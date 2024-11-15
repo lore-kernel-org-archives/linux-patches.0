@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F5CA188CDB;
-	Fri, 15 Nov 2024 06:51:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6572A185924;
+	Fri, 15 Nov 2024 06:51:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731653494; cv=none; b=pNOEZJIQGCjBrW67ifEFf2EpNvdSFAU17uhyYNp2HjVMOs4iSE8pfZkyhoEkSbFheKWA+2Mw8WAzdH9EAFd48TfmlFow15cDy2lNsIvgj4C8+q5wcc761Gi8dmK1+zZYePlRoFh2wjs6rxA0riCs7mFhSteqwc46KHBCC939zdo=
+	t=1731653498; cv=none; b=ez8wlyH+pCsezE2kOVGZp17X2YRIzPsiQX2ncrlkV6TRMKol/x1Ei36hlU/os2wygspJeniO7eWlIe8W98wt42bRxNGUFKh4iIZhoKN3a2Mj5lFi2rPmI5aEelMeHue2yuBAjbh4ZAM0PfTHsKsw9bOkQgk7QjT2ILd8dwkpJqc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731653494; c=relaxed/simple;
-	bh=+rzZsOoegnrOI0BmdpMG3dt6yM0AHwwglx/LNCpjnPw=;
+	s=arc-20240116; t=1731653498; c=relaxed/simple;
+	bh=cR9RGk++wTU7TOw0RtfzT2XHw88gASrF4vXtFoATw9E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KujVng9vzYmYUxMPIO3Ah/GhV9+J8j4yh3tSOerRSfyURmV91ls/EymEGEgOAqYMstZBzX4S5mGzBXHb8vpIWDMJbBv/AbrrS70oq6ikP9DeVLjM3HMfdYpSmPi3tGCt1J6P1/BclfC4q+HGQaOeBbTYA3pPFnCzy+vlPHSrC9g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ACeMkv7i; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Zo6e8KE3YF3YyXbbiiz5d6JLR0XpSHY+NV7Cg3ThiXXos6dRVfuwENto6RCGM3lvHKy6MGghrU8sSYl6bbg0Fn6/NnXW+vLlxBbBFIfV2gaLeeHo5r/zgbWNOPGXhULmGBOOCeInr0CgY1v0tCQxfm0yloxMfKSZRl1xzQzGmpQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EHVXiBIr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ACeMkv7i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1042FC4CECF;
-	Fri, 15 Nov 2024 06:51:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EHVXiBIr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DA01C4CECF;
+	Fri, 15 Nov 2024 06:51:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731653494;
-	bh=+rzZsOoegnrOI0BmdpMG3dt6yM0AHwwglx/LNCpjnPw=;
+	s=korg; t=1731653497;
+	bh=cR9RGk++wTU7TOw0RtfzT2XHw88gASrF4vXtFoATw9E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ACeMkv7iJ6HQBtadaaiQTuToy2cxyiXcmsyvVAALTVmSAZsS//D1BbZAak1RVDU9s
-	 B1gq04GYl8ThC/NjHaN+0Fz/3zo1DYBXaPBw1cgajNbu3e56prUKFgEvAy9u2ilMc2
-	 LUpsG8o9ojqt1HPvc7qhZstnAzo5Iav+avIO4A7g=
+	b=EHVXiBIrzsakEecYzA0xaoN6LrGXYkjaa6ydTDJ5iIjUY5k4tkoWRhPtlWCIiqND0
+	 nU7g2nfdL3MWEJlb4IwXEXVF2ESY89Oy/8w/7DUhvlVpJALhYxEXAn5RbklC0VyX9e
+	 /Y3p9qO8cLJZmztO6IC7r/KSPU0m15XOuSkPMZ18=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+6c55f725d1bdc8c52058@syzkaller.appspotmail.com,
-	Alessandro Zanni <alessandro.zanni87@gmail.com>,
-	Jan Kara <jack@suse.cz>,
-	Christian Brauner <brauner@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 31/48] fs: Fix uninitialized value issue in from_kuid and from_kgid
-Date: Fri, 15 Nov 2024 07:38:20 +0100
-Message-ID: <20241115063724.088038198@linuxfoundation.org>
+	Maximilian Heyne <mheyne@amazon.de>,
+	Hagar Hemdan <hagarhem@amazon.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.6 40/48] io_uring: fix possible deadlock in io_register_iowq_max_workers()
+Date: Fri, 15 Nov 2024 07:38:29 +0100
+Message-ID: <20241115063724.410699530@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241115063722.962047137@linuxfoundation.org>
 References: <20241115063722.962047137@linuxfoundation.org>
@@ -53,49 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alessandro Zanni <alessandro.zanni87@gmail.com>
+From: Hagar Hemdan <hagarhem@amazon.com>
 
-[ Upstream commit 15f34347481648a567db67fb473c23befb796af5 ]
+commit 73254a297c2dd094abec7c9efee32455ae875bdf upstream.
 
-ocfs2_setattr() uses attr->ia_mode, attr->ia_uid and attr->ia_gid in
-a trace point even though ATTR_MODE, ATTR_UID and ATTR_GID aren't set.
+The io_register_iowq_max_workers() function calls io_put_sq_data(),
+which acquires the sqd->lock without releasing the uring_lock.
+Similar to the commit 009ad9f0c6ee ("io_uring: drop ctx->uring_lock
+before acquiring sqd->lock"), this can lead to a potential deadlock
+situation.
 
-Initialize all fields of newattrs to avoid uninitialized variables, by
-checking if ATTR_MODE, ATTR_UID, ATTR_GID are initialized, otherwise 0.
+To resolve this issue, the uring_lock is released before calling
+io_put_sq_data(), and then it is re-acquired after the function call.
 
-Reported-by: syzbot+6c55f725d1bdc8c52058@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=6c55f725d1bdc8c52058
-Signed-off-by: Alessandro Zanni <alessandro.zanni87@gmail.com>
-Link: https://lore.kernel.org/r/20241017120553.55331-1-alessandro.zanni87@gmail.com
-Reviewed-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+This change ensures that the locks are acquired in the correct
+order, preventing the possibility of a deadlock.
+
+Suggested-by: Maximilian Heyne <mheyne@amazon.de>
+Signed-off-by: Hagar Hemdan <hagarhem@amazon.com>
+Link: https://lore.kernel.org/r/20240604130527.3597-1-hagarhem@amazon.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ocfs2/file.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ io_uring/io_uring.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/fs/ocfs2/file.c b/fs/ocfs2/file.c
-index aa39d5d2d94f1..e4acb795d1190 100644
---- a/fs/ocfs2/file.c
-+++ b/fs/ocfs2/file.c
-@@ -1128,9 +1128,12 @@ int ocfs2_setattr(struct mnt_idmap *idmap, struct dentry *dentry,
- 	trace_ocfs2_setattr(inode, dentry,
- 			    (unsigned long long)OCFS2_I(inode)->ip_blkno,
- 			    dentry->d_name.len, dentry->d_name.name,
--			    attr->ia_valid, attr->ia_mode,
--			    from_kuid(&init_user_ns, attr->ia_uid),
--			    from_kgid(&init_user_ns, attr->ia_gid));
-+			    attr->ia_valid,
-+				attr->ia_valid & ATTR_MODE ? attr->ia_mode : 0,
-+				attr->ia_valid & ATTR_UID ?
-+					from_kuid(&init_user_ns, attr->ia_uid) : 0,
-+				attr->ia_valid & ATTR_GID ?
-+					from_kgid(&init_user_ns, attr->ia_gid) : 0);
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -4358,8 +4358,10 @@ static __cold int io_register_iowq_max_w
+ 	}
  
- 	/* ensuring we don't even attempt to truncate a symlink */
- 	if (S_ISLNK(inode->i_mode))
--- 
-2.43.0
-
+ 	if (sqd) {
++		mutex_unlock(&ctx->uring_lock);
+ 		mutex_unlock(&sqd->lock);
+ 		io_put_sq_data(sqd);
++		mutex_lock(&ctx->uring_lock);
+ 	}
+ 
+ 	if (copy_to_user(arg, new_count, sizeof(new_count)))
+@@ -4384,8 +4386,11 @@ static __cold int io_register_iowq_max_w
+ 	return 0;
+ err:
+ 	if (sqd) {
++		mutex_unlock(&ctx->uring_lock);
+ 		mutex_unlock(&sqd->lock);
+ 		io_put_sq_data(sqd);
++		mutex_lock(&ctx->uring_lock);
++
+ 	}
+ 	return ret;
+ }
 
 
