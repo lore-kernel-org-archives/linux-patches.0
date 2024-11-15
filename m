@@ -1,100 +1,254 @@
-Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
+Received: from mail-lf1-f43.google.com (mail-lf1-f43.google.com [209.85.167.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B926F1CCEF5
-	for <patches@lists.linux.dev>; Fri, 15 Nov 2024 13:36:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C6C7140E3C
+	for <patches@lists.linux.dev>; Fri, 15 Nov 2024 13:53:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731677808; cv=none; b=TrLjbB6qW1lAQGJvqJal0rqa525gQFzmAbX8OSt2Wlf6Mn2jtEDG4g8h4Zr/kSwKJvO2ck4CKK8DOPTwuraigSvLs40Nh5S9u6dsUMLrR3Jaft9j/dmokJGpkbUqu8MuxdjHxArs6XZAhFqFZsHLHzOJk8oYhjNE90THEEWEdoY=
+	t=1731678832; cv=none; b=gEhCAK7Fi54KRpTMA+X3LXmTYIJVyezo15GhMRI5+oOlxNPbFqu1Y3AILIydZOMGsfK3WFXnxvq8AKeaU/X8b/7fzLBBc7ocNe6W4h3Tyb93D6p6U43i04KL+SwButk4tJcZf2hJdS3ZhAtvpbaXZx5Y86otKWHpYoE2mm6pcEM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731677808; c=relaxed/simple;
-	bh=gd+fZnjtIrzZH8uRFuesecl8rg3R3bbNBsC0AcNkI2k=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=qCISEN4lx3XQs1obnGeVWE9dPcnU6LM56vg0RbeMrAmnjyDlJbDnFLZrVSWVu8FRTYhFYPUQNkh72DObMlLBnl/Qov25QFGTznmYunZV6Tz/TgwBMxWFJMdRbBdM3LLoy3WwsV5CR6h+WDszgeDrM9fkmLpJh12BzhAmJqxpaNU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com; spf=pass smtp.mailfrom=googlemail.com; dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b=UCuSsm/H; arc=none smtp.client-ip=209.85.128.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=googlemail.com
+	s=arc-20240116; t=1731678832; c=relaxed/simple;
+	bh=4qumaI7ptH00McolFCVEKnaTAY+7DPmWzG7P062ShR4=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=rEElTj/n5vP8njE70KHUQJAEHZ9B0L5CPipbH+GatabaMbItFGYspClzU7ZE3r3tOmLvfyDmuPxWf7mDXpy7O3FT1TPPvtL7O5F6ljcrhyDleEzJM7aGqUtW7bx0hHizhXV44dkwnKAKTg/OHPMj8xip/ISjMQc+M5DNVyQX5WQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=eqXRg8bc; arc=none smtp.client-ip=209.85.167.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b="UCuSsm/H"
-Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-4315839a7c9so15674385e9.3
-        for <patches@lists.linux.dev>; Fri, 15 Nov 2024 05:36:46 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="eqXRg8bc"
+Received: by mail-lf1-f43.google.com with SMTP id 2adb3069b0e04-539e8607c2aso1936393e87.3
+        for <patches@lists.linux.dev>; Fri, 15 Nov 2024 05:53:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20230601; t=1731677805; x=1732282605; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=QFMEoy+VpYmS896YAj0P2dmeI7XvRACI2gkwVcDp1l0=;
-        b=UCuSsm/H7jOyC0qjMRcE3Bygq7CFfIjQUqSq3zbj1hkQhv+SaaeeeZ89QFHva4lGuy
-         yRTR5QqRk8Ly/PxVW0dmo+K0ECCU79Bsj9AJllytBwgcCPtepaZsFzdE75PnLDpTdcGk
-         F6DyrQDvWvp7BNJuRQaa1zgIYj5hsAeyLKw4+d3zpD2VbOlae0+hke6nGJCzIcPEEOO4
-         s86AiDcMlKyWFrm2tpvns39Ux1uq0s36PtuD41XWfbOenlJlKgSQk4Q5Xd3ho4jn21bo
-         Y0pPNuDm1R3WfwdxJMb8v9XalgTRuaDZ20j2ysN9H8Rrim7kkmbnT0a8jLlWSPslkD2w
-         z3Hw==
+        d=google.com; s=20230601; t=1731678829; x=1732283629; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=V0Zrfl7hfIDnjLVKBKJHLo1lv4aBeXmkkwaBhD0FEIQ=;
+        b=eqXRg8bczHEdzn52SRljuWAO+Jm610PU0/urDtqUqUOhv062OZgvPZBJOGyo9Zp5lK
+         yvUCHet8CWO5q/7uyRcnRAuV8/8mXM87/M81hYu+2gKc4MNgfFgekqARmfCusIJ0YC55
+         7dtkBDMbj/NEvzIgXvoBdddCKJmdH959YjNFScezMqBWUoRaKSthvST+pXf3sO4/XsoC
+         KwZyYKGIRMVcJ+3iRKWjz9vUC5CpyQxOTOpJadxaWn4EyQV7yP9gC0/3qDcIGPxMrzgQ
+         QyWMg48WRdQKe9HD+3unrYudG/kHnZZfmTT6qm/Ih2F4WZxXZA1MEv6vImMITwfCVF9W
+         eflA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731677805; x=1732282605;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=QFMEoy+VpYmS896YAj0P2dmeI7XvRACI2gkwVcDp1l0=;
-        b=vZlY+r3ygABA8RIyD0wgyEu3e0koenSo/9kU0B7zBmrbnpTHsv1zm1HI0BMMEsI5md
-         ZYJ2fqH8kt2p3OiOFUscTr4rg7SwonRd0qbYjH7r66O+MysUO6Xt0h9W4XCrU4IL5wTs
-         zTOvGzRDJkgkB5NQG3jhJE+sZ52f09eaIVOZxhrPqNjHe9J6LXu+ndIWVIFbUX+wzela
-         j/lltlbXT6FUrFEunvZ7RgoE5nUWZAJU5DKllqPg5m/+EmWviP8jQod/hP1Kwhz+PtO0
-         uu+zNW9tOybQeQLtqp98zw48hRSc+WkWQZa1dwtRncdbj/88aoX/68e26SuA/C+E5Uj7
-         wxKg==
-X-Gm-Message-State: AOJu0YxK0G2v33Ejj/s8mirZeQJGi5usKc/IQdMXEq4B1p0mFGsTXHdk
-	uWA7D1Ynf9XUwrKxukU81oHzY7D+ItMsDDCapaWXSwp4xaGepPA=
-X-Google-Smtp-Source: AGHT+IFCGOXPuKhEx3Wk5YE8y8nyvKH/XqNmBteJiALxBgwKZI2U4Vxx8yVSP4YuFlEM3MRere3Prg==
-X-Received: by 2002:a05:600c:4f06:b0:426:6455:f124 with SMTP id 5b1f17b1804b1-432df67783emr23283655e9.0.1731677804979;
-        Fri, 15 Nov 2024 05:36:44 -0800 (PST)
-Received: from [192.168.1.3] (p5b05792c.dip0.t-ipconnect.de. [91.5.121.44])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-432da27fc8esm58933775e9.21.2024.11.15.05.36.43
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 15 Nov 2024 05:36:44 -0800 (PST)
-Message-ID: <c4cda9aa-bead-4ca3-8878-8f6d05953ba4@googlemail.com>
-Date: Fri, 15 Nov 2024 14:36:42 +0100
+        d=1e100.net; s=20230601; t=1731678829; x=1732283629;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=V0Zrfl7hfIDnjLVKBKJHLo1lv4aBeXmkkwaBhD0FEIQ=;
+        b=UhiWirZsmR68KeEMjR43s4jXGDJtzo9mY/bZ+9izhIBNVOMsY7BTgyLvR9nt1Ue4yO
+         5B7y9ucPeCZ/7TbXTa4YLWGHuZRq5+tOJxnndKOxCXn90HZ3sTo4ijXYHUZON8/oEdp8
+         T3G0fWD/iTIMv1ESZoRzMNQzLCfFaWrSbXzIrZjq9NUqq/utg2Z+jn0AhuOosiD+fXbi
+         RgJrxw4Fe38K8mXif573Fdj0IWiCZwo7o+GoHUhHLyvtJad56miEmel0MX9t6WeK8LLy
+         ioKxtfTn5bOK01L7RRuQwYhuIjvAUQgdeYUHnODgVxoAkTMwU7zmIKv1qMzHNI86bBSs
+         qDuw==
+X-Forwarded-Encrypted: i=1; AJvYcCXLeNKNSzzymLJUQHYSI3OmjZE9asKDCUQOp6zxXP+oJPrHfhmSKDeWYoLSgw9r/ilqCDRU66A9@lists.linux.dev
+X-Gm-Message-State: AOJu0YxZkqs8qwlN4lEpNtmWV5409PrDRVrITlvIN/e0GfjynttPQU89
+	EsYAK49Dd/clZqacpAA0hw+WzuaFlW+viCgZVBEV9OJ89oWwFDQPTZq2GhRAK7U3IXdh5AvF+eN
+	ZQSY1HlcWeYhXQCz85CboFbSA0d1qA+nanojx
+X-Google-Smtp-Source: AGHT+IE5r1M8lPK23nhZrFSkC0KnHUFhExjhrYeKILxAVz++Uu1eERvaqetOP5p6iE0686w8MVDqLqhr2kQswQHInhw=
+X-Received: by 2002:a05:6512:3b23:b0:53d:9ff8:ea08 with SMTP id
+ 2adb3069b0e04-53dab2a0776mr1451926e87.16.1731678828533; Fri, 15 Nov 2024
+ 05:53:48 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Betterbird (Windows)
-Subject: Re: [PATCH 6.6 00/48] 6.6.62-rc1 review
-Content-Language: de-DE
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org
-References: <20241115063722.962047137@linuxfoundation.org>
-From: Peter Schneider <pschneider1968@googlemail.com>
-In-Reply-To: <20241115063722.962047137@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+References: <20241114001712.80315-1-tony.luck@intel.com> <20241114001712.80315-5-tony.luck@intel.com>
+In-Reply-To: <20241114001712.80315-5-tony.luck@intel.com>
+From: Peter Newman <peternewman@google.com>
+Date: Fri, 15 Nov 2024 14:53:37 +0100
+Message-ID: <CALPaoCgFRFgQqG00Uc0GhMHK47bsbtFw6Bxy5O9A_HeYmGa5sA@mail.gmail.com>
+Subject: Re: [PATCH v9 4/9] x86/resctrl: Compute memory bandwidth for all
+ supported events
+To: Tony Luck <tony.luck@intel.com>
+Cc: Fenghua Yu <fenghua.yu@intel.com>, Reinette Chatre <reinette.chatre@intel.com>, 
+	Jonathan Corbet <corbet@lwn.net>, x86@kernel.org, James Morse <james.morse@arm.com>, 
+	Jamie Iles <quic_jiles@quicinc.com>, Babu Moger <babu.moger@amd.com>, 
+	Randy Dunlap <rdunlap@infradead.org>, "Shaopeng Tan (Fujitsu)" <tan.shaopeng@fujitsu.com>, 
+	linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org, 
+	patches@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Am 15.11.2024 um 07:37 schrieb Greg Kroah-Hartman:
-> This is the start of the stable review cycle for the 6.6.62 release.
-> There are 48 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+Hi Tony,
 
-Builds, boots and works on my 2-socket Ivy Bridge Xeon E5-2697 v2 server. No dmesg 
-oddities or regressions found.
+On Thu, Nov 14, 2024 at 1:17=E2=80=AFAM Tony Luck <tony.luck@intel.com> wro=
+te:
+>
+> Computing the bandwidth for an event is cheap, and only done once
+> per second. Doing so simplifies switching between events and allows
+> choosing different events per ctrl_mon group.
+>
+> Suggested-by: Reinette Chatre <reinette.chatre@intel.com>
+> Signed-off-by: Tony Luck <tony.luck@intel.com>
+> ---
+>  arch/x86/kernel/cpu/resctrl/monitor.c | 72 ++++++++++++---------------
+>  1 file changed, 33 insertions(+), 39 deletions(-)
+>
+> diff --git a/arch/x86/kernel/cpu/resctrl/monitor.c b/arch/x86/kernel/cpu/=
+resctrl/monitor.c
+> index 2176e355e864..da4ae21350c8 100644
+> --- a/arch/x86/kernel/cpu/resctrl/monitor.c
+> +++ b/arch/x86/kernel/cpu/resctrl/monitor.c
+> @@ -663,9 +663,12 @@ static int __mon_event_count(u32 closid, u32 rmid, s=
+truct rmid_read *rr)
+>   */
+>  static void mbm_bw_count(u32 closid, u32 rmid, struct rmid_read *rr)
+>  {
+> -       u32 idx =3D resctrl_arch_rmid_idx_encode(closid, rmid);
+> -       struct mbm_state *m =3D &rr->d->mbm_local[idx];
+>         u64 cur_bw, bytes, cur_bytes;
+> +       struct mbm_state *m;
+> +
+> +       m =3D get_mbm_state(rr->d, closid, rmid, rr->evtid);
+> +       if (WARN_ON_ONCE(!m))
+> +               return;
+>
+>         cur_bytes =3D rr->val;
+>         bytes =3D cur_bytes - m->prev_bw_bytes;
+> @@ -826,54 +829,45 @@ static void update_mba_bw(struct rdtgroup *rgrp, st=
+ruct rdt_mon_domain *dom_mbm)
+>         resctrl_arch_update_one(r_mba, dom_mba, closid, CDP_NONE, new_msr=
+_val);
+>  }
+>
+> -static void mbm_update(struct rdt_resource *r, struct rdt_mon_domain *d,
+> -                      u32 closid, u32 rmid)
+> +static void mbm_update_one_event(struct rdt_resource *r, struct rdt_mon_=
+domain *d,
+> +                                u32 closid, u32 rmid, enum resctrl_event=
+_id evtid)
+>  {
+>         struct rmid_read rr =3D {0};
+>
+>         rr.r =3D r;
+>         rr.d =3D d;
+> +       rr.evtid =3D evtid;
+> +       rr.arch_mon_ctx =3D resctrl_arch_mon_ctx_alloc(rr.r, rr.evtid);
+> +       if (IS_ERR(rr.arch_mon_ctx)) {
+> +               pr_warn_ratelimited("Failed to allocate monitor context: =
+%ld",
+> +                                   PTR_ERR(rr.arch_mon_ctx));
+> +               return;
+> +       }
+> +
+> +       __mon_event_count(closid, rmid, &rr);
+>
+>         /*
+> -        * This is protected from concurrent reads from user
+> -        * as both the user and we hold the global mutex.
+> +        * If the software controller is enabled, compute the
+> +        * bandwidth for this event id.
+>          */
+> -       if (is_mbm_total_enabled()) {
+> -               rr.evtid =3D QOS_L3_MBM_TOTAL_EVENT_ID;
+> -               rr.val =3D 0;
+> -               rr.arch_mon_ctx =3D resctrl_arch_mon_ctx_alloc(rr.r, rr.e=
+vtid);
+> -               if (IS_ERR(rr.arch_mon_ctx)) {
+> -                       pr_warn_ratelimited("Failed to allocate monitor c=
+ontext: %ld",
+> -                                           PTR_ERR(rr.arch_mon_ctx));
+> -                       return;
+> -               }
+> -
+> -               __mon_event_count(closid, rmid, &rr);
+> +       if (is_mba_sc(NULL))
+> +               mbm_bw_count(closid, rmid, &rr);
+>
+> -               resctrl_arch_mon_ctx_free(rr.r, rr.evtid, rr.arch_mon_ctx=
+);
+> -       }
+> -       if (is_mbm_local_enabled()) {
+> -               rr.evtid =3D QOS_L3_MBM_LOCAL_EVENT_ID;
+> -               rr.val =3D 0;
+> -               rr.arch_mon_ctx =3D resctrl_arch_mon_ctx_alloc(rr.r, rr.e=
+vtid);
+> -               if (IS_ERR(rr.arch_mon_ctx)) {
+> -                       pr_warn_ratelimited("Failed to allocate monitor c=
+ontext: %ld",
+> -                                           PTR_ERR(rr.arch_mon_ctx));
+> -                       return;
+> -               }
+> -
+> -               __mon_event_count(closid, rmid, &rr);
+> +       resctrl_arch_mon_ctx_free(rr.r, rr.evtid, rr.arch_mon_ctx);
+> +}
+>
+> -               /*
+> -                * Call the MBA software controller only for the
+> -                * control groups and when user has enabled
+> -                * the software controller explicitly.
+> -                */
+> -               if (is_mba_sc(NULL))
+> -                       mbm_bw_count(closid, rmid, &rr);
+> +static void mbm_update(struct rdt_resource *r, struct rdt_mon_domain *d,
+> +                      u32 closid, u32 rmid)
+> +{
+> +       /*
+> +        * This is protected from concurrent reads from user
+> +        * as both the user and we hold the global mutex.
+> +        */
+> +       if (is_mbm_total_enabled())
+> +               mbm_update_one_event(r, d, closid, rmid, QOS_L3_MBM_TOTAL=
+_EVENT_ID);
+>
+> -               resctrl_arch_mon_ctx_free(rr.r, rr.evtid, rr.arch_mon_ctx=
+);
+> -       }
+> +       if (is_mbm_local_enabled())
+> +               mbm_update_one_event(r, d, closid, rmid, QOS_L3_MBM_LOCAL=
+_EVENT_ID);
+>  }
+>
+>  /*
+> --
+> 2.47.0
+>
 
-Tested-by: Peter Schneider <pschneider1968@googlemail.com>
+I experimented with all-groups, per-domain counter aggregation files
+prototype using this change as a starting point.
 
-Beste Grüße,
-Peter Schneider
+I'm happy to report that the values reported looked fairly reasonable.
 
--- 
-Climb the mountain not to plant your flag, but to embrace the challenge,
-enjoy the air and behold the view. Climb it so you can see the world,
-not so the world can see you.                    -- David McCullough Jr.
+Tested-by: Peter Newman <peternewman@google.com>
 
-OpenPGP:  0xA3828BD796CCE11A8CADE8866E3A92C92C3FF244
-Download: https://www.peters-netzplatz.de/download/pschneider1968_pub.asc
-https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@googlemail.com
-https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@gmail.com
+I also did a quick experiment to see how close to 1 second apart the
+readings were:
+
+@@ -664,6 +664,7 @@ static int __mon_event_count(u32 closid, u32 rmid,
+struct rmid_read *rr)
+ static void mbm_bw_count(u32 closid, u32 rmid, struct rmid_read *rr)
+ {
+        u64 cur_bw, bytes, cur_bytes;
+        struct mbm_state *m;
++       u64 ts;
+
+        m =3D get_mbm_state(rr->d, closid, rmid, rr->evtid);
+@@ -680,6 +681,10 @@ static void mbm_bw_count(u32 closid, u32 rmid,
+struct rmid_read *rr)
+        cur_bw =3D bytes / SZ_1M;
+
+        m->prev_bw =3D cur_bw;
++
++       ts =3D jiffies;
++       m->latency =3D ts - m->last_update_jiffies;
++       m->last_update_jiffies =3D ts;
+ }
+
+On an AMD EPYC 7B12 64-Core Processor, I saw a consistent 1.021-1.026
+second period. Is this enough error that you would want to divide by
+the actual period instead of assuming a denominator of 1 exactly?
+We're mainly concerned with the relative bandwidth of jobs, so this
+error isn't much concern as long as it doesn't favor any group.
+
+The only thing I'd worry about is if the user is using setitimer() to
+keep a consistent 1 second period for reading the bandwidth rate, the
+window of the resctrl updates would drift away from the userspace
+consumer over time.
+
+Thanks!
+-Peter
