@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A723118734F;
-	Fri, 15 Nov 2024 06:41:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5745F3BBEB;
+	Fri, 15 Nov 2024 06:41:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731652914; cv=none; b=CEGMyR8anSZ2byl3sxpdEtUD42dgnIi6+Um5aoHHKmr1rek9g8WeEZ+XWr8AwxriZRBTCtP0OU/2Ykumf0Zy0kG2H6l3DPm2C6eUkZgDl6JbeJhsgRcuwj2L4LonPbwx6bDpbdlQd7N38eapMuuf/XzoUnnWsF9LkGm5jslu30w=
+	t=1731652917; cv=none; b=icsg1AWfGfWabKik9WFse2sWf9Dnw0Sz3hmMnRCFnMxEUS5AohMqE3RlIf5iGFlTzwMX1RQ1VeBViQUgclJTTwfWiZ2KKCeLCuVZBwxkgLvD9cWKsW3fvvQotft/0lJ3gO/9LoMfH3ydCfkFj2R8X/ZDzpOozRNbHIMvmN5RpA0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731652914; c=relaxed/simple;
-	bh=O76tXtpSTBjVzy6z54UwJZSdE16b6UORa0orm714Esk=;
+	s=arc-20240116; t=1731652917; c=relaxed/simple;
+	bh=f/0EmlfGxOQI2a7fS6tgAs/UWotwYl6XVO3E8ueY1pE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mbIAw1vITRtS2CklKnKf2gcMjr021vyt/8uC44dxV6BdZK+EfhNlYNV3+zznwHC3z2FyrORj4yA2XHo3vQ/Wz8O958yTRS5waEtYHPBWRVIsLzlwtd2kJjPtXGwbfL84pkIW/lTsn6oqY8FXZ+YeVztI4qfOaMS6Vvo9ygcCJg4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gyOdsUdy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MIfwBSY6j/paD7bVyVKG8uGakwVO9lYPHcz5Fg191HtCNWActD8EsS1iLxSJXtre5sWTHXVIQupCvUdsjiqxC15+yTizyOHyhYvtOZ+JBVOLHhuYKED9WVuiuUDjtlFXL+ePYfH8O2+D9RJ73SdpgWkpf4rEHI/FIVCsEExF9+o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DrB3ftuk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gyOdsUdy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A797C4CECF;
-	Fri, 15 Nov 2024 06:41:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DrB3ftuk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1B33C4CED0;
+	Fri, 15 Nov 2024 06:41:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731652914;
-	bh=O76tXtpSTBjVzy6z54UwJZSdE16b6UORa0orm714Esk=;
+	s=korg; t=1731652917;
+	bh=f/0EmlfGxOQI2a7fS6tgAs/UWotwYl6XVO3E8ueY1pE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gyOdsUdycVU4rTU1kDAiHxXCzK/dzyAmzivclNdpIBX5VZ6Efkz22kyUHCLyjbFYo
-	 wU9xMvJ5vyCric/cslkcdguBd8hRGc9EuWUNffTStJvCTdj56iEef3+p28bimvEjnn
-	 kFM9Nq0MhF6KrRTMzltq6ZqXpJp+qdEPtxDBmBy4=
+	b=DrB3ftuk6tvpQxA4cUL0ZDgJgEW9Pvy6BQfV7DOJJpyk6XP+ilzpCJiwBZPbZMt4i
+	 BdTuxhK/f3329iVGvB3nvfqZya0stnjzBdub5M4jS+g+nm0T3r0ISEk3vrRIwfRRaa
+	 7b9bsVU6zShlC01yO1P9qpgJPOx2oa9RsrHO9cBY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Reinhard Speyerer <rspmn@arcor.de>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 4.19 34/52] USB: serial: option: add Fibocom FG132 0x0112 composition
-Date: Fri, 15 Nov 2024 07:37:47 +0100
-Message-ID: <20241115063724.089073902@linuxfoundation.org>
+	Vlastimil Babka <vbabka@suse.cz>,
+	Dominique Martinet <asmadeus@codewreck.org>,
+	Thorsten Leemhuis <regressions@leemhuis.info>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Omar Sandoval <osandov@fb.com>
+Subject: [PATCH 4.19 52/52] 9p: fix slab cache name creation for real
+Date: Fri, 15 Nov 2024 07:38:05 +0100
+Message-ID: <20241115063724.729942143@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241115063722.845867306@linuxfoundation.org>
 References: <20241115063722.845867306@linuxfoundation.org>
@@ -50,53 +53,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Reinhard Speyerer <rspmn@arcor.de>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 
-commit 393c74ccbd847bacf18865a01b422586fc7341cf upstream.
+commit a360f311f57a36e96d88fa8086b749159714dcd2 upstream.
 
-Add Fibocom FG132 0x0112 composition:
+This was attempted by using the dev_name in the slab cache name, but as
+Omar Sandoval pointed out, that can be an arbitrary string, eg something
+like "/dev/root".  Which in turn trips verify_dirent_name(), which fails
+if a filename contains a slash.
 
-T:  Bus=03 Lev=02 Prnt=06 Port=01 Cnt=02 Dev#= 10 Spd=12   MxCh= 0
-D:  Ver= 2.01 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
-P:  Vendor=2cb7 ProdID=0112 Rev= 5.15
-S:  Manufacturer=Fibocom Wireless Inc.
-S:  Product=Fibocom Module
-S:  SerialNumber=xxxxxxxx
-C:* #Ifs= 4 Cfg#= 1 Atr=a0 MxPwr=500mA
-I:* If#= 0 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=50 Driver=qmi_wwan
-E:  Ad=82(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
-E:  Ad=81(I) Atr=02(Bulk) MxPS=  64 Ivl=0ms
-E:  Ad=01(O) Atr=02(Bulk) MxPS=  64 Ivl=0ms
-I:* If#= 1 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
-E:  Ad=02(O) Atr=02(Bulk) MxPS=  64 Ivl=0ms
-E:  Ad=83(I) Atr=02(Bulk) MxPS=  64 Ivl=0ms
-I:* If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=85(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-E:  Ad=84(I) Atr=02(Bulk) MxPS=  64 Ivl=0ms
-E:  Ad=03(O) Atr=02(Bulk) MxPS=  64 Ivl=0ms
-I:* If#= 3 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=86(I) Atr=02(Bulk) MxPS=  64 Ivl=0ms
-E:  Ad=04(O) Atr=02(Bulk) MxPS=  64 Ivl=0ms
+So just make it use a sequence counter, and make it an atomic_t to avoid
+any possible races or locking issues.
 
-Signed-off-by: Reinhard Speyerer <rspmn@arcor.de>
-Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan@kernel.org>
+Reported-and-tested-by: Omar Sandoval <osandov@fb.com>
+Link: https://lore.kernel.org/all/ZxafcO8KWMlXaeWE@telecaster.dhcp.thefacebook.com/
+Fixes: 79efebae4afc ("9p: Avoid creating multiple slab caches with the same name")
+Acked-by: Vlastimil Babka <vbabka@suse.cz>
+Cc: Dominique Martinet <asmadeus@codewreck.org>
+Cc: Thorsten Leemhuis <regressions@leemhuis.info>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/option.c |    3 +++
- 1 file changed, 3 insertions(+)
+ net/9p/client.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/serial/option.c
-+++ b/drivers/usb/serial/option.c
-@@ -2320,6 +2320,9 @@ static const struct usb_device_id option
- 	{ USB_DEVICE_AND_INTERFACE_INFO(0x2cb7, 0x010b, 0xff, 0xff, 0x30) },	/* Fibocom FG150 Diag */
- 	{ USB_DEVICE_AND_INTERFACE_INFO(0x2cb7, 0x010b, 0xff, 0, 0) },		/* Fibocom FG150 AT */
- 	{ USB_DEVICE_INTERFACE_CLASS(0x2cb7, 0x0111, 0xff) },			/* Fibocom FM160 (MBIM mode) */
-+	{ USB_DEVICE_AND_INTERFACE_INFO(0x2cb7, 0x0112, 0xff, 0xff, 0x30) },	/* Fibocom FG132 Diag */
-+	{ USB_DEVICE_AND_INTERFACE_INFO(0x2cb7, 0x0112, 0xff, 0xff, 0x40) },	/* Fibocom FG132 AT */
-+	{ USB_DEVICE_AND_INTERFACE_INFO(0x2cb7, 0x0112, 0xff, 0, 0) },		/* Fibocom FG132 NMEA */
- 	{ USB_DEVICE_INTERFACE_CLASS(0x2cb7, 0x0115, 0xff),			/* Fibocom FM135 (laptop MBIM) */
- 	  .driver_info = RSVD(5) },
- 	{ USB_DEVICE_INTERFACE_CLASS(0x2cb7, 0x01a0, 0xff) },			/* Fibocom NL668-AM/NL652-EU (laptop MBIM) */
+--- a/net/9p/client.c
++++ b/net/9p/client.c
+@@ -1016,6 +1016,7 @@ error:
+ struct p9_client *p9_client_create(const char *dev_name, char *options)
+ {
+ 	int err;
++	static atomic_t seqno = ATOMIC_INIT(0);
+ 	struct p9_client *clnt;
+ 	char *client_id;
+ 	char *cache_name;
+@@ -1071,7 +1072,8 @@ struct p9_client *p9_client_create(const
+ 	if (err)
+ 		goto close_trans;
+ 
+-	cache_name = kasprintf(GFP_KERNEL, "9p-fcall-cache-%s", dev_name);
++	cache_name = kasprintf(GFP_KERNEL,
++		"9p-fcall-cache-%u", atomic_inc_return(&seqno));
+ 	if (!cache_name) {
+ 		err = -ENOMEM;
+ 		goto close_trans;
 
 
