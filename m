@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5C5E185924;
-	Fri, 15 Nov 2024 06:52:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D9C7185924;
+	Fri, 15 Nov 2024 06:52:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731653540; cv=none; b=etlUKtr+kaGkd8cH5vemIwoU22VbtzURlbGtvjpOB9p7eZotbYD1/e5u0IIzZQu9T8LJ5kA4M6gFmJyAWXWFUeqn7tdcNe1W0SeyFOcvQBCyWOafCIQ7LTXWocn1AeDeMFqavGyXARS6L5VEDHQxKaIpXrz74A7HwSPksbmOnsA=
+	t=1731653544; cv=none; b=Dg+mZvRtOPOVRs71BO64CEUgeUOPiYJ2j3VHT5tGaC16pjEd8cedbltLaTlm+haPsHCOvz3gc/aQ8umNEsYkpUR2vH5VtNkTB05Ow5z2QX2PfU2Om1nQmRkSIQLLJ92V3WQOSIUSPM6WrJmiDgltdVAHFZpzfge9+etHP3LSgfc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731653540; c=relaxed/simple;
-	bh=AVvwxVBEw9jdSnZMCZa3THBT+Dp/WBKlRG6bBWdxMWg=;
+	s=arc-20240116; t=1731653544; c=relaxed/simple;
+	bh=FnoiFPD5ly6G0BKct9r6XpmB065JuIDIA1nxzigmx5Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UpJrIvzV/uwu1iB/rna4/jPnLXQ3MId1N7wfi9a4eRY/q0Q2JFkvjlFPj59RkPF6kq0ZUixXC7KVn2o4QskmpvmrufBRRz11Z8egJp7+TIWezyPT7V3CIUN3SuYt7w9N1HOSCKLuEU5P3dysy9/pKKJ0+V+9b569aSxBUlgPPiA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=es4/NkUl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=olZE5kMkAwP7bGGvAzBCNbRmgLPVdLlUc8OHxg0n2aPv+b0JuohgWy3R9/pK5YlmzrR1B9TCikiW/H9VrR6TFHfpqnnrxPHSttKoMljBjT6kqTVx2cvidEaeBiOqR3OCCDei1G1c7Lvtc6bbWJEpUAeFt7Xr9eb15WmWxMUaaXo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cfZS5eNH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="es4/NkUl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FEF3C4CECF;
-	Fri, 15 Nov 2024 06:52:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cfZS5eNH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2C3AC4CECF;
+	Fri, 15 Nov 2024 06:52:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731653540;
-	bh=AVvwxVBEw9jdSnZMCZa3THBT+Dp/WBKlRG6bBWdxMWg=;
+	s=korg; t=1731653544;
+	bh=FnoiFPD5ly6G0BKct9r6XpmB065JuIDIA1nxzigmx5Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=es4/NkUlQCK2PV75b1l/+9q1CktdTbIQV4kPOnxnP8jw3L8/yK4OPXmJ2Y5R9+zu2
-	 KREqGXhpxmIFGN6HfxfiUSt98MEwNd9IWYkY4Uy6lOk+9Mx3+BuVCpG3KkeqSUldaV
-	 xbswjq/ai6j8SvGtp48cqJxdnfWn/OOgPBZ1iv5c=
+	b=cfZS5eNH+6b7yES426P65P9nHrHRvDjeM6YhM+lu4E8Arr1+jJimU3qdmwokzd3Ao
+	 57QMzfT7PR7rwnuoOnuXcmm6f0olVSetwW5sPVv6pe9Mz2WjOxbXh9qaaj4xaVlyNH
+	 6EWPASbssHHIntsqZqC5hrmSN66sqLQK7Jkwq6fY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yanteng Si <siyanteng@cqsoftware.com.cn>,
-	Huacai Chen <chenhuacai@loongson.cn>,
+	Shengjiu Wang <shengjiu.wang@nxp.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 36/48] LoongArch: Use "Exception return address" to comment ERA
-Date: Fri, 15 Nov 2024 07:38:25 +0100
-Message-ID: <20241115063724.268268381@linuxfoundation.org>
+Subject: [PATCH 6.6 37/48] ASoC: fsl_micfil: Add sample rate constraint
+Date: Fri, 15 Nov 2024 07:38:26 +0100
+Message-ID: <20241115063724.304219545@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241115063722.962047137@linuxfoundation.org>
 References: <20241115063722.962047137@linuxfoundation.org>
@@ -51,34 +51,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yanteng Si <siyanteng@cqsoftware.com.cn>
+From: Shengjiu Wang <shengjiu.wang@nxp.com>
 
-[ Upstream commit b69269c870ece1bc7d2e3e39ca76f4602f2cb0dd ]
+[ Upstream commit b9a8ecf81066e01e8a3de35517481bc5aa0439e5 ]
 
-The information contained in the comment for LOONGARCH_CSR_ERA is even
-less informative than the macro itself, which can cause confusion for
-junior developers. Let's use the full English term.
+On some platforms, for example i.MX93, there is only one
+audio PLL source, so some sample rate can't be supported.
+If the PLL source is used for 8kHz series rates, then 11kHz
+series rates can't be supported.
 
-Signed-off-by: Yanteng Si <siyanteng@cqsoftware.com.cn>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+So add constraints according to the frequency of available
+clock sources, then alsa-lib will help to convert the
+unsupported rate for the driver.
+
+Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
+Link: https://patch.msgid.link/1728884313-6778-1-git-send-email-shengjiu.wang@nxp.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/loongarch/include/asm/loongarch.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/fsl/fsl_micfil.c | 38 ++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 38 insertions(+)
 
-diff --git a/arch/loongarch/include/asm/loongarch.h b/arch/loongarch/include/asm/loongarch.h
-index 33531d432b492..23232c7bdb9ff 100644
---- a/arch/loongarch/include/asm/loongarch.h
-+++ b/arch/loongarch/include/asm/loongarch.h
-@@ -242,7 +242,7 @@
- #define  CSR_ESTAT_IS_WIDTH		14
- #define  CSR_ESTAT_IS			(_ULCAST_(0x3fff) << CSR_ESTAT_IS_SHIFT)
+diff --git a/sound/soc/fsl/fsl_micfil.c b/sound/soc/fsl/fsl_micfil.c
+index 9407179af5d57..8478a4ac59f9d 100644
+--- a/sound/soc/fsl/fsl_micfil.c
++++ b/sound/soc/fsl/fsl_micfil.c
+@@ -28,6 +28,13 @@
  
--#define LOONGARCH_CSR_ERA		0x6	/* ERA */
-+#define LOONGARCH_CSR_ERA		0x6	/* Exception return address */
+ #define MICFIL_OSR_DEFAULT	16
  
- #define LOONGARCH_CSR_BADV		0x7	/* Bad virtual address */
++#define MICFIL_NUM_RATES	7
++#define MICFIL_CLK_SRC_NUM	3
++/* clock source ids */
++#define MICFIL_AUDIO_PLL1	0
++#define MICFIL_AUDIO_PLL2	1
++#define MICFIL_CLK_EXT3		2
++
+ enum quality {
+ 	QUALITY_HIGH,
+ 	QUALITY_MEDIUM,
+@@ -45,9 +52,12 @@ struct fsl_micfil {
+ 	struct clk *mclk;
+ 	struct clk *pll8k_clk;
+ 	struct clk *pll11k_clk;
++	struct clk *clk_src[MICFIL_CLK_SRC_NUM];
+ 	struct snd_dmaengine_dai_dma_data dma_params_rx;
+ 	struct sdma_peripheral_config sdmacfg;
+ 	struct snd_soc_card *card;
++	struct snd_pcm_hw_constraint_list constraint_rates;
++	unsigned int constraint_rates_list[MICFIL_NUM_RATES];
+ 	unsigned int dataline;
+ 	char name[32];
+ 	int irq[MICFIL_IRQ_LINES];
+@@ -475,12 +485,34 @@ static int fsl_micfil_startup(struct snd_pcm_substream *substream,
+ 			      struct snd_soc_dai *dai)
+ {
+ 	struct fsl_micfil *micfil = snd_soc_dai_get_drvdata(dai);
++	unsigned int rates[MICFIL_NUM_RATES] = {8000, 11025, 16000, 22050, 32000, 44100, 48000};
++	int i, j, k = 0;
++	u64 clk_rate;
  
+ 	if (!micfil) {
+ 		dev_err(dai->dev, "micfil dai priv_data not set\n");
+ 		return -EINVAL;
+ 	}
+ 
++	micfil->constraint_rates.list = micfil->constraint_rates_list;
++	micfil->constraint_rates.count = 0;
++
++	for (j = 0; j < MICFIL_NUM_RATES; j++) {
++		for (i = 0; i < MICFIL_CLK_SRC_NUM; i++) {
++			clk_rate = clk_get_rate(micfil->clk_src[i]);
++			if (clk_rate != 0 && do_div(clk_rate, rates[j]) == 0) {
++				micfil->constraint_rates_list[k++] = rates[j];
++				micfil->constraint_rates.count++;
++				break;
++			}
++		}
++	}
++
++	if (micfil->constraint_rates.count > 0)
++		snd_pcm_hw_constraint_list(substream->runtime, 0,
++					   SNDRV_PCM_HW_PARAM_RATE,
++					   &micfil->constraint_rates);
++
+ 	return 0;
+ }
+ 
+@@ -1165,6 +1197,12 @@ static int fsl_micfil_probe(struct platform_device *pdev)
+ 	fsl_asoc_get_pll_clocks(&pdev->dev, &micfil->pll8k_clk,
+ 				&micfil->pll11k_clk);
+ 
++	micfil->clk_src[MICFIL_AUDIO_PLL1] = micfil->pll8k_clk;
++	micfil->clk_src[MICFIL_AUDIO_PLL2] = micfil->pll11k_clk;
++	micfil->clk_src[MICFIL_CLK_EXT3] = devm_clk_get(&pdev->dev, "clkext3");
++	if (IS_ERR(micfil->clk_src[MICFIL_CLK_EXT3]))
++		micfil->clk_src[MICFIL_CLK_EXT3] = NULL;
++
+ 	/* init regmap */
+ 	regs = devm_platform_get_and_ioremap_resource(pdev, 0, &res);
+ 	if (IS_ERR(regs))
 -- 
 2.43.0
 
