@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B57D13BBEB;
-	Fri, 15 Nov 2024 06:44:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34C1E185924;
+	Fri, 15 Nov 2024 06:44:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731653041; cv=none; b=UShQ7xj7piMwy1ihE6DcvmijsyBFjgAk7t592bnQ5ri63OWj6ZriLp21kL68khoBDQR+6GIUMlVy0pg4yFol0/xUSPS921kI8fDQ7gXfBs2KGCl3O4H5EgTCGMuHsa0D6mJWJMyCBZ1xREzQJPrxZwLipta97NKvDOT+cbENWRY=
+	t=1731653045; cv=none; b=C3QO/vJYacvNR4NFLjIzzRo3GqfzzWMkhYCeFIiaeUp7zSToaV9agN4ScxYxQespmUUWxZugqSjCvjkCvBvXKEvEq+g2DCv2YiwjW3TLnf8a+VRdTxV5TlpG06mI2SFWexn2v7NkVa3pvz9ks1yynLCRKzN/wOeBlcFZSDvi34g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731653041; c=relaxed/simple;
-	bh=KRudr+lpCrf/n6CBqCzBDBJathAFgC2s/Lk7Bl3o0es=;
+	s=arc-20240116; t=1731653045; c=relaxed/simple;
+	bh=V3ThoFeNBSkZhRiqkbpC3NjpkB52yGG53WIKhAW7u4o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=dOqIW3SLVwofIyxe6qccSNBL0SV8PvRRJGxwMTGlOLsj/ybD7PXCMK4JceTms7eItw5y2o3z5sZdKkQ8zl47Cnc43lQaZ/1955YaXVEWZFc5Dscyy2eOis9Kwv3rYX00ZsCWrV0lhvxaI9QXYXNAuGrCgxWT9yuQbQrCsSa+7aA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iH5D3uhh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rucKME01N+GPD0AV5SnBP7/7ZFSBepN4GtnIcAToSjwjcSb1v0iV0ZuGdmbD9riwgPQKpHpxilYn/xflcmQslP+ldFCmIe9WELCl6TWHKmAy6OxD1a8niqeVbl38irVR6UFeGflu0KPF6JPndBZ8SxWny+/UClaJM4Y+q+tDbfk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cOdRT+kI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iH5D3uhh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23960C4CECF;
-	Fri, 15 Nov 2024 06:44:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cOdRT+kI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99AF3C4CECF;
+	Fri, 15 Nov 2024 06:44:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731653041;
-	bh=KRudr+lpCrf/n6CBqCzBDBJathAFgC2s/Lk7Bl3o0es=;
+	s=korg; t=1731653045;
+	bh=V3ThoFeNBSkZhRiqkbpC3NjpkB52yGG53WIKhAW7u4o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iH5D3uhhZB/+BAfp6wGko5tznTfKi1UEuvMzFqEVH34OzeLBosP0iWgL7SGxy8GYv
-	 zyy9iFUMzyNDQ9MuLMM7/ElrWYiiu4kjpv1IYh+ELzKBw1N82VBqS4EhK1UFW81/a4
-	 QBsyE6pmQXUBBbbGS1C8QOxpQWdw+dEX+fORXE1o=
+	b=cOdRT+kI6FGbE1Yc9AJWemSfrZXgZJ6AeYprPXDY/FYl2emSkieRcYQ60iiP1iFD8
+	 FylMhfBTpOgSGFLBI7YLN8XuE6Mcx7UedfKuvgUx38JsMCsvwTC49XXV6grcLOv3Lb
+	 NP751oUE4OypIvbeHdO/PE8STnG1ebwWxCPLuUD8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Walle <michael@walle.cc>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Lukas Wunner <lukas@wunner.de>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 5.4 36/66] spi: fix use-after-free of the add_lock mutex
-Date: Fri, 15 Nov 2024 07:37:45 +0100
-Message-ID: <20241115063724.149498736@linuxfoundation.org>
+	syzbot+a63a1f6a062033cf0f40@syzkaller.appspotmail.com,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	"David S. Miller" <davem@davemloft.net>,
+	Randy MacLeod <Randy.MacLeod@windriver.com>
+Subject: [PATCH 5.4 37/66] net: bridge: xmit: make sure we have at least eth header len bytes
+Date: Fri, 15 Nov 2024 07:37:46 +0100
+Message-ID: <20241115063724.186159647@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241115063722.834793938@linuxfoundation.org>
 References: <20241115063722.834793938@linuxfoundation.org>
@@ -46,67 +46,84 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michael Walle <michael@walle.cc>
+From: Nikolay Aleksandrov <razor@blackwall.org>
 
-commit 6c53b45c71b4920b5e62f0ea8079a1da382b9434 upstream.
+commit 8bd67ebb50c0145fd2ca8681ab65eb7e8cde1afc upstream.
 
-Commit 6098475d4cb4 ("spi: Fix deadlock when adding SPI controllers on
-SPI buses") introduced a per-controller mutex. But mutex_unlock() of
-said lock is called after the controller is already freed:
+syzbot triggered an uninit value[1] error in bridge device's xmit path
+by sending a short (less than ETH_HLEN bytes) skb. To fix it check if
+we can actually pull that amount instead of assuming.
 
-  spi_unregister_controller(ctlr)
-  -> put_device(&ctlr->dev)
-    -> spi_controller_release(dev)
-  -> mutex_unlock(&ctrl->add_lock)
+Tested with dropwatch:
+ drop at: br_dev_xmit+0xb93/0x12d0 [bridge] (0xffffffffc06739b3)
+ origin: software
+ timestamp: Mon May 13 11:31:53 2024 778214037 nsec
+ protocol: 0x88a8
+ length: 2
+ original length: 2
+ drop reason: PKT_TOO_SMALL
 
-Move the put_device() after the mutex_unlock().
+[1]
+BUG: KMSAN: uninit-value in br_dev_xmit+0x61d/0x1cb0 net/bridge/br_device.c:65
+ br_dev_xmit+0x61d/0x1cb0 net/bridge/br_device.c:65
+ __netdev_start_xmit include/linux/netdevice.h:4903 [inline]
+ netdev_start_xmit include/linux/netdevice.h:4917 [inline]
+ xmit_one net/core/dev.c:3531 [inline]
+ dev_hard_start_xmit+0x247/0xa20 net/core/dev.c:3547
+ __dev_queue_xmit+0x34db/0x5350 net/core/dev.c:4341
+ dev_queue_xmit include/linux/netdevice.h:3091 [inline]
+ __bpf_tx_skb net/core/filter.c:2136 [inline]
+ __bpf_redirect_common net/core/filter.c:2180 [inline]
+ __bpf_redirect+0x14a6/0x1620 net/core/filter.c:2187
+ ____bpf_clone_redirect net/core/filter.c:2460 [inline]
+ bpf_clone_redirect+0x328/0x470 net/core/filter.c:2432
+ ___bpf_prog_run+0x13fe/0xe0f0 kernel/bpf/core.c:1997
+ __bpf_prog_run512+0xb5/0xe0 kernel/bpf/core.c:2238
+ bpf_dispatcher_nop_func include/linux/bpf.h:1234 [inline]
+ __bpf_prog_run include/linux/filter.h:657 [inline]
+ bpf_prog_run include/linux/filter.h:664 [inline]
+ bpf_test_run+0x499/0xc30 net/bpf/test_run.c:425
+ bpf_prog_test_run_skb+0x14ea/0x1f20 net/bpf/test_run.c:1058
+ bpf_prog_test_run+0x6b7/0xad0 kernel/bpf/syscall.c:4269
+ __sys_bpf+0x6aa/0xd90 kernel/bpf/syscall.c:5678
+ __do_sys_bpf kernel/bpf/syscall.c:5767 [inline]
+ __se_sys_bpf kernel/bpf/syscall.c:5765 [inline]
+ __x64_sys_bpf+0xa0/0xe0 kernel/bpf/syscall.c:5765
+ x64_sys_call+0x96b/0x3b50 arch/x86/include/generated/asm/syscalls_64.h:322
+ do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+ do_syscall_64+0xcf/0x1e0 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-Fixes: 6098475d4cb4 ("spi: Fix deadlock when adding SPI controllers on SPI buses")
-Signed-off-by: Michael Walle <michael@walle.cc>
-Reviewed-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Reviewed-by: Lukas Wunner <lukas@wunner.de>
-Cc: stable@vger.kernel.org # v5.15
-Link: https://lore.kernel.org/r/20211111083713.3335171-1-michael@walle.cc
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: syzbot+a63a1f6a062033cf0f40@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=a63a1f6a062033cf0f40
+Signed-off-by: Nikolay Aleksandrov <razor@blackwall.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Randy MacLeod <Randy.MacLeod@windriver.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi.c |   12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ net/bridge/br_device.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/spi/spi.c
-+++ b/drivers/spi/spi.c
-@@ -2670,12 +2670,6 @@ void spi_unregister_controller(struct sp
+--- a/net/bridge/br_device.c
++++ b/net/bridge/br_device.c
+@@ -35,6 +35,11 @@ netdev_tx_t br_dev_xmit(struct sk_buff *
+ 	const unsigned char *dest;
+ 	u16 vid = 0;
  
- 	device_del(&ctlr->dev);
- 
--	/* Release the last reference on the controller if its driver
--	 * has not yet been converted to devm_spi_alloc_master/slave().
--	 */
--	if (!ctlr->devm_allocated)
--		put_device(&ctlr->dev);
--
- 	/* free bus id */
- 	mutex_lock(&board_lock);
- 	if (found == ctlr)
-@@ -2684,6 +2678,12 @@ void spi_unregister_controller(struct sp
- 
- 	if (IS_ENABLED(CONFIG_SPI_DYNAMIC))
- 		mutex_unlock(&ctlr->add_lock);
++	if (unlikely(!pskb_may_pull(skb, ETH_HLEN))) {
++		kfree_skb(skb);
++		return NETDEV_TX_OK;
++	}
 +
-+	/* Release the last reference on the controller if its driver
-+	 * has not yet been converted to devm_spi_alloc_master/slave().
-+	 */
-+	if (!ctlr->devm_allocated)
-+		put_device(&ctlr->dev);
- }
- EXPORT_SYMBOL_GPL(spi_unregister_controller);
+ 	memset(skb->cb, 0, sizeof(struct br_input_skb_cb));
  
+ 	rcu_read_lock();
 
 
