@@ -1,53 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1D2C18871E;
-	Fri, 15 Nov 2024 06:51:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D016E18873F;
+	Fri, 15 Nov 2024 06:51:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731653505; cv=none; b=Lp75W3x4XWFy9Pob+L3JYpOw5fiIry+toqh5AVkinjXLOOMFGVsODwKoevIXE/ykQG0+FPDrR8zy0vP6qdyEQQMqvdM2Ih8GVqE2C0M5EKqbH8tFYODc+lIvTQ0+bdcotCU9z5JrEpTERH+eyL9ifffPSsig/kdDYo+fKeXYa14=
+	t=1731653508; cv=none; b=kir4lQPR5n3nTKmjIobIhSDDa06u8JemaB6W4hlS8qznSCszq2nRqlvZUja5OkblTAGw5szZl+zmQQ0lIG1YDsWLdgrxRa+WTKw/M3ayAYzleIJjdXGmy+CrxDrAg1Ik2Xu2PKBH61jkGVAbaH3Pm+PaOqFTv++UmbIBoFL8kGU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731653505; c=relaxed/simple;
-	bh=PjbOU4Gb+yzzbdTFGBPyvHMGUvgNC4Cm62srRpbK8Eg=;
+	s=arc-20240116; t=1731653508; c=relaxed/simple;
+	bh=NLbKiu4vbOcrRQIcZeZvGuZy60mGIpmeo3SzNBeL3VU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XYo7iFYt7K89FN0EkvmP4yP5YBm25wzGn28ujf+ZiiMTlAcn7sEIFqGRAxgL1aLwzwZ61IvM6Icv+/MN4BYKcrDIG6dKDjyRHPs3aGXvRMn7z7Ob9ylX4KBP2Nyf2Q4oKqLTOZZpaVqDv+tVitGEIG4bMD6lU72ayOTqe6jJP50=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uU1+unNQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oGxs43vvP98fb4Aj3HZFyFLKCTnMtR+lJGcAqViOy0T9F0+JB9+Bm5t2C58HSb4iEiGgdNc7Dot/hmvIDkidbRrf36LPoYgwIk2EXDBc1pRCC5SbeJtARlM9zzFW64VROqqFdqipV5qkgQOnoprDwI3Cge0PgEdU7OzLE4FLah0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u4ijoW/t; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uU1+unNQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33321C4CECF;
-	Fri, 15 Nov 2024 06:51:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u4ijoW/t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0811C4CED2;
+	Fri, 15 Nov 2024 06:51:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731653504;
-	bh=PjbOU4Gb+yzzbdTFGBPyvHMGUvgNC4Cm62srRpbK8Eg=;
+	s=korg; t=1731653508;
+	bh=NLbKiu4vbOcrRQIcZeZvGuZy60mGIpmeo3SzNBeL3VU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uU1+unNQ+6bIO9naekgJOqoWwXCt8JozHbkbPydNAgbg30CL0ex0X4n+6eL5D3c7G
-	 IaKNerBkyfd61Ujtys1/rFY9rL9bdOxzrk5jW3uQRilT15E52Qo10L4H8evEiHQE6B
-	 upZF3sfKDHdbSoNqXKTKkQCOLI2Lrv/TiTTR2v5A=
+	b=u4ijoW/t8xEn6FYu3zN0UK04apTnO+U/CBJ0oq/fXVN+0i1E7nw2CYV0KYAIsVJTp
+	 WiWG0zAM5Y+leCnqV/Xt4fzTA5puxZO1/CKwLsFbT1dL7lEa2upoEoJmoI2lGA2Anl
+	 1G3SCW53xXjdrr304CoSa4uJaiqWw1gi+pLw/hSY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hugh Dickins <hughd@google.com>,
-	Andi Kleen <ak@linux.intel.com>,
-	Christoph Lameter <cl@linux.com>,
-	David Hildenbrand <david@redhat.com>,
-	"Huang, Ying" <ying.huang@intel.com>,
-	Kefeng Wang <wangkefeng.wang@huawei.com>,
+	Ryan Roberts <ryan.roberts@arm.com>,
 	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Mel Gorman <mgorman@techsingularity.net>,
-	Michal Hocko <mhocko@suse.com>,
-	Mike Kravetz <mike.kravetz@oracle.com>,
-	Nhat Pham <nphamcs@gmail.com>,
-	Sidhartha Kumar <sidhartha.kumar@oracle.com>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Tejun heo <tj@kernel.org>,
-	"Vishal Moola (Oracle)" <vishal.moola@gmail.com>,
-	Yang Shi <shy828301@gmail.com>,
-	Yosry Ahmed <yosryahmed@google.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6 42/48] mm: add page_rmappable_folio() wrapper
-Date: Fri, 15 Nov 2024 07:38:31 +0100
-Message-ID: <20241115063724.480624722@linuxfoundation.org>
+	Andrew Morton <akpm@linux-foundation.org>,
+	Hugh Dickins <hughd@google.com>
+Subject: [PATCH 6.6 43/48] mm/readahead: do not allow order-1 folio
+Date: Fri, 15 Nov 2024 07:38:32 +0100
+Message-ID: <20241115063724.516433548@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241115063722.962047137@linuxfoundation.org>
 References: <20241115063722.962047137@linuxfoundation.org>
@@ -66,116 +52,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hugh Dickins <hughd@google.com>
+From: Ryan Roberts <ryan.roberts@arm.com>
 
-commit 23e4883248f0472d806c8b3422ba6257e67bf1a5 upstream.
+commit ec056cef76a525706601b32048f174f9bea72c7c upstream.
 
-folio_prep_large_rmappable() is being used repeatedly along with a
-conversion from page to folio, a check non-NULL, a check order > 1: wrap
-it all up into struct folio *page_rmappable_folio(struct page *).
+The THP machinery does not support order-1 folios because it requires meta
+data spanning the first 3 `struct page`s.  So order-2 is the smallest
+large folio that we can safely create.
 
-Link: https://lkml.kernel.org/r/8d92c6cf-eebe-748-e29c-c8ab224c741@google.com
-Signed-off-by: Hugh Dickins <hughd@google.com>
-Cc: Andi Kleen <ak@linux.intel.com>
-Cc: Christoph Lameter <cl@linux.com>
-Cc: David Hildenbrand <david@redhat.com>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: "Huang, Ying" <ying.huang@intel.com>
-Cc: Kefeng Wang <wangkefeng.wang@huawei.com>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: Mel Gorman <mgorman@techsingularity.net>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Mike Kravetz <mike.kravetz@oracle.com>
-Cc: Nhat Pham <nphamcs@gmail.com>
-Cc: Sidhartha Kumar <sidhartha.kumar@oracle.com>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: Tejun heo <tj@kernel.org>
-Cc: Vishal Moola (Oracle) <vishal.moola@gmail.com>
-Cc: Yang Shi <shy828301@gmail.com>
-Cc: Yosry Ahmed <yosryahmed@google.com>
+There was a theoretical bug whereby if ra->size was 2 or 3 pages (due to
+the device-specific bdi->ra_pages being set that way), we could end up
+with order = 1.  Fix this by unconditionally checking if the preferred
+order is 1 and if so, set it to 0.  Previously this was done in a few
+specific places, but with this refactoring it is done just once,
+unconditionally, at the end of the calculation.
+
+This is a theoretical bug found during review of the code; I have no
+evidence to suggest this manifests in the real world (I expect all
+device-specific ra_pages values are much bigger than 3).
+
+Link: https://lkml.kernel.org/r/20231201161045.3962614-1-ryan.roberts@arm.com
+Signed-off-by: Ryan Roberts <ryan.roberts@arm.com>
+Reviewed-by: Matthew Wilcox (Oracle) <willy@infradead.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Hugh Dickins <hughd@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/internal.h   |    9 +++++++++
- mm/mempolicy.c  |   17 +++--------------
- mm/page_alloc.c |    8 ++------
- 3 files changed, 14 insertions(+), 20 deletions(-)
+ mm/readahead.c |   14 ++++++--------
+ 1 file changed, 6 insertions(+), 8 deletions(-)
 
---- a/mm/internal.h
-+++ b/mm/internal.h
-@@ -415,6 +415,15 @@ static inline void folio_set_order(struc
+--- a/mm/readahead.c
++++ b/mm/readahead.c
+@@ -514,16 +514,14 @@ void page_cache_ra_order(struct readahea
+ 		unsigned int order = new_order;
  
- void folio_undo_large_rmappable(struct folio *folio);
- 
-+static inline struct folio *page_rmappable_folio(struct page *page)
-+{
-+	struct folio *folio = (struct folio *)page;
-+
-+	if (folio && folio_order(folio) > 1)
-+		folio_prep_large_rmappable(folio);
-+	return folio;
-+}
-+
- static inline void prep_compound_head(struct page *page, unsigned int order)
- {
- 	struct folio *folio = (struct folio *)page;
---- a/mm/mempolicy.c
-+++ b/mm/mempolicy.c
-@@ -2200,10 +2200,7 @@ struct folio *vma_alloc_folio(gfp_t gfp,
- 		mpol_cond_put(pol);
- 		gfp |= __GFP_COMP;
- 		page = alloc_page_interleave(gfp, order, nid);
--		folio = (struct folio *)page;
--		if (folio && order > 1)
--			folio_prep_large_rmappable(folio);
--		goto out;
-+		return page_rmappable_folio(page);
- 	}
- 
- 	if (pol->mode == MPOL_PREFERRED_MANY) {
-@@ -2213,10 +2210,7 @@ struct folio *vma_alloc_folio(gfp_t gfp,
- 		gfp |= __GFP_COMP;
- 		page = alloc_pages_preferred_many(gfp, order, node, pol);
- 		mpol_cond_put(pol);
--		folio = (struct folio *)page;
--		if (folio && order > 1)
--			folio_prep_large_rmappable(folio);
--		goto out;
-+		return page_rmappable_folio(page);
- 	}
- 
- 	if (unlikely(IS_ENABLED(CONFIG_TRANSPARENT_HUGEPAGE) && hugepage)) {
-@@ -2310,12 +2304,7 @@ EXPORT_SYMBOL(alloc_pages);
- 
- struct folio *folio_alloc(gfp_t gfp, unsigned order)
- {
--	struct page *page = alloc_pages(gfp | __GFP_COMP, order);
--	struct folio *folio = (struct folio *)page;
--
--	if (folio && order > 1)
--		folio_prep_large_rmappable(folio);
--	return folio;
-+	return page_rmappable_folio(alloc_pages(gfp | __GFP_COMP, order));
- }
- EXPORT_SYMBOL(folio_alloc);
- 
---- a/mm/page_alloc.c
-+++ b/mm/page_alloc.c
-@@ -4464,12 +4464,8 @@ struct folio *__folio_alloc(gfp_t gfp, u
- 		nodemask_t *nodemask)
- {
- 	struct page *page = __alloc_pages(gfp | __GFP_COMP, order,
--			preferred_nid, nodemask);
--	struct folio *folio = (struct folio *)page;
--
--	if (folio && order > 1)
--		folio_prep_large_rmappable(folio);
--	return folio;
-+					preferred_nid, nodemask);
-+	return page_rmappable_folio(page);
- }
- EXPORT_SYMBOL(__folio_alloc);
- 
+ 		/* Align with smaller pages if needed */
+-		if (index & ((1UL << order) - 1)) {
++		if (index & ((1UL << order) - 1))
+ 			order = __ffs(index);
+-			if (order == 1)
+-				order = 0;
+-		}
+ 		/* Don't allocate pages past EOF */
+-		while (index + (1UL << order) - 1 > limit) {
+-			if (--order == 1)
+-				order = 0;
+-		}
++		while (index + (1UL << order) - 1 > limit)
++			order--;
++		/* THP machinery does not support order-1 */
++		if (order == 1)
++			order = 0;
+ 		err = ra_alloc_folio(ractl, index, mark, order, gfp);
+ 		if (err)
+ 			break;
 
 
