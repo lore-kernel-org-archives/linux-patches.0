@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73C55185949;
-	Fri, 15 Nov 2024 07:00:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FD10185924;
+	Fri, 15 Nov 2024 07:00:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731654019; cv=none; b=LrbjNmT5+lTVk0vdx4SgyIYY9+D0GbrJ8jZmCIXLG59cHWLxpdTqrgh/Nc04BdNXo55LVvQxKi0ePMZxFpZV1YsNgOnb1rRT1GhZ5SddYjT6pAV9TFx9YsT4N+1Uj6aN0uyEOWZWPBatufEupm1hDJvhlBnkAae0cBNAPotT7vM=
+	t=1731654023; cv=none; b=ob9ZBRhNm1lED3GwoWF0gidWUx/VQr8QLNHphXzzMY9zM0NikoIM4x87sr4Y/7liaTNKwsy6ySHPG6Sfm0MdvZduRMqiiRlu3+sHT5eIJ8YeH4tQ0Iy+anMU/3FEtFw0Qd1VHD8F41SoNLXUmjz0vtnKmwLQeJu/xcJODacNnQ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731654019; c=relaxed/simple;
-	bh=0m6mV5T+uKav4jseUtG2ikeMIfZyyJzj/Y115fc3tMo=;
+	s=arc-20240116; t=1731654023; c=relaxed/simple;
+	bh=R87tCKYKDXaehAlone5EF8p2OlGf0vArfKRIAhe3JMA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Yd6+ZaXYKmY0nnD7awCDr6/dQWxyxHl6T4IJ/xTk7J0xx9ZLAbBjgJu5VtRor0SWn3qlEjcI5SBRx1KtCqwunNF/VbWMEbcng7uG3uxHubctHbW0BnZE7w9ElA8qTWFVeO7wOkTS+UNTDVbwyp8serDVQuKaUBl3hcfnKD1uco4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j69kq6me; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IiMg6rNOdp1L6PX8OBXdbBT/K01hBF+CPMvqd/5pz+MMHGgkEBkIN1IknhbBbw7rwg4p7Nsnuvn28JtjSNdskQP3PKbyiXomNjVTQDCb8SXABCM7GlouKmCwe3D7PlU/tHU0aXxbQHzlBNq1TGUO8XkRk1WAVOQwVmMDJwbRZMk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OnHyYPkn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j69kq6me"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE07DC4CECF;
-	Fri, 15 Nov 2024 07:00:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OnHyYPkn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DF84C4CED0;
+	Fri, 15 Nov 2024 07:00:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731654019;
-	bh=0m6mV5T+uKav4jseUtG2ikeMIfZyyJzj/Y115fc3tMo=;
+	s=korg; t=1731654022;
+	bh=R87tCKYKDXaehAlone5EF8p2OlGf0vArfKRIAhe3JMA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j69kq6mecjlFMwL+L0ZUEark4wzKhikOSE3zzPsthe6RME/hzhJ2Sq3BZMy3n+ulM
-	 LNaL7nncDgpCHOjTRhqCD1b+HQtoY1OvmivQ8yWfYQc5jcl29vCF9OX7fDLFXdfaPg
-	 nrsJD3gFHSwHt5rTSys2zb97YXBp8Qj53st5y6fA=
+	b=OnHyYPknn7Ciou6HWo09dmvUfVLb94BVtKwwrocmNHPsnHwrwijSUoOc//HgDAPJc
+	 RM9Via897n1IZXzYdCk65Azc5HqiFunoowKPR+AVBv2S2blsUF3N5xZytGevNVj1bQ
+	 j2r4RXD6L5NIOX6my1k09Bv7X38/885hFFQVkpJ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	SurajSonawane2415 <surajsonawane0215@gmail.com>,
-	Jens Axboe <axboe@kernel.dk>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 03/22] block: Fix elevator_get_default() checking for NULL q->tag_set
-Date: Fri, 15 Nov 2024 07:38:49 +0100
-Message-ID: <20241115063721.298354328@linuxfoundation.org>
+	syzbot+111eaa994ff74f8d440f@syzkaller.appspotmail.com,
+	Jan Kara <jack@suse.cz>,
+	Hauke Mehrtens <hauke@hauke-m.de>
+Subject: [PATCH 5.15 21/22] udf: Avoid directory type conversion failure due to ENOMEM
+Date: Fri, 15 Nov 2024 07:39:07 +0100
+Message-ID: <20241115063721.942844477@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241115063721.172791419@linuxfoundation.org>
 References: <20241115063721.172791419@linuxfoundation.org>
@@ -51,50 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: SurajSonawane2415 <surajsonawane0215@gmail.com>
+From: Jan Kara <jack@suse.cz>
 
-[ Upstream commit b402328a24ee7193a8ab84277c0c90ae16768126 ]
+commit df97f64dfa317a5485daf247b6c043a584ef95f9 upstream.
 
-elevator_get_default() and elv_support_iosched() both check for whether
-or not q->tag_set is non-NULL, however it's not possible for them to be
-NULL. This messes up some static checkers, as the checking of tag_set
-isn't consistent.
+When converting directory from in-ICB to normal format, the last
+iteration through the directory fixing up directory enteries can fail
+due to ENOMEM. We do not expect this iteration to fail since the
+directory is already verified to be correct and it is difficult to undo
+the conversion at this point. So just use GFP_NOFAIL to make sure the
+small allocation cannot fail.
 
-Remove the checks, which both simplifies the logic and avoids checker
-errors.
-
-Signed-off-by: SurajSonawane2415 <surajsonawane0215@gmail.com>
-Link: https://lore.kernel.org/r/20241007111416.13814-1-surajsonawane0215@gmail.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: syzbot+111eaa994ff74f8d440f@syzkaller.appspotmail.com
+Fixes: 0aba4860b0d0 ("udf: Allocate name buffer in directory iterator on heap")
+Signed-off-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Hauke Mehrtens <hauke@hauke-m.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- block/elevator.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/udf/directory.c |    9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/block/elevator.c b/block/elevator.c
-index 1b5e57f6115f3..a98e8356f1b87 100644
---- a/block/elevator.c
-+++ b/block/elevator.c
-@@ -620,7 +620,7 @@ int elevator_switch_mq(struct request_queue *q,
- static inline bool elv_support_iosched(struct request_queue *q)
- {
- 	if (!queue_is_mq(q) ||
--	    (q->tag_set && (q->tag_set->flags & BLK_MQ_F_NO_SCHED)))
-+	    (q->tag_set->flags & BLK_MQ_F_NO_SCHED))
- 		return false;
- 	return true;
- }
-@@ -631,7 +631,7 @@ static inline bool elv_support_iosched(struct request_queue *q)
-  */
- static struct elevator_type *elevator_get_default(struct request_queue *q)
- {
--	if (q->tag_set && q->tag_set->flags & BLK_MQ_F_NO_SCHED_BY_DEFAULT)
-+	if (q->tag_set->flags & BLK_MQ_F_NO_SCHED_BY_DEFAULT)
- 		return NULL;
+--- a/fs/udf/directory.c
++++ b/fs/udf/directory.c
+@@ -249,9 +249,12 @@ int udf_fiiter_init(struct udf_fileident
+ 	iter->elen = 0;
+ 	iter->epos.bh = NULL;
+ 	iter->name = NULL;
+-	iter->namebuf = kmalloc(UDF_NAME_LEN_CS0, GFP_KERNEL);
+-	if (!iter->namebuf)
+-		return -ENOMEM;
++	/*
++	 * When directory is verified, we don't expect directory iteration to
++	 * fail and it can be difficult to undo without corrupting filesystem.
++	 * So just do not allow memory allocation failures here.
++	 */
++	iter->namebuf = kmalloc(UDF_NAME_LEN_CS0, GFP_KERNEL | __GFP_NOFAIL);
  
- 	if (q->nr_hw_queues != 1 &&
--- 
-2.43.0
-
+ 	if (iinfo->i_alloc_type == ICBTAG_FLAG_AD_IN_ICB) {
+ 		err = udf_copy_fi(iter);
 
 
