@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E7DC154C00;
-	Fri, 15 Nov 2024 06:43:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EA62154C00;
+	Fri, 15 Nov 2024 06:43:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731652983; cv=none; b=ZO1n8VZgiQN5bgpYzoLHo6U5yfjnx8Q6Ii1QvDMAz4z57nA6ni85rUDePWi1EpnHMz4fE37iMHxp6gNVittNpoiu4J2VND/0lMJZputDeMvB0h1GMyNPGJ3mGoceL39wbbYrQo5RMuGaKWvIZ5YYtH8eXEDY5CFBtgNz+wqEB98=
+	t=1731652987; cv=none; b=lx9/Lv8VLTKUZsW9oZP8k2h4Z/vF012ZUBT66eFc/lfn6JjLP6uyJswb7MV95JhwiJ4DaHGGrZ3POYBEirmX5f8XydUCz8uG+3x75GJZ3PA5zTg5xVYyvDvc5yuU/Jk+rANX3WdKZQ1CfDwG/QbzMzMJFeHo2YRzlFpMfCxQFj0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731652983; c=relaxed/simple;
-	bh=5NOaELHiZYHxLYquIA7qfqKwGf+oizr99nrisx3GZ9Y=;
+	s=arc-20240116; t=1731652987; c=relaxed/simple;
+	bh=cRJTDV1I4b/1UNt+/1aOkm2nHYMvMXvPlD+M2dSi+BM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M2HK7uGJIU1gSdEZ2aswMQgRdfEtUthTzs51ND8q1j7qvaJF7AqQdY1ak9C1XfaQwxXMIRhmQL2wReLNVN5iEPJpM6bv3fCXSFPDPTQnRD6Dp4vHtmNo9PskTSaQ6qLVG+wzbaYaiADKPppurUGIgYqV2oInDnXMasT2uEtxp54=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=feP9ol2C; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MIpCA5DJgaamNFYvt8+IKHpo4e0rbW8shv8il8SpqFU5m46tKgtNOTOVKDJRLvANXMoyS/8f3VciGkfCFblOKLLwj8Y7+0bxF8qyrVZ+lfqrAyf/hH+wC8Cc4NEBTtCd87F/6LaWaYk+Tq2YNyT/sOIJG8Y22MUhZevUZznx4kA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jXdXipZ0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="feP9ol2C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFDE5C4CECF;
-	Fri, 15 Nov 2024 06:43:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jXdXipZ0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71CEBC4CED2;
+	Fri, 15 Nov 2024 06:43:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731652983;
-	bh=5NOaELHiZYHxLYquIA7qfqKwGf+oizr99nrisx3GZ9Y=;
+	s=korg; t=1731652986;
+	bh=cRJTDV1I4b/1UNt+/1aOkm2nHYMvMXvPlD+M2dSi+BM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=feP9ol2CF7fdfZIyhV8pcatcy5xVOExrx+iMHeCeLRXApClM+kgSmwlTh958FhW+K
-	 86yb42H74ZcnHPISAfuIanHuVE2sIxnja+EhBwoUhhEnd8wl76itbIUu1axl345iS8
-	 +x2S0B9YF4AUuU7S9Cstr4JL3T4Dwz/5m1ZjOu8c=
+	b=jXdXipZ09gNv0wAw/AJgfWq7Y4usaQy22fRmGG0kxoKM0qEVeBGJAr+3Yd5GwfgUE
+	 87mkvkOMt/Chwfxxsd/YI55uPGdjIbVTzfpSXKR16xh/RMexYg9OmJ6GIfTKUE86tq
+	 z5sQNM2OJgS7oBKStcaddki7KExWuFFyavl1Ap8U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Murad Masimov <m.masimov@maxima.ru>,
-	Takashi Sakamoto <o-takashi@sakamocchi.jp>,
-	Takashi Iwai <tiwai@suse.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 20/66] ALSA: firewire-lib: fix return value on fail in amdtp_tscm_init()
-Date: Fri, 15 Nov 2024 07:37:29 +0100
-Message-ID: <20241115063723.573484681@linuxfoundation.org>
+	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+	Jacek Anaszewski <jacek.anaszewski@gmail.com>
+Subject: [PATCH 5.4 21/66] media: s5p-jpeg: prevent buffer overflows
+Date: Fri, 15 Nov 2024 07:37:30 +0100
+Message-ID: <20241115063723.609323486@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241115063722.834793938@linuxfoundation.org>
 References: <20241115063722.834793938@linuxfoundation.org>
@@ -52,41 +50,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Murad Masimov <m.masimov@maxima.ru>
+From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 
-[ Upstream commit 8abbf1f01d6a2ef9f911f793e30f7382154b5a3a ]
+commit 14a22762c3daeac59a5a534e124acbb4d7a79b3a upstream.
 
-If amdtp_stream_init() fails in amdtp_tscm_init(), the latter returns zero,
-though it's supposed to return error code, which is checked inside
-init_stream() in file tascam-stream.c.
+The current logic allows word to be less than 2. If this happens,
+there will be buffer overflows, as reported by smatch. Add extra
+checks to prevent it.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+While here, remove an unused word = 0 assignment.
 
-Fixes: 47faeea25ef3 ("ALSA: firewire-tascam: add data block processing layer")
-Signed-off-by: Murad Masimov <m.masimov@maxima.ru>
-Reviewed-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20241101185517.1819-1-m.masimov@maxima.ru
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 6c96dbbc2aa9 ("[media] s5p-jpeg: add support for 5433")
+Cc: stable@vger.kernel.org
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Reviewed-by: Jacek Anaszewski <jacek.anaszewski@gmail.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/firewire/tascam/amdtp-tascam.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/platform/s5p-jpeg/jpeg-core.c |   17 +++++++++++------
+ 1 file changed, 11 insertions(+), 6 deletions(-)
 
-diff --git a/sound/firewire/tascam/amdtp-tascam.c b/sound/firewire/tascam/amdtp-tascam.c
-index f823a2ab3544b..8ffc065b77f95 100644
---- a/sound/firewire/tascam/amdtp-tascam.c
-+++ b/sound/firewire/tascam/amdtp-tascam.c
-@@ -244,7 +244,7 @@ int amdtp_tscm_init(struct amdtp_stream *s, struct fw_unit *unit,
- 			CIP_NONBLOCKING | CIP_SKIP_DBC_ZERO_CHECK, fmt,
- 			process_ctx_payloads, sizeof(struct amdtp_tscm));
- 	if (err < 0)
--		return 0;
-+		return err;
+--- a/drivers/media/platform/s5p-jpeg/jpeg-core.c
++++ b/drivers/media/platform/s5p-jpeg/jpeg-core.c
+@@ -774,11 +774,14 @@ static void exynos4_jpeg_parse_decode_h_
+ 		(unsigned long)vb2_plane_vaddr(&vb->vb2_buf, 0) + ctx->out_q.sos + 2;
+ 	jpeg_buffer.curr = 0;
  
- 	if (dir == AMDTP_OUT_STREAM) {
- 		// Use fixed value for FDF field.
--- 
-2.43.0
-
+-	word = 0;
+-
+ 	if (get_word_be(&jpeg_buffer, &word))
+ 		return;
+-	jpeg_buffer.size = (long)word - 2;
++
++	if (word < 2)
++		jpeg_buffer.size = 0;
++	else
++		jpeg_buffer.size = (long)word - 2;
++
+ 	jpeg_buffer.data += 2;
+ 	jpeg_buffer.curr = 0;
+ 
+@@ -1057,6 +1060,7 @@ static int get_word_be(struct s5p_jpeg_b
+ 	if (byte == -1)
+ 		return -1;
+ 	*word = (unsigned int)byte | temp;
++
+ 	return 0;
+ }
+ 
+@@ -1144,7 +1148,7 @@ static bool s5p_jpeg_parse_hdr(struct s5
+ 			if (get_word_be(&jpeg_buffer, &word))
+ 				break;
+ 			length = (long)word - 2;
+-			if (!length)
++			if (length <= 0)
+ 				return false;
+ 			sof = jpeg_buffer.curr; /* after 0xffc0 */
+ 			sof_len = length;
+@@ -1175,7 +1179,7 @@ static bool s5p_jpeg_parse_hdr(struct s5
+ 			if (get_word_be(&jpeg_buffer, &word))
+ 				break;
+ 			length = (long)word - 2;
+-			if (!length)
++			if (length <= 0)
+ 				return false;
+ 			if (n_dqt >= S5P_JPEG_MAX_MARKER)
+ 				return false;
+@@ -1188,7 +1192,7 @@ static bool s5p_jpeg_parse_hdr(struct s5
+ 			if (get_word_be(&jpeg_buffer, &word))
+ 				break;
+ 			length = (long)word - 2;
+-			if (!length)
++			if (length <= 0)
+ 				return false;
+ 			if (n_dht >= S5P_JPEG_MAX_MARKER)
+ 				return false;
+@@ -1213,6 +1217,7 @@ static bool s5p_jpeg_parse_hdr(struct s5
+ 			if (get_word_be(&jpeg_buffer, &word))
+ 				break;
+ 			length = (long)word - 2;
++			/* No need to check underflows as skip() does it  */
+ 			skip(&jpeg_buffer, length);
+ 			break;
+ 		}
 
 
