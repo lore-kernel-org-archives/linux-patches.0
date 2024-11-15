@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF3A72BB1B;
-	Fri, 15 Nov 2024 06:59:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AD0618A922;
+	Fri, 15 Nov 2024 06:59:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731653966; cv=none; b=mRDDdMPcfblyNDB6qWums4ISqBwe0OBYY/rn3r5Fn4RR/3YrtYuXfGJmutcRvaAn+tE19dBJFVxZYyXsQn+S3rInJ1GScyA/ExPYH8o6Za9HTtAD8Ilw9tIDSWQqxdPR8C+0AitYx3HI5cSro57VVVNZaNxwx2+fnsYiaqstuF4=
+	t=1731653970; cv=none; b=XzPL0Supm7FQP+08C8wVg1ceizu4o7yRdffh2sVHfGmLGVG/23hkTUx6WrBfcqKipMuwFdrFpwaFgD+55Bx2l+LzaJtElDvfgtljH2eHbIvRLnBnXDoybkHV1VI6iDwaCvpTGFugNLew70wmyz+yLI/n3DvCxaRwaThM24DyKEc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731653966; c=relaxed/simple;
-	bh=A8i33bJut3e8ndFDhzJ1JCGz1btMafUIq3P8Uuc5mc0=;
+	s=arc-20240116; t=1731653970; c=relaxed/simple;
+	bh=aU5agX7tTLJgBCmwHosiSVY9DA2VpsTwNvYW2s+p2/o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=gvRQcA9yY9xuZuIG4UDx9JBYNUPuAm47rOwmwV3fo7sLel9YraOAO6FhKk6Vw3Wb58mw9+fyuEyl3XCCPMJiK9T32yIKfSPVhICR4XyQSe4mAZGfKvXqhCV4gdH0ZFiFLv9OO513Z14qee8y2Iq2pY6PZAUfaDIB+zO6C1SKK1A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pMfzzyEF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XioTIj6JBZv8Mf9XSjcId4dloOgrLhisaqtNe6O/MdvW0CDiXMoUuqc+X7zocqxgy1WQRHYNElIuhBmx1J6UvK9i62Ie1Yuhx1RcDhNirV6dt3uJY+x4dURS7Qsf/EeTTQhfgMKj1qwzlRJqyTMFEZMIufT5+F16yU+7c75nOag=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C2IsTjxJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pMfzzyEF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2255AC4CEDA;
-	Fri, 15 Nov 2024 06:59:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C2IsTjxJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A462C4CED7;
+	Fri, 15 Nov 2024 06:59:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731653966;
-	bh=A8i33bJut3e8ndFDhzJ1JCGz1btMafUIq3P8Uuc5mc0=;
+	s=korg; t=1731653970;
+	bh=aU5agX7tTLJgBCmwHosiSVY9DA2VpsTwNvYW2s+p2/o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pMfzzyEFCV8reUPVR/4QqhoVf8QtMnRxk8rfuPkqQk6hWiZXyxFkczugfkWTPjRQb
-	 rdnvqtYZbXaAOooQ2z6xlCSzOpZvHCVPD0xTm2GgI/zpClkICAuUmbH1/h8hEE1qFA
-	 29d3fu7Df7OivchaFR386oYcnQZWOSOwsZ6hlYIo=
+	b=C2IsTjxJcXiJnoz2Qez9z/9fKxBuNTPGbURzSnLbgTQILKtMAgBKwcQLkAZ9b1eHC
+	 Mlx8Y0n2Y+j6Pm2m+u4x/RAFz+SKnO8gGTBONjoXSPdeAr6hsRsfa/7ZNg4T9oCWOF
+	 2msrEor5wh2FHe3BEK/VjHHodCeKLNuq8asxaN5I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	=?UTF-8?q?Jan=20Sch=C3=A4r?= <jan@jschaer.ch>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.10 68/82] ALSA: usb-audio: Add endianness annotations
-Date: Fri, 15 Nov 2024 07:38:45 +0100
-Message-ID: <20241115063728.001386454@linuxfoundation.org>
+	Sven Schuchmann <schuchmann@schleissheimer.de>,
+	Ioana Ciornei <ioana.ciornei@nxp.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.10 69/82] net: phy: ti: take into account all possible interrupt sources
+Date: Fri, 15 Nov 2024 07:38:46 +0100
+Message-ID: <20241115063728.037843876@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241115063725.561151311@linuxfoundation.org>
 References: <20241115063725.561151311@linuxfoundation.org>
@@ -45,47 +45,110 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jan Schär <jan@jschaer.ch>
+From: Ioana Ciornei <ioana.ciornei@nxp.com>
 
-commit 61c606a43b6c74556e35acc645c7a1b6a67c2af9 upstream.
+commit 73f476aa1975bae6a792b340f5b26ffcfba869a6 upstream.
 
-Fixes: 4b8ea38fabab ("ALSA: usb-audio: Support jack detection on Dell dock")
-Reported-by: kernel test robot <lkp@intel.com>
-Link: https://lore.kernel.org/r/202207051932.qUilU0am-lkp@intel.com
-Signed-off-by: Jan Schär <jan@jschaer.ch>
-Link: https://lore.kernel.org/r/20220705135746.13713-1-jan@jschaer.ch
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+The previous implementation of .handle_interrupt() did not take into
+account the fact that all the interrupt status registers should be
+acknowledged since multiple interrupt sources could be asserted.
+
+Fix this by reading all the status registers before exiting with
+IRQ_NONE or triggering the PHY state machine.
+
+Fixes: 1d1ae3c6ca3f ("net: phy: ti: implement generic .handle_interrupt() callback")
+Reported-by: Sven Schuchmann <schuchmann@schleissheimer.de>
+Signed-off-by: Ioana Ciornei <ioana.ciornei@nxp.com>
+Link: https://lore.kernel.org/r/20210226153020.867852-1-ciorneiioana@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/mixer_quirks.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/phy/dp83822.c   |    9 +++++----
+ drivers/net/phy/dp83tc811.c |   11 ++++++-----
+ 2 files changed, 11 insertions(+), 9 deletions(-)
 
---- a/sound/usb/mixer_quirks.c
-+++ b/sound/usb/mixer_quirks.c
-@@ -1824,7 +1824,7 @@ static int snd_soundblaster_e1_switch_cr
- static int realtek_hda_set(struct snd_usb_audio *chip, u32 cmd)
- {
- 	struct usb_device *dev = chip->dev;
--	u32 buf = cpu_to_be32(cmd);
-+	__be32 buf = cpu_to_be32(cmd);
+--- a/drivers/net/phy/dp83822.c
++++ b/drivers/net/phy/dp83822.c
+@@ -305,6 +305,7 @@ static int dp83822_config_intr(struct ph
  
- 	return snd_usb_ctl_msg(dev, usb_sndctrlpipe(dev, 0), REALTEK_HDA_SET,
- 			       USB_RECIP_DEVICE | USB_TYPE_VENDOR | USB_DIR_OUT,
-@@ -1835,7 +1835,7 @@ static int realtek_hda_get(struct snd_us
+ static irqreturn_t dp83822_handle_interrupt(struct phy_device *phydev)
  {
- 	struct usb_device *dev = chip->dev;
- 	int err;
--	u32 buf = cpu_to_be32(cmd);
-+	__be32 buf = cpu_to_be32(cmd);
++	bool trigger_machine = false;
+ 	int irq_status;
  
- 	err = snd_usb_ctl_msg(dev, usb_sndctrlpipe(dev, 0), REALTEK_HDA_GET_OUT,
- 			      USB_RECIP_DEVICE | USB_TYPE_VENDOR | USB_DIR_OUT,
+ 	/* The MISR1 and MISR2 registers are holding the interrupt status in
+@@ -320,7 +321,7 @@ static irqreturn_t dp83822_handle_interr
+ 		return IRQ_NONE;
+ 	}
+ 	if (irq_status & ((irq_status & GENMASK(7, 0)) << 8))
+-		goto trigger_machine;
++		trigger_machine = true;
+ 
+ 	irq_status = phy_read(phydev, MII_DP83822_MISR2);
+ 	if (irq_status < 0) {
+@@ -328,11 +329,11 @@ static irqreturn_t dp83822_handle_interr
+ 		return IRQ_NONE;
+ 	}
+ 	if (irq_status & ((irq_status & GENMASK(7, 0)) << 8))
+-		goto trigger_machine;
++		trigger_machine = true;
+ 
+-	return IRQ_NONE;
++	if (!trigger_machine)
++		return IRQ_NONE;
+ 
+-trigger_machine:
+ 	phy_trigger_machine(phydev);
+ 
+ 	return IRQ_HANDLED;
+--- a/drivers/net/phy/dp83tc811.c
++++ b/drivers/net/phy/dp83tc811.c
+@@ -256,6 +256,7 @@ static int dp83811_config_intr(struct ph
+ 
+ static irqreturn_t dp83811_handle_interrupt(struct phy_device *phydev)
+ {
++	bool trigger_machine = false;
+ 	int irq_status;
+ 
+ 	/* The INT_STAT registers 1, 2 and 3 are holding the interrupt status
+@@ -271,7 +272,7 @@ static irqreturn_t dp83811_handle_interr
+ 		return IRQ_NONE;
+ 	}
+ 	if (irq_status & ((irq_status & GENMASK(7, 0)) << 8))
+-		goto trigger_machine;
++		trigger_machine = true;
+ 
+ 	irq_status = phy_read(phydev, MII_DP83811_INT_STAT2);
+ 	if (irq_status < 0) {
+@@ -279,7 +280,7 @@ static irqreturn_t dp83811_handle_interr
+ 		return IRQ_NONE;
+ 	}
+ 	if (irq_status & ((irq_status & GENMASK(7, 0)) << 8))
+-		goto trigger_machine;
++		trigger_machine = true;
+ 
+ 	irq_status = phy_read(phydev, MII_DP83811_INT_STAT3);
+ 	if (irq_status < 0) {
+@@ -287,11 +288,11 @@ static irqreturn_t dp83811_handle_interr
+ 		return IRQ_NONE;
+ 	}
+ 	if (irq_status & ((irq_status & GENMASK(7, 0)) << 8))
+-		goto trigger_machine;
++		trigger_machine = true;
+ 
+-	return IRQ_NONE;
++	if (!trigger_machine)
++		return IRQ_NONE;
+ 
+-trigger_machine:
+ 	phy_trigger_machine(phydev);
+ 
+ 	return IRQ_HANDLED;
 
 
