@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C59914EC77;
-	Fri, 15 Nov 2024 06:53:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EBFC185949;
+	Fri, 15 Nov 2024 06:53:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731653630; cv=none; b=pAFcsQ4nwvY/4CnlDKKQv+K5F4hkXO7EQum8dmt/b83xpC6noDwOyOD0ymQOUzbK0lxv0OVW79QLnMm7ABlm/4yMNMZlXgiRZoGzS4lbfXWW/bglj7C44pJuHlcGMLmCGC3/hBS16Q4cODVWjzDgXdrJi3+njbXmy9nBrVYmHqA=
+	t=1731653634; cv=none; b=Pgxheo3P3DgchWFUTDyY+JEprG5iq9Nh6V4FHA/62c7P/+VHRblYV/gdYAR92fMvvk2nZXVum+Y5D1kOhazU2MaAhJZCZdhQq5VCMxJ4vbZZ+Q/JiXukrgrSvDPmLbTQNNC80+C/HFsxjkmrAhh64O+WL4r6uvu2wf//2lKzhI8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731653630; c=relaxed/simple;
-	bh=LPZOBUIavDapwelH2J0VHr4iRztmHJoR3dFy3t6xjrI=;
+	s=arc-20240116; t=1731653634; c=relaxed/simple;
+	bh=9u3Q7eVjnHy8Y72KxZIpTXS1/sDHPUy+eD/QEAgn2OM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D+vh2nFbEjIVEnh9NlX5kZy/ZP0yuD16CQ7wrvm0Fpgxozuce2YzjY8YlXDYGR6FQLycjkYoSAtA9p/gCMMY5KZlD/S4LMN2n1osz4axfCNHvYWi0Syqa8B1Cmssdp8laUvjvsKy8iGcHkqr5QT9vnTpnyVpqGnpEiuAUXkHd2M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nIpjbvdZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TKYSS8wjhnROOOmcytom/CD+j07X7HNx+HxxrU0C3hrd/K/dyHpXZwsbCALXWgytp+uKVVgHukTkMEh3FHSPUHBBRT4QGSIPmhKsKwa7Q1REboneWwpk2hd5TrJFH+//PEo+p+tw5phizDINfpPwvFS2bC8mWUatOLgQZN6qfT0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tkaGd7Xv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nIpjbvdZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE262C4CED7;
-	Fri, 15 Nov 2024 06:53:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tkaGd7Xv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8492AC4CECF;
+	Fri, 15 Nov 2024 06:53:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731653630;
-	bh=LPZOBUIavDapwelH2J0VHr4iRztmHJoR3dFy3t6xjrI=;
+	s=korg; t=1731653634;
+	bh=9u3Q7eVjnHy8Y72KxZIpTXS1/sDHPUy+eD/QEAgn2OM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nIpjbvdZnbPm7lwEFJBtXN0XrKUEGt46f7R4BlJEtqO/aLxxxg2MDqOyWjHjgUJKb
-	 HXM8qYJeTmFq85hByRy6Acp45KeshPUDjm39UEMvVJcS0thPnWE6nwVeClE9ww5Jf/
-	 JzWn+ZpsLb6icgtWrrKaSJn3GgiQSTiPUNHo599w=
+	b=tkaGd7XvEZXASijH6+59WTIlArBwpnPMbgUk8/hQf3hu6lKhhruNMSqJjHED+jPhY
+	 IrHtRzNcNaAn8YkKsMfdp0GXbEMLHFIbg/8rKzIBUny++xiriBf6hwp82+tnhtFJyr
+	 yPNbfMXrDPqpKnUQBchjjtO4eomz5pf7veGfSkbw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pedro Falcato <pedro.falcato@gmail.com>,
-	syzbot+3c5d43e97993e1fa612b@syzkaller.appspotmail.com,
-	Dominique Martinet <asmadeus@codewreck.org>,
+	Sergey Matsievskiy <matsievskiysv@gmail.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 06/39] 9p: Avoid creating multiple slab caches with the same name
-Date: Fri, 15 Nov 2024 07:38:16 +0100
-Message-ID: <20241115063722.839131990@linuxfoundation.org>
+Subject: [PATCH 6.1 07/39] irqchip/ocelot: Fix trigger register address
+Date: Fri, 15 Nov 2024 07:38:17 +0100
+Message-ID: <20241115063722.875508362@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241115063722.599985562@linuxfoundation.org>
 References: <20241115063722.599985562@linuxfoundation.org>
@@ -52,60 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pedro Falcato <pedro.falcato@gmail.com>
+From: Sergey Matsievskiy <matsievskiysv@gmail.com>
 
-[ Upstream commit 79efebae4afc2221fa814c3cae001bede66ab259 ]
+[ Upstream commit 9e9c4666abb5bb444dac37e2d7eb5250c8d52a45 ]
 
-In the spirit of [1], avoid creating multiple slab caches with the same
-name. Instead, add the dev_name into the mix.
+Controllers, supported by this driver, have two sets of registers:
 
-[1]: https://lore.kernel.org/all/20240807090746.2146479-1-pedro.falcato@gmail.com/
+ * (main) interrupt registers control peripheral interrupt sources.
 
-Signed-off-by: Pedro Falcato <pedro.falcato@gmail.com>
-Reported-by: syzbot+3c5d43e97993e1fa612b@syzkaller.appspotmail.com
-Message-ID: <20240807094725.2193423-1-pedro.falcato@gmail.com>
-Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
+ * device interrupt registers configure per-device (network interface)
+   interrupts and act as an extra stage before the main interrupt
+   registers.
+
+In the driver unmask code, device trigger registers are used in the mask
+calculation of the main interrupt sticky register, mixing two kinds of
+registers.
+
+Use the main interrupt trigger register instead.
+
+Signed-off-by: Sergey Matsievskiy <matsievskiysv@gmail.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Link: https://lore.kernel.org/all/20240925184416.54204-2-matsievskiysv@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/9p/client.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/irqchip/irq-mscc-ocelot.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/9p/client.c b/net/9p/client.c
-index 0fc2d706d9c23..18db0e23e2f15 100644
---- a/net/9p/client.c
-+++ b/net/9p/client.c
-@@ -969,6 +969,7 @@ struct p9_client *p9_client_create(const char *dev_name, char *options)
- 	int err;
- 	struct p9_client *clnt;
- 	char *client_id;
-+	char *cache_name;
+diff --git a/drivers/irqchip/irq-mscc-ocelot.c b/drivers/irqchip/irq-mscc-ocelot.c
+index 4d0c3532dbe73..c19ab379e8c5e 100644
+--- a/drivers/irqchip/irq-mscc-ocelot.c
++++ b/drivers/irqchip/irq-mscc-ocelot.c
+@@ -37,7 +37,7 @@ static struct chip_props ocelot_props = {
+ 	.reg_off_ena_clr	= 0x1c,
+ 	.reg_off_ena_set	= 0x20,
+ 	.reg_off_ident		= 0x38,
+-	.reg_off_trigger	= 0x5c,
++	.reg_off_trigger	= 0x4,
+ 	.n_irq			= 24,
+ };
  
- 	err = 0;
- 	clnt = kmalloc(sizeof(*clnt), GFP_KERNEL);
-@@ -1026,15 +1027,22 @@ struct p9_client *p9_client_create(const char *dev_name, char *options)
- 	if (err)
- 		goto close_trans;
+@@ -70,7 +70,7 @@ static struct chip_props jaguar2_props = {
+ 	.reg_off_ena_clr	= 0x1c,
+ 	.reg_off_ena_set	= 0x20,
+ 	.reg_off_ident		= 0x38,
+-	.reg_off_trigger	= 0x5c,
++	.reg_off_trigger	= 0x4,
+ 	.n_irq			= 29,
+ };
  
-+	cache_name = kasprintf(GFP_KERNEL, "9p-fcall-cache-%s", dev_name);
-+	if (!cache_name) {
-+		err = -ENOMEM;
-+		goto close_trans;
-+	}
-+
- 	/* P9_HDRSZ + 4 is the smallest packet header we can have that is
- 	 * followed by data accessed from userspace by read
- 	 */
- 	clnt->fcall_cache =
--		kmem_cache_create_usercopy("9p-fcall-cache", clnt->msize,
-+		kmem_cache_create_usercopy(cache_name, clnt->msize,
- 					   0, 0, P9_HDRSZ + 4,
- 					   clnt->msize - (P9_HDRSZ + 4),
- 					   NULL);
- 
-+	kfree(cache_name);
- 	return clnt;
- 
- close_trans:
 -- 
 2.43.0
 
