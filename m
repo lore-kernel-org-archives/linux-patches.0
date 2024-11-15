@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A608E29A9;
-	Fri, 15 Nov 2024 06:46:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CBFC29A9;
+	Fri, 15 Nov 2024 06:46:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731653192; cv=none; b=gCBQAPUc4Tipy/qYvbL/Ja7tmCrrSSkxR8pZdbnd7eOACdxDbghfy9MxPftVDqNgscwOPjmbM18yWxpkDfGr1Wm3gdr9KgrtyEjlPl5MXP+dB+wnCYPRgrAke1NyVGUGbIC4rxVcuV+XpnJpMZLjLamKDQ7+oyUH+4dPXpUL08w=
+	t=1731653196; cv=none; b=QX0GPAgcL8RlDTfEgL74uVDy2YnSfAb71N8jQ2J2qDQ/gdtsEiQSaFGiJkdPRVyCb8jbLE/7qKOYrjkfbxiv05+Pr23ZNO6qHgfYJrl0E89+8Jh/iPLnPRA/bT+iwyLzgF3jVeWN/HX8La0P+799ladALRwpyL1ehC3VYHPmUL0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731653192; c=relaxed/simple;
-	bh=K27TvtFgj3X1LbmGaiNq27DYFpNTBPTYV6tKbad0HPo=;
+	s=arc-20240116; t=1731653196; c=relaxed/simple;
+	bh=nCK6jDc9SBBJgeqP6Y9JjCCLpQ9rFwP36VNQVcp4De0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=baowZxOrA310F77N1j9ems35lM8fO/ThiOABaKWf4xUVQDdZOYGrTptAMOr5Xkr1WXHGZ/alQ5ly7HGCnbGYQHMQW/pcLXA6AebMG2B/wLtaTBsTW9RpSZkumcQuNNL9+S0QaYHjEhQbe/KWRo0vRxQoQH2qJG7YKyzE27fYg3E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ANcuJw95; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WDhepkNQLrWoHvcDChWK9ST4uJi2mko1ti2lhdI+kHvxHhxfYebA1FocoJFsooaNvHD3XeoBu9WEnuLCPB+27Jv9m3rHq5KLV487QQC8Wd62EakQkWSo1RY+IUAed4p+WWBwe98L0E5xpc1llJuvBalgFRB8+Rc9wEDmFXddy1A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o0/wxb6w; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ANcuJw95"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1551FC4CECF;
-	Fri, 15 Nov 2024 06:46:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o0/wxb6w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71EE6C4CECF;
+	Fri, 15 Nov 2024 06:46:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731653192;
-	bh=K27TvtFgj3X1LbmGaiNq27DYFpNTBPTYV6tKbad0HPo=;
+	s=korg; t=1731653195;
+	bh=nCK6jDc9SBBJgeqP6Y9JjCCLpQ9rFwP36VNQVcp4De0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ANcuJw95BSBye/Io1FZ6JO2OCeNEF3eILy2PApNDnuFp07s60Oz9z6+FH6alDoCAQ
-	 sm44HNQQwGQN+O03Ge1IezQArvVHyMHlAWl9Ws+43RQ0H9Xz5RzFOwPQO9xP//VlIn
-	 mgh9zkh+LSRVcexLy5+vJn0TKC0ov/KlQcCa8/RE=
+	b=o0/wxb6wHIKLy40tia27sXQSw9B/GFJpRpCe2IbG4Eq6L70Fd7J4WN7/5RZE9CHIv
+	 HkBgXBAXEmUP1FYjoLN1vNukSVgFxnBbiI8Nln8VQroKc1kY/xUxBKVU+7wuP9J8zx
+	 rENL9C6ATqkOYUDnYiPMWIIxoofyE+OTdJpiJP8Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robin Murphy <robin.murphy@arm.com>,
-	Will Deacon <will@kernel.org>,
+	Greg Joyce <gjoyce@linux.ibm.com>,
+	Nilay Shroff <nilay@linux.ibm.com>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 14/63] iommu/arm-smmu: Clarify MMU-500 CPRE workaround
-Date: Fri, 15 Nov 2024 07:37:37 +0100
-Message-ID: <20241115063726.409982464@linuxfoundation.org>
+Subject: [PATCH 6.11 15/63] nvme: disable CC.CRIME (NVME_CC_CRIME)
+Date: Fri, 15 Nov 2024 07:37:38 +0100
+Message-ID: <20241115063726.445278714@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241115063725.892410236@linuxfoundation.org>
 References: <20241115063725.892410236@linuxfoundation.org>
@@ -51,45 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Robin Murphy <robin.murphy@arm.com>
+From: Greg Joyce <gjoyce@linux.ibm.com>
 
-[ Upstream commit 0dfe314cdd0d378f96bb9c6bdc05c8120f48606d ]
+[ Upstream commit 0ce96a6708f34280a536263ee5c67e20c433dcce ]
 
-CPRE workarounds are implicated in at least 5 MMU-500 errata, some of
-which remain unfixed. The comment and warning message have proven to be
-unhelpfully misleading about this scope, so reword them to get the point
-across with less risk of going out of date or confusing users.
+Disable NVME_CC_CRIME so that CSTS.RDY indicates that the media
+is ready and able to handle commands without returning
+NVME_SC_ADMIN_COMMAND_MEDIA_NOT_READY.
 
-Signed-off-by: Robin Murphy <robin.murphy@arm.com>
-Link: https://lore.kernel.org/r/dfa82171b5248ad7cf1f25592101a6eec36b8c9a.1728400877.git.robin.murphy@arm.com
-Signed-off-by: Will Deacon <will@kernel.org>
+Signed-off-by: Greg Joyce <gjoyce@linux.ibm.com>
+Reviewed-by: Nilay Shroff <nilay@linux.ibm.com>
+Tested-by: Nilay Shroff <nilay@linux.ibm.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/arm/arm-smmu/arm-smmu-impl.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/nvme/host/core.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-impl.c b/drivers/iommu/arm/arm-smmu/arm-smmu-impl.c
-index 9dc772f2cbb27..99030e6b16e7a 100644
---- a/drivers/iommu/arm/arm-smmu/arm-smmu-impl.c
-+++ b/drivers/iommu/arm/arm-smmu/arm-smmu-impl.c
-@@ -130,7 +130,7 @@ int arm_mmu500_reset(struct arm_smmu_device *smmu)
+diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
+index b954e77d3fc56..7dac71cce3ebe 100644
+--- a/drivers/nvme/host/core.c
++++ b/drivers/nvme/host/core.c
+@@ -2472,8 +2472,13 @@ int nvme_enable_ctrl(struct nvme_ctrl *ctrl)
+ 	else
+ 		ctrl->ctrl_config = NVME_CC_CSS_NVM;
  
- 	/*
- 	 * Disable MMU-500's not-particularly-beneficial next-page
--	 * prefetcher for the sake of errata #841119 and #826419.
-+	 * prefetcher for the sake of at least 5 known errata.
- 	 */
- 	for (i = 0; i < smmu->num_context_banks; ++i) {
- 		reg = arm_smmu_cb_read(smmu, i, ARM_SMMU_CB_ACTLR);
-@@ -138,7 +138,7 @@ int arm_mmu500_reset(struct arm_smmu_device *smmu)
- 		arm_smmu_cb_write(smmu, i, ARM_SMMU_CB_ACTLR, reg);
- 		reg = arm_smmu_cb_read(smmu, i, ARM_SMMU_CB_ACTLR);
- 		if (reg & ARM_MMU500_ACTLR_CPRE)
--			dev_warn_once(smmu->dev, "Failed to disable prefetcher [errata #841119 and #826419], check ACR.CACHE_LOCK\n");
-+			dev_warn_once(smmu->dev, "Failed to disable prefetcher for errata workarounds, check SACR.CACHE_LOCK\n");
- 	}
+-	if (ctrl->cap & NVME_CAP_CRMS_CRWMS && ctrl->cap & NVME_CAP_CRMS_CRIMS)
+-		ctrl->ctrl_config |= NVME_CC_CRIME;
++	/*
++	 * Setting CRIME results in CSTS.RDY before the media is ready. This
++	 * makes it possible for media related commands to return the error
++	 * NVME_SC_ADMIN_COMMAND_MEDIA_NOT_READY. Until the driver is
++	 * restructured to handle retries, disable CC.CRIME.
++	 */
++	ctrl->ctrl_config &= ~NVME_CC_CRIME;
  
- 	return 0;
+ 	ctrl->ctrl_config |= (NVME_CTRL_PAGE_SHIFT - 12) << NVME_CC_MPS_SHIFT;
+ 	ctrl->ctrl_config |= NVME_CC_AMS_RR | NVME_CC_SHN_NONE;
+@@ -2508,10 +2513,7 @@ int nvme_enable_ctrl(struct nvme_ctrl *ctrl)
+ 		 * devices are known to get this wrong. Use the larger of the
+ 		 * two values.
+ 		 */
+-		if (ctrl->ctrl_config & NVME_CC_CRIME)
+-			ready_timeout = NVME_CRTO_CRIMT(crto);
+-		else
+-			ready_timeout = NVME_CRTO_CRWMT(crto);
++		ready_timeout = NVME_CRTO_CRWMT(crto);
+ 
+ 		if (ready_timeout < timeout)
+ 			dev_warn_once(ctrl->device, "bad crto:%x cap:%llx\n",
 -- 
 2.43.0
 
