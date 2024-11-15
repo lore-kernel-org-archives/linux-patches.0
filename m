@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86785126C17;
-	Fri, 15 Nov 2024 06:43:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 044DE126C17;
+	Fri, 15 Nov 2024 06:43:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731653003; cv=none; b=WWJbrf2D6YF1uSE55H16l2FzvPNTko+9WFHaqpirQbj1H17T1SaYnGCMl7CtVVBZiJzShQnxqcrMlj6RHyfz76+QGVh/Gwf2dM9jqdzvjgHKvoyENLmWGETf0AsUKau79MoCkH3IK+ik4+4iiPfRwu18tGdU4iWwBxN4gUEdBVU=
+	t=1731653007; cv=none; b=AhkyNeiKfGEzlVwGm9LZkieCL5Q9NH7kVP8VC7KdZ4n2w9k+9vqc/baKuRZETK+FFv5TRUuM8bdGSiaI8p2OFsrSBv01+7lqbk5ozH0RHZbengixQcjOGrGVrkolBht6t3HBq+LhLnTJlT9GoGBHIfOXP1EOzhF/iYdoAAQTZwM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731653003; c=relaxed/simple;
-	bh=FpZEgnoeupIpr/jDxSFN7GVZJJVRIrfly40g6V3joUc=;
+	s=arc-20240116; t=1731653007; c=relaxed/simple;
+	bh=LqNU9b08LdyB6I6DNRYoXqjhiZjnNFJndBUP9iFNki8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aq7TFF/R/kxN1oC9PKLyTEvX5QNi2WcfRadTQnpsfEIF9Y0MVCGd3ILMYonYoyxUfNkvEpXmOKYEaGsUTOwKFDOVL8LB4kKQ3uwy4zJPizpeNJZ+WfPqnLKkDbl5UZVIAX2rMr2gAENE70hkAfLp6jOx3vqvfQLylztzuKA3txw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U/ODhOv5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZDHZ0ld9HWfvqhWSCuYC74S4afiKI+vpai+vsWGBRt+1CZOwkrDPkGWpgUuJPP7cRJCvosMX93MCZuqqFXG3XC2mlmQ3n2hfj8OFZLX67Rwg+lXKE7ay9aKhRdJjUflSFDxHtzYTAoEh6r6PvFzOjNBL5BcZDFs/ZNAvZ37t6jA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CnbN1hKs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U/ODhOv5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 010A3C4CECF;
-	Fri, 15 Nov 2024 06:43:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CnbN1hKs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50544C4CECF;
+	Fri, 15 Nov 2024 06:43:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731653003;
-	bh=FpZEgnoeupIpr/jDxSFN7GVZJJVRIrfly40g6V3joUc=;
+	s=korg; t=1731653006;
+	bh=LqNU9b08LdyB6I6DNRYoXqjhiZjnNFJndBUP9iFNki8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U/ODhOv5dqe11hc7Al9hlgFt1AW6702LqqZAq0imiH8O7bQkjspG+DjDXEaioGuJ1
-	 v3nG5q1+K4gOpEv6THI3asuQvQ+Ov4BeMqWDT93VWTv7MnaV8Apf3gNsZE6+ZrwG25
-	 ggy9DzZ7Pxvao4FfqKu8XzUVvKD6KiG6TlVIePXU=
+	b=CnbN1hKs1IannJXFi2mYJI/NboFbj6xw5QZAVyFYvn2R7uneX8FZc18p/XYCSvHA/
+	 HspvSf+YdG4x7g+vcpW0chv3xC0Ra6VhN6njTV3mN8hd/yI9x+SvzIMpJNixrKWPdb
+	 WuUVyT0Yzfx9KWvaHZ+iOr/NH5XWA91W4BYmVWGw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Antonio Quartulli <antonio@mandelbit.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 5.4 26/66] drm/amdgpu: prevent NULL pointer dereference if ATIF is not supported
-Date: Fri, 15 Nov 2024 07:37:35 +0100
-Message-ID: <20241115063723.787195324@linuxfoundation.org>
+	Ming-Hung Tsai <mtsai@redhat.com>,
+	Mikulas Patocka <mpatocka@redhat.com>,
+	Joe Thornber <thornber@redhat.com>
+Subject: [PATCH 5.4 27/66] dm cache: correct the number of origin blocks to match the target length
+Date: Fri, 15 Nov 2024 07:37:36 +0100
+Message-ID: <20241115063723.822765212@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241115063722.834793938@linuxfoundation.org>
 References: <20241115063722.834793938@linuxfoundation.org>
@@ -51,46 +51,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Antonio Quartulli <antonio@mandelbit.com>
+From: Ming-Hung Tsai <mtsai@redhat.com>
 
-commit a6dd15981c03f2cdc9a351a278f09b5479d53d2e upstream.
+commit 235d2e739fcbe964c9ce179b4c991025662dcdb6 upstream.
 
-acpi_evaluate_object() may return AE_NOT_FOUND (failure), which
-would result in dereferencing buffer.pointer (obj) while being NULL.
+When creating a cache device, the actual size of the cache origin might
+be greater than the specified cache target length. In such case, the
+number of origin blocks should match the cache target length, not the
+full size of the origin device, since access beyond the cache target is
+not possible. This issue occurs when reducing the origin device size
+using lvm, as lvreduce preloads the new cache table before resuming the
+cache origin, which can result in incorrect sizes for the discard bitset
+and smq hotspot blocks.
 
-Although this case may be unrealistic for the current code, it is
-still better to protect against possible bugs.
+Reproduce steps:
 
-Bail out also when status is AE_NOT_FOUND.
+1. create a cache device consists of 4096 origin blocks
 
-This fixes 1 FORWARD_NULL issue reported by Coverity
-Report: CID 1600951:  Null pointer dereferences  (FORWARD_NULL)
+dmsetup create cmeta --table "0 8192 linear /dev/sdc 0"
+dmsetup create cdata --table "0 65536 linear /dev/sdc 8192"
+dmsetup create corig --table "0 524288 linear /dev/sdc 262144"
+dd if=/dev/zero of=/dev/mapper/cmeta bs=4k count=1 oflag=direct
+dmsetup create cache --table "0 524288 cache /dev/mapper/cmeta \
+/dev/mapper/cdata /dev/mapper/corig 128 2 metadata2 writethrough smq 0"
 
-Signed-off-by: Antonio Quartulli <antonio@mandelbit.com>
-Fixes: c9b7c809b89f ("drm/amd: Guard against bad data for ATIF ACPI method")
-Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
-Link: https://lore.kernel.org/r/20241031152848.4716-1-antonio@mandelbit.com
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 91c9e221fe2553edf2db71627d8453f083de87a1)
+2. reduce the cache origin to 2048 oblocks, in lvreduce's approach
+
+dmsetup reload corig --table "0 262144 linear /dev/sdc 262144"
+dmsetup reload cache --table "0 262144 cache /dev/mapper/cmeta \
+/dev/mapper/cdata /dev/mapper/corig 128 2 metadata2 writethrough smq 0"
+dmsetup suspend cache
+dmsetup suspend corig
+dmsetup suspend cdata
+dmsetup suspend cmeta
+dmsetup resume corig
+dmsetup resume cdata
+dmsetup resume cmeta
+dmsetup resume cache
+
+3. shutdown the cache, and check the number of discard blocks in
+   superblock. The value is expected to be 2048, but actually is 4096.
+
+dmsetup remove cache corig cdata cmeta
+dd if=/dev/sdc bs=1c count=8 skip=224 2>/dev/null | hexdump -e '1/8 "%u\n"'
+
+Fix by correcting the origin_blocks initialization in cache_create and
+removing the unused origin_sectors from struct cache_args accordingly.
+
+Signed-off-by: Ming-Hung Tsai <mtsai@redhat.com>
+Fixes: c6b4fcbad044 ("dm: add cache target")
 Cc: stable@vger.kernel.org
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Acked-by: Joe Thornber <thornber@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_acpi.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/md/dm-cache-target.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_acpi.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_acpi.c
-@@ -110,8 +110,8 @@ static union acpi_object *amdgpu_atif_ca
- 				      &buffer);
- 	obj = (union acpi_object *)buffer.pointer;
+--- a/drivers/md/dm-cache-target.c
++++ b/drivers/md/dm-cache-target.c
+@@ -2085,7 +2085,6 @@ struct cache_args {
+ 	sector_t cache_sectors;
  
--	/* Fail if calling the method fails and ATIF is supported */
--	if (ACPI_FAILURE(status) && status != AE_NOT_FOUND) {
-+	/* Fail if calling the method fails */
-+	if (ACPI_FAILURE(status)) {
- 		DRM_DEBUG_DRIVER("failed to evaluate ATIF got %s\n",
- 				 acpi_format_exception(status));
- 		kfree(obj);
+ 	struct dm_dev *origin_dev;
+-	sector_t origin_sectors;
+ 
+ 	uint32_t block_size;
+ 
+@@ -2167,6 +2166,7 @@ static int parse_cache_dev(struct cache_
+ static int parse_origin_dev(struct cache_args *ca, struct dm_arg_set *as,
+ 			    char **error)
+ {
++	sector_t origin_sectors;
+ 	int r;
+ 
+ 	if (!at_least_one_arg(as, error))
+@@ -2179,8 +2179,8 @@ static int parse_origin_dev(struct cache
+ 		return r;
+ 	}
+ 
+-	ca->origin_sectors = get_dev_size(ca->origin_dev);
+-	if (ca->ti->len > ca->origin_sectors) {
++	origin_sectors = get_dev_size(ca->origin_dev);
++	if (ca->ti->len > origin_sectors) {
+ 		*error = "Device size larger than cached device";
+ 		return -EINVAL;
+ 	}
+@@ -2506,7 +2506,7 @@ static int cache_create(struct cache_arg
+ 
+ 	ca->metadata_dev = ca->origin_dev = ca->cache_dev = NULL;
+ 
+-	origin_blocks = cache->origin_sectors = ca->origin_sectors;
++	origin_blocks = cache->origin_sectors = ti->len;
+ 	origin_blocks = block_div(origin_blocks, ca->block_size);
+ 	cache->origin_blocks = to_oblock(origin_blocks);
+ 
 
 
