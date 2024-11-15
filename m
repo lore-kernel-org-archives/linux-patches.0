@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 524BA17E015;
-	Fri, 15 Nov 2024 06:43:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B57D13BBEB;
+	Fri, 15 Nov 2024 06:44:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731653038; cv=none; b=RNAz+vV7cORSOfMqGzYyhxEqvyA6JSU4qGz3mPIXjvSWjjQyqPmbZ7HUyOHxyB/Ao6QuLFiWq+cCCprjzMzgClNlhNtoBTBAVerHQ9R1dG7iKuWGYBIL1SuxDjSKqzZRRHf9xLsqPEY0ULjl3xZvNvTtb9wdxTF+FYpLz1LIR/A=
+	t=1731653041; cv=none; b=UShQ7xj7piMwy1ihE6DcvmijsyBFjgAk7t592bnQ5ri63OWj6ZriLp21kL68khoBDQR+6GIUMlVy0pg4yFol0/xUSPS921kI8fDQ7gXfBs2KGCl3O4H5EgTCGMuHsa0D6mJWJMyCBZ1xREzQJPrxZwLipta97NKvDOT+cbENWRY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731653038; c=relaxed/simple;
-	bh=syXHNysSx+S3L+Ft6dGK1EhvoaX/v9eJmW9AMTvj8wc=;
+	s=arc-20240116; t=1731653041; c=relaxed/simple;
+	bh=KRudr+lpCrf/n6CBqCzBDBJathAFgC2s/Lk7Bl3o0es=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=kxoq+Vo/BhUF5fWQqeCJvTKPCdNvJKeY7kVlyr1JH/yBc7Kr11jMyOyWql4QTSNtJGD3+o/e4xiek4FMmGZ56xqfTbpdoWdsrscD98jnUpibtwUUxTOMZVaSHkRvjj7usnsXfKwZufyOrR4z05RzevI1KgjoFw47z7BZHfTDAuU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oHP0oqS4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=dOqIW3SLVwofIyxe6qccSNBL0SV8PvRRJGxwMTGlOLsj/ybD7PXCMK4JceTms7eItw5y2o3z5sZdKkQ8zl47Cnc43lQaZ/1955YaXVEWZFc5Dscyy2eOis9Kwv3rYX00ZsCWrV0lhvxaI9QXYXNAuGrCgxWT9yuQbQrCsSa+7aA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iH5D3uhh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oHP0oqS4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBA48C4CECF;
-	Fri, 15 Nov 2024 06:43:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iH5D3uhh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23960C4CECF;
+	Fri, 15 Nov 2024 06:44:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731653038;
-	bh=syXHNysSx+S3L+Ft6dGK1EhvoaX/v9eJmW9AMTvj8wc=;
+	s=korg; t=1731653041;
+	bh=KRudr+lpCrf/n6CBqCzBDBJathAFgC2s/Lk7Bl3o0es=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oHP0oqS4IeqGKsUoJIZS4yAgqw+mJo9aY4TffSQgQDh2CIADZyWWJXgmvcXK0/IMC
-	 w128KZgWbDYHIi8XMfo8Ox3Er2IIC5P1p4cBqM8b1yEHFTfMPgh2vDQ0dayneIzxlF
-	 QyE/ypnjmZfNFm6ApGVlBeDvhI/gghvJfKtJX4/I=
+	b=iH5D3uhhZB/+BAfp6wGko5tznTfKi1UEuvMzFqEVH34OzeLBosP0iWgL7SGxy8GYv
+	 zyy9iFUMzyNDQ9MuLMM7/ElrWYiiu4kjpv1IYh+ELzKBw1N82VBqS4EhK1UFW81/a4
+	 QBsyE6pmQXUBBbbGS1C8QOxpQWdw+dEX+fORXE1o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Michael Walle <michael@walle.cc>,
 	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Mark Brown <broonie@kernel.org>,
-	Hardik Gohil <hgohil@mvista.com>
-Subject: [PATCH 5.4 35/66] spi: Fix deadlock when adding SPI controllers on SPI buses
-Date: Fri, 15 Nov 2024 07:37:44 +0100
-Message-ID: <20241115063724.112494538@linuxfoundation.org>
+	Lukas Wunner <lukas@wunner.de>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 5.4 36/66] spi: fix use-after-free of the add_lock mutex
+Date: Fri, 15 Nov 2024 07:37:45 +0100
+Message-ID: <20241115063724.149498736@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241115063722.834793938@linuxfoundation.org>
 References: <20241115063722.834793938@linuxfoundation.org>
@@ -52,101 +53,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Brown <broonie@kernel.org>
+From: Michael Walle <michael@walle.cc>
 
-commit 6098475d4cb48d821bdf453c61118c56e26294f0 upstream.
+commit 6c53b45c71b4920b5e62f0ea8079a1da382b9434 upstream.
 
-Currently we have a global spi_add_lock which we take when adding new
-devices so that we can check that we're not trying to reuse a chip
-select that's already controlled.  This means that if the SPI device is
-itself a SPI controller and triggers the instantiation of further SPI
-devices we trigger a deadlock as we try to register and instantiate
-those devices while in the process of doing so for the parent controller
-and hence already holding the global spi_add_lock.  Since we only care
-about concurrency within a single SPI bus move the lock to be per
-controller, avoiding the deadlock.
+Commit 6098475d4cb4 ("spi: Fix deadlock when adding SPI controllers on
+SPI buses") introduced a per-controller mutex. But mutex_unlock() of
+said lock is called after the controller is already freed:
 
-This can be easily triggered in the case of spi-mux.
+  spi_unregister_controller(ctlr)
+  -> put_device(&ctlr->dev)
+    -> spi_controller_release(dev)
+  -> mutex_unlock(&ctrl->add_lock)
 
-Reported-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Move the put_device() after the mutex_unlock().
+
+Fixes: 6098475d4cb4 ("spi: Fix deadlock when adding SPI controllers on SPI buses")
+Signed-off-by: Michael Walle <michael@walle.cc>
+Reviewed-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Reviewed-by: Lukas Wunner <lukas@wunner.de>
+Cc: stable@vger.kernel.org # v5.15
+Link: https://lore.kernel.org/r/20211111083713.3335171-1-michael@walle.cc
 Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Hardik Gohil <hgohil@mvista.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi.c       |   15 +++++----------
- include/linux/spi/spi.h |    3 +++
- 2 files changed, 8 insertions(+), 10 deletions(-)
+ drivers/spi/spi.c |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
 --- a/drivers/spi/spi.c
 +++ b/drivers/spi/spi.c
-@@ -472,12 +472,6 @@ static LIST_HEAD(spi_controller_list);
-  */
- static DEFINE_MUTEX(board_lock);
+@@ -2670,12 +2670,6 @@ void spi_unregister_controller(struct sp
  
--/*
-- * Prevents addition of devices with same chip select and
-- * addition of devices below an unregistering controller.
-- */
--static DEFINE_MUTEX(spi_add_lock);
+ 	device_del(&ctlr->dev);
+ 
+-	/* Release the last reference on the controller if its driver
+-	 * has not yet been converted to devm_spi_alloc_master/slave().
+-	 */
+-	if (!ctlr->devm_allocated)
+-		put_device(&ctlr->dev);
 -
- /**
-  * spi_alloc_device - Allocate a new SPI device
-  * @ctlr: Controller to which device is connected
-@@ -580,7 +574,7 @@ int spi_add_device(struct spi_device *sp
- 	 * chipselect **BEFORE** we call setup(), else we'll trash
- 	 * its configuration.  Lock against concurrent add() calls.
- 	 */
--	mutex_lock(&spi_add_lock);
-+	mutex_lock(&ctlr->add_lock);
- 
- 	status = bus_for_each_dev(&spi_bus_type, NULL, spi, spi_dev_check);
- 	if (status) {
-@@ -624,7 +618,7 @@ int spi_add_device(struct spi_device *sp
- 	}
- 
- done:
--	mutex_unlock(&spi_add_lock);
-+	mutex_unlock(&ctlr->add_lock);
- 	return status;
- }
- EXPORT_SYMBOL_GPL(spi_add_device);
-@@ -2512,6 +2506,7 @@ int spi_register_controller(struct spi_c
- 	spin_lock_init(&ctlr->bus_lock_spinlock);
- 	mutex_init(&ctlr->bus_lock_mutex);
- 	mutex_init(&ctlr->io_mutex);
-+	mutex_init(&ctlr->add_lock);
- 	ctlr->bus_lock_flag = 0;
- 	init_completion(&ctlr->xfer_completion);
- 	if (!ctlr->max_dma_len)
-@@ -2657,7 +2652,7 @@ void spi_unregister_controller(struct sp
- 
- 	/* Prevent addition of new devices, unregister existing ones */
- 	if (IS_ENABLED(CONFIG_SPI_DYNAMIC))
--		mutex_lock(&spi_add_lock);
-+		mutex_lock(&ctlr->add_lock);
- 
- 	device_for_each_child(&ctlr->dev, NULL, __unregister);
- 
-@@ -2688,7 +2683,7 @@ void spi_unregister_controller(struct sp
- 	mutex_unlock(&board_lock);
+ 	/* free bus id */
+ 	mutex_lock(&board_lock);
+ 	if (found == ctlr)
+@@ -2684,6 +2678,12 @@ void spi_unregister_controller(struct sp
  
  	if (IS_ENABLED(CONFIG_SPI_DYNAMIC))
--		mutex_unlock(&spi_add_lock);
-+		mutex_unlock(&ctlr->add_lock);
+ 		mutex_unlock(&ctlr->add_lock);
++
++	/* Release the last reference on the controller if its driver
++	 * has not yet been converted to devm_spi_alloc_master/slave().
++	 */
++	if (!ctlr->devm_allocated)
++		put_device(&ctlr->dev);
  }
  EXPORT_SYMBOL_GPL(spi_unregister_controller);
  
---- a/include/linux/spi/spi.h
-+++ b/include/linux/spi/spi.h
-@@ -483,6 +483,9 @@ struct spi_controller {
- 	/* I/O mutex */
- 	struct mutex		io_mutex;
- 
-+	/* Used to avoid adding the same CS twice */
-+	struct mutex		add_lock;
-+
- 	/* lock and mutex for SPI bus locking */
- 	spinlock_t		bus_lock_spinlock;
- 	struct mutex		bus_lock_mutex;
 
 
