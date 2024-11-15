@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65BC3185B5B;
-	Fri, 15 Nov 2024 06:41:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FB40185924;
+	Fri, 15 Nov 2024 06:41:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731652904; cv=none; b=HTF6MMiBKAyIKxkoO2jgR9+C3PqozdtaTvTJ41wm+TLIDiadbC827ZQYKiV92mmWixsJommt6NG+cC4PVitTvPih75pKKQV40tKbeeTurFCAUKfsjVyOXvLHYzED6XUIYl5/TudS2JejbjfGy2vJIjYu9m1T1KVDAVTZ1WjlBQ4=
+	t=1731652907; cv=none; b=oRgy474Wp3aTVVZYfu4gORRT6kkL3TXTcGWed7OkqhxeMhAqQqn6YP+gMFrYHelPKh5tP7raV+O6wkMfQR4ZEVMkxLaaGjFcZ9nSyt28xcsnzzOdB3Ydq8QUQg/NwwzzdAEz/QIPTTbBF6cR8h80Ko2gUbTJ9MzUAmIt6/hSW44=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731652904; c=relaxed/simple;
-	bh=VMfRkuPeDM2vQz+M7+LYTDXIJ71hSq12gWxVO5vq4vM=;
+	s=arc-20240116; t=1731652907; c=relaxed/simple;
+	bh=90Y2JB4c/oa4etDGt/0OAjmGS5vTlrZvj0A2UL7RhsA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MIFKBw7yC+73ZqbI7+qo4iJrQMA+OeBK6Sdh1a765nAExBCGDLLHE6ZXNLuOQ6EPQJ3kotp6bpRzD7TaKErvF+35lN5So2qTRkP6LIAZNkMtqEZeQyrZDYn2ED/fmx7Ek24r0pEgTNYOPLiqG2Cb7hIBjgEHSfPLRqHznK04yGs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LtMpixJe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Hqlr8bFcIRv+DSl6bzJS/CnMJKy07SURCRl0su7AfKDc/KvKSi3AISGJ8a6oEpPW94PFaMNgorb4cTilyFRnIGMJLOJLnaGs6grgbU/Q6+Yyv/zgdGTUNXxtZ2Kcmge2d5D7YveBDYhxHNGA17ear60JWFbvLbA4gB9faY+Q3U4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u2CZR4Pt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LtMpixJe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DC3EC4CECF;
-	Fri, 15 Nov 2024 06:41:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u2CZR4Pt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C522DC4CECF;
+	Fri, 15 Nov 2024 06:41:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731652904;
-	bh=VMfRkuPeDM2vQz+M7+LYTDXIJ71hSq12gWxVO5vq4vM=;
+	s=korg; t=1731652907;
+	bh=90Y2JB4c/oa4etDGt/0OAjmGS5vTlrZvj0A2UL7RhsA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LtMpixJen8YYB2ROr2HBEA05GKm9E40yIVGuNAgihsCyLY5vltRZc9fWx2/Zo6jsY
-	 Tli+sd0+LoyaDVbheR7SjtN3sBg9s6Rzs0RHmP1/d2bsyR1Vp1NSRv5rMqZLkWJaOb
-	 C4aOfOEQM/OlgGbo6Yth55iD0EGeVUjliIdpO6ZU=
+	b=u2CZR4PtmyzSjMUoVuPLXq7zrF3tRpxlFtgxCiA1epKD6oRkHiCGAkgO5emwe+/aC
+	 5uzifBZ/5UjrnuhcK7AoDEfHOhFB+jY5Ncanlu7HfsrPPrrIQ8bGesrLTI76BUCZVy
+	 mFsnC3an5U/mHlj+JflCZRsjPy5VYANdhR4N7HEE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	2639161967 <2639161967@qq.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	syzbot+6c55f725d1bdc8c52058@syzkaller.appspotmail.com,
+	Alessandro Zanni <alessandro.zanni87@gmail.com>,
+	Jan Kara <jack@suse.cz>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 49/52] powerpc/powernv: Free name on error in opal_event_init()
-Date: Fri, 15 Nov 2024 07:38:02 +0100
-Message-ID: <20241115063724.622552205@linuxfoundation.org>
+Subject: [PATCH 4.19 50/52] fs: Fix uninitialized value issue in from_kuid and from_kgid
+Date: Fri, 15 Nov 2024 07:38:03 +0100
+Message-ID: <20241115063724.658777678@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241115063722.845867306@linuxfoundation.org>
 References: <20241115063722.845867306@linuxfoundation.org>
@@ -51,37 +53,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Ellerman <mpe@ellerman.id.au>
+From: Alessandro Zanni <alessandro.zanni87@gmail.com>
 
-[ Upstream commit cf8989d20d64ad702a6210c11a0347ebf3852aa7 ]
+[ Upstream commit 15f34347481648a567db67fb473c23befb796af5 ]
 
-In opal_event_init() if request_irq() fails name is not freed, leading
-to a memory leak. The code only runs at boot time, there's no way for a
-user to trigger it, so there's no security impact.
+ocfs2_setattr() uses attr->ia_mode, attr->ia_uid and attr->ia_gid in
+a trace point even though ATTR_MODE, ATTR_UID and ATTR_GID aren't set.
 
-Fix the leak by freeing name in the error path.
+Initialize all fields of newattrs to avoid uninitialized variables, by
+checking if ATTR_MODE, ATTR_UID, ATTR_GID are initialized, otherwise 0.
 
-Reported-by: 2639161967 <2639161967@qq.com>
-Closes: https://lore.kernel.org/linuxppc-dev/87wmjp3wig.fsf@mail.lhotse
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://patch.msgid.link/20240920093520.67997-1-mpe@ellerman.id.au
+Reported-by: syzbot+6c55f725d1bdc8c52058@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=6c55f725d1bdc8c52058
+Signed-off-by: Alessandro Zanni <alessandro.zanni87@gmail.com>
+Link: https://lore.kernel.org/r/20241017120553.55331-1-alessandro.zanni87@gmail.com
+Reviewed-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/platforms/powernv/opal-irqchip.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/ocfs2/file.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/arch/powerpc/platforms/powernv/opal-irqchip.c b/arch/powerpc/platforms/powernv/opal-irqchip.c
-index e71f2111c8c0b..676ec9fdd115d 100644
---- a/arch/powerpc/platforms/powernv/opal-irqchip.c
-+++ b/arch/powerpc/platforms/powernv/opal-irqchip.c
-@@ -289,6 +289,7 @@ int __init opal_event_init(void)
- 				 name, NULL);
- 		if (rc) {
- 			pr_warn("Error %d requesting OPAL irq %d\n", rc, (int)r->start);
-+			kfree(name);
- 			continue;
- 		}
- 	}
+diff --git a/fs/ocfs2/file.c b/fs/ocfs2/file.c
+index 3c71c05a0581b..9062002fd56c6 100644
+--- a/fs/ocfs2/file.c
++++ b/fs/ocfs2/file.c
+@@ -1143,9 +1143,12 @@ int ocfs2_setattr(struct dentry *dentry, struct iattr *attr)
+ 	trace_ocfs2_setattr(inode, dentry,
+ 			    (unsigned long long)OCFS2_I(inode)->ip_blkno,
+ 			    dentry->d_name.len, dentry->d_name.name,
+-			    attr->ia_valid, attr->ia_mode,
+-			    from_kuid(&init_user_ns, attr->ia_uid),
+-			    from_kgid(&init_user_ns, attr->ia_gid));
++			    attr->ia_valid,
++				attr->ia_valid & ATTR_MODE ? attr->ia_mode : 0,
++				attr->ia_valid & ATTR_UID ?
++					from_kuid(&init_user_ns, attr->ia_uid) : 0,
++				attr->ia_valid & ATTR_GID ?
++					from_kgid(&init_user_ns, attr->ia_gid) : 0);
+ 
+ 	/* ensuring we don't even attempt to truncate a symlink */
+ 	if (S_ISLNK(inode->i_mode))
 -- 
 2.43.0
 
