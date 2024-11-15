@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFF5BEAD0;
-	Fri, 15 Nov 2024 06:48:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 473FC2BB1B;
+	Fri, 15 Nov 2024 06:48:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731653295; cv=none; b=rmo0F/fH6wub5S1+kPmfhGaEjb40ksNKUFVXUAYtMIbe9PLjlB9+WHKGUrB3M+tIujS/6hfZH/mHG6ICJBTdWuZPR31OduaPSjWw2PWlTbzuJXycKRlpAaoA4jD5Ym+Nle3B94je8LXxg9JdUfjKmbbKa/VgRNVCaXzE8i6dDgU=
+	t=1731653299; cv=none; b=fkhrRIxahyqWBOiWnT7XJHuGT2gCrzLvVTVEFqO9fvES3u/16Qlw0Xqvw0e7vWGBSMBmm3OZsXSFCeEQIo8GmgeXvccJSa+meUjJSc1qFhVvDyv0qAeicRxMy7xQUuLdpI8+9smAgvO0YvSXVhuo6/QlnxrfNBRb/o7oUh37G/k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731653295; c=relaxed/simple;
-	bh=ABAg4xhNy54k98nmqOLid28oKCegm1gMGevX4VpH+vE=;
+	s=arc-20240116; t=1731653299; c=relaxed/simple;
+	bh=lDnrpYOsA+VIUDlHxz1jFxDFSD5SfCbXHR6zo6t9wFI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DILuTOla7S+E+nxDzCfqgdNf84rpn9uQJu7apsnPjh3qBEzD1hhc05bXRztOWyQ8hQ/LdtPWEjWkZc1iL+auZ8bMmOURd/SDXaODNpqZByiRsqSA6i627uj0Tvj4erj33aoKWuzNIFwU9zaNuLvTKj2zlOnhGzMdVyIaKYoXdcw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fmBx0zB0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oUR2Q2bc600D3EQhQJPLyBwFhBFIbVBXEtAMEoemgBnrEsTanaNcGVQvvbOltq6JnG6GqKNydqYnSZ9I+b0ndcSEr2zTiMN2Q/vVTBnxZh3IqB3Pvm+fIqxNWr0VH+qJix8K6+fZiqqkle5ZwaCow+guhRuVEh3xSAbkisqSbK4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2TwznRFZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fmBx0zB0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31ED9C4CECF;
-	Fri, 15 Nov 2024 06:48:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2TwznRFZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75EAFC4CECF;
+	Fri, 15 Nov 2024 06:48:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731653295;
-	bh=ABAg4xhNy54k98nmqOLid28oKCegm1gMGevX4VpH+vE=;
+	s=korg; t=1731653298;
+	bh=lDnrpYOsA+VIUDlHxz1jFxDFSD5SfCbXHR6zo6t9wFI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fmBx0zB0zbbxTfD5VAtJH0oNOo55Mx/CEfGJFAk7Z7EjEFvHuF78yVIhuNVH9m5+b
-	 ZUsQgvj+BpQ3ea6aMxDmzBGs03m4ikXTP7xTcONL1KovBDF3eZc+hqo1aypIe2AwXo
-	 QGLzwZO8Si7l0mxcabbyMaBcYW2TkyqZgrDGR7OM=
+	b=2TwznRFZRJzQk3Gq/vhfF6mn48m8g1Qfq1donlXaVfCLqqX9dQoPBANXcaEuwQHVc
+	 cp5nV6rXfYRf3GeSn8GuZfZfio5fnLMSK5GHwTFIQQn5irh6SLw2rilgCMQKKL+lcU
+	 flztbUfjbjbYQU6lw037r512uvQnAJyoVBYcAxZ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Philip Yang <Philip.Yang@amd.com>,
-	Felix Kuehling <felix.kuehling@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	David Howells <dhowells@redhat.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	linux-afs@lists.infradead.org,
+	linux-fsdevel@vger.kernel.org,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 27/63] drm/amdkfd: Accounting pdd vram_usage for svm
-Date: Fri, 15 Nov 2024 07:37:50 +0100
-Message-ID: <20241115063726.900156661@linuxfoundation.org>
+Subject: [PATCH 6.11 45/63] afs: Fix lock recursion
+Date: Fri, 15 Nov 2024 07:38:08 +0100
+Message-ID: <20241115063727.539320914@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241115063725.892410236@linuxfoundation.org>
 References: <20241115063725.892410236@linuxfoundation.org>
@@ -52,147 +54,212 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Philip Yang <Philip.Yang@amd.com>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit 68d26c10ef503175df3142db6fcd75dd94860592 ]
+[ Upstream commit 610a79ffea02102899a1373fe226d949944a7ed6 ]
 
-Process device data pdd->vram_usage is read by rocm-smi via sysfs, this
-is currently missing the svm_bo usage accounting, so "rocm-smi
---showpids" per process VRAM usage report is incorrect.
+afs_wake_up_async_call() can incur lock recursion.  The problem is that it
+is called from AF_RXRPC whilst holding the ->notify_lock, but it tries to
+take a ref on the afs_call struct in order to pass it to a work queue - but
+if the afs_call is already queued, we then have an extraneous ref that must
+be put... calling afs_put_call() may call back down into AF_RXRPC through
+rxrpc_kernel_shutdown_call(), however, which might try taking the
+->notify_lock again.
 
-Add pdd->vram_usage accounting when svm_bo allocation and release,
-change to atomic64_t type because it is updated outside process mutex
-now.
+This case isn't very common, however, so defer it to a workqueue.  The oops
+looks something like:
 
-Signed-off-by: Philip Yang <Philip.Yang@amd.com>
-Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 98c0b0efcc11f2a5ddf3ce33af1e48eedf808b04)
+  BUG: spinlock recursion on CPU#0, krxrpcio/7001/1646
+   lock: 0xffff888141399b30, .magic: dead4ead, .owner: krxrpcio/7001/1646, .owner_cpu: 0
+  CPU: 0 UID: 0 PID: 1646 Comm: krxrpcio/7001 Not tainted 6.12.0-rc2-build3+ #4351
+  Hardware name: ASUS All Series/H97-PLUS, BIOS 2306 10/09/2014
+  Call Trace:
+   <TASK>
+   dump_stack_lvl+0x47/0x70
+   do_raw_spin_lock+0x3c/0x90
+   rxrpc_kernel_shutdown_call+0x83/0xb0
+   afs_put_call+0xd7/0x180
+   rxrpc_notify_socket+0xa0/0x190
+   rxrpc_input_split_jumbo+0x198/0x1d0
+   rxrpc_input_data+0x14b/0x1e0
+   ? rxrpc_input_call_packet+0xc2/0x1f0
+   rxrpc_input_call_event+0xad/0x6b0
+   rxrpc_input_packet_on_conn+0x1e1/0x210
+   rxrpc_input_packet+0x3f2/0x4d0
+   rxrpc_io_thread+0x243/0x410
+   ? __pfx_rxrpc_io_thread+0x10/0x10
+   kthread+0xcf/0xe0
+   ? __pfx_kthread+0x10/0x10
+   ret_from_fork+0x24/0x40
+   ? __pfx_kthread+0x10/0x10
+   ret_from_fork_asm+0x1a/0x30
+   </TASK>
+
+Signed-off-by: David Howells <dhowells@redhat.com>
+Link: https://lore.kernel.org/r/1394602.1729162732@warthog.procyon.org.uk
+cc: Marc Dionne <marc.dionne@auristor.com>
+cc: linux-afs@lists.infradead.org
+cc: linux-fsdevel@vger.kernel.org
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_chardev.c |  6 +++---
- drivers/gpu/drm/amd/amdkfd/kfd_priv.h    |  2 +-
- drivers/gpu/drm/amd/amdkfd/kfd_process.c |  4 ++--
- drivers/gpu/drm/amd/amdkfd/kfd_svm.c     | 26 ++++++++++++++++++++++++
- 4 files changed, 32 insertions(+), 6 deletions(-)
+ fs/afs/internal.h |  2 ++
+ fs/afs/rxrpc.c    | 83 +++++++++++++++++++++++++++++++++--------------
+ 2 files changed, 61 insertions(+), 24 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c b/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
-index 546b02f2241a6..5953bc5f31192 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
-@@ -1170,7 +1170,7 @@ static int kfd_ioctl_alloc_memory_of_gpu(struct file *filep,
+diff --git a/fs/afs/internal.h b/fs/afs/internal.h
+index b306c09808706..c9d620175e80c 100644
+--- a/fs/afs/internal.h
++++ b/fs/afs/internal.h
+@@ -130,6 +130,7 @@ struct afs_call {
+ 	wait_queue_head_t	waitq;		/* processes awaiting completion */
+ 	struct work_struct	async_work;	/* async I/O processor */
+ 	struct work_struct	work;		/* actual work processor */
++	struct work_struct	free_work;	/* Deferred free processor */
+ 	struct rxrpc_call	*rxcall;	/* RxRPC call handle */
+ 	struct rxrpc_peer	*peer;		/* Remote endpoint */
+ 	struct key		*key;		/* security for this call */
+@@ -1333,6 +1334,7 @@ extern int __net_init afs_open_socket(struct afs_net *);
+ extern void __net_exit afs_close_socket(struct afs_net *);
+ extern void afs_charge_preallocation(struct work_struct *);
+ extern void afs_put_call(struct afs_call *);
++void afs_deferred_put_call(struct afs_call *call);
+ void afs_make_call(struct afs_call *call, gfp_t gfp);
+ void afs_wait_for_call_to_complete(struct afs_call *call);
+ extern struct afs_call *afs_alloc_flat_call(struct afs_net *,
+diff --git a/fs/afs/rxrpc.c b/fs/afs/rxrpc.c
+index c453428f3c8ba..9f2a3bb56ec69 100644
+--- a/fs/afs/rxrpc.c
++++ b/fs/afs/rxrpc.c
+@@ -18,6 +18,7 @@
  
- 		if (flags & KFD_IOC_ALLOC_MEM_FLAGS_AQL_QUEUE_MEM)
- 			size >>= 1;
--		WRITE_ONCE(pdd->vram_usage, pdd->vram_usage + PAGE_ALIGN(size));
-+		atomic64_add(PAGE_ALIGN(size), &pdd->vram_usage);
- 	}
+ struct workqueue_struct *afs_async_calls;
  
- 	mutex_unlock(&p->mutex);
-@@ -1241,7 +1241,7 @@ static int kfd_ioctl_free_memory_of_gpu(struct file *filep,
- 		kfd_process_device_remove_obj_handle(
- 			pdd, GET_IDR_HANDLE(args->handle));
- 
--	WRITE_ONCE(pdd->vram_usage, pdd->vram_usage - size);
-+	atomic64_sub(size, &pdd->vram_usage);
- 
- err_unlock:
- err_pdd:
-@@ -2346,7 +2346,7 @@ static int criu_restore_memory_of_gpu(struct kfd_process_device *pdd,
- 	} else if (bo_bucket->alloc_flags & KFD_IOC_ALLOC_MEM_FLAGS_VRAM) {
- 		bo_bucket->restored_offset = offset;
- 		/* Update the VRAM usage count */
--		WRITE_ONCE(pdd->vram_usage, pdd->vram_usage + bo_bucket->size);
-+		atomic64_add(bo_bucket->size, &pdd->vram_usage);
- 	}
- 	return 0;
++static void afs_deferred_free_worker(struct work_struct *work);
+ static void afs_wake_up_call_waiter(struct sock *, struct rxrpc_call *, unsigned long);
+ static void afs_wake_up_async_call(struct sock *, struct rxrpc_call *, unsigned long);
+ static void afs_process_async_call(struct work_struct *);
+@@ -149,6 +150,7 @@ static struct afs_call *afs_alloc_call(struct afs_net *net,
+ 	call->debug_id = atomic_inc_return(&rxrpc_debug_id);
+ 	refcount_set(&call->ref, 1);
+ 	INIT_WORK(&call->async_work, afs_process_async_call);
++	INIT_WORK(&call->free_work, afs_deferred_free_worker);
+ 	init_waitqueue_head(&call->waitq);
+ 	spin_lock_init(&call->state_lock);
+ 	call->iter = &call->def_iter;
+@@ -159,6 +161,36 @@ static struct afs_call *afs_alloc_call(struct afs_net *net,
+ 	return call;
  }
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_priv.h b/drivers/gpu/drm/amd/amdkfd/kfd_priv.h
-index 2b3ec92981e8f..f35741fade911 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_priv.h
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_priv.h
-@@ -766,7 +766,7 @@ struct kfd_process_device {
- 	enum kfd_pdd_bound bound;
  
- 	/* VRAM usage */
--	uint64_t vram_usage;
-+	atomic64_t vram_usage;
- 	struct attribute attr_vram;
- 	char vram_filename[MAX_SYSFS_FILENAME_LEN];
- 
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_process.c b/drivers/gpu/drm/amd/amdkfd/kfd_process.c
-index e44892109f71b..8343b3e4de7b5 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_process.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_process.c
-@@ -306,7 +306,7 @@ static ssize_t kfd_procfs_show(struct kobject *kobj, struct attribute *attr,
- 	} else if (strncmp(attr->name, "vram_", 5) == 0) {
- 		struct kfd_process_device *pdd = container_of(attr, struct kfd_process_device,
- 							      attr_vram);
--		return snprintf(buffer, PAGE_SIZE, "%llu\n", READ_ONCE(pdd->vram_usage));
-+		return snprintf(buffer, PAGE_SIZE, "%llu\n", atomic64_read(&pdd->vram_usage));
- 	} else if (strncmp(attr->name, "sdma_", 5) == 0) {
- 		struct kfd_process_device *pdd = container_of(attr, struct kfd_process_device,
- 							      attr_sdma);
-@@ -1599,7 +1599,7 @@ struct kfd_process_device *kfd_create_process_device_data(struct kfd_node *dev,
- 	pdd->bound = PDD_UNBOUND;
- 	pdd->already_dequeued = false;
- 	pdd->runtime_inuse = false;
--	pdd->vram_usage = 0;
-+	atomic64_set(&pdd->vram_usage, 0);
- 	pdd->sdma_past_activity_counter = 0;
- 	pdd->user_gpu_id = dev->id;
- 	atomic64_set(&pdd->evict_duration_counter, 0);
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_svm.c b/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
-index bd9c2921e0dcc..7d00d89586a10 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
-@@ -404,6 +404,27 @@ static void svm_range_bo_release(struct kref *kref)
- 		spin_lock(&svm_bo->list_lock);
- 	}
- 	spin_unlock(&svm_bo->list_lock);
++static void afs_free_call(struct afs_call *call)
++{
++	struct afs_net *net = call->net;
++	int o;
 +
-+	if (mmget_not_zero(svm_bo->eviction_fence->mm)) {
-+		struct kfd_process_device *pdd;
-+		struct kfd_process *p;
-+		struct mm_struct *mm;
++	ASSERT(!work_pending(&call->async_work));
 +
-+		mm = svm_bo->eviction_fence->mm;
-+		/*
-+		 * The forked child process takes svm_bo device pages ref, svm_bo could be
-+		 * released after parent process is gone.
-+		 */
-+		p = kfd_lookup_process_by_mm(mm);
-+		if (p) {
-+			pdd = kfd_get_process_device_data(svm_bo->node, p);
-+			if (pdd)
-+				atomic64_sub(amdgpu_bo_size(svm_bo->bo), &pdd->vram_usage);
-+			kfd_unref_process(p);
-+		}
-+		mmput(mm);
++	rxrpc_kernel_put_peer(call->peer);
++
++	if (call->rxcall) {
++		rxrpc_kernel_shutdown_call(net->socket, call->rxcall);
++		rxrpc_kernel_put_call(net->socket, call->rxcall);
++		call->rxcall = NULL;
 +	}
++	if (call->type->destructor)
++		call->type->destructor(call);
 +
- 	if (!dma_fence_is_signaled(&svm_bo->eviction_fence->base))
- 		/* We're not in the eviction worker. Signal the fence. */
- 		dma_fence_signal(&svm_bo->eviction_fence->base);
-@@ -531,6 +552,7 @@ int
- svm_range_vram_node_new(struct kfd_node *node, struct svm_range *prange,
- 			bool clear)
- {
-+	struct kfd_process_device *pdd;
- 	struct amdgpu_bo_param bp;
- 	struct svm_range_bo *svm_bo;
- 	struct amdgpu_bo_user *ubo;
-@@ -622,6 +644,10 @@ svm_range_vram_node_new(struct kfd_node *node, struct svm_range *prange,
- 	list_add(&prange->svm_bo_list, &svm_bo->range_list);
- 	spin_unlock(&svm_bo->list_lock);
- 
-+	pdd = svm_range_get_pdd_by_node(prange, node);
-+	if (pdd)
-+		atomic64_add(amdgpu_bo_size(bo), &pdd->vram_usage);
++	afs_unuse_server_notime(call->net, call->server, afs_server_trace_put_call);
++	kfree(call->request);
 +
- 	return 0;
++	o = atomic_read(&net->nr_outstanding_calls);
++	trace_afs_call(call->debug_id, afs_call_trace_free, 0, o,
++		       __builtin_return_address(0));
++	kfree(call);
++
++	o = atomic_dec_return(&net->nr_outstanding_calls);
++	if (o == 0)
++		wake_up_var(&net->nr_outstanding_calls);
++}
++
+ /*
+  * Dispose of a reference on a call.
+  */
+@@ -173,32 +205,34 @@ void afs_put_call(struct afs_call *call)
+ 	o = atomic_read(&net->nr_outstanding_calls);
+ 	trace_afs_call(debug_id, afs_call_trace_put, r - 1, o,
+ 		       __builtin_return_address(0));
++	if (zero)
++		afs_free_call(call);
++}
  
- reserve_bo_failed:
+-	if (zero) {
+-		ASSERT(!work_pending(&call->async_work));
+-		ASSERT(call->type->name != NULL);
+-
+-		rxrpc_kernel_put_peer(call->peer);
+-
+-		if (call->rxcall) {
+-			rxrpc_kernel_shutdown_call(net->socket, call->rxcall);
+-			rxrpc_kernel_put_call(net->socket, call->rxcall);
+-			call->rxcall = NULL;
+-		}
+-		if (call->type->destructor)
+-			call->type->destructor(call);
++static void afs_deferred_free_worker(struct work_struct *work)
++{
++	struct afs_call *call = container_of(work, struct afs_call, free_work);
+ 
+-		afs_unuse_server_notime(call->net, call->server, afs_server_trace_put_call);
+-		kfree(call->request);
++	afs_free_call(call);
++}
+ 
+-		trace_afs_call(call->debug_id, afs_call_trace_free, 0, o,
+-			       __builtin_return_address(0));
+-		kfree(call);
++/*
++ * Dispose of a reference on a call, deferring the cleanup to a workqueue
++ * to avoid lock recursion.
++ */
++void afs_deferred_put_call(struct afs_call *call)
++{
++	struct afs_net *net = call->net;
++	unsigned int debug_id = call->debug_id;
++	bool zero;
++	int r, o;
+ 
+-		o = atomic_dec_return(&net->nr_outstanding_calls);
+-		if (o == 0)
+-			wake_up_var(&net->nr_outstanding_calls);
+-	}
++	zero = __refcount_dec_and_test(&call->ref, &r);
++	o = atomic_read(&net->nr_outstanding_calls);
++	trace_afs_call(debug_id, afs_call_trace_put, r - 1, o,
++		       __builtin_return_address(0));
++	if (zero)
++		schedule_work(&call->free_work);
+ }
+ 
+ static struct afs_call *afs_get_call(struct afs_call *call,
+@@ -640,7 +674,8 @@ static void afs_wake_up_call_waiter(struct sock *sk, struct rxrpc_call *rxcall,
+ }
+ 
+ /*
+- * wake up an asynchronous call
++ * Wake up an asynchronous call.  The caller is holding the call notify
++ * spinlock around this, so we can't call afs_put_call().
+  */
+ static void afs_wake_up_async_call(struct sock *sk, struct rxrpc_call *rxcall,
+ 				   unsigned long call_user_ID)
+@@ -657,7 +692,7 @@ static void afs_wake_up_async_call(struct sock *sk, struct rxrpc_call *rxcall,
+ 			       __builtin_return_address(0));
+ 
+ 		if (!queue_work(afs_async_calls, &call->async_work))
+-			afs_put_call(call);
++			afs_deferred_put_call(call);
+ 	}
+ }
+ 
 -- 
 2.43.0
 
