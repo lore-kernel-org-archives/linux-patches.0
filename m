@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EF6215FD13;
-	Fri, 15 Nov 2024 06:58:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99A452BB1B;
+	Fri, 15 Nov 2024 06:58:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731653895; cv=none; b=XSQ7fBAdVob4VbQecloyOtYCvZ6/OhoUXsPTQ4NIfgbBxdjEt/Q6Uz1x1Qo2qq2j09VFE4da18pCxoBR8ueVwR0gfQSpB621gJSF+dFJ5UVHkUoLpr7ZQU864U3apZCgirqSYm18icbwNFOyc2swfiMVsMBuhGNFjU0YZoCR+e0=
+	t=1731653898; cv=none; b=nsUncTpiIvyP22XzvnvwAL9gKPQxWo+N5vI5EiuHklL0NfLfg4fV6xDFipYYB3/ZTuJPwcy9rdMe+Rutve93ts4A33bwNkiV9FWuTCW2UJio5erZs+Oj/PPbWzH55EfnVkYj2gjinBO6CQTDIjtc2fAGFAy4cwYvgKNneRRgrnA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731653895; c=relaxed/simple;
-	bh=za9oGLypB2cNlL25tNMmiO273REKIdidwMlhvnfoh5A=;
+	s=arc-20240116; t=1731653898; c=relaxed/simple;
+	bh=4hnSSUgJI68EwVPAgQSuFuNQXWQ1THk4qflJjX9WZaU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NtOmpr6lRCzsQNQKD2V89w/PnJafO2IRRx7UHV0iYeiNQQ4A7y3798+PlF39LBuXKBewB2bQ/rjI0x4zW4/0RVvRkVgxQukqkAXsNdjAFUvpINLutK1eBTpzB9WHVzvPMk44oUDrlpO1iU393O+Vcpj5JSc1Rl/A0MPRubiSszA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hrTBrP6P; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=nTkU33HG0ZSAWBmnVP16WnUln0UyX0HhIWGfsbmmZds52PXBsAzgZehDboxEwNyD4YMy2qi3oqjwaheciHey85ODG9ZgyfhJn1q/7ghZej3CJS4ocpeif+FjcyruvJ8limNuPdBN0y/KavBuqnh/7L4fAZl35Kq+Scx7XYeMhgA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qjUb0dJ9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hrTBrP6P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0C56C4CECF;
-	Fri, 15 Nov 2024 06:58:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qjUb0dJ9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22C7BC4CED2;
+	Fri, 15 Nov 2024 06:58:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731653895;
-	bh=za9oGLypB2cNlL25tNMmiO273REKIdidwMlhvnfoh5A=;
+	s=korg; t=1731653898;
+	bh=4hnSSUgJI68EwVPAgQSuFuNQXWQ1THk4qflJjX9WZaU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hrTBrP6PocwJa0jmkCrRxU2N6AJiuq/7y118MyWmYiHHgKlKuRxuv3M0hmc1CJERI
-	 bpVYvUI9+2QOgc8hhEhQucu2qJQiyKVttz1eVX34l9OjGJsfVtq/2e2ymDdG0Qt61k
-	 PLAfrhs5ISC5xEHAZ2oqlXSvSq+Z82WaUEQbjmIc=
+	b=qjUb0dJ9Zkxa79lVd02ZPJMmLGRj9vuh6vLOayuumFaAe9/z3tAvdSP57gmW3r4r4
+	 CzYtFRpgkG3hUFZb8Ppo8KK5unoH3WYuv2Ib9LE3sh8nvaXAjY9eISqMOIG+8Ls1Ks
+	 WWIxvjAKi1Mljla5kvuyJScYLRc3aDbqYZoRID24=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 24/82] media: dvb_frontend: dont play tricks with underflow values
-Date: Fri, 15 Nov 2024 07:38:01 +0100
-Message-ID: <20241115063726.435345799@linuxfoundation.org>
+	=?UTF-8?q?Beno=C3=AEt=20Monin?= <benoit.monin@gmx.fr>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 5.10 61/82] USB: serial: option: add Quectel RG650V
+Date: Fri, 15 Nov 2024 07:38:38 +0100
+Message-ID: <20241115063727.753616884@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241115063725.561151311@linuxfoundation.org>
 References: <20241115063725.561151311@linuxfoundation.org>
@@ -44,50 +44,72 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+From: Benoît Monin <benoit.monin@gmx.fr>
 
-[ Upstream commit 9883a4d41aba7612644e9bb807b971247cea9b9d ]
+commit 3b05949ba39f305b585452d0e177470607842165 upstream.
 
-fepriv->auto_sub_step is unsigned. Setting it to -1 is just a
-trick to avoid calling continue, as reported by Coverity.
+Add support for Quectel RG650V which is based on Qualcomm SDX65 chip.
+The composition is DIAG / NMEA / AT / AT / QMI.
 
-It relies to have this code just afterwards:
+T:  Bus=02 Lev=01 Prnt=01 Port=03 Cnt=01 Dev#=  4 Spd=5000 MxCh= 0
+D:  Ver= 3.20 Cls=00(>ifc ) Sub=00 Prot=00 MxPS= 9 #Cfgs=  1
+P:  Vendor=2c7c ProdID=0122 Rev=05.15
+S:  Manufacturer=Quectel
+S:  Product=RG650V-EU
+S:  SerialNumber=xxxxxxx
+C:  #Ifs= 5 Cfg#= 1 Atr=a0 MxPwr=896mA
+I:  If#= 0 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+E:  Ad=01(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=81(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+I:  If#= 1 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=02(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=82(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=03(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=83(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=9ms
+I:  If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=04(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=85(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=86(I) Atr=03(Int.) MxPS=  10 Ivl=9ms
+I:  If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=ff Driver=qmi_wwan
+E:  Ad=05(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=87(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=88(I) Atr=03(Int.) MxPS=   8 Ivl=9ms
 
-	if (!ready) fepriv->auto_sub_step++;
-
-Simplify the code by simply setting it to zero and use
-continue to return to the while loop.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Benoît Monin <benoit.monin@gmx.fr>
+Cc: stable@vger.kernel.org
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/dvb-core/dvb_frontend.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/usb/serial/option.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/media/dvb-core/dvb_frontend.c b/drivers/media/dvb-core/dvb_frontend.c
-index ad3e42a4eaf73..01efb4bd260d9 100644
---- a/drivers/media/dvb-core/dvb_frontend.c
-+++ b/drivers/media/dvb-core/dvb_frontend.c
-@@ -442,8 +442,8 @@ static int dvb_frontend_swzigzag_autotune(struct dvb_frontend *fe, int check_wra
+--- a/drivers/usb/serial/option.c
++++ b/drivers/usb/serial/option.c
+@@ -251,6 +251,7 @@ static void option_instat_callback(struc
+ #define QUECTEL_VENDOR_ID			0x2c7c
+ /* These Quectel products use Quectel's vendor ID */
+ #define QUECTEL_PRODUCT_EC21			0x0121
++#define QUECTEL_PRODUCT_RG650V			0x0122
+ #define QUECTEL_PRODUCT_EM061K_LTA		0x0123
+ #define QUECTEL_PRODUCT_EM061K_LMS		0x0124
+ #define QUECTEL_PRODUCT_EC25			0x0125
+@@ -1273,6 +1274,8 @@ static const struct usb_device_id option
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EG912Y, 0xff, 0, 0) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EG916Q, 0xff, 0x00, 0x00) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_RM500K, 0xff, 0x00, 0x00) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_RG650V, 0xff, 0xff, 0x30) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_RG650V, 0xff, 0, 0) },
  
- 		default:
- 			fepriv->auto_step++;
--			fepriv->auto_sub_step = -1; /* it'll be incremented to 0 in a moment */
--			break;
-+			fepriv->auto_sub_step = 0;
-+			continue;
- 		}
- 
- 		if (!ready) fepriv->auto_sub_step++;
--- 
-2.43.0
-
+ 	{ USB_DEVICE(CMOTECH_VENDOR_ID, CMOTECH_PRODUCT_6001) },
+ 	{ USB_DEVICE(CMOTECH_VENDOR_ID, CMOTECH_PRODUCT_CMU_300) },
 
 
