@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F9DF154C00;
-	Fri, 15 Nov 2024 06:44:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3516F188722;
+	Fri, 15 Nov 2024 06:44:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731653060; cv=none; b=ATqbDx5+IgabV94OhDzlg3mnn/peGpj4q14g1sGpKc55g/rrb+Z+7w6ZGJOcKrErG/OqNFrGJGSmGZZSnAfvcySVuOEQ88qMSTeRPkk359k9Tv/+aWbDczoSsjt5W0ZefKe68zIQq09Tpgu+XX49rK5+Lz3PJSJuLZPmTXbARYI=
+	t=1731653062; cv=none; b=ZMgh1f2B8Teinw01y6uki9F/XRN2ks4cmI8vycbce3UTTqpoyi2kRGI9bDO6MKR2rGOi+Ibrp7OvpVShR4zGZtDE+lv/nSJFQ1U73Tc2/GRFLcjE9Ot8bZ+RjesSsY637EwKdLd5gPKCqNqTbjAOL4k1mKLTThECSe/cGz0sh2E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731653060; c=relaxed/simple;
-	bh=VdmQLK2qMVMpSssO0h3yna6lBOjWRWKffE6fFfZhHS8=;
+	s=arc-20240116; t=1731653062; c=relaxed/simple;
+	bh=VIsKTITuBodzwfP/uDAXTMnVvFyjYRpkR1X2+WaWwhc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n/57fOBzmtoEWTUOdUlMKvk9T4n/LlBSexbx3xwquozZanwoeHqSj08SK84WUH9/Oiv8UWOqu8f/gvrwlrX6DRVd8zMIcM0kdA4g6LdupLaoeaE22iIHnLYO9mcqo1OR+FfuXOenG/cAHYyOd4Z1nTWfYnsUohT3SO0kDHgVHYA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y3ktwuyq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uquKWHV1/oVToRqM8FePtO6jdnH9l+8rGjlt3FqD8yJM6+utxNUq4LV0WSjPseHhgMTNqhcQTUfc5NMBj7yj+nIEqF4R4gSEl2X9q7DAZUtEh0gSL8Ict4kVSTKhdnhlxYntO/pkEp612Esrqfsjj5r5/m3xJ/JMDdt6/1c1zpE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DlvmjoGZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y3ktwuyq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DCF8C4CECF;
-	Fri, 15 Nov 2024 06:44:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DlvmjoGZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A62FC4CECF;
+	Fri, 15 Nov 2024 06:44:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731653058;
-	bh=VdmQLK2qMVMpSssO0h3yna6lBOjWRWKffE6fFfZhHS8=;
+	s=korg; t=1731653062;
+	bh=VIsKTITuBodzwfP/uDAXTMnVvFyjYRpkR1X2+WaWwhc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y3ktwuyqW025ktR4suwgmLTwhF1UeCCrpmalabrrK/9t+TclLoMWADiTHkqXQJUm4
-	 7xylkdp8KqU4Rl3SimD7hvZMr2nRvi8Vb5A3WH4KvoIHpYekdkydA7Hszl9DAhPcF5
-	 bWWrtWGPBbDT1Dp44nQA8uUAu9LB2WW0FlcuZFIw=
+	b=DlvmjoGZwyDA7cDV0DdXws0bi3RcUDHvc5z9t8HLEsgv20oUVCA2LEMeubVcJjb+K
+	 BfsF+Y6zu8BIhqrpeRFfEXmAu5CRwrMWVqkjjwCDEx3+g8HlKwDkG4OTockOb4BKPP
+	 OyJKpPvxhuOr+9hJ+oYSi2wsCl7u//XvhW3z9OtU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zijun Hu <quic_zijuhu@quicinc.com>
-Subject: [PATCH 5.4 40/66] usb: musb: sunxi: Fix accessing an released usb phy
-Date: Fri, 15 Nov 2024 07:37:49 +0100
-Message-ID: <20241115063724.292945369@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 5.4 41/66] USB: serial: io_edgeport: fix use after free in debug printk
+Date: Fri, 15 Nov 2024 07:37:50 +0100
+Message-ID: <20241115063724.328414967@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241115063722.834793938@linuxfoundation.org>
 References: <20241115063722.834793938@linuxfoundation.org>
@@ -49,50 +50,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zijun Hu <quic_zijuhu@quicinc.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-commit 498dbd9aea205db9da674994b74c7bf8e18448bd upstream.
+commit 37bb5628379295c1254c113a407cab03a0f4d0b4 upstream.
 
-Commit 6ed05c68cbca ("usb: musb: sunxi: Explicitly release USB PHY on
-exit") will cause that usb phy @glue->xceiv is accessed after released.
+The "dev_dbg(&urb->dev->dev, ..." which happens after usb_free_urb(urb)
+is a use after free of the "urb" pointer.  Store the "dev" pointer at the
+start of the function to avoid this issue.
 
-1) register platform driver @sunxi_musb_driver
-// get the usb phy @glue->xceiv
-sunxi_musb_probe() -> devm_usb_get_phy().
-
-2) register and unregister platform driver @musb_driver
-musb_probe() -> sunxi_musb_init()
-use the phy here
-//the phy is released here
-musb_remove() -> sunxi_musb_exit() -> devm_usb_put_phy()
-
-3) register @musb_driver again
-musb_probe() -> sunxi_musb_init()
-use the phy here but the phy has been released at 2).
-...
-
-Fixed by reverting the commit, namely, removing devm_usb_put_phy()
-from sunxi_musb_exit().
-
-Fixes: 6ed05c68cbca ("usb: musb: sunxi: Explicitly release USB PHY on exit")
+Fixes: 984f68683298 ("USB: serial: io_edgeport.c: remove dbg() usage")
 Cc: stable@vger.kernel.org
-Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
-Link: https://lore.kernel.org/r/20241029-sunxi_fix-v1-1-9431ed2ab826@quicinc.com
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/musb/sunxi.c |    2 --
- 1 file changed, 2 deletions(-)
+ drivers/usb/serial/io_edgeport.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/usb/musb/sunxi.c
-+++ b/drivers/usb/musb/sunxi.c
-@@ -286,8 +286,6 @@ static int sunxi_musb_exit(struct musb *
- 	if (test_bit(SUNXI_MUSB_FL_HAS_SRAM, &glue->flags))
- 		sunxi_sram_release(musb->controller->parent);
+--- a/drivers/usb/serial/io_edgeport.c
++++ b/drivers/usb/serial/io_edgeport.c
+@@ -846,11 +846,12 @@ static void edge_bulk_out_data_callback(
+ static void edge_bulk_out_cmd_callback(struct urb *urb)
+ {
+ 	struct edgeport_port *edge_port = urb->context;
++	struct device *dev = &urb->dev->dev;
+ 	int status = urb->status;
  
--	devm_usb_put_phy(glue->dev, glue->xceiv);
--
- 	return 0;
- }
+ 	atomic_dec(&CmdUrbs);
+-	dev_dbg(&urb->dev->dev, "%s - FREE URB %p (outstanding %d)\n",
+-		__func__, urb, atomic_read(&CmdUrbs));
++	dev_dbg(dev, "%s - FREE URB %p (outstanding %d)\n", __func__, urb,
++		atomic_read(&CmdUrbs));
  
+ 
+ 	/* clean up the transfer buffer */
+@@ -860,8 +861,7 @@ static void edge_bulk_out_cmd_callback(s
+ 	usb_free_urb(urb);
+ 
+ 	if (status) {
+-		dev_dbg(&urb->dev->dev,
+-			"%s - nonzero write bulk status received: %d\n",
++		dev_dbg(dev, "%s - nonzero write bulk status received: %d\n",
+ 			__func__, status);
+ 		return;
+ 	}
 
 
