@@ -1,53 +1,53 @@
-Received: from NAM10-DM6-obe.outbound.protection.outlook.com (mail-dm6nam10on2060.outbound.protection.outlook.com [40.107.93.60])
+Received: from NAM10-DM6-obe.outbound.protection.outlook.com (mail-dm6nam10on2053.outbound.protection.outlook.com [40.107.93.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 958021BCA19
-	for <patches@lists.linux.dev>; Fri, 15 Nov 2024 16:20:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.93.60
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 589AF1632F0
+	for <patches@lists.linux.dev>; Fri, 15 Nov 2024 16:20:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.93.53
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731687605; cv=fail; b=JLVZqRYPz5eh7X2BOLeU9+DdXgylH0eQ/3MKeHZJQhljktUFYl+BS4MVnfhivF3aP0kpHZU7CL8wJA8OuwrkliWAqa+0OAsEBVUFLvfcD53pVWlLSh5S1lKzdCk2jVisD3l0rII8mO/upd+H8kDzwT5wtELnU2dXr+LHnsNE2G0=
+	t=1731687642; cv=fail; b=ldphaOC9bNXnun2rjjLX5HOoij4tKFzYVDsmpX8o+PiY8vx4YS0cuR0ezYpzcGlw50WTxHl7n6msE9K+Zxx78e90HFG/y30FFjfZ9dmET+KxgVpH9JYIkNsaJzW7eIzXRcIBuf5q0qJjOramj2A7OmCO8ncWoXw5mMAUstNGyaY=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731687605; c=relaxed/simple;
-	bh=EmrrSi3EIAWFZMZNVZINd+McxXa9KZmrPyinFVJ3DlE=;
+	s=arc-20240116; t=1731687642; c=relaxed/simple;
+	bh=hIRkWAEUBGKv0b/sii9F0L/OeaQtBZMkA8mHiiIltI4=;
 	h=Message-ID:Date:From:Subject:To:Cc:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=e167GK9PosEjNF6rr2TXT4RQhcZNqlibWczQXZDR8iTQh6APwvfzkd1FHPWW85EnYh+7jwN4at2xNul8Gnmja8U/US8o3mfaVrEE2WZdq3tsDDoTKaicvw4cL8fL/a/Nj9sxEQZg+IV2IsHBWYV/6M3gzb1xzM5ySZVw/1eHe+0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=OLdlDzQg; arc=fail smtp.client-ip=40.107.93.60
+	 Content-Type:MIME-Version; b=svdOoEaSWim7SZkSwKCXdL7iL03O0VjQp2aLQH0we/s8PX6hEMelURh5mpdfHTvtYAkJikEvkjOq9xqN4MNC/WbTaPEqi6T9IagpheCPQEaPkW1iI+m8UcEBsZDq8NgCDbUTArMj/HSbOgrQvnbLAK+Z78BjxnrPFZjhrYKI4Xs=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=TwsQQhxN; arc=fail smtp.client-ip=40.107.93.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="OLdlDzQg"
+	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="TwsQQhxN"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=n4mnS3TU0WodGWEVOMnNNlF47+Uav1mBis9Jm8Q1aavA7LI1N+YPBewVIKxK0WqQMUB44SCv7p03G1o5J1EWjyhRlrRuyedF30la7Xp8cOZ64/XPH2H2yJu412qeyXJ6UDvhz6IixMTtesXEVeJZdYBwVW8os0W/+1tHgATS7ZmbKOejQQvMHk7pQwaEezMbgSmQjLmp18vys+G1UPo6SWM0roE/4spKvY/bIPZehQOFH7ShSPamEoZgDwLh75i5evw1oLHVnMZeIvssPAivLThzU/Ni4VVppqf0vmNZQ6OJud5BXh7fdQnt1mq1V/Kr1QyEIHaLy3Z8iPWhroUE2g==
+ b=xkgnqNUKRWn5WZ0nr8usW/V0NRukjTTWQ+XBtAmL6OXJIAo/YtCJekJIAcIbLb/lJY8xoxlCQQ0k9WzRfxG0/7AkjnWrh40kOl3hUXy1dL3Fl+LIEk331azcxKHglOuRZjFpQ6iFWFLzh+1J4Ft9j+nqhnKrH6S88I0X2p/wofkWqciGL4sJnsUu/2ZoV6HVGdBXIGOOku5hgMU7M7JF9OjE4N5FHwmMqXdZt9qhJsC+eeO0qVKXNzhkfIv9hR3FBrE/PzJdo1QzP3xep9jSp6kUI07wtDuwVIVMBtbLNWGj1zBeVXydNHtuDFcHzmNfhtIEl6haGyKdJwLPWmheAQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=ge1aOkRDgZn8oEZ4bu7PYdQqJi/zlDQT3FFW/a2iNSE=;
- b=RUaQ8v5RttAuF/fjEv03I0dEO7eZlBxJ+6uLq2b+SUEEgXZdLPgYeiiF4UL0/7jmogn97HPmtqZGnAj1ITFel9Z53dcb83sCBTFm6DFzs0LNZ/yVVAv0e38qXRwkLppHhiPYbqFRn6rApN56g/pu88kRXU5vibbPGvS6cqPPZHhGhPq9oljTeEiOHfLNkelmPc0+AgQa5arr1EfztTdbPibDrXZPJrIZU+L7JxlxmBvup2D5KSedVOhmcDPc157EsJuQVGp1fyK9Tt/o3DBiItaFgIRGMLEw4gwjpcDVL6doolFWOULp6uwlwIGMGYQqbB5BE8IUd0M23VzLaUWqbA==
+ bh=kr50/SRBtROV8q+Wr8TAkZT+sluTHiLg6kfGlBJsrEM=;
+ b=hkLz2mcQQ1FjHERohuVCMxcwt4Tt+dE4TYhQuNWvvTi6OZPt1y0N7C21HVWJYaEp94qgmDoej9bYaSld4sHfnGrrSbPgHg52jc3LXLmzTOYWYz3vHoTmHaAK4YL5wkrCVtuqgBhCuk3T6ryzRmZszBNNy5Bt3DwEB4/PtU58FRSpRm4Cx35Gn/+6hx+5mO3yiNcm8Y7qEgwcq3P+lNNKvNLWAJSPJzCo4ZcbV+RBNs0LUedG/00rCtIGs6aEPy6B7/nc6FPNBqV6ENxivsdUiLjbMnNc9+IXUg/0waLk3va+JEPjcIN/BQqhsrOdq48WN97StkKA2KoX/hd8/L40Xw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
  header.d=amd.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=ge1aOkRDgZn8oEZ4bu7PYdQqJi/zlDQT3FFW/a2iNSE=;
- b=OLdlDzQgPmv+QsWoZlZZTEjxUvuBYNk9vSA/lrkt2wAapBVQbgZZVIzbueRgFQd4BcQhbKJ1r+fbJ2792zTVgix9Mh8Ky9P4v6PHg3ICI4ytMZmqh8PMtU/vUAFAuZngTkWHIi2cZcVeR5MOrFMT+uAaEolYcDch/2qkNoBGTSI=
+ bh=kr50/SRBtROV8q+Wr8TAkZT+sluTHiLg6kfGlBJsrEM=;
+ b=TwsQQhxNTvEJ0x8CdEIAqIqpYS3MSwVD35NWETb2nUVH1yvR6KU7NTjbb17uPs8xWGQBRH7g0nRmFxHBKuoGTnrQipoVS4RwEXXfxbp9djuT6u5IcxwZLRkWCrba65Ftn6jilJ/YOnrS+Fd+Js2LcgPmDmpUymoEq8BvIKK0knI=
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=amd.com;
 Received: from MW3PR12MB4553.namprd12.prod.outlook.com (2603:10b6:303:2c::19)
  by IA1PR12MB6258.namprd12.prod.outlook.com (2603:10b6:208:3e6::17) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8158.19; Fri, 15 Nov
- 2024 16:19:59 +0000
+ 2024 16:20:37 +0000
 Received: from MW3PR12MB4553.namprd12.prod.outlook.com
  ([fe80::b0ef:2936:fec1:3a87]) by MW3PR12MB4553.namprd12.prod.outlook.com
  ([fe80::b0ef:2936:fec1:3a87%4]) with mapi id 15.20.8158.013; Fri, 15 Nov 2024
- 16:19:59 +0000
-Message-ID: <3d66b98a-2715-b17c-9485-c819a7bb0182@amd.com>
-Date: Fri, 15 Nov 2024 10:19:55 -0600
+ 16:20:36 +0000
+Message-ID: <8b040e1a-2af8-9d9f-4697-dee96eb65b00@amd.com>
+Date: Fri, 15 Nov 2024 10:20:34 -0600
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
  Thunderbird/91.5.0
 From: "Moger, Babu" <bmoger@amd.com>
-Subject: Re: [PATCH v9 1/9] x86/resctrl: Introduce resctrl_file_fflags_init()
- to initialize fflags
+Subject: Re: [PATCH v9 2/9] x86/resctrl: Prepare for per-ctrl_mon group
+ mba_MBps control
 Reply-To: babu.moger@amd.com
 To: Tony Luck <tony.luck@intel.com>, Fenghua Yu <fenghua.yu@intel.com>,
  Reinette Chatre <reinette.chatre@intel.com>,
@@ -59,13 +59,13 @@ Cc: James Morse <james.morse@arm.com>, Jamie Iles <quic_jiles@quicinc.com>,
  linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
  patches@lists.linux.dev
 References: <20241114001712.80315-1-tony.luck@intel.com>
- <20241114001712.80315-2-tony.luck@intel.com>
+ <20241114001712.80315-3-tony.luck@intel.com>
 Content-Language: en-US
-In-Reply-To: <20241114001712.80315-2-tony.luck@intel.com>
+In-Reply-To: <20241114001712.80315-3-tony.luck@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: SN7PR04CA0011.namprd04.prod.outlook.com
- (2603:10b6:806:f2::16) To MW3PR12MB4553.namprd12.prod.outlook.com
+X-ClientProxiedBy: SN7PR04CA0006.namprd04.prod.outlook.com
+ (2603:10b6:806:f2::11) To MW3PR12MB4553.namprd12.prod.outlook.com
  (2603:10b6:303:2c::19)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -75,199 +75,202 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: MW3PR12MB4553:EE_|IA1PR12MB6258:EE_
-X-MS-Office365-Filtering-Correlation-Id: eeed76f7-0498-422e-1342-08dd059159da
+X-MS-Office365-Filtering-Correlation-Id: 55b645c0-7498-4816-d92c-08dd05917042
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|7416014|1800799024|366016;
 X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?TGFjZ0IxZ3drY3J1NFVmbENkUXVrYjJVaEw0NVgvaWVYTnEwZSs3eFh3bjdX?=
- =?utf-8?B?cGxudVU2L2twRHozR0JtZXVSalNZZmorNmtLdUdYWXlUUW1sZzhJZm94a3hK?=
- =?utf-8?B?R05SMnFudzhsK1RFM1kwUU56MnNyM0Z5UFg2RWVMN0dWY1ZrS0lKYlR5VnFT?=
- =?utf-8?B?VlBFaXpGQzR6eTFQYnljZUhqK295TzBlNFErYld6N1Q1QzRVTWMzQVlEWTBp?=
- =?utf-8?B?SDNIYTFJOEhleGtaVGh5NzU4YjlJZDJJYSsxZGQydHVwQ3ZNWlN0SEpYRzh3?=
- =?utf-8?B?RjJrUXpDbDNBTnpBNjl6QWx3YllWOWsxN0gzbzNrSWphN0dKK3k2RGRUTFhn?=
- =?utf-8?B?UHlSRFRsMThBYURzM0dvSDc2REJpY1duaTFkMzc2Um9YbTZESWRwRkRuR0RF?=
- =?utf-8?B?Q3JWTHVQbjBNbi9KeU1GcU9oaUNaUTZLUlozNVVvek16ZENYakVLUG1vUkpJ?=
- =?utf-8?B?R2tEbE1KbTlsNitZRVVqZUg0eUdqZHBJdmdQSERVQkU5cjZPbzBoMVBGQnhF?=
- =?utf-8?B?VkRVem9oRmJUL0p4eE1ncG9GbnlNNktjaTFZdThiUXh0SW1CRUJzSnFGWnJJ?=
- =?utf-8?B?UzMwL2RUTWUrY1g5TklpVitVb1Z6OTR1UVR2anl0dDgySmg3SVdzeWd4ZEVO?=
- =?utf-8?B?MW5MNmtoMjVSd1RZRFNMMWZsdW56aGxTVUR4OU9MSlgrYkF2aVdxZFVOVzd3?=
- =?utf-8?B?eTBXMW10UFBwQ1FiODJtaUI4MUJZZStBWkVMZXlPWGwrOE9WYkdqaHlPZHUy?=
- =?utf-8?B?RHdsaVAyOThvc2VrQjlXalZHTW5KU2NPU20yU1RFWWw0SjdRWEFYL055Z1Bn?=
- =?utf-8?B?VXNkdFJ5SGQzakllS05INVZSN2lUQUY3cFpUdzU0ZmErclQ3MWJwYm9DRGpU?=
- =?utf-8?B?YnNCTWl4TUpJMUNOdk0veUFWSGdRVSs2WE1GOEh4ckU3OFhGTEN4ZzdjWmJr?=
- =?utf-8?B?dFBGU0dPaVYvTndESU9TYWpUbkZySTY2elZKTjBLQkZmNE5VSFE0SldXNDMx?=
- =?utf-8?B?dGQ1RGJkcUtGV0FtdjYzUnhiNUc2M0ZDMFJKZFprR1ZUakZ5bXJBYm9ZOXN6?=
- =?utf-8?B?cERPS1I5ak5tRW0zTm1GeU80cVl3ck5rWWhraENNbzZvbzNPSThyS2tTbFFK?=
- =?utf-8?B?TUdIdFd6ZTA5b3hEM3AwdVdYQWtkSnVXQmNJRmRlVFBya1JORlhHejNGN1gy?=
- =?utf-8?B?ME42aHkySXNwUzEyL1JBeXdSSDlPQ20vRFI5TEFtSDBWdUwybzNhTkMvcXZz?=
- =?utf-8?B?d3R5Tk5WVlJOblBDdUYwdmZ2OTJXbmxYZnFzbXd2N2pTNmtsVVBhS3BzQXRI?=
- =?utf-8?B?WVJxUGp5M0J4eVovV0JVUk8vcDhGbXM3WHFIQ0U3T1o4MHRNRDFtRzRDTjJV?=
- =?utf-8?B?amIycXlzbktIeVpzWHJPRFhiL3A3Uk9PS3h0UTIzQS9ZSmNTS3MzMmxqcG5u?=
- =?utf-8?B?dVhBbTBHcndaUGJFaTRTcTAwQUZTRTRPTWZBNGFZTStTMjZON3lJUXU3S3BW?=
- =?utf-8?B?TU91SUczcGJhRUNxeE14Uy9DaWVPL3ltKy9PaWFIYkUyVjZLaHE1QUg5QWdo?=
- =?utf-8?B?UmYxenV4K28wQTl1aVdIajdwdVhoSEpZSDBnQktLUEd3YjhWVjRGc21DUmlS?=
- =?utf-8?B?ZGVpSzkwUUpYcEw4UEU2QkRUMldPbVVVYzFqSGxlejJaWHJyTHJmZ0lQeUJ0?=
- =?utf-8?B?YTZXYTRCZEF5ZFFYN0JNUDJ1c2VLNWNqMDJxUUtYd3luOWdsN1RGM0tNNUZE?=
- =?utf-8?Q?nLwVOMxYy8J/6PSKyO/qw71IXIpa7GEyp/mQI+O?=
+	=?utf-8?B?MXg0N2JrbkxqZDRsaEtzVEY5SlIyYnJiLzcrSTNiTXlWZnBMOWpTY29mYktK?=
+ =?utf-8?B?TlRuaGZkQVllUDdpSXNJSjl6N3g5d0U5bCtLbCt2R1hhYlZWQ1IxYmVvU0Qz?=
+ =?utf-8?B?b055UVp4S2xaSjVPbVEwRmVrZzNMWHMxTmkxcy85RVR5Vk8reXhiaHpMWVl3?=
+ =?utf-8?B?THBrUVJIRWJPbWY3eHZVZUwyLzFndmRBR3ZTczlzSHArTGZ4Ni92N3V2UXp2?=
+ =?utf-8?B?eE43V2Urdys0ZjJFRkFOWklkekYxUXY4aVU3aVd0cTFJVE1rdWFZT3lkWGIx?=
+ =?utf-8?B?cjRzYTBvN24vQkl3NSs5UUtSTUJ3d1VRL09EY2VRQkpibjZoZXc3Mm0veEVx?=
+ =?utf-8?B?YmFlTElKT2EvUjZkZWZpQm1mNkExT3lnUW5GVjNVRVVYTTgwMUEyVjJKTHcx?=
+ =?utf-8?B?MzNIOVdodFpqZnc0WU5ocXIxVE0rd3FUMFlJaFBENm5FNkdvK0pEc01VWVpq?=
+ =?utf-8?B?dWttRzB5MU1Sb0ZoQzI3MzlSc21tS1hLZlVndzB0dW9NQzR6bWttSGJ2dGMy?=
+ =?utf-8?B?L1lBalZ5Z0F4YjNKaFlIbkVGNnJjVFAxV3lNN3Y4NW9OUTZnRHVKYWlWVW44?=
+ =?utf-8?B?MDZGRXNrZmc5dHVVUDdMT2d4TVBkbmI4WUsxZ0tjMVo2cjYrbkpyalpIZklw?=
+ =?utf-8?B?TlluOHFGSjBGVStZYVBWN3FuL1Z1YTc3akF0UFNGVExqUEdrQk5CbFIwdndm?=
+ =?utf-8?B?RjY2MmRab1VSK0J3bkVsU2JpOW9QYW9lbUtJSGExeDZGRmlLRXVNdjkwbnVV?=
+ =?utf-8?B?aUVmUldRNEtLcnhEdC9LVVlWdExJNCtjbE9YaVduSzZCRTBOekw3ZmgzTEhQ?=
+ =?utf-8?B?azlWclRMbzVmQXEyM3I4UnM4UnZoNXpPeVpmU2ZGMTdGQ09wNVRuWk5BbmVU?=
+ =?utf-8?B?Q2NYSGl3T2FDV0tJT3VmYnpRYkQxbkhpSllRd2t0UHd0TzNyVzVFb3ZGaVlO?=
+ =?utf-8?B?STJmbXN3UTVHcXM5ZHVZRG5TU0tUZ2k3aHhOZEJLU1piU09vWW9NR3NSZ1RR?=
+ =?utf-8?B?czkydmY0UnV1VnlrNVhmRkpqWEcwWXgvSWY2SlYybzBSUTBNalNEQVB3K1Fl?=
+ =?utf-8?B?R3hFZjFTRkRKWnhyZ2Y5RmVtbE9DZDNSRzM1K2JUbThJazd1NVJlZytjNlBI?=
+ =?utf-8?B?czNCRkMwYUZzNlNPYTVuclpVMzhraG9yejdaN2lFREs4T1BmSlhXZjFPdVR6?=
+ =?utf-8?B?dGF2Mm53ekdLOGw2T0dFR3BnOVcwZ2lyeFhaS0FJbGV4SXA0b0Q1VjFHclVt?=
+ =?utf-8?B?UUdyTFJEUkJNUm80OWJmaHpEaHI3L1FXUjJmNndkUFh4eFNZU3l6c1gxQWEz?=
+ =?utf-8?B?bHdudCt1ekhvc1IzSS9MK1NWL2dicHE1dkxKUW9UbFArZGFvZExWYm1YazBu?=
+ =?utf-8?B?bGh5NkFHME91UzFVbGYwNDFzeC85T1kvS2xtWmdKYUtvbTErYVp3OHYyTmlB?=
+ =?utf-8?B?K0hZYmhHZ3o5L3BLNk1ua3JGbmZPUGNmR0hLSGtaVUhiMURPcXhsWlAwcElz?=
+ =?utf-8?B?cGI1NU9tMmprWU9JT1IrWXJoMFpZSmFIdWtlbUdxN3JVSENyTzUxbjBDZE50?=
+ =?utf-8?B?VzNiNGNFT2xkeHRxMVBteGVsa2VYN3VoZzltR3ZTNzNNNk1SUlR1REhtWndn?=
+ =?utf-8?B?M1RqM0tOUDZqdEZ2U3lLb0xPV2JlcW9rN3pkMmNiaVR3MDNBa2xnNktHOXNG?=
+ =?utf-8?B?SGpnLzBKYjR3ak5VUUFmS1JSYWZJeEd3bzJ0eXl3QTFqUE5PbDYyUVhVenJn?=
+ =?utf-8?Q?P5ycvzC3d9jFMld2iyXqDnHaqJgM1kFtN1QgjKk?=
 X-Forefront-Antispam-Report:
 	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MW3PR12MB4553.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(7416014)(1800799024)(366016);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?ZnRjVldjYXpIamVaTGFZNDRRdmg2Qy9BVVZwcUdwVjN6Nll4bDNrQnBNTUdt?=
- =?utf-8?B?Zk5WMFNwNUc2cWN0cUZ0UEJ1eTByeTR5bC94Q3ZFMVBhNnJvTHNZWmRFMldx?=
- =?utf-8?B?NVQwd0dmakhyVFVQMzl1QjJDWFNEelBtM1BNM3JJTGJsZVlvQU1Vb1I3THVj?=
- =?utf-8?B?Mi9qZm9PeWVtRlBTQ0ZNYU5SOWdJblFPR2tLMjZnMmNQazdOZG9TUXh3UGhO?=
- =?utf-8?B?MjJhSDlpNmpTS3FRTlduRVQxQ3pGL25wWkVoT2lVeUdESjczZTNUK1ZFZXJX?=
- =?utf-8?B?VXRaS0xiYUtybnB3cnVUdEFUSzIvU0lvdW95RFhmL2JLSXRxN0t2WkFqVXJE?=
- =?utf-8?B?djhzQnN3NWdCRFFFTnd2Rnl2UlJURkJYMjdPY2YvTDNrK1F6YSt1VG81S3VO?=
- =?utf-8?B?bmVXdmQ1UEF3M3F3alViZS9zRXBmdGVmeWE1RGY5TnlkUlprcXYvZmRDdUh0?=
- =?utf-8?B?NHJFSHFjd1dIYWZxRzJGcVlicUpUM2tLRzFmUHZkOVVqYkZpWTJhS014Q0tt?=
- =?utf-8?B?Q1JVblBWaExRSzYyc3l5d3NTZ0FUYjQ5YzcrN3V3aUNsY0xHb1ZVeVE4L0F5?=
- =?utf-8?B?alpwVzhIdkFyQnIzUnlwbnpOcU1mbVhUZGxPUWdha2ZUTXdlNUgvTlRpdkgw?=
- =?utf-8?B?S1ExOHgxb2FSV1g3NVhXTTh4Q3hER2NoUUI4dFdwVGpteisxM3NBN241Rmgw?=
- =?utf-8?B?ZDdxQk5QbExOaENLM2FRK0F6QUpSaTNHSGJmVER1Ky95OU5zZlUzVVZHTzQ0?=
- =?utf-8?B?RlRFZ2lUZVZBeHRVZDVrQjN2OHFCL0R4bFpEQ0JTL0V6azV2Wk9UNWpUa1Ns?=
- =?utf-8?B?aGtRSHIvOG1Ud2VFbmlSaEl0N2pVT2YwWVhmdTg5ZHJpNi9nNGJ6cE9BV05k?=
- =?utf-8?B?RXh5bCtCQjNmRHcvbHRvSmJvQlJHd3R4RWw2R1pvaS9hNlNicWlaNVZTazhX?=
- =?utf-8?B?bnN5NEFRRVpZZSs4OTQ4MVMydkRMODh4VUFjcmlSQll3QUdERCsrTnhZSWRk?=
- =?utf-8?B?NTgvRlZqUWFGR0llbFFhTVBiTXIycDJuUTZGQklKV21FZmJndEhrNmZhR2xP?=
- =?utf-8?B?NGt6bWo5VWlYNUpaNjRiTDNuV2hpVzVxOE9MaWkyajVXV1RVYTNFL1phVlVD?=
- =?utf-8?B?TWU0UnRKYWJreCtIZ2RLelVTeWhDUmNmbis1bGFqYTgramllTUVSWFdGRHl0?=
- =?utf-8?B?VkZKU1ZPWmpCV2pmS1lCRjR2QXFqdnh1cFlxSGNTWkY1clluSUtVN1VyZVVv?=
- =?utf-8?B?bFRpM1FUNE4zRUZiSnR4MjJOdkkwOWoxZ2ovRWZybmg5UUtGeEp5T0tad2xM?=
- =?utf-8?B?a09TeGdxRHNVL1hpQUhSMmFacW1SbzB6MXR0QlJWWS9qd0xXM3dLQXpQY2k0?=
- =?utf-8?B?b0JPSXNPVkRHRURzRWk5N3UwUjdWVmVwRFB4NnZHcHhzZnZxdXV0YjRaSFVL?=
- =?utf-8?B?QTlxQkRsTlN5N2JhVnc1SDJEcEF5OC9leWpyTWRqbVVuLzAxR2pUZUE2SEpG?=
- =?utf-8?B?Vlh5Z29tNlY4endQUUZZVjhpcFE2VDFyLzl3OVA0ejE0cGpuMXRpSFVNSkFl?=
- =?utf-8?B?aUxpa2VCS3RtVWovYzM4OTBxM2V5a0NoK2EzSzZ4cDdzR3MrdGtvTXBucEpa?=
- =?utf-8?B?UFJzYXE2UGVxUnVzMHRKUDFyV2xXYkpFK2tiV01JNndUTiswRWtNM1g2NFZB?=
- =?utf-8?B?VWFkSUVZSmVLdzUvZ1ZOMUNIWHE5SzdrVEhNekdWUExrc09yU0lJSlJuREJ0?=
- =?utf-8?B?R1lXdmdFTGxlY2pBbUp2Qm1Sb3NpK05iNWdKb2ZZeDAvd3NvSkJCQk9OMDY5?=
- =?utf-8?B?T3JEWkZzYnBnbkRYaitlajhJUHl5VXg2TDc5WmdHTFVuOXZWZk5xd0VybXkv?=
- =?utf-8?B?R0xHMjYweU9NeEV2VGFZejB4bUJuNXBoWlp5MytId3dDRGlnUGh0cHgxV2Y5?=
- =?utf-8?B?enp4WEM5SUhYa0RtWkROYnh5OUMrOUVXRm5xWXBzUTFkSWpZRHgvZkFJQzlX?=
- =?utf-8?B?RUtNak1Pb3p4bkwzZVRZU0FRY3pkd3Zqa0pielpvTWNxTnlJL0NtTUhsMlNG?=
- =?utf-8?B?N0tndE5wQ1BrTG9Gekw3TFNvU1c5OFBzcWpoVHd5Rnp4cHlDaWp2UGFSTGNJ?=
- =?utf-8?Q?byyk=3D?=
+	=?utf-8?B?Z2tVQlUwUWoyM1poSDZGdDJFV0lSZCtZQU80YUFVWk1IWS9ZYkw2OUUxWGNu?=
+ =?utf-8?B?amJTK0hlY05JQ1hsQ3RnMnEvZnlmY29YcmpTRmRQdVBpL1pzWSswQU5jbkkz?=
+ =?utf-8?B?NElOK0pZOTFZeTBwSjhleEtDNU8zbDNrUUJ1MGRLR1hublVvMjB1SEpNSFlz?=
+ =?utf-8?B?bk9LaVloUWRrcEtPUmJDbnZkaFlhVHFUUlJEd1UrRk5LNG9MclBXRU9JTmky?=
+ =?utf-8?B?ZUFGS2tKLzdORjZEb01IVHgrTi9VUi9IbGpZWHloREU1L2xxTGFYSDJ5MW5w?=
+ =?utf-8?B?L3FZdjJNWlk2S1Rhb1dCSEZQbDI2NUJZYXJTTjBMa3JXQzN6S1NTbkgrT05R?=
+ =?utf-8?B?Mzl4QWxzcmtiLzV0b0NySTNsb1lTckxJZUhiUzRCTzY3UVFiZE9pc2lLUEZP?=
+ =?utf-8?B?dUdEdjFXVk5qaGxNRGx6b2xkMWU3T3dhQlBTazdST05RaWY1anVyRWU2VEF0?=
+ =?utf-8?B?b0k4ZDljZFQ2WkN2dzhCaHg2NFJ3b0FyNERLVytQSVZBNzBLTFI1b3VvaXg1?=
+ =?utf-8?B?WG9GY2lYSTYzOEpISzNlMEdTQ0lvU1FxOWgrZXdaRjNYVTl0bzZ4UnZQTy9H?=
+ =?utf-8?B?anRQVnNNYS9jTk1yK3pKblVDRUdaTlBybzg1SGZ6NzVUcFBmWmsvUG4weXBD?=
+ =?utf-8?B?L2VYUHVjb280VWZyWi8yRk1DSVZPNEZvWExtUmkvdUxMUWhSZ1pyN1ZBUFBp?=
+ =?utf-8?B?eEY5bGdJS08zNW5XZUtEWG1jVHlvdWowNzlLalU1Um9kV0MrQmk2RnRQUkRh?=
+ =?utf-8?B?bUxOaHJFa1pWR1lrc29kRUl3U2pmQTBSaFJvNllOQzNVK1hUNGN3dGRxL3lW?=
+ =?utf-8?B?aG1MNXJOeitrUEYyRlNPRUhyMWJGeWw5RHRNUVNmcGJlUHdSbHArbXc5REwz?=
+ =?utf-8?B?LzlqRWVlVnV4cXBaK2JwNnFHZFNEbENoRUQ0U05RMGw0QmNtNUhWZWFwSTVR?=
+ =?utf-8?B?Mnk3d0x1Q0FTN2JkdkxsMis2SWhZenQrTndqM2dtZ04yeVFkeS9zakM3ZnRK?=
+ =?utf-8?B?K3dRNDl0aUVHdG9Vc3hod251aGJWekJwazhaaDRRNXl1elgzRWJPOThkTzR3?=
+ =?utf-8?B?UEFzUENHOVJjN05BZ3ljTTFNWDMyT295eUYrUUo2dUhvZlNBOUJmZmVQSnlw?=
+ =?utf-8?B?RTI3cHFuSEJzbHJkUW1XZEtWRXYyMmJCT3YzMys1U0cyVmlzdmJTbWtmdTB0?=
+ =?utf-8?B?K0l1SXpLaDUyZ3pzcG5LbGkzNng4MHdGcms4MUxueGU4TlcxNngvMTNCR05n?=
+ =?utf-8?B?VVJqY0JxdUVvNmFFRERSajJiU3ZtRzQyZWJkZTZpSWNPalJ2VnhKcEhUQ29N?=
+ =?utf-8?B?bkljcEFUaEVyamlURWdTSWNZSHlVU004eTRhZDRRMFBHNlJjdlhWWFNGWFZE?=
+ =?utf-8?B?ZkZteitjNDdwRk9HS3dGbXppRU96dk9lYS9sMUl5NkdWSDdrQ3F5Y2o1Nmg4?=
+ =?utf-8?B?Sk9wc0pEOWJYem5tdy80Uk11RlQ5OEQwY2FKbFFpSnNjbzE5N1BDcTFEZjBJ?=
+ =?utf-8?B?TW9OT213cENaemZlS0ZDdG1iOXpqWkRmRUlBTVU2dmNLZXh5RVZ6VXhpeEM2?=
+ =?utf-8?B?c01ONEVYQmZNcGFpSXNHNEtzbWJpT04zWXVZbm9mWC9rWkxJcVBmZThPN2pl?=
+ =?utf-8?B?STJVd2JQTENDTjlhVjErbkFuQlFCTTlzMjFYd291ajU4RUY4OXNqVUVsVWF0?=
+ =?utf-8?B?dFJWWEkrTGZSbVVJTGJjL3U2cUFaWlpjTkI2SmZMc1QyUkJDbm1oMUFjR3hD?=
+ =?utf-8?B?Y1VQYlloSUdPS1ZXOGVvSVo0cFdINTVJVHBFTWFhTHI1SVVWaXJqN0d2S3pr?=
+ =?utf-8?B?L2lwVnUxSkFzcUFzeU1EQU9qTU1tYXVsTkJSR2tsWW9jK2Z2MHpsRUNxQ1NG?=
+ =?utf-8?B?eDhjaW50bFlMMDBmaXM4SUJBMmg4Ukh5MEpUN0JaNUdMOHp0QVNWL1ZGeTMw?=
+ =?utf-8?B?TWNmY3ZRekhIeUN3TzRDTDVuWGQwdklhT2FyTm5iS2ZPeWF3Z3lpU251eUEz?=
+ =?utf-8?B?L1lWVHhLWE1BbHN6dHVLbWE1TVdFc3Rxclh0Ukt1eHdGRk01S3lwbE1vN1RW?=
+ =?utf-8?B?b1Jpdkk1SVdoQ3pjQUwzTE1LUTdKQ0lSOTMyTjdXM09rMERkMENFN1NqcjRi?=
+ =?utf-8?Q?g+1c=3D?=
 X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: eeed76f7-0498-422e-1342-08dd059159da
+X-MS-Exchange-CrossTenant-Network-Message-Id: 55b645c0-7498-4816-d92c-08dd05917042
 X-MS-Exchange-CrossTenant-AuthSource: MW3PR12MB4553.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 15 Nov 2024 16:19:59.3834
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 15 Nov 2024 16:20:36.9448
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: hkKb6/c8Bc/JwC4860dLgpgY/ZTl7qiWBM5Bbnk5ploglsDgWMjGczIUWyvF2k6h
+X-MS-Exchange-CrossTenant-UserPrincipalName: HD1ke+uphSJhBE74eyH5CXT3izRc174Tf1qZfiNOCOilSgrERTaOLCA0pr3xCOL1
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR12MB6258
 
-Tony, Looks good. Thanks
+Hi Tony,
 
 On 11/13/2024 6:17 PM, Tony Luck wrote:
-> From: Babu Moger <babu.moger@amd.com>
+> Resctrl uses local memory bandwidth event as input to the feedback
+> loop when the mba_MBps mount option is used. This means that this
+> mount option cannot be used on systems that only support monitoring
+> of total bandwidth.
 > 
-> thread_throttle_mode_init() and mbm_config_rftype_init() both initialize
-> fflags for resctrl files.
+> Prepare to allow users to choose the input event independently for
+> each ctrl_mon group.
+
+How about this?
+
+Provide users with the ability to select the input event independently 
+for each ctrl_mon group.
+
+
 > 
-> Adding new files will involve adding another function to initialize
-> the fflags. This can be simplified by adding a new function
-> resctrl_file_fflags_init() and passing the file name and flags
-> to be initialized.
-> 
-> Consolidate fflags initialization into resctrl_file_fflags_init() and
-> remove thread_throttle_mode_init() and mbm_config_rftype_init().
-> 
-> Signed-off-by: Babu Moger <babu.moger@amd.com>
-> Reviewed-by: Reinette Chatre <reinette.chatre@intel.com>
 > Signed-off-by: Tony Luck <tony.luck@intel.com>
 > ---
->   arch/x86/kernel/cpu/resctrl/internal.h |  3 +--
->   arch/x86/kernel/cpu/resctrl/core.c     |  4 +++-
->   arch/x86/kernel/cpu/resctrl/monitor.c  |  6 ++++--
->   arch/x86/kernel/cpu/resctrl/rdtgroup.c | 15 ++-------------
->   4 files changed, 10 insertions(+), 18 deletions(-)
+>   include/linux/resctrl.h                | 2 ++
+>   arch/x86/kernel/cpu/resctrl/internal.h | 2 ++
+>   arch/x86/kernel/cpu/resctrl/core.c     | 3 +++
+>   arch/x86/kernel/cpu/resctrl/rdtgroup.c | 6 ++++++
+>   4 files changed, 13 insertions(+)
 > 
+> diff --git a/include/linux/resctrl.h b/include/linux/resctrl.h
+> index d94abba1c716..fd05b937e2f4 100644
+> --- a/include/linux/resctrl.h
+> +++ b/include/linux/resctrl.h
+> @@ -49,6 +49,8 @@ enum resctrl_event_id {
+>   	QOS_L3_MBM_LOCAL_EVENT_ID	= 0x03,
+>   };
+>   
+> +extern enum resctrl_event_id mba_mbps_default_event;
+> +
+>   /**
+>    * struct resctrl_staged_config - parsed configuration to be applied
+>    * @new_ctrl:		new ctrl value to be loaded
 > diff --git a/arch/x86/kernel/cpu/resctrl/internal.h b/arch/x86/kernel/cpu/resctrl/internal.h
-> index 955999aecfca..faaff9d64102 100644
+> index faaff9d64102..485800055a7d 100644
 > --- a/arch/x86/kernel/cpu/resctrl/internal.h
 > +++ b/arch/x86/kernel/cpu/resctrl/internal.h
-> @@ -647,8 +647,7 @@ void cqm_handle_limbo(struct work_struct *work);
->   bool has_busy_rmid(struct rdt_mon_domain *d);
->   void __check_limbo(struct rdt_mon_domain *d, bool force_free);
->   void rdt_domain_reconfigure_cdp(struct rdt_resource *r);
-> -void __init thread_throttle_mode_init(void);
-> -void __init mbm_config_rftype_init(const char *config);
-> +void resctrl_file_fflags_init(const char *config, unsigned long fflags);
->   void rdt_staged_configs_clear(void);
->   bool closid_allocated(unsigned int closid);
->   int resctrl_find_cleanest_closid(void);
+> @@ -283,6 +283,7 @@ struct pseudo_lock_region {
+>    *				monitor only or ctrl_mon group
+>    * @mon:			mongroup related data
+>    * @mode:			mode of resource group
+> + * @mba_mbps_event:		input monitoring event id when mba_sc is enabled
+>    * @plr:			pseudo-locked region
+>    */
+>   struct rdtgroup {
+> @@ -295,6 +296,7 @@ struct rdtgroup {
+>   	enum rdt_group_type		type;
+>   	struct mongroup			mon;
+>   	enum rdtgrp_mode		mode;
+> +	enum resctrl_event_id		mba_mbps_event;
+>   	struct pseudo_lock_region	*plr;
+>   };
+>   
 > diff --git a/arch/x86/kernel/cpu/resctrl/core.c b/arch/x86/kernel/cpu/resctrl/core.c
-> index b681c2e07dbf..f3ee5859b69d 100644
+> index f3ee5859b69d..94bf559966d6 100644
 > --- a/arch/x86/kernel/cpu/resctrl/core.c
 > +++ b/arch/x86/kernel/cpu/resctrl/core.c
-> @@ -234,7 +234,9 @@ static __init bool __get_mem_config_intel(struct rdt_resource *r)
->   		r->membw.throttle_mode = THREAD_THROTTLE_PER_THREAD;
->   	else
->   		r->membw.throttle_mode = THREAD_THROTTLE_MAX;
-> -	thread_throttle_mode_init();
+> @@ -963,6 +963,9 @@ static __init bool get_rdt_mon_resources(void)
+>   	if (!rdt_mon_features)
+>   		return false;
+>   
+> +	if (is_mbm_local_enabled())
+> +		mba_mbps_default_event = QOS_L3_MBM_LOCAL_EVENT_ID;
+
+
+Any reason to separate this patch and patch 8?  I feel it can be combined.
+
+
 > +
-> +	resctrl_file_fflags_init("thread_throttle_mode",
-> +				 RFTYPE_CTRL_INFO | RFTYPE_RES_MB);
->   
->   	r->alloc_capable = true;
->   
-> diff --git a/arch/x86/kernel/cpu/resctrl/monitor.c b/arch/x86/kernel/cpu/resctrl/monitor.c
-> index 851b561850e0..7ef1a293cc13 100644
-> --- a/arch/x86/kernel/cpu/resctrl/monitor.c
-> +++ b/arch/x86/kernel/cpu/resctrl/monitor.c
-> @@ -1223,11 +1223,13 @@ int __init rdt_get_mon_l3_config(struct rdt_resource *r)
->   
->   		if (rdt_cpu_has(X86_FEATURE_CQM_MBM_TOTAL)) {
->   			mbm_total_event.configurable = true;
-> -			mbm_config_rftype_init("mbm_total_bytes_config");
-> +			resctrl_file_fflags_init("mbm_total_bytes_config",
-> +						 RFTYPE_MON_INFO | RFTYPE_RES_CACHE);
->   		}
->   		if (rdt_cpu_has(X86_FEATURE_CQM_MBM_LOCAL)) {
->   			mbm_local_event.configurable = true;
-> -			mbm_config_rftype_init("mbm_local_bytes_config");
-> +			resctrl_file_fflags_init("mbm_local_bytes_config",
-> +						 RFTYPE_MON_INFO | RFTYPE_RES_CACHE);
->   		}
->   	}
+>   	return !rdt_get_mon_l3_config(r);
+>   }
 >   
 > diff --git a/arch/x86/kernel/cpu/resctrl/rdtgroup.c b/arch/x86/kernel/cpu/resctrl/rdtgroup.c
-> index d7163b764c62..2b198ef95e1e 100644
+> index 2b198ef95e1e..a8022bddf9f7 100644
 > --- a/arch/x86/kernel/cpu/resctrl/rdtgroup.c
 > +++ b/arch/x86/kernel/cpu/resctrl/rdtgroup.c
-> @@ -2020,24 +2020,13 @@ static struct rftype *rdtgroup_get_rftype_by_name(const char *name)
->   	return NULL;
->   }
+> @@ -65,6 +65,8 @@ static void rdtgroup_destroy_root(void);
 >   
-> -void __init thread_throttle_mode_init(void)
-> -{
-> -	struct rftype *rft;
-> -
-> -	rft = rdtgroup_get_rftype_by_name("thread_throttle_mode");
-> -	if (!rft)
-> -		return;
-> -
-> -	rft->fflags = RFTYPE_CTRL_INFO | RFTYPE_RES_MB;
-> -}
-> -
-> -void __init mbm_config_rftype_init(const char *config)
-> +void resctrl_file_fflags_init(const char *config, unsigned long fflags)
->   {
->   	struct rftype *rft;
+>   struct dentry *debugfs_resctrl;
 >   
->   	rft = rdtgroup_get_rftype_by_name(config);
->   	if (rft)
-> -		rft->fflags = RFTYPE_MON_INFO | RFTYPE_RES_CACHE;
-> +		rft->fflags = fflags;
->   }
+> +enum resctrl_event_id mba_mbps_default_event;
+> +
+>   static bool resctrl_debug;
 >   
->   /**
+>   void rdt_last_cmd_clear(void)
+> @@ -3611,6 +3613,8 @@ static int rdtgroup_mkdir_ctrl_mon(struct kernfs_node *parent_kn,
+>   			rdt_last_cmd_puts("kernfs subdir error\n");
+>   			goto out_del_list;
+>   		}
+> +		if (is_mba_sc(NULL))
+> +			rdtgrp->mba_mbps_event = mba_mbps_default_event;
+>   	}
+>   
+>   	goto out_unlock;
+> @@ -3970,6 +3974,8 @@ static void __init rdtgroup_setup_default(void)
+>   	rdtgroup_default.closid = RESCTRL_RESERVED_CLOSID;
+>   	rdtgroup_default.mon.rmid = RESCTRL_RESERVED_RMID;
+>   	rdtgroup_default.type = RDTCTRL_GROUP;
+> +	if (supports_mba_mbps())
+> +		rdtgroup_default.mba_mbps_event = mba_mbps_default_event;
+>   	INIT_LIST_HEAD(&rdtgroup_default.mon.crdtgrp_list);
+>   
+>   	list_add(&rdtgroup_default.rdtgroup_list, &rdt_all_groups);
 
 -- 
 - Babu Moger
