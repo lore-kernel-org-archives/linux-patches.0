@@ -1,394 +1,268 @@
-Received: from mail-pf1-f172.google.com (mail-pf1-f172.google.com [209.85.210.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.16])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CCFF16EB4C
-	for <patches@lists.linux.dev>; Fri, 15 Nov 2024 08:16:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.172
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731658607; cv=none; b=MKO0arHox6um9PILnuMTLCuo64X9EiybhTx6/Hkr4ksAls77L3cU/yohZCd/WrMagULQcMzSJrHwVm/HdrNwS6Ccb1n4O1KrVbH8mySbFQn8uiFJz0hWJyFqXAlUSPVSJ1ZMG91uXdnbC+9kjOBeuAQkt/QszblU+E4UBNj3Feg=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731658607; c=relaxed/simple;
-	bh=Y+Vqnb+ztVvpNqlKhZ8mJnKqScnAkM2qBF0AfcC8388=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ZoAgfAPOORImUU5dct+e2w6QPuIf4kPEqzvZrsErY6j+WtjWoSghGQM8wOzebQx1PsbbVDQzEb6oddq0X/xsHlLh0QKN/zxOKXl6Ax7UjJf1016edNajg5tjSWGtBpuQrf2EqQRKN/dILgnmLZPr+VF5YNZVuxfpossqTrCHgXA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ezACorgG; arc=none smtp.client-ip=209.85.210.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A982E189528;
+	Fri, 15 Nov 2024 08:27:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=192.198.163.16
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1731659244; cv=fail; b=YhePlSZh6GH8F2vAPDIwmoMcOHCE19+buO2fOHUsWjxkRWhTpE0+qxvnckku+ZxkNAYNrn8qJgpS1m0aXH4E5p1lMylVA7lvM9A5YfE7qt+gvuogQ+MO7J3Ik75uBevFI7FebFTb1ZSoWjK3lKlto3WMRJdiTatGEboH8SzV22M=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1731659244; c=relaxed/simple;
+	bh=n/5/pYs/t8T6NiSFjcUcI9LapsE235/eMppp+IFuSCw=;
+	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=Ar6W58huQETZoBj5H/qEGyLlUURn0qb5hAmbOC4Nar6UoUxYa723RFh/fQVZzYLgiVF9Jwj1DD1MKgBkTIfNiLz6kVYLtSmysSkOYsEOGLho83mOvvlyBTYVTY5BECk3lewHWGeQ0wqrCGScLkDddmvyrKsuOIc2jLbmFiInqLY=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=i4M9qATz; arc=fail smtp.client-ip=192.198.163.16
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ezACorgG"
-Received: by mail-pf1-f172.google.com with SMTP id d2e1a72fcca58-723db2798caso1355478b3a.0
-        for <patches@lists.linux.dev>; Fri, 15 Nov 2024 00:16:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1731658605; x=1732263405; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=WGZF6N3/pmMpF8j/jWulN5WaeUPbK5MzBQJo41d0xWQ=;
-        b=ezACorgGvTl9N/wnTrZ4Vf+6uTyfVJm3sWDhSpm9oKqxoCc2FptIe7oLgYF9hAKEs8
-         mEl3/9c72X0m0dwyoGroG6dOF2BZb1ZMHbL1xgTyxhrTqq9h6lT0lrdjDrgkZSUupN3a
-         nAM0WxtdIZhMLasHylYadEYm6lhtBZ43Xd0FkN1jCsDbgINXiTvPXb+ZCgDeFyRJl+Oe
-         VKkUT8he9oXJeWWbj3XjooXJSiecSPGtWQrFU4Tv0uiW56Q9w1LGJXA6gITDszWjsfo0
-         63XPMQ1CjNJqmRhExZCmSq5Jd/zMQ71gw/IuSkwJc+vpb1fMEfABgSO5WyPS1c7hVBfu
-         O/Gg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731658605; x=1732263405;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=WGZF6N3/pmMpF8j/jWulN5WaeUPbK5MzBQJo41d0xWQ=;
-        b=kqFLPttrCwU4ibJUfvnIhN/uMDskqdWOXctPCfBsfu0mH3iAZEqmNwXX/x+194tXyS
-         xgWadQCobY0cTom/INRckFu6OWz4X0DMZ6PETQfzxiknBcfXeGy6Ldt4gPytJoDFdmAp
-         zxRwStnDcCMpJZpK3UreQijYaVE+EFh0ADSi9IbvrUfkzLmHFDMFIA/Htg6yvAHtZASs
-         mWsm9YgmkqENhm/yG1voPU1Ec2RFw9wwK1ZyOLLelwNGu3UZlBYg36nYcNfFRiR8H+a+
-         WFsUzkOAaBl+ByuPOyqIcVkn+bYIigDp2MpJiY+rakYIL44tvrk8PYyHV9OEbIPuw6RA
-         RW8A==
-X-Forwarded-Encrypted: i=1; AJvYcCUS3VVGqMro79UZOyJHl0fYIBLniGS5eIk9mB85DCvqYYHjYaL2vgnIbHZJ3J3EaljxCVACSSw4@lists.linux.dev
-X-Gm-Message-State: AOJu0Yx2Gx9I+dJo037pF0kVvC4SRDno/4tqpQ3KhFGnON3fm5+YKZQ5
-	Irm19uQ2ovDy2D0ys2x26G5TW8JMKvF1IB2c2BRxNM6ioxWGXMZm78+8YcD62DDRh8ACr5a9JVh
-	67U6aLC+G6O1gJY5fSU1gdl/vLis=
-X-Google-Smtp-Source: AGHT+IFfJc06IFrDBRy4tXJOWYNxG+uqUeX4nHUkEk2HDPIBbYg1BbxEFKblCFuZzokCR9PK0kZz1LhjYXA0wtfe1aQ=
-X-Received: by 2002:a05:6a00:1703:b0:71e:7674:4cf6 with SMTP id
- d2e1a72fcca58-72476b96cfbmr2708472b3a.8.1731658604484; Fri, 15 Nov 2024
- 00:16:44 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="i4M9qATz"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1731659241; x=1763195241;
+  h=from:to:cc:subject:date:message-id:references:
+   in-reply-to:content-transfer-encoding:mime-version;
+  bh=n/5/pYs/t8T6NiSFjcUcI9LapsE235/eMppp+IFuSCw=;
+  b=i4M9qATzkQ5dYh4Tismu9s4Rshth3m6fGJOI2nUzTIp14HQOvxj5TwWm
+   f57oUR4n9nR9tvmS2TuYG4mLBfwugR82+0PGOWOp7TZKMPR5dfsLAmsZ0
+   1CiOlOswDZf/KMJ5QUR7WO5J+OujA6LVBtt98TeEQ1nzanTY/caFEzbYZ
+   jspXEiy2rxPVRzu+L8BvjpQKm0MwE2QuY1dEiYF8k+GQ/kaK9I2yZcZSq
+   1n2+skps1tHfixVDJrxaxwUfNh0ZYnJm0h/brATpwyk3noxbwrZ4+GnwQ
+   YpIXP+XBI6AF+eB8ZHBb4tf4GXqIPcI9aoZqfgp4veuMZaDXr7wYJ1eiN
+   g==;
+X-CSE-ConnectionGUID: XHh1DpXBTOSTBvPpLskRAw==
+X-CSE-MsgGUID: rqbEeEl4QVyK1M33Q+m1Fw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11256"; a="19267385"
+X-IronPort-AV: E=Sophos;i="6.12,156,1728975600"; 
+   d="scan'208";a="19267385"
+Received: from fmviesa001.fm.intel.com ([10.60.135.141])
+  by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Nov 2024 00:27:16 -0800
+X-CSE-ConnectionGUID: RxRyCQCGQb+QkBQFjmrkOg==
+X-CSE-MsgGUID: Xci9jINFR+i2F9dL9uC54Q==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.12,156,1728975600"; 
+   d="scan'208";a="119425854"
+Received: from fmsmsx601.amr.corp.intel.com ([10.18.126.81])
+  by fmviesa001.fm.intel.com with ESMTP/TLS/AES256-GCM-SHA384; 15 Nov 2024 00:27:16 -0800
+Received: from fmsmsx603.amr.corp.intel.com (10.18.126.83) by
+ fmsmsx601.amr.corp.intel.com (10.18.126.81) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.39; Fri, 15 Nov 2024 00:27:15 -0800
+Received: from FMSEDG603.ED.cps.intel.com (10.1.192.133) by
+ fmsmsx603.amr.corp.intel.com (10.18.126.83) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.39 via Frontend Transport; Fri, 15 Nov 2024 00:27:15 -0800
+Received: from NAM12-MW2-obe.outbound.protection.outlook.com (104.47.66.41) by
+ edgegateway.intel.com (192.55.55.68) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.39; Fri, 15 Nov 2024 00:27:14 -0800
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=Ht4253YSC0yJK8IO5b6CVS2v5p5HqclUDd05Zdehe26Hs5unufX/HhYQjxPWTpRXq3SlBDBsIW2sgDSUpy9oW1i+/LGTqvB1M6FjDZalca6rxUcTQVt5y1atSxWX9Hr3hAoowDyk56YHYSCCleUTtBslvMEhsjqnoemQkIikRH5kOD9y1DvnBmg0OLAnXg/n3/cU9DKyjcAQ+AMa235TJq2eK6cZgdvJ5Z62N39qwtD4w9SQOtKVIS/4WR8GWzYL96mrLVspF9EP4ghBfmG6M55u3sSEUFPpbnfC0xuOq4myjs/rjbFMw8C/LDZ0ROxENTyAqdvP9blVtAUIOLjTig==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=SIGuCfuRn4V1xBnsu4KaygW+yjCut6U99PnYz7wEtZc=;
+ b=sogzlZRjUnh2XLe0z+mkzfIOmp6JuJVdtkH+3o24g12pt9Svx1p82jNkJ0f2++yarx/4nb/+E5rJZBv89HJtHaEHvXAdmcEdrskLfAdmphGvUU44GQd+gv0GdnSPD4A8mm0wl2HrjO9Zr7CuR1qjqpNzAuvC+9MW65ukngXNaD5+5/Q7TYkm6tkC6NQUTVBlj5+6HlLoUqo5oajokyQx1bJjwGNb4wx9rbV2X75Cf+XsFipTOUKKJcDzv7mcXA1myViKf08wVLB/kGfM68lXHEWMlVlWEYkPmjrs4vxusG9IRSgEkgvlzQ8zk1thx78KvcuJRdco9JTClcPbvoj+Pg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Received: from BN9PR11MB5276.namprd11.prod.outlook.com (2603:10b6:408:135::18)
+ by IA1PR11MB8100.namprd11.prod.outlook.com (2603:10b6:208:445::18) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8137.33; Fri, 15 Nov
+ 2024 08:27:12 +0000
+Received: from BN9PR11MB5276.namprd11.prod.outlook.com
+ ([fe80::b576:d3bd:c8e0:4bc1]) by BN9PR11MB5276.namprd11.prod.outlook.com
+ ([fe80::b576:d3bd:c8e0:4bc1%5]) with mapi id 15.20.8158.017; Fri, 15 Nov 2024
+ 08:27:12 +0000
+From: "Tian, Kevin" <kevin.tian@intel.com>
+To: Jason Gunthorpe <jgg@nvidia.com>, "iommu@lists.linux.dev"
+	<iommu@lists.linux.dev>, Will Deacon <will@kernel.org>
+CC: "patches@lists.linux.dev" <patches@lists.linux.dev>
+Subject: RE: [PATCH] iommu/arm-smmu-v3: Improve uAPI comment for
+ IOMMU_HW_INFO_TYPE_ARM_SMMUV3
+Thread-Topic: [PATCH] iommu/arm-smmu-v3: Improve uAPI comment for
+ IOMMU_HW_INFO_TYPE_ARM_SMMUV3
+Thread-Index: AQHbNTP0HhswaalbMkqgtEOdE0PE/7K4ApeQ
+Date: Fri, 15 Nov 2024 08:27:12 +0000
+Message-ID: <BN9PR11MB527626CD708AAAC3473F7BF98C242@BN9PR11MB5276.namprd11.prod.outlook.com>
+References: <0-v1-191e5e24cec3+3b0-iommufd_smmuv3_hwinf_jgg@nvidia.com>
+In-Reply-To: <0-v1-191e5e24cec3+3b0-iommufd_smmuv3_hwinf_jgg@nvidia.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: BN9PR11MB5276:EE_|IA1PR11MB8100:EE_
+x-ms-office365-filtering-correlation-id: a3a13e7d-c9ac-4678-aa81-08dd054f4dec
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;ARA:13230040|376014|366016|1800799024|38070700018;
+x-microsoft-antispam-message-info: =?us-ascii?Q?5s77GMP9BAnDOB3D/ozDG+koy/wB7BXP6d80xfI3/uaMTTmvXgJzG9Uw9ylv?=
+ =?us-ascii?Q?hdKrF0xwQfEoBm6wckao/hshyQkgP3e9DrruwzOaGcVnxlpaRpX8XlYUxnJL?=
+ =?us-ascii?Q?C5Z2X7rynk/MmrWbeBGDiTNP71jjk7Ow/OYW4CPPggKO0ZfzrwTT/X6SOr2r?=
+ =?us-ascii?Q?qkzz7Lj0cSKNxACviil+CVgUIt6HKZlEekQxJEy36RbAhiSLv/6jkumXzySP?=
+ =?us-ascii?Q?FtDEQ9WRyvuRH7CLlMeBKfi63xJhF0aU35AMXJ7dSAOyTu2MuS0POK1jr0mW?=
+ =?us-ascii?Q?wdBv3Jt2yyTUuixQWG11Si4DeF8WbTcsHxc/bzpiHA2n13YNMTtWvTheI0IE?=
+ =?us-ascii?Q?RdromFSZ42XSkK/cSNvNHKK3T3TktA9J+MdrCuQd++uv7h7V5lHdShuTW1Yt?=
+ =?us-ascii?Q?paqypl7jJaamOZw35i7HeW7TTRmsLWBK5TXjLMeLg2uOrWgfwPSrbyRszkkl?=
+ =?us-ascii?Q?tqkIYDzGXiauwqUeK2wAaGEpbxSJTFva0k+68ORPVHdpK2srdCWl9+H6+l9m?=
+ =?us-ascii?Q?Ont4S02HhoT3VdOiJqtS41ZXKhulFMxfx6ID7EU713rUI+zgUo/bP5Px2UgQ?=
+ =?us-ascii?Q?avTldfzbxJmwafk+j6fAxFTTCTZ62PRci/2Px+UBIhhABMDXvZUaopyQNAl0?=
+ =?us-ascii?Q?zteUyImEOXRM+QVe4lstJn/FMj9Th16WSKuOtQqUJOb1gbjI25oWGXwshY4s?=
+ =?us-ascii?Q?XAWg9FYimF9Fjb/nGLxYi0DCf7B6hsXj8H0JZnO8EZJmtBPB7D/agRzZcnX+?=
+ =?us-ascii?Q?VAMwnGaB9/nuKaiXLt0Nm80KC5r2Kte+ZHMuy9khkLk7Olcg6LjLur1g8R9R?=
+ =?us-ascii?Q?mfoBHMv0j2JBj2J/ur22nje4BVy/fmSBcg8bD3Lz563LfdHy/IU8AjC52tCQ?=
+ =?us-ascii?Q?qgNRwbUA5I8XnF20i0JBkz7iBHi8/12WRi7yIxNhX7hAe6sszv9nXZuh5jnY?=
+ =?us-ascii?Q?A1xjslapyGA99yvszf1SB2/98mPuc/+Zcfg4LhYgVWFaxC5kLYcQVxKBpEXn?=
+ =?us-ascii?Q?htg+KVThSc8/Tt2v9tbS0Y+OMhExIHkJpBFWCpBogb4dG8JUD7EjqtO3N0sS?=
+ =?us-ascii?Q?lGkUzVS5vjmHXS2GyrH98JqiFbALR3U8zWW1zoeZmTIOfUv9Xr0IpKjsZNko?=
+ =?us-ascii?Q?BmZ0A/epEwL7deCEXaqrN9sZ6viGf9Z4pudaoCJ9Bb0hRzJ4WaJ3oKW+2wqM?=
+ =?us-ascii?Q?tXV2dT9if7zDZHofRQWd2OURJk5FSRekZwp1c+Tigwhe+hRQcHfO6F1fU9is?=
+ =?us-ascii?Q?SL3/9ZYFL436ZZy8kRmrM6nbYVtgP+eafn8sw2zu5N582cnk3a0AgjXXVymk?=
+ =?us-ascii?Q?ec0arR+odjbZPSIWD+Ir69fUnrOq0Z7XtEf2VTtNnSL1h4kcCE0VZjoBVCX/?=
+ =?us-ascii?Q?k/GH8io=3D?=
+x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BN9PR11MB5276.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(366016)(1800799024)(38070700018);DIR:OUT;SFP:1101;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?vyLI/JfuHnc837+F61IkU7Iyxh4vitC50z2YFghw5zzPQvpd2zMqviewlkCO?=
+ =?us-ascii?Q?BcOgznPMOCduixFZ0EcD/qWH4V3WFlE5Rh7tXltJ7f+fpmtrhH8sBGtjU960?=
+ =?us-ascii?Q?9X79c5kj2bi2pcHxK9IM1nO9JTAyOGQa7xIZ5d63gFNU+GP8X+eVHkMbMgNn?=
+ =?us-ascii?Q?IUWoeYWrWuPKNsNTszuC6qrV+NEDNvMAd2Pp59NUa+jztA+XdtsoaLXT5Fyp?=
+ =?us-ascii?Q?bZqQb3g8ABTNjXBLh8DTC+f2yvNmTBPUQThkhcSeSnrBLhpIiBDzZhYQTT9n?=
+ =?us-ascii?Q?bBQQUMgjPcHCg/rCO7UIs+ADqw9lc10V8uKFPAe5GFzOqeiBSI9CSAvtYEOq?=
+ =?us-ascii?Q?H6FvDSXJ01Mtn8dp1cWq0wBuOUV0HNeAl87vH4b5ux62qgqYWFzjFooSRRg2?=
+ =?us-ascii?Q?br6JoUYRuLbjAnzn5G0KBCK9ysrUvrrf6MWEBxjW1W7QxhehEo+v7CXBA96L?=
+ =?us-ascii?Q?V1+HTH23vQ/Wl6QesqF+X2TeUwXVFUp1C34eSwjy/p2Y1lFNBQCiKuRIl2H+?=
+ =?us-ascii?Q?heRNtqMlwMjMMDGJgBtMlUFwtDlrybCd79y9YS1osvKtIWxDLQIarvsk+UjE?=
+ =?us-ascii?Q?ZGjFKEqW2PDEgiPbEa2K1/Go7cTdXtLzf+M6fjuWHpheVBnOH/q2HeIMLx+j?=
+ =?us-ascii?Q?1TC+oC26oFZdxFrO75N5pvpArB+a9oXdww4GRABw/JEMdIXQ8uPgYFW9lK0P?=
+ =?us-ascii?Q?43uILQxwSpIEyRX+dSZBGIVeeEcch7ftxFXEEL1xCxrtnw0N0daKcUuuXZkk?=
+ =?us-ascii?Q?Aiy7tjkMkUQh3KNNHslyg2x7pBiuMDb46uIIFU7zshN72N3EzZzwqQVTj/9n?=
+ =?us-ascii?Q?eJACutMKqo0wiJOoqVzrBnHxPW5JRPS/Y6ViaUG82lgBWu4HNXLVfseZfDmg?=
+ =?us-ascii?Q?gHVlQPurOeVF5KyesnP8SYm2cxttulrQ3ux5ZqxaQkLtai4VCAjwE3MCm/B5?=
+ =?us-ascii?Q?HTIbPf24BtxQbLP1mvrT5GRB5Jb7ujsO45hABH3cga5aHxCOZh37CkuGulhV?=
+ =?us-ascii?Q?dF/H+92EKWCHQXm0MJUJa3gFd22lT0v/IklcDdqetgN5lBo432Srs9bOI8kW?=
+ =?us-ascii?Q?gvswDhwIb+pG5qBJPP8RXLP35bbRuShs2ZCOqoGHd7zZL//3zNTiwDct97+T?=
+ =?us-ascii?Q?nY7Ule8EJDmJ9ybPAEdIAmcUbMqwwJMU+RcEOFtcKmQ4UKuA6tZP4ELoLs7l?=
+ =?us-ascii?Q?ZzTV7g/0SWo06L2rwCDijmVM2NIfp89FyXqYEVWhjmEQn8VMvrhxE/EE1VXB?=
+ =?us-ascii?Q?PFVzvvUpipDnX3u6t61XZkY2LcCOuD+MQg+E7x2vRqMfHaRAer8/OmDZvGfc?=
+ =?us-ascii?Q?/wlZaWtI230VqhquzJw1z7yl91VJ/lOgc3+QJgsxAS0qqYJRyY7g8t6c7vDq?=
+ =?us-ascii?Q?SIbiyt/PQsZ+bs9cocLCP/eui8CQyr6iLDwGJAmZIXmvRCeOq0PGC/8rMkoR?=
+ =?us-ascii?Q?1nWV871LV6BuL6sV37HTVYYgK7hMR5pOCUUiL1nPhXJAlC4t8RlBbBKfQ07X?=
+ =?us-ascii?Q?5AIIZRcj28YxAWsILKGHkYxLBILLl9qoVdgZf8MzdmR6+zqPIQrCPYOC4HqE?=
+ =?us-ascii?Q?VVIAnJDqU6xaEAOrh0MLQ9nQLI9Rskay/NjkdjBi?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20241115063725.892410236@linuxfoundation.org>
-In-Reply-To: <20241115063725.892410236@linuxfoundation.org>
-From: Luna Jernberg <droidbittin@gmail.com>
-Date: Fri, 15 Nov 2024 09:16:31 +0100
-Message-ID: <CADo9pHhc_JALkYdOGS1ZG5H3nc=4tz9GcR752Mx07ycPFy3Weg@mail.gmail.com>
-Subject: Re: [PATCH 6.11 00/63] 6.11.9-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, 
-	broonie@kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: BN9PR11MB5276.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: a3a13e7d-c9ac-4678-aa81-08dd054f4dec
+X-MS-Exchange-CrossTenant-originalarrivaltime: 15 Nov 2024 08:27:12.4293
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: F7JJ/0WoBHYY6KP0NVBhYWKobEHM7ILXmXSfuK+wYEhIl1TpxACbVU7F3ccXkbJqj/39lmp/1+EA0UR4wIZRtw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR11MB8100
+X-OriginatorOrg: intel.com
 
-Tested-by: Luna Jernberg <droidbittin@gmail.com>
+> From: Jason Gunthorpe <jgg@nvidia.com>
+> Sent: Wednesday, November 13, 2024 2:52 AM
+>=20
+> Be specific about what fields should be accessed in the idr result and
+> give other guidance to the VMM on how it should generate the
+> vIDR. Discussion on the list, and review of the qmeu implementation
 
-AMD Ryzen 5 5600 6-Core Processor:
-https://www.inet.se/produkt/5304697/amd-ryzen-5-5600-3-5-ghz-35mb on a
-https://www.gigabyte.com/Motherboard/B550-AORUS-ELITE-V2-rev-12
-https://www.inet.se/produkt/1903406/gigabyte-b550-aorus-elite-v2
-motherboard :)
+s/qmeu/qemu/
 
-running Arch Linux with the testing repos enabled:
-https://archlinux.org/ https://archboot.com/
-https://wiki.archlinux.org/title/Arch_Testing_Team
+> understood this needs to be clearer and more detailed.
+>=20
+> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+> ---
+>  include/uapi/linux/iommufd.h | 25 +++++++++++++++++--------
+>  1 file changed, 17 insertions(+), 8 deletions(-)
+>=20
+> As posted in the other thread, it is a enough of an improvement I'd like =
+to
+> pick it up for the iommufd PR.
+>=20
+> Thanks,
+> Jason
+>=20
+> diff --git a/include/uapi/linux/iommufd.h b/include/uapi/linux/iommufd.h
+> index 747d3d9baa3dda..1e0345a62a3ab8 100644
+> --- a/include/uapi/linux/iommufd.h
+> +++ b/include/uapi/linux/iommufd.h
+> @@ -549,16 +549,25 @@ struct iommu_hw_info_vtd {
+>   * For the details of @idr, @iidr and @aidr, please refer to the chapter=
+s
+>   * from 6.3.1 to 6.3.6 in the SMMUv3 Spec.
+>   *
+> - * User space should read the underlying ARM SMMUv3 hardware
+> information for
+> - * the list of supported features.
+> + * This reports the raw HW capability, and not all bits are meaningful t=
+o be
+> + * read by userspace. Only the following fields should be used:
+>   *
+> - * Note that these values reflect the raw HW capability, without any ins=
+ight if
+> - * any required kernel driver support is present. Bits may be set indica=
+ting
+> the
+> - * HW has functionality that is lacking kernel software support, such as=
+ BTM.
+> If
+> - * a VMM is using this information to construct emulated copies of these
+> - * registers it should only forward bits that it knows it can support.
+> + * idr[0]: ST_LEVEL, TERM_MODEL, STALL_MODEL, TTENDIAN , CD2L,
+> ASID16, TTF
+> + * idr[1]: SIDSIZE, SSIDSIZE
+> + * idr[3]: BBML, RIL
+> + * idr[5]: VAX, GRAN64K, GRAN16K, GRAN4K
+>   *
+> - * In future, presence of required kernel support will be indicated in f=
+lags.
 
-Den fre 15 nov. 2024 kl 07:47 skrev Greg Kroah-Hartman
-<gregkh@linuxfoundation.org>:
->
-> This is the start of the stable review cycle for the 6.11.9 release.
-> There are 63 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Sun, 17 Nov 2024 06:37:07 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
-6.11.9-rc1.gz
-> or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
--rc.git linux-6.11.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
->
-> -------------
-> Pseudo-Shortlog of commits:
->
-> Greg Kroah-Hartman <gregkh@linuxfoundation.org>
->     Linux 6.11.9-rc1
->
-> Linus Torvalds <torvalds@linux-foundation.org>
->     9p: fix slab cache name creation for real
->
-> Qun-Wei Lin <qun-wei.lin@mediatek.com>
->     mm: krealloc: Fix MTE false alarm in __do_krealloc
->
-> Nirmoy Das <nirmoy.das@intel.com>
->     drm/xe: Don't restart parallel queues multiple times on GT reset
->
-> Nirmoy Das <nirmoy.das@intel.com>
->     drm/xe/ufence: Prefetch ufence addr to catch bogus address
->
-> Shuicheng Lin <shuicheng.lin@intel.com>
->     drm/xe: Handle unreliable MMIO reads during forcewake
->
-> Badal Nilawar <badal.nilawar@intel.com>
->     drm/xe/guc/ct: Flush g2h worker in case of g2h response timeout
->
-> Shuicheng Lin <shuicheng.lin@intel.com>
->     drm/xe: Enlarge the invalidation timeout from 150 to 500
->
-> Hou Tao <houtao1@huawei.com>
->     bpf: Check validity of link->type in bpf_link_show_fdinfo()
->
-> Reinhard Speyerer <rspmn@arcor.de>
->     net: usb: qmi_wwan: add Fibocom FG132 0x0112 composition
->
-> Huacai Chen <chenhuacai@kernel.org>
->     LoongArch: KVM: Mark hrtimer to expire in hard interrupt context
->
-> Shengjiu Wang <shengjiu.wang@nxp.com>
->     ASoC: fsl_micfil: Add sample rate constraint
->
-> Yanteng Si <siyanteng@cqsoftware.com.cn>
->     LoongArch: Use "Exception return address" to comment ERA
->
-> Jack Yu <jack.yu@realtek.com>
->     ASoC: rt722-sdca: increase clk_stop_timeout to fix clock stop issue
->
-> Cyan Yang <cyan.yang@sifive.com>
->     RISCV: KVM: use raw_spinlock for critical section in imsic
->
-> Alexey Klimov <alexey.klimov@linaro.org>
->     ASoC: codecs: lpass-rx-macro: fix RXn(rx,n) macro for DSM_CTL and SEC=
-7 regs
->
-> Hans de Goede <hdegoede@redhat.com>
->     HID: lenovo: Add support for Thinkpad X1 Tablet Gen 3 keyboard
->
-> Kenneth Albanowski <kenalba@chromium.org>
->     HID: multitouch: Add quirk for Logitech Bolt receiver w/ Casa touchpa=
-d
->
-> Bart=C5=82omiej Mary=C5=84czak <marynczakbartlomiej@gmail.com>
->     HID: i2c-hid: Delayed i2c resume wakeup for 0x0d42 Goodix touchpad
->
-> David Howells <dhowells@redhat.com>
->     afs: Fix lock recursion
->
-> Alessandro Zanni <alessandro.zanni87@gmail.com>
->     fs: Fix uninitialized value issue in from_kuid and from_kgid
->
-> David Howells <dhowells@redhat.com>
->     netfs: Downgrade i_rwsem for a buffered write
->
-> Derek Fang <derek.fang@realtek.com>
->     ASoC: Intel: soc-acpi: lnl: Add match entry for TM2 laptops
->
-> Ilya Dudikov <ilyadud@mail.ru>
->     ASoC: amd: yc: Fix non-functional mic on ASUS E1404FA
->
-> Christian Heusel <christian@heusel.eu>
->     ASoC: amd: yc: Add quirk for ASUS Vivobook S15 M3502RA
->
-> Zhu Jun <zhujun2@cmss.chinamobile.com>
->     ASoC: codecs: Fix error handling in aw_dev_get_dsp_status function
->
-> Amadeusz S=C5=82awi=C5=84ski <amadeuszx.slawinski@linux.intel.com>
->     ASoC: Intel: avs: Update stream status in a separate thread
->
-> Jiawei Ye <jiawei.ye@foxmail.com>
->     bpf: Fix mismatched RCU unlock flavour in bpf_out_neigh_v6
->
-> Zijian Zhang <zijianzhang@bytedance.com>
->     bpf: Add sk_is_inet and IS_ICSK check in tls_sw_has_ctx_tx/rx
->
-> Feng Liu <feliu@nvidia.com>
->     virtio_pci: Fix admin vq cleanup by using correct info pointer
->
-> Yuan Can <yuancan@huawei.com>
->     vDPA/ifcvf: Fix pci_read_config_byte() return code handling
->
-> Matthieu Buffet <matthieu@buffet.re>
->     samples/landlock: Fix port parsing in sandboxer
->
-> Nilay Shroff <nilay@linux.ibm.com>
->     nvme: make keep-alive synchronous operation
->
-> Nilay Shroff <nilay@linux.ibm.com>
->     nvme-loop: flush off pending I/O while shutting down loop controller
->
-> Lucas De Marchi <lucas.demarchi@intel.com>
->     drm/xe/query: Increase timestamp width
->
-> Linus Walleij <linus.walleij@linaro.org>
->     net: phy: mdio-bcm-unimac: Add BCM6846 support
->
-> Michael Ellerman <mpe@ellerman.id.au>
->     powerpc/powernv: Free name on error in opal_event_init()
->
-> Philip Yang <Philip.Yang@amd.com>
->     drm/amdkfd: Accounting pdd vram_usage for svm
->
-> Keith Busch <kbusch@kernel.org>
->     nvme-multipath: defer partition scanning
->
-> Will Deacon <will@kernel.org>
->     kasan: Disable Software Tag-Based KASAN with GCC
->
-> Baojun Xu <baojun.xu@ti.com>
->     ALSA: hda/tas2781: Add new quirk for Lenovo, ASUS, Dell projects
->
-> Showrya M N <showrya@chelsio.com>
->     RDMA/siw: Add sendpage_ok() check to disable MSG_SPLICE_PAGES
->
-> Tyrone Wu <wudevelops@gmail.com>
->     selftests/bpf: Assert link info uprobe_multi count & path_size if uns=
-et
->
-> Ian Forbes <ian.forbes@broadcom.com>
->     drm/vmwgfx: Limit display layout ioctl array size to VMWGFX_NUM_DISPL=
-AY_UNITS
->
-> Julian Vetter <jvetter@kalrayinc.com>
->     sound: Make CONFIG_SND depend on INDIRECT_IOMEM instead of UML
->
-> Harald Freudenberger <freude@linux.ibm.com>
->     s390/ap: Fix CCA crypto card behavior within protected execution envi=
-ronment
->
-> Herbert Xu <herbert@gondor.apana.org.au>
->     crypto: marvell/cesa - Disable hash algorithms
->
-> Herbert Xu <herbert@gondor.apana.org.au>
->     crypto: api - Fix liveliness check in crypto_alg_tested
->
-> Rik van Riel <riel@surriel.com>
->     bpf: use kvzmalloc to allocate BPF verifier environment
->
-> Greg Joyce <gjoyce@linux.ibm.com>
->     nvme: disable CC.CRIME (NVME_CC_CRIME)
->
-> Robin Murphy <robin.murphy@arm.com>
->     iommu/arm-smmu: Clarify MMU-500 CPRE workaround
->
-> WangYuli <wangyuli@uniontech.com>
->     HID: multitouch: Add quirk for HONOR MagicBook Art 14 touchpad
->
-> Stefan Blum <stefanblum2004@gmail.com>
->     HID: multitouch: Add support for B2402FVA track point
->
-> SurajSonawane2415 <surajsonawane0215@gmail.com>
->     block: Fix elevator_get_default() checking for NULL q->tag_set
->
-> Hannes Reinecke <hare@suse.de>
->     nvme: tcp: avoid race between queue_lock lock and destroy
->
-> Andy Shevchenko <andriy.shevchenko@linux.intel.com>
->     pinctrl: intel: platform: Add Panther Lake to the list of supported
->
-> Rosen Penev <rosenp@gmail.com>
->     pinctrl: aw9523: add missing mutex_destroy
->
-> Sergey Matsievskiy <matsievskiysv@gmail.com>
->     irqchip/ocelot: Fix trigger register address
->
-> Nilay Shroff <nilay@linux.ibm.com>
->     nvmet-passthru: clear EUID/NGUID/UUID while using loop target
->
-> Eduard Zingerman <eddyz87@gmail.com>
->     selftests/bpf: Verify that sync_linked_regs preserves subreg_def
->
-> Pedro Falcato <pedro.falcato@gmail.com>
->     9p: Avoid creating multiple slab caches with the same name
->
-> Dominique Martinet <asmadeus@codewreck.org>
->     9p: v9fs_fid_find: also lookup by inode if not found dentry
->
-> Breno Leitao <leitao@debian.org>
->     nvme/host: Fix RCU list traversal to use SRCU primitive
->
-> Kuniyuki Iwashima <kuniyu@amazon.com>
->     smb: client: Fix use-after-free of network namespace.
->
->
-> -------------
->
-> Diffstat:
->
->  Makefile                                           |  4 +-
->  arch/loongarch/include/asm/loongarch.h             |  2 +-
->  arch/loongarch/kvm/timer.c                         |  7 +-
->  arch/loongarch/kvm/vcpu.c                          |  2 +-
->  arch/powerpc/platforms/powernv/opal-irqchip.c      |  1 +
->  arch/riscv/kvm/aia_imsic.c                         |  8 +--
->  block/elevator.c                                   |  4 +-
->  crypto/algapi.c                                    |  2 +-
->  drivers/crypto/marvell/cesa/hash.c                 | 12 ++--
->  drivers/gpu/drm/amd/amdkfd/kfd_chardev.c           |  6 +-
->  drivers/gpu/drm/amd/amdkfd/kfd_priv.h              |  2 +-
->  drivers/gpu/drm/amd/amdkfd/kfd_process.c           |  4 +-
->  drivers/gpu/drm/amd/amdkfd/kfd_svm.c               | 26 +++++++
->  drivers/gpu/drm/vmwgfx/vmwgfx_drv.h                |  4 +-
->  drivers/gpu/drm/vmwgfx/vmwgfx_kms.c                |  4 +-
->  drivers/gpu/drm/vmwgfx/vmwgfx_kms.h                |  3 -
->  drivers/gpu/drm/xe/xe_device.c                     |  2 +-
->  drivers/gpu/drm/xe/xe_force_wake.c                 | 12 +++-
->  drivers/gpu/drm/xe/xe_guc_ct.c                     | 18 +++++
->  drivers/gpu/drm/xe/xe_guc_submit.c                 | 14 +++-
->  drivers/gpu/drm/xe/xe_query.c                      |  6 +-
->  drivers/gpu/drm/xe/xe_sync.c                       |  3 +-
->  drivers/hid/hid-ids.h                              |  2 +
->  drivers/hid/hid-lenovo.c                           |  8 +++
->  drivers/hid/hid-multitouch.c                       | 13 ++++
->  drivers/hid/i2c-hid/i2c-hid-core.c                 | 10 +++
->  drivers/infiniband/sw/siw/siw_qp_tx.c              |  2 +
->  drivers/iommu/arm/arm-smmu/arm-smmu-impl.c         |  4 +-
->  drivers/irqchip/irq-mscc-ocelot.c                  |  4 +-
->  drivers/net/mdio/mdio-bcm-unimac.c                 |  1 +
->  drivers/net/usb/qmi_wwan.c                         |  1 +
->  drivers/nvme/host/core.c                           | 52 ++++++++------
->  drivers/nvme/host/multipath.c                      | 33 +++++++++
->  drivers/nvme/host/nvme.h                           |  1 +
->  drivers/nvme/host/tcp.c                            |  7 +-
->  drivers/nvme/target/loop.c                         | 13 ++++
->  drivers/nvme/target/passthru.c                     |  6 +-
->  drivers/pinctrl/intel/Kconfig                      |  1 +
->  drivers/pinctrl/pinctrl-aw9523.c                   |  6 +-
->  drivers/s390/crypto/ap_bus.c                       |  3 +-
->  drivers/s390/crypto/ap_bus.h                       |  2 +-
->  drivers/s390/crypto/ap_queue.c                     | 28 +++++---
->  drivers/vdpa/ifcvf/ifcvf_base.c                    |  2 +-
->  drivers/virtio/virtio_pci_common.c                 | 24 +++++--
->  drivers/virtio/virtio_pci_common.h                 |  1 +
->  drivers/virtio/virtio_pci_modern.c                 | 12 +---
->  fs/9p/fid.c                                        |  5 +-
->  fs/afs/internal.h                                  |  2 +
->  fs/afs/rxrpc.c                                     | 83 +++++++++++++++-=
-------
->  fs/netfs/locking.c                                 |  3 +-
->  fs/ocfs2/file.c                                    |  9 ++-
->  fs/smb/client/connect.c                            | 14 +++-
->  include/net/tls.h                                  | 12 +++-
->  kernel/bpf/syscall.c                               | 14 ++--
->  kernel/bpf/verifier.c                              |  4 +-
->  lib/Kconfig.kasan                                  |  7 +-
->  mm/slab_common.c                                   |  2 +-
->  net/9p/client.c                                    | 12 +++-
->  net/core/filter.c                                  |  2 +-
->  samples/landlock/sandboxer.c                       | 32 ++++++++-
->  sound/Kconfig                                      |  2 +-
->  sound/pci/hda/patch_realtek.c                      | 29 ++++++++
->  sound/soc/amd/yc/acp6x-mach.c                      | 14 ++++
->  sound/soc/codecs/aw88399.c                         |  2 +-
->  sound/soc/codecs/lpass-rx-macro.c                  | 15 ++--
->  sound/soc/codecs/rt722-sdca-sdw.c                  |  2 +-
->  sound/soc/fsl/fsl_micfil.c                         | 38 ++++++++++
->  sound/soc/intel/avs/core.c                         |  3 +-
->  sound/soc/intel/avs/pcm.c                          | 19 +++++
->  sound/soc/intel/avs/pcm.h                          | 16 +++++
->  sound/soc/intel/common/soc-acpi-intel-lnl-match.c  | 38 ++++++++++
->  .../selftests/bpf/prog_tests/fill_link_info.c      |  9 +++
->  .../selftests/bpf/progs/verifier_scalar_ids.c      | 67 ++++++++++++++++=
-+
->  73 files changed, 670 insertions(+), 167 deletions(-)
->
->
->
+probably add a umbrella sentence to mark out following features not
+reported via IDRs
+
+> + * - S1P should be assumed to be true if a NESTED HWPT can be created
+> + * - VFIO/iommufd only support platforms with COHACC, it should be
+> assumed to be
+> + *   true.
+> + * - ATS is a per-device property. If the VMM describes any devices as A=
+TS
+> + *   capable in ACPI/DT it should set the corresponding idr.
+> + *
+> + * This list may expand in future (eg E0PD, AIE, PBHA, D128, DS etc). It=
+ is
+> + * important that VMMs do not read bits outside the list to allow for
+> + * compatibility with future kernels. Several features in the SMMUv3
+> + * architecture are not currently supported by the kernel for nesting: H=
+TTU,
+> + * BTM, MPAM and others.
+
+Not sure why HTTU etc. are remarked separately instead of appending to
+the list of E0PD etc. there is a reason for kernel not reporting a certain
+feature now, no matter it's because the kernel hasn't supported it or
+supported it but just doesn't want to report. Knowing the difference=20
+doesn't help the business in VMM...
+
+>   */
+>  struct iommu_hw_info_arm_smmuv3 {
+>  	__u32 flags;
+>=20
+> base-commit: d68beb276ba26cec47350a6d468e967673ee0c56
+> --
+> 2.43.0
+
+If ARM maintainers are OK with the list of the baseline features:
+
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
