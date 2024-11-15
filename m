@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 596B63BBEB;
-	Fri, 15 Nov 2024 06:39:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 994BB3BBEB;
+	Fri, 15 Nov 2024 06:39:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731652782; cv=none; b=pW5NH5ujnM/wWeXp2rxqnWFGncZ8cGJRytOTncK5RNwGaaY68RS4DPNV7IFANjDmOqu7gqZSR+KzH28/2C1mwH6djcZVezX/hLQGoUlL/MX8o71usFw4Wc2I76V4+I136tM5txSLYAGIbEEdi3D+L+5z45KCPYg8dl36yBm0tmE=
+	t=1731652783; cv=none; b=IV58TTIUTj5mLXGUbPhe3QhTBzcq96d3EvP1Zwp2YtW2WfyMrQEO8QLTox9lgS9uK0APFnqixmNGLsYMGah984dLcydjE/RWV5gwyJd/5m68snrzUAq683lLXGinw8XG5/bmhh3yUlj7MNjQijE7yUOFR44WSxJl7RPb3O+xQ/c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731652782; c=relaxed/simple;
-	bh=mHl9pdV5pRLzXyM3woJoBBpPQNp7N9Eglz01vXxXAgM=;
+	s=arc-20240116; t=1731652783; c=relaxed/simple;
+	bh=/BxEGFN9Qqirb+uLuVg15bd2DRN6MSCCBiuJC939JAk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HNfGZt7jTu4fNi/HSMoYK4J+3zI06s+dYLiFgg4sNpSyn1I5yvs2Q2Ru9GHHQI5j7Ff31Zg0wd0SNE5wN9GN4qjG4wO0P14BKJND2dENCww7WgfTZjE/MNtJG6fWUY0kBvs9HtkSS2V4rL++SuT3CFlpUI6dsDO1L9dyqdUPu4c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qwkrh7JF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q4/hD1LOqZoN8DEJRvW99cY3pRN0SNxnQeR9ajnj0vru3oyNoDQHBdad5NPIg2rhzAvPiqK9wqEdCeBp2IXw1DzvRef0PRJ0IY8vjQ9flPQcc42plLTnLm1NQhZ+erx0OBjwK7cDWUTTbfKvEzHu4SQFfIPKVG9py1acnDwAQAQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vqZxDU1U; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qwkrh7JF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D821C4CECF;
-	Fri, 15 Nov 2024 06:39:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vqZxDU1U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5230C4CED0;
+	Fri, 15 Nov 2024 06:39:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731652780;
-	bh=mHl9pdV5pRLzXyM3woJoBBpPQNp7N9Eglz01vXxXAgM=;
+	s=korg; t=1731652783;
+	bh=/BxEGFN9Qqirb+uLuVg15bd2DRN6MSCCBiuJC939JAk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Qwkrh7JFcZoDIrJ5FScv5nI3EqRqBoAyMXVq0bGVBF4RkUBtYg/a+x/D7L7Zzjll8
-	 lsqkxidpKaASWqs3Kbz6fbZoFIliBab9pw2S89cjfxaPSXCWTp16CheTln73+nc6DE
-	 Z9e/XFJBW/2ibGlTvFDC78lqakplR3+UzaQi5av0=
+	b=vqZxDU1Uj3+Qtui7RKpPg2SrHDNduVZtoxMXdO5/GJ+wF3v1k0Po/j6JDkU3p+UC9
+	 sZIm/ir+zGBDJX2GWDIgpiRiUIimueN7pxn6nbXTzqHB9GRXKROjoqRljh0vykE88p
+	 6+4nfXmoHgokR+SPyHZqbmnZpukhGmqP3yU6Malg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
-	Hans Verkuil <hverkuil@xs4all.nl>,
+	Murad Masimov <m.masimov@maxima.ru>,
+	Takashi Sakamoto <o-takashi@sakamocchi.jp>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 13/52] media: adv7604: prevent underflow condition when reporting colorspace
-Date: Fri, 15 Nov 2024 07:37:26 +0100
-Message-ID: <20241115063723.331902109@linuxfoundation.org>
+Subject: [PATCH 4.19 14/52] ALSA: firewire-lib: fix return value on fail in amdtp_tscm_init()
+Date: Fri, 15 Nov 2024 07:37:27 +0100
+Message-ID: <20241115063723.369606903@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241115063722.845867306@linuxfoundation.org>
 References: <20241115063722.845867306@linuxfoundation.org>
@@ -51,72 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+From: Murad Masimov <m.masimov@maxima.ru>
 
-[ Upstream commit 50b9fa751d1aef5d262bde871c70a7f44262f0bc ]
+[ Upstream commit 8abbf1f01d6a2ef9f911f793e30f7382154b5a3a ]
 
-Currently, adv76xx_log_status() reads some date using
-io_read() which may return negative values. The current logic
-doesn't check such errors, causing colorspace to be reported
-on a wrong way at adv76xx_log_status(), as reported by Coverity.
+If amdtp_stream_init() fails in amdtp_tscm_init(), the latter returns zero,
+though it's supposed to return error code, which is checked inside
+init_stream() in file tascam-stream.c.
 
-If I/O error happens there, print a different message, instead
-of reporting bogus messages to userspace.
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-Fixes: 54450f591c99 ("[media] adv7604: driver for the Analog Devices ADV7604 video decoder")
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Reviewed-by: Hans Verkuil <hverkuil@xs4all.nl>
+Fixes: 47faeea25ef3 ("ALSA: firewire-tascam: add data block processing layer")
+Signed-off-by: Murad Masimov <m.masimov@maxima.ru>
+Reviewed-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20241101185517.1819-1-m.masimov@maxima.ru
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/adv7604.c | 26 +++++++++++++++++---------
- 1 file changed, 17 insertions(+), 9 deletions(-)
+ sound/firewire/tascam/amdtp-tascam.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/i2c/adv7604.c b/drivers/media/i2c/adv7604.c
-index 04577d409e63c..c48952f36af1a 100644
---- a/drivers/media/i2c/adv7604.c
-+++ b/drivers/media/i2c/adv7604.c
-@@ -2453,10 +2453,10 @@ static int adv76xx_log_status(struct v4l2_subdev *sd)
- 	const struct adv76xx_chip_info *info = state->info;
- 	struct v4l2_dv_timings timings;
- 	struct stdi_readback stdi;
--	u8 reg_io_0x02 = io_read(sd, 0x02);
-+	int ret;
-+	u8 reg_io_0x02;
- 	u8 edid_enabled;
- 	u8 cable_det;
--
- 	static const char * const csc_coeff_sel_rb[16] = {
- 		"bypassed", "YPbPr601 -> RGB", "reserved", "YPbPr709 -> RGB",
- 		"reserved", "RGB -> YPbPr601", "reserved", "RGB -> YPbPr709",
-@@ -2555,13 +2555,21 @@ static int adv76xx_log_status(struct v4l2_subdev *sd)
- 	v4l2_info(sd, "-----Color space-----\n");
- 	v4l2_info(sd, "RGB quantization range ctrl: %s\n",
- 			rgb_quantization_range_txt[state->rgb_quantization_range]);
--	v4l2_info(sd, "Input color space: %s\n",
--			input_color_space_txt[reg_io_0x02 >> 4]);
--	v4l2_info(sd, "Output color space: %s %s, alt-gamma %s\n",
--			(reg_io_0x02 & 0x02) ? "RGB" : "YCbCr",
--			(((reg_io_0x02 >> 2) & 0x01) ^ (reg_io_0x02 & 0x01)) ?
--				"(16-235)" : "(0-255)",
--			(reg_io_0x02 & 0x08) ? "enabled" : "disabled");
-+
-+	ret = io_read(sd, 0x02);
-+	if (ret < 0) {
-+		v4l2_info(sd, "Can't read Input/Output color space\n");
-+	} else {
-+		reg_io_0x02 = ret;
-+
-+		v4l2_info(sd, "Input color space: %s\n",
-+				input_color_space_txt[reg_io_0x02 >> 4]);
-+		v4l2_info(sd, "Output color space: %s %s, alt-gamma %s\n",
-+				(reg_io_0x02 & 0x02) ? "RGB" : "YCbCr",
-+				(((reg_io_0x02 >> 2) & 0x01) ^ (reg_io_0x02 & 0x01)) ?
-+					"(16-235)" : "(0-255)",
-+				(reg_io_0x02 & 0x08) ? "enabled" : "disabled");
-+	}
- 	v4l2_info(sd, "Color space conversion: %s\n",
- 			csc_coeff_sel_rb[cp_read(sd, info->cp_csc) >> 4]);
+diff --git a/sound/firewire/tascam/amdtp-tascam.c b/sound/firewire/tascam/amdtp-tascam.c
+index ab482423c1654..726cf659133b2 100644
+--- a/sound/firewire/tascam/amdtp-tascam.c
++++ b/sound/firewire/tascam/amdtp-tascam.c
+@@ -172,7 +172,7 @@ int amdtp_tscm_init(struct amdtp_stream *s, struct fw_unit *unit,
+ 				CIP_NONBLOCKING | CIP_SKIP_DBC_ZERO_CHECK, fmt,
+ 				process_data_blocks, sizeof(struct amdtp_tscm));
+ 	if (err < 0)
+-		return 0;
++		return err;
  
+ 	/* Use fixed value for FDF field. */
+ 	s->fdf = 0x00;
 -- 
 2.43.0
 
