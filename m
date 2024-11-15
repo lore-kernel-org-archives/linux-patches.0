@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0044D18893C;
-	Fri, 15 Nov 2024 06:43:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 713ED188701;
+	Fri, 15 Nov 2024 06:43:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731653014; cv=none; b=eu4cRsWv7hHYh2p7wRGzcDhnwVbTvtkGurX8GjGkOy+6bqEjUZzCWXd5BIo5C58BZZDp3uSYjAB2st0YfA3sF7hXj4husIK3HHKbM2tDpwmmOCZfVcpVRutruDHHcdkNqLpL6fm6/EGf217d4nvLUsyO2sv4Q76J7qfziSSrc9o=
+	t=1731653017; cv=none; b=swRQz6eoLaFGGaoRgFDpPSWwcrxzaJdxvzxtLN/t6LSlx7lp/igzArlbDSyL/0mvcwuBAs7MQkGQ3q5PgO3JWVYLodxY4TNFluQEX34VuqD5KXH/5n1pVFGVGx5Mf4ycOBMdRFkzjP2dU8e9MMkTt8rznUXXp6RL1jUI4PU4uG0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731653014; c=relaxed/simple;
-	bh=iptLyuJ6nMekJ/P5zDbSIi+1YCrFQNS/KNuAuxoNH54=;
+	s=arc-20240116; t=1731653017; c=relaxed/simple;
+	bh=QBTg2KMb9OSEZzlC+i1bY++7i+J0JtzylNZaiPbzays=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tNURpkKe+lXszKlVlIJQHMqoybKXCobgu9kpenUat4kYZyI5Hba9hS8FbnS24T1n/7gCPD7VcUB2SfpKJwnDVWtUskuA0Jhzm+c8R9bpACzMe2fJ10VZcT0EnD9rf8giZ9eu5OI/llOJBLp2OuuSITZu2+st4XDhuAUh4XBUtN8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iihTPETX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BzxOGL6U40BK1LUgb/bDQbKdHqiq4EtUSCz1bqx92AUZoV1JtHbvquzJ3Dc8GVwVDgLu8G6winL0rmAUwHQ4+mQ3hnpq0sOqTpFqBj30CW2ZjvGJW3Ld4yXhznDn8nCu/6Y1ZZT27bufQfahh49G99cduMiiP9WXMuD3u8HkerM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K8+CsLKj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iihTPETX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6037AC4CECF;
-	Fri, 15 Nov 2024 06:43:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K8+CsLKj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6593C4CECF;
+	Fri, 15 Nov 2024 06:43:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731653013;
-	bh=iptLyuJ6nMekJ/P5zDbSIi+1YCrFQNS/KNuAuxoNH54=;
+	s=korg; t=1731653017;
+	bh=QBTg2KMb9OSEZzlC+i1bY++7i+J0JtzylNZaiPbzays=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iihTPETXVwDLjpi8jBMve6CV3WmhjvYz1hcfr0ZdS2QyRlmk66yM8FBRJ0glP7HpM
-	 10zg0AEbvKKTNkIYk6GvTQBlwcKB2tc5+bNv4p6bVH5n+prq+u7L4r2IG4xh2IESsS
-	 Qzlwh9H1joJE2em7CK1vW9YSSD6IvaXFjZIq66nk=
+	b=K8+CsLKjK2Gz5fPq9fKfQHLyvNbwzhSorg+g3yXGa1X4dZyGcBpWwyIPJnouSluPt
+	 s1F2k2vbD/gKVPgCJOvlLJiDBCX36KbYt19UiHoZgJXeQeSlZ/864HXts4UWrJ+tPC
+	 VPISw05sXw7PYfHx+sQwbklHG/EOSoINKJE2GLcc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ming-Hung Tsai <mtsai@redhat.com>,
-	Mikulas Patocka <mpatocka@redhat.com>,
-	Joe Thornber <thornber@redhat.com>
-Subject: [PATCH 5.4 29/66] dm cache: optimize dirty bit checking with find_next_bit when resizing
-Date: Fri, 15 Nov 2024 07:37:38 +0100
-Message-ID: <20241115063723.894340994@linuxfoundation.org>
+	Wei Fang <wei.fang@nxp.com>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Claudiu Manoil <claudiu.manoil@nxp.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 12/66] net: enetc: set MAC address to the VF net_device
+Date: Fri, 15 Nov 2024 07:37:21 +0100
+Message-ID: <20241115063723.286509695@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241115063722.834793938@linuxfoundation.org>
 References: <20241115063722.834793938@linuxfoundation.org>
@@ -51,49 +53,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ming-Hung Tsai <mtsai@redhat.com>
+From: Wei Fang <wei.fang@nxp.com>
 
-commit f484697e619a83ecc370443a34746379ad99d204 upstream.
+[ Upstream commit badccd49b93bb945bf4e5cc8707db67cdc5e27e5 ]
 
-When shrinking the fast device, dm-cache iteratively searches for a
-dirty bit among the cache blocks to be dropped, which is less efficient.
-Use find_next_bit instead, as it is twice as fast as the iterative
-approach with test_bit.
+The MAC address of VF can be configured through the mailbox mechanism of
+ENETC, but the previous implementation forgot to set the MAC address in
+net_device, resulting in the SMAC of the sent frames still being the old
+MAC address. Since the MAC address in the hardware has been changed, Rx
+cannot receive frames with the DMAC address as the new MAC address. The
+most obvious phenomenon is that after changing the MAC address, we can
+see that the MAC address of eno0vf0 has not changed through the "ifconfig
+eno0vf0" command and the IP address cannot be obtained .
 
-Signed-off-by: Ming-Hung Tsai <mtsai@redhat.com>
-Fixes: f494a9c6b1b6 ("dm cache: cache shrinking support")
-Cc: stable@vger.kernel.org
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Acked-by: Joe Thornber <thornber@redhat.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+root@ls1028ardb:~# ifconfig eno0vf0 down
+root@ls1028ardb:~# ifconfig eno0vf0 hw ether 00:04:9f:3a:4d:56 up
+root@ls1028ardb:~# ifconfig eno0vf0
+eno0vf0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        ether 66:36:2c:3b:87:76  txqueuelen 1000  (Ethernet)
+        RX packets 794  bytes 69239 (69.2 KB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 11  bytes 2226 (2.2 KB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+Fixes: beb74ac878c8 ("enetc: Add vf to pf messaging support")
+Signed-off-by: Wei Fang <wei.fang@nxp.com>
+Reviewed-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Reviewed-by: Claudiu Manoil <claudiu.manoil@nxp.com>
+Link: https://patch.msgid.link/20241029090406.841836-1-wei.fang@nxp.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/dm-cache-target.c |   16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ drivers/net/ethernet/freescale/enetc/enetc_vf.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
---- a/drivers/md/dm-cache-target.c
-+++ b/drivers/md/dm-cache-target.c
-@@ -3009,14 +3009,14 @@ static bool can_resize(struct cache *cac
- 	/*
- 	 * We can't drop a dirty block when shrinking the cache.
- 	 */
--	while (from_cblock(new_size) < from_cblock(cache->cache_size)) {
--		if (is_dirty(cache, new_size)) {
--			DMERR("%s: unable to shrink cache; cache block %llu is dirty",
--			      cache_device_name(cache),
--			      (unsigned long long) from_cblock(new_size));
--			return false;
--		}
--		new_size = to_cblock(from_cblock(new_size) + 1);
-+	new_size = to_cblock(find_next_bit(cache->dirty_bitset,
-+					   from_cblock(cache->cache_size),
-+					   from_cblock(new_size)));
-+	if (new_size != cache->cache_size) {
-+		DMERR("%s: unable to shrink cache; cache block %llu is dirty",
-+		      cache_device_name(cache),
-+		      (unsigned long long) from_cblock(new_size));
-+		return false;
- 	}
+diff --git a/drivers/net/ethernet/freescale/enetc/enetc_vf.c b/drivers/net/ethernet/freescale/enetc/enetc_vf.c
+index af287b6d5f3b7..85998060df705 100644
+--- a/drivers/net/ethernet/freescale/enetc/enetc_vf.c
++++ b/drivers/net/ethernet/freescale/enetc/enetc_vf.c
+@@ -85,11 +85,18 @@ static int enetc_vf_set_mac_addr(struct net_device *ndev, void *addr)
+ {
+ 	struct enetc_ndev_priv *priv = netdev_priv(ndev);
+ 	struct sockaddr *saddr = addr;
++	int err;
  
- 	return true;
+ 	if (!is_valid_ether_addr(saddr->sa_data))
+ 		return -EADDRNOTAVAIL;
+ 
+-	return enetc_msg_vsi_set_primary_mac_addr(priv, saddr);
++	err = enetc_msg_vsi_set_primary_mac_addr(priv, saddr);
++	if (err)
++		return err;
++
++	eth_hw_addr_set(ndev, saddr->sa_data);
++
++	return 0;
+ }
+ 
+ static int enetc_vf_set_features(struct net_device *ndev,
+-- 
+2.43.0
+
 
 
