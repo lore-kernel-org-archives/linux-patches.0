@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 473FC2BB1B;
-	Fri, 15 Nov 2024 06:48:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 463A82BB1B;
+	Fri, 15 Nov 2024 06:48:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731653299; cv=none; b=fkhrRIxahyqWBOiWnT7XJHuGT2gCrzLvVTVEFqO9fvES3u/16Qlw0Xqvw0e7vWGBSMBmm3OZsXSFCeEQIo8GmgeXvccJSa+meUjJSc1qFhVvDyv0qAeicRxMy7xQUuLdpI8+9smAgvO0YvSXVhuo6/QlnxrfNBRb/o7oUh37G/k=
+	t=1731653302; cv=none; b=a+ISCmqvQEcFffu3YR5Sju5SdAvumpNWA2Pd/U5xDdSoWapyLcOd46O4/3qTJfNKhB8oZPKhbqYv7QA6JZaCnu2DCn+z1F7FGwvmAhOmrnzOv57n7IO0/XIlJwyvoHsXnlLiPp2Mvc3Jsbk87s+OpAhGzMZRGVE7rbV/38tUlJ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731653299; c=relaxed/simple;
-	bh=lDnrpYOsA+VIUDlHxz1jFxDFSD5SfCbXHR6zo6t9wFI=;
+	s=arc-20240116; t=1731653302; c=relaxed/simple;
+	bh=nQ2RuCg/jHbQJlFAFLh8a21CaGg7soj8ouXs5WcEGlg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oUR2Q2bc600D3EQhQJPLyBwFhBFIbVBXEtAMEoemgBnrEsTanaNcGVQvvbOltq6JnG6GqKNydqYnSZ9I+b0ndcSEr2zTiMN2Q/vVTBnxZh3IqB3Pvm+fIqxNWr0VH+qJix8K6+fZiqqkle5ZwaCow+guhRuVEh3xSAbkisqSbK4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2TwznRFZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=bCuP7VK17Qrptda/42dZiAEbfWmImAJc5rj+9jzTa9H05C7cjlTNgX7aT/O7NKgj68yeJN1TRZSavq4Q3zyWDfadIIO3HXw+AcT291rasWHZxaoL6qf91qJliGHe/jDYW1J0Ww0YMwOg3wx/2xbEg1OGXITcxQU4qbcMtcf4Li8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=opdIht4u; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2TwznRFZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75EAFC4CECF;
-	Fri, 15 Nov 2024 06:48:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="opdIht4u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E75AC4CECF;
+	Fri, 15 Nov 2024 06:48:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731653298;
-	bh=lDnrpYOsA+VIUDlHxz1jFxDFSD5SfCbXHR6zo6t9wFI=;
+	s=korg; t=1731653302;
+	bh=nQ2RuCg/jHbQJlFAFLh8a21CaGg7soj8ouXs5WcEGlg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2TwznRFZRJzQk3Gq/vhfF6mn48m8g1Qfq1donlXaVfCLqqX9dQoPBANXcaEuwQHVc
-	 cp5nV6rXfYRf3GeSn8GuZfZfio5fnLMSK5GHwTFIQQn5irh6SLw2rilgCMQKKL+lcU
-	 flztbUfjbjbYQU6lw037r512uvQnAJyoVBYcAxZ0=
+	b=opdIht4u1UnQGFytto4Cy57g+mxOwSc3++ak05P/LbCBr9ZPZuC2nLW1yp4mq3aoO
+	 pyLE++261ZrxoXWCB2jhkwZGUAX05UltZWqaNzGTYRhKSZddmQa7IQVBTT7OZUh2CM
+	 sm4aCcvRoHoZxRsHpeaiNWzq3j/yA8w/fg4KVv6c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	linux-afs@lists.infradead.org,
-	linux-fsdevel@vger.kernel.org,
-	Christian Brauner <brauner@kernel.org>,
+	=?UTF-8?q?Bart=C5=82omiej=20Mary=C5=84czak?= <marynczakbartlomiej@gmail.com>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 45/63] afs: Fix lock recursion
-Date: Fri, 15 Nov 2024 07:38:08 +0100
-Message-ID: <20241115063727.539320914@linuxfoundation.org>
+Subject: [PATCH 6.11 46/63] HID: i2c-hid: Delayed i2c resume wakeup for 0x0d42 Goodix touchpad
+Date: Fri, 15 Nov 2024 07:38:09 +0100
+Message-ID: <20241115063727.574560864@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241115063725.892410236@linuxfoundation.org>
 References: <20241115063725.892410236@linuxfoundation.org>
@@ -48,218 +45,92 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.11-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Bartłomiej Maryńczak <marynczakbartlomiej@gmail.com>
 
-[ Upstream commit 610a79ffea02102899a1373fe226d949944a7ed6 ]
+[ Upstream commit 293c485cbac2607595fdaae2b1fb390fc7b2d014 ]
 
-afs_wake_up_async_call() can incur lock recursion.  The problem is that it
-is called from AF_RXRPC whilst holding the ->notify_lock, but it tries to
-take a ref on the afs_call struct in order to pass it to a work queue - but
-if the afs_call is already queued, we then have an extraneous ref that must
-be put... calling afs_put_call() may call back down into AF_RXRPC through
-rxrpc_kernel_shutdown_call(), however, which might try taking the
-->notify_lock again.
+Patch for Goodix 27c6:0d42 touchpads found in Inspiron 5515 laptops.
 
-This case isn't very common, however, so defer it to a workqueue.  The oops
-looks something like:
+After resume from suspend, one can communicate with this device just fine.
+We can read data from it or request a reset,
+but for some reason the interrupt line will not go up
+when new events are available.
+(it can correctly respond to a reset with an interrupt tho)
 
-  BUG: spinlock recursion on CPU#0, krxrpcio/7001/1646
-   lock: 0xffff888141399b30, .magic: dead4ead, .owner: krxrpcio/7001/1646, .owner_cpu: 0
-  CPU: 0 UID: 0 PID: 1646 Comm: krxrpcio/7001 Not tainted 6.12.0-rc2-build3+ #4351
-  Hardware name: ASUS All Series/H97-PLUS, BIOS 2306 10/09/2014
-  Call Trace:
-   <TASK>
-   dump_stack_lvl+0x47/0x70
-   do_raw_spin_lock+0x3c/0x90
-   rxrpc_kernel_shutdown_call+0x83/0xb0
-   afs_put_call+0xd7/0x180
-   rxrpc_notify_socket+0xa0/0x190
-   rxrpc_input_split_jumbo+0x198/0x1d0
-   rxrpc_input_data+0x14b/0x1e0
-   ? rxrpc_input_call_packet+0xc2/0x1f0
-   rxrpc_input_call_event+0xad/0x6b0
-   rxrpc_input_packet_on_conn+0x1e1/0x210
-   rxrpc_input_packet+0x3f2/0x4d0
-   rxrpc_io_thread+0x243/0x410
-   ? __pfx_rxrpc_io_thread+0x10/0x10
-   kthread+0xcf/0xe0
-   ? __pfx_kthread+0x10/0x10
-   ret_from_fork+0x24/0x40
-   ? __pfx_kthread+0x10/0x10
-   ret_from_fork_asm+0x1a/0x30
-   </TASK>
+The only way I found to wake this device up
+is to send anything to it after ~1.5s mark,
+for example a simple read request, or power mode change.
 
-Signed-off-by: David Howells <dhowells@redhat.com>
-Link: https://lore.kernel.org/r/1394602.1729162732@warthog.procyon.org.uk
-cc: Marc Dionne <marc.dionne@auristor.com>
-cc: linux-afs@lists.infradead.org
-cc: linux-fsdevel@vger.kernel.org
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+In this patch, I simply delay the resume steps with msleep,
+this will cause the set_power request to happen after
+the ~1.5s barrier causing the device to resume its event interrupts.
+
+Sleep was used rather than delayed_work
+to make this workaround as non-invasive as possible.
+
+[jkosina@suse.com: shortlog update]
+Signed-off-by: Bartłomiej Maryńczak <marynczakbartlomiej@gmail.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/afs/internal.h |  2 ++
- fs/afs/rxrpc.c    | 83 +++++++++++++++++++++++++++++++++--------------
- 2 files changed, 61 insertions(+), 24 deletions(-)
+ drivers/hid/hid-ids.h              |  1 +
+ drivers/hid/i2c-hid/i2c-hid-core.c | 10 ++++++++++
+ 2 files changed, 11 insertions(+)
 
-diff --git a/fs/afs/internal.h b/fs/afs/internal.h
-index b306c09808706..c9d620175e80c 100644
---- a/fs/afs/internal.h
-+++ b/fs/afs/internal.h
-@@ -130,6 +130,7 @@ struct afs_call {
- 	wait_queue_head_t	waitq;		/* processes awaiting completion */
- 	struct work_struct	async_work;	/* async I/O processor */
- 	struct work_struct	work;		/* actual work processor */
-+	struct work_struct	free_work;	/* Deferred free processor */
- 	struct rxrpc_call	*rxcall;	/* RxRPC call handle */
- 	struct rxrpc_peer	*peer;		/* Remote endpoint */
- 	struct key		*key;		/* security for this call */
-@@ -1333,6 +1334,7 @@ extern int __net_init afs_open_socket(struct afs_net *);
- extern void __net_exit afs_close_socket(struct afs_net *);
- extern void afs_charge_preallocation(struct work_struct *);
- extern void afs_put_call(struct afs_call *);
-+void afs_deferred_put_call(struct afs_call *call);
- void afs_make_call(struct afs_call *call, gfp_t gfp);
- void afs_wait_for_call_to_complete(struct afs_call *call);
- extern struct afs_call *afs_alloc_flat_call(struct afs_net *,
-diff --git a/fs/afs/rxrpc.c b/fs/afs/rxrpc.c
-index c453428f3c8ba..9f2a3bb56ec69 100644
---- a/fs/afs/rxrpc.c
-+++ b/fs/afs/rxrpc.c
-@@ -18,6 +18,7 @@
+diff --git a/drivers/hid/hid-ids.h b/drivers/hid/hid-ids.h
+index 8a991b30e3c6d..25f96494700d8 100644
+--- a/drivers/hid/hid-ids.h
++++ b/drivers/hid/hid-ids.h
+@@ -509,6 +509,7 @@
+ #define I2C_DEVICE_ID_GOODIX_01E8	0x01e8
+ #define I2C_DEVICE_ID_GOODIX_01E9	0x01e9
+ #define I2C_DEVICE_ID_GOODIX_01F0	0x01f0
++#define I2C_DEVICE_ID_GOODIX_0D42	0x0d42
  
- struct workqueue_struct *afs_async_calls;
+ #define USB_VENDOR_ID_GOODTOUCH		0x1aad
+ #define USB_DEVICE_ID_GOODTOUCH_000f	0x000f
+diff --git a/drivers/hid/i2c-hid/i2c-hid-core.c b/drivers/hid/i2c-hid/i2c-hid-core.c
+index 2f8a9d3f1e861..8914c7db94718 100644
+--- a/drivers/hid/i2c-hid/i2c-hid-core.c
++++ b/drivers/hid/i2c-hid/i2c-hid-core.c
+@@ -50,6 +50,7 @@
+ #define I2C_HID_QUIRK_BAD_INPUT_SIZE		BIT(3)
+ #define I2C_HID_QUIRK_NO_WAKEUP_AFTER_RESET	BIT(4)
+ #define I2C_HID_QUIRK_NO_SLEEP_ON_SUSPEND	BIT(5)
++#define I2C_HID_QUIRK_DELAY_WAKEUP_AFTER_RESUME BIT(6)
  
-+static void afs_deferred_free_worker(struct work_struct *work);
- static void afs_wake_up_call_waiter(struct sock *, struct rxrpc_call *, unsigned long);
- static void afs_wake_up_async_call(struct sock *, struct rxrpc_call *, unsigned long);
- static void afs_process_async_call(struct work_struct *);
-@@ -149,6 +150,7 @@ static struct afs_call *afs_alloc_call(struct afs_net *net,
- 	call->debug_id = atomic_inc_return(&rxrpc_debug_id);
- 	refcount_set(&call->ref, 1);
- 	INIT_WORK(&call->async_work, afs_process_async_call);
-+	INIT_WORK(&call->free_work, afs_deferred_free_worker);
- 	init_waitqueue_head(&call->waitq);
- 	spin_lock_init(&call->state_lock);
- 	call->iter = &call->def_iter;
-@@ -159,6 +161,36 @@ static struct afs_call *afs_alloc_call(struct afs_net *net,
- 	return call;
- }
+ /* Command opcodes */
+ #define I2C_HID_OPCODE_RESET			0x01
+@@ -140,6 +141,8 @@ static const struct i2c_hid_quirks {
+ 	{ USB_VENDOR_ID_ELAN, HID_ANY_ID,
+ 		 I2C_HID_QUIRK_NO_WAKEUP_AFTER_RESET |
+ 		 I2C_HID_QUIRK_BOGUS_IRQ },
++	{ I2C_VENDOR_ID_GOODIX, I2C_DEVICE_ID_GOODIX_0D42,
++		 I2C_HID_QUIRK_DELAY_WAKEUP_AFTER_RESUME },
+ 	{ 0, 0 }
+ };
  
-+static void afs_free_call(struct afs_call *call)
-+{
-+	struct afs_net *net = call->net;
-+	int o;
-+
-+	ASSERT(!work_pending(&call->async_work));
-+
-+	rxrpc_kernel_put_peer(call->peer);
-+
-+	if (call->rxcall) {
-+		rxrpc_kernel_shutdown_call(net->socket, call->rxcall);
-+		rxrpc_kernel_put_call(net->socket, call->rxcall);
-+		call->rxcall = NULL;
-+	}
-+	if (call->type->destructor)
-+		call->type->destructor(call);
-+
-+	afs_unuse_server_notime(call->net, call->server, afs_server_trace_put_call);
-+	kfree(call->request);
-+
-+	o = atomic_read(&net->nr_outstanding_calls);
-+	trace_afs_call(call->debug_id, afs_call_trace_free, 0, o,
-+		       __builtin_return_address(0));
-+	kfree(call);
-+
-+	o = atomic_dec_return(&net->nr_outstanding_calls);
-+	if (o == 0)
-+		wake_up_var(&net->nr_outstanding_calls);
-+}
-+
- /*
-  * Dispose of a reference on a call.
-  */
-@@ -173,32 +205,34 @@ void afs_put_call(struct afs_call *call)
- 	o = atomic_read(&net->nr_outstanding_calls);
- 	trace_afs_call(debug_id, afs_call_trace_put, r - 1, o,
- 		       __builtin_return_address(0));
-+	if (zero)
-+		afs_free_call(call);
-+}
- 
--	if (zero) {
--		ASSERT(!work_pending(&call->async_work));
--		ASSERT(call->type->name != NULL);
--
--		rxrpc_kernel_put_peer(call->peer);
--
--		if (call->rxcall) {
--			rxrpc_kernel_shutdown_call(net->socket, call->rxcall);
--			rxrpc_kernel_put_call(net->socket, call->rxcall);
--			call->rxcall = NULL;
--		}
--		if (call->type->destructor)
--			call->type->destructor(call);
-+static void afs_deferred_free_worker(struct work_struct *work)
-+{
-+	struct afs_call *call = container_of(work, struct afs_call, free_work);
- 
--		afs_unuse_server_notime(call->net, call->server, afs_server_trace_put_call);
--		kfree(call->request);
-+	afs_free_call(call);
-+}
- 
--		trace_afs_call(call->debug_id, afs_call_trace_free, 0, o,
--			       __builtin_return_address(0));
--		kfree(call);
-+/*
-+ * Dispose of a reference on a call, deferring the cleanup to a workqueue
-+ * to avoid lock recursion.
-+ */
-+void afs_deferred_put_call(struct afs_call *call)
-+{
-+	struct afs_net *net = call->net;
-+	unsigned int debug_id = call->debug_id;
-+	bool zero;
-+	int r, o;
- 
--		o = atomic_dec_return(&net->nr_outstanding_calls);
--		if (o == 0)
--			wake_up_var(&net->nr_outstanding_calls);
--	}
-+	zero = __refcount_dec_and_test(&call->ref, &r);
-+	o = atomic_read(&net->nr_outstanding_calls);
-+	trace_afs_call(debug_id, afs_call_trace_put, r - 1, o,
-+		       __builtin_return_address(0));
-+	if (zero)
-+		schedule_work(&call->free_work);
- }
- 
- static struct afs_call *afs_get_call(struct afs_call *call,
-@@ -640,7 +674,8 @@ static void afs_wake_up_call_waiter(struct sock *sk, struct rxrpc_call *rxcall,
- }
- 
- /*
-- * wake up an asynchronous call
-+ * Wake up an asynchronous call.  The caller is holding the call notify
-+ * spinlock around this, so we can't call afs_put_call().
-  */
- static void afs_wake_up_async_call(struct sock *sk, struct rxrpc_call *rxcall,
- 				   unsigned long call_user_ID)
-@@ -657,7 +692,7 @@ static void afs_wake_up_async_call(struct sock *sk, struct rxrpc_call *rxcall,
- 			       __builtin_return_address(0));
- 
- 		if (!queue_work(afs_async_calls, &call->async_work))
--			afs_put_call(call);
-+			afs_deferred_put_call(call);
+@@ -981,6 +984,13 @@ static int i2c_hid_core_resume(struct i2c_hid *ihid)
+ 		return -ENXIO;
  	}
- }
  
++	/* On Goodix 27c6:0d42 wait extra time before device wakeup.
++	 * It's not clear why but if we send wakeup too early, the device will
++	 * never trigger input interrupts.
++	 */
++	if (ihid->quirks & I2C_HID_QUIRK_DELAY_WAKEUP_AFTER_RESUME)
++		msleep(1500);
++
+ 	/* Instead of resetting device, simply powers the device on. This
+ 	 * solves "incomplete reports" on Raydium devices 2386:3118 and
+ 	 * 2386:4B33 and fixes various SIS touchscreens no longer sending
 -- 
 2.43.0
 
