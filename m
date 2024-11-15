@@ -1,50 +1,50 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.10])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D2E514F9D9;
-	Fri, 15 Nov 2024 03:20:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.10
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7249E52F71;
+	Fri, 15 Nov 2024 03:24:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731640812; cv=none; b=tB2XaJP7s7DMmJXD1Rgln3tINfQLIwJbb5UJ5SgU68+48HmBQ+in5YcXUPhlkwgWNiXbgFKNkimeb2UMu31+jBrE4YD4dfTRFYU4TrUb0BMwX1x31sHW3wy+rrPqWc2t6XoGpGaQ3V7FO7Ehdp8kfbC8c1lakSAxJosgdOTkheA=
+	t=1731641063; cv=none; b=Szec9DLQsmFHfds2/Aa6a/dVxwmlqtmjH1nvDkDdSJiF1wo/u7gJFJ+v+zK6JBcGaEy7iZkLziE2Ysr8+NImK5yf2mJgIDEeYQMF1Ng5vij7fDQydwbIACV6Y7t50fEMa+YxVxlKX/q9RyJacXGgKpuE1ryjrPJ+RmTRVBaFCoQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731640812; c=relaxed/simple;
-	bh=EmmauIawg383LKUBt/6r/yNcNhvgcVIZnj39fkNbIv8=;
+	s=arc-20240116; t=1731641063; c=relaxed/simple;
+	bh=8QTLKulU08ztsSRY97lKpfpwjYQSjInkq5JQac5Ipcw=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=aOT1O6woK1Iz/JSBPz7/fuKGvCbc3daCOeCi0MabUXNWrymwvU9pAtmZhng7iSjmCX0XTK0rnrNxcg2IO8974DfiUM0cOPr3cdjzRSCqpC9t3KGZitaXzWGQq9/jKEj1WEUZ2D8XiDVymWd0fNSSodoKPGw5dKVHrCkuzuiyU2Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=KuxVc71l; arc=none smtp.client-ip=192.198.163.10
+	 In-Reply-To:Content-Type; b=epWn8+opWZdmP1atCPqk1z4JYqDG6LisgZQfBpTQo58I/rWbPAEeTVxedP1lD9kdos4u1B/MrCyDFMDvwaIi6AfTRwR4DFCegiXjG3tkP3+7ZXj1k8S2iwAYFJiJ8C5OCEllLWoD6ZEQ2DsmaWt7S5C7pNnpQeGUDOlRKK0DYHM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=UeQIt2IC; arc=none smtp.client-ip=192.198.163.12
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="KuxVc71l"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="UeQIt2IC"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1731640810; x=1763176810;
+  t=1731641061; x=1763177061;
   h=message-id:date:mime-version:subject:to:cc:references:
    from:in-reply-to:content-transfer-encoding;
-  bh=EmmauIawg383LKUBt/6r/yNcNhvgcVIZnj39fkNbIv8=;
-  b=KuxVc71lgwa9ezoyad055MKb3YyGlWYEquLOLRgqGX1TEdUqbW6li4jo
-   9KgQjr1HuQNDapOyyaYGXe/zLaKNGpPhl5zM30NrgvuVCcp68/cky77R2
-   FiDboKBNdJ0t0NTJYAjHJwc1C7kc5vvKPJSrHDNztdduuFphGcbYkQxFE
-   HiZng8GHHN8jxEZQZ/RWDt0EsbteLCbDXWZVAzQaviMQvjF65uliGt9JU
-   60d+R9ua/SBppB688Xgog3Qw5G514h8r69BXPdP3IPAGOrRapX43Z0bIx
-   i5ZrZZLOU/kIlkovkyF+r9coYDOqAHowiI4dhdCxzYJ5fJ1eyaeUcchxv
-   A==;
-X-CSE-ConnectionGUID: u8qSZTZCSyufpL8TeZYZWg==
-X-CSE-MsgGUID: rEhCG+2RQdWNL+K0WQHLhg==
-X-IronPort-AV: E=McAfee;i="6700,10204,11256"; a="43014889"
+  bh=8QTLKulU08ztsSRY97lKpfpwjYQSjInkq5JQac5Ipcw=;
+  b=UeQIt2ICWTMqSujkQF720eLI7L8a/gqkJhULfgz1IF1evfiHNi6YZWRR
+   rGn8zSXeKSsP8VMct4Hge4JXWCt3I+wLzSOsMWgTTwILIKJO5IalcO3vF
+   925FrNJMPle4cv4tMk1lyMTCbKfEUPaKoXVOOBIBA5wneYPyqgAFzhkvV
+   zRaA4WM42nRco+w4ty4HmWNO/47rQe8j+a7XDh3JEartqErGuEzLUWNQO
+   wXtRH0pjMZUxbMOPBVfZCWvAH9s7dFBHNseTsvYIKeYf8drfIaHQn++CF
+   91LVyeCpFNdIBv9RMmzXBOB+YXr9b/SUod925lTqOf5ADn5pI4s+KMl49
+   g==;
+X-CSE-ConnectionGUID: nS19FSs+TK2T6BLYdnoNsg==
+X-CSE-MsgGUID: 4Rv+z3OQQ8GMHSVHqWdJww==
+X-IronPort-AV: E=McAfee;i="6700,10204,11256"; a="35547979"
 X-IronPort-AV: E=Sophos;i="6.12,155,1728975600"; 
-   d="scan'208";a="43014889"
-Received: from orviesa008.jf.intel.com ([10.64.159.148])
-  by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Nov 2024 19:20:09 -0800
-X-CSE-ConnectionGUID: AtpwSsV+RnaGl0XhBl2YSw==
-X-CSE-MsgGUID: J2He9sEdRqWy3hAuDWdm3Q==
+   d="scan'208";a="35547979"
+Received: from fmviesa009.fm.intel.com ([10.60.135.149])
+  by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Nov 2024 19:24:20 -0800
+X-CSE-ConnectionGUID: bz14ucyiSAKh7VeVs8wqJA==
+X-CSE-MsgGUID: Pp7bmtyYTW64DjWErzO2FQ==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.12,155,1728975600"; 
-   d="scan'208";a="89166020"
+   d="scan'208";a="88819369"
 Received: from allen-sbox.sh.intel.com (HELO [10.239.159.30]) ([10.239.159.30])
-  by orviesa008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Nov 2024 19:20:07 -0800
-Message-ID: <9c065d9d-ec97-4d3c-a2af-0dd4fe40ad5a@linux.intel.com>
-Date: Fri, 15 Nov 2024 11:19:03 +0800
+  by fmviesa009-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Nov 2024 19:23:53 -0800
+Message-ID: <e9981960-a7f0-4e0f-991a-0b96e1d57cd5@linux.intel.com>
+Date: Fri, 15 Nov 2024 11:22:50 +0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -52,7 +52,8 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] iommu: Add ops->domain_alloc_nested()
+Subject: Re: [PATCH 2/2] iommu: Rename ops->domain_alloc_user() to
+ domain_alloc_paging_flags()
 To: Jason Gunthorpe <jgg@nvidia.com>, David Woodhouse <dwmw2@infradead.org>,
  iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>,
  Kevin Tian <kevin.tian@intel.com>, linux-arm-kernel@lists.infradead.org,
@@ -60,75 +61,33 @@ To: Jason Gunthorpe <jgg@nvidia.com>, David Woodhouse <dwmw2@infradead.org>,
  Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
  Will Deacon <will@kernel.org>
 Cc: patches@lists.linux.dev
-References: <1-v1-c252ebdeb57b+329-iommu_paging_flags_jgg@nvidia.com>
+References: <2-v1-c252ebdeb57b+329-iommu_paging_flags_jgg@nvidia.com>
 Content-Language: en-US
 From: Baolu Lu <baolu.lu@linux.intel.com>
-In-Reply-To: <1-v1-c252ebdeb57b+329-iommu_paging_flags_jgg@nvidia.com>
+In-Reply-To: <2-v1-c252ebdeb57b+329-iommu_paging_flags_jgg@nvidia.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 On 11/15/24 03:55, Jason Gunthorpe wrote:
-> It turns out all the drivers that are using this immediately call into
-> another function, so just make that function directly into the op. This
-> makes paging=NULL for domain_alloc_user and we can remove the argument in
-> the next patch.
+> Now that the main domain allocating path is calling this function it
+> doesn't make sense to leave it named _user. Change the name to
+> alloc_paging_flags() to mirror the new iommu_paging_domain_alloc_flags()
+> function.
 > 
-> The function mirrors the similar op in the viommu that allocates a nested
-> domain on top of the viommu's nesting parent. This version supports cases
-> where a viommu is not being used.
+> A driver should implement only one of ops->domain_alloc_paging() or
+> ops->domain_alloc_paging_user(). The former is a simpler interface with
+
+s/user/flags/
+
+I think domain_alloc_paging and domain_alloc_paging_flags will
+eventually be merged into a single domain_alloc_paging with flag
+support.
+
+> less boiler plate that the majority of drivers use. The latter is for
+> drivers with a greater feature set (PASID, multiple page table support,
+> advanced iommufd support, nesting, etc). Additional patches will be needed
+> to achieve this.
 > 
 > Signed-off-by: Jason Gunthorpe<jgg@nvidia.com>
-> ---
->   drivers/iommu/intel/iommu.c          |  9 +++------
->   drivers/iommu/intel/iommu.h          |  6 ++++--
->   drivers/iommu/intel/nested.c         | 11 +++++++++--
->   drivers/iommu/iommufd/hw_pagetable.c |  8 ++++----
->   drivers/iommu/iommufd/selftest.c     |  7 ++++---
->   include/linux/iommu.h                |  9 +++++----
->   6 files changed, 29 insertions(+), 21 deletions(-)
->
 
 Reviewed-by: Lu Baolu <baolu.lu@linux.intel.com>
-
-with below minor suggestion.
-
-[...]
-
-> diff --git a/drivers/iommu/intel/nested.c b/drivers/iommu/intel/nested.c
-> index 42c4533a6ea21d..aba92c00b42740 100644
-> --- a/drivers/iommu/intel/nested.c
-> +++ b/drivers/iommu/intel/nested.c
-> @@ -186,14 +186,21 @@ static const struct iommu_domain_ops intel_nested_domain_ops = {
->   	.cache_invalidate_user	= intel_nested_cache_invalidate_user,
->   };
->   
-> -struct iommu_domain *intel_nested_domain_alloc(struct iommu_domain *parent,
-> -					       const struct iommu_user_data *user_data)
-> +struct iommu_domain *
-> +intel_iommu_domain_alloc_nested(struct device *dev, struct iommu_domain *parent,
-> +				u32 flags,
-> +				const struct iommu_user_data *user_data)
->   {
-> +	struct device_domain_info *info = dev_iommu_priv_get(dev);
->   	struct dmar_domain *s2_domain = to_dmar_domain(parent);
-> +	struct intel_iommu *iommu = info->iommu;
->   	struct iommu_hwpt_vtd_s1 vtd;
->   	struct dmar_domain *domain;
->   	int ret;
->   
-> +	if (!nested_supported(iommu) || flags)
-> +		return ERR_PTR(-EOPNOTSUPP);
-
-How about making it like
-
-         if (!nested_supported(iommu) || (flags & 
-~IOMMU_HWPT_FAULT_ID_VALID))
-                 return ERR_PTR(-EOPNOTSUPP);
-
-         if ((flags & IOMMU_HWPT_FAULT_ID_VALID) && !info->pri_supported)
-                 return ERR_PTR(-EOPNOTSUPP);
-
-?
-
---
-baolu
