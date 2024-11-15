@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FC3E2BB1B;
-	Fri, 15 Nov 2024 06:58:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD967185924;
+	Fri, 15 Nov 2024 06:58:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731653882; cv=none; b=XwZoUVDc3s3Dg8XrLgNTFTvCprhFHbANwHL9calZa3p0slDqPXEmnvBJlUAU6PspLlQ0lnwfCghCfx9pfLYCUCSabIzgKEZqjbiF1gATK7UCmSLTTCsX8jlEBBXkAZDy52SKlkNUM3NJEYg8LsNpdwDTFn1Lu5I/qDBQQ8thaCk=
+	t=1731653886; cv=none; b=kmqzBxP8d3n/cmkheV2y+OCpZ8ymw3YvfsCxLoJy5LHiZVas0mH+F4UWnXw7yhJ/M5Ro3R2X/y73DE4IHG7r7uOtMOd/F85psjbIjHmWBhw96oPa7i5D3KxgPDSAX789ETa9QGFKyF13tL1Ly2loQWGkfSv5MA8+2NTlpcvy9io=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731653882; c=relaxed/simple;
-	bh=BrYjxwXZUME6GbBdEgZxb24SLTqw82z6qG3ue9+D3Zw=;
+	s=arc-20240116; t=1731653886; c=relaxed/simple;
+	bh=N3tDIAVgXV+6lUo4ixu33LI3zNwfM+Sum/A10oSxkGg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QAR5hKd9HwS/Zy2TSbxBbQOYmFecSBx0DbE82wK3espOLYuWVmwPhJwjQ4GDl6CsYx0ijfUUtUEOBGxFDYmz0JRs0MURiQdNeVid9AUupV8It88UGtI/k1aCalxeKOdSmzLx0pKEbQT87CSTE3YEFfY/wMl6YmvY4Hde8nEBtKk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nTgkw7KF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mBAeDZbCpw7AZ1t3ixad36StHleLteFKMlb2woo98hU3MHE5g2wahRi3QACntiu/ljHrgCKZCuzyMfKmHgQUBOarpDwo6UJpjZ84QkZWyIl+0XqvjZOVA5jQ9+/WjuhYrf8yNsP1nq6uusRFYJO6wqAhAkHwD8U/xyFx1/ZJqH4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EDTAk/l8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nTgkw7KF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2953FC4CECF;
-	Fri, 15 Nov 2024 06:58:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EDTAk/l8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53AA5C4CECF;
+	Fri, 15 Nov 2024 06:58:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731653882;
-	bh=BrYjxwXZUME6GbBdEgZxb24SLTqw82z6qG3ue9+D3Zw=;
+	s=korg; t=1731653885;
+	bh=N3tDIAVgXV+6lUo4ixu33LI3zNwfM+Sum/A10oSxkGg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nTgkw7KF1ZeimaFd8FUXR3iZACV78b5hLeFmU7nlyMkmoU0WNToiwS00pAyEqVOx2
-	 2K+BXA2UQ+6An0D5yVDpdfP5kpJTBGC8okzw4Bc6mAYfMXJegt3UgqyrznfHbsm/kh
-	 lYMD8olKhGSEzcyhO527dhSLMse4blr9TV2WcJBw=
+	b=EDTAk/l8gDn1p8sHnk/ophT5+lefb2Rn2tHwt0uW5u1K916Rq52KlWWGU+GFkhye+
+	 uLI52WYDyakTOB3hT3sMQLAdi74j/8H00l0NowVM73I5k8hfYlEaW+5dMZtNVjd+f9
+	 0QuhtpBGGfG0swgbrbXhOpvEKnS14h1iPWCkmNDY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Subject: [PATCH 5.10 30/82] media: cx24116: prevent overflows on SNR calculus
-Date: Fri, 15 Nov 2024 07:38:07 +0100
-Message-ID: <20241115063726.649969656@linuxfoundation.org>
+Subject: [PATCH 5.10 31/82] media: pulse8-cec: fix data timestamp at pulse8_setup()
+Date: Fri, 15 Nov 2024 07:38:08 +0100
+Message-ID: <20241115063726.685009417@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241115063725.561151311@linuxfoundation.org>
 References: <20241115063725.561151311@linuxfoundation.org>
@@ -51,44 +51,60 @@ Content-Transfer-Encoding: 8bit
 
 From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 
-commit 576a307a7650bd544fbb24df801b9b7863b85e2f upstream.
+commit ba9cf6b430433e57bfc8072364e944b7c0eca2a4 upstream.
 
-as reported by Coverity, if reading SNR registers fail, a negative
-number will be returned, causing an underflow when reading SNR
-registers.
+As pointed by Coverity, there is a hidden overflow condition there.
+As date is signed and u8 is unsigned, doing:
 
-Prevent that.
+	date = (data[0] << 24)
 
-Fixes: 8953db793d5b ("V4L/DVB (9178): cx24116: Add module parameter to return SNR as ESNO.")
+With a value bigger than 07f will make all upper bits of date
+0xffffffff. This can be demonstrated with this small code:
+
+<code>
+typedef int64_t time64_t;
+typedef uint8_t u8;
+
+int main(void)
+{
+	u8 data[] = { 0xde ,0xad , 0xbe, 0xef };
+	time64_t date;
+
+	date = (data[0] << 24) | (data[1] << 16) | (data[2] << 8) | data[3];
+	printf("Invalid data = 0x%08lx\n", date);
+
+	date = ((unsigned)data[0] << 24) | (data[1] << 16) | (data[2] << 8) | data[3];
+	printf("Expected data = 0x%08lx\n", date);
+
+	return 0;
+}
+</code>
+
+Fix it by converting the upper bit calculation to unsigned.
+
+Fixes: cea28e7a55e7 ("media: pulse8-cec: reorganize function order")
 Cc: stable@vger.kernel.org
 Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/dvb-frontends/cx24116.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/media/cec/usb/pulse8/pulse8-cec.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/media/dvb-frontends/cx24116.c
-+++ b/drivers/media/dvb-frontends/cx24116.c
-@@ -741,6 +741,7 @@ static int cx24116_read_snr_pct(struct d
- {
- 	struct cx24116_state *state = fe->demodulator_priv;
- 	u8 snr_reading;
-+	int ret;
- 	static const u32 snr_tab[] = { /* 10 x Table (rounded up) */
- 		0x00000, 0x0199A, 0x03333, 0x04ccD, 0x06667,
- 		0x08000, 0x0999A, 0x0b333, 0x0cccD, 0x0e667,
-@@ -749,7 +750,11 @@ static int cx24116_read_snr_pct(struct d
+diff --git a/drivers/media/cec/usb/pulse8/pulse8-cec.c b/drivers/media/cec/usb/pulse8/pulse8-cec.c
+index ba67587bd43e..171366fe3544 100644
+--- a/drivers/media/cec/usb/pulse8/pulse8-cec.c
++++ b/drivers/media/cec/usb/pulse8/pulse8-cec.c
+@@ -685,7 +685,7 @@ static int pulse8_setup(struct pulse8 *pulse8, struct serio *serio,
+ 	err = pulse8_send_and_wait(pulse8, cmd, 1, cmd[0], 4);
+ 	if (err)
+ 		return err;
+-	date = (data[0] << 24) | (data[1] << 16) | (data[2] << 8) | data[3];
++	date = ((unsigned)data[0] << 24) | (data[1] << 16) | (data[2] << 8) | data[3];
+ 	dev_info(pulse8->dev, "Firmware build date %ptT\n", &date);
  
- 	dprintk("%s()\n", __func__);
- 
--	snr_reading = cx24116_readreg(state, CX24116_REG_QUALITY0);
-+	ret = cx24116_readreg(state, CX24116_REG_QUALITY0);
-+	if (ret  < 0)
-+		return ret;
-+
-+	snr_reading = ret;
- 
- 	if (snr_reading >= 0xa0 /* 100% */)
- 		*snr = 0xffff;
+ 	dev_dbg(pulse8->dev, "Persistent config:\n");
+-- 
+2.47.0
+
 
 
