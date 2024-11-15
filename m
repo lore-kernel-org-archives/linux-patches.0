@@ -1,43 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC91A188917;
-	Fri, 15 Nov 2024 06:44:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A1B9188A18;
+	Fri, 15 Nov 2024 06:44:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731653051; cv=none; b=cb++V2nrHDWuvBTdDAaQoOxJooqYMu5tMELwV3TCfcjmCynYTnb9H+0oeBfS9aYB5fXPageGkl5zpVXDoEStoaBC92EekAl2CoFQOFFrxGJARd003HJg6epcg6oq4aG6Vp8i4Q6cZP1/9+O235JqcKr1sPdxc9Embge7ITd2zF4=
+	t=1731653055; cv=none; b=KyGoq3Kp1pIdZvjfHevHo+po7WoVf9HEAhtweMZYD35xfY2lfqMRo+w3S2N8iNzXObrWmMAe9jrCcQlkCTVNIzJ/RlOsCqX/sMk/qJhOjQ6fBVWsosCbNvD/9gq0UD3ucd+oYGkDC7EvjMhe38KNkfuLEH/EWMfFuQ5PcJ/ZXco=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731653051; c=relaxed/simple;
-	bh=Ct4G0ecX5nC42HpAR0gU0inUyIbrxChzBChC0DL9eqc=;
+	s=arc-20240116; t=1731653055; c=relaxed/simple;
+	bh=5RmG8YwQN25fGfdsFIESKorNL/a6Demz+sJPUFbGkJc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B7LPdQqZbT27tIAxO8WzhrBb2fwefxmDRJFWbyOEKQ1kST1kwWFVjmZD4BrXsXvy2qx3VZww/AkVXQh3gH+jE6Zm1Tr3ER9umSx5QaNamHw1TPq58UY4UDeyefVbMHDYGE3yuD5WMduu0bnBoehIyZy36zVNuHO1eYL240zgbDg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PaAvI1Ox; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=M62DknLInPuy6zDZaF5EH5TNPOD79yWaxKpBR/RGD5v5l0czSuagzSDD+8PwOWFr2zIjnBetNodxNyPzXm3QWQ0+CrfKVD77o0OyDjZ5VPe2dJ2uaulZuRNxG38djVYYMFR5MvTguBtWtfruMVJC8Nyi1TVyO21HVCkFd29JkrA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MfjiuD3t; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PaAvI1Ox"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B4BFC4CECF;
-	Fri, 15 Nov 2024 06:44:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MfjiuD3t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8421AC4CED0;
+	Fri, 15 Nov 2024 06:44:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731653051;
-	bh=Ct4G0ecX5nC42HpAR0gU0inUyIbrxChzBChC0DL9eqc=;
+	s=korg; t=1731653055;
+	bh=5RmG8YwQN25fGfdsFIESKorNL/a6Demz+sJPUFbGkJc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PaAvI1OxzbWjtY5165Smxc4SHi8+BNHhcGL27ouR1TKpA51lXkHapE9IFmiW6o9DT
-	 Zrir5akKfYxIdlKJt08l2H1cDMnV7VHcS/7Clthd7nHkdlAvVeQioEBSGSAtSEZXW+
-	 PzdFhb8oPeIx8C+ZGeHOh1Z8IXKaMzaLoIC3BD8U=
+	b=MfjiuD3tDDwVajmQ+MWbQQsn2x/8sapmj6+9izmCujPMIk7veuHC6U70+j431pitH
+	 SdhFBQ453ditad80IC8lJbndcJvP+/bNtNEKrPCuq9fzGJekz/ZQinbhMvc4PzZuPM
+	 JEPU3AxUIL/FTTNdb1XeLb7oSnZQWnkN878cboi0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qi Xi <xiqi2@huawei.com>,
-	kernel test robot <lkp@intel.com>,
-	Baoquan He <bhe@redhat.com>,
-	Dave Young <dyoung@redhat.com>,
-	Michael Holzheu <holzheu@linux.vnet.ibm.com>,
-	Vivek Goyal <vgoyal@redhat.com>,
-	Wang ShaoBo <bobo.shaobowang@huawei.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.4 39/66] fs/proc: fix compile warning about variable vmcore_mmap_ops
-Date: Fri, 15 Nov 2024 07:37:48 +0100
-Message-ID: <20241115063724.256987273@linuxfoundation.org>
+	syzbot+f0cbb34d39392f2746ca@syzkaller.appspotmail.com,
+	Xin Long <lucien.xin@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 13/66] sctp: properly validate chunk size in sctp_sf_ootb()
+Date: Fri, 15 Nov 2024 07:37:22 +0100
+Message-ID: <20241115063723.321937404@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241115063722.834793938@linuxfoundation.org>
 References: <20241115063722.834793938@linuxfoundation.org>
@@ -56,58 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qi Xi <xiqi2@huawei.com>
+From: Xin Long <lucien.xin@gmail.com>
 
-commit b8ee299855f08539e04d6c1a6acb3dc9e5423c00 upstream.
+[ Upstream commit 0ead60804b64f5bd6999eec88e503c6a1a242d41 ]
 
-When build with !CONFIG_MMU, the variable 'vmcore_mmap_ops'
-is defined but not used:
+A size validation fix similar to that in Commit 50619dbf8db7 ("sctp: add
+size validation when walking chunks") is also required in sctp_sf_ootb()
+to address a crash reported by syzbot:
 
->> fs/proc/vmcore.c:458:42: warning: unused variable 'vmcore_mmap_ops'
-     458 | static const struct vm_operations_struct vmcore_mmap_ops = {
+  BUG: KMSAN: uninit-value in sctp_sf_ootb+0x7f5/0xce0 net/sctp/sm_statefuns.c:3712
+  sctp_sf_ootb+0x7f5/0xce0 net/sctp/sm_statefuns.c:3712
+  sctp_do_sm+0x181/0x93d0 net/sctp/sm_sideeffect.c:1166
+  sctp_endpoint_bh_rcv+0xc38/0xf90 net/sctp/endpointola.c:407
+  sctp_inq_push+0x2ef/0x380 net/sctp/inqueue.c:88
+  sctp_rcv+0x3831/0x3b20 net/sctp/input.c:243
+  sctp4_rcv+0x42/0x50 net/sctp/protocol.c:1159
+  ip_protocol_deliver_rcu+0xb51/0x13d0 net/ipv4/ip_input.c:205
+  ip_local_deliver_finish+0x336/0x500 net/ipv4/ip_input.c:233
 
-Fix this by only defining it when CONFIG_MMU is enabled.
-
-Link: https://lkml.kernel.org/r/20241101034803.9298-1-xiqi2@huawei.com
-Fixes: 9cb218131de1 ("vmcore: introduce remap_oldmem_pfn_range()")
-Signed-off-by: Qi Xi <xiqi2@huawei.com>
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/lkml/202410301936.GcE8yUos-lkp@intel.com/
-Cc: Baoquan He <bhe@redhat.com>
-Cc: Dave Young <dyoung@redhat.com>
-Cc: Michael Holzheu <holzheu@linux.vnet.ibm.com>
-Cc: Vivek Goyal <vgoyal@redhat.com>
-Cc: Wang ShaoBo <bobo.shaobowang@huawei.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: syzbot+f0cbb34d39392f2746ca@syzkaller.appspotmail.com
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Xin Long <lucien.xin@gmail.com>
+Link: https://patch.msgid.link/a29ebb6d8b9f8affd0f9abb296faafafe10c17d8.1730223981.git.lucien.xin@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/proc/vmcore.c |    9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ net/sctp/sm_statefuns.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/proc/vmcore.c
-+++ b/fs/proc/vmcore.c
-@@ -447,10 +447,6 @@ static vm_fault_t mmap_vmcore_fault(stru
- #endif
- }
+diff --git a/net/sctp/sm_statefuns.c b/net/sctp/sm_statefuns.c
+index 67df4022853ba..6b613569372a0 100644
+--- a/net/sctp/sm_statefuns.c
++++ b/net/sctp/sm_statefuns.c
+@@ -3637,7 +3637,7 @@ enum sctp_disposition sctp_sf_ootb(struct net *net,
+ 		}
  
--static const struct vm_operations_struct vmcore_mmap_ops = {
--	.fault = mmap_vmcore_fault,
--};
--
- /**
-  * vmcore_alloc_buf - allocate buffer in vmalloc memory
-  * @sizez: size of buffer
-@@ -478,6 +474,11 @@ static inline char *vmcore_alloc_buf(siz
-  * virtually contiguous user-space in ELF layout.
-  */
- #ifdef CONFIG_MMU
-+
-+static const struct vm_operations_struct vmcore_mmap_ops = {
-+	.fault = mmap_vmcore_fault,
-+};
-+
- /*
-  * remap_oldmem_pfn_checked - do remap_oldmem_pfn_range replacing all pages
-  * reported as not being ram with the zero page.
+ 		ch = (struct sctp_chunkhdr *)ch_end;
+-	} while (ch_end < skb_tail_pointer(skb));
++	} while (ch_end + sizeof(*ch) < skb_tail_pointer(skb));
+ 
+ 	if (ootb_shut_ack)
+ 		return sctp_sf_shut_8_4_5(net, ep, asoc, type, arg, commands);
+-- 
+2.43.0
+
 
 
