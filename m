@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3AFF185924;
-	Fri, 15 Nov 2024 06:50:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2538F185924;
+	Fri, 15 Nov 2024 06:50:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731653439; cv=none; b=dtxl6AwBKFHqcmHB58Ovg3WVz5TcQrrJYBlbowxg2/78AzaYy/IWRVgrM0A9CH/bF05Jv9pEpOmXW9lE5IKplqqvHT36SSqlVv9eO5I6Ib5LGO7vAyaLIhHWz06EJJ0aysvIDFEXy2W+hxkAd/NHpz6m7kr2t7kh/j+o0kJZreo=
+	t=1731653443; cv=none; b=NZi2adjdiLuf6B1Cq7/n85KGeeg/nka6bok+puWOCT+C5irybQGMl8CTCLKEmiYOdjk6mqx590GqzN6YkGqBUiYMXNxvEZA3bCXTiaC4+wqdIr1ujMPIkQESx2lJcHagc30KD4WkcfWbyutIC3x5mMMon6MDPLF/mCcmISUnzFM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731653439; c=relaxed/simple;
-	bh=z+AvLwOFUoyXOJxpiY86p0Ujhp8/4HBoY09e3sg+Jr8=;
+	s=arc-20240116; t=1731653443; c=relaxed/simple;
+	bh=HsJtphv3vbmY6P4vWl8JtOh8npOh1fcYv023WVqmFjI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h/QpCt+nJTXI5V9yrNXsVbou5Kr4KK6lus6Nw6SLL+/mI9yFZztsFGqokloK+8wu8g75825M5DA4yxTK9OH2XV65NGtyDLX2MfbcRjj6+oJYThip+Df68aIB7knCMJUmvbKfeRlP+7bzKu5mMv68vDeMm4QKTqiRRTr4dhk9aWg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eTSiU72x; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Zov1VssolFsDCO9JkWKnD0jQkLmHtRKnE7qx6fLAHBK+KkwS0ge19okYeclqA6bHHAzFiOLpI38/H2mggrGsi/BbvUgYtyCfpQr5QPJjEwmAmm3wdS843MmX6hxyGB1H7HUAzE02jsdy2pKPrbbSKSkJ2/wiHxxlxs/xVtYJOUw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xZfWU6um; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eTSiU72x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15D16C4CECF;
-	Fri, 15 Nov 2024 06:50:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xZfWU6um"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88C5EC4CECF;
+	Fri, 15 Nov 2024 06:50:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731653439;
-	bh=z+AvLwOFUoyXOJxpiY86p0Ujhp8/4HBoY09e3sg+Jr8=;
+	s=korg; t=1731653443;
+	bh=HsJtphv3vbmY6P4vWl8JtOh8npOh1fcYv023WVqmFjI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eTSiU72xJmb0e3rWa8knAUJ1ERVU5TzHVXQBOsGkFaKuxiYBGj7QmwwBRndcZ5DPo
-	 NIS/xckHJpJCbT3Hc7zyR3+hufon+pAKdfL/qxEEiUNACROaEW9CiIHrGxhFRTKvOZ
-	 LOh8cYFpqYJy5HoRvUWbSm/VgaGmygrNSPAP5F5s=
+	b=xZfWU6um0DyXbbaFWZ/6MHJjWsA4RXGwjzu2pJlBMAXkibALs0yQDZn0tGr/6AgoG
+	 dHPx/UOF7NdUD0nc5/V78p0rqupNKJnSavse0mQntwtvx+BysqZbH48+4iyih7ipkZ
+	 sj2ziAIB5fmY3PdTY/mDlUjKHPIZhi1/bBeXrmT8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Nilay Shroff <nilay@linux.ibm.com>,
 	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 22/48] nvme-loop: flush off pending I/O while shutting down loop controller
-Date: Fri, 15 Nov 2024 07:38:11 +0100
-Message-ID: <20241115063723.766025173@linuxfoundation.org>
+Subject: [PATCH 6.6 23/48] nvme: make keep-alive synchronous operation
+Date: Fri, 15 Nov 2024 07:38:12 +0100
+Message-ID: <20241115063723.801310702@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241115063722.962047137@linuxfoundation.org>
 References: <20241115063722.962047137@linuxfoundation.org>
@@ -54,60 +54,118 @@ Content-Transfer-Encoding: 8bit
 
 From: Nilay Shroff <nilay@linux.ibm.com>
 
-[ Upstream commit c199fac88fe7c749f88a0653e9f621b9f5a71cf1 ]
+[ Upstream commit d06923670b5a5f609603d4a9fee4dec02d38de9c ]
 
-While shutting down loop controller, we first quiesce the admin/IO queue,
-delete the admin/IO tag-set and then at last destroy the admin/IO queue.
-However it's quite possible that during the window between quiescing and
-destroying of the admin/IO queue, some admin/IO request might sneak in
-and if that happens then we could potentially encounter a hung task
-because shutdown operation can't forward progress until any pending I/O
-is flushed off.
+The nvme keep-alive operation, which executes at a periodic interval,
+could potentially sneak in while shutting down a fabric controller.
+This may lead to a race between the fabric controller admin queue
+destroy code path (invoked while shutting down controller) and hw/hctx
+queue dispatcher called from the nvme keep-alive async request queuing
+operation. This race could lead to the kernel crash shown below:
 
-This commit helps ensure that before destroying the admin/IO queue, we
-unquiesce the admin/IO queue so that any outstanding requests, which are
-added after the admin/IO queue is quiesced, are now flushed to its
-completion.
+Call Trace:
+    autoremove_wake_function+0x0/0xbc (unreliable)
+    __blk_mq_sched_dispatch_requests+0x114/0x24c
+    blk_mq_sched_dispatch_requests+0x44/0x84
+    blk_mq_run_hw_queue+0x140/0x220
+    nvme_keep_alive_work+0xc8/0x19c [nvme_core]
+    process_one_work+0x200/0x4e0
+    worker_thread+0x340/0x504
+    kthread+0x138/0x140
+    start_kernel_thread+0x14/0x18
+
+While shutting down fabric controller, if nvme keep-alive request sneaks
+in then it would be flushed off. The nvme_keep_alive_end_io function is
+then invoked to handle the end of the keep-alive operation which
+decrements the admin->q_usage_counter and assuming this is the last/only
+request in the admin queue then the admin->q_usage_counter becomes zero.
+If that happens then blk-mq destroy queue operation (blk_mq_destroy_
+queue()) which could be potentially running simultaneously on another
+cpu (as this is the controller shutdown code path) would forward
+progress and deletes the admin queue. So, now from this point onward
+we are not supposed to access the admin queue resources. However the
+issue here's that the nvme keep-alive thread running hw/hctx queue
+dispatch operation hasn't yet finished its work and so it could still
+potentially access the admin queue resource while the admin queue had
+been already deleted and that causes the above crash.
+
+This fix helps avoid the observed crash by implementing keep-alive as a
+synchronous operation so that we decrement admin->q_usage_counter only
+after keep-alive command finished its execution and returns the command
+status back up to its caller (blk_execute_rq()). This would ensure that
+fabric shutdown code path doesn't destroy the fabric admin queue until
+keep-alive request finished execution and also keep-alive thread is not
+running hw/hctx queue dispatch operation.
 
 Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Nilay Shroff <nilay@linux.ibm.com>
 Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/loop.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ drivers/nvme/host/core.c | 17 +++++++----------
+ 1 file changed, 7 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/nvme/target/loop.c b/drivers/nvme/target/loop.c
-index 48d5df054cd02..bd61a1b82c4cd 100644
---- a/drivers/nvme/target/loop.c
-+++ b/drivers/nvme/target/loop.c
-@@ -265,6 +265,13 @@ static void nvme_loop_destroy_admin_queue(struct nvme_loop_ctrl *ctrl)
- {
- 	if (!test_and_clear_bit(NVME_LOOP_Q_LIVE, &ctrl->queues[0].flags))
- 		return;
-+	/*
-+	 * It's possible that some requests might have been added
-+	 * after admin queue is stopped/quiesced. So now start the
-+	 * queue to flush these requests to the completion.
-+	 */
-+	nvme_unquiesce_admin_queue(&ctrl->ctrl);
-+
- 	nvmet_sq_destroy(&ctrl->queues[0].nvme_sq);
- 	nvme_remove_admin_tag_set(&ctrl->ctrl);
- }
-@@ -297,6 +304,12 @@ static void nvme_loop_destroy_io_queues(struct nvme_loop_ctrl *ctrl)
- 		nvmet_sq_destroy(&ctrl->queues[i].nvme_sq);
- 	}
- 	ctrl->ctrl.queue_count = 1;
-+	/*
-+	 * It's possible that some requests might have been added
-+	 * after io queue is stopped/quiesced. So now start the
-+	 * queue to flush these requests to the completion.
-+	 */
-+	nvme_unquiesce_io_queues(&ctrl->ctrl);
+diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
+index e25206c7de80c..b3c5460c6d768 100644
+--- a/drivers/nvme/host/core.c
++++ b/drivers/nvme/host/core.c
+@@ -1178,10 +1178,9 @@ static void nvme_queue_keep_alive_work(struct nvme_ctrl *ctrl)
+ 			   nvme_keep_alive_work_period(ctrl));
  }
  
- static int nvme_loop_init_io_queues(struct nvme_loop_ctrl *ctrl)
+-static enum rq_end_io_ret nvme_keep_alive_end_io(struct request *rq,
+-						 blk_status_t status)
++static void nvme_keep_alive_finish(struct request *rq,
++		blk_status_t status, struct nvme_ctrl *ctrl)
+ {
+-	struct nvme_ctrl *ctrl = rq->end_io_data;
+ 	unsigned long flags;
+ 	bool startka = false;
+ 	unsigned long rtt = jiffies - (rq->deadline - rq->timeout);
+@@ -1199,13 +1198,11 @@ static enum rq_end_io_ret nvme_keep_alive_end_io(struct request *rq,
+ 		delay = 0;
+ 	}
+ 
+-	blk_mq_free_request(rq);
+-
+ 	if (status) {
+ 		dev_err(ctrl->device,
+ 			"failed nvme_keep_alive_end_io error=%d\n",
+ 				status);
+-		return RQ_END_IO_NONE;
++		return;
+ 	}
+ 
+ 	ctrl->ka_last_check_time = jiffies;
+@@ -1217,7 +1214,6 @@ static enum rq_end_io_ret nvme_keep_alive_end_io(struct request *rq,
+ 	spin_unlock_irqrestore(&ctrl->lock, flags);
+ 	if (startka)
+ 		queue_delayed_work(nvme_wq, &ctrl->ka_work, delay);
+-	return RQ_END_IO_NONE;
+ }
+ 
+ static void nvme_keep_alive_work(struct work_struct *work)
+@@ -1226,6 +1222,7 @@ static void nvme_keep_alive_work(struct work_struct *work)
+ 			struct nvme_ctrl, ka_work);
+ 	bool comp_seen = ctrl->comp_seen;
+ 	struct request *rq;
++	blk_status_t status;
+ 
+ 	ctrl->ka_last_check_time = jiffies;
+ 
+@@ -1248,9 +1245,9 @@ static void nvme_keep_alive_work(struct work_struct *work)
+ 	nvme_init_request(rq, &ctrl->ka_cmd);
+ 
+ 	rq->timeout = ctrl->kato * HZ;
+-	rq->end_io = nvme_keep_alive_end_io;
+-	rq->end_io_data = ctrl;
+-	blk_execute_rq_nowait(rq, false);
++	status = blk_execute_rq(rq, false);
++	nvme_keep_alive_finish(rq, status, ctrl);
++	blk_mq_free_request(rq);
+ }
+ 
+ static void nvme_start_keep_alive(struct nvme_ctrl *ctrl)
 -- 
 2.43.0
 
