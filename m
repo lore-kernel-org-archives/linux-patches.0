@@ -1,63 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B727818873F;
-	Fri, 15 Nov 2024 06:55:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37D82153800;
+	Fri, 15 Nov 2024 06:55:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731653719; cv=none; b=eVQxXjKqHNyIjxkRq0H7nSxLXDQHdQYk+5S+hgMYaFE5O+ZJ8njZf4eZWT2yBW4Yy2QiTKkpcLBdT27oX+d01AQRQTvN2+JqkGDYZPOGU8AIWKGLmOt6o9MoRSIkG0DO6YUff8LRyu474HvFXYZ4/RQV7DjCoPslmXhWQnU3nkQ=
+	t=1731653723; cv=none; b=D4liSIBZwyq8wYCgmWZNV9jgLYyQcGGceK+UIQ0AJWL9SPqGvVIhz/WDwbLRbO4QQtqcr/cnam22SOK7KetONVR7FPTJNgfXCqQ+zlQEaU8BmUFswdz7Bh4zF8omlKnjbJX4d9jJC8oQKZHNlMkMKl3LoC4k05nVBzHDurAusb0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731653719; c=relaxed/simple;
-	bh=wZvdsX5+m1ZcDBdhGUO3HYnWdveM/2AVsZKUu27+IvU=;
+	s=arc-20240116; t=1731653723; c=relaxed/simple;
+	bh=7IKq3kVhTuHrduhMTYKGr4BmdCOmsVDOgdYLNiziMjQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qYg/jgq26LSUqE+KFvKMulojX0ZavNCvEUabyLIjLwho9YDqewQZjFa5SAhl8X0tIZvyEYmYfeuhOYmcLKjg3kFk5Jz2Bdslhfe5gZZdhOT8IAy3RNwKiuJ/6NPZ/KtaFJaW69Jy9EsFWDhkED7+sI0FjLAUWvfN6GetNiiFvis=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HCmuTGmu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oEcrQ54ErxgrzCDHrIkfycfDkdvBW4fREUtmC5JxbepPklKEEnz/P096cno5eI6XELROwvF3LhhCYWfLHnT2hikMHAgmftDq7kHTD5sq1rDh6z+aH5dzXXyPnp+s7xm8ysp5Q5/7sUQIKczmFQNIAPapli/IQBUreRCpQYuVU54=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CJSWNxBA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HCmuTGmu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B431FC4CECF;
-	Fri, 15 Nov 2024 06:55:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CJSWNxBA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A89DC4CED2;
+	Fri, 15 Nov 2024 06:55:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731653719;
-	bh=wZvdsX5+m1ZcDBdhGUO3HYnWdveM/2AVsZKUu27+IvU=;
+	s=korg; t=1731653723;
+	bh=7IKq3kVhTuHrduhMTYKGr4BmdCOmsVDOgdYLNiziMjQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HCmuTGmutQ2l4LIM3EwCdUG6QZAq+d8LmbOoHWF1dpbP3h6AEjkTdSMRFSRokHCXP
-	 x4aG874oi39G2kgN2WazzmUXl57zAtqRhYnyNZ18b3F9ewj7CcN9U4CSUhYfpo/Shq
-	 qYBJAZ4fAMoPvPbaaDszO9ZPdh1UnJgZ5xKpw4ak=
+	b=CJSWNxBAjn4b7wydScOPcIztk1CFt/tyjCGLnd8CJQQaNABEih3lpuaCleUjgzpKS
+	 f5W7WgR95AvwcyFR8Y8oXw+lqzhy6GtfFSvVePUKo/V5FRTe41qWNuAzebHyl/anFL
+	 wOYUA0wSSrMLZ10J6SivyHv2y0gzYtMYBZs83I+I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandru Ardelean <alexandru.ardelean@analog.com>,
-	Andre Edich <andre.edich@microchip.com>,
-	Antoine Tenart <atenart@kernel.org>,
-	Baruch Siach <baruch@tkos.co.il>,
-	Christophe Leroy <christophe.leroy@c-s.fr>,
 	Dan Murphy <dmurphy@ti.com>,
-	Divya Koppera <Divya.Koppera@microchip.com>,
-	Florian Fainelli <f.fainelli@gmail.com>,
-	Hauke Mehrtens <hauke@hauke-m.de>,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Jerome Brunet <jbrunet@baylibre.com>,
-	Kavya Sree Kotagiri <kavyasree.kotagiri@microchip.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Marco Felsch <m.felsch@pengutronix.de>,
-	Marek Vasut <marex@denx.de>,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Mathias Kresin <dev@kresin.me>,
-	Maxim Kochetkov <fido_max@inbox.ru>,
-	Michael Walle <michael@walle.cc>,
-	Neil Armstrong <narmstrong@baylibre.com>,
-	Nisar Sayed <Nisar.Sayed@microchip.com>,
-	Oleksij Rempel <o.rempel@pengutronix.de>,
-	Philippe Schenker <philippe.schenker@toradex.com>,
-	Willy Liu <willy.liu@realtek.com>,
-	Yuiko Oshino <yuiko.oshino@microchip.com>,
 	Ioana Ciornei <ioana.ciornei@nxp.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 17/82] net: phy: export phy_error and phy_trigger_machine
-Date: Fri, 15 Nov 2024 07:37:54 +0100
-Message-ID: <20241115063726.184846596@linuxfoundation.org>
+Subject: [PATCH 5.10 18/82] net: phy: ti: implement generic .handle_interrupt() callback
+Date: Fri, 15 Nov 2024 07:37:55 +0100
+Message-ID: <20241115063726.222860587@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241115063725.561151311@linuxfoundation.org>
 References: <20241115063725.561151311@linuxfoundation.org>
@@ -78,96 +54,350 @@ Content-Transfer-Encoding: 8bit
 
 From: Ioana Ciornei <ioana.ciornei@nxp.com>
 
-[ Upstream commit 293e9a3d950dfebc76d9fa6931e6f91ef856b9ab ]
+[ Upstream commit 1d1ae3c6ca3ff49843d73852bb2a8153ce16f432 ]
 
-These functions are currently used by phy_interrupt() to either signal
-an error condition or to trigger the link state machine. In an attempt
-to actually support shared PHY IRQs, export these two functions so that
-the actual PHY drivers can use them.
+In an attempt to actually support shared IRQs in phylib, we now move the
+responsibility of triggering the phylib state machine or just returning
+IRQ_NONE, based on the IRQ status register, to the PHY driver. Having
+3 different IRQ handling callbacks (.handle_interrupt(),
+.did_interrupt() and .ack_interrupt() ) is confusing so let the PHY
+driver implement directly an IRQ handler like any other device driver.
+Make this driver follow the new convention.
 
-Cc: Alexandru Ardelean <alexandru.ardelean@analog.com>
-Cc: Andre Edich <andre.edich@microchip.com>
-Cc: Antoine Tenart <atenart@kernel.org>
-Cc: Baruch Siach <baruch@tkos.co.il>
-Cc: Christophe Leroy <christophe.leroy@c-s.fr>
 Cc: Dan Murphy <dmurphy@ti.com>
-Cc: Divya Koppera <Divya.Koppera@microchip.com>
-Cc: Florian Fainelli <f.fainelli@gmail.com>
-Cc: Hauke Mehrtens <hauke@hauke-m.de>
-Cc: Heiner Kallweit <hkallweit1@gmail.com>
-Cc: Jerome Brunet <jbrunet@baylibre.com>
-Cc: Kavya Sree Kotagiri <kavyasree.kotagiri@microchip.com>
-Cc: Linus Walleij <linus.walleij@linaro.org>
-Cc: Marco Felsch <m.felsch@pengutronix.de>
-Cc: Marek Vasut <marex@denx.de>
-Cc: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-Cc: Mathias Kresin <dev@kresin.me>
-Cc: Maxim Kochetkov <fido_max@inbox.ru>
-Cc: Michael Walle <michael@walle.cc>
-Cc: Neil Armstrong <narmstrong@baylibre.com>
-Cc: Nisar Sayed <Nisar.Sayed@microchip.com>
-Cc: Oleksij Rempel <o.rempel@pengutronix.de>
-Cc: Philippe Schenker <philippe.schenker@toradex.com>
-Cc: Willy Liu <willy.liu@realtek.com>
-Cc: Yuiko Oshino <yuiko.oshino@microchip.com>
 Signed-off-by: Ioana Ciornei <ioana.ciornei@nxp.com>
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Stable-dep-of: 256748d5480b ("net: phy: ti: add PHY_RST_AFTER_CLK_EN flag")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/phy.c | 6 ++++--
- include/linux/phy.h   | 2 ++
- 2 files changed, 6 insertions(+), 2 deletions(-)
+ drivers/net/phy/dp83640.c   | 27 +++++++++++++++++++++++
+ drivers/net/phy/dp83822.c   | 37 +++++++++++++++++++++++++++++++
+ drivers/net/phy/dp83848.c   | 33 ++++++++++++++++++++++++++++
+ drivers/net/phy/dp83867.c   | 25 +++++++++++++++++++++
+ drivers/net/phy/dp83869.c   | 25 +++++++++++++++++++++
+ drivers/net/phy/dp83tc811.c | 44 +++++++++++++++++++++++++++++++++++++
+ 6 files changed, 191 insertions(+)
 
-diff --git a/drivers/net/phy/phy.c b/drivers/net/phy/phy.c
-index f3e606b6617e9..eb0f2e11cc216 100644
---- a/drivers/net/phy/phy.c
-+++ b/drivers/net/phy/phy.c
-@@ -461,10 +461,11 @@ EXPORT_SYMBOL(phy_queue_state_machine);
-  *
-  * @phydev: the phy_device struct
-  */
--static void phy_trigger_machine(struct phy_device *phydev)
-+void phy_trigger_machine(struct phy_device *phydev)
- {
- 	phy_queue_state_machine(phydev, 0);
+diff --git a/drivers/net/phy/dp83640.c b/drivers/net/phy/dp83640.c
+index f2caccaf4408f..89577f1d35766 100644
+--- a/drivers/net/phy/dp83640.c
++++ b/drivers/net/phy/dp83640.c
+@@ -50,6 +50,14 @@
+ #define MII_DP83640_MISR_LINK_INT_EN 0x20
+ #define MII_DP83640_MISR_ED_INT_EN 0x40
+ #define MII_DP83640_MISR_LQ_INT_EN 0x80
++#define MII_DP83640_MISR_ANC_INT 0x400
++#define MII_DP83640_MISR_DUP_INT 0x800
++#define MII_DP83640_MISR_SPD_INT 0x1000
++#define MII_DP83640_MISR_LINK_INT 0x2000
++#define MII_DP83640_MISR_INT_MASK (MII_DP83640_MISR_ANC_INT |\
++				   MII_DP83640_MISR_DUP_INT |\
++				   MII_DP83640_MISR_SPD_INT |\
++				   MII_DP83640_MISR_LINK_INT)
+ 
+ /* phyter seems to miss the mark by 16 ns */
+ #define ADJTIME_FIX	16
+@@ -1193,6 +1201,24 @@ static int dp83640_config_intr(struct phy_device *phydev)
+ 	}
  }
-+EXPORT_SYMBOL(phy_trigger_machine);
  
- static void phy_abort_cable_test(struct phy_device *phydev)
++static irqreturn_t dp83640_handle_interrupt(struct phy_device *phydev)
++{
++	int irq_status;
++
++	irq_status = phy_read(phydev, MII_DP83640_MISR);
++	if (irq_status < 0) {
++		phy_error(phydev);
++		return IRQ_NONE;
++	}
++
++	if (!(irq_status & MII_DP83640_MISR_INT_MASK))
++		return IRQ_NONE;
++
++	phy_trigger_machine(phydev);
++
++	return IRQ_HANDLED;
++}
++
+ static int dp83640_hwtstamp(struct mii_timestamper *mii_ts, struct ifreq *ifr)
  {
-@@ -970,7 +971,7 @@ void phy_stop_machine(struct phy_device *phydev)
-  * Must not be called from interrupt context, or while the
-  * phydev->lock is held.
-  */
--static void phy_error(struct phy_device *phydev)
-+void phy_error(struct phy_device *phydev)
- {
- 	WARN_ON(1);
+ 	struct dp83640_private *dp83640 =
+@@ -1517,6 +1543,7 @@ static struct phy_driver dp83640_driver = {
+ 	.config_init	= dp83640_config_init,
+ 	.ack_interrupt  = dp83640_ack_interrupt,
+ 	.config_intr    = dp83640_config_intr,
++	.handle_interrupt = dp83640_handle_interrupt,
+ };
  
-@@ -980,6 +981,7 @@ static void phy_error(struct phy_device *phydev)
- 
- 	phy_trigger_machine(phydev);
+ static int __init dp83640_init(void)
+diff --git a/drivers/net/phy/dp83822.c b/drivers/net/phy/dp83822.c
+index c3828beccbad8..45fbb65085f96 100644
+--- a/drivers/net/phy/dp83822.c
++++ b/drivers/net/phy/dp83822.c
+@@ -303,6 +303,41 @@ static int dp83822_config_intr(struct phy_device *phydev)
+ 	return phy_write(phydev, MII_DP83822_PHYSCR, physcr_status);
  }
-+EXPORT_SYMBOL(phy_error);
  
- /**
-  * phy_disable_interrupts - Disable the PHY interrupts from the PHY side
-diff --git a/include/linux/phy.h b/include/linux/phy.h
-index 08725a262f320..203d53ea19d1b 100644
---- a/include/linux/phy.h
-+++ b/include/linux/phy.h
-@@ -1542,8 +1542,10 @@ void phy_drivers_unregister(struct phy_driver *drv, int n);
- int phy_driver_register(struct phy_driver *new_driver, struct module *owner);
- int phy_drivers_register(struct phy_driver *new_driver, int n,
- 			 struct module *owner);
-+void phy_error(struct phy_device *phydev);
- void phy_state_machine(struct work_struct *work);
- void phy_queue_state_machine(struct phy_device *phydev, unsigned long jiffies);
-+void phy_trigger_machine(struct phy_device *phydev);
- void phy_mac_interrupt(struct phy_device *phydev);
- void phy_start_machine(struct phy_device *phydev);
- void phy_stop_machine(struct phy_device *phydev);
++static irqreturn_t dp83822_handle_interrupt(struct phy_device *phydev)
++{
++	int irq_status;
++
++	/* The MISR1 and MISR2 registers are holding the interrupt status in
++	 * the upper half (15:8), while the lower half (7:0) is used for
++	 * controlling the interrupt enable state of those individual interrupt
++	 * sources. To determine the possible interrupt sources, just read the
++	 * MISR* register and use it directly to know which interrupts have
++	 * been enabled previously or not.
++	 */
++	irq_status = phy_read(phydev, MII_DP83822_MISR1);
++	if (irq_status < 0) {
++		phy_error(phydev);
++		return IRQ_NONE;
++	}
++	if (irq_status & ((irq_status & GENMASK(7, 0)) << 8))
++		goto trigger_machine;
++
++	irq_status = phy_read(phydev, MII_DP83822_MISR2);
++	if (irq_status < 0) {
++		phy_error(phydev);
++		return IRQ_NONE;
++	}
++	if (irq_status & ((irq_status & GENMASK(7, 0)) << 8))
++		goto trigger_machine;
++
++	return IRQ_NONE;
++
++trigger_machine:
++	phy_trigger_machine(phydev);
++
++	return IRQ_HANDLED;
++}
++
+ static int dp8382x_disable_wol(struct phy_device *phydev)
+ {
+ 	return phy_clear_bits_mmd(phydev, DP83822_DEVADDR, MII_DP83822_WOL_CFG,
+@@ -586,6 +621,7 @@ static int dp83822_resume(struct phy_device *phydev)
+ 		.set_wol = dp83822_set_wol,			\
+ 		.ack_interrupt = dp83822_ack_interrupt,		\
+ 		.config_intr = dp83822_config_intr,		\
++		.handle_interrupt = dp83822_handle_interrupt,	\
+ 		.suspend = dp83822_suspend,			\
+ 		.resume = dp83822_resume,			\
+ 	}
+@@ -601,6 +637,7 @@ static int dp83822_resume(struct phy_device *phydev)
+ 		.set_wol = dp83822_set_wol,			\
+ 		.ack_interrupt = dp83822_ack_interrupt,		\
+ 		.config_intr = dp83822_config_intr,		\
++		.handle_interrupt = dp83822_handle_interrupt,	\
+ 		.suspend = dp83822_suspend,			\
+ 		.resume = dp83822_resume,			\
+ 	}
+diff --git a/drivers/net/phy/dp83848.c b/drivers/net/phy/dp83848.c
+index 54c7c1b44e4d0..b707a9b278471 100644
+--- a/drivers/net/phy/dp83848.c
++++ b/drivers/net/phy/dp83848.c
+@@ -37,6 +37,20 @@
+ 	 DP83848_MISR_SPD_INT_EN |	\
+ 	 DP83848_MISR_LINK_INT_EN)
+ 
++#define DP83848_MISR_RHF_INT		BIT(8)
++#define DP83848_MISR_FHF_INT		BIT(9)
++#define DP83848_MISR_ANC_INT		BIT(10)
++#define DP83848_MISR_DUP_INT		BIT(11)
++#define DP83848_MISR_SPD_INT		BIT(12)
++#define DP83848_MISR_LINK_INT		BIT(13)
++#define DP83848_MISR_ED_INT		BIT(14)
++
++#define DP83848_INT_MASK		\
++	(DP83848_MISR_ANC_INT |	\
++	 DP83848_MISR_DUP_INT |	\
++	 DP83848_MISR_SPD_INT |	\
++	 DP83848_MISR_LINK_INT)
++
+ static int dp83848_ack_interrupt(struct phy_device *phydev)
+ {
+ 	int err = phy_read(phydev, DP83848_MISR);
+@@ -66,6 +80,24 @@ static int dp83848_config_intr(struct phy_device *phydev)
+ 	return phy_write(phydev, DP83848_MICR, control);
+ }
+ 
++static irqreturn_t dp83848_handle_interrupt(struct phy_device *phydev)
++{
++	int irq_status;
++
++	irq_status = phy_read(phydev, DP83848_MISR);
++	if (irq_status < 0) {
++		phy_error(phydev);
++		return IRQ_NONE;
++	}
++
++	if (!(irq_status & DP83848_INT_MASK))
++		return IRQ_NONE;
++
++	phy_trigger_machine(phydev);
++
++	return IRQ_HANDLED;
++}
++
+ static int dp83848_config_init(struct phy_device *phydev)
+ {
+ 	int val;
+@@ -104,6 +136,7 @@ MODULE_DEVICE_TABLE(mdio, dp83848_tbl);
+ 		/* IRQ related */				\
+ 		.ack_interrupt	= dp83848_ack_interrupt,	\
+ 		.config_intr	= dp83848_config_intr,		\
++		.handle_interrupt = dp83848_handle_interrupt,	\
+ 	}
+ 
+ static struct phy_driver dp83848_driver[] = {
+diff --git a/drivers/net/phy/dp83867.c b/drivers/net/phy/dp83867.c
+index 834bf63dc2009..0cb24bfbfa237 100644
+--- a/drivers/net/phy/dp83867.c
++++ b/drivers/net/phy/dp83867.c
+@@ -312,6 +312,30 @@ static int dp83867_config_intr(struct phy_device *phydev)
+ 	return phy_write(phydev, MII_DP83867_MICR, micr_status);
+ }
+ 
++static irqreturn_t dp83867_handle_interrupt(struct phy_device *phydev)
++{
++	int irq_status, irq_enabled;
++
++	irq_status = phy_read(phydev, MII_DP83867_ISR);
++	if (irq_status < 0) {
++		phy_error(phydev);
++		return IRQ_NONE;
++	}
++
++	irq_enabled = phy_read(phydev, MII_DP83867_MICR);
++	if (irq_enabled < 0) {
++		phy_error(phydev);
++		return IRQ_NONE;
++	}
++
++	if (!(irq_status & irq_enabled))
++		return IRQ_NONE;
++
++	phy_trigger_machine(phydev);
++
++	return IRQ_HANDLED;
++}
++
+ static int dp83867_read_status(struct phy_device *phydev)
+ {
+ 	int status = phy_read(phydev, MII_DP83867_PHYSTS);
+@@ -878,6 +902,7 @@ static struct phy_driver dp83867_driver[] = {
+ 		/* IRQ related */
+ 		.ack_interrupt	= dp83867_ack_interrupt,
+ 		.config_intr	= dp83867_config_intr,
++		.handle_interrupt = dp83867_handle_interrupt,
+ 
+ 		.suspend	= genphy_suspend,
+ 		.resume		= genphy_resume,
+diff --git a/drivers/net/phy/dp83869.c b/drivers/net/phy/dp83869.c
+index 01b593e0bb4a1..e2fe89c8059ea 100644
+--- a/drivers/net/phy/dp83869.c
++++ b/drivers/net/phy/dp83869.c
+@@ -207,6 +207,30 @@ static int dp83869_config_intr(struct phy_device *phydev)
+ 	return phy_write(phydev, MII_DP83869_MICR, micr_status);
+ }
+ 
++static irqreturn_t dp83869_handle_interrupt(struct phy_device *phydev)
++{
++	int irq_status, irq_enabled;
++
++	irq_status = phy_read(phydev, MII_DP83869_ISR);
++	if (irq_status < 0) {
++		phy_error(phydev);
++		return IRQ_NONE;
++	}
++
++	irq_enabled = phy_read(phydev, MII_DP83869_MICR);
++	if (irq_enabled < 0) {
++		phy_error(phydev);
++		return IRQ_NONE;
++	}
++
++	if (!(irq_status & irq_enabled))
++		return IRQ_NONE;
++
++	phy_trigger_machine(phydev);
++
++	return IRQ_HANDLED;
++}
++
+ static int dp83869_set_wol(struct phy_device *phydev,
+ 			   struct ethtool_wolinfo *wol)
+ {
+@@ -853,6 +877,7 @@ static struct phy_driver dp83869_driver[] = {
+ 		/* IRQ related */
+ 		.ack_interrupt	= dp83869_ack_interrupt,
+ 		.config_intr	= dp83869_config_intr,
++		.handle_interrupt = dp83869_handle_interrupt,
+ 		.read_status	= dp83869_read_status,
+ 
+ 		.get_tunable	= dp83869_get_tunable,
+diff --git a/drivers/net/phy/dp83tc811.c b/drivers/net/phy/dp83tc811.c
+index d73725312c7c3..a93c64ac76a39 100644
+--- a/drivers/net/phy/dp83tc811.c
++++ b/drivers/net/phy/dp83tc811.c
+@@ -254,6 +254,49 @@ static int dp83811_config_intr(struct phy_device *phydev)
+ 	return err;
+ }
+ 
++static irqreturn_t dp83811_handle_interrupt(struct phy_device *phydev)
++{
++	int irq_status;
++
++	/* The INT_STAT registers 1, 2 and 3 are holding the interrupt status
++	 * in the upper half (15:8), while the lower half (7:0) is used for
++	 * controlling the interrupt enable state of those individual interrupt
++	 * sources. To determine the possible interrupt sources, just read the
++	 * INT_STAT* register and use it directly to know which interrupts have
++	 * been enabled previously or not.
++	 */
++	irq_status = phy_read(phydev, MII_DP83811_INT_STAT1);
++	if (irq_status < 0) {
++		phy_error(phydev);
++		return IRQ_NONE;
++	}
++	if (irq_status & ((irq_status & GENMASK(7, 0)) << 8))
++		goto trigger_machine;
++
++	irq_status = phy_read(phydev, MII_DP83811_INT_STAT2);
++	if (irq_status < 0) {
++		phy_error(phydev);
++		return IRQ_NONE;
++	}
++	if (irq_status & ((irq_status & GENMASK(7, 0)) << 8))
++		goto trigger_machine;
++
++	irq_status = phy_read(phydev, MII_DP83811_INT_STAT3);
++	if (irq_status < 0) {
++		phy_error(phydev);
++		return IRQ_NONE;
++	}
++	if (irq_status & ((irq_status & GENMASK(7, 0)) << 8))
++		goto trigger_machine;
++
++	return IRQ_NONE;
++
++trigger_machine:
++	phy_trigger_machine(phydev);
++
++	return IRQ_HANDLED;
++}
++
+ static int dp83811_config_aneg(struct phy_device *phydev)
+ {
+ 	int value, err;
+@@ -345,6 +388,7 @@ static struct phy_driver dp83811_driver[] = {
+ 		.set_wol = dp83811_set_wol,
+ 		.ack_interrupt = dp83811_ack_interrupt,
+ 		.config_intr = dp83811_config_intr,
++		.handle_interrupt = dp83811_handle_interrupt,
+ 		.suspend = dp83811_suspend,
+ 		.resume = dp83811_resume,
+ 	 },
 -- 
 2.43.0
 
