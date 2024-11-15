@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D295A2BB1B;
-	Fri, 15 Nov 2024 06:59:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97A3018A921;
+	Fri, 15 Nov 2024 07:00:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731653998; cv=none; b=hW76ekpvyoJEFNgaZjdiYz4cljFe324lqzZ8G9pF4iGbOZLHSFCvHCfPIOrMSobiBAN1w40KCQywkvKnI/9aBLFA5sisb1Vc6MD+5XaqRm+bjiKyyyftElU40sJ4/y7c0RwlcrO81xxy4PsqirvCFCQxDGy7apKBZVNJIklfKFc=
+	t=1731654002; cv=none; b=NJ78xax9P0bKj2C932WSz8LqDsmrOtmcIvrx5ywePH1pyn6uJEgvxMtqLXq+o/a9ivsLr19awA6k2oFyBnQr7gJWsGHCr1Mmtk68Ssz9Uiu6jf1pO6RLfWibT1+YH4D9zFjAGducMXfnxbnzjCIy69yNTEWawJinkdzD0gmClUI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731653998; c=relaxed/simple;
-	bh=Jq9pKsroPDUzDi9gArQJIfDICgoODdMZHKzL3tX+KwI=;
+	s=arc-20240116; t=1731654002; c=relaxed/simple;
+	bh=DtEVghmzGUGzzD4h9q3asKMaVMWBxnNOEP6cCoJYBB4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B2FBZqqE1c9iWm/PDvynPgGo5xHgBvMa/XIHThmgcztDjjZ0p06TEhS2/nI6IR4K3b/lf2VXA8gdHXtorGndBXkCiYE1XSx1/BoT7YJpJgtoC/oKooVGlamVOySo5ZU74rgARiNLVYlE8xxOrg7o5NPYp0pD1vtRgx/uUZAnNyA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v59IiV5Q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PELbcNoX5zJQM7m66NA+GJE0GLDps6kzZ0TOzaXQnbqnfKrr1TDVDJpdogPXA8hJl0+p5qKT3qkxk6QzLmfCkqW62F+Xe/I8HK2oRt6TilK8E7GMS7kxrvEUckRH9W5/mwAuHh7MjPB13eA+z/lE8q+CC9J2XPOq4QSdPkl7yt4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ctBUPPer; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v59IiV5Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EABBCC4CECF;
-	Fri, 15 Nov 2024 06:59:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ctBUPPer"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAB15C4CECF;
+	Fri, 15 Nov 2024 07:00:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731653998;
-	bh=Jq9pKsroPDUzDi9gArQJIfDICgoODdMZHKzL3tX+KwI=;
+	s=korg; t=1731654002;
+	bh=DtEVghmzGUGzzD4h9q3asKMaVMWBxnNOEP6cCoJYBB4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v59IiV5QxBFwK0oFe1mGI8m41cpYZoOllwzHPDrFge1A+4lZXUAoLxML4Lqno4rG+
-	 8mI7FJEsqwtGmet1sYRNmhSnJv6A3TSWbG6fO6H3gpIanyqTUtVnydI5DZRRk/Nbnm
-	 JQSU9lNDV+rTQHaL+Vh4Kg2a+JqIqOiNu4bn8eSw=
+	b=ctBUPPer0pw96GunqR7LEJrOjPasanWFYx61YvVmGiDYODrh9Mt9PBMc/ID/+M+xb
+	 4TdoZLYym5NzYtfpKYeIxoJ/yYaFb9QHoi7HaHjKql9GZeFsCPS4DHvjy2571y4gRW
+	 Czr96Yl5KZbeiZW6MrgbsRCDBwKTUnXo2rgerxqw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Reinhard Speyerer <rspmn@arcor.de>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 15/22] net: usb: qmi_wwan: add Fibocom FG132 0x0112 composition
-Date: Fri, 15 Nov 2024 07:39:01 +0100
-Message-ID: <20241115063721.726126883@linuxfoundation.org>
+	Li Nan <linan122@huawei.com>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Song Liu <song@kernel.org>,
+	Hagar Gamal Halim <hagarhem@amazon.de>
+Subject: [PATCH 5.15 16/22] md/raid10: improve code of mrdev in raid10_sync_request
+Date: Fri, 15 Nov 2024 07:39:02 +0100
+Message-ID: <20241115063721.762245347@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241115063721.172791419@linuxfoundation.org>
 References: <20241115063721.172791419@linuxfoundation.org>
@@ -51,57 +52,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Reinhard Speyerer <rspmn@arcor.de>
+From: Li Nan <linan122@huawei.com>
 
-[ Upstream commit 64761c980cbf71fb7a532a8c7299907ea972a88c ]
+commit 59f8f0b54c8ffb4521f6bbd1cb6f4dfa5022e75e upstream.
 
-Add Fibocom FG132 0x0112 composition:
+'need_recover' and 'mrdev' are equivalent in raid10_sync_request(), and
+inc mrdev->nr_pending is unreasonable if don't need recovery. Replace
+'need_recover' with 'mrdev', and only inc nr_pending when needed.
 
-T:  Bus=03 Lev=02 Prnt=06 Port=01 Cnt=02 Dev#= 10 Spd=12   MxCh= 0
-D:  Ver= 2.01 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
-P:  Vendor=2cb7 ProdID=0112 Rev= 5.15
-S:  Manufacturer=Fibocom Wireless Inc.
-S:  Product=Fibocom Module
-S:  SerialNumber=xxxxxxxx
-C:* #Ifs= 4 Cfg#= 1 Atr=a0 MxPwr=500mA
-I:* If#= 0 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=50 Driver=qmi_wwan
-E:  Ad=82(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
-E:  Ad=81(I) Atr=02(Bulk) MxPS=  64 Ivl=0ms
-E:  Ad=01(O) Atr=02(Bulk) MxPS=  64 Ivl=0ms
-I:* If#= 1 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
-E:  Ad=02(O) Atr=02(Bulk) MxPS=  64 Ivl=0ms
-E:  Ad=83(I) Atr=02(Bulk) MxPS=  64 Ivl=0ms
-I:* If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=85(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-E:  Ad=84(I) Atr=02(Bulk) MxPS=  64 Ivl=0ms
-E:  Ad=03(O) Atr=02(Bulk) MxPS=  64 Ivl=0ms
-I:* If#= 3 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=86(I) Atr=02(Bulk) MxPS=  64 Ivl=0ms
-E:  Ad=04(O) Atr=02(Bulk) MxPS=  64 Ivl=0ms
-
-Signed-off-by: Reinhard Speyerer <rspmn@arcor.de>
-
-Link: https://patch.msgid.link/ZxLKp5YZDy-OM0-e@arcor.de
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Li Nan <linan122@huawei.com>
+Reviewed-by: Yu Kuai <yukuai3@huawei.com>
+Signed-off-by: Song Liu <song@kernel.org>
+Link: https://lore.kernel.org/r/20230527072218.2365857-3-linan666@huaweicloud.com
+Cc: Hagar Gamal Halim <hagarhem@amazon.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/usb/qmi_wwan.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/md/raid10.c |   23 ++++++++++++-----------
+ 1 file changed, 12 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/net/usb/qmi_wwan.c b/drivers/net/usb/qmi_wwan.c
-index 71ee7a3c3f5b8..74e3ba53f5b44 100644
---- a/drivers/net/usb/qmi_wwan.c
-+++ b/drivers/net/usb/qmi_wwan.c
-@@ -1421,6 +1421,7 @@ static const struct usb_device_id products[] = {
- 	{QMI_FIXED_INTF(0x2c7c, 0x0296, 4)},	/* Quectel BG96 */
- 	{QMI_QUIRK_SET_DTR(0x2c7c, 0x030e, 4)},	/* Quectel EM05GV2 */
- 	{QMI_QUIRK_SET_DTR(0x2cb7, 0x0104, 4)},	/* Fibocom NL678 series */
-+	{QMI_QUIRK_SET_DTR(0x2cb7, 0x0112, 0)},	/* Fibocom FG132 */
- 	{QMI_FIXED_INTF(0x0489, 0xe0b4, 0)},	/* Foxconn T77W968 LTE */
- 	{QMI_FIXED_INTF(0x0489, 0xe0b5, 0)},	/* Foxconn T77W968 LTE with eSIM support*/
- 	{QMI_FIXED_INTF(0x2692, 0x9025, 4)},    /* Cellient MPL200 (rebranded Qualcomm 05c6:9025) */
--- 
-2.43.0
-
+--- a/drivers/md/raid10.c
++++ b/drivers/md/raid10.c
+@@ -3443,7 +3443,6 @@ static sector_t raid10_sync_request(stru
+ 			sector_t sect;
+ 			int must_sync;
+ 			int any_working;
+-			int need_recover = 0;
+ 			struct raid10_info *mirror = &conf->mirrors[i];
+ 			struct md_rdev *mrdev, *mreplace;
+ 
+@@ -3451,14 +3450,13 @@ static sector_t raid10_sync_request(stru
+ 			mrdev = rcu_dereference(mirror->rdev);
+ 			mreplace = rcu_dereference(mirror->replacement);
+ 
+-			if (mrdev != NULL &&
+-			    !test_bit(Faulty, &mrdev->flags) &&
+-			    !test_bit(In_sync, &mrdev->flags))
+-				need_recover = 1;
++			if (mrdev && (test_bit(Faulty, &mrdev->flags) ||
++			    test_bit(In_sync, &mrdev->flags)))
++				mrdev = NULL;
+ 			if (mreplace && test_bit(Faulty, &mreplace->flags))
+ 				mreplace = NULL;
+ 
+-			if (!need_recover && !mreplace) {
++			if (!mrdev && !mreplace) {
+ 				rcu_read_unlock();
+ 				continue;
+ 			}
+@@ -3492,7 +3490,8 @@ static sector_t raid10_sync_request(stru
+ 				rcu_read_unlock();
+ 				continue;
+ 			}
+-			atomic_inc(&mrdev->nr_pending);
++			if (mrdev)
++				atomic_inc(&mrdev->nr_pending);
+ 			if (mreplace)
+ 				atomic_inc(&mreplace->nr_pending);
+ 			rcu_read_unlock();
+@@ -3579,7 +3578,7 @@ static sector_t raid10_sync_request(stru
+ 				r10_bio->devs[1].devnum = i;
+ 				r10_bio->devs[1].addr = to_addr;
+ 
+-				if (need_recover) {
++				if (mrdev) {
+ 					bio = r10_bio->devs[1].bio;
+ 					bio->bi_next = biolist;
+ 					biolist = bio;
+@@ -3624,7 +3623,7 @@ static sector_t raid10_sync_request(stru
+ 					for (k = 0; k < conf->copies; k++)
+ 						if (r10_bio->devs[k].devnum == i)
+ 							break;
+-					if (!test_bit(In_sync,
++					if (mrdev && !test_bit(In_sync,
+ 						      &mrdev->flags)
+ 					    && !rdev_set_badblocks(
+ 						    mrdev,
+@@ -3650,12 +3649,14 @@ static sector_t raid10_sync_request(stru
+ 				if (rb2)
+ 					atomic_dec(&rb2->remaining);
+ 				r10_bio = rb2;
+-				rdev_dec_pending(mrdev, mddev);
++				if (mrdev)
++					rdev_dec_pending(mrdev, mddev);
+ 				if (mreplace)
+ 					rdev_dec_pending(mreplace, mddev);
+ 				break;
+ 			}
+-			rdev_dec_pending(mrdev, mddev);
++			if (mrdev)
++				rdev_dec_pending(mrdev, mddev);
+ 			if (mreplace)
+ 				rdev_dec_pending(mreplace, mddev);
+ 			if (r10_bio->devs[0].bio->bi_opf & MD_FAILFAST) {
 
 
