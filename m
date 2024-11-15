@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30F36188904;
-	Fri, 15 Nov 2024 06:44:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA5A3126C17;
+	Fri, 15 Nov 2024 06:44:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731653076; cv=none; b=Azxs77wTZ8A7lqFQ0M107+qxCe7ShCNMUE1VrDRScxvHKEYEHroEGsUuBHMlpeAuOoVYwKeQziB5ymGtqp8h+DLm2ZjpIx0eEMmeaKYsauEcWI9GGIy7mZYUw5AAu9FEpRUXXM1+wlHHWV/ncOexUHp5KPpJIDDTqXx0+hJwF6o=
+	t=1731653079; cv=none; b=dHCdJKSZ6fqBp9Whc5v1/DBaKUEoJJg1/NOUdccPJv4pFML/jzil8x1HIyxaF1C6eDMyV4r4iOldMSD7VgGRp9SgUmV9Q/ZTE1FY1/zBSqRje0sMEM4xFDN49qz6z3jnGzlGgH50bkPTCtU4PMWPbHfMpAjVCIAdXtHdJQjy/lg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731653076; c=relaxed/simple;
-	bh=HMCaZojqD0tCQe7Zt1gW+kYXewVsen6V+xJBgo9dWFw=;
+	s=arc-20240116; t=1731653079; c=relaxed/simple;
+	bh=4HOA+2A9glwXsSIrgWeaKvc9GCrIdsYk79Rmv4ZL5R0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L35eImlrvX0TQz6iIcmSlOHTGe5rWVTyiYOSALPvtxGwjcG2iY6N8V3hp3pUMAr+i1yYOpFhM7p2zwHEfPWmPaENDYe4XiYJDhjmpv6iKyRCOh52Y+k7Zd6Nmu1cEjmrhE2yP+3cvS4ZgGF8B63LJT3Huq6s55KS3tY9rcpD5N4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xpkcadFI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HOskYxK6z52p0vxYMvcijoyvbbYQZ2tZ6Eh8K24Y2kkW/KtRcXesqtDd89AFok7R4Jc1GPG6ig4wGO6vdVNguRk5t/m9ve001u8qQlsIEDIEClYan121LaokKO5OK4I6mJtjYZZXdloPpwmLtA2Bnp+3iMcAf150mQnzXf+ohnU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kfRLdNWy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xpkcadFI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89568C4CECF;
-	Fri, 15 Nov 2024 06:44:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kfRLdNWy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AE95C4CECF;
+	Fri, 15 Nov 2024 06:44:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731653076;
-	bh=HMCaZojqD0tCQe7Zt1gW+kYXewVsen6V+xJBgo9dWFw=;
+	s=korg; t=1731653079;
+	bh=4HOA+2A9glwXsSIrgWeaKvc9GCrIdsYk79Rmv4ZL5R0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xpkcadFIl7BO/S/FJT8VISxgxLJUWOFQK2WhvnNvI7Jnp3kpxgMuCSUu3MrW18+/g
-	 tqwiP2HxBVViLnEYfjlLoQHiFe/J/c3zH39yxBToCk5s1VDbTD+/UWMxoJ0NBtXABw
-	 QZocCvTgRKR2m+qaQz9QQ7dgXDaYXiAsFuCslGXA=
+	b=kfRLdNWy07WPzLpjAfhstGEEWsnLVL57kPD4bsEHL/8FOeEXFf5AentXTSwQuQHcN
+	 mW8vPeHIVgimx7Esc6g8pX+3NRZg/x+vTMBkbEFrjVOO+q4zw7ki9hLhpzocdeTre/
+	 iWnHEX0JJHaT6R7D4FJJB8ryyOkuMuTvjgvAUrs0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoffer Dall <christoffer.dall@arm.com>,
-	Marc Zyngier <maz@kernel.org>,
-	Thomas Gleixner <tglx@linutronix.de>
-Subject: [PATCH 5.4 45/66] irqchip/gic-v3: Force propagation of the active state with a read-back
-Date: Fri, 15 Nov 2024 07:37:54 +0100
-Message-ID: <20241115063724.470637018@linuxfoundation.org>
+	Dario Binacchi <dario.binacchi@amarulasolutions.com>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 14/66] can: c_can: fix {rx,tx}_errors statistics
+Date: Fri, 15 Nov 2024 07:37:23 +0100
+Message-ID: <20241115063723.357497162@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241115063722.834793938@linuxfoundation.org>
 References: <20241115063722.834793938@linuxfoundation.org>
@@ -51,57 +51,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Zyngier <maz@kernel.org>
+From: Dario Binacchi <dario.binacchi@amarulasolutions.com>
 
-commit 464cb98f1c07298c4c10e714ae0c36338d18d316 upstream.
+[ Upstream commit 4d6d26537940f3b3e17138987ed9e4a334780bf7 ]
 
-Christoffer reports that on some implementations, writing to
-GICR_ISACTIVER0 (and similar GICD registers) can race badly with a guest
-issuing a deactivation of that interrupt via the system register interface.
+The c_can_handle_bus_err() function was incorrectly incrementing only the
+receive error counter, even in cases of bit or acknowledgment errors that
+occur during transmission. The patch fixes the issue by incrementing the
+appropriate counter based on the type of error.
 
-There are multiple reasons to this:
-
- - this uses an early write-acknoledgement memory type (nGnRE), meaning
-   that the write may only have made it as far as some interconnect
-   by the time the store is considered "done"
-
- - the GIC itself is allowed to buffer the write until it decides to
-   take it into account (as long as it is in finite time)
-
-The effects are that the activation may not have taken effect by the time
-the kernel enters the guest, forcing an immediate exit, or that a guest
-deactivation occurs before the interrupt is active, doing nothing.
-
-In order to guarantee that the write to the ISACTIVER register has taken
-effect, read back from it, forcing the interconnect to propagate the write,
-and the GIC to process the write before returning the read.
-
-Reported-by: Christoffer Dall <christoffer.dall@arm.com>
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Acked-by: Christoffer Dall <christoffer.dall@arm.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/all/20241106084418.3794612-1-maz@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 881ff67ad450 ("can: c_can: Added support for Bosch C_CAN controller")
+Signed-off-by: Dario Binacchi <dario.binacchi@amarulasolutions.com>
+Link: https://patch.msgid.link/20241014135319.2009782-1-dario.binacchi@amarulasolutions.com
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-gic-v3.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/net/can/c_can/c_can.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/drivers/irqchip/irq-gic-v3.c
-+++ b/drivers/irqchip/irq-gic-v3.c
-@@ -383,6 +383,13 @@ static int gic_irq_set_irqchip_state(str
- 	}
+diff --git a/drivers/net/can/c_can/c_can.c b/drivers/net/can/c_can/c_can.c
+index f14e739ba3f45..07cf6fda9720f 100644
+--- a/drivers/net/can/c_can/c_can.c
++++ b/drivers/net/can/c_can/c_can.c
+@@ -1001,7 +1001,6 @@ static int c_can_handle_bus_err(struct net_device *dev,
  
- 	gic_poke_irq(d, reg);
-+
-+	/*
-+	 * Force read-back to guarantee that the active state has taken
-+	 * effect, and won't race with a guest-driven deactivation.
-+	 */
-+	if (reg == GICD_ISACTIVER)
-+		gic_peek_irq(d, reg);
- 	return 0;
- }
+ 	/* common for all type of bus errors */
+ 	priv->can.can_stats.bus_error++;
+-	stats->rx_errors++;
  
+ 	/* propagate the error condition to the CAN stack */
+ 	skb = alloc_can_err_skb(dev, &cf);
+@@ -1018,26 +1017,32 @@ static int c_can_handle_bus_err(struct net_device *dev,
+ 	case LEC_STUFF_ERROR:
+ 		netdev_dbg(dev, "stuff error\n");
+ 		cf->data[2] |= CAN_ERR_PROT_STUFF;
++		stats->rx_errors++;
+ 		break;
+ 	case LEC_FORM_ERROR:
+ 		netdev_dbg(dev, "form error\n");
+ 		cf->data[2] |= CAN_ERR_PROT_FORM;
++		stats->rx_errors++;
+ 		break;
+ 	case LEC_ACK_ERROR:
+ 		netdev_dbg(dev, "ack error\n");
+ 		cf->data[3] = CAN_ERR_PROT_LOC_ACK;
++		stats->tx_errors++;
+ 		break;
+ 	case LEC_BIT1_ERROR:
+ 		netdev_dbg(dev, "bit1 error\n");
+ 		cf->data[2] |= CAN_ERR_PROT_BIT1;
++		stats->tx_errors++;
+ 		break;
+ 	case LEC_BIT0_ERROR:
+ 		netdev_dbg(dev, "bit0 error\n");
+ 		cf->data[2] |= CAN_ERR_PROT_BIT0;
++		stats->tx_errors++;
+ 		break;
+ 	case LEC_CRC_ERROR:
+ 		netdev_dbg(dev, "CRC error\n");
+ 		cf->data[3] = CAN_ERR_PROT_LOC_CRC_SEQ;
++		stats->rx_errors++;
+ 		break;
+ 	default:
+ 		break;
+-- 
+2.43.0
+
 
 
