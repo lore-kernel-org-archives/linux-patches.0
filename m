@@ -1,38 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C867A2BB1B;
-	Fri, 15 Nov 2024 06:48:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33E09EAD0;
+	Fri, 15 Nov 2024 06:49:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731653339; cv=none; b=R1MNTG4MxARlMl14j73GwKWMb7FM7CuPhzM6oXmy0d85cU5iviIUlCdpykFUNkZURX7rpLzR9R+71Jt9pRInKKh9G0Qv2OgyZcKtVTN5C8+Nta2vPSbPMG/P1X+zVNceG+K3qRQkmaU5tH1ZjcYYFiP46qwi6XvKUE6iyeoigqI=
+	t=1731653343; cv=none; b=M9wE8d1DWLMkjqJ9swwDaZmTiJ7aCqdUy4fNEamk8zLs0qSYkZx3QemJMYlBwBqyy3RsqUSVSKnhETXoKllR9JH8GoeyxWz87pYhD6NxA8zAu+IHNyazA850WuMS5lrNTMO8dsqTSbvJAS+4lVg+eUlvOL7NKYsiuW4wrDPLzfk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731653339; c=relaxed/simple;
-	bh=wQG0VW6v/0Dr54xvykwlRPG22nki01XYYFh3kqjBIL0=;
+	s=arc-20240116; t=1731653343; c=relaxed/simple;
+	bh=Qjb5lbN5dAOcMqvO3ApEkvxJ15U4wNcEsofQvZq7kUw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cGmLbDrp7cDeLznHUcrstExWQP9514Aue+Pas0OWEHvcmcE5lQQsvdGz3NauKWFWjUOforNs5tI1HSv4t92VH+zC8Vd4SZZPMsK1HfpiPAWRFgbWzVoGOFVtwQUb8zgw1DZ4JCYD1R4n/4ofEiSjKAJxl1vTlE/+6SxWovk3klk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B3v6ZQU0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FsiMCssSoYvxdKU8bZPn20V163ErJI490QGNPky6STBWKWsCA2IVJfIhE/MN0O7ntuYKKgYgC89Tm+/GFTMjxaAGlOJS+OuGObFNWxe3/AFBCU6jvW5tZAS2ICLRlEjYxSJ3elCKK7Geitm8P0OYi5ce2SKDS757L84dFDafeQM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XRR37g/B; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B3v6ZQU0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35363C4CECF;
-	Fri, 15 Nov 2024 06:48:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XRR37g/B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 963EAC4CECF;
+	Fri, 15 Nov 2024 06:49:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731653339;
-	bh=wQG0VW6v/0Dr54xvykwlRPG22nki01XYYFh3kqjBIL0=;
+	s=korg; t=1731653343;
+	bh=Qjb5lbN5dAOcMqvO3ApEkvxJ15U4wNcEsofQvZq7kUw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B3v6ZQU0AX4OlMwbFh+p3TESMSHoa0Cs4a2bHsBbGEzY1iAdDJL5hZXFUBYnpb0PH
-	 wh0UXPZX3YN4bpM/PMnnrua7G2O6wuZeWqtFp3BbWf9fB7tdI2YSdiSfxFnWUfCwr3
-	 m1ZKtYAV8Xk87qEziYKA666ukEvrY+zEst2/EUqo=
+	b=XRR37g/B5WUYTgUveOefk/IQlY2UuIvMQ8eleNrZ3agI5ovjyUk0r5HPyvxJ+Qbh/
+	 oidVdFIb99JBqIkpJmkZstYp+moQO+TZt5BoclEtZ150WLZdWbDSWBx86WbcI37s+/
+	 CJoO11TiGQ0yYVlKZoXIGLI4DMeJcxjrr+rxrZdg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hou Tao <houtao1@huawei.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
+	Jia Yao <jia.yao@intel.com>,
+	Shuicheng Lin <shuicheng.lin@intel.com>,
+	Lucas De Marchi <lucas.demarchi@intel.com>,
+	Matthew Auld <matthew.auld@intel.com>,
+	Nirmoy Das <nirmoy.das@intel.com>,
+	Jonathan Cavitt <jonathan.cavitt@intel.com>,
+	Zongyao Bai <zongyao.bai@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 56/63] bpf: Check validity of link->type in bpf_link_show_fdinfo()
-Date: Fri, 15 Nov 2024 07:38:19 +0100
-Message-ID: <20241115063727.930162831@linuxfoundation.org>
+Subject: [PATCH 6.11 57/63] drm/xe: Enlarge the invalidation timeout from 150 to 500
+Date: Fri, 15 Nov 2024 07:38:20 +0100
+Message-ID: <20241115063727.965591739@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241115063725.892410236@linuxfoundation.org>
 References: <20241115063725.892410236@linuxfoundation.org>
@@ -51,52 +56,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hou Tao <houtao1@huawei.com>
+From: Shuicheng Lin <shuicheng.lin@intel.com>
 
-[ Upstream commit 8421d4c8762bd022cb491f2f0f7019ef51b4f0a7 ]
+[ Upstream commit c8fb95e7a54315460b45090f0968167a332e1657 ]
 
-If a newly-added link type doesn't invoke BPF_LINK_TYPE(), accessing
-bpf_link_type_strs[link->type] may result in an out-of-bounds access.
+There are error messages like below that are occurring during stress
+testing: "[   31.004009] xe 0000:03:00.0: [drm] ERROR GT0: Global
+invalidation timeout". Previously it was hitting this 3 out of 1000
+executions of warm reboot.  After raising it to 500, 1000 warm reboot
+executions passed and it didn't fail.
 
-To spot such missed invocations early in the future, checking the
-validity of link->type in bpf_link_show_fdinfo() and emitting a warning
-when such invocations are missed.
+Due to the way xe_mmio_wait32() is implemented, the timeout is able to
+expire early when the register matches the expected value due to the
+wait increments starting small. So, the larger timeout value should have
+no effect during normal use cases.
 
-Signed-off-by: Hou Tao <houtao1@huawei.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20241024013558.1135167-3-houtao@huaweicloud.com
+v2 (Jonathan):
+  - rework the commit message
+v3 (Lucas):
+  - add conclusive message for the fail rate and test case
+v4:
+  - add suggested-by
+
+Suggested-by: Jia Yao <jia.yao@intel.com>
+Signed-off-by: Shuicheng Lin <shuicheng.lin@intel.com>
+Cc: Lucas De Marchi <lucas.demarchi@intel.com>
+Cc: Matthew Auld <matthew.auld@intel.com>
+Cc: Nirmoy Das <nirmoy.das@intel.com>
+Reviewed-by: Jonathan Cavitt <jonathan.cavitt@intel.com>
+Tested-by: Zongyao Bai <zongyao.bai@intel.com>
+Reviewed-by: Nirmoy Das <nirmoy.das@intel.com>
+Signed-off-by: Matthew Auld <matthew.auld@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20241015161207.1373401-1-shuicheng.lin@intel.com
+(cherry picked from commit 2eb460ab9f4bc5b575f52568d17936da0af681d8)
+[ Fix conflict with gt->mmio ]
+Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/syscall.c | 14 +++++++++-----
- 1 file changed, 9 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/xe/xe_device.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/bpf/syscall.c b/kernel/bpf/syscall.c
-index 19b590b5aaec9..b282ed1250358 100644
---- a/kernel/bpf/syscall.c
-+++ b/kernel/bpf/syscall.c
-@@ -3136,13 +3136,17 @@ static void bpf_link_show_fdinfo(struct seq_file *m, struct file *filp)
- {
- 	const struct bpf_link *link = filp->private_data;
- 	const struct bpf_prog *prog = link->prog;
-+	enum bpf_link_type type = link->type;
- 	char prog_tag[sizeof(prog->tag) * 2 + 1] = { };
+diff --git a/drivers/gpu/drm/xe/xe_device.c b/drivers/gpu/drm/xe/xe_device.c
+index fb394189d9e23..13213f39e52f9 100644
+--- a/drivers/gpu/drm/xe/xe_device.c
++++ b/drivers/gpu/drm/xe/xe_device.c
+@@ -870,7 +870,7 @@ void xe_device_l2_flush(struct xe_device *xe)
+ 	spin_lock(&gt->global_invl_lock);
+ 	xe_mmio_write32(gt, XE2_GLOBAL_INVAL, 0x1);
  
--	seq_printf(m,
--		   "link_type:\t%s\n"
--		   "link_id:\t%u\n",
--		   bpf_link_type_strs[link->type],
--		   link->id);
-+	if (type < ARRAY_SIZE(bpf_link_type_strs) && bpf_link_type_strs[type]) {
-+		seq_printf(m, "link_type:\t%s\n", bpf_link_type_strs[type]);
-+	} else {
-+		WARN_ONCE(1, "missing BPF_LINK_TYPE(...) for link type %u\n", type);
-+		seq_printf(m, "link_type:\t<%u>\n", type);
-+	}
-+	seq_printf(m, "link_id:\t%u\n", link->id);
-+
- 	if (prog) {
- 		bin2hex(prog_tag, prog->tag, sizeof(prog->tag));
- 		seq_printf(m,
+-	if (xe_mmio_wait32(gt, XE2_GLOBAL_INVAL, 0x1, 0x0, 150, NULL, true))
++	if (xe_mmio_wait32(gt, XE2_GLOBAL_INVAL, 0x1, 0x0, 500, NULL, true))
+ 		xe_gt_err_once(gt, "Global invalidation timeout\n");
+ 	spin_unlock(&gt->global_invl_lock);
+ 
 -- 
 2.43.0
 
