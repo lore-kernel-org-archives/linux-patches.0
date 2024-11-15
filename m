@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FBD6189903;
-	Fri, 15 Nov 2024 06:54:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FB90187FE8;
+	Fri, 15 Nov 2024 06:54:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731653668; cv=none; b=ijkKcHNwoRR+g0xycaQzKGdwbO7VgDk/lmRCa+XmPQ5HzY6e4/s/X7/ix/Sdg1mDh1icu4mfkJ2bqjr0iGzCFuMBoluUhSECFslqUlI4r9aRk7SG34dM6jpsvH2wkRtNfBeV6RqZ/WZ1gLGYlYLd8+/NHVOqW9DHh3PHuWwp3H8=
+	t=1731653671; cv=none; b=eP1923GJqhLumqhuhOkRpYcQKFGnw4dX3+UVUV8q+z7CSRSQS74hQ/3HYb2Go387lysWZAokijKoS3T5fedFVbUNrtnQ/BlcfAqcFMRJkiGnIz+AL9snNorYoNTDw7p/o76G3hegGGvMWU4vzOAB7oLqY3vjRt7+qyUO9rD7gwY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731653668; c=relaxed/simple;
-	bh=BvAyzgL9xOTwSb66o5awSwAmGEz6TnLt7GKSrqGRHXo=;
+	s=arc-20240116; t=1731653671; c=relaxed/simple;
+	bh=PamMbgd8mvabNN/WGFibdTwJq3Wv2j0AiPmbHPcTBL8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rUzQq642ldNZaV24POnU5K3cW9QhiTVHDSNF+wWY+DTIUIAc0de09L3rIeR9w5V77qWhhVkfPgQoWqp+Q8qnoprQPalmpRGVoJbsXixU82N2MMlgLl6xVUO0OiNTDI6O+jlR/oqWv6huMs9mKD0AqVq+UpTkGiof3Qal6iNstiM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AQFpNpK7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=WAHkJv2UjlXTLuaAJ/28xdlO6KAeFQC3T+zMUjUqnONE6TnlPRMBIa7V6YkQJx1XFfi8OxIZipYq1FpH894pSj9cGdMyvaNeQQrrS9px1V+XHo+NVlvNV2edD6/9cZOCJhByRyru3GZfnEOoKT0OxSs6LdxfrVGBaIY1kh7SSMY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aC3kyomp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AQFpNpK7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B6D0C4CED0;
-	Fri, 15 Nov 2024 06:54:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aC3kyomp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF2EAC4CED0;
+	Fri, 15 Nov 2024 06:54:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731653668;
-	bh=BvAyzgL9xOTwSb66o5awSwAmGEz6TnLt7GKSrqGRHXo=;
+	s=korg; t=1731653671;
+	bh=PamMbgd8mvabNN/WGFibdTwJq3Wv2j0AiPmbHPcTBL8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AQFpNpK7R/1bJSxbFYgtiPdl7Mgor1UN8f/PtUe0To0s4nRXVh04Uxa+rBTU/NehC
-	 PIMUc7SGSnrAhvqXrC1eYYvD8rJk++KtFMoSgMbO1k+osWYGkWRs+lsxaBVQ2SDxCy
-	 yNamBtRnHCgY157/glbwfAVjVUlVUnkBuoUzhmQY=
+	b=aC3kyompAJ9w97Gv7wS2emSt+NdT2rZ9OsuKuoaEhzTz4eYUc5RYJAPeT1nTYXuUq
+	 pXiau+pf+Izm3mq8CcIhzz1ORHDZWRv5/cJXyA3e6stjEfWbNur0kMgZfkZlAvteUp
+	 qsFQAk9niffBQCuezt4PDo/bizeEzPL7vjyGBmQ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qiao Ma <mqaio@linux.alibaba.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Philip Yang <Philip.Yang@amd.com>,
+	Felix Kuehling <felix.kuehling@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>,
 	Vamsi Krishna Brahmajosyula <vamsi-krishna.brahmajosyula@broadcom.com>
-Subject: [PATCH 6.1 32/39] uprobe: avoid out-of-bounds memory access of fetching args
-Date: Fri, 15 Nov 2024 07:38:42 +0100
-Message-ID: <20241115063723.766948747@linuxfoundation.org>
+Subject: [PATCH 6.1 33/39] drm/amdkfd: amdkfd_free_gtt_mem clear the correct pointer
+Date: Fri, 15 Nov 2024 07:38:43 +0100
+Message-ID: <20241115063723.802366355@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241115063722.599985562@linuxfoundation.org>
 References: <20241115063722.599985562@linuxfoundation.org>
@@ -46,186 +48,152 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Qiao Ma <mqaio@linux.alibaba.com>
+From: Philip Yang <Philip.Yang@amd.com>
 
-commit 373b9338c9722a368925d83bc622c596896b328e upstream.
+commit c86ad39140bbcb9dc75a10046c2221f657e8083b upstream.
 
-Uprobe needs to fetch args into a percpu buffer, and then copy to ring
-buffer to avoid non-atomic context problem.
+Pass pointer reference to amdgpu_bo_unref to clear the correct pointer,
+otherwise amdgpu_bo_unref clear the local variable, the original pointer
+not set to NULL, this could cause use-after-free bug.
 
-Sometimes user-space strings, arrays can be very large, but the size of
-percpu buffer is only page size. And store_trace_args() won't check
-whether these data exceeds a single page or not, caused out-of-bounds
-memory access.
-
-It could be reproduced by following steps:
-1. build kernel with CONFIG_KASAN enabled
-2. save follow program as test.c
-
-```
-\#include <stdio.h>
-\#include <stdlib.h>
-\#include <string.h>
-
-// If string length large than MAX_STRING_SIZE, the fetch_store_strlen()
-// will return 0, cause __get_data_size() return shorter size, and
-// store_trace_args() will not trigger out-of-bounds access.
-// So make string length less than 4096.
-\#define STRLEN 4093
-
-void generate_string(char *str, int n)
-{
-    int i;
-    for (i = 0; i < n; ++i)
-    {
-        char c = i % 26 + 'a';
-        str[i] = c;
-    }
-    str[n-1] = '\0';
-}
-
-void print_string(char *str)
-{
-    printf("%s\n", str);
-}
-
-int main()
-{
-    char tmp[STRLEN];
-
-    generate_string(tmp, STRLEN);
-    print_string(tmp);
-
-    return 0;
-}
-```
-3. compile program
-`gcc -o test test.c`
-
-4. get the offset of `print_string()`
-```
-objdump -t test | grep -w print_string
-0000000000401199 g     F .text  000000000000001b              print_string
-```
-
-5. configure uprobe with offset 0x1199
-```
-off=0x1199
-
-cd /sys/kernel/debug/tracing/
-echo "p /root/test:${off} arg1=+0(%di):ustring arg2=\$comm arg3=+0(%di):ustring"
- > uprobe_events
-echo 1 > events/uprobes/enable
-echo 1 > tracing_on
-```
-
-6. run `test`, and kasan will report error.
-==================================================================
-BUG: KASAN: use-after-free in strncpy_from_user+0x1d6/0x1f0
-Write of size 8 at addr ffff88812311c004 by task test/499CPU: 0 UID: 0 PID: 499 Comm: test Not tainted 6.12.0-rc3+ #18
-Hardware name: Red Hat KVM, BIOS 1.16.0-4.al8 04/01/2014
-Call Trace:
- <TASK>
- dump_stack_lvl+0x55/0x70
- print_address_description.constprop.0+0x27/0x310
- kasan_report+0x10f/0x120
- ? strncpy_from_user+0x1d6/0x1f0
- strncpy_from_user+0x1d6/0x1f0
- ? rmqueue.constprop.0+0x70d/0x2ad0
- process_fetch_insn+0xb26/0x1470
- ? __pfx_process_fetch_insn+0x10/0x10
- ? _raw_spin_lock+0x85/0xe0
- ? __pfx__raw_spin_lock+0x10/0x10
- ? __pte_offset_map+0x1f/0x2d0
- ? unwind_next_frame+0xc5f/0x1f80
- ? arch_stack_walk+0x68/0xf0
- ? is_bpf_text_address+0x23/0x30
- ? kernel_text_address.part.0+0xbb/0xd0
- ? __kernel_text_address+0x66/0xb0
- ? unwind_get_return_address+0x5e/0xa0
- ? __pfx_stack_trace_consume_entry+0x10/0x10
- ? arch_stack_walk+0xa2/0xf0
- ? _raw_spin_lock_irqsave+0x8b/0xf0
- ? __pfx__raw_spin_lock_irqsave+0x10/0x10
- ? depot_alloc_stack+0x4c/0x1f0
- ? _raw_spin_unlock_irqrestore+0xe/0x30
- ? stack_depot_save_flags+0x35d/0x4f0
- ? kasan_save_stack+0x34/0x50
- ? kasan_save_stack+0x24/0x50
- ? mutex_lock+0x91/0xe0
- ? __pfx_mutex_lock+0x10/0x10
- prepare_uprobe_buffer.part.0+0x2cd/0x500
- uprobe_dispatcher+0x2c3/0x6a0
- ? __pfx_uprobe_dispatcher+0x10/0x10
- ? __kasan_slab_alloc+0x4d/0x90
- handler_chain+0xdd/0x3e0
- handle_swbp+0x26e/0x3d0
- ? __pfx_handle_swbp+0x10/0x10
- ? uprobe_pre_sstep_notifier+0x151/0x1b0
- irqentry_exit_to_user_mode+0xe2/0x1b0
- asm_exc_int3+0x39/0x40
-RIP: 0033:0x401199
-Code: 01 c2 0f b6 45 fb 88 02 83 45 fc 01 8b 45 fc 3b 45 e4 7c b7 8b 45 e4 48 98 48 8d 50 ff 48 8b 45 e8 48 01 d0 ce
-RSP: 002b:00007ffdf00576a8 EFLAGS: 00000206
-RAX: 00007ffdf00576b0 RBX: 0000000000000000 RCX: 0000000000000ff2
-RDX: 0000000000000ffc RSI: 0000000000000ffd RDI: 00007ffdf00576b0
-RBP: 00007ffdf00586b0 R08: 00007feb2f9c0d20 R09: 00007feb2f9c0d20
-R10: 0000000000000001 R11: 0000000000000202 R12: 0000000000401040
-R13: 00007ffdf0058780 R14: 0000000000000000 R15: 0000000000000000
- </TASK>
-
-This commit enforces the buffer's maxlen less than a page-size to avoid
-store_trace_args() out-of-memory access.
-
-Link: https://lore.kernel.org/all/20241015060148.1108331-1-mqaio@linux.alibaba.com/
-
-Fixes: dcad1a204f72 ("tracing/uprobes: Fetch args before reserving a ring buffer")
-Signed-off-by: Qiao Ma <mqaio@linux.alibaba.com>
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Philip Yang <Philip.Yang@amd.com>
+Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
+Acked-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Vamsi Krishna Brahmajosyula <vamsi-krishna.brahmajosyula@broadcom.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_uprobe.c |    9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.c             |   14 +++++++-------
+ drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.h             |    2 +-
+ drivers/gpu/drm/amd/amdkfd/kfd_chardev.c               |    2 +-
+ drivers/gpu/drm/amd/amdkfd/kfd_device.c                |    4 ++--
+ drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c  |    2 +-
+ drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager.c           |    2 +-
+ drivers/gpu/drm/amd/amdkfd/kfd_process.c               |    2 +-
+ drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c |    4 ++--
+ 8 files changed, 16 insertions(+), 16 deletions(-)
 
---- a/kernel/trace/trace_uprobe.c
-+++ b/kernel/trace/trace_uprobe.c
-@@ -862,6 +862,7 @@ struct uprobe_cpu_buffer {
- };
- static struct uprobe_cpu_buffer __percpu *uprobe_cpu_buffer;
- static int uprobe_buffer_refcnt;
-+#define MAX_UCB_BUFFER_SIZE PAGE_SIZE
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.c
+@@ -344,15 +344,15 @@ allocate_mem_reserve_bo_failed:
+ 	return r;
+ }
  
- static int uprobe_buffer_init(void)
+-void amdgpu_amdkfd_free_gtt_mem(struct amdgpu_device *adev, void *mem_obj)
++void amdgpu_amdkfd_free_gtt_mem(struct amdgpu_device *adev, void **mem_obj)
  {
-@@ -960,6 +961,11 @@ static struct uprobe_cpu_buffer *prepare
- 	ucb = uprobe_buffer_get();
- 	ucb->dsize = tu->tp.size + dsize;
+-	struct amdgpu_bo *bo = (struct amdgpu_bo *) mem_obj;
++	struct amdgpu_bo **bo = (struct amdgpu_bo **) mem_obj;
  
-+	if (WARN_ON_ONCE(ucb->dsize > MAX_UCB_BUFFER_SIZE)) {
-+		ucb->dsize = MAX_UCB_BUFFER_SIZE;
-+		dsize = MAX_UCB_BUFFER_SIZE - tu->tp.size;
-+	}
-+
- 	store_trace_args(ucb->buf, &tu->tp, regs, esize, dsize);
+-	amdgpu_bo_reserve(bo, true);
+-	amdgpu_bo_kunmap(bo);
+-	amdgpu_bo_unpin(bo);
+-	amdgpu_bo_unreserve(bo);
+-	amdgpu_bo_unref(&(bo));
++	amdgpu_bo_reserve(*bo, true);
++	amdgpu_bo_kunmap(*bo);
++	amdgpu_bo_unpin(*bo);
++	amdgpu_bo_unreserve(*bo);
++	amdgpu_bo_unref(bo);
+ }
  
- 	return ucb;
-@@ -978,9 +984,6 @@ static void __uprobe_trace_func(struct t
+ int amdgpu_amdkfd_alloc_gws(struct amdgpu_device *adev, size_t size,
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.h
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.h
+@@ -210,7 +210,7 @@ int amdgpu_amdkfd_evict_userptr(struct k
+ int amdgpu_amdkfd_alloc_gtt_mem(struct amdgpu_device *adev, size_t size,
+ 				void **mem_obj, uint64_t *gpu_addr,
+ 				void **cpu_ptr, bool mqd_gfx9);
+-void amdgpu_amdkfd_free_gtt_mem(struct amdgpu_device *adev, void *mem_obj);
++void amdgpu_amdkfd_free_gtt_mem(struct amdgpu_device *adev, void **mem_obj);
+ int amdgpu_amdkfd_alloc_gws(struct amdgpu_device *adev, size_t size,
+ 				void **mem_obj);
+ void amdgpu_amdkfd_free_gws(struct amdgpu_device *adev, void *mem_obj);
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
+@@ -408,7 +408,7 @@ static int kfd_ioctl_create_queue(struct
  
- 	WARN_ON(call != trace_file->event_call);
+ err_create_queue:
+ 	if (wptr_bo)
+-		amdgpu_amdkfd_free_gtt_mem(dev->adev, wptr_bo);
++		amdgpu_amdkfd_free_gtt_mem(dev->adev, (void **)&wptr_bo);
+ err_wptr_map_gart:
+ err_alloc_doorbells:
+ err_bind_process:
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_device.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_device.c
+@@ -673,7 +673,7 @@ kfd_interrupt_error:
+ kfd_doorbell_error:
+ 	kfd_gtt_sa_fini(kfd);
+ kfd_gtt_sa_init_error:
+-	amdgpu_amdkfd_free_gtt_mem(kfd->adev, kfd->gtt_mem);
++	amdgpu_amdkfd_free_gtt_mem(kfd->adev, &kfd->gtt_mem);
+ alloc_gtt_mem_failure:
+ 	if (kfd->gws)
+ 		amdgpu_amdkfd_free_gws(kfd->adev, kfd->gws);
+@@ -693,7 +693,7 @@ void kgd2kfd_device_exit(struct kfd_dev
+ 		kfd_doorbell_fini(kfd);
+ 		ida_destroy(&kfd->doorbell_ida);
+ 		kfd_gtt_sa_fini(kfd);
+-		amdgpu_amdkfd_free_gtt_mem(kfd->adev, kfd->gtt_mem);
++		amdgpu_amdkfd_free_gtt_mem(kfd->adev, &kfd->gtt_mem);
+ 		if (kfd->gws)
+ 			amdgpu_amdkfd_free_gws(kfd->adev, kfd->gws);
+ 	}
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c
+@@ -2392,7 +2392,7 @@ static void deallocate_hiq_sdma_mqd(stru
+ {
+ 	WARN(!mqd, "No hiq sdma mqd trunk to free");
  
--	if (WARN_ON_ONCE(ucb->dsize > PAGE_SIZE))
--		return;
--
- 	if (trace_trigger_soft_disabled(trace_file))
- 		return;
+-	amdgpu_amdkfd_free_gtt_mem(dev->adev, mqd->gtt_mem);
++	amdgpu_amdkfd_free_gtt_mem(dev->adev, &mqd->gtt_mem);
+ }
  
+ void device_queue_manager_uninit(struct device_queue_manager *dqm)
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager.c
+@@ -204,7 +204,7 @@ void kfd_free_mqd_cp(struct mqd_manager
+ 	      struct kfd_mem_obj *mqd_mem_obj)
+ {
+ 	if (mqd_mem_obj->gtt_mem) {
+-		amdgpu_amdkfd_free_gtt_mem(mm->dev->adev, mqd_mem_obj->gtt_mem);
++		amdgpu_amdkfd_free_gtt_mem(mm->dev->adev, &mqd_mem_obj->gtt_mem);
+ 		kfree(mqd_mem_obj);
+ 	} else {
+ 		kfd_gtt_sa_free(mm->dev, mqd_mem_obj);
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_process.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_process.c
+@@ -1052,7 +1052,7 @@ static void kfd_process_destroy_pdds(str
+ 
+ 		if (pdd->dev->shared_resources.enable_mes)
+ 			amdgpu_amdkfd_free_gtt_mem(pdd->dev->adev,
+-						   pdd->proc_ctx_bo);
++						   &pdd->proc_ctx_bo);
+ 		/*
+ 		 * before destroying pdd, make sure to report availability
+ 		 * for auto suspend
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c
+@@ -441,9 +441,9 @@ int pqm_destroy_queue(struct process_que
+ 
+ 		if (dev->shared_resources.enable_mes) {
+ 			amdgpu_amdkfd_free_gtt_mem(dev->adev,
+-						   pqn->q->gang_ctx_bo);
++						   &pqn->q->gang_ctx_bo);
+ 			if (pqn->q->wptr_bo)
+-				amdgpu_amdkfd_free_gtt_mem(dev->adev, pqn->q->wptr_bo);
++				amdgpu_amdkfd_free_gtt_mem(dev->adev, (void **)&pqn->q->wptr_bo);
+ 
+ 		}
+ 		uninit_queue(pqn->q);
 
 
