@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB77717DFFD;
-	Fri, 15 Nov 2024 06:55:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4258E15FD13;
+	Fri, 15 Nov 2024 06:55:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731653712; cv=none; b=YgKqy7QcIgBt/i/WKyEJ3Qu6GjJ81H6HUX6cUTC2EU0KgT3uMWrwr/E4lZeRDMjcrlfonHYY2y6JcgDJ0IW165EB7g4oQxi/ZtDats3a6bOAinjOt1I8uukoHdZQrwSHo1f01/rd3DxIxz6sO5prgpwHaVndBA/bL7q2YpeduvI=
+	t=1731653716; cv=none; b=RKz5KnIoUipyqJj+vIQmM3BjBwTMv7kWGyJBiChPIFUjgVPgGUSe9zI4TAOvx3nxVjkPgxLlv715cKwWaEj+dvRVZcspRrbpBAc6qh/HKRRswcT/wwMEwCqC23RNhfqAx/nEsiREqoFmCgWsPhEMFTRlsiHcbuuJw+fycVckPh8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731653712; c=relaxed/simple;
-	bh=0ZvqN8e+QyS/VGAW9e3Zn+1v6Y9TiXAXXRp55HlbsF0=;
+	s=arc-20240116; t=1731653716; c=relaxed/simple;
+	bh=Pi/oCAd5f/4jxvSoSSy486TrUS+dGv+h/eYO5jzZWq8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=do8u+vEDwD8H0e5XVJs9GyBTDToiwlSlYJYJGPJv/+x84gl6dHHAVcb5gas+J0OyaUB16FDPfO9FH5nN6w8uBjJNMe6Dznf2PR+A1eRri0syFyTTRSAWzlIbcEfhf5K+xKvUfS9S7hRiHEDd7PdKtRA6slpVA9pTsAhj53RRXs8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xKDt+ham; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rb8gRrDzptH44sG8onYPRRBANIovXib99hOn5zyidJxDW8+SE+FHNJxGEi1rFmYwcfrwkBvGuE5kL34VmHqOtzDHOocrkwZ9x00eeKu4cKMNsabFK5lJEt4/yrig+J6AXyAmrYX0K25KGd8mwJAFtWLyKdePIVfypqI0KXeveqc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=njy0Btv/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xKDt+ham"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F207C4CECF;
-	Fri, 15 Nov 2024 06:55:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="njy0Btv/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A23FEC4CED0;
+	Fri, 15 Nov 2024 06:55:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731653712;
-	bh=0ZvqN8e+QyS/VGAW9e3Zn+1v6Y9TiXAXXRp55HlbsF0=;
+	s=korg; t=1731653716;
+	bh=Pi/oCAd5f/4jxvSoSSy486TrUS+dGv+h/eYO5jzZWq8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xKDt+hamWa+49VZ/g83fd29L7QsKGSxoLfnydGrJ5T6n4fFHYZSrvhZPh8mPQdj26
-	 EEwmyYp9MFIE4fWJ7h0W/x8kSDAiPlGuwGkywsc0C1r3kqvX7CY6LXoS0OIoz8igNM
-	 bM9WwR2sJxGslcuPloswgzBIs3hBp/10VQrLo/rU=
+	b=njy0Btv/p171Scmq2auJ4aAHYSELOE5KRT9+erpmaIvE3ofSDUJ7Nc3GbwsbWb/zI
+	 jB4CR6HgmU91zFpthTDXLPj3aRLtN21+NVusfE39Qsh98HeGTBgIIWlE57+ba4bTBF
+	 c9OOQIszz4QvDc4hb9Ou6LJ/zslrN/htL+PzQPA0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dario Binacchi <dario.binacchi@amarulasolutions.com>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Peiyang Wang <wangpeiyang1@huawei.com>,
+	Jijie Shao <shaojijie@huawei.com>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 15/82] can: c_can: fix {rx,tx}_errors statistics
-Date: Fri, 15 Nov 2024 07:37:52 +0100
-Message-ID: <20241115063726.113995449@linuxfoundation.org>
+Subject: [PATCH 5.10 16/82] net: hns3: fix kernel crash when uninstalling driver
+Date: Fri, 15 Nov 2024 07:37:53 +0100
+Message-ID: <20241115063726.149438947@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241115063725.561151311@linuxfoundation.org>
 References: <20241115063725.561151311@linuxfoundation.org>
@@ -51,69 +53,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dario Binacchi <dario.binacchi@amarulasolutions.com>
+From: Peiyang Wang <wangpeiyang1@huawei.com>
 
-[ Upstream commit 4d6d26537940f3b3e17138987ed9e4a334780bf7 ]
+[ Upstream commit df3dff8ab6d79edc942464999d06fbaedf8cdd18 ]
 
-The c_can_handle_bus_err() function was incorrectly incrementing only the
-receive error counter, even in cases of bit or acknowledgment errors that
-occur during transmission. The patch fixes the issue by incrementing the
-appropriate counter based on the type of error.
+When the driver is uninstalled and the VF is disabled concurrently, a
+kernel crash occurs. The reason is that the two actions call function
+pci_disable_sriov(). The num_VFs is checked to determine whether to
+release the corresponding resources. During the second calling, num_VFs
+is not 0 and the resource release function is called. However, the
+corresponding resource has been released during the first invoking.
+Therefore, the problem occurs:
 
-Fixes: 881ff67ad450 ("can: c_can: Added support for Bosch C_CAN controller")
-Signed-off-by: Dario Binacchi <dario.binacchi@amarulasolutions.com>
-Link: https://patch.msgid.link/20241014135319.2009782-1-dario.binacchi@amarulasolutions.com
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+[15277.839633][T50670] Unable to handle kernel NULL pointer dereference at virtual address 0000000000000020
+...
+[15278.131557][T50670] Call trace:
+[15278.134686][T50670]  klist_put+0x28/0x12c
+[15278.138682][T50670]  klist_del+0x14/0x20
+[15278.142592][T50670]  device_del+0xbc/0x3c0
+[15278.146676][T50670]  pci_remove_bus_device+0x84/0x120
+[15278.151714][T50670]  pci_stop_and_remove_bus_device+0x6c/0x80
+[15278.157447][T50670]  pci_iov_remove_virtfn+0xb4/0x12c
+[15278.162485][T50670]  sriov_disable+0x50/0x11c
+[15278.166829][T50670]  pci_disable_sriov+0x24/0x30
+[15278.171433][T50670]  hnae3_unregister_ae_algo_prepare+0x60/0x90 [hnae3]
+[15278.178039][T50670]  hclge_exit+0x28/0xd0 [hclge]
+[15278.182730][T50670]  __se_sys_delete_module.isra.0+0x164/0x230
+[15278.188550][T50670]  __arm64_sys_delete_module+0x1c/0x30
+[15278.193848][T50670]  invoke_syscall+0x50/0x11c
+[15278.198278][T50670]  el0_svc_common.constprop.0+0x158/0x164
+[15278.203837][T50670]  do_el0_svc+0x34/0xcc
+[15278.207834][T50670]  el0_svc+0x20/0x30
+
+For details, see the following figure.
+
+     rmmod hclge              disable VFs
+----------------------------------------------------
+hclge_exit()            sriov_numvfs_store()
+  ...                     device_lock()
+  pci_disable_sriov()     hns3_pci_sriov_configure()
+                            pci_disable_sriov()
+                              sriov_disable()
+    sriov_disable()             if !num_VFs :
+      if !num_VFs :               return;
+        return;                 sriov_del_vfs()
+      sriov_del_vfs()             ...
+        ...                       klist_put()
+        klist_put()               ...
+        ...                     num_VFs = 0;
+      num_VFs = 0;        device_unlock();
+
+In this patch, when driver is removing, we get the device_lock()
+to protect num_VFs, just like sriov_numvfs_store().
+
+Fixes: 0dd8a25f355b ("net: hns3: disable sriov before unload hclge layer")
+Signed-off-by: Peiyang Wang <wangpeiyang1@huawei.com>
+Signed-off-by: Jijie Shao <shaojijie@huawei.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20241101091507.3644584-1-shaojijie@huawei.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/c_can/c_can.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/hisilicon/hns3/hnae3.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/can/c_can/c_can.c b/drivers/net/can/c_can/c_can.c
-index 6c75e5897620d..6cdb28f1f2e23 100644
---- a/drivers/net/can/c_can/c_can.c
-+++ b/drivers/net/can/c_can/c_can.c
-@@ -992,7 +992,6 @@ static int c_can_handle_bus_err(struct net_device *dev,
- 
- 	/* common for all type of bus errors */
- 	priv->can.can_stats.bus_error++;
--	stats->rx_errors++;
- 
- 	/* propagate the error condition to the CAN stack */
- 	skb = alloc_can_err_skb(dev, &cf);
-@@ -1009,26 +1008,32 @@ static int c_can_handle_bus_err(struct net_device *dev,
- 	case LEC_STUFF_ERROR:
- 		netdev_dbg(dev, "stuff error\n");
- 		cf->data[2] |= CAN_ERR_PROT_STUFF;
-+		stats->rx_errors++;
- 		break;
- 	case LEC_FORM_ERROR:
- 		netdev_dbg(dev, "form error\n");
- 		cf->data[2] |= CAN_ERR_PROT_FORM;
-+		stats->rx_errors++;
- 		break;
- 	case LEC_ACK_ERROR:
- 		netdev_dbg(dev, "ack error\n");
- 		cf->data[3] = CAN_ERR_PROT_LOC_ACK;
-+		stats->tx_errors++;
- 		break;
- 	case LEC_BIT1_ERROR:
- 		netdev_dbg(dev, "bit1 error\n");
- 		cf->data[2] |= CAN_ERR_PROT_BIT1;
-+		stats->tx_errors++;
- 		break;
- 	case LEC_BIT0_ERROR:
- 		netdev_dbg(dev, "bit0 error\n");
- 		cf->data[2] |= CAN_ERR_PROT_BIT0;
-+		stats->tx_errors++;
- 		break;
- 	case LEC_CRC_ERROR:
- 		netdev_dbg(dev, "CRC error\n");
- 		cf->data[3] = CAN_ERR_PROT_LOC_CRC_SEQ;
-+		stats->rx_errors++;
- 		break;
- 	default:
- 		break;
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hnae3.c b/drivers/net/ethernet/hisilicon/hns3/hnae3.c
+index 67b0bf310daaa..9a63fbc694083 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hnae3.c
++++ b/drivers/net/ethernet/hisilicon/hns3/hnae3.c
+@@ -25,8 +25,11 @@ void hnae3_unregister_ae_algo_prepare(struct hnae3_ae_algo *ae_algo)
+ 		pci_id = pci_match_id(ae_algo->pdev_id_table, ae_dev->pdev);
+ 		if (!pci_id)
+ 			continue;
+-		if (IS_ENABLED(CONFIG_PCI_IOV))
++		if (IS_ENABLED(CONFIG_PCI_IOV)) {
++			device_lock(&ae_dev->pdev->dev);
+ 			pci_disable_sriov(ae_dev->pdev);
++			device_unlock(&ae_dev->pdev->dev);
++		}
+ 	}
+ }
+ EXPORT_SYMBOL(hnae3_unregister_ae_algo_prepare);
 -- 
 2.43.0
 
