@@ -1,39 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8364029A9;
-	Fri, 15 Nov 2024 06:45:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8B4014EC77;
+	Fri, 15 Nov 2024 06:45:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731653134; cv=none; b=Ac39CUysZZFlGBZQxmGfD31C2DJaINSqsq5iiCyuFHKyKYeI6z5kkG5MlMYZGJ/fg3v/85yVXSLDUR1eqiwY0dByU01WoLpc5a2ZXoz4lECxeN24MWyd8ZHSQkmuxrIEhifjqDLz2LW5baTMFi/FY4Ar2EWPU+E6TL5pjR7Vjx0=
+	t=1731653137; cv=none; b=LFdzlMfgPz8N2n4wveYkZ6FVvKHYhZEOpYUUZBEtWeYsQPyVTX1Q9k4Nkxhw1qUCita/YnRZ9PTphFaM/YSxsDoQP37arTMhRDV1jdTwfhCzbZ8FO+Us8vL6VvFYxZHIIqyUc3H8ahuRw5hHBtiv3zbs2NfJeRimpe3dSnOUpBA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731653134; c=relaxed/simple;
-	bh=ocoQ/HkIcFK/gHhW5DLu9+utAz+ukr3L6wIfXLhW3vI=;
+	s=arc-20240116; t=1731653137; c=relaxed/simple;
+	bh=pvKyAKK4+AWsShctkLE3IN3Yf27c4NcPm+2wE92F4eg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bvzVEcdRCzVLjYH0HiNXSH8AtO5+WBGYgPaQD+lpUGloP03idkyhk/mfqG0WkMVQiufVx9KCKQHJGEzMnSMV/Q8vtjXUADGTIo6TRA3hvdtLXUZMHv+69s++mAXMZewyF1qXUhlrbrUcW1FNXeU6awotF7PyKDwSlayWi8aZAR0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BzC5szOC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PHj9eNrmZHNsA364CwhxR/H9fVaI1SR+FSv4DRqK6aeRXU4Q1+LoOhZgZ4GX3NgRgL4AGivCP+Jh6d6gMLzaT2tZf4E3KYCYsw4Dvk6y3K6RWQD2oEPPFdaEY4o5AUxCDAGfjyiEFvGVjoYrPjZgsQS6L6BqLooo1wEzxJquOYw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H6WvkU12; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BzC5szOC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E172DC4CECF;
-	Fri, 15 Nov 2024 06:45:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H6WvkU12"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3203FC4CECF;
+	Fri, 15 Nov 2024 06:45:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731653134;
-	bh=ocoQ/HkIcFK/gHhW5DLu9+utAz+ukr3L6wIfXLhW3vI=;
+	s=korg; t=1731653137;
+	bh=pvKyAKK4+AWsShctkLE3IN3Yf27c4NcPm+2wE92F4eg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BzC5szOCO6rzKVdeuSCr4U5cpOgjwf+t9j8Lar6uc+AW+P83kzccT7txXFWpuGGjV
-	 9el6onoL285x9U6aOe+GUpqlN9UifWX3f0cVbyReuHr5uBvN8DbXP3+TGIKTmuguDj
-	 V1SgxZTw1Gf0WvtYTE8dGWMz0uoy/tH6eEuDhEeE=
+	b=H6WvkU12mTckU89apXeiPnuexOMh20Di5iUfgm2VjNuZ+5ptgRjdrLMjtsDijDoZo
+	 Ftcm5UEIkNUiydTzenmV0Vs3b3HR4W8xZR3+Ec8OM7Pev8VETfCmwVXRLnrwJFYjJA
+	 LTT5EwwKCzKwATrgIJOrzSm42lsI2Md16RCnUiBs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Zhang <zhangalex@google.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Daniel Vetter <daniel.vetter@ffwll.ch>,
+	Jani Nikula <jani.nikula@linux.intel.com>,
+	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Chris Wilson <chris@chris-wilson.co.uk>,
+	Peter Zijlstra <peterz@infradead.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Linus Torvalds <torvalds@linux-foundation.org>,
 	Harshvardhan Jha <harshvardhan.j.jha@oracle.com>
-Subject: [PATCH 5.4 64/66] mm/memory.c: make remap_pfn_range() reject unaligned addr
-Date: Fri, 15 Nov 2024 07:38:13 +0100
-Message-ID: <20241115063725.150318486@linuxfoundation.org>
+Subject: [PATCH 5.4 65/66] mm: add remap_pfn_range_notrack
+Date: Fri, 15 Nov 2024 07:38:14 +0100
+Message-ID: <20241115063725.185551046@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241115063722.834793938@linuxfoundation.org>
 References: <20241115063722.834793938@linuxfoundation.org>
@@ -52,47 +58,138 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Zhang <zhangalex@google.com>
+From: Christoph Hellwig <hch@lst.de>
 
-commit 0c4123e3fb82d6014d0a70b52eb38153f658541c upstream.
+commit 74ffa5a3e68504dd289135b1cf0422c19ffb3f2e upstream.
 
-This function implicitly assumes that the addr passed in is page aligned.
-A non page aligned addr could ultimately cause a kernel bug in
-remap_pte_range as the exit condition in the logic loop may never be
-satisfied.  This patch documents the need for the requirement, as well as
-explicitly adds a check for it.
+Patch series "add remap_pfn_range_notrack instead of reinventing it in i915", v2.
 
-Signed-off-by: Alex Zhang <zhangalex@google.com>
+i915 has some reason to want to avoid the track_pfn_remap overhead in
+remap_pfn_range.  Add a function to the core VM to do just that rather
+than reinventing the functionality poorly in the driver.
+
+Note that the remap_io_sg path does get exercises when using Xorg on my
+Thinkpad X1, so this should be considered lightly tested, I've not managed
+to hit the remap_io_mapping path at all.
+
+This patch (of 4):
+
+Add a version of remap_pfn_range that does not call track_pfn_range.  This
+will be used to fix horrible abuses of VM internals in the i915 driver.
+
+Link: https://lkml.kernel.org/r/20210326055505.1424432-1-hch@lst.de
+Link: https://lkml.kernel.org/r/20210326055505.1424432-2-hch@lst.de
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Acked-by: Daniel Vetter <daniel.vetter@ffwll.ch>
+Cc: Jani Nikula <jani.nikula@linux.intel.com>
+Cc: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Cc: Chris Wilson <chris@chris-wilson.co.uk>
+Cc: Peter Zijlstra <peterz@infradead.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: Andrew Morton <akpm@linux-foundation.org>
-Link: http://lkml.kernel.org/r/20200617233512.177519-1-zhangalex@google.com
 Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+(cherry picked from commit 69d4e1ce9087c8767f2fe9b9426fa2755c8e9072)
 Signed-off-by: Harshvardhan Jha <harshvardhan.j.jha@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/memory.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ include/linux/mm.h |    2 ++
+ mm/memory.c        |   51 +++++++++++++++++++++++++++++++--------------------
+ 2 files changed, 33 insertions(+), 20 deletions(-)
 
+--- a/include/linux/mm.h
++++ b/include/linux/mm.h
+@@ -2566,6 +2566,8 @@ unsigned long change_prot_numa(struct vm
+ struct vm_area_struct *find_extend_vma(struct mm_struct *, unsigned long addr);
+ int remap_pfn_range(struct vm_area_struct *, unsigned long addr,
+ 			unsigned long pfn, unsigned long size, pgprot_t);
++int remap_pfn_range_notrack(struct vm_area_struct *vma, unsigned long addr,
++		unsigned long pfn, unsigned long size, pgprot_t prot);
+ int vm_insert_page(struct vm_area_struct *, unsigned long addr, struct page *);
+ int vm_map_pages(struct vm_area_struct *vma, struct page **pages,
+ 				unsigned long num);
 --- a/mm/memory.c
 +++ b/mm/memory.c
-@@ -1920,7 +1920,7 @@ static inline int remap_p4d_range(struct
- /**
-  * remap_pfn_range - remap kernel memory to userspace
-  * @vma: user vma to map to
-- * @addr: target user address to start at
-+ * @addr: target page aligned user address to start at
-  * @pfn: page frame number of kernel physical memory address
-  * @size: size of mapping area
-  * @prot: page protection flags for this mapping
-@@ -1939,6 +1939,9 @@ int remap_pfn_range(struct vm_area_struc
- 	unsigned long remap_pfn = pfn;
+@@ -1917,26 +1917,17 @@ static inline int remap_p4d_range(struct
+ 	return 0;
+ }
+ 
+-/**
+- * remap_pfn_range - remap kernel memory to userspace
+- * @vma: user vma to map to
+- * @addr: target page aligned user address to start at
+- * @pfn: page frame number of kernel physical memory address
+- * @size: size of mapping area
+- * @prot: page protection flags for this mapping
+- *
+- * Note: this is only safe if the mm semaphore is held when called.
+- *
+- * Return: %0 on success, negative error code otherwise.
++/*
++ * Variant of remap_pfn_range that does not call track_pfn_remap.  The caller
++ * must have pre-validated the caching bits of the pgprot_t.
+  */
+-int remap_pfn_range(struct vm_area_struct *vma, unsigned long addr,
+-		    unsigned long pfn, unsigned long size, pgprot_t prot)
++int remap_pfn_range_notrack(struct vm_area_struct *vma, unsigned long addr,
++		unsigned long pfn, unsigned long size, pgprot_t prot)
+ {
+ 	pgd_t *pgd;
+ 	unsigned long next;
+ 	unsigned long end = addr + PAGE_ALIGN(size);
+ 	struct mm_struct *mm = vma->vm_mm;
+-	unsigned long remap_pfn = pfn;
  	int err;
  
-+	if (WARN_ON_ONCE(!PAGE_ALIGNED(addr)))
-+		return -EINVAL;
+ 	if (WARN_ON_ONCE(!PAGE_ALIGNED(addr)))
+@@ -1966,10 +1957,6 @@ int remap_pfn_range(struct vm_area_struc
+ 		vma->vm_pgoff = pfn;
+ 	}
+ 
+-	err = track_pfn_remap(vma, &prot, remap_pfn, addr, PAGE_ALIGN(size));
+-	if (err)
+-		return -EINVAL;
+-
+ 	vma->vm_flags |= VM_IO | VM_PFNMAP | VM_DONTEXPAND | VM_DONTDUMP;
+ 
+ 	BUG_ON(addr >= end);
+@@ -1981,12 +1968,36 @@ int remap_pfn_range(struct vm_area_struc
+ 		err = remap_p4d_range(mm, pgd, addr, next,
+ 				pfn + (addr >> PAGE_SHIFT), prot);
+ 		if (err)
+-			break;
++			return err;
+ 	} while (pgd++, addr = next, addr != end);
+ 
++	return 0;
++}
 +
- 	/*
- 	 * Physically remapped pages are special. Tell the
- 	 * rest of the world about it:
++/**
++ * remap_pfn_range - remap kernel memory to userspace
++ * @vma: user vma to map to
++ * @addr: target page aligned user address to start at
++ * @pfn: page frame number of kernel physical memory address
++ * @size: size of mapping area
++ * @prot: page protection flags for this mapping
++ *
++ * Note: this is only safe if the mm semaphore is held when called.
++ *
++ * Return: %0 on success, negative error code otherwise.
++ */
++int remap_pfn_range(struct vm_area_struct *vma, unsigned long addr,
++		    unsigned long pfn, unsigned long size, pgprot_t prot)
++{
++	int err;
++
++	err = track_pfn_remap(vma, &prot, pfn, addr, PAGE_ALIGN(size));
+ 	if (err)
+-		untrack_pfn(vma, remap_pfn, PAGE_ALIGN(size));
++		return -EINVAL;
+ 
++	err = remap_pfn_range_notrack(vma, addr, pfn, size, prot);
++	if (err)
++		untrack_pfn(vma, pfn, PAGE_ALIGN(size));
+ 	return err;
+ }
+ EXPORT_SYMBOL(remap_pfn_range);
 
 
