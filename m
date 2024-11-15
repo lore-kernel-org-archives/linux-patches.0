@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CBFC29A9;
-	Fri, 15 Nov 2024 06:46:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07B1B29A9;
+	Fri, 15 Nov 2024 06:46:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731653196; cv=none; b=QX0GPAgcL8RlDTfEgL74uVDy2YnSfAb71N8jQ2J2qDQ/gdtsEiQSaFGiJkdPRVyCb8jbLE/7qKOYrjkfbxiv05+Pr23ZNO6qHgfYJrl0E89+8Jh/iPLnPRA/bT+iwyLzgF3jVeWN/HX8La0P+799ladALRwpyL1ehC3VYHPmUL0=
+	t=1731653201; cv=none; b=rXhtuTSmlWKmd6tNNeddtPP/pf2lWgKPAbOmkG8EyQRPfIOf4tPUVYuVAlv2xj+1Oup7yDtHWDf27ggEN0sGjfyGAyGuRYUNIDHzc3LHkqv2qYPizsc8VNSiymtsvLWCEE0Mij1XnlK62XBjzMlw7dUMwDooxQ1Cw3BjSroVzUY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731653196; c=relaxed/simple;
-	bh=nCK6jDc9SBBJgeqP6Y9JjCCLpQ9rFwP36VNQVcp4De0=;
+	s=arc-20240116; t=1731653201; c=relaxed/simple;
+	bh=OhKcOB3vlntANpdLHTLejmik6n3jqiwNuIOIve3mpHE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WDhepkNQLrWoHvcDChWK9ST4uJi2mko1ti2lhdI+kHvxHhxfYebA1FocoJFsooaNvHD3XeoBu9WEnuLCPB+27Jv9m3rHq5KLV487QQC8Wd62EakQkWSo1RY+IUAed4p+WWBwe98L0E5xpc1llJuvBalgFRB8+Rc9wEDmFXddy1A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o0/wxb6w; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QCdgmBugZRNnFNM0mf5cwqJSqyU7VKKeB+IQFo2Wcl7dalQuGj278a7cL/UE5JN6PIH+X+qcTHEozcEYYTwZF0FlAHjAodA8MIyevJ/bavRl8rQ1VQ25f2OKccfRoPP3otLQfAQK8n7LCs07Pth7vttjCuX5uOhGePasJG7jHJA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sUGzc5+n; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o0/wxb6w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71EE6C4CECF;
-	Fri, 15 Nov 2024 06:46:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sUGzc5+n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11B91C4CECF;
+	Fri, 15 Nov 2024 06:46:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731653195;
-	bh=nCK6jDc9SBBJgeqP6Y9JjCCLpQ9rFwP36VNQVcp4De0=;
+	s=korg; t=1731653200;
+	bh=OhKcOB3vlntANpdLHTLejmik6n3jqiwNuIOIve3mpHE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o0/wxb6wHIKLy40tia27sXQSw9B/GFJpRpCe2IbG4Eq6L70Fd7J4WN7/5RZE9CHIv
-	 HkBgXBAXEmUP1FYjoLN1vNukSVgFxnBbiI8Nln8VQroKc1kY/xUxBKVU+7wuP9J8zx
-	 rENL9C6ATqkOYUDnYiPMWIIxoofyE+OTdJpiJP8Y=
+	b=sUGzc5+nS9A6zNIotugFWWNcmoLyAuibN/JPAXhsK4tJ5cctTMRIXqS/2QPEgQQsw
+	 m34w6twHNMDKTXAD08pS7iBsTSCQhVkzJao6FRkj/KH2ZpBzkGKUMIgrrjCDIHU/Ql
+	 5uYrAibQIS+0HyBZfPyjXH+IpITKETVhQI8uw/Ho=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Greg Joyce <gjoyce@linux.ibm.com>,
-	Nilay Shroff <nilay@linux.ibm.com>,
-	Keith Busch <kbusch@kernel.org>,
+	Rik van Riel <riel@surriel.com>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 15/63] nvme: disable CC.CRIME (NVME_CC_CRIME)
-Date: Fri, 15 Nov 2024 07:37:38 +0100
-Message-ID: <20241115063726.445278714@linuxfoundation.org>
+Subject: [PATCH 6.11 16/63] bpf: use kvzmalloc to allocate BPF verifier environment
+Date: Fri, 15 Nov 2024 07:37:39 +0100
+Message-ID: <20241115063726.480982981@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241115063725.892410236@linuxfoundation.org>
 References: <20241115063725.892410236@linuxfoundation.org>
@@ -52,55 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Greg Joyce <gjoyce@linux.ibm.com>
+From: Rik van Riel <riel@surriel.com>
 
-[ Upstream commit 0ce96a6708f34280a536263ee5c67e20c433dcce ]
+[ Upstream commit 434247637c66e1be2bc71a9987d4c3f0d8672387 ]
 
-Disable NVME_CC_CRIME so that CSTS.RDY indicates that the media
-is ready and able to handle commands without returning
-NVME_SC_ADMIN_COMMAND_MEDIA_NOT_READY.
+The kzmalloc call in bpf_check can fail when memory is very fragmented,
+which in turn can lead to an OOM kill.
 
-Signed-off-by: Greg Joyce <gjoyce@linux.ibm.com>
-Reviewed-by: Nilay Shroff <nilay@linux.ibm.com>
-Tested-by: Nilay Shroff <nilay@linux.ibm.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Use kvzmalloc to fall back to vmalloc when memory is too fragmented to
+allocate an order 3 sized bpf verifier environment.
+
+Admittedly this is not a very common case, and only happens on systems
+where memory has already been squeezed close to the limit, but this does
+not seem like much of a hot path, and it's a simple enough fix.
+
+Signed-off-by: Rik van Riel <riel@surriel.com>
+Reviewed-by: Shakeel Butt <shakeel.butt@linux.dev>
+Link: https://lore.kernel.org/r/20241008170735.16766766@imladris.surriel.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/core.c | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ kernel/bpf/verifier.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
-index b954e77d3fc56..7dac71cce3ebe 100644
---- a/drivers/nvme/host/core.c
-+++ b/drivers/nvme/host/core.c
-@@ -2472,8 +2472,13 @@ int nvme_enable_ctrl(struct nvme_ctrl *ctrl)
- 	else
- 		ctrl->ctrl_config = NVME_CC_CSS_NVM;
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index 626c5284ca5a8..a5a9b4e418a68 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -21718,7 +21718,7 @@ int bpf_check(struct bpf_prog **prog, union bpf_attr *attr, bpfptr_t uattr, __u3
+ 	/* 'struct bpf_verifier_env' can be global, but since it's not small,
+ 	 * allocate/free it every time bpf_check() is called
+ 	 */
+-	env = kzalloc(sizeof(struct bpf_verifier_env), GFP_KERNEL);
++	env = kvzalloc(sizeof(struct bpf_verifier_env), GFP_KERNEL);
+ 	if (!env)
+ 		return -ENOMEM;
  
--	if (ctrl->cap & NVME_CAP_CRMS_CRWMS && ctrl->cap & NVME_CAP_CRMS_CRIMS)
--		ctrl->ctrl_config |= NVME_CC_CRIME;
-+	/*
-+	 * Setting CRIME results in CSTS.RDY before the media is ready. This
-+	 * makes it possible for media related commands to return the error
-+	 * NVME_SC_ADMIN_COMMAND_MEDIA_NOT_READY. Until the driver is
-+	 * restructured to handle retries, disable CC.CRIME.
-+	 */
-+	ctrl->ctrl_config &= ~NVME_CC_CRIME;
- 
- 	ctrl->ctrl_config |= (NVME_CTRL_PAGE_SHIFT - 12) << NVME_CC_MPS_SHIFT;
- 	ctrl->ctrl_config |= NVME_CC_AMS_RR | NVME_CC_SHN_NONE;
-@@ -2508,10 +2513,7 @@ int nvme_enable_ctrl(struct nvme_ctrl *ctrl)
- 		 * devices are known to get this wrong. Use the larger of the
- 		 * two values.
- 		 */
--		if (ctrl->ctrl_config & NVME_CC_CRIME)
--			ready_timeout = NVME_CRTO_CRIMT(crto);
--		else
--			ready_timeout = NVME_CRTO_CRWMT(crto);
-+		ready_timeout = NVME_CRTO_CRWMT(crto);
- 
- 		if (ready_timeout < timeout)
- 			dev_warn_once(ctrl->device, "bad crto:%x cap:%llx\n",
+@@ -21944,6 +21944,6 @@ int bpf_check(struct bpf_prog **prog, union bpf_attr *attr, bpfptr_t uattr, __u3
+ 		mutex_unlock(&bpf_verifier_lock);
+ 	vfree(env->insn_aux_data);
+ err_free_env:
+-	kfree(env);
++	kvfree(env);
+ 	return ret;
+ }
 -- 
 2.43.0
 
