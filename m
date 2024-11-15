@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF8E22BB1B;
-	Fri, 15 Nov 2024 06:59:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22E6B2BB1B;
+	Fri, 15 Nov 2024 06:59:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731653992; cv=none; b=lWq23VY/L109iKM/1dVEBUoHr6FxDFcNE1bKH8hPV0G3D1Vy1+rzsEy15Iv9webF4DsDcg/hwocXAVlS4RWH5W8TEl+HPmVMU3ZHaK/9cOA1fmhUQbBzkeb1XZXl3X2gsMvM23n5Q/IROjJK1jRpR/Sm7OVoXBySa1i16X+f7xc=
+	t=1731653995; cv=none; b=WlO2MqBiBhyK000JPvSyDxzryMKkPEUmbelPr0qhUkAt0Ie9idWzoxDkhzWtyb52a0eqHZN9BqzHdhoD9R/ozHMnZJhvR4ZPy7z1GwawzqWGeDhfGzUI86x6HzXl4ReBByt7Eg3cubEeMmNaaFPFnV1E43U0IWA/IAlPu0aA4lk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731653992; c=relaxed/simple;
-	bh=lro1TU82qnxltnkOd+ezsKF3QMunMzZf/UKzGPs1mTI=;
+	s=arc-20240116; t=1731653995; c=relaxed/simple;
+	bh=QY0Yq71lHHJZzym8GLGc5jAxGL4MVq7RaF5iT2RpMlg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qc0aMs4X6g7+PYZ/D18TPyrhs3S7zCbZvJa0ZPD1yUT/08yYnvtwJHP9ZQena7wczg17lSfLZGbpGZ9c1ZtCnlov6eLEKCz0CRFLQzzJ2eZb737f3d6FgY2zSwM3TZq4yUkzk0Cu5s+pzEbeoDQ19lWAoU1gsA6R0Jzg9hBg/zA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0MwBUBhO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DHooPwzwg8/emCs6CpHejaWyKsdPQ473SdTH5rA3cbF3Fw9mJkMIZKfH1GPhTetbE/57/S/HNrgPoVAbJ7B4mNHXOsdVK5yFpjNrWLn8XbCpWVOPGaZiuraV7XwQ6WRurITMhKyrOtp3oPN4ozcFFsrg59uIfCMN6Ep1+N+TP/w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O8S27ZIr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0MwBUBhO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25FFFC4CED0;
-	Fri, 15 Nov 2024 06:59:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O8S27ZIr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 863DAC4CECF;
+	Fri, 15 Nov 2024 06:59:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731653991;
-	bh=lro1TU82qnxltnkOd+ezsKF3QMunMzZf/UKzGPs1mTI=;
+	s=korg; t=1731653995;
+	bh=QY0Yq71lHHJZzym8GLGc5jAxGL4MVq7RaF5iT2RpMlg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0MwBUBhOCgCV/NwYEgQ5VK6Uu7Zo+y1xMSkrX7EOUr4hnm/p7BkWj2vscmanoh+6s
-	 JT62LTiLwNq5Bi5m78oyTGojMDh7IwCqw708FuXuEQkzMw8v2vrds0piNjePb9rMJd
-	 2mGkuZJOHvbL2h5eDKPAJePBiK9DeZPpPmLMckHY=
+	b=O8S27ZIrR0BLTMOiMWIGUaRTgO45N+ZK29VMzJ6ebVWGTLr1R0WnCJDUwTtj1lbYl
+	 5hMAUgyLazq+C0pBTqxAGAJPvw4rm5GH1vB15UwuhI+89YCjVnh9Csr7MKy8xUj+yC
+	 UtQYxFfkpt8HhuOJVQxVShhselCo9Wi2796XrXI4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kenneth Albanowski <kenalba@chromium.org>,
+	Izhar Firdaus <izhar@fedoraproject.org>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 13/22] HID: multitouch: Add quirk for Logitech Bolt receiver w/ Casa touchpad
-Date: Fri, 15 Nov 2024 07:38:59 +0100
-Message-ID: <20241115063721.654448111@linuxfoundation.org>
+Subject: [PATCH 5.15 14/22] HID: lenovo: Add support for Thinkpad X1 Tablet Gen 3 keyboard
+Date: Fri, 15 Nov 2024 07:39:00 +0100
+Message-ID: <20241115063721.690670074@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241115063721.172791419@linuxfoundation.org>
 References: <20241115063721.172791419@linuxfoundation.org>
@@ -51,55 +52,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kenneth Albanowski <kenalba@chromium.org>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit 526748b925185e95f1415900ee13c2469d4b64cc ]
+[ Upstream commit 51268879eb2bfc563a91cdce69362d9dbf707e7e ]
 
-The Logitech Casa Touchpad does not reliably send touch release signals
-when communicating through the Logitech Bolt wireless-to-USB receiver.
+The Thinkpad X1 Tablet Gen 3 keyboard has the same Lenovo specific quirks
+as the original  Thinkpad X1 Tablet keyboard.
 
-Adjusting the device class to add MT_QUIRK_NOT_SEEN_MEANS_UP to make
-sure that no touches become stuck, MT_QUIRK_FORCE_MULTI_INPUT is not
-needed, but harmless.
+Add the PID for the "Thinkpad X1 Tablet Gen 3 keyboard" to the hid-lenovo
+driver to fix the FnLock, Mute and media buttons not working.
 
-Linux does not have information on which devices are connected to the
-Bolt receiver, so we have to enable this for the entire device.
-
-Signed-off-by: Kenneth Albanowski <kenalba@chromium.org>
+Suggested-by: Izhar Firdaus <izhar@fedoraproject.org>
+Closes https://bugzilla.redhat.com/show_bug.cgi?id=2315395
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-ids.h        | 1 +
- drivers/hid/hid-multitouch.c | 4 ++++
- 2 files changed, 5 insertions(+)
+ drivers/hid/hid-lenovo.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/hid/hid-ids.h b/drivers/hid/hid-ids.h
-index 110c59622a2d8..81db294dda408 100644
---- a/drivers/hid/hid-ids.h
-+++ b/drivers/hid/hid-ids.h
-@@ -831,6 +831,7 @@
- #define USB_DEVICE_ID_LOGITECH_NANO_RECEIVER_LIGHTSPEED_1	0xc539
- #define USB_DEVICE_ID_LOGITECH_NANO_RECEIVER_LIGHTSPEED_1_1	0xc53f
- #define USB_DEVICE_ID_LOGITECH_NANO_RECEIVER_POWERPLAY	0xc53a
-+#define USB_DEVICE_ID_LOGITECH_BOLT_RECEIVER	0xc548
- #define USB_DEVICE_ID_SPACETRAVELLER	0xc623
- #define USB_DEVICE_ID_SPACENAVIGATOR	0xc626
- #define USB_DEVICE_ID_DINOVO_DESKTOP	0xc704
-diff --git a/drivers/hid/hid-multitouch.c b/drivers/hid/hid-multitouch.c
-index 8f6e410af7016..57e4ff1ab275d 100644
---- a/drivers/hid/hid-multitouch.c
-+++ b/drivers/hid/hid-multitouch.c
-@@ -2134,6 +2134,10 @@ static const struct hid_device_id mt_devices[] = {
- 		HID_DEVICE(BUS_BLUETOOTH, HID_GROUP_MULTITOUCH_WIN_8,
- 			USB_VENDOR_ID_LOGITECH,
- 			USB_DEVICE_ID_LOGITECH_CASA_TOUCHPAD) },
-+	{ .driver_data = MT_CLS_WIN_8_FORCE_MULTI_INPUT_NSMU,
-+		HID_DEVICE(BUS_USB, HID_GROUP_MULTITOUCH_WIN_8,
-+			USB_VENDOR_ID_LOGITECH,
-+			USB_DEVICE_ID_LOGITECH_BOLT_RECEIVER) },
+diff --git a/drivers/hid/hid-lenovo.c b/drivers/hid/hid-lenovo.c
+index 44fd4a05ace38..9536f468b42c5 100644
+--- a/drivers/hid/hid-lenovo.c
++++ b/drivers/hid/hid-lenovo.c
+@@ -343,6 +343,7 @@ static int lenovo_input_mapping(struct hid_device *hdev,
+ 		return lenovo_input_mapping_tp10_ultrabook_kbd(hdev, hi, field,
+ 							       usage, bit, max);
+ 	case USB_DEVICE_ID_LENOVO_X1_TAB:
++	case USB_DEVICE_ID_LENOVO_X1_TAB3:
+ 		return lenovo_input_mapping_x1_tab_kbd(hdev, hi, field, usage, bit, max);
+ 	default:
+ 		return 0;
+@@ -431,6 +432,7 @@ static ssize_t attr_fn_lock_store(struct device *dev,
+ 		break;
+ 	case USB_DEVICE_ID_LENOVO_TP10UBKBD:
+ 	case USB_DEVICE_ID_LENOVO_X1_TAB:
++	case USB_DEVICE_ID_LENOVO_X1_TAB3:
+ 		ret = lenovo_led_set_tp10ubkbd(hdev, TP10UBKBD_FN_LOCK_LED, value);
+ 		if (ret)
+ 			return ret;
+@@ -614,6 +616,7 @@ static int lenovo_event(struct hid_device *hdev, struct hid_field *field,
+ 		return lenovo_event_cptkbd(hdev, field, usage, value);
+ 	case USB_DEVICE_ID_LENOVO_TP10UBKBD:
+ 	case USB_DEVICE_ID_LENOVO_X1_TAB:
++	case USB_DEVICE_ID_LENOVO_X1_TAB3:
+ 		return lenovo_event_tp10ubkbd(hdev, field, usage, value);
+ 	default:
+ 		return 0;
+@@ -896,6 +899,7 @@ static int lenovo_led_brightness_set(struct led_classdev *led_cdev,
+ 		break;
+ 	case USB_DEVICE_ID_LENOVO_TP10UBKBD:
+ 	case USB_DEVICE_ID_LENOVO_X1_TAB:
++	case USB_DEVICE_ID_LENOVO_X1_TAB3:
+ 		ret = lenovo_led_set_tp10ubkbd(hdev, tp10ubkbd_led[led_nr], value);
+ 		break;
+ 	}
+@@ -1136,6 +1140,7 @@ static int lenovo_probe(struct hid_device *hdev,
+ 		break;
+ 	case USB_DEVICE_ID_LENOVO_TP10UBKBD:
+ 	case USB_DEVICE_ID_LENOVO_X1_TAB:
++	case USB_DEVICE_ID_LENOVO_X1_TAB3:
+ 		ret = lenovo_probe_tp10ubkbd(hdev);
+ 		break;
+ 	default:
+@@ -1202,6 +1207,7 @@ static void lenovo_remove(struct hid_device *hdev)
+ 		break;
+ 	case USB_DEVICE_ID_LENOVO_TP10UBKBD:
+ 	case USB_DEVICE_ID_LENOVO_X1_TAB:
++	case USB_DEVICE_ID_LENOVO_X1_TAB3:
+ 		lenovo_remove_tp10ubkbd(hdev);
+ 		break;
+ 	}
+@@ -1247,6 +1253,8 @@ static const struct hid_device_id lenovo_devices[] = {
+ 	 */
+ 	{ HID_DEVICE(BUS_USB, HID_GROUP_GENERIC,
+ 		     USB_VENDOR_ID_LENOVO, USB_DEVICE_ID_LENOVO_X1_TAB) },
++	{ HID_DEVICE(BUS_USB, HID_GROUP_GENERIC,
++		     USB_VENDOR_ID_LENOVO, USB_DEVICE_ID_LENOVO_X1_TAB3) },
+ 	{ }
+ };
  
- 	/* MosArt panels */
- 	{ .driver_data = MT_CLS_CONFIDENCE_MINUS_ONE,
 -- 
 2.43.0
 
