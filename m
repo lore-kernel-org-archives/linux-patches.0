@@ -1,44 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE82D185949;
-	Fri, 15 Nov 2024 06:59:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BE39187FE8;
+	Fri, 15 Nov 2024 06:59:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731653949; cv=none; b=NWbb0V4Razu3njyXmeNPV85flLEGsMzZ0S2WKR2CfCobpqLggGwo+nfw2fA7HiM9NRNrfbq2ljEyi0Qm/weN00m8RpZHeu0fNBXUm09AGAI3KlFrLiii1M7TAHZEnUdkh7x2WpW6fu8GsK93oang56656OOKPlIdvKhRoxPSbSc=
+	t=1731653953; cv=none; b=V45H3NeUvtkXQDsbb/FkN0XDaYTX+JTI320TAbCz6phr4Iwn48pFzeI00X2736zpxDQv2JLWvdrg/qDaHn5SsP2g9yd5wtErx31kBjYiUSmbArU66A0cj6A0d9dW4ZOt+y/YDD7e4RPBh+8G/w4hYNTxNN2LqkyVSGWztzVOuLc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731653949; c=relaxed/simple;
-	bh=XZ9sz1oA0k62MISZq75y0Tyg1H4XWcEPYyMIBuHe3XY=;
+	s=arc-20240116; t=1731653953; c=relaxed/simple;
+	bh=hYznJcgUr0V9UYJl6siuLbl1z7vmcy9GPQ6o/EgBzDo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AyGkhbKwqXc+trTKngN0gGyq4v+ChHnqxdaYMcF6wpL0Lbu1K+BxKwh8MCURo0vAK2oKLaEkRny0qqC/Xoql0LsrEeKdAou0qmOWQRJDJU/PPemuKawn+aTsyO3H9WgDBcA9tn6lekS9R79WVQGZZPGS3grSiulTDDCYO9Aaw4g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ciXlvKDo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=GO7L/0Qmgu0wEob76WJ/L8A1mFU60tt1dVoq5O4bZMZqUT/9UZz9QRPIANfCVC4PZk1ynvwRgmXKmvsqfFFDkPT2yA/EuyO+9DjWWXrrVu0oLd02Q4ClWAPvarS9N4RajzOk5WKSrTFdIZ9WEJ62jUBRlQ7mvkcoadsHsl37pns=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ia/jO4J3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ciXlvKDo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB60FC4CECF;
-	Fri, 15 Nov 2024 06:59:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ia/jO4J3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E513C4CECF;
+	Fri, 15 Nov 2024 06:59:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731653949;
-	bh=XZ9sz1oA0k62MISZq75y0Tyg1H4XWcEPYyMIBuHe3XY=;
+	s=korg; t=1731653953;
+	bh=hYznJcgUr0V9UYJl6siuLbl1z7vmcy9GPQ6o/EgBzDo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ciXlvKDo6jTJ58/2HYoYN0JN3h7S7k5KAFebfmz2SanoroKFQSdBgfmHl4UpASvGe
-	 i3gIN3Zw1A6x7YDkeAe/rgchSNoeyGKqsdV7DfQQOy4zSwRAPIR/R6j7dKgRQ50zJ1
-	 TtumfaMs6ooKBWKxaSMrDsUdCkV//E/evGdknZxo=
+	b=ia/jO4J3q7u6DGCh8Q+vFO3gk61SYNb9/dL1YzZa/thb2HJwPeXOvUgCRIrX9u72D
+	 UGjZSSswpN16tdKD4LQnDFr3IOoC6XXUr8KAYwTWolUyHpaCRQlC8MKDA3qTGouh0w
+	 122fijmyIHZLvks6+YIImGTffjt0GAr60ZdOwZqo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Kanner <andrew.kanner@gmail.com>,
-	syzbot+386ce9e60fa1b18aac5b@syzkaller.appspotmail.com,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Jun Piao <piaojun@huawei.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.10 63/82] ocfs2: remove entry once instead of null-ptr-dereference in ocfs2_xa_remove()
-Date: Fri, 15 Nov 2024 07:38:40 +0100
-Message-ID: <20241115063727.823828476@linuxfoundation.org>
+	=?UTF-8?q?Jan=20Sch=C3=A4r?= <jan@jschaer.ch>,
+	Takashi Iwai <tiwai@suse.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 64/82] ALSA: usb-audio: Support jack detection on Dell dock
+Date: Fri, 15 Nov 2024 07:38:41 +0100
+Message-ID: <20241115063727.859530671@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241115063725.561151311@linuxfoundation.org>
 References: <20241115063725.561151311@linuxfoundation.org>
@@ -51,97 +45,237 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andrew Kanner <andrew.kanner@gmail.com>
+From: Jan Schär <jan@jschaer.ch>
 
-commit 0b63c0e01fba40e3992bc627272ec7b618ccaef7 upstream.
+[ Upstream commit 4b8ea38fabab45ad911a32a336416062553dfe9c ]
 
-Syzkaller is able to provoke null-ptr-dereference in ocfs2_xa_remove():
+The Dell WD15 dock has a headset and a line out port. Add support for
+detecting if a jack is inserted into one of these ports.
+For the headset jack, additionally determine if a mic is present.
 
-[   57.319872] (a.out,1161,7):ocfs2_xa_remove:2028 ERROR: status = -12
-[   57.320420] (a.out,1161,7):ocfs2_xa_cleanup_value_truncate:1999 ERROR: Partial truncate while removing xattr overlay.upper.  Leaking 1 clusters and removing the entry
-[   57.321727] BUG: kernel NULL pointer dereference, address: 0000000000000004
-[...]
-[   57.325727] RIP: 0010:ocfs2_xa_block_wipe_namevalue+0x2a/0xc0
-[...]
-[   57.331328] Call Trace:
-[   57.331477]  <TASK>
-[...]
-[   57.333511]  ? do_user_addr_fault+0x3e5/0x740
-[   57.333778]  ? exc_page_fault+0x70/0x170
-[   57.334016]  ? asm_exc_page_fault+0x2b/0x30
-[   57.334263]  ? __pfx_ocfs2_xa_block_wipe_namevalue+0x10/0x10
-[   57.334596]  ? ocfs2_xa_block_wipe_namevalue+0x2a/0xc0
-[   57.334913]  ocfs2_xa_remove_entry+0x23/0xc0
-[   57.335164]  ocfs2_xa_set+0x704/0xcf0
-[   57.335381]  ? _raw_spin_unlock+0x1a/0x40
-[   57.335620]  ? ocfs2_inode_cache_unlock+0x16/0x20
-[   57.335915]  ? trace_preempt_on+0x1e/0x70
-[   57.336153]  ? start_this_handle+0x16c/0x500
-[   57.336410]  ? preempt_count_sub+0x50/0x80
-[   57.336656]  ? _raw_read_unlock+0x20/0x40
-[   57.336906]  ? start_this_handle+0x16c/0x500
-[   57.337162]  ocfs2_xattr_block_set+0xa6/0x1e0
-[   57.337424]  __ocfs2_xattr_set_handle+0x1fd/0x5d0
-[   57.337706]  ? ocfs2_start_trans+0x13d/0x290
-[   57.337971]  ocfs2_xattr_set+0xb13/0xfb0
-[   57.338207]  ? dput+0x46/0x1c0
-[   57.338393]  ocfs2_xattr_trusted_set+0x28/0x30
-[   57.338665]  ? ocfs2_xattr_trusted_set+0x28/0x30
-[   57.338948]  __vfs_removexattr+0x92/0xc0
-[   57.339182]  __vfs_removexattr_locked+0xd5/0x190
-[   57.339456]  ? preempt_count_sub+0x50/0x80
-[   57.339705]  vfs_removexattr+0x5f/0x100
-[...]
+The WD15 contains an ALC4020 USB audio controller and ALC3263 audio codec
+from Realtek. It is a UAC 1 device, and UAC 1 does not support jack
+detection. Instead, jack detection works by sending HD Audio commands over
+vendor-type USB messages.
 
-Reproducer uses faultinject facility to fail ocfs2_xa_remove() ->
-ocfs2_xa_value_truncate() with -ENOMEM.
+I found out how it works by looking at USB captures on Windows.
+The audio codec is very similar to the one supported by
+sound/soc/codecs/rt298.c / rt298.h, some constant names and the mic
+detection are adapted from there. The realtek_add_jack function is adapted
+from build_connector_control in sound/usb/mixer.c.
 
-In this case the comment mentions that we can return 0 if
-ocfs2_xa_cleanup_value_truncate() is going to wipe the entry
-anyway. But the following 'rc' check is wrong and execution flow do
-'ocfs2_xa_remove_entry(loc);' twice:
-* 1st: in ocfs2_xa_cleanup_value_truncate();
-* 2nd: returning back to ocfs2_xa_remove() instead of going to 'out'.
+I tested this on a WD15 dock with the latest firmware.
 
-Fix this by skipping the 2nd removal of the same entry and making
-syzkaller repro happy.
-
-Link: https://lkml.kernel.org/r/20241103193845.2940988-1-andrew.kanner@gmail.com
-Fixes: 399ff3a748cf ("ocfs2: Handle errors while setting external xattr values.")
-Signed-off-by: Andrew Kanner <andrew.kanner@gmail.com>
-Reported-by: syzbot+386ce9e60fa1b18aac5b@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/671e13ab.050a0220.2b8c0f.01d0.GAE@google.com/T/
-Tested-by: syzbot+386ce9e60fa1b18aac5b@syzkaller.appspotmail.com
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Jun Piao <piaojun@huawei.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Jan Schär <jan@jschaer.ch>
+Link: https://lore.kernel.org/r/20220627171855.42338-1-jan@jschaer.ch
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Stable-dep-of: 4413665dd6c5 ("ALSA: usb-audio: Add quirks for Dell WD19 dock")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/xattr.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ sound/usb/mixer_quirks.c | 167 +++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 167 insertions(+)
 
---- a/fs/ocfs2/xattr.c
-+++ b/fs/ocfs2/xattr.c
-@@ -2042,8 +2042,7 @@ static int ocfs2_xa_remove(struct ocfs2_
- 				rc = 0;
- 			ocfs2_xa_cleanup_value_truncate(loc, "removing",
- 							orig_clusters);
--			if (rc)
--				goto out;
-+			goto out;
- 		}
- 	}
+diff --git a/sound/usb/mixer_quirks.c b/sound/usb/mixer_quirks.c
+index 99f2203bf51f1..750a386b9c177 100644
+--- a/sound/usb/mixer_quirks.c
++++ b/sound/usb/mixer_quirks.c
+@@ -24,6 +24,7 @@
+ #include <sound/asoundef.h>
+ #include <sound/core.h>
+ #include <sound/control.h>
++#include <sound/hda_verbs.h>
+ #include <sound/hwdep.h>
+ #include <sound/info.h>
+ #include <sound/tlv.h>
+@@ -1793,6 +1794,169 @@ static int snd_soundblaster_e1_switch_create(struct usb_mixer_interface *mixer)
+ 					  NULL);
+ }
  
++/*
++ * Dell WD15 dock jack detection
++ *
++ * The WD15 contains an ALC4020 USB audio controller and ALC3263 audio codec
++ * from Realtek. It is a UAC 1 device, and UAC 1 does not support jack
++ * detection. Instead, jack detection works by sending HD Audio commands over
++ * vendor-type USB messages.
++ */
++
++#define HDA_VERB_CMD(V, N, D) (((N) << 20) | ((V) << 8) | (D))
++
++#define REALTEK_HDA_VALUE 0x0038
++
++#define REALTEK_HDA_SET		62
++#define REALTEK_HDA_GET_OUT	88
++#define REALTEK_HDA_GET_IN	89
++
++#define REALTEK_LINE1			0x1a
++#define REALTEK_VENDOR_REGISTERS	0x20
++#define REALTEK_HP_OUT			0x21
++
++#define REALTEK_CBJ_CTRL2 0x50
++
++#define REALTEK_JACK_INTERRUPT_NODE 5
++
++#define REALTEK_MIC_FLAG 0x100
++
++static int realtek_hda_set(struct snd_usb_audio *chip, u32 cmd)
++{
++	struct usb_device *dev = chip->dev;
++	u32 buf = cpu_to_be32(cmd);
++
++	return snd_usb_ctl_msg(dev, usb_sndctrlpipe(dev, 0), REALTEK_HDA_SET,
++			       USB_RECIP_DEVICE | USB_TYPE_VENDOR | USB_DIR_OUT,
++			       REALTEK_HDA_VALUE, 0, &buf, sizeof(buf));
++}
++
++static int realtek_hda_get(struct snd_usb_audio *chip, u32 cmd, u32 *value)
++{
++	struct usb_device *dev = chip->dev;
++	int err;
++	u32 buf = cpu_to_be32(cmd);
++
++	err = snd_usb_ctl_msg(dev, usb_sndctrlpipe(dev, 0), REALTEK_HDA_GET_OUT,
++			      USB_RECIP_DEVICE | USB_TYPE_VENDOR | USB_DIR_OUT,
++			      REALTEK_HDA_VALUE, 0, &buf, sizeof(buf));
++	if (err < 0)
++		return err;
++	err = snd_usb_ctl_msg(dev, usb_rcvctrlpipe(dev, 0), REALTEK_HDA_GET_IN,
++			      USB_RECIP_DEVICE | USB_TYPE_VENDOR | USB_DIR_IN,
++			      REALTEK_HDA_VALUE, 0, &buf, sizeof(buf));
++	if (err < 0)
++		return err;
++
++	*value = be32_to_cpu(buf);
++	return 0;
++}
++
++static int realtek_ctl_connector_get(struct snd_kcontrol *kcontrol,
++				     struct snd_ctl_elem_value *ucontrol)
++{
++	struct usb_mixer_elem_info *cval = kcontrol->private_data;
++	struct snd_usb_audio *chip = cval->head.mixer->chip;
++	u32 pv = kcontrol->private_value;
++	u32 node_id = pv & 0xff;
++	u32 sense;
++	u32 cbj_ctrl2;
++	bool presence;
++	int err;
++
++	err = snd_usb_lock_shutdown(chip);
++	if (err < 0)
++		return err;
++	err = realtek_hda_get(chip,
++			      HDA_VERB_CMD(AC_VERB_GET_PIN_SENSE, node_id, 0),
++			      &sense);
++	if (err < 0)
++		goto err;
++	if (pv & REALTEK_MIC_FLAG) {
++		err = realtek_hda_set(chip,
++				      HDA_VERB_CMD(AC_VERB_SET_COEF_INDEX,
++						   REALTEK_VENDOR_REGISTERS,
++						   REALTEK_CBJ_CTRL2));
++		if (err < 0)
++			goto err;
++		err = realtek_hda_get(chip,
++				      HDA_VERB_CMD(AC_VERB_GET_PROC_COEF,
++						   REALTEK_VENDOR_REGISTERS, 0),
++				      &cbj_ctrl2);
++		if (err < 0)
++			goto err;
++	}
++err:
++	snd_usb_unlock_shutdown(chip);
++	if (err < 0)
++		return err;
++
++	presence = sense & AC_PINSENSE_PRESENCE;
++	if (pv & REALTEK_MIC_FLAG)
++		presence = presence && (cbj_ctrl2 & 0x0070) == 0x0070;
++	ucontrol->value.integer.value[0] = presence;
++	return 0;
++}
++
++static const struct snd_kcontrol_new realtek_connector_ctl_ro = {
++	.iface = SNDRV_CTL_ELEM_IFACE_CARD,
++	.name = "", /* will be filled later manually */
++	.access = SNDRV_CTL_ELEM_ACCESS_READ,
++	.info = snd_ctl_boolean_mono_info,
++	.get = realtek_ctl_connector_get,
++};
++
++static int realtek_resume_jack(struct usb_mixer_elem_list *list)
++{
++	snd_ctl_notify(list->mixer->chip->card, SNDRV_CTL_EVENT_MASK_VALUE,
++		       &list->kctl->id);
++	return 0;
++}
++
++static int realtek_add_jack(struct usb_mixer_interface *mixer,
++			    char *name, u32 val)
++{
++	struct usb_mixer_elem_info *cval;
++	struct snd_kcontrol *kctl;
++
++	cval = kzalloc(sizeof(*cval), GFP_KERNEL);
++	if (!cval)
++		return -ENOMEM;
++	snd_usb_mixer_elem_init_std(&cval->head, mixer,
++				    REALTEK_JACK_INTERRUPT_NODE);
++	cval->head.resume = realtek_resume_jack;
++	cval->val_type = USB_MIXER_BOOLEAN;
++	cval->channels = 1;
++	cval->min = 0;
++	cval->max = 1;
++	kctl = snd_ctl_new1(&realtek_connector_ctl_ro, cval);
++	if (!kctl) {
++		kfree(cval);
++		return -ENOMEM;
++	}
++	kctl->private_value = val;
++	strscpy(kctl->id.name, name, sizeof(kctl->id.name));
++	kctl->private_free = snd_usb_mixer_elem_free;
++	return snd_usb_mixer_add_control(&cval->head, kctl);
++}
++
++static int dell_dock_mixer_create(struct usb_mixer_interface *mixer)
++{
++	int err;
++
++	err = realtek_add_jack(mixer, "Line Out Jack", REALTEK_LINE1);
++	if (err < 0)
++		return err;
++	err = realtek_add_jack(mixer, "Headphone Jack", REALTEK_HP_OUT);
++	if (err < 0)
++		return err;
++	err = realtek_add_jack(mixer, "Headset Mic Jack",
++			       REALTEK_HP_OUT | REALTEK_MIC_FLAG);
++	if (err < 0)
++		return err;
++	return 0;
++}
++
+ static void dell_dock_init_vol(struct snd_usb_audio *chip, int ch, int id)
+ {
+ 	u16 buf = 0;
+@@ -3024,6 +3188,9 @@ int snd_usb_mixer_apply_create_quirk(struct usb_mixer_interface *mixer)
+ 		err = snd_soundblaster_e1_switch_create(mixer);
+ 		break;
+ 	case USB_ID(0x0bda, 0x4014): /* Dell WD15 dock */
++		err = dell_dock_mixer_create(mixer);
++		if (err < 0)
++			break;
+ 		err = dell_dock_mixer_init(mixer);
+ 		break;
+ 
+-- 
+2.43.0
+
 
 
