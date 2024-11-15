@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 415DB433C4;
-	Fri, 15 Nov 2024 06:50:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A116D153800;
+	Fri, 15 Nov 2024 06:50:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731653401; cv=none; b=ASJboh17ELfHYJUICLwcIiwM2w7nuu0OF4S1CkNFsSDKGmiaKpsUXM9eBBt7kksAAPXNmZC+F6FdGVl8UdYe8Fh6M79XfG1DXeg1MUTl9Fr7jstivhMTmke5HN7VJLyyF3V0QAy70Ugje7F0b/2auxqQZba6GhSPtAzN4p0SNvM=
+	t=1731653404; cv=none; b=NNTQZa/eK8q6AosRlCMRtW5Xy9a/lOKGZkfXr75Y45hfPO/BQjIWCPzcet2e556H+vHkLfnXvYHSTN2H5AjrmYyJUF/1J65MA1bpUCWZ8XrYn+50kH690+fczQE9+YANen2J9AE+k7e4CbnrKQLpvCDWbuvlM+K6S8oYwaKScWY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731653401; c=relaxed/simple;
-	bh=MyrvLfySPPGl7kMXkxm5rYFISf6RM6WAfV09LaB3hNo=;
+	s=arc-20240116; t=1731653404; c=relaxed/simple;
+	bh=Q58FeUfBgSK88AN8DbRgIU+74xr6vCaQEbb4RdJdd+w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QmN0w56d+2JvBLBEWjjInVOr2X8UI+PjarkDUaZTH5EihlU5cT9OZSMonxRqDzqroQpdGMgafy1KE0MDV933XkusOddRdfISbJUv1jmPEIBUyyebcDKZ8hbQRQMN0wcIN86qG/GL7hAlLoggSYggxJ/uPf5RR7Gd/zNha99zl8I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1D8vrLdF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HP9EXvN2aKBbnOT1PKf1xO7qSvJzQW21VX1GYFbwN8XlfWl/SjvW/g9qJiM9hAicsLcH68e0Pm15xIe69W/9/9toJO4kBzH5BodSNF8cfTPe+JV6djkWZ8P5wkmXdLq8P9rKw7pLYT/8yTDo5xhIlzYEUTQVItnUutLjK67W9Cw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YinPIMzL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1D8vrLdF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5D5FC4CECF;
-	Fri, 15 Nov 2024 06:50:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YinPIMzL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E3CBC4CECF;
+	Fri, 15 Nov 2024 06:50:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731653401;
-	bh=MyrvLfySPPGl7kMXkxm5rYFISf6RM6WAfV09LaB3hNo=;
+	s=korg; t=1731653404;
+	bh=Q58FeUfBgSK88AN8DbRgIU+74xr6vCaQEbb4RdJdd+w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1D8vrLdF4K38CvDxVQieuAK2va3VgXL8nJNVD8P1J4pnj1aHWbfrphLRNQUPvHl8g
-	 v2e/LwQDJ0oRE5uPcee526w9eh5on45bWqhmiZ0CMUXTazmRqNIJVXTFSMNom493vN
-	 ynfygr7ZWaYHKqQc0ACxw4q+e+C02rzbmJy7gQ9s=
+	b=YinPIMzLeJVdphnPoHpmkSnFy61DVr7/m2tzgWCQg886Z4TINX8xCg3uYrRRa7MV6
+	 Al7UI6v2QgoIITdOS+4Jtl28cIwGD1m8Xh+8rX/sk0wMHw4Q1rWGLvu/JdFP8n24T0
+	 gWn/Uk//Wh8AiztZGDVCOdbq5U467wLI86a0tw8g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Klaus Kudielka <klaus.kudielka@gmail.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 12/48] crypto: api - Fix liveliness check in crypto_alg_tested
-Date: Fri, 15 Nov 2024 07:38:01 +0100
-Message-ID: <20241115063723.406848990@linuxfoundation.org>
+Subject: [PATCH 6.6 13/48] crypto: marvell/cesa - Disable hash algorithms
+Date: Fri, 15 Nov 2024 07:38:02 +0100
+Message-ID: <20241115063723.444056147@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241115063722.962047137@linuxfoundation.org>
 References: <20241115063722.962047137@linuxfoundation.org>
@@ -52,43 +53,77 @@ Content-Transfer-Encoding: 8bit
 
 From: Herbert Xu <herbert@gondor.apana.org.au>
 
-[ Upstream commit b81e286ba154a4e0f01a94d99179a97f4ba3e396 ]
+[ Upstream commit e845d2399a00f866f287e0cefbd4fc7d8ef0d2f7 ]
 
-As algorithm testing is carried out without holding the main crypto
-lock, it is always possible for the algorithm to go away during the
-test.
+Disable cesa hash algorithms by lowering the priority because they
+appear to be broken when invoked in parallel.  This allows them to
+still be tested for debugging purposes.
 
-So before crypto_alg_tested updates the status of the tested alg,
-it checks whether it's still on the list of all algorithms.  This
-is inaccurate because it may be off the main list but still on the
-list of algorithms to be removed.
-
-Updating the algorithm status is safe per se as the larval still
-holds a reference to it.  However, killing spawns of other algorithms
-that are of lower priority is clearly a deficiency as it adds
-unnecessary churn.
-
-Fix the test by checking whether the algorithm is dead.
-
+Reported-by: Klaus Kudielka <klaus.kudielka@gmail.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- crypto/algapi.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/crypto/marvell/cesa/hash.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/crypto/algapi.c b/crypto/algapi.c
-index 85bc279b4233f..b3a6086042530 100644
---- a/crypto/algapi.c
-+++ b/crypto/algapi.c
-@@ -396,7 +396,7 @@ void crypto_alg_tested(const char *name, int err)
- 	q->cra_flags |= CRYPTO_ALG_DEAD;
- 	alg = test->adult;
- 
--	if (list_empty(&alg->cra_list))
-+	if (crypto_is_dead(alg))
- 		goto complete;
- 
- 	if (err == -ECANCELED)
+diff --git a/drivers/crypto/marvell/cesa/hash.c b/drivers/crypto/marvell/cesa/hash.c
+index 8d84ad45571c7..f150861ceaf69 100644
+--- a/drivers/crypto/marvell/cesa/hash.c
++++ b/drivers/crypto/marvell/cesa/hash.c
+@@ -947,7 +947,7 @@ struct ahash_alg mv_md5_alg = {
+ 		.base = {
+ 			.cra_name = "md5",
+ 			.cra_driver_name = "mv-md5",
+-			.cra_priority = 300,
++			.cra_priority = 0,
+ 			.cra_flags = CRYPTO_ALG_ASYNC |
+ 				     CRYPTO_ALG_ALLOCATES_MEMORY |
+ 				     CRYPTO_ALG_KERN_DRIVER_ONLY,
+@@ -1018,7 +1018,7 @@ struct ahash_alg mv_sha1_alg = {
+ 		.base = {
+ 			.cra_name = "sha1",
+ 			.cra_driver_name = "mv-sha1",
+-			.cra_priority = 300,
++			.cra_priority = 0,
+ 			.cra_flags = CRYPTO_ALG_ASYNC |
+ 				     CRYPTO_ALG_ALLOCATES_MEMORY |
+ 				     CRYPTO_ALG_KERN_DRIVER_ONLY,
+@@ -1092,7 +1092,7 @@ struct ahash_alg mv_sha256_alg = {
+ 		.base = {
+ 			.cra_name = "sha256",
+ 			.cra_driver_name = "mv-sha256",
+-			.cra_priority = 300,
++			.cra_priority = 0,
+ 			.cra_flags = CRYPTO_ALG_ASYNC |
+ 				     CRYPTO_ALG_ALLOCATES_MEMORY |
+ 				     CRYPTO_ALG_KERN_DRIVER_ONLY,
+@@ -1302,7 +1302,7 @@ struct ahash_alg mv_ahmac_md5_alg = {
+ 		.base = {
+ 			.cra_name = "hmac(md5)",
+ 			.cra_driver_name = "mv-hmac-md5",
+-			.cra_priority = 300,
++			.cra_priority = 0,
+ 			.cra_flags = CRYPTO_ALG_ASYNC |
+ 				     CRYPTO_ALG_ALLOCATES_MEMORY |
+ 				     CRYPTO_ALG_KERN_DRIVER_ONLY,
+@@ -1373,7 +1373,7 @@ struct ahash_alg mv_ahmac_sha1_alg = {
+ 		.base = {
+ 			.cra_name = "hmac(sha1)",
+ 			.cra_driver_name = "mv-hmac-sha1",
+-			.cra_priority = 300,
++			.cra_priority = 0,
+ 			.cra_flags = CRYPTO_ALG_ASYNC |
+ 				     CRYPTO_ALG_ALLOCATES_MEMORY |
+ 				     CRYPTO_ALG_KERN_DRIVER_ONLY,
+@@ -1444,7 +1444,7 @@ struct ahash_alg mv_ahmac_sha256_alg = {
+ 		.base = {
+ 			.cra_name = "hmac(sha256)",
+ 			.cra_driver_name = "mv-hmac-sha256",
+-			.cra_priority = 300,
++			.cra_priority = 0,
+ 			.cra_flags = CRYPTO_ALG_ASYNC |
+ 				     CRYPTO_ALG_ALLOCATES_MEMORY |
+ 				     CRYPTO_ALG_KERN_DRIVER_ONLY,
 -- 
 2.43.0
 
