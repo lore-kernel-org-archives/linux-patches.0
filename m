@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8E8929A9;
-	Fri, 15 Nov 2024 06:47:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDC4829A9;
+	Fri, 15 Nov 2024 06:47:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731653226; cv=none; b=YJPx9SvJ90xwYDlQZJNeQOUNjuIrUhegZPfLYDVsFYNGctAgTQgcomOp+WeJLwiNY3n3N8sMx3vgl2Nl2c7r6DX/4auMOI4DswA56tx+AkEZG0y08qtBZ5WpwbJLqolZwAmMFdssZbsO3+GTx5Xj7wc1AGWCNCsomeLMh1ChDYU=
+	t=1731653229; cv=none; b=s1jck6MZgHSAkLPn7uuxloi9mVZfRxShZWUw/by9u6biozBhsg0ZW7dH9+Z1t34dAsB+4COdhbd1red7Fy2jnsBUk4vKuLvxy+C03jItEuBjoweq8SZ5t/n0Q0lLr5Swijea3Gnex6HvVtSadfNNS1IXI9tiyO1TFoVfnPRzTKY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731653226; c=relaxed/simple;
-	bh=20Tn+lnqWg9pEbIa3oNM2/V80qkF8BpWmZHNdn90K60=;
+	s=arc-20240116; t=1731653229; c=relaxed/simple;
+	bh=p/BCBmYY8Yg0bzpG9lOkyCJu0DoFjltgfycqT2ZE1c4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ccvNisXt1RfLsf12S7VYrDPg5AGOBoVoqZmmw3TepI0F7ZoCXDcpwL2S5xJxqaqEUqvbWb8vAWoZPcE14pmd0R/G64FwcpQ15zHB90l/EdhQMqHitxV0+72QAaL/OinvKeU7H7M+8yb+eBLwMsjtXvPsAxnUGjIhanCkQqayB80=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rNcevkGV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kH3PZHtZPewtLfnF//vQUC3egAlKKgFjNnf7IGcvg5Kbxtu15VFCGKfU4vM/hjVzIVyLEfP03DxgZhfca8BlMOINXL8Zfput0Swmp24cHnOvFtOKlebH8+dn6xUazmeGpiSHfMMZ7ufqtxY5t1RFqpSDoe45Z2WlN44041wuc9A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A/1N4qpR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rNcevkGV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F45BC4CECF;
-	Fri, 15 Nov 2024 06:47:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A/1N4qpR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52A9DC4CECF;
+	Fri, 15 Nov 2024 06:47:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731653226;
-	bh=20Tn+lnqWg9pEbIa3oNM2/V80qkF8BpWmZHNdn90K60=;
+	s=korg; t=1731653229;
+	bh=p/BCBmYY8Yg0bzpG9lOkyCJu0DoFjltgfycqT2ZE1c4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rNcevkGVUMwvEzacbvTmRrxSUsMpYeG5RpZ47VeMLE4PvAnaT8ApmE8FSva6nKNvL
-	 OqJfBJGTt0vGzjt7zaKb/oSud9D0tChIyfU8RZuBFDVntEYcvDCVhh7w/PR3KJzAz8
-	 Wc827ACKY7ZLNsdEu8ir0/RqFDbLceWJDkxUbIz0=
+	b=A/1N4qpRb1C4mMdV2oe9QA2UmvsqhDy3mdmZzy6QQC7dD5nQolT/dXe4S3kmKgyOI
+	 +Wmd77GFuf/QOH2DodJ1kWqetcrTVPq0Ma5zZeVMKUONc0juPevDoCFnaA/4Hrk4Eo
+	 2JuJLrDyIiiay8Y4EsZM7cqOHgDkMxUpYLhdf++c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Showrya M N <showrya@chelsio.com>,
-	Potnuri Bharat Teja <bharat@chelsio.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Baojun Xu <baojun.xu@ti.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 23/63] RDMA/siw: Add sendpage_ok() check to disable MSG_SPLICE_PAGES
-Date: Fri, 15 Nov 2024 07:37:46 +0100
-Message-ID: <20241115063726.757605433@linuxfoundation.org>
+Subject: [PATCH 6.11 24/63] ALSA: hda/tas2781: Add new quirk for Lenovo, ASUS, Dell projects
+Date: Fri, 15 Nov 2024 07:37:47 +0100
+Message-ID: <20241115063726.792983232@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241115063725.892410236@linuxfoundation.org>
 References: <20241115063725.892410236@linuxfoundation.org>
@@ -52,52 +51,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Showrya M N <showrya@chelsio.com>
+From: Baojun Xu <baojun.xu@ti.com>
 
-[ Upstream commit 4e1e3dd88a4cedd5ccc1a3fc3d71e03b70a7a791 ]
+[ Upstream commit 1e9c708dc3ae7226d5f9461540e3d583736af5f1 ]
 
-While running ISER over SIW, the initiator machine encounters a warning
-from skb_splice_from_iter() indicating that a slab page is being used in
-send_page. To address this, it is better to add a sendpage_ok() check
-within the driver itself, and if it returns 0, then MSG_SPLICE_PAGES flag
-should be disabled before entering the network stack.
+Add new vendor_id and subsystem_id in quirk for Lenovo, ASUS,
+and Dell projects.
 
-A similar issue has been discussed for NVMe in this thread:
-https://lore.kernel.org/all/20240530142417.146696-1-ofir.gal@volumez.com/
-
-  WARNING: CPU: 0 PID: 5342 at net/core/skbuff.c:7140 skb_splice_from_iter+0x173/0x320
-  Call Trace:
-   tcp_sendmsg_locked+0x368/0xe40
-   siw_tx_hdt+0x695/0xa40 [siw]
-   siw_qp_sq_process+0x102/0xb00 [siw]
-   siw_sq_resume+0x39/0x110 [siw]
-   siw_run_sq+0x74/0x160 [siw]
-   kthread+0xd2/0x100
-   ret_from_fork+0x34/0x40
-   ret_from_fork_asm+0x1a/0x30
-
-Link: https://patch.msgid.link/r/20241007125835.89942-1-showrya@chelsio.com
-Signed-off-by: Showrya M N <showrya@chelsio.com>
-Signed-off-by: Potnuri Bharat Teja <bharat@chelsio.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Signed-off-by: Baojun Xu <baojun.xu@ti.com>
+Link: https://patch.msgid.link/20241011074040.524-1-baojun.xu@ti.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/siw/siw_qp_tx.c | 2 ++
- 1 file changed, 2 insertions(+)
+ sound/pci/hda/patch_realtek.c | 29 +++++++++++++++++++++++++++++
+ 1 file changed, 29 insertions(+)
 
-diff --git a/drivers/infiniband/sw/siw/siw_qp_tx.c b/drivers/infiniband/sw/siw/siw_qp_tx.c
-index 64ad9e0895bd0..a034264c56698 100644
---- a/drivers/infiniband/sw/siw/siw_qp_tx.c
-+++ b/drivers/infiniband/sw/siw/siw_qp_tx.c
-@@ -331,6 +331,8 @@ static int siw_tcp_sendpages(struct socket *s, struct page **page, int offset,
- 			msg.msg_flags &= ~MSG_MORE;
- 
- 		tcp_rate_check_app_limited(sk);
-+		if (!sendpage_ok(page[i]))
-+			msg.msg_flags &= ~MSG_SPLICE_PAGES;
- 		bvec_set_page(&bvec, page[i], bytes, offset);
- 		iov_iter_bvec(&msg.msg_iter, ITER_SOURCE, &bvec, 1, size);
- 
+diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
+index 660fd984a9285..d1d39f4cc9425 100644
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -10258,6 +10258,8 @@ static const struct snd_pci_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x1028, 0x0c1e, "Dell Precision 3540", ALC236_FIXUP_DELL_DUAL_CODECS),
+ 	SND_PCI_QUIRK(0x1028, 0x0c28, "Dell Inspiron 16 Plus 7630", ALC295_FIXUP_DELL_INSPIRON_TOP_SPEAKERS),
+ 	SND_PCI_QUIRK(0x1028, 0x0c4d, "Dell", ALC287_FIXUP_CS35L41_I2C_4),
++	SND_PCI_QUIRK(0x1028, 0x0c94, "Dell Polaris 3 metal", ALC287_FIXUP_TAS2781_I2C),
++	SND_PCI_QUIRK(0x1028, 0x0c96, "Dell Polaris 2in1", ALC287_FIXUP_TAS2781_I2C),
+ 	SND_PCI_QUIRK(0x1028, 0x0cbd, "Dell Oasis 13 CS MTL-U", ALC289_FIXUP_DELL_CS35L41_SPI_2),
+ 	SND_PCI_QUIRK(0x1028, 0x0cbe, "Dell Oasis 13 2-IN-1 MTL-U", ALC289_FIXUP_DELL_CS35L41_SPI_2),
+ 	SND_PCI_QUIRK(0x1028, 0x0cbf, "Dell Oasis 13 Low Weight MTU-L", ALC289_FIXUP_DELL_CS35L41_SPI_2),
+@@ -10572,11 +10574,15 @@ static const struct snd_pci_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x1043, 0x103f, "ASUS TX300", ALC282_FIXUP_ASUS_TX300),
+ 	SND_PCI_QUIRK(0x1043, 0x106d, "Asus K53BE", ALC269_FIXUP_LIMIT_INT_MIC_BOOST),
+ 	SND_PCI_QUIRK(0x1043, 0x10a1, "ASUS UX391UA", ALC294_FIXUP_ASUS_SPK),
++	SND_PCI_QUIRK(0x1043, 0x10a4, "ASUS TP3407SA", ALC287_FIXUP_TAS2781_I2C),
+ 	SND_PCI_QUIRK(0x1043, 0x10c0, "ASUS X540SA", ALC256_FIXUP_ASUS_MIC),
+ 	SND_PCI_QUIRK(0x1043, 0x10d0, "ASUS X540LA/X540LJ", ALC255_FIXUP_ASUS_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1043, 0x10d3, "ASUS K6500ZC", ALC294_FIXUP_ASUS_SPK),
++	SND_PCI_QUIRK(0x1043, 0x1154, "ASUS TP3607SH", ALC287_FIXUP_TAS2781_I2C),
+ 	SND_PCI_QUIRK(0x1043, 0x115d, "Asus 1015E", ALC269_FIXUP_LIMIT_INT_MIC_BOOST),
+ 	SND_PCI_QUIRK(0x1043, 0x11c0, "ASUS X556UR", ALC255_FIXUP_ASUS_MIC_NO_PRESENCE),
++	SND_PCI_QUIRK(0x1043, 0x1204, "ASUS Strix G615JHR_JMR_JPR", ALC287_FIXUP_TAS2781_I2C),
++	SND_PCI_QUIRK(0x1043, 0x1214, "ASUS Strix G615LH_LM_LP", ALC287_FIXUP_TAS2781_I2C),
+ 	SND_PCI_QUIRK(0x1043, 0x125e, "ASUS Q524UQK", ALC255_FIXUP_ASUS_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1043, 0x1271, "ASUS X430UN", ALC256_FIXUP_ASUS_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1043, 0x1290, "ASUS X441SA", ALC233_FIXUP_EAPD_COEF_AND_MIC_NO_PRESENCE),
+@@ -10656,6 +10662,7 @@ static const struct snd_pci_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x1043, 0x1e63, "ASUS H7606W", ALC285_FIXUP_CS35L56_I2C_2),
+ 	SND_PCI_QUIRK(0x1043, 0x1e83, "ASUS GA605W", ALC285_FIXUP_CS35L56_I2C_2),
+ 	SND_PCI_QUIRK(0x1043, 0x1e8e, "ASUS Zephyrus G15", ALC289_FIXUP_ASUS_GA401),
++	SND_PCI_QUIRK(0x1043, 0x1eb3, "ASUS Ally RCLA72", ALC287_FIXUP_TAS2781_I2C),
+ 	SND_PCI_QUIRK(0x1043, 0x1ed3, "ASUS HN7306W", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x1043, 0x1ee2, "ASUS UM6702RA/RC", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x1043, 0x1c52, "ASUS Zephyrus G15 2022", ALC289_FIXUP_ASUS_GA401),
+@@ -10670,6 +10677,13 @@ static const struct snd_pci_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x1043, 0x3a40, "ASUS G814JZR", ALC285_FIXUP_ASUS_SPI_REAR_SPEAKERS),
+ 	SND_PCI_QUIRK(0x1043, 0x3a50, "ASUS G834JYR/JZR", ALC285_FIXUP_ASUS_SPI_REAR_SPEAKERS),
+ 	SND_PCI_QUIRK(0x1043, 0x3a60, "ASUS G634JYR/JZR", ALC285_FIXUP_ASUS_SPI_REAR_SPEAKERS),
++	SND_PCI_QUIRK(0x1043, 0x3e30, "ASUS TP3607SA", ALC287_FIXUP_TAS2781_I2C),
++	SND_PCI_QUIRK(0x1043, 0x3ee0, "ASUS Strix G815_JHR_JMR_JPR", ALC287_FIXUP_TAS2781_I2C),
++	SND_PCI_QUIRK(0x1043, 0x3ef0, "ASUS Strix G635LR_LW_LX", ALC287_FIXUP_TAS2781_I2C),
++	SND_PCI_QUIRK(0x1043, 0x3f00, "ASUS Strix G815LH_LM_LP", ALC287_FIXUP_TAS2781_I2C),
++	SND_PCI_QUIRK(0x1043, 0x3f10, "ASUS Strix G835LR_LW_LX", ALC287_FIXUP_TAS2781_I2C),
++	SND_PCI_QUIRK(0x1043, 0x3f20, "ASUS Strix G615LR_LW", ALC287_FIXUP_TAS2781_I2C),
++	SND_PCI_QUIRK(0x1043, 0x3f30, "ASUS Strix G815LR_LW", ALC287_FIXUP_TAS2781_I2C),
+ 	SND_PCI_QUIRK(0x1043, 0x831a, "ASUS P901", ALC269_FIXUP_STEREO_DMIC),
+ 	SND_PCI_QUIRK(0x1043, 0x834a, "ASUS S101", ALC269_FIXUP_STEREO_DMIC),
+ 	SND_PCI_QUIRK(0x1043, 0x8398, "ASUS P1005", ALC269_FIXUP_STEREO_DMIC),
+@@ -10891,11 +10905,14 @@ static const struct snd_pci_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x17aa, 0x3878, "Lenovo Legion 7 Slim 16ARHA7", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x17aa, 0x387d, "Yoga S780-16 pro Quad AAC", ALC287_FIXUP_TAS2781_I2C),
+ 	SND_PCI_QUIRK(0x17aa, 0x387e, "Yoga S780-16 pro Quad YC", ALC287_FIXUP_TAS2781_I2C),
++	SND_PCI_QUIRK(0x17aa, 0x387f, "Yoga S780-16 pro dual LX", ALC287_FIXUP_TAS2781_I2C),
++	SND_PCI_QUIRK(0x17aa, 0x3880, "Yoga S780-16 pro dual YC", ALC287_FIXUP_TAS2781_I2C),
+ 	SND_PCI_QUIRK(0x17aa, 0x3881, "YB9 dual power mode2 YC", ALC287_FIXUP_TAS2781_I2C),
+ 	SND_PCI_QUIRK(0x17aa, 0x3882, "Lenovo Yoga Pro 7 14APH8", ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN),
+ 	SND_PCI_QUIRK(0x17aa, 0x3884, "Y780 YG DUAL", ALC287_FIXUP_TAS2781_I2C),
+ 	SND_PCI_QUIRK(0x17aa, 0x3886, "Y780 VECO DUAL", ALC287_FIXUP_TAS2781_I2C),
+ 	SND_PCI_QUIRK(0x17aa, 0x3891, "Lenovo Yoga Pro 7 14AHP9", ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN),
++	SND_PCI_QUIRK(0x17aa, 0x38a5, "Y580P AMD dual", ALC287_FIXUP_TAS2781_I2C),
+ 	SND_PCI_QUIRK(0x17aa, 0x38a7, "Y780P AMD YG dual", ALC287_FIXUP_TAS2781_I2C),
+ 	SND_PCI_QUIRK(0x17aa, 0x38a8, "Y780P AMD VECO dual", ALC287_FIXUP_TAS2781_I2C),
+ 	SND_PCI_QUIRK(0x17aa, 0x38a9, "Thinkbook 16P", ALC287_FIXUP_MG_RTKC_CSAMP_CS35L41_I2C_THINKPAD),
+@@ -10904,6 +10921,8 @@ static const struct snd_pci_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x17aa, 0x38b5, "Legion Slim 7 16IRH8", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x17aa, 0x38b6, "Legion Slim 7 16APH8", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x17aa, 0x38b7, "Legion Slim 7 16APH8", ALC287_FIXUP_CS35L41_I2C_2),
++	SND_PCI_QUIRK(0x17aa, 0x38b8, "Yoga S780-14.5 proX AMD YC Dual", ALC287_FIXUP_TAS2781_I2C),
++	SND_PCI_QUIRK(0x17aa, 0x38b9, "Yoga S780-14.5 proX AMD LX Dual", ALC287_FIXUP_TAS2781_I2C),
+ 	SND_PCI_QUIRK(0x17aa, 0x38ba, "Yoga S780-14.5 Air AMD quad YC", ALC287_FIXUP_TAS2781_I2C),
+ 	SND_PCI_QUIRK(0x17aa, 0x38bb, "Yoga S780-14.5 Air AMD quad AAC", ALC287_FIXUP_TAS2781_I2C),
+ 	SND_PCI_QUIRK(0x17aa, 0x38be, "Yoga S980-14.5 proX YC Dual", ALC287_FIXUP_TAS2781_I2C),
+@@ -10914,12 +10933,22 @@ static const struct snd_pci_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x17aa, 0x38cb, "Y790 YG DUAL", ALC287_FIXUP_TAS2781_I2C),
+ 	SND_PCI_QUIRK(0x17aa, 0x38cd, "Y790 VECO DUAL", ALC287_FIXUP_TAS2781_I2C),
+ 	SND_PCI_QUIRK(0x17aa, 0x38d2, "Lenovo Yoga 9 14IMH9", ALC287_FIXUP_YOGA9_14IMH9_BASS_SPK_PIN),
++	SND_PCI_QUIRK(0x17aa, 0x38d3, "Yoga S990-16 Pro IMH YC Dual", ALC287_FIXUP_TAS2781_I2C),
++	SND_PCI_QUIRK(0x17aa, 0x38d4, "Yoga S990-16 Pro IMH VECO Dual", ALC287_FIXUP_TAS2781_I2C),
++	SND_PCI_QUIRK(0x17aa, 0x38d5, "Yoga S990-16 Pro IMH YC Quad", ALC287_FIXUP_TAS2781_I2C),
++	SND_PCI_QUIRK(0x17aa, 0x38d6, "Yoga S990-16 Pro IMH VECO Quad", ALC287_FIXUP_TAS2781_I2C),
+ 	SND_PCI_QUIRK(0x17aa, 0x38d7, "Lenovo Yoga 9 14IMH9", ALC287_FIXUP_YOGA9_14IMH9_BASS_SPK_PIN),
++	SND_PCI_QUIRK(0x17aa, 0x38df, "Yoga Y990 Intel YC Dual", ALC287_FIXUP_TAS2781_I2C),
++	SND_PCI_QUIRK(0x17aa, 0x38e0, "Yoga Y990 Intel VECO Dual", ALC287_FIXUP_TAS2781_I2C),
++	SND_PCI_QUIRK(0x17aa, 0x38f8, "Yoga Book 9i", ALC287_FIXUP_TAS2781_I2C),
+ 	SND_PCI_QUIRK(0x17aa, 0x38df, "Y990 YG DUAL", ALC287_FIXUP_TAS2781_I2C),
+ 	SND_PCI_QUIRK(0x17aa, 0x38f9, "Thinkbook 16P Gen5", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x17aa, 0x38fa, "Thinkbook 16P Gen5", ALC287_FIXUP_CS35L41_I2C_2),
++	SND_PCI_QUIRK(0x17aa, 0x38fd, "ThinkBook plus Gen5 Hybrid", ALC287_FIXUP_TAS2781_I2C),
+ 	SND_PCI_QUIRK(0x17aa, 0x3902, "Lenovo E50-80", ALC269_FIXUP_DMIC_THINKPAD_ACPI),
+ 	SND_PCI_QUIRK(0x17aa, 0x3913, "Lenovo 145", ALC236_FIXUP_LENOVO_INV_DMIC),
++	SND_PCI_QUIRK(0x17aa, 0x391f, "Yoga S990-16 pro Quad YC Quad", ALC287_FIXUP_TAS2781_I2C),
++	SND_PCI_QUIRK(0x17aa, 0x3920, "Yoga S990-16 pro Quad VECO Quad", ALC287_FIXUP_TAS2781_I2C),
+ 	SND_PCI_QUIRK(0x17aa, 0x3977, "IdeaPad S210", ALC283_FIXUP_INT_MIC),
+ 	SND_PCI_QUIRK(0x17aa, 0x3978, "Lenovo B50-70", ALC269_FIXUP_DMIC_THINKPAD_ACPI),
+ 	SND_PCI_QUIRK(0x17aa, 0x3bf8, "Quanta FL1", ALC269_FIXUP_PCM_44K),
 -- 
 2.43.0
 
