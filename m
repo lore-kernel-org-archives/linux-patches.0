@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ACD4EAD0;
-	Fri, 15 Nov 2024 06:45:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E954EAD0;
+	Fri, 15 Nov 2024 06:45:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731653141; cv=none; b=OC46fR6KGPQB1qMBTR3oGjuxtBuucASzVoblWbpICRWUbHytLfnjJRiVZ3j3/5YvsWSRufHcGulcUwJKWoV5O8ETmtTTeK6jJ+tq6pNBzlM21ejYhDjRKcOHQ7GDEtE/p2lAu43CU737FwvQ5ONwMSPmoeYk6M01b2aWRXBkrdQ=
+	t=1731653144; cv=none; b=H+3QLJZXBHa8k8yHth/SEZrDCXrHyZ7d2R02WrGd8TcUln2GWCqnYCZ28IC/0gBEB5DzeSgsaBfVcyDaueSTGXtvDNjPpU6j79NnP16sa/AYmOR/4Gw1UsjcJWpxEW8q0bVEDFU6NJSjkBgpqODwfVBNEl7GbwOxDZopcCzOvx0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731653141; c=relaxed/simple;
-	bh=I8KFIsLkJH5FK03HInRAfOMcMNjXNpW9AbnbqufOfcM=;
+	s=arc-20240116; t=1731653144; c=relaxed/simple;
+	bh=tgG797msYoN74wgraK9s4WKonhCtafz/AzEE5KPcYVI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=gGxoOsLu2zAp8Z1ZbbVMX/f/T2bkxUKiAqkSzoyi46GTkHMaMo14D0L7U/xAw0SRrreWg4WuH5yFxwDwWbbvn0da6GHFltZPiYAYmuWDJTpE+hGBZFPD7XOO0GejHj52Eab9v4Hp6ztxv8EImCYtb2Nzhi0a2k75pNGynGZc6eI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vyQUF2M1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rvvQ+05ziyVrpzEmF0scEQhc3XxmO1+f0FgpuvgFMGv+35WFhV4lEVVqj6aWZy3Kdsv4+OcNpRlbRoTqfZmKVGdCpKHAUZRYbydm04RfPrVHjSaQeIOkNmesHZGC4txptgY8fhUdF6o2CfcJojniDQY67XrTO6huXFymBOIEMYE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BUz53xTY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vyQUF2M1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5482C4CECF;
-	Fri, 15 Nov 2024 06:45:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BUz53xTY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16E20C4CECF;
+	Fri, 15 Nov 2024 06:45:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731653141;
-	bh=I8KFIsLkJH5FK03HInRAfOMcMNjXNpW9AbnbqufOfcM=;
+	s=korg; t=1731653144;
+	bh=tgG797msYoN74wgraK9s4WKonhCtafz/AzEE5KPcYVI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vyQUF2M1XVjU2KQfEa4G8t2X0GJWrqSnxDGEqWknApldYftPocZCvxQxH+GKgOwIi
-	 QrawJRywg2BevXeiRqE09sUyBkwdHySSXu31tfypk4Q94SGVuYfbFuDG4dNXUDQ9Wt
-	 vtSTV45RNXuFQa0glOqggbHHLhFIlY1RjMdxsYdQ=
+	b=BUz53xTYhLnVGmb9pMkv1z3KRaGem+jzie4a1r8NCbx56ZA+hDbnL7YNrnmIoZeGk
+	 YsgYeYdURGeWI1IOeR+5Y4W8l4ymj+Oc5FpiIHXE3E+FOuBU1EYYogh3dyx620vFn9
+	 S2Eyo4Wem+ibr0xwXKwFxQHc4iEw9fSbYlH+dLyo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Jan=20Sch=C3=A4r?= <jan@jschaer.ch>,
-	Takashi Iwai <tiwai@suse.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 48/66] ALSA: usb-audio: Add quirks for Dell WD19 dock
-Date: Fri, 15 Nov 2024 07:37:57 +0100
-Message-ID: <20241115063724.576492616@linuxfoundation.org>
+	Vlastimil Babka <vbabka@suse.cz>,
+	Dominique Martinet <asmadeus@codewreck.org>,
+	Thorsten Leemhuis <regressions@leemhuis.info>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Omar Sandoval <osandov@fb.com>
+Subject: [PATCH 5.4 66/66] 9p: fix slab cache name creation for real
+Date: Fri, 15 Nov 2024 07:38:15 +0100
+Message-ID: <20241115063725.221391282@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241115063722.834793938@linuxfoundation.org>
 References: <20241115063722.834793938@linuxfoundation.org>
@@ -45,51 +47,55 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jan Schär <jan@jschaer.ch>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 
-[ Upstream commit 4413665dd6c528b31284119e3571c25f371e1c36 ]
+commit a360f311f57a36e96d88fa8086b749159714dcd2 upstream.
 
-The WD19 family of docks has the same audio chipset as the WD15. This
-change enables jack detection on the WD19.
+This was attempted by using the dev_name in the slab cache name, but as
+Omar Sandoval pointed out, that can be an arbitrary string, eg something
+like "/dev/root".  Which in turn trips verify_dirent_name(), which fails
+if a filename contains a slash.
 
-We don't need the dell_dock_mixer_init quirk for the WD19. It is only
-needed because of the dell_alc4020_map quirk for the WD15 in
-mixer_maps.c, which disables the volume controls. Even for the WD15,
-this quirk was apparently only needed when the dock firmware was not
-updated.
+So just make it use a sequence counter, and make it an atomic_t to avoid
+any possible races or locking issues.
 
-Signed-off-by: Jan Schär <jan@jschaer.ch>
-Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20241029221249.15661-1-jan@jschaer.ch
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-and-tested-by: Omar Sandoval <osandov@fb.com>
+Link: https://lore.kernel.org/all/ZxafcO8KWMlXaeWE@telecaster.dhcp.thefacebook.com/
+Fixes: 79efebae4afc ("9p: Avoid creating multiple slab caches with the same name")
+Acked-by: Vlastimil Babka <vbabka@suse.cz>
+Cc: Dominique Martinet <asmadeus@codewreck.org>
+Cc: Thorsten Leemhuis <regressions@leemhuis.info>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/mixer_quirks.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/9p/client.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/sound/usb/mixer_quirks.c b/sound/usb/mixer_quirks.c
-index 08cbcd69b3251..403b83cfac4c1 100644
---- a/sound/usb/mixer_quirks.c
-+++ b/sound/usb/mixer_quirks.c
-@@ -2444,6 +2444,9 @@ int snd_usb_mixer_apply_create_quirk(struct usb_mixer_interface *mixer)
- 			break;
- 		err = dell_dock_mixer_init(mixer);
- 		break;
-+	case USB_ID(0x0bda, 0x402e): /* Dell WD19 dock */
-+		err = dell_dock_mixer_create(mixer);
-+		break;
+--- a/net/9p/client.c
++++ b/net/9p/client.c
+@@ -1001,6 +1001,7 @@ error:
+ struct p9_client *p9_client_create(const char *dev_name, char *options)
+ {
+ 	int err;
++	static atomic_t seqno = ATOMIC_INIT(0);
+ 	struct p9_client *clnt;
+ 	char *client_id;
+ 	char *cache_name;
+@@ -1056,7 +1057,8 @@ struct p9_client *p9_client_create(const
+ 	if (err)
+ 		goto close_trans;
  
- 	case USB_ID(0x2a39, 0x3fd2): /* RME ADI-2 Pro */
- 	case USB_ID(0x2a39, 0x3fd3): /* RME ADI-2 DAC */
--- 
-2.43.0
-
+-	cache_name = kasprintf(GFP_KERNEL, "9p-fcall-cache-%s", dev_name);
++	cache_name = kasprintf(GFP_KERNEL,
++		"9p-fcall-cache-%u", atomic_inc_return(&seqno));
+ 	if (!cache_name) {
+ 		err = -ENOMEM;
+ 		goto close_trans;
 
 
