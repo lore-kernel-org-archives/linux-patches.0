@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 459CF1885AA;
-	Fri, 15 Nov 2024 06:53:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 436F514EC77;
+	Fri, 15 Nov 2024 06:53:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731653608; cv=none; b=J0YAOHiLq8/fYqREHFhMYoXYpNczA1qiifgiHefXojdJXHCXtsl/b0sxo7WJsNwRNSJRmFx4eb2+GSB/3l6MO3+TeEC/DNbU54RAPmDpNjylDuxph0Plui7V/5j6s/YqOntrHYav8spyHZ736gyJl1njowkHnf9UzZWby8YYoS0=
+	t=1731653610; cv=none; b=V4XiOu26ioVsf0ngpNA/R8ccn2Ea3PfDHD9S5p6YV6XqqEUfRtCKL+xvT/DYs/If2xosdqDNHfFSPeq2EA6GJOQLIbfYoAKz+a3MPxWfC3vZPjMpaIZgs+0QUASUfsax0E5iLnZYArCh0PRnt5F1WFNQYSpZt+tr+j5GcyELoaI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731653608; c=relaxed/simple;
-	bh=GII/UOhyQ2UJQDpEAcEO7r0/ahHbzCydUjCGdp4qnP8=;
+	s=arc-20240116; t=1731653610; c=relaxed/simple;
+	bh=Cbqo1j+aweMVFjAF2H5aM5WBBnnN2QrJF4bsYCLR5E0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hRltgYRMKw+LNtj+SITRoUROT5yzk/7xsURyFIo4FVBRsiN/8fsaRc13tlGBpK3jKOsYU/urDT45+Rwp8alRWgvmbX9fNBkTihcozdW0xWY3pYbE0MGNeUAqYIcPMDxJp7PUvXRf5s4QqVyl4ca3HsSB+DHaeKeY5eS9DPz2Xwc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yCR3JlT1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QwVlqFMLTkOXSgU/keWIHudA4jmhyku9fYC5eYHnmqlqTMJg/Lx1Wpm2xiy7nP9kw2396/mC1uC0ZqZm/qKEHZz8Y+CWBoETxvuarfr9wqffM4oZCTAjXgTN/MiqqCQqEFI6Y1sYXHuLYUrlC+Gq7NPXhD0MbnSc51nZT9jvjWo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AYf4d5Bl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yCR3JlT1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4973AC4CECF;
-	Fri, 15 Nov 2024 06:53:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AYf4d5Bl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5800C4CECF;
+	Fri, 15 Nov 2024 06:53:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731653606;
-	bh=GII/UOhyQ2UJQDpEAcEO7r0/ahHbzCydUjCGdp4qnP8=;
+	s=korg; t=1731653610;
+	bh=Cbqo1j+aweMVFjAF2H5aM5WBBnnN2QrJF4bsYCLR5E0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yCR3JlT1ux8Zjn82Kj3Qowes4c9zZkiGRGkQrPvnhSN1rGBLMYZIgHXfxj6lQ5Nqv
-	 vFAoV55XgWTcxBFZxVikx2U5FAxF/mOc4nOqTHYti1qmHhgK1J2j1oGAKS2IByB2QW
-	 OJUrfHmaeI3OWLOwkJAyC3kcEAPxLsE6gA7eSyYU=
+	b=AYf4d5BlH78r+UcZtJgzWr58LmJSODWFVVRb1GrJP4hxeArR1d0kIqWIr/XIZ0C6r
+	 5QbyIIPknFpWmi4SSJbWbcCiCZ7dfmzMv59uqtVwCZWsjZHkmkrHwnYMk6t23w3AnJ
+	 5M1Zha0On6wdA5B04iBbIdREWrbZLNpcU+Jjq6oM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiawei Ye <jiawei.ye@foxmail.com>,
-	Yonghong Song <yonghong.song@linux.dev>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
+	syzbot+6c55f725d1bdc8c52058@syzkaller.appspotmail.com,
+	Alessandro Zanni <alessandro.zanni87@gmail.com>,
+	Jan Kara <jack@suse.cz>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 23/39] bpf: Fix mismatched RCU unlock flavour in bpf_out_neigh_v6
-Date: Fri, 15 Nov 2024 07:38:33 +0100
-Message-ID: <20241115063723.447182706@linuxfoundation.org>
+Subject: [PATCH 6.1 24/39] fs: Fix uninitialized value issue in from_kuid and from_kgid
+Date: Fri, 15 Nov 2024 07:38:34 +0100
+Message-ID: <20241115063723.483028742@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241115063722.599985562@linuxfoundation.org>
 References: <20241115063722.599985562@linuxfoundation.org>
@@ -52,48 +53,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiawei Ye <jiawei.ye@foxmail.com>
+From: Alessandro Zanni <alessandro.zanni87@gmail.com>
 
-[ Upstream commit fb86c42a2a5d44e849ddfbc98b8d2f4f40d36ee3 ]
+[ Upstream commit 15f34347481648a567db67fb473c23befb796af5 ]
 
-In the bpf_out_neigh_v6 function, rcu_read_lock() is used to begin an RCU
-read-side critical section. However, when unlocking, one branch
-incorrectly uses a different RCU unlock flavour rcu_read_unlock_bh()
-instead of rcu_read_unlock(). This mismatch in RCU locking flavours can
-lead to unexpected behavior and potential concurrency issues.
+ocfs2_setattr() uses attr->ia_mode, attr->ia_uid and attr->ia_gid in
+a trace point even though ATTR_MODE, ATTR_UID and ATTR_GID aren't set.
 
-This possible bug was identified using a static analysis tool developed
-by myself, specifically designed to detect RCU-related issues.
+Initialize all fields of newattrs to avoid uninitialized variables, by
+checking if ATTR_MODE, ATTR_UID, ATTR_GID are initialized, otherwise 0.
 
-This patch corrects the mismatched unlock flavour by replacing the
-incorrect rcu_read_unlock_bh() with the appropriate rcu_read_unlock(),
-ensuring that the RCU critical section is properly exited. This change
-prevents potential synchronization issues and aligns with proper RCU
-usage patterns.
-
-Fixes: 09eed1192cec ("neighbour: switch to standard rcu, instead of rcu_bh")
-Signed-off-by: Jiawei Ye <jiawei.ye@foxmail.com>
-Acked-by: Yonghong Song <yonghong.song@linux.dev>
-Link: https://lore.kernel.org/r/tencent_CFD3D1C3D68B45EA9F52D8EC76D2C4134306@qq.com
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Reported-by: syzbot+6c55f725d1bdc8c52058@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=6c55f725d1bdc8c52058
+Signed-off-by: Alessandro Zanni <alessandro.zanni87@gmail.com>
+Link: https://lore.kernel.org/r/20241017120553.55331-1-alessandro.zanni87@gmail.com
+Reviewed-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/filter.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ocfs2/file.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/net/core/filter.c b/net/core/filter.c
-index 3f3286cf438e7..2f6fef5f5864f 100644
---- a/net/core/filter.c
-+++ b/net/core/filter.c
-@@ -2226,7 +2226,7 @@ static int bpf_out_neigh_v6(struct net *net, struct sk_buff *skb,
- 		rcu_read_unlock();
- 		return ret;
- 	}
--	rcu_read_unlock_bh();
-+	rcu_read_unlock();
- 	if (dst)
- 		IP6_INC_STATS(net, ip6_dst_idev(dst), IPSTATS_MIB_OUTNOROUTES);
- out_drop:
+diff --git a/fs/ocfs2/file.c b/fs/ocfs2/file.c
+index ea7c79e8ce429..e96b947c3f5dd 100644
+--- a/fs/ocfs2/file.c
++++ b/fs/ocfs2/file.c
+@@ -1129,9 +1129,12 @@ int ocfs2_setattr(struct user_namespace *mnt_userns, struct dentry *dentry,
+ 	trace_ocfs2_setattr(inode, dentry,
+ 			    (unsigned long long)OCFS2_I(inode)->ip_blkno,
+ 			    dentry->d_name.len, dentry->d_name.name,
+-			    attr->ia_valid, attr->ia_mode,
+-			    from_kuid(&init_user_ns, attr->ia_uid),
+-			    from_kgid(&init_user_ns, attr->ia_gid));
++			    attr->ia_valid,
++				attr->ia_valid & ATTR_MODE ? attr->ia_mode : 0,
++				attr->ia_valid & ATTR_UID ?
++					from_kuid(&init_user_ns, attr->ia_uid) : 0,
++				attr->ia_valid & ATTR_GID ?
++					from_kgid(&init_user_ns, attr->ia_gid) : 0);
+ 
+ 	/* ensuring we don't even attempt to truncate a symlink */
+ 	if (S_ISLNK(inode->i_mode))
 -- 
 2.43.0
 
