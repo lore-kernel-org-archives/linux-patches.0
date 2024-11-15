@@ -1,38 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 988C03BBEB;
-	Fri, 15 Nov 2024 06:44:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC91A188917;
+	Fri, 15 Nov 2024 06:44:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731653048; cv=none; b=Bme/mLaGp0zt11wyPRJHpMIOv/tqYId3kMvrK03SCcwY1x5ugq02CVz88rgi3wzGzfDQvh++ah+UHSPyoSm+ffEUPSFicTVqhrLhz4dYuZxE6qp/61mmKRTorMysUbQzis/uFGDyVPDvdPZk5epS/24hNoJjEqPRaMJALXNjxmU=
+	t=1731653051; cv=none; b=cb++V2nrHDWuvBTdDAaQoOxJooqYMu5tMELwV3TCfcjmCynYTnb9H+0oeBfS9aYB5fXPageGkl5zpVXDoEStoaBC92EekAl2CoFQOFFrxGJARd003HJg6epcg6oq4aG6Vp8i4Q6cZP1/9+O235JqcKr1sPdxc9Embge7ITd2zF4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731653048; c=relaxed/simple;
-	bh=LsWgmVfnE8+hUxasReQuB6322CSlwWbIw1GduvKVL/U=;
+	s=arc-20240116; t=1731653051; c=relaxed/simple;
+	bh=Ct4G0ecX5nC42HpAR0gU0inUyIbrxChzBChC0DL9eqc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VyuecdZZ0h3WjFDetOtmRakvQCq54sr+QUcOausbqaNQhg6rFnysVN9NJcIK6WKxxxlIR5U+xqmxTYDTDkgo2NfleGlKy9XDeOK0w1LtlYJFrkRj/f4pvoUC3lNYM8cImIFjqSOtvqqYB016FGXjeIPbGEWXfgM9k1OQxmg+qHA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=taQGMDb0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=B7LPdQqZbT27tIAxO8WzhrBb2fwefxmDRJFWbyOEKQ1kST1kwWFVjmZD4BrXsXvy2qx3VZww/AkVXQh3gH+jE6Zm1Tr3ER9umSx5QaNamHw1TPq58UY4UDeyefVbMHDYGE3yuD5WMduu0bnBoehIyZy36zVNuHO1eYL240zgbDg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PaAvI1Ox; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="taQGMDb0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01EB8C4CECF;
-	Fri, 15 Nov 2024 06:44:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PaAvI1Ox"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B4BFC4CECF;
+	Fri, 15 Nov 2024 06:44:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731653048;
-	bh=LsWgmVfnE8+hUxasReQuB6322CSlwWbIw1GduvKVL/U=;
+	s=korg; t=1731653051;
+	bh=Ct4G0ecX5nC42HpAR0gU0inUyIbrxChzBChC0DL9eqc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=taQGMDb0e7TgfBwJnqYDISmAlg5Ju4/P3d/Do2OoTrKBJ1rEGcu6QlGBaLcfGuQS4
-	 91zfKlY2xJLMbC8BtDk0nChNsMtGqHXXzq0UiKM/9hcct1wMP2+oymNJEp3DZf/Rqm
-	 sA4pLTD6trbRk1YgTeM6GeHJQjeb9svb9ZqLheeA=
+	b=PaAvI1OxzbWjtY5165Smxc4SHi8+BNHhcGL27ouR1TKpA51lXkHapE9IFmiW6o9DT
+	 Zrir5akKfYxIdlKJt08l2H1cDMnV7VHcS/7Clthd7nHkdlAvVeQioEBSGSAtSEZXW+
+	 PzdFhb8oPeIx8C+ZGeHOh1Z8IXKaMzaLoIC3BD8U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benoit Sevens <bsevens@google.com>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 5.4 38/66] media: uvcvideo: Skip parsing frames of type UVC_VS_UNDEFINED in uvc_parse_format
-Date: Fri, 15 Nov 2024 07:37:47 +0100
-Message-ID: <20241115063724.221589096@linuxfoundation.org>
+	Qi Xi <xiqi2@huawei.com>,
+	kernel test robot <lkp@intel.com>,
+	Baoquan He <bhe@redhat.com>,
+	Dave Young <dyoung@redhat.com>,
+	Michael Holzheu <holzheu@linux.vnet.ibm.com>,
+	Vivek Goyal <vgoyal@redhat.com>,
+	Wang ShaoBo <bobo.shaobowang@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.4 39/66] fs/proc: fix compile warning about variable vmcore_mmap_ops
+Date: Fri, 15 Nov 2024 07:37:48 +0100
+Message-ID: <20241115063724.256987273@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241115063722.834793938@linuxfoundation.org>
 References: <20241115063722.834793938@linuxfoundation.org>
@@ -51,35 +56,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benoit Sevens <bsevens@google.com>
+From: Qi Xi <xiqi2@huawei.com>
 
-commit ecf2b43018da9579842c774b7f35dbe11b5c38dd upstream.
+commit b8ee299855f08539e04d6c1a6acb3dc9e5423c00 upstream.
 
-This can lead to out of bounds writes since frames of this type were not
-taken into account when calculating the size of the frames buffer in
-uvc_parse_streaming.
+When build with !CONFIG_MMU, the variable 'vmcore_mmap_ops'
+is defined but not used:
 
-Fixes: c0efd232929c ("V4L/DVB (8145a): USB Video Class driver")
-Signed-off-by: Benoit Sevens <bsevens@google.com>
-Cc: stable@vger.kernel.org
-Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+>> fs/proc/vmcore.c:458:42: warning: unused variable 'vmcore_mmap_ops'
+     458 | static const struct vm_operations_struct vmcore_mmap_ops = {
+
+Fix this by only defining it when CONFIG_MMU is enabled.
+
+Link: https://lkml.kernel.org/r/20241101034803.9298-1-xiqi2@huawei.com
+Fixes: 9cb218131de1 ("vmcore: introduce remap_oldmem_pfn_range()")
+Signed-off-by: Qi Xi <xiqi2@huawei.com>
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/lkml/202410301936.GcE8yUos-lkp@intel.com/
+Cc: Baoquan He <bhe@redhat.com>
+Cc: Dave Young <dyoung@redhat.com>
+Cc: Michael Holzheu <holzheu@linux.vnet.ibm.com>
+Cc: Vivek Goyal <vgoyal@redhat.com>
+Cc: Wang ShaoBo <bobo.shaobowang@huawei.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/usb/uvc/uvc_driver.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/proc/vmcore.c |    9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
---- a/drivers/media/usb/uvc/uvc_driver.c
-+++ b/drivers/media/usb/uvc/uvc_driver.c
-@@ -602,7 +602,7 @@ static int uvc_parse_format(struct uvc_d
- 	/* Parse the frame descriptors. Only uncompressed, MJPEG and frame
- 	 * based formats have frame descriptors.
- 	 */
--	while (buflen > 2 && buffer[1] == USB_DT_CS_INTERFACE &&
-+	while (ftype && buflen > 2 && buffer[1] == USB_DT_CS_INTERFACE &&
- 	       buffer[2] == ftype) {
- 		frame = &format->frame[format->nframes];
- 		if (ftype != UVC_VS_FRAME_FRAME_BASED)
+--- a/fs/proc/vmcore.c
++++ b/fs/proc/vmcore.c
+@@ -447,10 +447,6 @@ static vm_fault_t mmap_vmcore_fault(stru
+ #endif
+ }
+ 
+-static const struct vm_operations_struct vmcore_mmap_ops = {
+-	.fault = mmap_vmcore_fault,
+-};
+-
+ /**
+  * vmcore_alloc_buf - allocate buffer in vmalloc memory
+  * @sizez: size of buffer
+@@ -478,6 +474,11 @@ static inline char *vmcore_alloc_buf(siz
+  * virtually contiguous user-space in ELF layout.
+  */
+ #ifdef CONFIG_MMU
++
++static const struct vm_operations_struct vmcore_mmap_ops = {
++	.fault = mmap_vmcore_fault,
++};
++
+ /*
+  * remap_oldmem_pfn_checked - do remap_oldmem_pfn_range replacing all pages
+  * reported as not being ram with the zero page.
 
 
