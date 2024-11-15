@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2317518873F;
-	Fri, 15 Nov 2024 06:47:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ED9E153800;
+	Fri, 15 Nov 2024 06:47:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731653259; cv=none; b=SK/LstqrILjvnyEiDOGiETtX4EyAJ/YcG74qtcIFmRGutxO1A7CDwsTw9QhHisK/C3FrHDOh5ZIcL8KzYXAz1Po0JnG/XmasCHtcg10Ywh27TA4EFwphEvHKkm7/5I6UPZ+hP0gfjAKGvpg2CELABe+E6voMQPrTmL+wh6Wu0RQ=
+	t=1731653262; cv=none; b=PX6wdT0gw+RXdEmtlG7Lg/Fp245BZu4F3Ce6IvjGSyfq6UyDRle/ZqULa1TS3obx8qiDmpWJaR+vORmMVM0osrg6RBtmADVCUM20qxWv35gpe9B2iP6rmWRT/VasSKqovpoOxqFLAqY7s8eG2/rFiQ//J6GXDjIMWiMl07yD300=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731653259; c=relaxed/simple;
-	bh=uCZ01Gt2GpCsZBve1uJcBDRDMAVGZdSlDlbunAJrOGY=;
+	s=arc-20240116; t=1731653262; c=relaxed/simple;
+	bh=dskR0iBkRtKpzOYGMaWAtQ+nOLVw738Z9467d1FIWeY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iZ/774us7plJTTxZJpLG1t1BKyRdwsZq/IcqaRnygVQOfQ3IevckhPXahC9Ts/OUTJvTox9wFHycSvfv4D53u8jT8e8aNO1mcRfcFQyTcO+7Aq9EzXqfnxSatlFzJ+RC3jIuKrBfcsXrGMXpQQEMl2yzKka3K7o4rwzQ4wiJwqA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EiULxjFZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pyhyJY2k6jV9DQm04mCr7U6l2e3DHXA03YypigNLLAd3u0qdqlzCyWWc5oZxlT33QNyEkI6DaYqL1sQCGRGpaVYPfYHONBgpfmuQ2pSSqnhAqoS7DbxgNpRTa1qenlytyPHsd7DGbFMxAv4VCtvP7GxuWOkVJ/T/z2cZglT8ACo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HdiJ+tlZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EiULxjFZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E218C4CECF;
-	Fri, 15 Nov 2024 06:47:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HdiJ+tlZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06BEAC4CECF;
+	Fri, 15 Nov 2024 06:47:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731653259;
-	bh=uCZ01Gt2GpCsZBve1uJcBDRDMAVGZdSlDlbunAJrOGY=;
+	s=korg; t=1731653262;
+	bh=dskR0iBkRtKpzOYGMaWAtQ+nOLVw738Z9467d1FIWeY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EiULxjFZqijoq3KEQ1XFIKzCvgBJ6CdWZ2dhSXcBoJDnmCLARPwRA/QL1kwycJMz/
-	 qlXVZL8ByN24m0w3m9aWRzfv8aLg0N5sv31ymm8ClQzHRVkz65m1z+Lxlf2dReAQHA
-	 uSL04fJNPPf9ctyCWWAPzF+rl3SAO+iCfWoJHs+I=
+	b=HdiJ+tlZKDb0LZd6yTA05745/8/W1BRuYJ5CtjY9kdxU69p2QXb4RVw9pOaDsKmQ6
+	 9wdMezOM/WngEUah8fLvlEVVgxnEueql8NFSddGEVbkBuap2OzXVVFg35Hk/gnLZoR
+	 JTC3qY+3V+2fowUNizynYNL0ZtY6aQJutFidIm28=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hannes Reinecke <hare@suse.de>,
-	Christoph Hellwig <hch@lst.de>,
-	Keith Busch <kbusch@kernel.org>,
+	Feng Liu <feliu@nvidia.com>,
+	Jiri Pirko <jiri@nvidia.com>,
+	Parav Pandit <parav@nvidia.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 26/63] nvme-multipath: defer partition scanning
-Date: Fri, 15 Nov 2024 07:37:49 +0100
-Message-ID: <20241115063726.863481790@linuxfoundation.org>
+Subject: [PATCH 6.11 35/63] virtio_pci: Fix admin vq cleanup by using correct info pointer
+Date: Fri, 15 Nov 2024 07:37:58 +0100
+Message-ID: <20241115063727.184350674@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241115063725.892410236@linuxfoundation.org>
 References: <20241115063725.892410236@linuxfoundation.org>
@@ -52,116 +53,164 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Keith Busch <kbusch@kernel.org>
+From: Feng Liu <feliu@nvidia.com>
 
-[ Upstream commit 1f021341eef41e77a633186e9be5223de2ce5d48 ]
+[ Upstream commit 97ee04feb682c906a1fa973ebe586fe91567d165 ]
 
-We need to suppress the partition scan from occuring within the
-controller's scan_work context. If a path error occurs here, the IO will
-wait until a path becomes available or all paths are torn down, but that
-action also occurs within scan_work, so it would deadlock. Defer the
-partion scan to a different context that does not block scan_work.
+vp_modern_avq_cleanup() and vp_del_vqs() clean up admin vq
+resources by virtio_pci_vq_info pointer. The info pointer of admin
+vq is stored in vp_dev->admin_vq.info instead of vp_dev->vqs[].
+Using the info pointer from vp_dev->vqs[] for admin vq causes a
+kernel NULL pointer dereference bug.
+In vp_modern_avq_cleanup() and vp_del_vqs(), get the info pointer
+from vp_dev->admin_vq.info for admin vq to clean up the resources.
+Also make info ptr as argument of vp_del_vq() to be symmetric with
+vp_setup_vq().
 
-Reported-by: Hannes Reinecke <hare@suse.de>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+vp_reset calls vp_modern_avq_cleanup, and causes the Call Trace:
+==================================================================
+BUG: kernel NULL pointer dereference, address:0000000000000000
+...
+CPU: 49 UID: 0 PID: 4439 Comm: modprobe Not tainted 6.11.0-rc5 #1
+RIP: 0010:vp_reset+0x57/0x90 [virtio_pci]
+Call Trace:
+ <TASK>
+...
+ ? vp_reset+0x57/0x90 [virtio_pci]
+ ? vp_reset+0x38/0x90 [virtio_pci]
+ virtio_reset_device+0x1d/0x30
+ remove_vq_common+0x1c/0x1a0 [virtio_net]
+ virtnet_remove+0xa1/0xc0 [virtio_net]
+ virtio_dev_remove+0x46/0xa0
+...
+ virtio_pci_driver_exit+0x14/0x810 [virtio_pci]
+==================================================================
+
+Fixes: 4c3b54af907e ("virtio_pci_modern: use completion instead of busy loop to wait on admin cmd result")
+Signed-off-by: Feng Liu <feliu@nvidia.com>
+Signed-off-by: Jiri Pirko <jiri@nvidia.com>
+Reviewed-by: Parav Pandit <parav@nvidia.com>
+Message-Id: <20241024135406.81388-1-feliu@nvidia.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/multipath.c | 33 +++++++++++++++++++++++++++++++++
- drivers/nvme/host/nvme.h      |  1 +
- 2 files changed, 34 insertions(+)
+ drivers/virtio/virtio_pci_common.c | 24 ++++++++++++++++++------
+ drivers/virtio/virtio_pci_common.h |  1 +
+ drivers/virtio/virtio_pci_modern.c | 12 +-----------
+ 3 files changed, 20 insertions(+), 17 deletions(-)
 
-diff --git a/drivers/nvme/host/multipath.c b/drivers/nvme/host/multipath.c
-index 6d97058cde7a1..a43982aaa40d7 100644
---- a/drivers/nvme/host/multipath.c
-+++ b/drivers/nvme/host/multipath.c
-@@ -577,6 +577,20 @@ static int nvme_add_ns_head_cdev(struct nvme_ns_head *head)
- 	return ret;
- }
+diff --git a/drivers/virtio/virtio_pci_common.c b/drivers/virtio/virtio_pci_common.c
+index c44d8ba00c02c..88074451dd615 100644
+--- a/drivers/virtio/virtio_pci_common.c
++++ b/drivers/virtio/virtio_pci_common.c
+@@ -24,6 +24,16 @@ MODULE_PARM_DESC(force_legacy,
+ 		 "Force legacy mode for transitional virtio 1 devices");
+ #endif
  
-+static void nvme_partition_scan_work(struct work_struct *work)
++bool vp_is_avq(struct virtio_device *vdev, unsigned int index)
 +{
-+	struct nvme_ns_head *head =
-+		container_of(work, struct nvme_ns_head, partition_scan_work);
++	struct virtio_pci_device *vp_dev = to_vp_device(vdev);
 +
-+	if (WARN_ON_ONCE(!test_and_clear_bit(GD_SUPPRESS_PART_SCAN,
-+					     &head->disk->state)))
-+		return;
++	if (!virtio_has_feature(vdev, VIRTIO_F_ADMIN_VQ))
++		return false;
 +
-+	mutex_lock(&head->disk->open_mutex);
-+	bdev_disk_changed(head->disk, false);
-+	mutex_unlock(&head->disk->open_mutex);
++	return index == vp_dev->admin_vq.vq_index;
 +}
 +
- static void nvme_requeue_work(struct work_struct *work)
+ /* wait for pending irq handlers */
+ void vp_synchronize_vectors(struct virtio_device *vdev)
  {
- 	struct nvme_ns_head *head =
-@@ -603,6 +617,7 @@ int nvme_mpath_alloc_disk(struct nvme_ctrl *ctrl, struct nvme_ns_head *head)
- 	bio_list_init(&head->requeue_list);
- 	spin_lock_init(&head->requeue_lock);
- 	INIT_WORK(&head->requeue_work, nvme_requeue_work);
-+	INIT_WORK(&head->partition_scan_work, nvme_partition_scan_work);
+@@ -234,10 +244,9 @@ static struct virtqueue *vp_setup_vq(struct virtio_device *vdev, unsigned int in
+ 	return vq;
+ }
+ 
+-static void vp_del_vq(struct virtqueue *vq)
++static void vp_del_vq(struct virtqueue *vq, struct virtio_pci_vq_info *info)
+ {
+ 	struct virtio_pci_device *vp_dev = to_vp_device(vq->vdev);
+-	struct virtio_pci_vq_info *info = vp_dev->vqs[vq->index];
+ 	unsigned long flags;
  
  	/*
- 	 * Add a multipath node if the subsystems supports multiple controllers.
-@@ -626,6 +641,16 @@ int nvme_mpath_alloc_disk(struct nvme_ctrl *ctrl, struct nvme_ns_head *head)
- 		return PTR_ERR(head->disk);
- 	head->disk->fops = &nvme_ns_head_ops;
- 	head->disk->private_data = head;
-+
-+	/*
-+	 * We need to suppress the partition scan from occuring within the
-+	 * controller's scan_work context. If a path error occurs here, the IO
-+	 * will wait until a path becomes available or all paths are torn down,
-+	 * but that action also occurs within scan_work, so it would deadlock.
-+	 * Defer the partion scan to a different context that does not block
-+	 * scan_work.
-+	 */
-+	set_bit(GD_SUPPRESS_PART_SCAN, &head->disk->state);
- 	sprintf(head->disk->disk_name, "nvme%dn%d",
- 			ctrl->subsys->instance, head->instance);
- 	return 0;
-@@ -652,6 +677,7 @@ static void nvme_mpath_set_live(struct nvme_ns *ns)
- 			return;
+@@ -258,13 +267,16 @@ static void vp_del_vq(struct virtqueue *vq)
+ void vp_del_vqs(struct virtio_device *vdev)
+ {
+ 	struct virtio_pci_device *vp_dev = to_vp_device(vdev);
++	struct virtio_pci_vq_info *info;
+ 	struct virtqueue *vq, *n;
+ 	int i;
+ 
+ 	list_for_each_entry_safe(vq, n, &vdev->vqs, list) {
+-		if (vp_dev->per_vq_vectors) {
+-			int v = vp_dev->vqs[vq->index]->msix_vector;
++		info = vp_is_avq(vdev, vq->index) ? vp_dev->admin_vq.info :
++						    vp_dev->vqs[vq->index];
+ 
++		if (vp_dev->per_vq_vectors) {
++			int v = info->msix_vector;
+ 			if (v != VIRTIO_MSI_NO_VECTOR &&
+ 			    !vp_is_slow_path_vector(v)) {
+ 				int irq = pci_irq_vector(vp_dev->pci_dev, v);
+@@ -273,7 +285,7 @@ void vp_del_vqs(struct virtio_device *vdev)
+ 				free_irq(irq, vq);
+ 			}
  		}
- 		nvme_add_ns_head_cdev(head);
-+		kblockd_schedule_work(&head->partition_scan_work);
+-		vp_del_vq(vq);
++		vp_del_vq(vq, info);
+ 	}
+ 	vp_dev->per_vq_vectors = false;
+ 
+@@ -354,7 +366,7 @@ vp_find_one_vq_msix(struct virtio_device *vdev, int queue_idx,
+ 			  vring_interrupt, 0,
+ 			  vp_dev->msix_names[msix_vec], vq);
+ 	if (err) {
+-		vp_del_vq(vq);
++		vp_del_vq(vq, *p_info);
+ 		return ERR_PTR(err);
  	}
  
- 	mutex_lock(&head->lock);
-@@ -972,6 +998,12 @@ void nvme_mpath_shutdown_disk(struct nvme_ns_head *head)
- 	kblockd_schedule_work(&head->requeue_work);
- 	if (test_bit(NVME_NSHEAD_DISK_LIVE, &head->flags)) {
- 		nvme_cdev_del(&head->cdev, &head->cdev_device);
-+		/*
-+		 * requeue I/O after NVME_NSHEAD_DISK_LIVE has been cleared
-+		 * to allow multipath to fail all I/O.
-+		 */
-+		synchronize_srcu(&head->srcu);
-+		kblockd_schedule_work(&head->requeue_work);
- 		del_gendisk(head->disk);
- 	}
- }
-@@ -983,6 +1015,7 @@ void nvme_mpath_remove_disk(struct nvme_ns_head *head)
- 	/* make sure all pending bios are cleaned up */
- 	kblockd_schedule_work(&head->requeue_work);
- 	flush_work(&head->requeue_work);
-+	flush_work(&head->partition_scan_work);
- 	put_disk(head->disk);
+diff --git a/drivers/virtio/virtio_pci_common.h b/drivers/virtio/virtio_pci_common.h
+index 1d9c49947f52d..8beecf23ec85e 100644
+--- a/drivers/virtio/virtio_pci_common.h
++++ b/drivers/virtio/virtio_pci_common.h
+@@ -178,6 +178,7 @@ struct virtio_device *virtio_pci_vf_get_pf_dev(struct pci_dev *pdev);
+ #define VIRTIO_ADMIN_CMD_BITMAP 0
+ #endif
+ 
++bool vp_is_avq(struct virtio_device *vdev, unsigned int index);
+ void vp_modern_avq_done(struct virtqueue *vq);
+ int vp_modern_admin_cmd_exec(struct virtio_device *vdev,
+ 			     struct virtio_admin_cmd *cmd);
+diff --git a/drivers/virtio/virtio_pci_modern.c b/drivers/virtio/virtio_pci_modern.c
+index 9193c30d640ae..4fbcbc7a9ae1c 100644
+--- a/drivers/virtio/virtio_pci_modern.c
++++ b/drivers/virtio/virtio_pci_modern.c
+@@ -43,16 +43,6 @@ static int vp_avq_index(struct virtio_device *vdev, u16 *index, u16 *num)
+ 	return 0;
  }
  
-diff --git a/drivers/nvme/host/nvme.h b/drivers/nvme/host/nvme.h
-index 313a4f978a2cf..093cb423f536b 100644
---- a/drivers/nvme/host/nvme.h
-+++ b/drivers/nvme/host/nvme.h
-@@ -494,6 +494,7 @@ struct nvme_ns_head {
- 	struct bio_list		requeue_list;
- 	spinlock_t		requeue_lock;
- 	struct work_struct	requeue_work;
-+	struct work_struct	partition_scan_work;
- 	struct mutex		lock;
- 	unsigned long		flags;
- #define NVME_NSHEAD_DISK_LIVE	0
+-static bool vp_is_avq(struct virtio_device *vdev, unsigned int index)
+-{
+-	struct virtio_pci_device *vp_dev = to_vp_device(vdev);
+-
+-	if (!virtio_has_feature(vdev, VIRTIO_F_ADMIN_VQ))
+-		return false;
+-
+-	return index == vp_dev->admin_vq.vq_index;
+-}
+-
+ void vp_modern_avq_done(struct virtqueue *vq)
+ {
+ 	struct virtio_pci_device *vp_dev = to_vp_device(vq->vdev);
+@@ -245,7 +235,7 @@ static void vp_modern_avq_cleanup(struct virtio_device *vdev)
+ 	if (!virtio_has_feature(vdev, VIRTIO_F_ADMIN_VQ))
+ 		return;
+ 
+-	vq = vp_dev->vqs[vp_dev->admin_vq.vq_index]->vq;
++	vq = vp_dev->admin_vq.info->vq;
+ 	if (!vq)
+ 		return;
+ 
 -- 
 2.43.0
 
