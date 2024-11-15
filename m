@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07B1B29A9;
-	Fri, 15 Nov 2024 06:46:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BEE829A9;
+	Fri, 15 Nov 2024 06:46:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731653201; cv=none; b=rXhtuTSmlWKmd6tNNeddtPP/pf2lWgKPAbOmkG8EyQRPfIOf4tPUVYuVAlv2xj+1Oup7yDtHWDf27ggEN0sGjfyGAyGuRYUNIDHzc3LHkqv2qYPizsc8VNSiymtsvLWCEE0Mij1XnlK62XBjzMlw7dUMwDooxQ1Cw3BjSroVzUY=
+	t=1731653204; cv=none; b=La23fskU0NgI6WJSYXuhZMm810vfoQ4H2hZo7J8dOGA12JcgKnGQhBhEi37DUiw8VGDVYr9NKnwIBOCmn/APXlM1dREH5WCjvCR7UTsPeSlazdpUWQXYZeohdzDAdTWsMB7hhDmCpme790VAb6d0qixVVIeFT7HYSh+nfFlzTNE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731653201; c=relaxed/simple;
-	bh=OhKcOB3vlntANpdLHTLejmik6n3jqiwNuIOIve3mpHE=;
+	s=arc-20240116; t=1731653204; c=relaxed/simple;
+	bh=Uq8hhrHYfJcm5YC0GTEEJog/vs8fW6o7jVU8Dc0NmQI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QCdgmBugZRNnFNM0mf5cwqJSqyU7VKKeB+IQFo2Wcl7dalQuGj278a7cL/UE5JN6PIH+X+qcTHEozcEYYTwZF0FlAHjAodA8MIyevJ/bavRl8rQ1VQ25f2OKccfRoPP3otLQfAQK8n7LCs07Pth7vttjCuX5uOhGePasJG7jHJA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sUGzc5+n; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=crK3xa7ZrIvlqRvMH7bBFlEAr8+3rVyFlHlnY9HLDMsFTZUeNN/Kft2q3mVLB7FoKmjmhlJyNfyDRReapfPFAXdWYdNT2zWzIYQfxGyHwCJmsiIDx6+h4/SGAEzK7te3R4qBQiQiKVIYshDqZNgKQzcdjrnwBTdEnzR7tIpVNcQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J6mFbkfW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sUGzc5+n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11B91C4CECF;
-	Fri, 15 Nov 2024 06:46:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J6mFbkfW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EBB0C4CECF;
+	Fri, 15 Nov 2024 06:46:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731653200;
-	bh=OhKcOB3vlntANpdLHTLejmik6n3jqiwNuIOIve3mpHE=;
+	s=korg; t=1731653203;
+	bh=Uq8hhrHYfJcm5YC0GTEEJog/vs8fW6o7jVU8Dc0NmQI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sUGzc5+nS9A6zNIotugFWWNcmoLyAuibN/JPAXhsK4tJ5cctTMRIXqS/2QPEgQQsw
-	 m34w6twHNMDKTXAD08pS7iBsTSCQhVkzJao6FRkj/KH2ZpBzkGKUMIgrrjCDIHU/Ql
-	 5uYrAibQIS+0HyBZfPyjXH+IpITKETVhQI8uw/Ho=
+	b=J6mFbkfWGD/q7+XvKZeP5fyXd0Dmsb2y+vR/UrbxOHXODu3lmryBhbUKEVG/5favJ
+	 zSi05/pq/WpU96v5la4uksRNeiHq2BCre4ezGmOKvRoRuMv7C17mXoPwytO0cnDIjF
+	 CNysFtuL0ACqcy9ngneIqdO2XH6OvyfwxTIaRW+A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rik van Riel <riel@surriel.com>,
-	Shakeel Butt <shakeel.butt@linux.dev>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 16/63] bpf: use kvzmalloc to allocate BPF verifier environment
-Date: Fri, 15 Nov 2024 07:37:39 +0100
-Message-ID: <20241115063726.480982981@linuxfoundation.org>
+Subject: [PATCH 6.11 17/63] crypto: api - Fix liveliness check in crypto_alg_tested
+Date: Fri, 15 Nov 2024 07:37:40 +0100
+Message-ID: <20241115063726.543014915@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241115063725.892410236@linuxfoundation.org>
 References: <20241115063725.892410236@linuxfoundation.org>
@@ -52,50 +50,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rik van Riel <riel@surriel.com>
+From: Herbert Xu <herbert@gondor.apana.org.au>
 
-[ Upstream commit 434247637c66e1be2bc71a9987d4c3f0d8672387 ]
+[ Upstream commit b81e286ba154a4e0f01a94d99179a97f4ba3e396 ]
 
-The kzmalloc call in bpf_check can fail when memory is very fragmented,
-which in turn can lead to an OOM kill.
+As algorithm testing is carried out without holding the main crypto
+lock, it is always possible for the algorithm to go away during the
+test.
 
-Use kvzmalloc to fall back to vmalloc when memory is too fragmented to
-allocate an order 3 sized bpf verifier environment.
+So before crypto_alg_tested updates the status of the tested alg,
+it checks whether it's still on the list of all algorithms.  This
+is inaccurate because it may be off the main list but still on the
+list of algorithms to be removed.
 
-Admittedly this is not a very common case, and only happens on systems
-where memory has already been squeezed close to the limit, but this does
-not seem like much of a hot path, and it's a simple enough fix.
+Updating the algorithm status is safe per se as the larval still
+holds a reference to it.  However, killing spawns of other algorithms
+that are of lower priority is clearly a deficiency as it adds
+unnecessary churn.
 
-Signed-off-by: Rik van Riel <riel@surriel.com>
-Reviewed-by: Shakeel Butt <shakeel.butt@linux.dev>
-Link: https://lore.kernel.org/r/20241008170735.16766766@imladris.surriel.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fix the test by checking whether the algorithm is dead.
+
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ crypto/algapi.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 626c5284ca5a8..a5a9b4e418a68 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -21718,7 +21718,7 @@ int bpf_check(struct bpf_prog **prog, union bpf_attr *attr, bpfptr_t uattr, __u3
- 	/* 'struct bpf_verifier_env' can be global, but since it's not small,
- 	 * allocate/free it every time bpf_check() is called
- 	 */
--	env = kzalloc(sizeof(struct bpf_verifier_env), GFP_KERNEL);
-+	env = kvzalloc(sizeof(struct bpf_verifier_env), GFP_KERNEL);
- 	if (!env)
- 		return -ENOMEM;
+diff --git a/crypto/algapi.c b/crypto/algapi.c
+index 122cd910c4e1c..192ea14d64ce6 100644
+--- a/crypto/algapi.c
++++ b/crypto/algapi.c
+@@ -396,7 +396,7 @@ void crypto_alg_tested(const char *name, int err)
+ 	q->cra_flags |= CRYPTO_ALG_DEAD;
+ 	alg = test->adult;
  
-@@ -21944,6 +21944,6 @@ int bpf_check(struct bpf_prog **prog, union bpf_attr *attr, bpfptr_t uattr, __u3
- 		mutex_unlock(&bpf_verifier_lock);
- 	vfree(env->insn_aux_data);
- err_free_env:
--	kfree(env);
-+	kvfree(env);
- 	return ret;
- }
+-	if (list_empty(&alg->cra_list))
++	if (crypto_is_dead(alg))
+ 		goto complete;
+ 
+ 	if (err == -ECANCELED)
 -- 
 2.43.0
 
