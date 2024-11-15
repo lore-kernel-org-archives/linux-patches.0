@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9013C1885B3;
-	Fri, 15 Nov 2024 06:56:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1F3017DFFD;
+	Fri, 15 Nov 2024 06:56:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731653802; cv=none; b=pYIqGNJQZ0w2Km9bVGyW6odRcD/ZK+FREQ+Fuabpk50oCAjf8J3arpkWnNG6YrO5hgVjr1nYzc7/hHVmxyrykVpNF1/GA6+XJU2v3jHpegwQDVrtc8XzxXClXFocyThl4EmutFCfGmBepIJy5kQHFkX5ChCE92n/DfzS6n0RSSQ=
+	t=1731653806; cv=none; b=Cmtqa3S3fYT+y4IQ/WTNsJmzWnqN0BnSEhtuYshKNcSZ74TppE2Oq/A5f/uX2a5FHXAeZg5ZlKZfyV+1gx6YStC1Hnfm1IkqjnfnAqAnnEQljDQ4hL7jyfFbmZN9izpmdoAvvbQIKvnUpzAY5g6qQ2txm1qjlCKNC3qJ9eS2P6E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731653802; c=relaxed/simple;
-	bh=wviWTF6oL+yq8ZZckWiA7IV7fs8ujjM1FXXHvcSbhvE=;
+	s=arc-20240116; t=1731653806; c=relaxed/simple;
+	bh=7qtLGnPaMS/oucIfoeB8PxE9UTSDOCjrLhrHZZq4HyM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eaLK0ZIl0hSdWHIse6WCHccfKRjRR8GpNwEAGPWmrO/3+32gtWuJWlGZkb+/hxWmO/hys53DtZPtLEhOyEUySZlnQygXVKoUvdk4N7YBKPlgcEdZPiFRNU3nNbBj2qA6cq6to6bCDO+lghO1Wr4MXfEqyZy9nhW+hxt61yjJwk8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dCopJMmX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LewWqmzVkxd/OuUEqxoEv+yZpsaL03G1/ZHFhfgTD0YRde2T7VMOvaSNJOnOvaZO3Z1P1BRyDeK0ePOPjxxKOoaFHZlpaHa01rD4EW9jYU940ojAoD98/nW69OidpdjVhVCv0KlvqtNISv2H2+up6gyVu2EjwXeTyETEKGpjuP4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EjeVevep; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dCopJMmX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C026EC4CECF;
-	Fri, 15 Nov 2024 06:56:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EjeVevep"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59E79C4CECF;
+	Fri, 15 Nov 2024 06:56:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731653802;
-	bh=wviWTF6oL+yq8ZZckWiA7IV7fs8ujjM1FXXHvcSbhvE=;
+	s=korg; t=1731653805;
+	bh=7qtLGnPaMS/oucIfoeB8PxE9UTSDOCjrLhrHZZq4HyM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dCopJMmXvxjGlDGuJOByeEgwYekAjjdVRhTBTYwuC9kxZDQVVN+p2aUwgOmOwCngx
-	 01WA4jRbnjqJzI0lsMWPiuldn/oWqq187+mGWefJbyrrnvzJSTESZWxE/DyXS6YP4S
-	 ejeDinGGOr1kTIBv688bFJ+QScUwxlbQk/40As68=
+	b=EjeVevepotEYaMhvD1Y2JWzdve/vyI7p11zwPWJ1JsAd/eLNOff2xOFj+H7uDLLJr
+	 NhzSxIRAFT1a24CZ/XQrMrRlKPV6FpNPqRna9xk7M0l+OX1S/UXXbKa+ujmbb1mplQ
+	 Cq2UFqbBFzmZwkVLnSAovN8hlys+U76ijBMbZFDE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amir Goldstein <amir73il@gmail.com>,
 	Jan Kara <jack@suse.cz>,
+	Amir Goldstein <amir73il@gmail.com>,
 	Jens Axboe <axboe@kernel.dk>,
 	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 41/82] io_uring: rename kiocb_end_write() local helper
-Date: Fri, 15 Nov 2024 07:38:18 +0100
-Message-ID: <20241115063727.039990798@linuxfoundation.org>
+Subject: [PATCH 5.10 42/82] fs: create kiocb_{start,end}_write() helpers
+Date: Fri, 15 Nov 2024 07:38:19 +0100
+Message-ID: <20241115063727.075441626@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241115063725.561151311@linuxfoundation.org>
 References: <20241115063725.561151311@linuxfoundation.org>
@@ -55,61 +55,71 @@ Content-Transfer-Encoding: 8bit
 
 From: Amir Goldstein <amir73il@gmail.com>
 
-Commit a370167fe526123637965f60859a9f1f3e1a58b7 upstream.
+Commit ed0360bbab72b829437b67ebb2f9cfac19f59dfe upstream.
 
-This helper does not take a kiocb as input and we want to create a
-common helper by that name that takes a kiocb as input.
+aio, io_uring, cachefiles and overlayfs, all open code an ugly variant
+of file_{start,end}_write() to silence lockdep warnings.
 
+Create helpers for this lockdep dance so we can use the helpers in all
+the callers.
+
+Suggested-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Amir Goldstein <amir73il@gmail.com>
 Reviewed-by: Jan Kara <jack@suse.cz>
 Reviewed-by: Jens Axboe <axboe@kernel.dk>
-Message-Id: <20230817141337.1025891-2-amir73il@gmail.com>
+Message-Id: <20230817141337.1025891-4-amir73il@gmail.com>
 Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/io_uring.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ include/linux/fs.h | 35 +++++++++++++++++++++++++++++++++++
+ 1 file changed, 35 insertions(+)
 
-diff --git a/io_uring/io_uring.c b/io_uring/io_uring.c
-index da07fba75827c..ec55f2788ac64 100644
---- a/io_uring/io_uring.c
-+++ b/io_uring/io_uring.c
-@@ -2667,7 +2667,7 @@ static int io_iopoll_check(struct io_ring_ctx *ctx, long min)
- 	return ret;
+diff --git a/include/linux/fs.h b/include/linux/fs.h
+index a7d839b196069..4e475ded5cf58 100644
+--- a/include/linux/fs.h
++++ b/include/linux/fs.h
+@@ -1797,6 +1797,41 @@ static inline bool sb_start_intwrite_trylock(struct super_block *sb)
+ 	return __sb_start_write_trylock(sb, SB_FREEZE_FS);
  }
  
--static void kiocb_end_write(struct io_kiocb *req)
-+static void io_req_end_write(struct io_kiocb *req)
- {
- 	/*
- 	 * Tell lockdep we inherited freeze protection from submission
-@@ -2737,7 +2737,7 @@ static void io_req_io_end(struct io_kiocb *req)
- 	struct io_rw *rw = &req->rw;
++/**
++ * kiocb_start_write - get write access to a superblock for async file io
++ * @iocb: the io context we want to submit the write with
++ *
++ * This is a variant of sb_start_write() for async io submission.
++ * Should be matched with a call to kiocb_end_write().
++ */
++static inline void kiocb_start_write(struct kiocb *iocb)
++{
++	struct inode *inode = file_inode(iocb->ki_filp);
++
++	sb_start_write(inode->i_sb);
++	/*
++	 * Fool lockdep by telling it the lock got released so that it
++	 * doesn't complain about the held lock when we return to userspace.
++	 */
++	__sb_writers_release(inode->i_sb, SB_FREEZE_WRITE);
++}
++
++/**
++ * kiocb_end_write - drop write access to a superblock after async file io
++ * @iocb: the io context we sumbitted the write with
++ *
++ * Should be matched with a call to kiocb_start_write().
++ */
++static inline void kiocb_end_write(struct kiocb *iocb)
++{
++	struct inode *inode = file_inode(iocb->ki_filp);
++
++	/*
++	 * Tell lockdep we inherited freeze protection from submission thread.
++	 */
++	__sb_writers_acquired(inode->i_sb, SB_FREEZE_WRITE);
++	sb_end_write(inode->i_sb);
++}
  
- 	if (rw->kiocb.ki_flags & IOCB_WRITE) {
--		kiocb_end_write(req);
-+		io_req_end_write(req);
- 		fsnotify_modify(req->file);
- 	} else {
- 		fsnotify_access(req->file);
-@@ -2817,7 +2817,7 @@ static void io_complete_rw_iopoll(struct kiocb *kiocb, long res, long res2)
- 	struct io_kiocb *req = container_of(kiocb, struct io_kiocb, rw.kiocb);
+ extern bool inode_owner_or_capable(const struct inode *inode);
  
- 	if (kiocb->ki_flags & IOCB_WRITE)
--		kiocb_end_write(req);
-+		io_req_end_write(req);
- 	if (unlikely(res != req->result)) {
- 		if (res == -EAGAIN && io_rw_should_reissue(req)) {
- 			req->flags |= REQ_F_REISSUE;
-@@ -3817,7 +3817,7 @@ static int io_write(struct io_kiocb *req, unsigned int issue_flags)
- 		ret = io_setup_async_rw(req, iovec, inline_vecs, iter, false);
- 		if (!ret) {
- 			if (kiocb->ki_flags & IOCB_WRITE)
--				kiocb_end_write(req);
-+				io_req_end_write(req);
- 			return -EAGAIN;
- 		}
- 		return ret;
 -- 
 2.43.0
 
