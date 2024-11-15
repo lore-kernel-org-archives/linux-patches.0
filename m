@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33A372BB1B;
-	Fri, 15 Nov 2024 06:57:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A3B41885B3;
+	Fri, 15 Nov 2024 06:57:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731653827; cv=none; b=Oc6/nJGEpTSXXY+p2m1oOdZzuL+I9JrBCWuEXtADEfDjTbtltUogMcUBQ51Jwuz+KX/P9ERb1qJcnRGVYbVriGPVi9Y5uVF2f06rAyZQBqrG6mQWdhOZMmGs7lbYtb+2kTpwdxPIlaA6/hsEfyM2c27jyEIq9UPKpa2ET+gWvbA=
+	t=1731653830; cv=none; b=lgor9aKKLDZvCDvsb5+0Ofen4WH8LVQNDNGc77IspKHS6Vvbrh8ul1B4PSU0sfc8vRfYNwGzVqGQ5ISkpE/AVADX0WjyXI/f2K8oxsLZzM+1IKmxxdvRw0Ov3Zls8JGH4P3pXU151Xk/e2PtnkEznNPBHqJh5rFY+FfUy3gWDKw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731653827; c=relaxed/simple;
-	bh=Fh8iS/bzL/yb5gH9oWygnPxH7WcOmrPBVI3uLAG4750=;
+	s=arc-20240116; t=1731653830; c=relaxed/simple;
+	bh=3AEHGZeRrlR2ZFtbkmSqc8zwz+y0Znz5EkdJKsg54P0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=idLDI5ryf9t8XITOJ9px7TyPu4y4S/VfRPZ8CHnzGqFh9QVA/YisC7B/Cy/mE6mZM15Ww61VL9Tjbgbhmkc79dEShojgHu6FQXbyVgpIbPINfAM1aIBm0wvBsmvi0joy84qCyCMGiEmujk8vUv5ibu9n03SJKhMZDCf0AWblJp0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gvGHnqbT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=lodafqZm0OLS+e570Fkg5y50nt/Vu2loHfcLtvXsc3B47ayp1zCVUsx6C5vcCjatZyOsbO2B5gUkZIIqPAZ/L46KNIqZXzYbFrZPHEglLQlS9HE2ezGU+x+tHyMJu9FlZsFn4YeTbZsyG96a6isP3SM/edcV4Nee9yTUsc9Udts=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dsq4lpr0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gvGHnqbT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66E47C4CECF;
-	Fri, 15 Nov 2024 06:57:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dsq4lpr0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5B2FC4CECF;
+	Fri, 15 Nov 2024 06:57:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731653827;
-	bh=Fh8iS/bzL/yb5gH9oWygnPxH7WcOmrPBVI3uLAG4750=;
+	s=korg; t=1731653830;
+	bh=3AEHGZeRrlR2ZFtbkmSqc8zwz+y0Znz5EkdJKsg54P0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gvGHnqbTl8WyqQDf0AzM8t8lBDkoi5+vMoTvKAxvRQ0YR6P1k65iMMH0QsuhVcCvc
-	 VMnsoKnEaL9lddCr+zGUVuYyeSgOgSr9NVULSF2UIpFxzJX4w/D69f6DXkIrZzZ53y
-	 eUECWo6rfhDabnr7AVAVaj2l5Ue9rwn4S67T7+ao=
+	b=dsq4lpr0S20zSz7+vHNT4ghFHp1N002PGKyYuXBn+tdOhpGUGxR/VGOAYtgUmKbPI
+	 Yrd6/N1bmFVdDqam+A+n60I68IjAzikgXq7KJnC+zQRaNeVEnCDJg/P+O/WCHnreSC
+	 Yyo0hVdulUuEekUG6mvcOXBDccyxUs+JKjry0OG8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Pavel Begunkov <asml.silence@gmail.com>,
-	Ming Lei <ming.lei@redhat.com>,
-	Jens Axboe <axboe@kernel.dk>,
-	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
-Subject: [PATCH 5.10 47/82] splice: dont generate zero-len segement bvecs
-Date: Fri, 15 Nov 2024 07:38:24 +0100
-Message-ID: <20241115063727.255293101@linuxfoundation.org>
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Mark Brown <broonie@kernel.org>,
+	Hardik Gohil <hgohil@mvista.com>
+Subject: [PATCH 5.10 48/82] spi: Fix deadlock when adding SPI controllers on SPI buses
+Date: Fri, 15 Nov 2024 07:38:25 +0100
+Message-ID: <20241115063727.291008727@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241115063725.561151311@linuxfoundation.org>
 References: <20241115063725.561151311@linuxfoundation.org>
@@ -47,56 +45,108 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pavel Begunkov <asml.silence@gmail.com>
+From: Mark Brown <broonie@kernel.org>
 
-commit 0f1d344feb534555a0dcd0beafb7211a37c5355e upstream.
+commit 6098475d4cb48d821bdf453c61118c56e26294f0 upstream.
 
-iter_file_splice_write() may spawn bvec segments with zero-length. In
-preparation for prohibiting them, filter out by hand at splice level.
+Currently we have a global spi_add_lock which we take when adding new
+devices so that we can check that we're not trying to reuse a chip
+select that's already controlled.  This means that if the SPI device is
+itself a SPI controller and triggers the instantiation of further SPI
+devices we trigger a deadlock as we try to register and instantiate
+those devices while in the process of doing so for the parent controller
+and hence already holding the global spi_add_lock.  Since we only care
+about concurrency within a single SPI bus move the lock to be per
+controller, avoiding the deadlock.
 
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
-Reviewed-by: Ming Lei <ming.lei@redhat.com>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+This can be easily triggered in the case of spi-mux.
+
+Reported-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Hardik Gohil <hgohil@mvista.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/splice.c |    9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/spi/spi.c       |   15 +++++----------
+ include/linux/spi/spi.h |    3 +++
+ 2 files changed, 8 insertions(+), 10 deletions(-)
 
---- a/fs/splice.c
-+++ b/fs/splice.c
-@@ -662,12 +662,14 @@ iter_file_splice_write(struct pipe_inode
+--- a/drivers/spi/spi.c
++++ b/drivers/spi/spi.c
+@@ -472,12 +472,6 @@ static LIST_HEAD(spi_controller_list);
+  */
+ static DEFINE_MUTEX(board_lock);
  
- 		/* build the vector */
- 		left = sd.total_len;
--		for (n = 0; !pipe_empty(head, tail) && left && n < nbufs; tail++, n++) {
-+		for (n = 0; !pipe_empty(head, tail) && left && n < nbufs; tail++) {
- 			struct pipe_buffer *buf = &pipe->bufs[tail & mask];
- 			size_t this_len = buf->len;
+-/*
+- * Prevents addition of devices with same chip select and
+- * addition of devices below an unregistering controller.
+- */
+-static DEFINE_MUTEX(spi_add_lock);
+-
+ /**
+  * spi_alloc_device - Allocate a new SPI device
+  * @ctlr: Controller to which device is connected
+@@ -581,7 +575,7 @@ int spi_add_device(struct spi_device *sp
+ 	 * chipselect **BEFORE** we call setup(), else we'll trash
+ 	 * its configuration.  Lock against concurrent add() calls.
+ 	 */
+-	mutex_lock(&spi_add_lock);
++	mutex_lock(&ctlr->add_lock);
  
--			if (this_len > left)
--				this_len = left;
-+			/* zero-length bvecs are not supported, skip them */
-+			if (!this_len)
-+				continue;
-+			this_len = min(this_len, left);
+ 	status = bus_for_each_dev(&spi_bus_type, NULL, spi, spi_dev_check);
+ 	if (status) {
+@@ -625,7 +619,7 @@ int spi_add_device(struct spi_device *sp
+ 	}
  
- 			ret = pipe_buf_confirm(pipe, buf);
- 			if (unlikely(ret)) {
-@@ -680,6 +682,7 @@ iter_file_splice_write(struct pipe_inode
- 			array[n].bv_len = this_len;
- 			array[n].bv_offset = buf->offset;
- 			left -= this_len;
-+			n++;
- 		}
+ done:
+-	mutex_unlock(&spi_add_lock);
++	mutex_unlock(&ctlr->add_lock);
+ 	return status;
+ }
+ EXPORT_SYMBOL_GPL(spi_add_device);
+@@ -2734,6 +2728,7 @@ int spi_register_controller(struct spi_c
+ 	spin_lock_init(&ctlr->bus_lock_spinlock);
+ 	mutex_init(&ctlr->bus_lock_mutex);
+ 	mutex_init(&ctlr->io_mutex);
++	mutex_init(&ctlr->add_lock);
+ 	ctlr->bus_lock_flag = 0;
+ 	init_completion(&ctlr->xfer_completion);
+ 	if (!ctlr->max_dma_len)
+@@ -2879,7 +2874,7 @@ void spi_unregister_controller(struct sp
  
- 		iov_iter_bvec(&from, WRITE, array, n, sd.total_len - left);
+ 	/* Prevent addition of new devices, unregister existing ones */
+ 	if (IS_ENABLED(CONFIG_SPI_DYNAMIC))
+-		mutex_lock(&spi_add_lock);
++		mutex_lock(&ctlr->add_lock);
+ 
+ 	device_for_each_child(&ctlr->dev, NULL, __unregister);
+ 
+@@ -2910,7 +2905,7 @@ void spi_unregister_controller(struct sp
+ 	mutex_unlock(&board_lock);
+ 
+ 	if (IS_ENABLED(CONFIG_SPI_DYNAMIC))
+-		mutex_unlock(&spi_add_lock);
++		mutex_unlock(&ctlr->add_lock);
+ }
+ EXPORT_SYMBOL_GPL(spi_unregister_controller);
+ 
+--- a/include/linux/spi/spi.h
++++ b/include/linux/spi/spi.h
+@@ -528,6 +528,9 @@ struct spi_controller {
+ 	/* I/O mutex */
+ 	struct mutex		io_mutex;
+ 
++	/* Used to avoid adding the same CS twice */
++	struct mutex		add_lock;
++
+ 	/* lock and mutex for SPI bus locking */
+ 	spinlock_t		bus_lock_spinlock;
+ 	struct mutex		bus_lock_mutex;
 
 
