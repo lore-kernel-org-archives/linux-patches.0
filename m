@@ -1,102 +1,67 @@
-Received: from mail-io1-f50.google.com (mail-io1-f50.google.com [209.85.166.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail.ozlabs.org (gandalf.ozlabs.org [150.107.74.76])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8334EEAF6
-	for <patches@lists.linux.dev>; Sat, 16 Nov 2024 21:19:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DC851AA1ED;
+	Sun, 17 Nov 2024 12:25:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=150.107.74.76
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731791944; cv=none; b=i0ZVCu6KLgHck74ON1vRBc0/ael3Y1IUvokJzSXDpm+8tDrDsWf/ZJN26Tei7168dTZcUZjiBJkzRbA91ajlh7/Hfi5dJ87w/a872GdYfUjMzxtVxN47lsNrQZgb/ChhnCTnBOJOqjfpevPsDJcDwXieOFyK3aDwKdEHY3ULOsM=
+	t=1731846337; cv=none; b=h7ZVYeBc0GEkdnoroRt39cE68u9QxWOmeZiG2jGNpbVHODopL7z2+RIrcpHlnNnSQe1qh9Ybzc+sk3x7JTRx9FoC33YvMY1fqVVfz91lwQT0e4myD8oDvzAgWfbDyH68omRlvme5ZJlmTuCI312+qE3gox4Ewo0A/mJLIBRKVVQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731791944; c=relaxed/simple;
-	bh=ATCDMfq1ap+xVM6eDu6GAm8UuTQFcxafUK21WEUFtU4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=I8cnn2dz0kbrMObvwbZwBsNFHNXjGoNIRVq+06FXCzwxYF8T/F5bNLdhoM7wuFDuEt0DLf6DjCKTtqWaFUKrwLrMynJfeBHbfTlDRxNmi52fl0cEsTGNTNAL7MakTCJmKTP1pqKKJM4/JB+5oCZrsw7idzrxohHCxduNWaaVuxc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org; spf=pass smtp.mailfrom=linuxfoundation.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ePYO7gpO; arc=none smtp.client-ip=209.85.166.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxfoundation.org
+	s=arc-20240116; t=1731846337; c=relaxed/simple;
+	bh=METi0w/NkMiw5z6lkH1cPvSH9klozqF92hNWDoxsVuU=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=cg3oyj13LvUUgR3g1vilpuDTG3L6tstKthOrPNRZwzBOCdiJww3lhGIOys/G0WBBiRFgQR1EICXrwOnhW1pt2g5LQaAJdYcxxQfz4h7M55zW2BmDpzMRksCSAc0vodR6tDzn5gz/VKxanuaviNdSs5E0O2+k5TQc+Pphc5Q309Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ellerman.id.au; spf=pass smtp.mailfrom=ellerman.id.au; dkim=pass (2048-bit key) header.d=ellerman.id.au header.i=@ellerman.id.au header.b=jddM0Hic; arc=none smtp.client-ip=150.107.74.76
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ellerman.id.au
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ellerman.id.au
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ePYO7gpO"
-Received: by mail-io1-f50.google.com with SMTP id ca18e2360f4ac-83e5dc9af36so95737239f.0
-        for <patches@lists.linux.dev>; Sat, 16 Nov 2024 13:19:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google; t=1731791942; x=1732396742; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=vH/N1Ah7ld00p34JtPqzQ6F88eNrq8g0hTlulRI55uM=;
-        b=ePYO7gpOeCztAOabcL51aL1V5Do9mgEKWPT/BNBOxsgNRSOGh9r5KGOrJXuFh7QJSA
-         PEHUcu4yQhRlAW6dIQiW4xUchiPo7oex3X6p3OiEvwQRX3gVWoT3X75Ut4NUj/qkC6np
-         bibCe1YVoM9iN2dyuq/bc7OGQVLTdzreq9qpM=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731791942; x=1732396742;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=vH/N1Ah7ld00p34JtPqzQ6F88eNrq8g0hTlulRI55uM=;
-        b=vVRPbZMe5L6qIkIsPwOOcOZDa3cZ9ucibPEuIwiGhbXn2tdgFgnIsDa/qIXThv5hYd
-         T1dWGKZVvm12HECoQju2feik2GhTreF3qR5ghAuTIosS/a0F5Kc12UOJml+vvo4LKlTq
-         08biqMnSb+Uyn614kLONjJSrqOPxYquPFjlE7NWV7/CDsaI4aILidngGPLguFWgMgrvP
-         fr3186JfiKI4YFdyBVJFXy5jfugkZI6RSnmJ28DK3IhSudUrlreiW4GOqB6xmNqFLHSz
-         vO87vBFisSYdiOJ/NdYjybgO4NrYGyAsO86HKxvkrcAWyH58iKhdqnlAJKNS9TTQmQqu
-         +kyw==
-X-Gm-Message-State: AOJu0Yx63n5EuT0IPsddzLNBJcLpVv16TO+zdH4RZrAH2XgR1ggkxwTY
-	axHYdWotazryeLywCiPIIJOWnghGIjAWvBpjRNEd1sIENncToYbXA2fjsQqTe6A=
-X-Google-Smtp-Source: AGHT+IFq5s9Maiz8mB72S8XNfESsKb86sKgq78MZpNxGDzORIvnWzE40RzcCjyYFXkV9FGACyi9G6w==
-X-Received: by 2002:a5e:cb4a:0:b0:82c:ec0f:a081 with SMTP id ca18e2360f4ac-83e5cd850d6mr1054234339f.4.1731791941764;
-        Sat, 16 Nov 2024 13:19:01 -0800 (PST)
-Received: from [192.168.1.128] ([38.175.170.29])
-        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-4e06d707987sm1206884173.34.2024.11.16.13.19.00
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 16 Nov 2024 13:19:01 -0800 (PST)
-Message-ID: <ce63b792-7430-411d-923c-39aa962ff35e@linuxfoundation.org>
-Date: Sat, 16 Nov 2024 14:18:59 -0700
+	dkim=pass (2048-bit key) header.d=ellerman.id.au header.i=@ellerman.id.au header.b="jddM0Hic"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ellerman.id.au;
+	s=201909; t=1731846332;
+	bh=ivoElLl6v01dXn3j88D2JzVuA8zDCUIbPPKgg72fH4U=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+	b=jddM0HicZ6glVWTVoexDcRGDtEPZfSdXC7PSUXrPxmgesfCZ2mwmnvfWGKtSBOGVE
+	 iXieeSBAr/q0k6Bz1u6q7Sl+d815QqpV9yXMhzWX4UlRIVOF51A3kQHz44ZAfFWhC6
+	 866nTk/LG/jkUUfdGNTEZbPe3tgAYV4aLpqY5YvZA2vyDy3xhK1AOkL1xpYhe998dx
+	 hi5LceFRxk8yPcizRFgj9lgIMC9zNr8Jlc47ExTwxayHgrCHKVLsvYPWymHw6djMqk
+	 /Zqc9VP5nVkoBikYSzX6kfE4pqaTZczuq+VWIoMn/vEEI+B3PP9V1nt0SeTZZ7kfoX
+	 oZjVswpgJPv/A==
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(Client did not present a certificate)
+	by mail.ozlabs.org (Postfix) with ESMTPSA id 4Xrqj76vXHz4xfV;
+	Sun, 17 Nov 2024 23:25:31 +1100 (AEDT)
+From: Michael Ellerman <patch-notifications@ellerman.id.au>
+To: Michael Ellerman <mpe@ellerman.id.au>, Nathan Chancellor <nathan@kernel.org>
+Cc: linuxppc-dev@lists.ozlabs.org, llvm@lists.linux.dev, patches@lists.linux.dev, stable@vger.kernel.org
+In-Reply-To: <20241030-powerpc-vdso-drop-stackp-flags-clang-v1-1-d95e7376d29c@kernel.org>
+References: <20241030-powerpc-vdso-drop-stackp-flags-clang-v1-1-d95e7376d29c@kernel.org>
+Subject: Re: [PATCH] powerpc/vdso: Drop -mstack-protector-guard flags in 32-bit files with clang
+Message-Id: <173184539742.890800.7357374459961481947.b4-ty@ellerman.id.au>
+Date: Sun, 17 Nov 2024 23:09:57 +1100
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4.19 00/52] 4.19.324-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
- Shuah Khan <skhan@linuxfoundation.org>
-References: <20241115063722.845867306@linuxfoundation.org>
-Content-Language: en-US
-From: Shuah Khan <skhan@linuxfoundation.org>
-In-Reply-To: <20241115063722.845867306@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
 
-On 11/14/24 23:37, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 4.19.324 release.
-> There are 52 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+On Wed, 30 Oct 2024 11:41:37 -0700, Nathan Chancellor wrote:
+> Under certain conditions, the 64-bit '-mstack-protector-guard' flags may
+> end up in the 32-bit vDSO flags, resulting in build failures due to the
+> structure of clang's argument parsing of the stack protector options,
+> which validates the arguments of the stack protector guard flags
+> unconditionally in the frontend, choking on the 64-bit values when
+> targeting 32-bit:
 > 
-> Responses should be made by Sun, 17 Nov 2024 06:37:07 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.19.324-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-4.19.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
-> 
+> [...]
 
-Compiled and booted on my test system. No dmesg regressions.
+Applied to powerpc/next.
 
-Tested-by: Shuah Khan <skhan@linuxfoundation.org>
+[1/1] powerpc/vdso: Drop -mstack-protector-guard flags in 32-bit files with clang
+      https://git.kernel.org/powerpc/c/d677ce521334d8f1f327cafc8b1b7854b0833158
 
-thanks,
--- Shuah
-
+cheers
