@@ -1,177 +1,196 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FAF91ACE12;
-	Mon, 18 Nov 2024 14:40:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6684C1953A2
+	for <patches@lists.linux.dev>; Mon, 18 Nov 2024 23:47:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731940800; cv=none; b=IfLjIC+LKxHZzfEVJBecuebgjZJytCFWBZVfhgMYfhJeAvIevBJZlcu6An7KehbMW83lXXgatyJdiGoTNWF4xi8HACCW+ht6hGTjryLPrNQJkrWOKI6/Q+ko0wAVLA3QBSgs5FDFfU2wxzMts3eZgINVBvuKACQqW9YFpes5m7E=
+	t=1731973658; cv=none; b=eveGgMMRgInh6RoRb5Ou70rmlEZ95Xns+NViiZqDBvh5UDQJOS9PwZ2FAq462nVF+Lyy32CNzQjJwqQwgUS1DyC60+iaztlivweQVWtBubHylHqTeBFsfaEnvsDhK59a0vqNFbJFfWlWCyvthe1RdhxnTEu4QA3d2LSTRrKJenc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731940800; c=relaxed/simple;
-	bh=VTEd3Ga9NE9gi5Kr6yGwOtdQn4jjIzWJchBVImY2QTo=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=WcAs1FvdJNUVHETaPT9TdKqL+185DcnK7vbnzf+8Vmj647gtb0ZKcCNskvQ8UyDRh3vpgeg8ho6gc0+QV3ITM5587aZAZmC6eI9DhXmGHn20SXFRRLewuSXl07RT6TABJAPH3HqoyHbiw8wk5pmiM/55JfqURy35h9MmFNIlKOM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=j4aVcwCD; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1731973658; c=relaxed/simple;
+	bh=BKtms7LWLD9J7tF7zaMFMdbLndSiQegnvW/JfKrXOpE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=W2ZNR1erVLBF9Va53a0lJZukV2OapZiRsFhTstHd7Yozgx7eUkujAI+LeSgXJY0ok1fU6PqZiHlCgi/L3HNnx8Wt0luOzOh9RuNAFkyyBRe3q3nONPvB0dgmlqORT4/ssZ58GunD45ISiGzvyG/nrYQPN8Lo0aHvUJ4IcWMyOqg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=dzygH5iy; arc=none smtp.client-ip=192.198.163.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="j4aVcwCD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DDA9C4CECC;
-	Mon, 18 Nov 2024 14:39:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1731940800;
-	bh=VTEd3Ga9NE9gi5Kr6yGwOtdQn4jjIzWJchBVImY2QTo=;
-	h=From:Date:Subject:To:Cc:From;
-	b=j4aVcwCDmEQ8e7Tno0B28wagSdUXYyaoX5ziEYtxbDr6v5eHhuWbO+Zfcl+R6jwO1
-	 dlMQ1FQhPlLZeAn/0A0ZGjv/jbVx1ZmNnRyp87UXtogBaCgTddFO0sJ+vDRsE5kt18
-	 f9wiO+5if1noyGcVhrtloN4LLj8jllxlMGw+EbXiZLUaC9LkycnPjCYlPP45L85Kaq
-	 ZVi4NtWx+oFePkM3QVdUdvF1mq9XZ0oW2syjMrUhatEjHyCyruikISdVEsDft8oRtG
-	 hL6swui2NeV6afXoG+zzxW+aV0WE9RSpWT98CF56y5pl8pAy88qagZTNKMoeb1EO1i
-	 4rnxmAhJbi6YQ==
-From: Nathan Chancellor <nathan@kernel.org>
-Date: Mon, 18 Nov 2024 07:39:32 -0700
-Subject: [PATCH v2] ACPI: platform-profile: Fix CFI violation when
- accessing sysfs files
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="dzygH5iy"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1731973656; x=1763509656;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=BKtms7LWLD9J7tF7zaMFMdbLndSiQegnvW/JfKrXOpE=;
+  b=dzygH5iy9z6B5Ziwpeku2FXEEIuIARl8N4DqvnjJFZYbmHor2PEfwtJd
+   /sq+Fu2OczyCAqzwcxuCXXCSnMujTbFLJKCqyi//oTDuFmMuTholU1ZKw
+   RDLpeIftHVQQAy1u6G2TpvKDupXMakDT/hTw66rNm53EkKohngbgh0ZS+
+   bzQf5tWx5zgd2t87eg9kz2+uatOR1ZgFqtWMTQo8t83uwiPdvKkfHe0vq
+   RqpEK4maXUHifV8hlXealPCZg1oGNvV61WdzXOiTV3UVaUbNLKpRRcjsV
+   yzJl07puPxnbQaAtmykteelFXgLW7Y/8EsOqdidEQ8AcTSqK7GFg75VnU
+   g==;
+X-CSE-ConnectionGUID: SX+wXnfVRXCeJTkunm0OTA==
+X-CSE-MsgGUID: NCbhX1pZS6e8gtkZb7u5PA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11260"; a="35859167"
+X-IronPort-AV: E=Sophos;i="6.12,165,1728975600"; 
+   d="scan'208";a="35859167"
+Received: from fmviesa001.fm.intel.com ([10.60.135.141])
+  by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Nov 2024 15:47:36 -0800
+X-CSE-ConnectionGUID: xsTE/DjiR06FrUJO0bw6NA==
+X-CSE-MsgGUID: TXvML7jURQGRPVZ9XUPe5Q==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.12,165,1728975600"; 
+   d="scan'208";a="120317076"
+Received: from agluck-desk3.sc.intel.com (HELO agluck-desk3) ([172.25.222.70])
+  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Nov 2024 15:47:36 -0800
+Date: Mon, 18 Nov 2024 15:47:34 -0800
+From: "Luck, Tony" <tony.luck@intel.com>
+To: babu.moger@amd.com
+Cc: Fenghua Yu <fenghua.yu@intel.com>,
+	Reinette Chatre <reinette.chatre@intel.com>,
+	Peter Newman <peternewman@google.com>,
+	Jonathan Corbet <corbet@lwn.net>, x86@kernel.org,
+	James Morse <james.morse@arm.com>,
+	Jamie Iles <quic_jiles@quicinc.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	"Shaopeng Tan (Fujitsu)" <tan.shaopeng@fujitsu.com>,
+	linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
+	patches@lists.linux.dev
+Subject: Re: [PATCH v9 2/9] x86/resctrl: Prepare for per-ctrl_mon group
+ mba_MBps control
+Message-ID: <ZzvSFm-dcZwdK9cO@agluck-desk3>
+References: <20241114001712.80315-1-tony.luck@intel.com>
+ <20241114001712.80315-3-tony.luck@intel.com>
+ <8b040e1a-2af8-9d9f-4697-dee96eb65b00@amd.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20241118-acpi-platform_profile-fix-cfi-violation-v2-1-62ff952804de@kernel.org>
-X-B4-Tracking: v=1; b=H4sIAKNRO2cC/5WNXQ6CMBCEr0L67Bpa/opP3sMQg3QLG5E2W9JoC
- He3cgMfv5nJfJsIyIRBXLJNMEYK5JYE6pSJYeqXEYFMYqFyVeZattAPnsDP/Wodv+6enaUZwdI
- bBksQyaUqfYBB1eimKh6msiK9ecY0Oky3LvFEYXX8OcRR/tL/HVGChLJpi7oyutS2vj6RF5zPj
- kfR7fv+BXGhoprfAAAA
-X-Change-ID: 20240819-acpi-platform_profile-fix-cfi-violation-de278753bd5f
-To: "Rafael J. Wysocki" <rafael@kernel.org>, Len Brown <lenb@kernel.org>
-Cc: Hans de Goede <hdegoede@redhat.com>, 
- Mark Pearson <markpearson@lenovo.com>, Kees Cook <kees@kernel.org>, 
- Sami Tolvanen <samitolvanen@google.com>, linux-acpi@vger.kernel.org, 
- linux-kernel@vger.kernel.org, llvm@lists.linux.dev, patches@lists.linux.dev, 
- stable@vger.kernel.org, John Rowley <lkml@johnrowley.me>, 
- Nathan Chancellor <nathan@kernel.org>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4742; i=nathan@kernel.org;
- h=from:subject:message-id; bh=VTEd3Ga9NE9gi5Kr6yGwOtdQn4jjIzWJchBVImY2QTo=;
- b=owGbwMvMwCUmm602sfCA1DTG02pJDOnWgfsPyF/9znJvGnfW/d66gr9ti3qLxAt33Uy/NCGuk
- G/bdo/4jlIWBjEuBlkxRZbqx6rHDQ3nnGW8cWoSzBxWJpAhDFycAjCRpXsYGR4rbPn078LyBvlH
- NjdnLH2w5HGtn8PNQ7scfRhCdn/6FZfIyDB9U+Gpr7sPOgvnPHlt3qhieCNKz3MSv9WLtHlr18w
- 5JscIAA==
-X-Developer-Key: i=nathan@kernel.org; a=openpgp;
- fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <8b040e1a-2af8-9d9f-4697-dee96eb65b00@amd.com>
 
-When an attribute group is created with sysfs_create_group(), the
-->sysfs_ops() callback is set to kobj_sysfs_ops, which sets the ->show()
-and ->store() callbacks to kobj_attr_show() and kobj_attr_store()
-respectively. These functions use container_of() to get the respective
-callback from the passed attribute, meaning that these callbacks need to
-be the same type as the callbacks in 'struct kobj_attribute'.
+On Fri, Nov 15, 2024 at 10:20:34AM -0600, Moger, Babu wrote:
 
-However, the platform_profile sysfs functions have the type of the
-->show() and ->store() callbacks in 'struct device_attribute', which
-results a CFI violation when accessing platform_profile or
-platform_profile_choices under /sys/firmware/acpi because the types do
-not match:
+Thanks for looking. Comments below.
 
-  CFI failure at kobj_attr_show+0x19/0x30 (target: platform_profile_choices_show+0x0/0x140; expected type: 0x7a69590c)
+> Hi Tony,
+> 
+> On 11/13/2024 6:17 PM, Tony Luck wrote:
+> > Resctrl uses local memory bandwidth event as input to the feedback
+> > loop when the mba_MBps mount option is used. This means that this
+> > mount option cannot be used on systems that only support monitoring
+> > of total bandwidth.
+> > 
+> > Prepare to allow users to choose the input event independently for
+> > each ctrl_mon group.
+> 
+> How about this?
+> 
+> Provide users with the ability to select the input event independently for
+> each ctrl_mon group.
 
-There is no functional issue from the type mismatch because the layout
-of 'struct kobj_attribute' and 'struct device_attribute' are the same,
-so the container_of() cast does not break anything aside from CFI.
+That's a description for the series as a whole. This patch doesn't
+do all the things in that sentence.
 
-Change the type of platform_profile_choices_show() and
-platform_profile_{show,store}() to match the callbacks in
-'struct kobj_attribute' and update the attribute variables to match,
-which resolves the CFI violation.
+> 
+> > 
+> > Signed-off-by: Tony Luck <tony.luck@intel.com>
+> > ---
+> >   include/linux/resctrl.h                | 2 ++
+> >   arch/x86/kernel/cpu/resctrl/internal.h | 2 ++
+> >   arch/x86/kernel/cpu/resctrl/core.c     | 3 +++
+> >   arch/x86/kernel/cpu/resctrl/rdtgroup.c | 6 ++++++
+> >   4 files changed, 13 insertions(+)
+> > 
+> > diff --git a/include/linux/resctrl.h b/include/linux/resctrl.h
+> > index d94abba1c716..fd05b937e2f4 100644
+> > --- a/include/linux/resctrl.h
+> > +++ b/include/linux/resctrl.h
+> > @@ -49,6 +49,8 @@ enum resctrl_event_id {
+> >   	QOS_L3_MBM_LOCAL_EVENT_ID	= 0x03,
+> >   };
+> > +extern enum resctrl_event_id mba_mbps_default_event;
+> > +
+> >   /**
+> >    * struct resctrl_staged_config - parsed configuration to be applied
+> >    * @new_ctrl:		new ctrl value to be loaded
+> > diff --git a/arch/x86/kernel/cpu/resctrl/internal.h b/arch/x86/kernel/cpu/resctrl/internal.h
+> > index faaff9d64102..485800055a7d 100644
+> > --- a/arch/x86/kernel/cpu/resctrl/internal.h
+> > +++ b/arch/x86/kernel/cpu/resctrl/internal.h
+> > @@ -283,6 +283,7 @@ struct pseudo_lock_region {
+> >    *				monitor only or ctrl_mon group
+> >    * @mon:			mongroup related data
+> >    * @mode:			mode of resource group
+> > + * @mba_mbps_event:		input monitoring event id when mba_sc is enabled
+> >    * @plr:			pseudo-locked region
+> >    */
+> >   struct rdtgroup {
+> > @@ -295,6 +296,7 @@ struct rdtgroup {
+> >   	enum rdt_group_type		type;
+> >   	struct mongroup			mon;
+> >   	enum rdtgrp_mode		mode;
+> > +	enum resctrl_event_id		mba_mbps_event;
+> >   	struct pseudo_lock_region	*plr;
+> >   };
+> > diff --git a/arch/x86/kernel/cpu/resctrl/core.c b/arch/x86/kernel/cpu/resctrl/core.c
+> > index f3ee5859b69d..94bf559966d6 100644
+> > --- a/arch/x86/kernel/cpu/resctrl/core.c
+> > +++ b/arch/x86/kernel/cpu/resctrl/core.c
+> > @@ -963,6 +963,9 @@ static __init bool get_rdt_mon_resources(void)
+> >   	if (!rdt_mon_features)
+> >   		return false;
+> > +	if (is_mbm_local_enabled())
+> > +		mba_mbps_default_event = QOS_L3_MBM_LOCAL_EVENT_ID;
+> 
+> 
+> Any reason to separate this patch and patch 8?  I feel it can be combined.
 
-Cc: stable@vger.kernel.org
-Fixes: a2ff95e018f1 ("ACPI: platform: Add platform profile support")
-Reported-by: John Rowley <lkml@johnrowley.me>
-Closes: https://github.com/ClangBuiltLinux/linux/issues/2047
-Tested-by: John Rowley <lkml@johnrowley.me>
-Reviewed-by: Sami Tolvanen <samitolvanen@google.com>
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
----
-John reminded me that this is still an issue in 6.12:
+patch 8 will set mba_mbps_default_event to QOS_L3_MBM_TOTAL_EVENT_ID
+on systems witout support for local memory bandwidth monitoring.
 
-https://github.com/ClangBuiltLinux/linux/issues/2047#issuecomment-2482635093
+The rest of the code isn't ready for that until midway through this
+series when other code has been updated to handle total bandwidth
+correctly.
 
-I know Greg said this driver should be using a 'struct device' but I am
-not familiar with that conversion and there was never any follow up to
-me asking how it should be done. I think it would be best to pick this
-change up now and have that conversion be done properly by someone who
-is more familiar with this driver later.
+I may have gone to extremes moving that part out all the way to patch
+8. It could potentially happen earlier in the series.
 
-Changes in v2:
-- Rebase on linux-pm/acpi
-- Pick up Sami's reviewed-by tag
-- Adjust wording around why there is no functional issue from the
-  mismatched types
-- Link to v1: https://lore.kernel.org/r/20240819-acpi-platform_profile-fix-cfi-violation-v1-1-479365d848f6@kernel.org
----
- drivers/acpi/platform_profile.c | 20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+> 
+> > +
+> >   	return !rdt_get_mon_l3_config(r);
+> >   }
+> > diff --git a/arch/x86/kernel/cpu/resctrl/rdtgroup.c b/arch/x86/kernel/cpu/resctrl/rdtgroup.c
+> > index 2b198ef95e1e..a8022bddf9f7 100644
+> > --- a/arch/x86/kernel/cpu/resctrl/rdtgroup.c
+> > +++ b/arch/x86/kernel/cpu/resctrl/rdtgroup.c
+> > @@ -65,6 +65,8 @@ static void rdtgroup_destroy_root(void);
+> >   struct dentry *debugfs_resctrl;
+> > +enum resctrl_event_id mba_mbps_default_event;
+> > +
+> >   static bool resctrl_debug;
+> >   void rdt_last_cmd_clear(void)
+> > @@ -3611,6 +3613,8 @@ static int rdtgroup_mkdir_ctrl_mon(struct kernfs_node *parent_kn,
+> >   			rdt_last_cmd_puts("kernfs subdir error\n");
+> >   			goto out_del_list;
+> >   		}
+> > +		if (is_mba_sc(NULL))
+> > +			rdtgrp->mba_mbps_event = mba_mbps_default_event;
+> >   	}
+> >   	goto out_unlock;
+> > @@ -3970,6 +3974,8 @@ static void __init rdtgroup_setup_default(void)
+> >   	rdtgroup_default.closid = RESCTRL_RESERVED_CLOSID;
+> >   	rdtgroup_default.mon.rmid = RESCTRL_RESERVED_RMID;
+> >   	rdtgroup_default.type = RDTCTRL_GROUP;
+> > +	if (supports_mba_mbps())
+> > +		rdtgroup_default.mba_mbps_event = mba_mbps_default_event;
+> >   	INIT_LIST_HEAD(&rdtgroup_default.mon.crdtgrp_list);
+> >   	list_add(&rdtgroup_default.rdtgroup_list, &rdt_all_groups);
+> 
+> -- 
+> - Babu Moger
 
-diff --git a/drivers/acpi/platform_profile.c b/drivers/acpi/platform_profile.c
-index d2f7fd7743a13df1dac3100c885208f4418218a5..11278f785526d48243e16659cd78d0b717846a7f 100644
---- a/drivers/acpi/platform_profile.c
-+++ b/drivers/acpi/platform_profile.c
-@@ -22,8 +22,8 @@ static const char * const profile_names[] = {
- };
- static_assert(ARRAY_SIZE(profile_names) == PLATFORM_PROFILE_LAST);
- 
--static ssize_t platform_profile_choices_show(struct device *dev,
--					struct device_attribute *attr,
-+static ssize_t platform_profile_choices_show(struct kobject *kobj,
-+					struct kobj_attribute *attr,
- 					char *buf)
- {
- 	int len = 0;
-@@ -49,8 +49,8 @@ static ssize_t platform_profile_choices_show(struct device *dev,
- 	return len;
- }
- 
--static ssize_t platform_profile_show(struct device *dev,
--					struct device_attribute *attr,
-+static ssize_t platform_profile_show(struct kobject *kobj,
-+					struct kobj_attribute *attr,
- 					char *buf)
- {
- 	enum platform_profile_option profile = PLATFORM_PROFILE_BALANCED;
-@@ -77,8 +77,8 @@ static ssize_t platform_profile_show(struct device *dev,
- 	return sysfs_emit(buf, "%s\n", profile_names[profile]);
- }
- 
--static ssize_t platform_profile_store(struct device *dev,
--			    struct device_attribute *attr,
-+static ssize_t platform_profile_store(struct kobject *kobj,
-+			    struct kobj_attribute *attr,
- 			    const char *buf, size_t count)
- {
- 	int err, i;
-@@ -115,12 +115,12 @@ static ssize_t platform_profile_store(struct device *dev,
- 	return count;
- }
- 
--static DEVICE_ATTR_RO(platform_profile_choices);
--static DEVICE_ATTR_RW(platform_profile);
-+static struct kobj_attribute attr_platform_profile_choices = __ATTR_RO(platform_profile_choices);
-+static struct kobj_attribute attr_platform_profile = __ATTR_RW(platform_profile);
- 
- static struct attribute *platform_profile_attrs[] = {
--	&dev_attr_platform_profile_choices.attr,
--	&dev_attr_platform_profile.attr,
-+	&attr_platform_profile_choices.attr,
-+	&attr_platform_profile.attr,
- 	NULL
- };
- 
-
----
-base-commit: d47a60e487fbb65bbbca3d99e59009f0a4acf34d
-change-id: 20240819-acpi-platform_profile-fix-cfi-violation-de278753bd5f
-
-Best regards,
--- 
-Nathan Chancellor <nathan@kernel.org>
-
+-Tony
