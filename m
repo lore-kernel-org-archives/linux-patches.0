@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67F321AA793;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD51B1B3727;
 	Wed, 20 Nov 2024 12:58:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732107533; cv=none; b=j+vNGc+L8fQhgDbIEIlvTbnvYT9SWlPQsCWKpum6Zfw+lXgbKVkxtYLiyVBhcXegZuMi2QaM3BNc915cxXxCJgrtxjhzDudbodyk2LxuGdmMnyDtnH4ICQY84hwJfxSQFBQy273fpS3G9aaqX7EFtF15s9ZjLh+ExWOzHcFMqJ4=
+	t=1732107533; cv=none; b=MO5ITHxZp/yI2ZZrbZhESkMWlM0aXKOkeyh2HtaibKjl0AF6Mkq04CiL/xI0JBBOCfWoFuyOckA41i6AahDvjdw0zR6UIVFBqbqku7tzdWig24FshnGgZq4y9mB5THY7DakBrL4y3cxIgkK17kvsSCVZQlovdfl/KtJ+bdOB168=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1732107533; c=relaxed/simple;
-	bh=RqyhxQNGxs5JKI9m/fNrCHdAiGn00kv7XNtcsp+m/Gc=;
+	bh=p1swoldLTwGQh3eyx3dn52C5lfRPahhfHVmhpNNBmyw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BboLbjT810yUyljdZbVy9DokFaDcmx7YXVMCHgSeCNBPNldyQJXdU5VKMHiBdEm3vQHbrPoITK7+9X5MU4WpuoHY+6i3qcTzUyJu4JTA0TUxR/ngqfD2D2shvkoyv6cWa4EB1pmOLPQAoGO5UHVwboHwCMgBNaYyFxo0bPdpA5k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zg4FSLYm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=j/dOBcBjx3Gq5t8hYzvzEGf/NV4g9dgF1y8ATDRyk8QePVksBFRcRVg4Ksg3l99e5xI6krMceBZkJUZ/z1qYa+5x/YSx5l6VpJW9/obsfcmtz8jddg4DtFR/2ayXG0u+S/WazUFMx2+N2Esy/PzheI1HvHznBtYUMs2Zl+eUqAc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d+AVzBUn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zg4FSLYm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6370C4CECD;
-	Wed, 20 Nov 2024 12:58:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d+AVzBUn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 894A9C4CED1;
+	Wed, 20 Nov 2024 12:58:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1732107532;
-	bh=RqyhxQNGxs5JKI9m/fNrCHdAiGn00kv7XNtcsp+m/Gc=;
+	s=korg; t=1732107533;
+	bh=p1swoldLTwGQh3eyx3dn52C5lfRPahhfHVmhpNNBmyw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zg4FSLYmUrASqxyUv+oAqTRcthAbrX1lllAngDscnE70g34c05SEB9PRocWDwo7z0
-	 4yj4u8wXjwDc4qo0y1efhl7Y4bEBNmqWimilU/CqSfFUYPrsjJrFSYbTrPSgPqTJLs
-	 h9mTDiePUkH+7IgGA2kVdfXsI5j9IqBIOW9mSxDM=
+	b=d+AVzBUndeJN2r5tljlA2lagL9Gec1GmbWeq4gpawCt33MHUFABk9COmuvF6Ruwg7
+	 N3OEkM/5uXNqRjHZSosbpYFs4WIe1+PuJwxgRtAA19iq2RSPthnfA3Oul53IMqffIq
+	 IV7IxSeZHCeOI/sEKsU3T07oOcPLZJNfO9ouMc9c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Geliang Tang <tanggeliang@kylinos.cn>,
 	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.11 065/107] mptcp: update local address flags when setting it
-Date: Wed, 20 Nov 2024 13:56:40 +0100
-Message-ID: <20241120125631.142893484@linuxfoundation.org>
+Subject: [PATCH 6.11 066/107] mptcp: hold pm lock when deleting entry
+Date: Wed, 20 Nov 2024 13:56:41 +0100
+Message-ID: <20241120125631.164389504@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241120125629.681745345@linuxfoundation.org>
 References: <20241120125629.681745345@linuxfoundation.org>
@@ -53,55 +53,45 @@ Content-Transfer-Encoding: 8bit
 
 From: Geliang Tang <tanggeliang@kylinos.cn>
 
-commit e0266319413d5d687ba7b6df7ca99e4b9724a4f2 upstream.
+commit f642c5c4d528d11bd78b6c6f84f541cd3c0bea86 upstream.
 
-Just like in-kernel pm, when userspace pm does set_flags, it needs to send
-out MP_PRIO signal, and also modify the flags of the corresponding address
-entry in the local address list. This patch implements the missing logic.
+When traversing userspace_pm_local_addr_list and deleting an entry from
+it in mptcp_pm_nl_remove_doit(), msk->pm.lock should be held.
 
-Traverse all address entries on userspace_pm_local_addr_list to find the
-local address entry, if bkup is true, set the flags of this entry with
-FLAG_BACKUP, otherwise, clear FLAG_BACKUP.
+This patch holds this lock before mptcp_userspace_pm_lookup_addr_by_id()
+and releases it after list_move() in mptcp_pm_nl_remove_doit().
 
-Fixes: 892f396c8e68 ("mptcp: netlink: issue MP_PRIO signals from userspace PMs")
+Fixes: d9a4594edabf ("mptcp: netlink: Add MPTCP_PM_CMD_REMOVE")
 Cc: stable@vger.kernel.org
 Signed-off-by: Geliang Tang <tanggeliang@kylinos.cn>
 Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20241112-net-mptcp-misc-6-12-pm-v1-1-b835580cefa8@kernel.org
+Link: https://patch.msgid.link/20241112-net-mptcp-misc-6-12-pm-v1-2-b835580cefa8@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/pm_userspace.c |   12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ net/mptcp/pm_userspace.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
 --- a/net/mptcp/pm_userspace.c
 +++ b/net/mptcp/pm_userspace.c
-@@ -574,6 +574,7 @@ int mptcp_userspace_pm_set_flags(struct
- 	struct nlattr *token = info->attrs[MPTCP_PM_ATTR_TOKEN];
- 	struct nlattr *attr = info->attrs[MPTCP_PM_ATTR_ADDR];
- 	struct net *net = sock_net(skb->sk);
-+	struct mptcp_pm_addr_entry *entry;
- 	struct mptcp_sock *msk;
- 	int ret = -EINVAL;
- 	struct sock *sk;
-@@ -615,6 +616,17 @@ int mptcp_userspace_pm_set_flags(struct
- 	if (loc.flags & MPTCP_PM_ADDR_FLAG_BACKUP)
- 		bkup = 1;
+@@ -325,14 +325,17 @@ int mptcp_pm_nl_remove_doit(struct sk_bu
+ 
+ 	lock_sock(sk);
  
 +	spin_lock_bh(&msk->pm.lock);
-+	list_for_each_entry(entry, &msk->pm.userspace_pm_local_addr_list, list) {
-+		if (mptcp_addresses_equal(&entry->addr, &loc.addr, false)) {
-+			if (bkup)
-+				entry->flags |= MPTCP_PM_ADDR_FLAG_BACKUP;
-+			else
-+				entry->flags &= ~MPTCP_PM_ADDR_FLAG_BACKUP;
-+		}
-+	}
+ 	match = mptcp_userspace_pm_lookup_addr_by_id(msk, id_val);
+ 	if (!match) {
+ 		GENL_SET_ERR_MSG(info, "address with specified id not found");
++		spin_unlock_bh(&msk->pm.lock);
+ 		release_sock(sk);
+ 		goto out;
+ 	}
+ 
+ 	list_move(&match->list, &free_list);
 +	spin_unlock_bh(&msk->pm.lock);
-+
- 	lock_sock(sk);
- 	ret = mptcp_pm_nl_mp_prio_send_ack(msk, &loc.addr, &rem.addr, bkup);
- 	release_sock(sk);
+ 
+ 	mptcp_pm_remove_addrs(msk, &free_list);
+ 
 
 
