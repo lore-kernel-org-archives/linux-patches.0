@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7AD91DFEF;
-	Wed, 20 Nov 2024 12:56:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 028B615853A;
+	Wed, 20 Nov 2024 12:58:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732107393; cv=none; b=ukDEuc3Fftcvo2kMlY6LcQYlPC1fdvL7rPzKMpDVN+uf/PpuCpP5AeHRhkJRc6rxhl+TiPj7ppoy0f4rDP5a0y88Bdd6zQbupBNxwUFuqtkP21AIW7+lLj2xzuwgG40NtTAJ+thZvRdm/xkHUwLx2Id/vtnlVYQOhPn+S75Yq18=
+	t=1732107489; cv=none; b=N9HqyRj3NqDw42KqmoqP/xuYaNDZVrJHg1S5s8L56m5wX2Da2O8k4pOw+OAtT/c1VfjwlItAoFy6gAhJVEmfNXaWIF8Mq4hi6bkefby1U8Hl3c7Zl7F7qZD+4ZDHcuIy5hOBOLTKm/iAXbF07wJep08oZcT+TLX013wLo/n0B4I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732107393; c=relaxed/simple;
-	bh=m6IC4S/OFmIC7Rv0cRxnR0hkSm7Pr15Ari4zJK3DIA4=;
+	s=arc-20240116; t=1732107489; c=relaxed/simple;
+	bh=voDjChbjrDHsP2UIPOiwcfrS0teNRDi7TsAfyUtgbU0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H267RYVTde9Nlk8sLgubh815E7+1IyraTI0529umlGzExzjlpsTmEfGmY+SCgv2JxY2aroFpp61yxPffNOLJMz5IHJr0ICH51xuo05IAJSSy70vDfWOyOo5MXeSdlGcfuHpDpnlmq9nfxgmOn4C0lwf2jBLbSfivnRzwDin9+yw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r5WMpUJ9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=S+4Nnz4FGF/+QTPscPPmQGkoMq7vEqpnXaV4781AERBmqQkO9wwpCPmeifi36e9ow9v44TXeiw+ZUEXy6/Yl+PSBHVr9Zk1gTNFqTmKgEepBl8nys2t7uyqLqvwjS9oUzwyy5SNjj/O9NFj+rQ2RKVLUx1zGILkUGHDrd7qNYYM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K9Le+UVk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r5WMpUJ9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FF90C4CECD;
-	Wed, 20 Nov 2024 12:56:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K9Le+UVk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9DAAC4CECD;
+	Wed, 20 Nov 2024 12:58:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1732107393;
-	bh=m6IC4S/OFmIC7Rv0cRxnR0hkSm7Pr15Ari4zJK3DIA4=;
+	s=korg; t=1732107488;
+	bh=voDjChbjrDHsP2UIPOiwcfrS0teNRDi7TsAfyUtgbU0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r5WMpUJ9T7Kv4KiiW81783A4AAzoYNo1013JOqBox8YhFFDOo6eZl0BZV5NkWOhtx
-	 EGHGv/1c1/QlmJFxZyNaRTyN0Gz6x9n8H6yydJ4exuzadhXdKUd6Sshay2Hr5DmNH7
-	 jpdkKtwKkAOrBxizyqr8S4PFAe4i4suV7N+cr+6U=
+	b=K9Le+UVkOjtRcuDqQGrxSnBnXPrWc3GKthqqEkbQ9lyFmfPkukDA6Hr1OlbyHR060
+	 bLfsJ6+suhcSR7nfNHCVpSP3xaGY/Ls1JjXNSigYuXN0BRErl1Fh3Chk+3xwOVtCYL
+	 YsWpf/DV+t5HbKR356VYlb+0gfxErii8a+ZdSWUI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+bc6bfc25a68b7a020ee1@syzkaller.appspotmail.com,
-	"Liam R. Howlett" <Liam.Howlett@Oracle.com>,
-	Vlastimil Babka <vbabka@suse.cz>,
-	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
-	Jann Horn <jannh@google.com>
-Subject: [PATCH 6.12 3/3] mm/mmap: fix __mmap_region() error handling in rare merge failure case
-Date: Wed, 20 Nov 2024 13:55:57 +0100
-Message-ID: <20241120124100.526989773@linuxfoundation.org>
+	syzkaller <syzkaller@googlegroups.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.11 001/107] netlink: terminate outstanding dump on socket close
+Date: Wed, 20 Nov 2024 13:55:36 +0100
+Message-ID: <20241120125629.714779813@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
-In-Reply-To: <20241120124100.444648273@linuxfoundation.org>
-References: <20241120124100.444648273@linuxfoundation.org>
+In-Reply-To: <20241120125629.681745345@linuxfoundation.org>
+References: <20241120125629.681745345@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,81 +49,146 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.11-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: "Liam R. Howlett" <Liam.Howlett@Oracle.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-The mmap_region() function tries to install a new vma, which requires a
-pre-allocation for the maple tree write due to the complex locking
-scenarios involved.
+[ Upstream commit 1904fb9ebf911441f90a68e96b22aa73e4410505 ]
 
-Recent efforts to simplify the error recovery required the relocation of
-the preallocation of the maple tree nodes (via vma_iter_prealloc()
-calling mas_preallocate()) higher in the function.
+Netlink supports iterative dumping of data. It provides the families
+the following ops:
+ - start - (optional) kicks off the dumping process
+ - dump  - actual dump helper, keeps getting called until it returns 0
+ - done  - (optional) pairs with .start, can be used for cleanup
+The whole process is asynchronous and the repeated calls to .dump
+don't actually happen in a tight loop, but rather are triggered
+in response to recvmsg() on the socket.
 
-The relocation of the preallocation meant that, if there was a file
-associated with the vma and the driver call (mmap_file()) modified the
-vma flags, then a new merge of the new vma with existing vmas is
-attempted.
+This gives the user full control over the dump, but also means that
+the user can close the socket without getting to the end of the dump.
+To make sure .start is always paired with .done we check if there
+is an ongoing dump before freeing the socket, and if so call .done.
 
-During the attempt to merge the existing vma with the new vma, the vma
-iterator is used - the same iterator that would be used for the next
-write attempt to the tree.  In the event of needing a further allocation
-and if the new allocations fails, the vma iterator (and contained maple
-state) will cleaned up, including freeing all previous allocations and
-will be reset internally.
+The complication is that sockets can get freed from BH and .done
+is allowed to sleep. So we use a workqueue to defer the call, when
+needed.
 
-Upon returning to the __mmap_region() function, the error is available
-in the vma_merge_struct and can be used to detect the -ENOMEM status.
+Unfortunately this does not work correctly. What we defer is not
+the cleanup but rather releasing a reference on the socket.
+We have no guarantee that we own the last reference, if someone
+else holds the socket they may release it in BH and we're back
+to square one.
 
-Hitting an -ENOMEM scenario after the driver callback leaves the system
-in a state that undoing the mapping is worse than continuing by dipping
-into the reserve.
+The whole dance, however, appears to be unnecessary. Only the user
+can interact with dumps, so we can clean up when socket is closed.
+And close always happens in process context. Some async code may
+still access the socket after close, queue notification skbs to it etc.
+but no dumps can start, end or otherwise make progress.
 
-A preallocation should be performed in the case of an -ENOMEM and the
-allocations were lost during the failure scenario.  The __GFP_NOFAIL
-flag is used in the allocation to ensure the allocation succeeds after
-implicitly telling the driver that the mapping was happening.
+Delete the workqueue and flush the dump state directly from the release
+handler. Note that further cleanup is possible in -next, for instance
+we now always call .done before releasing the main module reference,
+so dump doesn't have to take a reference of its own.
 
-The range is already set in the vma_iter_store() call below, so it is
-not necessary and is dropped.
-
-Reported-by: syzbot+bc6bfc25a68b7a020ee1@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/x/log.txt?x=17b0ace8580000
-Fixes: 5de195060b2e2 ("mm: resolve faulty mmap_region() error path behaviour")
-Signed-off-by: Liam R. Howlett <Liam.Howlett@Oracle.com>
-Reviewed-by: Vlastimil Babka <vbabka@suse.cz>
-Reviewed-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Cc: Jann Horn <jannh@google.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: syzkaller <syzkaller@googlegroups.com>
+Fixes: ed5d7788a934 ("netlink: Do not schedule work from sk_destruct")
+Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20241106015235.2458807-1-kuba@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/mmap.c |   13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ net/netlink/af_netlink.c | 31 ++++++++-----------------------
+ net/netlink/af_netlink.h |  2 --
+ 2 files changed, 8 insertions(+), 25 deletions(-)
 
---- a/mm/mmap.c
-+++ b/mm/mmap.c
-@@ -1491,7 +1491,18 @@ static unsigned long __mmap_region(struc
- 				vm_flags = vma->vm_flags;
- 				goto file_expanded;
- 			}
--			vma_iter_config(&vmi, addr, end);
-+
-+			/*
-+			 * In the unlikely even that more memory was needed, but
-+			 * not available for the vma merge, the vma iterator
-+			 * will have no memory reserved for the write we told
-+			 * the driver was happening.  To keep up the ruse,
-+			 * ensure the allocation for the store succeeds.
-+			 */
-+			if (vmg_nomem(&vmg)) {
-+				mas_preallocate(&vmi.mas, vma,
-+						GFP_KERNEL|__GFP_NOFAIL);
-+			}
- 		}
+diff --git a/net/netlink/af_netlink.c b/net/netlink/af_netlink.c
+index 0a9287fadb47a..f84aad420d446 100644
+--- a/net/netlink/af_netlink.c
++++ b/net/netlink/af_netlink.c
+@@ -393,15 +393,6 @@ static void netlink_skb_set_owner_r(struct sk_buff *skb, struct sock *sk)
  
- 		vm_flags = vma->vm_flags;
+ static void netlink_sock_destruct(struct sock *sk)
+ {
+-	struct netlink_sock *nlk = nlk_sk(sk);
+-
+-	if (nlk->cb_running) {
+-		if (nlk->cb.done)
+-			nlk->cb.done(&nlk->cb);
+-		module_put(nlk->cb.module);
+-		kfree_skb(nlk->cb.skb);
+-	}
+-
+ 	skb_queue_purge(&sk->sk_receive_queue);
+ 
+ 	if (!sock_flag(sk, SOCK_DEAD)) {
+@@ -414,14 +405,6 @@ static void netlink_sock_destruct(struct sock *sk)
+ 	WARN_ON(nlk_sk(sk)->groups);
+ }
+ 
+-static void netlink_sock_destruct_work(struct work_struct *work)
+-{
+-	struct netlink_sock *nlk = container_of(work, struct netlink_sock,
+-						work);
+-
+-	sk_free(&nlk->sk);
+-}
+-
+ /* This lock without WQ_FLAG_EXCLUSIVE is good on UP and it is _very_ bad on
+  * SMP. Look, when several writers sleep and reader wakes them up, all but one
+  * immediately hit write lock and grab all the cpus. Exclusive sleep solves
+@@ -731,12 +714,6 @@ static void deferred_put_nlk_sk(struct rcu_head *head)
+ 	if (!refcount_dec_and_test(&sk->sk_refcnt))
+ 		return;
+ 
+-	if (nlk->cb_running && nlk->cb.done) {
+-		INIT_WORK(&nlk->work, netlink_sock_destruct_work);
+-		schedule_work(&nlk->work);
+-		return;
+-	}
+-
+ 	sk_free(sk);
+ }
+ 
+@@ -788,6 +765,14 @@ static int netlink_release(struct socket *sock)
+ 				NETLINK_URELEASE, &n);
+ 	}
+ 
++	/* Terminate any outstanding dump */
++	if (nlk->cb_running) {
++		if (nlk->cb.done)
++			nlk->cb.done(&nlk->cb);
++		module_put(nlk->cb.module);
++		kfree_skb(nlk->cb.skb);
++	}
++
+ 	module_put(nlk->module);
+ 
+ 	if (netlink_is_kernel(sk)) {
+diff --git a/net/netlink/af_netlink.h b/net/netlink/af_netlink.h
+index 9751e29d4bbb9..b1a17c0d97a10 100644
+--- a/net/netlink/af_netlink.h
++++ b/net/netlink/af_netlink.h
+@@ -4,7 +4,6 @@
+ 
+ #include <linux/rhashtable.h>
+ #include <linux/atomic.h>
+-#include <linux/workqueue.h>
+ #include <net/sock.h>
+ 
+ /* flags */
+@@ -51,7 +50,6 @@ struct netlink_sock {
+ 
+ 	struct rhash_head	node;
+ 	struct rcu_head		rcu;
+-	struct work_struct	work;
+ };
+ 
+ static inline struct netlink_sock *nlk_sk(struct sock *sk)
+-- 
+2.43.0
+
 
 
