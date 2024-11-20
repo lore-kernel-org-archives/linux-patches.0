@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA5B81BF7F9;
-	Wed, 20 Nov 2024 13:01:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 630BF1BF7F9;
+	Wed, 20 Nov 2024 13:01:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732107707; cv=none; b=JSrs2Yjqx6J8FKzNE3mW5z5JNRqViMAMri7FULf+YbQe9uT5rpmc6jlpKtbe+O6VW20flJC/sV4I+X8ArruIGvf7Dl4us7ibj/6TOTVK2oPBBMrO4NRTDkidhndQh+7hN9BbYAkFOY85YDSbP/Fdjof4yxRXkmFwdOwoKTVvwWA=
+	t=1732107708; cv=none; b=tfj2Ik338cA145764DLJy7eBL+3dCIzPKABeTxecJ7PWLu3uenNkyBsG95sROxwcsisfL7rCKU1cFTyi87y8mtb+Kf0TW6nO2eBljwNUElZnJ1YKerxPNTZSUJov0GeDERFtD99GdG7Niafou0WcoW0xH/zJ2W4LcKMAu8aQSag=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732107707; c=relaxed/simple;
-	bh=x3CAbpj2PvJXe+lqBr40ARJguxzSBalLtmDzp+F3+/M=;
+	s=arc-20240116; t=1732107708; c=relaxed/simple;
+	bh=d/7lFGi7W4xfKNtZULzFis78nYthm5R0phen0gcxiEM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L92vRIC0GbNYaYZnb7IKtA9jN8eQcNemvqmv5zHCQu3RTKazwQXqlX0yOh2WymJPelQbIVgX8lOw7otbiMA67FrWSNNRfAXw/DUE9abOV/d2kn7+sVlhakbTNo4r8wPlKUZ53aswfsmbmiGR0QSEwxLJA4BwybZyVN9RJqXADac=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HPsMi+GQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=d6u1cGa5dU/Lj3p3vZHEL/pXQFkQamH/fYqbo3LyOC9xvFHMbdr1DC0u5IuCWvzxCvgSqDFRgFkbG4mbzEwv6okT6sWBh9wxoSYWh42dioxiQ6tlyaCwX9ddAWByPNyUzKK5BWHodsMIUDOAdfAXXaX1k4c0gQHvf0rZRvWeuOo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LaGta837; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HPsMi+GQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A0F9C4CED1;
-	Wed, 20 Nov 2024 13:01:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LaGta837"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39E05C4CED1;
+	Wed, 20 Nov 2024 13:01:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1732107707;
-	bh=x3CAbpj2PvJXe+lqBr40ARJguxzSBalLtmDzp+F3+/M=;
+	s=korg; t=1732107708;
+	bh=d/7lFGi7W4xfKNtZULzFis78nYthm5R0phen0gcxiEM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HPsMi+GQ+WVQvFVnntHrcCbfPYMZ7iOEPZ994rnA3/R74lqHX0Ws/2B2+O8lTAhiw
-	 buAoKgPiyxlD4MiOEtcT6lgxBvmLUbBL9aNWZ4sE+aRAdGroJvyxF39gkXJpVaD7bi
-	 ++GtExO7AIRnQ/Ufwv9QPvabRMZRPmn1HtNFxFc0=
+	b=LaGta837zUx63IK099/Ve8LaDa+hGU05+tlBDce/uiOnTYgnRmPue6KwaxkIQ/dOS
+	 VVysjQNWq/xtqbYCoY8W3S1XAlC8yyCVWKaD8YU/aIBCremDrAqur0ijrTh3RrzVKT
+	 +25sLWSImxcA7nf5pAMrF/fli18OzafyRBP3eupw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hyunwoo Kim <imv4bel@gmail.com>,
-	Eli Billauer <eli.billauer@gmail.com>
-Subject: [PATCH 6.1 72/73] char: xillybus: Fix trivial bug with mutex
-Date: Wed, 20 Nov 2024 13:58:58 +0100
-Message-ID: <20241120125811.329307492@linuxfoundation.org>
+	Michal Luczaj <mhal@rbox.co>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 73/73] net: Make copy_safe_from_sockptr() match documentation
+Date: Wed, 20 Nov 2024 13:58:59 +0100
+Message-ID: <20241120125811.352681403@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241120125809.623237564@linuxfoundation.org>
 References: <20241120125809.623237564@linuxfoundation.org>
@@ -50,45 +50,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eli Billauer <eli.billauer@gmail.com>
+From: Michal Luczaj <mhal@rbox.co>
 
-commit c002f04c0bc79ec00d4beb75fb631d5bf37419bd upstream.
+commit eb94b7bb10109a14a5431a67e5d8e31cfa06b395 upstream.
 
-@unit_mutex protects @unit from being freed, so obviously it should be
-released after @unit is used, and not before.
+copy_safe_from_sockptr()
+  return copy_from_sockptr()
+    return copy_from_sockptr_offset()
+      return copy_from_user()
 
-This is a follow-up to commit 282a4b71816b ("char: xillybus: Prevent
-use-after-free due to race condition") which ensures, among others, the
-protection of @private_data after @unit_mutex has been released.
+copy_from_user() does not return an error on fault. Instead, it returns a
+number of bytes that were not copied. Have it handled.
 
-Reported-by: Hyunwoo Kim <imv4bel@gmail.com>
-Signed-off-by: Eli Billauer <eli.billauer@gmail.com>
-Link: https://lore.kernel.org/r/20221117071825.3942-1-eli.billauer@gmail.com
+Patch has a side effect: it un-breaks garbage input handling of
+nfc_llcp_setsockopt() and mISDN's data_sock_setsockopt().
+
+Fixes: 6309863b31dd ("net: add copy_safe_from_sockptr() helper")
+Signed-off-by: Michal Luczaj <mhal@rbox.co>
+Link: https://patch.msgid.link/20241111-sockptr-copy-ret-fix-v1-1-a520083a93fb@rbox.co
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/xillybus/xillybus_class.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ include/linux/sockptr.h |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/char/xillybus/xillybus_class.c
-+++ b/drivers/char/xillybus/xillybus_class.c
-@@ -227,14 +227,15 @@ int xillybus_find_inode(struct inode *in
- 			break;
- 		}
- 
--	mutex_unlock(&unit_mutex);
--
--	if (!unit)
-+	if (!unit) {
-+		mutex_unlock(&unit_mutex);
- 		return -ENODEV;
-+	}
- 
- 	*private_data = unit->private_data;
- 	*index = minor - unit->lowest_minor;
- 
-+	mutex_unlock(&unit_mutex);
- 	return 0;
+--- a/include/linux/sockptr.h
++++ b/include/linux/sockptr.h
+@@ -77,7 +77,9 @@ static inline int copy_safe_from_sockptr
+ {
+ 	if (optlen < ksize)
+ 		return -EINVAL;
+-	return copy_from_sockptr(dst, optval, ksize);
++	if (copy_from_sockptr(dst, optval, ksize))
++		return -EFAULT;
++	return 0;
  }
- EXPORT_SYMBOL(xillybus_find_inode);
+ 
+ static inline int copy_to_sockptr_offset(sockptr_t dst, size_t offset,
 
 
