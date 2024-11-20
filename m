@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45F6F1A0BD6;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42A7E433B3;
 	Wed, 20 Nov 2024 13:00:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732107614; cv=none; b=eMcWQFiWD2Lv+QkpXK2p5WF4HIgDmhUiY7JoS//Jp+2RRUS/ZH+benjpx0s8WRjAndyPdoe6b+7J45NUxTmY1GL5UWQkHUDzbwpQ1BkiC5ZErrfZXxtcwcqbqLJuLabYjO2y45f26+IZWzbQ72ibnS+CYoS42F/5VTcPmK2aL/c=
+	t=1732107615; cv=none; b=Syg8NtAtngXkyk/5bUgjx3Whw4UFiPQoM6pHH2UDB0sjAvUsizpwWoNMDvxjnYL7+Ro+QR/COKwStBtJgXyNwMtEU5G49zSqgIwOzQgEp5uSyTZ1YKTvi0upvwXlFn+HH6eE/ZNWmqsCq2utJEBdce7B4+DdldJm9xWA1eXrM+g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732107614; c=relaxed/simple;
-	bh=VZGrDq2+p3uT+bNtOzGOhEXTiPWRrA+MCjDmJFL6OEk=;
+	s=arc-20240116; t=1732107615; c=relaxed/simple;
+	bh=FqBkPN7zbp2qD9F+4jcfr0dpPp1BxUN33x48EiASgc4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lFiQgW4DjdTPNk7uNhfXmvMJhWKaKGi/UFGJ0izVL8ATQk9w9eXmyiujoRoZa+mDTJSYYlrsBWZOjuf+j8zZRHNHRcIWlvmmEGwSMxXlgKnT0cUmE7efEgPLOi7GQAe2OH2fTeV+po3h1j5jsf6y4xsL0XKC20nhw+PwBgraIYU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i8jyeSEg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=adsYBxEwr+1C92LNQPeRNbkTAIDvztiM4I7xZw2avht/16NMS1fpYR5Caq3+L6zBeqwyzdtoEB63dkKVYLwLKX+QwXRImlQRXZiVE1zcjGgVCQSUQDV+yTZTV0atAw3/Zb+ko223FxmmI0D0Bqw/b5Ot9byv10ybz5ibPvFO9x4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CngvgN07; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i8jyeSEg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DCC1C4CECD;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CngvgN07"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C446CC4CECD;
 	Wed, 20 Nov 2024 13:00:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1732107614;
-	bh=VZGrDq2+p3uT+bNtOzGOhEXTiPWRrA+MCjDmJFL6OEk=;
+	bh=FqBkPN7zbp2qD9F+4jcfr0dpPp1BxUN33x48EiASgc4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i8jyeSEg2+MigmhD229t6DLCEQeDP+Qn8doh5Ty+lnwV08JFsmSgu0U0gZ/iZGuHE
-	 taVmz+sG6Z6VG/Aq9xxBaMNYLcvSGwUxTCAo1c9FhB+uGhczeASzQMSs/29h2kvnSb
-	 mP3UXcMRxB7O9eWzzAySAletXROr436MKchT9p2k=
+	b=CngvgN07OUIVAPeFmOwtSwvQ/IBxOkrrtnGCo3xXlYg2/V2E1TeozzP9X6dB0ye/m
+	 FaRKd10IxC8Dlph4TBOab1PfyKwsjIMWc0Ub+S7YC5BODXVAhxSuJUYuU4X7W1NcCv
+	 ruo6YR7pJgdLGePs954NCMMNp8gvonx80oiqKcoA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthieu Baerts <matttbe@kernel.org>,
-	Geliang Tang <geliang.tang@suse.com>,
+	Geliang Tang <tanggeliang@kylinos.cn>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
 	Mat Martineau <martineau@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 66/82] mptcp: define more local variables sk
-Date: Wed, 20 Nov 2024 13:57:16 +0100
-Message-ID: <20241120125631.098909193@linuxfoundation.org>
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 6.6 67/82] mptcp: add userspace_pm_lookup_addr_by_id helper
+Date: Wed, 20 Nov 2024 13:57:17 +0100
+Message-ID: <20241120125631.121854330@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241120125629.623666563@linuxfoundation.org>
 References: <20241120125629.623666563@linuxfoundation.org>
@@ -52,153 +52,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geliang Tang <geliang.tang@suse.com>
+From: Geliang Tang <tanggeliang@kylinos.cn>
 
-commit 14cb0e0bf39bd10429ba14e9e2f905f1144226fc upstream.
+commit 06afe09091ee69dc7ab058b4be9917ae59cc81e5 upstream.
 
-'(struct sock *)msk' is used several times in mptcp_nl_cmd_announce(),
-mptcp_nl_cmd_remove() or mptcp_userspace_pm_set_flags() in pm_userspace.c,
-it's worth adding a local variable sk to point it.
+Corresponding __lookup_addr_by_id() helper in the in-kernel netlink PM,
+this patch adds a new helper mptcp_userspace_pm_lookup_addr_by_id() to
+lookup the address entry with the given id on the userspace pm local
+address list.
 
-Reviewed-by: Matthieu Baerts <matttbe@kernel.org>
-Signed-off-by: Geliang Tang <geliang.tang@suse.com>
-Signed-off-by: Mat Martineau <martineau@kernel.org>
-Link: https://lore.kernel.org/r/20231025-send-net-next-20231025-v1-8-db8f25f798eb@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 06afe09091ee ("mptcp: add userspace_pm_lookup_addr_by_id helper")
+Signed-off-by: Geliang Tang <tanggeliang@kylinos.cn>
+Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Reviewed-by: Mat Martineau <martineau@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: f642c5c4d528 ("mptcp: hold pm lock when deleting entry")
 Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/pm_userspace.c |   31 ++++++++++++++++++++-----------
- 1 file changed, 20 insertions(+), 11 deletions(-)
+ net/mptcp/pm_userspace.c |   31 ++++++++++++++++---------------
+ 1 file changed, 16 insertions(+), 15 deletions(-)
 
 --- a/net/mptcp/pm_userspace.c
 +++ b/net/mptcp/pm_userspace.c
-@@ -183,6 +183,7 @@ int mptcp_nl_cmd_announce(struct sk_buff
- 	struct mptcp_pm_addr_entry addr_val;
- 	struct mptcp_sock *msk;
- 	int err = -EINVAL;
-+	struct sock *sk;
- 	u32 token_val;
- 
- 	if (!addr || !token) {
-@@ -198,6 +199,8 @@ int mptcp_nl_cmd_announce(struct sk_buff
- 		return err;
- 	}
- 
-+	sk = (struct sock *)msk;
-+
- 	if (!mptcp_pm_is_userspace(msk)) {
- 		GENL_SET_ERR_MSG(info, "invalid request; userspace PM not selected");
- 		goto announce_err;
-@@ -221,7 +224,7 @@ int mptcp_nl_cmd_announce(struct sk_buff
- 		goto announce_err;
- 	}
- 
--	lock_sock((struct sock *)msk);
-+	lock_sock(sk);
- 	spin_lock_bh(&msk->pm.lock);
- 
- 	if (mptcp_pm_alloc_anno_list(msk, &addr_val.addr)) {
-@@ -231,11 +234,11 @@ int mptcp_nl_cmd_announce(struct sk_buff
- 	}
- 
- 	spin_unlock_bh(&msk->pm.lock);
--	release_sock((struct sock *)msk);
-+	release_sock(sk);
- 
- 	err = 0;
-  announce_err:
--	sock_put((struct sock *)msk);
-+	sock_put(sk);
- 	return err;
+@@ -107,19 +107,26 @@ static int mptcp_userspace_pm_delete_loc
+ 	return -EINVAL;
  }
  
-@@ -282,6 +285,7 @@ int mptcp_nl_cmd_remove(struct sk_buff *
++static struct mptcp_pm_addr_entry *
++mptcp_userspace_pm_lookup_addr_by_id(struct mptcp_sock *msk, unsigned int id)
++{
++	struct mptcp_pm_addr_entry *entry;
++
++	list_for_each_entry(entry, &msk->pm.userspace_pm_local_addr_list, list) {
++		if (entry->addr.id == id)
++			return entry;
++	}
++	return NULL;
++}
++
+ int mptcp_userspace_pm_get_flags_and_ifindex_by_id(struct mptcp_sock *msk,
+ 						   unsigned int id,
+ 						   u8 *flags, int *ifindex)
+ {
+-	struct mptcp_pm_addr_entry *entry, *match = NULL;
++	struct mptcp_pm_addr_entry *match;
+ 
+ 	spin_lock_bh(&msk->pm.lock);
+-	list_for_each_entry(entry, &msk->pm.userspace_pm_local_addr_list, list) {
+-		if (id == entry->addr.id) {
+-			match = entry;
+-			break;
+-		}
+-	}
++	match = mptcp_userspace_pm_lookup_addr_by_id(msk, id);
+ 	spin_unlock_bh(&msk->pm.lock);
+ 	if (match) {
+ 		*flags = match->flags;
+@@ -280,7 +287,7 @@ int mptcp_nl_cmd_remove(struct sk_buff *
+ {
+ 	struct nlattr *token = info->attrs[MPTCP_PM_ATTR_TOKEN];
+ 	struct nlattr *id = info->attrs[MPTCP_PM_ATTR_LOC_ID];
+-	struct mptcp_pm_addr_entry *match = NULL;
++	struct mptcp_pm_addr_entry *match;
+ 	struct mptcp_pm_addr_entry *entry;
  	struct mptcp_sock *msk;
  	LIST_HEAD(free_list);
- 	int err = -EINVAL;
-+	struct sock *sk;
- 	u32 token_val;
- 	u8 id_val;
+@@ -317,13 +324,7 @@ int mptcp_nl_cmd_remove(struct sk_buff *
  
-@@ -299,6 +303,8 @@ int mptcp_nl_cmd_remove(struct sk_buff *
- 		return err;
- 	}
+ 	lock_sock(sk);
  
-+	sk = (struct sock *)msk;
-+
- 	if (!mptcp_pm_is_userspace(msk)) {
- 		GENL_SET_ERR_MSG(info, "invalid request; userspace PM not selected");
- 		goto remove_err;
-@@ -309,7 +315,7 @@ int mptcp_nl_cmd_remove(struct sk_buff *
- 		goto remove_err;
- 	}
- 
--	lock_sock((struct sock *)msk);
-+	lock_sock(sk);
- 
- 	list_for_each_entry(entry, &msk->pm.userspace_pm_local_addr_list, list) {
- 		if (entry->addr.id == id_val) {
-@@ -320,7 +326,7 @@ int mptcp_nl_cmd_remove(struct sk_buff *
- 
+-	list_for_each_entry(entry, &msk->pm.userspace_pm_local_addr_list, list) {
+-		if (entry->addr.id == id_val) {
+-			match = entry;
+-			break;
+-		}
+-	}
+-
++	match = mptcp_userspace_pm_lookup_addr_by_id(msk, id_val);
  	if (!match) {
  		GENL_SET_ERR_MSG(info, "address with specified id not found");
--		release_sock((struct sock *)msk);
-+		release_sock(sk);
- 		goto remove_err;
- 	}
- 
-@@ -328,15 +334,15 @@ int mptcp_nl_cmd_remove(struct sk_buff *
- 
- 	mptcp_pm_remove_addrs(msk, &free_list);
- 
--	release_sock((struct sock *)msk);
-+	release_sock(sk);
- 
- 	list_for_each_entry_safe(match, entry, &free_list, list) {
--		sock_kfree_s((struct sock *)msk, match, sizeof(*match));
-+		sock_kfree_s(sk, match, sizeof(*match));
- 	}
- 
- 	err = 0;
-  remove_err:
--	sock_put((struct sock *)msk);
-+	sock_put(sk);
- 	return err;
- }
- 
-@@ -558,6 +564,7 @@ int mptcp_userspace_pm_set_flags(struct
- {
- 	struct mptcp_sock *msk;
- 	int ret = -EINVAL;
-+	struct sock *sk;
- 	u32 token_val;
- 
- 	token_val = nla_get_u32(token);
-@@ -566,6 +573,8 @@ int mptcp_userspace_pm_set_flags(struct
- 	if (!msk)
- 		return ret;
- 
-+	sk = (struct sock *)msk;
-+
- 	if (!mptcp_pm_is_userspace(msk))
- 		goto set_flags_err;
- 
-@@ -573,11 +582,11 @@ int mptcp_userspace_pm_set_flags(struct
- 	    rem->addr.family == AF_UNSPEC)
- 		goto set_flags_err;
- 
--	lock_sock((struct sock *)msk);
-+	lock_sock(sk);
- 	ret = mptcp_pm_nl_mp_prio_send_ack(msk, &loc->addr, &rem->addr, bkup);
--	release_sock((struct sock *)msk);
-+	release_sock(sk);
- 
- set_flags_err:
--	sock_put((struct sock *)msk);
-+	sock_put(sk);
- 	return ret;
- }
+ 		release_sock(sk);
 
 
