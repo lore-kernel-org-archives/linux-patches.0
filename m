@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3685415853A;
-	Wed, 20 Nov 2024 12:58:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D0D319F487;
+	Wed, 20 Nov 2024 12:58:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732107508; cv=none; b=ju59WdmjkFWzEAT34VtcWmspJKiUIQs4C3WuqIzN0+MlIlXOGRDpmcOMTNZgZkm7jIMuF1JQAe7YA2LL31Gdw0lwBNVIIAaKCvyYaHV5WnXAfeeuGmnk27maKcFU3DVbdBbKqBK5eWEK51t2Rcc1VNX3hTuzXkmYPsAc5SL//t4=
+	t=1732107509; cv=none; b=mixXrGDuJXroaCjvp6Q7fjEHkphAi7jw2LOjcRfb9b4/lHTG2rU/EbKrjIkElU0T4HNg8gVQQDmYv7rQIOGQs9OgwaajuZ9q/MDykWjLtSGepq3zt7mdWkdo2Uu9e2P94W9MRYQtO8eAV7cG3bCwI7yKY9PaoHNme9S34r3tdvs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732107508; c=relaxed/simple;
-	bh=tVLRBDQvw9PPnPDsMojbUcl31L0AO0Dd2F0CwoAkCUc=;
+	s=arc-20240116; t=1732107509; c=relaxed/simple;
+	bh=mZSeSw9tUAW7SOPD1U2InL3Pv+Cp3YY1e222qKGq4cw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f/rrv6H885IU7r/s5BzkCZ5VqWbedpZzLrhcZgLtdXgFR52pGHBIVjHqB4SWfvFj42fvEhmVwHhvkmNcKFyssZKv7i6cb9ku5eQQkghCwnTLx6cl0tR2+rTvUR59aZnvTE/fG6eNeJsPvm1na27T63Id4PO409B6GDU1LVzJVQI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EwCPYXcp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XHHkcMwSAvPcEGJmPRJLsaxqoL6d0PiGn/0f9V8eTmYs4bzkBJ6UuRCQZRhNpdXESmSTkVdFr7kff6V+0uSlOP7IvGM8fpkQFCHu2L2un53aBtLHNaq2lru6sI+3mZp0hpQCS6bb6pIlO5oQG50djFV8LKGHJutpaRcdxfA60MU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tR1tRkP5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EwCPYXcp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D1E1C4CED2;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tR1tRkP5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D72E3C4CED1;
 	Wed, 20 Nov 2024 12:58:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1732107508;
-	bh=tVLRBDQvw9PPnPDsMojbUcl31L0AO0Dd2F0CwoAkCUc=;
+	bh=mZSeSw9tUAW7SOPD1U2InL3Pv+Cp3YY1e222qKGq4cw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EwCPYXcpgtkRRp8u2ga7LSlQOwf2fMyLPqUDVruBEUiNlmVQobqzmGk9NjTPNLE56
-	 I6JQ5Tj9sYHXrlXJHdMOVPWIjt+RP2YNVLu8gsDs7wIIYjRJgUcIz7MTb1YoGG4rVJ
-	 XZzh0nEpTDDHbBHR4d+kdkIj8uAQ18xsfdts6eDI=
+	b=tR1tRkP53g4onIkgWoyQCOt0Wozk0G+StORF8HzmQc7BuxA0N9c3Z2bCMpiRGoRUd
+	 mhab2iNNsBDyWeyshv5M0PCGi18cWs67A0P1JNnvi9IPuu3fciLt4LWDVrA+/XGAtb
+	 ZwK3rrw+4WQmS4YRg1x1FieG987lbRN36SVslM08=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Yan <andy.yan@rock-chips.com>,
-	Heiko Stuebner <heiko@sntech.de>,
+	Eric Dumazet <edumazet@google.com>,
+	Wang Liang <wangliang74@huawei.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 004/107] drm/rockchip: vop: Fix a dereferenced before check warning
-Date: Wed, 20 Nov 2024 13:55:39 +0100
-Message-ID: <20241120125629.779809209@linuxfoundation.org>
+Subject: [PATCH 6.11 005/107] net: fix data-races around sk->sk_forward_alloc
+Date: Wed, 20 Nov 2024 13:55:40 +0100
+Message-ID: <20241120125629.801957051@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241120125629.681745345@linuxfoundation.org>
 References: <20241120125629.681745345@linuxfoundation.org>
@@ -51,45 +52,145 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Yan <andy.yan@rock-chips.com>
+From: Wang Liang <wangliang74@huawei.com>
 
-[ Upstream commit ab1c793f457f740ab7108cc0b1340a402dbf484d ]
+[ Upstream commit 073d89808c065ac4c672c0a613a71b27a80691cb ]
 
-The 'state' can't be NULL, we should check crtc_state.
+Syzkaller reported this warning:
+ ------------[ cut here ]------------
+ WARNING: CPU: 0 PID: 16 at net/ipv4/af_inet.c:156 inet_sock_destruct+0x1c5/0x1e0
+ Modules linked in:
+ CPU: 0 UID: 0 PID: 16 Comm: ksoftirqd/0 Not tainted 6.12.0-rc5 #26
+ Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
+ RIP: 0010:inet_sock_destruct+0x1c5/0x1e0
+ Code: 24 12 4c 89 e2 5b 48 c7 c7 98 ec bb 82 41 5c e9 d1 18 17 ff 4c 89 e6 5b 48 c7 c7 d0 ec bb 82 41 5c e9 bf 18 17 ff 0f 0b eb 83 <0f> 0b eb 97 0f 0b eb 87 0f 0b e9 68 ff ff ff 66 66 2e 0f 1f 84 00
+ RSP: 0018:ffffc9000008bd90 EFLAGS: 00010206
+ RAX: 0000000000000300 RBX: ffff88810b172a90 RCX: 0000000000000007
+ RDX: 0000000000000002 RSI: 0000000000000300 RDI: ffff88810b172a00
+ RBP: ffff88810b172a00 R08: ffff888104273c00 R09: 0000000000100007
+ R10: 0000000000020000 R11: 0000000000000006 R12: ffff88810b172a00
+ R13: 0000000000000004 R14: 0000000000000000 R15: ffff888237c31f78
+ FS:  0000000000000000(0000) GS:ffff888237c00000(0000) knlGS:0000000000000000
+ CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+ CR2: 00007ffc63fecac8 CR3: 000000000342e000 CR4: 00000000000006f0
+ DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+ DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+ Call Trace:
+  <TASK>
+  ? __warn+0x88/0x130
+  ? inet_sock_destruct+0x1c5/0x1e0
+  ? report_bug+0x18e/0x1a0
+  ? handle_bug+0x53/0x90
+  ? exc_invalid_op+0x18/0x70
+  ? asm_exc_invalid_op+0x1a/0x20
+  ? inet_sock_destruct+0x1c5/0x1e0
+  __sk_destruct+0x2a/0x200
+  rcu_do_batch+0x1aa/0x530
+  ? rcu_do_batch+0x13b/0x530
+  rcu_core+0x159/0x2f0
+  handle_softirqs+0xd3/0x2b0
+  ? __pfx_smpboot_thread_fn+0x10/0x10
+  run_ksoftirqd+0x25/0x30
+  smpboot_thread_fn+0xdd/0x1d0
+  kthread+0xd3/0x100
+  ? __pfx_kthread+0x10/0x10
+  ret_from_fork+0x34/0x50
+  ? __pfx_kthread+0x10/0x10
+  ret_from_fork_asm+0x1a/0x30
+  </TASK>
+ ---[ end trace 0000000000000000 ]---
 
-Fix warning:
-drivers/gpu/drm/rockchip/rockchip_drm_vop.c:1096
-vop_plane_atomic_async_check() warn: variable dereferenced before check
-'state' (see line 1077)
+Its possible that two threads call tcp_v6_do_rcv()/sk_forward_alloc_add()
+concurrently when sk->sk_state == TCP_LISTEN with sk->sk_lock unlocked,
+which triggers a data-race around sk->sk_forward_alloc:
+tcp_v6_rcv
+    tcp_v6_do_rcv
+        skb_clone_and_charge_r
+            sk_rmem_schedule
+                __sk_mem_schedule
+                    sk_forward_alloc_add()
+            skb_set_owner_r
+                sk_mem_charge
+                    sk_forward_alloc_add()
+        __kfree_skb
+            skb_release_all
+                skb_release_head_state
+                    sock_rfree
+                        sk_mem_uncharge
+                            sk_forward_alloc_add()
+                            sk_mem_reclaim
+                                // set local var reclaimable
+                                __sk_mem_reclaim
+                                    sk_forward_alloc_add()
 
-Fixes: 5ddb0bd4ddc3 ("drm/atomic: Pass the full state to planes async atomic check and update")
-Signed-off-by: Andy Yan <andy.yan@rock-chips.com>
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
-Link: https://patchwork.freedesktop.org/patch/msgid/20241021072818.61621-1-andyshrk@163.com
+In this syzkaller testcase, two threads call
+tcp_v6_do_rcv() with skb->truesize=768, the sk_forward_alloc changes like
+this:
+ (cpu 1)             | (cpu 2)             | sk_forward_alloc
+ ...                 | ...                 | 0
+ __sk_mem_schedule() |                     | +4096 = 4096
+                     | __sk_mem_schedule() | +4096 = 8192
+ sk_mem_charge()     |                     | -768  = 7424
+                     | sk_mem_charge()     | -768  = 6656
+ ...                 |    ...              |
+ sk_mem_uncharge()   |                     | +768  = 7424
+ reclaimable=7424    |                     |
+                     | sk_mem_uncharge()   | +768  = 8192
+                     | reclaimable=8192    |
+ __sk_mem_reclaim()  |                     | -4096 = 4096
+                     | __sk_mem_reclaim()  | -8192 = -4096 != 0
+
+The skb_clone_and_charge_r() should not be called in tcp_v6_do_rcv() when
+sk->sk_state is TCP_LISTEN, it happens later in tcp_v6_syn_recv_sock().
+Fix the same issue in dccp_v6_do_rcv().
+
+Suggested-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Fixes: e994b2f0fb92 ("tcp: do not lock listener to process SYN packets")
+Signed-off-by: Wang Liang <wangliang74@huawei.com>
+Link: https://patch.msgid.link/20241107023405.889239-1-wangliang74@huawei.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/rockchip/rockchip_drm_vop.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ net/dccp/ipv6.c     | 2 +-
+ net/ipv6/tcp_ipv6.c | 4 +---
+ 2 files changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/rockchip/rockchip_drm_vop.c b/drivers/gpu/drm/rockchip/rockchip_drm_vop.c
-index f161f40d8ce4c..69900138295bf 100644
---- a/drivers/gpu/drm/rockchip/rockchip_drm_vop.c
-+++ b/drivers/gpu/drm/rockchip/rockchip_drm_vop.c
-@@ -1093,10 +1093,10 @@ static int vop_plane_atomic_async_check(struct drm_plane *plane,
- 	if (!plane->state->fb)
- 		return -EINVAL;
+diff --git a/net/dccp/ipv6.c b/net/dccp/ipv6.c
+index da5dba120bc9a..d6649246188d7 100644
+--- a/net/dccp/ipv6.c
++++ b/net/dccp/ipv6.c
+@@ -618,7 +618,7 @@ static int dccp_v6_do_rcv(struct sock *sk, struct sk_buff *skb)
+ 	   by tcp. Feel free to propose better solution.
+ 					       --ANK (980728)
+ 	 */
+-	if (np->rxopt.all)
++	if (np->rxopt.all && sk->sk_state != DCCP_LISTEN)
+ 		opt_skb = skb_clone_and_charge_r(skb, sk);
  
--	if (state)
--		crtc_state = drm_atomic_get_existing_crtc_state(state,
--								new_plane_state->crtc);
--	else /* Special case for asynchronous cursor updates. */
-+	crtc_state = drm_atomic_get_existing_crtc_state(state, new_plane_state->crtc);
-+
-+	/* Special case for asynchronous cursor updates. */
-+	if (!crtc_state)
- 		crtc_state = plane->crtc->state;
+ 	if (sk->sk_state == DCCP_OPEN) { /* Fast path */
+diff --git a/net/ipv6/tcp_ipv6.c b/net/ipv6/tcp_ipv6.c
+index 200fea92f12fc..84cd46311da09 100644
+--- a/net/ipv6/tcp_ipv6.c
++++ b/net/ipv6/tcp_ipv6.c
+@@ -1617,7 +1617,7 @@ int tcp_v6_do_rcv(struct sock *sk, struct sk_buff *skb)
+ 	   by tcp. Feel free to propose better solution.
+ 					       --ANK (980728)
+ 	 */
+-	if (np->rxopt.all)
++	if (np->rxopt.all && sk->sk_state != TCP_LISTEN)
+ 		opt_skb = skb_clone_and_charge_r(skb, sk);
  
- 	return drm_atomic_helper_check_plane_state(plane->state, crtc_state,
+ 	if (sk->sk_state == TCP_ESTABLISHED) { /* Fast path */
+@@ -1655,8 +1655,6 @@ int tcp_v6_do_rcv(struct sock *sk, struct sk_buff *skb)
+ 				if (reason)
+ 					goto reset;
+ 			}
+-			if (opt_skb)
+-				__kfree_skb(opt_skb);
+ 			return 0;
+ 		}
+ 	} else
 -- 
 2.43.0
 
