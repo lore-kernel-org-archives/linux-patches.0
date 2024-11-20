@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDE9E1991AA;
-	Wed, 20 Nov 2024 12:58:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 709661991AA;
+	Wed, 20 Nov 2024 12:58:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732107528; cv=none; b=e6dH9YHzd/o608jODNFsAqLn9ZUmmUuDQucycEY8M1pieonOKX/Lmt8Z87JynFf7Ca3JdAtAKX+MmEeXAaUJGattps12GzP/qGG5TH++fj3jlde4KQQPcpJPouxxXIwccV5A4FB9hAVoWpHhWWlpqLBbDAa4vfN9mB9r/zfCjps=
+	t=1732107528; cv=none; b=V4TJ/6JQH2cYBZ3JHuAB0ubO1z5tsnt8SP6lTUO8legr4DGlnRNBdu1HRkC395EURwBElrQ5V+JdmmKXa8rRprA5eKzkCaqk7xsk5UzIjiJPfVKgMvCgb76P7W/lvbsmrh3QBUDv8xfA12m92Fx34kN49ItBqU/WTKFU/GI+VbY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1732107528; c=relaxed/simple;
-	bh=ZVixMvBaA5q6U9S/NnbEXFemwLgDIama0mAOgyhI79M=;
+	bh=uHxujYS0h8Z8iFGNVOqQbIaQdOIZ1Xffxkiw0s3P6F8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S8GIEO/FQmUtebxNE3qa29k7OjNRGHsr0J3RR35oHc6FqWZmMFySL9REK5pHqqWQi31gq7SJRYjfdzI7wlubS63/uSa84R/iKr5UZ+lAphXvd1gvgt3HuwFzokZ1dmilVkdRcpW4FvRoNAO6ovo1O8y3g8FzLMcQn76Dlb1hneg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SeCwR2yz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UF7mwItvvyzhgZgXQjCprihUk+H4mUBs5AfLq6bsa+oqGdiF1hck5NPUbhZDCYXIP57MacpGnb17si9aUSFBfAEc0qvT/2IlNARI02YhhkKH4DjN01Ks2HLn+pj2c+0dXlFmE37cFQE8NACLp9hAly+NN837u7yyCFc2y5Z2s94=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bygBCOap; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SeCwR2yz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63565C4CECD;
-	Wed, 20 Nov 2024 12:58:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bygBCOap"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 355C6C4CECD;
+	Wed, 20 Nov 2024 12:58:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1732107527;
-	bh=ZVixMvBaA5q6U9S/NnbEXFemwLgDIama0mAOgyhI79M=;
+	s=korg; t=1732107528;
+	bh=uHxujYS0h8Z8iFGNVOqQbIaQdOIZ1Xffxkiw0s3P6F8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SeCwR2yzLZ5F0tX7zLqkDTFphNnjUVJ8d8bsTmebsF9/10cD5kTKO8AWQeBzjj3ur
-	 Gz5nlYO8T7UZ8l9mBoYIOyNJhV3bhtioloE0fR8e8lGUUn9zXrRreFcdNya5QMLyJ/
-	 FSZgSMY2KhLd8wUjuRj7kSZk7+jWd62upL5W9P88=
+	b=bygBCOappx5m7CYM+YA93gXezv1RqA20dHBfe9xsBbwvjiV8lfsYGMH7/cO4IlXBm
+	 RE9rcBcoPYHUsB02dSv7lMsOxt1PUHSIPiR0LQ6iiLpZOnQ7EoSCHs/0bgUJ1pyFWT
+	 2tNJ0s0o6lsYO9O9GMkWhCNNnTCLcok2i3tSZ8U4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hajime Tazaki <thehajime@gmail.com>,
-	"Liam R. Howlett" <Liam.Howlett@Oracle.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.11 059/107] nommu: pass NULL argument to vma_iter_prealloc()
-Date: Wed, 20 Nov 2024 13:56:34 +0100
-Message-ID: <20241120125631.008527525@linuxfoundation.org>
+	Christoph Anton Mitterer <calestyo@scientia.org>,
+	Jarkko Sakkinen <jarkko@kernel.org>
+Subject: [PATCH 6.11 060/107] tpm: Disable TPM on tpm2_create_primary() failure
+Date: Wed, 20 Nov 2024 13:56:35 +0100
+Message-ID: <20241120125631.030942429@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241120125629.681745345@linuxfoundation.org>
 References: <20241120125629.681745345@linuxfoundation.org>
@@ -51,40 +50,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hajime Tazaki <thehajime@gmail.com>
+From: Jarkko Sakkinen <jarkko@kernel.org>
 
-commit 247d720b2c5d22f7281437fd6054a138256986ba upstream.
+commit 423893fcbe7e9adc875bce4e55b9b25fc1424977 upstream.
 
-When deleting a vma entry from a maple tree, it has to pass NULL to
-vma_iter_prealloc() in order to calculate internal state of the tree, but
-it passed a wrong argument.  As a result, nommu kernels crashed upon
-accessing a vma iterator, such as acct_collect() reading the size of vma
-entries after do_munmap().
+The earlier bug fix misplaced the error-label when dealing with the
+tpm2_create_primary() return value, which the original completely ignored.
 
-This commit fixes this issue by passing a right argument to the
-preallocation call.
-
-Link: https://lkml.kernel.org/r/20241108222834.3625217-1-thehajime@gmail.com
-Fixes: b5df09226450 ("mm: set up vma iterator for vma_iter_prealloc() calls")
-Signed-off-by: Hajime Tazaki <thehajime@gmail.com>
-Reviewed-by: Liam R. Howlett <Liam.Howlett@Oracle.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: stable@vger.kernel.org
+Reported-by: Christoph Anton Mitterer <calestyo@scientia.org>
+Closes: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1087331
+Fixes: cc7d8594342a ("tpm: Rollback tpm2_load_null()")
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/nommu.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/char/tpm/tpm2-sessions.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/mm/nommu.c
-+++ b/mm/nommu.c
-@@ -568,7 +568,7 @@ static int delete_vma_from_mm(struct vm_
- 	VMA_ITERATOR(vmi, vma->vm_mm, vma->vm_start);
+--- a/drivers/char/tpm/tpm2-sessions.c
++++ b/drivers/char/tpm/tpm2-sessions.c
+@@ -948,10 +948,13 @@ static int tpm2_load_null(struct tpm_chi
+ 	/* Deduce from the name change TPM interference: */
+ 	dev_err(&chip->dev, "null key integrity check failed\n");
+ 	tpm2_flush_context(chip, tmp_null_key);
+-	chip->flags |= TPM_CHIP_FLAG_DISABLE;
  
- 	vma_iter_config(&vmi, vma->vm_start, vma->vm_end);
--	if (vma_iter_prealloc(&vmi, vma)) {
-+	if (vma_iter_prealloc(&vmi, NULL)) {
- 		pr_warn("Allocation of vma tree for process %d failed\n",
- 		       current->pid);
- 		return -ENOMEM;
+ err:
+-	return rc ? -ENODEV : 0;
++	if (rc) {
++		chip->flags |= TPM_CHIP_FLAG_DISABLE;
++		rc = -ENODEV;
++	}
++	return rc;
+ }
+ 
+ /**
 
 
