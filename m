@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 094AB1C7B69;
-	Wed, 20 Nov 2024 13:00:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC4571B3B28;
+	Wed, 20 Nov 2024 13:00:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732107609; cv=none; b=taqYrzQ50IWaR7fmpeZz2NPaBVI6IX78Rsc5bQilbAmcRcm+As3J8WpefcVhL8E8ATU10rD5CYwwumGEKc4+Ai7JM28mCd3P/e/ybYWpeYe+/Dm5SgPR/IW4LzMfsHZd/dh7Q6fMmQkQ59NRLAWxbhnnIXP/pBPk6Rd+43ANIE8=
+	t=1732107609; cv=none; b=IWNjiXezEqyygIjZ6tnzd5L8J/nZKXGDIIw/wmvLswBQp7QlaGr/MiNfaPg6CPfpnNwrUoUUUcxVz1YKYwfpck95HTPxFBHAqwqKmtLkJ62E7zrYct1Lt8TwVNrlkzyTvTqWn+zRVleoCUcIkIOMaG35s5sncTtbE3ikiB6OQRM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1732107609; c=relaxed/simple;
-	bh=OfDqWWqIQY4MydF5uhiLSK76wcvnle6E6a1+j2jG1ME=;
+	bh=7bDZCEgWrnYmWFHtidhxWAdAeRHPPiL5uGZfgERUJ8g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eZKrH3pyPZHd9H2is7yOFZxZWbt66xxZmjBgHuzQkW69gF/G1mhkCuxs5kKjtuQG6FKJ4ZWNkf7VczuefOTewJ+HLERMAu3Q6TJ/hyKXb4tYpJliwIHL/WWWhxejCEvq5FoHNRq0zW05wP5MQfyWiEg43tqrOIgenLtsrOp7fks=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uRfbrKs/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sBoC8/Xwsri+PCORnbyLCC8JZi7PX/ExrxxAzp6mIda0ZoR+9b3p1plXVgT6hDu1ldWBKo9cqmloFe70W2jN8qP5U0Jbo6dUuKWJNPi9c1oaT8+pp3kLakQLmOnO0mNmR6b4fmYqUEFs73mquQiydQFDjubXP1+PjV/bVspRYK0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MuZg4yGt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uRfbrKs/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E030DC4CED1;
-	Wed, 20 Nov 2024 13:00:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MuZg4yGt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68640C4CECD;
+	Wed, 20 Nov 2024 13:00:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1732107608;
-	bh=OfDqWWqIQY4MydF5uhiLSK76wcvnle6E6a1+j2jG1ME=;
+	s=korg; t=1732107609;
+	bh=7bDZCEgWrnYmWFHtidhxWAdAeRHPPiL5uGZfgERUJ8g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uRfbrKs/zYpuxWDSPj7agRMNGRIHZKpZ35NQoIfLWuTxLzVS8H6kDu/mXoSenq7Kj
-	 xvooVcKhEBwDctyV/v+tdCYKv4Re6ll0IeyPHAjmrvCdVOUqWRXzGVn2oBrhVDb6Ej
-	 DABYjhQmpXbLdP6aS7Z8ru45vEab5VLQUKss/gUA=
+	b=MuZg4yGtmqEoWixEWHSK0ZteDAM25Nx1TJiPHRFGnbSH+UoNaE1oeP1NgOXVPXTIm
+	 91PgN7h3LSN9dXd1K7t3hDGBTPilsmiGWSgxOYKqRYkpBF8G7f1mYu3vronYPFa4JQ
+	 lkRIseRjFiZjVRcKNE0Mx5AD1DaF5kbCE4KnQfp8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Umang Jain <umang.jain@ideasonboard.com>,
+	kernel test robot <lkp@intel.com>,
 	Dan Carpenter <dan.carpenter@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 58/82] staging: vchiq_arm: Use devm_kzalloc() for vchiq_arm_state allocation
-Date: Wed, 20 Nov 2024 13:57:08 +0100
-Message-ID: <20241120125630.916750050@linuxfoundation.org>
+	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>
+Subject: [PATCH 6.6 60/82] media: dvbdev: fix the logic when DVB_DYNAMIC_MINORS is not set
+Date: Wed, 20 Nov 2024 13:57:10 +0100
+Message-ID: <20241120125630.964490786@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241120125629.623666563@linuxfoundation.org>
 References: <20241120125629.623666563@linuxfoundation.org>
@@ -51,44 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Umang Jain <umang.jain@ideasonboard.com>
+From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 
-[ Upstream commit 404b739e895522838f1abdc340c554654d671dde ]
+commit a4aebaf6e6efff548b01a3dc49b4b9074751c15b upstream.
 
-The struct vchiq_arm_state 'platform_state' is currently allocated
-dynamically using kzalloc(). Unfortunately, it is never freed and is
-subjected to memory leaks in the error handling paths of the probe()
-function.
+When CONFIG_DVB_DYNAMIC_MINORS, ret is not initialized, and a
+semaphore is left at the wrong state, in case of errors.
 
-To address the issue, use device resource management helper
-devm_kzalloc(), to ensure cleanup after its allocation.
+Make the code simpler and avoid mistakes by having just one error
+check logic used weather DVB_DYNAMIC_MINORS is used or not.
 
-Fixes: 71bad7f08641 ("staging: add bcm2708 vchiq driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Umang Jain <umang.jain@ideasonboard.com>
-Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://lore.kernel.org/r/20241016130225.61024-2-umang.jain@ideasonboard.com
+Reported-by: kernel test robot <lkp@intel.com>
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Closes: https://lore.kernel.org/r/202410201717.ULWWdJv8-lkp@intel.com/
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Link: https://lore.kernel.org/r/9e067488d8935b8cf00959764a1fa5de85d65725.1730926254.git.mchehab+huawei@kernel.org
+Cc: Nathan Chancellor <nathan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/vc04_services/interface/vchiq_arm/vchiq_arm.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/dvb-core/dvbdev.c |   15 ++++-----------
+ 1 file changed, 4 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/staging/vc04_services/interface/vchiq_arm/vchiq_arm.c b/drivers/staging/vc04_services/interface/vchiq_arm/vchiq_arm.c
-index 0a97fb237f5e7..92aa98bbdc662 100644
---- a/drivers/staging/vc04_services/interface/vchiq_arm/vchiq_arm.c
-+++ b/drivers/staging/vc04_services/interface/vchiq_arm/vchiq_arm.c
-@@ -577,7 +577,7 @@ vchiq_platform_init_state(struct vchiq_state *state)
- {
- 	struct vchiq_arm_state *platform_state;
- 
--	platform_state = kzalloc(sizeof(*platform_state), GFP_KERNEL);
-+	platform_state = devm_kzalloc(state->dev, sizeof(*platform_state), GFP_KERNEL);
- 	if (!platform_state)
- 		return -ENOMEM;
- 
--- 
-2.43.0
-
+--- a/drivers/media/dvb-core/dvbdev.c
++++ b/drivers/media/dvb-core/dvbdev.c
+@@ -530,6 +530,9 @@ int dvb_register_device(struct dvb_adapt
+ 	for (minor = 0; minor < MAX_DVB_MINORS; minor++)
+ 		if (!dvb_minors[minor])
+ 			break;
++#else
++	minor = nums2minor(adap->num, type, id);
++#endif
+ 	if (minor >= MAX_DVB_MINORS) {
+ 		if (new_node) {
+ 			list_del(&new_node->list_head);
+@@ -543,17 +546,7 @@ int dvb_register_device(struct dvb_adapt
+ 		mutex_unlock(&dvbdev_register_lock);
+ 		return -EINVAL;
+ 	}
+-#else
+-	minor = nums2minor(adap->num, type, id);
+-	if (minor >= MAX_DVB_MINORS) {
+-		dvb_media_device_free(dvbdev);
+-		list_del(&dvbdev->list_head);
+-		kfree(dvbdev);
+-		*pdvbdev = NULL;
+-		mutex_unlock(&dvbdev_register_lock);
+-		return ret;
+-	}
+-#endif
++
+ 	dvbdev->minor = minor;
+ 	dvb_minors[minor] = dvb_device_get(dvbdev);
+ 	up_write(&minor_rwsem);
 
 
