@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91D281ABEB4;
-	Wed, 20 Nov 2024 13:01:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9B2E1BD513;
+	Wed, 20 Nov 2024 13:01:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732107682; cv=none; b=fqvI+UJDoPnN4F42gUW3KpPI0Bg+X1u+6Hn9vxEiww4YOqrErrIzCnVc6hoBWtqLLxy6nT5DekVof70bDP1xlJ5z6EmDOftDb7wmvrhR6vZhvERwbDKmZ8O+XoKAQLzVxbCubmvMeBJqZ8At8IdMxjOswAWtPwHZk2yIf84n7so=
+	t=1732107683; cv=none; b=nbyEgTkTWlESsRwLaTalRf6NOIqg8dlr9uotjcrqa9cc1FukGHNtyKYeXsC+nCzb8tXyiQ8Kn2HtZRV07Ij46ZJ2UFLPxfPnFoxLc4rqVZEj26RHdFMDj6Ce+C7Ir3N2AeIxfCjjWQxxEz/6vr4+uKY1H+dptzxcmiROhQ8hMPc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732107682; c=relaxed/simple;
-	bh=KAu7goQGAdbl0um/gpbaUzSXhamYHLFYbRFoE3Era74=;
+	s=arc-20240116; t=1732107683; c=relaxed/simple;
+	bh=zDPPWbU6ys60K2pz2T0QCbMo7fJbT4C4rGopTloGckg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K+MmI78KxnMy33ldrdvKTo6L6HcNc54TsH/Z+D4eKZSMhKYK50zV9q2VZMJKbbjd3RHLw2C+X/fqWM71gcpNaGrb+vwuJedSaZmjUmoQVuneGVNLjAZ66kixnxUKCgwAYHbxb4A5eabAa8TeL1uXAFj4GfTq4JjpvXVcuMQBGNE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ga+8CY6h; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=C79LkQrCutHdjBP4rlRFzCbJ5HJ751vsbXk8Cvzz+X8EYlg6ghr98l91CSbyzovICxoTnYRl8CnFVK44Y0kNx/GMpT7Vuh7H4PvbSaVI84oF7cbzEvdM/Xa/p35ozN1lrjscJ/5QrWLer9ZJ/NuvepvB/jdrGPmyDYS87ARRK8U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G5cItoZx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ga+8CY6h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BA46C4CECD;
-	Wed, 20 Nov 2024 13:01:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G5cItoZx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76EA1C4CECD;
+	Wed, 20 Nov 2024 13:01:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1732107682;
-	bh=KAu7goQGAdbl0um/gpbaUzSXhamYHLFYbRFoE3Era74=;
+	s=korg; t=1732107683;
+	bh=zDPPWbU6ys60K2pz2T0QCbMo7fJbT4C4rGopTloGckg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ga+8CY6hvuiu9VZk8jIx+ExCI7sszSwXQOSl8a+Y8LoTTiZwVtjWJrQau5e0JuDOV
-	 SRsXscuZUL3t8whtJrsuI/uDzl4CVb5yecFrpG18lWTQN+KXI8sXVPMNhqGsy8c3v9
-	 hGYvrVd5/YgU0EbTOqy6AuWCxYxm13VI+N50TuHM=
+	b=G5cItoZxfDM2rqutQv7e+v7SyI/EQ2uadPOXZ8VGFuWwaD67SkGnRUHBsEDc4N3zT
+	 5+KfhSjFn0xTUByMAQH1OWxaME/8z11QwBtz443QgQ8+NW/+imXhB74E8hK9LhwebL
+	 MmvWS0pjdyq50xZdxgRfJ5Kq6ZnNSfxgn4NIIKQQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
-	Nathan Chancellor <nathan@kernel.org>
-Subject: [PATCH 6.1 40/73] media: dvbdev: fix the logic when DVB_DYNAMIC_MINORS is not set
-Date: Wed, 20 Nov 2024 13:58:26 +0100
-Message-ID: <20241120125810.574020574@linuxfoundation.org>
+	Dai Ngo <dai.ngo@oracle.com>,
+	Chen Hanxiao <chenhx.fnst@fujitsu.com>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 6.1 41/73] NFSD: initialize copy->cp_clp early in nfsd4_copy for use by trace point
+Date: Wed, 20 Nov 2024 13:58:27 +0100
+Message-ID: <20241120125810.596732074@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241120125809.623237564@linuxfoundation.org>
 References: <20241120125809.623237564@linuxfoundation.org>
@@ -52,57 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+From: Dai Ngo <dai.ngo@oracle.com>
 
-commit a4aebaf6e6efff548b01a3dc49b4b9074751c15b upstream.
+[ Upstream commit 15d1975b7279693d6f09398e0e2e31aca2310275 ]
 
-When CONFIG_DVB_DYNAMIC_MINORS, ret is not initialized, and a
-semaphore is left at the wrong state, in case of errors.
+Prepare for adding server copy trace points.
 
-Make the code simpler and avoid mistakes by having just one error
-check logic used weather DVB_DYNAMIC_MINORS is used or not.
-
-Reported-by: kernel test robot <lkp@intel.com>
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Closes: https://lore.kernel.org/r/202410201717.ULWWdJv8-lkp@intel.com/
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Link: https://lore.kernel.org/r/9e067488d8935b8cf00959764a1fa5de85d65725.1730926254.git.mchehab+huawei@kernel.org
-Cc: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Dai Ngo <dai.ngo@oracle.com>
+Tested-by: Chen Hanxiao <chenhx.fnst@fujitsu.com>
+Stable-dep-of: 9ed666eba4e0 ("NFSD: Async COPY result needs to return a write verifier")
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/dvb-core/dvbdev.c |   15 ++++-----------
- 1 file changed, 4 insertions(+), 11 deletions(-)
+ fs/nfsd/nfs4proc.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/media/dvb-core/dvbdev.c
-+++ b/drivers/media/dvb-core/dvbdev.c
-@@ -534,6 +534,9 @@ int dvb_register_device(struct dvb_adapt
- 	for (minor = 0; minor < MAX_DVB_MINORS; minor++)
- 		if (dvb_minors[minor] == NULL)
- 			break;
-+#else
-+	minor = nums2minor(adap->num, type, id);
-+#endif
- 	if (minor >= MAX_DVB_MINORS) {
- 		if (new_node) {
- 			list_del (&new_node->list_head);
-@@ -547,17 +550,7 @@ int dvb_register_device(struct dvb_adapt
- 		mutex_unlock(&dvbdev_register_lock);
- 		return -EINVAL;
+--- a/fs/nfsd/nfs4proc.c
++++ b/fs/nfsd/nfs4proc.c
+@@ -1768,6 +1768,7 @@ nfsd4_copy(struct svc_rqst *rqstp, struc
+ 	__be32 status;
+ 	struct nfsd4_copy *async_copy = NULL;
+ 
++	copy->cp_clp = cstate->clp;
+ 	if (nfsd4_ssc_is_inter(copy)) {
+ 		if (!inter_copy_offload_enable || nfsd4_copy_is_sync(copy)) {
+ 			status = nfserr_notsupp;
+@@ -1782,7 +1783,6 @@ nfsd4_copy(struct svc_rqst *rqstp, struc
+ 			return status;
  	}
--#else
--	minor = nums2minor(adap->num, type, id);
--	if (minor >= MAX_DVB_MINORS) {
--		dvb_media_device_free(dvbdev);
--		list_del(&dvbdev->list_head);
--		kfree(dvbdev);
--		*pdvbdev = NULL;
--		mutex_unlock(&dvbdev_register_lock);
--		return ret;
--	}
--#endif
-+
- 	dvbdev->minor = minor;
- 	dvb_minors[minor] = dvb_device_get(dvbdev);
- 	up_write(&minor_rwsem);
+ 
+-	copy->cp_clp = cstate->clp;
+ 	memcpy(&copy->fh, &cstate->current_fh.fh_handle,
+ 		sizeof(struct knfsd_fh));
+ 	if (nfsd4_copy_is_async(copy)) {
 
 
