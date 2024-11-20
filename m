@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11CA81DFEF;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB1851A9B5A;
 	Wed, 20 Nov 2024 12:59:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732107546; cv=none; b=IxQ3LpDc2Pa55kfwNT/Vw0xvvmiZukldtMrx4xLW+vxsVmUNAjTkmUlqP/90Gp4Z17bJg9iy7yyWAYAotubv4o/AWZBB/wWBRQZrLp5bGHmLAUbm4MH4RzuMhij6134bkQ7+UT+qLdGIt+csnvWEvp3IQ5Rauh+5hl5LP3tS4Y8=
+	t=1732107546; cv=none; b=JL/skg0uOvTPOh9HT4KB75xvOYvr7wh2xCVtBtasW63JqhwZVUTkOAWpnVlr1ZEM+SbUKN7Jn7QI7y6+aoSazIXoRYKc1bUz2dnH1/deV019/ctNzH3h64OQM7+GL50PlA1sukFvtAMNDkfnuAKCip8f8Oiw12IRI9xiW9/8Vi8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1732107546; c=relaxed/simple;
-	bh=maxom8auafLfkegVbalftTySx9jjNuZ/4/heLcBUbBA=;
+	bh=3k+sMIyyINBVFg/3O15eqRqPgPhMex8NkWJmaiE7KMI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E/DG6X++0AjQoOvRAd+87yuhb77RfqAzY50Gw45IstFa/kncY4NWJVm9M+v5SEpYis6vkwQ1qIuGWImfFUQSQzaL1lbdg7hp0NiDpI1LRQjjv6JK9bY9pukrLENp9qlIjxr0ZMfrM6zDaV7h7nBnmmaDyO9DL0RD7HJ/ljRyim4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tcXaNJ8j; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mL9imEsPafFQbtiISwtj3OfRH4IV5A7cauMX+2nurzpOZGE2jia5sWGVScA9/T9k0FZqEwnJURaQBuch5upfoCwcob3+iiw9NLl/OX3XBl1emTsRczU7uiFtAxVy7pg5GMEahiNoMoeL38qfkaY44yod3BgCWujhfxEZJ3Bv1qY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mmvoc/D6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tcXaNJ8j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D240EC4CED2;
-	Wed, 20 Nov 2024 12:59:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mmvoc/D6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2D06C4CECD;
+	Wed, 20 Nov 2024 12:59:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1732107545;
-	bh=maxom8auafLfkegVbalftTySx9jjNuZ/4/heLcBUbBA=;
+	s=korg; t=1732107546;
+	bh=3k+sMIyyINBVFg/3O15eqRqPgPhMex8NkWJmaiE7KMI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tcXaNJ8jSj6SbpeCxYHDEydkOnvwm+ur0oNVxlo8blsFAxCF3cBs579ERTDur1FEA
-	 ksxJ2+5s8CSpeOH2q41bpM+eL1jTDSQbBGwsa0b5C0wFvbSqJNMleiRUo+ED1fKeSC
-	 QnnzoDBYkvGzhxf1VRJ2AwDkq7de5tOKzUyHCc1E=
+	b=mmvoc/D6Zyzrod4dxyH1rVzg2jVSBSCdnlXVmKSxWrDwRCLC1X7Y6Bf6g+OrETT6/
+	 mhtvBxQzvcQGFs841ed4gGl3CO5Z8o+NHKTelmMRYx6gJo+QhmGG4urKKDrFcbyf+f
+	 vjGuoYXsoVvTjWasmMJsgqt9+pqsgCuiXkOzFAnk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sam Protsenko <semen.protsenko@linaro.org>,
-	Aurelien Jarno <aurelien@aurel32.net>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.11 076/107] Revert "mmc: dw_mmc: Fix IDMAC operation with pages bigger than 4K"
-Date: Wed, 20 Nov 2024 13:56:51 +0100
-Message-ID: <20241120125631.394023444@linuxfoundation.org>
+	John Harrison <john.c.harrison@intel.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Ashutosh Dixit <ashutosh.dixit@intel.com>,
+	Lucas De Marchi <lucas.demarchi@intel.com>
+Subject: [PATCH 6.11 085/107] drm/xe/oa: Fix "Missing outer runtime PM protection" warning
+Date: Wed, 20 Nov 2024 13:57:00 +0100
+Message-ID: <20241120125631.612610728@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241120125629.681745345@linuxfoundation.org>
 References: <20241120125629.681745345@linuxfoundation.org>
@@ -51,47 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aurelien Jarno <aurelien@aurel32.net>
+From: Ashutosh Dixit <ashutosh.dixit@intel.com>
 
-commit 1635e407a4a64d08a8517ac59ca14ad4fc785e75 upstream.
+commit c0403e4ceecaefbeaf78263dffcd3e3f06a19f6b upstream.
 
-The commit 8396c793ffdf ("mmc: dw_mmc: Fix IDMAC operation with pages
-bigger than 4K") increased the max_req_size, even for 4K pages, causing
-various issues:
-- Panic booting the kernel/rootfs from an SD card on Rockchip RK3566
-- Panic booting the kernel/rootfs from an SD card on StarFive JH7100
-- "swiotlb buffer is full" and data corruption on StarFive JH7110
+Fix the following drm_WARN:
 
-At this stage no fix have been found, so it's probably better to just
-revert the change.
+[953.586396] xe 0000:00:02.0: [drm] Missing outer runtime PM protection
+...
+<4> [953.587090]  ? xe_pm_runtime_get_noresume+0x8d/0xa0 [xe]
+<4> [953.587208]  guc_exec_queue_add_msg+0x28/0x130 [xe]
+<4> [953.587319]  guc_exec_queue_fini+0x3a/0x40 [xe]
+<4> [953.587425]  xe_exec_queue_destroy+0xb3/0xf0 [xe]
+<4> [953.587515]  xe_oa_release+0x9c/0xc0 [xe]
 
-This reverts commit 8396c793ffdf28bb8aee7cfe0891080f8cab7890.
-
+Suggested-by: John Harrison <john.c.harrison@intel.com>
+Suggested-by: Matthew Brost <matthew.brost@intel.com>
+Fixes: e936f885f1e9 ("drm/xe/oa/uapi: Expose OA stream fd")
 Cc: stable@vger.kernel.org
-Cc: Sam Protsenko <semen.protsenko@linaro.org>
-Fixes: 8396c793ffdf ("mmc: dw_mmc: Fix IDMAC operation with pages bigger than 4K")
-Closes: https://lore.kernel.org/linux-mmc/614692b4-1dbe-31b8-a34d-cb6db1909bb7@w6rz.net/
-Closes: https://lore.kernel.org/linux-mmc/CAC8uq=Ppnmv98mpa1CrWLawWoPnu5abtU69v-=G-P7ysATQ2Pw@mail.gmail.com/
-Signed-off-by: Aurelien Jarno <aurelien@aurel32.net>
-Message-ID: <20241110114700.622372-1-aurelien@aurel32.net>
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Ashutosh Dixit <ashutosh.dixit@intel.com>
+Reviewed-by: Matthew Brost <matthew.brost@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20241109032003.3093811-1-ashutosh.dixit@intel.com
+(cherry picked from commit b107c63d2953907908fd0cafb0e543b3c3167b75)
+Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/dw_mmc.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/xe/xe_oa.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/mmc/host/dw_mmc.c
-+++ b/drivers/mmc/host/dw_mmc.c
-@@ -2957,8 +2957,8 @@ static int dw_mci_init_slot(struct dw_mc
- 	if (host->use_dma == TRANS_MODE_IDMAC) {
- 		mmc->max_segs = host->ring_size;
- 		mmc->max_blk_size = 65535;
--		mmc->max_req_size = DW_MCI_DESC_DATA_LENGTH * host->ring_size;
--		mmc->max_seg_size = mmc->max_req_size;
-+		mmc->max_seg_size = 0x1000;
-+		mmc->max_req_size = mmc->max_seg_size * host->ring_size;
- 		mmc->max_blk_count = mmc->max_req_size / 512;
- 	} else if (host->use_dma == TRANS_MODE_EDMAC) {
- 		mmc->max_segs = 64;
+diff --git a/drivers/gpu/drm/xe/xe_oa.c b/drivers/gpu/drm/xe/xe_oa.c
+index 2804f14f8f29..78823f53d290 100644
+--- a/drivers/gpu/drm/xe/xe_oa.c
++++ b/drivers/gpu/drm/xe/xe_oa.c
+@@ -1206,9 +1206,11 @@ static int xe_oa_release(struct inode *inode, struct file *file)
+ 	struct xe_oa_stream *stream = file->private_data;
+ 	struct xe_gt *gt = stream->gt;
+ 
++	xe_pm_runtime_get(gt_to_xe(gt));
+ 	mutex_lock(&gt->oa.gt_lock);
+ 	xe_oa_destroy_locked(stream);
+ 	mutex_unlock(&gt->oa.gt_lock);
++	xe_pm_runtime_put(gt_to_xe(gt));
+ 
+ 	/* Release the reference the OA stream kept on the driver */
+ 	drm_dev_put(&gt_to_xe(gt)->drm);
+-- 
+2.47.0
+
 
 
