@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 590951A9B5A;
-	Wed, 20 Nov 2024 12:59:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D62D61A9B5A;
+	Wed, 20 Nov 2024 12:59:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732107559; cv=none; b=nnZ8NAS5qf6VJ+jhh8CyGQ6cCVqixJwp76AElTTkxJ83oSEkZAxe6uc04c32TBgDHwGsjDkRj7HaruXbZ29/nrM76E1BCQlwHmzrSkm1bNPt3LmzFSjmZ0Zioz0AxNOVD0SMLZRlmPuiF04twZTpRko7xA+zskxTz243AKwojiU=
+	t=1732107560; cv=none; b=hRx4pZ/3ylEZJ6oFoNovGJMwbhyXnmaX5BK5oBQAZwirMKKKL6HarXUq6TcaXieCy10EUiKYVE1kUwj49XnrteYXOIQ/0qymOXGi6zGe3DE7dTRAIJibwkibdCdjC/9b0VqFiXQBG60CnEdQEjBa2Ox9tZ6OBz4JCVCb6DBQ+i0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732107559; c=relaxed/simple;
-	bh=yjm1v/yAnh6qdh9cOGqmuNsAyU6k2dGw5U/isvmAz6o=;
+	s=arc-20240116; t=1732107560; c=relaxed/simple;
+	bh=vH7C79dM5seNM7fCWPZTV1Dc7UC0PUv8WdPRF32gXIY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a7r409TgrY/r8g+jwxLFkyjZ1fhF4/kJggPGEc6UH0/AAdXwYL3uUIv8Cd1VLW7JsGoK2K1s/spbTFOOjHYB6c8dMLSSCsk5/IG45q9nrXbFeLlEWTkVBThv/ST7e8wR35uahagBTfnUU3r66Q3XndCmOO6hW9ErcLtaaJARGcY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QfkpEkmP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SGueFJLXXL2JbRwro4owhiKn1C5XRV6SKa23dJwJXEpGk5WLtF41IT21AmNzqOwpUVh7ajqA3gOi7iYDbSDVBYrRaqrWtQf8JgmAttd/vkiGcmfu20MxERDld5wSyoy7KPj/kHd+BfglG8nSFAyF1snSMQpWmmpAIZPlEpu3OGQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dVEF5l7q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QfkpEkmP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31950C4CED6;
-	Wed, 20 Nov 2024 12:59:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dVEF5l7q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A50A5C4CED2;
+	Wed, 20 Nov 2024 12:59:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1732107559;
-	bh=yjm1v/yAnh6qdh9cOGqmuNsAyU6k2dGw5U/isvmAz6o=;
+	s=korg; t=1732107560;
+	bh=vH7C79dM5seNM7fCWPZTV1Dc7UC0PUv8WdPRF32gXIY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QfkpEkmPYexwSmRGaOsy5bcssh/tbU0a9o3Au5Z7uxkkxJa6bWK9a9s9UP4EsYAfm
-	 KDr32Z8yVyaiNMfcSsNWNp23+ZsTv7Bdq8SMYFA2CZYxxPHPRDDStvfPAscZPH06HL
-	 gP23Z86KsUeq8SCowfjL2zSqJ0RmkWVS1I54PFWo=
+	b=dVEF5l7qySQyalG1jQ/54Bl1E2YbQt91fMZnQMwTvBSg0kHfiZyDg/vtg8v7QUruR
+	 p0+nIunGpFpbTgl/DOuuXe/sxFtiO5hfo1XUPHoxkPgIcndD3XZoWNVUiNRGlHjuyC
+	 N7Q5GOSrCo1QFyc+/qdMHG2PtiZA9FpexM3bgJQg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harry Wentland <harry.wentland@amd.com>,
-	Hamish Claxton <hamishclaxton@gmail.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	aurabindo.pillai@amd.com
-Subject: [PATCH 6.11 101/107] drm/amd/display: Fix failure to read vram info due to static BP_RESULT
-Date: Wed, 20 Nov 2024 13:57:16 +0100
-Message-ID: <20241120125632.010642215@linuxfoundation.org>
+	Matthew Brost <matthew.brost@intel.com>,
+	Matthew Auld <matthew.auld@intel.com>,
+	Lucas De Marchi <lucas.demarchi@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.11 103/107] drm/xe: Restore system memory GGTT mappings
+Date: Wed, 20 Nov 2024 13:57:18 +0100
+Message-ID: <20241120125632.055445412@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241120125629.681745345@linuxfoundation.org>
 References: <20241120125629.681745345@linuxfoundation.org>
@@ -52,36 +52,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hamish Claxton <hamishclaxton@gmail.com>
+From: Matthew Brost <matthew.brost@intel.com>
 
-commit 4bb2f52ac01b8d45d64c7c04881207722e5e6fe4 upstream.
+[ Upstream commit dd886a63d6e2ce5c16e662c07547c067ad7d91f5 ]
 
-The static declaration causes the check to fail.  Remove it.
+GGTT mappings reside on the device and this state is lost during suspend
+/ d3cold thus this state must be restored resume regardless if the BO is
+in system memory or VRAM.
 
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/3678
-Fixes: 00c391102abc ("drm/amd/display: Add misc DC changes for DCN401")
-Reviewed-by: Harry Wentland <harry.wentland@amd.com>
-Signed-off-by: Hamish Claxton <hamishclaxton@gmail.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: aurabindo.pillai@amd.com
-Cc: hamishclaxton@gmail.com
-(cherry picked from commit 91314e7dfd83345b8b820b782b2511c9c32866cd)
-Cc: stable@vger.kernel.org # 6.11.x
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+v2:
+ - Unnecessary parentheses around bo->placements[0] (Checkpatch)
+
+Signed-off-by: Matthew Brost <matthew.brost@intel.com>
+Reviewed-by: Matthew Auld <matthew.auld@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20241031182257.2949579-1-matthew.brost@intel.com
+(cherry picked from commit a19d1db9a3fa89fabd7c83544b84f393ee9b851f)
+Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
+Stable-dep-of: 46f1f4b0f3c2 ("drm/xe: improve hibernation on igpu")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/bios/bios_parser2.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/xe/xe_bo.c       | 14 +++++++++++---
+ drivers/gpu/drm/xe/xe_bo_evict.c |  1 -
+ 2 files changed, 11 insertions(+), 4 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/dc/bios/bios_parser2.c
-+++ b/drivers/gpu/drm/amd/display/dc/bios/bios_parser2.c
-@@ -3122,7 +3122,7 @@ static enum bp_result bios_parser_get_vr
- 		struct dc_vram_info *info)
- {
- 	struct bios_parser *bp = BP_FROM_DCB(dcb);
--	static enum bp_result result = BP_RESULT_BADBIOSTABLE;
-+	enum bp_result result = BP_RESULT_BADBIOSTABLE;
- 	struct atom_common_table_header *header;
- 	struct atom_data_revision revision;
+diff --git a/drivers/gpu/drm/xe/xe_bo.c b/drivers/gpu/drm/xe/xe_bo.c
+index e147ef1d0578f..c096e5c06f726 100644
+--- a/drivers/gpu/drm/xe/xe_bo.c
++++ b/drivers/gpu/drm/xe/xe_bo.c
+@@ -869,8 +869,8 @@ int xe_bo_evict_pinned(struct xe_bo *bo)
+ 	if (WARN_ON(!xe_bo_is_pinned(bo)))
+ 		return -EINVAL;
  
+-	if (WARN_ON(!xe_bo_is_vram(bo)))
+-		return -EINVAL;
++	if (!xe_bo_is_vram(bo))
++		return 0;
+ 
+ 	ret = ttm_bo_mem_space(&bo->ttm, &placement, &new_mem, &ctx);
+ 	if (ret)
+@@ -920,6 +920,7 @@ int xe_bo_restore_pinned(struct xe_bo *bo)
+ 		.interruptible = false,
+ 	};
+ 	struct ttm_resource *new_mem;
++	struct ttm_place *place = &bo->placements[0];
+ 	int ret;
+ 
+ 	xe_bo_assert_held(bo);
+@@ -933,6 +934,9 @@ int xe_bo_restore_pinned(struct xe_bo *bo)
+ 	if (WARN_ON(xe_bo_is_vram(bo) || !bo->ttm.ttm))
+ 		return -EINVAL;
+ 
++	if (!mem_type_is_vram(place->mem_type))
++		return 0;
++
+ 	ret = ttm_bo_mem_space(&bo->ttm, &bo->placement, &new_mem, &ctx);
+ 	if (ret)
+ 		return ret;
+@@ -1740,7 +1744,10 @@ int xe_bo_pin(struct xe_bo *bo)
+ 			place->fpfn = (xe_bo_addr(bo, 0, PAGE_SIZE) -
+ 				       vram_region_gpu_offset(bo->ttm.resource)) >> PAGE_SHIFT;
+ 			place->lpfn = place->fpfn + (bo->size >> PAGE_SHIFT);
++		}
+ 
++		if (mem_type_is_vram(place->mem_type) ||
++		    bo->flags & XE_BO_FLAG_GGTT) {
+ 			spin_lock(&xe->pinned.lock);
+ 			list_add_tail(&bo->pinned_link, &xe->pinned.kernel_bo_present);
+ 			spin_unlock(&xe->pinned.lock);
+@@ -1801,7 +1808,8 @@ void xe_bo_unpin(struct xe_bo *bo)
+ 	    bo->flags & XE_BO_FLAG_INTERNAL_TEST)) {
+ 		struct ttm_place *place = &(bo->placements[0]);
+ 
+-		if (mem_type_is_vram(place->mem_type)) {
++		if (mem_type_is_vram(place->mem_type) ||
++		    bo->flags & XE_BO_FLAG_GGTT) {
+ 			spin_lock(&xe->pinned.lock);
+ 			xe_assert(xe, !list_empty(&bo->pinned_link));
+ 			list_del_init(&bo->pinned_link);
+diff --git a/drivers/gpu/drm/xe/xe_bo_evict.c b/drivers/gpu/drm/xe/xe_bo_evict.c
+index c202197efbe05..ef1950ab2c1d8 100644
+--- a/drivers/gpu/drm/xe/xe_bo_evict.c
++++ b/drivers/gpu/drm/xe/xe_bo_evict.c
+@@ -170,7 +170,6 @@ int xe_bo_restore_kernel(struct xe_device *xe)
+ 		 * should setup the iosys map.
+ 		 */
+ 		xe_assert(xe, !iosys_map_is_null(&bo->vmap));
+-		xe_assert(xe, xe_bo_is_vram(bo));
+ 
+ 		xe_bo_put(bo);
+ 
+-- 
+2.43.0
+
 
 
