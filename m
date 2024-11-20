@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F62E1AA1DC;
-	Wed, 20 Nov 2024 13:01:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 208271BE226;
+	Wed, 20 Nov 2024 13:01:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732107693; cv=none; b=A5i6pljv67WKp8/qsz7u5UO9zeY/hJLupuRfEAAsYLb0fnRtN3EhGYJvxwb12x8Ta+rSz+L+ZviikzANRYqnGG+AMeUrSddoY3L8zjazI/FK/s97GC4ZmSmZcHli4o8hyMXpJ3RvCA/ajQiB6Y1tJGLZory7Is9AbgZf9f3IAfc=
+	t=1732107694; cv=none; b=jnmWrqnaiV0zglD30VLokvEMArgeh56c9lmRqfHfxD8YUuxts+HhvsbacIzBbkK2W5AxYbHimItXo0TCFc/vjDn5cD+OHeDKg1lInqPpXNYzUP8LfmmqTEK8/sAywP2ekyzK6mGQFRvU2ICKHRD/cGasO6vlx5l+NqYpBCxQ1N8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732107693; c=relaxed/simple;
-	bh=QQkPeJ//bSc0Lx/F9Pp5/bAU+q+oophCBG8JSjlkST4=;
+	s=arc-20240116; t=1732107694; c=relaxed/simple;
+	bh=lBlkr4ZrcugV8RoYAKAUUnIK9k/7FHKGUrtw65n6OCQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JYwH2TWZ87pYYGaNnEwe7YpnQSS7fc/2uTLJG1uM1wGFdlaPs0xOcxI1brB+qWfH/TF4/qnf5e4ckCJ9J6D3olA/ZaGh2XL0PFEHizr94inKT+iuuc7C3J7iLn5AFBET6GGdES9Im1g3zbFc+Ns1l1454Yr81CflHpe0KXZ9T7M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xEeYcKgb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=T48mwMjoNzPoOpN0nP1SiQTuHz7dTXe3Uj2MROkUAx+pNbn54lJIDFTa6SxhK1t8XLBEvKs8q7U7u7zTw+zlgTDJvdtmfU3KMDekjuO0ra8zrj+jePSwbVOec0atmIDViKw+86E+9yDFEUeIcFIAuAb+VjgCcSblppLsdAAHvHs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ApHl8PIf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xEeYcKgb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 230DAC4CECD;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ApHl8PIf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E350FC4CECD;
 	Wed, 20 Nov 2024 13:01:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1732107693;
-	bh=QQkPeJ//bSc0Lx/F9Pp5/bAU+q+oophCBG8JSjlkST4=;
+	s=korg; t=1732107694;
+	bh=lBlkr4ZrcugV8RoYAKAUUnIK9k/7FHKGUrtw65n6OCQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xEeYcKgbPxHKm0j9jAbaMWRIC/19tgaStWExDFJwrZaH2RvJfObduHJdQI0fVILOg
-	 pgC23ITsD4YVxjrnKerqpZ56BSmCJgdCcIdEpr3DQCEpvrG/npMYRp4jQPP/DRQX1f
-	 6ud79T/sfIDTBFgsfhdBvbCGVRNEbWYJEaWQNr3c=
+	b=ApHl8PIfwUqvZo0g9y7PMkKQjKLHIvLirn5cn918VMK/M8uwdVuDUdJHBeWBtbvxQ
+	 MXG6qh7VwEGQGXUj+sVooooTZ3b7RNTSXA3BPb+s3p/blMlHsChQs5aT5WgcN+Wo5G
+	 k1UByQk5vjNBPmCFhK11v3qBaWdtuBWuWB72YVN0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geliang Tang <geliang@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 52/73] mptcp: pm: use _rcu variant under rcu_read_lock
-Date: Wed, 20 Nov 2024 13:58:38 +0100
-Message-ID: <20241120125810.862445071@linuxfoundation.org>
+	Xuanzhe Yu <yuxuanzhe@outlook.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
+	Vamsi Krishna Brahmajosyula <vamsi-krishna.brahmajosyula@broadcom.com>
+Subject: [PATCH 6.1 53/73] ksmbd: fix slab-out-of-bounds in smb_strndup_from_utf16()
+Date: Wed, 20 Nov 2024 13:58:39 +0100
+Message-ID: <20241120125810.887264152@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241120125809.623237564@linuxfoundation.org>
 References: <20241120125809.623237564@linuxfoundation.org>
@@ -51,44 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: "Matthieu Baerts (NGI0)" <matttbe@kernel.org>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-commit db3eab8110bc0520416101b6a5b52f44a43fb4cf upstream.
+commit a80a486d72e20bd12c335bcd38b6e6f19356b0aa upstream.
 
-In mptcp_pm_create_subflow_or_signal_addr(), rcu_read_(un)lock() are
-used as expected to iterate over the list of local addresses, but
-list_for_each_entry() was used instead of list_for_each_entry_rcu() in
-__lookup_addr(). It is important to use this variant which adds the
-required READ_ONCE() (and diagnostic checks if enabled).
+If ->NameOffset of smb2_create_req is smaller than Buffer offset of
+smb2_create_req, slab-out-of-bounds read can happen from smb2_open.
+This patch set the minimum value of the name offset to the buffer offset
+to validate name length of smb2_create_req().
 
-Because __lookup_addr() is also used in mptcp_pm_nl_set_flags() where it
-is called under the pernet->lock and not rcu_read_lock(), an extra
-condition is then passed to help the diagnostic checks making sure
-either the associated spin lock or the RCU lock is held.
-
-Fixes: 86e39e04482b ("mptcp: keep track of local endpoint still available for each msk")
 Cc: stable@vger.kernel.org
-Reviewed-by: Geliang Tang <geliang@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20241112-net-mptcp-misc-6-12-pm-v1-3-b835580cefa8@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Reported-by: Xuanzhe Yu <yuxuanzhe@outlook.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Stable-dep-of: c6cd2e8d2d9a ("ksmbd: fix potencial out-of-bounds when buffer offset is invalid")
+Signed-off-by: Vamsi Krishna Brahmajosyula <vamsi-krishna.brahmajosyula@broadcom.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/pm_netlink.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/smb/server/smb2misc.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/net/mptcp/pm_netlink.c
-+++ b/net/mptcp/pm_netlink.c
-@@ -529,7 +529,8 @@ __lookup_addr(struct pm_nl_pernet *perne
- {
- 	struct mptcp_pm_addr_entry *entry;
+--- a/fs/smb/server/smb2misc.c
++++ b/fs/smb/server/smb2misc.c
+@@ -107,7 +107,10 @@ static int smb2_get_data_area_len(unsign
+ 	case SMB2_CREATE:
+ 	{
+ 		unsigned short int name_off =
+-			le16_to_cpu(((struct smb2_create_req *)hdr)->NameOffset);
++			max_t(unsigned short int,
++			      le16_to_cpu(((struct smb2_create_req *)hdr)->NameOffset),
++			      offsetof(struct smb2_create_req, Buffer));
++
+ 		unsigned short int name_len =
+ 			le16_to_cpu(((struct smb2_create_req *)hdr)->NameLength);
  
--	list_for_each_entry(entry, &pernet->local_addr_list, list) {
-+	list_for_each_entry_rcu(entry, &pernet->local_addr_list, list,
-+				lockdep_is_held(&pernet->lock)) {
- 		if (mptcp_addresses_equal(&entry->addr, info, entry->addr.port))
- 			return entry;
- 	}
 
 
