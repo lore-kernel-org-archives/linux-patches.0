@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75BDB1A0BD6;
-	Wed, 20 Nov 2024 13:00:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7856A1A0BD6;
+	Wed, 20 Nov 2024 13:00:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732107627; cv=none; b=TIb+81Xh4jzz8drms0lFwEUs4GsCBJvPO/+5fwUPu1qznOUG76oYobA7MD8Eekzy/JE86NDvgB48LDROTuftrvmsIKGWyprmwo8Y0At2iIKQAcJBupjF1nmf89R4+l8By32FmmZrONaBm3ZaVtwXHNJSV8HMDwVPGi3dnSC0QmE=
+	t=1732107628; cv=none; b=Tmbv3JBAwApJxahsS19DRHPviPukYc/aOWL0nPN2JQj3Dj9hPgRGaWpcM6JAmlwrbutPBs/zSVAxe2FPZXdfR8Ku/HunDU2Ks5OX92xBVfpOhq09Jz/9iJ6xAzGpV/2HKC4cEQ81cIFa7wkwSHjfyDsvU9n9slwFV/w1s5LZ3HY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732107627; c=relaxed/simple;
-	bh=w16YvXK2iG65DsUiIVVs8iMVtUnwCsAePY8pAOkeXsQ=;
+	s=arc-20240116; t=1732107628; c=relaxed/simple;
+	bh=MabJgEQTIGsADFOpN8xRgaZ+9uplwjC33cC8RmP1afc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UoAc+dv0I6F/uyuLNmlt5h8HVy/Q3eEd0U24KrPdA9T36n1a4X8FC59qXk39nSEsAegtFnyRVkGD1ZhOHWntPs8tAHKvxEJVbRls18cUf5rSKSPNrWjg+QjTTU5oVCPgK0/UJ5JVMss20h/oYia77wDLsRMHxNgN68yVfTSOewU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BxD2TWT8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oqzFXqeH1/OCxdjDE4hJyKLhmRl48yWsbDQ8yHUfFI9fgXc6BqyPRe+SoVHvyR2KMXxy+4y/idirQHTseIxOo8rP0ZqAqvNt8ZviZtV2CYma/IKjm+fUsLPbFc90srvdkx4SEdKi5VExxXGeSIYpoSPzMSJ0w+e5PIvLWGbYLK4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ckA7OnDg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BxD2TWT8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E8DBC4CECD;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ckA7OnDg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEF7CC4CECD;
 	Wed, 20 Nov 2024 13:00:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1732107627;
-	bh=w16YvXK2iG65DsUiIVVs8iMVtUnwCsAePY8pAOkeXsQ=;
+	s=korg; t=1732107628;
+	bh=MabJgEQTIGsADFOpN8xRgaZ+9uplwjC33cC8RmP1afc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BxD2TWT8/sb0QS6xBlFFhNyYSp6ChRxfshd8LN1Gsq+gWvfeyHl+Ow1asZR27v2Ml
-	 x0FaQMxgkZITDTCE7TKFhN9YhLyzYWJW1Xe4orIbEtSzMBb7sS2l+ayfk95RlsgZbE
-	 h33P2+dOBZzYPK0JCQhSf4+vPsXuwc8e3qpjVsXE=
+	b=ckA7OnDgOB5MXOykk0IcSOh6ZrAYlmZR9rwXIkN5+utAdCiDa+QybtqV1WZct5N3I
+	 B4RWIHdRahuNl+Dzlv77sa9pBuVVLeVdsfbSZqQ/3KsPvW19lqKXB7Rz89eS9uYYQZ
+	 DGQlvOf/PQQQrjB00KfGyXB97JBpF289sbDHqriY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiaxun Yang <jiaxun.yang@flygoat.com>,
 	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.6 46/82] LoongArch: Disable KASAN if PGDIR_SIZE is too large for cpu_vabits
-Date: Wed, 20 Nov 2024 13:56:56 +0100
-Message-ID: <20241120125630.646637614@linuxfoundation.org>
+Subject: [PATCH 6.6 47/82] LoongArch: Make KASAN work with 5-level page-tables
+Date: Wed, 20 Nov 2024 13:56:57 +0100
+Message-ID: <20241120125630.671856856@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241120125629.623666563@linuxfoundation.org>
 References: <20241120125629.623666563@linuxfoundation.org>
@@ -52,82 +51,79 @@ Content-Transfer-Encoding: 8bit
 
 From: Huacai Chen <chenhuacai@loongson.cn>
 
-commit 227ca9f6f6aeb8aa8f0c10430b955f1fe2aeab91 upstream.
+commit a410656643ce4844ba9875aa4e87a7779308259b upstream.
 
-If PGDIR_SIZE is too large for cpu_vabits, KASAN_SHADOW_END will
-overflow UINTPTR_MAX because KASAN_SHADOW_START/KASAN_SHADOW_END are
-aligned up by PGDIR_SIZE. And then the overflowed KASAN_SHADOW_END looks
-like a user space address.
-
-For example, PGDIR_SIZE of CONFIG_4KB_4LEVEL is 2^39, which is too large
-for Loongson-2K series whose cpu_vabits = 39.
-
-Since CONFIG_4KB_4LEVEL is completely legal for CPUs with cpu_vabits <=
-39, we just disable KASAN via early return in kasan_init(). Otherwise we
-get a boot failure.
-
-Moreover, we change KASAN_SHADOW_END from the first address after KASAN
-shadow area to the last address in KASAN shadow area, in order to avoid
-the end address exactly overflow to 0 (which is a legal case). We don't
-need to worry about alignment because pgd_addr_end() can handle it.
+Make KASAN work with 5-level page-tables, including:
+1. Implement and use __pgd_none() and kasan_p4d_offset().
+2. As done in kasan_pmd_populate() and kasan_pte_populate(), restrict
+   the loop conditions of kasan_p4d_populate() and kasan_pud_populate()
+   to avoid unnecessary population.
 
 Cc: stable@vger.kernel.org
-Reviewed-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
 Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/include/asm/kasan.h |    2 +-
- arch/loongarch/mm/kasan_init.c     |   15 +++++++++++++--
- 2 files changed, 14 insertions(+), 3 deletions(-)
+ arch/loongarch/mm/kasan_init.c |   26 +++++++++++++++++++++++---
+ 1 file changed, 23 insertions(+), 3 deletions(-)
 
---- a/arch/loongarch/include/asm/kasan.h
-+++ b/arch/loongarch/include/asm/kasan.h
-@@ -51,7 +51,7 @@
- /* KAsan shadow memory start right after vmalloc. */
- #define KASAN_SHADOW_START		round_up(KFENCE_AREA_END, PGDIR_SIZE)
- #define KASAN_SHADOW_SIZE		(XKVRANGE_VC_SHADOW_END - XKPRANGE_CC_KASAN_OFFSET)
--#define KASAN_SHADOW_END		round_up(KASAN_SHADOW_START + KASAN_SHADOW_SIZE, PGDIR_SIZE)
-+#define KASAN_SHADOW_END		(round_up(KASAN_SHADOW_START + KASAN_SHADOW_SIZE, PGDIR_SIZE) - 1)
- 
- #define XKPRANGE_CC_SHADOW_OFFSET	(KASAN_SHADOW_START + XKPRANGE_CC_KASAN_OFFSET)
- #define XKPRANGE_UC_SHADOW_OFFSET	(KASAN_SHADOW_START + XKPRANGE_UC_KASAN_OFFSET)
 --- a/arch/loongarch/mm/kasan_init.c
 +++ b/arch/loongarch/mm/kasan_init.c
-@@ -218,7 +218,7 @@ static void __init kasan_map_populate(un
- asmlinkage void __init kasan_early_init(void)
- {
- 	BUILD_BUG_ON(!IS_ALIGNED(KASAN_SHADOW_START, PGDIR_SIZE));
--	BUILD_BUG_ON(!IS_ALIGNED(KASAN_SHADOW_END, PGDIR_SIZE));
-+	BUILD_BUG_ON(!IS_ALIGNED(KASAN_SHADOW_END + 1, PGDIR_SIZE));
+@@ -13,6 +13,13 @@
+ 
+ static pgd_t kasan_pg_dir[PTRS_PER_PGD] __initdata __aligned(PAGE_SIZE);
+ 
++#ifdef __PAGETABLE_P4D_FOLDED
++#define __pgd_none(early, pgd) (0)
++#else
++#define __pgd_none(early, pgd) (early ? (pgd_val(pgd) == 0) : \
++(__pa(pgd_val(pgd)) == (unsigned long)__pa(kasan_early_shadow_p4d)))
++#endif
++
+ #ifdef __PAGETABLE_PUD_FOLDED
+ #define __p4d_none(early, p4d) (0)
+ #else
+@@ -142,6 +149,19 @@ static pud_t *__init kasan_pud_offset(p4
+ 	return pud_offset(p4dp, addr);
  }
  
- static inline void kasan_set_pgd(pgd_t *pgdp, pgd_t pgdval)
-@@ -233,7 +233,7 @@ static void __init clear_pgds(unsigned l
- 	 * swapper_pg_dir. pgd_clear() can't be used
- 	 * here because it's nop on 2,3-level pagetable setups
- 	 */
--	for (; start < end; start += PGDIR_SIZE)
-+	for (; start < end; start = pgd_addr_end(start, end))
- 		kasan_set_pgd((pgd_t *)pgd_offset_k(start), __pgd(0));
- }
- 
-@@ -243,6 +243,17 @@ void __init kasan_init(void)
- 	phys_addr_t pa_start, pa_end;
- 
- 	/*
-+	 * If PGDIR_SIZE is too large for cpu_vabits, KASAN_SHADOW_END will
-+	 * overflow UINTPTR_MAX and then looks like a user space address.
-+	 * For example, PGDIR_SIZE of CONFIG_4KB_4LEVEL is 2^39, which is too
-+	 * large for Loongson-2K series whose cpu_vabits = 39.
-+	 */
-+	if (KASAN_SHADOW_END < vm_map_base) {
-+		pr_warn("PGDIR_SIZE too large for cpu_vabits, KernelAddressSanitizer disabled.\n");
-+		return;
++static p4d_t *__init kasan_p4d_offset(pgd_t *pgdp, unsigned long addr, int node, bool early)
++{
++	if (__pgd_none(early, pgdp_get(pgdp))) {
++		phys_addr_t p4d_phys = early ?
++			__pa_symbol(kasan_early_shadow_p4d) : kasan_alloc_zeroed_page(node);
++		if (!early)
++			memcpy(__va(p4d_phys), kasan_early_shadow_p4d, sizeof(kasan_early_shadow_p4d));
++		pgd_populate(&init_mm, pgdp, (p4d_t *)__va(p4d_phys));
 +	}
 +
-+	/*
- 	 * PGD was populated as invalid_pmd_table or invalid_pud_table
- 	 * in pagetable_init() which depends on how many levels of page
- 	 * table you are using, but we had to clean the gpd of kasan
++	return p4d_offset(pgdp, addr);
++}
++
+ static void __init kasan_pte_populate(pmd_t *pmdp, unsigned long addr,
+ 				      unsigned long end, int node, bool early)
+ {
+@@ -178,19 +198,19 @@ static void __init kasan_pud_populate(p4
+ 	do {
+ 		next = pud_addr_end(addr, end);
+ 		kasan_pmd_populate(pudp, addr, next, node, early);
+-	} while (pudp++, addr = next, addr != end);
++	} while (pudp++, addr = next, addr != end && __pud_none(early, READ_ONCE(*pudp)));
+ }
+ 
+ static void __init kasan_p4d_populate(pgd_t *pgdp, unsigned long addr,
+ 					    unsigned long end, int node, bool early)
+ {
+ 	unsigned long next;
+-	p4d_t *p4dp = p4d_offset(pgdp, addr);
++	p4d_t *p4dp = kasan_p4d_offset(pgdp, addr, node, early);
+ 
+ 	do {
+ 		next = p4d_addr_end(addr, end);
+ 		kasan_pud_populate(p4dp, addr, next, node, early);
+-	} while (p4dp++, addr = next, addr != end);
++	} while (p4dp++, addr = next, addr != end && __p4d_none(early, READ_ONCE(*p4dp)));
+ }
+ 
+ static void __init kasan_pgd_populate(unsigned long addr, unsigned long end,
 
 
