@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACE6D1BD501;
-	Wed, 20 Nov 2024 13:01:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91D281ABEB4;
+	Wed, 20 Nov 2024 13:01:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732107681; cv=none; b=U2FYG5ugm4aPGOfoQdIAj6NJk/DE9cmI12BLwBXYhzHl08n3BxvPrCuydKjDVBqVDQ518Ygz+G9jhK82pNS5LoIv5gEVTO+37DUH4fLpkZx/QVDKuI870hdZT6c2cDhisLAy1G5VNehOTku3abTzLgFk32bwthuYo826B7VaTuA=
+	t=1732107682; cv=none; b=fqvI+UJDoPnN4F42gUW3KpPI0Bg+X1u+6Hn9vxEiww4YOqrErrIzCnVc6hoBWtqLLxy6nT5DekVof70bDP1xlJ5z6EmDOftDb7wmvrhR6vZhvERwbDKmZ8O+XoKAQLzVxbCubmvMeBJqZ8At8IdMxjOswAWtPwHZk2yIf84n7so=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732107681; c=relaxed/simple;
-	bh=yXebHKcRGVuAZFkA/Jb0EPJYwrAeQ2pbajirEhQkTjY=;
+	s=arc-20240116; t=1732107682; c=relaxed/simple;
+	bh=KAu7goQGAdbl0um/gpbaUzSXhamYHLFYbRFoE3Era74=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sigywliNHulJruNK71HzXTIx38BhWPVfnp6bPvBEElMX3OsTjeRZY0SPmbUy5LuGCyLsjUNJvF4aAshYGLDtP5Q3OyBl1P9zDhV9sFWOw8xxB2P7iXdpjCQh/Y9Ba0gmg7dEllcqLaieqNh+Fbe+xLrFHuHCexBQ9aF5LX2u3MU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=02Xf86S8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K+MmI78KxnMy33ldrdvKTo6L6HcNc54TsH/Z+D4eKZSMhKYK50zV9q2VZMJKbbjd3RHLw2C+X/fqWM71gcpNaGrb+vwuJedSaZmjUmoQVuneGVNLjAZ66kixnxUKCgwAYHbxb4A5eabAa8TeL1uXAFj4GfTq4JjpvXVcuMQBGNE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ga+8CY6h; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="02Xf86S8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 825D0C4CECD;
-	Wed, 20 Nov 2024 13:01:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ga+8CY6h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BA46C4CECD;
+	Wed, 20 Nov 2024 13:01:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1732107681;
-	bh=yXebHKcRGVuAZFkA/Jb0EPJYwrAeQ2pbajirEhQkTjY=;
+	s=korg; t=1732107682;
+	bh=KAu7goQGAdbl0um/gpbaUzSXhamYHLFYbRFoE3Era74=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=02Xf86S8kY0e3XkhiuOsam+ji9n9sDTzxkzjyaLFkfLP+HE9kdF+Xz5A/cobqeOji
-	 Vq9nUE0jX+zp802lNmn/gnpEBk2WS3L27qf128f0uQTKNj9RAYIHp/3P2PC8a84847
-	 HTnSA97lVQwnQdqPf3lZB5gHMoFdCDHQsasIRUDc=
+	b=Ga+8CY6hvuiu9VZk8jIx+ExCI7sszSwXQOSl8a+Y8LoTTiZwVtjWJrQau5e0JuDOV
+	 SRsXscuZUL3t8whtJrsuI/uDzl4CVb5yecFrpG18lWTQN+KXI8sXVPMNhqGsy8c3v9
+	 hGYvrVd5/YgU0EbTOqy6AuWCxYxm13VI+N50TuHM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org,
-	Robert Richter <rrichter@amd.com>
+To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	kernel test robot <lkp@intel.com>,
 	Dan Carpenter <dan.carpenter@linaro.org>,
-	Ira Weiny <ira.weiny@intel.com>,
-	Dave Jiang <dave.jiang@intel.com>
-Subject: [PATCH 6.1 39/73] cxl/pci: fix error code in __cxl_hdm_decode_init()
-Date: Wed, 20 Nov 2024 13:58:25 +0100
-Message-ID: <20241120125810.547346183@linuxfoundation.org>
+	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>
+Subject: [PATCH 6.1 40/73] media: dvbdev: fix the logic when DVB_DYNAMIC_MINORS is not set
+Date: Wed, 20 Nov 2024 13:58:26 +0100
+Message-ID: <20241120125810.574020574@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241120125809.623237564@linuxfoundation.org>
 References: <20241120125809.623237564@linuxfoundation.org>
@@ -52,36 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 
-When commit 0cab68720598 ("cxl/pci: Fix disabling memory if DVSEC CXL
-Range does not match a CFMWS window") was backported, this chunk moved
-from the cxl_hdm_decode_init() function which returns negative error
-codes to the __cxl_hdm_decode_init() function which returns false on
-error.  So the error code needs to be modified from -ENXIO to false.
+commit a4aebaf6e6efff548b01a3dc49b4b9074751c15b upstream.
 
-This issue only exits in the 6.1.y kernels.  In later kernels negative
-error codes are correct and the driver didn't exist in earlier kernels.
+When CONFIG_DVB_DYNAMIC_MINORS, ret is not initialized, and a
+semaphore is left at the wrong state, in case of errors.
 
-Fixes: 031217128990 ("cxl/pci: Fix disabling memory if DVSEC CXL Range does not match a CFMWS window")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Ira Weiny <ira.weiny@intel.com>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Make the code simpler and avoid mistakes by having just one error
+check logic used weather DVB_DYNAMIC_MINORS is used or not.
+
+Reported-by: kernel test robot <lkp@intel.com>
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Closes: https://lore.kernel.org/r/202410201717.ULWWdJv8-lkp@intel.com/
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Link: https://lore.kernel.org/r/9e067488d8935b8cf00959764a1fa5de85d65725.1730926254.git.mchehab+huawei@kernel.org
+Cc: Nathan Chancellor <nathan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cxl/core/pci.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/dvb-core/dvbdev.c |   15 ++++-----------
+ 1 file changed, 4 insertions(+), 11 deletions(-)
 
---- a/drivers/cxl/core/pci.c
-+++ b/drivers/cxl/core/pci.c
-@@ -377,7 +377,7 @@ static bool __cxl_hdm_decode_init(struct
- 
- 	if (!allowed && info->mem_enabled) {
- 		dev_err(dev, "Range register decodes outside platform defined CXL ranges.\n");
--		return -ENXIO;
-+		return false;
+--- a/drivers/media/dvb-core/dvbdev.c
++++ b/drivers/media/dvb-core/dvbdev.c
+@@ -534,6 +534,9 @@ int dvb_register_device(struct dvb_adapt
+ 	for (minor = 0; minor < MAX_DVB_MINORS; minor++)
+ 		if (dvb_minors[minor] == NULL)
+ 			break;
++#else
++	minor = nums2minor(adap->num, type, id);
++#endif
+ 	if (minor >= MAX_DVB_MINORS) {
+ 		if (new_node) {
+ 			list_del (&new_node->list_head);
+@@ -547,17 +550,7 @@ int dvb_register_device(struct dvb_adapt
+ 		mutex_unlock(&dvbdev_register_lock);
+ 		return -EINVAL;
  	}
- 
- 	/*
+-#else
+-	minor = nums2minor(adap->num, type, id);
+-	if (minor >= MAX_DVB_MINORS) {
+-		dvb_media_device_free(dvbdev);
+-		list_del(&dvbdev->list_head);
+-		kfree(dvbdev);
+-		*pdvbdev = NULL;
+-		mutex_unlock(&dvbdev_register_lock);
+-		return ret;
+-	}
+-#endif
++
+ 	dvbdev->minor = minor;
+ 	dvb_minors[minor] = dvb_device_get(dvbdev);
+ 	up_write(&minor_rwsem);
 
 
