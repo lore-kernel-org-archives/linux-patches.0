@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C11AF1AB6F8;
-	Wed, 20 Nov 2024 13:01:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 807FA1AB6F8;
+	Wed, 20 Nov 2024 13:01:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732107687; cv=none; b=TD23dKzojhfI2MBKN5SpYkvkIbgXHQdfQJHom19CwW95NatW8s/ZZlv/F2lewhe9Tj1Q3x+EYNKSlV0UI7tP7Wk0fqr+zLLYYcEeNyftRYE9PtmUC6BWFE4+8LpPjbwaxpxr1WOBAJp5OzyFo651XoNleO0dlQbBi7xk95Ba404=
+	t=1732107688; cv=none; b=BzryrhSJGyhxIUakn3jQWRwpjykEiaE/1BnuAa7EBdEWdfrSa03/GQneom4ivGAsHmhxxQ3YMUFfXuJhsIciKBBP8seRgxuWtDcoJHn57wJlKHegJMbm3ZsAWpRL2IjEf6ohlmDZ3t8hH3JMQMCxyh9KuSHpzfipy6uuWI6fDo0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732107687; c=relaxed/simple;
-	bh=7gYsEI4+5DOEKtkKY8w6W6Z+cVMoXR7hstHGwwxtisg=;
+	s=arc-20240116; t=1732107688; c=relaxed/simple;
+	bh=sUvunWP6Vin6EGayulokAoYe8deZVZiW+yGffbZBCIY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oYF5sHUuRmmgst9fjBHAz/EFVLN6z4P+1i2Vx5K1/E5mzBkd0a3a/TZsdjp1z3QRB7BTL09Nau208xt5iStLMyn/rYMQc6llz1zPtRwf3nlSq930zj7Lq9VfnRQnqiICXBOYrQLOvLI7cF6IEdlDR4n6KJQmMo1jtP4ZhUs7buo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LbPMC3RX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XNfvSkhS/HGLDKSwCrCBBmYBPeaBDzNXp8LIVfPMmEr9H/GQSScZV+BA0FyHJNU0xRzrpuvEK447SOkW4sZQuRGOnO6GwFw4cxtDVe4CRVlb2IZmCZOwqfaqV1GmB2H3W7vU24HWwo7oa3XoLal04s8uq19Vlqee1lcXo6X1xwU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=srxrMgTx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LbPMC3RX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E7E8C4CECD;
-	Wed, 20 Nov 2024 13:01:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="srxrMgTx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CB59C4CECD;
+	Wed, 20 Nov 2024 13:01:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1732107687;
-	bh=7gYsEI4+5DOEKtkKY8w6W6Z+cVMoXR7hstHGwwxtisg=;
+	s=korg; t=1732107688;
+	bh=sUvunWP6Vin6EGayulokAoYe8deZVZiW+yGffbZBCIY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LbPMC3RXvPrkI36NO05Exq8rf+euGCRDT9Dz49unTbQMI5oBk7ksgKHE5J9nJTlyc
-	 GlAXRiqf1ck8PSEs9dKsofzZFXADf8Z/PMGMTL0KV/T5yswA2Vh3V6xGZKqS/9GGDz
-	 nZWFIqZYHHmWHzcFDljM+ic4m2oQNyjdHwTlKdDI=
+	b=srxrMgTxxZY2us9EV4mSQexTbIOwtECmGfK5X7uQrSzgrEv8Ty2EfJGrHY0t7uFok
+	 1Rb5BsNUW8RXiIEfpivRZRAq+88rZjEN3FQv6vBgHNyV8fh24MeQxQUPXbkSVYfY8x
+	 bnQs0QilwgJfYeoVMOz6TK+iWHzebk5mOORIvbQ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Si-Wei Liu <si-wei.liu@oracle.com>,
-	Dragos Tatulea <dtatulea@nvidia.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Jason Wang <jasowang@redhat.com>
-Subject: [PATCH 6.1 19/73] vdpa/mlx5: Fix PA offset with unaligned starting iotlb map
-Date: Wed, 20 Nov 2024 13:58:05 +0100
-Message-ID: <20241120125810.080744391@linuxfoundation.org>
+	Paolo Abeni <pabeni@redhat.com>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 46/73] mptcp: cope racing subflow creation in mptcp_rcv_space_adjust
+Date: Wed, 20 Nov 2024 13:58:32 +0100
+Message-ID: <20241120125810.715725345@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241120125809.623237564@linuxfoundation.org>
 References: <20241120125809.623237564@linuxfoundation.org>
@@ -52,54 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Si-Wei Liu <si-wei.liu@oracle.com>
+From: Paolo Abeni <pabeni@redhat.com>
 
-commit 29ce8b8a4fa74e841342c8b8f8941848a3c6f29f upstream.
+commit ce7356ae35943cc6494cc692e62d51a734062b7d upstream.
 
-When calculating the physical address range based on the iotlb and mr
-[start,end) ranges, the offset of mr->start relative to map->start
-is not taken into account. This leads to some incorrect and duplicate
-mappings.
+Additional active subflows - i.e. created by the in kernel path
+manager - are included into the subflow list before starting the
+3whs.
 
-For the case when mr->start < map->start the code is already correct:
-the range in [mr->start, map->start) was handled by a different
-iteration.
+A racing recvmsg() spooling data received on an already established
+subflow would unconditionally call tcp_cleanup_rbuf() on all the
+current subflows, potentially hitting a divide by zero error on
+the newly created ones.
 
-Fixes: 94abbccdf291 ("vdpa/mlx5: Add shared memory registration code")
-Cc: stable@vger.kernel.org
-Signed-off-by: Si-Wei Liu <si-wei.liu@oracle.com>
-Signed-off-by: Dragos Tatulea <dtatulea@nvidia.com>
-Message-Id: <20241021134040.975221-2-dtatulea@nvidia.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Acked-by: Jason Wang <jasowang@redhat.com>
+Explicitly check that the subflow is in a suitable state before
+invoking tcp_cleanup_rbuf().
+
+Fixes: c76c6956566f ("mptcp: call tcp_cleanup_rbuf on subflows")
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/02374660836e1b52afc91966b7535c8c5f7bafb0.1731060874.git.pabeni@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ Conflicts in protocol.c, because commit f410cbea9f3d ("tcp: annotate
+  data-races around tp->window_clamp") has not been backported to this
+  version. The conflict is easy to resolve, because only the context is
+  different, but not the line to modify. ]
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/vdpa/mlx5/core/mr.c |    8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ net/mptcp/protocol.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/vdpa/mlx5/core/mr.c
-+++ b/drivers/vdpa/mlx5/core/mr.c
-@@ -232,7 +232,7 @@ static int map_direct_mr(struct mlx5_vdp
- 	struct page *pg;
- 	unsigned int nsg;
- 	int sglen;
--	u64 pa;
-+	u64 pa, offset;
- 	u64 paend;
- 	struct scatterlist *sg;
- 	struct device *dma = mvdev->vdev.dma_dev;
-@@ -255,8 +255,10 @@ static int map_direct_mr(struct mlx5_vdp
- 	sg = mr->sg_head.sgl;
- 	for (map = vhost_iotlb_itree_first(iotlb, mr->start, mr->end - 1);
- 	     map; map = vhost_iotlb_itree_next(map, mr->start, mr->end - 1)) {
--		paend = map->addr + maplen(map, mr);
--		for (pa = map->addr; pa < paend; pa += sglen) {
-+		offset = mr->start > map->start ? mr->start - map->start : 0;
-+		pa = map->addr + offset;
-+		paend = map->addr + offset + maplen(map, mr);
-+		for (; pa < paend; pa += sglen) {
- 			pg = pfn_to_page(__phys_to_pfn(pa));
- 			if (!sg) {
- 				mlx5_vdpa_warn(mvdev, "sg null. start 0x%llx, end 0x%llx\n",
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -2057,7 +2057,8 @@ static void mptcp_rcv_space_adjust(struc
+ 				slow = lock_sock_fast(ssk);
+ 				WRITE_ONCE(ssk->sk_rcvbuf, rcvbuf);
+ 				tcp_sk(ssk)->window_clamp = window_clamp;
+-				tcp_cleanup_rbuf(ssk, 1);
++				if (tcp_can_send_ack(ssk))
++					tcp_cleanup_rbuf(ssk, 1);
+ 				unlock_sock_fast(ssk, slow);
+ 			}
+ 		}
 
 
