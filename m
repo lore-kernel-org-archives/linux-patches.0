@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD4171AE843;
-	Wed, 20 Nov 2024 12:59:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75F651C243A;
+	Wed, 20 Nov 2024 12:59:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732107591; cv=none; b=GuQWK4VVd+jR5l66Whz/UrsYQwHRJw4if0cplRo+D8l+dMAwYuOYDXzByRm0qWbHrj0/dQ4/BL7x6XB9Fz5VRWd0naVDvqBI5usSdF/in0bA4pICAwmo5xOAVv+NeVqFy/j4zQkU3x+bQEydO8G3aEC7r1VIicqbF1z0DxhRsxg=
+	t=1732107592; cv=none; b=B2KeCQ+lfaD62C8Jra+nksydNMDRDaw9neaSAlhVMruoI2dafjUWlaVuiA3l2dUIDV6Clx64do9hqM0j4TemIzycwveNOjFINdRyGyKhOuMOP+PYF8znGi+Jri4c3uYR7mUZPDzsZl1QUscP1IeJsl6coH3DsoePnFS2UtREsiU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732107591; c=relaxed/simple;
-	bh=hmuPY7qPgO2N9bwh6zLjfW8vTxtUY8IyAfRNTVXST1Y=;
+	s=arc-20240116; t=1732107592; c=relaxed/simple;
+	bh=P7e41+A6tC0wPsOhyI2ANFi3zzv7DQWNjJE/T/T5mDE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MpRZgrHF0HAErlWuW5bjrkPsnzcKxdpBl64KgMf5EFzijwzzHLZPKSgB16s95T6ZECummJXLp3r3iODhW25nGHFWoUFKbbMwbVjWntvi8/gMw6ZPTrDXocNat7sADHCK9lJR/DgkIDubZx5G2/lguM+XS+nJxIs5erMDMqSwvQU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wwf63ubM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OBtdJJDk1KL/FsPKOX2x5BQ18ONtv3okyuLbk7Coxvz1dUHtvnZEjMx0crf2qPS6gDXmvHLaksMStEgluZ8YxYVYeC3YOPJXTeZGBfDpcg/39ZgMMeUReoYlvXKt6cwdKKFqieot8y8oEZG3F77GAVCE/94f/Wg7vmBMN2d8+VU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R5/dhy3j; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wwf63ubM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79EB2C4CECD;
-	Wed, 20 Nov 2024 12:59:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R5/dhy3j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4421EC4CECD;
+	Wed, 20 Nov 2024 12:59:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1732107591;
-	bh=hmuPY7qPgO2N9bwh6zLjfW8vTxtUY8IyAfRNTVXST1Y=;
+	s=korg; t=1732107592;
+	bh=P7e41+A6tC0wPsOhyI2ANFi3zzv7DQWNjJE/T/T5mDE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wwf63ubMvXBa/f36QmRPfE9k2C91TCdyjSauOCIe50Jz9+W6kDm/Y+pOvuzFvfFxn
-	 vcpQ13roDaE6TdDdEBNBoqSg52JavFyreQNS6bh5+XL5mQtbrXv2c/3De80KdLjMGY
-	 AnwvTDzB44HunXPjCFz2XAFrhm9gRLHJmjHPfE7o=
+	b=R5/dhy3jRTPAgRd4AdqOOn+87RPkxUFfDBb/J4O6kSTXt8jGUqlUp1uP55UGxqa8/
+	 FokusSkFDbVvW2QRYANRkw+x13oqkQVu2VXMJOydQfQmIqYbs7wLI5LUVHwwS/67K+
+	 Ij+nw7j+AgJNYT//GJMbVeUVn0cEQl076u5u6Ga4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Samasth Norway Ananda <samasth.norway.ananda@oracle.com>,
-	"Enrico Bravi (PhD at polito.it)" <enrico.bravi@huawei.com>,
-	Mimi Zohar <zohar@linux.ibm.com>
-Subject: [PATCH 6.6 35/82] ima: fix buffer overrun in ima_eventdigest_init_common
-Date: Wed, 20 Nov 2024 13:56:45 +0100
-Message-ID: <20241120125630.403545516@linuxfoundation.org>
+	Like Xu <like.xu.linux@gmail.com>,
+	Chao Gao <chao.gao@intel.com>,
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 6.6 36/82] KVM: nVMX: Treat vpid01 as current if L2 is active, but with VPID disabled
+Date: Wed, 20 Nov 2024 13:56:46 +0100
+Message-ID: <20241120125630.426335042@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241120125629.623666563@linuxfoundation.org>
 References: <20241120125629.623666563@linuxfoundation.org>
@@ -51,52 +51,110 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Samasth Norway Ananda <samasth.norway.ananda@oracle.com>
+From: Sean Christopherson <seanjc@google.com>
 
-commit 923168a0631bc42fffd55087b337b1b6c54dcff5 upstream.
+commit 2657b82a78f18528bef56dc1b017158490970873 upstream.
 
-Function ima_eventdigest_init() calls ima_eventdigest_init_common()
-with HASH_ALGO__LAST which is then used to access the array
-hash_digest_size[] leading to buffer overrun. Have a conditional
-statement to handle this.
+When getting the current VPID, e.g. to emulate a guest TLB flush, return
+vpid01 if L2 is running but with VPID disabled, i.e. if VPID is disabled
+in vmcs12.  Architecturally, if VPID is disabled, then the guest and host
+effectively share VPID=0.  KVM emulates this behavior by using vpid01 when
+running an L2 with VPID disabled (see prepare_vmcs02_early_rare()), and so
+KVM must also treat vpid01 as the current VPID while L2 is active.
 
-Fixes: 9fab303a2cb3 ("ima: fix violation measurement list record")
-Signed-off-by: Samasth Norway Ananda <samasth.norway.ananda@oracle.com>
-Tested-by: Enrico Bravi (PhD at polito.it) <enrico.bravi@huawei.com>
-Cc: stable@vger.kernel.org # 5.19+
-Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
+Unconditionally treating vpid02 as the current VPID when L2 is active
+causes KVM to flush TLB entries for vpid02 instead of vpid01, which
+results in TLB entries from L1 being incorrectly preserved across nested
+VM-Enter to L2 (L2=>L1 isn't problematic, because the TLB flush after
+nested VM-Exit flushes vpid01).
+
+The bug manifests as failures in the vmx_apicv_test KVM-Unit-Test, as KVM
+incorrectly retains TLB entries for the APIC-access page across a nested
+VM-Enter.
+
+Opportunisticaly add comments at various touchpoints to explain the
+architectural requirements, and also why KVM uses vpid01 instead of vpid02.
+
+All credit goes to Chao, who root caused the issue and identified the fix.
+
+Link: https://lore.kernel.org/all/ZwzczkIlYGX+QXJz@intel.com
+Fixes: 2b4a5a5d5688 ("KVM: nVMX: Flush current VPID (L1 vs. L2) for KVM_REQ_TLB_FLUSH_GUEST")
+Cc: stable@vger.kernel.org
+Cc: Like Xu <like.xu.linux@gmail.com>
+Debugged-by: Chao Gao <chao.gao@intel.com>
+Reviewed-by: Chao Gao <chao.gao@intel.com>
+Tested-by: Chao Gao <chao.gao@intel.com>
+Link: https://lore.kernel.org/r/20241031202011.1580522-1-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/integrity/ima/ima_template_lib.c |   14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ arch/x86/kvm/vmx/nested.c |   30 +++++++++++++++++++++++++-----
+ arch/x86/kvm/vmx/vmx.c    |    2 +-
+ 2 files changed, 26 insertions(+), 6 deletions(-)
 
---- a/security/integrity/ima/ima_template_lib.c
-+++ b/security/integrity/ima/ima_template_lib.c
-@@ -318,15 +318,21 @@ static int ima_eventdigest_init_common(c
- 				      hash_algo_name[hash_algo]);
- 	}
+--- a/arch/x86/kvm/vmx/nested.c
++++ b/arch/x86/kvm/vmx/nested.c
+@@ -1150,11 +1150,14 @@ static void nested_vmx_transition_tlb_fl
+ 		kvm_make_request(KVM_REQ_HV_TLB_FLUSH, vcpu);
  
--	if (digest)
-+	if (digest) {
- 		memcpy(buffer + offset, digest, digestsize);
--	else
-+	} else {
- 		/*
- 		 * If digest is NULL, the event being recorded is a violation.
- 		 * Make room for the digest by increasing the offset by the
--		 * hash algorithm digest size.
-+		 * hash algorithm digest size. If the hash algorithm is not
-+		 * specified increase the offset by IMA_DIGEST_SIZE which
-+		 * fits SHA1 or MD5
- 		 */
--		offset += hash_digest_size[hash_algo];
-+		if (hash_algo < HASH_ALGO__LAST)
-+			offset += hash_digest_size[hash_algo];
-+		else
-+			offset += IMA_DIGEST_SIZE;
-+	}
+ 	/*
+-	 * If vmcs12 doesn't use VPID, L1 expects linear and combined mappings
+-	 * for *all* contexts to be flushed on VM-Enter/VM-Exit, i.e. it's a
+-	 * full TLB flush from the guest's perspective.  This is required even
+-	 * if VPID is disabled in the host as KVM may need to synchronize the
+-	 * MMU in response to the guest TLB flush.
++	 * If VPID is disabled, then guest TLB accesses use VPID=0, i.e. the
++	 * same VPID as the host, and so architecturally, linear and combined
++	 * mappings for VPID=0 must be flushed at VM-Enter and VM-Exit.  KVM
++	 * emulates L2 sharing L1's VPID=0 by using vpid01 while running L2,
++	 * and so KVM must also emulate TLB flush of VPID=0, i.e. vpid01.  This
++	 * is required if VPID is disabled in KVM, as a TLB flush (there are no
++	 * VPIDs) still occurs from L1's perspective, and KVM may need to
++	 * synchronize the MMU in response to the guest TLB flush.
+ 	 *
+ 	 * Note, using TLB_FLUSH_GUEST is correct even if nested EPT is in use.
+ 	 * EPT is a special snowflake, as guest-physical mappings aren't
+@@ -2229,6 +2232,17 @@ static void prepare_vmcs02_early_rare(st
  
- 	return ima_write_template_field_data(buffer, offset + digestsize,
- 					     fmt, field_data);
+ 	vmcs_write64(VMCS_LINK_POINTER, INVALID_GPA);
+ 
++	/*
++	 * If VPID is disabled, then guest TLB accesses use VPID=0, i.e. the
++	 * same VPID as the host.  Emulate this behavior by using vpid01 for L2
++	 * if VPID is disabled in vmcs12.  Note, if VPID is disabled, VM-Enter
++	 * and VM-Exit are architecturally required to flush VPID=0, but *only*
++	 * VPID=0.  I.e. using vpid02 would be ok (so long as KVM emulates the
++	 * required flushes), but doing so would cause KVM to over-flush.  E.g.
++	 * if L1 runs L2 X with VPID12=1, then runs L2 Y with VPID12 disabled,
++	 * and then runs L2 X again, then KVM can and should retain TLB entries
++	 * for VPID12=1.
++	 */
+ 	if (enable_vpid) {
+ 		if (nested_cpu_has_vpid(vmcs12) && vmx->nested.vpid02)
+ 			vmcs_write16(VIRTUAL_PROCESSOR_ID, vmx->nested.vpid02);
+@@ -5827,6 +5841,12 @@ static int handle_invvpid(struct kvm_vcp
+ 		return nested_vmx_fail(vcpu,
+ 			VMXERR_INVALID_OPERAND_TO_INVEPT_INVVPID);
+ 
++	/*
++	 * Always flush the effective vpid02, i.e. never flush the current VPID
++	 * and never explicitly flush vpid01.  INVVPID targets a VPID, not a
++	 * VMCS, and so whether or not the current vmcs12 has VPID enabled is
++	 * irrelevant (and there may not be a loaded vmcs12).
++	 */
+ 	vpid02 = nested_get_vpid02(vcpu);
+ 	switch (type) {
+ 	case VMX_VPID_EXTENT_INDIVIDUAL_ADDR:
+--- a/arch/x86/kvm/vmx/vmx.c
++++ b/arch/x86/kvm/vmx/vmx.c
+@@ -3193,7 +3193,7 @@ static void vmx_flush_tlb_all(struct kvm
+ 
+ static inline int vmx_get_current_vpid(struct kvm_vcpu *vcpu)
+ {
+-	if (is_guest_mode(vcpu))
++	if (is_guest_mode(vcpu) && nested_cpu_has_vpid(get_vmcs12(vcpu)))
+ 		return nested_get_vpid02(vcpu);
+ 	return to_vmx(vcpu)->vpid;
+ }
 
 
