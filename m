@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F29781BDA80;
-	Wed, 20 Nov 2024 12:59:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B071B1BE23C;
+	Wed, 20 Nov 2024 12:59:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732107572; cv=none; b=kiaJiDUYFdzphXIvtl2CI9Z0pBWVHuuXHd4+Dp8gEFmwQRuIJzX0CLlFHscODLH2hRi0C+LVVXVr4l17ipm/yODIieDX/dB5j9pccasGNIkZARx0Do5WEryik6vzKbE85E2J8Lg0RX08vHd8pRO6u7nZEQoaD/j0dtkj11xAec4=
+	t=1732107572; cv=none; b=UKOO7PtBCOqQtjbj8KMnxF+KRkXArRMtzz1f81k4B5XjLsJUM24IMq4WnTnCSNJfyzd/JZPWH4S/QBmQBGs7B/u+VlZeCdrYJuGmzg5RjQtAqycj9SZsKrP2es6Hc8PgQqJmlVaZBfqLDfxyllMY1WngeyrDObqYCJA5Qxkp+8Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1732107572; c=relaxed/simple;
-	bh=NAxYekKM02+1VD/ohNoGLyMes7xl9gnq6wiii0IZDvk=;
+	bh=MSEg/5C9EizcOgf1EjtJHeJQu7TAlYlViVI3tGjDnLU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cc0o3sKPVSoSPCx516atVSomOoa1HyNFod8zpjcP1BW+yNQb1nRzvFixVkulx99c9stT2tfpGWATcsiVCjhvD3/wEHTN3CqMkRuh/heqG7MSbHlo6nCENTBlVMm9NrvWyZ4tRetIMrVwFziBp4p4EZIG9WNez8QORcZ2ARnY4E0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TV2ZgVMr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=I9m1H0sLhVnG4eTfGORagzhiTZEB/1Xyz1WGHLWgUjsc0OtXWgYU8JyHm53OBRo6W+L1qyjdn/il0g9kY/EyftzEDPYQt9Zg1HlzJNA3XrNe4HN8Cj11SVBNGthSEnrHUL5q4wkofXm2rP4RIYPW3TFB8dyt+B8NzbEWSg5duEw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jbVi1JC5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TV2ZgVMr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C823BC4CED1;
-	Wed, 20 Nov 2024 12:59:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jbVi1JC5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CF70C4CECD;
+	Wed, 20 Nov 2024 12:59:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1732107571;
-	bh=NAxYekKM02+1VD/ohNoGLyMes7xl9gnq6wiii0IZDvk=;
+	s=korg; t=1732107572;
+	bh=MSEg/5C9EizcOgf1EjtJHeJQu7TAlYlViVI3tGjDnLU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TV2ZgVMrCRIDncPtXWYvBYyfPXmFoG/91qxTjZqiwgnzV9LgQuEsIQ7pPX0Ye04RM
-	 cElUU6wj7t1rJZ8cjJyhKQ1ySXiFT6XyI3dTBLaUgXNFWXWavkEQ1Intd22m/oP6ir
-	 99I7l4cL4mhd7Mz9Y57JJ0Zgg7/8QVra7yu5uQH8=
+	b=jbVi1JC50jTEnqUxskqH0IrXEl1GAYw2HhhfT2kCxxlSNUwYCoX4iaWQMwgkuL7gM
+	 0JXEpgNgOuv91yZAltBAHH2ZmHzHJ+1ITbiHUEUiGe60k234c/YSbgJgwZqA3x8tv0
+	 HuWxMQph2KdpVo3b+xa3sYNVNNGrYYBivlNWgPgo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefano Garzarella <sgarzare@redhat.com>,
-	Michal Luczaj <mhal@rbox.co>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 11/82] virtio/vsock: Fix accept_queue memory leak
-Date: Wed, 20 Nov 2024 13:56:21 +0100
-Message-ID: <20241120125629.872050844@linuxfoundation.org>
+Subject: [PATCH 6.6 12/82] Revert "RDMA/core: Fix ENODEV error for iWARP test over vlan"
+Date: Wed, 20 Nov 2024 13:56:22 +0100
+Message-ID: <20241120125629.893785883@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241120125629.623666563@linuxfoundation.org>
 References: <20241120125629.623666563@linuxfoundation.org>
@@ -52,91 +50,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Luczaj <mhal@rbox.co>
+From: Leon Romanovsky <leonro@nvidia.com>
 
-[ Upstream commit d7b0ff5a866724c3ad21f2628c22a63336deec3f ]
+[ Upstream commit 6abe2a90808192a5a8b2825293e5f10e80fdea56 ]
 
-As the final stages of socket destruction may be delayed, it is possible
-that virtio_transport_recv_listen() will be called after the accept_queue
-has been flushed, but before the SOCK_DONE flag has been set. As a result,
-sockets enqueued after the flush would remain unremoved, leading to a
-memory leak.
+The citied commit in Fixes line caused to regression for udaddy [1]
+application. It doesn't work over VLANs anymore.
 
-vsock_release
-  __vsock_release
-    lock
-    virtio_transport_release
-      virtio_transport_close
-        schedule_delayed_work(close_work)
-    sk_shutdown = SHUTDOWN_MASK
-(!) flush accept_queue
-    release
-                                        virtio_transport_recv_pkt
-                                          vsock_find_bound_socket
-                                          lock
-                                          if flag(SOCK_DONE) return
-                                          virtio_transport_recv_listen
-                                            child = vsock_create_connected
-                                      (!)   vsock_enqueue_accept(child)
-                                          release
-close_work
-  lock
-  virtio_transport_do_close
-    set_flag(SOCK_DONE)
-    virtio_transport_remove_sock
-      vsock_remove_sock
-        vsock_remove_bound
-  release
+Client:
+  ifconfig eth2 1.1.1.1
+  ip link add link eth2 name p0.3597 type vlan protocol 802.1Q id 3597
+  ip link set dev p0.3597 up
+  ip addr add 2.2.2.2/16 dev p0.3597
+  udaddy -S 847 -C 220 -c 2 -t 0 -s 2.2.2.3 -b 2.2.2.2
 
-Introduce a sk_shutdown check to disallow vsock_enqueue_accept() during
-socket destruction.
+Server:
+  ifconfig eth2 1.1.1.3
+  ip link add link eth2 name p0.3597 type vlan protocol 802.1Q id 3597
+  ip link set dev p0.3597 up
+  ip addr add 2.2.2.3/16 dev p0.3597
+  udaddy -S 847 -C 220 -c 2 -t 0 -b 2.2.2.3
 
-unreferenced object 0xffff888109e3f800 (size 2040):
-  comm "kworker/5:2", pid 371, jiffies 4294940105
-  hex dump (first 32 bytes):
-    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-    28 00 0b 40 00 00 00 00 00 00 00 00 00 00 00 00  (..@............
-  backtrace (crc 9e5f4e84):
-    [<ffffffff81418ff1>] kmem_cache_alloc_noprof+0x2c1/0x360
-    [<ffffffff81d27aa0>] sk_prot_alloc+0x30/0x120
-    [<ffffffff81d2b54c>] sk_alloc+0x2c/0x4b0
-    [<ffffffff81fe049a>] __vsock_create.constprop.0+0x2a/0x310
-    [<ffffffff81fe6d6c>] virtio_transport_recv_pkt+0x4dc/0x9a0
-    [<ffffffff81fe745d>] vsock_loopback_work+0xfd/0x140
-    [<ffffffff810fc6ac>] process_one_work+0x20c/0x570
-    [<ffffffff810fce3f>] worker_thread+0x1bf/0x3a0
-    [<ffffffff811070dd>] kthread+0xdd/0x110
-    [<ffffffff81044fdd>] ret_from_fork+0x2d/0x50
-    [<ffffffff8100785a>] ret_from_fork_asm+0x1a/0x30
+[1] https://github.com/linux-rdma/rdma-core/blob/master/librdmacm/examples/udaddy.c
 
-Fixes: 3fe356d58efa ("vsock/virtio: discard packets only when socket is really closed")
-Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
-Signed-off-by: Michal Luczaj <mhal@rbox.co>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 5069d7e202f6 ("RDMA/core: Fix ENODEV error for iWARP test over vlan")
+Reported-by: Leon Romanovsky <leonro@nvidia.com>
+Closes: https://lore.kernel.org/all/20241110130746.GA48891@unreal
+Link: https://patch.msgid.link/bb9d403419b2b9566da5b8bf0761fa8377927e49.1731401658.git.leon@kernel.org
+Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/vmw_vsock/virtio_transport_common.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/infiniband/core/addr.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/net/vmw_vsock/virtio_transport_common.c b/net/vmw_vsock/virtio_transport_common.c
-index 2a44505f4a223..43495820b64fb 100644
---- a/net/vmw_vsock/virtio_transport_common.c
-+++ b/net/vmw_vsock/virtio_transport_common.c
-@@ -1314,6 +1314,14 @@ virtio_transport_recv_listen(struct sock *sk, struct sk_buff *skb,
- 		return -ENOMEM;
+diff --git a/drivers/infiniband/core/addr.c b/drivers/infiniband/core/addr.c
+index fd78d678877c4..f253295795f0a 100644
+--- a/drivers/infiniband/core/addr.c
++++ b/drivers/infiniband/core/addr.c
+@@ -269,8 +269,6 @@ rdma_find_ndev_for_src_ip_rcu(struct net *net, const struct sockaddr *src_in)
+ 		break;
+ #endif
  	}
+-	if (!ret && dev && is_vlan_dev(dev))
+-		dev = vlan_dev_real_dev(dev);
+ 	return ret ? ERR_PTR(ret) : dev;
+ }
  
-+	/* __vsock_release() might have already flushed accept_queue.
-+	 * Subsequent enqueues would lead to a memory leak.
-+	 */
-+	if (sk->sk_shutdown == SHUTDOWN_MASK) {
-+		virtio_transport_reset_no_sock(t, skb);
-+		return -ESHUTDOWN;
-+	}
-+
- 	child = vsock_create_connected(sk);
- 	if (!child) {
- 		virtio_transport_reset_no_sock(t, skb);
 -- 
 2.43.0
 
