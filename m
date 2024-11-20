@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBB1D1C830E;
-	Wed, 20 Nov 2024 13:00:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBAC21C830B;
+	Wed, 20 Nov 2024 13:00:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732107607; cv=none; b=GRtsnuw4Y/x3ViAKCF9My2HcyFxq/Jv7GnwP9pNPnOHteQ3vJGG3FWEFmm/WfOZAscAXZF9eEnbBI7a7iSGr1b9bEicqSR8TGNIflEWPgA0jzQHo/59vgkK3u9TDeTYTFdKBwsEiifi0CAVCLPLQZlqZ8FKHvdFQLYI8mek2fqk=
+	t=1732107607; cv=none; b=EoiW+g0731nsTfjFFqG0sL8xNI20VtX153AzsFGCbqObMGVBbjmJhzSEiOlEgDVwH6CZilNNFPyve2fLm6SmCz2c8T1JLM9PbowJqlZQ9dEoaXolFvE9rXMYumZZzcmPELJfMCGjvzETZZEVJ2Kn+9htZzfW3+juif3phDnsVBQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1732107607; c=relaxed/simple;
-	bh=K7ChAq73IUPqd9HpV0n/k9Bz5TIn3ZedeDjPmIpkxNE=;
+	bh=poOgLjJURqHizdHszuMrxzKRqUBdcMyAPFQB9KWCIYE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MsgcG+hCYogAJ/WIaK7ofuho9FPAoCblmG76xA7fy8xbiE2+yqFgVQKo48Y7Wi0q0tA2rAFn3ksXTwzZ6r5ZdGhJ3RLp8NVcuVtXUxoU2vYYbvaraV0IbIfEcalxN8MPqERXir3VnQ3A4AhRWCjmlhV0vOAZ/d/yoeyWXeztDNo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ROOAstTK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qC4bVBMTXtIt4XG7229zyQLDRPoR2uA2DMj4TzacekvPavVVJbSxURZEHVCIR7oa2tL7Q7ixbcMI0obm3lArt7jaO3D96ivS4PiTVBbmKHwk/p+++AV4ghE4Uykvx69UzJDqqjoz1qdi/tMQpeOeA14BX68fckQVGl6YVqYMB/c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FxqJzB4Q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ROOAstTK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74942C4CED2;
-	Wed, 20 Nov 2024 13:00:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FxqJzB4Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A0E6C4CECD;
+	Wed, 20 Nov 2024 13:00:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1732107606;
-	bh=K7ChAq73IUPqd9HpV0n/k9Bz5TIn3ZedeDjPmIpkxNE=;
+	s=korg; t=1732107605;
+	bh=poOgLjJURqHizdHszuMrxzKRqUBdcMyAPFQB9KWCIYE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ROOAstTKa9SZqBd0PV79c2u+59ZZOKsXHdDV3UPBc57vS+KxdWFDpGzwb60UZDftO
-	 T5+kFmgrzvR1CWvPTKW3j1FjPTdDV7Kio5BDqeas7MbmXkjhew5UVxeq1biFVMKow8
-	 IdsUCE/VHygPqclY2JdY+jX4uqM2qdgA0yzuYc7M=
+	b=FxqJzB4QE6Z8jlzd8iNi4BToRf940V/XcxWekGxIGDSCugh2MfpDzdOnD0n5s4Qtb
+	 blUR4JacV8hY6tWfk1iUzfvFVbQ0xw2WzZc/M+vlu97BwqB55wC2F1ZMc2Ye7WNgZe
+	 VI0NSgxSA3sST/Qf6RviknIWVsRQR37tAZLQiADc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Wahren <wahrenst@gmx.net>,
+	SeongJae Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 57/82] staging: vchiq_arm: Get the rid off struct vchiq_2835_state
-Date: Wed, 20 Nov 2024 13:57:07 +0100
-Message-ID: <20241120125630.894936545@linuxfoundation.org>
+Subject: [PATCH 6.6 56/82] mm/damon/core: handle zero {aggregation,ops_update} intervals
+Date: Wed, 20 Nov 2024 13:57:06 +0100
+Message-ID: <20241120125630.873747470@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241120125629.623666563@linuxfoundation.org>
 References: <20241120125629.623666563@linuxfoundation.org>
@@ -50,77 +51,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefan Wahren <wahrenst@gmx.net>
+From: SeongJae Park <sj@kernel.org>
 
-[ Upstream commit 4e2766102da632f26341d5539519b0abf73df887 ]
+[ Upstream commit 3488af0970445ff5532c7e8dc5e6456b877aee5e ]
 
-The whole benefit of this encapsulating struct is questionable.
-It just stores a flag to signalize the init state of vchiq_arm_state.
-Beside the fact this flag is set too soon, the access to uninitialized
-members should be avoided. So initialize vchiq_arm_state properly before
-assign it directly to vchiq_state.
+Patch series "mm/damon/core: fix handling of zero non-sampling intervals".
 
-Signed-off-by: Stefan Wahren <wahrenst@gmx.net>
-Link: https://lore.kernel.org/r/20240621131958.98208-6-wahrenst@gmx.net
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: 404b739e8955 ("staging: vchiq_arm: Use devm_kzalloc() for vchiq_arm_state allocation")
+DAMON's internal intervals accounting logic is not correctly handling
+non-sampling intervals of zero values for a wrong assumption.  This could
+cause unexpected monitoring behavior, and even result in infinite hang of
+DAMON sysfs interface user threads in case of zero aggregation interval.
+Fix those by updating the intervals accounting logic.  For details of the
+root case and solutions, please refer to commit messages of fixes.
+
+This patch (of 2):
+
+DAMON's logics to determine if this is the time to do aggregation and ops
+update assumes next_{aggregation,ops_update}_sis are always set larger
+than current passed_sample_intervals.  And therefore it further assumes
+continuously incrementing passed_sample_intervals every sampling interval
+will make it reaches to the next_{aggregation,ops_update}_sis in future.
+The logic therefore make the action and update
+next_{aggregation,ops_updaste}_sis only if passed_sample_intervals is same
+to the counts, respectively.
+
+If Aggregation interval or Ops update interval are zero, however,
+next_aggregation_sis or next_ops_update_sis are set same to current
+passed_sample_intervals, respectively.  And passed_sample_intervals is
+incremented before doing the next_{aggregation,ops_update}_sis check.
+Hence, passed_sample_intervals becomes larger than
+next_{aggregation,ops_update}_sis, and the logic says it is not the time
+to do the action and update next_{aggregation,ops_update}_sis forever,
+until an overflow happens.  In other words, DAMON stops doing aggregations
+or ops updates effectively forever, and users cannot get monitoring
+results.
+
+Based on the documents and the common sense, a reasonable behavior for
+such inputs is doing an aggregation and an ops update for every sampling
+interval.  Handle the case by removing the assumption.
+
+Note that this could incur particular real issue for DAMON sysfs interface
+users, in case of zero Aggregation interval.  When user starts DAMON with
+zero Aggregation interval and asks online DAMON parameter tuning via DAMON
+sysfs interface, the request is handled by the aggregation callback.
+Until the callback finishes the work, the user who requested the online
+tuning just waits.  Hence, the user will be stuck until the
+passed_sample_intervals overflows.
+
+Link: https://lkml.kernel.org/r/20241031183757.49610-1-sj@kernel.org
+Link: https://lkml.kernel.org/r/20241031183757.49610-2-sj@kernel.org
+Fixes: 4472edf63d66 ("mm/damon/core: use number of passed access sampling as a timer")
+Signed-off-by: SeongJae Park <sj@kernel.org>
+Cc: <stable@vger.kernel.org>	[6.7.x]
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../interface/vchiq_arm/vchiq_arm.c           | 25 +++++--------------
- 1 file changed, 6 insertions(+), 19 deletions(-)
+ mm/damon/core.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/staging/vc04_services/interface/vchiq_arm/vchiq_arm.c b/drivers/staging/vc04_services/interface/vchiq_arm/vchiq_arm.c
-index aa2313f3bcab8..0a97fb237f5e7 100644
---- a/drivers/staging/vc04_services/interface/vchiq_arm/vchiq_arm.c
-+++ b/drivers/staging/vc04_services/interface/vchiq_arm/vchiq_arm.c
-@@ -115,11 +115,6 @@ struct vchiq_arm_state {
- 	int first_connect;
- };
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index a29390fd55935..d0441e24a8ed5 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -1454,7 +1454,7 @@ static int kdamond_fn(void *data)
+ 		if (ctx->ops.check_accesses)
+ 			max_nr_accesses = ctx->ops.check_accesses(ctx);
  
--struct vchiq_2835_state {
--	int inited;
--	struct vchiq_arm_state arm_state;
--};
--
- struct vchiq_pagelist_info {
- 	struct pagelist *pagelist;
- 	size_t pagelist_buffer_size;
-@@ -580,29 +575,21 @@ vchiq_arm_init_state(struct vchiq_state *state,
- int
- vchiq_platform_init_state(struct vchiq_state *state)
- {
--	struct vchiq_2835_state *platform_state;
-+	struct vchiq_arm_state *platform_state;
+-		if (ctx->passed_sample_intervals == next_aggregation_sis) {
++		if (ctx->passed_sample_intervals >= next_aggregation_sis) {
+ 			kdamond_merge_regions(ctx,
+ 					max_nr_accesses / 10,
+ 					sz_limit);
+@@ -1472,7 +1472,7 @@ static int kdamond_fn(void *data)
  
--	state->platform_state = kzalloc(sizeof(*platform_state), GFP_KERNEL);
--	if (!state->platform_state)
-+	platform_state = kzalloc(sizeof(*platform_state), GFP_KERNEL);
-+	if (!platform_state)
- 		return -ENOMEM;
+ 		sample_interval = ctx->attrs.sample_interval ?
+ 			ctx->attrs.sample_interval : 1;
+-		if (ctx->passed_sample_intervals == next_aggregation_sis) {
++		if (ctx->passed_sample_intervals >= next_aggregation_sis) {
+ 			ctx->next_aggregation_sis = next_aggregation_sis +
+ 				ctx->attrs.aggr_interval / sample_interval;
  
--	platform_state = (struct vchiq_2835_state *)state->platform_state;
--
--	platform_state->inited = 1;
--	vchiq_arm_init_state(state, &platform_state->arm_state);
-+	vchiq_arm_init_state(state, platform_state);
-+	state->platform_state = (struct opaque_platform_state *)platform_state;
+@@ -1482,7 +1482,7 @@ static int kdamond_fn(void *data)
+ 				ctx->ops.reset_aggregated(ctx);
+ 		}
  
- 	return 0;
- }
- 
- static struct vchiq_arm_state *vchiq_platform_get_arm_state(struct vchiq_state *state)
- {
--	struct vchiq_2835_state *platform_state;
--
--	platform_state   = (struct vchiq_2835_state *)state->platform_state;
--
--	WARN_ON_ONCE(!platform_state->inited);
--
--	return &platform_state->arm_state;
-+	return (struct vchiq_arm_state *)state->platform_state;
- }
- 
- void
+-		if (ctx->passed_sample_intervals == next_ops_update_sis) {
++		if (ctx->passed_sample_intervals >= next_ops_update_sis) {
+ 			ctx->next_ops_update_sis = next_ops_update_sis +
+ 				ctx->attrs.ops_update_interval /
+ 				sample_interval;
 -- 
 2.43.0
 
