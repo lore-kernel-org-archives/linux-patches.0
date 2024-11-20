@@ -1,261 +1,194 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.15])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f181.google.com (mail-qt1-f181.google.com [209.85.160.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC758AD27
-	for <patches@lists.linux.dev>; Wed, 20 Nov 2024 01:08:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=192.198.163.15
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732064933; cv=fail; b=OzZLnaZhERfgRmlqfJRH8/cVIA3Qup7FCt6TMQPdumwMnxoIMdJRd90Vor8cM+wm0GnQLj5/BDj+4Ufn6GKm6ZGi6LAhR6w/9vpsSBD98YwfFC7i/KutJCFti0YKc75InUUqu5HJS+2Xps0gE5jKvfeGxIyX6BMaGVDmxqVkqIA=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732064933; c=relaxed/simple;
-	bh=rzu/9acDqxdD8J6A51TDMv5hWYizQLE/hwiURUVHx0A=;
-	h=Message-ID:Date:Subject:To:CC:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=eCmV+yApUsa/UvdOtj6SuvChubPiWVyjtd6Ru2rR7ap7X8ZVmlrImRFlluqHfTVi3UoiSHWrsT2Zu+yKBIDtkSZjNDSsXXiv9edXnit6T6rCO//ZH5i5USpx84k3BD3Q0PEMSVNNWWvH8MG13L10CW5GjEP7RsKOU9FAYsyopEo=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=W9NW/N6F; arc=fail smtp.client-ip=192.198.163.15
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74A3D191
+	for <patches@lists.linux.dev>; Wed, 20 Nov 2024 01:09:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.181
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1732064975; cv=none; b=oTwYcb07T5t+XQKmitntm9zQ4XHKB2w1bMwY9njEhDqDDhus/8+Ixd4U7S86CJJ0tEarpDybFIYDpvmZBo6rVrtituZch5i4j+M5JpnGUtuMh5GxH/pTZSnWdHoWVLwoDEqqipS1LuQMrLxl2Mkf5jfFRMTN/gnB2rnKYplZAqQ=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1732064975; c=relaxed/simple;
+	bh=Vj355c/zFITMQdHKCKf583txuNNPyzHRszs0Cn12ivQ=;
+	h=MIME-Version:In-Reply-To:References:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=vBh03z3gPSVF0QuztzQGTYip1hNLk51aZRFgjTaXVgGYmD/SPV6UyQ4FWM7oF4fwqbx2ZbL5cV6LCeTekhLN+pLL4IuH0WxRzdMNOEBc/EaUBw3tVBAYZzVXrfzsIl2NbySURBBJxOi2Oy78NPI24+xWmHXW0s4GKNFt4lTkW28=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=V+DrpTup; arc=none smtp.client-ip=209.85.160.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="W9NW/N6F"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1732064932; x=1763600932;
-  h=message-id:date:subject:to:cc:references:from:
-   in-reply-to:content-transfer-encoding:mime-version;
-  bh=rzu/9acDqxdD8J6A51TDMv5hWYizQLE/hwiURUVHx0A=;
-  b=W9NW/N6FbYI3X/Nfju9Qbtkfr9UJRRzmbC8Jd8vxsudOan4+Wg4E/kh9
-   3LaXIyl65NK78ZlSfFd7i9eCHkPeJBCMTx8b2WM3g0390fCT1Y7hCfr7o
-   1HKcavKGAfqgS6VnSzogHOwEbyCmNKWpv+sMmytTzQK8+TlK8tybVg7Ib
-   +caPX7xwjlguFOHqmABiTCAMpln3kT3ztUBeyaLMTJ3SMtNtmDW26t/u1
-   paaUxg3RCPLm6+eg2DWsyl4rfeAeFaWSFLYnRmWc5Ss6Qbf3f88BLgrA3
-   twkwEhCYwkKIfobKerMp/oIE0jtuzj5Nx84GNBlm/FEST86bwU/4pX0cZ
-   w==;
-X-CSE-ConnectionGUID: yOs3U/o8RcOxlQi84JLTlA==
-X-CSE-MsgGUID: 6tgZ4D8VST+NiZXmrXTZww==
-X-IronPort-AV: E=McAfee;i="6700,10204,11261"; a="32212352"
-X-IronPort-AV: E=Sophos;i="6.12,168,1728975600"; 
-   d="scan'208";a="32212352"
-Received: from orviesa004.jf.intel.com ([10.64.159.144])
-  by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Nov 2024 17:08:51 -0800
-X-CSE-ConnectionGUID: 9CczjyGmQPGUV/6XANIXpA==
-X-CSE-MsgGUID: 73UBwA5cQyebjhLM5kFIMA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,168,1728975600"; 
-   d="scan'208";a="94819219"
-Received: from orsmsx603.amr.corp.intel.com ([10.22.229.16])
-  by orviesa004.jf.intel.com with ESMTP/TLS/AES256-GCM-SHA384; 19 Nov 2024 17:08:51 -0800
-Received: from orsmsx601.amr.corp.intel.com (10.22.229.14) by
- ORSMSX603.amr.corp.intel.com (10.22.229.16) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.39; Tue, 19 Nov 2024 17:08:49 -0800
-Received: from ORSEDG601.ED.cps.intel.com (10.7.248.6) by
- orsmsx601.amr.corp.intel.com (10.22.229.14) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.39 via Frontend Transport; Tue, 19 Nov 2024 17:08:49 -0800
-Received: from NAM11-BN8-obe.outbound.protection.outlook.com (104.47.58.169)
- by edgegateway.intel.com (134.134.137.102) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Tue, 19 Nov 2024 17:08:49 -0800
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=BRGyCIgCSN5AJ27TbEojq08XZfTNtOzOpRJ9cW37X3tM7zbd1hcFFZiH2o6wmH6w/nzxY9v/O9hye6Xrl+KpbFtwPwrfsPIknioAO2h92UgtR2YFdUvv84Qi8RygvkFFbjRzslAno2i5mkte2tQGcccGOj5YX6CJR0N5hwZ+YQvjZl2yRA3LObw89/GyohhftAqX7mLx4gouY4IuzJX7i7uTgACqQJ/cldWmWW9psOeLejjZemjU7R//dBBbwJEYvgYdKdOGZ/XIjVeaYw87e73dQcL4T+JchDPToYJpyyhvwzGoKJlTzP8rw9FW+86wd95WaK4kDhuS5kTU/rvQ/w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=AJ0pdzrYZSBnmEyFZrKKqhaEdXB4NpHIOtWOGrJZQM8=;
- b=EiaH6lYwl9/zlBrlgObDUZ3uEXeCpMlFau1JRGPaMD/hGlADyjqsdOUDa0lrk5PISoZcGjlCHWmQJbukAXJEgtTHPkWftRL5J5nxGqeIpDMZNp8lo7iSEFA0BdGagvNSLq9nD35El8O1BpOFKhkQksZHJuEgBJ8gTMMYPpikcWlZrVE7nQfLybYVH+4hsCYRWnSwJWNs7tTWf/A+zpjNyIHPJb8nwIEE1LdEab+Yak2/SMfaGgtM1IIgXBXfWVam+RSO8u2sJ11x7ZNBPRQdoX1j2G6a+bXtfQxFOLQ2bfX4qbl+eTrE8sS/UYeBUW+yIj0dfDdYzHUPV+zO7LdZzQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from SJ2PR11MB7573.namprd11.prod.outlook.com (2603:10b6:a03:4d2::10)
- by CH0PR11MB8190.namprd11.prod.outlook.com (2603:10b6:610:188::5) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8158.23; Wed, 20 Nov
- 2024 01:08:44 +0000
-Received: from SJ2PR11MB7573.namprd11.prod.outlook.com
- ([fe80::61a:aa57:1d81:a9cf]) by SJ2PR11MB7573.namprd11.prod.outlook.com
- ([fe80::61a:aa57:1d81:a9cf%7]) with mapi id 15.20.8158.019; Wed, 20 Nov 2024
- 01:08:44 +0000
-Message-ID: <515914f2-501d-4df3-894a-2d255d18be1c@intel.com>
-Date: Tue, 19 Nov 2024 17:08:42 -0800
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v9 2/9] x86/resctrl: Prepare for per-ctrl_mon group
- mba_MBps control
-To: Tony Luck <tony.luck@intel.com>, Fenghua Yu <fenghua.yu@intel.com>, "Peter
- Newman" <peternewman@google.com>, Jonathan Corbet <corbet@lwn.net>,
-	<x86@kernel.org>
-CC: James Morse <james.morse@arm.com>, Jamie Iles <quic_jiles@quicinc.com>,
-	Babu Moger <babu.moger@amd.com>, Randy Dunlap <rdunlap@infradead.org>,
-	"Shaopeng Tan (Fujitsu)" <tan.shaopeng@fujitsu.com>,
-	<linux-kernel@vger.kernel.org>, <linux-doc@vger.kernel.org>,
-	<patches@lists.linux.dev>
-References: <20241114001712.80315-1-tony.luck@intel.com>
- <20241114001712.80315-3-tony.luck@intel.com>
-From: Reinette Chatre <reinette.chatre@intel.com>
-Content-Language: en-US
-In-Reply-To: <20241114001712.80315-3-tony.luck@intel.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: MW4PR04CA0162.namprd04.prod.outlook.com
- (2603:10b6:303:85::17) To SJ2PR11MB7573.namprd11.prod.outlook.com
- (2603:10b6:a03:4d2::10)
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="V+DrpTup"
+Received: by mail-qt1-f181.google.com with SMTP id d75a77b69052e-460b2e4c50fso10126891cf.0
+        for <patches@lists.linux.dev>; Tue, 19 Nov 2024 17:09:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1732064972; x=1732669772; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Vj355c/zFITMQdHKCKf583txuNNPyzHRszs0Cn12ivQ=;
+        b=V+DrpTuppeU5OVRZKnotjAiDH0qdp+Mfmkz3C2SB8XgB4/bXbvGa3bxDb8qCOaXIlw
+         D6wkRvx4XhYv0J9J6FtoLZtAx2eVbA8oMci2SKRy3m1JQnKq85PvD4s1NEQJjBFEPWoQ
+         Apm/mPH4tcsrj+WQQS3Wn2fpSFwx3P0zEUNTw=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1732064972; x=1732669772;
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Vj355c/zFITMQdHKCKf583txuNNPyzHRszs0Cn12ivQ=;
+        b=b1yZg6c3Ns+1dM8JGpqQVLZiWSu706maUBRF8S6ktBBcUuG2XDC89bGZWpY8Hcq19/
+         OcMzqyo8Z7whrgTLlZOl/lWmcBT6j4EzFwnaC1fC03LQr1p85dEg6Od5QjAW5JsWRTu0
+         gTd4p2dYkAhizUd9LL8OllEHuJvoa7WMUB1KJFPXDUFPGPvUo7aJXgs8qFBL1CBLKNFn
+         Jf+FJUOfhZaGE8XfwBw7a1MlDK3/8RuckhJ8yYU7wBjn5pXN7F2mgSNaEzhp6neynE65
+         WFkpjMYz7pylQpGikEU/F91IMr8J6P7ynzeHxtsiLaq5Nn3n3GlXpeGVDHMuD11geFYf
+         ORFg==
+X-Forwarded-Encrypted: i=1; AJvYcCWGNLsjfELduDPn+x+Ya7VLOrAip7aoeX1slczfscgiQ9H7BpdfykvbQU/tRrS59p3WyDqGVRlb@lists.linux.dev
+X-Gm-Message-State: AOJu0Yz7KiErOkM4pHx4C9jyjCPnfkxDVGA8F39D4p4CQtnOnG7cBBIU
+	++J9RHVr/EEHik9pULxT/r6oX8NSiSWlKmqMxfkWex95ELM3PpYDxQMd5y47kjnthcnj1Vjm+Ws
+	mFWSVbVDdI4T2yaAa9hXO4sc50ljDzHEkCesW
+X-Gm-Gg: ASbGnctlGB7FZM9W7jj+Ko+hQf7Le9oBvQxMMnG8AEVnVHu8PcUQHTmejtNsAgdjVef
+	ef/KKx+vas8LYxYU4zsm4dj0WbnDMn99GEotbo9YA1tARibg+PWKouZo92LQ=
+X-Google-Smtp-Source: AGHT+IFEQP0GoC2K78QjB5OV4UVVBTAop+qg+n0pMj+V8unQfj0rGdOhjC0ubNaryFKoIeIMuX2Cx56PFjeqpAF1wOA=
+X-Received: by 2002:ad4:5ca4:0:b0:6cc:567:d595 with SMTP id
+ 6a1803df08f44-6d4377afcf2mr13493476d6.7.1732064972431; Tue, 19 Nov 2024
+ 17:09:32 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 19 Nov 2024 20:09:31 -0500
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ2PR11MB7573:EE_|CH0PR11MB8190:EE_
-X-MS-Office365-Filtering-Correlation-Id: f9ac8178-f9d1-4de5-9528-08dd08ffe102
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|7416014|1800799024|376014|366016;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?dTAxSG5vQkZSNXJMMWFwU1NqT3lBKzZEQ25TK3EwUHNCSmx0dHQ2QjM0WVNZ?=
- =?utf-8?B?cWdsQndKVVdLSzJjcXRzbXV2MS8wdmR3cTVaeGhTdGtERlpxbEZjVkdsM0VH?=
- =?utf-8?B?SnB4VTJ5UGtKK0krNXVYOE5YSjJtRUFzNUp1dEJOL3pUSkladzlDSlpBdXZ2?=
- =?utf-8?B?U1c4cy9EL202UCt6Q1Bma3ZGS0QrVWw1RWYxaHV0TDBaQm1OdVNTcXBhUzBV?=
- =?utf-8?B?SncxSmdJTThwZCt6WHYyNk5rN3lzRXY4dmpCTFI4QmwvVWVhdzdTbDBJMkU4?=
- =?utf-8?B?RG1EbHpBQkxzS1c0OVhlVVRNMDV6VWM0Vk1sejhhV1JCRDBWOGZCZDdKY1d4?=
- =?utf-8?B?VGdUVmJKOElxcnFBbHNEUnFIeUtJSnlQQjlYL3pIaUV0Tm41V2sxUEM3WlNr?=
- =?utf-8?B?MXg5bXRHbnR4RkVUMUZoK1NTWEF1Vk5nRnhodFkyYngxNURTTTBnbWVXcHly?=
- =?utf-8?B?Q0hhWXJ4Q3pMVWJoRjJlMU13N3VFTWtzUWZPOUt2QThnenc1T2h1dkJOdlov?=
- =?utf-8?B?K0kvWmF5SFMyb2hNVnI1djA1WmxTTjRMNERHaE5zOENCTDNPeGtNc2prbFB5?=
- =?utf-8?B?S01RZlplTE96NVdpNmdYZk44eS9GZXVIVXQ3L1gzMitnVkR4TGU5OGNMbmg4?=
- =?utf-8?B?N2x5ZFc4UXYrcE5vSndmWkhDOEYvNzRiZVZMdTVEVW1GcmVtTWMyTGxuTzBh?=
- =?utf-8?B?SFgzSGZVcWZQalVkWEZ4M0gyYWJIT3ZQcWZQb2hYZWJwd0ozTGFFdmY5YUhy?=
- =?utf-8?B?TllITC91L2V0YWZvYVE4Mm1JTlMyeDRuMk1yR01XaExCRlFwSFRHYXE3VVVj?=
- =?utf-8?B?bFljcWlsakNGY3JGZmo3REQ3VmJxYW0zbFJIWFlOb0VTalFZeG5QQjVicGlr?=
- =?utf-8?B?UVIwZjFCWTJFNTlyTC9aczBGYUlkT3NVMHBrZ2RRcEhnOThjWjFlMUp0cy9m?=
- =?utf-8?B?ejE2dEY3S3ZOd05sek02eU5uNUE3NExIQ3p6UmpDSjNLc0N1M0FRck1CS1Fm?=
- =?utf-8?B?QStnSEM4VnNFdnhnTW5wUzg2bUhhdEpzbmpzN2UyeEsxU0ovV29ZSUp3OHFa?=
- =?utf-8?B?b0paWU40NCtkeWMwemE0RzFveUcxbUVvQVdBSm1UNTlaNDQrcklQK29DL0hj?=
- =?utf-8?B?SGMrZHl1THpBZHdHSVcxZldjRlVHWEZqU3RSUkQ4eEx5M1lFTUlUeTZ3VHkr?=
- =?utf-8?B?SXZnL0hhdUtWeEx2dHlFbDNiSU9QRzc3Wkd4M20rckl1TnA0dG50dmJmTHpR?=
- =?utf-8?B?bWQzZ0ZGOWsxTkhBaFcxY1VSaUptWHlOVDNEcnYzODNWRWxZV25QM0h4RkxX?=
- =?utf-8?B?Q21BRTlibDFVdUdZU25qY0pjREZQZ2MxR3Q0SlJhR1BNWjMzcGErWTJBZHdU?=
- =?utf-8?B?QXp5eUk3Szk5R0xmaHhleHhPVHVUVzQ1TVIvZnoxUVQ3Rjhwb2V3c2tkaW96?=
- =?utf-8?B?UHlzWEdCeFNiV3Z4QXZGNzdFcnFsQ1BqMnRFLzErTWE4SDhycnBWK0liSjJi?=
- =?utf-8?B?SG9QU2d0eHlET1JBYWFpU3hQc3RxQk5FN1ZVcnlhbGEwZk5ic2JBOGU0MTV2?=
- =?utf-8?B?ZzJHQ0Y3NUlQVG5UNzFxblJVRFpzeVZ6V0VyVE42RkU0NHlENFR3Nk52SDY0?=
- =?utf-8?B?ZVF6Z2owNk9OK0dtNk5VOHdIRmhnendSbHZTc0hCci9wWEM3ZURLNlV3bTRJ?=
- =?utf-8?B?T1dLS0tzRWtLbnNuNkVaZWNMQjBFeW9QcXVQdDBZbFU2cVRSbTNnOFlFUDZp?=
- =?utf-8?Q?WFlNrwWrdmuRRioQmM=3D?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ2PR11MB7573.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(7416014)(1800799024)(376014)(366016);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?ODNnU2VyeVZrYldrLzhueUZFcjNUZW5Ha3R5LzE5UWxYK29XZnJKaVc0ZmJH?=
- =?utf-8?B?ZS9VYTA3eEtaNERzU2QzUXFrKzF3dWpLenkrcVNySndyZFM5ZDNzWGJxWFJJ?=
- =?utf-8?B?SmdmQVdCZXZRNFVlYWM2UlJQMkprOW55b3ZZenB0UGlHMWtMZXNtalBaTnZN?=
- =?utf-8?B?bzhXNjUxRVVyVDZNZCtiQjRFVVN3KzAvRzU4WUxBNEgrZkRIZ0lUUTIxdmdW?=
- =?utf-8?B?cUpscjJhNnNIWXRVS3gwK1VUWndDdU5INVdHdzc1ZDR1ak40OGNQUDRvMy9H?=
- =?utf-8?B?VGFhMXNhWDdhWGp0ckEwNmhNREZtOUN0Vzc2eWIwdldZWTNzTllIU3B4cEFX?=
- =?utf-8?B?Z29nMExIT0g2RVVLMDdyOHNNMGkzMzJnTEpzQmVXWStVTGkvRXE3ZHVEYm9r?=
- =?utf-8?B?VEpWb3dXaGZhNlVCS2dIazBEQnFURllScEIreVZHOFNtVkZZcDdXRXVvazVS?=
- =?utf-8?B?MVZBbUlTMmZsd0xGOFN1TURISUsxZ1dDaFJXRmlvd2x1OHN2emUrVkpUbnVh?=
- =?utf-8?B?SnFQZWN4QWtiUVdwRDBlRm5MbjA0U3RtMTFwRDZicWUvdlIyRzNRTXNSbmRh?=
- =?utf-8?B?V2pEK0kyWGhSajB4L3dyM2xwcU9EVkp2KzJFWWsyazY3SUtRY0ZHUkNCVno4?=
- =?utf-8?B?SHBUci9YdjBiYUd6TTNzUzlmWTJHUm11YWNocE9tUHNmSjZMbjU5TVljOHpo?=
- =?utf-8?B?TFlIZjhZS3FiU2l6b0R2TjlvdUN1djB6YStSZXdZNThrbkVVZUxscGRTWlMw?=
- =?utf-8?B?elJuUGhyNG5vN2IvQWx2RTFUWHV5Ukp0SWFQSXhiQldpcFRXN005dCtaNEd6?=
- =?utf-8?B?SnYvZUhIRlRMT3BlcWtFc2tLY0J1M2w1b0ZQRlE0ZC9qbmVZSktJd2Q1MS9N?=
- =?utf-8?B?L2VUV3VhVkg0MXFmc2xpTFVha1ZOQWJCUk9RZ0xyOUd0WDUyelg3akVkREkx?=
- =?utf-8?B?WjdUR05Sekc3VFNJOGNWLzRjazBhUXNnS1ZLa2tzb1lkblp4Nit4anRpRWFW?=
- =?utf-8?B?YVRKekZDQ1FOVm5NU3hNRk5pNDVKV1pWdnh0UDlmUFJrb3hqdklyN0tEVFAx?=
- =?utf-8?B?TTJKbVJ6WFMrSmR2L3NZU2toTTl0WklYM3pLTmZsOXVUd2FRRVZSbkFEaXBR?=
- =?utf-8?B?T3B3RTdqSHJ6YkZaZS9ET2pWNVh3V2w5dVlwczJqMmRoeFdJcjJ4VVBOcDVE?=
- =?utf-8?B?cFpvUE9iQkEzV0pMOVpEd1FpampzdjBHVXc3bldCYjUrSWZYNDlFRkMra3pm?=
- =?utf-8?B?eW9qdkhIeGh3cHFFQjlOTE54ZzBaTm44eTlxaUYwTnlFUHZsUlU1WkRwMFMv?=
- =?utf-8?B?Q0NMTXhRcXZxRFNtWjFKMzhvMDd0eFEyYzhKaFozRk1yVjlNZWl0VEN1UkVy?=
- =?utf-8?B?TEZPSk1zaG9idmQ4ZFk5cU1GM25jdTV0VzF3RXZVNlozb2EwQlNWaVBPOWpB?=
- =?utf-8?B?RTlndkRzem0xSFkxQ3JRcVIwSE5LcExzMVFSeDAxTlNRdDFhQzRWOUVMd3gx?=
- =?utf-8?B?c3A5K0ZnZlNOeGNYOFl6SVZTa3hvbE9WU1VUZEVlM2lrdjlONi9Xa3hDLzJa?=
- =?utf-8?B?dVBWRitPanA0dXRkQy8wNm5kMDFqQi82Wk9ZN1NkTFZQYThBdzFqbmczTU50?=
- =?utf-8?B?Y3JZZTJYUzNRdWtrc0QxZEpheVk3aGFkODQxSGtsWjdTWTdrVDRJLzJkN3RU?=
- =?utf-8?B?ZlNtSjlLZS8ybnNjdWtJUEg3dnpMZUN2RTlJN3NuMFB4V2wvUlEyQ2RVOU5k?=
- =?utf-8?B?ZkVEdkJGT0VWRVIyN0FXa3Bydm00QTZFbFlIRE1Sc1FHY2pSbUlKRUlSM3Qz?=
- =?utf-8?B?QWpER1lqcEJ2aDdvV0xKOU5BOHVmTFY2RFZhKzVGNHIyM2FiMlBVVGl3Wnlo?=
- =?utf-8?B?Z3lJcmY4NUwrRVRmM2hvdkNqQ0lmNVA0TjVQUmFBMDlWSlp0S2VSbUJBNStv?=
- =?utf-8?B?am13aTU1dHVySHJBdWw3ZzB0MWlYN3gzaTBzMGxSV0NuSWFMeWJMZVN0V2ZX?=
- =?utf-8?B?ZUpoMzEvZ2F6OUhTNnhXbXNhSmlONWtkM3ZzSFErZ2NoZFgyeTlYdE9mcTFV?=
- =?utf-8?B?d00zaDRDOTRzKzg4SmU2S0djOVoxKy96U3RkbWd1RUNER2JWRWhjWkRLd1hk?=
- =?utf-8?B?eWdTNFptOTJKcDh5ajRVWjRIQ2RZUm9VbFZtbUUzNjkzeDFRMk5CSWFPRk82?=
- =?utf-8?B?SlE9PQ==?=
-X-MS-Exchange-CrossTenant-Network-Message-Id: f9ac8178-f9d1-4de5-9528-08dd08ffe102
-X-MS-Exchange-CrossTenant-AuthSource: SJ2PR11MB7573.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Nov 2024 01:08:44.2649
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 0zqLaKNoY+b0ivgMtcIK04GUol5uqAGv8VWwtv+eDl2C5aXOCG2FnWHqeE06O9BWHIO+WOhv7IKC4d0TlmqyFmI5kKYRgYlXyoSXGX4KhhA=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH0PR11MB8190
-X-OriginatorOrg: intel.com
+In-Reply-To: <5kisfv22tgqwzjpxqrbx56ywr7l4r7pny3pl2r7crv4rijqbwk@azricdasttg7>
+References: <phdcjgqqpjpruxp7v2mw446q73xr3eg4wfgfbjw5tasgr2pgg2@77swbk47b2tg>
+ <lf7y7wpuca6kzqcglgs5d443iusf7xjocum4adi7t3npfavccx@zgsp37oyztme>
+ <CAE-0n53-KmOS3zXmJPvOOZ7xxkek9-S=oBExgaY0PDnt_HjdNw@mail.gmail.com>
+ <yk3xidaisbd56yndaucax7otijjauqmm7lqm6q4q633kdawlqo@qaq27lwxmvwd>
+ <CAE-0n501j+8bMnMKabFyZjn+MLUy3Z68Hiv1PsfW0APy5ggN8g@mail.gmail.com>
+ <gstohhcdnmnkszk4l2ikd5xiewtotgo5okia62paauj6zpaw7y@4wchyvoynm2p>
+ <CAE-0n50z6MNa7WOsg-NU7k8BpFeJJyYfHX3ov6DsthLWauSNpA@mail.gmail.com>
+ <hqmx7jtkvrwvb27n56hw7rpefhp37lhr3a5fawz7gsl76uuj5s@h7m6wpdhibkk>
+ <CAE-0n50y1O2C47zOGJPmMjKXK_m6a=jhpEAP4nW+RymZbo2xyg@mail.gmail.com> <5kisfv22tgqwzjpxqrbx56ywr7l4r7pny3pl2r7crv4rijqbwk@azricdasttg7>
+From: Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.12.dev1+gaa8c22fdeedb
+Date: Tue, 19 Nov 2024 20:09:31 -0500
+Message-ID: <CAE-0n50Bxi2GfnxOmMwe-F+k5jMSiyAVPDb6K8pYm-i6hpJTOA@mail.gmail.com>
+Subject: Re: [PATCH v4 15/18] dt-bindings: usb: Add ports to
+ google,cros-ec-typec for DP altmode
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: chrome-platform@lists.linux.dev, linux-kernel@vger.kernel.org, 
+	patches@lists.linux.dev, devicetree@vger.kernel.org, 
+	Douglas Anderson <dianders@chromium.org>, Pin-yen Lin <treapking@chromium.org>, 
+	Andrzej Hajda <andrzej.hajda@intel.com>, Benson Leung <bleung@chromium.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Daniel Vetter <daniel@ffwll.ch>, David Airlie <airlied@gmail.com>, 
+	dri-devel@lists.freedesktop.org, Guenter Roeck <groeck@chromium.org>, 
+	Jernej Skrabec <jernej.skrabec@gmail.com>, Jonas Karlman <jonas@kwiboo.se>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+	Laurent Pinchart <Laurent.pinchart@ideasonboard.com>, Lee Jones <lee@kernel.org>, 
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
+	Neil Armstrong <neil.armstrong@linaro.org>, Prashant Malani <pmalani@chromium.org>, 
+	Robert Foss <rfoss@kernel.org>, Rob Herring <robh+dt@kernel.org>, 
+	Thomas Zimmermann <tzimmermann@suse.de>, Tzung-Bi Shih <tzungbi@kernel.org>, 
+	Alexandre Belloni <alexandre.belloni@bootlin.com>, 
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>, Daniel Scally <djrscally@gmail.com>, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>, Ivan Orlov <ivan.orlov0322@gmail.com>, 
+	linux-acpi@vger.kernel.org, linux-usb@vger.kernel.org, 
+	Mika Westerberg <mika.westerberg@linux.intel.com>, 
+	"Rafael J . Wysocki" <rafael.j.wysocki@intel.com>, Sakari Ailus <sakari.ailus@linux.intel.com>, 
+	Vinod Koul <vkoul@kernel.org>, Rob Herring <robh@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 
-Hi Tony,
+Quoting Dmitry Baryshkov (2024-11-15 09:17:15)
+> On Mon, Nov 11, 2024 at 06:16:27PM -0800, Stephen Boyd wrote:
+> > Quoting Dmitry Baryshkov (2024-11-08 23:05:18)
+> > > On Thu, Nov 07, 2024 at 04:28:24PM -0800, Stephen Boyd wrote:
+> > > > Quoting Dmitry Baryshkov (2024-10-31 15:54:49)
+> > > > > On Thu, Oct 31, 2024 at 02:45:29PM -0700, Stephen Boyd wrote:
+> > > > > > Quoting Dmitry Baryshkov (2024-10-31 11:42:36)
+> > > > > > > On Tue, Oct 29, 2024 at 01:15:51PM -0700, Stephen Boyd wrote:
+> > > > Long story short, I don't see how we can avoid _any_ lane assignment
+> > > > logic in drm_bridge. The logic shouldn't walk the entire bridge chain,
+> > > > but it should at least act on the bridge that is a DP bridge. I think
+> > > > you're saying pretty much the same thing here, but you want the lane
+> > > > remapping to be done via the typec layer whereas I want it to be done in
+> > > > the drm_bridge layer. To me it looks out of place to add a
+> > > > typec_switch_desc inside each DP drm_bridge because we duplicate the
+> > > > logic about USB type-c DP altmode lane assignment to each DP bridge. A
+> > > > DP bridge should just think about DP and not know or care about USB
+> > > > type-c.
+> > > >
+> > > > This is what's leading me to think we need some sort of lane assignment
+> > > > capability at the DP connector. How that assignment flows from the DP
+> > > > connector created in drm_bridge_connector.c to the hardware is where it
+> > > > is less clear to me. Should that be implemented as a typec_switch_desc,
+> > > > essentially out of band with drm_bridge, or as some drm_bridge_funcs
+> > > > function similar to struct drm_bridge_funcs::hdmi_*()? If you look at
+> > > > IT6505 in it6505_get_extcon_property() it actually wants to pull the
+> > > > orientation of the type-c port with extcon_get_property(EXTCON_DISP_DP,
+> > > > EXTCON_PROP_USB_TYPEC_POLARITY). Maybe pushing the orientation to the DP
+> > > > bridge is backwards and we should be exposing this as some sort of
+> > > > connector API that the drm_bridge can query whenever it wants.
+> > >
+> > > And it6505_get_extcon_property() / EXTCON_PROP_USB_TYPEC_POLARITY is a
+> > > Type-C code, isn't it?
+> > >
+> >
+> > Sort of? It's combining DP and USB_TYPEC enums there so it's not very
+> > clear if it's one or the other instead of just both.
+>
+> But EXTCON_PROP_USB_TYPEC_POLARITY is just a Type-C, nothing about DP in it.
 
-On 11/13/24 4:17 PM, Tony Luck wrote:
-> Resctrl uses local memory bandwidth event as input to the feedback
-> loop when the mba_MBps mount option is used. This means that this
-> mount option cannot be used on systems that only support monitoring
-> of total bandwidth.
-> 
-> Prepare to allow users to choose the input event independently for
-> each ctrl_mon group.
+It's extcon_get_property(it6505->extcon, EXTCON_DISP_DP,
+EXTCON_PROP_USB_TYPEC_POLARITY, ...) which has EXTCON_DISP_DP in there,
+so there's something about DP there. That's all I'm saying.
 
-The lack of detail on design and implementation leaves a lot for the
-reader to decipher. For example,
-* the change appears to create a contract that rdtgroup.mba_mbps_event
-  is only valid if mba_sc is enabled, this is "documented" in the
-  structure member comment but not connected to the rest of implementation, not
-  here nor later in series.
-* the patch uses *three* different checks to manage new variables:
-  is_mbm_local_enabled(), is_mba_sc(), and supports_mba_mbps(). Reader is
-  left to decipher that all checks are built on is_mbm_local_enabled()
-  and thus it is ok to use these checks before using the value that is only
-  assigned when is_mbm_local_enabled().
-* clearly mba_mbps_default_event cannot always have a value making reader wonder
-  if enum resctrl_event_id needs a "0", takes some deciphering to get confidence
-  that its assignment when is_mbm_local_enabled() fits under the contract
-  that values are only value when is_mba_sc() and thus any code following contract by
-  first checking for mba_sc should never encounter a 0.
-* based on premise of this work reader may consider what happens if
-  system does not support local MBM. more deciphering needed to get confidence
-  that while mba_mbps_default_event will not be set, since is_mba_sc() still
-  depends on local MBM this still fits under contract that mba_mbps_default_event
-  cannot be used in this case.
+> >
+> > I understand that the QMP PHY driver has implemented the lane control
+> > for orientation with a typec_switch_desc, but the QMP PHY is a plain DP
+> > PHY in this scenario. How would the type-c handlers work here? We
+> > couldn't call them through the type-c framework as far as I can tell.
+>
+> If QMP PHY is a plain DP PHY, it usually has no support for lane remapping
+> (e.g. phy-qcom-edp doesn't).
+>
+> Let me reiterate, please: lane management is outside of the DisplayPort
+> spec, at least as far as I can understand it. All lane remapping
+> (especially a dynamic one) is a pure vendor extension to the standard.
+> I'm trying to find a way to support Corsola and Trogdor without adding
+> "this is done specially for Google" kind of API. Usually that doesn't
+> fly in the long term.
 
-Of course, it may just me that needs more help to understand what a patch is doing 
-while having little insight into what it intends to do. I thought by sharing some of
-the questions I felt needed to investigated may give some insight into the difficulty
-a cryptic changelog creates. Review could be helped significantly if the changelog
-provides insight into the design decisions. 
+Got it.
 
-...
+>
+> I understand that using Type-C API for the DRM bridge sounds strange.
+> But even the mentioned bridge uses Type-C API. It asks for the Type-C
+> polarity, not the DP polarity.
+>
 
-> @@ -3611,6 +3613,8 @@ static int rdtgroup_mkdir_ctrl_mon(struct kernfs_node *parent_kn,
->  			rdt_last_cmd_puts("kernfs subdir error\n");
->  			goto out_del_list;
->  		}
-> +		if (is_mba_sc(NULL))
-> +			rdtgrp->mba_mbps_event = mba_mbps_default_event;
->  	}
->  
->  	goto out_unlock;
-> @@ -3970,6 +3974,8 @@ static void __init rdtgroup_setup_default(void)
->  	rdtgroup_default.closid = RESCTRL_RESERVED_CLOSID;
->  	rdtgroup_default.mon.rmid = RESCTRL_RESERVED_RMID;
->  	rdtgroup_default.type = RDTCTRL_GROUP;
-> +	if (supports_mba_mbps())
-> +		rdtgroup_default.mba_mbps_event = mba_mbps_default_event;
->  	INIT_LIST_HEAD(&rdtgroup_default.mon.crdtgrp_list);
->  
->  	list_add(&rdtgroup_default.rdtgroup_list, &rdt_all_groups);
+I understand that lane assignment isn't part of the DisplayPort spec,
+while it is part of the USB Type-C DisplayPort Altmode spec.
 
-I do not see the default resource group's mba_mbps_event ever being reset. This means
-that if the user mounts resctrl, changes mba_mbps_event, umount resctrl, remount
-resctrl, then the default resource group will not have the default mba_mbps_event
-but whatever was set on previous mount. Is this intended? No mention of this behavior in
-changelog.
+I'm not entirely convinced that lane assignment is _only_ part of the
+altmode spec and should be implemented with a typec switch though,
+because I imagine some hardware design could be created that has two
+DisplayPort connectors, just like these two USB-C connectors, and some
+sort of HPD redriver logic similar to the EC that decides which DP port
+"wins" and should have DP sent to it. Or perhaps 2 lanes DP to a DP
+connector and 2 lanes DP sent to a DP to HDMI bridge (shudder). In
+either case, USB type-c isn't involved.
 
-Reinette
+It sounds like we're debating how to handle lane assignment in the
+kernel. Either way, the code is going to be implemented in the bridge
+driver because it's the one that has to change what physical lane a
+logical lane is assigned to. The question is if it should be some sort
+of bridge_funcs callback, or should bridge drivers hook into the typec
+framework to expose an orientation switch, or something else?
+
+I'm thinking we should introduce some sort of bridge_funcs callback that
+can be called from the DP altmode driver, either parallel to the
+drm_connector_oob_hotplug_event() function or from it directly. If we
+can pass the fwnode for the usb-c-connector to the oob_hotplug_event
+callback, maybe that's all we need to figure out which lanes go where.
+And then in the 2 DP connector muxing world we can call
+drm_connector_oob_hotplug_event() with one or the other DP connector
+node, which will likely be children nodes of the "HPD redriver" device.
