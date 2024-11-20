@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 967FB1ABEA3;
-	Wed, 20 Nov 2024 13:01:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BB4F1BC9EC;
+	Wed, 20 Nov 2024 13:01:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732107675; cv=none; b=gIQSC7vw1K9JBK9k9aRbw7I7UHyT/AAm2SnTNlX8Zjecy9hrgiYeoR4r/D9hSZNDF9OhstPLiIbshw/KoyPItNZsQ1mWS24W4S7SbIUhmxQkbTuMjX0Vyop57JEud6Io9iFsLruGM/6BGG0WTIcgjz2P7T8aNA13oclmjYlYn7U=
+	t=1732107676; cv=none; b=B8JJcbZUnqPxIChLkrrd+wUjEadf5tBKl/OUMQA9FYJHIcXFpzwpshDV6mOOfjEQDOZ4ty7Po1TiNIxn+ClZFiP2+rzZ4znif8SRqj+V8yepg20i/Vtj6f7oxG7Hzwkj+KB7S1Hh0mSV1/agyAB9kPz6eNkn//DcMlNHfLmNJSk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732107675; c=relaxed/simple;
-	bh=4Ru3zBZvULVWIchRU1KrTugEkIfk2g86NOkk6K9yIc4=;
+	s=arc-20240116; t=1732107676; c=relaxed/simple;
+	bh=UySQMx9QgOCOdws/V4Yrrhvx4NYlJyCkXdrLrIu5hgI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JWa+ZUZ4rAYssFmeOaJhYp5yy9ObJUQtQISZldeMfT86iWu6Czti4qgAaN0qtR2j5s1PaeGBWXoyt1H6KDQo0sm+OFm4Lgfgah7hyR2suWKtn4P87ANUdvRnEN7JfeCWUMC/YTjQ26uJU4mX2XGNtznLPmgOB7feQXIO8Z23sGk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tz8CV7aI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hfR0Y/+JMIl5uchgdB1vDp5v4ryA6B8px8J6oeUMNe2PWOpbA276kbHtqkmJ+dcn7AQLmJG5CBsbdAPj4JmQsirMKsQDW2J79jgCQJ3EwhsgGx+ni5OjThzzTeIwiFODGiaf/Uam1+deq3vK6wgiVrk4ZxFuDx/UIDuPg78fI0M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NmVkG4Zu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tz8CV7aI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6454FC4CECD;
-	Wed, 20 Nov 2024 13:01:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NmVkG4Zu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2255EC4CED1;
+	Wed, 20 Nov 2024 13:01:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1732107675;
-	bh=4Ru3zBZvULVWIchRU1KrTugEkIfk2g86NOkk6K9yIc4=;
+	s=korg; t=1732107676;
+	bh=UySQMx9QgOCOdws/V4Yrrhvx4NYlJyCkXdrLrIu5hgI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tz8CV7aI19Yj6Bu1E0CHXSlRzugW/JhgRKWHEXTrTEX7HRTVE5nUbAz5IK5Lyvixm
-	 eWVKFt6CpPT67xXleXmu4G3bborZSLbGXqlVZZzEN4R/zMdh+ml7dOyiGOTesA+RtU
-	 pSPMOMB0XUrqEWqEnZAUlRSyORJTHv4y6LX/Fnlo=
+	b=NmVkG4Zu65+Yr/4SF+N1pMDO82W8OMjwVP3/ssssCLCcschZwIlBKckyxCwjf31kM
+	 DbqApwr9kFeVW4jFWFHgAX65Ate67GEAX+SGDWXU2L8m1KfO2HuQ7hIuKO9CYshzou
+	 /03kKASe4nTzYB0uAN0CQRv2Ek9OnI7+PmDkoZR4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Francesco Dolcini <francesco.dolcini@toradex.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>
-Subject: [PATCH 6.1 32/73] drm/bridge: tc358768: Fix DSI command tx
-Date: Wed, 20 Nov 2024 13:58:18 +0100
-Message-ID: <20241120125810.381626418@linuxfoundation.org>
+	Vijendar Mukunda <Vijendar.Mukunda@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.1 33/73] drm/amd: Fix initialization mistake for NBIO 7.7.0
+Date: Wed, 20 Nov 2024 13:58:19 +0100
+Message-ID: <20241120125810.405675396@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241120125809.623237564@linuxfoundation.org>
 References: <20241120125809.623237564@linuxfoundation.org>
@@ -50,72 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Francesco Dolcini <francesco.dolcini@toradex.com>
+From: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
 
-commit 32c4514455b2b8fde506f8c0962f15c7e4c26f1d upstream.
+commit 7013a8268d311fded6c7a6528fc1de82668e75f6 upstream.
 
-Wait for the command transmission to be completed in the DSI transfer
-function polling for the dc_start bit to go back to idle state after the
-transmission is started.
+There is a strapping issue on NBIO 7.7.0 that can lead to spurious PME
+events while in the D0 state.
 
-This is documented in the datasheet and failures to do so lead to
-commands corruption.
-
-Fixes: ff1ca6397b1d ("drm/bridge: Add tc358768 driver")
+Co-developed-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Link: https://lore.kernel.org/r/20241112161142.28974-1-mario.limonciello@amd.com
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 447a54a0f79c9a409ceaa17804bdd2e0206397b9)
 Cc: stable@vger.kernel.org
-Signed-off-by: Francesco Dolcini <francesco.dolcini@toradex.com>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://lore.kernel.org/r/20240926141246.48282-1-francesco@dolcini.it
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240926141246.48282-1-francesco@dolcini.it
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/bridge/tc358768.c |   21 +++++++++++++++++++--
- 1 file changed, 19 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/nbio_v7_7.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/gpu/drm/bridge/tc358768.c
-+++ b/drivers/gpu/drm/bridge/tc358768.c
-@@ -126,6 +126,9 @@
- #define TC358768_DSI_CONFW_MODE_CLR	(6 << 29)
- #define TC358768_DSI_CONFW_ADDR_DSI_CONTROL	(0x3 << 24)
+--- a/drivers/gpu/drm/amd/amdgpu/nbio_v7_7.c
++++ b/drivers/gpu/drm/amd/amdgpu/nbio_v7_7.c
+@@ -247,6 +247,12 @@ static void nbio_v7_7_init_registers(str
+ 	if (def != data)
+ 		WREG32_SOC15(NBIO, 0, regBIF0_PCIE_MST_CTRL_3, data);
  
-+/* TC358768_DSICMD_TX (0x0600) register */
-+#define TC358768_DSI_CMDTX_DC_START	BIT(0)
-+
- static const char * const tc358768_supplies[] = {
- 	"vddc", "vddmipi", "vddio"
- };
-@@ -230,6 +233,21 @@ static void tc358768_update_bits(struct
- 		tc358768_write(priv, reg, tmp);
++	switch (adev->ip_versions[NBIO_HWIP][0]) {
++	case IP_VERSION(7, 7, 0):
++		data = RREG32_SOC15(NBIO, 0, regRCC_DEV0_EPF5_STRAP4) & ~BIT(23);
++		WREG32_SOC15(NBIO, 0, regRCC_DEV0_EPF5_STRAP4, data);
++		break;
++	}
  }
  
-+static void tc358768_dsicmd_tx(struct tc358768_priv *priv)
-+{
-+	u32 val;
-+
-+	/* start transfer */
-+	tc358768_write(priv, TC358768_DSICMD_TX, TC358768_DSI_CMDTX_DC_START);
-+	if (priv->error)
-+		return;
-+
-+	/* wait transfer completion */
-+	priv->error = regmap_read_poll_timeout(priv->regmap, TC358768_DSICMD_TX, val,
-+					       (val & TC358768_DSI_CMDTX_DC_START) == 0,
-+					       100, 100000);
-+}
-+
- static int tc358768_sw_reset(struct tc358768_priv *priv)
- {
- 	/* Assert Reset */
-@@ -517,8 +535,7 @@ static ssize_t tc358768_dsi_host_transfe
- 		}
- 	}
- 
--	/* start transfer */
--	tc358768_write(priv, TC358768_DSICMD_TX, 1);
-+	tc358768_dsicmd_tx(priv);
- 
- 	ret = tc358768_clear_error(priv);
- 	if (ret)
+ static void nbio_v7_7_update_medium_grain_clock_gating(struct amdgpu_device *adev,
 
 
