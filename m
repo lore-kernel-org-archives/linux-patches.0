@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAEE21A4F19;
-	Wed, 20 Nov 2024 12:58:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 188201AA783;
+	Wed, 20 Nov 2024 12:58:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732107523; cv=none; b=NXa2FhuVDcwioTxN0elZDUomvmCOfqC2f5D7MGqzCnvjR/bCLBCn82Xu6NvAmaG4/1hkv+zCWFHcfXwdpJglOFsnlTY2F5Pke326HuR4ndk7f5DU9BV69vpUN6qh4HZrTnsYR/bkoZzsrdFXtOyraXpeQvE8EMO7GjE/z85awu4=
+	t=1732107523; cv=none; b=XaOacsvdTWlBCziHoKAOocClHkZ3etq3CeK++aqwVpCYos9cKGJ6ohk7WhHACUAjRorH76ZzgYPop9m9fI4jY1AbZ9lnZpzvGMhMIlR+mr59y8mww3TAY6WfAINnubjWF6ULge4QbpnCQTvEnhS2xrAh6bcaWF2qDWid1UKmf/I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1732107523; c=relaxed/simple;
-	bh=jXwm8+blZSpdgP3w4IMjh+4FrG/6SjMpvSf5IOdhD9E=;
+	bh=JPqR6rhf9ReEPqzufigOangaPXXzVrs6DIqcdQQ4qMc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z+Mv5fh97TIaNr2VkaI7UfHA4f9HMzHmdc0wWDyuRZCr4G6rychbc6bSc6Rup68Kd2OrFYPCoYNWpOTajy1d+mrpJcxF6AqKkeftoO3WFIfZZBk3f8At3zUMLlA5Ux6cRAlfGiuXmac7SxqiQKAWg6Aq4VSbLdtiuShmtI5g/WY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IXt/8aCC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YL7uoszvuOTjfo11F0vo0PJSkpxRTuazQcPPBzrfFiwyXU74j3sP5VObsFce+9u/Lf7lgmVwBwQI2va/UnmotEekqgb4HuXmebieBgR8rWPBXJFO1uFI4WIZI15jjm5bTcpipyKP/JqC6aTy0wcpUh6UEkpfeQRKZ16AGsp5yGs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tsq9uqc8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IXt/8aCC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7048EC4CED2;
-	Wed, 20 Nov 2024 12:58:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tsq9uqc8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDB7BC4CED6;
+	Wed, 20 Nov 2024 12:58:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1732107521;
-	bh=jXwm8+blZSpdgP3w4IMjh+4FrG/6SjMpvSf5IOdhD9E=;
+	s=korg; t=1732107523;
+	bh=JPqR6rhf9ReEPqzufigOangaPXXzVrs6DIqcdQQ4qMc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IXt/8aCC6u5RnLF4DlTZANiZXEge7VJ+FNDU6OeH3apjgUobpDN7g6sYbFbLDf5PX
-	 /47ZxlectwcFEa0aBhuBmJjntT+reqV4NGeBcc3gfc/9xVyvl8Y36CMIEv3M9RUZ23
-	 t/YciSDDNTaHsRJkEXvEStSNjLwhKJPOkXlJ4lps=
+	b=tsq9uqc8+UEYDDOohidDt56BSffSgDmz04uV5iol6fP5Kfc64u1z5H97FK9ecGJyR
+	 d0MFumTOLK8SmzPd5BE7YHKghEkVN+Iul6Knflawu14/2zN2b3vyCvDy566l9abr4s
+	 557vvDZswxgI7Kl5pmCanKgNZPunmgbu+id6l37I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Samasth Norway Ananda <samasth.norway.ananda@oracle.com>,
-	"Enrico Bravi (PhD at polito.it)" <enrico.bravi@huawei.com>,
-	Mimi Zohar <zohar@linux.ibm.com>
-Subject: [PATCH 6.11 052/107] ima: fix buffer overrun in ima_eventdigest_init_common
-Date: Wed, 20 Nov 2024 13:56:27 +0100
-Message-ID: <20241120125630.849424288@linuxfoundation.org>
+	Leo Li <sunpeng.li@amd.com>,
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Rodrigo Siqueira <rodrigo.siqueira@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.11 036/107] drm/amd/display: Run idle optimizations at end of vblank handler
+Date: Wed, 20 Nov 2024 13:56:11 +0100
+Message-ID: <20241120125630.492599855@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241120125629.681745345@linuxfoundation.org>
 References: <20241120125629.681745345@linuxfoundation.org>
@@ -51,52 +53,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Samasth Norway Ananda <samasth.norway.ananda@oracle.com>
+From: Leo Li <sunpeng.li@amd.com>
 
-commit 923168a0631bc42fffd55087b337b1b6c54dcff5 upstream.
+commit 17e68f89132b9ee4b144358b49e5df404b314181 upstream.
 
-Function ima_eventdigest_init() calls ima_eventdigest_init_common()
-with HASH_ALGO__LAST which is then used to access the array
-hash_digest_size[] leading to buffer overrun. Have a conditional
-statement to handle this.
+[Why & How]
+1. After allowing idle optimizations, hw programming is disallowed.
+2. Before hw programming, we need to disallow idle optimizations.
 
-Fixes: 9fab303a2cb3 ("ima: fix violation measurement list record")
-Signed-off-by: Samasth Norway Ananda <samasth.norway.ananda@oracle.com>
-Tested-by: Enrico Bravi (PhD at polito.it) <enrico.bravi@huawei.com>
-Cc: stable@vger.kernel.org # 5.19+
-Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
+Otherwise, in scenario 1, we will immediately kick hw out of idle
+optimizations with register access.
+
+Scenario 2 is less of a concern, since any register access will kick
+hw out of idle optimizations. But we'll do it early for correctness.
+
+Signed-off-by: Leo Li <sunpeng.li@amd.com>
+Reviewed-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Rodrigo Siqueira <rodrigo.siqueira@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/integrity/ima/ima_template_lib.c |   14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crtc.c |   12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
---- a/security/integrity/ima/ima_template_lib.c
-+++ b/security/integrity/ima/ima_template_lib.c
-@@ -318,15 +318,21 @@ static int ima_eventdigest_init_common(c
- 				      hash_algo_name[hash_algo]);
- 	}
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crtc.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crtc.c
+@@ -251,9 +251,10 @@ static void amdgpu_dm_crtc_vblank_contro
+ 	else if (dm->active_vblank_irq_count)
+ 		dm->active_vblank_irq_count--;
  
--	if (digest)
-+	if (digest) {
- 		memcpy(buffer + offset, digest, digestsize);
--	else
-+	} else {
- 		/*
- 		 * If digest is NULL, the event being recorded is a violation.
- 		 * Make room for the digest by increasing the offset by the
--		 * hash algorithm digest size.
-+		 * hash algorithm digest size. If the hash algorithm is not
-+		 * specified increase the offset by IMA_DIGEST_SIZE which
-+		 * fits SHA1 or MD5
- 		 */
--		offset += hash_digest_size[hash_algo];
-+		if (hash_algo < HASH_ALGO__LAST)
-+			offset += hash_digest_size[hash_algo];
-+		else
-+			offset += IMA_DIGEST_SIZE;
+-	dc_allow_idle_optimizations(dm->dc, dm->active_vblank_irq_count == 0);
+-
+-	DRM_DEBUG_KMS("Allow idle optimizations (MALL): %d\n", dm->active_vblank_irq_count == 0);
++	if (dm->active_vblank_irq_count > 0) {
++		DRM_DEBUG_KMS("Allow idle optimizations (MALL): false\n");
++		dc_allow_idle_optimizations(dm->dc, false);
 +	}
  
- 	return ima_write_template_field_data(buffer, offset + digestsize,
- 					     fmt, field_data);
+ 	/*
+ 	 * Control PSR based on vblank requirements from OS
+@@ -272,6 +273,11 @@ static void amdgpu_dm_crtc_vblank_contro
+ 			vblank_work->stream->link->replay_settings.replay_feature_enabled);
+ 	}
+ 
++	if (dm->active_vblank_irq_count == 0) {
++		DRM_DEBUG_KMS("Allow idle optimizations (MALL): true\n");
++		dc_allow_idle_optimizations(dm->dc, true);
++	}
++
+ 	mutex_unlock(&dm->dc_lock);
+ 
+ 	dc_stream_release(vblank_work->stream);
 
 
