@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 987D11AAE3B;
-	Wed, 20 Nov 2024 12:59:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A1FD1AA1C3;
+	Wed, 20 Nov 2024 12:59:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732107552; cv=none; b=YUCGQDiWYhaZSAvVZRMAlomDm/BfW5URGCRhTFFbNhBHfChiYGihIuuoXoDjA+a+hYiEyv583QCji6sxWhAPLwrwFtDQ7BF4XyKYg4ZYkkQCAQ2anzfWaD0xsog/prfqterwcEw0knxnqSODhQj+DadES1WHS02wI35T8wke/XQ=
+	t=1732107553; cv=none; b=PaNXV3FaiENGQV3H9JxHEsmCZFrfyZnIqgsrwlFWYZuLIjwYgNetiwrPf5D+g8L/+1LbAi2IGXPqEsuON2TF1S3W99s5ECv9G2SwzwokRzGnt8dTjRTKH/3KvXvWXV5Ktc45uYUJTEy6BIOXemFHqzTTYjFhfxB4PMEu0J50r6U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732107552; c=relaxed/simple;
-	bh=qUGqCumYOecAmSTcMYwpPXgS4TNidTZL+BR2Jl/ZqQw=;
+	s=arc-20240116; t=1732107553; c=relaxed/simple;
+	bh=8/zKHBZ8mJuwovPq7IY9Obe5R3JP33TRKIp2fTgpcyo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=DMIa4TWI01KuwabAGk3VHWf5aHyuGuve2WiOooRuCvp05h+dJ3emIj6708MBqgTgxjHSMXIETgijYFZS0v0vrkwmRmgafAXnhyrpGc+XBZzd6NfkiRQ8BgDZqhRRyasr6LtmgY9Ia2am6P9QEkpXlGhYCsx75OjQ6sPludhhIJc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eG/okq+z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pwfvUj0aw9WGid02Tfy77HGUL8ZXLw09JFncLDgiHyxq8i3uQbUfxploZnPuaew5zVCVeaWAfe8c6mfxSbBNBBDZtHIhRsktbDe/b5GYhMH8z+vyIpxtjyFllZx5Oca3YLBfgAkOyfAS5x5O+yX2j3bGTu02t9DBdwI+2AaqmEg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R6mSl+lu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eG/okq+z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 682CBC4CED8;
-	Wed, 20 Nov 2024 12:59:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R6mSl+lu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1ECB5C4CECD;
+	Wed, 20 Nov 2024 12:59:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1732107552;
-	bh=qUGqCumYOecAmSTcMYwpPXgS4TNidTZL+BR2Jl/ZqQw=;
+	s=korg; t=1732107553;
+	bh=8/zKHBZ8mJuwovPq7IY9Obe5R3JP33TRKIp2fTgpcyo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eG/okq+zN9vC0xG+U00F+lJLehg4271+zIgFViUlJB7M38swLdsK+ggfXQ0kw8aid
-	 5iJuNZR9Uj7U5hQOjZWxsMr6dgqHyZTZuYxPn/NreOiv/tAt5ENfIkVHzPwmvI234c
-	 dDTZc3+0ggdU1CNKBfSRnXI6Y/+UH+XABxo3vYyE=
+	b=R6mSl+luwXxOeR22cLAWK4InOELXM1HICLLmPeYiakSZbQcAUK5E2QUrWdyOOW+mn
+	 nRaqh1MB89EVIqqZtZtugxToSTI5R65bBcR0nWwFboS5dvgaOqVt++1Z5Ed1PuWxdv
+	 rYwWzsgoMlfda+CjCZJSFeaiYfUNFDM183ZU0Sr8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	David Rosca <david.rosca@amd.com>,
+	Leo Liu <leo.liu@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.11 093/107] drm/amdgpu: fix check in gmc_v9_0_get_vm_pte()
-Date: Wed, 20 Nov 2024 13:57:08 +0100
-Message-ID: <20241120125631.812057350@linuxfoundation.org>
+Subject: [PATCH 6.11 094/107] drm/amdgpu: Fix video caps for H264 and HEVC encode maximum size
+Date: Wed, 20 Nov 2024 13:57:09 +0100
+Message-ID: <20241120125631.837852261@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241120125629.681745345@linuxfoundation.org>
 References: <20241120125629.681745345@linuxfoundation.org>
@@ -44,69 +45,151 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.11-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christian König <christian.koenig@amd.com>
+From: David Rosca <david.rosca@amd.com>
 
-commit 0e5ac88fb918297a7484b67f2b484d43bed3fbbe upstream.
+commit d641a151fcaf0d043075b214b469a14abab25af2 upstream.
 
-The coherency flags can only be determined when the BO is locked and that
-in turn is only guaranteed when the mapping is validated.
+H264 supports 4096x4096 starting from Polaris.
+HEVC also supports 4096x4096, with VCN 3 and newer 8192x4352
+is supported.
 
-Fix the check, move the resource check into the function and add an assert
-that the BO is locked.
-
-Signed-off-by: Christian König <christian.koenig@amd.com>
-Fixes: d1a372af1c3d ("drm/amdgpu: Set MTYPE in PTE based on BO flags")
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: David Rosca <david.rosca@amd.com>
+Reviewed-by: Leo Liu <leo.liu@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 1b4ca8546f5b5c482717bedb8e031227b1541539)
+(cherry picked from commit 69e9a9e65b1ea542d07e3fdd4222b46e9f5a3a29)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/gmc_v9_0.c |   13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/nv.c    |   12 ++++++------
+ drivers/gpu/drm/amd/amdgpu/soc15.c |    4 ++--
+ drivers/gpu/drm/amd/amdgpu/soc21.c |   12 ++++++------
+ drivers/gpu/drm/amd/amdgpu/soc24.c |    2 +-
+ drivers/gpu/drm/amd/amdgpu/vi.c    |    8 ++++----
+ 5 files changed, 19 insertions(+), 19 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/gmc_v9_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/gmc_v9_0.c
-@@ -1124,8 +1124,10 @@ static void gmc_v9_0_get_coherence_flags
- 					 uint64_t *flags)
+--- a/drivers/gpu/drm/amd/amdgpu/nv.c
++++ b/drivers/gpu/drm/amd/amdgpu/nv.c
+@@ -67,8 +67,8 @@ static const struct amd_ip_funcs nv_comm
+ 
+ /* Navi */
+ static const struct amdgpu_video_codec_info nv_video_codecs_encode_array[] = {
+-	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_MPEG4_AVC, 4096, 2304, 0)},
+-	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_HEVC, 4096, 2304, 0)},
++	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_MPEG4_AVC, 4096, 4096, 0)},
++	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_HEVC, 4096, 4096, 0)},
+ };
+ 
+ static const struct amdgpu_video_codecs nv_video_codecs_encode = {
+@@ -94,8 +94,8 @@ static const struct amdgpu_video_codecs
+ 
+ /* Sienna Cichlid */
+ static const struct amdgpu_video_codec_info sc_video_codecs_encode_array[] = {
+-	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_MPEG4_AVC, 4096, 2160, 0)},
+-	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_HEVC, 7680, 4352, 0)},
++	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_MPEG4_AVC, 4096, 4096, 0)},
++	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_HEVC, 8192, 4352, 0)},
+ };
+ 
+ static const struct amdgpu_video_codecs sc_video_codecs_encode = {
+@@ -136,8 +136,8 @@ static const struct amdgpu_video_codecs
+ 
+ /* SRIOV Sienna Cichlid, not const since data is controlled by host */
+ static struct amdgpu_video_codec_info sriov_sc_video_codecs_encode_array[] = {
+-	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_MPEG4_AVC, 4096, 2160, 0)},
+-	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_HEVC, 7680, 4352, 0)},
++	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_MPEG4_AVC, 4096, 4096, 0)},
++	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_HEVC, 8192, 4352, 0)},
+ };
+ 
+ static struct amdgpu_video_codec_info sriov_sc_video_codecs_decode_array_vcn0[] = {
+--- a/drivers/gpu/drm/amd/amdgpu/soc15.c
++++ b/drivers/gpu/drm/amd/amdgpu/soc15.c
+@@ -90,8 +90,8 @@ static const struct amd_ip_funcs soc15_c
+ /* Vega, Raven, Arcturus */
+ static const struct amdgpu_video_codec_info vega_video_codecs_encode_array[] =
  {
- 	struct amdgpu_device *bo_adev = amdgpu_ttm_adev(bo->tbo.bdev);
--	bool is_vram = bo->tbo.resource->mem_type == TTM_PL_VRAM;
--	bool coherent = bo->flags & (AMDGPU_GEM_CREATE_COHERENT | AMDGPU_GEM_CREATE_EXT_COHERENT);
-+	bool is_vram = bo->tbo.resource &&
-+		bo->tbo.resource->mem_type == TTM_PL_VRAM;
-+	bool coherent = bo->flags & (AMDGPU_GEM_CREATE_COHERENT |
-+				     AMDGPU_GEM_CREATE_EXT_COHERENT);
- 	bool ext_coherent = bo->flags & AMDGPU_GEM_CREATE_EXT_COHERENT;
- 	bool uncached = bo->flags & AMDGPU_GEM_CREATE_UNCACHED;
- 	struct amdgpu_vm *vm = mapping->bo_va->base.vm;
-@@ -1133,6 +1135,8 @@ static void gmc_v9_0_get_coherence_flags
- 	bool snoop = false;
- 	bool is_local;
+-	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_MPEG4_AVC, 4096, 2304, 0)},
+-	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_HEVC, 4096, 2304, 0)},
++	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_MPEG4_AVC, 4096, 4096, 0)},
++	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_HEVC, 4096, 4096, 0)},
+ };
  
-+	dma_resv_assert_held(bo->tbo.base.resv);
-+
- 	switch (amdgpu_ip_version(adev, GC_HWIP, 0)) {
- 	case IP_VERSION(9, 4, 1):
- 	case IP_VERSION(9, 4, 2):
-@@ -1251,9 +1255,8 @@ static void gmc_v9_0_get_vm_pte(struct a
- 		*flags &= ~AMDGPU_PTE_VALID;
- 	}
+ static const struct amdgpu_video_codecs vega_video_codecs_encode =
+--- a/drivers/gpu/drm/amd/amdgpu/soc21.c
++++ b/drivers/gpu/drm/amd/amdgpu/soc21.c
+@@ -49,13 +49,13 @@ static const struct amd_ip_funcs soc21_c
  
--	if (bo && bo->tbo.resource)
--		gmc_v9_0_get_coherence_flags(adev, mapping->bo_va->base.bo,
--					     mapping, flags);
-+	if ((*flags & AMDGPU_PTE_VALID) && bo)
-+		gmc_v9_0_get_coherence_flags(adev, bo, mapping, flags);
- }
+ /* SOC21 */
+ static const struct amdgpu_video_codec_info vcn_4_0_0_video_codecs_encode_array_vcn0[] = {
+-	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_MPEG4_AVC, 4096, 2304, 0)},
++	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_MPEG4_AVC, 4096, 4096, 0)},
+ 	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_HEVC, 8192, 4352, 0)},
+ 	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_AV1, 8192, 4352, 0)},
+ };
  
- static void gmc_v9_0_override_vm_pte_flags(struct amdgpu_device *adev,
+ static const struct amdgpu_video_codec_info vcn_4_0_0_video_codecs_encode_array_vcn1[] = {
+-	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_MPEG4_AVC, 4096, 2304, 0)},
++	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_MPEG4_AVC, 4096, 4096, 0)},
+ 	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_HEVC, 8192, 4352, 0)},
+ };
+ 
+@@ -96,14 +96,14 @@ static const struct amdgpu_video_codecs
+ 
+ /* SRIOV SOC21, not const since data is controlled by host */
+ static struct amdgpu_video_codec_info sriov_vcn_4_0_0_video_codecs_encode_array_vcn0[] = {
+-	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_MPEG4_AVC, 4096, 2304, 0)},
+-	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_HEVC, 4096, 2304, 0)},
++	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_MPEG4_AVC, 4096, 4096, 0)},
++	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_HEVC, 8192, 4352, 0)},
+ 	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_AV1, 8192, 4352, 0)},
+ };
+ 
+ static struct amdgpu_video_codec_info sriov_vcn_4_0_0_video_codecs_encode_array_vcn1[] = {
+-	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_MPEG4_AVC, 4096, 2304, 0)},
+-	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_HEVC, 4096, 2304, 0)},
++	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_MPEG4_AVC, 4096, 4096, 0)},
++	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_HEVC, 8192, 4352, 0)},
+ };
+ 
+ static struct amdgpu_video_codecs sriov_vcn_4_0_0_video_codecs_encode_vcn0 = {
+--- a/drivers/gpu/drm/amd/amdgpu/soc24.c
++++ b/drivers/gpu/drm/amd/amdgpu/soc24.c
+@@ -48,7 +48,7 @@
+ static const struct amd_ip_funcs soc24_common_ip_funcs;
+ 
+ static const struct amdgpu_video_codec_info vcn_5_0_0_video_codecs_encode_array_vcn0[] = {
+-	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_MPEG4_AVC, 4096, 2304, 0)},
++	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_MPEG4_AVC, 4096, 4096, 0)},
+ 	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_HEVC, 8192, 4352, 0)},
+ 	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_AV1, 8192, 4352, 0)},
+ };
+--- a/drivers/gpu/drm/amd/amdgpu/vi.c
++++ b/drivers/gpu/drm/amd/amdgpu/vi.c
+@@ -136,15 +136,15 @@ static const struct amdgpu_video_codec_i
+ 	{
+ 		.codec_type = AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_MPEG4_AVC,
+ 		.max_width = 4096,
+-		.max_height = 2304,
+-		.max_pixels_per_frame = 4096 * 2304,
++		.max_height = 4096,
++		.max_pixels_per_frame = 4096 * 4096,
+ 		.max_level = 0,
+ 	},
+ 	{
+ 		.codec_type = AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_HEVC,
+ 		.max_width = 4096,
+-		.max_height = 2304,
+-		.max_pixels_per_frame = 4096 * 2304,
++		.max_height = 4096,
++		.max_pixels_per_frame = 4096 * 4096,
+ 		.max_level = 0,
+ 	},
+ };
 
 
