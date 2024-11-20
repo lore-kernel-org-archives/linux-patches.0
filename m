@@ -1,39 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E255B1DFEF;
-	Wed, 20 Nov 2024 12:59:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1ACAF1DFEF;
+	Wed, 20 Nov 2024 12:59:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732107543; cv=none; b=t8zc/sTqXhJPiVoMcYFm/+OJV066fnuHo9XGt83NxJsqO/+v8ETH8b6VAffZ5KTZN5/RCJWESq2l2Lg0yP3pTsLqTvzs9DFIJxzU9efqX0but74WEQCgZG/5439OUG2S779M5TygYMYas8GdQTxbFm8yBDqSSnoy0D2Oww//OqQ=
+	t=1732107544; cv=none; b=nNoGZuELjATSZOMTB+a2c+FgTDyQI2m0qYoNhfNyaUwH2mcR3mVxYlI4KZOKGSD8yLSMmrWLUu/djhiIBdF8FcswkJguRM5WKGpywgBjybg9hKideop39SCuNZZr9HrVHSWjO/H2n9/4nODEBcCVvl+I78gReSzxnOUAGb7GDpc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732107543; c=relaxed/simple;
-	bh=2KJdwdEF4f/rkh2xCgbWJ7/4scskCEIUANqUq57512g=;
+	s=arc-20240116; t=1732107544; c=relaxed/simple;
+	bh=MBQ/r6HxBVZRAqmgW+vXUQYXZEJ5RpFf03M4yIIB5h4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jvZxwv0HkmY6ZEMdXv52dg5czJWig9juHnxiHlvspu7227SZtV5T29nPa/Cnaid6omqAIhCag7sGljOroNa9ot0FUxpI2/lc9ZRoeqR4Q4GCyg42Q7ADN1xCmPIBb2DZ4qfBSARnTI3atKARFWDpP/bpwrS4R5KuTe9be3F+Duk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qp3L+BXC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aswi+Sa11Hk7O/hlAMWVkCKmbQ38ZCM686M8bSVLM/gkhdsslKbrBzLoG7l3JTfpA0l6S64VAtt/aL74IJWoWaDEja0r363VZ4AA9aDhQT6Jf9eYCZOsQi95hfVNmLpNY+RRp3spdiI2rXNNtyqIx2xo382bVKq+K5iIL8IHZG4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rtdFcZsk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qp3L+BXC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B78C0C4CECD;
-	Wed, 20 Nov 2024 12:59:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rtdFcZsk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B293C4CED2;
+	Wed, 20 Nov 2024 12:59:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1732107542;
-	bh=2KJdwdEF4f/rkh2xCgbWJ7/4scskCEIUANqUq57512g=;
+	s=korg; t=1732107543;
+	bh=MBQ/r6HxBVZRAqmgW+vXUQYXZEJ5RpFf03M4yIIB5h4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qp3L+BXCe90XZdMGiFVIBqyk41/WV1I6kZ/2Nq25m2pEFk6mv/WuJanpervEXEccD
-	 DQQlmBz3g3PBsnWhtc8FfIzQ8Iy61gLc3q+bq/aExIe4LqXWJ7dt/njO79cEN6QBal
-	 eyFfl6AO/nVhjFI1X8N4YahfEvjWM5HhfwYVeneU=
+	b=rtdFcZskauo5JXYRuCn/uk582x9VcHhMuODIarg8Q/60lDsSxajTz+RZG2h/R4z6K
+	 0lJU9CVfhVF2ozVjhR3pGQko4yzmElxTybLqCl0aFV0ngAEIzszh6rWfnErK+yLMbW
+	 rje1DSYB/z2SDc3E8YE/1m5NEHVH3o3jfPSTzviE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Brian Gerst <brgerst@gmail.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Nathan Chancellor <nathan@kernel.org>
-Subject: [PATCH 6.11 041/107] x86/stackprotector: Work around strict Clang TLS symbol requirements
-Date: Wed, 20 Nov 2024 13:56:16 +0100
-Message-ID: <20241120125630.602084856@linuxfoundation.org>
+	Jinjiang Tu <tujinjiang@huawei.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	Alexander Lobakin <alobakin@pm.me>,
+	David Hildenbrand <david@redhat.com>,
+	Kefeng Wang <wangkefeng.wang@huawei.com>,
+	Mel Gorman <mgorman@techsingularity.net>,
+	Nanyong Sun <sunnanyong@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.11 042/107] mm: fix NULL pointer dereference in alloc_pages_bulk_noprof
+Date: Wed, 20 Nov 2024 13:56:17 +0100
+Message-ID: <20241120125630.623952974@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241120125629.681745345@linuxfoundation.org>
 References: <20241120125629.681745345@linuxfoundation.org>
@@ -52,129 +56,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ard Biesheuvel <ardb@kernel.org>
+From: Jinjiang Tu <tujinjiang@huawei.com>
 
-commit 577c134d311b9b94598d7a0c86be1f431f823003 upstream.
+commit 8ce41b0f9d77cca074df25afd39b86e2ee3aa68e upstream.
 
-GCC and Clang both implement stack protector support based on Thread Local
-Storage (TLS) variables, and this is used in the kernel to implement per-task
-stack cookies, by copying a task's stack cookie into a per-CPU variable every
-time it is scheduled in.
+We triggered a NULL pointer dereference for ac.preferred_zoneref->zone in
+alloc_pages_bulk_noprof() when the task is migrated between cpusets.
 
-Both now also implement -mstack-protector-guard-symbol=, which permits the TLS
-variable to be specified directly. This is useful because it will allow to
-move away from using a fixed offset of 40 bytes into the per-CPU area on
-x86_64, which requires a lot of special handling in the per-CPU code and the
-runtime relocation code.
+When cpuset is enabled, in prepare_alloc_pages(), ac->nodemask may be
+&current->mems_allowed.  when first_zones_zonelist() is called to find
+preferred_zoneref, the ac->nodemask may be modified concurrently if the
+task is migrated between different cpusets.  Assuming we have 2 NUMA Node,
+when traversing Node1 in ac->zonelist, the nodemask is 2, and when
+traversing Node2 in ac->zonelist, the nodemask is 1.  As a result, the
+ac->preferred_zoneref points to NULL zone.
 
-However, while GCC is rather lax in its implementation of this command line
-option, Clang actually requires that the provided symbol name refers to a TLS
-variable (i.e., one declared with __thread), although it also permits the
-variable to be undeclared entirely, in which case it will use an implicit
-declaration of the right type.
+In alloc_pages_bulk_noprof(), for_each_zone_zonelist_nodemask() finds a
+allowable zone and calls zonelist_node_idx(ac.preferred_zoneref), leading
+to NULL pointer dereference.
 
-The upshot of this is that Clang will emit the correct references to the stack
-cookie variable in most cases, e.g.,
+__alloc_pages_noprof() fixes this issue by checking NULL pointer in commit
+ea57485af8f4 ("mm, page_alloc: fix check for NULL preferred_zone") and
+commit df76cee6bbeb ("mm, page_alloc: remove redundant checks from alloc
+fastpath").
 
-  10d:       64 a1 00 00 00 00       mov    %fs:0x0,%eax
-                     10f: R_386_32   __stack_chk_guard
+To fix it, check NULL pointer for preferred_zoneref->zone.
 
-However, if a non-TLS definition of the symbol in question is visible in the
-same compilation unit (which amounts to the whole of vmlinux if LTO is
-enabled), it will drop the per-CPU prefix and emit a load from a bogus
-address.
-
-Work around this by using a symbol name that never occurs in C code, and emit
-it as an alias in the linker script.
-
-Fixes: 3fb0fdb3bbe7 ("x86/stackprotector/32: Make the canary into a regular percpu variable")
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
-Signed-off-by: Brian Gerst <brgerst@gmail.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Nathan Chancellor <nathan@kernel.org>
-Tested-by: Nathan Chancellor <nathan@kernel.org>
-Cc: stable@vger.kernel.org
-Link: https://github.com/ClangBuiltLinux/linux/issues/1854
-Link: https://lore.kernel.org/r/20241105155801.1779119-2-brgerst@gmail.com
+Link: https://lkml.kernel.org/r/20241113083235.166798-1-tujinjiang@huawei.com
+Fixes: 387ba26fb1cb ("mm/page_alloc: add a bulk page allocator")
+Signed-off-by: Jinjiang Tu <tujinjiang@huawei.com>
+Reviewed-by: Vlastimil Babka <vbabka@suse.cz>
+Cc: Alexander Lobakin <alobakin@pm.me>
+Cc: David Hildenbrand <david@redhat.com>
+Cc: Kefeng Wang <wangkefeng.wang@huawei.com>
+Cc: Mel Gorman <mgorman@techsingularity.net>
+Cc: Nanyong Sun <sunnanyong@huawei.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/Makefile                     |    5 +++--
- arch/x86/entry/entry.S                |   16 ++++++++++++++++
- arch/x86/include/asm/asm-prototypes.h |    3 +++
- arch/x86/kernel/cpu/common.c          |    2 ++
- arch/x86/kernel/vmlinux.lds.S         |    3 +++
- 5 files changed, 27 insertions(+), 2 deletions(-)
+ mm/page_alloc.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/arch/x86/Makefile
-+++ b/arch/x86/Makefile
-@@ -138,9 +138,10 @@ ifeq ($(CONFIG_X86_32),y)
+--- a/mm/page_alloc.c
++++ b/mm/page_alloc.c
+@@ -4569,7 +4569,8 @@ unsigned long alloc_pages_bulk_noprof(gf
+ 	gfp = alloc_gfp;
  
-     ifeq ($(CONFIG_STACKPROTECTOR),y)
-         ifeq ($(CONFIG_SMP),y)
--			KBUILD_CFLAGS += -mstack-protector-guard-reg=fs -mstack-protector-guard-symbol=__stack_chk_guard
-+            KBUILD_CFLAGS += -mstack-protector-guard-reg=fs \
-+                             -mstack-protector-guard-symbol=__ref_stack_chk_guard
-         else
--			KBUILD_CFLAGS += -mstack-protector-guard=global
-+            KBUILD_CFLAGS += -mstack-protector-guard=global
-         endif
-     endif
- else
---- a/arch/x86/entry/entry.S
-+++ b/arch/x86/entry/entry.S
-@@ -51,3 +51,19 @@ EXPORT_SYMBOL_GPL(mds_verw_sel);
- .popsection
+ 	/* Find an allowed local zone that meets the low watermark. */
+-	for_each_zone_zonelist_nodemask(zone, z, ac.zonelist, ac.highest_zoneidx, ac.nodemask) {
++	z = ac.preferred_zoneref;
++	for_next_zone_zonelist_nodemask(zone, z, ac.highest_zoneidx, ac.nodemask) {
+ 		unsigned long mark;
  
- THUNK warn_thunk_thunk, __warn_thunk
-+
-+#ifndef CONFIG_X86_64
-+/*
-+ * Clang's implementation of TLS stack cookies requires the variable in
-+ * question to be a TLS variable. If the variable happens to be defined as an
-+ * ordinary variable with external linkage in the same compilation unit (which
-+ * amounts to the whole of vmlinux with LTO enabled), Clang will drop the
-+ * segment register prefix from the references, resulting in broken code. Work
-+ * around this by avoiding the symbol used in -mstack-protector-guard-symbol=
-+ * entirely in the C code, and use an alias emitted by the linker script
-+ * instead.
-+ */
-+#ifdef CONFIG_STACKPROTECTOR
-+EXPORT_SYMBOL(__ref_stack_chk_guard);
-+#endif
-+#endif
---- a/arch/x86/include/asm/asm-prototypes.h
-+++ b/arch/x86/include/asm/asm-prototypes.h
-@@ -20,3 +20,6 @@
- extern void cmpxchg8b_emu(void);
- #endif
- 
-+#if defined(__GENKSYMS__) && defined(CONFIG_STACKPROTECTOR)
-+extern unsigned long __ref_stack_chk_guard;
-+#endif
---- a/arch/x86/kernel/cpu/common.c
-+++ b/arch/x86/kernel/cpu/common.c
-@@ -2084,8 +2084,10 @@ void syscall_init(void)
- 
- #ifdef CONFIG_STACKPROTECTOR
- DEFINE_PER_CPU(unsigned long, __stack_chk_guard);
-+#ifndef CONFIG_SMP
- EXPORT_PER_CPU_SYMBOL(__stack_chk_guard);
- #endif
-+#endif
- 
- #endif	/* CONFIG_X86_64 */
- 
---- a/arch/x86/kernel/vmlinux.lds.S
-+++ b/arch/x86/kernel/vmlinux.lds.S
-@@ -492,6 +492,9 @@ SECTIONS
- . = ASSERT((_end - LOAD_OFFSET <= KERNEL_IMAGE_SIZE),
- 	   "kernel image bigger than KERNEL_IMAGE_SIZE");
- 
-+/* needed for Clang - see arch/x86/entry/entry.S */
-+PROVIDE(__ref_stack_chk_guard = __stack_chk_guard);
-+
- #ifdef CONFIG_X86_64
- /*
-  * Per-cpu symbols which need to be offset from __per_cpu_load
+ 		if (cpusets_enabled() && (alloc_flags & ALLOC_CPUSET) &&
 
 
