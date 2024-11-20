@@ -1,38 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE2331B3727;
-	Wed, 20 Nov 2024 12:58:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A9D61AA7AE;
+	Wed, 20 Nov 2024 12:58:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732107534; cv=none; b=kycYy/7jrT1gMwk+NP8QPsbu4dvAtXHtkdvVlKDx3dnOewtngA4w10S/na0XiCTFIMUfy44K+9J0yAYZ3dZWL/ROpBiAmcv41v8FPd62JEATdpT9x8n34E2Z9RxR5+fj8e/h68DK1gWNAods4sNvUWNC5tcih3FOLyMqkWOfy6o=
+	t=1732107535; cv=none; b=W5q9i/TKMHlBjOKN1l+patiU3TeQmoSYJuwVBVJGyIjTk0FCLXBhPC3alpAxg5LYNg1uI1e5GqVD/hCGBO0hwDKaWm6F0yTzRvzGX5jPtMWjoCVxenrJRC8iismpEaGfzdImSDwcZW8CudisBZgbaeeR++/9XuBBMz7JlY/53S0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732107534; c=relaxed/simple;
-	bh=JMYFJoAg3PYo/rfx77r7L61cXa/sEHupTEfSnyOte+U=;
+	s=arc-20240116; t=1732107535; c=relaxed/simple;
+	bh=vd6Nk9FCkZx5myfbYHgg+kPwHFqcqxLWr7trCPiGxEM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P53DGJd3auio+yTwf7FRDi6GdTx2KETPs/fSZRhflM3PFfbpTuvTFtIgiI90PnvgJlUwRttqPRvXKyKtV2sfjEYTB00QNVilfjLBuuHIsQpQmDJCTqz2uAyjLCnGdi2elLSsJxZcdrMQrtcekmGls/ge3mz9EAIGgkcs0sfmdjA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wGydPsNL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jJrITM4ryMxSgK6SXPxsGsxNRDCgELPlGi8RlXNZQp6SDcnzBRdq1kmUqSuvHuq9FjMasjl6B35Fd5nj4OKlsDLMDIKJChUTS7bbwiezyVFLlvyXdHDEtY7ZhxvnXKClQggzeM5Fs6Fk+xdyQLrmNJNl0JelYXbzBOLApMV0BiM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FdSfSSGG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wGydPsNL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DAA4C4CED6;
-	Wed, 20 Nov 2024 12:58:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FdSfSSGG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47AF1C4CED2;
+	Wed, 20 Nov 2024 12:58:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1732107534;
-	bh=JMYFJoAg3PYo/rfx77r7L61cXa/sEHupTEfSnyOte+U=;
+	s=korg; t=1732107535;
+	bh=vd6Nk9FCkZx5myfbYHgg+kPwHFqcqxLWr7trCPiGxEM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wGydPsNLzFF5ZOtWqwsffjOfSYPYnG7OmwYfQY4xjfo4UgKXeeDFYSndAnBuSFedB
-	 Lcz29HKxMR9gApcrAvrP2rsgCr+K3pllSoJjVgovSu+euxRLSz+ZswSZToE8cByBVP
-	 tvfFbsjwd22XuUpn6AkaVpCsstzbSnna8P+FUMmw=
+	b=FdSfSSGGPkxo00uqMkER2idl7fzTn3ok/xVUHJec9FfdWM4t4p2yoHV5q21WtL1+8
+	 yvgLDof74EP2Rua1dvp1c6tLHHhCaBbJNGdeZG/g45aoJ78gxUxwOkNPCsyG6UQDs9
+	 t3RehGi2l/mkoyeOz+RO6XzBoto7UphAkHaJkifk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geliang Tang <geliang@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.11 067/107] mptcp: pm: use _rcu variant under rcu_read_lock
-Date: Wed, 20 Nov 2024 13:56:42 +0100
-Message-ID: <20241120125631.187833147@linuxfoundation.org>
+	Dmitry Antipov <dmantipov@yandex.ru>,
+	syzbot+56f7cd1abe4b8e475180@syzkaller.appspotmail.com,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Jun Piao <piaojun@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.11 068/107] ocfs2: fix UBSAN warning in ocfs2_verify_volume()
+Date: Wed, 20 Nov 2024 13:56:43 +0100
+Message-ID: <20241120125631.209745598@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241120125629.681745345@linuxfoundation.org>
 References: <20241120125629.681745345@linuxfoundation.org>
@@ -51,43 +57,125 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+From: Dmitry Antipov <dmantipov@yandex.ru>
 
-commit db3eab8110bc0520416101b6a5b52f44a43fb4cf upstream.
+commit 23aab037106d46e6168ce1214a958ce9bf317f2e upstream.
 
-In mptcp_pm_create_subflow_or_signal_addr(), rcu_read_(un)lock() are
-used as expected to iterate over the list of local addresses, but
-list_for_each_entry() was used instead of list_for_each_entry_rcu() in
-__lookup_addr(). It is important to use this variant which adds the
-required READ_ONCE() (and diagnostic checks if enabled).
+Syzbot has reported the following splat triggered by UBSAN:
 
-Because __lookup_addr() is also used in mptcp_pm_nl_set_flags() where it
-is called under the pernet->lock and not rcu_read_lock(), an extra
-condition is then passed to help the diagnostic checks making sure
-either the associated spin lock or the RCU lock is held.
+UBSAN: shift-out-of-bounds in fs/ocfs2/super.c:2336:10
+shift exponent 32768 is too large for 32-bit type 'int'
+CPU: 2 UID: 0 PID: 5255 Comm: repro Not tainted 6.12.0-rc4-syzkaller-00047-gc2ee9f594da8 #0
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.3-3.fc41 04/01/2014
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0x241/0x360
+ ? __pfx_dump_stack_lvl+0x10/0x10
+ ? __pfx__printk+0x10/0x10
+ ? __asan_memset+0x23/0x50
+ ? lockdep_init_map_type+0xa1/0x910
+ __ubsan_handle_shift_out_of_bounds+0x3c8/0x420
+ ocfs2_fill_super+0xf9c/0x5750
+ ? __pfx_ocfs2_fill_super+0x10/0x10
+ ? __pfx_validate_chain+0x10/0x10
+ ? __pfx_validate_chain+0x10/0x10
+ ? validate_chain+0x11e/0x5920
+ ? __lock_acquire+0x1384/0x2050
+ ? __pfx_validate_chain+0x10/0x10
+ ? string+0x26a/0x2b0
+ ? widen_string+0x3a/0x310
+ ? string+0x26a/0x2b0
+ ? bdev_name+0x2b1/0x3c0
+ ? pointer+0x703/0x1210
+ ? __pfx_pointer+0x10/0x10
+ ? __pfx_format_decode+0x10/0x10
+ ? __lock_acquire+0x1384/0x2050
+ ? vsnprintf+0x1ccd/0x1da0
+ ? snprintf+0xda/0x120
+ ? __pfx_lock_release+0x10/0x10
+ ? do_raw_spin_lock+0x14f/0x370
+ ? __pfx_snprintf+0x10/0x10
+ ? set_blocksize+0x1f9/0x360
+ ? sb_set_blocksize+0x98/0xf0
+ ? setup_bdev_super+0x4e6/0x5d0
+ mount_bdev+0x20c/0x2d0
+ ? __pfx_ocfs2_fill_super+0x10/0x10
+ ? __pfx_mount_bdev+0x10/0x10
+ ? vfs_parse_fs_string+0x190/0x230
+ ? __pfx_vfs_parse_fs_string+0x10/0x10
+ legacy_get_tree+0xf0/0x190
+ ? __pfx_ocfs2_mount+0x10/0x10
+ vfs_get_tree+0x92/0x2b0
+ do_new_mount+0x2be/0xb40
+ ? __pfx_do_new_mount+0x10/0x10
+ __se_sys_mount+0x2d6/0x3c0
+ ? __pfx___se_sys_mount+0x10/0x10
+ ? do_syscall_64+0x100/0x230
+ ? __x64_sys_mount+0x20/0xc0
+ do_syscall_64+0xf3/0x230
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+RIP: 0033:0x7f37cae96fda
+Code: 48 8b 0d 51 ce 0c 00 f7 d8 64 89 01 48 83 c8 ff c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 44 00 00 49 89 ca b8 a5 00 00 00 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 8b 0d 1e ce 0c 00 f7 d8 64 89 01 48
+RSP: 002b:00007fff6c1aa228 EFLAGS: 00000206 ORIG_RAX: 00000000000000a5
+RAX: ffffffffffffffda RBX: 00007fff6c1aa240 RCX: 00007f37cae96fda
+RDX: 00000000200002c0 RSI: 0000000020000040 RDI: 00007fff6c1aa240
+RBP: 0000000000000004 R08: 00007fff6c1aa280 R09: 0000000000000000
+R10: 00000000000008c0 R11: 0000000000000206 R12: 00000000000008c0
+R13: 00007fff6c1aa280 R14: 0000000000000003 R15: 0000000001000000
+ </TASK>
 
-Fixes: 86e39e04482b ("mptcp: keep track of local endpoint still available for each msk")
-Cc: stable@vger.kernel.org
-Reviewed-by: Geliang Tang <geliang@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20241112-net-mptcp-misc-6-12-pm-v1-3-b835580cefa8@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+For a really damaged superblock, the value of 'i_super.s_blocksize_bits'
+may exceed the maximum possible shift for an underlying 'int'.  So add an
+extra check whether the aforementioned field represents the valid block
+size, which is 512 bytes, 1K, 2K, or 4K.
+
+Link: https://lkml.kernel.org/r/20241106092100.2661330-1-dmantipov@yandex.ru
+Fixes: ccd979bdbce9 ("[PATCH] OCFS2: The Second Oracle Cluster Filesystem")
+Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
+Reported-by: syzbot+56f7cd1abe4b8e475180@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=56f7cd1abe4b8e475180
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Jun Piao <piaojun@huawei.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/pm_netlink.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/ocfs2/super.c |   13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
---- a/net/mptcp/pm_netlink.c
-+++ b/net/mptcp/pm_netlink.c
-@@ -520,7 +520,8 @@ __lookup_addr(struct pm_nl_pernet *perne
+--- a/fs/ocfs2/super.c
++++ b/fs/ocfs2/super.c
+@@ -2321,6 +2321,7 @@ static int ocfs2_verify_volume(struct oc
+ 			       struct ocfs2_blockcheck_stats *stats)
  {
- 	struct mptcp_pm_addr_entry *entry;
+ 	int status = -EAGAIN;
++	u32 blksz_bits;
  
--	list_for_each_entry(entry, &pernet->local_addr_list, list) {
-+	list_for_each_entry_rcu(entry, &pernet->local_addr_list, list,
-+				lockdep_is_held(&pernet->lock)) {
- 		if (mptcp_addresses_equal(&entry->addr, info, entry->addr.port))
- 			return entry;
- 	}
+ 	if (memcmp(di->i_signature, OCFS2_SUPER_BLOCK_SIGNATURE,
+ 		   strlen(OCFS2_SUPER_BLOCK_SIGNATURE)) == 0) {
+@@ -2335,11 +2336,15 @@ static int ocfs2_verify_volume(struct oc
+ 				goto out;
+ 		}
+ 		status = -EINVAL;
+-		if ((1 << le32_to_cpu(di->id2.i_super.s_blocksize_bits)) != blksz) {
++		/* Acceptable block sizes are 512 bytes, 1K, 2K and 4K. */
++		blksz_bits = le32_to_cpu(di->id2.i_super.s_blocksize_bits);
++		if (blksz_bits < 9 || blksz_bits > 12) {
+ 			mlog(ML_ERROR, "found superblock with incorrect block "
+-			     "size: found %u, should be %u\n",
+-			     1 << le32_to_cpu(di->id2.i_super.s_blocksize_bits),
+-			       blksz);
++			     "size bits: found %u, should be 9, 10, 11, or 12\n",
++			     blksz_bits);
++		} else if ((1 << le32_to_cpu(blksz_bits)) != blksz) {
++			mlog(ML_ERROR, "found superblock with incorrect block "
++			     "size: found %u, should be %u\n", 1 << blksz_bits, blksz);
+ 		} else if (le16_to_cpu(di->id2.i_super.s_major_rev_level) !=
+ 			   OCFS2_MAJOR_REV_LEVEL ||
+ 			   le16_to_cpu(di->id2.i_super.s_minor_rev_level) !=
 
 
