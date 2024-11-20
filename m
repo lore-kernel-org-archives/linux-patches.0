@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 794721C305A;
-	Wed, 20 Nov 2024 13:00:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30FFC1C4A24;
+	Wed, 20 Nov 2024 13:00:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732107600; cv=none; b=MSr320GEkUzFDz+7wxk55aYXN1W2uMN1Buk6i14qvqIlVLfgJB3jfiaFfRpKHn/nlSsrEBq4yBaPk9sXiHWkA/ZN3nhxDIfNc3dHVUNb8Swx25BVEeYBhfDfIbJdGv7IVrFkzidZLXfT4WDk2lPT/i021ksgFc7zvrAEJ9yCtX8=
+	t=1732107601; cv=none; b=Y9rKqAgaoZ3oC/loi5Yq5CNzUVpCDESEPkVD8L20+BSXdFA9I6bSviJKtF2fTgPQaWluDQOKe9MPE+XgzsnMp+VwWDVCRc+RHgtnMx8z1wrMPS+5ws22rSJV8kq3Ph1E7SIHh5NNSTU/Z9YL8vyPmZbgHWHwE1SqtAfGYsf6kb0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732107600; c=relaxed/simple;
-	bh=RGNApLX6C1IG50/0kYa/xefMh9p0cgyl2+I2sRXHKZ8=;
+	s=arc-20240116; t=1732107601; c=relaxed/simple;
+	bh=OuHpIowSIJGbTTxftgDSCNwWO5L2y4KtgYo1LaH3OaU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TNlc6PqMUtFLxpXc5QfKdYAK1P007tM3jLiYuNUHbjgk41mZruJrLXudOORgkALErnbGeOMm00NTcAMQpuxYlNT94AMvk6QREOJ6InegGVSjzZewrn0lXaprXNmKw3sc8+S0EAup9dZyd66dZpZs8kiWugU2VFwGE7OMjzsmq/E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ELrJkS34; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kxKkg5Bv2UAH3Hw4iosQTOomk2YNyhG6OFB8v5nk6bnO16IGJVlexKKwkp3X4ABHym26iI8p7lyrTxD6K59JZlEfZMuT0eYDZuaA1qUun2L04cZGvBwQIb1RneuXzsK4x++8GwYKW/EdaFQzxxz6UKv2WwZs6oaj1TP8QCl9xhc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BYs+yUmp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ELrJkS34"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B17DC4CED8;
-	Wed, 20 Nov 2024 13:00:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BYs+yUmp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07807C4CECD;
+	Wed, 20 Nov 2024 13:00:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1732107600;
-	bh=RGNApLX6C1IG50/0kYa/xefMh9p0cgyl2+I2sRXHKZ8=;
+	s=korg; t=1732107601;
+	bh=OuHpIowSIJGbTTxftgDSCNwWO5L2y4KtgYo1LaH3OaU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ELrJkS34bBLlRouYiAY/5jrfp9FbncwubS9RH8DqLa/gGSRT43Mqzl0dPqhp5IXzA
-	 FDsfFrZSvoVPYGv3a0vC0ZfZ//PNGpA/16GjsQ07su+DfcJR65evQF0XIIffK1oQB4
-	 JXoXGRB8zH9l2E0e5K6fuQgiS6jwiCDdsAbKFCUc=
+	b=BYs+yUmpQ4fumZ9FJuroNiUhlgDMuVGPvgLpPxV+jWJf5C3xH4MG4OpVWXer2NZ+8
+	 YYjK7p7/fXOcyI+MlE2yxS1iFCfr+dotA1dvXcw6T4Pmy9zgJR1dVV8sF8K1uaDFHD
+	 CLWs5CPwu5uc9Aal4vT7DCNeIz4Zwh+vDXbb1hv8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andre Przywara <andre.przywara@arm.com>,
-	Parthiban Nallathambi <parthiban@linumiz.com>,
-	Chen-Yu Tsai <wens@csie.org>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.6 49/82] mmc: sunxi-mmc: Fix A100 compatible description
-Date: Wed, 20 Nov 2024 13:56:59 +0100
-Message-ID: <20241120125630.716314454@linuxfoundation.org>
+	Francesco Dolcini <francesco.dolcini@toradex.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>
+Subject: [PATCH 6.6 50/82] drm/bridge: tc358768: Fix DSI command tx
+Date: Wed, 20 Nov 2024 13:57:00 +0100
+Message-ID: <20241120125630.737194029@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241120125629.623666563@linuxfoundation.org>
 References: <20241120125629.623666563@linuxfoundation.org>
@@ -52,57 +50,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andre Przywara <andre.przywara@arm.com>
+From: Francesco Dolcini <francesco.dolcini@toradex.com>
 
-commit 85b580afc2c215394e08974bf033de9face94955 upstream.
+commit 32c4514455b2b8fde506f8c0962f15c7e4c26f1d upstream.
 
-It turns out that the Allwinner A100/A133 SoC only supports 8K DMA
-blocks (13 bits wide), for both the SD/SDIO and eMMC instances.
-And while this alone would make a trivial fix, the H616 falls back to
-the A100 compatible string, so we have to now match the H616 compatible
-string explicitly against the description advertising 64K DMA blocks.
+Wait for the command transmission to be completed in the DSI transfer
+function polling for the dc_start bit to go back to idle state after the
+transmission is started.
 
-As the A100 is now compatible with the D1 description, let the A100
-compatible string point to that block instead, and introduce an explicit
-match against the H616 string, pointing to the old description.
-Also remove the redundant setting of clk_delays to NULL on the way.
+This is documented in the datasheet and failures to do so lead to
+commands corruption.
 
-Fixes: 3536b82e5853 ("mmc: sunxi: add support for A100 mmc controller")
+Fixes: ff1ca6397b1d ("drm/bridge: Add tc358768 driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Andre Przywara <andre.przywara@arm.com>
-Tested-by: Parthiban Nallathambi <parthiban@linumiz.com>
-Reviewed-by: Chen-Yu Tsai <wens@csie.org>
-Message-ID: <20241107014240.24669-1-andre.przywara@arm.com>
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Francesco Dolcini <francesco.dolcini@toradex.com>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://lore.kernel.org/r/20240926141246.48282-1-francesco@dolcini.it
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240926141246.48282-1-francesco@dolcini.it
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/sunxi-mmc.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/bridge/tc358768.c |   21 +++++++++++++++++++--
+ 1 file changed, 19 insertions(+), 2 deletions(-)
 
---- a/drivers/mmc/host/sunxi-mmc.c
-+++ b/drivers/mmc/host/sunxi-mmc.c
-@@ -1191,10 +1191,9 @@ static const struct sunxi_mmc_cfg sun50i
- 	.needs_new_timings = true,
- };
+--- a/drivers/gpu/drm/bridge/tc358768.c
++++ b/drivers/gpu/drm/bridge/tc358768.c
+@@ -125,6 +125,9 @@
+ #define TC358768_DSI_CONFW_MODE_CLR	(6 << 29)
+ #define TC358768_DSI_CONFW_ADDR_DSI_CONTROL	(0x3 << 24)
  
--static const struct sunxi_mmc_cfg sun50i_a100_cfg = {
-+static const struct sunxi_mmc_cfg sun50i_h616_cfg = {
- 	.idma_des_size_bits = 16,
- 	.idma_des_shift = 2,
--	.clk_delays = NULL,
- 	.can_calibrate = true,
- 	.mask_data0 = true,
- 	.needs_new_timings = true,
-@@ -1217,8 +1216,9 @@ static const struct of_device_id sunxi_m
- 	{ .compatible = "allwinner,sun20i-d1-mmc", .data = &sun20i_d1_cfg },
- 	{ .compatible = "allwinner,sun50i-a64-mmc", .data = &sun50i_a64_cfg },
- 	{ .compatible = "allwinner,sun50i-a64-emmc", .data = &sun50i_a64_emmc_cfg },
--	{ .compatible = "allwinner,sun50i-a100-mmc", .data = &sun50i_a100_cfg },
-+	{ .compatible = "allwinner,sun50i-a100-mmc", .data = &sun20i_d1_cfg },
- 	{ .compatible = "allwinner,sun50i-a100-emmc", .data = &sun50i_a100_emmc_cfg },
-+	{ .compatible = "allwinner,sun50i-h616-mmc", .data = &sun50i_h616_cfg },
- 	{ /* sentinel */ }
++/* TC358768_DSICMD_TX (0x0600) register */
++#define TC358768_DSI_CMDTX_DC_START	BIT(0)
++
+ static const char * const tc358768_supplies[] = {
+ 	"vddc", "vddmipi", "vddio"
  };
- MODULE_DEVICE_TABLE(of, sunxi_mmc_of_match);
+@@ -229,6 +232,21 @@ static void tc358768_update_bits(struct
+ 		tc358768_write(priv, reg, tmp);
+ }
+ 
++static void tc358768_dsicmd_tx(struct tc358768_priv *priv)
++{
++	u32 val;
++
++	/* start transfer */
++	tc358768_write(priv, TC358768_DSICMD_TX, TC358768_DSI_CMDTX_DC_START);
++	if (priv->error)
++		return;
++
++	/* wait transfer completion */
++	priv->error = regmap_read_poll_timeout(priv->regmap, TC358768_DSICMD_TX, val,
++					       (val & TC358768_DSI_CMDTX_DC_START) == 0,
++					       100, 100000);
++}
++
+ static int tc358768_sw_reset(struct tc358768_priv *priv)
+ {
+ 	/* Assert Reset */
+@@ -516,8 +534,7 @@ static ssize_t tc358768_dsi_host_transfe
+ 		}
+ 	}
+ 
+-	/* start transfer */
+-	tc358768_write(priv, TC358768_DSICMD_TX, 1);
++	tc358768_dsicmd_tx(priv);
+ 
+ 	ret = tc358768_clear_error(priv);
+ 	if (ret)
 
 
