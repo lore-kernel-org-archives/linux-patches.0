@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B84071A704B;
-	Wed, 20 Nov 2024 12:59:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F2271ABEB5;
+	Wed, 20 Nov 2024 12:59:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732107575; cv=none; b=YN7nUB0gByf/ENR7MV7xmiAr2j/vvjOqI+cT6VJIdbhllHw1QxCH+xY4QaGFt58rj5K5/R8tGHwtXHP/J4oEzM3VQeBed/NEhcbMxIPTKDzlBIuF2WWkexdz9Y6WNMdOu7cUymqHtCvGBOFSiCBd/aqBdNxc4rfNaMCSkZQA7Ls=
+	t=1732107576; cv=none; b=lpaVNu/oYPs7evxVcFU9El2q+W5eqLQIHETIf4DvCfBLEYjjbW7Iz/KVPOSaOuUDYePLhOZGHlWNuo+maNxkcHKPWwzDX2hY6niEKfI47kLmfEkqjKAchc+R8UBdiOzr2u/gqFg3s7Aru/AENX4/ugDXOkB9+SYRrmyzNBhKdMc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732107575; c=relaxed/simple;
-	bh=8bPhAKiVNM0LUAVSbFalSXebfpYnFDMyBTzOfggUFBw=;
+	s=arc-20240116; t=1732107576; c=relaxed/simple;
+	bh=vuR7x51rPdpPZn1L13tIMncd4I2lHLn44sdNDqhP/4Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GI+f4k+EzK7liHd2N6+Th7ehhwdfW6gwWqlyD9xmgDHmltZ5iv9iQfoDB/GCyvduDa1rRDEpVv/9hhHIhdvxoYQ2UP6ke7BBGVlhLodB7OobC2pcNBPLS1F5IjC43uVBowmvUfsUu+xK9Em2Kp3mUhI08jgcoInffSlrwiev4wM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s1g0Rdk0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hRSfdvq1QEcavPw5uaFuG5NzJx7bQsdhUFvVeaEkd7+SJfZKwLoh1ERSr42YrYTcbTlItjmvnZMyrCrEiYxXhFuO5TyWXhip4iRLPXOHPsco1pcgoJsoY4mkWnW+K8nvmVPyYIXxYFWCoieMxhwn7JTpYI384X1Oe2kMS5+hiNY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yp4qC4Mw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s1g0Rdk0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AF56C4CED6;
-	Wed, 20 Nov 2024 12:59:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yp4qC4Mw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45A9EC4CECD;
+	Wed, 20 Nov 2024 12:59:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1732107575;
-	bh=8bPhAKiVNM0LUAVSbFalSXebfpYnFDMyBTzOfggUFBw=;
+	s=korg; t=1732107576;
+	bh=vuR7x51rPdpPZn1L13tIMncd4I2lHLn44sdNDqhP/4Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s1g0Rdk0XUd9m0rWCpxlPpl4u/C0AzCBju7Uh/EiKJP1B4Jd4ryUNJN94rUZhIE7W
-	 L/Kbn+78OMMG4vSRB5w+JiRv3hQ1zciD7hgNM2fryAa96SgbO9PDmHgBVqpW7C97qt
-	 E5MY2YqG87e/WZnWUAdstKFhY+UR9NNbOs8SuM24=
+	b=yp4qC4Mw1/gjyG4Os7V0igVaEJecIw5QXrQvvm/ao0KhFCqe2lEmElIB7hNs5v7+q
+	 2MZuIb9XwzGF/5VdwFGHowdnUNznNtxivRyAFSIW5WPDP3CDJIN5JZsVW7nqE4bQxT
+	 fPdObPZdZaL75cmlsHpZaSCnPVQBs3zUSjNOq9dg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Alexandre Ferrieux <alexandre.ferrieux@orange.com>,
-	Victor Nogueira <victor@mojatatu.com>,
+	Wei Fang <wei.fang@nxp.com>,
+	Simon Horman <horms@kernel.org>,
+	Jesper Dangaard Brouer <hawk@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 16/82] net: sched: cls_u32: Fix u32s systematic failure to free IDR entries for hnodes.
-Date: Wed, 20 Nov 2024 13:56:26 +0100
-Message-ID: <20241120125629.980433508@linuxfoundation.org>
+Subject: [PATCH 6.6 17/82] samples: pktgen: correct dev to DEV
+Date: Wed, 20 Nov 2024 13:56:27 +0100
+Message-ID: <20241120125630.001013240@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241120125629.623666563@linuxfoundation.org>
 References: <20241120125629.623666563@linuxfoundation.org>
@@ -54,98 +53,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexandre Ferrieux <alexandre.ferrieux@gmail.com>
+From: Wei Fang <wei.fang@nxp.com>
 
-[ Upstream commit 73af53d82076bbe184d9ece9e14b0dc8599e6055 ]
+[ Upstream commit 3342dc8b4623d835e7dd76a15cec2e5a94fe2f93 ]
 
-To generate hnode handles (in gen_new_htid()), u32 uses IDR and
-encodes the returned small integer into a structured 32-bit
-word. Unfortunately, at disposal time, the needed decoding
-is not done. As a result, idr_remove() fails, and the IDR
-fills up. Since its size is 2048, the following script ends up
-with "Filter already exists":
+In the pktgen_sample01_simple.sh script, the device variable is uppercase
+'DEV' instead of lowercase 'dev'. Because of this typo, the script cannot
+enable UDP tx checksum.
 
-  tc filter add dev myve $FILTER1
-  tc filter add dev myve $FILTER2
-  for i in {1..2048}
-  do
-    echo $i
-    tc filter del dev myve $FILTER2
-    tc filter add dev myve $FILTER2
-  done
-
-This patch adds the missing decoding logic for handles that
-deserve it.
-
-Fixes: e7614370d6f0 ("net_sched: use idr to allocate u32 filter handles")
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Signed-off-by: Alexandre Ferrieux <alexandre.ferrieux@orange.com>
-Tested-by: Victor Nogueira <victor@mojatatu.com>
-Link: https://patch.msgid.link/20241110172836.331319-1-alexandre.ferrieux@orange.com
+Fixes: 460a9aa23de6 ("samples: pktgen: add UDP tx checksum support")
+Signed-off-by: Wei Fang <wei.fang@nxp.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Acked-by: Jesper Dangaard Brouer <hawk@kernel.org>
+Link: https://patch.msgid.link/20241112030347.1849335-1-wei.fang@nxp.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/cls_u32.c | 18 ++++++++++++++----
- 1 file changed, 14 insertions(+), 4 deletions(-)
+ samples/pktgen/pktgen_sample01_simple.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/sched/cls_u32.c b/net/sched/cls_u32.c
-index b3531f458adaf..67f27be138487 100644
---- a/net/sched/cls_u32.c
-+++ b/net/sched/cls_u32.c
-@@ -92,6 +92,16 @@ struct tc_u_common {
- 	long			knodes;
- };
+diff --git a/samples/pktgen/pktgen_sample01_simple.sh b/samples/pktgen/pktgen_sample01_simple.sh
+index cdb9f497f87da..66cb707479e6c 100755
+--- a/samples/pktgen/pktgen_sample01_simple.sh
++++ b/samples/pktgen/pktgen_sample01_simple.sh
+@@ -76,7 +76,7 @@ if [ -n "$DST_PORT" ]; then
+     pg_set $DEV "udp_dst_max $UDP_DST_MAX"
+ fi
  
-+static u32 handle2id(u32 h)
-+{
-+	return ((h & 0x80000000) ? ((h >> 20) & 0x7FF) : h);
-+}
-+
-+static u32 id2handle(u32 id)
-+{
-+	return (id | 0x800U) << 20;
-+}
-+
- static inline unsigned int u32_hash_fold(__be32 key,
- 					 const struct tc_u32_sel *sel,
- 					 u8 fshift)
-@@ -310,7 +320,7 @@ static u32 gen_new_htid(struct tc_u_common *tp_c, struct tc_u_hnode *ptr)
- 	int id = idr_alloc_cyclic(&tp_c->handle_idr, ptr, 1, 0x7FF, GFP_KERNEL);
- 	if (id < 0)
- 		return 0;
--	return (id | 0x800U) << 20;
-+	return id2handle(id);
- }
+-[ ! -z "$UDP_CSUM" ] && pg_set $dev "flag UDPCSUM"
++[ ! -z "$UDP_CSUM" ] && pg_set $DEV "flag UDPCSUM"
  
- static struct hlist_head *tc_u_common_hash;
-@@ -360,7 +370,7 @@ static int u32_init(struct tcf_proto *tp)
- 		return -ENOBUFS;
- 
- 	refcount_set(&root_ht->refcnt, 1);
--	root_ht->handle = tp_c ? gen_new_htid(tp_c, root_ht) : 0x80000000;
-+	root_ht->handle = tp_c ? gen_new_htid(tp_c, root_ht) : id2handle(0);
- 	root_ht->prio = tp->prio;
- 	root_ht->is_root = true;
- 	idr_init(&root_ht->handle_idr);
-@@ -612,7 +622,7 @@ static int u32_destroy_hnode(struct tcf_proto *tp, struct tc_u_hnode *ht,
- 		if (phn == ht) {
- 			u32_clear_hw_hnode(tp, ht, extack);
- 			idr_destroy(&ht->handle_idr);
--			idr_remove(&tp_c->handle_idr, ht->handle);
-+			idr_remove(&tp_c->handle_idr, handle2id(ht->handle));
- 			RCU_INIT_POINTER(*hn, ht->next);
- 			kfree_rcu(ht, rcu);
- 			return 0;
-@@ -989,7 +999,7 @@ static int u32_change(struct net *net, struct sk_buff *in_skb,
- 
- 		err = u32_replace_hw_hnode(tp, ht, userflags, extack);
- 		if (err) {
--			idr_remove(&tp_c->handle_idr, handle);
-+			idr_remove(&tp_c->handle_idr, handle2id(handle));
- 			kfree(ht);
- 			return err;
- 		}
+ # Setup random UDP port src range
+ pg_set $DEV "flag UDPSRC_RND"
 -- 
 2.43.0
 
