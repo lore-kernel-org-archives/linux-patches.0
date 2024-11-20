@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F09481AB6C0;
-	Wed, 20 Nov 2024 12:59:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C13941BC092;
+	Wed, 20 Nov 2024 12:59:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732107564; cv=none; b=l4qCHXO+//GLhKMngGb5Ckk0U5zOb9VRjDBBajtLr7lelUbgMofTrLjIIEKhWm2PlgCYvaF4hpaAkCRC4wtMfEpNv03H0o0K2BTKz4p9vU9/Nb06aUJFw8lE3yniWl/PyfWGpB2OcRPfXc2NcyOSQ7sOIpUK3gDBkbVAPIvIQnQ=
+	t=1732107564; cv=none; b=eQky/ilhpGxZy9htHNftf6JosMgvIsBrsgUIUpXzybqCk2hK7Zh0kTlDpRVvnOxPF+Wc8Pu7z2zKpFrBenDaC+JxXIDFCVr+oODXLmlGUk0x3bJE9dO2m8GkLfX/AS8yRyYHs1LcYFC07Y5RkIlcvKIXbfYtSL66XiYiDgppJnY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1732107564; c=relaxed/simple;
-	bh=Rua3aVXMNGREC2fpNcwAUgux/NnulmLiaJBk1/ctpL4=;
+	bh=5wK5F11B8ToTGa0v5wKSghh3Cpcbdy8lDd6CI3hAqWY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ty+447cuEtg3zInyMjZ02cUX4L+NtNJO8HxERqFOIh7NBVeck4UbFAMZ5IpYn6Hk0exJ2PYp1DTOM2fI8iA1k42HCEbns5IwJhDrmHIC1tp0v3553w5Pek8lJhpRYpFbgL7lFelmOPRtfnXLXhZdBzTSuYYIGv32D/ZBrMb0y2c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=viDeKaoI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qfb26jxMP4atuRF+bVgBzJ5ctd6rD5HVNGQMRVbtA0MnzMnv1acdDWb/8Y/w0LLz5IiJHqbKP5ilTfItFYCTawQSn1Qvg/30Ap5dA5s1ssz8VbduHJ6L1aWSMNgpn1ciRqWGMoGmZZUXeG2EZcxhwoaAltdHsdh8L1JlkMSBA5M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RXW2XC3/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="viDeKaoI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD993C4CECD;
-	Wed, 20 Nov 2024 12:59:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RXW2XC3/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E132C4CED8;
+	Wed, 20 Nov 2024 12:59:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1732107563;
-	bh=Rua3aVXMNGREC2fpNcwAUgux/NnulmLiaJBk1/ctpL4=;
+	s=korg; t=1732107564;
+	bh=5wK5F11B8ToTGa0v5wKSghh3Cpcbdy8lDd6CI3hAqWY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=viDeKaoISfIBWQnWL6jYQ3tI515/+nJnwYnEHtwR+jbTNVuJgIwyK494zULQW8UMs
-	 m1B00mHG3OmM+znJa6l96kC9OjX/6UIyxpeb7KykLjajQjDt7dTKorb3nKB8+X5T+F
-	 /TRANYlB1jXQJsCAUW8PigHAVgV+tU7Tz2K3nzRw=
+	b=RXW2XC3/YINE8hcPFpsSq9XewqT57vzhdaOtRtwPwsFigtnNTuOjjDXJJMrIvTWN1
+	 Jzgw0bxHVRSJ4sqFuYeCALT1hjhfPVnF5nR2BV8lS21vOtbFwrSmtsCaV51tN2XMae
+	 stn2HvtYf90e/C/KpNQQ4sdcQ8ip2CA6abajDT7o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandre Ferrieux <alexandre.ferrieux@orange.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Victor Nogueira <victor@mojatatu.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.11 106/107] net: sched: u32: Add test case for systematic hnode IDR leaks
-Date: Wed, 20 Nov 2024 13:57:21 +0100
-Message-ID: <20241120125632.132113884@linuxfoundation.org>
+	kernel test robot <lkp@intel.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>
+Subject: [PATCH 6.11 107/107] media: dvbdev: fix the logic when DVB_DYNAMIC_MINORS is not set
+Date: Wed, 20 Nov 2024 13:57:22 +0100
+Message-ID: <20241120125632.157485361@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241120125629.681745345@linuxfoundation.org>
 References: <20241120125629.681745345@linuxfoundation.org>
@@ -52,57 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexandre Ferrieux <alexandre.ferrieux@gmail.com>
+From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 
-commit ca34aceb322bfcd6ab498884f1805ee12f983259 upstream.
+commit a4aebaf6e6efff548b01a3dc49b4b9074751c15b upstream.
 
-Add a tdc test case to exercise the just-fixed systematic leak of
-IDR entries in u32 hnode disposal. Given the IDR in question is
-confined to the range [1..0x7FF], it is sufficient to create/delete
-the same filter 2048 times to fill it up and get a nonzero exit
-status from "tc filter add".
+When CONFIG_DVB_DYNAMIC_MINORS, ret is not initialized, and a
+semaphore is left at the wrong state, in case of errors.
 
-Signed-off-by: Alexandre Ferrieux <alexandre.ferrieux@orange.com>
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Reviewed-by: Victor Nogueira <victor@mojatatu.com>
-Link: https://patch.msgid.link/20241113100428.360460-1-alexandre.ferrieux@orange.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Make the code simpler and avoid mistakes by having just one error
+check logic used weather DVB_DYNAMIC_MINORS is used or not.
+
+Reported-by: kernel test robot <lkp@intel.com>
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Closes: https://lore.kernel.org/r/202410201717.ULWWdJv8-lkp@intel.com/
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Link: https://lore.kernel.org/r/9e067488d8935b8cf00959764a1fa5de85d65725.1730926254.git.mchehab+huawei@kernel.org
+Cc: Nathan Chancellor <nathan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/tc-testing/tc-tests/filters/u32.json |   24 +++++++++++
- 1 file changed, 24 insertions(+)
+ drivers/media/dvb-core/dvbdev.c |   15 ++++-----------
+ 1 file changed, 4 insertions(+), 11 deletions(-)
 
---- a/tools/testing/selftests/tc-testing/tc-tests/filters/u32.json
-+++ b/tools/testing/selftests/tc-testing/tc-tests/filters/u32.json
-@@ -329,5 +329,29 @@
-         "teardown": [
-             "$TC qdisc del dev $DEV1 parent root drr"
-         ]
-+    },
-+    {
-+        "id": "1234",
-+        "name": "Exercise IDR leaks by creating/deleting a filter many (2048) times",
-+        "category": [
-+            "filter",
-+            "u32"
-+        ],
-+        "plugins": {
-+            "requires": "nsPlugin"
-+        },
-+        "setup": [
-+            "$TC qdisc add dev $DEV1 parent root handle 10: drr",
-+            "$TC filter add dev $DEV1 parent 10:0 protocol ip prio 2 u32 match ip src 0.0.0.2/32 action drop",
-+            "$TC filter add dev $DEV1 parent 10:0 protocol ip prio 3 u32 match ip src 0.0.0.3/32 action drop"
-+        ],
-+        "cmdUnderTest": "bash -c 'for i in {1..2048} ;do echo filter delete dev $DEV1 pref 3;echo filter add dev $DEV1 parent 10:0 protocol ip prio 3 u32 match ip src 0.0.0.3/32 action drop;done | $TC -b -'",
-+        "expExitCode": "0",
-+        "verifyCmd": "$TC filter show dev $DEV1",
-+        "matchPattern": "protocol ip pref 3 u32",
-+        "matchCount": "3",
-+        "teardown": [
-+            "$TC qdisc del dev $DEV1 parent root drr"
-+        ]
-     }
- ]
+--- a/drivers/media/dvb-core/dvbdev.c
++++ b/drivers/media/dvb-core/dvbdev.c
+@@ -530,6 +530,9 @@ int dvb_register_device(struct dvb_adapt
+ 	for (minor = 0; minor < MAX_DVB_MINORS; minor++)
+ 		if (!dvb_minors[minor])
+ 			break;
++#else
++	minor = nums2minor(adap->num, type, id);
++#endif
+ 	if (minor >= MAX_DVB_MINORS) {
+ 		if (new_node) {
+ 			list_del(&new_node->list_head);
+@@ -543,17 +546,7 @@ int dvb_register_device(struct dvb_adapt
+ 		mutex_unlock(&dvbdev_register_lock);
+ 		return -EINVAL;
+ 	}
+-#else
+-	minor = nums2minor(adap->num, type, id);
+-	if (minor >= MAX_DVB_MINORS) {
+-		dvb_media_device_free(dvbdev);
+-		list_del(&dvbdev->list_head);
+-		kfree(dvbdev);
+-		*pdvbdev = NULL;
+-		mutex_unlock(&dvbdev_register_lock);
+-		return ret;
+-	}
+-#endif
++
+ 	dvbdev->minor = minor;
+ 	dvb_minors[minor] = dvb_device_get(dvbdev);
+ 	up_write(&minor_rwsem);
 
 
