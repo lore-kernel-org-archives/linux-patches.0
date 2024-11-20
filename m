@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 677F31991AA;
-	Wed, 20 Nov 2024 13:01:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 136E61DFEF;
+	Wed, 20 Nov 2024 13:01:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732107666; cv=none; b=bDvZIDr6b0JBEReqj8L4/lEK7mGI/D1tYSmldsQJfMMn/G3QImrAn9Meu6rIfpi4asolNudBo1Ea1LoSAJL4iNAT82/ErcQAgrsrmolTyFMvuSEOXPOfFVxRM170h/HqPqgELfXNKKGsthItTPS3pjwzbmS4oz4h+XFkK3R1AnU=
+	t=1732107667; cv=none; b=BfPi22rbn01B2/KS/nmtlui0voPiDyvqM6Mr3AqlUiJ1EL8rA50VAXbJ/Liw2IwCBIJ1yb6lol/dnAyd9DpJM/+7zNLr/c7yp3vaCqWw/uHk3g1FAfxllaX24Sp/Cn90mlg1OETf5a3MCh5v7HZ2rLWHG3iTvZjnTVoP/FO2wPY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732107666; c=relaxed/simple;
-	bh=Ktb9N4M0n1X6H90SqER4M7vJiqhxknoVO+qLFoCpGL4=;
+	s=arc-20240116; t=1732107667; c=relaxed/simple;
+	bh=Q82vM47DKIGPKnKOP4YYVYRBkT6gYVcGZBZnafefuhI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HwsMJUT9l8vAGqYEeZdwrgRcPHHJlRYFIZD9qDU+QAkTAYDJC73I8Lcu5Vh1VHQIkJqsoGrTUJ1pKyIWq9KaslR4UV95h5cB/w91m9yUsaaWDdJdEnPQ9hqxhcZ7vY4d8HZc4sBW8O9HduraBIWWIlq7K5mkCJRFwxiy3rTJjUE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=boy78uGD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=mb9e7n0U+X1anGGkapjaO62QjpSIl8MbaSsolN2CWQDDFIMACZ8X8r4CVg9S2XnpkEaYThrLahy1smvcAOBhf8logR1wHZeTpubk14FpUv7D/8ZnN6AgY691LsSR7+6ygT79ylbGH0L0WjtEPCDi0xGUdueDKkKCXyGTi7+pmHE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sfz/0xh9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="boy78uGD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D718C4CECD;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sfz/0xh9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF8DBC4CECD;
 	Wed, 20 Nov 2024 13:01:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1732107666;
-	bh=Ktb9N4M0n1X6H90SqER4M7vJiqhxknoVO+qLFoCpGL4=;
+	s=korg; t=1732107667;
+	bh=Q82vM47DKIGPKnKOP4YYVYRBkT6gYVcGZBZnafefuhI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=boy78uGDslX0ajft/IaY6W0ench3ffm6IQ71Wqh5/19w2UrD3hS+SYfxpGMc+thaU
-	 Z+uCzger3g+TOJyOOyQcbXckOq9T0mRmS+SGwdeB+KeYok0xGpDJNgl14qOodazmCz
-	 1TLxTERXsJ+x/Jt2Zg/b7AQIdFCA36l2oSDAcZAA=
+	b=sfz/0xh9hQO9YLnosplby7Ew2ffYixm6i+dSTRb59LuHN8sEXbXH2XTAgZTy8kgv1
+	 VO2pDoVwk5X83rVHCJfmHFeAERIQLIrqBfceE+o3aMjB0s2VU6OwfParHHsdvYQ9s+
+	 Js6sYLvLSoD2Kb8K2J8voMO4BpfqcId5pBlyry/A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dragos Tatulea <dtatulea@nvidia.com>,
+	Moshe Shemesh <moshe@nvidia.com>,
+	Cosmin Ratiu <cratiu@nvidia.com>,
+	Yevgeny Kliteynik <kliteyn@nvidia.com>,
 	Tariq Toukan <tariqt@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 06/73] net/mlx5e: kTLS, Fix incorrect page refcounting
-Date: Wed, 20 Nov 2024 13:57:52 +0100
-Message-ID: <20241120125809.779991136@linuxfoundation.org>
+Subject: [PATCH 6.1 07/73] net/mlx5e: CT: Fix null-ptr-deref in add rule err flow
+Date: Wed, 20 Nov 2024 13:57:53 +0100
+Message-ID: <20241120125809.804395940@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241120125809.623237564@linuxfoundation.org>
 References: <20241120125809.623237564@linuxfoundation.org>
@@ -46,76 +48,73 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dragos Tatulea <dtatulea@nvidia.com>
+From: Moshe Shemesh <moshe@nvidia.com>
 
-[ Upstream commit dd6e972cc5890d91d6749bb48e3912721c4e4b25 ]
+[ Upstream commit e99c6873229fe0482e7ceb7d5600e32d623ed9d9 ]
 
-The kTLS tx handling code is using a mix of get_page() and
-page_ref_inc() APIs to increment the page reference. But on the release
-path (mlx5e_ktls_tx_handle_resync_dump_comp()), only put_page() is used.
+In error flow of mlx5_tc_ct_entry_add_rule(), in case ct_rule_add()
+callback returns error, zone_rule->attr is used uninitiated. Fix it to
+use attr which has the needed pointer value.
 
-This is an issue when using pages from large folios: the get_page()
-references are stored on the folio page while the page_ref_inc()
-references are stored directly in the given page. On release the folio
-page will be dereferenced too many times.
+Kernel log:
+ BUG: kernel NULL pointer dereference, address: 0000000000000110
+ RIP: 0010:mlx5_tc_ct_entry_add_rule+0x2b1/0x2f0 [mlx5_core]
+…
+ Call Trace:
+  <TASK>
+  ? __die+0x20/0x70
+  ? page_fault_oops+0x150/0x3e0
+  ? exc_page_fault+0x74/0x140
+  ? asm_exc_page_fault+0x22/0x30
+  ? mlx5_tc_ct_entry_add_rule+0x2b1/0x2f0 [mlx5_core]
+  ? mlx5_tc_ct_entry_add_rule+0x1d5/0x2f0 [mlx5_core]
+  mlx5_tc_ct_block_flow_offload+0xc6a/0xf90 [mlx5_core]
+  ? nf_flow_offload_tuple+0xd8/0x190 [nf_flow_table]
+  nf_flow_offload_tuple+0xd8/0x190 [nf_flow_table]
+  flow_offload_work_handler+0x142/0x320 [nf_flow_table]
+  ? finish_task_switch.isra.0+0x15b/0x2b0
+  process_one_work+0x16c/0x320
+  worker_thread+0x28c/0x3a0
+  ? __pfx_worker_thread+0x10/0x10
+  kthread+0xb8/0xf0
+  ? __pfx_kthread+0x10/0x10
+  ret_from_fork+0x2d/0x50
+  ? __pfx_kthread+0x10/0x10
+  ret_from_fork_asm+0x1a/0x30
+  </TASK>
 
-This was found while doing kTLS testing with sendfile() + ZC when the
-served file was read from NFS on a kernel with NFS large folios support
-(commit 49b29a573da8 ("nfs: add support for large folios")).
-
-Fixes: 84d1bb2b139e ("net/mlx5e: kTLS, Limit DUMP wqe size")
-Signed-off-by: Dragos Tatulea <dtatulea@nvidia.com>
+Fixes: 7fac5c2eced3 ("net/mlx5: CT: Avoid reusing modify header context for natted entries")
+Signed-off-by: Moshe Shemesh <moshe@nvidia.com>
+Reviewed-by: Cosmin Ratiu <cratiu@nvidia.com>
+Reviewed-by: Yevgeny Kliteynik <kliteyn@nvidia.com>
 Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20241107183527.676877-5-tariqt@nvidia.com
+Link: https://patch.msgid.link/20241107183527.676877-7-tariqt@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/mellanox/mlx5/core/en_accel/ktls_tx.c    | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/en/tc_ct.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ktls_tx.c b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ktls_tx.c
-index 2e0335246967b..6d56d4a9977b0 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ktls_tx.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ktls_tx.c
-@@ -665,7 +665,7 @@ tx_sync_info_get(struct mlx5e_ktls_offload_context_tx *priv_tx,
- 	while (remaining > 0) {
- 		skb_frag_t *frag = &record->frags[i];
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/tc_ct.c b/drivers/net/ethernet/mellanox/mlx5/core/en/tc_ct.c
+index f01f7dfdbcf88..b011e0d2b620e 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en/tc_ct.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en/tc_ct.c
+@@ -862,7 +862,7 @@ mlx5_tc_ct_entry_add_rule(struct mlx5_tc_ct_priv *ct_priv,
+ 	return 0;
  
--		get_page(skb_frag_page(frag));
-+		page_ref_inc(skb_frag_page(frag));
- 		remaining -= skb_frag_size(frag);
- 		info->frags[i++] = *frag;
- 	}
-@@ -768,7 +768,7 @@ void mlx5e_ktls_tx_handle_resync_dump_comp(struct mlx5e_txqsq *sq,
- 	stats = sq->stats;
- 
- 	mlx5e_tx_dma_unmap(sq->pdev, dma);
--	put_page(wi->resync_dump_frag_page);
-+	page_ref_dec(wi->resync_dump_frag_page);
- 	stats->tls_dump_packets++;
- 	stats->tls_dump_bytes += wi->num_bytes;
- }
-@@ -821,12 +821,12 @@ mlx5e_ktls_tx_handle_ooo(struct mlx5e_ktls_offload_context_tx *priv_tx,
- 
- err_out:
- 	for (; i < info.nr_frags; i++)
--		/* The put_page() here undoes the page ref obtained in tx_sync_info_get().
-+		/* The page_ref_dec() here undoes the page ref obtained in tx_sync_info_get().
- 		 * Page refs obtained for the DUMP WQEs above (by page_ref_add) will be
- 		 * released only upon their completions (or in mlx5e_free_txqsq_descs,
- 		 * if channel closes).
- 		 */
--		put_page(skb_frag_page(&info.frags[i]));
-+		page_ref_dec(skb_frag_page(&info.frags[i]));
- 
- 	return MLX5E_KTLS_SYNC_FAIL;
- }
+ err_rule:
+-	mlx5_tc_ct_entry_destroy_mod_hdr(ct_priv, zone_rule->attr, zone_rule->mh);
++	mlx5_tc_ct_entry_destroy_mod_hdr(ct_priv, attr, zone_rule->mh);
+ 	mlx5_put_label_mapping(ct_priv, attr->ct_attr.ct_labels_id);
+ err_mod_hdr:
+ 	kfree(attr);
 -- 
 2.43.0
 
