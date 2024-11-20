@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E44901AB6F8;
-	Wed, 20 Nov 2024 13:01:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C11AF1AB6F8;
+	Wed, 20 Nov 2024 13:01:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732107687; cv=none; b=YuI7jUOU0Ft9/8+FaIuiFxJFdmlfk1XAH5Zb2GO44bfkuZv6oiPSKVbgk9LayVK36Phrwlbauu2IGpOGaQ4XzX/cZEF5hebyNcPYZbQfmJ9DA1OlMmavgUQPJEUEJ81SfqWWeXg9R/X2WPiHxxxT3b4mo6rLom7UafKoxrYNKjc=
+	t=1732107687; cv=none; b=TD23dKzojhfI2MBKN5SpYkvkIbgXHQdfQJHom19CwW95NatW8s/ZZlv/F2lewhe9Tj1Q3x+EYNKSlV0UI7tP7Wk0fqr+zLLYYcEeNyftRYE9PtmUC6BWFE4+8LpPjbwaxpxr1WOBAJp5OzyFo651XoNleO0dlQbBi7xk95Ba404=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1732107687; c=relaxed/simple;
-	bh=P6pjCIbuPGd0//WINip3WH1vsv7nAz4DKGQ98iUzi1g=;
+	bh=7gYsEI4+5DOEKtkKY8w6W6Z+cVMoXR7hstHGwwxtisg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T6g0R8TXROoDhyvtXx+49aRJRka2omrHQbBsIZ5EzByP4vVN3Qa/serOo0AVWYIpgxngvn6+HsC9iIAKCC02peqVACz8uhG213EKuoAIKeRTHFh6y/JGe1D7z6y7Syg5JTSLQDnf0i1PlmwPXAR1m+ivWt/6By9mo6y05fhrSqw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t3CGG0Ik; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oYF5sHUuRmmgst9fjBHAz/EFVLN6z4P+1i2Vx5K1/E5mzBkd0a3a/TZsdjp1z3QRB7BTL09Nau208xt5iStLMyn/rYMQc6llz1zPtRwf3nlSq930zj7Lq9VfnRQnqiICXBOYrQLOvLI7cF6IEdlDR4n6KJQmMo1jtP4ZhUs7buo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LbPMC3RX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t3CGG0Ik"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB720C4CECD;
-	Wed, 20 Nov 2024 13:01:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LbPMC3RX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E7E8C4CECD;
+	Wed, 20 Nov 2024 13:01:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1732107686;
-	bh=P6pjCIbuPGd0//WINip3WH1vsv7nAz4DKGQ98iUzi1g=;
+	s=korg; t=1732107687;
+	bh=7gYsEI4+5DOEKtkKY8w6W6Z+cVMoXR7hstHGwwxtisg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t3CGG0Ik4yAecf4BHXibpLM2H8uBV0aqYqIbA1Tpw5Hzcut5iLy6ysAIjL5xHNh9z
-	 46c9JZbxlS4HcpyWDO32W2W+sKIVNXTv4vndSU/cC6LA+vJ2eSSlXSbAj+YtUgAAwI
-	 IriI6tTh1rR2zSc3x8L0ZN/rO7TuJ1xG9TayDIp0=
+	b=LbPMC3RXvPrkI36NO05Exq8rf+euGCRDT9Dz49unTbQMI5oBk7ksgKHE5J9nJTlyc
+	 GlAXRiqf1ck8PSEs9dKsofzZFXADf8Z/PMGMTL0KV/T5yswA2Vh3V6xGZKqS/9GGDz
+	 nZWFIqZYHHmWHzcFDljM+ic4m2oQNyjdHwTlKdDI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Olga Kornievskaia <okorniev@redhat.com>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.1 45/73] NFSD: Never decrement pending_async_copies on error
-Date: Wed, 20 Nov 2024 13:58:31 +0100
-Message-ID: <20241120125810.693186179@linuxfoundation.org>
+	Si-Wei Liu <si-wei.liu@oracle.com>,
+	Dragos Tatulea <dtatulea@nvidia.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Jason Wang <jasowang@redhat.com>
+Subject: [PATCH 6.1 19/73] vdpa/mlx5: Fix PA offset with unaligned starting iotlb map
+Date: Wed, 20 Nov 2024 13:58:05 +0100
+Message-ID: <20241120125810.080744391@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241120125809.623237564@linuxfoundation.org>
 References: <20241120125809.623237564@linuxfoundation.org>
@@ -50,34 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Si-Wei Liu <si-wei.liu@oracle.com>
 
-[ Upstream commit 8286f8b622990194207df9ab852e0f87c60d35e9 ]
+commit 29ce8b8a4fa74e841342c8b8f8941848a3c6f29f upstream.
 
-The error flow in nfsd4_copy() calls cleanup_async_copy(), which
-already decrements nn->pending_async_copies.
+When calculating the physical address range based on the iotlb and mr
+[start,end) ranges, the offset of mr->start relative to map->start
+is not taken into account. This leads to some incorrect and duplicate
+mappings.
 
-Reported-by: Olga Kornievskaia <okorniev@redhat.com>
-Fixes: aadc3bbea163 ("NFSD: Limit the number of concurrent async COPY operations")
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+For the case when mr->start < map->start the code is already correct:
+the range in [mr->start, map->start) was handled by a different
+iteration.
+
+Fixes: 94abbccdf291 ("vdpa/mlx5: Add shared memory registration code")
+Cc: stable@vger.kernel.org
+Signed-off-by: Si-Wei Liu <si-wei.liu@oracle.com>
+Signed-off-by: Dragos Tatulea <dtatulea@nvidia.com>
+Message-Id: <20241021134040.975221-2-dtatulea@nvidia.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Acked-by: Jason Wang <jasowang@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs4proc.c |    4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/vdpa/mlx5/core/mr.c |    8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
---- a/fs/nfsd/nfs4proc.c
-+++ b/fs/nfsd/nfs4proc.c
-@@ -1790,10 +1790,8 @@ nfsd4_copy(struct svc_rqst *rqstp, struc
- 		refcount_set(&async_copy->refcount, 1);
- 		/* Arbitrary cap on number of pending async copy operations */
- 		if (atomic_inc_return(&nn->pending_async_copies) >
--				(int)rqstp->rq_pool->sp_nrthreads) {
--			atomic_dec(&nn->pending_async_copies);
-+				(int)rqstp->rq_pool->sp_nrthreads)
- 			goto out_err;
--		}
- 		async_copy->cp_src = kmalloc(sizeof(*async_copy->cp_src), GFP_KERNEL);
- 		if (!async_copy->cp_src)
- 			goto out_err;
+--- a/drivers/vdpa/mlx5/core/mr.c
++++ b/drivers/vdpa/mlx5/core/mr.c
+@@ -232,7 +232,7 @@ static int map_direct_mr(struct mlx5_vdp
+ 	struct page *pg;
+ 	unsigned int nsg;
+ 	int sglen;
+-	u64 pa;
++	u64 pa, offset;
+ 	u64 paend;
+ 	struct scatterlist *sg;
+ 	struct device *dma = mvdev->vdev.dma_dev;
+@@ -255,8 +255,10 @@ static int map_direct_mr(struct mlx5_vdp
+ 	sg = mr->sg_head.sgl;
+ 	for (map = vhost_iotlb_itree_first(iotlb, mr->start, mr->end - 1);
+ 	     map; map = vhost_iotlb_itree_next(map, mr->start, mr->end - 1)) {
+-		paend = map->addr + maplen(map, mr);
+-		for (pa = map->addr; pa < paend; pa += sglen) {
++		offset = mr->start > map->start ? mr->start - map->start : 0;
++		pa = map->addr + offset;
++		paend = map->addr + offset + maplen(map, mr);
++		for (; pa < paend; pa += sglen) {
+ 			pg = pfn_to_page(__phys_to_pfn(pa));
+ 			if (!sg) {
+ 				mlx5_vdpa_warn(mvdev, "sg null. start 0x%llx, end 0x%llx\n",
 
 
