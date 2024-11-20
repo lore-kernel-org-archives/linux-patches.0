@@ -1,39 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C312F1B5ED8;
-	Wed, 20 Nov 2024 13:00:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7E691B5ED8;
+	Wed, 20 Nov 2024 13:00:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732107628; cv=none; b=HFFfYys9lvG1QnRsRRhr0LdIZwwdNDZLjRU1iwbJS3QMxkxK0Vfh8UlvT88cmgZxMk0XLM0ONiN7BPjG5Ca3skfW5wf6LTcILNvM5+qaGFoOid9BYozoo6wX42bkkpbEN0b6RYdxlZarET4lrpGTT02yXSR5ZyCW92JqZqSw42M=
+	t=1732107629; cv=none; b=gcZm0wZ3B1q/xbgkizzwFPQs+w0tLCdzXIpxrIWQqb1cYwZYmSkMGJR8iLXbKSSLe6EaUd+I+FfS4BZQt5UNGnA8UQXKM5SHQfGnOFw9a4OOZRDm0WPx1DDE++nwNs7lsLgqQGYIiwtvim3VcJtf94/5WEMMush4/HCR49fmU64=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732107628; c=relaxed/simple;
-	bh=AdaQrp1LJ59CE2O/43iCY9nMxj811yvi3so0r8ZB1n0=;
+	s=arc-20240116; t=1732107629; c=relaxed/simple;
+	bh=Uxj9GH67d14v+oIPRi63uDx+nnbI3sk6iyV5SWRB33Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O7CmMuAxQKltMKv7HTHizkWgDPdCWDY7wAuBXkOXFXS+Q8YLLwsrBwHvBFD646TEhnOKflQeH9lyhwD/lkz1ofHyDFbtXVSyh2ip2C0GyRdH1T1tkyokh0IyjViiNa294UHAXOY7+48dGKpKRvixezjjLzV9eUIW8yhGDmPq0x4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B6LEChY0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TzzIfSOsYILLnFQAYJ4cxHyDw9h599D4PYtXoiQuhjnuhzkGibJdFD/9HV5nqCWQ4jikO87jdRyrJqkUWKgoQmsxOC+dYozfM5ljs8ueA2S4h0K5NoZfOAT3nRdon3XHb3psLwCyxBbTS5bwV7pJA47bjIPuZqizxvf98laCvY4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BErey3Io; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B6LEChY0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98B76C4CED1;
-	Wed, 20 Nov 2024 13:00:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BErey3Io"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4485BC4CECD;
+	Wed, 20 Nov 2024 13:00:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1732107628;
-	bh=AdaQrp1LJ59CE2O/43iCY9nMxj811yvi3so0r8ZB1n0=;
+	s=korg; t=1732107629;
+	bh=Uxj9GH67d14v+oIPRi63uDx+nnbI3sk6iyV5SWRB33Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B6LEChY0/btbjW/a1OwE4rkSz7uInDarRK6e4+uLVdUvwbDtS0KxuspRxxkeZztFS
-	 +qHFpd7IIMp0M2vNqpNxuLq9W3Te63zCN0huPIn6w02NJ/q6Lw52CMwDtOBeZtM8kB
-	 a8sN7MtW1yZb4nGa/M31Nc5iGTGLawfU6UQQLK50=
+	b=BErey3Io9axUN7yygREkR2SdWuuKuoJUYsqawRK1HsXM+zOTlKzKNRoc9ih/ot04R
+	 KbVYmYrxFNKMK5H9LPiUIOsLP1X6zD1lJaF9eIGdrBlDdAPdQP2kBi6oGOgUJHKGVU
+	 yqiWiSwIXv8CH3/YvpCxXSX5ZjYR6tzB1+w60vN0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Sean Christopherson <seanjc@google.com>,
-	Xiaoyao Li <xiaoyao.li@intel.com>,
-	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 6.6 38/82] KVM: VMX: Bury Intel PT virtualization (guest/host mode) behind CONFIG_BROKEN
-Date: Wed, 20 Nov 2024 13:56:48 +0100
-Message-ID: <20241120125630.470252569@linuxfoundation.org>
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	Jann Horn <jannh@google.com>,
+	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	Mark Brown <broonie@kernel.org>,
+	Andreas Larsson <andreas@gaisler.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Helge Deller <deller@gmx.de>,
+	"James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Peter Xu <peterx@redhat.com>,
+	Will Deacon <will@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.6 79/82] mm: resolve faulty mmap_region() error path behaviour
+Date: Wed, 20 Nov 2024 13:57:29 +0100
+Message-ID: <20241120125631.395416286@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241120125629.623666563@linuxfoundation.org>
 References: <20241120125629.623666563@linuxfoundation.org>
@@ -52,59 +62,277 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
 
-commit aa0d42cacf093a6fcca872edc954f6f812926a17 upstream.
+[ Upstream commit 5de195060b2e251a835f622759550e6202167641 ]
 
-Hide KVM's pt_mode module param behind CONFIG_BROKEN, i.e. disable support
-for virtualizing Intel PT via guest/host mode unless BROKEN=y.  There are
-myriad bugs in the implementation, some of which are fatal to the guest,
-and others which put the stability and health of the host at risk.
+The mmap_region() function is somewhat terrifying, with spaghetti-like
+control flow and numerous means by which issues can arise and incomplete
+state, memory leaks and other unpleasantness can occur.
 
-For guest fatalities, the most glaring issue is that KVM fails to ensure
-tracing is disabled, and *stays* disabled prior to VM-Enter, which is
-necessary as hardware disallows loading (the guest's) RTIT_CTL if tracing
-is enabled (enforced via a VMX consistency check).  Per the SDM:
+A large amount of the complexity arises from trying to handle errors late
+in the process of mapping a VMA, which forms the basis of recently
+observed issues with resource leaks and observable inconsistent state.
 
-  If the logical processor is operating with Intel PT enabled (if
-  IA32_RTIT_CTL.TraceEn = 1) at the time of VM entry, the "load
-  IA32_RTIT_CTL" VM-entry control must be 0.
+Taking advantage of previous patches in this series we move a number of
+checks earlier in the code, simplifying things by moving the core of the
+logic into a static internal function __mmap_region().
 
-On the host side, KVM doesn't validate the guest CPUID configuration
-provided by userspace, and even worse, uses the guest configuration to
-decide what MSRs to save/load at VM-Enter and VM-Exit.  E.g. configuring
-guest CPUID to enumerate more address ranges than are supported in hardware
-will result in KVM trying to passthrough, save, and load non-existent MSRs,
-which generates a variety of WARNs, ToPA ERRORs in the host, a potential
-deadlock, etc.
+Doing this allows us to perform a number of checks up front before we do
+any real work, and allows us to unwind the writable unmap check
+unconditionally as required and to perform a CONFIG_DEBUG_VM_MAPLE_TREE
+validation unconditionally also.
 
-Fixes: f99e3daf94ff ("KVM: x86: Add Intel PT virtualization work mode")
-Cc: stable@vger.kernel.org
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
-Tested-by: Adrian Hunter <adrian.hunter@intel.com>
-Message-ID: <20241101185031.1799556-2-seanjc@google.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+We move a number of things here:
+
+1. We preallocate memory for the iterator before we call the file-backed
+   memory hook, allowing us to exit early and avoid having to perform
+   complicated and error-prone close/free logic. We carefully free
+   iterator state on both success and error paths.
+
+2. The enclosing mmap_region() function handles the mapping_map_writable()
+   logic early. Previously the logic had the mapping_map_writable() at the
+   point of mapping a newly allocated file-backed VMA, and a matching
+   mapping_unmap_writable() on success and error paths.
+
+   We now do this unconditionally if this is a file-backed, shared writable
+   mapping. If a driver changes the flags to eliminate VM_MAYWRITE, however
+   doing so does not invalidate the seal check we just performed, and we in
+   any case always decrement the counter in the wrapper.
+
+   We perform a debug assert to ensure a driver does not attempt to do the
+   opposite.
+
+3. We also move arch_validate_flags() up into the mmap_region()
+   function. This is only relevant on arm64 and sparc64, and the check is
+   only meaningful for SPARC with ADI enabled. We explicitly add a warning
+   for this arch if a driver invalidates this check, though the code ought
+   eventually to be fixed to eliminate the need for this.
+
+With all of these measures in place, we no longer need to explicitly close
+the VMA on error paths, as we place all checks which might fail prior to a
+call to any driver mmap hook.
+
+This eliminates an entire class of errors, makes the code easier to reason
+about and more robust.
+
+Link: https://lkml.kernel.org/r/6e0becb36d2f5472053ac5d544c0edfe9b899e25.1730224667.git.lorenzo.stoakes@oracle.com
+Fixes: deb0f6562884 ("mm/mmap: undo ->mmap() when arch_validate_flags() fails")
+Signed-off-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Reported-by: Jann Horn <jannh@google.com>
+Reviewed-by: Liam R. Howlett <Liam.Howlett@oracle.com>
+Reviewed-by: Vlastimil Babka <vbabka@suse.cz>
+Tested-by: Mark Brown <broonie@kernel.org>
+Cc: Andreas Larsson <andreas@gaisler.com>
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+Cc: David S. Miller <davem@davemloft.net>
+Cc: Helge Deller <deller@gmx.de>
+Cc: James E.J. Bottomley <James.Bottomley@HansenPartnership.com>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: Peter Xu <peterx@redhat.com>
+Cc: Will Deacon <will@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/vmx/vmx.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ mm/mmap.c |  117 +++++++++++++++++++++++++++++++++++---------------------------
+ 1 file changed, 67 insertions(+), 50 deletions(-)
 
---- a/arch/x86/kvm/vmx/vmx.c
-+++ b/arch/x86/kvm/vmx/vmx.c
-@@ -212,9 +212,11 @@ module_param(ple_window_shrink, uint, 04
- static unsigned int ple_window_max        = KVM_VMX_DEFAULT_PLE_WINDOW_MAX;
- module_param(ple_window_max, uint, 0444);
+--- a/mm/mmap.c
++++ b/mm/mmap.c
+@@ -2666,14 +2666,14 @@ int do_munmap(struct mm_struct *mm, unsi
+ 	return do_vmi_munmap(&vmi, mm, start, len, uf, false);
+ }
  
--/* Default is SYSTEM mode, 1 for host-guest mode */
-+/* Default is SYSTEM mode, 1 for host-guest mode (which is BROKEN) */
- int __read_mostly pt_mode = PT_MODE_SYSTEM;
-+#ifdef CONFIG_BROKEN
- module_param(pt_mode, int, S_IRUGO);
+-unsigned long mmap_region(struct file *file, unsigned long addr,
++static unsigned long __mmap_region(struct file *file, unsigned long addr,
+ 		unsigned long len, vm_flags_t vm_flags, unsigned long pgoff,
+ 		struct list_head *uf)
+ {
+ 	struct mm_struct *mm = current->mm;
+ 	struct vm_area_struct *vma = NULL;
+ 	struct vm_area_struct *next, *prev, *merge;
+-	pgoff_t pglen = len >> PAGE_SHIFT;
++	pgoff_t pglen = PHYS_PFN(len);
+ 	unsigned long charged = 0;
+ 	unsigned long end = addr + len;
+ 	unsigned long merge_start = addr, merge_end = end;
+@@ -2770,25 +2770,26 @@ cannot_expand:
+ 	vma->vm_page_prot = vm_get_page_prot(vm_flags);
+ 	vma->vm_pgoff = pgoff;
+ 
+-	if (file) {
+-		if (vm_flags & VM_SHARED) {
+-			error = mapping_map_writable(file->f_mapping);
+-			if (error)
+-				goto free_vma;
+-		}
++	if (vma_iter_prealloc(&vmi, vma)) {
++		error = -ENOMEM;
++		goto free_vma;
++	}
+ 
++	if (file) {
+ 		vma->vm_file = get_file(file);
+ 		error = mmap_file(file, vma);
+ 		if (error)
+-			goto unmap_and_free_vma;
++			goto unmap_and_free_file_vma;
+ 
++		/* Drivers cannot alter the address of the VMA. */
++		WARN_ON_ONCE(addr != vma->vm_start);
+ 		/*
+-		 * Expansion is handled above, merging is handled below.
+-		 * Drivers should not alter the address of the VMA.
++		 * Drivers should not permit writability when previously it was
++		 * disallowed.
+ 		 */
+-		error = -EINVAL;
+-		if (WARN_ON((addr != vma->vm_start)))
+-			goto close_and_free_vma;
++		VM_WARN_ON_ONCE(vm_flags != vma->vm_flags &&
++				!(vm_flags & VM_MAYWRITE) &&
++				(vma->vm_flags & VM_MAYWRITE));
+ 
+ 		vma_iter_config(&vmi, addr, end);
+ 		/*
+@@ -2800,6 +2801,7 @@ cannot_expand:
+ 				    vma->vm_end, vma->vm_flags, NULL,
+ 				    vma->vm_file, vma->vm_pgoff, NULL,
+ 				    NULL_VM_UFFD_CTX, NULL);
++
+ 			if (merge) {
+ 				/*
+ 				 * ->mmap() can change vma->vm_file and fput
+@@ -2813,7 +2815,7 @@ cannot_expand:
+ 				vma = merge;
+ 				/* Update vm_flags to pick up the change. */
+ 				vm_flags = vma->vm_flags;
+-				goto unmap_writable;
++				goto file_expanded;
+ 			}
+ 		}
+ 
+@@ -2821,24 +2823,15 @@ cannot_expand:
+ 	} else if (vm_flags & VM_SHARED) {
+ 		error = shmem_zero_setup(vma);
+ 		if (error)
+-			goto free_vma;
++			goto free_iter_vma;
+ 	} else {
+ 		vma_set_anonymous(vma);
+ 	}
+ 
+-	if (map_deny_write_exec(vma->vm_flags, vma->vm_flags)) {
+-		error = -EACCES;
+-		goto close_and_free_vma;
+-	}
+-
+-	/* Allow architectures to sanity-check the vm_flags */
+-	error = -EINVAL;
+-	if (!arch_validate_flags(vma->vm_flags))
+-		goto close_and_free_vma;
+-
+-	error = -ENOMEM;
+-	if (vma_iter_prealloc(&vmi, vma))
+-		goto close_and_free_vma;
++#ifdef CONFIG_SPARC64
++	/* TODO: Fix SPARC ADI! */
++	WARN_ON_ONCE(!arch_validate_flags(vm_flags));
 +#endif
  
- static DEFINE_STATIC_KEY_FALSE(vmx_l1d_should_flush);
- static DEFINE_STATIC_KEY_FALSE(vmx_l1d_flush_cond);
+ 	/* Lock the VMA since it is modified after insertion into VMA tree */
+ 	vma_start_write(vma);
+@@ -2861,10 +2854,7 @@ cannot_expand:
+ 	 */
+ 	khugepaged_enter_vma(vma, vma->vm_flags);
+ 
+-	/* Once vma denies write, undo our temporary denial count */
+-unmap_writable:
+-	if (file && vm_flags & VM_SHARED)
+-		mapping_unmap_writable(file->f_mapping);
++file_expanded:
+ 	file = vma->vm_file;
+ 	ksm_add_vma(vma);
+ expanded:
+@@ -2894,33 +2884,60 @@ expanded:
+ 
+ 	vma_set_page_prot(vma);
+ 
+-	validate_mm(mm);
+ 	return addr;
+ 
+-close_and_free_vma:
+-	vma_close(vma);
+-
+-	if (file || vma->vm_file) {
+-unmap_and_free_vma:
+-		fput(vma->vm_file);
+-		vma->vm_file = NULL;
+-
+-		vma_iter_set(&vmi, vma->vm_end);
+-		/* Undo any partial mapping done by a device driver. */
+-		unmap_region(mm, &vmi.mas, vma, prev, next, vma->vm_start,
+-			     vma->vm_end, vma->vm_end, true);
+-	}
+-	if (file && (vm_flags & VM_SHARED))
+-		mapping_unmap_writable(file->f_mapping);
++unmap_and_free_file_vma:
++	fput(vma->vm_file);
++	vma->vm_file = NULL;
++
++	vma_iter_set(&vmi, vma->vm_end);
++	/* Undo any partial mapping done by a device driver. */
++	unmap_region(mm, &vmi.mas, vma, prev, next, vma->vm_start,
++		     vma->vm_end, vma->vm_end, true);
++free_iter_vma:
++	vma_iter_free(&vmi);
+ free_vma:
+ 	vm_area_free(vma);
+ unacct_error:
+ 	if (charged)
+ 		vm_unacct_memory(charged);
+-	validate_mm(mm);
+ 	return error;
+ }
+ 
++unsigned long mmap_region(struct file *file, unsigned long addr,
++			  unsigned long len, vm_flags_t vm_flags, unsigned long pgoff,
++			  struct list_head *uf)
++{
++	unsigned long ret;
++	bool writable_file_mapping = false;
++
++	/* Check to see if MDWE is applicable. */
++	if (map_deny_write_exec(vm_flags, vm_flags))
++		return -EACCES;
++
++	/* Allow architectures to sanity-check the vm_flags. */
++	if (!arch_validate_flags(vm_flags))
++		return -EINVAL;
++
++	/* Map writable and ensure this isn't a sealed memfd. */
++	if (file && (vm_flags & VM_SHARED)) {
++		int error = mapping_map_writable(file->f_mapping);
++
++		if (error)
++			return error;
++		writable_file_mapping = true;
++	}
++
++	ret = __mmap_region(file, addr, len, vm_flags, pgoff, uf);
++
++	/* Clear our write mapping regardless of error. */
++	if (writable_file_mapping)
++		mapping_unmap_writable(file->f_mapping);
++
++	validate_mm(current->mm);
++	return ret;
++}
++
+ static int __vm_munmap(unsigned long start, size_t len, bool unlock)
+ {
+ 	int ret;
 
 
