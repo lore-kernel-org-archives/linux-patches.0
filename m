@@ -1,136 +1,149 @@
-Received: from mail-qk1-f174.google.com (mail-qk1-f174.google.com [209.85.222.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 056321E489
-	for <patches@lists.linux.dev>; Wed, 20 Nov 2024 19:32:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.174
+Received: from submarine.notk.org (submarine.notk.org [62.210.214.84])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A06961B5ED8;
+	Wed, 20 Nov 2024 21:29:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=62.210.214.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732131150; cv=none; b=pC07I/NI1mmefQnDRQQYJ0iMOYS6hXH8Ge1X5sXwpWQAn/Oe6PRapHj4FdRLydQpi9jFRqZcI9RNQeG8CYIzjCAq1iXUTkoo7PZu+F2qfDBuzEMXNjREOOOQIsujTqKQafpLyRedPNAiopAFF+10W3YZH17xyhmFJf8+Cu+Rx9U=
+	t=1732138148; cv=none; b=GaFruorIPZtKLJx9rIq6jELtL7IRLzoilEpY9KchZB33cQHIKBOodkk8bBoSBxySCcnm0UXoQhif0VHykMmgURvhTvf0lARsjMBrEm44zeDHH9yVMBA6w57nyNeyF7iE/dwmy8I+/FyqNLncqm3lQGn4ZtQk9lRzsyFg5XIzwqs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732131150; c=relaxed/simple;
-	bh=PuithziMhynZLzuja888G9EvlHakLVWFIqd4tToVGHI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=i+UEm41H8yui1YXvVphKttIVJb3KaFennF1meh4nTFlcvtq3Xf5GfQ/mbFYqLQhxoY1JJGzx0X50Y1HKf5xExca/TwVKsQ6JUURNP4yvOHrLQKoliU77bAwAdcICIWxc9UlxqE1CDEqOlzg/vq8EE1HHh9+4dM+T9IS7pH0m84M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=j2q+IcId; arc=none smtp.client-ip=209.85.222.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1732138148; c=relaxed/simple;
+	bh=AH7jBkvW3vmQevUwT1qZe6oh5eRiuiDeIP9puuoH2g0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=WFK12/igTO7kgt0d7Xt/CCJWf9BfJzsIdFLU5+h41P6y9Gy//9/9PkHVs0mcqww37vmMBeMpddTes5mwBnPTbVYAeFuBT9TunP3I218Qg4dRzW9m4tsHGdftTR13N0in5qWXHIyjHTtgOMDNOgt74CJDAORxILfth74jb3TG53s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=codewreck.org; spf=pass smtp.mailfrom=codewreck.org; dkim=pass (2048-bit key) header.d=codewreck.org header.i=@codewreck.org header.b=umgXeC4i; arc=none smtp.client-ip=62.210.214.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=codewreck.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=codewreck.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="j2q+IcId"
-Received: by mail-qk1-f174.google.com with SMTP id af79cd13be357-7b14df8f821so6644785a.2
-        for <patches@lists.linux.dev>; Wed, 20 Nov 2024 11:32:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1732131148; x=1732735948; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=GGeYeVXD/KX5j861dx5BNBmJBVar1QWTw1FBXtzzqj4=;
-        b=j2q+IcIdSSkoSN81nXzgfVSx+J+gSby5MzJ7+RE6avcbkiUoRZEM6tuN/IMUMBXVKc
-         v+bVgmsXYeBD1F3LTCw1+J8iSS511nWFfv+ALtzGJCCZpgHTUL8sOWBHH15xg2RXHWGv
-         RSHDfaDfYHTplb8JWuN16HDmxKk+oaM30BFRqh2vXgSlwvViQWqUeG6+x2h6UngHvIdf
-         WzztcabbC8SvBcYKHmLVcxlZnpkTm04JN88anpWjOhiZ00NlMPZAiZ5rRPULVJyTjbux
-         XaAiA1nIis+OR9Ut4voLPoq6Fc+3JTBVz/jII1IXxq/YwkwVIe92AVv+vsLG6RQou32r
-         MsOA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732131148; x=1732735948;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=GGeYeVXD/KX5j861dx5BNBmJBVar1QWTw1FBXtzzqj4=;
-        b=oyiHAeJBbYaV6VIRH2Py74sO8uwFny3zAk65SbHQqDD1x4nYzNdijvDitI+eaajLZH
-         GT5RYvULWk9593ZCovMgasuQ2R7qCpa+aZZBTpJ0+FMB55VYWo4YQlEwB3Zvw1ALheqY
-         dVC2s66LP7MTwBw579Sp5dRDfvPwbQXgr2Br5/jjma21eBf/FLzvOz5iEphByPpzWRxn
-         ff6R/4ATdiIvGdtbI9syVX489hELkQ+mEhdcjAW260wZnXCWQv5+b6vLZc9bDSFMw0F3
-         OMxrTFX1GQBI5Grl8cVlgFD/5jvRu+ZCIkfA6LMo8s1ao8CNL1/6omEjBxNKp4/zTMdp
-         WrwA==
-X-Gm-Message-State: AOJu0YwIdZg0YeTEo4nHBhKUVSy37wNvUYtpSK4uRD3lxT3yIHN5VvjF
-	Ctt7SsTri4ZPm/Q+X0uOaF+n3r5eA09N8GFgKgZX4WN04JVtCD/u
-X-Google-Smtp-Source: AGHT+IHZwPH7loUwDUaX5FdR4VpdHiigkGP/q28Wxmjw5G2HeO5AC0RAFn+FVUTmVBIdn8SZh/cfDw==
-X-Received: by 2002:a05:620a:298c:b0:7b1:4536:8dc7 with SMTP id af79cd13be357-7b42ee82dffmr546504085a.41.1732131147668;
-        Wed, 20 Nov 2024 11:32:27 -0800 (PST)
-Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-7b479d5f3a0sm129955285a.49.2024.11.20.11.32.24
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 20 Nov 2024 11:32:27 -0800 (PST)
-Message-ID: <fba149cb-25ec-45d4-8f9c-71f4c3cf6299@gmail.com>
-Date: Wed, 20 Nov 2024 11:32:23 -0800
+	dkim=pass (2048-bit key) header.d=codewreck.org header.i=@codewreck.org header.b="umgXeC4i"
+Received: from gaia.codewreck.org (localhost [127.0.0.1])
+	by submarine.notk.org (Postfix) with ESMTPS id B81CA14C1E1;
+	Wed, 20 Nov 2024 22:29:00 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=codewreck.org;
+	s=2; t=1732138143;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=QpBeDvQksNg01sH+Wzi0SHUbla6WiWqM9PQqY8u5gPQ=;
+	b=umgXeC4iOmTTUmV1dgALJ1ehGtwZMRzyy5BnORN5sMRzYtGwm0HMdNSsHwch/tGMCaku8n
+	sk6Bwb2/zSPUaQ5/U6NNehRKMmp9dWKn5hbo3LvjhlYfxZXdkHXhAul2fdzNj+05/dFS44
+	5hmrIOxY3+0Bm34ctJce1niJIgeLSpuFgu4joCEPNRcbp3m84zpCTZp3+G8geKnmNmsbkG
+	CgbXDmhWbkM9XMUt2dyIS127mzFn7RxOCAEvnNvuUEKJ6awgs71bzLtUGF1TD4KmPDH7+z
+	Nx1uxUwPV/PMaqo5+mBo5DXhnDhqFYrD05ydOxbG2tJ0gSr6kQ+yWvIhsm81cQ==
+Received: from localhost (gaia.codewreck.org [local])
+	by gaia.codewreck.org (OpenSMTPD) with ESMTPA id 4cec0879;
+	Wed, 20 Nov 2024 21:28:58 +0000 (UTC)
+Date: Thu, 21 Nov 2024 06:28:43 +0900
+From: Dominique Martinet <asmadeus@codewreck.org>
+To: Kees Cook <kees@kernel.org>
+Cc: Ulrich Teichert <ulrich.teichert@kumkeo.de>,
+	Salvatore Bonaccorso <carnil@debian.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	"stable@vger.kernel.org" <stable@vger.kernel.org>,
+	"patches@lists.linux.dev" <patches@lists.linux.dev>,
+	"y0un9n132@gmail.com" <y0un9n132@gmail.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Jiri Kosina <jkosina@suse.com>, Sasha Levin <sashal@kernel.org>,
+	"regressions@lists.linux.dev" <regressions@lists.linux.dev>
+Subject: Re: Re: [PATCH 6.1 175/321] x86: Increase brk randomness entropy for
+ 64-bit systems
+Message-ID: <Zz5Ui1lf3cu0bBlN@codewreck.org>
+References: <20240827143838.192435816@linuxfoundation.org>
+ <20240827143844.891898677@linuxfoundation.org>
+ <Zz0_-iJH1WaR3BUZ@codewreck.org>
+ <Zz2JQzi-5pTP_WPx@eldamar.lan>
+ <Zz2YrA740TRgl_13@codewreck.org>
+ <eaf6cfe58733416c928a8ff0d1d1b1ec@kumkeo.de>
+ <202411201000.F3313C02@keescook>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.12 0/3] 6.12.1-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
- conor@kernel.org, hargar@microsoft.com, broonie@kernel.org
-References: <20241120124100.444648273@linuxfoundation.org>
-Content-Language: en-US
-From: Florian Fainelli <f.fainelli@gmail.com>
-Autocrypt: addr=f.fainelli@gmail.com; keydata=
- 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
-In-Reply-To: <20241120124100.444648273@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <202411201000.F3313C02@keescook>
 
-On 11/20/24 04:55, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.12.1 release.
-> There are 3 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Fri, 22 Nov 2024 12:40:53 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.12.1-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.12.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+Thank you for the replies,
 
-On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
-BMIPS_GENERIC:
+Kees Cook wrote on Wed, Nov 20, 2024 at 10:08:04AM -0800:
+> It seems like the correct first step is to revert the brk change. It's
+> still not clear to me why the change is causing a problem -- I assume it
+> is colliding with some other program area.
+> 
+> Is the problem strictly with qemu-user-static? (i.e. it was GCC running
+> in qemu-user-static so the crash is qemu, not GCC) That should help me
+> narrow down the issue. There must be some built-in assumption. And it's
+> aarch64 within x86_64 where it happens (is the program within qemu also
+> aarch64 or is it arm32)?
 
-Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
+As far as I'm aware I've only seen qemu-user-static fail for aarch64
+(e.g. the arm32 variant works fine, didn't try other arches) in this
+particular configuration (the debian bookworm package has been built
+with --static-pie which is known to cause problems)
+
+It's also fixed in newer versions of qemu, even with --static-pie,
+because they reworked the way they detect program mapppins in qemu
+commit dd55885516 ("linux-user: Rewrite non-fixed probe_guest_base")
+and that also fixed the issue (in qemu 8.1.0)
+
+So, in short there are many fixes available; it's a qemu bug that
+assumed something about the memory layout and broke with this kaslr
+patch (and for some reason only happened on non-pie static build)
+
+
+mjt will at the very least rebuild the package with pie enabled, because
+it's known to cause other issues with aarch64 and that was an oversight
+in the first place, so this issue will go away for debian without any
+further work.
+
+This is the background behind me saying that this probably should be
+reverted in stable branches (to avoid other surprises with old
+userspace), but master can probably keep this commit if it brings
+tangible security benefits (and I think it does)
+
+See the debian qemu-side of the bug for details:
+https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1087822
+
+
+> Is there an simple reproducer?
+
+Unfortunately I couldn't get it to reproduce easily, but I think it's
+just a matter of finding the right binary that does problematic mappings
+(e.g. running true in a loop didn't work but running gcc in a loop did)
+
+The most reliable reproducer I've been using is building a reasonably
+large program, we were working on modemmanager at the time so that's
+what I used; if usually fails between 100-300/500 of the build:
+----
+$ docker run -ti --rm --platform linux/arm64/v8 docker.io/arm64v8/alpine:3.20 sh
+/ # apk add bash-completion-dev dbus-dev elogind-dev gobject-introspection-dev gtk-doc libgudev-dev libmbim-dev libqmi-dev linux-headers meson vala clang abuild alpine-sdk curl
+/ # curl -O https://gitlab.freedesktop.org/mobile-broadband/ModemManager/-/archive/1.22.0/ModemManager-1.22.0.tar.gz
+/ # tar xf ModemManager-1.22.0.tar.gz
+/ # cd ModemManager-1.22.0/
+/ # abuild-meson \
+        -Db_lto=true \
+        -Dsystemdsystemunitdir=no \
+        -Ddbus_policy_dir=/usr/share/dbus-1/system.d \
+        -Dgtk_doc=true \
+        -Dsystemd_journal=false \
+        -Dsystemd_suspend_resume=true \
+        -Dvapi=true \
+        -Dpolkit=no \
+        . output
+/ # meson compile -C output
+----
+
+If you take any of the command that failed from this build and run it in
+a loop, it'll also eventually fail after a couple hundred of
+invocations, but if your loop doesn't involve any parallelism that'll be
+slower to reproduce.
+
+Note it requires qemu to be broken as well, so you'll have best chances
+with a debian bookworm (VM is fine; a chroot or podman instead of docker
+is also fine; in the chroot case ninja requires at least /dev (and
+possibly /proc) mounted)
+
+
+Thanks,
 -- 
-Florian
+Dominique Martinet | Asmadeus
