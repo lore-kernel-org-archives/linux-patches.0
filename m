@@ -1,46 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F02481AB51E;
-	Wed, 20 Nov 2024 12:58:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24E831AB539;
+	Wed, 20 Nov 2024 12:58:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732107516; cv=none; b=uD4tRUnNGWsKXFDURMwrt8E2LrSlA3a0OVDgbla05VJNQcIAglyP0r3iZaHiCbc0lE9L6+ZSOH+vo8A93BtAagNTlN6EuC4Pnf/LNR1m3DqoP+A0SG+y6QSq2Tnm9C3/9SCZsvKpSLh33EEwjOAI6ujARoh8Yf8NLzUV10sfENA=
+	t=1732107517; cv=none; b=JZ1lGR45tqV5gSypYMxOhmfcEemw0gLM4aysstdlavfoJz5UoXV1ZrKIOadVf1fX0bU34uNM4wXjCvsBhmW0L52hrzz+UwLHb08HSZvuRezL98TXJork90AmC/zj+tNHiOm47mXrjrQSSFI0AEmAjXkezDZGBved2ZdWoQMzzdU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732107516; c=relaxed/simple;
-	bh=qM5VcE9hnP6sXSAhCdOSknCja/bVx5yqjzbhg7JmaMo=;
+	s=arc-20240116; t=1732107517; c=relaxed/simple;
+	bh=UZuO0fDJhqCBm1MvFfoUJSJ0BBvpRJ7N9T9GnERd0Ow=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g2O214mqNMykBGW9NssvGcTRfhr2tyTDfnvfv7WWbka/MQGc4UqlsjP3KdLeY3rfWqB+jp+Ecyhzz1Dlzsa0eDl5N/RIg+TVoxeb3wW0/bOwOxZ4E6zIQp0wiF2KNZHlAhy5yb4asoOhsG8xFyFQslztXPQEp/n5C58ZOVUxRxY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=saquaVdy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Tqlwz3/4G5YFjl0DoQ+1KhS69SYJUVbtiuCyGAQN5iNGATnRpdkZQX8GJzwGE7pwCmX4P5zpvAiwT7Fmkubl8/8489FfPMIwFFVQccbDFghKEPbn6EQteGGX4nEumFqrWUr/pK0m/Ipu6Sp/sTcLLCNk0E+/UbJMkvavwYhWsXs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZlqffxxG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="saquaVdy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9B9BC4CECD;
-	Wed, 20 Nov 2024 12:58:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZlqffxxG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB4F9C4CED2;
+	Wed, 20 Nov 2024 12:58:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1732107515;
-	bh=qM5VcE9hnP6sXSAhCdOSknCja/bVx5yqjzbhg7JmaMo=;
+	s=korg; t=1732107517;
+	bh=UZuO0fDJhqCBm1MvFfoUJSJ0BBvpRJ7N9T9GnERd0Ow=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=saquaVdycvIqlOCZMTSKT0f6R9VVJce9qwXnMzfDByFpavJ72wBYk9c8iqJhmeXP3
-	 G3ghGv3Z0nf9mtnpt7f67vKcANdNZucxdTLSmSTpjGKuc6+9uEyPmtDl0CsxTWHgSY
-	 A2ew4ABox/Y8Mgh/wuwlUwRrKl4W2TFtaxgIB+d4=
+	b=ZlqffxxGgFfyafFJI7ul9D4qUDGrIXAUjau2HMnTOQY6Ota7ir9Ju7PBBoPHarbVw
+	 c34xIqMT4uLJxpKJ0PpbZEiZGfJvRLBt9fqLdn1MYWK4FeNjLgGOBVVF1twtvyPVoB
+	 +v7o2ZuFih++5RdBZJa2m2G5D0tnOEohLS346NxQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qun-Wei Lin <qun-wei.lin@mediatek.com>,
-	Andrew Yang <andrew.yang@mediatek.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Casper Li <casper.li@mediatek.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Chinwen Chang <chinwen.chang@mediatek.com>,
-	Kent Overstreet <kent.overstreet@linux.dev>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
-	Pasha Tatashin <pasha.tatashin@soleen.com>,
-	Shakeel Butt <shakeel.butt@linux.dev>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Andrei Vagin <avagin@google.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	David Hildenbrand <david@redhat.com>,
+	Matthew Wilcox <willy@infradead.org>,
+	=?UTF-8?q?Micha=C5=82=20Miros=C5=82aw?= <mirq-linux@rere.qmqm.pl>,
+	Muhammad Usama Anjum <usama.anjum@collabora.com>,
+	Oscar Salvador <osalvador@suse.de>,
+	Peter Xu <peterx@redhat.com>,
+	Ryan Roberts <ryan.roberts@arm.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.11 045/107] sched/task_stack: fix object_is_on_stack() for KASAN tagged pointers
-Date: Wed, 20 Nov 2024 13:56:20 +0100
-Message-ID: <20241120125630.694733916@linuxfoundation.org>
+Subject: [PATCH 6.11 046/107] fs/proc/task_mmu: prevent integer overflow in pagemap_scan_get_args()
+Date: Wed, 20 Nov 2024 13:56:21 +0100
+Message-ID: <20241120125630.716200451@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241120125629.681745345@linuxfoundation.org>
 References: <20241120125629.681745345@linuxfoundation.org>
@@ -53,95 +54,58 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.11-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Qun-Wei Lin <qun-wei.lin@mediatek.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-commit fd7b4f9f46d46acbc7af3a439bb0d869efdc5c58 upstream.
+commit 669b0cb81e4e4e78cff77a5b367c7f70c0c6c05e upstream.
 
-When CONFIG_KASAN_SW_TAGS and CONFIG_KASAN_STACK are enabled, the
-object_is_on_stack() function may produce incorrect results due to the
-presence of tags in the obj pointer, while the stack pointer does not have
-tags.  This discrepancy can lead to incorrect stack object detection and
-subsequently trigger warnings if CONFIG_DEBUG_OBJECTS is also enabled.
+The "arg->vec_len" variable is a u64 that comes from the user at the start
+of the function.  The "arg->vec_len * sizeof(struct page_region))"
+multiplication can lead to integer wrapping.  Use size_mul() to avoid
+that.
 
-Example of the warning:
+Also the size_add/mul() functions work on unsigned long so for 32bit
+systems we need to ensure that "arg->vec_len" fits in an unsigned long.
 
-ODEBUG: object 3eff800082ea7bb0 is NOT on stack ffff800082ea0000, but annotated.
-------------[ cut here ]------------
-WARNING: CPU: 0 PID: 1 at lib/debugobjects.c:557 __debug_object_init+0x330/0x364
-Modules linked in:
-CPU: 0 UID: 0 PID: 1 Comm: swapper/0 Not tainted 6.12.0-rc5 #4
-Hardware name: linux,dummy-virt (DT)
-pstate: 600000c5 (nZCv daIF -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-pc : __debug_object_init+0x330/0x364
-lr : __debug_object_init+0x330/0x364
-sp : ffff800082ea7b40
-x29: ffff800082ea7b40 x28: 98ff0000c0164518 x27: 98ff0000c0164534
-x26: ffff800082d93ec8 x25: 0000000000000001 x24: 1cff0000c00172a0
-x23: 0000000000000000 x22: ffff800082d93ed0 x21: ffff800081a24418
-x20: 3eff800082ea7bb0 x19: efff800000000000 x18: 0000000000000000
-x17: 00000000000000ff x16: 0000000000000047 x15: 206b63617473206e
-x14: 0000000000000018 x13: ffff800082ea7780 x12: 0ffff800082ea78e
-x11: 0ffff800082ea790 x10: 0ffff800082ea79d x9 : 34d77febe173e800
-x8 : 34d77febe173e800 x7 : 0000000000000001 x6 : 0000000000000001
-x5 : feff800082ea74b8 x4 : ffff800082870a90 x3 : ffff80008018d3c4
-x2 : 0000000000000001 x1 : ffff800082858810 x0 : 0000000000000050
-Call trace:
- __debug_object_init+0x330/0x364
- debug_object_init_on_stack+0x30/0x3c
- schedule_hrtimeout_range_clock+0xac/0x26c
- schedule_hrtimeout+0x1c/0x30
- wait_task_inactive+0x1d4/0x25c
- kthread_bind_mask+0x28/0x98
- init_rescuer+0x1e8/0x280
- workqueue_init+0x1a0/0x3cc
- kernel_init_freeable+0x118/0x200
- kernel_init+0x28/0x1f0
- ret_from_fork+0x10/0x20
----[ end trace 0000000000000000 ]---
-ODEBUG: object 3eff800082ea7bb0 is NOT on stack ffff800082ea0000, but annotated.
-------------[ cut here ]------------
-
-Link: https://lkml.kernel.org/r/20241113042544.19095-1-qun-wei.lin@mediatek.com
-Signed-off-by: Qun-Wei Lin <qun-wei.lin@mediatek.com>
-Cc: Andrew Yang <andrew.yang@mediatek.com>
-Cc: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Cc: Casper Li <casper.li@mediatek.com>
-Cc: Catalin Marinas <catalin.marinas@arm.com>
-Cc: Chinwen Chang <chinwen.chang@mediatek.com>
-Cc: Kent Overstreet <kent.overstreet@linux.dev>
-Cc: Matthias Brugger <matthias.bgg@gmail.com>
-Cc: Pasha Tatashin <pasha.tatashin@soleen.com>
-Cc: Shakeel Butt <shakeel.butt@linux.dev>
+Link: https://lkml.kernel.org/r/39d41335-dd4d-48ed-8a7f-402c57d8ea84@stanley.mountain
+Fixes: 52526ca7fdb9 ("fs/proc/task_mmu: implement IOCTL to get and optionally clear info about PTEs")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Cc: Andrei Vagin <avagin@google.com>
+Cc: Andrii Nakryiko <andrii@kernel.org>
+Cc: Arnd Bergmann <arnd@arndb.de>
+Cc: David Hildenbrand <david@redhat.com>
+Cc: Matthew Wilcox <willy@infradead.org>
+Cc: Michał Mirosław <mirq-linux@rere.qmqm.pl>
+Cc: Muhammad Usama Anjum <usama.anjum@collabora.com>
+Cc: Oscar Salvador <osalvador@suse.de>
+Cc: Peter Xu <peterx@redhat.com>
+Cc: Ryan Roberts <ryan.roberts@arm.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/sched/task_stack.h |    2 ++
- 1 file changed, 2 insertions(+)
+ fs/proc/task_mmu.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/include/linux/sched/task_stack.h
-+++ b/include/linux/sched/task_stack.h
-@@ -9,6 +9,7 @@
- #include <linux/sched.h>
- #include <linux/magic.h>
- #include <linux/refcount.h>
-+#include <linux/kasan.h>
+--- a/fs/proc/task_mmu.c
++++ b/fs/proc/task_mmu.c
+@@ -2672,8 +2672,10 @@ static int pagemap_scan_get_args(struct
+ 		return -EFAULT;
+ 	if (!arg->vec && arg->vec_len)
+ 		return -EINVAL;
++	if (UINT_MAX == SIZE_MAX && arg->vec_len > SIZE_MAX)
++		return -EINVAL;
+ 	if (arg->vec && !access_ok((void __user *)(long)arg->vec,
+-			      arg->vec_len * sizeof(struct page_region)))
++				   size_mul(arg->vec_len, sizeof(struct page_region))))
+ 		return -EFAULT;
  
- #ifdef CONFIG_THREAD_INFO_IN_TASK
- 
-@@ -89,6 +90,7 @@ static inline int object_is_on_stack(con
- {
- 	void *stack = task_stack_page(current);
- 
-+	obj = kasan_reset_tag(obj);
- 	return (obj >= stack) && (obj < (stack + THREAD_SIZE));
- }
- 
+ 	/* Fixup default values */
 
 
