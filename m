@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D56F31A2C25;
-	Wed, 20 Nov 2024 12:56:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7AD91DFEF;
+	Wed, 20 Nov 2024 12:56:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732107392; cv=none; b=RTNCPErVE8elWlH8EcV1dFjRuL46TaunlwmFFAABN9sYSLnQKaYTbhTTMDxb4Kvy+P0ucXtbeelR1eK58YnC6daNDO+UTWKLseifcNyglHKLXm+w43xSVPLHQFS0cFnV4KU7LDgAAc5K3GpYcRYrSn1/zwiN/bCRMqqrad1jCPU=
+	t=1732107393; cv=none; b=ukDEuc3Fftcvo2kMlY6LcQYlPC1fdvL7rPzKMpDVN+uf/PpuCpP5AeHRhkJRc6rxhl+TiPj7ppoy0f4rDP5a0y88Bdd6zQbupBNxwUFuqtkP21AIW7+lLj2xzuwgG40NtTAJ+thZvRdm/xkHUwLx2Id/vtnlVYQOhPn+S75Yq18=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732107392; c=relaxed/simple;
-	bh=bm8wfbm+He6fD+0Fp/sOOWr5Yg6s37EdglFrc3V+E9E=;
+	s=arc-20240116; t=1732107393; c=relaxed/simple;
+	bh=m6IC4S/OFmIC7Rv0cRxnR0hkSm7Pr15Ari4zJK3DIA4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lVcq7jZQPIuwY+ad1FS6HdSpbI+1s55wLNAZYdB4O98dhQUL/gNFAa8VpujbutnJc/y1IYyyvtS1VnBhf2evtPRhrGxLB1K6CPfMvgMuMlDj5XTy99fBkEpi9svNrlW7Waz+RVjpPJFoNNaQRD1kosYki9A63bgC8j3tOfsvZOM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aU7kWiM6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=H267RYVTde9Nlk8sLgubh815E7+1IyraTI0529umlGzExzjlpsTmEfGmY+SCgv2JxY2aroFpp61yxPffNOLJMz5IHJr0ICH51xuo05IAJSSy70vDfWOyOo5MXeSdlGcfuHpDpnlmq9nfxgmOn4C0lwf2jBLbSfivnRzwDin9+yw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r5WMpUJ9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aU7kWiM6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50B4FC4CECD;
-	Wed, 20 Nov 2024 12:56:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r5WMpUJ9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FF90C4CECD;
+	Wed, 20 Nov 2024 12:56:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1732107392;
-	bh=bm8wfbm+He6fD+0Fp/sOOWr5Yg6s37EdglFrc3V+E9E=;
+	s=korg; t=1732107393;
+	bh=m6IC4S/OFmIC7Rv0cRxnR0hkSm7Pr15Ari4zJK3DIA4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aU7kWiM6ns/VOW/yrPazmBrUi0I3VEeGzoRD77hgrlstSrpi+k+/8NqMB9XaOET5y
-	 Cu2xLkOVZvsNn9zHCp4yMQFtKcycAD9DYdJr3LoNsZub9C4z+RABsZgwmehZjEhphs
-	 Ppx/aogjdiXz4A8aqz+rJw6WIJuxEMMcC9QzNHBg=
+	b=r5WMpUJ9T7Kv4KiiW81783A4AAzoYNo1013JOqBox8YhFFDOo6eZl0BZV5NkWOhtx
+	 EGHGv/1c1/QlmJFxZyNaRTyN0Gz6x9n8H6yydJ4exuzadhXdKUd6Sshay2Hr5DmNH7
+	 jpdkKtwKkAOrBxizyqr8S4PFAe4i4suV7N+cr+6U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benoit Sevens <bsevens@google.com>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 6.12 2/3] media: uvcvideo: Skip parsing frames of type UVC_VS_UNDEFINED in uvc_parse_format
-Date: Wed, 20 Nov 2024 13:55:56 +0100
-Message-ID: <20241120124100.503739172@linuxfoundation.org>
+	syzbot+bc6bfc25a68b7a020ee1@syzkaller.appspotmail.com,
+	"Liam R. Howlett" <Liam.Howlett@Oracle.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	Jann Horn <jannh@google.com>
+Subject: [PATCH 6.12 3/3] mm/mmap: fix __mmap_region() error handling in rare merge failure case
+Date: Wed, 20 Nov 2024 13:55:57 +0100
+Message-ID: <20241120124100.526989773@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241120124100.444648273@linuxfoundation.org>
 References: <20241120124100.444648273@linuxfoundation.org>
@@ -51,35 +53,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benoit Sevens <bsevens@google.com>
+From: "Liam R. Howlett" <Liam.Howlett@Oracle.com>
 
-commit ecf2b43018da9579842c774b7f35dbe11b5c38dd upstream.
+The mmap_region() function tries to install a new vma, which requires a
+pre-allocation for the maple tree write due to the complex locking
+scenarios involved.
 
-This can lead to out of bounds writes since frames of this type were not
-taken into account when calculating the size of the frames buffer in
-uvc_parse_streaming.
+Recent efforts to simplify the error recovery required the relocation of
+the preallocation of the maple tree nodes (via vma_iter_prealloc()
+calling mas_preallocate()) higher in the function.
 
-Fixes: c0efd232929c ("V4L/DVB (8145a): USB Video Class driver")
-Signed-off-by: Benoit Sevens <bsevens@google.com>
-Cc: stable@vger.kernel.org
-Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+The relocation of the preallocation meant that, if there was a file
+associated with the vma and the driver call (mmap_file()) modified the
+vma flags, then a new merge of the new vma with existing vmas is
+attempted.
+
+During the attempt to merge the existing vma with the new vma, the vma
+iterator is used - the same iterator that would be used for the next
+write attempt to the tree.  In the event of needing a further allocation
+and if the new allocations fails, the vma iterator (and contained maple
+state) will cleaned up, including freeing all previous allocations and
+will be reset internally.
+
+Upon returning to the __mmap_region() function, the error is available
+in the vma_merge_struct and can be used to detect the -ENOMEM status.
+
+Hitting an -ENOMEM scenario after the driver callback leaves the system
+in a state that undoing the mapping is worse than continuing by dipping
+into the reserve.
+
+A preallocation should be performed in the case of an -ENOMEM and the
+allocations were lost during the failure scenario.  The __GFP_NOFAIL
+flag is used in the allocation to ensure the allocation succeeds after
+implicitly telling the driver that the mapping was happening.
+
+The range is already set in the vma_iter_store() call below, so it is
+not necessary and is dropped.
+
+Reported-by: syzbot+bc6bfc25a68b7a020ee1@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/x/log.txt?x=17b0ace8580000
+Fixes: 5de195060b2e2 ("mm: resolve faulty mmap_region() error path behaviour")
+Signed-off-by: Liam R. Howlett <Liam.Howlett@Oracle.com>
+Reviewed-by: Vlastimil Babka <vbabka@suse.cz>
+Reviewed-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Cc: Jann Horn <jannh@google.com>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/usb/uvc/uvc_driver.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ mm/mmap.c |   13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
---- a/drivers/media/usb/uvc/uvc_driver.c
-+++ b/drivers/media/usb/uvc/uvc_driver.c
-@@ -371,7 +371,7 @@ static int uvc_parse_format(struct uvc_d
- 	 * Parse the frame descriptors. Only uncompressed, MJPEG and frame
- 	 * based formats have frame descriptors.
- 	 */
--	while (buflen > 2 && buffer[1] == USB_DT_CS_INTERFACE &&
-+	while (ftype && buflen > 2 && buffer[1] == USB_DT_CS_INTERFACE &&
- 	       buffer[2] == ftype) {
- 		unsigned int maxIntervalIndex;
+--- a/mm/mmap.c
++++ b/mm/mmap.c
+@@ -1491,7 +1491,18 @@ static unsigned long __mmap_region(struc
+ 				vm_flags = vma->vm_flags;
+ 				goto file_expanded;
+ 			}
+-			vma_iter_config(&vmi, addr, end);
++
++			/*
++			 * In the unlikely even that more memory was needed, but
++			 * not available for the vma merge, the vma iterator
++			 * will have no memory reserved for the write we told
++			 * the driver was happening.  To keep up the ruse,
++			 * ensure the allocation for the store succeeds.
++			 */
++			if (vmg_nomem(&vmg)) {
++				mas_preallocate(&vmi.mas, vma,
++						GFP_KERNEL|__GFP_NOFAIL);
++			}
+ 		}
  
+ 		vm_flags = vma->vm_flags;
 
 
