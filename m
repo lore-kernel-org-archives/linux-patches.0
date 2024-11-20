@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C829F15853A;
-	Wed, 20 Nov 2024 12:58:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C82FB1991AA;
+	Wed, 20 Nov 2024 12:58:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732107490; cv=none; b=otJGyA0pqajA9bvvzopsdEQ8zr0Mo3gpUaBr+czodY2gUBPHCXBfwcHcJT1crSFIriRsk44FDD3LzNS4PjRJh12kge0BamiH7VNUi5NInAYvXlCAKNSfa+m8pr+9Suk/tQlqr8MobKFeJ+123YbrjiphvqR8fg9jLqkQTVMS0ss=
+	t=1732107490; cv=none; b=Sf1PfouLg2sfmS+y62lezqQKkXp8fjScjGIOQJyrpOr22b59WlyqJDyFu/Hc+rGU2r6n/vHIRNLn4c+HTrMlZOYooeTMk2Uswudx0s1bAq92Js1tUt0cyg8mLpq/kpEe2YOTnF2ZXurQt4nXBkIGoZw8cKbVFJ3SF97ChFzHQRA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1732107490; c=relaxed/simple;
-	bh=OCzJSyOHysvjCzGE4l6T2BuPqLXw4wAhmvW1dJ79CbA=;
+	bh=cSOp0YZ368t1cWfjVFdoJmWfSHSyqeyHrIU1qacd4tE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DS20+jm2424yvkzeT8++kGf+tsCyTmULYbYn9FvHXf76ecJuVQGsbkl6qjJiTs7LJKy8llaMjxIrbj0xhuRLWNgUo552QUMg0eH1Ly6Y93illdBh8SUHhj38bIqqfNRtnbwb/QtG+R31JhfosG7nS/PUWzeYnzq2HNhwCqbTM+E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=phTuzSNf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=t9ds6Xqdt3fiD8bDN1z5YEZ0kJYVh1loYQixPpLpOriy9Xf/CpSTN0Xetws+UoZWkab2raioqFWPUNEBr+QHFLWJgOvuKJR15Ff6zJpI1s/R4zo9HHZT1dD1cyiAfLyK/Y3JhfzqZ1Uvw+QoTKi4PNBn6MtTqcltsmyC/xkphzI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gL4d706z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="phTuzSNf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65100C4CED1;
-	Wed, 20 Nov 2024 12:58:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gL4d706z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 825F4C4CECD;
+	Wed, 20 Nov 2024 12:58:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1732107490;
-	bh=OCzJSyOHysvjCzGE4l6T2BuPqLXw4wAhmvW1dJ79CbA=;
+	s=korg; t=1732107489;
+	bh=cSOp0YZ368t1cWfjVFdoJmWfSHSyqeyHrIU1qacd4tE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=phTuzSNfnYUQ6c3pdRLbiqIMu5Y9gLg38doeyN8rnmIEJyyTNpRq4CLlJgfpjC0oo
-	 PocMlmx7U99YkP/d35gmg5LloWLat5GQfFhuuFcpje3BnhG9VSKbkXSi3A8C/7bQ7t
-	 ZXsWT8x84vbI41ASBcg98e0buQm11cb8SfFABkKA=
+	b=gL4d706zjFMXwwr8XsoDS2I1ko0IhSJDqhB6HWLUzrFJUrzWP51DvzAh69NJK6Z+9
+	 PUmb4o3lZ5RQjFmCx+qnUyHnZ5v4ie7l4OhG2FbjHn+QHGBjUkj5bmH/af8Xn9MxWx
+	 XeYJv3spHhGUKpb/NN8py978sMlTgDJDUccwZF9A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	William Tu <witu@nvidia.com>,
+	Dragos Tatulea <dtatulea@nvidia.com>,
 	Tariq Toukan <tariqt@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 011/107] net/mlx5e: clear xdp features on non-uplink representors
-Date: Wed, 20 Nov 2024 13:55:46 +0100
-Message-ID: <20241120125629.937776747@linuxfoundation.org>
+Subject: [PATCH 6.11 010/107] net/mlx5e: kTLS, Fix incorrect page refcounting
+Date: Wed, 20 Nov 2024 13:55:45 +0100
+Message-ID: <20241120125629.916383629@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241120125629.681745345@linuxfoundation.org>
 References: <20241120125629.681745345@linuxfoundation.org>
@@ -52,57 +52,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: William Tu <witu@nvidia.com>
+From: Dragos Tatulea <dtatulea@nvidia.com>
 
-[ Upstream commit c079389878debf767dc4e52fe877b9117258dfe2 ]
+[ Upstream commit dd6e972cc5890d91d6749bb48e3912721c4e4b25 ]
 
-Non-uplink representor port does not support XDP. The patch clears
-the xdp feature by checking the net_device_ops.ndo_bpf is set or not.
+The kTLS tx handling code is using a mix of get_page() and
+page_ref_inc() APIs to increment the page reference. But on the release
+path (mlx5e_ktls_tx_handle_resync_dump_comp()), only put_page() is used.
 
-Verify using the netlink tool:
-$ tools/net/ynl/cli.py --spec Documentation/netlink/specs/netdev.yaml --dump dev-get
+This is an issue when using pages from large folios: the get_page()
+references are stored on the folio page while the page_ref_inc()
+references are stored directly in the given page. On release the folio
+page will be dereferenced too many times.
 
-Representor netdev before the patch:
-{'ifindex': 8,
-  'xdp-features': {'basic',
-                   'ndo-xmit',
-                   'ndo-xmit-sg',
-                   'redirect',
-                   'rx-sg',
-                   'xsk-zerocopy'},
-  'xdp-rx-metadata-features': set(),
-  'xdp-zc-max-segs': 1,
-  'xsk-features': set()},
-With the patch:
- {'ifindex': 8,
-  'xdp-features': set(),
-  'xdp-rx-metadata-features': set(),
-  'xsk-features': set()},
+This was found while doing kTLS testing with sendfile() + ZC when the
+served file was read from NFS on a kernel with NFS large folios support
+(commit 49b29a573da8 ("nfs: add support for large folios")).
 
-Fixes: 4d5ab0ad964d ("net/mlx5e: take into account device reconfiguration for xdp_features flag")
-Signed-off-by: William Tu <witu@nvidia.com>
+Fixes: 84d1bb2b139e ("net/mlx5e: kTLS, Limit DUMP wqe size")
+Signed-off-by: Dragos Tatulea <dtatulea@nvidia.com>
 Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20241107183527.676877-6-tariqt@nvidia.com
+Link: https://patch.msgid.link/20241107183527.676877-5-tariqt@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en_main.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ .../net/ethernet/mellanox/mlx5/core/en_accel/ktls_tx.c    | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-index 3e11c1c6d4f69..99d0b977ed3d2 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-@@ -4266,7 +4266,8 @@ void mlx5e_set_xdp_feature(struct net_device *netdev)
- 	struct mlx5e_params *params = &priv->channels.params;
- 	xdp_features_t val;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ktls_tx.c b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ktls_tx.c
+index d61be26a4df1a..3db31cc107192 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ktls_tx.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ktls_tx.c
+@@ -660,7 +660,7 @@ tx_sync_info_get(struct mlx5e_ktls_offload_context_tx *priv_tx,
+ 	while (remaining > 0) {
+ 		skb_frag_t *frag = &record->frags[i];
  
--	if (params->packet_merge.type != MLX5E_PACKET_MERGE_NONE) {
-+	if (!netdev->netdev_ops->ndo_bpf ||
-+	    params->packet_merge.type != MLX5E_PACKET_MERGE_NONE) {
- 		xdp_clear_features_flag(netdev);
- 		return;
+-		get_page(skb_frag_page(frag));
++		page_ref_inc(skb_frag_page(frag));
+ 		remaining -= skb_frag_size(frag);
+ 		info->frags[i++] = *frag;
  	}
+@@ -763,7 +763,7 @@ void mlx5e_ktls_tx_handle_resync_dump_comp(struct mlx5e_txqsq *sq,
+ 	stats = sq->stats;
+ 
+ 	mlx5e_tx_dma_unmap(sq->pdev, dma);
+-	put_page(wi->resync_dump_frag_page);
++	page_ref_dec(wi->resync_dump_frag_page);
+ 	stats->tls_dump_packets++;
+ 	stats->tls_dump_bytes += wi->num_bytes;
+ }
+@@ -816,12 +816,12 @@ mlx5e_ktls_tx_handle_ooo(struct mlx5e_ktls_offload_context_tx *priv_tx,
+ 
+ err_out:
+ 	for (; i < info.nr_frags; i++)
+-		/* The put_page() here undoes the page ref obtained in tx_sync_info_get().
++		/* The page_ref_dec() here undoes the page ref obtained in tx_sync_info_get().
+ 		 * Page refs obtained for the DUMP WQEs above (by page_ref_add) will be
+ 		 * released only upon their completions (or in mlx5e_free_txqsq_descs,
+ 		 * if channel closes).
+ 		 */
+-		put_page(skb_frag_page(&info.frags[i]));
++		page_ref_dec(skb_frag_page(&info.frags[i]));
+ 
+ 	return MLX5E_KTLS_SYNC_FAIL;
+ }
 -- 
 2.43.0
 
