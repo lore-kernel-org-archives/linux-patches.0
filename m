@@ -1,150 +1,101 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64F9D19E97F;
-	Wed, 20 Nov 2024 17:59:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 372451E515;
+	Wed, 20 Nov 2024 18:08:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732125579; cv=none; b=VpxLfuoE9AEpWo7cNuj4W7wX4xZwupAf8+34exGluCCTbqVh1/hBhmAgJvl6zmp7No0/wyYW3yHuenfC6ND+L5lBL1TqyaX5K8Bhq9qRl1sJBk3g3AKGv4ZBPy4pnqKOLv29jiMlRHc2pbOWSeDxcYDqRGPviqOKwNP4da7PHeU=
+	t=1732126088; cv=none; b=bBsIkoctn5xzTzfPdY/mArVimYH9I6A6WhliLv6EyisODd171ohXDDIFYf9Z1XyymGEbdQ/YKXZ82pZSO8J9vY2ndi3qSoXDeKQwP/dytesYIXful/d4Y7Dr6AAkxkfanJiTtXcEtpC1dBwM5xoPLIk0fN9ltXYAm1Eoh652z9k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732125579; c=relaxed/simple;
-	bh=DZ38UxyzHdOC0ZPM6AsxHCE30MP5BwfG1PST2fUMSVk=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=nT+9UtbJbe64XDXzywbqbwXXsTfygFkmVLHbuL+mtHeVNLKJhGCXOuHadbTbXdefV7FIEVb3+rbo3BPhHUxFGOHDJxF9mllWtP7iL+pqsyE0e0WkQseEjetXoIGgKo9jnwWjxdA+Z7vExuHZ1wpq/pCoT3fGet94trW8XXWO1qw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=azKfIHNd; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1732126088; c=relaxed/simple;
+	bh=iw4r2EmtAHn3UqWFDYild7FKS/PWFaWAo+7bl1fIHLQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Ngk+X3xD3AiexuSyZPZ2qgy/sNnMXAZyy97n+SRN2oj1wap3iePAw+Pjc9HtvxmNC8R1pfbEmE0SYTeT6IQsCEtH0zna5S5UbIbpmK3o32k+QSJZVwU5mZT9pYKBBaOzevyzyzejRuoT76L3al/bgqKxP/NZjYn4rM3+aN2kJTI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Wjlj2Y6X; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="azKfIHNd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 553DAC4CECD;
-	Wed, 20 Nov 2024 17:59:35 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Wjlj2Y6X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1244C4CECD;
+	Wed, 20 Nov 2024 18:08:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1732125579;
-	bh=DZ38UxyzHdOC0ZPM6AsxHCE30MP5BwfG1PST2fUMSVk=;
-	h=From:To:Cc:Subject:Date:From;
-	b=azKfIHNdWD1IHqTeU5C444Y1BksEFRPL8GWfOYC3o5MTdJswd7pS2bO5Ab/5r+JiP
-	 xVNIU9nxmGdj8G5oNGKbX37y9YyK2q3I9xwdA7JG4LxWqTIbIouPCbbrz7Er9Pox/X
-	 3Fg5DhKJW+s9uizw7X3SL5DcZEpftLIMbhS1Dxecr4Bu3uGuQPvQBpp4R+PdCe+Tzi
-	 VgxPyKRNO+4TMtJDFJaCh44v0gyxwT4MW5b+Fx3KrKvGiqGaoluGsMFSyADSxCnQ+7
-	 LcTW73+GxoZkMV0R+OgIdCL66aR4xwgDYbL+55zg0WHofP1A1ThPUndLkqoyzcArX5
-	 wp7jfvlkKgDvw==
-From: Miguel Ojeda <ojeda@kernel.org>
-To: Steven Rostedt <rostedt@goodmis.org>,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Miguel Ojeda <ojeda@kernel.org>,
-	Alex Gaynor <alex.gaynor@gmail.com>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	linux-kernel@vger.kernel.org,
-	linux-trace-kernel@vger.kernel.org,
-	Boqun Feng <boqun.feng@gmail.com>,
-	Gary Guo <gary@garyguo.net>,
-	=?UTF-8?q?Bj=C3=B6rn=20Roy=20Baron?= <bjorn3_gh@protonmail.com>,
-	Benno Lossin <benno.lossin@proton.me>,
-	Andreas Hindborg <a.hindborg@kernel.org>,
-	Alice Ryhl <aliceryhl@google.com>,
-	Trevor Gross <tmgross@umich.edu>,
-	rust-for-linux@vger.kernel.org,
-	patches@lists.linux.dev
-Subject: [PATCH] rust: jump_label: skip formatting generated file
-Date: Wed, 20 Nov 2024 18:59:16 +0100
-Message-ID: <20241120175916.58860-1-ojeda@kernel.org>
+	s=k20201202; t=1732126087;
+	bh=iw4r2EmtAHn3UqWFDYild7FKS/PWFaWAo+7bl1fIHLQ=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=Wjlj2Y6XW+W1AF4Re2Pcf/c3nVekBknddgTDYKMluMnJk900cJYYNwPkWxkG/I5+O
+	 c6bCy9PYciOjWgUYwdJtisArGuM6OoPqFU57EB4LXCzJlRRSzSHPlobNsA9tgEaHaa
+	 9E9+/HLdNaJOE8Mx0F7Nk1A2xVRQfOj/309T3TCS2Cj0aPRyS9VmCFID5c9xBgOu4Q
+	 Q9A/yI5n1Hi3bSLpEnCsb5QN2ThoW8X5QWTE6F7QNhc7usNhcRgvZp8hars+98G1A7
+	 GE41igKuHD4B+AHJbvqTz8zVcCCHkijO8Um2QkqAXVmyX1XPlSupGBaw3rcZmyIrSO
+	 2uhq2WHXDVYCg==
+Date: Wed, 20 Nov 2024 10:08:04 -0800
+From: Kees Cook <kees@kernel.org>
+To: Ulrich Teichert <ulrich.teichert@kumkeo.de>
+Cc: Dominique Martinet <asmadeus@codewreck.org>,
+	Salvatore Bonaccorso <carnil@debian.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	"stable@vger.kernel.org" <stable@vger.kernel.org>,
+	"patches@lists.linux.dev" <patches@lists.linux.dev>,
+	"y0un9n132@gmail.com" <y0un9n132@gmail.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Jiri Kosina <jkosina@suse.com>, Sasha Levin <sashal@kernel.org>,
+	"regressions@lists.linux.dev" <regressions@lists.linux.dev>
+Subject: Re: Re: [PATCH 6.1 175/321] x86: Increase brk randomness entropy for
+ 64-bit systems
+Message-ID: <202411201000.F3313C02@keescook>
+References: <20240827143838.192435816@linuxfoundation.org>
+ <20240827143844.891898677@linuxfoundation.org>
+ <Zz0_-iJH1WaR3BUZ@codewreck.org>
+ <Zz2JQzi-5pTP_WPx@eldamar.lan>
+ <Zz2YrA740TRgl_13@codewreck.org>
+ <eaf6cfe58733416c928a8ff0d1d1b1ec@kumkeo.de>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <eaf6cfe58733416c928a8ff0d1d1b1ec@kumkeo.de>
 
-After a source tree build of the kernel, and having used the `RSCPP`
-rule, running `rustfmt` fails with:
+On Wed, Nov 20, 2024 at 08:25:57AM +0000, Ulrich Teichert wrote:
+> Hi Dominique & all,
+> 
+> >Salvatore Bonaccorso wrote on Wed, Nov 20, 2024 at 08:01:23AM +0100:
+> >> Interestigly there is another report in Debian which identifies the
+> >> backport of upstream commit 44c76825d6eefee9eb7ce06c38e1a6632ac7eb7d
+> >> to cause issues in the 6.1.y series:
+> >>
+> >> https://bugs.debian.org/1085762
+> >>  https://lore.kernel.org/regressions/18f34d636390454180240e6a61af9217@kumkeo.de/T/#u
+> 
+> >Thanks for the heads up!
+> 
+> >This would appear to be the same bug (running qemu-aarch64 in user mode
+> >on an x86 machine) ?
+> >I've added Ulrich in recipients to confirm he's using qemu-user-static
+> >like I was.
+> 
+> pbuilder uses qemu inside the ARM64 chroot, yes. I don't know which variety of qemu, though.
+> 
+> >Shame I didn't notice all his work, that would have saved me some
+> >time :)
+> 
+> Well, at least we now have confirmation from two different git bisects done by
+> two different developers, pointing to the same commit ;-)
 
-    error: macros that expand to items must be delimited with braces or followed by a semicolon
-     --> rust/kernel/arch_static_branch_asm.rs:1:27
-      |
-    1 | ...ls!("1: jmp " ... ".popsection \n\t")
-      |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-      |
-    help: change the delimiters to curly braces
-      |
-    1 | ::kernel::concat_literals!{"1: jmp " ... ".popsection \n\t"}
-      |                           ~                                ~
-    help: add a semicolon
-      |
-    1 | ::kernel::concat_literals!("1: jmp " ... ".popsection \n\t");
-      |                                                             +
+It seems like the correct first step is to revert the brk change. It's
+still not clear to me why the change is causing a problem -- I assume it
+is colliding with some other program area.
 
-This file is not meant to be formatted nor works on its own since it is
-meant to be textually included.
+Is the problem strictly with qemu-user-static? (i.e. it was GCC running
+in qemu-user-static so the crash is qemu, not GCC) That should help me
+narrow down the issue. There must be some built-in assumption. And it's
+aarch64 within x86_64 where it happens (is the program within qemu also
+aarch64 or is it arm32)?
 
-Thus skip formatting it by prefixing its name with `generated_`.
+Is there an simple reproducer?
 
-Fixes: 169484ab6677 ("rust: add arch_static_branch")
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
----
- rust/Makefile                                                 | 4 ++--
- rust/kernel/.gitignore                                        | 2 +-
- ..._branch_asm.rs.S => generated_arch_static_branch_asm.rs.S} | 0
- rust/kernel/jump_label.rs                                     | 4 ++--
- 4 files changed, 5 insertions(+), 5 deletions(-)
- rename rust/kernel/{arch_static_branch_asm.rs.S => generated_arch_static_branch_asm.rs.S} (100%)
+-Kees
 
-diff --git a/rust/Makefile b/rust/Makefile
-index bc2a9071dd29..99db963637e6 100644
---- a/rust/Makefile
-+++ b/rust/Makefile
-@@ -36,7 +36,7 @@ always-$(CONFIG_RUST_KERNEL_DOCTESTS) += doctests_kernel_generated_kunit.c
- obj-$(CONFIG_RUST_KERNEL_DOCTESTS) += doctests_kernel_generated.o
- obj-$(CONFIG_RUST_KERNEL_DOCTESTS) += doctests_kernel_generated_kunit.o
- 
--always-$(subst y,$(CONFIG_RUST),$(CONFIG_JUMP_LABEL)) += kernel/arch_static_branch_asm.rs
-+always-$(subst y,$(CONFIG_RUST),$(CONFIG_JUMP_LABEL)) += kernel/generated_arch_static_branch_asm.rs
- 
- # Avoids running `$(RUSTC)` for the sysroot when it may not be available.
- ifdef CONFIG_RUST
-@@ -427,7 +427,7 @@ $(obj)/kernel.o: $(src)/kernel/lib.rs $(obj)/alloc.o $(obj)/build_error.o \
- 	+$(call if_changed_rule,rustc_library)
- 
- ifdef CONFIG_JUMP_LABEL
--$(obj)/kernel.o: $(obj)/kernel/arch_static_branch_asm.rs
-+$(obj)/kernel.o: $(obj)/kernel/generated_arch_static_branch_asm.rs
- endif
- 
- endif # CONFIG_RUST
-diff --git a/rust/kernel/.gitignore b/rust/kernel/.gitignore
-index d082731007c6..6ba39a178f30 100644
---- a/rust/kernel/.gitignore
-+++ b/rust/kernel/.gitignore
-@@ -1,3 +1,3 @@
- # SPDX-License-Identifier: GPL-2.0
- 
--/arch_static_branch_asm.rs
-+/generated_arch_static_branch_asm.rs
-diff --git a/rust/kernel/arch_static_branch_asm.rs.S b/rust/kernel/generated_arch_static_branch_asm.rs.S
-similarity index 100%
-rename from rust/kernel/arch_static_branch_asm.rs.S
-rename to rust/kernel/generated_arch_static_branch_asm.rs.S
-diff --git a/rust/kernel/jump_label.rs b/rust/kernel/jump_label.rs
-index 2f2df03a3275..8974f04737f8 100644
---- a/rust/kernel/jump_label.rs
-+++ b/rust/kernel/jump_label.rs
-@@ -39,7 +39,7 @@ macro_rules! static_branch_unlikely {
- #[cfg(CONFIG_JUMP_LABEL)]
- const _: &str = include!(concat!(
-     env!("OBJTREE"),
--    "/rust/kernel/arch_static_branch_asm.rs"
-+    "/rust/kernel/generated_arch_static_branch_asm.rs"
- ));
- 
- #[macro_export]
-@@ -48,7 +48,7 @@ macro_rules! static_branch_unlikely {
- macro_rules! arch_static_branch {
-     ($key:path, $keytyp:ty, $field:ident, $branch:expr) => {'my_label: {
-         $crate::asm!(
--            include!(concat!(env!("OBJTREE"), "/rust/kernel/arch_static_branch_asm.rs"));
-+            include!(concat!(env!("OBJTREE"), "/rust/kernel/generated_arch_static_branch_asm.rs"));
-             l_yes = label {
-                 break 'my_label true;
-             },
-
-base-commit: 22193c586b43ee88d66954395885742a6e4a49a9
 -- 
-2.47.0
-
+Kees Cook
