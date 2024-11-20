@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D4981ABEC5;
-	Wed, 20 Nov 2024 13:01:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D8E71BF7E5;
+	Wed, 20 Nov 2024 13:01:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732107700; cv=none; b=RLCn9oxFjpRqDkvHyXAuugiwpnkBuOBqMtPZeEZiqiVDvESb28Xgnb2JnpzQ+nZQXjObApE1wKGkYBLJSD8fO5FE8s1Qn8I3l3ktVyl7rI620X1GUpIT/Ahapzt2k4AC2PkXNnksidMpADgX/U1inURvJmxzETA/okVFDQGQLCA=
+	t=1732107701; cv=none; b=Oz1IuQWmbwAx/KtUTj68Hrtp7x1gQvCvbV6EbGr1vSbwWp51H2htBFkIm3BKq6Jga4fBS6mzmLZV5XtvtnBapFnNQWw6ylcLdFQsPlU1fG+hIpEZydoon1Ove3r2FcVRwbjf5wMq+g5NHRaV6Bkbdoys2YmWQGbLk6iuPVsCjzw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732107700; c=relaxed/simple;
-	bh=TduempTNwf8SXLdLLZCrnRlb+/jLHyGOEhNtrmnVVBY=;
+	s=arc-20240116; t=1732107701; c=relaxed/simple;
+	bh=db/U3qvMoF6/OJ6Fl6kMQo6lAukDRHcZ6jHgbLifCS8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jZCgsTlGF2Z52rULZN4MHwstIxPAZyF3Xq7gpcVrG1THTNN2u2ZaFPPxunEiBmAe7hXyC9AMJwkYm08v1JICXr2MQSI9xaDRdf19LW3AyW2dNN1qaQGUIQxLvb6Ps2zriQaRmka71uJk54Rl8qk2C1GTgwn30bSQEHMIj3qlTTo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jWQImUL2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OAmBaKwep1MtpJXuxSSEFbK9tCgrcvHvcqLTaDiMZ9HIPstr4DT0ujdHG2gRxfqcgV/UsgrSORcQbx+KmImBOihOq0zU7srPwzuwj4rkZYO1583E8puojyHySwVle+a7AjTGcatqy6Ra1G3VXErOb/I03o/FhnBKQrxnUxL/jJo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JxznsOIp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jWQImUL2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B884C4CECD;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JxznsOIp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03C9EC4CECD;
 	Wed, 20 Nov 2024 13:01:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1732107700;
-	bh=TduempTNwf8SXLdLLZCrnRlb+/jLHyGOEhNtrmnVVBY=;
+	s=korg; t=1732107701;
+	bh=db/U3qvMoF6/OJ6Fl6kMQo6lAukDRHcZ6jHgbLifCS8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jWQImUL2ClJc9LUuaLR9kow4NRHGSFNIyeuaP4mB0ZjRtRKbG0dwWpH1zPTfxvWgd
-	 9lkO61OjnQ0rnlpm8QKJhhjhZPTY1TR76XzBpTjEIdONvrOr2DlKw3YdG0GOMQSVPd
-	 DxYwQnX/B17ISWa75fpP1JH+XuBmm8vXhUXM3mDs=
+	b=JxznsOIpRo4PYP4TDAtEWVW+QZ1B9ieg4kDtBJ+O5b9NtiRz6fvbSRfVLRZp0uc3r
+	 P+zaE5P4D7Vyvw09YL/ElWlPmF0BXqySSWg97HwXhqHETvYNeDzSJKdSLw5ZxRaByI
+	 cUfS6RWNKHP9bpq1PCuvJWc9jJv0fIhtQR6xaB0s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Sean Christopherson <seanjc@google.com>,
-	Xiaoyao Li <xiaoyao.li@intel.com>,
-	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 6.1 24/73] KVM: VMX: Bury Intel PT virtualization (guest/host mode) behind CONFIG_BROKEN
-Date: Wed, 20 Nov 2024 13:58:10 +0100
-Message-ID: <20241120125810.194388592@linuxfoundation.org>
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	Ubisectech Sirius <bugreport@valiantsec.com>,
+	syzbot+9982fb8d18eba905abe2@syzkaller.appspotmail.com,
+	Tejun Heo <tj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.1 25/73] nilfs2: fix null-ptr-deref in block_touch_buffer tracepoint
+Date: Wed, 20 Nov 2024 13:58:11 +0100
+Message-ID: <20241120125810.216016629@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241120125809.623237564@linuxfoundation.org>
 References: <20241120125809.623237564@linuxfoundation.org>
@@ -52,59 +53,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-commit aa0d42cacf093a6fcca872edc954f6f812926a17 upstream.
+commit cd45e963e44b0f10d90b9e6c0e8b4f47f3c92471 upstream.
 
-Hide KVM's pt_mode module param behind CONFIG_BROKEN, i.e. disable support
-for virtualizing Intel PT via guest/host mode unless BROKEN=y.  There are
-myriad bugs in the implementation, some of which are fatal to the guest,
-and others which put the stability and health of the host at risk.
+Patch series "nilfs2: fix null-ptr-deref bugs on block tracepoints".
 
-For guest fatalities, the most glaring issue is that KVM fails to ensure
-tracing is disabled, and *stays* disabled prior to VM-Enter, which is
-necessary as hardware disallows loading (the guest's) RTIT_CTL if tracing
-is enabled (enforced via a VMX consistency check).  Per the SDM:
+This series fixes null pointer dereference bugs that occur when using
+nilfs2 and two block-related tracepoints.
 
-  If the logical processor is operating with Intel PT enabled (if
-  IA32_RTIT_CTL.TraceEn = 1) at the time of VM entry, the "load
-  IA32_RTIT_CTL" VM-entry control must be 0.
 
-On the host side, KVM doesn't validate the guest CPUID configuration
-provided by userspace, and even worse, uses the guest configuration to
-decide what MSRs to save/load at VM-Enter and VM-Exit.  E.g. configuring
-guest CPUID to enumerate more address ranges than are supported in hardware
-will result in KVM trying to passthrough, save, and load non-existent MSRs,
-which generates a variety of WARNs, ToPA ERRORs in the host, a potential
-deadlock, etc.
+This patch (of 2):
 
-Fixes: f99e3daf94ff ("KVM: x86: Add Intel PT virtualization work mode")
-Cc: stable@vger.kernel.org
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
-Tested-by: Adrian Hunter <adrian.hunter@intel.com>
-Message-ID: <20241101185031.1799556-2-seanjc@google.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+It has been reported that when using "block:block_touch_buffer"
+tracepoint, touch_buffer() called from __nilfs_get_folio_block() causes a
+NULL pointer dereference, or a general protection fault when KASAN is
+enabled.
+
+This happens because since the tracepoint was added in touch_buffer(), it
+references the dev_t member bh->b_bdev->bd_dev regardless of whether the
+buffer head has a pointer to a block_device structure.  In the current
+implementation, the block_device structure is set after the function
+returns to the caller.
+
+Here, touch_buffer() is used to mark the folio/page that owns the buffer
+head as accessed, but the common search helper for folio/page used by the
+caller function was optimized to mark the folio/page as accessed when it
+was reimplemented a long time ago, eliminating the need to call
+touch_buffer() here in the first place.
+
+So this solves the issue by eliminating the touch_buffer() call itself.
+
+Link: https://lkml.kernel.org/r/20241106160811.3316-1-konishi.ryusuke@gmail.com
+Link: https://lkml.kernel.org/r/20241106160811.3316-2-konishi.ryusuke@gmail.com
+Fixes: 5305cb830834 ("block: add block_{touch|dirty}_buffer tracepoint")
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Reported-by: Ubisectech Sirius <bugreport@valiantsec.com>
+Closes: https://lkml.kernel.org/r/86bd3013-887e-4e38-960f-ca45c657f032.bugreport@valiantsec.com
+Reported-by: syzbot+9982fb8d18eba905abe2@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=9982fb8d18eba905abe2
+Tested-by: syzbot+9982fb8d18eba905abe2@syzkaller.appspotmail.com
+Cc: Tejun Heo <tj@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/vmx/vmx.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/nilfs2/page.c |    1 -
+ 1 file changed, 1 deletion(-)
 
---- a/arch/x86/kvm/vmx/vmx.c
-+++ b/arch/x86/kvm/vmx/vmx.c
-@@ -209,9 +209,11 @@ module_param(ple_window_shrink, uint, 04
- static unsigned int ple_window_max        = KVM_VMX_DEFAULT_PLE_WINDOW_MAX;
- module_param(ple_window_max, uint, 0444);
+--- a/fs/nilfs2/page.c
++++ b/fs/nilfs2/page.c
+@@ -39,7 +39,6 @@ __nilfs_get_page_block(struct page *page
+ 	first_block = (unsigned long)index << (PAGE_SHIFT - blkbits);
+ 	bh = nilfs_page_get_nth_block(page, block - first_block);
  
--/* Default is SYSTEM mode, 1 for host-guest mode */
-+/* Default is SYSTEM mode, 1 for host-guest mode (which is BROKEN) */
- int __read_mostly pt_mode = PT_MODE_SYSTEM;
-+#ifdef CONFIG_BROKEN
- module_param(pt_mode, int, S_IRUGO);
-+#endif
- 
- static DEFINE_STATIC_KEY_FALSE(vmx_l1d_should_flush);
- static DEFINE_STATIC_KEY_FALSE(vmx_l1d_flush_cond);
+-	touch_buffer(bh);
+ 	wait_on_buffer(bh);
+ 	return bh;
+ }
 
 
