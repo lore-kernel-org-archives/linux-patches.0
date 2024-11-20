@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3C8D1AAE3F;
-	Wed, 20 Nov 2024 12:59:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 987D11AAE3B;
+	Wed, 20 Nov 2024 12:59:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732107551; cv=none; b=lmMUjUdPRijDZsjMzz+gy61lZO9SDwfCaRrYxGI009Q166BphKv8nBrifcnbraWcODetJQy2h1Vq2cgF2mKqJzQOJkfBWhilXWl6WRugTEbBPomj7Vo024nctWW4+0uyG6aITRGRYUHZa+r4fjjE7yBRNOLYiapVmQ+O0MMwmFw=
+	t=1732107552; cv=none; b=YUCGQDiWYhaZSAvVZRMAlomDm/BfW5URGCRhTFFbNhBHfChiYGihIuuoXoDjA+a+hYiEyv583QCji6sxWhAPLwrwFtDQ7BF4XyKYg4ZYkkQCAQ2anzfWaD0xsog/prfqterwcEw0knxnqSODhQj+DadES1WHS02wI35T8wke/XQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732107551; c=relaxed/simple;
-	bh=lR6d73fT818/Bvu7yaIRp1RSoAU2kpNwSy/C1xOUznw=;
+	s=arc-20240116; t=1732107552; c=relaxed/simple;
+	bh=qUGqCumYOecAmSTcMYwpPXgS4TNidTZL+BR2Jl/ZqQw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LKAJieDv1lkdds1rKV35+LKvkaQ5ZAEuev3TCTTwWLwEDJF3c1ApzdPqvQJJAmR8ysaiu+fjXXZ7rixXrYrAmQTV0s01uhm3xcPUQIGJFns/KeW5drWvEsW+Lu9zyTLfFsOVwdDdukfxee6+TjFVzsY2LSdBHgNLT6DZApZ4/SI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z3HJhFXa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=DMIa4TWI01KuwabAGk3VHWf5aHyuGuve2WiOooRuCvp05h+dJ3emIj6708MBqgTgxjHSMXIETgijYFZS0v0vrkwmRmgafAXnhyrpGc+XBZzd6NfkiRQ8BgDZqhRRyasr6LtmgY9Ia2am6P9QEkpXlGhYCsx75OjQ6sPludhhIJc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eG/okq+z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z3HJhFXa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AD52C4CECD;
-	Wed, 20 Nov 2024 12:59:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eG/okq+z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 682CBC4CED8;
+	Wed, 20 Nov 2024 12:59:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1732107551;
-	bh=lR6d73fT818/Bvu7yaIRp1RSoAU2kpNwSy/C1xOUznw=;
+	s=korg; t=1732107552;
+	bh=qUGqCumYOecAmSTcMYwpPXgS4TNidTZL+BR2Jl/ZqQw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z3HJhFXaEZ6vL3DazOb9h9VUC2DDe58ieMFOxYqTtEZLCbkANUwoiu/NyJ615xeq6
-	 JXHCX3MdKyLl1cvUxNxTdYPiOd2nGaRSOvNgzBC2RY+g2r4Qopb1FssMEaWVkM6TkO
-	 l1V6tIEwgdBMC+ypGcvPUn6PNeaVzlmW3F47fzfw=
+	b=eG/okq+zN9vC0xG+U00F+lJLehg4271+zIgFViUlJB7M38swLdsK+ggfXQ0kw8aid
+	 5iJuNZR9Uj7U5hQOjZWxsMr6dgqHyZTZuYxPn/NreOiv/tAt5ENfIkVHzPwmvI234c
+	 dDTZc3+0ggdU1CNKBfSRnXI6Y/+UH+XABxo3vYyE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vijendar Mukunda <Vijendar.Mukunda@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.11 092/107] drm/amd: Fix initialization mistake for NBIO 7.7.0
-Date: Wed, 20 Nov 2024 13:57:07 +0100
-Message-ID: <20241120125631.787841299@linuxfoundation.org>
+Subject: [PATCH 6.11 093/107] drm/amdgpu: fix check in gmc_v9_0_get_vm_pte()
+Date: Wed, 20 Nov 2024 13:57:08 +0100
+Message-ID: <20241120125631.812057350@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241120125629.681745345@linuxfoundation.org>
 References: <20241120125629.681745345@linuxfoundation.org>
@@ -45,46 +44,69 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.11-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
+From: Christian König <christian.koenig@amd.com>
 
-commit 7013a8268d311fded6c7a6528fc1de82668e75f6 upstream.
+commit 0e5ac88fb918297a7484b67f2b484d43bed3fbbe upstream.
 
-There is a strapping issue on NBIO 7.7.0 that can lead to spurious PME
-events while in the D0 state.
+The coherency flags can only be determined when the BO is locked and that
+in turn is only guaranteed when the mapping is validated.
 
-Co-developed-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Fix the check, move the resource check into the function and add an assert
+that the BO is locked.
+
+Signed-off-by: Christian König <christian.koenig@amd.com>
+Fixes: d1a372af1c3d ("drm/amdgpu: Set MTYPE in PTE based on BO flags")
 Acked-by: Alex Deucher <alexander.deucher@amd.com>
-Link: https://lore.kernel.org/r/20241112161142.28974-1-mario.limonciello@amd.com
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 447a54a0f79c9a409ceaa17804bdd2e0206397b9)
+(cherry picked from commit 1b4ca8546f5b5c482717bedb8e031227b1541539)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/nbio_v7_7.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/gmc_v9_0.c |   13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/nbio_v7_7.c
-+++ b/drivers/gpu/drm/amd/amdgpu/nbio_v7_7.c
-@@ -247,6 +247,12 @@ static void nbio_v7_7_init_registers(str
- 	if (def != data)
- 		WREG32_SOC15(NBIO, 0, regBIF0_PCIE_MST_CTRL_3, data);
+--- a/drivers/gpu/drm/amd/amdgpu/gmc_v9_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gmc_v9_0.c
+@@ -1124,8 +1124,10 @@ static void gmc_v9_0_get_coherence_flags
+ 					 uint64_t *flags)
+ {
+ 	struct amdgpu_device *bo_adev = amdgpu_ttm_adev(bo->tbo.bdev);
+-	bool is_vram = bo->tbo.resource->mem_type == TTM_PL_VRAM;
+-	bool coherent = bo->flags & (AMDGPU_GEM_CREATE_COHERENT | AMDGPU_GEM_CREATE_EXT_COHERENT);
++	bool is_vram = bo->tbo.resource &&
++		bo->tbo.resource->mem_type == TTM_PL_VRAM;
++	bool coherent = bo->flags & (AMDGPU_GEM_CREATE_COHERENT |
++				     AMDGPU_GEM_CREATE_EXT_COHERENT);
+ 	bool ext_coherent = bo->flags & AMDGPU_GEM_CREATE_EXT_COHERENT;
+ 	bool uncached = bo->flags & AMDGPU_GEM_CREATE_UNCACHED;
+ 	struct amdgpu_vm *vm = mapping->bo_va->base.vm;
+@@ -1133,6 +1135,8 @@ static void gmc_v9_0_get_coherence_flags
+ 	bool snoop = false;
+ 	bool is_local;
  
-+	switch (adev->ip_versions[NBIO_HWIP][0]) {
-+	case IP_VERSION(7, 7, 0):
-+		data = RREG32_SOC15(NBIO, 0, regRCC_DEV0_EPF5_STRAP4) & ~BIT(23);
-+		WREG32_SOC15(NBIO, 0, regRCC_DEV0_EPF5_STRAP4, data);
-+		break;
-+	}
++	dma_resv_assert_held(bo->tbo.base.resv);
++
+ 	switch (amdgpu_ip_version(adev, GC_HWIP, 0)) {
+ 	case IP_VERSION(9, 4, 1):
+ 	case IP_VERSION(9, 4, 2):
+@@ -1251,9 +1255,8 @@ static void gmc_v9_0_get_vm_pte(struct a
+ 		*flags &= ~AMDGPU_PTE_VALID;
+ 	}
+ 
+-	if (bo && bo->tbo.resource)
+-		gmc_v9_0_get_coherence_flags(adev, mapping->bo_va->base.bo,
+-					     mapping, flags);
++	if ((*flags & AMDGPU_PTE_VALID) && bo)
++		gmc_v9_0_get_coherence_flags(adev, bo, mapping, flags);
  }
  
- static void nbio_v7_7_update_medium_grain_clock_gating(struct amdgpu_device *adev,
+ static void gmc_v9_0_override_vm_pte_flags(struct amdgpu_device *adev,
 
 
