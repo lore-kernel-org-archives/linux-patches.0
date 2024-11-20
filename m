@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95A971C7B63;
-	Wed, 20 Nov 2024 13:00:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C2C21C7B63;
+	Wed, 20 Nov 2024 13:00:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732107602; cv=none; b=CQT1Cuei6V73yHJfs7ow+SadfXaI14Q1dX5JcQWcXHGyGXy/gRCSaj6OMrbdTrIjCR+WXELejWBvtTRe7VYCnn5jMdQYEBUSTSD4ml5d5Jkho/8Im4gGUNj+eQi+rRGVp+2JMM/aswxMBFZ0KaUgU+GPcF7wZTVBXXViiJxU6KE=
+	t=1732107603; cv=none; b=XNaSbeIrXmyOf4FD/BkqbIH2z/8ies+UhWtnQ3/o/3YH5xH3C5znVgMPpDzNjnan1sjyUEuaqVHCOW1FOF8eH0skeEVh7U1LCc+Tho/sZjk09pfSirnWHVRvV7rvBqfL2m6pUV+br2+5VoEWLAcbuqnAL2b/6MledpNk60yFCXg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732107602; c=relaxed/simple;
-	bh=kz9sCQU/kM2LWfqM/B3IyK0DRU9yaTX4AQcXcDEP+Vg=;
+	s=arc-20240116; t=1732107603; c=relaxed/simple;
+	bh=j2Kdf1KkKWxLUumArBbboCwyjHNixrHnIeOFcCUX1xk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XlNFKUCbtMrJFKHZ1zjUSUQdy35ZvawGF5zX/pmULFvtM9TIs8PiW/QB+gA6JVxLtgvtKwBscHZZf8qLxdh8B4EQXF2lebCpNh8+tq6meQmFmAoxknnRjXJGphSDaO14Gh1h/Vt1whGgGhB9evTXSv2NBw7eu5r2Ugv9LL1esBg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JfMNah1M; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZEaRlzSPfNOggmd6DkBkyWM9axIcFBqA1NHZfqGtEw+u8aQeMvRYDS7ag4A7fI3WLsm31C81Ebz+JDLAm613TsGJijaTevgE8z3mLr38pHbQdX9oK8mvdLWd71taxoMJWnRfBg62f0HBS9ZFDoiw6n+St+h0e1TE3Mdtm6rxEsA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qNvbYRxQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JfMNah1M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64E3DC4CECD;
-	Wed, 20 Nov 2024 13:00:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qNvbYRxQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13580C4CED1;
+	Wed, 20 Nov 2024 13:00:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1732107602;
-	bh=kz9sCQU/kM2LWfqM/B3IyK0DRU9yaTX4AQcXcDEP+Vg=;
+	s=korg; t=1732107603;
+	bh=j2Kdf1KkKWxLUumArBbboCwyjHNixrHnIeOFcCUX1xk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JfMNah1MDkwCIY3B9pUwb0Sgad8JVLX0LhSTbEWfz75rgUBBGV4C0+JVeMaN8bHTV
-	 5B8+8yai1Be2gTBcwXV1TdNKttXauPLbSAWdX5hrq/PfjxD9GxuYEYhZpaEg3MrTez
-	 WGyIaJKSJyhSeqcZ58Tu20SThNBv054H/xjLcwE4=
+	b=qNvbYRxQwU4htyjdLnsNGwPv0NcvTnOlV6USGCpztDAzaZ/IjETrHZI31Z8nMIdVD
+	 VYENBN2RNprT7el6oc3yXznubLQ28Y4r8zEPRvcCOeTR64QSWlv4XD2Ddfn2zNR1Zx
+	 Iu5JiDAaMhQ5sbruVt+rNiLKZGqR8jbsYeB7qNwQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Diogo Ivo <diogo.ivo@tecnico.ulisboa.pt>,
-	Lyude Paul <lyude@redhat.com>,
-	Dave Airlie <airlied@redhat.com>
-Subject: [PATCH 6.6 52/82] nouveau: fw: sync dma after setup is called.
-Date: Wed, 20 Nov 2024 13:57:02 +0100
-Message-ID: <20241120125630.781619507@linuxfoundation.org>
+	Vijendar Mukunda <Vijendar.Mukunda@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.6 53/82] drm/amd: Fix initialization mistake for NBIO 7.7.0
+Date: Wed, 20 Nov 2024 13:57:03 +0100
+Message-ID: <20241120125630.803962325@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241120125629.623666563@linuxfoundation.org>
 References: <20241120125629.623666563@linuxfoundation.org>
@@ -51,57 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dave Airlie <airlied@redhat.com>
+From: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
 
-commit 21ec425eaf2cb7c0371f7683f81ad7d9679b6eb5 upstream.
+commit 7013a8268d311fded6c7a6528fc1de82668e75f6 upstream.
 
-When this code moved to non-coherent allocator the sync was put too
-early for some firmwares which called the setup function, move the
-sync down after the setup function.
+There is a strapping issue on NBIO 7.7.0 that can lead to spurious PME
+events while in the D0 state.
 
-Reported-by: Diogo Ivo <diogo.ivo@tecnico.ulisboa.pt>
-Tested-by: Diogo Ivo <diogo.ivo@tecnico.ulisboa.pt>
-Reviewed-by: Lyude Paul <lyude@redhat.com>
-Fixes: 9b340aeb26d5 ("nouveau/firmware: use dma non-coherent allocator")
+Co-developed-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Link: https://lore.kernel.org/r/20241112161142.28974-1-mario.limonciello@amd.com
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 447a54a0f79c9a409ceaa17804bdd2e0206397b9)
 Cc: stable@vger.kernel.org
-Signed-off-by: Dave Airlie <airlied@redhat.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20241114004603.3095485-1-airlied@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/nouveau/nvkm/falcon/fw.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/nbio_v7_7.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/gpu/drm/nouveau/nvkm/falcon/fw.c b/drivers/gpu/drm/nouveau/nvkm/falcon/fw.c
-index a1c8545f1249..cac6d64ab67d 100644
---- a/drivers/gpu/drm/nouveau/nvkm/falcon/fw.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/falcon/fw.c
-@@ -89,11 +89,6 @@ nvkm_falcon_fw_boot(struct nvkm_falcon_fw *fw, struct nvkm_subdev *user,
- 		nvkm_falcon_fw_dtor_sigs(fw);
- 	}
+--- a/drivers/gpu/drm/amd/amdgpu/nbio_v7_7.c
++++ b/drivers/gpu/drm/amd/amdgpu/nbio_v7_7.c
+@@ -247,6 +247,12 @@ static void nbio_v7_7_init_registers(str
+ 	if (def != data)
+ 		WREG32_SOC15(NBIO, 0, regBIF0_PCIE_MST_CTRL_3, data);
  
--	/* after last write to the img, sync dma mappings */
--	dma_sync_single_for_device(fw->fw.device->dev,
--				   fw->fw.phys,
--				   sg_dma_len(&fw->fw.mem.sgl),
--				   DMA_TO_DEVICE);
++	switch (adev->ip_versions[NBIO_HWIP][0]) {
++	case IP_VERSION(7, 7, 0):
++		data = RREG32_SOC15(NBIO, 0, regRCC_DEV0_EPF5_STRAP4) & ~BIT(23);
++		WREG32_SOC15(NBIO, 0, regRCC_DEV0_EPF5_STRAP4, data);
++		break;
++	}
+ }
  
- 	FLCNFW_DBG(fw, "resetting");
- 	fw->func->reset(fw);
-@@ -105,6 +100,12 @@ nvkm_falcon_fw_boot(struct nvkm_falcon_fw *fw, struct nvkm_subdev *user,
- 			goto done;
- 	}
- 
-+	/* after last write to the img, sync dma mappings */
-+	dma_sync_single_for_device(fw->fw.device->dev,
-+				   fw->fw.phys,
-+				   sg_dma_len(&fw->fw.mem.sgl),
-+				   DMA_TO_DEVICE);
-+
- 	ret = fw->func->load(fw);
- 	if (ret)
- 		goto done;
--- 
-2.47.0
-
+ static void nbio_v7_7_update_medium_grain_clock_gating(struct amdgpu_device *adev,
 
 
