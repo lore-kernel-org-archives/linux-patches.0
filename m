@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E09CB1DFEF;
-	Wed, 20 Nov 2024 13:01:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F8681DFEF;
+	Wed, 20 Nov 2024 13:01:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732107668; cv=none; b=lGGzruoQIWzF/reXDojESYo1DPjgApkmQuLCDjwtEZfO5vtJm+SzHREJ3BsfMh5syxp11kspIfWLpMDfK37XksoW0qnl2BPHx/DOb6yYJlktcXLUEuhdlNbDwh0qhbKYq6xkniHx6hfJnaUwgjm8E/XyNIZAV4j8nLuwmsL/fNI=
+	t=1732107668; cv=none; b=k95VI4YnGGB2XCIR6h2HxM1MxIkMnX5ISId+ZMn/8lQTcQoZOfm0KQfSBm1CHq/B9vEfx7wEkT5z0y7NpkIRT+3HBOM1dKF7RyOkKjpjyE+xWB1jhzDrN9w2aKaH8JXIjPlXSdbsVuQUoj6eY2LksZ/JQH4tmmvQv+iiZQ3tigs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1732107668; c=relaxed/simple;
-	bh=GUIlNxLyJsJWBfTZKAbg8b6az3KP9sE5nGQLe7DLfvk=;
+	bh=CuxeHG2gPc0sQUkvDXLMTKR5lY/kOpt9zdb/YDJ6GhM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZjLuxbvIfid2x7lmkzbTYzyY51kI/lHNbirzUvs/M3uRMS0VV7TXCOmoGsuNGyMZDEHeejU6NoL/Sf+zbEvKduDsLtJ15A9Ho9bImRAU0kPIiCA7t/tHnigv6thGBg5NBsobcvlHw2VpOHJAS2SgH3ie7fEgQmMHAQcp5gAmkNE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c/Up645l; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kOBjkKhqxgOCynIj7fx/WT4jaHa68L7JEIm8YxC3kB7fTSQWtRD9ZDJ+Kqw2rWVD26AryFs7n+NqBMuEBacUEpAMEPsw0/XI2Cm1nlLbJdWWZl0OqtsFEntzEbP0/cOFbQR9+f9kt5c4hKWlw2gBqryRfaAzKmL7A/H/TJENd/A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r7TTQ2lM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c/Up645l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B266AC4CECD;
-	Wed, 20 Nov 2024 13:01:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r7TTQ2lM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D518C4CECD;
+	Wed, 20 Nov 2024 13:01:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1732107667;
-	bh=GUIlNxLyJsJWBfTZKAbg8b6az3KP9sE5nGQLe7DLfvk=;
+	s=korg; t=1732107668;
+	bh=CuxeHG2gPc0sQUkvDXLMTKR5lY/kOpt9zdb/YDJ6GhM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c/Up645l24I/vzvA6VCA33hK2/leW7kUVdiNrV3769zfkGpKgzGH0dpJvtC51BzVv
-	 Wbgyy528qmddnTuanUj5DQbnER0UFTI5jVe0mK+HAbyP0P1qVChJ3gOaHnaUTMROKn
-	 HuSXdHR5/8RiNZa6uXiyTjBGezGJkvJkuHRh6t8Q=
+	b=r7TTQ2lMElSsxcPOilcMo252gb9GxrFFSXuzDDEM2WDhKGD9PdxRInNox6dc6aeG9
+	 7bHalBay/HlmrLhxOesp4Rx6SKfqE3huEhas5y4DriPasWlEYC3Qp4HH5LejBw+Kod
+	 v7sOEzY6ULDUMSwMdxcB0kb6Vi/8wo5ZC0HtrS+w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefano Garzarella <sgarzare@redhat.com>,
-	Michal Luczaj <mhal@rbox.co>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Lukas Bulwahn <lukas.bulwahn@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 08/73] virtio/vsock: Fix accept_queue memory leak
-Date: Wed, 20 Nov 2024 13:57:54 +0100
-Message-ID: <20241120125809.827122288@linuxfoundation.org>
+Subject: [PATCH 6.1 09/73] Bluetooth: hci_event: Remove code to removed CONFIG_BT_HS
+Date: Wed, 20 Nov 2024 13:57:55 +0100
+Message-ID: <20241120125809.850556473@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241120125809.623237564@linuxfoundation.org>
 References: <20241120125809.623237564@linuxfoundation.org>
@@ -52,91 +51,204 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Luczaj <mhal@rbox.co>
+From: Lukas Bulwahn <lukas.bulwahn@gmail.com>
 
-[ Upstream commit d7b0ff5a866724c3ad21f2628c22a63336deec3f ]
+[ Upstream commit f4b0c2b4cd78b75acde56c2ee5aa732b6fb2a6a9 ]
 
-As the final stages of socket destruction may be delayed, it is possible
-that virtio_transport_recv_listen() will be called after the accept_queue
-has been flushed, but before the SOCK_DONE flag has been set. As a result,
-sockets enqueued after the flush would remain unremoved, leading to a
-memory leak.
+Commit cec9f3c5561d ("Bluetooth: Remove BT_HS") removes config BT_HS, but
+misses two "ifdef BT_HS" blocks in hci_event.c.
 
-vsock_release
-  __vsock_release
-    lock
-    virtio_transport_release
-      virtio_transport_close
-        schedule_delayed_work(close_work)
-    sk_shutdown = SHUTDOWN_MASK
-(!) flush accept_queue
-    release
-                                        virtio_transport_recv_pkt
-                                          vsock_find_bound_socket
-                                          lock
-                                          if flag(SOCK_DONE) return
-                                          virtio_transport_recv_listen
-                                            child = vsock_create_connected
-                                      (!)   vsock_enqueue_accept(child)
-                                          release
-close_work
-  lock
-  virtio_transport_do_close
-    set_flag(SOCK_DONE)
-    virtio_transport_remove_sock
-      vsock_remove_sock
-        vsock_remove_bound
-  release
+Remove this dead code from this removed config option.
 
-Introduce a sk_shutdown check to disallow vsock_enqueue_accept() during
-socket destruction.
-
-unreferenced object 0xffff888109e3f800 (size 2040):
-  comm "kworker/5:2", pid 371, jiffies 4294940105
-  hex dump (first 32 bytes):
-    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-    28 00 0b 40 00 00 00 00 00 00 00 00 00 00 00 00  (..@............
-  backtrace (crc 9e5f4e84):
-    [<ffffffff81418ff1>] kmem_cache_alloc_noprof+0x2c1/0x360
-    [<ffffffff81d27aa0>] sk_prot_alloc+0x30/0x120
-    [<ffffffff81d2b54c>] sk_alloc+0x2c/0x4b0
-    [<ffffffff81fe049a>] __vsock_create.constprop.0+0x2a/0x310
-    [<ffffffff81fe6d6c>] virtio_transport_recv_pkt+0x4dc/0x9a0
-    [<ffffffff81fe745d>] vsock_loopback_work+0xfd/0x140
-    [<ffffffff810fc6ac>] process_one_work+0x20c/0x570
-    [<ffffffff810fce3f>] worker_thread+0x1bf/0x3a0
-    [<ffffffff811070dd>] kthread+0xdd/0x110
-    [<ffffffff81044fdd>] ret_from_fork+0x2d/0x50
-    [<ffffffff8100785a>] ret_from_fork_asm+0x1a/0x30
-
-Fixes: 3fe356d58efa ("vsock/virtio: discard packets only when socket is really closed")
-Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
-Signed-off-by: Michal Luczaj <mhal@rbox.co>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Lukas Bulwahn <lukas.bulwahn@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Stable-dep-of: 7967dc8f797f ("Bluetooth: hci_core: Fix calling mgmt_device_connected")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/vmw_vsock/virtio_transport_common.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ net/bluetooth/hci_event.c | 163 --------------------------------------
+ 1 file changed, 163 deletions(-)
 
-diff --git a/net/vmw_vsock/virtio_transport_common.c b/net/vmw_vsock/virtio_transport_common.c
-index b22dc7bed2182..3bc573cbf8a6e 100644
---- a/net/vmw_vsock/virtio_transport_common.c
-+++ b/net/vmw_vsock/virtio_transport_common.c
-@@ -1220,6 +1220,14 @@ virtio_transport_recv_listen(struct sock *sk, struct sk_buff *skb,
- 		return -ENOMEM;
- 	}
+diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
+index 7c1df481ebe9d..b6fe5e15981f8 100644
+--- a/net/bluetooth/hci_event.c
++++ b/net/bluetooth/hci_event.c
+@@ -5648,150 +5648,6 @@ static void hci_remote_oob_data_request_evt(struct hci_dev *hdev, void *edata,
+ 	hci_dev_unlock(hdev);
+ }
  
-+	/* __vsock_release() might have already flushed accept_queue.
-+	 * Subsequent enqueues would lead to a memory leak.
-+	 */
-+	if (sk->sk_shutdown == SHUTDOWN_MASK) {
-+		virtio_transport_reset_no_sock(t, skb);
-+		return -ESHUTDOWN;
-+	}
-+
- 	child = vsock_create_connected(sk);
- 	if (!child) {
- 		virtio_transport_reset_no_sock(t, skb);
+-#if IS_ENABLED(CONFIG_BT_HS)
+-static void hci_chan_selected_evt(struct hci_dev *hdev, void *data,
+-				  struct sk_buff *skb)
+-{
+-	struct hci_ev_channel_selected *ev = data;
+-	struct hci_conn *hcon;
+-
+-	bt_dev_dbg(hdev, "handle 0x%2.2x", ev->phy_handle);
+-
+-	hcon = hci_conn_hash_lookup_handle(hdev, ev->phy_handle);
+-	if (!hcon)
+-		return;
+-
+-	amp_read_loc_assoc_final_data(hdev, hcon);
+-}
+-
+-static void hci_phy_link_complete_evt(struct hci_dev *hdev, void *data,
+-				      struct sk_buff *skb)
+-{
+-	struct hci_ev_phy_link_complete *ev = data;
+-	struct hci_conn *hcon, *bredr_hcon;
+-
+-	bt_dev_dbg(hdev, "handle 0x%2.2x status 0x%2.2x", ev->phy_handle,
+-		   ev->status);
+-
+-	hci_dev_lock(hdev);
+-
+-	hcon = hci_conn_hash_lookup_handle(hdev, ev->phy_handle);
+-	if (!hcon)
+-		goto unlock;
+-
+-	if (!hcon->amp_mgr)
+-		goto unlock;
+-
+-	if (ev->status) {
+-		hci_conn_del(hcon);
+-		goto unlock;
+-	}
+-
+-	bredr_hcon = hcon->amp_mgr->l2cap_conn->hcon;
+-
+-	hcon->state = BT_CONNECTED;
+-	bacpy(&hcon->dst, &bredr_hcon->dst);
+-
+-	hci_conn_hold(hcon);
+-	hcon->disc_timeout = HCI_DISCONN_TIMEOUT;
+-	hci_conn_drop(hcon);
+-
+-	hci_debugfs_create_conn(hcon);
+-	hci_conn_add_sysfs(hcon);
+-
+-	amp_physical_cfm(bredr_hcon, hcon);
+-
+-unlock:
+-	hci_dev_unlock(hdev);
+-}
+-
+-static void hci_loglink_complete_evt(struct hci_dev *hdev, void *data,
+-				     struct sk_buff *skb)
+-{
+-	struct hci_ev_logical_link_complete *ev = data;
+-	struct hci_conn *hcon;
+-	struct hci_chan *hchan;
+-	struct amp_mgr *mgr;
+-
+-	bt_dev_dbg(hdev, "log_handle 0x%4.4x phy_handle 0x%2.2x status 0x%2.2x",
+-		   le16_to_cpu(ev->handle), ev->phy_handle, ev->status);
+-
+-	hcon = hci_conn_hash_lookup_handle(hdev, ev->phy_handle);
+-	if (!hcon)
+-		return;
+-
+-	/* Create AMP hchan */
+-	hchan = hci_chan_create(hcon);
+-	if (!hchan)
+-		return;
+-
+-	hchan->handle = le16_to_cpu(ev->handle);
+-	hchan->amp = true;
+-
+-	BT_DBG("hcon %p mgr %p hchan %p", hcon, hcon->amp_mgr, hchan);
+-
+-	mgr = hcon->amp_mgr;
+-	if (mgr && mgr->bredr_chan) {
+-		struct l2cap_chan *bredr_chan = mgr->bredr_chan;
+-
+-		l2cap_chan_lock(bredr_chan);
+-
+-		bredr_chan->conn->mtu = hdev->block_mtu;
+-		l2cap_logical_cfm(bredr_chan, hchan, 0);
+-		hci_conn_hold(hcon);
+-
+-		l2cap_chan_unlock(bredr_chan);
+-	}
+-}
+-
+-static void hci_disconn_loglink_complete_evt(struct hci_dev *hdev, void *data,
+-					     struct sk_buff *skb)
+-{
+-	struct hci_ev_disconn_logical_link_complete *ev = data;
+-	struct hci_chan *hchan;
+-
+-	bt_dev_dbg(hdev, "handle 0x%4.4x status 0x%2.2x",
+-		   le16_to_cpu(ev->handle), ev->status);
+-
+-	if (ev->status)
+-		return;
+-
+-	hci_dev_lock(hdev);
+-
+-	hchan = hci_chan_lookup_handle(hdev, le16_to_cpu(ev->handle));
+-	if (!hchan || !hchan->amp)
+-		goto unlock;
+-
+-	amp_destroy_logical_link(hchan, ev->reason);
+-
+-unlock:
+-	hci_dev_unlock(hdev);
+-}
+-
+-static void hci_disconn_phylink_complete_evt(struct hci_dev *hdev, void *data,
+-					     struct sk_buff *skb)
+-{
+-	struct hci_ev_disconn_phy_link_complete *ev = data;
+-	struct hci_conn *hcon;
+-
+-	bt_dev_dbg(hdev, "status 0x%2.2x", ev->status);
+-
+-	if (ev->status)
+-		return;
+-
+-	hci_dev_lock(hdev);
+-
+-	hcon = hci_conn_hash_lookup_handle(hdev, ev->phy_handle);
+-	if (hcon && hcon->type == AMP_LINK) {
+-		hcon->state = BT_CLOSED;
+-		hci_disconn_cfm(hcon, ev->reason);
+-		hci_conn_del(hcon);
+-	}
+-
+-	hci_dev_unlock(hdev);
+-}
+-#endif
+-
+ static void le_conn_update_addr(struct hci_conn *conn, bdaddr_t *bdaddr,
+ 				u8 bdaddr_type, bdaddr_t *local_rpa)
+ {
+@@ -7473,25 +7329,6 @@ static const struct hci_ev {
+ 	/* [0x3e = HCI_EV_LE_META] */
+ 	HCI_EV_REQ_VL(HCI_EV_LE_META, hci_le_meta_evt,
+ 		      sizeof(struct hci_ev_le_meta), HCI_MAX_EVENT_SIZE),
+-#if IS_ENABLED(CONFIG_BT_HS)
+-	/* [0x40 = HCI_EV_PHY_LINK_COMPLETE] */
+-	HCI_EV(HCI_EV_PHY_LINK_COMPLETE, hci_phy_link_complete_evt,
+-	       sizeof(struct hci_ev_phy_link_complete)),
+-	/* [0x41 = HCI_EV_CHANNEL_SELECTED] */
+-	HCI_EV(HCI_EV_CHANNEL_SELECTED, hci_chan_selected_evt,
+-	       sizeof(struct hci_ev_channel_selected)),
+-	/* [0x42 = HCI_EV_DISCONN_PHY_LINK_COMPLETE] */
+-	HCI_EV(HCI_EV_DISCONN_LOGICAL_LINK_COMPLETE,
+-	       hci_disconn_loglink_complete_evt,
+-	       sizeof(struct hci_ev_disconn_logical_link_complete)),
+-	/* [0x45 = HCI_EV_LOGICAL_LINK_COMPLETE] */
+-	HCI_EV(HCI_EV_LOGICAL_LINK_COMPLETE, hci_loglink_complete_evt,
+-	       sizeof(struct hci_ev_logical_link_complete)),
+-	/* [0x46 = HCI_EV_DISCONN_LOGICAL_LINK_COMPLETE] */
+-	HCI_EV(HCI_EV_DISCONN_PHY_LINK_COMPLETE,
+-	       hci_disconn_phylink_complete_evt,
+-	       sizeof(struct hci_ev_disconn_phy_link_complete)),
+-#endif
+ 	/* [0x48 = HCI_EV_NUM_COMP_BLOCKS] */
+ 	HCI_EV(HCI_EV_NUM_COMP_BLOCKS, hci_num_comp_blocks_evt,
+ 	       sizeof(struct hci_ev_num_comp_blocks)),
 -- 
 2.43.0
 
