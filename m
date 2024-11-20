@@ -1,149 +1,101 @@
-Received: from submarine.notk.org (submarine.notk.org [62.210.214.84])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A06961B5ED8;
-	Wed, 20 Nov 2024 21:29:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=62.210.214.84
+Received: from mail-il1-f181.google.com (mail-il1-f181.google.com [209.85.166.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D66D13BAF1
+	for <patches@lists.linux.dev>; Wed, 20 Nov 2024 23:19:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732138148; cv=none; b=GaFruorIPZtKLJx9rIq6jELtL7IRLzoilEpY9KchZB33cQHIKBOodkk8bBoSBxySCcnm0UXoQhif0VHykMmgURvhTvf0lARsjMBrEm44zeDHH9yVMBA6w57nyNeyF7iE/dwmy8I+/FyqNLncqm3lQGn4ZtQk9lRzsyFg5XIzwqs=
+	t=1732144790; cv=none; b=YVq4gtSd2ELtFFqXnCbbO38EPojYMdHjSeBjsbL02fCztikQrtAdEvxv5S6t5yhb4//seSOllFTIQLW7fDUwK22/pr4gsSZiIPl01Jn18rGXR7qH6oW9jouDU2AMUPwxc6Jeg4dGYsyqKJdHL9+BqSvjjBso+EgcB6UkGp6P2nM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732138148; c=relaxed/simple;
-	bh=AH7jBkvW3vmQevUwT1qZe6oh5eRiuiDeIP9puuoH2g0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=WFK12/igTO7kgt0d7Xt/CCJWf9BfJzsIdFLU5+h41P6y9Gy//9/9PkHVs0mcqww37vmMBeMpddTes5mwBnPTbVYAeFuBT9TunP3I218Qg4dRzW9m4tsHGdftTR13N0in5qWXHIyjHTtgOMDNOgt74CJDAORxILfth74jb3TG53s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=codewreck.org; spf=pass smtp.mailfrom=codewreck.org; dkim=pass (2048-bit key) header.d=codewreck.org header.i=@codewreck.org header.b=umgXeC4i; arc=none smtp.client-ip=62.210.214.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=codewreck.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=codewreck.org
+	s=arc-20240116; t=1732144790; c=relaxed/simple;
+	bh=L+1vPU8iD+DS0o0p4K0V83tfmB6n4Px8DPutjFQDicA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=OpPYNCz3DX3cfRUpVavZ1RN5pf2+PEvN1TYq9Jx8xqV9u7ymSA2Th58+iXWlWyViUdSv0WX64QZ9PqVa398zlZB7oMyrQxvS23dldoGXlpKEKaRuTeKnekvTleiu2n7i08C9Rbzr8GBdpHkJ4UgpjM3GR9z3NqutfnvVavAPt74=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org; spf=pass smtp.mailfrom=linuxfoundation.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fdx4ZOiw; arc=none smtp.client-ip=209.85.166.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxfoundation.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=codewreck.org header.i=@codewreck.org header.b="umgXeC4i"
-Received: from gaia.codewreck.org (localhost [127.0.0.1])
-	by submarine.notk.org (Postfix) with ESMTPS id B81CA14C1E1;
-	Wed, 20 Nov 2024 22:29:00 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=codewreck.org;
-	s=2; t=1732138143;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=QpBeDvQksNg01sH+Wzi0SHUbla6WiWqM9PQqY8u5gPQ=;
-	b=umgXeC4iOmTTUmV1dgALJ1ehGtwZMRzyy5BnORN5sMRzYtGwm0HMdNSsHwch/tGMCaku8n
-	sk6Bwb2/zSPUaQ5/U6NNehRKMmp9dWKn5hbo3LvjhlYfxZXdkHXhAul2fdzNj+05/dFS44
-	5hmrIOxY3+0Bm34ctJce1niJIgeLSpuFgu4joCEPNRcbp3m84zpCTZp3+G8geKnmNmsbkG
-	CgbXDmhWbkM9XMUt2dyIS127mzFn7RxOCAEvnNvuUEKJ6awgs71bzLtUGF1TD4KmPDH7+z
-	Nx1uxUwPV/PMaqo5+mBo5DXhnDhqFYrD05ydOxbG2tJ0gSr6kQ+yWvIhsm81cQ==
-Received: from localhost (gaia.codewreck.org [local])
-	by gaia.codewreck.org (OpenSMTPD) with ESMTPA id 4cec0879;
-	Wed, 20 Nov 2024 21:28:58 +0000 (UTC)
-Date: Thu, 21 Nov 2024 06:28:43 +0900
-From: Dominique Martinet <asmadeus@codewreck.org>
-To: Kees Cook <kees@kernel.org>
-Cc: Ulrich Teichert <ulrich.teichert@kumkeo.de>,
-	Salvatore Bonaccorso <carnil@debian.org>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	"stable@vger.kernel.org" <stable@vger.kernel.org>,
-	"patches@lists.linux.dev" <patches@lists.linux.dev>,
-	"y0un9n132@gmail.com" <y0un9n132@gmail.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Jiri Kosina <jkosina@suse.com>, Sasha Levin <sashal@kernel.org>,
-	"regressions@lists.linux.dev" <regressions@lists.linux.dev>
-Subject: Re: Re: [PATCH 6.1 175/321] x86: Increase brk randomness entropy for
- 64-bit systems
-Message-ID: <Zz5Ui1lf3cu0bBlN@codewreck.org>
-References: <20240827143838.192435816@linuxfoundation.org>
- <20240827143844.891898677@linuxfoundation.org>
- <Zz0_-iJH1WaR3BUZ@codewreck.org>
- <Zz2JQzi-5pTP_WPx@eldamar.lan>
- <Zz2YrA740TRgl_13@codewreck.org>
- <eaf6cfe58733416c928a8ff0d1d1b1ec@kumkeo.de>
- <202411201000.F3313C02@keescook>
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fdx4ZOiw"
+Received: by mail-il1-f181.google.com with SMTP id e9e14a558f8ab-3a752be9f4bso903175ab.2
+        for <patches@lists.linux.dev>; Wed, 20 Nov 2024 15:19:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxfoundation.org; s=google; t=1732144787; x=1732749587; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=+giK/ELPAcyHUjRKfZAXji3lVew14WmyxLefpLGtglI=;
+        b=Fdx4ZOiwQ9UKVWlOvL4erIEzAtkDtSGxMRiXWuitFO+5FtPpVwT26FEnqf+G2fRdZV
+         3IDtGgD1jCCyR28WtmpRa8ef7yTbQy4MQ7AXVCDSu2PfGQ7V1j4fPRSunyD2D32ZpkVa
+         xKR9G/T8NXo3ZfmPbAxPsfwiloH5mZaJWjSu0=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1732144787; x=1732749587;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=+giK/ELPAcyHUjRKfZAXji3lVew14WmyxLefpLGtglI=;
+        b=j4kcG4G4ZNv+Nt2jFq6mULcWUG7J4SHiP27tJkXjJblpYy0wPRoGsJdrfzNm0udYB+
+         4IA3NcaUf1lvyc8LKDDLWQUth1ISgFqXUwuxwPb5UA5kBO9uQsCxuEZoaPC44MxGoR+G
+         D06Apy8KAu69TfFUhUV0FRK4+LFoNcxAYKAgkGyETqnU7WaSTn+7iLnprxhdRg5G+jOB
+         pVh6d/ZdnFmJmQz9hI4c8ZE1CLGeFTMULFra6NzFzq1xCd/ISmiK8I2jDVYyxq2EbXgE
+         S8cHdpuiy5fYaza8FlmYIUHgcCwjszqGttypu2321+RZujJnZZ8dohJcNIcLueoE8SMk
+         qB9g==
+X-Gm-Message-State: AOJu0YwgohtF0eWVtHzawYVFyKlKzy+/umnqhc4g2bBfdDy9t3jk6twg
+	C5HEIUoLrX5n8+C0ba1SeUqMvlDp31A7YiXyNuqL1CtohVBdHH744t81OUF3fqY=
+X-Google-Smtp-Source: AGHT+IGtmIuZiiAkhRZ1DYVcTmSOeSFCial+bj0SazLudqMOLZCZt1tnwDQnoatujtj0YTJ4Q9UkRg==
+X-Received: by 2002:a05:6e02:20c9:b0:3a7:8bb5:3fe1 with SMTP id e9e14a558f8ab-3a78bb54052mr29359015ab.12.1732144786685;
+        Wed, 20 Nov 2024 15:19:46 -0800 (PST)
+Received: from [192.168.1.128] ([38.175.170.29])
+        by smtp.gmail.com with ESMTPSA id e9e14a558f8ab-3a748091bccsm33805385ab.46.2024.11.20.15.19.45
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 20 Nov 2024 15:19:46 -0800 (PST)
+Message-ID: <b1465833-d406-4011-a733-f86d4145e157@linuxfoundation.org>
+Date: Wed, 20 Nov 2024 16:19:45 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <202411201000.F3313C02@keescook>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.12 0/3] 6.12.1-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
+ Shuah Khan <skhan@linuxfoundation.org>
+References: <20241120124100.444648273@linuxfoundation.org>
+Content-Language: en-US
+From: Shuah Khan <skhan@linuxfoundation.org>
+In-Reply-To: <20241120124100.444648273@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Thank you for the replies,
-
-Kees Cook wrote on Wed, Nov 20, 2024 at 10:08:04AM -0800:
-> It seems like the correct first step is to revert the brk change. It's
-> still not clear to me why the change is causing a problem -- I assume it
-> is colliding with some other program area.
+On 11/20/24 05:55, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.12.1 release.
+> There are 3 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 > 
-> Is the problem strictly with qemu-user-static? (i.e. it was GCC running
-> in qemu-user-static so the crash is qemu, not GCC) That should help me
-> narrow down the issue. There must be some built-in assumption. And it's
-> aarch64 within x86_64 where it happens (is the program within qemu also
-> aarch64 or is it arm32)?
+> Responses should be made by Fri, 22 Nov 2024 12:40:53 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.12.1-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.12.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
+> 
 
-As far as I'm aware I've only seen qemu-user-static fail for aarch64
-(e.g. the arm32 variant works fine, didn't try other arches) in this
-particular configuration (the debian bookworm package has been built
-with --static-pie which is known to cause problems)
+Compiled and booted on my test system. No dmesg regressions.
 
-It's also fixed in newer versions of qemu, even with --static-pie,
-because they reworked the way they detect program mapppins in qemu
-commit dd55885516 ("linux-user: Rewrite non-fixed probe_guest_base")
-and that also fixed the issue (in qemu 8.1.0)
+Tested-by: Shuah Khan <skhan@linuxfoundation.org>
 
-So, in short there are many fixes available; it's a qemu bug that
-assumed something about the memory layout and broke with this kaslr
-patch (and for some reason only happened on non-pie static build)
-
-
-mjt will at the very least rebuild the package with pie enabled, because
-it's known to cause other issues with aarch64 and that was an oversight
-in the first place, so this issue will go away for debian without any
-further work.
-
-This is the background behind me saying that this probably should be
-reverted in stable branches (to avoid other surprises with old
-userspace), but master can probably keep this commit if it brings
-tangible security benefits (and I think it does)
-
-See the debian qemu-side of the bug for details:
-https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1087822
-
-
-> Is there an simple reproducer?
-
-Unfortunately I couldn't get it to reproduce easily, but I think it's
-just a matter of finding the right binary that does problematic mappings
-(e.g. running true in a loop didn't work but running gcc in a loop did)
-
-The most reliable reproducer I've been using is building a reasonably
-large program, we were working on modemmanager at the time so that's
-what I used; if usually fails between 100-300/500 of the build:
-----
-$ docker run -ti --rm --platform linux/arm64/v8 docker.io/arm64v8/alpine:3.20 sh
-/ # apk add bash-completion-dev dbus-dev elogind-dev gobject-introspection-dev gtk-doc libgudev-dev libmbim-dev libqmi-dev linux-headers meson vala clang abuild alpine-sdk curl
-/ # curl -O https://gitlab.freedesktop.org/mobile-broadband/ModemManager/-/archive/1.22.0/ModemManager-1.22.0.tar.gz
-/ # tar xf ModemManager-1.22.0.tar.gz
-/ # cd ModemManager-1.22.0/
-/ # abuild-meson \
-        -Db_lto=true \
-        -Dsystemdsystemunitdir=no \
-        -Ddbus_policy_dir=/usr/share/dbus-1/system.d \
-        -Dgtk_doc=true \
-        -Dsystemd_journal=false \
-        -Dsystemd_suspend_resume=true \
-        -Dvapi=true \
-        -Dpolkit=no \
-        . output
-/ # meson compile -C output
-----
-
-If you take any of the command that failed from this build and run it in
-a loop, it'll also eventually fail after a couple hundred of
-invocations, but if your loop doesn't involve any parallelism that'll be
-slower to reproduce.
-
-Note it requires qemu to be broken as well, so you'll have best chances
-with a debian bookworm (VM is fine; a chroot or podman instead of docker
-is also fine; in the chroot case ninja requires at least /dev (and
-possibly /proc) mounted)
-
-
-Thanks,
--- 
-Dominique Martinet | Asmadeus
+thanks,
+-- Shuah
