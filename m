@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B45415853A;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4425B15853A;
 	Wed, 20 Nov 2024 12:58:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732107491; cv=none; b=j19xIlcd3fO4LsWX1VksEXGMSTm4EIysBOS/f3pz5F4JOfzp4raFW4robO5Z1mr0cZbtPZWI7vYm90aBZ4HLLyn/C6LDA7JChVSN6v50V7szsFtR7xhjc3SUyE7ErDpPNlM/eRs9UzaNbsShm6UDQpUhQ3xP6iTQtA+ILsAkq00=
+	t=1732107492; cv=none; b=S4LghRy8bkGoFvpkccbfIcHldu7fLYJEN6wMbW7nhnQUsWyQxaVY4WPXnKFV66zL3vpcmt4kEhF/s3kND9maszeK7acz9c2aPS3BZmSstQEwq9WdvV1rraZHLF3t63d4OYNthnkEOVv03XbxWSSuqWELWGDxOKFT575fHvHBXcQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732107491; c=relaxed/simple;
-	bh=p19rQIXwdwjzf0VV7HfwqqWyjhwSho1E2fgNRr2Kzds=;
+	s=arc-20240116; t=1732107492; c=relaxed/simple;
+	bh=4qYbZkL8CecxlzD/SlHXidXU9+nc6/aXySldRK58K4A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=YEZE5ZmXAuv9DZFlkaJTIzlK/8/Pi5jTOUNJEqPQLrXh1wAysrUYm/Tq+zZBu6uuWrbRx1zsJyOmqIJoZ/PuhXs7YZaoTs90dpxyrUmymuoFZnn7RbgAknlZbFyhGQ4A1UmDwiJoaSK4y/i/BWL3whIHb1ARq15qURFMWxUjMag=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QPnVNzgZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=noSjRsylBmlYRQACET7Eg0MZlPzZQo3c/h9EkWrUCsnBiQfUIr6H6y43PueorLDyWkaLSc+oOQoISGxdt2did4MVP1MgH/yk+74cPAoLLCegeDC9Zfa8GJn92gMDzGYzuLbygkvVQzTVU9gOL/Qvrq3lVIeIKRW0wNH8sIUz6sk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w49jN2xP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QPnVNzgZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26637C4CECD;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w49jN2xP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C505FC4CED8;
 	Wed, 20 Nov 2024 12:58:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1732107491;
-	bh=p19rQIXwdwjzf0VV7HfwqqWyjhwSho1E2fgNRr2Kzds=;
+	bh=4qYbZkL8CecxlzD/SlHXidXU9+nc6/aXySldRK58K4A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QPnVNzgZcmLXJgzGvT6PdFFPA4UL7AcsKfp9Rmidp4L0TEBvBl1900pYkY03Zkxgb
-	 xmx/fSyKAtXeAJSNRxIW0InvXBuepeINb/FuMs60BeqHP0vzLB+QJHtIxNVOLoA4Gf
-	 6nUFaOPXUwPn/Z9HwC8GVT8Reh4JNT89mhj29B1E=
+	b=w49jN2xPJnpBP9B+kFFMi+j8fwPBTO2a9mQ6PfRuqMQ0bRHnVb7PAnX5VRffWQOvY
+	 +vxsX/MjKn4xnvY9PaxsFwggkYb5pWty/9N4jnKnrgsi3iqRRnBWHxu0utSFZ1ym27
+	 aJZHnJ5LSSDOVFRQbSja68iJzKatnx+btiZM8dig=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Moshe Shemesh <moshe@nvidia.com>,
-	Cosmin Ratiu <cratiu@nvidia.com>,
-	Yevgeny Kliteynik <kliteyn@nvidia.com>,
+	Carolina Jubran <cjubran@nvidia.com>,
 	Tariq Toukan <tariqt@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 012/107] net/mlx5e: CT: Fix null-ptr-deref in add rule err flow
-Date: Wed, 20 Nov 2024 13:55:47 +0100
-Message-ID: <20241120125629.959140439@linuxfoundation.org>
+Subject: [PATCH 6.11 013/107] net/mlx5e: Disable loopback self-test on multi-PF netdev
+Date: Wed, 20 Nov 2024 13:55:48 +0100
+Message-ID: <20241120125629.980088020@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241120125629.681745345@linuxfoundation.org>
 References: <20241120125629.681745345@linuxfoundation.org>
@@ -48,73 +46,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.11-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Moshe Shemesh <moshe@nvidia.com>
+From: Carolina Jubran <cjubran@nvidia.com>
 
-[ Upstream commit e99c6873229fe0482e7ceb7d5600e32d623ed9d9 ]
+[ Upstream commit d1ac33934a66e8d58a52668999bf9e8f59e56c81 ]
 
-In error flow of mlx5_tc_ct_entry_add_rule(), in case ct_rule_add()
-callback returns error, zone_rule->attr is used uninitiated. Fix it to
-use attr which has the needed pointer value.
+In Multi-PF (Socket Direct) configurations, when a loopback packet is
+sent through one of the secondary devices, it will always be received
+on the primary device. This causes the loopback layer to fail in
+identifying the loopback packet as the devices are different.
 
-Kernel log:
- BUG: kernel NULL pointer dereference, address: 0000000000000110
- RIP: 0010:mlx5_tc_ct_entry_add_rule+0x2b1/0x2f0 [mlx5_core]
-…
- Call Trace:
-  <TASK>
-  ? __die+0x20/0x70
-  ? page_fault_oops+0x150/0x3e0
-  ? exc_page_fault+0x74/0x140
-  ? asm_exc_page_fault+0x22/0x30
-  ? mlx5_tc_ct_entry_add_rule+0x2b1/0x2f0 [mlx5_core]
-  ? mlx5_tc_ct_entry_add_rule+0x1d5/0x2f0 [mlx5_core]
-  mlx5_tc_ct_block_flow_offload+0xc6a/0xf90 [mlx5_core]
-  ? nf_flow_offload_tuple+0xd8/0x190 [nf_flow_table]
-  nf_flow_offload_tuple+0xd8/0x190 [nf_flow_table]
-  flow_offload_work_handler+0x142/0x320 [nf_flow_table]
-  ? finish_task_switch.isra.0+0x15b/0x2b0
-  process_one_work+0x16c/0x320
-  worker_thread+0x28c/0x3a0
-  ? __pfx_worker_thread+0x10/0x10
-  kthread+0xb8/0xf0
-  ? __pfx_kthread+0x10/0x10
-  ret_from_fork+0x2d/0x50
-  ? __pfx_kthread+0x10/0x10
-  ret_from_fork_asm+0x1a/0x30
-  </TASK>
+To avoid false test failures, disable the loopback self-test in
+Multi-PF configurations.
 
-Fixes: 7fac5c2eced3 ("net/mlx5: CT: Avoid reusing modify header context for natted entries")
-Signed-off-by: Moshe Shemesh <moshe@nvidia.com>
-Reviewed-by: Cosmin Ratiu <cratiu@nvidia.com>
-Reviewed-by: Yevgeny Kliteynik <kliteyn@nvidia.com>
+Fixes: ed29705e4ed1 ("net/mlx5: Enable SD feature")
+Signed-off-by: Carolina Jubran <cjubran@nvidia.com>
 Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20241107183527.676877-7-tariqt@nvidia.com
+Link: https://patch.msgid.link/20241107183527.676877-8-tariqt@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en/tc_ct.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/mellanox/mlx5/core/en_selftest.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/tc_ct.c b/drivers/net/ethernet/mellanox/mlx5/core/en/tc_ct.c
-index 71a168746ebe2..deabed1d46a14 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en/tc_ct.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en/tc_ct.c
-@@ -866,7 +866,7 @@ mlx5_tc_ct_entry_add_rule(struct mlx5_tc_ct_priv *ct_priv,
- 	return 0;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_selftest.c b/drivers/net/ethernet/mellanox/mlx5/core/en_selftest.c
+index 5bf8318cc48b8..1d60465cc2ca4 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_selftest.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_selftest.c
+@@ -36,6 +36,7 @@
+ #include "en.h"
+ #include "en/port.h"
+ #include "eswitch.h"
++#include "lib/mlx5.h"
  
- err_rule:
--	mlx5_tc_ct_entry_destroy_mod_hdr(ct_priv, zone_rule->attr, zone_rule->mh);
-+	mlx5_tc_ct_entry_destroy_mod_hdr(ct_priv, attr, zone_rule->mh);
- 	mlx5_put_label_mapping(ct_priv, attr->ct_attr.ct_labels_id);
- err_mod_hdr:
- 	kfree(attr);
+ static int mlx5e_test_health_info(struct mlx5e_priv *priv)
+ {
+@@ -247,6 +248,9 @@ static int mlx5e_cond_loopback(struct mlx5e_priv *priv)
+ 	if (is_mdev_switchdev_mode(priv->mdev))
+ 		return -EOPNOTSUPP;
+ 
++	if (mlx5_get_sd(priv->mdev))
++		return -EOPNOTSUPP;
++
+ 	return 0;
+ }
+ 
 -- 
 2.43.0
 
