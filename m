@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 523F71A706F;
-	Wed, 20 Nov 2024 12:58:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D9B01A706F;
+	Wed, 20 Nov 2024 12:58:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732107525; cv=none; b=km+ZnF3tLlYHvNXquPzfMCPgRzL59qAcggQoi/TSx8g2QISDEAMVaxXqzCBscAHEmZqToOxPHhdIDHCFWc+IEWR6n2Rp73i7wnDDxeIbDC9wbcg0zOcsKqtIvEHRe55nMWmFNDvcGHTWiGoDOB1Bas76PQGrGkc7n8fODa0Spko=
+	t=1732107526; cv=none; b=J3rjbhkGRErDNsEf41gixZ/8tJKYM5F0HJwuFoAjGpcNx+oclpRhjoJqRtbxrNgR91kEPZKqKCk2UytIqePbmLWdQmDgEKhVbhgiT+P+M5MwjLcG5JDTT5EZklHZoJXjGmP679onhVxvMQGZgTr2BEdxXWJ6P6mXkP58+WNjxdQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732107525; c=relaxed/simple;
-	bh=A1eGRKLHij7+XLL23kY+TIibSb0sExsiO3iH+DPt5FI=;
+	s=arc-20240116; t=1732107526; c=relaxed/simple;
+	bh=OxTMeCrdfw03CzRm5ZjmZOF8uX889Mux3TmDuAC8n7o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Vmcjhsmiqk+J29SZdv+hT3lKhodv9bQZhOleASJDvBW0qRYIz7ni5DT7JYuE36ehdx+gea3KBKPZG26Uuq5jKXekjfepkjjwRttDcP9zULHQEq02KcY2GorGT4y0F66DULSm7W7WtsAjR0dq0fL24us6rrnga/fsQFcPXqWV3gQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DHcSOHYh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SeA6hN3leAB0BXEAed5AQxSSYlt4WKGxk5fcAuCB+Kyn8D9ZnZoExXwvOoS69XyZPWMOoIMly3KeJh9AJwh7lQ8FygWJfqZeNWNFptdkjIVGSqTM4IuBJJtrnY7U9Ob0KD/mBeGr8RrwqxwzxnG1aQInURu8cJA+MPLq1YdkBvU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mn61w/pk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DHcSOHYh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20489C4CECD;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mn61w/pk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2F81C4CECD;
 	Wed, 20 Nov 2024 12:58:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1732107525;
-	bh=A1eGRKLHij7+XLL23kY+TIibSb0sExsiO3iH+DPt5FI=;
+	s=korg; t=1732107526;
+	bh=OxTMeCrdfw03CzRm5ZjmZOF8uX889Mux3TmDuAC8n7o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DHcSOHYhlzAmxJ1EKfNi+9a4sBo+upTax0hd/uYSGDmJoTR62LrNKwHCt5YC2vNXJ
-	 cYQh2vyfQfLslyKU1seCTOO5K8/E7TmDpqqD6jd9mgxc9c/M34VqQNavKzHFLXx69N
-	 xrt5yBaaoQDvQqY7xd2M039TCMhbnp4sZM2ezxq8=
+	b=Mn61w/pkZU/RwAld3VK/5VUtxzg2iVIAWUIhUQutih9OIVPFVIadvRSfcq2kAtK47
+	 Zn9nTK2aUj0cywfWwrgXaAtsOhWErUWIMWwlNGjgIicmpya2g+0qfZkuKataA0ysl1
+	 EUAZsQmGtKRu2GEEuRu7pcidu7VBZBCf2EO1dMOk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxim Levitsky <mlevitsk@redhat.com>,
-	Yong He <zhuangel570@gmail.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
 	Sean Christopherson <seanjc@google.com>,
+	Xiaoyao Li <xiaoyao.li@intel.com>,
 	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 6.11 056/107] KVM: x86: Unconditionally set irr_pending when updating APICv state
-Date: Wed, 20 Nov 2024 13:56:31 +0100
-Message-ID: <20241120125630.941542923@linuxfoundation.org>
+Subject: [PATCH 6.11 057/107] KVM: VMX: Bury Intel PT virtualization (guest/host mode) behind CONFIG_BROKEN
+Date: Wed, 20 Nov 2024 13:56:32 +0100
+Message-ID: <20241120125630.963757771@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241120125629.681745345@linuxfoundation.org>
 References: <20241120125629.681745345@linuxfoundation.org>
@@ -54,110 +54,57 @@ Content-Transfer-Encoding: 8bit
 
 From: Sean Christopherson <seanjc@google.com>
 
-commit d3ddef46f22e8c3124e0df1f325bc6a18dadff39 upstream.
+commit aa0d42cacf093a6fcca872edc954f6f812926a17 upstream.
 
-Always set irr_pending (to true) when updating APICv status to fix a bug
-where KVM fails to set irr_pending when userspace sets APIC state and
-APICv is disabled, which ultimate results in KVM failing to inject the
-pending interrupt(s) that userspace stuffed into the vIRR, until another
-interrupt happens to be emulated by KVM.
+Hide KVM's pt_mode module param behind CONFIG_BROKEN, i.e. disable support
+for virtualizing Intel PT via guest/host mode unless BROKEN=y.  There are
+myriad bugs in the implementation, some of which are fatal to the guest,
+and others which put the stability and health of the host at risk.
 
-Only the APICv-disabled case is flawed, as KVM forces apic->irr_pending to
-be true if APICv is enabled, because not all vIRR updates will be visible
-to KVM.
+For guest fatalities, the most glaring issue is that KVM fails to ensure
+tracing is disabled, and *stays* disabled prior to VM-Enter, which is
+necessary as hardware disallows loading (the guest's) RTIT_CTL if tracing
+is enabled (enforced via a VMX consistency check).  Per the SDM:
 
-Hit the bug with a big hammer, even though strictly speaking KVM can scan
-the vIRR and set/clear irr_pending as appropriate for this specific case.
-The bug was introduced by commit 755c2bf87860 ("KVM: x86: lapic: don't
-touch irr_pending in kvm_apic_update_apicv when inhibiting it"), which as
-the shortlog suggests, deleted code that updated irr_pending.
+  If the logical processor is operating with Intel PT enabled (if
+  IA32_RTIT_CTL.TraceEn = 1) at the time of VM entry, the "load
+  IA32_RTIT_CTL" VM-entry control must be 0.
 
-Before that commit, kvm_apic_update_apicv() did indeed scan the vIRR, with
-with the crucial difference that kvm_apic_update_apicv() did the scan even
-when APICv was being *disabled*, e.g. due to an AVIC inhibition.
+On the host side, KVM doesn't validate the guest CPUID configuration
+provided by userspace, and even worse, uses the guest configuration to
+decide what MSRs to save/load at VM-Enter and VM-Exit.  E.g. configuring
+guest CPUID to enumerate more address ranges than are supported in hardware
+will result in KVM trying to passthrough, save, and load non-existent MSRs,
+which generates a variety of WARNs, ToPA ERRORs in the host, a potential
+deadlock, etc.
 
-        struct kvm_lapic *apic = vcpu->arch.apic;
-
-        if (vcpu->arch.apicv_active) {
-                /* irr_pending is always true when apicv is activated. */
-                apic->irr_pending = true;
-                apic->isr_count = 1;
-        } else {
-                apic->irr_pending = (apic_search_irr(apic) != -1);
-                apic->isr_count = count_vectors(apic->regs + APIC_ISR);
-        }
-
-And _that_ bug (clearing irr_pending) was introduced by commit b26a695a1d78
-("kvm: lapic: Introduce APICv update helper function"), prior to which KVM
-unconditionally set irr_pending to true in kvm_apic_set_state(), i.e.
-assumed that the new virtual APIC state could have a pending IRQ.
-
-Furthermore, in addition to introducing this issue, commit 755c2bf87860
-also papered over the underlying bug: KVM doesn't ensure CPUs and devices
-see APICv as disabled prior to searching the IRR.  Waiting until KVM
-emulates an EOI to update irr_pending "works", but only because KVM won't
-emulate EOI until after refresh_apicv_exec_ctrl(), and there are plenty of
-memory barriers in between.  I.e. leaving irr_pending set is basically
-hacking around bad ordering.
-
-So, effectively revert to the pre-b26a695a1d78 behavior for state restore,
-even though it's sub-optimal if no IRQs are pending, in order to provide a
-minimal fix, but leave behind a FIXME to document the ugliness.  With luck,
-the ordering issue will be fixed and the mess will be cleaned up in the
-not-too-distant future.
-
-Fixes: 755c2bf87860 ("KVM: x86: lapic: don't touch irr_pending in kvm_apic_update_apicv when inhibiting it")
+Fixes: f99e3daf94ff ("KVM: x86: Add Intel PT virtualization work mode")
 Cc: stable@vger.kernel.org
-Cc: Maxim Levitsky <mlevitsk@redhat.com>
-Reported-by: Yong He <zhuangel570@gmail.com>
-Closes: https://lkml.kernel.org/r/20241023124527.1092810-1-alexyonghe%40tencent.com
+Cc: Adrian Hunter <adrian.hunter@intel.com>
 Signed-off-by: Sean Christopherson <seanjc@google.com>
-Message-ID: <20241106015135.2462147-1-seanjc@google.com>
+Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
+Tested-by: Adrian Hunter <adrian.hunter@intel.com>
+Message-ID: <20241101185031.1799556-2-seanjc@google.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/lapic.c |   29 ++++++++++++++++++-----------
- 1 file changed, 18 insertions(+), 11 deletions(-)
+ arch/x86/kvm/vmx/vmx.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/arch/x86/kvm/lapic.c
-+++ b/arch/x86/kvm/lapic.c
-@@ -2629,19 +2629,26 @@ void kvm_apic_update_apicv(struct kvm_vc
- {
- 	struct kvm_lapic *apic = vcpu->arch.apic;
+--- a/arch/x86/kvm/vmx/vmx.c
++++ b/arch/x86/kvm/vmx/vmx.c
+@@ -217,9 +217,11 @@ module_param(ple_window_shrink, uint, 04
+ static unsigned int ple_window_max        = KVM_VMX_DEFAULT_PLE_WINDOW_MAX;
+ module_param(ple_window_max, uint, 0444);
  
--	if (apic->apicv_active) {
--		/* irr_pending is always true when apicv is activated. */
--		apic->irr_pending = true;
-+	/*
-+	 * When APICv is enabled, KVM must always search the IRR for a pending
-+	 * IRQ, as other vCPUs and devices can set IRR bits even if the vCPU
-+	 * isn't running.  If APICv is disabled, KVM _should_ search the IRR
-+	 * for a pending IRQ.  But KVM currently doesn't ensure *all* hardware,
-+	 * e.g. CPUs and IOMMUs, has seen the change in state, i.e. searching
-+	 * the IRR at this time could race with IRQ delivery from hardware that
-+	 * still sees APICv as being enabled.
-+	 *
-+	 * FIXME: Ensure other vCPUs and devices observe the change in APICv
-+	 *        state prior to updating KVM's metadata caches, so that KVM
-+	 *        can safely search the IRR and set irr_pending accordingly.
-+	 */
-+	apic->irr_pending = true;
-+
-+	if (apic->apicv_active)
- 		apic->isr_count = 1;
--	} else {
--		/*
--		 * Don't clear irr_pending, searching the IRR can race with
--		 * updates from the CPU as APICv is still active from hardware's
--		 * perspective.  The flag will be cleared as appropriate when
--		 * KVM injects the interrupt.
--		 */
-+	else
- 		apic->isr_count = count_vectors(apic->regs + APIC_ISR);
--	}
-+
- 	apic->highest_isr_cache = -1;
- }
+-/* Default is SYSTEM mode, 1 for host-guest mode */
++/* Default is SYSTEM mode, 1 for host-guest mode (which is BROKEN) */
+ int __read_mostly pt_mode = PT_MODE_SYSTEM;
++#ifdef CONFIG_BROKEN
+ module_param(pt_mode, int, S_IRUGO);
++#endif
+ 
+ struct x86_pmu_lbr __ro_after_init vmx_lbr_caps;
  
 
 
