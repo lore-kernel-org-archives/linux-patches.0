@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A4C41C9EDF;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACE6D1BD501;
 	Wed, 20 Nov 2024 13:01:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732107681; cv=none; b=dLnYvLrmonytpl6MXRlaU1xTG24GL/X+4dGNwyDQpD/lrT6sI0FqrwGKtDXATtBvQLTLf6dDpH30g17Hi6+8pI0HhL0dGzEgXUu7t7vUBFk5sSg+PCFoWAw5QFMoEL8rRDH+UL8UqeV+WwB8kNGYoZjEYNlpfYgz9qQKBIR/kSE=
+	t=1732107681; cv=none; b=U2FYG5ugm4aPGOfoQdIAj6NJk/DE9cmI12BLwBXYhzHl08n3BxvPrCuydKjDVBqVDQ518Ygz+G9jhK82pNS5LoIv5gEVTO+37DUH4fLpkZx/QVDKuI870hdZT6c2cDhisLAy1G5VNehOTku3abTzLgFk32bwthuYo826B7VaTuA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1732107681; c=relaxed/simple;
-	bh=3GUO4/8PWdAaaT4aLdQYfVunXM0sTkhrbLFjsdxuEXE=;
+	bh=yXebHKcRGVuAZFkA/Jb0EPJYwrAeQ2pbajirEhQkTjY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y6ofIzUgW5HNfOp6OAKK5DW1sLUDfD8d1+cmuugrv6Glo6zcpKGSYrzI8Fv3pbqKGKup1YIAyEJltSDn7jFa2rLwyUIJ8AdTR8bcOJpoS+7iAioeFzeKHh3Ipmq13crM6A5ChZCbvKamZ51/UKT7CkqeM6RubXtmmpBA8mgxRCc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PlKUZT3L; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sigywliNHulJruNK71HzXTIx38BhWPVfnp6bPvBEElMX3OsTjeRZY0SPmbUy5LuGCyLsjUNJvF4aAshYGLDtP5Q3OyBl1P9zDhV9sFWOw8xxB2P7iXdpjCQh/Y9Ba0gmg7dEllcqLaieqNh+Fbe+xLrFHuHCexBQ9aF5LX2u3MU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=02Xf86S8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PlKUZT3L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4C7BC4CECD;
-	Wed, 20 Nov 2024 13:01:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="02Xf86S8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 825D0C4CECD;
+	Wed, 20 Nov 2024 13:01:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1732107680;
-	bh=3GUO4/8PWdAaaT4aLdQYfVunXM0sTkhrbLFjsdxuEXE=;
+	s=korg; t=1732107681;
+	bh=yXebHKcRGVuAZFkA/Jb0EPJYwrAeQ2pbajirEhQkTjY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PlKUZT3LKGm5zl+kWkaeI+sabZN6enpG3384kI5eG4wVbL5EBOsRyPSkGWNnmp+6f
-	 XRNC3ovMSX57LVpRlXq39doS6G6/9tyhPxK6WhM/hxiCznpbR+Uxmwj9c1Kamta5RK
-	 BWimNcmEQmolq0YZyKUIXtdKeeHzb1HoZ8P/mSJc=
+	b=02Xf86S8kY0e3XkhiuOsam+ji9n9sDTzxkzjyaLFkfLP+HE9kdF+Xz5A/cobqeOji
+	 Vq9nUE0jX+zp802lNmn/gnpEBk2WS3L27qf128f0uQTKNj9RAYIHp/3P2PC8a84847
+	 HTnSA97lVQwnQdqPf3lZB5gHMoFdCDHQsasIRUDc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
+To: stable@vger.kernel.org,
+	Robert Richter <rrichter@amd.com>
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Jiri Olsa <jolsa@kernel.org>
-Subject: [PATCH 6.1 38/73] lib/buildid: Fix build ID parsing logic
-Date: Wed, 20 Nov 2024 13:58:24 +0100
-Message-ID: <20241120125810.524264449@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Ira Weiny <ira.weiny@intel.com>,
+	Dave Jiang <dave.jiang@intel.com>
+Subject: [PATCH 6.1 39/73] cxl/pci: fix error code in __cxl_hdm_decode_init()
+Date: Wed, 20 Nov 2024 13:58:25 +0100
+Message-ID: <20241120125810.547346183@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241120125809.623237564@linuxfoundation.org>
 References: <20241120125809.623237564@linuxfoundation.org>
@@ -50,34 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiri Olsa <jolsa@kernel.org>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-The parse_build_id_buf does not account Elf32_Nhdr header size
-when getting the build id data pointer and returns wrong build
-id data as result.
+When commit 0cab68720598 ("cxl/pci: Fix disabling memory if DVSEC CXL
+Range does not match a CFMWS window") was backported, this chunk moved
+from the cxl_hdm_decode_init() function which returns negative error
+codes to the __cxl_hdm_decode_init() function which returns false on
+error.  So the error code needs to be modified from -ENXIO to false.
 
-This is problem only for stable trees that merged 84887f4c1c3a
-fix, the upstream build id code was refactored and returns proper
-build id.
+This issue only exits in the 6.1.y kernels.  In later kernels negative
+error codes are correct and the driver didn't exist in earlier kernels.
 
-Acked-by: Andrii Nakryiko <andrii@kernel.org>
-Fixes: 84887f4c1c3a ("lib/buildid: harden build ID parsing logic")
-Signed-off-by: Jiri Olsa <jolsa@kernel.org>
+Fixes: 031217128990 ("cxl/pci: Fix disabling memory if DVSEC CXL Range does not match a CFMWS window")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: Ira Weiny <ira.weiny@intel.com>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/buildid.c |    2 +-
+ drivers/cxl/core/pci.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/lib/buildid.c
-+++ b/lib/buildid.c
-@@ -40,7 +40,7 @@ static int parse_build_id_buf(unsigned c
- 		    name_sz == note_name_sz &&
- 		    memcmp(nhdr + 1, note_name, note_name_sz) == 0 &&
- 		    desc_sz > 0 && desc_sz <= BUILD_ID_SIZE_MAX) {
--			data = note_start + note_off + ALIGN(note_name_sz, 4);
-+			data = note_start + note_off + sizeof(Elf32_Nhdr) + ALIGN(note_name_sz, 4);
- 			memcpy(build_id, data, desc_sz);
- 			memset(build_id + desc_sz, 0, BUILD_ID_SIZE_MAX - desc_sz);
- 			if (size)
+--- a/drivers/cxl/core/pci.c
++++ b/drivers/cxl/core/pci.c
+@@ -377,7 +377,7 @@ static bool __cxl_hdm_decode_init(struct
+ 
+ 	if (!allowed && info->mem_enabled) {
+ 		dev_err(dev, "Range register decodes outside platform defined CXL ranges.\n");
+-		return -ENXIO;
++		return false;
+ 	}
+ 
+ 	/*
 
 
