@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D0D319F487;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B97921AA7BF;
 	Wed, 20 Nov 2024 12:58:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732107509; cv=none; b=mixXrGDuJXroaCjvp6Q7fjEHkphAi7jw2LOjcRfb9b4/lHTG2rU/EbKrjIkElU0T4HNg8gVQQDmYv7rQIOGQs9OgwaajuZ9q/MDykWjLtSGepq3zt7mdWkdo2Uu9e2P94W9MRYQtO8eAV7cG3bCwI7yKY9PaoHNme9S34r3tdvs=
+	t=1732107509; cv=none; b=qHXMlRpZOBYBN1mxg1pGfjiLYMfVB5GPRobwUkUzXD3MKJLk3ZmeNBTiR2I9+Dfr/TmsgbFGHt3OvCWxfmNQk5e9uuryJWXh9adRZE5+GvlXRRsPoDyk27uMNqe7dS06EAEAgGwnb8F6O2Uq+RF7wb3F7faVsk2w6Sf/Ymo4//4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1732107509; c=relaxed/simple;
-	bh=mZSeSw9tUAW7SOPD1U2InL3Pv+Cp3YY1e222qKGq4cw=;
+	bh=ubza3QECvLZpVWBWKgS+hP7guhcQUZL+r3khW3Alcl8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XHHkcMwSAvPcEGJmPRJLsaxqoL6d0PiGn/0f9V8eTmYs4bzkBJ6UuRCQZRhNpdXESmSTkVdFr7kff6V+0uSlOP7IvGM8fpkQFCHu2L2un53aBtLHNaq2lru6sI+3mZp0hpQCS6bb6pIlO5oQG50djFV8LKGHJutpaRcdxfA60MU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tR1tRkP5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sq1DZx7UBwToCkrcZvgv1Pv1x9Hxl4foGlBo0VEOmMneYxYdtJ0MB5ig8Oh8+ilrtVLb+WCx77nBm6y5ZiMfheGfCPytIjL44GnHmpRWPd1dlQJBmMQKzQ4oCSntMIBPvQQDVGkMgZZAio1ECZ8QsT6DJt0IXErm/pMn4+E694U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TVN22Il4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tR1tRkP5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D72E3C4CED1;
-	Wed, 20 Nov 2024 12:58:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TVN22Il4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E7B2C4CED1;
+	Wed, 20 Nov 2024 12:58:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1732107508;
-	bh=mZSeSw9tUAW7SOPD1U2InL3Pv+Cp3YY1e222qKGq4cw=;
+	s=korg; t=1732107509;
+	bh=ubza3QECvLZpVWBWKgS+hP7guhcQUZL+r3khW3Alcl8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tR1tRkP53g4onIkgWoyQCOt0Wozk0G+StORF8HzmQc7BuxA0N9c3Z2bCMpiRGoRUd
-	 mhab2iNNsBDyWeyshv5M0PCGi18cWs67A0P1JNnvi9IPuu3fciLt4LWDVrA+/XGAtb
-	 ZwK3rrw+4WQmS4YRg1x1FieG987lbRN36SVslM08=
+	b=TVN22Il4OIZ6++Neceqw24Wkm3PGd/2soKKVUTK5SeAjfrZqxZRnE3wHhYmnRIqRN
+	 zSrP6AgxwjO9HDpmz4WtolVJLnmWi5h2dhHDMo/IiIv+bGRA8B/UZxKW79bFEkrYCO
+	 B6nlx0ojKdj7g6yNjWoAE6r1MdFvuzncxxhR3kuU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Eric Dumazet <edumazet@google.com>,
-	Wang Liang <wangliang74@huawei.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 005/107] net: fix data-races around sk->sk_forward_alloc
-Date: Wed, 20 Nov 2024 13:55:40 +0100
-Message-ID: <20241120125629.801957051@linuxfoundation.org>
+Subject: [PATCH 6.11 006/107] mptcp: error out earlier on disconnect
+Date: Wed, 20 Nov 2024 13:55:41 +0100
+Message-ID: <20241120125629.825501002@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241120125629.681745345@linuxfoundation.org>
 References: <20241120125629.681745345@linuxfoundation.org>
@@ -52,145 +53,118 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wang Liang <wangliang74@huawei.com>
+From: Paolo Abeni <pabeni@redhat.com>
 
-[ Upstream commit 073d89808c065ac4c672c0a613a71b27a80691cb ]
+[ Upstream commit 581302298524e9d77c4c44ff5156a6cd112227ae ]
 
-Syzkaller reported this warning:
- ------------[ cut here ]------------
- WARNING: CPU: 0 PID: 16 at net/ipv4/af_inet.c:156 inet_sock_destruct+0x1c5/0x1e0
- Modules linked in:
- CPU: 0 UID: 0 PID: 16 Comm: ksoftirqd/0 Not tainted 6.12.0-rc5 #26
- Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
- RIP: 0010:inet_sock_destruct+0x1c5/0x1e0
- Code: 24 12 4c 89 e2 5b 48 c7 c7 98 ec bb 82 41 5c e9 d1 18 17 ff 4c 89 e6 5b 48 c7 c7 d0 ec bb 82 41 5c e9 bf 18 17 ff 0f 0b eb 83 <0f> 0b eb 97 0f 0b eb 87 0f 0b e9 68 ff ff ff 66 66 2e 0f 1f 84 00
- RSP: 0018:ffffc9000008bd90 EFLAGS: 00010206
- RAX: 0000000000000300 RBX: ffff88810b172a90 RCX: 0000000000000007
- RDX: 0000000000000002 RSI: 0000000000000300 RDI: ffff88810b172a00
- RBP: ffff88810b172a00 R08: ffff888104273c00 R09: 0000000000100007
- R10: 0000000000020000 R11: 0000000000000006 R12: ffff88810b172a00
- R13: 0000000000000004 R14: 0000000000000000 R15: ffff888237c31f78
- FS:  0000000000000000(0000) GS:ffff888237c00000(0000) knlGS:0000000000000000
- CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
- CR2: 00007ffc63fecac8 CR3: 000000000342e000 CR4: 00000000000006f0
- DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
- DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
- Call Trace:
-  <TASK>
-  ? __warn+0x88/0x130
-  ? inet_sock_destruct+0x1c5/0x1e0
-  ? report_bug+0x18e/0x1a0
-  ? handle_bug+0x53/0x90
-  ? exc_invalid_op+0x18/0x70
-  ? asm_exc_invalid_op+0x1a/0x20
-  ? inet_sock_destruct+0x1c5/0x1e0
-  __sk_destruct+0x2a/0x200
-  rcu_do_batch+0x1aa/0x530
-  ? rcu_do_batch+0x13b/0x530
-  rcu_core+0x159/0x2f0
-  handle_softirqs+0xd3/0x2b0
-  ? __pfx_smpboot_thread_fn+0x10/0x10
-  run_ksoftirqd+0x25/0x30
-  smpboot_thread_fn+0xdd/0x1d0
-  kthread+0xd3/0x100
-  ? __pfx_kthread+0x10/0x10
-  ret_from_fork+0x34/0x50
-  ? __pfx_kthread+0x10/0x10
-  ret_from_fork_asm+0x1a/0x30
-  </TASK>
- ---[ end trace 0000000000000000 ]---
+Eric reported a division by zero splat in the MPTCP protocol:
 
-Its possible that two threads call tcp_v6_do_rcv()/sk_forward_alloc_add()
-concurrently when sk->sk_state == TCP_LISTEN with sk->sk_lock unlocked,
-which triggers a data-race around sk->sk_forward_alloc:
-tcp_v6_rcv
-    tcp_v6_do_rcv
-        skb_clone_and_charge_r
-            sk_rmem_schedule
-                __sk_mem_schedule
-                    sk_forward_alloc_add()
-            skb_set_owner_r
-                sk_mem_charge
-                    sk_forward_alloc_add()
-        __kfree_skb
-            skb_release_all
-                skb_release_head_state
-                    sock_rfree
-                        sk_mem_uncharge
-                            sk_forward_alloc_add()
-                            sk_mem_reclaim
-                                // set local var reclaimable
-                                __sk_mem_reclaim
-                                    sk_forward_alloc_add()
+Oops: divide error: 0000 [#1] PREEMPT SMP KASAN PTI
+CPU: 1 UID: 0 PID: 6094 Comm: syz-executor317 Not tainted
+6.12.0-rc5-syzkaller-00291-g05b92660cdfe #0
+Hardware name: Google Google Compute Engine/Google Compute Engine,
+BIOS Google 09/13/2024
+RIP: 0010:__tcp_select_window+0x5b4/0x1310 net/ipv4/tcp_output.c:3163
+Code: f6 44 01 e3 89 df e8 9b 75 09 f8 44 39 f3 0f 8d 11 ff ff ff e8
+0d 74 09 f8 45 89 f4 e9 04 ff ff ff e8 00 74 09 f8 44 89 f0 99 <f7> 7c
+24 14 41 29 d6 45 89 f4 e9 ec fe ff ff e8 e8 73 09 f8 48 89
+RSP: 0018:ffffc900041f7930 EFLAGS: 00010293
+RAX: 0000000000017e67 RBX: 0000000000017e67 RCX: ffffffff8983314b
+RDX: 0000000000000000 RSI: ffffffff898331b0 RDI: 0000000000000004
+RBP: 00000000005d6000 R08: 0000000000000004 R09: 0000000000017e67
+R10: 0000000000003e80 R11: 0000000000000000 R12: 0000000000003e80
+R13: ffff888031d9b440 R14: 0000000000017e67 R15: 00000000002eb000
+FS: 00007feb5d7f16c0(0000) GS:ffff8880b8700000(0000) knlGS:0000000000000000
+CS: 0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007feb5d8adbb8 CR3: 0000000074e4c000 CR4: 00000000003526f0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Call Trace:
+<TASK>
+__tcp_cleanup_rbuf+0x3e7/0x4b0 net/ipv4/tcp.c:1493
+mptcp_rcv_space_adjust net/mptcp/protocol.c:2085 [inline]
+mptcp_recvmsg+0x2156/0x2600 net/mptcp/protocol.c:2289
+inet_recvmsg+0x469/0x6a0 net/ipv4/af_inet.c:885
+sock_recvmsg_nosec net/socket.c:1051 [inline]
+sock_recvmsg+0x1b2/0x250 net/socket.c:1073
+__sys_recvfrom+0x1a5/0x2e0 net/socket.c:2265
+__do_sys_recvfrom net/socket.c:2283 [inline]
+__se_sys_recvfrom net/socket.c:2279 [inline]
+__x64_sys_recvfrom+0xe0/0x1c0 net/socket.c:2279
+do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+do_syscall_64+0xcd/0x250 arch/x86/entry/common.c:83
+entry_SYSCALL_64_after_hwframe+0x77/0x7f
+RIP: 0033:0x7feb5d857559
+Code: 28 00 00 00 75 05 48 83 c4 28 c3 e8 51 18 00 00 90 48 89 f8 48
+89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d
+01 f0 ff ff 73 01 c3 48 c7 c1 b0 ff ff ff f7 d8 64 89 01 48
+RSP: 002b:00007feb5d7f1208 EFLAGS: 00000246 ORIG_RAX: 000000000000002d
+RAX: ffffffffffffffda RBX: 00007feb5d8e1318 RCX: 00007feb5d857559
+RDX: 000000800000000e RSI: 0000000000000000 RDI: 0000000000000003
+RBP: 00007feb5d8e1310 R08: 0000000000000000 R09: ffffffff81000000
+R10: 0000000000000100 R11: 0000000000000246 R12: 00007feb5d8e131c
+R13: 00007feb5d8ae074 R14: 000000800000000e R15: 00000000fffffdef
 
-In this syzkaller testcase, two threads call
-tcp_v6_do_rcv() with skb->truesize=768, the sk_forward_alloc changes like
-this:
- (cpu 1)             | (cpu 2)             | sk_forward_alloc
- ...                 | ...                 | 0
- __sk_mem_schedule() |                     | +4096 = 4096
-                     | __sk_mem_schedule() | +4096 = 8192
- sk_mem_charge()     |                     | -768  = 7424
-                     | sk_mem_charge()     | -768  = 6656
- ...                 |    ...              |
- sk_mem_uncharge()   |                     | +768  = 7424
- reclaimable=7424    |                     |
-                     | sk_mem_uncharge()   | +768  = 8192
-                     | reclaimable=8192    |
- __sk_mem_reclaim()  |                     | -4096 = 4096
-                     | __sk_mem_reclaim()  | -8192 = -4096 != 0
+and provided a nice reproducer.
 
-The skb_clone_and_charge_r() should not be called in tcp_v6_do_rcv() when
-sk->sk_state is TCP_LISTEN, it happens later in tcp_v6_syn_recv_sock().
-Fix the same issue in dccp_v6_do_rcv().
+The root cause is the current bad handling of racing disconnect.
+After the blamed commit below, sk_wait_data() can return (with
+error) with the underlying socket disconnected and a zero rcv_mss.
 
-Suggested-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Fixes: e994b2f0fb92 ("tcp: do not lock listener to process SYN packets")
-Signed-off-by: Wang Liang <wangliang74@huawei.com>
-Link: https://patch.msgid.link/20241107023405.889239-1-wangliang74@huawei.com
+Catch the error and return without performing any additional
+operations on the current socket.
+
+Reported-by: Eric Dumazet <edumazet@google.com>
+Fixes: 419ce133ab92 ("tcp: allow again tcp_disconnect() when threads are waiting")
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/8c82ecf71662ecbc47bf390f9905de70884c9f2d.1731060874.git.pabeni@redhat.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/dccp/ipv6.c     | 2 +-
- net/ipv6/tcp_ipv6.c | 4 +---
- 2 files changed, 2 insertions(+), 4 deletions(-)
+ net/mptcp/protocol.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/net/dccp/ipv6.c b/net/dccp/ipv6.c
-index da5dba120bc9a..d6649246188d7 100644
---- a/net/dccp/ipv6.c
-+++ b/net/dccp/ipv6.c
-@@ -618,7 +618,7 @@ static int dccp_v6_do_rcv(struct sock *sk, struct sk_buff *skb)
- 	   by tcp. Feel free to propose better solution.
- 					       --ANK (980728)
- 	 */
--	if (np->rxopt.all)
-+	if (np->rxopt.all && sk->sk_state != DCCP_LISTEN)
- 		opt_skb = skb_clone_and_charge_r(skb, sk);
+diff --git a/net/mptcp/protocol.c b/net/mptcp/protocol.c
+index ec87b36f0d451..f3e54c836ba56 100644
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -2205,7 +2205,7 @@ static int mptcp_recvmsg(struct sock *sk, struct msghdr *msg, size_t len,
+ 		cmsg_flags = MPTCP_CMSG_INQ;
  
- 	if (sk->sk_state == DCCP_OPEN) { /* Fast path */
-diff --git a/net/ipv6/tcp_ipv6.c b/net/ipv6/tcp_ipv6.c
-index 200fea92f12fc..84cd46311da09 100644
---- a/net/ipv6/tcp_ipv6.c
-+++ b/net/ipv6/tcp_ipv6.c
-@@ -1617,7 +1617,7 @@ int tcp_v6_do_rcv(struct sock *sk, struct sk_buff *skb)
- 	   by tcp. Feel free to propose better solution.
- 					       --ANK (980728)
- 	 */
--	if (np->rxopt.all)
-+	if (np->rxopt.all && sk->sk_state != TCP_LISTEN)
- 		opt_skb = skb_clone_and_charge_r(skb, sk);
+ 	while (copied < len) {
+-		int bytes_read;
++		int err, bytes_read;
  
- 	if (sk->sk_state == TCP_ESTABLISHED) { /* Fast path */
-@@ -1655,8 +1655,6 @@ int tcp_v6_do_rcv(struct sock *sk, struct sk_buff *skb)
- 				if (reason)
- 					goto reset;
- 			}
--			if (opt_skb)
--				__kfree_skb(opt_skb);
- 			return 0;
+ 		bytes_read = __mptcp_recvmsg_mskq(msk, msg, len - copied, flags, &tss, &cmsg_flags);
+ 		if (unlikely(bytes_read < 0)) {
+@@ -2267,9 +2267,16 @@ static int mptcp_recvmsg(struct sock *sk, struct msghdr *msg, size_t len,
  		}
- 	} else
+ 
+ 		pr_debug("block timeout %ld\n", timeo);
+-		sk_wait_data(sk, &timeo, NULL);
++		mptcp_rcv_space_adjust(msk, copied);
++		err = sk_wait_data(sk, &timeo, NULL);
++		if (err < 0) {
++			err = copied ? : err;
++			goto out_err;
++		}
+ 	}
+ 
++	mptcp_rcv_space_adjust(msk, copied);
++
+ out_err:
+ 	if (cmsg_flags && copied >= 0) {
+ 		if (cmsg_flags & MPTCP_CMSG_TS)
+@@ -2285,8 +2292,6 @@ static int mptcp_recvmsg(struct sock *sk, struct msghdr *msg, size_t len,
+ 	pr_debug("msk=%p rx queue empty=%d:%d copied=%d\n",
+ 		 msk, skb_queue_empty_lockless(&sk->sk_receive_queue),
+ 		 skb_queue_empty(&msk->receive_queue), copied);
+-	if (!(flags & MSG_PEEK))
+-		mptcp_rcv_space_adjust(msk, copied);
+ 
+ 	release_sock(sk);
+ 	return copied;
 -- 
 2.43.0
 
