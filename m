@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DC8E1BE226;
-	Wed, 20 Nov 2024 13:01:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41FD71BE870;
+	Wed, 20 Nov 2024 13:01:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732107696; cv=none; b=D4sUeKTJ10Npe9dYHoBrQGhJUEIYBrK4VRKS72Z4Eq/oJzU1jgkqnL2fSwtT4XysFZTeTxk/ud+qo94GrSacgTTgnsc15z9WZplHZbqpCjwoHP8UELYBX++6FdnYBaBo+Da3eIyUK4nkwBWs/8OgUHJGuOdhiCxyUTCKEE/YlIM=
+	t=1732107697; cv=none; b=h903eH1PWa1rg0aILnCQirE3Hy96fNljfu8EVWHO4vyl9KN2C0lN0Kez/coOHarq6l3yy1GX8/Nh7D5w4/eDTKp1XEfBhzcNytYiXuhzlgkaqsChQVm85/8oJCsX2z/1MNrk0iOkdpqFaL4fQUTM7pGPZ7hM15Y7NMZ/k3vJuNI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732107696; c=relaxed/simple;
-	bh=Blqfoc6rOlz5qJf+tunxJ3Ncx5VxViRCODQlzIQOFQo=;
+	s=arc-20240116; t=1732107697; c=relaxed/simple;
+	bh=WbA83DzP4mf8rrRpr63FQ6q7pVtjmuMz0OgaUxpzP1k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dvqcLluOOTFfdYoupd+6S5okbwh0qNawsNmKOn6prr2DHotDNpA7J5ybWhrjL5K4xFT3Ao+/JA+7tzXiqKL2Sfok5b74PSrrTKPIFloiuKeZhZ87gg082LJRKgx/er8b2JW+aDiwEfqcufVMeH/g4vQoYpct10gnzttZfGk+BtI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RtftJdCM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ksATtQk+hC8a8LmZ1/qCuhZzz+dsVrPvuznztPCPvu3TOrN1nJWgLRzDV1KR7k38ngmA2EfZ24YSAw6pig39bAaptJbOqiOvXy8sDUuJnFl7Rvpy3yOBL2Idc0gi3mMtUkAqPyUSFT6BZTqhzJQ0ohjA2bNr5tRY4cdhXCEVUr0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vRGG9LLF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RtftJdCM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CA43C4CECD;
-	Wed, 20 Nov 2024 13:01:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vRGG9LLF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 190ACC4CECD;
+	Wed, 20 Nov 2024 13:01:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1732107696;
-	bh=Blqfoc6rOlz5qJf+tunxJ3Ncx5VxViRCODQlzIQOFQo=;
+	s=korg; t=1732107697;
+	bh=WbA83DzP4mf8rrRpr63FQ6q7pVtjmuMz0OgaUxpzP1k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RtftJdCMZzIdZsazAFgdzV3dWywwohYGD2NG9fjthUES1Yp94dTNjz7Qm4ZmX+rXW
-	 BWjVXCO6pnqLWNoXkhnStxKCq8iOb5C2OZzE9IBBJjT6ohVqLVEfBclbXBlAbqijHX
-	 H1vzK67ueyILAYRvoIvV+WsG75cMBagImdcV3Nx0=
+	b=vRGG9LLFZpBFbTxFvtNzpDZsmb3nDKrIargowpDiGdm4MAhTFvHnn70GmTnnVJH7W
+	 rFobrXedCGjg1qf/YMxt8P82OBXlkrQSVlnYBaqrCZJaCNarc2KugkagV4GhYxUufQ
+	 khmpai7TeAGTwx0nDA1xIRl+6bAqZk8CjI+WkMyc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Parav Pandit <parav@nvidia.com>,
-	Angus Chen <angus.chen@jaguarmicro.com>,
-	Xiaoguang Wang <lege.wang@jaguarmicro.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Jason Wang <jasowang@redhat.com>
-Subject: [PATCH 6.1 20/73] vp_vdpa: fix id_table array not null terminated error
-Date: Wed, 20 Nov 2024 13:58:06 +0100
-Message-ID: <20241120125810.103198879@linuxfoundation.org>
+	Eric Dumazet <edumazet@google.com>,
+	syzbot <syzkaller@googlegroups.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Xiangyu Chen <xiangyu.chen@windriver.com>
+Subject: [PATCH 6.1 56/73] nfc: llcp: fix nfc_llcp_setsockopt() unsafe copies
+Date: Wed, 20 Nov 2024 13:58:42 +0100
+Message-ID: <20241120125810.957785477@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241120125809.623237564@linuxfoundation.org>
 References: <20241120125809.623237564@linuxfoundation.org>
@@ -53,53 +54,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiaoguang Wang <lege.wang@jaguarmicro.com>
+From: Eric Dumazet <edumazet@google.com>
 
-commit 4e39ecadf1d2a08187139619f1f314b64ba7d947 upstream.
+[ Upstream commit 7a87441c9651ba37842f4809224aca13a554a26f ]
 
-Allocate one extra virtio_device_id as null terminator, otherwise
-vdpa_mgmtdev_get_classes() may iterate multiple times and visit
-undefined memory.
+syzbot reported unsafe calls to copy_from_sockptr() [1]
 
-Fixes: ffbda8e9df10 ("vdpa/vp_vdpa : add vdpa tool support in vp_vdpa")
-Cc: stable@vger.kernel.org
-Suggested-by: Parav Pandit <parav@nvidia.com>
-Signed-off-by: Angus Chen <angus.chen@jaguarmicro.com>
-Signed-off-by: Xiaoguang Wang <lege.wang@jaguarmicro.com>
-Message-Id: <20241105133518.1494-1-lege.wang@jaguarmicro.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Reviewed-by: Parav Pandit <parav@nvidia.com>
-Acked-by: Jason Wang <jasowang@redhat.com>
+Use copy_safe_from_sockptr() instead.
+
+[1]
+
+BUG: KASAN: slab-out-of-bounds in copy_from_sockptr_offset include/linux/sockptr.h:49 [inline]
+ BUG: KASAN: slab-out-of-bounds in copy_from_sockptr include/linux/sockptr.h:55 [inline]
+ BUG: KASAN: slab-out-of-bounds in nfc_llcp_setsockopt+0x6c2/0x850 net/nfc/llcp_sock.c:255
+Read of size 4 at addr ffff88801caa1ec3 by task syz-executor459/5078
+
+CPU: 0 PID: 5078 Comm: syz-executor459 Not tainted 6.8.0-syzkaller-08951-gfe46a7dd189e #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 03/27/2024
+Call Trace:
+ <TASK>
+  __dump_stack lib/dump_stack.c:88 [inline]
+  dump_stack_lvl+0x241/0x360 lib/dump_stack.c:114
+  print_address_description mm/kasan/report.c:377 [inline]
+  print_report+0x169/0x550 mm/kasan/report.c:488
+  kasan_report+0x143/0x180 mm/kasan/report.c:601
+  copy_from_sockptr_offset include/linux/sockptr.h:49 [inline]
+  copy_from_sockptr include/linux/sockptr.h:55 [inline]
+  nfc_llcp_setsockopt+0x6c2/0x850 net/nfc/llcp_sock.c:255
+  do_sock_setsockopt+0x3b1/0x720 net/socket.c:2311
+  __sys_setsockopt+0x1ae/0x250 net/socket.c:2334
+  __do_sys_setsockopt net/socket.c:2343 [inline]
+  __se_sys_setsockopt net/socket.c:2340 [inline]
+  __x64_sys_setsockopt+0xb5/0xd0 net/socket.c:2340
+ do_syscall_64+0xfd/0x240
+ entry_SYSCALL_64_after_hwframe+0x6d/0x75
+RIP: 0033:0x7f7fac07fd89
+Code: 28 00 00 00 75 05 48 83 c4 28 c3 e8 91 18 00 00 90 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 b8 ff ff ff f7 d8 64 89 01 48
+RSP: 002b:00007fff660eb788 EFLAGS: 00000246 ORIG_RAX: 0000000000000036
+RAX: ffffffffffffffda RBX: 0000000000000003 RCX: 00007f7fac07fd89
+RDX: 0000000000000000 RSI: 0000000000000118 RDI: 0000000000000004
+RBP: 0000000000000000 R08: 0000000000000002 R09: 0000000000000000
+R10: 0000000020000a80 R11: 0000000000000246 R12: 0000000000000000
+R13: 0000000000000000 R14: 0000000000000000 R15: 0000000000000000
+
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/20240408082845.3957374-4-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Xiangyu Chen <xiangyu.chen@windriver.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/vdpa/virtio_pci/vp_vdpa.c |   10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ net/nfc/llcp_sock.c |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
---- a/drivers/vdpa/virtio_pci/vp_vdpa.c
-+++ b/drivers/vdpa/virtio_pci/vp_vdpa.c
-@@ -591,7 +591,11 @@ static int vp_vdpa_probe(struct pci_dev
- 		goto mdev_err;
- 	}
+--- a/net/nfc/llcp_sock.c
++++ b/net/nfc/llcp_sock.c
+@@ -252,10 +252,10 @@ static int nfc_llcp_setsockopt(struct so
+ 			break;
+ 		}
  
--	mdev_id = kzalloc(sizeof(struct virtio_device_id), GFP_KERNEL);
-+	/*
-+	 * id_table should be a null terminated array, so allocate one additional
-+	 * entry here, see vdpa_mgmtdev_get_classes().
-+	 */
-+	mdev_id = kcalloc(2, sizeof(struct virtio_device_id), GFP_KERNEL);
- 	if (!mdev_id) {
- 		err = -ENOMEM;
- 		goto mdev_id_err;
-@@ -611,8 +615,8 @@ static int vp_vdpa_probe(struct pci_dev
- 		goto probe_err;
- 	}
+-		if (copy_from_sockptr(&opt, optval, sizeof(u32))) {
+-			err = -EFAULT;
++		err = copy_safe_from_sockptr(&opt, sizeof(opt),
++					     optval, optlen);
++		if (err)
+ 			break;
+-		}
  
--	mdev_id->device = mdev->id.device;
--	mdev_id->vendor = mdev->id.vendor;
-+	mdev_id[0].device = mdev->id.device;
-+	mdev_id[0].vendor = mdev->id.vendor;
- 	mgtdev->id_table = mdev_id;
- 	mgtdev->max_supported_vqs = vp_modern_get_num_queues(mdev);
- 	mgtdev->supported_features = vp_modern_get_features(mdev);
+ 		if (opt > LLCP_MAX_RW) {
+ 			err = -EINVAL;
+@@ -274,10 +274,10 @@ static int nfc_llcp_setsockopt(struct so
+ 			break;
+ 		}
+ 
+-		if (copy_from_sockptr(&opt, optval, sizeof(u32))) {
+-			err = -EFAULT;
++		err = copy_safe_from_sockptr(&opt, sizeof(opt),
++					     optval, optlen);
++		if (err)
+ 			break;
+-		}
+ 
+ 		if (opt > LLCP_MAX_MIUX) {
+ 			err = -EINVAL;
 
 
