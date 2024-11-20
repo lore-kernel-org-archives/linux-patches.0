@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 788BE1A4F19;
-	Wed, 20 Nov 2024 12:58:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56D421A4F19;
+	Wed, 20 Nov 2024 12:58:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732107511; cv=none; b=N/eejLobwPxQSDUtu6SaexYbBv8u/bVx8uwL8Cc/XjhMYqX4DMYEpWyAKpNdDGu2Prp0rwoHPXIOUK6OjwV06rG2vLfFarbAZainOx5XaPf00r2WcdaM7FB4l/NK9s0pcv3dcfeffc+C42lPa3Ga9PwFkksbpZY+d5YtnvLxHe4=
+	t=1732107512; cv=none; b=Bc5qyNLOnOjv0ffcjdR+uVXot3YCPVinlmVSuLaOcmTBR4ikXaeyAQdM1pmC4CYUId9iK0eEVgYNdDb/BVqDIPVHJ4WtsXwydE58IC2nvj+9OY8CLin9UnS9EvCxi89kgtJLjGs+tuRiFrp0+C3X6zaSWat4WS/yiwbjJAdBMF8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732107511; c=relaxed/simple;
-	bh=QOGEvo3z/t7nHxmQPKmGQwYk7KmlrPGaz7lr+baYu08=;
+	s=arc-20240116; t=1732107512; c=relaxed/simple;
+	bh=VEBL2mrItjVhV65mjJEVS8geTheXYUifjW8aRylVwMQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Cuqc05vPOTwWnKVngu/JQmQKDpuKtSoAKqSbPiMVIsE0BP1AR/G3ZmfDGKP4hhRMvrkhrK4Z3Tj5HF3F9cLEi4qssi53Ir8y8MCfsu6WR9OELtp/g7yeRjZGg7CnnYJwvndMHiz/UdEG9aa/QrnbZS2jQziwRmRbtcdpErcI0WU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XmrYOwqZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IA+oFBQRFHUW0kJowqxZtXKAWgg75ITfu1PyjR+L7onX8/9WK2QPMAyk2fZD9UpD6BEKfKQeVeDJ/4f2QmyBZ0vOBrpdagJnZsigqYOtL2LYZUhkk0Kznip+YWioAfSIgBFMAgqeMKXW20IunAA0ToYBTOayQVL8+s8YxrswE70=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hheCKM7j; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XmrYOwqZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 431FBC4CECD;
-	Wed, 20 Nov 2024 12:58:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hheCKM7j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25395C4CECD;
+	Wed, 20 Nov 2024 12:58:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1732107511;
-	bh=QOGEvo3z/t7nHxmQPKmGQwYk7KmlrPGaz7lr+baYu08=;
+	s=korg; t=1732107512;
+	bh=VEBL2mrItjVhV65mjJEVS8geTheXYUifjW8aRylVwMQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XmrYOwqZGjNV7uIolwxnI6mLllntnwuG+w0SS+zzTcvyLQfUCz8Q+w7YPvYG1IDRE
-	 +f7zRTbbqz7euLum3t797ACk8mljk5b31MmMyKQFSkUinHP+y1fYrXkQLdTbdiDYIk
-	 cueMp2Cy3NE2K5oQ7WhxKsxZpIH/ZewWNCe+FLY8=
+	b=hheCKM7j1kKALHeIAddxho0CCKK/u1AVVOchzdc1eKy7WnFyy4E6aNt+eFiusiZHV
+	 Mqw5YIJd76EBxTsqsMbuVW1IIju4oO33RK+BXqKLBsxci35/VFwUgRoCzJ+jWa3i7Q
+	 /dYn8PVth9WEAUiAZNUAZ/JBaczDD9HmkQo2j5qI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Parav Pandit <parav@nvidia.com>,
-	Amir Tzin <amirtz@nvidia.com>,
+	Mark Bloch <mbloch@nvidia.com>,
+	Maor Gottlieb <maorg@nvidia.com>,
 	Tariq Toukan <tariqt@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 008/107] net/mlx5: Fix msix vectors to respect platform limit
-Date: Wed, 20 Nov 2024 13:55:43 +0100
-Message-ID: <20241120125629.871642548@linuxfoundation.org>
+Subject: [PATCH 6.11 009/107] net/mlx5: fs, lock FTE when checking if active
+Date: Wed, 20 Nov 2024 13:55:44 +0100
+Message-ID: <20241120125629.894888841@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241120125629.681745345@linuxfoundation.org>
 References: <20241120125629.681745345@linuxfoundation.org>
@@ -53,145 +53,128 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Parav Pandit <parav@nvidia.com>
+From: Mark Bloch <mbloch@nvidia.com>
 
-[ Upstream commit d0989c9d2b3a89ae5e4ad45fe6d7bbe449fc49fe ]
+[ Upstream commit 9ca314419930f9135727e39d77e66262d5f7bef6 ]
 
-The number of PCI vectors allocated by the platform (which may be fewer
-than requested) is currently not honored when creating the SF pool;
-only the PCI MSI-X capability is considered.
+The referenced commits introduced a two-step process for deleting FTEs:
 
-As a result, when a platform allocates fewer vectors
-(in non-dynamic mode) than requested, the PF and SF pools end up
-with an invalid vector range.
+- Lock the FTE, delete it from hardware, set the hardware deletion function
+  to NULL and unlock the FTE.
+- Lock the parent flow group, delete the software copy of the FTE, and
+  remove it from the xarray.
 
-This causes incorrect SF vector accounting, which leads to the
-following call trace when an invalid IRQ vector is allocated.
+However, this approach encounters a race condition if a rule with the same
+match value is added simultaneously. In this scenario, fs_core may set the
+hardware deletion function to NULL prematurely, causing a panic during
+subsequent rule deletions.
 
-This issue is resolved by ensuring that the platform's vector
-limit is respected for both the SF and PF pools.
+To prevent this, ensure the active flag of the FTE is checked under a lock,
+which will prevent the fs_core layer from attaching a new steering rule to
+an FTE that is in the process of deletion.
 
-Workqueue: mlx5_vhca_event0 mlx5_sf_dev_add_active_work [mlx5_core]
-RIP: 0010:pci_irq_vector+0x23/0x80
-RSP: 0018:ffffabd5cebd7248 EFLAGS: 00010246
-RAX: ffff980880e7f308 RBX: ffff9808932fb880 RCX: 0000000000000001
-RDX: 00000000000001ff RSI: 0000000000000200 RDI: ffff980880e7f308
-RBP: 0000000000000200 R08: 0000000000000010 R09: ffff97a9116f0860
-R10: 0000000000000002 R11: 0000000000000228 R12: ffff980897cd0160
-R13: 0000000000000000 R14: ffff97a920fec0c0 R15: ffffabd5cebd72d0
-FS:  0000000000000000(0000) GS:ffff97c7ff9c0000(0000) knlGS:0000000000000000
- ? rescuer_thread+0x350/0x350
- kthread+0x11b/0x140
- ? __kthread_bind_mask+0x60/0x60
- ret_from_fork+0x22/0x30
-mlx5_core 0000:a1:00.0: mlx5_irq_alloc:321:(pid 6781): Failed to request irq. err = -22
-mlx5_core 0000:a1:00.0: mlx5_irq_alloc:321:(pid 6781): Failed to request irq. err = -22
-mlx5_core.sf mlx5_core.sf.6: MLX5E: StrdRq(1) RqSz(8) StrdSz(2048) RxCqeCmprss(0 enhanced)
-mlx5_core.sf mlx5_core.sf.7: firmware version: 32.43.356
-mlx5_core.sf mlx5_core.sf.6 enpa1s0f0s4: renamed from eth0
-mlx5_core.sf mlx5_core.sf.7: Rate limit: 127 rates are supported, range: 0Mbps to 195312Mbps
-mlx5_core 0000:a1:00.0: mlx5_irq_alloc:321:(pid 6781): Failed to request irq. err = -22
-mlx5_core 0000:a1:00.0: mlx5_irq_alloc:321:(pid 6781): Failed to request irq. err = -22
-mlx5_core 0000:a1:00.0: mlx5_irq_alloc:321:(pid 6781): Failed to request irq. err = -22
+[  438.967589] MOSHE: 2496 mlx5_del_flow_rules del_hw_func
+[  438.968205] ------------[ cut here ]------------
+[  438.968654] refcount_t: decrement hit 0; leaking memory.
+[  438.969249] WARNING: CPU: 0 PID: 8957 at lib/refcount.c:31 refcount_warn_saturate+0xfb/0x110
+[  438.970054] Modules linked in: act_mirred cls_flower act_gact sch_ingress openvswitch nsh mlx5_vdpa vringh vhost_iotlb vdpa mlx5_ib mlx5_core xt_conntrack xt_MASQUERADE nf_conntrack_netlink nfnetlink xt_addrtype iptable_nat nf_nat br_netfilter rpcsec_gss_krb5 auth_rpcgss oid_registry overlay rpcrdma rdma_ucm ib_iser libiscsi scsi_transport_iscsi ib_umad rdma_cm ib_ipoib iw_cm ib_cm ib_uverbs ib_core zram zsmalloc fuse [last unloaded: cls_flower]
+[  438.973288] CPU: 0 UID: 0 PID: 8957 Comm: tc Not tainted 6.12.0-rc1+ #8
+[  438.973888] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.13.0-0-gf21b5a4aeb02-prebuilt.qemu.org 04/01/2014
+[  438.974874] RIP: 0010:refcount_warn_saturate+0xfb/0x110
+[  438.975363] Code: 40 66 3b 82 c6 05 16 e9 4d 01 01 e8 1f 7c a0 ff 0f 0b c3 cc cc cc cc 48 c7 c7 10 66 3b 82 c6 05 fd e8 4d 01 01 e8 05 7c a0 ff <0f> 0b c3 cc cc cc cc 66 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 00 90
+[  438.976947] RSP: 0018:ffff888124a53610 EFLAGS: 00010286
+[  438.977446] RAX: 0000000000000000 RBX: ffff888119d56de0 RCX: 0000000000000000
+[  438.978090] RDX: ffff88852c828700 RSI: ffff88852c81b3c0 RDI: ffff88852c81b3c0
+[  438.978721] RBP: ffff888120fa0e88 R08: 0000000000000000 R09: ffff888124a534b0
+[  438.979353] R10: 0000000000000001 R11: 0000000000000001 R12: ffff888119d56de0
+[  438.979979] R13: ffff888120fa0ec0 R14: ffff888120fa0ee8 R15: ffff888119d56de0
+[  438.980607] FS:  00007fe6dcc0f800(0000) GS:ffff88852c800000(0000) knlGS:0000000000000000
+[  438.983984] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[  438.984544] CR2: 00000000004275e0 CR3: 0000000186982001 CR4: 0000000000372eb0
+[  438.985205] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+[  438.985842] DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+[  438.986507] Call Trace:
+[  438.986799]  <TASK>
+[  438.987070]  ? __warn+0x7d/0x110
+[  438.987426]  ? refcount_warn_saturate+0xfb/0x110
+[  438.987877]  ? report_bug+0x17d/0x190
+[  438.988261]  ? prb_read_valid+0x17/0x20
+[  438.988659]  ? handle_bug+0x53/0x90
+[  438.989054]  ? exc_invalid_op+0x14/0x70
+[  438.989458]  ? asm_exc_invalid_op+0x16/0x20
+[  438.989883]  ? refcount_warn_saturate+0xfb/0x110
+[  438.990348]  mlx5_del_flow_rules+0x2f7/0x340 [mlx5_core]
+[  438.990932]  __mlx5_eswitch_del_rule+0x49/0x170 [mlx5_core]
+[  438.991519]  ? mlx5_lag_is_sriov+0x3c/0x50 [mlx5_core]
+[  438.992054]  ? xas_load+0x9/0xb0
+[  438.992407]  mlx5e_tc_rule_unoffload+0x45/0xe0 [mlx5_core]
+[  438.993037]  mlx5e_tc_del_fdb_flow+0x2a6/0x2e0 [mlx5_core]
+[  438.993623]  mlx5e_flow_put+0x29/0x60 [mlx5_core]
+[  438.994161]  mlx5e_delete_flower+0x261/0x390 [mlx5_core]
+[  438.994728]  tc_setup_cb_destroy+0xb9/0x190
+[  438.995150]  fl_hw_destroy_filter+0x94/0xc0 [cls_flower]
+[  438.995650]  fl_change+0x11a4/0x13c0 [cls_flower]
+[  438.996105]  tc_new_tfilter+0x347/0xbc0
+[  438.996503]  ? ___slab_alloc+0x70/0x8c0
+[  438.996929]  rtnetlink_rcv_msg+0xf9/0x3e0
+[  438.997339]  ? __netlink_sendskb+0x4c/0x70
+[  438.997751]  ? netlink_unicast+0x286/0x2d0
+[  438.998171]  ? __pfx_rtnetlink_rcv_msg+0x10/0x10
+[  438.998625]  netlink_rcv_skb+0x54/0x100
+[  438.999020]  netlink_unicast+0x203/0x2d0
+[  438.999421]  netlink_sendmsg+0x1e4/0x420
+[  438.999820]  __sock_sendmsg+0xa1/0xb0
+[  439.000203]  ____sys_sendmsg+0x207/0x2a0
+[  439.000600]  ? copy_msghdr_from_user+0x6d/0xa0
+[  439.001072]  ___sys_sendmsg+0x80/0xc0
+[  439.001459]  ? ___sys_recvmsg+0x8b/0xc0
+[  439.001848]  ? generic_update_time+0x4d/0x60
+[  439.002282]  __sys_sendmsg+0x51/0x90
+[  439.002658]  do_syscall_64+0x50/0x110
+[  439.003040]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
 
-Fixes: 3354822cde5a ("net/mlx5: Use dynamic msix vectors allocation")
-Signed-off-by: Parav Pandit <parav@nvidia.com>
-Signed-off-by: Amir Tzin <amirtz@nvidia.com>
+Fixes: 718ce4d601db ("net/mlx5: Consolidate update FTE for all removal changes")
+Fixes: cefc23554fc2 ("net/mlx5: Fix FTE cleanup")
+Signed-off-by: Mark Bloch <mbloch@nvidia.com>
+Reviewed-by: Maor Gottlieb <maorg@nvidia.com>
 Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20241107183527.676877-3-tariqt@nvidia.com
+Link: https://patch.msgid.link/20241107183527.676877-4-tariqt@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/mellanox/mlx5/core/pci_irq.c | 32 ++++++++++++++++---
- 1 file changed, 27 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/fs_core.c | 15 ++++++++++++---
+ 1 file changed, 12 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/pci_irq.c b/drivers/net/ethernet/mellanox/mlx5/core/pci_irq.c
-index 81a9232a03e1b..7db9cab9bedf6 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/pci_irq.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/pci_irq.c
-@@ -593,9 +593,11 @@ static void irq_pool_free(struct mlx5_irq_pool *pool)
- 	kvfree(pool);
- }
- 
--static int irq_pools_init(struct mlx5_core_dev *dev, int sf_vec, int pcif_vec)
-+static int irq_pools_init(struct mlx5_core_dev *dev, int sf_vec, int pcif_vec,
-+			  bool dynamic_vec)
- {
- 	struct mlx5_irq_table *table = dev->priv.irq_table;
-+	int sf_vec_available = sf_vec;
- 	int num_sf_ctrl;
- 	int err;
- 
-@@ -616,6 +618,13 @@ static int irq_pools_init(struct mlx5_core_dev *dev, int sf_vec, int pcif_vec)
- 	num_sf_ctrl = DIV_ROUND_UP(mlx5_sf_max_functions(dev),
- 				   MLX5_SFS_PER_CTRL_IRQ);
- 	num_sf_ctrl = min_t(int, MLX5_IRQ_CTRL_SF_MAX, num_sf_ctrl);
-+	if (!dynamic_vec && (num_sf_ctrl + 1) > sf_vec_available) {
-+		mlx5_core_dbg(dev,
-+			      "Not enough IRQs for SFs control and completion pool, required=%d avail=%d\n",
-+			      num_sf_ctrl + 1, sf_vec_available);
-+		return 0;
-+	}
-+
- 	table->sf_ctrl_pool = irq_pool_alloc(dev, pcif_vec, num_sf_ctrl,
- 					     "mlx5_sf_ctrl",
- 					     MLX5_EQ_SHARE_IRQ_MIN_CTRL,
-@@ -624,9 +633,11 @@ static int irq_pools_init(struct mlx5_core_dev *dev, int sf_vec, int pcif_vec)
- 		err = PTR_ERR(table->sf_ctrl_pool);
- 		goto err_pf;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/fs_core.c b/drivers/net/ethernet/mellanox/mlx5/core/fs_core.c
+index a47d6419160d7..fb01acbadf732 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/fs_core.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/fs_core.c
+@@ -1946,13 +1946,22 @@ lookup_fte_locked(struct mlx5_flow_group *g,
+ 		fte_tmp = NULL;
+ 		goto out;
  	}
--	/* init sf_comp_pool */
-+	sf_vec_available -= num_sf_ctrl;
 +
-+	/* init sf_comp_pool, remaining vectors are for the SF completions */
- 	table->sf_comp_pool = irq_pool_alloc(dev, pcif_vec + num_sf_ctrl,
--					     sf_vec - num_sf_ctrl, "mlx5_sf_comp",
-+					     sf_vec_available, "mlx5_sf_comp",
- 					     MLX5_EQ_SHARE_IRQ_MIN_COMP,
- 					     MLX5_EQ_SHARE_IRQ_MAX_COMP);
- 	if (IS_ERR(table->sf_comp_pool)) {
-@@ -715,6 +726,7 @@ int mlx5_irq_table_get_num_comp(struct mlx5_irq_table *table)
- int mlx5_irq_table_create(struct mlx5_core_dev *dev)
- {
- 	int num_eqs = mlx5_max_eq_cap_get(dev);
-+	bool dynamic_vec;
- 	int total_vec;
- 	int pcif_vec;
- 	int req_vec;
-@@ -724,21 +736,31 @@ int mlx5_irq_table_create(struct mlx5_core_dev *dev)
- 	if (mlx5_core_is_sf(dev))
- 		return 0;
- 
-+	/* PCI PF vectors usage is limited by online cpus, device EQs and
-+	 * PCI MSI-X capability.
-+	 */
- 	pcif_vec = MLX5_CAP_GEN(dev, num_ports) * num_online_cpus() + 1;
- 	pcif_vec = min_t(int, pcif_vec, num_eqs);
-+	pcif_vec = min_t(int, pcif_vec, pci_msix_vec_count(dev->pdev));
- 
- 	total_vec = pcif_vec;
- 	if (mlx5_sf_max_functions(dev))
- 		total_vec += MLX5_MAX_MSIX_PER_SF * mlx5_sf_max_functions(dev);
- 	total_vec = min_t(int, total_vec, pci_msix_vec_count(dev->pdev));
--	pcif_vec = min_t(int, pcif_vec, pci_msix_vec_count(dev->pdev));
- 
- 	req_vec = pci_msix_can_alloc_dyn(dev->pdev) ? 1 : total_vec;
- 	n = pci_alloc_irq_vectors(dev->pdev, 1, req_vec, PCI_IRQ_MSIX);
- 	if (n < 0)
- 		return n;
- 
--	err = irq_pools_init(dev, total_vec - pcif_vec, pcif_vec);
-+	/* Further limit vectors of the pools based on platform for non dynamic case */
-+	dynamic_vec = pci_msix_can_alloc_dyn(dev->pdev);
-+	if (!dynamic_vec) {
-+		pcif_vec = min_t(int, n, pcif_vec);
-+		total_vec = min_t(int, n, total_vec);
-+	}
++	nested_down_write_ref_node(&fte_tmp->node, FS_LOCK_CHILD);
 +
-+	err = irq_pools_init(dev, total_vec - pcif_vec, pcif_vec, dynamic_vec);
- 	if (err)
- 		pci_free_irq_vectors(dev->pdev);
+ 	if (!fte_tmp->node.active) {
++		up_write_ref_node(&fte_tmp->node, false);
++
++		if (take_write)
++			up_write_ref_node(&g->node, false);
++		else
++			up_read_ref_node(&g->node);
++
+ 		tree_put_node(&fte_tmp->node, false);
+-		fte_tmp = NULL;
+-		goto out;
++
++		return NULL;
+ 	}
  
+-	nested_down_write_ref_node(&fte_tmp->node, FS_LOCK_CHILD);
+ out:
+ 	if (take_write)
+ 		up_write_ref_node(&g->node, false);
 -- 
 2.43.0
 
