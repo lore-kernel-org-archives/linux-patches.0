@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 480FF1A7262;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E70BD1A7262;
 	Wed, 20 Nov 2024 12:59:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732107581; cv=none; b=EbPW0qA1U9GcF9a1B+8XV5/34o6KgVjXfk2u1ix/6J4TuY3JxbIjQoDp8V25zcbMKYvztHGdl4OuunYjodEYV2tH1drBXMUGqarf9SlBoqlo6TJ+Za00Kcu/tCqHrEpluyAqnr6+kOIbCsl1kxb4qKDMYODT1HSFVUKkCwbke1k=
+	t=1732107582; cv=none; b=dQVALRYc+e1BHFMIQPRao804wmzWKnq6Z3xhwA0c1ZeUNaqBg18ZRE8qouQo6oVBnxk73UEfJ72N5c418cfGfNGA0OCE1zlVHx9IhJ2XleEgDOTS6GPH74+jidfmicXv81bmSZXWE9VVbTHmKWXZ+8GxW4M9vIa/+oKhkS9cEfE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732107581; c=relaxed/simple;
-	bh=97WX+sZJqbMNoO6BQfJhl/yUh1AE3sowOGh3YUEVhrY=;
+	s=arc-20240116; t=1732107582; c=relaxed/simple;
+	bh=i6jPMdquwlpoQ1yiEG6F/GuxOrhYi3bpVfGIk7bWZeA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QUPEOuvfzfMG1hspxuV7J4d5slWQjYFB66Wp/omLKf3puQOd8K2WSPzCJgFVc3RCGe9VQIMAGydMO4opDHz6LZheMQVUa/MMjzOOuuRbYKsdvkKPEsDF6OhPxh9hA7kgv2bYFeZK7mlPwS9d0WbMjkv0nOv0JLk7szgAilSkzNE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qj7XhAGr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GQS/l9y6bLbdRdFQTMIczNVQRHwQ+W1p4JuSWPkUJBt+EtKET0aMyvaQGfM9x+lctQKluVvD83m3aznFuL0QXLYm0AMs82JEmDE7V6WlPtugaunIjdfg70VekyUoaLLRH8i7FE6PZnUslJjrCPdjgJNzdZ72j4/0PxA0F9o1R9w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tuQt/pkX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qj7XhAGr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15DC7C4CECD;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tuQt/pkX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB64FC4CECD;
 	Wed, 20 Nov 2024 12:59:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1732107581;
-	bh=97WX+sZJqbMNoO6BQfJhl/yUh1AE3sowOGh3YUEVhrY=;
+	bh=i6jPMdquwlpoQ1yiEG6F/GuxOrhYi3bpVfGIk7bWZeA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Qj7XhAGrrJ2Ap4fYZXKa/LCuKTlMEEnAb7ROV/JU3E+oQC8tA5gZys4PnAcBny2xF
-	 ikacha+AZEDn6sv8mCtGpqYhuCpQevbcZRBZI+be7ZaRZ2NHFun1Kq/p+Y130dRtVB
-	 ARlUZQKTmcfcu+/edMQ3EZ3TJo6x6scAUcjP6NuU=
+	b=tuQt/pkXqUxQM8gUWCacy2Yi6X+W40t3KkKOtgnPFPmSiPH7d5t02qW0oeWvI38Bq
+	 35Azr9/ELlWSHpyy51o7Z/hZ647idt5uPcp13FL0L0RLC8Cr9i/v4FY/xJ24ygmO6x
+	 fvtAph/ysYkh2Ksdc9t2/ELGo8Y27d64sfgWjuSY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jisheng Zhang <jszhang@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>,
+	Vitalii Mordan <mordan@ispras.ru>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 22/82] net: stmmac: rename stmmac_pltfr_remove_no_dt to stmmac_pltfr_remove
-Date: Wed, 20 Nov 2024 13:56:32 +0100
-Message-ID: <20241120125630.110279802@linuxfoundation.org>
+Subject: [PATCH 6.6 23/82] stmmac: dwmac-intel-plat: fix call balance of tx_clk handling routines
+Date: Wed, 20 Nov 2024 13:56:33 +0100
+Message-ID: <20241120125630.131656879@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241120125629.623666563@linuxfoundation.org>
 References: <20241120125629.623666563@linuxfoundation.org>
@@ -51,116 +51,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jisheng Zhang <jszhang@kernel.org>
+From: Vitalii Mordan <mordan@ispras.ru>
 
-[ Upstream commit 2c9fc838067b02cb3e6057fef5cd7cf1c04a95aa ]
+[ Upstream commit 5b366eae71937ae7412365340b431064625f9617 ]
 
-Now, all users of the old stmmac_pltfr_remove() are converted to the
-devres helper, it's time to rename stmmac_pltfr_remove_no_dt() back to
-stmmac_pltfr_remove() and remove the old stmmac_pltfr_remove().
+If the clock dwmac->tx_clk was not enabled in intel_eth_plat_probe,
+it should not be disabled in any path.
 
-Signed-off-by: Jisheng Zhang <jszhang@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: 5b366eae7193 ("stmmac: dwmac-intel-plat: fix call balance of tx_clk handling routines")
+Conversely, if it was enabled in intel_eth_plat_probe, it must be disabled
+in all error paths to ensure proper cleanup.
+
+Found by Linux Verification Center (linuxtesting.org) with Klever.
+
+Fixes: 9efc9b2b04c7 ("net: stmmac: Add dwmac-intel-plat for GBE driver")
+Signed-off-by: Vitalii Mordan <mordan@ispras.ru>
+Link: https://patch.msgid.link/20241108173334.2973603-1-mordan@ispras.ru
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../stmicro/stmmac/dwmac-intel-plat.c         |  2 +-
- .../ethernet/stmicro/stmmac/dwmac-visconti.c  |  3 +--
- .../ethernet/stmicro/stmmac/stmmac_platform.c | 23 +++----------------
- .../ethernet/stmicro/stmmac/stmmac_platform.h |  1 -
- 4 files changed, 5 insertions(+), 24 deletions(-)
+ .../stmicro/stmmac/dwmac-intel-plat.c         | 25 +++++++++++++------
+ 1 file changed, 17 insertions(+), 8 deletions(-)
 
 diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-intel-plat.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-intel-plat.c
-index d1aec2ca2b429..70edc5232379f 100644
+index 70edc5232379f..134f6506df99a 100644
 --- a/drivers/net/ethernet/stmicro/stmmac/dwmac-intel-plat.c
 +++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-intel-plat.c
-@@ -164,7 +164,7 @@ static void intel_eth_plat_remove(struct platform_device *pdev)
- {
+@@ -111,7 +111,12 @@ static int intel_eth_plat_probe(struct platform_device *pdev)
+ 			if (IS_ERR(dwmac->tx_clk))
+ 				return PTR_ERR(dwmac->tx_clk);
+ 
+-			clk_prepare_enable(dwmac->tx_clk);
++			ret = clk_prepare_enable(dwmac->tx_clk);
++			if (ret) {
++				dev_err(&pdev->dev,
++					"Failed to enable tx_clk\n");
++				return ret;
++			}
+ 
+ 			/* Check and configure TX clock rate */
+ 			rate = clk_get_rate(dwmac->tx_clk);
+@@ -122,7 +127,7 @@ static int intel_eth_plat_probe(struct platform_device *pdev)
+ 				if (ret) {
+ 					dev_err(&pdev->dev,
+ 						"Failed to set tx_clk\n");
+-					return ret;
++					goto err_tx_clk_disable;
+ 				}
+ 			}
+ 		}
+@@ -136,7 +141,7 @@ static int intel_eth_plat_probe(struct platform_device *pdev)
+ 			if (ret) {
+ 				dev_err(&pdev->dev,
+ 					"Failed to set clk_ptp_ref\n");
+-				return ret;
++				goto err_tx_clk_disable;
+ 			}
+ 		}
+ 	}
+@@ -152,12 +157,15 @@ static int intel_eth_plat_probe(struct platform_device *pdev)
+ 	}
+ 
+ 	ret = stmmac_dvr_probe(&pdev->dev, plat_dat, &stmmac_res);
+-	if (ret) {
+-		clk_disable_unprepare(dwmac->tx_clk);
+-		return ret;
+-	}
++	if (ret)
++		goto err_tx_clk_disable;
+ 
+ 	return 0;
++
++err_tx_clk_disable:
++	if (dwmac->data->tx_clk_en)
++		clk_disable_unprepare(dwmac->tx_clk);
++	return ret;
+ }
+ 
+ static void intel_eth_plat_remove(struct platform_device *pdev)
+@@ -165,7 +173,8 @@ static void intel_eth_plat_remove(struct platform_device *pdev)
  	struct intel_dwmac *dwmac = get_stmmac_bsp_priv(&pdev->dev);
  
--	stmmac_pltfr_remove_no_dt(pdev);
-+	stmmac_pltfr_remove(pdev);
- 	clk_disable_unprepare(dwmac->tx_clk);
+ 	stmmac_pltfr_remove(pdev);
+-	clk_disable_unprepare(dwmac->tx_clk);
++	if (dwmac->data->tx_clk_en)
++		clk_disable_unprepare(dwmac->tx_clk);
  }
  
-diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-visconti.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-visconti.c
-index 45f5d66a11c26..a5a5cfa989c6e 100644
---- a/drivers/net/ethernet/stmicro/stmmac/dwmac-visconti.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-visconti.c
-@@ -256,8 +256,7 @@ static int visconti_eth_dwmac_probe(struct platform_device *pdev)
- 
- static void visconti_eth_dwmac_remove(struct platform_device *pdev)
- {
--	stmmac_pltfr_remove_no_dt(pdev);
--
-+	stmmac_pltfr_remove(pdev);
- 	visconti_eth_clock_remove(pdev);
- }
- 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c
-index 30d5e635190e6..b4fdd40be63cb 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c
-@@ -810,7 +810,7 @@ static void devm_stmmac_pltfr_remove(void *data)
- {
- 	struct platform_device *pdev = data;
- 
--	stmmac_pltfr_remove_no_dt(pdev);
-+	stmmac_pltfr_remove(pdev);
- }
- 
- /**
-@@ -837,12 +837,12 @@ int devm_stmmac_pltfr_probe(struct platform_device *pdev,
- EXPORT_SYMBOL_GPL(devm_stmmac_pltfr_probe);
- 
- /**
-- * stmmac_pltfr_remove_no_dt
-+ * stmmac_pltfr_remove
-  * @pdev: pointer to the platform device
-  * Description: This undoes the effects of stmmac_pltfr_probe() by removing the
-  * driver and calling the platform's exit() callback.
-  */
--void stmmac_pltfr_remove_no_dt(struct platform_device *pdev)
-+void stmmac_pltfr_remove(struct platform_device *pdev)
- {
- 	struct net_device *ndev = platform_get_drvdata(pdev);
- 	struct stmmac_priv *priv = netdev_priv(ndev);
-@@ -851,23 +851,6 @@ void stmmac_pltfr_remove_no_dt(struct platform_device *pdev)
- 	stmmac_dvr_remove(&pdev->dev);
- 	stmmac_pltfr_exit(pdev, plat);
- }
--EXPORT_SYMBOL_GPL(stmmac_pltfr_remove_no_dt);
--
--/**
-- * stmmac_pltfr_remove
-- * @pdev: platform device pointer
-- * Description: this function calls the main to free the net resources
-- * and calls the platforms hook and release the resources (e.g. mem).
-- */
--void stmmac_pltfr_remove(struct platform_device *pdev)
--{
--	struct net_device *ndev = platform_get_drvdata(pdev);
--	struct stmmac_priv *priv = netdev_priv(ndev);
--	struct plat_stmmacenet_data *plat = priv->plat;
--
--	stmmac_pltfr_remove_no_dt(pdev);
--	stmmac_remove_config_dt(pdev, plat);
--}
- EXPORT_SYMBOL_GPL(stmmac_pltfr_remove);
- 
- /**
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.h b/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.h
-index c5565b2a70acc..bb07a99e1248b 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.h
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.h
-@@ -32,7 +32,6 @@ int stmmac_pltfr_probe(struct platform_device *pdev,
- int devm_stmmac_pltfr_probe(struct platform_device *pdev,
- 			    struct plat_stmmacenet_data *plat,
- 			    struct stmmac_resources *res);
--void stmmac_pltfr_remove_no_dt(struct platform_device *pdev);
- void stmmac_pltfr_remove(struct platform_device *pdev);
- extern const struct dev_pm_ops stmmac_pltfr_pm_ops;
- 
+ static struct platform_driver intel_eth_plat_driver = {
 -- 
 2.43.0
 
