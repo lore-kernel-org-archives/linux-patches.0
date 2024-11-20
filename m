@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD2F515853A;
-	Wed, 20 Nov 2024 12:58:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8DE715853A;
+	Wed, 20 Nov 2024 12:58:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732107537; cv=none; b=GKUqxCpAtZyE3IMrOltZGp5EMVjvKHU2e+Dh8G3zFH4znW8nM7JzewXKUVEKdXd0gfNYMSxuGo5pW0dotqSZww/OQxZJYOTOeLdQCMjLuhXM0PYYNsnPLIPDDcrq2VJFbqyMBBwZtLNtfXYGOJLOjHCl1uY27ZeRWyx2kHFCmn8=
+	t=1732107538; cv=none; b=RnWciJT1+7OoVK/CcN/QBIZZCpZ2SX8xVBx+4FJqWDbPxkIaYOOCPT0Stpn7pnfhCbqlo/llO8xld8HkjG3KNBSy4RGhkq6NaBvP+uiSueyomYJNlF7abo+MosnG1aC79riufEFRX2YAy71T9CyuLYvXAKSQEUcEMkVqlFGe7TY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732107537; c=relaxed/simple;
-	bh=RD1uMX6XRiJfjlpLVkjo/DPJ8rebGUL4rrDEN1Hbzg8=;
+	s=arc-20240116; t=1732107538; c=relaxed/simple;
+	bh=emaWHrKVAJMpbiG+Ush8Rk4dlXrjL9urXMpgTvgmhLw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kFgfV6lH5tSPeUlDivEr/6nNgyO2WA9UTF1KSVZj58W+X2ZDYAm0tWC77APHxbGImmz+ljS+7FgpkvavF1GhlVKsF0s8OvxnjuEWGOrUIB8tV8kbQhhtN4KntFiXiRzN/rB3Wh5Qxpf/cTajqT6yD8QVZacEG9AUGW0SgN1xQVg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L8aSxVsL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bGPN1LnKLwsoOxcAWOgdfBXcv4Y4zC0w4Y1IkPzIG251UsYP0rxdzsPlxXX7BOUDARamxDOkSy9d4zxDKDUSLR7BxJ+RUQhm0iQNmqonx8rs73vezSZ/4Ih9EE08eSRGvM+E1BE9G1nMjGQY05+7V+SJsLhziyVL9vHpkGUwYk4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ovj7/f4N; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L8aSxVsL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A692EC4CECD;
-	Wed, 20 Nov 2024 12:58:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ovj7/f4N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B63EC4CED1;
+	Wed, 20 Nov 2024 12:58:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1732107537;
-	bh=RD1uMX6XRiJfjlpLVkjo/DPJ8rebGUL4rrDEN1Hbzg8=;
+	s=korg; t=1732107538;
+	bh=emaWHrKVAJMpbiG+Ush8Rk4dlXrjL9urXMpgTvgmhLw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L8aSxVsL5m631v+zJcnpXIn6jwnIJ+N/6IoK+lFIv5hG5G2thjCl2Y+Rh9UPCY2Fv
-	 JW7SD4vGIsGuAPUTbTNl9UvxkBiERAgOCbaJbDYDRMm3IaomOvfL3s4+yDpIpwLwNM
-	 e5v7IahuTdUDUMUFDdywt4vcJP+CFkhZ2LhEqTVY=
+	b=Ovj7/f4Nrpz+QXF7uDuI/zYXslZn+oR+8NBt14Wxpjd9MZV7qa0OaOzjnUZnju2AC
+	 gBxoW9mkOxqBFeB9NKi5LjLu+wSZbtTAq1chWp2OF0+4xo828ZAipdTClb0EHxuYDX
+	 MXiH013KpF4+qNCsF7AMDCUXSQKd6HUP/c/AQfyo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiaxun Yang <jiaxun.yang@flygoat.com>,
+	Kanglong Wang <wangkanglong@loongson.cn>,
 	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.11 071/107] LoongArch: Disable KASAN if PGDIR_SIZE is too large for cpu_vabits
-Date: Wed, 20 Nov 2024 13:56:46 +0100
-Message-ID: <20241120125631.282723620@linuxfoundation.org>
+Subject: [PATCH 6.11 072/107] LoongArch: Add WriteCombine shadow mapping in KASAN
+Date: Wed, 20 Nov 2024 13:56:47 +0100
+Message-ID: <20241120125631.305954704@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241120125629.681745345@linuxfoundation.org>
 References: <20241120125629.681745345@linuxfoundation.org>
@@ -50,84 +50,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Huacai Chen <chenhuacai@loongson.cn>
+From: Kanglong Wang <wangkanglong@loongson.cn>
 
-commit 227ca9f6f6aeb8aa8f0c10430b955f1fe2aeab91 upstream.
+commit 139d42ca51018c1d43ab5f35829179f060d1ab31 upstream.
 
-If PGDIR_SIZE is too large for cpu_vabits, KASAN_SHADOW_END will
-overflow UINTPTR_MAX because KASAN_SHADOW_START/KASAN_SHADOW_END are
-aligned up by PGDIR_SIZE. And then the overflowed KASAN_SHADOW_END looks
-like a user space address.
+Currently, the kernel couldn't boot when ARCH_IOREMAP, ARCH_WRITECOMBINE
+and KASAN are enabled together. Because DMW2 is used by kernel now which
+is configured as 0xa000000000000000 for WriteCombine, but KASAN has no
+segment mapping for it. This patch fix this issue.
 
-For example, PGDIR_SIZE of CONFIG_4KB_4LEVEL is 2^39, which is too large
-for Loongson-2K series whose cpu_vabits = 39.
-
-Since CONFIG_4KB_4LEVEL is completely legal for CPUs with cpu_vabits <=
-39, we just disable KASAN via early return in kasan_init(). Otherwise we
-get a boot failure.
-
-Moreover, we change KASAN_SHADOW_END from the first address after KASAN
-shadow area to the last address in KASAN shadow area, in order to avoid
-the end address exactly overflow to 0 (which is a legal case). We don't
-need to worry about alignment because pgd_addr_end() can handle it.
+Solution: Add the relevant definitions for WriteCombine (DMW2) in KASAN.
 
 Cc: stable@vger.kernel.org
-Reviewed-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
+Fixes: 8e02c3b782ec ("LoongArch: Add writecombine support for DMW-based ioremap()")
+Signed-off-by: Kanglong Wang <wangkanglong@loongson.cn>
 Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/include/asm/kasan.h |    2 +-
- arch/loongarch/mm/kasan_init.c     |   15 +++++++++++++--
- 2 files changed, 14 insertions(+), 3 deletions(-)
+ arch/loongarch/include/asm/kasan.h |   11 ++++++++++-
+ arch/loongarch/mm/kasan_init.c     |    5 +++++
+ 2 files changed, 15 insertions(+), 1 deletion(-)
 
 --- a/arch/loongarch/include/asm/kasan.h
 +++ b/arch/loongarch/include/asm/kasan.h
-@@ -51,7 +51,7 @@
- /* KAsan shadow memory start right after vmalloc. */
- #define KASAN_SHADOW_START		round_up(KFENCE_AREA_END, PGDIR_SIZE)
- #define KASAN_SHADOW_SIZE		(XKVRANGE_VC_SHADOW_END - XKPRANGE_CC_KASAN_OFFSET)
--#define KASAN_SHADOW_END		round_up(KASAN_SHADOW_START + KASAN_SHADOW_SIZE, PGDIR_SIZE)
-+#define KASAN_SHADOW_END		(round_up(KASAN_SHADOW_START + KASAN_SHADOW_SIZE, PGDIR_SIZE) - 1)
+@@ -25,6 +25,7 @@
+ /* 64-bit segment value. */
+ #define XKPRANGE_UC_SEG		(0x8000)
+ #define XKPRANGE_CC_SEG		(0x9000)
++#define XKPRANGE_WC_SEG		(0xa000)
+ #define XKVRANGE_VC_SEG		(0xffff)
+ 
+ /* Cached */
+@@ -41,10 +42,17 @@
+ #define XKPRANGE_UC_SHADOW_SIZE		(XKPRANGE_UC_SIZE >> KASAN_SHADOW_SCALE_SHIFT)
+ #define XKPRANGE_UC_SHADOW_END		(XKPRANGE_UC_KASAN_OFFSET + XKPRANGE_UC_SHADOW_SIZE)
+ 
++/* WriteCombine */
++#define XKPRANGE_WC_START		WRITECOMBINE_BASE
++#define XKPRANGE_WC_SIZE		XRANGE_SIZE
++#define XKPRANGE_WC_KASAN_OFFSET	XKPRANGE_UC_SHADOW_END
++#define XKPRANGE_WC_SHADOW_SIZE		(XKPRANGE_WC_SIZE >> KASAN_SHADOW_SCALE_SHIFT)
++#define XKPRANGE_WC_SHADOW_END		(XKPRANGE_WC_KASAN_OFFSET + XKPRANGE_WC_SHADOW_SIZE)
++
+ /* VMALLOC (Cached or UnCached)  */
+ #define XKVRANGE_VC_START		MODULES_VADDR
+ #define XKVRANGE_VC_SIZE		round_up(KFENCE_AREA_END - MODULES_VADDR + 1, PGDIR_SIZE)
+-#define XKVRANGE_VC_KASAN_OFFSET	XKPRANGE_UC_SHADOW_END
++#define XKVRANGE_VC_KASAN_OFFSET	XKPRANGE_WC_SHADOW_END
+ #define XKVRANGE_VC_SHADOW_SIZE		(XKVRANGE_VC_SIZE >> KASAN_SHADOW_SCALE_SHIFT)
+ #define XKVRANGE_VC_SHADOW_END		(XKVRANGE_VC_KASAN_OFFSET + XKVRANGE_VC_SHADOW_SIZE)
+ 
+@@ -55,6 +63,7 @@
  
  #define XKPRANGE_CC_SHADOW_OFFSET	(KASAN_SHADOW_START + XKPRANGE_CC_KASAN_OFFSET)
  #define XKPRANGE_UC_SHADOW_OFFSET	(KASAN_SHADOW_START + XKPRANGE_UC_KASAN_OFFSET)
++#define XKPRANGE_WC_SHADOW_OFFSET	(KASAN_SHADOW_START + XKPRANGE_WC_KASAN_OFFSET)
+ #define XKVRANGE_VC_SHADOW_OFFSET	(KASAN_SHADOW_START + XKVRANGE_VC_KASAN_OFFSET)
+ 
+ extern bool kasan_early_stage;
 --- a/arch/loongarch/mm/kasan_init.c
 +++ b/arch/loongarch/mm/kasan_init.c
-@@ -218,7 +218,7 @@ static void __init kasan_map_populate(un
- asmlinkage void __init kasan_early_init(void)
- {
- 	BUILD_BUG_ON(!IS_ALIGNED(KASAN_SHADOW_START, PGDIR_SIZE));
--	BUILD_BUG_ON(!IS_ALIGNED(KASAN_SHADOW_END, PGDIR_SIZE));
-+	BUILD_BUG_ON(!IS_ALIGNED(KASAN_SHADOW_END + 1, PGDIR_SIZE));
- }
+@@ -55,6 +55,9 @@ void *kasan_mem_to_shadow(const void *ad
+ 		case XKPRANGE_UC_SEG:
+ 			offset = XKPRANGE_UC_SHADOW_OFFSET;
+ 			break;
++		case XKPRANGE_WC_SEG:
++			offset = XKPRANGE_WC_SHADOW_OFFSET;
++			break;
+ 		case XKVRANGE_VC_SEG:
+ 			offset = XKVRANGE_VC_SHADOW_OFFSET;
+ 			break;
+@@ -79,6 +82,8 @@ const void *kasan_shadow_to_mem(const vo
  
- static inline void kasan_set_pgd(pgd_t *pgdp, pgd_t pgdval)
-@@ -233,7 +233,7 @@ static void __init clear_pgds(unsigned l
- 	 * swapper_pg_dir. pgd_clear() can't be used
- 	 * here because it's nop on 2,3-level pagetable setups
- 	 */
--	for (; start < end; start += PGDIR_SIZE)
-+	for (; start < end; start = pgd_addr_end(start, end))
- 		kasan_set_pgd((pgd_t *)pgd_offset_k(start), __pgd(0));
- }
- 
-@@ -243,6 +243,17 @@ void __init kasan_init(void)
- 	phys_addr_t pa_start, pa_end;
- 
- 	/*
-+	 * If PGDIR_SIZE is too large for cpu_vabits, KASAN_SHADOW_END will
-+	 * overflow UINTPTR_MAX and then looks like a user space address.
-+	 * For example, PGDIR_SIZE of CONFIG_4KB_4LEVEL is 2^39, which is too
-+	 * large for Loongson-2K series whose cpu_vabits = 39.
-+	 */
-+	if (KASAN_SHADOW_END < vm_map_base) {
-+		pr_warn("PGDIR_SIZE too large for cpu_vabits, KernelAddressSanitizer disabled.\n");
-+		return;
-+	}
-+
-+	/*
- 	 * PGD was populated as invalid_pmd_table or invalid_pud_table
- 	 * in pagetable_init() which depends on how many levels of page
- 	 * table you are using, but we had to clean the gpd of kasan
+ 	if (addr >= XKVRANGE_VC_SHADOW_OFFSET)
+ 		return (void *)(((addr - XKVRANGE_VC_SHADOW_OFFSET) << KASAN_SHADOW_SCALE_SHIFT) + XKVRANGE_VC_START);
++	else if (addr >= XKPRANGE_WC_SHADOW_OFFSET)
++		return (void *)(((addr - XKPRANGE_WC_SHADOW_OFFSET) << KASAN_SHADOW_SCALE_SHIFT) + XKPRANGE_WC_START);
+ 	else if (addr >= XKPRANGE_UC_SHADOW_OFFSET)
+ 		return (void *)(((addr - XKPRANGE_UC_SHADOW_OFFSET) << KASAN_SHADOW_SCALE_SHIFT) + XKPRANGE_UC_START);
+ 	else if (addr >= XKPRANGE_CC_SHADOW_OFFSET)
 
 
