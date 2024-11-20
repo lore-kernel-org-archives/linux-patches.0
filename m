@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DED241BBBED;
-	Wed, 20 Nov 2024 13:01:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 858191B6CEE;
+	Wed, 20 Nov 2024 13:01:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732107671; cv=none; b=f1kNED+9J6vj0khDgkH4GkS7/cQqpdPi1tZLVYTIK1H8v1Kplpo7tDuoW+FeLs4LcKGlwvnGe3R/M/xQzv61Um5qR7I9MZy62mcWczA5mJjuf9pHxgSkX2PjbJaqO5WtYdIUZ2K1WHCOJOyQkxKtjN4UTnlZ5+mdF1gDKPi7D1w=
+	t=1732107671; cv=none; b=h/F96nC9iTx5VBHS0j1iiYFkQ9XqNAFsQxcFBUNmpbQKDOOBu+JJ9G0jKA0DNtx64nC7JYFuY/X9QmgIlj5UjBgdujL501g5driX9xSggw5ScDXUy9f1/s7myJ93XluFwjDYCF5FtLdXDt5bMtkybuSnTPuyRv6RB6t9QUlj+ZY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1732107671; c=relaxed/simple;
-	bh=KdBhprWoyKzCwcIuF2nziNuOQtH//Ef0WF5nMaY0xgo=;
+	bh=BnNB+IdYJGsbXs/PXp0Sf5honPwz4KEZhZLGXcqX8EU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QE+u4ThkoxzMeQEJ2q2+662Rgcq0lKUsKHiw7nWAG3NVl/j3UH8b11nMeXFQMCo9iL3QGG5Cyx/Aor27RpP76APRr4TnvmhgKraUl2dRDFxAfdUKii/uWuEDXTaBhJJrCLNc5EyIc1fS8lVSzgsq1LKj1ubqQozkA9CuAGSN0h4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o/wF3TKG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=o1WWcRrYWCxmijNyp3C9MDVyVMrRLICFBvFaf/G2KVsCCD8AUs+lXEP9+FV2m8Y9u5qEGQzeKg6InjQkO4qIA7EpFjWHRtFPVgwFxUJPgBVUdk9yLa51JXk81gZB5W6NIBtx83P0PO8SdZWHqGNoJx5XvO+NMppzVwOKzxCbUcU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L2ijq+n4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o/wF3TKG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB23AC4CECD;
-	Wed, 20 Nov 2024 13:01:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L2ijq+n4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DDF6C4CECD;
+	Wed, 20 Nov 2024 13:01:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1732107670;
-	bh=KdBhprWoyKzCwcIuF2nziNuOQtH//Ef0WF5nMaY0xgo=;
+	s=korg; t=1732107671;
+	bh=BnNB+IdYJGsbXs/PXp0Sf5honPwz4KEZhZLGXcqX8EU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o/wF3TKGH2OAoLyhNTo3fp/7nduyRW1nyEwJniNCB4NXT440SkHR/ZuJDFQwPZOJo
-	 c96od1DqkvEaGjQGpDaU4YlZmCX6ntgpT+6Wn2NBBRYhRD1RaVh+oxR5LVFy3AGSTp
-	 nGZ29Q9PncNZtQlw2Gs8TGj/qApam8HHBlozKsoU=
+	b=L2ijq+n4nvaDcRTVQFIx44jCec/8bAEd/m240Kp+KRFFwrC95zO4GUfBU8NBu3Ioy
+	 /fXKfC0uP3+zp15ZO2dX/g7xkrqQ+aTAZkJxKP/EwTsoh/Tk8oanqEN2pJtl4CXRew
+	 Ru8xYjcB7n7Pg9kK7Gkvg9xMRMXYeH3olDb5Vy84=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kailang Yang <kailang@realtek.com>,
+	Maksym Glubokiy <maxgl.kernel@gmail.com>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.1 26/73] ALSA: hda/realtek - Fixed Clevo platform headset Mic issue
-Date: Wed, 20 Nov 2024 13:58:12 +0100
-Message-ID: <20241120125810.239240981@linuxfoundation.org>
+Subject: [PATCH 6.1 27/73] ALSA: hda/realtek: fix mute/micmute LEDs for a HP EliteBook 645 G10
+Date: Wed, 20 Nov 2024 13:58:13 +0100
+Message-ID: <20241120125810.262725450@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241120125809.623237564@linuxfoundation.org>
 References: <20241120125809.623237564@linuxfoundation.org>
@@ -50,32 +50,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kailang Yang <kailang@realtek.com>
+From: Maksym Glubokiy <maxgl.kernel@gmail.com>
 
-commit 42ee87df8530150d637aa48363b72b22a9bbd78f upstream.
+commit 96409eeab8cdd394e03ec494ea9547edc27f7ab4 upstream.
 
-Clevo platform with ALC255 Headset Mic was disable by default.
-Assigned verb table for Mic pin will enable it.
+HP EliteBook 645 G10 uses ALC236 codec and need the
+ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF quirk to make mute LED and
+micmute LED work.
 
-Signed-off-by: Kailang Yang <kailang@realtek.com>
+Signed-off-by: Maksym Glubokiy <maxgl.kernel@gmail.com>
 Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/b2dcac3e09ef4f82b36d6712194e1ea4@realtek.com
+Link: https://patch.msgid.link/20241112154815.10888-1-maxgl.kernel@gmail.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_realtek.c |    2 ++
- 1 file changed, 2 insertions(+)
+ sound/pci/hda/patch_realtek.c |    1 +
+ 1 file changed, 1 insertion(+)
 
 --- a/sound/pci/hda/patch_realtek.c
 +++ b/sound/pci/hda/patch_realtek.c
-@@ -10872,6 +10872,8 @@ static const struct snd_hda_pin_quirk al
- 		{0x1a, 0x40000000}),
- 	SND_HDA_PIN_QUIRK(0x10ec0256, 0x1043, "ASUS", ALC2XX_FIXUP_HEADSET_MIC,
- 		{0x19, 0x40000000}),
-+	SND_HDA_PIN_QUIRK(0x10ec0255, 0x1558, "Clevo", ALC2XX_FIXUP_HEADSET_MIC,
-+		{0x19, 0x40000000}),
- 	{}
- };
- 
+@@ -9840,6 +9840,7 @@ static const struct snd_pci_quirk alc269
+ 	SND_PCI_QUIRK(0x103c, 0x8b59, "HP Elite mt645 G7 Mobile Thin Client U89", ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
+ 	SND_PCI_QUIRK(0x103c, 0x8b5d, "HP", ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
+ 	SND_PCI_QUIRK(0x103c, 0x8b5e, "HP", ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
++	SND_PCI_QUIRK(0x103c, 0x8b5f, "HP", ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
+ 	SND_PCI_QUIRK(0x103c, 0x8b63, "HP Elite Dragonfly 13.5 inch G4", ALC245_FIXUP_CS35L41_SPI_4_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8b65, "HP ProBook 455 15.6 inch G10 Notebook PC", ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
+ 	SND_PCI_QUIRK(0x103c, 0x8b66, "HP", ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
 
 
