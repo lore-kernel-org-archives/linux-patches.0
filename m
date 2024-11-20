@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0BDA1A76C6;
-	Wed, 20 Nov 2024 12:58:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7354019F487;
+	Wed, 20 Nov 2024 12:58:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732107494; cv=none; b=q2jwCThqQ/zbs+qC7n6jQrF10R5V0X3sOQT4WwzJFBYDiR9WyzeANaXY/a+rc7t95cNVqijiQxPh3MQbej6t5G5HerZKT+TUgmRFu0s4IVtmbqh7NDNoVU6n39aVqQ28nncpocHPXbCESyvoWcoARBn+4NDT8Ktg8gtFCWcDuXs=
+	t=1732107495; cv=none; b=YLeYyLW9MvhgubccGTNxWxNrdkG2iVdVJsvSpl8n42g1SAjCvJsCgIjF0WDNfeeI4RRWOZY3ABFkNP+qrPVm3ps33ARTkH4OqZuPKDbNDWSxDz0tOjHDKp16IaWYqHAe/GJIWzLxTZeCEIbLx2xfCbzI7Mly+V2ZF9z18pDvD4s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732107494; c=relaxed/simple;
-	bh=9vVSnWxUXKALwKMvQi44gYENpGfdpRF+HT1y4E8xE40=;
+	s=arc-20240116; t=1732107495; c=relaxed/simple;
+	bh=QfcN1vLjk5Zvaw7Rq/TPZu0NMfBzqSnMZijSLJ9/bgs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BlvCOi2yJIuzQZPbuEW8rhX2izPWucO7FXWGHVWZl1Umt+ZYHSmPqXJx0HagFY3/qm2zl773WQCsiMDWd6xrEn8JHBqZ23qRoZv1nEy4M8Yy9L7qnws3Q6uk2U9xAB0l+psuYyyWJzahFJORqcjBoefJExJg2dTbQT/YNCWl0YE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rsCTJr47; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sbAGulZZHKqGZaAEKQX0NgxpaX4qBDjaUKPUBffIAQW4/acbBKMlHQ8E91n8VF5ZutlHAW8/pxTjC2RAtnkHs5whJAW58jJ6SJT2NJ7nkwhgWOF2NKJBR1JbFx+sSAKPOGEIZXj6MfmkfBu2nWF09BuTZd183vujeakTQ20c88M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s/7OMCIC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rsCTJr47"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 848FCC4CED8;
-	Wed, 20 Nov 2024 12:58:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s/7OMCIC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 481D0C4CED6;
+	Wed, 20 Nov 2024 12:58:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1732107494;
-	bh=9vVSnWxUXKALwKMvQi44gYENpGfdpRF+HT1y4E8xE40=;
+	s=korg; t=1732107495;
+	bh=QfcN1vLjk5Zvaw7Rq/TPZu0NMfBzqSnMZijSLJ9/bgs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rsCTJr47pWirFTGX69UNUsvYPHzhz/curStA+3okWUrvJkCtFL4H3BDYQ+JDi4bM3
-	 kWJIgHcWs5qaRGzfrAPXqKfP6+M7ZN2rZ4HB2EguZSfD6MitxjdcTXxbPKUTJ6GdC3
-	 SKCEX8evDWTOTQpUYwyxZYy3oEdihSnCD1wyMkK8=
+	b=s/7OMCICKmcBgA3wAqnuLRG+S9MhczT5q3n77VUOQdZDZ4AzuErrnK+nydbA9w3c0
+	 TYpk+Rsmxea50xExdS7XgYZQIGxQBuxD3mOuponxwC2AlOp2xG8qNInJHWsuqKndGX
+	 nhfBUDFHane2rwb7IPtoaaubidSl5JfJhNEjOmjA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefano Garzarella <sgarzare@redhat.com>,
-	Michal Luczaj <mhal@rbox.co>,
-	Arseniy Krasnov <avkrasnov@salutedevices.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 017/107] virtio/vsock: Improve MSG_ZEROCOPY error handling
-Date: Wed, 20 Nov 2024 13:55:52 +0100
-Message-ID: <20241120125630.066430223@linuxfoundation.org>
+Subject: [PATCH 6.11 018/107] Revert "RDMA/core: Fix ENODEV error for iWARP test over vlan"
+Date: Wed, 20 Nov 2024 13:55:53 +0100
+Message-ID: <20241120125630.088591891@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241120125629.681745345@linuxfoundation.org>
 References: <20241120125629.681745345@linuxfoundation.org>
@@ -53,34 +50,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Luczaj <mhal@rbox.co>
+From: Leon Romanovsky <leonro@nvidia.com>
 
-[ Upstream commit 60cf6206a1f513512f5d73fa4d3dbbcad2e7dcd6 ]
+[ Upstream commit 6abe2a90808192a5a8b2825293e5f10e80fdea56 ]
 
-Add a missing kfree_skb() to prevent memory leaks.
+The citied commit in Fixes line caused to regression for udaddy [1]
+application. It doesn't work over VLANs anymore.
 
-Fixes: 581512a6dc93 ("vsock/virtio: MSG_ZEROCOPY flag support")
-Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
-Signed-off-by: Michal Luczaj <mhal@rbox.co>
-Acked-by: Arseniy Krasnov <avkrasnov@salutedevices.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Client:
+  ifconfig eth2 1.1.1.1
+  ip link add link eth2 name p0.3597 type vlan protocol 802.1Q id 3597
+  ip link set dev p0.3597 up
+  ip addr add 2.2.2.2/16 dev p0.3597
+  udaddy -S 847 -C 220 -c 2 -t 0 -s 2.2.2.3 -b 2.2.2.2
+
+Server:
+  ifconfig eth2 1.1.1.3
+  ip link add link eth2 name p0.3597 type vlan protocol 802.1Q id 3597
+  ip link set dev p0.3597 up
+  ip addr add 2.2.2.3/16 dev p0.3597
+  udaddy -S 847 -C 220 -c 2 -t 0 -b 2.2.2.3
+
+[1] https://github.com/linux-rdma/rdma-core/blob/master/librdmacm/examples/udaddy.c
+
+Fixes: 5069d7e202f6 ("RDMA/core: Fix ENODEV error for iWARP test over vlan")
+Reported-by: Leon Romanovsky <leonro@nvidia.com>
+Closes: https://lore.kernel.org/all/20241110130746.GA48891@unreal
+Link: https://patch.msgid.link/bb9d403419b2b9566da5b8bf0761fa8377927e49.1731401658.git.leon@kernel.org
+Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/vmw_vsock/virtio_transport_common.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/infiniband/core/addr.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/net/vmw_vsock/virtio_transport_common.c b/net/vmw_vsock/virtio_transport_common.c
-index 5437819872dd7..0211964e45459 100644
---- a/net/vmw_vsock/virtio_transport_common.c
-+++ b/net/vmw_vsock/virtio_transport_common.c
-@@ -400,6 +400,7 @@ static int virtio_transport_send_pkt_info(struct vsock_sock *vsk,
- 			if (virtio_transport_init_zcopy_skb(vsk, skb,
- 							    info->msg,
- 							    can_zcopy)) {
-+				kfree_skb(skb);
- 				ret = -ENOMEM;
- 				break;
- 			}
+diff --git a/drivers/infiniband/core/addr.c b/drivers/infiniband/core/addr.c
+index c4cf26f1d1496..be0743dac3fff 100644
+--- a/drivers/infiniband/core/addr.c
++++ b/drivers/infiniband/core/addr.c
+@@ -269,8 +269,6 @@ rdma_find_ndev_for_src_ip_rcu(struct net *net, const struct sockaddr *src_in)
+ 		break;
+ #endif
+ 	}
+-	if (!ret && dev && is_vlan_dev(dev))
+-		dev = vlan_dev_real_dev(dev);
+ 	return ret ? ERR_PTR(ret) : dev;
+ }
+ 
 -- 
 2.43.0
 
