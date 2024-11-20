@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FBD51991AA;
-	Wed, 20 Nov 2024 12:58:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51A341991AA;
+	Wed, 20 Nov 2024 12:58:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732107504; cv=none; b=PalOmlUmbzdUgLnqjF6+lz9X4XPR5AecMoGWCex5R93mBeDUPeH6Kxl+6e2wKxcbFE0+4f8nHcRSOuHcq7L7gVa4aAB7HF47CbzDlp9razDbYVphMiL8oIL2LPczxv7cbp68oO8WEg/nn0688ELtkW4spFiZfH9cLBPwPgP5txU=
+	t=1732107505; cv=none; b=T0wrvrqpCMly7Qp8+ohBzuw+Nwqm4g0TK9f3JASXLQLmTyECrCdBx33ASx09peKB+RxmKMB7PLuYre1dgryK2GCV593UW0LHiUcHskBnfLcU2LxXH18KRxoBuz+CEGUYETo/ax6Pw9nL3Aqa56bwVD/BSn4aWNb7p6L/uFLRjGA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732107504; c=relaxed/simple;
-	bh=s+jk3ohl90HvTtJmuIIHRVvtsQOhubt8qBYarGUy424=;
+	s=arc-20240116; t=1732107505; c=relaxed/simple;
+	bh=gySCtsuYN/J9d289uDYNrJr1Ry7Nxmb1SxUr8SD5pSo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZoUOfZPhciZTaq/QukcB8mCiy7g1YfZw42djoaPRwU7QnQpRBakwXDXy4bkBTouFkyDwZBMCUyeb/XzFBrH/DQrWI/UDzpL2LzROk4+Za8vpsfGgLPE15oVrkf+oFetfVYfKsP/Z7uqf/QdOSi7NfAjTs3xGiobRgbJ79lS3SJc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H6dCIIyP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=S0Rc5UyS3sIf/XyJwE3fFm8katBZ7Dw4oNezNt1JTT3eYbFR0iH2VTaD6mzCQfKviRIUO1yicUpBNFq5MWO8dScouUkaOeVyLRvcITjHVFPa71kUctD1r/nxNxdCVRzMtP0EIa2aAwTBRQtmZITl8cqTpmFLjraNXPlGkpSentE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Me2eeuMj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H6dCIIyP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7618BC4CECD;
-	Wed, 20 Nov 2024 12:58:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Me2eeuMj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28D12C4CECD;
+	Wed, 20 Nov 2024 12:58:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1732107504;
-	bh=s+jk3ohl90HvTtJmuIIHRVvtsQOhubt8qBYarGUy424=;
+	s=korg; t=1732107505;
+	bh=gySCtsuYN/J9d289uDYNrJr1Ry7Nxmb1SxUr8SD5pSo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H6dCIIyPM27j0kqUapj9kIvBtjRqMTkslxGJuQo06uqWclX6aWBMWP4gvb5h29pjp
-	 PCCJ7yBSSI0Yk+tsj2YwKIVp9NT+oz9KHrlfdqb3iqBV88RUYhHhr7Emhot7h05LO6
-	 G7UDtaYAETWSWgP4I5B3UGFZt555G155JOJQLbrM=
+	b=Me2eeuMjd2r1kh1zHQRfTbdY/MXPd6fyJnCl2A2+dgj8A3S0R7L/KBQspCUube2BS
+	 RtvrHd+Ixo4F7x28fguPwRXniT8FMfq3SCynnewMHmf7r6dYDP+JXuumKUUNXfHvut
+	 Pj3i56TkxLcZJ+xNx46YTdeDCzC1nf4HI5m0zV8k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Wahren <wahrenst@gmx.net>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Meghana Malladi <m-malladi@ti.com>,
+	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
+	MD Danish Anwar <danishanwar@ti.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 003/107] net: vertexcom: mse102x: Fix tx_bytes calculation
-Date: Wed, 20 Nov 2024 13:55:38 +0100
-Message-ID: <20241120125629.758659167@linuxfoundation.org>
+Subject: [PATCH 6.11 030/107] net: ti: icssg-prueth: Fix 1 PPS sync
+Date: Wed, 20 Nov 2024 13:56:05 +0100
+Message-ID: <20241120125630.359797649@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241120125629.681745345@linuxfoundation.org>
 References: <20241120125629.681745345@linuxfoundation.org>
@@ -51,44 +53,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefan Wahren <wahrenst@gmx.net>
+From: Meghana Malladi <m-malladi@ti.com>
 
-[ Upstream commit e68da664d379f352d41d7955712c44e0a738e4ab ]
+[ Upstream commit dc065076ee7768377d7c16af7d1b0767782d8c98 ]
 
-The tx_bytes should consider the actual size of the Ethernet frames
-without the SPI encapsulation. But we still need to take care of
-Ethernet padding.
+The first PPS latch time needs to be calculated by the driver
+(in rounded off seconds) and configured as the start time
+offset for the cycle. After synchronizing two PTP clocks
+running as master/slave, missing this would cause master
+and slave to start immediately with some milliseconds
+drift which causes the PPS signal to never synchronize with
+the PTP master.
 
-Fixes: 2f207cbf0dd4 ("net: vertexcom: Add MSE102x SPI support")
-Signed-off-by: Stefan Wahren <wahrenst@gmx.net>
-Link: https://patch.msgid.link/20241108114343.6174-3-wahrenst@gmx.net
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 186734c15886 ("net: ti: icssg-prueth: add packet timestamping and ptp support")
+Signed-off-by: Meghana Malladi <m-malladi@ti.com>
+Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
+Reviewed-by: MD Danish Anwar <danishanwar@ti.com>
+Link: https://patch.msgid.link/20241111095842.478833-1-m-malladi@ti.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/vertexcom/mse102x.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/ti/icssg/icssg_prueth.c | 13 +++++++++++--
+ drivers/net/ethernet/ti/icssg/icssg_prueth.h | 12 ++++++++++++
+ 2 files changed, 23 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/vertexcom/mse102x.c b/drivers/net/ethernet/vertexcom/mse102x.c
-index 33ef3a49de8ee..bccf0ac66b1a8 100644
---- a/drivers/net/ethernet/vertexcom/mse102x.c
-+++ b/drivers/net/ethernet/vertexcom/mse102x.c
-@@ -437,13 +437,15 @@ static void mse102x_tx_work(struct work_struct *work)
- 	mse = &mses->mse102x;
+diff --git a/drivers/net/ethernet/ti/icssg/icssg_prueth.c b/drivers/net/ethernet/ti/icssg/icssg_prueth.c
+index 33cb3590a5cde..55d12679b24b7 100644
+--- a/drivers/net/ethernet/ti/icssg/icssg_prueth.c
++++ b/drivers/net/ethernet/ti/icssg/icssg_prueth.c
+@@ -15,6 +15,7 @@
+ #include <linux/genalloc.h>
+ #include <linux/if_vlan.h>
+ #include <linux/interrupt.h>
++#include <linux/io-64-nonatomic-hi-lo.h>
+ #include <linux/kernel.h>
+ #include <linux/mfd/syscon.h>
+ #include <linux/module.h>
+@@ -389,6 +390,8 @@ static int prueth_perout_enable(void *clockops_data,
+ 	struct prueth_emac *emac = clockops_data;
+ 	u32 reduction_factor = 0, offset = 0;
+ 	struct timespec64 ts;
++	u64 current_cycle;
++	u64 start_offset;
+ 	u64 ns_period;
  
- 	while ((txb = skb_dequeue(&mse->txq))) {
-+		unsigned int len = max_t(unsigned int, txb->len, ETH_ZLEN);
+ 	if (!on)
+@@ -427,8 +430,14 @@ static int prueth_perout_enable(void *clockops_data,
+ 	writel(reduction_factor, emac->prueth->shram.va +
+ 		TIMESYNC_FW_WC_SYNCOUT_REDUCTION_FACTOR_OFFSET);
+ 
+-	writel(0, emac->prueth->shram.va +
+-		TIMESYNC_FW_WC_SYNCOUT_START_TIME_CYCLECOUNT_OFFSET);
++	current_cycle = icssg_read_time(emac->prueth->shram.va +
++					TIMESYNC_FW_WC_CYCLECOUNT_OFFSET);
 +
- 		mutex_lock(&mses->lock);
- 		ret = mse102x_tx_pkt_spi(mse, txb, work_timeout);
- 		mutex_unlock(&mses->lock);
- 		if (ret) {
- 			mse->ndev->stats.tx_dropped++;
- 		} else {
--			mse->ndev->stats.tx_bytes += txb->len;
-+			mse->ndev->stats.tx_bytes += len;
- 			mse->ndev->stats.tx_packets++;
- 		}
++	/* Rounding of current_cycle count to next second */
++	start_offset = roundup(current_cycle, MSEC_PER_SEC);
++
++	hi_lo_writeq(start_offset, emac->prueth->shram.va +
++		     TIMESYNC_FW_WC_SYNCOUT_START_TIME_CYCLECOUNT_OFFSET);
  
+ 	return 0;
+ }
+diff --git a/drivers/net/ethernet/ti/icssg/icssg_prueth.h b/drivers/net/ethernet/ti/icssg/icssg_prueth.h
+index 4d1c895dacdb6..169949acf2539 100644
+--- a/drivers/net/ethernet/ti/icssg/icssg_prueth.h
++++ b/drivers/net/ethernet/ti/icssg/icssg_prueth.h
+@@ -316,6 +316,18 @@ static inline int prueth_emac_slice(struct prueth_emac *emac)
+ extern const struct ethtool_ops icssg_ethtool_ops;
+ extern const struct dev_pm_ops prueth_dev_pm_ops;
+ 
++static inline u64 icssg_read_time(const void __iomem *addr)
++{
++	u32 low, high;
++
++	do {
++		high = readl(addr + 4);
++		low = readl(addr);
++	} while (high != readl(addr + 4));
++
++	return low + ((u64)high << 32);
++}
++
+ /* Classifier helpers */
+ void icssg_class_set_mac_addr(struct regmap *miig_rt, int slice, u8 *mac);
+ void icssg_class_set_host_mac_addr(struct regmap *miig_rt, const u8 *mac);
 -- 
 2.43.0
 
