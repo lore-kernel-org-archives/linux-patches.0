@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 449811A4F1B;
-	Wed, 20 Nov 2024 12:58:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FBD51991AA;
+	Wed, 20 Nov 2024 12:58:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732107504; cv=none; b=aLzKZBwCX1ZgyrYSzsq6JOpy8p+9bGaNNM7xn7+su9YEyZFgzSpy7VKgBLtwf5zJpqn9pd7dvz2L1oYQygTBWRyC5+ELF2+fDjLsZH9Q0px1OFp0QsIuBfK5ctw2n5RGoB4hWuOyyeubJG+8eQLtGJrhrrLbarPf26GAKoQiHZU=
+	t=1732107504; cv=none; b=PalOmlUmbzdUgLnqjF6+lz9X4XPR5AecMoGWCex5R93mBeDUPeH6Kxl+6e2wKxcbFE0+4f8nHcRSOuHcq7L7gVa4aAB7HF47CbzDlp9razDbYVphMiL8oIL2LPczxv7cbp68oO8WEg/nn0688ELtkW4spFiZfH9cLBPwPgP5txU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1732107504; c=relaxed/simple;
-	bh=7jbB/vRt/R3ZC28WjjdhEEpUkI8FOuzehrY5CJf9Yuk=;
+	bh=s+jk3ohl90HvTtJmuIIHRVvtsQOhubt8qBYarGUy424=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QQgW9HNaoLDhM67jiLQUdpALBCbk7P10+86dnoRbLdKptQ4M9WR8LbQbpSSHG3YxfI+Vpmq341/VNEExqUk/sDjLmm1hHofxoK/ZAzE9RtGFIjUdBVHHhuEg8oYpy4iLWXJ4ucwatrRDPKnCFhurVxPBUcnXcZUaoFFbSBe1gvM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h+gb+HBh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZoUOfZPhciZTaq/QukcB8mCiy7g1YfZw42djoaPRwU7QnQpRBakwXDXy4bkBTouFkyDwZBMCUyeb/XzFBrH/DQrWI/UDzpL2LzROk4+Za8vpsfGgLPE15oVrkf+oFetfVYfKsP/Z7uqf/QdOSi7NfAjTs3xGiobRgbJ79lS3SJc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H6dCIIyP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h+gb+HBh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C982BC4CED1;
-	Wed, 20 Nov 2024 12:58:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H6dCIIyP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7618BC4CECD;
+	Wed, 20 Nov 2024 12:58:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1732107503;
-	bh=7jbB/vRt/R3ZC28WjjdhEEpUkI8FOuzehrY5CJf9Yuk=;
+	s=korg; t=1732107504;
+	bh=s+jk3ohl90HvTtJmuIIHRVvtsQOhubt8qBYarGUy424=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h+gb+HBhjaldbCRPpTegsMXoJ5wxg4bSVZVYt8zhtkeqYf6bjDSuK8GqK50pXO5nl
-	 EiInVN4eXUVM6qsMqu2kkByujK91yvpPe1p3NZ+eGKcHhI3JINIjJkMi6uJIRVe7wX
-	 GbSHdtz76mSpk7viMLOSWR0LpmbcxaWs6ZDI/HzU=
+	b=H6dCIIyPM27j0kqUapj9kIvBtjRqMTkslxGJuQo06uqWclX6aWBMWP4gvb5h29pjp
+	 PCCJ7yBSSI0Yk+tsj2YwKIVp9NT+oz9KHrlfdqb3iqBV88RUYhHhr7Emhot7h05LO6
+	 G7UDtaYAETWSWgP4I5B3UGFZt555G155JOJQLbrM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Ridong <chenridong@huawei.com>,
-	Zack Rusin <zack.rusin@broadcom.com>,
+	Stefan Wahren <wahrenst@gmx.net>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 029/107] drm/vmwgfx: avoid null_ptr_deref in vmw_framebuffer_surface_create_handle
-Date: Wed, 20 Nov 2024 13:56:04 +0100
-Message-ID: <20241120125630.337289370@linuxfoundation.org>
+Subject: [PATCH 6.11 003/107] net: vertexcom: mse102x: Fix tx_bytes calculation
+Date: Wed, 20 Nov 2024 13:55:38 +0100
+Message-ID: <20241120125629.758659167@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241120125629.681745345@linuxfoundation.org>
 References: <20241120125629.681745345@linuxfoundation.org>
@@ -51,35 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen Ridong <chenridong@huawei.com>
+From: Stefan Wahren <wahrenst@gmx.net>
 
-[ Upstream commit 93d1f41a82de382845af460bf03bcb17dcbf08c5 ]
+[ Upstream commit e68da664d379f352d41d7955712c44e0a738e4ab ]
 
-The 'vmw_user_object_buffer' function may return NULL with incorrect
-inputs. To avoid possible null pointer dereference, add a check whether
-the 'bo' is NULL in the vmw_framebuffer_surface_create_handle.
+The tx_bytes should consider the actual size of the Ethernet frames
+without the SPI encapsulation. But we still need to take care of
+Ethernet padding.
 
-Fixes: d6667f0ddf46 ("drm/vmwgfx: Fix handling of dumb buffers")
-Signed-off-by: Chen Ridong <chenridong@huawei.com>
-Signed-off-by: Zack Rusin <zack.rusin@broadcom.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20241029083429.1185479-1-chenridong@huaweicloud.com
+Fixes: 2f207cbf0dd4 ("net: vertexcom: Add MSE102x SPI support")
+Signed-off-by: Stefan Wahren <wahrenst@gmx.net>
+Link: https://patch.msgid.link/20241108114343.6174-3-wahrenst@gmx.net
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/vmwgfx/vmwgfx_kms.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/ethernet/vertexcom/mse102x.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_kms.c b/drivers/gpu/drm/vmwgfx/vmwgfx_kms.c
-index 63b8d7591253c..10d596cb4b402 100644
---- a/drivers/gpu/drm/vmwgfx/vmwgfx_kms.c
-+++ b/drivers/gpu/drm/vmwgfx/vmwgfx_kms.c
-@@ -1265,6 +1265,8 @@ static int vmw_framebuffer_surface_create_handle(struct drm_framebuffer *fb,
- 	struct vmw_framebuffer_surface *vfbs = vmw_framebuffer_to_vfbs(fb);
- 	struct vmw_bo *bo = vmw_user_object_buffer(&vfbs->uo);
+diff --git a/drivers/net/ethernet/vertexcom/mse102x.c b/drivers/net/ethernet/vertexcom/mse102x.c
+index 33ef3a49de8ee..bccf0ac66b1a8 100644
+--- a/drivers/net/ethernet/vertexcom/mse102x.c
++++ b/drivers/net/ethernet/vertexcom/mse102x.c
+@@ -437,13 +437,15 @@ static void mse102x_tx_work(struct work_struct *work)
+ 	mse = &mses->mse102x;
  
-+	if (WARN_ON(!bo))
-+		return -EINVAL;
- 	return drm_gem_handle_create(file_priv, &bo->tbo.base, handle);
- }
+ 	while ((txb = skb_dequeue(&mse->txq))) {
++		unsigned int len = max_t(unsigned int, txb->len, ETH_ZLEN);
++
+ 		mutex_lock(&mses->lock);
+ 		ret = mse102x_tx_pkt_spi(mse, txb, work_timeout);
+ 		mutex_unlock(&mses->lock);
+ 		if (ret) {
+ 			mse->ndev->stats.tx_dropped++;
+ 		} else {
+-			mse->ndev->stats.tx_bytes += txb->len;
++			mse->ndev->stats.tx_bytes += len;
+ 			mse->ndev->stats.tx_packets++;
+ 		}
  
 -- 
 2.43.0
