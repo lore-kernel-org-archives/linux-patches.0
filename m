@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D8E71BF7E5;
-	Wed, 20 Nov 2024 13:01:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 093211ABEC5;
+	Wed, 20 Nov 2024 13:01:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732107701; cv=none; b=Oz1IuQWmbwAx/KtUTj68Hrtp7x1gQvCvbV6EbGr1vSbwWp51H2htBFkIm3BKq6Jga4fBS6mzmLZV5XtvtnBapFnNQWw6ylcLdFQsPlU1fG+hIpEZydoon1Ove3r2FcVRwbjf5wMq+g5NHRaV6Bkbdoys2YmWQGbLk6iuPVsCjzw=
+	t=1732107702; cv=none; b=USLLo4/wzd3WgSYnXUF0dbq3rrJRgnTHjyAmBlC4kILl0N6SwujbOxEPUHV1OatzoSmxAfYAvQtgFmnlr5aIFyZ9ZjB7NsEX35fJMhenHD01vrXUUxNfSVtIa5a1UCkIWb1oaz0Ck9GkoXQamj0f1Im7FY64DvopPqA8UvYSICg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732107701; c=relaxed/simple;
-	bh=db/U3qvMoF6/OJ6Fl6kMQo6lAukDRHcZ6jHgbLifCS8=;
+	s=arc-20240116; t=1732107702; c=relaxed/simple;
+	bh=fFj64FxxY0kAaWXtVlGcVZeXbJwWFVFB7RZ7WzzT4/M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OAmBaKwep1MtpJXuxSSEFbK9tCgrcvHvcqLTaDiMZ9HIPstr4DT0ujdHG2gRxfqcgV/UsgrSORcQbx+KmImBOihOq0zU7srPwzuwj4rkZYO1583E8puojyHySwVle+a7AjTGcatqy6Ra1G3VXErOb/I03o/FhnBKQrxnUxL/jJo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JxznsOIp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=OAadOfFMHFxGuqkfCxUfjrlDE2mzm2ZPaU3N4Yxn1Yw2jJ+d+dIv9ilX1dhhWkGrRIFImVsi3+DQwDcV7cD4UgtH7HesQm5LJ+UyyTOGkq1lVrMomnjoR+KxgOdbxZOe+eV98NtWRfUmwZ8OG3Pztl+LwH9Kb8GtdkSNlHao7kw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K5yjnZ/7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JxznsOIp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03C9EC4CECD;
-	Wed, 20 Nov 2024 13:01:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K5yjnZ/7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB893C4CECD;
+	Wed, 20 Nov 2024 13:01:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1732107701;
-	bh=db/U3qvMoF6/OJ6Fl6kMQo6lAukDRHcZ6jHgbLifCS8=;
+	bh=fFj64FxxY0kAaWXtVlGcVZeXbJwWFVFB7RZ7WzzT4/M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JxznsOIpRo4PYP4TDAtEWVW+QZ1B9ieg4kDtBJ+O5b9NtiRz6fvbSRfVLRZp0uc3r
-	 P+zaE5P4D7Vyvw09YL/ElWlPmF0BXqySSWg97HwXhqHETvYNeDzSJKdSLw5ZxRaByI
-	 cUfS6RWNKHP9bpq1PCuvJWc9jJv0fIhtQR6xaB0s=
+	b=K5yjnZ/7dFKrmeo9ayk9o3DtsoHx7U6EzRjLGsTIhqkk+RkeB9eyUEAr+tUeApDMB
+	 iHphsjwk+bY/cN1+TzhE6AFVqws3IhUTtnyvXKXComFzHpmwbEkb+VAPR81QJy5Qxa
+	 Pn3AXNAQXFhlMJJyTogE4yHf8Io/Crxo9+vd5HpI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	Ubisectech Sirius <bugreport@valiantsec.com>,
-	syzbot+9982fb8d18eba905abe2@syzkaller.appspotmail.com,
-	Tejun Heo <tj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 25/73] nilfs2: fix null-ptr-deref in block_touch_buffer tracepoint
-Date: Wed, 20 Nov 2024 13:58:11 +0100
-Message-ID: <20241120125810.216016629@linuxfoundation.org>
+	Baoquan He <bhe@redhat.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Tom Lendacky <thomas.lendacky@amd.com>,
+	stable@kernel.org
+Subject: [PATCH 6.1 16/73] x86/mm: Fix a kdump kernel failure on SME system when CONFIG_IMA_KEXEC=y
+Date: Wed, 20 Nov 2024 13:58:02 +0100
+Message-ID: <20241120125810.012027210@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241120125809.623237564@linuxfoundation.org>
 References: <20241120125809.623237564@linuxfoundation.org>
@@ -47,69 +46,121 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+From: Baoquan He <bhe@redhat.com>
 
-commit cd45e963e44b0f10d90b9e6c0e8b4f47f3c92471 upstream.
+commit 8d9ffb2fe65a6c4ef114e8d4f947958a12751bbe upstream.
 
-Patch series "nilfs2: fix null-ptr-deref bugs on block tracepoints".
+The kdump kernel is broken on SME systems with CONFIG_IMA_KEXEC=y enabled.
+Debugging traced the issue back to
 
-This series fixes null pointer dereference bugs that occur when using
-nilfs2 and two block-related tracepoints.
+  b69a2afd5afc ("x86/kexec: Carry forward IMA measurement log on kexec").
 
+Testing was previously not conducted on SME systems with CONFIG_IMA_KEXEC
+enabled, which led to the oversight, with the following incarnation:
 
-This patch (of 2):
+...
+  ima: No TPM chip found, activating TPM-bypass!
+  Loading compiled-in module X.509 certificates
+  Loaded X.509 cert 'Build time autogenerated kernel key: 18ae0bc7e79b64700122bb1d6a904b070fef2656'
+  ima: Allocated hash algorithm: sha256
+  Oops: general protection fault, probably for non-canonical address 0xcfacfdfe6660003e: 0000 [#1] PREEMPT SMP NOPTI
+  CPU: 0 UID: 0 PID: 1 Comm: swapper/0 Not tainted 6.11.0-rc2+ #14
+  Hardware name: Dell Inc. PowerEdge R7425/02MJ3T, BIOS 1.20.0 05/03/2023
+  RIP: 0010:ima_restore_measurement_list
+  Call Trace:
+   <TASK>
+   ? show_trace_log_lvl
+   ? show_trace_log_lvl
+   ? ima_load_kexec_buffer
+   ? __die_body.cold
+   ? die_addr
+   ? exc_general_protection
+   ? asm_exc_general_protection
+   ? ima_restore_measurement_list
+   ? vprintk_emit
+   ? ima_load_kexec_buffer
+   ima_load_kexec_buffer
+   ima_init
+   ? __pfx_init_ima
+   init_ima
+   ? __pfx_init_ima
+   do_one_initcall
+   do_initcalls
+   ? __pfx_kernel_init
+   kernel_init_freeable
+   kernel_init
+   ret_from_fork
+   ? __pfx_kernel_init
+   ret_from_fork_asm
+   </TASK>
+  Modules linked in:
+  ---[ end trace 0000000000000000 ]---
+  ...
+  Kernel panic - not syncing: Fatal exception
+  Kernel Offset: disabled
+  Rebooting in 10 seconds..
 
-It has been reported that when using "block:block_touch_buffer"
-tracepoint, touch_buffer() called from __nilfs_get_folio_block() causes a
-NULL pointer dereference, or a general protection fault when KASAN is
-enabled.
+Adding debug printks showed that the stored addr and size of ima_kexec buffer
+are not decrypted correctly like:
 
-This happens because since the tracepoint was added in touch_buffer(), it
-references the dev_t member bh->b_bdev->bd_dev regardless of whether the
-buffer head has a pointer to a block_device structure.  In the current
-implementation, the block_device structure is set after the function
-returns to the caller.
+  ima: ima_load_kexec_buffer, buffer:0xcfacfdfe6660003e, size:0xe48066052d5df359
 
-Here, touch_buffer() is used to mark the folio/page that owns the buffer
-head as accessed, but the common search helper for folio/page used by the
-caller function was optimized to mark the folio/page as accessed when it
-was reimplemented a long time ago, eliminating the need to call
-touch_buffer() here in the first place.
+Three types of setup_data info
 
-So this solves the issue by eliminating the touch_buffer() call itself.
+  — SETUP_EFI,
+  - SETUP_IMA, and
+  - SETUP_RNG_SEED
 
-Link: https://lkml.kernel.org/r/20241106160811.3316-1-konishi.ryusuke@gmail.com
-Link: https://lkml.kernel.org/r/20241106160811.3316-2-konishi.ryusuke@gmail.com
-Fixes: 5305cb830834 ("block: add block_{touch|dirty}_buffer tracepoint")
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Reported-by: Ubisectech Sirius <bugreport@valiantsec.com>
-Closes: https://lkml.kernel.org/r/86bd3013-887e-4e38-960f-ca45c657f032.bugreport@valiantsec.com
-Reported-by: syzbot+9982fb8d18eba905abe2@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=9982fb8d18eba905abe2
-Tested-by: syzbot+9982fb8d18eba905abe2@syzkaller.appspotmail.com
-Cc: Tejun Heo <tj@kernel.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+are passed to the kexec/kdump kernel. Only the ima_kexec buffer
+experienced incorrect decryption. Debugging identified a bug in
+early_memremap_is_setup_data(), where an incorrect range calculation
+occurred due to the len variable in struct setup_data ended up only
+representing the length of the data field, excluding the struct's size,
+and thus leading to miscalculation.
+
+Address a similar issue in memremap_is_setup_data() while at it.
+
+  [ bp: Heavily massage. ]
+
+Fixes: b3c72fc9a78e ("x86/boot: Introduce setup_indirect")
+Signed-off-by: Baoquan He <bhe@redhat.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Acked-by: Tom Lendacky <thomas.lendacky@amd.com>
+Cc: <stable@kernel.org>
+Link: https://lore.kernel.org/r/20240911081615.262202-3-bhe@redhat.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nilfs2/page.c |    1 -
- 1 file changed, 1 deletion(-)
+ arch/x86/mm/ioremap.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/fs/nilfs2/page.c
-+++ b/fs/nilfs2/page.c
-@@ -39,7 +39,6 @@ __nilfs_get_page_block(struct page *page
- 	first_block = (unsigned long)index << (PAGE_SHIFT - blkbits);
- 	bh = nilfs_page_get_nth_block(page, block - first_block);
+--- a/arch/x86/mm/ioremap.c
++++ b/arch/x86/mm/ioremap.c
+@@ -650,7 +650,8 @@ static bool memremap_is_setup_data(resou
+ 		paddr_next = data->next;
+ 		len = data->len;
  
--	touch_buffer(bh);
- 	wait_on_buffer(bh);
- 	return bh;
- }
+-		if ((phys_addr > paddr) && (phys_addr < (paddr + len))) {
++		if ((phys_addr > paddr) &&
++		    (phys_addr < (paddr + sizeof(struct setup_data) + len))) {
+ 			memunmap(data);
+ 			return true;
+ 		}
+@@ -712,7 +713,8 @@ static bool __init early_memremap_is_set
+ 		paddr_next = data->next;
+ 		len = data->len;
+ 
+-		if ((phys_addr > paddr) && (phys_addr < (paddr + len))) {
++		if ((phys_addr > paddr) &&
++		    (phys_addr < (paddr + sizeof(struct setup_data) + len))) {
+ 			early_memunmap(data, sizeof(*data));
+ 			return true;
+ 		}
 
 
