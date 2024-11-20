@@ -1,50 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74C9A1BC076;
-	Wed, 20 Nov 2024 12:59:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECE581BC076;
+	Wed, 20 Nov 2024 12:59:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732107561; cv=none; b=pIoXXUtnARj2hKZ+kyQR9DXI9uF7rTZLgj5v8PnUabP1RxHTW8iY7dEzFDaelA8+/43BVpwEr3X6oLfJXTPcxiKKLcS3A/AmCGzYU6Y17v9M7CUHbVXSU/LRP98yF2ADhklPEUNyD6lXvEKYXE5WU8fp2PBkEY2FvAyDuJiNPEo=
+	t=1732107562; cv=none; b=OkZxoBX3GJ+rpJahVO8ksctYHuOBPJh7GgCSIGnjuaSQ4V0bhSb3ELjw3Kp9PlhPxU0I3SxLaOvzStOERgVCQHPjavM3+nEYdApABXeg9y56ANrsVvXTZiUeN6Fwma8lK01aRTL9B6HjcQPbLHFcEIYq7ePgwSoPFJJiUqPUjIY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732107561; c=relaxed/simple;
-	bh=lKP1WgdU8q/uWabTqyUu/GJatZgksCtytrxmHWO8ELQ=;
+	s=arc-20240116; t=1732107562; c=relaxed/simple;
+	bh=ocfPMPVI6I0d+xpVC1N/Vko+kYWwyab77faojR4iSek=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hK2T33m36sWfV+os5oAxworoJQ9UWYHnAf4X9LhleGVz/WNzIbTXbg4ea/tPo6clJMq0f2jcBfG3/pONCY0398Xti05anj5bvDba7IOruRS9bqBIbMR0PY6ksSEerclzuuiM+EbaI/RbK7+NrdgzVghho7jPcJC8lgzVppppE+Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iUkJpLiG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Lz5vsBrYyqln5jYs3IOPmpfkD13JxSkJbFJ7mLI8lAWyyUweRauzmq/Nwj1U3kL5ZtZUoLTCwcvJmnMLO43CRTK/rJx9OzgILoShzOZ0aFB3Z5vfzYBnovn9SXayHroNSFBcD6THefA+05fpL5nD4h4zrk+3sr91ujWBUJe9uuI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BqcIdmGk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iUkJpLiG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD24BC4CED1;
-	Wed, 20 Nov 2024 12:59:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BqcIdmGk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84113C4CED8;
+	Wed, 20 Nov 2024 12:59:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1732107559;
-	bh=lKP1WgdU8q/uWabTqyUu/GJatZgksCtytrxmHWO8ELQ=;
+	s=korg; t=1732107561;
+	bh=ocfPMPVI6I0d+xpVC1N/Vko+kYWwyab77faojR4iSek=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iUkJpLiG1tNofCd2C7exesTKLc2kpW1gzR8Gq59ANqWgPXTBsG0DtfjtAhZiPjGY7
-	 Ak+uFb0ERxMgGfUxYd5ATWRE8H51h4PzHHcWx7s7jtmoaXQjyClL4a47vSfvutKSIq
-	 AvBZl1U4Rgr5VvqpHyrym1fEh2bbm1JyqCykGN60=
+	b=BqcIdmGkFZT9AKoE7y5GevJ23cOVesNujwwpdOH9+40R6y+AkXtDTH7poD0AoC6zd
+	 aYhT8m3BSwZHlvc1N1tYtiGCjn4OiS9X5OZBcY31JWwXTCqw/+MghhHntDZulhxzlP
+	 H1J73ERDgvR6Rb6VI4w+md+OBLtoNV483LPfNQR4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Jann Horn <jannh@google.com>,
-	Vlastimil Babka <vbabka@suse.cz>,
-	Andreas Larsson <andreas@gaisler.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Helge Deller <deller@gmx.de>,
-	"James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>,
-	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Mark Brown <broonie@kernel.org>,
-	Peter Xu <peterx@redhat.com>,
-	Will Deacon <will@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Matthew Auld <matthew.auld@intel.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Lucas De Marchi <lucas.demarchi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 102/107] mm: refactor arch_calc_vm_flag_bits() and arm64 MTE handling
-Date: Wed, 20 Nov 2024 13:57:17 +0100
-Message-ID: <20241120125632.033441138@linuxfoundation.org>
+Subject: [PATCH 6.11 104/107] drm/xe: improve hibernation on igpu
+Date: Wed, 20 Nov 2024 13:57:19 +0100
+Message-ID: <20241120125632.078645187@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241120125629.681745345@linuxfoundation.org>
 References: <20241120125629.681745345@linuxfoundation.org>
@@ -63,216 +52,160 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+From: Matthew Auld <matthew.auld@intel.com>
 
-[ Upstream commit 5baf8b037debf4ec60108ccfeccb8636d1dbad81 ]
+[ Upstream commit 46f1f4b0f3c2a2dff9887de7c66ccc7ef482bd83 ]
 
-Currently MTE is permitted in two circumstances (desiring to use MTE
-having been specified by the VM_MTE flag) - where MAP_ANONYMOUS is
-specified, as checked by arch_calc_vm_flag_bits() and actualised by
-setting the VM_MTE_ALLOWED flag, or if the file backing the mapping is
-shmem, in which case we set VM_MTE_ALLOWED in shmem_mmap() when the mmap
-hook is activated in mmap_region().
+The GGTT looks to be stored inside stolen memory on igpu which is not
+treated as normal RAM.  The core kernel skips this memory range when
+creating the hibernation image, therefore when coming back from
+hibernation the GGTT programming is lost. This seems to cause issues
+with broken resume where GuC FW fails to load:
 
-The function that checks that, if VM_MTE is set, VM_MTE_ALLOWED is also
-set is the arm64 implementation of arch_validate_flags().
+[drm] *ERROR* GT0: load failed: status = 0x400000A0, time = 10ms, freq = 1250MHz (req 1300MHz), done = -1
+[drm] *ERROR* GT0: load failed: status: Reset = 0, BootROM = 0x50, UKernel = 0x00, MIA = 0x00, Auth = 0x01
+[drm] *ERROR* GT0: firmware signature verification failed
+[drm] *ERROR* CRITICAL: Xe has declared device 0000:00:02.0 as wedged.
 
-Unfortunately, we intend to refactor mmap_region() to perform this check
-earlier, meaning that in the case of a shmem backing we will not have
-invoked shmem_mmap() yet, causing the mapping to fail spuriously.
+Current GGTT users are kernel internal and tracked as pinned, so it
+should be possible to hook into the existing save/restore logic that we
+use for dgpu, where the actual evict is skipped but on restore we
+importantly restore the GGTT programming.  This has been confirmed to
+fix hibernation on at least ADL and MTL, though likely all igpu
+platforms are affected.
 
-It is inappropriate to set this architecture-specific flag in general mm
-code anyway, so a sensible resolution of this issue is to instead move the
-check somewhere else.
+This also means we have a hole in our testing, where the existing s4
+tests only really test the driver hooks, and don't go as far as actually
+rebooting and restoring from the hibernation image and in turn powering
+down RAM (and therefore losing the contents of stolen).
 
-We resolve this by setting VM_MTE_ALLOWED much earlier in do_mmap(), via
-the arch_calc_vm_flag_bits() call.
+v2 (Brost)
+ - Remove extra newline and drop unnecessary parentheses.
 
-This is an appropriate place to do this as we already check for the
-MAP_ANONYMOUS case here, and the shmem file case is simply a variant of
-the same idea - we permit RAM-backed memory.
-
-This requires a modification to the arch_calc_vm_flag_bits() signature to
-pass in a pointer to the struct file associated with the mapping, however
-this is not too egregious as this is only used by two architectures anyway
-- arm64 and parisc.
-
-So this patch performs this adjustment and removes the unnecessary
-assignment of VM_MTE_ALLOWED in shmem_mmap().
-
-[akpm@linux-foundation.org: fix whitespace, per Catalin]
-Link: https://lkml.kernel.org/r/ec251b20ba1964fb64cf1607d2ad80c47f3873df.1730224667.git.lorenzo.stoakes@oracle.com
-Fixes: deb0f6562884 ("mm/mmap: undo ->mmap() when arch_validate_flags() fails")
-Signed-off-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Suggested-by: Catalin Marinas <catalin.marinas@arm.com>
-Reported-by: Jann Horn <jannh@google.com>
-Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
-Reviewed-by: Vlastimil Babka <vbabka@suse.cz>
-Cc: Andreas Larsson <andreas@gaisler.com>
-Cc: David S. Miller <davem@davemloft.net>
-Cc: Helge Deller <deller@gmx.de>
-Cc: James E.J. Bottomley <James.Bottomley@HansenPartnership.com>
-Cc: Liam R. Howlett <Liam.Howlett@oracle.com>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: Mark Brown <broonie@kernel.org>
-Cc: Peter Xu <peterx@redhat.com>
-Cc: Will Deacon <will@kernel.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: dd08ebf6c352 ("drm/xe: Introduce a new DRM driver for Intel GPUs")
+Link: https://gitlab.freedesktop.org/drm/xe/kernel/-/issues/3275
+Signed-off-by: Matthew Auld <matthew.auld@intel.com>
+Cc: Matthew Brost <matthew.brost@intel.com>
+Cc: <stable@vger.kernel.org> # v6.8+
+Reviewed-by: Matthew Brost <matthew.brost@intel.com>
+Reviewed-by: Lucas De Marchi <lucas.demarchi@intel.com>
+Signed-off-by: Matthew Brost <matthew.brost@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20241101170156.213490-2-matthew.auld@intel.com
+(cherry picked from commit f2a6b8e396666d97ada8e8759dfb6a69d8df6380)
+Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/include/asm/mman.h  | 10 +++++++---
- arch/parisc/include/asm/mman.h |  5 +++--
- include/linux/mman.h           |  7 ++++---
- mm/mmap.c                      |  2 +-
- mm/nommu.c                     |  2 +-
- mm/shmem.c                     |  3 ---
- 6 files changed, 16 insertions(+), 13 deletions(-)
+ drivers/gpu/drm/xe/xe_bo.c       | 37 ++++++++++++++------------------
+ drivers/gpu/drm/xe/xe_bo_evict.c |  6 ------
+ 2 files changed, 16 insertions(+), 27 deletions(-)
 
-diff --git a/arch/arm64/include/asm/mman.h b/arch/arm64/include/asm/mman.h
-index 5966ee4a61542..ef35c52aabd66 100644
---- a/arch/arm64/include/asm/mman.h
-+++ b/arch/arm64/include/asm/mman.h
-@@ -3,6 +3,8 @@
- #define __ASM_MMAN_H__
+diff --git a/drivers/gpu/drm/xe/xe_bo.c b/drivers/gpu/drm/xe/xe_bo.c
+index c096e5c06f726..9a01babe679c9 100644
+--- a/drivers/gpu/drm/xe/xe_bo.c
++++ b/drivers/gpu/drm/xe/xe_bo.c
+@@ -931,7 +931,10 @@ int xe_bo_restore_pinned(struct xe_bo *bo)
+ 	if (WARN_ON(!xe_bo_is_pinned(bo)))
+ 		return -EINVAL;
  
- #include <linux/compiler.h>
-+#include <linux/fs.h>
-+#include <linux/shmem_fs.h>
- #include <linux/types.h>
- #include <uapi/asm/mman.h>
+-	if (WARN_ON(xe_bo_is_vram(bo) || !bo->ttm.ttm))
++	if (WARN_ON(xe_bo_is_vram(bo)))
++		return -EINVAL;
++
++	if (WARN_ON(!bo->ttm.ttm && !xe_bo_is_stolen(bo)))
+ 		return -EINVAL;
  
-@@ -21,19 +23,21 @@ static inline unsigned long arch_calc_vm_prot_bits(unsigned long prot,
- }
- #define arch_calc_vm_prot_bits(prot, pkey) arch_calc_vm_prot_bits(prot, pkey)
+ 	if (!mem_type_is_vram(place->mem_type))
+@@ -1706,6 +1709,7 @@ int xe_bo_pin_external(struct xe_bo *bo)
  
--static inline unsigned long arch_calc_vm_flag_bits(unsigned long flags)
-+static inline unsigned long arch_calc_vm_flag_bits(struct file *file,
-+						   unsigned long flags)
+ int xe_bo_pin(struct xe_bo *bo)
  {
- 	/*
- 	 * Only allow MTE on anonymous mappings as these are guaranteed to be
- 	 * backed by tags-capable memory. The vm_flags may be overridden by a
- 	 * filesystem supporting MTE (RAM-based).
++	struct ttm_place *place = &bo->placements[0];
+ 	struct xe_device *xe = xe_bo_device(bo);
+ 	int err;
+ 
+@@ -1736,8 +1740,6 @@ int xe_bo_pin(struct xe_bo *bo)
  	 */
--	if (system_supports_mte() && (flags & MAP_ANONYMOUS))
-+	if (system_supports_mte() &&
-+	    ((flags & MAP_ANONYMOUS) || shmem_file(file)))
- 		return VM_MTE_ALLOWED;
- 
- 	return 0;
- }
--#define arch_calc_vm_flag_bits(flags) arch_calc_vm_flag_bits(flags)
-+#define arch_calc_vm_flag_bits(file, flags) arch_calc_vm_flag_bits(file, flags)
- 
- static inline bool arch_validate_prot(unsigned long prot,
- 	unsigned long addr __always_unused)
-diff --git a/arch/parisc/include/asm/mman.h b/arch/parisc/include/asm/mman.h
-index 89b6beeda0b86..663f587dc7896 100644
---- a/arch/parisc/include/asm/mman.h
-+++ b/arch/parisc/include/asm/mman.h
-@@ -2,6 +2,7 @@
- #ifndef __ASM_MMAN_H__
- #define __ASM_MMAN_H__
- 
-+#include <linux/fs.h>
- #include <uapi/asm/mman.h>
- 
- /* PARISC cannot allow mdwe as it needs writable stacks */
-@@ -11,7 +12,7 @@ static inline bool arch_memory_deny_write_exec_supported(void)
- }
- #define arch_memory_deny_write_exec_supported arch_memory_deny_write_exec_supported
- 
--static inline unsigned long arch_calc_vm_flag_bits(unsigned long flags)
-+static inline unsigned long arch_calc_vm_flag_bits(struct file *file, unsigned long flags)
- {
- 	/*
- 	 * The stack on parisc grows upwards, so if userspace requests memory
-@@ -23,6 +24,6 @@ static inline unsigned long arch_calc_vm_flag_bits(unsigned long flags)
- 
- 	return 0;
- }
--#define arch_calc_vm_flag_bits(flags) arch_calc_vm_flag_bits(flags)
-+#define arch_calc_vm_flag_bits(file, flags) arch_calc_vm_flag_bits(file, flags)
- 
- #endif /* __ASM_MMAN_H__ */
-diff --git a/include/linux/mman.h b/include/linux/mman.h
-index bcb201ab7a412..c274870343155 100644
---- a/include/linux/mman.h
-+++ b/include/linux/mman.h
-@@ -2,6 +2,7 @@
- #ifndef _LINUX_MMAN_H
- #define _LINUX_MMAN_H
- 
-+#include <linux/fs.h>
- #include <linux/mm.h>
- #include <linux/percpu_counter.h>
- 
-@@ -94,7 +95,7 @@ static inline void vm_unacct_memory(long pages)
- #endif
- 
- #ifndef arch_calc_vm_flag_bits
--#define arch_calc_vm_flag_bits(flags) 0
-+#define arch_calc_vm_flag_bits(file, flags) 0
- #endif
- 
- #ifndef arch_validate_prot
-@@ -151,13 +152,13 @@ calc_vm_prot_bits(unsigned long prot, unsigned long pkey)
-  * Combine the mmap "flags" argument into "vm_flags" used internally.
-  */
- static inline unsigned long
--calc_vm_flag_bits(unsigned long flags)
-+calc_vm_flag_bits(struct file *file, unsigned long flags)
- {
- 	return _calc_vm_trans(flags, MAP_GROWSDOWN,  VM_GROWSDOWN ) |
- 	       _calc_vm_trans(flags, MAP_LOCKED,     VM_LOCKED    ) |
- 	       _calc_vm_trans(flags, MAP_SYNC,	     VM_SYNC      ) |
- 	       _calc_vm_trans(flags, MAP_STACK,	     VM_NOHUGEPAGE) |
--	       arch_calc_vm_flag_bits(flags);
-+	       arch_calc_vm_flag_bits(file, flags);
- }
- 
- unsigned long vm_commit_limit(void);
-diff --git a/mm/mmap.c b/mm/mmap.c
-index 8a04f29aa4230..ccebd17fb48f6 100644
---- a/mm/mmap.c
-+++ b/mm/mmap.c
-@@ -1316,7 +1316,7 @@ unsigned long do_mmap(struct file *file, unsigned long addr,
- 	 * to. we assume access permissions have been handled by the open
- 	 * of the memory object, so we don't do any here.
- 	 */
--	vm_flags |= calc_vm_prot_bits(prot, pkey) | calc_vm_flag_bits(flags) |
-+	vm_flags |= calc_vm_prot_bits(prot, pkey) | calc_vm_flag_bits(file, flags) |
- 			mm->def_flags | VM_MAYREAD | VM_MAYWRITE | VM_MAYEXEC;
- 
- 	/* Obtain the address to map to. we verify (or select) it and ensure
-diff --git a/mm/nommu.c b/mm/nommu.c
-index 7e018da8574ed..50100b909187a 100644
---- a/mm/nommu.c
-+++ b/mm/nommu.c
-@@ -838,7 +838,7 @@ static unsigned long determine_vm_flags(struct file *file,
- {
- 	unsigned long vm_flags;
- 
--	vm_flags = calc_vm_prot_bits(prot, 0) | calc_vm_flag_bits(flags);
-+	vm_flags = calc_vm_prot_bits(prot, 0) | calc_vm_flag_bits(file, flags);
- 
- 	if (!file) {
- 		/*
-diff --git a/mm/shmem.c b/mm/shmem.c
-index 27f496d6e43eb..67f2ae6a8f0f3 100644
---- a/mm/shmem.c
-+++ b/mm/shmem.c
-@@ -2597,9 +2597,6 @@ static int shmem_mmap(struct file *file, struct vm_area_struct *vma)
- 	if (ret)
- 		return ret;
- 
--	/* arm64 - allow memory tagging on RAM-based files */
--	vm_flags_set(vma, VM_MTE_ALLOWED);
+ 	if (IS_DGFX(xe) && !(IS_ENABLED(CONFIG_DRM_XE_DEBUG) &&
+ 	    bo->flags & XE_BO_FLAG_INTERNAL_TEST)) {
+-		struct ttm_place *place = &(bo->placements[0]);
 -
- 	file_accessed(file);
- 	/* This is anonymous shared memory if it is unlinked at the time of mmap */
- 	if (inode->i_nlink)
+ 		if (mem_type_is_vram(place->mem_type)) {
+ 			xe_assert(xe, place->flags & TTM_PL_FLAG_CONTIGUOUS);
+ 
+@@ -1745,13 +1747,12 @@ int xe_bo_pin(struct xe_bo *bo)
+ 				       vram_region_gpu_offset(bo->ttm.resource)) >> PAGE_SHIFT;
+ 			place->lpfn = place->fpfn + (bo->size >> PAGE_SHIFT);
+ 		}
++	}
+ 
+-		if (mem_type_is_vram(place->mem_type) ||
+-		    bo->flags & XE_BO_FLAG_GGTT) {
+-			spin_lock(&xe->pinned.lock);
+-			list_add_tail(&bo->pinned_link, &xe->pinned.kernel_bo_present);
+-			spin_unlock(&xe->pinned.lock);
+-		}
++	if (mem_type_is_vram(place->mem_type) || bo->flags & XE_BO_FLAG_GGTT) {
++		spin_lock(&xe->pinned.lock);
++		list_add_tail(&bo->pinned_link, &xe->pinned.kernel_bo_present);
++		spin_unlock(&xe->pinned.lock);
+ 	}
+ 
+ 	ttm_bo_pin(&bo->ttm);
+@@ -1799,24 +1800,18 @@ void xe_bo_unpin_external(struct xe_bo *bo)
+ 
+ void xe_bo_unpin(struct xe_bo *bo)
+ {
++	struct ttm_place *place = &bo->placements[0];
+ 	struct xe_device *xe = xe_bo_device(bo);
+ 
+ 	xe_assert(xe, !bo->ttm.base.import_attach);
+ 	xe_assert(xe, xe_bo_is_pinned(bo));
+ 
+-	if (IS_DGFX(xe) && !(IS_ENABLED(CONFIG_DRM_XE_DEBUG) &&
+-	    bo->flags & XE_BO_FLAG_INTERNAL_TEST)) {
+-		struct ttm_place *place = &(bo->placements[0]);
+-
+-		if (mem_type_is_vram(place->mem_type) ||
+-		    bo->flags & XE_BO_FLAG_GGTT) {
+-			spin_lock(&xe->pinned.lock);
+-			xe_assert(xe, !list_empty(&bo->pinned_link));
+-			list_del_init(&bo->pinned_link);
+-			spin_unlock(&xe->pinned.lock);
+-		}
++	if (mem_type_is_vram(place->mem_type) || bo->flags & XE_BO_FLAG_GGTT) {
++		spin_lock(&xe->pinned.lock);
++		xe_assert(xe, !list_empty(&bo->pinned_link));
++		list_del_init(&bo->pinned_link);
++		spin_unlock(&xe->pinned.lock);
+ 	}
+-
+ 	ttm_bo_unpin(&bo->ttm);
+ }
+ 
+diff --git a/drivers/gpu/drm/xe/xe_bo_evict.c b/drivers/gpu/drm/xe/xe_bo_evict.c
+index ef1950ab2c1d8..8fb2be0610035 100644
+--- a/drivers/gpu/drm/xe/xe_bo_evict.c
++++ b/drivers/gpu/drm/xe/xe_bo_evict.c
+@@ -34,9 +34,6 @@ int xe_bo_evict_all(struct xe_device *xe)
+ 	u8 id;
+ 	int ret;
+ 
+-	if (!IS_DGFX(xe))
+-		return 0;
+-
+ 	/* User memory */
+ 	for (mem_type = XE_PL_TT; mem_type <= XE_PL_VRAM1; ++mem_type) {
+ 		struct ttm_resource_manager *man =
+@@ -136,9 +133,6 @@ int xe_bo_restore_kernel(struct xe_device *xe)
+ 	struct xe_bo *bo;
+ 	int ret;
+ 
+-	if (!IS_DGFX(xe))
+-		return 0;
+-
+ 	spin_lock(&xe->pinned.lock);
+ 	for (;;) {
+ 		bo = list_first_entry_or_null(&xe->pinned.evicted,
 -- 
 2.43.0
 
