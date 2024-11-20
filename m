@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 664921A7AFD;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0041A1A7AFD;
 	Wed, 20 Nov 2024 12:59:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732107590; cv=none; b=hnE79mlIBUEcsebIFzuBs/ueOn/1NzW/P22WgxWOvVdZjFD81v4+qNMinPvQCwN4dOsO7k3mqfOt3BeBDO13aif8ZATYovIm8RVw2gRNOvJ6qvO8H7wd6Nmb7vKe0NpJ4mCWOl0MFNOmceROen8CX61dkfL62e1pVgqlPcgAvjQ=
+	t=1732107591; cv=none; b=jOEB6lk4o0yQf8IAFHa+cjueffzEZ7gkSkk1oMmAEcV0hiy6RcnDs8jJa1R6FNXBmy4hc2nTHmCNH8hN4atoEowg0uyWxZNhQu6dYbg2oqecCoAweN3ygFxgjTSp5aMo5k1nLZhu1eAk+fw7n9rSb6yQX01yjDnWYrdc0CpSmMg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732107590; c=relaxed/simple;
-	bh=1NNA3BkyY2EPUdvylRX7qbfC+boErdkQ7fWqqyDFmdY=;
+	s=arc-20240116; t=1732107591; c=relaxed/simple;
+	bh=IkMDTci/vZj+FOEv0MbBuOzjQW6xVBH689Y5clI9Axg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Vj1bswAFCc2P1XytjO0BpgHzFTvpfKgCNJSjAFyO8RwJnwdCrr2ep2hqBlOJ4NuhHSCezo+TORRO7VcOyf3+UL6Fjr85AC7wHulDvw/JlCAfj5LnlGjT714+b+wxdwx9H8fT+VQJbUlUH3w2MwC6m9VNXIMYDzTGv5W4yggu5Sk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vj+5p+KR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pxiyG6feu21BdkTh1ovu1WdwI7TouR3KCAbETqcYemi/qtTxoGjFjDzEgXdAp42PWW/5NRkKbiizprxLzr5TNiDQqjyZCsD/uvUOCfBOi/jdCLQ42+qHvB70IO3dIXUUtAbOBq0jS3qpMZt2nAjVfubvXG+OP64CmU1j1pvd5Pw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1aDNjjcz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vj+5p+KR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFC29C4CECD;
-	Wed, 20 Nov 2024 12:59:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1aDNjjcz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C14B8C4CECD;
+	Wed, 20 Nov 2024 12:59:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1732107590;
-	bh=1NNA3BkyY2EPUdvylRX7qbfC+boErdkQ7fWqqyDFmdY=;
+	bh=IkMDTci/vZj+FOEv0MbBuOzjQW6xVBH689Y5clI9Axg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vj+5p+KRiT/MnXHA17RphILRkeYobm0f0DAhitJp2uJV0e7NwRIfN9Zo9KNx5rmfM
-	 UDtcHAPNTE5JylgeRwj2AIxW1OrAAZSZPi1ugKa9mlmtIl+EBjHm4zCHPzLf7z16n3
-	 haOBGBJdUn544ASHiAiYQDjG+NXkYUH4SUXmrQ+g=
+	b=1aDNjjczTzE6ya3ZYRkNmxZr/J79P7F0MfjXmuA5ZXJz5aY0OrAzsEwmRR27tBQzg
+	 jOiE4bLqrwN5hMLjLjsS7zcE8ZqgIllyx7K0ibQ4h0SZwMlB4LZ0FVzWLMHjHhXata
+	 FXFX1DARNk1p9ef7yOR2tlIYQ4ylI/X/d1CDuoMI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Si-Wei Liu <si-wei.liu@oracle.com>,
-	Dragos Tatulea <dtatulea@nvidia.com>,
+	Parav Pandit <parav@nvidia.com>,
+	Angus Chen <angus.chen@jaguarmicro.com>,
+	Xiaoguang Wang <lege.wang@jaguarmicro.com>,
 	"Michael S. Tsirkin" <mst@redhat.com>,
 	Jason Wang <jasowang@redhat.com>
-Subject: [PATCH 6.6 33/82] vdpa/mlx5: Fix PA offset with unaligned starting iotlb map
-Date: Wed, 20 Nov 2024 13:56:43 +0100
-Message-ID: <20241120125630.359710355@linuxfoundation.org>
+Subject: [PATCH 6.6 34/82] vp_vdpa: fix id_table array not null terminated error
+Date: Wed, 20 Nov 2024 13:56:44 +0100
+Message-ID: <20241120125630.381800349@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241120125629.623666563@linuxfoundation.org>
 References: <20241120125629.623666563@linuxfoundation.org>
@@ -52,54 +53,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Si-Wei Liu <si-wei.liu@oracle.com>
+From: Xiaoguang Wang <lege.wang@jaguarmicro.com>
 
-commit 29ce8b8a4fa74e841342c8b8f8941848a3c6f29f upstream.
+commit 4e39ecadf1d2a08187139619f1f314b64ba7d947 upstream.
 
-When calculating the physical address range based on the iotlb and mr
-[start,end) ranges, the offset of mr->start relative to map->start
-is not taken into account. This leads to some incorrect and duplicate
-mappings.
+Allocate one extra virtio_device_id as null terminator, otherwise
+vdpa_mgmtdev_get_classes() may iterate multiple times and visit
+undefined memory.
 
-For the case when mr->start < map->start the code is already correct:
-the range in [mr->start, map->start) was handled by a different
-iteration.
-
-Fixes: 94abbccdf291 ("vdpa/mlx5: Add shared memory registration code")
+Fixes: ffbda8e9df10 ("vdpa/vp_vdpa : add vdpa tool support in vp_vdpa")
 Cc: stable@vger.kernel.org
-Signed-off-by: Si-Wei Liu <si-wei.liu@oracle.com>
-Signed-off-by: Dragos Tatulea <dtatulea@nvidia.com>
-Message-Id: <20241021134040.975221-2-dtatulea@nvidia.com>
+Suggested-by: Parav Pandit <parav@nvidia.com>
+Signed-off-by: Angus Chen <angus.chen@jaguarmicro.com>
+Signed-off-by: Xiaoguang Wang <lege.wang@jaguarmicro.com>
+Message-Id: <20241105133518.1494-1-lege.wang@jaguarmicro.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Reviewed-by: Parav Pandit <parav@nvidia.com>
 Acked-by: Jason Wang <jasowang@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/vdpa/mlx5/core/mr.c |    8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/vdpa/virtio_pci/vp_vdpa.c |   10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
---- a/drivers/vdpa/mlx5/core/mr.c
-+++ b/drivers/vdpa/mlx5/core/mr.c
-@@ -232,7 +232,7 @@ static int map_direct_mr(struct mlx5_vdp
- 	struct page *pg;
- 	unsigned int nsg;
- 	int sglen;
--	u64 pa;
-+	u64 pa, offset;
- 	u64 paend;
- 	struct scatterlist *sg;
- 	struct device *dma = mvdev->vdev.dma_dev;
-@@ -255,8 +255,10 @@ static int map_direct_mr(struct mlx5_vdp
- 	sg = mr->sg_head.sgl;
- 	for (map = vhost_iotlb_itree_first(iotlb, mr->start, mr->end - 1);
- 	     map; map = vhost_iotlb_itree_next(map, mr->start, mr->end - 1)) {
--		paend = map->addr + maplen(map, mr);
--		for (pa = map->addr; pa < paend; pa += sglen) {
-+		offset = mr->start > map->start ? mr->start - map->start : 0;
-+		pa = map->addr + offset;
-+		paend = map->addr + offset + maplen(map, mr);
-+		for (; pa < paend; pa += sglen) {
- 			pg = pfn_to_page(__phys_to_pfn(pa));
- 			if (!sg) {
- 				mlx5_vdpa_warn(mvdev, "sg null. start 0x%llx, end 0x%llx\n",
+--- a/drivers/vdpa/virtio_pci/vp_vdpa.c
++++ b/drivers/vdpa/virtio_pci/vp_vdpa.c
+@@ -591,7 +591,11 @@ static int vp_vdpa_probe(struct pci_dev
+ 		goto mdev_err;
+ 	}
+ 
+-	mdev_id = kzalloc(sizeof(struct virtio_device_id), GFP_KERNEL);
++	/*
++	 * id_table should be a null terminated array, so allocate one additional
++	 * entry here, see vdpa_mgmtdev_get_classes().
++	 */
++	mdev_id = kcalloc(2, sizeof(struct virtio_device_id), GFP_KERNEL);
+ 	if (!mdev_id) {
+ 		err = -ENOMEM;
+ 		goto mdev_id_err;
+@@ -611,8 +615,8 @@ static int vp_vdpa_probe(struct pci_dev
+ 		goto probe_err;
+ 	}
+ 
+-	mdev_id->device = mdev->id.device;
+-	mdev_id->vendor = mdev->id.vendor;
++	mdev_id[0].device = mdev->id.device;
++	mdev_id[0].vendor = mdev->id.vendor;
+ 	mgtdev->id_table = mdev_id;
+ 	mgtdev->max_supported_vqs = vp_modern_get_num_queues(mdev);
+ 	mgtdev->supported_features = vp_modern_get_features(mdev);
 
 
