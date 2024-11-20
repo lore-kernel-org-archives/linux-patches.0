@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 333381AA793;
-	Wed, 20 Nov 2024 12:58:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67F321AA793;
+	Wed, 20 Nov 2024 12:58:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732107532; cv=none; b=ehCfjqCvsbcKnmfbpOl4DFRnwU8HO+J4cRH5rU4WzZFvTJ2huTUPK8wjocj+zHuH1ZNgrqqph6c2mJsHV8rOsYg4PW+ydYBFvXqD5LBxWfTa+bLbGcot/XJWGHMOPWmrFEJo6KEdxD+LFQEymlP7fJG5Wvrb1zw59jTC16vRI64=
+	t=1732107533; cv=none; b=j+vNGc+L8fQhgDbIEIlvTbnvYT9SWlPQsCWKpum6Zfw+lXgbKVkxtYLiyVBhcXegZuMi2QaM3BNc915cxXxCJgrtxjhzDudbodyk2LxuGdmMnyDtnH4ICQY84hwJfxSQFBQy273fpS3G9aaqX7EFtF15s9ZjLh+ExWOzHcFMqJ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732107532; c=relaxed/simple;
-	bh=jIvnw2Ai34zh22YL7yBeHnjaijaHCxFPqcCC82ofT2A=;
+	s=arc-20240116; t=1732107533; c=relaxed/simple;
+	bh=RqyhxQNGxs5JKI9m/fNrCHdAiGn00kv7XNtcsp+m/Gc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fjjlfBZXklzjSWq/sDRzV5qd8uvcUlEivg0gwtE3tkd43OsAyJOOF968tx7Z+Vp+4h/4kdvIMg8peJHFs5eZrM/LbUk1hWiOEZyPHLFAlO4GUIjfLqOW3fyUhm9bBQ11DhXzPbX4xkM2cfYj/hGmr1V5TIl0NGvnZrn89wouPaQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bRXstaH/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BboLbjT810yUyljdZbVy9DokFaDcmx7YXVMCHgSeCNBPNldyQJXdU5VKMHiBdEm3vQHbrPoITK7+9X5MU4WpuoHY+6i3qcTzUyJu4JTA0TUxR/ngqfD2D2shvkoyv6cWa4EB1pmOLPQAoGO5UHVwboHwCMgBNaYyFxo0bPdpA5k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zg4FSLYm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bRXstaH/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F4072C4CECD;
-	Wed, 20 Nov 2024 12:58:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zg4FSLYm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6370C4CECD;
+	Wed, 20 Nov 2024 12:58:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1732107532;
-	bh=jIvnw2Ai34zh22YL7yBeHnjaijaHCxFPqcCC82ofT2A=;
+	bh=RqyhxQNGxs5JKI9m/fNrCHdAiGn00kv7XNtcsp+m/Gc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bRXstaH/sDekwc3GqgqJoB4+OTUBU4b5r/PvMrZgW3nNE3M2q9akhk0Idi1FOep+I
-	 8/YIIDW39061FC0acbSJtoX3EbFy3m28WfYytBO78R40p5OotqVjml+L7bm1oqdLs4
-	 IyYQX2n+FlHCDSbuOJNQai6aV5TrGRLgNsEPHiR4=
+	b=zg4FSLYmUrASqxyUv+oAqTRcthAbrX1lllAngDscnE70g34c05SEB9PRocWDwo7z0
+	 4yj4u8wXjwDc4qo0y1efhl7Y4bEBNmqWimilU/CqSfFUYPrsjJrFSYbTrPSgPqTJLs
+	 h9mTDiePUkH+7IgGA2kVdfXsI5j9IqBIOW9mSxDM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maksym Glubokiy <maxgl.kernel@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.11 064/107] ALSA: hda/realtek: fix mute/micmute LEDs for a HP EliteBook 645 G10
-Date: Wed, 20 Nov 2024 13:56:39 +0100
-Message-ID: <20241120125631.119812402@linuxfoundation.org>
+	Geliang Tang <tanggeliang@kylinos.cn>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.11 065/107] mptcp: update local address flags when setting it
+Date: Wed, 20 Nov 2024 13:56:40 +0100
+Message-ID: <20241120125631.142893484@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241120125629.681745345@linuxfoundation.org>
 References: <20241120125629.681745345@linuxfoundation.org>
@@ -50,32 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maksym Glubokiy <maxgl.kernel@gmail.com>
+From: Geliang Tang <tanggeliang@kylinos.cn>
 
-commit 96409eeab8cdd394e03ec494ea9547edc27f7ab4 upstream.
+commit e0266319413d5d687ba7b6df7ca99e4b9724a4f2 upstream.
 
-HP EliteBook 645 G10 uses ALC236 codec and need the
-ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF quirk to make mute LED and
-micmute LED work.
+Just like in-kernel pm, when userspace pm does set_flags, it needs to send
+out MP_PRIO signal, and also modify the flags of the corresponding address
+entry in the local address list. This patch implements the missing logic.
 
-Signed-off-by: Maksym Glubokiy <maxgl.kernel@gmail.com>
-Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20241112154815.10888-1-maxgl.kernel@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Traverse all address entries on userspace_pm_local_addr_list to find the
+local address entry, if bkup is true, set the flags of this entry with
+FLAG_BACKUP, otherwise, clear FLAG_BACKUP.
+
+Fixes: 892f396c8e68 ("mptcp: netlink: issue MP_PRIO signals from userspace PMs")
+Cc: stable@vger.kernel.org
+Signed-off-by: Geliang Tang <tanggeliang@kylinos.cn>
+Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20241112-net-mptcp-misc-6-12-pm-v1-1-b835580cefa8@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_realtek.c |    1 +
- 1 file changed, 1 insertion(+)
+ net/mptcp/pm_userspace.c |   12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -10483,6 +10483,7 @@ static const struct snd_pci_quirk alc269
- 	SND_PCI_QUIRK(0x103c, 0x8b59, "HP Elite mt645 G7 Mobile Thin Client U89", ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
- 	SND_PCI_QUIRK(0x103c, 0x8b5d, "HP", ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
- 	SND_PCI_QUIRK(0x103c, 0x8b5e, "HP", ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
-+	SND_PCI_QUIRK(0x103c, 0x8b5f, "HP", ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
- 	SND_PCI_QUIRK(0x103c, 0x8b63, "HP Elite Dragonfly 13.5 inch G4", ALC245_FIXUP_CS35L41_SPI_4_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8b65, "HP ProBook 455 15.6 inch G10 Notebook PC", ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
- 	SND_PCI_QUIRK(0x103c, 0x8b66, "HP", ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
+--- a/net/mptcp/pm_userspace.c
++++ b/net/mptcp/pm_userspace.c
+@@ -574,6 +574,7 @@ int mptcp_userspace_pm_set_flags(struct
+ 	struct nlattr *token = info->attrs[MPTCP_PM_ATTR_TOKEN];
+ 	struct nlattr *attr = info->attrs[MPTCP_PM_ATTR_ADDR];
+ 	struct net *net = sock_net(skb->sk);
++	struct mptcp_pm_addr_entry *entry;
+ 	struct mptcp_sock *msk;
+ 	int ret = -EINVAL;
+ 	struct sock *sk;
+@@ -615,6 +616,17 @@ int mptcp_userspace_pm_set_flags(struct
+ 	if (loc.flags & MPTCP_PM_ADDR_FLAG_BACKUP)
+ 		bkup = 1;
+ 
++	spin_lock_bh(&msk->pm.lock);
++	list_for_each_entry(entry, &msk->pm.userspace_pm_local_addr_list, list) {
++		if (mptcp_addresses_equal(&entry->addr, &loc.addr, false)) {
++			if (bkup)
++				entry->flags |= MPTCP_PM_ADDR_FLAG_BACKUP;
++			else
++				entry->flags &= ~MPTCP_PM_ADDR_FLAG_BACKUP;
++		}
++	}
++	spin_unlock_bh(&msk->pm.lock);
++
+ 	lock_sock(sk);
+ 	ret = mptcp_pm_nl_mp_prio_send_ack(msk, &loc.addr, &rem.addr, bkup);
+ 	release_sock(sk);
 
 
