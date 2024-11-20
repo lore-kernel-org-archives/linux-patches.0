@@ -1,114 +1,82 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50DF51AA782;
-	Wed, 20 Nov 2024 13:01:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 885301C9B84;
+	Wed, 20 Nov 2024 15:13:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732107715; cv=none; b=gomP0+J/hGGjqou/E3/1etlp3AIXe5/RWN4zfeIeRKi+yVvlgVCnFG/skdxT9adeCRj4HGPmaOUGLc62LStPwi0CT1D0EISEUK+8X7dAyiJ7DciorFGTC7QdqkwcRO7VE7+6IjyWuNBO492NnQiTtm3Xc+MRNv2ZbsinIwqvz3w=
+	t=1732115632; cv=none; b=TyKHNhMFMZnbrk2lYJhMhRorWU7NsbJcipzFtqTl2n7yjDVgB5IQkoST1gKRaT3xak5kwrtC7zQ0JQ+5QwK1z/9aLVqFS3z/ylPaGBokb2U4UGU7FSxE1itdlyCKpgGoxorlRE14gubnouuIspDjbOK55VOkeScRenwziH9IECY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732107715; c=relaxed/simple;
-	bh=7GEFDIXHD1s3So54glhHE7n+zavhQnQS6aA9+A7ng4U=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HHBrGTfM9B1DulOgdIHr97WNBMV94olFP6xQjfKw1Yw2w7WluwraVhxv79bNxsDMlVi+b2fYc28zQgdLtPRqTGXReH6aXnU7fpkGahaULcEa+P0SEK02PlccJhcu+1v9kn12L51vC5ajw/icaQ6rIrrwAWyzmlqUBfwGFKZgAgs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WFemKhBI; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1732115632; c=relaxed/simple;
+	bh=uOwuHPzVcd6zYIYRf4qO/jqsh1MN5P9Nn03V801MwYI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ZZF0cJqEzpAevgbTboXqvjDd5TGc+eoCEBcukXO09WB4OimArziB3Bp5y5OUlRnLttZw1MWIkNT5vKkc6Wsr4sX+B8EmNuHwzRAiDUcS8xEX+5LjNHoSpakw49gJOaKQ9d1kM4voH6pxKRBa9zG6Euq6TUMKutpeAKVLuVV0S2o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mmyRPNFV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WFemKhBI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F352C4CED1;
-	Wed, 20 Nov 2024 13:01:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1732107715;
-	bh=7GEFDIXHD1s3So54glhHE7n+zavhQnQS6aA9+A7ng4U=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WFemKhBI+RAREE/PHlXHX4TiZd2K13e1cobL6VeR3+G5birDD54V4JHatQGnBI7ub
-	 NFz4MYeVLRSb0zxXhdwJRrzKq0C95IhgGeY+fc8f8TuSXTcaDzfTSHFsZ2wihXBNQL
-	 qhed7ogUirSX01e0TjI0PWy87q/6zkzrMlwD8IYc=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org,
-	ericvh@kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	syzbot+eb83fe1cce5833cd66a0@syzkaller.appspotmail.com,
-	Xiangyu Chen <xiangyu.chen@windriver.com>
-Subject: [PATCH 6.1 57/73] fs/9p: fix uninitialized values during inode evict
-Date: Wed, 20 Nov 2024 13:58:43 +0100
-Message-ID: <20241120125810.980718603@linuxfoundation.org>
-X-Mailer: git-send-email 2.47.0
-In-Reply-To: <20241120125809.623237564@linuxfoundation.org>
-References: <20241120125809.623237564@linuxfoundation.org>
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mmyRPNFV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75362C4CECD;
+	Wed, 20 Nov 2024 15:13:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1732115631;
+	bh=uOwuHPzVcd6zYIYRf4qO/jqsh1MN5P9Nn03V801MwYI=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=mmyRPNFVwNVuIxG5LxojcvaqHxzcKiH2d8HdpTa+to2OwpgAIzwHxp7R85SQ7mNdW
+	 PpJBClRfzudMAH64Qmk8lwCHsXdeS2/RKnDyE7rw+Pa+uQyHy6M4D8D1Qz8stcC9Cy
+	 dw/gvwBvkx6ozQoFbB4jvmSyXy5PUs1LLadiBL/vft64oP0q774DULlFwQGXykQtmb
+	 8nKDF27lK31+wU/JoagXNIagxSeXPj0LDYf+gXnOVX57FkbIM4VcN5PbOI7aXovtwr
+	 8tcB/l6TCQD7NJc1fFo4bI2cgsClvMy+U2wGuohewRkBdMb2jUZDeX/aPb5YvsZ81G
+	 mWutrsOZEallA==
+Date: Wed, 20 Nov 2024 15:13:45 +0000
+From: Mark Brown <broonie@kernel.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+	conor@kernel.org, hargar@microsoft.com
+Subject: Re: [PATCH 6.12 0/3] 6.12.1-rc1 review
+Message-ID: <d7bb7a05-bc03-4fa0-97a9-bf4425a38100@sirena.org.uk>
+References: <20241120124100.444648273@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-
-6.1-stable review patch.  If anyone has any objections, please let me know.
-
-------------------
-
-From: Eric Van Hensbergen <ericvh@kernel.org>
-
-[ Upstream commit 6630036b7c228f57c7893ee0403e92c2db2cd21d ]
-
-If an iget fails due to not being able to retrieve information
-from the server then the inode structure is only partially
-initialized.  When the inode gets evicted, references to
-uninitialized structures (like fscache cookies) were being
-made.
-
-This patch checks for a bad_inode before doing anything other
-than clearing the inode from the cache.  Since the inode is
-bad, it shouldn't have any state associated with it that needs
-to be written back (and there really isn't a way to complete
-those anyways).
-
-Reported-by: syzbot+eb83fe1cce5833cd66a0@syzkaller.appspotmail.com
-Signed-off-by: Eric Van Hensbergen <ericvh@kernel.org>
-(cherry picked from commit 1b4cb6e91f19b81217ad98142ee53a1ab25893fd)
-[Xiangyu: CVE-2024-36923 Minor conflict resolution due to missing 4eb31178 ]
-Signed-off-by: Xiangyu Chen <xiangyu.chen@windriver.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- fs/9p/vfs_inode.c |   23 +++++++++++++----------
- 1 file changed, 13 insertions(+), 10 deletions(-)
-
---- a/fs/9p/vfs_inode.c
-+++ b/fs/9p/vfs_inode.c
-@@ -392,17 +392,20 @@ void v9fs_evict_inode(struct inode *inod
- 	struct v9fs_inode *v9inode = V9FS_I(inode);
- 	__le32 version;
- 
--	truncate_inode_pages_final(&inode->i_data);
--	version = cpu_to_le32(v9inode->qid.version);
--	fscache_clear_inode_writeback(v9fs_inode_cookie(v9inode), inode,
-+	if (!is_bad_inode(inode)) {
-+		truncate_inode_pages_final(&inode->i_data);
-+		version = cpu_to_le32(v9inode->qid.version);
-+		fscache_clear_inode_writeback(v9fs_inode_cookie(v9inode), inode,
- 				      &version);
--	clear_inode(inode);
--	filemap_fdatawrite(&inode->i_data);
--
--	fscache_relinquish_cookie(v9fs_inode_cookie(v9inode), false);
--	/* clunk the fid stashed in writeback_fid */
--	p9_fid_put(v9inode->writeback_fid);
--	v9inode->writeback_fid = NULL;
-+		clear_inode(inode);
-+		filemap_fdatawrite(&inode->i_data);
-+		if (v9fs_inode_cookie(v9inode))
-+			fscache_relinquish_cookie(v9fs_inode_cookie(v9inode), false);
-+		/* clunk the fid stashed in writeback_fid */
-+		p9_fid_put(v9inode->writeback_fid);
-+		v9inode->writeback_fid = NULL;
-+	} else
-+		clear_inode(inode);
- }
- 
- static int v9fs_test_inode(struct inode *inode, void *data)
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="cixMipoW/OXll4DT"
+Content-Disposition: inline
+In-Reply-To: <20241120124100.444648273@linuxfoundation.org>
+X-Cookie: Place stamp here.
 
 
+--cixMipoW/OXll4DT
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+
+On Wed, Nov 20, 2024 at 01:55:54PM +0100, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.12.1 release.
+> There are 3 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+
+Tested-by: Mark Brown <broonie@kernel.org>
+
+--cixMipoW/OXll4DT
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmc9/KgACgkQJNaLcl1U
+h9BTfQf/UC8j7yxJCYUhq/L1am+cUnPIjzGE7NuFZL1nKDt1kdk9JYamTtGpbRW+
+X36CU83/yn/tXiRgEe6+2s4sOlh1S7XWQ9Hue/0kMj8lwk6l9yncNpWmcPYLVJX/
+g6ZmgkumCAbEb1TMenck6qHsChVBVEYp/r0q/5SqW/faeiyuOOiLDA5CSddhitYW
+uwSk+FAwSWBo5b9OgyX1PLuX6aZPMEKyEC7Eze1Oh7uTct3fY/PE2C40QBYVtznZ
+DeAWWliduaDMXxH9z/McIqo9ZNBeb/iI1/2Rnb3u3LGf3M+rjr1KSGTGQtsGEYVe
+gfLjGierUFJa0g/GoDrusJoYs201tQ==
+=lgDk
+-----END PGP SIGNATURE-----
+
+--cixMipoW/OXll4DT--
