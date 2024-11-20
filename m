@@ -1,43 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1ACAF1DFEF;
-	Wed, 20 Nov 2024 12:59:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DA341DFEF;
+	Wed, 20 Nov 2024 12:59:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732107544; cv=none; b=nNoGZuELjATSZOMTB+a2c+FgTDyQI2m0qYoNhfNyaUwH2mcR3mVxYlI4KZOKGSD8yLSMmrWLUu/djhiIBdF8FcswkJguRM5WKGpywgBjybg9hKideop39SCuNZZr9HrVHSWjO/H2n9/4nODEBcCVvl+I78gReSzxnOUAGb7GDpc=
+	t=1732107544; cv=none; b=QyA26qjiri+Tm/5qNCF31+tWxH0olLWbPr4OsBvQEebsZu+U4DzRbCvhPvZjVUB1g6eVd/RcJptGk669Mo5qBU+ypDThnWXZyC0PqGjDNQqb5opCo9jNQj5y4+H+qNbW+qahVLLqfdmfT/Z2VWojVN//BHiBD8dxLbqtpofiUa8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1732107544; c=relaxed/simple;
-	bh=MBQ/r6HxBVZRAqmgW+vXUQYXZEJ5RpFf03M4yIIB5h4=;
+	bh=Q1Bgpz1DgwTBrtATz0jIHqFCTwuYx+SjQ7g4QqkS+0Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aswi+Sa11Hk7O/hlAMWVkCKmbQ38ZCM686M8bSVLM/gkhdsslKbrBzLoG7l3JTfpA0l6S64VAtt/aL74IJWoWaDEja0r363VZ4AA9aDhQT6Jf9eYCZOsQi95hfVNmLpNY+RRp3spdiI2rXNNtyqIx2xo382bVKq+K5iIL8IHZG4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rtdFcZsk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LHfhLnA9UBHpiS0caqs2KhNQ8DW4gZB30AIqDDlmX5GoSJcBUG+EcnXxN2Rsg0KX9dPdborSXxMAWHfgkGo0pZ+94nlzvFgnJptsznwkoBQ+/nEO6gHW3Fydgei7SdaNDSS68lQLJVOh2x+Ix4rJnRTioaJ+OxCaS5tuovdogTE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hUIhACP4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rtdFcZsk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B293C4CED2;
-	Wed, 20 Nov 2024 12:59:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hUIhACP4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C3ACC4CECD;
+	Wed, 20 Nov 2024 12:59:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1732107543;
-	bh=MBQ/r6HxBVZRAqmgW+vXUQYXZEJ5RpFf03M4yIIB5h4=;
+	s=korg; t=1732107544;
+	bh=Q1Bgpz1DgwTBrtATz0jIHqFCTwuYx+SjQ7g4QqkS+0Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rtdFcZskauo5JXYRuCn/uk582x9VcHhMuODIarg8Q/60lDsSxajTz+RZG2h/R4z6K
-	 0lJU9CVfhVF2ozVjhR3pGQko4yzmElxTybLqCl0aFV0ngAEIzszh6rWfnErK+yLMbW
-	 rje1DSYB/z2SDc3E8YE/1m5NEHVH3o3jfPSTzviE=
+	b=hUIhACP4m8mv1u2eNVs756ge0wGMyUSQhA/sB87LhIjcWZbgX2KxaQJapw6xNHFB9
+	 WQ2rKl4PP52cmCkg3by+lDEYR5HNxTJSe65cjfYUwoK/Zd4gAilUrwuQgmPXcC0Bm4
+	 H/HYs6xXSra3eqrx+vrBlueAV0wNDXj2drnjAtUE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinjiang Tu <tujinjiang@huawei.com>,
-	Vlastimil Babka <vbabka@suse.cz>,
-	Alexander Lobakin <alobakin@pm.me>,
-	David Hildenbrand <david@redhat.com>,
-	Kefeng Wang <wangkefeng.wang@huawei.com>,
-	Mel Gorman <mgorman@techsingularity.net>,
-	Nanyong Sun <sunnanyong@huawei.com>,
+	Dmitry Antipov <dmantipov@yandex.ru>,
+	syzbot+453873f1588c2d75b447@syzkaller.appspotmail.com,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Mark Fasheh <mark@fasheh.com>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Jun Piao <piaojun@huawei.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.11 042/107] mm: fix NULL pointer dereference in alloc_pages_bulk_noprof
-Date: Wed, 20 Nov 2024 13:56:17 +0100
-Message-ID: <20241120125630.623952974@linuxfoundation.org>
+Subject: [PATCH 6.11 043/107] ocfs2: uncache inode which has failed entering the group
+Date: Wed, 20 Nov 2024 13:56:18 +0100
+Message-ID: <20241120125630.646327352@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241120125629.681745345@linuxfoundation.org>
 References: <20241120125629.681745345@linuxfoundation.org>
@@ -56,59 +57,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinjiang Tu <tujinjiang@huawei.com>
+From: Dmitry Antipov <dmantipov@yandex.ru>
 
-commit 8ce41b0f9d77cca074df25afd39b86e2ee3aa68e upstream.
+commit 737f34137844d6572ab7d473c998c7f977ff30eb upstream.
 
-We triggered a NULL pointer dereference for ac.preferred_zoneref->zone in
-alloc_pages_bulk_noprof() when the task is migrated between cpusets.
+Syzbot has reported the following BUG:
 
-When cpuset is enabled, in prepare_alloc_pages(), ac->nodemask may be
-&current->mems_allowed.  when first_zones_zonelist() is called to find
-preferred_zoneref, the ac->nodemask may be modified concurrently if the
-task is migrated between different cpusets.  Assuming we have 2 NUMA Node,
-when traversing Node1 in ac->zonelist, the nodemask is 2, and when
-traversing Node2 in ac->zonelist, the nodemask is 1.  As a result, the
-ac->preferred_zoneref points to NULL zone.
+kernel BUG at fs/ocfs2/uptodate.c:509!
+...
+Call Trace:
+ <TASK>
+ ? __die_body+0x5f/0xb0
+ ? die+0x9e/0xc0
+ ? do_trap+0x15a/0x3a0
+ ? ocfs2_set_new_buffer_uptodate+0x145/0x160
+ ? do_error_trap+0x1dc/0x2c0
+ ? ocfs2_set_new_buffer_uptodate+0x145/0x160
+ ? __pfx_do_error_trap+0x10/0x10
+ ? handle_invalid_op+0x34/0x40
+ ? ocfs2_set_new_buffer_uptodate+0x145/0x160
+ ? exc_invalid_op+0x38/0x50
+ ? asm_exc_invalid_op+0x1a/0x20
+ ? ocfs2_set_new_buffer_uptodate+0x2e/0x160
+ ? ocfs2_set_new_buffer_uptodate+0x144/0x160
+ ? ocfs2_set_new_buffer_uptodate+0x145/0x160
+ ocfs2_group_add+0x39f/0x15a0
+ ? __pfx_ocfs2_group_add+0x10/0x10
+ ? __pfx_lock_acquire+0x10/0x10
+ ? mnt_get_write_access+0x68/0x2b0
+ ? __pfx_lock_release+0x10/0x10
+ ? rcu_read_lock_any_held+0xb7/0x160
+ ? __pfx_rcu_read_lock_any_held+0x10/0x10
+ ? smack_log+0x123/0x540
+ ? mnt_get_write_access+0x68/0x2b0
+ ? mnt_get_write_access+0x68/0x2b0
+ ? mnt_get_write_access+0x226/0x2b0
+ ocfs2_ioctl+0x65e/0x7d0
+ ? __pfx_ocfs2_ioctl+0x10/0x10
+ ? smack_file_ioctl+0x29e/0x3a0
+ ? __pfx_smack_file_ioctl+0x10/0x10
+ ? lockdep_hardirqs_on_prepare+0x43d/0x780
+ ? __pfx_lockdep_hardirqs_on_prepare+0x10/0x10
+ ? __pfx_ocfs2_ioctl+0x10/0x10
+ __se_sys_ioctl+0xfb/0x170
+ do_syscall_64+0xf3/0x230
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+...
+ </TASK>
 
-In alloc_pages_bulk_noprof(), for_each_zone_zonelist_nodemask() finds a
-allowable zone and calls zonelist_node_idx(ac.preferred_zoneref), leading
-to NULL pointer dereference.
+When 'ioctl(OCFS2_IOC_GROUP_ADD, ...)' has failed for the particular
+inode in 'ocfs2_verify_group_and_input()', corresponding buffer head
+remains cached and subsequent call to the same 'ioctl()' for the same
+inode issues the BUG() in 'ocfs2_set_new_buffer_uptodate()' (trying
+to cache the same buffer head of that inode). Fix this by uncaching
+the buffer head with 'ocfs2_remove_from_cache()' on error path in
+'ocfs2_group_add()'.
 
-__alloc_pages_noprof() fixes this issue by checking NULL pointer in commit
-ea57485af8f4 ("mm, page_alloc: fix check for NULL preferred_zone") and
-commit df76cee6bbeb ("mm, page_alloc: remove redundant checks from alloc
-fastpath").
-
-To fix it, check NULL pointer for preferred_zoneref->zone.
-
-Link: https://lkml.kernel.org/r/20241113083235.166798-1-tujinjiang@huawei.com
-Fixes: 387ba26fb1cb ("mm/page_alloc: add a bulk page allocator")
-Signed-off-by: Jinjiang Tu <tujinjiang@huawei.com>
-Reviewed-by: Vlastimil Babka <vbabka@suse.cz>
-Cc: Alexander Lobakin <alobakin@pm.me>
-Cc: David Hildenbrand <david@redhat.com>
-Cc: Kefeng Wang <wangkefeng.wang@huawei.com>
-Cc: Mel Gorman <mgorman@techsingularity.net>
-Cc: Nanyong Sun <sunnanyong@huawei.com>
+Link: https://lkml.kernel.org/r/20241114043844.111847-1-dmantipov@yandex.ru
+Fixes: 7909f2bf8353 ("[PATCH 2/2] ocfs2: Implement group add for online resize")
+Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
+Reported-by: syzbot+453873f1588c2d75b447@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=453873f1588c2d75b447
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Cc: Dmitry Antipov <dmantipov@yandex.ru>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Jun Piao <piaojun@huawei.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/page_alloc.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/ocfs2/resize.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/mm/page_alloc.c
-+++ b/mm/page_alloc.c
-@@ -4569,7 +4569,8 @@ unsigned long alloc_pages_bulk_noprof(gf
- 	gfp = alloc_gfp;
+--- a/fs/ocfs2/resize.c
++++ b/fs/ocfs2/resize.c
+@@ -574,6 +574,8 @@ out_commit:
+ 	ocfs2_commit_trans(osb, handle);
  
- 	/* Find an allowed local zone that meets the low watermark. */
--	for_each_zone_zonelist_nodemask(zone, z, ac.zonelist, ac.highest_zoneidx, ac.nodemask) {
-+	z = ac.preferred_zoneref;
-+	for_next_zone_zonelist_nodemask(zone, z, ac.highest_zoneidx, ac.nodemask) {
- 		unsigned long mark;
+ out_free_group_bh:
++	if (ret < 0)
++		ocfs2_remove_from_cache(INODE_CACHE(inode), group_bh);
+ 	brelse(group_bh);
  
- 		if (cpusets_enabled() && (alloc_flags & ALLOC_CPUSET) &&
+ out_unlock:
 
 
