@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E70BD1A7262;
-	Wed, 20 Nov 2024 12:59:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97EE01C1F0A;
+	Wed, 20 Nov 2024 12:59:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732107582; cv=none; b=dQVALRYc+e1BHFMIQPRao804wmzWKnq6Z3xhwA0c1ZeUNaqBg18ZRE8qouQo6oVBnxk73UEfJ72N5c418cfGfNGA0OCE1zlVHx9IhJ2XleEgDOTS6GPH74+jidfmicXv81bmSZXWE9VVbTHmKWXZ+8GxW4M9vIa/+oKhkS9cEfE=
+	t=1732107582; cv=none; b=IE0h2NTgu0baGl77tA4Od/hyLBk4JabA3jjm+DBa1FxPE/WpErTfd56Xc0CkXZ1JE44aCcRRQvT4zYZqnD+5T7mCxTC4Z25KRQGpvO6FQce5Ch+vJ7VUXvklf7emYb92kWMvXO/7ELkxMJ+z8xZCKG4mCUjnX1MpKJEPKt5S48E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1732107582; c=relaxed/simple;
-	bh=i6jPMdquwlpoQ1yiEG6F/GuxOrhYi3bpVfGIk7bWZeA=;
+	bh=705Nk1twKF6NKIQBfX/l1OHSCVq65+APFQVYBRJfMO4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GQS/l9y6bLbdRdFQTMIczNVQRHwQ+W1p4JuSWPkUJBt+EtKET0aMyvaQGfM9x+lctQKluVvD83m3aznFuL0QXLYm0AMs82JEmDE7V6WlPtugaunIjdfg70VekyUoaLLRH8i7FE6PZnUslJjrCPdjgJNzdZ72j4/0PxA0F9o1R9w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tuQt/pkX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DLEz8F1VMH8XFC4LUHhn7GdrVtQATDy2h9j2Atwq6WFj5Nlww4wtN8b0G2/WlbXJjV6+xh9pWg7jW+ec/P+HGHufiOZ5xVoZrUfzmNwiUSSKN9Zq7n7k6hAEr+Qy5KZyQe49njd45SrMfkPyBi7PXBSHoWWQYovRiMuEM10/Dzg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MEYSBdbI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tuQt/pkX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB64FC4CECD;
-	Wed, 20 Nov 2024 12:59:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MEYSBdbI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F921C4CECD;
+	Wed, 20 Nov 2024 12:59:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1732107581;
-	bh=i6jPMdquwlpoQ1yiEG6F/GuxOrhYi3bpVfGIk7bWZeA=;
+	s=korg; t=1732107582;
+	bh=705Nk1twKF6NKIQBfX/l1OHSCVq65+APFQVYBRJfMO4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tuQt/pkXqUxQM8gUWCacy2Yi6X+W40t3KkKOtgnPFPmSiPH7d5t02qW0oeWvI38Bq
-	 35Azr9/ELlWSHpyy51o7Z/hZ647idt5uPcp13FL0L0RLC8Cr9i/v4FY/xJ24ygmO6x
-	 fvtAph/ysYkh2Ksdc9t2/ELGo8Y27d64sfgWjuSY=
+	b=MEYSBdbItm+svjhWIa67Y8GRedMs9LwIWOB+3hjuDa0+4Fjpa1/wNdVYZ3UIzREaU
+	 1rZAtP7BM4uPIdHIYBBKd0sbfZ0TP48dQ0nR1x4oH41R3J/9KwaK6dqcZP2K+94dFI
+	 9+veqHl1WnMBap9Vl4EZ9GdsxyCqCEj3HxKExnBI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vitalii Mordan <mordan@ispras.ru>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Meghana Malladi <m-malladi@ti.com>,
+	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
+	MD Danish Anwar <danishanwar@ti.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 23/82] stmmac: dwmac-intel-plat: fix call balance of tx_clk handling routines
-Date: Wed, 20 Nov 2024 13:56:33 +0100
-Message-ID: <20241120125630.131656879@linuxfoundation.org>
+Subject: [PATCH 6.6 24/82] net: ti: icssg-prueth: Fix 1 PPS sync
+Date: Wed, 20 Nov 2024 13:56:34 +0100
+Message-ID: <20241120125630.153762392@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241120125629.623666563@linuxfoundation.org>
 References: <20241120125629.623666563@linuxfoundation.org>
@@ -51,93 +53,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vitalii Mordan <mordan@ispras.ru>
+From: Meghana Malladi <m-malladi@ti.com>
 
-[ Upstream commit 5b366eae71937ae7412365340b431064625f9617 ]
+[ Upstream commit dc065076ee7768377d7c16af7d1b0767782d8c98 ]
 
-If the clock dwmac->tx_clk was not enabled in intel_eth_plat_probe,
-it should not be disabled in any path.
+The first PPS latch time needs to be calculated by the driver
+(in rounded off seconds) and configured as the start time
+offset for the cycle. After synchronizing two PTP clocks
+running as master/slave, missing this would cause master
+and slave to start immediately with some milliseconds
+drift which causes the PPS signal to never synchronize with
+the PTP master.
 
-Conversely, if it was enabled in intel_eth_plat_probe, it must be disabled
-in all error paths to ensure proper cleanup.
-
-Found by Linux Verification Center (linuxtesting.org) with Klever.
-
-Fixes: 9efc9b2b04c7 ("net: stmmac: Add dwmac-intel-plat for GBE driver")
-Signed-off-by: Vitalii Mordan <mordan@ispras.ru>
-Link: https://patch.msgid.link/20241108173334.2973603-1-mordan@ispras.ru
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 186734c15886 ("net: ti: icssg-prueth: add packet timestamping and ptp support")
+Signed-off-by: Meghana Malladi <m-malladi@ti.com>
+Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
+Reviewed-by: MD Danish Anwar <danishanwar@ti.com>
+Link: https://patch.msgid.link/20241111095842.478833-1-m-malladi@ti.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../stmicro/stmmac/dwmac-intel-plat.c         | 25 +++++++++++++------
- 1 file changed, 17 insertions(+), 8 deletions(-)
+ drivers/net/ethernet/ti/icssg/icssg_prueth.c | 13 +++++++++++--
+ drivers/net/ethernet/ti/icssg/icssg_prueth.h | 12 ++++++++++++
+ 2 files changed, 23 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-intel-plat.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-intel-plat.c
-index 70edc5232379f..134f6506df99a 100644
---- a/drivers/net/ethernet/stmicro/stmmac/dwmac-intel-plat.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-intel-plat.c
-@@ -111,7 +111,12 @@ static int intel_eth_plat_probe(struct platform_device *pdev)
- 			if (IS_ERR(dwmac->tx_clk))
- 				return PTR_ERR(dwmac->tx_clk);
+diff --git a/drivers/net/ethernet/ti/icssg/icssg_prueth.c b/drivers/net/ethernet/ti/icssg/icssg_prueth.c
+index fb120baee5532..7efb3e347c042 100644
+--- a/drivers/net/ethernet/ti/icssg/icssg_prueth.c
++++ b/drivers/net/ethernet/ti/icssg/icssg_prueth.c
+@@ -15,6 +15,7 @@
+ #include <linux/genalloc.h>
+ #include <linux/if_vlan.h>
+ #include <linux/interrupt.h>
++#include <linux/io-64-nonatomic-hi-lo.h>
+ #include <linux/kernel.h>
+ #include <linux/mfd/syscon.h>
+ #include <linux/module.h>
+@@ -1245,6 +1246,8 @@ static int prueth_perout_enable(void *clockops_data,
+ 	struct prueth_emac *emac = clockops_data;
+ 	u32 reduction_factor = 0, offset = 0;
+ 	struct timespec64 ts;
++	u64 current_cycle;
++	u64 start_offset;
+ 	u64 ns_period;
  
--			clk_prepare_enable(dwmac->tx_clk);
-+			ret = clk_prepare_enable(dwmac->tx_clk);
-+			if (ret) {
-+				dev_err(&pdev->dev,
-+					"Failed to enable tx_clk\n");
-+				return ret;
-+			}
+ 	if (!on)
+@@ -1283,8 +1286,14 @@ static int prueth_perout_enable(void *clockops_data,
+ 	writel(reduction_factor, emac->prueth->shram.va +
+ 		TIMESYNC_FW_WC_SYNCOUT_REDUCTION_FACTOR_OFFSET);
  
- 			/* Check and configure TX clock rate */
- 			rate = clk_get_rate(dwmac->tx_clk);
-@@ -122,7 +127,7 @@ static int intel_eth_plat_probe(struct platform_device *pdev)
- 				if (ret) {
- 					dev_err(&pdev->dev,
- 						"Failed to set tx_clk\n");
--					return ret;
-+					goto err_tx_clk_disable;
- 				}
- 			}
- 		}
-@@ -136,7 +141,7 @@ static int intel_eth_plat_probe(struct platform_device *pdev)
- 			if (ret) {
- 				dev_err(&pdev->dev,
- 					"Failed to set clk_ptp_ref\n");
--				return ret;
-+				goto err_tx_clk_disable;
- 			}
- 		}
- 	}
-@@ -152,12 +157,15 @@ static int intel_eth_plat_probe(struct platform_device *pdev)
- 	}
- 
- 	ret = stmmac_dvr_probe(&pdev->dev, plat_dat, &stmmac_res);
--	if (ret) {
--		clk_disable_unprepare(dwmac->tx_clk);
--		return ret;
--	}
-+	if (ret)
-+		goto err_tx_clk_disable;
+-	writel(0, emac->prueth->shram.va +
+-		TIMESYNC_FW_WC_SYNCOUT_START_TIME_CYCLECOUNT_OFFSET);
++	current_cycle = icssg_read_time(emac->prueth->shram.va +
++					TIMESYNC_FW_WC_CYCLECOUNT_OFFSET);
++
++	/* Rounding of current_cycle count to next second */
++	start_offset = roundup(current_cycle, MSEC_PER_SEC);
++
++	hi_lo_writeq(start_offset, emac->prueth->shram.va +
++		     TIMESYNC_FW_WC_SYNCOUT_START_TIME_CYCLECOUNT_OFFSET);
  
  	return 0;
+ }
+diff --git a/drivers/net/ethernet/ti/icssg/icssg_prueth.h b/drivers/net/ethernet/ti/icssg/icssg_prueth.h
+index 3fe80a8758d30..0713ad7897b68 100644
+--- a/drivers/net/ethernet/ti/icssg/icssg_prueth.h
++++ b/drivers/net/ethernet/ti/icssg/icssg_prueth.h
+@@ -257,6 +257,18 @@ static inline int prueth_emac_slice(struct prueth_emac *emac)
+ 
+ extern const struct ethtool_ops icssg_ethtool_ops;
+ 
++static inline u64 icssg_read_time(const void __iomem *addr)
++{
++	u32 low, high;
 +
-+err_tx_clk_disable:
-+	if (dwmac->data->tx_clk_en)
-+		clk_disable_unprepare(dwmac->tx_clk);
-+	return ret;
- }
- 
- static void intel_eth_plat_remove(struct platform_device *pdev)
-@@ -165,7 +173,8 @@ static void intel_eth_plat_remove(struct platform_device *pdev)
- 	struct intel_dwmac *dwmac = get_stmmac_bsp_priv(&pdev->dev);
- 
- 	stmmac_pltfr_remove(pdev);
--	clk_disable_unprepare(dwmac->tx_clk);
-+	if (dwmac->data->tx_clk_en)
-+		clk_disable_unprepare(dwmac->tx_clk);
- }
- 
- static struct platform_driver intel_eth_plat_driver = {
++	do {
++		high = readl(addr + 4);
++		low = readl(addr);
++	} while (high != readl(addr + 4));
++
++	return low + ((u64)high << 32);
++}
++
+ /* Classifier helpers */
+ void icssg_class_set_mac_addr(struct regmap *miig_rt, int slice, u8 *mac);
+ void icssg_class_set_host_mac_addr(struct regmap *miig_rt, const u8 *mac);
 -- 
 2.43.0
 
