@@ -1,99 +1,121 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67E9B157495;
-	Wed, 20 Nov 2024 18:12:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 388B11F931;
+	Wed, 20 Nov 2024 18:14:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732126336; cv=none; b=uTzdFOkmwdIyvI6g+VX53sQmLBO9WfGMZ2u+370Gu8t9WIiZCVcP4CWR8AGgDuH4p9GWWyRsJhHjMibw7IdmOfd6cxnWsziFf+WcTFOiIZboZZ57NmxTt7KF9WSD75NFbaZexhmxqUWlYG8GPfBy9BBKQg2CKfau2xUGYeSX/Qs=
+	t=1732126451; cv=none; b=kBKm9zV5x/thlsEHxU+IIsZqqFmjaTcRX9EL2Uc5krPM8aW2hzeRdUUU6V+lq+XNOs0JVoSW4Tzr9j7z85YY5yrbV++gCw7i6lv7+N2XcuImEb7u8RWWNA216zAcn7sH2Hth8MYvn5DXcJHTcC0zrIoqaZ15CGfZwxy0E8dSuog=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732126336; c=relaxed/simple;
-	bh=yN99B6dw1+Kpn9n/hT3dqt06djMUw83aiQb2jkmwd1k=;
-	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=Kj6RoxCZIJei3jqKgMS93i3f2UfSE6WJjBmytsWNNDZ0k51WrRgTvZlifyyxPs/Eu+O7pPKmti7RQWbUbFWPnoFjPEl4w1247USHwWVaABHCrXO3/VJ3hmHEofsNgqibCu8OSuJSN5XpmaizaT1XkYfs12uboXcbe0tzUTnqOcw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OefdNV7P; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1732126451; c=relaxed/simple;
+	bh=uwloS8aq1NCY5t6kL4Soj/ngvcEhOYV4IG3I/Xyh4Gk=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=Qyz4r8jKrdIarSrwTHLcRIiHnLZ2CbO7A8VYCM7BkMTmuY2yZ7pCE5aV2wm81Pa0bHAbdk1OwzNJC1lWG4QoDR/blxHtBDmAzvLu7OVln+IOSFt1BoRx9fRoj7SI4pOFb3ohbV+iCLVGGGeYtnp7nb6A1Ulhc31H2GhiZjRYMwQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TCZ8mq5E; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OefdNV7P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FAC6C4CED0;
-	Wed, 20 Nov 2024 18:12:15 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TCZ8mq5E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9448CC4CECD;
+	Wed, 20 Nov 2024 18:14:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1732126336;
-	bh=yN99B6dw1+Kpn9n/hT3dqt06djMUw83aiQb2jkmwd1k=;
-	h=Date:From:To:cc:Subject:In-Reply-To:References:From;
-	b=OefdNV7PFnk2ZaiEc7O8w/RZR8x/cGDiPk611ulWyLYYijqqZETZ3Hm6jmXt25mDT
-	 RE78rzXi2rg1Bkkrj1PUzqWoEMLk41ttTaHefRJCNkuNX6hJxZPXI+sxmo8Kk2ge1c
-	 DDWmvP8ohlRyjQG99+VlPtiO532UfJE7mM67WupRRwbRr5u9B9MHlhT6chx+tPKaZ0
-	 G3cUufhg5H+0Ryj0tsOmz+LeqyupAoj5MUn9f50meI+knnZOgnvZwnmvbccLfNTPfH
-	 2V9aCdtLVOTtbvC8d20n/TXlXRB5sEsdbTGzQIkbmiG0VC//VDHf20L75AD/GmKRcy
-	 o1DAI/oxAtU1w==
-Date: Wed, 20 Nov 2024 19:12:12 +0100 (CET)
-From: Jiri Kosina <jikos@kernel.org>
-To: Kees Cook <kees@kernel.org>
-cc: Ulrich Teichert <ulrich.teichert@kumkeo.de>, 
-    Dominique Martinet <asmadeus@codewreck.org>, 
-    Salvatore Bonaccorso <carnil@debian.org>, 
-    Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
-    "stable@vger.kernel.org" <stable@vger.kernel.org>, 
-    "patches@lists.linux.dev" <patches@lists.linux.dev>, 
-    "y0un9n132@gmail.com" <y0un9n132@gmail.com>, 
-    Thomas Gleixner <tglx@linutronix.de>, Sasha Levin <sashal@kernel.org>, 
-    "regressions@lists.linux.dev" <regressions@lists.linux.dev>
-Subject: Re: Re: [PATCH 6.1 175/321] x86: Increase brk randomness entropy
- for 64-bit systems
-In-Reply-To: <202411201000.F3313C02@keescook>
-Message-ID: <8s8037p1-8o51-278o-nor4-o5q968rsq7op@xreary.bet>
-References: <20240827143838.192435816@linuxfoundation.org> <20240827143844.891898677@linuxfoundation.org> <Zz0_-iJH1WaR3BUZ@codewreck.org> <Zz2JQzi-5pTP_WPx@eldamar.lan> <Zz2YrA740TRgl_13@codewreck.org> <eaf6cfe58733416c928a8ff0d1d1b1ec@kumkeo.de>
- <202411201000.F3313C02@keescook>
+	s=k20201202; t=1732126450;
+	bh=uwloS8aq1NCY5t6kL4Soj/ngvcEhOYV4IG3I/Xyh4Gk=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=TCZ8mq5EVoCYmVRZjbZet8aNfT0cwzgeNSmkfylCs+EQ5rQCOpAJt0gDA3i111USb
+	 aK+6DPRGsxHSkZMoVdPzP5Yq5DgTbnaX1S4WNNaO96l/5vKLNp3vl9lfP0zfyyJkyx
+	 rVDdqDpcF1y68J1+ZertKjNEj+CSvVJMcNsljfCyziDC4NJq8aan79jplEhN5PjMj4
+	 aKCM/TrZpOCYABa5Ai7D/ZCjU3jDjIiBpl9i6UBNbdhGT4JtLPYL0jCdfvhzyHUUyW
+	 AnYvQyzFqQRYE0n7atrnRCRtAnmbsj97UbCn8byE6PZMq9amjvssnYrtdVvZm+IE52
+	 EO6/IolgKQY0g==
+From: SeongJae Park <sj@kernel.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: SeongJae Park <sj@kernel.org>,
+	stable@vger.kernel.org,
+	patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net,
+	rwarsow@gmx.de,
+	conor@kernel.org,
+	hargar@microsoft.com,
+	broonie@kernel.org,
+	damon@lists.linux.dev
+Subject: Re: [PATCH 6.12 0/3] 6.12.1-rc1 review
+Date: Wed, 20 Nov 2024 10:14:05 -0800
+Message-Id: <20241120181405.70382-1-sj@kernel.org>
+X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20241120124100.444648273@linuxfoundation.org>
+References: 
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 8bit
 
-On Wed, 20 Nov 2024, Kees Cook wrote:
+Hello,
 
-> > >> Interestigly there is another report in Debian which identifies the
-> > >> backport of upstream commit 44c76825d6eefee9eb7ce06c38e1a6632ac7eb7d
-> > >> to cause issues in the 6.1.y series:
-> > >>
-> > >> https://bugs.debian.org/1085762
-> > >>  https://lore.kernel.org/regressions/18f34d636390454180240e6a61af9217@kumkeo.de/T/#u
-> > 
-> > >Thanks for the heads up!
-> > 
-> > >This would appear to be the same bug (running qemu-aarch64 in user mode
-> > >on an x86 machine) ?
-> > >I've added Ulrich in recipients to confirm he's using qemu-user-static
-> > >like I was.
-> > 
-> > pbuilder uses qemu inside the ARM64 chroot, yes. I don't know which variety of qemu, though.
-> > 
-> > >Shame I didn't notice all his work, that would have saved me some
-> > >time :)
-> > 
-> > Well, at least we now have confirmation from two different git bisects done by
-> > two different developers, pointing to the same commit ;-)
-> 
-> It seems like the correct first step is to revert the brk change. It's
-> still not clear to me why the change is causing a problem -- I assume it
-> is colliding with some other program area.
-> 
-> Is the problem strictly with qemu-user-static? (i.e. it was GCC running
-> in qemu-user-static so the crash is qemu, not GCC) That should help me
-> narrow down the issue. There must be some built-in assumption. And it's
-> aarch64 within x86_64 where it happens (is the program within qemu also
-> aarch64 or is it arm32)?
-> 
-> Is there an simple reproducer?
+On Wed, 20 Nov 2024 13:55:54 +0100 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
 
-Also seeing /proc/<pid>/maps from a working case (without the patch) might 
-give some clue.
+> This is the start of the stable review cycle for the 6.12.1 release.
+> There are 3 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Fri, 22 Nov 2024 12:40:53 +0000.
+> Anything received after that time might be too late.
+
+This rc kernel passes DAMON functionality test[1] on my test machine.
+Attaching the test results summary below.  Please note that I retrieved the
+kernel from linux-stable-rc tree[2].
+
+Tested-by: SeongJae Park <sj@kernel.org>
+
+[1] https://github.com/damonitor/damon-tests/tree/next/corr
+[2] 11741096a22c ("Linux 6.12.1-rc1")
 
 Thanks,
+SJ
 
--- 
-Jiri Kosina
-SUSE Labs
+[...]
 
+---
+
+ok 9 selftests: damon: damos_tried_regions.py
+ok 10 selftests: damon: damon_nr_regions.py
+ok 11 selftests: damon: reclaim.sh
+ok 12 selftests: damon: lru_sort.sh
+ok 13 selftests: damon: debugfs_empty_targets.sh
+ok 14 selftests: damon: debugfs_huge_count_read_write.sh
+ok 15 selftests: damon: debugfs_duplicate_context_creation.sh
+ok 16 selftests: damon: debugfs_rm_non_contexts.sh
+ok 17 selftests: damon: debugfs_target_ids_read_before_terminate_race.sh
+ok 18 selftests: damon: debugfs_target_ids_pid_leak.sh
+ok 19 selftests: damon: sysfs_update_removed_scheme_dir.sh
+ok 20 selftests: damon: sysfs_update_schemes_tried_regions_hang.py
+ok 1 selftests: damon-tests: kunit.sh
+ok 2 selftests: damon-tests: huge_count_read_write.sh
+ok 3 selftests: damon-tests: buffer_overflow.sh
+ok 4 selftests: damon-tests: rm_contexts.sh
+ok 5 selftests: damon-tests: record_null_deref.sh
+ok 6 selftests: damon-tests: dbgfs_target_ids_read_before_terminate_race.sh
+ok 7 selftests: damon-tests: dbgfs_target_ids_pid_leak.sh
+ok 8 selftests: damon-tests: damo_tests.sh
+ok 9 selftests: damon-tests: masim-record.sh
+ok 10 selftests: damon-tests: build_i386.sh
+ok 11 selftests: damon-tests: build_arm64.sh # SKIP
+ok 12 selftests: damon-tests: build_m68k.sh # SKIP
+ok 13 selftests: damon-tests: build_i386_idle_flag.sh
+ok 14 selftests: damon-tests: build_i386_highpte.sh
+ok 15 selftests: damon-tests: build_nomemcg.sh
+ [33m
+ [92mPASS [39m
