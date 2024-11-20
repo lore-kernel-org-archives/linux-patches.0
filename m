@@ -1,43 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35D7F1BB6BE;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DED241BBBED;
 	Wed, 20 Nov 2024 13:01:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732107670; cv=none; b=oLa3qiWBjnks+YTT52Oj71aPq63S6gpWKEO1WovSSdLL1cOq6/uZMQHUkvbbUC8+5XlFg9B4lPn2rp2tHcm/xZ6ODvvgSY+qCBSfFlL4mzIBVGkQkMUSVTUJsx1C7DSFY6uiPHIqLef5xbbK771JU8G0x30HXyhQp+HR/d8D7Hk=
+	t=1732107671; cv=none; b=f1kNED+9J6vj0khDgkH4GkS7/cQqpdPi1tZLVYTIK1H8v1Kplpo7tDuoW+FeLs4LcKGlwvnGe3R/M/xQzv61Um5qR7I9MZy62mcWczA5mJjuf9pHxgSkX2PjbJaqO5WtYdIUZ2K1WHCOJOyQkxKtjN4UTnlZ5+mdF1gDKPi7D1w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732107670; c=relaxed/simple;
-	bh=kvJEMtPEAOJLI9/UnbpLEVSpArzJriYjsdsIaAnPU2Y=;
+	s=arc-20240116; t=1732107671; c=relaxed/simple;
+	bh=KdBhprWoyKzCwcIuF2nziNuOQtH//Ef0WF5nMaY0xgo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Na7tdTa2ttNJn52nlh+ozxFP8K7rlDblMj8hgvDWQrTR5naBwdslUe+T42oAgx5+c0CM/c1tUu3QClyp1EfKkvrS+xNsDezaTZUtLFnyKTbYXC9EWEfu/DBvWuXwNia9cxSyN73irMnoGiObGt2BjPAEi5EZssK25LSqCMLkJvI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mG/bT7eZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QE+u4ThkoxzMeQEJ2q2+662Rgcq0lKUsKHiw7nWAG3NVl/j3UH8b11nMeXFQMCo9iL3QGG5Cyx/Aor27RpP76APRr4TnvmhgKraUl2dRDFxAfdUKii/uWuEDXTaBhJJrCLNc5EyIc1fS8lVSzgsq1LKj1ubqQozkA9CuAGSN0h4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o/wF3TKG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mG/bT7eZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9D47C4CECD;
-	Wed, 20 Nov 2024 13:01:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o/wF3TKG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB23AC4CECD;
+	Wed, 20 Nov 2024 13:01:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1732107670;
-	bh=kvJEMtPEAOJLI9/UnbpLEVSpArzJriYjsdsIaAnPU2Y=;
+	bh=KdBhprWoyKzCwcIuF2nziNuOQtH//Ef0WF5nMaY0xgo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mG/bT7eZMHe/bxJFCbybQcsORmdSeZeByqEFEhSw6Ao7tFy63GBfrIawXUy3a1XPV
-	 eog5tYmxnkxNjhj38RDihfS5b6I3l5PNNhqnHncB1Qk8ARwxOkTkcCIYcl2qTYLNhE
-	 3jkrlT0HCFS/lTC5FvYP+BGby8dece2BIFVStH0U=
+	b=o/wF3TKGH2OAoLyhNTo3fp/7nduyRW1nyEwJniNCB4NXT440SkHR/ZuJDFQwPZOJo
+	 c96od1DqkvEaGjQGpDaU4YlZmCX6ntgpT+6Wn2NBBRYhRD1RaVh+oxR5LVFy3AGSTp
+	 nGZ29Q9PncNZtQlw2Gs8TGj/qApam8HHBlozKsoU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinjiang Tu <tujinjiang@huawei.com>,
-	Vlastimil Babka <vbabka@suse.cz>,
-	Alexander Lobakin <alobakin@pm.me>,
-	David Hildenbrand <david@redhat.com>,
-	Kefeng Wang <wangkefeng.wang@huawei.com>,
-	Mel Gorman <mgorman@techsingularity.net>,
-	Nanyong Sun <sunnanyong@huawei.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 17/73] mm: fix NULL pointer dereference in alloc_pages_bulk_noprof
-Date: Wed, 20 Nov 2024 13:58:03 +0100
-Message-ID: <20241120125810.034976545@linuxfoundation.org>
+	Kailang Yang <kailang@realtek.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.1 26/73] ALSA: hda/realtek - Fixed Clevo platform headset Mic issue
+Date: Wed, 20 Nov 2024 13:58:12 +0100
+Message-ID: <20241120125810.239240981@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241120125809.623237564@linuxfoundation.org>
 References: <20241120125809.623237564@linuxfoundation.org>
@@ -56,59 +50,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinjiang Tu <tujinjiang@huawei.com>
+From: Kailang Yang <kailang@realtek.com>
 
-commit 8ce41b0f9d77cca074df25afd39b86e2ee3aa68e upstream.
+commit 42ee87df8530150d637aa48363b72b22a9bbd78f upstream.
 
-We triggered a NULL pointer dereference for ac.preferred_zoneref->zone in
-alloc_pages_bulk_noprof() when the task is migrated between cpusets.
+Clevo platform with ALC255 Headset Mic was disable by default.
+Assigned verb table for Mic pin will enable it.
 
-When cpuset is enabled, in prepare_alloc_pages(), ac->nodemask may be
-&current->mems_allowed.  when first_zones_zonelist() is called to find
-preferred_zoneref, the ac->nodemask may be modified concurrently if the
-task is migrated between different cpusets.  Assuming we have 2 NUMA Node,
-when traversing Node1 in ac->zonelist, the nodemask is 2, and when
-traversing Node2 in ac->zonelist, the nodemask is 1.  As a result, the
-ac->preferred_zoneref points to NULL zone.
-
-In alloc_pages_bulk_noprof(), for_each_zone_zonelist_nodemask() finds a
-allowable zone and calls zonelist_node_idx(ac.preferred_zoneref), leading
-to NULL pointer dereference.
-
-__alloc_pages_noprof() fixes this issue by checking NULL pointer in commit
-ea57485af8f4 ("mm, page_alloc: fix check for NULL preferred_zone") and
-commit df76cee6bbeb ("mm, page_alloc: remove redundant checks from alloc
-fastpath").
-
-To fix it, check NULL pointer for preferred_zoneref->zone.
-
-Link: https://lkml.kernel.org/r/20241113083235.166798-1-tujinjiang@huawei.com
-Fixes: 387ba26fb1cb ("mm/page_alloc: add a bulk page allocator")
-Signed-off-by: Jinjiang Tu <tujinjiang@huawei.com>
-Reviewed-by: Vlastimil Babka <vbabka@suse.cz>
-Cc: Alexander Lobakin <alobakin@pm.me>
-Cc: David Hildenbrand <david@redhat.com>
-Cc: Kefeng Wang <wangkefeng.wang@huawei.com>
-Cc: Mel Gorman <mgorman@techsingularity.net>
-Cc: Nanyong Sun <sunnanyong@huawei.com>
+Signed-off-by: Kailang Yang <kailang@realtek.com>
 Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Link: https://lore.kernel.org/b2dcac3e09ef4f82b36d6712194e1ea4@realtek.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/page_alloc.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ sound/pci/hda/patch_realtek.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/mm/page_alloc.c
-+++ b/mm/page_alloc.c
-@@ -5457,7 +5457,8 @@ unsigned long __alloc_pages_bulk(gfp_t g
- 	gfp = alloc_gfp;
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -10872,6 +10872,8 @@ static const struct snd_hda_pin_quirk al
+ 		{0x1a, 0x40000000}),
+ 	SND_HDA_PIN_QUIRK(0x10ec0256, 0x1043, "ASUS", ALC2XX_FIXUP_HEADSET_MIC,
+ 		{0x19, 0x40000000}),
++	SND_HDA_PIN_QUIRK(0x10ec0255, 0x1558, "Clevo", ALC2XX_FIXUP_HEADSET_MIC,
++		{0x19, 0x40000000}),
+ 	{}
+ };
  
- 	/* Find an allowed local zone that meets the low watermark. */
--	for_each_zone_zonelist_nodemask(zone, z, ac.zonelist, ac.highest_zoneidx, ac.nodemask) {
-+	z = ac.preferred_zoneref;
-+	for_next_zone_zonelist_nodemask(zone, z, ac.highest_zoneidx, ac.nodemask) {
- 		unsigned long mark;
- 
- 		if (cpusets_enabled() && (alloc_flags & ALLOC_CPUSET) &&
 
 
