@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E4C81DFEF;
-	Wed, 20 Nov 2024 12:59:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 421151DFEF;
+	Wed, 20 Nov 2024 12:59:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732107541; cv=none; b=LDf9KyBv5r6L481WgGkigj/bVKx6ySIYZE9gFM7YCpRkcncpth6EEp+F4RT+1iRe9SIk2ZibFd0reDVJvn7/MZxJuqeNnzvkBW8Jyg+eFpZCfujQkImKsCcut/4bvSRQx0KY8OuFO5NHCu4fvHk52CosvmXJhxyyUTbYw6O/4oE=
+	t=1732107542; cv=none; b=MNcdxXVzgehn1F4XM991uxA0pZKZ95K4bVfkkSYA5y7m6dXfDJjcCxuiZLWJyAj2wf+ZZmMnxejvAgvI2wq3Cpj9Lc0Ly34/lrICrBmfCTcFOoRI6sFekdk7rL1yRIemDYwcenopsgUd3PI+74srnDuCrhh33dEvLjY/VMxD1R8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732107541; c=relaxed/simple;
-	bh=LemcfKD68W02ZBO17DIuRgVsk24TgtYr1BCdleKiXQg=;
+	s=arc-20240116; t=1732107542; c=relaxed/simple;
+	bh=COKaUunbj+OnATXnBjJejagYXCJP9BXboDwfATU1vWg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z9qgH88ePhrXvox2oks7tWpWGaZUQYg5ATf1i0q1Muu5TYi4MCyJkak7030zveKS9rmvBshcNkuln/w/htti18KRQEdy5ZSRC7nL+0tI69vPx/x2fIKi44VbIBkTMapTLwko8HFAJSidEWUFNLyiY/XHuU8VIBzYk7+R7fI3kl8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QN0rWmYW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ooaNT6DtuGcV9Wgu/+nVN9mWc5q91GBfloc0QyhzTlOFqPFhR7xwQwdN0QbCqKMuky618Uzp3XfRZsQQ6U9oY17NqkeifJBsQsphzDPFTT07T0FSVsog/lj+OJLCH83Uljw10PF1/c2Nog12UHygIh6CvFUJfQXWpkAu3DboTY8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZdymbXuC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QN0rWmYW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6431DC4CECD;
-	Wed, 20 Nov 2024 12:59:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZdymbXuC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E305C4CECD;
+	Wed, 20 Nov 2024 12:59:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1732107541;
-	bh=LemcfKD68W02ZBO17DIuRgVsk24TgtYr1BCdleKiXQg=;
+	s=korg; t=1732107542;
+	bh=COKaUunbj+OnATXnBjJejagYXCJP9BXboDwfATU1vWg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QN0rWmYWpA8mdPN6DQvhA8FOi1x3CsAuI+28lma86CqEJhozNnhI7AVYrimozlQN5
-	 xdVHQpqwxjbQp+MyS4wSu4LGvn+0uiKzHEPvDHbfKZBNIvcapkXMLePjmy6dgGhkT5
-	 e51cb19cEpHVUpxyJW4qdR1TehGH5+VDe0l/PUC0=
+	b=ZdymbXuCwOnFq4vBVpA7netuPOLun+oYANk3B9U8UABYwYhOPoe5XgUlVo91Dkxg7
+	 nil25JZk1De6Zd0Gj1dc/dutO6piZx4gfSxv9zx4wOIT2uh6TfDGjIggUZ5VccKMeo
+	 ZkCn+kdjJYdEvDa/47/Es8KMK3iJniSlJ+PzHHAk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>
-Subject: [PATCH 6.11 039/107] x86/CPU/AMD: Clear virtualized VMLOAD/VMSAVE on Zen4 client
-Date: Wed, 20 Nov 2024 13:56:14 +0100
-Message-ID: <20241120125630.559920968@linuxfoundation.org>
+	Baoquan He <bhe@redhat.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Tom Lendacky <thomas.lendacky@amd.com>,
+	stable@kernel.org
+Subject: [PATCH 6.11 040/107] x86/mm: Fix a kdump kernel failure on SME system when CONFIG_IMA_KEXEC=y
+Date: Wed, 20 Nov 2024 13:56:15 +0100
+Message-ID: <20241120125630.580946116@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241120125629.681745345@linuxfoundation.org>
 References: <20241120125629.681745345@linuxfoundation.org>
@@ -44,51 +46,121 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.11-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Baoquan He <bhe@redhat.com>
 
-commit a5ca1dc46a6b610dd4627d8b633d6c84f9724ef0 upstream.
+commit 8d9ffb2fe65a6c4ef114e8d4f947958a12751bbe upstream.
 
-A number of Zen4 client SoCs advertise the ability to use virtualized
-VMLOAD/VMSAVE, but using these instructions is reported to be a cause
-of a random host reboot.
+The kdump kernel is broken on SME systems with CONFIG_IMA_KEXEC=y enabled.
+Debugging traced the issue back to
 
-These instructions aren't intended to be advertised on Zen4 client
-so clear the capability.
+  b69a2afd5afc ("x86/kexec: Carry forward IMA measurement log on kexec").
 
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Testing was previously not conducted on SME systems with CONFIG_IMA_KEXEC
+enabled, which led to the oversight, with the following incarnation:
+
+...
+  ima: No TPM chip found, activating TPM-bypass!
+  Loading compiled-in module X.509 certificates
+  Loaded X.509 cert 'Build time autogenerated kernel key: 18ae0bc7e79b64700122bb1d6a904b070fef2656'
+  ima: Allocated hash algorithm: sha256
+  Oops: general protection fault, probably for non-canonical address 0xcfacfdfe6660003e: 0000 [#1] PREEMPT SMP NOPTI
+  CPU: 0 UID: 0 PID: 1 Comm: swapper/0 Not tainted 6.11.0-rc2+ #14
+  Hardware name: Dell Inc. PowerEdge R7425/02MJ3T, BIOS 1.20.0 05/03/2023
+  RIP: 0010:ima_restore_measurement_list
+  Call Trace:
+   <TASK>
+   ? show_trace_log_lvl
+   ? show_trace_log_lvl
+   ? ima_load_kexec_buffer
+   ? __die_body.cold
+   ? die_addr
+   ? exc_general_protection
+   ? asm_exc_general_protection
+   ? ima_restore_measurement_list
+   ? vprintk_emit
+   ? ima_load_kexec_buffer
+   ima_load_kexec_buffer
+   ima_init
+   ? __pfx_init_ima
+   init_ima
+   ? __pfx_init_ima
+   do_one_initcall
+   do_initcalls
+   ? __pfx_kernel_init
+   kernel_init_freeable
+   kernel_init
+   ret_from_fork
+   ? __pfx_kernel_init
+   ret_from_fork_asm
+   </TASK>
+  Modules linked in:
+  ---[ end trace 0000000000000000 ]---
+  ...
+  Kernel panic - not syncing: Fatal exception
+  Kernel Offset: disabled
+  Rebooting in 10 seconds..
+
+Adding debug printks showed that the stored addr and size of ima_kexec buffer
+are not decrypted correctly like:
+
+  ima: ima_load_kexec_buffer, buffer:0xcfacfdfe6660003e, size:0xe48066052d5df359
+
+Three types of setup_data info
+
+  — SETUP_EFI,
+  - SETUP_IMA, and
+  - SETUP_RNG_SEED
+
+are passed to the kexec/kdump kernel. Only the ima_kexec buffer
+experienced incorrect decryption. Debugging identified a bug in
+early_memremap_is_setup_data(), where an incorrect range calculation
+occurred due to the len variable in struct setup_data ended up only
+representing the length of the data field, excluding the struct's size,
+and thus leading to miscalculation.
+
+Address a similar issue in memremap_is_setup_data() while at it.
+
+  [ bp: Heavily massage. ]
+
+Fixes: b3c72fc9a78e ("x86/boot: Introduce setup_indirect")
+Signed-off-by: Baoquan He <bhe@redhat.com>
 Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Cc: stable@vger.kernel.org
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=219009
+Acked-by: Tom Lendacky <thomas.lendacky@amd.com>
+Cc: <stable@kernel.org>
+Link: https://lore.kernel.org/r/20240911081615.262202-3-bhe@redhat.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/cpu/amd.c |   11 +++++++++++
- 1 file changed, 11 insertions(+)
+ arch/x86/mm/ioremap.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/arch/x86/kernel/cpu/amd.c
-+++ b/arch/x86/kernel/cpu/amd.c
-@@ -924,6 +924,17 @@ static void init_amd_zen4(struct cpuinfo
- {
- 	if (!cpu_has(c, X86_FEATURE_HYPERVISOR))
- 		msr_set_bit(MSR_ZEN4_BP_CFG, MSR_ZEN4_BP_CFG_SHARED_BTB_FIX_BIT);
-+
-+	/*
-+	 * These Zen4 SoCs advertise support for virtualized VMLOAD/VMSAVE
-+	 * in some BIOS versions but they can lead to random host reboots.
-+	 */
-+	switch (c->x86_model) {
-+	case 0x18 ... 0x1f:
-+	case 0x60 ... 0x7f:
-+		clear_cpu_cap(c, X86_FEATURE_V_VMSAVE_VMLOAD);
-+		break;
-+	}
- }
+--- a/arch/x86/mm/ioremap.c
++++ b/arch/x86/mm/ioremap.c
+@@ -655,7 +655,8 @@ static bool memremap_is_setup_data(resou
+ 		paddr_next = data->next;
+ 		len = data->len;
  
- static void init_amd_zen5(struct cpuinfo_x86 *c)
+-		if ((phys_addr > paddr) && (phys_addr < (paddr + len))) {
++		if ((phys_addr > paddr) &&
++		    (phys_addr < (paddr + sizeof(struct setup_data) + len))) {
+ 			memunmap(data);
+ 			return true;
+ 		}
+@@ -717,7 +718,8 @@ static bool __init early_memremap_is_set
+ 		paddr_next = data->next;
+ 		len = data->len;
+ 
+-		if ((phys_addr > paddr) && (phys_addr < (paddr + len))) {
++		if ((phys_addr > paddr) &&
++		    (phys_addr < (paddr + sizeof(struct setup_data) + len))) {
+ 			early_memunmap(data, sizeof(*data));
+ 			return true;
+ 		}
 
 
