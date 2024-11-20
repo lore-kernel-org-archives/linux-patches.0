@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F18391A9B37;
-	Wed, 20 Nov 2024 13:00:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C81D21C9DF9;
+	Wed, 20 Nov 2024 13:00:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732107631; cv=none; b=UktunxLPn6GUOfvYauVEEmGAemh1oDYivMd9KE1/6Q0ap+6DJbusz/L2j/jjjfdskj3dro2EnhAlNDucjpqfVgC1iz9/U8F6/Gii9Jjr5lXX+9GR63aGhSqHEsZuFLdd/1IdZI6uBC3DnIhluxRWPTi44ghSN5AEZSKmF0gQEe8=
+	t=1732107631; cv=none; b=ox+wP7nrMCfbnZSb0bDMkTZj4jCGZU7fEi1lxyyV1bUSQZoqAgOAWIkdMBZHzxOENp4GuC4tpvHe1ZXcE6GLukqgEcIPqfFhZkgB/1Bf2QBw4DT2NU7UBOSPSQ4Rc6zulCcoJrNA5aWgcppqo6vKBsegXtiQk/tKNMe1OwD7A4o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1732107631; c=relaxed/simple;
-	bh=UDyghqrUPnJLOVpoA/KDgncdBicZtioYZUwQfv/jrcI=;
+	bh=epaCY/4Bu5kPewWLzPJ7HtM/xyfUO0cTSx2rR+9ZmLs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Pp/O+Zq5gplclw2MTUBhQ1cnVhFbazMUQcmGymSos0pNIEMRAB02gWpPIJ73l+XSJDswV/5pPp2Ioi1RYEenyfIYxDj42vUyL5gtH3m1eKgM1HWOcaWf0nOciR65Y6gFOlDiJ8DiPMhQS//AIYKogd1E63w7A9XkEOVGey5HPU8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BszirPZl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=V+siWMFcJVgYc88Or5NS5Tt8SySA/g1+pDRIf9wnfQY0JA8hjmQOWEJnJ/nH4OP0OJzqM/1Fy8IVMesl5ZBGbe1k6fvPtsTVi5MoMeS30hRNnaKGsa5rxDT3FMtR/ruQogZ9hXdPrNo6oPuBNv5BOdNAIzWg8By1dbYdmaXhFCM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ak9RqIQY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BszirPZl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8AF3C4CECD;
-	Wed, 20 Nov 2024 13:00:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ak9RqIQY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 985B8C4CECD;
+	Wed, 20 Nov 2024 13:00:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1732107630;
-	bh=UDyghqrUPnJLOVpoA/KDgncdBicZtioYZUwQfv/jrcI=;
+	s=korg; t=1732107631;
+	bh=epaCY/4Bu5kPewWLzPJ7HtM/xyfUO0cTSx2rR+9ZmLs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BszirPZlGtDLvSlrVmZPqwyOYEFRQNyWwnfMAKuhzEkoOI8AIKYZbWd4CpgSg6OMR
-	 YPpOsESjGv+My1tmiBlN/idbtwa0Y8bUx9Nd+wGhhE6xUT0GbalqbghsNJZxvZjFb5
-	 W056G9zA0x99IXKjaDYenMic/6/J5KPoIU40wQLE=
+	b=ak9RqIQYY2S7huwRcvM5gq8a0bFVmWO5594fzZ0tdx/k0cLVupQa/ubPX9q/lvz7w
+	 1pkVJJUoLYC2U4h9mvK2VnachQD/eV7V+VULTCtqRR+I4yc6hp0SA9OCNzSaoik0Fe
+	 kcAmHWvNe3xP/RK1ie5xkl6TVesM9/3axNv2BejM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	SeongJae Park <sj@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6 81/82] mm/damon/core: handle zero schemes apply interval
-Date: Wed, 20 Nov 2024 13:57:31 +0100
-Message-ID: <20241120125631.443556240@linuxfoundation.org>
+Subject: [PATCH 6.6 82/82] mm/damon/core: copy nr_accesses when splitting region
+Date: Wed, 20 Nov 2024 13:57:32 +0100
+Message-ID: <20241120125631.465852682@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241120125629.623666563@linuxfoundation.org>
 References: <20241120125629.623666563@linuxfoundation.org>
@@ -52,68 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 From: SeongJae Park <sj@kernel.org>
 
-commit 8e7bde615f634a82a44b1f3d293c049fd3ef9ca9 upstream.
+commit 1f3730fd9e8d4d77fb99c60d0e6ad4b1104e7e04 upstream.
 
-DAMON's logics to determine if this is the time to apply damos schemes
-assumes next_apply_sis is always set larger than current
-passed_sample_intervals.  And therefore assume continuously incrementing
-passed_sample_intervals will make it reaches to the next_apply_sis in
-future.  The logic hence does apply the scheme and update next_apply_sis
-only if passed_sample_intervals is same to next_apply_sis.
+Regions split function ('damon_split_region_at()') is called at the
+beginning of an aggregation interval, and when DAMOS applying the actions
+and charging quota.  Because 'nr_accesses' fields of all regions are reset
+at the beginning of each aggregation interval, and DAMOS was applying the
+action at the end of each aggregation interval, there was no need to copy
+the 'nr_accesses' field to the split-out region.
 
-If Schemes apply interval is set as zero, however, next_apply_sis is set
-same to current passed_sample_intervals, respectively.  And
-passed_sample_intervals is incremented before doing the next_apply_sis
-check.  Hence, next_apply_sis becomes larger than next_apply_sis, and the
-logic says it is not the time to apply schemes and update next_apply_sis.
-In other words, DAMON stops applying schemes until passed_sample_intervals
-overflows.
+However, commit 42f994b71404 ("mm/damon/core: implement scheme-specific
+apply interval") made DAMOS applies action on its own timing interval.
+Hence, 'nr_accesses' should also copied to split-out regions, but the
+commit didn't.  Fix it by copying it.
 
-Based on the documents and the common sense, a reasonable behavior for
-such inputs would be applying the schemes for every sampling interval.
-Handle the case by removing the assumption.
-
-Link: https://lkml.kernel.org/r/20241031183757.49610-3-sj@kernel.org
+Link: https://lkml.kernel.org/r/20231119171529.66863-1-sj@kernel.org
 Fixes: 42f994b71404 ("mm/damon/core: implement scheme-specific apply interval")
 Signed-off-by: SeongJae Park <sj@kernel.org>
-Cc: <stable@vger.kernel.org>	[6.7.x]
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/damon/core.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ mm/damon/core.c |    1 +
+ 1 file changed, 1 insertion(+)
 
 --- a/mm/damon/core.c
 +++ b/mm/damon/core.c
-@@ -989,7 +989,7 @@ static void damon_do_apply_schemes(struc
- 	damon_for_each_scheme(s, c) {
- 		struct damos_quota *quota = &s->quota;
+@@ -1215,6 +1215,7 @@ static void damon_split_region_at(struct
  
--		if (c->passed_sample_intervals != s->next_apply_sis)
-+		if (c->passed_sample_intervals < s->next_apply_sis)
- 			continue;
+ 	new->age = r->age;
+ 	new->last_nr_accesses = r->last_nr_accesses;
++	new->nr_accesses = r->nr_accesses;
  
- 		if (!s->wmarks.activated)
-@@ -1089,7 +1089,7 @@ static void kdamond_apply_schemes(struct
- 	bool has_schemes_to_apply = false;
- 
- 	damon_for_each_scheme(s, c) {
--		if (c->passed_sample_intervals != s->next_apply_sis)
-+		if (c->passed_sample_intervals < s->next_apply_sis)
- 			continue;
- 
- 		if (!s->wmarks.activated)
-@@ -1109,9 +1109,9 @@ static void kdamond_apply_schemes(struct
- 	}
- 
- 	damon_for_each_scheme(s, c) {
--		if (c->passed_sample_intervals != s->next_apply_sis)
-+		if (c->passed_sample_intervals < s->next_apply_sis)
- 			continue;
--		s->next_apply_sis +=
-+		s->next_apply_sis = c->passed_sample_intervals +
- 			(s->apply_interval_us ? s->apply_interval_us :
- 			 c->attrs.aggr_interval) / sample_interval;
- 	}
+ 	damon_insert_region(new, r, damon_next_region(r), t);
+ }
 
 
