@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 686481A4F1B;
-	Wed, 20 Nov 2024 12:58:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71B761A4F1B;
+	Wed, 20 Nov 2024 12:58:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732107500; cv=none; b=T6S4A4dKqMeG45gSTI+TGxS/uolFqdOIsFdDUieQs314l2uj1dZvQuenlyl+wBItAUbvoK7IpkwXydNDKwNKzl3uNnh9mUxSkpZTP6fMO0lZsZZHue0tgUZVe6FdtuooW4C6f2eAVSOKmHMhzOZx/t+f5+1YbVD9gzU+tnzEVlQ=
+	t=1732107501; cv=none; b=T1VPUQt5GOJR8RJdKdEvR3YVkgAGuFYBKe4rYP5ZZeHnJslWuKXehWuThgZ2wBQ0AHymLZD+QrBkfbz05r/owOrZzXrhteMvJIj9TDb2D5o9rUthY7TwjHGrx9D6e4DykvicziIf2B5jN+eIx/fQFiswAxU8KwLi0etcVJttszg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732107500; c=relaxed/simple;
-	bh=PkmnAeRKd2QD8xZaOpS8iRJhiKaNbPMWNsVii1AAb2A=;
+	s=arc-20240116; t=1732107501; c=relaxed/simple;
+	bh=AymQ/0fs7sWPZzrQLIgZTYA4M3M5+8mB06DqlBGudCs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RxoHqgtpM7ZvWPkNf05oNPEMVAyL7FWAQoKQqTv4KcmmT2DqSIwOvLnKFNICoK4E1vaNj2IGnC1tWETs0lLZa2LuAVQbRU4oirPrUsGajABmuCauo9VprS9q/csNANwsn35p9BKvQ+7g0Qi63HQaGe3zs6/NwUL6TXOpJG23lrI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w9N7JaXS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kjMq6yZSA55xXV/u0Ncqw6b25PqtkBLhQLbI33cIVw0DW+I0fBXWQodGSa82Ob58l8hACRPVpE6gkua9JzBTjpSWbfL8luuiczvodez4T9hWBbU5DKd3tE0Nov735pC5nyJ9Hc3Zgf7zKPbnXv+6MKid4B9Oghhs+YM/fJojaV8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GsgkTc9n; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w9N7JaXS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DFBCC4CED1;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GsgkTc9n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2ECEC4CECD;
 	Wed, 20 Nov 2024 12:58:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1732107500;
-	bh=PkmnAeRKd2QD8xZaOpS8iRJhiKaNbPMWNsVii1AAb2A=;
+	s=korg; t=1732107501;
+	bh=AymQ/0fs7sWPZzrQLIgZTYA4M3M5+8mB06DqlBGudCs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w9N7JaXS6qivmrDxm7Az49B3pD0wSmAuhxDt9dLPc1myZTFzrqHzhw/A0R8UrGA04
-	 C8RermQnF6VtZQlMSy6KQZZMqthAR9ou60VQNG1UsM0lMHyL8+F6Im+D3c+iEwlEn0
-	 cNEvKwY5EOa+6IGiA4WIRmfblGwto5peveq4pWtM=
+	b=GsgkTc9nxN4m37qQNj7wLZSL5A0bnsVL2QDW0CcqRtAVVeJpEeQ+z4/nVnzLoQVGY
+	 zb30AhTHyv20chxSXe4vigkEcp4A7cIIiyjWKkxik19WExNotb2WrmO3rsU0hM0CTk
+	 HkKLtS7rWualksRxmLgmh5tLr3dFwkH7ieTbi0KI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
-	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Wei Fang <wei.fang@nxp.com>,
+	Simon Horman <horms@kernel.org>,
+	Jesper Dangaard Brouer <hawk@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 024/107] net: phylink: ensure PHY momentary link-fails are handled
-Date: Wed, 20 Nov 2024 13:55:59 +0100
-Message-ID: <20241120125630.222045890@linuxfoundation.org>
+Subject: [PATCH 6.11 025/107] samples: pktgen: correct dev to DEV
+Date: Wed, 20 Nov 2024 13:56:00 +0100
+Message-ID: <20241120125630.244824225@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241120125629.681745345@linuxfoundation.org>
 References: <20241120125629.681745345@linuxfoundation.org>
@@ -52,95 +53,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+From: Wei Fang <wei.fang@nxp.com>
 
-[ Upstream commit 671154f174e0e7f242507cd074497661deb41bfd ]
+[ Upstream commit 3342dc8b4623d835e7dd76a15cec2e5a94fe2f93 ]
 
-Normally, phylib won't notify changes in quick succession. However, as
-a result of commit 3e43b903da04 ("net: phy: Immediately call
-adjust_link if only tx_lpi_enabled changes") this is no longer true -
-it is now possible that phy_link_down() and phy_link_up() will both
-complete before phylink's resolver has run, which means it'll miss that
-pl->phy_state.link momentarily became false.
+In the pktgen_sample01_simple.sh script, the device variable is uppercase
+'DEV' instead of lowercase 'dev'. Because of this typo, the script cannot
+enable UDP tx checksum.
 
-Rename "mac_link_dropped" to be more generic "link_failed" since it will
-cover more than the MAC/PCS end of the link failing, and arrange to set
-this in phylink_phy_change() if we notice that the PHY reports that the
-link is down.
-
-This will ensure that we capture an EEE reconfiguration event.
-
-Fixes: 3e43b903da04 ("net: phy: Immediately call adjust_link if only tx_lpi_enabled changes")
-Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
-Reviewed-by: Oleksij Rempel <o.rempel@pengutronix.de>
-Link: https://patch.msgid.link/E1tAtcW-002RBS-LB@rmk-PC.armlinux.org.uk
+Fixes: 460a9aa23de6 ("samples: pktgen: add UDP tx checksum support")
+Signed-off-by: Wei Fang <wei.fang@nxp.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Acked-by: Jesper Dangaard Brouer <hawk@kernel.org>
+Link: https://patch.msgid.link/20241112030347.1849335-1-wei.fang@nxp.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/phylink.c | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ samples/pktgen/pktgen_sample01_simple.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/phy/phylink.c b/drivers/net/phy/phylink.c
-index 51c526d227fab..ed60836180b78 100644
---- a/drivers/net/phy/phylink.c
-+++ b/drivers/net/phy/phylink.c
-@@ -78,7 +78,7 @@ struct phylink {
- 	unsigned int pcs_neg_mode;
- 	unsigned int pcs_state;
+diff --git a/samples/pktgen/pktgen_sample01_simple.sh b/samples/pktgen/pktgen_sample01_simple.sh
+index cdb9f497f87da..66cb707479e6c 100755
+--- a/samples/pktgen/pktgen_sample01_simple.sh
++++ b/samples/pktgen/pktgen_sample01_simple.sh
+@@ -76,7 +76,7 @@ if [ -n "$DST_PORT" ]; then
+     pg_set $DEV "udp_dst_max $UDP_DST_MAX"
+ fi
  
--	bool mac_link_dropped;
-+	bool link_failed;
- 	bool using_mac_select_pcs;
+-[ ! -z "$UDP_CSUM" ] && pg_set $dev "flag UDPCSUM"
++[ ! -z "$UDP_CSUM" ] && pg_set $DEV "flag UDPCSUM"
  
- 	struct sfp_bus *sfp_bus;
-@@ -1475,9 +1475,9 @@ static void phylink_resolve(struct work_struct *w)
- 		cur_link_state = pl->old_link_state;
- 
- 	if (pl->phylink_disable_state) {
--		pl->mac_link_dropped = false;
-+		pl->link_failed = false;
- 		link_state.link = false;
--	} else if (pl->mac_link_dropped) {
-+	} else if (pl->link_failed) {
- 		link_state.link = false;
- 		retrigger = true;
- 	} else {
-@@ -1572,7 +1572,7 @@ static void phylink_resolve(struct work_struct *w)
- 			phylink_link_up(pl, link_state);
- 	}
- 	if (!link_state.link && retrigger) {
--		pl->mac_link_dropped = false;
-+		pl->link_failed = false;
- 		queue_work(system_power_efficient_wq, &pl->resolve);
- 	}
- 	mutex_unlock(&pl->state_mutex);
-@@ -1793,6 +1793,8 @@ static void phylink_phy_change(struct phy_device *phydev, bool up)
- 		pl->phy_state.pause |= MLO_PAUSE_RX;
- 	pl->phy_state.interface = phydev->interface;
- 	pl->phy_state.link = up;
-+	if (!up)
-+		pl->link_failed = true;
- 	mutex_unlock(&pl->state_mutex);
- 
- 	phylink_run_resolve(pl);
-@@ -2116,7 +2118,7 @@ EXPORT_SYMBOL_GPL(phylink_disconnect_phy);
- static void phylink_link_changed(struct phylink *pl, bool up, const char *what)
- {
- 	if (!up)
--		pl->mac_link_dropped = true;
-+		pl->link_failed = true;
- 	phylink_run_resolve(pl);
- 	phylink_dbg(pl, "%s link %s\n", what, up ? "up" : "down");
- }
-@@ -2750,7 +2752,7 @@ int phylink_ethtool_set_pauseparam(struct phylink *pl,
- 	 * link will cycle.
- 	 */
- 	if (manual_changed) {
--		pl->mac_link_dropped = true;
-+		pl->link_failed = true;
- 		phylink_run_resolve(pl);
- 	}
- 
+ # Setup random UDP port src range
+ pg_set $DEV "flag UDPSRC_RND"
 -- 
 2.43.0
 
