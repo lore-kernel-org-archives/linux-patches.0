@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 421151DFEF;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E255B1DFEF;
 	Wed, 20 Nov 2024 12:59:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732107542; cv=none; b=MNcdxXVzgehn1F4XM991uxA0pZKZ95K4bVfkkSYA5y7m6dXfDJjcCxuiZLWJyAj2wf+ZZmMnxejvAgvI2wq3Cpj9Lc0Ly34/lrICrBmfCTcFOoRI6sFekdk7rL1yRIemDYwcenopsgUd3PI+74srnDuCrhh33dEvLjY/VMxD1R8=
+	t=1732107543; cv=none; b=t8zc/sTqXhJPiVoMcYFm/+OJV066fnuHo9XGt83NxJsqO/+v8ETH8b6VAffZ5KTZN5/RCJWESq2l2Lg0yP3pTsLqTvzs9DFIJxzU9efqX0but74WEQCgZG/5439OUG2S779M5TygYMYas8GdQTxbFm8yBDqSSnoy0D2Oww//OqQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732107542; c=relaxed/simple;
-	bh=COKaUunbj+OnATXnBjJejagYXCJP9BXboDwfATU1vWg=;
+	s=arc-20240116; t=1732107543; c=relaxed/simple;
+	bh=2KJdwdEF4f/rkh2xCgbWJ7/4scskCEIUANqUq57512g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ooaNT6DtuGcV9Wgu/+nVN9mWc5q91GBfloc0QyhzTlOFqPFhR7xwQwdN0QbCqKMuky618Uzp3XfRZsQQ6U9oY17NqkeifJBsQsphzDPFTT07T0FSVsog/lj+OJLCH83Uljw10PF1/c2Nog12UHygIh6CvFUJfQXWpkAu3DboTY8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZdymbXuC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jvZxwv0HkmY6ZEMdXv52dg5czJWig9juHnxiHlvspu7227SZtV5T29nPa/Cnaid6omqAIhCag7sGljOroNa9ot0FUxpI2/lc9ZRoeqR4Q4GCyg42Q7ADN1xCmPIBb2DZ4qfBSARnTI3atKARFWDpP/bpwrS4R5KuTe9be3F+Duk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qp3L+BXC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZdymbXuC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E305C4CECD;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qp3L+BXC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B78C0C4CECD;
 	Wed, 20 Nov 2024 12:59:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1732107542;
-	bh=COKaUunbj+OnATXnBjJejagYXCJP9BXboDwfATU1vWg=;
+	bh=2KJdwdEF4f/rkh2xCgbWJ7/4scskCEIUANqUq57512g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZdymbXuCwOnFq4vBVpA7netuPOLun+oYANk3B9U8UABYwYhOPoe5XgUlVo91Dkxg7
-	 nil25JZk1De6Zd0Gj1dc/dutO6piZx4gfSxv9zx4wOIT2uh6TfDGjIggUZ5VccKMeo
-	 ZkCn+kdjJYdEvDa/47/Es8KMK3iJniSlJ+PzHHAk=
+	b=qp3L+BXCe90XZdMGiFVIBqyk41/WV1I6kZ/2Nq25m2pEFk6mv/WuJanpervEXEccD
+	 DQQlmBz3g3PBsnWhtc8FfIzQ8Iy61gLc3q+bq/aExIe4LqXWJ7dt/njO79cEN6QBal
+	 eyFfl6AO/nVhjFI1X8N4YahfEvjWM5HhfwYVeneU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baoquan He <bhe@redhat.com>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	Brian Gerst <brgerst@gmail.com>,
 	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Tom Lendacky <thomas.lendacky@amd.com>,
-	stable@kernel.org
-Subject: [PATCH 6.11 040/107] x86/mm: Fix a kdump kernel failure on SME system when CONFIG_IMA_KEXEC=y
-Date: Wed, 20 Nov 2024 13:56:15 +0100
-Message-ID: <20241120125630.580946116@linuxfoundation.org>
+	Nathan Chancellor <nathan@kernel.org>
+Subject: [PATCH 6.11 041/107] x86/stackprotector: Work around strict Clang TLS symbol requirements
+Date: Wed, 20 Nov 2024 13:56:16 +0100
+Message-ID: <20241120125630.602084856@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241120125629.681745345@linuxfoundation.org>
 References: <20241120125629.681745345@linuxfoundation.org>
@@ -46,121 +46,135 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.11-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Baoquan He <bhe@redhat.com>
+From: Ard Biesheuvel <ardb@kernel.org>
 
-commit 8d9ffb2fe65a6c4ef114e8d4f947958a12751bbe upstream.
+commit 577c134d311b9b94598d7a0c86be1f431f823003 upstream.
 
-The kdump kernel is broken on SME systems with CONFIG_IMA_KEXEC=y enabled.
-Debugging traced the issue back to
+GCC and Clang both implement stack protector support based on Thread Local
+Storage (TLS) variables, and this is used in the kernel to implement per-task
+stack cookies, by copying a task's stack cookie into a per-CPU variable every
+time it is scheduled in.
 
-  b69a2afd5afc ("x86/kexec: Carry forward IMA measurement log on kexec").
+Both now also implement -mstack-protector-guard-symbol=, which permits the TLS
+variable to be specified directly. This is useful because it will allow to
+move away from using a fixed offset of 40 bytes into the per-CPU area on
+x86_64, which requires a lot of special handling in the per-CPU code and the
+runtime relocation code.
 
-Testing was previously not conducted on SME systems with CONFIG_IMA_KEXEC
-enabled, which led to the oversight, with the following incarnation:
+However, while GCC is rather lax in its implementation of this command line
+option, Clang actually requires that the provided symbol name refers to a TLS
+variable (i.e., one declared with __thread), although it also permits the
+variable to be undeclared entirely, in which case it will use an implicit
+declaration of the right type.
 
-...
-  ima: No TPM chip found, activating TPM-bypass!
-  Loading compiled-in module X.509 certificates
-  Loaded X.509 cert 'Build time autogenerated kernel key: 18ae0bc7e79b64700122bb1d6a904b070fef2656'
-  ima: Allocated hash algorithm: sha256
-  Oops: general protection fault, probably for non-canonical address 0xcfacfdfe6660003e: 0000 [#1] PREEMPT SMP NOPTI
-  CPU: 0 UID: 0 PID: 1 Comm: swapper/0 Not tainted 6.11.0-rc2+ #14
-  Hardware name: Dell Inc. PowerEdge R7425/02MJ3T, BIOS 1.20.0 05/03/2023
-  RIP: 0010:ima_restore_measurement_list
-  Call Trace:
-   <TASK>
-   ? show_trace_log_lvl
-   ? show_trace_log_lvl
-   ? ima_load_kexec_buffer
-   ? __die_body.cold
-   ? die_addr
-   ? exc_general_protection
-   ? asm_exc_general_protection
-   ? ima_restore_measurement_list
-   ? vprintk_emit
-   ? ima_load_kexec_buffer
-   ima_load_kexec_buffer
-   ima_init
-   ? __pfx_init_ima
-   init_ima
-   ? __pfx_init_ima
-   do_one_initcall
-   do_initcalls
-   ? __pfx_kernel_init
-   kernel_init_freeable
-   kernel_init
-   ret_from_fork
-   ? __pfx_kernel_init
-   ret_from_fork_asm
-   </TASK>
-  Modules linked in:
-  ---[ end trace 0000000000000000 ]---
-  ...
-  Kernel panic - not syncing: Fatal exception
-  Kernel Offset: disabled
-  Rebooting in 10 seconds..
+The upshot of this is that Clang will emit the correct references to the stack
+cookie variable in most cases, e.g.,
 
-Adding debug printks showed that the stored addr and size of ima_kexec buffer
-are not decrypted correctly like:
+  10d:       64 a1 00 00 00 00       mov    %fs:0x0,%eax
+                     10f: R_386_32   __stack_chk_guard
 
-  ima: ima_load_kexec_buffer, buffer:0xcfacfdfe6660003e, size:0xe48066052d5df359
+However, if a non-TLS definition of the symbol in question is visible in the
+same compilation unit (which amounts to the whole of vmlinux if LTO is
+enabled), it will drop the per-CPU prefix and emit a load from a bogus
+address.
 
-Three types of setup_data info
+Work around this by using a symbol name that never occurs in C code, and emit
+it as an alias in the linker script.
 
-  — SETUP_EFI,
-  - SETUP_IMA, and
-  - SETUP_RNG_SEED
-
-are passed to the kexec/kdump kernel. Only the ima_kexec buffer
-experienced incorrect decryption. Debugging identified a bug in
-early_memremap_is_setup_data(), where an incorrect range calculation
-occurred due to the len variable in struct setup_data ended up only
-representing the length of the data field, excluding the struct's size,
-and thus leading to miscalculation.
-
-Address a similar issue in memremap_is_setup_data() while at it.
-
-  [ bp: Heavily massage. ]
-
-Fixes: b3c72fc9a78e ("x86/boot: Introduce setup_indirect")
-Signed-off-by: Baoquan He <bhe@redhat.com>
+Fixes: 3fb0fdb3bbe7 ("x86/stackprotector/32: Make the canary into a regular percpu variable")
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Signed-off-by: Brian Gerst <brgerst@gmail.com>
 Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Acked-by: Tom Lendacky <thomas.lendacky@amd.com>
-Cc: <stable@kernel.org>
-Link: https://lore.kernel.org/r/20240911081615.262202-3-bhe@redhat.com
+Reviewed-by: Nathan Chancellor <nathan@kernel.org>
+Tested-by: Nathan Chancellor <nathan@kernel.org>
+Cc: stable@vger.kernel.org
+Link: https://github.com/ClangBuiltLinux/linux/issues/1854
+Link: https://lore.kernel.org/r/20241105155801.1779119-2-brgerst@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/mm/ioremap.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ arch/x86/Makefile                     |    5 +++--
+ arch/x86/entry/entry.S                |   16 ++++++++++++++++
+ arch/x86/include/asm/asm-prototypes.h |    3 +++
+ arch/x86/kernel/cpu/common.c          |    2 ++
+ arch/x86/kernel/vmlinux.lds.S         |    3 +++
+ 5 files changed, 27 insertions(+), 2 deletions(-)
 
---- a/arch/x86/mm/ioremap.c
-+++ b/arch/x86/mm/ioremap.c
-@@ -655,7 +655,8 @@ static bool memremap_is_setup_data(resou
- 		paddr_next = data->next;
- 		len = data->len;
+--- a/arch/x86/Makefile
++++ b/arch/x86/Makefile
+@@ -138,9 +138,10 @@ ifeq ($(CONFIG_X86_32),y)
  
--		if ((phys_addr > paddr) && (phys_addr < (paddr + len))) {
-+		if ((phys_addr > paddr) &&
-+		    (phys_addr < (paddr + sizeof(struct setup_data) + len))) {
- 			memunmap(data);
- 			return true;
- 		}
-@@ -717,7 +718,8 @@ static bool __init early_memremap_is_set
- 		paddr_next = data->next;
- 		len = data->len;
+     ifeq ($(CONFIG_STACKPROTECTOR),y)
+         ifeq ($(CONFIG_SMP),y)
+-			KBUILD_CFLAGS += -mstack-protector-guard-reg=fs -mstack-protector-guard-symbol=__stack_chk_guard
++            KBUILD_CFLAGS += -mstack-protector-guard-reg=fs \
++                             -mstack-protector-guard-symbol=__ref_stack_chk_guard
+         else
+-			KBUILD_CFLAGS += -mstack-protector-guard=global
++            KBUILD_CFLAGS += -mstack-protector-guard=global
+         endif
+     endif
+ else
+--- a/arch/x86/entry/entry.S
++++ b/arch/x86/entry/entry.S
+@@ -51,3 +51,19 @@ EXPORT_SYMBOL_GPL(mds_verw_sel);
+ .popsection
  
--		if ((phys_addr > paddr) && (phys_addr < (paddr + len))) {
-+		if ((phys_addr > paddr) &&
-+		    (phys_addr < (paddr + sizeof(struct setup_data) + len))) {
- 			early_memunmap(data, sizeof(*data));
- 			return true;
- 		}
+ THUNK warn_thunk_thunk, __warn_thunk
++
++#ifndef CONFIG_X86_64
++/*
++ * Clang's implementation of TLS stack cookies requires the variable in
++ * question to be a TLS variable. If the variable happens to be defined as an
++ * ordinary variable with external linkage in the same compilation unit (which
++ * amounts to the whole of vmlinux with LTO enabled), Clang will drop the
++ * segment register prefix from the references, resulting in broken code. Work
++ * around this by avoiding the symbol used in -mstack-protector-guard-symbol=
++ * entirely in the C code, and use an alias emitted by the linker script
++ * instead.
++ */
++#ifdef CONFIG_STACKPROTECTOR
++EXPORT_SYMBOL(__ref_stack_chk_guard);
++#endif
++#endif
+--- a/arch/x86/include/asm/asm-prototypes.h
++++ b/arch/x86/include/asm/asm-prototypes.h
+@@ -20,3 +20,6 @@
+ extern void cmpxchg8b_emu(void);
+ #endif
+ 
++#if defined(__GENKSYMS__) && defined(CONFIG_STACKPROTECTOR)
++extern unsigned long __ref_stack_chk_guard;
++#endif
+--- a/arch/x86/kernel/cpu/common.c
++++ b/arch/x86/kernel/cpu/common.c
+@@ -2084,8 +2084,10 @@ void syscall_init(void)
+ 
+ #ifdef CONFIG_STACKPROTECTOR
+ DEFINE_PER_CPU(unsigned long, __stack_chk_guard);
++#ifndef CONFIG_SMP
+ EXPORT_PER_CPU_SYMBOL(__stack_chk_guard);
+ #endif
++#endif
+ 
+ #endif	/* CONFIG_X86_64 */
+ 
+--- a/arch/x86/kernel/vmlinux.lds.S
++++ b/arch/x86/kernel/vmlinux.lds.S
+@@ -492,6 +492,9 @@ SECTIONS
+ . = ASSERT((_end - LOAD_OFFSET <= KERNEL_IMAGE_SIZE),
+ 	   "kernel image bigger than KERNEL_IMAGE_SIZE");
+ 
++/* needed for Clang - see arch/x86/entry/entry.S */
++PROVIDE(__ref_stack_chk_guard = __stack_chk_guard);
++
+ #ifdef CONFIG_X86_64
+ /*
+  * Per-cpu symbols which need to be offset from __per_cpu_load
 
 
