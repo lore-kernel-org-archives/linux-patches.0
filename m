@@ -1,39 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D92E41AD9EE;
-	Wed, 20 Nov 2024 12:59:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8972F1AA1E6;
+	Wed, 20 Nov 2024 12:59:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732107585; cv=none; b=s9+Tt9iUHaVEqD6Fs55DqyTr/YJVpx5ZOvWRjMhtaN+2Ulis0I1k61qiOWyytL9adoKE/pzHnPgCW3GXaleYKJLOQEUswfjgNwMyEjJKSxTdQjo7t3Gw1E1cxijfTFtTvvTJMmI+Le2h+K4c3ZcH95pfO1BdoNIPJFZ8Jan8+lk=
+	t=1732107586; cv=none; b=nQyryBjbCBMRDbWkS/kzNeX8Sv5sx5S6ZMLHEJmD+9YU8USoc3ptfEieR2tmnJgagfKOk2zyqKWA+wKV2dYpKoC7ryWTMLfSDU1fKidHdEphgvjjRwBhlHa59rOj3HRefKdN5ac4w3ohN5HmULMhZAgOGMwbI4c5PzjvWZYrAcE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732107585; c=relaxed/simple;
-	bh=Iylf0lCKR8HypGHKmOlPZcMXMYi+y41TtrkJk0h5nXY=;
+	s=arc-20240116; t=1732107586; c=relaxed/simple;
+	bh=WqwHEe6rbdrNMUauHspmKiFumff52F24z2yZNL4HGQs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=fgsdYjzu73baPPCMHLNTndwvwo23ypsVYNE5jo82NDaSuj39tA84LxzEpZeski8hU4QAzbxrt88QENcxPG8d4wuO06k5Iv75qK/m4lLfu2yVI0hwMh6itDahmx5Rhhnxsmy4buTCH5iAbi9rtd7SR12ujck2+4Kd2Qi2IawF8/4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yESrGd+W; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XR260Kg6zfk3X1Oo48NW/NTyy7N/BUHZ4VqsZbZcwZKSWL9fBp4bePBfW11JL/7orAjW564PKptfqE8RC6DwPmQfMyYoJLTumCfOWkx4D9QIW0FMhtDkvbb2CHacfH/oFDZHajyuMQGHJvt2bHNk3UAgrOXY2lIb5pcqDyFjzd4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b0xiubli; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yESrGd+W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACABFC4CECD;
-	Wed, 20 Nov 2024 12:59:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b0xiubli"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61F35C4CECD;
+	Wed, 20 Nov 2024 12:59:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1732107585;
-	bh=Iylf0lCKR8HypGHKmOlPZcMXMYi+y41TtrkJk0h5nXY=;
+	s=korg; t=1732107586;
+	bh=WqwHEe6rbdrNMUauHspmKiFumff52F24z2yZNL4HGQs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yESrGd+W3x8uJ2PZE3riUncZlP/c0tFTbwP3MfrFFC1ShTe5CdmoyJMh8LJbO+ceL
-	 N3Dr6NOFif8ctiRr6hiqnUaif7ON8y8Ex0B0/PgWyft8KRNc19IaoNsaxlr4m2Lj1e
-	 55dFPQVRkZiNdRVHJJg9tJsuZf8XIV69c8eeNZK0=
+	b=b0xiubliC5iGaJ2z/9jueHPlQ9D6kktv4YlKbI183liyeHo0Trz8mDxY6gU0YnFvg
+	 z3Oz4+R8oGhcz6Kj8w4YrZ7OmXxg4ByWO9XwXMnqVLJCRw3GnjiDwbDQ6ANFKpT/XJ
+	 tfZk+5L5RUKgg6sWuaH2hsFGKOFXDKbHVqf5LfUs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baoquan He <bhe@redhat.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Tom Lendacky <thomas.lendacky@amd.com>,
-	stable@kernel.org
-Subject: [PATCH 6.6 28/82] x86/mm: Fix a kdump kernel failure on SME system when CONFIG_IMA_KEXEC=y
-Date: Wed, 20 Nov 2024 13:56:38 +0100
-Message-ID: <20241120125630.245114920@linuxfoundation.org>
+	Jinjiang Tu <tujinjiang@huawei.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	Alexander Lobakin <alobakin@pm.me>,
+	David Hildenbrand <david@redhat.com>,
+	Kefeng Wang <wangkefeng.wang@huawei.com>,
+	Mel Gorman <mgorman@techsingularity.net>,
+	Nanyong Sun <sunnanyong@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.6 29/82] mm: fix NULL pointer dereference in alloc_pages_bulk_noprof
+Date: Wed, 20 Nov 2024 13:56:39 +0100
+Message-ID: <20241120125630.267536136@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241120125629.623666563@linuxfoundation.org>
 References: <20241120125629.623666563@linuxfoundation.org>
@@ -46,121 +50,65 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Baoquan He <bhe@redhat.com>
+From: Jinjiang Tu <tujinjiang@huawei.com>
 
-commit 8d9ffb2fe65a6c4ef114e8d4f947958a12751bbe upstream.
+commit 8ce41b0f9d77cca074df25afd39b86e2ee3aa68e upstream.
 
-The kdump kernel is broken on SME systems with CONFIG_IMA_KEXEC=y enabled.
-Debugging traced the issue back to
+We triggered a NULL pointer dereference for ac.preferred_zoneref->zone in
+alloc_pages_bulk_noprof() when the task is migrated between cpusets.
 
-  b69a2afd5afc ("x86/kexec: Carry forward IMA measurement log on kexec").
+When cpuset is enabled, in prepare_alloc_pages(), ac->nodemask may be
+&current->mems_allowed.  when first_zones_zonelist() is called to find
+preferred_zoneref, the ac->nodemask may be modified concurrently if the
+task is migrated between different cpusets.  Assuming we have 2 NUMA Node,
+when traversing Node1 in ac->zonelist, the nodemask is 2, and when
+traversing Node2 in ac->zonelist, the nodemask is 1.  As a result, the
+ac->preferred_zoneref points to NULL zone.
 
-Testing was previously not conducted on SME systems with CONFIG_IMA_KEXEC
-enabled, which led to the oversight, with the following incarnation:
+In alloc_pages_bulk_noprof(), for_each_zone_zonelist_nodemask() finds a
+allowable zone and calls zonelist_node_idx(ac.preferred_zoneref), leading
+to NULL pointer dereference.
 
-...
-  ima: No TPM chip found, activating TPM-bypass!
-  Loading compiled-in module X.509 certificates
-  Loaded X.509 cert 'Build time autogenerated kernel key: 18ae0bc7e79b64700122bb1d6a904b070fef2656'
-  ima: Allocated hash algorithm: sha256
-  Oops: general protection fault, probably for non-canonical address 0xcfacfdfe6660003e: 0000 [#1] PREEMPT SMP NOPTI
-  CPU: 0 UID: 0 PID: 1 Comm: swapper/0 Not tainted 6.11.0-rc2+ #14
-  Hardware name: Dell Inc. PowerEdge R7425/02MJ3T, BIOS 1.20.0 05/03/2023
-  RIP: 0010:ima_restore_measurement_list
-  Call Trace:
-   <TASK>
-   ? show_trace_log_lvl
-   ? show_trace_log_lvl
-   ? ima_load_kexec_buffer
-   ? __die_body.cold
-   ? die_addr
-   ? exc_general_protection
-   ? asm_exc_general_protection
-   ? ima_restore_measurement_list
-   ? vprintk_emit
-   ? ima_load_kexec_buffer
-   ima_load_kexec_buffer
-   ima_init
-   ? __pfx_init_ima
-   init_ima
-   ? __pfx_init_ima
-   do_one_initcall
-   do_initcalls
-   ? __pfx_kernel_init
-   kernel_init_freeable
-   kernel_init
-   ret_from_fork
-   ? __pfx_kernel_init
-   ret_from_fork_asm
-   </TASK>
-  Modules linked in:
-  ---[ end trace 0000000000000000 ]---
-  ...
-  Kernel panic - not syncing: Fatal exception
-  Kernel Offset: disabled
-  Rebooting in 10 seconds..
+__alloc_pages_noprof() fixes this issue by checking NULL pointer in commit
+ea57485af8f4 ("mm, page_alloc: fix check for NULL preferred_zone") and
+commit df76cee6bbeb ("mm, page_alloc: remove redundant checks from alloc
+fastpath").
 
-Adding debug printks showed that the stored addr and size of ima_kexec buffer
-are not decrypted correctly like:
+To fix it, check NULL pointer for preferred_zoneref->zone.
 
-  ima: ima_load_kexec_buffer, buffer:0xcfacfdfe6660003e, size:0xe48066052d5df359
-
-Three types of setup_data info
-
-  — SETUP_EFI,
-  - SETUP_IMA, and
-  - SETUP_RNG_SEED
-
-are passed to the kexec/kdump kernel. Only the ima_kexec buffer
-experienced incorrect decryption. Debugging identified a bug in
-early_memremap_is_setup_data(), where an incorrect range calculation
-occurred due to the len variable in struct setup_data ended up only
-representing the length of the data field, excluding the struct's size,
-and thus leading to miscalculation.
-
-Address a similar issue in memremap_is_setup_data() while at it.
-
-  [ bp: Heavily massage. ]
-
-Fixes: b3c72fc9a78e ("x86/boot: Introduce setup_indirect")
-Signed-off-by: Baoquan He <bhe@redhat.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Acked-by: Tom Lendacky <thomas.lendacky@amd.com>
-Cc: <stable@kernel.org>
-Link: https://lore.kernel.org/r/20240911081615.262202-3-bhe@redhat.com
+Link: https://lkml.kernel.org/r/20241113083235.166798-1-tujinjiang@huawei.com
+Fixes: 387ba26fb1cb ("mm/page_alloc: add a bulk page allocator")
+Signed-off-by: Jinjiang Tu <tujinjiang@huawei.com>
+Reviewed-by: Vlastimil Babka <vbabka@suse.cz>
+Cc: Alexander Lobakin <alobakin@pm.me>
+Cc: David Hildenbrand <david@redhat.com>
+Cc: Kefeng Wang <wangkefeng.wang@huawei.com>
+Cc: Mel Gorman <mgorman@techsingularity.net>
+Cc: Nanyong Sun <sunnanyong@huawei.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/mm/ioremap.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ mm/page_alloc.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/arch/x86/mm/ioremap.c
-+++ b/arch/x86/mm/ioremap.c
-@@ -655,7 +655,8 @@ static bool memremap_is_setup_data(resou
- 		paddr_next = data->next;
- 		len = data->len;
+--- a/mm/page_alloc.c
++++ b/mm/page_alloc.c
+@@ -4301,7 +4301,8 @@ unsigned long __alloc_pages_bulk(gfp_t g
+ 	gfp = alloc_gfp;
  
--		if ((phys_addr > paddr) && (phys_addr < (paddr + len))) {
-+		if ((phys_addr > paddr) &&
-+		    (phys_addr < (paddr + sizeof(struct setup_data) + len))) {
- 			memunmap(data);
- 			return true;
- 		}
-@@ -717,7 +718,8 @@ static bool __init early_memremap_is_set
- 		paddr_next = data->next;
- 		len = data->len;
+ 	/* Find an allowed local zone that meets the low watermark. */
+-	for_each_zone_zonelist_nodemask(zone, z, ac.zonelist, ac.highest_zoneidx, ac.nodemask) {
++	z = ac.preferred_zoneref;
++	for_next_zone_zonelist_nodemask(zone, z, ac.highest_zoneidx, ac.nodemask) {
+ 		unsigned long mark;
  
--		if ((phys_addr > paddr) && (phys_addr < (paddr + len))) {
-+		if ((phys_addr > paddr) &&
-+		    (phys_addr < (paddr + sizeof(struct setup_data) + len))) {
- 			early_memunmap(data, sizeof(*data));
- 			return true;
- 		}
+ 		if (cpusets_enabled() && (alloc_flags & ALLOC_CPUSET) &&
 
 
