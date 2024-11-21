@@ -1,49 +1,49 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.14])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.16])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5EDC18BB9A
-	for <patches@lists.linux.dev>; Thu, 21 Nov 2024 17:21:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.14
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D4296CDAF
+	for <patches@lists.linux.dev>; Thu, 21 Nov 2024 17:33:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.16
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732209721; cv=none; b=qoKD3dm4XrZjkzA7FhE8Lk4o6K/MNajX9qmp50y7TCevnqWU8iWqJDERVf5ZU8qBYI4k0sgIbIP3Z/7JSchqDC2lJQHeexZWT9e+wAawB2buD/kIT2wro3/yl5zLD1BwpWwe/nsCLkXeFRKgFTAbJpRR2sd8EpdhlauxLKcgMAk=
+	t=1732210428; cv=none; b=clDDVrHeVTmAonuewbjvtHayBndx8dNK/MCwXNR7NAJO2FyaMqS504C1+hwt96jr2RO/jOCtFskXqu2wE2o7lpD+F8aS7HNeFMoeFS+5qhSOu9Y1L0LI9NzGDwyed96XTs0myhpZvwD06OCuC+n6v4vRjCmR8Rl0KuyWK9UjDqE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732209721; c=relaxed/simple;
-	bh=uZzvCXceCCMGBokvz6i2+tM5IXiCzvpjR3wsV/2zti0=;
+	s=arc-20240116; t=1732210428; c=relaxed/simple;
+	bh=l+5rg6F5Ri2+kCpE6vsQzetIKYYVF6RSN2YSgcdjSNc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mCWfpaskVitpLkFRakXhtm9e7K0VFI+9ZAtF6hOwuRCxgFYn8Bnf/4oN4ydZdRZavPly26pz+ZIS8hfwBNBb0ebqr7fAtVlWexBhKCFB4UeGHXq+HuVfcMavEszsDwsiIWcks23rzwuarh8c22+3bEyo3rat1Ci1HQ+DDH/s45c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=N5eNftqQ; arc=none smtp.client-ip=192.198.163.14
+	 Content-Type:Content-Disposition:In-Reply-To; b=Pht0wq68C+b/TJD5+XPky03WUJXhlIWgmQrktw8OXYcLiIMITqFJhqS9mPzRlfZ33kvZx6JO9Zw0g+s6lTykdWh73udRkUHzW2Am58PIqZ6FOvbaY2RJafkKHk1xhrBv62/+XPtT59tYahTF+lXWeuNvefK1T0NuyYDNUowPVgw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Y+cIMeuf; arc=none smtp.client-ip=192.198.163.16
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="N5eNftqQ"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Y+cIMeuf"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1732209719; x=1763745719;
+  t=1732210428; x=1763746428;
   h=date:from:to:cc:subject:message-id:references:
    mime-version:in-reply-to;
-  bh=uZzvCXceCCMGBokvz6i2+tM5IXiCzvpjR3wsV/2zti0=;
-  b=N5eNftqQp2QIDK6kzjDZvfXl8nNjtZKKnB41gvXdmmIz+5yGCU1fyrJZ
-   GRmijWhuF7VwIFsbTvdvJ+NHvOz3PABQrsZNclD01+4z236aosMfQWQXt
-   hiCjyMR9brT1JFV+6c7GjvWdTLsRhQj1gTh+ZJ0Glsws2Na9zz9vOLxE3
-   7dbK237uQv+m9tPjrJcoPuAWKTbanID4JJOTwGX3L583r0vuRxJicVdTt
-   Wb0E9pweN6luC7zMdJrQ7nuJI9AmlttocNajpD9Jh72c0ek7hf4ACBuAU
-   dH4CkEXTRwU8rppElpC0s0M52N53o/UsrXlPEO1Rr85bBZG3I4FmJi/u/
-   w==;
-X-CSE-ConnectionGUID: i/TSSqHzRyW7jTEgmhteeg==
-X-CSE-MsgGUID: QGuTfYi3TruX0+yOSz4lfQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11263"; a="32580568"
+  bh=l+5rg6F5Ri2+kCpE6vsQzetIKYYVF6RSN2YSgcdjSNc=;
+  b=Y+cIMeuf57AJVLbczZs0OSPpupvm0sh7EKhi9yANbb/h7VHsFwReEo+J
+   gUhXKBxx/0Xg2bufBiXHBJZXzeEZ7fPJ06lt54b/HlxCGpSQXKu1FoTKI
+   o3OLO18YjGILtPbj4/2mkjyeXyxam9z1dIsl3N2E3g3CXr7gymMg7XwJu
+   nj5pFw2N4AaokiVviJvBp1qCv8oXJE+vSFWiVL1Y1LAMLRq2mC0he4rQ0
+   lSbhTeXlI80XoAK31fs/EZJ/pyfLntGZNVBdHUitUip1rlCMYhX96CdOg
+   CVfujx+fXCjPAq8IGTQGYUtGQ4QrBCB8WcSD+brnUofejHwxiP49H/S0i
+   g==;
+X-CSE-ConnectionGUID: JEObRMf8RHORJ5bPzGuiOw==
+X-CSE-MsgGUID: zw7D4xPnRoys9/E3yMxftA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11263"; a="19929673"
 X-IronPort-AV: E=Sophos;i="6.12,173,1728975600"; 
-   d="scan'208";a="32580568"
-Received: from fmviesa002.fm.intel.com ([10.60.135.142])
-  by fmvoesa108.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Nov 2024 09:21:59 -0800
-X-CSE-ConnectionGUID: XpRLyIZlQoqaQWkAYrTjjA==
-X-CSE-MsgGUID: zPX9LWEsSpiCTXZsOPprLg==
+   d="scan'208";a="19929673"
+Received: from orviesa001.jf.intel.com ([10.64.159.141])
+  by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Nov 2024 09:33:48 -0800
+X-CSE-ConnectionGUID: zV0y1nmISQ2iIHzzPqLcFQ==
+X-CSE-MsgGUID: RyYvtQ3vRdmH2rxhOvFAYQ==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.12,173,1728975600"; 
-   d="scan'208";a="113597678"
+   d="scan'208";a="127845120"
 Received: from agluck-desk3.sc.intel.com (HELO agluck-desk3) ([172.25.222.70])
-  by fmviesa002-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Nov 2024 09:21:59 -0800
-Date: Thu, 21 Nov 2024 09:21:58 -0800
+  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Nov 2024 09:33:46 -0800
+Date: Thu, 21 Nov 2024 09:33:44 -0800
 From: "Luck, Tony" <tony.luck@intel.com>
 To: Reinette Chatre <reinette.chatre@intel.com>
 Cc: Fenghua Yu <fenghua.yu@intel.com>,
@@ -56,12 +56,12 @@ Cc: Fenghua Yu <fenghua.yu@intel.com>,
 	"Shaopeng Tan (Fujitsu)" <tan.shaopeng@fujitsu.com>,
 	linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
 	patches@lists.linux.dev
-Subject: Re: [PATCH v9 1/9] x86/resctrl: Introduce resctrl_file_fflags_init()
- to initialize fflags
-Message-ID: <Zz9sNkBj3Mpv2vO4@agluck-desk3>
+Subject: Re: [PATCH v9 2/9] x86/resctrl: Prepare for per-ctrl_mon group
+ mba_MBps control
+Message-ID: <Zz9u-JcQBlxKZia1@agluck-desk3>
 References: <20241114001712.80315-1-tony.luck@intel.com>
- <20241114001712.80315-2-tony.luck@intel.com>
- <dd1d284f-2138-4e63-8bc5-2e55ff9f0a2d@intel.com>
+ <20241114001712.80315-3-tony.luck@intel.com>
+ <515914f2-501d-4df3-894a-2d255d18be1c@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -70,47 +70,101 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <dd1d284f-2138-4e63-8bc5-2e55ff9f0a2d@intel.com>
+In-Reply-To: <515914f2-501d-4df3-894a-2d255d18be1c@intel.com>
 
-On Tue, Nov 19, 2024 at 04:38:15PM -0800, Reinette Chatre wrote:
+On Tue, Nov 19, 2024 at 05:08:42PM -0800, Reinette Chatre wrote:
 > Hi Tony,
 > 
 > On 11/13/24 4:17 PM, Tony Luck wrote:
-> > From: Babu Moger <babu.moger@amd.com>
+> > Resctrl uses local memory bandwidth event as input to the feedback
+> > loop when the mba_MBps mount option is used. This means that this
+> > mount option cannot be used on systems that only support monitoring
+> > of total bandwidth.
 > > 
-> > thread_throttle_mode_init() and mbm_config_rftype_init() both initialize
-> > fflags for resctrl files.
-> > 
-> > Adding new files will involve adding another function to initialize
-> > the fflags. This can be simplified by adding a new function
-> > resctrl_file_fflags_init() and passing the file name and flags
-> > to be initialized.
-> > 
-> > Consolidate fflags initialization into resctrl_file_fflags_init() and
-> > remove thread_throttle_mode_init() and mbm_config_rftype_init().
-> > 
-> > Signed-off-by: Babu Moger <babu.moger@amd.com>
-> > Reviewed-by: Reinette Chatre <reinette.chatre@intel.com>
-> > Signed-off-by: Tony Luck <tony.luck@intel.com>
+> > Prepare to allow users to choose the input event independently for
+> > each ctrl_mon group.
 > 
-> Please place "Signed-off-by" tag before "Reviewed-by" tag. For reference,
-> "Ordering of commit tags" in Documentation/process/maintainer-tip.rst
-
 Hi Reinette,
 
-I had misremembered what that Documentation file said. There is a
-section that describes keeping the Signed-off-by: tags in the order
-they were applied so that the commit comment describes the path that
-the patch took before final acceptance. I thought that ordering applied
-to other tags.
+> The lack of detail on design and implementation leaves a lot for the
+> reader to decipher. For example,
+> * the change appears to create a contract that rdtgroup.mba_mbps_event
+>   is only valid if mba_sc is enabled, this is "documented" in the
+>   structure member comment but not connected to the rest of implementation, not
+>   here nor later in series.
 
-But while I was there refreshing my memory I also noted the section
-about documenting changes made when adopting patches from other
-people. So I've added:
+I'll add text documenting this to the commit comment here, and also a
+comment in the code that defines mba_mbps_default_event.
 
-[Tony: Drop __init attribute so resctrl_file_fflags_init() can be used
-at run time]
+> * the patch uses *three* different checks to manage new variables:
+>   is_mbm_local_enabled(), is_mba_sc(), and supports_mba_mbps(). Reader is
+>   left to decipher that all checks are built on is_mbm_local_enabled()
+>   and thus it is ok to use these checks before using the value that is only
+>   assigned when is_mbm_local_enabled().
+
+With some refactoring I've got that down to just one new additon of
+"is_mba_sc()" (protecting the assignment of rdtgrp->mba_mbps_event
+in rdtgroup_mkdir_ctrl_mon().
+
+> * clearly mba_mbps_default_event cannot always have a value making reader wonder
+>   if enum resctrl_event_id needs a "0", takes some deciphering to get confidence
+>   that its assignment when is_mbm_local_enabled() fits under the contract
+>   that values are only value when is_mba_sc() and thus any code following contract by
+>   first checking for mba_sc should never encounter a 0.
+
+Documented that mba_mbps_default_event remaining "0" is not an issue in
+the comment at the definition of mba_mbps_default_event.
+
+> * based on premise of this work reader may consider what happens if
+>   system does not support local MBM. more deciphering needed to get confidence
+>   that while mba_mbps_default_event will not be set, since is_mba_sc() still
+>   depends on local MBM this still fits under contract that mba_mbps_default_event
+>   cannot be used in this case.
+
+I think I've cleared up this mystery with commit and code comments.
+
+> Of course, it may just me that needs more help to understand what a patch is doing 
+> while having little insight into what it intends to do. I thought by sharing some of
+> the questions I felt needed to investigated may give some insight into the difficulty
+> a cryptic changelog creates. Review could be helped significantly if the changelog
+> provides insight into the design decisions. 
+
+Good point. I've also re-worked the cover letter to provide more
+information on the problem and solution implemented by this series.
+
+> ...
 > 
+> > @@ -3611,6 +3613,8 @@ static int rdtgroup_mkdir_ctrl_mon(struct kernfs_node *parent_kn,
+> >  			rdt_last_cmd_puts("kernfs subdir error\n");
+> >  			goto out_del_list;
+> >  		}
+> > +		if (is_mba_sc(NULL))
+> > +			rdtgrp->mba_mbps_event = mba_mbps_default_event;
+> >  	}
+> >  
+> >  	goto out_unlock;
+> > @@ -3970,6 +3974,8 @@ static void __init rdtgroup_setup_default(void)
+> >  	rdtgroup_default.closid = RESCTRL_RESERVED_CLOSID;
+> >  	rdtgroup_default.mon.rmid = RESCTRL_RESERVED_RMID;
+> >  	rdtgroup_default.type = RDTCTRL_GROUP;
+> > +	if (supports_mba_mbps())
+> > +		rdtgroup_default.mba_mbps_event = mba_mbps_default_event;
+> >  	INIT_LIST_HEAD(&rdtgroup_default.mon.crdtgrp_list);
+> >  
+> >  	list_add(&rdtgroup_default.rdtgroup_list, &rdt_all_groups);
+> 
+> I do not see the default resource group's mba_mbps_event ever being reset. This means
+> that if the user mounts resctrl, changes mba_mbps_event, umount resctrl, remount
+> resctrl, then the default resource group will not have the default mba_mbps_event
+> but whatever was set on previous mount. Is this intended? No mention of this behavior in
+> changelog.
+
+Good catch. You are correct that a changed event value in the default
+CTRL_MON group is preserved across unmount/remount. This was not
+intentional. Moving the initialization of rdtgroup_default.mba_mbps_event
+into set_mba_sc() fixes this (with the added benefit of removing the
+supports_mba_mbps() check).
+
 > Reinette
 
 -Tony
