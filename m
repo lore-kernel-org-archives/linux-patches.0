@@ -1,122 +1,181 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from NAM12-BN8-obe.outbound.protection.outlook.com (mail-bn8nam12on2070.outbound.protection.outlook.com [40.107.237.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E57F19DF66;
-	Thu, 21 Nov 2024 18:22:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732213352; cv=none; b=Y191Co3VsHAtq11a41eceYrTpvVvHrwO+pbAmjmZ9L5quIT7C6oqI+SBrec7NlqWNjX2Am5NYfobpNebBt4T38dH6kxSLWBq1vxkXEhK/Wv6v81M81P09lK9iX1a+BZ3ycvNtjwbBH10bipgkW7YY+a/U8y2oUaFA028WyZ75I8=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732213352; c=relaxed/simple;
-	bh=NlOGgKbYlSPT5mGVg0Vqrr2RjMPYarQpOk/xs/FSmYk=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=S8GlCDEdNcqVaZLdBVlID97tSY/uV+Gx/oZlUYzNiKOEqI0BQbxnElH53fpHa3222TNiWb9ydMFn98cKXFr8dMKfoM1o7QQeSm7muOQekJcTWWdqvjkAGg1qBRbux+7k/RVymT0Rdf6+6qPCoPRvn3bZGBt/Klyk5Te32m3iFeE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=atvUalK/; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56B121C7265
+	for <patches@lists.linux.dev>; Thu, 21 Nov 2024 19:39:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.237.70
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1732217985; cv=fail; b=lM3tUiwfa3SBsNxROjqVWpH2Gm5uYoHkLk74dib3LCNawJG5gkk1bTVvu1Uuw0VuAa541yBqJSRVTIGNYlg2OYSlPb1YrTQa49Zo7vpVRRlQ+VjKQyCz6kRICn1WP524KS3GG1tQwrMM/VmQXRGHA2nRBSfOUVF+/4tl0TLM2fw=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1732217985; c=relaxed/simple;
+	bh=zWL7fo7G3K67WYBszVD36hGL8I+0SHvwIGzVggrV0d0=;
+	h=From:To:CC:Subject:In-Reply-To:References:Content-Type:
+	 MIME-Version:Message-ID:Date; b=UQUE334KoLst3AkYDF51G46fXwFyySHjSlwNq0uUVUkNEmQiONZt5q647E/a1gJif8BXbejsYU97HNWwirbixICnygEZCRQ8xxv/9wgS2/5BMDDZMTZDU/fOq8uBWVLn+8Wkl53RVjNBI7LYexCraHroWFa9WAn7JPPgiBiPRc4=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=cbPI3L2o; arc=fail smtp.client-ip=40.107.237.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="atvUalK/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B671C4CECC;
-	Thu, 21 Nov 2024 18:22:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1732213351;
-	bh=NlOGgKbYlSPT5mGVg0Vqrr2RjMPYarQpOk/xs/FSmYk=;
-	h=From:Date:Subject:To:Cc:From;
-	b=atvUalK/cG6ylxLiD0a+I5dn9F7g0pAOH0QaU3bxPk0lUB0cdKxKoerXOF+bAlaYT
-	 XA7F75fFoRHiYd1i7XPk06BpZWPBuBSWL8iq2kNJJLMpRrBu17+30fuSclDF7GT2nL
-	 jyNOS14kQ39ciM+QmJSRv8jkIgYBt5vy/c9EUbc6xd+UZlPOkZq+aFwWObfxvtzxsX
-	 hlU4pEkrKUkZxQzSi4ybrPNOJx+hPBhvOnxzC1dP0Ny9LIDGg5AemNI8NNn/aaWJkf
-	 nJ4oopgOA5gRBo33SCnPHsWIVy5i6CkBH+mzrxs97GEOLuRXgyEma7zgd7XZW2i+YX
-	 xQT9e6eX47lIA==
-From: Nathan Chancellor <nathan@kernel.org>
-Date: Thu, 21 Nov 2024 11:22:18 -0700
-Subject: [PATCH v2] hexagon: Disable constant extender optimization for
- LLVM prior to 19.1.0
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="cbPI3L2o"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=NtrdzAtOPp80bWcqxntNI0MqndgmkMsDVXh2LzIPdQmzgUdlR7bZEn3mVDafXDS0LO9jZTaXV84sru1wDa7BWWl29Sh/OrSSgkz2Msp6hQ1CUazmgZRDrVB891rpLW1SKkEQCJ2qm3kDmvzH1nbsocBOECk25OCe0YvLRmoc0Ib1KSX8ATVT4Zp8bjOMuxSqm18a1FE4FjK87nuspIE4Leh1NWsdmWU9CLcBmrKZYYJqyzvsp2OrOnKQxxoHEjrj3oLPri/emT6sScBNT4mYLJJIzl3bHw56OUU9KR6yExD/Y7mluVLU5+YCkmkwzuJT49wY88YBthvV4heGLgvxkw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=RsoV5sY9eH+xsHFAdQixQwyUdI4ErPTvJ0C9xEnX+Qo=;
+ b=g5BmuZXat51aGYdjZUInRt7fZl3Gc70qeAE16IUjh7PyAX0OXiARfVEesmBQT6L2/vM2zLlKrAqlay5g3M0pUV0S1A+7Min7fMZiaKOT5EHqqw2SK5YS00ZOa6zfT1CvB2T6z5hNQ8nPFxl5tN0gzaOQ17bPcAneYddvBbsyIg+73ijBgD4KFJMs37F02XOZTVaeGbiTxkcVeLF+UjGr2cyha6BYweMSqO08UwvbB9WQwadiF5MIIl1NSjiZwiqFdGXEmWmUAUo1V6jOlYi+ch3MaymxIlj0bVqqWSrZKlJAXJ29WvcVsXqcdZ6Gj9C8L9/dWxBV0iqdo5XT6bOAVQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.117.160) smtp.rcpttodomain=linuxfoundation.org
+ smtp.mailfrom=nvidia.com; dmarc=pass (p=reject sp=reject pct=100) action=none
+ header.from=nvidia.com; dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=RsoV5sY9eH+xsHFAdQixQwyUdI4ErPTvJ0C9xEnX+Qo=;
+ b=cbPI3L2oJo0fn/II67TqX6AGF0XY4hGneZWORcwdD8XG8iQ0D829lJS7Q6kBAhtihm5xQtU6nVbwrX27R3d4Y6OiM/MLaa25AJuS0LElaRfCFsUPT4RU2gt+sPkx88sZ6jKy2+gFLM6ayaQ9uqqnXL43O92tRLJyIKaZdxyAhS0KW5H1oJIBcVRCQrd/TP/TFNHBM8e/UL3TI7OsTuWbIIZwF9y7ZNdYzbfd1sVbqWNMzwh+MThDH4morQ9PR9drLMe4S8CzkXbz5v1rJSZR85aUQELdxNWWmpZ+brcIAWznllFXxccL02sb91MkcXHwE+DzPCIihJgBi+cgppdqlg==
+Received: from SJ0PR05CA0109.namprd05.prod.outlook.com (2603:10b6:a03:334::24)
+ by DM6PR12MB4156.namprd12.prod.outlook.com (2603:10b6:5:218::17) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8182.17; Thu, 21 Nov
+ 2024 19:39:36 +0000
+Received: from CY4PEPF0000FCC3.namprd03.prod.outlook.com
+ (2603:10b6:a03:334:cafe::57) by SJ0PR05CA0109.outlook.office365.com
+ (2603:10b6:a03:334::24) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8182.16 via Frontend
+ Transport; Thu, 21 Nov 2024 19:39:36 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
+ smtp.mailfrom=nvidia.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.117.160) by
+ CY4PEPF0000FCC3.mail.protection.outlook.com (10.167.242.105) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.8182.16 via Frontend Transport; Thu, 21 Nov 2024 19:39:36 +0000
+Received: from rnnvmail202.nvidia.com (10.129.68.7) by mail.nvidia.com
+ (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Thu, 21 Nov
+ 2024 11:39:17 -0800
+Received: from rnnvmail201.nvidia.com (10.129.68.8) by rnnvmail202.nvidia.com
+ (10.129.68.7) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Thu, 21 Nov
+ 2024 11:39:16 -0800
+Received: from jonathanh-vm-01.nvidia.com (10.127.8.9) by mail.nvidia.com
+ (10.129.68.8) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4 via Frontend
+ Transport; Thu, 21 Nov 2024 11:39:15 -0800
+From: Jon Hunter <jonathanh@nvidia.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+CC: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	<patches@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
+	<torvalds@linux-foundation.org>, <akpm@linux-foundation.org>,
+	<linux@roeck-us.net>, <shuah@kernel.org>, <patches@kernelci.org>,
+	<lkft-triage@lists.linaro.org>, <pavel@denx.de>, <jonathanh@nvidia.com>,
+	<f.fainelli@gmail.com>, <sudipm.mukherjee@gmail.com>, <srw@sladewatkins.net>,
+	<rwarsow@gmx.de>, <conor@kernel.org>, <hargar@microsoft.com>,
+	<broonie@kernel.org>, <linux-tegra@vger.kernel.org>, <stable@vger.kernel.org>
+Subject: Re: [PATCH 6.1 00/73] 6.1.119-rc1 review
+In-Reply-To: <20241120125809.623237564@linuxfoundation.org>
+References: <20241120125809.623237564@linuxfoundation.org>
+X-NVConfidentiality: public
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20241121-hexagon-disable-constant-expander-pass-v2-1-1a92e9afb0f4@kernel.org>
-X-B4-Tracking: v=1; b=H4sIAFl6P2cC/43NQQ6CMBCF4auQrh1DCxZw5T0MiykdoJG0pEMIh
- nB3K/EALv+3eN8umKIjFvdsF5FWxy74FOqSiW5EPxA4m1qoXJV5nSsYacMheLCO0UwEXfC8oF+
- Athm9pQgzMkNttNHSGo19J9LZHKl32wk929Sj4yXE9+mu8rv+CNn8S6wSJBQaq6Kk5qYq+3hR9
- DRdQxxEexzHB6moz63dAAAA
-X-Change-ID: 20240802-hexagon-disable-constant-expander-pass-8b6b61db6afc
-To: Brian Cain <bcain@quicinc.com>, 
- Andrew Morton <akpm@linux-foundation.org>
-Cc: linux-hexagon@vger.kernel.org, patches@lists.linux.dev, 
- llvm@lists.linux.dev, stable@vger.kernel.org, 
- Nathan Chancellor <nathan@kernel.org>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2848; i=nathan@kernel.org;
- h=from:subject:message-id; bh=NlOGgKbYlSPT5mGVg0Vqrr2RjMPYarQpOk/xs/FSmYk=;
- b=owGbwMvMwCUmm602sfCA1DTG02pJDOn2Ven3w17GXkmtbC9WKHRauz/9Quh2o8WPX8dJlzif1
- d398OqjjlIWBjEuBlkxRZbqx6rHDQ3nnGW8cWoSzBxWJpAhDFycAjARBzuG/yGLl5ltCfJbwbhN
- 8Hjmp7bIyXs9zEQN52Y95nZnfF76roCRYVfnuSqFRb/1vJa0n3vFsFcqLnLDttzsrPKPWd/Ytoq
- /YQYA
-X-Developer-Key: i=nathan@kernel.org; a=openpgp;
- fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
+Message-ID: <d68d91f2-a903-4890-8fe6-108e01b7dfca@rnnvmail201.nvidia.com>
+Date: Thu, 21 Nov 2024 11:39:15 -0800
+X-NV-OnPremToCloud: ExternallySecured
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CY4PEPF0000FCC3:EE_|DM6PR12MB4156:EE_
+X-MS-Office365-Filtering-Correlation-Id: 7a82f4f3-2786-4cd8-9bc0-08dd0a643b1c
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|7416014|376014|82310400026|1800799024|36860700013;
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?R3pPSUw1ditKNnhNdmlSbWdRdnlqMmlVZjdSeXF3b1JqWTRrVU9UMUNZc0g4?=
+ =?utf-8?B?MlpBZWQrbmsxalRWdkNjUWhJaVFEVkQ5enNmQnFRa09UNTJDd3g0dk9LajdG?=
+ =?utf-8?B?UDN2ZUE2QlpOOGtYazlOVnEvelRGZmcweEZTMmNpSkFNSWdQaFQzNllFdXRZ?=
+ =?utf-8?B?Q0liZ0lQanhHL3lqUEJ5bVJmL1g3VDFDTXcwdDg2TVVtdzZMOHV4RXZ2RmxD?=
+ =?utf-8?B?ZlQ3MDk2dFVjOGRHSk1DaHpUKzRSZ2x1NjF3MHBsK2k2VFNLL3hFeEJzVVhr?=
+ =?utf-8?B?S2x4OEpFWFAweXE0MFo3RnBORGQ4RmVDa1h5Z2lhaERzRUIvRk1sZG1tOW1V?=
+ =?utf-8?B?czZxa3dZRFhGMGs3cHRCbWx4dmx5WUkrZytBeE1zRHJLeGptN21OcHJIb1pa?=
+ =?utf-8?B?SW5kNkxjTDR2Zks5Q1h3eGtxcE0xZjdGSXlQSG5EVHdUQmRTUVdaNjZhS0F5?=
+ =?utf-8?B?VXZ5MnRFZm1FbU0rT0l6WDkwdk03Q1hsM056bGhCZ01JWnZ6VVZBeVo4TjI4?=
+ =?utf-8?B?MjZxS3JIZDVjL0U1VnFYUmNkdm9YcTVreHNlWVFJSGcwVkd1S1JhZDFGRFFv?=
+ =?utf-8?B?TG4vVUVFMkl6bzBhbEpuaTMzM1RYK1NGYmI2OGl0Nm45ZllDSFlWOEY4cWN1?=
+ =?utf-8?B?blM2RDNBSW45SDc4L1M5a1ErRloyQXU4bkVhNnNmQk5nL09PMkhIa2hGdWly?=
+ =?utf-8?B?YUVwd1d6VFNxeHo1OTF3MTFzU0hoTzdmZ2Z5RUpkVDhTWHQzSHdlbm54RG1j?=
+ =?utf-8?B?Y1dVV2QrWHBmaGdKU2ZBWTBUS2dIR1laN0xYcGFBRGFpdE4vdE9GTTlVVzlo?=
+ =?utf-8?B?cC94ZkllZlNiT0pBV0hHRXYwbFhqSVlpOUxRblFleEJyV0o1WjgzY1JJTzUw?=
+ =?utf-8?B?Q3Z5UFp6REpiOGt0QjRwN0xoT09vaEZTSWo3VHNSMStvclMvNW9iS05sSmlE?=
+ =?utf-8?B?YVB6Tnl2bjNwaFF5WHhFcGRIMEhDTkdtcVdLaVpGWHovNzRNMTlvcFRPaGpF?=
+ =?utf-8?B?ZE1HSzl3Qk1BNjNjNW1MZVIyUTR0enBtb28zV202K2dSODRXellEMHdKZVc0?=
+ =?utf-8?B?ZGg0cFlkU2xnNWZ2Zjd1ZUl2Q2xQZ0FWaFVZbm1mTlpudzJET055ZUd0Zm9u?=
+ =?utf-8?B?NG05cmFWdEh5c2ZEQndNYUtURksyaHlyandEeHNiRUorTXpmM1Y5UXBtcU4v?=
+ =?utf-8?B?eTJ6UllWMEhNRmxmWGQ1TENncWluSWFYY2pJbE1uSnNucmNoWE9ndkF1M1cr?=
+ =?utf-8?B?UnVjMkxnd1krMm1ia0JyMWhMT0IyUUcrS1NYTVQyMCtTWSs2WmdoUkgyakVK?=
+ =?utf-8?B?aVJKZjE0WnZUQU1RMmNrQmlsVGF6cVBJRzBTWlpidVgxL1JuNXJiS3RKaEp3?=
+ =?utf-8?B?TFp2SnlIVFY0TW5VYTZLeWZzZE02ZG1na2d5WThzTlVBNEphNW5jc25Qbkw2?=
+ =?utf-8?B?WVd0OTh1UHJsandtbVZGbGhGd2Q0WjUrU3E5c0JqNVFaczZneU9KSWZpNEVi?=
+ =?utf-8?B?SzBaL3hTWkJMQmFLblRoOTAwNEhscGZGWWFXSzlZNW5LYk1OMlRpRVNOK1Ex?=
+ =?utf-8?B?NXRmUHVxQmFIVFFqQllRR1NTVmlrdlBEc3VzR2NUekk2U2gyc2tteEZCVEpr?=
+ =?utf-8?B?d0hBQ3k4dWI2RHpTZUdxNEsrS0VVdmZ1Wk4zNzRHUjJscTVPeHdrdUVLUzA5?=
+ =?utf-8?B?ZVhWMFY2eWp5dll2QXZLN2ZMaTNKQjE0TVpuM2VVTi8zK3EwSTRTUEd5c2th?=
+ =?utf-8?B?MFRoVFJ5Qis3Y0FGM05QMWxrZXZ5MTdOeHNNQTN2VWFjVHVBc1JIN1NqWDdD?=
+ =?utf-8?B?WnErQmhJSVJlcjdiUEVGMHlGYVp5ZEgyNEIvSkdFUUZNN1pCK3ZCbzhjZFgw?=
+ =?utf-8?B?TFNjR09rRkhBMmV1L1lCNVlQM2NHMjhBK1BLL3l2TW5qR0E9PQ==?=
+X-Forefront-Antispam-Report:
+	CIP:216.228.117.160;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge1.nvidia.com;CAT:NONE;SFS:(13230040)(7416014)(376014)(82310400026)(1800799024)(36860700013);DIR:OUT;SFP:1101;
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Nov 2024 19:39:36.0123
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 7a82f4f3-2786-4cd8-9bc0-08dd0a643b1c
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.160];Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	CY4PEPF0000FCC3.namprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR12MB4156
 
-The Hexagon-specific constant extender optimization in LLVM may crash on
-Linux kernel code [1], such as fs/bcache/btree_io.c after
-commit 32ed4a620c54 ("bcachefs: Btree path tracepoints") in 6.12:
+On Wed, 20 Nov 2024 13:57:46 +0100, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.1.119 release.
+> There are 73 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Fri, 22 Nov 2024 12:57:58 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.119-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
-  clang: llvm/lib/Target/Hexagon/HexagonConstExtenders.cpp:745: bool (anonymous namespace)::HexagonConstExtenders::ExtRoot::operator<(const HCE::ExtRoot &) const: Assertion `ThisB->getParent() == OtherB->getParent()' failed.
-  Stack dump:
-  0.      Program arguments: clang --target=hexagon-linux-musl ... fs/bcachefs/btree_io.c
-  1.      <eof> parser at end of file
-  2.      Code generation
-  3.      Running pass 'Function Pass Manager' on module 'fs/bcachefs/btree_io.c'.
-  4.      Running pass 'Hexagon constant-extender optimization' on function '@__btree_node_lock_nopath'
+All tests passing for Tegra ...
 
-Without assertions enabled, there is just a hang during compilation.
+Test results for stable-v6.1:
+    10 builds:	10 pass, 0 fail
+    26 boots:	26 pass, 0 fail
+    115 tests:	115 pass, 0 fail
 
-This has been resolved in LLVM main (20.0.0) [2] and backported to LLVM
-19.1.0 but the kernel supports LLVM 13.0.1 and newer, so disable the
-constant expander optimization using the '-mllvm' option when using a
-toolchain that is not fixed.
+Linux version:	6.1.119-rc1-g43ca6897c30a
+Boards tested:	tegra124-jetson-tk1, tegra186-p2771-0000,
+                tegra194-p2972-0000, tegra194-p3509-0000+p3668-0000,
+                tegra20-ventana, tegra210-p2371-2180,
+                tegra210-p3450-0000, tegra30-cardhu-a04
 
-Cc: stable@vger.kernel.org
-Link: https://github.com/llvm/llvm-project/issues/99714 [1]
-Link: https://github.com/llvm/llvm-project/commit/68df06a0b2998765cb0a41353fcf0919bbf57ddb [2]
-Link: https://github.com/llvm/llvm-project/commit/2ab8d93061581edad3501561722ebd5632d73892 [3]
-Reviewed-by: Brian Cain <bcain@quicinc.com>
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
----
-Andrew, can you please take this for 6.13? Our CI continues to hit this.
+Tested-by: Jon Hunter <jonathanh@nvidia.com>
 
-Changes in v2:
-- Rebase on 6.12 to make sure it is still applicable
-- Name exact bcachefs commit that introduces crash now that it is
-  merged
-- Add 'Cc: stable' as this is now visible in a stable release
-- Carry forward Brian's reviewed-by
-- Link to v1: https://lore.kernel.org/r/20240819-hexagon-disable-constant-expander-pass-v1-1-36a734e9527d@kernel.org
----
- arch/hexagon/Makefile | 6 ++++++
- 1 file changed, 6 insertions(+)
-
-diff --git a/arch/hexagon/Makefile b/arch/hexagon/Makefile
-index 92d005958dfb232d48a4ca843b46262a84a08eb4..ff172cbe5881a074f9d9430c37071992a4c8beac 100644
---- a/arch/hexagon/Makefile
-+++ b/arch/hexagon/Makefile
-@@ -32,3 +32,9 @@ KBUILD_LDFLAGS += $(ldflags-y)
- TIR_NAME := r19
- KBUILD_CFLAGS += -ffixed-$(TIR_NAME) -DTHREADINFO_REG=$(TIR_NAME) -D__linux__
- KBUILD_AFLAGS += -DTHREADINFO_REG=$(TIR_NAME)
-+
-+# Disable HexagonConstExtenders pass for LLVM versions prior to 19.1.0
-+# https://github.com/llvm/llvm-project/issues/99714
-+ifneq ($(call clang-min-version, 190100),y)
-+KBUILD_CFLAGS += -mllvm -hexagon-cext=false
-+endif
-
----
-base-commit: adc218676eef25575469234709c2d87185ca223a
-change-id: 20240802-hexagon-disable-constant-expander-pass-8b6b61db6afc
-
-Best regards,
--- 
-Nathan Chancellor <nathan@kernel.org>
-
+Jon
