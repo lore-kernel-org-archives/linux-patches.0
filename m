@@ -1,124 +1,122 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.13])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BF021C303A
-	for <patches@lists.linux.dev>; Thu, 21 Nov 2024 17:42:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.13
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E57F19DF66;
+	Thu, 21 Nov 2024 18:22:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732210937; cv=none; b=UfcmWkf/5MaNRDAvY4BDmwzfYE4+s5vGv8nN4KIGI6wQ/nbUdomUSLLZK5UXX8+p3FUZ6+C1MXPlje7Ag2t/w7HuzUwx5eF3RS2aFjy45C6CA8j6D/aGPn7dBCw048SZ6e7bTaLaFNPp39Y0H/PCVxjC5mAtK2F/KrWTJvmS8JE=
+	t=1732213352; cv=none; b=Y191Co3VsHAtq11a41eceYrTpvVvHrwO+pbAmjmZ9L5quIT7C6oqI+SBrec7NlqWNjX2Am5NYfobpNebBt4T38dH6kxSLWBq1vxkXEhK/Wv6v81M81P09lK9iX1a+BZ3ycvNtjwbBH10bipgkW7YY+a/U8y2oUaFA028WyZ75I8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732210937; c=relaxed/simple;
-	bh=jOFQHTKYUkPfNsXrd9VoXZV858hzfj/YVhEOk2Y5duU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bLZn482TMvSGLZBSzFoVK/0cfyO9auCFN+dk1pAsB85/IEy6Q3VpyebQwChPJzs149z5J0OqQZ2uxP0Hrw57bFz7PhKgELmQxWqCEDnAwaGeFwPvwt7r4sqVjm7qoq1mtDgZ0AElKXiFaY1/pI2maLl5TbJAfw/F7HJelqjJxms=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=OMevH85j; arc=none smtp.client-ip=198.175.65.13
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	s=arc-20240116; t=1732213352; c=relaxed/simple;
+	bh=NlOGgKbYlSPT5mGVg0Vqrr2RjMPYarQpOk/xs/FSmYk=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=S8GlCDEdNcqVaZLdBVlID97tSY/uV+Gx/oZlUYzNiKOEqI0BQbxnElH53fpHa3222TNiWb9ydMFn98cKXFr8dMKfoM1o7QQeSm7muOQekJcTWWdqvjkAGg1qBRbux+7k/RVymT0Rdf6+6qPCoPRvn3bZGBt/Klyk5Te32m3iFeE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=atvUalK/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="OMevH85j"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1732210936; x=1763746936;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=jOFQHTKYUkPfNsXrd9VoXZV858hzfj/YVhEOk2Y5duU=;
-  b=OMevH85jAomir2+gqiH2N5qcyAQv8wqhE221jwcp7dsQyp9nSiPB6gxs
-   ag/xrD/d8rd/7O1vvWnrI3ZImsw9bfIFWrPoqBuTgVn0lmaiw7P533Uuk
-   KWQ0l9ENcuhMXJT/HYoBym4WlP7ii6mQUWTH4FQlQjO8PHg6O1SkeVbok
-   eBqwKz1dTp1/GTQICnqrbGXvi7hpViVUVYCoPJI9YiGqrsdPKz/S4mzxT
-   WljvSudZO+l4LY07+IxIwzKauwJtfYSneYz+KtFxYUDyjHVrSDbDgQ2r8
-   PMmQ9ouCT5iKxalzS5XVAj9Iq8RCkhmiWzjUTpSn2TrCow031y9aYEJ4v
-   w==;
-X-CSE-ConnectionGUID: RnStNnS+QzezCTokUdTMlA==
-X-CSE-MsgGUID: 1/KI0+xuSRye6TV1sEIhZA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11263"; a="43405148"
-X-IronPort-AV: E=Sophos;i="6.12,173,1728975600"; 
-   d="scan'208";a="43405148"
-Received: from fmviesa007.fm.intel.com ([10.60.135.147])
-  by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Nov 2024 09:42:14 -0800
-X-CSE-ConnectionGUID: aQY4trkfR3i3hpRXS4MZfg==
-X-CSE-MsgGUID: Ao+P2QtZQiKI4tfyTNWfbg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,173,1728975600"; 
-   d="scan'208";a="90125950"
-Received: from agluck-desk3.sc.intel.com (HELO agluck-desk3) ([172.25.222.70])
-  by fmviesa007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Nov 2024 09:42:13 -0800
-Date: Thu, 21 Nov 2024 09:42:12 -0800
-From: "Luck, Tony" <tony.luck@intel.com>
-To: Reinette Chatre <reinette.chatre@intel.com>
-Cc: Fenghua Yu <fenghua.yu@intel.com>,
-	Peter Newman <peternewman@google.com>,
-	Jonathan Corbet <corbet@lwn.net>, x86@kernel.org,
-	James Morse <james.morse@arm.com>,
-	Jamie Iles <quic_jiles@quicinc.com>,
-	Babu Moger <babu.moger@amd.com>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	"Shaopeng Tan (Fujitsu)" <tan.shaopeng@fujitsu.com>,
-	linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
-	patches@lists.linux.dev
-Subject: Re: [PATCH v9 6/9] x86/resctrl: Add "mba_MBps_event" file to
- ctrl_mon directories
-Message-ID: <Zz9w9FYAqbgu2aOq@agluck-desk3>
-References: <20241114001712.80315-1-tony.luck@intel.com>
- <20241114001712.80315-7-tony.luck@intel.com>
- <4796ded1-a988-4038-bdbb-fc9a93da0c55@intel.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="atvUalK/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B671C4CECC;
+	Thu, 21 Nov 2024 18:22:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1732213351;
+	bh=NlOGgKbYlSPT5mGVg0Vqrr2RjMPYarQpOk/xs/FSmYk=;
+	h=From:Date:Subject:To:Cc:From;
+	b=atvUalK/cG6ylxLiD0a+I5dn9F7g0pAOH0QaU3bxPk0lUB0cdKxKoerXOF+bAlaYT
+	 XA7F75fFoRHiYd1i7XPk06BpZWPBuBSWL8iq2kNJJLMpRrBu17+30fuSclDF7GT2nL
+	 jyNOS14kQ39ciM+QmJSRv8jkIgYBt5vy/c9EUbc6xd+UZlPOkZq+aFwWObfxvtzxsX
+	 hlU4pEkrKUkZxQzSi4ybrPNOJx+hPBhvOnxzC1dP0Ny9LIDGg5AemNI8NNn/aaWJkf
+	 nJ4oopgOA5gRBo33SCnPHsWIVy5i6CkBH+mzrxs97GEOLuRXgyEma7zgd7XZW2i+YX
+	 xQT9e6eX47lIA==
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Thu, 21 Nov 2024 11:22:18 -0700
+Subject: [PATCH v2] hexagon: Disable constant extender optimization for
+ LLVM prior to 19.1.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <4796ded1-a988-4038-bdbb-fc9a93da0c55@intel.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20241121-hexagon-disable-constant-expander-pass-v2-1-1a92e9afb0f4@kernel.org>
+X-B4-Tracking: v=1; b=H4sIAFl6P2cC/43NQQ6CMBCF4auQrh1DCxZw5T0MiykdoJG0pEMIh
+ nB3K/EALv+3eN8umKIjFvdsF5FWxy74FOqSiW5EPxA4m1qoXJV5nSsYacMheLCO0UwEXfC8oF+
+ Athm9pQgzMkNttNHSGo19J9LZHKl32wk929Sj4yXE9+mu8rv+CNn8S6wSJBQaq6Kk5qYq+3hR9
+ DRdQxxEexzHB6moz63dAAAA
+X-Change-ID: 20240802-hexagon-disable-constant-expander-pass-8b6b61db6afc
+To: Brian Cain <bcain@quicinc.com>, 
+ Andrew Morton <akpm@linux-foundation.org>
+Cc: linux-hexagon@vger.kernel.org, patches@lists.linux.dev, 
+ llvm@lists.linux.dev, stable@vger.kernel.org, 
+ Nathan Chancellor <nathan@kernel.org>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2848; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=NlOGgKbYlSPT5mGVg0Vqrr2RjMPYarQpOk/xs/FSmYk=;
+ b=owGbwMvMwCUmm602sfCA1DTG02pJDOn2Ven3w17GXkmtbC9WKHRauz/9Quh2o8WPX8dJlzif1
+ d398OqjjlIWBjEuBlkxRZbqx6rHDQ3nnGW8cWoSzBxWJpAhDFycAjARBzuG/yGLl5ltCfJbwbhN
+ 8Hjmp7bIyXs9zEQN52Y95nZnfF76roCRYVfnuSqFRb/1vJa0n3vFsFcqLnLDttzsrPKPWd/Ytoq
+ /YQYA
+X-Developer-Key: i=nathan@kernel.org; a=openpgp;
+ fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-On Tue, Nov 19, 2024 at 08:03:06PM -0800, Reinette Chatre wrote:
-> Hi Tony,
-> 
-> On 11/13/24 4:17 PM, Tony Luck wrote:
-> > The "mba_MBps" mount option provides an alternate method to
-> > control memory bandwidth. Instead of specifying allowable
-> > bandwidth as a percentage of maximum possible, the user
-> > provides a MiB/s limit value.
-> > 
-> > Historically the limit was enforced by a feedback loop from
-> 
-> "Historically the limit was enforced" no history needed since
-> this is still the case at the time of this patch.
-> 
-> > the measure local bandwidth to adjust the memory bandwidth
-> > allocation controls.
-> 
-> I am not sure what is meant by "a feedback loop from the measure
-> local bandwidth" (that was copy&pasted to next patch).
+The Hexagon-specific constant extender optimization in LLVM may crash on
+Linux kernel code [1], such as fs/bcache/btree_io.c after
+commit 32ed4a620c54 ("bcachefs: Btree path tracepoints") in 6.12:
 
-Dropped the whole of the "Historically" paragraph.
-> 
-> > 
-> > In preparation to allow the user to pick the memory bandwidth
-> > monitoring event used as input to the feedback loop, provide
-> > a file in each ctrl_mon group directory that shows the event
-> 
-> In the documentation the custom is to use CTRL_MON.
+  clang: llvm/lib/Target/Hexagon/HexagonConstExtenders.cpp:745: bool (anonymous namespace)::HexagonConstExtenders::ExtRoot::operator<(const HCE::ExtRoot &) const: Assertion `ThisB->getParent() == OtherB->getParent()' failed.
+  Stack dump:
+  0.      Program arguments: clang --target=hexagon-linux-musl ... fs/bcachefs/btree_io.c
+  1.      <eof> parser at end of file
+  2.      Code generation
+  3.      Running pass 'Function Pass Manager' on module 'fs/bcachefs/btree_io.c'.
+  4.      Running pass 'Hexagon constant-extender optimization' on function '@__btree_node_lock_nopath'
 
-Fixed here (and in several other places in the series).
+Without assertions enabled, there is just a hang during compilation.
 
-> > currently in use.
-> 
-> Much better changelog. I think it will help to add a snippet that
-> mentions the file is only visible to user space if resctrl
-> was mounted with mba_MBps, and thus only visible when mba_sc is
-> enabled, and thus reinforcing that this maintains the contract
-> that rdtgrp->mba_mbps_event is only accessed when mba_sc is enabled.
+This has been resolved in LLVM main (20.0.0) [2] and backported to LLVM
+19.1.0 but the kernel supports LLVM 13.0.1 and newer, so disable the
+constant expander optimization using the '-mllvm' option when using a
+toolchain that is not fixed.
 
-Added text to commit message about this file only being visible
-when the "mba_MBps" mount option is in use.
+Cc: stable@vger.kernel.org
+Link: https://github.com/llvm/llvm-project/issues/99714 [1]
+Link: https://github.com/llvm/llvm-project/commit/68df06a0b2998765cb0a41353fcf0919bbf57ddb [2]
+Link: https://github.com/llvm/llvm-project/commit/2ab8d93061581edad3501561722ebd5632d73892 [3]
+Reviewed-by: Brian Cain <bcain@quicinc.com>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+Andrew, can you please take this for 6.13? Our CI continues to hit this.
 
-> > 
-> > Suggested-by: Reinette Chatre <reinette.chatre@intel.com>
-> > Signed-off-by: Tony Luck <tony.luck@intel.com>
-> > ---
-> 
-> Reinette
+Changes in v2:
+- Rebase on 6.12 to make sure it is still applicable
+- Name exact bcachefs commit that introduces crash now that it is
+  merged
+- Add 'Cc: stable' as this is now visible in a stable release
+- Carry forward Brian's reviewed-by
+- Link to v1: https://lore.kernel.org/r/20240819-hexagon-disable-constant-expander-pass-v1-1-36a734e9527d@kernel.org
+---
+ arch/hexagon/Makefile | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
--Tony
+diff --git a/arch/hexagon/Makefile b/arch/hexagon/Makefile
+index 92d005958dfb232d48a4ca843b46262a84a08eb4..ff172cbe5881a074f9d9430c37071992a4c8beac 100644
+--- a/arch/hexagon/Makefile
++++ b/arch/hexagon/Makefile
+@@ -32,3 +32,9 @@ KBUILD_LDFLAGS += $(ldflags-y)
+ TIR_NAME := r19
+ KBUILD_CFLAGS += -ffixed-$(TIR_NAME) -DTHREADINFO_REG=$(TIR_NAME) -D__linux__
+ KBUILD_AFLAGS += -DTHREADINFO_REG=$(TIR_NAME)
++
++# Disable HexagonConstExtenders pass for LLVM versions prior to 19.1.0
++# https://github.com/llvm/llvm-project/issues/99714
++ifneq ($(call clang-min-version, 190100),y)
++KBUILD_CFLAGS += -mllvm -hexagon-cext=false
++endif
+
+---
+base-commit: adc218676eef25575469234709c2d87185ca223a
+change-id: 20240802-hexagon-disable-constant-expander-pass-8b6b61db6afc
+
+Best regards,
+-- 
+Nathan Chancellor <nathan@kernel.org>
+
