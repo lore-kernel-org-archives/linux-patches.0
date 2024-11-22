@@ -1,48 +1,48 @@
 Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56D5619CC3C
-	for <patches@lists.linux.dev>; Fri, 22 Nov 2024 23:58:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D7D81CB53D
+	for <patches@lists.linux.dev>; Fri, 22 Nov 2024 23:58:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732319921; cv=none; b=cBroIWywK/KpGB5TEbzO9hN51qqurb87aBt+2Rqjglj1HYtxc1pTqV+FIhjYlrRvBbJMVNAZNasJPofULQlcI1dgUSO3Rs17j3436FDDYq6P3MgxPDHE4hJQ9VDRRJmlYFfg5wSVoM4q4cMXiuANeXDssoqFsa/myCC99ePm02I=
+	t=1732319922; cv=none; b=Kp3+z5IA0QXKNwbQ8vpzy6hKhwzjEG3HS+sA2cMlzB/bVJjKsP/b5L77Y8fDt/4GJlTbwz9yKLJR+uGcgc7UcJm1gsrJTpbGlxoBM+ZN+KavSpDnoQFMC4OahY9N/Ym3anoswpawoB0EnLb+pTG6yEH1LCc03b1qWXDpxosHTM8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732319921; c=relaxed/simple;
-	bh=DgdFQG7ogmZInC9WaL3dmKhljd5aCwuTH2jubE9qPbw=;
+	s=arc-20240116; t=1732319922; c=relaxed/simple;
+	bh=Syhd0kuw6fN7AJ+GTquPajZxSLFc2Qlh/gYSKbznIJw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HyQ07ewCOQRBdSXZzVYAcwrF/ANa5X+r1vU1+aeygbf7lIOWbhFyD0bi7cgdiP011nHwsfVGgZUm/lk+y2ITHdQEJXhAknTulE35ButnIIUwFTt04AJAZ2nO88T4sJVlYI35Ry4YP8nFbxylx7qu8KDF8lR1FA3/LMYmKiv4U1E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=aqozgCdK; arc=none smtp.client-ip=198.175.65.18
+	 MIME-Version; b=baHx9emKK5SGW2SvI4iQ1T3j8mlw2LeZh+C5ayyAx3/mZcd80+xp6gffQXK1D1VdhwDkCM25EomOyvkSDbBck/eMzBk8cIiMkQYXiivrQijvw3DBRT1HbKmFr7OMx98halVB+Y9T27c2FX2na/GLYxRewFjZGemlQL5/iQxWjbA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=XJgM4I95; arc=none smtp.client-ip=198.175.65.18
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="aqozgCdK"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="XJgM4I95"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1732319920; x=1763855920;
+  t=1732319921; x=1763855921;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=DgdFQG7ogmZInC9WaL3dmKhljd5aCwuTH2jubE9qPbw=;
-  b=aqozgCdKk/nJbD/chv8WbGdsqyxqV76eH9bCxnBTH8+w83T6UpGybywA
-   KMHTOAXlOKxr/zvoRpa9SVXSmXRmFrWfd8Y/CFgBxgkPpf4C/gNrbrqrZ
-   7DyopsZ+xzmxV5r4qX5yFY3koggygtxRNtRPPxK4baIeesQYxBzLS/Fn2
-   7h00akNhpg+xFb1/c8ddLHqXqWleXOscYm0olXvFIm4qHsL+IaW5PPBP0
-   ijNiQRj6d85fsyJInv4skmtYaXzFNnc/2w9A7iQMAIV0sKeNoat1sMSfP
-   RnufMMA2sGYekxwiEsUaCABmqR+Mo58YlLWITCzY4Q/EZuC3jYJXup3d5
+  bh=Syhd0kuw6fN7AJ+GTquPajZxSLFc2Qlh/gYSKbznIJw=;
+  b=XJgM4I95tnEpdHSgqV1ERu140bKmBDIC8yY2VXaG6JN9iTeVlscTw4Qf
+   b/0iWlp49Uh90K38nFGIyr+0mHgqlmvrfrn9/4iQ66q8KqRbeZhOWMK73
+   NgRvNBLNJ2yFghRlNtUnDzYPzPrHLOH5W6Gv3OdsJ8WgHgwbCbCLK9/24
+   Cc97rmBSoSZ/ByUYKynlBU9g9RIStT3qpfGGaRZarwpVbDBQsfLzC5F2m
+   8nRb0J/ny/PB6ypMf2+BWB4j0bqPHydMoZRdcTGnVLNXmDyyA0aNC0Dme
+   0hHgFu6mOsr8VZ9lDaHp9kSyrHiq/ugjKxb+hX27HU+GIAOSc1eGHFdIo
    Q==;
-X-CSE-ConnectionGUID: as9bYPETS9mx5ghY71ED5g==
-X-CSE-MsgGUID: 5z2UaqfoQl6kUKV5kY/YWw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11264"; a="32642694"
+X-CSE-ConnectionGUID: GbccpyR3TgCl+RjG0HhI8Q==
+X-CSE-MsgGUID: e4SrlNSaRJuHY/EQyu14kw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11264"; a="32642714"
 X-IronPort-AV: E=Sophos;i="6.12,177,1728975600"; 
-   d="scan'208";a="32642694"
+   d="scan'208";a="32642714"
 Received: from orviesa006.jf.intel.com ([10.64.159.146])
-  by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Nov 2024 15:58:38 -0800
-X-CSE-ConnectionGUID: QC6a06pMReubT/mxCz+Dkg==
-X-CSE-MsgGUID: M6apAD8YTCiOrgay/CremA==
+  by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Nov 2024 15:58:39 -0800
+X-CSE-ConnectionGUID: 3sWU245SQn23T3YiF4rzcw==
+X-CSE-MsgGUID: O4q4Mf85SIKarPVZYNQ+ug==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.12,177,1728975600"; 
-   d="scan'208";a="90850892"
+   d="scan'208";a="90850899"
 Received: from agluck-desk3.sc.intel.com ([172.25.222.70])
-  by orviesa006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Nov 2024 15:58:37 -0800
+  by orviesa006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Nov 2024 15:58:38 -0800
 From: Tony Luck <tony.luck@intel.com>
 To: Fenghua Yu <fenghua.yu@intel.com>,
 	Reinette Chatre <reinette.chatre@intel.com>,
@@ -58,9 +58,9 @@ Cc: James Morse <james.morse@arm.com>,
 	linux-doc@vger.kernel.org,
 	patches@lists.linux.dev,
 	Tony Luck <tony.luck@intel.com>
-Subject: [PATCH v10 1/8] x86/resctrl: Introduce resctrl_file_fflags_init() to initialize fflags
-Date: Fri, 22 Nov 2024 15:58:25 -0800
-Message-ID: <20241122235832.27498-2-tony.luck@intel.com>
+Subject: [PATCH v10 3/8] x86/resctrl: Modify update_mba_bw() to use per CTRL_MON group event
+Date: Fri, 22 Nov 2024 15:58:27 -0800
+Message-ID: <20241122235832.27498-4-tony.luck@intel.com>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241122235832.27498-1-tony.luck@intel.com>
 References: <20241122235832.27498-1-tony.luck@intel.com>
@@ -72,112 +72,62 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-From: Babu Moger <babu.moger@amd.com>
+Update_mba_bw() hard codes use of the memory bandwidth local event which
+prevents more flexible options from being deployed.
 
-thread_throttle_mode_init() and mbm_config_rftype_init() both initialize
-fflags for resctrl files.
+Change this function to use the event specified in the rdtgroup that is
+being processed.
 
-Adding new files will involve adding another function to initialize
-the fflags. This can be simplified by adding a new function
-resctrl_file_fflags_init() and passing the file name and flags
-to be initialized.
+Mount time checks for the "mba_MBps" option ensure that local memory
+bandwidth is enabled. So drop the redundant is_mbm_local_enabled() check.
 
-Consolidate fflags initialization into resctrl_file_fflags_init() and
-remove thread_throttle_mode_init() and mbm_config_rftype_init().
-
-[Tony: Drop __init attribute so resctrl_file_fflags_init() can be used
-at run time]
-
-Signed-off-by: Babu Moger <babu.moger@amd.com>
 Signed-off-by: Tony Luck <tony.luck@intel.com>
-Reviewed-by: Reinette Chatre <reinette.chatre@intel.com>
 ---
- arch/x86/kernel/cpu/resctrl/internal.h |  3 +--
- arch/x86/kernel/cpu/resctrl/core.c     |  4 +++-
- arch/x86/kernel/cpu/resctrl/monitor.c  |  6 ++++--
- arch/x86/kernel/cpu/resctrl/rdtgroup.c | 15 ++-------------
- 4 files changed, 10 insertions(+), 18 deletions(-)
+ arch/x86/kernel/cpu/resctrl/monitor.c | 16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
 
-diff --git a/arch/x86/kernel/cpu/resctrl/internal.h b/arch/x86/kernel/cpu/resctrl/internal.h
-index 955999aecfca..faaff9d64102 100644
---- a/arch/x86/kernel/cpu/resctrl/internal.h
-+++ b/arch/x86/kernel/cpu/resctrl/internal.h
-@@ -647,8 +647,7 @@ void cqm_handle_limbo(struct work_struct *work);
- bool has_busy_rmid(struct rdt_mon_domain *d);
- void __check_limbo(struct rdt_mon_domain *d, bool force_free);
- void rdt_domain_reconfigure_cdp(struct rdt_resource *r);
--void __init thread_throttle_mode_init(void);
--void __init mbm_config_rftype_init(const char *config);
-+void resctrl_file_fflags_init(const char *config, unsigned long fflags);
- void rdt_staged_configs_clear(void);
- bool closid_allocated(unsigned int closid);
- int resctrl_find_cleanest_closid(void);
-diff --git a/arch/x86/kernel/cpu/resctrl/core.c b/arch/x86/kernel/cpu/resctrl/core.c
-index b681c2e07dbf..f3ee5859b69d 100644
---- a/arch/x86/kernel/cpu/resctrl/core.c
-+++ b/arch/x86/kernel/cpu/resctrl/core.c
-@@ -234,7 +234,9 @@ static __init bool __get_mem_config_intel(struct rdt_resource *r)
- 		r->membw.throttle_mode = THREAD_THROTTLE_PER_THREAD;
- 	else
- 		r->membw.throttle_mode = THREAD_THROTTLE_MAX;
--	thread_throttle_mode_init();
-+
-+	resctrl_file_fflags_init("thread_throttle_mode",
-+				 RFTYPE_CTRL_INFO | RFTYPE_RES_MB);
- 
- 	r->alloc_capable = true;
- 
 diff --git a/arch/x86/kernel/cpu/resctrl/monitor.c b/arch/x86/kernel/cpu/resctrl/monitor.c
-index 851b561850e0..7ef1a293cc13 100644
+index 7ef1a293cc13..6fe2e6ab8dd4 100644
 --- a/arch/x86/kernel/cpu/resctrl/monitor.c
 +++ b/arch/x86/kernel/cpu/resctrl/monitor.c
-@@ -1223,11 +1223,13 @@ int __init rdt_get_mon_l3_config(struct rdt_resource *r)
+@@ -752,20 +752,20 @@ static void update_mba_bw(struct rdtgroup *rgrp, struct rdt_mon_domain *dom_mbm)
+ 	u32 closid, rmid, cur_msr_val, new_msr_val;
+ 	struct mbm_state *pmbm_data, *cmbm_data;
+ 	struct rdt_ctrl_domain *dom_mba;
++	enum resctrl_event_id evt_id;
+ 	struct rdt_resource *r_mba;
+-	u32 cur_bw, user_bw, idx;
+ 	struct list_head *head;
+ 	struct rdtgroup *entry;
+-
+-	if (!is_mbm_local_enabled())
+-		return;
++	u32 cur_bw, user_bw;
  
- 		if (rdt_cpu_has(X86_FEATURE_CQM_MBM_TOTAL)) {
- 			mbm_total_event.configurable = true;
--			mbm_config_rftype_init("mbm_total_bytes_config");
-+			resctrl_file_fflags_init("mbm_total_bytes_config",
-+						 RFTYPE_MON_INFO | RFTYPE_RES_CACHE);
- 		}
- 		if (rdt_cpu_has(X86_FEATURE_CQM_MBM_LOCAL)) {
- 			mbm_local_event.configurable = true;
--			mbm_config_rftype_init("mbm_local_bytes_config");
-+			resctrl_file_fflags_init("mbm_local_bytes_config",
-+						 RFTYPE_MON_INFO | RFTYPE_RES_CACHE);
- 		}
+ 	r_mba = &rdt_resources_all[RDT_RESOURCE_MBA].r_resctrl;
++	evt_id = rgrp->mba_mbps_event;
+ 
+ 	closid = rgrp->closid;
+ 	rmid = rgrp->mon.rmid;
+-	idx = resctrl_arch_rmid_idx_encode(closid, rmid);
+-	pmbm_data = &dom_mbm->mbm_local[idx];
++	pmbm_data = get_mbm_state(dom_mbm, closid, rmid, evt_id);
++	if (WARN_ON_ONCE(!pmbm_data))
++		return;
+ 
+ 	dom_mba = get_ctrl_domain_from_cpu(smp_processor_id(), r_mba);
+ 	if (!dom_mba) {
+@@ -784,7 +784,9 @@ static void update_mba_bw(struct rdtgroup *rgrp, struct rdt_mon_domain *dom_mbm)
+ 	 */
+ 	head = &rgrp->mon.crdtgrp_list;
+ 	list_for_each_entry(entry, head, mon.crdtgrp_list) {
+-		cmbm_data = &dom_mbm->mbm_local[entry->mon.rmid];
++		cmbm_data = get_mbm_state(dom_mbm, entry->closid, entry->mon.rmid, evt_id);
++		if (WARN_ON_ONCE(!cmbm_data))
++			return;
+ 		cur_bw += cmbm_data->prev_bw;
  	}
  
-diff --git a/arch/x86/kernel/cpu/resctrl/rdtgroup.c b/arch/x86/kernel/cpu/resctrl/rdtgroup.c
-index d7163b764c62..2b198ef95e1e 100644
---- a/arch/x86/kernel/cpu/resctrl/rdtgroup.c
-+++ b/arch/x86/kernel/cpu/resctrl/rdtgroup.c
-@@ -2020,24 +2020,13 @@ static struct rftype *rdtgroup_get_rftype_by_name(const char *name)
- 	return NULL;
- }
- 
--void __init thread_throttle_mode_init(void)
--{
--	struct rftype *rft;
--
--	rft = rdtgroup_get_rftype_by_name("thread_throttle_mode");
--	if (!rft)
--		return;
--
--	rft->fflags = RFTYPE_CTRL_INFO | RFTYPE_RES_MB;
--}
--
--void __init mbm_config_rftype_init(const char *config)
-+void resctrl_file_fflags_init(const char *config, unsigned long fflags)
- {
- 	struct rftype *rft;
- 
- 	rft = rdtgroup_get_rftype_by_name(config);
- 	if (rft)
--		rft->fflags = RFTYPE_MON_INFO | RFTYPE_RES_CACHE;
-+		rft->fflags = fflags;
- }
- 
- /**
 -- 
 2.47.0
 
