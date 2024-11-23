@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 814A3195;
-	Sat, 23 Nov 2024 18:03:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6D18195;
+	Sat, 23 Nov 2024 18:07:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732385031; cv=none; b=TwffDSvCjW8lFt6T3y5BLHZGvwrVE7Ie0SPZO63qzhFzuMcYMBfpQI+0CAaOFPdMvWX+fdOi0FRNTRCUkBSd9xaYMJMrZ5DEQi74tkg69y0kKRCZdSyGyzDBvSu0sqD9CbdzI4NBTSLxjMfGlVKUahxCVu2o5FPS+HsNWaud1y4=
+	t=1732385220; cv=none; b=IZF9tWbzR7rZPBf9HiE7X5JGIbtqqKwYTBvkBWNLjZ/EOzOPjVu+Hw2/UtaW4EPfn8BviyVbxkmgF4XL6LhcHoKTji7ULL3KFI7pLLCaZ/u6MvJXDscIyLtT4yEJ41lKKDb3vTtH8nWmv+jMj/sEBf2F+HlZx3yXAbawSoImJc4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732385031; c=relaxed/simple;
-	bh=znf4LwmiKLLGvxbVhzTeQXiFCUGm6KOIppU0Ug6hGW0=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=ZurrAxobwGZPPQqVUe3rzvjhLdH9DGibmOn/fRDPp4Ml3gle6my1c0R6uib3LyP23sCTekFTI6b2rOnTqeX/dw45ikseBq+Zeubu5Uz1QaUOMIzgYUJtbgJlNBqLWCx3zwY8LsMekMwVoT5tgO4cLWwX2daEmhuorJJvju6L05s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HLIvSPui; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1732385220; c=relaxed/simple;
+	bh=G8ni3nF+CHFJWJNVuFNWYcaPAgXx4khmiv9r6zEGe88=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=bOqOAzXqsB/nkD/3cBZRr02/DjofvypeBnv5hfCZlfRqv4k9piDvm1BN3lUd0e2RBqoVvpV/iQKoKOFL3Iy4uIWcR4fIYqTLUkI7XV0mFCb9arRJo14HOv3nlSg7JXP6RbFHD1dWs6PIPagYLGqS9hofEc7tn0AHXQejcKTZtFc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eyVONdpW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HLIvSPui"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6396C4CECD;
-	Sat, 23 Nov 2024 18:03:47 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eyVONdpW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51828C4CECD;
+	Sat, 23 Nov 2024 18:06:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1732385031;
-	bh=znf4LwmiKLLGvxbVhzTeQXiFCUGm6KOIppU0Ug6hGW0=;
+	s=k20201202; t=1732385220;
+	bh=G8ni3nF+CHFJWJNVuFNWYcaPAgXx4khmiv9r6zEGe88=;
 	h=From:To:Cc:Subject:Date:From;
-	b=HLIvSPuiEtZKJN/TrqpXEnUBvGttyzazq113hZ7QXPDTWeMCgA5rKp2awtk/7jRfq
-	 OZJjdVAw/ZhdR5IpCd5raLP5nvBPpYclin+qmbDL7/u5ynuUmOR0FN3PZ3wF3RrCBN
-	 wEGhP1KUyypzzYF11KPH/Sfshqbi68rpgjPXN/6p9BC2Z3XzWQQze0/Zs7bxz9xCwy
-	 oJ+9F/jq471bs8QxZ/k14XYsKRdOb/vuL3gsiUoOvh0Eu6NO2VJRlWCRtfeX75K25y
-	 dzHNLthROWjOb7HzBz8MP35MFq3c/GDCuIs089IyT7z8y5R224gFKHsYUDYOahjZJp
-	 rFoU39lLCdU+g==
+	b=eyVONdpWkApbwCT24KyJkQLD6xlCFJNnSDY9nGrfXDz/mUANd4VyGAiaK172CKNno
+	 n/b/5rzAcy6QnWTPjjZaYEu/Pd9ORrXSIclv9ooJ8sPLDHUHlWLu1zNxpg0Ob1vbLZ
+	 0KrlDOgbmCihdE7PaP5wVf4i6XkVzF+ns9jPbV/dUr4/Xc3M/THyeDjUZSLq0JGJmq
+	 STHLerOMZVTve2SYu8WRRFg/LJ+i1CQLIeQGnXXc0RYB/pyE7t1WqgTI+c/5ryxjgI
+	 Mc5EG4zJ3s+6ZFlHunXK86M8ctSCVqC1Hh/HCI9K2u59R33NmkG2Ybto2yVwQ5euJ3
+	 em0LGNRjwfQHQ==
 From: Miguel Ojeda <ojeda@kernel.org>
 To: Miguel Ojeda <ojeda@kernel.org>,
 	Alex Gaynor <alex.gaynor@gmail.com>
@@ -37,12 +37,10 @@ Cc: Boqun Feng <boqun.feng@gmail.com>,
 	Trevor Gross <tmgross@umich.edu>,
 	rust-for-linux@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev,
-	Christian Poveda <git@pvdrz.com>,
-	=?UTF-8?q?Emilio=20Cobos=20=C3=81lvarez?= <emilio@crisal.io>
-Subject: [PATCH] rust: kbuild: set `bindgen`'s Rust target version
-Date: Sat, 23 Nov 2024 19:03:23 +0100
-Message-ID: <20241123180323.255997-1-ojeda@kernel.org>
+	patches@lists.linux.dev
+Subject: [PATCH] rust: kbuild: run Clippy for `rusttest` code
+Date: Sat, 23 Nov 2024 19:06:38 +0100
+Message-ID: <20241123180639.260191-1-ojeda@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -52,97 +50,81 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Each `bindgen` release may upgrade the list of Rust targets. For instance,
-currently, in their master branch [1], the latest ones are:
+Running Clippy for `rusttest` code is useful to catch issues there too,
+even if the code is not as critical. In the future, this code may also
+run in kernelspace and could be copy-pasted. Thus it is useful to keep
+it under the same standards. For instance, it will now make us add
+`// SAFETY` comments.
 
-    Nightly => {
-        vectorcall_abi: #124485,
-        ptr_metadata: #81513,
-        layout_for_ptr: #69835,
-    },
-    Stable_1_77(77) => { offset_of: #106655 },
-    Stable_1_73(73) => { thiscall_abi: #42202 },
-    Stable_1_71(71) => { c_unwind_abi: #106075 },
-    Stable_1_68(68) => { abi_efiapi: #105795 },
+It also makes everything more consistent.
 
-By default, the highest stable release in their list is used, and users
-are expected to set one if they need to support older Rust versions
-(e.g. see [2]).
+Thus clean the few issues spotted by Clippy and start running it.
 
-Thus, over time, new Rust features are used by default, and at some
-point, it is likely that `bindgen` will emit Rust code that requires a
-Rust version higher than our minimum (or perhaps enabling an unstable
-feature). Currently, there is no problem because the maximum they have,
-as seen above, is Rust 1.77.0, and our current minimum is Rust 1.78.0.
-
-Therefore, set a Rust target explicitly now to prevent going forward in
-time too much and thus getting potential build failures at some point.
-
-Since we also support a minimum `bindgen` version, and since `bindgen`
-does not support passing unknown Rust target versions, we need to use
-the list of our minimum `bindgen` version, rather than the latest. So,
-since `bindgen` 0.65.1 had this list [3], we need to use Rust 1.68.0:
-
-    /// Rust stable 1.64
-    ///  * `core_ffi_c` ([Tracking issue](https://github.com/rust-lang/rust/issues/94501))
-    => Stable_1_64 => 1.64;
-    /// Rust stable 1.68
-    ///  * `abi_efiapi` calling convention ([Tracking issue](https://github.com/rust-lang/rust/issues/65815))
-    => Stable_1_68 => 1.68;
-    /// Nightly rust
-    ///  * `thiscall` calling convention ([Tracking issue](https://github.com/rust-lang/rust/issues/42202))
-    ///  * `vectorcall` calling convention (no tracking issue)
-    ///  * `c_unwind` calling convention ([Tracking issue](https://github.com/rust-lang/rust/issues/74990))
-    => Nightly => nightly;
-
-    ...
-
-    /// Latest stable release of Rust
-    pub const LATEST_STABLE_RUST: RustTarget = RustTarget::Stable_1_68;
-
-Thus add the `--rust-target 1.68` parameter. Add a comment as well
-explaining this.
-
-An alternative would be to use the currently running (i.e. actual) `rustc`
-and `bindgen` versions to pick a "better" Rust target version. However,
-that would introduce more moving parts depending on the user setup and
-is also more complex to implement.
-
-Cc: Christian Poveda <git@pvdrz.com>
-Cc: Emilio Cobos Álvarez <emilio@crisal.io>
-Link: https://github.com/rust-lang/rust-bindgen/blob/21c60f473f4e824d4aa9b2b508056320d474b110/bindgen/features.rs#L97-L105 [1]
-Link: https://github.com/rust-lang/rust-bindgen/issues/2960 [2]
-Link: https://github.com/rust-lang/rust-bindgen/blob/7d243056d335fdc4537f7bca73c06d01aae24ddc/bindgen/features.rs#L131-L150 [3]
 Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 ---
- rust/Makefile | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ rust/Makefile      | 8 ++++----
+ rust/kernel/str.rs | 4 +++-
+ 2 files changed, 7 insertions(+), 5 deletions(-)
 
 diff --git a/rust/Makefile b/rust/Makefile
-index f349e7b067ea..1ca63ffee6cd 100644
+index f349e7b067ea..5b257b814d38 100644
 --- a/rust/Makefile
 +++ b/rust/Makefile
-@@ -278,9 +278,19 @@ endif
- # architecture instead of generating `usize`.
- bindgen_c_flags_final = $(bindgen_c_flags_lto) -fno-builtin -D__BINDGEN__
+@@ -114,10 +114,10 @@ rustdoc-kernel: $(src)/kernel/lib.rs rustdoc-core rustdoc-ffi rustdoc-macros \
+     $(obj)/bindings.o FORCE
+ 	+$(call if_changed,rustdoc)
  
-+# Each `bindgen` release may upgrade the list of Rust target versions. By
-+# default, the highest stable release in their list is used. Thus we need to set
-+# a `--rust-target` to avoid future `bindgen` releases emitting code that
-+# `rustc` may not understand. On top of that, `bindgen` does not support passing
-+# an unknown Rust target version.
-+#
-+# Therefore, the Rust target for `bindgen` can be only as high as the minimum
-+# Rust version the kernel supports and only as high as the greatest stable Rust
-+# target supported by the minimum `bindgen` version the kernel supports (that
-+# is, if we do not test the actual `rustc`/`bindgen` versions running).
- quiet_cmd_bindgen = BINDGEN $@
-       cmd_bindgen = \
--	$(BINDGEN) $< $(bindgen_target_flags) \
-+	$(BINDGEN) $< $(bindgen_target_flags) --rust-target 1.68 \
- 		--use-core --with-derive-default --ctypes-prefix ffi --no-layout-tests \
- 		--no-debug '.*' --enable-function-attribute-detection \
- 		-o $@ -- $(bindgen_c_flags_final) -DMODULE \
+-quiet_cmd_rustc_test_library = RUSTC TL $<
++quiet_cmd_rustc_test_library = $(RUSTC_OR_CLIPPY_QUIET) TL $<
+       cmd_rustc_test_library = \
+ 	OBJTREE=$(abspath $(objtree)) \
+-	$(RUSTC) $(rust_common_flags) \
++	$(RUSTC_OR_CLIPPY) $(rust_common_flags) \
+ 		@$(objtree)/include/generated/rustc_cfg $(rustc_target_flags) \
+ 		--crate-type $(if $(rustc_test_library_proc),proc-macro,rlib) \
+ 		--out-dir $(objtree)/$(obj)/test --cfg testlib \
+@@ -185,10 +185,10 @@ quiet_cmd_rustdoc_test_kernel = RUSTDOC TK $<
+ 
+ # We cannot use `-Zpanic-abort-tests` because some tests are dynamic,
+ # so for the moment we skip `-Cpanic=abort`.
+-quiet_cmd_rustc_test = RUSTC T  $<
++quiet_cmd_rustc_test = $(RUSTC_OR_CLIPPY_QUIET) T  $<
+       cmd_rustc_test = \
+ 	OBJTREE=$(abspath $(objtree)) \
+-	$(RUSTC) --test $(rust_common_flags) \
++	$(RUSTC_OR_CLIPPY) --test $(rust_common_flags) \
+ 		@$(objtree)/include/generated/rustc_cfg \
+ 		$(rustc_target_flags) --out-dir $(objtree)/$(obj)/test \
+ 		-L$(objtree)/$(obj)/test \
+diff --git a/rust/kernel/str.rs b/rust/kernel/str.rs
+index d04c12a1426d..f98966ba4991 100644
+--- a/rust/kernel/str.rs
++++ b/rust/kernel/str.rs
+@@ -522,6 +522,7 @@ macro_rules! c_str {
+ }
+ 
+ #[cfg(test)]
++#[expect(clippy::items_after_test_module)]
+ mod tests {
+     use super::*;
+ 
+@@ -547,7 +548,7 @@ macro_rules! format {
+         })
+     }
+ 
+-    const ALL_ASCII_CHARS: &'static str =
++    const ALL_ASCII_CHARS: &str =
+         "\\x01\\x02\\x03\\x04\\x05\\x06\\x07\\x08\\x09\\x0a\\x0b\\x0c\\x0d\\x0e\\x0f\
+         \\x10\\x11\\x12\\x13\\x14\\x15\\x16\\x17\\x18\\x19\\x1a\\x1b\\x1c\\x1d\\x1e\\x1f \
+         !\"#$%&'()*+,-./0123456789:;<=>?@\
+@@ -581,6 +582,7 @@ fn test_cstr_to_str_panic() {
+     fn test_cstr_as_str_unchecked() {
+         let good_bytes = b"\xf0\x9f\x90\xA7\0";
+         let checked_cstr = CStr::from_bytes_with_nul(good_bytes).unwrap();
++        // SAFETY: The contents come from a string literal which contains valid UTF-8.
+         let unchecked_str = unsafe { checked_cstr.as_str_unchecked() };
+         assert_eq!(unchecked_str, "🐧");
+     }
 
 base-commit: b2603f8ac8217bc59f5c7f248ac248423b9b99cb
 -- 
