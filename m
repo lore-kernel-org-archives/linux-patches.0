@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6D18195;
-	Sat, 23 Nov 2024 18:07:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 171AA139D1B;
+	Sat, 23 Nov 2024 22:24:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732385220; cv=none; b=IZF9tWbzR7rZPBf9HiE7X5JGIbtqqKwYTBvkBWNLjZ/EOzOPjVu+Hw2/UtaW4EPfn8BviyVbxkmgF4XL6LhcHoKTji7ULL3KFI7pLLCaZ/u6MvJXDscIyLtT4yEJ41lKKDb3vTtH8nWmv+jMj/sEBf2F+HlZx3yXAbawSoImJc4=
+	t=1732400650; cv=none; b=tdxkT8q0DrDDBdKlPvaXhnK/t5joYRgLF/dPpJuUcH6TYWKDBGhm20sQ9+XoBO/7o/s8PBdgHvWKgBGyc7lOhslTl/61eBvcdRaJB2oRoTeTWe892LIA4CtzIPHBef6lt/1RxjpskcLpx+fxHWZS9cSj6OfL0T6wgor2U1IKFo8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732385220; c=relaxed/simple;
-	bh=G8ni3nF+CHFJWJNVuFNWYcaPAgXx4khmiv9r6zEGe88=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=bOqOAzXqsB/nkD/3cBZRr02/DjofvypeBnv5hfCZlfRqv4k9piDvm1BN3lUd0e2RBqoVvpV/iQKoKOFL3Iy4uIWcR4fIYqTLUkI7XV0mFCb9arRJo14HOv3nlSg7JXP6RbFHD1dWs6PIPagYLGqS9hofEc7tn0AHXQejcKTZtFc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eyVONdpW; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1732400650; c=relaxed/simple;
+	bh=0cceid9Jq8v7gT0R89WcHt7ECqajY1qVimASQaSFABY=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=r4KSpd5zp/4toIcxFJuilyDFj6Tkn07l8Z5DfkuaMpmKH6g26mCJOiwT2+z0acInjJV8FJbxzOAunBzivnp8tEVqyMFZLj/Ns+XsY8B4zK77++eS2kue8zIP7qXJYcF1l2Z/jasLhErW7TGYxNmaJ3TieSwQqAIL96k8FtoQzBY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gGn6Y5S7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eyVONdpW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51828C4CECD;
-	Sat, 23 Nov 2024 18:06:57 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gGn6Y5S7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD253C4CECD;
+	Sat, 23 Nov 2024 22:24:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1732385220;
-	bh=G8ni3nF+CHFJWJNVuFNWYcaPAgXx4khmiv9r6zEGe88=;
+	s=k20201202; t=1732400649;
+	bh=0cceid9Jq8v7gT0R89WcHt7ECqajY1qVimASQaSFABY=;
 	h=From:To:Cc:Subject:Date:From;
-	b=eyVONdpWkApbwCT24KyJkQLD6xlCFJNnSDY9nGrfXDz/mUANd4VyGAiaK172CKNno
-	 n/b/5rzAcy6QnWTPjjZaYEu/Pd9ORrXSIclv9ooJ8sPLDHUHlWLu1zNxpg0Ob1vbLZ
-	 0KrlDOgbmCihdE7PaP5wVf4i6XkVzF+ns9jPbV/dUr4/Xc3M/THyeDjUZSLq0JGJmq
-	 STHLerOMZVTve2SYu8WRRFg/LJ+i1CQLIeQGnXXc0RYB/pyE7t1WqgTI+c/5ryxjgI
-	 Mc5EG4zJ3s+6ZFlHunXK86M8ctSCVqC1Hh/HCI9K2u59R33NmkG2Ybto2yVwQ5euJ3
-	 em0LGNRjwfQHQ==
+	b=gGn6Y5S7FkIrpS+YMFGWtLN5XCUfK6ahd24hW52dLwi9psh856GI7gUuFRBvuHI60
+	 BPHrQhJVrmKsbi1+1ZHvuTJI221AbJIDr8GEWiYJLvOV9ZAukHWH2mQRUC2pe2zfC7
+	 i5FjJqbKUscomDl3oiTU1dCXWVfgo/ka9rgeQth1IhHeuUHZrx/EYjg3YHWRfATjU7
+	 j+hXJWszVmajxEcs7g9Sy1v3ZJT2UKcfXPNxhFGHnNBATxPb3z8M/h71mZ3tFXVfwD
+	 B5OYCjU+QkmqDbQOiSbZw4X3qASd+7mpv9fNzJPkojYA/q7y6W9LnS2ExzbDNhmSBp
+	 HPwJLgqgLkE0Q==
 From: Miguel Ojeda <ojeda@kernel.org>
 To: Miguel Ojeda <ojeda@kernel.org>,
 	Alex Gaynor <alex.gaynor@gmail.com>
@@ -38,93 +38,57 @@ Cc: Boqun Feng <boqun.feng@gmail.com>,
 	rust-for-linux@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev
-Subject: [PATCH] rust: kbuild: run Clippy for `rusttest` code
-Date: Sat, 23 Nov 2024 19:06:38 +0100
-Message-ID: <20241123180639.260191-1-ojeda@kernel.org>
+Subject: [RFC PATCH] rust: give Clippy the minimum supported Rust version
+Date: Sat, 23 Nov 2024 23:23:45 +0100
+Message-ID: <20241123222345.346976-1-ojeda@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Running Clippy for `rusttest` code is useful to catch issues there too,
-even if the code is not as critical. In the future, this code may also
-run in kernelspace and could be copy-pasted. Thus it is useful to keep
-it under the same standards. For instance, it will now make us add
-`// SAFETY` comments.
+Clippy's lints may avoid emitting a suggestion to use a language or
+library feature that is not supported by the minimum supported version,
+if given by the `msrv` field in the configuration file.
 
-It also makes everything more consistent.
+For instance, Clippy should not suggest using `let ... else` in a lint
+if the MSRV did not implement that syntax.
 
-Thus clean the few issues spotted by Clippy and start running it.
+If the MSRV is not provided, Clippy will assume all features are available.
 
+Thus enable it with the minimum Rust version the kernel supports.
+
+Note that there is currently a small disadvantage in doing so: since
+we still use unstable features that nevertheless work in the range
+of versions we support (e.g. `#[expect(...)]`), we lose suggestions
+for those. However, over time we will stop using unstable features
+(especially language and library ones) as it is our goal, thus, in the
+end, we will want to have the `msrv` set.
+
+Rust is also considering adding a similar feature in `rustc` too, which
+we should probably enable if it becomes available [2].
+
+Link: https://github.com/rust-lang/rust-clippy/blob/8298da72e7b81fa30c515631b40fc4c0845948cb/clippy_utils/src/msrvs.rs#L20 [1]
+Link: https://github.com/rust-lang/compiler-team/issues/772 [2]
 Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 ---
- rust/Makefile      | 8 ++++----
- rust/kernel/str.rs | 4 +++-
- 2 files changed, 7 insertions(+), 5 deletions(-)
+ .clippy.toml | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/rust/Makefile b/rust/Makefile
-index f349e7b067ea..5b257b814d38 100644
---- a/rust/Makefile
-+++ b/rust/Makefile
-@@ -114,10 +114,10 @@ rustdoc-kernel: $(src)/kernel/lib.rs rustdoc-core rustdoc-ffi rustdoc-macros \
-     $(obj)/bindings.o FORCE
- 	+$(call if_changed,rustdoc)
+diff --git a/.clippy.toml b/.clippy.toml
+index e4c4eef10b28..815c94732ed7 100644
+--- a/.clippy.toml
++++ b/.clippy.toml
+@@ -1,5 +1,7 @@
+ # SPDX-License-Identifier: GPL-2.0
  
--quiet_cmd_rustc_test_library = RUSTC TL $<
-+quiet_cmd_rustc_test_library = $(RUSTC_OR_CLIPPY_QUIET) TL $<
-       cmd_rustc_test_library = \
- 	OBJTREE=$(abspath $(objtree)) \
--	$(RUSTC) $(rust_common_flags) \
-+	$(RUSTC_OR_CLIPPY) $(rust_common_flags) \
- 		@$(objtree)/include/generated/rustc_cfg $(rustc_target_flags) \
- 		--crate-type $(if $(rustc_test_library_proc),proc-macro,rlib) \
- 		--out-dir $(objtree)/$(obj)/test --cfg testlib \
-@@ -185,10 +185,10 @@ quiet_cmd_rustdoc_test_kernel = RUSTDOC TK $<
++msrv = "1.78.0"
++
+ check-private-items = true
  
- # We cannot use `-Zpanic-abort-tests` because some tests are dynamic,
- # so for the moment we skip `-Cpanic=abort`.
--quiet_cmd_rustc_test = RUSTC T  $<
-+quiet_cmd_rustc_test = $(RUSTC_OR_CLIPPY_QUIET) T  $<
-       cmd_rustc_test = \
- 	OBJTREE=$(abspath $(objtree)) \
--	$(RUSTC) --test $(rust_common_flags) \
-+	$(RUSTC_OR_CLIPPY) --test $(rust_common_flags) \
- 		@$(objtree)/include/generated/rustc_cfg \
- 		$(rustc_target_flags) --out-dir $(objtree)/$(obj)/test \
- 		-L$(objtree)/$(obj)/test \
-diff --git a/rust/kernel/str.rs b/rust/kernel/str.rs
-index d04c12a1426d..f98966ba4991 100644
---- a/rust/kernel/str.rs
-+++ b/rust/kernel/str.rs
-@@ -522,6 +522,7 @@ macro_rules! c_str {
- }
- 
- #[cfg(test)]
-+#[expect(clippy::items_after_test_module)]
- mod tests {
-     use super::*;
- 
-@@ -547,7 +548,7 @@ macro_rules! format {
-         })
-     }
- 
--    const ALL_ASCII_CHARS: &'static str =
-+    const ALL_ASCII_CHARS: &str =
-         "\\x01\\x02\\x03\\x04\\x05\\x06\\x07\\x08\\x09\\x0a\\x0b\\x0c\\x0d\\x0e\\x0f\
-         \\x10\\x11\\x12\\x13\\x14\\x15\\x16\\x17\\x18\\x19\\x1a\\x1b\\x1c\\x1d\\x1e\\x1f \
-         !\"#$%&'()*+,-./0123456789:;<=>?@\
-@@ -581,6 +582,7 @@ fn test_cstr_to_str_panic() {
-     fn test_cstr_as_str_unchecked() {
-         let good_bytes = b"\xf0\x9f\x90\xA7\0";
-         let checked_cstr = CStr::from_bytes_with_nul(good_bytes).unwrap();
-+        // SAFETY: The contents come from a string literal which contains valid UTF-8.
-         let unchecked_str = unsafe { checked_cstr.as_str_unchecked() };
-         assert_eq!(unchecked_str, "🐧");
-     }
+ disallowed-macros = [
 
 base-commit: b2603f8ac8217bc59f5c7f248ac248423b9b99cb
 -- 
