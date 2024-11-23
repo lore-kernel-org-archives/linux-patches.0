@@ -1,106 +1,106 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.18])
+Received: from jabberwock.ucw.cz (jabberwock.ucw.cz [46.255.230.98])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E46951DE8A2
-	for <patches@lists.linux.dev>; Fri, 22 Nov 2024 23:58:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5A8616DEA9
+	for <patches@lists.linux.dev>; Sat, 23 Nov 2024 07:26:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.255.230.98
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732319925; cv=none; b=rvkYveSB297Vb8vQYsACESgwNxlYr2Pct4LXPzMPGve5BfEz7SWlRFd5Pk+/+BMCTibw5USYc0ruLquW0Nz6eC2RRL1Fl/XgmHtF0iZvAeedWTl9q0Rd35iKXDNIfr3VMIhs69ufu0m+T5IUzFKpnWYEEooFJe2pQgD7R6XVBro=
+	t=1732346768; cv=none; b=b0RsTVzlHJV144WMEkfTJLVzWrVNSrNQh5mSYKK71c5//SQxvSMT4utyQhYs/bIB09+Ng0xx4Ae+dxy4+WZoDKg+kWcVoGU1qcBKfFzzJ2rVKBbVWGOxNBOxhYZWbCqHLHDNMfjLIB1xdi+sS7XGbZgQ2RRdcenHvN9B4g9H/54=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732319925; c=relaxed/simple;
-	bh=fDfCFpRA+LjYsiAD12YwWZsVIyVX7Go/gjuhBuSbHhw=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZM2EOPmVQUrHi3lQvBbJEDDKnMb1z9PDFb3Eg9Lv28UgYUOSL5g7C9fMemTmb5sEqQpsfKw4MKpenM+xjnUSf+mR/dOqkaGeOctZJpUAt9+yXvMpyUgMqUWYriRcEdS+3WcsCwdoBjbmSrxn4JF2eKdpsWdOArv2h+AqIFde0F4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=cJVs6z2K; arc=none smtp.client-ip=198.175.65.18
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="cJVs6z2K"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1732319924; x=1763855924;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=fDfCFpRA+LjYsiAD12YwWZsVIyVX7Go/gjuhBuSbHhw=;
-  b=cJVs6z2KqDyOmheMrn2HYie0Zpf5Zf29JHEGM/FcMlv9qqnzAUpbblzg
-   /hxDvXqnMg6+d8IJGFt0FTxcFgwEKgATYxWdRX+UvOEcU+y5NHqfvZYoc
-   MQW8QdJZD85yG188kUrqW+i/0iSMEF1LkGZtToKAtGBHdu7A45sAppDLt
-   vaVQNq6JGsaMW9TZNVNBTzZVqkYZu6GiJLnYbuSOAAIlJkcVF4SDeZiqp
-   KwBKE/iJZBNTxs/VKv+UCFK14C32kXy+8fUyOtA1Dixi6LUhjTfGO27xZ
-   Az5gNeo2O9ecjxpqPbdkywYFIPDc1iah85Qs4yzuLCbxlxks8IMR3LPdr
-   A==;
-X-CSE-ConnectionGUID: r60yLpLWSg64Txg96vm3hw==
-X-CSE-MsgGUID: xiFk/IMfRlad2Vey4+mPBw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11264"; a="32642766"
-X-IronPort-AV: E=Sophos;i="6.12,177,1728975600"; 
-   d="scan'208";a="32642766"
-Received: from orviesa006.jf.intel.com ([10.64.159.146])
-  by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Nov 2024 15:58:40 -0800
-X-CSE-ConnectionGUID: QRhHz35tSHyVzsmQTImAGg==
-X-CSE-MsgGUID: /aPj5Iq+SpG2br21mtPLsg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,177,1728975600"; 
-   d="scan'208";a="90850919"
-Received: from agluck-desk3.sc.intel.com ([172.25.222.70])
-  by orviesa006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Nov 2024 15:58:40 -0800
-From: Tony Luck <tony.luck@intel.com>
-To: Fenghua Yu <fenghua.yu@intel.com>,
-	Reinette Chatre <reinette.chatre@intel.com>,
-	Peter Newman <peternewman@google.com>,
-	Jonathan Corbet <corbet@lwn.net>,
-	x86@kernel.org
-Cc: James Morse <james.morse@arm.com>,
-	Jamie Iles <quic_jiles@quicinc.com>,
-	Babu Moger <babu.moger@amd.com>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	"Shaopeng Tan (Fujitsu)" <tan.shaopeng@fujitsu.com>,
-	linux-kernel@vger.kernel.org,
-	linux-doc@vger.kernel.org,
-	patches@lists.linux.dev,
-	Tony Luck <tony.luck@intel.com>
-Subject: [PATCH v10 8/8] x86/resctrl: Document the new "mba_MBps_event" file
-Date: Fri, 22 Nov 2024 15:58:32 -0800
-Message-ID: <20241122235832.27498-9-tony.luck@intel.com>
-X-Mailer: git-send-email 2.47.0
-In-Reply-To: <20241122235832.27498-1-tony.luck@intel.com>
-References: <20241122235832.27498-1-tony.luck@intel.com>
+	s=arc-20240116; t=1732346768; c=relaxed/simple;
+	bh=EAWioJm7T9zrffHgoQOW92hh/2+ZDtEiBN2Sxxbv8L8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Fa7NP6DgOnTnmA1PzE4PAS55YiNnXZWTVlb5EEK9Ic0/faipy2RF9mmmihQ4nDiGtUnix6eI5Dj2U3+Rt+8OhDl59SgvwhSFD/WlBvxH4pGJ9wzwx6T0r5T7SEnqnbNi+GkBOcHCAKP155jq9DeIOmP7y92blcxQNAHxkg6Fm9A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=denx.de; spf=fail smtp.mailfrom=denx.de; arc=none smtp.client-ip=46.255.230.98
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=denx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=denx.de
+Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
+	id 4E1F21C00B2; Sat, 23 Nov 2024 08:25:57 +0100 (CET)
+Date: Sat, 23 Nov 2024 08:25:56 +0100
+From: Pavel Machek <pavel@denx.de>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+	conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
+	seanjc@google.com, chuck.lever@oracle.com
+Subject: Re: [PATCH 6.1 00/73] 6.1.119-rc1 review
+Message-ID: <Z0GDhId6mYswr+K0@duo.ucw.cz>
+References: <20241120125809.623237564@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="dKzwtp+IgQh+PyQN"
+Content-Disposition: inline
+In-Reply-To: <20241120125809.623237564@linuxfoundation.org>
 
-Add a section to document a new read/write file that shows/sets the memory
-bandwidth event used to control bandwidth used by each CTRL_MON group.
 
-Signed-off-by: Tony Luck <tony.luck@intel.com>
----
- Documentation/arch/x86/resctrl.rst | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+--dKzwtp+IgQh+PyQN
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-diff --git a/Documentation/arch/x86/resctrl.rst b/Documentation/arch/x86/resctrl.rst
-index a824affd741d..6768fc1fad16 100644
---- a/Documentation/arch/x86/resctrl.rst
-+++ b/Documentation/arch/x86/resctrl.rst
-@@ -384,6 +384,16 @@ When monitoring is enabled all MON groups will also contain:
- 	Available only with debug option. The identifier used by hardware
- 	for the monitor group. On x86 this is the RMID.
- 
-+When the "mba_MBps" mount option is used all CTRL_MON groups will also contain:
-+
-+"mba_MBps_event":
-+	Reading this file shows which memory bandwidth event is used
-+	as input to the software feedback loop that keeps memory bandwidth
-+	below the value specified in the schemata file. Writing the
-+	name of one of the supported memory bandwidth events found in
-+	/sys/fs/resctrl/info/L3_MON/mon_features changes the input
-+	event.
-+
- Resource allocation rules
- -------------------------
- 
--- 
-2.47.0
+Hi!
 
+> This is the start of the stable review cycle for the 6.1.119 release.
+> There are 73 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+
+> Sean Christopherson <seanjc@google.com>
+>     KVM: VMX: Bury Intel PT virtualization (guest/host mode) behind
+>     CONFIG_BROKEN
+
+So... someone is passing kernel command line parameter, and setup
+works for him, now we start silently ignoring that parameter? That is
+pretty unfriendly.
+
+> Chuck Lever <chuck.lever@oracle.com>
+>     NFSD: Limit the number of concurrent async COPY operations
+
+@@ -1782,10 +1783,16 @@ nfsd4_copy(struct svc_rqst *rqstp, struct nfsd4_com=
+pound_state *cstate,
+        if (nfsd4_copy_is_async(copy)) {
+-               status =3D nfserrno(-ENOMEM);
+                async_copy =3D kzalloc(sizeof(struct nfsd4_copy), GFP_KERNE=
+L);
+                if (!async_copy)
+                        goto out_err;
+
+This is wrong. Status is success from previous code, and you are now
+returning it in case of error.
+
+(Also, the atomic dance does not work. It will not allow desired
+concurency in case of races. Semaphore is canonical solution for
+this.)
+
+> Andrew Morton <akpm@linux-foundation.org>
+>     mm: revert "mm: shmem: fix data-race in shmem_getattr()"
+
+No problem with this patch, but please remember this next time you
+apply "no real bug but warnings are bad" change...
+
+Best regards,
+								Pavel
+--=20
+DENX Software Engineering GmbH,        Managing Director: Erika Unter
+HRB 165235 Munich, Office: Kirchenstr.5, D-82194 Groebenzell, Germany
+
+--dKzwtp+IgQh+PyQN
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCZ0GDhAAKCRAw5/Bqldv6
+8mwVAJ90VQOUZGh4OjHfAY6QIg8yMJT+swCeKKibxVEWFjUVjuhhT8BLdgEWNZI=
+=M/mH
+-----END PGP SIGNATURE-----
+
+--dKzwtp+IgQh+PyQN--
