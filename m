@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F363A13D890;
-	Sat, 23 Nov 2024 22:29:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9DA21A76B5;
+	Sat, 23 Nov 2024 22:29:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732400944; cv=none; b=Qu0Q3hxLiu+evlkCS+pGmPB6vNADW37S8amTlWZK3zwIxY+MOaNu/tnNzKS86COaBPL5szsxz4ycs8xwNVmlIw5tJRlgCuy+ifWlYS5i3asK3QTDR0oaY7/Cuhl61zaxYqHEp0ihJyk+NDVGCe++oQYhwKXgRSqfbg0r2HfwK+A=
+	t=1732400948; cv=none; b=k3xWgYHZxIMwNP7kczrNg/FTpvNivLTKA5wgr2x1RbCZRalKMTxLhtDF/H/qM4y4FUQoWN4sxiwWWkDC0nS0zlMXnO/PK1zbmLiIyYql+Y+Iz+Rygs6jqyNGRYzAKv/198mbZrmKOMYUYUmOIJzTkJPuGxGN5V/aET+2878DABk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732400944; c=relaxed/simple;
-	bh=6PCjz9RrSZ1Yw/TTVbEX2xuMJdKcdzDFBfIaGKpAUgY=;
+	s=arc-20240116; t=1732400948; c=relaxed/simple;
+	bh=EfqQMqbewNi5Q0JETOl053CaTiHNe0XxlEiK6n0WTGk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CQ71Hc/jZE0WH56ccJMpkywkUE22mlm01aPh1oMlOCm9qWddgfdhDVXSQy1W06PAj3rRvXuykOxKDDq+CxHSGCRTTxZnm1Zij1DfHBd8tM71P4pbAVc28BZe2kziX2uBS+D7yRNuzxBdeYIL3TsjPtqWGlF+jKE4Fn36zdnfeoY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=R7c+zOxE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VA3AeI8P8B8HMSL4EY8iH9joioJMawvuTunzAe0oDgxo7OtbS6Uyc/UjhYooSlcYhA5/xrTFdoRYFdaQU1iM0s6nE203Udm7aXD9tWeJs5lFBEcoCasbyJI/RLJ9IySXiLPKkAvbHXnANV3uRJviTnAzsrI2QppU7GHPe68gPwg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tw5Zgmrl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="R7c+zOxE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6E1FC4CED3;
-	Sat, 23 Nov 2024 22:28:59 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tw5Zgmrl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01AC8C4CED0;
+	Sat, 23 Nov 2024 22:29:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1732400943;
-	bh=6PCjz9RrSZ1Yw/TTVbEX2xuMJdKcdzDFBfIaGKpAUgY=;
+	s=k20201202; t=1732400947;
+	bh=EfqQMqbewNi5Q0JETOl053CaTiHNe0XxlEiK6n0WTGk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R7c+zOxEDMIHDDOla6tErFZ3TWgrmeyKgJieM33Nm+RSiWN3efsU34LFka5fqGaxN
-	 hImOTaEvO+9jDcHfujbx7LZ0INbEsHSt1OGgtGpOFQcVbCW6dfH9gSU+RknWghmVpP
-	 9unAqI31T+MtyIWjcNcwuDqoo/usGLbgBPy4ex3oyIeQ9cc3m0KKifkn+DuZROYJpS
-	 gfMhvWD7PZzwzSHUFwKIyX3VKj9VdVxy3alOXlWl8unpL12xGEGcTh2ot5UncBCTPy
-	 EGm7WfyVaNlt5ufDIQlw7Y/6/AWDMCjDjIPB7VhdcDEQP7nmw1BNeFqeriEsOtY2hI
-	 MWbUVZoDeXTjw==
+	b=tw5ZgmrlXhLVac5/eeFisRRhfh29LiVwhkYm0odzharzUiqUcp8lThKgCZGNcU1HC
+	 do6GhTC6NcF3wEfAOCMFm0Z06ZvHvosAtUTiBWGiacoem9oSuNC1esAvkDHWYW1n7g
+	 HRXCP1gtiEOVO1xcIbDoCzHJx4pbFX+A25/94t+L8utZ8v82vzMrAlXom574nUwh7h
+	 T6AZdQRtJ0AZEOkzWTgvxPdvplSf43NNu9E8rzJbyGdfqEP0Bk0vSrMvXen7x48crW
+	 FeLOQM0eSmdixOkRfLCgJtHUTfEbOqaCaVFyCf6y1XFTnS4xjEja4DsjXicQY2RKl8
+	 3ptb0NN3oQhXg==
 From: Miguel Ojeda <ojeda@kernel.org>
 To: Miguel Ojeda <ojeda@kernel.org>,
 	Alex Gaynor <alex.gaynor@gmail.com>,
@@ -42,9 +42,9 @@ Cc: Boqun Feng <boqun.feng@gmail.com>,
 	linux-block@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev
-Subject: [PATCH 2/3] rust: kernel: move `build_error` hidden function to prevent mistakes
-Date: Sat, 23 Nov 2024 23:28:48 +0100
-Message-ID: <20241123222849.350287-2-ojeda@kernel.org>
+Subject: [PATCH 3/3] rust: add `build_error!` to the prelude
+Date: Sat, 23 Nov 2024 23:28:49 +0100
+Message-ID: <20241123222849.350287-3-ojeda@kernel.org>
 In-Reply-To: <20241123222849.350287-1-ojeda@kernel.org>
 References: <20241123222849.350287-1-ojeda@kernel.org>
 Precedence: bulk
@@ -55,108 +55,165 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Users were using the hidden exported `kernel::build_error` function
-instead of the intended `kernel::build_error!` macro, e.g. see the
-previous commit.
+The sibling `build_assert!` is already in the prelude, it makes sense
+that a "core"/"language" facility like this is part of the prelude and
+users should not be defining their own one (thus there should be no risk
+of future name collisions and we would want to be aware of them anyway).
 
-To force to use the macro, move it into the `build_assert` module,
-thus making it a compilation error and avoiding a collision in the same
-"namespace". Using the function now would require typing the module name
-(which is hidden), not just a single character.
-
-Now attempting to use the function will trigger this error with the
-right suggestion by the compiler:
-
-      error[E0423]: expected function, found macro `kernel::build_error`
-      --> samples/rust/rust_minimal.rs:29:9
-         |
-      29 |         kernel::build_error();
-         |         ^^^^^^^^^^^^^^^^^^^ not a function
-         |
-      help: use `!` to invoke the macro
-         |
-      29 |         kernel::build_error!();
-         |                            +
-
-An alternative would be using an alias, but it would be more complex
-and moving it into the module seems right since it belongs there and
-reduces the amount of code at the crate root.
-
-Keep the `#[doc(hidden)]` inside `build_assert` in case the module is
-not hidden in the future.
+Thus add `build_error!` into the prelude.
 
 Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 ---
- rust/kernel/build_assert.rs | 11 +++++++----
- rust/kernel/lib.rs          |  6 ++----
- 2 files changed, 9 insertions(+), 8 deletions(-)
+ rust/kernel/block/mq/operations.rs |  3 ++-
+ rust/kernel/build_assert.rs        |  1 -
+ rust/kernel/net/phy.rs             | 18 +++++++++---------
+ rust/kernel/prelude.rs             |  2 +-
+ rust/macros/lib.rs                 |  8 ++++----
+ 5 files changed, 16 insertions(+), 16 deletions(-)
 
+diff --git a/rust/kernel/block/mq/operations.rs b/rust/kernel/block/mq/operations.rs
+index 962f16a5a530..864ff379dc91 100644
+--- a/rust/kernel/block/mq/operations.rs
++++ b/rust/kernel/block/mq/operations.rs
+@@ -9,6 +9,7 @@
+     block::mq::request::RequestDataWrapper,
+     block::mq::Request,
+     error::{from_result, Result},
++    prelude::*,
+     types::ARef,
+ };
+ use core::{marker::PhantomData, sync::atomic::AtomicU64, sync::atomic::Ordering};
+@@ -35,7 +36,7 @@ pub trait Operations: Sized {
+     /// Called by the kernel to poll the device for completed requests. Only
+     /// used for poll queues.
+     fn poll() -> bool {
+-        crate::build_error!(crate::error::VTABLE_DEFAULT_ERROR)
++        build_error!(crate::error::VTABLE_DEFAULT_ERROR)
+     }
+ }
+ 
 diff --git a/rust/kernel/build_assert.rs b/rust/kernel/build_assert.rs
-index 9e37120bc69c..347ba5ce50f4 100644
+index 347ba5ce50f4..6331b15d7c4d 100644
 --- a/rust/kernel/build_assert.rs
 +++ b/rust/kernel/build_assert.rs
-@@ -2,6 +2,9 @@
- 
- //! Build-time assert.
- 
-+#[doc(hidden)]
-+pub use build_error::build_error;
-+
- /// Fails the build if the code path calling `build_error!` can possibly be executed.
+@@ -14,7 +14,6 @@
+ /// # Examples
  ///
- /// If the macro is executed in const context, `build_error!` will panic.
-@@ -23,10 +26,10 @@
- #[macro_export]
- macro_rules! build_error {
-     () => {{
--        $crate::build_error("")
-+        $crate::build_assert::build_error("")
-     }};
-     ($msg:expr) => {{
--        $crate::build_error($msg)
-+        $crate::build_assert::build_error($msg)
-     }};
- }
+ /// ```
+-/// # use kernel::build_error;
+ /// #[inline]
+ /// fn foo(a: usize) -> usize {
+ ///     a.checked_add(1).unwrap_or_else(|| build_error!("overflow"))
+diff --git a/rust/kernel/net/phy.rs b/rust/kernel/net/phy.rs
+index f488f6c55e9a..654311a783e9 100644
+--- a/rust/kernel/net/phy.rs
++++ b/rust/kernel/net/phy.rs
+@@ -587,17 +587,17 @@ pub trait Driver {
  
-@@ -73,12 +76,12 @@ macro_rules! build_error {
- macro_rules! build_assert {
-     ($cond:expr $(,)?) => {{
-         if !$cond {
--            $crate::build_error(concat!("assertion failed: ", stringify!($cond)));
-+            $crate::build_assert::build_error(concat!("assertion failed: ", stringify!($cond)));
-         }
-     }};
-     ($cond:expr, $msg:expr) => {{
-         if !$cond {
--            $crate::build_error($msg);
-+            $crate::build_assert::build_error($msg);
-         }
-     }};
- }
-diff --git a/rust/kernel/lib.rs b/rust/kernel/lib.rs
-index bf8d7f841f94..73e33a41ea04 100644
---- a/rust/kernel/lib.rs
-+++ b/rust/kernel/lib.rs
-@@ -32,7 +32,8 @@
- pub mod alloc;
- #[cfg(CONFIG_BLOCK)]
- pub mod block;
--mod build_assert;
-+#[doc(hidden)]
-+pub mod build_assert;
- pub mod device;
- pub mod error;
- #[cfg(CONFIG_RUST_FW_LOADER_ABSTRACTIONS)]
-@@ -66,9 +67,6 @@
- pub use macros;
- pub use uapi;
+     /// Issues a PHY software reset.
+     fn soft_reset(_dev: &mut Device) -> Result {
+-        kernel::build_error!(VTABLE_DEFAULT_ERROR)
++        build_error!(VTABLE_DEFAULT_ERROR)
+     }
  
--#[doc(hidden)]
--pub use build_error::build_error;
--
- /// Prefix to appear before log messages printed from within the `kernel` crate.
- const __LOG_PREFIX: &[u8] = b"rust_kernel\0";
+     /// Sets up device-specific structures during discovery.
+     fn probe(_dev: &mut Device) -> Result {
+-        kernel::build_error!(VTABLE_DEFAULT_ERROR)
++        build_error!(VTABLE_DEFAULT_ERROR)
+     }
  
+     /// Probes the hardware to determine what abilities it has.
+     fn get_features(_dev: &mut Device) -> Result {
+-        kernel::build_error!(VTABLE_DEFAULT_ERROR)
++        build_error!(VTABLE_DEFAULT_ERROR)
+     }
+ 
+     /// Returns true if this is a suitable driver for the given phydev.
+@@ -609,32 +609,32 @@ fn match_phy_device(_dev: &Device) -> bool {
+     /// Configures the advertisement and resets auto-negotiation
+     /// if auto-negotiation is enabled.
+     fn config_aneg(_dev: &mut Device) -> Result {
+-        kernel::build_error!(VTABLE_DEFAULT_ERROR)
++        build_error!(VTABLE_DEFAULT_ERROR)
+     }
+ 
+     /// Determines the negotiated speed and duplex.
+     fn read_status(_dev: &mut Device) -> Result<u16> {
+-        kernel::build_error!(VTABLE_DEFAULT_ERROR)
++        build_error!(VTABLE_DEFAULT_ERROR)
+     }
+ 
+     /// Suspends the hardware, saving state if needed.
+     fn suspend(_dev: &mut Device) -> Result {
+-        kernel::build_error!(VTABLE_DEFAULT_ERROR)
++        build_error!(VTABLE_DEFAULT_ERROR)
+     }
+ 
+     /// Resumes the hardware, restoring state if needed.
+     fn resume(_dev: &mut Device) -> Result {
+-        kernel::build_error!(VTABLE_DEFAULT_ERROR)
++        build_error!(VTABLE_DEFAULT_ERROR)
+     }
+ 
+     /// Overrides the default MMD read function for reading a MMD register.
+     fn read_mmd(_dev: &mut Device, _devnum: u8, _regnum: u16) -> Result<u16> {
+-        kernel::build_error!(VTABLE_DEFAULT_ERROR)
++        build_error!(VTABLE_DEFAULT_ERROR)
+     }
+ 
+     /// Overrides the default MMD write function for writing a MMD register.
+     fn write_mmd(_dev: &mut Device, _devnum: u8, _regnum: u16, _val: u16) -> Result {
+-        kernel::build_error!(VTABLE_DEFAULT_ERROR)
++        build_error!(VTABLE_DEFAULT_ERROR)
+     }
+ 
+     /// Callback for notification of link change.
+diff --git a/rust/kernel/prelude.rs b/rust/kernel/prelude.rs
+index 8bdab9aa0d16..ed076b3062ae 100644
+--- a/rust/kernel/prelude.rs
++++ b/rust/kernel/prelude.rs
+@@ -19,7 +19,7 @@
+ #[doc(no_inline)]
+ pub use macros::{module, pin_data, pinned_drop, vtable, Zeroable};
+ 
+-pub use super::build_assert;
++pub use super::{build_assert, build_error};
+ 
+ // `super::std_vendor` is hidden, which makes the macro inline for some reason.
+ #[doc(no_inline)]
+diff --git a/rust/macros/lib.rs b/rust/macros/lib.rs
+index 1a30c8075ebd..d61bc6a56425 100644
+--- a/rust/macros/lib.rs
++++ b/rust/macros/lib.rs
+@@ -123,12 +123,12 @@ pub fn module(ts: TokenStream) -> TokenStream {
+ /// used on the Rust side, it should not be possible to call the default
+ /// implementation. This is done to ensure that we call the vtable methods
+ /// through the C vtable, and not through the Rust vtable. Therefore, the
+-/// default implementation should call `kernel::build_error!`, which prevents
++/// default implementation should call `build_error!`, which prevents
+ /// calls to this function at compile time:
+ ///
+ /// ```compile_fail
+ /// # // Intentionally missing `use`s to simplify `rusttest`.
+-/// kernel::build_error!(VTABLE_DEFAULT_ERROR)
++/// build_error!(VTABLE_DEFAULT_ERROR)
+ /// ```
+ ///
+ /// Note that you might need to import [`kernel::error::VTABLE_DEFAULT_ERROR`].
+@@ -145,11 +145,11 @@ pub fn module(ts: TokenStream) -> TokenStream {
+ /// #[vtable]
+ /// pub trait Operations: Send + Sync + Sized {
+ ///     fn foo(&self) -> Result<()> {
+-///         kernel::build_error!(VTABLE_DEFAULT_ERROR)
++///         build_error!(VTABLE_DEFAULT_ERROR)
+ ///     }
+ ///
+ ///     fn bar(&self) -> Result<()> {
+-///         kernel::build_error!(VTABLE_DEFAULT_ERROR)
++///         build_error!(VTABLE_DEFAULT_ERROR)
+ ///     }
+ /// }
+ ///
 -- 
 2.47.0
 
