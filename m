@@ -1,69 +1,69 @@
-Received: from mail-pj1-f42.google.com (mail-pj1-f42.google.com [209.85.216.42])
+Received: from mail-pj1-f43.google.com (mail-pj1-f43.google.com [209.85.216.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D6921514CC
-	for <patches@lists.linux.dev>; Sun, 24 Nov 2024 23:55:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 851AA1714AC
+	for <patches@lists.linux.dev>; Sun, 24 Nov 2024 23:56:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732492561; cv=none; b=Jd/1XP+Z0L9mOHqWVgibwxK9roZOf43zLfAyonNbWSgail4BSMBzAslNyJGV/Yt64GZZCVU9UJArCYadhCsLpTd2iPt8eInvaI5QNYOdi8N9JHg0ZQ8B7UuhWjij6KlTFSXA84EGhVPE5MjsZE7dUYVlt+nETttesr7ddrcBb94=
+	t=1732492572; cv=none; b=hEyjdVwqGGrYtnH77f4DcIWbWemC51v40/qedvoVbV4VJiGVDK9x6DO79F7jhGX5XiVeLRSNqgXECj8fxcqPVzE464A829Aq0pqNnILG5rpkY8JBTu/QFTfNj7S3a69Xk37hbETxJ3VLcpAZrpPwsblA9b0n3tG+cDlxax25/BQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732492561; c=relaxed/simple;
-	bh=PD/UJLm7LH6MMLLNmAJycIDksAQ/wERoT2FSyYoRmQA=;
+	s=arc-20240116; t=1732492572; c=relaxed/simple;
+	bh=BEcuvNrj8JDYTsw68D9XSc1FNx/lPzGaINUfsEXci2w=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=lmvogy95VyIMzpnRbBCyOn5RM0x9a0fVea1Ga0+LWSm4RIga/H55pn2bCTpxLfksg/flSPOMk/ByXyzLQMFoY9T+FuZlmY6LcvXREGWH25+Ox7323PMeY6CUj3yrmF82APmS4G7/JZ5UP+477daZN4Bx6jW8Xp/aB42W97m6GO8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QumRKFdq; arc=none smtp.client-ip=209.85.216.42
+	 To:Cc:Content-Type; b=uZ3ZhIiHv64AZSezf/hzgZ99amAHekG6AOUb3ChG3ym7QdGzFJZEf+fd3/5mRIrYes18LtrPCuRPMKa9kOcmMTkDGbkLTUOr3fVFOFApJFCTRO2ZTcQXo605sdxVka1/MqnMFNb2Yp3pAcUmK7wcu47/+Qr+Mvd6OEkFwCPxMtE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Qdz23F+F; arc=none smtp.client-ip=209.85.216.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QumRKFdq"
-Received: by mail-pj1-f42.google.com with SMTP id 98e67ed59e1d1-2ea93311724so592786a91.2
-        for <patches@lists.linux.dev>; Sun, 24 Nov 2024 15:55:59 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Qdz23F+F"
+Received: by mail-pj1-f43.google.com with SMTP id 98e67ed59e1d1-2ea704b1c2bso650840a91.1
+        for <patches@lists.linux.dev>; Sun, 24 Nov 2024 15:56:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1732492559; x=1733097359; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1732492571; x=1733097371; darn=lists.linux.dev;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=uSNG3NPvuuTBpMAx70Czhut8CJdhpPvO+OEns2dE0B0=;
-        b=QumRKFdqJnK5R4t5fIglCL8AQvs19lgi5XxOxh55zqvPF+wF9gs8pt0mkBVVoFnSlu
-         LghvrQJWVpJgyxqFl3zOrBFxtYj5wNLT3nSMyC8lwp+aP2+gZBy8WlVAyaUggKg0tp6N
-         urcL8qJRYkCZ/aVzKqy892OaadenGWozOAbUNCxxQbNJds+kPJIk44RVDqLmVLVu75Vb
-         NftQ9c2uXN2OyNtPoJ5j6VQGXvaTnYwQ91ffXS6+siJA1vDAc5J+BoD1E0nbpMBWsUsa
-         z2AjZQ/fbCAI8bsGxMpuI9nOyUX9FjXWGhV545jhu0QXVSomgLIFeU5CHiI6a/5fFkaM
-         cP0Q==
+        bh=BEcuvNrj8JDYTsw68D9XSc1FNx/lPzGaINUfsEXci2w=;
+        b=Qdz23F+F8JxOwt+rT47ct5SKNcjTu/OP2P6LAmPPbhGBQffyzJusATmD75fZ32MYcS
+         VoMRTiMqjHzc3G0tPlJMxI7MZ/uBtcuA/BfmtMsjltgnLt1U66/3DBQjfcGWrVpW1U6d
+         PzIT+KZVHMWjWCl5fmlFQd3toi5bXkGoRUEkiZWsexJ+FHJ+vNlpZYxPvu3eMxIac56P
+         jaBxlmvXBjUw5BdAPFnPPSl/XH/oGmSR040fxbWuGWqdEJkCxFGSEZSXSa+AMc4S5m0n
+         EiUyy7b8oWDJPDIIhk9ndQfBlhgaKREsgpLUk2tsvsD/zTl7B6SYunWl6tBOfgIY2VsL
+         g/zA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732492559; x=1733097359;
+        d=1e100.net; s=20230601; t=1732492571; x=1733097371;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=uSNG3NPvuuTBpMAx70Czhut8CJdhpPvO+OEns2dE0B0=;
-        b=B4Id8KP7d/6JkQdbH5382ZijhNUnD6r46GMKOuE0SSLNi26E8gPQfxLJUdOgGuRGwW
-         XIEpw3s6Q3fkr1wI3GBecrvnXy7e//0DES3uhbfXdkOT5m5dicm6kIEg4cH/4kGtAc6Z
-         kCohk5lcnJiUbyO/yjIvuauR07lY2qgbTBsRftbGgStBfw66a++FNWJHfMNEDpdfD/a3
-         SwA1nVibxGkyetiuNA4R6zbxcmQYbXF8YgoMljOgbKWut5VwAeBhU45pFtIooNPYtHbO
-         0jRGU4VLsmTi0ZEZhQwB9KCwGPn8N0mS0097qwBz+HtxVg4H/1WwKuaTPZNl6+y2RddC
-         eHhQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXECmV38/ab8F8DveESKpdEeBNelJAySfC9Gl+OhSkrklPB13oG3LFa9MehpLAyONtHGZI827io@lists.linux.dev
-X-Gm-Message-State: AOJu0YyJcYX9nGm6SZDPrTaVoMWdMtZ1SanQY98/qQ37jWqEZLq+Zcoa
-	wDfd+nZG1pM5EdNN86Mi49waeD6zZZBXR48yn8OF2rcsGV08jD0zmEgRuqy1vXvRbDtJU+2WRpV
-	5a8yHAohUtxIBY/msSAo/cgv/2zBSRZBj
-X-Gm-Gg: ASbGnctOfnRt0eZl0nfWh013UpGgnJM0w9cYOMFmHaoMK+nI4GQu8sVS76B7WxDuVfE
-	npqcgjlJoHt2dK0u3EjSe8Q+ULhlLYQ==
-X-Google-Smtp-Source: AGHT+IExKJPMfSptNdZi1BZ8FL450ZEm2k8j2KwKqOU+8iLFSl8lseaokzOBbj+tjOdhAv+NUZEjQc4mBf4vzHjZBLU=
-X-Received: by 2002:a17:90b:4b42:b0:2ea:a9ac:eeea with SMTP id
- 98e67ed59e1d1-2eb0e025c93mr5664097a91.2.1732492559391; Sun, 24 Nov 2024
- 15:55:59 -0800 (PST)
+        bh=BEcuvNrj8JDYTsw68D9XSc1FNx/lPzGaINUfsEXci2w=;
+        b=sXi7soGwF5Okz2bMmBD6F4Z/l7uBXJVH3khVAvLJo0+16z9/e+YTMhYCfKjRPenhBC
+         qnoofVg1f9anJDiP5Lu3+dPu8d1KtcIoMpynaxQmpgUOXcdUsCXp7FGkb+zjSjuPGspB
+         FLjIXk8MQ6zEzqIIt4vqFQiysVASA+jqhyHgG11ox3Un+34saJDWTvZsIDk83aWh51Xp
+         wPo6wGoH8NPgkaj6iyu7ab/3uSuG8MpLHIAAB2gMfupbnyHRLzHrk455wT/8RqGWMiET
+         XrOUWeMLMzcrpobQAM8pfBzVNfbID+y1ozW5kWRBKOOiKyav9J7HWTaB1CTV32bbjElS
+         eJvg==
+X-Forwarded-Encrypted: i=1; AJvYcCUAQJrAr5h0+ngaf3vfXpzt9l2UwMcLs5syW6b9dgzzuLvhXe/gxYVjsO4Rl7FdFf6jDPGdcApW@lists.linux.dev
+X-Gm-Message-State: AOJu0YzT5FKjGfmMRJe8Zua+CnRcg60Gyojiw5H12tF6/XwB2isGdskO
+	Y2DcjE8r0neD3DdPYs/jL+K1m4i7FRlZ8Th/uFOy8JlerJ6owXqMcBCJoSyNZl3+ctHLEub52LD
+	qZRop0HDCaTP6RizqFAQ4VVWgpVk=
+X-Gm-Gg: ASbGncvaOalPNSbOpP6UNBeCXRjhR2cqSoRyyRaHfaGJuFSesllEjMlkGdU2nP8o8d4
+	N0XMFLUVlb4XW4dJir6U6Wx2U1g6Y3g==
+X-Google-Smtp-Source: AGHT+IFjUWF43u/ROhUxo9tM85utRv+Ecq1g4sHrpaDwuC22Uwm+z/tdd8bUZbed3ovdPCNk9h+NMYan8RA/Vm2PrxM=
+X-Received: by 2002:a17:90a:e7ca:b0:2e2:c1e5:2df3 with SMTP id
+ 98e67ed59e1d1-2eb0e9a412amr6098614a91.8.1732492570768; Sun, 24 Nov 2024
+ 15:56:10 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20241116181538.369355-1-ojeda@kernel.org>
-In-Reply-To: <20241116181538.369355-1-ojeda@kernel.org>
+References: <20241117133127.473937-1-ojeda@kernel.org>
+In-Reply-To: <20241117133127.473937-1-ojeda@kernel.org>
 From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date: Mon, 25 Nov 2024 00:55:47 +0100
-Message-ID: <CANiq72m46L5sqU_fUapFMNF6m4mA9XHRaT-bRsPA7kffBmwnSg@mail.gmail.com>
-Subject: Re: [PATCH] rust: allow `clippy::needless_lifetimes`
+Date: Mon, 25 Nov 2024 00:55:58 +0100
+Message-ID: <CANiq72=hN20i4ZcVFRVgbiGNtq=FDDOVjeyQt4gf4-BrE5nd_A@mail.gmail.com>
+Subject: Re: [PATCH] docs: rust: remove spurious item in `expect` list
 To: Miguel Ojeda <ojeda@kernel.org>
 Cc: Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, 
 	Gary Guo <gary@garyguo.net>, =?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
@@ -73,49 +73,21 @@ Cc: Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>,
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Sat, Nov 16, 2024 at 7:16=E2=80=AFPM Miguel Ojeda <ojeda@kernel.org> wro=
+On Sun, Nov 17, 2024 at 2:31=E2=80=AFPM Miguel Ojeda <ojeda@kernel.org> wro=
 te:
 >
-> In beta Clippy (i.e. Rust 1.83.0), the `needless_lifetimes` lint has
-> been extended [1] to suggest eliding `impl` lifetimes, e.g.
+> This list started as a "when to prefer `expect`" list, but at some point
+> during writing I changed it to a "prefer `expect` unless...` one. However=
+,
+> the first bullet remained, which does not make sense anymore.
 >
->     error: the following explicit lifetimes could be elided: 'a
->     --> rust/kernel/list.rs:647:6
->         |
->     647 | impl<'a, T: ?Sized + ListItem<ID>, const ID: u64> FusedIterator=
- for Iter<'a, T, ID> {}
->         |      ^^                                                        =
-          ^^
->         |
->         =3D help: for further information visit https://rust-lang.github.=
-io/rust-clippy/master/index.html#needless_lifetimes
->         =3D note: `-D clippy::needless-lifetimes` implied by `-D warnings=
-`
->         =3D help: to override `-D warnings` add `#[allow(clippy::needless=
-_lifetimes)]`
->     help: elide the lifetimes
->         |
->     647 - impl<'a, T: ?Sized + ListItem<ID>, const ID: u64> FusedIterator=
- for Iter<'a, T, ID> {}
->     647 + impl<T: ?Sized + ListItem<ID>, const ID: u64> FusedIterator for=
- Iter<'_, T, ID> {}
+> Thus remove it. In addition, fix nearby typo.
 >
-> A possibility would have been to clean them -- the RFC patch [2] did
-> this, while asking if we wanted these cleanups. There is an open issue
-> [3] in Clippy about being able to differentiate some of the new cases,
-> e.g. those that do not involve introducing `'_`. Thus it seems others
-> feel similarly.
->
-> Thus, for the time being, we decided to `allow` the lint.
->
-> Link: https://github.com/rust-lang/rust-clippy/pull/13286 [1]
-> Link: https://lore.kernel.org/rust-for-linux/20241012231300.397010-1-ojed=
-a@kernel.org/ [2]
-> Link: https://github.com/rust-lang/rust-clippy/issues/13514 [3]
+> Fixes: 04866494e936 ("Documentation: rust: discuss `#[expect(...)]` in th=
+e guidelines")
 > Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 
-Applied to `rust-next` so that no one gets warnings on Thursday under
-`CLIPPY=3D1` -- thanks everyone!
+Applied to `rust-next` -- thanks everyone!
 
 Cheers,
 Miguel
