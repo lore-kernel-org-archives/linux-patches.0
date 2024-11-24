@@ -1,219 +1,90 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f53.google.com (mail-pj1-f53.google.com [209.85.216.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9DA21A76B5;
-	Sat, 23 Nov 2024 22:29:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 120F01514CC
+	for <patches@lists.linux.dev>; Sun, 24 Nov 2024 23:55:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732400948; cv=none; b=k3xWgYHZxIMwNP7kczrNg/FTpvNivLTKA5wgr2x1RbCZRalKMTxLhtDF/H/qM4y4FUQoWN4sxiwWWkDC0nS0zlMXnO/PK1zbmLiIyYql+Y+Iz+Rygs6jqyNGRYzAKv/198mbZrmKOMYUYUmOIJzTkJPuGxGN5V/aET+2878DABk=
+	t=1732492553; cv=none; b=D8/2Pt42ZJVxh5tLo3ZGxC2iGiKZVvgoZOoLENA7I/wlBiZnLNHU3VjUzcRwa1JpPihvSbXP/7WhqW4IMYAknoV4v5DtwGJSmSto9OUxQngxSwQf60ybctGpPSdstfANO4rXVkYOa6OyvXUSED5pwrpOFr5ggAM9i8C0Om/kDdU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732400948; c=relaxed/simple;
-	bh=EfqQMqbewNi5Q0JETOl053CaTiHNe0XxlEiK6n0WTGk=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VA3AeI8P8B8HMSL4EY8iH9joioJMawvuTunzAe0oDgxo7OtbS6Uyc/UjhYooSlcYhA5/xrTFdoRYFdaQU1iM0s6nE203Udm7aXD9tWeJs5lFBEcoCasbyJI/RLJ9IySXiLPKkAvbHXnANV3uRJviTnAzsrI2QppU7GHPe68gPwg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tw5Zgmrl; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1732492553; c=relaxed/simple;
+	bh=ahIJZ5ejiMwN/JQi1QRVHKcYWH3Zh8Fe+Ycej3jmRV0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=DnpBTORh63Vv0rKTuTJUrqlDb23cmZgnsoptnArSkXkfE25wP11bCif37Ed9sq4xIV51N+Mvdm4UL7aB3fp6L9HFKcxGyAZrloG7g9Muf/iUdC4+LX1g9GxHxg6WlhBAYqoQbEUftlE/pbH3K1S8BFxyYuTRWXfzezPdjX71e0s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GQS2hNdl; arc=none smtp.client-ip=209.85.216.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tw5Zgmrl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01AC8C4CED0;
-	Sat, 23 Nov 2024 22:29:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1732400947;
-	bh=EfqQMqbewNi5Q0JETOl053CaTiHNe0XxlEiK6n0WTGk=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tw5ZgmrlXhLVac5/eeFisRRhfh29LiVwhkYm0odzharzUiqUcp8lThKgCZGNcU1HC
-	 do6GhTC6NcF3wEfAOCMFm0Z06ZvHvosAtUTiBWGiacoem9oSuNC1esAvkDHWYW1n7g
-	 HRXCP1gtiEOVO1xcIbDoCzHJx4pbFX+A25/94t+L8utZ8v82vzMrAlXom574nUwh7h
-	 T6AZdQRtJ0AZEOkzWTgvxPdvplSf43NNu9E8rzJbyGdfqEP0Bk0vSrMvXen7x48crW
-	 FeLOQM0eSmdixOkRfLCgJtHUTfEbOqaCaVFyCf6y1XFTnS4xjEja4DsjXicQY2RKl8
-	 3ptb0NN3oQhXg==
-From: Miguel Ojeda <ojeda@kernel.org>
-To: Miguel Ojeda <ojeda@kernel.org>,
-	Alex Gaynor <alex.gaynor@gmail.com>,
-	FUJITA Tomonori <fujita.tomonori@gmail.com>,
-	Andreas Hindborg <a.hindborg@kernel.org>
-Cc: Boqun Feng <boqun.feng@gmail.com>,
-	Gary Guo <gary@garyguo.net>,
-	=?UTF-8?q?Bj=C3=B6rn=20Roy=20Baron?= <bjorn3_gh@protonmail.com>,
-	Benno Lossin <benno.lossin@proton.me>,
-	Alice Ryhl <aliceryhl@google.com>,
-	Trevor Gross <tmgross@umich.edu>,
-	rust-for-linux@vger.kernel.org,
-	netdev@vger.kernel.org,
-	linux-block@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev
-Subject: [PATCH 3/3] rust: add `build_error!` to the prelude
-Date: Sat, 23 Nov 2024 23:28:49 +0100
-Message-ID: <20241123222849.350287-3-ojeda@kernel.org>
-In-Reply-To: <20241123222849.350287-1-ojeda@kernel.org>
-References: <20241123222849.350287-1-ojeda@kernel.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GQS2hNdl"
+Received: by mail-pj1-f53.google.com with SMTP id 98e67ed59e1d1-2ea33a70fdfso650082a91.2
+        for <patches@lists.linux.dev>; Sun, 24 Nov 2024 15:55:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1732492551; x=1733097351; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ahIJZ5ejiMwN/JQi1QRVHKcYWH3Zh8Fe+Ycej3jmRV0=;
+        b=GQS2hNdlyeyEfff0iu42WdB1gGEc7fYUg9hTiTW5ZI4MMdJ0jL2hBsnMcGR6U0QeN9
+         B1urSU1vcjRE4dXbXScMc9V0WDLF1PxsHSOqU82wHwvpOSPnpo1ECoHKmytVlTus/gx0
+         PswtOPnJ9zd4ktZ3ZLn1gJSvLihhQGdCdorBl/HPxuIXiCVU/cuN/4o4gd3r2vNeDcsd
+         t/UfLNWQfEePUwB2n+XIQ9gr1465FpyW04Y+myEbdQD0gB4sRUCM1aN5p1mp6Yd/6y00
+         dlO/LNXevfet3jJ6TX1+YkNM5Nw/dv5W4Ufe3+hY/0W9Rz4cUB6yYvCJ/HyCmHF8Zdec
+         z5Ng==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1732492551; x=1733097351;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ahIJZ5ejiMwN/JQi1QRVHKcYWH3Zh8Fe+Ycej3jmRV0=;
+        b=gyicXE5qHQ7dwE+cnM73iHk5QKX7l2FpxzJun584iP5lx/uFpM9djUIjYuVRrnIGtW
+         2QPNHNYgNVaN930JpNoNWhODN/GlpPwhUsJdWwaXGgOT9uWCqUxklTdCmDAN53FzJLD7
+         f1YG2X3J0cyfpwYu5m3sEKjSk0foIJm0v+7saknn2F9VWKCRk98L2X1jD0gxOsrSaclm
+         OF8lMhQo3vA0rnQdEjD09LjRliraDRxixe+ojXZF1yzT411TqmO+td6vf0bFNRi80fm/
+         oAldBSbbqrjMWsZzjIQ32xXhtAfqrPYa/0mwmxQKwUD5Ix2MzsHpGE+l49L2ELj9VhfJ
+         tw5A==
+X-Forwarded-Encrypted: i=1; AJvYcCXUSc6OkJCJZRwZQtidyJwsEX0VYwuOq8ErX3InbILI53pzeVA6/ffU8zwi0oAe9wwK/TlM4dDS@lists.linux.dev
+X-Gm-Message-State: AOJu0YyiZNIjd9nNbLbgyj0RaiEas1AQncKHlcfdvfPkn5ISnaCRNy3N
+	TaVyFl2urEfaafxHMGhzyFpicQwsjXxNfevvsksJh+VT9RZtxPVwuO1c30nOFShQzvounoxbJ1e
+	++cEOrgQKdguzq0umBXCLh2gUGTU=
+X-Gm-Gg: ASbGncvbp2EbG04EAqMkv9qttMaem9bYATCD910EzcVwywFEq/Q5mHZKN6sCfiPXZ9g
+	aud/RYpYc/8wugPkFBFre5OkjG/Vd1g==
+X-Google-Smtp-Source: AGHT+IE0GVGXq6FAVz/1ZUH7H5yK+sxF6g6rGaYnxrsAhuXE3bPolOfAEBR2JrYP4HASDtXdNgIzJ9T+bA3QL/2iIhQ=
+X-Received: by 2002:a17:90b:1b51:b0:2ea:580f:6c0c with SMTP id
+ 98e67ed59e1d1-2eb0e024be7mr6003360a91.1.1732492551429; Sun, 24 Nov 2024
+ 15:55:51 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20241116181538.369355-1-ojeda@kernel.org> <CAH5fLgjU3BUU4nu6LscYKHTtZ8WSChXvf391v5v=xNK_2w7nrw@mail.gmail.com>
+In-Reply-To: <CAH5fLgjU3BUU4nu6LscYKHTtZ8WSChXvf391v5v=xNK_2w7nrw@mail.gmail.com>
+From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Date: Mon, 25 Nov 2024 00:55:37 +0100
+Message-ID: <CANiq72mSo9aq9Wu0WemVRsC2XXDKvw2D=rTAXg5eUF3g+yHO1g@mail.gmail.com>
+Subject: Re: [PATCH] rust: allow `clippy::needless_lifetimes`
+To: Alice Ryhl <aliceryhl@google.com>
+Cc: Miguel Ojeda <ojeda@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>, 
+	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
+	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
+	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@kernel.org>, 
+	Trevor Gross <tmgross@umich.edu>, rust-for-linux@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-The sibling `build_assert!` is already in the prelude, it makes sense
-that a "core"/"language" facility like this is part of the prelude and
-users should not be defining their own one (thus there should be no risk
-of future name collisions and we would want to be aware of them anyway).
+On Mon, Nov 18, 2024 at 10:51=E2=80=AFAM Alice Ryhl <aliceryhl@google.com> =
+wrote:
+>
+> Does this need any backports to keep old kernels warning-free on new comp=
+ilers?
 
-Thus add `build_error!` into the prelude.
++1, for stable, yeah, if we want to keep it Clippy-clean (which I
+think we should, especially given it is straightforward). I will send
+it.
 
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
----
- rust/kernel/block/mq/operations.rs |  3 ++-
- rust/kernel/build_assert.rs        |  1 -
- rust/kernel/net/phy.rs             | 18 +++++++++---------
- rust/kernel/prelude.rs             |  2 +-
- rust/macros/lib.rs                 |  8 ++++----
- 5 files changed, 16 insertions(+), 16 deletions(-)
+For the LTSs, which only support a single compiler, there is no need.
 
-diff --git a/rust/kernel/block/mq/operations.rs b/rust/kernel/block/mq/operations.rs
-index 962f16a5a530..864ff379dc91 100644
---- a/rust/kernel/block/mq/operations.rs
-+++ b/rust/kernel/block/mq/operations.rs
-@@ -9,6 +9,7 @@
-     block::mq::request::RequestDataWrapper,
-     block::mq::Request,
-     error::{from_result, Result},
-+    prelude::*,
-     types::ARef,
- };
- use core::{marker::PhantomData, sync::atomic::AtomicU64, sync::atomic::Ordering};
-@@ -35,7 +36,7 @@ pub trait Operations: Sized {
-     /// Called by the kernel to poll the device for completed requests. Only
-     /// used for poll queues.
-     fn poll() -> bool {
--        crate::build_error!(crate::error::VTABLE_DEFAULT_ERROR)
-+        build_error!(crate::error::VTABLE_DEFAULT_ERROR)
-     }
- }
- 
-diff --git a/rust/kernel/build_assert.rs b/rust/kernel/build_assert.rs
-index 347ba5ce50f4..6331b15d7c4d 100644
---- a/rust/kernel/build_assert.rs
-+++ b/rust/kernel/build_assert.rs
-@@ -14,7 +14,6 @@
- /// # Examples
- ///
- /// ```
--/// # use kernel::build_error;
- /// #[inline]
- /// fn foo(a: usize) -> usize {
- ///     a.checked_add(1).unwrap_or_else(|| build_error!("overflow"))
-diff --git a/rust/kernel/net/phy.rs b/rust/kernel/net/phy.rs
-index f488f6c55e9a..654311a783e9 100644
---- a/rust/kernel/net/phy.rs
-+++ b/rust/kernel/net/phy.rs
-@@ -587,17 +587,17 @@ pub trait Driver {
- 
-     /// Issues a PHY software reset.
-     fn soft_reset(_dev: &mut Device) -> Result {
--        kernel::build_error!(VTABLE_DEFAULT_ERROR)
-+        build_error!(VTABLE_DEFAULT_ERROR)
-     }
- 
-     /// Sets up device-specific structures during discovery.
-     fn probe(_dev: &mut Device) -> Result {
--        kernel::build_error!(VTABLE_DEFAULT_ERROR)
-+        build_error!(VTABLE_DEFAULT_ERROR)
-     }
- 
-     /// Probes the hardware to determine what abilities it has.
-     fn get_features(_dev: &mut Device) -> Result {
--        kernel::build_error!(VTABLE_DEFAULT_ERROR)
-+        build_error!(VTABLE_DEFAULT_ERROR)
-     }
- 
-     /// Returns true if this is a suitable driver for the given phydev.
-@@ -609,32 +609,32 @@ fn match_phy_device(_dev: &Device) -> bool {
-     /// Configures the advertisement and resets auto-negotiation
-     /// if auto-negotiation is enabled.
-     fn config_aneg(_dev: &mut Device) -> Result {
--        kernel::build_error!(VTABLE_DEFAULT_ERROR)
-+        build_error!(VTABLE_DEFAULT_ERROR)
-     }
- 
-     /// Determines the negotiated speed and duplex.
-     fn read_status(_dev: &mut Device) -> Result<u16> {
--        kernel::build_error!(VTABLE_DEFAULT_ERROR)
-+        build_error!(VTABLE_DEFAULT_ERROR)
-     }
- 
-     /// Suspends the hardware, saving state if needed.
-     fn suspend(_dev: &mut Device) -> Result {
--        kernel::build_error!(VTABLE_DEFAULT_ERROR)
-+        build_error!(VTABLE_DEFAULT_ERROR)
-     }
- 
-     /// Resumes the hardware, restoring state if needed.
-     fn resume(_dev: &mut Device) -> Result {
--        kernel::build_error!(VTABLE_DEFAULT_ERROR)
-+        build_error!(VTABLE_DEFAULT_ERROR)
-     }
- 
-     /// Overrides the default MMD read function for reading a MMD register.
-     fn read_mmd(_dev: &mut Device, _devnum: u8, _regnum: u16) -> Result<u16> {
--        kernel::build_error!(VTABLE_DEFAULT_ERROR)
-+        build_error!(VTABLE_DEFAULT_ERROR)
-     }
- 
-     /// Overrides the default MMD write function for writing a MMD register.
-     fn write_mmd(_dev: &mut Device, _devnum: u8, _regnum: u16, _val: u16) -> Result {
--        kernel::build_error!(VTABLE_DEFAULT_ERROR)
-+        build_error!(VTABLE_DEFAULT_ERROR)
-     }
- 
-     /// Callback for notification of link change.
-diff --git a/rust/kernel/prelude.rs b/rust/kernel/prelude.rs
-index 8bdab9aa0d16..ed076b3062ae 100644
---- a/rust/kernel/prelude.rs
-+++ b/rust/kernel/prelude.rs
-@@ -19,7 +19,7 @@
- #[doc(no_inline)]
- pub use macros::{module, pin_data, pinned_drop, vtable, Zeroable};
- 
--pub use super::build_assert;
-+pub use super::{build_assert, build_error};
- 
- // `super::std_vendor` is hidden, which makes the macro inline for some reason.
- #[doc(no_inline)]
-diff --git a/rust/macros/lib.rs b/rust/macros/lib.rs
-index 1a30c8075ebd..d61bc6a56425 100644
---- a/rust/macros/lib.rs
-+++ b/rust/macros/lib.rs
-@@ -123,12 +123,12 @@ pub fn module(ts: TokenStream) -> TokenStream {
- /// used on the Rust side, it should not be possible to call the default
- /// implementation. This is done to ensure that we call the vtable methods
- /// through the C vtable, and not through the Rust vtable. Therefore, the
--/// default implementation should call `kernel::build_error!`, which prevents
-+/// default implementation should call `build_error!`, which prevents
- /// calls to this function at compile time:
- ///
- /// ```compile_fail
- /// # // Intentionally missing `use`s to simplify `rusttest`.
--/// kernel::build_error!(VTABLE_DEFAULT_ERROR)
-+/// build_error!(VTABLE_DEFAULT_ERROR)
- /// ```
- ///
- /// Note that you might need to import [`kernel::error::VTABLE_DEFAULT_ERROR`].
-@@ -145,11 +145,11 @@ pub fn module(ts: TokenStream) -> TokenStream {
- /// #[vtable]
- /// pub trait Operations: Send + Sync + Sized {
- ///     fn foo(&self) -> Result<()> {
--///         kernel::build_error!(VTABLE_DEFAULT_ERROR)
-+///         build_error!(VTABLE_DEFAULT_ERROR)
- ///     }
- ///
- ///     fn bar(&self) -> Result<()> {
--///         kernel::build_error!(VTABLE_DEFAULT_ERROR)
-+///         build_error!(VTABLE_DEFAULT_ERROR)
- ///     }
- /// }
- ///
--- 
-2.47.0
-
+Cheers,
+Miguel
