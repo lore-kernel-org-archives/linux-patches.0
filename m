@@ -1,70 +1,69 @@
-Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
+Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E721D190052
-	for <patches@lists.linux.dev>; Mon, 25 Nov 2024 09:14:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A560F185935
+	for <patches@lists.linux.dev>; Mon, 25 Nov 2024 09:15:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732526064; cv=none; b=Q2Z2F/HQ8djUivK8gNeWTNRbNMtft3dFq1XdWI0FGcTD9cAI53UVNbeLztE+1pN/8FU4J2RgrYTDvDCix3/YWhuR6ZFHUS9be9STtXLuduXWeZlMQjgQVVBGaihEpRssXCBrhu9IiZj2TEUx+FJ+BHOfa3J6Z23cyfa9aSG8sRQ=
+	t=1732526155; cv=none; b=sV9/EosWUQ91eCJ/JMi0HXFGYfw7ynC/DmtjR5ZeSafUGYCjooqQGUB9tbRi9QL8IqJn9hq6j2bM4QWxXPsg6M6nXPnQ74/xXBUjH2EPXCeZrpy/zPxYz9W8KYessnsrdXWMm4FKaoj7Jqrci4eASblF/AgtQXUzecfQUBW8rsc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732526064; c=relaxed/simple;
-	bh=uSsPtNnVteIM2BzthXpkxL9YoGLmPqhmZKg37rTE7Tk=;
+	s=arc-20240116; t=1732526155; c=relaxed/simple;
+	bh=0ha3COx0DHOj8uxVj0+IXNOyCOzZMIKeCo7cSFiOZo0=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=WJGweuG9PV5rpcSQol3/W7PUL0Sp2NDwSdP21dxV9H+qCJ3A1vsYFgU4lCsGOZgi49e4CN50L5C7qnlMGZo0uQzYb7fiEwgh2MuvHUdA1smq9T76E5Gq1j533xDmhKlj6vnd1NsMHhCscvK4W3I24Zv5/lfvnkAmhCdzlfqVjNA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=jsEMs49M; arc=none smtp.client-ip=209.85.221.47
+	 To:Cc:Content-Type; b=WOjZ+biqMWfCtT5u2y5hygCAClvL23Bv2cqKc5kn24P1NyZbx+JA+LrYD2UXNBU87LTwvtz2mJT/agBa+wgMlA5O05smFZ/GblIzgpywUQq2gKX++YjOo/wyNJ0AwmYXFNYgRSnni0uU7nXfHq9/qLE66Tf02McACCDsHhGBy48=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=owkRSgF7; arc=none smtp.client-ip=209.85.221.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="jsEMs49M"
-Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-38248b810ffso3175157f8f.0
-        for <patches@lists.linux.dev>; Mon, 25 Nov 2024 01:14:22 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="owkRSgF7"
+Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-382423e1f7aso2956899f8f.2
+        for <patches@lists.linux.dev>; Mon, 25 Nov 2024 01:15:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1732526061; x=1733130861; darn=lists.linux.dev;
+        d=google.com; s=20230601; t=1732526152; x=1733130952; darn=lists.linux.dev;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=PrdMiDJt5vduIxa0PY5GoA+617/ZMEzbh2yCH7ixs2Q=;
-        b=jsEMs49MhXIBWuI3Ed7HtVlKsAJUW672cfj2dDCcIN+RLKmepQuNsb8ZV73iDXEFun
-         uEAt0jAd3xqAkzqMc4xnj9SQuTg+7bkDwCTDLvS9I+yrOrYdQMn/RBAQrzcP16LGTFmH
-         ptmhxsj5vzlDX8Rzm1hoC1iOZhTQpsmxNNvEeHIdKVdxHO+UTFqhV6A51ZvzSbpGYDhf
-         JcrMB0+Tzxv3+o06sY3XhQ7V/gqswzx1eS/c7rXe10de1wuRMJswvdpPwZSsF3jYWXDc
-         5sFdbQg14hyS/yerH2YrIePiTgnV8+MNVB0c63bwEcjlmNRr4enAjLeds2vvgc3v04vG
-         W2AQ==
+        bh=0ha3COx0DHOj8uxVj0+IXNOyCOzZMIKeCo7cSFiOZo0=;
+        b=owkRSgF7TpmZz9ETb/qBk8Da9PMk+JSmUomsDHGlUsaJiInmhicl74ggv0uOOYMuaN
+         TIdkg9zrJtSKLHz1YC58lXEyws8TFpLhSZG6Rt49ajU24xHa1HhAq/jzv+Gb+2HaBryI
+         zHE+ltRBJDn7IDnKrDLzw8tPdVlY4KZdGCwhu+qFcZ+WzZXUdcPEszEfjfPbYCLfBD5D
+         vuBUkcFE3Q59+/7KqJPQvQiOw+dGXcOMnvHcGmraZ8CAkBMjAmMfYHgSZ+ugpPcXZLKD
+         1JLkrivhBrpzxGKFXNYGNByh7UNpKZWODY/0CSvkEh3nTksKmyB11WqUEVJjuNoh53br
+         A6mA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732526061; x=1733130861;
+        d=1e100.net; s=20230601; t=1732526152; x=1733130952;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=PrdMiDJt5vduIxa0PY5GoA+617/ZMEzbh2yCH7ixs2Q=;
-        b=rNoodqROvvBEz1fcypl5drELWQvOQalRxAEbPLTOpBTP7cuXXJ+YVUcZo/qT/6PTQN
-         a6Phnzz2qEeBDGuK6QM8VLSUnskPvbe7ZnS6zJSnExxCPN6GuSinWOOSZdjhT+VUVUoE
-         CLlX8s1Hr8j/GK8BLzwuOmQp1PjXM1EdEt82Qt8ODV9mdbeg5PdsbLXdrMh5lzleRzx6
-         6oNQZt/3/rxTk5GhXLP+m1WDAfybUL2JZvIAPPEpwjvmLKqM0R0q7TqV9ejiv2fWS36E
-         ITlPtDaMBoQUvjmetMjHC3rugDQgEDJ1ByJQ7kI4JyqwPBn3Ef5jxw3ZfFHLGkwyVZp3
-         Jucw==
-X-Forwarded-Encrypted: i=1; AJvYcCVrinePQGd4irmeadGFHxnTYZb1MBX62lIzeyC9f+lIzQhk7Qk9xSqpp9gYSVqUVHzkdYlXMMJb@lists.linux.dev
-X-Gm-Message-State: AOJu0YxtE6yWrMXVS0+nNlOFvgiVjl3t1Jzl+k59zsvmJIUyU6LA7K6z
-	ayDfsjS+Qp53FyyN94UycE/9xsuOC4s8TvkkRIUZ3hAbfwy9FMaJpaWSRBtStHZpQi2pQzDucXG
-	Rp+9WwFdStighPncfSTFPsQDFmjZ7cW03hnlU
-X-Gm-Gg: ASbGnctLoI3Pb9klqgTKnSg8u63VX5ElmNr6qrH7ddUQPeYHtdWfIAoafGxiqxfAHve
-	SHD3FFx/Puei0kt9XvWKQHAeTrnMlxZABiIrtJ9za0NEM5clFCVuL+n8reCAoGw==
-X-Google-Smtp-Source: AGHT+IEOwMk3vapdbNHpELN0oZ6s3oro3YnZRn8GCOYxBikHFeMCXOFfPD4cUTzyUloMpcTHt84sQUv4Gf+wLfw8W4o=
-X-Received: by 2002:a05:6000:23c5:b0:382:3e51:4b1d with SMTP id
- ffacd0b85a97d-38260b59530mr6868816f8f.20.1732526061276; Mon, 25 Nov 2024
- 01:14:21 -0800 (PST)
+        bh=0ha3COx0DHOj8uxVj0+IXNOyCOzZMIKeCo7cSFiOZo0=;
+        b=GMSEiPJQxFo29EzZzHMyBcxfrCttFgJzEMzQZAQqQGUuSt54uKS/JdWGEfjajRurHg
+         4/d/u44F4orE1lwLdQVrNMamvhpL5a26DZQ1Q0NSKLSSfRir1ynGUtvGOjJFaPZFXjvT
+         6fZcc73w8JDrxiblH8/tweWxmHwVQomJlA5AbyEhj5exLwqt7E1gVc1JEczWm1/7fwHh
+         nSsNIjm4hmxt8Y/cJwTVfEmGwyrjVOKSxPkXyO3wCldvC1hGfhdKIutP+JemI0dvDskz
+         KuGL3aM4hzflPeczwY6ZuHulj8CnR5sHTGNcQ192rwUpjL2bzdJk7JerfnlxkcDArqB4
+         gooA==
+X-Forwarded-Encrypted: i=1; AJvYcCVNDS7k9upaaN2GHjMhX0Ig0O2K1f9vtjT70P3UP/aHSi5pDiwYBp4MbyptsC674CD9eqH8eAmd@lists.linux.dev
+X-Gm-Message-State: AOJu0Yz31MOmrVnyNRWnke9KbwrkQZ0EPSYrlbyPwtP3YkLgWDQ9wH/G
+	IuLKSGo78PSTzmMzzT2ZcJIjXAbCXglmGnxBE8ohRtP8lqZDAs64UvUJyQcw9qljXA6BvcFfYzn
+	wEGoi3YQ0w2Duc/KHhJeTRhB4wggbNOpQKzL2
+X-Gm-Gg: ASbGncuw+2OC1J+Wy7J7kSEygsJDAWPAIW6mj90l65BSbx9+BCGT3PRauIX0CtUikmg
+	nyT0toJXlDu4oHBiLIpA09hfAPCdBY3tUUhmO3vZNnqKMCY2FR2jMQ8j3qvfPOw==
+X-Google-Smtp-Source: AGHT+IH8NglVha/cRO2EUsWas5pT6+KPbdrlOa1Qfc0/+y2Ov2H+tjMFSpQ12N28tn+7P/9GBO4emIZVFBM59ocV130=
+X-Received: by 2002:a05:6000:1fab:b0:382:4a15:6928 with SMTP id
+ ffacd0b85a97d-38260b5715fmr10344321f8f.14.1732526152020; Mon, 25 Nov 2024
+ 01:15:52 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20241123222849.350287-1-ojeda@kernel.org> <20241123222849.350287-2-ojeda@kernel.org>
-In-Reply-To: <20241123222849.350287-2-ojeda@kernel.org>
+References: <20241123222849.350287-1-ojeda@kernel.org> <20241123222849.350287-3-ojeda@kernel.org>
+In-Reply-To: <20241123222849.350287-3-ojeda@kernel.org>
 From: Alice Ryhl <aliceryhl@google.com>
-Date: Mon, 25 Nov 2024 10:14:09 +0100
-Message-ID: <CAH5fLggK_uL0izyDogqdxqp+UEiDbMW555zgS6jk=gw3n07f6A@mail.gmail.com>
-Subject: Re: [PATCH 2/3] rust: kernel: move `build_error` hidden function to
- prevent mistakes
+Date: Mon, 25 Nov 2024 10:15:39 +0100
+Message-ID: <CAH5fLgjoC7=gBBnohf4GPLPrk+wpR7P5KMm25EAmTspdTjg=4g@mail.gmail.com>
+Subject: Re: [PATCH 3/3] rust: add `build_error!` to the prelude
 To: Miguel Ojeda <ojeda@kernel.org>
 Cc: Alex Gaynor <alex.gaynor@gmail.com>, FUJITA Tomonori <fujita.tomonori@gmail.com>, 
 	Andreas Hindborg <a.hindborg@kernel.org>, Boqun Feng <boqun.feng@gmail.com>, 
@@ -79,53 +78,13 @@ Content-Transfer-Encoding: quoted-printable
 On Sat, Nov 23, 2024 at 11:29=E2=80=AFPM Miguel Ojeda <ojeda@kernel.org> wr=
 ote:
 >
-> Users were using the hidden exported `kernel::build_error` function
-> instead of the intended `kernel::build_error!` macro, e.g. see the
-> previous commit.
+> The sibling `build_assert!` is already in the prelude, it makes sense
+> that a "core"/"language" facility like this is part of the prelude and
+> users should not be defining their own one (thus there should be no risk
+> of future name collisions and we would want to be aware of them anyway).
 >
-> To force to use the macro, move it into the `build_assert` module,
-> thus making it a compilation error and avoiding a collision in the same
-> "namespace". Using the function now would require typing the module name
-> (which is hidden), not just a single character.
->
-> Now attempting to use the function will trigger this error with the
-> right suggestion by the compiler:
->
->       error[E0423]: expected function, found macro `kernel::build_error`
->       --> samples/rust/rust_minimal.rs:29:9
->          |
->       29 |         kernel::build_error();
->          |         ^^^^^^^^^^^^^^^^^^^ not a function
->          |
->       help: use `!` to invoke the macro
->          |
->       29 |         kernel::build_error!();
->          |                            +
->
-> An alternative would be using an alias, but it would be more complex
-> and moving it into the module seems right since it belongs there and
-> reduces the amount of code at the crate root.
->
-> Keep the `#[doc(hidden)]` inside `build_assert` in case the module is
-> not hidden in the future.
+> Thus add `build_error!` into the prelude.
 >
 > Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 
 Reviewed-by: Alice Ryhl <aliceryhl@google.com>
-
-> diff --git a/rust/kernel/lib.rs b/rust/kernel/lib.rs
-> index bf8d7f841f94..73e33a41ea04 100644
-> --- a/rust/kernel/lib.rs
-> +++ b/rust/kernel/lib.rs
-> @@ -32,7 +32,8 @@
->  pub mod alloc;
->  #[cfg(CONFIG_BLOCK)]
->  pub mod block;
-> -mod build_assert;
-> +#[doc(hidden)]
-> +pub mod build_assert;
-
-You could also put #![doc(hidden)] at the top of build_assert.rs to
-simplify the lib.rs list. Not sure what is best.
-
-Alice
