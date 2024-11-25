@@ -1,95 +1,113 @@
-Received: from mail-pj1-f42.google.com (mail-pj1-f42.google.com [209.85.216.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1FF8190662
-	for <patches@lists.linux.dev>; Mon, 25 Nov 2024 09:56:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6138E1E480;
+	Mon, 25 Nov 2024 23:33:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732528598; cv=none; b=gu3Lj7foV0DlrqzqDe+pxumcWqHW9RMA3HWd+7c/uGfyC80vj6l8XHb8k0C9C4VIjJqL+jkg3gYfqstPWA9d+XkklJ7pzjmseRGYyjelEYT277YVn2xl8gUtCXhTV0PrZZs0BQgL5Z1fT8z0S5JMZu8Bw4AMVMfwDMsScgifCIQ=
+	t=1732577637; cv=none; b=QHMlw0m40KeysE/ABxdr3j0mn/GgAEDGA7XwttaBAuC/qUiXO67qoPbuBwb8w9Y6a8gPLrCaK9KwNf1eESiHoDhaAVgPNzY/SZQ+wX+4qqRxh7B01j3hv7bZoC+MFDn2ORxT+QRmJAO5tsTxwNq+Fip/oxqqqfHTow8JLWEthv8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732528598; c=relaxed/simple;
-	bh=yYZKNyVxriMi7AV//XVt0PIe+AMXWo5WmgtYsMcdOx0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=uURI9XgOi3Y/G0yP0dQPJY2KGQqrKNlx9gIkTF0Q/Edk4Q9iaaXCAqU9p1NoqQGyAHQtxAVrZZ9d+TIFiWmqh2HnjmxbDSf0rxa2YCnVuMroEWmbim+mtt9qflno2o4qXUktKHi7UyLjWBvrssLtowMWRPZk8G/wSZg/Ln6Ce/Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mHQivfCD; arc=none smtp.client-ip=209.85.216.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1732577637; c=relaxed/simple;
+	bh=ZI88yhG9GI0DouWMQIl4znxd8wu87u5uaWf+pyuEVRU=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Bj0KRbixS5qSHmSeOb0hmf2csDU3VHJBK1Hcon1TuIHRxT3xpDYndRh5k7jtAS0bnxxF+cFcHAtfSg5t1POYlTGicv4SU4ay3C8rFB7F0b6Znl9xw1uB6CoVHDcS0rL1L6YNYVHcOMihO1LverjNijng9DnOW9+AAoyJMnhNvV8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=L9MqDI9A; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mHQivfCD"
-Received: by mail-pj1-f42.google.com with SMTP id 98e67ed59e1d1-2ea93311724so654607a91.2
-        for <patches@lists.linux.dev>; Mon, 25 Nov 2024 01:56:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1732528596; x=1733133396; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=yYZKNyVxriMi7AV//XVt0PIe+AMXWo5WmgtYsMcdOx0=;
-        b=mHQivfCDC0pgwqkL74fRhqceb72XydkJFTS3vI+LGdQhETYWvhM1OhKp60lHyhqHlc
-         QuIyrDJDIt9t3wUYSriNyEbZ0+er9EyFNQShGhy6n6jXY3Pd0OJ1R2wp42g4yfeOVgcl
-         AHtyXwZtgUOXOCdEWA9yINVzbJ0Wu/0mXel1CFH9qL4RRZXG9xcwv8Im8QSx6Q3XFhYs
-         JgS1/CLUwr3CbR/LTDeohn432BSxbbLG7wi42teA20vFYXNLBcOToNokKNyebLlhmt02
-         /w8oRz3pQjPCcFZfUp+hy7ydtkSOJ6mG+at/OJZj30qGKNg0JRTaYv6rI4SDLqN587QS
-         ZPZg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732528596; x=1733133396;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=yYZKNyVxriMi7AV//XVt0PIe+AMXWo5WmgtYsMcdOx0=;
-        b=iwry/nfo2yjzqaIS49AZhSdbCaPkcFCdaKWstN3hdINGVTLTnxEoD+pG2ZzOTw3kHS
-         1QnGfHtwal38c5mLz8Dg1XusuHIkymtKswY+7SozoDOn7cPJy9bOPSihB5E0Xpx9rkel
-         UIfhMzVWOYg8Z+kmGtanfKej+7SkEoYYCtqpdotznMB3AW/2A98wjoyhfWrqaajH2i/5
-         CBEPNbOC/excuxYYhBtunZgVcMsx7g42lVLgCoyZwORN1RRZzLDtQ3vfqEthg/Y1+p75
-         pWBAFgdokMjlk1g9ZlDyGlQpoVqama5+ij3/A9/HTvEcEK4qvC4ySWhlnY+Z+O3fEWvf
-         FiZg==
-X-Forwarded-Encrypted: i=1; AJvYcCVYgiaTsT9d9ueGgLYBQ4aIPQfHBytlNfTrM1b29mkEtAwO5KB6l1DR7EYZUWGVMGHX3nNOXLIr@lists.linux.dev
-X-Gm-Message-State: AOJu0Yxw6ahC34COeWaLN2UQo+0a7s5cIFnfMZaMWEUXpUsVED3Ovajo
-	udCmt11lfHlcT9ggTlEqmOq77vHdqnflBfBntWuvQgtcIJynsoq/ZGf1AoaP96fdNO0Mm7hl05c
-	m3ZloPchGjhfFm+wkwzJa9R04Yn0=
-X-Gm-Gg: ASbGnctEkYkImodNRwhmhFdyLZ15lZ5cdEGO3M+2w0f4NWv/iiQC3ko38a04mY8KOxe
-	ahsxnZFLv2qBL366gMQmU0eAgL/DE8hY=
-X-Google-Smtp-Source: AGHT+IGaoGwCojAvQSCX3mdAqYlWAsTQexhHed/lggWkPEGb4m+hlgXa8w0huMdKx9oXQMlgU9jzhU5CZCIRge27C4M=
-X-Received: by 2002:a17:90b:3c08:b0:2eb:12ee:cf0b with SMTP id
- 98e67ed59e1d1-2eb12eecfb3mr6003337a91.1.1732528596262; Mon, 25 Nov 2024
- 01:56:36 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="L9MqDI9A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3690BC4CECE;
+	Mon, 25 Nov 2024 23:33:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1732577636;
+	bh=ZI88yhG9GI0DouWMQIl4znxd8wu87u5uaWf+pyuEVRU=;
+	h=From:To:Cc:Subject:Date:From;
+	b=L9MqDI9A8/KhvycwCCGcaVwWb8yODG0T+dRLdZeqzdDheGLoL7PkFNXvfI7WCSpzW
+	 llfh2jTJeI+nsQEpXwk7qan/ZPth4NVXXN72Zq6lNhs3Mam3bWimDBlS/x4AWG/hoK
+	 3TGZ0U3jqz8HjZ153FaovFS5k/wLNJ4ucK0Nre7Fk4SA2jbbAOwhfWu0tc/Z0K43+q
+	 rXLBLzPjVmO3vOMxkrmHtScCjM+XRDjaZuwB35RX+xXLN5LOmzR9TJ8QNyAoah2RVL
+	 AmZk2gEmqUhKa0vLgYjp0xBDpvmeX2o6FMpBqnMtN+UkpxtZN4gpzr7auBq99ie+/F
+	 gEA4vVKFguUDw==
+From: Miguel Ojeda <ojeda@kernel.org>
+To: Jocelyn Falempe <jfalempe@redhat.com>,
+	Miguel Ojeda <ojeda@kernel.org>,
+	Alex Gaynor <alex.gaynor@gmail.com>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	David Airlie <airlied@gmail.com>,
+	Simona Vetter <simona@ffwll.ch>
+Cc: Boqun Feng <boqun.feng@gmail.com>,
+	Gary Guo <gary@garyguo.net>,
+	=?UTF-8?q?Bj=C3=B6rn=20Roy=20Baron?= <bjorn3_gh@protonmail.com>,
+	Benno Lossin <benno.lossin@proton.me>,
+	Andreas Hindborg <a.hindborg@kernel.org>,
+	Alice Ryhl <aliceryhl@google.com>,
+	Trevor Gross <tmgross@umich.edu>,
+	rust-for-linux@vger.kernel.org,
+	dri-devel@lists.freedesktop.org,
+	linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev,
+	stable@vger.kernel.org
+Subject: [PATCH] drm/panic: remove spurious empty line to clean warning
+Date: Tue, 26 Nov 2024 00:33:32 +0100
+Message-ID: <20241125233332.697497-1-ojeda@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20241123180323.255997-1-ojeda@kernel.org> <CAH5fLggg5f0KpaObVtZc7WaxHjUqbhCDsn5CwnA5-3df2HEjnw@mail.gmail.com>
- <CANiq72moPEL5s0T3ELEDvWiE6Lz5oZv2hZnziV5A60EP65bkkQ@mail.gmail.com> <CAH5fLgjEDXHGLf+fAyzZwGtX+sjuCst6P9Eg_eyLjujd2datYw@mail.gmail.com>
-In-Reply-To: <CAH5fLgjEDXHGLf+fAyzZwGtX+sjuCst6P9Eg_eyLjujd2datYw@mail.gmail.com>
-From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date: Mon, 25 Nov 2024 10:56:24 +0100
-Message-ID: <CANiq72migNNeceZ95fJ4fKfOimD9hymdisvpqL0imAnjgVyxHw@mail.gmail.com>
-Subject: Re: [PATCH] rust: kbuild: set `bindgen`'s Rust target version
-To: Alice Ryhl <aliceryhl@google.com>
-Cc: Miguel Ojeda <ojeda@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>, 
-	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
-	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
-	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@kernel.org>, 
-	Trevor Gross <tmgross@umich.edu>, rust-for-linux@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev, 
-	Christian Poveda <git@pvdrz.com>, =?UTF-8?Q?Emilio_Cobos_=C3=81lvarez?= <emilio@crisal.io>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Mon, Nov 25, 2024 at 10:45=E2=80=AFAM Alice Ryhl <aliceryhl@google.com> =
-wrote:
->
-> Reviewed-by: Alice Ryhl <aliceryhl@google.com>
->
-> Sounds like this might need a backport to 6.12, to prevent issues
-> appearing on the LTS in the future?
+Clippy in the upcoming Rust 1.83.0 spots a spurious empty line since the
+`clippy::empty_line_after_doc_comments` warning is now enabled by default
+given it is part of the `suspicious` group [1]:
 
-Yeah (I am not sure how likely it will be that someone hits the issue
-in an LTS use case, since it requires using a `bindgen` that does not
-exist yet, even in `HEAD`, at the same time as an old enough `rustc`,
-but it is definitely possible, and life will keep surprising us).
+    error: empty line after doc comment
+       --> drivers/gpu/drm/drm_panic_qr.rs:931:1
+        |
+    931 | / /// They must remain valid for the duration of the function call.
+    932 | |
+        | |_
+    933 |   #[no_mangle]
+    934 | / pub unsafe extern "C" fn drm_panic_qr_generate(
+    935 | |     url: *const i8,
+    936 | |     data: *mut u8,
+    937 | |     data_len: usize,
+    ...   |
+    940 | |     tmp_size: usize,
+    941 | | ) -> u8 {
+        | |_______- the comment documents this function
+        |
+        = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#empty_line_after_doc_comments
+        = note: `-D clippy::empty-line-after-doc-comments` implied by `-D warnings`
+        = help: to override `-D warnings` add `#[allow(clippy::empty_line_after_doc_comments)]`
+        = help: if the empty line is unintentional remove it
 
-Thanks!
+Thus remove the empty line.
 
-Cheers,
-Miguel
+Cc: stable@vger.kernel.org
+Fixes: cb5164ac43d0 ("drm/panic: Add a QR code panic screen")
+Link: https://github.com/rust-lang/rust-clippy/pull/13091 [1]
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+---
+I added the Fixes and stable tags since it would be nice to keep the 6.12 LTS
+Clippy-clean (since that one is the first that supports several Rust compilers).
+
+ drivers/gpu/drm/drm_panic_qr.rs | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/drivers/gpu/drm/drm_panic_qr.rs b/drivers/gpu/drm/drm_panic_qr.rs
+index 09500cddc009..ef2d490965ba 100644
+--- a/drivers/gpu/drm/drm_panic_qr.rs
++++ b/drivers/gpu/drm/drm_panic_qr.rs
+@@ -929,7 +929,6 @@ fn draw_all(&mut self, data: impl Iterator<Item = u8>) {
+ /// * `tmp` must be valid for reading and writing for `tmp_size` bytes.
+ ///
+ /// They must remain valid for the duration of the function call.
+-
+ #[no_mangle]
+ pub unsafe extern "C" fn drm_panic_qr_generate(
+     url: *const i8,
+
+base-commit: b7ed2b6f4e8d7f64649795e76ee9db67300de8eb
+--
+2.47.0
