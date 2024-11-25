@@ -1,100 +1,93 @@
-Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+Received: from mail-pj1-f45.google.com (mail-pj1-f45.google.com [209.85.216.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98F97189528
-	for <patches@lists.linux.dev>; Mon, 25 Nov 2024 09:33:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5532187849
+	for <patches@lists.linux.dev>; Mon, 25 Nov 2024 09:42:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732527184; cv=none; b=TWxTKblJfrSuCqDyJlYHg4nqFDSOsf0nw2XFOvYJJDPlJPrjFIKW/grTJE7qBpDQlXm94jJb8LDYoriBmnjEyCXpwrK4CUhKJxTAXiWO4j12bdsIW+coW8cMpwVnCnhEd1zusbJVyJtHowvdXjeBgyPA6pDyg59hf886BYZLFWY=
+	t=1732527753; cv=none; b=LVX9xd+y3k1CMBnetNj+UchnYd+CL7vHz1mV9EAJ3tLk91fH71VozS3HY71egdDG2FcOHSrea1kRD6lJWdIKPfK4bmAsGqTXNXH+/jmVU37LZWJ4FIm4C9E8LiUz/x1RZf01eJQNmEmtQe3f41R4UFVIVtNDVImrF6qbSI8KpAA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732527184; c=relaxed/simple;
-	bh=iJhCiDk4FV6a8jhD1x9FdWaVImExu0N+arblA6KpRYw=;
+	s=arc-20240116; t=1732527753; c=relaxed/simple;
+	bh=D79QQIbDICLDOLd2x4NMBzjgcwjTiPN39k+g0fUIyOI=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=HJ8DKy/ITnPed46+7lJ8LQ044W5gxBRtn8swKCcBCpSBiBxk3mQPBa+8sy9jVZJmOWlHW9DDfulQKG0/d8CUwYExy/W3VWg/CqqWYHS827x0W7r8yAriw0iwESoRs4yGvI84V138lUPcu1SSRX8cx5dB0jBT4P7yD7HJUZjcGL4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=vlXxqe6s; arc=none smtp.client-ip=209.85.128.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	 To:Cc:Content-Type; b=YwXZfYxdcG8WRYmNXcpVASdoQTzN0NcdtnZPZqfAyJP11brheQbv9YJ043kH4aH6pHggZAvlTkNmVRfbv9DAH+cXjrJ3Alpo4nAvxHf7S5ohGqkh9EyFpHBLFvfug0y7hIy3AwzZuPPntIdlCV3Q23e24oMvK6e3E5PHBo+awpY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HTVZNOhU; arc=none smtp.client-ip=209.85.216.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="vlXxqe6s"
-Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-4349cc45219so10660245e9.3
-        for <patches@lists.linux.dev>; Mon, 25 Nov 2024 01:33:02 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HTVZNOhU"
+Received: by mail-pj1-f45.google.com with SMTP id 98e67ed59e1d1-2ea22159119so777274a91.0
+        for <patches@lists.linux.dev>; Mon, 25 Nov 2024 01:42:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1732527181; x=1733131981; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1732527751; x=1733132551; darn=lists.linux.dev;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=iJhCiDk4FV6a8jhD1x9FdWaVImExu0N+arblA6KpRYw=;
-        b=vlXxqe6s+W/DXETFCvVvKh2zA7nqtE3bmzDbOieivlvRdWSP87oq3qha+Vb4CIpdW8
-         HJo+deojBbdcps3zn6YfoWn6NYj5q/74gd2+SJSyrTTXy24IAPfRzLaarNiC+DJjXK9a
-         whOXw7S8IFLLTpKBlOS4htLdZzxSe31otoIpshp7TUBmBhTJ2tu09bQblfMeT+oZxRRc
-         3sEcXuvFSqKZo1c2qOzTFKvHwsIk0mnIeUmEy/KEb3oXaVLAZWBPJcgP53jgZFlHKQjI
-         +iuLdR3HUqIj7IqohNGyT2Sxqlf1axRY1bDz3FJ16eI20SJI8So6BMMqgQpNz1IybMMc
-         uzBQ==
+        bh=D79QQIbDICLDOLd2x4NMBzjgcwjTiPN39k+g0fUIyOI=;
+        b=HTVZNOhUDhb/w5QWxlPFt9Qxltm2WOkUUcpoKRIzOffnYuTVRAgRz9JIFiqrxNnbxB
+         K4eCanCoKJA1N+eDR5fwgnaT5t0mZxW30jqMVJ3hh6UEm66Ah18FPmpwb70UVdJPX6Wn
+         WukEnGd+03dZzFIZVP2Va+hVnn3t+HzDLqTXgpqGnbBnOalmpxH/ZLSsQXwKbeSv5kOo
+         To1x/Yem3zrwsa8jUnl2oIQ4vdN5H46PEoVAVQmoXoZUZsGHXPnFoSvth7rNDHw+nZqM
+         tmyVjCZtVLmgHn6SsYTmxEK0/KnJUqI0apQOzhOT9wtcExj0rh3wN46G/ekrA1Aqxwnd
+         TtqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732527181; x=1733131981;
+        d=1e100.net; s=20230601; t=1732527751; x=1733132551;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=iJhCiDk4FV6a8jhD1x9FdWaVImExu0N+arblA6KpRYw=;
-        b=t5A5DcsMHsXKitQ81b4XgOvHPcuIwtsrN0pge1RBXAY/oPI+Wf8h4W/bW7QXAY3Yfi
-         fcw039p6mMZMPuvru2Xzt+/I4jaCkR8yCbYWZQfdz2WdLYUdKqCfooTRQu+TvqrkYz52
-         3/qCP3CfJVw6kyScVRRN1i8e19yC1M+v/4PWdYQTE7Y6KEtHV4Bld9D59ikF+RHeWl5t
-         mK6ea/dM3//0XuBrv9Reh/br67rDpGN+yjFMMpUms6JJBbDSVpO/I7hJGqBi4Irg97iu
-         oNQe52XmqhhKXOoYyRRsH9VBLzhVkvgNPeVkGz2r0BPtmws8DAamS01fawTpz5ZBPCso
-         25ZQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUNkbfUsakIW/eHylPk73toQXpl5AGoZm5RUUDQ2aMQqqdBBC5VulWDHGhCV/GYwom+xUBs9iKV@lists.linux.dev
-X-Gm-Message-State: AOJu0Yy9LMo9sRUWp2UDtZlsW6joi/LgnNtdDY0SLQbdlMFOPtz6brMm
-	usCD6X2XM2pQb+HfpBeBnR7+B0xMw9u1hXQCw8mrN7mFJfb3jsr0BIqxBiZIoRBkkWHAYMlapLE
-	X0McBIPdWxj7IeFCqPmjQE+RVBU006iCRRqtQ
-X-Gm-Gg: ASbGnctXDpIenyUj3mC1MSmn8w9xKLI7Xa8ZqyivTp5IleQAqEw+RXeihemjjQx3r4i
-	5IF19b3BBtqs8QtmqgyvjIWLNxWadLfBk2q3rS73MhRl7VYIN0twGRZsmsz1YDA==
-X-Google-Smtp-Source: AGHT+IHk2ePzXk7rFVIBNN5xp9LHxdFZTmA+UEnsClr0r4H+EBABd5CJ17K9erfSX4yaztpTHbj05WlX4/9ds8MqiC4=
-X-Received: by 2002:a5d:6484:0:b0:382:4ab4:b428 with SMTP id
- ffacd0b85a97d-38260b452famr8130184f8f.8.1732527179739; Mon, 25 Nov 2024
- 01:32:59 -0800 (PST)
+        bh=D79QQIbDICLDOLd2x4NMBzjgcwjTiPN39k+g0fUIyOI=;
+        b=YfIVaA2IjCKvhSg+Hi3HTGKo0kxcfTkERfqhNoe16deTiSdy1/CXOac4KqLhLWWi6u
+         V5z8WaYGSeMtJE/R79RCT4TQBOOXKo5k8YK7lq4kibUxvZvABSBgXdO5+iQy0QX03VQb
+         B+l/aEdr+iPrQzQPnzmPeGDVdXLIlTO8tbv7t5VdPyHeiQCJvpgvrVc6pMr7XxpsVt2K
+         ofsZ4S55M8k5/6SA8uUiRKj2kGrZeIxgCb5I20nq0U8iGF/bMDIk5g7UIkrkmTuU9ONM
+         Tu2ZMJRXRT2KUyHBPgFHCe57NH+Qujl0na9ZHpoilGsg3EOWxBF130tvmPfUofZWkd3S
+         Kz6Q==
+X-Forwarded-Encrypted: i=1; AJvYcCX2HIHMYC+t0gIExQpNrt6rYUk39atQKP53GSryaRNvlPJMor80d1VmhpsnyGDBWfuO+N4c9nNF@lists.linux.dev
+X-Gm-Message-State: AOJu0YxvKt4I0QJf1laxSuPteZM0F9DzhHEnBxCkyLkOHbqxb+fJcXc6
+	XdMbwFptx3Go25NRgQkBFEJH55q62p5YakFolroel5QM2S6dz+n1e3Y6C/sZsfuzFn0Ss2y3BET
+	8GDzKijVdVAUn7HCyBnfQ4+xVUg0=
+X-Gm-Gg: ASbGncuV/rgOdS62+7dshuZ27V5ul+pHxM0SDmvvBPELeoT8w0tl55ae5HXzZcyCXp5
+	BKNmVKo4EUGRuNytn8DUU6br0Xt7H+Pw=
+X-Google-Smtp-Source: AGHT+IEGLZ++8tt2PlctfEq4UgYYL3skiDg2q+3/WmcEXus7ZhGZuBmsYxzhmr1PBfKiM65aW3eB0dSGItRD95f+BVM=
+X-Received: by 2002:a17:90b:38d0:b0:2ea:b2d7:4a24 with SMTP id
+ 98e67ed59e1d1-2eb0e8906a4mr6483669a91.8.1732527751250; Mon, 25 Nov 2024
+ 01:42:31 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20241123222849.350287-1-ojeda@kernel.org> <20241123222849.350287-2-ojeda@kernel.org>
- <CAH5fLggK_uL0izyDogqdxqp+UEiDbMW555zgS6jk=gw3n07f6A@mail.gmail.com> <CANiq72nKgj0n84Q76FSsPSeaupwgEKBT0GQbO8m-KHKZb103gg@mail.gmail.com>
-In-Reply-To: <CANiq72nKgj0n84Q76FSsPSeaupwgEKBT0GQbO8m-KHKZb103gg@mail.gmail.com>
-From: Alice Ryhl <aliceryhl@google.com>
-Date: Mon, 25 Nov 2024 10:32:47 +0100
-Message-ID: <CAH5fLgiUwnNE9fP8SFOBY1OeKDhb8NGPSRjSxQaL5fAYb7nAWQ@mail.gmail.com>
-Subject: Re: [PATCH 2/3] rust: kernel: move `build_error` hidden function to
- prevent mistakes
-To: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+References: <20241123180323.255997-1-ojeda@kernel.org> <CAH5fLggg5f0KpaObVtZc7WaxHjUqbhCDsn5CwnA5-3df2HEjnw@mail.gmail.com>
+In-Reply-To: <CAH5fLggg5f0KpaObVtZc7WaxHjUqbhCDsn5CwnA5-3df2HEjnw@mail.gmail.com>
+From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Date: Mon, 25 Nov 2024 10:42:19 +0100
+Message-ID: <CANiq72moPEL5s0T3ELEDvWiE6Lz5oZv2hZnziV5A60EP65bkkQ@mail.gmail.com>
+Subject: Re: [PATCH] rust: kbuild: set `bindgen`'s Rust target version
+To: Alice Ryhl <aliceryhl@google.com>
 Cc: Miguel Ojeda <ojeda@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>, 
-	FUJITA Tomonori <fujita.tomonori@gmail.com>, Andreas Hindborg <a.hindborg@kernel.org>, 
 	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
 	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
-	Benno Lossin <benno.lossin@proton.me>, Trevor Gross <tmgross@umich.edu>, 
-	rust-for-linux@vger.kernel.org, netdev@vger.kernel.org, 
-	linux-block@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	patches@lists.linux.dev
+	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@kernel.org>, 
+	Trevor Gross <tmgross@umich.edu>, rust-for-linux@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev, 
+	Christian Poveda <git@pvdrz.com>, =?UTF-8?Q?Emilio_Cobos_=C3=81lvarez?= <emilio@crisal.io>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Nov 25, 2024 at 10:23=E2=80=AFAM Miguel Ojeda
-<miguel.ojeda.sandonis@gmail.com> wrote:
+On Mon, Nov 25, 2024 at 10:08=E2=80=AFAM Alice Ryhl <aliceryhl@google.com> =
+wrote:
 >
-> On Mon, Nov 25, 2024 at 10:14=E2=80=AFAM Alice Ryhl <aliceryhl@google.com=
-> wrote:
-> >
-> > You could also put #![doc(hidden)] at the top of build_assert.rs to
-> > simplify the lib.rs list. Not sure what is best.
->
-> Yeah, not sure. We used outer attributes for the rest of
-> `doc(hidden)`s, including in the same file, so it is probably best to
-> keep it consistent, unless we decide to move all to inner ones.
+> Just to double-check, the problem is that bindgen currently doesn't
+> get any information about the rustc we're using, so it may generate
+> code invalid on the rustc we are actually using?
 
-It might actually make sense to move all of them, I think. I find that
-they make the list difficult to edit.
+Exactly: it doesn't at the moment, but eventually a future release could.
 
-But feel free to pick whichever one you prefer for this change. My RB
-applies with or without it :)
+Of course, people using the latest stable `rustc` would likely never
+see an issue. But there may be people e.g. building `bindgen` on their
+own, and thus likely picking the latest version, while using an older
+Rust toolchain from their distribution instead of, say, `rustup`.
 
-Alice
+Cheers,
+Miguel
