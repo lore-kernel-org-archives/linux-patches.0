@@ -1,57 +1,57 @@
-Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+Received: from mail-pj1-f42.google.com (mail-pj1-f42.google.com [209.85.216.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5B6D18C018
-	for <patches@lists.linux.dev>; Mon, 25 Nov 2024 09:45:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1FF8190662
+	for <patches@lists.linux.dev>; Mon, 25 Nov 2024 09:56:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732527925; cv=none; b=Q/g2U8Wr/5VagXep56urEDUBhx+5Z5RcltzvSnagb7wmKsaaNNGkGxEZXf+Kd5h87C4gRSZhSe15cJV8gGTZs/JtbdhvD2zMFv8kFc3x8G7V7FqnVfwx9L8yWtRaHNci9KIrFAbkeKeiDpfRoCBB5Bl8BIXjIcZltpwkRqT0hwA=
+	t=1732528598; cv=none; b=gu3Lj7foV0DlrqzqDe+pxumcWqHW9RMA3HWd+7c/uGfyC80vj6l8XHb8k0C9C4VIjJqL+jkg3gYfqstPWA9d+XkklJ7pzjmseRGYyjelEYT277YVn2xl8gUtCXhTV0PrZZs0BQgL5Z1fT8z0S5JMZu8Bw4AMVMfwDMsScgifCIQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732527925; c=relaxed/simple;
-	bh=8GWbrppTY2SdRiB8p/3spnrWMuOqZHHKbGVh/ni1TaU=;
+	s=arc-20240116; t=1732528598; c=relaxed/simple;
+	bh=yYZKNyVxriMi7AV//XVt0PIe+AMXWo5WmgtYsMcdOx0=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=PkW6AlSbD6tPVrniOvvfsCqxbC7tlgooEUkJM2zIk6AW3VBky+PZ3gxZuTHysqGK3htGAtlgtdHo9Pxf3XmEyc8XdGNNdF1EtRy388h48gSlU5cnrSuyAiEjKMi5/P0FMxmegH1jubrXiXkt/suBV7vJtcV8WiFPmhCWQVOhAHQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=mjkC68yp; arc=none smtp.client-ip=209.85.128.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	 To:Cc:Content-Type; b=uURI9XgOi3Y/G0yP0dQPJY2KGQqrKNlx9gIkTF0Q/Edk4Q9iaaXCAqU9p1NoqQGyAHQtxAVrZZ9d+TIFiWmqh2HnjmxbDSf0rxa2YCnVuMroEWmbim+mtt9qflno2o4qXUktKHi7UyLjWBvrssLtowMWRPZk8G/wSZg/Ln6Ce/Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mHQivfCD; arc=none smtp.client-ip=209.85.216.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="mjkC68yp"
-Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-4316a44d1bbso38256685e9.3
-        for <patches@lists.linux.dev>; Mon, 25 Nov 2024 01:45:23 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mHQivfCD"
+Received: by mail-pj1-f42.google.com with SMTP id 98e67ed59e1d1-2ea93311724so654607a91.2
+        for <patches@lists.linux.dev>; Mon, 25 Nov 2024 01:56:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1732527922; x=1733132722; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1732528596; x=1733133396; darn=lists.linux.dev;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=8GWbrppTY2SdRiB8p/3spnrWMuOqZHHKbGVh/ni1TaU=;
-        b=mjkC68ypS/voOMZddJ6l4pxOawOngH/rqprlTahRZ6YegVBpDOqcXHK4apyMvf1tAM
-         KWKAoHvDglhdX+noj1JKl7zH/Dih9qcneQ6X/9rGjq+zcTHUl8DVlTL/R95J2m8R646G
-         oWygWPE0VJ3bEnf+pIobf3ZodsVDGn4no9I1gUfRhf2BJCt5e7f1NFCKFpa2h0vSlpdK
-         boA5FqAka/zWuZ7SxEZmZTRxqaLduC6DFenTwyYeCQyTnUT12wVCz9FrJuMR6EkYNPfZ
-         3+BDCxiXFgjDFQBsBEXACVIQqN0eLF/msg6mX0lrFlBolkDMPez+9d9vAau+2hYH+/wU
-         MG5w==
+        bh=yYZKNyVxriMi7AV//XVt0PIe+AMXWo5WmgtYsMcdOx0=;
+        b=mHQivfCDC0pgwqkL74fRhqceb72XydkJFTS3vI+LGdQhETYWvhM1OhKp60lHyhqHlc
+         QuIyrDJDIt9t3wUYSriNyEbZ0+er9EyFNQShGhy6n6jXY3Pd0OJ1R2wp42g4yfeOVgcl
+         AHtyXwZtgUOXOCdEWA9yINVzbJ0Wu/0mXel1CFH9qL4RRZXG9xcwv8Im8QSx6Q3XFhYs
+         JgS1/CLUwr3CbR/LTDeohn432BSxbbLG7wi42teA20vFYXNLBcOToNokKNyebLlhmt02
+         /w8oRz3pQjPCcFZfUp+hy7ydtkSOJ6mG+at/OJZj30qGKNg0JRTaYv6rI4SDLqN587QS
+         ZPZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732527922; x=1733132722;
+        d=1e100.net; s=20230601; t=1732528596; x=1733133396;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=8GWbrppTY2SdRiB8p/3spnrWMuOqZHHKbGVh/ni1TaU=;
-        b=xG+GZh2ZCa9I/O8Vk3vwJawtn+D7Wy+gRPfRw6b846gtx4Lod71Z7oKHQMipjZMcft
-         3ButeHJ4zMeilLfUJ5ajCPIcsfpAwlSFBgWXmfMzmCoduEI5pbmRmGygfwemCw6YoUqJ
-         xhkfen76n3fpRQAwwRVtvWNyW1vetzKtJaN3+d2eaCABXiO48MGc9DSWYcPD7k5aGr9u
-         SVffc6DcCNdUYDY61+HNhPAvFZ4O2OF1ptncnAZueZFk3yLIJxIbRv5ifyBsM16+bWPl
-         7h/P2AaOKF7HvEyZJdFvGjy3kk2nr+apkGohdHFj9Y6DObAc/0349BhfhPBZqQlC4RJR
-         UyfA==
-X-Forwarded-Encrypted: i=1; AJvYcCVB4ecYiPAYW66boShmkH3pZ2aHFT6A5sVL0pCPwx7DxlW/sVvBqK+/d4wPiULIIBJ3YLtdhAdw@lists.linux.dev
-X-Gm-Message-State: AOJu0Yy4jbqPPiCcExI1uilt17OhQ7scBAQzXbFhuCSFYDb/j7/CieiN
-	yk8VBPmbavhNYIbZFYwCqsmTkKgIK9yIiPZRYVorQ2sSyUIV04Cft8tTRERZRMg6UbLZFaZwOoi
-	/2uakJ797X1z0qyBm4sEdy7hhRdqs+yyYGJ8t
-X-Gm-Gg: ASbGnctJ4y1426uWMvPW5M9aKFsLH7Kz9ouj+Iv5PDp7RRBem1MsbMZ03ri6k3ZO9hg
-	aAWbcETBTJVFwSUpArZK5xLL1XZdqB4+eCm6ulgj0Tn1XXOaMmap1NFxOIJ3+hw==
-X-Google-Smtp-Source: AGHT+IGMe//ja59s2KtnkXWASLS4/7cHUSPDFQmfLfQzEv/lOhx3Gg//+rAV5dCcd3lozbWK7n3eI2qxPCsTUq7WPdI=
-X-Received: by 2002:a05:600c:4fd1:b0:430:52ec:1e41 with SMTP id
- 5b1f17b1804b1-433ce42845fmr110108165e9.17.1732527922183; Mon, 25 Nov 2024
- 01:45:22 -0800 (PST)
+        bh=yYZKNyVxriMi7AV//XVt0PIe+AMXWo5WmgtYsMcdOx0=;
+        b=iwry/nfo2yjzqaIS49AZhSdbCaPkcFCdaKWstN3hdINGVTLTnxEoD+pG2ZzOTw3kHS
+         1QnGfHtwal38c5mLz8Dg1XusuHIkymtKswY+7SozoDOn7cPJy9bOPSihB5E0Xpx9rkel
+         UIfhMzVWOYg8Z+kmGtanfKej+7SkEoYYCtqpdotznMB3AW/2A98wjoyhfWrqaajH2i/5
+         CBEPNbOC/excuxYYhBtunZgVcMsx7g42lVLgCoyZwORN1RRZzLDtQ3vfqEthg/Y1+p75
+         pWBAFgdokMjlk1g9ZlDyGlQpoVqama5+ij3/A9/HTvEcEK4qvC4ySWhlnY+Z+O3fEWvf
+         FiZg==
+X-Forwarded-Encrypted: i=1; AJvYcCVYgiaTsT9d9ueGgLYBQ4aIPQfHBytlNfTrM1b29mkEtAwO5KB6l1DR7EYZUWGVMGHX3nNOXLIr@lists.linux.dev
+X-Gm-Message-State: AOJu0Yxw6ahC34COeWaLN2UQo+0a7s5cIFnfMZaMWEUXpUsVED3Ovajo
+	udCmt11lfHlcT9ggTlEqmOq77vHdqnflBfBntWuvQgtcIJynsoq/ZGf1AoaP96fdNO0Mm7hl05c
+	m3ZloPchGjhfFm+wkwzJa9R04Yn0=
+X-Gm-Gg: ASbGnctEkYkImodNRwhmhFdyLZ15lZ5cdEGO3M+2w0f4NWv/iiQC3ko38a04mY8KOxe
+	ahsxnZFLv2qBL366gMQmU0eAgL/DE8hY=
+X-Google-Smtp-Source: AGHT+IGaoGwCojAvQSCX3mdAqYlWAsTQexhHed/lggWkPEGb4m+hlgXa8w0huMdKx9oXQMlgU9jzhU5CZCIRge27C4M=
+X-Received: by 2002:a17:90b:3c08:b0:2eb:12ee:cf0b with SMTP id
+ 98e67ed59e1d1-2eb12eecfb3mr6003337a91.1.1732528596262; Mon, 25 Nov 2024
+ 01:56:36 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -59,13 +59,13 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 References: <20241123180323.255997-1-ojeda@kernel.org> <CAH5fLggg5f0KpaObVtZc7WaxHjUqbhCDsn5CwnA5-3df2HEjnw@mail.gmail.com>
- <CANiq72moPEL5s0T3ELEDvWiE6Lz5oZv2hZnziV5A60EP65bkkQ@mail.gmail.com>
-In-Reply-To: <CANiq72moPEL5s0T3ELEDvWiE6Lz5oZv2hZnziV5A60EP65bkkQ@mail.gmail.com>
-From: Alice Ryhl <aliceryhl@google.com>
-Date: Mon, 25 Nov 2024 10:45:09 +0100
-Message-ID: <CAH5fLgjEDXHGLf+fAyzZwGtX+sjuCst6P9Eg_eyLjujd2datYw@mail.gmail.com>
+ <CANiq72moPEL5s0T3ELEDvWiE6Lz5oZv2hZnziV5A60EP65bkkQ@mail.gmail.com> <CAH5fLgjEDXHGLf+fAyzZwGtX+sjuCst6P9Eg_eyLjujd2datYw@mail.gmail.com>
+In-Reply-To: <CAH5fLgjEDXHGLf+fAyzZwGtX+sjuCst6P9Eg_eyLjujd2datYw@mail.gmail.com>
+From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Date: Mon, 25 Nov 2024 10:56:24 +0100
+Message-ID: <CANiq72migNNeceZ95fJ4fKfOimD9hymdisvpqL0imAnjgVyxHw@mail.gmail.com>
 Subject: Re: [PATCH] rust: kbuild: set `bindgen`'s Rust target version
-To: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+To: Alice Ryhl <aliceryhl@google.com>
 Cc: Miguel Ojeda <ojeda@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>, 
 	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
 	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
@@ -76,26 +76,20 @@ Cc: Miguel Ojeda <ojeda@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>,
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Nov 25, 2024 at 10:42=E2=80=AFAM Miguel Ojeda
-<miguel.ojeda.sandonis@gmail.com> wrote:
+On Mon, Nov 25, 2024 at 10:45=E2=80=AFAM Alice Ryhl <aliceryhl@google.com> =
+wrote:
 >
-> On Mon, Nov 25, 2024 at 10:08=E2=80=AFAM Alice Ryhl <aliceryhl@google.com=
-> wrote:
-> >
-> > Just to double-check, the problem is that bindgen currently doesn't
-> > get any information about the rustc we're using, so it may generate
-> > code invalid on the rustc we are actually using?
+> Reviewed-by: Alice Ryhl <aliceryhl@google.com>
 >
-> Exactly: it doesn't at the moment, but eventually a future release could.
->
-> Of course, people using the latest stable `rustc` would likely never
-> see an issue. But there may be people e.g. building `bindgen` on their
-> own, and thus likely picking the latest version, while using an older
-> Rust toolchain from their distribution instead of, say, `rustup`.
+> Sounds like this might need a backport to 6.12, to prevent issues
+> appearing on the LTS in the future?
 
-Reviewed-by: Alice Ryhl <aliceryhl@google.com>
+Yeah (I am not sure how likely it will be that someone hits the issue
+in an LTS use case, since it requires using a `bindgen` that does not
+exist yet, even in `HEAD`, at the same time as an old enough `rustc`,
+but it is definitely possible, and life will keep surprising us).
 
-Sounds like this might need a backport to 6.12, to prevent issues
-appearing on the LTS in the future?
+Thanks!
 
-Alice
+Cheers,
+Miguel
