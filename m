@@ -1,97 +1,78 @@
-Received: from jabberwock.ucw.cz (jabberwock.ucw.cz [46.255.230.98])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 384FB13E8AE
-	for <patches@lists.linux.dev>; Thu, 28 Nov 2024 18:05:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.255.230.98
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 799FA19882B;
+	Thu, 28 Nov 2024 19:27:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732817124; cv=none; b=VlphMusQZyndDaC8xNbz9cIBk58SctF7jE7DGycJ96W1Bekz71eu/0+12iE5Z2Y+9TeRKAORd4cttweiqenEMGakO4Mek96wiVDWJobz9NmeiwWwMhnYGh4iJh5DhKzq2KWOKdVOPQUGcmwZbrqtUFA5tE/cyRWBFziTlnbYmGA=
+	t=1732822022; cv=none; b=lD5abIp/lsseXk/B2tO4OriYDT9Ld3dP9n1zIG/Nk/8UETTIVotta890cBD9iepJpo+8fUqubrDEIRH8lYxcGOU5x51A/lWEcn6qjLrt6+FHsMrvnsTJDKFsfRyxGmkZwEXg6aUBEu8uSMJpufwtVosQ361v9zKPr0luISIB66E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732817124; c=relaxed/simple;
-	bh=hhgpMzS8pN9T8uIknwZ8HxuAzC9Z8YBN9l9692StdeE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=IPUrtA3K+lsCcPS9vlVoGwCGKyjHiHNmnueLM+yHHen3bKpmtvlVe+uwWh5/g0ns9hvmWYpAchz/hk+ZUv7GkN6P5VT6FCm2GFiOri74frMWVhTeOFpq35ouc+3fLpnd6sRfZUov2qYS4zGrKtGUL9uaHOw7qXsaaxJuWlLlBEw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=denx.de; spf=fail smtp.mailfrom=denx.de; arc=none smtp.client-ip=46.255.230.98
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=denx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=denx.de
-Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
-	id 471521C00D9; Thu, 28 Nov 2024 19:05:21 +0100 (CET)
-Date: Thu, 28 Nov 2024 19:05:20 +0100
-From: Pavel Machek <pavel@denx.de>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, uwu@icenowy.me
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org, hargar@microsoft.com, broonie@kernel.org
-Subject: Re: [PATCH 6.1 00/98] 6.1.117-rc1 review
-Message-ID: <Z0iw4Hwltov+x89b@duo.ucw.cz>
-References: <20241112101844.263449965@linuxfoundation.org>
+	s=arc-20240116; t=1732822022; c=relaxed/simple;
+	bh=uhCpIRnB22gOek6/ItoKHE65ZGFfikpPq/Ra+s61V1M=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=hloLtmXH0nnVWpwINUcs0kPVP1OUOlUlRN0hxx9x3JNg58xGCTexBh8xfQ6LRXJUfnfumIEce6jclK3HyEDOhC4pihzJ6NeEDHK44dHkab2YfbHDFmEHXkV+BhttexkKDpNg2zh59HFuhmJJYzzAQ6POpriW5RT3EV0vBBnhk/Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CxJcZ1E0; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CxJcZ1E0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85FA9C4CED2;
+	Thu, 28 Nov 2024 19:27:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1732822021;
+	bh=uhCpIRnB22gOek6/ItoKHE65ZGFfikpPq/Ra+s61V1M=;
+	h=Date:From:To:Cc:Subject:From;
+	b=CxJcZ1E0uKkObjtme+VKhayhvIy0ZqUKrWUEuhHtHJdkEG6x3cP0cnlPeOlAX1GJT
+	 tyOf7vPjcGPucWYFc67KodYfVXDIgjkm65L2onsjmp6nTpSfuLBzBLGzWjjOWyXcjB
+	 yOW7dHIbi+8lSFJ0+968aOgi80I3HizmRmN+AlPSTCA0aCWU1NItm1gmSlnP+bFriJ
+	 uWlRWSrYGnyn31C0bxuPwlYfNur6pZVfJoS213vQCBtWjfGXHtqicf1S8SacLemuqT
+	 KDAhj+My0YSDeQkTWK/f5US4WNbWaq+DzFXgOyBx7G+jKG7EHFUD3rw8bXGYM2ktm3
+	 vSVwuekNAR/rA==
+Date: Thu, 28 Nov 2024 11:27:00 -0800
+From: Luis Chamberlain <mcgrof@kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>, samitolvanen@google.com,
+	petr.pavlu@suse.com, da.gomez@samsung.com,
+	linux-modules@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+	geert@linux-m68k.org, masahiroy@kernel.org, mmaurer@google.com,
+	arnd@arndb.de, deller@gmx.de, song@kernel.org
+Subject: [GIT PULL] Modules fixes for v6.13-rc1
+Message-ID: <Z0jEBLLRoUKoBVPk@bombadil.infradead.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="oqo3nIbTnLByV64u"
-Content-Disposition: inline
-In-Reply-To: <20241112101844.263449965@linuxfoundation.org>
-
-
---oqo3nIbTnLByV64u
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-Hi!
+The following changes since commit b86545e02e8c22fb89218f29d381fa8e8b91d815:
 
-> Icenowy Zheng <uwu@icenowy.me>
->     thermal/of: support thermal zones w/o trips subnode
+  Merge tag 'acpi-6.13-rc1-2' of git://git.kernel.org/pub/scm/linux/kernel/git/rafael/linux-pm (2024-11-27 14:50:31 -0800)
 
-This seems to introduce memory leak.
+are available in the Git repository at:
 
-+++ b/drivers/thermal/thermal_of.c
-@@ -238,18 +238,15 @@ static struct thermal_trip *thermal_of_trips_init(str=
-uct device_node *np
-, int *n
-=2E..    =20
-        trips =3D of_get_child_by_name(np, "trips");
--       if (!trips) {
--               pr_err("Failed to find 'trips' node\n");
--               return ERR_PTR(-EINVAL);
--       }
-+       if (!trips)
-+               return NULL;
-=20
-        count =3D of_get_child_count(trips);
--       if (!count) {
--               pr_err("No trip point defined\n");
--               ret =3D -EINVAL;
--               goto out_of_node_put;
--       }
-+       if (!count)
-+               return NULL;
+  git://git.kernel.org/pub/scm/linux/kernel/git/modules/linux.git/ tags/modules-6.13-rc1-v2
 
+for you to fetch changes up to c5efad88a94613cf60fed010b96dbc3044389316:
 
-In the !count case, we still need to do the of_node_put, AFAICT.
+  selftests: find_symbol: Actually use load_mod() parameter (2024-11-28 11:17:38 -0800)
 
-Best regards,
-								Pavel
---=20
-DENX Software Engineering GmbH,        Managing Director: Erika Unter
-HRB 165235 Munich, Office: Kirchenstr.5, D-82194 Groebenzell, Germany
+----------------------------------------------------------------
+Modules fixes for v6.13-rc1
 
---oqo3nIbTnLByV64u
-Content-Type: application/pgp-signature; name="signature.asc"
+This consists of 3 fixes, the main one build that we build the kallsyms
+test modules all over again if we just run make twice.
 
------BEGIN PGP SIGNATURE-----
+----------------------------------------------------------------
+Geert Uytterhoeven (1):
+      selftests: find_symbol: Actually use load_mod() parameter
 
-iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCZ0iw4AAKCRAw5/Bqldv6
-8u6fAKCvN8zN8FZ3yvxQNlH9T0I0ckJLXACffOWxUEAAiduhpx95v/4Kkfstzgg=
-=9At1
------END PGP SIGNATURE-----
+Luis Chamberlain (2):
+      selftests: kallsyms: fix double build stupidity
+      selftests: kallsyms: fix and clarify current test boundaries
 
---oqo3nIbTnLByV64u--
+ lib/Kconfig.debug                             | 32 ++++++++++++++++++++++++++-
+ lib/tests/module/Makefile                     | 17 +++++++-------
+ lib/tests/module/gen_test_kallsyms.sh         |  9 ++++++--
+ tools/testing/selftests/module/find_symbol.sh |  4 ++--
+ 4 files changed, 48 insertions(+), 14 deletions(-)
