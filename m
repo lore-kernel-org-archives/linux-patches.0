@@ -1,138 +1,179 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33BEC52F88
-	for <patches@lists.linux.dev>; Thu, 28 Nov 2024 02:10:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEDDA33DF;
+	Thu, 28 Nov 2024 02:22:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732759822; cv=none; b=u7OA23Qf7o7EBOT1B5o6yQR3WmJ4Ql2Q/gpCtUgQddbAGSJ4o8zyWJh7dSmiHFWbPQrIGeMizeHM/RUhcMYNlf5GR6AZSOKwrK8pVqdQUclCt1OYFkNJaFF/lCLzja6FQGgurvcyr+F1AVaGIt+E6V7OzIrOwPWnparQZL6QhAQ=
+	t=1732760549; cv=none; b=Sq1fdSbyLZ1gqDHvGhxSnLKJvjJROZTS02OXUDgVmuWn7kOLrcLmdwqjSwX4RR7QqI4Ms81JfM2X4YVEuiV4iq6peSKy6lAuKrt+oqZicR9epfZ7NwES0FyYS2nonYs8HBe1ZKw/DAapthyOYFu625wCYZk2bDcl64z6vuKhBQc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732759822; c=relaxed/simple;
-	bh=YX1D5e/FRew05/8KQ3wt7LTC+rcwVLOoX6FnMCmCyhk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Cc0no36rfK36Gl3pHuukZeYkIndvZ7hgBCbP8Ig+l8zKUuyYeTbe59WnulWgLqgw3dLvWErEay2DM6kkvKvqam3m09fOLuu+absY34ap+DyTgmoXg8zYts40iQmOmd1PMghKewZx+u+9OPdYp+LOeKv8rr7RTSyYwlft3NJPhP4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=f6HMrNGb; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1732760549; c=relaxed/simple;
+	bh=ZDz1m5wguyNknjgwK4RvPulZTP4oicLjox5MGdn0e3M=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Q6VCLgjj9Kj6i/Vu8KYMxtM9sXZITDuedpZFOmyWbMvAO2vUUPeXB2IG0r0K73MyfFrEX9C60mztE63DRIp0WN+veLKHMr8hCw1K0z2M6koIB6zH2UXyPB3PttAxdOIBJW2Aj7TbPMUSS7GVgDey4bycQkk8vvo4gkONFN/lPvY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=B5ViQ4Kx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="f6HMrNGb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6503C4CED8
-	for <patches@lists.linux.dev>; Thu, 28 Nov 2024 02:10:21 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="B5ViQ4Kx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 229BBC4CECC;
+	Thu, 28 Nov 2024 02:22:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1732759821;
-	bh=YX1D5e/FRew05/8KQ3wt7LTC+rcwVLOoX6FnMCmCyhk=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=f6HMrNGbGl1EZWUn0dSe9HN+UC+j8gLdEDk5HrRDDuRmbB7MdMp/IgFbfWj41Cl2y
-	 ayRpWLf3hatk58Va6nnNiI6yU85h9VFMz6trtKd6mGqHfktnwETPWz1Tarm5S5e64K
-	 4EKoB9fKyKg1ItD5Up4c8aNKxw34aOUJ+GDHZYb/5E5G9/V9syWeAKvH8AY3B7qauS
-	 WVeuNisw1fKRQqthZCHuOBgvoYphMD+EES97yg2b7qpcwgsT3miMnOgIM3kM4tg86C
-	 0taG89cHcuTaxGvEueJAGO0jlOxE+U7Hp+TJTcBI++VxOzQAWlS1I9NOsOgoixqGc5
-	 eyLfpoES5C+jA==
-Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-53de5ec22adso316163e87.3
-        for <patches@lists.linux.dev>; Wed, 27 Nov 2024 18:10:21 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCW4Qq7iHrMh4AcWa/424gP2LLY2kFRGPzkLl8xsPqLyviGimv+X8y0yYs8czWOXQkJcdL7U3/hj@lists.linux.dev
-X-Gm-Message-State: AOJu0Yy7QCugAR/oixrdfSl9PwbUwIfrDG3F8g+RUl0UXqXQbC//KzPK
-	zFl7oSVWG18HPMhiFtef6RMHHlxy9El7imcDLUnscRHUa+/FXHKV2jdU/hW3QbyxTNtpTBzAgN2
-	INb8S/Ez4CSeRb/z4kEGe6NS5+68=
-X-Google-Smtp-Source: AGHT+IGJl1MVVpustJ2ts2Pio5dLzBKWLqVoYYvsx3ccT201+1nWm8YVMnCydOOQg35CI1c8yA12VrmouApP27aeKhc=
-X-Received: by 2002:a05:6512:3d89:b0:539:f9b9:e6d2 with SMTP id
- 2adb3069b0e04-53df00ff7c6mr3300348e87.35.1732759820389; Wed, 27 Nov 2024
- 18:10:20 -0800 (PST)
+	s=k20201202; t=1732760548;
+	bh=ZDz1m5wguyNknjgwK4RvPulZTP4oicLjox5MGdn0e3M=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=B5ViQ4KxhUqTQh3Lq9jlEBMSKA5+va9iKMuuJ4e7xchSdalr2tLgvkA73USjSyt1r
+	 Hb+D4RWeWQ+FNyk9sTixhbHTZh6LGNRK2RdU5aggNsGCoGGQl5SmPACZ7GNo9sNp1O
+	 APHe2pwVby0etTzGY6QTbLzIueq8+BCsYbE+tC3p/4Jf8H4I70aZphLXHh4YRE+bOw
+	 dO5bvFqlPjSYqTQfcJF4sbyjMOvGM8N1s4m9QwZSSJ/pp0Vzn7xc37PTqP9ms4sbiG
+	 pymxihgEDWXMwPFlzjsnrVh3EpyS2qXwSEo/a1touX6M406DoALfzRVONjjZjhNDOH
+	 gCciNHUOIQXAg==
+Date: Wed, 27 Nov 2024 18:22:26 -0800
+From: Luis Chamberlain <mcgrof@kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: samitolvanen@google.com, petr.pavlu@suse.com, da.gomez@samsung.com,
+	linux-modules@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, masahiroy@kernel.org,
+	mmaurer@google.com, arnd@arndb.de, deller@gmx.de, song@kernel.org
+Subject: Re: [GIT PULL] Modules changes for v6.13-rc1
+Message-ID: <Z0fT4hC30NISjmi_@bombadil.infradead.org>
+References: <Z0ZxiLw9hauUynTS@bombadil.infradead.org>
+ <CAHk-=wjCkJsdLageTx6C4n--aYFoO6gSRe0Rwcbk1jQdOdiPfg@mail.gmail.com>
+ <Z0eeuCyUGcKgsc5h@bombadil.infradead.org>
+ <Z0eqiayuv1w4a_dc@bombadil.infradead.org>
+ <CAHk-=wj+imfGvW73XoYn60bAMzRtPfXFqwFTUqBoEq4=u5_oUg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <Z0ZxiLw9hauUynTS@bombadil.infradead.org> <CAHk-=wjCkJsdLageTx6C4n--aYFoO6gSRe0Rwcbk1jQdOdiPfg@mail.gmail.com>
- <Z0eeuCyUGcKgsc5h@bombadil.infradead.org> <Z0eqiayuv1w4a_dc@bombadil.infradead.org>
- <CAHk-=wj+imfGvW73XoYn60bAMzRtPfXFqwFTUqBoEq4=u5_oUg@mail.gmail.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 In-Reply-To: <CAHk-=wj+imfGvW73XoYn60bAMzRtPfXFqwFTUqBoEq4=u5_oUg@mail.gmail.com>
-From: Masahiro Yamada <masahiroy@kernel.org>
-Date: Thu, 28 Nov 2024 11:09:43 +0900
-X-Gmail-Original-Message-ID: <CAK7LNAQyhxPZfpK3hVPtYvCYjad4pTUim5jVsEsuXqefY8KhWQ@mail.gmail.com>
-Message-ID: <CAK7LNAQyhxPZfpK3hVPtYvCYjad4pTUim5jVsEsuXqefY8KhWQ@mail.gmail.com>
-Subject: Re: [GIT PULL] Modules changes for v6.13-rc1
-To: Linus Torvalds <torvalds@linux-foundation.org>, Luis Chamberlain <mcgrof@kernel.org>
-Cc: samitolvanen@google.com, petr.pavlu@suse.com, da.gomez@samsung.com, 
-	linux-modules@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, mmaurer@google.com, arnd@arndb.de, 
-	deller@gmx.de, song@kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-Hi Linus and Luis,
-
-
-On Thu, Nov 28, 2024 at 8:57=E2=80=AFAM Linus Torvalds
-<torvalds@linux-foundation.org> wrote:
->
+On Wed, Nov 27, 2024 at 03:56:48PM -0800, Linus Torvalds wrote:
 > On Wed, 27 Nov 2024 at 15:26, Luis Chamberlain <mcgrof@kernel.org> wrote:
 > >
 > > On Wed, Nov 27, 2024 at 02:35:36PM -0800, Luis Chamberlain wrote:
 > > > Sorry about that, I'm on it.
 > >
 > > OK here is a fix, goes double build tested and then run time tested.
->
+> 
 > No, you misunderstand.
->
+> 
 > I don't mind the tests being built. That's *good*.
->
+> 
 > I mind them being built *twice*. That means that there's some
 > seriously broken lack of dependency logic.
->
->             Linus
 
+Ah, gobble gobble, got it. That was also fixed in the patch but it I
+also changed the default build to go fast, ok we'll revert back to the
+older defaults (TEST_KALLSYMS_LARGE now) now and just make it clear the
+double build was the issue being fixed.
 
-Right.
+From f7da80262bd89a0d2c2c1a9e59f5a14b84e34f3f Mon Sep 17 00:00:00 2001
+From: Luis Chamberlain <mcgrof@kernel.org>
+Date: Wed, 27 Nov 2024 14:10:57 -0800
+Subject: [PATCH v2] selftests: kallsyms: fix double build stupidity
 
-The lib/tests/module/test_kallsyms_*.c files
-are always regenerated due to the 'FORCE'.
+Fix the stupid FORCE so that re-builds will only trigger
+when really needed. While at it, document the sensible ranges
+supported and fix the script to accept these alternatives.
 
-lib/tests/module/Makefile:
+Reported-by: Linus Torvalds <torvalds@linux-foundation.org>
+Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
+---
+ lib/Kconfig.debug                     | 32 ++++++++++++++++++++++++++-
+ lib/tests/module/Makefile             |  2 +-
+ lib/tests/module/gen_test_kallsyms.sh |  9 ++++++--
+ 3 files changed, 39 insertions(+), 4 deletions(-)
 
-$(obj)/%.c: FORCE
-
-
-
-
-The following diff will fix the issue.
-(I used 'foreach' to factor out similar lines, but it is just a bonus clean=
--up).
-
-
+diff --git a/lib/Kconfig.debug b/lib/Kconfig.debug
+index b5929721fc63..da8c35bfaeaf 100644
+--- a/lib/Kconfig.debug
++++ b/lib/Kconfig.debug
+@@ -2986,9 +2986,39 @@ config TEST_KALLSYMS_D
+ 	tristate
+ 	depends on m
+ 
++choice
++	prompt "Kallsym test range"
++	default TEST_KALLSYMS_LARGE
++	help
++	  Selecting something other than "Fast" will enable tests which slow
++	  down the build and may crash your build.
++
++config TEST_KALLSYMS_FAST
++	bool "Fast builds"
++	help
++	  You won't really be testing kallsysms, so this just helps fast builds
++	  when allmodconfig is used..
++
++config TEST_KALLSYMS_LARGE
++	bool "Enable testing kallsyms with large exports"
++	help
++	  This will enable larger number of symbols. Only enable this if you
++	  are a modules developer. This will slow down your build considerbly.
++
++config TEST_KALLSYMS_MAX
++	bool "Known kallsysms limits"
++	help
++	  This will enable exports to the point we know we'll start crashing
++	  builds.
++
++endchoice
++
+ config TEST_KALLSYMS_NUMSYMS
+ 	int "test kallsyms number of symbols"
+-	default 100
++	range 2 10000
++	default 2 if TEST_KALLSYMS_FAST
++	default 100 if TEST_KALLSYMS_LARGE
++	default 10000 if TEST_KALLSYMS_MAX
+ 	help
+ 	  The number of symbols to create on TEST_KALLSYMS_A, only one of which
+ 	  module TEST_KALLSYMS_B will use. This also will be used
 diff --git a/lib/tests/module/Makefile b/lib/tests/module/Makefile
-index af5c27b996cb..8cfc4ae600a9 100644
+index af5c27b996cb..5436386d7aa0 100644
 --- a/lib/tests/module/Makefile
 +++ b/lib/tests/module/Makefile
-@@ -3,13 +3,12 @@ obj-$(CONFIG_TEST_KALLSYMS_B) +=3D test_kallsyms_b.o
- obj-$(CONFIG_TEST_KALLSYMS_C) +=3D test_kallsyms_c.o
- obj-$(CONFIG_TEST_KALLSYMS_D) +=3D test_kallsyms_d.o
-
+@@ -3,7 +3,7 @@ obj-$(CONFIG_TEST_KALLSYMS_B) += test_kallsyms_b.o
+ obj-$(CONFIG_TEST_KALLSYMS_C) += test_kallsyms_c.o
+ obj-$(CONFIG_TEST_KALLSYMS_D) += test_kallsyms_d.o
+ 
 -$(obj)/%.c: FORCE
--       @$(kecho) "  GEN     $@"
--       $(Q)$(srctree)/lib/tests/module/gen_test_kallsyms.sh $@\
--               $(CONFIG_TEST_KALLSYMS_NUMSYMS) \
--               $(CONFIG_TEST_KALLSYMS_SCALE_FACTOR)
-+quiet_cmd_gen_test_kallsyms =3D GEN     $@
-+      cmd_gen_test_kallsyms =3D $< $@ \
-+       $(CONFIG_TEST_KALLSYMS_NUMSYMS) \
-+       $(CONFIG_TEST_KALLSYMS_SCALE_FACTOR)
-
--clean-files +=3D test_kallsyms_a.c
--clean-files +=3D test_kallsyms_b.c
--clean-files +=3D test_kallsyms_c.c
--clean-files +=3D test_kallsyms_d.c
-+$(obj)/%.c: $(src)/gen_test_kallsyms.sh FORCE
-+       $(call if_changed,gen_test_kallsyms)
++$(obj)/%.c: $(srctree)/lib/tests/module/gen_test_kallsyms.sh $(KCONFIG_CONFIG)
+ 	@$(kecho) "  GEN     $@"
+ 	$(Q)$(srctree)/lib/tests/module/gen_test_kallsyms.sh $@\
+ 		$(CONFIG_TEST_KALLSYMS_NUMSYMS) \
+diff --git a/lib/tests/module/gen_test_kallsyms.sh b/lib/tests/module/gen_test_kallsyms.sh
+index 3f2c626350ad..561dcac0f359 100755
+--- a/lib/tests/module/gen_test_kallsyms.sh
++++ b/lib/tests/module/gen_test_kallsyms.sh
+@@ -7,6 +7,11 @@ NUM_SYMS=$2
+ SCALE_FACTOR=$3
+ TEST_TYPE=$(echo $TARGET | sed -e 's|lib/tests/module/test_kallsyms_||g')
+ TEST_TYPE=$(echo $TEST_TYPE | sed -e 's|.c||g')
++FIRST_B_LOOKUP=1
 +
-+targets +=3D $(foreach x, a b c d, test_kallsyms_$(x).c)
++if [[ $NUM_SYMS -gt 2 ]]; then
++	FIRST_B_LOOKUP=$((NUM_SYMS/2))
++fi
+ 
+ gen_template_module_header()
+ {
+@@ -52,10 +57,10 @@ ____END_MODULE
+ 
+ gen_template_module_data_b()
+ {
+-	printf "\nextern int auto_test_a_%010d;\n\n" 28
++	printf "\nextern int auto_test_a_%010d;\n\n" $FIRST_B_LOOKUP
+ 	echo "static int auto_runtime_test(void)"
+ 	echo "{"
+-	printf "\nreturn auto_test_a_%010d;\n" 28
++	printf "\nreturn auto_test_a_%010d;\n" $FIRST_B_LOOKUP
+ 	echo "}"
+ }
+ 
+-- 
+2.45.2
 
-
-
-
-
-
-
-
---=20
-Best Regards
-Masahiro Yamada
