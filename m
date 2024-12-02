@@ -1,63 +1,119 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3199A450EE;
-	Fri, 29 Nov 2024 19:19:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2D1E1FECAA;
+	Mon,  2 Dec 2024 13:02:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732907994; cv=none; b=duMsZyTmo7/b/Rx92dpcE6kYHTywak2cvpXyIE8pUJXd9bg4MhIO5Zu0FDrnyMHPtiSKvTMi6HEr5aZGb7Do7e8OujqD7Gga6mMP47OSMf1YF8Cs+r1K9pWbUghikP6QxGi7Qzhv8OT2OZAQP+QtWcWRQbSBN2LmMIqpmzauHT4=
+	t=1733144541; cv=none; b=E+g/eozfx0HKY5DlsFES7hZp7Qr9ZtijuH5MKwnfSlS1W7nUmKckB11+MEoKIdhnAX6pLaqN04J5Cft4M+1zIqVGBCZSQ6BrxzM8ba/w7Tv35clZiNSX1hhK5bWYglxdLvnCCMWPxGe26Yi/W2S/XGYxiusWS0te+dMH5jDSodw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732907994; c=relaxed/simple;
-	bh=N0R9fuHuP+Aam5eKycEo6pKAy95ex427QgL7eTS5U1c=;
-	h=Subject:From:In-Reply-To:References:Message-Id:Date:To:Cc; b=pzqp57i8T+gyrbr8LXPUrsW4sD7lmGIc3fwOcgkv2pNrP4mx9XNJ8J62pPWCOELI9jRt/CZz6x+gXYWhximQujrLH9nRFiXv+1B3YCQ1FuXrsqqmeGSsf9rGFJpMT/LEzdLTGp0bkeCBkJs9bvCTSZu+xbFIdgr9tSFd4mZiKgI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=f9OF0Rpv; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1733144541; c=relaxed/simple;
+	bh=Zs/rD6jzJ/nV0ysK8vRSIb8oO75WOyFspYTWwSHRkt0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=TrsRVULduynXeqF+AMgK0bov+7DRmykvszQ8F3NMeUHMyxzaXlqo8yOmXBT/OnSrM9Ro+QUmjhIkgnt75Ul5zPGhStDMMQC3h0+I26veHXmqM+vggRwGclyMHk0/IIZ2HMn3ewltE9YEvh/8oIooDMXUpgmPniRGcWAdfaF/Y5A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qNXbx2Gu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="f9OF0Rpv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3D46C4CECF;
-	Fri, 29 Nov 2024 19:19:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1732907994;
-	bh=N0R9fuHuP+Aam5eKycEo6pKAy95ex427QgL7eTS5U1c=;
-	h=Subject:From:In-Reply-To:References:Date:To:Cc:From;
-	b=f9OF0Rpvs0rqL7QqjcDt0cYkXXR8qSKMbD+Vv6HwAbqP+vh6wmtP6atdiR9p/qNng
-	 XfvHNLCifKUV0fB35xnKy9HZ7Rr9Lzzj417kj/E0Y2M5W5OrrcmkkAqAfsCA6YkB6R
-	 4sFnM24kjXCZvGY3PsicmWsN7dowbDW6qH/f/UYSzBl/EBEfiJ8jPfNN5DJZzL6Mij
-	 jpsOLOeSo2FFCTD2kjS18gf13ue9i5iLW62arfw9KiZIvj+FZOtQd7Pc2wHE4wTi6S
-	 TJIOna/j5B9jP1St4/CPQw7BDNPIspVF7ATekNscEG92PczLNjcaq40yVFI4V6P1yg
-	 sKt1tuLeQMOaQ==
-Received: from [10.30.226.235] (localhost [IPv6:::1])
-	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id AE2F0380A944;
-	Fri, 29 Nov 2024 19:20:08 +0000 (UTC)
-Subject: Re: [GIT PULL] Modules fixes for v6.13-rc1
-From: pr-tracker-bot@kernel.org
-In-Reply-To: <Z0jEBLLRoUKoBVPk@bombadil.infradead.org>
-References: <Z0jEBLLRoUKoBVPk@bombadil.infradead.org>
-X-PR-Tracked-List-Id: <linux-modules.vger.kernel.org>
-X-PR-Tracked-Message-Id: <Z0jEBLLRoUKoBVPk@bombadil.infradead.org>
-X-PR-Tracked-Remote: git://git.kernel.org/pub/scm/linux/kernel/git/modules/linux.git/ tags/modules-6.13-rc1-v2
-X-PR-Tracked-Commit-Id: c5efad88a94613cf60fed010b96dbc3044389316
-X-PR-Merge-Tree: torvalds/linux.git
-X-PR-Merge-Refname: refs/heads/master
-X-PR-Merge-Commit-Id: 93e064ce854abfacdeb0ac526a13ad29d093e813
-Message-Id: <173290800727.2154162.7216402406203444354.pr-tracker-bot@kernel.org>
-Date: Fri, 29 Nov 2024 19:20:07 +0000
-To: Luis Chamberlain <mcgrof@kernel.org>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>, samitolvanen@google.com, petr.pavlu@suse.com, da.gomez@samsung.com, linux-modules@vger.kernel.org, patches@lists.linux.dev, linux-kernel@vger.kernel.org, geert@linux-m68k.org, masahiroy@kernel.org, mmaurer@google.com, arnd@arndb.de, deller@gmx.de, song@kernel.org
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qNXbx2Gu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDA21C4CED1;
+	Mon,  2 Dec 2024 13:02:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1733144540;
+	bh=Zs/rD6jzJ/nV0ysK8vRSIb8oO75WOyFspYTWwSHRkt0=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=qNXbx2GuQxnxDcN74QHvJaZnn2fuS+fG+cTpznQjPBTuVTQm/muHItjMaPBAYc6sA
+	 h7VlVeVQZgr59HlVAmO37q4IM7AUfr0ewhRKLpKAg2rd8x3+o+FeAv7FG5gVo3Hrkt
+	 Q4zJPsxtm3hYkTWMKs2goh8jaeTGfAGosXHuIK24=
+Date: Mon, 2 Dec 2024 14:02:17 +0100
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Guenter Roeck <linux@roeck-us.net>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
+	hargar@microsoft.com, broonie@kernel.org
+Subject: Re: [PATCH 6.1 00/73] 6.1.119-rc1 review
+Message-ID: <2024120206-dreamy-wilder-ec77@gregkh>
+References: <20241120125809.623237564@linuxfoundation.org>
+ <eda70745-0ea2-43bd-bee3-8905e3a1d3cc@roeck-us.net>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <eda70745-0ea2-43bd-bee3-8905e3a1d3cc@roeck-us.net>
 
-The pull request you sent on Thu, 28 Nov 2024 11:27:00 -0800:
+On Sat, Nov 23, 2024 at 07:47:09AM -0800, Guenter Roeck wrote:
+> On 11/20/24 04:57, Greg Kroah-Hartman wrote:
+> > This is the start of the stable review cycle for the 6.1.119 release.
+> > There are 73 patches in this series, all will be posted as a response
+> > to this one.  If anyone has any issues with these being applied, please
+> > let me know.
+> > 
+> > Responses should be made by Fri, 22 Nov 2024 12:57:58 +0000.
+> > Anything received after that time might be too late.
+> > 
+> > The whole patch series can be found in one patch at:
+> > 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.119-rc1.gz
+> > or in the git tree and branch at:
+> > 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+> > and the diffstat can be found below.
+> > 
+> > thanks,
+> > 
+> > greg k-h
+> > 
+> > -------------
+> > Pseudo-Shortlog of commits:
+> > 
+> > Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> >      Linux 6.1.119-rc1
+> > 
+> > Michal Luczaj <mhal@rbox.co>
+> >      net: Make copy_safe_from_sockptr() match documentation
+> > 
+> > Eli Billauer <eli.billauer@gmail.com>
+> >      char: xillybus: Fix trivial bug with mutex
+> > 
+> > Mikulas Patocka <mpatocka@redhat.com>
+> >      parisc: fix a possible DMA corruption
+> > 
+> 
+> This results in:
+> 
+> include/linux/slab.h:229: warning: "ARCH_KMALLOC_MINALIGN" redefined
+>   229 | #define ARCH_KMALLOC_MINALIGN ARCH_DMA_MINALIGN
+>       |
+> In file included from include/linux/cache.h:6,
+>                  from include/linux/mmzone.h:12,
+>                  from include/linux/gfp.h:7,
+>                  from include/linux/mm.h:7:
+> arch/parisc/include/asm/cache.h:28: note: this is the location of the previous definition
+>    28 | #define ARCH_KMALLOC_MINALIGN   16      /* ldcw requires 16-byte alignment */
+> 
+> because commit 4ab5f8ec7d71a ("mm/slab: decouple ARCH_KMALLOC_MINALIGN
+> from ARCH_DMA_MINALIGN") was not applied as well.
+> 
+> Then there is
+> 
+> include/linux/dma-mapping.h:546:47: error: macro "cache_line_size" passed 1 arguments, but takes just 0
+>   546 | static inline int dma_get_cache_alignment(void)
+>       |                                               ^
+> arch/parisc/include/asm/cache.h:31: note: macro "cache_line_size" defined here
+>    31 | #define cache_line_size()       dcache_stride
+>       |
+> include/linux/dma-mapping.h:547:1: error: expected '=', ',', ';', 'asm' or '__attribute__' before '{' token
+> 
+> because commit 8c57da28dc3df ("dma: allow dma_get_cache_alignment()
+> to be overridden by the arch code") is missing as well.
+> 
+> Those two patches fix the compile errors. I have not tested if the resulting
+> images boot.
 
-> git://git.kernel.org/pub/scm/linux/kernel/git/modules/linux.git/ tags/modules-6.13-rc1-v2
+Thanks, I'll go queue them up now.
 
-has been merged into torvalds/linux.git:
-https://git.kernel.org/torvalds/c/93e064ce854abfacdeb0ac526a13ad29d093e813
-
-Thank you!
-
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/prtracker.html
+greg k-h
