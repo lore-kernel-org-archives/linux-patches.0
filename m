@@ -1,42 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2D1E1FECAA;
-	Mon,  2 Dec 2024 13:02:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62F75AD51;
+	Mon,  2 Dec 2024 16:16:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733144541; cv=none; b=E+g/eozfx0HKY5DlsFES7hZp7Qr9ZtijuH5MKwnfSlS1W7nUmKckB11+MEoKIdhnAX6pLaqN04J5Cft4M+1zIqVGBCZSQ6BrxzM8ba/w7Tv35clZiNSX1hhK5bWYglxdLvnCCMWPxGe26Yi/W2S/XGYxiusWS0te+dMH5jDSodw=
+	t=1733156173; cv=none; b=NDfjiCF4ZU8yKKzFqGVDr17zKpR/85FWTRhh6nZVvAiTBa0BMqCJCc6bbXVbyv5Sy+bkb891qxpOB9+zxi8zVejiHguNFVG0wUD/aRtoUzjbL6fIPnr/+FtCtlCa7tiuCDpmqzGGmh+v/CK2+M8f7/BZqYioBFhcaaTDCdzpc9Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733144541; c=relaxed/simple;
-	bh=Zs/rD6jzJ/nV0ysK8vRSIb8oO75WOyFspYTWwSHRkt0=;
+	s=arc-20240116; t=1733156173; c=relaxed/simple;
+	bh=xlQywIlZNQT5qCo7G3nLeY962rjjbO5Mq7s9hOqzSTg=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=TrsRVULduynXeqF+AMgK0bov+7DRmykvszQ8F3NMeUHMyxzaXlqo8yOmXBT/OnSrM9Ro+QUmjhIkgnt75Ul5zPGhStDMMQC3h0+I26veHXmqM+vggRwGclyMHk0/IIZ2HMn3ewltE9YEvh/8oIooDMXUpgmPniRGcWAdfaF/Y5A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qNXbx2Gu; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=ot4eBzmD8mZ+3Q8KbdXoVR0Cifc3qHC4N6G4FBjzE7GGelK1JMlwCLrZrlN1VuNUpGGMC+a7y7S/DQbu8eyOoCbHkahMfHIb/0ewlDQO8ksg/oA1FLOxAv8zcCj5hldnrjeItdxgAWEvf4Cr90ZVjTnptN/OXhwjWe9pTAnTjuY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AM3jWJZp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qNXbx2Gu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDA21C4CED1;
-	Mon,  2 Dec 2024 13:02:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733144540;
-	bh=Zs/rD6jzJ/nV0ysK8vRSIb8oO75WOyFspYTWwSHRkt0=;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AM3jWJZp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41270C4CED1;
+	Mon,  2 Dec 2024 16:16:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1733156172;
+	bh=xlQywIlZNQT5qCo7G3nLeY962rjjbO5Mq7s9hOqzSTg=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=qNXbx2GuQxnxDcN74QHvJaZnn2fuS+fG+cTpznQjPBTuVTQm/muHItjMaPBAYc6sA
-	 h7VlVeVQZgr59HlVAmO37q4IM7AUfr0ewhRKLpKAg2rd8x3+o+FeAv7FG5gVo3Hrkt
-	 Q4zJPsxtm3hYkTWMKs2goh8jaeTGfAGosXHuIK24=
-Date: Mon, 2 Dec 2024 14:02:17 +0100
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Guenter Roeck <linux@roeck-us.net>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
-	hargar@microsoft.com, broonie@kernel.org
-Subject: Re: [PATCH 6.1 00/73] 6.1.119-rc1 review
-Message-ID: <2024120206-dreamy-wilder-ec77@gregkh>
-References: <20241120125809.623237564@linuxfoundation.org>
- <eda70745-0ea2-43bd-bee3-8905e3a1d3cc@roeck-us.net>
+	b=AM3jWJZp/CgkhVFK3t4ZwOl6h+mOxDJCQGTmx11N/Hf/ImgkXc1kb1eUP5yFTTFkj
+	 C542BBLgdoRljc3cFThdDsZ72G6r/Wt+ZH1IQ0idZd/D9REB3bX7SWEpc9Sd/kIzHD
+	 9LAH3oMX8fddnzb7a9+AAFjcVrMUX2A3zUUUo4ec8CCiOjAH/qlsIEPn+5yPXSFXDH
+	 ub4vRhdTZyhfDZGdmUIwXyWBgmFF1qIMNm2zk0nzZkXpRvLQyz13Re+7H5HqORoTMg
+	 wTfKHqx+3iafT5IrwnauhRgnYebgSmavAeFUPCkVaOr1VCOuP/iXxvcwW4NGGRMm6H
+	 inpEPVj9t2ItQ==
+Date: Mon, 2 Dec 2024 09:16:10 -0700
+From: Nathan Chancellor <nathan@kernel.org>
+To: Masahiro Yamada <masahiroy@kernel.org>
+Cc: Nicolas Schier <nicolas@fjasle.eu>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Bill Wendling <morbo@google.com>,
+	Justin Stitt <justinstitt@google.com>,
+	Arnd Bergmann <arnd@arndb.de>, Aleksei Vetrov <vvvvvv@google.com>,
+	linux-kbuild@vger.kernel.org, linux-kernel@vger.kernel.org,
+	llvm@lists.linux.dev, patches@lists.linux.dev,
+	stable@vger.kernel.org
+Subject: Re: [PATCH v2] kbuild: Move -Wenum-enum-conversion to W=2
+Message-ID: <20241202161610.GA2845796@thelio-3990X>
+References: <20241017-disable-two-clang-enum-warnings-v2-1-163ac04346ae@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -45,75 +48,78 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <eda70745-0ea2-43bd-bee3-8905e3a1d3cc@roeck-us.net>
+In-Reply-To: <20241017-disable-two-clang-enum-warnings-v2-1-163ac04346ae@kernel.org>
 
-On Sat, Nov 23, 2024 at 07:47:09AM -0800, Guenter Roeck wrote:
-> On 11/20/24 04:57, Greg Kroah-Hartman wrote:
-> > This is the start of the stable review cycle for the 6.1.119 release.
-> > There are 73 patches in this series, all will be posted as a response
-> > to this one.  If anyone has any issues with these being applied, please
-> > let me know.
-> > 
-> > Responses should be made by Fri, 22 Nov 2024 12:57:58 +0000.
-> > Anything received after that time might be too late.
-> > 
-> > The whole patch series can be found in one patch at:
-> > 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.119-rc1.gz
-> > or in the git tree and branch at:
-> > 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
-> > and the diffstat can be found below.
-> > 
-> > thanks,
-> > 
-> > greg k-h
-> > 
-> > -------------
-> > Pseudo-Shortlog of commits:
-> > 
-> > Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> >      Linux 6.1.119-rc1
-> > 
-> > Michal Luczaj <mhal@rbox.co>
-> >      net: Make copy_safe_from_sockptr() match documentation
-> > 
-> > Eli Billauer <eli.billauer@gmail.com>
-> >      char: xillybus: Fix trivial bug with mutex
-> > 
-> > Mikulas Patocka <mpatocka@redhat.com>
-> >      parisc: fix a possible DMA corruption
-> > 
-> 
-> This results in:
-> 
-> include/linux/slab.h:229: warning: "ARCH_KMALLOC_MINALIGN" redefined
->   229 | #define ARCH_KMALLOC_MINALIGN ARCH_DMA_MINALIGN
->       |
-> In file included from include/linux/cache.h:6,
->                  from include/linux/mmzone.h:12,
->                  from include/linux/gfp.h:7,
->                  from include/linux/mm.h:7:
-> arch/parisc/include/asm/cache.h:28: note: this is the location of the previous definition
->    28 | #define ARCH_KMALLOC_MINALIGN   16      /* ldcw requires 16-byte alignment */
-> 
-> because commit 4ab5f8ec7d71a ("mm/slab: decouple ARCH_KMALLOC_MINALIGN
-> from ARCH_DMA_MINALIGN") was not applied as well.
-> 
-> Then there is
-> 
-> include/linux/dma-mapping.h:546:47: error: macro "cache_line_size" passed 1 arguments, but takes just 0
->   546 | static inline int dma_get_cache_alignment(void)
->       |                                               ^
-> arch/parisc/include/asm/cache.h:31: note: macro "cache_line_size" defined here
->    31 | #define cache_line_size()       dcache_stride
->       |
-> include/linux/dma-mapping.h:547:1: error: expected '=', ',', ';', 'asm' or '__attribute__' before '{' token
-> 
-> because commit 8c57da28dc3df ("dma: allow dma_get_cache_alignment()
-> to be overridden by the arch code") is missing as well.
-> 
-> Those two patches fix the compile errors. I have not tested if the resulting
-> images boot.
+Masahiro, could you please pick this up? The lore link is below in case
+it is no longer in your inbox (or I can resend).
 
-Thanks, I'll go queue them up now.
+https://lore.kernel.org/20241017-disable-two-clang-enum-warnings-v2-1-163ac04346ae@kernel.org/
 
-greg k-h
+On Thu, Oct 17, 2024 at 10:09:22AM -0700, Nathan Chancellor wrote:
+> -Wenum-enum-conversion was strengthened in clang-19 to warn for C, which
+> caused the kernel to move it to W=1 in commit 75b5ab134bb5 ("kbuild:
+> Move -Wenum-{compare-conditional,enum-conversion} into W=1") because
+> there were numerous instances that would break builds with -Werror.
+> Unfortunately, this is not a full solution, as more and more developers,
+> subsystems, and distributors are building with W=1 as well, so they
+> continue to see the numerous instances of this warning.
+> 
+> Since the move to W=1, there have not been many new instances that have
+> appeared through various build reports and the ones that have appeared
+> seem to be following similar existing patterns, suggesting that most
+> instances of this warning will not be real issues. The only alternatives
+> for silencing this warning are adding casts (which is generally seen as
+> an ugly practice) or refactoring the enums to macro defines or a unified
+> enum (which may be undesirable because of type safety in other parts of
+> the code).
+> 
+> Move the warning to W=2, where warnings that occur frequently but may be
+> relevant should reside.
+> 
+> Cc: stable@vger.kernel.org
+> Fixes: 75b5ab134bb5 ("kbuild: Move -Wenum-{compare-conditional,enum-conversion} into W=1")
+> Link: https://lore.kernel.org/ZwRA9SOcOjjLJcpi@google.com/
+> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+> ---
+> Changes in v2:
+> - Move -Wenum-enum-conversion to W=2, instead of disabling it
+>   outright (Arnd)
+> - Leave -Wenum-compare-conditional in W=1, as there are not that
+>   many instances, so it can be turned on fully at some point (Arnd)
+> - Link to v1: https://lore.kernel.org/r/20241016-disable-two-clang-enum-warnings-v1-1-ae886d7a0269@kernel.org
+> ---
+>  scripts/Makefile.extrawarn | 5 ++++-
+>  1 file changed, 4 insertions(+), 1 deletion(-)
+> 
+> diff --git a/scripts/Makefile.extrawarn b/scripts/Makefile.extrawarn
+> index 1d13cecc7cc7808610e635ddc03476cf92b3a8c1..04faf15ed316a9c291dc952b6cc40fb6c8c330cf 100644
+> --- a/scripts/Makefile.extrawarn
+> +++ b/scripts/Makefile.extrawarn
+> @@ -130,7 +130,6 @@ KBUILD_CFLAGS += $(call cc-disable-warning, pointer-to-enum-cast)
+>  KBUILD_CFLAGS += -Wno-tautological-constant-out-of-range-compare
+>  KBUILD_CFLAGS += $(call cc-disable-warning, unaligned-access)
+>  KBUILD_CFLAGS += -Wno-enum-compare-conditional
+> -KBUILD_CFLAGS += -Wno-enum-enum-conversion
+>  endif
+>  
+>  endif
+> @@ -154,6 +153,10 @@ KBUILD_CFLAGS += -Wno-missing-field-initializers
+>  KBUILD_CFLAGS += -Wno-type-limits
+>  KBUILD_CFLAGS += -Wno-shift-negative-value
+>  
+> +ifdef CONFIG_CC_IS_CLANG
+> +KBUILD_CFLAGS += -Wno-enum-enum-conversion
+> +endif
+> +
+>  ifdef CONFIG_CC_IS_GCC
+>  KBUILD_CFLAGS += -Wno-maybe-uninitialized
+>  endif
+> 
+> ---
+> base-commit: 8e929cb546ee42c9a61d24fae60605e9e3192354
+> change-id: 20241016-disable-two-clang-enum-warnings-e7994d44f948
+> 
+> Best regards,
+> -- 
+> Nathan Chancellor <nathan@kernel.org>
+> 
