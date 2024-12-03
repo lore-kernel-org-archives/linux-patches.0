@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 274D01F6662;
-	Tue,  3 Dec 2024 14:34:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D76451F4704;
+	Tue,  3 Dec 2024 14:34:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733236462; cv=none; b=UlJzMPPbo57ieOFBXY3tqVZUf51UyPS51Fh07qit8Q7WWzS8fNHZC4QPRKPQwJ8FOuGgzh1mjN0LuiXkWt7k84Y6MswJloyXqdlzQNMMGpPBmEe10lAq4HAHrYGMkKicLkFpDS5NfHpfENAkvSvxjaEzL3u+8OTIEc1icQThhzo=
+	t=1733236467; cv=none; b=vAJVG73gbRO6TNb2Xy5vQcn6ITNRP4DUsbDoZ3aRdBSN7/j67vqclylDx9GLCgU3O6sBuiS+wswKcGcQQvH8/NpGJVTLN7991OTvoqbCbBEdLzlzH9xJmJIhXf67lfPzZb8HgQmA2zpg4ovzSIn1NoJAKFsixfxgE82XU1uDDws=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733236462; c=relaxed/simple;
-	bh=Nmc1MgM3Cwl5SFCNYp/FEsU5b9Lxq2KPltu5b/5QVEk=;
+	s=arc-20240116; t=1733236467; c=relaxed/simple;
+	bh=J2bEWlbxF0iFM0DAbZ1HPRu6loGq9VASk5nR4fdg/9c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H0WiPT5dCvpQAwbtnqmaahBfjwatXUhD3W6fhCd7DpHAChdv8ryLNyb0shRSWYTVwAohY/lOjhnvjqh+a0dNYiz3HUCdXWmJK6P3O4ouzhSfOMCO8Zp8u4WVYNXRJO3Ehbfs6c6eRxjrUHUE+UNimaS9JtK3Qdq6BvwQjp3aPXE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iKpRLTQb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XM+LaONRY3fN7azt+luqIFTFFDh9qCdlJkk1jr0zwMH7sT5adp3YYTdcvGI4CfuHhQvB0c5gZsE2etJB9YDKaZpl/9UdZ9oOUSNmNpBl3wcW54bHeBqC/gk6VmIF1PhsJyfn4ISGvKuoy9J6+Lkwpm1VSwNpcM1+7KMMXrePwwo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lHvYKXld; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iKpRLTQb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C544C4CECF;
-	Tue,  3 Dec 2024 14:34:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lHvYKXld"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA0DCC4CED9;
+	Tue,  3 Dec 2024 14:34:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733236462;
-	bh=Nmc1MgM3Cwl5SFCNYp/FEsU5b9Lxq2KPltu5b/5QVEk=;
+	s=korg; t=1733236465;
+	bh=J2bEWlbxF0iFM0DAbZ1HPRu6loGq9VASk5nR4fdg/9c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iKpRLTQbPiS/+eHPa3LSDSAMmuykzCx7h+gDOb92tpGVa6MsRAf+SnPeR9EyE5fOH
-	 p7GhN3nQ1lNCCKu2MD8cd2OzeHTbThMoC5U7I4D0lRrGMIywpnSkCBadSd1BQplsC3
-	 kqmHxI/cmo91tTFYjtSXQEuDv5tlNg9efcHGZaiE=
+	b=lHvYKXldFcKxnIWGtueCfrpOoPEa5g403/uRcyI0emjL9e94FQr13iUX8JRj3whlQ
+	 KE685klZ3uDiuDBWnCnabhUSBnuZcobLdOcszXTpO5JvDIkZ9C2wDCcJPOXlwGN5bs
+	 gN8ECSKUiVYGDeUzpEqkDozKTfYIM3tGexxs8dwc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Everest K.C." <everestkc@everestkc.com.np>,
+	Chen Ridong <chenridong@huawei.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 026/138] crypto: cavium - Fix the if condition to exit loop after timeout
-Date: Tue,  3 Dec 2024 15:30:55 +0100
-Message-ID: <20241203141924.548477749@linuxfoundation.org>
+Subject: [PATCH 4.19 027/138] crypto: bcm - add error check in the ahash_hmac_init function
+Date: Tue,  3 Dec 2024 15:30:56 +0100
+Message-ID: <20241203141924.588567308@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203141923.524658091@linuxfoundation.org>
 References: <20241203141923.524658091@linuxfoundation.org>
@@ -51,51 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Everest K.C <everestkc@everestkc.com.np>
+From: Chen Ridong <chenridong@huawei.com>
 
-[ Upstream commit 53d91ca76b6c426c546542a44c78507b42008c9e ]
+[ Upstream commit 19630cf57233e845b6ac57c9c969a4888925467b ]
 
-The while loop breaks in the first run because of incorrect
-if condition. It also causes the statements after the if to
-appear dead.
-Fix this by changing the condition from if(timeout--) to
-if(!timeout--).
+The ahash_init functions may return fails. The ahash_hmac_init should
+not return ok when ahash_init returns error. For an example, ahash_init
+will return -ENOMEM when allocation memory is error.
 
-This bug was reported by Coverity Scan.
-Report:
-CID 1600859: (#1 of 1): Logically dead code (DEADCODE)
-dead_error_line: Execution cannot reach this statement: udelay(30UL);
-
-Fixes: 9e2c7d99941d ("crypto: cavium - Add Support for Octeon-tx CPT Engine")
-Signed-off-by: Everest K.C. <everestkc@everestkc.com.np>
+Fixes: 9d12ba86f818 ("crypto: brcm - Add Broadcom SPU driver")
+Signed-off-by: Chen Ridong <chenridong@huawei.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/cavium/cpt/cptpf_main.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/crypto/bcm/cipher.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/crypto/cavium/cpt/cptpf_main.c b/drivers/crypto/cavium/cpt/cptpf_main.c
-index 7416f30ee976d..7e1d95b85b270 100644
---- a/drivers/crypto/cavium/cpt/cptpf_main.c
-+++ b/drivers/crypto/cavium/cpt/cptpf_main.c
-@@ -48,7 +48,7 @@ static void cpt_disable_cores(struct cpt_device *cpt, u64 coremask,
- 		dev_err(dev, "Cores still busy %llx", coremask);
- 		grp = cpt_read_csr64(cpt->reg_base,
- 				     CPTX_PF_EXEC_BUSY(0));
--		if (timeout--)
-+		if (!timeout--)
- 			break;
+diff --git a/drivers/crypto/bcm/cipher.c b/drivers/crypto/bcm/cipher.c
+index c63992fbbc988..4349961982cc9 100644
+--- a/drivers/crypto/bcm/cipher.c
++++ b/drivers/crypto/bcm/cipher.c
+@@ -2510,6 +2510,7 @@ static int ahash_hmac_setkey(struct crypto_ahash *ahash, const u8 *key,
  
- 		udelay(CSR_DELAY);
-@@ -398,7 +398,7 @@ static void cpt_disable_all_cores(struct cpt_device *cpt)
- 		dev_err(dev, "Cores still busy");
- 		grp = cpt_read_csr64(cpt->reg_base,
- 				     CPTX_PF_EXEC_BUSY(0));
--		if (timeout--)
-+		if (!timeout--)
- 			break;
+ static int ahash_hmac_init(struct ahash_request *req)
+ {
++	int ret;
+ 	struct iproc_reqctx_s *rctx = ahash_request_ctx(req);
+ 	struct crypto_ahash *tfm = crypto_ahash_reqtfm(req);
+ 	struct iproc_ctx_s *ctx = crypto_ahash_ctx(tfm);
+@@ -2519,7 +2520,9 @@ static int ahash_hmac_init(struct ahash_request *req)
+ 	flow_log("ahash_hmac_init()\n");
  
- 		udelay(CSR_DELAY);
+ 	/* init the context as a hash */
+-	ahash_init(req);
++	ret = ahash_init(req);
++	if (ret)
++		return ret;
+ 
+ 	if (!spu_no_incr_hash(ctx)) {
+ 		/* SPU-M can do incr hashing but needs sw for outer HMAC */
 -- 
 2.43.0
 
