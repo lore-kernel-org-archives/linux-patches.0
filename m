@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DC5433FE;
-	Tue,  3 Dec 2024 15:04:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49B2533FE;
+	Tue,  3 Dec 2024 15:04:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733238278; cv=none; b=ixERnqniC7dtdpfjBl/CvylKWKaNmwGBGGXjk5BEneLpWF4q3WrDUgWgeLaaOSQMQphqQX35ao11+R2XNGOdLsHrabngAPfB8I++dvSbkbGVJs4y8rCE2FG7J20eryLsTzLgrrVsRU2/ivpU1rLe+6XRXp5DcTzYH/jKnVLk8p8=
+	t=1733238281; cv=none; b=BVM6VsChLH5dJQcGsuv2kzz6IxjQahSLmkYHj4o5hOeYDctBmjxIyknMFxcDorpw0Lxnbdg1pmIUSteMjn9BpsBpwvBOTDhAwvG8IxavQxvTnMmm7YAsoyPBFeI8p7L1BqMpc5M/7r2gbNKjEGB0p9o+5wvIRDORsIy1yhAr3t8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733238278; c=relaxed/simple;
-	bh=K4V6KGsgw+3UH6WOtbBrPFzvQw+2oP9eU1hlVxb5P1c=;
+	s=arc-20240116; t=1733238281; c=relaxed/simple;
+	bh=kYa4Bf3THBCzxVIaOl+VB7yDYDxoVvTnvC6uJ7WexcM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eGfVlM9Pe0yWCSGOxNXvepzCyBTrHEeohBUuX6GWh1yhly4HvtlDh5tPJ+AW367ckQ4I4atWP1MhmTNpaTTVZNglsPF6jry2FCVe5MnbXRNTgZgBI6HkyC1/fEQyopyzjdBvJx/V3KpBtCZ9Fs7h+KzQK6hrmEltamU2wi5upp0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SF3ZFZXv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HHHL3FIxy58OUqG8/foqRaLsqXfZxK5FGKOQaM4SIOvMY2oMscpY2W4HJ/IpmQnJWQRJL+WfI6ikotwSQYH4aTK8oiIe04Mp+iMqhRi1eoRmCl7GcBvJcYTUGxV7viHqCB/6QCXhL54Vb43oznZblWU1oDp0XCvAD4vB2f6LrGs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XyBdJKhO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SF3ZFZXv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0335EC4CECF;
-	Tue,  3 Dec 2024 15:04:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XyBdJKhO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7EC6C4CECF;
+	Tue,  3 Dec 2024 15:04:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733238278;
-	bh=K4V6KGsgw+3UH6WOtbBrPFzvQw+2oP9eU1hlVxb5P1c=;
+	s=korg; t=1733238281;
+	bh=kYa4Bf3THBCzxVIaOl+VB7yDYDxoVvTnvC6uJ7WexcM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SF3ZFZXvX6PZY4bXudjlDPZc3y3gIfjYKzXlz341DjVuyZa5rTOqaT20V+p2w5LXE
-	 CeM8E2aB8NJKqWeB83ePTbFhkuxlRlzLZfm4v04cT9tdLf1CL/iIFHoUYN5MMScEH0
-	 Sp9AQNAuuY5+Uc2n2heksTy2wGcyMuBf4VDPNsPk=
+	b=XyBdJKhOsD9kjCHFLEEhebtcISQveAf+jDoBEyoH7L/Io4Y80sErncvQOls8nNUja
+	 yZYP0QSX/Iqus/N+RF3GsmJNA94xhNpKZQXsf0B3vpbyhgK9keWEGlVpX0rGluknAq
+	 GatwvitoZ5xPNbVX82gxTFzFQ/uoU5W/7OCz7mg0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Dan Carpenter <dan.carpenter@linaro.org>,
 	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 223/817] drm/omap: Fix possible NULL dereference
-Date: Tue,  3 Dec 2024 15:36:35 +0100
-Message-ID: <20241203144004.453584434@linuxfoundation.org>
+Subject: [PATCH 6.11 224/817] drm/omap: Fix locking in omap_gem_new_dmabuf()
+Date: Tue,  3 Dec 2024 15:36:36 +0100
+Message-ID: <20241203144004.492615382@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -53,131 +54,71 @@ Content-Transfer-Encoding: 8bit
 
 From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
 
-[ Upstream commit a88fee2d67d9b78c24630a987a88ccf886b2498b ]
+[ Upstream commit e6a1c4037227539373c8cf484ace83833e2ad6a2 ]
 
-smatch reports:
+omap_gem_new_dmabuf() creates the new gem object, and then takes and
+holds the omap_obj->lock for the rest of the function. This has two
+issues:
 
-drivers/gpu/drm/omapdrm/dss/base.c:176 omapdss_device_disconnect() error: we previously assumed 'src' could be null (see line 169)
+- omap_gem_free_object(), which is called in the error paths, also takes
+  the same lock, leading to deadlock
+- Even if the above wouldn't happen, in the error cases
+  omap_gem_new_dmabuf() still unlocks omap_obj->lock, even after the
+  omap_obj has already been freed.
 
-This code is mostly from a time when omapdrm had its own display device
-model. I can't honestly remember the details, and I don't think it's
-worth digging in deeply into that for a legacy driver.
+Furthermore, I don't think there's any reason to take the lock at all,
+as the object was just created and not yet shared with anyone else.
 
-However, it looks like we only call omapdss_device_disconnect() and
-omapdss_device_connect() with NULL as the src parameter. We can thus
-drop the src parameter from both functions, and fix the smatch warning.
+To fix all this, drop taking the lock.
 
-I don't think omapdss_device_disconnect() ever gets NULL for the dst
-parameter (if it did, we'd crash soon after returning from the
-function), but I have kept the !dst check, just in case, but I added a
-WARN_ON() there.
-
-Also, if the dst parameter can be NULL, we can't always get the struct
-dss_device pointer from dst->dss (which is only used for a debug print).
-To make sure we can't hit that issue, do it similarly to the
-omapdss_device_connect() function: add 'struct dss_device *dss' as the
-first parameter, so that we always have it regardless of the dst.
-
-Fixes: 79107f274b2f ("drm/omap: Add support for drm_bridge")
+Fixes: 3cbd0c587b12 ("drm/omap: gem: Replace struct_mutex usage with omap_obj private lock")
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Closes: https://lore.kernel.org/all/511b99d7-aade-4f92-bd3e-63163a13d617@stanley.mountain/
 Reviewed-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240806-omapdrm-misc-fixes-v1-1-15d31aea0831@ideasonboard.com
+Link: https://patchwork.freedesktop.org/patch/msgid/20240806-omapdrm-misc-fixes-v1-3-15d31aea0831@ideasonboard.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/omapdrm/dss/base.c    | 25 ++++++-------------------
- drivers/gpu/drm/omapdrm/dss/omapdss.h |  3 +--
- drivers/gpu/drm/omapdrm/omap_drv.c    |  4 ++--
- 3 files changed, 9 insertions(+), 23 deletions(-)
+ drivers/gpu/drm/omapdrm/omap_gem.c | 10 ++--------
+ 1 file changed, 2 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/gpu/drm/omapdrm/dss/base.c b/drivers/gpu/drm/omapdrm/dss/base.c
-index 050ca7eafac58..556e0f9026bed 100644
---- a/drivers/gpu/drm/omapdrm/dss/base.c
-+++ b/drivers/gpu/drm/omapdrm/dss/base.c
-@@ -139,21 +139,13 @@ static bool omapdss_device_is_connected(struct omap_dss_device *dssdev)
- }
+diff --git a/drivers/gpu/drm/omapdrm/omap_gem.c b/drivers/gpu/drm/omapdrm/omap_gem.c
+index fdae677558f3e..b9c67e4ca3605 100644
+--- a/drivers/gpu/drm/omapdrm/omap_gem.c
++++ b/drivers/gpu/drm/omapdrm/omap_gem.c
+@@ -1402,8 +1402,6 @@ struct drm_gem_object *omap_gem_new_dmabuf(struct drm_device *dev, size_t size,
  
- int omapdss_device_connect(struct dss_device *dss,
--			   struct omap_dss_device *src,
- 			   struct omap_dss_device *dst)
- {
--	dev_dbg(&dss->pdev->dev, "connect(%s, %s)\n",
--		src ? dev_name(src->dev) : "NULL",
-+	dev_dbg(&dss->pdev->dev, "connect(%s)\n",
- 		dst ? dev_name(dst->dev) : "NULL");
+ 	omap_obj = to_omap_bo(obj);
  
--	if (!dst) {
--		/*
--		 * The destination is NULL when the source is connected to a
--		 * bridge instead of a DSS device. Stop here, we will attach
--		 * the bridge later when we will have a DRM encoder.
--		 */
--		return src && src->bridge ? 0 : -EINVAL;
--	}
-+	if (!dst)
-+		return -EINVAL;
- 
- 	if (omapdss_device_is_connected(dst))
- 		return -EBUSY;
-@@ -163,19 +155,14 @@ int omapdss_device_connect(struct dss_device *dss,
- 	return 0;
- }
- 
--void omapdss_device_disconnect(struct omap_dss_device *src,
-+void omapdss_device_disconnect(struct dss_device *dss,
- 			       struct omap_dss_device *dst)
- {
--	struct dss_device *dss = src ? src->dss : dst->dss;
+-	mutex_lock(&omap_obj->lock);
 -
--	dev_dbg(&dss->pdev->dev, "disconnect(%s, %s)\n",
--		src ? dev_name(src->dev) : "NULL",
-+	dev_dbg(&dss->pdev->dev, "disconnect(%s)\n",
- 		dst ? dev_name(dst->dev) : "NULL");
+ 	omap_obj->sgt = sgt;
  
--	if (!dst) {
--		WARN_ON(!src->bridge);
-+	if (WARN_ON(!dst))
- 		return;
--	}
+ 	if (omap_gem_sgt_is_contiguous(sgt, size)) {
+@@ -1418,21 +1416,17 @@ struct drm_gem_object *omap_gem_new_dmabuf(struct drm_device *dev, size_t size,
+ 		pages = kcalloc(npages, sizeof(*pages), GFP_KERNEL);
+ 		if (!pages) {
+ 			omap_gem_free_object(obj);
+-			obj = ERR_PTR(-ENOMEM);
+-			goto done;
++			return ERR_PTR(-ENOMEM);
+ 		}
  
- 	if (!dst->id && !omapdss_device_is_connected(dst)) {
- 		WARN_ON(1);
-diff --git a/drivers/gpu/drm/omapdrm/dss/omapdss.h b/drivers/gpu/drm/omapdrm/dss/omapdss.h
-index 040d5a3e33d68..4c22c09c93d52 100644
---- a/drivers/gpu/drm/omapdrm/dss/omapdss.h
-+++ b/drivers/gpu/drm/omapdrm/dss/omapdss.h
-@@ -242,9 +242,8 @@ struct omap_dss_device *omapdss_device_get(struct omap_dss_device *dssdev);
- void omapdss_device_put(struct omap_dss_device *dssdev);
- struct omap_dss_device *omapdss_find_device_by_node(struct device_node *node);
- int omapdss_device_connect(struct dss_device *dss,
--			   struct omap_dss_device *src,
- 			   struct omap_dss_device *dst);
--void omapdss_device_disconnect(struct omap_dss_device *src,
-+void omapdss_device_disconnect(struct dss_device *dss,
- 			       struct omap_dss_device *dst);
+ 		omap_obj->pages = pages;
+ 		ret = drm_prime_sg_to_page_array(sgt, pages, npages);
+ 		if (ret) {
+ 			omap_gem_free_object(obj);
+-			obj = ERR_PTR(-ENOMEM);
+-			goto done;
++			return ERR_PTR(-ENOMEM);
+ 		}
+ 	}
  
- int omap_dss_get_num_overlay_managers(void);
-diff --git a/drivers/gpu/drm/omapdrm/omap_drv.c b/drivers/gpu/drm/omapdrm/omap_drv.c
-index d3eac4817d768..a982378aa1411 100644
---- a/drivers/gpu/drm/omapdrm/omap_drv.c
-+++ b/drivers/gpu/drm/omapdrm/omap_drv.c
-@@ -307,7 +307,7 @@ static void omap_disconnect_pipelines(struct drm_device *ddev)
- 	for (i = 0; i < priv->num_pipes; i++) {
- 		struct omap_drm_pipeline *pipe = &priv->pipes[i];
+-done:
+-	mutex_unlock(&omap_obj->lock);
+ 	return obj;
+ }
  
--		omapdss_device_disconnect(NULL, pipe->output);
-+		omapdss_device_disconnect(priv->dss, pipe->output);
- 
- 		omapdss_device_put(pipe->output);
- 		pipe->output = NULL;
-@@ -325,7 +325,7 @@ static int omap_connect_pipelines(struct drm_device *ddev)
- 	int r;
- 
- 	for_each_dss_output(output) {
--		r = omapdss_device_connect(priv->dss, NULL, output);
-+		r = omapdss_device_connect(priv->dss, output);
- 		if (r == -EPROBE_DEFER) {
- 			omapdss_device_put(output);
- 			return r;
 -- 
 2.43.0
 
