@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17DA11F1313;
-	Tue,  3 Dec 2024 14:39:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD0B61F7074;
+	Tue,  3 Dec 2024 14:39:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733236764; cv=none; b=SLwoU/rQ1y2bjWljssJqEmFVPcscjKzAB5XJ5jXc3xj5dSSLHiqi2HW8fnu9V11IVZOaRCtyvDKWbs/ickzmPeQ3siKoEwdokLpqyBnoz+z3qkFZMJU234Rkcw0LiRUwUliwFTChzx9/sQGHbdjSxs/AOgdgF55dZuXmj2gw1Ag=
+	t=1733236769; cv=none; b=dqinAzzxC1uGOvKKcSe6OOntdXEY9M7f84kaPqhoqCNNOzI4tBNmCWKzaMIdnVB2zk0vVbERTqcvf6fN+jrVnBkvMrSm89/OGYxTTuidlQWbicuGxEY9yV/Vyy/VrZcJcN/NnSsqORmCXfDbAUZGL1cJO/hJU6OiyzGJ5dIQJJM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733236764; c=relaxed/simple;
-	bh=ZBiyf/l4HP+5v16GlG90QY0JYH5vyA345AQmQkQuTA4=;
+	s=arc-20240116; t=1733236769; c=relaxed/simple;
+	bh=NSuo9D6AoKF1221hExFw51CjWhTO1/upi1N/76BYjnw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jvYoOpVPB9MY5tslhcBmvQ6M2hQzmSRdbkDqvjlJMY/1+KM5ouLzklMzXexUH8d5OLJMvyUvN5eWU2ZDXqZxv7bOwKEV0iFyKYhUJ2Pfnq/X0VsaRT4bvCaAhlexKIaA3WaWGTRMq5Qh28zQ61FChwEoqYJIWO2KaaaXKtlou1s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w8NYZn1L; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=hI1NhcfmzP0VkITuMB4WgVDm0RAdROjA/g3TE8wH2IlxlSC1hAt+PpcHVdLx7YviIzZJSxkUJFhbQ8c+mTizIN3nuH1PdankvkEuH3OywlAZ2Ys/ntzRlvdSIGDeziO6xQR0Z/wHpsz0tkf3LdecjDdb3ULsh0A6Sxw53ZyFs3A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yidqXFCu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w8NYZn1L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EBE8C4CECF;
-	Tue,  3 Dec 2024 14:39:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yidqXFCu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4E16C4CECF;
+	Tue,  3 Dec 2024 14:39:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733236763;
-	bh=ZBiyf/l4HP+5v16GlG90QY0JYH5vyA345AQmQkQuTA4=;
+	s=korg; t=1733236767;
+	bh=NSuo9D6AoKF1221hExFw51CjWhTO1/upi1N/76BYjnw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w8NYZn1Lct+olroq3o9UypQV1yPAvs6t6Vw3WpOD6fY8eanu5Do7KMj5jZ9r4rXDt
-	 MgGz1BceDw7WRULtwlMC0pjkGT00RJ1gHOR+MJVjMHgtWW5/+HiRkQrumiEZzAwd86
-	 dWtOhyFWBQh4bRLbWYx5Sfi2uSWyjqBiI1CcZbD4=
+	b=yidqXFCuyrF/NT2aqT+tdXb5UpYM39qDdwOk+z4hCPEhE5SRbq2KsmUgPg+ZWz8fx
+	 9DZeCPkYA35vYnbzkODXjvkwErl7O5lbTs3BfqK6kvnOOaXT6fbTdZ3/0nEhkdstru
+	 Z1GkXjWLPouhHclzcx2M1Y1Fq+FJ9rRRet6klAgM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+58c872f7790a4d2ac951@syzkaller.appspotmail.com,
-	Jeongjun Park <aha310510@gmail.com>,
-	Jozsef Kadlecsik <kadlec@blackhole.kfki.hu>,
-	Pablo Neira Ayuso <pablo@netfilter.org>
-Subject: [PATCH 4.19 111/138] netfilter: ipset: add missing range check in bitmap_ip_uadt
-Date: Tue,  3 Dec 2024 15:32:20 +0100
-Message-ID: <20241203141927.812539648@linuxfoundation.org>
+	Hans de Goede <hdegoede@redhat.com>,
+	Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
+	=?UTF-8?q?Alexis=20Lothor=C3=A9?= <alexis.lothore@bootlin.com>
+Subject: [PATCH 4.19 112/138] spi: Fix acpi deferred irq probe
+Date: Tue,  3 Dec 2024 15:32:21 +0100
+Message-ID: <20241203141927.850260472@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203141923.524658091@linuxfoundation.org>
 References: <20241203141923.524658091@linuxfoundation.org>
@@ -46,57 +46,67 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 4.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jeongjun Park <aha310510@gmail.com>
+From: Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>
 
-commit 35f56c554eb1b56b77b3cf197a6b00922d49033d upstream.
+commit d24cfee7f63d6b44d45a67c5662bd1cc48e8b3ca upstream.
 
-When tb[IPSET_ATTR_IP_TO] is not present but tb[IPSET_ATTR_CIDR] exists,
-the values of ip and ip_to are slightly swapped. Therefore, the range check
-for ip should be done later, but this part is missing and it seems that the
-vulnerability occurs.
+When probing spi device take care of deferred probe of ACPI irq gpio
+similar like for OF/DT case.
 
-So we should add missing range checks and remove unnecessary range checks.
+>From practical standpoint this fixes issue with vsc-tp driver on
+Dell XP 9340 laptop, which try to request interrupt with spi->irq
+equal to -EPROBE_DEFER and fail to probe with the following error:
 
-Cc: <stable@vger.kernel.org>
-Reported-by: syzbot+58c872f7790a4d2ac951@syzkaller.appspotmail.com
-Fixes: 72205fc68bd1 ("netfilter: ipset: bitmap:ip set type support")
-Signed-off-by: Jeongjun Park <aha310510@gmail.com>
-Acked-by: Jozsef Kadlecsik <kadlec@blackhole.kfki.hu>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+vsc-tp spi-INTC10D0:00: probe with driver vsc-tp failed with error -22
+
+Suggested-by: Hans de Goede <hdegoede@redhat.com>
+Fixes: 33ada67da352 ("ACPI / spi: attach GPIO IRQ from ACPI description to SPI device")
+Cc: stable@vger.kernel.org
+Signed-off-by: Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Tested-by: Alexis Lothoré <alexis.lothore@bootlin.com> # Dell XPS9320, ov01a10
+Link: https://patch.msgid.link/20241122094224.226773-1-stanislaw.gruszka@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/ipset/ip_set_bitmap_ip.c |    7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ drivers/spi/spi.c |   13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
---- a/net/netfilter/ipset/ip_set_bitmap_ip.c
-+++ b/net/netfilter/ipset/ip_set_bitmap_ip.c
-@@ -166,11 +166,8 @@ bitmap_ip_uadt(struct ip_set *set, struc
- 		ret = ip_set_get_hostipaddr4(tb[IPSET_ATTR_IP_TO], &ip_to);
- 		if (ret)
- 			return ret;
--		if (ip > ip_to) {
-+		if (ip > ip_to)
- 			swap(ip, ip_to);
--			if (ip < map->first_ip)
--				return -IPSET_ERR_BITMAP_RANGE;
--		}
- 	} else if (tb[IPSET_ATTR_CIDR]) {
- 		u8 cidr = nla_get_u8(tb[IPSET_ATTR_CIDR]);
- 
-@@ -181,7 +178,7 @@ bitmap_ip_uadt(struct ip_set *set, struc
- 		ip_to = ip;
+--- a/drivers/spi/spi.c
++++ b/drivers/spi/spi.c
+@@ -358,6 +358,16 @@ static int spi_drv_probe(struct device *
+ 			spi->irq = 0;
  	}
  
--	if (ip_to > map->last_ip)
-+	if (ip < map->first_ip || ip_to > map->last_ip)
- 		return -IPSET_ERR_BITMAP_RANGE;
++	if (has_acpi_companion(dev) && spi->irq < 0) {
++		struct acpi_device *adev = to_acpi_device_node(dev->fwnode);
++
++		spi->irq = acpi_dev_gpio_irq_get(adev, 0);
++		if (spi->irq == -EPROBE_DEFER)
++			return -EPROBE_DEFER;
++		if (spi->irq < 0)
++			spi->irq = 0;
++	}
++
+ 	ret = dev_pm_domain_attach(dev, true);
+ 	if (ret)
+ 		return ret;
+@@ -1843,9 +1853,6 @@ static acpi_status acpi_register_spi_dev
+ 	acpi_set_modalias(adev, acpi_device_hid(adev), spi->modalias,
+ 			  sizeof(spi->modalias));
  
- 	for (; !before(ip_to, ip); ip += map->hosts) {
+-	if (spi->irq < 0)
+-		spi->irq = acpi_dev_gpio_irq_get(adev, 0);
+-
+ 	acpi_device_set_enumerated(adev);
+ 
+ 	adev->power.flags.ignore_parent = true;
 
 
