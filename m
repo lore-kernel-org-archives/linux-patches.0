@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 823E61F667A;
-	Tue,  3 Dec 2024 14:35:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A413A1F7060;
+	Tue,  3 Dec 2024 14:35:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733236510; cv=none; b=Rn46/5ZQRbDgiu/xUmz8iGDhVXRKW2urE0+mPC5P1WQH6I2kFQYlhdzHGCFtM7uB6qwqYsIGimm15m4eagCHsi2OLIqwg3yFVi+duyC9RRyzMLQnsA44KXhxf7xcD/HTenThcxX6wL+3+HpyHBr25Ti/uPZJ7ot8MLONf93Ciok=
+	t=1733236513; cv=none; b=LruKKQP3sajKzTbr+36yin/LDT4HM/LiSD6a4EIn655R8zLT9bAMaL1LN9cEHN8PXcRX+5JPWhOmxxHKhwmW0YeIbpnvzV6blAWdSYyO+m6xmsCa+WAy4k3u8NdkpwEo75IcPGOjIb75eTwxrlAYC2zETky5mYMGvu1hQpKO5CM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733236510; c=relaxed/simple;
-	bh=IUcmelc1S6rD2JDiGOJeO9Yek7qiKhXWXUSSEomreqk=;
+	s=arc-20240116; t=1733236513; c=relaxed/simple;
+	bh=4e+atGT+razKs3WZZUPJBMpKSHnke8gLiE3jwDra9+Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EBjAi+WDmjF1rHtZqMEHCDBnbxRle+bOyw73J9NhdKM6eXK8iSnB6jk1+2EE9pkbtNU6jVRdaq+op0pm2Ef6OFZpKbqeZoYNR+1PjFLf/S+Ry6cDebYNatXm5JYrQumeFf/XOpmi+Zbf6Di+jXwJnIB6kCDbjqT/ftQFj78RAt0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pqyNwYCm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tY/wHK4RUgsyhjHOu7VFnA/g63kJH55QtbY2zoWgIbrp0FO5FeDXkPATtZ0SQN3Kvxy0tFFxq2YVQFYgZtWS/xKy5L0Fgb6KqDLO0fHiObVGL9RP9i+LBQSuyGPRBQagMgMYdUCTjeH4tvIOcjIU9/I9JlOLGPXCJjrLQTxBxsk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A1zepymF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pqyNwYCm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC0B1C4CECF;
-	Tue,  3 Dec 2024 14:35:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A1zepymF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23623C4CED6;
+	Tue,  3 Dec 2024 14:35:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733236510;
-	bh=IUcmelc1S6rD2JDiGOJeO9Yek7qiKhXWXUSSEomreqk=;
+	s=korg; t=1733236513;
+	bh=4e+atGT+razKs3WZZUPJBMpKSHnke8gLiE3jwDra9+Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pqyNwYCmPgWPNnpQbXtKYeckw8+qrtvmP8JE1RMtZzzRqrmtEWuZzRAP9/+tNA0tq
-	 tfKiwQ6SBaxr+uFJIuD3NPQUn7bQhpkLDi00cYxTtIpX0Ek/q00PedSaBtST6vfWGW
-	 Um5MWl3ambmLxye4SnLrk6rcJ1hXKlhdW6g05E7g=
+	b=A1zepymFj8jObzZ3Qyfb7mqGQm70anPqH1aSGk8J6BTmJcvf+Sk3JR4qJTS9SjRN4
+	 M9kEJFw/5UGzSsTvQ/BguxJKOxhE1HwH6/fWzwx7/ZuZZgyK4h7Ocbic3DOorLGx4v
+	 BUMDPmaRCHJheZvwm+hYhOEyEzPdDv0z7nqy9kP4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alper Nebi Yasak <alpernebiyasak@gmail.com>,
-	Brian Norris <briannorris@chromium.org>,
-	Kalle Valo <kvalo@kernel.org>,
+	Chris Wilson <chris@chris-wilson.co.uk>,
+	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+	Mika Kuoppala <mika.kuoppala@linux.intel.com>,
+	Matthew Auld <matthew.william.auld@gmail.com>,
+	Jason Ekstrand <jason.ekstrand@intel.com>,
+	Kenneth Graunke <kenneth@whitecape.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 041/138] wifi: mwifiex: Fix memcpy() field-spanning write warning in mwifiex_config_scan()
-Date: Tue,  3 Dec 2024 15:31:10 +0100
-Message-ID: <20241203141925.130681082@linuxfoundation.org>
+Subject: [PATCH 4.19 042/138] drm/i915/gtt: Enable full-ppgtt by default everywhere
+Date: Tue,  3 Dec 2024 15:31:11 +0100
+Message-ID: <20241203141925.168805464@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203141923.524658091@linuxfoundation.org>
 References: <20241203141923.524658091@linuxfoundation.org>
@@ -52,53 +55,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alper Nebi Yasak <alpernebiyasak@gmail.com>
+From: Chris Wilson <chris@chris-wilson.co.uk>
 
-[ Upstream commit d241a139c2e9f8a479f25c75ebd5391e6a448500 ]
+[ Upstream commit 79556df293b2efbb3ccebb6db02120d62e348b44 ]
 
-Replace one-element array with a flexible-array member in `struct
-mwifiex_ie_types_wildcard_ssid_params` to fix the following warning
-on a MT8173 Chromebook (mt8173-elm-hana):
+We should we have all the kinks worked out and full-ppgtt now works
+reliably on gen7 (Ivybridge, Valleyview/Baytrail and Haswell). If we can
+let userspace have full control over their own ppgtt, it makes softpinning
+far more effective, in turn making GPU dispatch far more efficient by
+virtue of better mm segregation.  On the other hand, switching over to a
+different GTT for every client does incur noticeable overhead, but only
+for very lightweight tasks.
 
-[  356.775250] ------------[ cut here ]------------
-[  356.784543] memcpy: detected field-spanning write (size 6) of single field "wildcard_ssid_tlv->ssid" at drivers/net/wireless/marvell/mwifiex/scan.c:904 (size 1)
-[  356.813403] WARNING: CPU: 3 PID: 742 at drivers/net/wireless/marvell/mwifiex/scan.c:904 mwifiex_scan_networks+0x4fc/0xf28 [mwifiex]
-
-The "(size 6)" above is exactly the length of the SSID of the network
-this device was connected to. The source of the warning looks like:
-
-    ssid_len = user_scan_in->ssid_list[i].ssid_len;
-    [...]
-    memcpy(wildcard_ssid_tlv->ssid,
-           user_scan_in->ssid_list[i].ssid, ssid_len);
-
-There is a #define WILDCARD_SSID_TLV_MAX_SIZE that uses sizeof() on this
-struct, but it already didn't account for the size of the one-element
-array, so it doesn't need to be changed.
-
-Fixes: 5e6e3a92b9a4 ("wireless: mwifiex: initial commit for Marvell mwifiex driver")
-Signed-off-by: Alper Nebi Yasak <alpernebiyasak@gmail.com>
-Acked-by: Brian Norris <briannorris@chromium.org>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://patch.msgid.link/20241007222301.24154-1-alpernebiyasak@gmail.com
+Signed-off-by: Chris Wilson <chris@chris-wilson.co.uk>
+Cc: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Cc: Mika Kuoppala <mika.kuoppala@linux.intel.com>
+Cc: Matthew Auld <matthew.william.auld@gmail.com>
+Reviewed-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Cc: Jason Ekstrand <jason.ekstrand@intel.com>
+Cc: Kenneth Graunke <kenneth@whitecape.org>
+Acked-by: Kenneth Graunke <kenneth@whitecape.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20180717095751.1034-1-chris@chris-wilson.co.uk
+Stable-dep-of: ffcde9e44d3e ("drm: fsl-dcu: enable PIXCLK on LS1021A")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/marvell/mwifiex/fw.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/i915/i915_gem_gtt.c | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/wireless/marvell/mwifiex/fw.h b/drivers/net/wireless/marvell/mwifiex/fw.h
-index bfa482cf464ff..c8bf6e559dc56 100644
---- a/drivers/net/wireless/marvell/mwifiex/fw.h
-+++ b/drivers/net/wireless/marvell/mwifiex/fw.h
-@@ -853,7 +853,7 @@ struct mwifiex_ietypes_chanstats {
- struct mwifiex_ie_types_wildcard_ssid_params {
- 	struct mwifiex_ie_types_header header;
- 	u8 max_ssid_length;
--	u8 ssid[1];
-+	u8 ssid[];
- } __packed;
+diff --git a/drivers/gpu/drm/i915/i915_gem_gtt.c b/drivers/gpu/drm/i915/i915_gem_gtt.c
+index d4c6aa7fbac8d..0b5b45fe0fe78 100644
+--- a/drivers/gpu/drm/i915/i915_gem_gtt.c
++++ b/drivers/gpu/drm/i915/i915_gem_gtt.c
+@@ -180,13 +180,11 @@ int intel_sanitize_enable_ppgtt(struct drm_i915_private *dev_priv,
+ 		return 0;
+ 	}
  
- #define TSF_DATA_SIZE            8
+-	if (HAS_LOGICAL_RING_CONTEXTS(dev_priv)) {
+-		if (has_full_48bit_ppgtt)
+-			return 3;
++	if (has_full_48bit_ppgtt)
++		return 3;
+ 
+-		if (has_full_ppgtt)
+-			return 2;
+-	}
++	if (has_full_ppgtt)
++		return 2;
+ 
+ 	return 1;
+ }
 -- 
 2.43.0
 
