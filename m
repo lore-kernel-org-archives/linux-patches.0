@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15CEB1F76A4;
-	Tue,  3 Dec 2024 15:16:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0DFF2D7BF;
+	Tue,  3 Dec 2024 15:16:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733238993; cv=none; b=Uz5NLH7VKOMDHIQHEY1dZLST8exAOgnavOtXrmGNdSGTnzzq/0WdqOigoF3t0Z90bmbUJtZSQEImWQkeSQpQMaYhg5J2AnY0Qr2lenMWTvtH1nA/U5NCZu+hWT+PExExxpl8aPFc5/8jhMTghWMX7U9yO4DJ11kYyM9e/VkD1Co=
+	t=1733238996; cv=none; b=So8rFCiaTvjJ9+WPFc0OYLPyRWDteMNhLlO4yIQrxPYRUQtfuttwr/2s+AGXS9/zslhyak7cktslz2dWD+z6MrZtSOIVS8wZ8w9Lipnwr6kOI3rwePqO2APhwlO9n8Jllc+MiEaiK4uxXl1Y+WpSSmp2xiIJEtTUWPSbR/BX33g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733238993; c=relaxed/simple;
-	bh=cqxJntvHswYh3fg7COe0tH6BsYOzOl+5QgzX1otzG/E=;
+	s=arc-20240116; t=1733238996; c=relaxed/simple;
+	bh=+wKoZpIq0NiIipHBhms2ZsC6xznCqGFPr0T3aJKQyfc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LegfB7KERrZw9UmZCRkS0vFWgGRM1Q7nYKRHp0KhC8jD9mC/e6aIaRt4JQ/XW+DF3XsdHNKpgor2lfVgLctXX1+emA3WMQnxeQpJgGiJKl4dCn13QAT9Jq6W3W//exHOD/K52bFjEYcCv9tTjB08ZX/Yv6TbosnoI+iN6P07v0s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1r8ptSn3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hGjpiID0FDG6cK79bnUIA/YaN/Ms1LFFzkQxpQQATI7gkDdnYd8tyqYfm01gq+Cy2SpAsGRU9mKxRaO3BwXu/Y+p6cbsla6ylc9ZyvGuYB8DMC1OL9+OWiQoVnyMOQsG97hNMl3OsrB52dEL6WfWdvuWXsMlOxmBzS1tj38zhk8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xARo3wgg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1r8ptSn3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 920A1C4CECF;
-	Tue,  3 Dec 2024 15:16:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xARo3wgg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75CE2C4CECF;
+	Tue,  3 Dec 2024 15:16:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733238993;
-	bh=cqxJntvHswYh3fg7COe0tH6BsYOzOl+5QgzX1otzG/E=;
+	s=korg; t=1733238995;
+	bh=+wKoZpIq0NiIipHBhms2ZsC6xznCqGFPr0T3aJKQyfc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1r8ptSn37Pmb/tqHsz54BgLVvfXifq9+hL1VrG5Eeo/gq0ROq8G7hC1c1LdX0WydN
-	 1n7VQUuxrDEe1rCI5wagECq/EOwhcYNUZEVVpUrtGbJtBNA1jSKxLzh/iPMr/szM7+
-	 nsHehV4hzcPW3THr4W4RBT2CkpmBc4xIe0PyNPDs=
+	b=xARo3wggRhbfIveK5Vxs/awroL3Wgq8uZO/3kcPkV7y1j18YNKADNn48OE+3RkKX1
+	 Dlb1G7Y75UPkjrYGUtGW4VQeDBjp/FBPm0SLRuzZnSbgH93q3+i+Z/pR/mGKvVjH0b
+	 u28Pua7SFtLRI0JGnbRToAS0yYqjK0AOpxS+b9fU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergio Paracuellos <sergio.paracuellos@gmail.com>,
+	Lorenzo Bianconi <lorenzo@kernel.org>,
 	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 467/817] clk: ralink: mtmips: fix clocks probe order in oldest ralink SoCs
-Date: Tue,  3 Dec 2024 15:40:39 +0100
-Message-ID: <20241203144014.102441828@linuxfoundation.org>
+Subject: [PATCH 6.11 468/817] clk: en7523: remove REG_PCIE*_{MEM,MEM_MASK} configuration
+Date: Tue,  3 Dec 2024 15:40:40 +0100
+Message-ID: <20241203144014.140346034@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -51,131 +51,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sergio Paracuellos <sergio.paracuellos@gmail.com>
+From: Lorenzo Bianconi <lorenzo@kernel.org>
 
-[ Upstream commit d34db686a3d74bd564bfce2ada15011c556269fc ]
+[ Upstream commit c31d1cdd7bff1d2c13d435bb9d0c76bfaa332097 ]
 
-Base clocks are the first in being probed and are real dependencies of the
-rest of fixed, factor and peripheral clocks. For old ralink SoCs RT2880,
-RT305x and RT3883 'xtal' must be defined first since in any other case,
-when fixed clocks are probed they are delayed until 'xtal' is probed so the
-following warning appears:
+REG_PCIE*_MEM and REG_PCIE*_MEM_MASK regs (PBUS_CSR memory region) are not
+part of the scu block on the EN7581 SoC and they are used to select the
+PCIE ports on the PBUS, so remove this configuration from the clock driver
+and set these registers in the PCIE host driver instead.
+This patch does not introduce any backward incompatibility since the dts
+for EN7581 SoC is not upstream yet.
 
- WARNING: CPU: 0 PID: 0 at drivers/clk/ralink/clk-mtmips.c:499 rt3883_bus_recalc_rate+0x98/0x138
- Modules linked in:
- CPU: 0 PID: 0 Comm: swapper Not tainted 6.6.43 #0
- Stack : 805e58d0 00000000 00000004 8004f950 00000000 00000004 00000000 00000000
- 80669c54 80830000 80700000 805ae570 80670068 00000001 80669bf8 00000000
- 00000000 00000000 805ae570 80669b38 00000020 804db7dc 00000000 00000000
- 203a6d6d 80669b78 80669e48 70617773 00000000 805ae570 00000000 00000009
- 00000000 00000001 00000004 00000001 00000000 00000000 83fe43b0 00000000
- ...
- Call Trace:
- [<800065d0>] show_stack+0x64/0xf4
- [<804bca14>] dump_stack_lvl+0x38/0x60
- [<800218ac>] __warn+0x94/0xe4
- [<8002195c>] warn_slowpath_fmt+0x60/0x94
- [<80259ff8>] rt3883_bus_recalc_rate+0x98/0x138
- [<80254530>] __clk_register+0x568/0x688
- [<80254838>] of_clk_hw_register+0x18/0x2c
- [<8070b910>] rt2880_clk_of_clk_init_driver+0x18c/0x594
- [<8070b628>] of_clk_init+0x1c0/0x23c
- [<806fc448>] plat_time_init+0x58/0x18c
- [<806fdaf0>] time_init+0x10/0x6c
- [<806f9bc4>] start_kernel+0x458/0x67c
-
- ---[ end trace 0000000000000000 ]---
-
-When this driver was mainlined we could not find any active users of old
-ralink SoCs so we cannot perform any real tests for them. Now, one user
-of a Belkin f9k1109 version 1 device which uses RT3883 SoC appeared and
-reported some issues in openWRT:
-- https://github.com/openwrt/openwrt/issues/16054
-
-Thus, define a 'rt2880_xtal_recalc_rate()' just returning the expected
-frequency 40Mhz and use it along the old ralink SoCs to have a correct
-boot trace with no warnings and a working clock plan from the beggining.
-
-Fixes: 6f3b15586eef ("clk: ralink: add clock and reset driver for MTMIPS SoCs")
-Signed-off-by: Sergio Paracuellos <sergio.paracuellos@gmail.com>
-Link: https://lore.kernel.org/r/20240910044024.120009-3-sergio.paracuellos@gmail.com
+Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
+Link: https://lore.kernel.org/r/20241112-clk-en7581-syscon-v2-2-8ada5e394ae4@kernel.org
 Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Stable-dep-of: f98eded9e9ab ("clk: en7523: fix estimation of fixed rate for EN7581")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/ralink/clk-mtmips.c | 21 +++++++++++++--------
- 1 file changed, 13 insertions(+), 8 deletions(-)
+ drivers/clk/clk-en7523.c | 18 ------------------
+ 1 file changed, 18 deletions(-)
 
-diff --git a/drivers/clk/ralink/clk-mtmips.c b/drivers/clk/ralink/clk-mtmips.c
-index 62f9801ecd3a4..76285fbbdeaa2 100644
---- a/drivers/clk/ralink/clk-mtmips.c
-+++ b/drivers/clk/ralink/clk-mtmips.c
-@@ -263,10 +263,6 @@ static int mtmips_register_pherip_clocks(struct device_node *np,
- 		.rate = _rate		 \
- 	}
- 
--static struct mtmips_clk_fixed rt305x_fixed_clocks[] = {
--	CLK_FIXED("xtal", NULL, 40000000)
--};
--
- static struct mtmips_clk_fixed rt3883_fixed_clocks[] = {
- 	CLK_FIXED("xtal", NULL, 40000000),
- 	CLK_FIXED("periph", "xtal", 40000000)
-@@ -371,6 +367,12 @@ static inline struct mtmips_clk *to_mtmips_clk(struct clk_hw *hw)
- 	return container_of(hw, struct mtmips_clk, hw);
- }
- 
-+static unsigned long rt2880_xtal_recalc_rate(struct clk_hw *hw,
-+					     unsigned long parent_rate)
-+{
-+	return 40000000;
-+}
-+
- static unsigned long rt5350_xtal_recalc_rate(struct clk_hw *hw,
- 					     unsigned long parent_rate)
+diff --git a/drivers/clk/clk-en7523.c b/drivers/clk/clk-en7523.c
+index 22fbea61c3dcc..ec6716844fdcf 100644
+--- a/drivers/clk/clk-en7523.c
++++ b/drivers/clk/clk-en7523.c
+@@ -31,12 +31,6 @@
+ #define   REG_RESET_CONTROL_PCIE1	BIT(27)
+ #define   REG_RESET_CONTROL_PCIE2	BIT(26)
+ /* EN7581 */
+-#define REG_PCIE0_MEM			0x00
+-#define REG_PCIE0_MEM_MASK		0x04
+-#define REG_PCIE1_MEM			0x08
+-#define REG_PCIE1_MEM_MASK		0x0c
+-#define REG_PCIE2_MEM			0x10
+-#define REG_PCIE2_MEM_MASK		0x14
+ #define REG_NP_SCU_PCIC			0x88
+ #define REG_NP_SCU_SSTR			0x9c
+ #define REG_PCIE_XSI0_SEL_MASK		GENMASK(14, 13)
+@@ -415,26 +409,14 @@ static void en7581_pci_disable(struct clk_hw *hw)
+ static int en7581_clk_hw_init(struct platform_device *pdev,
+ 			      void __iomem *np_base)
  {
-@@ -682,10 +684,12 @@ static unsigned long mt76x8_cpu_recalc_rate(struct clk_hw *hw,
+-	void __iomem *pb_base;
+ 	u32 val;
+ 
+-	pb_base = devm_platform_ioremap_resource(pdev, 3);
+-	if (IS_ERR(pb_base))
+-		return PTR_ERR(pb_base);
+-
+ 	val = readl(np_base + REG_NP_SCU_SSTR);
+ 	val &= ~(REG_PCIE_XSI0_SEL_MASK | REG_PCIE_XSI1_SEL_MASK);
+ 	writel(val, np_base + REG_NP_SCU_SSTR);
+ 	val = readl(np_base + REG_NP_SCU_PCIC);
+ 	writel(val | 3, np_base + REG_NP_SCU_PCIC);
+ 
+-	writel(0x20000000, pb_base + REG_PCIE0_MEM);
+-	writel(0xfc000000, pb_base + REG_PCIE0_MEM_MASK);
+-	writel(0x24000000, pb_base + REG_PCIE1_MEM);
+-	writel(0xfc000000, pb_base + REG_PCIE1_MEM_MASK);
+-	writel(0x28000000, pb_base + REG_PCIE2_MEM);
+-	writel(0xfc000000, pb_base + REG_PCIE2_MEM_MASK);
+-
+ 	return 0;
  }
  
- static struct mtmips_clk rt2880_clks_base[] = {
-+	{ CLK_BASE("xtal", NULL, rt2880_xtal_recalc_rate) },
- 	{ CLK_BASE("cpu", "xtal", rt2880_cpu_recalc_rate) }
- };
- 
- static struct mtmips_clk rt305x_clks_base[] = {
-+	{ CLK_BASE("xtal", NULL, rt2880_xtal_recalc_rate) },
- 	{ CLK_BASE("cpu", "xtal", rt305x_cpu_recalc_rate) }
- };
- 
-@@ -695,6 +699,7 @@ static struct mtmips_clk rt3352_clks_base[] = {
- };
- 
- static struct mtmips_clk rt3883_clks_base[] = {
-+	{ CLK_BASE("xtal", NULL, rt2880_xtal_recalc_rate) },
- 	{ CLK_BASE("cpu", "xtal", rt3883_cpu_recalc_rate) },
- 	{ CLK_BASE("bus", "cpu", rt3883_bus_recalc_rate) }
- };
-@@ -751,8 +756,8 @@ static int mtmips_register_clocks(struct device_node *np,
- static const struct mtmips_clk_data rt2880_clk_data = {
- 	.clk_base = rt2880_clks_base,
- 	.num_clk_base = ARRAY_SIZE(rt2880_clks_base),
--	.clk_fixed = rt305x_fixed_clocks,
--	.num_clk_fixed = ARRAY_SIZE(rt305x_fixed_clocks),
-+	.clk_fixed = NULL,
-+	.num_clk_fixed = 0,
- 	.clk_factor = rt2880_factor_clocks,
- 	.num_clk_factor = ARRAY_SIZE(rt2880_factor_clocks),
- 	.clk_periph = rt2880_pherip_clks,
-@@ -762,8 +767,8 @@ static const struct mtmips_clk_data rt2880_clk_data = {
- static const struct mtmips_clk_data rt305x_clk_data = {
- 	.clk_base = rt305x_clks_base,
- 	.num_clk_base = ARRAY_SIZE(rt305x_clks_base),
--	.clk_fixed = rt305x_fixed_clocks,
--	.num_clk_fixed = ARRAY_SIZE(rt305x_fixed_clocks),
-+	.clk_fixed = NULL,
-+	.num_clk_fixed = 0,
- 	.clk_factor = rt305x_factor_clocks,
- 	.num_clk_factor = ARRAY_SIZE(rt305x_factor_clocks),
- 	.clk_periph = rt305x_pherip_clks,
 -- 
 2.43.0
 
