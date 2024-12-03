@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71ABF1DFD91;
-	Tue,  3 Dec 2024 15:32:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F6401F76D2;
+	Tue,  3 Dec 2024 15:32:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733239940; cv=none; b=RDmbtD4LUggtYyiIsLJdeZXSUkQ4h+wmD9yzPYVvAG6VS2HIk5x3gve6BsOI3qwPY12xozfLLltXbvWGGXbfkA8PfAanW8Lz15lm9jSM4/1OPObdQuP983LvJEX/uD2TkLnNJzyRBOFIlayJdFN0jhPQlArB+Hy5HBeexH6asEw=
+	t=1733239943; cv=none; b=XNuGl3S/ShuDZ1Qv1sKVbkH+B0fdLdmO98VAzuk8IqfjX4pE22ouNswydJVp92g+DreVsoSaStmI6XBRVirgzaoz4NWzliHEF5Fwd+2QCmonatOjjRa92wkaeiFb1JlylB1XAn2jeJGCzwpqA6y6Xn8edDj8Z+kJlOYnuINw+0s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733239940; c=relaxed/simple;
-	bh=bLFi9niiZ796hqo8zl50pEqBFEKr3clwxj7YeMvK45E=;
+	s=arc-20240116; t=1733239943; c=relaxed/simple;
+	bh=9Hize2eSJnfn/d46YI+fxUcc148VadctsKOheqWIRTc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PdZIlH6wBN6/eMX7faz0S9TVFXWNptKE/+DDNcA9ssEIMKBSF7vaJkO+wIJJfBQtt0zAPb+lhNp5tVaKPoLDDgY0nmaJ0BhrEeWSse5FydqZtasKpRqH4j0LED041LL/rkyPv8fA61wCR4z3y4vXcbFQCfXWkDAGix7G71vXnaM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q+JEYRzi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ne1cg1Usfj035nEKQTWvgi+TZEHYi9Gtj1aoML63UakXiQT1I5+swrUp/yZwJYxWFe/mHfRj3ajmzKkGhSTRxkPSSQDJYkuR6mORKzLnl/Eb16I+oEOxnR/PR22Nb/x1zbDeMHToOQ5QS87APl9Cf0/4yYxtNPRp28avPaPCMzI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VYlKil8l; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q+JEYRzi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8FE4C4CECF;
-	Tue,  3 Dec 2024 15:32:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VYlKil8l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89C68C4CED8;
+	Tue,  3 Dec 2024 15:32:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733239940;
-	bh=bLFi9niiZ796hqo8zl50pEqBFEKr3clwxj7YeMvK45E=;
+	s=korg; t=1733239942;
+	bh=9Hize2eSJnfn/d46YI+fxUcc148VadctsKOheqWIRTc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q+JEYRziUQ8+xiEKuIn6UoeYIXky5Xdl9zzaSp3OAEOiGxnjNK2cRg6jB2SqeCatz
-	 lV0vShjJfqmTVWsfqt/uMViyM2jfp125TwfToulhEysj6Cpil9qFa1Gekmlrj31RR0
-	 ncNreTwdsBjNnpOfJLEO8/R0l3iYC92CSpM9XWj0=
+	b=VYlKil8le02o8XcvNn/JxcXD8nBW7RHnNwYY6aLYCodhOXdKirjmjGW9smQ70PERY
+	 uUjkWYAfNHLtUVaeTO/RaGopfRS7pwMSMGtvCmYqYQkhnjiPAX77ZJWoCATSfsPYPF
+	 J/+QJcn4en6AKa0lIwsYDZsv/6b8jblF9aWpjaQ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Alex Zenla <alex@edera.dev>,
+	Alexander Merritt <alexander@edera.dev>,
+	Ariadne Conill <ariadne@ariadne.space>,
+	Juergen Gross <jgross@suse.com>,
+	Dominique Martinet <asmadeus@codewreck.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 779/817] rtc: rzn1: fix BCD to rtc_time conversion errors
-Date: Tue,  3 Dec 2024 15:45:51 +0100
-Message-ID: <20241203144026.420961629@linuxfoundation.org>
+Subject: [PATCH 6.11 788/817] 9p/xen: fix init sequence
+Date: Tue,  3 Dec 2024 15:46:00 +0100
+Message-ID: <20241203144026.771450313@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -52,50 +54,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wolfram Sang <wsa+renesas@sang-engineering.com>
+From: Alex Zenla <alex@edera.dev>
 
-[ Upstream commit 55727188dfa3572aecd946e58fab9e4a64f06894 ]
+[ Upstream commit 7ef3ae82a6ebbf4750967d1ce43bcdb7e44ff74b ]
 
-tm_mon describes months from 0 to 11, but the register contains BCD from
-1 to 12. tm_year contains years since 1900, but the BCD contains 20XX.
-Apply the offsets when converting these numbers.
+Large amount of mount hangs observed during hotplugging of 9pfs devices. The
+9pfs Xen driver attempts to initialize itself more than once, causing the
+frontend and backend to disagree: the backend listens on a channel that the
+frontend does not send on, resulting in stalled processing.
 
-Fixes: deeb4b5393e1 ("rtc: rzn1: Add new RTC driver")
-Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://lore.kernel.org/r/20241113113032.27409-1-wsa+renesas@sang-engineering.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Only allow initialization of 9p frontend once.
+
+Fixes: c15fe55d14b3b ("9p/xen: fix connection sequence")
+Signed-off-by: Alex Zenla <alex@edera.dev>
+Signed-off-by: Alexander Merritt <alexander@edera.dev>
+Signed-off-by: Ariadne Conill <ariadne@ariadne.space>
+Reviewed-by: Juergen Gross <jgross@suse.com>
+Message-ID: <20241119211633.38321-1-alexander@edera.dev>
+Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-rzn1.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ net/9p/trans_xen.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/rtc/rtc-rzn1.c b/drivers/rtc/rtc-rzn1.c
-index 56ebbd4d04814..8570c8e63d70c 100644
---- a/drivers/rtc/rtc-rzn1.c
-+++ b/drivers/rtc/rtc-rzn1.c
-@@ -111,8 +111,8 @@ static int rzn1_rtc_read_time(struct device *dev, struct rtc_time *tm)
- 	tm->tm_hour = bcd2bin(tm->tm_hour);
- 	tm->tm_wday = bcd2bin(tm->tm_wday);
- 	tm->tm_mday = bcd2bin(tm->tm_mday);
--	tm->tm_mon = bcd2bin(tm->tm_mon);
--	tm->tm_year = bcd2bin(tm->tm_year);
-+	tm->tm_mon = bcd2bin(tm->tm_mon) - 1;
-+	tm->tm_year = bcd2bin(tm->tm_year) + 100;
+diff --git a/net/9p/trans_xen.c b/net/9p/trans_xen.c
+index dfdbe1ca53387..0304e8a1616d8 100644
+--- a/net/9p/trans_xen.c
++++ b/net/9p/trans_xen.c
+@@ -465,6 +465,7 @@ static int xen_9pfs_front_init(struct xenbus_device *dev)
+ 		goto error;
+ 	}
  
++	xenbus_switch_state(dev, XenbusStateInitialised);
  	return 0;
- }
-@@ -128,8 +128,8 @@ static int rzn1_rtc_set_time(struct device *dev, struct rtc_time *tm)
- 	tm->tm_hour = bin2bcd(tm->tm_hour);
- 	tm->tm_wday = bin2bcd(rzn1_rtc_tm_to_wday(tm));
- 	tm->tm_mday = bin2bcd(tm->tm_mday);
--	tm->tm_mon = bin2bcd(tm->tm_mon);
--	tm->tm_year = bin2bcd(tm->tm_year);
-+	tm->tm_mon = bin2bcd(tm->tm_mon + 1);
-+	tm->tm_year = bin2bcd(tm->tm_year - 100);
  
- 	val = readl(rtc->base + RZN1_RTC_CTL2);
- 	if (!(val & RZN1_RTC_CTL2_STOPPED)) {
+  error_xenbus:
+@@ -512,8 +513,10 @@ static void xen_9pfs_front_changed(struct xenbus_device *dev,
+ 		break;
+ 
+ 	case XenbusStateInitWait:
+-		if (!xen_9pfs_front_init(dev))
+-			xenbus_switch_state(dev, XenbusStateInitialised);
++		if (dev->state != XenbusStateInitialising)
++			break;
++
++		xen_9pfs_front_init(dev);
+ 		break;
+ 
+ 	case XenbusStateConnected:
 -- 
 2.43.0
 
