@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F010E14A088;
-	Tue,  3 Dec 2024 16:03:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC2A314A088;
+	Tue,  3 Dec 2024 16:04:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733241840; cv=none; b=CYDpCWAe6h1/b+PdPpiGVQ1GP+BEaQl3LNqYtlM+zyr877ONZxnnzIpue0n011EsJDFmaiIXNvoMOOsQEMwGqN8Y7z7ZUQ5FToJs/5tMAW2LZ1IytJtiYEncEhRIrwmkhhJMzf0YwiR877qz7XdrwjEvJqSe9OXaEW0WN/7cThc=
+	t=1733241843; cv=none; b=ggAvU72EpHv1I2G8ZK57Xq8mcu+kUW/088g7yZ0iPhtszARmAhpT6eNubq1Ki6T2p3LgQgIqa9aQO8Os61F+h9uI9vrIcrtwJ9wjLlaN7MbwEWGzBYqZv75Rr/KlJSLxji1WjXnpuAUF9FdfXA5xos3UDf8Gvkph7MXSk0Cbsw4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733241840; c=relaxed/simple;
-	bh=SzIDSIb7RmP229wG289IoXZ2fkN9qxqdL3/iLNru0vw=;
+	s=arc-20240116; t=1733241843; c=relaxed/simple;
+	bh=nyLOVgkDbbYxljtSMGz6dbag1MgXm3dcjURmpgIKP9s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IkXiX6T6KXUg3RS5q3qcSmoh6NVsD3qDUywiHwHHC2u/lFtrtaaM9tNMKolJzlBZwtWYccRCF2STgozORWEAj8gZ2FKbOzU5xnjCL/7AS1OoCJv/iJXuoKKWgxX50XJF/BzU9zyVc51mT0Ar7fhdjowEJEh1l9iyQh8Ok61r370=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0rjof7PK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DsQN3t3h3l5nFFs8tXhIFzBV3nXAAFhZoltWCdo8OgSLwyKAgcgB2XunfqkMKm5WJn2Rpa8+tBkBfJSrbUbBXvxwIp6gDPu9gf1sJrFoSohmcZWSjTWj+smSrN+NfkOROwaNCuxxc8ElBUJbSwYVnfDv1syKmaEdHglG1ynPT0U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HOYT/V04; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0rjof7PK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F44FC4CED8;
-	Tue,  3 Dec 2024 16:03:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HOYT/V04"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB93BC4CECF;
+	Tue,  3 Dec 2024 16:04:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733241839;
-	bh=SzIDSIb7RmP229wG289IoXZ2fkN9qxqdL3/iLNru0vw=;
+	s=korg; t=1733241843;
+	bh=nyLOVgkDbbYxljtSMGz6dbag1MgXm3dcjURmpgIKP9s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0rjof7PKvW2LnzRyESqsk09rQIe6owI4MbtslPXDu4MBEJF08fgjt6FY20Zd66Zgw
-	 ircFDU1PYE4wzXgeKe2hgQZN1eYW1KBm/QXk4otIwMC0HKkE8zyABMhOfoOHZ4xTdq
-	 q2T3AfTeg/jlrKiq2pw8KU1PThOL0UXkERjmDsWo=
+	b=HOYT/V04PSF4CpVQohxcI2Jc+j1sqRNtmRVtn6Ll4mhO8KpRCyJ/9JF+xVHblGMzL
+	 CGWpZB5Ab2Jno2sUD6mgfrFtrhktDvlc/EHmeuO1X+NoTYCn+ebqJWo8jQG+wmxFUy
+	 OMuw+L54IGIvcBqvl4oux7BqC5SyZsc3dQw4UQtE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hao Ge <gehao@kylinos.cn>,
-	Namhyung Kim <namhyung@kernel.org>,
-	hao.ge@linux.dev,
-	bpf@vger.kernel.org,
+	Murad Masimov <m.masimov@maxima.ru>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 532/826] perf bpf-filter: Return -ENOMEM directly when pfi allocation fails
-Date: Tue,  3 Dec 2024 15:44:19 +0100
-Message-ID: <20241203144804.507539868@linuxfoundation.org>
+Subject: [PATCH 6.12 533/826] hwmon: (tps23861) Fix reporting of negative temperatures
+Date: Tue,  3 Dec 2024 15:44:20 +0100
+Message-ID: <20241203144804.546001191@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -53,38 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hao Ge <gehao@kylinos.cn>
+From: Murad Masimov <m.masimov@maxima.ru>
 
-[ Upstream commit bd077a53ad87cb111632e564cdfe8dfbe96786de ]
+[ Upstream commit de2bf507fabba9c0c678cf5ed54beb546f5ca29a ]
 
-Directly return -ENOMEM when pfi allocation fails,
-instead of performing other operations on pfi.
+Negative temperatures are reported as large positive temperatures
+due to missing sign extension from unsigned int to long. Cast unsigned
+raw register values to signed before performing the calculations
+to fix the problem.
 
-Fixes: 0fe2b18ddc40 ("perf bpf-filter: Support multiple events properly")
-Signed-off-by: Hao Ge <gehao@kylinos.cn>
-Acked-by: Namhyung Kim <namhyung@kernel.org>
-Cc: hao.ge@linux.dev
-Cc: bpf@vger.kernel.org
-Link: https://lore.kernel.org/r/20241113030537.26732-1-hao.ge@linux.dev
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: fff7b8ab2255 ("hwmon: add Texas Instruments TPS23861 driver")
+Signed-off-by: Murad Masimov <m.masimov@maxima.ru>
+Message-ID: <20241121173604.2021-1-m.masimov@maxima.ru>
+[groeck: Updated subject and description]
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/bpf-filter.c | 2 +-
+ drivers/hwmon/tps23861.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/perf/util/bpf-filter.c b/tools/perf/util/bpf-filter.c
-index e87b6789eb9ef..a4fdf6911ec1c 100644
---- a/tools/perf/util/bpf-filter.c
-+++ b/tools/perf/util/bpf-filter.c
-@@ -375,7 +375,7 @@ static int create_idx_hash(struct evsel *evsel, struct perf_bpf_filter_entry *en
- 	pfi = zalloc(sizeof(*pfi));
- 	if (pfi == NULL) {
- 		pr_err("Cannot save pinned filter index\n");
--		goto err;
-+		return -ENOMEM;
- 	}
+diff --git a/drivers/hwmon/tps23861.c b/drivers/hwmon/tps23861.c
+index dfcfb09d9f3cd..80fb03f30c302 100644
+--- a/drivers/hwmon/tps23861.c
++++ b/drivers/hwmon/tps23861.c
+@@ -132,7 +132,7 @@ static int tps23861_read_temp(struct tps23861_data *data, long *val)
+ 	if (err < 0)
+ 		return err;
  
- 	pfi->evsel = evsel;
+-	*val = (regval * TEMPERATURE_LSB) - 20000;
++	*val = ((long)regval * TEMPERATURE_LSB) - 20000;
+ 
+ 	return 0;
+ }
 -- 
 2.43.0
 
