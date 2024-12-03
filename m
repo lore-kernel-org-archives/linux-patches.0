@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7D001F4704;
-	Tue,  3 Dec 2024 14:34:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1033D1F666F;
+	Tue,  3 Dec 2024 14:34:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733236475; cv=none; b=uU/YAELDGYrvMoXMTcYKCSSbE+S7ZkjntYsxeBPnR/qqWTEBK3Yc1uqi0lkp6IFwHne7UXsAgKzUw8vbH5Vxa/0jSJepQINd1CKLNlG0V5fvuuKQYcNJZ70zVMebL+dwsMVQk77a40RqndqI3agSzUKrZP/BGhRnJLO6kYB6oos=
+	t=1733236479; cv=none; b=U3blMDczCaLw8WFwhba72FnqgVYt5KZYRXSFqrkBTQSJx2TC//UOHXF0ZFBB5o3NNKOBIM9JaBcYse2csBHDxk18Ygc7Ip+2tbau9efWHXKVF1ME9HHHlR4v2pY+xmEMvE1AD+rBkOMJOJOKB/QvUqk+CfpLrbztC9Yr4Bc3Eas=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733236475; c=relaxed/simple;
-	bh=dJXwlaMXF7GbIvxmuryaf7sGgNOqlk6z6UiXyA0IdNE=;
+	s=arc-20240116; t=1733236479; c=relaxed/simple;
+	bh=VBkkYDm1aRzmF1dSwgKuphZxxLqM0mtu5UchqJD/92U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GraeHw95+moQfk+wcmOwudQydfJKK2kHIjEsq0hM4FjbEjP7uUQUy9AIL103h/wW3hk3Dso3QClX6UX+s7BEXB/r2ut6oibubIgFi8YbiqBR2IiDwNYDM1+5USWOrZA3hbIy5toeGpKAYN+b7V5kSNmo5esgCLPHsZLTjkiAGTQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S0F5PRaT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IguYSfPy/EmD5mzT/VdoU5kJfmlMnPGtxgE52JTjdPv9M5KPaiqH9ei6U8wTi+u0SIGa6ARpCCoxg83wXGVl1griYUOrdKoF1FzmY5h2eYpufoNN8kcshztRYpozdNiTPYMEFGZSKXvPkjSQdVU1xu6dBropvYcJV0IuXtvsraE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OedCTkEC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S0F5PRaT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 258A8C4CECF;
-	Tue,  3 Dec 2024 14:34:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OedCTkEC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 751EFC4CECF;
+	Tue,  3 Dec 2024 14:34:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733236475;
-	bh=dJXwlaMXF7GbIvxmuryaf7sGgNOqlk6z6UiXyA0IdNE=;
+	s=korg; t=1733236478;
+	bh=VBkkYDm1aRzmF1dSwgKuphZxxLqM0mtu5UchqJD/92U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S0F5PRaTHwIB241Snf2DEoF810FT09aJLrU71+DYoyo8kqVVxI6pfGUcxojOWvLiI
-	 XLoEROzI3LjyX2WdoifLbmKeioR06UIBXXOtSVjpGtpB3rYqFJb9ugv8WhXVqFsEvp
-	 vgyn7owmlz6CdoU65fiaenS5rmMqkie/KqEcQWHk=
+	b=OedCTkECGyyaT85+xa3779hRktNJU70p2PwCiMqN/TvGImUxFFQ7kYTpV/LG33R70
+	 21kqut7WOfC8RhSvLB3hsKB9sgH5HObKVaVZUzD88B4j6EvfuWoInfGSVOPnhHN6HI
+	 90y4XUKZYW7B4pNStxNhx2bfnayHmwWx0ojUAdoA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	Tejun Heo <tj@kernel.org>,
-	Ubisectech Sirius <bugreport@valiantsec.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 4.19 005/138] nilfs2: fix null-ptr-deref in block_dirty_buffer tracepoint
-Date: Tue,  3 Dec 2024 15:30:34 +0100
-Message-ID: <20241203141923.741863321@linuxfoundation.org>
+	Sam Protsenko <semen.protsenko@linaro.org>,
+	Aurelien Jarno <aurelien@aurel32.net>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 4.19 006/138] Revert "mmc: dw_mmc: Fix IDMAC operation with pages bigger than 4K"
+Date: Tue,  3 Dec 2024 15:30:35 +0100
+Message-ID: <20241203141923.779882913@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203141923.524658091@linuxfoundation.org>
 References: <20241203141923.524658091@linuxfoundation.org>
@@ -52,100 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+From: Aurelien Jarno <aurelien@aurel32.net>
 
-commit 2026559a6c4ce34db117d2db8f710fe2a9420d5a upstream.
+commit 1635e407a4a64d08a8517ac59ca14ad4fc785e75 upstream.
 
-When using the "block:block_dirty_buffer" tracepoint, mark_buffer_dirty()
-may cause a NULL pointer dereference, or a general protection fault when
-KASAN is enabled.
+The commit 8396c793ffdf ("mmc: dw_mmc: Fix IDMAC operation with pages
+bigger than 4K") increased the max_req_size, even for 4K pages, causing
+various issues:
+- Panic booting the kernel/rootfs from an SD card on Rockchip RK3566
+- Panic booting the kernel/rootfs from an SD card on StarFive JH7100
+- "swiotlb buffer is full" and data corruption on StarFive JH7110
 
-This happens because, since the tracepoint was added in
-mark_buffer_dirty(), it references the dev_t member bh->b_bdev->bd_dev
-regardless of whether the buffer head has a pointer to a block_device
-structure.
+At this stage no fix have been found, so it's probably better to just
+revert the change.
 
-In the current implementation, nilfs_grab_buffer(), which grabs a buffer
-to read (or create) a block of metadata, including b-tree node blocks,
-does not set the block device, but instead does so only if the buffer is
-not in the "uptodate" state for each of its caller block reading
-functions.  However, if the uptodate flag is set on a folio/page, and the
-buffer heads are detached from it by try_to_free_buffers(), and new buffer
-heads are then attached by create_empty_buffers(), the uptodate flag may
-be restored to each buffer without the block device being set to
-bh->b_bdev, and mark_buffer_dirty() may be called later in that state,
-resulting in the bug mentioned above.
+This reverts commit 8396c793ffdf28bb8aee7cfe0891080f8cab7890.
 
-Fix this issue by making nilfs_grab_buffer() always set the block device
-of the super block structure to the buffer head, regardless of the state
-of the buffer's uptodate flag.
-
-Link: https://lkml.kernel.org/r/20241106160811.3316-3-konishi.ryusuke@gmail.com
-Fixes: 5305cb830834 ("block: add block_{touch|dirty}_buffer tracepoint")
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Cc: Tejun Heo <tj@kernel.org>
-Cc: Ubisectech Sirius <bugreport@valiantsec.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: stable@vger.kernel.org
+Cc: Sam Protsenko <semen.protsenko@linaro.org>
+Fixes: 8396c793ffdf ("mmc: dw_mmc: Fix IDMAC operation with pages bigger than 4K")
+Closes: https://lore.kernel.org/linux-mmc/614692b4-1dbe-31b8-a34d-cb6db1909bb7@w6rz.net/
+Closes: https://lore.kernel.org/linux-mmc/CAC8uq=Ppnmv98mpa1CrWLawWoPnu5abtU69v-=G-P7ysATQ2Pw@mail.gmail.com/
+Signed-off-by: Aurelien Jarno <aurelien@aurel32.net>
+Message-ID: <20241110114700.622372-1-aurelien@aurel32.net>
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nilfs2/btnode.c  |    2 --
- fs/nilfs2/gcinode.c |    4 +---
- fs/nilfs2/mdt.c     |    1 -
- fs/nilfs2/page.c    |    1 +
- 4 files changed, 2 insertions(+), 6 deletions(-)
+ drivers/mmc/host/dw_mmc.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/nilfs2/btnode.c
-+++ b/fs/nilfs2/btnode.c
-@@ -68,7 +68,6 @@ nilfs_btnode_create_block(struct address
- 		goto failed;
- 	}
- 	memset(bh->b_data, 0, i_blocksize(inode));
--	bh->b_bdev = inode->i_sb->s_bdev;
- 	bh->b_blocknr = blocknr;
- 	set_buffer_mapped(bh);
- 	set_buffer_uptodate(bh);
-@@ -133,7 +132,6 @@ int nilfs_btnode_submit_block(struct add
- 		goto found;
- 	}
- 	set_buffer_mapped(bh);
--	bh->b_bdev = inode->i_sb->s_bdev;
- 	bh->b_blocknr = pblocknr; /* set block address for read */
- 	bh->b_end_io = end_buffer_read_sync;
- 	get_bh(bh);
---- a/fs/nilfs2/gcinode.c
-+++ b/fs/nilfs2/gcinode.c
-@@ -83,10 +83,8 @@ int nilfs_gccache_submit_read_data(struc
- 		goto out;
- 	}
- 
--	if (!buffer_mapped(bh)) {
--		bh->b_bdev = inode->i_sb->s_bdev;
-+	if (!buffer_mapped(bh))
- 		set_buffer_mapped(bh);
--	}
- 	bh->b_blocknr = pbn;
- 	bh->b_end_io = end_buffer_read_sync;
- 	get_bh(bh);
---- a/fs/nilfs2/mdt.c
-+++ b/fs/nilfs2/mdt.c
-@@ -89,7 +89,6 @@ static int nilfs_mdt_create_block(struct
- 	if (buffer_uptodate(bh))
- 		goto failed_bh;
- 
--	bh->b_bdev = sb->s_bdev;
- 	err = nilfs_mdt_insert_new_block(inode, block, bh, init_block);
- 	if (likely(!err)) {
- 		get_bh(bh);
---- a/fs/nilfs2/page.c
-+++ b/fs/nilfs2/page.c
-@@ -63,6 +63,7 @@ struct buffer_head *nilfs_grab_buffer(st
- 		put_page(page);
- 		return NULL;
- 	}
-+	bh->b_bdev = inode->i_sb->s_bdev;
- 	return bh;
- }
- 
+--- a/drivers/mmc/host/dw_mmc.c
++++ b/drivers/mmc/host/dw_mmc.c
+@@ -2857,8 +2857,8 @@ static int dw_mci_init_slot(struct dw_mc
+ 	if (host->use_dma == TRANS_MODE_IDMAC) {
+ 		mmc->max_segs = host->ring_size;
+ 		mmc->max_blk_size = 65535;
+-		mmc->max_req_size = DW_MCI_DESC_DATA_LENGTH * host->ring_size;
+-		mmc->max_seg_size = mmc->max_req_size;
++		mmc->max_seg_size = 0x1000;
++		mmc->max_req_size = mmc->max_seg_size * host->ring_size;
+ 		mmc->max_blk_count = mmc->max_req_size / 512;
+ 	} else if (host->use_dma == TRANS_MODE_EDMAC) {
+ 		mmc->max_segs = 64;
 
 
