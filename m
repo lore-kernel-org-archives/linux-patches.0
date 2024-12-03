@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04A6D1F8925;
-	Tue,  3 Dec 2024 15:45:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A9761E5711;
+	Tue,  3 Dec 2024 15:45:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733240720; cv=none; b=lz23bdi9/SE1rvN4yrrWtwpxhNI1RBZuTYBxY/HFtQBxHqrIw/y9nT/ONhk3SB7Gc2V/URtkJuov2qnVak/0UkmjOP4WGu10bKxkyGalgJv0EH33k8KNqHBSa/ElbDYgE6NB9yhAgMMSO2uw4NZjnspcVdDA27l32YzlTyCeeTA=
+	t=1733240723; cv=none; b=WZcXUCtEReptKaj/YuDCGT01TpZbP2MrOw0PZRNzR/pxdArirVCnOQxDSMmg2sxN0xVpGar+VrDxKnMdR6CsR8bENVPmZyAPIFmhCjijF7dRlQsQv2NBsPAWSd/elSi4D7vLry8wYOG07KMJgpw+ax/7+CccVJ0WITJCeSJFzQo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733240720; c=relaxed/simple;
-	bh=czYKVQGEpX79SOQIpFhJumVF3S1i7bGmhUaoUD7RVnM=;
+	s=arc-20240116; t=1733240723; c=relaxed/simple;
+	bh=z4ETVYUTa6lNwZ39kk86YuNs0/S9juK4KXfcsEOfO8A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=te8ZSTIZRBZArCuFPX5eWs05K742DgdnAcP2/d1JyCr0lrDvferyOtNySkeMwD6efptw4BQbg4PlIyA+4ZNGs2wteD6cX/F4aU8LdsuUMulXr+2D3dba6aWe6Iyi0TJv6XOsWwADY1rywL2AX4i1320HlloWRJscG4eBG5WItjA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vnPUOhFM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fvK/1WCrKA2LnDI+kz+o7+5H5vMvp0lBFel2u2aF9/aGmjf2QyyQ6+zeenZt1gTm36sS9lpiAQl1m0xp9Xs9fgoH3IlsNTuxYaB4oVM1kz28xnksU6Y02dtWYkjrh4L7eg7JJgDzrqcQUrEY48DQN23NLZ+lQ3kFt6/XB5CJ2OQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kWQiyeAo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vnPUOhFM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68D3DC4CECF;
-	Tue,  3 Dec 2024 15:45:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kWQiyeAo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4F5CC4CECF;
+	Tue,  3 Dec 2024 15:45:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733240719;
-	bh=czYKVQGEpX79SOQIpFhJumVF3S1i7bGmhUaoUD7RVnM=;
+	s=korg; t=1733240723;
+	bh=z4ETVYUTa6lNwZ39kk86YuNs0/S9juK4KXfcsEOfO8A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vnPUOhFM5KZ0QQ6LwDeUVI6Jv61+4/x06yfT6BxoWrp7cO74fyZKS9pJhxNCDfFvm
-	 UjrQNckN1zk28qgUGu+bnIqhkaIHFqZ1rtUMHpm8N4Zg/DsqPRR0ea7ZHrxQfhKKR4
-	 frpdLxnqaKSFJhJRIFtLM4T22+X9R4PbkCd2rrgI=
+	b=kWQiyeAoiO0f6RQUpmsE99YVjObat3my+NYkMAPNEsbvwljIywKE0nGcOKA6DyKkQ
+	 jxDy5cyfXFkZQFK34UleOiJhgJfRG2BIMj2OnIIJI9vMo6GelCwsaDOqEy2po9/yLd
+	 2jI3d6yrFJmVV9jjJv4kjHTvuRbCV+Fmzy/bLSDs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Douglas Anderson <dianders@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 217/826] drm/bridge: anx7625: Drop EDID cache on bridge power off
-Date: Tue,  3 Dec 2024 15:39:04 +0100
-Message-ID: <20241203144752.205769882@linuxfoundation.org>
+Subject: [PATCH 6.12 218/826] drm/bridge: it6505: Drop EDID cache on bridge power off
+Date: Tue,  3 Dec 2024 15:39:05 +0100
+Message-ID: <20241203144752.244515371@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -54,7 +54,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Pin-yen Lin <treapking@chromium.org>
 
-[ Upstream commit 00ae002116a14c2e6a342c4c9ae080cdbb9b4b21 ]
+[ Upstream commit 574c558ddb68591c9a4b7a95e45e935ab22c0fc6 ]
 
 The bridge might miss the display change events when it's powered off.
 This happens when a user changes the external monitor when the system
@@ -65,30 +65,30 @@ when there is no EDID read after it is powered on.
 
 Drop the cache to force an EDID read after system resume to fix this.
 
-Fixes: 8bdfc5dae4e3 ("drm/bridge: anx7625: Add anx7625 MIPI DSI/DPI to DP")
+Fixes: 11feaef69d0c ("drm/bridge: it6505: Add caching for EDID")
 Signed-off-by: Pin-yen Lin <treapking@chromium.org>
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Reviewed-by: Douglas Anderson <dianders@chromium.org>
 Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240926092931.3870342-2-treapking@chromium.org
+Link: https://patchwork.freedesktop.org/patch/msgid/20240926092931.3870342-3-treapking@chromium.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/analogix/anx7625.c | 2 ++
+ drivers/gpu/drm/bridge/ite-it6505.c | 2 ++
  1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/bridge/analogix/anx7625.c b/drivers/gpu/drm/bridge/analogix/anx7625.c
-index a2e9bb485c366..a2675b121fe44 100644
---- a/drivers/gpu/drm/bridge/analogix/anx7625.c
-+++ b/drivers/gpu/drm/bridge/analogix/anx7625.c
-@@ -2551,6 +2551,8 @@ static int __maybe_unused anx7625_runtime_pm_suspend(struct device *dev)
- 	mutex_lock(&ctx->lock);
+diff --git a/drivers/gpu/drm/bridge/ite-it6505.c b/drivers/gpu/drm/bridge/ite-it6505.c
+index 87b8545fccc0a..e3a9832c742cb 100644
+--- a/drivers/gpu/drm/bridge/ite-it6505.c
++++ b/drivers/gpu/drm/bridge/ite-it6505.c
+@@ -3107,6 +3107,8 @@ static __maybe_unused int it6505_bridge_suspend(struct device *dev)
+ {
+ 	struct it6505 *it6505 = dev_get_drvdata(dev);
  
- 	anx7625_stop_dp_work(ctx);
-+	if (!ctx->pdata.panel_bridge)
-+		anx7625_remove_edid(ctx);
- 	anx7625_power_standby(ctx);
++	it6505_remove_edid(it6505);
++
+ 	return it6505_poweroff(it6505);
+ }
  
- 	mutex_unlock(&ctx->lock);
 -- 
 2.43.0
 
