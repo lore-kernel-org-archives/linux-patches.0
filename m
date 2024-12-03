@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AA261E766E;
-	Tue,  3 Dec 2024 16:07:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 581BD1E766E;
+	Tue,  3 Dec 2024 16:07:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733242073; cv=none; b=G0JKkzeiZwpfFex5ZeJRO6XsJqTVnAnmb2zsamsiHIAp50rMVdRHyoKgwdHyrO3tYgrVBixoRE8tv6kIf+aqY1dRoiOMeDLmT4ow6U7SxQIC4h8Ura+9ZGXZnGD4rRV3SZ2vjXQn+yxFSVPg/YU7L0jQ17/xD9+xlsHJstG4lBI=
+	t=1733242076; cv=none; b=egabaEvk1gVutf4YhhezAeFhln37QpZ46278wiBf4ZefLm1M/Ep3W3RGk3qsNCOYj3dvg0SLfkI+pDnQfndcFfWwa30G9ZFJgSdW+fhDOrx6qHsa6s1RXvlRHzKovRPKr2P1WJXToBN3bUfXvZbRLIshz3ZRW13OV5vpNjEW/fY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733242073; c=relaxed/simple;
-	bh=AlxRXdag/kHDbSf3MCgL3+/YrJJb9b57V0ZPa6HzsEU=;
+	s=arc-20240116; t=1733242076; c=relaxed/simple;
+	bh=Qyih0H2DS+4c+68XfnaWewQr+7K7Ssydk+tWRJ5DZi0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o9qt96JXm6R2j3LVcdN2l2fH5Hbo29f52z+Ry2XgSphOobAoMOkCGw+nOAL5qyp+1h8FNfpSG5cSrkGI8CaAMuQ9pCi/gLcs4mATs1o+dMbYRysrv6GcX/5lWMth8INidb9JlfRusdIkULTisGkaMhLSbPd3BHKeZ2hHLqd8/qY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OHDVLfWV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kOwSfnI8yNuOX0Y3dDmYgYJGcAAc1nlqoLCZfHv4NGyi3CNgXkuNdsSUYqp7BLYdJjyNtJ6o9p3NLCKik8GjbWAXZRv9gpxXauSXvgwdC+VdwAByIm24Snv0AfyKypohL3hhm4bFwhduU25nFBGi2+mnJAImdWskB0YxE6ZmxeM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zObTingD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OHDVLfWV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24D89C4CECF;
-	Tue,  3 Dec 2024 16:07:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zObTingD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6833CC4CECF;
+	Tue,  3 Dec 2024 16:07:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733242072;
-	bh=AlxRXdag/kHDbSf3MCgL3+/YrJJb9b57V0ZPa6HzsEU=;
+	s=korg; t=1733242075;
+	bh=Qyih0H2DS+4c+68XfnaWewQr+7K7Ssydk+tWRJ5DZi0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OHDVLfWVygpFmjZo96gTIlJZFtyYGsEb9cRyoLtT00TK0wwg8eLJ44U6v77wZNmq9
-	 EsiFB5YrtYRwbC+cE+yT7PNo134jIKs7SMK+ujGM5UCgp5837/UVCcHgQvWF9dBpXY
-	 c8o5ZdFp4tM/xLyvltt6eZHxN+FkK1uv2ixcWLz8=
+	b=zObTingDNv8840dEhmGlydvWdEpzU+6u6XRthD/lJZB1XUCsLc709VraxV4S0FISJ
+	 yW3PlbjVZ3dlDE341kOPSp8MUI2TXulN58nmxATJ9DaPubwt0hEYeDKXMvvYy6iv6I
+	 sEkbFClo9brKaILM48WnMpYC0puOhN560NhE8c1o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
+	David Lechner <dlechner@baylibre.com>,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 599/826] iio: backend: fix wrong pointer passed to IS_ERR()
-Date: Tue,  3 Dec 2024 15:45:26 +0100
-Message-ID: <20241203144807.121880903@linuxfoundation.org>
+Subject: [PATCH 6.12 600/826] iio: adc: ad4000: fix reading unsigned data
+Date: Tue,  3 Dec 2024 15:45:27 +0100
+Message-ID: <20241203144807.162680908@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -51,36 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: David Lechner <dlechner@baylibre.com>
 
-[ Upstream commit fa4076314480bcb2bb32051027735b1cde07eea2 ]
+[ Upstream commit 62dd96ac9cdf2814f41cfc55ecaf22a28aad6ccb ]
 
-It should be fwnode_back passed to IS_ERR().
+Fix reading unsigned data from the AD4000 ADC via the _raw sysfs
+attribute by ensuring that *val is set before returning from
+ad4000_single_conversion(). This was not being set in any code path
+and was causing the attribute to return a random value.
 
-Fixes: c464cc610f51 ("iio: add child nodes support in iio backend framework")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://patch.msgid.link/20241028135215.1549-1-yangyingliang@huaweicloud.com
+Fixes: 938fd562b974 ("iio: adc: Add support for AD4000")
+Signed-off-by: David Lechner <dlechner@baylibre.com>
+Link: https://patch.msgid.link/20241030-iio-adc-ad4000-fix-reading-unsigned-data-v1-1-2e28dd75fe29@baylibre.com
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/industrialio-backend.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/iio/adc/ad4000.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/iio/industrialio-backend.c b/drivers/iio/industrialio-backend.c
-index 20b3b5212da76..fb34a8e4d04e7 100644
---- a/drivers/iio/industrialio-backend.c
-+++ b/drivers/iio/industrialio-backend.c
-@@ -737,8 +737,8 @@ static struct iio_backend *__devm_iio_backend_fwnode_get(struct device *dev, con
- 	}
+diff --git a/drivers/iio/adc/ad4000.c b/drivers/iio/adc/ad4000.c
+index 6ea4912450849..fc9c9807f89d2 100644
+--- a/drivers/iio/adc/ad4000.c
++++ b/drivers/iio/adc/ad4000.c
+@@ -344,6 +344,8 @@ static int ad4000_single_conversion(struct iio_dev *indio_dev,
  
- 	fwnode_back = fwnode_find_reference(fwnode, "io-backends", index);
--	if (IS_ERR(fwnode))
--		return dev_err_cast_probe(dev, fwnode,
-+	if (IS_ERR(fwnode_back))
-+		return dev_err_cast_probe(dev, fwnode_back,
- 					  "Cannot get Firmware reference\n");
+ 	if (chan->scan_type.sign == 's')
+ 		*val = sign_extend32(sample, chan->scan_type.realbits - 1);
++	else
++		*val = sample;
  
- 	guard(mutex)(&iio_back_lock);
+ 	return IIO_VAL_INT;
+ }
 -- 
 2.43.0
 
