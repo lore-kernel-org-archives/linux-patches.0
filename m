@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAFE81F7558;
-	Tue,  3 Dec 2024 15:36:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4285204092;
+	Tue,  3 Dec 2024 15:36:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733240201; cv=none; b=lf+WyO+daWgQubgwXtbxzy/hctZvlQ09zYDx0Ae5uqoAXquYiaoW8pbwxShuIuYCcS6yJ3H6cawUyhc//DaCY9FKoxh/+YA8yWSOiTzy12Dd/+bzQ396TmaB0BLc60c+4EBrypTpv2Vm0EYpPl/FuZnCAAP4Xfgq4RHcT9ILb/0=
+	t=1733240204; cv=none; b=pgORBYWPum0HWtT6lKcoKGGbAq+dMbfBCIdmD41AFzdBjWYGJKiCjO02EjW4W44b6eXEG0JyBspEBRIh0g48Qib09bxpv+h674AkfD8qScphme4Q1JMIpvhbRTraJ2PxI4bxA/yMN7POxU1TfMeQiB6yVYg9wUMNr/dF3QRhWM0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733240201; c=relaxed/simple;
-	bh=CagYEJ8Dbp2KMDr3CY9PUaxb1p7VvzwvhgciGf4nErE=;
+	s=arc-20240116; t=1733240204; c=relaxed/simple;
+	bh=QksBFP36RJWMW/VKbN1hxKJzDB8gHvoZiRl3GxexLe8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FtTnmyZ66/NM0J+t8ZZkjNsOBlVrZqfYAirZr7mrumwV/3Gq53Ltjdzb9Wy0C1mygrTJ/KxnxE6SCDnUZwNCn4JHZ9SE9JAcCNsHahB/lqvwGF3fVKkAmvj40xQRVz0JTRabH4aWNOeygvL514f1fZ2P1K+PjMaRwbCNyFHlgQg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K615TZw6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PiZZLbJEPcWWJD9tKlV6VHp6YIcdridQcn0M81W/CFv4JwoHT81u2dI6qyMYn0VKUVMl9Q9REhU4LvJhg5WFeeULLaxDi/s5NhRqnocl8a8hwwPuMHYMMATb9HwliYFghif+bsUnL03vvYFS+X1t7XARXGDU1M5iEgSWf6QfHmg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2a78F9Ss; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K615TZw6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F674C4CECF;
-	Tue,  3 Dec 2024 15:36:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2a78F9Ss"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04F57C4CECF;
+	Tue,  3 Dec 2024 15:36:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733240200;
-	bh=CagYEJ8Dbp2KMDr3CY9PUaxb1p7VvzwvhgciGf4nErE=;
+	s=korg; t=1733240203;
+	bh=QksBFP36RJWMW/VKbN1hxKJzDB8gHvoZiRl3GxexLe8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K615TZw6lt5jQCJT/gK9s8/ryeambx9Db5rkk29b91Lz+Ih+ZP6b/SSSsbO3jFWT2
-	 B6FIMM5MFLNOxyxxXf2GdQ+ohDZ0fqhGb4Nu+F5rhGfAxee8VVJpyeFtnY24oxKmQ5
-	 0XSJzUNgmisDZ3xPd0mOZjZXyMHAHY8n4mBWFyY4=
+	b=2a78F9SsuHqMigR8KS6rnIXDsF8QnK5xsNKLTBLrHUg15NyPtwx8sIN/UETsgEanK
+	 D5/mP5+jKbgJvzFYaHTfuaBhUh8XAEVTnvrZz34s6v/O0cjbHFNXCGZRI3OjmZQdig
+	 f8W3AXs7ruwWyfppkElfPo+wlUCbsunYQi78xzwk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qiuxu Zhuo <qiuxu.zhuo@intel.com>,
-	Tony Luck <tony.luck@intel.com>,
-	Diego Garcia Rodriguez <diego.garcia.rodriguez@intel.com>,
+	Yi Yang <yiyang13@huawei.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 057/826] EDAC/{skx_common,i10nm}: Fix incorrect far-memory error source indicator
-Date: Tue,  3 Dec 2024 15:36:24 +0100
-Message-ID: <20241203144745.697453274@linuxfoundation.org>
+Subject: [PATCH 6.12 058/826] crypto: pcrypt - Call crypto layer directly when padata_do_parallel() return -EBUSY
+Date: Tue,  3 Dec 2024 15:36:25 +0100
+Message-ID: <20241203144745.735386479@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -52,104 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
+From: Yi Yang <yiyang13@huawei.com>
 
-[ Upstream commit a36667037a0c0e36c59407f8ae636295390239a5 ]
+[ Upstream commit 662f2f13e66d3883b9238b0b96b17886179e60e2 ]
 
-The Granite Rapids CPUs with Flat2LM memory configurations may
-mistakenly report near-memory errors as far-memory errors, resulting
-in the invalid decoded ADXL results:
+Since commit 8f4f68e788c3 ("crypto: pcrypt - Fix hungtask for
+PADATA_RESET"), the pcrypt encryption and decryption operations return
+-EAGAIN when the CPU goes online or offline. In alg_test(), a WARN is
+generated when pcrypt_aead_decrypt() or pcrypt_aead_encrypt() returns
+-EAGAIN, the unnecessary panic will occur when panic_on_warn set 1.
+Fix this issue by calling crypto layer directly without parallelization
+in that case.
 
-  EDAC skx: Bad imc -1
-
-Fix this incorrect far-memory error source indicator by prefetching the
-decoded far-memory controller ID, and adjust the error source indicator
-to near-memory if the far-memory controller ID is invalid.
-
-Fixes: ba987eaaabf9 ("EDAC/i10nm: Add Intel Granite Rapids server support")
-Signed-off-by: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
-Signed-off-by: Tony Luck <tony.luck@intel.com>
-Tested-by: Diego Garcia Rodriguez <diego.garcia.rodriguez@intel.com>
-Link: https://lore.kernel.org/r/20241015072236.24543-3-qiuxu.zhuo@intel.com
+Fixes: 8f4f68e788c3 ("crypto: pcrypt - Fix hungtask for PADATA_RESET")
+Signed-off-by: Yi Yang <yiyang13@huawei.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/edac/i10nm_base.c |  1 +
- drivers/edac/skx_common.c | 23 +++++++++++++++++++++++
- drivers/edac/skx_common.h |  1 +
- 3 files changed, 25 insertions(+)
+ crypto/pcrypt.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/edac/i10nm_base.c b/drivers/edac/i10nm_base.c
-index e2a954de913b4..51556c72a9674 100644
---- a/drivers/edac/i10nm_base.c
-+++ b/drivers/edac/i10nm_base.c
-@@ -1036,6 +1036,7 @@ static int __init i10nm_init(void)
- 		return -ENODEV;
- 
- 	cfg = (struct res_config *)id->driver_data;
-+	skx_set_res_cfg(cfg);
- 	res_cfg = cfg;
- 
- 	rc = skx_get_hi_lo(0x09a2, off, &tolm, &tohm);
-diff --git a/drivers/edac/skx_common.c b/drivers/edac/skx_common.c
-index 52b4628998700..6cf17af7d9112 100644
---- a/drivers/edac/skx_common.c
-+++ b/drivers/edac/skx_common.c
-@@ -47,6 +47,7 @@ static skx_show_retry_log_f skx_show_retry_rd_err_log;
- static u64 skx_tolm, skx_tohm;
- static LIST_HEAD(dev_edac_list);
- static bool skx_mem_cfg_2lm;
-+static struct res_config *skx_res_cfg;
- 
- int skx_adxl_get(void)
- {
-@@ -135,6 +136,22 @@ static bool skx_adxl_decode(struct decoded_addr *res, enum error_source err_src)
- 		return false;
- 	}
- 
-+	/*
-+	 * GNR with a Flat2LM memory configuration may mistakenly classify
-+	 * a near-memory error(DDR5) as a far-memory error(CXL), resulting
-+	 * in the incorrect selection of decoded ADXL components.
-+	 * To address this, prefetch the decoded far-memory controller ID
-+	 * and adjust the error source to near-memory if the far-memory
-+	 * controller ID is invalid.
-+	 */
-+	if (skx_res_cfg && skx_res_cfg->type == GNR && err_src == ERR_SRC_2LM_FM) {
-+		res->imc = (int)adxl_values[component_indices[INDEX_MEMCTRL]];
-+		if (res->imc == -1) {
-+			err_src = ERR_SRC_2LM_NM;
-+			edac_dbg(0, "Adjust the error source to near-memory.\n");
-+		}
+diff --git a/crypto/pcrypt.c b/crypto/pcrypt.c
+index d0d954fe9d54f..7fc79e7dce44a 100644
+--- a/crypto/pcrypt.c
++++ b/crypto/pcrypt.c
+@@ -117,8 +117,10 @@ static int pcrypt_aead_encrypt(struct aead_request *req)
+ 	err = padata_do_parallel(ictx->psenc, padata, &ctx->cb_cpu);
+ 	if (!err)
+ 		return -EINPROGRESS;
+-	if (err == -EBUSY)
+-		return -EAGAIN;
++	if (err == -EBUSY) {
++		/* try non-parallel mode */
++		return crypto_aead_encrypt(creq);
 +	}
-+
- 	res->socket  = (int)adxl_values[component_indices[INDEX_SOCKET]];
- 	if (err_src == ERR_SRC_2LM_NM) {
- 		res->imc     = (adxl_nm_bitmap & BIT_NM_MEMCTRL) ?
-@@ -191,6 +208,12 @@ void skx_set_mem_cfg(bool mem_cfg_2lm)
+ 
+ 	return err;
  }
- EXPORT_SYMBOL_GPL(skx_set_mem_cfg);
+@@ -166,8 +168,10 @@ static int pcrypt_aead_decrypt(struct aead_request *req)
+ 	err = padata_do_parallel(ictx->psdec, padata, &ctx->cb_cpu);
+ 	if (!err)
+ 		return -EINPROGRESS;
+-	if (err == -EBUSY)
+-		return -EAGAIN;
++	if (err == -EBUSY) {
++		/* try non-parallel mode */
++		return crypto_aead_decrypt(creq);
++	}
  
-+void skx_set_res_cfg(struct res_config *cfg)
-+{
-+	skx_res_cfg = cfg;
-+}
-+EXPORT_SYMBOL_GPL(skx_set_res_cfg);
-+
- void skx_set_decode(skx_decode_f decode, skx_show_retry_log_f show_retry_log)
- {
- 	driver_decode = decode;
-diff --git a/drivers/edac/skx_common.h b/drivers/edac/skx_common.h
-index cd47f81868319..54bba8a62f727 100644
---- a/drivers/edac/skx_common.h
-+++ b/drivers/edac/skx_common.h
-@@ -241,6 +241,7 @@ int skx_adxl_get(void);
- void skx_adxl_put(void);
- void skx_set_decode(skx_decode_f decode, skx_show_retry_log_f show_retry_log);
- void skx_set_mem_cfg(bool mem_cfg_2lm);
-+void skx_set_res_cfg(struct res_config *cfg);
- 
- int skx_get_src_id(struct skx_dev *d, int off, u8 *id);
- int skx_get_node_id(struct skx_dev *d, u8 *id);
+ 	return err;
+ }
 -- 
 2.43.0
 
