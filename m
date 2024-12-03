@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3A4C2B9B9;
-	Tue,  3 Dec 2024 16:14:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C2B91F76D2;
+	Tue,  3 Dec 2024 16:14:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733242486; cv=none; b=T6pmBrooOJ1sT4lxiNG8NqpM+8G6alLYLOSJf01HkWMVcfnuUFkn8FI4Q7MokHH01XlzaeB+/8+I2ZkSkx7D7t0cLdBu4WLeMA3lpapB8zs1m/AebMBhi8txqeFPi0vKghjz/vXJ3WkDpAVjkQKE3Bo4s19ijwkdMFBfQ9/qepk=
+	t=1733242489; cv=none; b=aW89ic5kcLhJXCTuGgxAVXQA09SauIrYE29iq8EPfiLweyf0HjrYsZnKyCQ6S7LKImEsxxgisQVgIQ/MvcOGa0OXN05vf5i5RVj9DpgwNyxl+KfMv1IT1FU5453/T9n7YbbstsupHTeZeKVjw7A6AcknSzGKCjh4AhzYnQRInuk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733242486; c=relaxed/simple;
-	bh=+6dSZIcSwQdMEQ7iHuEsmZ0WgSei7QsOLj4D7A+ZkXE=;
+	s=arc-20240116; t=1733242489; c=relaxed/simple;
+	bh=JRd2ja2lz/58wjsP+2rU0WW6olk6/ssPAW1M9bVuY8M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UhEZD8Nh2WDZDG438Ffc2jxA5j94clzT4Mf57/auxPxwAsVDv84onAyo1yE2ASasLvdTyB2ACGlKlnrXvTFiHXnaqAI09aZK+JC0bTrHCJOG/B+80LhjnWsK4DWWGmw8Io5PkB7DoWWgkyQjLfZ1wYc4qO9aPlGuZJPFbVtBPA4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2kjIH7M3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jWI0lQG55Q2TP14AC3XYOE7ANlPDXeWuBrDUejp1OjakKFwkDyJ0WGvxQFmLLs/LSqA28ck2Ycsn6k8E9UziAiEFACEcCmzZbzOSXaNTLe7VYmWdX59blC5nDyL/Pf+zONj4X/GvWDHrbroz5zA6NuF0baaR0PfdbhNWntXOKFA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cNzMteKt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2kjIH7M3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F8C1C4CECF;
-	Tue,  3 Dec 2024 16:14:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cNzMteKt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACE32C4CECF;
+	Tue,  3 Dec 2024 16:14:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733242485;
-	bh=+6dSZIcSwQdMEQ7iHuEsmZ0WgSei7QsOLj4D7A+ZkXE=;
+	s=korg; t=1733242489;
+	bh=JRd2ja2lz/58wjsP+2rU0WW6olk6/ssPAW1M9bVuY8M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2kjIH7M30pj/RIIaZNdYt487lGOQi+SISayr9+66kAheNQRmnLXV9jmxKPrxyy4Xr
-	 PIgyetrZAcpDFHoEwqV4GW+7n2Z6pMu3qT/dmFzGeaypQ2H7RKa8Kfx3Oxfa2RizSt
-	 TpHME+BMf5nxXiLSkloPxSrQX4AZ6MtPtEybAab4=
+	b=cNzMteKt5xnxqkIo6uljMuAiX5m0oic0f3UeMIpPhmOaPohG9VNirXpdG28N9OLcc
+	 pNAtS3gwpkl3k8R5ZncFh9g/aGOQGpUEgG4dz/KcDTycDD8GHgAWxfEkhVGZPMw/0v
+	 MU9yH2zpQZNuIT0LT4AcnY0rSm1VF58A/avZ8pmU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Rosenberg <drosen@google.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>
-Subject: [PATCH 6.12 687/826] Revert "f2fs: remove unreachable lazytime mount option parsing"
-Date: Tue,  3 Dec 2024 15:46:54 +0100
-Message-ID: <20241203144810.554811624@linuxfoundation.org>
+	Michal Vrastil <michal.vrastil@hidglobal.com>,
+	Elson Roy Serrao <quic_eserrao@quicinc.com>,
+	Peter korsgaard <peter@korsgaard.com>
+Subject: [PATCH 6.12 688/826] Revert "usb: gadget: composite: fix OS descriptors w_value logic"
+Date: Tue,  3 Dec 2024 15:46:55 +0100
+Message-ID: <20241203144810.593652302@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -51,57 +51,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jaegeuk Kim <jaegeuk@kernel.org>
+From: Michal Vrastil <michal.vrastil@hidglobal.com>
 
-commit acff9409dd40beaca2bd982678d222e2740ad84b upstream.
+commit 51cdd69d6a857f527d6d0697a2e1f0fa8bca1005 upstream.
 
-This reverts commit 54f43a10fa257ad4af02a1d157fefef6ebcfa7dc.
+This reverts commit ec6ce7075ef879b91a8710829016005dc8170f17.
 
-The above commit broke the lazytime mount, given
+Fix installation of WinUSB driver using OS descriptors. Without the
+fix the drivers are not installed correctly and the property
+'DeviceInterfaceGUID' is missing on host side.
 
-mount("/dev/vdb", "/mnt/test", "f2fs", 0, "lazytime");
+The original change was based on the assumption that the interface
+number is in the high byte of wValue but it is in the low byte,
+instead. Unfortunately, the fix is based on MS documentation which is
+also wrong.
 
-CC: stable@vger.kernel.org # 6.11+
-Signed-off-by: Daniel Rosenberg <drosen@google.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+The actual USB request for OS descriptors (using USB analyzer) looks
+like:
+
+Offset  0   1   2   3   4   5   6   7
+0x000   C1  A1  02  00  05  00  0A  00
+
+C1: bmRequestType (device to host, vendor, interface)
+A1: nas magic number
+0002: wValue (2: nas interface)
+0005: wIndex (5: get extended property i.e. nas interface GUID)
+008E: wLength (142)
+
+The fix was tested on Windows 10 and Windows 11.
+
+Cc: stable@vger.kernel.org
+Fixes: ec6ce7075ef8 ("usb: gadget: composite: fix OS descriptors w_value logic")
+Signed-off-by: Michal Vrastil <michal.vrastil@hidglobal.com>
+Signed-off-by: Elson Roy Serrao <quic_eserrao@quicinc.com>
+Acked-by: Peter korsgaard <peter@korsgaard.com>
+Link: https://lore.kernel.org/r/20241113235433.20244-1-quic_eserrao@quicinc.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/super.c |   10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/usb/gadget/composite.c |   18 +++++++++++++++---
+ 1 file changed, 15 insertions(+), 3 deletions(-)
 
---- a/fs/f2fs/super.c
-+++ b/fs/f2fs/super.c
-@@ -150,6 +150,8 @@ enum {
- 	Opt_mode,
- 	Opt_fault_injection,
- 	Opt_fault_type,
-+	Opt_lazytime,
-+	Opt_nolazytime,
- 	Opt_quota,
- 	Opt_noquota,
- 	Opt_usrquota,
-@@ -226,6 +228,8 @@ static match_table_t f2fs_tokens = {
- 	{Opt_mode, "mode=%s"},
- 	{Opt_fault_injection, "fault_injection=%u"},
- 	{Opt_fault_type, "fault_type=%u"},
-+	{Opt_lazytime, "lazytime"},
-+	{Opt_nolazytime, "nolazytime"},
- 	{Opt_quota, "quota"},
- 	{Opt_noquota, "noquota"},
- 	{Opt_usrquota, "usrquota"},
-@@ -918,6 +922,12 @@ static int parse_options(struct super_bl
- 			f2fs_info(sbi, "fault_type options not supported");
- 			break;
- #endif
-+		case Opt_lazytime:
-+			sb->s_flags |= SB_LAZYTIME;
-+			break;
-+		case Opt_nolazytime:
-+			sb->s_flags &= ~SB_LAZYTIME;
-+			break;
- #ifdef CONFIG_QUOTA
- 		case Opt_quota:
- 		case Opt_usrquota:
+--- a/drivers/usb/gadget/composite.c
++++ b/drivers/usb/gadget/composite.c
+@@ -2111,8 +2111,20 @@ unknown:
+ 			memset(buf, 0, w_length);
+ 			buf[5] = 0x01;
+ 			switch (ctrl->bRequestType & USB_RECIP_MASK) {
++			/*
++			 * The Microsoft CompatID OS Descriptor Spec(w_index = 0x4) and
++			 * Extended Prop OS Desc Spec(w_index = 0x5) state that the
++			 * HighByte of wValue is the InterfaceNumber and the LowByte is
++			 * the PageNumber. This high/low byte ordering is incorrectly
++			 * documented in the Spec. USB analyzer output on the below
++			 * request packets show the high/low byte inverted i.e LowByte
++			 * is the InterfaceNumber and the HighByte is the PageNumber.
++			 * Since we dont support >64KB CompatID/ExtendedProp descriptors,
++			 * PageNumber is set to 0. Hence verify that the HighByte is 0
++			 * for below two cases.
++			 */
+ 			case USB_RECIP_DEVICE:
+-				if (w_index != 0x4 || (w_value & 0xff))
++				if (w_index != 0x4 || (w_value >> 8))
+ 					break;
+ 				buf[6] = w_index;
+ 				/* Number of ext compat interfaces */
+@@ -2128,9 +2140,9 @@ unknown:
+ 				}
+ 				break;
+ 			case USB_RECIP_INTERFACE:
+-				if (w_index != 0x5 || (w_value & 0xff))
++				if (w_index != 0x5 || (w_value >> 8))
+ 					break;
+-				interface = w_value >> 8;
++				interface = w_value & 0xFF;
+ 				if (interface >= MAX_CONFIG_INTERFACES ||
+ 				    !os_desc_cfg->interface[interface])
+ 					break;
 
 
