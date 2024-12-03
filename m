@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 315F81F6691;
-	Tue,  3 Dec 2024 15:05:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF2601E3DF9;
+	Tue,  3 Dec 2024 15:05:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733238304; cv=none; b=cTTeCa2WOF3UV48JA4i7Wsw8rhF8d1VZUfg94Pk4KEFKJo5ojCcTxQQ6/KmkePMLLMZrpXcx6DmpFKfEp6PY5YnalXK5VRg5ORseCzOZy2BGRcany3/L3Bm4WPAQP3Pjp0Vl9tlHxPchsDxa2TvmQrMYaSl+J9L8NP9AI5xGM/E=
+	t=1733238307; cv=none; b=SDuqvMCn3qyywJcPL0hLs0kPIEWIHPIze2+48pqI21j13aOcukSZLuQT/PRxrn9/A3fjyKnoJ8uY+FKAfR7ZbP683JlfooDM56CnF9AZxsYuiXI3m7bIL6tSxRVd++PhVBWwAUu95UVS0SdOgYRU7BXP7TjYEkF6UWxnsdXGwys=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733238304; c=relaxed/simple;
-	bh=g2qbOyD2OGLPxB+wEJ4TDJwEcKJnfBeX5n9Bbc/ibds=;
+	s=arc-20240116; t=1733238307; c=relaxed/simple;
+	bh=kj51eXIINTWsR+LMXBM3+65zTvomt5Pm5KnZAL0I/W0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jLsG2QlqNcCOUdQr4Zt638MXXbdZ2CBFIqavG3b02sHs0aUFxH0lj/ghGSIhyqm7Iqjye3aPET2+y6P1B5KTcjF95arBXNEVMVM+nePY1yd+rEQI2kLUqt8QXJVfmcZfcKojqlwFBSaCF8URz2SdjgqeBpHhCf4Vqzeh7kYY03Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dowCNtDo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UiswLmWCXJ+gHHj2BYrmGum/+9P125YyMuYw/glzpkNVn8KDWemkyqQK1vdswArwnmo8XyTMRLEuTvkWYXUMcDKHHHaneMKC8nITXDVk/ToLV58Dc0b9HfM3T+vMxygwPsIckOfjWNcqyaeT7litvIJcnlk/r8hWVpdNnNUoeQs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p7q9teH3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dowCNtDo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B05EAC4CECF;
-	Tue,  3 Dec 2024 15:05:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p7q9teH3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C080C4CED6;
+	Tue,  3 Dec 2024 15:05:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733238304;
-	bh=g2qbOyD2OGLPxB+wEJ4TDJwEcKJnfBeX5n9Bbc/ibds=;
+	s=korg; t=1733238306;
+	bh=kj51eXIINTWsR+LMXBM3+65zTvomt5Pm5KnZAL0I/W0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dowCNtDoqwPeYj1vII8DpEUq/M6u4fqJD3/uGSWHtBCkKToCf0e4ehAT8Y48t4tsM
-	 I4ylEDbccJUWHZnVawudzfvge8DAXiS3H3hwFzmSgP6GMzSXcShTlZj+PcBn/ERGc5
-	 uUIs7lbTPZrEhlgXfYnY/7M4IzPnGnW7fQOX1LsA=
+	b=p7q9teH3HGhSi6/vv31qshVSvQ90JxwKB9vfuXhcER7pN2Gwf31xwbaOTNikiajqp
+	 9xOufFYF71iGz1cdXmFeXNUXq6GjIcqZXK0Pau1TgEOsWGUR5FqEWxzx2tIbLtjzP5
+	 Too1fWLFw2tviiSNNM5BfJhNXum/ALb7VGRyZ31I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Bingbu Cao <bingbu.cao@intel.com>,
-	Hans Verkuil <hverkuil@xs4all.nl>,
+	Daniel Vetter <daniel.vetter@ffwll.ch>,
+	Jani Nikula <jani.nikula@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 205/817] media: ipu6: Fix DMA and physical address debugging messages for 32-bit
-Date: Tue,  3 Dec 2024 15:36:17 +0100
-Message-ID: <20241203144003.746360689@linuxfoundation.org>
+Subject: [PATCH 6.11 232/817] drm/ipuv3/parallel: convert to struct drm_edid
+Date: Tue,  3 Dec 2024 15:36:44 +0100
+Message-ID: <20241203144004.805068111@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -52,117 +51,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sakari Ailus <sakari.ailus@linux.intel.com>
+From: Jani Nikula <jani.nikula@intel.com>
 
-[ Upstream commit 199c204bcc732ec18dbaec2b9d6445addbd376ea ]
+[ Upstream commit 42e08287a3185409a7a1923374a557e04fc36e48 ]
 
-Fix printing DMA and physical address printing on 32-bit platforms, by
-using correct types. Also cast DMA_BIT_MASK() result to dma_addr_t to make
-Clang happy.
+Prefer the struct drm_edid based functions for storing the EDID and
+updating the connector.
 
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Reviewed-by: Bingbu Cao <bingbu.cao@intel.com>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
-Stable-dep-of: daabc5c64703 ("media: ipu6: not override the dma_ops of device in driver")
+Reviewed-by: Daniel Vetter <daniel.vetter@ffwll.ch>
+Link: https://patchwork.freedesktop.org/patch/msgid/a1698044d556072e79041d69b8702099fd17bd90.1724348429.git.jani.nikula@intel.com
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+Stable-dep-of: f673055a4678 ("drm/imx: Add missing DRM_BRIDGE_CONNECTOR dependency")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/pci/intel/ipu6/ipu6-dma.c |  7 ++++---
- drivers/media/pci/intel/ipu6/ipu6-mmu.c | 28 +++++++++++++++----------
- 2 files changed, 21 insertions(+), 14 deletions(-)
+ drivers/gpu/drm/imx/ipuv3/parallel-display.c | 14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/media/pci/intel/ipu6/ipu6-dma.c b/drivers/media/pci/intel/ipu6/ipu6-dma.c
-index 92530a1cc90f5..801f6bd00a891 100644
---- a/drivers/media/pci/intel/ipu6/ipu6-dma.c
-+++ b/drivers/media/pci/intel/ipu6/ipu6-dma.c
-@@ -428,11 +428,12 @@ static int ipu6_dma_map_sg(struct device *dev, struct scatterlist *sglist,
+diff --git a/drivers/gpu/drm/imx/ipuv3/parallel-display.c b/drivers/gpu/drm/imx/ipuv3/parallel-display.c
+index 55dedd73f528c..91d7808a2d8d3 100644
+--- a/drivers/gpu/drm/imx/ipuv3/parallel-display.c
++++ b/drivers/gpu/drm/imx/ipuv3/parallel-display.c
+@@ -34,7 +34,7 @@ struct imx_parallel_display_encoder {
  
- 	iova_addr = iova->pfn_lo;
- 	for_each_sg(sglist, sg, count, i) {
-+		phys_addr_t iova_pa;
- 		int ret;
+ struct imx_parallel_display {
+ 	struct device *dev;
+-	void *edid;
++	const struct drm_edid *drm_edid;
+ 	u32 bus_format;
+ 	u32 bus_flags;
+ 	struct drm_display_mode mode;
+@@ -62,9 +62,9 @@ static int imx_pd_connector_get_modes(struct drm_connector *connector)
+ 	if (num_modes > 0)
+ 		return num_modes;
  
--		dev_dbg(dev, "mapping entry %d: iova 0x%llx phy %pad size %d\n",
--			i, PFN_PHYS(iova_addr), &sg_dma_address(sg),
--			sg_dma_len(sg));
-+		iova_pa = PFN_PHYS(iova_addr);
-+		dev_dbg(dev, "mapping entry %d: iova %pap phy %pap size %d\n",
-+			i, &iova_pa, &sg_dma_address(sg), sg_dma_len(sg));
- 
- 		ret = ipu6_mmu_map(mmu->dmap->mmu_info, PFN_PHYS(iova_addr),
- 				   sg_dma_address(sg),
-diff --git a/drivers/media/pci/intel/ipu6/ipu6-mmu.c b/drivers/media/pci/intel/ipu6/ipu6-mmu.c
-index c3a20507d6dbc..57298ac73d072 100644
---- a/drivers/media/pci/intel/ipu6/ipu6-mmu.c
-+++ b/drivers/media/pci/intel/ipu6/ipu6-mmu.c
-@@ -97,13 +97,15 @@ static void page_table_dump(struct ipu6_mmu_info *mmu_info)
- 	for (l1_idx = 0; l1_idx < ISP_L1PT_PTES; l1_idx++) {
- 		u32 l2_idx;
- 		u32 iova = (phys_addr_t)l1_idx << ISP_L1PT_SHIFT;
-+		phys_addr_t l2_phys;
- 
- 		if (mmu_info->l1_pt[l1_idx] == mmu_info->dummy_l2_pteval)
- 			continue;
-+
-+		l2_phys = TBL_PHYS_ADDR(mmu_info->l1_pt[l1_idx];)
- 		dev_dbg(mmu_info->dev,
--			"l1 entry %u; iovas 0x%8.8x-0x%8.8x, at %pa\n",
--			l1_idx, iova, iova + ISP_PAGE_SIZE,
--			TBL_PHYS_ADDR(mmu_info->l1_pt[l1_idx]));
-+			"l1 entry %u; iovas 0x%8.8x-0x%8.8x, at %pap\n",
-+			l1_idx, iova, iova + ISP_PAGE_SIZE, &l2_phys);
- 
- 		for (l2_idx = 0; l2_idx < ISP_L2PT_PTES; l2_idx++) {
- 			u32 *l2_pt = mmu_info->l2_pts[l1_idx];
-@@ -227,7 +229,7 @@ static u32 *alloc_l1_pt(struct ipu6_mmu_info *mmu_info)
+-	if (imxpd->edid) {
+-		drm_connector_update_edid_property(connector, imxpd->edid);
+-		num_modes = drm_add_edid_modes(connector, imxpd->edid);
++	if (imxpd->drm_edid) {
++		drm_edid_connector_update(connector, imxpd->drm_edid);
++		num_modes = drm_edid_connector_add_modes(connector);
  	}
  
- 	mmu_info->l1_pt_dma = dma >> ISP_PADDR_SHIFT;
--	dev_dbg(mmu_info->dev, "l1 pt %p mapped at %llx\n", pt, dma);
-+	dev_dbg(mmu_info->dev, "l1 pt %p mapped at %pad\n", pt, &dma);
+ 	if (np) {
+@@ -331,7 +331,7 @@ static int imx_pd_probe(struct platform_device *pdev)
  
- 	return pt;
+ 	edidp = of_get_property(np, "edid", &edid_len);
+ 	if (edidp)
+-		imxpd->edid = devm_kmemdup(dev, edidp, edid_len, GFP_KERNEL);
++		imxpd->drm_edid = drm_edid_alloc(edidp, edid_len);
  
-@@ -330,8 +332,8 @@ static int __ipu6_mmu_map(struct ipu6_mmu_info *mmu_info, unsigned long iova,
- 	u32 iova_end = ALIGN(iova + size, ISP_PAGE_SIZE);
+ 	ret = of_property_read_string(np, "interface-pix-fmt", &fmt);
+ 	if (!ret) {
+@@ -355,7 +355,11 @@ static int imx_pd_probe(struct platform_device *pdev)
  
- 	dev_dbg(mmu_info->dev,
--		"mapping iova 0x%8.8x--0x%8.8x, size %zu at paddr 0x%10.10llx\n",
--		iova_start, iova_end, size, paddr);
-+		"mapping iova 0x%8.8x--0x%8.8x, size %zu at paddr %pap\n",
-+		iova_start, iova_end, size, &paddr);
- 
- 	return l2_map(mmu_info, iova_start, paddr, size);
- }
-@@ -361,10 +363,13 @@ static size_t l2_unmap(struct ipu6_mmu_info *mmu_info, unsigned long iova,
- 	for (l2_idx = (iova_start & ISP_L2PT_MASK) >> ISP_L2PT_SHIFT;
- 	     (iova_start & ISP_L1PT_MASK) + (l2_idx << ISP_PAGE_SHIFT)
- 		     < iova_start + size && l2_idx < ISP_L2PT_PTES; l2_idx++) {
-+		phys_addr_t pteval;
+ static void imx_pd_remove(struct platform_device *pdev)
+ {
++	struct imx_parallel_display *imxpd = platform_get_drvdata(pdev);
 +
- 		l2_pt = mmu_info->l2_pts[l1_idx];
-+		pteval = TBL_PHYS_ADDR(l2_pt[l2_idx]);
- 		dev_dbg(mmu_info->dev,
--			"unmap l2 index %u with pteval 0x%10.10llx\n",
--			l2_idx, TBL_PHYS_ADDR(l2_pt[l2_idx]));
-+			"unmap l2 index %u with pteval 0x%p\n",
-+			l2_idx, &pteval);
- 		l2_pt[l2_idx] = mmu_info->dummy_page_pteval;
+ 	component_del(&pdev->dev, &imx_pd_ops);
++
++	drm_edid_free(imxpd->drm_edid);
+ }
  
- 		clflush_cache_range((void *)&l2_pt[l2_idx],
-@@ -525,9 +530,10 @@ static struct ipu6_mmu_info *ipu6_mmu_alloc(struct ipu6_device *isp)
- 		return NULL;
- 
- 	mmu_info->aperture_start = 0;
--	mmu_info->aperture_end = DMA_BIT_MASK(isp->secure_mode ?
--					      IPU6_MMU_ADDR_BITS :
--					      IPU6_MMU_ADDR_BITS_NON_SECURE);
-+	mmu_info->aperture_end =
-+		(dma_addr_t)DMA_BIT_MASK(isp->secure_mode ?
-+					 IPU6_MMU_ADDR_BITS :
-+					 IPU6_MMU_ADDR_BITS_NON_SECURE);
- 	mmu_info->pgsize_bitmap = SZ_4K;
- 	mmu_info->dev = &isp->pdev->dev;
- 
+ static const struct of_device_id imx_pd_dt_ids[] = {
 -- 
 2.43.0
 
