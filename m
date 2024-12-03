@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD69D1F75BB;
-	Tue,  3 Dec 2024 15:04:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03E3E33FE;
+	Tue,  3 Dec 2024 15:04:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733238249; cv=none; b=kRUPGtFy5Q0x1SuxMUmaTqVf9gFLIl30GPmU3zPjR4pW35sxvPSfK+ksfGBCLUSO/rggZLb/WUVXpVDl+HSV+9z+JHkLqGAvflAG3Jr1nNfJ8h/ZOuES/+l1d/GGDq6RaBqNPBB6kKczhHddxKCzXfUQJxfaklGRCJiH1s1O1/4=
+	t=1733238253; cv=none; b=C8W+JSJMFfqsrpcfqkkXP9qU/ZysuHh6AnvfgiFV5EZbYq4Zjnw/DF9UgRQ+IIsq013KD/fQ7XcIAeMTiJWIXoqAA1LOS81Lea96kqzvYF87O4qsWRs98wH3euFqJoQGWii2hPGN6IxfBninIUdfj81ZhlMuGCWzWwagT5VWRB4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733238249; c=relaxed/simple;
-	bh=6kmSni5xYFEN17AAU6rw2Btl+a0XVi5JfocRLgrn0lg=;
+	s=arc-20240116; t=1733238253; c=relaxed/simple;
+	bh=ZSV6cY7ECoocDWsIEeUcMgfj2DibJ1cTZPLSPDCihrc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=vEsWRok4sHIzV4U9/fUF9z+J2kqzTT7w5lcK1Pe1MxnTo9QBPLnrXZd1TjYDPqg6YKkwEx1afWX6dl6we/FE34x2sG2PtajTjeBSseLLZVQSwjbdAl496Qo2bHxHMXUrBAFy5a+VYmzZEjjjomOqgxTuq1koluFM6TmB5S1+oCw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pO1fmL8o; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZkOgmp5wdRvTYQCQBnsj5fBhO/MjSJqPnHBAEYu1JabSo3ib/RhcvWvC+XiOdWNCBQJqXY+2MgjnpI40Po6rWrpMuQKI/4AlcAA+WmMGkb4q3zlPKP9AQNOhCNoc+TazcpQEBDJKlAuqbzTn1pWpc2irJeTILBQIB6lWUfERjZw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YJzTQ5/k; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pO1fmL8o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CD05C4CECF;
-	Tue,  3 Dec 2024 15:04:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YJzTQ5/k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 328AAC4CECF;
+	Tue,  3 Dec 2024 15:04:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733238249;
-	bh=6kmSni5xYFEN17AAU6rw2Btl+a0XVi5JfocRLgrn0lg=;
+	s=korg; t=1733238252;
+	bh=ZSV6cY7ECoocDWsIEeUcMgfj2DibJ1cTZPLSPDCihrc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pO1fmL8owmeEolyVpQlN6OQTx3ZQJ5JQ1XkNtDP8KW1p9D3W7k4o07oBc1EFjW2ni
-	 AIewe+eiH3lZX1p//jbMvvOUppbR79Q/7CBwCgMVDtp0f6npoe4t+2CSE5DQCAw9x6
-	 KjUkv8npnGpx8oHXw74koD1d7MG8bHKoyuvsOXNA=
+	b=YJzTQ5/kwUYdcKGUuhcYo0M+v6/pSHaziSpp6HNEOF6YqJ5VlfdwJA0a5Q2r4YGlh
+	 LrNR5GiJtbBxig/VBBfnq+jzAVvtiWwBUmVPn87sEX90KLxleXHbsZx2nle36x+hYu
+	 i+xcI+xEWEVKGKNp9de7y2TpFTtOlS0uuQZnl2po=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Yufan <chenyufan@vivo.com>,
+	Frank Binns <frank.binns@imgtec.com>,
 	Matt Coster <matt.coster@imgtec.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 214/817] drm/imagination: Convert to use time_before macro
-Date: Tue,  3 Dec 2024 15:36:26 +0100
-Message-ID: <20241203144004.103947404@linuxfoundation.org>
+Subject: [PATCH 6.11 215/817] drm/imagination: Use pvr_vm_context_get()
+Date: Tue,  3 Dec 2024 15:36:27 +0100
+Message-ID: <20241203144004.142350917@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -51,36 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen Yufan <chenyufan@vivo.com>
+From: Matt Coster <Matt.Coster@imgtec.com>
 
-[ Upstream commit 7a5115ba1d691bd14db91d2fcc3ce0b056574ce9 ]
+[ Upstream commit eb4accc5234525e2cb2b720187ccaf6db99b705f ]
 
-Use time_*() macros instead of using jiffies directly to handle overflow
-issues.
+I missed this open-coded kref_get() while trying to debug a refcount
+bug, so let's use the helper function here to avoid that waste of time
+again in the future.
 
-Fixes: cc1aeedb98ad ("drm/imagination: Implement firmware infrastructure and META FW support")
-Signed-off-by: Chen Yufan <chenyufan@vivo.com>
-Reviewed-by: Matt Coster <matt.coster@imgtec.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240823093925.9599-1-chenyufan@vivo.com
+Fixes: ff5f643de0bf ("drm/imagination: Add GEM and VM related code")
+Reviewed-by: Frank Binns <frank.binns@imgtec.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/8616641d-6005-4b25-bc0a-0b53985a0e08@imgtec.com
 Signed-off-by: Matt Coster <matt.coster@imgtec.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/imagination/pvr_ccb.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/imagination/pvr_vm.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/imagination/pvr_ccb.c b/drivers/gpu/drm/imagination/pvr_ccb.c
-index 4deeac7ed40a4..2bbdc05a3b977 100644
---- a/drivers/gpu/drm/imagination/pvr_ccb.c
-+++ b/drivers/gpu/drm/imagination/pvr_ccb.c
-@@ -321,7 +321,7 @@ static int pvr_kccb_reserve_slot_sync(struct pvr_device *pvr_dev)
- 	bool reserved = false;
- 	u32 retries = 0;
+diff --git a/drivers/gpu/drm/imagination/pvr_vm.c b/drivers/gpu/drm/imagination/pvr_vm.c
+index 7bd6ba4c6e8ab..363f885a70982 100644
+--- a/drivers/gpu/drm/imagination/pvr_vm.c
++++ b/drivers/gpu/drm/imagination/pvr_vm.c
+@@ -654,9 +654,7 @@ pvr_vm_context_lookup(struct pvr_file *pvr_file, u32 handle)
  
--	while ((jiffies - start_timestamp) < (u32)RESERVE_SLOT_TIMEOUT ||
-+	while (time_before(jiffies, start_timestamp + RESERVE_SLOT_TIMEOUT) ||
- 	       retries < RESERVE_SLOT_MIN_RETRIES) {
- 		reserved = pvr_kccb_try_reserve_slot(pvr_dev);
- 		if (reserved)
+ 	xa_lock(&pvr_file->vm_ctx_handles);
+ 	vm_ctx = xa_load(&pvr_file->vm_ctx_handles, handle);
+-	if (vm_ctx)
+-		kref_get(&vm_ctx->ref_count);
+-
++	pvr_vm_context_get(vm_ctx);
+ 	xa_unlock(&pvr_file->vm_ctx_handles);
+ 
+ 	return vm_ctx;
 -- 
 2.43.0
 
