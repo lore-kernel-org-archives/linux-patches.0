@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5C5D1F4709;
-	Tue,  3 Dec 2024 14:59:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B8481F4283;
+	Tue,  3 Dec 2024 14:59:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733237979; cv=none; b=XxrG4IFQGaBCvnfV3V9XCdUhYCZXlIP7VMAZRnqm6qyeDlvnV0VKi4xRQFo8Ed3Gt+/OgSOHasSexyIECgVjY7zpu/UBXYHOor1QS532hCwCs5rkESDrR45EKMJp6j5dLJQf6Pp0djquf7H8MAXKYBSMZ9aDQxaVXLUmIhkgVb4=
+	t=1733237982; cv=none; b=jDgiZqJyTpj6p6agq3+I9Ut69ZlbbJfu2LDky/kSf59/+YOxLcVcM+hvJq64v1QHryoLbG1wXcFy6PGeogT6tmThG4oFm+UcOUrgOiQGfC7naPOQswDU3wreyUW2V1jBK55L1enWw0Yvza/1T4tF2g+xzRua3vEoBsTRZjeSTsY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733237979; c=relaxed/simple;
-	bh=j7tgS2RjnBN5Y2Vd9RuMBCEc+ZFyNwe14gY5r2haIuw=;
+	s=arc-20240116; t=1733237982; c=relaxed/simple;
+	bh=tBC+0/oqGH14jg007fSij66WyBqJMFu26F0QrRWtiOk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t3OrYSLfV6rULWH/zlUy2qEIBXZzQKRtV9/ZgGgCXei5ivj0V/IH5BdEKBrsVnDczkt5Gwrb5sEY1/nRZTqN8W2TGs1Ktw2guQdfMcaBTFUwPse/xDRtvSC6vKvbzfQ13d9ZTYXWdGijpZjcjKUG9N9pg+Pw5RbRp1DS/XevRTY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ASqwdT1r; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=A++BIg/blp8PvIMNU+uHvKS+BC0VIDQ/9IRbShwQwjL3gy36CgFCbAGe9G/U1P4K7qa+rIMyloZD26ENjuyQkbfB0i+7jHUg5FP5kQbfaWDNFMnGmyHvIudMfdQOkAsfDXLmKfKvdzHCZrO9dWQf90mKkNbLSBt/nEKkm1oGULg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vKpXntD/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ASqwdT1r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53CD2C4CECF;
-	Tue,  3 Dec 2024 14:59:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vKpXntD/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9B50C4CECF;
+	Tue,  3 Dec 2024 14:59:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733237978;
-	bh=j7tgS2RjnBN5Y2Vd9RuMBCEc+ZFyNwe14gY5r2haIuw=;
+	s=korg; t=1733237982;
+	bh=tBC+0/oqGH14jg007fSij66WyBqJMFu26F0QrRWtiOk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ASqwdT1rWdb7Jcbux83S3c+l2wJXaY7bL3Buavd79kX9oCktULHdKOgNeDyXdZ8WX
-	 sVXJug/WhWH8F/LEMvWOe7BPpN07cU7JiLanVdymDwCN6JL/T4W/3l/JRJL96W7gRF
-	 Ivm0n6Yg4JPj6jxy2e+kSis8laN1C/+420PRBGAg=
+	b=vKpXntD/R/oA1zCbfQmvmfIhhRlg2r820RgNWvLyNV2A/TxpEWMuCzlLnEVYiEtdY
+	 Tb7EyS4klmUT0JcppyNxJkkBLAHkDcE85UZkLEl7U7ihMT2ALXjpRHm6/EJCX4Ia1H
+	 HWDtmE48x10P10gNL+3YANYd1uxASUKR7iBjmhTY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Ridong <chenridong@huawei.com>,
+	Nicolai Stange <nstange@suse.com>,
+	Michal Suchanek <msuchanek@suse.de>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 123/817] crypto: bcm - add error check in the ahash_hmac_init function
-Date: Tue,  3 Dec 2024 15:34:55 +0100
-Message-ID: <20241203144000.516451796@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>,
+	Michael Ellerman <mpe@ellerman.id.au>
+Subject: [PATCH 6.11 124/817] crypto: aes-gcm-p10 - Use the correct bit to test for P10
+Date: Tue,  3 Dec 2024 15:34:56 +0100
+Message-ID: <20241203144000.554716881@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -51,45 +53,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen Ridong <chenridong@huawei.com>
+From: Michal Suchanek <msuchanek@suse.de>
 
-[ Upstream commit 19630cf57233e845b6ac57c9c969a4888925467b ]
+[ Upstream commit 3574a5168ff3b6bddc4cd235878491f75967c8d4 ]
 
-The ahash_init functions may return fails. The ahash_hmac_init should
-not return ok when ahash_init returns error. For an example, ahash_init
-will return -ENOMEM when allocation memory is error.
+A hwcap feature bit is passed to cpu_has_feature, resulting in testing
+for CPU_FTR_MMCRA instead of the 3.1 platform revision.
 
-Fixes: 9d12ba86f818 ("crypto: brcm - Add Broadcom SPU driver")
-Signed-off-by: Chen Ridong <chenridong@huawei.com>
+Fixes: c954b252dee9 ("crypto: powerpc/p10-aes-gcm - Register modules as SIMD")
+Reported-by: Nicolai Stange <nstange@suse.com>
+Signed-off-by: Michal Suchanek <msuchanek@suse.de>
+Acked-by: Michael Ellerman <mpe@ellerman.id.au> (powerpc)
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/bcm/cipher.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ arch/powerpc/crypto/aes-gcm-p10-glue.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/crypto/bcm/cipher.c b/drivers/crypto/bcm/cipher.c
-index 1a3ecd44cbaf6..20f6453670aa4 100644
---- a/drivers/crypto/bcm/cipher.c
-+++ b/drivers/crypto/bcm/cipher.c
-@@ -2415,6 +2415,7 @@ static int ahash_hmac_setkey(struct crypto_ahash *ahash, const u8 *key,
- 
- static int ahash_hmac_init(struct ahash_request *req)
+diff --git a/arch/powerpc/crypto/aes-gcm-p10-glue.c b/arch/powerpc/crypto/aes-gcm-p10-glue.c
+index e52629334cf80..1f8b677756582 100644
+--- a/arch/powerpc/crypto/aes-gcm-p10-glue.c
++++ b/arch/powerpc/crypto/aes-gcm-p10-glue.c
+@@ -414,7 +414,7 @@ static int __init p10_init(void)
  {
-+	int ret;
- 	struct iproc_reqctx_s *rctx = ahash_request_ctx(req);
- 	struct crypto_ahash *tfm = crypto_ahash_reqtfm(req);
- 	struct iproc_ctx_s *ctx = crypto_ahash_ctx(tfm);
-@@ -2424,7 +2425,9 @@ static int ahash_hmac_init(struct ahash_request *req)
- 	flow_log("ahash_hmac_init()\n");
+ 	int ret;
  
- 	/* init the context as a hash */
--	ahash_init(req);
-+	ret = ahash_init(req);
-+	if (ret)
-+		return ret;
+-	if (!cpu_has_feature(PPC_FEATURE2_ARCH_3_1))
++	if (!cpu_has_feature(CPU_FTR_ARCH_31))
+ 		return 0;
  
- 	if (!spu_no_incr_hash(ctx)) {
- 		/* SPU-M can do incr hashing but needs sw for outer HMAC */
+ 	ret = simd_register_aeads_compat(gcm_aes_algs,
 -- 
 2.43.0
 
