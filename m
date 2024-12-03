@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53D8F23CE;
-	Tue,  3 Dec 2024 16:06:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E2A423CE;
+	Tue,  3 Dec 2024 16:06:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733241970; cv=none; b=VbiE8Q/GKTbvqza4P15lq6DCfS0useM112lsZzxPPN++iEtuzq612MY8/f9N+N3I98yIbQxZbCmt749kMCrqfqGPB4zjuMfWuklK9XkMl+PtPjgA4hZukdTF0jh1Vj06q5gOnf0rkAPTbo75VGBfgXoy7gXWlcYKu3Cb9wrm5eY=
+	t=1733241974; cv=none; b=ctyn2w8f3jRudpo7ilA8sstge1kwPKzzvYw9+NXNlhp+Jajjo3vuhas2WcU50fFK0MWe+4afEQgVuig1B2Z1yPvwqMcTxD3tzfOwVELwpMMESnpZx+hQL/N1LoZS2evUa9Wo07+sQMxvMRJxtpjEIYGGeCAoYG4ZkaWC0321TPo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733241970; c=relaxed/simple;
-	bh=yfae5t2PM2KFj7Y+tf25kEW0Gheg/a7pS3rvPp8O37U=;
+	s=arc-20240116; t=1733241974; c=relaxed/simple;
+	bh=NDZQ3Sdg48CXAJRNVesRPhp6ctYwaGzi30Dm4pvBEaw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T4N15FfdStYRYxDi/KqSOV9lRruAHPyxAzPhpciAOfCIitWgLoOo3kxSN5TmackJfS0hzRdxV8hQ4lRtXZL9KydVLLOpytFyparCGu9vIBCn4fovaEOfm32c+UPRCe2T3BeIDymh84CYk3v/HTM1oAGgb925FeRe/SnwWsQIINo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X0tI5nGG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qkCw0Muw6HlXrtX179oIieP7Sh2MQe+BTkCi3RAQhu2Glwb2jNsCex5uEwsWa0LdUaGs72OVXzrwOnhQ0dbEm4SDB1DHqNVVBxo/yRrywOEj9E2ELTfPVlPsKNQYWmRNaLO93FigDHCamRTTwvOqaK7p/6y/rZFQ/iyG8MgPZGk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sCb+XbhT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X0tI5nGG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B77E9C4CECF;
-	Tue,  3 Dec 2024 16:06:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sCb+XbhT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3562FC4CECF;
+	Tue,  3 Dec 2024 16:06:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733241970;
-	bh=yfae5t2PM2KFj7Y+tf25kEW0Gheg/a7pS3rvPp8O37U=;
+	s=korg; t=1733241973;
+	bh=NDZQ3Sdg48CXAJRNVesRPhp6ctYwaGzi30Dm4pvBEaw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X0tI5nGGT7vr4AZf/GA5qvO4J7rXwE06bsy1tuyAWTo9BUQXgGBBxsotpiswlotvl
-	 dT1KyJaeEvaPQXQblkrl1jBe0IyTw8bwsH71doSCOJkOsiURAxcZ1SrziygGzf7Hcw
-	 Rxpg/5js26U144IWOci2ZTlVT6sSWWdyRqdMmiU0=
+	b=sCb+XbhTOBGIqh1+g1HAcau5gJei+7iRJr4sOdZHP0rkPqjKg07R+QaRRnrGsrUAP
+	 wNSMmSeAC9Mz97Al3UmRBUYDEWK626W0ZOK8YAEldEgoAiUw3zBwLiH49P2Sd/ZHm0
+	 17aD7tRISdR7fj7vf3wXt/LU8lPfD5eLJlR/E6R8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
+	Hariprasad Kelam <hkelam@marvell.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 569/826] net: stmmac: dwmac-socfpga: Set RX watchdog interrupt as broken
-Date: Tue,  3 Dec 2024 15:44:56 +0100
-Message-ID: <20241203144805.945850583@linuxfoundation.org>
+Subject: [PATCH 6.12 570/826] octeontx2-af: RPM: Fix mismatch in lmac type
+Date: Tue,  3 Dec 2024 15:44:57 +0100
+Message-ID: <20241203144805.983953427@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -51,48 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maxime Chevallier <maxime.chevallier@bootlin.com>
+From: Hariprasad Kelam <hkelam@marvell.com>
 
-[ Upstream commit 407618d66dba55e7db1278872e8be106808bbe91 ]
+[ Upstream commit 7ebbbb23ea5b6d051509cb11399afac5042c9266 ]
 
-On DWMAC3 and later, there's a RX Watchdog interrupt that's used for
-interrupt coalescing. It's known to be buggy on some platforms, and
-dwmac-socfpga appears to be one of them. Changing the interrupt
-coalescing from ethtool doesn't appear to have any effect here.
+Due to a bug in the previous patch, there is a mismatch
+between the lmac type reported by the driver and the actual
+hardware configuration.
 
-Without disabling RIWT (Received Interrupt Watchdog Timer, I
-believe...), we observe latencies while receiving traffic that amount to
-around ~0.4ms. This was discovered with NTP but can be easily reproduced
-with a simple ping. Without this patch :
-
-64 bytes from 192.168.5.2: icmp_seq=1 ttl=64 time=0.657 ms
-
-With this patch :
-
-64 bytes from 192.168.5.2: icmp_seq=1 ttl=64 time=0.254 ms
-
-Fixes: 801d233b7302 ("net: stmmac: Add SOCFPGA glue driver")
-Signed-off-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Link: https://patch.msgid.link/20241122141256.764578-1-maxime.chevallier@bootlin.com
+Fixes: 3ad3f8f93c81 ("octeontx2-af: cn10k: MAC internal loopback support")
+Signed-off-by: Hariprasad Kelam <hkelam@marvell.com>
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/dwmac-socfpga.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/ethernet/marvell/octeontx2/af/rpm.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-socfpga.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-socfpga.c
-index fdb4c773ec98a..e897b49aa9e05 100644
---- a/drivers/net/ethernet/stmicro/stmmac/dwmac-socfpga.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-socfpga.c
-@@ -486,6 +486,8 @@ static int socfpga_dwmac_probe(struct platform_device *pdev)
- 	plat_dat->pcs_exit = socfpga_dwmac_pcs_exit;
- 	plat_dat->select_pcs = socfpga_dwmac_select_pcs;
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rpm.c b/drivers/net/ethernet/marvell/octeontx2/af/rpm.c
+index 1b34cf9c97035..9e8c5e4389f8b 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/rpm.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/rpm.c
+@@ -467,7 +467,7 @@ u8 rpm_get_lmac_type(void *rpmd, int lmac_id)
+ 	int err;
  
-+	plat_dat->riwt_off = 1;
-+
- 	ret = stmmac_dvr_probe(&pdev->dev, plat_dat, &stmmac_res);
- 	if (ret)
- 		return ret;
+ 	req = FIELD_SET(CMDREG_ID, CGX_CMD_GET_LINK_STS, req);
+-	err = cgx_fwi_cmd_generic(req, &resp, rpm, 0);
++	err = cgx_fwi_cmd_generic(req, &resp, rpm, lmac_id);
+ 	if (!err)
+ 		return FIELD_GET(RESP_LINKSTAT_LMAC_TYPE, resp);
+ 	return err;
 -- 
 2.43.0
 
