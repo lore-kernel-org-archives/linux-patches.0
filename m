@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1033D1F666F;
-	Tue,  3 Dec 2024 14:34:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8604D1F666F;
+	Tue,  3 Dec 2024 14:34:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733236479; cv=none; b=U3blMDczCaLw8WFwhba72FnqgVYt5KZYRXSFqrkBTQSJx2TC//UOHXF0ZFBB5o3NNKOBIM9JaBcYse2csBHDxk18Ygc7Ip+2tbau9efWHXKVF1ME9HHHlR4v2pY+xmEMvE1AD+rBkOMJOJOKB/QvUqk+CfpLrbztC9Yr4Bc3Eas=
+	t=1733236482; cv=none; b=jmOVE5mSANlQC/AYMYsWyxVxbtJ6WhxyDfqnk9ljiqFCM0EandqKOI48VTH3oEUyS6zpLrluuy+cHMxFb7P5fv8sAW7JuSWStNBo0NhOCOyhbdNKmyx2CP10MlHVqke9IbNKbkq3xM6ExyrnV9EQa479pp7s+wQS/a9i1flkdi8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733236479; c=relaxed/simple;
-	bh=VBkkYDm1aRzmF1dSwgKuphZxxLqM0mtu5UchqJD/92U=;
+	s=arc-20240116; t=1733236482; c=relaxed/simple;
+	bh=bQtF7souVXElaDFAUD1TCbohw97GyzMim7msDbr95sA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IguYSfPy/EmD5mzT/VdoU5kJfmlMnPGtxgE52JTjdPv9M5KPaiqH9ei6U8wTi+u0SIGa6ARpCCoxg83wXGVl1griYUOrdKoF1FzmY5h2eYpufoNN8kcshztRYpozdNiTPYMEFGZSKXvPkjSQdVU1xu6dBropvYcJV0IuXtvsraE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OedCTkEC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=id1PRVkb179Nzx6MjKHHYEEMAORtMWa77SNKdTh8goBavJXafbBmx3G6V3v79ulwsN23w+LwTsSPIj6zzMMlIZkdg1Nlz20efR3esa+QmPEd/3j0MdMjMUigPGS4NvE28VszdD8bfeWl+MRDcVAJBYlvPD3TnOQOV4cGGe+6YsA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1JPrxiJj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OedCTkEC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 751EFC4CECF;
-	Tue,  3 Dec 2024 14:34:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1JPrxiJj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9582C4CECF;
+	Tue,  3 Dec 2024 14:34:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733236478;
-	bh=VBkkYDm1aRzmF1dSwgKuphZxxLqM0mtu5UchqJD/92U=;
+	s=korg; t=1733236482;
+	bh=bQtF7souVXElaDFAUD1TCbohw97GyzMim7msDbr95sA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OedCTkECGyyaT85+xa3779hRktNJU70p2PwCiMqN/TvGImUxFFQ7kYTpV/LG33R70
-	 21kqut7WOfC8RhSvLB3hsKB9sgH5HObKVaVZUzD88B4j6EvfuWoInfGSVOPnhHN6HI
-	 90y4XUKZYW7B4pNStxNhx2bfnayHmwWx0ojUAdoA=
+	b=1JPrxiJjd9KKxB8eMSRDbwaUosgk/aGwXN4X8i6uwtN97mEOKgo9hlXi1Xp/zdLa7
+	 d9dwbA3HY+b5Ffb9XtVPRgxrIt5NHkcnur2itQU/xFoF8F0ee4xN7mUo4CZmjHdLMM
+	 9OUppoYrJ1uRhhhZY77mRzsmffc2SAxQ9pNVW8v4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sam Protsenko <semen.protsenko@linaro.org>,
-	Aurelien Jarno <aurelien@aurel32.net>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 4.19 006/138] Revert "mmc: dw_mmc: Fix IDMAC operation with pages bigger than 4K"
-Date: Tue,  3 Dec 2024 15:30:35 +0100
-Message-ID: <20241203141923.779882913@linuxfoundation.org>
+	kernel test robot <lkp@intel.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>
+Subject: [PATCH 4.19 007/138] media: dvbdev: fix the logic when DVB_DYNAMIC_MINORS is not set
+Date: Tue,  3 Dec 2024 15:30:36 +0100
+Message-ID: <20241203141923.818277282@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203141923.524658091@linuxfoundation.org>
 References: <20241203141923.524658091@linuxfoundation.org>
@@ -51,47 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aurelien Jarno <aurelien@aurel32.net>
+From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 
-commit 1635e407a4a64d08a8517ac59ca14ad4fc785e75 upstream.
+commit a4aebaf6e6efff548b01a3dc49b4b9074751c15b upstream.
 
-The commit 8396c793ffdf ("mmc: dw_mmc: Fix IDMAC operation with pages
-bigger than 4K") increased the max_req_size, even for 4K pages, causing
-various issues:
-- Panic booting the kernel/rootfs from an SD card on Rockchip RK3566
-- Panic booting the kernel/rootfs from an SD card on StarFive JH7100
-- "swiotlb buffer is full" and data corruption on StarFive JH7110
+When CONFIG_DVB_DYNAMIC_MINORS, ret is not initialized, and a
+semaphore is left at the wrong state, in case of errors.
 
-At this stage no fix have been found, so it's probably better to just
-revert the change.
+Make the code simpler and avoid mistakes by having just one error
+check logic used weather DVB_DYNAMIC_MINORS is used or not.
 
-This reverts commit 8396c793ffdf28bb8aee7cfe0891080f8cab7890.
-
-Cc: stable@vger.kernel.org
-Cc: Sam Protsenko <semen.protsenko@linaro.org>
-Fixes: 8396c793ffdf ("mmc: dw_mmc: Fix IDMAC operation with pages bigger than 4K")
-Closes: https://lore.kernel.org/linux-mmc/614692b4-1dbe-31b8-a34d-cb6db1909bb7@w6rz.net/
-Closes: https://lore.kernel.org/linux-mmc/CAC8uq=Ppnmv98mpa1CrWLawWoPnu5abtU69v-=G-P7ysATQ2Pw@mail.gmail.com/
-Signed-off-by: Aurelien Jarno <aurelien@aurel32.net>
-Message-ID: <20241110114700.622372-1-aurelien@aurel32.net>
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Reported-by: kernel test robot <lkp@intel.com>
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Closes: https://lore.kernel.org/r/202410201717.ULWWdJv8-lkp@intel.com/
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Link: https://lore.kernel.org/r/9e067488d8935b8cf00959764a1fa5de85d65725.1730926254.git.mchehab+huawei@kernel.org
+Cc: Nathan Chancellor <nathan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/dw_mmc.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/media/dvb-core/dvbdev.c |   15 ++++-----------
+ 1 file changed, 4 insertions(+), 11 deletions(-)
 
---- a/drivers/mmc/host/dw_mmc.c
-+++ b/drivers/mmc/host/dw_mmc.c
-@@ -2857,8 +2857,8 @@ static int dw_mci_init_slot(struct dw_mc
- 	if (host->use_dma == TRANS_MODE_IDMAC) {
- 		mmc->max_segs = host->ring_size;
- 		mmc->max_blk_size = 65535;
--		mmc->max_req_size = DW_MCI_DESC_DATA_LENGTH * host->ring_size;
--		mmc->max_seg_size = mmc->max_req_size;
-+		mmc->max_seg_size = 0x1000;
-+		mmc->max_req_size = mmc->max_seg_size * host->ring_size;
- 		mmc->max_blk_count = mmc->max_req_size / 512;
- 	} else if (host->use_dma == TRANS_MODE_EDMAC) {
- 		mmc->max_segs = 64;
+--- a/drivers/media/dvb-core/dvbdev.c
++++ b/drivers/media/dvb-core/dvbdev.c
+@@ -544,6 +544,9 @@ int dvb_register_device(struct dvb_adapt
+ 	for (minor = 0; minor < MAX_DVB_MINORS; minor++)
+ 		if (dvb_minors[minor] == NULL)
+ 			break;
++#else
++	minor = nums2minor(adap->num, type, id);
++#endif
+ 	if (minor >= MAX_DVB_MINORS) {
+ 		if (new_node) {
+ 			list_del (&new_node->list_head);
+@@ -557,17 +560,7 @@ int dvb_register_device(struct dvb_adapt
+ 		mutex_unlock(&dvbdev_register_lock);
+ 		return -EINVAL;
+ 	}
+-#else
+-	minor = nums2minor(adap->num, type, id);
+-	if (minor >= MAX_DVB_MINORS) {
+-		dvb_media_device_free(dvbdev);
+-		list_del(&dvbdev->list_head);
+-		kfree(dvbdev);
+-		*pdvbdev = NULL;
+-		mutex_unlock(&dvbdev_register_lock);
+-		return ret;
+-	}
+-#endif
++
+ 	dvbdev->minor = minor;
+ 	dvb_minors[minor] = dvb_device_get(dvbdev);
+ 	up_write(&minor_rwsem);
 
 
