@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB9A91F76B4;
-	Tue,  3 Dec 2024 15:30:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A14AA1F76A2;
+	Tue,  3 Dec 2024 15:30:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733239852; cv=none; b=vB/Sqf2mYHu7hj8kEPfo76tWTqNWIRFu0+84YLglfuk8ULQKaJSkhL/9xui3Dhl0bj+0ZyOPJ8yGDzWbSzb2lav9Uvw3JRMVhho690Rq5SwZYq+l5Z0qmL7/vf5wfuIOHnIx7fXjui0Lna6OC+KxRQcxFJ1h72cF/Ru0mwdhSj8=
+	t=1733239855; cv=none; b=SjmSJC6jr8SE4wcZwBKafVgDvyq3bmf0Wm6ORoqUlSpf4v1qLgd2iJXSGHOWs2vB7alCkcDxxlQedu0/hZ35Hhj7I/9hqafWsrfv7JhBNYhjscEU233xLbMl+94ZKB5wT9RngukSaCZyYXVxcBuKEur0bO9A13vPBtu5fMH3q4M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733239852; c=relaxed/simple;
-	bh=fF6mVmuLdBrr2JSzymty37Yv9TqGdPTQ7khiv3IrKqY=;
+	s=arc-20240116; t=1733239855; c=relaxed/simple;
+	bh=wiCBTjt7C3Eus3ELw9mVqSdF7/n8meqw+NnZFydKMfs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=snc15FNzt7vUPy/RozNxH3TUNsYGJp+LQxvMyp9o2bJt1VQLESDem5t2/Nc+hsTZhj3r18IbIrbZPlWwpe+mnKzOKPGaaRfG6eDHZuquAF0Wg0AS4LxBeuGXX4Z8tpR0ViwRFNrzJNYegVNwuDqLgHNALFlTqBeuSvhJszCtP9Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HSIAIPSs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hgWXj1mn83od1q6rNs0YBegV6twhAYmDoKcbR/FQGV78RXKj/4qjVqr7knh4PrEUEAa+mWlOUWLSBsPXJVwYwxtFEsxie7Lv4NQbXx/b63pTohRmpugpPBRGzLnU8qjbmLLScW/ScVxRUkuyuTZJ4MDFoo+0i/GPK+/dSKNjUSk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R2qjPFOX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HSIAIPSs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 404CEC4CED8;
-	Tue,  3 Dec 2024 15:30:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R2qjPFOX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21CC2C4CED8;
+	Tue,  3 Dec 2024 15:30:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733239852;
-	bh=fF6mVmuLdBrr2JSzymty37Yv9TqGdPTQ7khiv3IrKqY=;
+	s=korg; t=1733239855;
+	bh=wiCBTjt7C3Eus3ELw9mVqSdF7/n8meqw+NnZFydKMfs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HSIAIPSsyY+RanXKwTjysiCxZ11/lf/I13MoqnikMSc03MeHrXD50m48o3k3SLDnV
-	 TClYTubz+s+7JCsJxih0msvNOkDZFNb8r0ejCwwQKNlal+iU+g6kPnijdoQRpBwM8N
-	 9z+UfgpxXkJ5pV52tmD0MvTB6/55eOekBKCUQMSI=
+	b=R2qjPFOXLrAQ6Y7e9vqeN2aSAE/9aZ0RsHWT+J1xSM9M9nDJrdZ6mPMEIj959laNz
+	 vTBHy0CebBpxFWpGElb+SIV+i+uVDqdlXaMC8RCXOegpR/qoOfW0puI/lMf5yOlp6c
+	 vnJw7FZLY1a1hENE9Q2ZMtvunYj6rWBzgugIA3ck=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
-	William Breathitt Gray <wbg@kernel.org>
-Subject: [PATCH 6.11 757/817] counter: stm32-timer-cnt: fix device_node handling in probe_encoder()
-Date: Tue,  3 Dec 2024 15:45:29 +0100
-Message-ID: <20241203144025.544897800@linuxfoundation.org>
+	Ming Lei <ming.lei@redhat.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.11 758/817] ublk: fix error code for unsupported command
+Date: Tue,  3 Dec 2024 15:45:30 +0100
+Message-ID: <20241203144025.583732910@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -50,37 +50,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+From: Ming Lei <ming.lei@redhat.com>
 
-commit 147359e23e5c9652ff8c5a98a51a7323bd51c94a upstream.
+commit 34c1227035b3ab930a1ae6ab6f22fec1af8ab09e upstream.
 
-Device nodes accessed via of_get_compatible_child() require
-of_node_put() to be called when the node is no longer required to avoid
-leaving a reference to the node behind, leaking the resource.
+ENOTSUPP is for kernel use only, and shouldn't be sent to userspace.
 
-In this case, the usage of 'tnode' is straightforward and there are no
-error paths, allowing for a single of_node_put() when 'tnode' is no
-longer required.
+Fix it by replacing it with EOPNOTSUPP.
 
 Cc: stable@vger.kernel.org
-Fixes: 29646ee33cc3 ("counter: stm32-timer-cnt: add checks on quadrature encoder capability")
-Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
-Link: https://lore.kernel.org/r/20241027-stm32-timer-cnt-of_node_put-v1-1-ebd903cdf7ac@gmail.com
-Signed-off-by: William Breathitt Gray <wbg@kernel.org>
+Fixes: bfbcef036396 ("ublk_drv: move ublk_get_device_from_id into ublk_ctrl_uring_cmd")
+Signed-off-by: Ming Lei <ming.lei@redhat.com>
+Link: https://lore.kernel.org/r/20241119030646.2319030-1-ming.lei@redhat.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/counter/stm32-timer-cnt.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/block/ublk_drv.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/counter/stm32-timer-cnt.c
-+++ b/drivers/counter/stm32-timer-cnt.c
-@@ -700,6 +700,7 @@ static int stm32_timer_cnt_probe_encoder
+--- a/drivers/block/ublk_drv.c
++++ b/drivers/block/ublk_drv.c
+@@ -2975,7 +2975,7 @@ static int ublk_ctrl_uring_cmd(struct io
+ 		ret = ublk_ctrl_end_recovery(ub, cmd);
+ 		break;
+ 	default:
+-		ret = -ENOTSUPP;
++		ret = -EOPNOTSUPP;
+ 		break;
  	}
  
- 	ret = of_property_read_u32(tnode, "reg", &idx);
-+	of_node_put(tnode);
- 	if (ret) {
- 		dev_err(dev, "Can't get index (%d)\n", ret);
- 		return ret;
 
 
