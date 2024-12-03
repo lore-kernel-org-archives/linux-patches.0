@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70B6B1E3DED;
-	Tue,  3 Dec 2024 15:27:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FDD91F473A;
+	Tue,  3 Dec 2024 15:27:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733239669; cv=none; b=H8wJ9wWCHhl5to9YwvkLiiGk3jfQKl9wIq6zMTEdufIsjAK4bcvNEmWE3w6Wn0ZrI1OsW90NxkYEjon4Il4cnSWnEUSPzfpkFxTVcZAos+80cFJQzafAHiHW2lC9qo2NqqTK8AudbE8IKvmhAINZkniXfylR2FZZWSTLJRCBoyM=
+	t=1733239672; cv=none; b=hWeEY2B21F6kHJcqgi54w1VzsCORPRPsMuLKl3wofrsL+W1I4YJJeC1R1le+OXG4BGHH2bPfpYm2gIwpGmU26Qma43TgHPsGtuqLhrQHV13aeNNqnbXpcVg2O9HmvFOhSjv6nEPDB1qN7sZzhJuAopaDnoZUroa1+3lL/EDmgkE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733239669; c=relaxed/simple;
-	bh=OreZVNfYjjGaIf+cJZCw2YvmzIUc5s8ELOHDG1EPUJA=;
+	s=arc-20240116; t=1733239672; c=relaxed/simple;
+	bh=I6Lkp9TdwxBdByviiV+HT4f04mJpkbp9yG/Jt4oqgL4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SHo7m36HQl7KTe80pvXPqTNJPofklpqScAliyRTwDBZ7BmylfnmIsPkOt6Lqj+4S1+LzXEorxdAGBhDxJmbsEVKuNXci7kB1y21oLuxm/wU63Le8t9aCWx+w6Y90NouRYibCep1TkXL39Q+l4apyG9M6bLq5ZOi/R+YP6YFy9wc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ObP5gCEB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YEHwBnCCqoFOoerhaBlWdwk0H2zAlpeFWGGvzOuHAy08fkmGpFVBt0GO0cbW4ZD0NKK6LTJ3v3q6+U7IlS+p8F8+M4LVcXPmOx+cf5fFpAXTXCgtLZqVVQ9kGic+lHOJPQfxiDbKSBcY1KudyAALhxxAObtCquvJjXwLVOHa5ao=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Td3ZBHkr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ObP5gCEB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBFAEC4CECF;
-	Tue,  3 Dec 2024 15:27:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Td3ZBHkr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19769C4CECF;
+	Tue,  3 Dec 2024 15:27:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733239669;
-	bh=OreZVNfYjjGaIf+cJZCw2YvmzIUc5s8ELOHDG1EPUJA=;
+	s=korg; t=1733239672;
+	bh=I6Lkp9TdwxBdByviiV+HT4f04mJpkbp9yG/Jt4oqgL4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ObP5gCEB574UnTgQ6f5am2h3zFTK15lY4XFsmda5XGyQN5DaXlMCw3h6zTgkWeE43
-	 yPlkmDNfI1WtGEhWGfIjIK3aPB7l9ro14rgqhqhCwtd71Kz2OO8KHJmKnj4Pl3NS+2
-	 c7F3QNjORPfHqFdRWWgfw3i/lo/M1KRERxBZjqGE=
+	b=Td3ZBHkrXQTq8if4idtrDriMHTHUv0eB8kCpYtr83koVD7twdIOv/PWklSGHXq6Uk
+	 tUXCGhZfTmmvxDj5FCjVgA9y76XqJXPGjjPX35av/wJSEszXahnWRQMz6QbkxktWB1
+	 pHsy1yQUXBG+VFrj5wj0DbpJDAV3SG71Q9oEd2kI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+2159cbb522b02847c053@syzkaller.appspotmail.com,
-	Pavel Begunkov <asml.silence@gmail.com>,
+	Mikulas Patocka <mpatocka@redhat.com>,
+	Christoph Hellwig <hch@lst.de>,
 	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.11 694/817] io_uring: check for overflows in io_pin_pages
-Date: Tue,  3 Dec 2024 15:44:26 +0100
-Message-ID: <20241203144023.065506618@linuxfoundation.org>
+Subject: [PATCH 6.11 695/817] blk-settings: round down io_opt to physical_block_size
+Date: Tue,  3 Dec 2024 15:44:27 +0100
+Message-ID: <20241203144023.104081930@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -51,50 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pavel Begunkov <asml.silence@gmail.com>
+From: Mikulas Patocka <mpatocka@redhat.com>
 
-commit 0c0a4eae26ac78379d0c1db053de168a8febc6c9 upstream.
+commit 9c0ba14828d64744ccd195c610594ba254a1a9ab upstream.
 
-WARNING: CPU: 0 PID: 5834 at io_uring/memmap.c:144 io_pin_pages+0x149/0x180 io_uring/memmap.c:144
-CPU: 0 UID: 0 PID: 5834 Comm: syz-executor825 Not tainted 6.12.0-next-20241118-syzkaller #0
-Call Trace:
- <TASK>
- __io_uaddr_map+0xfb/0x2d0 io_uring/memmap.c:183
- io_rings_map io_uring/io_uring.c:2611 [inline]
- io_allocate_scq_urings+0x1c0/0x650 io_uring/io_uring.c:3470
- io_uring_create+0x5b5/0xc00 io_uring/io_uring.c:3692
- io_uring_setup io_uring/io_uring.c:3781 [inline]
- ...
- </TASK>
+There was a bug report [1] where the user got a warning alignment
+inconsistency. The user has optimal I/O 16776704 (0xFFFE00) and physical
+block size 4096. Note that the optimal I/O size may be set by the DMA
+engines or SCSI controllers and they have no knowledge about the disks
+attached to them, so the situation with optimal I/O not aligned to
+physical block size may happen.
 
-io_pin_pages()'s uaddr parameter came directly from the user and can be
-garbage. Don't just add size to it as it can overflow.
+This commit makes blk_validate_limits round down optimal I/O size to the
+physical block size of the block device.
 
-Cc: stable@vger.kernel.org
-Reported-by: syzbot+2159cbb522b02847c053@syzkaller.appspotmail.com
-Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
-Link: https://lore.kernel.org/r/1b7520ddb168e1d537d64be47414a0629d0d8f8f.1732581026.git.asml.silence@gmail.com
+Closes: https://lore.kernel.org/dm-devel/1426ad71-79b4-4062-b2bf-84278be66a5d@redhat.com/T/ [1]
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Fixes: a23634644afc ("block: take io_opt and io_min into account for max_sectors")
+Cc: stable@vger.kernel.org	# v6.11+
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Link: https://lore.kernel.org/r/3dc0014b-9690-dc38-81c9-4a316a2d4fb2@redhat.com
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/memmap.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ block/blk-settings.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/io_uring/memmap.c
-+++ b/io_uring/memmap.c
-@@ -137,7 +137,12 @@ struct page **io_pin_pages(unsigned long
- 	struct page **pages;
- 	int ret;
+--- a/block/blk-settings.c
++++ b/block/blk-settings.c
+@@ -250,6 +250,13 @@ static int blk_validate_limits(struct qu
+ 		lim->io_min = lim->physical_block_size;
  
--	end = (uaddr + len + PAGE_SIZE - 1) >> PAGE_SHIFT;
-+	if (check_add_overflow(uaddr, len, &end))
-+		return ERR_PTR(-EOVERFLOW);
-+	if (check_add_overflow(end, PAGE_SIZE - 1, &end))
-+		return ERR_PTR(-EOVERFLOW);
+ 	/*
++	 * The optimal I/O size may not be aligned to physical block size
++	 * (because it may be limited by dma engines which have no clue about
++	 * block size of the disks attached to them), so we round it down here.
++	 */
++	lim->io_opt = round_down(lim->io_opt, lim->physical_block_size);
 +
-+	end = end >> PAGE_SHIFT;
- 	start = uaddr >> PAGE_SHIFT;
- 	nr_pages = end - start;
- 	if (WARN_ON_ONCE(!nr_pages))
++	/*
+ 	 * max_hw_sectors has a somewhat weird default for historical reason,
+ 	 * but driver really should set their own instead of relying on this
+ 	 * value.
 
 
