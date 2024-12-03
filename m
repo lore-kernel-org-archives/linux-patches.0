@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3B6C1F75A4;
-	Tue,  3 Dec 2024 15:17:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE4782D7BF;
+	Tue,  3 Dec 2024 15:17:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733239031; cv=none; b=pcFke+DR734eJIFPxsJ/rKdJnNPr0PsCHs7H4reNh+aGgDpskATFPLCVGeWdf3CSSgGUvZATYWjEpyxlafS690GpKKVGJhx/qNkW+UhN91LPOaAv6v+OjQWDwj84CT6Nug97k0+I0KQvOzSPAsURQ+02Tv3Co6vqsk08n99gcPc=
+	t=1733239034; cv=none; b=C1OhLc7f/iScOBQvh/xPRihYvsL6RcyV6oVMX6ay4ke3NnP5jFe4avmTFIh8rKbvVZIuyPWygQBByKFOtTUE6Uqt/OWQaj0tvK8xOguX/uw42pTf7ZfdiA/gnUQUK6Fq3pboREG4G4cLymMfPaHqB4Y+rQ1nw5tGTxESg2iapwM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733239031; c=relaxed/simple;
-	bh=6bH/rsZaZ6djhZ58EGXTh2UAFaO489pY8Dr+yllTr+4=;
+	s=arc-20240116; t=1733239034; c=relaxed/simple;
+	bh=xKEiPI0uWQNmi7GmdGKRdTIY+N0A5oz60DTmCnwC1Q4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KuE+I7TGJyxugCipWxBov35ncmyVRmzQ+hy7ZPBJsBaZ4moJJ9LXmvhqumInxjpswMtfcHMRjiN6mE901nu0GahIBTY3uE2UgRsknO+ibOY6LDdcxe2PTxdpk5sLiCrvVJ3Da8/lEz2v2fPWekGwsNXHqHKzI8Lb+pwHuSMC9Fo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fg3i6e8X; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=q3VW+dZanFSjObHhEAd1xFLoyjQP6wpoRzktfTBwqr6HGPIlCUSIPMhtMkFG7WRYqvIyCh6GJ3CYbnMAnNSaNUSv7MAHQEUvqOtpKFqyM326hWQrhqqWH3QAS65qTArG+uKNfhBlzmyXVmXWwUrjQk7leYjLHjts/Z1EvhMVkr8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k6wSrjrm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fg3i6e8X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81827C4CECF;
-	Tue,  3 Dec 2024 15:17:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k6wSrjrm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5662BC4CECF;
+	Tue,  3 Dec 2024 15:17:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733239030;
-	bh=6bH/rsZaZ6djhZ58EGXTh2UAFaO489pY8Dr+yllTr+4=;
+	s=korg; t=1733239033;
+	bh=xKEiPI0uWQNmi7GmdGKRdTIY+N0A5oz60DTmCnwC1Q4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fg3i6e8XeYIfAO+dMUpLn10kDT6Dfytm8klLbWLHSK6414ANHQtFt4VZwa74XrX/M
-	 eM9bRkBzCDqcbKDk6eD11HyRfB5tNjKHOBIia25tO0W+ClTJb9CXoTniPPie5pyywN
-	 7OlFHbycm8pvbN+KgDgVBsQmsd4pFdzVzlqEd0Wc=
+	b=k6wSrjrmL98IUqs9ulS8w0k1HBJ2mY2I/a4Ecj17x8a6kOdLGxhxHuD/qnf6HSHmQ
+	 5spogiWIZtK8EHlNTJcA1s9sk4r9v1NJ0ge8tLO0az1DDa+8hzY0CxfTRW2N09+BDv
+	 h5ZqDHECZCF1hzELe1PX7Xsr8Oumdn3r00YP4LEk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zeng Heng <zengheng4@huawei.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 439/817] scsi: fusion: Remove unused variable rc
-Date: Tue,  3 Dec 2024 15:40:11 +0100
-Message-ID: <20241203144013.017018023@linuxfoundation.org>
+Subject: [PATCH 6.11 474/817] arm64: dts: qcom: sc8180x: Add a SoC-specific compatible to cpufreq-hw
+Date: Tue,  3 Dec 2024 15:40:46 +0100
+Message-ID: <20241203144014.372523081@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -51,44 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zeng Heng <zengheng4@huawei.com>
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
-[ Upstream commit bd65694223f7ad11c790ab63ad1af87a771192ee ]
+[ Upstream commit 5df30684415d5a902f23862ab5bbed2a2df7fbf1 ]
 
-The return value of scsi_device_reprobe() is currently ignored in
-_scsih_reprobe_lun(). Fixing the calling code to deal with the potential
-error is non-trivial, so for now just WARN_ON().
+Comply with bindings guidelines and get rid of errors such as:
 
-The handling of scsi_device_reprobe()'s return value refers to
-_scsih_reprobe_lun() and the following link:
+cpufreq@18323000: compatible: 'oneOf' conditional failed, one must be fixed:
+        ['qcom,cpufreq-hw'] is too short
 
-https://lore.kernel.org/all/094fdbf57487af4f395238c0525b2a560c8f68f0.1469766027.git.calvinowens@fb.com/
-
-Fixes: f99be43b3024 ("[SCSI] fusion: power pc and miscellaneous bug fixs")
-Signed-off-by: Zeng Heng <zengheng4@huawei.com>
-Link: https://lore.kernel.org/r/20241024084417.154655-1-zengheng4@huawei.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: 8575f197b077 ("arm64: dts: qcom: Introduce the SC8180x platform")
+Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/message/fusion/mptsas.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ arch/arm64/boot/dts/qcom/sc8180x.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/message/fusion/mptsas.c b/drivers/message/fusion/mptsas.c
-index a0bcb0864ecd2..a798e26c6402d 100644
---- a/drivers/message/fusion/mptsas.c
-+++ b/drivers/message/fusion/mptsas.c
-@@ -4231,10 +4231,8 @@ mptsas_find_phyinfo_by_phys_disk_num(MPT_ADAPTER *ioc, u8 phys_disk_num,
- static void
- mptsas_reprobe_lun(struct scsi_device *sdev, void *data)
- {
--	int rc;
--
- 	sdev->no_uld_attach = data ? 1 : 0;
--	rc = scsi_device_reprobe(sdev);
-+	WARN_ON(scsi_device_reprobe(sdev));
- }
+diff --git a/arch/arm64/boot/dts/qcom/sc8180x.dtsi b/arch/arm64/boot/dts/qcom/sc8180x.dtsi
+index 6e707d993aeb3..b1451f8ad2a60 100644
+--- a/arch/arm64/boot/dts/qcom/sc8180x.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc8180x.dtsi
+@@ -3730,7 +3730,7 @@ lmh@18358800 {
+ 		};
  
- static void
+ 		cpufreq_hw: cpufreq@18323000 {
+-			compatible = "qcom,cpufreq-hw";
++			compatible = "qcom,sc8180x-cpufreq-hw", "qcom,cpufreq-hw";
+ 			reg = <0 0x18323000 0 0x1400>, <0 0x18325800 0 0x1400>;
+ 			reg-names = "freq-domain0", "freq-domain1";
+ 
 -- 
 2.43.0
 
