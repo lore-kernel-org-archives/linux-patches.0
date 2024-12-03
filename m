@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 057C91E3DED;
-	Tue,  3 Dec 2024 15:27:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82E22646;
+	Tue,  3 Dec 2024 15:27:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733239664; cv=none; b=Vy3eAsNiqDSOypGgnZE1wXMtojVDdpuK5Kl+ex2oqN4AVvsiLWQxOEJ7m0lWUCQ4fAGqgTeL/1Hq18lmCALfEgfjTIRA5bzCG3H0BTPJL96qJ7bSvIwAH4CU0ILrFOcEbnTj/LD6v5S2OCpO7ceoTdA+TQTHwkmjur+rV8ug1jk=
+	t=1733239666; cv=none; b=aVirKdzXCthoGhVnJ7zrP/+KjF7wuhc6T0ywXdYBgoP2CAegV2dCyh8afiIbV/nyexLueMNSRO3nC69CWhGiX05IPkULtcMPHfyM3XKzbpgiBjSr1NTny/7EdnoehxXYJ4h1U27BVTvBJjNP635LQxg02RCoiyAILkhyX7YrDc0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733239664; c=relaxed/simple;
-	bh=Xye5iWk895UWp4AgAWiMCFcmf8JtMlnR5vYkLFbuDrU=;
+	s=arc-20240116; t=1733239666; c=relaxed/simple;
+	bh=Rsf/fGHwKCbF79M7MOFEwvFAMKYZQEh2ien2sj4efYw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TZ9MsuNIcMdixhYoayUVgodIrndIIXku3Htdkol+qtbIvMDGMGtaKyCbuRwX6FAPqZ34lhTFHQLn8kn+Yz4o9vNf40rF/mktb6PZc/rua9a3yPQrs9K4szNnZwKzhXK7DNNa+16fY+N3lodNKRBAWCS/yXh1+w2+B0pjzDFzgP4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JDbnp+xp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VhTyaSACuo1B1vdkD13gJAWC+HQlvM80EOeq5T+TkHBtyPnE/THq0S8M1udTHvBXHOuEMbGmH+H34s3JFnanBJO6vAyLC/foxJwwIekCap5bGjhencffb5FtkCjqadJVMjDlGTOrRJkeG3oIAHL0fC3cqWpL2OedQTnaKQYqi90=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HuobRWIs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JDbnp+xp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F7EEC4CECF;
-	Tue,  3 Dec 2024 15:27:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HuobRWIs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BC93C4CECF;
+	Tue,  3 Dec 2024 15:27:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733239663;
-	bh=Xye5iWk895UWp4AgAWiMCFcmf8JtMlnR5vYkLFbuDrU=;
+	s=korg; t=1733239666;
+	bh=Rsf/fGHwKCbF79M7MOFEwvFAMKYZQEh2ien2sj4efYw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JDbnp+xpZxZoUrST4wn39Qs/gKKdV6ugoBGKoiwoROsR5TW6EaHhLQ6M4lCKlznW5
-	 /z0PVP26OLx4WcU/vxbc5mlR/yG8lpjLtjgjTDwj15e/xuaUCFYKsEZl/F6jtOR7N8
-	 KKALKMP8ZZaJgwGgNpcMBu+T1bkmQok5A7tSxeXw=
+	b=HuobRWIsHwSNkrG1utLJuQx5YrMKjfyJJ8FOqfQvRzUOO/z6neJBS6Qdr+Jfa1Z8F
+	 pX3DEFMx71ydWV4tIucG8PAyjmglWrZCZBJMh/QRPJ/xkj7XbM9cVNDf1+lcyfLMhe
+	 YO7Wy6txcdbxyAjYN30a0s3PIZABBcftmw41yRD4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
-	stable <stable@kernel.org>,
-	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
-Subject: [PATCH 6.11 692/817] Revert "serial: sh-sci: Clean sci_ports[0] after at earlycon exit"
-Date: Tue,  3 Dec 2024 15:44:24 +0100
-Message-ID: <20241203144022.986918425@linuxfoundation.org>
+	Pavel Begunkov <asml.silence@gmail.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.11 693/817] io_uring: fix corner case forgetting to vunmap
+Date: Tue,  3 Dec 2024 15:44:25 +0100
+Message-ID: <20241203144023.027006556@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -51,66 +50,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Pavel Begunkov <asml.silence@gmail.com>
 
-commit 718632467d88e98816fa01ab12681ef1c2aa56f8 upstream.
+commit 43eef70e7e2ac74e7767731dd806720c7fb5e010 upstream.
 
-This reverts commit 3791ea69a4858b81e0277f695ca40f5aae40f312.
+io_pages_unmap() is a bit tricky in trying to figure whether the pages
+were previously vmap'ed or not. In particular If there is juts one page
+it belives there is no need to vunmap. Paired io_pages_map(), however,
+could've failed io_mem_alloc_compound() and attempted to
+io_mem_alloc_single(), which does vmap, and that leads to unpaired vmap.
 
-It was reported to cause boot-time issues, so revert it for now.
+The solution is to fail if io_mem_alloc_compound() can't allocate a
+single page. That's the easiest way to deal with it, and those two
+functions are getting removed soon, so no need to overcomplicate it.
 
-Reported-by: Geert Uytterhoeven <geert@linux-m68k.org>
-Fixes: 3791ea69a485 ("serial: sh-sci: Clean sci_ports[0] after at earlycon exit")
-Cc: stable <stable@kernel.org>
-Cc: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+Cc: stable@vger.kernel.org
+Fixes: 3ab1db3c6039e ("io_uring: get rid of remap_pfn_range() for mapping rings/sqes")
+Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
+Link: https://lore.kernel.org/r/477e75a3907a2fe83249e49c0a92cd480b2c60e0.1732569842.git.asml.silence@gmail.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/sh-sci.c |   28 ----------------------------
- 1 file changed, 28 deletions(-)
+ io_uring/memmap.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/tty/serial/sh-sci.c
-+++ b/drivers/tty/serial/sh-sci.c
-@@ -3535,32 +3535,6 @@ sh_early_platform_init_buffer("earlyprin
- #ifdef CONFIG_SERIAL_SH_SCI_EARLYCON
- static struct plat_sci_port port_cfg __initdata;
+--- a/io_uring/memmap.c
++++ b/io_uring/memmap.c
+@@ -72,6 +72,8 @@ void *io_pages_map(struct page ***out_pa
+ 	ret = io_mem_alloc_compound(pages, nr_pages, size, gfp);
+ 	if (!IS_ERR(ret))
+ 		goto done;
++	if (nr_pages == 1)
++		goto fail;
  
--static int early_console_exit(struct console *co)
--{
--	struct sci_port *sci_port = &sci_ports[0];
--	struct uart_port *port = &sci_port->port;
--	unsigned long flags;
--	int locked = 1;
+ 	ret = io_mem_alloc_single(pages, nr_pages, size, gfp);
+ 	if (!IS_ERR(ret)) {
+@@ -80,7 +82,7 @@ done:
+ 		*npages = nr_pages;
+ 		return ret;
+ 	}
 -
--	if (port->sysrq)
--		locked = 0;
--	else if (oops_in_progress)
--		locked = uart_port_trylock_irqsave(port, &flags);
--	else
--		uart_port_lock_irqsave(port, &flags);
--
--	/*
--	 * Clean the slot used by earlycon. A new SCI device might
--	 * map to this slot.
--	 */
--	memset(sci_ports, 0, sizeof(*sci_port));
--
--	if (locked)
--		uart_port_unlock_irqrestore(port, flags);
--
--	return 0;
--}
--
- static int __init early_console_setup(struct earlycon_device *device,
- 				      int type)
- {
-@@ -3577,8 +3551,6 @@ static int __init early_console_setup(st
- 		       SCSCR_RE | SCSCR_TE | port_cfg.scscr);
- 
- 	device->con->write = serial_console_write;
--	device->con->exit = early_console_exit;
--
- 	return 0;
- }
- static int __init sci_early_console_setup(struct earlycon_device *device,
++fail:
+ 	kvfree(pages);
+ 	*out_pages = NULL;
+ 	*npages = 0;
 
 
