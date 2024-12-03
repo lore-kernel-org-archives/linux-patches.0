@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8604D1F666F;
-	Tue,  3 Dec 2024 14:34:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27BCA1F7064;
+	Tue,  3 Dec 2024 14:34:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733236482; cv=none; b=jmOVE5mSANlQC/AYMYsWyxVxbtJ6WhxyDfqnk9ljiqFCM0EandqKOI48VTH3oEUyS6zpLrluuy+cHMxFb7P5fv8sAW7JuSWStNBo0NhOCOyhbdNKmyx2CP10MlHVqke9IbNKbkq3xM6ExyrnV9EQa479pp7s+wQS/a9i1flkdi8=
+	t=1733236486; cv=none; b=CE4rvalldS9NmOSM1FT9NqBvGnxLnUUVagtxpFUTskrXe1zPEsggoFMkq8vxMupYZ7PrleECWKtdR0EbuZN1NvzoyuiuFXv7dTMc7x15G4RVzrS+J+Diz57FOXwc/F0qbXhVDZUxgYArGYyfbdLz0WVfkjqG8YL3Sqfu49URv7Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733236482; c=relaxed/simple;
-	bh=bQtF7souVXElaDFAUD1TCbohw97GyzMim7msDbr95sA=;
+	s=arc-20240116; t=1733236486; c=relaxed/simple;
+	bh=S+wlBRhjrJjlZ32G4L6Ck6WIEJxlsM4dFE+3khxukJU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=id1PRVkb179Nzx6MjKHHYEEMAORtMWa77SNKdTh8goBavJXafbBmx3G6V3v79ulwsN23w+LwTsSPIj6zzMMlIZkdg1Nlz20efR3esa+QmPEd/3j0MdMjMUigPGS4NvE28VszdD8bfeWl+MRDcVAJBYlvPD3TnOQOV4cGGe+6YsA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1JPrxiJj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LYwE4vKvoj5gA4GGkJxsBiDDtgQFt9+g9wnj3+qO8BJTw9j5Y8rBS/XDGLMwhjCuCdFq2FxPs/waBwySVlXcQKcG068kSm9rC4cZo4/G7ZZtyjPffgFnTj9VV9r7j1dKytUdF/VJBYMhYh091NXyX9Lwr57+br38WgBwQz436Oo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zmhdJEYU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1JPrxiJj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9582C4CECF;
-	Tue,  3 Dec 2024 14:34:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zmhdJEYU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83F68C4CED9;
+	Tue,  3 Dec 2024 14:34:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733236482;
-	bh=bQtF7souVXElaDFAUD1TCbohw97GyzMim7msDbr95sA=;
+	s=korg; t=1733236486;
+	bh=S+wlBRhjrJjlZ32G4L6Ck6WIEJxlsM4dFE+3khxukJU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1JPrxiJjd9KKxB8eMSRDbwaUosgk/aGwXN4X8i6uwtN97mEOKgo9hlXi1Xp/zdLa7
-	 d9dwbA3HY+b5Ffb9XtVPRgxrIt5NHkcnur2itQU/xFoF8F0ee4xN7mUo4CZmjHdLMM
-	 9OUppoYrJ1uRhhhZY77mRzsmffc2SAxQ9pNVW8v4=
+	b=zmhdJEYUCYS5J/9JT8dsPxXAp1KX+igMBO+fe1HB5Q2vn6krEShg73KlMEDMaXpGa
+	 US3DuiuopAPp7NMSkSsV8bNdzH5Y0Zkkh6JzdKFx9crZ8qFF7mzvLnvSV28ui2m27y
+	 WNkuplt8QqtSRtn7/MDzS/APFZ526X+gFvd9x7Ks=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
-	Nathan Chancellor <nathan@kernel.org>
-Subject: [PATCH 4.19 007/138] media: dvbdev: fix the logic when DVB_DYNAMIC_MINORS is not set
-Date: Tue,  3 Dec 2024 15:30:36 +0100
-Message-ID: <20241203141923.818277282@linuxfoundation.org>
+	Chris Down <chris@chrisdown.name>,
+	Masahiro Yamada <masahiroy@kernel.org>
+Subject: [PATCH 4.19 008/138] kbuild: Use uname for LINUX_COMPILE_HOST detection
+Date: Tue,  3 Dec 2024 15:30:37 +0100
+Message-ID: <20241203141923.856818701@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203141923.524658091@linuxfoundation.org>
 References: <20241203141923.524658091@linuxfoundation.org>
@@ -52,57 +50,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+From: Chris Down <chris@chrisdown.name>
 
-commit a4aebaf6e6efff548b01a3dc49b4b9074751c15b upstream.
+commit 1e66d50ad3a1dbf0169b14d502be59a4b1213149 upstream.
 
-When CONFIG_DVB_DYNAMIC_MINORS, ret is not initialized, and a
-semaphore is left at the wrong state, in case of errors.
+`hostname` may not be present on some systems as it's not mandated by
+POSIX/SUSv4. This isn't just a theoretical problem: on Arch Linux,
+`hostname` is provided by `inetutils`, which isn't part of the base
+distribution.
 
-Make the code simpler and avoid mistakes by having just one error
-check logic used weather DVB_DYNAMIC_MINORS is used or not.
+    ./scripts/mkcompile_h: line 38: hostname: command not found
 
-Reported-by: kernel test robot <lkp@intel.com>
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Closes: https://lore.kernel.org/r/202410201717.ULWWdJv8-lkp@intel.com/
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Link: https://lore.kernel.org/r/9e067488d8935b8cf00959764a1fa5de85d65725.1730926254.git.mchehab+huawei@kernel.org
-Cc: Nathan Chancellor <nathan@kernel.org>
+Use `uname -n` instead, which is more likely to be available (and
+mandated by standards).
+
+Signed-off-by: Chris Down <chris@chrisdown.name>
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/dvb-core/dvbdev.c |   15 ++++-----------
- 1 file changed, 4 insertions(+), 11 deletions(-)
+ scripts/mkcompile_h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/media/dvb-core/dvbdev.c
-+++ b/drivers/media/dvb-core/dvbdev.c
-@@ -544,6 +544,9 @@ int dvb_register_device(struct dvb_adapt
- 	for (minor = 0; minor < MAX_DVB_MINORS; minor++)
- 		if (dvb_minors[minor] == NULL)
- 			break;
-+#else
-+	minor = nums2minor(adap->num, type, id);
-+#endif
- 	if (minor >= MAX_DVB_MINORS) {
- 		if (new_node) {
- 			list_del (&new_node->list_head);
-@@ -557,17 +560,7 @@ int dvb_register_device(struct dvb_adapt
- 		mutex_unlock(&dvbdev_register_lock);
- 		return -EINVAL;
- 	}
--#else
--	minor = nums2minor(adap->num, type, id);
--	if (minor >= MAX_DVB_MINORS) {
--		dvb_media_device_free(dvbdev);
--		list_del(&dvbdev->list_head);
--		kfree(dvbdev);
--		*pdvbdev = NULL;
--		mutex_unlock(&dvbdev_register_lock);
--		return ret;
--	}
--#endif
-+
- 	dvbdev->minor = minor;
- 	dvb_minors[minor] = dvb_device_get(dvbdev);
- 	up_write(&minor_rwsem);
+--- a/scripts/mkcompile_h
++++ b/scripts/mkcompile_h
+@@ -44,7 +44,7 @@ else
+ 	LINUX_COMPILE_BY=$KBUILD_BUILD_USER
+ fi
+ if test -z "$KBUILD_BUILD_HOST"; then
+-	LINUX_COMPILE_HOST=`hostname`
++	LINUX_COMPILE_HOST=`uname -n`
+ else
+ 	LINUX_COMPILE_HOST=$KBUILD_BUILD_HOST
+ fi
 
 
