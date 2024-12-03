@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 828D41F6698;
-	Tue,  3 Dec 2024 15:09:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A3071F7585;
+	Tue,  3 Dec 2024 15:09:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733238540; cv=none; b=tXMk71Xws2g7yq4prvmzuiIYreH2V3zKIdX46VuH9+h/dBude/v/peR3D4pc3m0LM3nwOboj1qr7vfzC/6WWLjn9e2Lnwz441OUqq7WYKNE0bYkQpwgLGF0Wu1H/YTlsy/wdB851H9NSpm+so6AW5mj8IDkKhPLYTn4TrvEX5Sw=
+	t=1733238543; cv=none; b=H8St2DrnbnRpDQWaxYuq0F6n1CNbN6l3z5E0ZRdbAedgsZUnwj+6Gq6cvPjnxCHC1F+j4fVOblvHl+Z/66sgucpsjXn1KNCv4eCS/Nf+5dbyDQy9myrpyrB3932+hyg2xa4TpOCasWGr5A/YzUFHZXw0R4chnseXOEBCbriS1So=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733238540; c=relaxed/simple;
-	bh=FtxPCOGjDhdugIGDpvJJ2UHITrwgm/wRab7tgg0deIc=;
+	s=arc-20240116; t=1733238543; c=relaxed/simple;
+	bh=vyiYh1yMANBAIYkKzvcXRo8Lc/MbZivjid/lk+i7FSM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G5QhhnX0ccqmExFoUJmJOrfuMc6xE19SYnAPFwsrtXlq2FMXDBhduI1MwV+rxpvZ/ItBFCdKoTHD2413c3hqBeYJXoKxHJAvyikBuDOykNZz1DmQQage9/Ii+UL7vCUCWmCjEdQExWlbds+MbaJPUSRqC2mL6O+LePl7rL4YCIw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yxFKNf7B; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gEPKZCPNKj+O0zkHpbJrB5KU7f+oXlClX+dx8awooIAtgkW3IKKFXxqPS0c+UQ3E/8+F0BMRqdl7ujajuGAS3JXuBdZU0bHlFg/YbASYDCJzepdO4FpsuHN0PvnG4oFdDKRq6QDQGkNBunDyTee+a+xjaM6by5SzKd7kOOXbg04=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nv6ni3QG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yxFKNf7B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B621CC4CED8;
-	Tue,  3 Dec 2024 15:08:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nv6ni3QG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96241C4CECF;
+	Tue,  3 Dec 2024 15:09:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733238540;
-	bh=FtxPCOGjDhdugIGDpvJJ2UHITrwgm/wRab7tgg0deIc=;
+	s=korg; t=1733238543;
+	bh=vyiYh1yMANBAIYkKzvcXRo8Lc/MbZivjid/lk+i7FSM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yxFKNf7BrmyWQ4/aE13fw3XRfd4LjjT5VMgeydbozNG/ObbiWYxsPsmFjhJtxegiX
-	 BBrB88l/fMh0mdN7liZeg/QZZ6i4D7vykKjXZcPdBfzkIINvxFAs+KIkuu5BTDYFbP
-	 pMfdwN6gY5rSHe4fSEVurZvnq5srFWzo0WToEt7s=
+	b=nv6ni3QG6ZRSl98+Yv4lNM5Wij48ynExGqReqwF8jj4ps7LHd5zfLnLH2Lfj+mu5M
+	 eqF6Lh0B6BfV72c5L6nM4Dued+7Rj1BR34E9CKNcrXCIFbOXabosNtn2P2L41PFW77
+	 l3h7WbToEZzG2LJ/5iEsMjf4WjG051ZU2R+WTchk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexei Starovoitov <ast@kernel.org>,
 	Philo Lu <lulie@linux.alibaba.com>,
 	Martin KaFai Lau <martin.lau@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 313/817] bpf: Support __nullable argument suffix for tp_btf
-Date: Tue,  3 Dec 2024 15:38:05 +0100
-Message-ID: <20241203144008.034669365@linuxfoundation.org>
+Subject: [PATCH 6.11 314/817] selftests/bpf: Add test for __nullable suffix in tp_btf
+Date: Tue,  3 Dec 2024 15:38:06 +0100
+Message-ID: <20241203144008.073569594@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -54,113 +53,111 @@ Content-Transfer-Encoding: 8bit
 
 From: Philo Lu <lulie@linux.alibaba.com>
 
-[ Upstream commit 8aeaed21befc90f27f4fca6dd190850d97d2e9e3 ]
+[ Upstream commit 2060f07f861a237345922023e9347a204c0795af ]
 
-Pointers passed to tp_btf were trusted to be valid, but some tracepoints
-do take NULL pointer as input, such as trace_tcp_send_reset(). Then the
-invalid memory access cannot be detected by verifier.
+Add a tracepoint with __nullable suffix in bpf_testmod, and add cases
+for it:
 
-This patch fix it by add a suffix "__nullable" to the unreliable
-argument. The suffix is shown in btf, and PTR_MAYBE_NULL will be added
-to nullable arguments. Then users must check the pointer before use it.
+$ ./test_progs -t "tp_btf_nullable"
+ #406/1   tp_btf_nullable/handle_tp_btf_nullable_bare1:OK
+ #406/2   tp_btf_nullable/handle_tp_btf_nullable_bare2:OK
+ #406     tp_btf_nullable:OK
+ Summary: 1/2 PASSED, 0 SKIPPED, 0 FAILED
 
-A problem here is that we use "btf_trace_##call" to search func_proto.
-As it is a typedef, argument names as well as the suffix are not
-recorded. To solve this, I use bpf_raw_event_map to find
-"__bpf_trace##template" from "btf_trace_##call", and then we can see the
-suffix.
-
-Suggested-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Philo Lu <lulie@linux.alibaba.com>
-Link: https://lore.kernel.org/r/20240911033719.91468-2-lulie@linux.alibaba.com
+Link: https://lore.kernel.org/r/20240911033719.91468-3-lulie@linux.alibaba.com
 Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
 Stable-dep-of: cb4158ce8ec8 ("bpf: Mark raw_tp arguments with PTR_MAYBE_NULL")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/btf.c      |  3 +++
- kernel/bpf/verifier.c | 36 ++++++++++++++++++++++++++++++++----
- 2 files changed, 35 insertions(+), 4 deletions(-)
+ .../bpf/bpf_testmod/bpf_testmod-events.h      |  6 +++++
+ .../selftests/bpf/bpf_testmod/bpf_testmod.c   |  2 ++
+ .../bpf/prog_tests/tp_btf_nullable.c          | 14 +++++++++++
+ .../bpf/progs/test_tp_btf_nullable.c          | 24 +++++++++++++++++++
+ 4 files changed, 46 insertions(+)
+ create mode 100644 tools/testing/selftests/bpf/prog_tests/tp_btf_nullable.c
+ create mode 100644 tools/testing/selftests/bpf/progs/test_tp_btf_nullable.c
 
-diff --git a/kernel/bpf/btf.c b/kernel/bpf/btf.c
-index 5f4f1d0bc23a4..76afa90814ddb 100644
---- a/kernel/bpf/btf.c
-+++ b/kernel/bpf/btf.c
-@@ -6534,6 +6534,9 @@ bool btf_ctx_access(int off, int size, enum bpf_access_type type,
- 	if (prog_args_trusted(prog))
- 		info->reg_type |= PTR_TRUSTED;
+diff --git a/tools/testing/selftests/bpf/bpf_testmod/bpf_testmod-events.h b/tools/testing/selftests/bpf/bpf_testmod/bpf_testmod-events.h
+index 11ee801e75e7e..6c3b4d4f173ac 100644
+--- a/tools/testing/selftests/bpf/bpf_testmod/bpf_testmod-events.h
++++ b/tools/testing/selftests/bpf/bpf_testmod/bpf_testmod-events.h
+@@ -34,6 +34,12 @@ DECLARE_TRACE(bpf_testmod_test_write_bare,
+ 	TP_ARGS(task, ctx)
+ );
  
-+	if (btf_param_match_suffix(btf, &args[arg], "__nullable"))
-+		info->reg_type |= PTR_MAYBE_NULL;
++/* Used in bpf_testmod_test_read() to test __nullable suffix */
++DECLARE_TRACE(bpf_testmod_test_nullable_bare,
++	TP_PROTO(struct bpf_testmod_test_read_ctx *ctx__nullable),
++	TP_ARGS(ctx__nullable)
++);
 +
- 	if (tgt_prog) {
- 		enum bpf_prog_type tgt_type;
+ #undef BPF_TESTMOD_DECLARE_TRACE
+ #ifdef DECLARE_TRACE_WRITABLE
+ #define BPF_TESTMOD_DECLARE_TRACE(call, proto, args, size) \
+diff --git a/tools/testing/selftests/bpf/bpf_testmod/bpf_testmod.c b/tools/testing/selftests/bpf/bpf_testmod/bpf_testmod.c
+index 72f565af4f829..a89af5b9587cd 100644
+--- a/tools/testing/selftests/bpf/bpf_testmod/bpf_testmod.c
++++ b/tools/testing/selftests/bpf/bpf_testmod/bpf_testmod.c
+@@ -356,6 +356,8 @@ bpf_testmod_test_read(struct file *file, struct kobject *kobj,
+ 	if (bpf_testmod_loop_test(101) > 100)
+ 		trace_bpf_testmod_test_read(current, &ctx);
  
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 3bee91db81f0a..0481915e63c21 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -28,6 +28,8 @@
- #include <linux/cpumask.h>
- #include <linux/bpf_mem_alloc.h>
- #include <net/xdp.h>
-+#include <linux/trace_events.h>
-+#include <linux/kallsyms.h>
- 
- #include "disasm.h"
- 
-@@ -21308,11 +21310,13 @@ int bpf_check_attach_target(struct bpf_verifier_log *log,
- {
- 	bool prog_extension = prog->type == BPF_PROG_TYPE_EXT;
- 	bool prog_tracing = prog->type == BPF_PROG_TYPE_TRACING;
-+	char trace_symbol[KSYM_SYMBOL_LEN];
- 	const char prefix[] = "btf_trace_";
-+	struct bpf_raw_event_map *btp;
- 	int ret = 0, subprog = -1, i;
- 	const struct btf_type *t;
- 	bool conservative = true;
--	const char *tname;
-+	const char *tname, *fname;
- 	struct btf *btf;
- 	long addr = 0;
- 	struct module *mod = NULL;
-@@ -21443,10 +21447,34 @@ int bpf_check_attach_target(struct bpf_verifier_log *log,
- 			return -EINVAL;
- 		}
- 		tname += sizeof(prefix) - 1;
--		t = btf_type_by_id(btf, t->type);
--		if (!btf_type_is_ptr(t))
--			/* should never happen in valid vmlinux build */
++	trace_bpf_testmod_test_nullable_bare(NULL);
 +
-+		/* The func_proto of "btf_trace_##tname" is generated from typedef without argument
-+		 * names. Thus using bpf_raw_event_map to get argument names.
-+		 */
-+		btp = bpf_get_raw_tracepoint(tname);
-+		if (!btp)
- 			return -EINVAL;
-+		fname = kallsyms_lookup((unsigned long)btp->bpf_func, NULL, NULL, NULL,
-+					trace_symbol);
-+		bpf_put_raw_tracepoint(btp);
+ 	/* Magic number to enable writable tp */
+ 	if (len == 64) {
+ 		struct bpf_testmod_test_writable_ctx writable = {
+diff --git a/tools/testing/selftests/bpf/prog_tests/tp_btf_nullable.c b/tools/testing/selftests/bpf/prog_tests/tp_btf_nullable.c
+new file mode 100644
+index 0000000000000..accc42e01f8a8
+--- /dev/null
++++ b/tools/testing/selftests/bpf/prog_tests/tp_btf_nullable.c
+@@ -0,0 +1,14 @@
++// SPDX-License-Identifier: GPL-2.0
 +
-+		if (fname)
-+			ret = btf_find_by_name_kind(btf, fname, BTF_KIND_FUNC);
++#include <test_progs.h>
++#include "test_tp_btf_nullable.skel.h"
 +
-+		if (!fname || ret < 0) {
-+			bpf_log(log, "Cannot find btf of tracepoint template, fall back to %s%s.\n",
-+				prefix, tname);
-+			t = btf_type_by_id(btf, t->type);
-+			if (!btf_type_is_ptr(t))
-+				/* should never happen in valid vmlinux build */
-+				return -EINVAL;
-+		} else {
-+			t = btf_type_by_id(btf, ret);
-+			if (!btf_type_is_func(t))
-+				/* should never happen in valid vmlinux build */
-+				return -EINVAL;
-+		}
++void test_tp_btf_nullable(void)
++{
++	if (!env.has_testmod) {
++		test__skip();
++		return;
++	}
 +
- 		t = btf_type_by_id(btf, t->type);
- 		if (!btf_type_is_func_proto(t))
- 			/* should never happen in valid vmlinux build */
++	RUN_TESTS(test_tp_btf_nullable);
++}
+diff --git a/tools/testing/selftests/bpf/progs/test_tp_btf_nullable.c b/tools/testing/selftests/bpf/progs/test_tp_btf_nullable.c
+new file mode 100644
+index 0000000000000..bba3e37f749b8
+--- /dev/null
++++ b/tools/testing/selftests/bpf/progs/test_tp_btf_nullable.c
+@@ -0,0 +1,24 @@
++// SPDX-License-Identifier: GPL-2.0
++
++#include "vmlinux.h"
++#include <bpf/bpf_helpers.h>
++#include <bpf/bpf_tracing.h>
++#include "../bpf_testmod/bpf_testmod.h"
++#include "bpf_misc.h"
++
++SEC("tp_btf/bpf_testmod_test_nullable_bare")
++__failure __msg("R1 invalid mem access 'trusted_ptr_or_null_'")
++int BPF_PROG(handle_tp_btf_nullable_bare1, struct bpf_testmod_test_read_ctx *nullable_ctx)
++{
++	return nullable_ctx->len;
++}
++
++SEC("tp_btf/bpf_testmod_test_nullable_bare")
++int BPF_PROG(handle_tp_btf_nullable_bare2, struct bpf_testmod_test_read_ctx *nullable_ctx)
++{
++	if (nullable_ctx)
++		return nullable_ctx->len;
++	return 0;
++}
++
++char _license[] SEC("license") = "GPL";
 -- 
 2.43.0
 
