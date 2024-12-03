@@ -1,125 +1,187 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62F75AD51;
-	Mon,  2 Dec 2024 16:16:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 648773BB24;
+	Tue,  3 Dec 2024 14:33:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733156173; cv=none; b=NDfjiCF4ZU8yKKzFqGVDr17zKpR/85FWTRhh6nZVvAiTBa0BMqCJCc6bbXVbyv5Sy+bkb891qxpOB9+zxi8zVejiHguNFVG0wUD/aRtoUzjbL6fIPnr/+FtCtlCa7tiuCDpmqzGGmh+v/CK2+M8f7/BZqYioBFhcaaTDCdzpc9Y=
+	t=1733236396; cv=none; b=WdPNZhe8wmT2GX3dMWkr+6x8OUEZ6OikWv86usRfLp1JRn28weIjLLTggmPXzFjSMT7FfPSIbeQNI9gjetwNK69W+Y0D16dlUFHzeUeHZrQiDWr2u6XKwHU/+bLjjqbSGrTz+dQps3t6EGfAjngc4ZAioqOXtEvaSl1XSmrPL10=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733156173; c=relaxed/simple;
-	bh=xlQywIlZNQT5qCo7G3nLeY962rjjbO5Mq7s9hOqzSTg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ot4eBzmD8mZ+3Q8KbdXoVR0Cifc3qHC4N6G4FBjzE7GGelK1JMlwCLrZrlN1VuNUpGGMC+a7y7S/DQbu8eyOoCbHkahMfHIb/0ewlDQO8ksg/oA1FLOxAv8zcCj5hldnrjeItdxgAWEvf4Cr90ZVjTnptN/OXhwjWe9pTAnTjuY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AM3jWJZp; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1733236396; c=relaxed/simple;
+	bh=gg7mnNVWzAOE1DNxi7ful6QkRKwAey+owIxwO3I+mLA=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=rkMwS0ayjj1BpSnZFRT8IRM+KT3kuQ7Kk6djw6CrxPC/POGjADOYfxYogzK5FVMmTuMrgTlzw6sV9OqSg7CNGqb+ELH3la2cbL14N3eGMAQr6sLpeRAtvXp92tK3kaTC130KriMZXzo9LRZzbCDbavs2Py7XLAIgNZtCNeJLW8U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EQ54r1a2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AM3jWJZp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41270C4CED1;
-	Mon,  2 Dec 2024 16:16:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1733156172;
-	bh=xlQywIlZNQT5qCo7G3nLeY962rjjbO5Mq7s9hOqzSTg=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=AM3jWJZp/CgkhVFK3t4ZwOl6h+mOxDJCQGTmx11N/Hf/ImgkXc1kb1eUP5yFTTFkj
-	 C542BBLgdoRljc3cFThdDsZ72G6r/Wt+ZH1IQ0idZd/D9REB3bX7SWEpc9Sd/kIzHD
-	 9LAH3oMX8fddnzb7a9+AAFjcVrMUX2A3zUUUo4ec8CCiOjAH/qlsIEPn+5yPXSFXDH
-	 ub4vRhdTZyhfDZGdmUIwXyWBgmFF1qIMNm2zk0nzZkXpRvLQyz13Re+7H5HqORoTMg
-	 wTfKHqx+3iafT5IrwnauhRgnYebgSmavAeFUPCkVaOr1VCOuP/iXxvcwW4NGGRMm6H
-	 inpEPVj9t2ItQ==
-Date: Mon, 2 Dec 2024 09:16:10 -0700
-From: Nathan Chancellor <nathan@kernel.org>
-To: Masahiro Yamada <masahiroy@kernel.org>
-Cc: Nicolas Schier <nicolas@fjasle.eu>,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	Bill Wendling <morbo@google.com>,
-	Justin Stitt <justinstitt@google.com>,
-	Arnd Bergmann <arnd@arndb.de>, Aleksei Vetrov <vvvvvv@google.com>,
-	linux-kbuild@vger.kernel.org, linux-kernel@vger.kernel.org,
-	llvm@lists.linux.dev, patches@lists.linux.dev,
-	stable@vger.kernel.org
-Subject: Re: [PATCH v2] kbuild: Move -Wenum-enum-conversion to W=2
-Message-ID: <20241202161610.GA2845796@thelio-3990X>
-References: <20241017-disable-two-clang-enum-warnings-v2-1-163ac04346ae@kernel.org>
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EQ54r1a2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67FE0C4CECF;
+	Tue,  3 Dec 2024 14:33:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1733236395;
+	bh=gg7mnNVWzAOE1DNxi7ful6QkRKwAey+owIxwO3I+mLA=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=EQ54r1a2DIfHrebQux9t6Vfpq9JeXlASbOFCBqao+1GXcHCIkj/fL6A1tSiNmIOkR
+	 UOHKzM/EiI1dXHiYhpQZZ1ZTKjTGsnnKA2zh2f+jsguY077zkAeT4zGEWxpsSFlGM0
+	 V1cRSB/lY1zfqtcaSXpWQcUhs5MFzhwHg6e5WS88=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	syzkaller <syzkaller@googlegroups.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 001/138] netlink: terminate outstanding dump on socket close
+Date: Tue,  3 Dec 2024 15:30:30 +0100
+Message-ID: <20241203141923.586600123@linuxfoundation.org>
+X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20241203141923.524658091@linuxfoundation.org>
+References: <20241203141923.524658091@linuxfoundation.org>
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241017-disable-two-clang-enum-warnings-v2-1-163ac04346ae@kernel.org>
+Content-Transfer-Encoding: 8bit
 
-Masahiro, could you please pick this up? The lore link is below in case
-it is no longer in your inbox (or I can resend).
+4.19-stable review patch.  If anyone has any objections, please let me know.
 
-https://lore.kernel.org/20241017-disable-two-clang-enum-warnings-v2-1-163ac04346ae@kernel.org/
+------------------
 
-On Thu, Oct 17, 2024 at 10:09:22AM -0700, Nathan Chancellor wrote:
-> -Wenum-enum-conversion was strengthened in clang-19 to warn for C, which
-> caused the kernel to move it to W=1 in commit 75b5ab134bb5 ("kbuild:
-> Move -Wenum-{compare-conditional,enum-conversion} into W=1") because
-> there were numerous instances that would break builds with -Werror.
-> Unfortunately, this is not a full solution, as more and more developers,
-> subsystems, and distributors are building with W=1 as well, so they
-> continue to see the numerous instances of this warning.
-> 
-> Since the move to W=1, there have not been many new instances that have
-> appeared through various build reports and the ones that have appeared
-> seem to be following similar existing patterns, suggesting that most
-> instances of this warning will not be real issues. The only alternatives
-> for silencing this warning are adding casts (which is generally seen as
-> an ugly practice) or refactoring the enums to macro defines or a unified
-> enum (which may be undesirable because of type safety in other parts of
-> the code).
-> 
-> Move the warning to W=2, where warnings that occur frequently but may be
-> relevant should reside.
-> 
-> Cc: stable@vger.kernel.org
-> Fixes: 75b5ab134bb5 ("kbuild: Move -Wenum-{compare-conditional,enum-conversion} into W=1")
-> Link: https://lore.kernel.org/ZwRA9SOcOjjLJcpi@google.com/
-> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-> ---
-> Changes in v2:
-> - Move -Wenum-enum-conversion to W=2, instead of disabling it
->   outright (Arnd)
-> - Leave -Wenum-compare-conditional in W=1, as there are not that
->   many instances, so it can be turned on fully at some point (Arnd)
-> - Link to v1: https://lore.kernel.org/r/20241016-disable-two-clang-enum-warnings-v1-1-ae886d7a0269@kernel.org
-> ---
->  scripts/Makefile.extrawarn | 5 ++++-
->  1 file changed, 4 insertions(+), 1 deletion(-)
-> 
-> diff --git a/scripts/Makefile.extrawarn b/scripts/Makefile.extrawarn
-> index 1d13cecc7cc7808610e635ddc03476cf92b3a8c1..04faf15ed316a9c291dc952b6cc40fb6c8c330cf 100644
-> --- a/scripts/Makefile.extrawarn
-> +++ b/scripts/Makefile.extrawarn
-> @@ -130,7 +130,6 @@ KBUILD_CFLAGS += $(call cc-disable-warning, pointer-to-enum-cast)
->  KBUILD_CFLAGS += -Wno-tautological-constant-out-of-range-compare
->  KBUILD_CFLAGS += $(call cc-disable-warning, unaligned-access)
->  KBUILD_CFLAGS += -Wno-enum-compare-conditional
-> -KBUILD_CFLAGS += -Wno-enum-enum-conversion
->  endif
->  
->  endif
-> @@ -154,6 +153,10 @@ KBUILD_CFLAGS += -Wno-missing-field-initializers
->  KBUILD_CFLAGS += -Wno-type-limits
->  KBUILD_CFLAGS += -Wno-shift-negative-value
->  
-> +ifdef CONFIG_CC_IS_CLANG
-> +KBUILD_CFLAGS += -Wno-enum-enum-conversion
-> +endif
-> +
->  ifdef CONFIG_CC_IS_GCC
->  KBUILD_CFLAGS += -Wno-maybe-uninitialized
->  endif
-> 
-> ---
-> base-commit: 8e929cb546ee42c9a61d24fae60605e9e3192354
-> change-id: 20241016-disable-two-clang-enum-warnings-e7994d44f948
-> 
-> Best regards,
-> -- 
-> Nathan Chancellor <nathan@kernel.org>
-> 
+From: Jakub Kicinski <kuba@kernel.org>
+
+[ Upstream commit 1904fb9ebf911441f90a68e96b22aa73e4410505 ]
+
+Netlink supports iterative dumping of data. It provides the families
+the following ops:
+ - start - (optional) kicks off the dumping process
+ - dump  - actual dump helper, keeps getting called until it returns 0
+ - done  - (optional) pairs with .start, can be used for cleanup
+The whole process is asynchronous and the repeated calls to .dump
+don't actually happen in a tight loop, but rather are triggered
+in response to recvmsg() on the socket.
+
+This gives the user full control over the dump, but also means that
+the user can close the socket without getting to the end of the dump.
+To make sure .start is always paired with .done we check if there
+is an ongoing dump before freeing the socket, and if so call .done.
+
+The complication is that sockets can get freed from BH and .done
+is allowed to sleep. So we use a workqueue to defer the call, when
+needed.
+
+Unfortunately this does not work correctly. What we defer is not
+the cleanup but rather releasing a reference on the socket.
+We have no guarantee that we own the last reference, if someone
+else holds the socket they may release it in BH and we're back
+to square one.
+
+The whole dance, however, appears to be unnecessary. Only the user
+can interact with dumps, so we can clean up when socket is closed.
+And close always happens in process context. Some async code may
+still access the socket after close, queue notification skbs to it etc.
+but no dumps can start, end or otherwise make progress.
+
+Delete the workqueue and flush the dump state directly from the release
+handler. Note that further cleanup is possible in -next, for instance
+we now always call .done before releasing the main module reference,
+so dump doesn't have to take a reference of its own.
+
+Reported-by: syzkaller <syzkaller@googlegroups.com>
+Fixes: ed5d7788a934 ("netlink: Do not schedule work from sk_destruct")
+Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20241106015235.2458807-1-kuba@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ net/netlink/af_netlink.c |   31 ++++++++-----------------------
+ net/netlink/af_netlink.h |    2 --
+ 2 files changed, 8 insertions(+), 25 deletions(-)
+
+--- a/net/netlink/af_netlink.c
++++ b/net/netlink/af_netlink.c
+@@ -393,15 +393,6 @@ static void netlink_skb_set_owner_r(stru
+ 
+ static void netlink_sock_destruct(struct sock *sk)
+ {
+-	struct netlink_sock *nlk = nlk_sk(sk);
+-
+-	if (nlk->cb_running) {
+-		if (nlk->cb.done)
+-			nlk->cb.done(&nlk->cb);
+-		module_put(nlk->cb.module);
+-		kfree_skb(nlk->cb.skb);
+-	}
+-
+ 	skb_queue_purge(&sk->sk_receive_queue);
+ 
+ 	if (!sock_flag(sk, SOCK_DEAD)) {
+@@ -414,14 +405,6 @@ static void netlink_sock_destruct(struct
+ 	WARN_ON(nlk_sk(sk)->groups);
+ }
+ 
+-static void netlink_sock_destruct_work(struct work_struct *work)
+-{
+-	struct netlink_sock *nlk = container_of(work, struct netlink_sock,
+-						work);
+-
+-	sk_free(&nlk->sk);
+-}
+-
+ /* This lock without WQ_FLAG_EXCLUSIVE is good on UP and it is _very_ bad on
+  * SMP. Look, when several writers sleep and reader wakes them up, all but one
+  * immediately hit write lock and grab all the cpus. Exclusive sleep solves
+@@ -738,12 +721,6 @@ static void deferred_put_nlk_sk(struct r
+ 	if (!refcount_dec_and_test(&sk->sk_refcnt))
+ 		return;
+ 
+-	if (nlk->cb_running && nlk->cb.done) {
+-		INIT_WORK(&nlk->work, netlink_sock_destruct_work);
+-		schedule_work(&nlk->work);
+-		return;
+-	}
+-
+ 	sk_free(sk);
+ }
+ 
+@@ -793,6 +770,14 @@ static int netlink_release(struct socket
+ 				NETLINK_URELEASE, &n);
+ 	}
+ 
++	/* Terminate any outstanding dump */
++	if (nlk->cb_running) {
++		if (nlk->cb.done)
++			nlk->cb.done(&nlk->cb);
++		module_put(nlk->cb.module);
++		kfree_skb(nlk->cb.skb);
++	}
++
+ 	module_put(nlk->module);
+ 
+ 	if (netlink_is_kernel(sk)) {
+--- a/net/netlink/af_netlink.h
++++ b/net/netlink/af_netlink.h
+@@ -4,7 +4,6 @@
+ 
+ #include <linux/rhashtable.h>
+ #include <linux/atomic.h>
+-#include <linux/workqueue.h>
+ #include <net/sock.h>
+ 
+ /* flags */
+@@ -45,7 +44,6 @@ struct netlink_sock {
+ 
+ 	struct rhash_head	node;
+ 	struct rcu_head		rcu;
+-	struct work_struct	work;
+ };
+ 
+ static inline struct netlink_sock *nlk_sk(struct sock *sk)
+
+
