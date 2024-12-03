@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A99D1F7566;
-	Tue,  3 Dec 2024 14:58:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26D0B1F7578;
+	Tue,  3 Dec 2024 14:58:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733237921; cv=none; b=gTYiIUaHBEXWpI7w3V1VSqcppDD++ivT4uFinsWZ9FlYR7UZ1XKRcFoiCjreTScFDh/uFzOYF3v+BzsIjxiHcR+rYU0phUKPCZBHLqP/0DXMuTzI3AZIWAqmq2t19HsrgclYVhkyWIaw8pjr39dmy+Rg4clkuZC7IjnYtZE96mg=
+	t=1733237924; cv=none; b=h52FS8zk3I517i8bn2GkzJLb0tSIn3ihVk8MZIfpQpJfY/+9vOTBfR9w/xa1D/PhHX9vABJSX9urMUmd2euQmlLjzUoNOVDh9QVLWRLwUgtp/Rc1Y5ooXN34mcDu9M4hwQrPXBxWWRbFxhRxSdlCY2vmzZkdfkHWPyXjWWzhdX4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733237921; c=relaxed/simple;
-	bh=myDHcu0VlxiALjvtcrL6Ad36KlTj1dLc9NxuMVX9yN4=;
+	s=arc-20240116; t=1733237924; c=relaxed/simple;
+	bh=ifoGt1ce3PnesxtRq6M8E+QshLzUQI7r4ohgztzF0So=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hM2cctQLTno17YDpO99YRBML3zceDt+0txI/96PwSCgldmhPqNKDJbxRLxYlF7PO1DIp63k9nsY4bnOVTrdOcgRkYVCdm8wc/Rz3p4YIxnFKnCSgcuv4g0V9RAD8FhZ8UHGS4riH3gZtUcx/tYOo1ZPY7bvNpAt5pba/EXgGaj0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vNFoJyS7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Fwk/wfhenyqkAo8+1h8QMvz6Co8flrKHNoGEop/7q1iJQK/6ay3zrZqMDVysr4HX0WPK3ox69gPGIcfMF0vwvuU6bLjAq85e0N8eAiFErSQ9PUtAqCQUCMRRo7h0ilPDseviNRChL1mx25dLT1CeIgWINyQYr3MT1hdKh0Tvgrw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ahH3iKq6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vNFoJyS7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7800EC4CED8;
-	Tue,  3 Dec 2024 14:58:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ahH3iKq6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AF0FC4CECF;
+	Tue,  3 Dec 2024 14:58:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733237921;
-	bh=myDHcu0VlxiALjvtcrL6Ad36KlTj1dLc9NxuMVX9yN4=;
+	s=korg; t=1733237924;
+	bh=ifoGt1ce3PnesxtRq6M8E+QshLzUQI7r4ohgztzF0So=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vNFoJyS79Bi6WtNFQd1eTJ32GkLtVieVesN8XqDK65eFmUnclNaJ7SNcY/R+4J9Lf
-	 Ebyx/FU1H8HRIJ5kAiJ15Z20RItypVCsMGRtQm/87g6K1AOywkQYKQWlk7qLrE8Fkr
-	 R6CgMe00FnYF3smhX+dMev+MKpXQkXnT4qvcR1U0=
+	b=ahH3iKq66rNUKvBxS5bvQ4xPJTOfSrFdGdk+23RdryZ2HNT+iBZBN+DKSRbYl9GCL
+	 CMlpR9EkBC1OnvwGYpq6vETnFPkmaitXd+nKi3Y8XDal+4x0A2t/aABQrbXjamqWNb
+	 ECQwSHc+/ttFaM+8qRJdZvXr3Pu8gM5L3+UBTGdU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Brown <broonie@kernel.org>,
-	Catalin Marinas <catalin.marinas@arm.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Lukasz Luba <lukasz.luba@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 066/817] kselftest/arm64: Fix encoding for SVE B16B16 test
-Date: Tue,  3 Dec 2024 15:33:58 +0100
-Message-ID: <20241203143958.265579018@linuxfoundation.org>
+Subject: [PATCH 6.11 101/817] thermal: core: Represent suspend-related thermal zone flags as bits
+Date: Tue,  3 Dec 2024 15:34:33 +0100
+Message-ID: <20241203143959.649220592@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -51,37 +51,122 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Brown <broonie@kernel.org>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit 69c0d824779843b51ca2339b2163db4d3b40c54c ]
+[ Upstream commit 26c9ab8090cda1eb3d42f491cc32d227404897da ]
 
-The test for SVE_B16B16 had a cut'n'paste of a SME instruction, fix it with
-a relevant SVE instruction.
+Instead of using two separate fields in struct thermal_zone_device for
+representing flags related to thermal zone suspend, represent them
+explicitly as bits in one u8 "state" field.
 
-Fixes: 44d10c27bd75 ("kselftest/arm64: Add 2023 DPISA hwcap test coverage")
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Link: https://lore.kernel.org/r/20241028-arm64-b16b16-test-v1-1-59a4a7449bdf@kernel.org
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+Subsequently, that field will be used for addressing race conditions
+related to thermal zone initialization and exit.
+
+No intentional functional impact.
+
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Link: https://patch.msgid.link/7733910.EvYhyI6sBW@rjwysocki.net
+Reviewed-by: Lukasz Luba <lukasz.luba@arm.com>
+Stable-dep-of: 7837fa8115e0 ("thermal: core: Mark thermal zones as initializing to start with")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/arm64/abi/hwcap.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/thermal/thermal_core.c | 11 +++++------
+ drivers/thermal/thermal_core.h | 11 +++++++----
+ 2 files changed, 12 insertions(+), 10 deletions(-)
 
-diff --git a/tools/testing/selftests/arm64/abi/hwcap.c b/tools/testing/selftests/arm64/abi/hwcap.c
-index 41c245478e412..14e146a23879a 100644
---- a/tools/testing/selftests/arm64/abi/hwcap.c
-+++ b/tools/testing/selftests/arm64/abi/hwcap.c
-@@ -355,8 +355,8 @@ static void sveaes_sigill(void)
+diff --git a/drivers/thermal/thermal_core.c b/drivers/thermal/thermal_core.c
+index 728eca88a56af..7218bcbaf656e 100644
+--- a/drivers/thermal/thermal_core.c
++++ b/drivers/thermal/thermal_core.c
+@@ -553,7 +553,7 @@ void __thermal_zone_device_update(struct thermal_zone_device *tz,
+ 	LIST_HEAD(way_up_list);
+ 	int temp, ret;
  
- static void sveb16b16_sigill(void)
- {
--	/* BFADD ZA.H[W0, 0], {Z0.H-Z1.H} */
--	asm volatile(".inst 0xC1E41C00" : : : );
-+	/* BFADD Z0.H, Z0.H, Z0.H */
-+	asm volatile(".inst 0x65000000" : : : );
+-	if (tz->suspended || tz->mode != THERMAL_DEVICE_ENABLED)
++	if (tz->state != TZ_STATE_READY || tz->mode != THERMAL_DEVICE_ENABLED)
+ 		return;
+ 
+ 	ret = __thermal_zone_get_temp(tz, &temp);
+@@ -1693,7 +1693,7 @@ static void thermal_zone_device_resume(struct work_struct *work)
+ 
+ 	mutex_lock(&tz->lock);
+ 
+-	tz->suspended = false;
++	tz->state &= ~(TZ_STATE_FLAG_SUSPENDED | TZ_STATE_FLAG_RESUMING);
+ 
+ 	thermal_debug_tz_resume(tz);
+ 	thermal_zone_device_init(tz);
+@@ -1701,7 +1701,6 @@ static void thermal_zone_device_resume(struct work_struct *work)
+ 	__thermal_zone_device_update(tz, THERMAL_TZ_RESUME);
+ 
+ 	complete(&tz->resume);
+-	tz->resuming = false;
+ 
+ 	mutex_unlock(&tz->lock);
  }
+@@ -1710,7 +1709,7 @@ static void thermal_zone_pm_prepare(struct thermal_zone_device *tz)
+ {
+ 	mutex_lock(&tz->lock);
  
- static void svepmull_sigill(void)
+-	if (tz->resuming) {
++	if (tz->state & TZ_STATE_FLAG_RESUMING) {
+ 		/*
+ 		 * thermal_zone_device_resume() queued up for this zone has not
+ 		 * acquired the lock yet, so release it to let the function run
+@@ -1723,7 +1722,7 @@ static void thermal_zone_pm_prepare(struct thermal_zone_device *tz)
+ 		mutex_lock(&tz->lock);
+ 	}
+ 
+-	tz->suspended = true;
++	tz->state |= TZ_STATE_FLAG_SUSPENDED;
+ 
+ 	mutex_unlock(&tz->lock);
+ }
+@@ -1735,7 +1734,7 @@ static void thermal_zone_pm_complete(struct thermal_zone_device *tz)
+ 	cancel_delayed_work(&tz->poll_queue);
+ 
+ 	reinit_completion(&tz->resume);
+-	tz->resuming = true;
++	tz->state |= TZ_STATE_FLAG_RESUMING;
+ 
+ 	/*
+ 	 * Replace the work function with the resume one, which will restore the
+diff --git a/drivers/thermal/thermal_core.h b/drivers/thermal/thermal_core.h
+index e93a7641736ed..1cf722ba4b71d 100644
+--- a/drivers/thermal/thermal_core.h
++++ b/drivers/thermal/thermal_core.h
+@@ -61,6 +61,11 @@ struct thermal_governor {
+ 	struct list_head	governor_list;
+ };
+ 
++#define	TZ_STATE_FLAG_SUSPENDED	BIT(0)
++#define	TZ_STATE_FLAG_RESUMING	BIT(1)
++
++#define TZ_STATE_READY		0
++
+ /**
+  * struct thermal_zone_device - structure for a thermal zone
+  * @id:		unique id number for each thermal zone
+@@ -100,8 +105,7 @@ struct thermal_governor {
+  * @node:	node in thermal_tz_list (in thermal_core.c)
+  * @poll_queue:	delayed work for polling
+  * @notify_event: Last notification event
+- * @suspended: thermal zone suspend indicator
+- * @resuming:	indicates whether or not thermal zone resume is in progress
++ * @state: 	current state of the thermal zone
+  * @trips:	array of struct thermal_trip objects
+  */
+ struct thermal_zone_device {
+@@ -134,8 +138,7 @@ struct thermal_zone_device {
+ 	struct list_head node;
+ 	struct delayed_work poll_queue;
+ 	enum thermal_notify_event notify_event;
+-	bool suspended;
+-	bool resuming;
++	u8 state;
+ #ifdef CONFIG_THERMAL_DEBUGFS
+ 	struct thermal_debugfs *debugfs;
+ #endif
 -- 
 2.43.0
 
