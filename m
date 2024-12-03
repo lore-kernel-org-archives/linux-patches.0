@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B8081F75AC;
-	Tue,  3 Dec 2024 16:00:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEE5323CE;
+	Tue,  3 Dec 2024 16:00:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733241616; cv=none; b=VYRuES7nuiCW5qJhTiMOQsYKZUXu56qm6MrRqAKPnphX1kLsMSZPgZFOhkt8yXXLhLZMc0LR+ksganMK3tQogPBY6PTNQGUthwoe+KESor1iJI9vfYz8Zq73uwrQXyRTNbmokW69ghbb9otJcs5Qs/aPuAZEPRhjuVuO/M72LAw=
+	t=1733241619; cv=none; b=ZMlJlBbSYzJUKtc54nOtZLMAgiuaoMzIPpv9DkHjIH2QIpOE7ZQ9DSbgOPU3L1ArAxKlrUUqKMJ+NkPdAkJl7toQjBU2WH+J+wI4J0ZXpuJzzUN3P9oSiXFMyT7jBa9hnqJ7XDFsmWGnE4Q/TyxQ2q9oAxg+LxHlQ0s26ZzYRtU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733241616; c=relaxed/simple;
-	bh=sW4oua2dYZD7joy7x79AY3fyjoXIkD7wp0bStQ8s+A8=;
+	s=arc-20240116; t=1733241619; c=relaxed/simple;
+	bh=2qP7msLqtb+debtNjPcjVXXWSsqf39qridvVWfuc0gw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U+8XLGOBRdU9yBW2Ggi34DXvO/p7kHpsW+Tb5ZCfZvqQsBR6dlPnrGSsFyrRlGrwE+WkkptlHefSNtfvv4QDW9U0XQSYfxhje/FpoaPiohYbQMhWE2ndAwJ4nGDPuYnPXqB2zrWlNsSGU18OG6NjTIPB7qeAHXOonAxE+xjW/tk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tjhGawfm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TVucPqTG/fgUjGNU4+vg3WEO0PSf5SFhrDJxED9iDgGLW38vXf0Bny9OFRK3c2qkrrg2V7jQ7j0gemCaQcYH8mmOnYCXzfvISnLp6ErjBR2bwjMNrSSNcgfurbVASqW8NWoB/G9FWqhS2JqFhnz4NnvZSeVucYj3qzu8EEUMymc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=suAc4sJJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tjhGawfm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF546C4CED9;
-	Tue,  3 Dec 2024 16:00:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="suAc4sJJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A287C4CECF;
+	Tue,  3 Dec 2024 16:00:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733241616;
-	bh=sW4oua2dYZD7joy7x79AY3fyjoXIkD7wp0bStQ8s+A8=;
+	s=korg; t=1733241619;
+	bh=2qP7msLqtb+debtNjPcjVXXWSsqf39qridvVWfuc0gw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tjhGawfmrzktYN0g/CfbfhAZeAex8PEzVf4Yif6paqJ2tTdvBC2k1sKBblWxGxo5R
-	 NIeqlhCIpILEjadRBh5BIbYRuX+M4X0B2HqTe+Ay2LvV60UtaHpMOwi2cfPmpwjS3T
-	 odOpaQzILh/lrCT8Okbk6hm1/7h1cNRug8qtcL/Q=
+	b=suAc4sJJ34C5SoK8w/s7TsPuRnBT64wWS0grlVtbMp7Jhve10aLyeY1dek3VHU0l+
+	 yoUzd7hsbo3ogcte+zdE+Fnc2NmXcxBARx6uUqb/aeJ37seez9ZNhAn0gzvFvHAZmT
+	 IVW3k9C1AWF1ds71r6IfjKwcNLFnq6ktZ/5E2qZI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Andreas Gruenbacher <agruenba@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 468/826] gfs2: Allow immediate GLF_VERIFY_DELETE work
-Date: Tue,  3 Dec 2024 15:43:15 +0100
-Message-ID: <20241203144802.019668891@linuxfoundation.org>
+Subject: [PATCH 6.12 469/826] gfs2: Fix unlinked inode cleanup
+Date: Tue,  3 Dec 2024 15:43:16 +0100
+Message-ID: <20241203144802.058675458@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -52,60 +52,81 @@ Content-Transfer-Encoding: 8bit
 
 From: Andreas Gruenbacher <agruenba@redhat.com>
 
-[ Upstream commit 160bc9555d8654464cbbd7bb1f6687048471d2f6 ]
+[ Upstream commit 7c6f714d88475ceae5342264858a641eafa19632 ]
 
-Add an argument to gfs2_queue_verify_delete() that allows it to queue
-GLF_VERIFY_DELETE work for immediate execution.  This is used in the
-next patch.
+Before commit f0e56edc2ec7 ("gfs2: Split the two kinds of glock "delete"
+work"), function delete_work_func() was used to trigger the eviction of
+in-memory inodes from remote as well as deleting unlinked inodes at a
+later point.  These two kinds of work were then split into two kinds of
+work, and the two places in the code were deferred deletion of inodes is
+required accidentally ended up queuing the wrong kind of work.  This
+caused unlinked inodes to be left behind, which could in the worst case
+fill up filesystems and require a filesystem check to recover.
 
+Fix that by queuing the right kind of work in try_rgrp_unlink() and
+gfs2_drop_inode().
+
+Fixes: f0e56edc2ec7 ("gfs2: Split the two kinds of glock "delete" work")
 Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
-Stable-dep-of: 7c6f714d8847 ("gfs2: Fix unlinked inode cleanup")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/gfs2/glock.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ fs/gfs2/glock.c | 2 +-
+ fs/gfs2/glock.h | 1 +
+ fs/gfs2/rgrp.c  | 2 +-
+ fs/gfs2/super.c | 2 +-
+ 4 files changed, 4 insertions(+), 3 deletions(-)
 
 diff --git a/fs/gfs2/glock.c b/fs/gfs2/glock.c
-index 5addf4ebf33bd..509115202ccf9 100644
+index 509115202ccf9..a51fe42732c4c 100644
 --- a/fs/gfs2/glock.c
 +++ b/fs/gfs2/glock.c
-@@ -1013,14 +1013,15 @@ bool gfs2_queue_try_to_evict(struct gfs2_glock *gl)
+@@ -1013,7 +1013,7 @@ bool gfs2_queue_try_to_evict(struct gfs2_glock *gl)
  				  &gl->gl_delete, 0);
  }
  
--static bool gfs2_queue_verify_delete(struct gfs2_glock *gl)
-+static bool gfs2_queue_verify_delete(struct gfs2_glock *gl, bool later)
+-static bool gfs2_queue_verify_delete(struct gfs2_glock *gl, bool later)
++bool gfs2_queue_verify_delete(struct gfs2_glock *gl, bool later)
  {
  	struct gfs2_sbd *sdp = gl->gl_name.ln_sbd;
-+	unsigned long delay;
+ 	unsigned long delay;
+diff --git a/fs/gfs2/glock.h b/fs/gfs2/glock.h
+index adf0091cc98f9..63e101d448e96 100644
+--- a/fs/gfs2/glock.h
++++ b/fs/gfs2/glock.h
+@@ -245,6 +245,7 @@ static inline int gfs2_glock_nq_init(struct gfs2_glock *gl,
+ void gfs2_glock_cb(struct gfs2_glock *gl, unsigned int state);
+ void gfs2_glock_complete(struct gfs2_glock *gl, int ret);
+ bool gfs2_queue_try_to_evict(struct gfs2_glock *gl);
++bool gfs2_queue_verify_delete(struct gfs2_glock *gl, bool later);
+ void gfs2_cancel_delete_work(struct gfs2_glock *gl);
+ void gfs2_flush_delete_work(struct gfs2_sbd *sdp);
+ void gfs2_gl_hash_clear(struct gfs2_sbd *sdp);
+diff --git a/fs/gfs2/rgrp.c b/fs/gfs2/rgrp.c
+index 29c7728167652..5393031297153 100644
+--- a/fs/gfs2/rgrp.c
++++ b/fs/gfs2/rgrp.c
+@@ -1879,7 +1879,7 @@ static void try_rgrp_unlink(struct gfs2_rgrpd *rgd, u64 *last_unlinked, u64 skip
+ 		 */
+ 		ip = gl->gl_object;
  
- 	if (test_and_set_bit(GLF_VERIFY_DELETE, &gl->gl_flags))
- 		return false;
--	return queue_delayed_work(sdp->sd_delete_wq,
--				  &gl->gl_delete, 5 * HZ);
-+	delay = later ? 5 * HZ : 0;
-+	return queue_delayed_work(sdp->sd_delete_wq, &gl->gl_delete, delay);
- }
+-		if (ip || !gfs2_queue_try_to_evict(gl))
++		if (ip || !gfs2_queue_verify_delete(gl, false))
+ 			gfs2_glock_put(gl);
+ 		else
+ 			found++;
+diff --git a/fs/gfs2/super.c b/fs/gfs2/super.c
+index 6678060ed4d2b..e22c1edc32b39 100644
+--- a/fs/gfs2/super.c
++++ b/fs/gfs2/super.c
+@@ -1045,7 +1045,7 @@ static int gfs2_drop_inode(struct inode *inode)
+ 		struct gfs2_glock *gl = ip->i_iopen_gh.gh_gl;
  
- static void delete_work_func(struct work_struct *work)
-@@ -1052,7 +1053,7 @@ static void delete_work_func(struct work_struct *work)
- 		if (gfs2_try_evict(gl)) {
- 			if (test_bit(SDF_KILL, &sdp->sd_flags))
- 				goto out;
--			if (gfs2_queue_verify_delete(gl))
-+			if (gfs2_queue_verify_delete(gl, true))
- 				return;
- 		}
- 		goto out;
-@@ -1064,7 +1065,7 @@ static void delete_work_func(struct work_struct *work)
- 		if (IS_ERR(inode)) {
- 			if (PTR_ERR(inode) == -EAGAIN &&
- 			    !test_bit(SDF_KILL, &sdp->sd_flags) &&
--			    gfs2_queue_verify_delete(gl))
-+			    gfs2_queue_verify_delete(gl, true))
- 				return;
- 		} else {
- 			d_prune_aliases(inode);
+ 		gfs2_glock_hold(gl);
+-		if (!gfs2_queue_try_to_evict(gl))
++		if (!gfs2_queue_verify_delete(gl, true))
+ 			gfs2_glock_put_async(gl);
+ 		return 0;
+ 	}
 -- 
 2.43.0
 
