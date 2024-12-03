@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 533631F75A5;
-	Tue,  3 Dec 2024 15:59:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92AF41F75B4;
+	Tue,  3 Dec 2024 15:59:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733241582; cv=none; b=mc9zUMcaudCdNsJa6RKZsKAFNTyAf4CmoID7AFg7kbaXpEK8BNUs2BU1B6QzvvB+Diagau9ZM/rbMT+b71rOR+VDH12sk4ePLN2mQtm7KkIE0C2+F5bTfY3SSAurEViehFca9kINw1G26wmLq2oi18e8fLghSCSBzoGD/mFjB30=
+	t=1733241585; cv=none; b=c4q56BMSw/WaCLg/t6R/ybcs9MQpiy+Eur1KX1m4ACG57ZmkVPJPOwRq7pNkKA12XDRVunjlju9I/4OiAfIdQ5sPITU1knPplFXXaULPKvGxBSHO5xqhLRcz9aeq1uTa74b+B7qhAQls+ukOVWD633d+ysHwVqIJWbmtBwmqUHQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733241582; c=relaxed/simple;
-	bh=81TGApmyNmKVeF3658GjUJulMUhJB3BEbiJnbfOIlLg=;
+	s=arc-20240116; t=1733241585; c=relaxed/simple;
+	bh=GUtQlEST33PzsFC1jwBaUD+Ixcd9DUtuEirMd3d8PKo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p4vxDEeatgxMaYeu9EFCeHCKWwwiR+EzBHkPdsN/JAb9THy65kwauVTB9/uQ6bAv3wpYNshIJIDLaXEEpgCV/m5V6EhugkM2nATql9V5BwTHrgr7KykYLWxqDS/Yx6s5fWWIFJLsU3Q/vRDGAIA+yllb2Ru7QGv7Qq+3rpXyNkA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yr1/pNpA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tvHOytkFeGB6byZKhPEILkrJMS4aqttKpp2uf1hM2K+dCtzk1c1zSxheVWcUd2zsYfZJsTtR8ulntnxMVRvbe3ixkBdjLLW/5VvtapyNsmeH5CLGpyJ5+/dELPWFpapIJOjiovJ1EHIlHniu471pkU0SznPPurjczcGfFKUQbqc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=poAINTmP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yr1/pNpA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5252C4CECF;
-	Tue,  3 Dec 2024 15:59:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="poAINTmP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 064A0C4CECF;
+	Tue,  3 Dec 2024 15:59:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733241582;
-	bh=81TGApmyNmKVeF3658GjUJulMUhJB3BEbiJnbfOIlLg=;
+	s=korg; t=1733241585;
+	bh=GUtQlEST33PzsFC1jwBaUD+Ixcd9DUtuEirMd3d8PKo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Yr1/pNpAiWlMIdAaKHTLT+nJwGOC3eZVObMaZu8gNxdZzGdF90Uf90vpEKoED5U1G
-	 uZQbEDi+CW9v/PIP5el/LjE7UH6z/wy8r/412khCbNf26oNFe8CAJmI+a1OnxkTA7o
-	 y9tkjTEzx1O/3Qdktu44jSdPx+dZcoMzJPc3Wyb0=
+	b=poAINTmPws9/ccxnQNSmoukqy4FB0ykxjUY9h6AahY3ZbgaAKv3Tatn+tLVF3Oik0
+	 mFM9agHRLbAGPUrxJUoe4kERsZJWqRx9sD42LilC2EfiAzPxSUzmLlxxA+d6enKHXf
+	 jMMWihYSi2VxKeUS8FZVy7mBHmdUmQgz/XOw9wnA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
+	zhang jiao <zhangjiao2@cmss.chinamobile.com>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 459/826] arm64: dts: qcom: sc8180x: Add a SoC-specific compatible to cpufreq-hw
-Date: Tue,  3 Dec 2024 15:43:06 +0100
-Message-ID: <20241203144801.661375765@linuxfoundation.org>
+Subject: [PATCH 6.12 460/826] pinctrl: k210: Undef K210_PC_DEFAULT
+Date: Tue,  3 Dec 2024 15:43:07 +0100
+Message-ID: <20241203144801.700387122@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -52,37 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+From: zhang jiao <zhangjiao2@cmss.chinamobile.com>
 
-[ Upstream commit 5df30684415d5a902f23862ab5bbed2a2df7fbf1 ]
+[ Upstream commit 7e86490c5dee5c41a55f32d0dc34269e200e6909 ]
 
-Comply with bindings guidelines and get rid of errors such as:
+When the temporary macro K210_PC_DEFAULT is not needed anymore,
+use its name in the #undef statement instead of
+the incorrect "DEFAULT" name.
 
-cpufreq@18323000: compatible: 'oneOf' conditional failed, one must be fixed:
-        ['qcom,cpufreq-hw'] is too short
-
-Fixes: 8575f197b077 ("arm64: dts: qcom: Introduce the SC8180x platform")
-Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+Fixes: d4c34d09ab03 ("pinctrl: Add RISC-V Canaan Kendryte K210 FPIOA driver")
+Signed-off-by: zhang jiao <zhangjiao2@cmss.chinamobile.com>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Link: https://lore.kernel.org/20241113071201.5440-1-zhangjiao2@cmss.chinamobile.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sc8180x.dtsi | 2 +-
+ drivers/pinctrl/pinctrl-k210.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc8180x.dtsi b/arch/arm64/boot/dts/qcom/sc8180x.dtsi
-index 0e9429684dd97..60f71b4902615 100644
---- a/arch/arm64/boot/dts/qcom/sc8180x.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc8180x.dtsi
-@@ -3889,7 +3889,7 @@ lmh@18358800 {
- 		};
+diff --git a/drivers/pinctrl/pinctrl-k210.c b/drivers/pinctrl/pinctrl-k210.c
+index 0f6b55fec31de..a71805997b028 100644
+--- a/drivers/pinctrl/pinctrl-k210.c
++++ b/drivers/pinctrl/pinctrl-k210.c
+@@ -183,7 +183,7 @@ static const u32 k210_pinconf_mode_id_to_mode[] = {
+ 	[K210_PC_DEFAULT_INT13] = K210_PC_MODE_IN | K210_PC_PU,
+ };
  
- 		cpufreq_hw: cpufreq@18323000 {
--			compatible = "qcom,cpufreq-hw";
-+			compatible = "qcom,sc8180x-cpufreq-hw", "qcom,cpufreq-hw";
- 			reg = <0 0x18323000 0 0x1400>, <0 0x18325800 0 0x1400>;
- 			reg-names = "freq-domain0", "freq-domain1";
+-#undef DEFAULT
++#undef K210_PC_DEFAULT
  
+ /*
+  * Pin functions configuration information.
 -- 
 2.43.0
 
