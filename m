@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 724611F12FC;
-	Tue,  3 Dec 2024 14:33:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3888C1F667F;
+	Tue,  3 Dec 2024 14:33:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733236432; cv=none; b=auA6hk5+GlEpultTetz3myUXO89MF7xBwcXscL/p8e/VsqpCiuAtnL8duCNZ6F2gZXX2raoCtAUOrjSJv8m9OV3npRPHjCDBMN7FFLduqknpdoPt+4Ed+JgQiAkvxCialYaSoYl9oYzwIh7ZW+tMtsfDvkFMnK0QYP3Y1BmyvIk=
+	t=1733236436; cv=none; b=GZ6XAdI+zBDbHz4nSRwvcafn0w/Js2nw6kGnIiQnsxiz1BDfd9GKyujIVziok+mmLvDBrV+8VkHkakp0k0sXO2pPPaaQYLys0THIsPWAunCVEBaW1xJZDqrlATJzeirgMKLBDa5ZARv3E6JF5BGmCi4MYsaS4gDK0uCX6qLPoyY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733236432; c=relaxed/simple;
-	bh=Gbe4kaFJvZB16o1HJ+mRCco7lwL+r8ZcrPZZLXTUJGc=;
+	s=arc-20240116; t=1733236436; c=relaxed/simple;
+	bh=qjiWXOf14jkrnclnP5QjSZDvOXiq3v4IjFdHxZ3W//s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BZ60MdBtyZTSfDSCOIvZkKDfZVh5Bt+dbF0tb+jwpwzdC8RdFyf3jz2BZX7m6NU7wJCtpATSOyoYfhxUMyGOwm+OlJ6GPBNCCAj34JCmq+7ZCWgvvpqHERcV7/ikPUxsbkE8qFOuQY/6UsP0eBa20rGXlb+HE8e6/M0PkI/j82s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jkkYMgV3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=g2FgZtQ9MOAXj8Rr2HlabLH3Cet39X93GzW2ntGrrHacKHLLMKAtbFnJ92IbYpiz1pXuQ151MReLbZBI1rdmLL1XcX/EUJo3BV56nEUtB8spFF84UrZVvo1YMb+CC9tq9jTbEMp79kkc4yVf2tuOhmmDKk/5rLh/YvFFZZxGBgM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aFTyZruw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jkkYMgV3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D681CC4CECF;
-	Tue,  3 Dec 2024 14:33:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aFTyZruw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57D9CC4CED8;
+	Tue,  3 Dec 2024 14:33:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733236432;
-	bh=Gbe4kaFJvZB16o1HJ+mRCco7lwL+r8ZcrPZZLXTUJGc=;
+	s=korg; t=1733236435;
+	bh=qjiWXOf14jkrnclnP5QjSZDvOXiq3v4IjFdHxZ3W//s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jkkYMgV33RBX9pOLY4dKZSUgNkivCiOFtWpqIchsnk4BhsJXgje1MxhEzIR8epukl
-	 0yotS+GBvdYolHGh4C9Htm3xZ4VkuTHseNoaG/4imZcAAo0Xle/D/ObTHnnOaFHmfl
-	 W0+M+Of29Kg6dYYbBqLM7VW5h7ITBstKoLad7U+o=
+	b=aFTyZruwX6hW6QaeR93SQcy2UwAD4dJ5hrQ0JIRNL8+yANmv7SPKu34xpdSOVNXze
+	 F6kL2m7IL50HIE99kuL6Phq/sZ3ln/yBtgZ0KVkdtmgFfpKAmxKGdfOfORb5cTyF68
+	 LWuwulnFtWiJRgg1SnmGpxAfWaexL0BqW1FubmVM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Palmer <daniel@0x0f.com>,
-	Finn Thain <fthain@linux-m68k.org>,
 	Geert Uytterhoeven <geert@linux-m68k.org>,
+	Arnd Bergmann <arnd@arndb.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 018/138] m68k: mvme147: Fix SCSI controller IRQ numbers
-Date: Tue,  3 Dec 2024 15:30:47 +0100
-Message-ID: <20241203141924.242596025@linuxfoundation.org>
+Subject: [PATCH 4.19 019/138] m68k: mvme16x: Add and use "mvme16x.h"
+Date: Tue,  3 Dec 2024 15:30:48 +0100
+Message-ID: <20241203141924.280943885@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203141923.524658091@linuxfoundation.org>
 References: <20241203141923.524658091@linuxfoundation.org>
@@ -46,50 +45,78 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 4.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Daniel Palmer <daniel@0x0f.com>
+From: Geert Uytterhoeven <geert@linux-m68k.org>
 
-[ Upstream commit 47bc874427382018fa2e3e982480e156271eee70 ]
+[ Upstream commit dcec33c1fc4ab63983d93ffb0d82b68fc5775b88 ]
 
-Sometime long ago the m68k IRQ code was refactored and the interrupt
-numbers for SCSI controller on this board ended up wrong, and it hasn't
-worked since.
+When building with W=1:
 
-The PCC adds 0x40 to the vector for its interrupts so they end up in
-the user interrupt range. Hence, the kernel number should be the kernel
-offset for user interrupt range + the PCC interrupt number.
+    arch/m68k/mvme16x/config.c:208:6: warning: no previous prototype for ‘mvme16x_cons_write’ [-Wmissing-prototypes]
+      208 | void mvme16x_cons_write(struct console *co, const char *str, unsigned count)
+	  |      ^~~~~~~~~~~~~~~~~~
 
-Fixes: 200a3d352cd5 ("[PATCH] m68k: convert VME irq code")
-Signed-off-by: Daniel Palmer <daniel@0x0f.com>
-Reviewed-by: Finn Thain <fthain@linux-m68k.org>
-Reviewed-by: Geert Uytterhoeven <geert@linux-m68k.org>
-Link: https://lore.kernel.org/0e7636a21a0274eea35bfd5d874459d5078e97cc.1727926187.git.fthain@linux-m68k.org
+Fix this by introducing a new header file "mvme16x.h" for holding the
+prototypes of functions implemented in arch/m68k/mvme16x/.
+
 Signed-off-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Acked-by: Arnd Bergmann <arnd@arndb.de>
+Link: https://lore.kernel.org/r/6200cc3b26fad215c4524748af04692e38c5ecd2.1694613528.git.geert@linux-m68k.org
+Stable-dep-of: 077b33b9e283 ("m68k: mvme147: Reinstate early console")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/m68k/include/asm/mvme147hw.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/m68k/kernel/early_printk.c | 4 ++--
+ arch/m68k/mvme16x/config.c      | 2 ++
+ arch/m68k/mvme16x/mvme16x.h     | 6 ++++++
+ 3 files changed, 10 insertions(+), 2 deletions(-)
+ create mode 100644 arch/m68k/mvme16x/mvme16x.h
 
-diff --git a/arch/m68k/include/asm/mvme147hw.h b/arch/m68k/include/asm/mvme147hw.h
-index 9c7ff67c5ffd6..46ce392db6fc6 100644
---- a/arch/m68k/include/asm/mvme147hw.h
-+++ b/arch/m68k/include/asm/mvme147hw.h
-@@ -90,8 +90,8 @@ struct pcc_regs {
- #define M147_SCC_B_ADDR		0xfffe3000
- #define M147_SCC_PCLK		5000000
+diff --git a/arch/m68k/kernel/early_printk.c b/arch/m68k/kernel/early_printk.c
+index 7d3fe08a48eb0..3cc944df04f65 100644
+--- a/arch/m68k/kernel/early_printk.c
++++ b/arch/m68k/kernel/early_printk.c
+@@ -12,8 +12,8 @@
+ #include <linux/string.h>
+ #include <asm/setup.h>
  
--#define MVME147_IRQ_SCSI_PORT	(IRQ_USER+0x45)
--#define MVME147_IRQ_SCSI_DMA	(IRQ_USER+0x46)
-+#define MVME147_IRQ_SCSI_PORT	(IRQ_USER + 5)
-+#define MVME147_IRQ_SCSI_DMA	(IRQ_USER + 6)
+-extern void mvme16x_cons_write(struct console *co,
+-			       const char *str, unsigned count);
++
++#include "../mvme16x/mvme16x.h"
  
- /* SCC interrupts, for MVME147 */
+ asmlinkage void __init debug_cons_nputs(const char *s, unsigned n);
  
+diff --git a/arch/m68k/mvme16x/config.c b/arch/m68k/mvme16x/config.c
+index 5feb3ab484d08..bb658e0a5be5a 100644
+--- a/arch/m68k/mvme16x/config.c
++++ b/arch/m68k/mvme16x/config.c
+@@ -38,6 +38,8 @@
+ #include <asm/machdep.h>
+ #include <asm/mvme16xhw.h>
+ 
++#include "mvme16x.h"
++
+ extern t_bdid mvme_bdid;
+ 
+ static MK48T08ptr_t volatile rtc = (MK48T08ptr_t)MVME_RTC_BASE;
+diff --git a/arch/m68k/mvme16x/mvme16x.h b/arch/m68k/mvme16x/mvme16x.h
+new file mode 100644
+index 0000000000000..159c34b700394
+--- /dev/null
++++ b/arch/m68k/mvme16x/mvme16x.h
+@@ -0,0 +1,6 @@
++/* SPDX-License-Identifier: GPL-2.0-only */
++
++struct console;
++
++/* config.c */
++void mvme16x_cons_write(struct console *co, const char *str, unsigned count);
 -- 
 2.43.0
 
