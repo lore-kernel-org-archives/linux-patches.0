@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FA051F667A;
-	Tue,  3 Dec 2024 14:38:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB2581EE029;
+	Tue,  3 Dec 2024 14:38:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733236698; cv=none; b=l0ciO4wL7QX0xuX7Q4MrX9Z5ZVCVJT4wd9RMxO6UyDuy9DNZ3cu9Ob+7tVM8ggFehCMJYpj0kt7gCAR2XfhmPR6bRON2UxrjD0Yzjr/7wj+4n7tLGxbykbFScbsvnmwfaQ1MamXuk83J1iMQj/sCH4q0H6T3VTTefuJ+tfsMF/U=
+	t=1733236706; cv=none; b=nqQp9PF8bieH1SABEXl/kquKn0uHdSJYDPywXg5sQBNdHIEV4roCFMMuz0ksW6hHOH0UuzCRyi3+INowiF+OqchX/BFdjADd8ubv56y80Dvjc3VH/pSebsr7hY8ZhU8VD3kMOBOiQMIMyfsIZywZT7D6h3w+PuBY0SFdaTAJ92Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733236698; c=relaxed/simple;
-	bh=PqSU7j9WAhGXnB+LWaMmim6z0DO50DVVwsi2krlHSd4=;
+	s=arc-20240116; t=1733236706; c=relaxed/simple;
+	bh=FBKRD4fTI3R7RqgjPTMGImvFTBa1ciqqDJqomsKRZyU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BzKRZU3npbtSqgsnNq/Dh94KFnliFGnSX6M7OdT/A1J3+P4axQygExTuW/O+iYbxTZHqVQfAFrCyjK4LRFpr+yLPrYGHd+rnCYP24J2csKtWlIWeHFce3SwdrIejocY0KesO/NwHFYJKixJXZRBYO7BS2dktkLjlrgNHld7qL4A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cb4UAzeQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YJ5l8InCVjtmzvyvfc9kuKURYV5DS1SFe6upsPEenk4B3Ae3P2w1yQOofNWGPQswhjzCczpkQreeLJRyMXIU2r3eJOMuRQyPcPo0eNwYmTyBeY/m1OLf29Hupk8J5b2z34cdB8CpZsy3mM9JwJIQnQ5+FAhgQF2Y+UBLZ9ZteRY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rrXFqiFS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cb4UAzeQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF3A8C4CED8;
-	Tue,  3 Dec 2024 14:38:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rrXFqiFS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D703C4CECF;
+	Tue,  3 Dec 2024 14:38:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733236698;
-	bh=PqSU7j9WAhGXnB+LWaMmim6z0DO50DVVwsi2krlHSd4=;
+	s=korg; t=1733236706;
+	bh=FBKRD4fTI3R7RqgjPTMGImvFTBa1ciqqDJqomsKRZyU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cb4UAzeQo3k61y6ryi3o9yhjRjsENLxBM4XGuumNVKFAYWmHcm2RfKqdw64fSZ/id
-	 6FQLoXB6t70sRLIs4KJ30XR9Cm1CY8dewhvweIxIRnNR/XbvngEGtYZGShKjCUbeoW
-	 3ka6btJgTNpJGlB4lF5SxOA734Yv87ABvfdFQIHs=
+	b=rrXFqiFSKkgcRJy8htHP/MOutyd/xqCUgNx7yGLYJ22vYI6sAGMC9ShYxlnuvcui3
+	 XxvaEInr4ekNNXQiqe0Yv/1cZOJb9QA8WxKz2DPfkgrnWl8wqcyRI7mEUvn6xIG/e4
+	 IAnQXBOMkeTCdXTZfTxfh07PAUzMmRRjoRPrpxmk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Jeongjun Park <aha310510@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 093/138] net: stmmac: dwmac-socfpga: Set RX watchdog interrupt as broken
-Date: Tue,  3 Dec 2024 15:32:02 +0100
-Message-ID: <20241203141927.125637333@linuxfoundation.org>
+Subject: [PATCH 4.19 094/138] usb: using mutex lock and supporting O_NONBLOCK flag in iowarrior_read()
+Date: Tue,  3 Dec 2024 15:32:03 +0100
+Message-ID: <20241203141927.163843273@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203141923.524658091@linuxfoundation.org>
 References: <20241203141923.524658091@linuxfoundation.org>
@@ -51,48 +50,127 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maxime Chevallier <maxime.chevallier@bootlin.com>
+From: Jeongjun Park <aha310510@gmail.com>
 
-[ Upstream commit 407618d66dba55e7db1278872e8be106808bbe91 ]
+[ Upstream commit 44feafbaa66ec86232b123bb8437a6a262442025 ]
 
-On DWMAC3 and later, there's a RX Watchdog interrupt that's used for
-interrupt coalescing. It's known to be buggy on some platforms, and
-dwmac-socfpga appears to be one of them. Changing the interrupt
-coalescing from ethtool doesn't appear to have any effect here.
+iowarrior_read() uses the iowarrior dev structure, but does not use any
+lock on the structure. This can cause various bugs including data-races,
+so it is more appropriate to use a mutex lock to safely protect the
+iowarrior dev structure. When using a mutex lock, you should split the
+branch to prevent blocking when the O_NONBLOCK flag is set.
 
-Without disabling RIWT (Received Interrupt Watchdog Timer, I
-believe...), we observe latencies while receiving traffic that amount to
-around ~0.4ms. This was discovered with NTP but can be easily reproduced
-with a simple ping. Without this patch :
+In addition, it is unnecessary to check for NULL on the iowarrior dev
+structure obtained by reading file->private_data. Therefore, it is
+better to remove the check.
 
-64 bytes from 192.168.5.2: icmp_seq=1 ttl=64 time=0.657 ms
-
-With this patch :
-
-64 bytes from 192.168.5.2: icmp_seq=1 ttl=64 time=0.254 ms
-
-Fixes: 801d233b7302 ("net: stmmac: Add SOCFPGA glue driver")
-Signed-off-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Link: https://patch.msgid.link/20241122141256.764578-1-maxime.chevallier@bootlin.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 946b960d13c1 ("USB: add driver for iowarrior devices.")
+Signed-off-by: Jeongjun Park <aha310510@gmail.com>
+Link: https://lore.kernel.org/r/20240919103403.3986-1-aha310510@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/dwmac-socfpga.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/usb/misc/iowarrior.c | 46 ++++++++++++++++++++++++++++--------
+ 1 file changed, 36 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-socfpga.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-socfpga.c
-index 33407df6bea69..9176fbee5ed6c 100644
---- a/drivers/net/ethernet/stmicro/stmmac/dwmac-socfpga.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-socfpga.c
-@@ -346,6 +346,8 @@ static int socfpga_dwmac_probe(struct platform_device *pdev)
- 	plat_dat->bsp_priv = dwmac;
- 	plat_dat->fix_mac_speed = socfpga_dwmac_fix_mac_speed;
+diff --git a/drivers/usb/misc/iowarrior.c b/drivers/usb/misc/iowarrior.c
+index 8b04d27059203..44a70e0334680 100644
+--- a/drivers/usb/misc/iowarrior.c
++++ b/drivers/usb/misc/iowarrior.c
+@@ -281,28 +281,45 @@ static ssize_t iowarrior_read(struct file *file, char __user *buffer,
+ 	struct iowarrior *dev;
+ 	int read_idx;
+ 	int offset;
++	int retval;
  
-+	plat_dat->riwt_off = 1;
+ 	dev = file->private_data;
+ 
++	if (file->f_flags & O_NONBLOCK) {
++		retval = mutex_trylock(&dev->mutex);
++		if (!retval)
++			return -EAGAIN;
++	} else {
++		retval = mutex_lock_interruptible(&dev->mutex);
++		if (retval)
++			return -ERESTARTSYS;
++	}
 +
- 	ret = stmmac_dvr_probe(&pdev->dev, plat_dat, &stmmac_res);
- 	if (ret)
- 		goto err_remove_config_dt;
+ 	/* verify that the device wasn't unplugged */
+-	if (!dev || !dev->present)
+-		return -ENODEV;
++	if (!dev->present) {
++		retval = -ENODEV;
++		goto exit;
++	}
+ 
+ 	dev_dbg(&dev->interface->dev, "minor %d, count = %zd\n",
+ 		dev->minor, count);
+ 
+ 	/* read count must be packet size (+ time stamp) */
+ 	if ((count != dev->report_size)
+-	    && (count != (dev->report_size + 1)))
+-		return -EINVAL;
++	    && (count != (dev->report_size + 1))) {
++		retval = -EINVAL;
++		goto exit;
++	}
+ 
+ 	/* repeat until no buffer overrun in callback handler occur */
+ 	do {
+ 		atomic_set(&dev->overflow_flag, 0);
+ 		if ((read_idx = read_index(dev)) == -1) {
+ 			/* queue empty */
+-			if (file->f_flags & O_NONBLOCK)
+-				return -EAGAIN;
++			if (file->f_flags & O_NONBLOCK) {
++				retval = -EAGAIN;
++				goto exit;
++			}
+ 			else {
+ 				//next line will return when there is either new data, or the device is unplugged
+ 				int r = wait_event_interruptible(dev->read_wait,
+@@ -313,28 +330,37 @@ static ssize_t iowarrior_read(struct file *file, char __user *buffer,
+ 								  -1));
+ 				if (r) {
+ 					//we were interrupted by a signal
+-					return -ERESTART;
++					retval = -ERESTART;
++					goto exit;
+ 				}
+ 				if (!dev->present) {
+ 					//The device was unplugged
+-					return -ENODEV;
++					retval = -ENODEV;
++					goto exit;
+ 				}
+ 				if (read_idx == -1) {
+ 					// Can this happen ???
+-					return 0;
++					retval = 0;
++					goto exit;
+ 				}
+ 			}
+ 		}
+ 
+ 		offset = read_idx * (dev->report_size + 1);
+ 		if (copy_to_user(buffer, dev->read_queue + offset, count)) {
+-			return -EFAULT;
++			retval = -EFAULT;
++			goto exit;
+ 		}
+ 	} while (atomic_read(&dev->overflow_flag));
+ 
+ 	read_idx = ++read_idx == MAX_INTERRUPT_BUFFER ? 0 : read_idx;
+ 	atomic_set(&dev->read_idx, read_idx);
++	mutex_unlock(&dev->mutex);
+ 	return count;
++
++exit:
++	mutex_unlock(&dev->mutex);
++	return retval;
+ }
+ 
+ /*
 -- 
 2.43.0
 
