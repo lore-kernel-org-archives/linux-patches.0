@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E64041F755D;
-	Tue,  3 Dec 2024 14:55:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C3DB1F756E;
+	Tue,  3 Dec 2024 14:55:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733237701; cv=none; b=Q1MeG6MYP9ncpW6T3w5jxkOs395waFWgak43oyjrhOXhuof2knINQmWUv1l6aKGfE3w+/SpN6uajSXPm+hVIMw+wNZPxaQ6mqYjh6woxNcIQkEHdFZ222yOijkp4dXsdPwlUeGK0IFCoDMoJaTG60eJqh3GWh1Mt0teUpbPBOfk=
+	t=1733237707; cv=none; b=OC0omF2Z6RCvgG95Py8wocn3igmkUQBdjiV4YhWZFOjLIpYDAlJhalqPM2SvGHZyobxV1Qn2hHcVe3DiGWfFSgN16JgLQ00nSWcf81MTe4eUFuvS0/Ta6TzlV1ufON6HOlQGmUozJtZtkdFVQUbhQKiZNTCcwL6Rt7uEM2o8VA8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733237701; c=relaxed/simple;
-	bh=hYrJEmKm77X/+aHo520D1PglQ5zhiYH3KzZ1Q0hVRwQ=;
+	s=arc-20240116; t=1733237707; c=relaxed/simple;
+	bh=/EisSg5VA81U7NOQYivRZeETjA7lvw2HZU5sOk4T/t0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R7y47oz48G3SFenczm0gBp7MNUVVGj1twgBXpkTAVlhkf0EwG6rHfsvOJycq3AITJs+vgg0m/Alj3Y3jA0/ZdPfAUoSLjK9B1U8o526Bmz0EESqoflLI0niU9/0bvdnsSb8OrNbuC/dc642/gkIYu+9QMzX1eiVk0kySR/SqojY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pGUpfSCt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DdBPm1BnG6z4S0tpwOikB8sRw8Su78IZGqIBpXoDBUDgZFXnRwyaH7lFh2ODcmN42RO4IpafjwrqbXheLyvID9TzMz/lqhtoeYt0z9i8N2/DobjbnCVsAIUm+KfNkAoG5lC/90rWepN2e1ygegq4dNx6rxGHzfD/e2ygkKaN9bo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PoZ1SOWx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pGUpfSCt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10DE7C4CECF;
-	Tue,  3 Dec 2024 14:54:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PoZ1SOWx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 709CBC4CECF;
+	Tue,  3 Dec 2024 14:55:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733237700;
-	bh=hYrJEmKm77X/+aHo520D1PglQ5zhiYH3KzZ1Q0hVRwQ=;
+	s=korg; t=1733237706;
+	bh=/EisSg5VA81U7NOQYivRZeETjA7lvw2HZU5sOk4T/t0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pGUpfSCtd1bucLA+R8i0wiwrh9S7WuRRfHkUQdwtNya9XlHbmd89iz0cP23JQxKgU
-	 5lIamHrVRhmMFQdMgboV8kuYYG1Mh4AZwmlKybNIuNXD1FmVPAk8Tqf2gCafJJDVQC
-	 Qz0WDyD0gz7avGA7UV0wrTqJDSvq6oSdmkXrAkp0=
+	b=PoZ1SOWxbcoe00rZC3C4SVbY5aA/jRS9tvLHUXFf/pTutsCZHURoZ4Kg0/3unUbso
+	 Zg5yqE+codj+TJyPVn8Yr890iHjdunT+930SEneMEw7vSlO4dmwM0vb/sZa8IDiw9j
+	 GIlrJ2XWn50E/uCd5W+2NR2VRh11chCDqzT5aM4g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiuhong Wang <xiuhong.wang@unisoc.com>,
-	Zhiguo Niu <zhiguo.niu@unisoc.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
-	Daniel Rosenberg <drosen@google.com>
-Subject: [PATCH 6.11 046/817] f2fs: fix fiemap failure issue when page size is 16KB
-Date: Tue,  3 Dec 2024 15:33:38 +0100
-Message-ID: <20241203143957.460042336@linuxfoundation.org>
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Fangzhi Zuo <Jerry.Zuo@amd.com>,
+	Rodrigo Siqueira <rodrigo.siqueira@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.11 047/817] drm/amd/display: Skip Invalid Streams from DSC Policy
+Date: Tue,  3 Dec 2024 15:33:39 +0100
+Message-ID: <20241203143957.499724170@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -53,109 +54,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiuhong Wang <xiuhong.wang@unisoc.com>
+From: Fangzhi Zuo <Jerry.Zuo@amd.com>
 
-commit a7a7c1d423a6351a6541e95c797da5358e5ad1ea upstream.
+[ Upstream commit 9afeda04964281e9f708b92c2a9c4f8a1387b46e ]
 
-After enable 16K page size, an infinite loop may occur in
-fiemap (fm_length=UINT64_MAX) on a file, such as the 16KB
-scratch.img during the remount operation in Android.
+Streams with invalid new connector state should be elimiated from
+dsc policy.
 
-The condition for whether fiemap continues to map is to check
-whether the number of bytes corresponding to the next map.m_lblk
-exceeds blks_to_bytes(inode,max_inode_blocks(inode)) if there are HOLE.
-The latter does not take into account the maximum size of a file with 16KB
-page size, so the loop cannot be jumped out.
-
-The following is the fail trace:
-When f2fs_map_blocks reaches map.m_lblk=3936, it needs to go to the
-first direct node block, so the map is 3936 + 4090 = 8026,
-The next map is the second direct node block, that is,
-8026 + 4090 = 12116,
-The next map is the first indirect node block, that is,
-12116 + 4090 * 4090 = 16740216,
-The next map is the second indirect node block, that is,
-16740216 + 4090 * 4090 = 33468316,
-The next map is the first double indirect node block, that is,
-33468316 + 4090 * 4090 * 4090 = 68451397316
-Since map.m_lblk represents the address of a block, which is 32
-bits, truncation will occur, that is, 68451397316 becomes
-4026887876, and the number of bytes corresponding to the block
-number does not exceed blks_to_bytes(inode,max_inode_blocks(inode)),
-so the loop will not be jumped out.
-The next time, it will be considered that it should still be a
-double indirect node block, that is,
-4026887876 + 4090 * 4090 * 4090 = 72444816876, which will be
-truncated to 3725340140, and the loop will not be jumped out.
-
-156.374871: f2fs_map_blocks: dev = (254,57), ino = 7449, file offset = 0, start blkaddr = 0x8e00, len = 0x200, flags = 2,seg_type = 8, may_create = 0, multidevice = 0, flag = 1, err = 0
-156.374916: f2fs_map_blocks: dev = (254,57), ino = 7449, file offset = 512, start blkaddr = 0x0, len = 0x0, flags = 0 , seg_type = 8, may_create = 0, multidevice = 0, flag = 1, err = 0
-156.374920: f2fs_map_blocks: dev = (254,57), ino = 7449, file offset = 513, start blkaddr = 0x0, len = 0x0, flags = 0, seg_type = 8, may_create = 0, multidevice = 0, flag = 1, err = 0
-......
-156.385747: f2fs_map_blocks: dev = (254,57), ino = 7449, file offset = 3935, start blkaddr = 0x0, len = 0x0, flags = 0, seg_type = 8, may_create = 0, multidevice = 0, flag = 1, err = 0
-156.385752: f2fs_map_blocks: dev = (254,57), ino = 7449, file offset = 3936, start blkaddr = 0x0, len = 0x0, flags = 0, seg_type = 8, may_create = 0, multidevice = 0, flag = 1, err = 0
-156.385755: f2fs_map_blocks: dev = (254,57), ino = 7449, file offset = 8026, start blkaddr = 0x0, len = 0x0, flags = 0, seg_type = 8, may_create = 0, multidevice = 0, flag = 1, err = 0
-156.385758: f2fs_map_blocks: dev = (254,57), ino = 7449, file offset = 12116, start blkaddr = 0x0, len = 0x0, flags = 0, seg_type = 8, may_create = 0, multidevice = 0, flag = 1, err = 0
-156.385761: f2fs_map_blocks: dev = (254,57), ino = 7449, file offset = 16740216, start blkaddr = 0x0, len = 0x0, flags = 0, seg_type = 8, may_create = 0, multidevice = 0, flag = 1, err = 0
-156.385764: f2fs_map_blocks: dev = (254,57), ino = 7449, file offset = 33468316, start blkaddr = 0x0, len = 0x0, flags = 0, seg_type = 8, may_create = 0, multidevice = 0, flag = 1, err = 0
-156.385767: f2fs_map_blocks: dev = (254,57), ino = 7449, file offset = 4026887876, start blkaddr = 0x0, len = 0x0, flags = 0, seg_type = 8, may_create = 0, multidevice = 0, flag = 1, err = 0
-156.385770: f2fs_map_blocks: dev = (254,57), ino = 7449, file offset = 3725340140, start blkaddr = 0x0, len = 0x0, flags = 0, seg_type = 8, may_create = 0, multidevice = 0, flag = 1, err = 0
-156.385772: f2fs_map_blocks: dev = (254,57), ino = 7449, file offset = 4026887876, start blkaddr = 0x0, len = 0x0, flags = 0, seg_type = 8, may_create = 0, multidevice = 0, flag = 1, err = 0
-156.385775: f2fs_map_blocks: dev = (254,57), ino = 7449, file offset = 3725340140, start blkaddr = 0x0, len = 0x0, flags = 0, seg_type = 8, may_create = 0, multidevice = 0, flag = 1, err = 0
-
-Commit a6a010f5def5 ("f2fs: Restrict max filesize for 16K f2fs")
-has set the maximum allowed file size to (U32_MAX + 1) * F2FS_BLKSIZE,
-so max_file_blocks should be used here to limit it, that is,
-maxbytes defined above. And the max_inode_blocks function is not
-called by other functions except here, so cleanup it.
-
-Signed-off-by: Xiuhong Wang <xiuhong.wang@unisoc.com>
-Signed-off-by: Zhiguo Niu <zhiguo.niu@unisoc.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
-Cc: Daniel Rosenberg <drosen@google.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Signed-off-by: Fangzhi Zuo <Jerry.Zuo@amd.com>
+Signed-off-by: Rodrigo Siqueira <rodrigo.siqueira@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/data.c |   22 +---------------------
- 1 file changed, 1 insertion(+), 21 deletions(-)
+ .../drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
---- a/fs/f2fs/data.c
-+++ b/fs/f2fs/data.c
-@@ -1894,25 +1894,6 @@ static int f2fs_xattr_fiemap(struct inod
- 	return (err < 0 ? err : 0);
- }
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
+index 905c11af01716..0fa922f60ac0a 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
+@@ -1120,6 +1120,7 @@ static int compute_mst_dsc_configs_for_link(struct drm_atomic_state *state,
+ 	int i, k, ret;
+ 	bool debugfs_overwrite = false;
+ 	uint16_t fec_overhead_multiplier_x1000 = get_fec_overhead_multiplier(dc_link);
++	struct drm_connector_state *new_conn_state;
  
--static loff_t max_inode_blocks(struct inode *inode)
--{
--	loff_t result = ADDRS_PER_INODE(inode);
--	loff_t leaf_count = ADDRS_PER_BLOCK(inode);
--
--	/* two direct node blocks */
--	result += (leaf_count * 2);
--
--	/* two indirect node blocks */
--	leaf_count *= NIDS_PER_BLOCK;
--	result += (leaf_count * 2);
--
--	/* one double indirect node block */
--	leaf_count *= NIDS_PER_BLOCK;
--	result += leaf_count;
--
--	return result;
--}
--
- int f2fs_fiemap(struct inode *inode, struct fiemap_extent_info *fieinfo,
- 		u64 start, u64 len)
- {
-@@ -1985,8 +1966,7 @@ next:
- 	if (!compr_cluster && !(map.m_flags & F2FS_MAP_FLAGS)) {
- 		start_blk = next_pgofs;
+ 	memset(params, 0, sizeof(params));
  
--		if (blks_to_bytes(inode, start_blk) < blks_to_bytes(inode,
--						max_inode_blocks(inode)))
-+		if (blks_to_bytes(inode, start_blk) < maxbytes)
- 			goto prep_next;
+@@ -1127,7 +1128,7 @@ static int compute_mst_dsc_configs_for_link(struct drm_atomic_state *state,
+ 		return PTR_ERR(mst_state);
  
- 		flags |= FIEMAP_EXTENT_LAST;
+ 	/* Set up params */
+-	DRM_DEBUG_DRIVER("%s: MST_DSC Set up params for %d streams\n", __func__, dc_state->stream_count);
++	DRM_DEBUG_DRIVER("%s: MST_DSC Try to set up params from %d streams\n", __func__, dc_state->stream_count);
+ 	for (i = 0; i < dc_state->stream_count; i++) {
+ 		struct dc_dsc_policy dsc_policy = {0};
+ 
+@@ -1143,6 +1144,14 @@ static int compute_mst_dsc_configs_for_link(struct drm_atomic_state *state,
+ 		if (!aconnector->mst_output_port)
+ 			continue;
+ 
++		new_conn_state = drm_atomic_get_new_connector_state(state, &aconnector->base);
++
++		if (!new_conn_state) {
++			DRM_DEBUG_DRIVER("%s:%d MST_DSC Skip the stream 0x%p with invalid new_conn_state\n",
++					__func__, __LINE__, stream);
++			continue;
++		}
++
+ 		stream->timing.flags.DSC = 0;
+ 
+ 		params[count].timing = &stream->timing;
+@@ -1175,6 +1184,8 @@ static int compute_mst_dsc_configs_for_link(struct drm_atomic_state *state,
+ 		count++;
+ 	}
+ 
++	DRM_DEBUG_DRIVER("%s: MST_DSC Params set up for %d streams\n", __func__, count);
++
+ 	if (count == 0) {
+ 		ASSERT(0);
+ 		return 0;
+-- 
+2.43.0
+
 
 
