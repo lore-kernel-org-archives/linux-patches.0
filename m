@@ -1,38 +1,51 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46EB71DA3D;
-	Tue,  3 Dec 2024 15:18:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 358B62D7BF;
+	Tue,  3 Dec 2024 15:18:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733239123; cv=none; b=aHA5zNyJR2qbNqBjpPRa9CgBymOMjEZ4ZXmD9ECDXroipk0Cz9OLoqJSc7hOf+puhtqBpPrUNH9OyS4UEfUaDA7sI6YzC2qb6/OsW4HG0RBy7uz5LojXIcOaC88MVMccm14dr1+qJbfOEJQwIyHvxcdUmnY88Zydjo+UiqRj1EQ=
+	t=1733239126; cv=none; b=ZK2IwEfrXHhL1BJu97U2vM7zF0Kxya/ISQE2sDZ/YYDIB+vK4Cm9Sjudws4NfUh4POoFZMe48lRUL5qjcMzjPsY6/3jmjt6ewGRKOll7ugxfYvFk0HuDq6Smqe8QOzkZv+w5KqWb5p4Hx/IzbySNq/QfKBHv+RnHNDAcvNN0w30=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733239123; c=relaxed/simple;
-	bh=+in8l7teeCs+1YZbnT0/HxwOyK5f1zVRtN/ohigswck=;
+	s=arc-20240116; t=1733239126; c=relaxed/simple;
+	bh=k6x86TfFb1xPFJjjMTjiPyo4iv8v/OOLn4Y0ccR1S5A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EqLTa+97wyYuZICErirHe+Rw0kx4U52bkDiauAB4yYrf1ZO6Ufd8Pp+Bzmh95fXUtEeQeoQNeGKG0LXinab9i9nBl0ANvf2e7EWU5TDeVaENHaggWdgtPjTnjdSO6oU8/tGN66Sf4QI4JyFDD0VEFh0d+EHGvFMmrW05BjdJatQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Im9JsHSU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NBQqTZRJvpKRmGY8cc0GrzYtsotHK524Pr8SEuSv9E2VLgNbeWkv5sfIm0cNXAzmnzdBkRURlWT5keIQ3I1SWBlqUJlQzdsHttsRzZx+kJevHf+GppZtBRCjaJUVss2QJcl7koOisvwcOUZBl+5Y+lSgxGCDFUkKKIQdpR1xRh4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rDhLxtge; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Im9JsHSU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDCC8C4CECF;
-	Tue,  3 Dec 2024 15:18:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rDhLxtge"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8210EC4CECF;
+	Tue,  3 Dec 2024 15:18:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733239123;
-	bh=+in8l7teeCs+1YZbnT0/HxwOyK5f1zVRtN/ohigswck=;
+	s=korg; t=1733239126;
+	bh=k6x86TfFb1xPFJjjMTjiPyo4iv8v/OOLn4Y0ccR1S5A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Im9JsHSUnxHMkzwQR3PJCs0QLVyIplClMYzJrNV3arJnWCcECwcyK5aA6hMOnrPVC
-	 TsGJcl49dFErDZP/f0Z7hbZi00yrsKUNpfgTtHYQ2zk001m2AzL9cqS5C0w83E0HHr
-	 6Mu0JW0DV5N/EHSFPKzClSMCve3h2EFsX2WQHW3c=
+	b=rDhLxtgeXfcUPEpSj2SyY0xV95iNyVyi0bwvGweWd0lAocOyRKwPhijVtDidKfeLb
+	 6GsCoGmq933xet6V9LINWi128/oXWt8av4ONE75Wm2ldwWALtVgfqwyHRqmAJ+MMCQ
+	 Rhf6sHvOGXj+lYw5uobqm7zhrECOBAyh+hEbx/Cc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Laight <david.laight@aculab.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
+	Ganapatrao Kulkarni <gankulkarni@os.amperecomputing.com>,
+	Leo Yan <leo.yan@arm.com>,
+	James Clark <james.clark@linaro.org>,
+	Ben Gainey <ben.gainey@arm.com>,
+	Suzuki K Poulose <suzuki.poulose@arm.com>,
+	Will Deacon <will@kernel.org>,
+	Mathieu Poirier <mathieu.poirier@linaro.org>,
+	Mike Leach <mike.leach@linaro.org>,
+	Ruidong Tian <tianruidong@linux.alibaba.com>,
+	Benjamin Gray <bgray@linux.ibm.com>,
+	linux-arm-kernel@lists.infradead.org,
+	coresight@lists.linaro.org,
+	John Garry <john.g.garry@oracle.com>,
+	scclevenger@os.amperecomputing.com,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 480/817] x86: fix off-by-one in access_ok()
-Date: Tue,  3 Dec 2024 15:40:52 +0100
-Message-ID: <20241203144014.608019904@linuxfoundation.org>
+Subject: [PATCH 6.11 481/817] perf cs-etm: Dont flush when packet_queue fills up
+Date: Tue,  3 Dec 2024 15:40:53 +0100
+Message-ID: <20241203144014.646375317@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -51,50 +64,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Laight <David.Laight@ACULAB.COM>
+From: James Clark <james.clark@linaro.org>
 
-[ Upstream commit 573f45a9f9a47fed4c7957609689b772121b33d7 ]
+[ Upstream commit 5afd032961e8465808c4bc385c06e7676fbe1951 ]
 
-When the size isn't a small constant, __access_ok() will call
-valid_user_address() with the address after the last byte of the user
-buffer.
+cs_etm__flush(), like cs_etm__sample() is an operation that generates a
+sample and then swaps the current with the previous packet. Calling
+flush after processing the queues results in two swaps which corrupts
+the next sample. Therefore it wasn't appropriate to call flush here so
+remove it.
 
-It is valid for a buffer to end with the last valid user address so
-valid_user_address() must allow accesses to the base of the guard page.
+Flushing is still done on a discontinuity to explicitly clear the last
+branch buffer, but when the packet_queue fills up before reaching a
+timestamp, that's not a discontinuity and the call to
+cs_etm__process_traceid_queue() already generated samples and drained
+the buffers correctly.
 
-[ This introduces an off-by-one in the other direction for the plain
-  non-sized accesses, but since we have that guard region that is a
-  whole page, those checks "allowing" accesses to that guard region
-  don't really matter. The access will fault anyway, whether to the
-  guard page or if the address has been masked to all ones - Linus ]
+This is visible by looking for a branch that has the same target as the
+previous branch and the following source is before the address of the
+last target, which is impossible as execution would have had to have
+gone backwards:
 
-Fixes: 86e6b1547b3d0 ("x86: fix user address masking non-canonical speculation issue")
-Signed-off-by: David Laight <david.laight@aculab.com>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+  ffff800080849d40 _find_next_and_bit+0x78 => ffff80008011cadc update_sg_lb_stats+0x94
+   (packet_queue fills here before a timestamp, resulting in a flush and
+    branch target ffff80008011cadc is duplicated.)
+  ffff80008011cb1c update_sg_lb_stats+0xd4 => ffff80008011cadc update_sg_lb_stats+0x94
+  ffff8000801117c4 cpu_util+0x24 => ffff8000801117d4 cpu_util+0x34
+
+After removing the flush the correct branch target is used for the
+second sample, and ffff8000801117c4 is no longer before the previous
+address:
+
+  ffff800080849d40 _find_next_and_bit+0x78 => ffff80008011cadc update_sg_lb_stats+0x94
+  ffff80008011cb1c update_sg_lb_stats+0xd4 => ffff8000801117a0 cpu_util+0x0
+  ffff8000801117c4 cpu_util+0x24 => ffff8000801117d4 cpu_util+0x34
+
+Make sure that a final branch stack is output at the end of the trace
+by calling cs_etm__end_block(). This is already done for both the
+timeless decode paths.
+
+Fixes: 21fe8dc1191a ("perf cs-etm: Add support for CPU-wide trace scenarios")
+Reported-by: Ganapatrao Kulkarni <gankulkarni@os.amperecomputing.com>
+Closes: https://lore.kernel.org/all/20240719092619.274730-1-gankulkarni@os.amperecomputing.com/
+Reviewed-by: Leo Yan <leo.yan@arm.com>
+Signed-off-by: James Clark <james.clark@linaro.org>
+Tested-by: Ganapatrao Kulkarni <gankulkarni@os.amperecomputing.com>
+Cc: Ben Gainey <ben.gainey@arm.com>
+Cc: Suzuki K Poulose <suzuki.poulose@arm.com>
+Cc: Will Deacon <will@kernel.org>
+Cc: Mathieu Poirier <mathieu.poirier@linaro.org>
+Cc: Mike Leach <mike.leach@linaro.org>
+Cc: Ruidong Tian <tianruidong@linux.alibaba.com>
+Cc: Benjamin Gray <bgray@linux.ibm.com>
+Cc: linux-arm-kernel@lists.infradead.org
+Cc: coresight@lists.linaro.org
+Cc: John Garry <john.g.garry@oracle.com>
+Cc: scclevenger@os.amperecomputing.com
+Link: https://lore.kernel.org/r/20240916135743.1490403-2-james.clark@linaro.org
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/cpu/common.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ tools/perf/util/cs-etm.c | 25 ++++++++++++++++++-------
+ 1 file changed, 18 insertions(+), 7 deletions(-)
 
-diff --git a/arch/x86/kernel/cpu/common.c b/arch/x86/kernel/cpu/common.c
-index c472282ab40fd..fd89f1c65c947 100644
---- a/arch/x86/kernel/cpu/common.c
-+++ b/arch/x86/kernel/cpu/common.c
-@@ -2374,12 +2374,12 @@ void __init arch_cpu_finalize_init(void)
- 	alternative_instructions();
+diff --git a/tools/perf/util/cs-etm.c b/tools/perf/util/cs-etm.c
+index 5e9fbcfad7d44..f4615fa4280d8 100644
+--- a/tools/perf/util/cs-etm.c
++++ b/tools/perf/util/cs-etm.c
+@@ -2439,12 +2439,6 @@ static void cs_etm__clear_all_traceid_queues(struct cs_etm_queue *etmq)
  
- 	if (IS_ENABLED(CONFIG_X86_64)) {
--		unsigned long USER_PTR_MAX = TASK_SIZE_MAX-1;
-+		unsigned long USER_PTR_MAX = TASK_SIZE_MAX;
+ 		/* Ignore return value */
+ 		cs_etm__process_traceid_queue(etmq, tidq);
+-
+-		/*
+-		 * Generate an instruction sample with the remaining
+-		 * branchstack entries.
+-		 */
+-		cs_etm__flush(etmq, tidq);
+ 	}
+ }
  
- 		/*
- 		 * Enable this when LAM is gated on LASS support
- 		if (cpu_feature_enabled(X86_FEATURE_LAM))
--			USER_PTR_MAX = (1ul << 63) - PAGE_SIZE - 1;
-+			USER_PTR_MAX = (1ul << 63) - PAGE_SIZE;
- 		 */
- 		runtime_const_init(ptr, USER_PTR_MAX);
+@@ -2587,7 +2581,7 @@ static int cs_etm__process_timestamped_queues(struct cs_etm_auxtrace *etm)
  
+ 	while (1) {
+ 		if (!etm->heap.heap_cnt)
+-			goto out;
++			break;
+ 
+ 		/* Take the entry at the top of the min heap */
+ 		cs_queue_nr = etm->heap.heap_array[0].queue_nr;
+@@ -2670,6 +2664,23 @@ static int cs_etm__process_timestamped_queues(struct cs_etm_auxtrace *etm)
+ 		ret = auxtrace_heap__add(&etm->heap, cs_queue_nr, cs_timestamp);
+ 	}
+ 
++	for (i = 0; i < etm->queues.nr_queues; i++) {
++		struct int_node *inode;
++
++		etmq = etm->queues.queue_array[i].priv;
++		if (!etmq)
++			continue;
++
++		intlist__for_each_entry(inode, etmq->traceid_queues_list) {
++			int idx = (int)(intptr_t)inode->priv;
++
++			/* Flush any remaining branch stack entries */
++			tidq = etmq->traceid_queues[idx];
++			ret = cs_etm__end_block(etmq, tidq);
++			if (ret)
++				return ret;
++		}
++	}
+ out:
+ 	return ret;
+ }
 -- 
 2.43.0
 
