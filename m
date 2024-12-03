@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C1831F7560;
-	Tue,  3 Dec 2024 15:07:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BB4C1F7560;
+	Tue,  3 Dec 2024 15:07:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733238459; cv=none; b=dAZaS+CkH/GK7qdNc5vTRa9O9x8UKPqRQFLk9DEHn/4d7tDsxBLi2yJ9+VPZ6TJfsFRlMVZlOUBt7/WRo+f3zPxzfv/EDFW7EK7+YIiqvdUcgVGkaGuLkjHJeldbRgxblwO/Ezf+HLacV7/1p/PMVSd8BYe/k/o/fVY1LpzNQzI=
+	t=1733238462; cv=none; b=DXsSaZYxVZTx5JZkq2GnpaMP45pAHbDn2QmDGtHF3qHGDSLYlq1vJE8ztLW7nzcJA47RxxY/dcXQ2ebqj9TYNQoHNeKIyNWKhGuGzuC6bDexto/Qmeb11o0oJZJsE3qIcG9JweMqLHhmz7665c2RKXBsMG5ow8lbwxj842B8SIM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733238459; c=relaxed/simple;
-	bh=FzKHRwArrEtrlS9QW0CDn7BzYiZQbbIXiGq2Hv2Vc6c=;
+	s=arc-20240116; t=1733238462; c=relaxed/simple;
+	bh=jJPLmHiJKpiFjHo4qmHwNMrfUEpk+ujnxJXKB0vrVUA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=reyRxmjGQQUgT127W6f3nzcZ0a7YpwYb+pUqhVhkvu/1wqyEzi+oD9QaqMFDAnlSGXUevuUCyAQbQBiX1Wlj69s00XwtdmN0P57ofZ0PB30krJTYcMXSsY7JOr/2WZ6MIUgsQ9OtTvJxbJ8ohnLZ7cokDwpaJuV3Y00Q69CgSKI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SurjCit8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SoQtFd0GAeqiTbntDuyoms8hmfmnzQl439ZvhhiM8rXjm9KIQJZBduDyfB3Akmw8M78aoRKdiKX1fOP8ukEBeOBZFxTfvf9TfRJ/a1wHaQqw/poveCKnaQbCEYy29P/TR61h2ZeuxSvdn8B0jO8/qEsXBhkcAZDh+qGLetdf4EI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wx1a5cgx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SurjCit8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECECDC4CED6;
-	Tue,  3 Dec 2024 15:07:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wx1a5cgx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4D9AC4CED8;
+	Tue,  3 Dec 2024 15:07:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733238459;
-	bh=FzKHRwArrEtrlS9QW0CDn7BzYiZQbbIXiGq2Hv2Vc6c=;
+	s=korg; t=1733238462;
+	bh=jJPLmHiJKpiFjHo4qmHwNMrfUEpk+ujnxJXKB0vrVUA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SurjCit8x3fMPOXVpX8P7fESrw4SLlos8WsrXkJ/9QzuoRq4ev6nlymbqQgavuabw
-	 vsOAgGRJb1PKVvNPBfmLQ5hVL4oMumSDJ5p5OAGcPYZcVWZFmt8tHAAwOjHPi0QAp0
-	 yIMT5pGGJfCXFxL9N98f/A2tuJpObKrD/GphNCpE=
+	b=Wx1a5cgx8KySahvcRxLWIM3XPmCksr+95jve1wrjaOmSq19kXxPidojtc1Ml0Q5aF
+	 XMgD/sqGSCKmS2MnfjSLJE3nERHPMpA7/8o89t4WwUlB4O6wwaVZxCVJuYsqz8mksK
+	 0TqhAkEdWB/8Fc3/K1B2hGk3VCuWI1vWfqylM7rY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Dipendra Khadka <kdipendra88@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Andrew Lunn <andrew@lunn.ch>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 285/817] drm/msm/dpu: drop LM_3 / LM_4 on MSM8998
-Date: Tue,  3 Dec 2024 15:37:37 +0100
-Message-ID: <20241203144006.933995995@linuxfoundation.org>
+Subject: [PATCH 6.11 286/817] octeontx2-pf: handle otx2_mbox_get_rsp errors in otx2_common.c
+Date: Tue,  3 Dec 2024 15:37:38 +0100
+Message-ID: <20241203144006.973432080@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -51,47 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Dipendra Khadka <kdipendra88@gmail.com>
 
-[ Upstream commit c59afe50773d5c972f6684f9bbd9a2ddb2fb92fa ]
+[ Upstream commit 0fbc7a5027c6f7f2c785adae3dcec22b2f2b69b3 ]
 
-On the MSM8998 platform ther are no LM_3 and LM_4 blocks. Drop them from
-the MSM8998 catalog.
+Add error pointer check after calling otx2_mbox_get_rsp().
 
-Fixes: 94391a14fc27 ("drm/msm/dpu1: Add MSM8998 to hw catalog")
-Reported-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Patchwork: https://patchwork.freedesktop.org/patch/612585/
-Link: https://lore.kernel.org/r/20240905-dpu-fix-sdm845-catalog-v1-3-3363d03998bd@linaro.org
+Fixes: ab58a416c93f ("octeontx2-pf: cn10k: Get max mtu supported from admin function")
+Signed-off-by: Dipendra Khadka <kdipendra88@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: Andrew Lunn <andrew@lunn.ch>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h  | 12 ------------
- 1 file changed, 12 deletions(-)
+ drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h
-index 1d3e9666c7411..64c94e919a698 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h
-@@ -156,18 +156,6 @@ static const struct dpu_lm_cfg msm8998_lm[] = {
- 		.sblk = &msm8998_lm_sblk,
- 		.lm_pair = LM_5,
- 		.pingpong = PINGPONG_2,
--	}, {
--		.name = "lm_3", .id = LM_3,
--		.base = 0x47000, .len = 0x320,
--		.features = MIXER_MSM8998_MASK,
--		.sblk = &msm8998_lm_sblk,
--		.pingpong = PINGPONG_NONE,
--	}, {
--		.name = "lm_4", .id = LM_4,
--		.base = 0x48000, .len = 0x320,
--		.features = MIXER_MSM8998_MASK,
--		.sblk = &msm8998_lm_sblk,
--		.pingpong = PINGPONG_NONE,
- 	}, {
- 		.name = "lm_5", .id = LM_5,
- 		.base = 0x49000, .len = 0x320,
+diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.c b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.c
+index 87d5776e3b88e..7510a918d942c 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.c
++++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.c
+@@ -1837,6 +1837,10 @@ u16 otx2_get_max_mtu(struct otx2_nic *pfvf)
+ 	if (!rc) {
+ 		rsp = (struct nix_hw_info *)
+ 		       otx2_mbox_get_rsp(&pfvf->mbox.mbox, 0, &req->hdr);
++		if (IS_ERR(rsp)) {
++			rc = PTR_ERR(rsp);
++			goto out;
++		}
+ 
+ 		/* HW counts VLAN insertion bytes (8 for double tag)
+ 		 * irrespective of whether SQE is requesting to insert VLAN
 -- 
 2.43.0
 
