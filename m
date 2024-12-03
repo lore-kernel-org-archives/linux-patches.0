@@ -1,39 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9202F1F8EE3;
-	Tue,  3 Dec 2024 15:14:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A2951F75BB;
+	Tue,  3 Dec 2024 15:14:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733238888; cv=none; b=Wwrzw9ixVoYeQC9dGvzHjGlzQcWS40fXmrJ75h7FcZ1C/1c3Uorvh9CfYhgO40EX4zoqLKv/M0+afO2fLxX9FrgJDUy09zolnI1lI0ilN6ChQE+ctbRRqffI/IEiR7fMEa5fWt1TB0KNeYMtvZRZpyQqnOv1NmvutpMP1jNQBqw=
+	t=1733238891; cv=none; b=GRoEtPAyG9OIMfPME0WRDe0pa/RsYTbo1QP4Cv5EPeS/NANE5tmH/6mYZCIRNXuBn1vdbJRlqVbfdFXHXvDt8SQRGroi9lQHoTSnQDvx5Gp0WwxxwGZ9s6+8QOl8Ve0cWPwVfGo1W9AzRuFzn2NscHdFa+klygcEHE2Ua71VIyQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733238888; c=relaxed/simple;
-	bh=tCz0oOTQ7vkiBZFrHRoZnbi2XVuZf4CcSevCcFurN/M=;
+	s=arc-20240116; t=1733238891; c=relaxed/simple;
+	bh=1h9wZxQ7pKHRn8iCOtTGHQeI29XP3eQLpz9hzIuZNQo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hAFp9iF8mwTrT3Dg0Gs6/YlEEeZwKbWHwNBToub6qtcTHmWh3Xr0Z16JpJNN2Gc7pi4XTywa1KC7sTnES2im0vez44BGHxGBoVCvdeweCG2lJcRXpSe0D978SLQjpApcP6szbKgyylU/S8CANBTr5qvrbHIXfSYHzW9JmoZBqr8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lcCBR+0O; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=EVWj3TVguspSSinaeh9/sIw9TOUSvNytHElrvJJJkNB4rdudDm9mYBUyQgfq/L+jaeXsptFeKIgrr244k1kdmuqIy+HtDSmPRd+4nkZOzAcOn7c6rsBJaSohB/klPP5nQE+0Z6VtDjLLc/9MCNLCiZyNKElraWDFrg+FQ9zUurA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yBpyNPeq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lcCBR+0O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 177EDC4CECF;
-	Tue,  3 Dec 2024 15:14:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yBpyNPeq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7EDBC4CECF;
+	Tue,  3 Dec 2024 15:14:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733238888;
-	bh=tCz0oOTQ7vkiBZFrHRoZnbi2XVuZf4CcSevCcFurN/M=;
+	s=korg; t=1733238891;
+	bh=1h9wZxQ7pKHRn8iCOtTGHQeI29XP3eQLpz9hzIuZNQo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lcCBR+0OSSz7jTlrWjKlurEdQ7vyn3qPLUB6+zi+qDgWH2rtoQrSRl3FwTPpY+DMT
-	 08iaTxAaa3c4+61mlmqVVedtqm+kq7Qn55QywbWwXsKCZQAX+nmRo0ZH0+lZIE/gkq
-	 VXqBad3VlZh5z5IwVdSk7nnL7LnVagk9ej2U8EeA=
+	b=yBpyNPeq+NdDfKbWWgwaz1NhwUfEQo7qJenwwzwRVnRzK4Df8WdFAwyXcnbVoWm4R
+	 TyXprZqxb3vU/k5vAIoarV8N/NJT+xBbOhS+87nJyJwyVjq0RILwhexHHpTWb/BVLm
+	 +40d10iYMkG85uFG6Npg0lsxuDcbQXjlPWmruyuc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhenzhong Duan <zhenzhong.duan@intel.com>,
-	Lu Baolu <baolu.lu@linux.intel.com>,
-	Joerg Roedel <jroedel@suse.de>,
+	Tamir Duberstein <tamird@gmail.com>,
+	Andy Whitcroft <apw@canonical.com>,
+	Dwaipayan Ray <dwaipayanray1@gmail.com>,
+	Joe Perches <joe@perches.com>,
+	Louis Peens <louis.peens@corigine.com>,
+	Lukas Bulwahn <lukas.bulwahn@gmail.com>,
+	=?UTF-8?q?Niklas=20S=C3=B6derlund?= <niklas.soderlund+renesas@ragnatech.se>,
+	Philippe Schenker <philippe.schenker@toradex.com>,
+	Simon Horman <horms@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 431/817] iommu/vt-d: Fix checks and print in pgtable_walk()
-Date: Tue,  3 Dec 2024 15:40:03 +0100
-Message-ID: <20241203144012.706184444@linuxfoundation.org>
+Subject: [PATCH 6.11 432/817] checkpatch: always parse orig_commit in fixes tag
+Date: Tue,  3 Dec 2024 15:40:04 +0100
+Message-ID: <20241203144012.745370511@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -46,66 +53,122 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.11-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhenzhong Duan <zhenzhong.duan@intel.com>
+From: Tamir Duberstein <tamird@gmail.com>
 
-[ Upstream commit f1645676f25d2c846798f0233c3a953efd62aafb ]
+[ Upstream commit 2f07b652384969f5d0b317e1daa5f2eb967bc73d ]
 
-There are some issues in pgtable_walk():
+Do not require the presence of `$balanced_parens` to get the commit SHA;
+this allows a `Fixes: deadbeef` tag to get a correct suggestion rather
+than a suggestion containing a reference to HEAD.
 
-1. Super page is dumped as non-present page
-2. dma_pte_superpage() should not check against leaf page table entries
-3. Pointer pte is never NULL so checking it is meaningless
-4. When an entry is not present, it still makes sense to dump the entry
-   content.
+Given this patch:
 
-Fix 1,2 by checking dma_pte_superpage()'s returned value after level check.
-Fix 3 by removing pte check.
-Fix 4 by checking present bit after printing.
+: From: Tamir Duberstein <tamird@gmail.com>
+: Subject: Test patch
+: Date: Fri, 25 Oct 2024 19:30:51 -0400
+:
+: This is a test patch.
+:
+: Fixes: bd17e036b495
+: Signed-off-by: Tamir Duberstein <tamird@gmail.com>
+: --- /dev/null
+: +++ b/new-file
+: @@ -0,0 +1 @@
+: +Test.
 
-By this chance, change to print "page table not present" instead of "PTE
-not present" to be clearer.
+Before:
 
-Fixes: 914ff7719e8a ("iommu/vt-d: Dump DMAR translation structure when DMA fault occurs")
-Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-Link: https://lore.kernel.org/r/20241024092146.715063-3-zhenzhong.duan@intel.com
-Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
+WARNING: Please use correct Fixes: style 'Fixes: <12 chars of sha1> ("<title line>")' - ie: 'Fixes: c10a7d25e68f ("Test patch")'
+
+After:
+
+WARNING: Please use correct Fixes: style 'Fixes: <12 chars of sha1> ("<title line>")' - ie: 'Fixes: bd17e036b495 ("checkpatch: warn for non-standard fixes tag style")'
+
+The prior behavior incorrectly suggested the patch's own SHA and title
+line rather than the referenced commit's.  This fixes that.
+
+Ironically this:
+
+Fixes: bd17e036b495 ("checkpatch: warn for non-standard fixes tag style")
+Signed-off-by: Tamir Duberstein <tamird@gmail.com>
+Cc: Andy Whitcroft <apw@canonical.com>
+Cc: Dwaipayan Ray <dwaipayanray1@gmail.com>
+Cc: Joe Perches <joe@perches.com>
+Cc: Louis Peens <louis.peens@corigine.com>
+Cc: Lukas Bulwahn <lukas.bulwahn@gmail.com>
+Cc: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
+Cc: Philippe Schenker <philippe.schenker@toradex.com>
+Cc: Simon Horman <horms@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/intel/iommu.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ scripts/checkpatch.pl | 37 ++++++++++++++++---------------------
+ 1 file changed, 16 insertions(+), 21 deletions(-)
 
-diff --git a/drivers/iommu/intel/iommu.c b/drivers/iommu/intel/iommu.c
-index 8e56df584d3f4..cdb8701a968fd 100644
---- a/drivers/iommu/intel/iommu.c
-+++ b/drivers/iommu/intel/iommu.c
-@@ -722,14 +722,15 @@ static void pgtable_walk(struct intel_iommu *iommu, unsigned long pfn,
- 	while (1) {
- 		offset = pfn_level_offset(pfn, level);
- 		pte = &parent[offset];
--		if (!pte || (dma_pte_superpage(pte) || !dma_pte_present(pte))) {
--			pr_info("PTE not present at level %d\n", level);
--			break;
--		}
+diff --git a/scripts/checkpatch.pl b/scripts/checkpatch.pl
+index 4427572b24771..b03d526e4c454 100755
+--- a/scripts/checkpatch.pl
++++ b/scripts/checkpatch.pl
+@@ -3209,36 +3209,31 @@ sub process {
  
- 		pr_info("pte level: %d, pte value: 0x%016llx\n", level, pte->val);
+ # Check Fixes: styles is correct
+ 		if (!$in_header_lines &&
+-		    $line =~ /^\s*fixes:?\s*(?:commit\s*)?[0-9a-f]{5,}\b/i) {
+-			my $orig_commit = "";
+-			my $id = "0123456789ab";
+-			my $title = "commit title";
+-			my $tag_case = 1;
+-			my $tag_space = 1;
+-			my $id_length = 1;
+-			my $id_case = 1;
++		    $line =~ /^\s*(fixes:?)\s*(?:commit\s*)?([0-9a-f]{5,40})(?:\s*($balanced_parens))?/i) {
++			my $tag = $1;
++			my $orig_commit = $2;
++			my $title;
+ 			my $title_has_quotes = 0;
+ 			$fixes_tag = 1;
+-
+-			if ($line =~ /(\s*fixes:?)\s+([0-9a-f]{5,})\s+($balanced_parens)/i) {
+-				my $tag = $1;
+-				$orig_commit = $2;
+-				$title = $3;
+-
+-				$tag_case = 0 if $tag eq "Fixes:";
+-				$tag_space = 0 if ($line =~ /^fixes:? [0-9a-f]{5,} ($balanced_parens)/i);
+-
+-				$id_length = 0 if ($orig_commit =~ /^[0-9a-f]{12}$/i);
+-				$id_case = 0 if ($orig_commit !~ /[A-F]/);
+-
++			if (defined $3) {
+ 				# Always strip leading/trailing parens then double quotes if existing
+-				$title = substr($title, 1, -1);
++				$title = substr($3, 1, -1);
+ 				if ($title =~ /^".*"$/) {
+ 					$title = substr($title, 1, -1);
+ 					$title_has_quotes = 1;
+ 				}
++			} else {
++				$title = "commit title"
+ 			}
  
--		if (level == 1)
-+		if (!dma_pte_present(pte)) {
-+			pr_info("page table not present at level %d\n", level - 1);
-+			break;
-+		}
 +
-+		if (level == 1 || dma_pte_superpage(pte))
- 			break;
++			my $tag_case = not ($tag eq "Fixes:");
++			my $tag_space = not ($line =~ /^fixes:? [0-9a-f]{5,40} ($balanced_parens)/i);
++
++			my $id_length = not ($orig_commit =~ /^[0-9a-f]{12}$/i);
++			my $id_case = not ($orig_commit !~ /[A-F]/);
++
++			my $id = "0123456789ab";
+ 			my ($cid, $ctitle) = git_commit_info($orig_commit, $id,
+ 							     $title);
  
- 		parent = phys_to_virt(dma_pte_addr(pte));
 -- 
 2.43.0
 
