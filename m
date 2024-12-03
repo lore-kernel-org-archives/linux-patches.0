@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E9E61F8ACF;
-	Tue,  3 Dec 2024 16:15:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3F041F8AE1;
+	Tue,  3 Dec 2024 16:15:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733242532; cv=none; b=Ntj84SXg/kltclgVojk4gOIqEPmt1bdC78ZreSMDxcSb+aNlczb3/9A58t2gRtrehkdJbBwFWQCUZAQ9AV0Qsy8kxJKxT7pQDzuZFxtPXGmxzJGQPjhroNyn/urFM3iBvwmnTQ/poODoO/Auh+Q25ftCWXzZtRNDGtplDbWEA7w=
+	t=1733242536; cv=none; b=IGeqObWken8kXBM0RjHwEOU6f0TvNWwlGCa7HEwtaHn6Q8n2aNcs/XpafuiSC9d6tBE6kUws3sxcaJPnNsmHiyOeW350hhiz2Rt9aQTL5mWeNPqai0qmSCqMQUiyLkDZpsBULMsABEYdmZIeJYPUmOlln5SgsCIHahBc60f+cNI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733242532; c=relaxed/simple;
-	bh=FUVh1bfg6R1y1dJF5050Xz+cYRclIcXNsp5oMR3vSx8=;
+	s=arc-20240116; t=1733242536; c=relaxed/simple;
+	bh=Nwfg02/28d+iPh8vZAf6NJJiMbkNjYi4Jp0Zj19XQIs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=biI62yhvQ8JX1yUHrRUTUzDlbW/g3JRJJQMU1kJFVZnScpDqteF3hb79xqgsJ8ueE3u33kwH2dzyRiuZpB5kb4PJiSg7JrrovPovOsmvu9JfhnKlZ//BgZH5MjA/oy6NSN4+cGpf5dqYD5f8i2pABWDJhYewBmXbKxLcr2q/xA0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gn36iBGA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=b6MD9zjOSGstSeKBdZMCjCwrpWjUO3xsLwuhIud1h6G8Snr8Hx5zeAtYT5E14rxALhzvayzac9Kj7yirmWgPpuqlLC3KMvIYvk7+l11QyvPLp4IlIFbKZi0WieDPJw5OZB6OxFByH0cHYFHpii0HfMlcLTvfTSUCyqeFYaMGsK4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FYMgkTfo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gn36iBGA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0FE2C4CEDA;
-	Tue,  3 Dec 2024 16:15:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FYMgkTfo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33974C4CED8;
+	Tue,  3 Dec 2024 16:15:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733242532;
-	bh=FUVh1bfg6R1y1dJF5050Xz+cYRclIcXNsp5oMR3vSx8=;
+	s=korg; t=1733242535;
+	bh=Nwfg02/28d+iPh8vZAf6NJJiMbkNjYi4Jp0Zj19XQIs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Gn36iBGAXoAFIlt+pOJ4sMggLuzt1HmYZ9Gv3scVmrchXADrld5zgrZI/W7gUisoo
-	 JvU0OEovUBtjJZ/tV7I5sjzCIzOpp4tNAJKl9mF+7+nuHoiutmHapoz1+OJpF+dHgF
-	 qr9zgWY0Tq5upcGdZMb2LYnyaQqlM249p2kGv/nY=
+	b=FYMgkTfoDNQDGhnqTZcHSWNzMC1dIXeNeH+gHgbXjbZAAyhI15wCFFa8JVT7tWBwA
+	 Z6K43KyDTPSiVbvQqzU7gaz0cWZ0TQ4ljDCKcqFOvNihj5B/O4l6V7P5zendzhjefI
+	 xiQIAs315oIirI9W51U6IRrbGLVyZaYJLCPBRbYE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen-Yu Tsai <wenst@chromium.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Subject: [PATCH 6.12 733/826] arm64: dts: mediatek: mt8186-corsola-voltorb: Merge speaker codec nodes
-Date: Tue,  3 Dec 2024 15:47:40 +0100
-Message-ID: <20241203144812.358702822@linuxfoundation.org>
+	Joe Damato <jdamato@fastly.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 734/826] netdev-genl: Hold rcu_read_lock in napi_get
+Date: Tue,  3 Dec 2024 15:47:41 +0100
+Message-ID: <20241203144812.399048820@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -50,100 +50,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen-Yu Tsai <wenst@chromium.org>
+From: Joe Damato <jdamato@fastly.com>
 
-commit 26ea2459d1724406bf0b342df6b4b1f002d7f8e3 upstream.
+commit c53bf100f68619acf6cedcf4cf5249a1ca2db0b4 upstream.
 
-The Voltorb device uses a speaker codec different from the original
-Corsola device. When the Voltorb device tree was first added, the new
-codec was added as a separate node when it should have just replaced the
-existing one.
+Hold rcu_read_lock in netdev_nl_napi_get_doit, which calls napi_by_id
+and is required to be called under rcu_read_lock.
 
-Merge the two nodes. The only differences are the compatible string and
-the GPIO line property name. This keeps the device node path for the
-speaker codec the same across the MT8186 Chromebook line. Also rename
-the related labels and node names from having rt1019p to speaker codec.
-
-Cc: stable@vger.kernel.org # v6.11+
-Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://lore.kernel.org/r/20241018082113.1297268-1-wenst@chromium.org
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Cc: stable@vger.kernel.org
+Fixes: 27f91aaf49b3 ("netdev-genl: Add netlink framework functions for napi")
+Signed-off-by: Joe Damato <jdamato@fastly.com>
+Link: https://patch.msgid.link/20241114175157.16604-1-jdamato@fastly.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/mediatek/mt8186-corsola-voltorb.dtsi |   21 +++------------
- arch/arm64/boot/dts/mediatek/mt8186-corsola.dtsi         |    8 ++---
- 2 files changed, 9 insertions(+), 20 deletions(-)
+ net/core/netdev-genl.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/arch/arm64/boot/dts/mediatek/mt8186-corsola-voltorb.dtsi
-+++ b/arch/arm64/boot/dts/mediatek/mt8186-corsola-voltorb.dtsi
-@@ -10,12 +10,6 @@
+--- a/net/core/netdev-genl.c
++++ b/net/core/netdev-genl.c
+@@ -215,6 +215,7 @@ int netdev_nl_napi_get_doit(struct sk_bu
+ 		return -ENOMEM;
  
- / {
- 	chassis-type = "laptop";
--
--	max98360a: max98360a {
--		compatible = "maxim,max98360a";
--		sdmode-gpios = <&pio 150 GPIO_ACTIVE_HIGH>;
--		#sound-dai-cells = <0>;
--	};
- };
+ 	rtnl_lock();
++	rcu_read_lock();
  
- &cpu6 {
-@@ -59,19 +53,14 @@
- 	opp-hz = /bits/ 64 <2200000000>;
- };
+ 	napi = napi_by_id(napi_id);
+ 	if (napi) {
+@@ -224,6 +225,7 @@ int netdev_nl_napi_get_doit(struct sk_bu
+ 		err = -ENOENT;
+ 	}
  
--&rt1019p{
--	status = "disabled";
--};
--
- &sound {
- 	compatible = "mediatek,mt8186-mt6366-rt5682s-max98360-sound";
--	status = "okay";
-+};
++	rcu_read_unlock();
+ 	rtnl_unlock();
  
--	spk-hdmi-playback-dai-link {
--		codec {
--			sound-dai = <&it6505dptx>, <&max98360a>;
--		};
--	};
-+&speaker_codec {
-+	compatible = "maxim,max98360a";
-+	sdmode-gpios = <&pio 150 GPIO_ACTIVE_HIGH>;
-+	/delete-property/ sdb-gpios;
- };
- 
- &spmi {
---- a/arch/arm64/boot/dts/mediatek/mt8186-corsola.dtsi
-+++ b/arch/arm64/boot/dts/mediatek/mt8186-corsola.dtsi
-@@ -259,15 +259,15 @@
- 			mediatek,clk-provider = "cpu";
- 			/* RT1019P and IT6505 connected to the same I2S line */
- 			codec {
--				sound-dai = <&it6505dptx>, <&rt1019p>;
-+				sound-dai = <&it6505dptx>, <&speaker_codec>;
- 			};
- 		};
- 	};
- 
--	rt1019p: speaker-codec {
-+	speaker_codec: speaker-codec {
- 		compatible = "realtek,rt1019p";
- 		pinctrl-names = "default";
--		pinctrl-0 = <&rt1019p_pins_default>;
-+		pinctrl-0 = <&speaker_codec_pins_default>;
- 		#sound-dai-cells = <0>;
- 		sdb-gpios = <&pio 150 GPIO_ACTIVE_HIGH>;
- 	};
-@@ -1179,7 +1179,7 @@
- 		};
- 	};
- 
--	rt1019p_pins_default: rt1019p-default-pins {
-+	speaker_codec_pins_default: speaker-codec-default-pins {
- 		pins-sdb {
- 			pinmux = <PINMUX_GPIO150__FUNC_GPIO150>;
- 			output-low;
+ 	if (err)
 
 
