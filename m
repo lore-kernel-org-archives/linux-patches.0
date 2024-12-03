@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C23D204F84;
-	Tue,  3 Dec 2024 15:37:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 598B01F76B0;
+	Tue,  3 Dec 2024 15:37:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733240246; cv=none; b=e7v5/Z3rS6KCR3oOASn1Y5k7iSMzs937v6zmC8FNgb3XHsRL7EwbJs0qk5Iv52kWvqdBaRvWJEKTAIvTuj/ZaWHG9fgzoFtgPhJbwQOSlqbzfOFmU41syLLcfO8L81sYpEyUw5CV+PWDmP8WAhwMni81poCM1H4hrSQfn8/YdTs=
+	t=1733240249; cv=none; b=V7c/wdsxUE+Mzy09G/+VeG/lAYOCG9860m7r8UG6TxRMBi5X+MVo6BE1eikEw8ydZuqQwbxIydYxsUsIFgkrth+AQYEOQEJjOEeLt8A/TpgfI4RG06VePi1ecK/sYBcqlFH4azbJpCvt25HkFbYb5dPqepg2y9F8YoVR4PE9ha8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733240246; c=relaxed/simple;
-	bh=aOue+mhFXTb0ZsrGbKxmnrDIlIQjRhZN5B+qbvGfQk4=;
+	s=arc-20240116; t=1733240249; c=relaxed/simple;
+	bh=+g4ga/lPFB1m6CKgG5pwrT6zYKdC/x5UGmDxHyZntVU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YPhI6V5jPCZ/BFbyuSMUAewmSNgrf5j2xM6KyDCk/vY32IGt7mGXUATI1JjPnTF2EzwvwbGLjSOSlYFiLeUCSO8TavDt8k7z8fq7aNYGIRVu9zUdvIwkXDITFtbWJgQsMvP1oTUoSqcNMKOGL2eKOqHhijLFvxjJic//SHP3zAk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GL81Q+bc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CrHe0AO+5GhxqbRKiAKE8FzKvHGbKZ6S2cvv1nXAEFjLvcuvoQQzTjgB7lt3NUrsIf/GY7HTy9mLQAcEgMUNzMroazESSloYMJpLQ2He4STCGA0R+HA92IIsOJRoHTH1k7JpW0Ieblo02dXNwJu9qmgOeL8vkkfxo8TT9HYBMgQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hvhskVN+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GL81Q+bc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEC56C4CECF;
-	Tue,  3 Dec 2024 15:37:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hvhskVN+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1A16C4CECF;
+	Tue,  3 Dec 2024 15:37:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733240246;
-	bh=aOue+mhFXTb0ZsrGbKxmnrDIlIQjRhZN5B+qbvGfQk4=;
+	s=korg; t=1733240249;
+	bh=+g4ga/lPFB1m6CKgG5pwrT6zYKdC/x5UGmDxHyZntVU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GL81Q+bcEzAhOC3aEB6VQZVUSM15S0Ac6Yiw6HSY8rMKMeKeP/eSKmkhaHluBjyCZ
-	 a3hy4RYA36NiWpdxk5X82Ksb6EhEPmItdqTG4jr+UDdB5jQ2oEeA9bKaZzZoDDb4QR
-	 EKxoqvou0mnSu5ZTGD8nW7pA+1UHZWM5EYSGcNIM=
+	b=hvhskVN+KSlYkQlbXfc0lzn9RYYmi5V3q9X7+7bkOKTXS+p933h9gKVXjyeEuwxBE
+	 GXsFlL7PVsFG1tTC4TsTYE+BzIvalW9PreccBMeO88phCNE8JhVV09BDErjqe7Gy42
+	 91aUpAfwYXKaRa9S0JhIRknVyJ4I9uwaqPa8uTdM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zizhi Wo <wozizhi@huawei.com>,
-	David Howells <dhowells@redhat.com>,
-	Christian Brauner <brauner@kernel.org>,
+	Baruch Siach <baruch@tkos.co.il>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Neeraj Upadhyay <neeraj.upadhyay@kernel.org>,
+	Frederic Weisbecker <frederic@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 032/826] netfs/fscache: Add a memory barrier for FSCACHE_VOLUME_CREATING
-Date: Tue,  3 Dec 2024 15:35:59 +0100
-Message-ID: <20241203144744.711400036@linuxfoundation.org>
+Subject: [PATCH 6.12 067/826] doc: rcu: update printed dynticks counter bits
+Date: Tue,  3 Dec 2024 15:36:34 +0100
+Message-ID: <20241203144746.086297997@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -52,65 +53,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zizhi Wo <wozizhi@huawei.com>
+From: Baruch Siach <baruch@tkos.co.il>
 
-[ Upstream commit 22f9400a6f3560629478e0a64247b8fcc811a24d ]
+[ Upstream commit 4a09e358922381f9b258e863bcd9c910584203b9 ]
 
-In fscache_create_volume(), there is a missing memory barrier between the
-bit-clearing operation and the wake-up operation. This may cause a
-situation where, after a wake-up, the bit-clearing operation hasn't been
-detected yet, leading to an indefinite wait. The triggering process is as
-follows:
+The stall warning prints 16 bits since commit 171476775d32
+("context_tracking: Convert state to atomic_t").
 
-  [cookie1]                [cookie2]                  [volume_work]
-fscache_perform_lookup
-  fscache_create_volume
-                        fscache_perform_lookup
-                          fscache_create_volume
-			                        fscache_create_volume_work
-                                                  cachefiles_acquire_volume
-                                                  clear_and_wake_up_bit
-    test_and_set_bit
-                            test_and_set_bit
-                              goto maybe_wait
-      goto no_wait
-
-In the above process, cookie1 and cookie2 has the same volume. When cookie1
-enters the -no_wait- process, it will clear the bit and wake up the waiting
-process. If a barrier is missing, it may cause cookie2 to remain in the
--wait- process indefinitely.
-
-In commit 3288666c7256 ("fscache: Use clear_and_wake_up_bit() in
-fscache_create_volume_work()"), barriers were added to similar operations
-in fscache_create_volume_work(), but fscache_create_volume() was missed.
-
-By combining the clear and wake operations into clear_and_wake_up_bit() to
-fix this issue.
-
-Fixes: bfa22da3ed65 ("fscache: Provide and use cache methods to lookup/create/free a volume")
-Signed-off-by: Zizhi Wo <wozizhi@huawei.com>
-Link: https://lore.kernel.org/r/20241107110649.3980193-6-wozizhi@huawei.com
-Acked-by: David Howells <dhowells@redhat.com>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Fixes: 171476775d32 ("context_tracking: Convert state to atomic_t")
+Signed-off-by: Baruch Siach <baruch@tkos.co.il>
+Reviewed-by: "Paul E. McKenney" <paulmck@kernel.org>
+Signed-off-by: Neeraj Upadhyay <neeraj.upadhyay@kernel.org>
+Signed-off-by: Frederic Weisbecker <frederic@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/netfs/fscache_volume.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ Documentation/RCU/stallwarn.rst | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/netfs/fscache_volume.c b/fs/netfs/fscache_volume.c
-index cb75c07b5281a..ced14ac78cc1c 100644
---- a/fs/netfs/fscache_volume.c
-+++ b/fs/netfs/fscache_volume.c
-@@ -322,8 +322,7 @@ void fscache_create_volume(struct fscache_volume *volume, bool wait)
- 	}
- 	return;
- no_wait:
--	clear_bit_unlock(FSCACHE_VOLUME_CREATING, &volume->flags);
--	wake_up_bit(&volume->flags, FSCACHE_VOLUME_CREATING);
-+	clear_and_wake_up_bit(FSCACHE_VOLUME_CREATING, &volume->flags);
- }
+diff --git a/Documentation/RCU/stallwarn.rst b/Documentation/RCU/stallwarn.rst
+index ca7b7cd806a16..30080ff6f4062 100644
+--- a/Documentation/RCU/stallwarn.rst
++++ b/Documentation/RCU/stallwarn.rst
+@@ -249,7 +249,7 @@ ticks this GP)" indicates that this CPU has not taken any scheduling-clock
+ interrupts during the current stalled grace period.
  
- /*
+ The "idle=" portion of the message prints the dyntick-idle state.
+-The hex number before the first "/" is the low-order 12 bits of the
++The hex number before the first "/" is the low-order 16 bits of the
+ dynticks counter, which will have an even-numbered value if the CPU
+ is in dyntick-idle mode and an odd-numbered value otherwise.  The hex
+ number between the two "/"s is the value of the nesting, which will be
 -- 
 2.43.0
 
