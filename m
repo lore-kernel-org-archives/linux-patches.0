@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9B3F1F130E;
-	Tue,  3 Dec 2024 15:03:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2CAB1F7572;
+	Tue,  3 Dec 2024 15:03:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733238232; cv=none; b=RQxYHcpuIferFZzlD9HQz9NVtSaZUSg7iR/CAdXjwfWh1cM0/IaCfAsRvepFMGqNewY5R2GluLDehwI0HVcmnQL1+o2JnDI+0/gihr34VMv2neSpe1DImL7jJavtWLgVsx/Fy2CHVQDUq0ayk4ZrwW9ScGzz6QMOLyG5Ea4sqKA=
+	t=1733238235; cv=none; b=BdlqWpekYoUjhm4k3s+LIiOShHD7Rc5D85XM9374jZ3PbIzuNhgu645PLFk/O/cuJywDFpXy2wQM+83jZ/HQ4Ppyy++YjK58NtVH3a23vYNrVdvB4rebLgJMG6I3T/1FbNcoH+0QgRPFwGHHHnThuoVYZO5NwgUx3K+JbW1wovM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733238232; c=relaxed/simple;
-	bh=9FVnb/clbbKNMn2OQu9XCwQ7u8z2aMm8bXpAWyneMNE=;
+	s=arc-20240116; t=1733238235; c=relaxed/simple;
+	bh=bNYhbPg6pEx1YtzG74xduv4OejjpdLYVBAQBGspBbEQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IOmp1gAgx+OmFM3BX+Rq8Q4OM6+yN446NmkGsSYD+T0Afi3488SEoTDUlMkY+RiD/8SGhpoCbltXHucI0Wo46J7BKypGVD54VLC6HBg9wy4St/WINQt37YMNhu2PiKC72+BKyKwxjEcFHnW5lqRHvIrfp4wwpFB1h7A7TZr24/Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2HAp0F/Q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Kqpv7FnlfCOkjR0q8KnOAJpc870O+wjIk4/INMwqf93E5urJV/5scsbXQeFQ0iQY7sSiqS0aKNmP1JhwYw5+CdTymk6pu3wRRUgpnMl8o59ydWjIW5sfkVIDcJqxrt3NCpkIwzi/R2BfsN/cLoNbmVQwreMiFJxRx2VkFgsgaAM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZT25TgCA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2HAp0F/Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B4D2C4CED6;
-	Tue,  3 Dec 2024 15:03:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZT25TgCA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2961FC4CED8;
+	Tue,  3 Dec 2024 15:03:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733238232;
-	bh=9FVnb/clbbKNMn2OQu9XCwQ7u8z2aMm8bXpAWyneMNE=;
+	s=korg; t=1733238235;
+	bh=bNYhbPg6pEx1YtzG74xduv4OejjpdLYVBAQBGspBbEQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2HAp0F/Qn8Wmpl/f849IGRDvWkUzp2lva3CRwVFbPkHgm+/csGR46PueMxhw5UD84
-	 YlRwR1St4e3oMsrEWIQQ56t149bDMIFmxRROKFEUqOrVMZWR7Y5HgqGPG3KA8zaIbQ
-	 RLYg0sYvpka8Q0HyIoWbn8cyV5vz+WUM6V3lcYDs=
+	b=ZT25TgCA8PVycA8vVz0dF523tkFjxLKgD5MdtT6YjOwqv1Wov7ZK3LhlyDpx3nZnd
+	 Kvi2+MQpgZMk2+X7l7VDQ2haGyzd7M/hTBY/gRQzvalfI2U3wsnYks8za+GdEqk7oo
+	 GFqxjxbZaMVer90ly1HyKHaX8zHGZakE8POT9pRI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Riesch <michael.riesch@wolfvision.net>,
-	Muhammed Efe Cetin <efectn@6tel.net>,
-	Dragan Simic <dsimic@manjaro.org>,
-	Heiko Stuebner <heiko@sntech.de>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Daolong Zhu <jg_daolongzhu@mediatek.corp-partner.google.com>,
+	Hsin-Te Yuan <yuanhsinte@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 176/817] arm64: dts: rockchip: Remove enable-active-low from two boards
-Date: Tue,  3 Dec 2024 15:35:48 +0100
-Message-ID: <20241203144002.601035159@linuxfoundation.org>
+Subject: [PATCH 6.11 177/817] arm64: dts: mt8183: fennel: add i2c2s i2c-scl-internal-delay-ns
+Date: Tue,  3 Dec 2024 15:35:49 +0100
+Message-ID: <20241203144002.639739721@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -53,60 +53,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heiko Stuebner <heiko@sntech.de>
+From: Daolong Zhu <jg_daolongzhu@mediatek.corp-partner.google.com>
 
-[ Upstream commit 4a9d7e6596f90631f21bca9cb46c6de05d8e86d4 ]
+[ Upstream commit c802db127dfb9602aaa9338e433c0553d34f1a9c ]
 
-The 'enable-active-low' property is not a valid, because it is the
-default behaviour of the fixed regulator.
+Add i2c2's i2c-scl-internal-delay-ns.
 
-Only 'enable-active-high' is valid, and when this property is absent
-the fixed regulator will act as active low by default.
-
-Both the rk3588-orange-pi-5 and the Wolfvision pf5 io expander overlay
-smuggled those enable-active-low properties in, so remove them to
-make dtbscheck happier.
-
-Fixes: 28799a7734a0 ("arm64: dts: rockchip: add wolfvision pf5 io expander board")
-Cc: Michael Riesch <michael.riesch@wolfvision.net>
-Fixes: b6bc755d806e ("arm64: dts: rockchip: Add Orange Pi 5")
-Cc: Muhammed Efe Cetin <efectn@6tel.net>
-
-Reviewed-by: Michael Riesch <michael.riesch@wolfvision.net>
-Reviewed-by: Dragan Simic <dsimic@manjaro.org>
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
-Link: https://lore.kernel.org/r/20241008203940.2573684-10-heiko@sntech.de
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Fixes: 6cd7fdc8c530 ("arm64: dts: mt8183: Add kukui-jacuzzi-fennel board")
+Reviewed-by: Matthias Brugger <matthias.bgg@gmail.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Signed-off-by: Daolong Zhu <jg_daolongzhu@mediatek.corp-partner.google.com>
+Signed-off-by: Hsin-Te Yuan <yuanhsinte@chromium.org>
+Reviewed-by:
+Link: https://lore.kernel.org/r/20241025-i2c-delay-v2-1-9be1bcaf35e0@chromium.org
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../boot/dts/rockchip/rk3568-wolfvision-pf5-io-expander.dtso     | 1 -
- arch/arm64/boot/dts/rockchip/rk3588s-orangepi-5.dts              | 1 -
- 2 files changed, 2 deletions(-)
+ arch/arm64/boot/dts/mediatek/mt8183-kukui-jacuzzi-fennel.dtsi | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/rockchip/rk3568-wolfvision-pf5-io-expander.dtso b/arch/arm64/boot/dts/rockchip/rk3568-wolfvision-pf5-io-expander.dtso
-index ebcaeafc3800d..fa61633aea152 100644
---- a/arch/arm64/boot/dts/rockchip/rk3568-wolfvision-pf5-io-expander.dtso
-+++ b/arch/arm64/boot/dts/rockchip/rk3568-wolfvision-pf5-io-expander.dtso
-@@ -49,7 +49,6 @@ vcc1v8_eth: vcc1v8-eth-regulator {
+diff --git a/arch/arm64/boot/dts/mediatek/mt8183-kukui-jacuzzi-fennel.dtsi b/arch/arm64/boot/dts/mediatek/mt8183-kukui-jacuzzi-fennel.dtsi
+index bbe6c338f465e..f9c1ec366b266 100644
+--- a/arch/arm64/boot/dts/mediatek/mt8183-kukui-jacuzzi-fennel.dtsi
++++ b/arch/arm64/boot/dts/mediatek/mt8183-kukui-jacuzzi-fennel.dtsi
+@@ -25,3 +25,6 @@ trackpad@2c {
+ 	};
+ };
  
- 	vcc3v3_eth: vcc3v3-eth-regulator {
- 		compatible = "regulator-fixed";
--		enable-active-low;
- 		gpio = <&gpio0 RK_PC0 GPIO_ACTIVE_LOW>;
- 		pinctrl-names = "default";
- 		pinctrl-0 = <&vcc3v3_eth_enn>;
-diff --git a/arch/arm64/boot/dts/rockchip/rk3588s-orangepi-5.dts b/arch/arm64/boot/dts/rockchip/rk3588s-orangepi-5.dts
-index feea6b20a6bf5..6b77be6432495 100644
---- a/arch/arm64/boot/dts/rockchip/rk3588s-orangepi-5.dts
-+++ b/arch/arm64/boot/dts/rockchip/rk3588s-orangepi-5.dts
-@@ -71,7 +71,6 @@ vcc5v0_sys: vcc5v0-sys-regulator {
- 
- 	vcc_3v3_sd_s0: vcc-3v3-sd-s0-regulator {
- 		compatible = "regulator-fixed";
--		enable-active-low;
- 		gpios = <&gpio4 RK_PB5 GPIO_ACTIVE_LOW>;
- 		regulator-name = "vcc_3v3_sd_s0";
- 		regulator-boot-on;
++&i2c2 {
++	i2c-scl-internal-delay-ns = <21500>;
++};
 -- 
 2.43.0
 
