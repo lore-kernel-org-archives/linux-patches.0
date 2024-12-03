@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB27F23CE;
-	Tue,  3 Dec 2024 16:04:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93C211DE8A5;
+	Tue,  3 Dec 2024 16:04:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733241874; cv=none; b=uALzGwCKh0aTrlIZvfdp31YMtAGLYkQ9Nhxczkok3K4UdfMM7UO9zG7AusaMHklftiyFNX9no+G1eiAiJEzSfPS843jA3f3IE+QycPYDmr0ljog6STsxgLjlJnvJXVg7RmLJy2f4aKsN3tK5+jukNXPaKf+VVS4KUiLBA+h87xQ=
+	t=1733241878; cv=none; b=kA9jOvsOE9ninxfcfGtC04YqX65Srmu4OQ/GlzHmSNmruL3vRp+qC1f7vmL5HGO7DUsNQYYADPxplXBwyj14eS2HE9X1CE7HzJzIa+7QLo66rEKlKSiariKXejT4sJuQjYl85p9nHyr3dmU4AbPK5ZoIXmiQoiXrIy/3+NzrQwo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733241874; c=relaxed/simple;
-	bh=ogvCTtrrSN6ECBQamQ/csB2nojqI6n9cz3vYYpNuulI=;
+	s=arc-20240116; t=1733241878; c=relaxed/simple;
+	bh=K4X/61PgwI7fJdet9Gn3GzPVNPHQZ/3siF7ARNCFSQo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nvM4dlDhw7rpNUvEK/8GU3br6ml5z7+3HAc+xJFhJACBdJkK9euCfTx0NtOMyOYqEJUUGvXWV5rfWUsNCIQ3JHzRUxt0TtvEU6b6rAqr0lFx7mUvgbVMIqaod3AmQmlyD2S4EeJaeV3aGc/AhpHLznJKZXMtab30SKWVx/Qvwko=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IZthUx7s; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=n45rvCRTBRXSIrAcC2E4mPBVtTOQUz8Zke00PxS0ICnGSJ+xuQ8VAAHxsGSSTm+2+4bsfP5hQmqGtOq5ltF6sO9dHI0lOUw4HwLK4TxE+PiUuUV5rSCvy3/i0PxRy/uL2V8Z9yKTKvovLGNQ3EYWshEMncMJc9NXSmrSJMRTHiA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bunTEEOy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IZthUx7s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BA25C4CED6;
-	Tue,  3 Dec 2024 16:04:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bunTEEOy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7443C4CECF;
+	Tue,  3 Dec 2024 16:04:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733241874;
-	bh=ogvCTtrrSN6ECBQamQ/csB2nojqI6n9cz3vYYpNuulI=;
+	s=korg; t=1733241878;
+	bh=K4X/61PgwI7fJdet9Gn3GzPVNPHQZ/3siF7ARNCFSQo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IZthUx7sC3SEyjvx5/4ghmpxvEnl+jGsuFASV1+upEK5OboR/2I2K/TzerZdUtCG2
-	 k9Z8/1we9ggoApSJe9nDEHtMtzpGPM2DlTXJAJWgBvfZKnl7SNsnGV3x1o/RBQego5
-	 Sd0Wv+EEj8pZxAZa0gB/KHEYo+JG2lMglN0K86gA=
+	b=bunTEEOyyYZaXFk7pS43scux50LrDH7o0XaZKJkQ4Nbet+JUDEW+wl9AzQ+C6WTBS
+	 S45YySZfX4COPohAB6HFYw/O56cSgSV66cD+HuOSGk5yaVZLGVC1mSCe8L55sbdhnw
+	 Lm9UfBR3Ib9HWGcOgkTisAK4KG7zljCL7/CNSJsY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jason Gunthorpe <jgg@nvidia.com>,
 	Alex Williamson <alex.williamson@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 540/826] vfio/mlx5: Fix an unwind issue in mlx5vf_add_migration_pages()
-Date: Tue,  3 Dec 2024 15:44:27 +0100
-Message-ID: <20241203144804.818356336@linuxfoundation.org>
+Subject: [PATCH 6.12 541/826] vfio/mlx5: Fix unwind flows in mlx5vf_pci_save/resume_device_data()
+Date: Tue,  3 Dec 2024 15:44:28 +0100
+Message-ID: <20241203144804.856848377@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -54,57 +54,117 @@ Content-Transfer-Encoding: 8bit
 
 From: Yishai Hadas <yishaih@nvidia.com>
 
-[ Upstream commit 22e87bf3f77c18f5982c19ffe2732ef0c7a25f16 ]
+[ Upstream commit cb04444c243c001fc27f275e84792ff1c2b96867 ]
 
-Fix an unwind issue in mlx5vf_add_migration_pages().
+Fix unwind flows in mlx5vf_pci_save_device_data() and
+mlx5vf_pci_resume_device_data() to avoid freeing the migf pointer at the
+'end' label, as this will be handled by fput(migf->filp) through
+mlx5vf_release_file().
 
-If a set of pages is allocated but fails to be added to the SG table,
-they need to be freed to prevent a memory leak.
+To ensure mlx5vf_release_file() functions correctly, move the
+initialization of migf fields (such as migf->lock) to occur before any
+potential unwind flow, as these fields may be accessed within
+mlx5vf_release_file().
 
-Any pages successfully added to the SG table will be freed as part of
-mlx5vf_free_data_buffer().
-
-Fixes: 6fadb021266d ("vfio/mlx5: Implement vfio_pci driver for mlx5 devices")
+Fixes: 9945a67ea4b3 ("vfio/mlx5: Refactor PD usage")
 Signed-off-by: Yishai Hadas <yishaih@nvidia.com>
 Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
-Link: https://lore.kernel.org/r/20241114095318.16556-2-yishaih@nvidia.com
+Link: https://lore.kernel.org/r/20241114095318.16556-3-yishaih@nvidia.com
 Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vfio/pci/mlx5/cmd.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/vfio/pci/mlx5/main.c | 35 +++++++++++++++++------------------
+ 1 file changed, 17 insertions(+), 18 deletions(-)
 
-diff --git a/drivers/vfio/pci/mlx5/cmd.c b/drivers/vfio/pci/mlx5/cmd.c
-index 41a4b0cf42975..7527e277c8989 100644
---- a/drivers/vfio/pci/mlx5/cmd.c
-+++ b/drivers/vfio/pci/mlx5/cmd.c
-@@ -423,6 +423,7 @@ static int mlx5vf_add_migration_pages(struct mlx5_vhca_data_buffer *buf,
- 	unsigned long filled;
- 	unsigned int to_fill;
- 	int ret;
-+	int i;
+diff --git a/drivers/vfio/pci/mlx5/main.c b/drivers/vfio/pci/mlx5/main.c
+index 242c23eef452e..8833e60d42f56 100644
+--- a/drivers/vfio/pci/mlx5/main.c
++++ b/drivers/vfio/pci/mlx5/main.c
+@@ -640,14 +640,11 @@ mlx5vf_pci_save_device_data(struct mlx5vf_pci_core_device *mvdev, bool track)
+ 					O_RDONLY);
+ 	if (IS_ERR(migf->filp)) {
+ 		ret = PTR_ERR(migf->filp);
+-		goto end;
++		kfree(migf);
++		return ERR_PTR(ret);
+ 	}
  
- 	to_fill = min_t(unsigned int, npages, PAGE_SIZE / sizeof(*page_list));
- 	page_list = kvzalloc(to_fill * sizeof(*page_list), GFP_KERNEL_ACCOUNT);
-@@ -443,7 +444,7 @@ static int mlx5vf_add_migration_pages(struct mlx5_vhca_data_buffer *buf,
- 			GFP_KERNEL_ACCOUNT);
+ 	migf->mvdev = mvdev;
+-	ret = mlx5vf_cmd_alloc_pd(migf);
+-	if (ret)
+-		goto out_free;
+-
+ 	stream_open(migf->filp->f_inode, migf->filp);
+ 	mutex_init(&migf->lock);
+ 	init_waitqueue_head(&migf->poll_wait);
+@@ -663,6 +660,11 @@ mlx5vf_pci_save_device_data(struct mlx5vf_pci_core_device *mvdev, bool track)
+ 	INIT_LIST_HEAD(&migf->buf_list);
+ 	INIT_LIST_HEAD(&migf->avail_list);
+ 	spin_lock_init(&migf->list_lock);
++
++	ret = mlx5vf_cmd_alloc_pd(migf);
++	if (ret)
++		goto out;
++
+ 	ret = mlx5vf_cmd_query_vhca_migration_state(mvdev, &length, &full_size, 0);
+ 	if (ret)
+ 		goto out_pd;
+@@ -692,10 +694,8 @@ mlx5vf_pci_save_device_data(struct mlx5vf_pci_core_device *mvdev, bool track)
+ 	mlx5vf_free_data_buffer(buf);
+ out_pd:
+ 	mlx5fv_cmd_clean_migf_resources(migf);
+-out_free:
++out:
+ 	fput(migf->filp);
+-end:
+-	kfree(migf);
+ 	return ERR_PTR(ret);
+ }
  
- 		if (ret)
--			goto err;
-+			goto err_append;
- 		buf->allocated_length += filled * PAGE_SIZE;
- 		/* clean input for another bulk allocation */
- 		memset(page_list, 0, filled * sizeof(*page_list));
-@@ -454,6 +455,9 @@ static int mlx5vf_add_migration_pages(struct mlx5_vhca_data_buffer *buf,
- 	kvfree(page_list);
- 	return 0;
+@@ -1016,13 +1016,19 @@ mlx5vf_pci_resume_device_data(struct mlx5vf_pci_core_device *mvdev)
+ 					O_WRONLY);
+ 	if (IS_ERR(migf->filp)) {
+ 		ret = PTR_ERR(migf->filp);
+-		goto end;
++		kfree(migf);
++		return ERR_PTR(ret);
+ 	}
  
-+err_append:
-+	for (i = filled - 1; i >= 0; i--)
-+		__free_page(page_list[i]);
- err:
- 	kvfree(page_list);
- 	return ret;
++	stream_open(migf->filp->f_inode, migf->filp);
++	mutex_init(&migf->lock);
++	INIT_LIST_HEAD(&migf->buf_list);
++	INIT_LIST_HEAD(&migf->avail_list);
++	spin_lock_init(&migf->list_lock);
+ 	migf->mvdev = mvdev;
+ 	ret = mlx5vf_cmd_alloc_pd(migf);
+ 	if (ret)
+-		goto out_free;
++		goto out;
+ 
+ 	buf = mlx5vf_alloc_data_buffer(migf, 0, DMA_TO_DEVICE);
+ 	if (IS_ERR(buf)) {
+@@ -1041,20 +1047,13 @@ mlx5vf_pci_resume_device_data(struct mlx5vf_pci_core_device *mvdev)
+ 	migf->buf_header[0] = buf;
+ 	migf->load_state = MLX5_VF_LOAD_STATE_READ_HEADER;
+ 
+-	stream_open(migf->filp->f_inode, migf->filp);
+-	mutex_init(&migf->lock);
+-	INIT_LIST_HEAD(&migf->buf_list);
+-	INIT_LIST_HEAD(&migf->avail_list);
+-	spin_lock_init(&migf->list_lock);
+ 	return migf;
+ out_buf:
+ 	mlx5vf_free_data_buffer(migf->buf[0]);
+ out_pd:
+ 	mlx5vf_cmd_dealloc_pd(migf);
+-out_free:
++out:
+ 	fput(migf->filp);
+-end:
+-	kfree(migf);
+ 	return ERR_PTR(ret);
+ }
+ 
 -- 
 2.43.0
 
