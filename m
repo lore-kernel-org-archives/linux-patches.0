@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C93C314A088;
-	Tue,  3 Dec 2024 16:17:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6D091F892F;
+	Tue,  3 Dec 2024 16:17:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733242672; cv=none; b=PO2RxGKEQFAwGfqpw3TxwOA5Ofg1M9DjfpSFjIC24zLxjFbeJEchAitRnSCTDeFIh8EZltQi/J192QLzd9kezC/6rCN5eIIsOReX1mp3WMddOY3xkM08cUFGumbcjZCpjmgf9Y0VN3vqlNbRhwE4ed8qS+ytUHegDkUjOpM/ASc=
+	t=1733242675; cv=none; b=kAzRkLlDK5hQsgHzMUpprcNXaRzjN3Sun0xSAv0Deq2bOU6CZMU+AJPX7Q/NfuGn+JGF5XmzbQ7NotzeGW6pOxpSqNjhb9FlgSubLVp6WeQUv8EfZSFg5JlB6TCHQ/9RhVq/SmRkXyt08h+F0tudL9UaV37WEILeGjPD3PG2wYs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733242672; c=relaxed/simple;
-	bh=WmhqEN/N80820+ss45B163uQ1gFWwvOKeVtGzORnZMI=;
+	s=arc-20240116; t=1733242675; c=relaxed/simple;
+	bh=p+qpcbUKEpWeSO7Ws2fgdMdEIoF6CSAd+pnUBK+NPDY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LcG2YXZ+5urndzXg9JSEcQrYwRRRw7E3lYZfecXb8jJlbiMmk8pYnRSS+RRX09feECFAh8JvuVcx7WLW+wFIcDGNi5NQueicuznFB6nklRnGPYcmJqhzQj9CjkYKOr4Qj+LrEZFIHMbYnkl+WCzAi39UYY6+D6Nl3705I1+Tu6I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XD467e2g; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aP6KRkdEDtcbPTMq97Qj5ROs6+zpM42MAOKssvkL6q10U0CcMVOG2QXUYt6oue1fbobyv1fEw65btHMUCxTJZsaIWRz8a+JEPWMe8JjdC5SmrAcveE0yT+j6+ZsI+DBx/eSwwlFzX3XXYSIQVbXVhIRyL6NAwAr+XaiqG6wJtcU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H6aQp/RF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XD467e2g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA8E4C4CECF;
-	Tue,  3 Dec 2024 16:17:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H6aQp/RF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAAF6C4CECF;
+	Tue,  3 Dec 2024 16:17:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733242672;
-	bh=WmhqEN/N80820+ss45B163uQ1gFWwvOKeVtGzORnZMI=;
+	s=korg; t=1733242675;
+	bh=p+qpcbUKEpWeSO7Ws2fgdMdEIoF6CSAd+pnUBK+NPDY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XD467e2gsyQmrWhp1p5yFLcVwB0YPp8C44SjNZLW4DYYy4Wj5UkhuCvAr3Y3Dlu6M
-	 Bj+FkOm6ZViqMIs6vRh9oXhHicRJIOS+QTHmnDqrJQxxuMV0Y6PInVU2oApliYoaAN
-	 sqra+7C2NVREgOMEpDRIo/WePUsilwyGoqhg//9s=
+	b=H6aQp/RF3eX2uOcsVjcsu1npQ2Pb0hFqz+snTApZsb/+MSus89htWQtM2+evc9w5M
+	 M0efpbtFhDiWndtVTvX9jubt1fobXtTrmLUq/E1KhBShYe4DEQk5lwZ06zLChx1psJ
+	 gLAdZdNviw3w/ncBdwOcyCXdywZYDcQRMKeHwJgo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
+	Tiwei Bie <tiwei.btw@antgroup.com>,
+	Anton Ivanov <anton.ivanov@cambridgegreys.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 774/826] kfifo: dont include dma-mapping.h in kfifo.h
-Date: Tue,  3 Dec 2024 15:48:21 +0100
-Message-ID: <20241203144813.960225245@linuxfoundation.org>
+Subject: [PATCH 6.12 775/826] um: ubd: Initialize ubds disk pointer in ubd_add
+Date: Tue,  3 Dec 2024 15:48:22 +0100
+Message-ID: <20241203144813.999139955@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -50,65 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christoph Hellwig <hch@lst.de>
+From: Tiwei Bie <tiwei.btw@antgroup.com>
 
-[ Upstream commit 44059790a5cb9258ae6137387e4c39b717fd2ced ]
+[ Upstream commit df700802abcac3c7c4a4ced099aa42b9a144eea8 ]
 
-Nothing in kfifo.h directly needs dma-mapping.h, only two macros
-use DMA_MAPPING_ERROR when actually instantiated.  Drop the
-dma-mapping.h include to reduce include bloat.
+Currently, the initialization of the disk pointer in the ubd structure
+is missing. It should be initialized with the allocated gendisk pointer
+in ubd_add().
 
-Add an explicity <linux/io.h> include to drivers/mailbox/omap-mailbox.c
-as that file uses __raw_readl and __raw_writel through a complicated
-include chain involving <linux/dma-mapping.h>
-
-Fixes: d52b761e4b1a ("kfifo: add kfifo_dma_out_prepare_mapped()")
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Link: https://lore.kernel.org/r/20241023055317.313234-1-hch@lst.de
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 32621ad7a7ea ("ubd: remove the ubd_gendisk array")
+Signed-off-by: Tiwei Bie <tiwei.btw@antgroup.com>
+Acked-By: Anton Ivanov <anton.ivanov@cambridgegreys.com>
+Link: https://patch.msgid.link/20241104163203.435515-2-tiwei.btw@antgroup.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mailbox/omap-mailbox.c | 1 +
- include/linux/kfifo.h          | 1 -
- samples/kfifo/dma-example.c    | 1 +
- 3 files changed, 2 insertions(+), 1 deletion(-)
+ arch/um/drivers/ubd_kern.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/mailbox/omap-mailbox.c b/drivers/mailbox/omap-mailbox.c
-index 6797770474a55..680243751d625 100644
---- a/drivers/mailbox/omap-mailbox.c
-+++ b/drivers/mailbox/omap-mailbox.c
-@@ -15,6 +15,7 @@
- #include <linux/slab.h>
- #include <linux/kfifo.h>
- #include <linux/err.h>
-+#include <linux/io.h>
- #include <linux/module.h>
- #include <linux/of.h>
- #include <linux/platform_device.h>
-diff --git a/include/linux/kfifo.h b/include/linux/kfifo.h
-index 564868bdce898..fd743d4c4b4bd 100644
---- a/include/linux/kfifo.h
-+++ b/include/linux/kfifo.h
-@@ -37,7 +37,6 @@
-  */
+diff --git a/arch/um/drivers/ubd_kern.c b/arch/um/drivers/ubd_kern.c
+index 119df76627002..2bfb17373244b 100644
+--- a/arch/um/drivers/ubd_kern.c
++++ b/arch/um/drivers/ubd_kern.c
+@@ -898,6 +898,8 @@ static int ubd_add(int n, char **error_out)
+ 	if (err)
+ 		goto out_cleanup_disk;
  
- #include <linux/array_size.h>
--#include <linux/dma-mapping.h>
- #include <linux/spinlock.h>
- #include <linux/stddef.h>
- #include <linux/types.h>
-diff --git a/samples/kfifo/dma-example.c b/samples/kfifo/dma-example.c
-index 48df719dac8c6..8076ac410161a 100644
---- a/samples/kfifo/dma-example.c
-+++ b/samples/kfifo/dma-example.c
-@@ -9,6 +9,7 @@
- #include <linux/kfifo.h>
- #include <linux/module.h>
- #include <linux/scatterlist.h>
-+#include <linux/dma-mapping.h>
++	ubd_dev->disk = disk;
++
+ 	return 0;
  
- /*
-  * This module shows how to handle fifo dma operations.
+ out_cleanup_disk:
 -- 
 2.43.0
 
