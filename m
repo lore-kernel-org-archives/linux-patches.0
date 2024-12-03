@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA3021F755B;
-	Tue,  3 Dec 2024 15:41:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00D341F759C;
+	Tue,  3 Dec 2024 15:42:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733240519; cv=none; b=Apxllx8/wQOFW+NQjyWyCKRlMJd1XnEn4JP58jTWzFgd+Zg0C+8L2GUQnKLlH33+XxTKG6Yak8G068IVChUE7sRZ7Kp4nJtLdggqgq3XIyDOqkiUlnz9L7KeGY4gJnNbivIUIoJh1AdaSotT3DFkaHGyUaUEVLqKSpCDw0PZd58=
+	t=1733240523; cv=none; b=YTnPLXYJo+7Eqh4LQLnFxM5MKaflmaH6siYHSvA62WfAljb5J0VABvBOimEAuhR9392p5LcC6+LuXA67dOkYKapOaI57LKTfVzRkV3koZ+nwDASiXeKlRppBGwSlbQDyaFUlT+QmyqxO7DCERjgNInia6rCvwnD2uPE1tdq2hs8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733240519; c=relaxed/simple;
-	bh=TrKmHSUFsrm5sboxzemy/z1Ljgzy3QLctKoPBX8hk6U=;
+	s=arc-20240116; t=1733240523; c=relaxed/simple;
+	bh=mHJ1SmiOHaYQsb5g4ORYkG+GivuKDFtE1+k5FzAk06g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BOcszP0e3rGvIkXEq9O9Qr0vVuJaHazBqnYy6P+EEmd+puKnZIqy83sXPXqp1WfYgvWOKwnWTFwTJ06zSOM6Km3CYp1/lbXUfg5cStAH6MBESGK3+QfcvdZrfA/YC2kiqnwbqqKF0i0VyDCFQjg/svJH1YQqGHbCdEj17ErVaLo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T/au0ilu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XQJg6HQLdqtX6UZ5KYIeby4Al5whw/1rQXTyCO6UnRSh5BHpySqQIWqARylQcfdUXJOKh/PeRSdgaxEE6SKrJEKVdS6mCCIJYIZ8MNxtPGEBMWK7RxF3bchYmxKZEPPyLPtnjRuKDuDJUlOiOUwZgeBuLlJDdOAdUKi4f80JQfc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xvyRok9s; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T/au0ilu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A21CC4CECF;
-	Tue,  3 Dec 2024 15:41:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xvyRok9s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79A1DC4CECF;
+	Tue,  3 Dec 2024 15:42:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733240519;
-	bh=TrKmHSUFsrm5sboxzemy/z1Ljgzy3QLctKoPBX8hk6U=;
+	s=korg; t=1733240522;
+	bh=mHJ1SmiOHaYQsb5g4ORYkG+GivuKDFtE1+k5FzAk06g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T/au0iluHbnIBbdQAN/4fp/fBmg8qSAemWl803MoJ3RlB3Nz+JKSPwLsUj4IHzmxi
-	 I/4vKtZG3ownPZJx0Cy3slPw4HlTd5WllwZ+TrwJkhFVIYYtAurFSfnkrcnI14B0q1
-	 9DZX57Ifs75USYYnQjec2Ct1NGBLJ/vIhqOHaX5c=
+	b=xvyRok9sRIWrXZ+0AYckHy1w77Brw0L9jDxAqtExFZEeFlV0qJJhdLUxrLoexg4y2
+	 jpPtpske39nld+qzxMghHsIqCpnAFaZwlyKuAxokTz3uTBy+T7L4r4Vw0cdvGlSU2u
+	 WoYtBKfkRZfzOuCrscpQ1HF4vKSmxCVi7IkgFLVc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Alexander Stein <alexander.stein@ew.tq-group.com>,
+	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 159/826] arm64: dts: renesas: hihope: Drop #sound-dai-cells
-Date: Tue,  3 Dec 2024 15:38:06 +0100
-Message-ID: <20241203144749.944134081@linuxfoundation.org>
+Subject: [PATCH 6.12 160/826] arm64: dts: imx8mn-tqma8mqnl-mba8mx-usbot: fix coexistence of output-low and output-high in GPIO
+Date: Tue,  3 Dec 2024 15:38:07 +0100
+Message-ID: <20241203144749.982355444@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -52,59 +52,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+From: Frank Li <Frank.Li@nxp.com>
 
-[ Upstream commit 9cc926e3fab42dd292219796cfc94e41f4ab749d ]
+[ Upstream commit c771d311b1901cd4679c8fc7f89a882fe07cf4a0 ]
 
-"#sound-dai-cells" is required if the board is using "simple-card".
-However, the HiHope board uses "audio-graph", thus remove the unneeded
-`#sound-dai-cells`.
+Fix the issue where both 'output-low' and 'output-high' exist under GPIO
+hog nodes  (rst_usb_hub_hog and sel_usb_hub_hog) when applying device
+tree overlays. Since /delete-property/ is not supported in the overlays,
+setting 'output-low' results in both properties being present. The
+workaround is to disable these hogs and create new ones with 'output-low'
+as needed.
 
-Commit 9e72606cd2db ("arm64: dts: renesas: #sound-dai-cells is used when
-simple-card") updated the comment regarding usage of "#sound-dai-cells"
-in the SoC DTSI but missed to remove "#sound-dai-cells" from board DTS
-files.
+Fix below CHECK_DTBS warning:
+arch/arm64/boot/dts/freescale/imx8mn-tqma8mqnl-mba8mx-usbotg.dtb: sel-usb-hub-hog:
+   {'output-low': True, 'gpio-hog': True, 'gpios': [[1, 0]], 'output-high': True, 'phandle': 108, '$nodename': ['sel-usb-hub-hog']}
+       is valid under each of {'required': ['output-low']}, {'required': ['output-high']
 
-Fixes: 9e72606cd2db ("arm64: dts: renesas: #sound-dai-cells is used when simple-card")
-Signed-off-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Acked-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
-Link: https://lore.kernel.org/20241010135332.710648-1-prabhakar.mahadev-lad.rj@bp.renesas.com
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Fixes: 3f6fc30abebc ("arm64: dts: imx8mn: tqma8mqnl-mba8mx: Add USB DR overlay")
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
+Reviewed-by: Alexander Stein <alexander.stein@ew.tq-group.com>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/renesas/hihope-rev2.dtsi | 3 ---
- arch/arm64/boot/dts/renesas/hihope-rev4.dtsi | 3 ---
- 2 files changed, 6 deletions(-)
+ .../imx8mn-tqma8mqnl-mba8mx-usbotg.dtso       | 29 +++++++++++++++++--
+ 1 file changed, 27 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/renesas/hihope-rev2.dtsi b/arch/arm64/boot/dts/renesas/hihope-rev2.dtsi
-index 8e2db1d6ca81e..25c55b32aafe5 100644
---- a/arch/arm64/boot/dts/renesas/hihope-rev2.dtsi
-+++ b/arch/arm64/boot/dts/renesas/hihope-rev2.dtsi
-@@ -69,9 +69,6 @@ &rcar_sound {
+diff --git a/arch/arm64/boot/dts/freescale/imx8mn-tqma8mqnl-mba8mx-usbotg.dtso b/arch/arm64/boot/dts/freescale/imx8mn-tqma8mqnl-mba8mx-usbotg.dtso
+index 96db07fc9bece..1f2a0fe70a0a2 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mn-tqma8mqnl-mba8mx-usbotg.dtso
++++ b/arch/arm64/boot/dts/freescale/imx8mn-tqma8mqnl-mba8mx-usbotg.dtso
+@@ -29,12 +29,37 @@ usb_dr_connector: endpoint {
+ 	};
+ };
  
- 	status = "okay";
++/*
++ * rst_usb_hub_hog and sel_usb_hub_hog have property 'output-high',
++ * dt overlay don't support /delete-property/. Both 'output-low' and
++ * 'output-high' will be exist under hog nodes if overlay file set
++ * 'output-low'. Workaround is disable these hog and create new hog with
++ * 'output-low'.
++ */
++
+ &rst_usb_hub_hog {
+-	output-low;
++	status = "disabled";
++};
++
++&expander0 {
++	rst-usb-low-hub-hog {
++		gpio-hog;
++		gpios = <13 0>;
++		output-low;
++		line-name = "RST_USB_HUB#";
++	};
+ };
  
--	/* Single DAI */
--	#sound-dai-cells = <0>;
--
- 	rsnd_port: port {
- 		rsnd_endpoint: endpoint {
- 			remote-endpoint = <&dw_hdmi0_snd_in>;
-diff --git a/arch/arm64/boot/dts/renesas/hihope-rev4.dtsi b/arch/arm64/boot/dts/renesas/hihope-rev4.dtsi
-index 66f3affe04697..deb69c2727756 100644
---- a/arch/arm64/boot/dts/renesas/hihope-rev4.dtsi
-+++ b/arch/arm64/boot/dts/renesas/hihope-rev4.dtsi
-@@ -84,9 +84,6 @@ &rcar_sound {
- 	pinctrl-names = "default";
- 	status = "okay";
+ &sel_usb_hub_hog {
+-	output-low;
++	status = "disabled";
++};
++
++&gpio2 {
++	sel-usb-low-hub-hog {
++		gpio-hog;
++		gpios = <1 GPIO_ACTIVE_HIGH>;
++		output-low;
++	};
+ };
  
--	/* Single DAI */
--	#sound-dai-cells = <0>;
--
- 	/* audio_clkout0/1/2/3 */
- 	#clock-cells = <1>;
- 	clock-frequency = <12288000 11289600>;
+ &usbotg1 {
 -- 
 2.43.0
 
