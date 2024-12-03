@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBFAB205E35;
-	Tue,  3 Dec 2024 15:33:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19064209F41;
+	Tue,  3 Dec 2024 15:33:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733239980; cv=none; b=aQN3cFTz/NDuwDSoSIs7WtK1JisRsQOTxfTwV8SPej5jIBw55A03AZjsaxPgl6P25k/5hk6ujFAV2Ax+U5Cqsr2t4KE3/tUBoxB6jscVr1xdxEwqYDXyITxI6vp9ts3gY6Ny85wGQzTJ2PweF5qhwWYCUkHtFkyLhbGqlxCRYo4=
+	t=1733239984; cv=none; b=PAyLYJGklO/MReoZ9TTww0NGChNWUdr8K9ktfRwklnf8uRYkYL+BIDRdQzaNb1Qs1RpNlLBvkPj3vfD3BkbuXcGnTNVAr/9Z+I0lv6sg8eYNk0nT16SfEMkG/LqONsCDQAyRs8cMB8U5gkozwwYfGZgkRuYt9D4Emo4SE+J+QAw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733239980; c=relaxed/simple;
-	bh=8IhWj7CyFEqx6EzKpbWfiICPY7TNJG88xXGK5vf0CIQ=;
+	s=arc-20240116; t=1733239984; c=relaxed/simple;
+	bh=jQNX0rYmLz63nfn/fQdHDjGrcprmf6ZR7Ftn/0dgfZQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ft1844it9TQO9nbvKPnXZWHuXMOfnQRunq1KWwp7j96xF4Mfbv0EH9vNXkpzUV6nTr/IcSVfAnYfYiepUEvQ7iy2g/ba/TZGnMgEva1EbsbsWFdMOsczGBqq/IdygnlwVKyLFmxK3MxGBcKAimScR/MsO4hYStCqTI8cyBz++Io=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Txs2eGGN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Mk79SPzeSxVwRb7TjzYatDackkNzP1WJKiuyLyYSgZYu0xx0K7gFfBoj9qnwmiKRXM4nYl4RQyGPwnYO8ux576cEs+Q0eOuOmefkMtmcu+77xyf2nZJozU7ve595QensAkuioyzXlYRyVt8dusp3216N/bL2uY20/WmKVGMeIyA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BUmfTSNq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Txs2eGGN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53033C4CED8;
-	Tue,  3 Dec 2024 15:33:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BUmfTSNq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D9A1C4CECF;
+	Tue,  3 Dec 2024 15:33:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733239980;
-	bh=8IhWj7CyFEqx6EzKpbWfiICPY7TNJG88xXGK5vf0CIQ=;
+	s=korg; t=1733239983;
+	bh=jQNX0rYmLz63nfn/fQdHDjGrcprmf6ZR7Ftn/0dgfZQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Txs2eGGN16yEY5wRT4qe8iPPvsBVFKUTiwuYHM7q6fQrSYianlV7NhyIYn92tCiDN
-	 Zp3bAkDYKX29tmVIXVGSlNsYrJwcGJruKwtIKAKNWkTSRHoFo+OlYv23AZydTs5IZo
-	 thqkJH2t6rl8JPEHXznEuksNvZXVfBKUsfE073j8=
+	b=BUmfTSNqlqI/Qoz7gV2X4OMqMmRYraML1aEoTz+2j2KtfET6Ui7E3SJf2mivKb8dd
+	 S/YPK6F2J3EEXCueg6aEYd1yH+EVRsRZdG4S1kMUZXhQWKws6xAkyOcY6tT6shGA9W
+	 +45PLiezGJ5C8aRx7tmFXi2zda2KvHGKC8038Q+g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Aurich <paul@darkrain42.org>,
-	Steve French <stfrench@microsoft.com>,
+	John Garry <john.g.garry@oracle.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 800/817] smb: Initialize cfid->tcon before performing network ops
-Date: Tue,  3 Dec 2024 15:46:12 +0100
-Message-ID: <20241203144027.253924837@linuxfoundation.org>
+Subject: [PATCH 6.11 801/817] block: Dont allow an atomic write be truncated in blkdev_write_iter()
+Date: Tue,  3 Dec 2024 15:46:13 +0100
+Message-ID: <20241203144027.493331684@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -51,43 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paul Aurich <paul@darkrain42.org>
+From: John Garry <john.g.garry@oracle.com>
 
-[ Upstream commit c353ee4fb119a2582d0e011f66a76a38f5cf984d ]
+[ Upstream commit 2cbd51f1f8739fd2fdf4bae1386bcf75ce0176ba ]
 
-Avoid leaking a tcon ref when a lease break races with opening the
-cached directory. Processing the leak break might take a reference to
-the tcon in cached_dir_lease_break() and then fail to release the ref in
-cached_dir_offload_close, since cfid->tcon is still NULL.
+A write which goes past the end of the bdev in blkdev_write_iter() will
+be truncated. Truncating cannot tolerated for an atomic write, so error
+that condition.
 
-Fixes: ebe98f1447bb ("cifs: enable caching of directories for which a lease is held")
-Signed-off-by: Paul Aurich <paul@darkrain42.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fixes: caf336f81b3a ("block: Add fops atomic write support")
+Signed-off-by: John Garry <john.g.garry@oracle.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Link: https://lore.kernel.org/r/20241127092318.632790-1-john.g.garry@oracle.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/cached_dir.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ block/fops.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/fs/smb/client/cached_dir.c b/fs/smb/client/cached_dir.c
-index 004349a7ab69d..9c0ef4195b582 100644
---- a/fs/smb/client/cached_dir.c
-+++ b/fs/smb/client/cached_dir.c
-@@ -227,6 +227,7 @@ int open_cached_dir(unsigned int xid, struct cifs_tcon *tcon,
- 		}
- 	}
- 	cfid->dentry = dentry;
-+	cfid->tcon = tcon;
+diff --git a/block/fops.c b/block/fops.c
+index 56db751bba49b..16bb5ae702379 100644
+--- a/block/fops.c
++++ b/block/fops.c
+@@ -676,6 +676,7 @@ static ssize_t blkdev_write_iter(struct kiocb *iocb, struct iov_iter *from)
+ 	struct file *file = iocb->ki_filp;
+ 	struct inode *bd_inode = bdev_file_inode(file);
+ 	struct block_device *bdev = I_BDEV(bd_inode);
++	bool atomic = iocb->ki_flags & IOCB_ATOMIC;
+ 	loff_t size = bdev_nr_bytes(bdev);
+ 	size_t shorted = 0;
+ 	ssize_t ret;
+@@ -695,7 +696,7 @@ static ssize_t blkdev_write_iter(struct kiocb *iocb, struct iov_iter *from)
+ 	if ((iocb->ki_flags & (IOCB_NOWAIT | IOCB_DIRECT)) == IOCB_NOWAIT)
+ 		return -EOPNOTSUPP;
  
- 	/*
- 	 * We do not hold the lock for the open because in case
-@@ -298,7 +299,6 @@ int open_cached_dir(unsigned int xid, struct cifs_tcon *tcon,
- 		}
- 		goto oshr_free;
- 	}
--	cfid->tcon = tcon;
- 	cfid->is_open = true;
+-	if (iocb->ki_flags & IOCB_ATOMIC) {
++	if (atomic) {
+ 		ret = generic_atomic_write_valid(iocb, from);
+ 		if (ret)
+ 			return ret;
+@@ -703,6 +704,8 @@ static ssize_t blkdev_write_iter(struct kiocb *iocb, struct iov_iter *from)
  
- 	spin_lock(&cfids->cfid_list_lock);
+ 	size -= iocb->ki_pos;
+ 	if (iov_iter_count(from) > size) {
++		if (atomic)
++			return -EINVAL;
+ 		shorted = iov_iter_count(from) - size;
+ 		iov_iter_truncate(from, size);
+ 	}
 -- 
 2.43.0
 
