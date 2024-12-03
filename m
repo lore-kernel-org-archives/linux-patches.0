@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5A2D1EF08A;
-	Tue,  3 Dec 2024 14:41:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 200AB1EF08A;
+	Tue,  3 Dec 2024 14:41:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733236884; cv=none; b=O2JMyoIOqxb7hgfixHh3euxoy7QBOs8cD2UpvoV1ZTes1v7BEA60mxgKziR0rjIJRP2Qiyjmf3FQDZ7eLusScvDfTw5Fnu4KKkQZgsU2Chuk0ufc6/slEOTc16rP4vjS6qXXCvrO+yM3UP+PU7oy2XEZ6T5GRlZ2QcGJa5KtYaw=
+	t=1733236887; cv=none; b=nsq5GdvQv/CLzovODWdUNM3OedTIQTo/CSbmOuhzfujPWRL5RbLC7CALGxsY2NGwnON7FBOnAS6XDDwNRwLBqMpW4yzvGc1m8nzs/w9UR4Vg12dLQDph7Y+IHRszRXNyCIZ9CZTfZuSMg+O5GO8KN3PcPBTDS2arld0QYgmQN1g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733236884; c=relaxed/simple;
-	bh=uJb3tNZ1HKrLBL2ZN7hd5tr6ttBvacPjVRpwHwNj/pE=;
+	s=arc-20240116; t=1733236887; c=relaxed/simple;
+	bh=A63LVcEsSMzy4hlvTXI7TMhsCbx9grBZraODA+1YJlE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=f7sT3Rx8xJCzyif5GUDXxrhRb9OFJF4SDX1tccxrPnrwB6sXIJNuZkm43HudTepeVZmNAvAJUpcv28v+edpHzb9Iq/P8RqPc1ppDhO76VAJEPIH3v7yUOG0KrV4A3KmyiiY40CCEvA22wuEfrAhgRs0Yhdo/g46mZml/h1f20ao=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UKCCZQyz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QI7kyAhZuaCnWUfslz1juUtiM7e1NIezlnajzUokyvJycIifcfdjN2mE1104zJ/X8tF6wl18AAW7BibL6C49/IhciI+d/gBqeXwBFXGStrisOFMxUe+4eBrwvCZsQ4HA0MpdG+LmBHXKhCyMnhkJpZ8OVg+YzFJ6znux1s+CLJM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U8hiLYvL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UKCCZQyz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A4A5C4CECF;
-	Tue,  3 Dec 2024 14:41:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U8hiLYvL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82892C4CECF;
+	Tue,  3 Dec 2024 14:41:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733236883;
-	bh=uJb3tNZ1HKrLBL2ZN7hd5tr6ttBvacPjVRpwHwNj/pE=;
+	s=korg; t=1733236887;
+	bh=A63LVcEsSMzy4hlvTXI7TMhsCbx9grBZraODA+1YJlE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UKCCZQyzA0gWeRTtXmqztWD2Yck3hvzwYyLFa7yr21BekIZBgDuGklqI1Z7Lizfm0
-	 wCHOKucSY5oQPQRPbEFy4N3XCN72GWgdmcuWW08FxZdSq3hXq85cBqWq6dFac3Z4bb
-	 nH79sfYj83drU1uQLwaxPxkFcDfhYG0TJzUyusgs=
+	b=U8hiLYvL7H8QcysxummJgpPqrSSxCmZOCYKK07zqzwRz7QtBID9wf/6Z2q4GpL3tk
+	 3YOtGC390MhF7HBGH9UoPS/xAs42VmYXjHMxbvLrDOiPndCOdwvI2tnj6KmVEQGzuZ
+	 EjJGJG7vrEdz0z5WBr1hIRx1i6CHZvtlkJEF60rs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masahiro Yamada <masahiroy@kernel.org>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 137/138] modpost: remove incorrect code in do_eisa_entry()
-Date: Tue,  3 Dec 2024 15:32:46 +0100
-Message-ID: <20241203141928.809395699@linuxfoundation.org>
+Subject: [PATCH 4.19 138/138] sh: intc: Fix use-after-free bug in register_intc_controller()
+Date: Tue,  3 Dec 2024 15:32:47 +0100
+Message-ID: <20241203141928.847582169@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203141923.524658091@linuxfoundation.org>
 References: <20241203141923.524658091@linuxfoundation.org>
@@ -44,88 +45,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 4.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Masahiro Yamada <masahiroy@kernel.org>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit 0c3e091319e4748cb36ac9a50848903dc6f54054 ]
+[ Upstream commit 63e72e551942642c48456a4134975136cdcb9b3c ]
 
-This function contains multiple bugs after the following commits:
+In the error handling for this function, d is freed without ever
+removing it from intc_list which would lead to a use after free.
+To fix this, let's only add it to the list after everything has
+succeeded.
 
- - ac551828993e ("modpost: i2c aliases need no trailing wildcard")
- - 6543becf26ff ("mod/file2alias: make modalias generation safe for cross compiling")
-
-Commit ac551828993e inserted the following code to do_eisa_entry():
-
-    else
-            strcat(alias, "*");
-
-This is incorrect because 'alias' is uninitialized. If it is not
-NULL-terminated, strcat() could cause a buffer overrun.
-
-Even if 'alias' happens to be zero-filled, it would output:
-
-    MODULE_ALIAS("*");
-
-This would match anything. As a result, the module could be loaded by
-any unrelated uevent from an unrelated subsystem.
-
-Commit ac551828993e introduced another bug.            
-
-Prior to that commit, the conditional check was:
-
-    if (eisa->sig[0])
-
-This checked if the first character of eisa_device_id::sig was not '\0'.
-
-However, commit ac551828993e changed it as follows:
-
-    if (sig[0])
-
-sig[0] is NOT the first character of the eisa_device_id::sig. The
-type of 'sig' is 'char (*)[8]', meaning that the type of 'sig[0]' is
-'char [8]' instead of 'char'. 'sig[0]' and 'symval' refer to the same
-address, which never becomes NULL.
-
-The correct conversion would have been:
-
-    if ((*sig)[0])
-
-However, this if-conditional was meaningless because the earlier change
-in commit ac551828993e was incorrect.
-
-This commit removes the entire incorrect code, which should never have
-been executed.
-
-Fixes: ac551828993e ("modpost: i2c aliases need no trailing wildcard")
-Fixes: 6543becf26ff ("mod/file2alias: make modalias generation safe for cross compiling")
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Fixes: 2dcec7a988a1 ("sh: intc: set_irq_wake() support")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+Signed-off-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/mod/file2alias.c | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ drivers/sh/intc/core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/scripts/mod/file2alias.c b/scripts/mod/file2alias.c
-index 90868df7865e3..adcaabf408949 100644
---- a/scripts/mod/file2alias.c
-+++ b/scripts/mod/file2alias.c
-@@ -763,10 +763,7 @@ static int do_eisa_entry(const char *filename, void *symval,
- 		char *alias)
- {
- 	DEF_FIELD_ADDR(symval, eisa_device_id, sig);
--	if (sig[0])
--		sprintf(alias, EISA_DEVICE_MODALIAS_FMT "*", *sig);
--	else
--		strcat(alias, "*");
-+	sprintf(alias, EISA_DEVICE_MODALIAS_FMT "*", *sig);
- 	return 1;
- }
+diff --git a/drivers/sh/intc/core.c b/drivers/sh/intc/core.c
+index 46f0f322d4d8f..48fe5fab5693d 100644
+--- a/drivers/sh/intc/core.c
++++ b/drivers/sh/intc/core.c
+@@ -194,7 +194,6 @@ int __init register_intc_controller(struct intc_desc *desc)
+ 		goto err0;
  
+ 	INIT_LIST_HEAD(&d->list);
+-	list_add_tail(&d->list, &intc_list);
+ 
+ 	raw_spin_lock_init(&d->lock);
+ 	INIT_RADIX_TREE(&d->tree, GFP_ATOMIC);
+@@ -380,6 +379,7 @@ int __init register_intc_controller(struct intc_desc *desc)
+ 
+ 	d->skip_suspend = desc->skip_syscore_suspend;
+ 
++	list_add_tail(&d->list, &intc_list);
+ 	nr_intc_controllers++;
+ 
+ 	return 0;
 -- 
 2.43.0
 
