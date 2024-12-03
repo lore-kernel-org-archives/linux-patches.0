@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 803781F759C;
-	Tue,  3 Dec 2024 16:08:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61BF374BE1;
+	Tue,  3 Dec 2024 16:08:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733242115; cv=none; b=Hy4MaBwb2F+37xbvIvUNx5z5EFUBE3VHfAjB1fI2eLAuf/jaI+/4xq2lD7vJOs/SX2m33BND1r1I7G3rbklJaN1qowzW+2W1DMA94UfdkOLJEXftSnFRB4W1kYqareAT26NXx85R1J+E9vLBhjvS6/zcwmgyCUhqhvoug2Z3D84=
+	t=1733242118; cv=none; b=s/oHFMaIHN3oaV/vRCGoB2qjmfEvaitBbEJ/Zu9pE4GW8J6f3+mFNLmWJTaLCn47HNCQVETBB3q4Y7B9tN+OlIQgjDeQo8mj5a8T1BGI08zhn7pAGLslWGSgRV5p05bOLZOZegwheHgVgBtt9Ul0gZIRkrnLbsTZZw/SpPRaPsE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733242115; c=relaxed/simple;
-	bh=P9OG11fpTVjY6dD/SZMxnZbCbhmNYuybSrwnpFATZtI=;
+	s=arc-20240116; t=1733242118; c=relaxed/simple;
+	bh=Mji3Pcb3nhTGeuFnMath+UwSCeKNBvF5NEg9/+ksy78=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jfvQ7ROKzcSh9OPJ8yDkWVSRStoNyrGAQBXDSrejdqAf6vvW1bsiGMQyXjC256GgCUau1SCrRTDIGC37I8tfL+eF/c5cIFyAsC/zMsALridBpg4vQscsOSvQEIW6AN0KCusH+G0cTBWoslbQDw1BmYu9CRgoTbpYlLeETKYj3pM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YQaBkkio; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tUI98O8KaO646fcOzB6ynwl66M/j++h6iP8vuxZGAfG4t4i7QtQb9XNezidhsqBaiTYYIKgFCwNOPcdmLvMiExkLXZPi26okCPTh/XPA2zdQvlWNESqqcJmy4pW+1s2YDsgUU0YwAXY0I6S0cd6FTQV8so7xPR2+1IiuHE6SDV4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jAF/xSl3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YQaBkkio"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D44FC4CECF;
-	Tue,  3 Dec 2024 16:08:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jAF/xSl3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4E8AC4CECF;
+	Tue,  3 Dec 2024 16:08:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733242115;
-	bh=P9OG11fpTVjY6dD/SZMxnZbCbhmNYuybSrwnpFATZtI=;
+	s=korg; t=1733242118;
+	bh=Mji3Pcb3nhTGeuFnMath+UwSCeKNBvF5NEg9/+ksy78=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YQaBkkiodp9WiSWzZ8ttp3L3v2rmOg7NkafCRAoCxO4EbQaqGm+3E5mWNAdHrDkJO
-	 1JFVC6ubidND0pwRILmx0X6YtWtU05G4JMhU884GWaFlQ7ZSOvY3vkJSqYK/UGGdgY
-	 OfMI57lmyr6RgXJD76Xwr0tRTjafzWXyvuznNZOU=
+	b=jAF/xSl3QC15OTPyOx6YRp40cLKZpBgN5ga4D902CYPWdUvUZFrtLLVlmuUaLwXGK
+	 jTdP/jL+qS0smT2duzHIGbUwPTQf1nP6xeRWm8awnImD/yNqtg9eksAeAv4QcUiUV7
+	 U7DPZ4r+ac9xxNhria5DPn0e13mgWNdJrl92weJg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kailang Yang <kailang@realtek.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Richard Cochran <richardcochran@gmail.com>,
+	Somnath Kotur <somnath.kotur@broadcom.com>,
+	Pavan Chebbi <pavan.chebbi@broadcom.com>,
+	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
+	Michael Chan <michael.chan@broadcom.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 611/826] ALSA: hda/realtek: Update ALC256 depop procedure
-Date: Tue,  3 Dec 2024 15:45:38 +0100
-Message-ID: <20241203144807.586750502@linuxfoundation.org>
+Subject: [PATCH 6.12 582/826] bnxt_en: Unregister PTP during PCI shutdown and suspend
+Date: Tue,  3 Dec 2024 15:45:09 +0100
+Message-ID: <20241203144806.452206914@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -51,100 +55,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kailang Yang <kailang@realtek.com>
+From: Michael Chan <michael.chan@broadcom.com>
 
-[ Upstream commit cc3d0b5dd989d3238d456f9fd385946379a9c13d ]
+[ Upstream commit 3661c05c54e8db7064aa96a0774654740974dffc ]
 
-Old procedure has a chance to meet Headphone no output.
+If we go through the PCI shutdown or suspend path, we shutdown the
+NIC but PTP remains registered.  If the kernel continues to run for
+a little bit, the periodic PTP .do_aux_work() function may be called
+and it will read the PHC from the BAR register.  Since the device
+has already been disabled, it will cause a PCIe completion timeout.
+Fix it by calling bnxt_ptp_clear() in the PCI shutdown/suspend
+handlers.  bnxt_ptp_clear() will unregister from PTP and
+.do_aux_work() will be canceled.
 
-Fixes: 4a219ef8f370 ("ALSA: hda/realtek - Add ALC256 HP depop function")
-Signed-off-by: Kailang Yang <kailang@realtek.com>
-Link: https://lore.kernel.org/463c5f93715d4714967041a0a8cec28e@realtek.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+In bnxt_resume(), we need to re-initialize PTP.
+
+Fixes: a521c8a01d26 ("bnxt_en: Move bnxt_ptp_init() from bnxt_open() back to bnxt_init_one()")
+Cc: Richard Cochran <richardcochran@gmail.com>
+Reviewed-by: Somnath Kotur <somnath.kotur@broadcom.com>
+Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
+Reviewed-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
+Signed-off-by: Michael Chan <michael.chan@broadcom.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_realtek.c | 42 ++++++++++++++++-------------------
- 1 file changed, 19 insertions(+), 23 deletions(-)
+ drivers/net/ethernet/broadcom/bnxt/bnxt.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-index 24b4fe99304a4..61d7d8b937676 100644
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -3613,25 +3613,22 @@ static void alc256_init(struct hda_codec *codec)
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+index 015ad2b0bcd1c..3d9ee91e1f8be 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+@@ -15999,6 +15999,7 @@ static void bnxt_shutdown(struct pci_dev *pdev)
+ 	if (netif_running(dev))
+ 		dev_close(dev);
  
- 	hp_pin_sense = snd_hda_jack_detect(codec, hp_pin);
++	bnxt_ptp_clear(bp);
+ 	bnxt_clear_int_mode(bp);
+ 	pci_disable_device(pdev);
  
--	if (hp_pin_sense)
-+	if (hp_pin_sense) {
- 		msleep(2);
-+		alc_update_coefex_idx(codec, 0x57, 0x04, 0x0007, 0x1); /* Low power */
+@@ -16026,6 +16027,7 @@ static int bnxt_suspend(struct device *device)
+ 		rc = bnxt_close(dev);
+ 	}
+ 	bnxt_hwrm_func_drv_unrgtr(bp);
++	bnxt_ptp_clear(bp);
+ 	pci_disable_device(bp->pdev);
+ 	bnxt_free_ctx_mem(bp);
+ 	rtnl_unlock();
+@@ -16069,6 +16071,10 @@ static int bnxt_resume(struct device *device)
+ 	if (bp->fw_crash_mem)
+ 		bnxt_hwrm_crash_dump_mem_cfg(bp);
  
--	alc_update_coefex_idx(codec, 0x57, 0x04, 0x0007, 0x1); /* Low power */
--
--	snd_hda_codec_write(codec, hp_pin, 0,
--			    AC_VERB_SET_AMP_GAIN_MUTE, AMP_OUT_MUTE);
--
--	if (hp_pin_sense || spec->ultra_low_power)
--		msleep(85);
--
--	snd_hda_codec_write(codec, hp_pin, 0,
-+		snd_hda_codec_write(codec, hp_pin, 0,
- 			    AC_VERB_SET_PIN_WIDGET_CONTROL, PIN_OUT);
- 
--	if (hp_pin_sense || spec->ultra_low_power)
--		msleep(100);
-+		msleep(75);
-+
-+		snd_hda_codec_write(codec, hp_pin, 0,
-+			    AC_VERB_SET_AMP_GAIN_MUTE, AMP_OUT_UNMUTE);
- 
-+		msleep(75);
-+		alc_update_coefex_idx(codec, 0x57, 0x04, 0x0007, 0x4); /* Hight power */
++	if (bnxt_ptp_init(bp)) {
++		kfree(bp->ptp_cfg);
++		bp->ptp_cfg = NULL;
 +	}
- 	alc_update_coef_idx(codec, 0x46, 3 << 12, 0);
--	alc_update_coefex_idx(codec, 0x57, 0x04, 0x0007, 0x4); /* Hight power */
- 	alc_update_coefex_idx(codec, 0x53, 0x02, 0x8000, 1 << 15); /* Clear bit */
- 	alc_update_coefex_idx(codec, 0x53, 0x02, 0x8000, 0 << 15);
- 	/*
-@@ -3655,29 +3652,28 @@ static void alc256_shutup(struct hda_codec *codec)
- 	alc_update_coefex_idx(codec, 0x57, 0x04, 0x0007, 0x1); /* Low power */
- 	hp_pin_sense = snd_hda_jack_detect(codec, hp_pin);
- 
--	if (hp_pin_sense)
-+	if (hp_pin_sense) {
- 		msleep(2);
- 
--	snd_hda_codec_write(codec, hp_pin, 0,
-+		snd_hda_codec_write(codec, hp_pin, 0,
- 			    AC_VERB_SET_AMP_GAIN_MUTE, AMP_OUT_MUTE);
- 
--	if (hp_pin_sense || spec->ultra_low_power)
--		msleep(85);
-+		msleep(75);
- 
- 	/* 3k pull low control for Headset jack. */
- 	/* NOTE: call this before clearing the pin, otherwise codec stalls */
- 	/* If disable 3k pulldown control for alc257, the Mic detection will not work correctly
- 	 * when booting with headset plugged. So skip setting it for the codec alc257
- 	 */
--	if (spec->en_3kpull_low)
--		alc_update_coef_idx(codec, 0x46, 0, 3 << 12);
-+		if (spec->en_3kpull_low)
-+			alc_update_coef_idx(codec, 0x46, 0, 3 << 12);
- 
--	if (!spec->no_shutup_pins)
--		snd_hda_codec_write(codec, hp_pin, 0,
-+		if (!spec->no_shutup_pins)
-+			snd_hda_codec_write(codec, hp_pin, 0,
- 				    AC_VERB_SET_PIN_WIDGET_CONTROL, 0x0);
- 
--	if (hp_pin_sense || spec->ultra_low_power)
--		msleep(100);
-+		msleep(75);
-+	}
- 
- 	alc_auto_setup_eapd(codec, false);
- 	alc_shutup_pins(codec);
+ 	bnxt_get_wol_settings(bp);
+ 	if (netif_running(dev)) {
+ 		rc = bnxt_open(dev);
 -- 
 2.43.0
 
