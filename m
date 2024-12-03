@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0FC11EE00B;
-	Tue,  3 Dec 2024 16:17:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BCC114A088;
+	Tue,  3 Dec 2024 16:17:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733242654; cv=none; b=UwHakh6BjBJzOe8NvlCndg7tjx8OMhaEFm4KhQ1sH6x89YQkCJfBfCVYnystnagju1zWqj4ygom+1HfpBKluuQhtuC7SyaMCS0bf7pjoz3uPff4tV5WUowBzhECXrLiSf1K4Pay1KFZFMl1Tns5+fkLQaNpkNxqaxAEAMYsVZUw=
+	t=1733242657; cv=none; b=kV0CBeMd8T/Um92ik0QWXLDcLSIL8jGKQYK/eLUU98OUoF3FuqqNVqTpQGXWBja1+gwDSl3kAAHTlVYCnOkKRx5aJFraSn350h5bObpN6/VRMzLYnEhsb1uTzpNUa4i2qMhFRjKmXlgh4JB6OT9ZbfgJ6LmmtoM3gxOWzZb2c4Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733242654; c=relaxed/simple;
-	bh=J0zhvZQO9vHFYyKPPrLuDoUHcggAqMugTQGSxwNvQp0=;
+	s=arc-20240116; t=1733242657; c=relaxed/simple;
+	bh=DFEO+4fRpTYGh38B+ohgQwgNkr44D4npmP60DglHhgQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fqlitO37vY3ShvVBxNmroG4wAYAmPnGFQLsO9Uu2b/8ETxgViL3WeSud6ojxJMfZE54108AXY6aPln33b723qfZw36qm6O4b7g+J6OyBFkT5q/VFU1yF0/0mQaNxdFsp3H7pVRRW7nnQ9YsxRGElZp+E5KiNsh8xU1LVYUMxMuI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IESEXvWl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nHNGRUrnN1PvPubu9bg80edpQsnOGf88okBLfPqoegFMvvgwtI6hDMGl41bmM8g0e55o4LqiRQS5Uf56ehUxOHS5fHdKz/77EZIKefIKBmzGkGTlI2uDUrsjuSWORCY/OFpkhmmfiXsZlp2z/TmckvoJ2jsVXJ0JhoSJ7FZeoak=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QGA2ziuC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IESEXvWl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 764DCC4CECF;
-	Tue,  3 Dec 2024 16:17:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QGA2ziuC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8507BC4CECF;
+	Tue,  3 Dec 2024 16:17:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733242653;
-	bh=J0zhvZQO9vHFYyKPPrLuDoUHcggAqMugTQGSxwNvQp0=;
+	s=korg; t=1733242656;
+	bh=DFEO+4fRpTYGh38B+ohgQwgNkr44D4npmP60DglHhgQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IESEXvWlA0ahzzEOINP4YFlZvIOPm6Fdtx6ivc9StoW7QS3hs/TKRy8DeU3DS0sq9
-	 ivihDmLcfMx6AFGv0URVLSllX4s5Cx/d3p2iibYHRCBpZmqWxilgJuelBkZRzuLDD0
-	 Hl2mFzYpYPnZ+WxLrEnSSuhaqqGw2W0dwRHO3GI0=
+	b=QGA2ziuCnFGUwqg851bRoGkcTkjRB4jb4cU6Cob4YR4A+Fx2WEl8+SsEaLfGZSeNh
+	 jD0Lr57T1XGshXS+KgqeAdNhzvjH0+EvNsthQb3FBNrapjctNFDKiBjBhp4KEA2Nd2
+	 FvW3/BGWc4OsQ8+rFgND9E4TD7+wlxDlNveA5A48=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.12 751/826] smb3: request handle caching when caching directories
-Date: Tue,  3 Dec 2024 15:47:58 +0100
-Message-ID: <20241203144813.058814558@linuxfoundation.org>
+	Yuan Can <yuancan@huawei.com>,
+	James Ogletree <jogletre@opensource.cirrus.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 6.12 769/826] Input: cs40l50 - fix wrong usage of INIT_WORK()
+Date: Tue,  3 Dec 2024 15:48:16 +0100
+Message-ID: <20241203144813.763094574@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -49,33 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steve French <stfrench@microsoft.com>
+From: Yuan Can <yuancan@huawei.com>
 
-commit 9ed9d83a51a9636d367c796252409e7b2f4de4d4 upstream.
+commit 5c822c0ce5cc83ed4cd8394f3dc46dae8d9a681d upstream.
 
-This client was only requesting READ caching, not READ and HANDLE caching
-in the LeaseState on the open requests we send for directories.  To
-delay closing a handle (e.g. for caching directory contents) we should
-be requesting HANDLE as well as READ (as we already do for deferred
-close of files).   See MS-SMB2 3.3.1.4 e.g.
+In cs40l50_add(), the work_data is a local variable and the work_data.work
+should initialize with INIT_WORK_ONSTACK() instead of INIT_WORK().
+Small error in cs40l50_erase() also fixed in this commit.
 
+Fixes: c38fe1bb5d21 ("Input: cs40l50 - Add support for the CS40L50 haptic driver")
+Signed-off-by: Yuan Can <yuancan@huawei.com>
+Reviewed-by: James Ogletree <jogletre@opensource.cirrus.com>
+Link: https://lore.kernel.org/r/20241106013549.78142-1-yuancan@huawei.com
 Cc: stable@vger.kernel.org
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/smb2ops.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/input/misc/cs40l50-vibra.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/fs/smb/client/smb2ops.c
-+++ b/fs/smb/client/smb2ops.c
-@@ -4080,7 +4080,7 @@ map_oplock_to_lease(u8 oplock)
- 	if (oplock == SMB2_OPLOCK_LEVEL_EXCLUSIVE)
- 		return SMB2_LEASE_WRITE_CACHING_LE | SMB2_LEASE_READ_CACHING_LE;
- 	else if (oplock == SMB2_OPLOCK_LEVEL_II)
--		return SMB2_LEASE_READ_CACHING_LE;
-+		return SMB2_LEASE_READ_CACHING_LE | SMB2_LEASE_HANDLE_CACHING_LE;
- 	else if (oplock == SMB2_OPLOCK_LEVEL_BATCH)
- 		return SMB2_LEASE_HANDLE_CACHING_LE | SMB2_LEASE_READ_CACHING_LE |
- 		       SMB2_LEASE_WRITE_CACHING_LE;
+--- a/drivers/input/misc/cs40l50-vibra.c
++++ b/drivers/input/misc/cs40l50-vibra.c
+@@ -334,11 +334,12 @@ static int cs40l50_add(struct input_dev
+ 	work_data.custom_len = effect->u.periodic.custom_len;
+ 	work_data.vib = vib;
+ 	work_data.effect = effect;
+-	INIT_WORK(&work_data.work, cs40l50_add_worker);
++	INIT_WORK_ONSTACK(&work_data.work, cs40l50_add_worker);
+ 
+ 	/* Push to the workqueue to serialize with playbacks */
+ 	queue_work(vib->vib_wq, &work_data.work);
+ 	flush_work(&work_data.work);
++	destroy_work_on_stack(&work_data.work);
+ 
+ 	kfree(work_data.custom_data);
+ 
+@@ -467,11 +468,12 @@ static int cs40l50_erase(struct input_de
+ 	work_data.vib = vib;
+ 	work_data.effect = &dev->ff->effects[effect_id];
+ 
+-	INIT_WORK(&work_data.work, cs40l50_erase_worker);
++	INIT_WORK_ONSTACK(&work_data.work, cs40l50_erase_worker);
+ 
+ 	/* Push to workqueue to serialize with playbacks */
+ 	queue_work(vib->vib_wq, &work_data.work);
+ 	flush_work(&work_data.work);
++	destroy_work_on_stack(&work_data.work);
+ 
+ 	return work_data.error;
+ }
 
 
