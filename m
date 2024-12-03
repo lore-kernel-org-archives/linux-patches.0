@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5DB4646;
-	Tue,  3 Dec 2024 15:28:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B47D1F76D9;
+	Tue,  3 Dec 2024 15:28:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733239710; cv=none; b=kvm5BmXgrArdGUFapfSpdRnr+DPunG2xGajENZiQvS4joi7GlHpr//EvhKcWdqbPHlz0KkoepT779mT7hkUakkSy62aEyfb3i7BlkQPSGjliV0YIuxliC/O4eG5PZNbxVUwAiEVvTcb4hW2qD3GUdkAe2L64rOaV72FGpQSZipM=
+	t=1733239713; cv=none; b=Yg9+gHJRvn+r/YYajWZKaZ04rvd0c5CpRSM45bmFLjM2rzFi/rjkZDJFRcxa4smbyfujKdo55M8GbSflJ96iRZRPqbV+LkKwdwfpvSl3jt0m2zf1I+jBiVFbt/9GVfSFsBbA5NlDE3VQ/KmbDPvhtSysqzpeDqkA3fsYhWU/M24=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733239710; c=relaxed/simple;
-	bh=V/irMdHw1iLrd++OvBT2nIF/ogKf56r6FycKlSuHpCY=;
+	s=arc-20240116; t=1733239713; c=relaxed/simple;
+	bh=ovkFelU5ByJE1dtBwQtlm7wo7bS8nYVihmFpPmNipPY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aXqB4LC3IN0qy3nIDmkE0grvQz50b6HWk9lVd60apC+Z7CxjxMJtycybdtzNN7k/Wd8ii2BbmiagdlLCJyhMWhxOGJ63ZZjI4OTu9GEFxdjAIVUDaoHz88Bfc2UiGA3/ZDMgRQnHb9IW8lT0s3PmmhLTYLnBOZ3j2YXROCuLFKo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sdWk3aQ1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pT7MIaHEmQCF7II7dLY6X46/k28jGKXqkaTMBFVTL1W+crxT88h97HTvnEh1Zssx1Xr/EBzwYU/U8wenpkXCgANNwxrtMnPhgVMj+upJ8rMS1HtjKK1M2CgBvleEZmZGYL3IbZNacLx6+fxQngFZknxL9wnJ3zySVpItExkN/WA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EKApj8pM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sdWk3aQ1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6B01C4CED6;
-	Tue,  3 Dec 2024 15:28:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EKApj8pM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8930C4CED8;
+	Tue,  3 Dec 2024 15:28:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733239710;
-	bh=V/irMdHw1iLrd++OvBT2nIF/ogKf56r6FycKlSuHpCY=;
+	s=korg; t=1733239713;
+	bh=ovkFelU5ByJE1dtBwQtlm7wo7bS8nYVihmFpPmNipPY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sdWk3aQ1xkmRud0TN+k1OWLg5V6ODeTfxqSShFPtem98WGZl+WtGGiYFNkfA+fcpk
-	 +YyV3lkBNDIgUD6sVwDCXO4Z79DzaIW6kJf7Wi9nrUQGZJUXZzs4YEkX5GEx63erDA
-	 pMvkMwEfDGR/5t/pWCgNh/+qmJ06GR0bupsD47Jk=
+	b=EKApj8pMZ3t3miNn1jOVFk0tqM0aXDA6tvzrrew38Cew8DnFxAgKWsxmARjOEBcvJ
+	 jL74Shd08yaNvJkvFka1jntw3FtAMo9Wy/mUl1QKFanNC57Y7KWLUE8TUejLgDzwEc
+	 OaOFg0ZwIfbLhR8bwDGrVT9hfw2JWXOmqpqpikOI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tom Talpey <tom@talpey.com>,
-	Jianhong Yin <jiyin@redhat.com>,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.com>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.11 706/817] smb: client: fix NULL ptr deref in crypto_aead_setkey()
-Date: Tue,  3 Dec 2024 15:44:38 +0100
-Message-ID: <20241203144023.539877770@linuxfoundation.org>
+	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
+	Tzung-Bi Shih <tzungbi@kernel.org>
+Subject: [PATCH 6.11 707/817] platform/chrome: cros_ec_typec: fix missing fwnode reference decrement
+Date: Tue,  3 Dec 2024 15:44:39 +0100
+Message-ID: <20241203144023.579711753@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -52,121 +50,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paulo Alcantara <pc@manguebit.com>
+From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
 
-commit 4bdec0d1f658f7c98749bd2c5a486e6cfa8565d2 upstream.
+commit 9c41f371457bd9a24874e3c7934d9745e87fbc58 upstream.
 
-Neither SMB3.0 or SMB3.02 supports encryption negotiate context, so
-when SMB2_GLOBAL_CAP_ENCRYPTION flag is set in the negotiate response,
-the client uses AES-128-CCM as the default cipher.  See MS-SMB2
-3.3.5.4.
+The device_for_each_child_node() macro requires explicit calls to
+fwnode_handle_put() upon early exits (return, break, goto) to decrement
+the fwnode's refcount, and avoid levaing a node reference behind.
 
-Commit b0abcd65ec54 ("smb: client: fix UAF in async decryption") added
-a @server->cipher_type check to conditionally call
-smb3_crypto_aead_allocate(), but that check would always be false as
-@server->cipher_type is unset for SMB3.02.
+Add the missing fwnode_handle_put() after the common label for all error
+paths.
 
-Fix the following KASAN splat by setting @server->cipher_type for
-SMB3.02 as well.
-
-mount.cifs //srv/share /mnt -o vers=3.02,seal,...
-
-BUG: KASAN: null-ptr-deref in crypto_aead_setkey+0x2c/0x130
-Read of size 8 at addr 0000000000000020 by task mount.cifs/1095
-CPU: 1 UID: 0 PID: 1095 Comm: mount.cifs Not tainted 6.12.0 #1
-Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-3.fc41
-04/01/2014
-Call Trace:
- <TASK>
- dump_stack_lvl+0x5d/0x80
- ? crypto_aead_setkey+0x2c/0x130
- kasan_report+0xda/0x110
- ? crypto_aead_setkey+0x2c/0x130
- crypto_aead_setkey+0x2c/0x130
- crypt_message+0x258/0xec0 [cifs]
- ? __asan_memset+0x23/0x50
- ? __pfx_crypt_message+0x10/0x10 [cifs]
- ? mark_lock+0xb0/0x6a0
- ? hlock_class+0x32/0xb0
- ? mark_lock+0xb0/0x6a0
- smb3_init_transform_rq+0x352/0x3f0 [cifs]
- ? lock_acquire.part.0+0xf4/0x2a0
- smb_send_rqst+0x144/0x230 [cifs]
- ? __pfx_smb_send_rqst+0x10/0x10 [cifs]
- ? hlock_class+0x32/0xb0
- ? smb2_setup_request+0x225/0x3a0 [cifs]
- ? __pfx_cifs_compound_last_callback+0x10/0x10 [cifs]
- compound_send_recv+0x59b/0x1140 [cifs]
- ? __pfx_compound_send_recv+0x10/0x10 [cifs]
- ? __create_object+0x5e/0x90
- ? hlock_class+0x32/0xb0
- ? do_raw_spin_unlock+0x9a/0xf0
- cifs_send_recv+0x23/0x30 [cifs]
- SMB2_tcon+0x3ec/0xb30 [cifs]
- ? __pfx_SMB2_tcon+0x10/0x10 [cifs]
- ? lock_acquire.part.0+0xf4/0x2a0
- ? __pfx_lock_release+0x10/0x10
- ? do_raw_spin_trylock+0xc6/0x120
- ? lock_acquire+0x3f/0x90
- ? _get_xid+0x16/0xd0 [cifs]
- ? __pfx_SMB2_tcon+0x10/0x10 [cifs]
- ? cifs_get_smb_ses+0xcdd/0x10a0 [cifs]
- cifs_get_smb_ses+0xcdd/0x10a0 [cifs]
- ? __pfx_cifs_get_smb_ses+0x10/0x10 [cifs]
- ? cifs_get_tcp_session+0xaa0/0xca0 [cifs]
- cifs_mount_get_session+0x8a/0x210 [cifs]
- dfs_mount_share+0x1b0/0x11d0 [cifs]
- ? __pfx___lock_acquire+0x10/0x10
- ? __pfx_dfs_mount_share+0x10/0x10 [cifs]
- ? lock_acquire.part.0+0xf4/0x2a0
- ? find_held_lock+0x8a/0xa0
- ? hlock_class+0x32/0xb0
- ? lock_release+0x203/0x5d0
- cifs_mount+0xb3/0x3d0 [cifs]
- ? do_raw_spin_trylock+0xc6/0x120
- ? __pfx_cifs_mount+0x10/0x10 [cifs]
- ? lock_acquire+0x3f/0x90
- ? find_nls+0x16/0xa0
- ? smb3_update_mnt_flags+0x372/0x3b0 [cifs]
- cifs_smb3_do_mount+0x1e2/0xc80 [cifs]
- ? __pfx_vfs_parse_fs_string+0x10/0x10
- ? __pfx_cifs_smb3_do_mount+0x10/0x10 [cifs]
- smb3_get_tree+0x1bf/0x330 [cifs]
- vfs_get_tree+0x4a/0x160
- path_mount+0x3c1/0xfb0
- ? kasan_quarantine_put+0xc7/0x1d0
- ? __pfx_path_mount+0x10/0x10
- ? kmem_cache_free+0x118/0x3e0
- ? user_path_at+0x74/0xa0
- __x64_sys_mount+0x1a6/0x1e0
- ? __pfx___x64_sys_mount+0x10/0x10
- ? mark_held_locks+0x1a/0x90
- do_syscall_64+0xbb/0x1d0
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-Cc: Tom Talpey <tom@talpey.com>
-Reported-by: Jianhong Yin <jiyin@redhat.com>
-Cc: stable@vger.kernel.org # v6.12
-Fixes: b0abcd65ec54 ("smb: client: fix UAF in async decryption")
-Signed-off-by: Paulo Alcantara (Red Hat) <pc@manguebit.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Cc: stable@vger.kernel.org
+Fixes: fdc6b21e2444 ("platform/chrome: Add Type C connector class driver")
+Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+Link: https://lore.kernel.org/r/20241013-cross_ec_typec_fwnode_handle_put-v2-1-9182b2cd7767@gmail.com
+Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/smb2pdu.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/platform/chrome/cros_ec_typec.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/fs/smb/client/smb2pdu.c
-+++ b/fs/smb/client/smb2pdu.c
-@@ -1230,7 +1230,9 @@ SMB2_negotiate(const unsigned int xid,
- 	 * SMB3.0 supports only 1 cipher and doesn't have a encryption neg context
- 	 * Set the cipher type manually.
- 	 */
--	if (server->dialect == SMB30_PROT_ID && (server->capabilities & SMB2_GLOBAL_CAP_ENCRYPTION))
-+	if ((server->dialect == SMB30_PROT_ID ||
-+	     server->dialect == SMB302_PROT_ID) &&
-+	    (server->capabilities & SMB2_GLOBAL_CAP_ENCRYPTION))
- 		server->cipher_type = SMB2_ENCRYPTION_AES128_CCM;
+--- a/drivers/platform/chrome/cros_ec_typec.c
++++ b/drivers/platform/chrome/cros_ec_typec.c
+@@ -409,6 +409,7 @@ static int cros_typec_init_ports(struct
+ 	return 0;
  
- 	security_blob = smb2_get_data_area_len(&blob_offset, &blob_length,
+ unregister_ports:
++	fwnode_handle_put(fwnode);
+ 	cros_unregister_ports(typec);
+ 	return ret;
+ }
 
 
