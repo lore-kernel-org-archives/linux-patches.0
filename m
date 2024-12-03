@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9E721F76BF;
-	Tue,  3 Dec 2024 16:13:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6656B81ADA;
+	Tue,  3 Dec 2024 16:13:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733242381; cv=none; b=RkwcVEIAN6jgotMl+JiAfg3GJZYaL7JRkOx0n8gwldHiMz3TX77NdCmRPInhrfpXrNWfC1qYOP4lS8R0PEr9rW9IR/+dFQ5ItY8dQIbW9+EhXhBixvUUE/sVi/SDgcf9DeDRyQL3qShMJORtN4jLgcEhS/7Neqh3696vAuyxMe8=
+	t=1733242385; cv=none; b=oj1RcmN34bR3zS7IsvlrMI3/SeuGlV+9XNmd68Mlmwm12As5cAQXAGiD26KJIILwitp6PkwH1UxwYFuLPbHYneoTq7DiDJxA/exNLnnugpBSugtsnEoSQ8ox7A6uMLBtyDmnSfv4GfJiUpEXj2nPPDN38n6umB8HOcGjsQQ5UMc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733242381; c=relaxed/simple;
-	bh=vVCquukYal775Kga0bwgh6ERbWNMH++hDb44nLa6mrY=;
+	s=arc-20240116; t=1733242385; c=relaxed/simple;
+	bh=z+i1Lhfma7exl5Hw5WDUyvghWTmnmQWbCdL/8yUWb/s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ccz+7er1fSd6mdTQ2kXAKp2F0wFaQKQdVPqL8YOzvIie2BoIKky8tQQnF5gv5u9XOpiPMvpYiDsM7yPP8WJ/kIeNu13S8cLRqtr6fclbsK7XJ6uQ4FgeRLIQyc7b0DvDXiK+oSS1ul9jBbck2J9b0K/dtsRTzycLFNYtTNEzhnk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pQYFPIUR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CTAS/tsBTgFHgVBPG5ZTSV0OrP3lio937vn/DDNV6INQKNeOeidEYh/UrKmvEBKJ3w7HSi/X4Zrc1kEItNHbuT8/I9CuiOcHrJifjkTEWMdkYxwZ0K5nDOI9AUl5SnKsO2deBQjuft1FUSPwznZ9QeEprya0j4V75369fC/u3jw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iPRh2RJs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pQYFPIUR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30147C4CECF;
-	Tue,  3 Dec 2024 16:13:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iPRh2RJs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73661C4CECF;
+	Tue,  3 Dec 2024 16:13:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733242381;
-	bh=vVCquukYal775Kga0bwgh6ERbWNMH++hDb44nLa6mrY=;
+	s=korg; t=1733242384;
+	bh=z+i1Lhfma7exl5Hw5WDUyvghWTmnmQWbCdL/8yUWb/s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pQYFPIURjgFSulgxzh0w8LPaPm/Yv+vHNoOHSznVmfdyJ3RwGjH9VQhRO7Y05TCI8
-	 GqTkNOvtUxMtyb3QE1Ppta/PpabDZ7vjmNDDhmttoL8oE7/d4FjQvEAeHXxg/bSSxm
-	 a4eGhTog4jPpMaUVMEw7b+V7JXIkRYtI+ei37O4s=
+	b=iPRh2RJs+eJJeXgjCLwPvG62NtsxLeRLMWu/FnOaufXHfSa0THYo3lglSgydANE7W
+	 qAhYOz4URbm/4NtW7wi7zNLEGFJj78ByT3TpYD2qmryx8eevuZoA/UZOd23TrxOz+Z
+	 F82dqNb7k3+uobqs2sI+TXCfCd2rZ5tj+2XvzcSE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dennis Wassenberg <Dennis.Wassenberg@secunet.com>,
-	Lukas Wunner <lukas@wunner.de>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>
-Subject: [PATCH 6.12 654/826] PCI: Fix use-after-free of slot->bus on hot remove
-Date: Tue,  3 Dec 2024 15:46:21 +0100
-Message-ID: <20241203144809.266529939@linuxfoundation.org>
+	Haiyong Sun <sunhaiyong@loongson.cn>,
+	Huacai Chen <chenhuacai@loongson.cn>
+Subject: [PATCH 6.12 655/826] LoongArch: Explicitly specify code model in Makefile
+Date: Tue,  3 Dec 2024 15:46:22 +0100
+Message-ID: <20241203144809.305758035@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -52,129 +50,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lukas Wunner <lukas@wunner.de>
+From: Huacai Chen <chenhuacai@loongson.cn>
 
-commit c7acef99642b763ba585f4a43af999fcdbcc3dc4 upstream.
+commit e67e0eb6a98b261caf45048f9eb95fd7609289c0 upstream.
 
-Dennis reports a boot crash on recent Lenovo laptops with a USB4 dock.
+LoongArch's toolchain may change the default code model from normal to
+medium. This is unnecessary for kernel, and generates some relocations
+which cannot be handled by the module loader. So explicitly specify the
+code model to normal in Makefile (for Rust 'normal' is 'small').
 
-Since commit 0fc70886569c ("thunderbolt: Reset USB4 v2 host router") and
-commit 59a54c5f3dbd ("thunderbolt: Reset topology created by the boot
-firmware"), USB4 v2 and v1 Host Routers are reset on probe of the
-thunderbolt driver.
-
-The reset clears the Presence Detect State and Data Link Layer Link Active
-bits at the USB4 Host Router's Root Port and thus causes hot removal of the
-dock.
-
-The crash occurs when pciehp is unbound from one of the dock's Downstream
-Ports:  pciehp creates a pci_slot on bind and destroys it on unbind.  The
-pci_slot contains a pointer to the pci_bus below the Downstream Port, but
-a reference on that pci_bus is never acquired.  The pci_bus is destroyed
-before the pci_slot, so a use-after-free ensues when pci_slot_release()
-accesses slot->bus.
-
-In principle this should not happen because pci_stop_bus_device() unbinds
-pciehp (and therefore destroys the pci_slot) before the pci_bus is
-destroyed by pci_remove_bus_device().
-
-However the stacktrace provided by Dennis shows that pciehp is unbound from
-pci_remove_bus_device() instead of pci_stop_bus_device().  To understand
-the significance of this, one needs to know that the PCI core uses a two
-step process to remove a portion of the hierarchy:  It first unbinds all
-drivers in the sub-hierarchy in pci_stop_bus_device() and then actually
-removes the devices in pci_remove_bus_device().  There is no precaution to
-prevent driver binding in-between pci_stop_bus_device() and
-pci_remove_bus_device().
-
-In Dennis' case, it seems removal of the hierarchy by pciehp races with
-driver binding by pci_bus_add_devices().  pciehp is bound to the
-Downstream Port after pci_stop_bus_device() has run, so it is unbound by
-pci_remove_bus_device() instead of pci_stop_bus_device().  Because the
-pci_bus has already been destroyed at that point, accesses to it result in
-a use-after-free.
-
-One might conclude that driver binding needs to be prevented after
-pci_stop_bus_device() has run.  However it seems risky that pci_slot points
-to pci_bus without holding a reference.  Solely relying on correct ordering
-of driver unbind versus pci_bus destruction is certainly not defensive
-programming.
-
-If pci_slot has a need to access data in pci_bus, it ought to acquire a
-reference.  Amend pci_create_slot() accordingly.  Dennis reports that the
-crash is not reproducible with this change.
-
-Abridged stacktrace:
-
-  pcieport 0000:00:07.0: PME: Signaling with IRQ 156
-  pcieport 0000:00:07.0: pciehp: Slot #12 AttnBtn- PwrCtrl- MRL- AttnInd- PwrInd- HotPlug+ Surprise+ Interlock- NoCompl+ IbPresDis- LLActRep+
-  pci_bus 0000:20: dev 00, created physical slot 12
-  pcieport 0000:00:07.0: pciehp: Slot(12): Card not present
-  ...
-  pcieport 0000:21:02.0: pciehp: pcie_disable_notification: SLOTCTRL d8 write cmd 0
-  Oops: general protection fault, probably for non-canonical address 0x6b6b6b6b6b6b6b6b: 0000 [#1] PREEMPT SMP NOPTI
-  CPU: 13 UID: 0 PID: 134 Comm: irq/156-pciehp Not tainted 6.11.0-devel+ #1
-  RIP: 0010:dev_driver_string+0x12/0x40
-  pci_destroy_slot
-  pciehp_remove
-  pcie_port_remove_service
-  device_release_driver_internal
-  bus_remove_device
-  device_del
-  device_unregister
-  remove_iter
-  device_for_each_child
-  pcie_portdrv_remove
-  pci_device_remove
-  device_release_driver_internal
-  bus_remove_device
-  device_del
-  pci_remove_bus_device (recursive invocation)
-  pci_remove_bus_device
-  pciehp_unconfigure_device
-  pciehp_disable_slot
-  pciehp_handle_presence_or_link_change
-  pciehp_ist
-
-Link: https://lore.kernel.org/r/4bfd4c0e976c1776cd08e76603903b338cf25729.1728579288.git.lukas@wunner.de
-Reported-by: Dennis Wassenberg <Dennis.Wassenberg@secunet.com>
-Closes: https://lore.kernel.org/r/6de4b45ff2b32dd91a805ec02ec8ec73ef411bf6.camel@secunet.com/
-Tested-by: Dennis Wassenberg <Dennis.Wassenberg@secunet.com>
-Signed-off-by: Lukas Wunner <lukas@wunner.de>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Mika Westerberg <mika.westerberg@linux.intel.com>
 Cc: stable@vger.kernel.org
+Tested-by: Haiyong Sun <sunhaiyong@loongson.cn>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/slot.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ arch/loongarch/Makefile |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/pci/slot.c
-+++ b/drivers/pci/slot.c
-@@ -79,6 +79,7 @@ static void pci_slot_release(struct kobj
- 	up_read(&pci_bus_sem);
+--- a/arch/loongarch/Makefile
++++ b/arch/loongarch/Makefile
+@@ -59,7 +59,7 @@ endif
  
- 	list_del(&slot->list);
-+	pci_bus_put(slot->bus);
+ ifdef CONFIG_64BIT
+ ld-emul			= $(64bit-emul)
+-cflags-y		+= -mabi=lp64s
++cflags-y		+= -mabi=lp64s -mcmodel=normal
+ endif
  
- 	kfree(slot);
- }
-@@ -261,7 +262,7 @@ placeholder:
- 		goto err;
- 	}
+ cflags-y			+= -pipe $(CC_FLAGS_NO_FPU)
+@@ -104,7 +104,7 @@ ifdef CONFIG_OBJTOOL
+ KBUILD_CFLAGS			+= -fno-jump-tables
+ endif
  
--	slot->bus = parent;
-+	slot->bus = pci_bus_get(parent);
- 	slot->number = slot_nr;
+-KBUILD_RUSTFLAGS		+= --target=loongarch64-unknown-none-softfloat
++KBUILD_RUSTFLAGS		+= --target=loongarch64-unknown-none-softfloat -Ccode-model=small
+ KBUILD_RUSTFLAGS_KERNEL		+= -Zdirect-access-external-data=yes
+ KBUILD_RUSTFLAGS_MODULE		+= -Zdirect-access-external-data=no
  
- 	slot->kobj.kset = pci_slots_kset;
-@@ -269,6 +270,7 @@ placeholder:
- 	slot_name = make_slot_name(name);
- 	if (!slot_name) {
- 		err = -ENOMEM;
-+		pci_bus_put(slot->bus);
- 		kfree(slot);
- 		goto err;
- 	}
 
 
