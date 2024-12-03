@@ -1,44 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 297C81E25E3;
-	Tue,  3 Dec 2024 16:20:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E8441F8933;
+	Tue,  3 Dec 2024 16:20:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733242820; cv=none; b=Nk+2WKH2NqY7+WFfXEKMbEzW/K5cLwanxWLloY2Xim1UyAOBQUhGwHV3NXd/6FV9mvLDQONg3vmeowDas0X2WTyei2v1byn+dRKrgkupfc1+VtWZpJJ9Vfx/utPwu6irXTOcjPaDiGwA3rEICLyS2AftjKvW9PBFVpGiZ9owDEQ=
+	t=1733242823; cv=none; b=kOsUzFYFjceP4KAFeUgcxWuBWFVAQjdWVsIXfUzrJ1A4L2rskfSBY1QFYkJXSLRh4ILmETTluXMqsULzlBGAZOg1w/g5yixmzJruuIokShe/jmvkwYVP9vrkw2N6YC9uOZsKIUlETluhlBUYeTLCi9YQwy9UyRBBEQCiOfWPoiY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733242820; c=relaxed/simple;
-	bh=Qy+BAYcRHE2O6cAvWjZgLj0PVfvbFtLF0E0wQ3KkLmQ=;
+	s=arc-20240116; t=1733242823; c=relaxed/simple;
+	bh=rWGMRo4PyywWCnO2sjBR8M6vEAQeuLDFVucKKHcKbtM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R/aIDDktOsfOc8Fbwj+4q4IfV4fxM48YK9GSqYnDwIf4Y/RMcgMFlILGgaR6/EmB/n6idDkseWJjFnUlbHrSDV6KWWobtdMxEg/U1Z5H5Y9qd/Nca6BZkX6a+pwDsDiZPY/zkTLMx1MyUOg3yh2+Sz5xlemUVTwooCBH8lnBZF4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kOFJsxDv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Po+Tzts0CREDsfqZ7+aRuWqxpe6Lk2uj9Af2PW0PKu/JRV7KUvP1ipYDuBbSkbj4+AQmOdckde0jyyMFlRCo+LutSCrfAr8Lu6xZX/+RvnHrMyE+lLvZcJKgq7S+Bv9mGrFl9x09lWuGkL/uDCOLilfw4WJsbYkdWVTvmpM4HTY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bi+VZtoy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kOFJsxDv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C58DC4CECF;
-	Tue,  3 Dec 2024 16:20:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bi+VZtoy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11AD4C4CED6;
+	Tue,  3 Dec 2024 16:20:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733242820;
-	bh=Qy+BAYcRHE2O6cAvWjZgLj0PVfvbFtLF0E0wQ3KkLmQ=;
+	s=korg; t=1733242823;
+	bh=rWGMRo4PyywWCnO2sjBR8M6vEAQeuLDFVucKKHcKbtM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kOFJsxDv/bNxXo+4JozOQECQ3aJAhC5s8mMxYwZGVIwOM3XG2qIaUktictBi1g20l
-	 ik565XTYeqv+yBKbk8jhbKi4RdZPxZ6wz3wEV2w0yQ86agjlrtJFaqPuPUAED9QgLk
-	 lgXASGBM7LEKi+ns2CwTeQMZ7eO9/K7wHnTQ4RF4=
+	b=bi+VZtoy5PtkO9Jd2rzq05S5vHBoOh1iGvYxdIHdQGxBfI/H3D4TmW/TkzzIPoZYb
+	 wB0MpnJfvuZ88ShLosc4y/NCwIWIpeZul5BY4c/ls5l8VVFXnzsOqg7qWq4H9EClUB
+	 CCO4Xr3SHShm87ls1KAi1hC7zBPLkf0D593Jyky8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Grzeschik <m.grzeschik@pengutronix.de>,
-	Eric Van Hensbergen <ericvh@kernel.org>,
-	Latchesar Ionkov <lucho@ionkov.net>,
-	Dominique Martinet <asmadeus@codewreck.org>,
-	Christian Schoenebeck <linux_oss@crudebyte.com>,
-	v9fs@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	Mirsad Todorovac <mtodorovac69@gmail.com>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 788/826] net/9p/usbg: fix handling of the failed kzalloc() memory allocation
-Date: Tue,  3 Dec 2024 15:48:35 +0100
-Message-ID: <20241203144814.499396037@linuxfoundation.org>
+Subject: [PATCH 6.12 789/826] rtc: rzn1: fix BCD to rtc_time conversion errors
+Date: Tue,  3 Dec 2024 15:48:36 +0100
+Message-ID: <20241203144814.539744855@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -57,50 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mirsad Todorovac <mtodorovac69@gmail.com>
+From: Wolfram Sang <wsa+renesas@sang-engineering.com>
 
-[ Upstream commit ff1060813d9347e8c45c8b8cff93a4dfdb6726ad ]
+[ Upstream commit 55727188dfa3572aecd946e58fab9e4a64f06894 ]
 
-On the linux-next, next-20241108 vanilla kernel, the coccinelle tool gave the
-following error report:
+tm_mon describes months from 0 to 11, but the register contains BCD from
+1 to 12. tm_year contains years since 1900, but the BCD contains 20XX.
+Apply the offsets when converting these numbers.
 
-./net/9p/trans_usbg.c:912:5-11: ERROR: allocation function on line 911 returns
-NULL not ERR_PTR on failure
-
-kzalloc() failure is fixed to handle the NULL return case on the memory exhaustion.
-
-Fixes: a3be076dc174d ("net/9p/usbg: Add new usb gadget function transport")
-Cc: Michael Grzeschik <m.grzeschik@pengutronix.de>
-Cc: Eric Van Hensbergen <ericvh@kernel.org>
-Cc: Latchesar Ionkov <lucho@ionkov.net>
-Cc: Dominique Martinet <asmadeus@codewreck.org>
-Cc: Christian Schoenebeck <linux_oss@crudebyte.com>
-Cc: v9fs@lists.linux.dev
-Cc: linux-kernel@vger.kernel.org
-Signed-off-by: Mirsad Todorovac <mtodorovac69@gmail.com>
-Message-ID: <20241109211840.721226-2-mtodorovac69@gmail.com>
-Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
+Fixes: deeb4b5393e1 ("rtc: rzn1: Add new RTC driver")
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://lore.kernel.org/r/20241113113032.27409-1-wsa+renesas@sang-engineering.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/9p/trans_usbg.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/rtc/rtc-rzn1.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/net/9p/trans_usbg.c b/net/9p/trans_usbg.c
-index 975b76839dca1..6b694f117aef2 100644
---- a/net/9p/trans_usbg.c
-+++ b/net/9p/trans_usbg.c
-@@ -909,9 +909,9 @@ static struct usb_function_instance *usb9pfs_alloc_instance(void)
- 	usb9pfs_opts->buflen = DEFAULT_BUFLEN;
+diff --git a/drivers/rtc/rtc-rzn1.c b/drivers/rtc/rtc-rzn1.c
+index 56ebbd4d04814..8570c8e63d70c 100644
+--- a/drivers/rtc/rtc-rzn1.c
++++ b/drivers/rtc/rtc-rzn1.c
+@@ -111,8 +111,8 @@ static int rzn1_rtc_read_time(struct device *dev, struct rtc_time *tm)
+ 	tm->tm_hour = bcd2bin(tm->tm_hour);
+ 	tm->tm_wday = bcd2bin(tm->tm_wday);
+ 	tm->tm_mday = bcd2bin(tm->tm_mday);
+-	tm->tm_mon = bcd2bin(tm->tm_mon);
+-	tm->tm_year = bcd2bin(tm->tm_year);
++	tm->tm_mon = bcd2bin(tm->tm_mon) - 1;
++	tm->tm_year = bcd2bin(tm->tm_year) + 100;
  
- 	dev = kzalloc(sizeof(*dev), GFP_KERNEL);
--	if (IS_ERR(dev)) {
-+	if (!dev) {
- 		kfree(usb9pfs_opts);
--		return ERR_CAST(dev);
-+		return ERR_PTR(-ENOMEM);
- 	}
+ 	return 0;
+ }
+@@ -128,8 +128,8 @@ static int rzn1_rtc_set_time(struct device *dev, struct rtc_time *tm)
+ 	tm->tm_hour = bin2bcd(tm->tm_hour);
+ 	tm->tm_wday = bin2bcd(rzn1_rtc_tm_to_wday(tm));
+ 	tm->tm_mday = bin2bcd(tm->tm_mday);
+-	tm->tm_mon = bin2bcd(tm->tm_mon);
+-	tm->tm_year = bin2bcd(tm->tm_year);
++	tm->tm_mon = bin2bcd(tm->tm_mon + 1);
++	tm->tm_year = bin2bcd(tm->tm_year - 100);
  
- 	usb9pfs_opts->dev = dev;
+ 	val = readl(rtc->base + RZN1_RTC_CTL2);
+ 	if (!(val & RZN1_RTC_CTL2_STOPPED)) {
 -- 
 2.43.0
 
