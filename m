@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4823E20ADFF;
-	Tue,  3 Dec 2024 15:34:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35F991F890F;
+	Tue,  3 Dec 2024 15:34:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733240059; cv=none; b=SpqON+ChfxB1XqYMokyXr7SiEDFral8cmL+kdcBBIBA7EaSML/cvy9ZXKF1QUfxNKYM8msWiCWu9Orje9KIW9JN658RT6bU6qE/92V58UVCTO6Xi2ODyAGqJtjvy39lklcwiyNeb5a7c7IrrtA0ADM5Ot2M6YtBxnGXzgsRBipQ=
+	t=1733240062; cv=none; b=PqfaZHmf/at+4TcN/bVVeBromO06bg8Hh6XjpTLVPI6LcvXByYB5oQZZPSGGkzjL1JFIjB5HTmCJESUoy0vndsO9CFhRUyds/qcUAoc8MSc6jtoAb4C8u5DDiAEXBuXoLDBwzJldX/MQbG7fXz3UeJQLiTKBXl2eJHUZtEWwNHk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733240059; c=relaxed/simple;
-	bh=gK2cAcKu57kF9+NHEHxVTly0BgXhtalABh/zVpetF04=;
+	s=arc-20240116; t=1733240062; c=relaxed/simple;
+	bh=LqDIrgEnb+5IXZsegJZEOxzisTyyvY5a63MfebA9FqA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qn+FGn1MUbZc/P859cxJfX+zoOAF4vTzM5sSodQIL2o/wG+hdXOmUaNgDI8FTF8CqUxJZSPCqDO/NDnWH+8Ie4lUpugvJ+eS4kiFH4Jdjx79ClZ49lmwH0GAvVB6WIEhqAQvCEIhoZzJB0x2doY+MYtGIzdulphGPQQvhyg/l3I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2kwkRie9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WYTg/5FUpRV/t3TF75zi4qH7v2Vqx8FIzdgIg3hRYAb/UeU6/3k8xFBzK5RPja0uK5+EbYruseOSoiYhM/UbwUoNKRcWDvM6SbaqoRm16sDdbsKUXqPQPNjfTxImV7y4nlbwPp+rgEoqItdupEC3wqzZPwkyQFQlu5m3kqZD4Z4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cPcSUwFt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2kwkRie9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77F3AC4CECF;
-	Tue,  3 Dec 2024 15:34:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cPcSUwFt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D1E3C4CECF;
+	Tue,  3 Dec 2024 15:34:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733240058;
-	bh=gK2cAcKu57kF9+NHEHxVTly0BgXhtalABh/zVpetF04=;
+	s=korg; t=1733240061;
+	bh=LqDIrgEnb+5IXZsegJZEOxzisTyyvY5a63MfebA9FqA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2kwkRie9ZsSvbc1qYPiQ/MbCIIux8xaRPI9HMW7El17JgOESvpK5eB9cMfcE7I6sK
-	 /OvfquDXRnJnAmWpcBy/jjtPIVN56Fl/rrWDTbydY5HjYSwohHWzITc06f9UUoQkmg
-	 cUf9taXaYSFz8wURaah99e8C0jm6ifk7XQm2bbHU=
+	b=cPcSUwFt1sspHE0nBu+HBydDnIlKqkBFC+FKIdCpf/DW7lq5X6OTee68ILIVeuSch
+	 ORh+e7pML/2R2F9KfpFpO+1XmhECQw4EBb4Onx40yjpK9Ey44m1EE0XTIbr+93oim8
+	 drj2W2W9jPbVhBSGgIjxwzlDlN8upsAzMWtSuq+0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Darrick J. Wong" <djwong@kernel.org>,
+	Andre Przywara <andre.przywara@arm.com>,
+	Mark Brown <broonie@kernel.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 001/826] MAINTAINERS: appoint myself the XFS maintainer for 6.12 LTS
-Date: Tue,  3 Dec 2024 15:35:28 +0100
-Message-ID: <20241203144743.497996068@linuxfoundation.org>
+Subject: [PATCH 6.12 010/826] kselftest/arm64: mte: fix printf type warnings about longs
+Date: Tue,  3 Dec 2024 15:35:37 +0100
+Message-ID: <20241203144743.847521705@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -50,34 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Darrick J. Wong <djwong@kernel.org>
+From: Andre Przywara <andre.przywara@arm.com>
 
-I'm appointing myself to be responsible for getting after people to
-submit their upstream bug fixes with the appropriate Fixes tags and to
-cc stable; to find whatever slips through the cracks; and to keep an eye
-on the automatic QA of all that stuff.
+[ Upstream commit 96dddb7b9406259baace9a1831e8da155311be6f ]
 
-Cc: <stable@vger.kernel.org> # v6.12
-Signed-off-by: "Darrick J. Wong" <djwong@kernel.org>
+When checking MTE tags, we print some diagnostic messages when the tests
+fail. Some variables uses there are "longs", however we only use "%x"
+for the format specifier.
+
+Update the format specifiers to "%lx", to match the variable types they
+are supposed to print.
+
+Fixes: f3b2a26ca78d ("kselftest/arm64: Verify mte tag inclusion via prctl")
+Signed-off-by: Andre Przywara <andre.przywara@arm.com>
+Reviewed-by: Mark Brown <broonie@kernel.org>
+Link: https://lore.kernel.org/r/20240816153251.2833702-9-andre.przywara@arm.com
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- MAINTAINERS | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ tools/testing/selftests/arm64/mte/check_tags_inclusion.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index b878ddc99f94e..23d89f2a3008e 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -25358,8 +25358,7 @@ F:	include/xen/arm/swiotlb-xen.h
- F:	include/xen/swiotlb-xen.h
- 
- XFS FILESYSTEM
--M:	Carlos Maiolino <cem@kernel.org>
--R:	Darrick J. Wong <djwong@kernel.org>
-+M:	Darrick J. Wong <djwong@kernel.org>
- L:	linux-xfs@vger.kernel.org
- S:	Supported
- W:	http://xfs.org/
+diff --git a/tools/testing/selftests/arm64/mte/check_tags_inclusion.c b/tools/testing/selftests/arm64/mte/check_tags_inclusion.c
+index 2b1425b92b699..a3d1e23fe02af 100644
+--- a/tools/testing/selftests/arm64/mte/check_tags_inclusion.c
++++ b/tools/testing/selftests/arm64/mte/check_tags_inclusion.c
+@@ -65,7 +65,7 @@ static int check_single_included_tags(int mem_type, int mode)
+ 			ptr = mte_insert_tags(ptr, BUFFER_SIZE);
+ 			/* Check tag value */
+ 			if (MT_FETCH_TAG((uintptr_t)ptr) == tag) {
+-				ksft_print_msg("FAIL: wrong tag = 0x%x with include mask=0x%x\n",
++				ksft_print_msg("FAIL: wrong tag = 0x%lx with include mask=0x%x\n",
+ 					       MT_FETCH_TAG((uintptr_t)ptr),
+ 					       MT_INCLUDE_VALID_TAG(tag));
+ 				result = KSFT_FAIL;
+@@ -97,7 +97,7 @@ static int check_multiple_included_tags(int mem_type, int mode)
+ 			ptr = mte_insert_tags(ptr, BUFFER_SIZE);
+ 			/* Check tag value */
+ 			if (MT_FETCH_TAG((uintptr_t)ptr) < tag) {
+-				ksft_print_msg("FAIL: wrong tag = 0x%x with include mask=0x%x\n",
++				ksft_print_msg("FAIL: wrong tag = 0x%lx with include mask=0x%lx\n",
+ 					       MT_FETCH_TAG((uintptr_t)ptr),
+ 					       MT_INCLUDE_VALID_TAGS(excl_mask));
+ 				result = KSFT_FAIL;
 -- 
 2.43.0
 
