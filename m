@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01EA81F669E;
-	Tue,  3 Dec 2024 15:12:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F54F1F669E;
+	Tue,  3 Dec 2024 15:12:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733238738; cv=none; b=DjvEM0oHpxqlZFevK/gQm3tnqxMVcZhII0yUcPihhGUYhnNwpK4ndbIYha89X5tdDkEw3WZbbgl/nqAQnOSeEsCJ1IckN9+Hu3bW78FVH+5CzOeMnf3V1lDozjPMBAt0og9CheFfT1sfetE4pBDxZ6nShkFw9ilVj+W7SNfF9Kc=
+	t=1733238739; cv=none; b=f/TRQGfzMFg/oXFQcCJADaxU7ZXMrh+sQVj7Ue8+FSRPih7cmiToaFjm82OnPhaFDfGpVeZko6P5n4tp6Pt4bbkrcbjCLW+fVDcyRizSc9jEmAhdx4DXPN+BDsiP6AaVqGs6+9qZcbbTGjshxv0JN1dw2wJHsQJtIC9Z29SECnQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733238738; c=relaxed/simple;
-	bh=xCmccjG4DaLL0jjJ1gTv4idj0ueHFRSW4aJi+7qotMU=;
+	s=arc-20240116; t=1733238739; c=relaxed/simple;
+	bh=lpFHcQnGXEFBeFjTXzs0aQUZGphEspnQQktPTVotopE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=imO+FLZd9Xk8pWYHoIbJgdJvBds462h++8ZH20xu/4j3olHMsd2sAxSAK9S5ybiQMmiGtIQeWEI08CpPj3wpU6bb/OKI/QU4uefDDMU3b7rWLBWxrxjF9ba83JSGV3TiFA8NcjIeQrWu2vxyz91GocnudZXbNVCGvJgjjx8n1s8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YsXkSbi8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VX81+IaCCQ7jyaxElbKUeafMNPpJCd2B47rrg8ulrAcUyoBo5mcXUM/rqqZqFyzV6g4VvpXe19crHQBOGnx2CXso48TcjWsWZc42WkiYRGRLqKyG7o2OQVbsSNat8V2s/PBA/t4AraFDgjzhZnUFeQaYbmIzVtaDaJQHzdOZU5M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MdmHnk9H; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YsXkSbi8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B9C6C4CED6;
-	Tue,  3 Dec 2024 15:12:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MdmHnk9H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 265EDC4CECF;
+	Tue,  3 Dec 2024 15:12:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733238736;
-	bh=xCmccjG4DaLL0jjJ1gTv4idj0ueHFRSW4aJi+7qotMU=;
+	s=korg; t=1733238739;
+	bh=lpFHcQnGXEFBeFjTXzs0aQUZGphEspnQQktPTVotopE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YsXkSbi8ZVtCbvgST41LmnzVX2Z1QHKxZMrDw5vbKgD8FHP0/EPhWglZdW6bzMleF
-	 IPw8Vd5p31THVguUGhYSeDmNjXru/4S0BiRlIiQ2zBE7GTPyAm6iBI4LwezkWj8RdG
-	 K74caiLOCDJY2pmY0NYBi0NEkE2/+EOEqXTaF0xE=
+	b=MdmHnk9HWoyxIUQlzmi2v5Mxa8CPJ5pIyH2RAuMEz4w6HXZfQztf/vJcDRj1LtF/y
+	 tqZYQo65p52ke3TX+CslyFdWvoBeNG/m59rYExlQVV1YmpaMek/UnJ5bbxJ28MvITK
+	 7DdA/ZTjvMtRaT+BGYU9HwKfReXGH0ImtORGFh6Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Biju Das <biju.das.jz@bp.renesas.com>,
-	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Jonathan Marek <jonathan@marek.ca>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 381/817] pinctrl: renesas: Select PINCTRL_RZG2L for RZ/V2H(P) SoC
-Date: Tue,  3 Dec 2024 15:39:13 +0100
-Message-ID: <20241203144010.715495501@linuxfoundation.org>
+Subject: [PATCH 6.11 382/817] clk: qcom: videocc-sm8550: depend on either gcc-sm8550 or gcc-sm8650
+Date: Tue,  3 Dec 2024 15:39:14 +0100
+Message-ID: <20241203144010.753840834@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -52,37 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+From: Jonathan Marek <jonathan@marek.ca>
 
-[ Upstream commit 5dcde519a067ac5c85c273e550dde1873e2199bf ]
+[ Upstream commit aab8d53711346d5569261aec9702b7579eecf1ab ]
 
-Add explicit selection of the PINCTRL_RZG2L config option for the
-RZ/V2H(P) (R9A09G057) SoC, ensuring pin control driver is enabled
-for this SoC.
+This driver is compatible with both sm8550 and sm8650, fix the Kconfig
+entry to reflect that.
 
-Fixes: 9bd95ac86e70 ("pinctrl: renesas: rzg2l: Add support for RZ/V2H SoC")
-Reported-by: Biju Das <biju.das.jz@bp.renesas.com>
-Signed-off-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://lore.kernel.org/20241010132726.702658-1-prabhakar.mahadev-lad.rj@bp.renesas.com
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Fixes: da1f361c887c ("clk: qcom: videocc-sm8550: Add SM8650 video clock controller")
+Signed-off-by: Jonathan Marek <jonathan@marek.ca>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://lore.kernel.org/r/20241005144047.2226-1-jonathan@marek.ca
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/renesas/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/clk/qcom/Kconfig | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pinctrl/renesas/Kconfig b/drivers/pinctrl/renesas/Kconfig
-index 14bd55d647319..7f3f41c7fe54c 100644
---- a/drivers/pinctrl/renesas/Kconfig
-+++ b/drivers/pinctrl/renesas/Kconfig
-@@ -41,6 +41,7 @@ config PINCTRL_RENESAS
- 	select PINCTRL_PFC_R8A779H0 if ARCH_R8A779H0
- 	select PINCTRL_RZG2L if ARCH_RZG2L
- 	select PINCTRL_RZV2M if ARCH_R9A09G011
-+	select PINCTRL_RZG2L if ARCH_R9A09G057
- 	select PINCTRL_PFC_SH7203 if CPU_SUBTYPE_SH7203
- 	select PINCTRL_PFC_SH7264 if CPU_SUBTYPE_SH7264
- 	select PINCTRL_PFC_SH7269 if CPU_SUBTYPE_SH7269
+diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
+index 11ae28430dadb..8e1b7f63e95a1 100644
+--- a/drivers/clk/qcom/Kconfig
++++ b/drivers/clk/qcom/Kconfig
+@@ -1203,11 +1203,11 @@ config SM_VIDEOCC_8350
+ config SM_VIDEOCC_8550
+ 	tristate "SM8550 Video Clock Controller"
+ 	depends on ARM64 || COMPILE_TEST
+-	select SM_GCC_8550
++	depends on SM_GCC_8550 || SM_GCC_8650
+ 	select QCOM_GDSC
+ 	help
+ 	  Support for the video clock controller on Qualcomm Technologies, Inc.
+-	  SM8550 devices.
++	  SM8550 or SM8650 devices.
+ 	  Say Y if you want to support video devices and functionality such as
+ 	  video encode/decode.
+ 
 -- 
 2.43.0
 
