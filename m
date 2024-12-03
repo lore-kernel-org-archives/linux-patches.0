@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A90891E3DF9;
-	Tue,  3 Dec 2024 15:00:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFFE133FE;
+	Tue,  3 Dec 2024 15:01:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733238057; cv=none; b=SZnkdzFUi7ETTtwRVdmVJriuu/hXsxuYuVjXqBNMC5XfSwP4K4/pKbMVHsF041IuNIXZ4MgSoqWrs3mdCcqwV13l2HtNl6anLok2dDz8rM/JGzz4YcaFTt+z8rzzoVz/3FzhagPraKTQTztitD1If+Yz+jCTJmNN4MlKfN3qULQ=
+	t=1733238060; cv=none; b=sLFvdNGzp3OczzcV9nAd3GP6zR7Usy8dM72DLOzCYbxWfrNd+KBq7wVLKLmFPaU909Szf/aKrxEZbopP0rDTHlTUUjzlskFw18cSl0PXqi1AnXliSw+R2QMmhFv4+YGnH0bT3eOUNqD3HYcso8MfpCadfWTgU0trbgZ6+Ejsblo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733238057; c=relaxed/simple;
-	bh=WDjRi6/MiYEVkjtaKVM4a9f9pV8QRRgNi2P/HXVPaGk=;
+	s=arc-20240116; t=1733238060; c=relaxed/simple;
+	bh=602GjF4QMEs4JP18sHlYPEt+QLHPQ8Wh5XG1c/OE9Nw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JTP6ymkNS8pDwA7OFyL8ol/M77ajMFCOtnGSQ0SYaddEc5Dx+1feG6qokQDCSl86gFkEam3kPoRTlxF8YwjvyPS3iB/fGJaxf35T1QTz1gtimLoGceaDrWI6xfI1Zw+mU4w+1lpBpYkJJD+MO+A/1MZcDtCRn/qAScEA9XwCtbg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0qaKz5DQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qW+w7ePPK+fJmE8tf0UB+etrD2cCgBzeC+ddZezv2x9iUzpf3q+epsXvEpIVlV0lQYuxfIQMiwXzM/Xsq4XMpPZ8kZ3vJi6P/Q/hD0NAqOikx70VH+TKNMk4CgPyjhXxpeINORxW2qc5944W1eu0eLhh9aN5Rbs2gjTm5zYICTc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JyRdmffg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0qaKz5DQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30BB7C4CECF;
-	Tue,  3 Dec 2024 15:00:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JyRdmffg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CE45C4CECF;
+	Tue,  3 Dec 2024 15:00:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733238057;
-	bh=WDjRi6/MiYEVkjtaKVM4a9f9pV8QRRgNi2P/HXVPaGk=;
+	s=korg; t=1733238060;
+	bh=602GjF4QMEs4JP18sHlYPEt+QLHPQ8Wh5XG1c/OE9Nw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0qaKz5DQ1Hn2Fn+v834j3rus5UzQHKy1ynklxn5/z5fYHrzrppnVd4oTNRcMgzV48
-	 4Prr8VbUgSmiMFVHtrD/64pTqqqfQvwCGbeennchPEm3dCBKr9NVRCopZ7tfG/W24g
-	 OygxkUV+9XINgPiCJtzrh4n+GRrF6mr+I30jwPwg=
+	b=JyRdmffgMSfB9WRNNFx+ByGDxP/ViXtuBK/44LtJb++llaSDJiyd6fCWew28a8jpq
+	 3QSJrnmR5fPnafFumiLZwr/ld7/Wf2DtOnREVn2nkTsojlt+TceGXlNHb6HO6IP3fS
+	 bzmCpZ7Z45QZ+IJIalz21ZGY6849esbqYSGIDjoo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Macpaul Lin <macpaul.lin@mediatek.com>,
 	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 148/817] arm64: dts: mt8195: Fix dtbs_check error for mutex node
-Date: Tue,  3 Dec 2024 15:35:20 +0100
-Message-ID: <20241203144001.505685461@linuxfoundation.org>
+Subject: [PATCH 6.11 149/817] arm64: dts: mt8195: Fix dtbs_check error for infracfg_ao node
+Date: Tue,  3 Dec 2024 15:35:21 +0100
+Message-ID: <20241203144001.544232883@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -53,41 +53,40 @@ Content-Transfer-Encoding: 8bit
 
 From: Macpaul Lin <macpaul.lin@mediatek.com>
 
-[ Upstream commit 0fc557b539a1e11bdc5053a308b12d84ea754786 ]
+[ Upstream commit c14ab45f5d458073248ddc62d31045d5d616806f ]
 
-The mutex node in mt8195.dtsi was triggering a dtbs_check error:
-  mutex@1c101000: 'clock-names', 'reg-names' do not match any of the
-                  regexes: 'pinctrl-[0-9]+'
+The infracfg_ao node in mt8195.dtsi was causing a dtbs_check error.
+The error message was:
 
-This seems no need by inspecting the DT schemas and other reference boards,
-so drop 'clock-names' and 'reg-names' in mt8195.dtsi.
+syscon@10001000: compatible: ['mediatek,mt8195-infracfg_ao', 'syscon',
+                 'simple-mfd'] is too long
 
-Fixes: 92d2c23dc269 ("arm64: dts: mt8195: add display node for vdosys1")
+To resolve this, remove 'simple-mfd' from the 'compatible' property of the
+infracfg_ao node.
+
+Fixes: 37f2582883be ("arm64: dts: Add mediatek SoC mt8195 and evaluation board")
 Signed-off-by: Macpaul Lin <macpaul.lin@mediatek.com>
 Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://lore.kernel.org/r/20241002051620.2050-4-macpaul.lin@mediatek.com
+Link: https://lore.kernel.org/r/20241002051620.2050-1-macpaul.lin@mediatek.com
 Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/mediatek/mt8195.dtsi | 2 --
- 1 file changed, 2 deletions(-)
+ arch/arm64/boot/dts/mediatek/mt8195.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/arch/arm64/boot/dts/mediatek/mt8195.dtsi b/arch/arm64/boot/dts/mediatek/mt8195.dtsi
-index 98c15eb68589a..30903d468e99f 100644
+index 30903d468e99f..e56b23995c7bf 100644
 --- a/arch/arm64/boot/dts/mediatek/mt8195.dtsi
 +++ b/arch/arm64/boot/dts/mediatek/mt8195.dtsi
-@@ -3330,11 +3330,9 @@ &larb19 &larb21 &larb24 &larb25
- 		mutex1: mutex@1c101000 {
- 			compatible = "mediatek,mt8195-disp-mutex";
- 			reg = <0 0x1c101000 0 0x1000>;
--			reg-names = "vdo1_mutex";
- 			interrupts = <GIC_SPI 494 IRQ_TYPE_LEVEL_HIGH 0>;
- 			power-domains = <&spm MT8195_POWER_DOMAIN_VDOSYS1>;
- 			clocks = <&vdosys1 CLK_VDO1_DISP_MUTEX>;
--			clock-names = "vdo1_mutex";
- 			mediatek,gce-client-reg = <&gce0 SUBSYS_1c10XXXX 0x1000 0x1000>;
- 			mediatek,gce-events = <CMDQ_EVENT_VDO1_STREAM_DONE_ENG_0>;
+@@ -487,7 +487,7 @@ topckgen: syscon@10000000 {
  		};
+ 
+ 		infracfg_ao: syscon@10001000 {
+-			compatible = "mediatek,mt8195-infracfg_ao", "syscon", "simple-mfd";
++			compatible = "mediatek,mt8195-infracfg_ao", "syscon";
+ 			reg = <0 0x10001000 0 0x1000>;
+ 			#clock-cells = <1>;
+ 			#reset-cells = <1>;
 -- 
 2.43.0
 
