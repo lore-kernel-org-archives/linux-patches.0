@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE20B1E3DCF;
-	Tue,  3 Dec 2024 16:14:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 446E31F76BF;
+	Tue,  3 Dec 2024 16:14:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733242476; cv=none; b=rFZlmPA6JRflx/+0wa466biU1tNJnHTbW9UoktX5aWfcDE6IlMRez9tHnDpugEM/Ojzx5NljVdLF6K3PQWhQfzfJZLALUar+gGFlzv+ITBG0wxp70Gt3oxbpNbcof6i7ALKtPlohaypXE9ZRbk0A9cB4xioI0Q313fwewtb86v4=
+	t=1733242479; cv=none; b=OMxdbTmnttHoKyWIqZYmXoFSkZDEIUrcUuBldDwj2XCDDodVs069klXyXk37krHIIfXQ3Ep1EhkV/gjgmfvOAuhqIfnQBEb2t2Itu9AVlu/wNmfhszuqXMyDUTWyI4jdnrDH60C0xZzFqMXzJcSGjTuBKFQ+G4uuq5ywj+arkjQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733242476; c=relaxed/simple;
-	bh=B+H6IHQ12EU9QjHr1ZWfVT5C563SY02Plp1AYLCY3/M=;
+	s=arc-20240116; t=1733242479; c=relaxed/simple;
+	bh=boloXJbE19sBiKTRSUjA0UZcU4rReThFa/FQSIfY2fo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G7xN+ZtOKRh7lyY7EwAXDZFNl4vR8ADkqRgUjtmdqegdJF45lnD9ZRuSBmBB6jetTzh+BvXiAKmzE3x4F8miu/n82YfL+DKoqcME/MmACFXvruMFX2t/CcgRzXgh3P26idmuaMInJrKTtU5VjfBBWGO1qyXhqoZv/qTyPUt4dC4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t5IuEy5x; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Mr+5WrYAemgRG+gdtZbL8jXmyNxZv1n/bFGmGNB3pHPRbRhfIWlXNbzr3+r/kdzhDJBdcbvOW8nblfqwGz889sjGX3Xa72hr8OLrsSlPHyioYAVVBgB0YjClMxSlWMYUim08c3kXwQMp3aXqmg8IpoWh7a3pr97/W8fbZHua7Rc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V7akQOBm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t5IuEy5x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72C0AC4CED6;
-	Tue,  3 Dec 2024 16:14:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V7akQOBm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFAC9C4CECF;
+	Tue,  3 Dec 2024 16:14:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733242475;
-	bh=B+H6IHQ12EU9QjHr1ZWfVT5C563SY02Plp1AYLCY3/M=;
+	s=korg; t=1733242479;
+	bh=boloXJbE19sBiKTRSUjA0UZcU4rReThFa/FQSIfY2fo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t5IuEy5x5DAU6w9mDpLQz9rUxks38uws3f5vKKXwANgEvprqoZyZOW/5L7RX+YmI3
-	 eMqgO811JgKxVXsOxI0xikzLzm67Xol6YaHAZxyOb11iqY++e8eWXfcDPDCM698ZRJ
-	 tg0D3I4cyCe57cQbwTLZcTB0IxAGLBJKO/+zQmzY=
+	b=V7akQOBm7W+/4pxf6bMoVqZ6G4xOFWjhTCYXsq5IN8K8CcdU4dycb+hPUxK67nlsx
+	 IQpeW+g0xy76Gv5coWwDPifz9NVGwVSXhqfmLGJ+WIc1SfCCfplGl3WPPCCSyqTx7x
+	 Pz2AZrVgpvGL0wWW4xqPdxkHoLdjlZYKGzRLgo4U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kartik Rajput <kkartik@nvidia.com>,
-	Linus Walleij <linus.walleij@linaro.org>
-Subject: [PATCH 6.12 714/826] serial: amba-pl011: Fix RX stall when DMA is used
-Date: Tue,  3 Dec 2024 15:47:21 +0100
-Message-ID: <20241203144811.614048299@linuxfoundation.org>
+	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
+	Kalle Valo <kvalo@kernel.org>
+Subject: [PATCH 6.12 685/826] wifi: brcmfmac: release root node in all execution paths
+Date: Tue,  3 Dec 2024 15:46:52 +0100
+Message-ID: <20241203144810.478086300@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -50,44 +50,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kartik Rajput <kkartik@nvidia.com>
+From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
 
-commit 2bcacc1c87acf9a8ebc17de18cb2b3cfeca547cf upstream.
+commit 2e19a3b590ebf2e351fc9d0e7c323430e65b6b6d upstream.
 
-Function pl011_throttle_rx() calls pl011_stop_rx() to disable RX, which
-also disables the RX DMA by clearing the RXDMAE bit of the DMACR
-register. However, to properly unthrottle RX when DMA is used, the
-function pl011_unthrottle_rx() is expected to set the RXDMAE bit of
-the DMACR register, which it currently lacks. This causes RX to stall
-after the throttle API is called.
+The fixed patch introduced an additional condition to enter the scope
+where the 'root' device_node is released (!settings->board_type,
+currently 'err'), which avoid decrementing the refcount with a call to
+of_node_put() if that second condition is not satisfied.
 
-Set RXDMAE bit in the DMACR register while unthrottling RX if RX DMA is
-used.
+Move the call to of_node_put() to the point where 'root' is no longer
+required to avoid leaking the resource if err is not zero.
 
-Fixes: 211565b10099 ("serial: pl011: UPSTAT_AUTORTS requires .throttle/unthrottle")
 Cc: stable@vger.kernel.org
-Signed-off-by: Kartik Rajput <kkartik@nvidia.com>
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-Link: https://lore.kernel.org/r/20241113092629.60226-1-kkartik@nvidia.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 7682de8b3351 ("wifi: brcmfmac: of: Fetch Apple properties")
+Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://patch.msgid.link/20241030-brcmfmac-of-cleanup-v1-1-0b90eefb4279@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/amba-pl011.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/of.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/drivers/tty/serial/amba-pl011.c
-+++ b/drivers/tty/serial/amba-pl011.c
-@@ -1819,6 +1819,11 @@ static void pl011_unthrottle_rx(struct u
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/of.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/of.c
+@@ -110,9 +110,8 @@ void brcmf_of_probe(struct device *dev,
+ 		}
+ 		strreplace(board_type, '/', '-');
+ 		settings->board_type = board_type;
+-
+-		of_node_put(root);
+ 	}
++	of_node_put(root);
  
- 	pl011_write(uap->im, uap, REG_IMSC);
- 
-+	if (uap->using_rx_dma) {
-+		uap->dmacr |= UART011_RXDMAE;
-+		pl011_write(uap->dmacr, uap, REG_DMACR);
-+	}
-+
- 	uart_port_unlock_irqrestore(&uap->port, flags);
- }
- 
+ 	if (!np || !of_device_is_compatible(np, "brcm,bcm4329-fmac"))
+ 		return;
 
 
