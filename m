@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB8CC1DA4E;
-	Tue,  3 Dec 2024 15:03:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6615133FE;
+	Tue,  3 Dec 2024 15:03:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733238202; cv=none; b=neCj0jYPFvau8GB4T1JjTLLgZa9qjk+/led3eqHhedGKNWGJ4F1dITipelSkey6eDc4ioOIe+ykTVcvFmluc1IWx/tCI30xBmPu07928+cyBuY3w6eh2/XdZdB8UFOMJH0vOGOwnJkoeYhls1mPDFZgpB8RjFqWCBzWdHDRIDv8=
+	t=1733238204; cv=none; b=sZ4ULPQmsIaDH66oHE3HcuXTVxWxkt+gMAyltSl1KNoLsChG5ieMAdymMiUR5uX3l/3w+Ycq6LNZ2zsnELGjCTX41FMHlMGtIvbCukxxxyW87A8lVsJtBFQwVjYLaN+aNRqEJnv2dVjiQn0pqo4crqNgJCmfsroI6FT67YuCRT4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733238202; c=relaxed/simple;
-	bh=EvZN41rEKYFxwlyI+8HdS/MHeMeSK1LPS57TZC2q5QI=;
+	s=arc-20240116; t=1733238204; c=relaxed/simple;
+	bh=qy//g9q45qzI57+dQD2LPUn+4i+zlYToPxx1Ij8XTak=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QJqDGDZ1oTrV0F3rzHI8Ec11eX5oY1tUtBNYDfbA9IRcWOvj6SSjAc67HVJ5Un3Ubrc4F7fovJpSPCayjOxLvKBi8QgLmx7KBLiMFBa3v+/3EilBHz1DM5H+/3UTfaaVr+O5SbAmZYRxqvdeL70UavrCHeVdRVHl2TmrP3MuUhk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pLQRkDaQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sTuox6YX0KhSoDEYXggIPaj3JyluLesUROtDwKRxKWBISivHPIVXAhJ/Yo4FFTtEQ5EvYoGPW10iTflTelB5oxryqRiB+rdPSSKGU2c95M7CY2M1/1wGNENP79bnX3ML7+yz3mjvfw5hv4NXGHqzadItS5Qr/YzAxzLJJz1HG6M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EoZYM8MQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pLQRkDaQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D8F0C4CECF;
-	Tue,  3 Dec 2024 15:03:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EoZYM8MQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE752C4CECF;
+	Tue,  3 Dec 2024 15:03:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733238201;
-	bh=EvZN41rEKYFxwlyI+8HdS/MHeMeSK1LPS57TZC2q5QI=;
+	s=korg; t=1733238204;
+	bh=qy//g9q45qzI57+dQD2LPUn+4i+zlYToPxx1Ij8XTak=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pLQRkDaQcPo6YqPfzYaXR3oS9Hilzrmy4CnNcgBt4bEjKhpVQOabTHvxJorBJg3mz
-	 exSn+Qr8n1SCsWOCp2s7L7Uap0we9aTce2tZ2msG74QJAZ6OwY8E/Yhtda6WtRDKoC
-	 QrLZT9SfmVYBXrierx0d6sCDL9nUqGYO19WNw/5o=
+	b=EoZYM8MQvkYwmeKK/bJ59tYO1CxEfdUkpCRSDkAcJydurzmcoEwpXwIRIq84S214q
+	 CQMqnvmRJXPRWG99g3R62zWwOQ1xMhWgRssc1IKya+hl8UQ2/m51+sJfTLTZ/nsw5X
+	 ax8KYTtrYYKfHYHRnuMK2L4hLWafYj9q6Z/6G4+o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Li <Frank.Li@nxp.com>,
-	Alexander Stein <alexander.stein@ew.tq-group.com>,
-	Shawn Guo <shawnguo@kernel.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 196/817] arm64: dts: imx8mn-tqma8mqnl-mba8mx-usbot: fix coexistence of output-low and output-high in GPIO
-Date: Tue,  3 Dec 2024 15:36:08 +0100
-Message-ID: <20241203144003.389861066@linuxfoundation.org>
+Subject: [PATCH 6.11 197/817] arm64: dts: mediatek: Add ADC node on MT6357, MT6358, MT6359 PMICs
+Date: Tue,  3 Dec 2024 15:36:09 +0100
+Message-ID: <20241203144003.429982858@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -52,75 +50,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Frank Li <Frank.Li@nxp.com>
+From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 
-[ Upstream commit c771d311b1901cd4679c8fc7f89a882fe07cf4a0 ]
+[ Upstream commit b0a4ce81f327eae06c1088f1a437edc48a94a3e8 ]
 
-Fix the issue where both 'output-low' and 'output-high' exist under GPIO
-hog nodes  (rst_usb_hub_hog and sel_usb_hub_hog) when applying device
-tree overlays. Since /delete-property/ is not supported in the overlays,
-setting 'output-low' results in both properties being present. The
-workaround is to disable these hogs and create new ones with 'output-low'
-as needed.
+Add support for the ADC on MT6357/8/9 and keep it default enabled
+as this IP is always present on those PMICs.
+Users may use different IIO channels depending on board-specific
+routing.
 
-Fix below CHECK_DTBS warning:
-arch/arm64/boot/dts/freescale/imx8mn-tqma8mqnl-mba8mx-usbotg.dtb: sel-usb-hub-hog:
-   {'output-low': True, 'gpio-hog': True, 'gpios': [[1, 0]], 'output-high': True, 'phandle': 108, '$nodename': ['sel-usb-hub-hog']}
-       is valid under each of {'required': ['output-low']}, {'required': ['output-high']
-
-Fixes: 3f6fc30abebc ("arm64: dts: imx8mn: tqma8mqnl-mba8mx: Add USB DR overlay")
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
-Reviewed-by: Alexander Stein <alexander.stein@ew.tq-group.com>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+Link: https://lore.kernel.org/r/20240604123008.327424-6-angelogioacchino.delregno@collabora.com
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Stable-dep-of: 76ab2ae0ab9e ("arm64: dts: mediatek: mt6358: fix dtbs_check error")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../imx8mn-tqma8mqnl-mba8mx-usbotg.dtso       | 29 +++++++++++++++++--
- 1 file changed, 27 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/mediatek/mt6357.dtsi | 5 +++++
+ arch/arm64/boot/dts/mediatek/mt6358.dtsi | 5 +++++
+ arch/arm64/boot/dts/mediatek/mt6359.dtsi | 5 +++++
+ 3 files changed, 15 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/freescale/imx8mn-tqma8mqnl-mba8mx-usbotg.dtso b/arch/arm64/boot/dts/freescale/imx8mn-tqma8mqnl-mba8mx-usbotg.dtso
-index 96db07fc9bece..1f2a0fe70a0a2 100644
---- a/arch/arm64/boot/dts/freescale/imx8mn-tqma8mqnl-mba8mx-usbotg.dtso
-+++ b/arch/arm64/boot/dts/freescale/imx8mn-tqma8mqnl-mba8mx-usbotg.dtso
-@@ -29,12 +29,37 @@ usb_dr_connector: endpoint {
- 	};
- };
+diff --git a/arch/arm64/boot/dts/mediatek/mt6357.dtsi b/arch/arm64/boot/dts/mediatek/mt6357.dtsi
+index 3330a03c2f745..5fafa842d312f 100644
+--- a/arch/arm64/boot/dts/mediatek/mt6357.dtsi
++++ b/arch/arm64/boot/dts/mediatek/mt6357.dtsi
+@@ -10,6 +10,11 @@ &pwrap {
+ 	mt6357_pmic: pmic {
+ 		compatible = "mediatek,mt6357";
  
-+/*
-+ * rst_usb_hub_hog and sel_usb_hub_hog have property 'output-high',
-+ * dt overlay don't support /delete-property/. Both 'output-low' and
-+ * 'output-high' will be exist under hog nodes if overlay file set
-+ * 'output-low'. Workaround is disable these hog and create new hog with
-+ * 'output-low'.
-+ */
++		pmic_adc: adc {
++			compatible = "mediatek,mt6357-auxadc";
++			#io-channel-cells = <1>;
++		};
 +
- &rst_usb_hub_hog {
--	output-low;
-+	status = "disabled";
-+};
-+
-+&expander0 {
-+	rst-usb-low-hub-hog {
-+		gpio-hog;
-+		gpios = <13 0>;
-+		output-low;
-+		line-name = "RST_USB_HUB#";
-+	};
- };
+ 		regulators {
+ 			mt6357_vproc_reg: buck-vproc {
+ 				regulator-name = "vproc";
+diff --git a/arch/arm64/boot/dts/mediatek/mt6358.dtsi b/arch/arm64/boot/dts/mediatek/mt6358.dtsi
+index a1b96013f8141..641d452fbc083 100644
+--- a/arch/arm64/boot/dts/mediatek/mt6358.dtsi
++++ b/arch/arm64/boot/dts/mediatek/mt6358.dtsi
+@@ -10,6 +10,11 @@ pmic: pmic {
+ 		interrupt-controller;
+ 		#interrupt-cells = <2>;
  
- &sel_usb_hub_hog {
--	output-low;
-+	status = "disabled";
-+};
++		pmic_adc: adc {
++			compatible = "mediatek,mt6358-auxadc";
++			#io-channel-cells = <1>;
++		};
 +
-+&gpio2 {
-+	sel-usb-low-hub-hog {
-+		gpio-hog;
-+		gpios = <1 GPIO_ACTIVE_HIGH>;
-+		output-low;
-+	};
- };
+ 		mt6358codec: mt6358codec {
+ 			compatible = "mediatek,mt6358-sound";
+ 			mediatek,dmic-mode = <0>; /* two-wires */
+diff --git a/arch/arm64/boot/dts/mediatek/mt6359.dtsi b/arch/arm64/boot/dts/mediatek/mt6359.dtsi
+index df3e822232d34..8e1b8c85c6ede 100644
+--- a/arch/arm64/boot/dts/mediatek/mt6359.dtsi
++++ b/arch/arm64/boot/dts/mediatek/mt6359.dtsi
+@@ -9,6 +9,11 @@ pmic: pmic {
+ 		interrupt-controller;
+ 		#interrupt-cells = <2>;
  
- &usbotg1 {
++		pmic_adc: adc {
++			compatible = "mediatek,mt6359-auxadc";
++			#io-channel-cells = <1>;
++		};
++
+ 		mt6359codec: mt6359codec {
+ 		};
+ 
 -- 
 2.43.0
 
