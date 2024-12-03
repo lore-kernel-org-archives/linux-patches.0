@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE4782D7BF;
-	Tue,  3 Dec 2024 15:17:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C16E1D9341;
+	Tue,  3 Dec 2024 15:17:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733239034; cv=none; b=C1OhLc7f/iScOBQvh/xPRihYvsL6RcyV6oVMX6ay4ke3NnP5jFe4avmTFIh8rKbvVZIuyPWygQBByKFOtTUE6Uqt/OWQaj0tvK8xOguX/uw42pTf7ZfdiA/gnUQUK6Fq3pboREG4G4cLymMfPaHqB4Y+rQ1nw5tGTxESg2iapwM=
+	t=1733239037; cv=none; b=NMoxMdjs/bsHX8nYAubE/vvdig9kYo5kLOb/lyD+7Cb4NP0yhGQVH8Q1K29Uc2z+kGx5SrzsyNfblUAb8Rdoj+nbgxHOa+zNorBJuM/PuMhXZexEDQQFSNGoFUBpiTdqDY1fv6y1W74xvIVforoLJfBmXB6Jh0Y4j8FVYfxjfoI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733239034; c=relaxed/simple;
-	bh=xKEiPI0uWQNmi7GmdGKRdTIY+N0A5oz60DTmCnwC1Q4=;
+	s=arc-20240116; t=1733239037; c=relaxed/simple;
+	bh=1Ptlv6AtZ0M48nJPuemh91dgNurfC9Dry8iOy4m6JVY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q3VW+dZanFSjObHhEAd1xFLoyjQP6wpoRzktfTBwqr6HGPIlCUSIPMhtMkFG7WRYqvIyCh6GJ3CYbnMAnNSaNUSv7MAHQEUvqOtpKFqyM326hWQrhqqWH3QAS65qTArG+uKNfhBlzmyXVmXWwUrjQk7leYjLHjts/Z1EvhMVkr8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k6wSrjrm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dEcvGY8jKcBMmmzNYwEfkNoNBXew/cj1nvVO4x9QnQWChAKxwGqpIlHkItkDdjQMiqaQRnc2x93x3LTpgg4C1lfi6Cez8n7l/0fe+ccgtkHOq6J7Ai5nRxUicud6gw0lggR/1UIRtFbivTIry5eBqmagsGkK0NYyaN2YkkbdReo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nN/6O3+W; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k6wSrjrm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5662BC4CECF;
-	Tue,  3 Dec 2024 15:17:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nN/6O3+W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4530EC4CECF;
+	Tue,  3 Dec 2024 15:17:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733239033;
-	bh=xKEiPI0uWQNmi7GmdGKRdTIY+N0A5oz60DTmCnwC1Q4=;
+	s=korg; t=1733239036;
+	bh=1Ptlv6AtZ0M48nJPuemh91dgNurfC9Dry8iOy4m6JVY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k6wSrjrmL98IUqs9ulS8w0k1HBJ2mY2I/a4Ecj17x8a6kOdLGxhxHuD/qnf6HSHmQ
-	 5spogiWIZtK8EHlNTJcA1s9sk4r9v1NJ0ge8tLO0az1DDa+8hzY0CxfTRW2N09+BDv
-	 h5ZqDHECZCF1hzELe1PX7Xsr8Oumdn3r00YP4LEk=
+	b=nN/6O3+Wpze7ST/Ix3cKgOmNBBO2f/UR68GRo83rSv14t7gQ6Ib9aIraglUN9UsNl
+	 vqD0dGX1zRmT/574zgnlA1qAgl4FZL4CuAxEO/Y8y9lf0wdpp4K5fSLo3n7VpbKMXx
+	 vRpFZauvuT4rUwneTkOrzZjZKi6jeaadYsiC9F+E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
+	Andreas Gruenbacher <agruenba@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 474/817] arm64: dts: qcom: sc8180x: Add a SoC-specific compatible to cpufreq-hw
-Date: Tue,  3 Dec 2024 15:40:46 +0100
-Message-ID: <20241203144014.372523081@linuxfoundation.org>
+Subject: [PATCH 6.11 483/817] gfs2: Allow immediate GLF_VERIFY_DELETE work
+Date: Tue,  3 Dec 2024 15:40:55 +0100
+Message-ID: <20241203144014.725404347@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -52,37 +50,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+From: Andreas Gruenbacher <agruenba@redhat.com>
 
-[ Upstream commit 5df30684415d5a902f23862ab5bbed2a2df7fbf1 ]
+[ Upstream commit 160bc9555d8654464cbbd7bb1f6687048471d2f6 ]
 
-Comply with bindings guidelines and get rid of errors such as:
+Add an argument to gfs2_queue_verify_delete() that allows it to queue
+GLF_VERIFY_DELETE work for immediate execution.  This is used in the
+next patch.
 
-cpufreq@18323000: compatible: 'oneOf' conditional failed, one must be fixed:
-        ['qcom,cpufreq-hw'] is too short
-
-Fixes: 8575f197b077 ("arm64: dts: qcom: Introduce the SC8180x platform")
-Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
+Stable-dep-of: 7c6f714d8847 ("gfs2: Fix unlinked inode cleanup")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sc8180x.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/gfs2/glock.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc8180x.dtsi b/arch/arm64/boot/dts/qcom/sc8180x.dtsi
-index 6e707d993aeb3..b1451f8ad2a60 100644
---- a/arch/arm64/boot/dts/qcom/sc8180x.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc8180x.dtsi
-@@ -3730,7 +3730,7 @@ lmh@18358800 {
- 		};
+diff --git a/fs/gfs2/glock.c b/fs/gfs2/glock.c
+index 301139db908bf..b7f5347e4b41b 100644
+--- a/fs/gfs2/glock.c
++++ b/fs/gfs2/glock.c
+@@ -1013,14 +1013,15 @@ bool gfs2_queue_try_to_evict(struct gfs2_glock *gl)
+ 				  &gl->gl_delete, 0);
+ }
  
- 		cpufreq_hw: cpufreq@18323000 {
--			compatible = "qcom,cpufreq-hw";
-+			compatible = "qcom,sc8180x-cpufreq-hw", "qcom,cpufreq-hw";
- 			reg = <0 0x18323000 0 0x1400>, <0 0x18325800 0 0x1400>;
- 			reg-names = "freq-domain0", "freq-domain1";
+-static bool gfs2_queue_verify_delete(struct gfs2_glock *gl)
++static bool gfs2_queue_verify_delete(struct gfs2_glock *gl, bool later)
+ {
+ 	struct gfs2_sbd *sdp = gl->gl_name.ln_sbd;
++	unsigned long delay;
  
+ 	if (test_and_set_bit(GLF_VERIFY_DELETE, &gl->gl_flags))
+ 		return false;
+-	return queue_delayed_work(sdp->sd_delete_wq,
+-				  &gl->gl_delete, 5 * HZ);
++	delay = later ? 5 * HZ : 0;
++	return queue_delayed_work(sdp->sd_delete_wq, &gl->gl_delete, delay);
+ }
+ 
+ static void delete_work_func(struct work_struct *work)
+@@ -1052,7 +1053,7 @@ static void delete_work_func(struct work_struct *work)
+ 		if (gfs2_try_evict(gl)) {
+ 			if (test_bit(SDF_KILL, &sdp->sd_flags))
+ 				goto out;
+-			if (gfs2_queue_verify_delete(gl))
++			if (gfs2_queue_verify_delete(gl, true))
+ 				return;
+ 		}
+ 		goto out;
+@@ -1064,7 +1065,7 @@ static void delete_work_func(struct work_struct *work)
+ 		if (IS_ERR(inode)) {
+ 			if (PTR_ERR(inode) == -EAGAIN &&
+ 			    !test_bit(SDF_KILL, &sdp->sd_flags) &&
+-			    gfs2_queue_verify_delete(gl))
++			    gfs2_queue_verify_delete(gl, true))
+ 				return;
+ 		} else {
+ 			d_prune_aliases(inode);
 -- 
 2.43.0
 
