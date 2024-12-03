@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32BA91F76D1;
-	Tue,  3 Dec 2024 16:05:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 941FE1F76BF;
+	Tue,  3 Dec 2024 16:05:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733241943; cv=none; b=UgEd/pKIK94yz+qhFYF037DM6TSc6KXsThPpb29M7beiXy+a3HjUrcZk8m9LrixlCY9dsxIrbU0HK38QhGFvNeaSAHK+Ylh3f+MbIwgLCDSGHo1MMAJBLOd4WHcGQT0c98zev6fuSnz1PF894f51wQuf0zmQSHmeqvqpHwjEAUE=
+	t=1733241946; cv=none; b=UT9xyUWNljlQQoPDDWVP4pF2kH2/DgSIwqGU3CLGABEKb4et0xNSyfgsQvrSCH7fu8KmovZJXhgQUhvNa6NQtRfHvBKEl1SWp5afvhDEBBlHWSGzcuZJT98QrbYe/Zz2QdX6AI6uVDCaPU3zbcj8h21iYCkhL+jw8kVUhXIjsN8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733241943; c=relaxed/simple;
-	bh=evqfyOL5nVOaSX8tZ00jbQDIH0AVuX8WGszBPzuPAUE=;
+	s=arc-20240116; t=1733241946; c=relaxed/simple;
+	bh=k26xzvTTsUz5QLRZok2KG4MZyzrYBz0EtthK0sgQJpI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FSJz3yC+gUj1bhCyHwD45T5MGY9UN6KgMXE1khAybg1G4xTxBP1P86pZXryvFHuqEsbZKi+pu6MQw2ZiQHIvZYYYHogD+J3CXStNwK83snCwSl7OGrEpA/kpcTxpgK/0KvAbTjSe/XBxnlOqS6IwaRxySZzp1hdtS/VyTNEQ1gs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F7Rb0E9w; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Th4SIjzEZ8q1VFtBuov2kAR5FFFNdZmcwQxM8V95OVKWGuTtYdqiT32mdhNe/ZIuilUi895bqAgbLlkB/oyCPcwGxSWLcX9KDYQH7MsOOvgZeGHb9iqML7GkwCm1rX//hFCSyMFF4rRAxP9/vKEJZwY3+noZY3+bOFOHSNRwItU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2ee1QGkP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F7Rb0E9w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93770C4CECF;
-	Tue,  3 Dec 2024 16:05:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2ee1QGkP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1EEAC4CECF;
+	Tue,  3 Dec 2024 16:05:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733241943;
-	bh=evqfyOL5nVOaSX8tZ00jbQDIH0AVuX8WGszBPzuPAUE=;
+	s=korg; t=1733241946;
+	bh=k26xzvTTsUz5QLRZok2KG4MZyzrYBz0EtthK0sgQJpI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F7Rb0E9wfCnHXOuwEXidfatdwHflQ5Cdvt929NnrwIFtmpXR1FHIxXXwR91n23+wL
-	 lZqLlrX3Jw2hbcT/m2+AAT13O9iofM86fPRN02sBAXQrVTOqzjdXXR0pLC/uI6znTG
-	 T8YaVbU8IPjUBJgTRRYbVwRVzp9eZDVpeBtinE6s=
+	b=2ee1QGkPIab8EX3AyDj0PrjLllbFwp5dLlryqv6Ayg641Ws68aHuvY8Pyd+L/ebIU
+	 Ln+awB9NN8Sq0zuTfOtIinI1IEzpeua1+fR9hM2BNQSFmnYoO4oGo23fPqbJdpL7in
+	 EKNa/H5Fnz2HdCB6BoBTssk1DTkS/txCg5lbzycw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandra Winter <wintera@linux.ibm.com>,
-	Thorsten Winkler <twinkler@linux.ibm.com>,
-	Sidraya Jayagond <sidraya@linux.ibm.com>,
-	David Wei <dw@davidwei.uk>,
+	Justin Lai <justinlai0215@realtek.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 562/826] s390/iucv: MSG_PEEK causes memory leak in iucv_sock_destruct()
-Date: Tue,  3 Dec 2024 15:44:49 +0100
-Message-ID: <20241203144805.666675305@linuxfoundation.org>
+Subject: [PATCH 6.12 563/826] rtase: Refactor the rtase_check_mac_version_valid() function
+Date: Tue,  3 Dec 2024 15:44:50 +0100
+Message-ID: <20241203144805.706531417@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -54,111 +51,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sidraya Jayagond <sidraya@linux.ibm.com>
+From: Justin Lai <justinlai0215@realtek.com>
 
-[ Upstream commit ebaf81317e42aa990ad20b113cfe3a7b20d4e937 ]
+[ Upstream commit a1f8609ff1f658e410f78d800ca947d57e51996a ]
 
-Passing MSG_PEEK flag to skb_recv_datagram() increments skb refcount
-(skb->users) and iucv_sock_recvmsg() does not decrement skb refcount
-at exit.
-This results in skb memory leak in skb_queue_purge() and WARN_ON in
-iucv_sock_destruct() during socket close. To fix this decrease
-skb refcount by one if MSG_PEEK is set in order to prevent memory
-leak and WARN_ON.
+Different hardware requires different configurations, but this distinction
+was not made previously. Additionally, the error message was not clear
+enough. Therefore, this patch will address the issues mentioned above.
 
-WARNING: CPU: 2 PID: 6292 at net/iucv/af_iucv.c:286 iucv_sock_destruct+0x144/0x1a0 [af_iucv]
-CPU: 2 PID: 6292 Comm: afiucv_test_msg Kdump: loaded Tainted: G        W          6.10.0-rc7 #1
-Hardware name: IBM 3931 A01 704 (z/VM 7.3.0)
-Call Trace:
-        [<001587c682c4aa98>] iucv_sock_destruct+0x148/0x1a0 [af_iucv]
-        [<001587c682c4a9d0>] iucv_sock_destruct+0x80/0x1a0 [af_iucv]
-        [<001587c704117a32>] __sk_destruct+0x52/0x550
-        [<001587c704104a54>] __sock_release+0xa4/0x230
-        [<001587c704104c0c>] sock_close+0x2c/0x40
-        [<001587c702c5f5a8>] __fput+0x2e8/0x970
-        [<001587c7024148c4>] task_work_run+0x1c4/0x2c0
-        [<001587c7023b0716>] do_exit+0x996/0x1050
-        [<001587c7023b13aa>] do_group_exit+0x13a/0x360
-        [<001587c7023b1626>] __s390x_sys_exit_group+0x56/0x60
-        [<001587c7022bccca>] do_syscall+0x27a/0x380
-        [<001587c7049a6a0c>] __do_syscall+0x9c/0x160
-        [<001587c7049ce8a8>] system_call+0x70/0x98
-        Last Breaking-Event-Address:
-        [<001587c682c4a9d4>] iucv_sock_destruct+0x84/0x1a0 [af_iucv]
-
-Fixes: eac3731bd04c ("[S390]: Add AF_IUCV socket support")
-Reviewed-by: Alexandra Winter <wintera@linux.ibm.com>
-Reviewed-by: Thorsten Winkler <twinkler@linux.ibm.com>
-Signed-off-by: Sidraya Jayagond <sidraya@linux.ibm.com>
-Signed-off-by: Alexandra Winter <wintera@linux.ibm.com>
-Reviewed-by: David Wei <dw@davidwei.uk>
-Link: https://patch.msgid.link/20241119152219.3712168-1-wintera@linux.ibm.com
+Fixes: a36e9f5cfe9e ("rtase: Add support for a pci table in this module")
+Signed-off-by: Justin Lai <justinlai0215@realtek.com>
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/iucv/af_iucv.c | 26 +++++++++++++++++---------
- 1 file changed, 17 insertions(+), 9 deletions(-)
+ drivers/net/ethernet/realtek/rtase/rtase.h    |  7 ++++-
+ .../net/ethernet/realtek/rtase/rtase_main.c   | 28 +++++++++++--------
+ 2 files changed, 22 insertions(+), 13 deletions(-)
 
-diff --git a/net/iucv/af_iucv.c b/net/iucv/af_iucv.c
-index c00323fa9eb66..7929df08d4e02 100644
---- a/net/iucv/af_iucv.c
-+++ b/net/iucv/af_iucv.c
-@@ -1236,7 +1236,9 @@ static int iucv_sock_recvmsg(struct socket *sock, struct msghdr *msg,
- 		return -EOPNOTSUPP;
+diff --git a/drivers/net/ethernet/realtek/rtase/rtase.h b/drivers/net/ethernet/realtek/rtase/rtase.h
+index 583c33930f886..4a4434869b10a 100644
+--- a/drivers/net/ethernet/realtek/rtase/rtase.h
++++ b/drivers/net/ethernet/realtek/rtase/rtase.h
+@@ -9,7 +9,10 @@
+ #ifndef RTASE_H
+ #define RTASE_H
  
- 	/* receive/dequeue next skb:
--	 * the function understands MSG_PEEK and, thus, does not dequeue skb */
-+	 * the function understands MSG_PEEK and, thus, does not dequeue skb
-+	 * only refcount is increased.
-+	 */
- 	skb = skb_recv_datagram(sk, flags, &err);
- 	if (!skb) {
- 		if (sk->sk_shutdown & RCV_SHUTDOWN)
-@@ -1252,9 +1254,8 @@ static int iucv_sock_recvmsg(struct socket *sock, struct msghdr *msg,
+-#define RTASE_HW_VER_MASK 0x7C800000
++#define RTASE_HW_VER_MASK     0x7C800000
++#define RTASE_HW_VER_906X_7XA 0x00800000
++#define RTASE_HW_VER_906X_7XC 0x04000000
++#define RTASE_HW_VER_907XD_V1 0x04800000
  
- 	cskb = skb;
- 	if (skb_copy_datagram_msg(cskb, offset, msg, copied)) {
--		if (!(flags & MSG_PEEK))
--			skb_queue_head(&sk->sk_receive_queue, skb);
--		return -EFAULT;
-+		err = -EFAULT;
-+		goto err_out;
- 	}
- 
- 	/* SOCK_SEQPACKET: set MSG_TRUNC if recv buf size is too small */
-@@ -1271,11 +1272,8 @@ static int iucv_sock_recvmsg(struct socket *sock, struct msghdr *msg,
- 	err = put_cmsg(msg, SOL_IUCV, SCM_IUCV_TRGCLS,
- 		       sizeof(IUCV_SKB_CB(skb)->class),
- 		       (void *)&IUCV_SKB_CB(skb)->class);
--	if (err) {
--		if (!(flags & MSG_PEEK))
--			skb_queue_head(&sk->sk_receive_queue, skb);
--		return err;
--	}
-+	if (err)
-+		goto err_out;
- 
- 	/* Mark read part of skb as used */
- 	if (!(flags & MSG_PEEK)) {
-@@ -1331,8 +1329,18 @@ static int iucv_sock_recvmsg(struct socket *sock, struct msghdr *msg,
- 	/* SOCK_SEQPACKET: return real length if MSG_TRUNC is set */
- 	if (sk->sk_type == SOCK_SEQPACKET && (flags & MSG_TRUNC))
- 		copied = rlen;
-+	if (flags & MSG_PEEK)
-+		skb_unref(skb);
- 
- 	return copied;
+ #define RTASE_RX_DMA_BURST_256       4
+ #define RTASE_TX_DMA_BURST_UNLIMITED 7
+@@ -327,6 +330,8 @@ struct rtase_private {
+ 	u16 int_nums;
+ 	u16 tx_int_mit;
+ 	u16 rx_int_mit;
 +
-+err_out:
-+	if (!(flags & MSG_PEEK))
-+		skb_queue_head(&sk->sk_receive_queue, skb);
-+	else
-+		skb_unref(skb);
-+
-+	return err;
++	u32 hw_ver;
+ };
+ 
+ #define RTASE_LSO_64K 64000
+diff --git a/drivers/net/ethernet/realtek/rtase/rtase_main.c b/drivers/net/ethernet/realtek/rtase/rtase_main.c
+index f8777b7663d35..c2999e24904d1 100644
+--- a/drivers/net/ethernet/realtek/rtase/rtase_main.c
++++ b/drivers/net/ethernet/realtek/rtase/rtase_main.c
+@@ -1972,20 +1972,21 @@ static void rtase_init_software_variable(struct pci_dev *pdev,
+ 	tp->dev->max_mtu = RTASE_MAX_JUMBO_SIZE;
  }
  
- static inline __poll_t iucv_accept_poll(struct sock *parent)
+-static bool rtase_check_mac_version_valid(struct rtase_private *tp)
++static int rtase_check_mac_version_valid(struct rtase_private *tp)
+ {
+-	u32 hw_ver = rtase_r32(tp, RTASE_TX_CONFIG_0) & RTASE_HW_VER_MASK;
+-	bool known_ver = false;
++	int ret = -ENODEV;
+ 
+-	switch (hw_ver) {
+-	case 0x00800000:
+-	case 0x04000000:
+-	case 0x04800000:
+-		known_ver = true;
++	tp->hw_ver = rtase_r32(tp, RTASE_TX_CONFIG_0) & RTASE_HW_VER_MASK;
++
++	switch (tp->hw_ver) {
++	case RTASE_HW_VER_906X_7XA:
++	case RTASE_HW_VER_906X_7XC:
++	case RTASE_HW_VER_907XD_V1:
++		ret = 0;
+ 		break;
+ 	}
+ 
+-	return known_ver;
++	return ret;
+ }
+ 
+ static int rtase_init_board(struct pci_dev *pdev, struct net_device **dev_out,
+@@ -2105,9 +2106,12 @@ static int rtase_init_one(struct pci_dev *pdev,
+ 	tp->pdev = pdev;
+ 
+ 	/* identify chip attached to board */
+-	if (!rtase_check_mac_version_valid(tp))
+-		return dev_err_probe(&pdev->dev, -ENODEV,
+-				     "unknown chip version, contact rtase maintainers (see MAINTAINERS file)\n");
++	ret = rtase_check_mac_version_valid(tp);
++	if (ret != 0) {
++		dev_err(&pdev->dev,
++			"unknown chip version: 0x%08x, contact rtase maintainers (see MAINTAINERS file)\n",
++			tp->hw_ver);
++	}
+ 
+ 	rtase_init_software_variable(pdev, tp);
+ 	rtase_init_hardware(tp);
 -- 
 2.43.0
 
