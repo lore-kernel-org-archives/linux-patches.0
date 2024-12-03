@@ -1,51 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF7E21F76CA;
-	Tue,  3 Dec 2024 16:00:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 183C71DE8A5;
+	Tue,  3 Dec 2024 16:00:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733241609; cv=none; b=q6uHBhKyRaDkLPpBwM4+mhHpHpEGwFM6sL2qFIDW11V0gFZ70xsX2jh2EuMyS+iqpsw3z2CiWpwV6TgjwSNj+N3qi32Z9YG5QAKYbNMX6GcMVgIOXZaPWztNFN06ka+t7XF4RPkmpJd1hzN5klwUt6+gmrR0/wKLNVI2Nn0mkPg=
+	t=1733241613; cv=none; b=qLsJAdMLJQ2JDQshUDRTBQKKT+VgDftWnodUKrQpfKTAXsvahV/jzKD7aOxykgHierWwpqZc8ed1h1H4iAt5q83q0nfszk0hE/8EBpr5oAvmg7NLLtEkvzmaj76rGh45sIEiV0VZDthQQ8OKEW/v2wGJ1xYr7bFtce3yW8UQ/g8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733241609; c=relaxed/simple;
-	bh=+GjaJtihJEJjXSD/Z19KOnJEr+vA5pBVadj8GWzT/N0=;
+	s=arc-20240116; t=1733241613; c=relaxed/simple;
+	bh=akShsFEil0YacuqeQe43BUgNuPtIIN64SmY3xWamGDQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f//TV9YVnEu+BeBxRYZESrHDNzl+Ubmking9f5Hx7AssoRyHYq/euOjGqQU58LQTRvAZnXxryA6S0pBoQalc073C29K2hKNA3aDrDpe05yFkN+a0fmMNvGkWndnJO59f6lfsSzfSRrbGLjqOE/Lm2XTZFeVuWI7OCh3VEw32/Xw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PNk7jleC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bah2sNfCU76sKYPRNWwBzpKh5by5iyeaDc1SWX1SsTdRQEhEmzNTSrlcZt2XsljvYha5X9l+Wv8DfnPLYVzI3Cj48X80IYNoQNDGnip3uC54foJmynxzyNKh05z5HKPF/HbuCJHgW5sAyRkEX1wuVeca7xpA5GkfIA6eA/B0UVg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rmeyTokV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PNk7jleC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F258CC4CECF;
-	Tue,  3 Dec 2024 16:00:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rmeyTokV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FB5EC4CECF;
+	Tue,  3 Dec 2024 16:00:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733241609;
-	bh=+GjaJtihJEJjXSD/Z19KOnJEr+vA5pBVadj8GWzT/N0=;
+	s=korg; t=1733241612;
+	bh=akShsFEil0YacuqeQe43BUgNuPtIIN64SmY3xWamGDQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PNk7jleCx18+eW5G6wl/6EgKHXQNwoZ2a1+veK42SLaDmdF0vFdaXF2/QkBcgO863
-	 Vd5pnLQnkRRDkI7L//A63hyrNA/c2NjM7srR85ZxlerA3uZueg8bHW3jySOBTVn+VL
-	 enHIiYqBF3/z1520Zo8F3b/XJyosAmOnX2ljW58Y=
+	b=rmeyTokVOps9Yb6UGG+K6493tZdwxxBSOEaP1vc47hmwyBiXRmzAicwg1fmgqmAx0
+	 CniH5mDmK3H+cOPRJccsBzyGpKeIIWa6jmsgW2XiWk2YdiafhzX3hjNiTLioAQqEr9
+	 ikfSf7OIdxLxEFv5YFQyS92UoXnwgJfX2Q0OcG08=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ganapatrao Kulkarni <gankulkarni@os.amperecomputing.com>,
-	Leo Yan <leo.yan@arm.com>,
-	James Clark <james.clark@linaro.org>,
-	Ben Gainey <ben.gainey@arm.com>,
-	Suzuki K Poulose <suzuki.poulose@arm.com>,
-	Will Deacon <will@kernel.org>,
-	Mathieu Poirier <mathieu.poirier@linaro.org>,
-	Mike Leach <mike.leach@linaro.org>,
-	Ruidong Tian <tianruidong@linux.alibaba.com>,
-	Benjamin Gray <bgray@linux.ibm.com>,
-	linux-arm-kernel@lists.infradead.org,
-	coresight@lists.linaro.org,
-	John Garry <john.g.garry@oracle.com>,
-	scclevenger@os.amperecomputing.com,
-	Namhyung Kim <namhyung@kernel.org>,
+	Andreas Gruenbacher <agruenba@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 466/826] perf cs-etm: Dont flush when packet_queue fills up
-Date: Tue,  3 Dec 2024 15:43:13 +0100
-Message-ID: <20241203144801.941516477@linuxfoundation.org>
+Subject: [PATCH 6.12 467/826] gfs2: Rename GLF_VERIFY_EVICT to GLF_VERIFY_DELETE
+Date: Tue,  3 Dec 2024 15:43:14 +0100
+Message-ID: <20241203144801.980796502@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -64,119 +50,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: James Clark <james.clark@linaro.org>
+From: Andreas Gruenbacher <agruenba@redhat.com>
 
-[ Upstream commit 5afd032961e8465808c4bc385c06e7676fbe1951 ]
+[ Upstream commit 820ce8ed53ce2111aa5171f7349f289d7e9d0693 ]
 
-cs_etm__flush(), like cs_etm__sample() is an operation that generates a
-sample and then swaps the current with the previous packet. Calling
-flush after processing the queues results in two swaps which corrupts
-the next sample. Therefore it wasn't appropriate to call flush here so
-remove it.
+Rename the GLF_VERIFY_EVICT flag to GLF_VERIFY_DELETE: that flag
+indicates that we want to delete an inode / verify that it has been
+deleted.
 
-Flushing is still done on a discontinuity to explicitly clear the last
-branch buffer, but when the packet_queue fills up before reaching a
-timestamp, that's not a discontinuity and the call to
-cs_etm__process_traceid_queue() already generated samples and drained
-the buffers correctly.
+To match, rename gfs2_queue_verify_evict() to
+gfs2_queue_verify_delete().
 
-This is visible by looking for a branch that has the same target as the
-previous branch and the following source is before the address of the
-last target, which is impossible as execution would have had to have
-gone backwards:
-
-  ffff800080849d40 _find_next_and_bit+0x78 => ffff80008011cadc update_sg_lb_stats+0x94
-   (packet_queue fills here before a timestamp, resulting in a flush and
-    branch target ffff80008011cadc is duplicated.)
-  ffff80008011cb1c update_sg_lb_stats+0xd4 => ffff80008011cadc update_sg_lb_stats+0x94
-  ffff8000801117c4 cpu_util+0x24 => ffff8000801117d4 cpu_util+0x34
-
-After removing the flush the correct branch target is used for the
-second sample, and ffff8000801117c4 is no longer before the previous
-address:
-
-  ffff800080849d40 _find_next_and_bit+0x78 => ffff80008011cadc update_sg_lb_stats+0x94
-  ffff80008011cb1c update_sg_lb_stats+0xd4 => ffff8000801117a0 cpu_util+0x0
-  ffff8000801117c4 cpu_util+0x24 => ffff8000801117d4 cpu_util+0x34
-
-Make sure that a final branch stack is output at the end of the trace
-by calling cs_etm__end_block(). This is already done for both the
-timeless decode paths.
-
-Fixes: 21fe8dc1191a ("perf cs-etm: Add support for CPU-wide trace scenarios")
-Reported-by: Ganapatrao Kulkarni <gankulkarni@os.amperecomputing.com>
-Closes: https://lore.kernel.org/all/20240719092619.274730-1-gankulkarni@os.amperecomputing.com/
-Reviewed-by: Leo Yan <leo.yan@arm.com>
-Signed-off-by: James Clark <james.clark@linaro.org>
-Tested-by: Ganapatrao Kulkarni <gankulkarni@os.amperecomputing.com>
-Cc: Ben Gainey <ben.gainey@arm.com>
-Cc: Suzuki K Poulose <suzuki.poulose@arm.com>
-Cc: Will Deacon <will@kernel.org>
-Cc: Mathieu Poirier <mathieu.poirier@linaro.org>
-Cc: Mike Leach <mike.leach@linaro.org>
-Cc: Ruidong Tian <tianruidong@linux.alibaba.com>
-Cc: Benjamin Gray <bgray@linux.ibm.com>
-Cc: linux-arm-kernel@lists.infradead.org
-Cc: coresight@lists.linaro.org
-Cc: John Garry <john.g.garry@oracle.com>
-Cc: scclevenger@os.amperecomputing.com
-Link: https://lore.kernel.org/r/20240916135743.1490403-2-james.clark@linaro.org
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
+Stable-dep-of: 7c6f714d8847 ("gfs2: Fix unlinked inode cleanup")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/cs-etm.c | 25 ++++++++++++++++++-------
- 1 file changed, 18 insertions(+), 7 deletions(-)
+ fs/gfs2/glock.c  | 14 +++++++-------
+ fs/gfs2/incore.h |  2 +-
+ 2 files changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/tools/perf/util/cs-etm.c b/tools/perf/util/cs-etm.c
-index 40f047baef810..0bf9e5c27b599 100644
---- a/tools/perf/util/cs-etm.c
-+++ b/tools/perf/util/cs-etm.c
-@@ -2490,12 +2490,6 @@ static void cs_etm__clear_all_traceid_queues(struct cs_etm_queue *etmq)
- 
- 		/* Ignore return value */
- 		cs_etm__process_traceid_queue(etmq, tidq);
--
--		/*
--		 * Generate an instruction sample with the remaining
--		 * branchstack entries.
--		 */
--		cs_etm__flush(etmq, tidq);
- 	}
+diff --git a/fs/gfs2/glock.c b/fs/gfs2/glock.c
+index 269c3bc7fced7..5addf4ebf33bd 100644
+--- a/fs/gfs2/glock.c
++++ b/fs/gfs2/glock.c
+@@ -1013,11 +1013,11 @@ bool gfs2_queue_try_to_evict(struct gfs2_glock *gl)
+ 				  &gl->gl_delete, 0);
  }
  
-@@ -2638,7 +2632,7 @@ static int cs_etm__process_timestamped_queues(struct cs_etm_auxtrace *etm)
+-static bool gfs2_queue_verify_evict(struct gfs2_glock *gl)
++static bool gfs2_queue_verify_delete(struct gfs2_glock *gl)
+ {
+ 	struct gfs2_sbd *sdp = gl->gl_name.ln_sbd;
  
- 	while (1) {
- 		if (!etm->heap.heap_cnt)
--			goto out;
-+			break;
- 
- 		/* Take the entry at the top of the min heap */
- 		cs_queue_nr = etm->heap.heap_array[0].queue_nr;
-@@ -2721,6 +2715,23 @@ static int cs_etm__process_timestamped_queues(struct cs_etm_auxtrace *etm)
- 		ret = auxtrace_heap__add(&etm->heap, cs_queue_nr, cs_timestamp);
+-	if (test_and_set_bit(GLF_VERIFY_EVICT, &gl->gl_flags))
++	if (test_and_set_bit(GLF_VERIFY_DELETE, &gl->gl_flags))
+ 		return false;
+ 	return queue_delayed_work(sdp->sd_delete_wq,
+ 				  &gl->gl_delete, 5 * HZ);
+@@ -1052,19 +1052,19 @@ static void delete_work_func(struct work_struct *work)
+ 		if (gfs2_try_evict(gl)) {
+ 			if (test_bit(SDF_KILL, &sdp->sd_flags))
+ 				goto out;
+-			if (gfs2_queue_verify_evict(gl))
++			if (gfs2_queue_verify_delete(gl))
+ 				return;
+ 		}
+ 		goto out;
  	}
  
-+	for (i = 0; i < etm->queues.nr_queues; i++) {
-+		struct int_node *inode;
-+
-+		etmq = etm->queues.queue_array[i].priv;
-+		if (!etmq)
-+			continue;
-+
-+		intlist__for_each_entry(inode, etmq->traceid_queues_list) {
-+			int idx = (int)(intptr_t)inode->priv;
-+
-+			/* Flush any remaining branch stack entries */
-+			tidq = etmq->traceid_queues[idx];
-+			ret = cs_etm__end_block(etmq, tidq);
-+			if (ret)
-+				return ret;
-+		}
-+	}
- out:
- 	return ret;
+-	if (test_and_clear_bit(GLF_VERIFY_EVICT, &gl->gl_flags)) {
++	if (test_and_clear_bit(GLF_VERIFY_DELETE, &gl->gl_flags)) {
+ 		inode = gfs2_lookup_by_inum(sdp, no_addr, gl->gl_no_formal_ino,
+ 					    GFS2_BLKST_UNLINKED);
+ 		if (IS_ERR(inode)) {
+ 			if (PTR_ERR(inode) == -EAGAIN &&
+ 			    !test_bit(SDF_KILL, &sdp->sd_flags) &&
+-			    gfs2_queue_verify_evict(gl))
++			    gfs2_queue_verify_delete(gl))
+ 				return;
+ 		} else {
+ 			d_prune_aliases(inode);
+@@ -2118,7 +2118,7 @@ static void glock_hash_walk(glock_examiner examiner, const struct gfs2_sbd *sdp)
+ void gfs2_cancel_delete_work(struct gfs2_glock *gl)
+ {
+ 	clear_bit(GLF_TRY_TO_EVICT, &gl->gl_flags);
+-	clear_bit(GLF_VERIFY_EVICT, &gl->gl_flags);
++	clear_bit(GLF_VERIFY_DELETE, &gl->gl_flags);
+ 	if (cancel_delayed_work(&gl->gl_delete))
+ 		gfs2_glock_put(gl);
  }
+@@ -2371,7 +2371,7 @@ static const char *gflags2str(char *buf, const struct gfs2_glock *gl)
+ 		*p++ = 'N';
+ 	if (test_bit(GLF_TRY_TO_EVICT, gflags))
+ 		*p++ = 'e';
+-	if (test_bit(GLF_VERIFY_EVICT, gflags))
++	if (test_bit(GLF_VERIFY_DELETE, gflags))
+ 		*p++ = 'E';
+ 	*p = 0;
+ 	return buf;
+diff --git a/fs/gfs2/incore.h b/fs/gfs2/incore.h
+index aa4ef67a34e03..bd1348bff90eb 100644
+--- a/fs/gfs2/incore.h
++++ b/fs/gfs2/incore.h
+@@ -329,7 +329,7 @@ enum {
+ 	GLF_BLOCKING			= 15,
+ 	GLF_UNLOCKED			= 16, /* Wait for glock to be unlocked */
+ 	GLF_TRY_TO_EVICT		= 17, /* iopen glocks only */
+-	GLF_VERIFY_EVICT		= 18, /* iopen glocks only */
++	GLF_VERIFY_DELETE		= 18, /* iopen glocks only */
+ };
+ 
+ struct gfs2_glock {
 -- 
 2.43.0
 
