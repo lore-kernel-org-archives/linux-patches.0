@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E00FD1F8926;
-	Tue,  3 Dec 2024 16:14:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F10241F8907;
+	Tue,  3 Dec 2024 16:14:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733242460; cv=none; b=kgu/nJSWHmazFLKn1r+Mp64Zq0+8JWJYxSFaC33paffjtYLiAPkHI29pfo36VlrS9ER56y3YplpA2y7566XNwA+Qi6jkniUmFQv0IA1/E9CNNP3eIBVgh0i57L6/aqKXPk272f0eBAaiEhjVLBAeHUdbNHcKRI39Ant9gwT7c5o=
+	t=1733242463; cv=none; b=cpfZxErtA6+w7ZiNZa5u3FbZLN/tNRCiIzs7JchkColZrNsoCDwt5KNPAIF2dNdEvFMtf0vfElEIRRbAn3kFST8n5AxdvIiQPgwL6Hbgo3mO3Bd/KqaEScgv1h46+Cl/gKXrVAaBM3PA9qClsakWlXdoO70OEr1HfglkCiUVWw4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733242460; c=relaxed/simple;
-	bh=650+guEAsI/hhLwVxGg4EC1NWotUa+/qQ4G66Iuv18Y=;
+	s=arc-20240116; t=1733242463; c=relaxed/simple;
+	bh=QFmQ53cfupUsiD+aHBkjYKLbmUt9GMETG3sZiY8mW68=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d4wvIt4hFQc/l3truhZPBdNAnzyBA+iKPAhap18ep76Xf1euc18RCdVXpJJnlQxaG1Q7k2vgAWJPdxqBCSZ5oJ/AtsrC2beon2MOrmRA3ATLNHk+xC21tdTZGpo9QGc3ChZDbNRJ6Daqs45skVvhdnc4gjTgDFpHUF/HOT95p58=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PjArNjXF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=M5dAZToz99Aq3A9ai2KXlccouyFuA7owXfxAmjQmXinDuYVuxKzDLu9qOGwk8Rp2j1urTlolvWq9vgbMO7s1L1F2Re0cjfjirWWQ8c7r9MiZHJxtucPdlzvXKmAyyIOEQQ3AQjG5x5Oj9Kb4aMTVKcs7vcP0t/rwvOedLblOmGE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QN1bia37; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PjArNjXF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63DDFC4CECF;
-	Tue,  3 Dec 2024 16:14:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QN1bia37"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79B01C4CECF;
+	Tue,  3 Dec 2024 16:14:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733242459;
-	bh=650+guEAsI/hhLwVxGg4EC1NWotUa+/qQ4G66Iuv18Y=;
+	s=korg; t=1733242462;
+	bh=QFmQ53cfupUsiD+aHBkjYKLbmUt9GMETG3sZiY8mW68=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PjArNjXFdF4lG3gnCmHwbCcFxqP71secAdlT7WSucOvwN+KyBeR4kGHNVSHftyy+3
-	 VOxD0P+LiohPJS2DFRhV02ZtucmqTB5wkTcTg3vNteFDZXVTBj6rP9Yz5Wnp7qDYbx
-	 NbVn/4uBLgpX4fKgktAyeyzYggOZvFQFz6NJW+hs=
+	b=QN1bia37EqwZPBg3so0TY6QBVD6BND9+NG+1o7dY501jSfYferKiIJ9AUmlKCA320
+	 a2K8WvSMAh2jSElbfNYs397yDFRc/XzLac7i4jPwl3adS2wmVZR7eCiBmRpx3Cb6gM
+	 o6OtXLrGiyi8ZQk50AfR2EvW0/bdmkHG/LB3PojA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tiwei Bie <tiwei.btw@antgroup.com>,
-	Anton Ivanov <anton.ivanov@cambridgegreys.com>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.12 710/826] um: net: Do not use drvdata in release
-Date: Tue,  3 Dec 2024 15:47:17 +0100
-Message-ID: <20241203144811.457064346@linuxfoundation.org>
+	Jose Ignacio Tornos Martinez <jtornosm@redhat.com>,
+	Jeff Johnson <quic_jjohnson@quicinc.com>
+Subject: [PATCH 6.12 684/826] wifi: ath12k: fix crash when unbinding
+Date: Tue,  3 Dec 2024 15:46:51 +0100
+Message-ID: <20241203144810.440112375@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -51,74 +50,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tiwei Bie <tiwei.btw@antgroup.com>
+From: Jose Ignacio Tornos Martinez <jtornosm@redhat.com>
 
-commit d1db692a9be3b4bd3473b64fcae996afaffe8438 upstream.
+commit 1304446f67863385dc4c914b6e0194f6664ee764 upstream.
 
-The drvdata is not available in release. Let's just use container_of()
-to get the uml_net instance. Otherwise, removing a network device will
-result in a crash:
-
-RIP: 0033:net_device_release+0x10/0x6f
-RSP: 00000000e20c7c40  EFLAGS: 00010206
-RAX: 000000006002e4e7 RBX: 00000000600f1baf RCX: 00000000624074e0
-RDX: 0000000062778000 RSI: 0000000060551c80 RDI: 00000000627af028
-RBP: 00000000e20c7c50 R08: 00000000603ad594 R09: 00000000e20c7b70
-R10: 000000000000135a R11: 00000000603ad422 R12: 0000000000000000
-R13: 0000000062c7af00 R14: 0000000062406d60 R15: 00000000627700b6
-Kernel panic - not syncing: Segfault with no mm
-CPU: 0 UID: 0 PID: 29 Comm: kworker/0:2 Not tainted 6.12.0-rc6-g59b723cd2adb #1
-Workqueue: events mc_work_proc
-Stack:
- 627af028 62c7af00 e20c7c80 60276fcd
- 62778000 603f5820 627af028 00000000
- e20c7cb0 603a2bcd 627af000 62770010
+If there is an error during some initialization related to firmware,
+the function ath12k_dp_cc_cleanup is called to release resources.
+However this is released again when the device is unbinded (ath12k_pci),
+and we get:
+BUG: kernel NULL pointer dereference, address: 0000000000000020
+at RIP: 0010:ath12k_dp_cc_cleanup.part.0+0xb6/0x500 [ath12k]
 Call Trace:
- [<60276fcd>] device_release+0x70/0xba
- [<603a2bcd>] kobject_put+0xba/0xe7
- [<60277265>] put_device+0x19/0x1c
- [<60281266>] platform_device_put+0x26/0x29
- [<60281e5f>] platform_device_unregister+0x2c/0x2e
- [<6002ec9c>] net_remove+0x63/0x69
- [<60031316>] ? mconsole_reply+0x0/0x50
- [<600310c8>] mconsole_remove+0x160/0x1cc
- [<60087d40>] ? __remove_hrtimer+0x38/0x74
- [<60087ff8>] ? hrtimer_try_to_cancel+0x8c/0x98
- [<6006b3cf>] ? dl_server_stop+0x3f/0x48
- [<6006b390>] ? dl_server_stop+0x0/0x48
- [<600672e8>] ? dequeue_entities+0x327/0x390
- [<60038fa6>] ? um_set_signals+0x0/0x43
- [<6003070c>] mc_work_proc+0x77/0x91
- [<60057664>] process_scheduled_works+0x1b3/0x2dd
- [<60055f32>] ? assign_work+0x0/0x58
- [<60057f0a>] worker_thread+0x1e9/0x293
- [<6005406f>] ? set_pf_worker+0x0/0x64
- [<6005d65d>] ? arch_local_irq_save+0x0/0x2d
- [<6005d748>] ? kthread_exit+0x0/0x3a
- [<60057d21>] ? worker_thread+0x0/0x293
- [<6005dbf1>] kthread+0x126/0x12b
- [<600219c5>] new_thread_handler+0x85/0xb6
+ath12k_dp_cc_cleanup
+ath12k_dp_free
+ath12k_core_deinit
+ath12k_pci_remove
+...
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Tiwei Bie <tiwei.btw@antgroup.com>
-Acked-By: Anton Ivanov <anton.ivanov@cambridgegreys.com>
-Link: https://patch.msgid.link/20241104163203.435515-4-tiwei.btw@antgroup.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+The issue is always reproducible from a VM because the MSI addressing
+initialization is failing.
+
+In order to fix the issue, just set to NULL the released structure in
+ath12k_dp_cc_cleanup at the end.
+
+cc: stable@vger.kernel.org
+Fixes: d889913205cf ("wifi: ath12k: driver for Qualcomm Wi-Fi 7 devices")
+Signed-off-by: Jose Ignacio Tornos Martinez <jtornosm@redhat.com>
+Link: https://patch.msgid.link/20241017181004.199589-2-jtornosm@redhat.com
+Signed-off-by: Jeff Johnson <quic_jjohnson@quicinc.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/um/drivers/net_kern.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/ath/ath12k/dp.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/arch/um/drivers/net_kern.c
-+++ b/arch/um/drivers/net_kern.c
-@@ -336,7 +336,7 @@ static struct platform_driver uml_net_dr
+--- a/drivers/net/wireless/ath/ath12k/dp.c
++++ b/drivers/net/wireless/ath/ath12k/dp.c
+@@ -1247,6 +1247,7 @@ static void ath12k_dp_cc_cleanup(struct
+ 	}
  
- static void net_device_release(struct device *dev)
- {
--	struct uml_net *device = dev_get_drvdata(dev);
-+	struct uml_net *device = container_of(dev, struct uml_net, pdev.dev);
- 	struct net_device *netdev = device->dev;
- 	struct uml_net_private *lp = netdev_priv(netdev);
+ 	kfree(dp->spt_info);
++	dp->spt_info = NULL;
+ }
  
+ static void ath12k_dp_reoq_lut_cleanup(struct ath12k_base *ab)
 
 
