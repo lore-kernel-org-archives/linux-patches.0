@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB4AF1F130E;
-	Tue,  3 Dec 2024 15:05:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C67C31F429B;
+	Tue,  3 Dec 2024 15:05:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733238346; cv=none; b=Lwh5GJx3iJrWumQhjFTfson0G4h38UkvjhNGZ2U9AdIAR4wY9pUaXtZXJxy4jwDL43+dy0n9nSzBWT+ELKrxa+7fvh7qPVLToJ7nnmntBtkO4iG4SMHM+3jmvc0cimSokS+U6LczmX8Fzha2xSAeWURNXc4BwMgYzV0fMCsJyaM=
+	t=1733238349; cv=none; b=NseEl28zHx72PgxjnjJ2ppJLMHwSkpjuXQ0TRDH92nIkWfYKxyiw55YnpYfH6XS9L6iwgRVAymdkToLaGnbdbzNwu+8cs1wAAhGMVykk9bh8a5Cdi6tnLxg5pN4olGBC5g/1BHE9vnhbhMuy2RGIrp4GPXNn8+z6O/vLXeO2dOY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733238346; c=relaxed/simple;
-	bh=VOggt4QDtFxkeEoRfQz6p6cQwzEhO1AvuCfNqxxrzzI=;
+	s=arc-20240116; t=1733238349; c=relaxed/simple;
+	bh=/o3fBt+8vBlnRuW0hw+iGJBOU/AvAb2ESiF7Iw0EfG4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VLL+lfOArReBpRhCmdyRZyFLE972zED4eTfH1joGYQPwaNphFdqekEWcqff0VeqrDX/0p8HACjWhYPsLlBTRoZmQW1qUKVqI/2iXz7QgnJF14a2JsdVRJ3pxegZG5RjiDl4V/2SVWygbxodEX5JTMF+/7J3uBIcQs97fgxPsvII=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aK/nn6mq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ETq7CJO+/dP1hVpmAdq6apvumKm3oI50j/mHeiSqXV2SDMW8WaNl1cXAofPLppFCGONGNe1DJu799RDjnEBri1KfNn5QkEwRCv1foSxz/SibbFWc3f+pb1xzwR8q3yCLCmMFOMa1jDbrY88rCPlnkyLSnPDSA6Au9LpX7kUYYdA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jQm3PTDP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aK/nn6mq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5355AC4CECF;
-	Tue,  3 Dec 2024 15:05:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jQm3PTDP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 353F0C4CECF;
+	Tue,  3 Dec 2024 15:05:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733238346;
-	bh=VOggt4QDtFxkeEoRfQz6p6cQwzEhO1AvuCfNqxxrzzI=;
+	s=korg; t=1733238349;
+	bh=/o3fBt+8vBlnRuW0hw+iGJBOU/AvAb2ESiF7Iw0EfG4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aK/nn6mqD/0uZs1IV+EXj5tSWqjpfWbiY+0ExtIJMtmE6SREyNHV3GhVNn4LymE5s
-	 hxdWav9pfMkQLdy+/VUC+v4gRCFti5CWKHB9pe3qFIZ584j2cd+vR9kou5SGYycRUz
-	 GZXOMbvYbHqd03xsda8APOHqfEX6mrckI/1gn7Ng=
+	b=jQm3PTDPQVNnH8tfaLLIYXY5XdHzY2jRdibZgMTmQHhia37OUGqM0oTNkE++0jHfZ
+	 CstGKEEye18Y9xnst6XWx0nChSfeDN0QKHxwuGVDVuSi/zfjyAx4RpB+XBv5PRtH7b
+	 Tzn1j5Bvkge4IWvsJxAI/2EVnbKauAV5ee5lczN4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiaxin Yu <jiaxin.yu@mediatek.com>,
-	Macpaul Lin <macpaul.lin@mediatek.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 248/817] ASoC: dt-bindings: mt6359: Update generic node name and dmic-mode
-Date: Tue,  3 Dec 2024 15:37:00 +0100
-Message-ID: <20241203144005.451389369@linuxfoundation.org>
+Subject: [PATCH 6.11 249/817] ASoC: fsl-asoc-card: Add missing handling of {hp,mic}-dt-gpios
+Date: Tue,  3 Dec 2024 15:37:01 +0100
+Message-ID: <20241203144005.490219759@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -53,75 +52,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Macpaul Lin <macpaul.lin@mediatek.com>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit 4649cbd97fdae5069e9a71cd7669b62b90e03669 ]
+[ Upstream commit cfd1054c65eefec30972416a83eb62920bc1ff8d ]
 
-Some fix and updates in the following items:
-1. examples:
-   Update generic node name to 'audio-codec' to comply with the
-   coming change in 'mt6359.dtsi'. This change is necessary to fix the
-   dtbs_check error:
-   pmic: 'mt6359codec' does not match any of the regexes: 'pinctrl-[0-9]+'
+The DT bindings deprecated the "hp-det-gpio" and "mic-det-gpio"
+properties in favor of "hp-det-gpios" and "mic-det-gpios", but the
+driver was never updated to support the latter.
 
-2. mediatek,dmic-mode:
-   After inspecting the .dts and .dtsi files using 'mt6359-codec', it was
-   discovered that the definitions of 'two wires' and 'one wire' are
-   inverted compared to the DT schema.
-   For example, the following boards using MT6359 PMIC:
-    - mt8192-asurada.dtsi
-    - mt8195-cherry.dtsi
-   These boards use the same definitions of 'dmic-mode' as other boards
-   using MT6358 PMIC. The meaning of '0' or '1' has been noted as comments
-   in the device trees.
+Even before, there existed users of "hp-det-gpios" and "mic-det-gpios".
+While this may have been handled fine by the ASoC core, this was missed
+by the Freescale-specific part.
 
-   Upon examining the code in [1] and [2], it was confirmed that the
-   definitions of 'dmic-mode' are consistent between "MT6359 PMIC" and
-   "MT6358 PMIC". Therefore, the DT Schema should be correct as is.
-
-References:
-[1] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/sound/soc/codecs/mt6358.c#n1875
-[2] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/sound/soc/codecs/mt6359.c#L1515
-
-Fixes: 539237d1c609 ("dt-bindings: mediatek: mt6359: add codec document")
-Signed-off-by: Jiaxin Yu <jiaxin.yu@mediatek.com>
-Signed-off-by: Macpaul Lin <macpaul.lin@mediatek.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://patch.msgid.link/20240930075451.14196-1-macpaul.lin@mediatek.com
+Fixes: 4189b54220e5af15 ("ASoC: dt-bindings: fsl-asoc-card: convert to YAML")
+Fixes: 40ba2eda0a7b727f ("arm64: dts: imx8mm-nitrogen-r2: add audio")
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Reviewed-by: Krzysztof Kozlowski <krzk@kernel.org>
+Link: https://patch.msgid.link/dbcb5bfea005a468ec6dc38374fe6d02bc693c22.1727438777.git.geert+renesas@glider.be
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/devicetree/bindings/sound/mt6359.yaml | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ sound/soc/fsl/fsl-asoc-card.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/sound/mt6359.yaml b/Documentation/devicetree/bindings/sound/mt6359.yaml
-index 23d411fc4200e..128698630c865 100644
---- a/Documentation/devicetree/bindings/sound/mt6359.yaml
-+++ b/Documentation/devicetree/bindings/sound/mt6359.yaml
-@@ -23,8 +23,8 @@ properties:
-       Indicates how many data pins are used to transmit two channels of PDM
-       signal. 0 means two wires, 1 means one wire. Default value is 0.
-     enum:
--      - 0 # one wire
--      - 1 # two wires
-+      - 0 # two wires
-+      - 1 # one wire
+diff --git a/sound/soc/fsl/fsl-asoc-card.c b/sound/soc/fsl/fsl-asoc-card.c
+index f6c3aeff0d8ea..a0c2ce84c32b1 100644
+--- a/sound/soc/fsl/fsl-asoc-card.c
++++ b/sound/soc/fsl/fsl-asoc-card.c
+@@ -1033,14 +1033,15 @@ static int fsl_asoc_card_probe(struct platform_device *pdev)
+ 	}
  
-   mediatek,mic-type-0:
-     $ref: /schemas/types.yaml#/definitions/uint32
-@@ -53,9 +53,9 @@ additionalProperties: false
+ 	/*
+-	 * Properties "hp-det-gpio" and "mic-det-gpio" are optional, and
++	 * Properties "hp-det-gpios" and "mic-det-gpios" are optional, and
+ 	 * simple_util_init_jack() uses these properties for creating
+ 	 * Headphone Jack and Microphone Jack.
+ 	 *
+ 	 * The notifier is initialized in snd_soc_card_jack_new(), then
+ 	 * snd_soc_jack_notifier_register can be called.
+ 	 */
+-	if (of_property_read_bool(np, "hp-det-gpio")) {
++	if (of_property_read_bool(np, "hp-det-gpios") ||
++	    of_property_read_bool(np, "hp-det-gpio") /* deprecated */) {
+ 		ret = simple_util_init_jack(&priv->card, &priv->hp_jack,
+ 					    1, NULL, "Headphone Jack");
+ 		if (ret)
+@@ -1049,7 +1050,8 @@ static int fsl_asoc_card_probe(struct platform_device *pdev)
+ 		snd_soc_jack_notifier_register(&priv->hp_jack.jack, &hp_jack_nb);
+ 	}
  
- examples:
-   - |
--    mt6359codec: mt6359codec {
--      mediatek,dmic-mode = <0>;
--      mediatek,mic-type-0 = <2>;
-+    mt6359codec: audio-codec {
-+        mediatek,dmic-mode = <0>;
-+        mediatek,mic-type-0 = <2>;
-     };
- 
- ...
+-	if (of_property_read_bool(np, "mic-det-gpio")) {
++	if (of_property_read_bool(np, "mic-det-gpios") ||
++	    of_property_read_bool(np, "mic-det-gpio") /* deprecated */) {
+ 		ret = simple_util_init_jack(&priv->card, &priv->mic_jack,
+ 					    0, NULL, "Mic Jack");
+ 		if (ret)
 -- 
 2.43.0
 
