@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD4581F76D2;
-	Tue,  3 Dec 2024 15:33:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 380E81F76D2;
+	Tue,  3 Dec 2024 15:33:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733240024; cv=none; b=Z82MSzqno0QyDQJ1Qene6GmZmbZZ9nD+jd3lvhApPzAFiHtzDadtC2fofckbSiOdeDj6MNWjRZMN1UwpQqJctkdh7TZUlfPHyms0XA6FG6g4AiJ1nU/9T2+xfCeJKyXmO8gy0xhNEvnUZx7QGoCihVmsQTk7SvoMV+44VKvR4OM=
+	t=1733240027; cv=none; b=KjyJ3zeye/7WBoVA9RsY5VNPiZ70g9wi/0TuwOPh4ahAbWoc2oU0bbXdNtOnDTBfrI3cJPjMt6xRFI6BH6ulkT0E6WCp+5lSm+6sjVpQ+k7uNs6LManx6cyVkmMsabGgS40NUGXatfY0ZfvaLmkVEmDBmZ/e9jJD0gSFsL9Fu1U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733240024; c=relaxed/simple;
-	bh=KY84619X2yINXf4ap7r29ihPRcTkXdaWQFULf+5BUTA=;
+	s=arc-20240116; t=1733240027; c=relaxed/simple;
+	bh=G9/4eeCiDp3QQJHGJVovqFRfk+DpCbSmfVpZ3BIFZSg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LAcQP0HGa+RhEJHTl71tyPFeo/dgTqqB4t+ZHCFfCw/rVIGHrCfc0esePvgvgR8bJ0UShBeBb/MzJF1lOqo3Z0Ax6q8oArxkZ/wLAKAdsaXnwuVkzqfm/iu9SWbLl/sn1wba7aC4O5M7VqzOfP0uoa7ByMznYaL0SKSDCzBb9Rg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gDv3BYa8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Z8A4zGr9hG5l4Ad98TdeEa9NOSFwYNttyDO4vEMw3i5AjmYzOARc73DCJeRQajPNlTXLcz5F75YaGfb4Jv9JkkGmKYnVsKi5Js9rtfIspOu1hFKwKqvp/wFMpmwa0QXVMj12VcGIeTSgq5ysWu/WR1GfB51zhKGH03MldXYeqZ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nljrTTOI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gDv3BYa8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF4FDC4CECF;
-	Tue,  3 Dec 2024 15:33:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nljrTTOI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7F00C4CECF;
+	Tue,  3 Dec 2024 15:33:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733240024;
-	bh=KY84619X2yINXf4ap7r29ihPRcTkXdaWQFULf+5BUTA=;
+	s=korg; t=1733240027;
+	bh=G9/4eeCiDp3QQJHGJVovqFRfk+DpCbSmfVpZ3BIFZSg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gDv3BYa8J7pkwGP6RU9PcgbDznHu3tj+gD8NoRHOM4b2pxkMfJiVK7jtHd+6tbPpc
-	 0uGKTjhhAxp8qIpFTD1WJwn0nTNk+myWvQhbqO8FDxN841uUNzTPzTV82uJx2AdxV4
-	 2+4fokW92fygzSBDpNSNHYqJYLNQLGsT8SEvV5no=
+	b=nljrTTOII5iLNmso3HXWD3O/6+TbSyJWedq2vNYVyih25o5w26MVmPA1zqg9Mq4Io
+	 L3iOIHzxy2qWvFENXZ1PT0qy5PXYBzYXKlS5hED+XvrQPTdB99a/XwPEUlyz+ahYoy
+	 +Xq9G49aKrBLaE7Q2TghRQEM/sywMltlsNL58zvE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
+	Yu Kuai <yukuai3@huawei.com>,
 	Ming Lei <ming.lei@redhat.com>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 784/817] block: model freeze & enter queue as lock for supporting lockdep
-Date: Tue,  3 Dec 2024 15:45:56 +0100
-Message-ID: <20241203144026.615524426@linuxfoundation.org>
+Subject: [PATCH 6.11 785/817] block: fix uaf for flush rq while iterating tags
+Date: Tue,  3 Dec 2024 15:45:57 +0100
+Message-ID: <20241203144026.654970142@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -52,362 +52,165 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ming Lei <ming.lei@redhat.com>
+From: Yu Kuai <yukuai3@huawei.com>
 
-[ Upstream commit f1be1788a32e8fa63416ad4518bbd1a85a825c9d ]
+[ Upstream commit 3802f73bd80766d70f319658f334754164075bc3 ]
 
-Recently we got several deadlock report[1][2][3] caused by
-blk_mq_freeze_queue and blk_enter_queue().
+blk_mq_clear_flush_rq_mapping() is not called during scsi probe, by
+checking blk_queue_init_done(). However, QUEUE_FLAG_INIT_DONE is cleared
+in del_gendisk by commit aec89dc5d421 ("block: keep q_usage_counter in
+atomic mode after del_gendisk"), hence for disk like scsi, following
+blk_mq_destroy_queue() will not clear flush rq from tags->rqs[] as well,
+cause following uaf that is found by our syzkaller for v6.6:
 
-Turns out the two are just like acquiring read/write lock, so model them
-as read/write lock for supporting lockdep:
+==================================================================
+BUG: KASAN: slab-use-after-free in blk_mq_find_and_get_req+0x16e/0x1a0 block/blk-mq-tag.c:261
+Read of size 4 at addr ffff88811c969c20 by task kworker/1:2H/224909
 
-1) model q->q_usage_counter as two locks(io and queue lock)
+CPU: 1 PID: 224909 Comm: kworker/1:2H Not tainted 6.6.0-ga836a5060850 #32
+Workqueue: kblockd blk_mq_timeout_work
+Call Trace:
 
-- queue lock covers sync with blk_enter_queue()
+__dump_stack lib/dump_stack.c:88 [inline]
+dump_stack_lvl+0x91/0xf0 lib/dump_stack.c:106
+print_address_description.constprop.0+0x66/0x300 mm/kasan/report.c:364
+print_report+0x3e/0x70 mm/kasan/report.c:475
+kasan_report+0xb8/0xf0 mm/kasan/report.c:588
+blk_mq_find_and_get_req+0x16e/0x1a0 block/blk-mq-tag.c:261
+bt_iter block/blk-mq-tag.c:288 [inline]
+__sbitmap_for_each_set include/linux/sbitmap.h:295 [inline]
+sbitmap_for_each_set include/linux/sbitmap.h:316 [inline]
+bt_for_each+0x455/0x790 block/blk-mq-tag.c:325
+blk_mq_queue_tag_busy_iter+0x320/0x740 block/blk-mq-tag.c:534
+blk_mq_timeout_work+0x1a3/0x7b0 block/blk-mq.c:1673
+process_one_work+0x7c4/0x1450 kernel/workqueue.c:2631
+process_scheduled_works kernel/workqueue.c:2704 [inline]
+worker_thread+0x804/0xe40 kernel/workqueue.c:2785
+kthread+0x346/0x450 kernel/kthread.c:388
+ret_from_fork+0x4d/0x80 arch/x86/kernel/process.c:147
+ret_from_fork_asm+0x1b/0x30 arch/x86/entry/entry_64.S:293
 
-- io lock covers sync with bio_enter_queue()
+Allocated by task 942:
+kasan_save_stack+0x22/0x50 mm/kasan/common.c:45
+kasan_set_track+0x25/0x30 mm/kasan/common.c:52
+____kasan_kmalloc mm/kasan/common.c:374 [inline]
+__kasan_kmalloc mm/kasan/common.c:383 [inline]
+__kasan_kmalloc+0xaa/0xb0 mm/kasan/common.c:380
+kasan_kmalloc include/linux/kasan.h:198 [inline]
+__do_kmalloc_node mm/slab_common.c:1007 [inline]
+__kmalloc_node+0x69/0x170 mm/slab_common.c:1014
+kmalloc_node include/linux/slab.h:620 [inline]
+kzalloc_node include/linux/slab.h:732 [inline]
+blk_alloc_flush_queue+0x144/0x2f0 block/blk-flush.c:499
+blk_mq_alloc_hctx+0x601/0x940 block/blk-mq.c:3788
+blk_mq_alloc_and_init_hctx+0x27f/0x330 block/blk-mq.c:4261
+blk_mq_realloc_hw_ctxs+0x488/0x5e0 block/blk-mq.c:4294
+blk_mq_init_allocated_queue+0x188/0x860 block/blk-mq.c:4350
+blk_mq_init_queue_data block/blk-mq.c:4166 [inline]
+blk_mq_init_queue+0x8d/0x100 block/blk-mq.c:4176
+scsi_alloc_sdev+0x843/0xd50 drivers/scsi/scsi_scan.c:335
+scsi_probe_and_add_lun+0x77c/0xde0 drivers/scsi/scsi_scan.c:1189
+__scsi_scan_target+0x1fc/0x5a0 drivers/scsi/scsi_scan.c:1727
+scsi_scan_channel drivers/scsi/scsi_scan.c:1815 [inline]
+scsi_scan_channel+0x14b/0x1e0 drivers/scsi/scsi_scan.c:1791
+scsi_scan_host_selected+0x2fe/0x400 drivers/scsi/scsi_scan.c:1844
+scsi_scan+0x3a0/0x3f0 drivers/scsi/scsi_sysfs.c:151
+store_scan+0x2a/0x60 drivers/scsi/scsi_sysfs.c:191
+dev_attr_store+0x5c/0x90 drivers/base/core.c:2388
+sysfs_kf_write+0x11c/0x170 fs/sysfs/file.c:136
+kernfs_fop_write_iter+0x3fc/0x610 fs/kernfs/file.c:338
+call_write_iter include/linux/fs.h:2083 [inline]
+new_sync_write+0x1b4/0x2d0 fs/read_write.c:493
+vfs_write+0x76c/0xb00 fs/read_write.c:586
+ksys_write+0x127/0x250 fs/read_write.c:639
+do_syscall_x64 arch/x86/entry/common.c:51 [inline]
+do_syscall_64+0x70/0x120 arch/x86/entry/common.c:81
+entry_SYSCALL_64_after_hwframe+0x78/0xe2
 
-2) make the lockdep class/key as per-queue:
+Freed by task 244687:
+kasan_save_stack+0x22/0x50 mm/kasan/common.c:45
+kasan_set_track+0x25/0x30 mm/kasan/common.c:52
+kasan_save_free_info+0x2b/0x50 mm/kasan/generic.c:522
+____kasan_slab_free mm/kasan/common.c:236 [inline]
+__kasan_slab_free+0x12a/0x1b0 mm/kasan/common.c:244
+kasan_slab_free include/linux/kasan.h:164 [inline]
+slab_free_hook mm/slub.c:1815 [inline]
+slab_free_freelist_hook mm/slub.c:1841 [inline]
+slab_free mm/slub.c:3807 [inline]
+__kmem_cache_free+0xe4/0x520 mm/slub.c:3820
+blk_free_flush_queue+0x40/0x60 block/blk-flush.c:520
+blk_mq_hw_sysfs_release+0x4a/0x170 block/blk-mq-sysfs.c:37
+kobject_cleanup+0x136/0x410 lib/kobject.c:689
+kobject_release lib/kobject.c:720 [inline]
+kref_put include/linux/kref.h:65 [inline]
+kobject_put+0x119/0x140 lib/kobject.c:737
+blk_mq_release+0x24f/0x3f0 block/blk-mq.c:4144
+blk_free_queue block/blk-core.c:298 [inline]
+blk_put_queue+0xe2/0x180 block/blk-core.c:314
+blkg_free_workfn+0x376/0x6e0 block/blk-cgroup.c:144
+process_one_work+0x7c4/0x1450 kernel/workqueue.c:2631
+process_scheduled_works kernel/workqueue.c:2704 [inline]
+worker_thread+0x804/0xe40 kernel/workqueue.c:2785
+kthread+0x346/0x450 kernel/kthread.c:388
+ret_from_fork+0x4d/0x80 arch/x86/kernel/process.c:147
+ret_from_fork_asm+0x1b/0x30 arch/x86/entry/entry_64.S:293
 
-- different subsystem has very different lock use pattern, shared lock
- class causes false positive easily
+Other than blk_mq_clear_flush_rq_mapping(), the flag is only used in
+blk_register_queue() from initialization path, hence it's safe not to
+clear the flag in del_gendisk. And since QUEUE_FLAG_REGISTERED already
+make sure that queue should only be registered once, there is no need
+to test the flag as well.
 
-- freeze_queue degrades to no lock in case that disk state becomes DEAD
-  because bio_enter_queue() won't be blocked any more
-
-- freeze_queue degrades to no lock in case that request queue becomes dying
-  because blk_enter_queue() won't be blocked any more
-
-3) model blk_mq_freeze_queue() as acquire_exclusive & try_lock
-- it is exclusive lock, so dependency with blk_enter_queue() is covered
-
-- it is trylock because blk_mq_freeze_queue() are allowed to run
-  concurrently
-
-4) model blk_enter_queue() & bio_enter_queue() as acquire_read()
-- nested blk_enter_queue() are allowed
-
-- dependency with blk_mq_freeze_queue() is covered
-
-- blk_queue_exit() is often called from other contexts(such as irq), and
-it can't be annotated as lock_release(), so simply do it in
-blk_enter_queue(), this way still covered cases as many as possible
-
-With lockdep support, such kind of reports may be reported asap and
-needn't wait until the real deadlock is triggered.
-
-For example, lockdep report can be triggered in the report[3] with this
-patch applied.
-
-[1] occasional block layer hang when setting 'echo noop > /sys/block/sda/queue/scheduler'
-https://bugzilla.kernel.org/show_bug.cgi?id=219166
-
-[2] del_gendisk() vs blk_queue_enter() race condition
-https://lore.kernel.org/linux-block/20241003085610.GK11458@google.com/
-
-[3] queue_freeze & queue_enter deadlock in scsi
-https://lore.kernel.org/linux-block/ZxG38G9BuFdBpBHZ@fedora/T/#u
-
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Ming Lei <ming.lei@redhat.com>
-Link: https://lore.kernel.org/r/20241025003722.3630252-4-ming.lei@redhat.com
+Fixes: 6cfeadbff3f8 ("blk-mq: don't clear flush_rq from tags->rqs[]")
+Depends-on: commit aec89dc5d421 ("block: keep q_usage_counter in atomic mode after del_gendisk")
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Reviewed-by: Ming Lei <ming.lei@redhat.com>
+Link: https://lore.kernel.org/r/20241104110005.1412161-1-yukuai1@huaweicloud.com
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Stable-dep-of: 3802f73bd807 ("block: fix uaf for flush rq while iterating tags")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-core.c       | 18 ++++++++++++++++--
- block/blk-mq.c         | 26 ++++++++++++++++++++++----
- block/blk.h            | 29 ++++++++++++++++++++++++++---
- block/genhd.c          | 15 +++++++++++----
- include/linux/blkdev.h |  6 ++++++
- 5 files changed, 81 insertions(+), 13 deletions(-)
+ block/blk-sysfs.c | 6 ++----
+ block/genhd.c     | 9 +++------
+ 2 files changed, 5 insertions(+), 10 deletions(-)
 
-diff --git a/block/blk-core.c b/block/blk-core.c
-index bc5e8c5eaac9f..09d10bb95fda0 100644
---- a/block/blk-core.c
-+++ b/block/blk-core.c
-@@ -261,6 +261,8 @@ static void blk_free_queue(struct request_queue *q)
- 		blk_mq_release(q);
- 
- 	ida_free(&blk_queue_ida, q->id);
-+	lockdep_unregister_key(&q->io_lock_cls_key);
-+	lockdep_unregister_key(&q->q_lock_cls_key);
- 	call_rcu(&q->rcu_head, blk_free_queue_rcu);
- }
- 
-@@ -278,18 +280,20 @@ void blk_put_queue(struct request_queue *q)
- }
- EXPORT_SYMBOL(blk_put_queue);
- 
--void blk_queue_start_drain(struct request_queue *q)
-+bool blk_queue_start_drain(struct request_queue *q)
- {
- 	/*
- 	 * When queue DYING flag is set, we need to block new req
- 	 * entering queue, so we call blk_freeze_queue_start() to
- 	 * prevent I/O from crossing blk_queue_enter().
+diff --git a/block/blk-sysfs.c b/block/blk-sysfs.c
+index e85941bec857b..207577145c54f 100644
+--- a/block/blk-sysfs.c
++++ b/block/blk-sysfs.c
+@@ -794,10 +794,8 @@ int blk_register_queue(struct gendisk *disk)
+ 	 * faster to shut down and is made fully functional here as
+ 	 * request_queues for non-existent devices never get registered.
  	 */
--	blk_freeze_queue_start(q);
-+	bool freeze = __blk_freeze_queue_start(q);
- 	if (queue_is_mq(q))
- 		blk_mq_wake_waiters(q);
- 	/* Make blk_queue_enter() reexamine the DYING flag. */
- 	wake_up_all(&q->mq_freeze_wq);
-+
-+	return freeze;
- }
+-	if (!blk_queue_init_done(q)) {
+-		blk_queue_flag_set(QUEUE_FLAG_INIT_DONE, q);
+-		percpu_ref_switch_to_percpu(&q->q_usage_counter);
+-	}
++	blk_queue_flag_set(QUEUE_FLAG_INIT_DONE, q);
++	percpu_ref_switch_to_percpu(&q->q_usage_counter);
  
- /**
-@@ -321,6 +325,8 @@ int blk_queue_enter(struct request_queue *q, blk_mq_req_flags_t flags)
- 			return -ENODEV;
- 	}
+ 	return ret;
  
-+	rwsem_acquire_read(&q->q_lockdep_map, 0, 0, _RET_IP_);
-+	rwsem_release(&q->q_lockdep_map, _RET_IP_);
- 	return 0;
- }
- 
-@@ -352,6 +358,8 @@ int __bio_queue_enter(struct request_queue *q, struct bio *bio)
- 			goto dead;
- 	}
- 
-+	rwsem_acquire_read(&q->io_lockdep_map, 0, 0, _RET_IP_);
-+	rwsem_release(&q->io_lockdep_map, _RET_IP_);
- 	return 0;
- dead:
- 	bio_io_error(bio);
-@@ -441,6 +449,12 @@ struct request_queue *blk_alloc_queue(struct queue_limits *lim, int node_id)
- 				PERCPU_REF_INIT_ATOMIC, GFP_KERNEL);
- 	if (error)
- 		goto fail_stats;
-+	lockdep_register_key(&q->io_lock_cls_key);
-+	lockdep_register_key(&q->q_lock_cls_key);
-+	lockdep_init_map(&q->io_lockdep_map, "&q->q_usage_counter(io)",
-+			 &q->io_lock_cls_key, 0);
-+	lockdep_init_map(&q->q_lockdep_map, "&q->q_usage_counter(queue)",
-+			 &q->q_lock_cls_key, 0);
- 
- 	q->nr_requests = BLKDEV_DEFAULT_RQ;
- 
-diff --git a/block/blk-mq.c b/block/blk-mq.c
-index a2c40a97328b6..46e1cd2d1be8d 100644
---- a/block/blk-mq.c
-+++ b/block/blk-mq.c
-@@ -120,17 +120,29 @@ void blk_mq_in_flight_rw(struct request_queue *q, struct block_device *part,
- 	inflight[1] = mi.inflight[1];
- }
- 
--void blk_freeze_queue_start(struct request_queue *q)
-+bool __blk_freeze_queue_start(struct request_queue *q)
- {
-+	int freeze;
-+
- 	mutex_lock(&q->mq_freeze_lock);
- 	if (++q->mq_freeze_depth == 1) {
- 		percpu_ref_kill(&q->q_usage_counter);
- 		mutex_unlock(&q->mq_freeze_lock);
- 		if (queue_is_mq(q))
- 			blk_mq_run_hw_queues(q, false);
-+		freeze = true;
- 	} else {
- 		mutex_unlock(&q->mq_freeze_lock);
-+		freeze = false;
- 	}
-+
-+	return freeze;
-+}
-+
-+void blk_freeze_queue_start(struct request_queue *q)
-+{
-+	if (__blk_freeze_queue_start(q))
-+		blk_freeze_acquire_lock(q, false, false);
- }
- EXPORT_SYMBOL_GPL(blk_freeze_queue_start);
- 
-@@ -176,8 +188,10 @@ void blk_mq_freeze_queue(struct request_queue *q)
- }
- EXPORT_SYMBOL_GPL(blk_mq_freeze_queue);
- 
--void __blk_mq_unfreeze_queue(struct request_queue *q, bool force_atomic)
-+bool __blk_mq_unfreeze_queue(struct request_queue *q, bool force_atomic)
- {
-+	int unfreeze = false;
-+
- 	mutex_lock(&q->mq_freeze_lock);
- 	if (force_atomic)
- 		q->q_usage_counter.data->force_atomic = true;
-@@ -186,13 +200,17 @@ void __blk_mq_unfreeze_queue(struct request_queue *q, bool force_atomic)
- 	if (!q->mq_freeze_depth) {
- 		percpu_ref_resurrect(&q->q_usage_counter);
- 		wake_up_all(&q->mq_freeze_wq);
-+		unfreeze = true;
- 	}
- 	mutex_unlock(&q->mq_freeze_lock);
-+
-+	return unfreeze;
- }
- 
- void blk_mq_unfreeze_queue(struct request_queue *q)
- {
--	__blk_mq_unfreeze_queue(q, false);
-+	if (__blk_mq_unfreeze_queue(q, false))
-+		blk_unfreeze_release_lock(q, false, false);
- }
- EXPORT_SYMBOL_GPL(blk_mq_unfreeze_queue);
- 
-@@ -205,7 +223,7 @@ EXPORT_SYMBOL_GPL(blk_mq_unfreeze_queue);
-  */
- void blk_freeze_queue_start_non_owner(struct request_queue *q)
- {
--	blk_freeze_queue_start(q);
-+	__blk_freeze_queue_start(q);
- }
- EXPORT_SYMBOL_GPL(blk_freeze_queue_start_non_owner);
- 
-diff --git a/block/blk.h b/block/blk.h
-index 61c2afa67daab..42f1d31d4649a 100644
---- a/block/blk.h
-+++ b/block/blk.h
-@@ -4,6 +4,7 @@
- 
- #include <linux/bio-integrity.h>
- #include <linux/blk-crypto.h>
-+#include <linux/lockdep.h>
- #include <linux/memblock.h>	/* for max_pfn/max_low_pfn */
- #include <linux/sched/sysctl.h>
- #include <linux/timekeeping.h>
-@@ -35,8 +36,9 @@ struct blk_flush_queue *blk_alloc_flush_queue(int node, int cmd_size,
- void blk_free_flush_queue(struct blk_flush_queue *q);
- 
- void blk_freeze_queue(struct request_queue *q);
--void __blk_mq_unfreeze_queue(struct request_queue *q, bool force_atomic);
--void blk_queue_start_drain(struct request_queue *q);
-+bool __blk_mq_unfreeze_queue(struct request_queue *q, bool force_atomic);
-+bool blk_queue_start_drain(struct request_queue *q);
-+bool __blk_freeze_queue_start(struct request_queue *q);
- int __bio_queue_enter(struct request_queue *q, struct bio *bio);
- void submit_bio_noacct_nocheck(struct bio *bio);
- void bio_await_chain(struct bio *bio);
-@@ -69,8 +71,11 @@ static inline int bio_queue_enter(struct bio *bio)
- {
- 	struct request_queue *q = bdev_get_queue(bio->bi_bdev);
- 
--	if (blk_try_enter_queue(q, false))
-+	if (blk_try_enter_queue(q, false)) {
-+		rwsem_acquire_read(&q->io_lockdep_map, 0, 0, _RET_IP_);
-+		rwsem_release(&q->io_lockdep_map, _RET_IP_);
- 		return 0;
-+	}
- 	return __bio_queue_enter(q, bio);
- }
- 
-@@ -724,4 +729,22 @@ void blk_integrity_verify(struct bio *bio);
- void blk_integrity_prepare(struct request *rq);
- void blk_integrity_complete(struct request *rq, unsigned int nr_bytes);
- 
-+static inline void blk_freeze_acquire_lock(struct request_queue *q, bool
-+		disk_dead, bool queue_dying)
-+{
-+	if (!disk_dead)
-+		rwsem_acquire(&q->io_lockdep_map, 0, 1, _RET_IP_);
-+	if (!queue_dying)
-+		rwsem_acquire(&q->q_lockdep_map, 0, 1, _RET_IP_);
-+}
-+
-+static inline void blk_unfreeze_release_lock(struct request_queue *q, bool
-+		disk_dead, bool queue_dying)
-+{
-+	if (!queue_dying)
-+		rwsem_release(&q->q_lockdep_map, _RET_IP_);
-+	if (!disk_dead)
-+		rwsem_release(&q->io_lockdep_map, _RET_IP_);
-+}
-+
- #endif /* BLK_INTERNAL_H */
 diff --git a/block/genhd.c b/block/genhd.c
-index 1c05dd4c6980b..6ad3fcde01105 100644
+index 6ad3fcde01105..8645cf3b0816e 100644
 --- a/block/genhd.c
 +++ b/block/genhd.c
-@@ -581,13 +581,13 @@ static void blk_report_disk_dead(struct gendisk *disk, bool surprise)
- 	rcu_read_unlock();
- }
- 
--static void __blk_mark_disk_dead(struct gendisk *disk)
-+static bool __blk_mark_disk_dead(struct gendisk *disk)
- {
- 	/*
- 	 * Fail any new I/O.
+@@ -722,13 +722,10 @@ void del_gendisk(struct gendisk *disk)
+ 	 * If the disk does not own the queue, allow using passthrough requests
+ 	 * again.  Else leave the queue frozen to fail all I/O.
  	 */
- 	if (test_and_set_bit(GD_DEAD, &disk->state))
--		return;
-+		return false;
+-	if (!test_bit(GD_OWNS_QUEUE, &disk->state)) {
+-		blk_queue_flag_clear(QUEUE_FLAG_INIT_DONE, q);
++	if (!test_bit(GD_OWNS_QUEUE, &disk->state))
+ 		__blk_mq_unfreeze_queue(q, true);
+-	} else {
+-		if (queue_is_mq(q))
+-			blk_mq_exit_queue(q);
+-	}
++	else if (queue_is_mq(q))
++		blk_mq_exit_queue(q);
  
- 	if (test_bit(GD_OWNS_QUEUE, &disk->state))
- 		blk_queue_flag_set(QUEUE_FLAG_DYING, disk->queue);
-@@ -600,7 +600,7 @@ static void __blk_mark_disk_dead(struct gendisk *disk)
- 	/*
- 	 * Prevent new I/O from crossing bio_queue_enter().
- 	 */
--	blk_queue_start_drain(disk->queue);
-+	return blk_queue_start_drain(disk->queue);
- }
- 
- /**
-@@ -641,6 +641,7 @@ void del_gendisk(struct gendisk *disk)
- 	struct request_queue *q = disk->queue;
- 	struct block_device *part;
- 	unsigned long idx;
-+	bool start_drain, queue_dying;
- 
- 	might_sleep();
- 
-@@ -668,7 +669,10 @@ void del_gendisk(struct gendisk *disk)
- 	 * Drop all partitions now that the disk is marked dead.
- 	 */
- 	mutex_lock(&disk->open_mutex);
--	__blk_mark_disk_dead(disk);
-+	start_drain = __blk_mark_disk_dead(disk);
-+	queue_dying = blk_queue_dying(q);
-+	if (start_drain)
-+		blk_freeze_acquire_lock(q, true, queue_dying);
- 	xa_for_each_start(&disk->part_tbl, idx, part, 1)
- 		drop_partition(part);
- 	mutex_unlock(&disk->open_mutex);
-@@ -725,6 +729,9 @@ void del_gendisk(struct gendisk *disk)
- 		if (queue_is_mq(q))
- 			blk_mq_exit_queue(q);
- 	}
-+
-+	if (start_drain)
-+		blk_unfreeze_release_lock(q, true, queue_dying);
- }
- EXPORT_SYMBOL(del_gendisk);
- 
-diff --git a/include/linux/blkdev.h b/include/linux/blkdev.h
-index 643c9020a35a6..a6e42a823b71e 100644
---- a/include/linux/blkdev.h
-+++ b/include/linux/blkdev.h
-@@ -25,6 +25,7 @@
- #include <linux/uuid.h>
- #include <linux/xarray.h>
- #include <linux/file.h>
-+#include <linux/lockdep.h>
- 
- struct module;
- struct request_queue;
-@@ -471,6 +472,11 @@ struct request_queue {
- 	struct xarray		hctx_table;
- 
- 	struct percpu_ref	q_usage_counter;
-+	struct lock_class_key	io_lock_cls_key;
-+	struct lockdep_map	io_lockdep_map;
-+
-+	struct lock_class_key	q_lock_cls_key;
-+	struct lockdep_map	q_lockdep_map;
- 
- 	struct request		*last_merge;
- 
+ 	if (start_drain)
+ 		blk_unfreeze_release_lock(q, true, queue_dying);
 -- 
 2.43.0
 
