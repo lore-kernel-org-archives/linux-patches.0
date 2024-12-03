@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C791B1DDC26;
-	Tue,  3 Dec 2024 15:40:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D0BA1FA166;
+	Tue,  3 Dec 2024 15:40:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733240429; cv=none; b=kOdlnRZHbKI1RMf33+QAzSe5A36/Zd16Hghwe7e8kFWg+G+LpbT5w4uga+KkL2hoVxdckcGiaA1JYD0dod9J6/BETjLAVp02XnI9kP1PyhU+6LRCxo6qWkvDqHG2s3HfT8TiaR0A+jLwyAKTJwl//d0zAYd+XOckaGrtEoM7ZgQ=
+	t=1733240433; cv=none; b=MIGR5u3Hn6Rtmfk15agMxoLhnSbCJIUtuHBD17FPTFkFC4wZ64/Tj+Pdlgax8Q+NphyBxSvJLVZSWkmgNG0vAAbMI0eoZ9E2v7HxHp88ZMrdld38Ue6LrYej4qKyfOE4kIBoI6SjeH5q+Sc6/gDYX8hL2EMRYQbJHsBb44FG6qQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733240429; c=relaxed/simple;
-	bh=mr35+k15UdQV67AjyJCFOIzYWVOzeZd6NujJrIeRZoA=;
+	s=arc-20240116; t=1733240433; c=relaxed/simple;
+	bh=ecL81Gt32jai8EFXfJxCwmYRZkUOLviiIfZwnlQ/bNI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YECWAnf5UfrE7b9lBkvLwC0gh5AofHPtOE+UEwNILDoD7hJc4qNV2k1AwXrXZ9V+cUx4D2j6KJRkqju2lW2glh7UQNAU76tgSL7bZ+L+osC6RtDN3rcFEgb6b+Kmx1fdvWxSCL3O6mg8KIA653lLLTiecX7kFeIeYENZ+wj3OYs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gf3Y7Jno; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kFSLOvNUey1jj6BKPZ9zUwXsEV6eBO8KO3/9xixgunVNqYywcX51+xrwDO0euMVRmOVOu5kVfNPD5tLHcGXMisA2NxbzZeIto9pGhXFfITbOeMwIlBM4hkzo0cDUNNoaF1GK0ThQO5u6rbK0epROIIoBoLaMaHbSardqDGbSQzg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ubGE1Vi4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gf3Y7Jno"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50071C4CED8;
-	Tue,  3 Dec 2024 15:40:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ubGE1Vi4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9333FC4CEDD;
+	Tue,  3 Dec 2024 15:40:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733240429;
-	bh=mr35+k15UdQV67AjyJCFOIzYWVOzeZd6NujJrIeRZoA=;
+	s=korg; t=1733240433;
+	bh=ecL81Gt32jai8EFXfJxCwmYRZkUOLviiIfZwnlQ/bNI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Gf3Y7Jno+RBz8unKHJcMV9njXQsZCPzNGxm53tP1N/Cbnx4boIC9TgjpgCcaxF7zU
-	 roxLjCGnd6yF3ntaeBoYT/vI6rQqLzlv0Z9dyZ/NPxe9Aha56ZGbkD0wJOUgUmHZWx
-	 2kC3QcHwHmrEQpt9B078h3w1B5Fiyv9X1SCALnIY=
+	b=ubGE1Vi4NpPqM+ekpdqTvNWccfAUDknIgrFYdbwCUuJvPh1nBJ1WEBRt37Z5nGXfE
+	 8IjiNl67JbR1tfPXrfsq1Rt478byHnH46fuyOQ0LFEOwAMaf4TH5TJEqfynvre7GO+
+	 JNfFTLOVdxOisDqmvTUISWASsyKlypNOkBTtwuSg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srikar Dronamraju <srikar@linux.ibm.com>,
-	Frederic Weisbecker <frederic@kernel.org>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Chen-Yu Tsai <wenst@chromium.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 131/826] gpio: sloppy-logic-analyzer remove reference to rcu_momentary_dyntick_idle()
-Date: Tue,  3 Dec 2024 15:37:38 +0100
-Message-ID: <20241203144748.851733836@linuxfoundation.org>
+Subject: [PATCH 6.12 132/826] arm64: dts: mediatek: mt8173-elm-hana: Add vdd-supply to second source trackpad
+Date: Tue,  3 Dec 2024 15:37:39 +0100
+Message-ID: <20241203144748.889772461@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -52,39 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Srikar Dronamraju <srikar@linux.ibm.com>
+From: Chen-Yu Tsai <wenst@chromium.org>
 
-[ Upstream commit a0b6594e411dcae0cc563f5157cf062e93603388 ]
+[ Upstream commit f766fae08f6a2eaeb45d8d2c053724c91526835c ]
 
-There is one last reference to rcu_momentary_dyntick_idle() after
-commit 32a9f26e5e26 ("rcu: Rename rcu_momentary_dyntick_idle() into
-rcu_momentary_eqs()")
+The Hana device has a second source option trackpad, but it is missing
+its regulator supply. It only works because the regulator is marked as
+always-on.
 
-Rename it for consistency.
+Add the regulator supply, but leave out the post-power-on delay. Instead,
+document the post-power-on delay along with the reason for not adding
+it in a comment.
 
-Fixes: 32a9f26e5e26 ("rcu: Rename rcu_momentary_dyntick_idle() into rcu_momentary_eqs()")
-Signed-off-by: Srikar Dronamraju <srikar@linux.ibm.com>
-Acked-by: Frederic Weisbecker <frederic@kernel.org>
-Link: https://lore.kernel.org/r/20240925054619.568209-1-srikar@linux.ibm.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Fixes: 689b937bedde ("arm64: dts: mediatek: add mt8173 elm and hana board")
+Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://lore.kernel.org/r/20241018082001.1296963-1-wenst@chromium.org
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/gpio/gpio-sloppy-logic-analyzer.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/mediatek/mt8173-elm-hana.dtsi | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/tools/gpio/gpio-sloppy-logic-analyzer.sh b/tools/gpio/gpio-sloppy-logic-analyzer.sh
-index ed21a110df5e5..3ef2278e49f91 100755
---- a/tools/gpio/gpio-sloppy-logic-analyzer.sh
-+++ b/tools/gpio/gpio-sloppy-logic-analyzer.sh
-@@ -113,7 +113,7 @@ init_cpu()
- 		taskset -p "$newmask" "$p" || continue
- 	done 2>/dev/null >/dev/null
- 
--	# Big hammer! Working with 'rcu_momentary_dyntick_idle()' for a more fine-grained solution
-+	# Big hammer! Working with 'rcu_momentary_eqs()' for a more fine-grained solution
- 	# still printed warnings. Same for re-enabling the stall detector after sampling.
- 	echo 1 > /sys/module/rcupdate/parameters/rcu_cpu_stall_suppress
- 
+diff --git a/arch/arm64/boot/dts/mediatek/mt8173-elm-hana.dtsi b/arch/arm64/boot/dts/mediatek/mt8173-elm-hana.dtsi
+index 8d1cbc92bce32..ae0379fd42a91 100644
+--- a/arch/arm64/boot/dts/mediatek/mt8173-elm-hana.dtsi
++++ b/arch/arm64/boot/dts/mediatek/mt8173-elm-hana.dtsi
+@@ -49,6 +49,14 @@ trackpad2: trackpad@2c {
+ 		interrupts-extended = <&pio 117 IRQ_TYPE_LEVEL_LOW>;
+ 		reg = <0x2c>;
+ 		hid-descr-addr = <0x0020>;
++		/*
++		 * The trackpad needs a post-power-on delay of 100ms,
++		 * but at time of writing, the power supply for it on
++		 * this board is always on. The delay is therefore not
++		 * added to avoid impacting the readiness of the
++		 * trackpad.
++		 */
++		vdd-supply = <&mt6397_vgp6_reg>;
+ 		wakeup-source;
+ 	};
+ };
 -- 
 2.43.0
 
