@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 456E61F8913;
-	Tue,  3 Dec 2024 15:10:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BB2E1FA179;
+	Tue,  3 Dec 2024 15:10:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733238632; cv=none; b=Nzx68fblT28hs7hXrtGDF++K3xyfqQVdOA9ee+ovzGgCb280QPI+MMnhpRv0jghoVqrgysdHqn++1m9R70Cui8tOtCfLMoK9hw38BXDeIuxijh1wJnIw/aVHyzC/+YvGLSz61fsCz8KWk6UI6o7cXNoX8kjA/yaLJ1u/VsOVrSw=
+	t=1733238635; cv=none; b=txVdlIPtaKeBGRdJYyejzEAmk6T30ojCPztIsCq5nW3l7dU/7ZuT9NVOZcauDp4eZVOazPEDHES88LseMl+2liVj6AnLrSt6Shbi2prjWL8uM+dx+z/WwFw+4gzFABjVE07w5pakQDM6b+Oy2NvJMFPpU4iz+NHmSsQbfOgJXlI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733238632; c=relaxed/simple;
-	bh=L4mOVFBq88Rc1rYey/V0Ena49ThaSAVK0COnJy4ETi4=;
+	s=arc-20240116; t=1733238635; c=relaxed/simple;
+	bh=ZBnFLSH5mesefKiXD1690R4E0Wtn3t2cXrsHfhzVHBA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KuntLTyyQ7Zdy6Z/4EQ5tsnc4b/G7H4f6zFvXtk2+xe+xJE9aRWOGV+uBSjJzjTn8a+mG4etMVu0h5tvo4hPYRYUHS4zV0bo8MyiwZjdz8WOrJdzH+E3YMss63gVBmmtz+YN1OCXaQd+1qYiQYxOVCD1xoFPPzszXMV7mGrUoq8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=avvhULlu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jPDPGXG7eDlXvxkce0dKtGw/78Kbam7K+tkg3puhJBox/Nh7QOCO6VDQQj+Bycg5WwshRPqFro2SQT7+sFy4K2o7YTR3qJm/97kDof4i+cioh/Cs8Tpx3TZLWZAGeMv5TSfMvBSHGdpCnDpjOklsGQimnqyPvBMPOM7Bw3yy9H4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d67oPlMV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="avvhULlu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5448C4CECF;
-	Tue,  3 Dec 2024 15:10:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d67oPlMV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A679DC4CECF;
+	Tue,  3 Dec 2024 15:10:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733238632;
-	bh=L4mOVFBq88Rc1rYey/V0Ena49ThaSAVK0COnJy4ETi4=;
+	s=korg; t=1733238635;
+	bh=ZBnFLSH5mesefKiXD1690R4E0Wtn3t2cXrsHfhzVHBA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=avvhULlued8VTZoQDQ/EBZ8SfpM+mCHGb5ofBvRJVTDPp9EqF5S4uduc5L41R4TJu
-	 ORl1XAq5j802wfs4lrEm2l1p36eRHJh77VGypKHdlK3ZqYxIND4h0Ka64GpTN5ySHA
-	 U8IxmdQzUEM9oB5tqK/Ftv+UdOoStAzc//oMvdvw=
+	b=d67oPlMVOxbkc1Ucz71CakF6xwSUEsfBhDaArvFl2BUMCQFSuPQgf3nqGw7QPGHy1
+	 Zic1fTOQQU+Hq57xdzVovs4TQe9xjmoq+sNSdYRJYJdQz5IdUr3+85vh+tj2Ade/gA
+	 JKqxBOqVGdJBSSZHyXnTpMoHRFsejdrS9QO2rJSM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Huafei <lihuafei1@huawei.com>,
-	Lyude Paul <lyude@redhat.com>,
+	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 303/817] drm/nouveau/gr/gf100: Fix missing unlock in gf100_gr_chan_new()
-Date: Tue,  3 Dec 2024 15:37:55 +0100
-Message-ID: <20241203144007.644004019@linuxfoundation.org>
+Subject: [PATCH 6.11 338/817] wifi: iwlwifi: mvm: tell iwlmei when we finished suspending
+Date: Tue,  3 Dec 2024 15:38:30 +0100
+Message-ID: <20241203144009.014917251@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -51,39 +52,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li Huafei <lihuafei1@huawei.com>
+From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
 
-[ Upstream commit a2f599046c671d6b46d93aed95b37241ce4504cf ]
+[ Upstream commit d1a54ec21b8e7bca59141ff1ac6ce73e07d744f2 ]
 
-When the call to gf100_grctx_generate() fails, unlock gr->fecs.mutex
-before returning the error.
+Since we no longer shut down the device in suspend, we also no longer
+call iwl_mvm_mei_device_state() and this is a problem because iwlmei
+expects this to be called when it runs its own suspend sequence. It
+checks mei->device_down in iwl_mei_remove() which is called upon
+suspend.
 
-Fixes smatch warning:
+Fix this by telling iwlmei when we're done accessing the device.
+When we'll wake up, the device should be untouched if CSME didn't use it
+during the suspend time. If CSME used it, we'll notice it through the
+CSR_FUNC_SCRATCH register.
 
-drivers/gpu/drm/nouveau/nvkm/engine/gr/gf100.c:480 gf100_gr_chan_new() warn: inconsistent returns '&gr->fecs.mutex'.
-
-Fixes: ca081fff6ecc ("drm/nouveau/gr/gf100-: generate golden context during first object alloc")
-Signed-off-by: Li Huafei <lihuafei1@huawei.com>
-Reviewed-by: Lyude Paul <lyude@redhat.com>
-Signed-off-by: Lyude Paul <lyude@redhat.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20241026173844.2392679-1-lihuafei1@huawei.com
+Fixes: e8bb19c1d590 ("wifi: iwlwifi: support fast resume")
+Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://patch.msgid.link/20241028135215.525287b90af2.Ibf183824471ea5580d9276d104444e53191e6900@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/nouveau/nvkm/engine/gr/gf100.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/nouveau/nvkm/engine/gr/gf100.c b/drivers/gpu/drm/nouveau/nvkm/engine/gr/gf100.c
-index 060c74a80eb14..3ea447f6a45b5 100644
---- a/drivers/gpu/drm/nouveau/nvkm/engine/gr/gf100.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/engine/gr/gf100.c
-@@ -443,6 +443,7 @@ gf100_gr_chan_new(struct nvkm_gr *base, struct nvkm_chan *fifoch,
- 		ret = gf100_grctx_generate(gr, chan, fifoch->inst);
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c b/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
+index af4c2e7dab083..e9979f8a8827e 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
+@@ -1236,6 +1236,7 @@ int __iwl_mvm_mac_start(struct iwl_mvm *mvm)
+ 	fast_resume = mvm->fast_resume;
+ 
+ 	if (fast_resume) {
++		iwl_mvm_mei_device_state(mvm, true);
+ 		ret = iwl_mvm_fast_resume(mvm);
  		if (ret) {
- 			nvkm_error(&base->engine.subdev, "failed to construct context\n");
-+			mutex_unlock(&gr->fecs.mutex);
- 			return ret;
- 		}
- 	}
+ 			iwl_mvm_stop_device(mvm);
+@@ -1376,10 +1377,13 @@ void __iwl_mvm_mac_stop(struct iwl_mvm *mvm, bool suspend)
+ 		iwl_mvm_rm_aux_sta(mvm);
+ 
+ 	if (suspend &&
+-	    mvm->trans->trans_cfg->device_family >= IWL_DEVICE_FAMILY_22000)
++	    mvm->trans->trans_cfg->device_family >= IWL_DEVICE_FAMILY_22000) {
+ 		iwl_mvm_fast_suspend(mvm);
+-	else
++		/* From this point on, we won't touch the device */
++		iwl_mvm_mei_device_state(mvm, false);
++	} else {
+ 		iwl_mvm_stop_device(mvm);
++	}
+ 
+ 	iwl_mvm_async_handlers_purge(mvm);
+ 	/* async_handlers_list is empty and will stay empty: HW is stopped */
 -- 
 2.43.0
 
