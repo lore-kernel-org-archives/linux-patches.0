@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF8312C80;
-	Tue,  3 Dec 2024 15:49:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E1292C80;
+	Tue,  3 Dec 2024 15:49:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733240955; cv=none; b=pplWlUMPXCD55zuDyff2bkhFsIuv8U4cpr9SEVc7PZ3siCWxcyuqHdm4ar/vQSvk+UklYdYYzbJ55Ysw1jwtOqh6ZZhL+nLUb9w3kzFEz2vcT8lXfH2kgEXNkQL5aQA4qE4qAcPg7ZvMplUlGtF4TrYVqNYL7vBZXVK8/tBsJgU=
+	t=1733240959; cv=none; b=Z6NKsSbjuqgU2yZHAhA/2xImJpr5mq3ta01x02x/6EJ1RHCQAR5CD56Hr00vfL9FJR3t6uan0dvBDotrw+ig8DOXoTvBBYr/OUEiMy5EWOFwbAgdEhksCHSL3hrjy9GaupzYRqBZrKFJaq93eSFZ0ywSzo4j5T0w2Ph+jHuF9kI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733240955; c=relaxed/simple;
-	bh=vXT/QlB1u6fcoLaLAWylLsqUWLFcCqmsrVP4pfpCJ0k=;
+	s=arc-20240116; t=1733240959; c=relaxed/simple;
+	bh=h+A1vpS25tvamGn0SWbrCJoIJEiPTCdKBNOpi+313Kw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M+HWMqRQkJWmXSFpHTQ2qevhjn6H5oNmB3ZIdLUREsY4MFWsB3yLqVIC/4Xt74PIXWFTNl1itRXdTh+bU3DlisWX9+EtgO8DOb3n3dDTzTrHYh5XGcXRZ0fo1o6W5Sf5QD2sBaiuYnyA+88L6+3fb0/dkjS1moRRjPSuVgbyrYg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZdOyAugE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=J7qbqrRSMdrnVrMv1mfhFYQoLFz1aRzwcwwy5QjlJ6KKYtzjiQbKNtr5daXf8elBZZSxq5dxf+tvvUSWRYo9czv7U3fmJaIAODx2l6xK40nVoDd1vL++Wz1CA/HrhDWdr8AM0rShSjjkXKDJX4Nv+z4n9WNZNdCCSIvtLRJHZdM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oHyfQvAR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZdOyAugE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 279D5C4CECF;
-	Tue,  3 Dec 2024 15:49:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oHyfQvAR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 829D6C4CECF;
+	Tue,  3 Dec 2024 15:49:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733240955;
-	bh=vXT/QlB1u6fcoLaLAWylLsqUWLFcCqmsrVP4pfpCJ0k=;
+	s=korg; t=1733240959;
+	bh=h+A1vpS25tvamGn0SWbrCJoIJEiPTCdKBNOpi+313Kw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZdOyAugEt7ZzCD8QGoctwf+OjuaLQraDEinKWzb6KHqxrtlagtNInGJsYvFsuUCSl
-	 3TjjKdW0rHgBtXfTwK6lhlBjkkknGdqTT7lIIloB+NinNtBLjNLxdRr5yvizRxOIPq
-	 n4R1Msp72bp573/dOeQE7Sha6e0pU9Rd9KFw0YZ0=
+	b=oHyfQvARU9x+AxeSyJeLNfM0d9h5OW5jRbAzgKs71g2yiMAOECD9c8CgKBHshmfR2
+	 MtISeAUjaVVyMq2y9VV3JMRKQX1L837BVjtGnbNjTKGXr0DAmr5LYJLee/KpbUDziq
+	 sm6KfCSPeR6tG5nXBSJ/frzPHjQMILf1FYD5ZGis=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Huafei <lihuafei1@huawei.com>,
-	Lyude Paul <lyude@redhat.com>,
+	Sean Anderson <sean.anderson@linux.dev>,
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 285/826] drm/nouveau/gr/gf100: Fix missing unlock in gf100_gr_chan_new()
-Date: Tue,  3 Dec 2024 15:40:12 +0100
-Message-ID: <20241203144754.889327404@linuxfoundation.org>
+Subject: [PATCH 6.12 286/826] drm: zynqmp_kms: Unplug DRM device before removal
+Date: Tue,  3 Dec 2024 15:40:13 +0100
+Message-ID: <20241203144754.928312781@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -51,39 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li Huafei <lihuafei1@huawei.com>
+From: Sean Anderson <sean.anderson@linux.dev>
 
-[ Upstream commit a2f599046c671d6b46d93aed95b37241ce4504cf ]
+[ Upstream commit 2e07c88914fc5289c21820b1aa94f058feb38197 ]
 
-When the call to gf100_grctx_generate() fails, unlock gr->fecs.mutex
-before returning the error.
+Prevent userspace accesses to the DRM device from causing
+use-after-frees by unplugging the device before we remove it. This
+causes any further userspace accesses to result in an error without
+further calls into this driver's internals.
 
-Fixes smatch warning:
-
-drivers/gpu/drm/nouveau/nvkm/engine/gr/gf100.c:480 gf100_gr_chan_new() warn: inconsistent returns '&gr->fecs.mutex'.
-
-Fixes: ca081fff6ecc ("drm/nouveau/gr/gf100-: generate golden context during first object alloc")
-Signed-off-by: Li Huafei <lihuafei1@huawei.com>
-Reviewed-by: Lyude Paul <lyude@redhat.com>
-Signed-off-by: Lyude Paul <lyude@redhat.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20241026173844.2392679-1-lihuafei1@huawei.com
+Fixes: d76271d22694 ("drm: xlnx: DRM/KMS driver for Xilinx ZynqMP DisplayPort Subsystem")
+Closes: https://lore.kernel.org/dri-devel/4d8f4c9b-2efb-4774-9a37-2f257f79b2c9@linux.dev/
+Signed-off-by: Sean Anderson <sean.anderson@linux.dev>
+Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240809193600.3360015-2-sean.anderson@linux.dev
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/nouveau/nvkm/engine/gr/gf100.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/xlnx/zynqmp_kms.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/nouveau/nvkm/engine/gr/gf100.c b/drivers/gpu/drm/nouveau/nvkm/engine/gr/gf100.c
-index 060c74a80eb14..3ea447f6a45b5 100644
---- a/drivers/gpu/drm/nouveau/nvkm/engine/gr/gf100.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/engine/gr/gf100.c
-@@ -443,6 +443,7 @@ gf100_gr_chan_new(struct nvkm_gr *base, struct nvkm_chan *fifoch,
- 		ret = gf100_grctx_generate(gr, chan, fifoch->inst);
- 		if (ret) {
- 			nvkm_error(&base->engine.subdev, "failed to construct context\n");
-+			mutex_unlock(&gr->fecs.mutex);
- 			return ret;
- 		}
- 	}
+diff --git a/drivers/gpu/drm/xlnx/zynqmp_kms.c b/drivers/gpu/drm/xlnx/zynqmp_kms.c
+index bd1368df78703..4556af2faa0f1 100644
+--- a/drivers/gpu/drm/xlnx/zynqmp_kms.c
++++ b/drivers/gpu/drm/xlnx/zynqmp_kms.c
+@@ -536,7 +536,7 @@ void zynqmp_dpsub_drm_cleanup(struct zynqmp_dpsub *dpsub)
+ {
+ 	struct drm_device *drm = &dpsub->drm->dev;
+ 
+-	drm_dev_unregister(drm);
++	drm_dev_unplug(drm);
+ 	drm_atomic_helper_shutdown(drm);
+ 	drm_encoder_cleanup(&dpsub->drm->encoder);
+ 	drm_kms_helper_poll_fini(drm);
 -- 
 2.43.0
 
