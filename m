@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B7B81F75B3;
-	Tue,  3 Dec 2024 15:38:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C3F01F8921;
+	Tue,  3 Dec 2024 15:38:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733240301; cv=none; b=bOF1wV55zER8yNFwQ5sfe09y5H5AzDgmjIx4Elp9ZZ0Hu4up2kU0h25xuA+C19sGFWWDVrB8krh3by8UNF31N0XWM+E8Pi06fdnTKApeLv82Puik6Ql6+ziek/bLeGYkycQSocMQoNdB8zQ/ey0tDdI81q9HROsJsV3x9DvJD30=
+	t=1733240304; cv=none; b=f4dmBAC2L14S9UbUwLM/1ImcsZWvZ/5XVWBW/m8rzVN7s+lF+gpYSfW5ElBQOxId1HEuLKxBLkgnFop871eQ0OFxYktpMg9MIKWFnj6wIvNAIbuYmpGv7QvhxauPmXh7h9bn/4u93sGM6VejepFVq0SHqDN3G+iIS1kcHWAnFmw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733240301; c=relaxed/simple;
-	bh=GJ5DFxm/A4rGnT7YEHeisu6v/IRRuHKhAyleN6Jx7cU=;
+	s=arc-20240116; t=1733240304; c=relaxed/simple;
+	bh=cJ/qim6mt4Nct0arDRf4yFkbyZU+xUS+wcMIf/+Ii7k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EtSOVfZJfpc1R/6/KK7uWP6QVcEHGyzhgEfIhtpoDP2+IJn+O8JeYPzkyxQTHfY5X5Njv5642bKwUVL8L3idq6q3b8UVlgghbDqJMzXGWxQz7T7eT/yAm3PGQ3DaM9JdZBWFx+D0Z9Z+x1CJr80a+8E2gGnaln6kaYmzJ9ZZlIc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Na18e7Ye; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oRk0Zy6AjgudslWPwadEA8M3ercSspn6W8WnTpqC497DcDJuN8qrSKpZfOGOGQLf/JpbZM/t9k1qdFrgrgEBZzokp/5GYvaJnGWbmhm+uWKi2yy9Ioibzq1QnWfJIRnJBjXGe4a5ivy4xriL1BhJ/6TPK20hereBEWbUMWQSVNk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pek1mLdj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Na18e7Ye"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA546C4CED6;
-	Tue,  3 Dec 2024 15:38:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pek1mLdj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4219C4CECF;
+	Tue,  3 Dec 2024 15:38:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733240301;
-	bh=GJ5DFxm/A4rGnT7YEHeisu6v/IRRuHKhAyleN6Jx7cU=;
+	s=korg; t=1733240304;
+	bh=cJ/qim6mt4Nct0arDRf4yFkbyZU+xUS+wcMIf/+Ii7k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Na18e7YeZKzdZnLSaQN19Q/Z2ARs+iXrrcpCnbkfN6o+ruTWHnv4yfzWSh7WLOhaj
-	 E5T0oKtyKHYExo9uU0PyiNabq0VLtxumUi6+cDdKvNFb0lCdd3l4gBCnwYSD3qRrmn
-	 LeiGkarjC6iVnPETPGEZDqp835Tl5/XlL/GgX14Q=
+	b=Pek1mLdjENTbmR5A35z7BaWkBgy4GaGwNJMVZIv5SPvIx07eItnzlDFA7f5jNSBVs
+	 /vRrj8ya9TLZtONTuz+PJWwfAmSCJYDiwltx6m/HJRRuO5Z62VNCFVhyB+TR+zwXeq
+	 7qq7wfG3WYgt2KHrdantwSscUrF0JV+qdr0H/tUg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marco Elver <elver@google.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
 	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 092/826] kcsan, seqlock: Fix incorrect assumption in read_seqbegin()
-Date: Tue,  3 Dec 2024 15:36:59 +0100
-Message-ID: <20241203144747.320285361@linuxfoundation.org>
+Subject: [PATCH 6.12 093/826] sched/ext: Remove sched_fork() hack
+Date: Tue,  3 Dec 2024 15:37:00 +0100
+Message-ID: <20241203144747.359653795@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -51,76 +52,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marco Elver <elver@google.com>
+From: Thomas Gleixner <tglx@linutronix.de>
 
-[ Upstream commit 183ec5f26b2fc97a4a9871865bfe9b33c41fddb2 ]
+[ Upstream commit 0f0d1b8e5010bfe1feeb4d78d137e41946a5370d ]
 
-During testing of the preceding changes, I noticed that in some cases,
-current->kcsan_ctx.in_flat_atomic remained true until task exit. This is
-obviously wrong, because _all_ accesses for the given task will be
-treated as atomic, resulting in false negatives i.e. missed data races.
+Instead of solving the underlying problem of the double invocation of
+__sched_fork() for idle tasks, sched-ext decided to hack around the issue
+by partially clearing out the entity struct to preserve the already
+enqueued node. A provided analysis and solution has been ignored for four
+months.
 
-Debugging led to fs/dcache.c, where we can see this usage of seqlock:
+Now that someone else has taken care of cleaning it up, remove the
+disgusting hack and clear out the full structure. Remove the comment in the
+structure declaration as well, as there is no requirement for @node being
+the last element anymore.
 
-	struct dentry *d_lookup(const struct dentry *parent, const struct qstr *name)
-	{
-		struct dentry *dentry;
-		unsigned seq;
-
-		do {
-			seq = read_seqbegin(&rename_lock);
-			dentry = __d_lookup(parent, name);
-			if (dentry)
-				break;
-		} while (read_seqretry(&rename_lock, seq));
-	[...]
-
-As can be seen, read_seqretry() is never called if dentry != NULL;
-consequently, current->kcsan_ctx.in_flat_atomic will never be reset to
-false by read_seqretry().
-
-Give up on the wrong assumption of "assume closing read_seqretry()", and
-rely on the already-present annotations in read_seqcount_begin/retry().
-
-Fixes: 88ecd153be95 ("seqlock, kcsan: Add annotations for KCSAN")
-Signed-off-by: Marco Elver <elver@google.com>
+Fixes: f0e1a0643a59 ("sched_ext: Implement BPF extensible scheduler class")
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20241104161910.780003-6-elver@google.com
+Acked-by: Tejun Heo <tj@kernel.org>
+Link: https://lore.kernel.org/r/87ldy82wkc.ffs@tglx
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/seqlock.h | 12 +-----------
- 1 file changed, 1 insertion(+), 11 deletions(-)
+ include/linux/sched/ext.h | 1 -
+ kernel/sched/ext.c        | 7 +------
+ 2 files changed, 1 insertion(+), 7 deletions(-)
 
-diff --git a/include/linux/seqlock.h b/include/linux/seqlock.h
-index 45eee0e5dca01..5298765d6ca48 100644
---- a/include/linux/seqlock.h
-+++ b/include/linux/seqlock.h
-@@ -810,11 +810,7 @@ static __always_inline void write_seqcount_latch_end(seqcount_latch_t *s)
-  */
- static inline unsigned read_seqbegin(const seqlock_t *sl)
- {
--	unsigned ret = read_seqcount_begin(&sl->seqcount);
--
--	kcsan_atomic_next(0);  /* non-raw usage, assume closing read_seqretry() */
--	kcsan_flat_atomic_begin();
--	return ret;
-+	return read_seqcount_begin(&sl->seqcount);
- }
+diff --git a/include/linux/sched/ext.h b/include/linux/sched/ext.h
+index 1ddbde64a31b4..2799e7284fff7 100644
+--- a/include/linux/sched/ext.h
++++ b/include/linux/sched/ext.h
+@@ -199,7 +199,6 @@ struct sched_ext_entity {
+ #ifdef CONFIG_EXT_GROUP_SCHED
+ 	struct cgroup		*cgrp_moving_from;
+ #endif
+-	/* must be the last field, see init_scx_entity() */
+ 	struct list_head	tasks_node;
+ };
  
- /**
-@@ -830,12 +826,6 @@ static inline unsigned read_seqbegin(const seqlock_t *sl)
-  */
- static inline unsigned read_seqretry(const seqlock_t *sl, unsigned start)
+diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
+index 751d73d500e51..ecb88c5285447 100644
+--- a/kernel/sched/ext.c
++++ b/kernel/sched/ext.c
+@@ -3567,12 +3567,7 @@ static void scx_ops_exit_task(struct task_struct *p)
+ 
+ void init_scx_entity(struct sched_ext_entity *scx)
  {
 -	/*
--	 * Assume not nested: read_seqretry() may be called multiple times when
--	 * completing read critical section.
+-	 * init_idle() calls this function again after fork sequence is
+-	 * complete. Don't touch ->tasks_node as it's already linked.
 -	 */
--	kcsan_flat_atomic_end();
+-	memset(scx, 0, offsetof(struct sched_ext_entity, tasks_node));
 -
- 	return read_seqcount_retry(&sl->seqcount, start);
- }
- 
++	memset(scx, 0, sizeof(*scx));
+ 	INIT_LIST_HEAD(&scx->dsq_list.node);
+ 	RB_CLEAR_NODE(&scx->dsq_priq);
+ 	scx->sticky_cpu = -1;
 -- 
 2.43.0
 
