@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FB241F75B7;
-	Tue,  3 Dec 2024 15:22:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDB5A1EF0AE;
+	Tue,  3 Dec 2024 15:22:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733239342; cv=none; b=FFtjqES1HFE50U/fryrPcWunN3V59WGGwAbOw5Pz54dksN36u3t9/adlcCY5yeS4JEZ2/ZoIKgUJcsnyOZF4FLCCSc3OvVdSIGRDHRlgNtatztqMU3YAn6wVy5Hs0AsP5+/LhfnAXqlchb9nIX/oTp9XYV1T9uHDv8slx19Y/TI=
+	t=1733239343; cv=none; b=IZbVYmAub9ZWrj9H9eSV0cuBbOsfDS8glLvLFXz/zKTdhdJhj0Ah/BtMwK74TkXqsY0+cbFF2NqYIwh0lgTmelrZwub2vP3nM6WJ5loiwwUNKP5qPByc/y5sC+iaTNDLQM3gcvZOvhhENvcG7J48cSjH9LLuzO9HzuI0O4369rY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733239342; c=relaxed/simple;
-	bh=iSwwvW+y51kq4ZzCPifiS0zRlvZtlBurq0TDFb8O7P8=;
+	s=arc-20240116; t=1733239343; c=relaxed/simple;
+	bh=Od3nrKjAaffNDou8ObsEJx4Ytq/nFFF9xESNocKVTPw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i8qId/2uj0o59ZwtDYaOCFYBIPCCDL85eD5XYURMhbK2e/Dn0M7cyMVudKnKvgCvO/A2Cucr9kD3VTop7hDa7uoz4S20RNskqsRMCg5MOun4Gw9R/DGubVpBFeJRMbTJhWtcQeyqe3DZS90MgiMUgRecVtTqKCVGHAZV6MXf7J8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fvaz0p4J; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=P5bqW2G0kxmIPsl6vlsRfPYYmYIgFqtq3T95B4SNtejB/IRZRq5OWXx1HKamauMXBib/7faZnpx/h70ckE7RkMoCg4pa40qyA64aOAm/DlSZTTRurG/pBVZXfPHSLaRMBe39n6F+BMSYbLyMCBNtqUrdzKBtz9RSurhEYiIOnZg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mtoMcDaI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fvaz0p4J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7145AC4CECF;
-	Tue,  3 Dec 2024 15:22:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mtoMcDaI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57407C4CECF;
+	Tue,  3 Dec 2024 15:22:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733239340;
-	bh=iSwwvW+y51kq4ZzCPifiS0zRlvZtlBurq0TDFb8O7P8=;
+	s=korg; t=1733239343;
+	bh=Od3nrKjAaffNDou8ObsEJx4Ytq/nFFF9xESNocKVTPw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Fvaz0p4JB1M0GKdGQ4guqrga/HNqaHsI5xUGjZktrkO054lkVYeuc+sh0nSzSHvzu
-	 uPE0bOCHj4cb1+eILJqU57mdJODmSi0ZN4NSFPyxi3Dovh/46ljBxfw5BjXWbYnsj0
-	 crjSQQlsQ/6y0m9NlztxzL8hoGlvpvy+kXVAx1Zs=
+	b=mtoMcDaInTfpQdYCnXJ2b95z0+qyYQDYbCp+IkKmTK71sBxJYfd01CIPmIhd8oaRE
+	 ixni7qyQQ86e/uPsM6sVyvLZJvtql42+0E9nf3FM/lTQ02uFkbrKFSTk8pnihmLK3h
+	 3rUQyYLp9ZMVb99nLbjB9mzIZCTLHWcDycUW80ZI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
-	Vinod Koul <vkoul@kernel.org>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 549/817] phy: airoha: Fix REG_CSR_2L_PLL_CMN_RESERVE0 config in airoha_pcie_phy_init_clk_out()
-Date: Tue,  3 Dec 2024 15:42:01 +0100
-Message-ID: <20241203144017.336229918@linuxfoundation.org>
+Subject: [PATCH 6.11 540/817] NFSD: Prevent NULL dereference in nfsd4_process_cb_update()
+Date: Tue,  3 Dec 2024 15:41:52 +0100
+Message-ID: <20241203144016.983100814@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -51,35 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenzo Bianconi <lorenzo@kernel.org>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit 09a19fb75498985cbb598f1fa43a7d2416925c30 ]
+[ Upstream commit 1e02c641c3a43c88cecc08402000418e15578d38 ]
 
-Fix typo configuring REG_CSR_2L_PLL_CMN_RESERVE0 register in
-airoha_pcie_phy_init_clk_out routine.
+@ses is initialized to NULL. If __nfsd4_find_backchannel() finds no
+available backchannel session, setup_callback_client() will try to
+dereference @ses and segfault.
 
-Fixes: d7d2818b9383 ("phy: airoha: Add PCIe PHY driver for EN7581 SoC.")
-Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Link: https://lore.kernel.org/r/20240918-airoha-en7581-phy-fixes-v1-1-8291729a87f8@kernel.org
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Fixes: dcbeaa68dbbd ("nfsd4: allow backchannel recovery")
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/phy-airoha-pcie.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/nfsd/nfs4callback.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/phy/phy-airoha-pcie.c b/drivers/phy/phy-airoha-pcie.c
-index bd3edaa986c8b..3113be0a0e5b6 100644
---- a/drivers/phy/phy-airoha-pcie.c
-+++ b/drivers/phy/phy-airoha-pcie.c
-@@ -456,7 +456,7 @@ static void airoha_pcie_phy_init_clk_out(struct airoha_pcie_phy *pcie_phy)
- 	airoha_phy_csr_2l_clear_bits(pcie_phy, REG_CSR_2L_CLKTX1_OFFSET,
- 				     CSR_2L_PXP_CLKTX1_SR);
- 	airoha_phy_csr_2l_update_field(pcie_phy, REG_CSR_2L_PLL_CMN_RESERVE0,
--				       CSR_2L_PXP_PLL_RESERVE_MASK, 0xdd);
-+				       CSR_2L_PXP_PLL_RESERVE_MASK, 0xd0d);
- }
+diff --git a/fs/nfsd/nfs4callback.c b/fs/nfsd/nfs4callback.c
+index d756f443fc444..e6183097517ff 100644
+--- a/fs/nfsd/nfs4callback.c
++++ b/fs/nfsd/nfs4callback.c
+@@ -1455,6 +1455,8 @@ static void nfsd4_process_cb_update(struct nfsd4_callback *cb)
+ 		ses = c->cn_session;
+ 	}
+ 	spin_unlock(&clp->cl_lock);
++	if (!c)
++		return;
  
- static void airoha_pcie_phy_init_csr_2l(struct airoha_pcie_phy *pcie_phy)
+ 	err = setup_callback_client(clp, &conn, ses);
+ 	if (err) {
 -- 
 2.43.0
 
