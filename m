@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C396314A088;
-	Tue,  3 Dec 2024 16:18:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FF5B1F9A94;
+	Tue,  3 Dec 2024 16:18:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733242684; cv=none; b=cNo3dRHz28hJz4zQ0/ISzuAnkL51DCKLbilI4DvP1OW2DATuVM/3YoD+FQxQBqKjcdqyDZ1G+hBkCfKT4zVyZooCejxbHrNfBCPAnSIeHJPWk3PdFmpEeLGn7RjwR6N3Lwk2gQQZZE+mDZFoK5jDWrTuISwODTVtR+YDtp1VT7A=
+	t=1733242688; cv=none; b=JB3/XWIpOs3UHOUtBNAU+cBKumpvPMfnruwCtB1i2PypHR/Eai3f6i9EDVRsMFtjX3y4T2EtNSvzGJ8TJhDqeG5hYFxu++/knYyLPv6a37kTOQiPPazjZ37Z3I+74dG7jW23nxuCBNRr3uNSznWBXytFNSdsNEwAGzJvHfp62tU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733242684; c=relaxed/simple;
-	bh=IEqozqj1PHEDxnZKDwQdTtHAsv8d8YS9h8uiMlTzuTg=;
+	s=arc-20240116; t=1733242688; c=relaxed/simple;
+	bh=vjSoRr/ljWFK04RfUFGxqGWtgspNiqVh4HiWJj4OVr0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g9Jd+q4oHWsn4bCG9TTr3CcEMbreMjiNCKfkQvmJ/KkNy2ePqcF28yJhzxfo4ZFGr+b0EFBuuYHwPBOJ3swW3fVE4fwKJPwNx5jL3sxdObB75jQET0RVkDU2/2+pgnFNxu4saiNl0Wgwhma3dZs++ufPr2adNKKWJuw48PcHHu0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wk834+vX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TzVLskOCHth5ypZWoqbKJMqW7bhaEnB8uuLJn1aDRefN1xj9uBOYUexjMH2pNoB4Tgl/inj4jAHgQnLdCTWfDBRLVHkye/epPkkG74tm/4mnRrpvumMhlc8sLY7BITYgQQGnE7JtlRyMQlc5NOhIAakVCJjwxTU45u0aNn1diKc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jdGnKhMn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wk834+vX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49616C4CECF;
-	Tue,  3 Dec 2024 16:18:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jdGnKhMn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74B64C4CECF;
+	Tue,  3 Dec 2024 16:18:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733242684;
-	bh=IEqozqj1PHEDxnZKDwQdTtHAsv8d8YS9h8uiMlTzuTg=;
+	s=korg; t=1733242687;
+	bh=vjSoRr/ljWFK04RfUFGxqGWtgspNiqVh4HiWJj4OVr0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Wk834+vXK+eqc/aKpU2mkx0j6vL96iSq70yn5oIYGuea6ZmYg4Z/x35kE5qSLjIXW
-	 z8nYiwxe27rRW02h9NUBp2DtFhHCPu1EASCKzz8PpIJkTsHt3iyFTwS5qNFkPgB3rx
-	 cXN7TZ3BEq9rGfjgmsfdcTIhR+pEYnjzWRWE4gxc=
+	b=jdGnKhMnIIGnnjYWN2eNUGqwxqzHEa+qzqmNWUxtcjkyC0gtxuFNEKgSGJ+L1r0c9
+	 f8Qi4y8k1UlvtnL/YkRwV/WOAK/Yygo3r5+F2s74SjQx4VmsgYAtYB2G2uxZCbf7C5
+	 245TgqZxUis8j+Vb8I2IQjb+139I/Wr6gBQjpoHw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mike Snitzer <snitzer@kernel.org>,
-	NeilBrown <neilb@suse.de>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 778/826] nfs/localio: must clear res.replen in nfs_local_read_done
-Date: Tue,  3 Dec 2024 15:48:25 +0100
-Message-ID: <20241203144814.113938942@linuxfoundation.org>
+	David Howells <dhowells@redhat.com>,
+	"Paulo Alcantara (Red Hat)" <pc@manguebit.com>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.12 752/826] smb: client: handle max length for SMB symlinks
+Date: Tue,  3 Dec 2024 15:47:59 +0100
+Message-ID: <20241203144813.097373708@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -52,57 +51,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: NeilBrown <neilb@suse.de>
+From: Paulo Alcantara <pc@manguebit.com>
 
-[ Upstream commit 650703bc4ed3edf841e851c99ab8e7ba9e5262a3 ]
+commit 0812340811e45ec4039d409049be53056182a552 upstream.
 
-Otherwise memory corruption can occur due to NFSv3 LOCALIO reads
-leaving garbage in res.replen:
-- nfs3_read_done() copies that into server->read_hdrsize; from there
-  nfs3_proc_read_setup() copies it to args.replen in new requests.
-- nfs3_xdr_enc_read3args() passes that to rpc_prepare_reply_pages()
-  which includes it in hdrsize for xdr_init_pages, so that rq_rcv_buf
-  contains a ridiculous len.
-- This is copied to rq_private_buf and xs_read_stream_request()
-  eventually passes the kvec to sock_recvmsg() which receives incoming
-  data into entirely the wrong place.
+We can't use PATH_MAX for SMB symlinks because
 
-This is easily reproduced with NFSv3 LOCALIO that is servicing reads
-when it is made to pivot back to using normal RPC.  This switch back
-to using normal NFSv3 with RPC can occur for a few reasons but this
-issue was exposed with a test that stops and then restarts the NFSv3
-server while LOCALIO is performing heavy read IO.
+  (1) Windows Server will fail FSCTL_SET_REPARSE_POINT with
+      STATUS_IO_REPARSE_DATA_INVALID when input buffer is larger than
+      16K, as specified in MS-FSA 2.1.5.10.37.
 
-Fixes: 70ba381e1a43 ("nfs: add LOCALIO support")
-Reported-by: Mike Snitzer <snitzer@kernel.org>
-Signed-off-by: NeilBrown <neilb@suse.de>
-Co-developed-by: Mike Snitzer <snitzer@kernel.org>
-Signed-off-by: Mike Snitzer <snitzer@kernel.org>
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+  (2) The client won't be able to parse large SMB responses that
+      includes SMB symlink path within SMB2_CREATE or SMB2_IOCTL
+      responses.
+
+Fix this by defining a maximum length value (4060) for SMB symlinks
+that both client and server can handle.
+
+Cc: David Howells <dhowells@redhat.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Paulo Alcantara (Red Hat) <pc@manguebit.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfs/localio.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ fs/smb/client/reparse.c |    5 ++++-
+ fs/smb/client/reparse.h |    2 ++
+ 2 files changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/fs/nfs/localio.c b/fs/nfs/localio.c
-index 8f0ce82a677e1..637528e6368ef 100644
---- a/fs/nfs/localio.c
-+++ b/fs/nfs/localio.c
-@@ -354,6 +354,12 @@ nfs_local_read_done(struct nfs_local_kiocb *iocb, long status)
+--- a/fs/smb/client/reparse.c
++++ b/fs/smb/client/reparse.c
+@@ -35,6 +35,9 @@ int smb2_create_reparse_symlink(const un
+ 	u16 len, plen;
+ 	int rc = 0;
  
- 	nfs_local_pgio_done(hdr, status);
- 
-+	/*
-+	 * Must clear replen otherwise NFSv3 data corruption will occur
-+	 * if/when switching from LOCALIO back to using normal RPC.
-+	 */
-+	hdr->res.replen = 0;
++	if (strlen(symname) > REPARSE_SYM_PATH_MAX)
++		return -ENAMETOOLONG;
 +
- 	if (hdr->res.count != hdr->args.count ||
- 	    hdr->args.offset + hdr->res.count >= i_size_read(file_inode(filp)))
- 		hdr->res.eof = true;
--- 
-2.43.0
-
+ 	sym = kstrdup(symname, GFP_KERNEL);
+ 	if (!sym)
+ 		return -ENOMEM;
+@@ -64,7 +67,7 @@ int smb2_create_reparse_symlink(const un
+ 	if (rc < 0)
+ 		goto out;
+ 
+-	plen = 2 * UniStrnlen((wchar_t *)path, PATH_MAX);
++	plen = 2 * UniStrnlen((wchar_t *)path, REPARSE_SYM_PATH_MAX);
+ 	len = sizeof(*buf) + plen * 2;
+ 	buf = kzalloc(len, GFP_KERNEL);
+ 	if (!buf) {
+--- a/fs/smb/client/reparse.h
++++ b/fs/smb/client/reparse.h
+@@ -12,6 +12,8 @@
+ #include "fs_context.h"
+ #include "cifsglob.h"
+ 
++#define REPARSE_SYM_PATH_MAX 4060
++
+ /*
+  * Used only by cifs.ko to ignore reparse points from files when client or
+  * server doesn't support FSCTL_GET_REPARSE_POINT.
 
 
