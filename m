@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E14641F8923;
-	Tue,  3 Dec 2024 15:35:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FA861F8924;
+	Tue,  3 Dec 2024 15:35:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733240137; cv=none; b=hOgyYDX83nZrayTtHm67sg2861ulb885Z5vFL1FQ8ZZAzSldykVskLLll4FI/d/SgA18SdF2Df+CxjY8Bx3BEFRLoZ1ZfYKXVoty8bzSRZ3MD/ZChhzKOU124w3y+03VCqxpJhYGIO+MVn+lRaJkBVqGiXfn0HUXREj8g/AADpQ=
+	t=1733240140; cv=none; b=sRpt/fJC1uzkyUX7xZLbT9+FrETTPl4WioyhhCrr9HfKv61m1XrcT/sE1IPojAocZEMGrs5Cl0INp+nH9lzKo6uRktZtf6pJhkVG4TZxlt/7yVyoRAgjTkCcbHuzapFS7mIbk8HJcesOnYDsBf6nS0Gw9BCE3oZSPwhcWxxkYKo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733240137; c=relaxed/simple;
-	bh=9pEG6wyySdqTqFFBLZqxcig48oAYGWDQm4JQirBfk58=;
+	s=arc-20240116; t=1733240140; c=relaxed/simple;
+	bh=g1yilmzVgMFMJuAdFa0cNTnyVc062uSNSlrGg0tXT9A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MPmsLjd2qaTB5aOhQQuBIO/8P6drs+dYw6DfSVn1RA1S7n1Wh3ah5I/iawZM9kwN33ExZJKGLbVsw7jJsRZ69ZzPUKVUQ3Nopn0F3FHQZSQ5EyWR8kiKdfAHccmd1DBzkxYyoRsUVuHScq2z1TYV0r5+g+5Ordzv0a3DLvGcpQY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bgZIboyS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MFEvEQqvjP4pWVi0jEDO7vyZ029/XDu54XpdXDVD+t+06lQ68nla3gy0wD2UkO2nfFqbCFlIOJeQLcv8M6CjoW+V5LvjCkqArKVZGbapcZyCLIgm+mnkuh6JaZd3TYNRrzWVEXghOe5CdO7lBLaHmn7iTtP7xF4Lp7Ni1h4C2gI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y2wGn2Iu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bgZIboyS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 677ACC4CECF;
-	Tue,  3 Dec 2024 15:35:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y2wGn2Iu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A237C4CECF;
+	Tue,  3 Dec 2024 15:35:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733240136;
-	bh=9pEG6wyySdqTqFFBLZqxcig48oAYGWDQm4JQirBfk58=;
+	s=korg; t=1733240139;
+	bh=g1yilmzVgMFMJuAdFa0cNTnyVc062uSNSlrGg0tXT9A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bgZIboySjuE9vEx/VRHYgx5soCSvKlhhh/2o5L4Sstu2ortEHaLdSD0iWV4oXBzvb
-	 oyAlY5KJJhKYVnR4xwj1IjL/noNH7a29KpxLZYyhR9tzilNPrDfM92bkUmhOfNvWeJ
-	 cb6LaWwLXO2DV97uXkGqz+HCLPZdj5/Xn6a8Hy68=
+	b=Y2wGn2Iu+N13kGWVXMvkSEZAGxBCUyDx7GDSZYH8C0iEkJU1F+ReAgjp2z6aBUNG+
+	 jihB3oVxd6XYOaDSJFl4TN1gh3NJme3P5RNjLCsr0038m1ibNXx8El1w7jbyCrjvAd
+	 9oQBY8t65Ipk6laFxDriZ5s8y+20Z1dWrXKOeJG0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bill ODonnell <bodonnel@redhat.com>,
-	Christian Brauner <brauner@kernel.org>,
+	Kristina Martsenko <kristina.martsenko@arm.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 006/826] efs: fix the efs new mount api implementation
-Date: Tue,  3 Dec 2024 15:35:33 +0100
-Message-ID: <20241203144743.693055124@linuxfoundation.org>
+Subject: [PATCH 6.12 007/826] arm64: probes: Disable kprobes/uprobes on MOPS instructions
+Date: Tue,  3 Dec 2024 15:35:34 +0100
+Message-ID: <20241203144743.731765913@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -51,129 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bill O'Donnell <bodonnel@redhat.com>
+From: Kristina Martsenko <kristina.martsenko@arm.com>
 
-[ Upstream commit 51ceeb1a8142537b9f65aeaac6c301560a948197 ]
+[ Upstream commit c56c599d9002d44f559be3852b371db46adac87c ]
 
-Commit 39a6c668e4 (efs: convert efs to use the new mount api)
-did not include anything from v2 and v3 that were also submitted.
-Fix this by bringing in those changes that were proposed in v2 and
-v3.
+FEAT_MOPS instructions require that all three instructions (prologue,
+main and epilogue) appear consecutively in memory. Placing a
+kprobe/uprobe on one of them doesn't work as only a single instruction
+gets executed out-of-line or simulated. So don't allow placing a probe
+on a MOPS instruction.
 
-Fixes: 39a6c668e4 efs: convert efs to use the new mount api.
-
-Signed-off-by: Bill O'Donnell <bodonnel@redhat.com>
-Link: https://lore.kernel.org/r/20241014190241.4093825-1-bodonnel@redhat.com
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Fixes: b7564127ffcb ("arm64: mops: detect and enable FEAT_MOPS")
+Signed-off-by: Kristina Martsenko <kristina.martsenko@arm.com>
+Link: https://lore.kernel.org/r/20240930161051.3777828-2-kristina.martsenko@arm.com
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/efs/super.c | 43 +++----------------------------------------
- 1 file changed, 3 insertions(+), 40 deletions(-)
+ arch/arm64/include/asm/insn.h          | 1 +
+ arch/arm64/kernel/probes/decode-insn.c | 7 +++++--
+ 2 files changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/fs/efs/super.c b/fs/efs/super.c
-index e4421c10caebe..c59086b7eabfe 100644
---- a/fs/efs/super.c
-+++ b/fs/efs/super.c
-@@ -15,7 +15,6 @@
- #include <linux/vfs.h>
- #include <linux/blkdev.h>
- #include <linux/fs_context.h>
--#include <linux/fs_parser.h>
- #include "efs.h"
- #include <linux/efs_vh.h>
- #include <linux/efs_fs_sb.h>
-@@ -49,15 +48,6 @@ static struct pt_types sgi_pt_types[] = {
- 	{0,		NULL}
- };
+diff --git a/arch/arm64/include/asm/insn.h b/arch/arm64/include/asm/insn.h
+index 8c0a36f72d6fc..bc77869dbd43b 100644
+--- a/arch/arm64/include/asm/insn.h
++++ b/arch/arm64/include/asm/insn.h
+@@ -353,6 +353,7 @@ __AARCH64_INSN_FUNCS(ldrsw_lit,	0xFF000000, 0x98000000)
+ __AARCH64_INSN_FUNCS(exclusive,	0x3F800000, 0x08000000)
+ __AARCH64_INSN_FUNCS(load_ex,	0x3F400000, 0x08400000)
+ __AARCH64_INSN_FUNCS(store_ex,	0x3F400000, 0x08000000)
++__AARCH64_INSN_FUNCS(mops,	0x3B200C00, 0x19000400)
+ __AARCH64_INSN_FUNCS(stp,	0x7FC00000, 0x29000000)
+ __AARCH64_INSN_FUNCS(ldp,	0x7FC00000, 0x29400000)
+ __AARCH64_INSN_FUNCS(stp_post,	0x7FC00000, 0x28800000)
+diff --git a/arch/arm64/kernel/probes/decode-insn.c b/arch/arm64/kernel/probes/decode-insn.c
+index 3496d6169e59b..42b69936cee34 100644
+--- a/arch/arm64/kernel/probes/decode-insn.c
++++ b/arch/arm64/kernel/probes/decode-insn.c
+@@ -58,10 +58,13 @@ static bool __kprobes aarch64_insn_is_steppable(u32 insn)
+ 	 * Instructions which load PC relative literals are not going to work
+ 	 * when executed from an XOL slot. Instructions doing an exclusive
+ 	 * load/store are not going to complete successfully when single-step
+-	 * exception handling happens in the middle of the sequence.
++	 * exception handling happens in the middle of the sequence. Memory
++	 * copy/set instructions require that all three instructions be placed
++	 * consecutively in memory.
+ 	 */
+ 	if (aarch64_insn_uses_literal(insn) ||
+-	    aarch64_insn_is_exclusive(insn))
++	    aarch64_insn_is_exclusive(insn) ||
++	    aarch64_insn_is_mops(insn))
+ 		return false;
  
--enum {
--	Opt_explicit_open,
--};
--
--static const struct fs_parameter_spec efs_param_spec[] = {
--	fsparam_flag    ("explicit-open",       Opt_explicit_open),
--	{}
--};
--
- /*
-  * File system definition and registration.
-  */
-@@ -67,7 +57,6 @@ static struct file_system_type efs_fs_type = {
- 	.kill_sb		= efs_kill_sb,
- 	.fs_flags		= FS_REQUIRES_DEV,
- 	.init_fs_context	= efs_init_fs_context,
--	.parameters		= efs_param_spec,
- };
- MODULE_ALIAS_FS("efs");
- 
-@@ -265,7 +254,8 @@ static int efs_fill_super(struct super_block *s, struct fs_context *fc)
- 	if (!sb_set_blocksize(s, EFS_BLOCKSIZE)) {
- 		pr_err("device does not support %d byte blocks\n",
- 			EFS_BLOCKSIZE);
--		return -EINVAL;
-+		return invalf(fc, "device does not support %d byte blocks\n",
-+			      EFS_BLOCKSIZE);
- 	}
- 
- 	/* read the vh (volume header) block */
-@@ -327,43 +317,22 @@ static int efs_fill_super(struct super_block *s, struct fs_context *fc)
- 	return 0;
- }
- 
--static void efs_free_fc(struct fs_context *fc)
--{
--	kfree(fc->fs_private);
--}
--
- static int efs_get_tree(struct fs_context *fc)
- {
- 	return get_tree_bdev(fc, efs_fill_super);
- }
- 
--static int efs_parse_param(struct fs_context *fc, struct fs_parameter *param)
--{
--	int token;
--	struct fs_parse_result result;
--
--	token = fs_parse(fc, efs_param_spec, param, &result);
--	if (token < 0)
--		return token;
--	return 0;
--}
--
- static int efs_reconfigure(struct fs_context *fc)
- {
- 	sync_filesystem(fc->root->d_sb);
-+	fc->sb_flags |= SB_RDONLY;
- 
- 	return 0;
- }
- 
--struct efs_context {
--	unsigned long s_mount_opts;
--};
--
- static const struct fs_context_operations efs_context_opts = {
--	.parse_param	= efs_parse_param,
- 	.get_tree	= efs_get_tree,
- 	.reconfigure	= efs_reconfigure,
--	.free		= efs_free_fc,
- };
- 
- /*
-@@ -371,12 +340,6 @@ static const struct fs_context_operations efs_context_opts = {
-  */
- static int efs_init_fs_context(struct fs_context *fc)
- {
--	struct efs_context *ctx;
--
--	ctx = kzalloc(sizeof(struct efs_context), GFP_KERNEL);
--	if (!ctx)
--		return -ENOMEM;
--	fc->fs_private = ctx;
- 	fc->ops = &efs_context_opts;
- 
- 	return 0;
+ 	return true;
 -- 
 2.43.0
 
