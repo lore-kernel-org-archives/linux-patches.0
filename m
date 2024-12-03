@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 645191F76A4;
-	Tue,  3 Dec 2024 15:11:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E1D51F76A4;
+	Tue,  3 Dec 2024 15:11:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733238716; cv=none; b=hMUyDOUEmv6S9nJK0rKNZpRqoA58VarGtk91OenQpT/RQnj3Af4XVYPk6qS9x2Kv1MRMWEbRXLUlM4kcOUpbeT2yHsKrw9YFasvfEBp+jshqp2Y8Ke0gfty63qa8rJ+oh6SDD6JXKRDj0Zitmo0eD71Z/nfqvYFgSX+b8xdGRHY=
+	t=1733238719; cv=none; b=XhZ77LlTRG+pPELidYBg+W/U3T71/FF7ZNlxlJIAhhPw0cYmP/D2yMiXC5oJzbi8EBzYhegvbN+IM29f6lJyd2oxLUzvtSpMczuz0Bk6QYHLIsc4S835NoaGsDPx0f+z+60mETWfVVIix59EJoan5S3z2G1rnwRBmGMpPPCcKWc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733238716; c=relaxed/simple;
-	bh=cG4mjA+nJ8XL+NjPshtIoT2nRFmtFjuANg/v1M7Wqhs=;
+	s=arc-20240116; t=1733238719; c=relaxed/simple;
+	bh=sMd9p5uSZ6C2UQJWp+flJUWF1h6Gmqubny42CjkSW2Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PPhjJ+sDGOiHUqWudRP85d6b1aOpXmJKk9AiQgzQIYUFSASjlzJ1POlRpvJRj3C5eiA7m5G1KMeviXpxyS//ua0JHsw7tFNYKWdVX86KFUL2nRfbrfGb2+7rmCMCnaXdFlfXwIA1f3GJJWilTz/FGeG/BLhVLeMBe87DQU2xiTU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bf7c2wom; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WCne71FP7uKP/POZpmTaYqoMOlRSQXakGaBpfv575qsrlEwPL011gHxfmtEgRrQX8vk4XgI+ZJ4FABkVWHdmRl/oRh5eZfDANZEK73H6BPhKVawSUPB11VEb7l42cgWx+r3rzTh2BEiOV51mmAKD1eC/g96Scfnb+MjUARCxFeI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UCfuNdT8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bf7c2wom"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E59C3C4CECF;
-	Tue,  3 Dec 2024 15:11:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UCfuNdT8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBD10C4CECF;
+	Tue,  3 Dec 2024 15:11:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733238716;
-	bh=cG4mjA+nJ8XL+NjPshtIoT2nRFmtFjuANg/v1M7Wqhs=;
+	s=korg; t=1733238719;
+	bh=sMd9p5uSZ6C2UQJWp+flJUWF1h6Gmqubny42CjkSW2Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bf7c2womv47KOUahdl5QShnJVxB/xxJFchVPcKqfeD8lJNhRmq1gFtLy9CJj6SXk3
-	 ZC2eEWvxDjpY6yJN7DVVfbL8at9VgYoQJgzBDEuxUgEf4uDaKOhcTvPooffVYy8X2a
-	 2rm8s20z7iHbmL5gYWAqZB/wFcBzcLmpAkqfVZoo=
+	b=UCfuNdT8iA8I5P070ku8tACIXzVtUm9r9A+/0W1VUOqHatC7PB+l2/k1duGMnOvZP
+	 GKiH2l2c+4ROdvCL+q/g5RfcY94kkj1YXj7u4Vfzg3iOMLYv1MDaA5AzRJ/SClONSK
+	 TA40ebRe8DlqrMhzT8FTlD4aWXU4lFqL9eRFcoBw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiri Olsa <jolsa@kernel.org>,
 	Andrii Nakryiko <andrii@kernel.org>,
+	Jiri Olsa <jolsa@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 342/817] bpf: Allow return values 0 and 1 for kprobe session
-Date: Tue,  3 Dec 2024 15:38:34 +0100
-Message-ID: <20241203144009.173384140@linuxfoundation.org>
+Subject: [PATCH 6.11 343/817] bpf: Force uprobe bpf program to always return 0
+Date: Tue,  3 Dec 2024 15:38:35 +0100
+Message-ID: <20241203144009.212607507@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -53,41 +53,55 @@ Content-Transfer-Encoding: 8bit
 
 From: Jiri Olsa <jolsa@kernel.org>
 
-[ Upstream commit 17c4b65a24938c6dd79496cce5df15f70d9c253c ]
+[ Upstream commit f505005bc7426f4309880da94cfbfc37efa225bd ]
 
-The kprobe session program can return only 0 or 1,
-instruct verifier to check for that.
+As suggested by Andrii make uprobe multi bpf programs to always return 0,
+so they can't force uprobe removal.
 
-Fixes: 535a3692ba72 ("bpf: Add support for kprobe session attach")
+Keeping the int return type for uprobe_prog_run, because it will be used
+in following session changes.
+
+Fixes: 89ae89f53d20 ("bpf: Add multi uprobe link")
+Suggested-by: Andrii Nakryiko <andrii@kernel.org>
 Signed-off-by: Jiri Olsa <jolsa@kernel.org>
 Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
 Acked-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20241108134544.480660-2-jolsa@kernel.org
+Link: https://lore.kernel.org/bpf/20241108134544.480660-3-jolsa@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ kernel/trace/bpf_trace.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index b34a358c75e0f..61c3896087b2c 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -15798,6 +15798,15 @@ static int check_return_code(struct bpf_verifier_env *env, int regno, const char
- 			return -ENOTSUPP;
- 		}
- 		break;
-+	case BPF_PROG_TYPE_KPROBE:
-+		switch (env->prog->expected_attach_type) {
-+		case BPF_TRACE_KPROBE_SESSION:
-+			range = retval_range(0, 1);
-+			break;
-+		default:
-+			return 0;
-+		}
-+		break;
- 	case BPF_PROG_TYPE_SK_LOOKUP:
- 		range = retval_range(SK_DROP, SK_PASS);
- 		break;
+diff --git a/kernel/trace/bpf_trace.c b/kernel/trace/bpf_trace.c
+index 6dbbb3683ab2e..9cb1c952c3ec4 100644
+--- a/kernel/trace/bpf_trace.c
++++ b/kernel/trace/bpf_trace.c
+@@ -3294,7 +3294,6 @@ static int uprobe_prog_run(struct bpf_uprobe *uprobe,
+ 	struct bpf_prog *prog = link->link.prog;
+ 	bool sleepable = prog->sleepable;
+ 	struct bpf_run_ctx *old_run_ctx;
+-	int err = 0;
+ 
+ 	if (link->task && current->mm != link->task->mm)
+ 		return 0;
+@@ -3307,7 +3306,7 @@ static int uprobe_prog_run(struct bpf_uprobe *uprobe,
+ 	migrate_disable();
+ 
+ 	old_run_ctx = bpf_set_run_ctx(&run_ctx.run_ctx);
+-	err = bpf_prog_run(link->link.prog, regs);
++	bpf_prog_run(link->link.prog, regs);
+ 	bpf_reset_run_ctx(old_run_ctx);
+ 
+ 	migrate_enable();
+@@ -3316,7 +3315,7 @@ static int uprobe_prog_run(struct bpf_uprobe *uprobe,
+ 		rcu_read_unlock_trace();
+ 	else
+ 		rcu_read_unlock();
+-	return err;
++	return 0;
+ }
+ 
+ static bool
 -- 
 2.43.0
 
