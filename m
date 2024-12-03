@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3D9E23CE;
-	Tue,  3 Dec 2024 16:07:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F061223CE;
+	Tue,  3 Dec 2024 16:07:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733242057; cv=none; b=H7BJwjOru6QMd7ZxiS2vorxBw1UDN9GncN08N7SEftUxhUKDLbUAfVfcSisHyd8/7RSb0EVVP60JDgLgZLz94B2XeE71OwGyqRw6geM3WHXR83Np65OUVpOgizf7J9LpAQT8BGDPXE46q06TEbR6jWC319di7FvTYeJ3FpKQJ4s=
+	t=1733242060; cv=none; b=SZ0NDzlZDib3eROX8oNnRWDqqk+Jc8GgHty5pMBiFFC5/BCz3EJne4+wSsENQjSkpF1rYiM+uB9gVUwTfwHXBEzcL56+SGoEMoZVbmb2PpwB7z7jmixLIkWRcE9mrb838zVqcDdoCQYUZdEpR3AiCkggp5IWdR/TwuWjuUuLFcA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733242057; c=relaxed/simple;
-	bh=7RIGY277x7ZWAcIiFVaF86JH/+/VohLn7IObSkwcf9o=;
+	s=arc-20240116; t=1733242060; c=relaxed/simple;
+	bh=orxU6+enaatr/yFKZysiPWIkS4vmaSr3qGHUIX/Opts=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CrfJwAQnn8FarNeXE8CQCLgbMxrY7kJZ6PNZ0Piq3MRMH4H5tmGckDVPUPa1ZbbxVmBHk/MY9RqGW04rLp9YwP0nblcQ4v1U2nNRBCtwyb1+5napi3g9wCoBuFllxnwv0z+aIKTtNcCHA1hv2z3g33j0a8usVRQJ3s1ShpH6GrE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RXMBFKXQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BSGMonDhBk96sapchh72414cHPeE5REUhO5ajn7q5pruU8+RkYJw/QDrbcQ9lz4HB2KaqZ06tUZfwIizyBSwtyrx+R5bjjg4o89H7m6h+RnJnRfh4JjcVzrEdyxmeqbH6mOMpVWKE4cYvm8+NN/VGVkAutpNPVScDrIZ6LN7lgY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dLy4nGUK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RXMBFKXQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E929EC4CECF;
-	Tue,  3 Dec 2024 16:07:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dLy4nGUK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22B2DC4CECF;
+	Tue,  3 Dec 2024 16:07:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733242056;
-	bh=7RIGY277x7ZWAcIiFVaF86JH/+/VohLn7IObSkwcf9o=;
+	s=korg; t=1733242059;
+	bh=orxU6+enaatr/yFKZysiPWIkS4vmaSr3qGHUIX/Opts=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RXMBFKXQ1Xrm6EQeeLmFuSoB9GFloAAVLI2BnSAyLDWpjpB2a6404ugSrL1QO4n+W
-	 VE0zUB6Ft6MKgHaQAmRfLtjtn3xX+I6XRb9bU+3axvVoMbAYzxiyYlBp5wmk62ViaJ
-	 M6bwN117Nw5+nEUIypKiB4i+ECQVNeLyQxA1o9gM=
+	b=dLy4nGUKIl9qmm/YitdPkl/Gt5vl09Wn5EOzpdWaXgHoiiOoY93olj9ZmAtfKJVF/
+	 BXEM5lkywL6owmxGY3eYFExmFvBVYn+drxtUgS7lhPMaowOkNwNh8UUPRBLwvzKTyI
+	 efmapGTQSd6skcfWp1v2/bLzqUkH8d6qJY/DhOzU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinjie Ruan <ruanjinjie@huawei.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Keita Morisaki <keyz@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 595/826] misc: apds990x: Fix missing pm_runtime_disable()
-Date: Tue,  3 Dec 2024 15:45:22 +0100
-Message-ID: <20241203144806.968203897@linuxfoundation.org>
+Subject: [PATCH 6.12 596/826] devres: Fix page faults when tracing devres from unloaded modules
+Date: Tue,  3 Dec 2024 15:45:23 +0100
+Message-ID: <20241203144807.006878887@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -50,65 +51,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinjie Ruan <ruanjinjie@huawei.com>
+From: Keita Morisaki <keyz@google.com>
 
-[ Upstream commit 3c5d8b819d27012264edd17e6ae7fffda382fe44 ]
+[ Upstream commit 765399553714e934a219d698953d435f4f99caa7 ]
 
-The pm_runtime_disable() is missing in probe error path,
-so add it to fix it.
+The devres ftrace event logs the name of the devres node, which is often a
+function name (e.g., "devm_work_drop") stringified by macros like
+devm_add_action. Currently, ftrace stores this name as a string literal
+address, which can become invalid when the module containing the string is
+unloaded. This results in page faults when ftrace tries to access the name.
 
-Fixes: 92b1f84d46b2 ("drivers/misc: driver for APDS990X ALS and proximity sensors")
-Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-Link: https://lore.kernel.org/r/20240923035556.3009105-1-ruanjinjie@huawei.com
+This behavior is problematic because the devres ftrace event is designed to
+trace resource management throughout a device driver's lifecycle, including
+during module unload. The event should be available even after the module
+is unloaded to properly diagnose resource issues.
+
+Fix the issue by copying the devres node name into the ftrace ring buffer
+using __assign_str(), instead of storing just the address. This ensures
+that ftrace can always access the name, even if the module is unloaded.
+
+This change increases the memory usage for each of the ftrace entry by
+12-16 bytes assuming the average devres node name is 20 bytes long,
+depending on the size of const char *.
+
+Note that this change does not affect anything unless all of following
+conditions are met.
+- CONFIG_DEBUG_DEVRES is enabled
+- ftrace tracing is enabled
+- The devres event is enabled in ftrace tracing
+
+Fixes: 09705dcb63d2 ("devres: Enable trace events")
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Signed-off-by: Keita Morisaki <keyz@google.com>
+Link: https://lore.kernel.org/r/20240928125005.714781-1-keyz@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/misc/apds990x.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ drivers/base/trace.h | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/misc/apds990x.c b/drivers/misc/apds990x.c
-index 6d4edd69db126..e7d73c972f65d 100644
---- a/drivers/misc/apds990x.c
-+++ b/drivers/misc/apds990x.c
-@@ -1147,7 +1147,7 @@ static int apds990x_probe(struct i2c_client *client)
- 		err = chip->pdata->setup_resources();
- 		if (err) {
- 			err = -EINVAL;
--			goto fail3;
-+			goto fail4;
- 		}
- 	}
+diff --git a/drivers/base/trace.h b/drivers/base/trace.h
+index e52b6eae060dd..3b83b13a57ff1 100644
+--- a/drivers/base/trace.h
++++ b/drivers/base/trace.h
+@@ -24,18 +24,18 @@ DECLARE_EVENT_CLASS(devres,
+ 		__field(struct device *, dev)
+ 		__field(const char *, op)
+ 		__field(void *, node)
+-		__field(const char *, name)
++		__string(name, name)
+ 		__field(size_t, size)
+ 	),
+ 	TP_fast_assign(
+ 		__assign_str(devname);
+ 		__entry->op = op;
+ 		__entry->node = node;
+-		__entry->name = name;
++		__assign_str(name);
+ 		__entry->size = size;
+ 	),
+ 	TP_printk("%s %3s %p %s (%zu bytes)", __get_str(devname),
+-		  __entry->op, __entry->node, __entry->name, __entry->size)
++		  __entry->op, __entry->node, __get_str(name), __entry->size)
+ );
  
-@@ -1155,7 +1155,7 @@ static int apds990x_probe(struct i2c_client *client)
- 				apds990x_attribute_group);
- 	if (err < 0) {
- 		dev_err(&chip->client->dev, "Sysfs registration failed\n");
--		goto fail4;
-+		goto fail5;
- 	}
- 
- 	err = request_threaded_irq(client->irq, NULL,
-@@ -1166,15 +1166,17 @@ static int apds990x_probe(struct i2c_client *client)
- 	if (err) {
- 		dev_err(&client->dev, "could not get IRQ %d\n",
- 			client->irq);
--		goto fail5;
-+		goto fail6;
- 	}
- 	return err;
--fail5:
-+fail6:
- 	sysfs_remove_group(&chip->client->dev.kobj,
- 			&apds990x_attribute_group[0]);
--fail4:
-+fail5:
- 	if (chip->pdata && chip->pdata->release_resources)
- 		chip->pdata->release_resources();
-+fail4:
-+	pm_runtime_disable(&client->dev);
- fail3:
- 	regulator_bulk_disable(ARRAY_SIZE(chip->regs), chip->regs);
- fail2:
+ DEFINE_EVENT(devres, devres_log,
 -- 
 2.43.0
 
