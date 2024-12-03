@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0F461F7591;
-	Tue,  3 Dec 2024 16:19:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 316521F8921;
+	Tue,  3 Dec 2024 16:20:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733242796; cv=none; b=Lp/APQSb1qB+njNDz01GkRo32MfFXhVDhGGY+NIuliwUpwDg56LOkgIgylxTM41PxTksiSRChTILTC+8rgwPznPqHirqO5WXODA9LT/iMcQTP9LbMBqtI1o/SfZkhfmJ6dbnPiHRs44CuFii9TyRwCQDHZ2u+pBY/ekJnPysATY=
+	t=1733242800; cv=none; b=sl9hFBAfhLe9jUZQbXR1eTJHWGdrNKpD8qsAax+eT3yHpzUL8mpB0H7vM/+ZEpiKd+Q13099/MilmYVEC4v+uKHUqwkTO2jRe7ltpFb3r6Y23tvd+njbFYRXEqTjHmC/KE09bRtkgJ6Ol8IUzhgm1nia8b6FHJsT6D5guY+OPlw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733242796; c=relaxed/simple;
-	bh=fghnyjDL8bV++MNTVCk14zRDFf4yQwdfJs2TWT3Z0QI=;
+	s=arc-20240116; t=1733242800; c=relaxed/simple;
+	bh=S2efNBFEwFt2mGlEljz9iADnHNq2jvlwFKZ+/2JSlqA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=itAPzehZyPGRqJldzXmdvrfV50Hltb4abklMqUBTt9OqKIoG+J9havZzIRJ0Lwk7+m912Gz6OiR4thofV692reM2rYlxORSfg1dqsvRp0Gk4obP7DJQ/40CteAYWkKhXAM0VJikzdflACsc8Uew2agjpPzmcGMM/0DsmCyjhFjs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wPbUrIM2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=P9f61EAE5AgNP8ftQNC3SavCrcaE8wOv0RM4PczEjXwanwGBcNY06WDpF3yfk8ovKQowWnsMThv0A6rNEoasPbVeTm2sCgsnKk+XqMSD9/7HgiaQz/eke1x5fNh7CH3td+oUlKprnJAA6ADV8PC9jr0BEY5wjpPwXCOppWm+O3g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LOtcd/a0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wPbUrIM2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E643C4CED8;
-	Tue,  3 Dec 2024 16:19:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LOtcd/a0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93AE6C4CED8;
+	Tue,  3 Dec 2024 16:19:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733242796;
-	bh=fghnyjDL8bV++MNTVCk14zRDFf4yQwdfJs2TWT3Z0QI=;
+	s=korg; t=1733242800;
+	bh=S2efNBFEwFt2mGlEljz9iADnHNq2jvlwFKZ+/2JSlqA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wPbUrIM2GmhVTvUj6b8n32S/30YpyIlGixkpAc6y1E3s+YLfnZQ7N5gEiHVCQLFXS
-	 iTL4FGgMhG6FjovXc8M4zHkJCEPzWeqOIPq4SKq0eLvoZZVhBAxmf/ZsiHer/AnRug
-	 VJlduBy6/9a7Vygn5gCI5wGiP5f8pIhklPin+xcw=
+	b=LOtcd/a0jQxe5uloqCyNMCDsEgYo/09UrOi6ypSy66/0iXbh4eBI12zq3TdXj6FBe
+	 6KBtOleDlF28AamMX6Ci0QoxbMUj6prHGUuRJxYOcQ57aXKvaxrD9fibIkOfGjPaMF
+	 lMliut+nuC3CtrkDyK4WyOYCjG+iLyygYbn8C43I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shyam Prasad N <sprasad@microsoft.com>,
-	Meetakshi Setiya <msetiya@microsoft.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Bharath SM <bharathsm@microsoft.com>,
 	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 812/826] cifs: during remount, make sure passwords are in sync
-Date: Tue,  3 Dec 2024 15:48:59 +0100
-Message-ID: <20241203144815.429776521@linuxfoundation.org>
+Subject: [PATCH 6.12 813/826] cifs: unlock on error in smb3_reconfigure()
+Date: Tue,  3 Dec 2024 15:49:00 +0100
+Message-ID: <20241203144815.468852530@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -52,164 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shyam Prasad N <sprasad@microsoft.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit 0f0e357902957fba28ed31bde0d6921c6bd1485d ]
+[ Upstream commit cda88d2fef7aa7de80b5697e8009fcbbb436f42d ]
 
-This fixes scenarios where remount can overwrite the only currently
-working password, breaking reconnect.
+Unlock before returning if smb3_sync_session_ctx_passwords() fails.
 
-We recently introduced a password2 field in both ses and ctx structs.
-This was done so as to allow the client to rotate passwords for a mount
-without any downtime. However, when the client transparently handles
-password rotation, it can swap the values of the two password fields
-in the ses struct, but not in smb3_fs_context struct that hangs off
-cifs_sb. This can lead to a situation where a remount unintentionally
-overwrites a working password in the ses struct.
-
-In order to fix this, we first get the passwords in ctx struct
-in-sync with ses struct, before replacing them with what the passwords
-that could be passed as a part of remount.
-
-Also, in order to avoid race condition between smb2_reconnect and
-smb3_reconfigure, we make sure to lock session_mutex before changing
-password and password2 fields of the ses structure.
-
-Fixes: 35f834265e0d ("smb3: fix broken reconnect when password changing on the server by allowing password rotation")
-Signed-off-by: Shyam Prasad N <sprasad@microsoft.com>
-Signed-off-by: Meetakshi Setiya <msetiya@microsoft.com>
+Fixes: 7e654ab7da03 ("cifs: during remount, make sure passwords are in sync")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: Bharath SM <bharathsm@microsoft.com>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/fs_context.c | 83 +++++++++++++++++++++++++++++++++-----
- fs/smb/client/fs_context.h |  1 +
- 2 files changed, 75 insertions(+), 9 deletions(-)
+ fs/smb/client/fs_context.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/fs/smb/client/fs_context.c b/fs/smb/client/fs_context.c
-index 5c5a52019efad..1a5842ced489d 100644
+index 1a5842ced489d..48606e2ddffdc 100644
 --- a/fs/smb/client/fs_context.c
 +++ b/fs/smb/client/fs_context.c
-@@ -890,12 +890,37 @@ do {									\
- 	cifs_sb->ctx->field = NULL;					\
- } while (0)
- 
-+int smb3_sync_session_ctx_passwords(struct cifs_sb_info *cifs_sb, struct cifs_ses *ses)
-+{
-+	if (ses->password &&
-+	    cifs_sb->ctx->password &&
-+	    strcmp(ses->password, cifs_sb->ctx->password)) {
-+		kfree_sensitive(cifs_sb->ctx->password);
-+		cifs_sb->ctx->password = kstrdup(ses->password, GFP_KERNEL);
-+		if (!cifs_sb->ctx->password)
-+			return -ENOMEM;
+@@ -978,8 +978,10 @@ static int smb3_reconfigure(struct fs_context *fc)
+ 	 * later stage
+ 	 */
+ 	rc = smb3_sync_session_ctx_passwords(cifs_sb, ses);
+-	if (rc)
++	if (rc) {
++		mutex_unlock(&ses->session_mutex);
+ 		return rc;
 +	}
-+	if (ses->password2 &&
-+	    cifs_sb->ctx->password2 &&
-+	    strcmp(ses->password2, cifs_sb->ctx->password2)) {
-+		kfree_sensitive(cifs_sb->ctx->password2);
-+		cifs_sb->ctx->password2 = kstrdup(ses->password2, GFP_KERNEL);
-+		if (!cifs_sb->ctx->password2) {
-+			kfree_sensitive(cifs_sb->ctx->password);
-+			cifs_sb->ctx->password = NULL;
-+			return -ENOMEM;
-+		}
-+	}
-+	return 0;
-+}
-+
- static int smb3_reconfigure(struct fs_context *fc)
- {
- 	struct smb3_fs_context *ctx = smb3_fc2context(fc);
- 	struct dentry *root = fc->root;
- 	struct cifs_sb_info *cifs_sb = CIFS_SB(root->d_sb);
- 	struct cifs_ses *ses = cifs_sb_master_tcon(cifs_sb)->ses;
-+	char *new_password = NULL, *new_password2 = NULL;
- 	bool need_recon = false;
- 	int rc;
  
-@@ -915,21 +940,61 @@ static int smb3_reconfigure(struct fs_context *fc)
- 	STEAL_STRING(cifs_sb, ctx, UNC);
- 	STEAL_STRING(cifs_sb, ctx, source);
- 	STEAL_STRING(cifs_sb, ctx, username);
-+
- 	if (need_recon == false)
- 		STEAL_STRING_SENSITIVE(cifs_sb, ctx, password);
- 	else  {
--		kfree_sensitive(ses->password);
--		ses->password = kstrdup(ctx->password, GFP_KERNEL);
--		if (!ses->password)
--			return -ENOMEM;
--		kfree_sensitive(ses->password2);
--		ses->password2 = kstrdup(ctx->password2, GFP_KERNEL);
--		if (!ses->password2) {
--			kfree_sensitive(ses->password);
--			ses->password = NULL;
-+		if (ctx->password) {
-+			new_password = kstrdup(ctx->password, GFP_KERNEL);
-+			if (!new_password)
-+				return -ENOMEM;
-+		} else
-+			STEAL_STRING_SENSITIVE(cifs_sb, ctx, password);
-+	}
-+
-+	/*
-+	 * if a new password2 has been specified, then reset it's value
-+	 * inside the ses struct
-+	 */
-+	if (ctx->password2) {
-+		new_password2 = kstrdup(ctx->password2, GFP_KERNEL);
-+		if (!new_password2) {
-+			kfree_sensitive(new_password);
- 			return -ENOMEM;
- 		}
-+	} else
-+		STEAL_STRING_SENSITIVE(cifs_sb, ctx, password2);
-+
-+	/*
-+	 * we may update the passwords in the ses struct below. Make sure we do
-+	 * not race with smb2_reconnect
-+	 */
-+	mutex_lock(&ses->session_mutex);
-+
-+	/*
-+	 * smb2_reconnect may swap password and password2 in case session setup
-+	 * failed. First get ctx passwords in sync with ses passwords. It should
-+	 * be okay to do this even if this function were to return an error at a
-+	 * later stage
-+	 */
-+	rc = smb3_sync_session_ctx_passwords(cifs_sb, ses);
-+	if (rc)
-+		return rc;
-+
-+	/*
-+	 * now that allocations for passwords are done, commit them
-+	 */
-+	if (new_password) {
-+		kfree_sensitive(ses->password);
-+		ses->password = new_password;
- 	}
-+	if (new_password2) {
-+		kfree_sensitive(ses->password2);
-+		ses->password2 = new_password2;
-+	}
-+
-+	mutex_unlock(&ses->session_mutex);
-+
- 	STEAL_STRING(cifs_sb, ctx, domainname);
- 	STEAL_STRING(cifs_sb, ctx, nodename);
- 	STEAL_STRING(cifs_sb, ctx, iocharset);
-diff --git a/fs/smb/client/fs_context.h b/fs/smb/client/fs_context.h
-index 890d6d9d4a592..c8c8b4451b3bc 100644
---- a/fs/smb/client/fs_context.h
-+++ b/fs/smb/client/fs_context.h
-@@ -299,6 +299,7 @@ static inline struct smb3_fs_context *smb3_fc2context(const struct fs_context *f
- }
- 
- extern int smb3_fs_context_dup(struct smb3_fs_context *new_ctx, struct smb3_fs_context *ctx);
-+extern int smb3_sync_session_ctx_passwords(struct cifs_sb_info *cifs_sb, struct cifs_ses *ses);
- extern void smb3_update_mnt_flags(struct cifs_sb_info *cifs_sb);
- 
- /*
+ 	/*
+ 	 * now that allocations for passwords are done, commit them
 -- 
 2.43.0
 
