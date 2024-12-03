@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7341B1DE2A1;
-	Tue,  3 Dec 2024 14:53:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6A152AF05;
+	Tue,  3 Dec 2024 14:53:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733237630; cv=none; b=oYyAiiVOszQdjz2ooP0pNfEuHXeqwbQMw9ZIQPBRnQnrzMydJb6IQW2iAGRQ9mp6zUJCo5g0tOtGoc9+E9FuRmPtJUPCm2fHmsPV88Q7Bcj3VXxKG1ycoG7e3YCQUONUrWivQE2+nfhw77JT2JRQxf5Hh+LM+jk9coL4kEH/2kU=
+	t=1733237633; cv=none; b=kMXNPIDIhC3T5EvywGVxqLKtZLueBx3ghg0txUg0kMiJqY8K/qCz2BMFW2sqrd3J/kRqfaC5YZWcBA+WfbqVRQSGn90CsXvqnmJEUhs0BZBFolgBNT3eJv4OZm/SYzA2TZTWF9RYCz/Uzujh3MN9N2i2Ntzk4l6gpflFl/TK2Fc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733237630; c=relaxed/simple;
-	bh=ONYW/Le1C/ghtFvB+LzWzA8auaFwb/46q4Rccn6SE4I=;
+	s=arc-20240116; t=1733237633; c=relaxed/simple;
+	bh=p/9dJuorFSkqBWtxvcgG4574N3rVzWV7ZHIr0JHWUxc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=d1dd8/3VwgF8uc4HXrhtKV3CxlaUegmI90XAXj1r+xpxfDGkZyx4KHJbPCsb7KZs9yESYMcDtYLgRY9ABCDhLXC06DR+pU/aJX/HCtNWbnH6pvAJxkS4p50SPVfSfCx9fQ5Jfc7d6UqZMlOd5/kbeSYcbSHAcFIitP0Y/6GTQmg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gTAs2CRm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=TXPxGUo7OmyyvudvLEucBJQ0WIJ0sfNiuIB1hQUOREnpQgBFsZfE6f7OdRDfJTWAdXC4K8qVAuEXVo1VTwTyiFcIlvXLGCiYiTboGxeWd/1d9sVY/hr8iI3sgswGCa5kHu6r4Pw3FsG9DfmbdKqr+1Jx6FAOTHdAgxTN4yrbwfg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qBCpyJEz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gTAs2CRm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D20B3C4CECF;
-	Tue,  3 Dec 2024 14:53:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qBCpyJEz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E440C4CECF;
+	Tue,  3 Dec 2024 14:53:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733237630;
-	bh=ONYW/Le1C/ghtFvB+LzWzA8auaFwb/46q4Rccn6SE4I=;
+	s=korg; t=1733237633;
+	bh=p/9dJuorFSkqBWtxvcgG4574N3rVzWV7ZHIr0JHWUxc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gTAs2CRmgP4ljyX2HJ2gQtPiDeryXhFeciW2WHa+qzC07UbCIlnzdVTbmMtlRprDQ
-	 39RaA6dfVpx4OeJHUWiuykzpsUl3Y0oVO4hratRj20ItivnjB/bROAry5AMpK5yMgg
-	 jTl41WqDVA37hFMrsI3oM7VJJ4uA9ZZqlS2EQiaM=
+	b=qBCpyJEzPlZKbz44tX30ro0jgwq5wGamt16+8CjzlOwNE0rwd79ooqWsHcdq1sP9l
+	 tpyGI9Xu1qiECofyWmaU3tcOvJzzhjIelReFiBFfSKv8oL5LviDRpkPJSwOLgDyOfC
+	 1f+LHgNpFLTwZ4I/PSJOY2MQUPjgQIlSd/UVHQKo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
 	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 025/817] platform/x86: dell-smbios-base: Extends support to Alienware products
-Date: Tue,  3 Dec 2024 15:33:17 +0100
-Message-ID: <20241203143956.626503479@linuxfoundation.org>
+Subject: [PATCH 6.11 026/817] platform/x86: dell-wmi-base: Handle META key Lock/Unlock events
+Date: Tue,  3 Dec 2024 15:33:18 +0100
+Message-ID: <20241203143956.669540629@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -56,44 +56,45 @@ Content-Transfer-Encoding: 8bit
 
 From: Kurt Borja <kuurtb@gmail.com>
 
-[ Upstream commit a36b8b84ac4327b90ef5a22bc97cc96a92073330 ]
+[ Upstream commit ec61f0bb4feec3345626a2b93b970b6719743997 ]
 
-Fixes the following error:
+Some Alienware devices have a key that locks/unlocks the Meta key. This
+key triggers a WMI event that should be ignored by the kernel, as it's
+handled by internally the firmware.
 
-dell_smbios: Unable to run on non-Dell system
+There is no known way of changing this default behavior. The firmware
+would lock/unlock the Meta key, regardless of how the event is handled.
 
-Which is triggered after dell-wmi driver fails to initialize on
-Alienware systems, as it depends on dell-smbios.
-
-This effectively extends dell-wmi, dell-smbios and dcdbas support to
-Alienware devices, that might share some features of the SMBIOS intereface
-calling interface with other Dell products.
-
-Tested on an Alienware X15 R1.
+Tested on an Alienware x15 R1.
 
 Signed-off-by: Kurt Borja <kuurtb@gmail.com>
 Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
 Acked-by: Pali Rohár <pali@kernel.org>
-Link: https://lore.kernel.org/r/20241031154023.6149-2-kuurtb@gmail.com
+Link: https://lore.kernel.org/r/20241031154441.6663-2-kuurtb@gmail.com
 Reviewed-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/dell/dell-smbios-base.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/platform/x86/dell/dell-wmi-base.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/platform/x86/dell/dell-smbios-base.c b/drivers/platform/x86/dell/dell-smbios-base.c
-index 73e41eb69cb57..01c72b91a50d4 100644
---- a/drivers/platform/x86/dell/dell-smbios-base.c
-+++ b/drivers/platform/x86/dell/dell-smbios-base.c
-@@ -576,6 +576,7 @@ static int __init dell_smbios_init(void)
- 	int ret, wmi, smm;
+diff --git a/drivers/platform/x86/dell/dell-wmi-base.c b/drivers/platform/x86/dell/dell-wmi-base.c
+index 24fd7ffadda95..841a5414d28a6 100644
+--- a/drivers/platform/x86/dell/dell-wmi-base.c
++++ b/drivers/platform/x86/dell/dell-wmi-base.c
+@@ -80,6 +80,12 @@ static const struct dmi_system_id dell_wmi_smbios_list[] __initconst = {
+ static const struct key_entry dell_wmi_keymap_type_0000[] = {
+ 	{ KE_IGNORE, 0x003a, { KEY_CAPSLOCK } },
  
- 	if (!dmi_find_device(DMI_DEV_TYPE_OEM_STRING, "Dell System", NULL) &&
-+	    !dmi_find_device(DMI_DEV_TYPE_OEM_STRING, "Alienware", NULL) &&
- 	    !dmi_find_device(DMI_DEV_TYPE_OEM_STRING, "www.dell.com", NULL)) {
- 		pr_err("Unable to run on non-Dell system\n");
- 		return -ENODEV;
++	/* Meta key lock */
++	{ KE_IGNORE, 0xe000, { KEY_RIGHTMETA } },
++
++	/* Meta key unlock */
++	{ KE_IGNORE, 0xe001, { KEY_RIGHTMETA } },
++
+ 	/* Key code is followed by brightness level */
+ 	{ KE_KEY,    0xe005, { KEY_BRIGHTNESSDOWN } },
+ 	{ KE_KEY,    0xe006, { KEY_BRIGHTNESSUP } },
 -- 
 2.43.0
 
