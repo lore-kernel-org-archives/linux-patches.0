@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 853761E0496;
-	Tue,  3 Dec 2024 15:51:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAA6C1F754A;
+	Tue,  3 Dec 2024 15:51:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733241112; cv=none; b=qpMYNtoDP/s4QoN3qlRpLae9ZOY4COGgGkIXwiJQeEScswxbcVJz9T/dyd70/sgoVilfBhReTz3bDAapp7Q6jdxfqv1q+V1XhDaGJfGaBIUtT8laHQaSH2MuXYtb3XjwJDC6MOgLO6MaAeccDr16JN22nPppuDWsdOrbOJWm2Cw=
+	t=1733241115; cv=none; b=tq6Lrm905lvwHZ9Htmzw1DbrM49eSVJJ+cAuWn6j/TbT8pF2SsxJCgdnBYvyEf1sx1jqfYMOEl8If5VeDfvOPRP3EV53highx1THxIN/q6u/koNEpotU1uCCOy7k7VoX5w2ugKFruobE6mjl1eyS9GOVTKYzNNjxzDUZq10tVTo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733241112; c=relaxed/simple;
-	bh=sGO8qoZ8b8mJOtUeVZFr1TQ8yz6GMFa4Jv/YYAVTlGw=;
+	s=arc-20240116; t=1733241115; c=relaxed/simple;
+	bh=027zST1bQEb3FKELCx310JRMakbtT+URtDuW+79LMK0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MBgMJqjU9vXk4uU/SDD0epEWAH4cc12dgHJgNVwfWu6lWDuYSZLSqee1AC+BSv8IiqKfuNm3fVifZynVqjEOmXhpRoLQGYlquq/++2TDmxDDsFilL0edysEUe2TzFbDjnTckhTjzyLDqkHJJ5MXD1CBWbsxeFO4F5+xC7PMvHj0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dclpyUjG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZtAAYB4j58xqun42Tafpaf+Fqh/D2uGNeq5cblMQdKwLaQZiLfDMlgXd+yb8sv72BS16GLGZU6wCPEZgRWZqSTi3GjPkBiTGVQi0Jq+5fWgDzfh+6PKK5UBQ+Y8xX6gxaGsvSS7bQvDmIn1Z6LkKTvevxYKC96Cts54R+GxoS6c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H8a4OwC0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dclpyUjG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B241CC4CECF;
-	Tue,  3 Dec 2024 15:51:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H8a4OwC0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19BEBC4CECF;
+	Tue,  3 Dec 2024 15:51:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733241112;
-	bh=sGO8qoZ8b8mJOtUeVZFr1TQ8yz6GMFa4Jv/YYAVTlGw=;
+	s=korg; t=1733241115;
+	bh=027zST1bQEb3FKELCx310JRMakbtT+URtDuW+79LMK0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dclpyUjGr8wN2jdP9bRQQW19EAS28gFLMUXeDI8aWabb6b25f/2iwAkJMLrJXjiYt
-	 LllxMsC5RvyoZYBTlJe29xi33U06E3t/gF822t8BlzFakWPPpDIHFCmCSmyTuHxN8F
-	 1IPx26zV8lD4nhO7TfPyDX9teUH8RGXxasDtuZXc=
+	b=H8a4OwC0Yr6l/ywUnafkj0I+HnrH30UTJwtCsr4vhr/0Hp9dmcuqMkr1UYnkn2ZSv
+	 VKm2eRwkdrhOTDb0cdvRAbQS+DQ2aI4ANJ/AFjZhbP5rjAkUklLdU6HdYTdyqZKdHf
+	 xprI6bEsJQ8RSWvqfErzTo4JPUjJo521grOEGk6A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alf Marius <post@alfmarius.net>,
-	Kalle Valo <kvalo@kernel.org>,
+	Martin KaFai Lau <martin.lau@linux.dev>,
+	Xu Kuohai <xukuohai@huawei.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 328/826] Revert "wifi: iwlegacy: do not skip frames with bad FCS"
-Date: Tue,  3 Dec 2024 15:40:55 +0100
-Message-ID: <20241203144756.555674615@linuxfoundation.org>
+Subject: [PATCH 6.12 329/826] bpf: Use function pointers count as struct_ops links count
+Date: Tue,  3 Dec 2024 15:40:56 +0100
+Message-ID: <20241203144756.594364245@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -51,54 +52,120 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kalle Valo <kvalo@kernel.org>
+From: Xu Kuohai <xukuohai@huawei.com>
 
-[ Upstream commit 11597043d74809daf5d14256b96d6781749b3f82 ]
+[ Upstream commit 821a3fa32bbe3bc0fa23b3189325d3720a49a24c ]
 
-This reverts commit 02b682d54598f61cbb7dbb14d98ec1801112b878.
+Only function pointers in a struct_ops structure can be linked to bpf
+progs, so set the links count to the function pointers count, instead
+of the total members count in the structure.
 
-Alf reports that this commit causes the connection to eventually die on
-iwl4965. The reason is that rx_status.flag is zeroed after
-RX_FLAG_FAILED_FCS_CRC is set and mac80211 doesn't know the received frame is
-corrupted.
-
-Fixes: 02b682d54598 ("wifi: iwlegacy: do not skip frames with bad FCS")
-Reported-by: Alf Marius <post@alfmarius.net>
-Closes: https://lore.kernel.org/r/60f752e8-787e-44a8-92ae-48bdfc9b43e7@app.fastmail.com/
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://patch.msgid.link/20241112142419.1023743-1-kvalo@kernel.org
+Suggested-by: Martin KaFai Lau <martin.lau@linux.dev>
+Signed-off-by: Xu Kuohai <xukuohai@huawei.com>
+Link: https://lore.kernel.org/r/20241112145849.3436772-3-xukuohai@huaweicloud.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Stable-dep-of: 7c8ce4ffb684 ("bpf: Add kernel symbol for struct_ops trampoline")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlegacy/3945.c     | 2 +-
- drivers/net/wireless/intel/iwlegacy/4965-mac.c | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ kernel/bpf/bpf_struct_ops.c | 35 +++++++++++++++++++++++++----------
+ 1 file changed, 25 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlegacy/3945.c b/drivers/net/wireless/intel/iwlegacy/3945.c
-index 14d2331ee6cb9..b0656b143f77a 100644
---- a/drivers/net/wireless/intel/iwlegacy/3945.c
-+++ b/drivers/net/wireless/intel/iwlegacy/3945.c
-@@ -566,7 +566,7 @@ il3945_hdl_rx(struct il_priv *il, struct il_rx_buf *rxb)
- 	if (!(rx_end->status & RX_RES_STATUS_NO_CRC32_ERROR) ||
- 	    !(rx_end->status & RX_RES_STATUS_NO_RXE_OVERFLOW)) {
- 		D_RX("Bad CRC or FIFO: 0x%08X.\n", rx_end->status);
--		rx_status.flag |= RX_FLAG_FAILED_FCS_CRC;
-+		return;
- 	}
+diff --git a/kernel/bpf/bpf_struct_ops.c b/kernel/bpf/bpf_struct_ops.c
+index fda3dd2ee9844..5058d1536c554 100644
+--- a/kernel/bpf/bpf_struct_ops.c
++++ b/kernel/bpf/bpf_struct_ops.c
+@@ -32,7 +32,7 @@ struct bpf_struct_ops_map {
+ 	 * (in kvalue.data).
+ 	 */
+ 	struct bpf_link **links;
+-	u32 links_cnt;
++	u32 funcs_cnt;
+ 	u32 image_pages_cnt;
+ 	/* image_pages is an array of pages that has all the trampolines
+ 	 * that stores the func args before calling the bpf_prog.
+@@ -481,11 +481,11 @@ static void bpf_struct_ops_map_put_progs(struct bpf_struct_ops_map *st_map)
+ {
+ 	u32 i;
  
- 	/* Convert 3945's rssi indicator to dBm */
-diff --git a/drivers/net/wireless/intel/iwlegacy/4965-mac.c b/drivers/net/wireless/intel/iwlegacy/4965-mac.c
-index fcccde7bb6592..05c4af41bdb96 100644
---- a/drivers/net/wireless/intel/iwlegacy/4965-mac.c
-+++ b/drivers/net/wireless/intel/iwlegacy/4965-mac.c
-@@ -664,7 +664,7 @@ il4965_hdl_rx(struct il_priv *il, struct il_rx_buf *rxb)
- 	if (!(rx_pkt_status & RX_RES_STATUS_NO_CRC32_ERROR) ||
- 	    !(rx_pkt_status & RX_RES_STATUS_NO_RXE_OVERFLOW)) {
- 		D_RX("Bad CRC or FIFO: 0x%08X.\n", le32_to_cpu(rx_pkt_status));
--		rx_status.flag |= RX_FLAG_FAILED_FCS_CRC;
-+		return;
+-	for (i = 0; i < st_map->links_cnt; i++) {
+-		if (st_map->links[i]) {
+-			bpf_link_put(st_map->links[i]);
+-			st_map->links[i] = NULL;
+-		}
++	for (i = 0; i < st_map->funcs_cnt; i++) {
++		if (!st_map->links[i])
++			break;
++		bpf_link_put(st_map->links[i]);
++		st_map->links[i] = NULL;
  	}
+ }
  
- 	/* This will be used in several places later */
+@@ -601,6 +601,7 @@ static long bpf_struct_ops_map_update_elem(struct bpf_map *map, void *key,
+ 	int prog_fd, err;
+ 	u32 i, trampoline_start, image_off = 0;
+ 	void *cur_image = NULL, *image = NULL;
++	struct bpf_link **plink;
+ 
+ 	if (flags)
+ 		return -EINVAL;
+@@ -639,6 +640,7 @@ static long bpf_struct_ops_map_update_elem(struct bpf_map *map, void *key,
+ 	udata = &uvalue->data;
+ 	kdata = &kvalue->data;
+ 
++	plink = st_map->links;
+ 	module_type = btf_type_by_id(btf_vmlinux, st_ops_ids[IDX_MODULE_ID]);
+ 	for_each_member(i, t, member) {
+ 		const struct btf_type *mtype, *ptype;
+@@ -714,7 +716,7 @@ static long bpf_struct_ops_map_update_elem(struct bpf_map *map, void *key,
+ 		}
+ 		bpf_link_init(&link->link, BPF_LINK_TYPE_STRUCT_OPS,
+ 			      &bpf_struct_ops_link_lops, prog);
+-		st_map->links[i] = &link->link;
++		*plink++ = &link->link;
+ 
+ 		trampoline_start = image_off;
+ 		err = bpf_struct_ops_prepare_trampoline(tlinks, link,
+@@ -895,6 +897,19 @@ static int bpf_struct_ops_map_alloc_check(union bpf_attr *attr)
+ 	return 0;
+ }
+ 
++static u32 count_func_ptrs(const struct btf *btf, const struct btf_type *t)
++{
++	int i;
++	u32 count;
++	const struct btf_member *member;
++
++	count = 0;
++	for_each_member(i, t, member)
++		if (btf_type_resolve_func_ptr(btf, member->type, NULL))
++			count++;
++	return count;
++}
++
+ static struct bpf_map *bpf_struct_ops_map_alloc(union bpf_attr *attr)
+ {
+ 	const struct bpf_struct_ops_desc *st_ops_desc;
+@@ -961,9 +976,9 @@ static struct bpf_map *bpf_struct_ops_map_alloc(union bpf_attr *attr)
+ 	map = &st_map->map;
+ 
+ 	st_map->uvalue = bpf_map_area_alloc(vt->size, NUMA_NO_NODE);
+-	st_map->links_cnt = btf_type_vlen(t);
++	st_map->funcs_cnt = count_func_ptrs(btf, t);
+ 	st_map->links =
+-		bpf_map_area_alloc(st_map->links_cnt * sizeof(struct bpf_links *),
++		bpf_map_area_alloc(st_map->funcs_cnt * sizeof(struct bpf_link *),
+ 				   NUMA_NO_NODE);
+ 	if (!st_map->uvalue || !st_map->links) {
+ 		ret = -ENOMEM;
+@@ -994,7 +1009,7 @@ static u64 bpf_struct_ops_map_mem_usage(const struct bpf_map *map)
+ 	usage = sizeof(*st_map) +
+ 			vt->size - sizeof(struct bpf_struct_ops_value);
+ 	usage += vt->size;
+-	usage += btf_type_vlen(vt) * sizeof(struct bpf_links *);
++	usage += st_map->funcs_cnt * sizeof(struct bpf_link *);
+ 	usage += PAGE_SIZE;
+ 	return usage;
+ }
 -- 
 2.43.0
 
