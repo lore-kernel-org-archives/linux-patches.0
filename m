@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82E22646;
-	Tue,  3 Dec 2024 15:27:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70B6B1E3DED;
+	Tue,  3 Dec 2024 15:27:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733239666; cv=none; b=aVirKdzXCthoGhVnJ7zrP/+KjF7wuhc6T0ywXdYBgoP2CAegV2dCyh8afiIbV/nyexLueMNSRO3nC69CWhGiX05IPkULtcMPHfyM3XKzbpgiBjSr1NTny/7EdnoehxXYJ4h1U27BVTvBJjNP635LQxg02RCoiyAILkhyX7YrDc0=
+	t=1733239669; cv=none; b=H8wJ9wWCHhl5to9YwvkLiiGk3jfQKl9wIq6zMTEdufIsjAK4bcvNEmWE3w6Wn0ZrI1OsW90NxkYEjon4Il4cnSWnEUSPzfpkFxTVcZAos+80cFJQzafAHiHW2lC9qo2NqqTK8AudbE8IKvmhAINZkniXfylR2FZZWSTLJRCBoyM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733239666; c=relaxed/simple;
-	bh=Rsf/fGHwKCbF79M7MOFEwvFAMKYZQEh2ien2sj4efYw=;
+	s=arc-20240116; t=1733239669; c=relaxed/simple;
+	bh=OreZVNfYjjGaIf+cJZCw2YvmzIUc5s8ELOHDG1EPUJA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VhTyaSACuo1B1vdkD13gJAWC+HQlvM80EOeq5T+TkHBtyPnE/THq0S8M1udTHvBXHOuEMbGmH+H34s3JFnanBJO6vAyLC/foxJwwIekCap5bGjhencffb5FtkCjqadJVMjDlGTOrRJkeG3oIAHL0fC3cqWpL2OedQTnaKQYqi90=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HuobRWIs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SHo7m36HQl7KTe80pvXPqTNJPofklpqScAliyRTwDBZ7BmylfnmIsPkOt6Lqj+4S1+LzXEorxdAGBhDxJmbsEVKuNXci7kB1y21oLuxm/wU63Le8t9aCWx+w6Y90NouRYibCep1TkXL39Q+l4apyG9M6bLq5ZOi/R+YP6YFy9wc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ObP5gCEB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HuobRWIs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BC93C4CECF;
-	Tue,  3 Dec 2024 15:27:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ObP5gCEB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBFAEC4CECF;
+	Tue,  3 Dec 2024 15:27:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733239666;
-	bh=Rsf/fGHwKCbF79M7MOFEwvFAMKYZQEh2ien2sj4efYw=;
+	s=korg; t=1733239669;
+	bh=OreZVNfYjjGaIf+cJZCw2YvmzIUc5s8ELOHDG1EPUJA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HuobRWIsHwSNkrG1utLJuQx5YrMKjfyJJ8FOqfQvRzUOO/z6neJBS6Qdr+Jfa1Z8F
-	 pX3DEFMx71ydWV4tIucG8PAyjmglWrZCZBJMh/QRPJ/xkj7XbM9cVNDf1+lcyfLMhe
-	 YO7Wy6txcdbxyAjYN30a0s3PIZABBcftmw41yRD4=
+	b=ObP5gCEB574UnTgQ6f5am2h3zFTK15lY4XFsmda5XGyQN5DaXlMCw3h6zTgkWeE43
+	 yPlkmDNfI1WtGEhWGfIjIK3aPB7l9ro14rgqhqhCwtd71Kz2OO8KHJmKnj4Pl3NS+2
+	 c7F3QNjORPfHqFdRWWgfw3i/lo/M1KRERxBZjqGE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	syzbot+2159cbb522b02847c053@syzkaller.appspotmail.com,
 	Pavel Begunkov <asml.silence@gmail.com>,
 	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.11 693/817] io_uring: fix corner case forgetting to vunmap
-Date: Tue,  3 Dec 2024 15:44:25 +0100
-Message-ID: <20241203144023.027006556@linuxfoundation.org>
+Subject: [PATCH 6.11 694/817] io_uring: check for overflows in io_pin_pages
+Date: Tue,  3 Dec 2024 15:44:26 +0100
+Message-ID: <20241203144023.065506618@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -52,47 +53,48 @@ Content-Transfer-Encoding: 8bit
 
 From: Pavel Begunkov <asml.silence@gmail.com>
 
-commit 43eef70e7e2ac74e7767731dd806720c7fb5e010 upstream.
+commit 0c0a4eae26ac78379d0c1db053de168a8febc6c9 upstream.
 
-io_pages_unmap() is a bit tricky in trying to figure whether the pages
-were previously vmap'ed or not. In particular If there is juts one page
-it belives there is no need to vunmap. Paired io_pages_map(), however,
-could've failed io_mem_alloc_compound() and attempted to
-io_mem_alloc_single(), which does vmap, and that leads to unpaired vmap.
+WARNING: CPU: 0 PID: 5834 at io_uring/memmap.c:144 io_pin_pages+0x149/0x180 io_uring/memmap.c:144
+CPU: 0 UID: 0 PID: 5834 Comm: syz-executor825 Not tainted 6.12.0-next-20241118-syzkaller #0
+Call Trace:
+ <TASK>
+ __io_uaddr_map+0xfb/0x2d0 io_uring/memmap.c:183
+ io_rings_map io_uring/io_uring.c:2611 [inline]
+ io_allocate_scq_urings+0x1c0/0x650 io_uring/io_uring.c:3470
+ io_uring_create+0x5b5/0xc00 io_uring/io_uring.c:3692
+ io_uring_setup io_uring/io_uring.c:3781 [inline]
+ ...
+ </TASK>
 
-The solution is to fail if io_mem_alloc_compound() can't allocate a
-single page. That's the easiest way to deal with it, and those two
-functions are getting removed soon, so no need to overcomplicate it.
+io_pin_pages()'s uaddr parameter came directly from the user and can be
+garbage. Don't just add size to it as it can overflow.
 
 Cc: stable@vger.kernel.org
-Fixes: 3ab1db3c6039e ("io_uring: get rid of remap_pfn_range() for mapping rings/sqes")
+Reported-by: syzbot+2159cbb522b02847c053@syzkaller.appspotmail.com
 Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
-Link: https://lore.kernel.org/r/477e75a3907a2fe83249e49c0a92cd480b2c60e0.1732569842.git.asml.silence@gmail.com
+Link: https://lore.kernel.org/r/1b7520ddb168e1d537d64be47414a0629d0d8f8f.1732581026.git.asml.silence@gmail.com
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/memmap.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ io_uring/memmap.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
 --- a/io_uring/memmap.c
 +++ b/io_uring/memmap.c
-@@ -72,6 +72,8 @@ void *io_pages_map(struct page ***out_pa
- 	ret = io_mem_alloc_compound(pages, nr_pages, size, gfp);
- 	if (!IS_ERR(ret))
- 		goto done;
-+	if (nr_pages == 1)
-+		goto fail;
+@@ -137,7 +137,12 @@ struct page **io_pin_pages(unsigned long
+ 	struct page **pages;
+ 	int ret;
  
- 	ret = io_mem_alloc_single(pages, nr_pages, size, gfp);
- 	if (!IS_ERR(ret)) {
-@@ -80,7 +82,7 @@ done:
- 		*npages = nr_pages;
- 		return ret;
- 	}
--
-+fail:
- 	kvfree(pages);
- 	*out_pages = NULL;
- 	*npages = 0;
+-	end = (uaddr + len + PAGE_SIZE - 1) >> PAGE_SHIFT;
++	if (check_add_overflow(uaddr, len, &end))
++		return ERR_PTR(-EOVERFLOW);
++	if (check_add_overflow(end, PAGE_SIZE - 1, &end))
++		return ERR_PTR(-EOVERFLOW);
++
++	end = end >> PAGE_SHIFT;
+ 	start = uaddr >> PAGE_SHIFT;
+ 	nr_pages = end - start;
+ 	if (WARN_ON_ONCE(!nr_pages))
 
 
