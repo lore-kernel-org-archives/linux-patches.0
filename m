@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45E2D1E766E;
-	Tue,  3 Dec 2024 16:07:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 946BB1E766E;
+	Tue,  3 Dec 2024 16:07:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733242066; cv=none; b=K+Qs/kC+srbbaCSuuuJH/dDTV2i92W2l4Z1vEvMyFftVDJXsvrGjJqY/M8kSP9ccOcTAkxyIvhQybdSMnKwGfmPCy1IfIpgzasy4P6oAeIr0Dmc3zy5s5uiJHgtl7M4USzExS6LM3RPWcOrlP8S/0MNx6PeAbaEYm6PASkAjX6Q=
+	t=1733242069; cv=none; b=m+3GbzJwXMfiidbvC+ETkneZAVZMr+/aOeujoE+HwEGEERCODOdeFd8y0azm1vH/byOcB35RrUzsGDDW2F8dlmpSB0LxKatl+cAsOGZ2/rHSpLxdZSSb3NoyQayetpKphEtZChLpSdKpLdt23YAP5Ul5eQ5eVSc7S8ChaLbMBJ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733242066; c=relaxed/simple;
-	bh=kCYoxj1AkfhJjM6Jam2GZQRv1Wyjtrd4z55ssTuZ2qQ=;
+	s=arc-20240116; t=1733242069; c=relaxed/simple;
+	bh=Z6PIrt9cCnmiIBIzVMvw4Y05rOQmzI8BoDkwNIcLUQM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pvZNk1qfpfSSpg5jVkqtRhffWW9brmWe/Zz/d8nAZ+AeCGCsrqK9wygBfG+8wERtPQr7Eyl2HLId1HpQoGq0VW3ztWgid9oZR/jC6EEYx0GGvyqWW86jyyVJuWMQmPUdRuNE6z51pUhH+BgDWfl0j56utusfnMsntzqdtaOB52c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j+6tlzqU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZJfEhj1l/7x6uzI3NS0HnPD30jzE60+F9obsZAHL3HYPO0i4Q8S11b2xiCeGxD89wX4bGOtYOPjnN9sleF2BrzHstci3o9Rxtt1QkLyE5EnbzFfJigWUntaPXBiIQWqhT/k+FpYOYDO2lNx/AU5qA0dfQHAbUHx4U2M8nocQpZA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VK5IHfqX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j+6tlzqU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9902C4CECF;
-	Tue,  3 Dec 2024 16:07:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VK5IHfqX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDD0FC4CECF;
+	Tue,  3 Dec 2024 16:07:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733242066;
-	bh=kCYoxj1AkfhJjM6Jam2GZQRv1Wyjtrd4z55ssTuZ2qQ=;
+	s=korg; t=1733242069;
+	bh=Z6PIrt9cCnmiIBIzVMvw4Y05rOQmzI8BoDkwNIcLUQM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j+6tlzqU9/nf6BLqMe45X4PA30JhViIpkpvDvY95IFAi2ub6RU90o04pfK9s+4+7m
-	 SI+M2HPmTsbVKcZkY0PrkRK50P7bWMMitWIWJzK3e5NW0K11QhD1Q93wiYCJyOPE3m
-	 Kzay0N0/YTPFRZI2ND76ToP1YptDPyfY8jMsYqr4=
+	b=VK5IHfqXW4fCMru8ih7EvAqc5pYKTUWIC0KDCIwBua37ixc04IHLiLNMCJB5KF9Yd
+	 ngay5ZPPSTLTXXbbUOgTHX+EOo3KC0UYSV96XTfMZTq+erynHT8EwZ14W+aWTudVNW
+	 E4lKZnir6EpLw6Fm9x9iVI06Cdzh5YBc2SMgot4Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Somnath Kotur <somnath.kotur@broadcom.com>,
-	Shravya KN <shravya.k-n@broadcom.com>,
-	Michael Chan <michael.chan@broadcom.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Raviteja Laggyshetty <quic_rlaggysh@quicinc.com>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Georgi Djakov <djakov@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 580/826] bnxt_en: Fix receive ring space parameters when XDP is active
-Date: Tue,  3 Dec 2024 15:45:07 +0100
-Message-ID: <20241203144806.375413161@linuxfoundation.org>
+Subject: [PATCH 6.12 598/826] interconnect: qcom: icc-rpmh: probe defer incase of missing QoS clock dependency
+Date: Tue,  3 Dec 2024 15:45:25 +0100
+Message-ID: <20241203144807.082973135@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -53,89 +53,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shravya KN <shravya.k-n@broadcom.com>
+From: Raviteja Laggyshetty <quic_rlaggysh@quicinc.com>
 
-[ Upstream commit 3051a77a09dfe3022aa012071346937fdf059033 ]
+[ Upstream commit 05123e3299dd6aa02508469b303262338c2a661c ]
 
-The MTU setting at the time an XDP multi-buffer is attached
-determines whether the aggregation ring will be used and the
-rx_skb_func handler.  This is done in bnxt_set_rx_skb_mode().
+Return -EPROBE_DEFER from interconnect provider incase probe defer is
+received from devm_clk_bulk_get_all(). This would help in reattempting
+the inteconnect driver probe, once the required QoS clocks are
+available.
 
-If the MTU is later changed, the aggregation ring setting may need
-to be changed and it may become out-of-sync with the settings
-initially done in bnxt_set_rx_skb_mode().  This may result in
-random memory corruption and crashes as the HW may DMA data larger
-than the allocated buffer size, such as:
-
-BUG: kernel NULL pointer dereference, address: 00000000000003c0
-PGD 0 P4D 0
-Oops: 0000 [#1] PREEMPT SMP NOPTI
-CPU: 17 PID: 0 Comm: swapper/17 Kdump: loaded Tainted: G S         OE      6.1.0-226bf9805506 #1
-Hardware name: Wiwynn Delta Lake PVT BZA.02601.0150/Delta Lake-Class1, BIOS F0E_3A12 08/26/2021
-RIP: 0010:bnxt_rx_pkt+0xe97/0x1ae0 [bnxt_en]
-Code: 8b 95 70 ff ff ff 4c 8b 9d 48 ff ff ff 66 41 89 87 b4 00 00 00 e9 0b f7 ff ff 0f b7 43 0a 49 8b 95 a8 04 00 00 25 ff 0f 00 00 <0f> b7 14 42 48 c1 e2 06 49 03 95 a0 04 00 00 0f b6 42 33f
-RSP: 0018:ffffa19f40cc0d18 EFLAGS: 00010202
-RAX: 00000000000001e0 RBX: ffff8e2c805c6100 RCX: 00000000000007ff
-RDX: 0000000000000000 RSI: ffff8e2c271ab990 RDI: ffff8e2c84f12380
-RBP: ffffa19f40cc0e48 R08: 000000000001000d R09: 974ea2fcddfa4cbf
-R10: 0000000000000000 R11: ffffa19f40cc0ff8 R12: ffff8e2c94b58980
-R13: ffff8e2c952d6600 R14: 0000000000000016 R15: ffff8e2c271ab990
-FS:  0000000000000000(0000) GS:ffff8e3b3f840000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00000000000003c0 CR3: 0000000e8580a004 CR4: 00000000007706e0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-PKRU: 55555554
-Call Trace:
- <IRQ>
- __bnxt_poll_work+0x1c2/0x3e0 [bnxt_en]
-
-To address the issue, we now call bnxt_set_rx_skb_mode() within
-bnxt_change_mtu() to properly set the AGG rings configuration and
-update rx_skb_func based on the new MTU value.
-Additionally, BNXT_FLAG_NO_AGG_RINGS is cleared at the beginning of
-bnxt_set_rx_skb_mode() to make sure it gets set or cleared based on
-the current MTU.
-
-Fixes: 08450ea98ae9 ("bnxt_en: Fix max_mtu setting for multi-buf XDP")
-Co-developed-by: Somnath Kotur <somnath.kotur@broadcom.com>
-Signed-off-by: Somnath Kotur <somnath.kotur@broadcom.com>
-Signed-off-by: Shravya KN <shravya.k-n@broadcom.com>
-Signed-off-by: Michael Chan <michael.chan@broadcom.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Suggested-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Raviteja Laggyshetty <quic_rlaggysh@quicinc.com>
+Reviewed-by: Konrad Dybcio <konradybcio@kernel.org>
+Fixes: 0a7be6b35da8 ("interconnect: qcom: icc-rpmh: Add QoS configuration support")
+Link: https://lore.kernel.org/r/20240911094516.16901-1-quic_rlaggysh@quicinc.com
+Signed-off-by: Georgi Djakov <djakov@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/interconnect/qcom/icc-rpmh.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-index 908ce838eedbb..913acd80d6483 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-@@ -4558,7 +4558,7 @@ int bnxt_set_rx_skb_mode(struct bnxt *bp, bool page_mode)
- 	struct net_device *dev = bp->dev;
+diff --git a/drivers/interconnect/qcom/icc-rpmh.c b/drivers/interconnect/qcom/icc-rpmh.c
+index f49a8e0cb03c0..adacd6f7d6a8f 100644
+--- a/drivers/interconnect/qcom/icc-rpmh.c
++++ b/drivers/interconnect/qcom/icc-rpmh.c
+@@ -311,6 +311,9 @@ int qcom_icc_rpmh_probe(struct platform_device *pdev)
+ 		}
  
- 	if (page_mode) {
--		bp->flags &= ~BNXT_FLAG_AGG_RINGS;
-+		bp->flags &= ~(BNXT_FLAG_AGG_RINGS | BNXT_FLAG_NO_AGG_RINGS);
- 		bp->flags |= BNXT_FLAG_RX_PAGE_MODE;
- 
- 		if (bp->xdp_prog->aux->xdp_has_frags)
-@@ -14494,6 +14494,14 @@ static int bnxt_change_mtu(struct net_device *dev, int new_mtu)
- 		bnxt_close_nic(bp, true, false);
- 
- 	WRITE_ONCE(dev->mtu, new_mtu);
+ 		qp->num_clks = devm_clk_bulk_get_all(qp->dev, &qp->clks);
++		if (qp->num_clks == -EPROBE_DEFER)
++			return dev_err_probe(dev, qp->num_clks, "Failed to get QoS clocks\n");
 +
-+	/* MTU change may change the AGG ring settings if an XDP multi-buffer
-+	 * program is attached.  We need to set the AGG rings settings and
-+	 * rx_skb_func accordingly.
-+	 */
-+	if (READ_ONCE(bp->xdp_prog))
-+		bnxt_set_rx_skb_mode(bp, true);
-+
- 	bnxt_set_ring_params(bp);
- 
- 	if (netif_running(dev))
+ 		if (qp->num_clks < 0 || (!qp->num_clks && desc->qos_clks_required)) {
+ 			dev_info(dev, "Skipping QoS, failed to get clk: %d\n", qp->num_clks);
+ 			goto skip_qos_config;
 -- 
 2.43.0
 
