@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C8F41F706A;
-	Tue,  3 Dec 2024 14:36:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0FE21F668D;
+	Tue,  3 Dec 2024 14:36:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733236591; cv=none; b=cNeGNghZTdlug4jOrpLADbrKrYEdGzoBFWGtdVxAxkI4u5MhyBkfjIB9S091pN18l30X8RTcrkLs3yRlVpcvxZ7GPqq0FVmMF9BJM/Xump14IYVKqBJKRbkM+EvzXhUa5+mxn82jOMig6DRh/adIYlw7hard1FbAJpHV1damphs=
+	t=1733236594; cv=none; b=hv3W6yX326uBMRbf3f0JwZ1QazeZIDZ+Qw1Iub++Uj+Furg9XJMlUvS7RLdldUYi/EBTVKvSUIC+b9cKPWR4evhp6SthSOOQquHH9fugHzIbpYf5tKIsi5002nh9Qracsq+lQTsK3yGnrYkMs2YEfihvWenx1KYb3be6DVrd6M4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733236591; c=relaxed/simple;
-	bh=qVztrk/BZK3Nm7mSUVxID7RUlwuMHo99WkVgcYbNU3I=;
+	s=arc-20240116; t=1733236594; c=relaxed/simple;
+	bh=HW2ujMHfRdP5eXQ1MTApqUZR4sacQamv6tT5bnmY2m8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Txtmy+ItB7vU0q7C0LJfvtEf8oKwdbF8QuiDS2WLNCVxEQPkdU9xnCutKgUh0r5WwJ2WK8jnEknw0isRfyd5C9x/syWq3XmGcEIAjevAVKMKFm9UdR+RRpYE5ZM8uf+aU0sJ64jR2ChIsw0yFDhE0AExvDLb8Ud8Jo0zr2yy0XA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rPj+4zKA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rFLM7VBXkGwBZf+xOoLo4hqNXzJBSYiZqxE2knBeYRduaOIBLDHn7gU31NpmZm919WzgExqC+BXVqequO51yqpdYhRIU8rG2XRzGyy6rPJ+7nQ5sNCjRNcBwR8gR2gcrjXHpJsEzoZ9YpIu/tQxflWqGYN3XYVB+6wMWnDwxZA0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j0iZlxQr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rPj+4zKA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3D48C4CECF;
-	Tue,  3 Dec 2024 14:36:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j0iZlxQr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15807C4CED8;
+	Tue,  3 Dec 2024 14:36:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733236591;
-	bh=qVztrk/BZK3Nm7mSUVxID7RUlwuMHo99WkVgcYbNU3I=;
+	s=korg; t=1733236594;
+	bh=HW2ujMHfRdP5eXQ1MTApqUZR4sacQamv6tT5bnmY2m8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rPj+4zKArkopVR/RtcqOPqLJaZfO5v0pG1+dbwuY2OetFj/LhGFwntvdBGFglJo1E
-	 62mkijgSoAMNv0PIalMP26x4ocbSyBfstTZKZrT7UVLNI5ESyONp7jWzOf7CNeytEy
-	 Zri4ctqYO/PgzOXXrQRRButQghxA+HPq2e+WI5qM=
+	b=j0iZlxQrABkKeyqgubKdyt+Y8jPQNE6Kk4WJfHVlInILHvT/l7KQSXT3Mjru3GzWB
+	 xgqauWmMoC7XAWfBrgh6UX/t/yD278lXWn9P/iMIdfh/sZP5wfdGxocZOa3ky5DJPh
+	 yaI8hV+mlarmACPxxh3gOUilF83qyEzDwiY62Jq4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andre Przywara <andre.przywara@arm.com>,
-	Chen-Yu Tsai <wens@csie.org>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 033/138] ARM: dts: cubieboard4: Fix DCDC5 regulator constraints
-Date: Tue,  3 Dec 2024 15:31:02 +0100
-Message-ID: <20241203141924.823129598@linuxfoundation.org>
+Subject: [PATCH 4.19 034/138] regmap: irq: Set lockdep class for hierarchical IRQ domains
+Date: Tue,  3 Dec 2024 15:31:03 +0100
+Message-ID: <20241203141924.861130861@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203141923.524658091@linuxfoundation.org>
 References: <20241203141923.524658091@linuxfoundation.org>
@@ -51,54 +51,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andre Przywara <andre.przywara@arm.com>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit dd36ad71ad65968f97630808bc8d605c929b128e ]
+[ Upstream commit 953e549471cabc9d4980f1da2e9fa79f4c23da06 ]
 
-The DCDC5 voltage rail in the X-Powers AXP809 PMIC has a resolution of
-50mV, so the currently enforced limits of 1.475 and 1.525 volts cannot
-be set, when the existing regulator value is beyond this range.
+Lockdep gives a false positive splat as it can't distinguish the lock
+which is taken by different IRQ descriptors from different IRQ chips
+that are organized in a way of a hierarchy:
 
-This will lead to the whole regulator driver to give up and fail
-probing, which in turn will hang the system, as essential devices depend
-on the PMIC.
-In this case a bug in U-Boot set the voltage to 1.75V (meant for DCDC4),
-and the AXP driver's attempt to correct this lead to this error:
-==================
-[    4.447653] axp20x-rsb sunxi-rsb-3a3: AXP20X driver loaded
-[    4.450066] vcc-dram: Bringing 1750000uV into 1575000-1575000uV
-[    4.460272] vcc-dram: failed to apply 1575000-1575000uV constraint: -EINVAL
-[    4.474788] axp20x-regulator axp20x-regulator.0: Failed to register dcdc5
-[    4.482276] axp20x-regulator axp20x-regulator.0: probe with driver axp20x-regulator failed with error -22
-==================
+   ======================================================
+   WARNING: possible circular locking dependency detected
+   6.12.0-rc5-next-20241101-00148-g9fabf8160b53 #562 Tainted: G        W
+   ------------------------------------------------------
+   modprobe/141 is trying to acquire lock:
+   ffff899446947868 (intel_soc_pmic_bxtwc:502:(&bxtwc_regmap_config)->lock){+.+.}-{4:4}, at: regmap_update_bits_base+0x33/0x90
 
-Set the limits to values that can be programmed, so any correction will
-be successful.
+   but task is already holding lock:
+   ffff899446947c68 (&d->lock){+.+.}-{4:4}, at: __setup_irq+0x682/0x790
 
-Signed-off-by: Andre Przywara <andre.przywara@arm.com>
-Fixes: 1e1dea72651b ("ARM: dts: sun9i: cubieboard4: Add AXP809 PMIC device node and regulators")
-Link: https://patch.msgid.link/20241007222916.19013-1-andre.przywara@arm.com
-Signed-off-by: Chen-Yu Tsai <wens@csie.org>
+   which lock already depends on the new lock.
+
+   -> #3 (&d->lock){+.+.}-{4:4}:
+   -> #2 (&desc->request_mutex){+.+.}-{4:4}:
+   -> #1 (ipclock){+.+.}-{4:4}:
+   -> #0 (intel_soc_pmic_bxtwc:502:(&bxtwc_regmap_config)->lock){+.+.}-{4:4}:
+
+   Chain exists of:
+     intel_soc_pmic_bxtwc:502:(&bxtwc_regmap_config)->lock --> &desc->request_mutex --> &d->lock
+
+    Possible unsafe locking scenario:
+
+          CPU0                    CPU1
+          ----                    ----
+     lock(&d->lock);
+                                  lock(&desc->request_mutex);
+                                  lock(&d->lock);
+     lock(intel_soc_pmic_bxtwc:502:(&bxtwc_regmap_config)->lock);
+
+    *** DEADLOCK ***
+
+   3 locks held by modprobe/141:
+    #0: ffff8994419368f8 (&dev->mutex){....}-{4:4}, at: __driver_attach+0xf6/0x250
+    #1: ffff89944690b250 (&desc->request_mutex){+.+.}-{4:4}, at: __setup_irq+0x1a2/0x790
+    #2: ffff899446947c68 (&d->lock){+.+.}-{4:4}, at: __setup_irq+0x682/0x790
+
+Set a lockdep class when we map the IRQ so that it doesn't warn about
+a lockdep bug that doesn't exist.
+
+Fixes: 4af8be67fd99 ("regmap: Convert regmap_irq to use irq_domain")
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://patch.msgid.link/20241101165553.4055617-1-andriy.shevchenko@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/sun9i-a80-cubieboard4.dts | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/base/regmap/regmap-irq.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/arch/arm/boot/dts/sun9i-a80-cubieboard4.dts b/arch/arm/boot/dts/sun9i-a80-cubieboard4.dts
-index 85da85faf869a..0e37ae46348ad 100644
---- a/arch/arm/boot/dts/sun9i-a80-cubieboard4.dts
-+++ b/arch/arm/boot/dts/sun9i-a80-cubieboard4.dts
-@@ -253,8 +253,8 @@ reg_dcdc4: dcdc4 {
+diff --git a/drivers/base/regmap/regmap-irq.c b/drivers/base/regmap/regmap-irq.c
+index 982c7ac311b85..aeb4961d14b95 100644
+--- a/drivers/base/regmap/regmap-irq.c
++++ b/drivers/base/regmap/regmap-irq.c
+@@ -391,12 +391,16 @@ static irqreturn_t regmap_irq_thread(int irq, void *d)
+ 		return IRQ_NONE;
+ }
  
- 			reg_dcdc5: dcdc5 {
- 				regulator-always-on;
--				regulator-min-microvolt = <1425000>;
--				regulator-max-microvolt = <1575000>;
-+				regulator-min-microvolt = <1450000>;
-+				regulator-max-microvolt = <1550000>;
- 				regulator-name = "vcc-dram";
- 			};
++static struct lock_class_key regmap_irq_lock_class;
++static struct lock_class_key regmap_irq_request_class;
++
+ static int regmap_irq_map(struct irq_domain *h, unsigned int virq,
+ 			  irq_hw_number_t hw)
+ {
+ 	struct regmap_irq_chip_data *data = h->host_data;
  
+ 	irq_set_chip_data(virq, data);
++	irq_set_lockdep_class(virq, &regmap_irq_lock_class, &regmap_irq_request_class);
+ 	irq_set_chip(virq, &data->irq_chip);
+ 	irq_set_nested_thread(virq, 1);
+ 	irq_set_parent(virq, data->irq);
 -- 
 2.43.0
 
