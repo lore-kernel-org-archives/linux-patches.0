@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E83A1F7591;
-	Tue,  3 Dec 2024 15:58:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 485811F75B4;
+	Tue,  3 Dec 2024 15:58:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733241509; cv=none; b=c1Nd3bOgnSIVd2cp15KpH9+B97BKECgnVQMlSZplm4cw9SZ8Pzi5hazn5IA+MR0wkpIemp0Et5xUsY2E5V1IPJedyL9BZnqOkdJvKFMlnLsGWlA099RXsvpyb0siolz3GjXvhv9TwVRYNn8EpHXihednc1OTgSc9J5LWL2p10ck=
+	t=1733241512; cv=none; b=OXiHx7TPBHmydaqB82nXYrTV7NlHDAULJGAE7+uXicN2237KRmxoWSvn8GgrmptQ+Tc6mDKqqVX590v+xBUCQxacjOof7yXpL9jqk4sSb7vign89eEAmtiSP00WdNieZaMebSbpB+ssbbJo6u3StHpf8fVEwYhW8aTXwa4exvz8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733241509; c=relaxed/simple;
-	bh=rL5Yzuop3P6VvjMObvV3rtxI5ublqh27wvlhgb9tEls=;
+	s=arc-20240116; t=1733241512; c=relaxed/simple;
+	bh=Sg6EQT8ULsJbz5hkGa+oL/d8tu3TaBABL+BuncVYysU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TbTAdijxZVzpkyRna4tw6AUz5zULcRkcZy8N8wUI1Qo8WEGQINLqOqxNSRwqfJ7qYiX7pyzyAfb2zFH3e576bnJm5GWhzUp8yduNX9u/iTdoGkfxDEuHh3u3BAT04KdgX2JXLrryNefL+srIwaywijV6N33uw4AcGgjO1rWSxJM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T7KRIve4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Y5tp8f2TsTfcKPd+AucLYcKuAqrQg/VGDlHTapxwLoQm8rsvG5ttKW+wcOq0PW7kwK6v8+sbjlEg7qacTL4RX3V1VHHS3BIlexce4p+mikIeKguv89uK51pCHMFtv7erb1Vs17jMFdIBhHRy6SIO5ezpP32xtP/igDKv8wyox+4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=isLwLlh+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T7KRIve4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D51DC4CECF;
-	Tue,  3 Dec 2024 15:58:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="isLwLlh+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC796C4CECF;
+	Tue,  3 Dec 2024 15:58:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733241509;
-	bh=rL5Yzuop3P6VvjMObvV3rtxI5ublqh27wvlhgb9tEls=;
+	s=korg; t=1733241512;
+	bh=Sg6EQT8ULsJbz5hkGa+oL/d8tu3TaBABL+BuncVYysU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T7KRIve4yl5fgIw62PJyX2KGmQtjaL7EPd006IF4IktpDCL+S01kqEzYTSVi7+Ekt
-	 s4DtqRi58ipDWkMRRIycghkvO1/Ni72qCIbFOS7oFjjLeMZHOjJgDSFL3Rg/XQRH9v
-	 JzBsHdgkiRXQpeda7FhCQ50LU+Wm4oKMStXUxFfA=
+	b=isLwLlh+dHnYE7XCObSpSiTj4d6fv/YFrSo+M4eYg0p3TFB8Q1V35XVg/Ry8GuPUP
+	 F7VPcuhht0z4P6NV1q+/L5GVZzpCL15xeKPMKUZNzowPjN8k3RCpdziCa7trUTVo9d
+	 Lr57Nn+Ku3442XmQ5zykzaOEsEK41dGK+Xn8cZrg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhenzhong Duan <zhenzhong.duan@intel.com>,
-	Lu Baolu <baolu.lu@linux.intel.com>,
-	Joerg Roedel <jroedel@suse.de>,
+	Vegard Nossum <vegard.nossum@oracle.com>,
+	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
+	Dan Williams <dan.j.williams@intel.com>,
+	Ira Weiny <ira.weiny@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 411/826] iommu/vt-d: Fix checks and print in pgtable_walk()
-Date: Tue,  3 Dec 2024 15:42:18 +0100
-Message-ID: <20241203144759.793419413@linuxfoundation.org>
+Subject: [PATCH 6.12 438/826] dax: delete a stale directory pmem
+Date: Tue,  3 Dec 2024 15:42:45 +0100
+Message-ID: <20241203144800.849301662@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -52,60 +53,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhenzhong Duan <zhenzhong.duan@intel.com>
+From: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
 
-[ Upstream commit f1645676f25d2c846798f0233c3a953efd62aafb ]
+[ Upstream commit b8e6d7ce50673c39514921ac61f7af00bbb58b87 ]
 
-There are some issues in pgtable_walk():
+After commit: 83762cb5c7c4 ("dax: Kill DEV_DAX_PMEM_COMPAT") the pmem/
+directory is not needed anymore and Makefile changes were made
+accordingly in this commit, but there is a Makefile and pmem.c in pmem/
+which are now stale and pmem.c is empty, remove them.
 
-1. Super page is dumped as non-present page
-2. dma_pte_superpage() should not check against leaf page table entries
-3. Pointer pte is never NULL so checking it is meaningless
-4. When an entry is not present, it still makes sense to dump the entry
-   content.
-
-Fix 1,2 by checking dma_pte_superpage()'s returned value after level check.
-Fix 3 by removing pte check.
-Fix 4 by checking present bit after printing.
-
-By this chance, change to print "page table not present" instead of "PTE
-not present" to be clearer.
-
-Fixes: 914ff7719e8a ("iommu/vt-d: Dump DMAR translation structure when DMA fault occurs")
-Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-Link: https://lore.kernel.org/r/20241024092146.715063-3-zhenzhong.duan@intel.com
-Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
+Fixes: 83762cb5c7c4 ("dax: Kill DEV_DAX_PMEM_COMPAT")
+Suggested-by: Vegard Nossum <vegard.nossum@oracle.com>
+Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+Reviewed-by: Dan Williams <dan.j.williams@intel.com>
+Reviewed-by: Ira Weiny <ira.weiny@intel.com>
+Link: https://patch.msgid.link/20241017101144.1654085-1-harshit.m.mogalapalli@oracle.com
+Signed-off-by: Ira Weiny <ira.weiny@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/intel/iommu.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ drivers/dax/pmem/Makefile |  7 -------
+ drivers/dax/pmem/pmem.c   | 10 ----------
+ 2 files changed, 17 deletions(-)
+ delete mode 100644 drivers/dax/pmem/Makefile
+ delete mode 100644 drivers/dax/pmem/pmem.c
 
-diff --git a/drivers/iommu/intel/iommu.c b/drivers/iommu/intel/iommu.c
-index 29c4a3bf3acd0..a167d59101ae2 100644
---- a/drivers/iommu/intel/iommu.c
-+++ b/drivers/iommu/intel/iommu.c
-@@ -707,14 +707,15 @@ static void pgtable_walk(struct intel_iommu *iommu, unsigned long pfn,
- 	while (1) {
- 		offset = pfn_level_offset(pfn, level);
- 		pte = &parent[offset];
--		if (!pte || (dma_pte_superpage(pte) || !dma_pte_present(pte))) {
--			pr_info("PTE not present at level %d\n", level);
--			break;
--		}
- 
- 		pr_info("pte level: %d, pte value: 0x%016llx\n", level, pte->val);
- 
--		if (level == 1)
-+		if (!dma_pte_present(pte)) {
-+			pr_info("page table not present at level %d\n", level - 1);
-+			break;
-+		}
-+
-+		if (level == 1 || dma_pte_superpage(pte))
- 			break;
- 
- 		parent = phys_to_virt(dma_pte_addr(pte));
+diff --git a/drivers/dax/pmem/Makefile b/drivers/dax/pmem/Makefile
+deleted file mode 100644
+index 191c31f0d4f00..0000000000000
+--- a/drivers/dax/pmem/Makefile
++++ /dev/null
+@@ -1,7 +0,0 @@
+-# SPDX-License-Identifier: GPL-2.0-only
+-obj-$(CONFIG_DEV_DAX_PMEM) += dax_pmem.o
+-obj-$(CONFIG_DEV_DAX_PMEM) += dax_pmem_core.o
+-
+-dax_pmem-y := pmem.o
+-dax_pmem_core-y := core.o
+-dax_pmem_compat-y := compat.o
+diff --git a/drivers/dax/pmem/pmem.c b/drivers/dax/pmem/pmem.c
+deleted file mode 100644
+index dfe91a2990fec..0000000000000
+--- a/drivers/dax/pmem/pmem.c
++++ /dev/null
+@@ -1,10 +0,0 @@
+-// SPDX-License-Identifier: GPL-2.0
+-/* Copyright(c) 2016 - 2018 Intel Corporation. All rights reserved. */
+-#include <linux/percpu-refcount.h>
+-#include <linux/memremap.h>
+-#include <linux/module.h>
+-#include <linux/pfn_t.h>
+-#include <linux/nd.h>
+-#include "../bus.h"
+-
+-
 -- 
 2.43.0
 
