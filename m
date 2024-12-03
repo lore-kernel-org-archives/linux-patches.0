@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87D201EE00B;
-	Tue,  3 Dec 2024 16:16:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B8AD1EE00B;
+	Tue,  3 Dec 2024 16:16:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733242610; cv=none; b=QbuCqvKJy8rreLu2mflROcY0TerEAgDzIIca+AB3FVsx5BTB+h7vNsINQ1glc1jngSYvz+c7h+vAKzQwYpn4wv1qssjqtosSaoEitLD36DQWGtQG4idXepR6v+rdTjhoLuxzrcxKlwY37w7FBx6XrX/5y3tZy6Fsn6dmXS/5JwE=
+	t=1733242614; cv=none; b=eGHNpr1MmKvjSFW4nYBAAKjfZINb09+9jqQYSlgUxK1Ac3cXhqYjy/Cladnnx9shWXeMrEl4yrGFCR/6dq34Z+1RGVSZVRYVMlB7rrWLTcomxJwapspMsPSTS1eKsHcRBFD5ZAJhwFotI285+hWU16dJN+uo2UTInzW0+Lvw50k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733242610; c=relaxed/simple;
-	bh=neF6z0mJRfuyA3cna/mWo6YL8EfheWMLxBYlWzLGkGI=;
+	s=arc-20240116; t=1733242614; c=relaxed/simple;
+	bh=+0+6r2MHINbDQULt5wKOXblsY2cj8glUBQ0Fgyco8G8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HklAfV4a6uDCg9e0gzXLhP3AHm4ReOs0azTULJ3I9v8gVL5/2X/+CW2SCLjo5hOJr0G51jCuS+RtPWzPpFVUj911j3XKv/+GqNPLdk4F5n9xIiDbFR/WecoggOLFQ8e4vxN3h101MTXBTVjtuiCA/c1i0RcljfJ3qQFyLaVSvM0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NN0e/QMp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=n3pXIkQXKLGQdfNUpQLxyqAjiEYcYnDRSZffabBOeymiXGsRB1Wg5BXYqSDbXfOQOzMblLgTsXBPpUqosdNFhzkwXCrqlHqRMEHgZPNOx4Ge3otT24c/0SGIIIMUkCak7y2/5MJ0k7B7W6+ahbOsL1pckLd9eAVcNxnACwkYx/w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QvEfqCHq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NN0e/QMp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1C75C4CECF;
-	Tue,  3 Dec 2024 16:16:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QvEfqCHq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6795EC4CECF;
+	Tue,  3 Dec 2024 16:16:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733242610;
-	bh=neF6z0mJRfuyA3cna/mWo6YL8EfheWMLxBYlWzLGkGI=;
+	s=korg; t=1733242613;
+	bh=+0+6r2MHINbDQULt5wKOXblsY2cj8glUBQ0Fgyco8G8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NN0e/QMpyIKpxOHdjPQQobprNtjE+GZMs8zvI+KknWHND7UWJd/tobKHD7AlcVFEp
-	 MMvI5F82maph2i4siQn3cXpLhI5rXvG9JtVY6Ninbr0rxnM+OYpzV6n3hnJMsohpQp
-	 itYBiavm6NqRLKCjNGOGnpP4LVUWNjw2yJ/h2Rvs=
+	b=QvEfqCHqgmdY++Q5zw33TSSWACdWm2u5NxddPBg7w4ssBq1t/TqEJqnXjXshY9zls
+	 2+B/PWWSWngLKRo1W7pKwp84UoOeRSumRSRLueXZQrAFx8su7fyzH7qs9mSE+AMMN+
+	 QH7Bdj+jlyUHYOTZmVhCQgaOwfNgK6A0e5PBPwyU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muchun Song <muchun.song@linux.dev>,
-	Muchun Song <songmuchun@bytedance.com>,
-	Ming Lei <ming.lei@redhat.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.12 724/826] block: fix missing dispatching request when queue is started or unquiesced
-Date: Tue,  3 Dec 2024 15:47:31 +0100
-Message-ID: <20241203144812.004788757@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	kernel test robot <lkp@intel.com>,
+	Arnd Bergmann <arnd@arndb.de>
+Subject: [PATCH 6.12 715/826] serial: amba-pl011: fix build regression
+Date: Tue,  3 Dec 2024 15:47:22 +0100
+Message-ID: <20241203144811.654184578@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -52,66 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Muchun Song <songmuchun@bytedance.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-commit 2003ee8a9aa14d766b06088156978d53c2e9be3d upstream.
+commit b5a23a60e8ab5711f4952912424347bf3864ce8d upstream.
 
-Supposing the following scenario with a virtio_blk driver.
+When CONFIG_DMA_ENGINE is disabled, the driver now fails to build:
 
-CPU0                    CPU1                    CPU2
+drivers/tty/serial/amba-pl011.c: In function 'pl011_unthrottle_rx':
+drivers/tty/serial/amba-pl011.c:1822:16: error: 'struct uart_amba_port' has no member named 'using_rx_dma'
+ 1822 |         if (uap->using_rx_dma) {
+      |                ^~
+drivers/tty/serial/amba-pl011.c:1823:20: error: 'struct uart_amba_port' has no member named 'dmacr'
+ 1823 |                 uap->dmacr |= UART011_RXDMAE;
+      |                    ^~
+drivers/tty/serial/amba-pl011.c:1824:32: error: 'struct uart_amba_port' has no member named 'dmacr'
+ 1824 |                 pl011_write(uap->dmacr, uap, REG_DMACR);
+      |                                ^~
 
-blk_mq_try_issue_directly()
-  __blk_mq_issue_directly()
-    q->mq_ops->queue_rq()
-      virtio_queue_rq()
-        blk_mq_stop_hw_queue()
-                                                virtblk_done()
-                        blk_mq_try_issue_directly()
-                          if (blk_mq_hctx_stopped())
-  blk_mq_request_bypass_insert()                  blk_mq_run_hw_queue()
-  blk_mq_run_hw_queue()     blk_mq_run_hw_queue()
-                            blk_mq_insert_request()
-                            return
+Add the missing #ifdef check around these field accesses, matching
+what other parts of this driver do.
 
-After CPU0 has marked the queue as stopped, CPU1 will see the queue is
-stopped. But before CPU1 puts the request on the dispatch list, CPU2
-receives the interrupt of completion of request, so it will run the
-hardware queue and marks the queue as non-stopped. Meanwhile, CPU1 also
-runs the same hardware queue. After both CPU1 and CPU2 complete
-blk_mq_run_hw_queue(), CPU1 just puts the request to the same hardware
-queue and returns. It misses dispatching a request. Fix it by running
-the hardware queue explicitly. And blk_mq_request_issue_directly()
-should handle a similar situation. Fix it as well.
-
-Fixes: d964f04a8fde ("blk-mq: fix direct issue")
-Cc: stable@vger.kernel.org
-Cc: Muchun Song <muchun.song@linux.dev>
-Signed-off-by: Muchun Song <songmuchun@bytedance.com>
-Reviewed-by: Ming Lei <ming.lei@redhat.com>
-Link: https://lore.kernel.org/r/20241014092934.53630-2-songmuchun@bytedance.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 2bcacc1c87ac ("serial: amba-pl011: Fix RX stall when DMA is used")
+Cc: stable <stable@kernel.org>
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202411140617.nkjeHhsK-lkp@intel.com/
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Link: https://lore.kernel.org/r/20241115110021.744332-1-arnd@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- block/blk-mq.c |    2 ++
+ drivers/tty/serial/amba-pl011.c |    2 ++
  1 file changed, 2 insertions(+)
 
---- a/block/blk-mq.c
-+++ b/block/blk-mq.c
-@@ -2620,6 +2620,7 @@ static void blk_mq_try_issue_directly(st
+--- a/drivers/tty/serial/amba-pl011.c
++++ b/drivers/tty/serial/amba-pl011.c
+@@ -1819,10 +1819,12 @@ static void pl011_unthrottle_rx(struct u
  
- 	if (blk_mq_hctx_stopped(hctx) || blk_queue_quiesced(rq->q)) {
- 		blk_mq_insert_request(rq, 0);
-+		blk_mq_run_hw_queue(hctx, false);
- 		return;
+ 	pl011_write(uap->im, uap, REG_IMSC);
+ 
++#ifdef CONFIG_DMA_ENGINE
+ 	if (uap->using_rx_dma) {
+ 		uap->dmacr |= UART011_RXDMAE;
+ 		pl011_write(uap->dmacr, uap, REG_DMACR);
  	}
++#endif
  
-@@ -2650,6 +2651,7 @@ static blk_status_t blk_mq_request_issue
- 
- 	if (blk_mq_hctx_stopped(hctx) || blk_queue_quiesced(rq->q)) {
- 		blk_mq_insert_request(rq, 0);
-+		blk_mq_run_hw_queue(hctx, false);
- 		return BLK_STS_OK;
- 	}
- 
+ 	uart_port_unlock_irqrestore(&uap->port, flags);
+ }
 
 
