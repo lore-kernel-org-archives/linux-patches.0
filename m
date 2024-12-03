@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E1431E3DF9;
-	Tue,  3 Dec 2024 15:06:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D901A1F706B;
+	Tue,  3 Dec 2024 15:06:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733238416; cv=none; b=SmKoXpYxXZmGJAxjUe1l4LDPiOlw/sQUNcHw1/gt5wrHLPmtvJGwMG2PgPuifbxlzYVy/ZyqBCoqHe6jn5uCkd7H/iGsTT46QltCQ8izbxE4QbLZ92fQIGoLN+d1nT4VsS4wrO/57SWAczyw4LHd1bSQ1feU9M/1kVmzZEExxaI=
+	t=1733238418; cv=none; b=T6XU/a5NMqHIekulJDbo+n8GMpwkM2jxWekqryfdCsE/l5E0qNEDXoIVzsuX23sKPUH5ZjNQNr2UpNyjD7AQRV8umjkYb1IYqKsmOYkOpCVrxR88Uv0BHNV4wve3Gmf0tVbUQb9KDaVk+YqMGS8QgAUZARzipcbiPyKdjEFWe7E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733238416; c=relaxed/simple;
-	bh=qy84lbqVdGFSc8dZ4N6yvF99HwNGfUVn9Qqd7ScXduk=;
+	s=arc-20240116; t=1733238418; c=relaxed/simple;
+	bh=x5IxqqW8Mc5rhppTTlNvo5Y8m/0aP6UeWiDR4YQoQjs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=G+G3jX5CcHYS9KiGBzjfPruNZVVIli4f6gnxqsV3FqTLwe5G19WRy7K3Jxc9VmMsvyWWYThHhQYYmKdcgKsjG3gNCbOgD9y7TUPP9R9CWV8YzujKDNAI9I4LrrctVxGwesqepM0ex5xebQipgZXhPF2d22PwgdIQ84wm83xXChY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wEGHYeRH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bDHSgG54ClNFSbZBBOgu2WRt/lTa6JnDVRipttPlM+W4rsYrtpVt6FSQDJgJKSHk+VB5pEC5JOGn/sZLJwiQnmImeKAZ9tRLmqvQp/iqHEhJMNOeQKokwkcRrjLZ4Ybgn8MMY+cuc+R5zixSS9kpck0CpP5xk+d4Larqp1J7JxE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2iuCqY5h; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wEGHYeRH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A9C9C4CECF;
-	Tue,  3 Dec 2024 15:06:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2iuCqY5h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 641BAC4CECF;
+	Tue,  3 Dec 2024 15:06:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733238415;
-	bh=qy84lbqVdGFSc8dZ4N6yvF99HwNGfUVn9Qqd7ScXduk=;
+	s=korg; t=1733238418;
+	bh=x5IxqqW8Mc5rhppTTlNvo5Y8m/0aP6UeWiDR4YQoQjs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wEGHYeRHryp+I+X164xYGmyuuTTFxVCF5NmlTT2h6vFpUpVJjT609hVybbSyVDufo
-	 FW7W+Ew/oAWCknnLdLsmGyTOgMhYqUqKseyvdq/KR5R2CZ9FOCVnFlh1Oys22jq0z9
-	 r/1ToutxHQOXuIbVao7Fef0TwU/oAzrMtkq2pJFI=
+	b=2iuCqY5hgKRZme6PCgM1jHA9BazcXzZmOFj8zT72OstHcTwsdayQy6ImGamdlyjKH
+	 wH++IXV0jaLYBzo9iaW6wBkBQVbHmscMYbxTBIBdQOpqoPC8KrHHOQxCpUbGs014MH
+	 UA71QFbI+NZ4JBTCaYdD5WXah1+IRVmcfu/YvMKQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
-	Dave Stevenson <dave.stevenson@raspberrypi.com>,
+	Stefan Hansson <newbyte@postmarketos.org>,
+	Jessica Zhang <quic_jesszhan@quicinc.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 268/817] drm/vc4: Match drm_dev_enter and exit calls in vc4_hvs_lut_load
-Date: Tue,  3 Dec 2024 15:37:20 +0100
-Message-ID: <20241203144006.254895935@linuxfoundation.org>
+Subject: [PATCH 6.11 239/817] drm/panel: nt35510: Make new commands optional
+Date: Tue,  3 Dec 2024 15:36:51 +0100
+Message-ID: <20241203144005.088316883@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -46,56 +46,74 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.11-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dave Stevenson <dave.stevenson@raspberrypi.com>
+From: Linus Walleij <linus.walleij@linaro.org>
 
-[ Upstream commit cf1c87d978d47339a39bfa7a6133ecd3f8f87525 ]
+[ Upstream commit 2418aa8516b26c5e332a1a8c216d4d620f965a56 ]
 
-Commit 52efe364d196 ("drm/vc4: hvs: Don't write gamma luts on 2711")
-added a return path to vc4_hvs_lut_load that had called
-drm_dev_enter, but not drm_dev_exit.
+The commit introducing the Frida display started to write the
+SETVCMOFF registers unconditionally, and some (not all!) Hydis
+display seem to be affected by ghosting after the commit.
 
-Ensure we call drm_dev_exit.
+Make SETVCMOFF optional and only send these commands on the
+Frida display for now.
 
-Fixes: 52efe364d196 ("drm/vc4: hvs: Don't write gamma luts on 2711")
-Reported-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Closes: https://lore.kernel.org/dri-devel/37051126-3921-4afe-a936-5f828bff5752@samsung.com/
-Tested-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Reviewed-by: Maíra Canal <mcanal@igalia.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20241008-drm-vc4-fixes-v1-1-9d0396ca9f42@raspberrypi.com
-Signed-off-by: Dave Stevenson <dave.stevenson@raspberrypi.com>
+Reported-by: Stefan Hansson <newbyte@postmarketos.org>
+Fixes: 219a1f49094f ("drm/panel: nt35510: support FRIDA FRD400B25025-A-CTK")
+Acked-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+Tested-by: Stefan Hansson <newbyte@postmarketos.org>
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240908-fix-nt35510-v2-1-d4834b9cdb9b@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/vc4/vc4_hvs.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/panel/panel-novatek-nt35510.c | 15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/gpu/drm/vc4/vc4_hvs.c b/drivers/gpu/drm/vc4/vc4_hvs.c
-index 64d2410b4b860..ad2d8f6f1e9ef 100644
---- a/drivers/gpu/drm/vc4/vc4_hvs.c
-+++ b/drivers/gpu/drm/vc4/vc4_hvs.c
-@@ -225,7 +225,7 @@ static void vc4_hvs_lut_load(struct vc4_hvs *hvs,
- 		return;
+diff --git a/drivers/gpu/drm/panel/panel-novatek-nt35510.c b/drivers/gpu/drm/panel/panel-novatek-nt35510.c
+index d3bfdfc9cff64..f54e0fa429378 100644
+--- a/drivers/gpu/drm/panel/panel-novatek-nt35510.c
++++ b/drivers/gpu/drm/panel/panel-novatek-nt35510.c
+@@ -38,6 +38,7 @@
  
- 	if (hvs->vc4->gen == VC4_GEN_4)
--		return;
-+		goto exit;
+ #define NT35510_CMD_CORRECT_GAMMA BIT(0)
+ #define NT35510_CMD_CONTROL_DISPLAY BIT(1)
++#define NT35510_CMD_SETVCMOFF BIT(2)
  
- 	/* The LUT memory is laid out with each HVS channel in order,
- 	 * each of which takes 256 writes for R, 256 for G, then 256
-@@ -242,6 +242,7 @@ static void vc4_hvs_lut_load(struct vc4_hvs *hvs,
- 	for (i = 0; i < crtc->gamma_size; i++)
- 		HVS_WRITE(SCALER_GAMDATA, vc4_crtc->lut_b[i]);
+ #define MCS_CMD_MAUCCTR		0xF0 /* Manufacturer command enable */
+ #define MCS_CMD_READ_ID1	0xDA
+@@ -721,11 +722,13 @@ static int nt35510_setup_power(struct nt35510 *nt)
+ 	if (ret)
+ 		return ret;
  
-+exit:
- 	drm_dev_exit(idx);
- }
+-	ret = nt35510_send_long(nt, dsi, NT35510_P1_SETVCMOFF,
+-				NT35510_P1_VCMOFF_LEN,
+-				nt->conf->vcmoff);
+-	if (ret)
+-		return ret;
++	if (nt->conf->cmds & NT35510_CMD_SETVCMOFF) {
++		ret = nt35510_send_long(nt, dsi, NT35510_P1_SETVCMOFF,
++					NT35510_P1_VCMOFF_LEN,
++					nt->conf->vcmoff);
++		if (ret)
++			return ret;
++	}
  
+ 	/* Typically 10 ms */
+ 	usleep_range(10000, 20000);
+@@ -1319,7 +1322,7 @@ static const struct nt35510_config nt35510_frida_frd400b25025 = {
+ 	},
+ 	.mode_flags = MIPI_DSI_MODE_VIDEO | MIPI_DSI_MODE_VIDEO_BURST |
+ 			MIPI_DSI_MODE_LPM,
+-	.cmds = NT35510_CMD_CONTROL_DISPLAY,
++	.cmds = NT35510_CMD_CONTROL_DISPLAY | NT35510_CMD_SETVCMOFF,
+ 	/* 0x03: AVDD = 6.2V */
+ 	.avdd = { 0x03, 0x03, 0x03 },
+ 	/* 0x46: PCK = 2 x Hsync, BTP = 2.5 x VDDB */
 -- 
 2.43.0
 
