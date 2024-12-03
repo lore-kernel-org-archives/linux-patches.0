@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C4AD2D7BF;
-	Tue,  3 Dec 2024 15:17:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0924C646;
+	Tue,  3 Dec 2024 15:17:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733239062; cv=none; b=FFdVWQPeVbJn1iNKu1kXgxs1BrBdn/T45DRy+IryN28CQ8lAxqX4/ag8cFNCw7CgSpK2dyEc5l5EF/qzuN74Mn3Xo4PTAmoWvZZywmBKHrlKbBMde+jnj7dmnx99eDUU6Wq7BHR1NoEHnLShsGfKeWPbA/z2ROuAHJ16TYMce9Q=
+	t=1733239065; cv=none; b=f808eLIOxRkavFTu0oMtSKixPguf2imOp9mM/oLDesbzAk+GccuwvRt2N4fsUFoj3g6FIDouhWpl0PUv22ktr2deNYF20IYYAwzUmaQi2JTdZphqNVxYeGhvi2RqmsAQnfWgxBx4Pw3v7TYhBbz2cKRZQLMn3wA2045vT0VgrJA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733239062; c=relaxed/simple;
-	bh=GQAxnlGMvwWouBkpTmR0R1r0GiSDMj89rEtIduTw7wo=;
+	s=arc-20240116; t=1733239065; c=relaxed/simple;
+	bh=SQ2nWRdJAUv632xDzL7yh1UFKPvYc/nnHQlQLJJnblc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BnpiiZJgQsneRC3wlp84IBamwzgDNKx4pkLYLgEDXQlGOsnrLbBHbneIG5Af34URihNgBy9BSx5usm6XjotbTNyZIyiksF/yQ0GC/mzDRhX8vRd2nAHyWACjmUo6rw/7c3Dq5eHFcDoR0tmPSx80DKyhAdzovnasuLPkGUFAexw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zsAXBSm6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=A4znIkCocGVnUz8wAf/s4NcA7RjPYJ0mqOdzL7EPZinuq7Lcw/b/ffch75Z3G0fVOs3bZ0Am9RBjAU53sI9iVJa7ddLv+6nPsYqvX8N/WBUXDhegGSs3RC8B+urTQ1Gw0BgtCuhqG5C0BAdtBF4L6lCJUJL4Hmyb387NZUFgjIg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gz4urRdH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zsAXBSm6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5415C4CECF;
-	Tue,  3 Dec 2024 15:17:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gz4urRdH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8554CC4CECF;
+	Tue,  3 Dec 2024 15:17:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733239062;
-	bh=GQAxnlGMvwWouBkpTmR0R1r0GiSDMj89rEtIduTw7wo=;
+	s=korg; t=1733239064;
+	bh=SQ2nWRdJAUv632xDzL7yh1UFKPvYc/nnHQlQLJJnblc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zsAXBSm6KVtevC1GIXmD98nXE7y8l7FpJIfKes+kIlauFxdfQ+8K06uHjTbrGQbSL
-	 Jw/1oOHDttjN3KPppH23nfCn6XqwG4jOhnAba+d3nVngOWHyaccUk2LNzx3b7o+fe3
-	 0o70itmb+m+gHpFXizMjOSs290cxJJQpa4Ilb/tM=
+	b=gz4urRdHvg7oHYVDH+dzhLvwfhUuoXuvvJ+M4jCMQhoVBw55dimMmr9sWg6lmg2/k
+	 F0b5EUkJrIUO9j2o+j0bD3ZM9r+789O4CUbA1eLBqWfIY7lkn9RHA1Pmhbskm+oeFA
+	 jT8+yYQUQfxuGXNlK4SHSpJgrrgTwtfihdo9R5NM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
+	Veronika Molnarova <vmolnaro@redhat.com>,
+	Michael Petlan <mpetlan@redhat.com>,
 	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 490/817] perf stat: Fix affinity memory leaks on error path
-Date: Tue,  3 Dec 2024 15:41:02 +0100
-Message-ID: <20241203144014.999371803@linuxfoundation.org>
+Subject: [PATCH 6.11 491/817] perf trace: Keep exited threads for summary
+Date: Tue,  3 Dec 2024 15:41:03 +0100
+Message-ID: <20241203144015.039364035@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -51,41 +52,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Rogers <irogers@google.com>
+From: Michael Petlan <mpetlan@redhat.com>
 
-[ Upstream commit 7f6ccb70e465bd8c9cf8973aee1c01224e4bdb3c ]
+[ Upstream commit d29d92df410e2fb523f640478b18f70c1823e55e ]
 
-Missed cleanup when an error occurs.
+Since 9ffa6c7512ca ("perf machine thread: Remove exited threads by
+default") perf cleans exited threads up, but as said, sometimes they
+are necessary to be kept. The mentioned commit does not cover all the
+cases, we also need the information to construct the summary table in
+perf-trace.
 
-Fixes: 49de179577e7 ("perf stat: No need to setup affinities when starting a workload")
-Signed-off-by: Ian Rogers <irogers@google.com>
-Link: https://lore.kernel.org/r/20241001052327.7052-2-irogers@google.com
+Before:
+    # perf trace -s true
+
+     Summary of events:
+
+After:
+    # perf trace -s -- true
+
+     Summary of events:
+
+     true (383382), 64 events, 91.4%
+
+       syscall            calls  errors  total       min       avg       max       stddev
+                                         (msec)    (msec)    (msec)    (msec)        (%)
+       --------------- --------  ------ -------- --------- --------- ---------     ------
+       mmap                   8      0     0.150     0.013     0.019     0.031     11.90%
+       mprotect               3      0     0.045     0.014     0.015     0.017      6.47%
+       openat                 2      0     0.014     0.006     0.007     0.007      9.73%
+       munmap                 1      0     0.009     0.009     0.009     0.009      0.00%
+       access                 1      1     0.009     0.009     0.009     0.009      0.00%
+       pread64                4      0     0.006     0.001     0.001     0.002      4.53%
+       fstat                  2      0     0.005     0.001     0.002     0.003     37.59%
+       arch_prctl             2      1     0.003     0.001     0.002     0.002     25.91%
+       read                   1      0     0.003     0.003     0.003     0.003      0.00%
+       close                  2      0     0.003     0.001     0.001     0.001      3.86%
+       brk                    1      0     0.002     0.002     0.002     0.002      0.00%
+       rseq                   1      0     0.001     0.001     0.001     0.001      0.00%
+       prlimit64              1      0     0.001     0.001     0.001     0.001      0.00%
+       set_robust_list        1      0     0.001     0.001     0.001     0.001      0.00%
+       set_tid_address        1      0     0.001     0.001     0.001     0.001      0.00%
+       execve                 1      0     0.000     0.000     0.000     0.000      0.00%
+
+[namhyung: simplified the condition]
+
+Fixes: 9ffa6c7512ca ("perf machine thread: Remove exited threads by default")
+Reported-by: Veronika Molnarova <vmolnaro@redhat.com>
+Signed-off-by: Michael Petlan <mpetlan@redhat.com>
+Link: https://lore.kernel.org/r/20240927151926.399474-1-mpetlan@redhat.com
 Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-stat.c | 2 ++
- 1 file changed, 2 insertions(+)
+ tools/perf/builtin-trace.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/tools/perf/builtin-stat.c b/tools/perf/builtin-stat.c
-index d0cbd1477dfcc..668a8ad2bf604 100644
---- a/tools/perf/builtin-stat.c
-+++ b/tools/perf/builtin-stat.c
-@@ -823,6 +823,7 @@ static int __run_perf_stat(int argc, const char **argv, int run_idx)
- 		}
- 	}
- 	affinity__cleanup(affinity);
-+	affinity = NULL;
+diff --git a/tools/perf/builtin-trace.c b/tools/perf/builtin-trace.c
+index 8449f2beb54d7..19db23f78b199 100644
+--- a/tools/perf/builtin-trace.c
++++ b/tools/perf/builtin-trace.c
+@@ -5038,6 +5038,10 @@ int cmd_trace(int argc, const char **argv)
+ 	if (trace.summary_only)
+ 		trace.summary = trace.summary_only;
  
- 	evlist__for_each_entry(evsel_list, counter) {
- 		if (!counter->supported) {
-@@ -961,6 +962,7 @@ static int __run_perf_stat(int argc, const char **argv, int run_idx)
- 	if (forks)
- 		evlist__cancel_workload(evsel_list);
- 
-+	affinity__cleanup(affinity);
- 	return err;
- }
- 
++	/* Keep exited threads, otherwise information might be lost for summary */
++	if (trace.summary)
++		symbol_conf.keep_exited_threads = true;
++
+ 	if (output_name != NULL) {
+ 		err = trace__open_output(&trace, output_name);
+ 		if (err < 0) {
 -- 
 2.43.0
 
