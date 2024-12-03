@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E73891F1313;
-	Tue,  3 Dec 2024 14:39:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17DA11F1313;
+	Tue,  3 Dec 2024 14:39:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733236761; cv=none; b=k+CqVrZmHXNDKMCMeTUgg/+XhA6fFzUtpsZLia0pn4GRh+i6K9rb+06wby+FHa7chWK481Gy20yJzonVAdO77CFiGiufx4g5FsucSvHMWOTCLiAjiG19JOfvJw0qqSOCn7c7E9SjKfKgu7fPL1Y301i4PKZD4My031JV1uT7VAI=
+	t=1733236764; cv=none; b=SLwoU/rQ1y2bjWljssJqEmFVPcscjKzAB5XJ5jXc3xj5dSSLHiqi2HW8fnu9V11IVZOaRCtyvDKWbs/ickzmPeQ3siKoEwdokLpqyBnoz+z3qkFZMJU234Rkcw0LiRUwUliwFTChzx9/sQGHbdjSxs/AOgdgF55dZuXmj2gw1Ag=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733236761; c=relaxed/simple;
-	bh=CHjICPKuyooT478r6YFMuuATdLm9LioPbkQwpjA6cWI=;
+	s=arc-20240116; t=1733236764; c=relaxed/simple;
+	bh=ZBiyf/l4HP+5v16GlG90QY0JYH5vyA345AQmQkQuTA4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KfCXfkYh9ZT2v2t2f/vrvc2zNcf5W1TEGRfYHIclH5hcn/Jc6me5n9rNE4s+Fye0ZYcpZ3bjNX/DJ3aW8ivf7znadejvbDtYF2JA+dhpffN35d6WLqoRiTWFM1sA+S3odQr8HOBM4o6iasbbsvwUSsqzoH89Fvx3RkeNb4xaCG4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KYk/x7Us; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jvYoOpVPB9MY5tslhcBmvQ6M2hQzmSRdbkDqvjlJMY/1+KM5ouLzklMzXexUH8d5OLJMvyUvN5eWU2ZDXqZxv7bOwKEV0iFyKYhUJ2Pfnq/X0VsaRT4bvCaAhlexKIaA3WaWGTRMq5Qh28zQ61FChwEoqYJIWO2KaaaXKtlou1s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w8NYZn1L; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KYk/x7Us"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA009C4CECF;
-	Tue,  3 Dec 2024 14:39:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w8NYZn1L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EBE8C4CECF;
+	Tue,  3 Dec 2024 14:39:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733236760;
-	bh=CHjICPKuyooT478r6YFMuuATdLm9LioPbkQwpjA6cWI=;
+	s=korg; t=1733236763;
+	bh=ZBiyf/l4HP+5v16GlG90QY0JYH5vyA345AQmQkQuTA4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KYk/x7UsWkr6Ee0ThCEmYCH6R/uYLFSIj6tX3lhshesgafmECe0Ra4uBI0DiljlcO
-	 tPfsMIUD9uFf/6IRM/HbULJpTpe/hoogHUOJps5u1NX5VDVC9Mm+pBdNZzBRsy5YvN
-	 70F4lhX7HwgA3hJonpx0z0W7CT/Kb6J76FGCP+SI=
+	b=w8NYZn1Lct+olroq3o9UypQV1yPAvs6t6Vw3WpOD6fY8eanu5Do7KMj5jZ9r4rXDt
+	 MgGz1BceDw7WRULtwlMC0pjkGT00RJ1gHOR+MJVjMHgtWW5/+HiRkQrumiEZzAwd86
+	 dWtOhyFWBQh4bRLbWYx5Sfi2uSWyjqBiI1CcZbD4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
-	stable <stable@kernel.org>,
-	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
-Subject: [PATCH 4.19 110/138] Revert "serial: sh-sci: Clean sci_ports[0] after at earlycon exit"
-Date: Tue,  3 Dec 2024 15:32:19 +0100
-Message-ID: <20241203141927.774970643@linuxfoundation.org>
+	syzbot+58c872f7790a4d2ac951@syzkaller.appspotmail.com,
+	Jeongjun Park <aha310510@gmail.com>,
+	Jozsef Kadlecsik <kadlec@blackhole.kfki.hu>,
+	Pablo Neira Ayuso <pablo@netfilter.org>
+Subject: [PATCH 4.19 111/138] netfilter: ipset: add missing range check in bitmap_ip_uadt
+Date: Tue,  3 Dec 2024 15:32:20 +0100
+Message-ID: <20241203141927.812539648@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203141923.524658091@linuxfoundation.org>
 References: <20241203141923.524658091@linuxfoundation.org>
@@ -51,66 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Jeongjun Park <aha310510@gmail.com>
 
-commit 718632467d88e98816fa01ab12681ef1c2aa56f8 upstream.
+commit 35f56c554eb1b56b77b3cf197a6b00922d49033d upstream.
 
-This reverts commit 3791ea69a4858b81e0277f695ca40f5aae40f312.
+When tb[IPSET_ATTR_IP_TO] is not present but tb[IPSET_ATTR_CIDR] exists,
+the values of ip and ip_to are slightly swapped. Therefore, the range check
+for ip should be done later, but this part is missing and it seems that the
+vulnerability occurs.
 
-It was reported to cause boot-time issues, so revert it for now.
+So we should add missing range checks and remove unnecessary range checks.
 
-Reported-by: Geert Uytterhoeven <geert@linux-m68k.org>
-Fixes: 3791ea69a485 ("serial: sh-sci: Clean sci_ports[0] after at earlycon exit")
-Cc: stable <stable@kernel.org>
-Cc: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+Cc: <stable@vger.kernel.org>
+Reported-by: syzbot+58c872f7790a4d2ac951@syzkaller.appspotmail.com
+Fixes: 72205fc68bd1 ("netfilter: ipset: bitmap:ip set type support")
+Signed-off-by: Jeongjun Park <aha310510@gmail.com>
+Acked-by: Jozsef Kadlecsik <kadlec@blackhole.kfki.hu>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/sh-sci.c |   28 ----------------------------
- 1 file changed, 28 deletions(-)
+ net/netfilter/ipset/ip_set_bitmap_ip.c |    7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
---- a/drivers/tty/serial/sh-sci.c
-+++ b/drivers/tty/serial/sh-sci.c
-@@ -3455,32 +3455,6 @@ early_platform_init_buffer("earlyprintk"
- #ifdef CONFIG_SERIAL_SH_SCI_EARLYCON
- static struct plat_sci_port port_cfg __initdata;
+--- a/net/netfilter/ipset/ip_set_bitmap_ip.c
++++ b/net/netfilter/ipset/ip_set_bitmap_ip.c
+@@ -166,11 +166,8 @@ bitmap_ip_uadt(struct ip_set *set, struc
+ 		ret = ip_set_get_hostipaddr4(tb[IPSET_ATTR_IP_TO], &ip_to);
+ 		if (ret)
+ 			return ret;
+-		if (ip > ip_to) {
++		if (ip > ip_to)
+ 			swap(ip, ip_to);
+-			if (ip < map->first_ip)
+-				return -IPSET_ERR_BITMAP_RANGE;
+-		}
+ 	} else if (tb[IPSET_ATTR_CIDR]) {
+ 		u8 cidr = nla_get_u8(tb[IPSET_ATTR_CIDR]);
  
--static int early_console_exit(struct console *co)
--{
--	struct sci_port *sci_port = &sci_ports[0];
--	struct uart_port *port = &sci_port->port;
--	unsigned long flags;
--	int locked = 1;
--
--	if (port->sysrq)
--		locked = 0;
--	else if (oops_in_progress)
--		locked = uart_port_trylock_irqsave(port, &flags);
--	else
--		uart_port_lock_irqsave(port, &flags);
--
--	/*
--	 * Clean the slot used by earlycon. A new SCI device might
--	 * map to this slot.
--	 */
--	memset(sci_ports, 0, sizeof(*sci_port));
--
--	if (locked)
--		uart_port_unlock_irqrestore(port, flags);
--
--	return 0;
--}
--
- static int __init early_console_setup(struct earlycon_device *device,
- 				      int type)
- {
-@@ -3499,8 +3473,6 @@ static int __init early_console_setup(st
- 		       SCSCR_RE | SCSCR_TE | port_cfg.scscr);
+@@ -181,7 +178,7 @@ bitmap_ip_uadt(struct ip_set *set, struc
+ 		ip_to = ip;
+ 	}
  
- 	device->con->write = serial_console_write;
--	device->con->exit = early_console_exit;
--
- 	return 0;
- }
- static int __init sci_early_console_setup(struct earlycon_device *device,
+-	if (ip_to > map->last_ip)
++	if (ip < map->first_ip || ip_to > map->last_ip)
+ 		return -IPSET_ERR_BITMAP_RANGE;
+ 
+ 	for (; !before(ip_to, ip); ip += map->hosts) {
 
 
