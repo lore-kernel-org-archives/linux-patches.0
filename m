@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6630081ADA;
-	Tue,  3 Dec 2024 16:12:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9E721F76BF;
+	Tue,  3 Dec 2024 16:13:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733242378; cv=none; b=f9ebOHK7aOSGTkDdKYv+VDElrSRwkve13Nvmmw2pvqWK3ui3fgvnUCv0mtWYbjhpuViT9AQ75ypZYFd7S3nECkKfv6ivO4zppSLnzqv2qCtfMISnC2Mv48/k3179WrtPiaM6vmqD/FeV4D8eQmcjBiWmyGgoQarw2Z24d107llQ=
+	t=1733242381; cv=none; b=RkwcVEIAN6jgotMl+JiAfg3GJZYaL7JRkOx0n8gwldHiMz3TX77NdCmRPInhrfpXrNWfC1qYOP4lS8R0PEr9rW9IR/+dFQ5ItY8dQIbW9+EhXhBixvUUE/sVi/SDgcf9DeDRyQL3qShMJORtN4jLgcEhS/7Neqh3696vAuyxMe8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733242378; c=relaxed/simple;
-	bh=8OA7DPLX3LjFGEUS2R1J17JOwHlF1ZKrwQjhWlFUdgo=;
+	s=arc-20240116; t=1733242381; c=relaxed/simple;
+	bh=vVCquukYal775Kga0bwgh6ERbWNMH++hDb44nLa6mrY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YVl+oX9nLc6pfs27/KFUIyadkvJwpT0pQFcgtgw+84xoGdDUEhHApswWx87xFhP6/pFgVkh8zwbiO+eaE5hY+Ln5997ZU5VuuVaXc+n/JNGOcNo1+mZbedRINLlfe+zAgZCF6v/8IgcsvzdAzHuCb6YcQwmckb+9XYxHsmTjpo4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kPO/cOk9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ccz+7er1fSd6mdTQ2kXAKp2F0wFaQKQdVPqL8YOzvIie2BoIKky8tQQnF5gv5u9XOpiPMvpYiDsM7yPP8WJ/kIeNu13S8cLRqtr6fclbsK7XJ6uQ4FgeRLIQyc7b0DvDXiK+oSS1ul9jBbck2J9b0K/dtsRTzycLFNYtTNEzhnk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pQYFPIUR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kPO/cOk9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFABDC4CECF;
-	Tue,  3 Dec 2024 16:12:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pQYFPIUR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30147C4CECF;
+	Tue,  3 Dec 2024 16:13:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733242378;
-	bh=8OA7DPLX3LjFGEUS2R1J17JOwHlF1ZKrwQjhWlFUdgo=;
+	s=korg; t=1733242381;
+	bh=vVCquukYal775Kga0bwgh6ERbWNMH++hDb44nLa6mrY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kPO/cOk9Uh8UvbJK0IF650t1sp4I8FtmEutkcb+uGuMN8OhBGyZY0UUIqjk11pIXa
-	 vQf6uv1E99W1HhUfsppUtgxkLZZ3v8egHr5qppmAwnKReAdnx863dx/KxBk00X0P6t
-	 nk0LzoswTxm64cRITZSohcn3+GWZyAUMawPeV6gs=
+	b=pQYFPIURjgFSulgxzh0w8LPaPm/Yv+vHNoOHSznVmfdyJ3RwGjH9VQhRO7Y05TCI8
+	 GqTkNOvtUxMtyb3QE1Ppta/PpabDZ7vjmNDDhmttoL8oE7/d4FjQvEAeHXxg/bSSxm
+	 a4eGhTog4jPpMaUVMEw7b+V7JXIkRYtI+ei37O4s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	kernel test robot <oliver.sang@intel.com>,
-	Jan Hendrik Farr <kernel@jfarr.cc>,
-	Miguel Ojeda <ojeda@kernel.org>,
-	Thorsten Blum <thorsten.blum@linux.dev>,
-	Kees Cook <kees@kernel.org>
-Subject: [PATCH 6.12 653/826] Compiler Attributes: disable __counted_by for clang < 19.1.3
-Date: Tue,  3 Dec 2024 15:46:20 +0100
-Message-ID: <20241203144809.226660268@linuxfoundation.org>
+	Dennis Wassenberg <Dennis.Wassenberg@secunet.com>,
+	Lukas Wunner <lukas@wunner.de>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>
+Subject: [PATCH 6.12 654/826] PCI: Fix use-after-free of slot->bus on hot remove
+Date: Tue,  3 Dec 2024 15:46:21 +0100
+Message-ID: <20241203144809.266529939@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -54,136 +52,129 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jan Hendrik Farr <kernel@jfarr.cc>
+From: Lukas Wunner <lukas@wunner.de>
 
-commit f06e108a3dc53c0f5234d18de0bd224753db5019 upstream.
+commit c7acef99642b763ba585f4a43af999fcdbcc3dc4 upstream.
 
-This patch disables __counted_by for clang versions < 19.1.3 because
-of the two issues listed below. It does this by introducing
-CONFIG_CC_HAS_COUNTED_BY.
+Dennis reports a boot crash on recent Lenovo laptops with a USB4 dock.
 
-1. clang < 19.1.2 has a bug that can lead to __bdos returning 0:
-https://github.com/llvm/llvm-project/pull/110497
+Since commit 0fc70886569c ("thunderbolt: Reset USB4 v2 host router") and
+commit 59a54c5f3dbd ("thunderbolt: Reset topology created by the boot
+firmware"), USB4 v2 and v1 Host Routers are reset on probe of the
+thunderbolt driver.
 
-2. clang < 19.1.3 has a bug that can lead to __bdos being off by 4:
-https://github.com/llvm/llvm-project/pull/112636
+The reset clears the Presence Detect State and Data Link Layer Link Active
+bits at the USB4 Host Router's Root Port and thus causes hot removal of the
+dock.
 
-Fixes: c8248faf3ca2 ("Compiler Attributes: counted_by: Adjust name and identifier expansion")
-Cc: stable@vger.kernel.org # 6.6.x: 16c31dd7fdf6: Compiler Attributes: counted_by: bump min gcc version
-Cc: stable@vger.kernel.org # 6.6.x: 2993eb7a8d34: Compiler Attributes: counted_by: fixup clang URL
-Cc: stable@vger.kernel.org # 6.6.x: 231dc3f0c936: lkdtm/bugs: Improve warning message for compilers without counted_by support
-Cc: stable@vger.kernel.org # 6.6.x
-Reported-by: Nathan Chancellor <nathan@kernel.org>
-Closes: https://lore.kernel.org/all/20240913164630.GA4091534@thelio-3990X/
-Reported-by: kernel test robot <oliver.sang@intel.com>
-Closes: https://lore.kernel.org/oe-lkp/202409260949.a1254989-oliver.sang@intel.com
-Link: https://lore.kernel.org/all/Zw8iawAF5W2uzGuh@archlinux/T/#m204c09f63c076586a02d194b87dffc7e81b8de7b
-Suggested-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Jan Hendrik Farr <kernel@jfarr.cc>
-Reviewed-by: Nathan Chancellor <nathan@kernel.org>
-Tested-by: Nathan Chancellor <nathan@kernel.org>
-Reviewed-by: Miguel Ojeda <ojeda@kernel.org>
-Reviewed-by: Thorsten Blum <thorsten.blum@linux.dev>
-Link: https://lore.kernel.org/r/20241029140036.577804-2-kernel@jfarr.cc
-Signed-off-by: Kees Cook <kees@kernel.org>
+The crash occurs when pciehp is unbound from one of the dock's Downstream
+Ports:  pciehp creates a pci_slot on bind and destroys it on unbind.  The
+pci_slot contains a pointer to the pci_bus below the Downstream Port, but
+a reference on that pci_bus is never acquired.  The pci_bus is destroyed
+before the pci_slot, so a use-after-free ensues when pci_slot_release()
+accesses slot->bus.
+
+In principle this should not happen because pci_stop_bus_device() unbinds
+pciehp (and therefore destroys the pci_slot) before the pci_bus is
+destroyed by pci_remove_bus_device().
+
+However the stacktrace provided by Dennis shows that pciehp is unbound from
+pci_remove_bus_device() instead of pci_stop_bus_device().  To understand
+the significance of this, one needs to know that the PCI core uses a two
+step process to remove a portion of the hierarchy:  It first unbinds all
+drivers in the sub-hierarchy in pci_stop_bus_device() and then actually
+removes the devices in pci_remove_bus_device().  There is no precaution to
+prevent driver binding in-between pci_stop_bus_device() and
+pci_remove_bus_device().
+
+In Dennis' case, it seems removal of the hierarchy by pciehp races with
+driver binding by pci_bus_add_devices().  pciehp is bound to the
+Downstream Port after pci_stop_bus_device() has run, so it is unbound by
+pci_remove_bus_device() instead of pci_stop_bus_device().  Because the
+pci_bus has already been destroyed at that point, accesses to it result in
+a use-after-free.
+
+One might conclude that driver binding needs to be prevented after
+pci_stop_bus_device() has run.  However it seems risky that pci_slot points
+to pci_bus without holding a reference.  Solely relying on correct ordering
+of driver unbind versus pci_bus destruction is certainly not defensive
+programming.
+
+If pci_slot has a need to access data in pci_bus, it ought to acquire a
+reference.  Amend pci_create_slot() accordingly.  Dennis reports that the
+crash is not reproducible with this change.
+
+Abridged stacktrace:
+
+  pcieport 0000:00:07.0: PME: Signaling with IRQ 156
+  pcieport 0000:00:07.0: pciehp: Slot #12 AttnBtn- PwrCtrl- MRL- AttnInd- PwrInd- HotPlug+ Surprise+ Interlock- NoCompl+ IbPresDis- LLActRep+
+  pci_bus 0000:20: dev 00, created physical slot 12
+  pcieport 0000:00:07.0: pciehp: Slot(12): Card not present
+  ...
+  pcieport 0000:21:02.0: pciehp: pcie_disable_notification: SLOTCTRL d8 write cmd 0
+  Oops: general protection fault, probably for non-canonical address 0x6b6b6b6b6b6b6b6b: 0000 [#1] PREEMPT SMP NOPTI
+  CPU: 13 UID: 0 PID: 134 Comm: irq/156-pciehp Not tainted 6.11.0-devel+ #1
+  RIP: 0010:dev_driver_string+0x12/0x40
+  pci_destroy_slot
+  pciehp_remove
+  pcie_port_remove_service
+  device_release_driver_internal
+  bus_remove_device
+  device_del
+  device_unregister
+  remove_iter
+  device_for_each_child
+  pcie_portdrv_remove
+  pci_device_remove
+  device_release_driver_internal
+  bus_remove_device
+  device_del
+  pci_remove_bus_device (recursive invocation)
+  pci_remove_bus_device
+  pciehp_unconfigure_device
+  pciehp_disable_slot
+  pciehp_handle_presence_or_link_change
+  pciehp_ist
+
+Link: https://lore.kernel.org/r/4bfd4c0e976c1776cd08e76603903b338cf25729.1728579288.git.lukas@wunner.de
+Reported-by: Dennis Wassenberg <Dennis.Wassenberg@secunet.com>
+Closes: https://lore.kernel.org/r/6de4b45ff2b32dd91a805ec02ec8ec73ef411bf6.camel@secunet.com/
+Tested-by: Dennis Wassenberg <Dennis.Wassenberg@secunet.com>
+Signed-off-by: Lukas Wunner <lukas@wunner.de>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/lkdtm/bugs.c           |    2 +-
- include/linux/compiler_attributes.h |   13 -------------
- include/linux/compiler_types.h      |   19 +++++++++++++++++++
- init/Kconfig                        |    9 +++++++++
- lib/overflow_kunit.c                |    2 +-
- 5 files changed, 30 insertions(+), 15 deletions(-)
+ drivers/pci/slot.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/misc/lkdtm/bugs.c
-+++ b/drivers/misc/lkdtm/bugs.c
-@@ -445,7 +445,7 @@ static void lkdtm_FAM_BOUNDS(void)
+--- a/drivers/pci/slot.c
++++ b/drivers/pci/slot.c
+@@ -79,6 +79,7 @@ static void pci_slot_release(struct kobj
+ 	up_read(&pci_bus_sem);
  
- 	pr_err("FAIL: survived access of invalid flexible array member index!\n");
+ 	list_del(&slot->list);
++	pci_bus_put(slot->bus);
  
--	if (!__has_attribute(__counted_by__))
-+	if (!IS_ENABLED(CONFIG_CC_HAS_COUNTED_BY))
- 		pr_warn("This is expected since this %s was built with a compiler that does not support __counted_by\n",
- 			lkdtm_kernel_info);
- 	else if (IS_ENABLED(CONFIG_UBSAN_BOUNDS))
---- a/include/linux/compiler_attributes.h
-+++ b/include/linux/compiler_attributes.h
-@@ -95,19 +95,6 @@
- #endif
+ 	kfree(slot);
+ }
+@@ -261,7 +262,7 @@ placeholder:
+ 		goto err;
+ 	}
  
- /*
-- * Optional: only supported since gcc >= 15
-- * Optional: only supported since clang >= 18
-- *
-- *   gcc: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=108896
-- * clang: https://github.com/llvm/llvm-project/pull/76348
-- */
--#if __has_attribute(__counted_by__)
--# define __counted_by(member)		__attribute__((__counted_by__(member)))
--#else
--# define __counted_by(member)
--#endif
--
--/*
-  * Optional: not supported by gcc
-  * Optional: only supported since clang >= 14.0
-  *
---- a/include/linux/compiler_types.h
-+++ b/include/linux/compiler_types.h
-@@ -324,6 +324,25 @@ struct ftrace_likely_data {
- #endif
+-	slot->bus = parent;
++	slot->bus = pci_bus_get(parent);
+ 	slot->number = slot_nr;
  
- /*
-+ * Optional: only supported since gcc >= 15
-+ * Optional: only supported since clang >= 18
-+ *
-+ *   gcc: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=108896
-+ * clang: https://github.com/llvm/llvm-project/pull/76348
-+ *
-+ * __bdos on clang < 19.1.2 can erroneously return 0:
-+ * https://github.com/llvm/llvm-project/pull/110497
-+ *
-+ * __bdos on clang < 19.1.3 can be off by 4:
-+ * https://github.com/llvm/llvm-project/pull/112636
-+ */
-+#ifdef CONFIG_CC_HAS_COUNTED_BY
-+# define __counted_by(member)		__attribute__((__counted_by__(member)))
-+#else
-+# define __counted_by(member)
-+#endif
-+
-+/*
-  * Apply __counted_by() when the Endianness matches to increase test coverage.
-  */
- #ifdef __LITTLE_ENDIAN
---- a/init/Kconfig
-+++ b/init/Kconfig
-@@ -120,6 +120,15 @@ config CC_HAS_ASM_INLINE
- config CC_HAS_NO_PROFILE_FN_ATTR
- 	def_bool $(success,echo '__attribute__((no_profile_instrument_function)) int x();' | $(CC) -x c - -c -o /dev/null -Werror)
- 
-+config CC_HAS_COUNTED_BY
-+	# TODO: when gcc 15 is released remove the build test and add
-+	# a gcc version check
-+	def_bool $(success,echo 'struct flex { int count; int array[] __attribute__((__counted_by__(count))); };' | $(CC) $(CLANG_FLAGS) -x c - -c -o /dev/null -Werror)
-+	# clang needs to be at least 19.1.3 to avoid __bdos miscalculations
-+	# https://github.com/llvm/llvm-project/pull/110497
-+	# https://github.com/llvm/llvm-project/pull/112636
-+	depends on !(CC_IS_CLANG && CLANG_VERSION < 190103)
-+
- config PAHOLE_VERSION
- 	int
- 	default $(shell,$(srctree)/scripts/pahole-version.sh $(PAHOLE))
---- a/lib/overflow_kunit.c
-+++ b/lib/overflow_kunit.c
-@@ -1187,7 +1187,7 @@ static void DEFINE_FLEX_test(struct kuni
- {
- 	/* Using _RAW_ on a __counted_by struct will initialize "counter" to zero */
- 	DEFINE_RAW_FLEX(struct foo, two_but_zero, array, 2);
--#if __has_attribute(__counted_by__)
-+#ifdef CONFIG_CC_HAS_COUNTED_BY
- 	int expected_raw_size = sizeof(struct foo);
- #else
- 	int expected_raw_size = sizeof(struct foo) + 2 * sizeof(s16);
+ 	slot->kobj.kset = pci_slots_kset;
+@@ -269,6 +270,7 @@ placeholder:
+ 	slot_name = make_slot_name(name);
+ 	if (!slot_name) {
+ 		err = -ENOMEM;
++		pci_bus_put(slot->bus);
+ 		kfree(slot);
+ 		goto err;
+ 	}
 
 
