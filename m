@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55BA91F7547;
-	Tue,  3 Dec 2024 15:02:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4241E1EF0BC;
+	Tue,  3 Dec 2024 15:02:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733238120; cv=none; b=Yd/Gfz8jFel+xW3dx24cVGX1ieRC8K1pKd6Pg4k3HKbLg/vkyIGJLyO0ivpGITNjGVThUTR8X6lMiDlGBwf1Z4TaXbqWOpqnZvHf8poBHpvPAUwS+u0/ZamTReFUY5rnHpCiBEhwF6rFHf1bI0iPTWFOIuTC//gIOE1d97f9ZEE=
+	t=1733238123; cv=none; b=M9ExJ5tNSS6gTUbAYSeMubrIOnPggrf8eGsKEREYekVaIYCbsNWeYE61nvIYFPDFljDM+T1aQgQt0r/m07LJ4gH6pNgqhLJ8JlAwzDlN1giQR3/0sfbzYJ555mCIoQXnbpV6a2ku5FM5fWWsrug+tvM7MMxoom8QWcBzbz1NByc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733238120; c=relaxed/simple;
-	bh=AzM2+U1Php47t+7wTLJ46JgoTWJ7vcHT9XXbaa3Flrc=;
+	s=arc-20240116; t=1733238123; c=relaxed/simple;
+	bh=rpDjAqYJ61Q1LcLLTOQbWADz+R1VwPlYASR1/y+9V4M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Lzo7XpOsV+zG5xhKF+QCotf5lqvur8y8u+bUU6sVXiVqFEwlm6gMoLOTHRxq/i+KcnAw+S/vK7WSdafYXPSfRWH562nw0exbYG7qxgRLo/hDJnbLyW/tpiK3KCt1DgNLJDRQ7/oCON+py4x8ZUwsOFJqM/EyQkGC+naB4OpyLlE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yJe4N1Ap; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KqndsJlEZxJOnYN+lGDwlX1Xx43ozm4xct3e9uzzTPpIOxOglWHwUWiffZsCyUkFB76ySE76nbRNjvwZrmRZAxiRz8UBJKCtEgz962bdAAltVFQFoL4QpLCByMWbOO05T9ABcltWQmQKTtOnU7zK4vffdjBD4too70MOe7oIClM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ze1xfPCR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yJe4N1Ap"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D06E2C4CECF;
-	Tue,  3 Dec 2024 15:01:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ze1xfPCR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B495EC4CECF;
+	Tue,  3 Dec 2024 15:02:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733238120;
-	bh=AzM2+U1Php47t+7wTLJ46JgoTWJ7vcHT9XXbaa3Flrc=;
+	s=korg; t=1733238123;
+	bh=rpDjAqYJ61Q1LcLLTOQbWADz+R1VwPlYASR1/y+9V4M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yJe4N1Apd//1v5lcJ59J3VKcC0h4G7SC0nLpvc1vU/uMbITGgDlc/QFbv3yM+a6cw
-	 xjd7GP9yk0bMtAtbRDHkaFpa/j5t2sqpjtyHywVKDHurSLXKLjtZn/J0prJ+jJjAUX
-	 Kgmgj1maKj1P4gQ+H+ksBTdsVo7HgMAq3M/xZHzI=
+	b=ze1xfPCR/72pO2Hbm/WnFhUiM+UdDsVXhxfKeDYX2JrWvutXLEtmPLu1Y1gsWEKcI
+	 NWiS6PIx3PfnTW2whfMymQ8Vv/D3eFzj2wXNovgaujJxkcuKpEMf1D/w07pr42wTZT
+	 gRKTr4ykjladlA1Uc/RYXRkKbeTJ3vOlGuwb/j2w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Horia Geanta <horia.geanta@freescale.com>,
-	Vlastimil Babka <vbabka@suse.cz>,
-	Jonathan Corbet <corbet@lwn.net>,
+	Ross Burton <ross.burton@arm.com>,
+	Sudeep Holla <sudeep.holla@arm.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Mark Brown <broonie@kernel.org>,
+	Daniel Lezcano <daniel.lezcano@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 167/817] kernel-doc: allow object-like macros in ReST output
-Date: Tue,  3 Dec 2024 15:35:39 +0100
-Message-ID: <20241203144002.246811860@linuxfoundation.org>
+Subject: [PATCH 6.11 138/817] clocksource/drivers:sp804: Make user selectable
+Date: Tue,  3 Dec 2024 15:35:10 +0100
+Message-ID: <20241203144001.110410838@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -53,152 +54,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Mark Brown <broonie@kernel.org>
 
-[ Upstream commit bb8fd09e2811e2386bb40b9f0d3c7dd6e7961a1e ]
+[ Upstream commit 0309f714a0908e947af1c902cf6a330cb593e75e ]
 
-output_function_rst() does not handle object-like macros. It presents
-a trailing "()" while output_function_man() handles these macros
-correctly.
+The sp804 is currently only user selectable if COMPILE_TEST, this was
+done by commit dfc82faad725 ("clocksource/drivers/sp804: Add
+COMPILE_TEST to CONFIG_ARM_TIMER_SP804") in order to avoid it being
+spuriously offered on platforms that won't have the hardware since it's
+generally only seen on Arm based platforms.  This config is overly
+restrictive, while platforms that rely on the SP804 do select it in
+their Kconfig there are others such as the Arm fast models which have a
+SP804 available but currently unused by Linux.  Relax the dependency to
+allow it to be user selectable on arm and arm64 to avoid surprises and
+in case someone comes up with a use for extra timer hardware.
 
-Update output_function_rst() to handle object-like macros.
-Don't show the "Parameters" heading if there are no parameters.
-
-For output_function_man(), don't show the "ARGUMENTS" heading if there
-are no parameters.
-
-I have tested this quite a bit with my ad hoc test files for both ReST
-and man format outputs. The generated output looks good.
-
-Fixes: cbb4d3e6510b ("scripts/kernel-doc: handle object-like macros")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Cc: Horia Geanta <horia.geanta@freescale.com>
-Tested-by: Vlastimil Babka <vbabka@suse.cz>
-Signed-off-by: Jonathan Corbet <corbet@lwn.net>
-Link: https://lore.kernel.org/r/20241015181107.536894-1-rdunlap@infradead.org
+Fixes: dfc82faad725 ("clocksource/drivers/sp804: Add COMPILE_TEST to CONFIG_ARM_TIMER_SP804")
+Reported-by: Ross Burton <ross.burton@arm.com>
+Reviewed-by: Sudeep Holla <sudeep.holla@arm.com>
+Acked-by: Mark Rutland <mark.rutland@arm.com>
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Link: https://lore.kernel.org/r/20241001-arm64-vexpress-sp804-v3-1-0a2d3f7883e4@kernel.org
+Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/kernel-doc | 43 ++++++++++++++++++++++++++++++-------------
- 1 file changed, 30 insertions(+), 13 deletions(-)
+ drivers/clocksource/Kconfig | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/scripts/kernel-doc b/scripts/kernel-doc
-index c608820f0bf51..320544321ecba 100755
---- a/scripts/kernel-doc
-+++ b/scripts/kernel-doc
-@@ -569,6 +569,8 @@ sub output_function_man(%) {
-     my %args = %{$_[0]};
-     my ($parameter, $section);
-     my $count;
-+    my $func_macro = $args{'func_macro'};
-+    my $paramcount = $#{$args{'parameterlist'}}; # -1 is empty
+diff --git a/drivers/clocksource/Kconfig b/drivers/clocksource/Kconfig
+index 95dd4660b5b65..d546903dba4f3 100644
+--- a/drivers/clocksource/Kconfig
++++ b/drivers/clocksource/Kconfig
+@@ -400,7 +400,8 @@ config ARM_GT_INITIAL_PRESCALER_VAL
+ 	  This affects CPU_FREQ max delta from the initial frequency.
  
-     print ".TH \"$args{'function'}\" 9 \"$args{'function'}\" \"$man_date\" \"Kernel Hacker's Manual\" LINUX\n";
- 
-@@ -600,7 +602,10 @@ sub output_function_man(%) {
-         $parenth = "";
-     }
- 
--    print ".SH ARGUMENTS\n";
-+    $paramcount = $#{$args{'parameterlist'}}; # -1 is empty
-+    if ($paramcount >= 0) {
-+    	print ".SH ARGUMENTS\n";
-+	}
-     foreach $parameter (@{$args{'parameterlist'}}) {
-         my $parameter_name = $parameter;
-         $parameter_name =~ s/\[.*//;
-@@ -822,10 +827,16 @@ sub output_function_rst(%) {
-     my $oldprefix = $lineprefix;
- 
-     my $signature = "";
--    if ($args{'functiontype'} ne "") {
--        $signature = $args{'functiontype'} . " " . $args{'function'} . " (";
--    } else {
--        $signature = $args{'function'} . " (";
-+    my $func_macro = $args{'func_macro'};
-+    my $paramcount = $#{$args{'parameterlist'}}; # -1 is empty
-+
-+	if ($func_macro) {
-+        $signature = $args{'function'};
-+	} else {
-+		if ($args{'functiontype'}) {
-+        	$signature = $args{'functiontype'} . " ";
-+		}
-+		$signature .= $args{'function'} . " (";
-     }
- 
-     my $count = 0;
-@@ -844,7 +855,9 @@ sub output_function_rst(%) {
-         }
-     }
- 
--    $signature .= ")";
-+    if (!$func_macro) {
-+    	$signature .= ")";
-+    }
- 
-     if ($sphinx_major < 3) {
-         if ($args{'typedef'}) {
-@@ -888,9 +901,11 @@ sub output_function_rst(%) {
-     # Put our descriptive text into a container (thus an HTML <div>) to help
-     # set the function prototypes apart.
-     #
--    print ".. container:: kernelindent\n\n";
-     $lineprefix = "  ";
--    print $lineprefix . "**Parameters**\n\n";
-+	if ($paramcount >= 0) {
-+    	print ".. container:: kernelindent\n\n";
-+   		print $lineprefix . "**Parameters**\n\n";
-+    }
-     foreach $parameter (@{$args{'parameterlist'}}) {
-         my $parameter_name = $parameter;
-         $parameter_name =~ s/\[.*//;
-@@ -1704,7 +1719,7 @@ sub check_return_section {
- sub dump_function($$) {
-     my $prototype = shift;
-     my $file = shift;
--    my $noret = 0;
-+    my $func_macro = 0;
- 
-     print_lineno($new_start_line);
- 
-@@ -1769,7 +1784,7 @@ sub dump_function($$) {
-         # declaration_name and opening parenthesis (notice the \s+).
-         $return_type = $1;
-         $declaration_name = $2;
--        $noret = 1;
-+        $func_macro = 1;
-     } elsif ($prototype =~ m/^()($name)\s*$prototype_end/ ||
-         $prototype =~ m/^($type1)\s+($name)\s*$prototype_end/ ||
-         $prototype =~ m/^($type2+)\s*($name)\s*$prototype_end/)  {
-@@ -1796,7 +1811,7 @@ sub dump_function($$) {
-     # of warnings goes sufficiently down, the check is only performed in
-     # -Wreturn mode.
-     # TODO: always perform the check.
--    if ($Wreturn && !$noret) {
-+    if ($Wreturn && !$func_macro) {
-         check_return_section($file, $declaration_name, $return_type);
-     }
- 
-@@ -1814,7 +1829,8 @@ sub dump_function($$) {
-                             'parametertypes' => \%parametertypes,
-                             'sectionlist' => \@sectionlist,
-                             'sections' => \%sections,
--                            'purpose' => $declaration_purpose
-+                            'purpose' => $declaration_purpose,
-+							'func_macro' => $func_macro
-                            });
-     } else {
-         output_declaration($declaration_name,
-@@ -1827,7 +1843,8 @@ sub dump_function($$) {
-                             'parametertypes' => \%parametertypes,
-                             'sectionlist' => \@sectionlist,
-                             'sections' => \%sections,
--                            'purpose' => $declaration_purpose
-+                            'purpose' => $declaration_purpose,
-+							'func_macro' => $func_macro
-                            });
-     }
- }
+ config ARM_TIMER_SP804
+-	bool "Support for Dual Timer SP804 module" if COMPILE_TEST
++	bool "Support for Dual Timer SP804 module"
++	depends on ARM || ARM64 || COMPILE_TEST
+ 	depends on GENERIC_SCHED_CLOCK && HAVE_CLK
+ 	select CLKSRC_MMIO
+ 	select TIMER_OF if OF
 -- 
 2.43.0
 
