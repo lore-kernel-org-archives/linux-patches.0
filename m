@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C233B1F7567;
-	Tue,  3 Dec 2024 16:17:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0FC11EE00B;
+	Tue,  3 Dec 2024 16:17:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733242650; cv=none; b=fGpyk4PKzTWQ+ThCoUvwOlPSCY6oxJWbQf0qEc/JHHZDqAfaLq4/uWfNd/AubJ5BKkUEGjusTK+eYuhv5g5c1U7Adn3eRnms/le9aJOng3nGtDqC0710Outcrxg0Taf2gSwYH1RC3aTpRUeZ4F+T762OixfzgUNes1HU0doMMTg=
+	t=1733242654; cv=none; b=UwHakh6BjBJzOe8NvlCndg7tjx8OMhaEFm4KhQ1sH6x89YQkCJfBfCVYnystnagju1zWqj4ygom+1HfpBKluuQhtuC7SyaMCS0bf7pjoz3uPff4tV5WUowBzhECXrLiSf1K4Pay1KFZFMl1Tns5+fkLQaNpkNxqaxAEAMYsVZUw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733242650; c=relaxed/simple;
-	bh=cAGurfIRCWAQfJ9HijU0u9PwuRQLsgKdp1XBbXtxqrE=;
+	s=arc-20240116; t=1733242654; c=relaxed/simple;
+	bh=J0zhvZQO9vHFYyKPPrLuDoUHcggAqMugTQGSxwNvQp0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=emfeHNAIDiw6Ajx7GmDdNzxyzJrujjhIyMGVRnTyQPr7E1T0xRiOdVtuGS4c8XXhUS6Vs79BBc6rdu8SCaEWoxUBRzBYXxxGsqjCSk/UcIUwxsO0/tQehXtzIxCZsEWZkNnRheMG7dYPkeltqyHTRmEZqIWTzJrJ5JLgWhziBDE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ow42VEfY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fqlitO37vY3ShvVBxNmroG4wAYAmPnGFQLsO9Uu2b/8ETxgViL3WeSud6ojxJMfZE54108AXY6aPln33b723qfZw36qm6O4b7g+J6OyBFkT5q/VFU1yF0/0mQaNxdFsp3H7pVRRW7nnQ9YsxRGElZp+E5KiNsh8xU1LVYUMxMuI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IESEXvWl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ow42VEfY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CB6FC4CECF;
-	Tue,  3 Dec 2024 16:17:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IESEXvWl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 764DCC4CECF;
+	Tue,  3 Dec 2024 16:17:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733242650;
-	bh=cAGurfIRCWAQfJ9HijU0u9PwuRQLsgKdp1XBbXtxqrE=;
+	s=korg; t=1733242653;
+	bh=J0zhvZQO9vHFYyKPPrLuDoUHcggAqMugTQGSxwNvQp0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ow42VEfYt0nnXKf1mx67v2RG+AR2T/WG14A1UF2YHayrXssDRekah41w+N5nUR7AB
-	 bm3MJxCcbEqoGS410b7wO/9bbgzUe4w6/rWdlfGKSR1ehOYJQEOO/YJCFE1DV03ilH
-	 mPmQPgOQEhlXxYmaKufR8cf4dHGfcOQHsDkF4zv8=
+	b=IESEXvWlA0ahzzEOINP4YFlZvIOPm6Fdtx6ivc9StoW7QS3hs/TKRy8DeU3DS0sq9
+	 ivihDmLcfMx6AFGv0URVLSllX4s5Cx/d3p2iibYHRCBpZmqWxilgJuelBkZRzuLDD0
+	 Hl2mFzYpYPnZ+WxLrEnSSuhaqqGw2W0dwRHO3GI0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ma Wupeng <mawupeng1@huawei.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.12 768/826] ipc: fix memleak if msg_init_ns failed in create_ipc_ns
-Date: Tue,  3 Dec 2024 15:48:15 +0100
-Message-ID: <20241203144813.725214919@linuxfoundation.org>
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.12 751/826] smb3: request handle caching when caching directories
+Date: Tue,  3 Dec 2024 15:47:58 +0100
+Message-ID: <20241203144813.058814558@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -50,62 +49,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ma Wupeng <mawupeng1@huawei.com>
+From: Steve French <stfrench@microsoft.com>
 
-commit bc8f5921cd69188627c08041276238de222ab466 upstream.
+commit 9ed9d83a51a9636d367c796252409e7b2f4de4d4 upstream.
 
-Percpu memory allocation may failed during create_ipc_ns however this
-fail is not handled properly since ipc sysctls and mq sysctls is not
-released properly. Fix this by release these two resource when failure.
+This client was only requesting READ caching, not READ and HANDLE caching
+in the LeaseState on the open requests we send for directories.  To
+delay closing a handle (e.g. for caching directory contents) we should
+be requesting HANDLE as well as READ (as we already do for deferred
+close of files).   See MS-SMB2 3.3.1.4 e.g.
 
-Here is the kmemleak stack when percpu failed:
-
-unreferenced object 0xffff88819de2a600 (size 512):
-  comm "shmem_2nstest", pid 120711, jiffies 4300542254
-  hex dump (first 32 bytes):
-    60 aa 9d 84 ff ff ff ff fc 18 48 b2 84 88 ff ff  `.........H.....
-    04 00 00 00 a4 01 00 00 20 e4 56 81 ff ff ff ff  ........ .V.....
-  backtrace (crc be7cba35):
-    [<ffffffff81b43f83>] __kmalloc_node_track_caller_noprof+0x333/0x420
-    [<ffffffff81a52e56>] kmemdup_noprof+0x26/0x50
-    [<ffffffff821b2f37>] setup_mq_sysctls+0x57/0x1d0
-    [<ffffffff821b29cc>] copy_ipcs+0x29c/0x3b0
-    [<ffffffff815d6a10>] create_new_namespaces+0x1d0/0x920
-    [<ffffffff815d7449>] copy_namespaces+0x2e9/0x3e0
-    [<ffffffff815458f3>] copy_process+0x29f3/0x7ff0
-    [<ffffffff8154b080>] kernel_clone+0xc0/0x650
-    [<ffffffff8154b6b1>] __do_sys_clone+0xa1/0xe0
-    [<ffffffff843df8ff>] do_syscall_64+0xbf/0x1c0
-    [<ffffffff846000b0>] entry_SYSCALL_64_after_hwframe+0x4b/0x53
-
-Link: https://lkml.kernel.org/r/20241023093129.3074301-1-mawupeng1@huawei.com
-Fixes: 72d1e611082e ("ipc/msg: mitigate the lock contention with percpu counter")
-Signed-off-by: Ma Wupeng <mawupeng1@huawei.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: stable@vger.kernel.org
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- ipc/namespace.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/smb/client/smb2ops.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/ipc/namespace.c
-+++ b/ipc/namespace.c
-@@ -83,13 +83,15 @@ static struct ipc_namespace *create_ipc_
- 
- 	err = msg_init_ns(ns);
- 	if (err)
--		goto fail_put;
-+		goto fail_ipc;
- 
- 	sem_init_ns(ns);
- 	shm_init_ns(ns);
- 
- 	return ns;
- 
-+fail_ipc:
-+	retire_ipc_sysctls(ns);
- fail_mq:
- 	retire_mq_sysctls(ns);
- 
+--- a/fs/smb/client/smb2ops.c
++++ b/fs/smb/client/smb2ops.c
+@@ -4080,7 +4080,7 @@ map_oplock_to_lease(u8 oplock)
+ 	if (oplock == SMB2_OPLOCK_LEVEL_EXCLUSIVE)
+ 		return SMB2_LEASE_WRITE_CACHING_LE | SMB2_LEASE_READ_CACHING_LE;
+ 	else if (oplock == SMB2_OPLOCK_LEVEL_II)
+-		return SMB2_LEASE_READ_CACHING_LE;
++		return SMB2_LEASE_READ_CACHING_LE | SMB2_LEASE_HANDLE_CACHING_LE;
+ 	else if (oplock == SMB2_OPLOCK_LEVEL_BATCH)
+ 		return SMB2_LEASE_HANDLE_CACHING_LE | SMB2_LEASE_READ_CACHING_LE |
+ 		       SMB2_LEASE_WRITE_CACHING_LE;
 
 
