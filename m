@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11BF51FA178;
-	Tue,  3 Dec 2024 15:46:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A0891FA17C;
+	Tue,  3 Dec 2024 15:46:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733240773; cv=none; b=DN/pCUHzLE2YQWPGCft9PF3I8ju7voUFD62rRvevAXoQl9nHlJV+PX7OGtc+42NDdJy/e17sONvzBq/u2yMbneu1QC0FQJR3iF4QKPELqsbeMhhjWAg0Jk1s59rFWx4/BDj8mMPG325ULlPiNvfCTo0LS/e/K+3sWdgkG9QguCA=
+	t=1733240776; cv=none; b=DqetdYbKj3LtVPZapLkYEslvzbHo+VwdPfRRRqGqvRuQ9Cm0MmDs65sbFahFUkUYVkxqbMUJeZE5bryxBjvBndLjCr8T2LjBB8dk2/XP1XrB1XExKYTy71WegBMNVbwViUM76EYjBnKnDk0g/EMeGnwM2si4UAmR1NtZW+M3FX0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733240773; c=relaxed/simple;
-	bh=XCtz3qoFBZG/Dq+cHzvqg6I4FDHnYXnXBiPxcG722Sg=;
+	s=arc-20240116; t=1733240776; c=relaxed/simple;
+	bh=F2m0CodRo/bM43n8L8Nr/1vJCS76okz6AH5JhkfWxro=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=eA8wtm8on0Su58Eg1v204Xrl+s9DZg7VtldLxeiYEPJSui2kp+pM435txOf5yPbShk4w6laIJaYsMaXJjDn1nyN98hd9gMYPWuSAihCY8RcTJhyI/w2Rc56Wtnz3h2FnTVF9MELHG7WzTtsdaRQ3M/Kk7/FVaIhhe6+MIXy9gJw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nvW6y7Xu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DRVKzny36ues1vglEGXwKnLo/k6LxEGNZiQa1X2F/7SNEHUMp819UvjFTBZFmapUKiMGjLtqvK3z+DK7HcccS20vj0XxeuRtkwdYCOHJMfLgX0S1lxwgfIQdtYDgF9Da1Ou0+LoeNetaYYQut6GHP4Hbvwjjsdwkd8sU2fAvy9k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E5GnHrGT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nvW6y7Xu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EE5EC4CED6;
-	Tue,  3 Dec 2024 15:46:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E5GnHrGT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE91AC4CED6;
+	Tue,  3 Dec 2024 15:46:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733240772;
-	bh=XCtz3qoFBZG/Dq+cHzvqg6I4FDHnYXnXBiPxcG722Sg=;
+	s=korg; t=1733240776;
+	bh=F2m0CodRo/bM43n8L8Nr/1vJCS76okz6AH5JhkfWxro=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nvW6y7Xund4ATd5RjYTPSaMNZtNkSjRH+K3xcxnmi2YnkVcBH4GxBbl3fMg1u2kgw
-	 tf1ydZcnLimyImwxTQFgDhv7g0wLr0zRVO7jmDaAsnSyQKE1fKW8YEYo3NrxcWWhoL
-	 bGmys+c1gWfI2Dhl0ocnVRwovuJ3XD+47Dl8GUFc=
+	b=E5GnHrGT2Gf72TotJ18Al6738RCfNqtLWU7jAztDv8jgqYVbJH7u8/jmqumMHrfJt
+	 IkpP01qMvyLSxGwSlh5rv0x/4LelajCXkOVkxyzgJU5wGW65w9d8Gdau2Ezp5rQTuK
+	 H6skBdHm5XnriCd78BgzhHVLnS6AwMHFTdFD4Ew8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn@rivosinc.com>,
+	Yuan Chen <chenyuan@kylinos.cn>,
 	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 230/826] selftests: bpf: Add missing per-arch include path
-Date: Tue,  3 Dec 2024 15:39:17 +0100
-Message-ID: <20241203144752.717491485@linuxfoundation.org>
+Subject: [PATCH 6.12 231/826] bpf: Fix the xdp_adjust_tail sample prog issue
+Date: Tue,  3 Dec 2024 15:39:18 +0100
+Message-ID: <20241203144752.759710110@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -45,52 +45,44 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Björn Töpel <bjorn@rivosinc.com>
+From: Yuan Chen <chenyuan@kylinos.cn>
 
-[ Upstream commit 19090f0306f1748980596c6c71f1c4b128639cff ]
+[ Upstream commit 4236f114a3ffbbfd217436c08852e94cae372f57 ]
 
-The prog_tests programs do not include the per-arch tools include
-path, e.g. tools/arch/riscv/include. Some architectures depend those
-files to build properly.
+During the xdp_adjust_tail test, probabilistic failure occurs and SKB package
+is discarded by the kernel. After checking the issues by tracking SKB package,
+it is identified that they were caused by checksum errors. Refer to checksum
+of the arch/arm64/include/asm/checksum.h for fixing.
 
-Include tools/arch/$(SUBARCH)/include in the selftests bpf build.
+v2: Based on Alexei Starovoitov's suggestions, it is necessary to keep the code
+ implementation consistent.
 
-Fixes: 6d74d178fe6e ("tools: Add riscv barrier implementation")
-Signed-off-by: Björn Töpel <bjorn@rivosinc.com>
+Fixes: c6ffd1ff7856 (bpf: add bpf_xdp_adjust_tail sample prog)
+Signed-off-by: Yuan Chen <chenyuan@kylinos.cn>
 Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20240927131355.350918-2-bjorn@kernel.org
+Link: https://lore.kernel.org/bpf/20240930024115.52841-1-chenyuan_fl@163.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/Makefile | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ samples/bpf/xdp_adjust_tail_kern.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/tools/testing/selftests/bpf/Makefile b/tools/testing/selftests/bpf/Makefile
-index 75016962f7956..43a0293184785 100644
---- a/tools/testing/selftests/bpf/Makefile
-+++ b/tools/testing/selftests/bpf/Makefile
-@@ -10,6 +10,7 @@ TOOLSDIR := $(abspath ../../..)
- LIBDIR := $(TOOLSDIR)/lib
- BPFDIR := $(LIBDIR)/bpf
- TOOLSINCDIR := $(TOOLSDIR)/include
-+TOOLSARCHINCDIR := $(TOOLSDIR)/arch/$(SRCARCH)/include
- BPFTOOLDIR := $(TOOLSDIR)/bpf/bpftool
- APIDIR := $(TOOLSINCDIR)/uapi
- ifneq ($(O),)
-@@ -44,7 +45,7 @@ CFLAGS += -g $(OPT_FLAGS) -rdynamic					\
- 	  -Wall -Werror -fno-omit-frame-pointer				\
- 	  $(GENFLAGS) $(SAN_CFLAGS) $(LIBELF_CFLAGS)			\
- 	  -I$(CURDIR) -I$(INCLUDE_DIR) -I$(GENDIR) -I$(LIBDIR)		\
--	  -I$(TOOLSINCDIR) -I$(APIDIR) -I$(OUTPUT)
-+	  -I$(TOOLSINCDIR) -I$(TOOLSARCHINCDIR) -I$(APIDIR) -I$(OUTPUT)
- LDFLAGS += $(SAN_LDFLAGS)
- LDLIBS += $(LIBELF_LIBS) -lz -lrt -lpthread
+diff --git a/samples/bpf/xdp_adjust_tail_kern.c b/samples/bpf/xdp_adjust_tail_kern.c
+index ffdd548627f0a..da67bcad1c638 100644
+--- a/samples/bpf/xdp_adjust_tail_kern.c
++++ b/samples/bpf/xdp_adjust_tail_kern.c
+@@ -57,6 +57,7 @@ static __always_inline void swap_mac(void *data, struct ethhdr *orig_eth)
+ 
+ static __always_inline __u16 csum_fold_helper(__u32 csum)
+ {
++	csum = (csum & 0xffff) + (csum >> 16);
+ 	return ~((csum & 0xffff) + (csum >> 16));
+ }
  
 -- 
 2.43.0
