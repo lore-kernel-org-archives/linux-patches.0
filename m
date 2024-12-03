@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A1F61F76D7;
-	Tue,  3 Dec 2024 16:10:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00C821F75AC;
+	Tue,  3 Dec 2024 16:10:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733242221; cv=none; b=iizIjOa+v8Btbh0nYFfUBdNh+wOq+xRZTtuCwOKd7whj8D+6bWcAIBPTUOg60d29wBwD8npFkoa8ePcmtBtC6ohXO4Xmw9lLTWglU/TbOMATeQHja+g3PUk7q03aqSJ7+DIcySzX4FONjdF2chhOYocmRVF4OQtKiK7gEzdLHQ8=
+	t=1733242225; cv=none; b=V0aLvGrFcGw7SIqGs3zc/aUjAAsDcnRwgBWL5qjHt1klZadBJPEsCtwAmQZeI4ghXPHyHPBXvFLGkGMZ94eYq1siHbekNdlIbd/dGwKP/g9aq5akSrcuGWz2URWtO1nOh4NyZiOwSlz8iDgnrpEhkaaxnZZe/3qSvgu54X8omzs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733242221; c=relaxed/simple;
-	bh=92Sh+qUsR8EvdT80wUVF5lsWU1mIhbu2WvzHXzg8bBQ=;
+	s=arc-20240116; t=1733242225; c=relaxed/simple;
+	bh=WQLyL4cPxbTGi/OTGCtE9scf/5jrgdXJml20qbhKHok=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L3L7QUJgEcgSGXFiPjgVIi722tWGFjiRf7KLtXNS3J0+OAJcA+VLc+7g9hC61u0NDrjr11pDHZonGiSNhK3xTpax7a3+BWkV4IPL2mnIbsvkYBZgroF2zxy7j2jTlnNpZuC6RT/KS6a7bj3ZZemffXncfqM5KUIObM343q1MRJI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2FtG5/kH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nLbsylsYhvJpGGQTv9pzhbrdN7aSh3lobIVKjsRj3bpyeE4/IG8FRUVzYxhFGFZ23u7vScgptHXPXF1wWN02U9RIsCocIBv8qQXZI7FE7SRl00x9TUHq0To7BtafvCJnJv+ODg+71BxiO6NurVG/M3d6dqgJkSQHhI3sxuWmKHM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EE0EAaMs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2FtG5/kH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8266EC4CECF;
-	Tue,  3 Dec 2024 16:10:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EE0EAaMs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15EB3C4CECF;
+	Tue,  3 Dec 2024 16:10:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733242221;
-	bh=92Sh+qUsR8EvdT80wUVF5lsWU1mIhbu2WvzHXzg8bBQ=;
+	s=korg; t=1733242224;
+	bh=WQLyL4cPxbTGi/OTGCtE9scf/5jrgdXJml20qbhKHok=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2FtG5/kHXmfKtmBEkUG2X1kysW2oSCEXvii2NLyXQX+wzqbZQPLkt69o77bw3dZ6a
-	 pPNcd7zU4fyuCCdWr6n5YcofXR5ql1JuIgPKDhuLQ0HId+5oBHWXG+Ti5BR9v95qjM
-	 taV0icqWInN+vmeyRZwET7fQG8qSzZsucY5zMvQc=
+	b=EE0EAaMsjVJ+sR4xVoLWANNJEQ0lrYWR8ix3LeCLSfrzkvpanRe1iSFJA1rvuGgtC
+	 JwDga4e5SgdJ1QHXxGcOAZmBTEiczNV9msJ9vMbGzM7oY7+VCzI6zs+KWDTNX9p7E2
+	 itBJ5M2Z7n45rdZSJixto+JKp0q0wXYmdKk9cQ8k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Charles Han <hanchunchao@inspur.com>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 615/826] ASoC: imx-audmix: Add NULL check in imx_audmix_probe
-Date: Tue,  3 Dec 2024 15:45:42 +0100
-Message-ID: <20241203144807.743601816@linuxfoundation.org>
+	kernel test robot <lkp@intel.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Sean Christopherson <seanjc@google.com>,
+	Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH 6.12 642/826] KVM: x86: add back X86_LOCAL_APIC dependency
+Date: Tue,  3 Dec 2024 15:46:09 +0100
+Message-ID: <20241203144808.793325198@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -51,40 +52,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Charles Han <hanchunchao@inspur.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit e038f43edaf0083f6aa7c9415d86cf28dfd152f9 ]
+commit 1331343af6f502aecd274d522dd34bf7c965f484 upstream.
 
-devm_kasprintf() can return a NULL pointer on failure,but this
-returned value in imx_audmix_probe() is not checked.
-Add NULL check in imx_audmix_probe(), to handle kernel NULL
-pointer dereference error.
+Enabling KVM now causes a build failure on x86-32 if X86_LOCAL_APIC
+is disabled:
 
-Fixes: 05d996e11348 ("ASoC: imx-audmix: Split capture device for audmix")
-Signed-off-by: Charles Han <hanchunchao@inspur.com>
-Link: https://patch.msgid.link/20241118084553.4195-1-hanchunchao@inspur.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+arch/x86/kvm/svm/svm.c: In function 'svm_emergency_disable_virtualization_cpu':
+arch/x86/kvm/svm/svm.c:597:9: error: 'kvm_rebooting' undeclared (first use in this function); did you mean 'kvm_irq_routing'?
+  597 |         kvm_rebooting = true;
+      |         ^~~~~~~~~~~~~
+      |         kvm_irq_routing
+arch/x86/kvm/svm/svm.c:597:9: note: each undeclared identifier is reported only once for each function it appears in
+make[6]: *** [scripts/Makefile.build:221: arch/x86/kvm/svm/svm.o] Error 1
+In file included from include/linux/rculist.h:11,
+                 from include/linux/hashtable.h:14,
+                 from arch/x86/kvm/svm/avic.c:18:
+arch/x86/kvm/svm/avic.c: In function 'avic_pi_update_irte':
+arch/x86/kvm/svm/avic.c:909:38: error: 'struct kvm' has no member named 'irq_routing'
+  909 |         irq_rt = srcu_dereference(kvm->irq_routing, &kvm->irq_srcu);
+      |                                      ^~
+include/linux/rcupdate.h:538:17: note: in definition of macro '__rcu_dereference_check'
+  538 |         typeof(*p) *local = (typeof(*p) *__force)READ_ONCE(p); \
+
+Move the dependency to the same place as before.
+
+Fixes: ea4290d77bda ("KVM: x86: leave kvm.ko out of the build if no vendor module is requested")
+Cc: stable@vger.kernel.org
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202410060426.e9Xsnkvi-lkp@intel.com/
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Acked-by: Sean Christopherson <seanjc@google.com>
+[sean: add Cc to stable, tweak shortlog scope]
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Message-ID: <20241118172002.1633824-2-seanjc@google.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/fsl/imx-audmix.c | 3 +++
- 1 file changed, 3 insertions(+)
+ arch/x86/kvm/Kconfig |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/fsl/imx-audmix.c b/sound/soc/fsl/imx-audmix.c
-index 6fbcf33fd0dea..8e7b75cf64db4 100644
---- a/sound/soc/fsl/imx-audmix.c
-+++ b/sound/soc/fsl/imx-audmix.c
-@@ -275,6 +275,9 @@ static int imx_audmix_probe(struct platform_device *pdev)
- 		/* Add AUDMIX Backend */
- 		be_name = devm_kasprintf(&pdev->dev, GFP_KERNEL,
- 					 "audmix-%d", i);
-+		if (!be_name)
-+			return -ENOMEM;
-+
- 		priv->dai[num_dai + i].cpus	= &dlc[1];
- 		priv->dai[num_dai + i].codecs	= &snd_soc_dummy_dlc;
+--- a/arch/x86/kvm/Kconfig
++++ b/arch/x86/kvm/Kconfig
+@@ -19,7 +19,6 @@ if VIRTUALIZATION
  
--- 
-2.43.0
-
+ config KVM_X86
+ 	def_tristate KVM if KVM_INTEL || KVM_AMD
+-	depends on X86_LOCAL_APIC
+ 	select KVM_COMMON
+ 	select KVM_GENERIC_MMU_NOTIFIER
+ 	select HAVE_KVM_IRQCHIP
+@@ -50,6 +49,7 @@ config KVM_X86
+ 
+ config KVM
+ 	tristate "Kernel-based Virtual Machine (KVM) support"
++	depends on X86_LOCAL_APIC
+ 	help
+ 	  Support hosting fully virtualized guest machines using hardware
+ 	  virtualization extensions.  You will need a fairly recent
 
 
