@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 330111F473A;
-	Tue,  3 Dec 2024 15:26:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42B0E1F707A;
+	Tue,  3 Dec 2024 15:26:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733239594; cv=none; b=Cg582qJ8HXU/7LYIC+2IPhsWBA0WT1T9S4oxiw30jApKAn+thZxh4G4mCgpkSrVir7trINvbebiyXJHJtQ3zffFP2iyiS4Gn9gNsHaFoB/TQ64FL6LmZ83GBlEHJYKeOcoZpr/4YjJPE8QhUchwHLVfsPrFGe+RpxbNH155xieQ=
+	t=1733239597; cv=none; b=PsbBogAc2gstHK82yvcdHd2IghwWwoXCnL598B2dJN+SANvaYHsIgPoTX7DeZdHRrw/xYqnj5IZ0lSyiOk4D6nZZGqfcZUme3Lz36c5u+RMz/VJzTQt1NIm0nBfIPNFMj+/NKzK8DrbNMtILj9cabm/msRROpVvg+s4SGkJWc/c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733239594; c=relaxed/simple;
-	bh=tsd2vyf0dMHA1r4GdT5ewEypEAfbt6yTMcJaD7bSFXw=;
+	s=arc-20240116; t=1733239597; c=relaxed/simple;
+	bh=m9zedYvgZqm+jUD+9kQl36tBD5pHpDWe9qX/WH0fzJE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=mf6dM7Bqf4OOOrp3dCu/NaVvUMPdBtXXr7WPOH3nnMoPQHJUUZ2g+OurAMxV3AjCZXlKRTTjBB4k08hVaB4sbMCVH7IN/SU8MJ/JAj0iQvVTgfv5OmfJyoN67D2lOXqAyThW0NA7TmzAVog96+Nd1AeAsLcXST8GtxjRSPGVDiw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ae2cNmE3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GqIqy84n3TztXbgIesq1j2F9OKxU/4PDwrad34gpRNgWatxJYMmTofR8MfNlkDdHgUocm8cjJ/KsYDzgoNMMod0F4T84AIKbjsVForMV1zBKeSYicp+RB9GU4d0Gfs8F0SQAmaTadAUfeX8G6iqGHOCfcV3827z0d4QDq8mFl1w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rAsrZ1ot; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ae2cNmE3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D81DC4CED6;
-	Tue,  3 Dec 2024 15:26:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rAsrZ1ot"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE29CC4CECF;
+	Tue,  3 Dec 2024 15:26:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733239594;
-	bh=tsd2vyf0dMHA1r4GdT5ewEypEAfbt6yTMcJaD7bSFXw=;
+	s=korg; t=1733239597;
+	bh=m9zedYvgZqm+jUD+9kQl36tBD5pHpDWe9qX/WH0fzJE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ae2cNmE3l11OJqZ5beQ7jnj2GSrP6ldmDRU6xiPMtfmzJ7sNd8cFfBgzECfdjLqak
-	 6OmjvuLoB6DHJQ+hMQwlA4h/PR6NvraJt5KxyL+Xl/z8S9CXnK41UAZi22QtNlJUX8
-	 uSXAhd8Bhl43aCOLkFrRc9RMHIe2GCdaJ3zxnvqo=
+	b=rAsrZ1otBukzZytYzMAr+CpMSrBuCmaWViTojoQ+cQP0WPiVwvrDWP4FmjfPM4Kur
+	 dLtVuVh/+xJfxiT4Mai19mwyzOdv0Lwl25txypH3I72FGEz/fGttSfangY065nzvv4
+	 Xv/pLe8XvpEoaVntQKqS851Rk1k6qdDEUiPm66ck=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>
-Subject: [PATCH 6.11 667/817] tools/nolibc: s390: include std.h
-Date: Tue,  3 Dec 2024 15:43:59 +0100
-Message-ID: <20241203144021.992691816@linuxfoundation.org>
+	Anjelique Melendez <quic_amelende@quicinc.com>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Linus Walleij <linus.walleij@linaro.org>
+Subject: [PATCH 6.11 668/817] pinctrl: qcom: spmi: fix debugfs drive strength
+Date: Tue,  3 Dec 2024 15:44:00 +0100
+Message-ID: <20241203144022.031672566@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -44,40 +46,53 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.11-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-commit 711b5875814b2a0e9a5aaf7a85ba7c80f5a389b1 upstream.
+commit 6bc0ebfb1d920f13c522545f114cdabb49e9408a upstream.
 
-arch-s390.h uses types from std.h, but does not include it.
-Depending on the inclusion order the compilation can fail.
-Include std.h explicitly to avoid these errors.
+Commit 723e8462a4fe ("pinctrl: qcom: spmi-gpio: Fix the GPIO strength
+mapping") fixed a long-standing issue in the Qualcomm SPMI PMIC gpio
+driver which had the 'low' and 'high' drive strength settings switched
+but failed to update the debugfs interface which still gets this wrong.
 
-Fixes: 404fa87c0eaf ("tools/nolibc: s390: provide custom implementation for sys_fork")
-Cc: stable@vger.kernel.org
-Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
-Link: https://lore.kernel.org/r/20240927-nolibc-s390-std-h-v1-1-30442339a6b9@linutronix.de
-Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
+Fix the debugfs code so that the exported values match the hardware
+settings.
+
+Note that this probably means that most devicetrees that try to describe
+the firmware settings got this wrong if the settings were derived from
+debugfs. Before the above mentioned commit the settings would have
+actually matched the firmware settings even if they were described
+incorrectly, but now they are inverted.
+
+Fixes: 723e8462a4fe ("pinctrl: qcom: spmi-gpio: Fix the GPIO strength mapping")
+Fixes: eadff3024472 ("pinctrl: Qualcomm SPMI PMIC GPIO pin controller driver")
+Cc: Anjelique Melendez <quic_amelende@quicinc.com>
+Cc: stable@vger.kernel.org	# 3.19
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://lore.kernel.org/20241025121622.1496-1-johan+linaro@kernel.org
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/include/nolibc/arch-s390.h |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/pinctrl/qcom/pinctrl-spmi-gpio.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/tools/include/nolibc/arch-s390.h
-+++ b/tools/include/nolibc/arch-s390.h
-@@ -10,6 +10,7 @@
+--- a/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
++++ b/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
+@@ -667,7 +667,7 @@ static void pmic_gpio_config_dbg_show(st
+ 		"push-pull", "open-drain", "open-source"
+ 	};
+ 	static const char *const strengths[] = {
+-		"no", "high", "medium", "low"
++		"no", "low", "medium", "high"
+ 	};
  
- #include "compiler.h"
- #include "crt.h"
-+#include "std.h"
- 
- /* Syscalls for s390:
-  *   - registers are 64-bit
+ 	pad = pctldev->desc->pins[pin].drv_data;
 
 
