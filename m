@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41B2D1F890E;
-	Tue,  3 Dec 2024 16:01:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3FD51F75B9;
+	Tue,  3 Dec 2024 16:01:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733241716; cv=none; b=WDiGv27ac6AnvRIaZXaGPX1UiVAv2XfNBUayCALXvF7doI8q1sU/VSas4p4mnjxLzMBg0Pyg9d/bHNuYNGuhKsreRMfniB2d9sLsieuGOZRVhtYA2SwMG2l3sHBdZyFm1ZyqwsxYNiF2qe417k8e3VrZCJSvoQ599d8/DQAQza8=
+	t=1733241719; cv=none; b=uYug0wgNQJUMkLl/QVTUWoISfqwelPEcDBauPlAWEBC4ClVnwRKKntCfFsko2bKnF7rLyLRhzRg6805/lfOLlkRn+Y8ueXXAzv0wgnUVhUyVO/Zm3V4qEXcmik1CdlOASNgEVpNDkijiX4wDxL1IPQeYleRW87u6lQ2eHMfJX80=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733241716; c=relaxed/simple;
-	bh=0l2lxkN061Dg8opGvNzybL+Pu0Fx1GEBGCKUuIuEYj8=;
+	s=arc-20240116; t=1733241719; c=relaxed/simple;
+	bh=6jfyDwk7LwRd9mZtFsuBhevq4+y3l1SXkSJFbUzCaB4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Tt9h4BXBIUBAuqfXRWSUai85KgxX4oQ3+I3EbXrXkrVhaQEVgTn3CzVb7QuBUlC22OzmHb1Kj7VoHJSM8oD7Bj5dmbX7VJkIjSDQUyStS0ZxM+ngTu9rXwzXul9GbOyelDkXkrfVUlkBc7PmjfYcmMI5vR9FOpvfbQ9MSFhaTqw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P/hSOTnn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ORjhigUaw+bXWi69299ArBDQyh7voi5xaysKqTz7XYPzP/fjklHjUkKrWTGMb6MpHlpktg6Ij19tm9CBX1FSJzskOI2kaKlPClWljnkKoyEpLde1SzmnGp1KLd9Y2dYP1iU6t0n483KsN6oFb3n8t7sXVszPpfW82EgXHdlUiZU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=emgbrYiE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P/hSOTnn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A693FC4CED8;
-	Tue,  3 Dec 2024 16:01:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="emgbrYiE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11A33C4CECF;
+	Tue,  3 Dec 2024 16:01:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733241716;
-	bh=0l2lxkN061Dg8opGvNzybL+Pu0Fx1GEBGCKUuIuEYj8=;
+	s=korg; t=1733241719;
+	bh=6jfyDwk7LwRd9mZtFsuBhevq4+y3l1SXkSJFbUzCaB4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P/hSOTnnjbYX6OGr3Qkwdfvk0mBwCvgXOaOM95ry6vr/mINuk9rjKjN9UczZ9o2Fw
-	 uba9xn9Yh/DzyE5JNmInwGRjsV95u45r3lOHL2QAwSqznYNPgtkJvj2CqtxTlj1TtD
-	 tidTX6fNJ96x96t+sxd76vJlzgpjvSSK68BEFUQ0=
+	b=emgbrYiEArDol3EGJe0vpjdbGglrZAj1OEOs2IhRDQSbAqU48Pt/KDtzGdFoV0CJW
+	 88IeUgYj/AhcK34ZAHHUMnSo02aB88SS4QhQJ9TfCK5Z0sdi+47LmebU1Qhz+4UEPa
+	 1ussvBskBFXyDaKL+QuVWaX7MkEyawv3ldkwksGE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ravindra Yashvant Shinde <ravindra.yashvant.shinde@nxp.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	LongPing Wei <weilongping@oppo.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 496/826] i3c: master: Remove i3c_dev_disable_ibi_locked(olddev) on device hotjoin
-Date: Tue,  3 Dec 2024 15:43:43 +0100
-Message-ID: <20241203144803.103190006@linuxfoundation.org>
+Subject: [PATCH 6.12 497/826] f2fs: fix the wrong f2fs_bug_on condition in f2fs_do_replace_block
+Date: Tue,  3 Dec 2024 15:43:44 +0100
+Message-ID: <20241203144803.142205903@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -53,79 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Frank Li <Frank.Li@nxp.com>
+From: LongPing Wei <weilongping@oppo.com>
 
-[ Upstream commit 36faa04ce3d9c962b4b29d285ad07ca29e2988e4 ]
+[ Upstream commit c3af1f13476ec23fd99c98d060a89be28c1e8871 ]
 
-When a new device hotjoins, a new dynamic address is assigned.
-i3c_master_add_i3c_dev_locked() identifies that the device was previously
-attached to the bus and locates the olddev.
+This f2fs_bug_on was introduced by commit 2c1905042c8c ("f2fs: check
+segment type in __f2fs_replace_block") when there were only 6 curseg types.
+After commit d0b9e42ab615 ("f2fs: introduce inmem curseg") was introduced,
+the condition should be changed to checking curseg->seg_type.
 
-i3c_master_add_i3c_dev_locked()
-{
-    ...
-    olddev = i3c_master_search_i3c_dev_duplicate(newdev);
-    ...
-    if (olddev) {
-        ...
-        i3c_dev_disable_ibi_locked(olddev);
-        ^^^^^^
-        The olddev should not receive any commands on the i3c bus as it
-        does not exist and has been assigned a new address. This will
-        result in NACK or timeout. So remove it.
-    }
-
-    i3c_dev_free_ibi_locked(olddev);
-    ^^^^^^^^
-    This function internally calls i3c_dev_disable_ibi_locked() function
-    causing to send DISEC command with old Address.
-
-    The olddev should not receive any commands on the i3c bus as it
-    does not exist and has been assigned a new address. This will
-    result in NACK or timeout. So, update the olddev->ibi->enabled
-    flag to false to avoid DISEC with OldAddr.
-}
-
-Include part of Ravindra Yashvant Shinde's work:
-https://lore.kernel.org/linux-i3c/20240820151917.3904956-1-ravindra.yashvant.shinde@nxp.com/T/#u
-
-Fixes: 317bacf960a4 ("i3c: master: add enable(disable) hot join in sys entry")
-Co-developed-by: Ravindra Yashvant Shinde <ravindra.yashvant.shinde@nxp.com>
-Signed-off-by: Ravindra Yashvant Shinde <ravindra.yashvant.shinde@nxp.com>
-Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
-Link: https://lore.kernel.org/r/20241001162232.223724-1-Frank.Li@nxp.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Fixes: d0b9e42ab615 ("f2fs: introduce inmem curseg")
+Signed-off-by: LongPing Wei <weilongping@oppo.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i3c/master.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ fs/f2fs/segment.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/i3c/master.c b/drivers/i3c/master.c
-index 6f3eb710a75d6..ffe99f0c6acef 100644
---- a/drivers/i3c/master.c
-+++ b/drivers/i3c/master.c
-@@ -2051,11 +2051,16 @@ int i3c_master_add_i3c_dev_locked(struct i3c_master_controller *master,
- 			ibireq.max_payload_len = olddev->ibi->max_payload_len;
- 			ibireq.num_slots = olddev->ibi->num_slots;
- 
--			if (olddev->ibi->enabled) {
-+			if (olddev->ibi->enabled)
- 				enable_ibi = true;
--				i3c_dev_disable_ibi_locked(olddev);
--			}
--
-+			/*
-+			 * The olddev should not receive any commands on the
-+			 * i3c bus as it does not exist and has been assigned
-+			 * a new address. This will result in NACK or timeout.
-+			 * So, update the olddev->ibi->enabled flag to false
-+			 * to avoid DISEC with OldAddr.
-+			 */
-+			olddev->ibi->enabled = false;
- 			i3c_dev_free_ibi_locked(olddev);
+diff --git a/fs/f2fs/segment.c b/fs/f2fs/segment.c
+index 1766254279d24..7b54b1851d346 100644
+--- a/fs/f2fs/segment.c
++++ b/fs/f2fs/segment.c
+@@ -3977,8 +3977,8 @@ void f2fs_do_replace_block(struct f2fs_sb_info *sbi, struct f2fs_summary *sum,
  		}
- 		mutex_unlock(&olddev->ibi_lock);
+ 	}
+ 
+-	f2fs_bug_on(sbi, !IS_DATASEG(type));
+ 	curseg = CURSEG_I(sbi, type);
++	f2fs_bug_on(sbi, !IS_DATASEG(curseg->seg_type));
+ 
+ 	mutex_lock(&curseg->curseg_mutex);
+ 	down_write(&sit_i->sentry_lock);
 -- 
 2.43.0
 
