@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D6F81F76CE;
-	Tue,  3 Dec 2024 15:53:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93F861F7060;
+	Tue,  3 Dec 2024 15:53:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733241227; cv=none; b=iaTATZY1GtS95fYg0M6JE6eG7VwuiidwYH8dUscnbsUz155tPJoN8fWqzI5EvxvDK7i9knIzfUBvawdHsEoV3hudtCsi7n8NwUf5DY1ZuPwqF+G3TB0By6iyP3veN10ijz9ymxN1j7SbS1rnlwXvfBqTV36zzup6J+3/JwI1QiE=
+	t=1733241230; cv=none; b=NpZQWdcc2RAvLrMH1t1WN8u5rRHAU2wNxKx04g/9ppE45JoU4l8yTi7SwQcVot8tOHrYivzhvou/XqAYI9lFerjDZcUrqgQewB0gOu76Cbam3Tg0HQm0TYoXGqdsXjxlXRmpFpl2Cp/sVIYUWLUy/XwYHSBRzbo4oJpREn4RqPI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733241227; c=relaxed/simple;
-	bh=AClKNTr3vQtd9F5S4DdxMe6ZG3R2qDLwooCYBQ9YFxA=;
+	s=arc-20240116; t=1733241230; c=relaxed/simple;
+	bh=OXUa7JNHyp82ljoYbTixvQHcuo02f0nTZX12BYXhFRk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gm2ththQefxR8s6e2XW3gTMu6WsurDmyM2PhHgKmog8bEqoXUvNRnUlv6HgCF2ENM4FKW2ZEQkb5BCJ21V7nCUw0woidu+r0ICPHTAFeSbeg1yj8f/X5Kxkkg0KfqgZU1zVNl8GIAx654NMhFCPgIHOLvHszgIekD0fL8jdBRNY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fwlLOptd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CkJP980doGQe94Htb1s/bwAYSKabQny6vu6uEL/YCyWjlp/zmZnsN46YtL5C2jylFmj6MO8ixZXom8FWaNYA6YClswgXDpKdlHbxKV3FwUvvLH2L7ldBsz6AZfu5LnDe4KUfrw5k+kKtZuuhDiKMDjsVPeg5pGsxWlRarWOoXMI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2G8/XBL5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fwlLOptd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EC9EC4CED6;
-	Tue,  3 Dec 2024 15:53:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2G8/XBL5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FDCDC4CED6;
+	Tue,  3 Dec 2024 15:53:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733241227;
-	bh=AClKNTr3vQtd9F5S4DdxMe6ZG3R2qDLwooCYBQ9YFxA=;
+	s=korg; t=1733241230;
+	bh=OXUa7JNHyp82ljoYbTixvQHcuo02f0nTZX12BYXhFRk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fwlLOptdpWUFY7u3M7Wt2P8pyInQdk2nFnDgKyh6GeB4wn0gShXDlalQPsEYJGslm
-	 9ysxzWtkpk3hPy4BbaTDx3+yu5pwiAg0XghudW8IcO6TY/eVErvkUlC3fGFk2zA2Ga
-	 EGgp7keAOO6kxKI6B9YLWZNKmJFV47tHvASH2mQ4=
+	b=2G8/XBL5nWHHiyOOF/ANsHec8ey8DPseFo4M31a8NmQHuQdPxC9GqyJa1iL4GnXbO
+	 tL8zg+EWc8+s6YE7+TDE6V0y5kviAQ9DtdyaldCI8MYR7o4OCPWb6Ig9VTDWJUEn5p
+	 G41kZ7wuUV0nhVe6NBk1n3S8u/PRDnNFFK3jl68w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengchang Tang <tangchengchang@huawei.com>,
-	Junxian Huang <huangjunxian6@hisilicon.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Nobuhiro Iwamatsu <nobuhiro1.iwamatsu@toshiba.co.jp>,
+	Biju Das <biju.das.jz@bp.renesas.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 360/826] RDMA/hns: Disassociate mmap pages for all uctx when HW is being reset
-Date: Tue,  3 Dec 2024 15:41:27 +0100
-Message-ID: <20241203144757.804469887@linuxfoundation.org>
+Subject: [PATCH 6.12 361/826] pinctrl: renesas: rzg2l: Fix missing return in rzg2l_pinctrl_register()
+Date: Tue,  3 Dec 2024 15:41:28 +0100
+Message-ID: <20241203144757.843253176@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -52,66 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chengchang Tang <tangchengchang@huawei.com>
+From: Biju Das <biju.das.jz@bp.renesas.com>
 
-[ Upstream commit 615b94746a54702af923b28bd8a629f4ac0ff0d8 ]
+[ Upstream commit 1737715a4c2c08f207c94cc1f3af3c5945318d29 ]
 
-When HW is being reset, userspace should not ring doorbell otherwise
-it may lead to abnormal consequence such as RAS.
+Fix the missing return statement in the error path of
+rzg2l_pinctrl_register().
 
-Disassociate mmap pages for all uctx to prevent userspace from ringing
-doorbell to HW. Since all resources will be destroyed during HW reset,
-no new mmap is allowed after HW reset is completed.
-
-Fixes: 9a4435375cd1 ("IB/hns: Add driver files for hns RoCE driver")
-Signed-off-by: Chengchang Tang <tangchengchang@huawei.com>
-Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
-Link: https://patch.msgid.link/20240927103323.1897094-3-huangjunxian6@hisilicon.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: f73f63b24491fa43 ("pinctrl: renesas: rzg2l: Use dev_err_probe()")
+Reported-by: Nobuhiro Iwamatsu <nobuhiro1.iwamatsu@toshiba.co.jp>
+Closes: https://lore.kernel.org/all/OS0PR01MB638837327E5487B71D88A70392712@OS0PR01MB6388.jpnprd01.prod.outlook.com/
+Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://lore.kernel.org/20241003082550.33341-1-biju.das.jz@bp.renesas.com
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hns/hns_roce_hw_v2.c | 4 ++++
- drivers/infiniband/hw/hns/hns_roce_main.c  | 5 +++++
- 2 files changed, 9 insertions(+)
+ drivers/pinctrl/renesas/pinctrl-rzg2l.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-index 24e906b9d3ae1..f1feaa79f78ee 100644
---- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-+++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-@@ -7017,6 +7017,7 @@ static void hns_roce_hw_v2_uninit_instance(struct hnae3_handle *handle,
+diff --git a/drivers/pinctrl/renesas/pinctrl-rzg2l.c b/drivers/pinctrl/renesas/pinctrl-rzg2l.c
+index 5a403915fed2c..3a81837b5e623 100644
+--- a/drivers/pinctrl/renesas/pinctrl-rzg2l.c
++++ b/drivers/pinctrl/renesas/pinctrl-rzg2l.c
+@@ -2710,7 +2710,7 @@ static int rzg2l_pinctrl_register(struct rzg2l_pinctrl *pctrl)
  
- 	handle->rinfo.instance_state = HNS_ROCE_STATE_NON_INIT;
- }
-+
- static int hns_roce_hw_v2_reset_notify_down(struct hnae3_handle *handle)
- {
- 	struct hns_roce_dev *hr_dev;
-@@ -7035,6 +7036,9 @@ static int hns_roce_hw_v2_reset_notify_down(struct hnae3_handle *handle)
+ 	ret = pinctrl_enable(pctrl->pctl);
+ 	if (ret)
+-		dev_err_probe(pctrl->dev, ret, "pinctrl enable failed\n");
++		return dev_err_probe(pctrl->dev, ret, "pinctrl enable failed\n");
  
- 	hr_dev->active = false;
- 	hr_dev->dis_db = true;
-+
-+	rdma_user_mmap_disassociate(&hr_dev->ib_dev);
-+
- 	hr_dev->state = HNS_ROCE_DEVICE_STATE_RST_DOWN;
- 
- 	return 0;
-diff --git a/drivers/infiniband/hw/hns/hns_roce_main.c b/drivers/infiniband/hw/hns/hns_roce_main.c
-index 4cb0af7335870..49315f39361de 100644
---- a/drivers/infiniband/hw/hns/hns_roce_main.c
-+++ b/drivers/infiniband/hw/hns/hns_roce_main.c
-@@ -466,6 +466,11 @@ static int hns_roce_mmap(struct ib_ucontext *uctx, struct vm_area_struct *vma)
- 	pgprot_t prot;
- 	int ret;
- 
-+	if (hr_dev->dis_db) {
-+		atomic64_inc(&hr_dev->dfx_cnt[HNS_ROCE_DFX_MMAP_ERR_CNT]);
-+		return -EPERM;
-+	}
-+
- 	rdma_entry = rdma_user_mmap_entry_get_pgoff(uctx, vma->vm_pgoff);
- 	if (!rdma_entry) {
- 		atomic64_inc(&hr_dev->dfx_cnt[HNS_ROCE_DFX_MMAP_ERR_CNT]);
+ 	ret = rzg2l_gpio_register(pctrl);
+ 	if (ret)
 -- 
 2.43.0
 
