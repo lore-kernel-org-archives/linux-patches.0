@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4F951DF981;
-	Tue,  3 Dec 2024 15:52:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A15C153800;
+	Tue,  3 Dec 2024 15:52:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733241135; cv=none; b=oGRrWgq8ymlDWG3GugEIRPKjVWmPCiGlRJHMAvkwk0znMzPHxjJg8JUmevLMNkzSo5Kn1WTufzzEZHHJA4qQMqW4cR8/i9/bGIu2iWzcYQY6pj/6jd7yYJwZ4hbXJmwcz52wWntSDs000K91j66N+5B7VDJPdo+7ByzVfh4iGpw=
+	t=1733241139; cv=none; b=jCZ7I7Gp1C8McZM4k/jeysjcagbq9U8iw0DSztJdLMyPxzePfPbfCUvWel27PLncHp99sLLNkuSGnlnVYgFpjbfR1TF/V+kk1CRTVPA7zRk4cNkChMFeYONq4u6V0CMB2hwfeBNXI7l+yuBjpNMlSWc8QS/FV5VoXZAO8FeiezE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733241135; c=relaxed/simple;
-	bh=QBtZOCzm7G5wR3UwNyjTQlCRlyhWO575X7JzeJy9pOM=;
+	s=arc-20240116; t=1733241139; c=relaxed/simple;
+	bh=pbEkVgW68EcuZPO/EZGig4ODWPGgklcmlzdTXZIBgLU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E27h7D8G5FOnh6UjaA+oDYfngztG4gMNRzxjCummUSW6VlLMJqQrXJGqbLtgkTak8pP72ij4V1D6wsS4aJtwQ2KXRaG7cVs3oIIubWlfOxFXUIpbXYMKzXt88VbH19BK4rNlLRnZsnEeP05jZG8zzuLhH0xt1fY/Ng0JU9Lv7uU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rIup0Xzh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bgKAzfUYLM6TC3KrNLLRECcTiAIhtM4SSfnuvetnpqUDROD7eiYYxoxNVRdNWUPzplQw4xtZlfG/00QEZPGOaljhUYKM8rPTW4fr7zV//81cqhxQEPW939+p04b38NboyV4w+uZqoiyUyIS6Xv5rR0JCqqNMeFKGtqn3vDzLsls=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WoMtqA46; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rIup0Xzh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43584C4CECF;
-	Tue,  3 Dec 2024 15:52:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WoMtqA46"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75225C4CECF;
+	Tue,  3 Dec 2024 15:52:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733241135;
-	bh=QBtZOCzm7G5wR3UwNyjTQlCRlyhWO575X7JzeJy9pOM=;
+	s=korg; t=1733241138;
+	bh=pbEkVgW68EcuZPO/EZGig4ODWPGgklcmlzdTXZIBgLU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rIup0Xzh43brICUkcwAMyt1PLT9xoJfb03zoqjFx0f/cdGokvjznR4TsFUKRFy4bn
-	 pIVRIZ14AJNfPZtS2shMM8ri+oCQC42nhRtglYAz/pegAceEhFVAtsWPMedSMavtRL
-	 xl19tFL2XoAom2+9t0IsT41jKb5OfWw5mx44eY0Q=
+	b=WoMtqA465qnqvxsl9MY/S11bcingvHZcHfq9PCH+qTafaMqDf4/QXrLidQIbXDR4b
+	 hssmcymm/s/NCCJqcOPZJwp5JZdG1LmraZSH14ISbZja428XMF9UBbFgftUMC8MujP
+	 qLidtOiGxUuKDs7hGx/xT26S6uyero+Lm/UxZVHs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zijian Zhang <zijianzhang@bytedance.com>,
-	John Fastabend <john.fastabend@gmail.com>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
+	Igor Pylypiv <ipylypiv@google.com>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 308/826] selftests/bpf: Add txmsg_pass to pull/push/pop in test_sockmap
-Date: Tue,  3 Dec 2024 15:40:35 +0100
-Message-ID: <20241203144755.776560622@linuxfoundation.org>
+Subject: [PATCH 6.12 335/826] i2c: dev: Fix memory leak when underlying adapter does not support I2C
+Date: Tue,  3 Dec 2024 15:41:02 +0100
+Message-ID: <20241203144756.828642738@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -52,78 +51,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zijian Zhang <zijianzhang@bytedance.com>
+From: Igor Pylypiv <ipylypiv@google.com>
 
-[ Upstream commit 66c54c20408d994be34be2c070fba08472f69eee ]
+[ Upstream commit 48730a9d04ffccda541602d722d1ff81920a85d8 ]
 
-Add txmsg_pass to test_txmsg_pull/push/pop. If txmsg_pass is missing,
-tx_prog will be NULL, and no program will be attached to the sockmap.
-As a result, pull/push/pop are never invoked.
+Early return in i2cdev_ioctl_rdwr() failed to free the memory allocated
+by the caller. Move freeing the memory to the function where it has been
+allocated to prevent similar leaks in the future.
 
-Fixes: 328aa08a081b ("bpf: Selftests, break down test_sockmap into subtests")
-Signed-off-by: Zijian Zhang <zijianzhang@bytedance.com>
-Reviewed-by: John Fastabend <john.fastabend@gmail.com>
-Link: https://lore.kernel.org/r/20241106222520.527076-2-zijianzhang@bytedance.com
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Fixes: 97ca843f6ad3 ("i2c: dev: Check for I2C_FUNC_I2C before calling i2c_transfer")
+Signed-off-by: Igor Pylypiv <ipylypiv@google.com>
+[wsa: replaced '== NULL' with '!']
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/test_sockmap.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/i2c/i2c-dev.c | 17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
 
-diff --git a/tools/testing/selftests/bpf/test_sockmap.c b/tools/testing/selftests/bpf/test_sockmap.c
-index 075c93ed143e6..0f065273fde32 100644
---- a/tools/testing/selftests/bpf/test_sockmap.c
-+++ b/tools/testing/selftests/bpf/test_sockmap.c
-@@ -1596,11 +1596,13 @@ static void test_txmsg_cork_hangs(int cgrp, struct sockmap_options *opt)
- static void test_txmsg_pull(int cgrp, struct sockmap_options *opt)
- {
- 	/* Test basic start/end */
-+	txmsg_pass = 1;
- 	txmsg_start = 1;
- 	txmsg_end = 2;
- 	test_send(opt, cgrp);
+diff --git a/drivers/i2c/i2c-dev.c b/drivers/i2c/i2c-dev.c
+index 61f7c4003d2ff..e9577f920286d 100644
+--- a/drivers/i2c/i2c-dev.c
++++ b/drivers/i2c/i2c-dev.c
+@@ -251,10 +251,8 @@ static noinline int i2cdev_ioctl_rdwr(struct i2c_client *client,
+ 		return -EOPNOTSUPP;
  
- 	/* Test >4k pull */
-+	txmsg_pass = 1;
- 	txmsg_start = 4096;
- 	txmsg_end = 9182;
- 	test_send_large(opt, cgrp);
-@@ -1629,11 +1631,13 @@ static void test_txmsg_pull(int cgrp, struct sockmap_options *opt)
- static void test_txmsg_pop(int cgrp, struct sockmap_options *opt)
- {
- 	/* Test basic pop */
-+	txmsg_pass = 1;
- 	txmsg_start_pop = 1;
- 	txmsg_pop = 2;
- 	test_send_many(opt, cgrp);
+ 	data_ptrs = kmalloc_array(nmsgs, sizeof(u8 __user *), GFP_KERNEL);
+-	if (data_ptrs == NULL) {
+-		kfree(msgs);
++	if (!data_ptrs)
+ 		return -ENOMEM;
+-	}
  
- 	/* Test pop with >4k */
-+	txmsg_pass = 1;
- 	txmsg_start_pop = 4096;
- 	txmsg_pop = 4096;
- 	test_send_large(opt, cgrp);
-@@ -1662,11 +1666,13 @@ static void test_txmsg_pop(int cgrp, struct sockmap_options *opt)
- static void test_txmsg_push(int cgrp, struct sockmap_options *opt)
- {
- 	/* Test basic push */
-+	txmsg_pass = 1;
- 	txmsg_start_push = 1;
- 	txmsg_end_push = 1;
- 	test_send(opt, cgrp);
+ 	res = 0;
+ 	for (i = 0; i < nmsgs; i++) {
+@@ -302,7 +300,6 @@ static noinline int i2cdev_ioctl_rdwr(struct i2c_client *client,
+ 		for (j = 0; j < i; ++j)
+ 			kfree(msgs[j].buf);
+ 		kfree(data_ptrs);
+-		kfree(msgs);
+ 		return res;
+ 	}
  
- 	/* Test push 4kB >4k */
-+	txmsg_pass = 1;
- 	txmsg_start_push = 4096;
- 	txmsg_end_push = 4096;
- 	test_send_large(opt, cgrp);
-@@ -1687,6 +1693,7 @@ static void test_txmsg_push(int cgrp, struct sockmap_options *opt)
+@@ -316,7 +313,6 @@ static noinline int i2cdev_ioctl_rdwr(struct i2c_client *client,
+ 		kfree(msgs[i].buf);
+ 	}
+ 	kfree(data_ptrs);
+-	kfree(msgs);
+ 	return res;
+ }
  
- static void test_txmsg_push_pop(int cgrp, struct sockmap_options *opt)
- {
-+	txmsg_pass = 1;
- 	txmsg_start_push = 1;
- 	txmsg_end_push = 10;
- 	txmsg_start_pop = 5;
+@@ -446,6 +442,7 @@ static long i2cdev_ioctl(struct file *file, unsigned int cmd, unsigned long arg)
+ 	case I2C_RDWR: {
+ 		struct i2c_rdwr_ioctl_data rdwr_arg;
+ 		struct i2c_msg *rdwr_pa;
++		int res;
+ 
+ 		if (copy_from_user(&rdwr_arg,
+ 				   (struct i2c_rdwr_ioctl_data __user *)arg,
+@@ -467,7 +464,9 @@ static long i2cdev_ioctl(struct file *file, unsigned int cmd, unsigned long arg)
+ 		if (IS_ERR(rdwr_pa))
+ 			return PTR_ERR(rdwr_pa);
+ 
+-		return i2cdev_ioctl_rdwr(client, rdwr_arg.nmsgs, rdwr_pa);
++		res = i2cdev_ioctl_rdwr(client, rdwr_arg.nmsgs, rdwr_pa);
++		kfree(rdwr_pa);
++		return res;
+ 	}
+ 
+ 	case I2C_SMBUS: {
+@@ -540,7 +539,7 @@ static long compat_i2cdev_ioctl(struct file *file, unsigned int cmd, unsigned lo
+ 		struct i2c_rdwr_ioctl_data32 rdwr_arg;
+ 		struct i2c_msg32 __user *p;
+ 		struct i2c_msg *rdwr_pa;
+-		int i;
++		int i, res;
+ 
+ 		if (copy_from_user(&rdwr_arg,
+ 				   (struct i2c_rdwr_ioctl_data32 __user *)arg,
+@@ -573,7 +572,9 @@ static long compat_i2cdev_ioctl(struct file *file, unsigned int cmd, unsigned lo
+ 			};
+ 		}
+ 
+-		return i2cdev_ioctl_rdwr(client, rdwr_arg.nmsgs, rdwr_pa);
++		res = i2cdev_ioctl_rdwr(client, rdwr_arg.nmsgs, rdwr_pa);
++		kfree(rdwr_pa);
++		return res;
+ 	}
+ 	case I2C_SMBUS: {
+ 		struct i2c_smbus_ioctl_data32	data32;
 -- 
 2.43.0
 
