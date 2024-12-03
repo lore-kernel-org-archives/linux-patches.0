@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A82B1F76A4;
-	Tue,  3 Dec 2024 16:02:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FC831F75B9;
+	Tue,  3 Dec 2024 16:02:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733241723; cv=none; b=ERZdFXODSeVKxeaFqrHux+/DAMnw3fZeD04O3FT6jkAx1a8L6Nd5yGSxmnFdQBfjZg/fWxcCuDMpOGtxhNQQdrDJUz9qjCgB/qrJrNE0tkbYP9sxGVHpVpEeggUa0WPkm2gZyaRCUrSFiQzlpppoVosR0gaDOymLdWodLcJJmrQ=
+	t=1733241726; cv=none; b=DQvlpEzgkF7wiGMGxgWLJFcQeJCVjYt14Iyqj3LeMIDYrs7hX+70qE+4LkmexygDaDTq4WFJcATAwPCNt8fSQVNnJpS4EjTTlTapHp5rlM6hVtLP4RkVHUOS0w2hp7H326cKhMJ++L9ZJGslSgcvDKNwDBcZ8XEFKYYcstRuylY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733241723; c=relaxed/simple;
-	bh=/j6F0g9IFuHiHuxHHLa99NqfmZVdU3OZ/ycOZ5vwPAI=;
+	s=arc-20240116; t=1733241726; c=relaxed/simple;
+	bh=yGdJLdG32CmLEvV7AhUpkp7NBCaeHesBUG6pmvaaI1o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hKJK7zdNux78vyib45ZU7r7CWkm49xWrL2CD1+eXS1rIZNEPKpVncnNl7j3hRHkUp5nHOssxSdKNe1JVum/yTHRBZ1/VgUWYtI55WCzFkdOpWlD4uCE+eDiABXRZvCdyZqQVMxJkbQhqayhxuzA3dm+Z5IgKwyjnb81NUpx5cA0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lNYmZJf5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=HstKQ+LzEeoYu7xshM4nggv9UZv547qVrAVZBn2c+ja/GhSJePBSmD3N2vmUgwI5teCEIFLB1FMVZhbcMs+LAQIl214N4pFCBS2DsZn9aemJwANDD3HRiAEyZAGh5SFZktOPuCGcL4s1E8aevnY1lYxp189s7N7xzfmWDkXBA88=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yVlrr/zV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lNYmZJf5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D73BC4CECF;
-	Tue,  3 Dec 2024 16:02:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yVlrr/zV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98375C4CECF;
+	Tue,  3 Dec 2024 16:02:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733241722;
-	bh=/j6F0g9IFuHiHuxHHLa99NqfmZVdU3OZ/ycOZ5vwPAI=;
+	s=korg; t=1733241726;
+	bh=yGdJLdG32CmLEvV7AhUpkp7NBCaeHesBUG6pmvaaI1o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lNYmZJf5Rzj8WVuUKOtRmFlkaopGlKi2enlcpQgwuGjfdwFC9PLhyLwhLQq/yZiBo
-	 fo+J0nent6gyLEzR2b8fJqC8GiNU5GCsY7FhxEFTPelgWUmKJsPXTL4RxuYPFpixrF
-	 2FjSvyb98bBBGcfrPbN2kBqaf/gobJ2kcf3uqKgU=
+	b=yVlrr/zVuSrTgAwekwdrxOlJgm1311Ivo8zRWPpycLdXb1cLYP80Hynvaynnq92LA
+	 N5ULwrS6vXEadXWNRcFBc8L0MMM69VXoo8gZAZJb/OgHYN6zkPbR7pa82NeVsj4ne6
+	 8BseRsSuQFbAMjyrzkmpWBpNqTlenAo8peQ52xPQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yongpeng Yang <yangyongpeng1@oppo.com>,
+	Zeng Heng <zengheng4@huawei.com>,
 	Chao Yu <chao@kernel.org>,
 	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 498/826] f2fs: check curseg->inited before write_sum_page in change_curseg
-Date: Tue,  3 Dec 2024 15:43:45 +0100
-Message-ID: <20241203144803.180296207@linuxfoundation.org>
+Subject: [PATCH 6.12 499/826] f2fs: Fix not used variable index
+Date: Tue,  3 Dec 2024 15:43:46 +0100
+Message-ID: <20241203144803.219241685@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -46,42 +46,60 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yongpeng Yang <yangyongpeng1@oppo.com>
+From: Zeng Heng <zengheng4@huawei.com>
 
-[ Upstream commit 43563069e1c1df417d2eed6eca8a22fc6b04691d ]
+[ Upstream commit 0c3a38a4b442893f8baca72e44a2a27d52d6cc75 ]
 
-In the __f2fs_init_atgc_curseg->get_atssr_segment calling,
-curseg->segno is NULL_SEGNO, indicating that there is no summary
-block that needs to be written.
+Fix the following compilation warning:
+fs/f2fs/data.c:2391:10: warning: variable ‘index’ set but not used
+[-Wunused-but-set-variable]
+ 2391 |  pgoff_t index;
 
-Fixes: 093749e296e2 ("f2fs: support age threshold based garbage collection")
-Signed-off-by: Yongpeng Yang <yangyongpeng1@oppo.com>
+Only define and set the variable index when the CONFIG_F2FS_FS_COMPRESSION
+is enabled.
+
+Fixes: db92e6c729d8 ("f2fs: convert f2fs_mpage_readpages() to use folio")
+Signed-off-by: Zeng Heng <zengheng4@huawei.com>
 Reviewed-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/segment.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/f2fs/data.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/f2fs/segment.c b/fs/f2fs/segment.c
-index 7b54b1851d346..edf205093f435 100644
---- a/fs/f2fs/segment.c
-+++ b/fs/f2fs/segment.c
-@@ -2926,7 +2926,8 @@ static int change_curseg(struct f2fs_sb_info *sbi, int type)
- 	struct f2fs_summary_block *sum_node;
- 	struct page *sum_page;
+diff --git a/fs/f2fs/data.c b/fs/f2fs/data.c
+index 94f7b084f6016..9202082a3902c 100644
+--- a/fs/f2fs/data.c
++++ b/fs/f2fs/data.c
+@@ -2385,10 +2385,10 @@ static int f2fs_mpage_readpages(struct inode *inode,
+ 		.nr_cpages = 0,
+ 	};
+ 	pgoff_t nc_cluster_idx = NULL_CLUSTER;
++	pgoff_t index;
+ #endif
+ 	unsigned nr_pages = rac ? readahead_count(rac) : 1;
+ 	unsigned max_nr_pages = nr_pages;
+-	pgoff_t index;
+ 	int ret = 0;
  
--	write_sum_page(sbi, curseg->sum_blk, GET_SUM_BLOCK(sbi, curseg->segno));
-+	if (curseg->inited)
-+		write_sum_page(sbi, curseg->sum_blk, GET_SUM_BLOCK(sbi, curseg->segno));
+ 	map.m_pblk = 0;
+@@ -2406,9 +2406,9 @@ static int f2fs_mpage_readpages(struct inode *inode,
+ 			prefetchw(&folio->flags);
+ 		}
  
- 	__set_test_and_inuse(sbi, new_segno);
++#ifdef CONFIG_F2FS_FS_COMPRESSION
+ 		index = folio_index(folio);
+ 
+-#ifdef CONFIG_F2FS_FS_COMPRESSION
+ 		if (!f2fs_compressed_file(inode))
+ 			goto read_single_page;
  
 -- 
 2.43.0
