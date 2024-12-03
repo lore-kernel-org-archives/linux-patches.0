@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C6571DFD91;
-	Tue,  3 Dec 2024 15:38:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D85351F8AD2;
+	Tue,  3 Dec 2024 15:38:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733240336; cv=none; b=cULMgCGWto3U7yiGnbK8LNYEFHwYB6uUX0J+Fi++9zQnoZoVBMlwW+VFa0/ekgVNiAnZ4zUJkgZa6UO6AkM0Rv8QjDYNPzVbXhbr1ZdHBLV+Rsr2Eo14zOrT5gjvSjU48Ks8wPrPAfZplNWJ4KBhf+sFTifJiyvKb1QrEN7jPN0=
+	t=1733240338; cv=none; b=bWaLpv8sPajJUUSzr18bxn+9SbJP0NwU0bFSQ+LYJF0kpZmnXY4iT7+So1M9xyFlfoKAoqmfMi2/fpcHpH5+UwsKXlqg5Qj1G2OmoAvS8PKtT/t3PVsHVJLv9aD+OufStmT9CYSGaQnJ+YaPDX0GlhCRbb+OkWMXTIPTnb3JI/k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733240336; c=relaxed/simple;
-	bh=6IxqcU7PImgr6pfKPQyUxvixc9/HNwRbNzh7mRbDJcs=;
+	s=arc-20240116; t=1733240338; c=relaxed/simple;
+	bh=9hj1VzRRmlWz9Pq/Qh1TxkKb8SE9lhuG7/Y502QWIo8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kWAt9YN1Kp6CtZkRJxkgkllbrEZdy38TgBeiQg6Ka8gO1daCELYzr2ijxAJ0QA2Mftrd4x4VAJQ4vpgJ41pZ2kLWtnpy4APC3yq/z+pe7VQ0Nnyccj/tU15dsknikyWqDN4BHPwIa83cL3UgBXpz7x0xuJ7pKYtEACpn3rSmOt4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FIcVBe5P; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OBZj7Q1SK4rdGqWAjunHVYewVnAvVoxsFt3uEYiKcEY3q/IBfo5TYHXtvVFEYD9Dud+JIZGUuSE8HRk+Xi1lj8JNxPRV1y3NwDA6viOhxCKtD4w1ThmeUl9pKiWMmrwrmK+3RvdH0BO5veOaIn5D15qHGkFp7sGvfqqf8n1N1bw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Itm9BsqB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FIcVBe5P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51153C4CECF;
-	Tue,  3 Dec 2024 15:38:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Itm9BsqB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32E44C4CECF;
+	Tue,  3 Dec 2024 15:38:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733240335;
-	bh=6IxqcU7PImgr6pfKPQyUxvixc9/HNwRbNzh7mRbDJcs=;
+	s=korg; t=1733240338;
+	bh=9hj1VzRRmlWz9Pq/Qh1TxkKb8SE9lhuG7/Y502QWIo8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FIcVBe5PfiFNzluVBsc8yg40ikSbDcAvXzhseKz2xsHsF2vfXYaDt05wj0YEESGzR
-	 ykukCH4drbRw7u3AuI5pEPL75y9n6dwXkKEA/EO29MypKbSnvrL23mK7Efs906QHc4
-	 CcFRzrODYDw7m5ftZZ4sSb/uy1nzY2BYCZ2No3ug=
+	b=Itm9BsqBV29PvwJ7XiPLXv99ArfCiCSv+ncDimHArkbpgDKmqEcmEZEdB2pz6xEJY
+	 KH+J2r8+45ouE0PK26VJCmPLhQ0E3QNrboJRl3GR1KXYh0jWjuaj3EDyiE/nXQl5F2
+	 GCXaOYMN4tfWN2MyDbEOhO30CrxJs+ZfvrftYI9g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lifeng Zheng <zhenglifeng1@huawei.com>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 073/826] ACPI: CPPC: Fix _CPC register setting issue
-Date: Tue,  3 Dec 2024 15:36:40 +0100
-Message-ID: <20241203144746.319601276@linuxfoundation.org>
+Subject: [PATCH 6.12 074/826] thermal: testing: Use DEFINE_FREE() and __free() to simplify code
+Date: Tue,  3 Dec 2024 15:36:41 +0100
+Message-ID: <20241203144746.358012017@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -51,40 +50,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lifeng Zheng <zhenglifeng1@huawei.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit 2388b266c9fcc7c9169ba85c7f9ebe325b7622d7 ]
+[ Upstream commit 1c426fd09ca85fb77f120f7933e39eb9df99a39a ]
 
-Since commit 60949b7b8054 ("ACPI: CPPC: Fix MASK_VAL() usage"), _CPC
-registers cannot be changed from 1 to 0.
+Use DEFINE_FREE() to define a __free function for dropping thermal
+zone template reference counters and use it along with __free() to
+simplify code in some places.
 
-It turns out that there is an extra OR after MASK_VAL_WRITE(), which
-has already ORed prev_val with the register mask.
+No intentional functional impact.
 
-Remove the extra OR to fix the problem.
-
-Fixes: 60949b7b8054 ("ACPI: CPPC: Fix MASK_VAL() usage")
-Signed-off-by: Lifeng Zheng <zhenglifeng1@huawei.com>
-Link: https://patch.msgid.link/20241113103309.761031-1-zhenglifeng1@huawei.com
-[ rjw: Subject and changelog edits ]
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Link: https://patch.msgid.link/4628747.LvFx2qVVIh@rjwysocki.net
+[ rjw: Add variable initialization to address compiler warning ]
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Stable-dep-of: 0104dcdaad3a ("thermal: testing: Initialize some variables annoteded with _free()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/cppc_acpi.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/thermal/testing/zone.c | 24 +++++++++---------------
+ 1 file changed, 9 insertions(+), 15 deletions(-)
 
-diff --git a/drivers/acpi/cppc_acpi.c b/drivers/acpi/cppc_acpi.c
-index 5c0cc7aae8726..e78e3754d99e1 100644
---- a/drivers/acpi/cppc_acpi.c
-+++ b/drivers/acpi/cppc_acpi.c
-@@ -1140,7 +1140,6 @@ static int cpc_write(int cpu, struct cpc_register_resource *reg_res, u64 val)
- 			return -EFAULT;
- 		}
- 		val = MASK_VAL_WRITE(reg, prev_val, val);
--		val |= prev_val;
- 	}
+diff --git a/drivers/thermal/testing/zone.c b/drivers/thermal/testing/zone.c
+index c6d8c66f40f98..452c3fa2b2bc5 100644
+--- a/drivers/thermal/testing/zone.c
++++ b/drivers/thermal/testing/zone.c
+@@ -310,6 +310,9 @@ static void tt_put_tt_zone(struct tt_thermal_zone *tt_zone)
+ 	tt_zone->refcount--;
+ }
  
- 	switch (size) {
++DEFINE_FREE(put_tt_zone, struct tt_thermal_zone *,
++	    if (!IS_ERR_OR_NULL(_T)) tt_put_tt_zone(_T))
++
+ static void tt_zone_add_trip_work_fn(struct work_struct *work)
+ {
+ 	struct tt_work *tt_work = tt_work_of_work(work);
+@@ -332,9 +335,9 @@ static void tt_zone_add_trip_work_fn(struct work_struct *work)
+ 
+ int tt_zone_add_trip(const char *arg)
+ {
++	struct tt_thermal_zone *tt_zone __free(put_tt_zone) = NULL;
+ 	struct tt_work *tt_work __free(kfree);
+ 	struct tt_trip *tt_trip __free(kfree);
+-	struct tt_thermal_zone *tt_zone;
+ 	int id;
+ 
+ 	tt_work = kzalloc(sizeof(*tt_work), GFP_KERNEL);
+@@ -350,10 +353,8 @@ int tt_zone_add_trip(const char *arg)
+ 		return PTR_ERR(tt_zone);
+ 
+ 	id = ida_alloc(&tt_zone->ida, GFP_KERNEL);
+-	if (id < 0) {
+-		tt_put_tt_zone(tt_zone);
++	if (id < 0)
+ 		return id;
+-	}
+ 
+ 	tt_trip->trip.type = THERMAL_TRIP_ACTIVE;
+ 	tt_trip->trip.temperature = THERMAL_TEMP_INVALID;
+@@ -366,7 +367,7 @@ int tt_zone_add_trip(const char *arg)
+ 	tt_zone->num_trips++;
+ 
+ 	INIT_WORK(&tt_work->work, tt_zone_add_trip_work_fn);
+-	tt_work->tt_zone = tt_zone;
++	tt_work->tt_zone = no_free_ptr(tt_zone);
+ 	tt_work->tt_trip = no_free_ptr(tt_trip);
+ 	schedule_work(&(no_free_ptr(tt_work)->work));
+ 
+@@ -425,23 +426,18 @@ static int tt_zone_register_tz(struct tt_thermal_zone *tt_zone)
+ 
+ int tt_zone_reg(const char *arg)
+ {
+-	struct tt_thermal_zone *tt_zone;
+-	int ret;
++	struct tt_thermal_zone *tt_zone __free(put_tt_zone);
+ 
+ 	tt_zone = tt_get_tt_zone(arg);
+ 	if (IS_ERR(tt_zone))
+ 		return PTR_ERR(tt_zone);
+ 
+-	ret = tt_zone_register_tz(tt_zone);
+-
+-	tt_put_tt_zone(tt_zone);
+-
+-	return ret;
++	return tt_zone_register_tz(tt_zone);
+ }
+ 
+ int tt_zone_unreg(const char *arg)
+ {
+-	struct tt_thermal_zone *tt_zone;
++	struct tt_thermal_zone *tt_zone __free(put_tt_zone);
+ 
+ 	tt_zone = tt_get_tt_zone(arg);
+ 	if (IS_ERR(tt_zone))
+@@ -449,8 +445,6 @@ int tt_zone_unreg(const char *arg)
+ 
+ 	tt_zone_unregister_tz(tt_zone);
+ 
+-	tt_put_tt_zone(tt_zone);
+-
+ 	return 0;
+ }
+ 
 -- 
 2.43.0
 
