@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E62611F12F7;
-	Tue,  3 Dec 2024 16:07:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA65C23CE;
+	Tue,  3 Dec 2024 16:07:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733242049; cv=none; b=PPyfTzdKHXTXWxgEJNdIKMjtHS1+eo1WAbeo/q8hQbMyFMppyNB5Xwrlqa0E8tm1D54QH+Mq1n2X+qW6dLyXShs29EURAwAQER2enrj2Mw6Oa4pHpn/SmOSMhtiUZnR4KYLthEXYg68pyK5wy0N2+EZ74vvlrdMHGm5VYAMnOQI=
+	t=1733242052; cv=none; b=UYv3FeM9LFKC7RnK9Nwr1hK2ornv83L875u+VZp+n1gJtAKdt2p96OewhPaOK0NILWHt7e0z9m1djH0k1lHqSytj/0472TgmueexJz3mGlCDLkYBVBQLbnEH2mOjjlLy0NkambtVL/JbmIFELRIgC/9JmpSx0wIwD+lB/I+Ghxo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733242049; c=relaxed/simple;
-	bh=SWAylQZvUb+npJ8U96cuAY/IPqpdya2MwO0qZVc2bJw=;
+	s=arc-20240116; t=1733242052; c=relaxed/simple;
+	bh=dFsAMJc2IxI/vYBa6tH/X0ctEcQHtsq5S8RmNp+FbFw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uunAAn3JQAtbJDyd7Ssj86GvnITkXgFzn+0NMPaFe1R01/Kz4LcskAEP8TH+O50G/GjGHKPMn6hYFSHFjdqeS/cem93Do/9Iq2iT1508POjpB96Ro9zq8hiS2AW71nbBSWUcmxpuYRRN72f0ocZGidNvdMue4xogA+fMBnmZkeU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m2Rn/DhG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pViIJe7UuPqfhxIMy3xyfae1MmKfxG4//MV2FZnUBSoG9pKcWcIkFA70ezzvAtqoaK1c/4WL6uNCdOMoE5h9BsVShxA94s7O3rKIJ9nb0dXaY4EZSE7LOVcz+zY7WMBfbkobiBkSQTI0LwZQriFQ38E7XSWpzRPYDosfnH3C2Eg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cWc20bQV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m2Rn/DhG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FCD6C4CECF;
-	Tue,  3 Dec 2024 16:07:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cWc20bQV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0A32C4CECF;
+	Tue,  3 Dec 2024 16:07:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733242048;
-	bh=SWAylQZvUb+npJ8U96cuAY/IPqpdya2MwO0qZVc2bJw=;
+	s=korg; t=1733242052;
+	bh=dFsAMJc2IxI/vYBa6tH/X0ctEcQHtsq5S8RmNp+FbFw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m2Rn/DhG1DSaUnYNPLG3Lw9LTGGwDxe5oowRhlXViRhRKyqKqyiOkQ87bEoLfUABW
-	 rmfLkozav20THpy1riUoBDxoCJ7oEFXevP39pbKCAOgwqplFuDQByQWQxc5b9I9eb1
-	 gAYSvvC2rSE2VhDFA55foUhIDRixdWIfZeDsHDTA=
+	b=cWc20bQVuIJjepyXDkRRx38FNW3L0ljixA9AYbG7sMBiHfrbYJNuz+1j3D3DNlQhd
+	 7PSjZa2fvg9Cge81YAmUcyZ/EUVglgO93hTP9gWMwg03+00LQohB8kCNor6+i2MpfA
+	 bSAZJn6k3YVuKhDAyMECpYuHrrP1X8VCuCVd9Pdc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	syzbot+685e14d04fe35692d3bc@syzkaller.appspotmail.com,
+	syzbot+1f8ca5ee82576ec01f12@syzkaller.appspotmail.com,
+	Edward Adam Davis <eadavis@qq.com>,
+	syzbot+5f1ce62e956b7b19610e@syzkaller.appspotmail.com,
 	Oliver Neukum <oneukum@suse.com>,
-	syzbot+422188bce66e76020e55@syzkaller.appspotmail.com,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 593/826] USB: chaoskey: fail open after removal
-Date: Tue,  3 Dec 2024 15:45:20 +0100
-Message-ID: <20241203144806.890235282@linuxfoundation.org>
+Subject: [PATCH 6.12 594/826] USB: chaoskey: Fix possible deadlock chaoskey_list_lock
+Date: Tue,  3 Dec 2024 15:45:21 +0100
+Message-ID: <20241203144806.929099761@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -51,144 +54,152 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Neukum <oneukum@suse.com>
+From: Edward Adam Davis <eadavis@qq.com>
 
-[ Upstream commit 422dc0a4d12d0b80dd3aab3fe5943f665ba8f041 ]
+[ Upstream commit d73dc7b182be4238b75278bfae16afb4c5564a58 ]
 
-chaoskey_open() takes the lock only to increase the
-counter of openings. That means that the mutual exclusion
-with chaoskey_disconnect() cannot prevent an increase
-of the counter and chaoskey_open() returning a success.
+[Syzbot reported two possible deadlocks]
+The first possible deadlock is:
+WARNING: possible recursive locking detected
+6.12.0-rc1-syzkaller-00027-g4a9fe2a8ac53 #0 Not tainted
+--------------------------------------------
+syz-executor363/2651 is trying to acquire lock:
+ffffffff89b120e8 (chaoskey_list_lock){+.+.}-{3:3}, at: chaoskey_release+0x15d/0x2c0 drivers/usb/misc/chaoskey.c:322
 
-If that race is hit, chaoskey_disconnect() will happily
-free all resources associated with the device after
-it has dropped the lock, as it has read the counter
-as zero.
+but task is already holding lock:
+ffffffff89b120e8 (chaoskey_list_lock){+.+.}-{3:3}, at: chaoskey_release+0x7f/0x2c0 drivers/usb/misc/chaoskey.c:299
 
-To prevent this race chaoskey_open() has to check
-the presence of the device under the lock.
-However, the current per device lock cannot be used,
-because it is a part of the data structure to be
-freed. Hence an additional global mutex is needed.
-The issue is as old as the driver.
+other info that might help us debug this:
+ Possible unsafe locking scenario:
 
-Signed-off-by: Oliver Neukum <oneukum@suse.com>
-Reported-by: syzbot+422188bce66e76020e55@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=422188bce66e76020e55
-Fixes: 66e3e591891da ("usb: Add driver for Altus Metrum ChaosKey device (v2)")
-Rule: add
-Link: https://lore.kernel.org/stable/20241002132201.552578-1-oneukum%40suse.com
-Link: https://lore.kernel.org/r/20241002132201.552578-1-oneukum@suse.com
+       CPU0
+       ----
+  lock(chaoskey_list_lock);
+  lock(chaoskey_list_lock);
+
+ *** DEADLOCK ***
+
+The second possible deadlock is:
+WARNING: possible circular locking dependency detected
+6.12.0-rc1-syzkaller-00027-g4a9fe2a8ac53 #0 Not tainted
+------------------------------------------------------
+kworker/0:2/804 is trying to acquire lock:
+ffffffff899dadb0 (minor_rwsem){++++}-{3:3}, at: usb_deregister_dev+0x7c/0x1e0 drivers/usb/core/file.c:186
+
+but task is already holding lock:
+ffffffff89b120e8 (chaoskey_list_lock){+.+.}-{3:3}, at: chaoskey_disconnect+0xa8/0x2a0 drivers/usb/misc/chaoskey.c:235
+
+which lock already depends on the new lock.
+
+the existing dependency chain (in reverse order) is:
+
+-> #1 (chaoskey_list_lock){+.+.}-{3:3}:
+       __mutex_lock_common kernel/locking/mutex.c:608 [inline]
+       __mutex_lock+0x175/0x9c0 kernel/locking/mutex.c:752
+       chaoskey_open+0xdd/0x220 drivers/usb/misc/chaoskey.c:274
+       usb_open+0x186/0x220 drivers/usb/core/file.c:47
+       chrdev_open+0x237/0x6a0 fs/char_dev.c:414
+       do_dentry_open+0x6cb/0x1390 fs/open.c:958
+       vfs_open+0x82/0x3f0 fs/open.c:1088
+       do_open fs/namei.c:3774 [inline]
+       path_openat+0x1e6a/0x2d60 fs/namei.c:3933
+       do_filp_open+0x1dc/0x430 fs/namei.c:3960
+       do_sys_openat2+0x17a/0x1e0 fs/open.c:1415
+       do_sys_open fs/open.c:1430 [inline]
+       __do_sys_openat fs/open.c:1446 [inline]
+       __se_sys_openat fs/open.c:1441 [inline]
+       __x64_sys_openat+0x175/0x210 fs/open.c:1441
+       do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+       do_syscall_64+0xcd/0x250 arch/x86/entry/common.c:83
+       entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+-> #0 (minor_rwsem){++++}-{3:3}:
+       check_prev_add kernel/locking/lockdep.c:3161 [inline]
+       check_prevs_add kernel/locking/lockdep.c:3280 [inline]
+       validate_chain kernel/locking/lockdep.c:3904 [inline]
+       __lock_acquire+0x250b/0x3ce0 kernel/locking/lockdep.c:5202
+       lock_acquire.part.0+0x11b/0x380 kernel/locking/lockdep.c:5825
+       down_write+0x93/0x200 kernel/locking/rwsem.c:1577
+       usb_deregister_dev+0x7c/0x1e0 drivers/usb/core/file.c:186
+       chaoskey_disconnect+0xb7/0x2a0 drivers/usb/misc/chaoskey.c:236
+       usb_unbind_interface+0x1e8/0x970 drivers/usb/core/driver.c:461
+       device_remove drivers/base/dd.c:569 [inline]
+       device_remove+0x122/0x170 drivers/base/dd.c:561
+       __device_release_driver drivers/base/dd.c:1273 [inline]
+       device_release_driver_internal+0x44a/0x610 drivers/base/dd.c:1296
+       bus_remove_device+0x22f/0x420 drivers/base/bus.c:576
+       device_del+0x396/0x9f0 drivers/base/core.c:3864
+       usb_disable_device+0x36c/0x7f0 drivers/usb/core/message.c:1418
+       usb_disconnect+0x2e1/0x920 drivers/usb/core/hub.c:2304
+       hub_port_connect drivers/usb/core/hub.c:5361 [inline]
+       hub_port_connect_change drivers/usb/core/hub.c:5661 [inline]
+       port_event drivers/usb/core/hub.c:5821 [inline]
+       hub_event+0x1bed/0x4f40 drivers/usb/core/hub.c:5903
+       process_one_work+0x9c5/0x1ba0 kernel/workqueue.c:3229
+       process_scheduled_works kernel/workqueue.c:3310 [inline]
+       worker_thread+0x6c8/0xf00 kernel/workqueue.c:3391
+       kthread+0x2c1/0x3a0 kernel/kthread.c:389
+       ret_from_fork+0x45/0x80 arch/x86/kernel/process.c:147
+       ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:244
+
+other info that might help us debug this:
+
+ Possible unsafe locking scenario:
+
+       CPU0                    CPU1
+       ----                    ----
+  lock(chaoskey_list_lock);
+                               lock(minor_rwsem);
+                               lock(chaoskey_list_lock);
+  lock(minor_rwsem);
+
+ *** DEADLOCK ***
+[Analysis]
+The first is AA lock, it because wrong logic, it need a unlock.
+The second is AB lock, it needs to rearrange the order of lock usage.
+
+Fixes: 422dc0a4d12d ("USB: chaoskey: fail open after removal")
+Reported-by: syzbot+685e14d04fe35692d3bc@syzkaller.appspotmail.com
+Reported-by: syzbot+1f8ca5ee82576ec01f12@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=685e14d04fe35692d3bc
+Signed-off-by: Edward Adam Davis <eadavis@qq.com>
+Tested-by: syzbot+685e14d04fe35692d3bc@syzkaller.appspotmail.com
+Reported-by: syzbot+5f1ce62e956b7b19610e@syzkaller.appspotmail.com
+Tested-by: syzbot+5f1ce62e956b7b19610e@syzkaller.appspotmail.com
+Tested-by: syzbot+1f8ca5ee82576ec01f12@syzkaller.appspotmail.com
+Link: https://lore.kernel.org/r/tencent_84EB865C89862EC22EE94CB3A7C706C59206@qq.com
+Cc: Oliver Neukum <oneukum@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/misc/chaoskey.c | 35 ++++++++++++++++++++++++-----------
- 1 file changed, 24 insertions(+), 11 deletions(-)
+ drivers/usb/misc/chaoskey.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/usb/misc/chaoskey.c b/drivers/usb/misc/chaoskey.c
-index 6fb5140e29b9d..e8b63df5f9759 100644
+index e8b63df5f9759..225863321dc47 100644
 --- a/drivers/usb/misc/chaoskey.c
 +++ b/drivers/usb/misc/chaoskey.c
-@@ -27,6 +27,8 @@ static struct usb_class_driver chaoskey_class;
- static int chaoskey_rng_read(struct hwrng *rng, void *data,
- 			     size_t max, bool wait);
- 
-+static DEFINE_MUTEX(chaoskey_list_lock);
-+
- #define usb_dbg(usb_if, format, arg...) \
- 	dev_dbg(&(usb_if)->dev, format, ## arg)
- 
-@@ -230,6 +232,7 @@ static void chaoskey_disconnect(struct usb_interface *interface)
+@@ -232,10 +232,10 @@ static void chaoskey_disconnect(struct usb_interface *interface)
  	if (dev->hwrng_registered)
  		hwrng_unregister(&dev->hwrng);
  
-+	mutex_lock(&chaoskey_list_lock);
+-	mutex_lock(&chaoskey_list_lock);
  	usb_deregister_dev(interface, &chaoskey_class);
  
  	usb_set_intfdata(interface, NULL);
-@@ -244,6 +247,7 @@ static void chaoskey_disconnect(struct usb_interface *interface)
- 	} else
- 		mutex_unlock(&dev->lock);
- 
-+	mutex_unlock(&chaoskey_list_lock);
- 	usb_dbg(interface, "disconnect done");
- }
- 
-@@ -251,6 +255,7 @@ static int chaoskey_open(struct inode *inode, struct file *file)
- {
- 	struct chaoskey *dev;
- 	struct usb_interface *interface;
-+	int rv = 0;
- 
- 	/* get the interface from minor number and driver information */
- 	interface = usb_find_interface(&chaoskey_driver, iminor(inode));
-@@ -266,18 +271,23 @@ static int chaoskey_open(struct inode *inode, struct file *file)
- 	}
- 
- 	file->private_data = dev;
 +	mutex_lock(&chaoskey_list_lock);
  	mutex_lock(&dev->lock);
--	++dev->open;
-+	if (dev->present)
-+		++dev->open;
-+	else
-+		rv = -ENODEV;
+ 
+ 	dev->present = false;
+@@ -319,7 +319,7 @@ static int chaoskey_release(struct inode *inode, struct file *file)
+ bail:
  	mutex_unlock(&dev->lock);
+ destruction:
+-	mutex_lock(&chaoskey_list_lock);
 +	mutex_unlock(&chaoskey_list_lock);
- 
--	usb_dbg(interface, "open success");
--	return 0;
-+	return rv;
- }
- 
- static int chaoskey_release(struct inode *inode, struct file *file)
- {
- 	struct chaoskey *dev = file->private_data;
- 	struct usb_interface *interface;
-+	int rv = 0;
- 
- 	if (dev == NULL)
- 		return -ENODEV;
-@@ -286,14 +296,15 @@ static int chaoskey_release(struct inode *inode, struct file *file)
- 
- 	usb_dbg(interface, "release");
- 
-+	mutex_lock(&chaoskey_list_lock);
- 	mutex_lock(&dev->lock);
- 
- 	usb_dbg(interface, "open count at release is %d", dev->open);
- 
- 	if (dev->open <= 0) {
- 		usb_dbg(interface, "invalid open count (%d)", dev->open);
--		mutex_unlock(&dev->lock);
--		return -ENODEV;
-+		rv = -ENODEV;
-+		goto bail;
- 	}
- 
- 	--dev->open;
-@@ -302,13 +313,15 @@ static int chaoskey_release(struct inode *inode, struct file *file)
- 		if (dev->open == 0) {
- 			mutex_unlock(&dev->lock);
- 			chaoskey_free(dev);
--		} else
--			mutex_unlock(&dev->lock);
--	} else
--		mutex_unlock(&dev->lock);
--
-+			goto destruction;
-+		}
-+	}
-+bail:
-+	mutex_unlock(&dev->lock);
-+destruction:
-+	mutex_lock(&chaoskey_list_lock);
  	usb_dbg(interface, "release success");
--	return 0;
-+	return rv;
+ 	return rv;
  }
- 
- static void chaos_read_callback(struct urb *urb)
 -- 
 2.43.0
 
