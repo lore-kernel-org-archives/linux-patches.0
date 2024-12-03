@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBF011F473A;
-	Tue,  3 Dec 2024 15:26:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4F311F707A;
+	Tue,  3 Dec 2024 15:26:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733239608; cv=none; b=XGLuzIdtfeepkligtopfSuVyE6OzeMHMAm+q7FqgMFdUSZ5dtM37QTvdJrqrlyLHgf0bYik4ZrZdiLferqpIEIygLzRD8qbK4GyhR3K8iuMuaBbdVInvm3U3PsjIHy/w7/IoKTOsuomuqB2wkgMeH2SjEEnYrgM192Ae7ZhuwyU=
+	t=1733239611; cv=none; b=iKshAxWX+OxEN6k5jkieP+XEgy1ifOgHRNk28BoQzcv3fZPtaW96ipRHxPRimA1V+JKMeY3NNZW3JDkSl+PAIiGGq4J8k21vm44pxRCBtGpNaiug/ieyEYR+jfer5vGe/dph9FCk3GCCuxRXbfBrZDax9BiExbkMHf8TwacHTGE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733239608; c=relaxed/simple;
-	bh=tND0Z5nxZk4GPzN0NINDBHsPKblSNIiEM7JGZX5p7h8=;
+	s=arc-20240116; t=1733239611; c=relaxed/simple;
+	bh=+nPgtdtshirxVEaGowCvaM6ZbyeLlgJh0cl4+peDJ5c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AnA+c9TFOzwG2fpGpB1fEVyCn2uVl4eL5DX6thyynLdHBqV2i5kWcbNQFv/JmJVLOAUp/GTadifvyhBRpexrQ1N5DuqMsmPZ+v5eVm4lO8Xw9+jCNqADW7z9q8Zvk2jrVLLiEoIWguIrhQfgzrCsZk0erVTReXBC2SUHLsF4P0Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c8TPcF+w; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZyxditvjaXcuHfvP0C5WMlVueny/40vs7H81DHYUv4H9+7ERZjPggNwrnQ1RO4kSj55NwEQwa8OuDu5wWzsftppmESusSrxUVA59iGXmcN/M+tqI3dCAlgM1rtRWKaTACnwRuxKdhav0zM4ahhJRR/mKhXzf3bcDNNWueV/8JLg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kYBg2Jhv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c8TPcF+w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53A9AC4CECF;
-	Tue,  3 Dec 2024 15:26:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kYBg2Jhv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BCF5C4CECF;
+	Tue,  3 Dec 2024 15:26:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733239608;
-	bh=tND0Z5nxZk4GPzN0NINDBHsPKblSNIiEM7JGZX5p7h8=;
+	s=korg; t=1733239611;
+	bh=+nPgtdtshirxVEaGowCvaM6ZbyeLlgJh0cl4+peDJ5c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c8TPcF+wVrS6gNcklNt6aYJPGzHfTYjghQ0L/5yjV1iuKMiJ5EkTbh3M3wZDk5YVE
-	 TRtPBaJoZ542Sz/i7UGeSGj3TSv3wuJLjBMen59tLObRol0YUazKX1x88P9IRBS2kN
-	 dS+yl22uBOYMubfI4Ycg3XFXJCQgPb0Lwlr668Oc=
+	b=kYBg2JhvLxcFdZtLvhN8WuxRvM0mNt4urfPD04ZnYEF6n8EWmJs+1yceImOGV4Vdt
+	 Flc1wVqJlrDVvftjo03166GE8CGwd3Wv9FgmlbHVIDCmTmk+RRmnjPlMriDyVbWPqx
+	 Z46EMqp4moVPcMY6E8xL9ITdSBbqNqNISYZ8gNr0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tejun Heo <tj@kernel.org>,
-	Luca Boccassi <bluca@debian.org>,
-	Sean Christopherson <seanjc@google.com>,
-	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 6.11 645/817] KVM: x86: switch hugepage recovery thread to vhost_task
-Date: Tue,  3 Dec 2024 15:43:37 +0100
-Message-ID: <20241203144021.133588029@linuxfoundation.org>
+	Yuezhang Mo <Yuezhang.Mo@sony.com>,
+	Namjae Jeon <linkinjeon@kernel.org>
+Subject: [PATCH 6.11 672/817] exfat: fix out-of-bounds access of directory entries
+Date: Tue,  3 Dec 2024 15:44:04 +0100
+Message-ID: <20241203144022.188136788@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -52,334 +50,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Bonzini <pbonzini@redhat.com>
+From: Yuezhang Mo <Yuezhang.Mo@sony.com>
 
-commit d96c77bd4eeba469bddbbb14323d2191684da82a upstream.
+commit 184fa506e392eb78364d9283c961217ff2c0617b upstream.
 
-kvm_vm_create_worker_thread() is meant to be used for kthreads that
-can consume significant amounts of CPU time on behalf of a VM or in
-response to how the VM behaves (for example how it accesses its memory).
-Therefore it wants to charge the CPU time consumed by that work to
-the VM's container.
+In the case of the directory size is greater than or equal to
+the cluster size, if start_clu becomes an EOF cluster(an invalid
+cluster) due to file system corruption, then the directory entry
+where ei->hint_femp.eidx hint is outside the directory, resulting
+in an out-of-bounds access, which may cause further file system
+corruption.
 
-However, because of these threads, cgroups which have kvm instances
-inside never complete freezing.  This can be trivially reproduced:
+This commit adds a check for start_clu, if it is an invalid cluster,
+the file or directory will be treated as empty.
 
-  root@test ~# mkdir /sys/fs/cgroup/test
-  root@test ~# echo $$ > /sys/fs/cgroup/test/cgroup.procs
-  root@test ~# qemu-system-x86_64 -nographic -enable-kvm
-
-and in another terminal:
-
-  root@test ~# echo 1 > /sys/fs/cgroup/test/cgroup.freeze
-  root@test ~# cat /sys/fs/cgroup/test/cgroup.events
-  populated 1
-  frozen 0
-
-The cgroup freezing happens in the signal delivery path but
-kvm_nx_huge_page_recovery_worker, while joining non-root cgroups, never
-calls into the signal delivery path and thus never gets frozen. Because
-the cgroup freezer determines whether a given cgroup is frozen by
-comparing the number of frozen threads to the total number of threads
-in the cgroup, the cgroup never becomes frozen and users waiting for
-the state transition may hang indefinitely.
-
-Since the worker kthread is tied to a user process, it's better if
-it behaves similarly to user tasks as much as possible, including
-being able to send SIGSTOP and SIGCONT.  In fact, vhost_task is all
-that kvm_vm_create_worker_thread() wanted to be and more: not only it
-inherits the userspace process's cgroups, it has other niceties like
-being parented properly in the process tree.  Use it instead of the
-homegrown alternative.
-
-Incidentally, the new code is also better behaved when you flip recovery
-back and forth to disabled and back to enabled.  If your recovery period
-is 1 minute, it will run the next recovery after 1 minute independent
-of how many times you flipped the parameter.
-
-(Commit message based on emails from Tejun).
-
-Reported-by: Tejun Heo <tj@kernel.org>
-Reported-by: Luca Boccassi <bluca@debian.org>
-Acked-by: Tejun Heo <tj@kernel.org>
-Tested-by: Luca Boccassi <bluca@debian.org>
 Cc: stable@vger.kernel.org
-Reviewed-by: Sean Christopherson <seanjc@google.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: Yuezhang Mo <Yuezhang.Mo@sony.com>
+Co-developed-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/kvm_host.h |    4 +
- arch/x86/kvm/Kconfig            |    1 
- arch/x86/kvm/mmu/mmu.c          |   68 ++++++++++++--------------
- include/linux/kvm_host.h        |    6 --
- virt/kvm/kvm_main.c             |  103 ----------------------------------------
- 5 files changed, 35 insertions(+), 147 deletions(-)
+ fs/exfat/namei.c |   20 ++++++++++++++++----
+ 1 file changed, 16 insertions(+), 4 deletions(-)
 
---- a/arch/x86/include/asm/kvm_host.h
-+++ b/arch/x86/include/asm/kvm_host.h
-@@ -26,6 +26,7 @@
- #include <linux/irqbypass.h>
- #include <linux/hyperv.h>
- #include <linux/kfifo.h>
-+#include <linux/sched/vhost_task.h>
- 
- #include <asm/apic.h>
- #include <asm/pvclock-abi.h>
-@@ -1445,7 +1446,8 @@ struct kvm_arch {
- 	bool sgx_provisioning_allowed;
- 
- 	struct kvm_x86_pmu_event_filter __rcu *pmu_event_filter;
--	struct task_struct *nx_huge_page_recovery_thread;
-+	struct vhost_task *nx_huge_page_recovery_thread;
-+	u64 nx_huge_page_last;
- 
- #ifdef CONFIG_X86_64
- 	/* The number of TDP MMU pages across all roots. */
---- a/arch/x86/kvm/Kconfig
-+++ b/arch/x86/kvm/Kconfig
-@@ -29,6 +29,7 @@ config KVM
- 	select HAVE_KVM_IRQ_BYPASS
- 	select HAVE_KVM_IRQ_ROUTING
- 	select HAVE_KVM_READONLY_MEM
-+	select VHOST_TASK
- 	select KVM_ASYNC_PF
- 	select USER_RETURN_NOTIFIER
- 	select KVM_MMIO
---- a/arch/x86/kvm/mmu/mmu.c
-+++ b/arch/x86/kvm/mmu/mmu.c
-@@ -7160,7 +7160,7 @@ static int set_nx_huge_pages(const char
- 			kvm_mmu_zap_all_fast(kvm);
- 			mutex_unlock(&kvm->slots_lock);
- 
--			wake_up_process(kvm->arch.nx_huge_page_recovery_thread);
-+			vhost_task_wake(kvm->arch.nx_huge_page_recovery_thread);
- 		}
- 		mutex_unlock(&kvm_lock);
- 	}
-@@ -7306,7 +7306,7 @@ static int set_nx_huge_pages_recovery_pa
- 		mutex_lock(&kvm_lock);
- 
- 		list_for_each_entry(kvm, &vm_list, vm_list)
--			wake_up_process(kvm->arch.nx_huge_page_recovery_thread);
-+			vhost_task_wake(kvm->arch.nx_huge_page_recovery_thread);
- 
- 		mutex_unlock(&kvm_lock);
- 	}
-@@ -7409,62 +7409,56 @@ static void kvm_recover_nx_huge_pages(st
- 	srcu_read_unlock(&kvm->srcu, rcu_idx);
- }
- 
--static long get_nx_huge_page_recovery_timeout(u64 start_time)
-+static void kvm_nx_huge_page_recovery_worker_kill(void *data)
- {
--	bool enabled;
--	uint period;
--
--	enabled = calc_nx_huge_pages_recovery_period(&period);
--
--	return enabled ? start_time + msecs_to_jiffies(period) - get_jiffies_64()
--		       : MAX_SCHEDULE_TIMEOUT;
- }
- 
--static int kvm_nx_huge_page_recovery_worker(struct kvm *kvm, uintptr_t data)
-+static bool kvm_nx_huge_page_recovery_worker(void *data)
- {
--	u64 start_time;
-+	struct kvm *kvm = data;
-+	bool enabled;
-+	uint period;
- 	long remaining_time;
- 
--	while (true) {
--		start_time = get_jiffies_64();
--		remaining_time = get_nx_huge_page_recovery_timeout(start_time);
--
--		set_current_state(TASK_INTERRUPTIBLE);
--		while (!kthread_should_stop() && remaining_time > 0) {
--			schedule_timeout(remaining_time);
--			remaining_time = get_nx_huge_page_recovery_timeout(start_time);
--			set_current_state(TASK_INTERRUPTIBLE);
--		}
--
--		set_current_state(TASK_RUNNING);
--
--		if (kthread_should_stop())
--			return 0;
-+	enabled = calc_nx_huge_pages_recovery_period(&period);
-+	if (!enabled)
-+		return false;
- 
--		kvm_recover_nx_huge_pages(kvm);
-+	remaining_time = kvm->arch.nx_huge_page_last + msecs_to_jiffies(period)
-+		- get_jiffies_64();
-+	if (remaining_time > 0) {
-+		schedule_timeout(remaining_time);
-+		/* check for signals and come back */
-+		return true;
- 	}
+--- a/fs/exfat/namei.c
++++ b/fs/exfat/namei.c
+@@ -637,14 +637,26 @@ static int exfat_find(struct inode *dir,
+ 	info->size = le64_to_cpu(ep2->dentry.stream.valid_size);
+ 	info->valid_size = le64_to_cpu(ep2->dentry.stream.valid_size);
+ 	info->size = le64_to_cpu(ep2->dentry.stream.size);
 +
-+	__set_current_state(TASK_RUNNING);
-+	kvm_recover_nx_huge_pages(kvm);
-+	kvm->arch.nx_huge_page_last = get_jiffies_64();
-+	return true;
- }
- 
- int kvm_mmu_post_init_vm(struct kvm *kvm)
- {
--	int err;
--
- 	if (nx_hugepage_mitigation_hard_disabled)
- 		return 0;
- 
--	err = kvm_vm_create_worker_thread(kvm, kvm_nx_huge_page_recovery_worker, 0,
--					  "kvm-nx-lpage-recovery",
--					  &kvm->arch.nx_huge_page_recovery_thread);
--	if (!err)
--		kthread_unpark(kvm->arch.nx_huge_page_recovery_thread);
-+	kvm->arch.nx_huge_page_last = get_jiffies_64();
-+	kvm->arch.nx_huge_page_recovery_thread = vhost_task_create(
-+		kvm_nx_huge_page_recovery_worker, kvm_nx_huge_page_recovery_worker_kill,
-+		kvm, "kvm-nx-lpage-recovery");
- 
--	return err;
-+	if (!kvm->arch.nx_huge_page_recovery_thread)
-+		return -ENOMEM;
++	info->start_clu = le32_to_cpu(ep2->dentry.stream.start_clu);
++	if (!is_valid_cluster(sbi, info->start_clu) && info->size) {
++		exfat_warn(sb, "start_clu is invalid cluster(0x%x)",
++				info->start_clu);
++		info->size = 0;
++		info->valid_size = 0;
++	}
 +
-+	vhost_task_start(kvm->arch.nx_huge_page_recovery_thread);
-+	return 0;
- }
- 
- void kvm_mmu_pre_destroy_vm(struct kvm *kvm)
- {
- 	if (kvm->arch.nx_huge_page_recovery_thread)
--		kthread_stop(kvm->arch.nx_huge_page_recovery_thread);
-+		vhost_task_stop(kvm->arch.nx_huge_page_recovery_thread);
- }
- 
- #ifdef CONFIG_KVM_GENERIC_MEMORY_ATTRIBUTES
---- a/include/linux/kvm_host.h
-+++ b/include/linux/kvm_host.h
-@@ -2370,12 +2370,6 @@ static inline int kvm_arch_vcpu_run_pid_
- }
- #endif /* CONFIG_HAVE_KVM_VCPU_RUN_PID_CHANGE */
- 
--typedef int (*kvm_vm_thread_fn_t)(struct kvm *kvm, uintptr_t data);
--
--int kvm_vm_create_worker_thread(struct kvm *kvm, kvm_vm_thread_fn_t thread_fn,
--				uintptr_t data, const char *name,
--				struct task_struct **thread_ptr);
--
- #ifdef CONFIG_KVM_XFER_TO_GUEST_WORK
- static inline void kvm_handle_signal_exit(struct kvm_vcpu *vcpu)
- {
---- a/virt/kvm/kvm_main.c
-+++ b/virt/kvm/kvm_main.c
-@@ -6573,106 +6573,3 @@ void kvm_exit(void)
- 	kvm_irqfd_exit();
- }
- EXPORT_SYMBOL_GPL(kvm_exit);
--
--struct kvm_vm_worker_thread_context {
--	struct kvm *kvm;
--	struct task_struct *parent;
--	struct completion init_done;
--	kvm_vm_thread_fn_t thread_fn;
--	uintptr_t data;
--	int err;
--};
--
--static int kvm_vm_worker_thread(void *context)
--{
--	/*
--	 * The init_context is allocated on the stack of the parent thread, so
--	 * we have to locally copy anything that is needed beyond initialization
--	 */
--	struct kvm_vm_worker_thread_context *init_context = context;
--	struct task_struct *parent;
--	struct kvm *kvm = init_context->kvm;
--	kvm_vm_thread_fn_t thread_fn = init_context->thread_fn;
--	uintptr_t data = init_context->data;
--	int err;
--
--	err = kthread_park(current);
--	/* kthread_park(current) is never supposed to return an error */
--	WARN_ON(err != 0);
--	if (err)
--		goto init_complete;
--
--	err = cgroup_attach_task_all(init_context->parent, current);
--	if (err) {
--		kvm_err("%s: cgroup_attach_task_all failed with err %d\n",
--			__func__, err);
--		goto init_complete;
++	if (info->valid_size > info->size) {
++		exfat_warn(sb, "valid_size(%lld) is greater than size(%lld)",
++				info->valid_size, info->size);
++		info->valid_size = info->size;
++	}
++
+ 	if (info->size == 0) {
+ 		info->flags = ALLOC_NO_FAT_CHAIN;
+ 		info->start_clu = EXFAT_EOF_CLUSTER;
+-	} else {
++	} else
+ 		info->flags = ep2->dentry.stream.flags;
+-		info->start_clu =
+-			le32_to_cpu(ep2->dentry.stream.start_clu);
 -	}
--
--	set_user_nice(current, task_nice(init_context->parent));
--
--init_complete:
--	init_context->err = err;
--	complete(&init_context->init_done);
--	init_context = NULL;
--
--	if (err)
--		goto out;
--
--	/* Wait to be woken up by the spawner before proceeding. */
--	kthread_parkme();
--
--	if (!kthread_should_stop())
--		err = thread_fn(kvm, data);
--
--out:
--	/*
--	 * Move kthread back to its original cgroup to prevent it lingering in
--	 * the cgroup of the VM process, after the latter finishes its
--	 * execution.
--	 *
--	 * kthread_stop() waits on the 'exited' completion condition which is
--	 * set in exit_mm(), via mm_release(), in do_exit(). However, the
--	 * kthread is removed from the cgroup in the cgroup_exit() which is
--	 * called after the exit_mm(). This causes the kthread_stop() to return
--	 * before the kthread actually quits the cgroup.
--	 */
--	rcu_read_lock();
--	parent = rcu_dereference(current->real_parent);
--	get_task_struct(parent);
--	rcu_read_unlock();
--	cgroup_attach_task_all(parent, current);
--	put_task_struct(parent);
--
--	return err;
--}
--
--int kvm_vm_create_worker_thread(struct kvm *kvm, kvm_vm_thread_fn_t thread_fn,
--				uintptr_t data, const char *name,
--				struct task_struct **thread_ptr)
--{
--	struct kvm_vm_worker_thread_context init_context = {};
--	struct task_struct *thread;
--
--	*thread_ptr = NULL;
--	init_context.kvm = kvm;
--	init_context.parent = current;
--	init_context.thread_fn = thread_fn;
--	init_context.data = data;
--	init_completion(&init_context.init_done);
--
--	thread = kthread_run(kvm_vm_worker_thread, &init_context,
--			     "%s-%d", name, task_pid_nr(current));
--	if (IS_ERR(thread))
--		return PTR_ERR(thread);
--
--	/* kthread_run is never supposed to return NULL */
--	WARN_ON(thread == NULL);
--
--	wait_for_completion(&init_context.init_done);
--
--	if (!init_context.err)
--		*thread_ptr = thread;
--
--	return init_context.err;
--}
+ 
+ 	exfat_get_entry_time(sbi, &info->crtime,
+ 			     ep->dentry.file.create_tz,
 
 
