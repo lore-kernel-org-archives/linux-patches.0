@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C61201F75B6;
-	Tue,  3 Dec 2024 15:39:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1E165336E;
+	Tue,  3 Dec 2024 15:39:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733240347; cv=none; b=DiedvScP7LP9BkpnNf1vkT/jbXbFkpgHPTarjLH2kz1RAIMMwwqbz26kkTYfl4hLHr5WuNREP6XhqjURP63jgzMhkfUpXrb52iEamLyjABBdCyQrMZK/qdpfxTp8gHovXEH8ETct9nRus/FDMbIVAcxqh5V/1ImCOp/Hibq8VrA=
+	t=1733240350; cv=none; b=QEtxvGSQ3NTha4Ub0kICozvrYtxQJ4xC1N7SlH0Do0UyVR/071LEtqawbMEwIlFCYbmGgjegKJ0MAdOu07Xtp7GY/AbEU1oyAsTvWIYH5wkIBU4uSNlb777bEpxznwG4N6kZ2rTJae+Xr8sZPPs4ykuT9LBnWeHcLS5VjjXRo9Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733240347; c=relaxed/simple;
-	bh=ED7ZUML4X87RKZYqkb58ISYC5k1b1DYII43hTUeR2aQ=;
+	s=arc-20240116; t=1733240350; c=relaxed/simple;
+	bh=Vtvx8CPZTan3W/CK9wUEA/uDlg07JgRd6wnNvehI+Co=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N3DQbNLn3lL3VgV0Ca3h+/d3TY9+d615Vh/Q38T9cjabD8Homl0je2SNytlf5i9/bCzjnDwXl2jSgCMX0OAJ+JoRzkUQp47DYcjJ/WwYHDtmavCTS5KX8Gq3OPDM8y6jwSBNZtr4Ka0USsutAa3hWAidU1QgtuYxg0wq+2ol/6U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xnx81w6/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iUsUYVYYpTjAy3mL50J250kI3m9nFS9v5B0RIFZrY84w4SuctlCzfA2XeRDvZOPHHF46XTdHZxyLkvqZvHQkAVGL5+tdiQgYmLCHGnQEBwXrJvjisJmFk0753tsXKKjwDf2vU+2iZebWHgzgnw6KjwReC5eN20wu8jfTUhMbVbU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QKo/9VkI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xnx81w6/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16453C4CECF;
-	Tue,  3 Dec 2024 15:39:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QKo/9VkI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25FACC4CECF;
+	Tue,  3 Dec 2024 15:39:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733240347;
-	bh=ED7ZUML4X87RKZYqkb58ISYC5k1b1DYII43hTUeR2aQ=;
+	s=korg; t=1733240350;
+	bh=Vtvx8CPZTan3W/CK9wUEA/uDlg07JgRd6wnNvehI+Co=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xnx81w6/CyuFP0fi2pXS+ertABA9IVXWB3phAHNvM0R+F2TQKvRo4kgtQZLRGDJDa
-	 4fHip9L2tkGuNd8h8jalsUhkhtmlkOIwrPNvqpDvS4rpJFsDGw5ALUhsRsLhGGcx2U
-	 YnVuYzFpTCbBciC85IgTjEKRgcbEGxCJNEj92PKE=
+	b=QKo/9VkIgPfstfa42+cAGeIsGOJJGe/7VBAsVnsDA3VADs7jzSsyiTPRm4stc4kp1
+	 Uwur5JBRKlt4DYy2Ojz2fa1NnUDo8BS0e4tLwnKQOCOaT34QUNx978wMfR4WaCFoSg
+	 JRz6XqXzSUjtc67ETdAB6lBd8vkmj13zz3YC11Lg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Pin-yen Lin <treapking@chromium.org>,
+	kernel test robot <lkp@intel.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 101/826] arm64: dts: qcom: qcs6390-rb3gen2: use modem.mbn for modem DSP
-Date: Tue,  3 Dec 2024 15:37:08 +0100
-Message-ID: <20241203144747.673340864@linuxfoundation.org>
+Subject: [PATCH 6.12 110/826] arm64: dts: mt8183: Add port node to dpi node
+Date: Tue,  3 Dec 2024 15:37:17 +0100
+Message-ID: <20241203144748.035009825@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -52,37 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Pin-yen Lin <treapking@chromium.org>
 
-[ Upstream commit 6317aad0e1525f3e3609d9a0fea762a37799943a ]
+[ Upstream commit ec1a37b3cd0cf9a1bf88816a5342fb06e3316b34 ]
 
-Newer boards should always use squashed MBN firmware instead of split
-MDT+bNN. Use qcom/qcs6490/modem.mbn as the firmware for the modem on
-RB3gen2.
+Add the port node to fix the binding schema check.
 
-Fixes: ac6d35b9b74c ("arm64: dts: qcom: qcs6490-rb3gen2: Enable various remoteprocs")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Konrad Dybcio <konradybcio@kernel.org>
-Link: https://lore.kernel.org/r/20240907-rb3g2-fixes-v1-1-eb9da98e9f80@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: 009d855a26fd ("arm64: dts: mt8183: add dpi node to mt8183")
+Signed-off-by: Pin-yen Lin <treapking@chromium.org>
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202409110843.Hm5W9upr-lkp@intel.com/
+Link: https://lore.kernel.org/r/20240912144430.3161717-3-treapking@chromium.org
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/mediatek/mt8183.dtsi | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
-index 0d45662b8028b..5d0167fbc7098 100644
---- a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
-+++ b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
-@@ -707,7 +707,7 @@ &remoteproc_cdsp {
- };
+diff --git a/arch/arm64/boot/dts/mediatek/mt8183.dtsi b/arch/arm64/boot/dts/mediatek/mt8183.dtsi
+index 266441e999f21..0a6578aacf828 100644
+--- a/arch/arm64/boot/dts/mediatek/mt8183.dtsi
++++ b/arch/arm64/boot/dts/mediatek/mt8183.dtsi
+@@ -1845,6 +1845,10 @@ dpi0: dpi@14015000 {
+ 				 <&mmsys CLK_MM_DPI_MM>,
+ 				 <&apmixedsys CLK_APMIXED_TVDPLL>;
+ 			clock-names = "pixel", "engine", "pll";
++
++			port {
++				dpi_out: endpoint { };
++			};
+ 		};
  
- &remoteproc_mpss {
--	firmware-name = "qcom/qcs6490/modem.mdt";
-+	firmware-name = "qcom/qcs6490/modem.mbn";
- 	status = "okay";
- };
- 
+ 		mutex: mutex@14016000 {
 -- 
 2.43.0
 
