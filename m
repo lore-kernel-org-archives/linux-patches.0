@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FEF91DAC9F;
-	Tue,  3 Dec 2024 15:48:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3073B1DAC9F;
+	Tue,  3 Dec 2024 15:48:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733240929; cv=none; b=VqJdQMy4EvzxUCa1W8VSawuG0dddrZ3COownVJTT/m3MiHNk5UZuHGlyk1vwCJavTCVUOsABsV6tHzWLa9wjuamgk2zzUmupfFYiiy+klmOJkiJrPZ9HD73ejbtrVjK0ni1nnryJO8qza8V0kzu7BdXA5/FC4JJAHTc/kWGhhec=
+	t=1733240932; cv=none; b=NoHOfzssQXlgTTToDU0YDgqJSeMLvoc6p6RnqjoMqE3d9IlLw1IfIDSdo/HCvUzW8yt71zSHPbqUeav7QwMcZQhfszEghUNRTu9Yw0zyDhcpMKmV4d8Bf422cyWisT/aOlxANiHiXQK+dNoeriiZ8ik0y3br2e8kF8U8sWYEit8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733240929; c=relaxed/simple;
-	bh=oMqbbhhE9JYsLSYW2pIPPfoCRBhXavXzrcmRkEMealU=;
+	s=arc-20240116; t=1733240932; c=relaxed/simple;
+	bh=WHP5ugFvhtq3mxEKIeH4R+fJhYMqo0ucgtassGmMl9A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J5vJRHLXPHDNP+mbUEhAzvCxtjWqFTaqv2h2rjVtF4VkPVlkqyIEbGfZ2kdBRMQsYS3CY1wP764ehgvS6Ua3eZQNXmNd4+TdzAXiLzg5IyynOiINWRMqDuLW7/jwjIFmVaajOx9cfyIhzf/ww6CKAsJz1Lr7FzoZRFWquPt3N/8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BTZcJwvR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NZYrFmPNS+skP77HukZe97dx+HPCQh3WRX9DEy2LV4y9q1478Lx6Ik47p93mm+D3X8dTQn31oPGSdnFaOdsO1+uGrK4CQlCxeU2ee+w7/41Pgp1maLIGPsbXOm6EW6Oavm/kAr5rYS3EVIJzzNqlUlygGwkJqv2K7NkJGof3skk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vqcnEBV1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BTZcJwvR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E119C4CECF;
-	Tue,  3 Dec 2024 15:48:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vqcnEBV1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC078C4CECF;
+	Tue,  3 Dec 2024 15:48:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733240928;
-	bh=oMqbbhhE9JYsLSYW2pIPPfoCRBhXavXzrcmRkEMealU=;
+	s=korg; t=1733240932;
+	bh=WHP5ugFvhtq3mxEKIeH4R+fJhYMqo0ucgtassGmMl9A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BTZcJwvRy+vdldFxBDusxdstARdG1MjIHn3u5+eioCZKyepecQaF8jLZMKz8QvEBQ
-	 9tw8vAUrDJ5fbSpqXjqHhG4yDT+dhF+pqbh4QmiWyFeSPhbwMxcbwtpmxxCjweyBHg
-	 hYyxXuOQTB5EnnkNIoaWoRVDtt1sLk/ZAsB3SSv0=
+	b=vqcnEBV1bmiuopi0ldePr0IqGbuzcSRoEk7kY8tcQYXeeAOfW0ghp3i2okuGe6w8r
+	 /XMkowGlYSA3dBjqhZIV0FosjyrzXvAPk+yAfLjMq2ZJgTOjkJ/BrdbIitGKYTx29l
+	 vKq6F/jArbBW+m7M4f0Pjvj1P2Hv+VMmMZy6HILw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Horman <horms@kernel.org>,
-	Hangbin Liu <liuhangbin@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Jan Kiszka <jan.kiszka@siemens.com>,
+	Aradhya Bhatia <a-bhatia1@ti.com>,
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 246/826] netdevsim: copy addresses for both in and out paths
-Date: Tue,  3 Dec 2024 15:39:33 +0100
-Message-ID: <20241203144753.361788722@linuxfoundation.org>
+Subject: [PATCH 6.12 247/826] drm/bridge: tc358767: Fix link properties discovery
+Date: Tue,  3 Dec 2024 15:39:34 +0100
+Message-ID: <20241203144753.400663430@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -52,68 +53,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hangbin Liu <liuhangbin@gmail.com>
+From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
 
-[ Upstream commit 2cf567f421dbfe7e53b7e5ddee9400da10efb75d ]
+[ Upstream commit 2d343723c7e1f9f6d64f721f07cfdfc2993758d1 ]
 
-The current code only copies the address for the in path, leaving the out
-path address set to 0. This patch corrects the issue by copying the addresses
-for both the in and out paths. Before this patch:
+When a display controller driver uses DRM_BRIDGE_ATTACH_NO_CONNECTOR,
+tc358767 will behave properly and skip the creation of the connector.
 
-  # cat /sys/kernel/debug/netdevsim/netdevsim0/ports/0/ipsec
-  SA count=2 tx=20
-  sa[0] tx ipaddr=0.0.0.0
-  sa[0]    spi=0x00000100 proto=0x32 salt=0x0adecc3a crypt=1
-  sa[0]    key=0x3167608a ca4f1397 43565909 941fa627
-  sa[1] rx ipaddr=192.168.0.1
-  sa[1]    spi=0x00000101 proto=0x32 salt=0x0adecc3a crypt=1
-  sa[1]    key=0x3167608a ca4f1397 43565909 941fa627
+However, tc_get_display_props(), which is used to find out about the DP
+monitor and link, is only called from two places: .atomic_enable() and
+tc_connector_get_modes(). The latter is only used when tc358767 creates
+its own connector, i.e. when DRM_BRIDGE_ATTACH_NO_CONNECTOR is _not_
+set.
 
-After this patch:
+Thus, the driver never finds out the link properties before get_edid()
+is called. With num_lanes of 0 and link_rate of 0 there are not many
+valid modes...
 
-  = cat /sys/kernel/debug/netdevsim/netdevsim0/ports/0/ipsec
-  SA count=2 tx=20
-  sa[0] tx ipaddr=192.168.0.2
-  sa[0]    spi=0x00000100 proto=0x32 salt=0x0adecc3a crypt=1
-  sa[0]    key=0x3167608a ca4f1397 43565909 941fa627
-  sa[1] rx ipaddr=192.168.0.1
-  sa[1]    spi=0x00000101 proto=0x32 salt=0x0adecc3a crypt=1
-  sa[1]    key=0x3167608a ca4f1397 43565909 941fa627
+Fix this by adding tc_get_display_props() call at the beginning of
+get_edid(), so that we have up to date information before looking at the
+modes.
 
-Fixes: 7699353da875 ("netdevsim: add ipsec offload testing")
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
-Link: https://patch.msgid.link/20241010040027.21440-3-liuhangbin@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: Jan Kiszka <jan.kiszka@siemens.com>
+Closes: https://lore.kernel.org/all/24282420-b4dd-45b3-bb1c-fc37fe4a8205@siemens.com/
+Fixes: de5e6c027ae6 ("drm/bridge: tc358767: add drm_panel_bridge support")
+Reviewed-by: Aradhya Bhatia <a-bhatia1@ti.com>
+Tested-by: Jan Kiszka <jan.kiszka@siemens.com>
+Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20231108-tc358767-v2-2-25c5f70a2159@ideasonboard.com
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/netdevsim/ipsec.c | 11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/bridge/tc358767.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/net/netdevsim/ipsec.c b/drivers/net/netdevsim/ipsec.c
-index f0d58092e7e96..3612b0633bd17 100644
---- a/drivers/net/netdevsim/ipsec.c
-+++ b/drivers/net/netdevsim/ipsec.c
-@@ -176,14 +176,13 @@ static int nsim_ipsec_add_sa(struct xfrm_state *xs,
- 		return ret;
- 	}
+diff --git a/drivers/gpu/drm/bridge/tc358767.c b/drivers/gpu/drm/bridge/tc358767.c
+index f3afdab55c113..47189587643a1 100644
+--- a/drivers/gpu/drm/bridge/tc358767.c
++++ b/drivers/gpu/drm/bridge/tc358767.c
+@@ -1714,6 +1714,13 @@ static const struct drm_edid *tc_edid_read(struct drm_bridge *bridge,
+ 					   struct drm_connector *connector)
+ {
+ 	struct tc_data *tc = bridge_to_tc(bridge);
++	int ret;
++
++	ret = tc_get_display_props(tc);
++	if (ret < 0) {
++		dev_err(tc->dev, "failed to read display props: %d\n", ret);
++		return 0;
++	}
  
--	if (xs->xso.dir == XFRM_DEV_OFFLOAD_IN) {
-+	if (xs->xso.dir == XFRM_DEV_OFFLOAD_IN)
- 		sa.rx = true;
- 
--		if (xs->props.family == AF_INET6)
--			memcpy(sa.ipaddr, &xs->id.daddr.a6, 16);
--		else
--			memcpy(&sa.ipaddr[3], &xs->id.daddr.a4, 4);
--	}
-+	if (xs->props.family == AF_INET6)
-+		memcpy(sa.ipaddr, &xs->id.daddr.a6, 16);
-+	else
-+		memcpy(&sa.ipaddr[3], &xs->id.daddr.a4, 4);
- 
- 	/* the preparations worked, so save the info */
- 	memcpy(&ipsec->sa[sa_idx], &sa, sizeof(sa));
+ 	return drm_edid_read_ddc(connector, &tc->aux.ddc);
+ }
 -- 
 2.43.0
 
