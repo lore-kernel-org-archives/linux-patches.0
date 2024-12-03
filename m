@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF2E41E47AD;
-	Tue,  3 Dec 2024 16:09:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CA4181ADA;
+	Tue,  3 Dec 2024 16:10:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733242197; cv=none; b=E5xs9r3Pez4/uchC6X+a9XMKaYGaCaoONncyp2B1QWT0NVTr5ja1LmoP0oNuRMpUqi734A82wFF2YXKV5hrcmEi2jedZ7O94UZTf7QUFgx3WchPIu7mnqanSie2x82OEVFG+J/AuTnmvNOSW7UrK5deyGiy1Bh3SUFpYdN2SwU4=
+	t=1733242201; cv=none; b=d1AzCRAyfSB/Ocb+Qc4zR9Fz05S+oDENkuqFbDxK2TlPKM3xpSPhx8IFZ7aJH67SUSIPjxw1XMrVcuM+EMP22+/v+1SxeYMKHc467eHGYD5LpC1jRWvLPTRJk1+okE/Dv060PTtcI3wcD7AZbIsOiqEZk5flGojjD4pCNtLU1cQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733242197; c=relaxed/simple;
-	bh=WrZZOcoKYU7WATi4dsRh1Qys29707DNIQSkmPpcGdzI=;
+	s=arc-20240116; t=1733242201; c=relaxed/simple;
+	bh=AsapXsjjmKTXufkMfE4cN3ca0FZ1VkHhSQE1JY9LonI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jQxwuYrtfnr4r6V8vWorC1ZrIs6hPOI9nt0ADY9UcDceRNPO1o3Xgpod76DF21VQNYL5e4lvNPOB09lIaRfXIozsFCiLaidFUWAsqeakGmZsd1th032l16q7EXJnsSd2LNl9rCXlF7xprA7Mkitq8VPOyL07cjBKfmXQcshDYGk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d98btQ5x; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GbeNcwU87lZ3iS6r2wAoAOw/0Unjz/aUYu7dUs96ZR+7Pgs7Lm8J2hHbj6ToNWFyOrm318wPhhI7L6VRZxa+dT2cs+7jgz7TGA2+LwtkHOyZnY2gd/6H9OBLwDVEaOvGAu4lo+1oVQLsyWvUCiBfP7CZiYRXKIWwFJQiz0xnmPQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zLhMZxwX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d98btQ5x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D491C4CECF;
-	Tue,  3 Dec 2024 16:09:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zLhMZxwX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A13DBC4CECF;
+	Tue,  3 Dec 2024 16:10:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733242197;
-	bh=WrZZOcoKYU7WATi4dsRh1Qys29707DNIQSkmPpcGdzI=;
+	s=korg; t=1733242201;
+	bh=AsapXsjjmKTXufkMfE4cN3ca0FZ1VkHhSQE1JY9LonI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d98btQ5xTaGs8a+DJWUVfqEsjIJ5PYAirEnpDWFySm6LlNODYKk3iDrnTjkAKy7vh
-	 wrGIHBHnUeNxNxGryNWrd4/5RyBsdtyHyhQXwAU0h4QMjE/chakE+QZEm7aYGQ4ocf
-	 6LAXZnPanF9yDmSi9L+DbABzf3melEQNrKOYh9fc=
+	b=zLhMZxwX67KQrttNuBILkT+y7eq3A/OFJXhtTKVo6RS6gUz7Ro06+xDINgTJpQo5m
+	 giPNJoZN3a7dXO7jyJepN08doeCi3g4vzsfgnU93ddXF14dK/fNewrvTf9zC71SToZ
+	 vxjli5It5+q7gfghU0v7H3oY8g/5tpdDwtXNJtPg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilya Zverev <ilya@zverev.info>,
+	Qiu-ji Chen <chenqiuji666@gmail.com>,
 	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.12 635/826] ASoC: amd: yc: Add a quirk for microfone on Lenovo ThinkPad P14s Gen 5 21MES00B00
-Date: Tue,  3 Dec 2024 15:46:02 +0100
-Message-ID: <20241203144808.522462311@linuxfoundation.org>
+Subject: [PATCH 6.12 636/826] ASoC: codecs: Fix atomicity violation in snd_soc_component_get_drvdata()
+Date: Tue,  3 Dec 2024 15:46:03 +0100
+Message-ID: <20241203144808.560885413@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -50,38 +50,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ilya Zverev <ilya@zverev.info>
+From: Qiu-ji Chen <chenqiuji666@gmail.com>
 
-commit b682aa788e5f9f1ddacdfbb453e49fd3f4e83721 upstream.
+commit 1157733344651ca505e259d6554591ff156922fa upstream.
 
-New ThinkPads need new quirk entries. Ilya has tested this one.
-Laptop product id is 21MES00B00, though the shorthand 21ME works.
+An atomicity violation occurs when the validity of the variables
+da7219->clk_src and da7219->mclk_rate is being assessed. Since the entire
+assessment is not protected by a lock, the da7219 variable might still be
+in flux during the assessment, rendering this check invalid.
 
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=219533
+To fix this issue, we recommend adding a lock before the block
+if ((da7219->clk_src == clk_id) && (da7219->mclk_rate == freq)) so that
+the legitimacy check for da7219->clk_src and da7219->mclk_rate is
+protected by the lock, ensuring the validity of the check.
+
+This possible bug is found by an experimental static analysis tool
+developed by our team. This tool analyzes the locking APIs
+to extract function pairs that can be concurrently executed, and then
+analyzes the instructions in the paired functions to identify possible
+concurrency bugs including data races and atomicity violations.
+
+Fixes: 6d817c0e9fd7 ("ASoC: codecs: Add da7219 codec driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ilya Zverev <ilya@zverev.info>
-Link: https://patch.msgid.link/20241127134420.14471-1-ilya@zverev.info
+Signed-off-by: Qiu-ji Chen <chenqiuji666@gmail.com>
+Link: https://patch.msgid.link/20240930101216.23723-1-chenqiuji666@gmail.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/amd/yc/acp6x-mach.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ sound/soc/codecs/da7219.c |    9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
---- a/sound/soc/amd/yc/acp6x-mach.c
-+++ b/sound/soc/amd/yc/acp6x-mach.c
-@@ -245,6 +245,13 @@ static const struct dmi_system_id yc_acp
- 		.driver_data = &acp6x_card,
- 		.matches = {
- 			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "21ME"),
-+		}
-+	},
-+	{
-+		.driver_data = &acp6x_card,
-+		.matches = {
-+			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
- 			DMI_MATCH(DMI_PRODUCT_NAME, "82QF"),
- 		}
- 	},
+--- a/sound/soc/codecs/da7219.c
++++ b/sound/soc/codecs/da7219.c
+@@ -1167,17 +1167,20 @@ static int da7219_set_dai_sysclk(struct
+ 	struct da7219_priv *da7219 = snd_soc_component_get_drvdata(component);
+ 	int ret = 0;
+ 
+-	if ((da7219->clk_src == clk_id) && (da7219->mclk_rate == freq))
++	mutex_lock(&da7219->pll_lock);
++
++	if ((da7219->clk_src == clk_id) && (da7219->mclk_rate == freq)) {
++		mutex_unlock(&da7219->pll_lock);
+ 		return 0;
++	}
+ 
+ 	if ((freq < 2000000) || (freq > 54000000)) {
++		mutex_unlock(&da7219->pll_lock);
+ 		dev_err(codec_dai->dev, "Unsupported MCLK value %d\n",
+ 			freq);
+ 		return -EINVAL;
+ 	}
+ 
+-	mutex_lock(&da7219->pll_lock);
+-
+ 	switch (clk_id) {
+ 	case DA7219_CLKSRC_MCLK_SQR:
+ 		snd_soc_component_update_bits(component, DA7219_PLL_CTRL,
 
 
