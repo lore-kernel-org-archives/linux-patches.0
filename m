@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 042561F892C;
-	Tue,  3 Dec 2024 15:50:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C14BA1DAC9F;
+	Tue,  3 Dec 2024 15:50:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733241051; cv=none; b=mU08Fy5F/Xb8WqBPaoGwKzob+W0WhKfBoGHHNey0yhuMjjq2UweGCmO/cRM6Nvh+DiayJTaUSWWKfJJS5bg6zY0386+fU4JL2nwA1zOkn5io1vb1m1NuizdZLaSi8XUM5NUPccYOhAURLoQUbBFlHmez4Gp7sg0r9ixZaHOClEo=
+	t=1733241054; cv=none; b=nM/DaYVpEJvCLRGTXo3PcjPMQZMDgFrAs+HBiYtRNTEbfReiUo4wMx2n6QWmiAzcCQblE92Z+jDaxpPv5F8BiQ3e/sBOZV8wZyGlUHe94ZED9oLJ9w8xkUuQgvkOTaZ11cJpTjc99T7b+zb1DF1mTtKSFB6nQyd1DxdoQQSoHf4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733241051; c=relaxed/simple;
-	bh=W2nX2w9c05IoDRLyPNbu2QXhXlZPg7h0+glWOxbFrkQ=;
+	s=arc-20240116; t=1733241054; c=relaxed/simple;
+	bh=hwTSditoq2gjqULLpMNipxrabK/7z5Jn3No4dTS1ZLg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FQa4XAF/K4I3OuqjySVmwEaYXYIMMAeJotmn7ul4hO5pD1F6Ar0mOYV6nt6DwuSSrVaFqCjJDxl3/sLoiCY3oYZZSXiWbQ61/89RaZijYrepKYWp8nFkVlBD7yiMhMeLVMoJ34LsqfL84VSYtVUwB2uIIsonykuEfGgQijj3UdA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wQt43J5p; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mPKS8PUDRYiUuuPJMKElmIfCU5f8ePvKwKd9gGT1zgJ8NUpz/DxHnt9VjLfYxO0rdIa2QAUz9yHcrUg3oPtBlxBkhhkRAEXdD/OZ0lvj0OTzfHa+TuaEA9NdSf/ljsUvwrlgitqXkzCVdvAf9PomrW5LsvzNpeBaPz/O0kw/z3s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ToCwri37; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wQt43J5p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E7DFC4CECF;
-	Tue,  3 Dec 2024 15:50:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ToCwri37"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3BB8C4CED6;
+	Tue,  3 Dec 2024 15:50:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733241050;
-	bh=W2nX2w9c05IoDRLyPNbu2QXhXlZPg7h0+glWOxbFrkQ=;
+	s=korg; t=1733241054;
+	bh=hwTSditoq2gjqULLpMNipxrabK/7z5Jn3No4dTS1ZLg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wQt43J5pxYxMO2Wdz9cnayEpPdKyKY19T+X37kNXtdo/KyuiyYeV5NXcXhwaZ/toi
-	 khSkQFXNExc/l4V5sP3BRh0p3u7OILl8xaxx/URCp1GfpAznHu2KxPKK9NL1Vuwmxf
-	 wA23okpZQUh06X+PchxIli9jLiT0tijMbG5emoyc=
+	b=ToCwri37DaH+fT0zhRqk4mai2ncHPwQxaPb38/O2GBEFcZvUCqF6YV6ReMdzlbnUd
+	 ycKGOEKZnEp28MdXI2oJUwY9Fes0vnk4oZQWQhFdjv0OGJlH7gXS1Vlpglkol4oNfQ
+	 n/Zzr38DOwiIodF6VGdUZale2pm8CaTNF/OMpixg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lukasz Luba <lukasz.luba@arm.com>,
-	Rob Clark <robdclark@chromium.org>,
+	Suraj Kandpal <suraj.kandpal@intel.com>,
+	Matt Roper <matthew.d.roper@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 279/826] drm/msm/gpu: Check the status of registration to PM QoS
-Date: Tue,  3 Dec 2024 15:40:06 +0100
-Message-ID: <20241203144754.657608223@linuxfoundation.org>
+Subject: [PATCH 6.12 280/826] drm/xe/hdcp: Fix gsc structure check in fw check status
+Date: Tue,  3 Dec 2024 15:40:07 +0100
+Message-ID: <20241203144754.695147102@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -51,49 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lukasz Luba <lukasz.luba@arm.com>
+From: Suraj Kandpal <suraj.kandpal@intel.com>
 
-[ Upstream commit 8f32ddd87e499ba6d2dc74ce30b6932baf1e1fc3 ]
+[ Upstream commit 182a32bcc223203c57761889fac7fa2dbb34684b ]
 
-There is a need to check the returned value of the registration function.
-In case of returned error, print that and stop the init process.
+Fix the condition for gsc structure validity in
+gsc_cs_status_check(). It needs to be an OR and not an AND
+condition
 
-Fixes: 7c0ffcd40b16 ("drm/msm/gpu: Respect PM QoS constraints")
-Signed-off-by: Lukasz Luba <lukasz.luba@arm.com>
-Patchwork: https://patchwork.freedesktop.org/patch/620336/
-Signed-off-by: Rob Clark <robdclark@chromium.org>
+Fixes: b4224f6bae38 ("drm/xe/hdcp: Check GSC structure validity")
+Signed-off-by: Suraj Kandpal <suraj.kandpal@intel.com>
+Reviewed-by: Matt Roper <matthew.d.roper@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20241025160834.8785-1-suraj.kandpal@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/msm_gpu_devfreq.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/xe/display/xe_hdcp_gsc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/msm/msm_gpu_devfreq.c b/drivers/gpu/drm/msm/msm_gpu_devfreq.c
-index ea70c1c32d940..6970b0f7f457c 100644
---- a/drivers/gpu/drm/msm/msm_gpu_devfreq.c
-+++ b/drivers/gpu/drm/msm/msm_gpu_devfreq.c
-@@ -140,6 +140,7 @@ void msm_devfreq_init(struct msm_gpu *gpu)
- {
- 	struct msm_gpu_devfreq *df = &gpu->devfreq;
- 	struct msm_drm_private *priv = gpu->dev->dev_private;
-+	int ret;
+diff --git a/drivers/gpu/drm/xe/display/xe_hdcp_gsc.c b/drivers/gpu/drm/xe/display/xe_hdcp_gsc.c
+index 6619a40aed153..f4332f06b6c80 100644
+--- a/drivers/gpu/drm/xe/display/xe_hdcp_gsc.c
++++ b/drivers/gpu/drm/xe/display/xe_hdcp_gsc.c
+@@ -42,7 +42,7 @@ bool intel_hdcp_gsc_check_status(struct xe_device *xe)
+ 	struct xe_gsc *gsc = &gt->uc.gsc;
+ 	bool ret = true;
  
- 	/* We need target support to do devfreq */
- 	if (!gpu->funcs->gpu_busy)
-@@ -156,8 +157,12 @@ void msm_devfreq_init(struct msm_gpu *gpu)
- 
- 	mutex_init(&df->lock);
- 
--	dev_pm_qos_add_request(&gpu->pdev->dev, &df->boost_freq,
--			       DEV_PM_QOS_MIN_FREQUENCY, 0);
-+	ret = dev_pm_qos_add_request(&gpu->pdev->dev, &df->boost_freq,
-+				     DEV_PM_QOS_MIN_FREQUENCY, 0);
-+	if (ret < 0) {
-+		DRM_DEV_ERROR(&gpu->pdev->dev, "Couldn't initialize QoS\n");
-+		return;
-+	}
- 
- 	msm_devfreq_profile.initial_freq = gpu->fast_rate;
- 
+-	if (!gsc && !xe_uc_fw_is_enabled(&gsc->fw)) {
++	if (!gsc || !xe_uc_fw_is_enabled(&gsc->fw)) {
+ 		drm_dbg_kms(&xe->drm,
+ 			    "GSC Components not ready for HDCP2.x\n");
+ 		return false;
 -- 
 2.43.0
 
