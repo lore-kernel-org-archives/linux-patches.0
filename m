@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8907F1F7545;
-	Tue,  3 Dec 2024 15:10:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 456E61F8913;
+	Tue,  3 Dec 2024 15:10:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733238629; cv=none; b=lGy8TIgDlwhjZv7dF9+5pwojoIJ5t6tazMpZhynwpVL6h8/HjTFD4s0yOcKf0J1PtL7xP6jEUHSPfaeaJjokvCPQUdGeOv2enO6tt9dkPWPlJv04x60KGRYxBGxGHO51pQeZlq+w+Eju8swVhXpwotCUJmb1LEMAycB6Lzh8Lrc=
+	t=1733238632; cv=none; b=Nzx68fblT28hs7hXrtGDF++K3xyfqQVdOA9ee+ovzGgCb280QPI+MMnhpRv0jghoVqrgysdHqn++1m9R70Cui8tOtCfLMoK9hw38BXDeIuxijh1wJnIw/aVHyzC/+YvGLSz61fsCz8KWk6UI6o7cXNoX8kjA/yaLJ1u/VsOVrSw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733238629; c=relaxed/simple;
-	bh=kFyja+B6QLVc0wSkETfotY3fv52FcY9XCgYHwtDbym0=;
+	s=arc-20240116; t=1733238632; c=relaxed/simple;
+	bh=L4mOVFBq88Rc1rYey/V0Ena49ThaSAVK0COnJy4ETi4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bw0ryFZeYr7a0/pC2Cv3x7cctI8Okg/YMobeu43MQWAATk3oQzm0SBInxIUVi6H1DfbqCCJhwlZYUeoAJ7e48GzUY27JwWqqmehqm4DLnP15mSM63CL0XhepN1ppTE/yxL2OEi9bFaTnxfxU+A7iHRPgnLtpchfQVq4IVpof4/s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SG47AyMa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KuntLTyyQ7Zdy6Z/4EQ5tsnc4b/G7H4f6zFvXtk2+xe+xJE9aRWOGV+uBSjJzjTn8a+mG4etMVu0h5tvo4hPYRYUHS4zV0bo8MyiwZjdz8WOrJdzH+E3YMss63gVBmmtz+YN1OCXaQd+1qYiQYxOVCD1xoFPPzszXMV7mGrUoq8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=avvhULlu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SG47AyMa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C2FBC4CECF;
-	Tue,  3 Dec 2024 15:10:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="avvhULlu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5448C4CECF;
+	Tue,  3 Dec 2024 15:10:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733238629;
-	bh=kFyja+B6QLVc0wSkETfotY3fv52FcY9XCgYHwtDbym0=;
+	s=korg; t=1733238632;
+	bh=L4mOVFBq88Rc1rYey/V0Ena49ThaSAVK0COnJy4ETi4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SG47AyMad+dLARmlm8btWLYkeDBCRzixWp6HsGzACeppyMFT/kf9sh3kJQT1NWJlO
-	 4Xz8vLzeahc99xNBV5GCMF3O/txujkfAOoSkG5YnlNEqpcPz7cAXUks+hdEjpYPLyo
-	 aY1WSCpNXcmeI+K+UnvxVs4J50g5oeNsjtesdjKE=
+	b=avvhULlued8VTZoQDQ/EBZ8SfpM+mCHGb5ofBvRJVTDPp9EqF5S4uduc5L41R4TJu
+	 ORl1XAq5j802wfs4lrEm2l1p36eRHJh77VGypKHdlK3ZqYxIND4h0Ka64GpTN5ySHA
+	 U8IxmdQzUEM9oB5tqK/Ftv+UdOoStAzc//oMvdvw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Lijo Lazar <lijo.lazar@amd.com>,
 	Li Huafei <lihuafei1@huawei.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Lyude Paul <lyude@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 312/817] drm/amdgpu: Fix the memory allocation issue in amdgpu_discovery_get_nps_info()
-Date: Tue,  3 Dec 2024 15:38:04 +0100
-Message-ID: <20241203144007.995444567@linuxfoundation.org>
+Subject: [PATCH 6.11 303/817] drm/nouveau/gr/gf100: Fix missing unlock in gf100_gr_chan_new()
+Date: Tue,  3 Dec 2024 15:37:55 +0100
+Message-ID: <20241203144007.644004019@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -55,52 +53,37 @@ Content-Transfer-Encoding: 8bit
 
 From: Li Huafei <lihuafei1@huawei.com>
 
-[ Upstream commit a1144da794adedb9447437c57d69add56494309d ]
+[ Upstream commit a2f599046c671d6b46d93aed95b37241ce4504cf ]
 
-Fix two issues with memory allocation in amdgpu_discovery_get_nps_info()
-for mem_ranges:
+When the call to gf100_grctx_generate() fails, unlock gr->fecs.mutex
+before returning the error.
 
- - Add a check for allocation failure to avoid dereferencing a null
-   pointer.
+Fixes smatch warning:
 
- - As suggested by Christophe, use kvcalloc() for memory allocation,
-   which checks for multiplication overflow.
+drivers/gpu/drm/nouveau/nvkm/engine/gr/gf100.c:480 gf100_gr_chan_new() warn: inconsistent returns '&gr->fecs.mutex'.
 
-Additionally, assign the output parameters nps_type and range_cnt after
-the kvcalloc() call to prevent modifying the output parameters in case
-of an error return.
-
-Fixes: b194d21b9bcc ("drm/amdgpu: Use NPS ranges from discovery table")
-Suggested-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
+Fixes: ca081fff6ecc ("drm/nouveau/gr/gf100-: generate golden context during first object alloc")
 Signed-off-by: Li Huafei <lihuafei1@huawei.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Reviewed-by: Lyude Paul <lyude@redhat.com>
+Signed-off-by: Lyude Paul <lyude@redhat.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20241026173844.2392679-1-lihuafei1@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_discovery.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/nouveau/nvkm/engine/gr/gf100.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_discovery.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_discovery.c
-index 4bd61c169ca8d..ca8091fd3a24f 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_discovery.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_discovery.c
-@@ -1757,11 +1757,13 @@ int amdgpu_discovery_get_nps_info(struct amdgpu_device *adev,
- 
- 	switch (le16_to_cpu(nps_info->v1.header.version_major)) {
- 	case 1:
-+		mem_ranges = kvcalloc(nps_info->v1.count,
-+				      sizeof(*mem_ranges),
-+				      GFP_KERNEL);
-+		if (!mem_ranges)
-+			return -ENOMEM;
- 		*nps_type = nps_info->v1.nps_type;
- 		*range_cnt = nps_info->v1.count;
--		mem_ranges = kvzalloc(
--			*range_cnt * sizeof(struct amdgpu_gmc_memrange),
--			GFP_KERNEL);
- 		for (i = 0; i < *range_cnt; i++) {
- 			mem_ranges[i].base_address =
- 				nps_info->v1.instance_info[i].base_address;
+diff --git a/drivers/gpu/drm/nouveau/nvkm/engine/gr/gf100.c b/drivers/gpu/drm/nouveau/nvkm/engine/gr/gf100.c
+index 060c74a80eb14..3ea447f6a45b5 100644
+--- a/drivers/gpu/drm/nouveau/nvkm/engine/gr/gf100.c
++++ b/drivers/gpu/drm/nouveau/nvkm/engine/gr/gf100.c
+@@ -443,6 +443,7 @@ gf100_gr_chan_new(struct nvkm_gr *base, struct nvkm_chan *fifoch,
+ 		ret = gf100_grctx_generate(gr, chan, fifoch->inst);
+ 		if (ret) {
+ 			nvkm_error(&base->engine.subdev, "failed to construct context\n");
++			mutex_unlock(&gr->fecs.mutex);
+ 			return ret;
+ 		}
+ 	}
 -- 
 2.43.0
 
