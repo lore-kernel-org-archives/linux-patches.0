@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E49841F9F6E;
-	Tue,  3 Dec 2024 15:10:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8CFA1F8913;
+	Tue,  3 Dec 2024 15:10:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733238621; cv=none; b=JJ2/Ad6pZ18gY1e7uFFXaRebCPi5Qk7ZPtEKnO6PrM6seais6+PyzYZem08cvXfXGQU0SoAQN6Q4fYkjK2G7gc0V2hFv8oyCjZiXevOPTSDTdbH0LUr5LxSHo+HIKmS458aoXtJNGgy0sS0SbcXgrGMyQlM/LdlNKfEDS4uHfNY=
+	t=1733238623; cv=none; b=jjllndytXBssRKWULrjhnLo5liALOlmw3fEX1XbWK+++dVzevdEx0BiwoYgQB3YDWyw3GKmZiSQ4tgQW83GINn62Vh2fAiB09y7rjCh3U6H6Eyvx8WcxRkEoGva9UKqMRO9PCKJiPVt+43Njx5kHBNVgsS1juP2r1yN7rdsVxio=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733238621; c=relaxed/simple;
-	bh=uObt0zRF1yP9QbV29wo3AjShE8ykN9W1gcyEvY0X274=;
+	s=arc-20240116; t=1733238623; c=relaxed/simple;
+	bh=tjZ3k/fn+URv+YdrKM96uWgzh7G+vYS6Ghi0lZW/7/4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iKHEw570CX+wQ2PKmzq8xx71DMAVLH9JiRT4w+lsYbMN11cU1ihtptPVa2CQ0zvGme2stKgN7ygOBun4Sl4jRCwlNbYYpjN0cFUzm3/kOczP1yf1J4c1oRN9irc3ctkdYkk1Qf0uVnZ0YRYexvvrR/aqf1y5RCXUwxM2c3GEFq8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x5EWP6HQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Of7qp/LUABUb8BYelZSxresIAssXVuduzk+Sy9HNh7GjOaDM4fKfy4gTe9unViCR87UPauyMZLk8O3fhiFAWcm0Qwko5sCG0wLOF8B4HfYmjzsBNgt0wA6g6srMmPs8UjCYd00dfyb5iMRw5bRCWZkJXy9Id2Pw1ZSKDWoUcChI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hPdsbBv9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x5EWP6HQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6815FC4CED6;
-	Tue,  3 Dec 2024 15:10:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hPdsbBv9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4270CC4CED6;
+	Tue,  3 Dec 2024 15:10:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733238620;
-	bh=uObt0zRF1yP9QbV29wo3AjShE8ykN9W1gcyEvY0X274=;
+	s=korg; t=1733238623;
+	bh=tjZ3k/fn+URv+YdrKM96uWgzh7G+vYS6Ghi0lZW/7/4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x5EWP6HQwAsGlc5OYp8/dNRYNeLI2aoic6HNdtcUXmV0dbeVj5zlGClWkwITOzzSN
-	 hQoVmWQHDrto5b1l/0Yky5W/2L+INUE0lnd8i2DKvRZAik3i6k4SnUSGD2wVkkgLlY
-	 BO96hA0/pE+90illsORDoxXZo1n2JLiBwdizM4bw=
+	b=hPdsbBv9duEkNzgjBlO/REzXMZFhefG6Vsqv3AXXjGKfzjB4/Zah8HyJGVMBAX6jH
+	 uT2qQsQA6i4Htkbhnb3aYloGy8i3ml/RwanNkQW9gPOgWyigsfRC67m8WLOLfjeLZS
+	 pML1sPySvCN2H7FFs4cCEgLflM4cMwxn5QPwnhsc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leon Hwang <leon.hwang@linux.dev>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Quentin Monnet <qmo@kernel.org>,
-	Yonghong Song <yonghong.song@linux.dev>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 309/817] bpf, bpftool: Fix incorrect disasm pc
-Date: Tue,  3 Dec 2024 15:38:01 +0100
-Message-ID: <20241203144007.879066256@linuxfoundation.org>
+Subject: [PATCH 6.11 310/817] bpf: Tighten tail call checks for lingering locks, RCU, preempt_disable
+Date: Tue,  3 Dec 2024 15:38:02 +0100
+Message-ID: <20241203144007.917808097@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -53,161 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leon Hwang <leon.hwang@linux.dev>
+From: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 
-[ Upstream commit 4d99e509c161f8610de125202c648fa4acd00541 ]
+[ Upstream commit 46f7ed32f7a873d6675ea72e1d6317df41a55f81 ]
 
-This patch addresses the bpftool issue "Wrong callq address displayed"[0].
+There are three situations when a program logically exits and transfers
+control to the kernel or another program: bpf_throw, BPF_EXIT, and tail
+calls. The former two check for any lingering locks and references, but
+tail calls currently do not. Expand the checks to check for spin locks,
+RCU read sections and preempt disabled sections.
 
-The issue stemmed from an incorrect program counter (PC) value used during
-disassembly with LLVM or libbfd.
+Spin locks are indirectly preventing tail calls as function calls are
+disallowed, but the checks for preemption and RCU are more relaxed,
+hence ensure tail calls are prevented in their presence.
 
-For LLVM: The PC argument must represent the actual address in the kernel
-to compute the correct relative address.
-
-For libbfd: The relative address can be adjusted by adding func_ksym within
-the custom info->print_address_func to yield the correct address.
-
-Links:
-[0] https://github.com/libbpf/bpftool/issues/109
-
-Changes:
-v2 -> v3:
-  * Address comment from Quentin:
-    * Remove the typedef.
-
-v1 -> v2:
-  * Fix the broken libbfd disassembler.
-
-Fixes: e1947c750ffe ("bpftool: Refactor disassembler for JIT-ed programs")
-Signed-off-by: Leon Hwang <leon.hwang@linux.dev>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Tested-by: Quentin Monnet <qmo@kernel.org>
-Reviewed-by: Quentin Monnet <qmo@kernel.org>
-Acked-by: Yonghong Song <yonghong.song@linux.dev>
-Link: https://lore.kernel.org/bpf/20241031152844.68817-1-leon.hwang@linux.dev
+Fixes: 9bb00b2895cb ("bpf: Add kfunc bpf_rcu_read_lock/unlock()")
+Fixes: fc7566ad0a82 ("bpf: Introduce bpf_preempt_[disable,enable] kfuncs")
+Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Link: https://lore.kernel.org/r/20241103225940.1408302-2-memxor@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/bpf/bpftool/jit_disasm.c | 40 ++++++++++++++++++++++++----------
- 1 file changed, 29 insertions(+), 11 deletions(-)
+ kernel/bpf/verifier.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-diff --git a/tools/bpf/bpftool/jit_disasm.c b/tools/bpf/bpftool/jit_disasm.c
-index 7b8d9ec89ebd3..c032d2c6ab6d5 100644
---- a/tools/bpf/bpftool/jit_disasm.c
-+++ b/tools/bpf/bpftool/jit_disasm.c
-@@ -80,7 +80,8 @@ symbol_lookup_callback(__maybe_unused void *disasm_info,
- static int
- init_context(disasm_ctx_t *ctx, const char *arch,
- 	     __maybe_unused const char *disassembler_options,
--	     __maybe_unused unsigned char *image, __maybe_unused ssize_t len)
-+	     __maybe_unused unsigned char *image, __maybe_unused ssize_t len,
-+	     __maybe_unused __u64 func_ksym)
- {
- 	char *triple;
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index a5a9b4e418a68..3bee91db81f0a 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -10459,11 +10459,26 @@ static int check_helper_call(struct bpf_verifier_env *env, struct bpf_insn *insn
  
-@@ -109,12 +110,13 @@ static void destroy_context(disasm_ctx_t *ctx)
- }
- 
- static int
--disassemble_insn(disasm_ctx_t *ctx, unsigned char *image, ssize_t len, int pc)
-+disassemble_insn(disasm_ctx_t *ctx, unsigned char *image, ssize_t len, int pc,
-+		 __u64 func_ksym)
- {
- 	char buf[256];
- 	int count;
- 
--	count = LLVMDisasmInstruction(*ctx, image + pc, len - pc, pc,
-+	count = LLVMDisasmInstruction(*ctx, image + pc, len - pc, func_ksym + pc,
- 				      buf, sizeof(buf));
- 	if (json_output)
- 		printf_json(buf);
-@@ -136,8 +138,21 @@ int disasm_init(void)
- #ifdef HAVE_LIBBFD_SUPPORT
- #define DISASM_SPACER "\t"
- 
-+struct disasm_info {
-+	struct disassemble_info info;
-+	__u64 func_ksym;
-+};
+ 	switch (func_id) {
+ 	case BPF_FUNC_tail_call:
++		if (env->cur_state->active_lock.ptr) {
++			verbose(env, "tail_call cannot be used inside bpf_spin_lock-ed region\n");
++			return -EINVAL;
++		}
 +
-+static void disasm_print_addr(bfd_vma addr, struct disassemble_info *info)
-+{
-+	struct disasm_info *dinfo = container_of(info, struct disasm_info, info);
-+
-+	addr += dinfo->func_ksym;
-+	generic_print_address(addr, info);
-+}
-+
- typedef struct {
--	struct disassemble_info *info;
-+	struct disasm_info *info;
- 	disassembler_ftype disassemble;
- 	bfd *bfdf;
- } disasm_ctx_t;
-@@ -215,7 +230,7 @@ static int fprintf_json_styled(void *out,
- 
- static int init_context(disasm_ctx_t *ctx, const char *arch,
- 			const char *disassembler_options,
--			unsigned char *image, ssize_t len)
-+			unsigned char *image, ssize_t len, __u64 func_ksym)
- {
- 	struct disassemble_info *info;
- 	char tpath[PATH_MAX];
-@@ -238,12 +253,13 @@ static int init_context(disasm_ctx_t *ctx, const char *arch,
- 	}
- 	bfdf = ctx->bfdf;
- 
--	ctx->info = malloc(sizeof(struct disassemble_info));
-+	ctx->info = malloc(sizeof(struct disasm_info));
- 	if (!ctx->info) {
- 		p_err("mem alloc failed");
- 		goto err_close;
- 	}
--	info = ctx->info;
-+	ctx->info->func_ksym = func_ksym;
-+	info = &ctx->info->info;
- 
- 	if (json_output)
- 		init_disassemble_info_compat(info, stdout,
-@@ -272,6 +288,7 @@ static int init_context(disasm_ctx_t *ctx, const char *arch,
- 		info->disassembler_options = disassembler_options;
- 	info->buffer = image;
- 	info->buffer_length = len;
-+	info->print_address_func = disasm_print_addr;
- 
- 	disassemble_init_for_target(info);
- 
-@@ -304,9 +321,10 @@ static void destroy_context(disasm_ctx_t *ctx)
- 
- static int
- disassemble_insn(disasm_ctx_t *ctx, __maybe_unused unsigned char *image,
--		 __maybe_unused ssize_t len, int pc)
-+		 __maybe_unused ssize_t len, int pc,
-+		 __maybe_unused __u64 func_ksym)
- {
--	return ctx->disassemble(pc, ctx->info);
-+	return ctx->disassemble(pc, &ctx->info->info);
- }
- 
- int disasm_init(void)
-@@ -331,7 +349,7 @@ int disasm_print_insn(unsigned char *image, ssize_t len, int opcodes,
- 	if (!len)
- 		return -1;
- 
--	if (init_context(&ctx, arch, disassembler_options, image, len))
-+	if (init_context(&ctx, arch, disassembler_options, image, len, func_ksym))
- 		return -1;
- 
- 	if (json_output)
-@@ -360,7 +378,7 @@ int disasm_print_insn(unsigned char *image, ssize_t len, int opcodes,
- 			printf("%4x:" DISASM_SPACER, pc);
+ 		err = check_reference_leak(env, false);
+ 		if (err) {
+ 			verbose(env, "tail_call would lead to reference leak\n");
+ 			return err;
  		}
- 
--		count = disassemble_insn(&ctx, image, len, pc);
-+		count = disassemble_insn(&ctx, image, len, pc, func_ksym);
- 
- 		if (json_output) {
- 			/* Operand array, was started in fprintf_json. Before
++
++		if (env->cur_state->active_rcu_lock) {
++			verbose(env, "tail_call cannot be used inside bpf_rcu_read_lock-ed region\n");
++			return -EINVAL;
++		}
++
++		if (env->cur_state->active_preempt_lock) {
++			verbose(env, "tail_call cannot be used inside bpf_preempt_disable-ed region\n");
++			return -EINVAL;
++		}
+ 		break;
+ 	case BPF_FUNC_get_local_storage:
+ 		/* check that flags argument in get_local_storage(map, flags) is 0,
 -- 
 2.43.0
 
