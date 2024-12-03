@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 071521F76AD;
-	Tue,  3 Dec 2024 16:08:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6395F81ADA;
+	Tue,  3 Dec 2024 16:08:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733242102; cv=none; b=t45HyhyGlk1nJCiziMTyEQmyutr62uWD6sOZZqEJymPfmTfIVJ3UufCi1j8+SSrAfvjyZ18JHfLbrJQWfdbdygofcXB18KPUyooFxvk4j7ohA+UyByYgCBPitwjQBJy5Ocg8d5r6OhrNDQT6Mpe1YS6Wgv61MNnvGuLq4fI6K94=
+	t=1733242105; cv=none; b=OPVIZAH7y/XJQ2o6i1VsD4qrTUgtuC5eXJtR4GgV+rVU1nBK78fjv796caSBWasyPiPI2ESsB6r9qM4SYYxiWBUX9/7eDd7ErelMQGmj5c6C462W+tKh+g+D/ixEfmuZboT7NS3WmChKhW/Jsq02ji50tGa22oO1VGiaer/jbFQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733242102; c=relaxed/simple;
-	bh=oj0BEKeV8TbzCXMKvar+d7ph1mrP2Q9V1D5opZ5IL/4=;
+	s=arc-20240116; t=1733242105; c=relaxed/simple;
+	bh=rRxwlFmfHqQtKarodbpO9lG4fIWl7IjeX56MlMJpJL8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dSyPoJV8AIFora+LrE0hyo5at+c3vnMLtmPtjN0zV0jcF6LAMwVzpb0B2991wpL8bjSBfGwVsYqum07Ay419kohcPkqxPadgZ7r0YSp+OORwzv1HqzcdTCQkZ06/xz9Mscb1vidTpLLr2K54iqYkGmFekfwfMui4VQ+2vq9D7FA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MccE3ISl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=baLKH4uU7OREXo83cnJMLmnT8ns9vK91YkKhmSja1KccADeyd+ftb8B6d+W/4eX2khouBFjGE2iWfcOp9w7tkDNOGxn0C76FYgOuIrACEdvSMGw11N1iUTw1546covSAxRf1m4yTMaa0KjCPI0EB5ikbdvtq3m0PtmrbkBkzuKE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fb+uAlmV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MccE3ISl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78AA5C4CECF;
-	Tue,  3 Dec 2024 16:08:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fb+uAlmV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6A42C4CECF;
+	Tue,  3 Dec 2024 16:08:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733242101;
-	bh=oj0BEKeV8TbzCXMKvar+d7ph1mrP2Q9V1D5opZ5IL/4=;
+	s=korg; t=1733242105;
+	bh=rRxwlFmfHqQtKarodbpO9lG4fIWl7IjeX56MlMJpJL8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MccE3ISlL+p19tPqx5wnrN3y3yUEy5wApnI7BPj/cNFlP8cOP3cu/B8XDI+H2pSod
-	 9EM/KLxaILWg5h2H3fRQ6eU0+0t5faPgbfS8pUDnpwhTadczcT29t41Rt2In775yIb
-	 VHYaTKwZHzge23QjuSbyapXkDsMTnfXbOEn7P4JU=
+	b=Fb+uAlmVcGWW4HermO2aq1KgW8uQBMQcE6TA0v7dVVoX9w+bzTWqYVDvaFJpudlEB
+	 4RWEov7pMfkDKXo/Y5yCJ1v1S4Vjjdgq7/uneVRvVyeZlrh/y2Eo8TsKXrWYUc31+K
+	 uYyDw/cUDL/evnEbT2zx4OTMmCtYzibi0K6/F/zE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Somnath Kotur <somnath.kotur@broadcom.com>,
-	Pavan Chebbi <pavan.chebbi@broadcom.com>,
-	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
-	Michael Chan <michael.chan@broadcom.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	kernel test robot <lkp@intel.com>,
+	Carl Vanderlip <quic_carlv@quicinc.com>,
+	Jeffrey Hugo <quic_jhugo@quicinc.com>,
+	Mayank Rana <quic_mrana@quicinc.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 581/826] bnxt_en: Refactor bnxt_ptp_init()
-Date: Tue,  3 Dec 2024 15:45:08 +0100
-Message-ID: <20241203144806.413388296@linuxfoundation.org>
+Subject: [PATCH 6.12 608/826] bus: mhi: host: Switch trace_mhi_gen_tre fields to native endian
+Date: Tue,  3 Dec 2024 15:45:35 +0100
+Message-ID: <20241203144807.471288670@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -54,96 +54,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Chan <michael.chan@broadcom.com>
+From: Carl Vanderlip <quic_carlv@quicinc.com>
 
-[ Upstream commit 1e9614cd956268e10a669c0593e7e54d03d0c087 ]
+[ Upstream commit 23388a1b305e8aac714fafd5fdc72a580586bd0c ]
 
-Instead of passing the 2nd parameter phc_cfg to bnxt_ptp_init().
-Store it in bp->ptp_cfg so that the caller doesn't need to know what
-the value should be.
+Each of the __field() macros were triggering sparse warnings similar to:
+trace.h:87:1: sparse: sparse: cast to restricted __le64
+trace.h:87:1: sparse: sparse: restricted __le64 degrades to integer
+trace.h:87:1: sparse: sparse: restricted __le64 degrades to integer
 
-In the next patch, we'll need to call bnxt_ptp_init() in bnxt_resume()
-and this will make it easier.
+Change each little endian type to its similarly sized native integer.
+Convert inputs into native endian.
 
-Reviewed-by: Somnath Kotur <somnath.kotur@broadcom.com>
-Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
-Reviewed-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
-Signed-off-by: Michael Chan <michael.chan@broadcom.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Stable-dep-of: 3661c05c54e8 ("bnxt_en: Unregister PTP during PCI shutdown and suspend")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202402071859.8qMhgJEQ-lkp@intel.com/
+Fixes: ceeb64f41fe6 ("bus: mhi: host: Add tracing support")
+Signed-off-by: Carl Vanderlip <quic_carlv@quicinc.com>
+Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+Reviewed-by: Mayank Rana <quic_mrana@quicinc.com>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Link: https://lore.kernel.org/r/20241004170321.4047492-1-quic_carlv@quicinc.com
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt.c     | 6 +++---
- drivers/net/ethernet/broadcom/bnxt/bnxt_ptp.c | 4 ++--
- drivers/net/ethernet/broadcom/bnxt/bnxt_ptp.h | 3 ++-
- 3 files changed, 7 insertions(+), 6 deletions(-)
+ drivers/bus/mhi/host/trace.h | 25 +++++++++++++------------
+ 1 file changed, 13 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-index 913acd80d6483..015ad2b0bcd1c 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-@@ -9053,7 +9053,6 @@ static int __bnxt_hwrm_ptp_qcfg(struct bnxt *bp)
- 	struct hwrm_port_mac_ptp_qcfg_output *resp;
- 	struct hwrm_port_mac_ptp_qcfg_input *req;
- 	struct bnxt_ptp_cfg *ptp = bp->ptp_cfg;
--	bool phc_cfg;
- 	u8 flags;
- 	int rc;
+diff --git a/drivers/bus/mhi/host/trace.h b/drivers/bus/mhi/host/trace.h
+index 95613c8ebe069..3e0c41777429e 100644
+--- a/drivers/bus/mhi/host/trace.h
++++ b/drivers/bus/mhi/host/trace.h
+@@ -9,6 +9,7 @@
+ #if !defined(_TRACE_EVENT_MHI_HOST_H) || defined(TRACE_HEADER_MULTI_READ)
+ #define _TRACE_EVENT_MHI_HOST_H
  
-@@ -9100,8 +9099,9 @@ static int __bnxt_hwrm_ptp_qcfg(struct bnxt *bp)
- 		rc = -ENODEV;
- 		goto exit;
- 	}
--	phc_cfg = (flags & PORT_MAC_PTP_QCFG_RESP_FLAGS_RTC_CONFIGURED) != 0;
--	rc = bnxt_ptp_init(bp, phc_cfg);
-+	ptp->rtc_configured =
-+		(flags & PORT_MAC_PTP_QCFG_RESP_FLAGS_RTC_CONFIGURED) != 0;
-+	rc = bnxt_ptp_init(bp);
- 	if (rc)
- 		netdev_warn(bp->dev, "PTP initialization failed.\n");
- exit:
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_ptp.c b/drivers/net/ethernet/broadcom/bnxt/bnxt_ptp.c
-index fa514be876502..781225d3ba8ff 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt_ptp.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_ptp.c
-@@ -1024,7 +1024,7 @@ static void bnxt_ptp_free(struct bnxt *bp)
- 	}
- }
++#include <linux/byteorder/generic.h>
+ #include <linux/tracepoint.h>
+ #include <linux/trace_seq.h>
+ #include "../common.h"
+@@ -97,18 +98,18 @@ TRACE_EVENT(mhi_gen_tre,
+ 		__string(name, mhi_cntrl->mhi_dev->name)
+ 		__field(int, ch_num)
+ 		__field(void *, wp)
+-		__field(__le64, tre_ptr)
+-		__field(__le32, dword0)
+-		__field(__le32, dword1)
++		__field(uint64_t, tre_ptr)
++		__field(uint32_t, dword0)
++		__field(uint32_t, dword1)
+ 	),
  
--int bnxt_ptp_init(struct bnxt *bp, bool phc_cfg)
-+int bnxt_ptp_init(struct bnxt *bp)
- {
- 	struct bnxt_ptp_cfg *ptp = bp->ptp_cfg;
- 	int rc;
-@@ -1047,7 +1047,7 @@ int bnxt_ptp_init(struct bnxt *bp, bool phc_cfg)
+ 	TP_fast_assign(
+ 		__assign_str(name);
+ 		__entry->ch_num = mhi_chan->chan;
+ 		__entry->wp = mhi_tre;
+-		__entry->tre_ptr = mhi_tre->ptr;
+-		__entry->dword0 = mhi_tre->dword[0];
+-		__entry->dword1 = mhi_tre->dword[1];
++		__entry->tre_ptr = le64_to_cpu(mhi_tre->ptr);
++		__entry->dword0 = le32_to_cpu(mhi_tre->dword[0]);
++		__entry->dword1 = le32_to_cpu(mhi_tre->dword[1]);
+ 	),
  
- 	if (BNXT_PTP_USE_RTC(bp)) {
- 		bnxt_ptp_timecounter_init(bp, false);
--		rc = bnxt_ptp_init_rtc(bp, phc_cfg);
-+		rc = bnxt_ptp_init_rtc(bp, ptp->rtc_configured);
- 		if (rc)
- 			goto out;
- 	} else {
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_ptp.h b/drivers/net/ethernet/broadcom/bnxt/bnxt_ptp.h
-index f322466ecad35..61e89bb2d2690 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt_ptp.h
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_ptp.h
-@@ -133,6 +133,7 @@ struct bnxt_ptp_cfg {
- 					 BNXT_PTP_MSG_PDELAY_REQ |	\
- 					 BNXT_PTP_MSG_PDELAY_RESP)
- 	u8			tx_tstamp_en:1;
-+	u8			rtc_configured:1;
- 	int			rx_filter;
- 	u32			tstamp_filters;
+ 	TP_printk("%s: Chan: %d TRE: 0x%p TRE buf: 0x%llx DWORD0: 0x%08x DWORD1: 0x%08x\n",
+@@ -176,19 +177,19 @@ DECLARE_EVENT_CLASS(mhi_process_event_ring,
  
-@@ -180,6 +181,6 @@ void bnxt_tx_ts_cmp(struct bnxt *bp, struct bnxt_napi *bnapi,
- 		    struct tx_ts_cmp *tscmp);
- void bnxt_ptp_rtc_timecounter_init(struct bnxt_ptp_cfg *ptp, u64 ns);
- int bnxt_ptp_init_rtc(struct bnxt *bp, bool phc_cfg);
--int bnxt_ptp_init(struct bnxt *bp, bool phc_cfg);
-+int bnxt_ptp_init(struct bnxt *bp);
- void bnxt_ptp_clear(struct bnxt *bp);
- #endif
+ 	TP_STRUCT__entry(
+ 		__string(name, mhi_cntrl->mhi_dev->name)
+-		__field(__le32, dword0)
+-		__field(__le32, dword1)
++		__field(uint32_t, dword0)
++		__field(uint32_t, dword1)
+ 		__field(int, state)
+-		__field(__le64, ptr)
++		__field(uint64_t, ptr)
+ 		__field(void *, rp)
+ 	),
+ 
+ 	TP_fast_assign(
+ 		__assign_str(name);
+ 		__entry->rp = rp;
+-		__entry->ptr = rp->ptr;
+-		__entry->dword0 = rp->dword[0];
+-		__entry->dword1 = rp->dword[1];
++		__entry->ptr = le64_to_cpu(rp->ptr);
++		__entry->dword0 = le32_to_cpu(rp->dword[0]);
++		__entry->dword1 = le32_to_cpu(rp->dword[1]);
+ 		__entry->state = MHI_TRE_GET_EV_STATE(rp);
+ 	),
+ 
 -- 
 2.43.0
 
