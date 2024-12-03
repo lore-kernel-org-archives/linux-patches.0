@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB6191F8AEF;
-	Tue,  3 Dec 2024 15:45:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 542B71F8EEE;
+	Tue,  3 Dec 2024 15:45:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733240738; cv=none; b=DmJuYUUTSmqQAA1/SivhedVEzrDXeIUk11zlrBPvPJ0YiOSY5tXRy4Ao0cIXSauljCqwrAT3aw9cMzt1y5e4EsN1KowfVk1VnIOQVAodZZmis4Ch0Uc82U+7IC3mWyRslVx7Q7NX8I3l2xMR4Dwken90MFj6YJ5vObYb2P+1FIk=
+	t=1733240742; cv=none; b=LjWVrCioQ+tSh4KvuXtHZfwGk9TyZ7TUFsmd/g0YpLx0+eth36Cbby6mSZDYThk9oA/O1vx5SiZuaGbLyXB1IPMLuJByjFJioiv5zxtw6n1XmI5UHXcaOgYrwgcO1LlLmC2o63nAnDwnwKeaHkG6PofHUa/wLvuHyIppLNC5MdA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733240738; c=relaxed/simple;
-	bh=sibBjDl2k/e07GGTXMAHkkKVjgAVVSiFhzOskMSD6WU=;
+	s=arc-20240116; t=1733240742; c=relaxed/simple;
+	bh=ZrrFoKDBJ5VTYdgbs//uHIqfsrqxJpPwzKOsvzxJ69U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=UCOlI6R/Ps5kKqi+w7W3/Slqo2AUwx+SLr0fi0BNF+JHZE1ZvRmP8dYxVqi5m6mcKqeWUMXojW42IlS0YL/6AS+zMFAv5dP98ka9eUgmnc+4GeTPUOxi6cV9V/XMxuyRatPsmGzN7JJoKRa14iBA67/dtUAXLTlngNQrHqdaQxE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uJIveJ2p; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fBY3u4Uk2wMYvxAcPcnb3L+qIjVvBvP6t6/Gkrv43q9zb89ciaRvwdPtr8W0HSw9fkpeLEMQ9rUEAdiSJH5BJ5vkQq8F4lfNunoGr9UiXnM9lSLX7vepGqbHHIdfRK5FrrgoTRUyzSgCCF4s2iZxaYZ8omQqI7sNRuB/gvw/0pE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XisHcUkp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uJIveJ2p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41AC3C4CECF;
-	Tue,  3 Dec 2024 15:45:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XisHcUkp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7470C4CECF;
+	Tue,  3 Dec 2024 15:45:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733240738;
-	bh=sibBjDl2k/e07GGTXMAHkkKVjgAVVSiFhzOskMSD6WU=;
+	s=korg; t=1733240742;
+	bh=ZrrFoKDBJ5VTYdgbs//uHIqfsrqxJpPwzKOsvzxJ69U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uJIveJ2pUA6Ory2mXb2KRlT3/jd+DHjY2Sc+abSF4ap6NUf8IbgjtM05hTlUiwRQM
-	 r7LBGO3TghOoc0MhIUyzCFLSrgRUAaF8hrfoQjy/eTVg1lQFHEoQ7UXaRw1qtXIE1O
-	 5eKUHAwPB0OY3qAStE6HkD3+avYmb0JdaWkXp2YE=
+	b=XisHcUkpx2p3cWm48m6AVfUMn3nzp9ArwSkL8WdsGGNEF11FJjogjxqwJC3KW53YA
+	 Z2ThZ459uZ3PCfcY/vveqIxJ/g0OmiJiaOmRGn4JxJfqR0F4OrKQiRZDtqkGljBNYO
+	 O7zrRTpUXAVYQnpEr348ZmBJVS3t7ZVg9NycHYu8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Maguire <alan.maguire@oracle.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Eduard Zingerman <eddyz87@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Alexander Aring <aahringo@redhat.com>,
+	David Teigland <teigland@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 221/826] selftests/bpf: Fix uprobe_multi compilation error
-Date: Tue,  3 Dec 2024 15:39:08 +0100
-Message-ID: <20241203144752.362144939@linuxfoundation.org>
+Subject: [PATCH 6.12 222/826] dlm: fix swapped args sb_flags vs sb_status
+Date: Tue,  3 Dec 2024 15:39:09 +0100
+Message-ID: <20241203144752.400106144@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -47,57 +45,40 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alan Maguire <alan.maguire@oracle.com>
+From: Alexander Aring <aahringo@redhat.com>
 
-[ Upstream commit c27d8235ba97139d7a085367ff57773902eb3fc5 ]
+[ Upstream commit 6d59f2fbfb18965f76ebcff40ab38da717cde798 ]
 
-When building selftests, the following was seen:
+The arguments got swapped by commit 986ae3c2a8df ("dlm: fix race between
+final callback and remove") fixing this now.
 
-uprobe_multi.c: In function ‘trigger_uprobe’:
-uprobe_multi.c:108:40: error: ‘MADV_PAGEOUT’ undeclared (first use in this function)
-  108 |                 madvise(addr, page_sz, MADV_PAGEOUT);
-      |                                        ^~~~~~~~~~~~
-uprobe_multi.c:108:40: note: each undeclared identifier is reported only once for each function it appears in
-make: *** [Makefile:850: bpf-next/tools/testing/selftests/bpf/uprobe_multi] Error 1
-
-...even with updated UAPI headers. It seems the above value is
-defined in UAPI <linux/mman.h> but including that file triggers
-other redefinition errors.  Simplest solution is to add a
-guarded definition, as was done for MADV_POPULATE_READ.
-
-Fixes: 3c217a182018 ("selftests/bpf: add build ID tests")
-Signed-off-by: Alan Maguire <alan.maguire@oracle.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Acked-by: Eduard Zingerman <eddyz87@gmail.com>
-Link: https://lore.kernel.org/bpf/20240926144948.172090-1-alan.maguire@oracle.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: 986ae3c2a8df ("dlm: fix race between final callback and remove")
+Signed-off-by: Alexander Aring <aahringo@redhat.com>
+Signed-off-by: David Teigland <teigland@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/uprobe_multi.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ fs/dlm/ast.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/bpf/uprobe_multi.c b/tools/testing/selftests/bpf/uprobe_multi.c
-index c7828b13e5ffd..dd38dc68f6359 100644
---- a/tools/testing/selftests/bpf/uprobe_multi.c
-+++ b/tools/testing/selftests/bpf/uprobe_multi.c
-@@ -12,6 +12,10 @@
- #define MADV_POPULATE_READ 22
- #endif
- 
-+#ifndef MADV_PAGEOUT
-+#define MADV_PAGEOUT 21
-+#endif
-+
- int __attribute__((weak)) uprobe(void)
- {
- 	return 0;
+diff --git a/fs/dlm/ast.c b/fs/dlm/ast.c
+index 742b30b61c196..0fe8d80ce5e8d 100644
+--- a/fs/dlm/ast.c
++++ b/fs/dlm/ast.c
+@@ -30,7 +30,7 @@ static void dlm_run_callback(uint32_t ls_id, uint32_t lkb_id, int8_t mode,
+ 		trace_dlm_bast(ls_id, lkb_id, mode, res_name, res_length);
+ 		bastfn(astparam, mode);
+ 	} else if (flags & DLM_CB_CAST) {
+-		trace_dlm_ast(ls_id, lkb_id, sb_status, sb_flags, res_name,
++		trace_dlm_ast(ls_id, lkb_id, sb_flags, sb_status, res_name,
+ 			      res_length);
+ 		lksb->sb_status = sb_status;
+ 		lksb->sb_flags = sb_flags;
 -- 
 2.43.0
 
