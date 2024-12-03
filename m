@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65D7F1AB6C9;
-	Tue,  3 Dec 2024 15:53:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C28501AB6C9;
+	Tue,  3 Dec 2024 15:53:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733241212; cv=none; b=cTldrDgDKHh+If901aaXVYP8ZNfMX6zDxVQ0hG1kDgOJElDkqe1ErjhHFIhOZKUPue/HsuX5N54hYvXq//pSbwFEl5RNnk0KUQvQjQ35P3oBc+6eesbcE4V98v9+rOygkhYxGJHfPz6wQ3rfRkKX6gltXfUF7/hb5gSOnnyh1RA=
+	t=1733241215; cv=none; b=lTdPAey6k0+rSgHu6emuSCKLq26UlkdYQgK13TUejBSqDqWmUsWIDBVK0srAHE2MSdjDJdcsV3fO0VyD+kyan4DPppw7+AX/7T/7wl0WpspP0mlR6n0AVhW6lVDrDjv1SfG7NtKRUwz2R8ME976QjLS8NynCrysRimAPkNPPN6Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733241212; c=relaxed/simple;
-	bh=2hOh0Ue2TdcWuLwUNIoYEZYwVR6sIutjX06vWztoSpY=;
+	s=arc-20240116; t=1733241215; c=relaxed/simple;
+	bh=h4ga0Qogc3BpOYpnDkwrpU+/o1zsx89nsUHGJh/3w2o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Pda0pZh34aMWMxIyS6uKqUX0z5AI9K4hmVTzEPA7wbeiHpfpSWxdq2F5NQ/LmCLPqaobsNb0Hp8Z5KWMyI2nsJ1OkaHFL5DJzlcvPzvF2H4lgJAzrE2abtIDQFg8j/3scHiSprL/7HfqEKfeUljR8qNwQ89MrBAfSv7t6bttBzw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o07k9ku2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HYpaCDL+l2u66Gsg2rJN2X4qiEmqGjYNLL4MWDqeUw96zD8J9YpEWpYBVRwFsobk0fiZIK36a+D5UrwqQLiirWjqeX/zaWb82lygHAg+r01fl1ASlwuDCg3v/sI75ZNyjuX+YaiaD+b4Etc57Xhl971QuRxWbJV4F0bfeflATJA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FOySEAOQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o07k9ku2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB59AC4CECF;
-	Tue,  3 Dec 2024 15:53:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FOySEAOQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 017ECC4CED8;
+	Tue,  3 Dec 2024 15:53:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733241212;
-	bh=2hOh0Ue2TdcWuLwUNIoYEZYwVR6sIutjX06vWztoSpY=;
+	s=korg; t=1733241215;
+	bh=h4ga0Qogc3BpOYpnDkwrpU+/o1zsx89nsUHGJh/3w2o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o07k9ku28ENOSKTgZWvAEKcbdIzv3jk+mMPSlby3TwFk4NbKUpogFWveFmR+j8FCD
-	 7qTeJBoMIzkut34nySlm2N5AmVwYzr4beYMj0nWGji2T2HQyPgAhH7UBBcyzICQ45o
-	 0Zy3zEWqTMYfcK5qcl5OEarcbB1W54qTVBGtreqI=
+	b=FOySEAOQw7BkYughchUscdu8+HPjHrkZJBHfGJojBVPQ7oioAhuSPjSaM5vlmdWkX
+	 MQy4wW98H9aKF/Eyyqd2rk+FhoT8Ys1UmgxQFpWGhcw3/fAZP8flKgAlvQHtyQtuu4
+	 OJhp8s4hSxcuAR8omaftp7AO8UgeCQ8GNuH38Sag=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jie Zhan <zhanjie9@hisilicon.com>,
-	Zeng Heng <zengheng4@huawei.com>,
-	Ionela Voinescu <ionela.voinescu@arm.com>,
-	Huisong Li <lihuisong@huawei.com>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 358/826] cppc_cpufreq: Use desired perf if feedback ctrs are 0 or unchanged
-Date: Tue,  3 Dec 2024 15:41:25 +0100
-Message-ID: <20241203144757.725441659@linuxfoundation.org>
+Subject: [PATCH 6.12 341/826] Bluetooth: ISO: Use kref to track lifetime of iso_conn
+Date: Tue,  3 Dec 2024 15:41:08 +0100
+Message-ID: <20241203144757.063342247@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -54,126 +50,209 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jie Zhan <zhanjie9@hisilicon.com>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit c47195631960b626058c335aec31f186fa854f97 ]
+[ Upstream commit dc26097bdb864a0d5955b9a25e43376ffc1af99b ]
 
-The CPPC performance feedback counters could be 0 or unchanged when the
-target cpu is in a low-power idle state, e.g. power-gated or clock-gated.
+This make use of kref to keep track of reference of iso_conn which
+allows better tracking of its lifetime with usage of things like
+kref_get_unless_zero in a similar way as used in l2cap_chan.
 
-When the counters are 0, cppc_cpufreq_get_rate() returns 0 KHz, which makes
-cpufreq_online() get a false error and fail to generate a cpufreq policy.
+In addition to it remove call to iso_sock_set_timer on iso_sock_disconn
+since at that point it is useless to set a timer as the sk will be freed
+there is nothing to be done in iso_sock_timeout.
 
-When the counters are unchanged, the existing cppc_perf_from_fbctrs()
-returns a cached desired perf, but some platforms may update the real
-frequency back to the desired perf reg.
-
-For the above cases in cppc_cpufreq_get_rate(), get the latest desired perf
-from the CPPC reg to reflect the frequency because some platforms may
-update the actual frequency back there; if failed, use the cached desired
-perf.
-
-Fixes: 6a4fec4f6d30 ("cpufreq: cppc: cppc_cpufreq_get_rate() returns zero in all error cases.")
-Signed-off-by: Jie Zhan <zhanjie9@hisilicon.com>
-Reviewed-by: Zeng Heng <zengheng4@huawei.com>
-Reviewed-by: Ionela Voinescu <ionela.voinescu@arm.com>
-Reviewed-by: Huisong Li <lihuisong@huawei.com>
-Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+Fixes: ccf74f2390d6 ("Bluetooth: Add BTPROTO_ISO socket type")
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/cppc_cpufreq.c | 57 +++++++++++++++++++++++++++-------
- 1 file changed, 46 insertions(+), 11 deletions(-)
+ net/bluetooth/iso.c | 88 ++++++++++++++++++++++++++++++++++++---------
+ 1 file changed, 71 insertions(+), 17 deletions(-)
 
-diff --git a/drivers/cpufreq/cppc_cpufreq.c b/drivers/cpufreq/cppc_cpufreq.c
-index 2b8708475ac77..1a8f95e6cc8d0 100644
---- a/drivers/cpufreq/cppc_cpufreq.c
-+++ b/drivers/cpufreq/cppc_cpufreq.c
-@@ -118,6 +118,9 @@ static void cppc_scale_freq_workfn(struct kthread_work *work)
+diff --git a/net/bluetooth/iso.c b/net/bluetooth/iso.c
+index 7a83e400ac77a..109bf58c982ae 100644
+--- a/net/bluetooth/iso.c
++++ b/net/bluetooth/iso.c
+@@ -35,6 +35,7 @@ struct iso_conn {
+ 	struct sk_buff	*rx_skb;
+ 	__u32		rx_len;
+ 	__u16		tx_sn;
++	struct kref	ref;
+ };
  
- 	perf = cppc_perf_from_fbctrs(cpu_data, &cppc_fi->prev_perf_fb_ctrs,
- 				     &fb_ctrs);
-+	if (!perf)
-+		return;
-+
- 	cppc_fi->prev_perf_fb_ctrs = fb_ctrs;
+ #define iso_conn_lock(c)	spin_lock(&(c)->lock)
+@@ -93,6 +94,49 @@ static struct sock *iso_get_sock(bdaddr_t *src, bdaddr_t *dst,
+ #define ISO_CONN_TIMEOUT	(HZ * 40)
+ #define ISO_DISCONN_TIMEOUT	(HZ * 2)
  
- 	perf <<= SCHED_CAPACITY_SHIFT;
-@@ -724,13 +727,31 @@ static int cppc_perf_from_fbctrs(struct cppc_cpudata *cpu_data,
- 	delta_delivered = get_delta(fb_ctrs_t1->delivered,
- 				    fb_ctrs_t0->delivered);
- 
--	/* Check to avoid divide-by zero and invalid delivered_perf */
-+	/*
-+	 * Avoid divide-by zero and unchanged feedback counters.
-+	 * Leave it for callers to handle.
-+	 */
- 	if (!delta_reference || !delta_delivered)
--		return cpu_data->perf_ctrls.desired_perf;
-+		return 0;
- 
- 	return (reference_perf * delta_delivered) / delta_reference;
- }
- 
-+static int cppc_get_perf_ctrs_sample(int cpu,
-+				     struct cppc_perf_fb_ctrs *fb_ctrs_t0,
-+				     struct cppc_perf_fb_ctrs *fb_ctrs_t1)
++static void iso_conn_free(struct kref *ref)
 +{
-+	int ret;
++	struct iso_conn *conn = container_of(ref, struct iso_conn, ref);
 +
-+	ret = cppc_get_perf_ctrs(cpu, fb_ctrs_t0);
-+	if (ret)
-+		return ret;
++	BT_DBG("conn %p", conn);
 +
-+	udelay(2); /* 2usec delay between sampling */
++	if (conn->sk)
++		iso_pi(conn->sk)->conn = NULL;
 +
-+	return cppc_get_perf_ctrs(cpu, fb_ctrs_t1);
++	if (conn->hcon) {
++		conn->hcon->iso_data = NULL;
++		hci_conn_drop(conn->hcon);
++	}
++
++	/* Ensure no more work items will run since hci_conn has been dropped */
++	disable_delayed_work_sync(&conn->timeout_work);
++
++	kfree(conn);
 +}
 +
- static unsigned int cppc_cpufreq_get_rate(unsigned int cpu)
++static void iso_conn_put(struct iso_conn *conn)
++{
++	if (!conn)
++		return;
++
++	BT_DBG("conn %p refcnt %d", conn, kref_read(&conn->ref));
++
++	kref_put(&conn->ref, iso_conn_free);
++}
++
++static struct iso_conn *iso_conn_hold_unless_zero(struct iso_conn *conn)
++{
++	if (!conn)
++		return NULL;
++
++	BT_DBG("conn %p refcnt %u", conn, kref_read(&conn->ref));
++
++	if (!kref_get_unless_zero(&conn->ref))
++		return NULL;
++
++	return conn;
++}
++
+ static struct sock *iso_sock_hold(struct iso_conn *conn)
  {
- 	struct cppc_perf_fb_ctrs fb_ctrs_t0 = {0}, fb_ctrs_t1 = {0};
-@@ -746,18 +767,32 @@ static unsigned int cppc_cpufreq_get_rate(unsigned int cpu)
+ 	if (!conn || !bt_sock_linked(&iso_sk_list, conn->sk))
+@@ -109,9 +153,14 @@ static void iso_sock_timeout(struct work_struct *work)
+ 					     timeout_work.work);
+ 	struct sock *sk;
  
- 	cpufreq_cpu_put(policy);
- 
--	ret = cppc_get_perf_ctrs(cpu, &fb_ctrs_t0);
--	if (ret)
--		return 0;
--
--	udelay(2); /* 2usec delay between sampling */
--
--	ret = cppc_get_perf_ctrs(cpu, &fb_ctrs_t1);
--	if (ret)
--		return 0;
-+	ret = cppc_get_perf_ctrs_sample(cpu, &fb_ctrs_t0, &fb_ctrs_t1);
-+	if (ret) {
-+		if (ret == -EFAULT)
-+			/* Any of the associated CPPC regs is 0. */
-+			goto out_invalid_counters;
-+		else
-+			return 0;
-+	}
- 
- 	delivered_perf = cppc_perf_from_fbctrs(cpu_data, &fb_ctrs_t0,
- 					       &fb_ctrs_t1);
-+	if (!delivered_perf)
-+		goto out_invalid_counters;
++	conn = iso_conn_hold_unless_zero(conn);
++	if (!conn)
++		return;
 +
-+	return cppc_perf_to_khz(&cpu_data->perf_caps, delivered_perf);
-+
-+out_invalid_counters:
-+	/*
-+	 * Feedback counters could be unchanged or 0 when a cpu enters a
-+	 * low-power idle state, e.g. clock-gated or power-gated.
-+	 * Use desired perf for reflecting frequency.  Get the latest register
-+	 * value first as some platforms may update the actual delivered perf
-+	 * there; if failed, resort to the cached desired perf.
-+	 */
-+	if (cppc_get_desired_perf(cpu, &delivered_perf))
-+		delivered_perf = cpu_data->perf_ctrls.desired_perf;
+ 	iso_conn_lock(conn);
+ 	sk = iso_sock_hold(conn);
+ 	iso_conn_unlock(conn);
++	iso_conn_put(conn);
  
- 	return cppc_perf_to_khz(&cpu_data->perf_caps, delivered_perf);
+ 	if (!sk)
+ 		return;
+@@ -149,9 +198,14 @@ static struct iso_conn *iso_conn_add(struct hci_conn *hcon)
+ {
+ 	struct iso_conn *conn = hcon->iso_data;
+ 
++	conn = iso_conn_hold_unless_zero(conn);
+ 	if (conn) {
+-		if (!conn->hcon)
++		if (!conn->hcon) {
++			iso_conn_lock(conn);
+ 			conn->hcon = hcon;
++			iso_conn_unlock(conn);
++		}
++		iso_conn_put(conn);
+ 		return conn;
+ 	}
+ 
+@@ -159,6 +213,7 @@ static struct iso_conn *iso_conn_add(struct hci_conn *hcon)
+ 	if (!conn)
+ 		return NULL;
+ 
++	kref_init(&conn->ref);
+ 	spin_lock_init(&conn->lock);
+ 	INIT_DELAYED_WORK(&conn->timeout_work, iso_sock_timeout);
+ 
+@@ -178,17 +233,15 @@ static void iso_chan_del(struct sock *sk, int err)
+ 	struct sock *parent;
+ 
+ 	conn = iso_pi(sk)->conn;
++	iso_pi(sk)->conn = NULL;
+ 
+ 	BT_DBG("sk %p, conn %p, err %d", sk, conn, err);
+ 
+ 	if (conn) {
+ 		iso_conn_lock(conn);
+ 		conn->sk = NULL;
+-		iso_pi(sk)->conn = NULL;
+ 		iso_conn_unlock(conn);
+-
+-		if (conn->hcon)
+-			hci_conn_drop(conn->hcon);
++		iso_conn_put(conn);
+ 	}
+ 
+ 	sk->sk_state = BT_CLOSED;
+@@ -210,6 +263,7 @@ static void iso_conn_del(struct hci_conn *hcon, int err)
+ 	struct iso_conn *conn = hcon->iso_data;
+ 	struct sock *sk;
+ 
++	conn = iso_conn_hold_unless_zero(conn);
+ 	if (!conn)
+ 		return;
+ 
+@@ -219,20 +273,18 @@ static void iso_conn_del(struct hci_conn *hcon, int err)
+ 	iso_conn_lock(conn);
+ 	sk = iso_sock_hold(conn);
+ 	iso_conn_unlock(conn);
++	iso_conn_put(conn);
+ 
+-	if (sk) {
+-		lock_sock(sk);
+-		iso_sock_clear_timer(sk);
+-		iso_chan_del(sk, err);
+-		release_sock(sk);
+-		sock_put(sk);
++	if (!sk) {
++		iso_conn_put(conn);
++		return;
+ 	}
+ 
+-	/* Ensure no more work items will run before freeing conn. */
+-	cancel_delayed_work_sync(&conn->timeout_work);
+-
+-	hcon->iso_data = NULL;
+-	kfree(conn);
++	lock_sock(sk);
++	iso_sock_clear_timer(sk);
++	iso_chan_del(sk, err);
++	release_sock(sk);
++	sock_put(sk);
  }
+ 
+ static int __iso_chan_add(struct iso_conn *conn, struct sock *sk,
+@@ -652,6 +704,8 @@ static void iso_sock_destruct(struct sock *sk)
+ {
+ 	BT_DBG("sk %p", sk);
+ 
++	iso_conn_put(iso_pi(sk)->conn);
++
+ 	skb_queue_purge(&sk->sk_receive_queue);
+ 	skb_queue_purge(&sk->sk_write_queue);
+ }
+@@ -711,6 +765,7 @@ static void iso_sock_disconn(struct sock *sk)
+ 		 */
+ 		if (bis_sk) {
+ 			hcon->state = BT_OPEN;
++			hcon->iso_data = NULL;
+ 			iso_pi(sk)->conn->hcon = NULL;
+ 			iso_sock_clear_timer(sk);
+ 			iso_chan_del(sk, bt_to_errno(hcon->abort_reason));
+@@ -720,7 +775,6 @@ static void iso_sock_disconn(struct sock *sk)
+ 	}
+ 
+ 	sk->sk_state = BT_DISCONN;
+-	iso_sock_set_timer(sk, ISO_DISCONN_TIMEOUT);
+ 	iso_conn_lock(iso_pi(sk)->conn);
+ 	hci_conn_drop(iso_pi(sk)->conn->hcon);
+ 	iso_pi(sk)->conn->hcon = NULL;
 -- 
 2.43.0
 
