@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D006E5336E;
-	Tue,  3 Dec 2024 15:47:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44995153800;
+	Tue,  3 Dec 2024 15:47:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733240827; cv=none; b=YVheBtCGh+MfQg6kpxOgQSO45x5fBbhxWWm4wqZoyPTbJ8Zq+/NJfvmGZnqWe+SY5CR0orOubD0PbuAsXQfQXEpXLNJuINvgPErXthRx8y3A90KpkSHsbN/BpG2U4D3oxSXPDtli1r6h8OcZbuEbgFjMB3ItFmF6+repE4bv28g=
+	t=1733240831; cv=none; b=MZDsPsAwGRKebGr9X7fjS69XSrC3TuIGb5w00lKqtnBxRIUBHReBl1Nhi+L8Rt7FZ/Blhsa2+BYFDqg9/I0cpOA4Uvl6NHT8cy/u/xvLwecWoTQ38+xyFFIGqLiYpVycfbU8/IUvEr1v4nrn2LrYEamnFYyNaGAO56U1YzQcPBs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733240827; c=relaxed/simple;
-	bh=kqkJ366qg2BY6Z0cR5+B56q3CXP07dL2FD5nsWM/+pU=;
+	s=arc-20240116; t=1733240831; c=relaxed/simple;
+	bh=7uX7HlAh6tkDKddRJ60HVvO33gkEl+ZJ/QMH/Lr1P0s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=JJB0ARHXHvhFTVdbOzkARef8skVrGwITwBq8Ufvu2ZK6GBGcVxKRDXvAxnwhd2y/psgmIZ9YHPTbHiJL+wU0wJL3cbJzo73tV3DpCymS9SP7COfhjU1Ff09OYGPKb+FEpXvsSrq7M2+tEgyrv+zULUoWytRrea7HuCszXbJ4SlE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zLy1HYgb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EJdksmfFVYNzJ1dv9Y7Uyob7OY3jsvgH7js1/5TmnN+c7mnyORCZq+eqK1hfnQzJ3dqBIBTLWIg9OYi3Uwgj8v8V6pQUXc5EIm399LB5ZQmCd3gYDVSuyaXU311w4WEG4KUlSovpS7+YXjutAaK8ZTupg0oP/uftCfQx0XQgl6c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RrCAv71+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zLy1HYgb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DEB6C4CECF;
-	Tue,  3 Dec 2024 15:47:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RrCAv71+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99DC6C4CECF;
+	Tue,  3 Dec 2024 15:47:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733240827;
-	bh=kqkJ366qg2BY6Z0cR5+B56q3CXP07dL2FD5nsWM/+pU=;
+	s=korg; t=1733240831;
+	bh=7uX7HlAh6tkDKddRJ60HVvO33gkEl+ZJ/QMH/Lr1P0s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zLy1HYgbbQZEzePqIPkiGcSxbsaCD0JWTRBm1pN5SKQjmExStvR30lXQWASl1xNPx
-	 T87AfrvlcblaLsFSxCD4wqpfsXzZUO60DzQyda64z/v1K9uvb0eNr0d9sJ59Ea+Vvw
-	 gksmSnxvkfPNCbjRBu1g4qYIRjDyvPFHpxjBCT6c=
+	b=RrCAv71+DpVOqniuocPC0bpIf+cUnHyfhngLrrXkYPuDJXA4gzHJC4jgU4WhXLRck
+	 OI+hJ6kRMCodJxiEihFSWKZoUxYjwyHC77l+r/WA0hzT8qWaVXYOXj6es1A0rovoaN
+	 22obRgPkolmE85oAfqoFCN75VKYApSCCVFyf2qwQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
-	Dave Stevenson <dave.stevenson@raspberrypi.com>,
+	Miguel Ojeda <ojeda@kernel.org>,
+	Jocelyn Falempe <jfalempe@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 239/826] drm/vc4: Match drm_dev_enter and exit calls in vc4_hvs_lut_load
-Date: Tue,  3 Dec 2024 15:39:26 +0100
-Message-ID: <20241203144753.089465155@linuxfoundation.org>
+Subject: [PATCH 6.12 248/826] drm/panic: Select ZLIB_DEFLATE for DRM_PANIC_SCREEN_QR_CODE
+Date: Tue,  3 Dec 2024 15:39:35 +0100
+Message-ID: <20241203144753.440081605@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -46,56 +45,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dave Stevenson <dave.stevenson@raspberrypi.com>
+From: Miguel Ojeda <ojeda@kernel.org>
 
-[ Upstream commit cf1c87d978d47339a39bfa7a6133ecd3f8f87525 ]
+[ Upstream commit 2ad84af4cff9121827d3dd35e293478bdb0b58bb ]
 
-Commit 52efe364d196 ("drm/vc4: hvs: Don't write gamma luts on 2711")
-added a return path to vc4_hvs_lut_load that had called
-drm_dev_enter, but not drm_dev_exit.
+Under `CONFIG_DRM_PANIC_SCREEN_QR_CODE=y`, zlib is used:
 
-Ensure we call drm_dev_exit.
+    ld.lld: error: undefined symbol: zlib_deflate_workspacesize
+    >>> referenced by drm_panic.c
+    >>>               drivers/gpu/drm/drm_panic.o:(drm_panic_qr_init) in archive vmlinux.a
 
-Fixes: 52efe364d196 ("drm/vc4: hvs: Don't write gamma luts on 2711")
-Reported-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Closes: https://lore.kernel.org/dri-devel/37051126-3921-4afe-a936-5f828bff5752@samsung.com/
-Tested-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Reviewed-by: Maíra Canal <mcanal@igalia.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20241008-drm-vc4-fixes-v1-1-9d0396ca9f42@raspberrypi.com
-Signed-off-by: Dave Stevenson <dave.stevenson@raspberrypi.com>
+Thus select `CONFIG_ZLIB_DEFLATE`.
+
+Fixes: cb5164ac43d0 ("drm/panic: Add a QR code panic screen")
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+Reviewed-by: Jocelyn Falempe <jfalempe@redhat.com>
+Signed-off-by: Jocelyn Falempe <jfalempe@redhat.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20241003230734.653717-1-ojeda@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/vc4/vc4_hvs.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/vc4/vc4_hvs.c b/drivers/gpu/drm/vc4/vc4_hvs.c
-index 3787c070d15e3..15e4c888c4afd 100644
---- a/drivers/gpu/drm/vc4/vc4_hvs.c
-+++ b/drivers/gpu/drm/vc4/vc4_hvs.c
-@@ -225,7 +225,7 @@ static void vc4_hvs_lut_load(struct vc4_hvs *hvs,
- 		return;
- 
- 	if (hvs->vc4->gen == VC4_GEN_4)
--		return;
-+		goto exit;
- 
- 	/* The LUT memory is laid out with each HVS channel in order,
- 	 * each of which takes 256 writes for R, 256 for G, then 256
-@@ -242,6 +242,7 @@ static void vc4_hvs_lut_load(struct vc4_hvs *hvs,
- 	for (i = 0; i < crtc->gamma_size; i++)
- 		HVS_WRITE(SCALER_GAMDATA, vc4_crtc->lut_b[i]);
- 
-+exit:
- 	drm_dev_exit(idx);
- }
- 
+diff --git a/drivers/gpu/drm/Kconfig b/drivers/gpu/drm/Kconfig
+index 1cb5a4f192933..cf5bc77e2362c 100644
+--- a/drivers/gpu/drm/Kconfig
++++ b/drivers/gpu/drm/Kconfig
+@@ -152,6 +152,7 @@ config DRM_PANIC_SCREEN
+ config DRM_PANIC_SCREEN_QR_CODE
+ 	bool "Add a panic screen with a QR code"
+ 	depends on DRM_PANIC && RUST
++	select ZLIB_DEFLATE
+ 	help
+ 	  This option adds a QR code generator, and a panic screen with a QR
+ 	  code. The QR code will contain the last lines of kmsg and other debug
 -- 
 2.43.0
 
