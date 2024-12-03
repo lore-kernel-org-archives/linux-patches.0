@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9CB41EE029;
-	Tue,  3 Dec 2024 14:40:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DB2F17BB16;
+	Tue,  3 Dec 2024 14:40:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733236824; cv=none; b=hgvjcxJpQvEF0TdZb/wMWRPj8jQ28XCTq3MFnu3/MT+6EWbA978cbORLi8jIadnP0sUvZCczlUzgdsdcMYUTQuckq3S62WcgPrSIAXhWCDY9Jwj3Y7wPSueoYZTIfgr7+tmp7afuuViQbnL//6GJWcLCctC4gtaleT8ONErnTLs=
+	t=1733236829; cv=none; b=sb96vWLr3MlFYsJsh4FSwrtm9bS2XVLgMAhrfpP895Qa1PoaPd6JshDK0AHsYFPe8inQTHgz7OCLqKvOahpij46GVWmrPRh9V2LhEuMUWBSthSnDsf8yml+AnuMgjwEe4oS0QkmizDwzPKZdS3yR5cQq5AV7DCDPzyN5xijoyPo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733236824; c=relaxed/simple;
-	bh=ysw/BybpdfYX9g4OBwDOTUKmFQEmmZNCLZB3r9UmRn4=;
+	s=arc-20240116; t=1733236829; c=relaxed/simple;
+	bh=PohP6AqhYO9+QtbcCMAisANGT8uc1HalEagQOqUky7Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dBxbj6oSY6EmVIX32BpahZYRUnR92m/89Sl2iG4W1YSyVEo+G1guLddvqW9uShV1E7X2NwMkpd8f2S6pIuu/J1crgSp287y07oJhDy0S051jvIV6J75NJQ93nGYLKv2v4lnGlS6UtXTPiEHi0V+0Su+92nH6lDSjIPYyu1vO0eg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AnfY+d4A; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YB3rOvETV0cIKkdLLcMdAEEqX1qhyPIAXJr4WpV8q0xqLpkGs0omujBADnT1CXu7/sVb4z9w5zMsmiFEYsnYUsXUjaPLM8HjTmn3NmPxWh0vhzqnnqr7evWSvv1FPcsqFPbiT5LvZ/AzZpXVbTzO5S3pX6XynJaGpjbyDapWVX4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zOtk9r7S; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AnfY+d4A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63E2CC4CECF;
-	Tue,  3 Dec 2024 14:40:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zOtk9r7S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A702CC4CED9;
+	Tue,  3 Dec 2024 14:40:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733236824;
-	bh=ysw/BybpdfYX9g4OBwDOTUKmFQEmmZNCLZB3r9UmRn4=;
+	s=korg; t=1733236829;
+	bh=PohP6AqhYO9+QtbcCMAisANGT8uc1HalEagQOqUky7Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AnfY+d4AlX1P/qrNMSOvDz2GRwgyp3qB0TR3uhdAIM2/62rQVybhtxl36ShvtcyZU
-	 NAA5cGe9uk3deKCIhjkmd9NOdNTAll/JOpm8UpfsdSTEm4OJm4T6ksFuG8T8DXvmWc
-	 6SXAGyEvYbZ8HLPP9RqudbGPkevaiB7ON1se3OQs=
+	b=zOtk9r7SL5g4X3F9bz8r7KyWFgLjvdgtFQGV1LLivVyqCck5wKcxUpEDHy1KxpIEr
+	 ViCTkghqA1I7GXGWhEJz2aMv3Mt1t4UMrrEQJ2m1hVjDD7WeyOuEUe3wjM+g2En17S
+	 dZAm8rbS2t/4CDMJ34bIeVJIBVOFpoBuDEdci7Po=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tiwei Bie <tiwei.btw@antgroup.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Yang Erkun <yangerkun@huawei.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 127/138] um: Fix the return value of elf_core_copy_task_fpregs
-Date: Tue,  3 Dec 2024 15:32:36 +0100
-Message-ID: <20241203141928.425369167@linuxfoundation.org>
+Subject: [PATCH 4.19 128/138] NFSv4.0: Fix a use-after-free problem in the asynchronous open()
+Date: Tue,  3 Dec 2024 15:32:37 +0100
+Message-ID: <20241203141928.462920411@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203141923.524658091@linuxfoundation.org>
 References: <20241203141923.524658091@linuxfoundation.org>
@@ -51,34 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tiwei Bie <tiwei.btw@antgroup.com>
+From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-[ Upstream commit 865e3845eeaa21e9a62abc1361644e67124f1ec0 ]
+[ Upstream commit 2fdb05dc0931250574f0cb0ebeb5ed8e20f4a889 ]
 
-This function is expected to return a boolean value, which should be
-true on success and false on failure.
+Yang Erkun reports that when two threads are opening files at the same
+time, and are forced to abort before a reply is seen, then the call to
+nfs_release_seqid() in nfs4_opendata_free() can result in a
+use-after-free of the pointer to the defunct rpc task of the other
+thread.
+The fix is to ensure that if the RPC call is aborted before the call to
+nfs_wait_on_sequence() is complete, then we must call nfs_release_seqid()
+in nfs4_open_release() before the rpc_task is freed.
 
-Fixes: d1254b12c93e ("uml: fix x86_64 core dump crash")
-Signed-off-by: Tiwei Bie <tiwei.btw@antgroup.com>
-Link: https://patch.msgid.link/20240913023302.130300-1-tiwei.btw@antgroup.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Reported-by: Yang Erkun <yangerkun@huawei.com>
+Fixes: 24ac23ab88df ("NFSv4: Convert open() into an asynchronous RPC call")
+Reviewed-by: Yang Erkun <yangerkun@huawei.com>
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/um/kernel/process.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/nfs/nfs4proc.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/arch/um/kernel/process.c b/arch/um/kernel/process.c
-index c9d09d04d19df..83ae59f748e1f 100644
---- a/arch/um/kernel/process.c
-+++ b/arch/um/kernel/process.c
-@@ -396,6 +396,6 @@ int elf_core_copy_fpregs(struct task_struct *t, elf_fpregset_t *fpu)
- {
- 	int cpu = current_thread_info()->cpu;
+diff --git a/fs/nfs/nfs4proc.c b/fs/nfs/nfs4proc.c
+index c9db9a0fc7337..66db81a90ceee 100644
+--- a/fs/nfs/nfs4proc.c
++++ b/fs/nfs/nfs4proc.c
+@@ -2379,12 +2379,14 @@ static void nfs4_open_release(void *calldata)
+ 	struct nfs4_opendata *data = calldata;
+ 	struct nfs4_state *state = NULL;
  
--	return save_i387_registers(userspace_pid[cpu], (unsigned long *) fpu);
-+	return save_i387_registers(userspace_pid[cpu], (unsigned long *) fpu) == 0;
- }
- 
++	/* In case of error, no cleanup! */
++	if (data->rpc_status != 0 || !data->rpc_done) {
++		nfs_release_seqid(data->o_arg.seqid);
++		goto out_free;
++	}
+ 	/* If this request hasn't been cancelled, do nothing */
+ 	if (!data->cancelled)
+ 		goto out_free;
+-	/* In case of error, no cleanup! */
+-	if (data->rpc_status != 0 || !data->rpc_done)
+-		goto out_free;
+ 	/* In case we need an open_confirm, no cleanup! */
+ 	if (data->o_res.rflags & NFS4_OPEN_RESULT_CONFIRM)
+ 		goto out_free;
 -- 
 2.43.0
 
