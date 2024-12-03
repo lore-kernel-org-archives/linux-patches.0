@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B70981F7591;
-	Tue,  3 Dec 2024 15:44:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7E445336E;
+	Tue,  3 Dec 2024 15:44:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733240656; cv=none; b=HiuZqN5HPsT11Q+vgIu1/wWz04OaM9iUitHiZmJ+AIxMxqWgGFb5Ese3F9Z/zQoqJNIjVLQ/JiV388koRtdR4cQsU70+YH4UwuAzf8iM2t/fSf/sfw7CZz6E6d2h0nsY6jyxqxbALuF3oIUfnzR86vX8QwFePWoHBLaIDh5lmSY=
+	t=1733240665; cv=none; b=WHdS6akbge6qubH+/aNZGW5dmX2J+fEFnmY85/xBZmUr6nZ97MUsxHn9wpIBShK2naH4+CxsTJFK75aHSyh9Z036R9Vx6hcxsLQzp3WjbizWZa3lvUvKGOawpXwiIml5P++Pmeo4/9ozy3ZBMORoWxu+Bd4u9wCp1KduWvQeo/s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733240656; c=relaxed/simple;
-	bh=eLOOZoKkvS6lVGBjH86SR8pXu5ROTkYlfHajtCLAQqQ=;
+	s=arc-20240116; t=1733240665; c=relaxed/simple;
+	bh=zFF1CRGAXJbIyMKfnQ4YMjGnQzKfHhgyisG0k9cmYqU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ozl/gunSqUYSjr0kADFiHgBQAKsFFeuBoi0u/fNp6LKgNfBl/2QdOSVnwaytSqAaVw1KCfwKztxzb2YHYyEozmefakEp2qbV/3RUE/R8aHKN618eJASvOl4EpVgpZfmUFAyd3ZSPJS5vVIPOngIxrygs1AS6qOgH7p91e63Ynxc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MPgv652k; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Bp/lb1ZvDs8jEmNKjNKG0yVI3RMyyxwpZvRXFkffNe1mbLZZCnp6ybNc2nA51yB8I1Wzl1u7JCmEfS/xBNapSjRMR5Lwhmsm3UW080rujDtBW+FJCQRC4lcQZVPVIU+DWx+Dcb0fli9NqX4ycxdvIvDD35CvWhGVT8gpQZ48R7I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZvF/6eo7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MPgv652k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 230DFC4CECF;
-	Tue,  3 Dec 2024 15:44:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZvF/6eo7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C670C4CECF;
+	Tue,  3 Dec 2024 15:44:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733240656;
-	bh=eLOOZoKkvS6lVGBjH86SR8pXu5ROTkYlfHajtCLAQqQ=;
+	s=korg; t=1733240665;
+	bh=zFF1CRGAXJbIyMKfnQ4YMjGnQzKfHhgyisG0k9cmYqU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MPgv652k+n6B+SLW2pzEH8Ed3Ze0Q7W56jYqKKl+/uBlsHcN0iROL0mRZEEzFcShH
-	 DQiRxfQXteJt/XyPBJ5i5JR27kXRQcQtXKAkVkbo38eDQg34w+op/T7HzX/jbsJlQ7
-	 1/VWJIpmThi2RdL6hI+SV6vr+DnjkRag1B5Vjuz8=
+	b=ZvF/6eo7UVxJGWHgvwZ2VuCMnWJtlDL5DNF4qRv5sn13VAvUx+IaCDgMOyr2PSHTk
+	 C77E3brZ4+DAW0AVN0RJxZV8OiYLDXMfAQKnIQDIr1x6G8cirme1WHnCOlCSON1unG
+	 5vI/Z74utp8rY9ix98kESRwKF80JBG4QmEZfzyjk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergey Senozhatsky <senozhatsky@chromium.org>,
-	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
-	Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
-	Hans Verkuil <hverkuil@xs4all.nl>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
+	Rob Herring <robh@kernel.org>,
+	Chris Healy <cphealy@gmail.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 172/826] media: venus: sync with threaded IRQ during inst destruction
-Date: Tue,  3 Dec 2024 15:38:19 +0100
-Message-ID: <20241203144750.442703316@linuxfoundation.org>
+Subject: [PATCH 6.12 199/826] drm/imx: parallel-display: drop edid override support
+Date: Tue,  3 Dec 2024 15:38:46 +0100
+Message-ID: <20241203144751.508573156@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -53,144 +53,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sergey Senozhatsky <senozhatsky@chromium.org>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit 45b1a1b348ec178a599323f1ce7d7932aea8c6d4 ]
+[ Upstream commit fe30fabf229f7542a10dd249079fdb83844a7dba ]
 
-When destroying an inst we should make sure that we don't race
-against threaded IRQ (or pending IRQ), otherwise we can concurrently
-kfree() inst context and inst itself.
+None of the in-kernel DT files ever used edid override with the
+fsl-imx-drm driver. In case the EDID needs to be specified manually, DRM
+core allows one to either override it via the debugfs or to load it via
+request_firmware by using DRM_LOAD_EDID_FIRMWARE. In all other cases
+EDID and/or modes are to be provided as a part of the panel driver.
 
-BUG: KASAN: slab-use-after-free in vb2_queue_error+0x80/0x90
-Call trace:
-dump_backtrace+0x1c4/0x1f8
-show_stack+0x38/0x60
-dump_stack_lvl+0x168/0x1f0
-print_report+0x170/0x4c8
-kasan_report+0x94/0xd0
-__asan_report_load2_noabort+0x20/0x30
-vb2_queue_error+0x80/0x90
-venus_helper_vb2_queue_error+0x54/0x78
-venc_event_notify+0xec/0x158
-hfi_event_notify+0x878/0xd20
-hfi_process_msg_packet+0x27c/0x4e0
-venus_isr_thread+0x258/0x6e8
-hfi_isr_thread+0x70/0x90
-venus_isr_thread+0x34/0x50
-irq_thread_fn+0x88/0x130
-irq_thread+0x160/0x2c0
-kthread+0x294/0x328
-ret_from_fork+0x10/0x20
+Drop support for the edid property.
 
-Allocated by task 20291:
-kasan_set_track+0x4c/0x80
-kasan_save_alloc_info+0x28/0x38
-__kasan_kmalloc+0x84/0xa0
-kmalloc_trace+0x7c/0x98
-v4l2_m2m_ctx_init+0x74/0x280
-venc_open+0x444/0x6d0
-v4l2_open+0x19c/0x2a0
-chrdev_open+0x374/0x3f0
-do_dentry_open+0x710/0x10a8
-vfs_open+0x88/0xa8
-path_openat+0x1e6c/0x2700
-do_filp_open+0x1a4/0x2e0
-do_sys_openat2+0xe8/0x508
-do_sys_open+0x15c/0x1a0
-__arm64_sys_openat+0xa8/0xc8
-invoke_syscall+0xdc/0x270
-el0_svc_common+0x1ec/0x250
-do_el0_svc+0x54/0x70
-el0_svc+0x50/0xe8
-el0t_64_sync_handler+0x48/0x120
-el0t_64_sync+0x1a8/0x1b0
-
-Freed by task 20291:
- kasan_set_track+0x4c/0x80
- kasan_save_free_info+0x3c/0x60
- ____kasan_slab_free+0x124/0x1a0
- __kasan_slab_free+0x18/0x28
- __kmem_cache_free+0x134/0x300
- kfree+0xc8/0x1a8
- v4l2_m2m_ctx_release+0x44/0x60
- venc_close+0x78/0x130 [venus_enc]
- v4l2_release+0x20c/0x2f8
- __fput+0x328/0x7f0
- ____fput+0x2c/0x48
- task_work_run+0x1e0/0x280
- get_signal+0xfb8/0x1190
- do_notify_resume+0x34c/0x16a8
- el0_svc+0x9c/0xe8
- el0t_64_sync_handler+0x48/0x120
- el0t_64_sync+0x1a8/0x1b0
-
-Rearrange inst destruction.  First remove the inst from the
-core->instances list, second synchronize IRQ/IRQ-thread to
-make sure that nothing else would see the inst while we take
-it down.
-
-Fixes: 7472c1c69138 ("[media] media: venus: vdec: add video decoder files")
-Signed-off-by: Sergey Senozhatsky <senozhatsky@chromium.org>
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Signed-off-by: Stanimir Varbanov <stanimir.k.varbanov@gmail.com>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+Reviewed-by: Philipp Zabel <p.zabel@pengutronix.de>
+Acked-by: Rob Herring <robh@kernel.org>
+Tested-by: Chris Healy <cphealy@gmail.com>
+Tested-by: Philipp Zabel <p.zabel@pengutronix.de> # on imx6q-nitrogen6x
+Link: https://patchwork.freedesktop.org/patch/msgid/20240602-drm-imx-cleanup-v3-4-e549e2a43100@linaro.org
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Stable-dep-of: f673055a4678 ("drm/imx: Add missing DRM_BRIDGE_CONNECTOR dependency")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/qcom/venus/vdec.c | 12 +++++++++++-
- drivers/media/platform/qcom/venus/venc.c | 12 +++++++++++-
- 2 files changed, 22 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/imx/ipuv3/parallel-display.c | 17 -----------------
+ 1 file changed, 17 deletions(-)
 
-diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
-index 4af268e756883..b446046546403 100644
---- a/drivers/media/platform/qcom/venus/vdec.c
-+++ b/drivers/media/platform/qcom/venus/vdec.c
-@@ -1748,10 +1748,20 @@ static int vdec_close(struct file *file)
- 	vdec_pm_get(inst);
+diff --git a/drivers/gpu/drm/imx/ipuv3/parallel-display.c b/drivers/gpu/drm/imx/ipuv3/parallel-display.c
+index 91d7808a2d8d3..4d17fb96e77c5 100644
+--- a/drivers/gpu/drm/imx/ipuv3/parallel-display.c
++++ b/drivers/gpu/drm/imx/ipuv3/parallel-display.c
+@@ -16,7 +16,6 @@
  
- 	cancel_work_sync(&inst->delayed_process_work);
-+	/*
-+	 * First, remove the inst from the ->instances list, so that
-+	 * to_instance() will return NULL.
-+	 */
-+	hfi_session_destroy(inst);
-+	/*
-+	 * Second, make sure we don't have IRQ/IRQ-thread currently running
-+	 * or pending execution, which would race with the inst destruction.
-+	 */
-+	synchronize_irq(inst->core->irq);
-+
- 	v4l2_m2m_ctx_release(inst->m2m_ctx);
- 	v4l2_m2m_release(inst->m2m_dev);
- 	ida_destroy(&inst->dpb_ids);
--	hfi_session_destroy(inst);
- 	v4l2_fh_del(&inst->fh);
- 	v4l2_fh_exit(&inst->fh);
- 	vdec_ctrl_deinit(inst);
-diff --git a/drivers/media/platform/qcom/venus/venc.c b/drivers/media/platform/qcom/venus/venc.c
-index 56777d3d630a5..b83f03abbf0aa 100644
---- a/drivers/media/platform/qcom/venus/venc.c
-+++ b/drivers/media/platform/qcom/venus/venc.c
-@@ -1515,9 +1515,19 @@ static int venc_close(struct file *file)
+ #include <drm/drm_atomic_helper.h>
+ #include <drm/drm_bridge.h>
+-#include <drm/drm_edid.h>
+ #include <drm/drm_managed.h>
+ #include <drm/drm_of.h>
+ #include <drm/drm_panel.h>
+@@ -34,7 +33,6 @@ struct imx_parallel_display_encoder {
  
- 	venc_pm_get(inst);
+ struct imx_parallel_display {
+ 	struct device *dev;
+-	const struct drm_edid *drm_edid;
+ 	u32 bus_format;
+ 	u32 bus_flags;
+ 	struct drm_display_mode mode;
+@@ -62,11 +60,6 @@ static int imx_pd_connector_get_modes(struct drm_connector *connector)
+ 	if (num_modes > 0)
+ 		return num_modes;
  
-+	/*
-+	 * First, remove the inst from the ->instances list, so that
-+	 * to_instance() will return NULL.
-+	 */
-+	hfi_session_destroy(inst);
-+	/*
-+	 * Second, make sure we don't have IRQ/IRQ-thread currently running
-+	 * or pending execution, which would race with the inst destruction.
-+	 */
-+	synchronize_irq(inst->core->irq);
-+
- 	v4l2_m2m_ctx_release(inst->m2m_ctx);
- 	v4l2_m2m_release(inst->m2m_dev);
--	hfi_session_destroy(inst);
- 	v4l2_fh_del(&inst->fh);
- 	v4l2_fh_exit(&inst->fh);
- 	venc_ctrl_deinit(inst);
+-	if (imxpd->drm_edid) {
+-		drm_edid_connector_update(connector, imxpd->drm_edid);
+-		num_modes = drm_edid_connector_add_modes(connector);
+-	}
+-
+ 	if (np) {
+ 		struct drm_display_mode *mode = drm_mode_create(connector->dev);
+ 		int ret;
+@@ -312,9 +305,7 @@ static int imx_pd_probe(struct platform_device *pdev)
+ {
+ 	struct device *dev = &pdev->dev;
+ 	struct device_node *np = dev->of_node;
+-	const u8 *edidp;
+ 	struct imx_parallel_display *imxpd;
+-	int edid_len;
+ 	int ret;
+ 	u32 bus_format = 0;
+ 	const char *fmt;
+@@ -329,10 +320,6 @@ static int imx_pd_probe(struct platform_device *pdev)
+ 	if (ret && ret != -ENODEV)
+ 		return ret;
+ 
+-	edidp = of_get_property(np, "edid", &edid_len);
+-	if (edidp)
+-		imxpd->drm_edid = drm_edid_alloc(edidp, edid_len);
+-
+ 	ret = of_property_read_string(np, "interface-pix-fmt", &fmt);
+ 	if (!ret) {
+ 		if (!strcmp(fmt, "rgb24"))
+@@ -355,11 +342,7 @@ static int imx_pd_probe(struct platform_device *pdev)
+ 
+ static void imx_pd_remove(struct platform_device *pdev)
+ {
+-	struct imx_parallel_display *imxpd = platform_get_drvdata(pdev);
+-
+ 	component_del(&pdev->dev, &imx_pd_ops);
+-
+-	drm_edid_free(imxpd->drm_edid);
+ }
+ 
+ static const struct of_device_id imx_pd_dt_ids[] = {
 -- 
 2.43.0
 
