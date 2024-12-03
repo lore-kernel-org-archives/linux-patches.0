@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4B1C646;
-	Tue,  3 Dec 2024 15:31:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86E261F75A8;
+	Tue,  3 Dec 2024 15:31:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733239905; cv=none; b=nbHxl/7Y8nMYOUStoc67PyUMoUsK4MOY0MlwFYk/bgn4ApzllB58EJgJVmsA9evOqyvqbR3lOPMddL3XCGsdKnxH1AMFKl0UTVChJE+HsQ1Xd3itNTuLrrrv4IwLMIFcJUbUu1++EUtX8hivRluAdBBafT1n+vRHA0GpFLa65sc=
+	t=1733239908; cv=none; b=kITygiZHYCc/FLXyRLRCRstne0tYmICkTlur/56XgLHWkp472+f3UDDimQeelH7/ytFGq2tXdQDV/pmqzhPU5JMiDpxMqjSQ+CzQK+fDTqp9aFrF78YDbGZV9gQr+tbAc+gcIxDAZpXeghADdjlhODL79nKs3UjDKSKn0jSlVjk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733239905; c=relaxed/simple;
-	bh=84HfYKjoq2ZvNX+EG0OTm4CqyG5gv6uJ2Yh7JtMKidQ=;
+	s=arc-20240116; t=1733239908; c=relaxed/simple;
+	bh=ZKSyxQSjNQ2dM5CbD2KiomQt/uve8oWpIYhfdCyT6Qw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CggMJmLYlBvRLcWj66ak9+WXLYnSa7lABg424AjnfH44wxEmtX7wddrH/vb6IMEfJTzZg38UOFvrsuWRihCRrs27g13W2DiEsnuavcd/HyO5YcDgY0WDVnpBZPGHr61pIKaxviyMNPauc+d4g+4BMmQ8osn1bXmmpmrDohfVICs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FotdN9+W; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cf4Sd1XcisB1t+kKoubwa6IeIA6io/v1dlqM05v5mFqSVhOKmvtgMNQzG4jCSX3FeNSswZ/ydqTFChSwdk4tkgxpPOWmOGgO9I8nNXDh40h2df2AhpGJh8GusIzXqlJLl4va10JC9PveZT9IwyKprUmD9RN+uP6W+41ZIeOER9w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i3fJSjQL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FotdN9+W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38D9AC4CED6;
-	Tue,  3 Dec 2024 15:31:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i3fJSjQL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E751C4CED8;
+	Tue,  3 Dec 2024 15:31:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733239905;
-	bh=84HfYKjoq2ZvNX+EG0OTm4CqyG5gv6uJ2Yh7JtMKidQ=;
+	s=korg; t=1733239908;
+	bh=ZKSyxQSjNQ2dM5CbD2KiomQt/uve8oWpIYhfdCyT6Qw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FotdN9+WYvopMHuTC0lxG/ihY9zEKacPXgwAYwIEmCJ6bMjtPsGv7f8zUrSFNmDED
-	 KeBh3JWSlZasyop2O6+qAMSK4at/mQPHPRbILkOTVc53uV7kn8RrFLZaEoFarziqRQ
-	 inIyJ1zBm/fkoOPUbixaYCqzjijz4RxjgvCcOT8g=
+	b=i3fJSjQL0lnjnBgvz2nstjAK7mknhXNOM1ecRSyMeCTVNu1bhAgS+/ZVed6JcFCC8
+	 2XfO30tRy7j4OjFAvEAiwxP5ot+V33Wg0S30rnj286uLU4nSPMwB7rjD7PDRL+oCzc
+	 PtYvrFSZjneA9M0DuYRx9UCGKgZS5xIFvVN1b8Ew=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Aurich <paul@darkrain42.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.11 747/817] smb: Dont leak cfid when reconnect races with open_cached_dir
-Date: Tue,  3 Dec 2024 15:45:19 +0100
-Message-ID: <20241203144025.155729996@linuxfoundation.org>
+	Zhihao Cheng <chengzhihao1@huawei.com>,
+	Richard Weinberger <richard@nod.at>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.11 774/817] ubi: fastmap: wl: Schedule fm_work if wear-leveling pool is empty
+Date: Tue,  3 Dec 2024 15:45:46 +0100
+Message-ID: <20241203144026.225993604@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -50,226 +51,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paul Aurich <paul@darkrain42.org>
+From: Zhihao Cheng <chengzhihao1@huawei.com>
 
-commit 7afb86733685c64c604d32faf00fa4a1f22c2ab1 upstream.
+[ Upstream commit c4595fe394a289927077e3da561db27811919ee0 ]
 
-open_cached_dir() may either race with the tcon reconnection even before
-compound_send_recv() or directly trigger a reconnection via
-SMB2_open_init() or SMB_query_info_init().
+Since commit 14072ee33d5a ("ubi: fastmap: Check wl_pool for free peb
+before wear leveling"), wear_leveling_worker() won't schedule fm_work
+if wear-leveling pool is empty, which could temporarily disable the
+wear-leveling until the fastmap is updated(eg. pool becomes empty).
+Fix it by scheduling fm_work if wl_pool is empty during wear-leveing.
 
-The reconnection process invokes invalidate_all_cached_dirs() via
-cifs_mark_open_files_invalid(), which removes all cfids from the
-cfids->entries list but doesn't drop a ref if has_lease isn't true. This
-results in the currently-being-constructed cfid not being on the list,
-but still having a refcount of 2. It leaks if returned from
-open_cached_dir().
-
-Fix this by setting cfid->has_lease when the ref is actually taken; the
-cfid will not be used by other threads until it has a valid time.
-
-Addresses these kmemleaks:
-
-unreferenced object 0xffff8881090c4000 (size 1024):
-  comm "bash", pid 1860, jiffies 4295126592
-  hex dump (first 32 bytes):
-    00 01 00 00 00 00 ad de 22 01 00 00 00 00 ad de  ........".......
-    00 ca 45 22 81 88 ff ff f8 dc 4f 04 81 88 ff ff  ..E"......O.....
-  backtrace (crc 6f58c20f):
-    [<ffffffff8b895a1e>] __kmalloc_cache_noprof+0x2be/0x350
-    [<ffffffff8bda06e3>] open_cached_dir+0x993/0x1fb0
-    [<ffffffff8bdaa750>] cifs_readdir+0x15a0/0x1d50
-    [<ffffffff8b9a853f>] iterate_dir+0x28f/0x4b0
-    [<ffffffff8b9a9aed>] __x64_sys_getdents64+0xfd/0x200
-    [<ffffffff8cf6da05>] do_syscall_64+0x95/0x1a0
-    [<ffffffff8d00012f>] entry_SYSCALL_64_after_hwframe+0x76/0x7e
-unreferenced object 0xffff8881044fdcf8 (size 8):
-  comm "bash", pid 1860, jiffies 4295126592
-  hex dump (first 8 bytes):
-    00 cc cc cc cc cc cc cc                          ........
-  backtrace (crc 10c106a9):
-    [<ffffffff8b89a3d3>] __kmalloc_node_track_caller_noprof+0x363/0x480
-    [<ffffffff8b7d7256>] kstrdup+0x36/0x60
-    [<ffffffff8bda0700>] open_cached_dir+0x9b0/0x1fb0
-    [<ffffffff8bdaa750>] cifs_readdir+0x15a0/0x1d50
-    [<ffffffff8b9a853f>] iterate_dir+0x28f/0x4b0
-    [<ffffffff8b9a9aed>] __x64_sys_getdents64+0xfd/0x200
-    [<ffffffff8cf6da05>] do_syscall_64+0x95/0x1a0
-    [<ffffffff8d00012f>] entry_SYSCALL_64_after_hwframe+0x76/0x7e
-
-And addresses these BUG splats when unmounting the SMB filesystem:
-
-BUG: Dentry ffff888140590ba0{i=1000000000080,n=/}  still in use (2) [unmount of cifs cifs]
-WARNING: CPU: 3 PID: 3433 at fs/dcache.c:1536 umount_check+0xd0/0x100
-Modules linked in:
-CPU: 3 UID: 0 PID: 3433 Comm: bash Not tainted 6.12.0-rc4-g850925a8133c-dirty #49
-Hardware name: VMware, Inc. VMware Virtual Platform/440BX Desktop Reference Platform, BIOS 6.00 11/12/2020
-RIP: 0010:umount_check+0xd0/0x100
-Code: 8d 7c 24 40 e8 31 5a f4 ff 49 8b 54 24 40 41 56 49 89 e9 45 89 e8 48 89 d9 41 57 48 89 de 48 c7 c7 80 e7 db ac e8 f0 72 9a ff <0f> 0b 58 31 c0 5a 5b 5d 41 5c 41 5d 41 5e 41 5f e9 2b e5 5d 01 41
-RSP: 0018:ffff88811cc27978 EFLAGS: 00010286
-RAX: 0000000000000000 RBX: ffff888140590ba0 RCX: ffffffffaaf20bae
-RDX: dffffc0000000000 RSI: 0000000000000008 RDI: ffff8881f6fb6f40
-RBP: ffff8881462ec000 R08: 0000000000000001 R09: ffffed1023984ee3
-R10: ffff88811cc2771f R11: 00000000016cfcc0 R12: ffff888134383e08
-R13: 0000000000000002 R14: ffff8881462ec668 R15: ffffffffaceab4c0
-FS:  00007f23bfa98740(0000) GS:ffff8881f6f80000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 0000556de4a6f808 CR3: 0000000123c80000 CR4: 0000000000350ef0
-Call Trace:
- <TASK>
- d_walk+0x6a/0x530
- shrink_dcache_for_umount+0x6a/0x200
- generic_shutdown_super+0x52/0x2a0
- kill_anon_super+0x22/0x40
- cifs_kill_sb+0x159/0x1e0
- deactivate_locked_super+0x66/0xe0
- cleanup_mnt+0x140/0x210
- task_work_run+0xfb/0x170
- syscall_exit_to_user_mode+0x29f/0x2b0
- do_syscall_64+0xa1/0x1a0
- entry_SYSCALL_64_after_hwframe+0x76/0x7e
-RIP: 0033:0x7f23bfb93ae7
-Code: ff ff ff ff c3 66 0f 1f 44 00 00 48 8b 0d 11 93 0d 00 f7 d8 64 89 01 b8 ff ff ff ff eb bf 0f 1f 44 00 00 b8 50 00 00 00 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 8b 0d e9 92 0d 00 f7 d8 64 89 01 48
-RSP: 002b:00007ffee9138598 EFLAGS: 00000246 ORIG_RAX: 0000000000000050
-RAX: 0000000000000000 RBX: 0000558f1803e9a0 RCX: 00007f23bfb93ae7
-RDX: 0000000000000000 RSI: 0000000000000004 RDI: 0000558f1803e9a0
-RBP: 0000558f1803e600 R08: 0000000000000007 R09: 0000558f17fab610
-R10: d91d5ec34ab757b0 R11: 0000000000000246 R12: 0000000000000001
-R13: 0000000000000000 R14: 0000000000000015 R15: 0000000000000000
- </TASK>
-irq event stamp: 1163486
-hardirqs last  enabled at (1163485): [<ffffffffac98d344>] _raw_spin_unlock_irqrestore+0x34/0x60
-hardirqs last disabled at (1163486): [<ffffffffac97dcfc>] __schedule+0xc7c/0x19a0
-softirqs last  enabled at (1163482): [<ffffffffab79a3ee>] __smb_send_rqst+0x3de/0x990
-softirqs last disabled at (1163480): [<ffffffffac2314f1>] release_sock+0x21/0xf0
----[ end trace 0000000000000000 ]---
-
-VFS: Busy inodes after unmount of cifs (cifs)
-------------[ cut here ]------------
-kernel BUG at fs/super.c:661!
-Oops: invalid opcode: 0000 [#1] PREEMPT SMP KASAN NOPTI
-CPU: 1 UID: 0 PID: 3433 Comm: bash Tainted: G        W          6.12.0-rc4-g850925a8133c-dirty #49
-Tainted: [W]=WARN
-Hardware name: VMware, Inc. VMware Virtual Platform/440BX Desktop Reference Platform, BIOS 6.00 11/12/2020
-RIP: 0010:generic_shutdown_super+0x290/0x2a0
-Code: e8 15 7c f7 ff 48 8b 5d 28 48 89 df e8 09 7c f7 ff 48 8b 0b 48 89 ee 48 8d 95 68 06 00 00 48 c7 c7 80 7f db ac e8 00 69 af ff <0f> 0b 66 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 00 90 90 90 90 90 90
-RSP: 0018:ffff88811cc27a50 EFLAGS: 00010246
-RAX: 000000000000003e RBX: ffffffffae994420 RCX: 0000000000000027
-RDX: 0000000000000000 RSI: ffffffffab06180e RDI: ffff8881f6eb18c8
-RBP: ffff8881462ec000 R08: 0000000000000001 R09: ffffed103edd6319
-R10: ffff8881f6eb18cb R11: 00000000016d3158 R12: ffff8881462ec9c0
-R13: ffff8881462ec050 R14: 0000000000000001 R15: 0000000000000000
-FS:  00007f23bfa98740(0000) GS:ffff8881f6e80000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007f8364005d68 CR3: 0000000123c80000 CR4: 0000000000350ef0
-Call Trace:
- <TASK>
- kill_anon_super+0x22/0x40
- cifs_kill_sb+0x159/0x1e0
- deactivate_locked_super+0x66/0xe0
- cleanup_mnt+0x140/0x210
- task_work_run+0xfb/0x170
- syscall_exit_to_user_mode+0x29f/0x2b0
- do_syscall_64+0xa1/0x1a0
- entry_SYSCALL_64_after_hwframe+0x76/0x7e
-RIP: 0033:0x7f23bfb93ae7
- </TASK>
-Modules linked in:
----[ end trace 0000000000000000 ]---
-RIP: 0010:generic_shutdown_super+0x290/0x2a0
-Code: e8 15 7c f7 ff 48 8b 5d 28 48 89 df e8 09 7c f7 ff 48 8b 0b 48 89 ee 48 8d 95 68 06 00 00 48 c7 c7 80 7f db ac e8 00 69 af ff <0f> 0b 66 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 00 90 90 90 90 90 90
-RSP: 0018:ffff88811cc27a50 EFLAGS: 00010246
-RAX: 000000000000003e RBX: ffffffffae994420 RCX: 0000000000000027
-RDX: 0000000000000000 RSI: ffffffffab06180e RDI: ffff8881f6eb18c8
-RBP: ffff8881462ec000 R08: 0000000000000001 R09: ffffed103edd6319
-R10: ffff8881f6eb18cb R11: 00000000016d3158 R12: ffff8881462ec9c0
-R13: ffff8881462ec050 R14: 0000000000000001 R15: 0000000000000000
-FS:  00007f23bfa98740(0000) GS:ffff8881f6e80000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007f8364005d68 CR3: 0000000123c80000 CR4: 0000000000350ef0
-
-This reproduces eventually with an SMB mount and two shells running
-these loops concurrently
-
-- while true; do
-      cd ~; sleep 1;
-      for i in {1..3}; do cd /mnt/test/subdir;
-          echo $PWD; sleep 1; cd ..; echo $PWD; sleep 1;
-      done;
-      echo ...;
-  done
-- while true; do
-      iptables -F OUTPUT; mount -t cifs -a;
-      for _ in {0..2}; do ls /mnt/test/subdir/ | wc -l; done;
-      iptables -I OUTPUT -p tcp --dport 445 -j DROP;
-      sleep 10
-      echo "unmounting"; umount -l -t cifs -a; echo "done unmounting";
-      sleep 20
-      echo "recovering"; iptables -F OUTPUT;
-      sleep 10;
-  done
-
-Fixes: ebe98f1447bb ("cifs: enable caching of directories for which a lease is held")
-Fixes: 5c86919455c1 ("smb: client: fix use-after-free in smb2_query_info_compound()")
-Cc: stable@vger.kernel.org
-Signed-off-by: Paul Aurich <paul@darkrain42.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 14072ee33d5a ("ubi: fastmap: Check wl_pool for free peb before wear leveling")
+Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
+Signed-off-by: Richard Weinberger <richard@nod.at>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/cached_dir.c |   27 ++++++++++++++-------------
- 1 file changed, 14 insertions(+), 13 deletions(-)
+ drivers/mtd/ubi/fastmap-wl.c | 19 ++++++++++++++++---
+ drivers/mtd/ubi/wl.c         |  2 +-
+ drivers/mtd/ubi/wl.h         |  3 ++-
+ 3 files changed, 19 insertions(+), 5 deletions(-)
 
---- a/fs/smb/client/cached_dir.c
-+++ b/fs/smb/client/cached_dir.c
-@@ -59,6 +59,16 @@ static struct cached_fid *find_or_create
- 	list_add(&cfid->entry, &cfids->entries);
- 	cfid->on_list = true;
- 	kref_get(&cfid->refcount);
-+	/*
-+	 * Set @cfid->has_lease to true during construction so that the lease
-+	 * reference can be put in cached_dir_lease_break() due to a potential
-+	 * lease break right after the request is sent or while @cfid is still
-+	 * being cached, or if a reconnection is triggered during construction.
-+	 * Concurrent processes won't be to use it yet due to @cfid->time being
-+	 * zero.
-+	 */
-+	cfid->has_lease = true;
-+
- 	spin_unlock(&cfids->cfid_list_lock);
- 	return cfid;
- }
-@@ -176,12 +186,12 @@ replay_again:
- 		return -ENOENT;
- 	}
- 	/*
--	 * Return cached fid if it has a lease.  Otherwise, it is either a new
--	 * entry or laundromat worker removed it from @cfids->entries.  Caller
--	 * will put last reference if the latter.
-+	 * Return cached fid if it is valid (has a lease and has a time).
-+	 * Otherwise, it is either a new entry or laundromat worker removed it
-+	 * from @cfids->entries.  Caller will put last reference if the latter.
- 	 */
- 	spin_lock(&cfids->cfid_list_lock);
--	if (cfid->has_lease) {
-+	if (cfid->has_lease && cfid->time) {
- 		spin_unlock(&cfids->cfid_list_lock);
- 		*ret_cfid = cfid;
- 		kfree(utf16_path);
-@@ -267,15 +277,6 @@ replay_again:
+diff --git a/drivers/mtd/ubi/fastmap-wl.c b/drivers/mtd/ubi/fastmap-wl.c
+index 2a9cc9413c427..9bdb6525f1281 100644
+--- a/drivers/mtd/ubi/fastmap-wl.c
++++ b/drivers/mtd/ubi/fastmap-wl.c
+@@ -346,14 +346,27 @@ int ubi_wl_get_peb(struct ubi_device *ubi)
+  * WL sub-system.
+  *
+  * @ubi: UBI device description object
++ * @need_fill: whether to fill wear-leveling pool when no PEBs are found
+  */
+-static struct ubi_wl_entry *next_peb_for_wl(struct ubi_device *ubi)
++static struct ubi_wl_entry *next_peb_for_wl(struct ubi_device *ubi,
++					    bool need_fill)
+ {
+ 	struct ubi_fm_pool *pool = &ubi->fm_wl_pool;
+ 	int pnum;
  
- 	smb2_set_related(&rqst[1]);
+-	if (pool->used == pool->size)
++	if (pool->used == pool->size) {
++		if (need_fill && !ubi->fm_work_scheduled) {
++			/*
++			 * We cannot update the fastmap here because this
++			 * function is called in atomic context.
++			 * Let's fail here and refill/update it as soon as
++			 * possible.
++			 */
++			ubi->fm_work_scheduled = 1;
++			schedule_work(&ubi->fm_work);
++		}
+ 		return NULL;
++	}
  
--	/*
--	 * Set @cfid->has_lease to true before sending out compounded request so
--	 * its lease reference can be put in cached_dir_lease_break() due to a
--	 * potential lease break right after the request is sent or while @cfid
--	 * is still being cached.  Concurrent processes won't be to use it yet
--	 * due to @cfid->time being zero.
--	 */
--	cfid->has_lease = true;
--
- 	if (retries) {
- 		smb2_set_replay(server, &rqst[0]);
- 		smb2_set_replay(server, &rqst[1]);
+ 	pnum = pool->pebs[pool->used];
+ 	return ubi->lookuptbl[pnum];
+@@ -375,7 +388,7 @@ static bool need_wear_leveling(struct ubi_device *ubi)
+ 	if (!ubi->used.rb_node)
+ 		return false;
+ 
+-	e = next_peb_for_wl(ubi);
++	e = next_peb_for_wl(ubi, false);
+ 	if (!e) {
+ 		if (!ubi->free.rb_node)
+ 			return false;
+diff --git a/drivers/mtd/ubi/wl.c b/drivers/mtd/ubi/wl.c
+index 8a26968aba11f..fbd399cf65033 100644
+--- a/drivers/mtd/ubi/wl.c
++++ b/drivers/mtd/ubi/wl.c
+@@ -683,7 +683,7 @@ static int wear_leveling_worker(struct ubi_device *ubi, struct ubi_work *wrk,
+ 	ubi_assert(!ubi->move_to_put);
+ 
+ #ifdef CONFIG_MTD_UBI_FASTMAP
+-	if (!next_peb_for_wl(ubi) ||
++	if (!next_peb_for_wl(ubi, true) ||
+ #else
+ 	if (!ubi->free.rb_node ||
+ #endif
+diff --git a/drivers/mtd/ubi/wl.h b/drivers/mtd/ubi/wl.h
+index 7b6715ef6d4a3..a69169c35e310 100644
+--- a/drivers/mtd/ubi/wl.h
++++ b/drivers/mtd/ubi/wl.h
+@@ -5,7 +5,8 @@
+ static void update_fastmap_work_fn(struct work_struct *wrk);
+ static struct ubi_wl_entry *find_anchor_wl_entry(struct rb_root *root);
+ static struct ubi_wl_entry *get_peb_for_wl(struct ubi_device *ubi);
+-static struct ubi_wl_entry *next_peb_for_wl(struct ubi_device *ubi);
++static struct ubi_wl_entry *next_peb_for_wl(struct ubi_device *ubi,
++					    bool need_fill);
+ static bool need_wear_leveling(struct ubi_device *ubi);
+ static void ubi_fastmap_close(struct ubi_device *ubi);
+ static inline void ubi_fastmap_init(struct ubi_device *ubi, int *count)
+-- 
+2.43.0
+
 
 
