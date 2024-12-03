@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A410E1FA16B;
-	Tue,  3 Dec 2024 15:46:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B0191FA16B;
+	Tue,  3 Dec 2024 15:46:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733240786; cv=none; b=TN4BuM3ZPW72vqvnKNtTbrurbvPNVUiKYliNCK1oXanwjWPALFK8mFkYmrFuqvu+JZ6ZFpQCmh4utc3Ipb1XoZKitEo00KXiWOxVZS7tts4EnKxsGZ0L7S2eheACEaxhKBh9XtbtPxS3rQ/XUJ6KA3PZzGWIsIaukF+BQhSZQZE=
+	t=1733240790; cv=none; b=i9OkUGBd9r7IvvliEodFV37XcnCXT+siKYCnVnEpe4E749Jo0s6e52LcP+vYzT4ArQlB1p+DRc2SVcVH0DwHr857NG4yy5RDEdAuR1Gfd/mn6P6PgmwvywjjqDtt9X4BXN1ISsU6EdJ2D5LXIBIT9ajfNvmX4JKWV6ecr2NqH+E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733240786; c=relaxed/simple;
-	bh=gbA80Bv/j88v4Jl/c3eDtPCUe+o4Y1DXGjY3PgIeRtg=;
+	s=arc-20240116; t=1733240790; c=relaxed/simple;
+	bh=zBxLEB7n+JXIwu4m2tTtH1HsLgle8Iegu4SUp0IhVIE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kbA0xsED1HgI8WNvku2FYCKpW139Dn2rNm/PbtYN3kyG/OzcMFbDYkw9aBEQaIGO9QGwidQUyZ4nqz+wOsNntek8/mZDIa7HbcqdUAzJATv4BQyVPIuj3uLMKnBI3H8O11X6KI0ooxGEb6f1jcBluMcBwYmKbgDVY8iSiXrVGy4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KUg1fgXp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=RZ1Vjb+tHlTEdjalZXu0weJGMrVX59ezsBHzflom+lkIwcjJ1tTy0Nyh6y5AK8xHgyjsn6Ilk7V8Jfu4esvte5JioX5+Ltx3p5I0clu9uDBpsZ2Dmo4FaqNE7mxWEy9A5TpBGvVcxx6k9bAZh3OtaJiHSEEKJz2Uuh02fG129nI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MHNGDwbf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KUg1fgXp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15D96C4CECF;
-	Tue,  3 Dec 2024 15:46:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MHNGDwbf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C0F3C4CECF;
+	Tue,  3 Dec 2024 15:46:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733240786;
-	bh=gbA80Bv/j88v4Jl/c3eDtPCUe+o4Y1DXGjY3PgIeRtg=;
+	s=korg; t=1733240790;
+	bh=zBxLEB7n+JXIwu4m2tTtH1HsLgle8Iegu4SUp0IhVIE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KUg1fgXp7/4NmxP4Ke2IbN/G3n4i0u6m4NRXpkNfBwUNPeGqzn+WULb1lRE5nb9kw
-	 Jj81YOmVq4dM76/yUS4fADXiAxXkhoElNzknCsEd0S/5NT+XB47VlCpji6x05/tTIk
-	 zqTt8ZNNCdTssBjCvoucg7+UJ6jQjwPER8tAISQk=
+	b=MHNGDwbfN8wwq9kcHU6yCqDEpFeX/0+WJdWGLZachowWLsjl5MVS5r8lvvYrLYyyO
+	 KyzoRAGgAxc1VSHWlqT7HDmE7WoyRN08hQV9yXhO0jZgyAHLv5lJymUBpjr1BcsRiZ
+	 oFmrYPUO4BLyncChQw8CxonngJ2JPr5T3CHYJFIE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Balaji Pothunoori <quic_bpothuno@quicinc.com>,
-	Jeff Johnson <quic_jjohnson@quicinc.com>,
+	=?UTF-8?q?Alexis=20Lothor=C3=A9=20 ?= <alexis.lothore@bootlin.com>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 233/826] wifi: ath11k: Fix CE offset address calculation for WCN6750 in SSR
-Date: Tue,  3 Dec 2024 15:39:20 +0100
-Message-ID: <20241203144752.839825240@linuxfoundation.org>
+Subject: [PATCH 6.12 234/826] selftests/bpf: add missing header include for htons
+Date: Tue,  3 Dec 2024 15:39:21 +0100
+Message-ID: <20241203144752.880915503@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -45,66 +45,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Balaji Pothunoori <quic_bpothuno@quicinc.com>
+From: Alexis Lothoré (eBPF Foundation) <alexis.lothore@bootlin.com>
 
-[ Upstream commit 4c57ec6c4bb9979b42ae7fa7273fc2d4a361d576 ]
+[ Upstream commit bc9b3fb827fceec4e05564d6e668280f4470ab5b ]
 
-Currently, mem_ce and mem iomem addresses are used to calculate the
-CE offset address. mem_ce is initialized with mem address, and for
-targets where ce_remap is needed, mem_ce is remapped to a new address
-space during AHB probe.
+Including the network_helpers.h header in tests can lead to the following
+build error:
 
-For targets such as WCN6750 in which CE address space is same as WCSS
-address space (i.e. "ce_remap" hw_param is set to false), mem_ce and
-mem iomem addresses are same. In the initial SRNG setup for such targets,
-the CE offset address and hence CE register base addresses are
-calculated correctly in ath11k_hal_srng_init() as both mem and mem_ce
-are initialized with same iomem address.
+./network_helpers.h: In function ‘csum_tcpudp_magic’:
+./network_helpers.h:116:14: error: implicit declaration of function \
+  ‘htons’ [-Werror=implicit-function-declaration]
+  116 |         s += htons(proto + len);
 
-Later, after the firmware download, mem is initialized with BAR address
-received in qmi_wlanfw_device_info_resp_msg_v01 QMI message, while mem_ce
-is not updated.
+The error is avoided in many cases thanks to some other headers included
+earlier and bringing in arpa/inet.h (ie: test_progs.h).
 
-After initial setup success, during Subsystem Restart (SSR), as part
-of reinitialization, ath11k_hal_srng_init() will be called again,
-and CE offset address will be calculated incorrectly this time as mem_ce
-address was not updated. Due to the incorrect CE offset address,
-APPS accesses an invalid CE register address which leads to improper
-behavior in firmware after SSR is triggered.
+Make sure that test_progs build success does not depend on header ordering
+by adding the missing header include in network_helpers.h
 
-To fix the above issue, update mem_ce to mem iomem address in
-ath11k_qmi_request_device_info() for targets which do not support
-ce_remap feature.
-
-Signed-off-by: Balaji Pothunoori <quic_bpothuno@quicinc.com>
-Fixes: b42b3678c91f ("wifi: ath11k: remap ce register space for IPQ5018")
-Link: https://patch.msgid.link/20240927095825.22317-1-quic_bpothuno@quicinc.com
-Signed-off-by: Jeff Johnson <quic_jjohnson@quicinc.com>
+Fixes: f6642de0c3e9 ("selftests/bpf: Add csum helpers")
+Signed-off-by: Alexis Lothoré (eBPF Foundation) <alexis.lothore@bootlin.com>
+Link: https://lore.kernel.org/r/20241008-network_helpers_fix-v1-1-2c2ae03df7ef@bootlin.com
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath11k/qmi.c | 3 +++
- 1 file changed, 3 insertions(+)
+ tools/testing/selftests/bpf/network_helpers.h | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/wireless/ath/ath11k/qmi.c b/drivers/net/wireless/ath/ath11k/qmi.c
-index f477afd325dea..7a22483b35cd9 100644
---- a/drivers/net/wireless/ath/ath11k/qmi.c
-+++ b/drivers/net/wireless/ath/ath11k/qmi.c
-@@ -2180,6 +2180,9 @@ static int ath11k_qmi_request_device_info(struct ath11k_base *ab)
- 	ab->mem = bar_addr_va;
- 	ab->mem_len = resp.bar_size;
- 
-+	if (!ab->hw_params.ce_remap)
-+		ab->mem_ce = ab->mem;
-+
- 	return 0;
- out:
- 	return ret;
+diff --git a/tools/testing/selftests/bpf/network_helpers.h b/tools/testing/selftests/bpf/network_helpers.h
+index c72c16e1aff82..5764155b6d251 100644
+--- a/tools/testing/selftests/bpf/network_helpers.h
++++ b/tools/testing/selftests/bpf/network_helpers.h
+@@ -1,6 +1,7 @@
+ /* SPDX-License-Identifier: GPL-2.0 */
+ #ifndef __NETWORK_HELPERS_H
+ #define __NETWORK_HELPERS_H
++#include <arpa/inet.h>
+ #include <sys/socket.h>
+ #include <sys/types.h>
+ #include <linux/types.h>
 -- 
 2.43.0
 
