@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BCC114A088;
-	Tue,  3 Dec 2024 16:17:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2050A1F7567;
+	Tue,  3 Dec 2024 16:17:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733242657; cv=none; b=kV0CBeMd8T/Um92ik0QWXLDcLSIL8jGKQYK/eLUU98OUoF3FuqqNVqTpQGXWBja1+gwDSl3kAAHTlVYCnOkKRx5aJFraSn350h5bObpN6/VRMzLYnEhsb1uTzpNUa4i2qMhFRjKmXlgh4JB6OT9ZbfgJ6LmmtoM3gxOWzZb2c4Y=
+	t=1733242660; cv=none; b=dxP45DwgzPlqikTfcBXrhc34vzfWE5hIa83lqQsRxzrtt01kM+Mc/v+IHgNxe1mfyadszAgWOTlz8frSgh75TKuzOBmdv7rDM6EiFy+pSXOdzUQ8NHE3qQm6HrtK0bsPQgjpJl9d/yOyR4Yo3vXKld+rqIrnIfP5L/fEzW5bUUU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733242657; c=relaxed/simple;
-	bh=DFEO+4fRpTYGh38B+ohgQwgNkr44D4npmP60DglHhgQ=;
+	s=arc-20240116; t=1733242660; c=relaxed/simple;
+	bh=BHFUG6v3E60hHsetNtGFNTRoHnjPKDn7ymeXT4ocbj0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nHNGRUrnN1PvPubu9bg80edpQsnOGf88okBLfPqoegFMvvgwtI6hDMGl41bmM8g0e55o4LqiRQS5Uf56ehUxOHS5fHdKz/77EZIKefIKBmzGkGTlI2uDUrsjuSWORCY/OFpkhmmfiXsZlp2z/TmckvoJ2jsVXJ0JhoSJ7FZeoak=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QGA2ziuC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JOGDgWFKdV+7N2sT4H+SGwI5xljmYmePUZgzbQiZcN3u55OvTvUKVZYofEWQSZlS1wtKeMCWrPx32M2vrPUvGmKkZGb2Py0WVMOJjagerYwPNxP31blbI7U74OHDcgMbX37PPl4FzuzsfGNQUf/vwwq79oxesQTRMRIjpAXvB/Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vhoi7CMs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QGA2ziuC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8507BC4CECF;
-	Tue,  3 Dec 2024 16:17:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vhoi7CMs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B3FCC4CECF;
+	Tue,  3 Dec 2024 16:17:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733242656;
-	bh=DFEO+4fRpTYGh38B+ohgQwgNkr44D4npmP60DglHhgQ=;
+	s=korg; t=1733242660;
+	bh=BHFUG6v3E60hHsetNtGFNTRoHnjPKDn7ymeXT4ocbj0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QGA2ziuCnFGUwqg851bRoGkcTkjRB4jb4cU6Cob4YR4A+Fx2WEl8+SsEaLfGZSeNh
-	 jD0Lr57T1XGshXS+KgqeAdNhzvjH0+EvNsthQb3FBNrapjctNFDKiBjBhp4KEA2Nd2
-	 FvW3/BGWc4OsQ8+rFgND9E4TD7+wlxDlNveA5A48=
+	b=Vhoi7CMs2zBNxme0pZk9GlGAMVRkWMTTF96Sy0Q3iDCSMouTifV2slGVZsXJv26Ua
+	 O4NINOJbboDv1u07838zf31yhgrnqVeR1mZvBiPkXXtNNW/op9p1KMCraRIdZGvGJJ
+	 GpHlAwHIWf8sbJxxEXLlZ1pOVdmNz1cPVotJCgMQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Can <yuancan@huawei.com>,
-	James Ogletree <jogletre@opensource.cirrus.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.12 769/826] Input: cs40l50 - fix wrong usage of INIT_WORK()
-Date: Tue,  3 Dec 2024 15:48:16 +0100
-Message-ID: <20241203144813.763094574@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 6.12 770/826] NFSD: Prevent a potential integer overflow
+Date: Tue,  3 Dec 2024 15:48:17 +0100
+Message-ID: <20241203144813.800618131@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -51,54 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuan Can <yuancan@huawei.com>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-commit 5c822c0ce5cc83ed4cd8394f3dc46dae8d9a681d upstream.
+commit 7f33b92e5b18e904a481e6e208486da43e4dc841 upstream.
 
-In cs40l50_add(), the work_data is a local variable and the work_data.work
-should initialize with INIT_WORK_ONSTACK() instead of INIT_WORK().
-Small error in cs40l50_erase() also fixed in this commit.
+If the tag length is >= U32_MAX - 3 then the "length + 4" addition
+can result in an integer overflow. Address this by splitting the
+decoding into several steps so that decode_cb_compound4res() does
+not have to perform arithmetic on the unsafe length value.
 
-Fixes: c38fe1bb5d21 ("Input: cs40l50 - Add support for the CS40L50 haptic driver")
-Signed-off-by: Yuan Can <yuancan@huawei.com>
-Reviewed-by: James Ogletree <jogletre@opensource.cirrus.com>
-Link: https://lore.kernel.org/r/20241106013549.78142-1-yuancan@huawei.com
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
 Cc: stable@vger.kernel.org
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/misc/cs40l50-vibra.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ fs/nfsd/nfs4callback.c |   14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
---- a/drivers/input/misc/cs40l50-vibra.c
-+++ b/drivers/input/misc/cs40l50-vibra.c
-@@ -334,11 +334,12 @@ static int cs40l50_add(struct input_dev
- 	work_data.custom_len = effect->u.periodic.custom_len;
- 	work_data.vib = vib;
- 	work_data.effect = effect;
--	INIT_WORK(&work_data.work, cs40l50_add_worker);
-+	INIT_WORK_ONSTACK(&work_data.work, cs40l50_add_worker);
+--- a/fs/nfsd/nfs4callback.c
++++ b/fs/nfsd/nfs4callback.c
+@@ -287,17 +287,17 @@ static int decode_cb_compound4res(struct
+ 	u32 length;
+ 	__be32 *p;
  
- 	/* Push to the workqueue to serialize with playbacks */
- 	queue_work(vib->vib_wq, &work_data.work);
- 	flush_work(&work_data.work);
-+	destroy_work_on_stack(&work_data.work);
- 
- 	kfree(work_data.custom_data);
- 
-@@ -467,11 +468,12 @@ static int cs40l50_erase(struct input_de
- 	work_data.vib = vib;
- 	work_data.effect = &dev->ff->effects[effect_id];
- 
--	INIT_WORK(&work_data.work, cs40l50_erase_worker);
-+	INIT_WORK_ONSTACK(&work_data.work, cs40l50_erase_worker);
- 
- 	/* Push to workqueue to serialize with playbacks */
- 	queue_work(vib->vib_wq, &work_data.work);
- 	flush_work(&work_data.work);
-+	destroy_work_on_stack(&work_data.work);
- 
- 	return work_data.error;
- }
+-	p = xdr_inline_decode(xdr, 4 + 4);
++	p = xdr_inline_decode(xdr, XDR_UNIT);
+ 	if (unlikely(p == NULL))
+ 		goto out_overflow;
+-	hdr->status = be32_to_cpup(p++);
++	hdr->status = be32_to_cpup(p);
+ 	/* Ignore the tag */
+-	length = be32_to_cpup(p++);
+-	p = xdr_inline_decode(xdr, length + 4);
+-	if (unlikely(p == NULL))
++	if (xdr_stream_decode_u32(xdr, &length) < 0)
++		goto out_overflow;
++	if (xdr_inline_decode(xdr, length) == NULL)
++		goto out_overflow;
++	if (xdr_stream_decode_u32(xdr, &hdr->nops) < 0)
+ 		goto out_overflow;
+-	p += XDR_QUADLEN(length);
+-	hdr->nops = be32_to_cpup(p);
+ 	return 0;
+ out_overflow:
+ 	return -EIO;
 
 
