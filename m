@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE0D85336E;
-	Tue,  3 Dec 2024 15:39:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C61201F75B6;
+	Tue,  3 Dec 2024 15:39:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733240345; cv=none; b=MA97asZ1WVNvef+v04ES6M7RS1uVw+1YeZoU/k/MIoNFHdjHwMgQPOyarThPMe8yCmNmsMdWsovmKZ0RF9WdpJOFbUH9SMf8horiBNjUcmf2rj4Lhpn71ZxwfwzJrFPEr3ocH/Wqm+JBToknR5BKoEMI9cUPeE2s6zrpfKTkG8g=
+	t=1733240347; cv=none; b=DiedvScP7LP9BkpnNf1vkT/jbXbFkpgHPTarjLH2kz1RAIMMwwqbz26kkTYfl4hLHr5WuNREP6XhqjURP63jgzMhkfUpXrb52iEamLyjABBdCyQrMZK/qdpfxTp8gHovXEH8ETct9nRus/FDMbIVAcxqh5V/1ImCOp/Hibq8VrA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733240345; c=relaxed/simple;
-	bh=uqD6GzilJgcRAeeK4XKDZumvZXx1cCECcPxkbEiqObc=;
+	s=arc-20240116; t=1733240347; c=relaxed/simple;
+	bh=ED7ZUML4X87RKZYqkb58ISYC5k1b1DYII43hTUeR2aQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G6vGe9QwqYWB1kFoL5ikzNuhWSNPHwMJF8wJHgisZAztfRyRSL7ujwnC0z7KUarlcgpzFbHaY33txkAD94nMrSbC3zcwLxWRM/gA71sr7/H57pMDrTUcHQsxaoXww1cs1VPunQYi9nmuEUWZMszwrrUJl1D4qA/0YqmGus+x3c4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eULWTKao; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=N3DQbNLn3lL3VgV0Ca3h+/d3TY9+d615Vh/Q38T9cjabD8Homl0je2SNytlf5i9/bCzjnDwXl2jSgCMX0OAJ+JoRzkUQp47DYcjJ/WwYHDtmavCTS5KX8Gq3OPDM8y6jwSBNZtr4Ka0USsutAa3hWAidU1QgtuYxg0wq+2ol/6U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xnx81w6/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eULWTKao"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29CD0C4CECF;
-	Tue,  3 Dec 2024 15:39:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xnx81w6/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16453C4CECF;
+	Tue,  3 Dec 2024 15:39:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733240344;
-	bh=uqD6GzilJgcRAeeK4XKDZumvZXx1cCECcPxkbEiqObc=;
+	s=korg; t=1733240347;
+	bh=ED7ZUML4X87RKZYqkb58ISYC5k1b1DYII43hTUeR2aQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eULWTKaoRTmcyuvFvETqc7WsbsR57pwyxwdsG+fQPdCwfNkj5Z1Soek8lb0GWt1j5
-	 pLzopI8vxyUb+A6gMNNZODxa8mpY89bSW+FlhFyLKoh/Z/+e0Va07PlEA4CFHHLfou
-	 6jjAu450ap/W6apDStvGN2yBMrBFN+LyCLTkp5YA=
+	b=Xnx81w6/CyuFP0fi2pXS+ertABA9IVXWB3phAHNvM0R+F2TQKvRo4kgtQZLRGDJDa
+	 4fHip9L2tkGuNd8h8jalsUhkhtmlkOIwrPNvqpDvS4rpJFsDGw5ALUhsRsLhGGcx2U
+	 YnVuYzFpTCbBciC85IgTjEKRgcbEGxCJNEj92PKE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Loehle <christian.loehle@arm.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 066/826] sched/cpufreq: Ensure sd is rebuilt for EAS check
-Date: Tue,  3 Dec 2024 15:36:33 +0100
-Message-ID: <20241203144746.047399538@linuxfoundation.org>
+Subject: [PATCH 6.12 101/826] arm64: dts: qcom: qcs6390-rb3gen2: use modem.mbn for modem DSP
+Date: Tue,  3 Dec 2024 15:37:08 +0100
+Message-ID: <20241203144747.673340864@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -51,41 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Loehle <christian.loehle@arm.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit 70d8b6485b0bcd135b6699fc4252d2272818d1fb ]
+[ Upstream commit 6317aad0e1525f3e3609d9a0fea762a37799943a ]
 
-Ensure sugov_eas_rebuild_sd() is always called when sugov_init()
-succeeds. The out goto initialized sugov without forcing the rebuild.
+Newer boards should always use squashed MBN firmware instead of split
+MDT+bNN. Use qcom/qcs6490/modem.mbn as the firmware for the modem on
+RB3gen2.
 
-Previously the missing call to sugov_eas_rebuild_sd() could lead to EAS
-not being enabled on boot when it should have been, because it requires
-all policies to be controlled by schedutil while they might not have
-been initialized yet.
-
-Fixes: e7a1b32e43b1 ("cpufreq: Rebuild sched-domains when removing cpufreq driver")
-Signed-off-by: Christian Loehle <christian.loehle@arm.com>
-Link: https://patch.msgid.link/35e572d9-1152-406a-9e34-2525f7548af9@arm.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: ac6d35b9b74c ("arm64: dts: qcom: qcs6490-rb3gen2: Enable various remoteprocs")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Konrad Dybcio <konradybcio@kernel.org>
+Link: https://lore.kernel.org/r/20240907-rb3g2-fixes-v1-1-eb9da98e9f80@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/cpufreq_schedutil.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/sched/cpufreq_schedutil.c b/kernel/sched/cpufreq_schedutil.c
-index c6ba15388ea70..28c77904ea749 100644
---- a/kernel/sched/cpufreq_schedutil.c
-+++ b/kernel/sched/cpufreq_schedutil.c
-@@ -783,9 +783,8 @@ static int sugov_init(struct cpufreq_policy *policy)
- 	if (ret)
- 		goto fail;
+diff --git a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
+index 0d45662b8028b..5d0167fbc7098 100644
+--- a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
++++ b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
+@@ -707,7 +707,7 @@ &remoteproc_cdsp {
+ };
  
--	sugov_eas_rebuild_sd();
--
- out:
-+	sugov_eas_rebuild_sd();
- 	mutex_unlock(&global_tunables_lock);
- 	return 0;
+ &remoteproc_mpss {
+-	firmware-name = "qcom/qcs6490/modem.mdt";
++	firmware-name = "qcom/qcs6490/modem.mbn";
+ 	status = "okay";
+ };
  
 -- 
 2.43.0
