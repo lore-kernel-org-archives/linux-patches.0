@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 334C61F76BA;
-	Tue,  3 Dec 2024 15:13:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C44B1F75B1;
+	Tue,  3 Dec 2024 15:13:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733238808; cv=none; b=jnXhrmocYc5biGlkkZ+NgaSkwOMXGqXwUOVJd3Y/VVnahdqFIvjoxsjEHADDCT0JemAn9AjnLTgF4o5xhQ/rVj4oPTEfgfuSJSQnzxHEAP35ntXjHYALAq52UGYsff65bKnpXwrTngVDEMxvpgWVjrny/mRhlwrske5VtzTW5bI=
+	t=1733238811; cv=none; b=UEc1depx1jI8A8wvwxLGLYegQHHdEUoM71hJYYiiGMHOJYq52i/dnHP7Fd0iO6tZGqQHcjwLefvuZXu/XQQmIJVbp51kH5tdIVl7CnlSY4oktx/J2TxEzMh+rnl0NVB+ImQu68RF7vUycL9txD08SsZE0frEj6YVOiP/VEdXGuA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733238808; c=relaxed/simple;
-	bh=TIOanA+WgY8YDCWCcYSWiW+TDBqu0SqAhcrPi1r5uB4=;
+	s=arc-20240116; t=1733238811; c=relaxed/simple;
+	bh=qiAv7pDJdGlkP+xljQSOSQo0xOcJsk++TIm4nYqNjeM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PJOqZlLRvqawHW+UuBEyds0u45E5Wbxaa8wMNDcN37AlyBViC0gxBbLFj6zV5XJRxp9O/98dk/2pRkc24ohcCfaXQqAwLV3UH2a5BqQNX/nv4v4qR6uuZzjRNp3LJw2mAsyleE1GcLGI3d1FZVEaiLcdTHNVsGiP2fxSApkJfs0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vfUgBgic; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KI4T77JAX4RV3Lvy2XTu0WiY5B58IDjYdz2jyDTYHHGxpzLiFJt/dqqMgl3kR1K4zCO2Wg7ao8z+uq/F8erhEOaX80w27IMpT6O8HdhdVrcrf7XNxB4wr9YcLcxhvKYZ/uTlSj21O6il9isF383L8WG0u68Jf1DcC0AEAR8meeo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LFYIKgv3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vfUgBgic"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB91AC4CECF;
-	Tue,  3 Dec 2024 15:13:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LFYIKgv3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97960C4CECF;
+	Tue,  3 Dec 2024 15:13:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733238808;
-	bh=TIOanA+WgY8YDCWCcYSWiW+TDBqu0SqAhcrPi1r5uB4=;
+	s=korg; t=1733238811;
+	bh=qiAv7pDJdGlkP+xljQSOSQo0xOcJsk++TIm4nYqNjeM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vfUgBgic2iRSOb5pJf6DTRsOJcR1PUmuWYc3Q3wBqZ+hXiK+jyiZuLzXZue5xd8eC
-	 RBD49kSJVbosWhS0qbFAiIp4c+ZUDcnyCYbaf85WBempLg3oJjHoe78M/5Vap6hG0v
-	 CbMIc6vAqxgmangxj/zsEJHIVOxQOXw5PCBG9GXU=
+	b=LFYIKgv3GChGXgenjd7C4rnqA6BDmQeHfzV2GzNo4iBqAvy+Zj33u0gwpNKlxmrzo
+	 ccrXiT2fKVYRAg3D4btoUpaeDmXntlPcX5kNpVRfyQ4FRsWXOYqE3mAGl5pgfOXYKn
+	 K0Fb61txE8lFBm1jFatmwTptF6na6jVFyodsi3hs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zichen Xie <zichenxie0106@gmail.com>,
-	Chen Wang <unicorn_wang@outlook.com>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Stephen Boyd <sboyd@kernel.org>,
+	Takahiro Kuwano <Takahiro.Kuwano@infineon.com>,
+	Tudor Ambarus <tudor.ambarus@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 402/817] clk: sophgo: avoid integer overflow in sg2042_pll_recalc_rate()
-Date: Tue,  3 Dec 2024 15:39:34 +0100
-Message-ID: <20241203144011.565386363@linuxfoundation.org>
+Subject: [PATCH 6.11 403/817] mtd: spi-nor: spansion: Use nor->addr_nbytes in octal DTR mode in RD_ANY_REG_OP
+Date: Tue,  3 Dec 2024 15:39:35 +0100
+Message-ID: <20241203144011.603782056@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -53,42 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zichen Xie <zichenxie0106@gmail.com>
+From: Takahiro Kuwano <Takahiro.Kuwano@infineon.com>
 
-[ Upstream commit 00f8f70a0e8c6601861628be26270a0b6f4bbb34 ]
+[ Upstream commit b61c35e3404557779ec427c077f7a9f057bb053d ]
 
-This was found by a static analyzer.
-There may be a potential integer overflow issue in
-sg2042_pll_recalc_rate(). numerator is defined as u64 while
-parent_rate is defined as unsigned long and ctrl_table.fbdiv
-is defined as unsigned int. On 32-bit machine, the result of
-the calculation will be limited to "u32" without correct casting.
-Integer overflow may occur on high-performance systems.
+In octal DTR mode, RD_ANY_REG_OP needs to use 4-byte address regardless
+of flash's internal address mode. Use nor->addr_nbytes which is set to 4
+during setup.
 
-Fixes: 48cf7e01386e ("clk: sophgo: Add SG2042 clock driver")
-Signed-off-by: Zichen Xie <zichenxie0106@gmail.com>
-Reviewed-by: Chen Wang <unicorn_wang@outlook.com>
-Link: https://lore.kernel.org/r/20241023145146.13130-1-zichenxie0106@gmail.com
-Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Fixes: eff9604390d6 ("mtd: spi-nor: spansion: add octal DTR support in RD_ANY_REG_OP")
+Signed-off-by: Takahiro Kuwano <Takahiro.Kuwano@infineon.com>
+Link: https://lore.kernel.org/r/20241016000837.17951-1-Takahiro.Kuwano@infineon.com
+Signed-off-by: Tudor Ambarus <tudor.ambarus@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/sophgo/clk-sg2042-pll.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/mtd/spi-nor/spansion.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/clk/sophgo/clk-sg2042-pll.c b/drivers/clk/sophgo/clk-sg2042-pll.c
-index ff9deeef509b8..1537f4f05860e 100644
---- a/drivers/clk/sophgo/clk-sg2042-pll.c
-+++ b/drivers/clk/sophgo/clk-sg2042-pll.c
-@@ -153,7 +153,7 @@ static unsigned long sg2042_pll_recalc_rate(unsigned int reg_value,
+diff --git a/drivers/mtd/spi-nor/spansion.c b/drivers/mtd/spi-nor/spansion.c
+index 6cc237c24e072..020994374ea13 100644
+--- a/drivers/mtd/spi-nor/spansion.c
++++ b/drivers/mtd/spi-nor/spansion.c
+@@ -106,6 +106,7 @@ static int cypress_nor_sr_ready_and_clear_reg(struct spi_nor *nor, u64 addr)
+ 	int ret;
  
- 	sg2042_pll_ctrl_decode(reg_value, &ctrl_table);
- 
--	numerator = parent_rate * ctrl_table.fbdiv;
-+	numerator = (u64)parent_rate * ctrl_table.fbdiv;
- 	denominator = ctrl_table.refdiv * ctrl_table.postdiv1 * ctrl_table.postdiv2;
- 	do_div(numerator, denominator);
- 	return numerator;
+ 	if (nor->reg_proto == SNOR_PROTO_8_8_8_DTR) {
++		op.addr.nbytes = nor->addr_nbytes;
+ 		op.dummy.nbytes = params->rdsr_dummy;
+ 		op.data.nbytes = 2;
+ 	}
 -- 
 2.43.0
 
