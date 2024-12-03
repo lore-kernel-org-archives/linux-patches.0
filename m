@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 410411F8905;
-	Tue,  3 Dec 2024 15:48:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A32771DAC9F;
+	Tue,  3 Dec 2024 15:48:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733240922; cv=none; b=U89F8eRhhkN7ydq4sZ03VSbP9NRt11WR7lVkSK4QKbeFbjcJLtGv4GBBbHfNsY9OrBYcBDrVeXSSuxHzRIQvlx12iUJh8ZFWYSlC+Jnp2oaxacLQB1bZpnOBc1+6u13SG9Dvp9EwB45n1nvmCm2Oz33/Wa+o9Vhj04FUYI0FBto=
+	t=1733240925; cv=none; b=CwqrBPEfEx1MnY4kM9+RJffq3N2Too90fg66sl5x2AxqgqCUWi47L0QfsleSGcadEZSFhi+uipfJZhzZXr1ZXi7/U8jhJFSyEo1ck4Gpd1KY8/OD8zBr8av2YDmQgIiU10Kbl+zDyQEMYSyICXl0o2hI1EYPfm5d56zf1BXOg4Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733240922; c=relaxed/simple;
-	bh=dZy1vqqjfz9/mzzf2IaVyKqSZv1hPZgO+srF1b1jq0g=;
+	s=arc-20240116; t=1733240925; c=relaxed/simple;
+	bh=qYleLKZ1uO9MIAsVC+ulF2/X3L/DronYZMe2Yf0FYro=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KoBnfJdWbGG58bkZDPV1SaaPTlQL+/C3KJUqPRRgq6BHj037TX02CSgdQowVHJSu5XLcDW3RJ8kDHGBU74Vq45tN/ioNhZkmmfkXeDIvpPC8L+3GVUoL5JzWrSmNnrekR5KQyTEjVYrRJ09fVpxkdswHOEEScUc6pBKKHEqDCZs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CY+vd3yV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=opp34vKYpi2RJD8Y8Y9y6w6soGEleYDf8OrThyeAEsYVzwqny8hCfMHjpi6MDXRqmFkHXuGkeKz9uPcJHFfziv8LkdQ8m07ZIUgsTXr1OPDZYrmH/70I3/mfLJU8JuHysabmkaRul3nkMFBsVjFmZJJNvxwellG7vRVwyR00X1Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jxcYPJLS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CY+vd3yV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3D96C4CECF;
-	Tue,  3 Dec 2024 15:48:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jxcYPJLS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD947C4CED6;
+	Tue,  3 Dec 2024 15:48:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733240922;
-	bh=dZy1vqqjfz9/mzzf2IaVyKqSZv1hPZgO+srF1b1jq0g=;
+	s=korg; t=1733240925;
+	bh=qYleLKZ1uO9MIAsVC+ulF2/X3L/DronYZMe2Yf0FYro=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CY+vd3yV2nSRvqieFatkLZT8iU4rEBs8SZS5ksPV5Pf0eHmbNE+V2o8Z06dBQgUN1
-	 pTlNapabDD+5mc7OajQ378UL0m8buD0H4ZZn1ekzQVVbvmFUqsgi9xs4hcwOzVqMTF
-	 ZX6uBgX4gjM2F5Hd9bBLg4dYDHQehAp30G1oEM7g=
+	b=jxcYPJLSBF61kZgI4uwSpkwuxw7hk8pM8U67ia2N9NCcwbJmvGAzbC2naw/n44sIb
+	 chILQnrFXZwWnlhKV00ep7s9PO0e5K8NDT79Xq7Xk8Fu3+wuzq6obj49MihAgtMM5k
+	 z521ft/agGuJ4IpKDVQApGcLoXRTlc/G085GC89w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	"Everest K.C." <everestkc@everestkc.com.np>,
-	Mark Brown <broonie@kernel.org>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 244/826] ASoC: rt722-sdca: Remove logically deadcode in rt722-sdca.c
-Date: Tue,  3 Dec 2024 15:39:31 +0100
-Message-ID: <20241203144753.284904089@linuxfoundation.org>
+Subject: [PATCH 6.12 245/826] libbpf: never interpret subprogs in .text as entry programs
+Date: Tue,  3 Dec 2024 15:39:32 +0100
+Message-ID: <20241203144753.323238381@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -52,45 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Everest K.C <everestkc@everestkc.com.np>
+From: Andrii Nakryiko <andrii@kernel.org>
 
-[ Upstream commit 22206e569fb54bf9c95db9a0138a7485ba9e13bc ]
+[ Upstream commit db089c9158c1d535a36dfc010e5db37fccea2561 ]
 
-As the same condition was checked in inner and outer if statements.
-The code never reaches the inner else statement.
-Fix this by removing the logically dead inner else statement.
+Libbpf pre-1.0 had a legacy logic of allowing singular non-annotated
+(i.e., not having explicit SEC() annotation) function to be treated as
+sole entry BPF program (unless there were other explicit entry
+programs).
 
-Fixes: 7f5d6036ca00 ("ASoC: rt722-sdca: Add RT722 SDCA driver")
-Reported-by: Shuah Khan <skhan@linuxfoundation.org>
-Closes: https://lore.kernel.org/all/e44527e8-b7c6-4712-97a6-d54f02ad2dc9@linuxfoundation.org/
-Signed-off-by: Everest K.C. <everestkc@everestkc.com.np>
-Reviewed-by: Shuah Khan <skhan@linuxfoundation.org>
-Link: https://patch.msgid.link/20241010175755.5278-1-everestkc@everestkc.com.np
-Signed-off-by: Mark Brown <broonie@kernel.org>
+This behavior was dropped during libbpf 1.0 transition period (unless
+LIBBPF_STRICT_SEC_NAME flag was unset in libbpf_mode). When 1.0 was
+released and all the legacy behavior was removed, the bug slipped
+through leaving this legacy behavior around.
+
+Fix this for good, as it actually causes very confusing behavior if BPF
+object file only has subprograms, but no entry programs.
+
+Fixes: bd054102a8c7 ("libbpf: enforce strict libbpf 1.0 behaviors")
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/r/20241010211731.4121837-1-andrii@kernel.org
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/rt722-sdca.c | 8 ++------
- 1 file changed, 2 insertions(+), 6 deletions(-)
+ tools/lib/bpf/libbpf.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/codecs/rt722-sdca.c b/sound/soc/codecs/rt722-sdca.c
-index e5bd9ef812de1..f9f7512ca3608 100644
---- a/sound/soc/codecs/rt722-sdca.c
-+++ b/sound/soc/codecs/rt722-sdca.c
-@@ -607,12 +607,8 @@ static int rt722_sdca_dmic_set_gain_get(struct snd_kcontrol *kcontrol,
+diff --git a/tools/lib/bpf/libbpf.c b/tools/lib/bpf/libbpf.c
+index dde03484cc42c..1a54ea3a9208d 100644
+--- a/tools/lib/bpf/libbpf.c
++++ b/tools/lib/bpf/libbpf.c
+@@ -4389,7 +4389,7 @@ static int bpf_object__collect_externs(struct bpf_object *obj)
  
- 		if (!adc_vol_flag) /* boost gain */
- 			ctl = regvalue / boost_step;
--		else { /* ADC gain */
--			if (adc_vol_flag)
--				ctl = p->max - (((vol_max - regvalue) & 0xffff) / interval_offset);
--			else
--				ctl = p->max - (((0 - regvalue) & 0xffff) / interval_offset);
--		}
-+		else /* ADC gain */
-+			ctl = p->max - (((vol_max - regvalue) & 0xffff) / interval_offset);
+ static bool prog_is_subprog(const struct bpf_object *obj, const struct bpf_program *prog)
+ {
+-	return prog->sec_idx == obj->efile.text_shndx && obj->nr_programs > 1;
++	return prog->sec_idx == obj->efile.text_shndx;
+ }
  
- 		ucontrol->value.integer.value[i] = ctl;
- 	}
+ struct bpf_program *
 -- 
 2.43.0
 
