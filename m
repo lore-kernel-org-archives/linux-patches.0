@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19064209F41;
-	Tue,  3 Dec 2024 15:33:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C1B620A5EA;
+	Tue,  3 Dec 2024 15:33:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733239984; cv=none; b=PAyLYJGklO/MReoZ9TTww0NGChNWUdr8K9ktfRwklnf8uRYkYL+BIDRdQzaNb1Qs1RpNlLBvkPj3vfD3BkbuXcGnTNVAr/9Z+I0lv6sg8eYNk0nT16SfEMkG/LqONsCDQAyRs8cMB8U5gkozwwYfGZgkRuYt9D4Emo4SE+J+QAw=
+	t=1733239986; cv=none; b=qn9pJjXjzklP/W6tI+Hqfm/VveTfUbu8BJqEjlsYgKcMWnSAXwvS1huOM0hacBQhp6lOJYF3A3vaq3k0v0JnZG5SlxPDBSyo/MHfsOhNENgOiUWDJY7UszRkzbkc/j22qYK9BBiFuRYOCW/LYgEn5CfVUHUhA88uTuO0ND0lYu8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733239984; c=relaxed/simple;
-	bh=jQNX0rYmLz63nfn/fQdHDjGrcprmf6ZR7Ftn/0dgfZQ=;
+	s=arc-20240116; t=1733239986; c=relaxed/simple;
+	bh=I0uSYGxJRaWxfHgndYmwtokuYRQxAX/ligTSWELhSKE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Mk79SPzeSxVwRb7TjzYatDackkNzP1WJKiuyLyYSgZYu0xx0K7gFfBoj9qnwmiKRXM4nYl4RQyGPwnYO8ux576cEs+Q0eOuOmefkMtmcu+77xyf2nZJozU7ve595QensAkuioyzXlYRyVt8dusp3216N/bL2uY20/WmKVGMeIyA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BUmfTSNq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=egQxmcMeonHioX3k9Dzrg0Eyveov3UYlCEZRjNuQ2ATp5N6Hbn6HGa4pYiexwz6R4eBt1nnEII26vakXFCbBJViYXfzcTi5Z1i4esDioh3Bww3QZ2Y722r1CNfQj9Ti1B8mwBdcnAvPYJRdVPC6tDXGvceNXcM0swyM6W2ZdBNM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ylxcHFR6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BUmfTSNq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D9A1C4CECF;
-	Tue,  3 Dec 2024 15:33:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ylxcHFR6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24180C4CED6;
+	Tue,  3 Dec 2024 15:33:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733239983;
-	bh=jQNX0rYmLz63nfn/fQdHDjGrcprmf6ZR7Ftn/0dgfZQ=;
+	s=korg; t=1733239986;
+	bh=I0uSYGxJRaWxfHgndYmwtokuYRQxAX/ligTSWELhSKE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BUmfTSNqlqI/Qoz7gV2X4OMqMmRYraML1aEoTz+2j2KtfET6Ui7E3SJf2mivKb8dd
-	 S/YPK6F2J3EEXCueg6aEYd1yH+EVRsRZdG4S1kMUZXhQWKws6xAkyOcY6tT6shGA9W
-	 +45PLiezGJ5C8aRx7tmFXi2zda2KvHGKC8038Q+g=
+	b=ylxcHFR6JCerOJqlm9Giy0KTHuIV1kGz/P8HE0SgM47b1bV+MxXxCcOUmQFTorBg7
+	 ZrL5sUqNqgp8vbisUX6kH+B/U8ULgjfeRyHyp3S3Ywmg75bNA0hi5NT1FpSYNQT4pr
+	 L/YYBCD01QmD3GueOA96wdjMabjG2EaX9uitSxxM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Garry <john.g.garry@oracle.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Jens Axboe <axboe@kernel.dk>,
+	Masahiro Yamada <masahiroy@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 801/817] block: Dont allow an atomic write be truncated in blkdev_write_iter()
-Date: Tue,  3 Dec 2024 15:46:13 +0100
-Message-ID: <20241203144027.493331684@linuxfoundation.org>
+Subject: [PATCH 6.11 802/817] modpost: remove incorrect code in do_eisa_entry()
+Date: Tue,  3 Dec 2024 15:46:14 +0100
+Message-ID: <20241203144027.715407979@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -46,60 +44,88 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.11-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: John Garry <john.g.garry@oracle.com>
+From: Masahiro Yamada <masahiroy@kernel.org>
 
-[ Upstream commit 2cbd51f1f8739fd2fdf4bae1386bcf75ce0176ba ]
+[ Upstream commit 0c3e091319e4748cb36ac9a50848903dc6f54054 ]
 
-A write which goes past the end of the bdev in blkdev_write_iter() will
-be truncated. Truncating cannot tolerated for an atomic write, so error
-that condition.
+This function contains multiple bugs after the following commits:
 
-Fixes: caf336f81b3a ("block: Add fops atomic write support")
-Signed-off-by: John Garry <john.g.garry@oracle.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://lore.kernel.org/r/20241127092318.632790-1-john.g.garry@oracle.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+ - ac551828993e ("modpost: i2c aliases need no trailing wildcard")
+ - 6543becf26ff ("mod/file2alias: make modalias generation safe for cross compiling")
+
+Commit ac551828993e inserted the following code to do_eisa_entry():
+
+    else
+            strcat(alias, "*");
+
+This is incorrect because 'alias' is uninitialized. If it is not
+NULL-terminated, strcat() could cause a buffer overrun.
+
+Even if 'alias' happens to be zero-filled, it would output:
+
+    MODULE_ALIAS("*");
+
+This would match anything. As a result, the module could be loaded by
+any unrelated uevent from an unrelated subsystem.
+
+Commit ac551828993e introduced another bug.            
+
+Prior to that commit, the conditional check was:
+
+    if (eisa->sig[0])
+
+This checked if the first character of eisa_device_id::sig was not '\0'.
+
+However, commit ac551828993e changed it as follows:
+
+    if (sig[0])
+
+sig[0] is NOT the first character of the eisa_device_id::sig. The
+type of 'sig' is 'char (*)[8]', meaning that the type of 'sig[0]' is
+'char [8]' instead of 'char'. 'sig[0]' and 'symval' refer to the same
+address, which never becomes NULL.
+
+The correct conversion would have been:
+
+    if ((*sig)[0])
+
+However, this if-conditional was meaningless because the earlier change
+in commit ac551828993e was incorrect.
+
+This commit removes the entire incorrect code, which should never have
+been executed.
+
+Fixes: ac551828993e ("modpost: i2c aliases need no trailing wildcard")
+Fixes: 6543becf26ff ("mod/file2alias: make modalias generation safe for cross compiling")
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/fops.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ scripts/mod/file2alias.c | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
-diff --git a/block/fops.c b/block/fops.c
-index 56db751bba49b..16bb5ae702379 100644
---- a/block/fops.c
-+++ b/block/fops.c
-@@ -676,6 +676,7 @@ static ssize_t blkdev_write_iter(struct kiocb *iocb, struct iov_iter *from)
- 	struct file *file = iocb->ki_filp;
- 	struct inode *bd_inode = bdev_file_inode(file);
- 	struct block_device *bdev = I_BDEV(bd_inode);
-+	bool atomic = iocb->ki_flags & IOCB_ATOMIC;
- 	loff_t size = bdev_nr_bytes(bdev);
- 	size_t shorted = 0;
- 	ssize_t ret;
-@@ -695,7 +696,7 @@ static ssize_t blkdev_write_iter(struct kiocb *iocb, struct iov_iter *from)
- 	if ((iocb->ki_flags & (IOCB_NOWAIT | IOCB_DIRECT)) == IOCB_NOWAIT)
- 		return -EOPNOTSUPP;
+diff --git a/scripts/mod/file2alias.c b/scripts/mod/file2alias.c
+index 5d1c61fa5a550..bcb5a7e20775e 100644
+--- a/scripts/mod/file2alias.c
++++ b/scripts/mod/file2alias.c
+@@ -809,10 +809,7 @@ static int do_eisa_entry(const char *filename, void *symval,
+ 		char *alias)
+ {
+ 	DEF_FIELD_ADDR(symval, eisa_device_id, sig);
+-	if (sig[0])
+-		sprintf(alias, EISA_DEVICE_MODALIAS_FMT "*", *sig);
+-	else
+-		strcat(alias, "*");
++	sprintf(alias, EISA_DEVICE_MODALIAS_FMT "*", *sig);
+ 	return 1;
+ }
  
--	if (iocb->ki_flags & IOCB_ATOMIC) {
-+	if (atomic) {
- 		ret = generic_atomic_write_valid(iocb, from);
- 		if (ret)
- 			return ret;
-@@ -703,6 +704,8 @@ static ssize_t blkdev_write_iter(struct kiocb *iocb, struct iov_iter *from)
- 
- 	size -= iocb->ki_pos;
- 	if (iov_iter_count(from) > size) {
-+		if (atomic)
-+			return -EINVAL;
- 		shorted = iov_iter_count(from) - size;
- 		iov_iter_truncate(from, size);
- 	}
 -- 
 2.43.0
 
