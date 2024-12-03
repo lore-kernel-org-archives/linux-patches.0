@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B45823CE;
-	Tue,  3 Dec 2024 16:04:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21D041DE8A5;
+	Tue,  3 Dec 2024 16:04:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733241846; cv=none; b=GkS6B76NrBGOMAoTfWy7EuTZSwTr+38HAPX+P4NonjWNnrTKMQpabJCaIyQ2SUwHLJGejmiyx2+nZp/T8i0Kty/oejSD11GSsAUxpfzlibAnf8xmFLvkMzbIyE4GJPCKJqXVShSxpzp4KwgMCWNh3QIfTwsf7BwHQPKBEHHNVVs=
+	t=1733241850; cv=none; b=uBahPX+J28Qr+QDq5KYgPIO7KIJaMVGloQLMtZbcVHZY6LW7fQ0hUfwfmr5PoH52OTryWjlVdfzYhnLR8meAdwvKU3/0UW8E237FhK7579ATFgXr3D5fqDuwLNDbaW0TK0Dn+F+d9I4GUCozfT5VdhmIgmJZeGGZpHf5wWAMejI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733241846; c=relaxed/simple;
-	bh=k8P9bUTBc8tgfjCxL9LTxjBccqcuQY2iNmiRExnpijM=;
+	s=arc-20240116; t=1733241850; c=relaxed/simple;
+	bh=IyCbXifK4y6avAZeQJ+LEAQKjNq2+PVs6SddhaBaVD0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JfjHVkWNC+GOrABpvN9wFtPXmmSHwqgWW1g03bZdG93jtfBxjGVdtPneFLp7VrDSqjtDEpO+E1YNB5aQg9fs6WUW2yYKG8MUk8ErfKS+riSyiyO13iHPOGAz9bL0h7mYmraGienz7ATUdGlwuh5wt/Do26tL98H0maL2diMC0bY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CXRZCMu6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UpS2pKSeO9uVpcbDZ3R6bqyGKG+Ec5+EqpaPVacVPQhk416SM/q0v1JzMMrbBzfR8mTRUL8wpeF8JRRBmngJmSE436aKYUsJTARRqktruGi8fxnckvwBKUEXLPSr1E6C3kLOCNZQXiAR8XtQpd1yF+L3Po3ny0caWMvV/w/9ezI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BT9T6ik/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CXRZCMu6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 053DEC4CECF;
-	Tue,  3 Dec 2024 16:04:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BT9T6ik/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80E37C4CECF;
+	Tue,  3 Dec 2024 16:04:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733241846;
-	bh=k8P9bUTBc8tgfjCxL9LTxjBccqcuQY2iNmiRExnpijM=;
+	s=korg; t=1733241850;
+	bh=IyCbXifK4y6avAZeQJ+LEAQKjNq2+PVs6SddhaBaVD0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CXRZCMu6HeVLWTGY8W6kOO0fx/87LGxovv+++V4r7Is2jyEUPycwRf7IToEbCGSXC
-	 wT/c5L6pfgCZXD14RYBw3zHhEj0Iq5I6D6w9sNWtwPzT4ASyNElEWDsfG+RIxtLXIk
-	 ZY9Jmj2pngWsqQQZVrSW8/OB/gFaex/pQ5bdMZIg=
+	b=BT9T6ik/II42H7ffOhHpdVkITzn4/Mzkm+Qaml/7v4liBFNexMK5uccB+MPDwBY0l
+	 YvVpq2ONs1VYjtg6zQo3BogdWaxKjLQ60XH/3NiTusTu+VDqkxTf2eJI4/QDB/dryv
+	 2MEeAVb1S4W18lGzJB4pdD/Tf9zvUABE7O0Ja9uc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arne Schwabe <arne@rfc2549.org>,
-	Aleksa Savic <savicaleksa83@gmail.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Lorenzo Bianconi <lorenzo@kernel.org>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 534/826] hwmon: (aquacomputer_d5next) Fix length of speed_input array
-Date: Tue,  3 Dec 2024 15:44:21 +0100
-Message-ID: <20241203144804.586198089@linuxfoundation.org>
+Subject: [PATCH 6.12 535/826] phy: airoha: Fix REG_CSR_2L_PLL_CMN_RESERVE0 config in airoha_pcie_phy_init_clk_out()
+Date: Tue,  3 Dec 2024 15:44:22 +0100
+Message-ID: <20241203144804.625055278@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -52,41 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aleksa Savic <savicaleksa83@gmail.com>
+From: Lorenzo Bianconi <lorenzo@kernel.org>
 
-[ Upstream commit 998b5a78a9ce1cc4378e7281e4ea310e37596170 ]
+[ Upstream commit 09a19fb75498985cbb598f1fa43a7d2416925c30 ]
 
-Commit 120584c728a6 ("hwmon: (aquacomputer_d5next) Add support for Octo
-flow sensor") added support for reading Octo flow sensor, but didn't
-update the priv->speed_input array length. Since Octo has 8 fans, with
-the addition of the flow sensor the proper length for speed_input is 9.
+Fix typo configuring REG_CSR_2L_PLL_CMN_RESERVE0 register in
+airoha_pcie_phy_init_clk_out routine.
 
-Reported by Arne Schwabe on Github [1], who received a UBSAN warning.
-
-Fixes: 120584c728a6 ("hwmon: (aquacomputer_d5next) Add support for Octo flow sensor")
-Closes: https://github.com/aleksamagicka/aquacomputer_d5next-hwmon/issues/100 [1]
-Reported-by: Arne Schwabe <arne@rfc2549.org>
-Signed-off-by: Aleksa Savic <savicaleksa83@gmail.com>
-Message-ID: <20241124152725.7205-1-savicaleksa83@gmail.com>
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Fixes: d7d2818b9383 ("phy: airoha: Add PCIe PHY driver for EN7581 SoC.")
+Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
+Link: https://lore.kernel.org/r/20240918-airoha-en7581-phy-fixes-v1-1-8291729a87f8@kernel.org
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/aquacomputer_d5next.c | 2 +-
+ drivers/phy/phy-airoha-pcie.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/hwmon/aquacomputer_d5next.c b/drivers/hwmon/aquacomputer_d5next.c
-index 34cac27e4ddec..0dcb8a3a691d6 100644
---- a/drivers/hwmon/aquacomputer_d5next.c
-+++ b/drivers/hwmon/aquacomputer_d5next.c
-@@ -597,7 +597,7 @@ struct aqc_data {
+diff --git a/drivers/phy/phy-airoha-pcie.c b/drivers/phy/phy-airoha-pcie.c
+index 1e410eb410580..4624aa9dd7127 100644
+--- a/drivers/phy/phy-airoha-pcie.c
++++ b/drivers/phy/phy-airoha-pcie.c
+@@ -459,7 +459,7 @@ static void airoha_pcie_phy_init_clk_out(struct airoha_pcie_phy *pcie_phy)
+ 	airoha_phy_csr_2l_clear_bits(pcie_phy, REG_CSR_2L_CLKTX1_OFFSET,
+ 				     CSR_2L_PXP_CLKTX1_SR);
+ 	airoha_phy_csr_2l_update_field(pcie_phy, REG_CSR_2L_PLL_CMN_RESERVE0,
+-				       CSR_2L_PXP_PLL_RESERVE_MASK, 0xdd);
++				       CSR_2L_PXP_PLL_RESERVE_MASK, 0xd0d);
+ }
  
- 	/* Sensor values */
- 	s32 temp_input[20];	/* Max 4 physical and 16 virtual or 8 physical and 12 virtual */
--	s32 speed_input[8];
-+	s32 speed_input[9];
- 	u32 speed_input_min[1];
- 	u32 speed_input_target[1];
- 	u32 speed_input_max[1];
+ static void airoha_pcie_phy_init_csr_2l(struct airoha_pcie_phy *pcie_phy)
 -- 
 2.43.0
 
