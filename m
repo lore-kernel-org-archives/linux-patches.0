@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7554D1F76BB;
-	Tue,  3 Dec 2024 15:43:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEBE21F76B0;
+	Tue,  3 Dec 2024 15:43:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733240619; cv=none; b=VYmGSNKeAJ3NtoQv0Iry9Lf+mDSPnAt43fR4dSo8HUJuZE+cLNh4hvv5o8Z/WxB/2/VOdROBBT5hAZqGTyk2uP01WDsR98OXtJwPMrK7d1zNOSKYcE8DYf2lRuupgA2WonILi3tbyQPdQ9LlzLLyaOn4SqNVbcDjojQvRNx/79U=
+	t=1733240622; cv=none; b=tplfojcxW9whzpoyVWNUmzY9wTzSDBh+NWmAXS10dbiCxpyuFLLpAUCm1Bykg816pbqZ/qA26SWe2+t+zGJ5IYV0rJapWph71hh3wZw2zQYEFb13uKIHhtufKqz9ENp+3mOfZor73NfzSr7E5VWA8UxbZQYABtEOApVgTzPkUUs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733240619; c=relaxed/simple;
-	bh=kU0g5Cwm9XsxSqFZf3u8X7blZM8obLqDyaBGvcH/+ig=;
+	s=arc-20240116; t=1733240622; c=relaxed/simple;
+	bh=me6wIz70rGFVauBRGYwOm2rpIGNUne3QCfXnQAWYeew=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LmNShvemkgD9XKCUhWhsEfPYHUKoZEI80g/wkReq9YpC779Qg1MI29yX23OTpBVe2oauuENdbt6i13ckt/D3Md0rbViwYWSdMgR5pcRUjWgY/ZgapKw8mb3bMcmyUU93qnP8zyKdcTKtsD0zSx8vpC+FL5azY2Z+JKGY39W4nDg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=agvthce5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Ax/XUvwhWpB+N96xNItg5VlcCsoPab9Fg8Gm0J7k3a4nkXh+928k94PlNBmJUS1g2sJcDegPg1g0tPUXKBf6uFF7C7p76dyT3HhG/dPfAAUQCG+jOTi11Bwkflfp6vgE8JCVSgJYucbauXvfhYOP17nh4NSre/MKTcs9HEymWMU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jybJd3KO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="agvthce5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2388C4CECF;
-	Tue,  3 Dec 2024 15:43:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jybJd3KO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34441C4CECF;
+	Tue,  3 Dec 2024 15:43:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733240619;
-	bh=kU0g5Cwm9XsxSqFZf3u8X7blZM8obLqDyaBGvcH/+ig=;
+	s=korg; t=1733240622;
+	bh=me6wIz70rGFVauBRGYwOm2rpIGNUne3QCfXnQAWYeew=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=agvthce5SZDvqLOrgQK+4Mg7j+5f7JPJ3OkJkkc8EVBOflF28reYEz72jelxPnpoZ
-	 TIlSy/5TVxhdb0cd5r4/PhrMAl2lB9mTBHYG2tg2yT0kDy0tLbJdmTr9tBGHPQ+t9h
-	 7GktGVseWRgRac6lCgtKkEBkO0iXymNkhUqW8peg=
+	b=jybJd3KO70IoSS+mK3xCx0AWqsy/rgkh2JvMCZJl2Q+/myRTKDJuEXYXQlgDe1xsL
+	 fO/dJYQCvzRGztNhE6yzCva+AmnYaDxSZQyQe6N0RskV8P3pcUux0TE2J/NvyPY/on
+	 rkhZATrxrMIoB2JF8R+gy5aK7n284SQAP8vO38lM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tomasz Figa <tfiga@google.com>,
-	Sergey Senozhatsky <senozhatsky@chromium.org>,
-	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
-	Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
-	Hans Verkuil <hverkuil@xs4all.nl>,
+	Jeongjun Park <aha310510@gmail.com>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 171/826] media: venus: fix enc/dec destruction order
-Date: Tue,  3 Dec 2024 15:38:18 +0100
-Message-ID: <20241203144750.402737096@linuxfoundation.org>
+Subject: [PATCH 6.12 189/826] wifi: ath9k: add range check for conn_rsp_epid in htc_connect_service()
+Date: Tue,  3 Dec 2024 15:38:36 +0100
+Message-ID: <20241203144751.113232429@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -48,78 +46,62 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sergey Senozhatsky <senozhatsky@chromium.org>
+From: Jeongjun Park <aha310510@gmail.com>
 
-[ Upstream commit 6c9934c5a00ae722a98d1a06ed44b673514407b5 ]
+[ Upstream commit 8619593634cbdf5abf43f5714df49b04e4ef09ab ]
 
-We destroy mutex-es too early as they are still taken in
-v4l2_fh_exit()->v4l2_event_unsubscribe()->v4l2_ctrl_find().
+I found the following bug in my fuzzer:
 
-We should destroy mutex-es right before kfree().  Also
-do not vdec_ctrl_deinit() before v4l2_fh_exit().
+  UBSAN: array-index-out-of-bounds in drivers/net/wireless/ath/ath9k/htc_hst.c:26:51
+  index 255 is out of range for type 'htc_endpoint [22]'
+  CPU: 0 UID: 0 PID: 8 Comm: kworker/0:0 Not tainted 6.11.0-rc6-dirty #14
+  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
+  Workqueue: events request_firmware_work_func
+  Call Trace:
+   <TASK>
+   dump_stack_lvl+0x180/0x1b0
+   __ubsan_handle_out_of_bounds+0xd4/0x130
+   htc_issue_send.constprop.0+0x20c/0x230
+   ? _raw_spin_unlock_irqrestore+0x3c/0x70
+   ath9k_wmi_cmd+0x41d/0x610
+   ? mark_held_locks+0x9f/0xe0
+   ...
 
-Fixes: 7472c1c69138 ("[media] media: venus: vdec: add video decoder files")
-Suggested-by: Tomasz Figa <tfiga@google.com>
-Signed-off-by: Sergey Senozhatsky <senozhatsky@chromium.org>
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Signed-off-by: Stanimir Varbanov <stanimir.k.varbanov@gmail.com>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+Since this bug has been confirmed to be caused by insufficient verification
+of conn_rsp_epid, I think it would be appropriate to add a range check for
+conn_rsp_epid to htc_connect_service() to prevent the bug from occurring.
+
+Fixes: fb9987d0f748 ("ath9k_htc: Support for AR9271 chipset.")
+Signed-off-by: Jeongjun Park <aha310510@gmail.com>
+Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://patch.msgid.link/20240909103855.68006-1-aha310510@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/qcom/venus/vdec.c | 7 ++++---
- drivers/media/platform/qcom/venus/venc.c | 6 +++---
- 2 files changed, 7 insertions(+), 6 deletions(-)
+ drivers/net/wireless/ath/ath9k/htc_hst.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
-index d12089370d91e..4af268e756883 100644
---- a/drivers/media/platform/qcom/venus/vdec.c
-+++ b/drivers/media/platform/qcom/venus/vdec.c
-@@ -1750,13 +1750,14 @@ static int vdec_close(struct file *file)
- 	cancel_work_sync(&inst->delayed_process_work);
- 	v4l2_m2m_ctx_release(inst->m2m_ctx);
- 	v4l2_m2m_release(inst->m2m_dev);
--	vdec_ctrl_deinit(inst);
- 	ida_destroy(&inst->dpb_ids);
- 	hfi_session_destroy(inst);
--	mutex_destroy(&inst->lock);
--	mutex_destroy(&inst->ctx_q_lock);
- 	v4l2_fh_del(&inst->fh);
- 	v4l2_fh_exit(&inst->fh);
-+	vdec_ctrl_deinit(inst);
+diff --git a/drivers/net/wireless/ath/ath9k/htc_hst.c b/drivers/net/wireless/ath/ath9k/htc_hst.c
+index eb631fd3336d8..b5257b2b4aa52 100644
+--- a/drivers/net/wireless/ath/ath9k/htc_hst.c
++++ b/drivers/net/wireless/ath/ath9k/htc_hst.c
+@@ -294,6 +294,9 @@ int htc_connect_service(struct htc_target *target,
+ 		return -ETIMEDOUT;
+ 	}
+ 
++	if (target->conn_rsp_epid < 0 || target->conn_rsp_epid >= ENDPOINT_MAX)
++		return -EINVAL;
 +
-+	mutex_destroy(&inst->lock);
-+	mutex_destroy(&inst->ctx_q_lock);
- 
- 	vdec_pm_put(inst, false);
- 
-diff --git a/drivers/media/platform/qcom/venus/venc.c b/drivers/media/platform/qcom/venus/venc.c
-index 3ec2fb8d9fab6..56777d3d630a5 100644
---- a/drivers/media/platform/qcom/venus/venc.c
-+++ b/drivers/media/platform/qcom/venus/venc.c
-@@ -1517,14 +1517,14 @@ static int venc_close(struct file *file)
- 
- 	v4l2_m2m_ctx_release(inst->m2m_ctx);
- 	v4l2_m2m_release(inst->m2m_dev);
--	venc_ctrl_deinit(inst);
- 	hfi_session_destroy(inst);
--	mutex_destroy(&inst->lock);
--	mutex_destroy(&inst->ctx_q_lock);
- 	v4l2_fh_del(&inst->fh);
- 	v4l2_fh_exit(&inst->fh);
-+	venc_ctrl_deinit(inst);
- 
- 	inst->enc_state = VENUS_ENC_STATE_DEINIT;
-+	mutex_destroy(&inst->lock);
-+	mutex_destroy(&inst->ctx_q_lock);
- 
- 	venc_pm_put(inst, false);
- 
+ 	*conn_rsp_epid = target->conn_rsp_epid;
+ 	return 0;
+ err:
 -- 
 2.43.0
 
