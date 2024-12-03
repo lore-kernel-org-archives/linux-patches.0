@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20B371F4709;
-	Tue,  3 Dec 2024 15:25:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D0A31F757E;
+	Tue,  3 Dec 2024 15:25:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733239516; cv=none; b=SOlghXWoiheuRNmO0Kt6ECfYK64Ld5wFNlddgBJ6H+gOTHTKor5iRarFCNhwBp4dyHdRX0IgHvHapG51VXPpq3EXNOENd1JYfS4ISp2/NKKNBapIQ48Vd5w8uk0x2+TqYMRhkRjjnHFeQMU2s5k8JrM7r2sm3Ykit5QbKqfS6NM=
+	t=1733239519; cv=none; b=BRtWwE0r0qdtr4H+ExN3HYepLurXRzGhhadr66eFqv9ADrsdXROfH77b1uQ0eJgjoEIIttqgvKdr/Q45ldPUqMGwhgwYiSpEh9+iiKXlxnRBg3ftoO/BCKyZABESXRsDvH6yfxcum93P+WqmapoFlOGWiOenkSlSXXn1QEn+OVw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733239516; c=relaxed/simple;
-	bh=RJpQa0NLxdVS9ri6025jGH6Z6QkCvJaGv+TqFLmi9FY=;
+	s=arc-20240116; t=1733239519; c=relaxed/simple;
+	bh=/o4M9X3REStnwPdw3qdSSCp73PHPipLB05JPu5aYbf8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZJ87WG5wpUbFPxU0WSDB2BS7mgsmaXbH9MULh+ILO1+pduLVhf9fUBExRqY8BOVT1Afwk0xlk9BnVFE4QfaE6yAHfgM9DAW+RXAz0weiExnn+R0fGDHD6IY7SXDdYl68lh+YQS1odLb+1fP17NEge97kxvaSgmZf4SCSe8aWAY0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TW0VLMuQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=c66yqK9IPkKQUbRgarvNWD8pjzfNe8vU8lYkbdFcVZL1SCPtQLz0LIvK+oP7juiN5H+bdix/o4q5xSasboyAsaYikefJ81oRM+kAR9iCnzj4d2TCoOxTi8ho1KzqeSGR5tfW5SflKWBQUoXz48pbU8sy2gbwfoRlKWq9ls7DYAs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tqQcQ2Xb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TW0VLMuQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EF93C4CECF;
-	Tue,  3 Dec 2024 15:25:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tqQcQ2Xb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A65AC4CECF;
+	Tue,  3 Dec 2024 15:25:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733239516;
-	bh=RJpQa0NLxdVS9ri6025jGH6Z6QkCvJaGv+TqFLmi9FY=;
+	s=korg; t=1733239518;
+	bh=/o4M9X3REStnwPdw3qdSSCp73PHPipLB05JPu5aYbf8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TW0VLMuQug+VHcp3O1iTBtUNASbPUbSuwRWMqrf/IVKtSqssPT9nO26eQBLHVAqe/
-	 A2OitGDu4B6VqMzXYTUIkxzgu9yDpp+gxZYUIja2Qa/mGGx3xbdIsvIDTD+OioZP21
-	 AuiSpDDhvXsDc9WEdMT7lxdRWav6aGpW0OUxNIKo=
+	b=tqQcQ2XbbNEuycFuUa0susHiyGbtXrST0YeKKec9+GRoK5k9khrx2my1s7dVq5DoI
+	 ck9h3OtvGttMHfEyC5S3x+jJuiR9RwcmhLQ6ssEQS7fEs/JKFrEovBiQHRwUwOEwch
+	 WagIw65/+Xn5R1yZQmQpvRb358y+DUr0XRAM+w2Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Artem Sadovnikov <ancowi69@gmail.com>,
-	Dave Kleikamp <dave.kleikamp@oracle.com>
-Subject: [PATCH 6.11 639/817] jfs: xattr: check invalid xattr size more strictly
-Date: Tue,  3 Dec 2024 15:43:31 +0100
-Message-ID: <20241203144020.892188548@linuxfoundation.org>
+	Ilya Zverev <ilya@zverev.info>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.11 640/817] ASoC: amd: yc: Add a quirk for microfone on Lenovo ThinkPad P14s Gen 5 21MES00B00
+Date: Tue,  3 Dec 2024 15:43:32 +0100
+Message-ID: <20241203144020.930860329@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -50,38 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Artem Sadovnikov <ancowi69@gmail.com>
+From: Ilya Zverev <ilya@zverev.info>
 
-commit d9f9d96136cba8fedd647d2c024342ce090133c2 upstream.
+commit b682aa788e5f9f1ddacdfbb453e49fd3f4e83721 upstream.
 
-Commit 7c55b78818cf ("jfs: xattr: fix buffer overflow for invalid xattr")
-also addresses this issue but it only fixes it for positive values, while
-ea_size is an integer type and can take negative values, e.g. in case of
-a corrupted filesystem. This still breaks validation and would overflow
-because of implicit conversion from int to size_t in print_hex_dump().
+New ThinkPads need new quirk entries. Ilya has tested this one.
+Laptop product id is 21MES00B00, though the shorthand 21ME works.
 
-Fix this issue by clamping the ea_size value instead.
-
-Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
-
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=219533
 Cc: stable@vger.kernel.org
-Signed-off-by: Artem Sadovnikov <ancowi69@gmail.com>
-Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
+Signed-off-by: Ilya Zverev <ilya@zverev.info>
+Link: https://patch.msgid.link/20241127134420.14471-1-ilya@zverev.info
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/jfs/xattr.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/amd/yc/acp6x-mach.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/fs/jfs/xattr.c
-+++ b/fs/jfs/xattr.c
-@@ -559,7 +559,7 @@ static int ea_get(struct inode *inode, s
- 
-       size_check:
- 	if (EALIST_SIZE(ea_buf->xattr) != ea_size) {
--		int size = min_t(int, EALIST_SIZE(ea_buf->xattr), ea_size);
-+		int size = clamp_t(int, ea_size, 0, EALIST_SIZE(ea_buf->xattr));
- 
- 		printk(KERN_ERR "ea_get: invalid extended attribute\n");
- 		print_hex_dump(KERN_ERR, "", DUMP_PREFIX_ADDRESS, 16, 1,
+--- a/sound/soc/amd/yc/acp6x-mach.c
++++ b/sound/soc/amd/yc/acp6x-mach.c
+@@ -245,6 +245,13 @@ static const struct dmi_system_id yc_acp
+ 		.driver_data = &acp6x_card,
+ 		.matches = {
+ 			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "21ME"),
++		}
++	},
++	{
++		.driver_data = &acp6x_card,
++		.matches = {
++			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "82QF"),
+ 		}
+ 	},
 
 
