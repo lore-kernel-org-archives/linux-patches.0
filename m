@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FDAC1F76BB;
-	Tue,  3 Dec 2024 15:31:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AD9C1F8AC1;
+	Tue,  3 Dec 2024 15:31:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733239864; cv=none; b=Bi5/ER32BtXmtAxc2Y/pX7AuNTeebcnm5J5TirfieAh1E7hly/xQ6EtvWqye3u0wuyxITzN9xbfNbUWYALtOAZjSSnr6VgMAHVj9hA9fla6AeqrzumMmMmbJqXER7jOGRCTA9ciy9aZfBQcMmZ3OFi1xsr4qCPOdS4L8g6Suxic=
+	t=1733239867; cv=none; b=bnxVJ4XyMd2lDKovJEtYzzZmgY54U00GiSipxh5yuxdtrx8oEnjN29vSeZ8OGfHI2c4LPOuJSWwyjiwyQYIY7cOUKqtTn8XBDe7uOG7kSErxJMiL+9vHNQfsk4aWSb4LadoemQ0RmD00RwykAFk23SKP21l7xhL63xkzR5jb5f8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733239864; c=relaxed/simple;
-	bh=RIwzQloxJ20xgEqR7TEZ5bb+7PVR0ZSzzD4gpw86b4g=;
+	s=arc-20240116; t=1733239867; c=relaxed/simple;
+	bh=1/PF+ZX4fcflZlugDnz3ATpYV6rXdaPX/Rir10aa8dQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nhB/TfEeLXVK2pz5SZEzcQKlSYkueVAq4R6u7Y0DZeg1nWt7KsTBewAMohsXkU43aLbnLpWe89k2LV82ir3Y16uYarNvEs6HmuiGyhLGG4VJ1Qgv8vDQUi17bL1DCxaTd+7pwTiGaNBXzMmHyQ2zmrYqTb25lUpq9TyZ0qVafSQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jEUGmNCp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ugx2eGSfjgy74d/UHHZsDW1f5uIGpIgDa1XlQ6oXtjPiWrjylihn+J8z84vZn1Y6DeU/XTRuG6een0QXqgt69mxXG10cOX3dC+TTeZCx4Bjopdzm2zdtFBkc9UIiJYQd4UzQ9kOqFS3PGlR+VJl2w81tpwfDGsvf39n3YZpeFfo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WI5er7a4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jEUGmNCp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBAD7C4CECF;
-	Tue,  3 Dec 2024 15:31:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WI5er7a4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE587C4CEE4;
+	Tue,  3 Dec 2024 15:31:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733239864;
-	bh=RIwzQloxJ20xgEqR7TEZ5bb+7PVR0ZSzzD4gpw86b4g=;
+	s=korg; t=1733239867;
+	bh=1/PF+ZX4fcflZlugDnz3ATpYV6rXdaPX/Rir10aa8dQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jEUGmNCpgVPHjhPMhv3Qy1KMYrzBo1QKPAIeCnpanQwQBi+KX3gYypfl9ktxPIbSJ
-	 9R/gG0oMljbDKFFVVtIeFLgXiMLqb2LZzNAHgSWxZ0lywLs9louXmxW32YwEKZEYxy
-	 QIYbjnxLAZXA8se6Xn8OIjWYeoIPjZ9/UX8sBlyc=
+	b=WI5er7a4hCRp4bBs8OJ4ocQUfC79UglF/EK5J8m7I51WTc8N/tseZAJ+WDt3b6XBV
+	 N6VxddjPi3KwejqNzkymukOvoRblYVe4rhB33vsUtOGPho4sr5L9t3qYvJmkrHthYT
+	 7ZX+5r2tymNg0siXQpsmUlAjBgyPlpoXThsriNEs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ma Wupeng <mawupeng1@huawei.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.11 761/817] ipc: fix memleak if msg_init_ns failed in create_ipc_ns
-Date: Tue,  3 Dec 2024 15:45:33 +0100
-Message-ID: <20241203144025.699323076@linuxfoundation.org>
+	Yuan Can <yuancan@huawei.com>,
+	James Ogletree <jogletre@opensource.cirrus.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 6.11 762/817] Input: cs40l50 - fix wrong usage of INIT_WORK()
+Date: Tue,  3 Dec 2024 15:45:34 +0100
+Message-ID: <20241203144025.739181389@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -50,62 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ma Wupeng <mawupeng1@huawei.com>
+From: Yuan Can <yuancan@huawei.com>
 
-commit bc8f5921cd69188627c08041276238de222ab466 upstream.
+commit 5c822c0ce5cc83ed4cd8394f3dc46dae8d9a681d upstream.
 
-Percpu memory allocation may failed during create_ipc_ns however this
-fail is not handled properly since ipc sysctls and mq sysctls is not
-released properly. Fix this by release these two resource when failure.
+In cs40l50_add(), the work_data is a local variable and the work_data.work
+should initialize with INIT_WORK_ONSTACK() instead of INIT_WORK().
+Small error in cs40l50_erase() also fixed in this commit.
 
-Here is the kmemleak stack when percpu failed:
-
-unreferenced object 0xffff88819de2a600 (size 512):
-  comm "shmem_2nstest", pid 120711, jiffies 4300542254
-  hex dump (first 32 bytes):
-    60 aa 9d 84 ff ff ff ff fc 18 48 b2 84 88 ff ff  `.........H.....
-    04 00 00 00 a4 01 00 00 20 e4 56 81 ff ff ff ff  ........ .V.....
-  backtrace (crc be7cba35):
-    [<ffffffff81b43f83>] __kmalloc_node_track_caller_noprof+0x333/0x420
-    [<ffffffff81a52e56>] kmemdup_noprof+0x26/0x50
-    [<ffffffff821b2f37>] setup_mq_sysctls+0x57/0x1d0
-    [<ffffffff821b29cc>] copy_ipcs+0x29c/0x3b0
-    [<ffffffff815d6a10>] create_new_namespaces+0x1d0/0x920
-    [<ffffffff815d7449>] copy_namespaces+0x2e9/0x3e0
-    [<ffffffff815458f3>] copy_process+0x29f3/0x7ff0
-    [<ffffffff8154b080>] kernel_clone+0xc0/0x650
-    [<ffffffff8154b6b1>] __do_sys_clone+0xa1/0xe0
-    [<ffffffff843df8ff>] do_syscall_64+0xbf/0x1c0
-    [<ffffffff846000b0>] entry_SYSCALL_64_after_hwframe+0x4b/0x53
-
-Link: https://lkml.kernel.org/r/20241023093129.3074301-1-mawupeng1@huawei.com
-Fixes: 72d1e611082e ("ipc/msg: mitigate the lock contention with percpu counter")
-Signed-off-by: Ma Wupeng <mawupeng1@huawei.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: c38fe1bb5d21 ("Input: cs40l50 - Add support for the CS40L50 haptic driver")
+Signed-off-by: Yuan Can <yuancan@huawei.com>
+Reviewed-by: James Ogletree <jogletre@opensource.cirrus.com>
+Link: https://lore.kernel.org/r/20241106013549.78142-1-yuancan@huawei.com
+Cc: stable@vger.kernel.org
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- ipc/namespace.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/input/misc/cs40l50-vibra.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/ipc/namespace.c
-+++ b/ipc/namespace.c
-@@ -83,13 +83,15 @@ static struct ipc_namespace *create_ipc_
+diff --git a/drivers/input/misc/cs40l50-vibra.c b/drivers/input/misc/cs40l50-vibra.c
+index 03bdb7c26ec0..dce3b0ec8cf3 100644
+--- a/drivers/input/misc/cs40l50-vibra.c
++++ b/drivers/input/misc/cs40l50-vibra.c
+@@ -334,11 +334,12 @@ static int cs40l50_add(struct input_dev *dev, struct ff_effect *effect,
+ 	work_data.custom_len = effect->u.periodic.custom_len;
+ 	work_data.vib = vib;
+ 	work_data.effect = effect;
+-	INIT_WORK(&work_data.work, cs40l50_add_worker);
++	INIT_WORK_ONSTACK(&work_data.work, cs40l50_add_worker);
  
- 	err = msg_init_ns(ns);
- 	if (err)
--		goto fail_put;
-+		goto fail_ipc;
+ 	/* Push to the workqueue to serialize with playbacks */
+ 	queue_work(vib->vib_wq, &work_data.work);
+ 	flush_work(&work_data.work);
++	destroy_work_on_stack(&work_data.work);
  
- 	sem_init_ns(ns);
- 	shm_init_ns(ns);
+ 	kfree(work_data.custom_data);
  
- 	return ns;
+@@ -467,11 +468,12 @@ static int cs40l50_erase(struct input_dev *dev, int effect_id)
+ 	work_data.vib = vib;
+ 	work_data.effect = &dev->ff->effects[effect_id];
  
-+fail_ipc:
-+	retire_ipc_sysctls(ns);
- fail_mq:
- 	retire_mq_sysctls(ns);
+-	INIT_WORK(&work_data.work, cs40l50_erase_worker);
++	INIT_WORK_ONSTACK(&work_data.work, cs40l50_erase_worker);
  
+ 	/* Push to workqueue to serialize with playbacks */
+ 	queue_work(vib->vib_wq, &work_data.work);
+ 	flush_work(&work_data.work);
++	destroy_work_on_stack(&work_data.work);
+ 
+ 	return work_data.error;
+ }
+-- 
+2.47.1
+
 
 
