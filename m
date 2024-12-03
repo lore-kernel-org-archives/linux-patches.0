@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD4C01F130F;
-	Tue,  3 Dec 2024 15:25:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52B581F472A;
+	Tue,  3 Dec 2024 15:25:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733239508; cv=none; b=FBX/g9AV5YXZA6huWqqYDneC3wcRvhry6OCVBgzWwChxU8isyZLIqbo97z27uoAmz6oxTBQKhMXYqZCkkoXkVwpom4IsYc8vLg5PbUfTjRcBsBHDo6ManM+Q4n1+0iWZOvdqpT1iRC9L7YBSmJZI+Vcg1Q7ESf9T0i0Rayw6I2Q=
+	t=1733239510; cv=none; b=rSZ30rB4uzIzF0kyTrygp47Lx/6hSKiaioKrJcA58wwLlyNitfDPEmRC2AUFA1PTmbWz52X4U2gHCdS30YqynC6GWzRL1dxlvbDdDPFLSgD0+/1BN7aOe/zr7AHP0oKhHzbG2K/QLhivZww+JIesMQqmx5jiymCnNHWgubAHGLc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733239508; c=relaxed/simple;
-	bh=XKB+ovzRG8tuDflkS/JlsXyMp/gu/Fr31hG7kn/7GSE=;
+	s=arc-20240116; t=1733239510; c=relaxed/simple;
+	bh=eGciI+ZMTTs+2HA7z+tD0sFJeyLmLtwP7vWWyyURaR8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QqT/+m4b/El1Bwzj1Dqk3H8Gv3/5Je6nCM/uDBYf0N33atCXbLH+4pSWCFdzvTaR2Zy8KkxfeYuSSzOlqgHv5HNId/iyIaqMMam7EuaHWkcSi5hN2X5cfjOZF5FhwJWmWYknzqEoLDFTifkvC4O+LwAIEbekcz5FSxD4AFAOQKI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yHvd0BLk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IvcCntVPdhi51qMMMiH4cKWnm6YTpKum97p29VIuCUV56P5Tf7TOwvcd9WNYb4n+s2jNnB4gS2t3F6R8N42Mwv8G1BuBZvIYTCoVjK6XQyJJlJjJNlTqYtLYqVejZvE+Rqkkw5hNt1WXEJ7ECphYAFOjMhQcgtFEt1HZxM+zmos=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jTtdG3a/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yHvd0BLk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 253D5C4CECF;
-	Tue,  3 Dec 2024 15:25:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jTtdG3a/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2A1BC4CECF;
+	Tue,  3 Dec 2024 15:25:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733239507;
-	bh=XKB+ovzRG8tuDflkS/JlsXyMp/gu/Fr31hG7kn/7GSE=;
+	s=korg; t=1733239510;
+	bh=eGciI+ZMTTs+2HA7z+tD0sFJeyLmLtwP7vWWyyURaR8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yHvd0BLkJB8Y7xt73c3iBKVIec0sJEpA7Zoi7WDeI2l/UOwLw0vD5nDpAP7cRrf15
-	 N3YNlCCZr17W/hwDoXspUWd4U9qPUg0C66gt29xK+2qEWGz8+26mq6kxHw3nj7OTcA
-	 cpFaeJCCGz6Cku4+ooMwSK70YnquD4gqG2/KKUp0=
+	b=jTtdG3a/ZYaWQKU7zyhOi+YDNsL4aRZY7qpB97ZZBtAKZ6Spml+N/nhqDWi/bsh4J
+	 bcuAVE/taRVvWO7lav6cHKhfVDYnY8aksXtHhSEyqmGzaFrOpYuOjWMMCV6uqaRCWC
+	 D5yx6xwP6j/0PHWYTUa9JKml9RQmMKuy/oxU/orw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeongjun Park <aha310510@gmail.com>,
-	Andreas Dilger <adilger@dilger.ca>,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 6.11 637/817] ext4: supress data-race warnings in ext4_free_inodes_{count,set}()
-Date: Tue,  3 Dec 2024 15:43:29 +0100
-Message-ID: <20241203144020.806593923@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.11 611/817] usb: typec: fix potential array underflow in ucsi_ccg_sync_control()
+Date: Tue,  3 Dec 2024 15:43:03 +0100
+Message-ID: <20241203144019.782907270@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -51,83 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeongjun Park <aha310510@gmail.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-commit 902cc179c931a033cd7f4242353aa2733bf8524c upstream.
+[ Upstream commit e56aac6e5a25630645607b6856d4b2a17b2311a5 ]
 
-find_group_other() and find_group_orlov() read *_lo, *_hi with
-ext4_free_inodes_count without additional locking. This can cause
-data-race warning, but since the lock is held for most writes and free
-inodes value is generally not a problem even if it is incorrect, it is
-more appropriate to use READ_ONCE()/WRITE_ONCE() than to add locking.
+The "command" variable can be controlled by the user via debugfs.  The
+worry is that if con_index is zero then "&uc->ucsi->connector[con_index
+- 1]" would be an array underflow.
 
-==================================================================
-BUG: KCSAN: data-race in ext4_free_inodes_count / ext4_free_inodes_set
-
-write to 0xffff88810404300e of 2 bytes by task 6254 on cpu 1:
- ext4_free_inodes_set+0x1f/0x80 fs/ext4/super.c:405
- __ext4_new_inode+0x15ca/0x2200 fs/ext4/ialloc.c:1216
- ext4_symlink+0x242/0x5a0 fs/ext4/namei.c:3391
- vfs_symlink+0xca/0x1d0 fs/namei.c:4615
- do_symlinkat+0xe3/0x340 fs/namei.c:4641
- __do_sys_symlinkat fs/namei.c:4657 [inline]
- __se_sys_symlinkat fs/namei.c:4654 [inline]
- __x64_sys_symlinkat+0x5e/0x70 fs/namei.c:4654
- x64_sys_call+0x1dda/0x2d60 arch/x86/include/generated/asm/syscalls_64.h:267
- do_syscall_x64 arch/x86/entry/common.c:52 [inline]
- do_syscall_64+0x54/0x120 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x76/0x7e
-
-read to 0xffff88810404300e of 2 bytes by task 6257 on cpu 0:
- ext4_free_inodes_count+0x1c/0x80 fs/ext4/super.c:349
- find_group_other fs/ext4/ialloc.c:594 [inline]
- __ext4_new_inode+0x6ec/0x2200 fs/ext4/ialloc.c:1017
- ext4_symlink+0x242/0x5a0 fs/ext4/namei.c:3391
- vfs_symlink+0xca/0x1d0 fs/namei.c:4615
- do_symlinkat+0xe3/0x340 fs/namei.c:4641
- __do_sys_symlinkat fs/namei.c:4657 [inline]
- __se_sys_symlinkat fs/namei.c:4654 [inline]
- __x64_sys_symlinkat+0x5e/0x70 fs/namei.c:4654
- x64_sys_call+0x1dda/0x2d60 arch/x86/include/generated/asm/syscalls_64.h:267
- do_syscall_x64 arch/x86/entry/common.c:52 [inline]
- do_syscall_64+0x54/0x120 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x76/0x7e
-
-Cc: stable@vger.kernel.org
-Signed-off-by: Jeongjun Park <aha310510@gmail.com>
-Reviewed-by: Andreas Dilger <adilger@dilger.ca>
-Link: https://patch.msgid.link/20241003125337.47283-1-aha310510@gmail.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Fixes: 170a6726d0e2 ("usb: typec: ucsi: add support for separate DP altmode devices")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://lore.kernel.org/r/c69ef0b3-61b0-4dde-98dd-97b97f81d912@stanley.mountain
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/super.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/usb/typec/ucsi/ucsi_ccg.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/fs/ext4/super.c
-+++ b/fs/ext4/super.c
-@@ -353,9 +353,9 @@ __u32 ext4_free_group_clusters(struct su
- __u32 ext4_free_inodes_count(struct super_block *sb,
- 			      struct ext4_group_desc *bg)
- {
--	return le16_to_cpu(bg->bg_free_inodes_count_lo) |
-+	return le16_to_cpu(READ_ONCE(bg->bg_free_inodes_count_lo)) |
- 		(EXT4_DESC_SIZE(sb) >= EXT4_MIN_DESC_SIZE_64BIT ?
--		 (__u32)le16_to_cpu(bg->bg_free_inodes_count_hi) << 16 : 0);
-+		 (__u32)le16_to_cpu(READ_ONCE(bg->bg_free_inodes_count_hi)) << 16 : 0);
- }
+diff --git a/drivers/usb/typec/ucsi/ucsi_ccg.c b/drivers/usb/typec/ucsi/ucsi_ccg.c
+index 763ff99f000d9..14c2dc9255b54 100644
+--- a/drivers/usb/typec/ucsi/ucsi_ccg.c
++++ b/drivers/usb/typec/ucsi/ucsi_ccg.c
+@@ -644,6 +644,10 @@ static int ucsi_ccg_sync_control(struct ucsi *ucsi, u64 command)
+ 	    uc->has_multiple_dp) {
+ 		con_index = (uc->last_cmd_sent >> 16) &
+ 			UCSI_CMD_CONNECTOR_MASK;
++		if (con_index == 0) {
++			ret = -EINVAL;
++			goto unlock;
++		}
+ 		con = &uc->ucsi->connector[con_index - 1];
+ 		ucsi_ccg_update_set_new_cam_cmd(uc, con, &command);
+ 	}
+@@ -651,6 +655,7 @@ static int ucsi_ccg_sync_control(struct ucsi *ucsi, u64 command)
+ 	ret = ucsi_sync_control_common(ucsi, command);
  
- __u32 ext4_used_dirs_count(struct super_block *sb,
-@@ -409,9 +409,9 @@ void ext4_free_group_clusters_set(struct
- void ext4_free_inodes_set(struct super_block *sb,
- 			  struct ext4_group_desc *bg, __u32 count)
- {
--	bg->bg_free_inodes_count_lo = cpu_to_le16((__u16)count);
-+	WRITE_ONCE(bg->bg_free_inodes_count_lo, cpu_to_le16((__u16)count));
- 	if (EXT4_DESC_SIZE(sb) >= EXT4_MIN_DESC_SIZE_64BIT)
--		bg->bg_free_inodes_count_hi = cpu_to_le16(count >> 16);
-+		WRITE_ONCE(bg->bg_free_inodes_count_hi, cpu_to_le16(count >> 16));
- }
+ 	pm_runtime_put_sync(uc->dev);
++unlock:
+ 	mutex_unlock(&uc->lock);
  
- void ext4_used_dirs_set(struct super_block *sb,
+ 	return ret;
+-- 
+2.43.0
+
 
 
