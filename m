@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46E191F76D9;
-	Tue,  3 Dec 2024 16:06:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA74023CE;
+	Tue,  3 Dec 2024 16:06:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733241987; cv=none; b=JNV5jGm7ZXQYn6lxeZ0TzjLBGzwH19l8vS6Tj4EbOynkbzKvVmhfibwWZ5jn7XQw4rX+nSS2gvEYgq04aUdSc3UANUewTrCSrboZLnku1m/+yDusQ9ZJFm90T5NrGUdPJDdvEbmED6yUQWt7e32wiyAYJWenL75d+CBFMrAHbsU=
+	t=1733241990; cv=none; b=XJj4VyROo6Lp7I2txoqAEHSzixE+MbapaZLRcTeWKNT93cKIkqEZsXpNP70nR5Mc+S3uJqJHWywQJoM9ADRqoi6pHFKNoWKkuCPBgRg3tp6gKmQs7Lf2eNDXKPfZ3PMBk/4BmCKo49cFfL6tSdnaKjXXdI23LdrRmoJolycQFak=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733241987; c=relaxed/simple;
-	bh=e6hwQfJD/A8TDVxgSBW39uTnhqnilvyEA1azgXctm3U=;
+	s=arc-20240116; t=1733241990; c=relaxed/simple;
+	bh=eUKgLO/wYvS2BRrHCXn7UuRheZYrg9Bzp9vX1BQ1upo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nv/TIORsIghyODzs95ePtFsUNhXgAEb54kwsWYwYJMT2X80InkmBUrovKWziT/GItoZP7G7vZfGT/1yMKgAMi1IlVwqswjYXDXJrjsAeFV9tyk4mtiHcRoxGJruaXarVoBNtD3SyCejh4OQzDSaeKjzT2nrq1oANODvciawPufw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YspDb20d; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fwEOJ9dejcXoH3EPLBnb8RLQ9/di6yJWIU2TieUN1wHKjgcIetbRu42sP9bFSsHTxvp0YMaunH6+yas2icY6dPnQV5k4D+WHCjP/h/Ue8iqtimKVdiVFG0c4poUmL+yqq30SmYJG6WXOHDG83s9Hws4doudooVeSgFMbOZqJ5C4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mc0UbTJX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YspDb20d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D39CC4CEE7;
-	Tue,  3 Dec 2024 16:06:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mc0UbTJX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36F83C4CED8;
+	Tue,  3 Dec 2024 16:06:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733241987;
-	bh=e6hwQfJD/A8TDVxgSBW39uTnhqnilvyEA1azgXctm3U=;
+	s=korg; t=1733241990;
+	bh=eUKgLO/wYvS2BRrHCXn7UuRheZYrg9Bzp9vX1BQ1upo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YspDb20dp8WxQ8YSuvQiWvZUmwph+Bgfmv25IvtiDCO2zEzgPX5e6jprXIMLK8BmT
-	 z1in+NkxJEBsWNLGE88kCey0K1SgnVVCnWhS385nSjE5pFajlflVnsg0Fhntl00wWw
-	 EJqireKWtRxXuBKrqdJ8w8FUZP/Kw1wqlhOGfYkI=
+	b=Mc0UbTJXaxKJWQhn6ztzR9tVrzK+nDk0kOOVYFr0yjo4LyCrOwWGLqvd644ki3gAo
+	 U7JZTfn9iHx8H4FhBcf0Zq/KMuw6GZCywy/UqWp0x/6DrTPK1Mi1W0XqdB+I/j0M0/
+	 LeUxG6dNwuYakXFEPA2LhBQx20yAXOcx/REkv4jc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Fastabend <john.fastabend@gmail.com>,
-	Tiezhu Yang <yangtiezhu@loongson.cn>,
-	Huacai Chen <chenhuacai@loongson.cn>,
+	Hariprasad Kelam <hkelam@marvell.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 547/826] LoongArch: BPF: Sign-extend return values
-Date: Tue,  3 Dec 2024 15:44:34 +0100
-Message-ID: <20241203144805.088300048@linuxfoundation.org>
+Subject: [PATCH 6.12 574/826] octeontx2-af: Quiesce traffic before NIX block reset
+Date: Tue,  3 Dec 2024 15:45:01 +0100
+Message-ID: <20241203144806.142051342@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -52,89 +51,335 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tiezhu Yang <yangtiezhu@loongson.cn>
+From: Hariprasad Kelam <hkelam@marvell.com>
 
-[ Upstream commit 73c359d1d356cf10236ccd358bd55edab33e9424 ]
+[ Upstream commit 762ca6eed026346d9d41ed5ac633083c4f1e5071 ]
 
-(1) Description of Problem:
+During initialization, the AF driver resets all blocks. The RPM (MAC)
+block and NIX block operate on a credit-based model. When the NIX block
+resets during active traffic flow, it doesn't release credits to the RPM
+block. This causes the RPM FIFO to overflow, leading to receive traffic
+struck.
 
-When testing BPF JIT with the latest compiler toolchains on LoongArch,
-there exist some strange failed test cases, dmesg shows something like
-this:
+To address this issue, the patch introduces the following changes:
+1. Stop receiving traffic at the MAC level during AF driver
+   initialization.
+2. Perform an X2P reset (prevents RXFIFO of all LMACS from pushing data)
+3. Reset the NIX block.
+4. Clear the X2P reset and re-enable receiving traffic.
 
-  # dmesg -t | grep FAIL | head -1
-  ... ret -3 != -3 (0xfffffffd != 0xfffffffd)FAIL ...
-
-(2) Steps to Reproduce:
-
-  # echo 1 > /proc/sys/net/core/bpf_jit_enable
-  # modprobe test_bpf
-
-(3) Additional Info:
-
-There are no failed test cases compiled with the lower version of GCC
-such as 13.3.0, while the problems only appear with higher version of
-GCC such as 14.2.0.
-
-This is because the problems were hidden by the lower version of GCC due
-to redundant sign extension instructions generated by compiler, but with
-optimization of higher version of GCC, the sign extension instructions
-have been removed.
-
-(4) Root Cause Analysis:
-
-The LoongArch architecture does not expose sub-registers, and hold all
-32-bit values in a sign-extended format. While BPF, on the other hand,
-exposes sub-registers, and use zero-extension (similar to arm64/x86).
-
-This has led to some subtle bugs, where a BPF JITted program has not
-sign-extended the a0 register (return value in LoongArch land), passed
-the return value up the kernel, for example:
-
-  | int from_bpf(void);
-  |
-  | long foo(void)
-  | {
-  |    return from_bpf();
-  | }
-
-Here, a0 would be 0xffffffff instead of the expected 0xffffffffffffffff.
-
-Internally, the LoongArch JIT uses a5 as a dedicated register for BPF
-return values. That is to say, the LoongArch BPF uses a5 for BPF return
-values, which are zero-extended, whereas the LoongArch ABI uses a0 which
-is sign-extended.
-
-(5) Final Solution:
-
-Keep a5 zero-extended, but explicitly sign-extend a0 (which is used
-outside BPF land). Because libbpf currently defines the return value
-of an ebpf program as a 32-bit unsigned integer, just use addi.w to
-extend bit 31 into bits 63 through 32 of a5 to a0. This is similar to
-commit 2f1b0d3d7331 ("riscv, bpf: Sign-extend return values").
-
-Fixes: 5dc615520c4d ("LoongArch: Add BPF JIT support")
-Acked-by: John Fastabend <john.fastabend@gmail.com>
-Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Fixes: 54d557815e15 ("octeontx2-af: Reset all RVU blocks")
+Signed-off-by: Hariprasad Kelam <hkelam@marvell.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/loongarch/net/bpf_jit.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../net/ethernet/marvell/octeontx2/af/cgx.c   | 61 +++++++++++++++++++
+ .../net/ethernet/marvell/octeontx2/af/cgx.h   |  4 ++
+ .../marvell/octeontx2/af/lmac_common.h        |  2 +
+ .../net/ethernet/marvell/octeontx2/af/rpm.c   | 42 +++++++++++++
+ .../net/ethernet/marvell/octeontx2/af/rpm.h   |  4 ++
+ .../net/ethernet/marvell/octeontx2/af/rvu.c   |  1 +
+ .../net/ethernet/marvell/octeontx2/af/rvu.h   |  1 +
+ .../ethernet/marvell/octeontx2/af/rvu_cgx.c   | 36 +++++++++--
+ 8 files changed, 145 insertions(+), 6 deletions(-)
 
-diff --git a/arch/loongarch/net/bpf_jit.c b/arch/loongarch/net/bpf_jit.c
-index 7dbefd4ba2107..dd350cba1252f 100644
---- a/arch/loongarch/net/bpf_jit.c
-+++ b/arch/loongarch/net/bpf_jit.c
-@@ -179,7 +179,7 @@ static void __build_epilogue(struct jit_ctx *ctx, bool is_tail_call)
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/cgx.c b/drivers/net/ethernet/marvell/octeontx2/af/cgx.c
+index 2f621714c54e6..8216f843a7cd5 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/cgx.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/cgx.c
+@@ -214,6 +214,24 @@ u8 cgx_lmac_get_p2x(int cgx_id, int lmac_id)
+ 	return (cfg & CMR_P2X_SEL_MASK) >> CMR_P2X_SEL_SHIFT;
+ }
  
- 	if (!is_tail_call) {
- 		/* Set return value */
--		move_reg(ctx, LOONGARCH_GPR_A0, regmap[BPF_REG_0]);
-+		emit_insn(ctx, addiw, LOONGARCH_GPR_A0, regmap[BPF_REG_0], 0);
- 		/* Return to the caller */
- 		emit_insn(ctx, jirl, LOONGARCH_GPR_RA, LOONGARCH_GPR_ZERO, 0);
- 	} else {
++static u8 cgx_get_nix_resetbit(struct cgx *cgx)
++{
++	int first_lmac;
++	u8 p2x;
++
++	/* non 98XX silicons supports only NIX0 block */
++	if (cgx->pdev->subsystem_device != PCI_SUBSYS_DEVID_98XX)
++		return CGX_NIX0_RESET;
++
++	first_lmac = find_first_bit(&cgx->lmac_bmap, cgx->max_lmac_per_mac);
++	p2x = cgx_lmac_get_p2x(cgx->cgx_id, first_lmac);
++
++	if (p2x == CMR_P2X_SEL_NIX1)
++		return CGX_NIX1_RESET;
++	else
++		return CGX_NIX0_RESET;
++}
++
+ /* Ensure the required lock for event queue(where asynchronous events are
+  * posted) is acquired before calling this API. Else an asynchronous event(with
+  * latest link status) can reach the destination before this function returns
+@@ -1724,6 +1742,8 @@ static int cgx_lmac_init(struct cgx *cgx)
+ 		lmac->lmac_type = cgx->mac_ops->get_lmac_type(cgx, lmac->lmac_id);
+ 	}
+ 
++	/* Start X2P reset on given MAC block */
++	cgx->mac_ops->mac_x2p_reset(cgx, true);
+ 	return cgx_lmac_verify_fwi_version(cgx);
+ 
+ err_bitmap_free:
+@@ -1789,6 +1809,45 @@ static u8 cgx_get_rxid_mapoffset(struct cgx *cgx)
+ 		return 0x60;
+ }
+ 
++static void cgx_x2p_reset(void *cgxd, bool enable)
++{
++	struct cgx *cgx = cgxd;
++	int lmac_id;
++	u64 cfg;
++
++	if (enable) {
++		for_each_set_bit(lmac_id, &cgx->lmac_bmap, cgx->max_lmac_per_mac)
++			cgx->mac_ops->mac_enadis_rx(cgx, lmac_id, false);
++
++		usleep_range(1000, 2000);
++
++		cfg = cgx_read(cgx, 0, CGXX_CMR_GLOBAL_CONFIG);
++		cfg |= cgx_get_nix_resetbit(cgx) | CGX_NSCI_DROP;
++		cgx_write(cgx, 0, CGXX_CMR_GLOBAL_CONFIG, cfg);
++	} else {
++		cfg = cgx_read(cgx, 0, CGXX_CMR_GLOBAL_CONFIG);
++		cfg &= ~(cgx_get_nix_resetbit(cgx) | CGX_NSCI_DROP);
++		cgx_write(cgx, 0, CGXX_CMR_GLOBAL_CONFIG, cfg);
++	}
++}
++
++static int cgx_enadis_rx(void *cgxd, int lmac_id, bool enable)
++{
++	struct cgx *cgx = cgxd;
++	u64 cfg;
++
++	if (!is_lmac_valid(cgx, lmac_id))
++		return -ENODEV;
++
++	cfg = cgx_read(cgx, lmac_id, CGXX_CMRX_CFG);
++	if (enable)
++		cfg |= DATA_PKT_RX_EN;
++	else
++		cfg &= ~DATA_PKT_RX_EN;
++	cgx_write(cgx, lmac_id, CGXX_CMRX_CFG, cfg);
++	return 0;
++}
++
+ static struct mac_ops	cgx_mac_ops    = {
+ 	.name		=       "cgx",
+ 	.csr_offset	=       0,
+@@ -1820,6 +1879,8 @@ static struct mac_ops	cgx_mac_ops    = {
+ 	.mac_get_pfc_frm_cfg   =        cgx_lmac_get_pfc_frm_cfg,
+ 	.mac_reset   =			cgx_lmac_reset,
+ 	.mac_stats_reset       =	cgx_stats_reset,
++	.mac_x2p_reset                   =      cgx_x2p_reset,
++	.mac_enadis_rx			 =      cgx_enadis_rx,
+ };
+ 
+ static int cgx_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/cgx.h b/drivers/net/ethernet/marvell/octeontx2/af/cgx.h
+index f9cd4b58f0c02..1cf12e5c7da87 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/cgx.h
++++ b/drivers/net/ethernet/marvell/octeontx2/af/cgx.h
+@@ -32,6 +32,10 @@
+ #define CGX_LMAC_TYPE_MASK		0xF
+ #define CGXX_CMRX_INT			0x040
+ #define FW_CGX_INT			BIT_ULL(1)
++#define CGXX_CMR_GLOBAL_CONFIG          0x08
++#define CGX_NIX0_RESET			BIT_ULL(2)
++#define CGX_NIX1_RESET			BIT_ULL(3)
++#define CGX_NSCI_DROP			BIT_ULL(9)
+ #define CGXX_CMRX_INT_ENA_W1S		0x058
+ #define CGXX_CMRX_RX_ID_MAP		0x060
+ #define CGXX_CMRX_RX_STAT0		0x070
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/lmac_common.h b/drivers/net/ethernet/marvell/octeontx2/af/lmac_common.h
+index c43ff68ef1408..6180e68e1765a 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/lmac_common.h
++++ b/drivers/net/ethernet/marvell/octeontx2/af/lmac_common.h
+@@ -132,6 +132,8 @@ struct mac_ops {
+ 	int			(*get_fec_stats)(void *cgxd, int lmac_id,
+ 						 struct cgx_fec_stats_rsp *rsp);
+ 	int			(*mac_stats_reset)(void *cgxd, int lmac_id);
++	void                    (*mac_x2p_reset)(void *cgxd, bool enable);
++	int			(*mac_enadis_rx)(void *cgxd, int lmac_id, bool enable);
+ };
+ 
+ struct cgx {
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rpm.c b/drivers/net/ethernet/marvell/octeontx2/af/rpm.c
+index e97fcc51d7f24..2e9945446199e 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/rpm.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/rpm.c
+@@ -39,6 +39,8 @@ static struct mac_ops		rpm_mac_ops   = {
+ 	.mac_get_pfc_frm_cfg   =        rpm_lmac_get_pfc_frm_cfg,
+ 	.mac_reset   =			rpm_lmac_reset,
+ 	.mac_stats_reset		 =	  rpm_stats_reset,
++	.mac_x2p_reset                   =        rpm_x2p_reset,
++	.mac_enadis_rx			 =        rpm_enadis_rx,
+ };
+ 
+ static struct mac_ops		rpm2_mac_ops   = {
+@@ -72,6 +74,8 @@ static struct mac_ops		rpm2_mac_ops   = {
+ 	.mac_get_pfc_frm_cfg   =        rpm_lmac_get_pfc_frm_cfg,
+ 	.mac_reset   =			rpm_lmac_reset,
+ 	.mac_stats_reset	    =	rpm_stats_reset,
++	.mac_x2p_reset              =   rpm_x2p_reset,
++	.mac_enadis_rx		    =   rpm_enadis_rx,
+ };
+ 
+ bool is_dev_rpm2(void *rpmd)
+@@ -768,3 +772,41 @@ int rpm_lmac_reset(void *rpmd, int lmac_id, u8 pf_req_flr)
+ 
+ 	return 0;
+ }
++
++void rpm_x2p_reset(void *rpmd, bool enable)
++{
++	rpm_t *rpm = rpmd;
++	int lmac_id;
++	u64 cfg;
++
++	if (enable) {
++		for_each_set_bit(lmac_id, &rpm->lmac_bmap, rpm->max_lmac_per_mac)
++			rpm->mac_ops->mac_enadis_rx(rpm, lmac_id, false);
++
++		usleep_range(1000, 2000);
++
++		cfg = rpm_read(rpm, 0, RPMX_CMR_GLOBAL_CFG);
++		rpm_write(rpm, 0, RPMX_CMR_GLOBAL_CFG, cfg | RPM_NIX0_RESET);
++	} else {
++		cfg = rpm_read(rpm, 0, RPMX_CMR_GLOBAL_CFG);
++		cfg &= ~RPM_NIX0_RESET;
++		rpm_write(rpm, 0, RPMX_CMR_GLOBAL_CFG, cfg);
++	}
++}
++
++int rpm_enadis_rx(void *rpmd, int lmac_id, bool enable)
++{
++	rpm_t *rpm = rpmd;
++	u64 cfg;
++
++	if (!is_lmac_valid(rpm, lmac_id))
++		return -ENODEV;
++
++	cfg = rpm_read(rpm, lmac_id, RPMX_MTI_MAC100X_COMMAND_CONFIG);
++	if (enable)
++		cfg |= RPM_RX_EN;
++	else
++		cfg &= ~RPM_RX_EN;
++	rpm_write(rpm, lmac_id, RPMX_MTI_MAC100X_COMMAND_CONFIG, cfg);
++	return 0;
++}
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rpm.h b/drivers/net/ethernet/marvell/octeontx2/af/rpm.h
+index 5194fec4c3b8e..b8d3972e096ae 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/rpm.h
++++ b/drivers/net/ethernet/marvell/octeontx2/af/rpm.h
+@@ -17,6 +17,8 @@
+ 
+ /* Registers */
+ #define RPMX_CMRX_CFG			0x00
++#define RPMX_CMR_GLOBAL_CFG		0x08
++#define RPM_NIX0_RESET			BIT_ULL(3)
+ #define RPMX_RX_TS_PREPEND              BIT_ULL(22)
+ #define RPMX_TX_PTP_1S_SUPPORT          BIT_ULL(17)
+ #define RPMX_CMRX_RX_ID_MAP		0x80
+@@ -139,4 +141,6 @@ bool is_dev_rpm2(void *rpmd);
+ int rpm_get_fec_stats(void *cgxd, int lmac_id, struct cgx_fec_stats_rsp *rsp);
+ int rpm_lmac_reset(void *rpmd, int lmac_id, u8 pf_req_flr);
+ int rpm_stats_reset(void *rpmd, int lmac_id);
++void rpm_x2p_reset(void *rpmd, bool enable);
++int rpm_enadis_rx(void *rpmd, int lmac_id, bool enable);
+ #endif /* RPM_H */
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu.c
+index 1a97fb9032fa4..cd0d7b7774f1a 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/rvu.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu.c
+@@ -1162,6 +1162,7 @@ static int rvu_setup_hw_resources(struct rvu *rvu)
+ 	}
+ 
+ 	rvu_program_channels(rvu);
++	cgx_start_linkup(rvu);
+ 
+ 	err = rvu_mcs_init(rvu);
+ 	if (err) {
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu.h b/drivers/net/ethernet/marvell/octeontx2/af/rvu.h
+index 5016ba82e1423..8555edbb1c8f9 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/rvu.h
++++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu.h
+@@ -997,6 +997,7 @@ int rvu_cgx_prio_flow_ctrl_cfg(struct rvu *rvu, u16 pcifunc, u8 tx_pause, u8 rx_
+ int rvu_cgx_cfg_pause_frm(struct rvu *rvu, u16 pcifunc, u8 tx_pause, u8 rx_pause);
+ void rvu_mac_reset(struct rvu *rvu, u16 pcifunc);
+ u32 rvu_cgx_get_lmac_fifolen(struct rvu *rvu, int cgx, int lmac);
++void cgx_start_linkup(struct rvu *rvu);
+ int npc_get_nixlf_mcam_index(struct npc_mcam *mcam, u16 pcifunc, int nixlf,
+ 			     int type);
+ bool is_mcam_entry_enabled(struct rvu *rvu, struct npc_mcam *mcam, int blkaddr,
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_cgx.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_cgx.c
+index 4dcd7bfcad4e4..992fa0b82e8d2 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_cgx.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_cgx.c
+@@ -349,6 +349,7 @@ static void rvu_cgx_wq_destroy(struct rvu *rvu)
+ 
+ int rvu_cgx_init(struct rvu *rvu)
+ {
++	struct mac_ops *mac_ops;
+ 	int cgx, err;
+ 	void *cgxd;
+ 
+@@ -375,6 +376,15 @@ int rvu_cgx_init(struct rvu *rvu)
+ 	if (err)
+ 		return err;
+ 
++	/* Clear X2P reset on all MAC blocks */
++	for (cgx = 0; cgx < rvu->cgx_cnt_max; cgx++) {
++		cgxd = rvu_cgx_pdata(cgx, rvu);
++		if (!cgxd)
++			continue;
++		mac_ops = get_mac_ops(cgxd);
++		mac_ops->mac_x2p_reset(cgxd, false);
++	}
++
+ 	/* Register for CGX events */
+ 	err = cgx_lmac_event_handler_init(rvu);
+ 	if (err)
+@@ -382,10 +392,26 @@ int rvu_cgx_init(struct rvu *rvu)
+ 
+ 	mutex_init(&rvu->cgx_cfg_lock);
+ 
+-	/* Ensure event handler registration is completed, before
+-	 * we turn on the links
+-	 */
+-	mb();
++	return 0;
++}
++
++void cgx_start_linkup(struct rvu *rvu)
++{
++	unsigned long lmac_bmap;
++	struct mac_ops *mac_ops;
++	int cgx, lmac, err;
++	void *cgxd;
++
++	/* Enable receive on all LMACS */
++	for (cgx = 0; cgx <= rvu->cgx_cnt_max; cgx++) {
++		cgxd = rvu_cgx_pdata(cgx, rvu);
++		if (!cgxd)
++			continue;
++		mac_ops = get_mac_ops(cgxd);
++		lmac_bmap = cgx_get_lmac_bmap(cgxd);
++		for_each_set_bit(lmac, &lmac_bmap, rvu->hw->lmac_per_cgx)
++			mac_ops->mac_enadis_rx(cgxd, lmac, true);
++	}
+ 
+ 	/* Do link up for all CGX ports */
+ 	for (cgx = 0; cgx <= rvu->cgx_cnt_max; cgx++) {
+@@ -398,8 +424,6 @@ int rvu_cgx_init(struct rvu *rvu)
+ 				"Link up process failed to start on cgx %d\n",
+ 				cgx);
+ 	}
+-
+-	return 0;
+ }
+ 
+ int rvu_cgx_exit(struct rvu *rvu)
 -- 
 2.43.0
 
