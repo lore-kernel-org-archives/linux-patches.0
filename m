@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B1841DFE2A;
-	Tue,  3 Dec 2024 15:47:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 540671DFE2A;
+	Tue,  3 Dec 2024 15:47:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733240854; cv=none; b=SLkRPJkK7hZlPCJNJTkxe+BfxWSQBlKyHo0LUf4XnsBb9plIcnGl+K/eoaekHcHgDH22CMeEbxRMlX05DJmM+VvoKp3bMwg8c8/mz3ZWokvvEiPfF43bt0njtbLh2ElKzctNR3zAWq0S6AbbQOhTxmun7uEtT51IQsdwLiwRaX0=
+	t=1733240857; cv=none; b=JH8Q0kdMP5nx3ciLtmqkbapo2p4oWeWRB6Yf84cCyN4eyQ6y8ADll9Zcnt5caPh10H5d8lbUqw4AYjlnvIW7dLeSr83SCtV6vJ2MbiYVMuTQW0V71VYXIBV+nVL/QQ0aUiRVCzEb7+yQ7GVD+OVNtMc6ugM87Fra0kf+Vwjk2AQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733240854; c=relaxed/simple;
-	bh=3PGld6tgBaC7xb9at7lKdctB4lqmblVEgGg7GDksyWQ=;
+	s=arc-20240116; t=1733240857; c=relaxed/simple;
+	bh=rew1a4K2arvlcrBnQZJNP5GjXzvYjadzljekvx3wH2M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PuMMFzJCjgeUAHjbyRdkr+pFEoM/F84JWSo01DNgxTgWZZ9RncWH0QbgsP0bHeYNpn2KjdJkgnca60fr+d0Z+lHX1sRz1Y6NJn41A0op1RKYugPwYNH3quR+SXxYQrsXnUG1GUsqSa+9+SM1Kkjy1d9vAAVvv5hcoK6WabEwyaM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e5dyps5z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Fl5b6ejyJWuLaDxViRhRVQJS9pMZ2DisO8y0moBsFf8mtxSD8mJRIy5dd9AIU7fTj+0YAQSsm0l3+VQAt4K/lnSAQTrRDMbJ6QJ1TCsB+2b3vp5VVZFExJH21o2eQvgnhKtI8CSzHSoS8cd/hOJXCIwRK8gdV2Zr2u3DsqHxjlM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u7ai1whP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e5dyps5z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49144C4CECF;
-	Tue,  3 Dec 2024 15:47:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u7ai1whP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69F66C4CECF;
+	Tue,  3 Dec 2024 15:47:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733240853;
-	bh=3PGld6tgBaC7xb9at7lKdctB4lqmblVEgGg7GDksyWQ=;
+	s=korg; t=1733240856;
+	bh=rew1a4K2arvlcrBnQZJNP5GjXzvYjadzljekvx3wH2M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e5dyps5zJdWKOg3OjDNVfdBzB5zSmYAN4Vk3K8ajA1K56ogvnaohgXvp4YiS7XC4f
-	 PHBgsLRWIPkh9Y9j39TbQfuIls52Fl3KSR9JyXJOXnhQUe83eArpntVG9JLhIhk2el
-	 GlJUJxZisrOMMyvnHNou8uh6p26DVP4BwL2yLIcM=
+	b=u7ai1whPwqYpdQS4cNwIl1B3dkF42J2qk99zYDxLxmXOGTZnI4Tu8PoErm7RMPapt
+	 Sd6OuKu4FOlFHIxYqRycrizCdyuLdLx04js47pNx4ArMOm6YTUVRX889pjxIv1zzzd
+	 Hehknv/GZhZUnTs/1qoyseqMisoiB9bzwi+kZGhU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryan Walklin <ryan@testtoast.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
 	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 255/826] drm: panel: nv3052c: correct spi_device_id for RG35XX panel
-Date: Tue,  3 Dec 2024 15:39:42 +0100
-Message-ID: <20241203144753.713708901@linuxfoundation.org>
+Subject: [PATCH 6.12 256/826] drm/msm/dpu: on SDM845 move DSPP_3 to LM_5 block
+Date: Tue,  3 Dec 2024 15:39:43 +0100
+Message-ID: <20241203144753.751375089@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -52,44 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ryan Walklin <ryan@testtoast.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit 45608a3eb4902f32010a8328c0a01ccda4b38c9b ]
+[ Upstream commit 768a272d5357269b17b4b06dd8647e21bdc0ca3c ]
 
-The Anbernic RG35XX devices use an SPI LCD panel from an unknown OEM,
-with an NV3052C driver chip.
+On the SDM845 platform the DSPP_3 is used by the LM_5. Correct
+corresponding entries in the sdm845_lm array.
 
-As discussed previously, the integrating vendor and device name are
-preferred instead of the OEM serial. A previous patch corrected the
-device tree binding and of_device_id in the NV3052C driver, however the
-spi_device_id also needs correction.
-
-Correct the spi_device_id for the RG35XX panel.
-
-Signed-off-by: Ryan Walklin <ryan@testtoast.com>
-Fixes: 76dce2a96c0f ("drm: panel: nv3052c: Correct WL-355608-A8 panel compatible")
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20241020083836.175733-1-ryan@testtoast.com
-[DB: corrected the Fixes tag]
+Fixes: c72375172194 ("drm/msm/dpu/catalog: define DSPP blocks found on sdm845")
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Patchwork: https://patchwork.freedesktop.org/patch/612584/
+Link: https://lore.kernel.org/r/20240905-dpu-fix-sdm845-catalog-v1-1-3363d03998bd@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panel/panel-newvision-nv3052c.c | 2 +-
+ drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/panel/panel-newvision-nv3052c.c b/drivers/gpu/drm/panel/panel-newvision-nv3052c.c
-index d3baccfe6286b..06e16a7c14a75 100644
---- a/drivers/gpu/drm/panel/panel-newvision-nv3052c.c
-+++ b/drivers/gpu/drm/panel/panel-newvision-nv3052c.c
-@@ -917,7 +917,7 @@ static const struct nv3052c_panel_info wl_355608_a8_panel_info = {
- static const struct spi_device_id nv3052c_ids[] = {
- 	{ "ltk035c5444t", },
- 	{ "fs035vg158", },
--	{ "wl-355608-a8", },
-+	{ "rg35xx-plus-panel", },
- 	{ /* sentinel */ }
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h
+index 7a23389a57327..59eeea3dd2e9f 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h
+@@ -161,7 +161,6 @@ static const struct dpu_lm_cfg sdm845_lm[] = {
+ 		.features = MIXER_SDM845_MASK,
+ 		.sblk = &sdm845_lm_sblk,
+ 		.pingpong = PINGPONG_NONE,
+-		.dspp = DSPP_3,
+ 	}, {
+ 		.name = "lm_4", .id = LM_4,
+ 		.base = 0x0, .len = 0x320,
+@@ -175,6 +174,7 @@ static const struct dpu_lm_cfg sdm845_lm[] = {
+ 		.sblk = &sdm845_lm_sblk,
+ 		.lm_pair = LM_2,
+ 		.pingpong = PINGPONG_3,
++		.dspp = DSPP_3,
+ 	},
  };
- MODULE_DEVICE_TABLE(spi, nv3052c_ids);
+ 
 -- 
 2.43.0
 
