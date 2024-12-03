@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 671E51F76A4;
-	Tue,  3 Dec 2024 15:08:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FAD71F706B;
+	Tue,  3 Dec 2024 15:08:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733238494; cv=none; b=qYM/8BS2EvYJSYyfeoMdop6YUwpjhy12p0A4mg5N2WVEhesbAiIYfhSq2D2zWAdJByppaZzVsAhjijaw367cFaMKNNu66uWqwQ9eTrxnlYoUdAMbYRhLTnNgALMmXtJk4LiOigl0PSt5m7oUaEeT21JO4JREy5LePg2XP9Z50b8=
+	t=1733238500; cv=none; b=Wb9CCXzLKBsRbtqEeDtiXSvJtB/V9jcTzRlsApzbuQsLOXjIuIwFHSVp3x8HUVFBZ/lLJzpBx1cf6nWyPA2nOrC/R2co/COkM6jQv5yY1QAMLIiCub5EXAnRR4NDBfeCDcLP3xbsXEnVEdw9L6xNuzCP60eKso/bJtxh/oCl88Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733238494; c=relaxed/simple;
-	bh=+AKKajc7EaBjjao3KlU2Tczq8rb91XhKCaHEYRIRSCU=;
+	s=arc-20240116; t=1733238500; c=relaxed/simple;
+	bh=pEXI9JMwFylQZ5q1UnBPLdmz/MvQwojftlCmphZJ2Sk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WaCL0xIW5Y8ZlJC2GqYTxZgwWTqtUMCTEMBirAxHetABFGjMiL4Ab7rFLl3eW8ShbGLUjuRlpxhpcqfl6JfcfNndqKNu+6ROceO1fUQ/Jlm6E1rR8FHJSEV6s6m6QCKEPBxV1jh5xwWxMqDWiQPnNXbdmeCV52v0Mympg+EC76I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XTCUih2t; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gtPYuGPCV1RKdsZCsOcjBTBhEgyFQuTOmEHN3TaJ6lLiFa47SxQHrADv+gmuPEG5XUV4Ed/AO8ZbBU6CcRgFppENQwLZ+txnUZaxGQ5+4fZUAJlkEQzDeG2todx+3xIRMdFS4pj3a//5UONlBiGp98NG2oeZhPWkGJXnT7al26g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bAIJxA6O; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XTCUih2t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5635C4CECF;
-	Tue,  3 Dec 2024 15:08:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bAIJxA6O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA7ADC4AF09;
+	Tue,  3 Dec 2024 15:08:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733238494;
-	bh=+AKKajc7EaBjjao3KlU2Tczq8rb91XhKCaHEYRIRSCU=;
+	s=korg; t=1733238500;
+	bh=pEXI9JMwFylQZ5q1UnBPLdmz/MvQwojftlCmphZJ2Sk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XTCUih2tR3J5wXGVAVHQs3PDcnuvvxsERjNUbUpJfdQr7VpL/yfLsxGMsO7j5IMka
-	 2VOqP87arJx7PsXaUEnXEkfGHESgtYWUs/J+jYnVlBnqOUQtZaMrvhxs45nG6tXfcS
-	 tRA4B+xVoqy1rEGiVMzupZe0D5L2AGZ2f8uieHH4=
+	b=bAIJxA6OPna9D/7X0krILQplszjelojlI/t//r2ApjKWMRzQTct7ske6uBTKd0vWp
+	 XSCjcLeoh+027wO8s9UEz46G3NaDNY055E45fQflOBrWPSA0MpUoil4UUFnbVmeK+T
+	 +LjjKsRGm+Z3Hjakk1d4C/MrpqyRHFCQFch1ySCU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Jinjie Ruan <ruanjinjie@huawei.com>,
-	Rob Clark <robdclark@chromium.org>,
+	Suraj Kandpal <suraj.kandpal@intel.com>,
+	Matt Roper <matthew.d.roper@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 296/817] drm/msm/adreno: Use IRQF_NO_AUTOEN flag in request_irq()
-Date: Tue,  3 Dec 2024 15:37:48 +0100
-Message-ID: <20241203144007.373065402@linuxfoundation.org>
+Subject: [PATCH 6.11 298/817] drm/xe/hdcp: Fix gsc structure check in fw check status
+Date: Tue,  3 Dec 2024 15:37:50 +0100
+Message-ID: <20241203144007.450569204@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -52,45 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinjie Ruan <ruanjinjie@huawei.com>
+From: Suraj Kandpal <suraj.kandpal@intel.com>
 
-[ Upstream commit 394679f322649d06fea3c646ba65f5a0887f52c3 ]
+[ Upstream commit 182a32bcc223203c57761889fac7fa2dbb34684b ]
 
-disable_irq() after request_irq() still has a time gap in which
-interrupts can come. request_irq() with IRQF_NO_AUTOEN flag will
-disable IRQ auto-enable when request IRQ.
+Fix the condition for gsc structure validity in
+gsc_cs_status_check(). It needs to be an OR and not an AND
+condition
 
-Fixes: 4b565ca5a2cb ("drm/msm: Add A6XX device support")
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-Patchwork: https://patchwork.freedesktop.org/patch/614075/
-Signed-off-by: Rob Clark <robdclark@chromium.org>
+Fixes: b4224f6bae38 ("drm/xe/hdcp: Check GSC structure validity")
+Signed-off-by: Suraj Kandpal <suraj.kandpal@intel.com>
+Reviewed-by: Matt Roper <matthew.d.roper@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20241025160834.8785-1-suraj.kandpal@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/gpu/drm/xe/display/xe_hdcp_gsc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-index cb538a262d1c1..db36c81d0f123 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-@@ -1505,15 +1505,13 @@ static int a6xx_gmu_get_irq(struct a6xx_gmu *gmu, struct platform_device *pdev,
+diff --git a/drivers/gpu/drm/xe/display/xe_hdcp_gsc.c b/drivers/gpu/drm/xe/display/xe_hdcp_gsc.c
+index 0af667ebebf98..09b87d70e34c6 100644
+--- a/drivers/gpu/drm/xe/display/xe_hdcp_gsc.c
++++ b/drivers/gpu/drm/xe/display/xe_hdcp_gsc.c
+@@ -43,7 +43,7 @@ bool intel_hdcp_gsc_check_status(struct xe_device *xe)
+ 	struct xe_gsc *gsc = &gt->uc.gsc;
+ 	bool ret = true;
  
- 	irq = platform_get_irq_byname(pdev, name);
- 
--	ret = request_irq(irq, handler, IRQF_TRIGGER_HIGH, name, gmu);
-+	ret = request_irq(irq, handler, IRQF_TRIGGER_HIGH | IRQF_NO_AUTOEN, name, gmu);
- 	if (ret) {
- 		DRM_DEV_ERROR(&pdev->dev, "Unable to get interrupt %s %d\n",
- 			      name, ret);
- 		return ret;
- 	}
- 
--	disable_irq(irq);
--
- 	return irq;
- }
- 
+-	if (!gsc && !xe_uc_fw_is_enabled(&gsc->fw)) {
++	if (!gsc || !xe_uc_fw_is_enabled(&gsc->fw)) {
+ 		drm_dbg_kms(&xe->drm,
+ 			    "GSC Components not ready for HDCP2.x\n");
+ 		return false;
 -- 
 2.43.0
 
