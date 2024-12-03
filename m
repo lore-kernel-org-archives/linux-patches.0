@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 638181F6688;
-	Tue,  3 Dec 2024 14:41:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 902A01F7088;
+	Tue,  3 Dec 2024 14:52:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733236890; cv=none; b=CIHra76GSEQewHBiuG3luGlBP7o9/8XTuV84k835agGxQ3ZXx0zt4YK3BpmnOWEkWXp3Jz214qZd+BCXS56K7utQMT5l3eYbHqysTWkLZNnsKwzkPNhKcsf8DY/hMGZ9r7ZQgbr15aa0SJZXVu5ZMB0j18hJfky+SpizfhXNGDs=
+	t=1733237569; cv=none; b=QZthUQGnuY/rEMA/L/US+enf/pSw5/nv8Z1ranTW3yDpUClpbEyiaRqK/8G4tJAD/XN8dff7s0dViLpDtG4Wcs3CN1hfOa8Fd2dWckNsDxgJ17XPuf3Upc+yUFnVxp947QVwnKiLGXd+yQXTCPvS5l7xM+Ez5th+d74iVGias9I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733236890; c=relaxed/simple;
-	bh=qBQhaaH0R6Qzk5b4WHdxWJiv1GmtkNhe0eSrABCKKAk=;
+	s=arc-20240116; t=1733237569; c=relaxed/simple;
+	bh=gWX9X8+WUPBQedlXZQTJVtfcekZAzqxlljI8YP/kbj0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tKMshCAUmkO3H/I6aV4THDcOO4X233rvY6QQw4X9Wf2FNwFGfIWD5oGdYVaE2iIP1gCL7PGPQM/i+Rd9dbptR49uZa0BmPU7nM7fGzXh+2y6rgsLzcJQmd0DjRhJvbvKB3ASPGDDqlFzb3NFotAQXy7LTyFlIsDXYCn62+eCJKI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eAPe3zB1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DyIjcbEx6SzJtYY2WO9mCinJuh5gNrEET9kZ5NI2T0+O3yJO7cKu7YHCwDhGJdYKBKTwvqOvK3dw1xdmPoq3haWQABcmJC2m7vHy/dcvGBd959DQIAXuaaB6Ca48hQ46ObVuh/jnL54z52KFhP3jAfYKfRjwwuB74ZTktJbtKC4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bI3XtVn/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eAPe3zB1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C947BC4CECF;
-	Tue,  3 Dec 2024 14:41:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bI3XtVn/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87F9BC4CEDF;
+	Tue,  3 Dec 2024 14:52:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733236890;
-	bh=qBQhaaH0R6Qzk5b4WHdxWJiv1GmtkNhe0eSrABCKKAk=;
+	s=korg; t=1733237569;
+	bh=gWX9X8+WUPBQedlXZQTJVtfcekZAzqxlljI8YP/kbj0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eAPe3zB1/wWG6MzzBV4KRIlevwRfGiEvVwqZ5HRNH/pzd+nMDoN6FDfkO8zectPiv
-	 a95JxHEZ/pNMUH5kMuCFonDsRu9fchE4KAHLvMLU6JGtybVyaobfe28zpL69whLekF
-	 vrkWfGZ6HjV73vPfNSmrkSpA+2RLKLO1IaAX18hs=
+	b=bI3XtVn/C3h4TcMKrLUCx4uwmJwI/CteMeosVUNLN3z+uzEZipJ2GFl0Xi/Nj1Cj9
+	 SMrOFg/H8vfpEX+L7du4vwW+213Xf/4y6w8pqBCr1zDJ4GqilXPuGBr+pKgDo+i1R6
+	 8ZARU91mI5DeyizDvloXdDOmuEOtFDzRQyS8uFOo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhihao Cheng <chengzhihao1@huawei.com>,
-	Richard Weinberger <richard@nod.at>,
+	Ben Greear <greearb@candelatech.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 131/138] ubifs: Correct the total block count by deducting journal reservation
-Date: Tue,  3 Dec 2024 15:32:40 +0100
-Message-ID: <20241203141928.578818394@linuxfoundation.org>
+Subject: [PATCH 6.11 001/817] wifi: mac80211: Fix setting txpower with emulate_chanctx
+Date: Tue,  3 Dec 2024 15:32:53 +0100
+Message-ID: <20241203143955.675517037@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20241203141923.524658091@linuxfoundation.org>
-References: <20241203141923.524658091@linuxfoundation.org>
+In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
+References: <20241203143955.605130076@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,48 +47,48 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-4.19-stable review patch.  If anyone has any objections, please let me know.
+6.11-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhihao Cheng <chengzhihao1@huawei.com>
+From: Ben Greear <greearb@candelatech.com>
 
-[ Upstream commit 84a2bee9c49769310efa19601157ef50a1df1267 ]
+[ Upstream commit 8dd0498983eef524a8d104eb8abb32ec4c595bec ]
 
-Since commit e874dcde1cbf ("ubifs: Reserve one leb for each journal
-head while doing budget"), available space is calulated by deducting
-reservation for all journal heads. However, the total block count (
-which is only used by statfs) is not updated yet, which will cause
-the wrong displaying for used space(total - available).
-Fix it by deducting reservation for all journal heads from total
-block count.
+Propagate hw conf into the driver when txpower changes
+and driver is emulating channel contexts.
 
-Fixes: e874dcde1cbf ("ubifs: Reserve one leb for each journal head while doing budget")
-Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
-Signed-off-by: Richard Weinberger <richard@nod.at>
+Signed-off-by: Ben Greear <greearb@candelatech.com>
+Link: https://patch.msgid.link/20240924011325.1509103-1-greearb@candelatech.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ubifs/super.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ net/mac80211/cfg.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/fs/ubifs/super.c b/fs/ubifs/super.c
-index f5b663d70826c..1d548f86a41d3 100644
---- a/fs/ubifs/super.c
-+++ b/fs/ubifs/super.c
-@@ -755,10 +755,10 @@ static void init_constants_master(struct ubifs_info *c)
- 	 * necessary to report something for the 'statfs()' call.
- 	 *
- 	 * Subtract the LEB reserved for GC, the LEB which is reserved for
--	 * deletions, minimum LEBs for the index, and assume only one journal
--	 * head is available.
-+	 * deletions, minimum LEBs for the index, the LEBs which are reserved
-+	 * for each journal head.
- 	 */
--	tmp64 = c->main_lebs - 1 - 1 - MIN_INDEX_LEBS - c->jhead_cnt + 1;
-+	tmp64 = c->main_lebs - 1 - 1 - MIN_INDEX_LEBS - c->jhead_cnt;
- 	tmp64 *= (long long)c->leb_size - c->leb_overhead;
- 	tmp64 = ubifs_reported_space(c, tmp64);
- 	c->block_cnt = tmp64 >> UBIFS_BLOCK_SHIFT;
+diff --git a/net/mac80211/cfg.c b/net/mac80211/cfg.c
+index f2b5c18417ef7..6e35425fbff12 100644
+--- a/net/mac80211/cfg.c
++++ b/net/mac80211/cfg.c
+@@ -3046,6 +3046,7 @@ static int ieee80211_set_tx_power(struct wiphy *wiphy,
+ 	enum nl80211_tx_power_setting txp_type = type;
+ 	bool update_txp_type = false;
+ 	bool has_monitor = false;
++	int old_power = local->user_power_level;
+ 
+ 	lockdep_assert_wiphy(local->hw.wiphy);
+ 
+@@ -3128,6 +3129,10 @@ static int ieee80211_set_tx_power(struct wiphy *wiphy,
+ 		}
+ 	}
+ 
++	if (local->emulate_chanctx &&
++	    (old_power != local->user_power_level))
++		ieee80211_hw_conf_chan(local);
++
+ 	return 0;
+ }
+ 
 -- 
 2.43.0
 
