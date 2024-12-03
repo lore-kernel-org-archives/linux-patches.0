@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 283682500B8;
-	Tue,  3 Dec 2024 15:45:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 976C72500B8;
+	Tue,  3 Dec 2024 15:45:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733240713; cv=none; b=cs6L+2eplXz1Jih3AOz1zK21GfOWbq/f3Ae1BSMrhoHt1FLwGkbKFIhgu0kC97yCthFRKm6C+Vw8nC52O2/LKV5OZBaRbNEjvyCfQS7lrz/K20Lbo0Zt4n0TDM0p3oivmox5YWUO5GiQ3vKUZsTbvUrdkigHsrBuvmtHoHZiVrE=
+	t=1733240716; cv=none; b=CeNI0MeUqEvk0/nqouHVO2eI8vW8y80tP0DFw67Wpt6bClTQWR64s17OxN4MUUKkUkTorR0+39tvjHFFU6DsQob7kBexWU8lR6fLhBFHYQZBbDIL4ScBXqPpCqg94sIvVC5BAGxzOnn4h/8CmWLgUHvMlgKXNSvyhQyRXHLSfq8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733240713; c=relaxed/simple;
-	bh=aNdKMxSV8Iw6+iKFltkgMoAgYuOPtHikCvmFHodeRWc=;
+	s=arc-20240116; t=1733240716; c=relaxed/simple;
+	bh=kO+rBg74bKNdxAkJjGa9HKCGrvsmpkx81E9JTIW1foI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Jg1pxmDNEg99FI2StSg4d9dbHf52Rc1mDaiHGjM9kNt+WfVZ/mhLlWhQcg1qBdE8lcNOibaBqmy0+GjJXrjiqn5l9TM4HMdemMhwSJpD7ehAf08wmAF7V0oUjALvjTcdmJkLazovcvpwBpPKnZcLrxXbV1p1FkFh2WJH0SPPgJM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y9+CIl64; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MZ8zijs0lc3/83EdvNGDnH7BFFu4MDgApThIY+/1gC2rO9/BcVk43/yXMOz1jmhBfWbMOyp3xif38JcuUFacJPycqaqiHpdx/v4AtshhE/sChdrKi8O3AjTXsBoWzCMCRcc4uc3wByjE8uiKluxzMwdwydtOvIHaVQL58VWcip4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oS0OW9iH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y9+CIl64"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AE12C4CECF;
-	Tue,  3 Dec 2024 15:45:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oS0OW9iH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AEC6C4CECF;
+	Tue,  3 Dec 2024 15:45:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733240713;
-	bh=aNdKMxSV8Iw6+iKFltkgMoAgYuOPtHikCvmFHodeRWc=;
+	s=korg; t=1733240716;
+	bh=kO+rBg74bKNdxAkJjGa9HKCGrvsmpkx81E9JTIW1foI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y9+CIl64sXMvDdFuT+P/OC4mlzX7d9ww+uJAloudp8JhJPnLSVH5NT2yBZljZooCz
-	 pY7zVwkDuE79wxBAYKXRvs5cJSzY+3mBvT5af3B6rm7pNeF7UlDvUwQtPOPuczJxXs
-	 xEELBE06ZHFQYYGl4v4Sk1pe4Q35OoyacjAlmZB8=
+	b=oS0OW9iH9tyM79da7s255dQoXZKlGzi0DqGPmniGFyvCG8/uQD9XIfPVy1B6tpsBh
+	 Hp6Io9aRHN+FZcCCXEwtP9Kbm/MxlgPNbKIFkW5l6+aMQVFM1qoDw7wbAFgyYWtl5J
+	 60fpsQOnKwrjdiVx63xB1afI+dVm2L3xQblmXnoE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 215/826] drm/amdgpu/gfx9: Add Cleaner Shader Deinitialization in gfx_v9_0 Module
-Date: Tue,  3 Dec 2024 15:39:02 +0100
-Message-ID: <20241203144752.129523286@linuxfoundation.org>
+Subject: [PATCH 6.12 216/826] ASoC: fsl-asoc-card: Add missing handling of {hp,mic}-dt-gpios
+Date: Tue,  3 Dec 2024 15:39:03 +0100
+Message-ID: <20241203144752.167228531@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -46,52 +46,67 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit e47cb9d2533200d49dd5364d4a148119492f8a3d ]
+[ Upstream commit cfd1054c65eefec30972416a83eb62920bc1ff8d ]
 
-This commit addresses an omission in the previous patch related to the
-cleaner shader support for GFX9 hardware. Specifically, it adds the
-necessary deinitialization code for the cleaner shader in the
-gfx_v9_0_sw_fini function.
+The DT bindings deprecated the "hp-det-gpio" and "mic-det-gpio"
+properties in favor of "hp-det-gpios" and "mic-det-gpios", but the
+driver was never updated to support the latter.
 
-The added line amdgpu_gfx_cleaner_shader_sw_fini(adev); ensures that any
-allocated resources for the cleaner shader are freed correctly, avoiding
-potential memory leaks and ensuring that the GPU state is clean for the
-next initialization sequence.
+Even before, there existed users of "hp-det-gpios" and "mic-det-gpios".
+While this may have been handled fine by the ASoC core, this was missed
+by the Freescale-specific part.
 
-Cc: Christian König <christian.koenig@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Fixes: c2e70d307f44 ("drm/amdgpu/gfx9: Implement cleaner shader support for GFX9 hardware")
-Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
-Acked-by: Christian König <christian.koenig@amd.com>
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: 4189b54220e5af15 ("ASoC: dt-bindings: fsl-asoc-card: convert to YAML")
+Fixes: 40ba2eda0a7b727f ("arm64: dts: imx8mm-nitrogen-r2: add audio")
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Reviewed-by: Krzysztof Kozlowski <krzk@kernel.org>
+Link: https://patch.msgid.link/dbcb5bfea005a468ec6dc38374fe6d02bc693c22.1727438777.git.geert+renesas@glider.be
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c | 2 ++
- 1 file changed, 2 insertions(+)
+ sound/soc/fsl/fsl-asoc-card.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c b/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c
-index 23f0573ae47b3..785a343a95f0f 100644
---- a/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c
-@@ -2418,6 +2418,8 @@ static int gfx_v9_0_sw_fini(void *handle)
- 	amdgpu_gfx_kiq_free_ring(&adev->gfx.kiq[0].ring);
- 	amdgpu_gfx_kiq_fini(adev, 0);
+diff --git a/sound/soc/fsl/fsl-asoc-card.c b/sound/soc/fsl/fsl-asoc-card.c
+index f6c3aeff0d8ea..a0c2ce84c32b1 100644
+--- a/sound/soc/fsl/fsl-asoc-card.c
++++ b/sound/soc/fsl/fsl-asoc-card.c
+@@ -1033,14 +1033,15 @@ static int fsl_asoc_card_probe(struct platform_device *pdev)
+ 	}
  
-+	amdgpu_gfx_cleaner_shader_sw_fini(adev);
-+
- 	gfx_v9_0_mec_fini(adev);
- 	amdgpu_bo_free_kernel(&adev->gfx.rlc.clear_state_obj,
- 				&adev->gfx.rlc.clear_state_gpu_addr,
+ 	/*
+-	 * Properties "hp-det-gpio" and "mic-det-gpio" are optional, and
++	 * Properties "hp-det-gpios" and "mic-det-gpios" are optional, and
+ 	 * simple_util_init_jack() uses these properties for creating
+ 	 * Headphone Jack and Microphone Jack.
+ 	 *
+ 	 * The notifier is initialized in snd_soc_card_jack_new(), then
+ 	 * snd_soc_jack_notifier_register can be called.
+ 	 */
+-	if (of_property_read_bool(np, "hp-det-gpio")) {
++	if (of_property_read_bool(np, "hp-det-gpios") ||
++	    of_property_read_bool(np, "hp-det-gpio") /* deprecated */) {
+ 		ret = simple_util_init_jack(&priv->card, &priv->hp_jack,
+ 					    1, NULL, "Headphone Jack");
+ 		if (ret)
+@@ -1049,7 +1050,8 @@ static int fsl_asoc_card_probe(struct platform_device *pdev)
+ 		snd_soc_jack_notifier_register(&priv->hp_jack.jack, &hp_jack_nb);
+ 	}
+ 
+-	if (of_property_read_bool(np, "mic-det-gpio")) {
++	if (of_property_read_bool(np, "mic-det-gpios") ||
++	    of_property_read_bool(np, "mic-det-gpio") /* deprecated */) {
+ 		ret = simple_util_init_jack(&priv->card, &priv->mic_jack,
+ 					    0, NULL, "Mic Jack");
+ 		if (ret)
 -- 
 2.43.0
 
