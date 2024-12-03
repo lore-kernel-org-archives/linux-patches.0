@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF5E181ADA;
-	Tue,  3 Dec 2024 16:08:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 116EC1F759C;
+	Tue,  3 Dec 2024 16:08:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733242108; cv=none; b=XbWTbP3C4mvyLnr6ApyKWh1SqAEWEK/ZSmJY01eow5rWJvPZuriPckg/AvvbGlDQLq2XdRQ6k3jr1XjXtTOlsyDlAk6ln5cc9mlJJii2oJ3WuvL9ojRS4MaQoVCsTkq9P+sCx6IAlGlVPeufGl5/6qqWpXxZNK2Ph5F2IJNLjYs=
+	t=1733242112; cv=none; b=ZfEjybaOLmfanPVFnEWmZgUwhJhKfI8VMmnemEhCKdcc1IgyYV7dIveO2hVSzyHcrOUtSVAmPlEo2UVe/8uc0MxDcD31ID+ua+aY9fhP+ZilPhJ5sQwIBuGO0WkyRBxdU1evwSA8AdgwlZ/AHT+wQqxUCvox0xwQlW56DwGH1vo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733242108; c=relaxed/simple;
-	bh=PxzuBh49hKmhMoyyB/9dkFMzQCKkk0Yt5GIYpjckSI8=;
+	s=arc-20240116; t=1733242112; c=relaxed/simple;
+	bh=Ve5u589QsnB78UVBIoTInF688eA3BFs/TuPFW82Yo44=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lj8tuZBLjyCvEGJvUhUsbbiGABt+6rHqEhMtwCMeyvhaW7C1pmNFZmBVVAmNQsFiYxDV9dp3SleUCHgOc+0mj1zrAvap0K336Xa5uIxbC7fpTaZJqVcbZ6ok+nU0cYoIiehVo6cGp3DqsLDQl8mi9AuEcd0/w90m7POOhjD2WAA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rIOF2d/b; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=egtbWTswBrVntkn46cNGKuexeGrQtsg/aKoss3Wm2LTlGNQnLGjnUI1Jv/D2PJ5Cequbi2hFu81lbuHgx5XB0VyyOeVcxAEMBDbJ0Z/YymW2BWdQLa7bNcRcsgZCHdVjprXmqu0QJNIQoLmk/ygpJpwP3VgbHoEzs/qpbEBPjog=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oq7FM9/R; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rIOF2d/b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E746C4CECF;
-	Tue,  3 Dec 2024 16:08:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oq7FM9/R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72DD2C4CECF;
+	Tue,  3 Dec 2024 16:08:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733242108;
-	bh=PxzuBh49hKmhMoyyB/9dkFMzQCKkk0Yt5GIYpjckSI8=;
+	s=korg; t=1733242111;
+	bh=Ve5u589QsnB78UVBIoTInF688eA3BFs/TuPFW82Yo44=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rIOF2d/bFaj1hYbW2XbetziLYb6bhKegOyMTHHoxFw/0y4CUDqavPeZmI7buc1LF5
-	 gNHOp4p2lnMvSSJVVdgrd+ckatNwD2rKKJ2jpDWsq64HIrvNOHRqiU+tzIJLrp4q/o
-	 VTwDWP86HvRZLiYTDuZog/p+D9lNtgfNtYYNaT8U=
+	b=oq7FM9/RUHIVvfLRSjFdWi5pLTUVECqq2TYYBna4shcVeON+LhzXIfDomDYfN4xpb
+	 FKJJhn+Me9yVKhaQZYNlinP2bQsL4+riBTcEqTaTMkuoggQmK0PHNjn4ApYnDfbYxE
+	 LinNRXXAbQpEI1+J/0MKooL6KFjv5lDI7TtVX6Y8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Gaosheng Cui <cuigaosheng1@huawei.com>,
+	=?UTF-8?q?Amadeusz=20S=C5=82awi=C5=84ski?= <amadeuszx.slawinski@linux.intel.com>,
+	Russ Weight <russ.weight@linux.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 609/826] usb: typec: fix potential array underflow in ucsi_ccg_sync_control()
-Date: Tue,  3 Dec 2024 15:45:36 +0100
-Message-ID: <20241203144807.509830031@linuxfoundation.org>
+Subject: [PATCH 6.12 610/826] firmware_loader: Fix possible resource leak in fw_log_firmware_info()
+Date: Tue,  3 Dec 2024 15:45:37 +0100
+Message-ID: <20241203144807.548028933@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -45,53 +46,60 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Gaosheng Cui <cuigaosheng1@huawei.com>
 
-[ Upstream commit e56aac6e5a25630645607b6856d4b2a17b2311a5 ]
+[ Upstream commit 369a9c046c2fdfe037f05b43b84c386bdbccc103 ]
 
-The "command" variable can be controlled by the user via debugfs.  The
-worry is that if con_index is zero then "&uc->ucsi->connector[con_index
-- 1]" would be an array underflow.
+The alg instance should be released under the exception path, otherwise
+there may be resource leak here.
 
-Fixes: 170a6726d0e2 ("usb: typec: ucsi: add support for separate DP altmode devices")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/c69ef0b3-61b0-4dde-98dd-97b97f81d912@stanley.mountain
+To mitigate this, free the alg instance with crypto_free_shash when kmalloc
+fails.
+
+Fixes: 02fe26f25325 ("firmware_loader: Add debug message with checksum for FW file")
+Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
+Reviewed-by: Amadeusz Sławiński <amadeuszx.slawinski@linux.intel.com>
+Reviewed-by: Russ Weight <russ.weight@linux.dev>
+Link: https://lore.kernel.org/r/20241016110335.3677924-1-cuigaosheng1@huawei.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/typec/ucsi/ucsi_ccg.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/base/firmware_loader/main.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/usb/typec/ucsi/ucsi_ccg.c b/drivers/usb/typec/ucsi/ucsi_ccg.c
-index bccfc03b5986d..fcb8e61136cfd 100644
---- a/drivers/usb/typec/ucsi/ucsi_ccg.c
-+++ b/drivers/usb/typec/ucsi/ucsi_ccg.c
-@@ -644,6 +644,10 @@ static int ucsi_ccg_sync_control(struct ucsi *ucsi, u64 command)
- 	    uc->has_multiple_dp) {
- 		con_index = (uc->last_cmd_sent >> 16) &
- 			UCSI_CMD_CONNECTOR_MASK;
-+		if (con_index == 0) {
-+			ret = -EINVAL;
-+			goto unlock;
-+		}
- 		con = &uc->ucsi->connector[con_index - 1];
- 		ucsi_ccg_update_set_new_cam_cmd(uc, con, &command);
- 	}
-@@ -651,6 +655,7 @@ static int ucsi_ccg_sync_control(struct ucsi *ucsi, u64 command)
- 	ret = ucsi_sync_control_common(ucsi, command);
+diff --git a/drivers/base/firmware_loader/main.c b/drivers/base/firmware_loader/main.c
+index 324a9a3c087aa..c6664a7879697 100644
+--- a/drivers/base/firmware_loader/main.c
++++ b/drivers/base/firmware_loader/main.c
+@@ -829,19 +829,18 @@ static void fw_log_firmware_info(const struct firmware *fw, const char *name, st
+ 	shash->tfm = alg;
  
- 	pm_runtime_put_sync(uc->dev);
-+unlock:
- 	mutex_unlock(&uc->lock);
+ 	if (crypto_shash_digest(shash, fw->data, fw->size, sha256buf) < 0)
+-		goto out_shash;
++		goto out_free;
  
- 	return ret;
+ 	for (int i = 0; i < SHA256_DIGEST_SIZE; i++)
+ 		sprintf(&outbuf[i * 2], "%02x", sha256buf[i]);
+ 	outbuf[SHA256_BLOCK_SIZE] = 0;
+ 	dev_dbg(device, "Loaded FW: %s, sha256: %s\n", name, outbuf);
+ 
+-out_shash:
+-	crypto_free_shash(alg);
+ out_free:
+ 	kfree(shash);
+ 	kfree(outbuf);
+ 	kfree(sha256buf);
++	crypto_free_shash(alg);
+ }
+ #else
+ static void fw_log_firmware_info(const struct firmware *fw, const char *name,
 -- 
 2.43.0
 
