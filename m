@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F11801DDC26;
-	Tue,  3 Dec 2024 15:44:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3F751F8909;
+	Tue,  3 Dec 2024 15:44:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733240679; cv=none; b=oBbH5shzQbSiArEGyKNajbCoRU4mENkC77m05IAklS9fxSU516cpmq956DGzcvs8GbsvvML2UVcNGUMrXqd1UfQNi8VbEB25Z0HjDHMYaDi/rB9Pr92qoCyWyzuN9h4hS1heFSQfz1GuaPYci+LbSbJScaJHpWDB6vkmm2e5fbE=
+	t=1733240682; cv=none; b=qhESrbpVUt9Ro5oI9vNDwiFCbxhHKIBF3sCrntG4svr4VmaNbvi5LX1B+D1yR+Pha6nzCpSYdPJD+BYr2X1PdrTMr/vJ1vo5qnYrDgZJ78/47UMclCu2GPaXzE4t1KEfn9nqbNYIdNAqaeqjNweXqqigQeDWSy8NU8NpKliRMpM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733240679; c=relaxed/simple;
-	bh=2TuqysjA7LLR6zW0R220kZynJE71eLKAwAj616Ptd8c=;
+	s=arc-20240116; t=1733240682; c=relaxed/simple;
+	bh=4W2gjRzGaFSljtG7fUD11lFy0wHbc3YZBbi3jWBHY2Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ojspBwe7dlzclJ1c8rql5Y08+dXOtkhLSSgbqj+z0IVy9Qd6GLMrL/4sZGn1y6zQsvJA+TakaQik7z+imNo/xD1KJX645cZq0JPcB9Zv4AB9xh+0SxASmQ0fN7Nepq65qdYuHpnTNs2TUl71x+ailypJYgpBmwWEaCkxmgRifv0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R9q2lHAR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YkerPs+6NGtFtkn/1sltLuExK5+Q6SC+P5RQK3gGcxIIF4yirBHO/HekT4pKZ2tC+hi1qc8ca4QY5QMQ9MI5dS6JiGX2not1lQlo93xgjtAqhQlbFTdSWGEybO8Vhv5j5kMLPaBssgGwY3lnwaL540R2PF1tmIf0aa/4LxdIqdg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bPGOTVEp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R9q2lHAR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58A52C4CECF;
-	Tue,  3 Dec 2024 15:44:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bPGOTVEp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4639C4CECF;
+	Tue,  3 Dec 2024 15:44:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733240678;
-	bh=2TuqysjA7LLR6zW0R220kZynJE71eLKAwAj616Ptd8c=;
+	s=korg; t=1733240682;
+	bh=4W2gjRzGaFSljtG7fUD11lFy0wHbc3YZBbi3jWBHY2Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R9q2lHARaUfH8152vc2457IxWBS7iy7ZEFxXBPqRqcYBnf24VAWsPZWUSobgM+hQa
-	 bgxbb8GJDKLV/jU15g402schCb84AoVJmWxU/4hI677lNv4CxAT+MEthc1KMGXh1cU
-	 48nyrxHMgDDIAsrrN+/RuFlVCmBgS4SKRZwjWHCQ=
+	b=bPGOTVEprRaxV5wds3tr7KKybrNZNdorOgoF3aVH8IUu5MfFbzAup9hc5xz1PnSJj
+	 LjRfO0nNnGWM3SDq3Z6mOgA/k7GHlZrUPfDrL05PKpvDYkoe6GB/Ek+y2FhdXZxoNk
+	 6BoE3RWI9S0Lzh1IMzvcFgTz+6A34tGhUEDmlgpA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dimitri Fedrau <dima.fedrau@gmail.com>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@kernel.org>,
+	Li Huafei <lihuafei1@huawei.com>,
+	Andy Shevchenko <andy@kernel.org>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 173/826] pwm: Assume a disabled PWM to emit a constant inactive output
-Date: Tue,  3 Dec 2024 15:38:20 +0100
-Message-ID: <20241203144750.487585842@linuxfoundation.org>
+Subject: [PATCH 6.12 174/826] media: atomisp: Add check for rgby_data memory allocation failure
+Date: Tue,  3 Dec 2024 15:38:21 +0100
+Message-ID: <20241203144750.525344108@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -46,73 +47,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
+From: Li Huafei <lihuafei1@huawei.com>
 
-[ Upstream commit b2eaa1170e45dc18eb09dcc9abafbe9a7502e960 ]
+[ Upstream commit ed61c59139509f76d3592683c90dc3fdc6e23cd6 ]
 
-Some PWM hardwares (e.g. MC33XS2410) cannot implement a zero duty cycle
-but can instead disable the hardware which also results in a constant
-inactive output.
+In ia_css_3a_statistics_allocate(), there is no check on the allocation
+result of the rgby_data memory. If rgby_data is not successfully
+allocated, it may trigger the assert(host_stats->rgby_data) assertion in
+ia_css_s3a_hmem_decode(). Adding a check to fix this potential issue.
 
-There are some checks (enabled with CONFIG_PWM_DEBUG) to help
-implementing a driver without violating the normal rounding rules. Make
-them less strict to let above described hardware pass without warning.
-
-Reported-by: Dimitri Fedrau <dima.fedrau@gmail.com>
-Link: https://lore.kernel.org/r/20241103205215.GA509903@debian
-Fixes: 3ad1f3a33286 ("pwm: Implement some checks for lowlevel drivers")
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
-Reviewed-by: Dimitri Fedrau <dima.fedrau@gmail.com>
-Tested-by: Dimitri Fedrau <dima.fedrau@gmail.com>
-Link: https://lore.kernel.org/r/20241105153521.1001864-2-u.kleine-koenig@baylibre.com
-Signed-off-by: Uwe Kleine-König <ukleinek@kernel.org>
+Fixes: a49d25364dfb ("staging/atomisp: Add support for the Intel IPU v2")
+Signed-off-by: Li Huafei <lihuafei1@huawei.com>
+Reviewed-by: Andy Shevchenko <andy@kernel.org>
+Link: https://lore.kernel.org/r/20241104145051.3088231-1-lihuafei1@huawei.com
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pwm/core.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ drivers/staging/media/atomisp/pci/sh_css_params.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/pwm/core.c b/drivers/pwm/core.c
-index 6e752e148b98c..210368099a064 100644
---- a/drivers/pwm/core.c
-+++ b/drivers/pwm/core.c
-@@ -75,7 +75,7 @@ static void pwm_apply_debug(struct pwm_device *pwm,
- 	    state->duty_cycle < state->period)
- 		dev_warn(pwmchip_parent(chip), ".apply ignored .polarity\n");
+diff --git a/drivers/staging/media/atomisp/pci/sh_css_params.c b/drivers/staging/media/atomisp/pci/sh_css_params.c
+index 232744973ab88..b1feb6f6ebe89 100644
+--- a/drivers/staging/media/atomisp/pci/sh_css_params.c
++++ b/drivers/staging/media/atomisp/pci/sh_css_params.c
+@@ -4181,6 +4181,8 @@ ia_css_3a_statistics_allocate(const struct ia_css_3a_grid_info *grid)
+ 		goto err;
+ 	/* No weighted histogram, no structure, treat the histogram data as a byte dump in a byte array */
+ 	me->rgby_data = kvmalloc(sizeof_hmem(HMEM0_ID), GFP_KERNEL);
++	if (!me->rgby_data)
++		goto err;
  
--	if (state->enabled &&
-+	if (state->enabled && s2.enabled &&
- 	    last->polarity == state->polarity &&
- 	    last->period > s2.period &&
- 	    last->period <= state->period)
-@@ -83,7 +83,11 @@ static void pwm_apply_debug(struct pwm_device *pwm,
- 			 ".apply didn't pick the best available period (requested: %llu, applied: %llu, possible: %llu)\n",
- 			 state->period, s2.period, last->period);
- 
--	if (state->enabled && state->period < s2.period)
-+	/*
-+	 * Rounding period up is fine only if duty_cycle is 0 then, because a
-+	 * flat line doesn't have a characteristic period.
-+	 */
-+	if (state->enabled && s2.enabled && state->period < s2.period && s2.duty_cycle)
- 		dev_warn(pwmchip_parent(chip),
- 			 ".apply is supposed to round down period (requested: %llu, applied: %llu)\n",
- 			 state->period, s2.period);
-@@ -99,7 +103,7 @@ static void pwm_apply_debug(struct pwm_device *pwm,
- 			 s2.duty_cycle, s2.period,
- 			 last->duty_cycle, last->period);
- 
--	if (state->enabled && state->duty_cycle < s2.duty_cycle)
-+	if (state->enabled && s2.enabled && state->duty_cycle < s2.duty_cycle)
- 		dev_warn(pwmchip_parent(chip),
- 			 ".apply is supposed to round down duty_cycle (requested: %llu/%llu, applied: %llu/%llu)\n",
- 			 state->duty_cycle, state->period,
+ 	IA_CSS_LEAVE("return=%p", me);
+ 	return me;
 -- 
 2.43.0
 
