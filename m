@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2BDF1E3DF9;
-	Tue,  3 Dec 2024 15:04:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CC6C33FE;
+	Tue,  3 Dec 2024 15:04:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733238292; cv=none; b=U9gFXzaAbDtytlvyEnhjanAWeR9hfGYaabg8vOOwaX/Z0FL+eOXl7RaLgS7kjZebSRaJdXCHf1/bHVM3j64HRoj6p1LY7bSPZJBHJA8b4yAtzEu+jMh6F7BRhoDM4ShSycceRtiDJ7PD30fzjYqw0TtxrO7zaJBDC0HTq5JbzJ4=
+	t=1733238295; cv=none; b=iyEcJsuPpOyFViF46M6+36x9UJiZXyaEQrBFUfkqCqv/IUmtFJnibT9HqiDw9CYacOhKKvFJJBJKkahaBJu5e01JmJULaVQgXQjKt073UZHpyxiOnhKvjxGx6M/WO+8hg2wpBw6pZGSepaXslvCQSXTb3lRtOyqDD1rEZHMaZEg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733238292; c=relaxed/simple;
-	bh=/r2nAlp19P3DL20NaxOwqJlGC9a9QWGF53ej400YsfI=;
+	s=arc-20240116; t=1733238295; c=relaxed/simple;
+	bh=yp5uhLx432v4eQ5AL7YjTlmrhCMiV0wyec+EzLyktws=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=WfT4t4yDi38d+fF2H1XkDLHLBTDJ1JITvFqCVjaLWTKe9XVISibXrzS85qx6RCGcOKXGNmsdit8tLrXv+u845t+lsjjnmy0+gxe80kStWALsN+7VaYvFcuFIVcDZPT37xo5ujclAwHMn9M535GCOQlDWPRPhqELm5rG5jQm7cNU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zr7SJ/rj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q09GJlcloSG+aVXy+cFT57Z1sJa1PALDl2NFeGgp8Thwx/TvQVKjTiIhBA1Xr7Dk0fcQRY6D6su/Waihyte3N3Nro+XQNjihLXqei3yV/8uJz5QwYOqjSG6HbkTXXkxZov7vPAuZE5n/hFkAfRfZo1ZsHnXzZGe71WIxVUaSwHk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0w8WmJ00; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zr7SJ/rj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26E0FC4CECF;
-	Tue,  3 Dec 2024 15:04:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0w8WmJ00"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 097FAC4CECF;
+	Tue,  3 Dec 2024 15:04:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733238292;
-	bh=/r2nAlp19P3DL20NaxOwqJlGC9a9QWGF53ej400YsfI=;
+	s=korg; t=1733238295;
+	bh=yp5uhLx432v4eQ5AL7YjTlmrhCMiV0wyec+EzLyktws=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zr7SJ/rjRn1fIuR8iTrdggLQwqpcY8JZ9Dr594gN61p+Jw3t+NhDzuwR0QFgk3uaf
-	 myWjuG9L8SIEJB4G3f6Dn9MyEEh73lnxKCo8FjGbECLTxXD+hkBaVENxPgvWtKsodA
-	 KrZ9uYhb0BBlnO9UdB2l3xNxSJp6Bxxh3OsoGPio=
+	b=0w8WmJ004RPbYxccVVAJFsvm7GfLE3mdrCZJYDPF7qZNAhKx1P7/5Kip5rKuxAsul
+	 +y3ehIu0A08TYIqaqFDOQmh99boUiK+qB/naQmzua3CdhcRGk2xvbYJ6DMkIJ5ns6o
+	 ph9V6Kyyf11/uQRP2DWP/BC0/VIx0w2qFlG6fo6M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Huan Yang <link@vivo.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
 	Vivek Kasireddy <vivek.kasireddy@intel.com>,
+	Huan Yang <link@vivo.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 228/817] udmabuf: change folios array from kmalloc to kvmalloc
-Date: Tue,  3 Dec 2024 15:36:40 +0100
-Message-ID: <20241203144004.648775877@linuxfoundation.org>
+Subject: [PATCH 6.11 229/817] udmabuf: fix vmap_udmabuf error page set
+Date: Tue,  3 Dec 2024 15:36:41 +0100
+Message-ID: <20241203144004.687281410@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -46,7 +45,6 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.11-stable review patch.  If anyone has any objections, please let me know.
@@ -55,140 +53,83 @@ Content-Transfer-Encoding: 8bit
 
 From: Huan Yang <link@vivo.com>
 
-[ Upstream commit 1c0844c6184e658064e14c4335885785ad3bf84b ]
+[ Upstream commit 18d7de823b7150344d242c3677e65d68c5271b04 ]
 
-When PAGE_SIZE 4096, MAX_PAGE_ORDER 10, 64bit machine,
-page_alloc only support 4MB.
-If above this, trigger this warn and return NULL.
+Currently vmap_udmabuf set page's array by each folio.
+But, ubuf->folios is only contain's the folio's head page.
 
-udmabuf can change size limit, if change it to 3072(3GB), and then alloc
-3GB udmabuf, will fail create.
+That mean we repeatedly mapped the folio head page to the vmalloc area.
 
-[ 4080.876581] ------------[ cut here ]------------
-[ 4080.876843] WARNING: CPU: 3 PID: 2015 at mm/page_alloc.c:4556 __alloc_pages+0x2c8/0x350
-[ 4080.878839] RIP: 0010:__alloc_pages+0x2c8/0x350
-[ 4080.879470] Call Trace:
-[ 4080.879473]  <TASK>
-[ 4080.879473]  ? __alloc_pages+0x2c8/0x350
-[ 4080.879475]  ? __warn.cold+0x8e/0xe8
-[ 4080.880647]  ? __alloc_pages+0x2c8/0x350
-[ 4080.880909]  ? report_bug+0xff/0x140
-[ 4080.881175]  ? handle_bug+0x3c/0x80
-[ 4080.881556]  ? exc_invalid_op+0x17/0x70
-[ 4080.881559]  ? asm_exc_invalid_op+0x1a/0x20
-[ 4080.882077]  ? udmabuf_create+0x131/0x400
+Due to udmabuf can use hugetlb, if HVO enabled, tail page may not exist,
+so, we can't use page array to map, instead, use pfn array.
 
-Because MAX_PAGE_ORDER, kmalloc can max alloc 4096 * (1 << 10), 4MB
-memory, each array entry is pointer(8byte), so can save 524288 pages(2GB).
+By this, we removed page usage in udmabuf totally.
 
-Further more, costly order(order 3) may not be guaranteed that it can be
-applied for, due to fragmentation.
-
-This patch change udmabuf array use kvmalloc_array, this can fallback
-alloc into vmalloc, which can guarantee allocation for any size and does
-not affect the performance of kmalloc allocations.
-
+Fixes: 5e72b2b41a21 ("udmabuf: convert udmabuf driver to use folios")
+Suggested-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
 Signed-off-by: Huan Yang <link@vivo.com>
-Acked-by: Christian König <christian.koenig@amd.com>
 Acked-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
 Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240918025238.2957823-3-link@vivo.com
-Stable-dep-of: 18d7de823b71 ("udmabuf: fix vmap_udmabuf error page set")
+Link: https://patchwork.freedesktop.org/patch/msgid/20240918025238.2957823-4-link@vivo.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma-buf/udmabuf.c | 26 +++++++++++++-------------
- 1 file changed, 13 insertions(+), 13 deletions(-)
+ drivers/dma-buf/Kconfig   |  1 +
+ drivers/dma-buf/udmabuf.c | 22 +++++++++++++++-------
+ 2 files changed, 16 insertions(+), 7 deletions(-)
 
+diff --git a/drivers/dma-buf/Kconfig b/drivers/dma-buf/Kconfig
+index b46eb8a552d7b..fee04fdb08220 100644
+--- a/drivers/dma-buf/Kconfig
++++ b/drivers/dma-buf/Kconfig
+@@ -36,6 +36,7 @@ config UDMABUF
+ 	depends on DMA_SHARED_BUFFER
+ 	depends on MEMFD_CREATE || COMPILE_TEST
+ 	depends on MMU
++	select VMAP_PFN
+ 	help
+ 	  A driver to let userspace turn memfd regions into dma-bufs.
+ 	  Qemu can use this to create host dmabufs for guest framebuffers.
 diff --git a/drivers/dma-buf/udmabuf.c b/drivers/dma-buf/udmabuf.c
-index 047c3cd2cefff..bc94c194e172d 100644
+index bc94c194e172d..a3638ccc15f57 100644
 --- a/drivers/dma-buf/udmabuf.c
 +++ b/drivers/dma-buf/udmabuf.c
-@@ -80,7 +80,7 @@ static int vmap_udmabuf(struct dma_buf *buf, struct iosys_map *map)
+@@ -74,21 +74,29 @@ static int mmap_udmabuf(struct dma_buf *buf, struct vm_area_struct *vma)
+ static int vmap_udmabuf(struct dma_buf *buf, struct iosys_map *map)
+ {
+ 	struct udmabuf *ubuf = buf->priv;
+-	struct page **pages;
++	unsigned long *pfns;
+ 	void *vaddr;
+ 	pgoff_t pg;
  
  	dma_resv_assert_held(buf->resv);
  
--	pages = kmalloc_array(ubuf->pagecount, sizeof(*pages), GFP_KERNEL);
-+	pages = kvmalloc_array(ubuf->pagecount, sizeof(*pages), GFP_KERNEL);
- 	if (!pages)
+-	pages = kvmalloc_array(ubuf->pagecount, sizeof(*pages), GFP_KERNEL);
+-	if (!pages)
++	/**
++	 * HVO may free tail pages, so just use pfn to map each folio
++	 * into vmalloc area.
++	 */
++	pfns = kvmalloc_array(ubuf->pagecount, sizeof(*pfns), GFP_KERNEL);
++	if (!pfns)
  		return -ENOMEM;
  
-@@ -88,7 +88,7 @@ static int vmap_udmabuf(struct dma_buf *buf, struct iosys_map *map)
- 		pages[pg] = &ubuf->folios[pg]->page;
+-	for (pg = 0; pg < ubuf->pagecount; pg++)
+-		pages[pg] = &ubuf->folios[pg]->page;
++	for (pg = 0; pg < ubuf->pagecount; pg++) {
++		unsigned long pfn = folio_pfn(ubuf->folios[pg]);
  
- 	vaddr = vm_map_ram(pages, ubuf->pagecount, -1);
--	kfree(pages);
-+	kvfree(pages);
+-	vaddr = vm_map_ram(pages, ubuf->pagecount, -1);
+-	kvfree(pages);
++		pfn += ubuf->offsets[pg] >> PAGE_SHIFT;
++		pfns[pg] = pfn;
++	}
++
++	vaddr = vmap_pfn(pfns, ubuf->pagecount, PAGE_KERNEL);
++	kvfree(pfns);
  	if (!vaddr)
  		return -EINVAL;
  
-@@ -196,8 +196,8 @@ static void release_udmabuf(struct dma_buf *buf)
- 		put_sg_table(dev, ubuf->sg, DMA_BIDIRECTIONAL);
- 
- 	unpin_all_folios(&ubuf->unpin_list);
--	kfree(ubuf->offsets);
--	kfree(ubuf->folios);
-+	kvfree(ubuf->offsets);
-+	kvfree(ubuf->folios);
- 	kfree(ubuf);
- }
- 
-@@ -322,14 +322,14 @@ static long udmabuf_create(struct miscdevice *device,
- 	if (!ubuf->pagecount)
- 		goto err;
- 
--	ubuf->folios = kmalloc_array(ubuf->pagecount, sizeof(*ubuf->folios),
--				    GFP_KERNEL);
-+	ubuf->folios = kvmalloc_array(ubuf->pagecount, sizeof(*ubuf->folios),
-+				      GFP_KERNEL);
- 	if (!ubuf->folios) {
- 		ret = -ENOMEM;
- 		goto err;
- 	}
--	ubuf->offsets = kcalloc(ubuf->pagecount, sizeof(*ubuf->offsets),
--				GFP_KERNEL);
-+	ubuf->offsets = kvcalloc(ubuf->pagecount, sizeof(*ubuf->offsets),
-+				 GFP_KERNEL);
- 	if (!ubuf->offsets) {
- 		ret = -ENOMEM;
- 		goto err;
-@@ -343,7 +343,7 @@ static long udmabuf_create(struct miscdevice *device,
- 			goto err;
- 
- 		pgcnt = list[i].size >> PAGE_SHIFT;
--		folios = kmalloc_array(pgcnt, sizeof(*folios), GFP_KERNEL);
-+		folios = kvmalloc_array(pgcnt, sizeof(*folios), GFP_KERNEL);
- 		if (!folios) {
- 			ret = -ENOMEM;
- 			goto err;
-@@ -353,7 +353,7 @@ static long udmabuf_create(struct miscdevice *device,
- 		ret = memfd_pin_folios(memfd, list[i].offset, end,
- 				       folios, pgcnt, &pgoff);
- 		if (ret <= 0) {
--			kfree(folios);
-+			kvfree(folios);
- 			if (!ret)
- 				ret = -EINVAL;
- 			goto err;
-@@ -382,7 +382,7 @@ static long udmabuf_create(struct miscdevice *device,
- 			}
- 		}
- 
--		kfree(folios);
-+		kvfree(folios);
- 		fput(memfd);
- 		memfd = NULL;
- 	}
-@@ -398,8 +398,8 @@ static long udmabuf_create(struct miscdevice *device,
- 	if (memfd)
- 		fput(memfd);
- 	unpin_all_folios(&ubuf->unpin_list);
--	kfree(ubuf->offsets);
--	kfree(ubuf->folios);
-+	kvfree(ubuf->offsets);
-+	kvfree(ubuf->folios);
- 	kfree(ubuf);
- 	return ret;
- }
 -- 
 2.43.0
 
