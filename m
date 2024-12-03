@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96BAD81ADA;
-	Tue,  3 Dec 2024 16:12:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B78D1E3DF9;
+	Tue,  3 Dec 2024 16:12:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733242336; cv=none; b=rY+7B/+DcDSvUm0EV9oGUkgPmdFe4Q97DuO5zwUvBFzh9rpNcrRlRGSMR9Z2zRqaNECzeeCblk8GYknnkIErkJWhzFts4BcqqBH7+tqvEdV9IuB2tRU+hgTicujly1s03w7ZU+GIeuVCgHG4bUmj3WlN0yk5NTtxBn+GNM7eexo=
+	t=1733242340; cv=none; b=FzEqMOCzGeXd8diDlfxNl/9nicGpdleP7gSYZH9CDgwmi0bL/tzcdFNTmnr5uZmCdG5/QG2rGvAH48LTFHOIA7UovqzyJVBPhE+zZYqxfHh2HjzYH0gXPp5WH5nUFeO/MPk3MlxZvpmQzQhLT414kB450gME8Kry+kP5WrhovD4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733242336; c=relaxed/simple;
-	bh=RJ3FMkLbu7yLb2aQ7QYVdjbmWjvAW8Tduh+Kye34CNU=;
+	s=arc-20240116; t=1733242340; c=relaxed/simple;
+	bh=FDCenuR4rNo+a1UAPOMdvKDMBoSJNbx0J7lP/fxmEnU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uVxM3638gPYAaENRcCSa6KftXELafUvqiIcwg8QIAAtKxXxMTyiMwNQ9un/uL2CL1vWCOowbTQ1H2s5bMIL2YjxeoWjYbQDB5vMC+1SGjGdCRUC/zAI/ixM7NSpUberhn0lAsHDdaMKo+bvOFh5YcG/AC4LbRyIPc53aCBWtJdQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lQmaSsqm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qrN4gQ/BEe9/ANSD0mOLh3Row+1LISABIsuw5ET4CBwTEFDYji0uCCePh8B2FHHJUq/il3RAnFT1aSDQCjZQMNqeH9lGDY4kPSoHWAHt4DZnrYwsgFNlPyo04Rrju9iA91MZEzH2zkVfFlmNbJzUwpvey6txZ1t7EzmpsuN0dTU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vJVIpQjW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lQmaSsqm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 088F8C4CECF;
-	Tue,  3 Dec 2024 16:12:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vJVIpQjW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1E73C4CECF;
+	Tue,  3 Dec 2024 16:12:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733242336;
-	bh=RJ3FMkLbu7yLb2aQ7QYVdjbmWjvAW8Tduh+Kye34CNU=;
+	s=korg; t=1733242340;
+	bh=FDCenuR4rNo+a1UAPOMdvKDMBoSJNbx0J7lP/fxmEnU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lQmaSsqmN1bfi19uoFb3ziGyo8YMmL3vehLo/umhXLAd1KGxyHYdvyXag2E4eDEdq
-	 D39Pzm2Ah1nYjktF/L7TuzUHzfr33kP2crZgL6CzcxVe0043xeDd7fIEsT75O3WOJv
-	 qHOfBJiz1vUVsUms9If459fEk94R8DMELYawdmQY=
+	b=vJVIpQjWIFq30Md2uZ60UOvmIYAPfpqpyH+kMRQ5yI6jH8bSixawV6nowoIGuJXWH
+	 F87keMBe2FrGCBGcxQ0ld0ytHM4Q2ySb1Fg3nOLfaRDdr9qr/rHz5aJaVanEhLNmB5
+	 zrHtTEjoSnwCHAnYaIxBWDWeTY8X97ZdxCyQYLRo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kunkun Jiang <jiangkunkun@huawei.com>,
-	Jing Zhang <jingzhangos@google.com>,
-	Oliver Upton <oliver.upton@linux.dev>
-Subject: [PATCH 6.12 649/826] KVM: arm64: vgic-its: Clear ITE when DISCARD frees an ITE
-Date: Tue,  3 Dec 2024 15:46:16 +0100
-Message-ID: <20241203144809.069262519@linuxfoundation.org>
+	Andrej Shadura <andrew.shadura@collabora.co.uk>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Aleksei Vetrov <vvvvvv@google.com>
+Subject: [PATCH 6.12 676/826] Bluetooth: Fix type of len in rfcomm_sock_getsockopt{,_old}()
+Date: Tue,  3 Dec 2024 15:46:43 +0100
+Message-ID: <20241203144810.123743237@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -51,50 +52,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kunkun Jiang <jiangkunkun@huawei.com>
+From: Andrej Shadura <andrew.shadura@collabora.co.uk>
 
-commit 7602ffd1d5e8927fadd5187cb4aed2fdc9c47143 upstream.
+commit 5fe6caa62b07fd39cd6a28acc8f92ba2955e11a6 upstream.
 
-When DISCARD frees an ITE, it does not invalidate the
-corresponding ITE. In the scenario of continuous saves and
-restores, there may be a situation where an ITE is not saved
-but is restored. This is unreasonable and may cause restore
-to fail. This patch clears the corresponding ITE when DISCARD
-frees an ITE.
+Commit 9bf4e919ccad worked around an issue introduced after an innocuous
+optimisation change in LLVM main:
+
+> len is defined as an 'int' because it is assigned from
+> '__user int *optlen'. However, it is clamped against the result of
+> sizeof(), which has a type of 'size_t' ('unsigned long' for 64-bit
+> platforms). This is done with min_t() because min() requires compatible
+> types, which results in both len and the result of sizeof() being casted
+> to 'unsigned int', meaning len changes signs and the result of sizeof()
+> is truncated. From there, len is passed to copy_to_user(), which has a
+> third parameter type of 'unsigned long', so it is widened and changes
+> signs again. This excessive casting in combination with the KCSAN
+> instrumentation causes LLVM to fail to eliminate the __bad_copy_from()
+> call, failing the build.
+
+The same issue occurs in rfcomm in functions rfcomm_sock_getsockopt and
+rfcomm_sock_getsockopt_old.
+
+Change the type of len to size_t in both rfcomm_sock_getsockopt and
+rfcomm_sock_getsockopt_old and replace min_t() with min().
 
 Cc: stable@vger.kernel.org
-Fixes: eff484e0298d ("KVM: arm64: vgic-its: ITT save and restore")
-Signed-off-by: Kunkun Jiang <jiangkunkun@huawei.com>
-[Jing: Update with entry write helper]
-Signed-off-by: Jing Zhang <jingzhangos@google.com>
-Link: https://lore.kernel.org/r/20241107214137.428439-6-jingzhangos@google.com
-Signed-off-by: Oliver Upton <oliver.upton@linux.dev>
+Co-authored-by: Aleksei Vetrov <vvvvvv@google.com>
+Improves: 9bf4e919ccad ("Bluetooth: Fix type of len in {l2cap,sco}_sock_getsockopt_old()")
+Link: https://github.com/ClangBuiltLinux/linux/issues/2007
+Link: https://github.com/llvm/llvm-project/issues/85647
+Signed-off-by: Andrej Shadura <andrew.shadura@collabora.co.uk>
+Reviewed-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kvm/vgic/vgic-its.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ net/bluetooth/rfcomm/sock.c |   10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
---- a/arch/arm64/kvm/vgic/vgic-its.c
-+++ b/arch/arm64/kvm/vgic/vgic-its.c
-@@ -782,6 +782,9 @@ static int vgic_its_cmd_handle_discard(s
+--- a/net/bluetooth/rfcomm/sock.c
++++ b/net/bluetooth/rfcomm/sock.c
+@@ -729,7 +729,8 @@ static int rfcomm_sock_getsockopt_old(st
+ 	struct sock *l2cap_sk;
+ 	struct l2cap_conn *conn;
+ 	struct rfcomm_conninfo cinfo;
+-	int len, err = 0;
++	int err = 0;
++	size_t len;
+ 	u32 opt;
  
- 	ite = find_ite(its, device_id, event_id);
- 	if (ite && its_is_collection_mapped(ite->collection)) {
-+		struct its_device *device = find_its_device(its, device_id);
-+		int ite_esz = vgic_its_get_abi(its)->ite_esz;
-+		gpa_t gpa = device->itt_addr + ite->event_id * ite_esz;
- 		/*
- 		 * Though the spec talks about removing the pending state, we
- 		 * don't bother here since we clear the ITTE anyway and the
-@@ -790,7 +793,8 @@ static int vgic_its_cmd_handle_discard(s
- 		vgic_its_invalidate_cache(its);
+ 	BT_DBG("sk %p", sk);
+@@ -783,7 +784,7 @@ static int rfcomm_sock_getsockopt_old(st
+ 		cinfo.hci_handle = conn->hcon->handle;
+ 		memcpy(cinfo.dev_class, conn->hcon->dev_class, 3);
  
- 		its_free_ite(kvm, ite);
--		return 0;
-+
-+		return vgic_its_write_entry_lock(its, gpa, 0, ite_esz);
- 	}
+-		len = min_t(unsigned int, len, sizeof(cinfo));
++		len = min(len, sizeof(cinfo));
+ 		if (copy_to_user(optval, (char *) &cinfo, len))
+ 			err = -EFAULT;
  
- 	return E_ITS_DISCARD_UNMAPPED_INTERRUPT;
+@@ -802,7 +803,8 @@ static int rfcomm_sock_getsockopt(struct
+ {
+ 	struct sock *sk = sock->sk;
+ 	struct bt_security sec;
+-	int len, err = 0;
++	int err = 0;
++	size_t len;
+ 
+ 	BT_DBG("sk %p", sk);
+ 
+@@ -827,7 +829,7 @@ static int rfcomm_sock_getsockopt(struct
+ 		sec.level = rfcomm_pi(sk)->sec_level;
+ 		sec.key_size = 0;
+ 
+-		len = min_t(unsigned int, len, sizeof(sec));
++		len = min(len, sizeof(sec));
+ 		if (copy_to_user(optval, (char *) &sec, len))
+ 			err = -EFAULT;
+ 
 
 
