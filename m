@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 595371F76C7;
-	Tue,  3 Dec 2024 15:32:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7543C1F4276;
+	Tue,  3 Dec 2024 15:32:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733239960; cv=none; b=E9zl2/oFNprn0cczlqwSYCXvphV2Jcm7aC9x16IBviI2ByNNf7vPPLBWpp/tzwKanTqZ754ioFrx/ncWxdndowkBT79gkdTsLTJK61p2wAe3FrQ6xyOwF/OVxLR+Hd/8+XMDtx6j+PJmomOR4euciLa/diunuhrE/oFRth4R8kM=
+	t=1733239963; cv=none; b=j9eQrf1fZfEMPX1AJ7fvgn++4pvAqG8aF4QTHe9f5KKDdJcOx7YCkrrnAFqY0Y2ENUSwIKQ2mFe6v4tFnf46oxyMgJ43mbBhXPwEWCMt+WB/83Jfn+FAzM3bw6t1XuIp0gxoRIN2fOnsDa5SWIYdmZdLyNRwKZLDh4zZxtF6bdI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733239960; c=relaxed/simple;
-	bh=AO4XOT0ZNlX9d07DYSOaw0ECA5TflIlG5J6qUBBZYsI=;
+	s=arc-20240116; t=1733239963; c=relaxed/simple;
+	bh=ropRXjPiDr2y5ufmCLZbnQGwtjuSukPhR4D06txVxeE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=F0nLWEZhpzHVD1hmdsU9rlu1R7Cof7CRzOOgNy89+M4+jwYN5N7UMqnpxRuV6u+bhzT1P6xkYecVjXKNSh5WOzZ7CpQWv9HZbzN2Lrbj4ZlpngFoQKzZvlON6DTuESE1rRIhV11E1nUHuz/IYPopGYmbGophnAMvFT3KyMtRK7s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ui+uzkqw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=TgRRhYCmhbEiKDEbhUViRrdbLiRgQrLKyft6jnKwvDSQuyzT90gZ2mO6+2KcBGf98P370bFAxVu6YRtcSfUad6bN7SQsTkFMMQbSUY1yrPUnW9hk1s+WWIRnS111Z3lJXsFq5IWsA0vax0DZe6g2iO9XMghvV1OlAkboiD+Wnsc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JNbbDt4M; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ui+uzkqw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1871C4CECF;
-	Tue,  3 Dec 2024 15:32:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JNbbDt4M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F26DFC4CED8;
+	Tue,  3 Dec 2024 15:32:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733239960;
-	bh=AO4XOT0ZNlX9d07DYSOaw0ECA5TflIlG5J6qUBBZYsI=;
+	s=korg; t=1733239963;
+	bh=ropRXjPiDr2y5ufmCLZbnQGwtjuSukPhR4D06txVxeE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ui+uzkqwFOkCHIus8Lxy8rsKdVxrW7XLbz/yPzxgGYsNB7XkI4mvZLt819IdEaFfH
-	 7N5GvTbDakvkE+kQtvkkoCe++q1Y5tDn9lWW8wIlOlf7mpDHl+zLWppvqXkjd/Sl5p
-	 IkEzkY96wKcnzsW0ZWuxSR6K07PQ1sRJRiT6CO1k=
+	b=JNbbDt4MPqyy5RFP815e2U+hQJPMGR7SQhiK6RYaxqj5iZpr4eB2YWrdi2C6oWgfX
+	 i68cgn7FjH4Gv+5sSZOkapxWeVrrqrj8Ki9beDBJlYtQUMJNtIvD4y9aszibZwg7ks
+	 ocTmSHrxh8Mg3300qsqVCb8ax9mwH/oOTCfsrgRM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
 	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 794/817] cifs: Fix parsing native symlinks relative to the export
-Date: Tue,  3 Dec 2024 15:46:06 +0100
-Message-ID: <20241203144027.003897356@linuxfoundation.org>
+Subject: [PATCH 6.11 795/817] cifs: Fix parsing reparse point with native symlink in SMB1 non-UNICODE session
+Date: Tue,  3 Dec 2024 15:46:07 +0100
+Message-ID: <20241203144027.044081897@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -54,376 +54,44 @@ Content-Transfer-Encoding: 8bit
 
 From: Pali Rohár <pali@kernel.org>
 
-[ Upstream commit 723f4ef90452aa629f3d923e92e0449d69362b1d ]
+[ Upstream commit f4ca4f5a36eac9b4da378a0f28cbbe38534a0901 ]
 
-SMB symlink which has SYMLINK_FLAG_RELATIVE set is relative (as opposite of
-the absolute) and it can be relative either to the current directory (where
-is the symlink stored) or relative to the top level export path. To what it
-is relative depends on the first character of the symlink target path.
+SMB1 NT_TRANSACT_IOCTL/FSCTL_GET_REPARSE_POINT even in non-UNICODE mode
+returns reparse buffer in UNICODE/UTF-16 format.
 
-If the first character is path separator then symlink is relative to the
-export, otherwise to the current directory. Linux (and generally POSIX
-systems) supports only symlink paths relative to the current directory
-where is symlink stored.
+This is because FSCTL_GET_REPARSE_POINT is NT-based IOCTL which does not
+distinguish between 8-bit non-UNICODE and 16-bit UNICODE modes and its path
+buffers are always encoded in UTF-16.
 
-Currently if Linux SMB client reads relative SMB symlink with first
-character as path separator (slash), it let as is. Which means that Linux
-interpret it as absolute symlink pointing from the root (/). But this
-location is different than the top level directory of SMB export (unless
-SMB export was mounted to the root) and thefore SMB symlinks relative to
-the export are interpreted wrongly by Linux SMB client.
+This change fixes reading of native symlinks in SMB1 when UNICODE session
+is not active.
 
-Fix this problem. As Linux does not have equivalent of the path relative to
-the top of the mount point, convert such symlink target path relative to
-the current directory. Do this by prepending "../" pattern N times before
-the SMB target path, where N is the number of path separators found in SMB
-symlink path.
-
-So for example, if SMB share is mounted to Linux path /mnt/share/, symlink
-is stored in file /mnt/share/test/folder1/symlink (so SMB symlink path is
-test\folder1\symlink) and SMB symlink target points to \test\folder2\file,
-then convert symlink target path to Linux path ../../test/folder2/file.
-
-Deduplicate code for parsing SMB symlinks in native form from functions
-smb2_parse_symlink_response() and parse_reparse_native_symlink() into new
-function smb2_parse_native_symlink() and pass into this new function a new
-full_path parameter from callers, which specify SMB full path where is
-symlink stored.
-
-This change fixes resolving of the native Windows symlinks relative to the
-top level directory of the SMB share.
-
+Fixes: ed3e0a149b58 ("smb: client: implement ->query_reparse_point() for SMB1")
 Signed-off-by: Pali Rohár <pali@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
-Stable-dep-of: f4ca4f5a36ea ("cifs: Fix parsing reparse point with native symlink in SMB1 non-UNICODE session")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/cifsglob.h  |  1 +
- fs/smb/client/cifsproto.h |  1 +
- fs/smb/client/inode.c     |  1 +
- fs/smb/client/reparse.c   | 90 +++++++++++++++++++++++++++++++++------
- fs/smb/client/reparse.h   |  4 +-
- fs/smb/client/smb1ops.c   |  3 +-
- fs/smb/client/smb2file.c  | 21 +++++----
- fs/smb/client/smb2inode.c |  6 ++-
- fs/smb/client/smb2proto.h |  9 +++-
- 9 files changed, 108 insertions(+), 28 deletions(-)
+ fs/smb/client/smb1ops.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/fs/smb/client/cifsglob.h b/fs/smb/client/cifsglob.h
-index 1dfedb64ffcbc..64610236cc725 100644
---- a/fs/smb/client/cifsglob.h
-+++ b/fs/smb/client/cifsglob.h
-@@ -589,6 +589,7 @@ struct smb_version_operations {
- 	/* Check for STATUS_NETWORK_NAME_DELETED */
- 	bool (*is_network_name_deleted)(char *buf, struct TCP_Server_Info *srv);
- 	int (*parse_reparse_point)(struct cifs_sb_info *cifs_sb,
-+				   const char *full_path,
- 				   struct kvec *rsp_iov,
- 				   struct cifs_open_info_data *data);
- 	int (*create_reparse_symlink)(const unsigned int xid,
-diff --git a/fs/smb/client/cifsproto.h b/fs/smb/client/cifsproto.h
-index 497bf3c447bcb..8d35a5cab39e3 100644
---- a/fs/smb/client/cifsproto.h
-+++ b/fs/smb/client/cifsproto.h
-@@ -675,6 +675,7 @@ char *extract_hostname(const char *unc);
- char *extract_sharename(const char *unc);
- int parse_reparse_point(struct reparse_data_buffer *buf,
- 			u32 plen, struct cifs_sb_info *cifs_sb,
-+			const char *full_path,
- 			bool unicode, struct cifs_open_info_data *data);
- int cifs_sfu_make_node(unsigned int xid, struct inode *inode,
- 		       struct dentry *dentry, struct cifs_tcon *tcon,
-diff --git a/fs/smb/client/inode.c b/fs/smb/client/inode.c
-index ede36884be8ae..200936773a956 100644
---- a/fs/smb/client/inode.c
-+++ b/fs/smb/client/inode.c
-@@ -1075,6 +1075,7 @@ static int reparse_info_to_fattr(struct cifs_open_info_data *data,
- 			rc = 0;
- 		} else if (iov && server->ops->parse_reparse_point) {
- 			rc = server->ops->parse_reparse_point(cifs_sb,
-+							      full_path,
- 							      iov, data);
- 		}
- 		break;
-diff --git a/fs/smb/client/reparse.c b/fs/smb/client/reparse.c
-index 90da1e2b6217b..f74d0a86f44a4 100644
---- a/fs/smb/client/reparse.c
-+++ b/fs/smb/client/reparse.c
-@@ -535,9 +535,76 @@ static int parse_reparse_posix(struct reparse_posix_data *buf,
- 	return 0;
- }
- 
-+int smb2_parse_native_symlink(char **target, const char *buf, unsigned int len,
-+			      bool unicode, bool relative,
-+			      const char *full_path,
-+			      struct cifs_sb_info *cifs_sb)
-+{
-+	char sep = CIFS_DIR_SEP(cifs_sb);
-+	char *linux_target = NULL;
-+	char *smb_target = NULL;
-+	int levels;
-+	int rc;
-+	int i;
-+
-+	smb_target = cifs_strndup_from_utf16(buf, len, unicode, cifs_sb->local_nls);
-+	if (!smb_target) {
-+		rc = -ENOMEM;
-+		goto out;
-+	}
-+
-+	if (smb_target[0] == sep && relative) {
-+		/*
-+		 * This is a relative SMB symlink from the top of the share,
-+		 * which is the top level directory of the Linux mount point.
-+		 * Linux does not support such relative symlinks, so convert
-+		 * it to the relative symlink from the current directory.
-+		 * full_path is the SMB path to the symlink (from which is
-+		 * extracted current directory) and smb_target is the SMB path
-+		 * where symlink points, therefore full_path must always be on
-+		 * the SMB share.
-+		 */
-+		int smb_target_len = strlen(smb_target)+1;
-+		levels = 0;
-+		for (i = 1; full_path[i]; i++) { /* i=1 to skip leading sep */
-+			if (full_path[i] == sep)
-+				levels++;
-+		}
-+		linux_target = kmalloc(levels*3 + smb_target_len, GFP_KERNEL);
-+		if (!linux_target) {
-+			rc = -ENOMEM;
-+			goto out;
-+		}
-+		for (i = 0; i < levels; i++) {
-+			linux_target[i*3 + 0] = '.';
-+			linux_target[i*3 + 1] = '.';
-+			linux_target[i*3 + 2] = sep;
-+		}
-+		memcpy(linux_target + levels*3, smb_target+1, smb_target_len); /* +1 to skip leading sep */
-+	} else {
-+		linux_target = smb_target;
-+		smb_target = NULL;
-+	}
-+
-+	if (sep == '\\')
-+		convert_delimiter(linux_target, '/');
-+
-+	rc = 0;
-+	*target = linux_target;
-+
-+	cifs_dbg(FYI, "%s: symlink target: %s\n", __func__, *target);
-+
-+out:
-+	if (rc != 0)
-+		kfree(linux_target);
-+	kfree(smb_target);
-+	return rc;
-+}
-+
- static int parse_reparse_symlink(struct reparse_symlink_data_buffer *sym,
- 				 u32 plen, bool unicode,
- 				 struct cifs_sb_info *cifs_sb,
-+				 const char *full_path,
- 				 struct cifs_open_info_data *data)
- {
- 	unsigned int len;
-@@ -552,20 +619,18 @@ static int parse_reparse_symlink(struct reparse_symlink_data_buffer *sym,
- 		return -EIO;
- 	}
- 
--	data->symlink_target = cifs_strndup_from_utf16(sym->PathBuffer + offs,
--						       len, unicode,
--						       cifs_sb->local_nls);
--	if (!data->symlink_target)
--		return -ENOMEM;
--
--	convert_delimiter(data->symlink_target, '/');
--	cifs_dbg(FYI, "%s: target path: %s\n", __func__, data->symlink_target);
--
--	return 0;
-+	return smb2_parse_native_symlink(&data->symlink_target,
-+					 sym->PathBuffer + offs,
-+					 len,
-+					 unicode,
-+					 le32_to_cpu(sym->Flags) & SYMLINK_FLAG_RELATIVE,
-+					 full_path,
-+					 cifs_sb);
- }
- 
- int parse_reparse_point(struct reparse_data_buffer *buf,
- 			u32 plen, struct cifs_sb_info *cifs_sb,
-+			const char *full_path,
- 			bool unicode, struct cifs_open_info_data *data)
- {
- 	struct cifs_tcon *tcon = cifs_sb_master_tcon(cifs_sb);
-@@ -580,7 +645,7 @@ int parse_reparse_point(struct reparse_data_buffer *buf,
- 	case IO_REPARSE_TAG_SYMLINK:
- 		return parse_reparse_symlink(
- 			(struct reparse_symlink_data_buffer *)buf,
--			plen, unicode, cifs_sb, data);
-+			plen, unicode, cifs_sb, full_path, data);
- 	case IO_REPARSE_TAG_LX_SYMLINK:
- 	case IO_REPARSE_TAG_AF_UNIX:
- 	case IO_REPARSE_TAG_LX_FIFO:
-@@ -596,6 +661,7 @@ int parse_reparse_point(struct reparse_data_buffer *buf,
- }
- 
- int smb2_parse_reparse_point(struct cifs_sb_info *cifs_sb,
-+			     const char *full_path,
- 			     struct kvec *rsp_iov,
- 			     struct cifs_open_info_data *data)
- {
-@@ -605,7 +671,7 @@ int smb2_parse_reparse_point(struct cifs_sb_info *cifs_sb,
- 
- 	buf = (struct reparse_data_buffer *)((u8 *)io +
- 					     le32_to_cpu(io->OutputOffset));
--	return parse_reparse_point(buf, plen, cifs_sb, true, data);
-+	return parse_reparse_point(buf, plen, cifs_sb, full_path, true, data);
- }
- 
- static void wsl_to_fattr(struct cifs_open_info_data *data,
-diff --git a/fs/smb/client/reparse.h b/fs/smb/client/reparse.h
-index 2a9f4f9f79de0..ff05b0e75c928 100644
---- a/fs/smb/client/reparse.h
-+++ b/fs/smb/client/reparse.h
-@@ -117,7 +117,9 @@ int smb2_create_reparse_symlink(const unsigned int xid, struct inode *inode,
- int smb2_mknod_reparse(unsigned int xid, struct inode *inode,
- 		       struct dentry *dentry, struct cifs_tcon *tcon,
- 		       const char *full_path, umode_t mode, dev_t dev);
--int smb2_parse_reparse_point(struct cifs_sb_info *cifs_sb, struct kvec *rsp_iov,
-+int smb2_parse_reparse_point(struct cifs_sb_info *cifs_sb,
-+			     const char *full_path,
-+			     struct kvec *rsp_iov,
- 			     struct cifs_open_info_data *data);
- 
- #endif /* _CIFS_REPARSE_H */
 diff --git a/fs/smb/client/smb1ops.c b/fs/smb/client/smb1ops.c
-index 8c03250d85ae0..3c7f3c4b94c8d 100644
+index 3c7f3c4b94c8d..c252447918d67 100644
 --- a/fs/smb/client/smb1ops.c
 +++ b/fs/smb/client/smb1ops.c
-@@ -994,6 +994,7 @@ static int cifs_query_symlink(const unsigned int xid,
- }
- 
- static int cifs_parse_reparse_point(struct cifs_sb_info *cifs_sb,
-+				    const char *full_path,
- 				    struct kvec *rsp_iov,
- 				    struct cifs_open_info_data *data)
+@@ -1000,12 +1000,11 @@ static int cifs_parse_reparse_point(struct cifs_sb_info *cifs_sb,
  {
-@@ -1004,7 +1005,7 @@ static int cifs_parse_reparse_point(struct cifs_sb_info *cifs_sb,
+ 	struct reparse_data_buffer *buf;
+ 	TRANSACT_IOCTL_RSP *io = rsp_iov->iov_base;
+-	bool unicode = !!(io->hdr.Flags2 & SMBFLG2_UNICODE);
+ 	u32 plen = le16_to_cpu(io->ByteCount);
  
  	buf = (struct reparse_data_buffer *)((__u8 *)&io->hdr.Protocol +
  					     le32_to_cpu(io->DataOffset));
--	return parse_reparse_point(buf, plen, cifs_sb, unicode, data);
-+	return parse_reparse_point(buf, plen, cifs_sb, full_path, unicode, data);
+-	return parse_reparse_point(buf, plen, cifs_sb, full_path, unicode, data);
++	return parse_reparse_point(buf, plen, cifs_sb, full_path, true, data);
  }
  
  static bool
-diff --git a/fs/smb/client/smb2file.c b/fs/smb/client/smb2file.c
-index c23478ab1cf85..dc52995f55910 100644
---- a/fs/smb/client/smb2file.c
-+++ b/fs/smb/client/smb2file.c
-@@ -63,12 +63,12 @@ static struct smb2_symlink_err_rsp *symlink_data(const struct kvec *iov)
- 	return sym;
- }
- 
--int smb2_parse_symlink_response(struct cifs_sb_info *cifs_sb, const struct kvec *iov, char **path)
-+int smb2_parse_symlink_response(struct cifs_sb_info *cifs_sb, const struct kvec *iov,
-+				const char *full_path, char **path)
- {
- 	struct smb2_symlink_err_rsp *sym;
- 	unsigned int sub_offs, sub_len;
- 	unsigned int print_offs, print_len;
--	char *s;
- 
- 	if (!cifs_sb || !iov || !iov->iov_base || !iov->iov_len || !path)
- 		return -EINVAL;
-@@ -86,15 +86,13 @@ int smb2_parse_symlink_response(struct cifs_sb_info *cifs_sb, const struct kvec
- 	    iov->iov_len < SMB2_SYMLINK_STRUCT_SIZE + print_offs + print_len)
- 		return -EINVAL;
- 
--	s = cifs_strndup_from_utf16((char *)sym->PathBuffer + sub_offs, sub_len, true,
--				    cifs_sb->local_nls);
--	if (!s)
--		return -ENOMEM;
--	convert_delimiter(s, '/');
--	cifs_dbg(FYI, "%s: symlink target: %s\n", __func__, s);
--
--	*path = s;
--	return 0;
-+	return smb2_parse_native_symlink(path,
-+					 (char *)sym->PathBuffer + sub_offs,
-+					 sub_len,
-+					 true,
-+					 le32_to_cpu(sym->Flags) & SYMLINK_FLAG_RELATIVE,
-+					 full_path,
-+					 cifs_sb);
- }
- 
- int smb2_open_file(const unsigned int xid, struct cifs_open_parms *oparms, __u32 *oplock, void *buf)
-@@ -126,6 +124,7 @@ int smb2_open_file(const unsigned int xid, struct cifs_open_parms *oparms, __u32
- 			goto out;
- 		if (hdr->Status == STATUS_STOPPED_ON_SYMLINK) {
- 			rc = smb2_parse_symlink_response(oparms->cifs_sb, &err_iov,
-+							 oparms->path,
- 							 &data->symlink_target);
- 			if (!rc) {
- 				memset(smb2_data, 0, sizeof(*smb2_data));
-diff --git a/fs/smb/client/smb2inode.c b/fs/smb/client/smb2inode.c
-index cdb0e028e73c4..9a28a30ec1a34 100644
---- a/fs/smb/client/smb2inode.c
-+++ b/fs/smb/client/smb2inode.c
-@@ -828,6 +828,7 @@ static int smb2_compound_op(const unsigned int xid, struct cifs_tcon *tcon,
- 
- static int parse_create_response(struct cifs_open_info_data *data,
- 				 struct cifs_sb_info *cifs_sb,
-+				 const char *full_path,
- 				 const struct kvec *iov)
- {
- 	struct smb2_create_rsp *rsp = iov->iov_base;
-@@ -841,6 +842,7 @@ static int parse_create_response(struct cifs_open_info_data *data,
- 		break;
- 	case STATUS_STOPPED_ON_SYMLINK:
- 		rc = smb2_parse_symlink_response(cifs_sb, iov,
-+						 full_path,
- 						 &data->symlink_target);
- 		if (rc)
- 			return rc;
-@@ -930,14 +932,14 @@ int smb2_query_path_info(const unsigned int xid,
- 
- 	switch (rc) {
- 	case 0:
--		rc = parse_create_response(data, cifs_sb, &out_iov[0]);
-+		rc = parse_create_response(data, cifs_sb, full_path, &out_iov[0]);
- 		break;
- 	case -EOPNOTSUPP:
- 		/*
- 		 * BB TODO: When support for special files added to Samba
- 		 * re-verify this path.
- 		 */
--		rc = parse_create_response(data, cifs_sb, &out_iov[0]);
-+		rc = parse_create_response(data, cifs_sb, full_path, &out_iov[0]);
- 		if (rc || !data->reparse_point)
- 			goto out;
- 
-diff --git a/fs/smb/client/smb2proto.h b/fs/smb/client/smb2proto.h
-index 5e0855fefcfe6..aa01ae234732a 100644
---- a/fs/smb/client/smb2proto.h
-+++ b/fs/smb/client/smb2proto.h
-@@ -113,7 +113,14 @@ extern int smb3_query_mf_symlink(unsigned int xid, struct cifs_tcon *tcon,
- 			  struct cifs_sb_info *cifs_sb,
- 			  const unsigned char *path, char *pbuf,
- 			  unsigned int *pbytes_read);
--int smb2_parse_symlink_response(struct cifs_sb_info *cifs_sb, const struct kvec *iov, char **path);
-+int smb2_parse_native_symlink(char **target, const char *buf, unsigned int len,
-+			      bool unicode, bool relative,
-+			      const char *full_path,
-+			      struct cifs_sb_info *cifs_sb);
-+int smb2_parse_symlink_response(struct cifs_sb_info *cifs_sb,
-+				const struct kvec *iov,
-+				const char *full_path,
-+				char **path);
- int smb2_open_file(const unsigned int xid, struct cifs_open_parms *oparms, __u32 *oplock,
- 		   void *buf);
- extern int smb2_unlock_range(struct cifsFileInfo *cfile,
 -- 
 2.43.0
 
