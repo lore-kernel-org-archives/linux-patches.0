@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DADFB1AB6C9;
-	Tue,  3 Dec 2024 15:54:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C6C91AB6C9;
+	Tue,  3 Dec 2024 15:54:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733241260; cv=none; b=ZLORLS+dHRG3ShS1xE0QpGK+C5R/PGXaHudSCGiRipjyTVPZS89Wl97eMHKNGCmI0TjE/ew0fXskRWysS8ouKbfBhraQ9hhDZ4BolPVf//udGnmHJYofQ2Fce3W/0nChbHAdR45BeOuX1Gaxgic/5lyqajRATT4H0U/+fSnhRV4=
+	t=1733241264; cv=none; b=DPxz7IVrXdF+gR7My2iDK12v4N1djaVegrTne2H7j3K2L1XSlsEw6bRvw1GnJLOZUvOXGBjJ8pkEYMwyfJ3V8RE/Cm/fyPxOJFDpjJCTlXPFVxwo6TQ5w5a0gfyyCEmu/oR1sb5K7nxRp2IDV7OrcsuYfJCSXnbsEWgRsfwS+Og=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733241260; c=relaxed/simple;
-	bh=Gs3tjHe94Omi36WTAOtJ8xEwa4lxu4iWt2msaUOXagw=;
+	s=arc-20240116; t=1733241264; c=relaxed/simple;
+	bh=Sii21n9pKipmWVgWPcFR+mvypjtOVBOuPKXVGclHcz4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qdWMfTyCwZelaj+ZWdegTh9qkF23hO7Ib95bpZFjryt6NHQv4qkVlV2ea010EGopqGDJFKYCsm6KCqcUIeqplt9umOYKR6uC5lndDyCNhu3Sfyr8O6bP6QxQlRX3eB4gMPDX+s1if4rxY/0h1MhJwXlgJ7dtwWwEFcplp6evFQc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TmI24uDU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=P2mk5N0F9BbxSEDpKCHl78XQamUi2RvdB5vTiJB1KO+KeG9YcGS/pV3onb00aq1AntKm/ZdVWpvQcBpx/5NlE90S0WuAi5N/4U8KtX8n+Kz98F7okcwCjJX71ySUh+IpcCVARWynNzdE3VCErwkcV4dIfbixOcTPY9rf9G97bj4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gV9n9Bjt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TmI24uDU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AB85C4CED8;
-	Tue,  3 Dec 2024 15:54:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gV9n9Bjt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E39FC4CECF;
+	Tue,  3 Dec 2024 15:54:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733241260;
-	bh=Gs3tjHe94Omi36WTAOtJ8xEwa4lxu4iWt2msaUOXagw=;
+	s=korg; t=1733241264;
+	bh=Sii21n9pKipmWVgWPcFR+mvypjtOVBOuPKXVGclHcz4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TmI24uDUmoz2JYaQ7h6IKVSyEjachgwc7l4VP0UJS24YvyFa5JLITQe8Lt7F3opxU
-	 gnntQiSoe3t1LlrzyOXjHLtDlcxTi6ZVQADQyRfIDWaCbNPxPcV0joCenQVJ4xAICq
-	 QL6lRjqjv5KHN1+bTf8U7/1RS+q7kkJ1wZsJxJME=
+	b=gV9n9BjtSpZ53TtbgA98SKL5VdX+fRDg+FxsS9xKdRu6zunRYHIoQtLOh608JYcv9
+	 EL6LTqGn0WgIV/cVwVRjDJn+nTkJ9kW2fctxm8y5RexqOT7xdVprFlWAH2qS9FvTmn
+	 uoUoBzASIfIwbopaksgUG5TcjOwsMPABsz9jhAq4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Segher Boessenkool <segher@kernel.crashing.org>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Jinjie Ruan <ruanjinjie@huawei.com>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 369/826] powerpc/vdso: Flag VDSO64 entry points as functions
-Date: Tue,  3 Dec 2024 15:41:36 +0100
-Message-ID: <20241203144758.158023975@linuxfoundation.org>
+Subject: [PATCH 6.12 370/826] mfd: tps65010: Use IRQF_NO_AUTOEN flag in request_irq() to fix race
+Date: Tue,  3 Dec 2024 15:41:37 +0100
+Message-ID: <20241203144758.197053622@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -52,110 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe Leroy <christophe.leroy@csgroup.eu>
+From: Jinjie Ruan <ruanjinjie@huawei.com>
 
-[ Upstream commit 0161bd38c24312853ed5ae9a425a1c41c4ac674a ]
+[ Upstream commit 2174f9a8c9db50f74df769edd5a4ab822c73b6d2 ]
 
-On powerpc64 as shown below by readelf, vDSO functions symbols have
-type NOTYPE.
+As the comment said, disable_irq() after request_irq() still has a
+time gap in which interrupts can come. request_irq() with IRQF_NO_AUTOEN
+flag will disable IRQ auto-enable when request IRQ.
 
-$ powerpc64-linux-gnu-readelf -a arch/powerpc/kernel/vdso/vdso64.so.dbg
-ELF Header:
-  Magic:   7f 45 4c 46 02 02 01 00 00 00 00 00 00 00 00 00
-  Class:                             ELF64
-  Data:                              2's complement, big endian
-  Version:                           1 (current)
-  OS/ABI:                            UNIX - System V
-  ABI Version:                       0
-  Type:                              DYN (Shared object file)
-  Machine:                           PowerPC64
-  Version:                           0x1
-...
-
-Symbol table '.dynsym' contains 12 entries:
-   Num:    Value          Size Type    Bind   Vis      Ndx Name
-...
-     1: 0000000000000524    84 NOTYPE  GLOBAL DEFAULT    8 __[...]@@LINUX_2.6.15
-...
-     4: 0000000000000000     0 OBJECT  GLOBAL DEFAULT  ABS LINUX_2.6.15
-     5: 00000000000006c0    48 NOTYPE  GLOBAL DEFAULT    8 __[...]@@LINUX_2.6.15
-
-Symbol table '.symtab' contains 56 entries:
-   Num:    Value          Size Type    Bind   Vis      Ndx Name
-...
-    45: 0000000000000000     0 OBJECT  GLOBAL DEFAULT  ABS LINUX_2.6.15
-    46: 00000000000006c0    48 NOTYPE  GLOBAL DEFAULT    8 __kernel_getcpu
-    47: 0000000000000524    84 NOTYPE  GLOBAL DEFAULT    8 __kernel_clock_getres
-
-To overcome that, commit ba83b3239e65 ("selftests: vDSO: fix vDSO
-symbols lookup for powerpc64") was applied to have selftests also
-look for NOTYPE symbols, but the correct fix should be to flag VDSO
-entry points as functions.
-
-The original commit that brought VDSO support into powerpc/64 has the
-following explanation:
-
-    Note that the symbols exposed by the vDSO aren't "normal" function symbols, apps
-    can't be expected to link against them directly, the vDSO's are both seen
-    as if they were linked at 0 and the symbols just contain offsets to the
-    various functions.  This is done on purpose to avoid a relocation step
-    (ppc64 functions normally have descriptors with abs addresses in them).
-    When glibc uses those functions, it's expected to use it's own trampolines
-    that know how to reach them.
-
-The descriptors it's talking about are the OPD function descriptors
-used on ABI v1 (big endian). But it would be more correct for a text
-symbol to have type function, even if there's no function descriptor
-for it.
-
-glibc has a special case already for handling the VDSO symbols which
-creates a fake opd pointing at the kernel symbol. So changing the VDSO
-symbol type to function shouldn't affect that.
-
-For ABI v2, there is no function descriptors and VDSO functions can
-safely have function type.
-
-So lets flag VDSO entry points as functions and revert the
-selftest change.
-
-Link: https://github.com/mpe/linux-fullhistory/commit/5f2dd691b62da9d9cc54b938f8b29c22c93cb805
-Fixes: ba83b3239e65 ("selftests: vDSO: fix vDSO symbols lookup for powerpc64")
-Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Reviewed-By: Segher Boessenkool <segher@kernel.crashing.org>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://patch.msgid.link/b6ad2f1ee9887af3ca5ecade2a56f4acda517a85.1728512263.git.christophe.leroy@csgroup.eu
+Fixes: 72cd799544f2 ("[PATCH] I2C: add i2c driver for TPS6501x")
+Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+Link: https://lore.kernel.org/r/20240912031530.2211654-1-ruanjinjie@huawei.com
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/include/asm/vdso.h           | 1 +
- tools/testing/selftests/vDSO/parse_vdso.c | 3 +--
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ drivers/mfd/tps65010.c | 8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
 
-diff --git a/arch/powerpc/include/asm/vdso.h b/arch/powerpc/include/asm/vdso.h
-index 7650b6ce14c85..8d972bc98b55f 100644
---- a/arch/powerpc/include/asm/vdso.h
-+++ b/arch/powerpc/include/asm/vdso.h
-@@ -25,6 +25,7 @@ int vdso_getcpu_init(void);
- #ifdef __VDSO64__
- #define V_FUNCTION_BEGIN(name)		\
- 	.globl name;			\
-+	.type name,@function; 		\
- 	name:				\
- 
- #define V_FUNCTION_END(name)		\
-diff --git a/tools/testing/selftests/vDSO/parse_vdso.c b/tools/testing/selftests/vDSO/parse_vdso.c
-index 7dd5668ea8a6e..28f35620c4991 100644
---- a/tools/testing/selftests/vDSO/parse_vdso.c
-+++ b/tools/testing/selftests/vDSO/parse_vdso.c
-@@ -222,8 +222,7 @@ void *vdso_sym(const char *version, const char *name)
- 		ELF(Sym) *sym = &vdso_info.symtab[chain];
- 
- 		/* Check for a defined global or weak function w/ right name. */
--		if (ELF64_ST_TYPE(sym->st_info) != STT_FUNC &&
--		    ELF64_ST_TYPE(sym->st_info) != STT_NOTYPE)
-+		if (ELF64_ST_TYPE(sym->st_info) != STT_FUNC)
- 			continue;
- 		if (ELF64_ST_BIND(sym->st_info) != STB_GLOBAL &&
- 		    ELF64_ST_BIND(sym->st_info) != STB_WEAK)
+diff --git a/drivers/mfd/tps65010.c b/drivers/mfd/tps65010.c
+index 2b9105295f301..710364435b6b9 100644
+--- a/drivers/mfd/tps65010.c
++++ b/drivers/mfd/tps65010.c
+@@ -544,17 +544,13 @@ static int tps65010_probe(struct i2c_client *client)
+ 	 */
+ 	if (client->irq > 0) {
+ 		status = request_irq(client->irq, tps65010_irq,
+-				     IRQF_TRIGGER_FALLING, DRIVER_NAME, tps);
++				     IRQF_TRIGGER_FALLING | IRQF_NO_AUTOEN,
++				     DRIVER_NAME, tps);
+ 		if (status < 0) {
+ 			dev_dbg(&client->dev, "can't get IRQ %d, err %d\n",
+ 					client->irq, status);
+ 			return status;
+ 		}
+-		/* annoying race here, ideally we'd have an option
+-		 * to claim the irq now and enable it later.
+-		 * FIXME genirq IRQF_NOAUTOEN now solves that ...
+-		 */
+-		disable_irq(client->irq);
+ 		set_bit(FLAG_IRQ_ENABLE, &tps->flags);
+ 	} else
+ 		dev_warn(&client->dev, "IRQ not configured!\n");
 -- 
 2.43.0
 
