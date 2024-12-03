@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECAEA1DE8A5;
-	Tue,  3 Dec 2024 15:55:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 150FA1F7567;
+	Tue,  3 Dec 2024 15:56:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733241358; cv=none; b=d2u7oYViTqUtza9lWLLYQoJyHkuBvT0I63HRfjBFU5bETxJn4k2fXYv/ut2Rh7RIyxWBU+b3olAsr1RPJnp8igUQq9IHNova6NpaXqo/AijHSbVrjRLrYrPrmcz+hA59QOQ0YQ7wPGB551eG7zwpBmmCjn0h1iF7eHNG0uJbLYw=
+	t=1733241361; cv=none; b=nOz5LvqHWgN+DwvH3omomWxe/8CMLvg3/P2lY1ev5SdaUn1HoSebXn9Y4e+KvFqeLdgjPAsbNyxV1gS09v4wq/nFHdgiRK4q0/D/m5SaFQsKJZe96ZlHlgShlkO8fKtoiRsHjHRjbUenodqVcm8R4NDCjqNgBYvVv6liyOBcwrE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733241358; c=relaxed/simple;
-	bh=8mvqQOo8mtK/nk7Vh2nyEAkOFak9m3qvEN5H6nVhm6c=;
+	s=arc-20240116; t=1733241361; c=relaxed/simple;
+	bh=DaXlJaiDubjdFEQHxoXXWg1zC3YokFMhjmX13vWnalI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R8uL89zbfg+BLiTuIIBA7marVDyRcA/QZpf189DqAaTDJyL9e9ylHnUWW51Q6XSUZFoAlN+lfz966M5vil4OKqdN4rBPlNV5uer/Khipf4YXJGVaLsymmFXmZByyUjljXgfmIUo5IYmTtz5tCIsV+DUpsSbomP9lIEut/nhl6gM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AgIV24f0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WTiEuYVdvoCOi7lz4na5nJQG9RgEv8P8lHbgeRCNY3f7zyLrywlAxSGc57BuYsi+TPJEW3zucz9eQ6kU3S8U0fjc53CxXSqXObj/Tegp3w+fh07+978wojKdZRrITspvvARP2rk3//zyFIxgdtUEOdUgbnZuQetItzyhWjZKVns=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bOQ2MCBH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AgIV24f0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECD98C4CECF;
-	Tue,  3 Dec 2024 15:55:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bOQ2MCBH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D08EC4CECF;
+	Tue,  3 Dec 2024 15:56:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733241357;
-	bh=8mvqQOo8mtK/nk7Vh2nyEAkOFak9m3qvEN5H6nVhm6c=;
+	s=korg; t=1733241360;
+	bh=DaXlJaiDubjdFEQHxoXXWg1zC3YokFMhjmX13vWnalI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AgIV24f07X1ekUl9mJoS6gxsxkf+oiBL/WziKJepmgApVw+VE1GBQevQTh522H+BH
-	 fytM/UdG5BHiIFf5ABOpGUt9+B3dgv9oxvtim69UXeGDbEKiWluT8qJEysBh8UgEzt
-	 Ank2+sF5AlXe7AdtX2lqNBbO7+3TliBNbghsM2H8=
+	b=bOQ2MCBHgsVWMag9niF+TUjC21/NAKfzDlS3n5k6wYJr2HCwPNdchSxfbuMRM6bBw
+	 0OiA+VgOZWPPvbLsuxVJUGBxflfCekDQdiVdz0xPruYgKPhb/7zntZTZwlmlTk+wGw
+	 O2muEctRUHsSjzrf0vb9qxqLrmOoEiPDdPiICbDk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andre Przywara <andre.przywara@arm.com>,
-	Chen-Yu Tsai <wens@csie.org>,
+	Hien Huynh <hien.huynh.px@renesas.com>,
+	Biju Das <biju.das.jz@bp.renesas.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 397/826] clk: sunxi-ng: d1: Fix PLL_AUDIO0 preset
-Date: Tue,  3 Dec 2024 15:42:04 +0100
-Message-ID: <20241203144759.247967526@linuxfoundation.org>
+Subject: [PATCH 6.12 398/826] clk: renesas: rzg2l: Fix FOUTPOSTDIV clk
+Date: Tue,  3 Dec 2024 15:42:05 +0100
+Message-ID: <20241203144759.286419497@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -51,40 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andre Przywara <andre.przywara@arm.com>
+From: Biju Das <biju.das.jz@bp.renesas.com>
 
-[ Upstream commit e0f253a52ccee3cf3eb987e99756e20c68a1aac9 ]
+[ Upstream commit dabf72b85f298970e86891b5218459c17b57b26a ]
 
-To work around a limitation in our clock modelling, we try to force two
-bits in the AUDIO0 PLL to 0, in the CCU probe routine.
-However the ~ operator only applies to the first expression, and does
-not cover the second bit, so we end up clearing only bit 1.
+While computing foutpostdiv_rate, the value of params->pl5_fracin
+is discarded, which results in the wrong refresh rate. Fix the formula
+for computing foutpostdiv_rate.
 
-Group the bit-ORing with parentheses, to make it both clearer to read
-and actually correct.
-
-Fixes: 35b97bb94111 ("clk: sunxi-ng: Add support for the D1 SoC clocks")
-Signed-off-by: Andre Przywara <andre.przywara@arm.com>
-Link: https://patch.msgid.link/20241001105016.1068558-1-andre.przywara@arm.com
-Signed-off-by: Chen-Yu Tsai <wens@csie.org>
+Fixes: 1561380ee72f ("clk: renesas: rzg2l: Add FOUTPOSTDIV clk support")
+Signed-off-by: Hien Huynh <hien.huynh.px@renesas.com>
+Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://lore.kernel.org/20241024134236.315289-1-biju.das.jz@bp.renesas.com
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/sunxi-ng/ccu-sun20i-d1.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/clk/renesas/rzg2l-cpg.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/clk/sunxi-ng/ccu-sun20i-d1.c b/drivers/clk/sunxi-ng/ccu-sun20i-d1.c
-index 9b5cfac2ee70c..3f095515f54f9 100644
---- a/drivers/clk/sunxi-ng/ccu-sun20i-d1.c
-+++ b/drivers/clk/sunxi-ng/ccu-sun20i-d1.c
-@@ -1371,7 +1371,7 @@ static int sun20i_d1_ccu_probe(struct platform_device *pdev)
+diff --git a/drivers/clk/renesas/rzg2l-cpg.c b/drivers/clk/renesas/rzg2l-cpg.c
+index 88bf39e8c79c8..b43b763dfe186 100644
+--- a/drivers/clk/renesas/rzg2l-cpg.c
++++ b/drivers/clk/renesas/rzg2l-cpg.c
+@@ -548,7 +548,7 @@ static unsigned long
+ rzg2l_cpg_get_foutpostdiv_rate(struct rzg2l_pll5_param *params,
+ 			       unsigned long rate)
+ {
+-	unsigned long foutpostdiv_rate;
++	unsigned long foutpostdiv_rate, foutvco_rate;
  
- 	/* Enforce m1 = 0, m0 = 0 for PLL_AUDIO0 */
- 	val = readl(reg + SUN20I_D1_PLL_AUDIO0_REG);
--	val &= ~BIT(1) | BIT(0);
-+	val &= ~(BIT(1) | BIT(0));
- 	writel(val, reg + SUN20I_D1_PLL_AUDIO0_REG);
+ 	params->pl5_intin = rate / MEGA;
+ 	params->pl5_fracin = div_u64(((u64)rate % MEGA) << 24, MEGA);
+@@ -557,10 +557,11 @@ rzg2l_cpg_get_foutpostdiv_rate(struct rzg2l_pll5_param *params,
+ 	params->pl5_postdiv2 = 1;
+ 	params->pl5_spread = 0x16;
  
- 	/* Force fanout-27M factor N to 0. */
+-	foutpostdiv_rate =
+-		EXTAL_FREQ_IN_MEGA_HZ * MEGA / params->pl5_refdiv *
+-		((((params->pl5_intin << 24) + params->pl5_fracin)) >> 24) /
+-		(params->pl5_postdiv1 * params->pl5_postdiv2);
++	foutvco_rate = div_u64(mul_u32_u32(EXTAL_FREQ_IN_MEGA_HZ * MEGA,
++					   (params->pl5_intin << 24) + params->pl5_fracin),
++			       params->pl5_refdiv) >> 24;
++	foutpostdiv_rate = DIV_ROUND_CLOSEST_ULL(foutvco_rate,
++						 params->pl5_postdiv1 * params->pl5_postdiv2);
+ 
+ 	return foutpostdiv_rate;
+ }
 -- 
 2.43.0
 
