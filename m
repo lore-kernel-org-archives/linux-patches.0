@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4B8A1F76CA;
-	Tue,  3 Dec 2024 15:13:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43E801F76CA;
+	Tue,  3 Dec 2024 15:13:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733238802; cv=none; b=M5qYhDtzpqgz69vflDeUVFPuGwAXObTWkv6IUz0Yiyi7t2o6oTDcflOIK7D0e8d+nFYfHqNorY5r/6AFGuj98ZgCcJJ0Oiq1XRVjdcrkoSQU41j7BjZitYts9M2xgrD5oTSIafdhRPcFWLN0PNrnEWqOPpTaqf/9oEn+NRUU29g=
+	t=1733238805; cv=none; b=dIYqJnXr5xGRT/8mtrCNjJJTPVdWmchACvtG+6viugzNUQ5g3XaEb6OHRvUKalnNyqZtTayD1bTllvaSWmJDxnqqlNZsfd3QEUPWc+Q2CkJe3eoF8ckdGLKq4+aN0cMzRB8tsx8OhZpIcHPhi/7AHpJlNrd3FWsLkeBQrJI+XUs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733238802; c=relaxed/simple;
-	bh=cEkqAjkgqhBe9G2tv3shtJG0dOXUWJYtq1iuGAnHrSs=;
+	s=arc-20240116; t=1733238805; c=relaxed/simple;
+	bh=EzffqqCKUP6jXoXix28ZXxpa82C619lWfzPvGBYnYVU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=hiyGnlbNFr1vY/YD2JAtuPhwU3L3aVz4kKmzL60+ws32U0xrW67aZRdZR7mtmrysAweIAz6JCkUxb8ouUB6u1WwrqcrFIXTxngm7KEMAanLkApBYzngnmshJPPrgR+n2+YKvHWKAFziKUsf0wD7e0ijM3THSACHJllZdphWT+ks=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dfg2Y3Vd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=t0XProXWLZf1QDgiI9f2O5KdXftZoJ9wHU3UEwqIrBgVP7ELYKJn8y7aI4g+naP8yVy70a0rOPIIxoZQiXEUwc9RSXMIhqxh4NarV0gICSV36AT07yjl3Dx9nQPu+r+76AxXZsNf6pbfZhDoiz5Fxz6xDDzU2x51/KmXOBfDiJY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eAV/DFV1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dfg2Y3Vd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D549EC4CECF;
-	Tue,  3 Dec 2024 15:13:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eAV/DFV1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE910C4CECF;
+	Tue,  3 Dec 2024 15:13:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733238802;
-	bh=cEkqAjkgqhBe9G2tv3shtJG0dOXUWJYtq1iuGAnHrSs=;
+	s=korg; t=1733238805;
+	bh=EzffqqCKUP6jXoXix28ZXxpa82C619lWfzPvGBYnYVU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dfg2Y3Vd0Is2mI+Vpbu8DMqp3PCVGAiaHm1+o6nfZF4OdYX3IgXrpK0fjRidH7vCn
-	 tKjV33xigR+rXXakX32sWBG5WftE+RR9GDasorqm+L2zXjoDRX1uKS7zGN0PxaxQ5z
-	 6o7fx5JKZnJdQ0WQVHFgcpUQqEsCWqVvysEomE4w=
+	b=eAV/DFV1a8tshTN/iFIU3z0yQWEgq28POVH4mVuKKNE34EUf9RAnqxhj6EpPQ3/nU
+	 CBheLDav35uAHScQ2HawlRYTWKtQ25nXEj0xZaVwdMgzP51wZZ/ji8nFJA+/Ju/aDP
+	 s6vyHLYwh6vklcOwwWCNDsrRTdOu6CYH7orA26xU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Andr=C3=A9=20Almeida?= <andrealmeid@igalia.com>,
-	Theodore Tso <tytso@mit.edu>,
-	Gabriel Krisman Bertazi <krisman@suse.de>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Disha Goel <disgoel@linux.ibm.com>,
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 374/817] unicode: Fix utf8_load() error path
-Date: Tue,  3 Dec 2024 15:39:06 +0100
-Message-ID: <20241203144010.443849009@linuxfoundation.org>
+Subject: [PATCH 6.11 401/817] powerpc/mm/fault: Fix kfence page fault reporting
+Date: Tue,  3 Dec 2024 15:39:33 +0100
+Message-ID: <20241203144011.526997540@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -46,66 +47,89 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.11-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: André Almeida <andrealmeid@igalia.com>
+From: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
 
-[ Upstream commit 156bb2c569cd869583c593d27a5bd69e7b2a4264 ]
+[ Upstream commit 06dbbb4d5f7126b6307ab807cbf04ecfc459b933 ]
 
-utf8_load() requests the symbol "utf8_data_table" and then checks if the
-requested UTF-8 version is supported. If it's unsupported, it tries to
-put the data table using symbol_put(). If an unsupported version is
-requested, symbol_put() fails like this:
+copy_from_kernel_nofault() can be called when doing read of /proc/kcore.
+/proc/kcore can have some unmapped kfence objects which when read via
+copy_from_kernel_nofault() can cause page faults. Since *_nofault()
+functions define their own fixup table for handling fault, use that
+instead of asking kfence to handle such faults.
 
- kernel BUG at kernel/module/main.c:786!
- RIP: 0010:__symbol_put+0x93/0xb0
- Call Trace:
-  <TASK>
-  ? __die_body.cold+0x19/0x27
-  ? die+0x2e/0x50
-  ? do_trap+0xca/0x110
-  ? do_error_trap+0x65/0x80
-  ? __symbol_put+0x93/0xb0
-  ? exc_invalid_op+0x51/0x70
-  ? __symbol_put+0x93/0xb0
-  ? asm_exc_invalid_op+0x1a/0x20
-  ? __pfx_cmp_name+0x10/0x10
-  ? __symbol_put+0x93/0xb0
-  ? __symbol_put+0x62/0xb0
-  utf8_load+0xf8/0x150
+Hence we search the exception tables for the nip which generated the
+fault. If there is an entry then we let the fixup table handler handle the
+page fault by returning an error from within ___do_page_fault().
 
-That happens because symbol_put() expects the unique string that
-identify the symbol, instead of a pointer to the loaded symbol. Fix that
-by using such string.
+This can be easily triggered if someone tries to do dd from /proc/kcore.
+eg. dd if=/proc/kcore of=/dev/null bs=1M
 
-Fixes: 2b3d04787012 ("unicode: Add utf8-data module")
-Signed-off-by: André Almeida <andrealmeid@igalia.com>
-Reviewed-by: Theodore Ts'o <tytso@mit.edu>
-Link: https://lore.kernel.org/r/20240902225511.757831-2-andrealmeid@igalia.com
-Signed-off-by: Gabriel Krisman Bertazi <krisman@suse.de>
+Some example false negatives:
+
+  ===============================
+  BUG: KFENCE: invalid read in copy_from_kernel_nofault+0x9c/0x1a0
+  Invalid read at 0xc0000000fdff0000:
+   copy_from_kernel_nofault+0x9c/0x1a0
+   0xc00000000665f950
+   read_kcore_iter+0x57c/0xa04
+   proc_reg_read_iter+0xe4/0x16c
+   vfs_read+0x320/0x3ec
+   ksys_read+0x90/0x154
+   system_call_exception+0x120/0x310
+   system_call_vectored_common+0x15c/0x2ec
+
+  BUG: KFENCE: use-after-free read in copy_from_kernel_nofault+0x9c/0x1a0
+  Use-after-free read at 0xc0000000fe050000 (in kfence-#2):
+   copy_from_kernel_nofault+0x9c/0x1a0
+   0xc00000000665f950
+   read_kcore_iter+0x57c/0xa04
+   proc_reg_read_iter+0xe4/0x16c
+   vfs_read+0x320/0x3ec
+   ksys_read+0x90/0x154
+   system_call_exception+0x120/0x310
+   system_call_vectored_common+0x15c/0x2ec
+
+Fixes: 90cbac0e995d ("powerpc: Enable KFENCE for PPC32")
+Suggested-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Reported-by: Disha Goel <disgoel@linux.ibm.com>
+Signed-off-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+Reviewed-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://patch.msgid.link/a411788081d50e3b136c6270471e35aba3dfafa3.1729271995.git.ritesh.list@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/unicode/utf8-core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/powerpc/mm/fault.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/fs/unicode/utf8-core.c b/fs/unicode/utf8-core.c
-index 8395066341a43..0400824ef4936 100644
---- a/fs/unicode/utf8-core.c
-+++ b/fs/unicode/utf8-core.c
-@@ -198,7 +198,7 @@ struct unicode_map *utf8_load(unsigned int version)
- 	return um;
+diff --git a/arch/powerpc/mm/fault.c b/arch/powerpc/mm/fault.c
+index 81c77ddce2e30..c156fe0d53c37 100644
+--- a/arch/powerpc/mm/fault.c
++++ b/arch/powerpc/mm/fault.c
+@@ -439,10 +439,16 @@ static int ___do_page_fault(struct pt_regs *regs, unsigned long address,
+ 	/*
+ 	 * The kernel should never take an execute fault nor should it
+ 	 * take a page fault to a kernel address or a page fault to a user
+-	 * address outside of dedicated places
++	 * address outside of dedicated places.
++	 *
++	 * Rather than kfence directly reporting false negatives, search whether
++	 * the NIP belongs to the fixup table for cases where fault could come
++	 * from functions like copy_from_kernel_nofault().
+ 	 */
+ 	if (unlikely(!is_user && bad_kernel_fault(regs, error_code, address, is_write))) {
+-		if (kfence_handle_page_fault(address, is_write, regs))
++		if (is_kfence_address((void *)address) &&
++		    !search_exception_tables(instruction_pointer(regs)) &&
++		    kfence_handle_page_fault(address, is_write, regs))
+ 			return 0;
  
- out_symbol_put:
--	symbol_put(um->tables);
-+	symbol_put(utf8_data_table);
- out_free_um:
- 	kfree(um);
- 	return ERR_PTR(-EINVAL);
+ 		return SIGSEGV;
 -- 
 2.43.0
 
