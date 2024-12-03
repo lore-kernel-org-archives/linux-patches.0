@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63DF633FE;
-	Tue,  3 Dec 2024 15:01:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3E581F429B;
+	Tue,  3 Dec 2024 15:01:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733238067; cv=none; b=KofNsUlsLIG36XcEXlN139PJx+m3tzVefNQIScTfFVOEk8Bf2RI+9fYRLnP4XaQB6xTqpfYM4NPF2xr+OOyGhmoSAQDpetAWNH/uVw+bQCRrokD3mH3ocDRXUC1iwNO1HVpkGrKWy8zuH1aqviYS2Lq8/Kv7QW/htG0sSE+ZJd0=
+	t=1733238070; cv=none; b=rSytqAFwbMCVcOWv3ztxa4coI/725SYxwf7EkEQhfKWu/H4GV4OjyZHtcEb2zvwqIBIBHtfwrK4KHyjp/aProgejqkCZppoW5yNx2Q1S9/sBBqGX7kta2ZdDrlQyY2utcRxdi1vZszjQNIF+BXYGt2/nHoWksQGwDqSqBf/8m90=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733238067; c=relaxed/simple;
-	bh=owJY75CRqf06rHN05ueIbosMqrZuFBNRxJAaznAqx/s=;
+	s=arc-20240116; t=1733238070; c=relaxed/simple;
+	bh=ao9zbR9aVOHXnfcaAyn/dn1nJVcSGj2O5I+Ae/KZlL8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uH20CmejYCUkR4DWT1yVA6HphmoLDbBajzrstXYk3DJiq36/F2XzLxl5O/2SkpoMRqShMoojDZGtwNbVLxB5NXz1dXvhcS3fhoecbGkveitMKfeg56zPkQcvHc3iS7/m10J6nG61tw4VoEPyPAinRnTunTJc/9lpHg8gtw9cS6A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mDzE9sqJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=n3la8CW/fp5vL/w20Y97p226NMpMI2X5iDPesy2SQdyArEum3BcHWNxJWdC5RoH2Lm+nyD9HC6O0ShTuA8laVUDH1HQKkDzZqZi9QScfdVshY00quB9veN5E2QMjSBqiB/p2nerSov3XXKLFQEDJHds5WwRVh2EZTeJeFA5uNu8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eVeC0tV2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mDzE9sqJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8986C4CECF;
-	Tue,  3 Dec 2024 15:01:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eVeC0tV2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A711C4CECF;
+	Tue,  3 Dec 2024 15:01:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733238067;
-	bh=owJY75CRqf06rHN05ueIbosMqrZuFBNRxJAaznAqx/s=;
+	s=korg; t=1733238070;
+	bh=ao9zbR9aVOHXnfcaAyn/dn1nJVcSGj2O5I+Ae/KZlL8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mDzE9sqJnQ+VqutGmqKfmsMAwnmNwBS49hceg6RuOgMw3J0u3aCgG7RQd6QENdWPU
-	 duCwIHGBC0mt8DufW0SkGf+KL0SYbk4QQjELJABh8vijU3QIYb7DWfIWTSAUzYUvoO
-	 odPVBoDnOoq8bboscMrRal9AVMuv9uFmynlGCQI8=
+	b=eVeC0tV29FTf8vtq2lN/EttrLre5t7EGTdSeenKHHlwUcyIdsWGqs6cmu3n33Gkkw
+	 G8TuHo0SRKhJxaN+TM2OdCVh7anRbCRbWYClZQqoNSVtytLB5+JRN7WQIjsYljAhKV
+	 jj632s+cs7VLP18eHK22ZHAhu2rBfkgYC4d46c7o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
+	Luca Weiss <luca.weiss@fairphone.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 151/817] soc: qcom: geni-se: fix array underflow in geni_se_clk_tbl_get()
-Date: Tue,  3 Dec 2024 15:35:23 +0100
-Message-ID: <20241203144001.620275524@linuxfoundation.org>
+Subject: [PATCH 6.11 152/817] arm64: dts: qcom: sm6350: Fix GPU frequencies missing on some speedbins
+Date: Tue,  3 Dec 2024 15:35:24 +0100
+Message-ID: <20241203144001.659622212@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -51,38 +51,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Luca Weiss <luca.weiss@fairphone.com>
 
-[ Upstream commit 78261cb08f06c93d362cab5c5034bf5899bc7552 ]
+[ Upstream commit 600c499f8f5297c2c91e8146a8217f299e445ef6 ]
 
-This loop is supposed to break if the frequency returned from
-clk_round_rate() is the same as on the previous iteration.  However,
-that check doesn't make sense on the first iteration through the loop.
-It leads to reading before the start of these->clk_perf_tbl[] array.
+Make sure the GPU frequencies are marked as supported for the respective
+speedbins according to downstream msm-4.19 kernel:
 
-Fixes: eddac5af0654 ("soc: qcom: Add GENI based QUP Wrapper driver")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://lore.kernel.org/r/8cd12678-f44a-4b16-a579-c8f11175ee8c@stanley.mountain
+* 850 MHz: Speedbins 0 + 180
+* 800 MHz: Speedbins 0 + 180 + 169
+* 650 MHz: Speedbins 0 + 180 + 169 + 138
+* 565 MHz: Speedbins 0 + 180 + 169 + 138 + 120
+* 430 MHz: Speedbins 0 + 180 + 169 + 138 + 120
+* 355 MHz: Speedbins 0 + 180 + 169 + 138 + 120
+* 253 MHz: Speedbins 0 + 180 + 169 + 138 + 120
+
+Fixes: bd9b76750280 ("arm64: dts: qcom: sm6350: Add GPU nodes")
+Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+Link: https://lore.kernel.org/r/20241002-sm6350-gpu-speedbin-fix-v1-1-8a5d90c5097d@fairphone.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/qcom/qcom-geni-se.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/sm6350.dtsi | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/soc/qcom/qcom-geni-se.c b/drivers/soc/qcom/qcom-geni-se.c
-index 2e8f24d5da80b..4cb959106efa9 100644
---- a/drivers/soc/qcom/qcom-geni-se.c
-+++ b/drivers/soc/qcom/qcom-geni-se.c
-@@ -585,7 +585,8 @@ int geni_se_clk_tbl_get(struct geni_se *se, unsigned long **tbl)
+diff --git a/arch/arm64/boot/dts/qcom/sm6350.dtsi b/arch/arm64/boot/dts/qcom/sm6350.dtsi
+index 7986ddb30f6e8..4f8477de7e1b1 100644
+--- a/arch/arm64/boot/dts/qcom/sm6350.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm6350.dtsi
+@@ -1376,43 +1376,43 @@ gpu_opp_table: opp-table {
+ 				opp-850000000 {
+ 					opp-hz = /bits/ 64 <850000000>;
+ 					opp-level = <RPMH_REGULATOR_LEVEL_TURBO_L1>;
+-					opp-supported-hw = <0x02>;
++					opp-supported-hw = <0x03>;
+ 				};
  
- 	for (i = 0; i < MAX_CLK_PERF_LEVEL; i++) {
- 		freq = clk_round_rate(se->clk, freq + 1);
--		if (freq <= 0 || freq == se->clk_perf_tbl[i - 1])
-+		if (freq <= 0 ||
-+		    (i > 0 && freq == se->clk_perf_tbl[i - 1]))
- 			break;
- 		se->clk_perf_tbl[i] = freq;
- 	}
+ 				opp-800000000 {
+ 					opp-hz = /bits/ 64 <800000000>;
+ 					opp-level = <RPMH_REGULATOR_LEVEL_TURBO>;
+-					opp-supported-hw = <0x04>;
++					opp-supported-hw = <0x07>;
+ 				};
+ 
+ 				opp-650000000 {
+ 					opp-hz = /bits/ 64 <650000000>;
+ 					opp-level = <RPMH_REGULATOR_LEVEL_NOM_L1>;
+-					opp-supported-hw = <0x08>;
++					opp-supported-hw = <0x0f>;
+ 				};
+ 
+ 				opp-565000000 {
+ 					opp-hz = /bits/ 64 <565000000>;
+ 					opp-level = <RPMH_REGULATOR_LEVEL_NOM>;
+-					opp-supported-hw = <0x10>;
++					opp-supported-hw = <0x1f>;
+ 				};
+ 
+ 				opp-430000000 {
+ 					opp-hz = /bits/ 64 <430000000>;
+ 					opp-level = <RPMH_REGULATOR_LEVEL_SVS_L1>;
+-					opp-supported-hw = <0xff>;
++					opp-supported-hw = <0x1f>;
+ 				};
+ 
+ 				opp-355000000 {
+ 					opp-hz = /bits/ 64 <355000000>;
+ 					opp-level = <RPMH_REGULATOR_LEVEL_SVS>;
+-					opp-supported-hw = <0xff>;
++					opp-supported-hw = <0x1f>;
+ 				};
+ 
+ 				opp-253000000 {
+ 					opp-hz = /bits/ 64 <253000000>;
+ 					opp-level = <RPMH_REGULATOR_LEVEL_LOW_SVS>;
+-					opp-supported-hw = <0xff>;
++					opp-supported-hw = <0x1f>;
+ 				};
+ 			};
+ 		};
 -- 
 2.43.0
 
