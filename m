@@ -1,446 +1,152 @@
-Received: from wp530.webpack.hosteurope.de (wp530.webpack.hosteurope.de [80.237.130.52])
+Received: from NAM10-BN7-obe.outbound.protection.outlook.com (mail-bn7nam10on2043.outbound.protection.outlook.com [40.107.92.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF5CA1F471B;
-	Tue,  3 Dec 2024 17:24:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.237.130.52
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733246676; cv=none; b=AA/BmxJ696vkaoaFFyB1Tl0AI9jz1HD69nWlY/COnWqugcp6X5/yt0MXsCpXI4NrxaiW2O9o9XJiGfuK3dIAmVAMtQ2RwWsT0nEOoVvqjwwnoyn+tBFzj2XamE9q9pIwoCf3ZsijhDtDWRNC3vIqlCluRYl1Hnzjp8nEDVE//Ys=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733246676; c=relaxed/simple;
-	bh=R+nZZnhBsGwgYP2hKKSYOP+EGidPlMEUggwkGxXn1r0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=W4ZnV3nBsRPVePI/uvy1T+8CdyEn/DQBam//xeQlcEtpz+uA3n+wzG3pdDIhTtKVS3VOrJRysi86B6hKrG9+LUnIGcYL9TwsH+iDbnrRNJSIlqCcGgCZ2YBzGk5Gl0SrqV+K4F067qHtpdAsEIIQ61dwDUZI8pnMmjxe92f+9zE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=leemhuis.info; spf=pass smtp.mailfrom=leemhuis.info; dkim=pass (2048-bit key) header.d=leemhuis.info header.i=@leemhuis.info header.b=VpXtMA4l; arc=none smtp.client-ip=80.237.130.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=leemhuis.info
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=leemhuis.info
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41A711F8921;
+	Tue,  3 Dec 2024 17:31:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.92.43
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1733247104; cv=fail; b=EZymRvmjXX+e4/JkZY826x9P68OOoDRl2Rj2OlPfWwDU9R0jVfS//dSAlkotyrCLv14AfM8ODu5T9BalQs4LIWqIzYYbP1Xqbx1N7oYKY/uexHYiG4rVMIyhQsfbk8tc4a4BPOxqwVfW+loh1c0BR+sJl2gDpKaxzcEXwFwpwRo=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1733247104; c=relaxed/simple;
+	bh=3mbMVuB4hcbN7LKdMi8sNqKmEyxavp20L7In6Lg8VCg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=juFqoGNBS0eyDKf2OuoDFHv2gFj+ego+qL4lkLTDa7/41WgqdvpHnPANRQnrXMRuH5sXIIl95Yi+xHyo+7WC1fECe5AT5Kr9CbPVCOnjJvAzd2k3fSiKTZJGhFsVxHEt1ZtLOjZc5C0FksNYASljG4MfvkhN2F0Kh56yPCqOPJ4=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=hmH3BCUu; arc=fail smtp.client-ip=40.107.92.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=leemhuis.info header.i=@leemhuis.info header.b="VpXtMA4l"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=leemhuis.info; s=he214686; h=Content-Transfer-Encoding:Content-Type:
-	In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:Message-ID:From:
-	Sender:Reply-To:Subject:Date:Message-ID:To:Cc:MIME-Version:Content-Type:
-	Content-Transfer-Encoding:Content-ID:Content-Description:In-Reply-To:
-	References; bh=7THRhMNRRZ35+Cp9Ztb4wM4h4N09m4bzEGPHNNYxxko=; t=1733246673;
-	x=1733678673; b=VpXtMA4lTzxCjUSa/p4Xg2ZXoD8XH/cWByLG4i9zanjmmBqd/MtaH4+x6qoVo
-	siVVgqfhrFZB/iqsoqsZVggpvYwzv9LPhYbgWy60HO3+FJLATTcsICUuYkwmYUtGpu+eOKSsZCVTc
-	Ewa67FOZXMdCPSzvRMypkdXwCs9009to3j9OkJx5MUPDdRuiGi+ThrCh82kYqbwPAxL2j4zJx4BSt
-	sTywGS9i4CFJY7JOJ4dxirNorgVlDT6HEhuDi7U3nVsYZF20Xg93JFAjW1drP2WM5Jl3JE3awA+do
-	2dZfkFwlnn6UeZyMpx0AuaXh3/LwPOAJj3a+88o8LFB5Ft4PXQ==;
-Received: from [2a02:8108:8980:2478:87e9:6c79:5f84:367d]; authenticated
-	by wp530.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_128_GCM:128)
-	id 1tIWdJ-008HP3-01;
-	Tue, 03 Dec 2024 18:24:21 +0100
-Message-ID: <f2ada8a7-165b-41fb-8b7b-3c0d16bb8216@leemhuis.info>
-Date: Tue, 3 Dec 2024 18:24:19 +0100
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="hmH3BCUu"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=oaZKuQ/ALhimitJ7xxup1K4YqO3KRg5ucZK+9NopDpbyVRF8/b42/41wm/JCpeNwmuvbv4GqZ4X4QpEUzx2ZvLTMH84xzdmf8ANSmGkSNLoi7CP9agQ+c++tE90zYfIKEK7r/xB2QdiP6npQh6pGYh1v5ACsMzrc+QHrr+UZyb4LaucHeviz9EUDWNKC8zNHqTTrOFDzqXFWqqVqGejONhYlpXzLLeWzMPd9o0xuDpnBZm7plr2yFYhgsgAZi9iRw9Ct/WsO76jDrLQps3wAapdV2sT97IyDe6qKjfzYtW2eUn3f3IT3L0X6CvnDOdF7sitFqW+4lTYmWcxf8XjJMQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=thRiu1ljQKijE29fa+x/F0ZzXBsaZA7jDyS7e6ALdQs=;
+ b=oa3sE7uplYzdpZ51mvaMncAiV5gmeFe+A9npGrexLVrDnylRuKZ8eTosMSnZinZLA3NqYH3V5gsMc2lhIh1bYuFCXZ+TxkoKKxd6xfsR55Xc6JEy+NiAo/EGr+hZHknPrQDskL+YySz5Noro/82sUv3hCZ2aRwrHtDps47kcFxhTI7oJ9ukJCZr0sbjFbbibLbX6r2kd6k8bLY3Rlyy95yZfV57nJQgmzmui3HLueciQTbbo+WIiAB2ahLhmmI3u9CF4lSUZqJ8KA1nbNcSZyKO5Cv6BSEoItbRmzhXzOxwaGQymNudVqWmyucSBWfzbFtA5ZNbNd9RuHZc3SHpeIg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=thRiu1ljQKijE29fa+x/F0ZzXBsaZA7jDyS7e6ALdQs=;
+ b=hmH3BCUulDfYsG8YWw1nXOGDjToykTJUBH6ARIMaTouc/8GW9KbrrSybSl1wfduNdaXHQ+imEwgUvI5g0gZIK7GPgRyfb9M2MSSjKkWH6uRqx2QVdyHjTPCswxulQo/SZ1I5itZJqEN7kBhCorcDc9jQtMDL5zVfuWQHHaFL5n8fsoNmiV4He0pR+Ue/TZsk+ulwgI4CT6ajPcpDsjo5cvMaDkLKhq5clG/3f1TvvWurkUTZgs6BVxNJx7sgL6SKgBCKHORzE60lUhXGAcxvPjGTii7NOZTbDYEqE5V9BC7YlJ0WRPPS2Y+yfAGTkrZbHg7GESg45B/Zfcf73jSdOA==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from CH3PR12MB8659.namprd12.prod.outlook.com (2603:10b6:610:17c::13)
+ by MW4PR12MB7237.namprd12.prod.outlook.com (2603:10b6:303:22a::6) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8207.14; Tue, 3 Dec
+ 2024 17:31:35 +0000
+Received: from CH3PR12MB8659.namprd12.prod.outlook.com
+ ([fe80::6eb6:7d37:7b4b:1732]) by CH3PR12MB8659.namprd12.prod.outlook.com
+ ([fe80::6eb6:7d37:7b4b:1732%4]) with mapi id 15.20.8207.010; Tue, 3 Dec 2024
+ 17:31:33 +0000
+Date: Tue, 3 Dec 2024 13:31:32 -0400
+From: Jason Gunthorpe <jgg@nvidia.com>
+To: iommu@lists.linux.dev, Kevin Tian <kevin.tian@intel.com>,
+	Will Deacon <will@kernel.org>
+Cc: patches@lists.linux.dev
+Subject: Re: [PATCH] iommu/arm-smmu-v3: Improve uAPI comment for
+ IOMMU_HW_INFO_TYPE_ARM_SMMUV3
+Message-ID: <20241203173132.GA1930986@nvidia.com>
+References: <0-v1-191e5e24cec3+3b0-iommufd_smmuv3_hwinf_jgg@nvidia.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <0-v1-191e5e24cec3+3b0-iommufd_smmuv3_hwinf_jgg@nvidia.com>
+X-ClientProxiedBy: MN2PR01CA0056.prod.exchangelabs.com (2603:10b6:208:23f::25)
+ To CH3PR12MB8659.namprd12.prod.outlook.com (2603:10b6:610:17c::13)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.12 470/826] perf stat: Uniquify event name improvements
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org,
- Sasha Levin <sashal@kernel.org>
-Cc: patches@lists.linux.dev, Namhyung Kim <namhyung@kernel.org>,
- Ian Rogers <irogers@google.com>, Kan Liang <kan.liang@linux.intel.com>,
- James Clark <james.clark@linaro.org>, Yang Jihong
- <yangjihong@bytedance.com>, Dominique Martinet <asmadeus@codewreck.org>,
- Colin Ian King <colin.i.king@gmail.com>, Howard Chu <howardchu95@gmail.com>,
- Ze Gao <zegao2021@gmail.com>, Yicong Yang <yangyicong@hisilicon.com>,
- Weilin Wang <weilin.wang@intel.com>, Will Deacon <will@kernel.org>,
- Mike Leach <mike.leach@linaro.org>, Jing Zhang <renyu.zj@linux.alibaba.com>,
- Yang Li <yang.lee@linux.alibaba.com>, Leo Yan <leo.yan@linux.dev>,
- ak@linux.intel.com, Athira Rajeev <atrajeev@linux.vnet.ibm.com>,
- linux-arm-kernel@lists.infradead.org, Sun Haiyong <sunhaiyong@loongson.cn>,
- John Garry <john.g.garry@oracle.com>,
- Justin Forbes <jforbes@fedoraproject.org>
-References: <20241203144743.428732212@linuxfoundation.org>
- <20241203144802.097952233@linuxfoundation.org>
-From: Thorsten Leemhuis <linux@leemhuis.info>
-Content-Language: en-MW
-Autocrypt: addr=linux@leemhuis.info; keydata=
- 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 n7RI
-In-Reply-To: <20241203144802.097952233@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-bounce-key: webpack.hosteurope.de;linux@leemhuis.info;1733246673;7209c927;
-X-HE-SMSGID: 1tIWdJ-008HP3-01
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH3PR12MB8659:EE_|MW4PR12MB7237:EE_
+X-MS-Office365-Filtering-Correlation-Id: 22cefde8-35f3-41c0-ecb6-08dd13c054ae
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|366016|376014;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?kQf67atuLGABpGE4IxZ8b1dxcBaAvCDWPOPpK00V646x848+wROq7h3vImwb?=
+ =?us-ascii?Q?MwBx7W6n+zUDDue7rrLbJ3pLtc+LD+LUNLSQpAvgBT3ASkdkioetsyRMk2UY?=
+ =?us-ascii?Q?tdJpCOYusLoUCioJmtdxeTI+cW4gN8xWDI2bJLKwCicaB/7UPkkPI7rxx5iu?=
+ =?us-ascii?Q?yHGHeQshb2rXElv79BldBUV2bhyXRbcw3z6DwIKFgr+lwUYGF0b2Wk6R4iQ2?=
+ =?us-ascii?Q?rioQJqnZVvNrShw+glC9cB/+TpdlEo97ioDp3V3KvfELyGBNTB2XJX1s2hPj?=
+ =?us-ascii?Q?L3xsVfafAHmBXjGDoj4WwIbqgBtsEQxh4FH0Sb8EKBPhiLzj84CdkxoJcx14?=
+ =?us-ascii?Q?O8bQMPtEy7B7mhc4FUSfgUjOajjKLhfOByraOM56vs2Y9P9cu+ZWBG9wpRRr?=
+ =?us-ascii?Q?jmANR8UQsz6i9zzBTB/H98CW+G6M2GiKsKMLF+9EAeHJJdpWnzgFgZgSNAu+?=
+ =?us-ascii?Q?jgwRiiATvY45ZabF5nVYzi7yzh7Hf2kiT1lQMu6wsR/ifYpvqE30C4f47J6M?=
+ =?us-ascii?Q?SaGrqs3Jc1cWDXl/imuG9b8yRGvQhXt6UH3/1dvNnblINTXBW5vV4arvGqRL?=
+ =?us-ascii?Q?zpTucjCoNLCsXJqbOERKZo/mIHGXoWO8C5k/XPP8HP+RBFCqF6XylzeeVkQQ?=
+ =?us-ascii?Q?JhxsFYRk2CvjyyDgNPW5d78jHe8zrd98mqMaTTOS/JBZ6mvwKc1657L/QRYF?=
+ =?us-ascii?Q?Vs6IK0lfqs2rNQqkwSxzB15NmyI9D1hlHrEl3a3qc/wJFv8kYJILZOSCRVZx?=
+ =?us-ascii?Q?psI1X5ilbbbReqv4NQc8pK11lMWgQvU6WPAvB4bco9gRadfaDfq7L/QVC5g+?=
+ =?us-ascii?Q?/bPCktusz8OFmHyKtEGUX+wNuw92GaY8hQQuMd5sb5QeuecJbXK0XoKLSKKm?=
+ =?us-ascii?Q?oh/NAXEaYDMvCvdeaRinRTbHdBBEh8CUxw5BUj7LrLnhfGTnjtzUVZq4TEkQ?=
+ =?us-ascii?Q?357T0WC1FgiEqoxQSPqNhdSBQJs601JK8LwV2iprZd8hCAOVfhQKrke3IhE3?=
+ =?us-ascii?Q?dV7Hlj1jMiCZbudsysM37LCWVorNvNBeCDQqqHnpZnBYh38zEMNtuWEDc/Nf?=
+ =?us-ascii?Q?4VVV2caxYQMAWwmAExK5140sxrXl1YUUTmnLkDqdiUDGq5/szlEK5PJJhAXn?=
+ =?us-ascii?Q?k+2Sgt3iUI+KXbsC37ClzaPKZt4J6oq7r+2QvZ+mM+s/Kvx+OLFXK9XlCPKp?=
+ =?us-ascii?Q?HzH1ZcFq69+hiakJpXrd8GA3t4lYZMsyngNCandGVDBM5NM9/6ApaSB6CluC?=
+ =?us-ascii?Q?Dwfv99UCDosiFSCV2J81omEpG+pwXcTDez12dr9J/HPAgn2bI3KJ7d+0Tude?=
+ =?us-ascii?Q?RVC0G2/zf6wotNuR+m7l9dfK8riKfPBpewB1QhqHuLUeGQ=3D=3D?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH3PR12MB8659.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(376014);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?vDbXYnlS8s/h/csBUxUvBtWuo9y8KTcluoIl2RhZE3Y/dao+lNgxSPfojs5W?=
+ =?us-ascii?Q?eUpuSHJ4wqZeU7Kv0jlG/GRJRILM0VAXgX3nVLN11YkjJf90rUjPla0Mfzbx?=
+ =?us-ascii?Q?J/SL8bPw/rIaELPpQ9JX1RfgQm+vD/d2Jdiys5slYEnlFXjZrSJvjTWt/MUw?=
+ =?us-ascii?Q?6A2tjT2i09OfMpDblGfAIYVZxqpS47wGK4SXSSMP8eMqT1DqXSp5j6I3F45z?=
+ =?us-ascii?Q?lujHtUHBuvg4oE5QXqbSfi8c4QXhamxmZccmT6dHMg3yAiYEawcq3wiN89Vj?=
+ =?us-ascii?Q?HtOVRr9LmSS6x5aByPSYANk3yXg5pzAPw+i46GfJjLFpaNU6mCvR8i8tulep?=
+ =?us-ascii?Q?37ORP5xMmyMmLrSR2yQCuis8PScoSgtVrqtVZ51BwHxk7nqSJ+IewAEtwBqd?=
+ =?us-ascii?Q?qgVJhExzwX0KcmRjCLlo6mzN8SkTlXOM25Ln4BAtNKFOOwOqbdX7CBflLH4c?=
+ =?us-ascii?Q?C987Eq4usY7jcykBNSPO350VOe7e4JJfUgEDmc259OvW2EpyZxMti5VA8eeC?=
+ =?us-ascii?Q?gHQxtkPmx57NWgbEVWpVxCRUmzCw7scAWJ2T15WL4SOreKrdYcTOUVAtPaHu?=
+ =?us-ascii?Q?iIPYX1dzP44AVoZ3bKItP50boRl0Yfd3+p6FgNqRAlAeIwmXxEWVBEq3s+z0?=
+ =?us-ascii?Q?K/69nYlTD4/o8wJ7PEZDUJV4ukWSoZv1c+1h2V+278/NwuuhREphDIsRDi1U?=
+ =?us-ascii?Q?q3VyhKxvvgR3ITWyCrmOT6nTdX/VvEASFTtW8CLNWFWrFqOVgApl02TnnR9x?=
+ =?us-ascii?Q?gjnDKZWnuM0lQ6DfwcjwYczUPVwsRYVbqejcAxcd/J6HBI7+6xiux+2Fo9vA?=
+ =?us-ascii?Q?jAGHouXHeCkN4cr4Lr4aI9ErO+bbrcgz0qPCodjIuvKHJl5Ks2F3k/Hn/url?=
+ =?us-ascii?Q?WqBzdmmZw3Hg63LzwBmOwSr1q658xQ6WKIk53/fPyu5EPG92QHUqzhbOHxwh?=
+ =?us-ascii?Q?NKIrOz0Zvhh+gwqH+1FmtWVrlLyORrBNDCESOhRjlf68oRKg7pUHp9snudVs?=
+ =?us-ascii?Q?Wqzo3f27z//wbAF7nSEcgzsck7jaPEknaYm9dPub85x2SmFfpvADFl8VYdtz?=
+ =?us-ascii?Q?fqh3aG3BMfFQ1Wcf4iPsFlnwnaV9APiToAtiXs+P9RUv/EUsiBoXaBG92XM+?=
+ =?us-ascii?Q?4RHW5BJI9N4IIqdyTgUYk1+3KuZ3iparbTX69gyW+PVMmdZTIxRAEdy6LD2f?=
+ =?us-ascii?Q?lPMXt9zkmofsodVb2hZgNxZTzEQa6xJMmPfDU8NWEtucHUofqf33ZuxyHUwi?=
+ =?us-ascii?Q?isLAW1qItnrw4Ejpw3z6xm6Jo5Y2ynJEIO3+yRRkSLDUsR/RrL7EdDKdnb4t?=
+ =?us-ascii?Q?XGq0hjTpKP4mTHlaOw0bg4aM5YGgyW+W8/bjfRDvjG+6hlK/p+PQJNRwv9Aj?=
+ =?us-ascii?Q?WQxTBp/NFTMwZ8gZfi2KWLFyhJ+yOsXkAWyOwanjA6LB2kBGXzLOiAZ5HUKd?=
+ =?us-ascii?Q?DcwQjYNgOhi0xngDOEgR/tSu4GG69MdlfealLdlG4VghJ715AAuGmLhZ0s0L?=
+ =?us-ascii?Q?8Nj5I1Cwtlo4uYsVM/xYaNqx7otcM+UofYBDLhtan+XDc/7xvx4bUx5Fa0C1?=
+ =?us-ascii?Q?DYevKW/yhaN/hc1WyUfl4nkbUSRU/X1IzpnUZkuY?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 22cefde8-35f3-41c0-ecb6-08dd13c054ae
+X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB8659.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Dec 2024 17:31:33.3756
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: YUWVLSKEes4p12ijwUlneyCwzKoozWBOKMZqyjoksGzJTNH33PbiSihMPpgNN5/N
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW4PR12MB7237
 
-On 03.12.24 15:43, Greg Kroah-Hartman wrote:
-> 6.12-stable review patch.  If anyone has any objections, please let me =
-know.
->=20
-> ------------------
->=20
-> From: Ian Rogers <irogers@google.com>
->=20
-> [ Upstream commit 057f8bfc6f7070577523d1e3081081bbf4229c1c ]
->=20
-> Without aggregation on Intel:
-
-My 6.11.y-rc and 6.12.y-rc builds for Fedora failed when building perf.=20
-I did not bisect, but from a brief look at the error message (see
-below) I suspect it might be caused by this patch, which is the
-second of the patch-set "Event parsing fixes":
-https://lore.kernel.org/all/20240926144851.245903-1-james.clark@linaro.or=
-g/
-
-To my untrained eyes and from a quick look I guess the first patch
-in the series needs to be backported as well:
-perf evsel: Add alternate_hw_config and use in evsel__match
-https://lore.kernel.org/all/20240926144851.245903-2-james.clark@linaro.or=
-g/
-
-This is 22a4db3c36034e ("perf evsel: Add alternate_hw_config
-and use in evsel__match") in mainline. I tried to cherry-pick it
-on-top of 6.12.2-rc1, but there were a few small conflicts.=20
-
-Ciao, Thorsten
-
-P.S.: The build error:
-
-  gcc -Wp,-MD,util/.topdown.o.d -Wp,-MT,util/topdown.o -O2 -fexceptions -=
-g -grecord-gcc-switches -pipe -Wall -Wno-complain-wrong-lang -Werror=3Dfo=
-rmat-security -Wp,-U_FORTIFY_SOURCE,-D_FORTIFY_SOURCE=3D3 -Wp,-D_GLIBCXX_=
-ASSERTIONS -specs=3D/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-prote=
-ctor-strong -specs=3D/usr/lib/rpm/redhat/redhat-annobin-cc1 -m64 -march=3D=
-x86-64 -mtune=3Dgeneric -fasynchronous-unwind-tables -fstack-clash-protec=
-tion -fcf-protection -mtls-dialect=3Dgnu2 -Wbad-function-cast -Wdeclarati=
-on-after-statement -Wformat-security -Wformat-y2k -Winit-self -Wmissing-d=
-eclarations -Wmissing-prototypes -Wno-system-headers -Wold-style-definiti=
-on -Wpacked -Wredundant-decls -Wstrict-prototypes -Wswitch-default -Wswit=
-ch-enum -Wundef -Wwrite-strings -Wformat -Wno-type-limits -Wstrict-aliasi=
-ng=3D3 -Wshadow -DHAVE_SYSCALL_TABLE_SUPPORT -Iarch/x86/include/generated=
- -DHAVE_ARCH_X86_64_SUPPORT -DHAVE_ARCH_REGS_QUERY_REGISTER_OFFSET -DNDEB=
-UG=3D1 -O3 -fno-omit-frame-pointer -Wall -Wextra -std=3Dgnu11 -fstack-pro=
-tector-all -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3D2 -D_LARGEFILE64_SOURCE =
--D_FILE_OFFSET_BITS=3D64 -D_GNU_SOURCE -I/builddir/build/BUILD/kernel-6.1=
-2.2-build/kernel-6.12.2-rc1/linux-6.12.2-0.rc1.400.vanilla.fc41.x86_64/to=
-ols/perf/util/include -I/builddir/build/BUILD/kernel-6.12.2-build/kernel-=
-6.12.2-rc1/linux-6.12.2-0.rc1.400.vanilla.fc41.x86_64/tools/perf/arch/x86=
-/include -I/builddir/build/BUILD/kernel-6.12.2-build/kernel-6.12.2-rc1/li=
-nux-6.12.2-0.rc1.400.vanilla.fc41.x86_64/tools/include/ -I/builddir/build=
-/BUILD/kernel-6.12.2-build/kernel-6.12.2-rc1/linux-6.12.2-0.rc1.400.vanil=
-la.fc41.x86_64/tools/arch/x86/include/uapi -I/builddir/build/BUILD/kernel=
--6.12.2-build/kernel-6.12.2-rc1/linux-6.12.2-0.rc1.400.vanilla.fc41.x86_6=
-4/tools/include/uapi -I/builddir/build/BUILD/kernel-6.12.2-build/kernel-6=
-=2E12.2-rc1/linux-6.12.2-0.rc1.400.vanilla.fc41.x86_64/tools/arch/x86/inc=
-lude/ -I/builddir/build/BUILD/kernel-6.12.2-build/kernel-6.12.2-rc1/linux=
--6.12.2-0.rc1.400.vanilla.fc41.x86_64/tools/arch/x86/ -I/builddir/build/B=
-UILD/kernel-6.12.2-build/kernel-6.12.2-rc1/linux-6.12.2-0.rc1.400.vanilla=
-=2Efc41.x86_64/tools/perf/util -I/builddir/build/BUILD/kernel-6.12.2-buil=
-d/kernel-6.12.2-rc1/linux-6.12.2-0.rc1.400.vanilla.fc41.x86_64/tools/perf=
- -DHAVE_PTHREAD_ATTR_SETAFFINITY_NP -DHAVE_PTHREAD_BARRIER -DHAVE_EVENTFD=
-_SUPPORT -DHAVE_GET_CURRENT_DIR_NAME -DHAVE_GETTID -DHAVE_FILE_HANDLE -DH=
-AVE_DWARF_GETLOCATIONS_SUPPORT -DHAVE_DWARF_CFI_SUPPORT -DHAVE_AIO_SUPPOR=
-T -DHAVE_SCANDIRAT_SUPPORT -DHAVE_SCHED_GETCPU_SUPPORT -DHAVE_SETNS_SUPPO=
-RT -DHAVE_ZLIB_SUPPORT -DHAVE_LIBELF_SUPPORT -DHAVE_ELF_GETPHDRNUM_SUPPOR=
-T -DHAVE_GELF_GETNOTE_SUPPORT -DHAVE_ELF_GETSHDRSTRNDX_SUPPORT -DHAVE_DWA=
-RF_SUPPORT -DHAVE_LIBBPF_SUPPORT -DHAVE_SDT_EVENT -DHAVE_JITDUMP -DHAVE_B=
-PF_SKEL -DHAVE_DWARF_UNWIND_SUPPORT -DHAVE_LIBCRYPTO_SUPPORT -DHAVE_SLANG=
-_SUPPORT -DHAVE_LIBPERL_SUPPORT -DHAVE_TIMERFD_SUPPORT -DHAVE_LIBPYTHON_S=
-UPPORT -fPIC -DHAVE_LIBLLVM_SUPPORT -I/usr/include -D_GNU_SOURCE -D__STDC=
-_CONSTANT_MACROS -D__STDC_FORMAT_MACROS -D__STDC_LIMIT_MACROS -DHAVE_CXA_=
-DEMANGLE_SUPPORT -DHAVE_LZMA_SUPPORT -DHAVE_ZSTD_SUPPORT -DHAVE_BACKTRACE=
-_SUPPORT -DHAVE_LIBNUMA_SUPPORT -DHAVE_KVM_STAT_SUPPORT -DDISASM_FOUR_ARG=
-S_SIGNATURE -DDISASM_INIT_STYLED -DHAVE_LIBBABELTRACE_SUPPORT -DHAVE_AUXT=
-RACE_SUPPORT -DHAVE_JVMTI_CMLR -DHAVE_LIBTRACEEVENT -I/usr/include/tracee=
-vent -DLIBTRACEEVENT_VERSION=3D67067 -I/usr/include/tracefs -I/usr/includ=
-e/traceevent -DLIBTRACEFS_VERSION=3D67065 -I/builddir/build/BUILD/kernel-=
-6.12.2-build/kernel-6.12.2-rc1/linux-6.12.2-0.rc1.400.vanilla.fc41.x86_64=
-/tools/perf/libapi/include -I/builddir/build/BUILD/kernel-6.12.2-build/ke=
-rnel-6.12.2-rc1/linux-6.12.2-0.rc1.400.vanilla.fc41.x86_64/tools/perf/lib=
-subcmd/include -I/builddir/build/BUILD/kernel-6.12.2-build/kernel-6.12.2-=
-rc1/linux-6.12.2-0.rc1.400.vanilla.fc41.x86_64/tools/perf/libsymbol/inclu=
-de -I/builddir/build/BUILD/kernel-6.12.2-build/kernel-6.12.2-rc1/linux-6.=
-12.2-0.rc1.400.vanilla.fc41.x86_64/tools/perf/libperf/include -D"BUILD_ST=
-R(s)=3D#s" -c -o util/topdown.o util/topdown.c
-util/stat-display.c: In function =E2=80=98uniquify_event_name=E2=80=99:
-util/stat-display.c:895:45: error: =E2=80=98struct evsel=E2=80=99 has no =
-member named =E2=80=98alternate_hw_config=E2=80=99
-  895 |         if (counter->pmu->is_core && counter->alternate_hw_config=
- !=3D PERF_COUNT_HW_MAX)
-      |                                             ^~
-make[4]: *** [/builddir/build/BUILD/kernel-6.12.2-build/kernel-6.12.2-rc1=
-/linux-6.12.2-0.rc1.400.vanilla.fc41.x86_64/tools/build/Makefile.build:10=
-6: util/stat-display.o] Error 1
-make[4]: *** Waiting for unfinished jobs....
-
-> ```
-> $ perf stat -e instructions,cycles ...
-> ```
-> Will use "cycles" for the name of the legacy cycles event but as
-> "instructions" has a sysfs name it will and a "[cpu]" PMU suffix. This
-> often breaks things as the space between the event and the PMU name
-> look like an extra column. The existing uniquify logic was also
-> uniquifying in cases when all events are core and not with uncore
-> events, it was not correctly handling modifiers, etc.
->=20
-> Change the logic so that an initial pass that can disable
-> uniquification is run. For individual counters, disable uniquification
-> in more cases such as for consistency with legacy events or for
-> libpfm4 events. Don't use the "[pmu]" style suffix in uniquification,
-> always use "pmu/.../". Change how modifiers/terms are handled in the
-> uniquification so that they look like parse-able events.
->=20
-> This fixes "102: perf stat metrics (shadow stat) test:" that has been
-> failing due to "instructions [cpu]" breaking its column/awk logic when
-> values aren't aggregated. This started happening when instructions
-> could match a sysfs rather than a legacy event, so the fixes tag
-> reflects this.
->=20
-> Fixes: 617824a7f0f7 ("perf parse-events: Prefer sysfs/JSON hardware eve=
-nts over legacy")
-> Acked-by: Namhyung Kim <namhyung@kernel.org>
-> Signed-off-by: Ian Rogers <irogers@google.com>
-> [ Fix Intel TPEBS counting mode test ]
-> Acked-by: Kan Liang <kan.liang@linux.intel.com>
-> Signed-off-by: James Clark <james.clark@linaro.org>
-> Cc: Yang Jihong <yangjihong@bytedance.com>
-> Cc: Dominique Martinet <asmadeus@codewreck.org>
-> Cc: Colin Ian King <colin.i.king@gmail.com>
-> Cc: Howard Chu <howardchu95@gmail.com>
-> Cc: Ze Gao <zegao2021@gmail.com>
-> Cc: Yicong Yang <yangyicong@hisilicon.com>
-> Cc: Weilin Wang <weilin.wang@intel.com>
-> Cc: Will Deacon <will@kernel.org>
-> Cc: Mike Leach <mike.leach@linaro.org>
-> Cc: Jing Zhang <renyu.zj@linux.alibaba.com>
-> Cc: Yang Li <yang.lee@linux.alibaba.com>
-> Cc: Leo Yan <leo.yan@linux.dev>
-> Cc: ak@linux.intel.com
-> Cc: Athira Rajeev <atrajeev@linux.vnet.ibm.com>
-> Cc: linux-arm-kernel@lists.infradead.org
-> Cc: Sun Haiyong <sunhaiyong@loongson.cn>
-> Cc: John Garry <john.g.garry@oracle.com>
-> Link: https://lore.kernel.org/r/20240926144851.245903-3-james.clark@lin=
-aro.org
-> Signed-off-by: Namhyung Kim <namhyung@kernel.org>
-> Signed-off-by: Sasha Levin <sashal@kernel.org>
+On Tue, Nov 12, 2024 at 02:51:36PM -0400, Jason Gunthorpe wrote:
+> Be specific about what fields should be accessed in the idr result and
+> give other guidance to the VMM on how it should generate the
+> vIDR. Discussion on the list, and review of the qmeu implementation
+> understood this needs to be clearer and more detailed.
+> 
+> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 > ---
->  .../perf/tests/shell/test_stat_intel_tpebs.sh |  11 +-
->  tools/perf/util/stat-display.c                | 101 ++++++++++++++----=
+>  include/uapi/linux/iommufd.h | 25 +++++++++++++++++--------
+>  1 file changed, 17 insertions(+), 8 deletions(-)
 
->  2 files changed, 85 insertions(+), 27 deletions(-)
->=20
-> diff --git a/tools/perf/tests/shell/test_stat_intel_tpebs.sh b/tools/pe=
-rf/tests/shell/test_stat_intel_tpebs.sh
-> index c60b29add9801..9a11f42d153ca 100755
-> --- a/tools/perf/tests/shell/test_stat_intel_tpebs.sh
-> +++ b/tools/perf/tests/shell/test_stat_intel_tpebs.sh
-> @@ -8,12 +8,15 @@ grep -q GenuineIntel /proc/cpuinfo || { echo Skipping=
- non-Intel; exit 2; }
->  # Use this event for testing because it should exist in all platforms
->  event=3Dcache-misses:R
-> =20
-> +# Hybrid platforms output like "cpu_atom/cache-misses/R", rather than =
-as above
-> +alt_name=3D/cache-misses/R
-> +
->  # Without this cmd option, default value or zero is returned
-> -echo "Testing without --record-tpebs"
-> -result=3D$(perf stat -e "$event" true 2>&1)
-> -[[ "$result" =3D~ $event ]] || exit 1
-> +#echo "Testing without --record-tpebs"
-> +#result=3D$(perf stat -e "$event" true 2>&1)
-> +#[[ "$result" =3D~ $event || "$result" =3D~ $alt_name ]] || exit 1
-> =20
->  # In platforms that do not support TPEBS, it should execute without er=
-ror.
->  echo "Testing with --record-tpebs"
->  result=3D$(perf stat -e "$event" --record-tpebs -a sleep 0.01 2>&1)
-> -[[ "$result" =3D~ "perf record" && "$result" =3D~ $event ]] || exit 1
-> +[[ "$result" =3D~ "perf record" && "$result" =3D~ $event || "$result" =
-=3D~ $alt_name ]] || exit 1
-> diff --git a/tools/perf/util/stat-display.c b/tools/perf/util/stat-disp=
-lay.c
-> index ea96e4ebad8c8..cbff43ff8d0fb 100644
-> --- a/tools/perf/util/stat-display.c
-> +++ b/tools/perf/util/stat-display.c
-> @@ -871,38 +871,66 @@ static void printout(struct perf_stat_config *con=
-fig, struct outstate *os,
-> =20
->  static void uniquify_event_name(struct evsel *counter)
->  {
-> -	char *new_name;
-> -	char *config;
-> -	int ret =3D 0;
-> +	const char *name, *pmu_name;
-> +	char *new_name, *config;
-> +	int ret;
-> =20
-> -	if (counter->uniquified_name || counter->use_config_name ||
-> -	    !counter->pmu_name || !strncmp(evsel__name(counter), counter->pmu=
-_name,
-> -					   strlen(counter->pmu_name)))
-> +	/* The evsel was already uniquified. */
-> +	if (counter->uniquified_name)
->  		return;
-> =20
-> -	config =3D strchr(counter->name, '/');
-> +	/* Avoid checking to uniquify twice. */
-> +	counter->uniquified_name =3D true;
-> +
-> +	/* The evsel has a "name=3D" config term or is from libpfm. */
-> +	if (counter->use_config_name || counter->is_libpfm_event)
-> +		return;
-> +
-> +	/* Legacy no PMU event, don't uniquify. */
-> +	if  (!counter->pmu ||
-> +	     (counter->pmu->type < PERF_TYPE_MAX && counter->pmu->type !=3D P=
-ERF_TYPE_RAW))
-> +		return;
-> +
-> +	/* A sysfs or json event replacing a legacy event, don't uniquify. */=
+Applied to for-rc
 
-> +	if (counter->pmu->is_core && counter->alternate_hw_config !=3D PERF_C=
-OUNT_HW_MAX)
-> +		return;
-> +
-> +	name =3D evsel__name(counter);
-> +	pmu_name =3D counter->pmu->name;
-> +	/* Already prefixed by the PMU name. */
-> +	if (!strncmp(name, pmu_name, strlen(pmu_name)))
-> +		return;
-> +
-> +	config =3D strchr(name, '/');
->  	if (config) {
-> -		if (asprintf(&new_name,
-> -			     "%s%s", counter->pmu_name, config) > 0) {
-> -			free(counter->name);
-> -			counter->name =3D new_name;
-> -		}
-> -	} else {
-> -		if (evsel__is_hybrid(counter)) {
-> -			ret =3D asprintf(&new_name, "%s/%s/",
-> -				       counter->pmu_name, counter->name);
-> +		int len =3D config - name;
-> +
-> +		if (config[1] =3D=3D '/') {
-> +			/* case: event// */
-> +			ret =3D asprintf(&new_name, "%s/%.*s/%s", pmu_name, len, name, conf=
-ig + 2);
->  		} else {
-> -			ret =3D asprintf(&new_name, "%s [%s]",
-> -				       counter->name, counter->pmu_name);
-> +			/* case: event/.../ */
-> +			ret =3D asprintf(&new_name, "%s/%.*s,%s", pmu_name, len, name, conf=
-ig + 1);
->  		}
-> +	} else {
-> +		config =3D strchr(name, ':');
-> +		if (config) {
-> +			/* case: event:.. */
-> +			int len =3D config - name;
-> =20
-> -		if (ret) {
-> -			free(counter->name);
-> -			counter->name =3D new_name;
-> +			ret =3D asprintf(&new_name, "%s/%.*s/%s", pmu_name, len, name, conf=
-ig + 1);
-> +		} else {
-> +			/* case: event */
-> +			ret =3D asprintf(&new_name, "%s/%s/", pmu_name, name);
->  		}
->  	}
-> -
-> -	counter->uniquified_name =3D true;
-> +	if (ret > 0) {
-> +		free(counter->name);
-> +		counter->name =3D new_name;
-> +	} else {
-> +		/* ENOMEM from asprintf. */
-> +		counter->uniquified_name =3D false;
-> +	}
->  }
-> =20
->  static bool hybrid_uniquify(struct evsel *evsel, struct perf_stat_conf=
-ig *config)
-> @@ -1559,6 +1587,31 @@ static void print_cgroup_counter(struct perf_sta=
-t_config *config, struct evlist
->  		print_metric_end(config, os);
->  }
-> =20
-> +static void disable_uniquify(struct evlist *evlist)
-> +{
-> +	struct evsel *counter;
-> +	struct perf_pmu *last_pmu =3D NULL;
-> +	bool first =3D true;
-> +
-> +	evlist__for_each_entry(evlist, counter) {
-> +		/* If PMUs vary then uniquify can be useful. */
-> +		if (!first && counter->pmu !=3D last_pmu)
-> +			return;
-> +		first =3D false;
-> +		if (counter->pmu) {
-> +			/* Allow uniquify for uncore PMUs. */
-> +			if (!counter->pmu->is_core)
-> +				return;
-> +			/* Keep hybrid event names uniquified for clarity. */
-> +			if (perf_pmus__num_core_pmus() > 1)
-> +				return;
-> +		}
-> +	}
-> +	evlist__for_each_entry_continue(evlist, counter) {
-> +		counter->uniquified_name =3D true;
-> +	}
-> +}
-> +
->  void evlist__print_counters(struct evlist *evlist, struct perf_stat_co=
-nfig *config,
->  			    struct target *_target, struct timespec *ts,
->  			    int argc, const char **argv)
-> @@ -1572,6 +1625,8 @@ void evlist__print_counters(struct evlist *evlist=
-, struct perf_stat_config *conf
->  		.first =3D true,
->  	};
-> =20
-> +	disable_uniquify(evlist);
-> +
->  	if (config->iostat_run)
->  		evlist->selected =3D evlist__first(evlist);
-> =20
-
+Thanks,
+Jason
