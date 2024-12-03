@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D85F51F473A;
-	Tue,  3 Dec 2024 15:27:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C706D1F754A;
+	Tue,  3 Dec 2024 15:27:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733239637; cv=none; b=ecGfLl2MsCbpD4EiJdBmN/dkMEzRs8ikL1Zd2bAeZrZIgbUyk5eGAk1Q2lwRZMYv17cz2ecv2+hWhjl8VMY5zvQSG8Iyvk0BZHvE5/3A+KJh2EjbvygW/AJ1HmL87oquYm+Li2wHYWbyMpgZByeDzfKQSIgL19KL9u0972I96WI=
+	t=1733239640; cv=none; b=IokkqDtcdPpAB4/ffLdRCdBtbMtFTA+tglMYU1X4GEgWGp1gGS0b7/3bfu0qZd02wZdgWMDYFnwPlYU6Yp5IbqxXL7tLsguiZd2FLTQk0+EGPRrZw67bR0xMDOwMvDc9phWgPPWQuexpsnPiyjplNyCXsRK6oDRGyD4VGGiuFVU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733239637; c=relaxed/simple;
-	bh=xVnqiNlQY3tmOEDKFXAvfuCkYbDmYYRrV/ZFzvytr7A=;
+	s=arc-20240116; t=1733239640; c=relaxed/simple;
+	bh=L7Bi9ai8DtpleX4JIDKO77VuIE7pTPIvXtYKaq8Lp+s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=stkEKse5Nl8l1qZJzWgycgXZCj8Pq8yQAkEGLHYY8ClH7KLJGweXGJTSoFxaQz91v2kM9T0jZaz25Op4n0JxHFCmKV70+iqX0uQMcBK30N2AGlnNKlFXKou5biABvyNMelovOmtJJb/TsgdmGS901tbtpRqRDwqQvViNyvcVKCA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JagxpLrY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TGur850AnEZW6HKyXCuTHIZbqLPlVS9ywiODXoFB1sVOgNjZ9BdYpr6M2+2SJ8mSLnvAKTsD+j1AFEkOspbMvDELNdt+1shno2skz13zlQnU4g+mplH334WTew1tm/UCmGg6j5odVPaa6Im5zPrcQJnVgBl+zPxG13gi6+wkGBw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ewwjTjFE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JagxpLrY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E3CDC4CECF;
-	Tue,  3 Dec 2024 15:27:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ewwjTjFE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 063E3C4CED9;
+	Tue,  3 Dec 2024 15:27:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733239637;
-	bh=xVnqiNlQY3tmOEDKFXAvfuCkYbDmYYRrV/ZFzvytr7A=;
+	s=korg; t=1733239640;
+	bh=L7Bi9ai8DtpleX4JIDKO77VuIE7pTPIvXtYKaq8Lp+s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JagxpLrY/8Cjn2RiL9iDZUC8rS+Fm8gsHC3lvuiUj/wzuZgfU+WSQol71uaxdvRth
-	 LY/aXEwCIjApOinZgMprA6p9gLmQluN5RjtwEAij/TYqzifMgYXh1W/nknM0Fm6Vf/
-	 wjEnrDRQDc2CuhV9XcuqTAF6R7h65fdVcHEwwE0I=
+	b=ewwjTjFEOJzK/rzIglinx2/fB65gjm4h2lnUZO7OCBCRB5L6djsksLzo8FFq6r1bS
+	 rfZCcq5SuPgya+4L05pGjrtd+j8IEjF5bbcfwb9AMHooX5qU+N/JS6JFNPpFAKNumv
+	 x9g1zfrwBO0QBOYGZGf/8pyP6eXZgxzqGtLr3qWY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kunkun Jiang <jiangkunkun@huawei.com>,
-	Jing Zhang <jingzhangos@google.com>,
-	Oliver Upton <oliver.upton@linux.dev>
-Subject: [PATCH 6.11 651/817] KVM: arm64: vgic-its: Clear ITE when DISCARD frees an ITE
-Date: Tue,  3 Dec 2024 15:43:43 +0100
-Message-ID: <20241203144021.369113442@linuxfoundation.org>
+	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.11 642/817] ASoC: da7213: Populate max_register to regmap_config
+Date: Tue,  3 Dec 2024 15:43:34 +0100
+Message-ID: <20241203144021.010900443@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -51,50 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kunkun Jiang <jiangkunkun@huawei.com>
+From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
 
-commit 7602ffd1d5e8927fadd5187cb4aed2fdc9c47143 upstream.
+commit 9d4f9f6a7bb1afbde57d08c98f2db4ff019ee19d upstream.
 
-When DISCARD frees an ITE, it does not invalidate the
-corresponding ITE. In the scenario of continuous saves and
-restores, there may be a situation where an ITE is not saved
-but is restored. This is unreasonable and may cause restore
-to fail. This patch clears the corresponding ITE when DISCARD
-frees an ITE.
+On the Renesas RZ/G3S SMARC Carrier II board having a DA7212 codec (using
+da7213 driver) connected to one SSIF-2 available on the Renesas RZ/G3S SoC
+it has been discovered that using the runtime PM API for suspend/resume
+(as will be proposed in the following commits) leads to the codec not
+being propertly initialized after resume. This is because w/o
+max_register populated to regmap_config the regcache_rbtree_sync()
+breaks on base_reg > max condition and the regcache_sync_block() call is
+skipped.
 
+Fixes: ef5c2eba2412 ("ASoC: codecs: Add da7213 codec")
 Cc: stable@vger.kernel.org
-Fixes: eff484e0298d ("KVM: arm64: vgic-its: ITT save and restore")
-Signed-off-by: Kunkun Jiang <jiangkunkun@huawei.com>
-[Jing: Update with entry write helper]
-Signed-off-by: Jing Zhang <jingzhangos@google.com>
-Link: https://lore.kernel.org/r/20241107214137.428439-6-jingzhangos@google.com
-Signed-off-by: Oliver Upton <oliver.upton@linux.dev>
+Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+Link: https://patch.msgid.link/20241106081826.1211088-23-claudiu.beznea.uj@bp.renesas.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kvm/vgic/vgic-its.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ sound/soc/codecs/da7213.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/arch/arm64/kvm/vgic/vgic-its.c
-+++ b/arch/arm64/kvm/vgic/vgic-its.c
-@@ -782,6 +782,9 @@ static int vgic_its_cmd_handle_discard(s
+--- a/sound/soc/codecs/da7213.c
++++ b/sound/soc/codecs/da7213.c
+@@ -2136,6 +2136,7 @@ static const struct regmap_config da7213
+ 	.reg_bits = 8,
+ 	.val_bits = 8,
  
- 	ite = find_ite(its, device_id, event_id);
- 	if (ite && its_is_collection_mapped(ite->collection)) {
-+		struct its_device *device = find_its_device(its, device_id);
-+		int ite_esz = vgic_its_get_abi(its)->ite_esz;
-+		gpa_t gpa = device->itt_addr + ite->event_id * ite_esz;
- 		/*
- 		 * Though the spec talks about removing the pending state, we
- 		 * don't bother here since we clear the ITTE anyway and the
-@@ -790,7 +793,8 @@ static int vgic_its_cmd_handle_discard(s
- 		vgic_its_invalidate_cache(its);
- 
- 		its_free_ite(kvm, ite);
--		return 0;
-+
-+		return vgic_its_write_entry_lock(its, gpa, 0, ite_esz);
- 	}
- 
- 	return E_ITS_DISCARD_UNMAPPED_INTERRUPT;
++	.max_register = DA7213_TONE_GEN_OFF_PER,
+ 	.reg_defaults = da7213_reg_defaults,
+ 	.num_reg_defaults = ARRAY_SIZE(da7213_reg_defaults),
+ 	.volatile_reg = da7213_volatile_register,
 
 
