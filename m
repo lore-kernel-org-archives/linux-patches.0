@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A0221DE2A1;
-	Tue,  3 Dec 2024 14:54:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D75CC1DE2A1;
+	Tue,  3 Dec 2024 14:54:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733237694; cv=none; b=j6tK+VB1UVQNF8fmbPIB094vzJ1YLsk9U9DV6k0/KXxfCm1sOqqZMkqxgWfPoRoxNvvCoJ1EAPIAJfXtamJXMabtzSkHV8gLsAZmwbZmspwwPDIy31VChmw5mp2yklOymOSRwsyf3j3X7ka/balwDp8h3c9RO3PDPzMC8eAEGX4=
+	t=1733237697; cv=none; b=DXv2qjwOWu+zh/WeMh3q5UyVoqDukIQQdUMPDLomIyZfe5YddjL8WCcQpAh4dM8ppzjoCbVHLNN+F9ygVtV6ZGh99H249wMg0uD5s2j09+BKvyc2C/1y2TUL07xCQMtU9yWi8NTmuX1S/w9pxhx9X4bXOGyoxHwWGkLN5hf7nQw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733237694; c=relaxed/simple;
-	bh=UYczaWkkxgewnXL3ry3rTgf6Vrjy73duTuWISZGKaWg=;
+	s=arc-20240116; t=1733237697; c=relaxed/simple;
+	bh=gpgcDmCMaKLkgbH0LsTq+FeTfHcSb8GN0ReROZhaDxs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O1maQB47Hk+SEreQ72hA5w61RO9+ppQeYIV29t1OGZaJGBVG0PwJKxISe6Z5WSzm5g0RLZe56Jrp27ZNdRInpwupZB/Jk254iHgIfPk74dciTYvNs2WNj0/ySv7b7zwANqbbuWzxrHhqv6jrdmGPUdYXsrmhP/JjlqRJnLv+1Tw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d7ZSslfZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Qv+aIMrnp2rDtBZ4XSrYXP9TRnzbHZMT+Syg9Sv1kkrdZ1gUsoutgJtwHVh+doB1APeWZagN8W+5aS+vlqZHG8+LSUOdqoulWbeVTBQd0PPQ34lVUhFgVUb9hByWMieFdNx3zHBwxX6kz1JhGviSpVhSgtnhOXBJucYvD/89VPQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IG+XTxVb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d7ZSslfZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BDB1C4CED9;
-	Tue,  3 Dec 2024 14:54:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IG+XTxVb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC95DC4CED9;
+	Tue,  3 Dec 2024 14:54:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733237694;
-	bh=UYczaWkkxgewnXL3ry3rTgf6Vrjy73duTuWISZGKaWg=;
+	s=korg; t=1733237697;
+	bh=gpgcDmCMaKLkgbH0LsTq+FeTfHcSb8GN0ReROZhaDxs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d7ZSslfZE48QUaXieg1IeHvkLmend3vExVBzyU0pWn0Didombj96T3klhLZjQXdaQ
-	 lrXZIPoMLEi3vOUdpWjEleIIAiSfH07Bhg3DnZUY4lvitOxpsKGD0yLXan+DLAZwvA
-	 D2oOgcmQnVCwwm8PR2S6KtGq5O4HC/Ty4OILCqlo=
+	b=IG+XTxVbFiTh569r4HsI7YUGoVpkUfHzmbzrJu61H8/ia23h5ZPG4YuLXKJl7Fw1d
+	 8XfdR62PKjFFnayNqWoy0LJ4wUUHR5dOoaWlwXZH2K1LtMmAK/4NlP8gYaXrZWzluy
+	 Z46+aF42FKTekWxSU8V8KeQFzWF7aw7HmO9Tjfpw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	Breno Leitao <leitao@debian.org>,
+	David Ahern <dsahern@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 044/817] ARM: 9434/1: cfi: Fix compilation corner case
-Date: Tue,  3 Dec 2024 15:33:36 +0100
-Message-ID: <20241203143957.379828243@linuxfoundation.org>
+Subject: [PATCH 6.11 045/817] ipmr: Fix access to mfc_cache_list without lock held
+Date: Tue,  3 Dec 2024 15:33:37 +0100
+Message-ID: <20241203143957.418574225@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -53,59 +52,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Walleij <linus.walleij@linaro.org>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit 4aea16b7cfb76bd3361858ceee6893ef5c9b5570 ]
+[ Upstream commit e28acc9c1ccfcb24c08e020828f69d0a915b06ae ]
 
-When enabling expert mode CONFIG_EXPERT and using that power
-user mode to disable the branch prediction hardening
-!CONFIG_HARDEN_BRANCH_PREDICTOR, the assembly linker
-in CLANG notices that some assembly in proc-v7.S does
-not have corresponding C call sites, i.e. the prototypes
-in proc-v7-bugs.c are enclosed in ifdef
-CONFIG_HARDEN_BRANCH_PREDICTOR so this assembly:
+Accessing `mr_table->mfc_cache_list` is protected by an RCU lock. In the
+following code flow, the RCU read lock is not held, causing the
+following error when `RCU_PROVE` is not held. The same problem might
+show up in the IPv6 code path.
 
-SYM_TYPED_FUNC_START(cpu_v7_smc_switch_mm)
-SYM_TYPED_FUNC_START(cpu_v7_hvc_switch_mm)
+	6.12.0-rc5-kbuilder-01145-gbac17284bdcb #33 Tainted: G            E    N
+	-----------------------------
+	net/ipv4/ipmr_base.c:313 RCU-list traversed in non-reader section!!
 
-Results in:
+	rcu_scheduler_active = 2, debug_locks = 1
+		   2 locks held by RetransmitAggre/3519:
+		    #0: ffff88816188c6c0 (nlk_cb_mutex-ROUTE){+.+.}-{3:3}, at: __netlink_dump_start+0x8a/0x290
+		    #1: ffffffff83fcf7a8 (rtnl_mutex){+.+.}-{3:3}, at: rtnl_dumpit+0x6b/0x90
 
-ld.lld: error: undefined symbol: __kcfi_typeid_cpu_v7_smc_switch_mm
->>> referenced by proc-v7.S:94 (.../arch/arm/mm/proc-v7.S:94)
->>> arch/arm/mm/proc-v7.o:(.text+0x108) in archive vmlinux.a
+	stack backtrace:
+		    lockdep_rcu_suspicious
+		    mr_table_dump
+		    ipmr_rtm_dumproute
+		    rtnl_dump_all
+		    rtnl_dumpit
+		    netlink_dump
+		    __netlink_dump_start
+		    rtnetlink_rcv_msg
+		    netlink_rcv_skb
+		    netlink_unicast
+		    netlink_sendmsg
 
-ld.lld: error: undefined symbol: __kcfi_typeid_cpu_v7_hvc_switch_mm
->>> referenced by proc-v7.S:105 (.../arch/arm/mm/proc-v7.S:105)
->>> arch/arm/mm/proc-v7.o:(.text+0x124) in archive vmlinux.a
+This is not a problem per see, since the RTNL lock is held here, so, it
+is safe to iterate in the list without the RCU read lock, as suggested
+by Eric.
 
-Fix this by adding an additional requirement that
-CONFIG_HARDEN_BRANCH_PREDICTOR has to be enabled to compile
-these assembly calls.
+To alleviate the concern, modify the code to use
+list_for_each_entry_rcu() with the RTNL-held argument.
 
-Closes: https://lore.kernel.org/oe-kbuild-all/202411041456.ZsoEiD7T-lkp@intel.com/
+The annotation will raise an error only if RTNL or RCU read lock are
+missing during iteration, signaling a legitimate problem, otherwise it
+will avoid this false positive.
 
-Reported-by: kernel test robot <lkp@intel.com>
-Reviewed-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
-Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+This will solve the IPv6 case as well, since ip6mr_rtm_dumproute() calls
+this function as well.
+
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://patch.msgid.link/20241108-ipmr_rcu-v2-1-c718998e209b@debian.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mm/proc-v7.S | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv4/ipmr_base.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm/mm/proc-v7.S b/arch/arm/mm/proc-v7.S
-index 5fb9a6aecb001..2cd9333426794 100644
---- a/arch/arm/mm/proc-v7.S
-+++ b/arch/arm/mm/proc-v7.S
-@@ -94,7 +94,7 @@ SYM_TYPED_FUNC_START(cpu_v7_dcache_clean_area)
- 	ret	lr
- SYM_FUNC_END(cpu_v7_dcache_clean_area)
+diff --git a/net/ipv4/ipmr_base.c b/net/ipv4/ipmr_base.c
+index 271dc03fc6dbd..f0af12a2f70bc 100644
+--- a/net/ipv4/ipmr_base.c
++++ b/net/ipv4/ipmr_base.c
+@@ -310,7 +310,8 @@ int mr_table_dump(struct mr_table *mrt, struct sk_buff *skb,
+ 	if (filter->filter_set)
+ 		flags |= NLM_F_DUMP_FILTERED;
  
--#ifdef CONFIG_ARM_PSCI
-+#if defined(CONFIG_ARM_PSCI) && defined(CONFIG_HARDEN_BRANCH_PREDICTOR)
- 	.arch_extension sec
- SYM_TYPED_FUNC_START(cpu_v7_smc_switch_mm)
- 	stmfd	sp!, {r0 - r3}
+-	list_for_each_entry_rcu(mfc, &mrt->mfc_cache_list, list) {
++	list_for_each_entry_rcu(mfc, &mrt->mfc_cache_list, list,
++				lockdep_rtnl_is_held()) {
+ 		if (e < s_e)
+ 			goto next_entry;
+ 		if (filter->dev &&
 -- 
 2.43.0
 
