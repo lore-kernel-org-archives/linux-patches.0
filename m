@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89A0C1F7569;
-	Tue,  3 Dec 2024 15:16:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95CEB1F6696;
+	Tue,  3 Dec 2024 15:16:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733238972; cv=none; b=o/d1nNYn9Q1VyMsG+YBxytd8icE1U0NHjmOr1tffikfO2KcqRUD0QrHGqJq1nd+dC9omfYzJiwimjOvSLW5GBSxtkw1A2mohw+H+Dqmj07woB7EHKL9ZapMfUlbCPplH3cEPT9lOvfW8fga+fdNbR+iUNZMam5zvfXoNvdi4qQg=
+	t=1733238975; cv=none; b=Tt/P+SZ9ML6SU2QkI9RIzy4KmMiidT268+I5YPk2JUQe8oMCxIZR1sndj1o6vph7af0zyNi1OE+BfXChBJdi25uCkZKnLGApqQgvJREEEDUeJ/QlfxiES24I1wdkV1iWsfFjDHjAxVV7TOQ6dtTlDj71ylDkBr9fLR2SRJUMplI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733238972; c=relaxed/simple;
-	bh=wR9pCwoaVqA4iT2ooez6EFxwOH8c7mz36sZWEpmZnzA=;
+	s=arc-20240116; t=1733238975; c=relaxed/simple;
+	bh=7ACmJdlaAgC1vGOS5L+p6UJOIGn2CxxFOdMkF4mF+YI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Fi8TOkt6LYOqFcJWcjZ2GDKgLmc9xg7w7c/mG5jy1BECGid3OGIf6zMXFWgVwtkT1aSx0bWbEtRgod2IKjramQ9/eb27Fm4k88O8Hl+fsUctCChViXOvSMg/bDIGgshI4fVlbTYSckt74/1y5hxWClaDxfhg3f5B25DnEdQ7WPY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m1cpORY4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=l4wb8OmEiF+Mozqg1lesRQ/5J4lWo2QIXxoZX1Np4jSJ6C1ShlsnTpzyndWR3ofyHXI7FDI658Ma9TVV/ZvoTvpps4H/9QLMmZG3gNW0ta16SDGxfTX0GQN7ExgHkR6J2n6r/yhMmrJSnMCBmSGPsPfxy2X6xNHAgKQ3hWhuL6o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V2Tyhcog; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m1cpORY4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C211CC4CED6;
-	Tue,  3 Dec 2024 15:16:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V2Tyhcog"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEF8CC4CECF;
+	Tue,  3 Dec 2024 15:16:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733238972;
-	bh=wR9pCwoaVqA4iT2ooez6EFxwOH8c7mz36sZWEpmZnzA=;
+	s=korg; t=1733238975;
+	bh=7ACmJdlaAgC1vGOS5L+p6UJOIGn2CxxFOdMkF4mF+YI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m1cpORY4zdkjeFjLwgjZ2AaoKKDiT0ZLcMbfdOUssniMLtXjTUfJYps5IjeXAG/7V
-	 0OQ47ODozLppU0RPLkSJTCJOKPSm07HDO0HU2t3UdnzDPH3GuxaPr7acwJODrWZ78P
-	 D2u0T9xeyc+eRcsNoiS1XfA6Glvjjwnji9mnhaxo=
+	b=V2TyhcogqDUoLvZfTRHwllTKCJ4WaMELlVB9N1flh0gxCBEC4XkYgq+fI9zt4pwjo
+	 pfjZQtUGnUYqM3ES1E+ckqJi01C5ZHakkMkJdXfgF83fG8SIvfgIB6s5Ljgk9PkUHF
+	 etbuNBjZI8vEaKZR/DHps0WhfaJrZJePgO3gFHxQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Feng Fang <fangfeng4@huawei.com>,
-	Junxian Huang <huangjunxian6@hisilicon.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	Amit Machhiwal <amachhiw@linux.ibm.com>,
+	Kajol Jain <kjain@linux.ibm.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 460/817] RDMA/hns: Fix different dgids mapping to the same dip_idx
-Date: Tue,  3 Dec 2024 15:40:32 +0100
-Message-ID: <20241203144013.829268847@linuxfoundation.org>
+Subject: [PATCH 6.11 461/817] KVM: PPC: Book3S HV: Fix kmv -> kvm typo
+Date: Tue,  3 Dec 2024 15:40:33 +0100
+Message-ID: <20241203144013.870095723@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -52,310 +54,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Feng Fang <fangfeng4@huawei.com>
+From: Kajol Jain <kjain@linux.ibm.com>
 
-[ Upstream commit faa62440a5772b40bb7d78bf9e29556a82ecf153 ]
+[ Upstream commit 590d2f9347f7974d7954400e5d937672fd844a8b ]
 
-DIP algorithm requires a one-to-one mapping between dgid and dip_idx.
-Currently a queue 'spare_idx' is used to store QPN of QPs that use
-DIP algorithm. For a new dgid, use a QPN from spare_idx as dip_idx.
-This method lacks a mechanism for deduplicating QPN, which may result
-in different dgids sharing the same dip_idx and break the one-to-one
-mapping requirement.
+Fix typo in the following kvm function names from:
 
-This patch replaces spare_idx with xarray and introduces a refcnt of
-a dip_idx to indicate the number of QPs that using this dip_idx.
+ kmvhv_counters_tracepoint_regfunc -> kvmhv_counters_tracepoint_regfunc
+ kmvhv_counters_tracepoint_unregfunc -> kvmhv_counters_tracepoint_unregfunc
 
-The state machine for dip_idx management is implemented as:
-
-* The entry at an index in xarray is empty -- This indicates that the
-  corresponding dip_idx hasn't been created.
-
-* The entry at an index in xarray is not empty but with 0 refcnt --
-  This indicates that the corresponding dip_idx has been created but
-  not used as dip_idx yet.
-
-* The entry at an index in xarray is not empty and with non-0 refcnt --
-  This indicates that the corresponding dip_idx is being used by refcnt
-  number of DIP QPs.
-
-Fixes: eb653eda1e91 ("RDMA/hns: Bugfix for incorrect association between dip_idx and dgid")
-Fixes: f91696f2f053 ("RDMA/hns: Support congestion control type selection according to the FW")
-Signed-off-by: Feng Fang <fangfeng4@huawei.com>
-Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
-Link: https://patch.msgid.link/20241112055553.3681129-1-huangjunxian6@hisilicon.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: e1f288d2f9c6 ("KVM: PPC: Book3S HV nestedv2: Add support for reading VPA counters for pseries guests")
+Reported-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+Reviewed-by: Amit Machhiwal <amachhiw@linux.ibm.com>
+Signed-off-by: Kajol Jain <kjain@linux.ibm.com>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://patch.msgid.link/20241114085020.1147912-1-kjain@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hns/hns_roce_device.h | 11 +--
- drivers/infiniband/hw/hns/hns_roce_hw_v2.c  | 96 +++++++++++++++------
- drivers/infiniband/hw/hns/hns_roce_hw_v2.h  |  2 +-
- drivers/infiniband/hw/hns/hns_roce_main.c   |  2 -
- drivers/infiniband/hw/hns/hns_roce_qp.c     |  8 +-
- 5 files changed, 75 insertions(+), 44 deletions(-)
+ arch/powerpc/include/asm/kvm_book3s_64.h | 4 ++--
+ arch/powerpc/kvm/book3s_hv.c             | 4 ++--
+ arch/powerpc/kvm/trace_hv.h              | 2 +-
+ 3 files changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/infiniband/hw/hns/hns_roce_device.h b/drivers/infiniband/hw/hns/hns_roce_device.h
-index 9b51d5a1533f5..560a1d9de408f 100644
---- a/drivers/infiniband/hw/hns/hns_roce_device.h
-+++ b/drivers/infiniband/hw/hns/hns_roce_device.h
-@@ -489,12 +489,6 @@ struct hns_roce_bank {
- 	u32 next; /* Next ID to allocate. */
- };
+diff --git a/arch/powerpc/include/asm/kvm_book3s_64.h b/arch/powerpc/include/asm/kvm_book3s_64.h
+index 2ef9a5f4e5d14..11065313d4c12 100644
+--- a/arch/powerpc/include/asm/kvm_book3s_64.h
++++ b/arch/powerpc/include/asm/kvm_book3s_64.h
+@@ -684,8 +684,8 @@ int kvmhv_nestedv2_set_ptbl_entry(unsigned long lpid, u64 dw0, u64 dw1);
+ int kvmhv_nestedv2_parse_output(struct kvm_vcpu *vcpu);
+ int kvmhv_nestedv2_set_vpa(struct kvm_vcpu *vcpu, unsigned long vpa);
  
--struct hns_roce_idx_table {
--	u32 *spare_idx;
--	u32 head;
--	u32 tail;
--};
--
- struct hns_roce_qp_table {
- 	struct hns_roce_hem_table	qp_table;
- 	struct hns_roce_hem_table	irrl_table;
-@@ -503,7 +497,7 @@ struct hns_roce_qp_table {
- 	struct mutex			scc_mutex;
- 	struct hns_roce_bank bank[HNS_ROCE_QP_BANK_NUM];
- 	struct mutex bank_mutex;
--	struct hns_roce_idx_table	idx_table;
-+	struct xarray			dip_xa;
- };
+-int kmvhv_counters_tracepoint_regfunc(void);
+-void kmvhv_counters_tracepoint_unregfunc(void);
++int kvmhv_counters_tracepoint_regfunc(void);
++void kvmhv_counters_tracepoint_unregfunc(void);
+ int kvmhv_get_l2_counters_status(void);
+ void kvmhv_set_l2_counters_status(int cpu, bool status);
  
- struct hns_roce_cq_table {
-@@ -658,6 +652,7 @@ struct hns_roce_qp {
- 	u8			tc_mode;
- 	u8			priority;
- 	spinlock_t flush_lock;
-+	struct hns_roce_dip *dip;
- };
- 
- struct hns_roce_ib_iboe {
-@@ -984,8 +979,6 @@ struct hns_roce_dev {
- 	enum hns_roce_device_state state;
- 	struct list_head	qp_list; /* list of all qps on this dev */
- 	spinlock_t		qp_list_lock; /* protect qp_list */
--	struct list_head	dip_list; /* list of all dest ips on this dev */
--	spinlock_t		dip_list_lock; /* protect dip_list */
- 
- 	struct list_head        pgdir_list;
- 	struct mutex            pgdir_mutex;
-diff --git a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-index 707e96ce222c5..697b17cca02e7 100644
---- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-+++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-@@ -2553,20 +2553,19 @@ static void hns_roce_free_link_table(struct hns_roce_dev *hr_dev)
- 	free_link_table_buf(hr_dev, &priv->ext_llm);
+diff --git a/arch/powerpc/kvm/book3s_hv.c b/arch/powerpc/kvm/book3s_hv.c
+index b0432e78fa629..45b24706f7512 100644
+--- a/arch/powerpc/kvm/book3s_hv.c
++++ b/arch/powerpc/kvm/book3s_hv.c
+@@ -4148,7 +4148,7 @@ void kvmhv_set_l2_counters_status(int cpu, bool status)
+ 		lppaca_of(cpu).l2_counters_enable = 0;
  }
  
--static void free_dip_list(struct hns_roce_dev *hr_dev)
-+static void free_dip_entry(struct hns_roce_dev *hr_dev)
+-int kmvhv_counters_tracepoint_regfunc(void)
++int kvmhv_counters_tracepoint_regfunc(void)
  {
- 	struct hns_roce_dip *hr_dip;
--	struct hns_roce_dip *tmp;
--	unsigned long flags;
-+	unsigned long idx;
+ 	int cpu;
  
--	spin_lock_irqsave(&hr_dev->dip_list_lock, flags);
-+	xa_lock(&hr_dev->qp_table.dip_xa);
- 
--	list_for_each_entry_safe(hr_dip, tmp, &hr_dev->dip_list, node) {
--		list_del(&hr_dip->node);
-+	xa_for_each(&hr_dev->qp_table.dip_xa, idx, hr_dip) {
-+		__xa_erase(&hr_dev->qp_table.dip_xa, hr_dip->dip_idx);
- 		kfree(hr_dip);
- 	}
- 
--	spin_unlock_irqrestore(&hr_dev->dip_list_lock, flags);
-+	xa_unlock(&hr_dev->qp_table.dip_xa);
- }
- 
- static struct ib_pd *free_mr_init_pd(struct hns_roce_dev *hr_dev)
-@@ -2974,7 +2973,7 @@ static void hns_roce_v2_exit(struct hns_roce_dev *hr_dev)
- 		hns_roce_free_link_table(hr_dev);
- 
- 	if (hr_dev->pci_dev->revision == PCI_REVISION_ID_HIP09)
--		free_dip_list(hr_dev);
-+		free_dip_entry(hr_dev);
- }
- 
- static int hns_roce_mbox_post(struct hns_roce_dev *hr_dev,
-@@ -4694,26 +4693,49 @@ static int modify_qp_rtr_to_rts(struct ib_qp *ibqp, int attr_mask,
+@@ -4158,7 +4158,7 @@ int kmvhv_counters_tracepoint_regfunc(void)
  	return 0;
  }
  
-+static int alloc_dip_entry(struct xarray *dip_xa, u32 qpn)
-+{
-+	struct hns_roce_dip *hr_dip;
-+	int ret;
-+
-+	hr_dip = xa_load(dip_xa, qpn);
-+	if (hr_dip)
-+		return 0;
-+
-+	hr_dip = kzalloc(sizeof(*hr_dip), GFP_KERNEL);
-+	if (!hr_dip)
-+		return -ENOMEM;
-+
-+	ret = xa_err(xa_store(dip_xa, qpn, hr_dip, GFP_KERNEL));
-+	if (ret)
-+		kfree(hr_dip);
-+
-+	return ret;
-+}
-+
- static int get_dip_ctx_idx(struct ib_qp *ibqp, const struct ib_qp_attr *attr,
- 			   u32 *dip_idx)
+-void kmvhv_counters_tracepoint_unregfunc(void)
++void kvmhv_counters_tracepoint_unregfunc(void)
  {
- 	const struct ib_global_route *grh = rdma_ah_read_grh(&attr->ah_attr);
- 	struct hns_roce_dev *hr_dev = to_hr_dev(ibqp->device);
--	u32 *spare_idx = hr_dev->qp_table.idx_table.spare_idx;
--	u32 *head =  &hr_dev->qp_table.idx_table.head;
--	u32 *tail =  &hr_dev->qp_table.idx_table.tail;
-+	struct xarray *dip_xa = &hr_dev->qp_table.dip_xa;
-+	struct hns_roce_qp *hr_qp = to_hr_qp(ibqp);
- 	struct hns_roce_dip *hr_dip;
--	unsigned long flags;
-+	unsigned long idx;
- 	int ret = 0;
+ 	int cpu;
  
--	spin_lock_irqsave(&hr_dev->dip_list_lock, flags);
-+	ret = alloc_dip_entry(dip_xa, ibqp->qp_num);
-+	if (ret)
-+		return ret;
- 
--	spare_idx[*tail] = ibqp->qp_num;
--	*tail = (*tail == hr_dev->caps.num_qps - 1) ? 0 : (*tail + 1);
-+	xa_lock(dip_xa);
- 
--	list_for_each_entry(hr_dip, &hr_dev->dip_list, node) {
--		if (!memcmp(grh->dgid.raw, hr_dip->dgid, GID_LEN_V2)) {
-+	xa_for_each(dip_xa, idx, hr_dip) {
-+		if (hr_dip->qp_cnt &&
-+		    !memcmp(grh->dgid.raw, hr_dip->dgid, GID_LEN_V2)) {
- 			*dip_idx = hr_dip->dip_idx;
-+			hr_dip->qp_cnt++;
-+			hr_qp->dip = hr_dip;
- 			goto out;
- 		}
- 	}
-@@ -4721,19 +4743,24 @@ static int get_dip_ctx_idx(struct ib_qp *ibqp, const struct ib_qp_attr *attr,
- 	/* If no dgid is found, a new dip and a mapping between dgid and
- 	 * dip_idx will be created.
- 	 */
--	hr_dip = kzalloc(sizeof(*hr_dip), GFP_ATOMIC);
--	if (!hr_dip) {
--		ret = -ENOMEM;
--		goto out;
-+	xa_for_each(dip_xa, idx, hr_dip) {
-+		if (hr_dip->qp_cnt)
-+			continue;
-+
-+		*dip_idx = idx;
-+		memcpy(hr_dip->dgid, grh->dgid.raw, sizeof(grh->dgid.raw));
-+		hr_dip->dip_idx = idx;
-+		hr_dip->qp_cnt++;
-+		hr_qp->dip = hr_dip;
-+		break;
- 	}
- 
--	memcpy(hr_dip->dgid, grh->dgid.raw, sizeof(grh->dgid.raw));
--	hr_dip->dip_idx = *dip_idx = spare_idx[*head];
--	*head = (*head == hr_dev->caps.num_qps - 1) ? 0 : (*head + 1);
--	list_add_tail(&hr_dip->node, &hr_dev->dip_list);
-+	/* This should never happen. */
-+	if (WARN_ON_ONCE(!hr_qp->dip))
-+		ret = -ENOSPC;
- 
- out:
--	spin_unlock_irqrestore(&hr_dev->dip_list_lock, flags);
-+	xa_unlock(dip_xa);
- 	return ret;
- }
- 
-@@ -5587,6 +5614,20 @@ static int hns_roce_v2_destroy_qp_common(struct hns_roce_dev *hr_dev,
- 	return ret;
- }
- 
-+static void put_dip_ctx_idx(struct hns_roce_dev *hr_dev,
-+			    struct hns_roce_qp *hr_qp)
-+{
-+	struct hns_roce_dip *hr_dip = hr_qp->dip;
-+
-+	xa_lock(&hr_dev->qp_table.dip_xa);
-+
-+	hr_dip->qp_cnt--;
-+	if (!hr_dip->qp_cnt)
-+		memset(hr_dip->dgid, 0, GID_LEN_V2);
-+
-+	xa_unlock(&hr_dev->qp_table.dip_xa);
-+}
-+
- int hns_roce_v2_destroy_qp(struct ib_qp *ibqp, struct ib_udata *udata)
- {
- 	struct hns_roce_dev *hr_dev = to_hr_dev(ibqp->device);
-@@ -5600,6 +5641,9 @@ int hns_roce_v2_destroy_qp(struct ib_qp *ibqp, struct ib_udata *udata)
- 	spin_unlock_irqrestore(&hr_qp->flush_lock, flags);
- 	flush_work(&hr_qp->flush_work.work);
- 
-+	if (hr_qp->cong_type == CONG_TYPE_DIP)
-+		put_dip_ctx_idx(hr_dev, hr_qp);
-+
- 	ret = hns_roce_v2_destroy_qp_common(hr_dev, hr_qp, udata);
- 	if (ret)
- 		ibdev_err_ratelimited(&hr_dev->ib_dev,
-diff --git a/drivers/infiniband/hw/hns/hns_roce_hw_v2.h b/drivers/infiniband/hw/hns/hns_roce_hw_v2.h
-index dedb1853e193e..cbdbc9edbce6e 100644
---- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.h
-+++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.h
-@@ -1348,7 +1348,7 @@ struct hns_roce_v2_priv {
- struct hns_roce_dip {
- 	u8 dgid[GID_LEN_V2];
- 	u32 dip_idx;
--	struct list_head node; /* all dips are on a list */
-+	u32 qp_cnt;
- };
- 
- struct fmea_ram_ecc {
-diff --git a/drivers/infiniband/hw/hns/hns_roce_main.c b/drivers/infiniband/hw/hns/hns_roce_main.c
-index 49315f39361de..ae24c81c9812d 100644
---- a/drivers/infiniband/hw/hns/hns_roce_main.c
-+++ b/drivers/infiniband/hw/hns/hns_roce_main.c
-@@ -1135,8 +1135,6 @@ int hns_roce_init(struct hns_roce_dev *hr_dev)
- 
- 	INIT_LIST_HEAD(&hr_dev->qp_list);
- 	spin_lock_init(&hr_dev->qp_list_lock);
--	INIT_LIST_HEAD(&hr_dev->dip_list);
--	spin_lock_init(&hr_dev->dip_list_lock);
- 
- 	ret = hns_roce_register_device(hr_dev);
- 	if (ret)
-diff --git a/drivers/infiniband/hw/hns/hns_roce_qp.c b/drivers/infiniband/hw/hns/hns_roce_qp.c
-index 2ad03ecdbf8ec..9e2e76c594063 100644
---- a/drivers/infiniband/hw/hns/hns_roce_qp.c
-+++ b/drivers/infiniband/hw/hns/hns_roce_qp.c
-@@ -1573,14 +1573,10 @@ int hns_roce_init_qp_table(struct hns_roce_dev *hr_dev)
- 	unsigned int reserved_from_bot;
- 	unsigned int i;
- 
--	qp_table->idx_table.spare_idx = kcalloc(hr_dev->caps.num_qps,
--					sizeof(u32), GFP_KERNEL);
--	if (!qp_table->idx_table.spare_idx)
--		return -ENOMEM;
--
- 	mutex_init(&qp_table->scc_mutex);
- 	mutex_init(&qp_table->bank_mutex);
- 	xa_init(&hr_dev->qp_table_xa);
-+	xa_init(&qp_table->dip_xa);
- 
- 	reserved_from_bot = hr_dev->caps.reserved_qps;
- 
-@@ -1605,7 +1601,7 @@ void hns_roce_cleanup_qp_table(struct hns_roce_dev *hr_dev)
- 
- 	for (i = 0; i < HNS_ROCE_QP_BANK_NUM; i++)
- 		ida_destroy(&hr_dev->qp_table.bank[i].ida);
-+	xa_destroy(&hr_dev->qp_table.dip_xa);
- 	mutex_destroy(&hr_dev->qp_table.bank_mutex);
- 	mutex_destroy(&hr_dev->qp_table.scc_mutex);
--	kfree(hr_dev->qp_table.idx_table.spare_idx);
- }
+diff --git a/arch/powerpc/kvm/trace_hv.h b/arch/powerpc/kvm/trace_hv.h
+index 77ebc724e6cdf..35fccaa575cc1 100644
+--- a/arch/powerpc/kvm/trace_hv.h
++++ b/arch/powerpc/kvm/trace_hv.h
+@@ -538,7 +538,7 @@ TRACE_EVENT_FN_COND(kvmppc_vcpu_stats,
+ 	TP_printk("VCPU %d: l1_to_l2_cs_time=%llu ns l2_to_l1_cs_time=%llu ns l2_runtime=%llu ns",
+ 		__entry->vcpu_id,  __entry->l1_to_l2_cs,
+ 		__entry->l2_to_l1_cs, __entry->l2_runtime),
+-	kmvhv_counters_tracepoint_regfunc, kmvhv_counters_tracepoint_unregfunc
++	kvmhv_counters_tracepoint_regfunc, kvmhv_counters_tracepoint_unregfunc
+ );
+ #endif
+ #endif /* _TRACE_KVM_HV_H */
 -- 
 2.43.0
 
