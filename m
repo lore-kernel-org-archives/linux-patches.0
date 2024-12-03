@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CAD781ADA;
-	Tue,  3 Dec 2024 16:13:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8608681ADA;
+	Tue,  3 Dec 2024 16:14:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733242437; cv=none; b=CI3/78yMpLHi4xRNJfgu1DlAcRwyZysoYmYmpr3wxY4wPzIMGWBRLHlGRh8/f9dP7t5WZ6308suBQRZLdz/2/v6YMgRQ51CzaZq7f7j8FVj2f4Xd3Usa1YLgJZrRl+TWLOGSIgib1fzhlhS2hoCpLk2magwY8H6rouXwJ5Ww088=
+	t=1733242440; cv=none; b=k1g/hDH99y0/TV15S5d9Fbhuvg2pBRMFcieVahXHHd9y4vmwJ25EOs6Mc8waLZq/++VQVtt5/i8Wz4+dWSh7jLcsZNLhJpxkV76jlQ+AIgDO6MiR1Tdq3m+1A58blx1MJxIxB+keMzn4egIMIGlDv7AiR2MJNIeucDb0GpQ3av4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733242437; c=relaxed/simple;
-	bh=xa4ZyBdwllJVdeL84XZoloc3c1cpqAOw9IuuIrfaocE=;
+	s=arc-20240116; t=1733242440; c=relaxed/simple;
+	bh=Nj/KMfn34ZMg0jTBHZlm4CREm9HwDlXbuHrhfDCwXds=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e7ixg6XASSVrqcASsaEdKYUeqOYwzCykdRwamranLC/6GN1URMBr1hL5+IQh6TSKDGmx+Mcsj2EGJIUZMnQ0SMkzAY0NH/Wi08h9QEtDweW+nfiVitTnwPp9YcXz0YRDUvcgopQIMviLQG3Ru2LWj6otjRnU2/VGqzqmLKu7OUQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QtJWOiZ/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O51BdAJUa/qbOQkDy6pUOrOoa/bZ7OcADqEV49oQj0BBTmNGBItY0bMm4hWFT6NL0tpkVolY+JOWjMNI5mrnaEmYtYtbF1vrMVEPeia2iMuZXjtNS+M/hgdxseGD7WA06xVe12hkEHNWMqNfs0VGIylvRJjRLJC5m+DO0Uv5tso=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IUVwBsMl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QtJWOiZ/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C428DC4CECF;
-	Tue,  3 Dec 2024 16:13:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IUVwBsMl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E88BEC4CECF;
+	Tue,  3 Dec 2024 16:13:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733242437;
-	bh=xa4ZyBdwllJVdeL84XZoloc3c1cpqAOw9IuuIrfaocE=;
+	s=korg; t=1733242440;
+	bh=Nj/KMfn34ZMg0jTBHZlm4CREm9HwDlXbuHrhfDCwXds=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QtJWOiZ//cGVmPAJT+GFBSOwRLoQiU1yDsUyrqBU2NpGmJ42rHfAvZYMjyCZsQ5B8
-	 rxX4so3mEkL1YfHTn4Z1oP3B1RR5wzZ8Sz3HEfYJyiU9QETqdudEdz8V5oG5ln9cQZ
-	 n3Fwo+ER6eJZ7erRSfCrK00yIvivZ6WiMro43vus=
+	b=IUVwBsMlm61Zzn5XrfHOHL3I92e0VRC8fhMdVHCRbk+yfmbjrmdmCoVm8g5vmVXX3
+	 HUqsbinfGfgMa5758/DqBPHAiLeI/lElI7qhgmW/H2rVO8AdqnY6e9/aJhlEQD0/bo
+	 77k/pLphOji1R6oQiD/alPfuSHzfYcuzb448qAts=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	linux-cifs@vger.kernel.org,
-	syzkaller@googlegroups.com,
-	Yunseong Kim <yskelg@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
+	Tom Talpey <tom@talpey.com>,
+	Jianhong Yin <jiyin@redhat.com>,
+	"Paulo Alcantara (Red Hat)" <pc@manguebit.com>,
 	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.12 703/826] ksmbd: fix use-after-free in SMB request handling
-Date: Tue,  3 Dec 2024 15:47:10 +0100
-Message-ID: <20241203144811.180521239@linuxfoundation.org>
+Subject: [PATCH 6.12 704/826] smb: client: fix NULL ptr deref in crypto_aead_setkey()
+Date: Tue,  3 Dec 2024 15:47:11 +0100
+Message-ID: <20241203144811.220482919@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -53,57 +52,121 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yunseong Kim <yskelg@gmail.com>
+From: Paulo Alcantara <pc@manguebit.com>
 
-commit 9a8c5d89d327ff58e9b2517f8a6afb4181d32c6e upstream.
+commit 4bdec0d1f658f7c98749bd2c5a486e6cfa8565d2 upstream.
 
-A race condition exists between SMB request handling in
-`ksmbd_conn_handler_loop()` and the freeing of `ksmbd_conn` in the
-workqueue handler `handle_ksmbd_work()`. This leads to a UAF.
-- KASAN: slab-use-after-free Read in handle_ksmbd_work
-- KASAN: slab-use-after-free in rtlock_slowlock_locked
+Neither SMB3.0 or SMB3.02 supports encryption negotiate context, so
+when SMB2_GLOBAL_CAP_ENCRYPTION flag is set in the negotiate response,
+the client uses AES-128-CCM as the default cipher.  See MS-SMB2
+3.3.5.4.
 
-This race condition arises as follows:
-- `ksmbd_conn_handler_loop()` waits for `conn->r_count` to reach zero:
-  `wait_event(conn->r_count_q, atomic_read(&conn->r_count) == 0);`
-- Meanwhile, `handle_ksmbd_work()` decrements `conn->r_count` using
-  `atomic_dec_return(&conn->r_count)`, and if it reaches zero, calls
-  `ksmbd_conn_free()`, which frees `conn`.
-- However, after `handle_ksmbd_work()` decrements `conn->r_count`,
-  it may still access `conn->r_count_q` in the following line:
-  `waitqueue_active(&conn->r_count_q)` or `wake_up(&conn->r_count_q)`
-  This results in a UAF, as `conn` has already been freed.
+Commit b0abcd65ec54 ("smb: client: fix UAF in async decryption") added
+a @server->cipher_type check to conditionally call
+smb3_crypto_aead_allocate(), but that check would always be false as
+@server->cipher_type is unset for SMB3.02.
 
-The discovery of this UAF can be referenced in the following PR for
-syzkaller's support for SMB requests.
-Link: https://github.com/google/syzkaller/pull/5524
+Fix the following KASAN splat by setting @server->cipher_type for
+SMB3.02 as well.
 
-Fixes: ee426bfb9d09 ("ksmbd: add refcnt to ksmbd_conn struct")
-Cc: linux-cifs@vger.kernel.org
-Cc: stable@vger.kernel.org # v6.6.55+, v6.10.14+, v6.11.3+
-Cc: syzkaller@googlegroups.com
-Signed-off-by: Yunseong Kim <yskelg@gmail.com>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+mount.cifs //srv/share /mnt -o vers=3.02,seal,...
+
+BUG: KASAN: null-ptr-deref in crypto_aead_setkey+0x2c/0x130
+Read of size 8 at addr 0000000000000020 by task mount.cifs/1095
+CPU: 1 UID: 0 PID: 1095 Comm: mount.cifs Not tainted 6.12.0 #1
+Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-3.fc41
+04/01/2014
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0x5d/0x80
+ ? crypto_aead_setkey+0x2c/0x130
+ kasan_report+0xda/0x110
+ ? crypto_aead_setkey+0x2c/0x130
+ crypto_aead_setkey+0x2c/0x130
+ crypt_message+0x258/0xec0 [cifs]
+ ? __asan_memset+0x23/0x50
+ ? __pfx_crypt_message+0x10/0x10 [cifs]
+ ? mark_lock+0xb0/0x6a0
+ ? hlock_class+0x32/0xb0
+ ? mark_lock+0xb0/0x6a0
+ smb3_init_transform_rq+0x352/0x3f0 [cifs]
+ ? lock_acquire.part.0+0xf4/0x2a0
+ smb_send_rqst+0x144/0x230 [cifs]
+ ? __pfx_smb_send_rqst+0x10/0x10 [cifs]
+ ? hlock_class+0x32/0xb0
+ ? smb2_setup_request+0x225/0x3a0 [cifs]
+ ? __pfx_cifs_compound_last_callback+0x10/0x10 [cifs]
+ compound_send_recv+0x59b/0x1140 [cifs]
+ ? __pfx_compound_send_recv+0x10/0x10 [cifs]
+ ? __create_object+0x5e/0x90
+ ? hlock_class+0x32/0xb0
+ ? do_raw_spin_unlock+0x9a/0xf0
+ cifs_send_recv+0x23/0x30 [cifs]
+ SMB2_tcon+0x3ec/0xb30 [cifs]
+ ? __pfx_SMB2_tcon+0x10/0x10 [cifs]
+ ? lock_acquire.part.0+0xf4/0x2a0
+ ? __pfx_lock_release+0x10/0x10
+ ? do_raw_spin_trylock+0xc6/0x120
+ ? lock_acquire+0x3f/0x90
+ ? _get_xid+0x16/0xd0 [cifs]
+ ? __pfx_SMB2_tcon+0x10/0x10 [cifs]
+ ? cifs_get_smb_ses+0xcdd/0x10a0 [cifs]
+ cifs_get_smb_ses+0xcdd/0x10a0 [cifs]
+ ? __pfx_cifs_get_smb_ses+0x10/0x10 [cifs]
+ ? cifs_get_tcp_session+0xaa0/0xca0 [cifs]
+ cifs_mount_get_session+0x8a/0x210 [cifs]
+ dfs_mount_share+0x1b0/0x11d0 [cifs]
+ ? __pfx___lock_acquire+0x10/0x10
+ ? __pfx_dfs_mount_share+0x10/0x10 [cifs]
+ ? lock_acquire.part.0+0xf4/0x2a0
+ ? find_held_lock+0x8a/0xa0
+ ? hlock_class+0x32/0xb0
+ ? lock_release+0x203/0x5d0
+ cifs_mount+0xb3/0x3d0 [cifs]
+ ? do_raw_spin_trylock+0xc6/0x120
+ ? __pfx_cifs_mount+0x10/0x10 [cifs]
+ ? lock_acquire+0x3f/0x90
+ ? find_nls+0x16/0xa0
+ ? smb3_update_mnt_flags+0x372/0x3b0 [cifs]
+ cifs_smb3_do_mount+0x1e2/0xc80 [cifs]
+ ? __pfx_vfs_parse_fs_string+0x10/0x10
+ ? __pfx_cifs_smb3_do_mount+0x10/0x10 [cifs]
+ smb3_get_tree+0x1bf/0x330 [cifs]
+ vfs_get_tree+0x4a/0x160
+ path_mount+0x3c1/0xfb0
+ ? kasan_quarantine_put+0xc7/0x1d0
+ ? __pfx_path_mount+0x10/0x10
+ ? kmem_cache_free+0x118/0x3e0
+ ? user_path_at+0x74/0xa0
+ __x64_sys_mount+0x1a6/0x1e0
+ ? __pfx___x64_sys_mount+0x10/0x10
+ ? mark_held_locks+0x1a/0x90
+ do_syscall_64+0xbb/0x1d0
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+Cc: Tom Talpey <tom@talpey.com>
+Reported-by: Jianhong Yin <jiyin@redhat.com>
+Cc: stable@vger.kernel.org # v6.12
+Fixes: b0abcd65ec54 ("smb: client: fix UAF in async decryption")
+Signed-off-by: Paulo Alcantara (Red Hat) <pc@manguebit.com>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/server.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ fs/smb/client/smb2pdu.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/fs/smb/server/server.c
-+++ b/fs/smb/server/server.c
-@@ -276,8 +276,12 @@ static void handle_ksmbd_work(struct wor
- 	 * disconnection. waitqueue_active is safe because it
- 	 * uses atomic operation for condition.
+--- a/fs/smb/client/smb2pdu.c
++++ b/fs/smb/client/smb2pdu.c
+@@ -1231,7 +1231,9 @@ SMB2_negotiate(const unsigned int xid,
+ 	 * SMB3.0 supports only 1 cipher and doesn't have a encryption neg context
+ 	 * Set the cipher type manually.
  	 */
-+	atomic_inc(&conn->refcnt);
- 	if (!atomic_dec_return(&conn->r_count) && waitqueue_active(&conn->r_count_q))
- 		wake_up(&conn->r_count_q);
-+
-+	if (atomic_dec_and_test(&conn->refcnt))
-+		kfree(conn);
- }
+-	if (server->dialect == SMB30_PROT_ID && (server->capabilities & SMB2_GLOBAL_CAP_ENCRYPTION))
++	if ((server->dialect == SMB30_PROT_ID ||
++	     server->dialect == SMB302_PROT_ID) &&
++	    (server->capabilities & SMB2_GLOBAL_CAP_ENCRYPTION))
+ 		server->cipher_type = SMB2_ENCRYPTION_AES128_CCM;
  
- /**
+ 	security_blob = smb2_get_data_area_len(&blob_offset, &blob_length,
 
 
