@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FCBA1FBCB6;
-	Tue,  3 Dec 2024 15:11:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BD371FC0E5;
+	Tue,  3 Dec 2024 15:11:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733238690; cv=none; b=o51fX52ho5ZlE4ha1iOH1CxUglZJGqcrA9G/bqSXR2K577zSNmO37Qjf16qDsY1VvuTUNfIaybOReq5YKyZDCB45IX5BuFY3/k2BdqE9ncocy43GzEWh9lcLmH/lAArXB9FgPD7i0BFxZ1ee2TvjElTMZKy4IbJgLHOeomgTb5s=
+	t=1733238693; cv=none; b=mONHlKwpc+32tbXCGThGa20CiZjzBdcS7z3Rb/jhmpyDdAynLxRZPaqVyTBOtXj5sS1EJmYhhTRepnsRIjSpsvtnZ/aJVw2X7DQL/MKwIrrzAk53oZdwR/Tvpfe5BXP1LdR3iridVWPPzZIogCDKHqrsDihmNdn60NsGfzgQVEU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733238690; c=relaxed/simple;
-	bh=9BwFspFrr0EOaeGm1sK3fkXCSag+SnFbVlK4JQlfY7s=;
+	s=arc-20240116; t=1733238693; c=relaxed/simple;
+	bh=7zvJxPrMAvc4+T9t2X/SbjniyGb00yOmm/rrjlyysO0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hMVv00a5O35qncD9ibkaSx0jPsmj+vwYlPckslt0IEY3UkJ90c+ZApgKDihwufzBwUWFGFxUfy13wrxZ8anhtqLWYxhOTF38UtY2EkO0/KJSXH8EdtgRa7QEBaRHtI3vg9FSFPbd8Oh04dh4uekHBeSjIFoFkoP6zyM9UtMBecA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jy155aX8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=StbQPSd6ZIsK9bBL9Sv3APd7d5+8FYdYPZXuG/ofLvjOK/aXmWuuqT4N9CbSPCnOYOPfQsWnaL7yLpdFPNgIcOiVo+odxmnOT9RgZwh2s+ZnPCF0WdjvpdCKMShdsTFfgfPVH42J3qO28/T9PI3lv/Q9zvLHaN3wk8p/HTe1Gi8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RondncGn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jy155aX8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2ED7C4CEDE;
-	Tue,  3 Dec 2024 15:11:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RondncGn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4671C4CECF;
+	Tue,  3 Dec 2024 15:11:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733238690;
-	bh=9BwFspFrr0EOaeGm1sK3fkXCSag+SnFbVlK4JQlfY7s=;
+	s=korg; t=1733238693;
+	bh=7zvJxPrMAvc4+T9t2X/SbjniyGb00yOmm/rrjlyysO0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jy155aX8F9PzmDaEGFLhoMVQFmXh2Z/Zgn9uWmCjmEc9eJ05z7aalHkFRzjHLfZ7M
-	 qnQR+DH9FP7PeBX0rfmA0f+xh6b5d2wFBlzYll1xf7MOZwq1VCu6pLstnqzGtJrVE+
-	 bKa4zXpFUk1PV5UGZG7eq6flMfrQ3RZZyLDwVaOM=
+	b=RondncGncgbRKW8lLrpWvqZcT4PPIOEJL76LeSQ/C18dQFrTHQs/zafG8Ica+6PlD
+	 fLq8hD/xwD3Y3gpdB8vdErJcRVktPrL7X8SmUUKujqv+1pTlP/YEVMkbKEqblG5yaf
+	 MpJ1/uuvW1sFmb1MbuC5WrlOSxMbrTRB7/cSjS6o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+6cf5652d3df49fae2e3f@syzkaller.appspotmail.com,
-	Dmitry Antipov <dmantipov@yandex.ru>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Michal Schmidt <mschmidt@redhat.com>,
+	Felix Maurer <fmaurer@redhat.com>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
+	Stanislav Fomichev <sdf@fomichev.me>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 364/817] Bluetooth: fix use-after-free in device_for_each_child()
-Date: Tue,  3 Dec 2024 15:38:56 +0100
-Message-ID: <20241203144010.049791068@linuxfoundation.org>
+Subject: [PATCH 6.11 365/817] xsk: Free skb when TX metadata options are invalid
+Date: Tue,  3 Dec 2024 15:38:57 +0100
+Message-ID: <20241203144010.088639518@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -46,154 +49,77 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.11-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dmitry Antipov <dmantipov@yandex.ru>
+From: Felix Maurer <fmaurer@redhat.com>
 
-[ Upstream commit 27aabf27fd014ae037cc179c61b0bee7cff55b3d ]
+[ Upstream commit 0c0d0f42ffa6ac94cd79893b7ed419c15e1b45de ]
 
-Syzbot has reported the following KASAN splat:
+When a new skb is allocated for transmitting an xsk descriptor, i.e., for
+every non-multibuf descriptor or the first frag of a multibuf descriptor,
+but the descriptor is later found to have invalid options set for the TX
+metadata, the new skb is never freed. This can leak skbs until the send
+buffer is full which makes sending more packets impossible.
 
-BUG: KASAN: slab-use-after-free in device_for_each_child+0x18f/0x1a0
-Read of size 8 at addr ffff88801f605308 by task kbnepd bnep0/4980
+Fix this by freeing the skb in the error path if we are currently dealing
+with the first frag, i.e., an skb allocated in this iteration of
+xsk_build_skb.
 
-CPU: 0 UID: 0 PID: 4980 Comm: kbnepd bnep0 Not tainted 6.12.0-rc4-00161-gae90f6a6170d #1
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.3-2.fc40 04/01/2014
-Call Trace:
- <TASK>
- dump_stack_lvl+0x100/0x190
- ? device_for_each_child+0x18f/0x1a0
- print_report+0x13a/0x4cb
- ? __virt_addr_valid+0x5e/0x590
- ? __phys_addr+0xc6/0x150
- ? device_for_each_child+0x18f/0x1a0
- kasan_report+0xda/0x110
- ? device_for_each_child+0x18f/0x1a0
- ? __pfx_dev_memalloc_noio+0x10/0x10
- device_for_each_child+0x18f/0x1a0
- ? __pfx_device_for_each_child+0x10/0x10
- pm_runtime_set_memalloc_noio+0xf2/0x180
- netdev_unregister_kobject+0x1ed/0x270
- unregister_netdevice_many_notify+0x123c/0x1d80
- ? __mutex_trylock_common+0xde/0x250
- ? __pfx_unregister_netdevice_many_notify+0x10/0x10
- ? trace_contention_end+0xe6/0x140
- ? __mutex_lock+0x4e7/0x8f0
- ? __pfx_lock_acquire.part.0+0x10/0x10
- ? rcu_is_watching+0x12/0xc0
- ? unregister_netdev+0x12/0x30
- unregister_netdevice_queue+0x30d/0x3f0
- ? __pfx_unregister_netdevice_queue+0x10/0x10
- ? __pfx_down_write+0x10/0x10
- unregister_netdev+0x1c/0x30
- bnep_session+0x1fb3/0x2ab0
- ? __pfx_bnep_session+0x10/0x10
- ? __pfx_lock_release+0x10/0x10
- ? __pfx_woken_wake_function+0x10/0x10
- ? __kthread_parkme+0x132/0x200
- ? __pfx_bnep_session+0x10/0x10
- ? kthread+0x13a/0x370
- ? __pfx_bnep_session+0x10/0x10
- kthread+0x2b7/0x370
- ? __pfx_kthread+0x10/0x10
- ret_from_fork+0x48/0x80
- ? __pfx_kthread+0x10/0x10
- ret_from_fork_asm+0x1a/0x30
- </TASK>
-
-Allocated by task 4974:
- kasan_save_stack+0x30/0x50
- kasan_save_track+0x14/0x30
- __kasan_kmalloc+0xaa/0xb0
- __kmalloc_noprof+0x1d1/0x440
- hci_alloc_dev_priv+0x1d/0x2820
- __vhci_create_device+0xef/0x7d0
- vhci_write+0x2c7/0x480
- vfs_write+0x6a0/0xfc0
- ksys_write+0x12f/0x260
- do_syscall_64+0xc7/0x250
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-Freed by task 4979:
- kasan_save_stack+0x30/0x50
- kasan_save_track+0x14/0x30
- kasan_save_free_info+0x3b/0x60
- __kasan_slab_free+0x4f/0x70
- kfree+0x141/0x490
- hci_release_dev+0x4d9/0x600
- bt_host_release+0x6a/0xb0
- device_release+0xa4/0x240
- kobject_put+0x1ec/0x5a0
- put_device+0x1f/0x30
- vhci_release+0x81/0xf0
- __fput+0x3f6/0xb30
- task_work_run+0x151/0x250
- do_exit+0xa79/0x2c30
- do_group_exit+0xd5/0x2a0
- get_signal+0x1fcd/0x2210
- arch_do_signal_or_restart+0x93/0x780
- syscall_exit_to_user_mode+0x140/0x290
- do_syscall_64+0xd4/0x250
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-In 'hci_conn_del_sysfs()', 'device_unregister()' may be called when
-an underlying (kobject) reference counter is greater than 1. This
-means that reparenting (happened when the device is actually freed)
-is delayed and, during that delay, parent controller device (hciX)
-may be deleted. Since the latter may create a dangling pointer to
-freed parent, avoid that scenario by reparenting to NULL explicitly.
-
-Reported-by: syzbot+6cf5652d3df49fae2e3f@syzkaller.appspotmail.com
-Tested-by: syzbot+6cf5652d3df49fae2e3f@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=6cf5652d3df49fae2e3f
-Fixes: a85fb91e3d72 ("Bluetooth: Fix double free in hci_conn_cleanup")
-Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: 48eb03dd2630 ("xsk: Add TX timestamp and TX checksum offload support")
+Reported-by: Michal Schmidt <mschmidt@redhat.com>
+Signed-off-by: Felix Maurer <fmaurer@redhat.com>
+Reviewed-by: Toke Høiland-Jørgensen <toke@redhat.com>
+Acked-by: Stanislav Fomichev <sdf@fomichev.me>
+Acked-by: Martin KaFai Lau <martin.lau@kernel.org>
+Link: https://patch.msgid.link/edb9b00fb19e680dff5a3350cd7581c5927975a8.1731581697.git.fmaurer@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_sysfs.c | 15 ++++-----------
- 1 file changed, 4 insertions(+), 11 deletions(-)
+ net/xdp/xsk.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/net/bluetooth/hci_sysfs.c b/net/bluetooth/hci_sysfs.c
-index 367e32fe30eb8..4b54dbbf0729a 100644
---- a/net/bluetooth/hci_sysfs.c
-+++ b/net/bluetooth/hci_sysfs.c
-@@ -21,16 +21,6 @@ static const struct device_type bt_link = {
- 	.release = bt_link_release,
- };
+diff --git a/net/xdp/xsk.c b/net/xdp/xsk.c
+index 7e16336044b2d..6c042e03dad3c 100644
+--- a/net/xdp/xsk.c
++++ b/net/xdp/xsk.c
+@@ -675,6 +675,8 @@ static struct sk_buff *xsk_build_skb(struct xdp_sock *xs,
+ 		len = desc->len;
  
--/*
-- * The rfcomm tty device will possibly retain even when conn
-- * is down, and sysfs doesn't support move zombie device,
-- * so we should move the device before conn device is destroyed.
-- */
--static int __match_tty(struct device *dev, void *data)
--{
--	return !strncmp(dev_name(dev), "rfcomm", 6);
--}
+ 		if (!skb) {
++			first_frag = true;
++
+ 			hr = max(NET_SKB_PAD, L1_CACHE_ALIGN(dev->needed_headroom));
+ 			tr = dev->needed_tailroom;
+ 			skb = sock_alloc_send_skb(&xs->sk, hr + len + tr, 1, &err);
+@@ -685,12 +687,8 @@ static struct sk_buff *xsk_build_skb(struct xdp_sock *xs,
+ 			skb_put(skb, len);
+ 
+ 			err = skb_store_bits(skb, 0, buffer, len);
+-			if (unlikely(err)) {
+-				kfree_skb(skb);
++			if (unlikely(err))
+ 				goto free_err;
+-			}
 -
- void hci_conn_init_sysfs(struct hci_conn *conn)
- {
- 	struct hci_dev *hdev = conn->hdev;
-@@ -73,10 +63,13 @@ void hci_conn_del_sysfs(struct hci_conn *conn)
- 		return;
- 	}
+-			first_frag = true;
+ 		} else {
+ 			int nr_frags = skb_shinfo(skb)->nr_frags;
+ 			struct page *page;
+@@ -758,6 +756,9 @@ static struct sk_buff *xsk_build_skb(struct xdp_sock *xs,
+ 	return skb;
  
-+	/* If there are devices using the connection as parent reset it to NULL
-+	 * before unregistering the device.
-+	 */
- 	while (1) {
- 		struct device *dev;
- 
--		dev = device_find_child(&conn->dev, NULL, __match_tty);
-+		dev = device_find_any_child(&conn->dev);
- 		if (!dev)
- 			break;
- 		device_move(dev, NULL, DPM_ORDER_DEV_LAST);
+ free_err:
++	if (first_frag && skb)
++		kfree_skb(skb);
++
+ 	if (err == -EOVERFLOW) {
+ 		/* Drop the packet */
+ 		xsk_set_destructor_arg(xs->skb);
 -- 
 2.43.0
 
