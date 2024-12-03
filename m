@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1AF11F7584;
-	Tue,  3 Dec 2024 15:45:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DEF01F7584;
+	Tue,  3 Dec 2024 15:45:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733240749; cv=none; b=ods1/iltCJsyBOM7gGst75Gts0iBBnMXBGx1TQrXqWunqRv3knBxcJqHn3cBPi6vf0gcjyWCewTzt5MxJBIJ8CCSVRE0DF0jddxJb4II2bgS12iKmfoDlqhfMwPGBvySRecvZMw+B+nkPITKx8PLQrP9of2EE2ot5qoohKNDY6c=
+	t=1733240752; cv=none; b=Fu6rdl1Yfud17lXqsm41LJaxbXjr+jgrjVG3EssVOxTTJ2qkO5ZKBz2EsjnIhKvxc7yiu9VQqr/gcag282C066YRWBheTverlzORzgSbzzxJSBS1VGYSI5j81gxcY7jTKEzpWKCXu36cHj4CbxjnPGfNuIDppRjeNRg5075f3UM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733240749; c=relaxed/simple;
-	bh=wLX2+Dirk7deDOvKfysg76JuLFqblNvIX3afoB9At0E=;
+	s=arc-20240116; t=1733240752; c=relaxed/simple;
+	bh=Y4wuMa4pk9UEivDBUoPpME4AzypUk+WKj/pJfOMnbzE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WWvawWHeitUXmB4g6MdL0w6bDpogAjElOyalLmP50zbO1HaljDc25nE0ATniAzG1gQwdj829vkKi/nZhIWVQX+h73etCXt7GkX26ZLM+C6gBePdDhEyWcvmy80kxjUP76cmWV2Nyxc629tBxow8yFLm7Q/sPbgX4Z31Jy+pPnao=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1O1ZgWXY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bRwsYCwcqbSYebxJbP9mgfJmyWDVnOkZRk8MUgeyQHsB8/N/jC7o0e1IHIEPHIS8zpbJUwRmlxcWtcztDa4pkWLzlzhkpN8PEqbuhajLc38dtLyv1gJVxLCmy7QwifNRsHbnh3rADJLnIPc9To6EemM6pWiThjM6N8SV7yIu3jQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZIpmiCji; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1O1ZgWXY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63E39C4CED8;
-	Tue,  3 Dec 2024 15:45:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZIpmiCji"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D92DAC4CECF;
+	Tue,  3 Dec 2024 15:45:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733240748;
-	bh=wLX2+Dirk7deDOvKfysg76JuLFqblNvIX3afoB9At0E=;
+	s=korg; t=1733240752;
+	bh=Y4wuMa4pk9UEivDBUoPpME4AzypUk+WKj/pJfOMnbzE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1O1ZgWXYrBZS7UeLPwpfQYCP6MtvZuMUACpvzcP7Ie1VD3n7dUYFJryfSP//raetF
-	 jVPEH7fgzzsSJ5dIbD/r7vSgYxFn/pWloJBLdoN2bIGXlhsXuv5CX8WdKEZQt0lDH4
-	 xY+5jC8eSuaSvrL6Ok9USQpj55lI3OEBzzNM0/JE=
+	b=ZIpmiCjiwLwlDyRIiVJR62+aTpPgFw/h414YW8G+OpJD06sOCdCeh71G9SC8tPow/
+	 Yo65WtCII7/heVCSGfDNOZRE8ikTYNM+OrWH330fsHJx6hSSU6Q6/FgOqAkVH1wNzj
+	 Mieu3GF/0ZIOI8Ywe10/A2TleF9BR3Xc+/g7z37U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Kaistra <martin.kaistra@linutronix.de>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Vijendar Mukunda <Vijendar.Mukunda@amd.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 223/826] wifi: rtl8xxxu: Perform update_beacon_work when beaconing is enabled
-Date: Tue,  3 Dec 2024 15:39:10 +0100
-Message-ID: <20241203144752.438475206@linuxfoundation.org>
+Subject: [PATCH 6.12 224/826] ASoC: amd: acp: fix for inconsistent indenting
+Date: Tue,  3 Dec 2024 15:39:11 +0100
+Message-ID: <20241203144752.477559592@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -51,47 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Martin Kaistra <martin.kaistra@linutronix.de>
+From: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
 
-[ Upstream commit d7063ed6758c62e00a2f56467ded85a021fac67a ]
+[ Upstream commit 914219d74931211e719907e0eed03d8133f8b1b7 ]
 
-In STA+AP concurrent mode, performing a scan operation on one vif
-temporarily stops beacons on the other. When the scan is completed,
-beacons are enabled again with BSS_CHANGED_BEACON_ENABLED.
+Fix below Smatch static checker warning:
 
-We can observe that no beacons are being sent when just
-rtl8xxxu_start_tx_beacon() is being called.
+sound/soc/amd/acp/acp-sdw-sof-mach.c:365 sof_card_dai_links_create()
+warn: inconsistent indenting
 
-Thus, also perform update_beacon_work in order to restore beaconing.
-
-Fixes: cde8848cad0b ("wifi: rtl8xxxu: Add beacon functions")
-Signed-off-by: Martin Kaistra <martin.kaistra@linutronix.de>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20240930084955.455241-1-martin.kaistra@linutronix.de
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Closes: https://lore.kernel.org/all/a201e871-375e-43eb-960d-5c048956c2ff@amd.com/T/
+Fixes: 6d8348ddc56e ("ASoC: amd: acp: refactor SoundWire machine driver code")
+Signed-off-by: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
+Link: https://patch.msgid.link/20241007085321.3991149-2-Vijendar.Mukunda@amd.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtl8xxxu/core.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ sound/soc/amd/acp/acp-sdw-sof-mach.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/realtek/rtl8xxxu/core.c b/drivers/net/wireless/realtek/rtl8xxxu/core.c
-index 7891c988dd5f0..f95898f68d68a 100644
---- a/drivers/net/wireless/realtek/rtl8xxxu/core.c
-+++ b/drivers/net/wireless/realtek/rtl8xxxu/core.c
-@@ -5058,10 +5058,12 @@ rtl8xxxu_bss_info_changed(struct ieee80211_hw *hw, struct ieee80211_vif *vif,
+diff --git a/sound/soc/amd/acp/acp-sdw-sof-mach.c b/sound/soc/amd/acp/acp-sdw-sof-mach.c
+index 306854fb08e3d..acab2675d1f5c 100644
+--- a/sound/soc/amd/acp/acp-sdw-sof-mach.c
++++ b/sound/soc/amd/acp/acp-sdw-sof-mach.c
+@@ -362,7 +362,7 @@ static int sof_card_dai_links_create(struct snd_soc_card *card)
+ 	dai_links = devm_kcalloc(dev, num_links, sizeof(*dai_links), GFP_KERNEL);
+ 	if (!dai_links) {
+ 		ret = -ENOMEM;
+-	goto err_end;
++		goto err_end;
  	}
  
- 	if (changed & BSS_CHANGED_BEACON_ENABLED) {
--		if (bss_conf->enable_beacon)
-+		if (bss_conf->enable_beacon) {
- 			rtl8xxxu_start_tx_beacon(priv);
--		else
-+			schedule_delayed_work(&priv->update_beacon_work, 0);
-+		} else {
- 			rtl8xxxu_stop_tx_beacon(priv);
-+		}
- 	}
- 
- 	if (changed & BSS_CHANGED_BEACON)
+ 	card->codec_conf = codec_conf;
 -- 
 2.43.0
 
