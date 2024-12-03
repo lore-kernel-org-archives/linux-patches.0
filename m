@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D7221F7540;
-	Tue,  3 Dec 2024 15:15:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 813301F7540;
+	Tue,  3 Dec 2024 15:15:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733238940; cv=none; b=T8yQz8sZuc43jL5wCI58HOtyzsC2QcF0cMHulKZpR7VQUs+Z8vq5G6f/RMRhG7KNzcEy28V3QXDV+D7TGRhQRsWoeUPF5sBWMhTv8ga7KHzNjKUGpEeds+LVH1UCVWuv2SXl4QJxH3Z6ZXMb0qzuZ6QkVSb4Z/QWUwmnLDcWbLA=
+	t=1733238943; cv=none; b=NTjxEmtwvTAEX28exL2gXdsqjad89BkQwfe/neIaVS00CIn2NFNF16zPZd1eIO2/pmBA3JrKuVWjxN+qryuasBD+JItps0MJS7soqr9Zv5Xe6X4w1WsQfxfpo1YpR0OLMQRLnWRUt0qUmnfvB7okyphfMzywIfUojjNK2/NmkW0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733238940; c=relaxed/simple;
-	bh=2OmEbhZtJYYNTxrO9QACjxia5YQqO2U0ZFdVzvn+fMU=;
+	s=arc-20240116; t=1733238943; c=relaxed/simple;
+	bh=fk6jsLARIqqzRIm5t2MHnUYwaiFu4Lage6LNTwHG984=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FNP5y7CBD1MB+5dZfF1FywiOTO5F5O5Ex3BXl6RUSvFGsv9jfbnssq8xOkGgAUDOnMXfbBiuDfwIK0I1YSjgZWKH+pGzTd8pmG5aKrlhwcSYWvUDaZqlYFKlslCL9J1iXZLT1/Ib8r7FST1mDhb2S7ycLEF3MoBQNaFO4NbmWGI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ROQ4jfKy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IQ4GWK8+3Rxh9171oqpd35URlbBtHyCiOy4RhtkfmFwZ+M34pRgmFqRlpCXvRwb9/y/g1CxYZDtdrJ0X94pvsCR8X99+kNDvoTl9XmsexfhnGIP7w/B++jXlP+deGotSLc5zs3FlsJ6oVYaB9fEfOTHqo4a3biZPHoLE11JNqV4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FciLxn9o; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ROQ4jfKy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 124B0C4CECF;
-	Tue,  3 Dec 2024 15:15:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FciLxn9o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1095C4CECF;
+	Tue,  3 Dec 2024 15:15:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733238940;
-	bh=2OmEbhZtJYYNTxrO9QACjxia5YQqO2U0ZFdVzvn+fMU=;
+	s=korg; t=1733238943;
+	bh=fk6jsLARIqqzRIm5t2MHnUYwaiFu4Lage6LNTwHG984=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ROQ4jfKyvHHR1nbED9bBccGnCz0/0EsiUNr0up77g1fVdJIQi8ngSoR39GFxXtQRt
-	 TZlExWGgYnyq+kveSyMir5AKMRxsBc1qzvB2Izv47J0UWk06z6krvyrKp7iSoKnlwg
-	 MB7CwaP15lOkDSRg1vRALsTu9LTntuw+0lgKYk4E=
+	b=FciLxn9oGIEY9egz68dRJNz+ZklE9cnlhe84b0pJv41pLDl+PfQ/iCiWFUB4CD+nr
+	 EV1cMzwKrpt1LoXX310hs7S04oJ0SFYgrt3xkjn3dRx9svW00G2qgiQju0RhDFJdI8
+	 KiMFTjqxB0O3Sg32QsCXYR9JfkxWceRbu7r+8v+w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Jinjie Ruan <ruanjinjie@huawei.com>,
+	Quentin Perret <qperret@google.com>,
 	Viresh Kumar <viresh.kumar@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 450/817] cpufreq: loongson3: Check for error code from devm_mutex_init() call
-Date: Tue,  3 Dec 2024 15:40:22 +0100
-Message-ID: <20241203144013.442545766@linuxfoundation.org>
+Subject: [PATCH 6.11 451/817] cpufreq: CPPC: Fix wrong return value in cppc_get_cpu_cost()
+Date: Tue,  3 Dec 2024 15:40:23 +0100
+Message-ID: <20241203144013.480714450@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -51,41 +53,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Jinjie Ruan <ruanjinjie@huawei.com>
 
-[ Upstream commit db01e46689e9a986ca6b5d2f41b57d7a81551a4f ]
+[ Upstream commit be392aa80f1e5b0b65ccc2a540b9304fefcfe3d8 ]
 
-Even if it's not critical, the avoidance of checking the error code
-from devm_mutex_init() call today diminishes the point of using devm
-variant of it. Tomorrow it may even leak something. Add the missed
-check.
+cppc_get_cpu_cost() return 0 if the policy is NULL. Then in
+em_compute_costs(), the later zero check for cost is not valid
+as cost is uninitialized. As Quentin pointed out, kernel energy model
+core check the return value of get_cost() first, so if the callback
+failed it should tell the core. Return -EINVAL to fix it.
 
-Fixes: ccf51454145b ("cpufreq: Add Loongson-3 CPUFreq driver support")
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Fixes: 1a1374bb8c59 ("cpufreq: CPPC: Fix possible null-ptr-deref for cppc_get_cpu_cost()")
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Closes: https://lore.kernel.org/all/c4765377-7830-44c2-84fa-706b6e304e10@stanley.mountain/
+Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+Suggested-by: Quentin Perret <qperret@google.com>
 Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/loongson3_cpufreq.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/cpufreq/cppc_cpufreq.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/cpufreq/loongson3_cpufreq.c b/drivers/cpufreq/loongson3_cpufreq.c
-index 6b5e6798d9a28..a923e196ec86e 100644
---- a/drivers/cpufreq/loongson3_cpufreq.c
-+++ b/drivers/cpufreq/loongson3_cpufreq.c
-@@ -346,8 +346,11 @@ static int loongson3_cpufreq_probe(struct platform_device *pdev)
- {
- 	int i, ret;
+diff --git a/drivers/cpufreq/cppc_cpufreq.c b/drivers/cpufreq/cppc_cpufreq.c
+index 00556b4d83f83..27508b396846e 100644
+--- a/drivers/cpufreq/cppc_cpufreq.c
++++ b/drivers/cpufreq/cppc_cpufreq.c
+@@ -494,7 +494,7 @@ static int cppc_get_cpu_cost(struct device *cpu_dev, unsigned long KHz,
  
--	for (i = 0; i < MAX_PACKAGES; i++)
--		devm_mutex_init(&pdev->dev, &cpufreq_mutex[i]);
-+	for (i = 0; i < MAX_PACKAGES; i++) {
-+		ret = devm_mutex_init(&pdev->dev, &cpufreq_mutex[i]);
-+		if (ret)
-+			return ret;
-+	}
+ 	policy = cpufreq_cpu_get_raw(cpu_dev->id);
+ 	if (!policy)
+-		return 0;
++		return -EINVAL;
  
- 	ret = do_service_request(0, 0, CMD_GET_VERSION, 0, 0);
- 	if (ret <= 0)
+ 	cpu_data = policy->driver_data;
+ 	perf_caps = &cpu_data->perf_caps;
 -- 
 2.43.0
 
