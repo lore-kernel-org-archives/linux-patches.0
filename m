@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF96E1F6696;
-	Tue,  3 Dec 2024 15:20:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C94E21F6696;
+	Tue,  3 Dec 2024 15:20:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733239209; cv=none; b=SHBsp0JSAYbv7X7mp5valMcRZinMitsIHb75iLA2C+dMdlQZ+4jfuxisF362OnI/XuYoNr712fCu4nxUhlMx5x/2+Ec/dns49prEVXjQrL3DALD3vrT0g21Pb0kF1LUBVGi1sSUBzVzAi73btU4I189x4xUZyN41f6TOqFVMlCg=
+	t=1733239211; cv=none; b=DsUaT713PRPZkX7UiOadcZNPKPHesr50qJ4RT3EQyEPS8bU5as3mpyEsE2hylJqC+MaKZP+HZ+RAUkWM7IsxHkDvpGpqLjvV/6OGzHQT7pj9xmUVzmJHroE71l1daUK5ZHRAW7kC+6oFR4BCBr3kaxzoxR5Zw76R8rXy6VoBRd4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733239209; c=relaxed/simple;
-	bh=jRZnISTpeeHMzze58iio5jFVX2uO9drP9skvJ6MKvEE=;
+	s=arc-20240116; t=1733239211; c=relaxed/simple;
+	bh=Frn/a7UpvEDZ9h0mO1tU2pdP0q4et8HQC0KqLH3t0kQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZswLOQbCsSoEffDNAfrNAylI+BxZrDNNLpyyw8iVagp0x1lWzu8insU2D/peUH3JA+rUtVfHyLjxtaOq4YjOEFwQkd36LUFeIzzY61TNBStd/jYOsmZH10v5eWBTyl4n5SUxRf1apll7da4S3PeBAtt0dvXLcB8rAa2fXqhu8nI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ULiAbQz1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MCHJeWTA/zZcH8e0rmw6lJrdzxN6euEhQO3eLpSdqNhVOCEiuhknHPBDZFO4oFxy8Qzfeld2F56pnq2rpwqvSmzDxunaljXcl7Mw1YsD1bd4ykuV3UtGc7XHJgUZ4cAUcCRGv77YsUBnga5QJHeqJa6ej/bJN9uGKo5AuY6kGxg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bRBcH1NX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ULiAbQz1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60186C4CECF;
-	Tue,  3 Dec 2024 15:20:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bRBcH1NX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EA36C4CECF;
+	Tue,  3 Dec 2024 15:20:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733239208;
-	bh=jRZnISTpeeHMzze58iio5jFVX2uO9drP9skvJ6MKvEE=;
+	s=korg; t=1733239211;
+	bh=Frn/a7UpvEDZ9h0mO1tU2pdP0q4et8HQC0KqLH3t0kQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ULiAbQz1iQ6YMhqNsiMVx+KI/jEYDLXHwPSagYummEUUyqcoyNC82q68nOB4l/x4J
-	 PnItaVaPQ3FTir4NdXkeX5l03l2STVjl+I5Xw7gv7dWZ3DIYT9bLo5vRUgGyDEw8XW
-	 NhtPqHsRcD8cFVun0v+ht2esj9xEsruMHfs4xidk=
+	b=bRBcH1NXrc/odX/7AkuwNwOS9B2aq2hOWmjr4BCvDMXkIs2RlQjw4E98NUS9ACaQR
+	 ON4Iz8GDNBiPOqrVvduworDziP+o+2ked4DnylyvUviiGafR9v9kxW5vYh20lojxdT
+	 +/5UizJ9uJMHdRGGvsQMoMNGGPo17y3vcXxg4VaM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yongpeng Yang <yangyongpeng1@oppo.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 509/817] f2fs: check curseg->inited before write_sum_page in change_curseg
-Date: Tue,  3 Dec 2024 15:41:21 +0100
-Message-ID: <20241203144015.742660817@linuxfoundation.org>
+Subject: [PATCH 6.11 536/817] remoteproc: qcom: pas: add minidump_id to SM8350 resources
+Date: Tue,  3 Dec 2024 15:41:48 +0100
+Message-ID: <20241203144016.822448210@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -52,37 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yongpeng Yang <yangyongpeng1@oppo.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit 43563069e1c1df417d2eed6eca8a22fc6b04691d ]
+[ Upstream commit e8983156d54f59f57e648ecd44f01c16572da842 ]
 
-In the __f2fs_init_atgc_curseg->get_atssr_segment calling,
-curseg->segno is NULL_SEGNO, indicating that there is no summary
-block that needs to be written.
+Specify minidump_id for the SM8350 DSPs. It was omitted for in the
+original commit e8b4e9a21af7 ("remoteproc: qcom: pas: Add SM8350 PAS
+remoteprocs").
 
-Fixes: 093749e296e2 ("f2fs: support age threshold based garbage collection")
-Signed-off-by: Yongpeng Yang <yangyongpeng1@oppo.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Fixes: e8b4e9a21af7 ("remoteproc: qcom: pas: Add SM8350 PAS remoteprocs")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://lore.kernel.org/r/20241027-sar2130p-adsp-v1-2-bd204e39d24e@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/segment.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/remoteproc/qcom_q6v5_pas.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/f2fs/segment.c b/fs/f2fs/segment.c
-index 3f49a9e0ec642..6379d9c40a024 100644
---- a/fs/f2fs/segment.c
-+++ b/fs/f2fs/segment.c
-@@ -2926,7 +2926,8 @@ static int change_curseg(struct f2fs_sb_info *sbi, int type)
- 	struct f2fs_summary_block *sum_node;
- 	struct page *sum_page;
- 
--	write_sum_page(sbi, curseg->sum_blk, GET_SUM_BLOCK(sbi, curseg->segno));
-+	if (curseg->inited)
-+		write_sum_page(sbi, curseg->sum_blk, GET_SUM_BLOCK(sbi, curseg->segno));
- 
- 	__set_test_and_inuse(sbi, new_segno);
- 
+diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
+index 65467876f09e2..a4abec1e1e846 100644
+--- a/drivers/remoteproc/qcom_q6v5_pas.c
++++ b/drivers/remoteproc/qcom_q6v5_pas.c
+@@ -900,6 +900,7 @@ static const struct adsp_data sm8250_adsp_resource = {
+ 	.crash_reason_smem = 423,
+ 	.firmware_name = "adsp.mdt",
+ 	.pas_id = 1,
++	.minidump_id = 5,
+ 	.auto_boot = true,
+ 	.proxy_pd_names = (char*[]){
+ 		"lcx",
+@@ -1081,6 +1082,7 @@ static const struct adsp_data sm8350_cdsp_resource = {
+ 	.crash_reason_smem = 601,
+ 	.firmware_name = "cdsp.mdt",
+ 	.pas_id = 18,
++	.minidump_id = 7,
+ 	.auto_boot = true,
+ 	.proxy_pd_names = (char*[]){
+ 		"cx",
 -- 
 2.43.0
 
