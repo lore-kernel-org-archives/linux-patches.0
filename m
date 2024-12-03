@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A1FA1F893B;
-	Tue,  3 Dec 2024 16:16:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 708151F8AC6;
+	Tue,  3 Dec 2024 16:17:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733242617; cv=none; b=QfKMFSHy66NDSUCK4NzUexn99ik3eIFyIeAgrHk5/BsljsvlmBQyVH21p3E3LOhIjwNaWkIfzeu2qYELNy4RYq519r5X1BfBZgPKFN/YAtGim3FDWHJdbgCAAHRFcekTZVy+PR9xWjUf7bA4dDyGR+AxaeNwO7ip89ZMP+b8Tj4=
+	t=1733242621; cv=none; b=qQETUlQisN70m4mzzDvr8bNHkWwJrFZZp06YwUgx1CyZUjC/Fa9nTWIco4q7d2yXdp8AdYUV3XtPfIEGnD6hIsrzjtT1xaKxCJzkCKCNPXblyIRCm2XSNXJUeiSL8VWaX4LUcAXsSCo7pXaCGefAc+iMRktoQp6qBWhyIedsNBg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733242617; c=relaxed/simple;
-	bh=DNjoKT/GT+PIa7BYqi5WSQDCNrqH5bSqa5zcJURqyS4=;
+	s=arc-20240116; t=1733242621; c=relaxed/simple;
+	bh=4MMwSP1EV1PqYK43qq5aRXDkLkDqPZs3cyC2PG3aqls=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W/NFxWKK1MHpUblpAAWMy+cmJLa9NWHvjYhqnqqYHYuG9lyAVebsqxbki1yPcMcJmuy/2zzRGOFiif2zbk4zrPmq7sFZDXV3Q0EWBqsKRHYiEPF2LtIXtME8RQIWE4M5+b6l3WfyjjMPPeSEqgqnDQaG7fABPv8WymMM+JDgFG4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZRdzYulc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ZOdLfrENWhHNqgjCv+q2p0grVWiThr0Qv06DB1jnYuD/rhQ1DkVAsc19t1kiJMVRGZXI/xcLtJMDydnF685CSUhrCN0U/gqZSSmTEjnT/C8wkph7w2d5fjHnv6ASby/wtPtkClIStZ48rYG/6cfIiujZLN+hqAFrb9YptD5ZxyY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IOgDIOVA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZRdzYulc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9704C4CED6;
-	Tue,  3 Dec 2024 16:16:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IOgDIOVA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C2A4C4CECF;
+	Tue,  3 Dec 2024 16:17:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733242617;
-	bh=DNjoKT/GT+PIa7BYqi5WSQDCNrqH5bSqa5zcJURqyS4=;
+	s=korg; t=1733242621;
+	bh=4MMwSP1EV1PqYK43qq5aRXDkLkDqPZs3cyC2PG3aqls=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZRdzYulcEc4Wm34dehh0wzfp1+bUkRhBF8FvC8/iX4nBUkJey4WOHVStpWn32Miq7
-	 t/YHMti7tYUsgWRWh2wE2nVcofBxA/kaTHGz3I6lFgcTxrRy86WCFTrXC/mFcCf5R9
-	 fcd7UiNsT/Hf3iYV3Ze1r8vuV0jB5BadfQEQ5Z+I=
+	b=IOgDIOVAzizhQlcoAk6572JqVzXaYlked0+BwTR7SGGrTwYS5AzlPf1ZY26p1Y31b
+	 iUe/Zqhuy2zPtlkO9CBkNuVJ4fkvyzIhcCfovTzLlWjdW7Vd5LYQjK/1xqxxxhXGBC
+	 rhA6lj5pSTpVNswaIl+puPDzdBGnOnpDg3IDpPfo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jay Shin <jaeshin@redhat.com>,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.com>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.12 750/826] smb: client: fix use-after-free of signing key
-Date: Tue,  3 Dec 2024 15:47:57 +0100
-Message-ID: <20241203144813.020085739@linuxfoundation.org>
+	=?UTF-8?q?Hubert=20Wi=C5=9Bniewski?= <hubert.wisniewski.25632@gmail.com>
+Subject: [PATCH 6.12 759/826] usb: musb: Fix hardware lockup on first Rx endpoint request
+Date: Tue,  3 Dec 2024 15:48:06 +0100
+Message-ID: <20241203144813.373667736@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -45,164 +43,136 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Paulo Alcantara <pc@manguebit.com>
+From: Hubert Wiśniewski <hubert.wisniewski.25632@gmail.com>
 
-commit 343d7fe6df9e247671440a932b6a73af4fa86d95 upstream.
+commit 3fc137386c4620305bbc2a216868c53f9245670a upstream.
 
-Customers have reported use-after-free in @ses->auth_key.response with
-SMB2.1 + sign mounts which occurs due to following race:
+There is a possibility that a request's callback could be invoked from
+usb_ep_queue() (call trace below, supplemented with missing calls):
 
-task A                         task B
-cifs_mount()
- dfs_mount_share()
-  get_session()
-   cifs_mount_get_session()    cifs_send_recv()
-    cifs_get_smb_ses()          compound_send_recv()
-     cifs_setup_session()        smb2_setup_request()
-      kfree_sensitive()           smb2_calc_signature()
-                                   crypto_shash_setkey() *UAF*
+req->complete from usb_gadget_giveback_request
+	(drivers/usb/gadget/udc/core.c:999)
+usb_gadget_giveback_request from musb_g_giveback
+	(drivers/usb/musb/musb_gadget.c:147)
+musb_g_giveback from rxstate
+	(drivers/usb/musb/musb_gadget.c:784)
+rxstate from musb_ep_restart
+	(drivers/usb/musb/musb_gadget.c:1169)
+musb_ep_restart from musb_ep_restart_resume_work
+	(drivers/usb/musb/musb_gadget.c:1176)
+musb_ep_restart_resume_work from musb_queue_resume_work
+	(drivers/usb/musb/musb_core.c:2279)
+musb_queue_resume_work from musb_gadget_queue
+	(drivers/usb/musb/musb_gadget.c:1241)
+musb_gadget_queue from usb_ep_queue
+	(drivers/usb/gadget/udc/core.c:300)
 
-Fix this by ensuring that we have a valid @ses->auth_key.response by
-checking whether @ses->ses_status is SES_GOOD or SES_EXITING with
-@ses->ses_lock held.  After commit 24a9799aa8ef ("smb: client: fix UAF
-in smb2_reconnect_server()"), we made sure to call ->logoff() only
-when @ses was known to be good (e.g. valid ->auth_key.response), so
-it's safe to access signing key when @ses->ses_status == SES_EXITING.
+According to the docstring of usb_ep_queue(), this should not happen:
 
+"Note that @req's ->complete() callback must never be called from within
+usb_ep_queue() as that can create deadlock situations."
+
+In fact, a hardware lockup might occur in the following sequence:
+
+1. The gadget is initialized using musb_gadget_enable().
+2. Meanwhile, a packet arrives, and the RXPKTRDY flag is set, raising an
+   interrupt.
+3. If IRQs are enabled, the interrupt is handled, but musb_g_rx() finds an
+   empty queue (next_request() returns NULL). The interrupt flag has
+   already been cleared by the glue layer handler, but the RXPKTRDY flag
+   remains set.
+4. The first request is enqueued using usb_ep_queue(), leading to the call
+   of req->complete(), as shown in the call trace above.
+5. If the callback enables IRQs and another packet is waiting, step (3)
+   repeats. The request queue is empty because usb_g_giveback() removes the
+   request before invoking the callback.
+6. The endpoint remains locked up, as the interrupt triggered by hardware
+   setting the RXPKTRDY flag has been handled, but the flag itself remains
+   set.
+
+For this scenario to occur, it is only necessary for IRQs to be enabled at
+some point during the complete callback. This happens with the USB Ethernet
+gadget, whose rx_complete() callback calls netif_rx(). If called in the
+task context, netif_rx() disables the bottom halves (BHs). When the BHs are
+re-enabled, IRQs are also enabled to allow soft IRQs to be processed. The
+gadget itself is initialized at module load (or at boot if built-in), but
+the first request is enqueued when the network interface is brought up,
+triggering rx_complete() in the task context via ioctl(). If a packet
+arrives while the interface is down, it can prevent the interface from
+receiving any further packets from the USB host.
+
+The situation is quite complicated with many parties involved. This
+particular issue can be resolved in several possible ways:
+
+1. Ensure that callbacks never enable IRQs. This would be difficult to
+   enforce, as discovering how netif_rx() interacts with interrupts was
+   already quite challenging and u_ether is not the only function driver.
+   Similar "bugs" could be hidden in other drivers as well.
+2. Disable MUSB interrupts in musb_g_giveback() before calling the callback
+   and re-enable them afterwars (by calling musb_{dis,en}able_interrupts(),
+   for example). This would ensure that MUSB interrupts are not handled
+   during the callback, even if IRQs are enabled. In fact, it would allow
+   IRQs to be enabled when releasing the lock. However, this feels like an
+   inelegant hack.
+3. Modify the interrupt handler to clear the RXPKTRDY flag if the request
+   queue is empty. While this approach also feels like a hack, it wastes
+   CPU time by attempting to handle incoming packets when the software is
+   not ready to process them.
+4. Flush the Rx FIFO instead of calling rxstate() in musb_ep_restart().
+   This ensures that the hardware can receive packets when there is at
+   least one request in the queue. Once IRQs are enabled, the interrupt
+   handler will be able to correctly process the next incoming packet
+   (eventually calling rxstate()). This approach may cause one or two
+   packets to be dropped (two if double buffering is enabled), but this
+   seems to be a minor issue, as packet loss can occur when the software is
+   not yet ready to process them. Additionally, this solution makes the
+   gadget driver compliant with the rule mentioned in the docstring of
+   usb_ep_queue().
+
+There may be additional solutions, but from these four, the last one has
+been chosen as it seems to be the most appropriate, as it addresses the
+"bad" behavior of the driver.
+
+Fixes: baebdf48c360 ("net: dev: Makes sure netif_rx() can be invoked in any context.")
 Cc: stable@vger.kernel.org
-Reported-by: Jay Shin <jaeshin@redhat.com>
-Signed-off-by: Paulo Alcantara (Red Hat) <pc@manguebit.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Hubert Wiśniewski <hubert.wisniewski.25632@gmail.com>
+Link: https://lore.kernel.org/r/4ee1ead4525f78fb5909a8cbf99513ad0082ad21.camel@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/smb2proto.h     |    2 -
- fs/smb/client/smb2transport.c |   56 ++++++++++++++++++++++++++++++------------
- 2 files changed, 40 insertions(+), 18 deletions(-)
+ drivers/usb/musb/musb_gadget.c |   13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
---- a/fs/smb/client/smb2proto.h
-+++ b/fs/smb/client/smb2proto.h
-@@ -37,8 +37,6 @@ extern struct mid_q_entry *smb2_setup_re
- 					      struct smb_rqst *rqst);
- extern struct mid_q_entry *smb2_setup_async_request(
- 			struct TCP_Server_Info *server, struct smb_rqst *rqst);
--extern struct cifs_ses *smb2_find_smb_ses(struct TCP_Server_Info *server,
--					   __u64 ses_id);
- extern struct cifs_tcon *smb2_find_smb_tcon(struct TCP_Server_Info *server,
- 						__u64 ses_id, __u32  tid);
- extern int smb2_calc_signature(struct smb_rqst *rqst,
---- a/fs/smb/client/smb2transport.c
-+++ b/fs/smb/client/smb2transport.c
-@@ -74,7 +74,7 @@ err:
- 
- 
- static
--int smb2_get_sign_key(__u64 ses_id, struct TCP_Server_Info *server, u8 *key)
-+int smb3_get_sign_key(__u64 ses_id, struct TCP_Server_Info *server, u8 *key)
+--- a/drivers/usb/musb/musb_gadget.c
++++ b/drivers/usb/musb/musb_gadget.c
+@@ -1161,12 +1161,19 @@ void musb_free_request(struct usb_ep *ep
+  */
+ void musb_ep_restart(struct musb *musb, struct musb_request *req)
  {
- 	struct cifs_chan *chan;
- 	struct TCP_Server_Info *pserver;
-@@ -168,16 +168,41 @@ smb2_find_smb_ses_unlocked(struct TCP_Se
- 	return NULL;
- }
- 
--struct cifs_ses *
--smb2_find_smb_ses(struct TCP_Server_Info *server, __u64 ses_id)
-+static int smb2_get_sign_key(struct TCP_Server_Info *server,
-+			     __u64 ses_id, u8 *key)
- {
- 	struct cifs_ses *ses;
-+	int rc = -ENOENT;
++	u16 csr;
++	void __iomem *epio = req->ep->hw_ep->regs;
 +
-+	if (SERVER_IS_CHAN(server))
-+		server = server->primary_server;
- 
- 	spin_lock(&cifs_tcp_ses_lock);
--	ses = smb2_find_smb_ses_unlocked(server, ses_id);
--	spin_unlock(&cifs_tcp_ses_lock);
-+	list_for_each_entry(ses, &server->smb_ses_list, smb_ses_list) {
-+		if (ses->Suid != ses_id)
-+			continue;
- 
--	return ses;
-+		rc = 0;
-+		spin_lock(&ses->ses_lock);
-+		switch (ses->ses_status) {
-+		case SES_EXITING: /* SMB2_LOGOFF */
-+		case SES_GOOD:
-+			if (likely(ses->auth_key.response)) {
-+				memcpy(key, ses->auth_key.response,
-+				       SMB2_NTLMV2_SESSKEY_SIZE);
-+			} else {
-+				rc = -EIO;
-+			}
-+			break;
-+		default:
-+			rc = -EAGAIN;
-+			break;
-+		}
-+		spin_unlock(&ses->ses_lock);
-+		break;
+ 	trace_musb_req_start(req);
+ 	musb_ep_select(musb->mregs, req->epnum);
+-	if (req->tx)
++	if (req->tx) {
+ 		txstate(musb, req);
+-	else
+-		rxstate(musb, req);
++	} else {
++		csr = musb_readw(epio, MUSB_RXCSR);
++		csr |= MUSB_RXCSR_FLUSHFIFO | MUSB_RXCSR_P_WZC_BITS;
++		musb_writew(epio, MUSB_RXCSR, csr);
++		musb_writew(epio, MUSB_RXCSR, csr);
 +	}
-+	spin_unlock(&cifs_tcp_ses_lock);
-+	return rc;
  }
  
- static struct cifs_tcon *
-@@ -236,14 +261,16 @@ smb2_calc_signature(struct smb_rqst *rqs
- 	unsigned char *sigptr = smb2_signature;
- 	struct kvec *iov = rqst->rq_iov;
- 	struct smb2_hdr *shdr = (struct smb2_hdr *)iov[0].iov_base;
--	struct cifs_ses *ses;
- 	struct shash_desc *shash = NULL;
- 	struct smb_rqst drqst;
-+	__u64 sid = le64_to_cpu(shdr->SessionId);
-+	u8 key[SMB2_NTLMV2_SESSKEY_SIZE];
- 
--	ses = smb2_find_smb_ses(server, le64_to_cpu(shdr->SessionId));
--	if (unlikely(!ses)) {
--		cifs_server_dbg(FYI, "%s: Could not find session\n", __func__);
--		return -ENOENT;
-+	rc = smb2_get_sign_key(server, sid, key);
-+	if (unlikely(rc)) {
-+		cifs_server_dbg(FYI, "%s: [sesid=0x%llx] couldn't find signing key: %d\n",
-+				__func__, sid, rc);
-+		return rc;
- 	}
- 
- 	memset(smb2_signature, 0x0, SMB2_HMACSHA256_SIZE);
-@@ -260,8 +287,7 @@ smb2_calc_signature(struct smb_rqst *rqs
- 		shash = server->secmech.hmacsha256;
- 	}
- 
--	rc = crypto_shash_setkey(shash->tfm, ses->auth_key.response,
--			SMB2_NTLMV2_SESSKEY_SIZE);
-+	rc = crypto_shash_setkey(shash->tfm, key, sizeof(key));
- 	if (rc) {
- 		cifs_server_dbg(VFS,
- 				"%s: Could not update with response\n",
-@@ -303,8 +329,6 @@ smb2_calc_signature(struct smb_rqst *rqs
- out:
- 	if (allocate_crypto)
- 		cifs_free_hash(&shash);
--	if (ses)
--		cifs_put_smb_ses(ses);
- 	return rc;
- }
- 
-@@ -570,7 +594,7 @@ smb3_calc_signature(struct smb_rqst *rqs
- 	struct smb_rqst drqst;
- 	u8 key[SMB3_SIGN_KEY_SIZE];
- 
--	rc = smb2_get_sign_key(le64_to_cpu(shdr->SessionId), server, key);
-+	rc = smb3_get_sign_key(le64_to_cpu(shdr->SessionId), server, key);
- 	if (unlikely(rc)) {
- 		cifs_server_dbg(FYI, "%s: Could not get signing key\n", __func__);
- 		return rc;
+ static int musb_ep_restart_resume_work(struct musb *musb, void *data)
 
 
