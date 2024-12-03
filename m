@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 274281DA3D;
-	Tue,  3 Dec 2024 15:19:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 192F11EE001;
+	Tue,  3 Dec 2024 15:19:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733239168; cv=none; b=mhmXAhKYsjQs0Njg5/ihTkrmlfpK0K2RSYaxl82VKE55LK0PelZdc+8BMVhr/eOPPwwWNx+JvGMSpM3XUahEcSOsWJTv2haOmjnU8cZqMe4Vbm7ZfzeqDC4zMq3yY1OeRbJxgUCN4RddoZHfjvMFIHLv02OaHueKgZhP5+b8JHY=
+	t=1733239171; cv=none; b=bCtiUGhHcqzqalk/muFQ5Iuflh2U//3bgZO5lbQH4FORbEsjeU61eWbVcOngO0NkdGc8blMtM90MjN8HFqItQlG7kvSpWFSwOl6MQQv7vxMtz664ZB9vtZSkrp26W3zxtNJjuOzM5oeFIbgqgJSy2BB/YKkfBVhATKg6J+RRNP0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733239168; c=relaxed/simple;
-	bh=z3dAoXdz6mHON2J5gZsWTTHiMF2ChJ40D5C2J9ZnpCc=;
+	s=arc-20240116; t=1733239171; c=relaxed/simple;
+	bh=w9ywd52eqrNdNl5OzS9PSgZPeaG3FtwvCVAcEP/Fz24=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rFhBSZBFMDKL8qxzbphK5RMyPjDhI16XRV+yhca633dhoIAmsPpGl2EXTK/XOTDcAeXtuFdAz26Uk/B/tqCfMfhohMeEjw6OLXcoSnGBEHmD35s9UhkfsEc2e1dv+gaoHb9O648cTn0MnpwR8M7VhRUWm4E91FOxUQAyr0FbweM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cuw3mGxG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ThTT4dS+bBY5pZo96TTyDFBgrWtEUBUOCnf6njrQ0wagPcwPfynuSIpGATh0KPZ3npLzRwlzOTH3omPj/qCbEx9sAIe4jV4HsXQSw32pGAFMOombNYUBNoPhr2X6BJHPuNBMjCIaChrc+WFL51TGb4Knoex6WP4IpG+m2l1Khks=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wg3KknIo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cuw3mGxG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F4D8C4CECF;
-	Tue,  3 Dec 2024 15:19:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wg3KknIo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93C42C4CECF;
+	Tue,  3 Dec 2024 15:19:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733239168;
-	bh=z3dAoXdz6mHON2J5gZsWTTHiMF2ChJ40D5C2J9ZnpCc=;
+	s=korg; t=1733239171;
+	bh=w9ywd52eqrNdNl5OzS9PSgZPeaG3FtwvCVAcEP/Fz24=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cuw3mGxGwgfo+3A8wndK6+LIFqLgPj99C89IGc/BRqA+Lqput3Z9iLBltcTmknlcN
-	 a3z1f+fR/Ufv5B5fbAF1zQlbWdyeuJf71Nn30slwoO23+g7tCcF/zhjvIbThmxCxB1
-	 qH23WpGeH2FtLqlteSVaecCNFKAiAj1iTDVxEbAQ=
+	b=wg3KknIovVwQcNrbdqx/DmNiENVBzD8CUsqBRy0/mYt/Zru6TYwYVpqEcRVClmTj7
+	 kgQ7vldxAiHTr//CTdTVW7ggLBT4gh83bmik7pMBMv4EhwjbuOuBaWaFaqL+cpIF9b
+	 2bI8JyqI1+wuLttPXdeQ2GmR87YF1xcL3rzI7mg8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <oliver.sang@intel.com>,
-	Cyril Hrubis <chrubis@suse.cz>,
+	Jinsu Lee <jinsu1.lee@samsung.com>,
 	Chao Yu <chao@kernel.org>,
 	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 523/817] f2fs: fix to map blocks correctly for direct write
-Date: Tue,  3 Dec 2024 15:41:35 +0100
-Message-ID: <20241203144016.307467450@linuxfoundation.org>
+Subject: [PATCH 6.11 524/817] f2fs: fix to avoid forcing direct write to use buffered IO on inline_data inode
+Date: Tue,  3 Dec 2024 15:41:36 +0100
+Message-ID: <20241203144016.346780117@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -55,39 +54,44 @@ Content-Transfer-Encoding: 8bit
 
 From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit 5dd00ebda337b9295e7027691fa70540da369ff2 ]
+[ Upstream commit 26e6f59d0bbaac76fa3413462d780bd2b5f9f653 ]
 
-f2fs_map_blocks() supports to map continuous holes or preallocated
-address, we should avoid setting F2FS_MAP_MAPPED for these cases
-only, otherwise, it may fail f2fs_iomap_begin(), and make direct
-write fallbacking to use buffered IO and flush, result in performance
-regression.
+Jinsu Lee reported a performance regression issue, after commit
+5c8764f8679e ("f2fs: fix to force buffered IO on inline_data
+inode"), we forced direct write to use buffered IO on inline_data
+inode, it will cause performace regression due to memory copy
+and data flush.
 
-Fixes: 9f0f6bf42714 ("f2fs: support to map continuous holes or preallocated address")
-Reported-by: kernel test robot <oliver.sang@intel.com>
-Closes: https://lore.kernel.org/oe-lkp/202409122103.e45aa13b-oliver.sang@intel.com
-Cc: Cyril Hrubis <chrubis@suse.cz>
+It's fine to not force direct write to use buffered IO, as it
+can convert inline inode before committing direct write IO.
+
+Fixes: 5c8764f8679e ("f2fs: fix to force buffered IO on inline_data inode")
+Reported-by: Jinsu Lee <jinsu1.lee@samsung.com>
+Closes: https://lore.kernel.org/linux-f2fs-devel/af03dd2c-e361-4f80-b2fd-39440766cf6e@kernel.org
 Signed-off-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/data.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/f2fs/file.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/fs/f2fs/data.c b/fs/f2fs/data.c
-index 60a5aaefc5b63..1f2f397febcfa 100644
---- a/fs/f2fs/data.c
-+++ b/fs/f2fs/data.c
-@@ -1677,7 +1677,8 @@ int f2fs_map_blocks(struct inode *inode, struct f2fs_map_blocks *map, int flag)
- 		/* reserved delalloc block should be mapped for fiemap. */
- 		if (blkaddr == NEW_ADDR)
- 			map->m_flags |= F2FS_MAP_DELALLOC;
--		if (flag != F2FS_GET_BLOCK_DIO || !is_hole)
-+		/* DIO READ and hole case, should not map the blocks. */
-+		if (!(flag == F2FS_GET_BLOCK_DIO && is_hole && !map->m_may_create))
- 			map->m_flags |= F2FS_MAP_MAPPED;
+diff --git a/fs/f2fs/file.c b/fs/f2fs/file.c
+index 611c0aac721a3..b4047d8092890 100644
+--- a/fs/f2fs/file.c
++++ b/fs/f2fs/file.c
+@@ -868,7 +868,11 @@ static bool f2fs_force_buffered_io(struct inode *inode, int rw)
+ 		return true;
+ 	if (f2fs_compressed_file(inode))
+ 		return true;
+-	if (f2fs_has_inline_data(inode))
++	/*
++	 * only force direct read to use buffered IO, for direct write,
++	 * it expects inline data conversion before committing IO.
++	 */
++	if (f2fs_has_inline_data(inode) && rw == READ)
+ 		return true;
  
- 		map->m_pblk = blkaddr;
+ 	/* disallow direct IO if any of devices has unaligned blksize */
 -- 
 2.43.0
 
