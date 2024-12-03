@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D75CC1DE2A1;
-	Tue,  3 Dec 2024 14:54:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E64041F755D;
+	Tue,  3 Dec 2024 14:55:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733237697; cv=none; b=DXv2qjwOWu+zh/WeMh3q5UyVoqDukIQQdUMPDLomIyZfe5YddjL8WCcQpAh4dM8ppzjoCbVHLNN+F9ygVtV6ZGh99H249wMg0uD5s2j09+BKvyc2C/1y2TUL07xCQMtU9yWi8NTmuX1S/w9pxhx9X4bXOGyoxHwWGkLN5hf7nQw=
+	t=1733237701; cv=none; b=Q1MeG6MYP9ncpW6T3w5jxkOs395waFWgak43oyjrhOXhuof2knINQmWUv1l6aKGfE3w+/SpN6uajSXPm+hVIMw+wNZPxaQ6mqYjh6woxNcIQkEHdFZ222yOijkp4dXsdPwlUeGK0IFCoDMoJaTG60eJqh3GWh1Mt0teUpbPBOfk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733237697; c=relaxed/simple;
-	bh=gpgcDmCMaKLkgbH0LsTq+FeTfHcSb8GN0ReROZhaDxs=;
+	s=arc-20240116; t=1733237701; c=relaxed/simple;
+	bh=hYrJEmKm77X/+aHo520D1PglQ5zhiYH3KzZ1Q0hVRwQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Qv+aIMrnp2rDtBZ4XSrYXP9TRnzbHZMT+Syg9Sv1kkrdZ1gUsoutgJtwHVh+doB1APeWZagN8W+5aS+vlqZHG8+LSUOdqoulWbeVTBQd0PPQ34lVUhFgVUb9hByWMieFdNx3zHBwxX6kz1JhGviSpVhSgtnhOXBJucYvD/89VPQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IG+XTxVb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R7y47oz48G3SFenczm0gBp7MNUVVGj1twgBXpkTAVlhkf0EwG6rHfsvOJycq3AITJs+vgg0m/Alj3Y3jA0/ZdPfAUoSLjK9B1U8o526Bmz0EESqoflLI0niU9/0bvdnsSb8OrNbuC/dc642/gkIYu+9QMzX1eiVk0kySR/SqojY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pGUpfSCt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IG+XTxVb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC95DC4CED9;
-	Tue,  3 Dec 2024 14:54:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pGUpfSCt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10DE7C4CECF;
+	Tue,  3 Dec 2024 14:54:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733237697;
-	bh=gpgcDmCMaKLkgbH0LsTq+FeTfHcSb8GN0ReROZhaDxs=;
+	s=korg; t=1733237700;
+	bh=hYrJEmKm77X/+aHo520D1PglQ5zhiYH3KzZ1Q0hVRwQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IG+XTxVbFiTh569r4HsI7YUGoVpkUfHzmbzrJu61H8/ia23h5ZPG4YuLXKJl7Fw1d
-	 8XfdR62PKjFFnayNqWoy0LJ4wUUHR5dOoaWlwXZH2K1LtMmAK/4NlP8gYaXrZWzluy
-	 Z46+aF42FKTekWxSU8V8KeQFzWF7aw7HmO9Tjfpw=
+	b=pGUpfSCtd1bucLA+R8i0wiwrh9S7WuRRfHkUQdwtNya9XlHbmd89iz0cP23JQxKgU
+	 5lIamHrVRhmMFQdMgboV8kuYYG1Mh4AZwmlKybNIuNXD1FmVPAk8Tqf2gCafJJDVQC
+	 Qz0WDyD0gz7avGA7UV0wrTqJDSvq6oSdmkXrAkp0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
-	David Ahern <dsahern@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 045/817] ipmr: Fix access to mfc_cache_list without lock held
-Date: Tue,  3 Dec 2024 15:33:37 +0100
-Message-ID: <20241203143957.418574225@linuxfoundation.org>
+	Xiuhong Wang <xiuhong.wang@unisoc.com>,
+	Zhiguo Niu <zhiguo.niu@unisoc.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Daniel Rosenberg <drosen@google.com>
+Subject: [PATCH 6.11 046/817] f2fs: fix fiemap failure issue when page size is 16KB
+Date: Tue,  3 Dec 2024 15:33:38 +0100
+Message-ID: <20241203143957.460042336@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -52,76 +53,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Xiuhong Wang <xiuhong.wang@unisoc.com>
 
-[ Upstream commit e28acc9c1ccfcb24c08e020828f69d0a915b06ae ]
+commit a7a7c1d423a6351a6541e95c797da5358e5ad1ea upstream.
 
-Accessing `mr_table->mfc_cache_list` is protected by an RCU lock. In the
-following code flow, the RCU read lock is not held, causing the
-following error when `RCU_PROVE` is not held. The same problem might
-show up in the IPv6 code path.
+After enable 16K page size, an infinite loop may occur in
+fiemap (fm_length=UINT64_MAX) on a file, such as the 16KB
+scratch.img during the remount operation in Android.
 
-	6.12.0-rc5-kbuilder-01145-gbac17284bdcb #33 Tainted: G            E    N
-	-----------------------------
-	net/ipv4/ipmr_base.c:313 RCU-list traversed in non-reader section!!
+The condition for whether fiemap continues to map is to check
+whether the number of bytes corresponding to the next map.m_lblk
+exceeds blks_to_bytes(inode,max_inode_blocks(inode)) if there are HOLE.
+The latter does not take into account the maximum size of a file with 16KB
+page size, so the loop cannot be jumped out.
 
-	rcu_scheduler_active = 2, debug_locks = 1
-		   2 locks held by RetransmitAggre/3519:
-		    #0: ffff88816188c6c0 (nlk_cb_mutex-ROUTE){+.+.}-{3:3}, at: __netlink_dump_start+0x8a/0x290
-		    #1: ffffffff83fcf7a8 (rtnl_mutex){+.+.}-{3:3}, at: rtnl_dumpit+0x6b/0x90
+The following is the fail trace:
+When f2fs_map_blocks reaches map.m_lblk=3936, it needs to go to the
+first direct node block, so the map is 3936 + 4090 = 8026,
+The next map is the second direct node block, that is,
+8026 + 4090 = 12116,
+The next map is the first indirect node block, that is,
+12116 + 4090 * 4090 = 16740216,
+The next map is the second indirect node block, that is,
+16740216 + 4090 * 4090 = 33468316,
+The next map is the first double indirect node block, that is,
+33468316 + 4090 * 4090 * 4090 = 68451397316
+Since map.m_lblk represents the address of a block, which is 32
+bits, truncation will occur, that is, 68451397316 becomes
+4026887876, and the number of bytes corresponding to the block
+number does not exceed blks_to_bytes(inode,max_inode_blocks(inode)),
+so the loop will not be jumped out.
+The next time, it will be considered that it should still be a
+double indirect node block, that is,
+4026887876 + 4090 * 4090 * 4090 = 72444816876, which will be
+truncated to 3725340140, and the loop will not be jumped out.
 
-	stack backtrace:
-		    lockdep_rcu_suspicious
-		    mr_table_dump
-		    ipmr_rtm_dumproute
-		    rtnl_dump_all
-		    rtnl_dumpit
-		    netlink_dump
-		    __netlink_dump_start
-		    rtnetlink_rcv_msg
-		    netlink_rcv_skb
-		    netlink_unicast
-		    netlink_sendmsg
+156.374871: f2fs_map_blocks: dev = (254,57), ino = 7449, file offset = 0, start blkaddr = 0x8e00, len = 0x200, flags = 2,seg_type = 8, may_create = 0, multidevice = 0, flag = 1, err = 0
+156.374916: f2fs_map_blocks: dev = (254,57), ino = 7449, file offset = 512, start blkaddr = 0x0, len = 0x0, flags = 0 , seg_type = 8, may_create = 0, multidevice = 0, flag = 1, err = 0
+156.374920: f2fs_map_blocks: dev = (254,57), ino = 7449, file offset = 513, start blkaddr = 0x0, len = 0x0, flags = 0, seg_type = 8, may_create = 0, multidevice = 0, flag = 1, err = 0
+......
+156.385747: f2fs_map_blocks: dev = (254,57), ino = 7449, file offset = 3935, start blkaddr = 0x0, len = 0x0, flags = 0, seg_type = 8, may_create = 0, multidevice = 0, flag = 1, err = 0
+156.385752: f2fs_map_blocks: dev = (254,57), ino = 7449, file offset = 3936, start blkaddr = 0x0, len = 0x0, flags = 0, seg_type = 8, may_create = 0, multidevice = 0, flag = 1, err = 0
+156.385755: f2fs_map_blocks: dev = (254,57), ino = 7449, file offset = 8026, start blkaddr = 0x0, len = 0x0, flags = 0, seg_type = 8, may_create = 0, multidevice = 0, flag = 1, err = 0
+156.385758: f2fs_map_blocks: dev = (254,57), ino = 7449, file offset = 12116, start blkaddr = 0x0, len = 0x0, flags = 0, seg_type = 8, may_create = 0, multidevice = 0, flag = 1, err = 0
+156.385761: f2fs_map_blocks: dev = (254,57), ino = 7449, file offset = 16740216, start blkaddr = 0x0, len = 0x0, flags = 0, seg_type = 8, may_create = 0, multidevice = 0, flag = 1, err = 0
+156.385764: f2fs_map_blocks: dev = (254,57), ino = 7449, file offset = 33468316, start blkaddr = 0x0, len = 0x0, flags = 0, seg_type = 8, may_create = 0, multidevice = 0, flag = 1, err = 0
+156.385767: f2fs_map_blocks: dev = (254,57), ino = 7449, file offset = 4026887876, start blkaddr = 0x0, len = 0x0, flags = 0, seg_type = 8, may_create = 0, multidevice = 0, flag = 1, err = 0
+156.385770: f2fs_map_blocks: dev = (254,57), ino = 7449, file offset = 3725340140, start blkaddr = 0x0, len = 0x0, flags = 0, seg_type = 8, may_create = 0, multidevice = 0, flag = 1, err = 0
+156.385772: f2fs_map_blocks: dev = (254,57), ino = 7449, file offset = 4026887876, start blkaddr = 0x0, len = 0x0, flags = 0, seg_type = 8, may_create = 0, multidevice = 0, flag = 1, err = 0
+156.385775: f2fs_map_blocks: dev = (254,57), ino = 7449, file offset = 3725340140, start blkaddr = 0x0, len = 0x0, flags = 0, seg_type = 8, may_create = 0, multidevice = 0, flag = 1, err = 0
 
-This is not a problem per see, since the RTNL lock is held here, so, it
-is safe to iterate in the list without the RCU read lock, as suggested
-by Eric.
+Commit a6a010f5def5 ("f2fs: Restrict max filesize for 16K f2fs")
+has set the maximum allowed file size to (U32_MAX + 1) * F2FS_BLKSIZE,
+so max_file_blocks should be used here to limit it, that is,
+maxbytes defined above. And the max_inode_blocks function is not
+called by other functions except here, so cleanup it.
 
-To alleviate the concern, modify the code to use
-list_for_each_entry_rcu() with the RTNL-held argument.
-
-The annotation will raise an error only if RTNL or RCU read lock are
-missing during iteration, signaling a legitimate problem, otherwise it
-will avoid this false positive.
-
-This will solve the IPv6 case as well, since ip6mr_rtm_dumproute() calls
-this function as well.
-
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://patch.msgid.link/20241108-ipmr_rcu-v2-1-c718998e209b@debian.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Xiuhong Wang <xiuhong.wang@unisoc.com>
+Signed-off-by: Zhiguo Niu <zhiguo.niu@unisoc.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Cc: Daniel Rosenberg <drosen@google.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/ipmr_base.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/f2fs/data.c |   22 +---------------------
+ 1 file changed, 1 insertion(+), 21 deletions(-)
 
-diff --git a/net/ipv4/ipmr_base.c b/net/ipv4/ipmr_base.c
-index 271dc03fc6dbd..f0af12a2f70bc 100644
---- a/net/ipv4/ipmr_base.c
-+++ b/net/ipv4/ipmr_base.c
-@@ -310,7 +310,8 @@ int mr_table_dump(struct mr_table *mrt, struct sk_buff *skb,
- 	if (filter->filter_set)
- 		flags |= NLM_F_DUMP_FILTERED;
+--- a/fs/f2fs/data.c
++++ b/fs/f2fs/data.c
+@@ -1894,25 +1894,6 @@ static int f2fs_xattr_fiemap(struct inod
+ 	return (err < 0 ? err : 0);
+ }
  
--	list_for_each_entry_rcu(mfc, &mrt->mfc_cache_list, list) {
-+	list_for_each_entry_rcu(mfc, &mrt->mfc_cache_list, list,
-+				lockdep_rtnl_is_held()) {
- 		if (e < s_e)
- 			goto next_entry;
- 		if (filter->dev &&
--- 
-2.43.0
-
+-static loff_t max_inode_blocks(struct inode *inode)
+-{
+-	loff_t result = ADDRS_PER_INODE(inode);
+-	loff_t leaf_count = ADDRS_PER_BLOCK(inode);
+-
+-	/* two direct node blocks */
+-	result += (leaf_count * 2);
+-
+-	/* two indirect node blocks */
+-	leaf_count *= NIDS_PER_BLOCK;
+-	result += (leaf_count * 2);
+-
+-	/* one double indirect node block */
+-	leaf_count *= NIDS_PER_BLOCK;
+-	result += leaf_count;
+-
+-	return result;
+-}
+-
+ int f2fs_fiemap(struct inode *inode, struct fiemap_extent_info *fieinfo,
+ 		u64 start, u64 len)
+ {
+@@ -1985,8 +1966,7 @@ next:
+ 	if (!compr_cluster && !(map.m_flags & F2FS_MAP_FLAGS)) {
+ 		start_blk = next_pgofs;
+ 
+-		if (blks_to_bytes(inode, start_blk) < blks_to_bytes(inode,
+-						max_inode_blocks(inode)))
++		if (blks_to_bytes(inode, start_blk) < maxbytes)
+ 			goto prep_next;
+ 
+ 		flags |= FIEMAP_EXTENT_LAST;
 
 
