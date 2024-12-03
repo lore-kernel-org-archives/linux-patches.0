@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0927B1F9EAC;
-	Tue,  3 Dec 2024 15:34:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA07320B218;
+	Tue,  3 Dec 2024 15:34:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733240091; cv=none; b=q1d8NF8guaktiZvsDl/20p+XoTc3mxArdwphG27oTPA84jPCp7kWCtY6eRUEYby337Ru2vYVX+sRLgW45TWo02+688iNpRTH8L1VVbVbLKKqZa2dycmgVz0ClGoRTfHNHIKCms6G9jd9u6ObmRohl0bmfuiFb7ERUH7iPuLGIgc=
+	t=1733240094; cv=none; b=BHFlqrEnEZWYiftrG5EBmyPCHVOoOCZpIrFHLEWuqkoSuT5pC5d+ywbz7hRfQzxWImq6CecjtHiNr8PZNwwo9rLcRy4C8hMl0S3Lq0/ICwQeh5+WdCR+vM4sIYu1JqwzVzWh44k5Csp2zpD40WB746uvjSbL5uNfepiAmdb09aI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733240091; c=relaxed/simple;
-	bh=j6G6qJzVtWim7O+pyJCOy7DhUKQWPnmkUsOUPJZW3zA=;
+	s=arc-20240116; t=1733240094; c=relaxed/simple;
+	bh=e4nWDdH+kNNVukUmZ6C1qCNBT2pGiLuk00/Qh34/jSA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FsDT4h17kZdiRp2zaH8PpSvl3VwlZBiqP/DIN+nc0LzoWjUFh0T+H7JXh2uHLAsZnm6t5CGf9M4Xbb/y71xm+bQ/POZZCUiFyem3DqT1LOC1TQNRO+HLOY+Nos1u9cZu7nCNFAn9wpg479os+DEOjuVYHVGZgI/eZ4TR8PQBfrw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZaM3cm/D; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=atV0eNMXYbjGgHybFw7HNZNq9fQJqz/WE0L5LHyDGXfPZnWJqG+BCFMzF/5UZfbxZrULmzW3K+XZgLs9JgmzuwfADetTbCx9HXOp6tS8CpEIeKxoZRZ9kGKXqtt+PCQa2rtTyyHVzb7ugZbDA61kKnnuebg7CImH1yzDLXzRpIU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q+n4LN7H; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZaM3cm/D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B384C4CECF;
-	Tue,  3 Dec 2024 15:34:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q+n4LN7H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 709CAC4CECF;
+	Tue,  3 Dec 2024 15:34:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733240090;
-	bh=j6G6qJzVtWim7O+pyJCOy7DhUKQWPnmkUsOUPJZW3zA=;
+	s=korg; t=1733240093;
+	bh=e4nWDdH+kNNVukUmZ6C1qCNBT2pGiLuk00/Qh34/jSA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZaM3cm/D+tYkyavAkbxVX9BW2TiPMBi0M5Hx/qr7qGhSN3/T/z5VdRjCHtg+PPN5V
-	 QBWN7PGZSteMaETdTen6/o4ljr0cz6vEpOZ5U+uVDZl6K+ujZZ8+S+hO2nzZPyN/kQ
-	 KzroqNJDu5jj/eMjiGmFY0T2PoLZJRGSy3fMNtQI=
+	b=Q+n4LN7HKKooiyl/0nT7HbBIY9BOXQrm3pi1qHQkgI7ePnYfs+x0sqQxmGyiq6f9u
+	 eWXFY6t0w/6I4ZGqReUXyOW/vpilGKCtGIF7vI0uXfFWlFFRPLl2Oz2h2rKeaoD6LZ
+	 3QbPklNroArvPpl1MpbP6p7gSiH+6CGERn/ppi7E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aurabindo Pillai <aurabindo.pillai@amd.com>,
-	Fangzhi Zuo <Jerry.Zuo@amd.com>,
-	Rodrigo Siqueira <rodrigo.siqueira@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	David Disseldorp <ddiss@suse.de>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 002/826] drm/amd/display: Skip Invalid Streams from DSC Policy
-Date: Tue,  3 Dec 2024 15:35:29 +0100
-Message-ID: <20241203144743.537483702@linuxfoundation.org>
+Subject: [PATCH 6.12 020/826] initramfs: avoid filename buffer overrun
+Date: Tue,  3 Dec 2024 15:35:47 +0100
+Message-ID: <20241203144744.246705694@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -54,68 +51,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fangzhi Zuo <Jerry.Zuo@amd.com>
+From: David Disseldorp <ddiss@suse.de>
 
-[ Upstream commit 9afeda04964281e9f708b92c2a9c4f8a1387b46e ]
+[ Upstream commit e017671f534dd3f568db9e47b0583e853d2da9b5 ]
 
-Streams with invalid new connector state should be elimiated from
-dsc policy.
+The initramfs filename field is defined in
+Documentation/driver-api/early-userspace/buffer-format.rst as:
 
-Reviewed-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
-Signed-off-by: Fangzhi Zuo <Jerry.Zuo@amd.com>
-Signed-off-by: Rodrigo Siqueira <rodrigo.siqueira@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+ 37 cpio_file := ALGN(4) + cpio_header + filename + "\0" + ALGN(4) + data
+...
+ 55 ============= ================== =========================
+ 56 Field name    Field size         Meaning
+ 57 ============= ================== =========================
+...
+ 70 c_namesize    8 bytes            Length of filename, including final \0
+
+When extracting an initramfs cpio archive, the kernel's do_name() path
+handler assumes a zero-terminated path at @collected, passing it
+directly to filp_open() / init_mkdir() / init_mknod().
+
+If a specially crafted cpio entry carries a non-zero-terminated filename
+and is followed by uninitialized memory, then a file may be created with
+trailing characters that represent the uninitialized memory. The ability
+to create an initramfs entry would imply already having full control of
+the system, so the buffer overrun shouldn't be considered a security
+vulnerability.
+
+Append the output of the following bash script to an existing initramfs
+and observe any created /initramfs_test_fname_overrunAA* path. E.g.
+  ./reproducer.sh | gzip >> /myinitramfs
+
+It's easiest to observe non-zero uninitialized memory when the output is
+gzipped, as it'll overflow the heap allocated @out_buf in __gunzip(),
+rather than the initrd_start+initrd_size block.
+
+---- reproducer.sh ----
+nilchar="A"	# change to "\0" to properly zero terminate / pad
+magic="070701"
+ino=1
+mode=$(( 0100777 ))
+uid=0
+gid=0
+nlink=1
+mtime=1
+filesize=0
+devmajor=0
+devminor=1
+rdevmajor=0
+rdevminor=0
+csum=0
+fname="initramfs_test_fname_overrun"
+namelen=$(( ${#fname} + 1 ))	# plus one to account for terminator
+
+printf "%s%08x%08x%08x%08x%08x%08x%08x%08x%08x%08x%08x%08x%08x%s" \
+	$magic $ino $mode $uid $gid $nlink $mtime $filesize \
+	$devmajor $devminor $rdevmajor $rdevminor $namelen $csum $fname
+
+termpadlen=$(( 1 + ((4 - ((110 + $namelen) & 3)) % 4) ))
+printf "%.s${nilchar}" $(seq 1 $termpadlen)
+---- reproducer.sh ----
+
+Symlink filename fields handled in do_symlink() won't overrun past the
+data segment, due to the explicit zero-termination of the symlink
+target.
+
+Fix filename buffer overrun by aborting the initramfs FSM if any cpio
+entry doesn't carry a zero-terminator at the expected (name_len - 1)
+offset.
+
+Fixes: 1da177e4c3f41 ("Linux-2.6.12-rc2")
+Signed-off-by: David Disseldorp <ddiss@suse.de>
+Link: https://lore.kernel.org/r/20241030035509.20194-2-ddiss@suse.de
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c | 13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ init/initramfs.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
-index a08e8a0b696c6..f756640048fee 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
-@@ -1120,6 +1120,7 @@ static int compute_mst_dsc_configs_for_link(struct drm_atomic_state *state,
- 	int i, k, ret;
- 	bool debugfs_overwrite = false;
- 	uint16_t fec_overhead_multiplier_x1000 = get_fec_overhead_multiplier(dc_link);
-+	struct drm_connector_state *new_conn_state;
- 
- 	memset(params, 0, sizeof(params));
- 
-@@ -1127,7 +1128,7 @@ static int compute_mst_dsc_configs_for_link(struct drm_atomic_state *state,
- 		return PTR_ERR(mst_state);
- 
- 	/* Set up params */
--	DRM_DEBUG_DRIVER("%s: MST_DSC Set up params for %d streams\n", __func__, dc_state->stream_count);
-+	DRM_DEBUG_DRIVER("%s: MST_DSC Try to set up params from %d streams\n", __func__, dc_state->stream_count);
- 	for (i = 0; i < dc_state->stream_count; i++) {
- 		struct dc_dsc_policy dsc_policy = {0};
- 
-@@ -1143,6 +1144,14 @@ static int compute_mst_dsc_configs_for_link(struct drm_atomic_state *state,
- 		if (!aconnector->mst_output_port)
- 			continue;
- 
-+		new_conn_state = drm_atomic_get_new_connector_state(state, &aconnector->base);
+diff --git a/init/initramfs.c b/init/initramfs.c
+index bc911e466d5bb..b2f7583bb1f5c 100644
+--- a/init/initramfs.c
++++ b/init/initramfs.c
+@@ -360,6 +360,15 @@ static int __init do_name(void)
+ {
+ 	state = SkipIt;
+ 	next_state = Reset;
 +
-+		if (!new_conn_state) {
-+			DRM_DEBUG_DRIVER("%s:%d MST_DSC Skip the stream 0x%p with invalid new_conn_state\n",
-+					__func__, __LINE__, stream);
-+			continue;
-+		}
++	/* name_len > 0 && name_len <= PATH_MAX checked in do_header */
++	if (collected[name_len - 1] != '\0') {
++		pr_err("initramfs name without nulterm: %.*s\n",
++		       (int)name_len, collected);
++		error("malformed archive");
++		return 1;
++	}
 +
- 		stream->timing.flags.DSC = 0;
- 
- 		params[count].timing = &stream->timing;
-@@ -1175,6 +1184,8 @@ static int compute_mst_dsc_configs_for_link(struct drm_atomic_state *state,
- 		count++;
- 	}
- 
-+	DRM_DEBUG_DRIVER("%s: MST_DSC Params set up for %d streams\n", __func__, count);
-+
- 	if (count == 0) {
- 		ASSERT(0);
+ 	if (strcmp(collected, "TRAILER!!!") == 0) {
+ 		free_hash();
  		return 0;
+@@ -424,6 +433,12 @@ static int __init do_copy(void)
+ 
+ static int __init do_symlink(void)
+ {
++	if (collected[name_len - 1] != '\0') {
++		pr_err("initramfs symlink without nulterm: %.*s\n",
++		       (int)name_len, collected);
++		error("malformed archive");
++		return 1;
++	}
+ 	collected[N_ALIGN(name_len) + body_len] = '\0';
+ 	clean_path(collected, 0);
+ 	init_symlink(collected + N_ALIGN(name_len), collected);
 -- 
 2.43.0
 
