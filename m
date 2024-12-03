@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D06BA1DE8A5;
-	Tue,  3 Dec 2024 15:58:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D03C21F75AE;
+	Tue,  3 Dec 2024 15:58:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733241502; cv=none; b=kQrmQpnsbdkcI00JXnM5p0MiqR3e4cT0FryFjQLR9WfILao+2MTDYuahTyM1pGSdDqmclu+rtpUzEinAs1F10Wigj+tkjFWCNZFyH0m/Y1PAj2YpavVQ1sidFBJWVy+m5rOSD6QfByGHZrlC7Tm5HXGgK82QqkN1YF/Q4HMUJ6w=
+	t=1733241505; cv=none; b=MEEKziiRamuAO5LWiwU/UPzBzjxB8ifARZ22pPAiyfcpfiTCceu+6Mu2IhNcZs+kmx8IQeNAVNnXvAURw8EngEGNT2ASWoyUhlUUixQ6h9DMnIMB06h/A/JFxmla2e5LexbPyXQADRp7H68rrL+spDxmaQmS3Bq5WYK6OlZMG3s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733241502; c=relaxed/simple;
-	bh=zk9vYDpiQrwya0wsPNeRuDGuGH14Pnf2PAK3kv6CIpk=;
+	s=arc-20240116; t=1733241505; c=relaxed/simple;
+	bh=ael25QfdyRmdMYzNuAOub2aIEIb9wKH0ZBi1B3jXeSw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qaLKPjDcZ/P/w3dejVQZbJhqVP7MAGyCF4Ui8qaEGA6z1/8Mxr+b6H/QAyaTTRlrl04QmEYQwriBSiJ+4SevN2X9mxMkgeL+4qADnrOd9D2NPUsICCdRmUo4IbmFMlQoQMhhPXPVJ9xdN5hH7rRfAXKcQuSPLN13wGxvUIR8PnQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H4h+5h1+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tZwNBus4/8iFNoWZp8HjQuhgzIGqXmJyJvRiNHAJuYZdDT8eID20nEnZ4QGg2VeLYiHcmpQG4JkkDDJqdqvueXNwiAfnHnIH65G5ZSnfEBlJG0wr8WifQdTb5zVdyjdbnauZDh3Sy35hYqHQn/vcjNAYnSq8eL5qhAryMSoAeSk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iIkavq03; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H4h+5h1+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDD5DC4CECF;
-	Tue,  3 Dec 2024 15:58:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iIkavq03"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DA46C4CECF;
+	Tue,  3 Dec 2024 15:58:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733241502;
-	bh=zk9vYDpiQrwya0wsPNeRuDGuGH14Pnf2PAK3kv6CIpk=;
+	s=korg; t=1733241505;
+	bh=ael25QfdyRmdMYzNuAOub2aIEIb9wKH0ZBi1B3jXeSw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H4h+5h1+iJ160wNiNJ8dDcKrHKgYEMgjwS+IbVzAPDBHGqnuLjv59Yd+h0EeJT0rd
-	 Dji5dh9YSf5Yk728dXTXgUcwrHYVX3l7B6NDoQ3dTGzuqJ/Ww//Qyhl0a037Mnth4Q
-	 gFrdi5mjhz/PRGre4CF8ShMHgbD4CTQ8P5UbWtuc=
+	b=iIkavq03RsEU0OCsDPP5tp7LKLn6WSoMF5FtZiNSRnO39g3qYK4uTGgA+gZHaatDB
+	 1EVgoUuklEIG/P6JK9FIujdc5zngv5uwTni1eNz0EyBJPlwbPNwX4t98N5Krr54dd3
+	 PkkIQESssdH2DyOGTK1eK0JaD7truxjekX8+4Vzk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
-	Sergey Senozhatsky <senozhatsky@chromium.org>,
-	Jens Axboe <axboe@kernel.dk>,
-	Minchan Kim <minchan@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Nicolin Chen <nicolinc@nvidia.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 436/826] zram: ZRAM_DEF_COMP should depend on ZRAM
-Date: Tue,  3 Dec 2024 15:42:43 +0100
-Message-ID: <20241203144800.770573442@linuxfoundation.org>
+Subject: [PATCH 6.12 437/826] iommu/tegra241-cmdqv: Fix alignment failure at max_n_shift
+Date: Tue,  3 Dec 2024 15:42:44 +0100
+Message-ID: <20241203144800.809722948@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -54,42 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geert Uytterhoeven <geert@linux-m68k.org>
+From: Nicolin Chen <nicolinc@nvidia.com>
 
-[ Upstream commit 9f3310ccc71efff041fed3f8be5ad19b0feab30b ]
+[ Upstream commit a3799717b881aa0f4e722afb70e7b8ba84ae4f36 ]
 
-When Compressed RAM block device support is disabled, the
-CONFIG_ZRAM_DEF_COMP symbol still ends up in the generated config file:
+When configuring a kernel with PAGE_SIZE=4KB, depending on its setting of
+CONFIG_CMA_ALIGNMENT, VCMDQ_LOG2SIZE_MAX=19 could fail the alignment test
+and trigger a WARN_ON:
+    WARNING: at drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c:3646
+    Call trace:
+     arm_smmu_init_one_queue+0x15c/0x210
+     tegra241_cmdqv_init_structures+0x114/0x338
+     arm_smmu_device_probe+0xb48/0x1d90
 
-    CONFIG_ZRAM_DEF_COMP="unset-value"
+Fix it by capping max_n_shift to CMDQ_MAX_SZ_SHIFT as SMMUv3 CMDQ does.
 
-While this causes no real harm, avoid polluting the config file by
-adding a dependency on ZRAM.
-
-Link: https://lkml.kernel.org/r/64e05bad68a9bd5cc322efd114a04d25de525940.1730807319.git.geert@linux-m68k.org
-Fixes: 917a59e81c34 ("zram: introduce custom comp backends API")
-Signed-off-by: Geert Uytterhoeven <geert@linux-m68k.org>
-Reviewed-by: Sergey Senozhatsky <senozhatsky@chromium.org>
-Cc: Jens Axboe <axboe@kernel.dk>
-Cc: Minchan Kim <minchan@kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 918eb5c856f6 ("iommu/arm-smmu-v3: Add in-kernel support for NVIDIA Tegra241 (Grace) CMDQV")
+Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+Link: https://lore.kernel.org/r/20241111030226.1940737-1-nicolinc@nvidia.com
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/zram/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/block/zram/Kconfig b/drivers/block/zram/Kconfig
-index 6aea609b795c2..402b7b1758632 100644
---- a/drivers/block/zram/Kconfig
-+++ b/drivers/block/zram/Kconfig
-@@ -94,6 +94,7 @@ endchoice
+diff --git a/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c b/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c
+index a243c543598ce..6b479592140c4 100644
+--- a/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c
++++ b/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c
+@@ -509,7 +509,8 @@ static int tegra241_vcmdq_alloc_smmu_cmdq(struct tegra241_vcmdq *vcmdq)
  
- config ZRAM_DEF_COMP
- 	string
-+	depends on ZRAM
- 	default "lzo-rle" if ZRAM_DEF_COMP_LZORLE
- 	default "lzo" if ZRAM_DEF_COMP_LZO
- 	default "lz4" if ZRAM_DEF_COMP_LZ4
+ 	snprintf(name, 16, "vcmdq%u", vcmdq->idx);
+ 
+-	q->llq.max_n_shift = VCMDQ_LOG2SIZE_MAX;
++	/* Queue size, capped to ensure natural alignment */
++	q->llq.max_n_shift = min_t(u32, CMDQ_MAX_SZ_SHIFT, VCMDQ_LOG2SIZE_MAX);
+ 
+ 	/* Use the common helper to init the VCMDQ, and then... */
+ 	ret = arm_smmu_init_one_queue(smmu, q, vcmdq->page0,
 -- 
 2.43.0
 
