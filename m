@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47BEE1F666B;
-	Tue,  3 Dec 2024 14:55:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EC5213B5B6;
+	Tue,  3 Dec 2024 14:56:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733237759; cv=none; b=n8LQrauTNwPl3CXF+n0tFFo0UI6/jCgXuxe6ET1TCYgLTsg8EsU4M+JnwFDmTtMjCs7eOvjO8ywhFTxYlqNprInp03wnzA1as3m75OYm9tfVsAS7ejGcVbFs3ttc7d7u6gIAhwQgFjjOESPcKR+IktEr89/MVKitxjRaIM77dLY=
+	t=1733237762; cv=none; b=gAFEt39UWDCXOBvBEwcH5985zRVJc4ddfAqbFi6fVT0ye+LMmCbmwovRy32IWKV4LVKayC0IRO7+MzsBgccGDD3SFkaD+uMwjWN5YIJpUpP6QAslzw25nOMqeowvMyKI8hyzWXdW/42POWCDe0+LZE6x/Dz91dK7kdwcavEVJVk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733237759; c=relaxed/simple;
-	bh=twPrG1vo4WEKOBpFQ0tYEi65/S64GlyiNbAtxDCA3Do=;
+	s=arc-20240116; t=1733237762; c=relaxed/simple;
+	bh=aHvCJv7hmX7tWn4G3Gv0IkuRmmAcl39+Juuy/sZoqvI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k356o/vrziR9LB6YiXzkdEp9ArL3zR/BRBrCAIy9gZJwnob5voSBZ3wvpZLRMTTqPtXJUr9cz0ygHmrxcyxZ/bHAaroFwvJ1V5KT+VgkI9jWM4lbVPdf9BoKVzNLZVPLrB8AgtN2vnooNhPgjmvfi/tYRYZsTkXdMBawOngwzm4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b6BlvUSp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RZXY0Y0RAlzBYIIATt7kao9ScSx5flZqFBkAUaOC4Wt97RBBdDPQFUx2RVv969lKZmnZAN9BL6XovBdS7i+c2OuGGa0AqzSpIes5qT5Hmu5jb9qUa5SmIMFyc8vumuy6G9PH+3aszzLJcAd2ksqUaQM+Q7mYlUERrXAx3JVELK0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SvxcGOH5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b6BlvUSp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0025C4CECF;
-	Tue,  3 Dec 2024 14:55:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SvxcGOH5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0352DC4CECF;
+	Tue,  3 Dec 2024 14:56:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733237759;
-	bh=twPrG1vo4WEKOBpFQ0tYEi65/S64GlyiNbAtxDCA3Do=;
+	s=korg; t=1733237762;
+	bh=aHvCJv7hmX7tWn4G3Gv0IkuRmmAcl39+Juuy/sZoqvI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b6BlvUSpX1GedLmJ/1Td+c4/VJ8swJNj6D+IAFg3m4F/rRjhrDU8JVirygChR8vEN
-	 w1YJ9hF179pr1PfyBIYFUzb5oVxzwnHp+cGvTD4/iv9eur5xKRkPXVDHfZFQkMKaML
-	 8f+do/jAJUDLbT+LPOj3MwZErauygDhV7pwJQtzg=
+	b=SvxcGOH54uG8uL/fqwm16yQpcB5gFwHMgjt/qNz/GIlyh+a6mFBEMOt7IAOhDBCCT
+	 nzK2Zjkla4eJ6oB8ivZOr0XG4hVGjYb3SaTvm7gh8bR3WhBpMRPn07OgXeWia3aVI3
+	 KzxPBdNj27bbwGlvN7zGXaCmoa+nP5JOcDvR6+bU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
-	Jani Nikula <jani.nikula@intel.com>,
+	Jan Stancek <jstancek@redhat.com>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 035/817] drm: panel-orientation-quirks: Make Lenovo Yoga Tab 3 X90F DMI match less strict
-Date: Tue,  3 Dec 2024 15:33:27 +0100
-Message-ID: <20241203143957.020946328@linuxfoundation.org>
+Subject: [PATCH 6.11 062/817] ext4: avoid remount errors with abort mount option
+Date: Tue,  3 Dec 2024 15:33:54 +0100
+Message-ID: <20241203143958.105530590@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -51,39 +52,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Jan Kara <jack@suse.cz>
 
-[ Upstream commit 052ef642bd6c108a24f375f9ad174b97b425a50b ]
+[ Upstream commit 76486b104168ae59703190566e372badf433314b ]
 
-There are 2G and 4G RAM versions of the Lenovo Yoga Tab 3 X90F and it
-turns out that the 2G version has a DMI product name of
-"CHERRYVIEW D1 PLATFORM" where as the 4G version has
-"CHERRYVIEW C0 PLATFORM". The sys-vendor + product-version check are
-unique enough that the product-name check is not necessary.
+When we remount filesystem with 'abort' mount option while changing
+other mount options as well (as is LTP test doing), we can return error
+from the system call after commit d3476f3dad4a ("ext4: don't set
+SB_RDONLY after filesystem errors") because the application of mount
+option changes detects shutdown filesystem and refuses to do anything.
+The behavior of application of other mount options in presence of
+'abort' mount option is currently rather arbitary as some mount option
+changes are handled before 'abort' and some after it.
 
-Drop the product-name check so that the existing DMI match for the 4G
-RAM version also matches the 2G RAM version.
+Move aborting of the filesystem to the end of remount handling so all
+requested changes are properly applied before the filesystem is shutdown
+to have a reasonably consistent behavior.
 
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Acked-by: Jani Nikula <jani.nikula@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240825132131.6643-1-hdegoede@redhat.com
+Fixes: d3476f3dad4a ("ext4: don't set SB_RDONLY after filesystem errors")
+Reported-by: Jan Stancek <jstancek@redhat.com>
+Link: https://lore.kernel.org/all/Zvp6L+oFnfASaoHl@t14s
+Signed-off-by: Jan Kara <jack@suse.cz>
+Tested-by: Jan Stancek <jstancek@redhat.com>
+Link: https://patch.msgid.link/20241004221556.19222-1-jack@suse.cz
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_panel_orientation_quirks.c | 1 -
- 1 file changed, 1 deletion(-)
+ fs/ext4/super.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/drm_panel_orientation_quirks.c b/drivers/gpu/drm/drm_panel_orientation_quirks.c
-index 0830cae9a4d0f..2d84d7ea1ab7a 100644
---- a/drivers/gpu/drm/drm_panel_orientation_quirks.c
-+++ b/drivers/gpu/drm/drm_panel_orientation_quirks.c
-@@ -403,7 +403,6 @@ static const struct dmi_system_id orientation_data[] = {
- 	}, {	/* Lenovo Yoga Tab 3 X90F */
- 		.matches = {
- 		 DMI_MATCH(DMI_SYS_VENDOR, "Intel Corporation"),
--		 DMI_MATCH(DMI_PRODUCT_NAME, "CHERRYVIEW D1 PLATFORM"),
- 		 DMI_MATCH(DMI_PRODUCT_VERSION, "Blade3-10A-001"),
- 		},
- 		.driver_data = (void *)&lcd1600x2560_rightside_up,
+diff --git a/fs/ext4/super.c b/fs/ext4/super.c
+index cd3328b031534..42b1acac88e78 100644
+--- a/fs/ext4/super.c
++++ b/fs/ext4/super.c
+@@ -6518,9 +6518,6 @@ static int __ext4_remount(struct fs_context *fc, struct super_block *sb)
+ 		goto restore_opts;
+ 	}
+ 
+-	if (test_opt2(sb, ABORT))
+-		ext4_abort(sb, ESHUTDOWN, "Abort forced by user");
+-
+ 	sb->s_flags = (sb->s_flags & ~SB_POSIXACL) |
+ 		(test_opt(sb, POSIX_ACL) ? SB_POSIXACL : 0);
+ 
+@@ -6689,6 +6686,14 @@ static int __ext4_remount(struct fs_context *fc, struct super_block *sb)
+ 	if (!ext4_has_feature_mmp(sb) || sb_rdonly(sb))
+ 		ext4_stop_mmpd(sbi);
+ 
++	/*
++	 * Handle aborting the filesystem as the last thing during remount to
++	 * avoid obsure errors during remount when some option changes fail to
++	 * apply due to shutdown filesystem.
++	 */
++	if (test_opt2(sb, ABORT))
++		ext4_abort(sb, ESHUTDOWN, "Abort forced by user");
++
+ 	return 0;
+ 
+ restore_opts:
 -- 
 2.43.0
 
