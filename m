@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6387A1F7071;
-	Tue,  3 Dec 2024 15:30:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B0762500DA;
+	Tue,  3 Dec 2024 15:30:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733239806; cv=none; b=sgHuMuwpT8eFj4919/Np7Gah+89sCgAxW2n+zrlmWZq2Vb5Ahhe3FIzgPpUf6+4gB9zFTXBUcf08KHKqNmyHxARO2kpgEZNCMZYeNZ1vPV/03AfoYCHO3MvIyr6/NabbFIQNEuKagIskGdmilIaW1mYg4IW9tKtSiEXu83jLrvA=
+	t=1733239809; cv=none; b=L1n4K1ooY7xNbqohgfAQGfeC4F0OYdmNArqB8S+5hn0n3VnxKIcDtZWYcjF8XoU9ejsUExDVFyWDNT3iJ5K/J4pjVcrtJpPpgUTu+5omguYZ+CojVR3uyJE9YiPiH9zaxyt2/GFqZlfGqZp3ByV1nWhur6h4nl/CarEA87aOAM4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733239806; c=relaxed/simple;
-	bh=qlBZwscEI1hOXVmyfy7SEAVEBf0Vi9+9u88RNTl82fw=;
+	s=arc-20240116; t=1733239809; c=relaxed/simple;
+	bh=VKyB55eRUQOrhXpuDYVzKsyK+OCJl9/Hti7WlMJZEuI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qGb2M5+is6YOhxEGY+Ys2YrSGoLaaqdrZ967vdcA3CDiBiKjKnzIdwvTdb9zkNHC7di0JuCce6Xfql9ZwHUxZQJa2jRkfmyzDmeyEv8ItIF23diF4jytc88mBPFj7l0kGOODdiCte1wJ16yLfDe14C27/rI2UrVJ45Ti9JzzhiU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zWHjmPuV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=T6DvzAaJtFaIAVwgyaw4ESnTr1ZWOupAGCrAJCgp1hqURMCjEWb1ug9IDS7w8dfd9UL3QGct0qmgtB5A1EzWkC+r1IwICrrVxaSSaT876UP+bcKBwsECqBJ1FH28zAlPjk1QzZGd8n0mcwl8J7n3mTjy8E+cWf7SFVlmggqkTqk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b6gdIvv8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zWHjmPuV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEA7AC4CECF;
-	Tue,  3 Dec 2024 15:30:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b6gdIvv8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C88F0C4CECF;
+	Tue,  3 Dec 2024 15:30:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733239806;
-	bh=qlBZwscEI1hOXVmyfy7SEAVEBf0Vi9+9u88RNTl82fw=;
+	s=korg; t=1733239809;
+	bh=VKyB55eRUQOrhXpuDYVzKsyK+OCJl9/Hti7WlMJZEuI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zWHjmPuVRdqXuPxtI74TbZNX3UMfS9wAWdJMEH9KpiPxMgNBkp430lre4nwJBIn3+
-	 pRxgpXsYXkVuV55scURN/Ocw3Bzz+7cxREljjgZaP87PcnrFFDDkxcm4Lxv/boxmDi
-	 KHJ1Edp+JGazVvFBqE+lRI/YL0e/WyrsWhIVNxZE=
+	b=b6gdIvv85GpkdKHDJBi2tYoEF4Phuv0LyNT3P1JCEv3WS9EAOb0EQgEOMuRwnXtPF
+	 jbmwcF1sjh8ulooJD3YqdA8Nvs97yW3EqfKfIF3aK1b1DQtghGHUDUDk6wNYaEsssb
+	 49yC5mW+e974tgPWScid1oWIY0VPtAOE09xqxCoU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Simek <michal.simek@amd.com>,
-	Krzysztof Kozlowski <krzk@kernel.org>
-Subject: [PATCH 6.11 713/817] dt-bindings: serial: rs485: Fix rs485-rts-delay property
-Date: Tue,  3 Dec 2024 15:44:45 +0100
-Message-ID: <20241203144023.823560058@linuxfoundation.org>
+	syzbot+4bf62a7b1d0f4fdb7ae2@syzkaller.appspotmail.com,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.11 740/817] ALSA: pcm: Add sanity NULL check for the default mmap fault handler
+Date: Tue,  3 Dec 2024 15:45:12 +0100
+Message-ID: <20241203144024.882717934@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -50,51 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Simek <michal.simek@amd.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-commit 12b3642b6c242061d3ba84e6e3050c3141ded14c upstream.
+commit d2913a07d9037fe7aed4b7e680684163eaed6bc4 upstream.
 
-Code expects array only with 2 items which should be checked.
-But also item checking is not working as it should likely because of
-incorrect items description.
+A driver might allow the mmap access before initializing its
+runtime->dma_area properly.  Add a proper NULL check before passing to
+virt_to_page() for avoiding a panic.
 
-Fixes: d50f974c4f7f ("dt-bindings: serial: Convert rs485 bindings to json-schema")
-Signed-off-by: Michal Simek <michal.simek@amd.com>
-Cc: stable@vger.kernel.org
-Reviewed-by: Krzysztof Kozlowski <krzk@kernel.org>
-Link: https://lore.kernel.org/r/820c639b9e22fe037730ed44d1b044cdb6d28b75.1726480384.git.michal.simek@amd.com
+Reported-by: syzbot+4bf62a7b1d0f4fdb7ae2@syzkaller.appspotmail.com
+Cc: <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20241120141104.7060-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/devicetree/bindings/serial/rs485.yaml |   19 +++++++++----------
- 1 file changed, 9 insertions(+), 10 deletions(-)
+ sound/core/pcm_native.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/Documentation/devicetree/bindings/serial/rs485.yaml
-+++ b/Documentation/devicetree/bindings/serial/rs485.yaml
-@@ -18,16 +18,15 @@ properties:
-     description: prop-encoded-array <a b>
-     $ref: /schemas/types.yaml#/definitions/uint32-array
-     items:
--      items:
--        - description: Delay between rts signal and beginning of data sent in
--            milliseconds. It corresponds to the delay before sending data.
--          default: 0
--          maximum: 100
--        - description: Delay between end of data sent and rts signal in milliseconds.
--            It corresponds to the delay after sending data and actual release
--            of the line.
--          default: 0
--          maximum: 100
-+      - description: Delay between rts signal and beginning of data sent in
-+          milliseconds. It corresponds to the delay before sending data.
-+        default: 0
-+        maximum: 100
-+      - description: Delay between end of data sent and rts signal in milliseconds.
-+          It corresponds to the delay after sending data and actual release
-+          of the line.
-+        default: 0
-+        maximum: 100
- 
-   rs485-rts-active-high:
-     description: drive RTS high when sending (this is the default).
+--- a/sound/core/pcm_native.c
++++ b/sound/core/pcm_native.c
+@@ -3789,9 +3789,11 @@ static vm_fault_t snd_pcm_mmap_data_faul
+ 		return VM_FAULT_SIGBUS;
+ 	if (substream->ops->page)
+ 		page = substream->ops->page(substream, offset);
+-	else if (!snd_pcm_get_dma_buf(substream))
++	else if (!snd_pcm_get_dma_buf(substream)) {
++		if (WARN_ON_ONCE(!runtime->dma_area))
++			return VM_FAULT_SIGBUS;
+ 		page = virt_to_page(runtime->dma_area + offset);
+-	else
++	} else
+ 		page = snd_sgbuf_get_page(snd_pcm_get_dma_buf(substream), offset);
+ 	if (!page)
+ 		return VM_FAULT_SIGBUS;
 
 
