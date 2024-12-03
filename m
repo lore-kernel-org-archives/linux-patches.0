@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0137E1F75BD;
-	Tue,  3 Dec 2024 14:57:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 460411F76B1;
+	Tue,  3 Dec 2024 14:57:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733237858; cv=none; b=aZ+jzHJEbwFPx/NWobnDwl4/Dg8eNdR6x7/9qooajSehKgIIcrlnaLfSUiB9udFCAhaswGjdImdG+ydjxbuahG+52MCrtTU3aXPDDY3wQEBMJ5qOpG3ftTm1vPakn0XtvAdyKy7iD57D68ZRdFGH332XXtI48rwevRRMH0eS2XY=
+	t=1733237861; cv=none; b=M96sCQ0PjkdKg7W+Azpqb7zhZtdfOuFu+dMDtTa61hogcK6owFfsdemKSCluVmlL8C8M8p3sx6jHLffdeUdkAMP+X0ai2srGALLhPq1W20WjXkI00W7mL0Ax1PkDUm4E1e4Va+UMMGMoxpEoLDddGUy432JRtPDQjVdFOLlEfWA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733237858; c=relaxed/simple;
-	bh=NRqFO9dpE2sgOd6kCM9UoHiTHiS6W5aEBIpdU4Ji8sw=;
+	s=arc-20240116; t=1733237861; c=relaxed/simple;
+	bh=QWR9z0dsQhz/+TybN7in/G2YbwQ3sZpvLa38XNlY4gA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VkE5g9yUomy3TI08e5GtqPuX4wgYDXwQE8upQ2EuwZvG9suhO4q8+ij3i89ue/8oVoSSVOoZnPilV2Z8ZUE/y/pEHRPtTP1xigYdmP3ygJifhqTnAkQb5xPwgF8sDchLOea7601FeuTRrobavGe3TSQ9c4yDfNicx2W+9UEtBgE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KLFhmqyG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZObcVZw/dFq+WxaVzuwHHhLJ3W8IX+jBxJ8F0iRs67BAHLxQ1o/eWDlVpOGULQ3t4YEq02cty+9SzxZUMJerb8G8oRjyq1GEq4/92BWvJ/3qfxrkh9HZENovXHho54tILRnhr4WbJOV7yf/YnVQOQ0Kvq4uO1SbutK7WhbiQylk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sJtF+iqw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KLFhmqyG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64222C4CED9;
-	Tue,  3 Dec 2024 14:57:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sJtF+iqw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A847BC4CECF;
+	Tue,  3 Dec 2024 14:57:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733237857;
-	bh=NRqFO9dpE2sgOd6kCM9UoHiTHiS6W5aEBIpdU4Ji8sw=;
+	s=korg; t=1733237861;
+	bh=QWR9z0dsQhz/+TybN7in/G2YbwQ3sZpvLa38XNlY4gA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KLFhmqyGZD60BBOPpz50dSvPxC44jN4oCRaZd2Ai4PrBbLn2rfsPQXe5iMFL1Ma+9
-	 CukL7kz24LFLC10Hvk/BW2yjZRlnjN0bIZYpx5i40XeX0ABqCJFz8tNHExOqqEbb3U
-	 egg5j9nCPv8sbgTKMI/TdJX7GIb5F2Nf3y0Pd6+U=
+	b=sJtF+iqwo7cu5vzhNIzZ/wig++AHpr/bSt0bMynTTEP4klL6eZc7LvJl9OJ+1qSEh
+	 h8rWSySk98WBGe2ROcwInaSggDUay4U60QcFP65WZJAm4w+FhiTJFCJ1VHjR1XeOri
+	 hnI1OsNiZGwggZuAjVYWPjKvO9EAcURHMdg1Gecg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tomas Paukrt <tomaspaukrt@email.cz>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 088/817] crypto: mxs-dcp - Fix AES-CBC with hardware-bound keys
-Date: Tue,  3 Dec 2024 15:34:20 +0100
-Message-ID: <20241203143959.136230248@linuxfoundation.org>
+Subject: [PATCH 6.11 089/817] crypto: caam - Fix the pointer passed to caam_qi_shutdown()
+Date: Tue,  3 Dec 2024 15:34:21 +0100
+Message-ID: <20241203143959.174989918@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -51,67 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tomas Paukrt <tomaspaukrt@email.cz>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit 0dbb6854ca14933e194e8e46c894ca7bff95d0f3 ]
+[ Upstream commit ad980b04f51f7fb503530bd1cb328ba5e75a250e ]
 
-Fix passing an initialization vector in the payload field which
-is necessary for AES in CBC mode even with hardware-bound keys.
+The type of the last parameter given to devm_add_action_or_reset() is
+"struct caam_drv_private *", but in caam_qi_shutdown(), it is casted to
+"struct device *".
 
-Fixes: 3d16af0b4cfa ("crypto: mxs-dcp: Add support for hardware-bound keys")
-Signed-off-by: Tomas Paukrt <tomaspaukrt@email.cz>
+Pass the correct parameter to devm_add_action_or_reset() so that the
+resources are released as expected.
+
+Fixes: f414de2e2fff ("crypto: caam - use devres to de-initialize QI")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/mxs-dcp.c | 20 ++++++++++++--------
- 1 file changed, 12 insertions(+), 8 deletions(-)
+ drivers/crypto/caam/qi.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/crypto/mxs-dcp.c b/drivers/crypto/mxs-dcp.c
-index c82775dbb557a..77a6301f37f0a 100644
---- a/drivers/crypto/mxs-dcp.c
-+++ b/drivers/crypto/mxs-dcp.c
-@@ -225,21 +225,22 @@ static int mxs_dcp_start_dma(struct dcp_async_ctx *actx)
- static int mxs_dcp_run_aes(struct dcp_async_ctx *actx,
- 			   struct skcipher_request *req, int init)
- {
--	dma_addr_t key_phys = 0;
--	dma_addr_t src_phys, dst_phys;
-+	dma_addr_t key_phys, src_phys, dst_phys;
- 	struct dcp *sdcp = global_sdcp;
- 	struct dcp_dma_desc *desc = &sdcp->coh->desc[actx->chan];
- 	struct dcp_aes_req_ctx *rctx = skcipher_request_ctx(req);
- 	bool key_referenced = actx->key_referenced;
- 	int ret;
+diff --git a/drivers/crypto/caam/qi.c b/drivers/crypto/caam/qi.c
+index ba8fb5d8a7b26..dcb9069a254c7 100644
+--- a/drivers/crypto/caam/qi.c
++++ b/drivers/crypto/caam/qi.c
+@@ -793,7 +793,7 @@ int caam_qi_init(struct platform_device *caam_pdev)
  
--	if (!key_referenced) {
-+	if (key_referenced)
-+		key_phys = dma_map_single(sdcp->dev, sdcp->coh->aes_key + AES_KEYSIZE_128,
-+					  AES_KEYSIZE_128, DMA_TO_DEVICE);
-+	else
- 		key_phys = dma_map_single(sdcp->dev, sdcp->coh->aes_key,
- 					  2 * AES_KEYSIZE_128, DMA_TO_DEVICE);
--		ret = dma_mapping_error(sdcp->dev, key_phys);
--		if (ret)
--			return ret;
--	}
-+	ret = dma_mapping_error(sdcp->dev, key_phys);
-+	if (ret)
-+		return ret;
+ 	caam_debugfs_qi_init(ctrlpriv);
  
- 	src_phys = dma_map_single(sdcp->dev, sdcp->coh->aes_in_buf,
- 				  DCP_BUF_SZ, DMA_TO_DEVICE);
-@@ -300,7 +301,10 @@ static int mxs_dcp_run_aes(struct dcp_async_ctx *actx,
- err_dst:
- 	dma_unmap_single(sdcp->dev, src_phys, DCP_BUF_SZ, DMA_TO_DEVICE);
- err_src:
--	if (!key_referenced)
-+	if (key_referenced)
-+		dma_unmap_single(sdcp->dev, key_phys, AES_KEYSIZE_128,
-+				 DMA_TO_DEVICE);
-+	else
- 		dma_unmap_single(sdcp->dev, key_phys, 2 * AES_KEYSIZE_128,
- 				 DMA_TO_DEVICE);
- 	return ret;
+-	err = devm_add_action_or_reset(qidev, caam_qi_shutdown, ctrlpriv);
++	err = devm_add_action_or_reset(qidev, caam_qi_shutdown, qidev);
+ 	if (err)
+ 		goto fail2;
+ 
 -- 
 2.43.0
 
