@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 001B51F666B;
-	Tue,  3 Dec 2024 14:53:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7341B1DE2A1;
+	Tue,  3 Dec 2024 14:53:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733237627; cv=none; b=rlX/C8a0OnMSzwy7IpWrrqQBbdwYtQVG6x7J/bWa9uqahGUj0StJpkVH9Py5Z/f573pW+u/sPbv0f0IvuglKQj/af6cSveHCy17dwSzBfCPHar4cGAGA9ykF5sB1kz5wIVLQvRhYYojV8Cg01ymTa3gfcFPhReX8MeNkwzUFu9w=
+	t=1733237630; cv=none; b=oYyAiiVOszQdjz2ooP0pNfEuHXeqwbQMw9ZIQPBRnQnrzMydJb6IQW2iAGRQ9mp6zUJCo5g0tOtGoc9+E9FuRmPtJUPCm2fHmsPV88Q7Bcj3VXxKG1ycoG7e3YCQUONUrWivQE2+nfhw77JT2JRQxf5Hh+LM+jk9coL4kEH/2kU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733237627; c=relaxed/simple;
-	bh=Q/9zVibhquph8+5XviQCkeFDwnA4B8bszEo0GmyNbwc=;
+	s=arc-20240116; t=1733237630; c=relaxed/simple;
+	bh=ONYW/Le1C/ghtFvB+LzWzA8auaFwb/46q4Rccn6SE4I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t5FSngv3Tq6JzUEt+OuFKlcIafD1d9GX/GTbwHsn2xreSwnCucm2TryqAtq7qI/Dzp5wIORta3XX+FmW7J6DXPEgM//L5zD/k1AZKPNcla/gZ4r7+0dtx13N04RgHXbw83gD50BFw1DP1AfxTFdgrGuMuengDNsfpk01+1/Vazs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TLqSR0eG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=d1dd8/3VwgF8uc4HXrhtKV3CxlaUegmI90XAXj1r+xpxfDGkZyx4KHJbPCsb7KZs9yESYMcDtYLgRY9ABCDhLXC06DR+pU/aJX/HCtNWbnH6pvAJxkS4p50SPVfSfCx9fQ5Jfc7d6UqZMlOd5/kbeSYcbSHAcFIitP0Y/6GTQmg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gTAs2CRm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TLqSR0eG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FB3BC4CECF;
-	Tue,  3 Dec 2024 14:53:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gTAs2CRm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D20B3C4CECF;
+	Tue,  3 Dec 2024 14:53:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733237626;
-	bh=Q/9zVibhquph8+5XviQCkeFDwnA4B8bszEo0GmyNbwc=;
+	s=korg; t=1733237630;
+	bh=ONYW/Le1C/ghtFvB+LzWzA8auaFwb/46q4Rccn6SE4I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TLqSR0eGezciVJQsircflme+6aqWeRA9uzkAsoXB4LvsGd9pjNKnxvlIZLSsLr0tO
-	 KotgBw+ix2zpz5lc6vSpjl0WQNktwIJX8D24D655UIeHGe/EcrI0cgODTOXigupl8I
-	 azFYWVrbMwbKD0+dvAwDJVn5r2MH/9++fawfU9oQ=
+	b=gTAs2CRmgP4ljyX2HJ2gQtPiDeryXhFeciW2WHa+qzC07UbCIlnzdVTbmMtlRprDQ
+	 39RaA6dfVpx4OeJHUWiuykzpsUl3Y0oVO4hratRj20ItivnjB/bROAry5AMpK5yMgg
+	 jTl41WqDVA37hFMrsI3oM7VJJ4uA9ZZqlS2EQiaM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikhail Rudenko <mike.rudenko@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Kurt Borja <kuurtb@gmail.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 024/817] regulator: rk808: Add apply_bit for BUCK3 on RK809
-Date: Tue,  3 Dec 2024 15:33:16 +0100
-Message-ID: <20241203143956.587480279@linuxfoundation.org>
+Subject: [PATCH 6.11 025/817] platform/x86: dell-smbios-base: Extends support to Alienware products
+Date: Tue,  3 Dec 2024 15:33:17 +0100
+Message-ID: <20241203143956.626503479@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -45,47 +47,53 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.11-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mikhail Rudenko <mike.rudenko@gmail.com>
+From: Kurt Borja <kuurtb@gmail.com>
 
-[ Upstream commit 5e53e4a66bc7430dd2d11c18a86410e3a38d2940 ]
+[ Upstream commit a36b8b84ac4327b90ef5a22bc97cc96a92073330 ]
 
-Currently, RK809's BUCK3 regulator is modelled in the driver as a
-configurable regulator with 0.5-2.4V voltage range. But the voltage
-setting is not actually applied, because when bit 6 of
-PMIC_POWER_CONFIG register is set to 0 (default), BUCK3 output voltage
-is determined by the external feedback resistor. Fix this, by setting
-bit 6 when voltage selection is set. Existing users which do not
-specify voltage constraints in their device trees will not be affected
-by this change, since no voltage setting is applied in those cases,
-and bit 6 is not enabled.
+Fixes the following error:
 
-Signed-off-by: Mikhail Rudenko <mike.rudenko@gmail.com>
-Link: https://patch.msgid.link/20241017-rk809-dcdc3-v1-1-e3c3de92f39c@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+dell_smbios: Unable to run on non-Dell system
+
+Which is triggered after dell-wmi driver fails to initialize on
+Alienware systems, as it depends on dell-smbios.
+
+This effectively extends dell-wmi, dell-smbios and dcdbas support to
+Alienware devices, that might share some features of the SMBIOS intereface
+calling interface with other Dell products.
+
+Tested on an Alienware X15 R1.
+
+Signed-off-by: Kurt Borja <kuurtb@gmail.com>
+Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
+Acked-by: Pali Rohár <pali@kernel.org>
+Link: https://lore.kernel.org/r/20241031154023.6149-2-kuurtb@gmail.com
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/rk808-regulator.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/platform/x86/dell/dell-smbios-base.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/regulator/rk808-regulator.c b/drivers/regulator/rk808-regulator.c
-index 14b60abd6afc6..01a8d04879184 100644
---- a/drivers/regulator/rk808-regulator.c
-+++ b/drivers/regulator/rk808-regulator.c
-@@ -1379,6 +1379,8 @@ static const struct regulator_desc rk809_reg[] = {
- 		.n_linear_ranges = ARRAY_SIZE(rk817_buck1_voltage_ranges),
- 		.vsel_reg = RK817_BUCK3_ON_VSEL_REG,
- 		.vsel_mask = RK817_BUCK_VSEL_MASK,
-+		.apply_reg = RK817_POWER_CONFIG,
-+		.apply_bit = RK817_BUCK3_FB_RES_INTER,
- 		.enable_reg = RK817_POWER_EN_REG(0),
- 		.enable_mask = ENABLE_MASK(RK817_ID_DCDC3),
- 		.enable_val = ENABLE_MASK(RK817_ID_DCDC3),
+diff --git a/drivers/platform/x86/dell/dell-smbios-base.c b/drivers/platform/x86/dell/dell-smbios-base.c
+index 73e41eb69cb57..01c72b91a50d4 100644
+--- a/drivers/platform/x86/dell/dell-smbios-base.c
++++ b/drivers/platform/x86/dell/dell-smbios-base.c
+@@ -576,6 +576,7 @@ static int __init dell_smbios_init(void)
+ 	int ret, wmi, smm;
+ 
+ 	if (!dmi_find_device(DMI_DEV_TYPE_OEM_STRING, "Dell System", NULL) &&
++	    !dmi_find_device(DMI_DEV_TYPE_OEM_STRING, "Alienware", NULL) &&
+ 	    !dmi_find_device(DMI_DEV_TYPE_OEM_STRING, "www.dell.com", NULL)) {
+ 		pr_err("Unable to run on non-Dell system\n");
+ 		return -ENODEV;
 -- 
 2.43.0
 
