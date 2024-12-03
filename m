@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA0D81F75B4;
-	Tue,  3 Dec 2024 15:46:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0EA51F8926;
+	Tue,  3 Dec 2024 15:46:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733240762; cv=none; b=S40TQ3DBnd/csDwZW4SAAzNClbcxo90yYTP7pe+Mc1TKnrUPBrDvHImSSrjCbTmGLws2EjiItX6hzoqll9+gDUCQ12eunvU/0aR2QH0clHsXTieLamQJt8k1ThPq5PveZMFw83axIGHIIkBiIsTIpj+QJ67Jjx7UMCgOUCptdpM=
+	t=1733240766; cv=none; b=TP81vhadnv7mr7UxLaGFFm8cggRE3L7TvlL05GHyNO3p8wKKg3I+5GFKCzC73keN+Hc3wE0iczaOS1J+j40//uKPYGq6JnGayw8gVVkA5BTkA4Dlu3dhuyi6cRuQQCtMHEFYJOo3hk1KKXjPAO09PZbzAv1vNeLRliLW5SsDzwY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733240762; c=relaxed/simple;
-	bh=r3jiba7hvYFBzw7CNUOdcGSb7483AzmMSQFPg9JT9tE=;
+	s=arc-20240116; t=1733240766; c=relaxed/simple;
+	bh=5rJh/ZeeMQdgZ+w+LgAAZvXZrfr8c5gEGlAexdyioNw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AOkMPhHhB+68P/D3fSU3IrtT4C2fMGyk6t4N2+40borc3VIZ366DsFkEwVvqx/tFcqTLA7HgSBtUCCCE1Q36ZCFQv46WENjpI+aEXqckd4qe5rTOkFuuct2Vytudb7KX1fqt22LLk0+uoewhuPDk+UmqsNuFtykZpvv/wRM9JRs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b+B3vbh3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PnY2khhwwh+nYmHrTkoOTJbJeeit+go8brCll8VudwO8m24XrMQ0wNLwaow2CYLo2BZa02YeDU3k7SggLEsIlKQ/9WrzenSxCICdAXAetnJBSIND0u85Y4iTFOVPK0glt0keHl2/xzpNBzZDDZjMUQ7d2pQUUfRqpWfDV+JcwsI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GvccMvxS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b+B3vbh3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3848BC4CED6;
-	Tue,  3 Dec 2024 15:46:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GvccMvxS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C3CBC4CED6;
+	Tue,  3 Dec 2024 15:46:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733240762;
-	bh=r3jiba7hvYFBzw7CNUOdcGSb7483AzmMSQFPg9JT9tE=;
+	s=korg; t=1733240766;
+	bh=5rJh/ZeeMQdgZ+w+LgAAZvXZrfr8c5gEGlAexdyioNw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b+B3vbh3FDAmccwB6G6snXdt3uHGafaSHnivCiI+YWy7xnmbJUdaEGButbqiBUMRM
-	 lG44LYrg2vAjMTeObIvrKPLwPZ/GVBQjNeuEo8OmbHuUXiQi5glAN1zHh5QbuGuHzX
-	 SCm4FDTF2AvzXT8N2S3pWBbFV6YUxDpTMRd7Nhv4=
+	b=GvccMvxSMO4K69ApcahgXfmN6hYJmks4Cfc3goCk0WG90dotxiFGd9+rNCLkXz+9J
+	 iwgwBGPRw8DNRQ4WVbF/hICpbag0z1AhmrKcpKyrtX6vFpZLVZBKNQGKS52tSQBZNe
+	 WKaalYrPXnJF/kHNxazlWgMsiUUPLblVkK90QJrc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rameshkumar Sundaram <quic_ramess@quicinc.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Kalle Valo <kvalo@kernel.org>,
 	Jeff Johnson <quic_jjohnson@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 227/826] wifi: ath12k: fix use-after-free in ath12k_dp_cc_cleanup()
-Date: Tue,  3 Dec 2024 15:39:14 +0100
-Message-ID: <20241203144752.592781607@linuxfoundation.org>
+Subject: [PATCH 6.12 228/826] wifi: ath12k: fix one more memcpy size error
+Date: Tue,  3 Dec 2024 15:39:15 +0100
+Message-ID: <20241203144752.631636405@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -51,114 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rameshkumar Sundaram <quic_ramess@quicinc.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit bdb281103373fd80eb5c91cede1e115ba270b4e9 ]
+[ Upstream commit 19c23eb61fa4c802e6e0aaf74d6f7dcbe99f0ba3 ]
 
-During ath12k module removal, in ath12k_core_deinit(),
-ath12k_mac_destroy() un-registers ah->hw from mac80211 and frees
-the ah->hw as well as all the ar's in it. After this
-ath12k_core_soc_destroy()-> ath12k_dp_free()-> ath12k_dp_cc_cleanup()
-tries to access one of the freed ar's from pending skb.
+A previous patch addressed a fortified-memcpy warning on older compilers,
+but there is still a warning on gcc-14 in some configurations:
 
-This is because during mac destroy, driver failed to flush few
-data packets, which were accessed later in ath12k_dp_cc_cleanup()
-and freed, but using ar from the packet led to this use-after-free.
+In file included from include/linux/string.h:390,
+                 from drivers/net/wireless/ath/ath12k/wow.c:7:
+drivers/net/wireless/ath/ath12k/wow.c: In function 'ath12k_wow_convert_8023_to_80211.isra':
+include/linux/fortify-string.h:114:33: error: '__builtin_memcpy' accessing 18446744073709551610 or more bytes at offsets 0 and 0 overlaps 9223372036854775797 bytes at offset -9223372036854775803 [-Werror=restrict]
+include/linux/fortify-string.h:679:26: note: in expansion of macro '__fortify_memcpy_chk'
+  679 | #define memcpy(p, q, s)  __fortify_memcpy_chk(p, q, s,                  \
+      |                          ^~~~~~~~~~~~~~~~~~~~
+drivers/net/wireless/ath/ath12k/wow.c:199:25: note: in expansion of macro 'memcpy'
+  199 |                         memcpy(pat + a3_ofs - pkt_ofs,
+      |                         ^~~~~~
 
-BUG: KASAN: use-after-free in ath12k_dp_cc_cleanup.part.0+0x5e2/0xd40 [ath12k]
-Write of size 4 at addr ffff888150bd3514 by task modprobe/8926
-CPU: 0 UID: 0 PID: 8926 Comm: modprobe Not tainted
-6.11.0-rc2-wt-ath+ #1746
-Hardware name: Intel(R) Client Systems NUC8i7HVK/NUC8i7HVB, BIOS
-HNKBLi70.86A.0067.2021.0528.1339 05/28/2021
+Address this the same way as the other two, using size_add().
 
-Call Trace:
-  <TASK>
-  dump_stack_lvl+0x7d/0xe0
-  print_address_description.constprop.0+0x33/0x3a0
-  print_report+0xb5/0x260
-  ? kasan_addr_to_slab+0x24/0x80
-  kasan_report+0xd8/0x110
-  ? ath12k_dp_cc_cleanup.part.0+0x5e2/0xd40 [ath12k]
-  ? ath12k_dp_cc_cleanup.part.0+0x5e2/0xd40 [ath12k]
-  kasan_check_range+0xf3/0x1a0
-  __kasan_check_write+0x14/0x20
-  ath12k_dp_cc_cleanup.part.0+0x5e2/0xd40 [ath12k]
-  ath12k_dp_free+0x178/0x420 [ath12k]
-  ath12k_core_stop+0x176/0x200 [ath12k]
-  ath12k_core_deinit+0x13f/0x210 [ath12k]
-  ath12k_pci_remove+0xad/0x1c0 [ath12k]
-  pci_device_remove+0x9b/0x1b0
-  device_remove+0xbf/0x150
-  device_release_driver_internal+0x3c3/0x580
-  ? __kasan_check_read+0x11/0x20
-  driver_detach+0xc4/0x190
-  bus_remove_driver+0x130/0x2a0
-  driver_unregister+0x68/0x90
-  pci_unregister_driver+0x24/0x240
-  ? find_module_all+0x13e/0x1e0
-  ath12k_pci_exit+0x10/0x20 [ath12k]
-  __do_sys_delete_module+0x32c/0x580
-  ? module_flags+0x2f0/0x2f0
-  ? kmem_cache_free+0xf0/0x410
-  ? __fput+0x56f/0xab0
-  ? __fput+0x56f/0xab0
-  ? debug_smp_processor_id+0x17/0x20
-  __x64_sys_delete_module+0x4f/0x70
-  x64_sys_call+0x522/0x9f0
-  do_syscall_64+0x64/0x130
-  entry_SYSCALL_64_after_hwframe+0x4b/0x53
-RIP: 0033:0x7f8182c6ac8b
-
-Commit 24de1b7b231c ("wifi: ath12k: fix flush failure in recovery
-scenarios") added the change to decrement the pending packets count
-in case of recovery which make sense as ah->hw as well all
-ar's in it are intact during recovery, but during core deinit there
-is no use in decrementing packets count or waking up the empty waitq
-as the module is going to be removed also ar's from pending skb's
-can't be used and the packets should just be released back.
-
-To fix this, avoid accessing ar from skb->cb when driver is being
-unregistered.
-
-Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.1.1-00214-QCAHKSWPL_SILICONZ-1
-Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.0.c5-00481-QCAHMTSWPL_V1.0_V2.0_SILICONZ-3
-
-Fixes: 24de1b7b231c ("wifi: ath12k: fix flush failure in recovery scenarios")
-Signed-off-by: Rameshkumar Sundaram <quic_ramess@quicinc.com>
-Acked-by: Jeff Johnson <quic_jjohnson@quicinc.com>
-Link: https://patch.msgid.link/20241001092652.3134334-1-quic_ramess@quicinc.com
+Fixes: b49991d83bba ("wifi: ath12k: fix build vs old compiler")
+Fixes: 4a3c212eee0e ("wifi: ath12k: add basic WoW functionalities")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Acked-by: Kalle Valo <kvalo@kernel.org>
+Link: https://patch.msgid.link/20241004095420.637091-1-arnd@kernel.org
 Signed-off-by: Jeff Johnson <quic_jjohnson@quicinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/dp.c | 14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ drivers/net/wireless/ath/ath12k/wow.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/ath/ath12k/dp.c b/drivers/net/wireless/ath/ath12k/dp.c
-index 61aa78d8bd8c8..abddeafabfa1b 100644
---- a/drivers/net/wireless/ath/ath12k/dp.c
-+++ b/drivers/net/wireless/ath/ath12k/dp.c
-@@ -1202,10 +1202,16 @@ static void ath12k_dp_cc_cleanup(struct ath12k_base *ab)
- 			if (!skb)
- 				continue;
+diff --git a/drivers/net/wireless/ath/ath12k/wow.c b/drivers/net/wireless/ath/ath12k/wow.c
+index 9b8684abbe40a..3624180b25b97 100644
+--- a/drivers/net/wireless/ath/ath12k/wow.c
++++ b/drivers/net/wireless/ath/ath12k/wow.c
+@@ -191,7 +191,7 @@ ath12k_wow_convert_8023_to_80211(struct ath12k *ar,
+ 			memcpy(bytemask, eth_bytemask, eth_pat_len);
  
--			skb_cb = ATH12K_SKB_CB(skb);
--			ar = skb_cb->ar;
--			if (atomic_dec_and_test(&ar->dp.num_tx_pending))
--				wake_up(&ar->dp.tx_empty_waitq);
-+			/* if we are unregistering, hw would've been destroyed and
-+			 * ar is no longer valid.
-+			 */
-+			if (!(test_bit(ATH12K_FLAG_UNREGISTERING, &ab->dev_flags))) {
-+				skb_cb = ATH12K_SKB_CB(skb);
-+				ar = skb_cb->ar;
-+
-+				if (atomic_dec_and_test(&ar->dp.num_tx_pending))
-+					wake_up(&ar->dp.tx_empty_waitq);
-+			}
+ 			pat_len = eth_pat_len;
+-		} else if (eth_pkt_ofs + eth_pat_len < prot_ofs) {
++		} else if (size_add(eth_pkt_ofs, eth_pat_len) < prot_ofs) {
+ 			memcpy(pat, eth_pat, ETH_ALEN - eth_pkt_ofs);
+ 			memcpy(bytemask, eth_bytemask, ETH_ALEN - eth_pkt_ofs);
  
- 			dma_unmap_single(ab->dev, ATH12K_SKB_CB(skb)->paddr,
- 					 skb->len, DMA_TO_DEVICE);
 -- 
 2.43.0
 
