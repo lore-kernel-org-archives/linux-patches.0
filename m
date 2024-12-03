@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50FA6204F78;
-	Tue,  3 Dec 2024 15:37:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 940BC205AB8;
+	Tue,  3 Dec 2024 15:37:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733240229; cv=none; b=nYeZ4pL9a/U9c8UxvhTamQst63PkJ5/zK/RMHzwOgrr1+3O8C1dWjY22J+Bh1VCd0VHP1x/HPZcvQjxZqDqexY18MVdSp0azGZSMeHuIqwTP18GY6nDFdpSjKz+2zG0XiRZqZAhbMbKaGDOW3cC4Q9X8lcI2YhywarR4D0Nq/ko=
+	t=1733240232; cv=none; b=UCAo8doa71kgpbtiZL9CM5m2wcuzP4OJ2/Q05a1NmGlHN1zeH5YJTnSTT+SEKLIoXllliH5IOEi0TNcjzRTAG/AlaJATIkNe9k1QKbjd9sL0vtwAdGxkFfRKzfrH2XZ8bMsSbLKzsPLQ/x+Os5alDgpnpDDZWk6VC4L/i4GEE+A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733240229; c=relaxed/simple;
-	bh=W/j/VkLnHid0heI9Of0d1HWMeG0zmd5ykdQ3yAlIuFY=;
+	s=arc-20240116; t=1733240232; c=relaxed/simple;
+	bh=8nymN4DW5m5gwM5EMjI/fBgWCm8Cnj3EQUklaxg0xJw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IQRVOGFv8NQeBj+prgWsnCZgjlXfQVAnmkbpivkG0ufmswKak6WvmIh9V/jwYgujiDNQaSNcpA0BLKCDkglcqlorUiUuj9Eias+RdYB2Y6jB5JeIr3BBuq77uqmTtNJCUh++2/CtEirJogjCXDrOEFbm0d0WpR0l/qAf/j6aWuM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jVCdLk40; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=t1QSAcskLEuyKCZ3VeHSIr8mfHaanheRTHyYO7U8lh/jIcES/JgQYzFWB5tpVEBm7FkNTvc1n/snhES3rP9r1h6KiDL6FZykAkozRlsuxLeRAvru6YgdFFEmITyVNjvUq4YMXUfTlu4/fnkB4GgJsLG/YFHcCym0SFmk+VSwics=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NtKPeH9h; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jVCdLk40"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0ED6C4CED8;
-	Tue,  3 Dec 2024 15:37:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NtKPeH9h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5E48C4CECF;
+	Tue,  3 Dec 2024 15:37:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733240229;
-	bh=W/j/VkLnHid0heI9Of0d1HWMeG0zmd5ykdQ3yAlIuFY=;
+	s=korg; t=1733240232;
+	bh=8nymN4DW5m5gwM5EMjI/fBgWCm8Cnj3EQUklaxg0xJw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jVCdLk40zfqPUDRtKvxIRcipQfIJ+1le80DWnEWuyRsvKskngh5p1VjmfmMpZXbd1
-	 ejXpM4TkXn5YGDmzvdpM/LWaAIlyHUTmNovKbuY7euTsva9KAJaRfEksXRAxo4JJNp
-	 OO4OW1UPf2d4t6FF79gPygGEfpsIk6MFGwCtGvIk=
+	b=NtKPeH9huZVUBb85LWNrw7yLtSjON/8CTYmzgXJa66+799ld9ID8OKJHQbzlDTfQV
+	 VhV3GdOyGSDPWNQ3pyrwQ2GVHEU6j3wH6czcJCSrWgyIlTIymbIhJeecMsfhmxmKPI
+	 qyQKjfTaQPq37sX3i+fUGTxygBA1F5fdmdYf+sFA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>,
-	Christian Brauner <brauner@kernel.org>,
+	Long Li <leo.lilong@huawei.com>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 036/826] hfsplus: dont query the device logical block size multiple times
-Date: Tue,  3 Dec 2024 15:36:03 +0100
-Message-ID: <20241203144744.871027261@linuxfoundation.org>
+Subject: [PATCH 6.12 037/826] ext4: fix race in buffer_head read fault injection
+Date: Tue,  3 Dec 2024 15:36:04 +0100
+Message-ID: <20241203144744.909286734@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -51,137 +51,291 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+From: Long Li <leo.lilong@huawei.com>
 
-[ Upstream commit 1c82587cb57687de3f18ab4b98a8850c789bedcf ]
+[ Upstream commit 2f3d93e210b9c2866c8b3662adae427d5bf511ec ]
 
-Devices block sizes may change. One of these cases is a loop device by
-using ioctl LOOP_SET_BLOCK_SIZE.
+When I enabled ext4 debug for fault injection testing, I encountered the
+following warning:
 
-While this may cause other issues like IO being rejected, in the case of
-hfsplus, it will allocate a block by using that size and potentially write
-out-of-bounds when hfsplus_read_wrapper calls hfsplus_submit_bio and the
-latter function reads a different io_size.
+  EXT4-fs error (device sda): ext4_read_inode_bitmap:201: comm fsstress:
+         Cannot read inode bitmap - block_group = 8, inode_bitmap = 1051
+  WARNING: CPU: 0 PID: 511 at fs/buffer.c:1181 mark_buffer_dirty+0x1b3/0x1d0
 
-Using a new min_io_size initally set to sb_min_blocksize works for the
-purposes of the original fix, since it will be set to the max between
-HFSPLUS_SECTOR_SIZE and the first seen logical block size. We still use the
-max between HFSPLUS_SECTOR_SIZE and min_io_size in case the latter is not
-initialized.
+The root cause of the issue lies in the improper implementation of ext4's
+buffer_head read fault injection. The actual completion of buffer_head
+read and the buffer_head fault injection are not atomic, which can lead
+to the uptodate flag being cleared on normally used buffer_heads in race
+conditions.
 
-Tested by mounting an hfsplus filesystem with loop block sizes 512, 1024
-and 4096.
+[CPU0]           [CPU1]         [CPU2]
+ext4_read_inode_bitmap
+  ext4_read_bh()
+  <bh read complete>
+                 ext4_read_inode_bitmap
+                   if (buffer_uptodate(bh))
+                     return bh
+                               jbd2_journal_commit_transaction
+                                 __jbd2_journal_refile_buffer
+                                   __jbd2_journal_unfile_buffer
+                                     __jbd2_journal_temp_unlink_buffer
+  ext4_simulate_fail_bh()
+    clear_buffer_uptodate
+                                      mark_buffer_dirty
+                                        <report warning>
+                                        WARN_ON_ONCE(!buffer_uptodate(bh))
 
-The produced KASAN report before the fix looks like this:
+The best approach would be to perform fault injection in the IO completion
+callback function, rather than after IO completion. However, the IO
+completion callback function cannot get the fault injection code in sb.
 
-[  419.944641] ==================================================================
-[  419.945655] BUG: KASAN: slab-use-after-free in hfsplus_read_wrapper+0x659/0xa0a
-[  419.946703] Read of size 2 at addr ffff88800721fc00 by task repro/10678
-[  419.947612]
-[  419.947846] CPU: 0 UID: 0 PID: 10678 Comm: repro Not tainted 6.12.0-rc5-00008-gdf56e0f2f3ca #84
-[  419.949007] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.15.0-1 04/01/2014
-[  419.950035] Call Trace:
-[  419.950384]  <TASK>
-[  419.950676]  dump_stack_lvl+0x57/0x78
-[  419.951212]  ? hfsplus_read_wrapper+0x659/0xa0a
-[  419.951830]  print_report+0x14c/0x49e
-[  419.952361]  ? __virt_addr_valid+0x267/0x278
-[  419.952979]  ? kmem_cache_debug_flags+0xc/0x1d
-[  419.953561]  ? hfsplus_read_wrapper+0x659/0xa0a
-[  419.954231]  kasan_report+0x89/0xb0
-[  419.954748]  ? hfsplus_read_wrapper+0x659/0xa0a
-[  419.955367]  hfsplus_read_wrapper+0x659/0xa0a
-[  419.955948]  ? __pfx_hfsplus_read_wrapper+0x10/0x10
-[  419.956618]  ? do_raw_spin_unlock+0x59/0x1a9
-[  419.957214]  ? _raw_spin_unlock+0x1a/0x2e
-[  419.957772]  hfsplus_fill_super+0x348/0x1590
-[  419.958355]  ? hlock_class+0x4c/0x109
-[  419.958867]  ? __pfx_hfsplus_fill_super+0x10/0x10
-[  419.959499]  ? __pfx_string+0x10/0x10
-[  419.960006]  ? lock_acquire+0x3e2/0x454
-[  419.960532]  ? bdev_name.constprop.0+0xce/0x243
-[  419.961129]  ? __pfx_bdev_name.constprop.0+0x10/0x10
-[  419.961799]  ? pointer+0x3f0/0x62f
-[  419.962277]  ? __pfx_pointer+0x10/0x10
-[  419.962761]  ? vsnprintf+0x6c4/0xfba
-[  419.963178]  ? __pfx_vsnprintf+0x10/0x10
-[  419.963621]  ? setup_bdev_super+0x376/0x3b3
-[  419.964029]  ? snprintf+0x9d/0xd2
-[  419.964344]  ? __pfx_snprintf+0x10/0x10
-[  419.964675]  ? lock_acquired+0x45c/0x5e9
-[  419.965016]  ? set_blocksize+0x139/0x1c1
-[  419.965381]  ? sb_set_blocksize+0x6d/0xae
-[  419.965742]  ? __pfx_hfsplus_fill_super+0x10/0x10
-[  419.966179]  mount_bdev+0x12f/0x1bf
-[  419.966512]  ? __pfx_mount_bdev+0x10/0x10
-[  419.966886]  ? vfs_parse_fs_string+0xce/0x111
-[  419.967293]  ? __pfx_vfs_parse_fs_string+0x10/0x10
-[  419.967702]  ? __pfx_hfsplus_mount+0x10/0x10
-[  419.968073]  legacy_get_tree+0x104/0x178
-[  419.968414]  vfs_get_tree+0x86/0x296
-[  419.968751]  path_mount+0xba3/0xd0b
-[  419.969157]  ? __pfx_path_mount+0x10/0x10
-[  419.969594]  ? kmem_cache_free+0x1e2/0x260
-[  419.970311]  do_mount+0x99/0xe0
-[  419.970630]  ? __pfx_do_mount+0x10/0x10
-[  419.971008]  __do_sys_mount+0x199/0x1c9
-[  419.971397]  do_syscall_64+0xd0/0x135
-[  419.971761]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
-[  419.972233] RIP: 0033:0x7c3cb812972e
-[  419.972564] Code: 48 8b 0d f5 46 0d 00 f7 d8 64 89 01 48 83 c8 ff c3 66 2e 0f 1f 84 00 00 00 00 00 90 f3 0f 1e fa 49 89 ca b8 a5 00 00 00 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 8b 0d c2 46 0d 00 f7 d8 64 89 01 48
-[  419.974371] RSP: 002b:00007ffe30632548 EFLAGS: 00000286 ORIG_RAX: 00000000000000a5
-[  419.975048] RAX: ffffffffffffffda RBX: 00007ffe306328d8 RCX: 00007c3cb812972e
-[  419.975701] RDX: 0000000020000000 RSI: 0000000020000c80 RDI: 00007ffe306325d0
-[  419.976363] RBP: 00007ffe30632720 R08: 00007ffe30632610 R09: 0000000000000000
-[  419.977034] R10: 0000000000200008 R11: 0000000000000286 R12: 0000000000000000
-[  419.977713] R13: 00007ffe306328e8 R14: 00005a0eb298bc68 R15: 00007c3cb8356000
-[  419.978375]  </TASK>
-[  419.978589]
+Fix it by passing the result of fault injection into the bh read function,
+we simulate faults within the bh read function itself. This requires adding
+an extra parameter to the bh read functions that need fault injection.
 
-Fixes: 6596528e391a ("hfsplus: ensure bio requests are not smaller than the hardware sectors")
-Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
-Link: https://lore.kernel.org/r/20241107114109.839253-1-cascardo@igalia.com
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Fixes: 46f870d690fe ("ext4: simulate various I/O and checksum errors when reading metadata")
+Signed-off-by: Long Li <leo.lilong@huawei.com>
+Link: https://patch.msgid.link/20240906091746.510163-1-leo.lilong@huawei.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/hfsplus/hfsplus_fs.h | 3 ++-
- fs/hfsplus/wrapper.c    | 2 ++
- 2 files changed, 4 insertions(+), 1 deletion(-)
+ fs/ext4/balloc.c      |  4 ++--
+ fs/ext4/ext4.h        | 12 ++----------
+ fs/ext4/extents.c     |  2 +-
+ fs/ext4/ialloc.c      |  5 +++--
+ fs/ext4/indirect.c    |  2 +-
+ fs/ext4/inode.c       |  4 ++--
+ fs/ext4/mmp.c         |  2 +-
+ fs/ext4/move_extent.c |  2 +-
+ fs/ext4/resize.c      |  2 +-
+ fs/ext4/super.c       | 23 +++++++++++++++--------
+ 10 files changed, 29 insertions(+), 29 deletions(-)
 
-diff --git a/fs/hfsplus/hfsplus_fs.h b/fs/hfsplus/hfsplus_fs.h
-index 59ce81dca73fc..5389918bbf29d 100644
---- a/fs/hfsplus/hfsplus_fs.h
-+++ b/fs/hfsplus/hfsplus_fs.h
-@@ -156,6 +156,7 @@ struct hfsplus_sb_info {
- 
- 	/* Runtime variables */
- 	u32 blockoffset;
-+	u32 min_io_size;
- 	sector_t part_start;
- 	sector_t sect_count;
- 	int fs_shift;
-@@ -307,7 +308,7 @@ struct hfsplus_readdir_data {
-  */
- static inline unsigned short hfsplus_min_io_size(struct super_block *sb)
- {
--	return max_t(unsigned short, bdev_logical_block_size(sb->s_bdev),
-+	return max_t(unsigned short, HFSPLUS_SB(sb)->min_io_size,
- 		     HFSPLUS_SECTOR_SIZE);
+diff --git a/fs/ext4/balloc.c b/fs/ext4/balloc.c
+index 591fb3f710be7..8042ad8738089 100644
+--- a/fs/ext4/balloc.c
++++ b/fs/ext4/balloc.c
+@@ -550,7 +550,8 @@ ext4_read_block_bitmap_nowait(struct super_block *sb, ext4_group_t block_group,
+ 	trace_ext4_read_block_bitmap_load(sb, block_group, ignore_locked);
+ 	ext4_read_bh_nowait(bh, REQ_META | REQ_PRIO |
+ 			    (ignore_locked ? REQ_RAHEAD : 0),
+-			    ext4_end_bitmap_read);
++			    ext4_end_bitmap_read,
++			    ext4_simulate_fail(sb, EXT4_SIM_BBITMAP_EIO));
+ 	return bh;
+ verify:
+ 	err = ext4_validate_block_bitmap(sb, desc, block_group, bh);
+@@ -577,7 +578,6 @@ int ext4_wait_block_bitmap(struct super_block *sb, ext4_group_t block_group,
+ 	if (!desc)
+ 		return -EFSCORRUPTED;
+ 	wait_on_buffer(bh);
+-	ext4_simulate_fail_bh(sb, bh, EXT4_SIM_BBITMAP_EIO);
+ 	if (!buffer_uptodate(bh)) {
+ 		ext4_error_err(sb, EIO, "Cannot read block bitmap - "
+ 			       "block_group = %u, block_bitmap = %llu",
+diff --git a/fs/ext4/ext4.h b/fs/ext4/ext4.h
+index 44b0d418143c2..bbffb76d9a904 100644
+--- a/fs/ext4/ext4.h
++++ b/fs/ext4/ext4.h
+@@ -1865,14 +1865,6 @@ static inline bool ext4_simulate_fail(struct super_block *sb,
+ 	return false;
  }
  
-diff --git a/fs/hfsplus/wrapper.c b/fs/hfsplus/wrapper.c
-index 9592ffcb44e5e..74801911bc1cc 100644
---- a/fs/hfsplus/wrapper.c
-+++ b/fs/hfsplus/wrapper.c
-@@ -172,6 +172,8 @@ int hfsplus_read_wrapper(struct super_block *sb)
- 	if (!blocksize)
- 		goto out;
+-static inline void ext4_simulate_fail_bh(struct super_block *sb,
+-					 struct buffer_head *bh,
+-					 unsigned long code)
+-{
+-	if (!IS_ERR(bh) && ext4_simulate_fail(sb, code))
+-		clear_buffer_uptodate(bh);
+-}
+-
+ /*
+  * Error number codes for s_{first,last}_error_errno
+  *
+@@ -3100,9 +3092,9 @@ extern struct buffer_head *ext4_sb_bread(struct super_block *sb,
+ extern struct buffer_head *ext4_sb_bread_unmovable(struct super_block *sb,
+ 						   sector_t block);
+ extern void ext4_read_bh_nowait(struct buffer_head *bh, blk_opf_t op_flags,
+-				bh_end_io_t *end_io);
++				bh_end_io_t *end_io, bool simu_fail);
+ extern int ext4_read_bh(struct buffer_head *bh, blk_opf_t op_flags,
+-			bh_end_io_t *end_io);
++			bh_end_io_t *end_io, bool simu_fail);
+ extern int ext4_read_bh_lock(struct buffer_head *bh, blk_opf_t op_flags, bool wait);
+ extern void ext4_sb_breadahead_unmovable(struct super_block *sb, sector_t block);
+ extern int ext4_seq_options_show(struct seq_file *seq, void *offset);
+diff --git a/fs/ext4/extents.c b/fs/ext4/extents.c
+index 34e25eee65219..88f98dc440275 100644
+--- a/fs/ext4/extents.c
++++ b/fs/ext4/extents.c
+@@ -568,7 +568,7 @@ __read_extent_tree_block(const char *function, unsigned int line,
  
-+	sbi->min_io_size = blocksize;
+ 	if (!bh_uptodate_or_lock(bh)) {
+ 		trace_ext4_ext_load_extent(inode, pblk, _RET_IP_);
+-		err = ext4_read_bh(bh, 0, NULL);
++		err = ext4_read_bh(bh, 0, NULL, false);
+ 		if (err < 0)
+ 			goto errout;
+ 	}
+diff --git a/fs/ext4/ialloc.c b/fs/ext4/ialloc.c
+index 7f1a5f90dbbdf..21d228073d795 100644
+--- a/fs/ext4/ialloc.c
++++ b/fs/ext4/ialloc.c
+@@ -193,8 +193,9 @@ ext4_read_inode_bitmap(struct super_block *sb, ext4_group_t block_group)
+ 	 * submit the buffer_head for reading
+ 	 */
+ 	trace_ext4_load_inode_bitmap(sb, block_group);
+-	ext4_read_bh(bh, REQ_META | REQ_PRIO, ext4_end_bitmap_read);
+-	ext4_simulate_fail_bh(sb, bh, EXT4_SIM_IBITMAP_EIO);
++	ext4_read_bh(bh, REQ_META | REQ_PRIO,
++		     ext4_end_bitmap_read,
++		     ext4_simulate_fail(sb, EXT4_SIM_IBITMAP_EIO));
+ 	if (!buffer_uptodate(bh)) {
+ 		put_bh(bh);
+ 		ext4_error_err(sb, EIO, "Cannot read inode bitmap - "
+diff --git a/fs/ext4/indirect.c b/fs/ext4/indirect.c
+index 7404f0935c903..7de327fa7b1c5 100644
+--- a/fs/ext4/indirect.c
++++ b/fs/ext4/indirect.c
+@@ -170,7 +170,7 @@ static Indirect *ext4_get_branch(struct inode *inode, int depth,
+ 		}
+ 
+ 		if (!bh_uptodate_or_lock(bh)) {
+-			if (ext4_read_bh(bh, 0, NULL) < 0) {
++			if (ext4_read_bh(bh, 0, NULL, false) < 0) {
+ 				put_bh(bh);
+ 				goto failure;
+ 			}
+diff --git a/fs/ext4/inode.c b/fs/ext4/inode.c
+index 54bdd4884fe67..99d09cd9c6a37 100644
+--- a/fs/ext4/inode.c
++++ b/fs/ext4/inode.c
+@@ -4497,10 +4497,10 @@ static int __ext4_get_inode_loc(struct super_block *sb, unsigned long ino,
+ 	 * Read the block from disk.
+ 	 */
+ 	trace_ext4_load_inode(sb, ino);
+-	ext4_read_bh_nowait(bh, REQ_META | REQ_PRIO, NULL);
++	ext4_read_bh_nowait(bh, REQ_META | REQ_PRIO, NULL,
++			    ext4_simulate_fail(sb, EXT4_SIM_INODE_EIO));
+ 	blk_finish_plug(&plug);
+ 	wait_on_buffer(bh);
+-	ext4_simulate_fail_bh(sb, bh, EXT4_SIM_INODE_EIO);
+ 	if (!buffer_uptodate(bh)) {
+ 		if (ret_block)
+ 			*ret_block = block;
+diff --git a/fs/ext4/mmp.c b/fs/ext4/mmp.c
+index bd946d0c71b70..d64c04ed061ae 100644
+--- a/fs/ext4/mmp.c
++++ b/fs/ext4/mmp.c
+@@ -94,7 +94,7 @@ static int read_mmp_block(struct super_block *sb, struct buffer_head **bh,
+ 	}
+ 
+ 	lock_buffer(*bh);
+-	ret = ext4_read_bh(*bh, REQ_META | REQ_PRIO, NULL);
++	ret = ext4_read_bh(*bh, REQ_META | REQ_PRIO, NULL, false);
+ 	if (ret)
+ 		goto warn_exit;
+ 
+diff --git a/fs/ext4/move_extent.c b/fs/ext4/move_extent.c
+index b64661ea6e0ed..898443e98efc9 100644
+--- a/fs/ext4/move_extent.c
++++ b/fs/ext4/move_extent.c
+@@ -213,7 +213,7 @@ static int mext_page_mkuptodate(struct folio *folio, size_t from, size_t to)
+ 			unlock_buffer(bh);
+ 			continue;
+ 		}
+-		ext4_read_bh_nowait(bh, 0, NULL);
++		ext4_read_bh_nowait(bh, 0, NULL, false);
+ 		nr++;
+ 	} while (block++, (bh = bh->b_this_page) != head);
+ 
+diff --git a/fs/ext4/resize.c b/fs/ext4/resize.c
+index a2704f0643610..72f77f78ae8df 100644
+--- a/fs/ext4/resize.c
++++ b/fs/ext4/resize.c
+@@ -1300,7 +1300,7 @@ static struct buffer_head *ext4_get_bitmap(struct super_block *sb, __u64 block)
+ 	if (unlikely(!bh))
+ 		return NULL;
+ 	if (!bh_uptodate_or_lock(bh)) {
+-		if (ext4_read_bh(bh, 0, NULL) < 0) {
++		if (ext4_read_bh(bh, 0, NULL, false) < 0) {
+ 			brelse(bh);
+ 			return NULL;
+ 		}
+diff --git a/fs/ext4/super.c b/fs/ext4/super.c
+index 4645f16296732..95930e70b8aac 100644
+--- a/fs/ext4/super.c
++++ b/fs/ext4/super.c
+@@ -161,8 +161,14 @@ MODULE_ALIAS("ext3");
+ 
+ 
+ static inline void __ext4_read_bh(struct buffer_head *bh, blk_opf_t op_flags,
+-				  bh_end_io_t *end_io)
++				  bh_end_io_t *end_io, bool simu_fail)
+ {
++	if (simu_fail) {
++		clear_buffer_uptodate(bh);
++		unlock_buffer(bh);
++		return;
++	}
 +
- 	if (hfsplus_get_last_session(sb, &part_start, &part_size))
- 		goto out;
+ 	/*
+ 	 * buffer's verified bit is no longer valid after reading from
+ 	 * disk again due to write out error, clear it to make sure we
+@@ -176,7 +182,7 @@ static inline void __ext4_read_bh(struct buffer_head *bh, blk_opf_t op_flags,
+ }
  
+ void ext4_read_bh_nowait(struct buffer_head *bh, blk_opf_t op_flags,
+-			 bh_end_io_t *end_io)
++			 bh_end_io_t *end_io, bool simu_fail)
+ {
+ 	BUG_ON(!buffer_locked(bh));
+ 
+@@ -184,10 +190,11 @@ void ext4_read_bh_nowait(struct buffer_head *bh, blk_opf_t op_flags,
+ 		unlock_buffer(bh);
+ 		return;
+ 	}
+-	__ext4_read_bh(bh, op_flags, end_io);
++	__ext4_read_bh(bh, op_flags, end_io, simu_fail);
+ }
+ 
+-int ext4_read_bh(struct buffer_head *bh, blk_opf_t op_flags, bh_end_io_t *end_io)
++int ext4_read_bh(struct buffer_head *bh, blk_opf_t op_flags,
++		 bh_end_io_t *end_io, bool simu_fail)
+ {
+ 	BUG_ON(!buffer_locked(bh));
+ 
+@@ -196,7 +203,7 @@ int ext4_read_bh(struct buffer_head *bh, blk_opf_t op_flags, bh_end_io_t *end_io
+ 		return 0;
+ 	}
+ 
+-	__ext4_read_bh(bh, op_flags, end_io);
++	__ext4_read_bh(bh, op_flags, end_io, simu_fail);
+ 
+ 	wait_on_buffer(bh);
+ 	if (buffer_uptodate(bh))
+@@ -208,10 +215,10 @@ int ext4_read_bh_lock(struct buffer_head *bh, blk_opf_t op_flags, bool wait)
+ {
+ 	lock_buffer(bh);
+ 	if (!wait) {
+-		ext4_read_bh_nowait(bh, op_flags, NULL);
++		ext4_read_bh_nowait(bh, op_flags, NULL, false);
+ 		return 0;
+ 	}
+-	return ext4_read_bh(bh, op_flags, NULL);
++	return ext4_read_bh(bh, op_flags, NULL, false);
+ }
+ 
+ /*
+@@ -266,7 +273,7 @@ void ext4_sb_breadahead_unmovable(struct super_block *sb, sector_t block)
+ 
+ 	if (likely(bh)) {
+ 		if (trylock_buffer(bh))
+-			ext4_read_bh_nowait(bh, REQ_RAHEAD, NULL);
++			ext4_read_bh_nowait(bh, REQ_RAHEAD, NULL, false);
+ 		brelse(bh);
+ 	}
+ }
 -- 
 2.43.0
 
