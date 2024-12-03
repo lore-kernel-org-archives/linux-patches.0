@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D3F81F76AE;
-	Tue,  3 Dec 2024 15:13:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 519B71F8915;
+	Tue,  3 Dec 2024 15:13:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733238828; cv=none; b=aocxlwVwq8xlkheYVXXBGKm+Sjm6eAE/hb1wBAA3I0IXbwz5TMZ4ZYlgjLMA4y6phvvAwnwrs8xPYoLI74nvugm4bG1kKDpxm+Pp8pogl4KrVzdfDdXIJEhJu9l2EtG1KYFxmVpDiE0xb8d1MPbNFjG2ZPoWpMeCdSJ+TmXTyTg=
+	t=1733238831; cv=none; b=ZjvYKHBHyjlmbeNq4AIhBJ237DZVDz3YLc4xo2Sw8hnb/gFZXUMbFwAHB7w9QPB6Fd0hmR9yVHtQhluQZChRci5xr9gbPQm9+PtGqXbCX6M34yGRnQ7vzlW6tfv6RGUwzFleM8TRuWXjdTYHrWOt9kWi7jbYepSf9gbOSvWhTAU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733238828; c=relaxed/simple;
-	bh=CC3wyURV/K9FpcgHvK/lorX0Q+ZUuw9ddw2YaxEYeVs=;
+	s=arc-20240116; t=1733238831; c=relaxed/simple;
+	bh=VsYuicowWp5saApiH9Ln0GsEeRFekAp8PsIgsvxaH1M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JQcKAQ1OHyb/9WVbc+J7RvO8vQfoW5vLZnaS2CIVIOooPoVVwtsK3MWr2Q2TcxCzESd1NNQ81iUoxFNP7MImYcYVWhPO6JMDkfcFFZoiPeYFS/696/9I2zcHOydRf6S4V6ccGS5KU7nxy+wW7fj76HqODsr2SznbKKCh93oYMFI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VbVrqNVH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iRxwIxAeyx8Y40hbjmMuifWzYJYxJdPXJjKHTToXKn3KfL3rOKEjn0CkHwDDd8GL+Z48/Nw/Qn4iy+bt+aVnhiY2uE1XSL/sFZTnVurweSxjhzyWBzXFTQHEbAl2rmb3egmi4iLPVP2VA95mJglzoXWHwux9xQhlmbtL2B7o0j0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pYfr0wDd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VbVrqNVH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED04CC4CECF;
-	Tue,  3 Dec 2024 15:13:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pYfr0wDd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE3B5C4CECF;
+	Tue,  3 Dec 2024 15:13:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733238828;
-	bh=CC3wyURV/K9FpcgHvK/lorX0Q+ZUuw9ddw2YaxEYeVs=;
+	s=korg; t=1733238831;
+	bh=VsYuicowWp5saApiH9Ln0GsEeRFekAp8PsIgsvxaH1M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VbVrqNVH6+hHlnVX4GVcz/K3cqxNRTox4XH/KnxM0wDzyJRBhmsZRpRAIVSn9zvac
-	 i4MK1b6KwCXGyJKyuWYJrBfJ3kFpkRP3lQZ/Gd6UzEeewt6BH4ySAZ+k3hq3nF8D60
-	 6k34qC5/fu+7IVXvoDnYwKkwcyjuEbyX+0YXqIbI=
+	b=pYfr0wDdqVHeR4A8eZ5EqDeC9ozidTHHR/VNth3TcD9QRdCzjY9spJpOUbarPd68s
+	 FOyc3kqwRQJh9VcdTrlMh+RAKPUW6sPNiO0DOXqlBvQrDwEV+03TEzvsKOQ/4XMMqQ
+	 ul8aThwfHk0rhSj3LypbnctJX64NsWXlwi6sSCEk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Levi Yun <yeoreum.yun@arm.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 379/817] trace/trace_event_perf: remove duplicate samples on the first tracepoint event
-Date: Tue,  3 Dec 2024 15:39:11 +0100
-Message-ID: <20241203144010.637963230@linuxfoundation.org>
+Subject: [PATCH 6.11 380/817] pinctrl: zynqmp: drop excess struct member description
+Date: Tue,  3 Dec 2024 15:39:12 +0100
+Message-ID: <20241203144010.677042988@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -52,80 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Levi Yun <yeoreum.yun@arm.com>
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-[ Upstream commit afe5960dc208fe069ddaaeb0994d857b24ac19d1 ]
+[ Upstream commit 2a85fc7044987d751f27d7f1e4423eebbcecc2c6 ]
 
-When a tracepoint event is created with attr.freq = 1,
-'hwc->period_left' is not initialized correctly. As a result,
-in the perf_swevent_overflow() function, when the first time the event occurs,
-it calculates the event overflow and the perf_swevent_set_period() returns 3,
-this leads to the event are recorded for three duplicate times.
+The 'node' member has never been part of this structure so drop its
+description.
 
-Step to reproduce:
-    1. Enable the tracepoint event & starting tracing
-         $ echo 1 > /sys/kernel/tracing/events/module/module_free
-         $ echo 1 > /sys/kernel/tracing/tracing_on
-
-    2. Record with perf
-         $ perf record -a --strict-freq -F 1 -e "module:module_free"
-
-    3. Trigger module_free event.
-         $ modprobe -i sunrpc
-         $ modprobe -r sunrpc
-
-Result:
-     - Trace pipe result:
-         $ cat trace_pipe
-         modprobe-174509  [003] .....  6504.868896: module_free: sunrpc
-
-     - perf sample:
-         modprobe  174509 [003]  6504.868980: module:module_free: sunrpc
-         modprobe  174509 [003]  6504.868980: module:module_free: sunrpc
-         modprobe  174509 [003]  6504.868980: module:module_free: sunrpc
-
-By setting period_left via perf_swevent_set_period() as other sw_event did,
-This problem could be solved.
-
-After patch:
-     - Trace pipe result:
-         $ cat trace_pipe
-         modprobe 1153096 [068] 613468.867774: module:module_free: xfs
-
-     - perf sample
-         modprobe 1153096 [068] 613468.867794: module:module_free: xfs
-
-Link: https://lore.kernel.org/20240913021347.595330-1-yeoreum.yun@arm.com
-Fixes: bd2b5b12849a ("perf_counter: More aggressive frequency adjustment")
-Signed-off-by: Levi Yun <yeoreum.yun@arm.com>
-Acked-by: Namhyung Kim <namhyung@kernel.org>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Fixes: 8b242ca700f8 ("pinctrl: Add Xilinx ZynqMP pinctrl driver support")
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Link: https://lore.kernel.org/20241010080432.7781-1-brgl@bgdev.pl
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace_event_perf.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/pinctrl/pinctrl-zynqmp.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/kernel/trace/trace_event_perf.c b/kernel/trace/trace_event_perf.c
-index 05e7912418126..3ff9caa4a71bb 100644
---- a/kernel/trace/trace_event_perf.c
-+++ b/kernel/trace/trace_event_perf.c
-@@ -352,10 +352,16 @@ void perf_uprobe_destroy(struct perf_event *p_event)
- int perf_trace_add(struct perf_event *p_event, int flags)
- {
- 	struct trace_event_call *tp_event = p_event->tp_event;
-+	struct hw_perf_event *hwc = &p_event->hw;
- 
- 	if (!(flags & PERF_EF_START))
- 		p_event->hw.state = PERF_HES_STOPPED;
- 
-+	if (is_sampling_event(p_event)) {
-+		hwc->last_period = hwc->sample_period;
-+		perf_swevent_set_period(p_event);
-+	}
-+
- 	/*
- 	 * If TRACE_REG_PERF_ADD returns false; no custom action was performed
- 	 * and we need to take the default action of enqueueing our event on
+diff --git a/drivers/pinctrl/pinctrl-zynqmp.c b/drivers/pinctrl/pinctrl-zynqmp.c
+index 3c6d56fdb8c96..93454d2a26bcc 100644
+--- a/drivers/pinctrl/pinctrl-zynqmp.c
++++ b/drivers/pinctrl/pinctrl-zynqmp.c
+@@ -49,7 +49,6 @@
+  * @name:	Name of the pin mux function
+  * @groups:	List of pin groups for this function
+  * @ngroups:	Number of entries in @groups
+- * @node:	Firmware node matching with the function
+  *
+  * This structure holds information about pin control function
+  * and function group names supporting that function.
 -- 
 2.43.0
 
