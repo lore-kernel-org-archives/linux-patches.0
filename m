@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03A8A23CE;
-	Tue,  3 Dec 2024 16:01:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF91E23CE;
+	Tue,  3 Dec 2024 16:01:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733241704; cv=none; b=of0mCeKQ2SkbIgwtuty50ytUVpkOoYvvDXdkOMuHwY6sCRdIIB1gr6exwsOqP6LIncOwAqLFzyEkDe0WkOVV5Nnb7+BkpY4IUOQWget0JbHFERvkpCG5X8lhxyGs/yojF44ve0ykVnYIvHCxLqH83FZ3dqyemEHBA2YhNfSD9Fg=
+	t=1733241708; cv=none; b=Rk+6CcEd/wkTxw1DofW0kTd5unlIJaMxm1DXdqnAMjsZqNN7nqw3ckhYyR3q9uo1NjX0hSJ6n0xLo5YKCXWr0nHOhOFGUVuUExeLfo+0PEY9UQZc51STE7AGFCV3oK2JAPtjqfcsib2SOugTdOo1PuB4XII0Lw5VxtnSXrjeR/Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733241704; c=relaxed/simple;
-	bh=iwCOmiGm1OVFO+16XjpkC2LUS0bU4lTTsDVwQmu/T/k=;
+	s=arc-20240116; t=1733241708; c=relaxed/simple;
+	bh=NVyKa+/g9WhrBwwe1x52gME02tkaEmex1b57eMbZ+dE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YkHy9cmr6HoghLaArlPAkLU8qlvS/ZENXHwC71Z4DhDX+mtwLpAbf966sU6a9XP/1+v3NutFn6vB8EsRD1FFqXhkKWPg3j5RtbQUTK+aCEwSVGgBHx+mXM59hcbwReZVdSf07vL2Z2+STwiBtC3pnk/dJp7clJcC5vBxoc6bw/E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tsPyt+/Q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YRDD+m2HKJooyS5RuCMmGK8HJVwGHYs2cWdRVhkO4qSR0HnFrEXVmPRTMsu3Ya+X0A09Pjx6wHh/1spe3/cf5VPG7Kq8EEHEwUrODV7FVlKPWuiEyqUvvFur7BlG/18NaAgISPiiiG/L4Jtzs33XRzDnilJYdyVDIIBIxP63KJ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=09AFT2iP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tsPyt+/Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62A12C4CED6;
-	Tue,  3 Dec 2024 16:01:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="09AFT2iP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F234C4CECF;
+	Tue,  3 Dec 2024 16:01:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733241703;
-	bh=iwCOmiGm1OVFO+16XjpkC2LUS0bU4lTTsDVwQmu/T/k=;
+	s=korg; t=1733241707;
+	bh=NVyKa+/g9WhrBwwe1x52gME02tkaEmex1b57eMbZ+dE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tsPyt+/QFUbx+MPDMAtuRJMdWMgw3v1B5/4gUnzZRO+73EgqhoAQjuldSYSNNHpfu
-	 tOJJeIGSEsRXAohJjnh+Q8oFgZjFARVDFj3Bgm0wGDZbVfD4g4xgEcE9mGXKFZcqII
-	 wQMrU2vsjry2H+VbjQwUi8j8+5bwpNcGowb71rW4=
+	b=09AFT2iPyixwdQBupjKIG7xSSEvupLpve3+uAGiI6Q+O4UTM2f59C7TNqGMWEWX29
+	 NHjcvOmENr+kjYcSeUw4//jCtDfq7+D1oGYB8WI2UoxIDoLBbjLGvCRaPAUWTUMUsU
+	 XX+1zs82OPA3LYgqL7LUGm0cXZ8mp4mBhgOzA1Y4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Veronika Molnarova <vmolnaro@redhat.com>,
-	Michael Petlan <mpetlan@redhat.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Gabriele Monaco <gmonaco@redhat.com>,
 	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 477/826] perf trace: Keep exited threads for summary
-Date: Tue,  3 Dec 2024 15:43:24 +0100
-Message-ID: <20241203144802.368018775@linuxfoundation.org>
+Subject: [PATCH 6.12 495/826] perf ftrace latency: Fix unit on histogram first entry when using --use-nsec
+Date: Tue,  3 Dec 2024 15:43:42 +0100
+Message-ID: <20241203144803.064353147@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -52,75 +52,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Petlan <mpetlan@redhat.com>
+From: Arnaldo Carvalho de Melo <acme@kernel.org>
 
-[ Upstream commit d29d92df410e2fb523f640478b18f70c1823e55e ]
+[ Upstream commit 064d569e20e82c065b1dec9d20c29c7087bb1a00 ]
 
-Since 9ffa6c7512ca ("perf machine thread: Remove exited threads by
-default") perf cleans exited threads up, but as said, sometimes they
-are necessary to be kept. The mentioned commit does not cover all the
-cases, we also need the information to construct the summary table in
-perf-trace.
+The use_nsec arg wasn't being taken into account when printing the first
+histogram entry, fix it:
 
-Before:
-    # perf trace -s true
-
-     Summary of events:
+  root@number:~# perf ftrace latency --use-nsec -T switch_mm_irqs_off -a sleep 2
+  #   DURATION     |      COUNT | GRAPH                                          |
+       0 - 1    us |          0 |                                                |
+       1 - 2    ns |          0 |                                                |
+       2 - 4    ns |          0 |                                                |
+       4 - 8    ns |          0 |                                                |
+       8 - 16   ns |          0 |                                                |
+      16 - 32   ns |          0 |                                                |
+      32 - 64   ns |        125 |                                                |
+      64 - 128  ns |        335 |                                                |
+     128 - 256  ns |       2155 | ####                                           |
+     256 - 512  ns |       9996 | ###################                            |
+     512 - 1024 ns |       4958 | #########                                      |
+       1 - 2    us |       4636 | #########                                      |
+       2 - 4    us |       1053 | ##                                             |
+       4 - 8    us |         15 |                                                |
+       8 - 16   us |          1 |                                                |
+      16 - 32   us |          0 |                                                |
+      32 - 64   us |          0 |                                                |
+      64 - 128  us |          0 |                                                |
+     128 - 256  us |          0 |                                                |
+     256 - 512  us |          0 |                                                |
+     512 - 1024 us |          0 |                                                |
+       1 - ...  ms |          0 |                                                |
+  root@number:~#
 
 After:
-    # perf trace -s -- true
 
-     Summary of events:
+  root@number:~# perf ftrace latency --use-nsec -T switch_mm_irqs_off -a sleep 2
+  #   DURATION     |      COUNT | GRAPH                                          |
+       0 - 1    ns |          0 |                                                |
+       1 - 2    ns |          0 |                                                |
+       2 - 4    ns |          0 |                                                |
+       4 - 8    ns |          0 |                                                |
+       8 - 16   ns |          0 |                                                |
+      16 - 32   ns |          0 |                                                |
+      32 - 64   ns |         19 |                                                |
+      64 - 128  ns |         94 |                                                |
+     128 - 256  ns |       2191 | ####                                           |
+     256 - 512  ns |       9719 | ####################                           |
+     512 - 1024 ns |       5330 | ###########                                    |
+       1 - 2    us |       4104 | ########                                       |
+       2 - 4    us |        807 | #                                              |
+       4 - 8    us |          9 |                                                |
+       8 - 16   us |          0 |                                                |
+      16 - 32   us |          0 |                                                |
+      32 - 64   us |          0 |                                                |
+      64 - 128  us |          0 |                                                |
+     128 - 256  us |          0 |                                                |
+     256 - 512  us |          0 |                                                |
+     512 - 1024 us |          0 |                                                |
+       1 - ...  ms |          0 |                                                |
+  root@number:~#
 
-     true (383382), 64 events, 91.4%
-
-       syscall            calls  errors  total       min       avg       max       stddev
-                                         (msec)    (msec)    (msec)    (msec)        (%)
-       --------------- --------  ------ -------- --------- --------- ---------     ------
-       mmap                   8      0     0.150     0.013     0.019     0.031     11.90%
-       mprotect               3      0     0.045     0.014     0.015     0.017      6.47%
-       openat                 2      0     0.014     0.006     0.007     0.007      9.73%
-       munmap                 1      0     0.009     0.009     0.009     0.009      0.00%
-       access                 1      1     0.009     0.009     0.009     0.009      0.00%
-       pread64                4      0     0.006     0.001     0.001     0.002      4.53%
-       fstat                  2      0     0.005     0.001     0.002     0.003     37.59%
-       arch_prctl             2      1     0.003     0.001     0.002     0.002     25.91%
-       read                   1      0     0.003     0.003     0.003     0.003      0.00%
-       close                  2      0     0.003     0.001     0.001     0.001      3.86%
-       brk                    1      0     0.002     0.002     0.002     0.002      0.00%
-       rseq                   1      0     0.001     0.001     0.001     0.001      0.00%
-       prlimit64              1      0     0.001     0.001     0.001     0.001      0.00%
-       set_robust_list        1      0     0.001     0.001     0.001     0.001      0.00%
-       set_tid_address        1      0     0.001     0.001     0.001     0.001      0.00%
-       execve                 1      0     0.000     0.000     0.000     0.000      0.00%
-
-[namhyung: simplified the condition]
-
-Fixes: 9ffa6c7512ca ("perf machine thread: Remove exited threads by default")
-Reported-by: Veronika Molnarova <vmolnaro@redhat.com>
-Signed-off-by: Michael Petlan <mpetlan@redhat.com>
-Link: https://lore.kernel.org/r/20240927151926.399474-1-mpetlan@redhat.com
+Fixes: 84005bb6148618cc ("perf ftrace latency: Add -n/--use-nsec option")
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Cc: Gabriele Monaco <gmonaco@redhat.com>
+Link: https://lore.kernel.org/r/ZyE3frB-hMXHCnMO@x1
 Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-trace.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ tools/perf/builtin-ftrace.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/perf/builtin-trace.c b/tools/perf/builtin-trace.c
-index d3f11b90d0255..4cc942f7fec7d 100644
---- a/tools/perf/builtin-trace.c
-+++ b/tools/perf/builtin-trace.c
-@@ -5449,6 +5449,10 @@ int cmd_trace(int argc, const char **argv)
- 	if (trace.summary_only)
- 		trace.summary = trace.summary_only;
+diff --git a/tools/perf/builtin-ftrace.c b/tools/perf/builtin-ftrace.c
+index abcdc49b7a987..272d3c70810e7 100644
+--- a/tools/perf/builtin-ftrace.c
++++ b/tools/perf/builtin-ftrace.c
+@@ -815,7 +815,7 @@ static void display_histogram(int buckets[], bool use_nsec)
  
-+	/* Keep exited threads, otherwise information might be lost for summary */
-+	if (trace.summary)
-+		symbol_conf.keep_exited_threads = true;
-+
- 	if (output_name != NULL) {
- 		err = trace__open_output(&trace, output_name);
- 		if (err < 0) {
+ 	bar_len = buckets[0] * bar_total / total;
+ 	printf("  %4d - %-4d %s | %10d | %.*s%*s |\n",
+-	       0, 1, "us", buckets[0], bar_len, bar, bar_total - bar_len, "");
++	       0, 1, use_nsec ? "ns" : "us", buckets[0], bar_len, bar, bar_total - bar_len, "");
+ 
+ 	for (i = 1; i < NUM_BUCKET - 1; i++) {
+ 		int start = (1 << (i - 1));
 -- 
 2.43.0
 
