@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4763D81ADA;
-	Tue,  3 Dec 2024 16:18:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 899E981ADA;
+	Tue,  3 Dec 2024 16:18:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733242727; cv=none; b=jC4mH7BZiyww7Sgp56zzwQ2AmMUeoBTOc3SYH+1VJNQTBtEPOm3frT1y7NAnCzhXZG9KlgNjS6xrTN+zMuNcYpAZsnueVfxcGDkNJfBOk7sojHFe6uIqqM8ex926mLoLiJAJh0YCGE7UGv7p6VcmjhBqgP7Gx+UjIHXc4S5dEOc=
+	t=1733242730; cv=none; b=GUu9tIxZPRqCWEGdoJER+kK/O6yNphNsGeOonIRR79TsZGpOqkatWECvUia1cfuJpvAzRTmPoRfdm1bVg9D5EERue+lPhGQDqscCjhtK1Nbw9dDIX4IzsSjM27XWY5Xf3uPwuJtpKCU8/NJ9ds9XDRpgyKXf37fgolFpWK5itcE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733242727; c=relaxed/simple;
-	bh=gJtIHxJtTpA8zKHdPLvUlu/QJe6TuvySX737ZkRFaRw=;
+	s=arc-20240116; t=1733242730; c=relaxed/simple;
+	bh=Cv/Kvgu5sIAYJgJDXy248z7Ym9X0IQ6qy1fPR45RF4c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=peSl0vJ+pNk3YHPQP2Fv8dCsVZkxlr/4Sk8d8Fesz73ZzRO4MRIrFZ1oD7cw2h4s+iSHcqv3LXzXgGe8HhM5/GgWJwMN7yjWQDdIaXX500ynv+3ZZT6pSkc5co8Df7SDA+Bdc6e+9g0KxBGzH7SHGeIue+JDTTFBeeJvjj+YLs0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EYzqONlf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=t3bee4UvgsmRcfoIMqJnkMwTyhSuMdio0L1NTvXpZFJ4CsxzWAFJEsf12me7Lmt97JNAce+/mqF2Gx/VgN7OaY7EFy4aSfjwPBgL8cU0i9ukV4tzAvtoVKcNrbuxpxKm4S6Tw5o4AKSbjPWHgCURBjOKep0WAPzrEUouSZMiO78=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fXNDqs56; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EYzqONlf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AACADC4CED6;
-	Tue,  3 Dec 2024 16:18:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fXNDqs56"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDDA8C4CECF;
+	Tue,  3 Dec 2024 16:18:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733242727;
-	bh=gJtIHxJtTpA8zKHdPLvUlu/QJe6TuvySX737ZkRFaRw=;
+	s=korg; t=1733242730;
+	bh=Cv/Kvgu5sIAYJgJDXy248z7Ym9X0IQ6qy1fPR45RF4c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EYzqONlfbB81xRqUp/oogmFpuRq/4PfOgTqb0o+2Dv5TjIoTYbyyUhVthgyRak6cF
-	 2srm97pq9g5Ivr6NxlVCaTV/M2k8a2dfbvED/EnBVMHmVnJ9hIumFY38n0XW79yoQf
-	 BS3XZp2QcnhBoSp/8VGbCRNRdI6HTo3UD69YYjrw=
+	b=fXNDqs56205bth7FEot1+12ALVi8yE4Y7o0B0zhWD+wXisk14kg6/7Rvld9QjEqWJ
+	 rpBZAJjEnH+crcnojEO7w8vtNk7Umo0okCGDnlvELYaUeHlFQg4Jx9I3kv6bI+/+DU
+	 B0/H1aV85pzmHTYs02e5WTcEGHA0pvl6lpa9BnEI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ralph Boehme <slow@samba.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.12 749/826] fs/smb/client: implement chmod() for SMB3 POSIX Extensions
-Date: Tue,  3 Dec 2024 15:47:56 +0100
-Message-ID: <20241203144812.981971315@linuxfoundation.org>
+	Waqar Hameed <waqar.hameed@axis.com>,
+	Zhihao Cheng <chengzhihao1@huawei.com>,
+	Richard Weinberger <richard@nod.at>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 785/826] ubifs: authentication: Fix use-after-free in ubifs_tnc_end_commit
+Date: Tue,  3 Dec 2024 15:48:32 +0100
+Message-ID: <20241203144814.383554486@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -50,237 +52,171 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ralph Boehme <slow@samba.org>
+From: Waqar Hameed <waqar.hameed@axis.com>
 
-commit d413eabff18d640031fc955d107ad9c03c3bf9f1 upstream.
+[ Upstream commit 4617fb8fc15effe8eda4dd898d4e33eb537a7140 ]
 
-The NT ACL format for an SMB3 POSIX Extensions chmod() is a single ACE with the
-magic S-1-5-88-3-mode SID:
+After an insertion in TNC, the tree might split and cause a node to
+change its `znode->parent`. A further deletion of other nodes in the
+tree (which also could free the nodes), the aforementioned node's
+`znode->cparent` could still point to a freed node. This
+`znode->cparent` may not be updated when getting nodes to commit in
+`ubifs_tnc_start_commit()`. This could then trigger a use-after-free
+when accessing the `znode->cparent` in `write_index()` in
+`ubifs_tnc_end_commit()`.
 
-  NT Security Descriptor
-      Revision: 1
-      Type: 0x8004, Self Relative, DACL Present
-      Offset to owner SID: 56
-      Offset to group SID: 124
-      Offset to SACL: 0
-      Offset to DACL: 20
-      Owner: S-1-5-21-3177838999-3893657415-1037673384-1000
-      Group: S-1-22-2-1000
-      NT User (DACL) ACL
-          Revision: NT4 (2)
-          Size: 36
-          Num ACEs: 1
-          NT ACE: S-1-5-88-3-438, flags 0x00, Access Allowed, mask 0x00000000
-              Type: Access Allowed
-              NT ACE Flags: 0x00
-              Size: 28
-              Access required: 0x00000000
-              SID: S-1-5-88-3-438
+This can be triggered by running
 
-Owner and Group should be NULL, but the server is not required to fail the
-request if they are present.
+  rm -f /etc/test-file.bin
+  dd if=/dev/urandom of=/etc/test-file.bin bs=1M count=60 conv=fsync
 
-Signed-off-by: Ralph Boehme <slow@samba.org>
-Cc: stable@vger.kernel.org
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+in a loop, and with `CONFIG_UBIFS_FS_AUTHENTICATION`. KASAN then
+reports:
+
+  BUG: KASAN: use-after-free in ubifs_tnc_end_commit+0xa5c/0x1950
+  Write of size 32 at addr ffffff800a3af86c by task ubifs_bgt0_20/153
+
+  Call trace:
+   dump_backtrace+0x0/0x340
+   show_stack+0x18/0x24
+   dump_stack_lvl+0x9c/0xbc
+   print_address_description.constprop.0+0x74/0x2b0
+   kasan_report+0x1d8/0x1f0
+   kasan_check_range+0xf8/0x1a0
+   memcpy+0x84/0xf4
+   ubifs_tnc_end_commit+0xa5c/0x1950
+   do_commit+0x4e0/0x1340
+   ubifs_bg_thread+0x234/0x2e0
+   kthread+0x36c/0x410
+   ret_from_fork+0x10/0x20
+
+  Allocated by task 401:
+   kasan_save_stack+0x38/0x70
+   __kasan_kmalloc+0x8c/0xd0
+   __kmalloc+0x34c/0x5bc
+   tnc_insert+0x140/0x16a4
+   ubifs_tnc_add+0x370/0x52c
+   ubifs_jnl_write_data+0x5d8/0x870
+   do_writepage+0x36c/0x510
+   ubifs_writepage+0x190/0x4dc
+   __writepage+0x58/0x154
+   write_cache_pages+0x394/0x830
+   do_writepages+0x1f0/0x5b0
+   filemap_fdatawrite_wbc+0x170/0x25c
+   file_write_and_wait_range+0x140/0x190
+   ubifs_fsync+0xe8/0x290
+   vfs_fsync_range+0xc0/0x1e4
+   do_fsync+0x40/0x90
+   __arm64_sys_fsync+0x34/0x50
+   invoke_syscall.constprop.0+0xa8/0x260
+   do_el0_svc+0xc8/0x1f0
+   el0_svc+0x34/0x70
+   el0t_64_sync_handler+0x108/0x114
+   el0t_64_sync+0x1a4/0x1a8
+
+  Freed by task 403:
+   kasan_save_stack+0x38/0x70
+   kasan_set_track+0x28/0x40
+   kasan_set_free_info+0x28/0x4c
+   __kasan_slab_free+0xd4/0x13c
+   kfree+0xc4/0x3a0
+   tnc_delete+0x3f4/0xe40
+   ubifs_tnc_remove_range+0x368/0x73c
+   ubifs_tnc_remove_ino+0x29c/0x2e0
+   ubifs_jnl_delete_inode+0x150/0x260
+   ubifs_evict_inode+0x1d4/0x2e4
+   evict+0x1c8/0x450
+   iput+0x2a0/0x3c4
+   do_unlinkat+0x2cc/0x490
+   __arm64_sys_unlinkat+0x90/0x100
+   invoke_syscall.constprop.0+0xa8/0x260
+   do_el0_svc+0xc8/0x1f0
+   el0_svc+0x34/0x70
+   el0t_64_sync_handler+0x108/0x114
+   el0t_64_sync+0x1a4/0x1a8
+
+The offending `memcpy()` in `ubifs_copy_hash()` has a use-after-free
+when a node becomes root in TNC but still has a `cparent` to an already
+freed node. More specifically, consider the following TNC:
+
+         zroot
+         /
+        /
+      zp1
+      /
+     /
+    zn
+
+Inserting a new node `zn_new` with a key smaller then `zn` will trigger
+a split in `tnc_insert()` if `zp1` is full:
+
+         zroot
+         /   \
+        /     \
+      zp1     zp2
+      /         \
+     /           \
+  zn_new          zn
+
+`zn->parent` has now been moved to `zp2`, *but* `zn->cparent` still
+points to `zp1`.
+
+Now, consider a removal of all the nodes _except_ `zn`. Just when
+`tnc_delete()` is about to delete `zroot` and `zp2`:
+
+         zroot
+             \
+              \
+              zp2
+                \
+                 \
+                 zn
+
+`zroot` and `zp2` get freed and the tree collapses:
+
+           zn
+
+`zn` now becomes the new `zroot`.
+
+`get_znodes_to_commit()` will now only find `zn`, the new `zroot`, and
+`write_index()` will check its `znode->cparent` that wrongly points to
+the already freed `zp1`. `ubifs_copy_hash()` thus gets wrongly called
+with `znode->cparent->zbranch[znode->iip].hash` that triggers the
+use-after-free!
+
+Fix this by explicitly setting `znode->cparent` to `NULL` in
+`get_znodes_to_commit()` for the root node. The search for the dirty
+nodes is bottom-up in the tree. Thus, when `find_next_dirty(znode)`
+returns NULL, the current `znode` _is_ the root node. Add an assert for
+this.
+
+Fixes: 16a26b20d2af ("ubifs: authentication: Add hashes to index nodes")
+Tested-by: Waqar Hameed <waqar.hameed@axis.com>
+Co-developed-by: Zhihao Cheng <chengzhihao1@huawei.com>
+Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
+Signed-off-by: Waqar Hameed <waqar.hameed@axis.com>
+Reviewed-by: Zhihao Cheng <chengzhihao1@huawei.com>
+Signed-off-by: Richard Weinberger <richard@nod.at>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/cifsacl.c   |   50 +++++++++++++++++++++++++++-------------------
- fs/smb/client/cifsproto.h |    4 ++-
- fs/smb/client/inode.c     |    4 ++-
- fs/smb/client/smb2pdu.c   |    2 -
- 4 files changed, 37 insertions(+), 23 deletions(-)
+ fs/ubifs/tnc_commit.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/fs/smb/client/cifsacl.c
-+++ b/fs/smb/client/cifsacl.c
-@@ -885,12 +885,17 @@ unsigned int setup_authusers_ACE(struct
-  * Fill in the special SID based on the mode. See
-  * https://technet.microsoft.com/en-us/library/hh509017(v=ws.10).aspx
-  */
--unsigned int setup_special_mode_ACE(struct smb_ace *pntace, __u64 nmode)
-+unsigned int setup_special_mode_ACE(struct smb_ace *pntace,
-+				    bool posix,
-+				    __u64 nmode)
- {
- 	int i;
- 	unsigned int ace_size = 28;
- 
--	pntace->type = ACCESS_DENIED_ACE_TYPE;
-+	if (posix)
-+		pntace->type = ACCESS_ALLOWED_ACE_TYPE;
-+	else
-+		pntace->type = ACCESS_DENIED_ACE_TYPE;
- 	pntace->flags = 0x0;
- 	pntace->access_req = 0;
- 	pntace->sid.num_subauth = 3;
-@@ -933,7 +938,8 @@ static void populate_new_aces(char *nacl
- 		struct smb_sid *pownersid,
- 		struct smb_sid *pgrpsid,
- 		__u64 *pnmode, u32 *pnum_aces, u16 *pnsize,
--		bool modefromsid)
-+		bool modefromsid,
-+		bool posix)
- {
- 	__u64 nmode;
- 	u32 num_aces = 0;
-@@ -950,13 +956,15 @@ static void populate_new_aces(char *nacl
- 	num_aces = *pnum_aces;
- 	nsize = *pnsize;
- 
--	if (modefromsid) {
--		pnntace = (struct smb_ace *) (nacl_base + nsize);
--		nsize += setup_special_mode_ACE(pnntace, nmode);
--		num_aces++;
-+	if (modefromsid || posix) {
- 		pnntace = (struct smb_ace *) (nacl_base + nsize);
--		nsize += setup_authusers_ACE(pnntace);
-+		nsize += setup_special_mode_ACE(pnntace, posix, nmode);
- 		num_aces++;
-+		if (modefromsid) {
-+			pnntace = (struct smb_ace *) (nacl_base + nsize);
-+			nsize += setup_authusers_ACE(pnntace);
-+			num_aces++;
-+		}
- 		goto set_size;
- 	}
- 
-@@ -1076,7 +1084,7 @@ static __u16 replace_sids_and_copy_aces(
- 
- static int set_chmod_dacl(struct smb_acl *pdacl, struct smb_acl *pndacl,
- 		struct smb_sid *pownersid,	struct smb_sid *pgrpsid,
--		__u64 *pnmode, bool mode_from_sid)
-+		__u64 *pnmode, bool mode_from_sid, bool posix)
- {
- 	int i;
- 	u16 size = 0;
-@@ -1094,11 +1102,11 @@ static int set_chmod_dacl(struct smb_acl
- 	nsize = sizeof(struct smb_acl);
- 
- 	/* If pdacl is NULL, we don't have a src. Simply populate new ACL. */
--	if (!pdacl) {
-+	if (!pdacl || posix) {
- 		populate_new_aces(nacl_base,
- 				pownersid, pgrpsid,
- 				pnmode, &num_aces, &nsize,
--				mode_from_sid);
-+				mode_from_sid, posix);
- 		goto finalize_dacl;
- 	}
- 
-@@ -1115,7 +1123,7 @@ static int set_chmod_dacl(struct smb_acl
- 			populate_new_aces(nacl_base,
- 					pownersid, pgrpsid,
- 					pnmode, &num_aces, &nsize,
--					mode_from_sid);
-+					mode_from_sid, posix);
- 
- 			new_aces_set = true;
+diff --git a/fs/ubifs/tnc_commit.c b/fs/ubifs/tnc_commit.c
+index a55e04822d16e..7c43e0ccf6d47 100644
+--- a/fs/ubifs/tnc_commit.c
++++ b/fs/ubifs/tnc_commit.c
+@@ -657,6 +657,8 @@ static int get_znodes_to_commit(struct ubifs_info *c)
+ 		znode->alt = 0;
+ 		cnext = find_next_dirty(znode);
+ 		if (!cnext) {
++			ubifs_assert(c, !znode->parent);
++			znode->cparent = NULL;
+ 			znode->cnext = c->cnext;
+ 			break;
  		}
-@@ -1144,7 +1152,7 @@ next_ace:
- 		populate_new_aces(nacl_base,
- 				pownersid, pgrpsid,
- 				pnmode, &num_aces, &nsize,
--				mode_from_sid);
-+				mode_from_sid, posix);
- 
- 		new_aces_set = true;
- 	}
-@@ -1251,7 +1259,7 @@ static int parse_sec_desc(struct cifs_sb
- /* Convert permission bits from mode to equivalent CIFS ACL */
- static int build_sec_desc(struct smb_ntsd *pntsd, struct smb_ntsd *pnntsd,
- 	__u32 secdesclen, __u32 *pnsecdesclen, __u64 *pnmode, kuid_t uid, kgid_t gid,
--	bool mode_from_sid, bool id_from_sid, int *aclflag)
-+	bool mode_from_sid, bool id_from_sid, bool posix, int *aclflag)
- {
- 	int rc = 0;
- 	__u32 dacloffset;
-@@ -1288,7 +1296,7 @@ static int build_sec_desc(struct smb_nts
- 		ndacl_ptr->num_aces = cpu_to_le32(0);
- 
- 		rc = set_chmod_dacl(dacl_ptr, ndacl_ptr, owner_sid_ptr, group_sid_ptr,
--				    pnmode, mode_from_sid);
-+				    pnmode, mode_from_sid, posix);
- 
- 		sidsoffset = ndacloffset + le16_to_cpu(ndacl_ptr->size);
- 		/* copy the non-dacl portion of secdesc */
-@@ -1587,6 +1595,7 @@ id_mode_to_cifs_acl(struct inode *inode,
- 	struct tcon_link *tlink = cifs_sb_tlink(cifs_sb);
- 	struct smb_version_operations *ops;
- 	bool mode_from_sid, id_from_sid;
-+	bool posix = tlink_tcon(tlink)->posix_extensions;
- 	const u32 info = 0;
- 
- 	if (IS_ERR(tlink))
-@@ -1622,12 +1631,13 @@ id_mode_to_cifs_acl(struct inode *inode,
- 		id_from_sid = false;
- 
- 	/* Potentially, five new ACEs can be added to the ACL for U,G,O mapping */
--	nsecdesclen = secdesclen;
- 	if (pnmode && *pnmode != NO_CHANGE_64) { /* chmod */
--		if (mode_from_sid)
--			nsecdesclen += 2 * sizeof(struct smb_ace);
-+		if (posix)
-+			nsecdesclen = 1 * sizeof(struct smb_ace);
-+		else if (mode_from_sid)
-+			nsecdesclen = secdesclen + (2 * sizeof(struct smb_ace));
- 		else /* cifsacl */
--			nsecdesclen += 5 * sizeof(struct smb_ace);
-+			nsecdesclen = secdesclen + (5 * sizeof(struct smb_ace));
- 	} else { /* chown */
- 		/* When ownership changes, changes new owner sid length could be different */
- 		nsecdesclen = sizeof(struct smb_ntsd) + (sizeof(struct smb_sid) * 2);
-@@ -1657,7 +1667,7 @@ id_mode_to_cifs_acl(struct inode *inode,
- 	}
- 
- 	rc = build_sec_desc(pntsd, pnntsd, secdesclen, &nsecdesclen, pnmode, uid, gid,
--			    mode_from_sid, id_from_sid, &aclflag);
-+			    mode_from_sid, id_from_sid, posix, &aclflag);
- 
- 	cifs_dbg(NOISY, "build_sec_desc rc: %d\n", rc);
- 
---- a/fs/smb/client/cifsproto.h
-+++ b/fs/smb/client/cifsproto.h
-@@ -244,7 +244,9 @@ extern int cifs_set_acl(struct mnt_idmap
- extern int set_cifs_acl(struct smb_ntsd *pntsd, __u32 len, struct inode *ino,
- 				const char *path, int flag);
- extern unsigned int setup_authusers_ACE(struct smb_ace *pace);
--extern unsigned int setup_special_mode_ACE(struct smb_ace *pace, __u64 nmode);
-+extern unsigned int setup_special_mode_ACE(struct smb_ace *pace,
-+					   bool posix,
-+					   __u64 nmode);
- extern unsigned int setup_special_user_owner_ACE(struct smb_ace *pace);
- 
- extern void dequeue_mid(struct mid_q_entry *mid, bool malformed);
---- a/fs/smb/client/inode.c
-+++ b/fs/smb/client/inode.c
-@@ -3062,6 +3062,7 @@ cifs_setattr_nounix(struct dentry *diren
- 	int rc = -EACCES;
- 	__u32 dosattr = 0;
- 	__u64 mode = NO_CHANGE_64;
-+	bool posix = cifs_sb_master_tcon(cifs_sb)->posix_extensions;
- 
- 	xid = get_xid();
- 
-@@ -3152,7 +3153,8 @@ cifs_setattr_nounix(struct dentry *diren
- 		mode = attrs->ia_mode;
- 		rc = 0;
- 		if ((cifs_sb->mnt_cifs_flags & CIFS_MOUNT_CIFS_ACL) ||
--		    (cifs_sb->mnt_cifs_flags & CIFS_MOUNT_MODE_FROM_SID)) {
-+		    (cifs_sb->mnt_cifs_flags & CIFS_MOUNT_MODE_FROM_SID) ||
-+		    posix) {
- 			rc = id_mode_to_cifs_acl(inode, full_path, &mode,
- 						INVALID_UID, INVALID_GID);
- 			if (rc) {
---- a/fs/smb/client/smb2pdu.c
-+++ b/fs/smb/client/smb2pdu.c
-@@ -2685,7 +2685,7 @@ create_sd_buf(umode_t mode, bool set_own
- 	ptr += sizeof(struct smb3_acl);
- 
- 	/* create one ACE to hold the mode embedded in reserved special SID */
--	acelen = setup_special_mode_ACE((struct smb_ace *)ptr, (__u64)mode);
-+	acelen = setup_special_mode_ACE((struct smb_ace *)ptr, false, (__u64)mode);
- 	ptr += acelen;
- 	acl_size = acelen + sizeof(struct smb3_acl);
- 	ace_count = 1;
+-- 
+2.43.0
+
 
 
