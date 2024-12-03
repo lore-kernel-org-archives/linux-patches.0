@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DB891F75B9;
-	Tue,  3 Dec 2024 15:32:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56C261F75B6;
+	Tue,  3 Dec 2024 15:32:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733239934; cv=none; b=ahyfgQcQf2BbxXDJo3v1M1xrRsiFodHH0DQCq6PsUSBbVOCDvT7sGNHei/9VaoXwZRoyd4rH3QBocGNewJNZShiWcT+u8N6DNRq2Wd1ODsg3pvqD3i26pfHbWQcERrppWJ7JHI5YDIX35zokuDXuXNzv6VR9EdKkiRzqrRbZiAM=
+	t=1733239937; cv=none; b=EU0L/MPuTZiDAWiWWcihLnttr409GPRw6/o0+jlHDkhZmtvfrw56QVTM5D7m2lJIGkVlDEzfeEhdsOZPDKa6lvBIk/c9D110YZDDN2UIly1nBe2GlE3aHhpFip6QWrl++e+lFR4AOAZADLGcLoi68JgtgJnaQAr4EWyaUZPmOWo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733239934; c=relaxed/simple;
-	bh=NB8IRKcQTbBpU48qMXZhqbwuHU5oGjmBfsc4ht/ufd8=;
+	s=arc-20240116; t=1733239937; c=relaxed/simple;
+	bh=zjcOsR6rMimwhWPN5RCKsOk2nUpPJU0UvYgWvEkRWWk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=UiR0/V5QwsmwLHGJkIYmusOrAzN+/GMD3Wq1hvy2xi3H0tv7O1KNYxrAK1fP0dQS+Pc1NARjUIGGh1mDdPSeMgsEJ1ou8YtXlBKACqVwcjYx6v5YmfhtuLzkXGO1MAJU89FvTIbtoYjcXyRhVGBrntXgqaRmy7We0lBB+WyZt34=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mQq1Rpfk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IEl1oCItFVl8pQCS/k2wHaExEUS5O0q7eKJzs4oTVTXN/avK5FmkzD1Y+SHdKmOI/3Bp4ZEPZZPBdc5FBU3A3LcrIzGZM5AuwEmUpG2RXvNhgfptUUGw9fNEI1ekly1idD8YiaUtfnPcxV/kevWGPOu2EkQfngyExdxSd7tsIjo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s0ouJBck; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mQq1Rpfk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DCA6C4CECF;
-	Tue,  3 Dec 2024 15:32:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s0ouJBck"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D67C0C4CECF;
+	Tue,  3 Dec 2024 15:32:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733239934;
-	bh=NB8IRKcQTbBpU48qMXZhqbwuHU5oGjmBfsc4ht/ufd8=;
+	s=korg; t=1733239937;
+	bh=zjcOsR6rMimwhWPN5RCKsOk2nUpPJU0UvYgWvEkRWWk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mQq1RpfkrSVb3JEQnPMNd/Pq2hLpPOfDnvw2xy3R78EZoWWBvXnLNWqvaN9pTHgqx
-	 2/1SkFrWZfot4S0/Ew/R+fAGP5kN7S8qxKuUx+pnAZUduzSNZI0j9DMAU6sQI3acpi
-	 /3FFnBPqMWrCAFpq7+cJLSFzIOaWV4H/aFPQZsfM=
+	b=s0ouJBckEh/aV8v+FoW4dvHbbPuvLYH93Fa5fO8dejxKhAJ6DyPqfYe1LyhsPbcYb
+	 WzEThGTy9BSpSBEOZWzP4rSK1RNXV/pCage0+r/3HF+PhycbwQLWfhmQBM/d8kHil8
+	 5LzTeJWRDrM+j84z5bnVTahi4/UP8u1Zj2SNUSLs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Hubert=20Wi=C5=9Bniewski?= <hubert.wisniewski.25632@gmail.com>
-Subject: [PATCH 6.11 753/817] usb: musb: Fix hardware lockup on first Rx endpoint request
-Date: Tue,  3 Dec 2024 15:45:25 +0100
-Message-ID: <20241203144025.388250149@linuxfoundation.org>
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.11 744/817] ALSA: hda/realtek: Apply quirk for Medion E15433
+Date: Tue,  3 Dec 2024 15:45:16 +0100
+Message-ID: <20241203144025.038871639@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -43,136 +43,37 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.11-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hubert Wiśniewski <hubert.wisniewski.25632@gmail.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-commit 3fc137386c4620305bbc2a216868c53f9245670a upstream.
+commit ca0f79f0286046f6a91c099dc941cf7afae198d6 upstream.
 
-There is a possibility that a request's callback could be invoked from
-usb_ep_queue() (call trace below, supplemented with missing calls):
+Medion E15433 laptop wich ALC269VC (SSID 2782:1705) needs the same
+workaround for the missing speaker as another model.
 
-req->complete from usb_gadget_giveback_request
-	(drivers/usb/gadget/udc/core.c:999)
-usb_gadget_giveback_request from musb_g_giveback
-	(drivers/usb/musb/musb_gadget.c:147)
-musb_g_giveback from rxstate
-	(drivers/usb/musb/musb_gadget.c:784)
-rxstate from musb_ep_restart
-	(drivers/usb/musb/musb_gadget.c:1169)
-musb_ep_restart from musb_ep_restart_resume_work
-	(drivers/usb/musb/musb_gadget.c:1176)
-musb_ep_restart_resume_work from musb_queue_resume_work
-	(drivers/usb/musb/musb_core.c:2279)
-musb_queue_resume_work from musb_gadget_queue
-	(drivers/usb/musb/musb_gadget.c:1241)
-musb_gadget_queue from usb_ep_queue
-	(drivers/usb/gadget/udc/core.c:300)
-
-According to the docstring of usb_ep_queue(), this should not happen:
-
-"Note that @req's ->complete() callback must never be called from within
-usb_ep_queue() as that can create deadlock situations."
-
-In fact, a hardware lockup might occur in the following sequence:
-
-1. The gadget is initialized using musb_gadget_enable().
-2. Meanwhile, a packet arrives, and the RXPKTRDY flag is set, raising an
-   interrupt.
-3. If IRQs are enabled, the interrupt is handled, but musb_g_rx() finds an
-   empty queue (next_request() returns NULL). The interrupt flag has
-   already been cleared by the glue layer handler, but the RXPKTRDY flag
-   remains set.
-4. The first request is enqueued using usb_ep_queue(), leading to the call
-   of req->complete(), as shown in the call trace above.
-5. If the callback enables IRQs and another packet is waiting, step (3)
-   repeats. The request queue is empty because usb_g_giveback() removes the
-   request before invoking the callback.
-6. The endpoint remains locked up, as the interrupt triggered by hardware
-   setting the RXPKTRDY flag has been handled, but the flag itself remains
-   set.
-
-For this scenario to occur, it is only necessary for IRQs to be enabled at
-some point during the complete callback. This happens with the USB Ethernet
-gadget, whose rx_complete() callback calls netif_rx(). If called in the
-task context, netif_rx() disables the bottom halves (BHs). When the BHs are
-re-enabled, IRQs are also enabled to allow soft IRQs to be processed. The
-gadget itself is initialized at module load (or at boot if built-in), but
-the first request is enqueued when the network interface is brought up,
-triggering rx_complete() in the task context via ioctl(). If a packet
-arrives while the interface is down, it can prevent the interface from
-receiving any further packets from the USB host.
-
-The situation is quite complicated with many parties involved. This
-particular issue can be resolved in several possible ways:
-
-1. Ensure that callbacks never enable IRQs. This would be difficult to
-   enforce, as discovering how netif_rx() interacts with interrupts was
-   already quite challenging and u_ether is not the only function driver.
-   Similar "bugs" could be hidden in other drivers as well.
-2. Disable MUSB interrupts in musb_g_giveback() before calling the callback
-   and re-enable them afterwars (by calling musb_{dis,en}able_interrupts(),
-   for example). This would ensure that MUSB interrupts are not handled
-   during the callback, even if IRQs are enabled. In fact, it would allow
-   IRQs to be enabled when releasing the lock. However, this feels like an
-   inelegant hack.
-3. Modify the interrupt handler to clear the RXPKTRDY flag if the request
-   queue is empty. While this approach also feels like a hack, it wastes
-   CPU time by attempting to handle incoming packets when the software is
-   not ready to process them.
-4. Flush the Rx FIFO instead of calling rxstate() in musb_ep_restart().
-   This ensures that the hardware can receive packets when there is at
-   least one request in the queue. Once IRQs are enabled, the interrupt
-   handler will be able to correctly process the next incoming packet
-   (eventually calling rxstate()). This approach may cause one or two
-   packets to be dropped (two if double buffering is enabled), but this
-   seems to be a minor issue, as packet loss can occur when the software is
-   not yet ready to process them. Additionally, this solution makes the
-   gadget driver compliant with the rule mentioned in the docstring of
-   usb_ep_queue().
-
-There may be additional solutions, but from these four, the last one has
-been chosen as it seems to be the most appropriate, as it addresses the
-"bad" behavior of the driver.
-
-Fixes: baebdf48c360 ("net: dev: Makes sure netif_rx() can be invoked in any context.")
-Cc: stable@vger.kernel.org
-Signed-off-by: Hubert Wiśniewski <hubert.wisniewski.25632@gmail.com>
-Link: https://lore.kernel.org/r/4ee1ead4525f78fb5909a8cbf99513ad0082ad21.camel@gmail.com
+Link: https://bugzilla.suse.com/show_bug.cgi?id=1233298
+Cc: <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20241128072646.15659-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/musb/musb_gadget.c |   13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ sound/pci/hda/patch_realtek.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/usb/musb/musb_gadget.c
-+++ b/drivers/usb/musb/musb_gadget.c
-@@ -1161,12 +1161,19 @@ void musb_free_request(struct usb_ep *ep
-  */
- void musb_ep_restart(struct musb *musb, struct musb_request *req)
- {
-+	u16 csr;
-+	void __iomem *epio = req->ep->hw_ep->regs;
-+
- 	trace_musb_req_start(req);
- 	musb_ep_select(musb->mregs, req->epnum);
--	if (req->tx)
-+	if (req->tx) {
- 		txstate(musb, req);
--	else
--		rxstate(musb, req);
-+	} else {
-+		csr = musb_readw(epio, MUSB_RXCSR);
-+		csr |= MUSB_RXCSR_FLUSHFIFO | MUSB_RXCSR_P_WZC_BITS;
-+		musb_writew(epio, MUSB_RXCSR, csr);
-+		musb_writew(epio, MUSB_RXCSR, csr);
-+	}
- }
- 
- static int musb_ep_restart_resume_work(struct musb *musb, void *data)
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -11028,6 +11028,7 @@ static const struct snd_pci_quirk alc269
+ 	SND_PCI_QUIRK(0x2782, 0x0228, "Infinix ZERO BOOK 13", ALC269VB_FIXUP_INFINIX_ZERO_BOOK_13),
+ 	SND_PCI_QUIRK(0x2782, 0x0232, "CHUWI CoreBook XPro", ALC269VB_FIXUP_CHUWI_COREBOOK_XPRO),
+ 	SND_PCI_QUIRK(0x2782, 0x1701, "Infinix Y4 Max", ALC269VC_FIXUP_INFINIX_Y4_MAX),
++	SND_PCI_QUIRK(0x2782, 0x1705, "MEDION E15433", ALC269VC_FIXUP_INFINIX_Y4_MAX),
+ 	SND_PCI_QUIRK(0x2782, 0x1707, "Vaio VJFE-ADL", ALC298_FIXUP_SPK_VOLUME),
+ 	SND_PCI_QUIRK(0x8086, 0x2074, "Intel NUC 8", ALC233_FIXUP_INTEL_NUC8_DMIC),
+ 	SND_PCI_QUIRK(0x8086, 0x2080, "Intel NUC 8 Rugged", ALC256_FIXUP_INTEL_NUC8_RUGGED),
 
 
