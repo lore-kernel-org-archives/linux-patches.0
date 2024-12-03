@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3A5C646;
-	Tue,  3 Dec 2024 15:16:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9ACC1F890D;
+	Tue,  3 Dec 2024 15:16:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733238963; cv=none; b=o4ivaEmjjUr8rtT3o92guPd/wAG3EztmDT/L02IQd6Uc5pUn23TKqsuhNtH9ndl/P5fwVrTGXXlLy4JNHtCqpB5LyG40ogkP1KbGtIe8aFDkl3IpTXPgCkIbkwsLWIImhfGmVoeHf2NJE75M//ElWVWXQXTGFV+nx3rA8lhIeO0=
+	t=1733238966; cv=none; b=JHn6A0vD9VoOHyqWrdO26ppkAREChNoAMn0+YHyZL8vdBRcg9YDcVOOViXeWbhWay9/lR1VIhPt3j9niiocsI60UTSE/WWke0ixv2DeZGkH7hguk6icLURoX0nGUF/GjJUck7C+cVpSdrPUj8eW3mDO9+NtuHHVeQNGfF6UodCQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733238963; c=relaxed/simple;
-	bh=bpKV+feo1p5ZyLIj0LM1Vy1sIPybkhJrj/aFQVykGpU=;
+	s=arc-20240116; t=1733238966; c=relaxed/simple;
+	bh=8QTb2hh2bWvzDrhDa2pk8M2bmZ5qCp/s1qdf9XkK4qI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jIzFsuuatQAbewJxXM9WnEt/Vvs1OH/TUaexUmrZjuvl7VbGyV3Y89ElKqbvLuzyycrJj7jLbalV2detB27bipjwP3v6jnbp9oYu3tViHRqukZBmc26sbcQgnigxPtrKlTd2hN3hQxDvOGe/md8ROMxmiTHJqIrEgaOTt/m5mJ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c4AWcvVC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Tw8ZbZLPFETa2ayeUo04pDqucsQNxVgza332Wbm5jMFDiUlcnlDFfn8lJk6ZkLDHsPPUfvsTyDEFHmTSqcrpp33tJxe9cv95wBk8gjPS7BT8bhaegUQH8Q46p5+Lu0hqdoLa6dz31vUlZ4rmLsEVdsImd4jbVVVUq75sN3cQyMM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=adN7ZSAH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c4AWcvVC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AE63C4CECF;
-	Tue,  3 Dec 2024 15:16:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="adN7ZSAH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08AE2C4CECF;
+	Tue,  3 Dec 2024 15:16:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733238963;
-	bh=bpKV+feo1p5ZyLIj0LM1Vy1sIPybkhJrj/aFQVykGpU=;
+	s=korg; t=1733238966;
+	bh=8QTb2hh2bWvzDrhDa2pk8M2bmZ5qCp/s1qdf9XkK4qI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c4AWcvVCnunrxuFisZItlHo3Do1CJhcVqbmrvesowxHX/+rdQsKFM/YiFM0KqJVrj
-	 ZdC64hHvdz4OhrzrdG4S9T8KMXlkHbCwt2a5WmO5meOl+oL7ug/fnVIeVINmP8ogz4
-	 KsxFHp6N3pmUmFEI/ipDS3gmpkLZ0dJeWDAaxOB4=
+	b=adN7ZSAHOELjKepsKSY1RYoJ6sbtKooLjpT8oWJn9Hb/1W7e7ZS+1JSf3tvkTozYg
+	 o90u7o1cVr0j66ti+rKDXyM3FHMFOqkDvsX/Jg+U7gbpdvEu4aJzEP7Zeor1Kn2QrA
+	 TG8v/kw7vRXhHlHDmA3n6oPCe89tP4k25nRUBhG0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gautam Menghani <gautam@linux.ibm.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Zhen Lei <thunder.leizhen@huawei.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 458/817] KVM: PPC: Book3S HV: Avoid returning to nested hypervisor on pending doorbells
-Date: Tue,  3 Dec 2024 15:40:30 +0100
-Message-ID: <20241203144013.752372532@linuxfoundation.org>
+Subject: [PATCH 6.11 441/817] scsi: qedi: Fix a possible memory leak in qedi_alloc_and_init_sb()
+Date: Tue,  3 Dec 2024 15:40:13 +0100
+Message-ID: <20241203144013.094142297@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -51,75 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gautam Menghani <gautam@linux.ibm.com>
+From: Zhen Lei <thunder.leizhen@huawei.com>
 
-[ Upstream commit 26686db69917399fa30e3b3135360771e90f83ec ]
+[ Upstream commit 95bbdca4999bc59a72ebab01663d421d6ce5775d ]
 
-Commit 6398326b9ba1 ("KVM: PPC: Book3S HV P9: Stop using vc->dpdes")
-dropped the use of vcore->dpdes for msgsndp / SMT emulation. Prior to that
-commit, the below code at L1 level (see [1] for terminology) was
-responsible for setting vc->dpdes for the respective L2 vCPU:
+Hook "qedi_ops->common->sb_init = qed_sb_init" does not release the DMA
+memory sb_virt when it fails. Add dma_free_coherent() to free it. This
+is the same way as qedr_alloc_mem_sb() and qede_alloc_mem_sb().
 
-if (!nested) {
-	kvmppc_core_prepare_to_enter(vcpu);
-	if (vcpu->arch.doorbell_request) {
-		vc->dpdes = 1;
-		smp_wmb();
-		vcpu->arch.doorbell_request = 0;
-	}
-
-L1 then sent vc->dpdes to L0 via kvmhv_save_hv_regs(), and while
-servicing H_ENTER_NESTED at L0, the below condition at L0 level made sure
-to abort and go back to L1 if vcpu->arch.doorbell_request = 1 so that L1
-sets vc->dpdes as per above if condition:
-
-} else if (vcpu->arch.pending_exceptions ||
-	   vcpu->arch.doorbell_request ||
-	   xive_interrupt_pending(vcpu)) {
-	vcpu->arch.ret = RESUME_HOST;
-	goto out;
-}
-
-This worked fine since vcpu->arch.doorbell_request was used more like a
-flag and vc->dpdes was used to pass around the doorbell state. But after
-Commit 6398326b9ba1 ("KVM: PPC: Book3S HV P9: Stop using vc->dpdes"),
-vcpu->arch.doorbell_request is the only variable used to pass around
-doorbell state.
-With the plumbing for handling doorbells for nested guests updated to use
-vcpu->arch.doorbell_request over vc->dpdes, the above "else if" stops
-doorbells from working correctly as L0 aborts execution of L2 and
-instead goes back to L1.
-
-Remove vcpu->arch.doorbell_request from the above "else if" condition as
-it is no longer needed for L0 to correctly handle the doorbell status
-while running L2.
-
-[1] Terminology
-1. L0 : PowerNV linux running with HV privileges
-2. L1 : Pseries KVM guest running on top of L0
-2. L2 : Nested KVM guest running on top of L1
-
-Fixes: 6398326b9ba1 ("KVM: PPC: Book3S HV P9: Stop using vc->dpdes")
-Signed-off-by: Gautam Menghani <gautam@linux.ibm.com>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://patch.msgid.link/20241109063301.105289-4-gautam@linux.ibm.com
+Fixes: ace7f46ba5fd ("scsi: qedi: Add QLogic FastLinQ offload iSCSI driver framework.")
+Signed-off-by: Zhen Lei <thunder.leizhen@huawei.com>
+Link: https://lore.kernel.org/r/20241026125711.484-3-thunder.leizhen@huawei.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/kvm/book3s_hv.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/scsi/qedi/qedi_main.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/powerpc/kvm/book3s_hv.c b/arch/powerpc/kvm/book3s_hv.c
-index ccc9a8431b944..b0432e78fa629 100644
---- a/arch/powerpc/kvm/book3s_hv.c
-+++ b/arch/powerpc/kvm/book3s_hv.c
-@@ -4915,7 +4915,6 @@ int kvmhv_run_single_vcpu(struct kvm_vcpu *vcpu, u64 time_limit,
- 			lpcr &= ~LPCR_MER;
- 		}
- 	} else if (vcpu->arch.pending_exceptions ||
--		   vcpu->arch.doorbell_request ||
- 		   xive_interrupt_pending(vcpu)) {
- 		vcpu->arch.ret = RESUME_HOST;
- 		goto out;
+diff --git a/drivers/scsi/qedi/qedi_main.c b/drivers/scsi/qedi/qedi_main.c
+index cd0180b1f5b9d..ede8d1f6ae236 100644
+--- a/drivers/scsi/qedi/qedi_main.c
++++ b/drivers/scsi/qedi/qedi_main.c
+@@ -369,6 +369,7 @@ static int qedi_alloc_and_init_sb(struct qedi_ctx *qedi,
+ 	ret = qedi_ops->common->sb_init(qedi->cdev, sb_info, sb_virt, sb_phys,
+ 				       sb_id, QED_SB_TYPE_STORAGE);
+ 	if (ret) {
++		dma_free_coherent(&qedi->pdev->dev, sizeof(*sb_virt), sb_virt, sb_phys);
+ 		QEDI_ERR(&qedi->dbg_ctx,
+ 			 "Status block initialization failed for id = %d.\n",
+ 			  sb_id);
 -- 
 2.43.0
 
