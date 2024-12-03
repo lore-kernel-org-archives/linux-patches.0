@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E77071DDC26;
-	Tue,  3 Dec 2024 15:40:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C791B1DDC26;
+	Tue,  3 Dec 2024 15:40:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733240427; cv=none; b=gHInwZmPVon/K5HntClhFTJSXBvmcUNDRUukDuxN1dEQNLj7+LsndNmBZKT/vzD+qccJHA2DOQGrEOUG/s17Tzq6FkLsF9cvS07hzZ/CjMHHjr+brUmmb6GcJPlGJknfm9bSs8Ya+0BUnbJ2FWkZ/Zv5Z1pp+yrrv+dsUIXxOUQ=
+	t=1733240429; cv=none; b=kOdlnRZHbKI1RMf33+QAzSe5A36/Zd16Hghwe7e8kFWg+G+LpbT5w4uga+KkL2hoVxdckcGiaA1JYD0dod9J6/BETjLAVp02XnI9kP1PyhU+6LRCxo6qWkvDqHG2s3HfT8TiaR0A+jLwyAKTJwl//d0zAYd+XOckaGrtEoM7ZgQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733240427; c=relaxed/simple;
-	bh=j2wWdGiEZtGLfwU29ujhm3AuHn4MJYug+pXCZRdwcuA=;
+	s=arc-20240116; t=1733240429; c=relaxed/simple;
+	bh=mr35+k15UdQV67AjyJCFOIzYWVOzeZd6NujJrIeRZoA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MfLXR9BMs2ey1ThyZWHesx5vijE9iVJygSs38VGK+SnlGuVvfrTebG3BtPgk5A8pi0o8pYPZ4jiULIAVwxy+APyQcVoeaUPRguzH1wEkDSIktoFH6VBGLtVyE+dOOI511eqQnqQrvZfYx7PoZglMgcnnkFowD2t7eCFkHsS/hj4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ywXRbduw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YECWAnf5UfrE7b9lBkvLwC0gh5AofHPtOE+UEwNILDoD7hJc4qNV2k1AwXrXZ9V+cUx4D2j6KJRkqju2lW2glh7UQNAU76tgSL7bZ+L+osC6RtDN3rcFEgb6b+Kmx1fdvWxSCL3O6mg8KIA653lLLTiecX7kFeIeYENZ+wj3OYs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gf3Y7Jno; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ywXRbduw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F358C4CECF;
-	Tue,  3 Dec 2024 15:40:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gf3Y7Jno"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50071C4CED8;
+	Tue,  3 Dec 2024 15:40:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733240426;
-	bh=j2wWdGiEZtGLfwU29ujhm3AuHn4MJYug+pXCZRdwcuA=;
+	s=korg; t=1733240429;
+	bh=mr35+k15UdQV67AjyJCFOIzYWVOzeZd6NujJrIeRZoA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ywXRbduwUIczCJ4glKDCdB/NYFQPeOBjJFAUYID+idSPhgQVZElfd7/xrGU5d4ZJb
-	 M7Lw8X1sD4fDcaYId7UzNnCWG/2KWF9sDKeKcsHr5SccfzW7AvqxHWKN7mi2m8Vm2j
-	 o7IvfacY19jh2LEGJSnK+/wXlcJwf5yK57/fB2n4=
+	b=Gf3Y7Jno+RBz8unKHJcMV9njXQsZCPzNGxm53tP1N/Cbnx4boIC9TgjpgCcaxF7zU
+	 roxLjCGnd6yF3ntaeBoYT/vI6rQqLzlv0Z9dyZ/NPxe9Aha56ZGbkD0wJOUgUmHZWx
+	 2kC3QcHwHmrEQpt9B078h3w1B5Fiyv9X1SCALnIY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Morrisson <nmorrisson@phytec.com>,
-	Wadim Egorov <w.egorov@phytec.de>,
-	Vignesh Raghavendra <vigneshr@ti.com>,
+	Srikar Dronamraju <srikar@linux.ibm.com>,
+	Frederic Weisbecker <frederic@kernel.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 130/826] arm64: dts: ti: k3-am62x-phyboard-lyra: Drop unnecessary McASP AFIFOs
-Date: Tue,  3 Dec 2024 15:37:37 +0100
-Message-ID: <20241203144748.814390648@linuxfoundation.org>
+Subject: [PATCH 6.12 131/826] gpio: sloppy-logic-analyzer remove reference to rcu_momentary_dyntick_idle()
+Date: Tue,  3 Dec 2024 15:37:38 +0100
+Message-ID: <20241203144748.851733836@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -52,35 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Morrisson <nmorrisson@phytec.com>
+From: Srikar Dronamraju <srikar@linux.ibm.com>
 
-[ Upstream commit c33a0a02a29bde53a85407f86f332ac4bbc5ab87 ]
+[ Upstream commit a0b6594e411dcae0cc563f5157cf062e93603388 ]
 
-Drop the McASP AFIFOs for better audio latency. This adds back a
-change that was lost while refactoring the device tree.
+There is one last reference to rcu_momentary_dyntick_idle() after
+commit 32a9f26e5e26 ("rcu: Rename rcu_momentary_dyntick_idle() into
+rcu_momentary_eqs()")
 
-Fixes: 554dd562a5f2 ("arm64: dts: ti: k3-am625-phyboard-lyra-rdk: Drop McASP AFIFOs")
-Signed-off-by: Nathan Morrisson <nmorrisson@phytec.com>
-Reviewed-by: Wadim Egorov <w.egorov@phytec.de>
-Link: https://lore.kernel.org/r/20241002224754.2917895-1-nmorrisson@phytec.com
-Signed-off-by: Vignesh Raghavendra <vigneshr@ti.com>
+Rename it for consistency.
+
+Fixes: 32a9f26e5e26 ("rcu: Rename rcu_momentary_dyntick_idle() into rcu_momentary_eqs()")
+Signed-off-by: Srikar Dronamraju <srikar@linux.ibm.com>
+Acked-by: Frederic Weisbecker <frederic@kernel.org>
+Link: https://lore.kernel.org/r/20240925054619.568209-1-srikar@linux.ibm.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/ti/k3-am62x-phyboard-lyra.dtsi | 2 --
- 1 file changed, 2 deletions(-)
+ tools/gpio/gpio-sloppy-logic-analyzer.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/ti/k3-am62x-phyboard-lyra.dtsi b/arch/arm64/boot/dts/ti/k3-am62x-phyboard-lyra.dtsi
-index e4633af87eb9c..d6ce53c6d7481 100644
---- a/arch/arm64/boot/dts/ti/k3-am62x-phyboard-lyra.dtsi
-+++ b/arch/arm64/boot/dts/ti/k3-am62x-phyboard-lyra.dtsi
-@@ -433,8 +433,6 @@ &mcasp2 {
- 			0 0 0 0
- 			0 0 0 0
- 	>;
--	tx-num-evt = <32>;
--	rx-num-evt = <32>;
- 	status = "okay";
- };
+diff --git a/tools/gpio/gpio-sloppy-logic-analyzer.sh b/tools/gpio/gpio-sloppy-logic-analyzer.sh
+index ed21a110df5e5..3ef2278e49f91 100755
+--- a/tools/gpio/gpio-sloppy-logic-analyzer.sh
++++ b/tools/gpio/gpio-sloppy-logic-analyzer.sh
+@@ -113,7 +113,7 @@ init_cpu()
+ 		taskset -p "$newmask" "$p" || continue
+ 	done 2>/dev/null >/dev/null
+ 
+-	# Big hammer! Working with 'rcu_momentary_dyntick_idle()' for a more fine-grained solution
++	# Big hammer! Working with 'rcu_momentary_eqs()' for a more fine-grained solution
+ 	# still printed warnings. Same for re-enabling the stall detector after sampling.
+ 	echo 1 > /sys/module/rcupdate/parameters/rcu_cpu_stall_suppress
  
 -- 
 2.43.0
