@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 404561F76D9;
-	Tue,  3 Dec 2024 15:16:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3A5C646;
+	Tue,  3 Dec 2024 15:16:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733238961; cv=none; b=ZIfAoPtVbBjjf886P+X40M9KWX4zWL64+sEud4C4A7t/gwq3+sMRf3rCLRTO6/iqtNIR2PKWzpbynad3nidqGAyiVPLFOiBZ5CPzCDTVVJdpY8t4AW7YyF0wZ7SDVsy93hFNXWQ88AmMZ+bmky43SqHvfRHYOl1W5lB+Ndjz32A=
+	t=1733238963; cv=none; b=o4ivaEmjjUr8rtT3o92guPd/wAG3EztmDT/L02IQd6Uc5pUn23TKqsuhNtH9ndl/P5fwVrTGXXlLy4JNHtCqpB5LyG40ogkP1KbGtIe8aFDkl3IpTXPgCkIbkwsLWIImhfGmVoeHf2NJE75M//ElWVWXQXTGFV+nx3rA8lhIeO0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733238961; c=relaxed/simple;
-	bh=T2BMUvY382bbht+/hlh8dmU1Rxi9QzISPZlj4K+VnfU=;
+	s=arc-20240116; t=1733238963; c=relaxed/simple;
+	bh=bpKV+feo1p5ZyLIj0LM1Vy1sIPybkhJrj/aFQVykGpU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X5F9EceezbdGR7ulm9kAPzh6OA12OATgI2TyVV9rF9DoKNwxagmT2AtLyoLf1uo/rVD25PTylznkkszrcb2xkQsRcpVSTYwtstno6C0q/RMMS0KCz8Jg+SgTY6UfOainRFNrrRt29sTVKmafc6R8z7QV5I2ykxSv0LjFC7KPTe0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H0wuRn8S; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jIzFsuuatQAbewJxXM9WnEt/Vvs1OH/TUaexUmrZjuvl7VbGyV3Y89ElKqbvLuzyycrJj7jLbalV2detB27bipjwP3v6jnbp9oYu3tViHRqukZBmc26sbcQgnigxPtrKlTd2hN3hQxDvOGe/md8ROMxmiTHJqIrEgaOTt/m5mJ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c4AWcvVC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H0wuRn8S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B0F8C4CECF;
-	Tue,  3 Dec 2024 15:16:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c4AWcvVC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AE63C4CECF;
+	Tue,  3 Dec 2024 15:16:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733238960;
-	bh=T2BMUvY382bbht+/hlh8dmU1Rxi9QzISPZlj4K+VnfU=;
+	s=korg; t=1733238963;
+	bh=bpKV+feo1p5ZyLIj0LM1Vy1sIPybkhJrj/aFQVykGpU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H0wuRn8SmB8gU678qU/1wbatftEtGk8Hr7m2+gdE03vRo4UkGcrd7l+nJ4jYL9k0I
-	 N09nISH3Pvzg+kj1Ynt2oKsIffrn81l+qsrK0wSElagzIQcoC/c7Hz3yP6hUdZyQWg
-	 Kz9juBELQQ9np90ojMICbmRyVsHr5tgNCu1qn05s=
+	b=c4AWcvVCnunrxuFisZItlHo3Do1CJhcVqbmrvesowxHX/+rdQsKFM/YiFM0KqJVrj
+	 ZdC64hHvdz4OhrzrdG4S9T8KMXlkHbCwt2a5WmO5meOl+oL7ug/fnVIeVINmP8ogz4
+	 KsxFHp6N3pmUmFEI/ipDS3gmpkLZ0dJeWDAaxOB4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Gautam Menghani <gautam@linux.ibm.com>,
 	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 457/817] KVM: PPC: Book3S HV: Stop using vc->dpdes for nested KVM guests
-Date: Tue,  3 Dec 2024 15:40:29 +0100
-Message-ID: <20241203144013.713881519@linuxfoundation.org>
+Subject: [PATCH 6.11 458/817] KVM: PPC: Book3S HV: Avoid returning to nested hypervisor on pending doorbells
+Date: Tue,  3 Dec 2024 15:40:30 +0100
+Message-ID: <20241203144013.752372532@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -53,27 +53,46 @@ Content-Transfer-Encoding: 8bit
 
 From: Gautam Menghani <gautam@linux.ibm.com>
 
-[ Upstream commit 0d3c6b28896f9889c8864dab469e0343a0ad1c0c ]
+[ Upstream commit 26686db69917399fa30e3b3135360771e90f83ec ]
 
-commit 6398326b9ba1 ("KVM: PPC: Book3S HV P9: Stop using vc->dpdes")
-introduced an optimization to use only vcpu->doorbell_request for SMT
-emulation for Power9 and above guests, but the code for nested guests
-still relies on the old way of handling doorbells, due to which an L2
-guest (see [1]) cannot be booted with XICS with SMT>1. The command to
-repro this issue is:
+Commit 6398326b9ba1 ("KVM: PPC: Book3S HV P9: Stop using vc->dpdes")
+dropped the use of vcore->dpdes for msgsndp / SMT emulation. Prior to that
+commit, the below code at L1 level (see [1] for terminology) was
+responsible for setting vc->dpdes for the respective L2 vCPU:
 
-// To be run in L1
+if (!nested) {
+	kvmppc_core_prepare_to_enter(vcpu);
+	if (vcpu->arch.doorbell_request) {
+		vc->dpdes = 1;
+		smp_wmb();
+		vcpu->arch.doorbell_request = 0;
+	}
 
-qemu-system-ppc64 \
-	-drive file=rhel.qcow2,format=qcow2 \
-	-m 20G \
-	-smp 8,cores=1,threads=8 \
-	-cpu  host \
-	-nographic \
-	-machine pseries,ic-mode=xics -accel kvm
+L1 then sent vc->dpdes to L0 via kvmhv_save_hv_regs(), and while
+servicing H_ENTER_NESTED at L0, the below condition at L0 level made sure
+to abort and go back to L1 if vcpu->arch.doorbell_request = 1 so that L1
+sets vc->dpdes as per above if condition:
 
-Fix the plumbing to utilize vcpu->doorbell_request instead of vcore->dpdes
-for nested KVM guests on P9 and above.
+} else if (vcpu->arch.pending_exceptions ||
+	   vcpu->arch.doorbell_request ||
+	   xive_interrupt_pending(vcpu)) {
+	vcpu->arch.ret = RESUME_HOST;
+	goto out;
+}
+
+This worked fine since vcpu->arch.doorbell_request was used more like a
+flag and vc->dpdes was used to pass around the doorbell state. But after
+Commit 6398326b9ba1 ("KVM: PPC: Book3S HV P9: Stop using vc->dpdes"),
+vcpu->arch.doorbell_request is the only variable used to pass around
+doorbell state.
+With the plumbing for handling doorbells for nested guests updated to use
+vcpu->arch.doorbell_request over vc->dpdes, the above "else if" stops
+doorbells from working correctly as L0 aborts execution of L2 and
+instead goes back to L1.
+
+Remove vcpu->arch.doorbell_request from the above "else if" condition as
+it is no longer needed for L0 to correctly handle the doorbell status
+while running L2.
 
 [1] Terminology
 1. L0 : PowerNV linux running with HV privileges
@@ -83,79 +102,24 @@ for nested KVM guests on P9 and above.
 Fixes: 6398326b9ba1 ("KVM: PPC: Book3S HV P9: Stop using vc->dpdes")
 Signed-off-by: Gautam Menghani <gautam@linux.ibm.com>
 Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://patch.msgid.link/20241109063301.105289-3-gautam@linux.ibm.com
+Link: https://patch.msgid.link/20241109063301.105289-4-gautam@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/kvm/book3s_hv.c        |  9 +++++++++
- arch/powerpc/kvm/book3s_hv_nested.c | 14 ++++++++++----
- 2 files changed, 19 insertions(+), 4 deletions(-)
+ arch/powerpc/kvm/book3s_hv.c | 1 -
+ 1 file changed, 1 deletion(-)
 
 diff --git a/arch/powerpc/kvm/book3s_hv.c b/arch/powerpc/kvm/book3s_hv.c
-index 0ed5c5c7a350d..ccc9a8431b944 100644
+index ccc9a8431b944..b0432e78fa629 100644
 --- a/arch/powerpc/kvm/book3s_hv.c
 +++ b/arch/powerpc/kvm/book3s_hv.c
-@@ -4303,6 +4303,15 @@ static int kvmhv_vcpu_entry_p9_nested(struct kvm_vcpu *vcpu, u64 time_limit, uns
- 	}
- 	hvregs.hdec_expiry = time_limit;
- 
-+	/*
-+	 * hvregs has the doorbell status, so zero it here which
-+	 * enables us to receive doorbells when H_ENTER_NESTED is
-+	 * in progress for this vCPU
-+	 */
-+
-+	if (vcpu->arch.doorbell_request)
-+		vcpu->arch.doorbell_request = 0;
-+
- 	/*
- 	 * When setting DEC, we must always deal with irq_work_raise
- 	 * via NMI vs setting DEC. The problem occurs right as we
-diff --git a/arch/powerpc/kvm/book3s_hv_nested.c b/arch/powerpc/kvm/book3s_hv_nested.c
-index 05f5220960c63..125440a606ee3 100644
---- a/arch/powerpc/kvm/book3s_hv_nested.c
-+++ b/arch/powerpc/kvm/book3s_hv_nested.c
-@@ -32,7 +32,7 @@ void kvmhv_save_hv_regs(struct kvm_vcpu *vcpu, struct hv_guest_state *hr)
- 	struct kvmppc_vcore *vc = vcpu->arch.vcore;
- 
- 	hr->pcr = vc->pcr | PCR_MASK;
--	hr->dpdes = vc->dpdes;
-+	hr->dpdes = vcpu->arch.doorbell_request;
- 	hr->hfscr = vcpu->arch.hfscr;
- 	hr->tb_offset = vc->tb_offset;
- 	hr->dawr0 = vcpu->arch.dawr0;
-@@ -105,7 +105,7 @@ static void save_hv_return_state(struct kvm_vcpu *vcpu,
- {
- 	struct kvmppc_vcore *vc = vcpu->arch.vcore;
- 
--	hr->dpdes = vc->dpdes;
-+	hr->dpdes = vcpu->arch.doorbell_request;
- 	hr->purr = vcpu->arch.purr;
- 	hr->spurr = vcpu->arch.spurr;
- 	hr->ic = vcpu->arch.ic;
-@@ -143,7 +143,7 @@ static void restore_hv_regs(struct kvm_vcpu *vcpu, const struct hv_guest_state *
- 	struct kvmppc_vcore *vc = vcpu->arch.vcore;
- 
- 	vc->pcr = hr->pcr | PCR_MASK;
--	vc->dpdes = hr->dpdes;
-+	vcpu->arch.doorbell_request = hr->dpdes;
- 	vcpu->arch.hfscr = hr->hfscr;
- 	vcpu->arch.dawr0 = hr->dawr0;
- 	vcpu->arch.dawrx0 = hr->dawrx0;
-@@ -170,7 +170,13 @@ void kvmhv_restore_hv_return_state(struct kvm_vcpu *vcpu,
- {
- 	struct kvmppc_vcore *vc = vcpu->arch.vcore;
- 
--	vc->dpdes = hr->dpdes;
-+	/*
-+	 * This L2 vCPU might have received a doorbell while H_ENTER_NESTED was being handled.
-+	 * Make sure we preserve the doorbell if it was either:
-+	 *   a) Sent after H_ENTER_NESTED was called on this vCPU (arch.doorbell_request would be 1)
-+	 *   b) Doorbell was not handled and L2 exited for some other reason (hr->dpdes would be 1)
-+	 */
-+	vcpu->arch.doorbell_request = vcpu->arch.doorbell_request | hr->dpdes;
- 	vcpu->arch.hfscr = hr->hfscr;
- 	vcpu->arch.purr = hr->purr;
- 	vcpu->arch.spurr = hr->spurr;
+@@ -4915,7 +4915,6 @@ int kvmhv_run_single_vcpu(struct kvm_vcpu *vcpu, u64 time_limit,
+ 			lpcr &= ~LPCR_MER;
+ 		}
+ 	} else if (vcpu->arch.pending_exceptions ||
+-		   vcpu->arch.doorbell_request ||
+ 		   xive_interrupt_pending(vcpu)) {
+ 		vcpu->arch.ret = RESUME_HOST;
+ 		goto out;
 -- 
 2.43.0
 
