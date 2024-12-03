@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A9B51F76DB;
-	Tue,  3 Dec 2024 16:09:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06C881F8919;
+	Tue,  3 Dec 2024 16:09:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733242149; cv=none; b=my0UzxVS6c18oG2mEuKwxCso7LE1EGtlWjDDaaDmhJ6dlQf2TN+Tr9+kH1+M/9pP6zC/ZG9ZN5DrVv9vz+0bGJ0Gx4w9oa3nb6Q+HNiXjPPNyaJETSKpRty3Wc4HppaxfhJc+/4B4v1N0SoMse8lP0nEdoe/Pchhuk+9fuuGedM=
+	t=1733242153; cv=none; b=hyfQOV2YJVUsL7HFq1aR48Y3R65vN8LZtvGCXec3oJx5w5dC+8sbYmwQfrZi17JPmS6eedfCXHueYYyGBdGD1n5wRfFm4yEOm3PkpuLiHpIBvKUlOF7TUnG7NbavuuP2SZqBmSfAGa4wjOhuQnWpy5e7RL3NT1Hqr3/ttdUe4SA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733242149; c=relaxed/simple;
-	bh=aycgpjbKgoHQ5qLrlQR3M4/0lGkJGKEFk8UkXZv04JY=;
+	s=arc-20240116; t=1733242153; c=relaxed/simple;
+	bh=UU7pBpyc83pkRwuHopwMxN6yAqRv5I33uiZnfsolPbc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p/F3VFB6lCpffuQMBTTgLU5kSY8ChYHXS8c9gcB+UxIvb2MJt2CuPMzuc2X7SKhowPjonZmpyhtFnDtTPoXGnni1IoEsm0HIIu3DLm3IVcyVm32QE07x/cI2/LRz+413S0SiOUx0jhS1k6fFXZvb5rjBLY3pCLgGC5as8V23YXc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A2lC0hdJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fq+SBuQG0678X5qaM/RjfEMa7DkU7vB+MceHDWtCWk2Fh53KIbCyFiC6pu/mrjCjplyZYgrHDYJoEBwrPy+890bQ8aH1aWqpdOvj3uxW/vkaTcPrMBh7y1ZJOOdbkWNezzaCgICDF2PzSj1CTV5/S5LfIqPp/S57R6t0tMn+4rA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0frSzVuf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A2lC0hdJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BB0CC4CED6;
-	Tue,  3 Dec 2024 16:09:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0frSzVuf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B108C4CED6;
+	Tue,  3 Dec 2024 16:09:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733242149;
-	bh=aycgpjbKgoHQ5qLrlQR3M4/0lGkJGKEFk8UkXZv04JY=;
+	s=korg; t=1733242152;
+	bh=UU7pBpyc83pkRwuHopwMxN6yAqRv5I33uiZnfsolPbc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A2lC0hdJug5PvmuUPlgNOsyvD54K9gMLbfbwvJGPS4qWMGr3QyJCAgylqxgYw2arc
-	 usFC5mpoJmesa8tzHQfkgUgrCRYfCCpgnCJLqWrPQXWhsK+JGi5Jd4+qzJKEnsMwyF
-	 xI7FxH2EUagAYov+vv6xWRCCMwnmx84FU1eRN//A=
+	b=0frSzVuf3hJuTeoq9HKWiGoSKo7Xkcy4f+p65EmyysLKn0nrR/QTnn7YIsDtJqVC3
+	 D7oXPyNckwgXEBJ+hZyGng8FIUtLITLEDyz0wpWpGHIBJJMYXkfRUcaHXmeXv+iJGK
+	 lQUSVRRLJ3lUthLo06GD+nc3QxBhhBoVqdBxKKLs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiuhong Wang <xiuhong.wang@unisoc.com>,
-	Zhiguo Niu <zhiguo.niu@unisoc.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
-	Daniel Rosenberg <drosen@google.com>
-Subject: [PATCH 6.12 622/826] f2fs: fix fiemap failure issue when page size is 16KB
-Date: Tue,  3 Dec 2024 15:45:49 +0100
-Message-ID: <20241203144808.016638627@linuxfoundation.org>
+	Jakub Kicinski <kuba@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.12 623/826] net_sched: sch_fq: dont follow the fast path if Tx is behind now
+Date: Tue,  3 Dec 2024 15:45:50 +0100
+Message-ID: <20241203144808.056084231@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -53,109 +51,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiuhong Wang <xiuhong.wang@unisoc.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-commit a7a7c1d423a6351a6541e95c797da5358e5ad1ea upstream.
+commit 122aba8c80618eca904490b1733af27fb8f07528 upstream.
 
-After enable 16K page size, an infinite loop may occur in
-fiemap (fm_length=UINT64_MAX) on a file, such as the 16KB
-scratch.img during the remount operation in Android.
+Recent kernels cause a lot of TCP retransmissions
 
-The condition for whether fiemap continues to map is to check
-whether the number of bytes corresponding to the next map.m_lblk
-exceeds blks_to_bytes(inode,max_inode_blocks(inode)) if there are HOLE.
-The latter does not take into account the maximum size of a file with 16KB
-page size, so the loop cannot be jumped out.
+[ ID] Interval           Transfer     Bitrate         Retr  Cwnd
+[  5]   0.00-1.00   sec  2.24 GBytes  19.2 Gbits/sec  2767    442 KBytes
+[  5]   1.00-2.00   sec  2.23 GBytes  19.1 Gbits/sec  2312    350 KBytes
+                                                      ^^^^
 
-The following is the fail trace:
-When f2fs_map_blocks reaches map.m_lblk=3936, it needs to go to the
-first direct node block, so the map is 3936 + 4090 = 8026,
-The next map is the second direct node block, that is,
-8026 + 4090 = 12116,
-The next map is the first indirect node block, that is,
-12116 + 4090 * 4090 = 16740216,
-The next map is the second indirect node block, that is,
-16740216 + 4090 * 4090 = 33468316,
-The next map is the first double indirect node block, that is,
-33468316 + 4090 * 4090 * 4090 = 68451397316
-Since map.m_lblk represents the address of a block, which is 32
-bits, truncation will occur, that is, 68451397316 becomes
-4026887876, and the number of bytes corresponding to the block
-number does not exceed blks_to_bytes(inode,max_inode_blocks(inode)),
-so the loop will not be jumped out.
-The next time, it will be considered that it should still be a
-double indirect node block, that is,
-4026887876 + 4090 * 4090 * 4090 = 72444816876, which will be
-truncated to 3725340140, and the loop will not be jumped out.
+Replacing the qdisc with pfifo makes retransmissions go away.
 
-156.374871: f2fs_map_blocks: dev = (254,57), ino = 7449, file offset = 0, start blkaddr = 0x8e00, len = 0x200, flags = 2,seg_type = 8, may_create = 0, multidevice = 0, flag = 1, err = 0
-156.374916: f2fs_map_blocks: dev = (254,57), ino = 7449, file offset = 512, start blkaddr = 0x0, len = 0x0, flags = 0 , seg_type = 8, may_create = 0, multidevice = 0, flag = 1, err = 0
-156.374920: f2fs_map_blocks: dev = (254,57), ino = 7449, file offset = 513, start blkaddr = 0x0, len = 0x0, flags = 0, seg_type = 8, may_create = 0, multidevice = 0, flag = 1, err = 0
-......
-156.385747: f2fs_map_blocks: dev = (254,57), ino = 7449, file offset = 3935, start blkaddr = 0x0, len = 0x0, flags = 0, seg_type = 8, may_create = 0, multidevice = 0, flag = 1, err = 0
-156.385752: f2fs_map_blocks: dev = (254,57), ino = 7449, file offset = 3936, start blkaddr = 0x0, len = 0x0, flags = 0, seg_type = 8, may_create = 0, multidevice = 0, flag = 1, err = 0
-156.385755: f2fs_map_blocks: dev = (254,57), ino = 7449, file offset = 8026, start blkaddr = 0x0, len = 0x0, flags = 0, seg_type = 8, may_create = 0, multidevice = 0, flag = 1, err = 0
-156.385758: f2fs_map_blocks: dev = (254,57), ino = 7449, file offset = 12116, start blkaddr = 0x0, len = 0x0, flags = 0, seg_type = 8, may_create = 0, multidevice = 0, flag = 1, err = 0
-156.385761: f2fs_map_blocks: dev = (254,57), ino = 7449, file offset = 16740216, start blkaddr = 0x0, len = 0x0, flags = 0, seg_type = 8, may_create = 0, multidevice = 0, flag = 1, err = 0
-156.385764: f2fs_map_blocks: dev = (254,57), ino = 7449, file offset = 33468316, start blkaddr = 0x0, len = 0x0, flags = 0, seg_type = 8, may_create = 0, multidevice = 0, flag = 1, err = 0
-156.385767: f2fs_map_blocks: dev = (254,57), ino = 7449, file offset = 4026887876, start blkaddr = 0x0, len = 0x0, flags = 0, seg_type = 8, may_create = 0, multidevice = 0, flag = 1, err = 0
-156.385770: f2fs_map_blocks: dev = (254,57), ino = 7449, file offset = 3725340140, start blkaddr = 0x0, len = 0x0, flags = 0, seg_type = 8, may_create = 0, multidevice = 0, flag = 1, err = 0
-156.385772: f2fs_map_blocks: dev = (254,57), ino = 7449, file offset = 4026887876, start blkaddr = 0x0, len = 0x0, flags = 0, seg_type = 8, may_create = 0, multidevice = 0, flag = 1, err = 0
-156.385775: f2fs_map_blocks: dev = (254,57), ino = 7449, file offset = 3725340140, start blkaddr = 0x0, len = 0x0, flags = 0, seg_type = 8, may_create = 0, multidevice = 0, flag = 1, err = 0
+It appears that a flow may have a delayed packet with a very near
+Tx time. Later, we may get busy processing Rx and the target Tx time
+will pass, but we won't service Tx since the CPU is busy with Rx.
+If Rx sees an ACK and we try to push more data for the delayed flow
+we may fastpath the skb, not realizing that there are already "ready
+to send" packets for this flow sitting in the qdisc.
 
-Commit a6a010f5def5 ("f2fs: Restrict max filesize for 16K f2fs")
-has set the maximum allowed file size to (U32_MAX + 1) * F2FS_BLKSIZE,
-so max_file_blocks should be used here to limit it, that is,
-maxbytes defined above. And the max_inode_blocks function is not
-called by other functions except here, so cleanup it.
+Don't trust the fastpath if we are "behind" according to the projected
+Tx time for next flow waiting in the Qdisc. Because we consider anything
+within the offload window to be okay for fastpath we must consider
+the entire offload window as "now".
 
-Signed-off-by: Xiuhong Wang <xiuhong.wang@unisoc.com>
-Signed-off-by: Zhiguo Niu <zhiguo.niu@unisoc.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
-Cc: Daniel Rosenberg <drosen@google.com>
+Qdisc config:
+
+qdisc fq 8001: dev eth0 parent 1234:1 limit 10000p flow_limit 100p \
+  buckets 32768 orphan_mask 1023 bands 3 \
+  priomap 1 2 2 2 1 2 0 0 1 1 1 1 1 1 1 1 \
+  weights 589824 196608 65536 quantum 3028b initial_quantum 15140b \
+  low_rate_threshold 550Kbit \
+  refill_delay 40ms timer_slack 10us horizon 10s horizon_drop
+
+For iperf this change seems to do fine, the reordering is gone.
+The fastpath still gets used most of the time:
+
+  gc 0 highprio 0 fastpath 142614 throttled 418309 latency 19.1us
+   xx_behind 2731
+
+where "xx_behind" counts how many times we hit the new "return false".
+
+CC: stable@vger.kernel.org
+Fixes: 076433bd78d7 ("net_sched: sch_fq: add fast path for mostly idle qdisc")
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20241124022148.3126719-1-kuba@kernel.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+[stable: drop the offload horizon, it's not supported / 0]
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/data.c |   22 +---------------------
- 1 file changed, 1 insertion(+), 21 deletions(-)
+ net/sched/sch_fq.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/fs/f2fs/data.c
-+++ b/fs/f2fs/data.c
-@@ -1902,25 +1902,6 @@ static int f2fs_xattr_fiemap(struct inod
- 	return (err < 0 ? err : 0);
- }
+--- a/net/sched/sch_fq.c
++++ b/net/sched/sch_fq.c
+@@ -331,6 +331,12 @@ static bool fq_fastpath_check(const stru
+ 		 */
+ 		if (q->internal.qlen >= 8)
+ 			return false;
++
++		/* Ordering invariants fall apart if some delayed flows
++		 * are ready but we haven't serviced them, yet.
++		 */
++		if (q->time_next_delayed_flow <= now)
++			return false;
+ 	}
  
--static loff_t max_inode_blocks(struct inode *inode)
--{
--	loff_t result = ADDRS_PER_INODE(inode);
--	loff_t leaf_count = ADDRS_PER_BLOCK(inode);
--
--	/* two direct node blocks */
--	result += (leaf_count * 2);
--
--	/* two indirect node blocks */
--	leaf_count *= NIDS_PER_BLOCK;
--	result += (leaf_count * 2);
--
--	/* one double indirect node block */
--	leaf_count *= NIDS_PER_BLOCK;
--	result += leaf_count;
--
--	return result;
--}
--
- int f2fs_fiemap(struct inode *inode, struct fiemap_extent_info *fieinfo,
- 		u64 start, u64 len)
- {
-@@ -1993,8 +1974,7 @@ next:
- 	if (!compr_cluster && !(map.m_flags & F2FS_MAP_FLAGS)) {
- 		start_blk = next_pgofs;
- 
--		if (blks_to_bytes(inode, start_blk) < blks_to_bytes(inode,
--						max_inode_blocks(inode)))
-+		if (blks_to_bytes(inode, start_blk) < maxbytes)
- 			goto prep_next;
- 
- 		flags |= FIEMAP_EXTENT_LAST;
+ 	sk = skb->sk;
 
 
