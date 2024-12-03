@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B42321F7094;
-	Tue,  3 Dec 2024 14:58:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D6101F7550;
+	Tue,  3 Dec 2024 14:58:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733237897; cv=none; b=gJEQbKEfPNIyFeNM6FIoCX9Mg9KwJsWfHB5qvIxUT4gSIGo/KzsYuM6TuAK3kb8t5GjAVL3R7EfUhuiYZi5fliAqxwZ7wzEfV1wixG9OVPAABbCxQDzYZrcC8DphsVOQGkFH84zAtQnN4WEFcNtDcilhQhIa4PA1fQk0JMrvr0s=
+	t=1733237901; cv=none; b=fBNX2qXbuLY/QG8Ix4aWHsEfjds3scIw5Zt5r+aMVyMMSDGFYCRMQdVD5wfm1/VfKXHNkzngnb/q2DUyGn3hm7g2PlqnmG2pUXCicY+yawaYLvoQjGYU9MQeqhZ8eEDhpSuDoot9rf8oTc4TVxlmNEiCAHz16X0xqYKPUOpqExo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733237897; c=relaxed/simple;
-	bh=A5cOJ74lujhUMQPNL5CRylSkjx9r39DnuxaoJnWbMzw=;
+	s=arc-20240116; t=1733237901; c=relaxed/simple;
+	bh=VEJ/n+iOM0IVS9OVUO18QOccQmCffkCMUBWNtIefUV8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AgDPkdO5gbeKNAzq8Skb8Gf76vWqhsfAH23qQwFdTlnPJkVA2Ragt5TD9OeDJauFH8RLRn0RVjotrY2wrW41kQPrwzGQ+l157uwI86jbJxJpXewJoowvQFEa9+91fcdKST3SGkBOpn2QTrlFoDFqiPxmvx8kunuRg8i3XYM2Mps=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ABBOErrC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WCUyeilFEOBw3Oye22b5PuzBI0Ee+3beTIOVQEsthBMv+o6Zl9JXIBfb4V0eqnxkFTfQNd+PZTJtw135WPjcxu4Iamksd9fFwnRybaRk2WN80qo2BUo3xizrPqADccZjuk0oImuoCmZ1W42nE363JaUvZVMq2zSdSru2cqXfJ6U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sj6nVPdw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ABBOErrC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35953C4CECF;
-	Tue,  3 Dec 2024 14:58:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sj6nVPdw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68B52C4CECF;
+	Tue,  3 Dec 2024 14:58:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733237897;
-	bh=A5cOJ74lujhUMQPNL5CRylSkjx9r39DnuxaoJnWbMzw=;
+	s=korg; t=1733237900;
+	bh=VEJ/n+iOM0IVS9OVUO18QOccQmCffkCMUBWNtIefUV8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ABBOErrCETCopDVZw5tot/7hsi9o695WyXnnAwSd4dBRhvwjN//iLnQxIWJbOeIKD
-	 Bpg3W01lgrvOoZkIFdhEwIe8vWSFczc7/tF8pwT8CLGDokxk6zPQBCWNniK5IPuTbn
-	 943+GVzAmG930IsjL24AO/X1tVBwi+F1x342ScMQ=
+	b=sj6nVPdw7jLg/Ts18P/8IIfp4fd/qf1JiYB+gnE+tKuMkHSQy0cTKR7Q+z14+Q+EP
+	 DXPzzdiPe7mShiZz2iPadW1PSCixKlilg4tC8dVvtzVP5ZW23hrQqXqTbLmMAJXJDJ
+	 Cbi8qwTIbsCEydvaY6A1bvPStCqQD2jPQP+HFKJc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Will Deacon <will@kernel.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 099/817] thermal: core: Drop thermal_zone_device_is_enabled()
-Date: Tue,  3 Dec 2024 15:34:31 +0100
-Message-ID: <20241203143959.570132252@linuxfoundation.org>
+Subject: [PATCH 6.11 070/817] arm64: fix .data.rel.ro size assertion when CONFIG_LTO_CLANG
+Date: Tue,  3 Dec 2024 15:34:02 +0100
+Message-ID: <20241203143958.421146807@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -50,91 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Masahiro Yamada <masahiroy@kernel.org>
 
-[ Upstream commit 54fccad63ec88924db828df6fc0648930bccf345 ]
+[ Upstream commit 340fd66c856651d8c1d29f392dd26ad674d2db0e ]
 
-There are only two callers of thermal_zone_device_is_enabled()
-and one of them call is under the zone lock and the other one uses
-lockdep_assert_held() on that lock.  Thus the lockdep_assert_held()
-in thermal_zone_device_is_enabled() is redundant and it could be
-dropped, but then the function would merely become a wrapper around
-a simple tz->mode check that is more convenient to do directly.
+Commit be2881824ae9 ("arm64/build: Assert for unwanted sections")
+introduced an assertion to ensure that the .data.rel.ro section does
+not exist.
 
-Accordingly, drop thermal_zone_device_is_enabled() altogether and update
-its callers to check tz->mode directly as appropriate.
+However, this check does not work when CONFIG_LTO_CLANG is enabled,
+because .data.rel.ro matches the .data.[0-9a-zA-Z_]* pattern in the
+DATA_MAIN macro.
 
-While at it, combine the tz->mode and tz->suspended checks in
-__thermal_zone_device_update() because they are of a similar category
-and if any of them evaluates to "true", the outcome is the same.
+Move the ASSERT() above the RW_DATA() line.
 
-No intentinal functional impact.
-
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Link: https://patch.msgid.link/9353673.CDJkKcVGEf@rjwysocki.net
-Stable-dep-of: 7837fa8115e0 ("thermal: core: Mark thermal zones as initializing to start with")
+Fixes: be2881824ae9 ("arm64/build: Assert for unwanted sections")
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Acked-by: Will Deacon <will@kernel.org>
+Link: https://lore.kernel.org/r/20241106161843.189927-1-masahiroy@kernel.org
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thermal/thermal_core.c  | 12 +-----------
- drivers/thermal/thermal_core.h  |  3 ---
- drivers/thermal/thermal_sysfs.c |  2 +-
- 3 files changed, 2 insertions(+), 15 deletions(-)
+ arch/arm64/kernel/vmlinux.lds.S | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/thermal/thermal_core.c b/drivers/thermal/thermal_core.c
-index 2f9128cf55e92..468a0dae8c497 100644
---- a/drivers/thermal/thermal_core.c
-+++ b/drivers/thermal/thermal_core.c
-@@ -553,10 +553,7 @@ void __thermal_zone_device_update(struct thermal_zone_device *tz,
- 	LIST_HEAD(way_up_list);
- 	int temp, ret;
+diff --git a/arch/arm64/kernel/vmlinux.lds.S b/arch/arm64/kernel/vmlinux.lds.S
+index 55a8e310ea12c..d294c1ea8391b 100644
+--- a/arch/arm64/kernel/vmlinux.lds.S
++++ b/arch/arm64/kernel/vmlinux.lds.S
+@@ -288,6 +288,9 @@ SECTIONS
+ 	__initdata_end = .;
+ 	__init_end = .;
  
--	if (tz->suspended)
--		return;
++	.data.rel.ro : { *(.data.rel.ro) }
++	ASSERT(SIZEOF(.data.rel.ro) == 0, "Unexpected RELRO detected!")
++
+ 	_data = .;
+ 	_sdata = .;
+ 	RW_DATA(L1_CACHE_BYTES, PAGE_SIZE, THREAD_ALIGN)
+@@ -344,9 +347,6 @@ SECTIONS
+ 		*(.plt) *(.plt.*) *(.iplt) *(.igot .igot.plt)
+ 	}
+ 	ASSERT(SIZEOF(.plt) == 0, "Unexpected run-time procedure linkages detected!")
 -
--	if (!thermal_zone_device_is_enabled(tz))
-+	if (tz->suspended || tz->mode != THERMAL_DEVICE_ENABLED)
- 		return;
- 
- 	ret = __thermal_zone_get_temp(tz, &temp);
-@@ -651,13 +648,6 @@ int thermal_zone_device_disable(struct thermal_zone_device *tz)
+-	.data.rel.ro : { *(.data.rel.ro) }
+-	ASSERT(SIZEOF(.data.rel.ro) == 0, "Unexpected RELRO detected!")
  }
- EXPORT_SYMBOL_GPL(thermal_zone_device_disable);
  
--int thermal_zone_device_is_enabled(struct thermal_zone_device *tz)
--{
--	lockdep_assert_held(&tz->lock);
--
--	return tz->mode == THERMAL_DEVICE_ENABLED;
--}
--
- static bool thermal_zone_is_present(struct thermal_zone_device *tz)
- {
- 	return !list_empty(&tz->node);
-diff --git a/drivers/thermal/thermal_core.h b/drivers/thermal/thermal_core.h
-index 57fff8bd57611..e93a7641736ed 100644
---- a/drivers/thermal/thermal_core.h
-+++ b/drivers/thermal/thermal_core.h
-@@ -293,7 +293,4 @@ thermal_cooling_device_stats_update(struct thermal_cooling_device *cdev,
- 				    unsigned long new_state) {}
- #endif /* CONFIG_THERMAL_STATISTICS */
- 
--/* device tree support */
--int thermal_zone_device_is_enabled(struct thermal_zone_device *tz);
--
- #endif /* __THERMAL_CORE_H__ */
-diff --git a/drivers/thermal/thermal_sysfs.c b/drivers/thermal/thermal_sysfs.c
-index d628dd67be5cc..21f73a230c53e 100644
---- a/drivers/thermal/thermal_sysfs.c
-+++ b/drivers/thermal/thermal_sysfs.c
-@@ -53,7 +53,7 @@ mode_show(struct device *dev, struct device_attribute *attr, char *buf)
- 	int enabled;
- 
- 	mutex_lock(&tz->lock);
--	enabled = thermal_zone_device_is_enabled(tz);
-+	enabled = tz->mode == THERMAL_DEVICE_ENABLED;
- 	mutex_unlock(&tz->lock);
- 
- 	return sprintf(buf, "%s\n", enabled ? "enabled" : "disabled");
+ #include "image-vars.h"
 -- 
 2.43.0
 
