@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E77A21F8EE2;
-	Tue,  3 Dec 2024 15:39:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1F6B1F8EE2;
+	Tue,  3 Dec 2024 15:39:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733240370; cv=none; b=OVYGr74dAg/WCV0z6nLDiYavaUxovdYJlPgFtPMSiHOH9bq3urZHr/MoX9brkGBFu9DPDrtk+UAQPhlRlG75zNbK/EF7rIMUZNGjtaVEhl41Z0QeTUHA8nr3no2n/5Y7hLIgpYadfjwaoEEUaRpf6Y/jVPqsordch+FUuPkPCI4=
+	t=1733240372; cv=none; b=JWuQYVPeizPWnThia1wMZ6OsIhp7pf6R8ki3rcDHA/Cadrh6wFQzg+DdRweLCfgyFvaOpwDcDiWuU78jl2UY9wi7X2oDPozrbzB1TapJl5W0m3z4bdWArNvFQxqERMIgqvjkc3GJX8fuhlTkgkZMPy4P8yUXtE/U2suefHAGHP4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733240370; c=relaxed/simple;
-	bh=DWbXUxtqpNQxMzLonsHmIFXkLb8LkQ/zfWHe00xGAyE=;
+	s=arc-20240116; t=1733240372; c=relaxed/simple;
+	bh=E1yrA0Ntg/gO8dldclHLNI1gYNBBN0z/kga2OGvPx3M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=uiAvre3wvjauggmc6sZ1ro37LZ75kjZrpjG2mJ35b7dmWVKLh5aG5T7cvmJVA7VvK6hIPOJE7lIA2k6AJHP5VuDOiXvmto1X2qyb0wsDT29d6zkecKpuLGgJjtRV9QHK1tjFSWxb4UTi+5JPf3Vp/kblcjbDFhXV/EJO/+q7OMw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PWCglzkF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sorETTTFz+n6eGihhLTkbyoriXQs5gaofFltwDNkG+f28nmCgPRgXG0ceZRxGw7rHmDPT8U28lbVZ5e89NwKDMG6TBVO0WBFEXylVL9bR51O7JbfngIzeSI7duvXWb7uFO+1OiOi350cO+RZyHsyijmlX8zK7Ssg+aHGh7BE9N8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nGWYuOV7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PWCglzkF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D813C4CED6;
-	Tue,  3 Dec 2024 15:39:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nGWYuOV7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 556A5C4CECF;
+	Tue,  3 Dec 2024 15:39:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733240369;
-	bh=DWbXUxtqpNQxMzLonsHmIFXkLb8LkQ/zfWHe00xGAyE=;
+	s=korg; t=1733240372;
+	bh=E1yrA0Ntg/gO8dldclHLNI1gYNBBN0z/kga2OGvPx3M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PWCglzkFhCsrlaCjCuJ9W/KimGLDPwjqrANZjHExZKXw1lVdLhX6iYF7rw9Rngmrl
-	 L77/ZRPIjHFb0KByjFZb65y7RIqrTjc45e1W7/K5X3aS5FTiW0JtuWrcpy5MTjFB4/
-	 NzxIC1P8lkJWurbAUcN0AIBkyduIG2a6U8o+S9Oc=
+	b=nGWYuOV7cbwUASdKAOqhiUJF6zhQ7hhPj8fZIZwlqpf4xbKm1LVipOCvzCtxngc5A
+	 BeGWSRcPGkEBuD8kzQLOVX6UrWe9Xj6pRzIcQXgm8VYPMqZ5hLTcr+64CUGnIQ/3sl
+	 PZARSIQWT43L6uDyxMHJx6YmD2WKIzqnCBl3xhbs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+	Chen-Yu Tsai <wenst@chromium.org>,
+	Jonathan Corbet <corbet@lwn.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 116/826] mmc: mmc_spi: drop buggy snprintf()
-Date: Tue,  3 Dec 2024 15:37:23 +0100
-Message-ID: <20241203144748.266133920@linuxfoundation.org>
+Subject: [PATCH 6.12 117/826] scripts/kernel-doc: Do not track section counter across processed files
+Date: Tue,  3 Dec 2024 15:37:24 +0100
+Message-ID: <20241203144748.306256800@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -46,68 +45,57 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+From: Chen-Yu Tsai <wenst@chromium.org>
 
-[ Upstream commit 328bda09cc91b3d93bc64f4a4dadc44313dd8140 ]
+[ Upstream commit be9264110e4e874622d588a75daf930539fdf6ea ]
 
-GCC 13 complains about the truncated output of snprintf():
+The section counter tracks how many sections of kernel-doc were added.
+The only real use of the counter value is to check if anything was
+actually supposed to be output and give a warning is nothing is
+available.
 
-drivers/mmc/host/mmc_spi.c: In function ‘mmc_spi_response_get’:
-drivers/mmc/host/mmc_spi.c:227:64: error: ‘snprintf’ output may be truncated before the last format character [-Werror=format-truncation=]
-  227 |         snprintf(tag, sizeof(tag), "  ... CMD%d response SPI_%s",
-      |                                                                ^
-drivers/mmc/host/mmc_spi.c:227:9: note: ‘snprintf’ output between 26 and 43 bytes into a destination of size 32
-  227 |         snprintf(tag, sizeof(tag), "  ... CMD%d response SPI_%s",
-      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  228 |                 cmd->opcode, maptype(cmd));
+The current logic of remembering the initial value and then resetting
+the value then when processing each file means that if a file has the
+same number of sections as the previously processed one, a warning is
+incorrectly given.
 
-Drop it and fold the string it generates into the only place where it's
-emitted - the dev_dbg() call at the end of the function.
-
-Fixes: 15a0580ced08 ("mmc_spi host driver")
-Suggested-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Link: https://lore.kernel.org/r/20241008160134.69934-1-brgl@bgdev.pl
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
+Signed-off-by: Jonathan Corbet <corbet@lwn.net>
+Link: https://lore.kernel.org/r/20241008082905.4005524-1-wenst@chromium.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/mmc_spi.c | 9 +++------
- 1 file changed, 3 insertions(+), 6 deletions(-)
+ scripts/kernel-doc | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/mmc/host/mmc_spi.c b/drivers/mmc/host/mmc_spi.c
-index 8fee7052f2ef4..47443fb5eb336 100644
---- a/drivers/mmc/host/mmc_spi.c
-+++ b/drivers/mmc/host/mmc_spi.c
-@@ -222,10 +222,6 @@ static int mmc_spi_response_get(struct mmc_spi_host *host,
- 	u8 	leftover = 0;
- 	unsigned short rotator;
- 	int 	i;
--	char	tag[32];
--
--	snprintf(tag, sizeof(tag), "  ... CMD%d response SPI_%s",
--		cmd->opcode, maptype(cmd));
+diff --git a/scripts/kernel-doc b/scripts/kernel-doc
+index 2791f81952038..c608820f0bf51 100755
+--- a/scripts/kernel-doc
++++ b/scripts/kernel-doc
+@@ -2322,7 +2322,6 @@ sub process_inline($$) {
  
- 	/* Except for data block reads, the whole response will already
- 	 * be stored in the scratch buffer.  It's somewhere after the
-@@ -378,8 +374,9 @@ static int mmc_spi_response_get(struct mmc_spi_host *host,
- 	}
+ sub process_file($) {
+     my $file;
+-    my $initial_section_counter = $section_counter;
+     my ($orig_file) = @_;
  
- 	if (value < 0)
--		dev_dbg(&host->spi->dev, "%s: resp %04x %08x\n",
--			tag, cmd->resp[0], cmd->resp[1]);
-+		dev_dbg(&host->spi->dev,
-+			"  ... CMD%d response SPI_%s: resp %04x %08x\n",
-+			cmd->opcode, maptype(cmd), cmd->resp[0], cmd->resp[1]);
+     $file = map_filename($orig_file);
+@@ -2360,8 +2359,7 @@ sub process_file($) {
+     }
  
- 	/* disable chipselect on errors and some success cases */
- 	if (value >= 0 && cs_on)
+     # Make sure we got something interesting.
+-    if ($initial_section_counter == $section_counter && $
+-        output_mode ne "none") {
++    if (!$section_counter && $output_mode ne "none") {
+         if ($output_selection == OUTPUT_INCLUDE) {
+             emit_warning("${file}:1", "'$_' not found\n")
+                 for keys %function_table;
 -- 
 2.43.0
 
