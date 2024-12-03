@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 203DC1FC115;
-	Tue,  3 Dec 2024 15:35:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F12CB1F755B;
+	Tue,  3 Dec 2024 15:35:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733240111; cv=none; b=AjFcu0XmSg26w04MGBE9z60TUHWdb0ZL0zxF+XwwRZnhEY7WVGSmQGWSVX3i3BKms386yO/mi4BeGbMjN1oYlEyFxc6XHEwXfmkHRmpe0vOefEKpzyRl23Kb4YYm6dwVo5ghRnhK/odA3qu7CiXHa8j2X0PLN6ElrJxZ9LJnP1E=
+	t=1733240114; cv=none; b=nCzS+f5VCrstKWjh343G6KfiDe0ELRIs/td+fg0RJUpOleiFbBtgq2sU/l3VgyuarRS+PZ5TdGiXi6/kYmrMo+rkD7aJGXqap/NW/JLyLZgHFrYJbkjQZjwHlLjZVlimUqkNzirwfuFfZZ8u7eIkGdmQeS7e8A0bVcq8clwiBRc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733240111; c=relaxed/simple;
-	bh=mS6MGpCFdzNHJkpi0rQhpB+i+tVflsh158PJ6cF9PJo=;
+	s=arc-20240116; t=1733240114; c=relaxed/simple;
+	bh=/6j4Zuaft521yQ7obX5JXIS0aRFtxuRHTb2rAtqbak8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Te02cIejr1sR6ri73ZHXuxOfCyKe7kCf4j9uF6sPCzvDTqPPuX/odCwiW2koqbcpTsy7bPZCXN5uRoetkecWXcAEx13tRgT9kA1aREymgAiqPt1DniRjVFtGTj8gyaEnaN5eBvk4ksl/6BBYvW7RPBlJV6Rzoct5pJZOP+gkMUY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SRDe0n5m; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WktamWBabbceboJIZztq4Q7tqzqmO8bCEe7EpP37mshzzlWP0Ue49HBAGFBZBiboB123hSpMv839XqZUwoYHHLzGjSn5trNkcOK4KtwHuzerg/FUFz0vUP3eAFmKyGdtnhojAqjm0Q6yKdypg1DegiDz4FbQ9Q115r9YLUqo3yc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gK8czfhu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SRDe0n5m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F80DC4CECF;
-	Tue,  3 Dec 2024 15:35:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gK8czfhu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76BFEC4CED6;
+	Tue,  3 Dec 2024 15:35:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733240111;
-	bh=mS6MGpCFdzNHJkpi0rQhpB+i+tVflsh158PJ6cF9PJo=;
+	s=korg; t=1733240113;
+	bh=/6j4Zuaft521yQ7obX5JXIS0aRFtxuRHTb2rAtqbak8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SRDe0n5mr6wD3IfzdvrCccnjaKIQF7VTbD69wLyyw4xex//hEacK+NEIgHbQu/k4U
-	 Pfad9zbNeX0IdncGJWKy4Qmjrnw5giI+EQlJjsnNlrydgGBeuESJPJYRmPrRAKbikC
-	 KIbn8Srq9VAFmTWowXcFM+9XYywE3fJAHe5F56+s=
+	b=gK8czfhujk23cFkuWlcMeNFPpNo3yKYS3KiLHp2kr+HVIqHVEQ0uP7tXV+kMycmTF
+	 n2udVjzxgI5g1obOmRo0Kr7Q70wDGDhU6uIvjkT5QJgqXyC827kFKxTkajzwHE3u22
+	 hqeN1vnU0dT7qMhEFbtRc7O8sazwrXI/C7hLrT1Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Will Deacon <will@kernel.org>,
+	Aleksandr Mishin <amishin@t-argos.ru>,
+	Hanjun Guo <guohanjun@huawei.com>,
+	Sudeep Holla <sudeep.holla@arm.com>,
 	Catalin Marinas <catalin.marinas@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 026/826] arm64: fix .data.rel.ro size assertion when CONFIG_LTO_CLANG
-Date: Tue,  3 Dec 2024 15:35:53 +0100
-Message-ID: <20241203144744.481385884@linuxfoundation.org>
+Subject: [PATCH 6.12 027/826] acpi/arm64: Adjust error handling procedure in gtdt_parse_timer_block()
+Date: Tue,  3 Dec 2024 15:35:54 +0100
+Message-ID: <20241203144744.520393642@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -52,54 +53,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Masahiro Yamada <masahiroy@kernel.org>
+From: Aleksandr Mishin <amishin@t-argos.ru>
 
-[ Upstream commit 340fd66c856651d8c1d29f392dd26ad674d2db0e ]
+[ Upstream commit 1a9de2f6fda69d5f105dd8af776856a66abdaa64 ]
 
-Commit be2881824ae9 ("arm64/build: Assert for unwanted sections")
-introduced an assertion to ensure that the .data.rel.ro section does
-not exist.
+In case of error in gtdt_parse_timer_block() invalid 'gtdt_frame'
+will be used in 'do {} while (i-- >= 0 && gtdt_frame--);' statement block
+because do{} block will be executed even if 'i == 0'.
 
-However, this check does not work when CONFIG_LTO_CLANG is enabled,
-because .data.rel.ro matches the .data.[0-9a-zA-Z_]* pattern in the
-DATA_MAIN macro.
+Adjust error handling procedure by replacing 'i-- >= 0' with 'i-- > 0'.
 
-Move the ASSERT() above the RW_DATA() line.
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-Fixes: be2881824ae9 ("arm64/build: Assert for unwanted sections")
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-Acked-by: Will Deacon <will@kernel.org>
-Link: https://lore.kernel.org/r/20241106161843.189927-1-masahiroy@kernel.org
+Fixes: a712c3ed9b8a ("acpi/arm64: Add memory-mapped timer support in GTDT driver")
+Signed-off-by: Aleksandr Mishin <amishin@t-argos.ru>
+Acked-by: Hanjun Guo <guohanjun@huawei.com>
+Acked-by: Sudeep Holla <sudeep.holla@arm.com>
+Acked-by: Aleksandr Mishin <amishin@t-argos.ru>
+Link: https://lore.kernel.org/r/20240827101239.22020-1-amishin@t-argos.ru
 Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/kernel/vmlinux.lds.S | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/acpi/arm64/gtdt.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/kernel/vmlinux.lds.S b/arch/arm64/kernel/vmlinux.lds.S
-index 58d89d997d050..f84c71f04d9ea 100644
---- a/arch/arm64/kernel/vmlinux.lds.S
-+++ b/arch/arm64/kernel/vmlinux.lds.S
-@@ -287,6 +287,9 @@ SECTIONS
- 	__initdata_end = .;
- 	__init_end = .;
+diff --git a/drivers/acpi/arm64/gtdt.c b/drivers/acpi/arm64/gtdt.c
+index c0e77c1c8e09d..eb6c2d3603874 100644
+--- a/drivers/acpi/arm64/gtdt.c
++++ b/drivers/acpi/arm64/gtdt.c
+@@ -283,7 +283,7 @@ static int __init gtdt_parse_timer_block(struct acpi_gtdt_timer_block *block,
+ 		if (frame->virt_irq > 0)
+ 			acpi_unregister_gsi(gtdt_frame->virtual_timer_interrupt);
+ 		frame->virt_irq = 0;
+-	} while (i-- >= 0 && gtdt_frame--);
++	} while (i-- > 0 && gtdt_frame--);
  
-+	.data.rel.ro : { *(.data.rel.ro) }
-+	ASSERT(SIZEOF(.data.rel.ro) == 0, "Unexpected RELRO detected!")
-+
- 	_data = .;
- 	_sdata = .;
- 	RW_DATA(L1_CACHE_BYTES, PAGE_SIZE, THREAD_ALIGN)
-@@ -343,9 +346,6 @@ SECTIONS
- 		*(.plt) *(.plt.*) *(.iplt) *(.igot .igot.plt)
- 	}
- 	ASSERT(SIZEOF(.plt) == 0, "Unexpected run-time procedure linkages detected!")
--
--	.data.rel.ro : { *(.data.rel.ro) }
--	ASSERT(SIZEOF(.data.rel.ro) == 0, "Unexpected RELRO detected!")
+ 	return -EINVAL;
  }
- 
- #include "image-vars.h"
 -- 
 2.43.0
 
