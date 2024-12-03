@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86C511F7060;
-	Tue,  3 Dec 2024 15:56:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8D281DE8A5;
+	Tue,  3 Dec 2024 15:56:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733241414; cv=none; b=g5YpCm7IS8lpi3QqDdkq9iHJbLVcFtbdRBj4iaJ7btGpsHxJ7ukIkERfRVW2tjVyRBkvmHFcS5dwxFpu6JLSmP05eY+wZj2zT4MkLSYBie5YhycNyj0nbvpIJ5fUkC4f99y7nszURS0O9pXLV5Usl/DshsSnu9OozWwZCnyryYU=
+	t=1733241417; cv=none; b=MayDLhP5SO6jvUyOnrnfVBBmyefDBPpWejBwDtJZjq8/CZHUTcVOm3lKMw2bl8X0V0bY2c2cBY022w4Qi6qwA2FDU8VOmZMN5qW9JFlp1+ZKsEnKHO/yBYb8yjwG48dKIVxQaLR2NJXOmg0o49jIMXJbrK6nuaM90Clv3GzL6Is=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733241414; c=relaxed/simple;
-	bh=Vdy5sXJ6kk9XA0wvnxrIzucZcZADWzRtXNQ08A3ILA4=;
+	s=arc-20240116; t=1733241417; c=relaxed/simple;
+	bh=kmTkTDMAwRUl2mqBMssgrfS7IK2vqabIySMyRL0LjsU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X2Uk/I2Dj7WqUtAkM3xfr8Hyyi6I3BVe+7u3ZiE02ZpG1uFBupWb8nkU8VFU1Be0fHQSJLlsnPyh5ZXZRQbKS5r69ZneME/TFtv3IXCPl0I2dViYFhHsvv8YOgIfQv0nYIT7zEQqUvi6wWfCCMyKTdSbdU87Ge7weMZd08smLQM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cvSyOBZG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UdXITMstV2IPSSrEDycdzw/1/XDtye3n5lNJ96bYmZE+AbjPrkHvAJ5tpKbjPr18yzR/XroUWK0ZaVzR33Pg8iXAmKPK2AhpXtTyF9hbeRHKz614b+mvK3rr08YZPTIcDwmbllwc3cRNJiED3RHzLdbkRwUh0890dKm3X7mVK+A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=orzD1hc1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cvSyOBZG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE45CC4CECF;
-	Tue,  3 Dec 2024 15:56:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="orzD1hc1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 467A1C4CECF;
+	Tue,  3 Dec 2024 15:56:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733241414;
-	bh=Vdy5sXJ6kk9XA0wvnxrIzucZcZADWzRtXNQ08A3ILA4=;
+	s=korg; t=1733241417;
+	bh=kmTkTDMAwRUl2mqBMssgrfS7IK2vqabIySMyRL0LjsU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cvSyOBZGbigKf1ei6T3lKI7uR3crHqr6aUoFFJftC2ikCLcVTJCKCN7n/vcutbE6H
-	 sVuHjomFcC24agGlC7/1JiNRc1kIjI4NQQGTyvgL8bvI52XU6GPCl89Mliz5oUDLP6
-	 za1I6o43DnmFIfdl507kDywDZjAGCoCGMXWFa2z0=
+	b=orzD1hc1kCWBjZAB8Vsj/jyHQO+cM/HASb5RCEFQfR3vpLxLLUFLycR3RhvAkWq03
+	 YMJgehuZie/9ny0PMdxkAP7xMuK56xRjLEhXa5Ge5RKLMpPSoXOhyr928cwFvESPfD
+	 +e4JetAJW6IkGvZI2MBKpfRNryhedBsPCBIvHxME=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Biju Das <biju.das.jz@bp.renesas.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Vignesh Raghavendra <vigneshr@ti.com>,
+	"Dr. David Alan Gilbert" <linux@treblig.org>,
 	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 379/826] mtd: hyperbus: rpc-if: Add missing MODULE_DEVICE_TABLE
-Date: Tue,  3 Dec 2024 15:41:46 +0100
-Message-ID: <20241203144758.548127738@linuxfoundation.org>
+Subject: [PATCH 6.12 380/826] mtd: rawnand: atmel: Fix possible memory leak
+Date: Tue,  3 Dec 2024 15:41:47 +0100
+Message-ID: <20241203144758.589476129@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -53,46 +51,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Biju Das <biju.das.jz@bp.renesas.com>
+From: Miquel Raynal <miquel.raynal@bootlin.com>
 
-[ Upstream commit 7d189579a287d5c568db623c5fc2344cce98a887 ]
+[ Upstream commit 6d734f1bfc336aaea91313a5632f2f197608fadd ]
 
-The rpc-if-hyperflash driver can be compiled as a module, but lacks
-MODULE_DEVICE_TABLE() and will therefore not be loaded automatically.
-Fix this.
+The pmecc "user" structure is allocated in atmel_pmecc_create_user() and
+was supposed to be freed with atmel_pmecc_destroy_user(), but this other
+helper is never called. One solution would be to find the proper
+location to call the destructor, but the trend today is to switch to
+device managed allocations, which in this case fits pretty well.
 
-Fixes: 5de15b610f78 ("mtd: hyperbus: add Renesas RPC-IF driver")
-Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Reviewed-by: Vignesh Raghavendra <vigneshr@ti.com>
+Replace kzalloc() by devm_kzalloc() and drop the destructor entirely.
+
+Reported-by: "Dr. David Alan Gilbert" <linux@treblig.org>
+Closes: https://lore.kernel.org/all/ZvmIvRJCf6VhHvpo@gallifrey/
+Fixes: f88fc122cc34 ("mtd: nand: Cleanup/rework the atmel_nand driver")
 Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://lore.kernel.org/linux-mtd/20240731080846.257139-1-biju.das.jz@bp.renesas.com
+Link: https://lore.kernel.org/linux-mtd/20241001203149.387655-1-miquel.raynal@bootlin.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/hyperbus/rpc-if.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/mtd/nand/raw/atmel/pmecc.c | 8 +-------
+ drivers/mtd/nand/raw/atmel/pmecc.h | 2 --
+ 2 files changed, 1 insertion(+), 9 deletions(-)
 
-diff --git a/drivers/mtd/hyperbus/rpc-if.c b/drivers/mtd/hyperbus/rpc-if.c
-index b22aa57119f23..e7a28f3316c3f 100644
---- a/drivers/mtd/hyperbus/rpc-if.c
-+++ b/drivers/mtd/hyperbus/rpc-if.c
-@@ -163,9 +163,16 @@ static void rpcif_hb_remove(struct platform_device *pdev)
- 	pm_runtime_disable(hyperbus->rpc.dev);
- }
+diff --git a/drivers/mtd/nand/raw/atmel/pmecc.c b/drivers/mtd/nand/raw/atmel/pmecc.c
+index 4d7dc8a9c3738..a22aab4ed4e8a 100644
+--- a/drivers/mtd/nand/raw/atmel/pmecc.c
++++ b/drivers/mtd/nand/raw/atmel/pmecc.c
+@@ -362,7 +362,7 @@ atmel_pmecc_create_user(struct atmel_pmecc *pmecc,
+ 	size = ALIGN(size, sizeof(s32));
+ 	size += (req->ecc.strength + 1) * sizeof(s32) * 3;
  
-+static const struct platform_device_id rpc_if_hyperflash_id_table[] = {
-+	{ .name = "rpc-if-hyperflash" },
-+	{ /* sentinel */ }
-+};
-+MODULE_DEVICE_TABLE(platform, rpc_if_hyperflash_id_table);
-+
- static struct platform_driver rpcif_platform_driver = {
- 	.probe	= rpcif_hb_probe,
- 	.remove_new = rpcif_hb_remove,
-+	.id_table = rpc_if_hyperflash_id_table,
- 	.driver	= {
- 		.name	= "rpc-if-hyperflash",
- 	},
+-	user = kzalloc(size, GFP_KERNEL);
++	user = devm_kzalloc(pmecc->dev, size, GFP_KERNEL);
+ 	if (!user)
+ 		return ERR_PTR(-ENOMEM);
+ 
+@@ -408,12 +408,6 @@ atmel_pmecc_create_user(struct atmel_pmecc *pmecc,
+ }
+ EXPORT_SYMBOL_GPL(atmel_pmecc_create_user);
+ 
+-void atmel_pmecc_destroy_user(struct atmel_pmecc_user *user)
+-{
+-	kfree(user);
+-}
+-EXPORT_SYMBOL_GPL(atmel_pmecc_destroy_user);
+-
+ static int get_strength(struct atmel_pmecc_user *user)
+ {
+ 	const int *strengths = user->pmecc->caps->strengths;
+diff --git a/drivers/mtd/nand/raw/atmel/pmecc.h b/drivers/mtd/nand/raw/atmel/pmecc.h
+index 7851c05126cf1..cc0c5af1f4f1a 100644
+--- a/drivers/mtd/nand/raw/atmel/pmecc.h
++++ b/drivers/mtd/nand/raw/atmel/pmecc.h
+@@ -55,8 +55,6 @@ struct atmel_pmecc *devm_atmel_pmecc_get(struct device *dev);
+ struct atmel_pmecc_user *
+ atmel_pmecc_create_user(struct atmel_pmecc *pmecc,
+ 			struct atmel_pmecc_user_req *req);
+-void atmel_pmecc_destroy_user(struct atmel_pmecc_user *user);
+-
+ void atmel_pmecc_reset(struct atmel_pmecc *pmecc);
+ int atmel_pmecc_enable(struct atmel_pmecc_user *user, int op);
+ void atmel_pmecc_disable(struct atmel_pmecc_user *user);
 -- 
 2.43.0
 
