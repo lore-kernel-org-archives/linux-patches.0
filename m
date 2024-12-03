@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28FBE1DA3D;
-	Tue,  3 Dec 2024 15:19:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10BC61F669E;
+	Tue,  3 Dec 2024 15:19:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733239174; cv=none; b=pLKK+dWPyxAL23hsrlmIZ6ig/ishMxCo0NA4zDNPV9wv0JuSACYBPfkSvs9p/PX8ECVvtjd0lZIbgZTRnAKHV2P/jaVorBPAp8zYgVIn6cDVRlH+1ez5OLUim7+GnKEzqZipJAkpxxeGoPQfmqTzqNdlSAfZFC9zTYqip+9VRQw=
+	t=1733239177; cv=none; b=l3k3p4nsD7Hx34W3JT3NbTfX1723ZlO+vUklyjLfozF1vNMfkwO5YHqSmS7xvSC968FRz3f7AK7W4NyC7E7Vf6VtpCmaKo3NdMPkJSvdXxab1t4ml9jN/Te4ASB27nnctIt1fPRBBffDkWYOnQ+hJmz0tVzxnCHv8RDU0HvIb8k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733239174; c=relaxed/simple;
-	bh=scPZ8OHMzNUUtmNvnxMPO23mr9FIBJf3KvHEAoNosVk=;
+	s=arc-20240116; t=1733239177; c=relaxed/simple;
+	bh=rz3vYfYpoannZ3mnl13ENbQPt/KNQQeBWEMNRjb9iAQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a3iKkI1c7JGMslwhZgGeO7X2kRYZ05qrEMrAD/JkX7LD8yCRugH6/GqCulrV7abXdTi0e46yGh6ZZyxDrZ6r154Q9HtkE61ya9VwS7wjpfcQxCy60q/nr0gBcBA0xcNdYkexxk64Hh76bsLo3ZpGKPJNtUvNylY4YnQ04SFQ0es=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UrhC/MhR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WkARZqxaE4r2vz649IZhc/DopUEXgFEn7TTpt4Axj/Ny37xO+woVr8BztkiU8ZhrdNIw50/MhacBC2761g3riRdsU7EWByExKF0GbUYTWiADNlZitPnMq0W8gVfmMGCL5Y7bLBU/CglDdCan5QeVsoL0TTEQNxF2zMBnjeEI30s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RRvhwZ92; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UrhC/MhR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0E20C4CECF;
-	Tue,  3 Dec 2024 15:19:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RRvhwZ92"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88AC8C4CED8;
+	Tue,  3 Dec 2024 15:19:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733239174;
-	bh=scPZ8OHMzNUUtmNvnxMPO23mr9FIBJf3KvHEAoNosVk=;
+	s=korg; t=1733239176;
+	bh=rz3vYfYpoannZ3mnl13ENbQPt/KNQQeBWEMNRjb9iAQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UrhC/MhRQdvd1PKD2R1bnaGu8HxJXuP7bKsYj+AVNYSZ+j0IWdg9uIlNfRIBz1hkY
-	 Hl5UWB0/vsUOfsF0WtHV8sIyJpDzfem7U4KU5pmmcX9sLfP3LDRBktVySqW3lX5F7/
-	 RHdi7pIfyGSNn8yEpVUygzPxdpBGrMfZFB5uB+zA=
+	b=RRvhwZ92+stworbdfa+EMNwseJWo7vK/8k+bmUsX1Dfvzc+YNJT+kFzdUqJg2tuc4
+	 F24VFm2TY9VwSlnqd1+TG4bcMC16rey+RAf7W8bFtw9D6xl3bj2TNGMc5XLUW2N6HF
+	 RicaAlKQLo0CtNdmucJEeSzMlQG+s9Ta+nO3K+XQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Peterson <benjamin@engflow.com>,
-	Howard Chu <howardchu95@gmail.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	Namhyung Kim <namhyung@kernel.org>,
+	LongPing Wei <weilongping@oppo.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 525/817] perf trace: avoid garbage when not printing a trace events arguments
-Date: Tue,  3 Dec 2024 15:41:37 +0100
-Message-ID: <20241203144016.389603888@linuxfoundation.org>
+Subject: [PATCH 6.11 508/817] f2fs: fix the wrong f2fs_bug_on condition in f2fs_do_replace_block
+Date: Tue,  3 Dec 2024 15:41:20 +0100
+Message-ID: <20241203144015.701571982@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -53,39 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Peterson <benjamin@engflow.com>
+From: LongPing Wei <weilongping@oppo.com>
 
-[ Upstream commit 5fb8e56542a3cf469fdf25d77f50e21cbff3ae7e ]
+[ Upstream commit c3af1f13476ec23fd99c98d060a89be28c1e8871 ]
 
-trace__fprintf_tp_fields may not print any tracepoint arguments. E.g., if the
-argument values are all zero. Previously, this would result in a totally
-uninitialized buffer being passed to fprintf, which could lead to garbage on the
-console. Fix the problem by passing the number of initialized bytes fprintf.
+This f2fs_bug_on was introduced by commit 2c1905042c8c ("f2fs: check
+segment type in __f2fs_replace_block") when there were only 6 curseg types.
+After commit d0b9e42ab615 ("f2fs: introduce inmem curseg") was introduced,
+the condition should be changed to checking curseg->seg_type.
 
-Fixes: f11b2803bb88 ("perf trace: Allow choosing how to augment the tracepoint arguments")
-Signed-off-by: Benjamin Peterson <benjamin@engflow.com>
-Tested-by: Howard Chu <howardchu95@gmail.com>
-Tested-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Link: https://lore.kernel.org/r/20241103204816.7834-1-benjamin@engflow.com
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Fixes: d0b9e42ab615 ("f2fs: introduce inmem curseg")
+Signed-off-by: LongPing Wei <weilongping@oppo.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-trace.c | 2 +-
+ fs/f2fs/segment.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/perf/builtin-trace.c b/tools/perf/builtin-trace.c
-index 19db23f78b199..5298118ffb15f 100644
---- a/tools/perf/builtin-trace.c
-+++ b/tools/perf/builtin-trace.c
-@@ -2802,7 +2802,7 @@ static size_t trace__fprintf_tp_fields(struct trace *trace, struct evsel *evsel,
- 		printed += syscall_arg_fmt__scnprintf_val(arg, bf + printed, size - printed, &syscall_arg, val);
+diff --git a/fs/f2fs/segment.c b/fs/f2fs/segment.c
+index c9320c98cb142..3f49a9e0ec642 100644
+--- a/fs/f2fs/segment.c
++++ b/fs/f2fs/segment.c
+@@ -3974,8 +3974,8 @@ void f2fs_do_replace_block(struct f2fs_sb_info *sbi, struct f2fs_summary *sum,
+ 		}
  	}
  
--	return printed + fprintf(trace->output, "%s", bf);
-+	return printed + fprintf(trace->output, "%.*s", (int)printed, bf);
- }
+-	f2fs_bug_on(sbi, !IS_DATASEG(type));
+ 	curseg = CURSEG_I(sbi, type);
++	f2fs_bug_on(sbi, !IS_DATASEG(curseg->seg_type));
  
- static int trace__event_handler(struct trace *trace, struct evsel *evsel,
+ 	mutex_lock(&curseg->curseg_mutex);
+ 	down_write(&sit_i->sentry_lock);
 -- 
 2.43.0
 
