@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E6B71F75BC;
-	Tue,  3 Dec 2024 15:21:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F37A1F707A;
+	Tue,  3 Dec 2024 15:21:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733239271; cv=none; b=KlsxlK0/YNkFvNj51uhNCqWy2FSLvOeJ5syQPhipwOWPHDClGt8GcxpVNH+duC5pvTqImx5VSyn5R/XeODb+nAsWwtqNBDOiteidr+pVPm1ASbeFAINdgeRZSTVUNNhGiOTmByl7BMoQPSXCW5ceUOyOKXmKB4UwKcJf/8yfOHE=
+	t=1733239274; cv=none; b=EMIztT0ZJlHB/i/yKrSa4zdRVEQJMk5lmFqurg1YlR9HQu6hoyPk4xzriuyhvIEHfDFVf2qhMBTqcMM9cd2AlDVEEHh2ip0o+zlFVpYtpOiXpfXkSTZqQZ3/w4bnA/8vXC1bhujswFGaI2TbHpXarYA2flqPa4eOP7VXN71EvOo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733239271; c=relaxed/simple;
-	bh=zw1/m7qi+mr60LtK2kb/5L3sWLrv60zFpID40NcOtTo=;
+	s=arc-20240116; t=1733239274; c=relaxed/simple;
+	bh=cBMWcoYm3YCSk5VIA4j99ydugbJM1IhOXqaazW3/gDQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hmUe0wRYHIzOxJCFbsmZm88fs9hmw+lY9ChTWShOP1uV1Di/G5XLSehJJyyzQwpBie8ec5XSs8jcHGXe8MKv9VRA8IDBEoMWji7UV0tKOgUoQbndkbmh2Yj7jtBr83dBrtj3dS7pmo2Z4hqyGH4r0PlO6OMIHDkLvssTXCsFFm0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bTwMfnoX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OvcwtkhxEUM17JgO3M/nH5j9iElbovHAC0gYMUCO+SmjLTpeMkFRpM9xFa0aGEQyMNtanFhw9r77by8I3wsS/6iSvsiWAl0Qe+T5pKN7O4/flfTtGOelC5Vp4eiDN7AoelBqfkioMWQwZ6tQvYMWvOBrgI2PzGSXWppz+CpTy+Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b5By8HVV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bTwMfnoX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B57CBC4CECF;
-	Tue,  3 Dec 2024 15:21:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b5By8HVV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7350C4CECF;
+	Tue,  3 Dec 2024 15:21:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733239271;
-	bh=zw1/m7qi+mr60LtK2kb/5L3sWLrv60zFpID40NcOtTo=;
+	s=korg; t=1733239274;
+	bh=cBMWcoYm3YCSk5VIA4j99ydugbJM1IhOXqaazW3/gDQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bTwMfnoXKRZzQ8lPoZkGArr7GUnybixvKhSqRJwHDL3MOVnkKTOC/XLF0aY6ZO3p3
-	 JrfVzxx9UcgXwHV6d/95xUSNtE8KpMhFuy96S1GU5pTMbN3BBpLupFcMNiJEM+eaPk
-	 wpjf40eoNT//enqfg+4YaSqYARjg+I5shX5J65i4=
+	b=b5By8HVV9zIDEJh2sZ6ZRbUgUqYlJTjEp7u6RE2h10/MmzlmdT7HmQnRkAagNFdtJ
+	 q5KpelFg73Obj4WGKM+S3ZXzXwHY1rgfDQ1qyVa/pPLpES5qf3kJwl96/gF1T0OTws
+	 6qjXpZOvRDgb6q3jpcONFZ/i02pjAtvEkLw27nNM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Avihai Horon <avihaih@nvidia.com>,
+	Yi Liu <yi.l.liu@intel.com>,
+	Alex Williamson <alex.williamson@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 557/817] gpio: zevio: Add missed label initialisation
-Date: Tue,  3 Dec 2024 15:42:09 +0100
-Message-ID: <20241203144017.653077075@linuxfoundation.org>
+Subject: [PATCH 6.11 558/817] vfio/pci: Properly hide first-in-list PCIe extended capability
+Date: Tue,  3 Dec 2024 15:42:10 +0100
+Message-ID: <20241203144017.692120854@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -51,53 +52,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Avihai Horon <avihaih@nvidia.com>
 
-[ Upstream commit 5bbed54ba66925ebca19092d0750630f943d7bf2 ]
+[ Upstream commit fe4bf8d0b6716a423b16495d55b35d3fe515905d ]
 
-Initialise the GPIO chip label correctly as it was done by
-of_mm_gpiochip_add_data() before the below mentioned change.
+There are cases where a PCIe extended capability should be hidden from
+the user. For example, an unknown capability (i.e., capability with ID
+greater than PCI_EXT_CAP_ID_MAX) or a capability that is intentionally
+chosen to be hidden from the user.
 
-Fixes: cf8f4462e5fa ("gpio: zevio: drop of_gpio.h header")
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://lore.kernel.org/r/20241118092729.516736-1-andriy.shevchenko@linux.intel.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Hiding a capability is done by virtualizing and modifying the 'Next
+Capability Offset' field of the previous capability so it points to the
+capability after the one that should be hidden.
+
+The special case where the first capability in the list should be hidden
+is handled differently because there is no previous capability that can
+be modified. In this case, the capability ID and version are zeroed
+while leaving the next pointer intact. This hides the capability and
+leaves an anchor for the rest of the capability list.
+
+However, today, hiding the first capability in the list is not done
+properly if the capability is unknown, as struct
+vfio_pci_core_device->pci_config_map is set to the capability ID during
+initialization but the capability ID is not properly checked later when
+used in vfio_config_do_rw(). This leads to the following warning [1] and
+to an out-of-bounds access to ecap_perms array.
+
+Fix it by checking cap_id in vfio_config_do_rw(), and if it is greater
+than PCI_EXT_CAP_ID_MAX, use an alternative struct perm_bits for direct
+read only access instead of the ecap_perms array.
+
+Note that this is safe since the above is the only case where cap_id can
+exceed PCI_EXT_CAP_ID_MAX (except for the special capabilities, which
+are already checked before).
+
+[1]
+
+WARNING: CPU: 118 PID: 5329 at drivers/vfio/pci/vfio_pci_config.c:1900 vfio_pci_config_rw+0x395/0x430 [vfio_pci_core]
+CPU: 118 UID: 0 PID: 5329 Comm: simx-qemu-syste Not tainted 6.12.0+ #1
+(snip)
+Call Trace:
+ <TASK>
+ ? show_regs+0x69/0x80
+ ? __warn+0x8d/0x140
+ ? vfio_pci_config_rw+0x395/0x430 [vfio_pci_core]
+ ? report_bug+0x18f/0x1a0
+ ? handle_bug+0x63/0xa0
+ ? exc_invalid_op+0x19/0x70
+ ? asm_exc_invalid_op+0x1b/0x20
+ ? vfio_pci_config_rw+0x395/0x430 [vfio_pci_core]
+ ? vfio_pci_config_rw+0x244/0x430 [vfio_pci_core]
+ vfio_pci_rw+0x101/0x1b0 [vfio_pci_core]
+ vfio_pci_core_read+0x1d/0x30 [vfio_pci_core]
+ vfio_device_fops_read+0x27/0x40 [vfio]
+ vfs_read+0xbd/0x340
+ ? vfio_device_fops_unl_ioctl+0xbb/0x740 [vfio]
+ ? __rseq_handle_notify_resume+0xa4/0x4b0
+ __x64_sys_pread64+0x96/0xc0
+ x64_sys_call+0x1c3d/0x20d0
+ do_syscall_64+0x4d/0x120
+ entry_SYSCALL_64_after_hwframe+0x76/0x7e
+
+Fixes: 89e1f7d4c66d ("vfio: Add PCI device driver")
+Signed-off-by: Avihai Horon <avihaih@nvidia.com>
+Reviewed-by: Yi Liu <yi.l.liu@intel.com>
+Tested-by: Yi Liu <yi.l.liu@intel.com>
+Link: https://lore.kernel.org/r/20241124142739.21698-1-avihaih@nvidia.com
+Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpio-zevio.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/vfio/pci/vfio_pci_config.c | 16 ++++++++++++++--
+ 1 file changed, 14 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpio/gpio-zevio.c b/drivers/gpio/gpio-zevio.c
-index 2de61337ad3b5..d7230fd83f5d6 100644
---- a/drivers/gpio/gpio-zevio.c
-+++ b/drivers/gpio/gpio-zevio.c
-@@ -11,6 +11,7 @@
- #include <linux/io.h>
- #include <linux/mod_devicetable.h>
- #include <linux/platform_device.h>
-+#include <linux/property.h>
- #include <linux/slab.h>
- #include <linux/spinlock.h>
+diff --git a/drivers/vfio/pci/vfio_pci_config.c b/drivers/vfio/pci/vfio_pci_config.c
+index 97422aafaa7b5..ea2745c1ac5e6 100644
+--- a/drivers/vfio/pci/vfio_pci_config.c
++++ b/drivers/vfio/pci/vfio_pci_config.c
+@@ -313,6 +313,10 @@ static int vfio_virt_config_read(struct vfio_pci_core_device *vdev, int pos,
+ 	return count;
+ }
  
-@@ -169,6 +170,7 @@ static const struct gpio_chip zevio_gpio_chip = {
- /* Initialization */
- static int zevio_gpio_probe(struct platform_device *pdev)
- {
-+	struct device *dev = &pdev->dev;
- 	struct zevio_gpio *controller;
- 	int status, i;
- 
-@@ -180,6 +182,10 @@ static int zevio_gpio_probe(struct platform_device *pdev)
- 	controller->chip = zevio_gpio_chip;
- 	controller->chip.parent = &pdev->dev;
- 
-+	controller->chip.label = devm_kasprintf(dev, GFP_KERNEL, "%pfw", dev_fwnode(dev));
-+	if (!controller->chip.label)
-+		return -ENOMEM;
++static struct perm_bits direct_ro_perms = {
++	.readfn = vfio_direct_config_read,
++};
 +
- 	controller->regs = devm_platform_ioremap_resource(pdev, 0);
- 	if (IS_ERR(controller->regs))
- 		return dev_err_probe(&pdev->dev, PTR_ERR(controller->regs),
+ /* Default capability regions to read-only, no-virtualization */
+ static struct perm_bits cap_perms[PCI_CAP_ID_MAX + 1] = {
+ 	[0 ... PCI_CAP_ID_MAX] = { .readfn = vfio_direct_config_read }
+@@ -1897,9 +1901,17 @@ static ssize_t vfio_config_do_rw(struct vfio_pci_core_device *vdev, char __user
+ 		cap_start = *ppos;
+ 	} else {
+ 		if (*ppos >= PCI_CFG_SPACE_SIZE) {
+-			WARN_ON(cap_id > PCI_EXT_CAP_ID_MAX);
++			/*
++			 * We can get a cap_id that exceeds PCI_EXT_CAP_ID_MAX
++			 * if we're hiding an unknown capability at the start
++			 * of the extended capability list.  Use default, ro
++			 * access, which will virtualize the id and next values.
++			 */
++			if (cap_id > PCI_EXT_CAP_ID_MAX)
++				perm = &direct_ro_perms;
++			else
++				perm = &ecap_perms[cap_id];
+ 
+-			perm = &ecap_perms[cap_id];
+ 			cap_start = vfio_find_cap_start(vdev, *ppos);
+ 		} else {
+ 			WARN_ON(cap_id > PCI_CAP_ID_MAX);
 -- 
 2.43.0
 
