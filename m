@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 600571FBC82;
-	Tue,  3 Dec 2024 15:41:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D25AA1F76BC;
+	Tue,  3 Dec 2024 15:41:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733240488; cv=none; b=uUJTzixFi2F0LNUGxBTn7qw/AXxLg6PC/zSb3zHJAQnz6I5WVFKBBPGf4CLXROgHFSge+FBNc28T5BpXBGxsw0Zn0uKyMnNOB8NbHX+gvHUuLHXFsUhC73j+DvrDgpJniEvyQloQebOfSjI7yo5+y6VdjRT5z7brtwd0VNgv12k=
+	t=1733240491; cv=none; b=JerlaCKr++edu5Vct6k0TdMxUhfDf+AVhMDF2iBLTKWX2eZWW/quzA1U5AErS8KmdsiTI+C/KPQYj9BjhZ2dZ6jP1p8xmjX4OiicfNL8wcQhw0l/SyEMi5iIcRYH2Z/oPzBWAz0qCC2wy3+G4LHclzQYsgp+Pj7YeIYXcD1KV0E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733240488; c=relaxed/simple;
-	bh=LgvL5VTWmfSODKVp1ZEXAStYOGM3n0LVBLbVIXB8W/0=;
+	s=arc-20240116; t=1733240491; c=relaxed/simple;
+	bh=y5wgMpQabJH7NeVhEyay4yoTWhQVSbvlcAPtUVZuNHI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ACRpW/mRCFMpql39dRp8Q+rXj6JIq/XfkZXolrV9hanExU6PBoPLRcPU7CgcmR9h/yjxGazo14qtVXBOp9Az6Azom2FBtZBTXhxuaIl5TOwwD7natuG9WY0N5jWbdV+x/HNIgxoSk+E45wWnBc6YW7Z0TltJThFxn4z6346kedY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jtucOF6r; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OvTWaauKjt3oBIgcSjRbNXr68x5p5Uxbl9ZE8xZvGM7YWQ8mMZn1Ds8H355rRUSz6X1XW8HV9cac7Kgk95iPPW1x2a+CbWLHqdcAjxvAiOBYNX4AN7iB4U3veOdJ11sNZzxQlucoTzms4vcrNFGYYe82kMfZnh0Bx26IlPV9M+4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uKM3JaCP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jtucOF6r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1B20C4CED6;
-	Tue,  3 Dec 2024 15:41:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uKM3JaCP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 440FFC4CED6;
+	Tue,  3 Dec 2024 15:41:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733240488;
-	bh=LgvL5VTWmfSODKVp1ZEXAStYOGM3n0LVBLbVIXB8W/0=;
+	s=korg; t=1733240491;
+	bh=y5wgMpQabJH7NeVhEyay4yoTWhQVSbvlcAPtUVZuNHI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jtucOF6rFNeYmE9mVUYRuhWmfYT3QmFpBOjHHMlUGyTDfZyFCUf8GaJqIq1PEd+M1
-	 wt2lvjKpgkQEhO0WRVube8WzYGJoy43EkpKHvRt1BhO7THSVg2wJrgw7thR0gYZNnR
-	 oXcL7jlnMEabYJOsjwHKwjMqSmrQ2SHQ/1+WdOsU=
+	b=uKM3JaCPjEeDZsurd1fuUk7zVbuhbCtDggFPBluphT67ETkjr2bYNk8FMt5y//+YI
+	 VyWw/hJDUOtK7r10dmvEEv/2K0IDGdS5Zmj2vis9wnhN3f0OSlJ8o6A9Vk/YDwiHmT
+	 N4JggLv/1adzC2WbIG+0BhUkpr9dGhII9XvSNsl8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Niklas Schnelle <schnelle@linux.ibm.com>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Arnd Bergmann <arnd@arndb.de>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 151/826] watchdog: Add HAS_IOPORT dependency for SBC8360 and SBC7240
-Date: Tue,  3 Dec 2024 15:37:58 +0100
-Message-ID: <20241203144749.634698904@linuxfoundation.org>
+Subject: [PATCH 6.12 152/826] arm64: dts: qcom: x1e80100: Update C4/C5 residency/exit numbers
+Date: Tue,  3 Dec 2024 15:37:59 +0100
+Message-ID: <20241203144749.673578152@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -52,51 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Niklas Schnelle <schnelle@linux.ibm.com>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-[ Upstream commit d4d3125a3452a54acca69050be67b87ee2900e77 ]
+[ Upstream commit 2e65616ef07fa4c72c3898b22e5bede7d468cf32 ]
 
-Both drivers use I/O port accesses without declaring a dependency on
-CONFIG_HAS_IOPORT. For sbc8360_wdt this causes a compile error on UML
-once inb()/outb() helpers become conditional.
+Update the numbers based on the information found in the DSDT.
 
-For sbc7240_wdt this causes no such errors with UML because this driver
-depends on both x86_32 and !UML. Nevertheless add HAS_IOPORT as
-a dependency for both drivers to be explicit and drop the !UML
-dependency for sbc7240_wdt as it is now redundant since UML implies no
-HAS_IOPORT.
-
-Fixes: 52df67b6b313 ("watchdog: add HAS_IOPORT dependencies")
-Signed-off-by: Niklas Schnelle <schnelle@linux.ibm.com>
-Reviewed-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Fixes: af16b00578a7 ("arm64: dts: qcom: Add base X1E80100 dtsi and the QCP dts")
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20240716-topic-h_bits-v1-2-f6c5d3ff982c@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/watchdog/Kconfig | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/qcom/x1e80100.dtsi | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/watchdog/Kconfig b/drivers/watchdog/Kconfig
-index 684b9fe84fff5..94c96bcfefe34 100644
---- a/drivers/watchdog/Kconfig
-+++ b/drivers/watchdog/Kconfig
-@@ -1509,7 +1509,7 @@ config 60XX_WDT
+diff --git a/arch/arm64/boot/dts/qcom/x1e80100.dtsi b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+index a073336ca0bed..914f9cb3aca21 100644
+--- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
++++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+@@ -279,8 +279,8 @@ CLUSTER_C4: cpu-sleep-0 {
+ 				idle-state-name = "ret";
+ 				arm,psci-suspend-param = <0x00000004>;
+ 				entry-latency-us = <180>;
+-				exit-latency-us = <320>;
+-				min-residency-us = <1000>;
++				exit-latency-us = <500>;
++				min-residency-us = <600>;
+ 			};
+ 		};
  
- config SBC8360_WDT
- 	tristate "SBC8360 Watchdog Timer"
--	depends on X86_32
-+	depends on X86_32 && HAS_IOPORT
- 	help
- 
- 	  This is the driver for the hardware watchdog on the SBC8360 Single
-@@ -1522,7 +1522,7 @@ config SBC8360_WDT
- 
- config SBC7240_WDT
- 	tristate "SBC Nano 7240 Watchdog Timer"
--	depends on X86_32 && !UML
-+	depends on X86_32 && HAS_IOPORT
- 	help
- 	  This is the driver for the hardware watchdog found on the IEI
- 	  single board computers EPIC Nano 7240 (and likely others). This
+@@ -299,7 +299,7 @@ CLUSTER_CL5: cluster-sleep-1 {
+ 				idle-state-name = "ret-pll-off";
+ 				arm,psci-suspend-param = <0x01000054>;
+ 				entry-latency-us = <2200>;
+-				exit-latency-us = <2500>;
++				exit-latency-us = <4000>;
+ 				min-residency-us = <7000>;
+ 			};
+ 		};
 -- 
 2.43.0
 
