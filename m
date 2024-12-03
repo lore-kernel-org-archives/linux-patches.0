@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3FD51F75B9;
-	Tue,  3 Dec 2024 16:01:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A82B1F76A4;
+	Tue,  3 Dec 2024 16:02:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733241719; cv=none; b=uYug0wgNQJUMkLl/QVTUWoISfqwelPEcDBauPlAWEBC4ClVnwRKKntCfFsko2bKnF7rLyLRhzRg6805/lfOLlkRn+Y8ueXXAzv0wgnUVhUyVO/Zm3V4qEXcmik1CdlOASNgEVpNDkijiX4wDxL1IPQeYleRW87u6lQ2eHMfJX80=
+	t=1733241723; cv=none; b=ERZdFXODSeVKxeaFqrHux+/DAMnw3fZeD04O3FT6jkAx1a8L6Nd5yGSxmnFdQBfjZg/fWxcCuDMpOGtxhNQQdrDJUz9qjCgB/qrJrNE0tkbYP9sxGVHpVpEeggUa0WPkm2gZyaRCUrSFiQzlpppoVosR0gaDOymLdWodLcJJmrQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733241719; c=relaxed/simple;
-	bh=6jfyDwk7LwRd9mZtFsuBhevq4+y3l1SXkSJFbUzCaB4=;
+	s=arc-20240116; t=1733241723; c=relaxed/simple;
+	bh=/j6F0g9IFuHiHuxHHLa99NqfmZVdU3OZ/ycOZ5vwPAI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ORjhigUaw+bXWi69299ArBDQyh7voi5xaysKqTz7XYPzP/fjklHjUkKrWTGMb6MpHlpktg6Ij19tm9CBX1FSJzskOI2kaKlPClWljnkKoyEpLde1SzmnGp1KLd9Y2dYP1iU6t0n483KsN6oFb3n8t7sXVszPpfW82EgXHdlUiZU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=emgbrYiE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hKJK7zdNux78vyib45ZU7r7CWkm49xWrL2CD1+eXS1rIZNEPKpVncnNl7j3hRHkUp5nHOssxSdKNe1JVum/yTHRBZ1/VgUWYtI55WCzFkdOpWlD4uCE+eDiABXRZvCdyZqQVMxJkbQhqayhxuzA3dm+Z5IgKwyjnb81NUpx5cA0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lNYmZJf5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="emgbrYiE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11A33C4CECF;
-	Tue,  3 Dec 2024 16:01:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lNYmZJf5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D73BC4CECF;
+	Tue,  3 Dec 2024 16:02:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733241719;
-	bh=6jfyDwk7LwRd9mZtFsuBhevq4+y3l1SXkSJFbUzCaB4=;
+	s=korg; t=1733241722;
+	bh=/j6F0g9IFuHiHuxHHLa99NqfmZVdU3OZ/ycOZ5vwPAI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=emgbrYiEArDol3EGJe0vpjdbGglrZAj1OEOs2IhRDQSbAqU48Pt/KDtzGdFoV0CJW
-	 88IeUgYj/AhcK34ZAHHUMnSo02aB88SS4QhQJ9TfCK5Z0sdi+47LmebU1Qhz+4UEPa
-	 1ussvBskBFXyDaKL+QuVWaX7MkEyawv3ldkwksGE=
+	b=lNYmZJf5Rzj8WVuUKOtRmFlkaopGlKi2enlcpQgwuGjfdwFC9PLhyLwhLQq/yZiBo
+	 fo+J0nent6gyLEzR2b8fJqC8GiNU5GCsY7FhxEFTPelgWUmKJsPXTL4RxuYPFpixrF
+	 2FjSvyb98bBBGcfrPbN2kBqaf/gobJ2kcf3uqKgU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	LongPing Wei <weilongping@oppo.com>,
+	Yongpeng Yang <yangyongpeng1@oppo.com>,
 	Chao Yu <chao@kernel.org>,
 	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 497/826] f2fs: fix the wrong f2fs_bug_on condition in f2fs_do_replace_block
-Date: Tue,  3 Dec 2024 15:43:44 +0100
-Message-ID: <20241203144803.142205903@linuxfoundation.org>
+Subject: [PATCH 6.12 498/826] f2fs: check curseg->inited before write_sum_page in change_curseg
+Date: Tue,  3 Dec 2024 15:43:45 +0100
+Message-ID: <20241203144803.180296207@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -52,38 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: LongPing Wei <weilongping@oppo.com>
+From: Yongpeng Yang <yangyongpeng1@oppo.com>
 
-[ Upstream commit c3af1f13476ec23fd99c98d060a89be28c1e8871 ]
+[ Upstream commit 43563069e1c1df417d2eed6eca8a22fc6b04691d ]
 
-This f2fs_bug_on was introduced by commit 2c1905042c8c ("f2fs: check
-segment type in __f2fs_replace_block") when there were only 6 curseg types.
-After commit d0b9e42ab615 ("f2fs: introduce inmem curseg") was introduced,
-the condition should be changed to checking curseg->seg_type.
+In the __f2fs_init_atgc_curseg->get_atssr_segment calling,
+curseg->segno is NULL_SEGNO, indicating that there is no summary
+block that needs to be written.
 
-Fixes: d0b9e42ab615 ("f2fs: introduce inmem curseg")
-Signed-off-by: LongPing Wei <weilongping@oppo.com>
+Fixes: 093749e296e2 ("f2fs: support age threshold based garbage collection")
+Signed-off-by: Yongpeng Yang <yangyongpeng1@oppo.com>
 Reviewed-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/segment.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/f2fs/segment.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/fs/f2fs/segment.c b/fs/f2fs/segment.c
-index 1766254279d24..7b54b1851d346 100644
+index 7b54b1851d346..edf205093f435 100644
 --- a/fs/f2fs/segment.c
 +++ b/fs/f2fs/segment.c
-@@ -3977,8 +3977,8 @@ void f2fs_do_replace_block(struct f2fs_sb_info *sbi, struct f2fs_summary *sum,
- 		}
- 	}
+@@ -2926,7 +2926,8 @@ static int change_curseg(struct f2fs_sb_info *sbi, int type)
+ 	struct f2fs_summary_block *sum_node;
+ 	struct page *sum_page;
  
--	f2fs_bug_on(sbi, !IS_DATASEG(type));
- 	curseg = CURSEG_I(sbi, type);
-+	f2fs_bug_on(sbi, !IS_DATASEG(curseg->seg_type));
+-	write_sum_page(sbi, curseg->sum_blk, GET_SUM_BLOCK(sbi, curseg->segno));
++	if (curseg->inited)
++		write_sum_page(sbi, curseg->sum_blk, GET_SUM_BLOCK(sbi, curseg->segno));
  
- 	mutex_lock(&curseg->curseg_mutex);
- 	down_write(&sit_i->sentry_lock);
+ 	__set_test_and_inuse(sbi, new_segno);
+ 
 -- 
 2.43.0
 
