@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A4931F7558;
-	Tue,  3 Dec 2024 15:51:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74EE11DAC9F;
+	Tue,  3 Dec 2024 15:51:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733241095; cv=none; b=FGtgmTUh0nYF3uszHhwG0dLBXkuDUR3FDXJ3/lT3DUa1xBrG/JEnuyIqbMA3XEAHnm3y/ZiC0QrXf6Y9JOx889Himi28/X4oVPkGV9FSEMp/2pfSqdxXU1VWRMSrWnNRblfqTkomKBMuWmA6QdDvl/woQDXyPiHsPPB1WfMkRlo=
+	t=1733241098; cv=none; b=ZdJS06ZW+ji//lvIck4anbooWxGo/SGiwC6ueOrHt4ABQvx5fRtwhvA7dagCLRjNZWa07wbonjjyja4SnG2y4H2+4+iwq2piaIKlaGnkzULfoL7HJTx1CcOOxsOGqNxHrMQbPtlRFupjCpkVQm+n+/lsBjP84d2erDmZbLDBFZw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733241095; c=relaxed/simple;
-	bh=qlveK9bVWodoCR74QF8txbmvd9st1Z2T8ciWZbpQEGs=;
+	s=arc-20240116; t=1733241098; c=relaxed/simple;
+	bh=OQLcV5tDi+mScSdkvL25dJ0M5x01c00xawrmXaAWryQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BiNzN5E1lVijYn3fJ7YqDukVNDf4SuVikbsQxbtuPTB1NO8TMc0Z7BmPQnCOrFFl8vQsqrf8KlqqSeoqe4VZq+06eOO7uk6ryOUg/itNBOpQQTunB1bnivUcUEvgaF6x7Fl9SSOMUlJyEif8lZ6H+RIRuzVPAchmvEv3Sua4TRE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uo+hP7sa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nVsOlzfGMa49OzvtGPoaIIOJhngSH9vQyhnabXPyuki66MAUuwW3Xxr2tTuS/UUimCk7VEQjm6rXr8S3gIfpsEA6A1WqKUHDDtqoBX4xWjHQVEiNvEP3Gl5MkusILKq/apUrE6xE22P434e5BdgexGzvOealsojBifYKKglgRMQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V36soB1x; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uo+hP7sa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 811D3C4CECF;
-	Tue,  3 Dec 2024 15:51:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V36soB1x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6FF2C4CECF;
+	Tue,  3 Dec 2024 15:51:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733241095;
-	bh=qlveK9bVWodoCR74QF8txbmvd9st1Z2T8ciWZbpQEGs=;
+	s=korg; t=1733241098;
+	bh=OQLcV5tDi+mScSdkvL25dJ0M5x01c00xawrmXaAWryQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uo+hP7sa/OLzctUAHYyZP22rzKdyWPCljXUS/lriLd1s2n+IQ12yYBdP8GDcoKpR9
-	 q6ta/C595lumz19s+7BgYR+0NNSs4wgAyjb1aCML4zzaeqQeWzu9uLRteJS6DyzJU9
-	 nTEIgCWICCXrsXvXlr92JlXI/tYJAuyrxCVFIDuU=
+	b=V36soB1xDs+4Zj+cONgUMunAGwQdDgU5XUjlYRTBMsrpqa1Q0JhPUG5lMEdN8RR0g
+	 p0UtGD7s8E/W/l6nXs7TMcIOCoEhtM0Hh/gmAxy8amPgXiY7sKZl4x4RjUs5B1z6hT
+	 IsJS/Qav5qkV8KzzXhp6tJSWTWItplEhX7Jage+s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Jiri Olsa <jolsa@kernel.org>,
+	Hao Ge <gehao@kylinos.cn>,
+	Eric Sandeen <sandeen@redhat.com>,
+	Jan Kara <jack@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 324/826] bpf: Force uprobe bpf program to always return 0
-Date: Tue,  3 Dec 2024 15:40:51 +0100
-Message-ID: <20241203144756.400524830@linuxfoundation.org>
+Subject: [PATCH 6.12 307/826] isofs: avoid memory leak in iocharset
+Date: Tue,  3 Dec 2024 15:40:34 +0100
+Message-ID: <20241203144755.738977655@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -51,57 +52,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiri Olsa <jolsa@kernel.org>
+From: Hao Ge <gehao@kylinos.cn>
 
-[ Upstream commit f505005bc7426f4309880da94cfbfc37efa225bd ]
+[ Upstream commit 0b5bbeee4de616a268db77e2f40f19ab010a367b ]
 
-As suggested by Andrii make uprobe multi bpf programs to always return 0,
-so they can't force uprobe removal.
+A memleak was found as below:
 
-Keeping the int return type for uprobe_prog_run, because it will be used
-in following session changes.
+unreferenced object 0xffff0000d10164d8 (size 8):
+  comm "pool-udisksd", pid 108217, jiffies 4295408555
+  hex dump (first 8 bytes):
+    75 74 66 38 00 cc cc cc                          utf8....
+  backtrace (crc de430d31):
+    [<ffff800081046e6c>] kmemleak_alloc+0xb8/0xc8
+    [<ffff8000803e6c3c>] __kmalloc_node_track_caller_noprof+0x380/0x474
+    [<ffff800080363b74>] kstrdup+0x70/0xfc
+    [<ffff80007bb3c6a4>] isofs_parse_param+0x228/0x2c0 [isofs]
+    [<ffff8000804d7f68>] vfs_parse_fs_param+0xf4/0x164
+    [<ffff8000804d8064>] vfs_parse_fs_string+0x8c/0xd4
+    [<ffff8000804d815c>] vfs_parse_monolithic_sep+0xb0/0xfc
+    [<ffff8000804d81d8>] generic_parse_monolithic+0x30/0x3c
+    [<ffff8000804d8bfc>] parse_monolithic_mount_data+0x40/0x4c
+    [<ffff8000804b6a64>] path_mount+0x6c4/0x9ec
+    [<ffff8000804b6e38>] do_mount+0xac/0xc4
+    [<ffff8000804b7494>] __arm64_sys_mount+0x16c/0x2b0
+    [<ffff80008002b8dc>] invoke_syscall+0x7c/0x104
+    [<ffff80008002ba44>] el0_svc_common.constprop.1+0xe0/0x104
+    [<ffff80008002ba94>] do_el0_svc+0x2c/0x38
+    [<ffff800081041108>] el0_svc+0x3c/0x1b8
 
-Fixes: 89ae89f53d20 ("bpf: Add multi uprobe link")
-Suggested-by: Andrii Nakryiko <andrii@kernel.org>
-Signed-off-by: Jiri Olsa <jolsa@kernel.org>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Acked-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20241108134544.480660-3-jolsa@kernel.org
+The opt->iocharset is freed inside the isofs_fill_super function,
+But there may be situations where it's not possible to
+enter this function.
+
+For example, in the get_tree_bdev_flags function,when
+encountering the situation where "Can't mount, would change RO state,"
+In such a case, isofs_fill_super will not have the opportunity
+to be called,which means that opt->iocharset will not have the chance
+to be freed,ultimately leading to a memory leak.
+
+Let's move the memory freeing of opt->iocharset into
+isofs_free_fc function.
+
+Fixes: 1b17a46c9243 ("isofs: convert isofs to use the new mount API")
+Signed-off-by: Hao Ge <gehao@kylinos.cn>
+Reviewed-by: Eric Sandeen <sandeen@redhat.com>
+Signed-off-by: Jan Kara <jack@suse.cz>
+Link: https://patch.msgid.link/20241106082841.51773-1-hao.ge@linux.dev
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/bpf_trace.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ fs/isofs/inode.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/kernel/trace/bpf_trace.c b/kernel/trace/bpf_trace.c
-index 630b763e52402..792dc35414a3c 100644
---- a/kernel/trace/bpf_trace.c
-+++ b/kernel/trace/bpf_trace.c
-@@ -3205,7 +3205,6 @@ static int uprobe_prog_run(struct bpf_uprobe *uprobe,
- 	struct bpf_prog *prog = link->link.prog;
- 	bool sleepable = prog->sleepable;
- 	struct bpf_run_ctx *old_run_ctx;
--	int err = 0;
+diff --git a/fs/isofs/inode.c b/fs/isofs/inode.c
+index f50311a6b4299..47038e6608123 100644
+--- a/fs/isofs/inode.c
++++ b/fs/isofs/inode.c
+@@ -948,8 +948,6 @@ static int isofs_fill_super(struct super_block *s, struct fs_context *fc)
+ 		goto out_no_inode;
+ 	}
  
- 	if (link->task && !same_thread_group(current, link->task))
- 		return 0;
-@@ -3218,7 +3217,7 @@ static int uprobe_prog_run(struct bpf_uprobe *uprobe,
- 	migrate_disable();
+-	kfree(opt->iocharset);
+-
+ 	return 0;
  
- 	old_run_ctx = bpf_set_run_ctx(&run_ctx.run_ctx);
--	err = bpf_prog_run(link->link.prog, regs);
-+	bpf_prog_run(link->link.prog, regs);
- 	bpf_reset_run_ctx(old_run_ctx);
+ 	/*
+@@ -987,7 +985,6 @@ static int isofs_fill_super(struct super_block *s, struct fs_context *fc)
+ 	brelse(bh);
+ 	brelse(pri_bh);
+ out_freesbi:
+-	kfree(opt->iocharset);
+ 	kfree(sbi);
+ 	s->s_fs_info = NULL;
+ 	return error;
+@@ -1528,7 +1525,10 @@ static int isofs_get_tree(struct fs_context *fc)
  
- 	migrate_enable();
-@@ -3227,7 +3226,7 @@ static int uprobe_prog_run(struct bpf_uprobe *uprobe,
- 		rcu_read_unlock_trace();
- 	else
- 		rcu_read_unlock();
--	return err;
-+	return 0;
+ static void isofs_free_fc(struct fs_context *fc)
+ {
+-	kfree(fc->fs_private);
++	struct isofs_options *opt = fc->fs_private;
++
++	kfree(opt->iocharset);
++	kfree(opt);
  }
  
- static bool
+ static const struct fs_context_operations isofs_context_ops = {
 -- 
 2.43.0
 
