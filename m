@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06C881F8919;
-	Tue,  3 Dec 2024 16:09:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61E051F75BC;
+	Tue,  3 Dec 2024 16:09:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733242153; cv=none; b=hyfQOV2YJVUsL7HFq1aR48Y3R65vN8LZtvGCXec3oJx5w5dC+8sbYmwQfrZi17JPmS6eedfCXHueYYyGBdGD1n5wRfFm4yEOm3PkpuLiHpIBvKUlOF7TUnG7NbavuuP2SZqBmSfAGa4wjOhuQnWpy5e7RL3NT1Hqr3/ttdUe4SA=
+	t=1733242156; cv=none; b=ivU/Nh11RMDfpwTjvi6q3xyKKZkLZn9ZnwViLFC8U9Cf//sGnC5hccRXop0DsNy3/43oVeB+jX1WB5ZC6+bBCZOcIhFpq8eyoVmLVTQK+yfT7hUTRbtpaIOGQOyqlJDB/58VK7TXLJ5QwRaOTy9BGzuF7CpmHzh0lNgpIW2cVOo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733242153; c=relaxed/simple;
-	bh=UU7pBpyc83pkRwuHopwMxN6yAqRv5I33uiZnfsolPbc=;
+	s=arc-20240116; t=1733242156; c=relaxed/simple;
+	bh=FcS29hTitd+//2w+gJhCcntTtaYRbVDZ8SA9Notz6o0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fq+SBuQG0678X5qaM/RjfEMa7DkU7vB+MceHDWtCWk2Fh53KIbCyFiC6pu/mrjCjplyZYgrHDYJoEBwrPy+890bQ8aH1aWqpdOvj3uxW/vkaTcPrMBh7y1ZJOOdbkWNezzaCgICDF2PzSj1CTV5/S5LfIqPp/S57R6t0tMn+4rA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0frSzVuf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=o4lQfrAHLox9M8m+2Q1G64t4B83h/0/72dM+HvUHf2Cr8Tv6ow6hqpbpCutj0WONLinOJuz3Glw2/v8eyZ1wzGTz9wedK03InrouUTTYMstioilyHpVy4p4JUdWL5NV3567RgJnOiMqFDJwfX9f6DdfF3fUmh5mLma1mWW+DVrA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NsxAyQEI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0frSzVuf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B108C4CED6;
-	Tue,  3 Dec 2024 16:09:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NsxAyQEI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C56B3C4CECF;
+	Tue,  3 Dec 2024 16:09:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733242152;
-	bh=UU7pBpyc83pkRwuHopwMxN6yAqRv5I33uiZnfsolPbc=;
+	s=korg; t=1733242156;
+	bh=FcS29hTitd+//2w+gJhCcntTtaYRbVDZ8SA9Notz6o0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0frSzVuf3hJuTeoq9HKWiGoSKo7Xkcy4f+p65EmyysLKn0nrR/QTnn7YIsDtJqVC3
-	 D7oXPyNckwgXEBJ+hZyGng8FIUtLITLEDyz0wpWpGHIBJJMYXkfRUcaHXmeXv+iJGK
-	 lQUSVRRLJ3lUthLo06GD+nc3QxBhhBoVqdBxKKLs=
+	b=NsxAyQEIIIbNHbIZoubEpyQRxkvT3XXVOEGS6AWUV3kglAoafn62s+/xCYUhNYVJe
+	 G35HmscGIoShB+HTLpifXqLzpfLPNNbgU2eeYkwAqKNVAGNRGYYHwyzQPUk2rKTq+K
+	 8VQE8E3y5Pyt3aguZfRQk1GqvGzcfKLkqL/O85Rw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Kicinski <kuba@kernel.org>,
-	Eric Dumazet <edumazet@google.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.12 623/826] net_sched: sch_fq: dont follow the fast path if Tx is behind now
-Date: Tue,  3 Dec 2024 15:45:50 +0100
-Message-ID: <20241203144808.056084231@linuxfoundation.org>
+	Qiu-ji Chen <chenqiuji666@gmail.com>,
+	Juergen Gross <jgross@suse.com>
+Subject: [PATCH 6.12 624/826] xen: Fix the issue of resource not being properly released in xenbus_dev_probe()
+Date: Tue,  3 Dec 2024 15:45:51 +0100
+Message-ID: <20241203144808.094233415@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -51,75 +50,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Qiu-ji Chen <chenqiuji666@gmail.com>
 
-commit 122aba8c80618eca904490b1733af27fb8f07528 upstream.
+commit afc545da381ba0c651b2658966ac737032676f01 upstream.
 
-Recent kernels cause a lot of TCP retransmissions
+This patch fixes an issue in the function xenbus_dev_probe(). In the
+xenbus_dev_probe() function, within the if (err) branch at line 313, the
+program incorrectly returns err directly without releasing the resources
+allocated by err = drv->probe(dev, id). As the return value is non-zero,
+the upper layers assume the processing logic has failed. However, the probe
+operation was performed earlier without a corresponding remove operation.
+Since the probe actually allocates resources, failing to perform the remove
+operation could lead to problems.
 
-[ ID] Interval           Transfer     Bitrate         Retr  Cwnd
-[  5]   0.00-1.00   sec  2.24 GBytes  19.2 Gbits/sec  2767    442 KBytes
-[  5]   1.00-2.00   sec  2.23 GBytes  19.1 Gbits/sec  2312    350 KBytes
-                                                      ^^^^
+To fix this issue, we followed the resource release logic of the
+xenbus_dev_remove() function by adding a new block fail_remove before the
+fail_put block. After entering the branch if (err) at line 313, the
+function will use a goto statement to jump to the fail_remove block,
+ensuring that the previously acquired resources are correctly released,
+thus preventing the reference count leak.
 
-Replacing the qdisc with pfifo makes retransmissions go away.
+This bug was identified by an experimental static analysis tool developed
+by our team. The tool specializes in analyzing reference count operations
+and detecting potential issues where resources are not properly managed.
+In this case, the tool flagged the missing release operation as a
+potential problem, which led to the development of this patch.
 
-It appears that a flow may have a delayed packet with a very near
-Tx time. Later, we may get busy processing Rx and the target Tx time
-will pass, but we won't service Tx since the CPU is busy with Rx.
-If Rx sees an ACK and we try to push more data for the delayed flow
-we may fastpath the skb, not realizing that there are already "ready
-to send" packets for this flow sitting in the qdisc.
-
-Don't trust the fastpath if we are "behind" according to the projected
-Tx time for next flow waiting in the Qdisc. Because we consider anything
-within the offload window to be okay for fastpath we must consider
-the entire offload window as "now".
-
-Qdisc config:
-
-qdisc fq 8001: dev eth0 parent 1234:1 limit 10000p flow_limit 100p \
-  buckets 32768 orphan_mask 1023 bands 3 \
-  priomap 1 2 2 2 1 2 0 0 1 1 1 1 1 1 1 1 \
-  weights 589824 196608 65536 quantum 3028b initial_quantum 15140b \
-  low_rate_threshold 550Kbit \
-  refill_delay 40ms timer_slack 10us horizon 10s horizon_drop
-
-For iperf this change seems to do fine, the reordering is gone.
-The fastpath still gets used most of the time:
-
-  gc 0 highprio 0 fastpath 142614 throttled 418309 latency 19.1us
-   xx_behind 2731
-
-where "xx_behind" counts how many times we hit the new "return false".
-
-CC: stable@vger.kernel.org
-Fixes: 076433bd78d7 ("net_sched: sch_fq: add fast path for mostly idle qdisc")
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20241124022148.3126719-1-kuba@kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-[stable: drop the offload horizon, it's not supported / 0]
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 4bac07c993d0 ("xen: add the Xenbus sysfs and virtual device hotplug driver")
+Cc: stable@vger.kernel.org
+Signed-off-by: Qiu-ji Chen <chenqiuji666@gmail.com>
+Reviewed-by: Juergen Gross <jgross@suse.com>
+Message-ID: <20241105130919.4621-1-chenqiuji666@gmail.com>
+Signed-off-by: Juergen Gross <jgross@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/sch_fq.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/xen/xenbus/xenbus_probe.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/net/sched/sch_fq.c
-+++ b/net/sched/sch_fq.c
-@@ -331,6 +331,12 @@ static bool fq_fastpath_check(const stru
- 		 */
- 		if (q->internal.qlen >= 8)
- 			return false;
-+
-+		/* Ordering invariants fall apart if some delayed flows
-+		 * are ready but we haven't serviced them, yet.
-+		 */
-+		if (q->time_next_delayed_flow <= now)
-+			return false;
+--- a/drivers/xen/xenbus/xenbus_probe.c
++++ b/drivers/xen/xenbus/xenbus_probe.c
+@@ -313,7 +313,7 @@ int xenbus_dev_probe(struct device *_dev
+ 	if (err) {
+ 		dev_warn(&dev->dev, "watch_otherend on %s failed.\n",
+ 		       dev->nodename);
+-		return err;
++		goto fail_remove;
  	}
  
- 	sk = skb->sk;
+ 	dev->spurious_threshold = 1;
+@@ -322,6 +322,12 @@ int xenbus_dev_probe(struct device *_dev
+ 			 dev->nodename);
+ 
+ 	return 0;
++fail_remove:
++	if (drv->remove) {
++		down(&dev->reclaim_sem);
++		drv->remove(dev);
++		up(&dev->reclaim_sem);
++	}
+ fail_put:
+ 	module_put(drv->driver.owner);
+ fail:
 
 
