@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D55461DA3D;
-	Tue,  3 Dec 2024 15:19:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A33181F4707;
+	Tue,  3 Dec 2024 15:19:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733239180; cv=none; b=q0fsiJxVyJ5LT1AwXuOoOFmi/D1Q/2CDF/e+oB8FVQcBD08QZY10bkPkewuVkao3+WfRsl+H67WFv9AOb2Lw4VmJmm/3InppREQbZ3fVlbiitaWGHs9gIZ9L3aeSHYb3m/wo6cFWHwiXVHipAnbd2rLfRd0mrCxoKJDy201f9TM=
+	t=1733239182; cv=none; b=SL5i3vJKY3hXRxygAbqeX5B6GwSUL4XgPO23RsYrfHt3boRncm6ENCFltilOy+EpKc75goO3vH7aYmJyZno69Q+KH2QEUQ5HUHcayLdtLMuizRylGLrXQZ+LyqYtzBuDSz5fInw3O6JIPs3XqQLL3BBFRQOkCrT+uG+uVXcUvEg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733239180; c=relaxed/simple;
-	bh=9xqeSS25R0bJ6U4IJ3nXayA3AEx7Q0X0Ke9URNd8who=;
+	s=arc-20240116; t=1733239182; c=relaxed/simple;
+	bh=Y5RTXCk6MwROQWiJoZennfeunbSv/r106SOVb8zZ7Vg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SFbQJ1oltKnYJTUHjVmfSg4115BzvtoxBd3Z80P9tT3LujzPI9Tp2koYX1uAHktoquT70/YMnYZT1cnzQ6GNW38kCNOo5hjqpY2A9h5iRQo65/8Ad/ucyXZX+UN6JE6RB4v3Z2wfNwxbheYITUBhTwxzR4uLsmlGtG0bRun0GJg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MCkXHvnG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Zixh8lpTzzn1VZbGOAJ4U9OXJmf2RU9Pli9n+0QGMPl/UdShGLWnT2HBVBxs4z3afOFytSTxoafKJR+64Q54CLgis1I7hJOLOU3gYgZvXUgijiZRTALjChUGu9iOdPIerJOZ4M7qrATavWjPHkFDETiFmnsRQWgzbsYGu/lOhjM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZF8ka+GC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MCkXHvnG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F726C4CED6;
-	Tue,  3 Dec 2024 15:19:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZF8ka+GC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A0BFC4CECF;
+	Tue,  3 Dec 2024 15:19:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733239179;
-	bh=9xqeSS25R0bJ6U4IJ3nXayA3AEx7Q0X0Ke9URNd8who=;
+	s=korg; t=1733239182;
+	bh=Y5RTXCk6MwROQWiJoZennfeunbSv/r106SOVb8zZ7Vg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MCkXHvnGYnEj2YPMFJQVeLjQy/5Dzr9ZM3taURkWciVWhmPQRZz2PGqjSTl88a8KO
-	 aq0QlrRf6PuPXCnaRCPc8TxImL+o29L/uwP45MYvEQmdAkmC8KCgKvLEQ9xMknEQ1K
-	 CiecJFKWJcmC5sIMQhktorzD/iF7Utuaosnawl5U=
+	b=ZF8ka+GCgaZBhivF58WcuGr53OAng5jflSMqSxW+c1ot7TdF8jYoLIwvkQVkKBX9l
+	 EUhOeMyfWuuqk7xBDfQqZ/q2NdYm9itpGIpn/NQF/boYjvvhA4Ws/Cs7Pu8dP5dD+j
+	 bsKcIFR0WTkGxH5wGoOFzvnIJBuA114EMOnj/STw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
+To: stable@vger.kernel.org,
+	Greg Ungerer <gerg@linux-m68k.org>,
+	Geert Uytterhoeven <geert@linux-m68k.org>
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jean-Michel Hautbois <jeanmichel.hautbois@yoseli.org>,
+	linux-m68k@lists.linux-m68k.org,
+	linux-kernel@vger.kernel.org,
+	Antonio Quartulli <antonio@mandelbit.com>,
 	Greg Ungerer <gerg@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 526/817] m68k: mcfgpio: Fix incorrect register offset for CONFIG_M5441x
-Date: Tue,  3 Dec 2024 15:41:38 +0100
-Message-ID: <20241203144016.429730271@linuxfoundation.org>
+Subject: [PATCH 6.11 527/817] m68k: coldfire/device.c: only build FEC when HW macros are defined
+Date: Tue,  3 Dec 2024 15:41:39 +0100
+Message-ID: <20241203144016.470244149@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -51,35 +55,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jean-Michel Hautbois <jeanmichel.hautbois@yoseli.org>
+From: Antonio Quartulli <antonio@mandelbit.com>
 
-[ Upstream commit f212140962c93cd5da43283a18e31681540fc23d ]
+[ Upstream commit 63a24cf8cc330e5a68ebd2e20ae200096974c475 ]
 
-Fix a typo in the CONFIG_M5441x preprocessor condition, where the GPIO
-register offset was incorrectly set to 8 instead of 0. This prevented
-proper GPIO configuration for m5441x targets.
+When CONFIG_FEC is set (due to COMPILE_TEST) along with
+CONFIG_M54xx, coldfire/device.c has compile errors due to
+missing MCFEC_* and MCF_IRQ_FEC_* symbols.
 
-Fixes: bea8bcb12da0 ("m68knommu: Add support for the Coldfire m5441x.")
-Signed-off-by: Jean-Michel Hautbois <jeanmichel.hautbois@yoseli.org>
+Make the whole FEC blocks dependent on having the HW macros
+defined, rather than on CONFIG_FEC itself.
+
+This fix is very similar to commit e6e1e7b19fa1 ("m68k: coldfire/device.c: only build for MCF_EDMA when h/w macros are defined")
+
+Fixes: b7ce7f0d0efc ("m68knommu: merge common ColdFire FEC platform setup code")
+To: Greg Ungerer <gerg@linux-m68k.org>
+To: Geert Uytterhoeven <geert@linux-m68k.org>
+Cc: linux-m68k@lists.linux-m68k.org
+Cc: linux-kernel@vger.kernel.org
+Signed-off-by: Antonio Quartulli <antonio@mandelbit.com>
 Signed-off-by: Greg Ungerer <gerg@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/m68k/include/asm/mcfgpio.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/m68k/coldfire/device.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/arch/m68k/include/asm/mcfgpio.h b/arch/m68k/include/asm/mcfgpio.h
-index 019f244395464..9c91ecdafc453 100644
---- a/arch/m68k/include/asm/mcfgpio.h
-+++ b/arch/m68k/include/asm/mcfgpio.h
-@@ -136,7 +136,7 @@ static inline void gpio_free(unsigned gpio)
-  * read-modify-write as well as those controlled by the EPORT and GPIO modules.
-  */
- #define MCFGPIO_SCR_START		40
--#elif defined(CONFIGM5441x)
-+#elif defined(CONFIG_M5441x)
- /* The m5441x EPORT doesn't have its own GPIO port, uses PORT C */
- #define MCFGPIO_SCR_START		0
- #else
+diff --git a/arch/m68k/coldfire/device.c b/arch/m68k/coldfire/device.c
+index 7dab46728aeda..b6958ec2a220c 100644
+--- a/arch/m68k/coldfire/device.c
++++ b/arch/m68k/coldfire/device.c
+@@ -93,7 +93,7 @@ static struct platform_device mcf_uart = {
+ 	.dev.platform_data	= mcf_uart_platform_data,
+ };
+ 
+-#if IS_ENABLED(CONFIG_FEC)
++#ifdef MCFFEC_BASE0
+ 
+ #ifdef CONFIG_M5441x
+ #define FEC_NAME	"enet-fec"
+@@ -145,6 +145,7 @@ static struct platform_device mcf_fec0 = {
+ 		.platform_data		= FEC_PDATA,
+ 	}
+ };
++#endif /* MCFFEC_BASE0 */
+ 
+ #ifdef MCFFEC_BASE1
+ static struct resource mcf_fec1_resources[] = {
+@@ -182,7 +183,6 @@ static struct platform_device mcf_fec1 = {
+ 	}
+ };
+ #endif /* MCFFEC_BASE1 */
+-#endif /* CONFIG_FEC */
+ 
+ #if IS_ENABLED(CONFIG_SPI_COLDFIRE_QSPI)
+ /*
+@@ -624,12 +624,12 @@ static struct platform_device mcf_flexcan0 = {
+ 
+ static struct platform_device *mcf_devices[] __initdata = {
+ 	&mcf_uart,
+-#if IS_ENABLED(CONFIG_FEC)
++#ifdef MCFFEC_BASE0
+ 	&mcf_fec0,
++#endif
+ #ifdef MCFFEC_BASE1
+ 	&mcf_fec1,
+ #endif
+-#endif
+ #if IS_ENABLED(CONFIG_SPI_COLDFIRE_QSPI)
+ 	&mcf_qspi,
+ #endif
 -- 
 2.43.0
 
