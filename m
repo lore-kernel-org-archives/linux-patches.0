@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61B3E1EE029;
-	Tue,  3 Dec 2024 14:39:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 077E33BB24;
+	Tue,  3 Dec 2024 14:39:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733236775; cv=none; b=PdHIZ3rCStOIdta3X179/9NNzVosxBuDUyzr2aDCcHUp7pA8YFbGFBB48u6QNnCC2+fe3Q1FT9XQXYjLkLEaEtxI/CZJ1mEyZCyFChaakmcGoxNu0CQpKEht9gXjtnnj9BvoP9B/LmlTjWeDu2Zj7QpPH3C6j6LM+9YlGbaKm28=
+	t=1733236778; cv=none; b=u7H+bSmsFkTjXPllicnQbDJYWPjGNAeGUPlQs5PAfM+RKsDOdkZ5eWpzUByaAyfi5Zrgv2ifOJ7ObGg2kKH8Mo7Oe21duFRdXl6xJPqVzqZqMxfpQ+pv2ACWKYRTRf5Iq4kjgg57ZijEf6AizSFMggfIMqmnGV7B8H6CyErZLyc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733236775; c=relaxed/simple;
-	bh=rtW3Nt225JR0qRex2+PmlXQdutBbQhnmZJR3BYrmm9I=;
+	s=arc-20240116; t=1733236778; c=relaxed/simple;
+	bh=zKiukbJ/sLTwnT4ntPvsIPNbOOcH1TnRFxKfFzZE7io=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AbAwJ4kFflXKzOzpa+7dlAYuxVpt6D2jfI+kyKqLlCQp40aruMvC+MtQnhlv0mQFRDhqUv+DK9d92T7qtLZG4CaqJo/tl+eQEPbz0yCAHJzwqs8o4XdO1OWAzpxOxMZgK4jy4y8qWcJDb+EWojX0i58G9n+dM/WCSfl0WZrjJZE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0eT70xml; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RpOktVol2Fv/wci4IDhaDYiU4ZVKhTh4/cUqU5VV/8auASNkzYprwXcM0nfuoN2/TM1RRfvZ2urhc9Cos6NVprKYWeUOac3/Wg4npVGcqrtHBVl0iVM975XgD25kR69My+yA7pY+turKxU+Id+ERv+cm5jrL07bNOS9zwZ+SMCM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qBUZkukU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0eT70xml"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 908B7C4CECF;
-	Tue,  3 Dec 2024 14:39:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qBUZkukU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12B13C4CED6;
+	Tue,  3 Dec 2024 14:39:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733236774;
-	bh=rtW3Nt225JR0qRex2+PmlXQdutBbQhnmZJR3BYrmm9I=;
+	s=korg; t=1733236777;
+	bh=zKiukbJ/sLTwnT4ntPvsIPNbOOcH1TnRFxKfFzZE7io=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0eT70xmlZ6MdBM7rE8AgOByVXqkZGZi86700nB1SiQcebl/fvfEJvsXBSzDwq24Cj
-	 tIv+VcP7oFAIG0JUrJcpW1OJSrvJjbsB6W4ro/UsqOroyiK0OySOz3sqX9wXKTXNqb
-	 +zq0XAt6aL0qGXpBlmR9rf1N9wK2nHucyDgqSU2M=
+	b=qBUZkukUmFTxM/m4GUSODwtY7ts7JUOQT7MoQmcnHjdWTB9zSatxVceYv+Kwn8rwf
+	 B+Or/OYaIujvK3ZTNuPv42pImd7w2MHSzyMOMhRDGHQ7CCUm1eaG2Evzd3gAmEx+O4
+	 +P+M+8aRMD9YoIssfggJiSf2Uf6ZvlmJJQyRqMHQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Tiwei Bie <tiwei.btw@antgroup.com>,
 	Anton Ivanov <anton.ivanov@cambridgegreys.com>,
 	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 4.19 114/138] um: ubd: Do not use drvdata in release
-Date: Tue,  3 Dec 2024 15:32:23 +0100
-Message-ID: <20241203141927.927867215@linuxfoundation.org>
+Subject: [PATCH 4.19 115/138] um: net: Do not use drvdata in release
+Date: Tue,  3 Dec 2024 15:32:24 +0100
+Message-ID: <20241203141927.966150154@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203141923.524658091@linuxfoundation.org>
 References: <20241203141923.524658091@linuxfoundation.org>
@@ -53,76 +53,72 @@ Content-Transfer-Encoding: 8bit
 
 From: Tiwei Bie <tiwei.btw@antgroup.com>
 
-commit 5bee35e5389f450a7eea7318deb9073e9414d3b1 upstream.
+commit d1db692a9be3b4bd3473b64fcae996afaffe8438 upstream.
 
 The drvdata is not available in release. Let's just use container_of()
-to get the ubd instance. Otherwise, removing a ubd device will result
-in a crash:
+to get the uml_net instance. Otherwise, removing a network device will
+result in a crash:
 
-RIP: 0033:blk_mq_free_tag_set+0x1f/0xba
-RSP: 00000000e2083bf0  EFLAGS: 00010246
-RAX: 000000006021463a RBX: 0000000000000348 RCX: 0000000062604d00
-RDX: 0000000004208060 RSI: 00000000605241a0 RDI: 0000000000000348
-RBP: 00000000e2083c10 R08: 0000000062414010 R09: 00000000601603f7
-R10: 000000000000133a R11: 000000006038c4bd R12: 0000000000000000
-R13: 0000000060213a5c R14: 0000000062405d20 R15: 00000000604f7aa0
+RIP: 0033:net_device_release+0x10/0x6f
+RSP: 00000000e20c7c40  EFLAGS: 00010206
+RAX: 000000006002e4e7 RBX: 00000000600f1baf RCX: 00000000624074e0
+RDX: 0000000062778000 RSI: 0000000060551c80 RDI: 00000000627af028
+RBP: 00000000e20c7c50 R08: 00000000603ad594 R09: 00000000e20c7b70
+R10: 000000000000135a R11: 00000000603ad422 R12: 0000000000000000
+R13: 0000000062c7af00 R14: 0000000062406d60 R15: 00000000627700b6
 Kernel panic - not syncing: Segfault with no mm
-CPU: 0 PID: 17 Comm: kworker/0:1 Not tainted 6.8.0-rc3-00107-gba3f67c11638 #1
+CPU: 0 UID: 0 PID: 29 Comm: kworker/0:2 Not tainted 6.12.0-rc6-g59b723cd2adb #1
 Workqueue: events mc_work_proc
 Stack:
- 00000000 604f7ef0 62c5d000 62405d20
- e2083c30 6002c776 6002c755 600e47ff
- e2083c60 6025ffe3 04208060 603d36e0
+ 627af028 62c7af00 e20c7c80 60276fcd
+ 62778000 603f5820 627af028 00000000
+ e20c7cb0 603a2bcd 627af000 62770010
 Call Trace:
- [<6002c776>] ubd_device_release+0x21/0x55
- [<6002c755>] ? ubd_device_release+0x0/0x55
- [<600e47ff>] ? kfree+0x0/0x100
- [<6025ffe3>] device_release+0x70/0xba
- [<60381d6a>] kobject_put+0xb5/0xe2
- [<6026027b>] put_device+0x19/0x1c
- [<6026a036>] platform_device_put+0x26/0x29
- [<6026ac5a>] platform_device_unregister+0x2c/0x2e
- [<6002c52e>] ubd_remove+0xb8/0xd6
- [<6002bb74>] ? mconsole_reply+0x0/0x50
- [<6002b926>] mconsole_remove+0x160/0x1cc
- [<6002bbbc>] ? mconsole_reply+0x48/0x50
- [<6003379c>] ? um_set_signals+0x3b/0x43
- [<60061c55>] ? update_min_vruntime+0x14/0x70
- [<6006251f>] ? dequeue_task_fair+0x164/0x235
- [<600620aa>] ? update_cfs_group+0x0/0x40
- [<603a0e77>] ? __schedule+0x0/0x3ed
- [<60033761>] ? um_set_signals+0x0/0x43
- [<6002af6a>] mc_work_proc+0x77/0x91
- [<600520b4>] process_scheduled_works+0x1af/0x2c3
- [<6004ede3>] ? assign_work+0x0/0x58
- [<600527a1>] worker_thread+0x2f7/0x37a
- [<6004ee3b>] ? set_pf_worker+0x0/0x64
- [<6005765d>] ? arch_local_irq_save+0x0/0x2d
- [<60058e07>] ? kthread_exit+0x0/0x3a
- [<600524aa>] ? worker_thread+0x0/0x37a
- [<60058f9f>] kthread+0x130/0x135
- [<6002068e>] new_thread_handler+0x85/0xb6
+ [<60276fcd>] device_release+0x70/0xba
+ [<603a2bcd>] kobject_put+0xba/0xe7
+ [<60277265>] put_device+0x19/0x1c
+ [<60281266>] platform_device_put+0x26/0x29
+ [<60281e5f>] platform_device_unregister+0x2c/0x2e
+ [<6002ec9c>] net_remove+0x63/0x69
+ [<60031316>] ? mconsole_reply+0x0/0x50
+ [<600310c8>] mconsole_remove+0x160/0x1cc
+ [<60087d40>] ? __remove_hrtimer+0x38/0x74
+ [<60087ff8>] ? hrtimer_try_to_cancel+0x8c/0x98
+ [<6006b3cf>] ? dl_server_stop+0x3f/0x48
+ [<6006b390>] ? dl_server_stop+0x0/0x48
+ [<600672e8>] ? dequeue_entities+0x327/0x390
+ [<60038fa6>] ? um_set_signals+0x0/0x43
+ [<6003070c>] mc_work_proc+0x77/0x91
+ [<60057664>] process_scheduled_works+0x1b3/0x2dd
+ [<60055f32>] ? assign_work+0x0/0x58
+ [<60057f0a>] worker_thread+0x1e9/0x293
+ [<6005406f>] ? set_pf_worker+0x0/0x64
+ [<6005d65d>] ? arch_local_irq_save+0x0/0x2d
+ [<6005d748>] ? kthread_exit+0x0/0x3a
+ [<60057d21>] ? worker_thread+0x0/0x293
+ [<6005dbf1>] kthread+0x126/0x12b
+ [<600219c5>] new_thread_handler+0x85/0xb6
 
 Cc: stable@vger.kernel.org
 Signed-off-by: Tiwei Bie <tiwei.btw@antgroup.com>
 Acked-By: Anton Ivanov <anton.ivanov@cambridgegreys.com>
-Link: https://patch.msgid.link/20241104163203.435515-3-tiwei.btw@antgroup.com
+Link: https://patch.msgid.link/20241104163203.435515-4-tiwei.btw@antgroup.com
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/um/drivers/ubd_kern.c |    2 +-
+ arch/um/drivers/net_kern.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/um/drivers/ubd_kern.c
-+++ b/arch/um/drivers/ubd_kern.c
-@@ -854,7 +854,7 @@ static int ubd_open_dev(struct ubd *ubd_
+--- a/arch/um/drivers/net_kern.c
++++ b/arch/um/drivers/net_kern.c
+@@ -349,7 +349,7 @@ static struct platform_driver uml_net_dr
  
- static void ubd_device_release(struct device *dev)
+ static void net_device_release(struct device *dev)
  {
--	struct ubd *ubd_dev = dev_get_drvdata(dev);
-+	struct ubd *ubd_dev = container_of(dev, struct ubd, pdev.dev);
+-	struct uml_net *device = dev_get_drvdata(dev);
++	struct uml_net *device = container_of(dev, struct uml_net, pdev.dev);
+ 	struct net_device *netdev = device->dev;
+ 	struct uml_net_private *lp = netdev_priv(netdev);
  
- 	blk_cleanup_queue(ubd_dev->queue);
- 	*ubd_dev = ((struct ubd) DEFAULT_UBD);
 
 
