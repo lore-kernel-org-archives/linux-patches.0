@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1B451EF0AE;
-	Tue,  3 Dec 2024 15:22:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A02831EF0AE;
+	Tue,  3 Dec 2024 15:22:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733239346; cv=none; b=cX0qiP7c2Utz/y/3ye6NXRGiZGixCdFbrxZ7VeHogKJwVZiTPtuS/ANGqs1dDTEdzjhenH9C48DZl+v8q1s/YdWRnB3Cq4odlqsU3TnOzjBara3mUsCEd2c0Ln3VpBDBDWoRmoY3wrsG2EhxP99bihUTNMxEyjIafL7UlOUkiyw=
+	t=1733239349; cv=none; b=rKFl8UjU4LKG92tWZe+8g7Byg0zd+J2J0vw5/gCnL1RMu5DJurzlDclmVdmPWep9zxhTuSrT4uHTuNm2hZ65Jd1dUSqZlcMVEKr3tcAB5DMkFneiIhtveRb7Vl3/0A0LhjFmvG3jh8FOpYy/o/U1lK8izYjh80BxSH8SFvu/xhU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733239346; c=relaxed/simple;
-	bh=drmQEq1YzuAfmNPnLPE97JETLZHHDnrnwvS3AwvQvN8=;
+	s=arc-20240116; t=1733239349; c=relaxed/simple;
+	bh=8SUbUUaam3sYXQwZNnDLoC2h9BMxZQa0pYZtU8jNKfE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JF0z7bEuHro8Lb+4pq77SUVeEifM7yx50SAmW+2hTLJ6IACbAPDZoxOsxdXCoR+OORx2w+rbd42/vm4IrYPRpYe1B1NzoJGwOOvjY1w4UjagP4aLazY6VKWF+erC2yLnWq7Xos6HIJw0iZDbxm/TY7twLMRh9rQXpwvUl9Zj3ww=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sIvTqjbo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iVun1O4XjQXh7b9LKqWWifZ06ApQu448L4vaDMS7Cw0eb3dcraTOh6Td3XpTJ11va5bL+jfszqdOvxKz03+2jXAUyG3DH1ApR/Dl+SUcefT27flZOe64VklQgIfcFc/hMbZjDhIv6JBwZO1FhpfP2e0qGz2vwvtQU8qq4Liyqu0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=to+/ef3N; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sIvTqjbo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39A31C4CECF;
-	Tue,  3 Dec 2024 15:22:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="to+/ef3N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 258D5C4CECF;
+	Tue,  3 Dec 2024 15:22:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733239346;
-	bh=drmQEq1YzuAfmNPnLPE97JETLZHHDnrnwvS3AwvQvN8=;
+	s=korg; t=1733239349;
+	bh=8SUbUUaam3sYXQwZNnDLoC2h9BMxZQa0pYZtU8jNKfE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sIvTqjbo1EI+tFXZC2+s507JO0ZVU0ugW3FyF30bSeaweqf2vERjCPme2gXjJEUGc
-	 oiTpSdpS82pmicIj+cpPGrSgJXjOmz1HxwPh1y5n2+riuJVMxo+0SEgr6qJKfkh4UU
-	 fqt26qqjXxA5eEEE/Zl/0DUYTMuRRraB/1GvSDIU=
+	b=to+/ef3Nw5B+MXOMwnvJwYgeriyV1u7Sg4KoC6QqIAIbvol1So6XfSFGHjpc6NcBv
+	 khQPqCkBxnoCCUr78qVep2gI/vSd6v3zmEGwJelse9oCEIUvdkJZJLZgKUMKgVY/UO
+	 NvcgsMz6TtEZKPs5MpWNz0N4IFbJUU3u8Xfw4gGA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rosen Penev <rosenp@gmail.com>,
-	Andrew Lunn <andrew@lunn.ch>,
+	Eric Dumazet <edumazet@google.com>,
+	George McCollister <george.mccollister@gmail.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 575/817] net: mdio-ipq4019: add missing error check
-Date: Tue,  3 Dec 2024 15:42:27 +0100
-Message-ID: <20241203144018.358282494@linuxfoundation.org>
+Subject: [PATCH 6.11 584/817] net: hsr: fix hsr_init_sk() vs network/transport headers.
+Date: Tue,  3 Dec 2024 15:42:36 +0100
+Message-ID: <20241203144018.717185279@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -52,41 +52,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rosen Penev <rosenp@gmail.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 9cc8d0ecdd2aad42e377e971e3bb114339df609e ]
+[ Upstream commit 9cfb5e7f0ded2bfaabc270ceb5f91d13f0e805b9 ]
 
-If an optional resource is found but fails to remap, return on failure.
-Avoids any potential problems when using the iomapped resource as the
-assumption is that it's available.
+Following sequence in hsr_init_sk() is invalid :
 
-Fixes: 23a890d493e3 ("net: mdio: Add the reset function for IPQ MDIO driver")
-Signed-off-by: Rosen Penev <rosenp@gmail.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20241121193152.8966-1-rosenp@gmail.com
+    skb_reset_mac_header(skb);
+    skb_reset_mac_len(skb);
+    skb_reset_network_header(skb);
+    skb_reset_transport_header(skb);
+
+It is invalid because skb_reset_mac_len() needs the correct
+network header, which should be after the mac header.
+
+This patch moves the skb_reset_network_header()
+and skb_reset_transport_header() before
+the call to dev_hard_header().
+
+As a result skb->mac_len is no longer set to a value
+close to 65535.
+
+Fixes: 48b491a5cc74 ("net: hsr: fix mac_len checks")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: George McCollister <george.mccollister@gmail.com>
+Link: https://patch.msgid.link/20241122171343.897551-1-edumazet@google.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/mdio/mdio-ipq4019.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ net/hsr/hsr_device.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/mdio/mdio-ipq4019.c b/drivers/net/mdio/mdio-ipq4019.c
-index 9d8f43b28aac5..ea1f64596a85c 100644
---- a/drivers/net/mdio/mdio-ipq4019.c
-+++ b/drivers/net/mdio/mdio-ipq4019.c
-@@ -352,8 +352,11 @@ static int ipq4019_mdio_probe(struct platform_device *pdev)
- 	/* The platform resource is provided on the chipset IPQ5018 */
- 	/* This resource is optional */
- 	res = platform_get_resource(pdev, IORESOURCE_MEM, 1);
--	if (res)
-+	if (res) {
- 		priv->eth_ldo_rdy = devm_ioremap_resource(&pdev->dev, res);
-+		if (IS_ERR(priv->eth_ldo_rdy))
-+			return PTR_ERR(priv->eth_ldo_rdy);
-+	}
+diff --git a/net/hsr/hsr_device.c b/net/hsr/hsr_device.c
+index 049e22bdaafb7..1f40259597bc0 100644
+--- a/net/hsr/hsr_device.c
++++ b/net/hsr/hsr_device.c
+@@ -266,6 +266,8 @@ static struct sk_buff *hsr_init_skb(struct hsr_port *master)
+ 	skb->dev = master->dev;
+ 	skb->priority = TC_PRIO_CONTROL;
  
- 	bus->name = "ipq4019_mdio";
- 	bus->read = ipq4019_mdio_read_c22;
++	skb_reset_network_header(skb);
++	skb_reset_transport_header(skb);
+ 	if (dev_hard_header(skb, skb->dev, ETH_P_PRP,
+ 			    hsr->sup_multicast_addr,
+ 			    skb->dev->dev_addr, skb->len) <= 0)
+@@ -273,8 +275,6 @@ static struct sk_buff *hsr_init_skb(struct hsr_port *master)
+ 
+ 	skb_reset_mac_header(skb);
+ 	skb_reset_mac_len(skb);
+-	skb_reset_network_header(skb);
+-	skb_reset_transport_header(skb);
+ 
+ 	return skb;
+ out:
 -- 
 2.43.0
 
