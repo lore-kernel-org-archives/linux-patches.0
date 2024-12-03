@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF4D41F668A;
-	Tue,  3 Dec 2024 14:37:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1234E1F667E;
+	Tue,  3 Dec 2024 14:38:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733236677; cv=none; b=P51rtbxkv3PDUBC/lYveU3kp0Vhl1oZhKC8MG9Bu7KS51gDP37EaARzErCxnkDEKkTR2mfnJJsdK50EBrYprxEV035dwdZeT6TbPzWQL7v1mbmPXWH1uWP9t3b2OYq/DlnqY9Y0Vh7mokOFFD3n+XIHV13HLWRFlG7z+OR/ofbA=
+	t=1733236680; cv=none; b=EkNCAAPgN2kE1WQhh58RDUK7jtLXu547FBnQzfZ7TAtNE8YQ75mDWrkv8YQzgPUTiB2IuO+6JgF+Ga9CVbD2Rv005yZWv4IhYZ8QS7omlW3jZUpUaPvksyzfxy6yfgh+rbYidWm012Rv6S60JMkpKGmL1KpFC/ZGII550Nz19DE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733236677; c=relaxed/simple;
-	bh=Wy3qPFCtKj5qqYB73URvatoVL38Oa/a9ag+tK3qe9c4=;
+	s=arc-20240116; t=1733236680; c=relaxed/simple;
+	bh=Ig6w6py4oJNxm9aJ4KXBY/GupHpcUerE0eeJS3J+3IM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kFpoEKTaNHsYHLDJqv353XASoZO+JpX+ScNa7rc1uNv2x83qh/vZAKkRV/t2hDDx/AB+1RqPJ5esprmu2u9UZHpsVzjxseCAquBx4VaFILWLqwutTAG/uxkEjlyFMZmDgTBFd1UouYTRIWBMc3JKHdgkM4YRJudIA4Ccpfe7Te0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r9+QDeel; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Eyj1LAT9gk0okjR0qe0jmttMiTcbR3ZYB7ClcD9oFSN4JwRtDJ5f7ZY6LR1QS4kTLl/K4Jdb1F87bvWHMp1u27h0al1+vOegvy0Ae+AVYjgWWhpL1eECeEwGsCne8y/+OU0N5+ecZx+FS/AfGPYeCbh/Qg5nDjOJzNg527x1RiQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QSuI4cdM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r9+QDeel"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CD3EC4CED6;
-	Tue,  3 Dec 2024 14:37:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QSuI4cdM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88451C4CECF;
+	Tue,  3 Dec 2024 14:37:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733236676;
-	bh=Wy3qPFCtKj5qqYB73URvatoVL38Oa/a9ag+tK3qe9c4=;
+	s=korg; t=1733236679;
+	bh=Ig6w6py4oJNxm9aJ4KXBY/GupHpcUerE0eeJS3J+3IM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r9+QDeel3rbX+Eqixxo5pVeVr8pTJigXpOZH7EczXdDhTgzupTbSZOGZ4UbhDQodz
-	 k9Mz6y3/rhoNHRhuDnSLu6ymnsc11l1f3dJhmtHG4ZoZ071NkBmRw8nE0kRLkm/H5r
-	 GCQNypblIYn/wMTFhJW0YJZuYY3H2DjU8rZEVsOU=
+	b=QSuI4cdMnC7EEwdk0q8O6aj9PTiqCC3cuqv/KVsIYDmaRtvvjRiX1bbhmgdoxmp2T
+	 kumMbXezUTB3YJxzy9clzAbUFC++hNh3NIly3uvpTwqEtLxs2sJn3EOWjGNJwpMLMc
+	 NkJhKXnm/QRPge7Rh6c3AVo14qbjdpcS8ILLrQoI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyle Tso <kyletso@google.com>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Raghuram Chary J <raghuramchary.jallipalli@microchip.com>,
+	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 088/138] power: supply: core: Remove might_sleep() from power_supply_put()
-Date: Tue,  3 Dec 2024 15:31:57 +0100
-Message-ID: <20241203141926.935109617@linuxfoundation.org>
+Subject: [PATCH 4.19 089/138] net: usb: lan78xx: Fix memory leak on device unplug by freeing PHY device
+Date: Tue,  3 Dec 2024 15:31:58 +0100
+Message-ID: <20241203141926.972967200@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203141923.524658091@linuxfoundation.org>
 References: <20241203141923.524658091@linuxfoundation.org>
@@ -54,42 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bart Van Assche <bvanassche@acm.org>
+From: Oleksij Rempel <o.rempel@pengutronix.de>
 
-[ Upstream commit f6da4553ff24a5d1c959c9627c965323adc3d307 ]
+[ Upstream commit ae7370e61c5d8f5bcefc2d4fca724bd4e9bbf789 ]
 
-The put_device() call in power_supply_put() may call
-power_supply_dev_release(). The latter function does not sleep so
-power_supply_put() doesn't sleep either. Hence, remove the might_sleep()
-call from power_supply_put(). This patch suppresses false positive
-complaints about calling a sleeping function from atomic context if
-power_supply_put() is called from atomic context.
+Add calls to `phy_device_free` after `fixed_phy_unregister` to fix a
+memory leak that occurs when the device is unplugged. This ensures
+proper cleanup of pseudo fixed-link PHYs.
 
-Cc: Kyle Tso <kyletso@google.com>
-Cc: Krzysztof Kozlowski <krzk@kernel.org>
-Fixes: 1a352462b537 ("power_supply: Add power_supply_put for decrementing device reference counter")
-Signed-off-by: Bart Van Assche <bvanassche@acm.org>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://lore.kernel.org/r/20240917193914.47566-1-bvanassche@acm.org
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Fixes: 89b36fb5e532 ("lan78xx: Lan7801 Support for Fixed PHY")
+Cc: Raghuram Chary J <raghuramchary.jallipalli@microchip.com>
+Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Link: https://patch.msgid.link/20241116130558.1352230-2-o.rempel@pengutronix.de
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/power_supply_core.c | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/net/usb/lan78xx.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/power/supply/power_supply_core.c b/drivers/power/supply/power_supply_core.c
-index 3715a6c2955b2..b89d89455bcb3 100644
---- a/drivers/power/supply/power_supply_core.c
-+++ b/drivers/power/supply/power_supply_core.c
-@@ -482,8 +482,6 @@ EXPORT_SYMBOL_GPL(power_supply_get_by_name);
-  */
- void power_supply_put(struct power_supply *psy)
- {
--	might_sleep();
--
- 	atomic_dec(&psy->use_cnt);
- 	put_device(&psy->dev);
- }
+diff --git a/drivers/net/usb/lan78xx.c b/drivers/net/usb/lan78xx.c
+index f56f45c924de0..de07d90038205 100644
+--- a/drivers/net/usb/lan78xx.c
++++ b/drivers/net/usb/lan78xx.c
+@@ -2204,6 +2204,7 @@ static int lan78xx_phy_init(struct lan78xx_net *dev)
+ 		if (dev->chipid == ID_REV_CHIP_ID_7801_) {
+ 			if (phy_is_pseudo_fixed_link(phydev)) {
+ 				fixed_phy_unregister(phydev);
++				phy_device_free(phydev);
+ 			} else {
+ 				phy_unregister_fixup_for_uid(PHY_KSZ9031RNX,
+ 							     0xfffffff0);
+@@ -3884,8 +3885,10 @@ static void lan78xx_disconnect(struct usb_interface *intf)
+ 
+ 	phy_disconnect(net->phydev);
+ 
+-	if (phy_is_pseudo_fixed_link(phydev))
++	if (phy_is_pseudo_fixed_link(phydev)) {
+ 		fixed_phy_unregister(phydev);
++		phy_device_free(phydev);
++	}
+ 
+ 	unregister_netdev(net);
+ 
 -- 
 2.43.0
 
