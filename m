@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19BA51F754D;
-	Tue,  3 Dec 2024 14:35:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87DA81F669E;
+	Tue,  3 Dec 2024 14:35:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733236551; cv=none; b=gXDELqgbrpVLN35lZPT1lePzPHqmqrzqeamgnwZcRLao2YC0+EoCEyg98VX9lG5Sc+0PAzAxXiSIIboGK8kIR7mkRwsIH5EHYgbrLdsW/oldLXFNcJerI8cINnGRpILy3xStLcxK/gFoi+//Hk6jrR91D2lMXVC3FVqUxg+BseM=
+	t=1733236554; cv=none; b=AMVZ4J9H6EqydHTbq+RugHgcaCMiti45T2y9zeXc/KKwmmHvelvWzaHRfCVPzF5bLJyjBJTeQynUSD/B4lI5ifngeWvhlDBSql+Ihay3ToiOkajJWU6x8CRhWMvSA/Oopp91fesJwGoTUyTW6Fq+zXixrXL9r9j0/EmkPvFM/FM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733236551; c=relaxed/simple;
-	bh=l+wChceFfx08qyPoR1tem/Ejfw5mobnhyG51CGvye+E=;
+	s=arc-20240116; t=1733236554; c=relaxed/simple;
+	bh=zuOiESzJT0srW4NhwGdPQMKC6NItT86E+IsdyV4Up6Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D4B94JJNH206AcVrt6MkUCrFX7+D0BGZalfVxjlLI0WUZbcZ34a2gXbxLaTqzT1fDWNf6Ap/GX3oV2kPOB0/bo1rnLFqoxL7Wqm+jTHVjXWlxR4rz//uOfYIMeAiXiI6PcKoLlKR8fQpkyCbM4NV5+1xHocnvWI9gY+hW6j0RVs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YxYE8yYU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bSGE1pwGSjwYO+omFoKk37S4aRILtT+BcX3Iwr9vtkGSqJnWFYcANprLNFTu0xeQwVvko3FjgeIzi/pGANLfTVlQ1W7bc+ogbz1mexf047GivTfkQbNK+kWKkKFZLqBsLwWhR1999IAdVconompKyrkrVsa2zQzagiuOwGUtd/0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OF9Eeqkt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YxYE8yYU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F876C4CECF;
-	Tue,  3 Dec 2024 14:35:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OF9Eeqkt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E73B0C4CED8;
+	Tue,  3 Dec 2024 14:35:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733236550;
-	bh=l+wChceFfx08qyPoR1tem/Ejfw5mobnhyG51CGvye+E=;
+	s=korg; t=1733236554;
+	bh=zuOiESzJT0srW4NhwGdPQMKC6NItT86E+IsdyV4Up6Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YxYE8yYULn2wkKe0ZA8lKfFjYoee1N8i4qcYUoDqnY55otVoEixWL0KKhjXkLne8E
-	 vaYR4cBXuS9oR3YVaDyuQxqDTCYlF7SyoUHkBZZjYioNNx3sgd9SPX4ZuVBTDrTQeI
-	 iqW4nvrjmdwWLYR2T20y66wp/mVE28APD2LKYxz8=
+	b=OF9EeqkttV1pLGCSHnUGhk8000/KirClNvSfrQuRWgN47f4aqG7e8KqWMEKl40F63
+	 HKSuHkHVl3C2Bc11X82tB07CS1eT+97I1MFW/Q940Q6Vtt93b2cdoQoD3eUtT/QeB1
+	 JPf/acHNMy7E2cNp7zotk1G28GdvV1k9ReDfBZp8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Gmeiner <cgmeiner@igalia.com>,
-	Lucas Stach <l.stach@pengutronix.de>,
+	Mingwei Zheng <zmw12306@gmail.com>,
+	Jiasheng Jiang <jiashengjiangcool@gmail.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 052/138] drm/etnaviv: hold GPU lock across perfmon sampling
-Date: Tue,  3 Dec 2024 15:31:21 +0100
-Message-ID: <20241203141925.551204168@linuxfoundation.org>
+Subject: [PATCH 4.19 053/138] net: rfkill: gpio: Add check for clk_enable()
+Date: Tue,  3 Dec 2024 15:31:22 +0100
+Message-ID: <20241203141925.588308226@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203141923.524658091@linuxfoundation.org>
 References: <20241203141923.524658091@linuxfoundation.org>
@@ -51,76 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lucas Stach <l.stach@pengutronix.de>
+From: Mingwei Zheng <zmw12306@gmail.com>
 
-[ Upstream commit 37dc4737447a7667f8e9ec790dac251da057eb27 ]
+[ Upstream commit 8251e7621b25ccdb689f1dd9553b8789e3745ea1 ]
 
-The perfmon sampling mutates shared GPU state (e.g. VIVS_HI_CLOCK_CONTROL
-to select the pipe for the perf counter reads). To avoid clashing with
-other functions mutating the same state (e.g. etnaviv_gpu_update_clock)
-the perfmon sampling needs to hold the GPU lock.
+Add check for the return value of clk_enable() to catch the potential
+error.
 
-Fixes: 68dc0b295dcb ("drm/etnaviv: use 'sync points' for performance monitor requests")
-Reviewed-by: Christian Gmeiner <cgmeiner@igalia.com>
-Signed-off-by: Lucas Stach <l.stach@pengutronix.de>
+Fixes: 7176ba23f8b5 ("net: rfkill: add generic gpio rfkill driver")
+Signed-off-by: Mingwei Zheng <zmw12306@gmail.com>
+Signed-off-by: Jiasheng Jiang <jiashengjiangcool@gmail.com>
+Link: https://patch.msgid.link/20241108195341.1853080-1-zmw12306@gmail.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/etnaviv/etnaviv_gpu.c | 20 ++++++++++++++------
- 1 file changed, 14 insertions(+), 6 deletions(-)
+ net/rfkill/rfkill-gpio.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/etnaviv/etnaviv_gpu.c b/drivers/gpu/drm/etnaviv/etnaviv_gpu.c
-index ef82ad6251077..dec636b96531b 100644
---- a/drivers/gpu/drm/etnaviv/etnaviv_gpu.c
-+++ b/drivers/gpu/drm/etnaviv/etnaviv_gpu.c
-@@ -1237,6 +1237,8 @@ static void sync_point_perfmon_sample_pre(struct etnaviv_gpu *gpu,
+diff --git a/net/rfkill/rfkill-gpio.c b/net/rfkill/rfkill-gpio.c
+index 7524544a965fc..c1df7054c2f08 100644
+--- a/net/rfkill/rfkill-gpio.c
++++ b/net/rfkill/rfkill-gpio.c
+@@ -44,8 +44,12 @@ static int rfkill_gpio_set_power(void *data, bool blocked)
  {
- 	u32 val;
+ 	struct rfkill_gpio_data *rfkill = data;
  
-+	mutex_lock(&gpu->lock);
+-	if (!blocked && !IS_ERR(rfkill->clk) && !rfkill->clk_enabled)
+-		clk_enable(rfkill->clk);
++	if (!blocked && !IS_ERR(rfkill->clk) && !rfkill->clk_enabled) {
++		int ret = clk_enable(rfkill->clk);
 +
- 	/* disable clock gating */
- 	val = gpu_read_power(gpu, VIVS_PM_POWER_CONTROLS);
- 	val &= ~VIVS_PM_POWER_CONTROLS_ENABLE_MODULE_CLOCK_GATING;
-@@ -1248,6 +1250,8 @@ static void sync_point_perfmon_sample_pre(struct etnaviv_gpu *gpu,
- 	gpu_write(gpu, VIVS_HI_CLOCK_CONTROL, val);
- 
- 	sync_point_perfmon_sample(gpu, event, ETNA_PM_PROCESS_PRE);
-+
-+	mutex_unlock(&gpu->lock);
- }
- 
- static void sync_point_perfmon_sample_post(struct etnaviv_gpu *gpu,
-@@ -1257,13 +1261,9 @@ static void sync_point_perfmon_sample_post(struct etnaviv_gpu *gpu,
- 	unsigned int i;
- 	u32 val;
- 
--	sync_point_perfmon_sample(gpu, event, ETNA_PM_PROCESS_POST);
--
--	for (i = 0; i < submit->nr_pmrs; i++) {
--		const struct etnaviv_perfmon_request *pmr = submit->pmrs + i;
-+	mutex_lock(&gpu->lock);
- 
--		*pmr->bo_vma = pmr->sequence;
--	}
-+	sync_point_perfmon_sample(gpu, event, ETNA_PM_PROCESS_POST);
- 
- 	/* disable debug register */
- 	val = gpu_read(gpu, VIVS_HI_CLOCK_CONTROL);
-@@ -1274,6 +1274,14 @@ static void sync_point_perfmon_sample_post(struct etnaviv_gpu *gpu,
- 	val = gpu_read_power(gpu, VIVS_PM_POWER_CONTROLS);
- 	val |= VIVS_PM_POWER_CONTROLS_ENABLE_MODULE_CLOCK_GATING;
- 	gpu_write_power(gpu, VIVS_PM_POWER_CONTROLS, val);
-+
-+	mutex_unlock(&gpu->lock);
-+
-+	for (i = 0; i < submit->nr_pmrs; i++) {
-+		const struct etnaviv_perfmon_request *pmr = submit->pmrs + i;
-+
-+		*pmr->bo_vma = pmr->sequence;
++		if (ret)
++			return ret;
 +	}
- }
  
- 
+ 	gpiod_set_value_cansleep(rfkill->shutdown_gpio, !blocked);
+ 	gpiod_set_value_cansleep(rfkill->reset_gpio, !blocked);
 -- 
 2.43.0
 
