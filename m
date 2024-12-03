@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DA2F1F76DB;
-	Tue,  3 Dec 2024 16:11:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4A5742AA0;
+	Tue,  3 Dec 2024 16:11:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733242302; cv=none; b=pumIeC+W7ltT72ihvw5arRhwcOqJGj21dWGnrkwFvmKM++X6WWkkKfIxL4uamC1R4kUvBnu2lRFZAiXCOpJhTwvRlLzyz6gYOQKX5xgGEMh9IRQbL740mrid3YWa2DtOa52G1FZn2qc5XqwP1NwmuKk9Go41Sgkk1GGS308981M=
+	t=1733242305; cv=none; b=F0uzcNVeTzrOF6dN+TxiabGRR7iuEg+p+SKy7hfckpeokKJYVGVZRXXWRT1RlxSzGas2jL1ru2yHAhocGPKXwBDNwHeFLaFmib7gkCtRFsJlObtxxCnifwVj2gqeeMnIiuJGIbvgLIIMJKfrMski3KkGZG4jutVGgmowzR4+VFg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733242302; c=relaxed/simple;
-	bh=2xVGwk94yOV04Ij8NTRxV5HR98pTQJ08/WD9xWMt5uA=;
+	s=arc-20240116; t=1733242305; c=relaxed/simple;
+	bh=Lf1wOcfZF4+vb6ZFBLAaOBWZFV3M2ZCXKbKnAmrAm9I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c/wNyQXh5k4NwaoEjqq+vIzJSXEEjEzVKmtlCVOhsr65cqzA3xiyDEGuvIs9s85qOOIZCKHK3wdPOrqMFFpvnEw0Lmf85idPY5HFYxGNp7bX3hP3hifQO400PSgn1cDWb0EqKgmuzIEsbibB8t/sY898xC29EAAxcZNmw96iLTE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dO5XSGt9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ms/i5y6plYKx45hys09Y4HYmHroyAOX30VD/bhdotYDQpYFJo8yZVCy/XE2IrAts23dUjmz50f7wLgGEkK4wJCQRLFxFjIrO1K5KB1FBl4fLKEQVwSSCwFzPt/HiXtU5J09391gYbVkLtgwgDUjGz4GTID+5AGIv36RcwySIsVw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jPWsohZ5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dO5XSGt9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBACFC4CECF;
-	Tue,  3 Dec 2024 16:11:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jPWsohZ5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33B3BC4CECF;
+	Tue,  3 Dec 2024 16:11:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733242302;
-	bh=2xVGwk94yOV04Ij8NTRxV5HR98pTQJ08/WD9xWMt5uA=;
+	s=korg; t=1733242305;
+	bh=Lf1wOcfZF4+vb6ZFBLAaOBWZFV3M2ZCXKbKnAmrAm9I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dO5XSGt9Wph6aAKrySwzUEpXg3E/eP9X/No3HVWOK4/ewbaKeXhvFM2gY2JGGPBIw
-	 cVfnH2PtZJGJ4ocX9fYlQudr1DKQ36TCan3nWM8hZi6LOsE4yOJ5xtHnrRxrQKSQbK
-	 Sq0jb+PDfWf4QnEYADZxjX2LUd2NUUAfygNPWq+M=
+	b=jPWsohZ57gnsz7FwM1c3zpfz6E6sfuUnluE7mlqCuOZZx4PXf5cFvd6+Imm61iDNi
+	 5LzmG4vQRDqFV3JwQMYy12EbsY27ZxtPEksSo/EqhxY75hN1n+Vx/andDqyIZCpKCh
+	 YTsHRh+Spmf+TQ6pqPGXhCFd6ZGg42MOo7MA6DsQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
-	Lennart Poettering <lennart@poettering.net>,
-	Christian Brauner <brauner@kernel.org>
-Subject: [PATCH 6.12 666/826] fcntl: make F_DUPFD_QUERY associative
-Date: Tue,  3 Dec 2024 15:46:33 +0100
-Message-ID: <20241203144809.734838096@linuxfoundation.org>
+	Anjelique Melendez <quic_amelende@quicinc.com>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Linus Walleij <linus.walleij@linaro.org>
+Subject: [PATCH 6.12 667/826] pinctrl: qcom: spmi: fix debugfs drive strength
+Date: Tue,  3 Dec 2024 15:46:34 +0100
+Message-ID: <20241203144809.773081279@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -51,51 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-commit 2714b0d1f36999dbd99a3474a24e7301acbd74f1 upstream.
+commit 6bc0ebfb1d920f13c522545f114cdabb49e9408a upstream.
 
-Currently when passing a closed file descriptor to
-fcntl(fd, F_DUPFD_QUERY, fd_dup) the order matters:
+Commit 723e8462a4fe ("pinctrl: qcom: spmi-gpio: Fix the GPIO strength
+mapping") fixed a long-standing issue in the Qualcomm SPMI PMIC gpio
+driver which had the 'low' and 'high' drive strength settings switched
+but failed to update the debugfs interface which still gets this wrong.
 
-    fd = open("/dev/null");
-    fd_dup = dup(fd);
+Fix the debugfs code so that the exported values match the hardware
+settings.
 
-When we now close one of the file descriptors we get:
+Note that this probably means that most devicetrees that try to describe
+the firmware settings got this wrong if the settings were derived from
+debugfs. Before the above mentioned commit the settings would have
+actually matched the firmware settings even if they were described
+incorrectly, but now they are inverted.
 
-    (1) fcntl(fd, fd_dup) // -EBADF
-    (2) fcntl(fd_dup, fd) // 0 aka not equal
-
-depending on which file descriptor is passed first. That's not a huge
-deal but it gives the api I slightly weird feel. Make it so that the
-order doesn't matter by requiring that both file descriptors are valid:
-
-(1') fcntl(fd, fd_dup) // -EBADF
-(2') fcntl(fd_dup, fd) // -EBADF
-
-Link: https://lore.kernel.org/r/20241008-duften-formel-251f967602d5@brauner
-Fixes: c62b758bae6a ("fcntl: add F_DUPFD_QUERY fcntl()")
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Reviewed-By: Lennart Poettering <lennart@poettering.net>
-Cc: stable@vger.kernel.org
-Reported-by: Lennart Poettering <lennart@poettering.net>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Fixes: 723e8462a4fe ("pinctrl: qcom: spmi-gpio: Fix the GPIO strength mapping")
+Fixes: eadff3024472 ("pinctrl: Qualcomm SPMI PMIC GPIO pin controller driver")
+Cc: Anjelique Melendez <quic_amelende@quicinc.com>
+Cc: stable@vger.kernel.org	# 3.19
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://lore.kernel.org/20241025121622.1496-1-johan+linaro@kernel.org
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/fcntl.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/pinctrl/qcom/pinctrl-spmi-gpio.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/fcntl.c
-+++ b/fs/fcntl.c
-@@ -397,6 +397,9 @@ static long f_dupfd_query(int fd, struct
- {
- 	CLASS(fd_raw, f)(fd);
+--- a/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
++++ b/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
+@@ -667,7 +667,7 @@ static void pmic_gpio_config_dbg_show(st
+ 		"push-pull", "open-drain", "open-source"
+ 	};
+ 	static const char *const strengths[] = {
+-		"no", "high", "medium", "low"
++		"no", "low", "medium", "high"
+ 	};
  
-+	if (fd_empty(f))
-+		return -EBADF;
-+
- 	/*
- 	 * We can do the 'fdput()' immediately, as the only thing that
- 	 * matters is the pointer value which isn't changed by the fdput.
+ 	pad = pctldev->desc->pins[pin].drv_data;
 
 
