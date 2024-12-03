@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1510F1F6691;
-	Tue,  3 Dec 2024 15:07:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2C3B1F7569;
+	Tue,  3 Dec 2024 15:07:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733238442; cv=none; b=Yn8OIpF5YDAyhnBBfsjyDOQP95eiTAJpDiIHhRDKbFX/oCt1MgESL8vsK7LY5MmNo6spZk06IgZUDLiZQsaInhWZunMXrviXcOFA5P3YVCwACcRcvDFoblIw3zNYFnreNjGLN51fbKe6IaPDSTHRAiG1UNlBjWQUXvHxowW360o=
+	t=1733238445; cv=none; b=LbpcDEVXfKPa7xHCJrjBGKUe5PXfxUmRsNxg8/XkOMAow0irbo5uCuIcT5MUq67pWkCxPv1QP0EzrPIIXxBTKpiCPhwy9GNthdXD8ykVaKj2oyf13AqZ1cx5w8JrjXDEyfWGu6GbsqRrDBpcq16iHLr8U3PeONCv81EXy70ods0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733238442; c=relaxed/simple;
-	bh=FNxd6J1liP/EgOIXfpDvfYUNDCWE0mDjcWPMzsCujTs=;
+	s=arc-20240116; t=1733238445; c=relaxed/simple;
+	bh=jS5kBIbWgpRJ+u2icoy1SAsg6EKjFLueckwPcv73NhI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=jq5u+CT9gMhxdSa88Q8pfkdb5LH+gDXna9NZO27cRmErm/S6MYsZ3Mxn19Ku7FnPhPPG+E7ZKwBVhiF59ZtvNsANaVYWlFHozUXpB+Ba33HP+JMfTVHF7G/cYJiYacNxI9Zuubt+NM4NkX2HBcBNhl38wrxjGpY0DZw3YHCTmeA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CKzmebcC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pDcwk0hPS60H69GpYFiaKzpXfqGVL8hhbBL2XUij4D2OC3H0kG5oLWoYK2j6r/4CL0oo8esP+k0N6kG3nYSvFyjzbmz1bWes8GMKWhDjXhZDRHP1gximmz2XYrVe8yMULiITdzOEcxpHWbkwFwfyMBiATm4INK8HmKGwg3UhXu0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W4wx1ULh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CKzmebcC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86838C4CECF;
-	Tue,  3 Dec 2024 15:07:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W4wx1ULh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BAADC4CECF;
+	Tue,  3 Dec 2024 15:07:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733238441;
-	bh=FNxd6J1liP/EgOIXfpDvfYUNDCWE0mDjcWPMzsCujTs=;
+	s=korg; t=1733238444;
+	bh=jS5kBIbWgpRJ+u2icoy1SAsg6EKjFLueckwPcv73NhI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CKzmebcC+SV4iu+4ZgXIIXFpXX/HfuYHEAM0/Z3PJJQY4Oy+kUDBCliiB8d6NBru9
-	 15+TvXkDF+ukmOzoOLnzzjNQ7+fOFq22YbgrkKpM17vGnBjt1r9Wxe+Kc/Au/PE72W
-	 DGymgov21t4YZxtR9F91My4ffctBr2lia0f+m3OM=
+	b=W4wx1ULhQqPFk8SCO3muoUReKeYle9DtTRxMsx5BCWvyQIrO83sq5onJUolbEvtLh
+	 p8H76CaJxqT1/59VRjoq3WRNTvVdCpsfVIFEwFTeAWqPqwx5nQk/Si+Kmc62KNVuQ5
+	 STmqc++FI0CHcT1aCH514EPUP+pZG62HlnoKaq3o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Alexis=20Lothor=C3=A9?= <alexis.lothore@bootlin.com>,
-	Marek Vasut <marex@denx.de>,
+	Alper Nebi Yasak <alpernebiyasak@gmail.com>,
+	Brian Norris <briannorris@chromium.org>,
 	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 279/817] wifi: wilc1000: Set MAC after operation mode
-Date: Tue,  3 Dec 2024 15:37:31 +0100
-Message-ID: <20241203144006.697127461@linuxfoundation.org>
+Subject: [PATCH 6.11 280/817] wifi: mwifiex: Fix memcpy() field-spanning write warning in mwifiex_config_scan()
+Date: Tue,  3 Dec 2024 15:37:32 +0100
+Message-ID: <20241203144006.736003171@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -46,84 +46,59 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.11-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Marek Vasut <marex@denx.de>
+From: Alper Nebi Yasak <alpernebiyasak@gmail.com>
 
-[ Upstream commit 29dd3e48b9bd88bf65a1e760126fa18d1def7b30 ]
+[ Upstream commit d241a139c2e9f8a479f25c75ebd5391e6a448500 ]
 
-It seems it is necessary to set WILC MAC address after operation mode,
-otherwise the MAC address of the WILC MAC is reset back to what is in
-nvmem. This causes a failure to associate with AP after the WILC MAC
-address was overridden by userspace.
+Replace one-element array with a flexible-array member in `struct
+mwifiex_ie_types_wildcard_ssid_params` to fix the following warning
+on a MT8173 Chromebook (mt8173-elm-hana):
 
-Test case:
-"
-ap$ cat << EOF > hostap.conf
-interface=wlan0
-ssid=ssid
-hw_mode=g
-channel=6
-wpa=2
-wpa_passphrase=pass
-wpa_key_mgmt=WPA-PSK
-EOF
-ap$ hostapd -d hostap.conf
-ap$ ifconfig wlan0 10.0.0.1
-"
+[  356.775250] ------------[ cut here ]------------
+[  356.784543] memcpy: detected field-spanning write (size 6) of single field "wildcard_ssid_tlv->ssid" at drivers/net/wireless/marvell/mwifiex/scan.c:904 (size 1)
+[  356.813403] WARNING: CPU: 3 PID: 742 at drivers/net/wireless/marvell/mwifiex/scan.c:904 mwifiex_scan_networks+0x4fc/0xf28 [mwifiex]
 
-"
-sta$ ifconfig wlan0 hw ether 00:11:22:33:44:55
-sta$ wpa_supplicant -i wlan0 -c <(wpa_passphrase ssid pass)
-sta$ ifconfig wlan0 10.0.0.2
-sta$ ping 10.0.0.1 # fails without this patch
-"
+The "(size 6)" above is exactly the length of the SSID of the network
+this device was connected to. The source of the warning looks like:
 
-AP still indicates SA with original MAC address from nvmem without this patch:
-"
-nl80211: RX frame da=ff:ff:ff:ff:ff:ff sa=60:01:23:45:67:89 bssid=ff:ff:ff:ff:ff:ff ...
-                                          ^^^^^^^^^^^^^^^^^
-"
+    ssid_len = user_scan_in->ssid_list[i].ssid_len;
+    [...]
+    memcpy(wildcard_ssid_tlv->ssid,
+           user_scan_in->ssid_list[i].ssid, ssid_len);
 
-Fixes: 83d9b54ee5d4 ("wifi: wilc1000: read MAC address from fuse at probe")
-Tested-by: Alexis Lothoré <alexis.lothore@bootlin.com>
-Signed-off-by: Marek Vasut <marex@denx.de>
+There is a #define WILDCARD_SSID_TLV_MAX_SIZE that uses sizeof() on this
+struct, but it already didn't account for the size of the one-element
+array, so it doesn't need to be changed.
+
+Fixes: 5e6e3a92b9a4 ("wireless: mwifiex: initial commit for Marvell mwifiex driver")
+Signed-off-by: Alper Nebi Yasak <alpernebiyasak@gmail.com>
+Acked-by: Brian Norris <briannorris@chromium.org>
 Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://patch.msgid.link/20241003132504.52233-1-marex@denx.de
+Link: https://patch.msgid.link/20241007222301.24154-1-alpernebiyasak@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/microchip/wilc1000/netdev.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/net/wireless/marvell/mwifiex/fw.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/microchip/wilc1000/netdev.c b/drivers/net/wireless/microchip/wilc1000/netdev.c
-index 9ecf3fb29b558..8bc127c5a538c 100644
---- a/drivers/net/wireless/microchip/wilc1000/netdev.c
-+++ b/drivers/net/wireless/microchip/wilc1000/netdev.c
-@@ -608,6 +608,9 @@ static int wilc_mac_open(struct net_device *ndev)
- 		return ret;
- 	}
+diff --git a/drivers/net/wireless/marvell/mwifiex/fw.h b/drivers/net/wireless/marvell/mwifiex/fw.h
+index 5b072120e3f21..324efd55c8e4f 100644
+--- a/drivers/net/wireless/marvell/mwifiex/fw.h
++++ b/drivers/net/wireless/marvell/mwifiex/fw.h
+@@ -842,7 +842,7 @@ struct mwifiex_ietypes_chanstats {
+ struct mwifiex_ie_types_wildcard_ssid_params {
+ 	struct mwifiex_ie_types_header header;
+ 	u8 max_ssid_length;
+-	u8 ssid[1];
++	u8 ssid[];
+ } __packed;
  
-+	wilc_set_operation_mode(vif, wilc_get_vif_idx(vif), vif->iftype,
-+				vif->idx);
-+
- 	netdev_dbg(ndev, "Mac address: %pM\n", ndev->dev_addr);
- 	ret = wilc_set_mac_address(vif, ndev->dev_addr);
- 	if (ret) {
-@@ -618,9 +621,6 @@ static int wilc_mac_open(struct net_device *ndev)
- 		return ret;
- 	}
- 
--	wilc_set_operation_mode(vif, wilc_get_vif_idx(vif), vif->iftype,
--				vif->idx);
--
- 	mgmt_regs.interface_stypes = vif->mgmt_reg_stypes;
- 	/* so we detect a change */
- 	vif->mgmt_reg_stypes = 0;
+ #define TSF_DATA_SIZE            8
 -- 
 2.43.0
 
