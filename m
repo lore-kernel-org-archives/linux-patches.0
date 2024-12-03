@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E1292C80;
-	Tue,  3 Dec 2024 15:49:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C0BA2C80;
+	Tue,  3 Dec 2024 15:49:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733240959; cv=none; b=Z6NKsSbjuqgU2yZHAhA/2xImJpr5mq3ta01x02x/6EJ1RHCQAR5CD56Hr00vfL9FJR3t6uan0dvBDotrw+ig8DOXoTvBBYr/OUEiMy5EWOFwbAgdEhksCHSL3hrjy9GaupzYRqBZrKFJaq93eSFZ0ywSzo4j5T0w2Ph+jHuF9kI=
+	t=1733240962; cv=none; b=TvRQbKs6kDncRjdZewUchSa/ZMKPSwLjFXTW66rINkb2zhykjJU7SpIRS/4jq0Qm2FbBI5jDOvgcjHrrUG9BaMspdYYZanO8svGOKfHlU+6w8vW/skLodLzMF0+WcPC35qOZnE2XcGoVBrXqWnetSDRB+G7VsFs8BWF/DL+N1Bk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733240959; c=relaxed/simple;
-	bh=h+A1vpS25tvamGn0SWbrCJoIJEiPTCdKBNOpi+313Kw=;
+	s=arc-20240116; t=1733240962; c=relaxed/simple;
+	bh=4psw16yif1wqH/Gz3LMW7z5uEgO+JbwEBPb5tBGNKZk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J7qbqrRSMdrnVrMv1mfhFYQoLFz1aRzwcwwy5QjlJ6KKYtzjiQbKNtr5daXf8elBZZSxq5dxf+tvvUSWRYo9czv7U3fmJaIAODx2l6xK40nVoDd1vL++Wz1CA/HrhDWdr8AM0rShSjjkXKDJX4Nv+z4n9WNZNdCCSIvtLRJHZdM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oHyfQvAR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cZIZRChZnTsHuMDfRlwUJf4jB57IsChCAEtLEuIObSx6zimC3oRzZP2MqmgCsoJQjo6hxwnXAWu3QzRcNQA3hoPEgShXO4wV474YMyMqEYnascD33ZM2dQClhjAH6W9KyXGT4FZw9yqsVLLyTn3sowoN2Z5V9fdwVGJrXPCbHyA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MR04oNsQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oHyfQvAR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 829D6C4CECF;
-	Tue,  3 Dec 2024 15:49:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MR04oNsQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03E00C4CED8;
+	Tue,  3 Dec 2024 15:49:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733240959;
-	bh=h+A1vpS25tvamGn0SWbrCJoIJEiPTCdKBNOpi+313Kw=;
+	s=korg; t=1733240962;
+	bh=4psw16yif1wqH/Gz3LMW7z5uEgO+JbwEBPb5tBGNKZk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oHyfQvARU9x+AxeSyJeLNfM0d9h5OW5jRbAzgKs71g2yiMAOECD9c8CgKBHshmfR2
-	 MtISeAUjaVVyMq2y9VV3JMRKQX1L837BVjtGnbNjTKGXr0DAmr5LYJLee/KpbUDziq
-	 sm6KfCSPeR6tG5nXBSJ/frzPHjQMILf1FYD5ZGis=
+	b=MR04oNsQBYCZJ2sUVy3YCl+8yTtj4jSjyyVYGoFZ2mcdKJUCWGhBuQhPlfLsVmjqi
+	 j2YDHud7NsCPvXHG/GWTJm8cTU/0Mz0Rij6dsNLIvfThJOgCSx8jmFQNiE+JE0QFfM
+	 hA5f8OK9PH2BzPmR3/srhCG+CWF95RDNv/+0SYWo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Anderson <sean.anderson@linux.dev>,
+	Steffen Dirkwinkel <s.dirkwinkel@beckhoff.com>,
 	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 286/826] drm: zynqmp_kms: Unplug DRM device before removal
-Date: Tue,  3 Dec 2024 15:40:13 +0100
-Message-ID: <20241203144754.928312781@linuxfoundation.org>
+Subject: [PATCH 6.12 287/826] drm: xlnx: zynqmp_disp: layer may be null while releasing
+Date: Tue,  3 Dec 2024 15:40:14 +0100
+Message-ID: <20241203144754.966424975@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -51,38 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Anderson <sean.anderson@linux.dev>
+From: Steffen Dirkwinkel <s.dirkwinkel@beckhoff.com>
 
-[ Upstream commit 2e07c88914fc5289c21820b1aa94f058feb38197 ]
+[ Upstream commit 223842c7702b52846b1c5aef8aca7474ec1fd29b ]
 
-Prevent userspace accesses to the DRM device from causing
-use-after-frees by unplugging the device before we remove it. This
-causes any further userspace accesses to result in an error without
-further calls into this driver's internals.
+layer->info can be null if we have an error on the first layer in
+zynqmp_disp_create_layers
 
-Fixes: d76271d22694 ("drm: xlnx: DRM/KMS driver for Xilinx ZynqMP DisplayPort Subsystem")
-Closes: https://lore.kernel.org/dri-devel/4d8f4c9b-2efb-4774-9a37-2f257f79b2c9@linux.dev/
-Signed-off-by: Sean Anderson <sean.anderson@linux.dev>
+Fixes: 1836fd5ed98d ("drm: xlnx: zynqmp_dpsub: Minimize usage of global flag")
+Signed-off-by: Steffen Dirkwinkel <s.dirkwinkel@beckhoff.com>
 Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240809193600.3360015-2-sean.anderson@linux.dev
+Link: https://patchwork.freedesktop.org/patch/msgid/20241028133941.54264-1-lists@steffen.cc
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xlnx/zynqmp_kms.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/xlnx/zynqmp_disp.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/gpu/drm/xlnx/zynqmp_kms.c b/drivers/gpu/drm/xlnx/zynqmp_kms.c
-index bd1368df78703..4556af2faa0f1 100644
---- a/drivers/gpu/drm/xlnx/zynqmp_kms.c
-+++ b/drivers/gpu/drm/xlnx/zynqmp_kms.c
-@@ -536,7 +536,7 @@ void zynqmp_dpsub_drm_cleanup(struct zynqmp_dpsub *dpsub)
+diff --git a/drivers/gpu/drm/xlnx/zynqmp_disp.c b/drivers/gpu/drm/xlnx/zynqmp_disp.c
+index 9368acf56eaf7..e4e0e299e8a7d 100644
+--- a/drivers/gpu/drm/xlnx/zynqmp_disp.c
++++ b/drivers/gpu/drm/xlnx/zynqmp_disp.c
+@@ -1200,6 +1200,9 @@ static void zynqmp_disp_layer_release_dma(struct zynqmp_disp *disp,
  {
- 	struct drm_device *drm = &dpsub->drm->dev;
+ 	unsigned int i;
  
--	drm_dev_unregister(drm);
-+	drm_dev_unplug(drm);
- 	drm_atomic_helper_shutdown(drm);
- 	drm_encoder_cleanup(&dpsub->drm->encoder);
- 	drm_kms_helper_poll_fini(drm);
++	if (!layer->info)
++		return;
++
+ 	for (i = 0; i < layer->info->num_channels; i++) {
+ 		struct zynqmp_disp_layer_dma *dma = &layer->dmas[i];
+ 
 -- 
 2.43.0
 
