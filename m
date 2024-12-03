@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D6371F7578;
-	Tue,  3 Dec 2024 15:01:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 495F41F7558;
+	Tue,  3 Dec 2024 15:01:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733238091; cv=none; b=IrDNBH3eTsuHkqSl9d62Oa3KEoBf4QQE2IlaQ9c2W3iwhmjKZPErP+GV2JSo1yPzNp6LMzFlvCXpwW0g1eS/opVHE1NZp0C7+U0cy+oLcXBR+3eODgCbuJpicnhFHVR+Y2z4DM1SuzhN8kDj9Xf6MDLLR05VF0RD4gOh/RC6uWc=
+	t=1733238094; cv=none; b=Zho8ZFD0OygxtcCJQMnf0yAADBnUEOwvSbmTZxjGJXC1RKxOf1DmHCqv25XKK9dkbsC+WjSDWpE5ffSUQ4hPbL632JzzkxPbVvAvGqM2ODzyA8ddl39IBkQgAR+05PjNdbF95nxZlSPxrf8My9Lpf+FAHcFJXen0exY1Ju+k7nc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733238091; c=relaxed/simple;
-	bh=mCX7FiaQ4NP32ZRQBhjcFBAQBxfhoaTI/SRYoSDxBFI=;
+	s=arc-20240116; t=1733238094; c=relaxed/simple;
+	bh=cVFMNuhgFRiRSDIYw9RuWaNJy88UEvvl5Km/5O531hg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Jir/MNaVbP/9VV3iBoeUEYFXSBI3fDAyaOHs0OXw/gWEiE5chD/T47M1th0SELbdQlCr1scHmmmxGf6fq6K+oUke7k2d9Wk/neWXNWvoIAt2T19u4mufFxN+qYt9QFTS/a0ScmqDHPwAoYk8U2BN6kxCkb1jBfwszwKyIXcjQBQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LG1/TJXV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ezdLVjzaBGSsfTdMyK3L5dyQM6bsY7+prI7Umj8YGsI8F6aBuXELQtwCyJsA5kPJ9rWrDoldh+g613zVCYAjRx3t766XSF+DNzgReJsDz4Bd8bHCj/TcyoWqG+pJ2ZLVz2bNhLNwuPyRGXHlOv9WWTY3z3Btvqz+BcV7Cui3cTE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cM/EryM+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LG1/TJXV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9804C4CECF;
-	Tue,  3 Dec 2024 15:01:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cM/EryM+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4A46C4CED9;
+	Tue,  3 Dec 2024 15:01:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733238091;
-	bh=mCX7FiaQ4NP32ZRQBhjcFBAQBxfhoaTI/SRYoSDxBFI=;
+	s=korg; t=1733238094;
+	bh=cVFMNuhgFRiRSDIYw9RuWaNJy88UEvvl5Km/5O531hg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LG1/TJXVEC8qpxdrdyyz/5SJP08wu+xszKha66DABxiIOPBxZhh2oOFpVAQXJ2E2p
-	 /7LIItn7KOMwEhufuduIVY4/X4JCTJnChiRdedBxdNPmZ4GEJBd+TdNTxKSw4mp7+3
-	 HDUO+7ZfiL1Dd7FOS8b4ny6AemVrI5RHoio3Hzh4=
+	b=cM/EryM+jHhGm9YrcgEKtmkjFTnpQgLp5q0RuVR4kNqAypDAp+Yd+POpb5qh8yBUs
+	 j5NZrwTmfYGJsSc5GcoqDJpUUnRDlRPp4zad2GIGgPgi92las/eEOBZq2pFezwaBui
+	 CUA8ZcouvtY3RPjGF3izMMMMdWL9MyjOX0xYl9rw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abel Vesa <abel.vesa@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Stafford Horne <shorne@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 158/817] arm64: dts: qcom: x1e80100-vivobook-s15: Drop orientation-switch from USB SS[0-1] QMP PHYs
-Date: Tue,  3 Dec 2024 15:35:30 +0100
-Message-ID: <20241203144001.893514686@linuxfoundation.org>
+Subject: [PATCH 6.11 159/817] openrisc: Implement fixmap to fix earlycon
+Date: Tue,  3 Dec 2024 15:35:31 +0100
+Message-ID: <20241203144001.933014531@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -51,44 +50,162 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abel Vesa <abel.vesa@linaro.org>
+From: Stafford Horne <shorne@gmail.com>
 
-[ Upstream commit 27344eb70c8fd60fe7c570e2e12f169ff89d2c47 ]
+[ Upstream commit 1037d186edfc551fa7ba2d4336e74e7575a07a65 ]
 
-The orientation-switch is already set in the x1e80100 SoC dtsi,
-so drop from Vivobook S15 dts.
+With commit 53c98e35dcbc ("openrisc: mm: remove unneeded early ioremap
+code") it was commented that early ioremap was not used in OpenRISC.  I
+acked this but was wrong, earlycon was using it.  Earlycon setup now
+fails with the below trace:
 
-Fixes: d0e2f8f62dff ("arm64: dts: qcom: Add device tree for ASUS Vivobook S 15")
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-Link: https://lore.kernel.org/r/20241014-x1e80100-dts-drop-orientation-switch-v1-2-26afa6d4afd9@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+    Kernel command line: earlycon
+    ------------[ cut here ]------------
+    WARNING: CPU: 0 PID: 0 at mm/ioremap.c:23
+    generic_ioremap_prot+0x118/0x130
+    Modules linked in:
+    CPU: 0 UID: 0 PID: 0 Comm: swapper Not tainted
+    6.11.0-rc5-00001-gce02fd891c38-dirty #141
+    Call trace:
+    [<(ptrval)>] dump_stack_lvl+0x7c/0x9c
+    [<(ptrval)>] dump_stack+0x1c/0x2c
+    [<(ptrval)>] __warn+0xb4/0x108
+    [<(ptrval)>] ? generic_ioremap_prot+0x118/0x130
+    [<(ptrval)>] warn_slowpath_fmt+0x60/0x98
+    [<(ptrval)>] generic_ioremap_prot+0x118/0x130
+    [<(ptrval)>] ioremap_prot+0x20/0x30
+    [<(ptrval)>] of_setup_earlycon+0xd4/0x2e0
+    [<(ptrval)>] early_init_dt_scan_chosen_stdout+0x18c/0x1c8
+    [<(ptrval)>] param_setup_earlycon+0x3c/0x60
+    [<(ptrval)>] do_early_param+0xb0/0x118
+    [<(ptrval)>] parse_args+0x184/0x4b8
+    [<(ptrval)>] ? start_kernel+0x0/0x78c
+    [<(ptrval)>] parse_early_options+0x40/0x50
+    [<(ptrval)>] ? do_early_param+0x0/0x118
+    [<(ptrval)>] parse_early_param+0x48/0x68
+    [<(ptrval)>] ? start_kernel+0x318/0x78c
+    [<(ptrval)>] ? start_kernel+0x0/0x78c
+    ---[ end trace 0000000000000000 ]---
+
+To fix this we could either implement early_ioremap again or implement
+fixmap.  In this patch we choose the later option of implementing basic
+fixmap support.
+
+While fixing this we also remove the old FIX_IOREMAP slots that were
+used by early ioremap code.  That code was also removed by commit
+53c98e35dcbc ("openrisc: mm: remove unneeded early ioremap code") but
+these definitions were not cleaned up.
+
+Fixes: 53c98e35dcbc ("openrisc: mm: remove unneeded early ioremap code")
+Signed-off-by: Stafford Horne <shorne@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts | 4 ----
- 1 file changed, 4 deletions(-)
+ arch/openrisc/Kconfig              |  3 +++
+ arch/openrisc/include/asm/fixmap.h | 21 ++++-------------
+ arch/openrisc/mm/init.c            | 37 ++++++++++++++++++++++++++++++
+ 3 files changed, 45 insertions(+), 16 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts b/arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts
-index 530db0913f91d..7d4e039f63cf4 100644
---- a/arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts
-+++ b/arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts
-@@ -598,8 +598,6 @@ &usb_1_ss0_qmpphy {
- 	vdda-phy-supply = <&vreg_l3e_1p2>;
- 	vdda-pll-supply = <&vreg_l1j_0p8>;
+diff --git a/arch/openrisc/Kconfig b/arch/openrisc/Kconfig
+index 69c0258700b28..3279ef457c573 100644
+--- a/arch/openrisc/Kconfig
++++ b/arch/openrisc/Kconfig
+@@ -65,6 +65,9 @@ config STACKTRACE_SUPPORT
+ config LOCKDEP_SUPPORT
+ 	def_bool  y
  
--	orientation-switch;
--
- 	status = "okay";
++config FIX_EARLYCON_MEM
++	def_bool y
++
+ menu "Processor type and features"
+ 
+ choice
+diff --git a/arch/openrisc/include/asm/fixmap.h b/arch/openrisc/include/asm/fixmap.h
+index ecdb98a5839f7..aaa6a26a3e921 100644
+--- a/arch/openrisc/include/asm/fixmap.h
++++ b/arch/openrisc/include/asm/fixmap.h
+@@ -26,29 +26,18 @@
+ #include <linux/bug.h>
+ #include <asm/page.h>
+ 
+-/*
+- * On OpenRISC we use these special fixed_addresses for doing ioremap
+- * early in the boot process before memory initialization is complete.
+- * This is used, in particular, by the early serial console code.
+- *
+- * It's not really 'fixmap', per se, but fits loosely into the same
+- * paradigm.
+- */
+ enum fixed_addresses {
+-	/*
+-	 * FIX_IOREMAP entries are useful for mapping physical address
+-	 * space before ioremap() is useable, e.g. really early in boot
+-	 * before kmalloc() is working.
+-	 */
+-#define FIX_N_IOREMAPS  32
+-	FIX_IOREMAP_BEGIN,
+-	FIX_IOREMAP_END = FIX_IOREMAP_BEGIN + FIX_N_IOREMAPS - 1,
++	FIX_EARLYCON_MEM_BASE,
+ 	__end_of_fixed_addresses
  };
  
-@@ -632,8 +630,6 @@ &usb_1_ss1_qmpphy {
- 	vdda-phy-supply = <&vreg_l3e_1p2>;
- 	vdda-pll-supply = <&vreg_l2d_0p9>;
+ #define FIXADDR_SIZE		(__end_of_fixed_addresses << PAGE_SHIFT)
+ /* FIXADDR_BOTTOM might be a better name here... */
+ #define FIXADDR_START		(FIXADDR_TOP - FIXADDR_SIZE)
++#define FIXMAP_PAGE_IO		PAGE_KERNEL_NOCACHE
++
++extern void __set_fixmap(enum fixed_addresses idx,
++			 phys_addr_t phys, pgprot_t flags);
  
--	orientation-switch;
--
- 	status = "okay";
- };
+ #include <asm-generic/fixmap.h>
  
+diff --git a/arch/openrisc/mm/init.c b/arch/openrisc/mm/init.c
+index 1dcd78c8f0e99..d0cb1a0126f95 100644
+--- a/arch/openrisc/mm/init.c
++++ b/arch/openrisc/mm/init.c
+@@ -207,6 +207,43 @@ void __init mem_init(void)
+ 	return;
+ }
+ 
++static int __init map_page(unsigned long va, phys_addr_t pa, pgprot_t prot)
++{
++	p4d_t *p4d;
++	pud_t *pud;
++	pmd_t *pmd;
++	pte_t *pte;
++
++	p4d = p4d_offset(pgd_offset_k(va), va);
++	pud = pud_offset(p4d, va);
++	pmd = pmd_offset(pud, va);
++	pte = pte_alloc_kernel(pmd, va);
++
++	if (pte == NULL)
++		return -ENOMEM;
++
++	if (pgprot_val(prot))
++		set_pte_at(&init_mm, va, pte, pfn_pte(pa >> PAGE_SHIFT, prot));
++	else
++		pte_clear(&init_mm, va, pte);
++
++	local_flush_tlb_page(NULL, va);
++	return 0;
++}
++
++void __init __set_fixmap(enum fixed_addresses idx,
++			 phys_addr_t phys, pgprot_t prot)
++{
++	unsigned long address = __fix_to_virt(idx);
++
++	if (idx >= __end_of_fixed_addresses) {
++		BUG();
++		return;
++	}
++
++	map_page(address, phys, prot);
++}
++
+ static const pgprot_t protection_map[16] = {
+ 	[VM_NONE]					= PAGE_NONE,
+ 	[VM_READ]					= PAGE_READONLY_X,
 -- 
 2.43.0
 
