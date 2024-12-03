@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C412B23CE;
-	Tue,  3 Dec 2024 16:00:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D9801F75AC;
+	Tue,  3 Dec 2024 16:00:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733241646; cv=none; b=aLDP+H2owrx+bzxAmrfF+Yya6/AEkCuAPBjiDYn9R3wWWPOyXDd9p/483Lh/GIHNH1eyLe+bOn43+u/Ds4lufvDRR02Ru1m3Bs25oXH+x8AW+/318D3OWPjReolffcg5rGn6yxC0pNMoMacWrg/zXvHhubU27ZSrlmEIojznj0Y=
+	t=1733241650; cv=none; b=oY2tMCMRKCADKBmbA+Ht6M7sV9Cbg1LwcGZemekpwmWKmWvibpehnyV70Mka7KWwznsJCKvcRRHvx0kzD6Bmui5HuXpYSDQ/Vuri3nalU+xVZoqvog1MclSpvLi+lfWvSjjqqsCrjjNs5KWesFoEc+WYHd5vKdZ1aiEJIblj2Kg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733241646; c=relaxed/simple;
-	bh=AKCiCPIiUjyxVEGge9QE52s2sA+/mm9zWJ49cMpS7Nk=;
+	s=arc-20240116; t=1733241650; c=relaxed/simple;
+	bh=Zd+QnFcLhhyJ0572m+oBPI3tN4KM0B2XVwUjE7TTDmU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ChI7Mc5ZlcxDuv+4G243Mm++JO0kCkbUheHWK7iCSm47Mj/2jRZCLuh0QXTdd6woleKUgmmWl7dm/q4jImSk9WQ+9RsF2QEyt5THMSjCuHcY+eICgRERbT8RvGwnvLQrCojcT2SUj+RyWyDEd8LkrP26Vb0V298iT8QUWp4vMA4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lvdZYP30; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MzVvAHPFZNq7XXpuE8Du5lYgdjODlIUJ0ZL3j9rSrSoTXHvBdsWWbJJ+Bpgf8m/PJkEebhWfzOcSIG8I1P3ZvJlGQJ/egTtGsXuyMnqh/NfmBBCnKFaqa9DvhgGyj6RiRwEL+55BC5uLG8SxgCZwO/YTAUN6Byh3x76dQPqRGjM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sWgjjMOR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lvdZYP30"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25F68C4CECF;
-	Tue,  3 Dec 2024 16:00:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sWgjjMOR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C66BC4CED6;
+	Tue,  3 Dec 2024 16:00:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733241646;
-	bh=AKCiCPIiUjyxVEGge9QE52s2sA+/mm9zWJ49cMpS7Nk=;
+	s=korg; t=1733241650;
+	bh=Zd+QnFcLhhyJ0572m+oBPI3tN4KM0B2XVwUjE7TTDmU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lvdZYP308vVWy4zieRTVXtZ0DRVa3rf1UxW/crdK92jGIVy2k9Osv7qTqJK3268zJ
-	 NplHW7PWK+/YHyvyJzNIONvTdajo/l8fdMydfczqbd10DYwJxJljl3QFtEm6rV7QJ4
-	 myjcksAxbKhIPNeWaGIPdUqY0V+nXmz8K2iwjPv4=
+	b=sWgjjMORbFWeVxIcIad1w7RwDzkI+H3IIt3dHCzJYuMPuuuzBOTzjMePZZw1Dqbll
+	 nhhl0nmqgdOBn4A0Ero1+5RGjWDrt4y2JUkqzjlwsbcYi3u0DY9BDelT6B01k+rjDQ
+	 4z3D2afmcsyACJy0pSovFgjSC1hJQ5uolLmLSuU0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Charles Han <hanchunchao@inspur.com>,
-	=?UTF-8?q?Martin=20Povi=C5=A1er?= <povik+lin@cutebit.org>,
+	Sergio Paracuellos <sergio.paracuellos@gmail.com>,
 	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 447/826] clk: clk-apple-nco: Add NULL check in applnco_probe
-Date: Tue,  3 Dec 2024 15:42:54 +0100
-Message-ID: <20241203144801.196823752@linuxfoundation.org>
+Subject: [PATCH 6.12 448/826] clk: ralink: mtmips: fix clock plan for Ralink SoC RT3883
+Date: Tue,  3 Dec 2024 15:42:55 +0100
+Message-ID: <20241203144801.235556652@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -46,44 +45,62 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Charles Han <hanchunchao@inspur.com>
+From: Sergio Paracuellos <sergio.paracuellos@gmail.com>
 
-[ Upstream commit 969c765e2b508cca9099d246c010a1e48dcfd089 ]
+[ Upstream commit 33239152305567b3e9bf052f71fd4baecd626341 ]
 
-Add NULL check in applnco_probe, to handle kernel NULL pointer
-dereference error.
+Clock plan for Ralink SoC RT3883 needs an extra 'periph' clock to properly
+set some peripherals that has this clock as their parent. When this driver
+was mainlined we could not find any active users of this SoC so we cannot
+perform any real tests for it. Now, one user of a Belkin f9k1109 version 1
+device which uses this SoC appear and reported some issues in openWRT:
+- https://github.com/openwrt/openwrt/issues/16054
+The peripherals that are wrong are 'uart', 'i2c', 'i2s' and 'uartlite' which
+has a not defined 'periph' clock as parent. Hence, introduce it to have a
+properly working clock plan for this SoC.
 
-Fixes: 6641057d5dba ("clk: clk-apple-nco: Add driver for Apple NCO")
-Signed-off-by: Charles Han <hanchunchao@inspur.com>
-Link: https://lore.kernel.org/r/20241114072820.3071-1-hanchunchao@inspur.com
-Reviewed-by: Martin Povišer <povik+lin@cutebit.org>
+Fixes: 6f3b15586eef ("clk: ralink: add clock and reset driver for MTMIPS SoCs")
+Signed-off-by: Sergio Paracuellos <sergio.paracuellos@gmail.com>
+Link: https://lore.kernel.org/r/20240910044024.120009-2-sergio.paracuellos@gmail.com
 Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/clk-apple-nco.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/clk/ralink/clk-mtmips.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/clk/clk-apple-nco.c b/drivers/clk/clk-apple-nco.c
-index 39472a51530a3..457a48d489412 100644
---- a/drivers/clk/clk-apple-nco.c
-+++ b/drivers/clk/clk-apple-nco.c
-@@ -297,6 +297,9 @@ static int applnco_probe(struct platform_device *pdev)
- 		memset(&init, 0, sizeof(init));
- 		init.name = devm_kasprintf(&pdev->dev, GFP_KERNEL,
- 						"%s-%d", np->name, i);
-+		if (!init.name)
-+			return -ENOMEM;
+diff --git a/drivers/clk/ralink/clk-mtmips.c b/drivers/clk/ralink/clk-mtmips.c
+index 50a443bf79ecd..62f9801ecd3a4 100644
+--- a/drivers/clk/ralink/clk-mtmips.c
++++ b/drivers/clk/ralink/clk-mtmips.c
+@@ -267,6 +267,11 @@ static struct mtmips_clk_fixed rt305x_fixed_clocks[] = {
+ 	CLK_FIXED("xtal", NULL, 40000000)
+ };
+ 
++static struct mtmips_clk_fixed rt3883_fixed_clocks[] = {
++	CLK_FIXED("xtal", NULL, 40000000),
++	CLK_FIXED("periph", "xtal", 40000000)
++};
 +
- 		init.ops = &applnco_ops;
- 		init.parent_data = &pdata;
- 		init.num_parents = 1;
+ static struct mtmips_clk_fixed rt3352_fixed_clocks[] = {
+ 	CLK_FIXED("periph", "xtal", 40000000)
+ };
+@@ -779,8 +784,8 @@ static const struct mtmips_clk_data rt3352_clk_data = {
+ static const struct mtmips_clk_data rt3883_clk_data = {
+ 	.clk_base = rt3883_clks_base,
+ 	.num_clk_base = ARRAY_SIZE(rt3883_clks_base),
+-	.clk_fixed = rt305x_fixed_clocks,
+-	.num_clk_fixed = ARRAY_SIZE(rt305x_fixed_clocks),
++	.clk_fixed = rt3883_fixed_clocks,
++	.num_clk_fixed = ARRAY_SIZE(rt3883_fixed_clocks),
+ 	.clk_factor = NULL,
+ 	.num_clk_factor = 0,
+ 	.clk_periph = rt5350_pherip_clks,
 -- 
 2.43.0
 
