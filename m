@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF0E91E3DF9;
-	Tue,  3 Dec 2024 15:01:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBC511F6696;
+	Tue,  3 Dec 2024 15:01:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733238100; cv=none; b=DLDWgOQdh7Dmj0B98SX+jXOGn9SecEgwYqajqiMtIii/JT12thWg3iGmToB0NfGrAjfZSTM8iXaajBgDe2cqIJUihN8hxM6MRRXfVEsLjC9CxOgZanIa4odaxJnGZDjjZGfV3/ckmHbtbypsJwTPL9sJNpVPaQO37/hAakddKSk=
+	t=1733238102; cv=none; b=Z3euAiU2sqGanAZtc3uEXgoNPiweEduNJ0kgp5zgroypCP3kn3ZkO8d3ohg2+Iq+4fbAb6aRSsYgiYRxLrh00Dc6fjnhhDxLhJjqwLqNOTXq5nMkowFbEAcI1LN8v4ESq/M/aEbg7hHi6K18eC4uo9xNe+KewahnRTgBkVHD7Bw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733238100; c=relaxed/simple;
-	bh=0NSrUHNecNOh5B2Ox25E4d+VGQnx4Xin0QRV2j446Ts=;
+	s=arc-20240116; t=1733238102; c=relaxed/simple;
+	bh=FsxTOLEvPA2P9EHudlFITy2NzAgdQXVCKWT7bRZeJ68=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e9GeEX4/RwA/8cIz/CAdEk5qaiFFhPe7mAxPQ+ViiUszWLSkkPCz/kPKwY7c+GYW07gkwxrs7Pku1J6RE959I0Rpab4vRwSHYR/sduSWLBA2XdljFvIYpGPu+gPn8aYbFPU13PV1Snd4daLcjtadE01kTXctsLaDZeZwAkwiwno=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZkDL1PJa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bA4Ch/FpzhEwANk5yCD+S4p7Fggsf9pALcuNB8v951QJup7PnbrDzK5OJSAQT1K3ROfOCEjHAf+MlUna4Ad0sOjjPFZSB99dubG+TR2pyBDAEtnOx+MXkkGx20Az2GhMItmkYOzZOtRtbcgSJ9x7SBR24ZRYtPs3tNNvHpkhqLM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q38W1crb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZkDL1PJa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7387DC4CECF;
-	Tue,  3 Dec 2024 15:01:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q38W1crb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65640C4CECF;
+	Tue,  3 Dec 2024 15:01:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733238099;
-	bh=0NSrUHNecNOh5B2Ox25E4d+VGQnx4Xin0QRV2j446Ts=;
+	s=korg; t=1733238102;
+	bh=FsxTOLEvPA2P9EHudlFITy2NzAgdQXVCKWT7bRZeJ68=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZkDL1PJa42ZwzExu9dMNNgKac0/1g6aj91B88r6kQT7HYDSwHamrKGnQoi97aoekp
-	 YAdD4W0kzFshN4rjuRxoc0L+gD5GvIfCR3f2HPvqDPot1unv/wCLUNd/zqa10LYf2N
-	 NWV33TExe/kK10pjBMbjLLYVmMNVR9XqUxHS3d+A=
+	b=Q38W1crbx/Xr+c2qY9UscoICwiaZQp2W2sgLETETaiQZDaRGRD3wmc8WpHh4UO+54
+	 a3TfD5NiWwUsXlqziXVq3aNwCpwKbMyK40CiNi/NWKIcL5BlA+AFIt27eqDlcSjTAU
+	 1C0e8kDhrmHTMDXPI36VjIpc0UQPB0NT4VVUHah0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gregory Price <gourry@gourry.net>,
-	Ilias Apalodimas <ilias.apalodimas@linaro.org>,
-	Ard Biesheuvel <ardb@kernel.org>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Benjamin Mugnier <benjamin.mugnier@foss.st.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 161/817] tpm: fix signed/unsigned bug when checking event logs
-Date: Tue,  3 Dec 2024 15:35:33 +0100
-Message-ID: <20241203144002.011492906@linuxfoundation.org>
+Subject: [PATCH 6.11 162/817] media: i2c: vgxy61: Fix an error handling path in vgxy61_detect()
+Date: Tue,  3 Dec 2024 15:35:34 +0100
+Message-ID: <20241203144002.051300129@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -52,81 +53,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gregory Price <gourry@gourry.net>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit e6d654e9f5a97742cfe794b1c4bb5d3fb2d25e98 ]
+[ Upstream commit 0d5c92cde4d38825eeadf5b4e1534350f80a9924 ]
 
-A prior bugfix that fixes a signed/unsigned error causes
-another signed unsigned error.
+If cci_read() fails, 'st' is set to 0 in cci_read(), so we return success,
+instead of the expected error code.
 
-A situation where log_tbl->size is invalid can cause the
-size passed to memblock_reserve to become negative.
+Fix it and return the expected error.
 
-log_size from the main event log is an unsigned int, and
-the code reduces to the following
-
-u64 value = (int)unsigned_value;
-
-This results in sign extension, and the value sent to
-memblock_reserve becomes effectively negative.
-
-Fixes: be59d57f9806 ("efi/tpm: Fix sanity check of unsigned tbl_size being less than zero")
-Signed-off-by: Gregory Price <gourry@gourry.net>
-Reviewed-by: Ilias Apalodimas <ilias.apalodimas@linaro.org>
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Fixes: 9a6d7f2ba2b9 ("media: i2c: st-vgxy61: Convert to CCI register access helpers")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Reviewed-by: Benjamin Mugnier <benjamin.mugnier@foss.st.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/efi/tpm.c | 17 +++++++++--------
- 1 file changed, 9 insertions(+), 8 deletions(-)
+ drivers/media/i2c/vgxy61.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/firmware/efi/tpm.c b/drivers/firmware/efi/tpm.c
-index e8d69bd548f3f..9c3613e6af158 100644
---- a/drivers/firmware/efi/tpm.c
-+++ b/drivers/firmware/efi/tpm.c
-@@ -40,7 +40,8 @@ int __init efi_tpm_eventlog_init(void)
- {
- 	struct linux_efi_tpm_eventlog *log_tbl;
- 	struct efi_tcg2_final_events_table *final_tbl;
--	int tbl_size;
-+	unsigned int tbl_size;
-+	int final_tbl_size;
- 	int ret = 0;
+diff --git a/drivers/media/i2c/vgxy61.c b/drivers/media/i2c/vgxy61.c
+index 30378e9620166..8034e21051bec 100644
+--- a/drivers/media/i2c/vgxy61.c
++++ b/drivers/media/i2c/vgxy61.c
+@@ -1617,7 +1617,7 @@ static int vgxy61_detect(struct vgxy61_dev *sensor)
  
- 	if (efi.tpm_log == EFI_INVALID_TABLE_ADDR) {
-@@ -80,26 +81,26 @@ int __init efi_tpm_eventlog_init(void)
- 		goto out;
- 	}
+ 	ret = cci_read(sensor->regmap, VGXY61_REG_NVM, &st, NULL);
+ 	if (ret < 0)
+-		return st;
++		return ret;
+ 	if (st != VGXY61_NVM_OK)
+ 		dev_warn(&client->dev, "Bad nvm state got %u\n", (u8)st);
  
--	tbl_size = 0;
-+	final_tbl_size = 0;
- 	if (final_tbl->nr_events != 0) {
- 		void *events = (void *)efi.tpm_final_log
- 				+ sizeof(final_tbl->version)
- 				+ sizeof(final_tbl->nr_events);
- 
--		tbl_size = tpm2_calc_event_log_size(events,
--						    final_tbl->nr_events,
--						    log_tbl->log);
-+		final_tbl_size = tpm2_calc_event_log_size(events,
-+							  final_tbl->nr_events,
-+							  log_tbl->log);
- 	}
- 
--	if (tbl_size < 0) {
-+	if (final_tbl_size < 0) {
- 		pr_err(FW_BUG "Failed to parse event in TPM Final Events Log\n");
- 		ret = -EINVAL;
- 		goto out_calc;
- 	}
- 
- 	memblock_reserve(efi.tpm_final_log,
--			 tbl_size + sizeof(*final_tbl));
--	efi_tpm_final_log_size = tbl_size;
-+			 final_tbl_size + sizeof(*final_tbl));
-+	efi_tpm_final_log_size = final_tbl_size;
- 
- out_calc:
- 	early_memunmap(final_tbl, sizeof(*final_tbl));
 -- 
 2.43.0
 
