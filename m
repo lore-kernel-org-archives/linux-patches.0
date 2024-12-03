@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 810871F76A7;
-	Tue,  3 Dec 2024 15:30:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6387A1F7071;
+	Tue,  3 Dec 2024 15:30:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733239803; cv=none; b=oWzEGhb9mH+DRqZjuOcyIMmHMKrBWwNURavo1xXze23HlNlCvcQu10nXnUS1g2MzIRFudrKkPES3ikksHPGFU18chq3LNBDYn/dy8Ne0Yp+nsYme4qcEoLepUysVETfwQvMXhsxPdwvMTgjTzm4ZLj3WSv+f/UcHKG8T77QL0Mk=
+	t=1733239806; cv=none; b=sgHuMuwpT8eFj4919/Np7Gah+89sCgAxW2n+zrlmWZq2Vb5Ahhe3FIzgPpUf6+4gB9zFTXBUcf08KHKqNmyHxARO2kpgEZNCMZYeNZ1vPV/03AfoYCHO3MvIyr6/NabbFIQNEuKagIskGdmilIaW1mYg4IW9tKtSiEXu83jLrvA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733239803; c=relaxed/simple;
-	bh=WmAa9FecibBuJt5WEbMrDLxgZGLobYPPt7MsL1LzBbc=;
+	s=arc-20240116; t=1733239806; c=relaxed/simple;
+	bh=qlBZwscEI1hOXVmyfy7SEAVEBf0Vi9+9u88RNTl82fw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oB8O30UoM11DSjra4BI4wB1uQEsxV0WvyRYAz3VvwSUAD0cZ81Cp6o37IBU+iM3nNVQmVyDVQsamrvreEJJ51M0Y8MSPhKXHJfg+nMwKNYT0ajQ+xM+Mb9b9cr2emZ/FKhZMRYvwBLsShYOLnyBpF8Yj5YJYOwlmZRLlKUGFGQE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vDDQfAnl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qGb2M5+is6YOhxEGY+Ys2YrSGoLaaqdrZ967vdcA3CDiBiKjKnzIdwvTdb9zkNHC7di0JuCce6Xfql9ZwHUxZQJa2jRkfmyzDmeyEv8ItIF23diF4jytc88mBPFj7l0kGOODdiCte1wJ16yLfDe14C27/rI2UrVJ45Ti9JzzhiU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zWHjmPuV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vDDQfAnl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F17E2C4CECF;
-	Tue,  3 Dec 2024 15:30:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zWHjmPuV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEA7AC4CECF;
+	Tue,  3 Dec 2024 15:30:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733239803;
-	bh=WmAa9FecibBuJt5WEbMrDLxgZGLobYPPt7MsL1LzBbc=;
+	s=korg; t=1733239806;
+	bh=qlBZwscEI1hOXVmyfy7SEAVEBf0Vi9+9u88RNTl82fw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vDDQfAnljcRlog0uiavXn0RDT6/vv5yNZGFQOE/DnumIl7lvqGh/+dVBW8AFB57kc
-	 NPrCqs4NVZxy3RPxH6f0Vz4dYrAXbe7Bu6i2Gb4hP7BLI+Z4ZONBdkO7H7Tfebf7+I
-	 aDlFKBT5qkytqzweZ/A321C2cwlREpnHybGmlpuY=
+	b=zWHjmPuVRdqXuPxtI74TbZNX3UMfS9wAWdJMEH9KpiPxMgNBkp430lre4nwJBIn3+
+	 pRxgpXsYXkVuV55scURN/Ocw3Bzz+7cxREljjgZaP87PcnrFFDDkxcm4Lxv/boxmDi
+	 KHJ1Edp+JGazVvFBqE+lRI/YL0e/WyrsWhIVNxZE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.11 739/817] ALSA: ump: Fix evaluation of MIDI 1.0 FB info
-Date: Tue,  3 Dec 2024 15:45:11 +0100
-Message-ID: <20241203144024.844231302@linuxfoundation.org>
+	Michal Simek <michal.simek@amd.com>,
+	Krzysztof Kozlowski <krzk@kernel.org>
+Subject: [PATCH 6.11 713/817] dt-bindings: serial: rs485: Fix rs485-rts-delay property
+Date: Tue,  3 Dec 2024 15:44:45 +0100
+Message-ID: <20241203144023.823560058@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -49,42 +50,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Michal Simek <michal.simek@amd.com>
 
-commit 7be34f6feedd60e418de1c2c48e661d70416635f upstream.
+commit 12b3642b6c242061d3ba84e6e3050c3141ded14c upstream.
 
-The m1.0 field of UMP Function Block info specifies whether the given
-FB is a MIDI 1.0 port or not.  When implementing the UMP support on
-Linux, I somehow interpreted as if it were bit flags, but the field is
-actually an enumeration from 0 to 2, where 2 means MIDI 1.0 *and* low
-speed.
+Code expects array only with 2 items which should be checked.
+But also item checking is not working as it should likely because of
+incorrect items description.
 
-This patch corrects the interpretation and sets the right bit flags
-depending on the m1.0 field of FB Info.  This effectively fixes the
-missing detection of MIDI 1.0 FB when m1.0 is 2.
-
-Fixes: 37e0e14128e0 ("ALSA: ump: Support UMP Endpoint and Function Block parsing")
-Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20241127070059.8099-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: d50f974c4f7f ("dt-bindings: serial: Convert rs485 bindings to json-schema")
+Signed-off-by: Michal Simek <michal.simek@amd.com>
+Cc: stable@vger.kernel.org
+Reviewed-by: Krzysztof Kozlowski <krzk@kernel.org>
+Link: https://lore.kernel.org/r/820c639b9e22fe037730ed44d1b044cdb6d28b75.1726480384.git.michal.simek@amd.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/core/ump.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ Documentation/devicetree/bindings/serial/rs485.yaml |   19 +++++++++----------
+ 1 file changed, 9 insertions(+), 10 deletions(-)
 
---- a/sound/core/ump.c
-+++ b/sound/core/ump.c
-@@ -724,7 +724,10 @@ static void fill_fb_info(struct snd_ump_
- 	info->ui_hint = buf->fb_info.ui_hint;
- 	info->first_group = buf->fb_info.first_group;
- 	info->num_groups = buf->fb_info.num_groups;
--	info->flags = buf->fb_info.midi_10;
-+	if (buf->fb_info.midi_10 < 2)
-+		info->flags = buf->fb_info.midi_10;
-+	else
-+		info->flags = SNDRV_UMP_BLOCK_IS_MIDI1 | SNDRV_UMP_BLOCK_IS_LOWSPEED;
- 	info->active = buf->fb_info.active;
- 	info->midi_ci_version = buf->fb_info.midi_ci_version;
- 	info->sysex8_streams = buf->fb_info.sysex8_streams;
+--- a/Documentation/devicetree/bindings/serial/rs485.yaml
++++ b/Documentation/devicetree/bindings/serial/rs485.yaml
+@@ -18,16 +18,15 @@ properties:
+     description: prop-encoded-array <a b>
+     $ref: /schemas/types.yaml#/definitions/uint32-array
+     items:
+-      items:
+-        - description: Delay between rts signal and beginning of data sent in
+-            milliseconds. It corresponds to the delay before sending data.
+-          default: 0
+-          maximum: 100
+-        - description: Delay between end of data sent and rts signal in milliseconds.
+-            It corresponds to the delay after sending data and actual release
+-            of the line.
+-          default: 0
+-          maximum: 100
++      - description: Delay between rts signal and beginning of data sent in
++          milliseconds. It corresponds to the delay before sending data.
++        default: 0
++        maximum: 100
++      - description: Delay between end of data sent and rts signal in milliseconds.
++          It corresponds to the delay after sending data and actual release
++          of the line.
++        default: 0
++        maximum: 100
+ 
+   rs485-rts-active-high:
+     description: drive RTS high when sending (this is the default).
 
 
