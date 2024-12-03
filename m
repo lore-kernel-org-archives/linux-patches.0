@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27BCA1F7064;
-	Tue,  3 Dec 2024 14:34:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFA591F75B4;
+	Tue,  3 Dec 2024 14:34:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733236486; cv=none; b=CE4rvalldS9NmOSM1FT9NqBvGnxLnUUVagtxpFUTskrXe1zPEsggoFMkq8vxMupYZ7PrleECWKtdR0EbuZN1NvzoyuiuFXv7dTMc7x15G4RVzrS+J+Diz57FOXwc/F0qbXhVDZUxgYArGYyfbdLz0WVfkjqG8YL3Sqfu49URv7Q=
+	t=1733236489; cv=none; b=nIXwjAGoj502JeWQmoh0jvBoW/Gqp7tmyR1E974Yj2I2E4HbkH39j3zAaAzPEpEoO+DRhD4puIpBDgnDk9++fSCviRh7dETkF574iVpEJF/A9x/L1VdAKN8l+6elUr15JqsUUHsN3VEzuHjRophnxDvbwloCJ2smwBqsjZYaUF8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733236486; c=relaxed/simple;
-	bh=S+wlBRhjrJjlZ32G4L6Ck6WIEJxlsM4dFE+3khxukJU=;
+	s=arc-20240116; t=1733236489; c=relaxed/simple;
+	bh=Retbowbg0+PANAm9cBOd7SCIxotV6aPkXTCVN5SoVXc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LYwE4vKvoj5gA4GGkJxsBiDDtgQFt9+g9wnj3+qO8BJTw9j5Y8rBS/XDGLMwhjCuCdFq2FxPs/waBwySVlXcQKcG068kSm9rC4cZo4/G7ZZtyjPffgFnTj9VV9r7j1dKytUdF/VJBYMhYh091NXyX9Lwr57+br38WgBwQz436Oo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zmhdJEYU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kzHRM6a5xfmDcqU8/C0JuRsMIdhZrB4pj63W/ov5qGaCmllekRufSRRxxWBbS2btF2GY9XiQ6D5pTmsrG1xLM9UnPZ23IjmkWn3V1m0DScZ+CP6/Vtbzf03NnhnwWrHGht5yOX04PxoA70ckLTqFN45GAQ72q1Tzc8Yx4M3A0ag=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jIBxEvlr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zmhdJEYU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83F68C4CED9;
-	Tue,  3 Dec 2024 14:34:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jIBxEvlr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E51AC4CECF;
+	Tue,  3 Dec 2024 14:34:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733236486;
-	bh=S+wlBRhjrJjlZ32G4L6Ck6WIEJxlsM4dFE+3khxukJU=;
+	s=korg; t=1733236489;
+	bh=Retbowbg0+PANAm9cBOd7SCIxotV6aPkXTCVN5SoVXc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zmhdJEYUCYS5J/9JT8dsPxXAp1KX+igMBO+fe1HB5Q2vn6krEShg73KlMEDMaXpGa
-	 US3DuiuopAPp7NMSkSsV8bNdzH5Y0Zkkh6JzdKFx9crZ8qFF7mzvLnvSV28ui2m27y
-	 WNkuplt8QqtSRtn7/MDzS/APFZ526X+gFvd9x7Ks=
+	b=jIBxEvlr3JMJcn13TC6asmP9QTTJvki/dqWInEJlBbd3YUjnX6hhLl5g4tShfIPfa
+	 48y9Pah3mNYJZoMXwgQ4EAV5VjptIcc4NpH/n09EsT5CAB044KyrCJqIjSUjjLzed3
+	 OjNYpqWWCVV1xC208BfCN6dhnzf77mwK+LiwwU1Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Down <chris@chrisdown.name>,
-	Masahiro Yamada <masahiroy@kernel.org>
-Subject: [PATCH 4.19 008/138] kbuild: Use uname for LINUX_COMPILE_HOST detection
-Date: Tue,  3 Dec 2024 15:30:37 +0100
-Message-ID: <20241203141923.856818701@linuxfoundation.org>
+	Hugh Dickins <hughd@google.com>,
+	Chuck Lever <chuck.lever@oracle.com>,
+	Jeongjun Park <aha310510@gmail.com>,
+	Yu Zhao <yuzhao@google.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 4.19 009/138] mm: revert "mm: shmem: fix data-race in shmem_getattr()"
+Date: Tue,  3 Dec 2024 15:30:38 +0100
+Message-ID: <20241203141923.895517299@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203141923.524658091@linuxfoundation.org>
 References: <20241203141923.524658091@linuxfoundation.org>
@@ -50,37 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Down <chris@chrisdown.name>
+From: Andrew Morton <akpm@linux-foundation.org>
 
-commit 1e66d50ad3a1dbf0169b14d502be59a4b1213149 upstream.
+commit d1aa0c04294e29883d65eac6c2f72fe95cc7c049 upstream.
 
-`hostname` may not be present on some systems as it's not mandated by
-POSIX/SUSv4. This isn't just a theoretical problem: on Arch Linux,
-`hostname` is provided by `inetutils`, which isn't part of the base
-distribution.
+Revert d949d1d14fa2 ("mm: shmem: fix data-race in shmem_getattr()") as
+suggested by Chuck [1].  It is causing deadlocks when accessing tmpfs over
+NFS.
 
-    ./scripts/mkcompile_h: line 38: hostname: command not found
+As Hugh commented, "added just to silence a syzbot sanitizer splat: added
+where there has never been any practical problem".
 
-Use `uname -n` instead, which is more likely to be available (and
-mandated by standards).
-
-Signed-off-by: Chris Down <chris@chrisdown.name>
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Link: https://lkml.kernel.org/r/ZzdxKF39VEmXSSyN@tissot.1015granger.net [1]
+Fixes: d949d1d14fa2 ("mm: shmem: fix data-race in shmem_getattr()")
+Acked-by: Hugh Dickins <hughd@google.com>
+Cc: Chuck Lever <chuck.lever@oracle.com>
+Cc: Jeongjun Park <aha310510@gmail.com>
+Cc: Yu Zhao <yuzhao@google.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Hugh Dickins <hughd@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- scripts/mkcompile_h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ mm/shmem.c |    2 --
+ 1 file changed, 2 deletions(-)
 
---- a/scripts/mkcompile_h
-+++ b/scripts/mkcompile_h
-@@ -44,7 +44,7 @@ else
- 	LINUX_COMPILE_BY=$KBUILD_BUILD_USER
- fi
- if test -z "$KBUILD_BUILD_HOST"; then
--	LINUX_COMPILE_HOST=`hostname`
-+	LINUX_COMPILE_HOST=`uname -n`
- else
- 	LINUX_COMPILE_HOST=$KBUILD_BUILD_HOST
- fi
+--- a/mm/shmem.c
++++ b/mm/shmem.c
+@@ -1014,9 +1014,7 @@ static int shmem_getattr(const struct pa
+ 		shmem_recalc_inode(inode);
+ 		spin_unlock_irq(&info->lock);
+ 	}
+-	inode_lock_shared(inode);
+ 	generic_fillattr(inode, stat);
+-	inode_unlock_shared(inode);
+ 
+ 	if (is_huge_enabled(sb_info))
+ 		stat->blksize = HPAGE_PMD_SIZE;
 
 
