@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B2A817BB16;
-	Tue,  3 Dec 2024 14:39:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04C3717BB16;
+	Tue,  3 Dec 2024 14:39:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733236781; cv=none; b=MlmoaknqilGmrwsW3X4F/PlhaFvRPeSHjSvbbhdARHuX7+I5HB/eWyskYk+gySrVwlel3fnrwsKHfwNXvyNsiGodLgY/xXFrlL2lZzz5wkXOtdjf92RzpI/NpLtVlmFQks+Fi+fgw/wJ+yiUBJybHqUWMU2JgrNIGNxAjPhKE3M=
+	t=1733236784; cv=none; b=YO+MZf8Yh8lEFjWhZ0o5QBHTXZCBEhr+tbUTXesWa76FOnoYGdWrh/ku+Cu4s53OGI+sIthe55Ks8D2yn2/hiwnuNNHeoekK5Z7KIp48ruRZ4q1SJixOBrAuvJuy7Ou5k1Q96DXMXcbET/ZEhHxhkq3/2UhVDL5f8At5EPpdhLo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733236781; c=relaxed/simple;
-	bh=JlY4hdPL1598l86pqdsXG5cy+AzOU/zpQuIVse5xEqk=;
+	s=arc-20240116; t=1733236784; c=relaxed/simple;
+	bh=ScdG3CDh8b9GK0vF5W518esrVDIJ62Ii5tdx8NVHwV4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LNjFHGpeBTozuUIIrxxR2m5WknXIWIL+Jcis15SuSwzIOJG3Z0eMnx/ch9axnHiY5SmLbK8xLeqbTJNJpg4KQiTwyjTFECGZRKjuwyMatSrNv4mHiTkd/eXKRa57gOQE7qeWT47P166R0bbUYA/+e0GKODm3T0iqqzsmFps+8hU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2ZfOtzFX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KYXzx4OxYuLkhVtFW9KueQ05UvmCpj2y2KmS1EYFbRuW76f7vxAHYZcg7Wh+8g0Untnw+l1q2/INZhfKlB7H+xccQHeT8P3cFqHLDkCQInitvZyu5mJ6L3s5yA2D32ACl9I8M+SmD+zI/XtVSc+Jow1vX4d/Js1P65oA/tjVMCo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kfhd8j9y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2ZfOtzFX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E278C4CED6;
-	Tue,  3 Dec 2024 14:39:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kfhd8j9y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C7A8C4CECF;
+	Tue,  3 Dec 2024 14:39:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733236780;
-	bh=JlY4hdPL1598l86pqdsXG5cy+AzOU/zpQuIVse5xEqk=;
+	s=korg; t=1733236783;
+	bh=ScdG3CDh8b9GK0vF5W518esrVDIJ62Ii5tdx8NVHwV4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2ZfOtzFXfs1sRSs7jKtlgXAuD90te0MXCp7fdAaQF81gle2qzlL+f1wu4ClAzfnAV
-	 0Q+eApSZyJY66YyniwdXkdDEwnLpdi7g4gkl2LsWoBZ9WNxaWiQCi2XTvSH1ssE/cU
-	 0r/XPZzkAditErITBfL86rYZ/DcyeUrlULS1G0e4=
+	b=Kfhd8j9ySwlPzmqLSd80tyEsHzRyPZ8RWewkEbjSEZbXc6eiyStL2Q2qqDL81gMaV
+	 fvRDs8gRwCRPP4DPjTSRZfygjOK/90mxEVNfyy6SVli61t8jOk/GPHNHVISZAdbXbJ
+	 rbH5PSz2d6vHYDfAxgQEiHvYHP6FvG5zk7VsyHdg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bin Liu <b-liu@ti.com>,
-	Judith Mendez <jm@ti.com>,
-	Kevin Hilman <khilman@baylibre.com>
-Subject: [PATCH 4.19 116/138] serial: 8250: omap: Move pm_runtime_get_sync
-Date: Tue,  3 Dec 2024 15:32:25 +0100
-Message-ID: <20241203141928.003368392@linuxfoundation.org>
+	Vitalii Mordan <mordan@ispras.ru>,
+	Alan Stern <stern@rowland.harvard.edu>
+Subject: [PATCH 4.19 099/138] usb: ehci-spear: fix call balance of sehci clk handling routines
+Date: Tue,  3 Dec 2024 15:32:08 +0100
+Message-ID: <20241203141927.351557517@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203141923.524658091@linuxfoundation.org>
 References: <20241203141923.524658091@linuxfoundation.org>
@@ -51,48 +50,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bin Liu <b-liu@ti.com>
+From: Vitalii Mordan <mordan@ispras.ru>
 
-commit bcc7ba668818dcadd2f1db66b39ed860a63ecf97 upstream.
+commit 40c974826734836402abfd44efbf04f63a2cc1c1 upstream.
 
-Currently in omap_8250_shutdown, the dma->rx_running flag is
-set to zero in omap_8250_rx_dma_flush. Next pm_runtime_get_sync
-is called, which is a runtime resume call stack which can
-re-set the flag. When the call omap_8250_shutdown returns, the
-flag is expected to be UN-SET, but this is not the case. This
-is causing issues the next time UART is re-opened and
-omap_8250_rx_dma is called. Fix by moving pm_runtime_get_sync
-before the omap_8250_rx_dma_flush.
+If the clock sehci->clk was not enabled in spear_ehci_hcd_drv_probe,
+it should not be disabled in any path.
 
-cc: stable@vger.kernel.org
-Fixes: 0e31c8d173ab ("tty: serial: 8250_omap: add custom DMA-RX callback")
-Signed-off-by: Bin Liu <b-liu@ti.com>
-[Judith: Add commit message]
-Signed-off-by: Judith Mendez <jm@ti.com>
-Reviewed-by: Kevin Hilman <khilman@baylibre.com>
-Tested-by: Kevin Hilman <khilman@baylibre.com>
-Link: https://lore.kernel.org/r/20241031172315.453750-1-jm@ti.com
+Conversely, if it was enabled in spear_ehci_hcd_drv_probe, it must be disabled
+in all error paths to ensure proper cleanup.
+
+Found by Linux Verification Center (linuxtesting.org) with Klever.
+
+Fixes: 7675d6ba436f ("USB: EHCI: make ehci-spear a separate driver")
+Cc: stable@vger.kernel.org
+Signed-off-by: Vitalii Mordan <mordan@ispras.ru>
+Acked-by: Alan Stern <stern@rowland.harvard.edu>
+Link: https://lore.kernel.org/r/20241114230310.432213-1-mordan@ispras.ru
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/8250/8250_omap.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/usb/host/ehci-spear.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/drivers/tty/serial/8250/8250_omap.c
-+++ b/drivers/tty/serial/8250/8250_omap.c
-@@ -643,12 +643,12 @@ static void omap_8250_shutdown(struct ua
- 	struct uart_8250_port *up = up_to_u8250p(port);
- 	struct omap8250_priv *priv = port->private_data;
+--- a/drivers/usb/host/ehci-spear.c
++++ b/drivers/usb/host/ehci-spear.c
+@@ -110,7 +110,9 @@ static int spear_ehci_hcd_drv_probe(stru
+ 	/* registers start at offset 0x0 */
+ 	hcd_to_ehci(hcd)->caps = hcd->regs;
  
-+	pm_runtime_get_sync(port->dev);
-+
- 	flush_work(&priv->qos_work);
- 	if (up->dma)
- 		omap_8250_rx_dma_flush(up);
+-	clk_prepare_enable(sehci->clk);
++	retval = clk_prepare_enable(sehci->clk);
++	if (retval)
++		goto err_put_hcd;
+ 	retval = usb_add_hcd(hcd, irq, IRQF_SHARED);
+ 	if (retval)
+ 		goto err_stop_ehci;
+@@ -135,8 +137,7 @@ static int spear_ehci_hcd_drv_remove(str
  
--	pm_runtime_get_sync(port->dev);
--
- 	serial_out(up, UART_OMAP_WER, 0);
+ 	usb_remove_hcd(hcd);
  
- 	up->ier = 0;
+-	if (sehci->clk)
+-		clk_disable_unprepare(sehci->clk);
++	clk_disable_unprepare(sehci->clk);
+ 	usb_put_hcd(hcd);
+ 
+ 	return 0;
 
 
