@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB24E1F8909;
-	Tue,  3 Dec 2024 15:44:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7A451F6693;
+	Tue,  3 Dec 2024 15:44:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733240693; cv=none; b=dLBXgYeyZK6KJfG1Akkk2fxl6CVJjGF4n9BjU4JPdPDPk8b2I5b6d1hXQAqSXndm/gz6ILL7pmxBwfsU9wjCJUu9098jTJr7jF6k5WoagtWyNVsKs8Ln/kb25m1ugutyAeqYVm74COlROdpFmKsMqXIisntECDsAsmrHz6uasko=
+	t=1733240696; cv=none; b=bhFCKnY2JT6Jms3kKh6q278wYmKUQoz8i35DUcWDetC4CnW3xlFdI5cWy6m6pSN3l38fidLOCftiymmiYB65h2bBcXZP3fbKjvEWj9In7LprUSgNrW5w5gIYyNk++jn0li9LNF2Kytly4diCCsYmI1l3SG0T5eC76HptSKJVG8A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733240693; c=relaxed/simple;
-	bh=idLx6VznlGyNI1fGaXM+Gi77YsPLVfOq1IQFSxoZbYo=;
+	s=arc-20240116; t=1733240696; c=relaxed/simple;
+	bh=HpyGsw22t0WrC8xPUdrZTKd/z+kljfkHRiirGgA2o80=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CJb6kbsmJtutMlur3WlvTbt2Vtb01teaEB754yN1mGgktBPexCPpQe1yFSoG6KDbJRdswOUMMKaqsI26ChDcwZ1QOIA9NbMERXjnkW2SjjkW5i83FLDs716oPbIF24IpWVqFMVyxlE93SGCBbQSlCWV9329UCn0F4XUQlMTZ/3s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hxy+AbQ2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=fbx0zKSNTtitE1vbhDVRvpwMoiQHlKJEFvmoCNtwWGwbnfXfZBorxEE7vWBayBYYtMPGUaE29wyap+29PgLlfJlqKpwnUxfmorZv2p1k/QiQosV60p/WV6yKOYxytzG8yHbGoehduv4LgN6PUYtskyN68Shh+UOVMWy+mViD2yY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LPgzl1nC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hxy+AbQ2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1501DC4CECF;
-	Tue,  3 Dec 2024 15:44:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LPgzl1nC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57CCDC4CECF;
+	Tue,  3 Dec 2024 15:44:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733240692;
-	bh=idLx6VznlGyNI1fGaXM+Gi77YsPLVfOq1IQFSxoZbYo=;
+	s=korg; t=1733240695;
+	bh=HpyGsw22t0WrC8xPUdrZTKd/z+kljfkHRiirGgA2o80=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hxy+AbQ2pCLBu0DxE/ef8m6fsHewmqWf2wLtrKeuo4qhUTLXKQgNBdQq3K2QCYf4L
-	 6jCnEaOEcktt+Rc515Pp0etbynrT9bQumLmq26mVYkPUze8T1c6l2kiUdiwOU5MplI
-	 NyKUThEfa6HSZKQjYEWHp9VmieKCB7fLwyjPZHTg=
+	b=LPgzl1nCqT1wdksyXGAAReyC2tzzqIIwdQs2lDK57MuqGZQtoKN8B+laj9n2vgSQw
+	 iQ6oPMQpJedvfEULTCrJLGx3ryWx7kyNOAvPKKupFOK7oDNaEQaHNfealfL9SUUnzq
+	 TaWReD7N9sUbADWpvOW1BjxEZhLLqPKHyyTu4IcE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Kelley <mhklinux@outlook.com>,
-	Vitaly Kuznetsov <vkuznets@redhat.com>,
-	Saurabh Sengar <ssengar@linux.microsoft.com>,
-	Jiri Kosina <jkosina@suse.com>,
+	Casey G Bowman <casey.g.bowman@intel.com>,
+	Armin Wolf <W_Armin@gmx.de>,
+	Hans de Goede <hdegoede@redhat.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 177/826] HID: hyperv: streamline driver probe to avoid devres issues
-Date: Tue,  3 Dec 2024 15:38:24 +0100
-Message-ID: <20241203144750.642272591@linuxfoundation.org>
+Subject: [PATCH 6.12 178/826] platform/x86: asus-wmi: Fix inconsistent use of thermal policies
+Date: Tue,  3 Dec 2024 15:38:25 +0100
+Message-ID: <20241203144750.680615893@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -47,186 +47,140 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Vitaly Kuznetsov <vkuznets@redhat.com>
+From: Armin Wolf <W_Armin@gmx.de>
 
-[ Upstream commit 66ef47faa90d838cda131fe1f7776456cc3b59f2 ]
+[ Upstream commit 895085ec3f2ed7a26389943729e2904df1f88dc0 ]
 
-It was found that unloading 'hid_hyperv' module results in a devres
-complaint:
+When changing the thermal policy using the platform profile API,
+a Vivobook thermal policy is stored in throttle_thermal_policy_mode.
 
- ...
- hv_vmbus: unregistering driver hid_hyperv
- ------------[ cut here ]------------
- WARNING: CPU: 2 PID: 3983 at drivers/base/devres.c:691 devres_release_group+0x1f2/0x2c0
- ...
- Call Trace:
-  <TASK>
-  ? devres_release_group+0x1f2/0x2c0
-  ? __warn+0xd1/0x1c0
-  ? devres_release_group+0x1f2/0x2c0
-  ? report_bug+0x32a/0x3c0
-  ? handle_bug+0x53/0xa0
-  ? exc_invalid_op+0x18/0x50
-  ? asm_exc_invalid_op+0x1a/0x20
-  ? devres_release_group+0x1f2/0x2c0
-  ? devres_release_group+0x90/0x2c0
-  ? rcu_is_watching+0x15/0xb0
-  ? __pfx_devres_release_group+0x10/0x10
-  hid_device_remove+0xf5/0x220
-  device_release_driver_internal+0x371/0x540
-  ? klist_put+0xf3/0x170
-  bus_remove_device+0x1f1/0x3f0
-  device_del+0x33f/0x8c0
-  ? __pfx_device_del+0x10/0x10
-  ? cleanup_srcu_struct+0x337/0x500
-  hid_destroy_device+0xc8/0x130
-  mousevsc_remove+0xd2/0x1d0 [hid_hyperv]
-  device_release_driver_internal+0x371/0x540
-  driver_detach+0xc5/0x180
-  bus_remove_driver+0x11e/0x2a0
-  ? __mutex_unlock_slowpath+0x160/0x5e0
-  vmbus_driver_unregister+0x62/0x2b0 [hv_vmbus]
-  ...
+However everywhere else a normal thermal policy is stored inside this
+variable, potentially confusing the platform profile.
 
-And the issue seems to be that the corresponding devres group is not
-allocated. Normally, devres_open_group() is called from
-__hid_device_probe() but Hyper-V HID driver overrides 'hid_dev->driver'
-with 'mousevsc_hid_driver' stub and basically re-implements
-__hid_device_probe() by calling hid_parse() and hid_hw_start() but not
-devres_open_group(). hid_device_probe() does not call __hid_device_probe()
-for it. Later, when the driver is removed, hid_device_remove() calls
-devres_release_group() as it doesn't check whether hdev->driver was
-initially overridden or not.
+Fix this by always storing normal thermal policy values inside
+throttle_thermal_policy_mode and only do the conversion when writing
+the thermal policy to hardware. This also fixes the order in which
+throttle_thermal_policy_switch_next() steps through the thermal modes
+on Vivobook machines.
 
-The issue seems to be related to the commit 62c68e7cee33 ("HID: ensure
-timely release of driver-allocated resources") but the commit itself seems
-to be correct.
-
-Fix the issue by dropping the 'hid_dev->driver' override and using
-hid_register_driver()/hid_unregister_driver() instead. Alternatively, it
-would have been possible to rely on the default handling but
-HID_CONNECT_DEFAULT implies HID_CONNECT_HIDRAW and it doesn't seem to work
-for mousevsc as-is.
-
-Fixes: 62c68e7cee33 ("HID: ensure timely release of driver-allocated resources")
-Suggested-by: Michael Kelley <mhklinux@outlook.com>
-Signed-off-by: Vitaly Kuznetsov <vkuznets@redhat.com>
-Reviewed-by: Michael Kelley <mhklinux@outlook.com>
-Tested-by: Saurabh Sengar <ssengar@linux.microsoft.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Tested-by: Casey G Bowman <casey.g.bowman@intel.com>
+Fixes: bcbfcebda2cb ("platform/x86: asus-wmi: add support for vivobook fan profiles")
+Signed-off-by: Armin Wolf <W_Armin@gmx.de>
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://lore.kernel.org/r/20241107003811.615574-2-W_Armin@gmx.de
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-hyperv.c | 58 ++++++++++++++++++++++++++++------------
- 1 file changed, 41 insertions(+), 17 deletions(-)
+ drivers/platform/x86/asus-wmi.c | 64 +++++++++++----------------------
+ 1 file changed, 21 insertions(+), 43 deletions(-)
 
-diff --git a/drivers/hid/hid-hyperv.c b/drivers/hid/hid-hyperv.c
-index f33485d83d24f..0fb210e40a412 100644
---- a/drivers/hid/hid-hyperv.c
-+++ b/drivers/hid/hid-hyperv.c
-@@ -422,6 +422,25 @@ static int mousevsc_hid_raw_request(struct hid_device *hid,
- 	return 0;
- }
+diff --git a/drivers/platform/x86/asus-wmi.c b/drivers/platform/x86/asus-wmi.c
+index abdca3f05c5c1..89f5f44857d55 100644
+--- a/drivers/platform/x86/asus-wmi.c
++++ b/drivers/platform/x86/asus-wmi.c
+@@ -3696,10 +3696,28 @@ static int asus_wmi_custom_fan_curve_init(struct asus_wmi *asus)
+ /* Throttle thermal policy ****************************************************/
+ static int throttle_thermal_policy_write(struct asus_wmi *asus)
+ {
+-	u8 value = asus->throttle_thermal_policy_mode;
+ 	u32 retval;
++	u8 value;
+ 	int err;
  
-+static int mousevsc_hid_probe(struct hid_device *hid_dev, const struct hid_device_id *id)
-+{
-+	int ret;
-+
-+	ret = hid_parse(hid_dev);
-+	if (ret) {
-+		hid_err(hid_dev, "parse failed\n");
-+		return ret;
++	if (asus->throttle_thermal_policy_dev == ASUS_WMI_DEVID_THROTTLE_THERMAL_POLICY_VIVO) {
++		switch (asus->throttle_thermal_policy_mode) {
++		case ASUS_THROTTLE_THERMAL_POLICY_DEFAULT:
++			value = ASUS_THROTTLE_THERMAL_POLICY_DEFAULT_VIVO;
++			break;
++		case ASUS_THROTTLE_THERMAL_POLICY_OVERBOOST:
++			value = ASUS_THROTTLE_THERMAL_POLICY_OVERBOOST_VIVO;
++			break;
++		case ASUS_THROTTLE_THERMAL_POLICY_SILENT:
++			value = ASUS_THROTTLE_THERMAL_POLICY_SILENT_VIVO;
++			break;
++		default:
++			return -EINVAL;
++		}
++	} else {
++		value = asus->throttle_thermal_policy_mode;
 +	}
 +
-+	ret = hid_hw_start(hid_dev, HID_CONNECT_HIDINPUT | HID_CONNECT_HIDDEV);
-+	if (ret) {
-+		hid_err(hid_dev, "hw start failed\n");
-+		return ret;
-+	}
-+
-+	return 0;
-+}
-+
- static const struct hid_ll_driver mousevsc_ll_driver = {
- 	.parse = mousevsc_hid_parse,
- 	.open = mousevsc_hid_open,
-@@ -431,7 +450,16 @@ static const struct hid_ll_driver mousevsc_ll_driver = {
- 	.raw_request = mousevsc_hid_raw_request,
- };
+ 	err = asus_wmi_set_devstate(asus->throttle_thermal_policy_dev,
+ 				    value, &retval);
  
--static struct hid_driver mousevsc_hid_driver;
-+static const struct hid_device_id mousevsc_devices[] = {
-+	{ HID_DEVICE(BUS_VIRTUAL, HID_GROUP_ANY, 0x045E, 0x0621) },
-+	{ }
-+};
-+
-+static struct hid_driver mousevsc_hid_driver = {
-+	.name = "hid-hyperv",
-+	.id_table = mousevsc_devices,
-+	.probe = mousevsc_hid_probe,
-+};
+@@ -3804,46 +3822,6 @@ static ssize_t throttle_thermal_policy_store(struct device *dev,
+ static DEVICE_ATTR_RW(throttle_thermal_policy);
  
- static int mousevsc_probe(struct hv_device *device,
- 			const struct hv_vmbus_device_id *dev_id)
-@@ -473,7 +501,6 @@ static int mousevsc_probe(struct hv_device *device,
+ /* Platform profile ***********************************************************/
+-static int asus_wmi_platform_profile_to_vivo(struct asus_wmi *asus, int mode)
+-{
+-	bool vivo;
+-
+-	vivo = asus->throttle_thermal_policy_dev == ASUS_WMI_DEVID_THROTTLE_THERMAL_POLICY_VIVO;
+-
+-	if (vivo) {
+-		switch (mode) {
+-		case ASUS_THROTTLE_THERMAL_POLICY_DEFAULT:
+-			return ASUS_THROTTLE_THERMAL_POLICY_DEFAULT_VIVO;
+-		case ASUS_THROTTLE_THERMAL_POLICY_OVERBOOST:
+-			return ASUS_THROTTLE_THERMAL_POLICY_OVERBOOST_VIVO;
+-		case ASUS_THROTTLE_THERMAL_POLICY_SILENT:
+-			return ASUS_THROTTLE_THERMAL_POLICY_SILENT_VIVO;
+-		}
+-	}
+-
+-	return mode;
+-}
+-
+-static int asus_wmi_platform_profile_mode_from_vivo(struct asus_wmi *asus, int mode)
+-{
+-	bool vivo;
+-
+-	vivo = asus->throttle_thermal_policy_dev == ASUS_WMI_DEVID_THROTTLE_THERMAL_POLICY_VIVO;
+-
+-	if (vivo) {
+-		switch (mode) {
+-		case ASUS_THROTTLE_THERMAL_POLICY_DEFAULT_VIVO:
+-			return ASUS_THROTTLE_THERMAL_POLICY_DEFAULT;
+-		case ASUS_THROTTLE_THERMAL_POLICY_OVERBOOST_VIVO:
+-			return ASUS_THROTTLE_THERMAL_POLICY_OVERBOOST;
+-		case ASUS_THROTTLE_THERMAL_POLICY_SILENT_VIVO:
+-			return ASUS_THROTTLE_THERMAL_POLICY_SILENT;
+-		}
+-	}
+-
+-	return mode;
+-}
+-
+ static int asus_wmi_platform_profile_get(struct platform_profile_handler *pprof,
+ 					enum platform_profile_option *profile)
+ {
+@@ -3853,7 +3831,7 @@ static int asus_wmi_platform_profile_get(struct platform_profile_handler *pprof,
+ 	asus = container_of(pprof, struct asus_wmi, platform_profile_handler);
+ 	tp = asus->throttle_thermal_policy_mode;
+ 
+-	switch (asus_wmi_platform_profile_mode_from_vivo(asus, tp)) {
++	switch (tp) {
+ 	case ASUS_THROTTLE_THERMAL_POLICY_DEFAULT:
+ 		*profile = PLATFORM_PROFILE_BALANCED;
+ 		break;
+@@ -3892,7 +3870,7 @@ static int asus_wmi_platform_profile_set(struct platform_profile_handler *pprof,
+ 		return -EOPNOTSUPP;
  	}
  
- 	hid_dev->ll_driver = &mousevsc_ll_driver;
--	hid_dev->driver = &mousevsc_hid_driver;
- 	hid_dev->bus = BUS_VIRTUAL;
- 	hid_dev->vendor = input_dev->hid_dev_info.vendor;
- 	hid_dev->product = input_dev->hid_dev_info.product;
-@@ -488,20 +515,6 @@ static int mousevsc_probe(struct hv_device *device,
- 	if (ret)
- 		goto probe_err2;
- 
--
--	ret = hid_parse(hid_dev);
--	if (ret) {
--		hid_err(hid_dev, "parse failed\n");
--		goto probe_err2;
--	}
--
--	ret = hid_hw_start(hid_dev, HID_CONNECT_HIDINPUT | HID_CONNECT_HIDDEV);
--
--	if (ret) {
--		hid_err(hid_dev, "hw start failed\n");
--		goto probe_err2;
--	}
--
- 	device_init_wakeup(&device->device, true);
- 
- 	input_dev->connected = true;
-@@ -579,12 +592,23 @@ static struct  hv_driver mousevsc_drv = {
- 
- static int __init mousevsc_init(void)
- {
--	return vmbus_driver_register(&mousevsc_drv);
-+	int ret;
-+
-+	ret = hid_register_driver(&mousevsc_hid_driver);
-+	if (ret)
-+		return ret;
-+
-+	ret = vmbus_driver_register(&mousevsc_drv);
-+	if (ret)
-+		hid_unregister_driver(&mousevsc_hid_driver);
-+
-+	return ret;
+-	asus->throttle_thermal_policy_mode = asus_wmi_platform_profile_to_vivo(asus, tp);
++	asus->throttle_thermal_policy_mode = tp;
+ 	return throttle_thermal_policy_write(asus);
  }
  
- static void __exit mousevsc_exit(void)
- {
- 	vmbus_driver_unregister(&mousevsc_drv);
-+	hid_unregister_driver(&mousevsc_hid_driver);
- }
- 
- MODULE_LICENSE("GPL");
 -- 
 2.43.0
 
