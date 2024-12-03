@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E1AD14A088;
-	Tue,  3 Dec 2024 16:03:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92B5123CE;
+	Tue,  3 Dec 2024 16:03:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733241823; cv=none; b=Q+hLbSs9GK9qu4V1dv9vOeOX3zxkE/z2Uz1fzrlppQ8lYzVbo9/YM2FdwCrKVkum85f44/3Yyl+dYAZgseR7c+xVSs6dEIbVppfnoH27hPnFbhwij/Ue6cihxy6jwYUFdVHEpzWb/MqrO/p5BUiN4e8h/wqLa8bpv+hQekpZW8c=
+	t=1733241826; cv=none; b=eQd3IA813fXaQt7cbTcpUPxM55Iq5NOBE30LY9/niFu/oNjfaTRAnQdBWLcQ+0bndFoHxv6QxOCbITiIIgqhhnlbMUpK5ooleveJ/6fAu7bRDQlF+Ex6izwFOz+JKwtRwCB9QDoyt07FflxV+IKyQncqTifARtz+RRWHcQlPhZo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733241823; c=relaxed/simple;
-	bh=Hg3kOUmmsXrH/AAcgVCgYN3GJWzmxBLa9J4bxitWVEM=;
+	s=arc-20240116; t=1733241826; c=relaxed/simple;
+	bh=OUq1uUE4RCylziVipS0TpLKsForytiOZHgrIZ9YnrEs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=REOvck6QQ9TyM/J1DYU6yNg+whErwXAwLZi0f3eq81UNsTaLXEWqxUk9S781k2V1OHmHGBpvQA3+AOpoX0+u9utjjgsjz7RR7pHC8mS+NDGMQvrF5hFD+IUS81a60mXKKuvetA2gGIUAYgLGWuWNL0RhzhpSF5N1x+opBBaphik=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cCU5GZnJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SZP1E5QjQZaglE9a5YVTdYgU0yKOSCC5FPHAgHXrWA7wH86ORQ0cfHoadYSBJdGRyqRgPRKb89ChYoEggWLhCB7Lbu2NX3EKiN2V2llD2IxiCOyh5GtEL9w19+fZ99skx5hQUgPN7F4/aKtdGcWEGzwYWF0trhnlNjd9fHlXP+k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bnpl9Ak/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cCU5GZnJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C21C3C4CECF;
-	Tue,  3 Dec 2024 16:03:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bnpl9Ak/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08B4BC4CECF;
+	Tue,  3 Dec 2024 16:03:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733241823;
-	bh=Hg3kOUmmsXrH/AAcgVCgYN3GJWzmxBLa9J4bxitWVEM=;
+	s=korg; t=1733241826;
+	bh=OUq1uUE4RCylziVipS0TpLKsForytiOZHgrIZ9YnrEs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cCU5GZnJ66ThLldByKbygSHnYxUGglEF3UOlYARoFT8i/WsVvsNrEtD5hq5XelL9Y
-	 S7lmF1HtihDdunhMl66n0+51bX8mcXeadFlYhKIWL9J853Sca5KfKCYES1ErG0ly8Z
-	 xByF4EbV19mZPkr+bVY76rB87/NVJK0qf2Fk6QzU=
+	b=Bnpl9Ak/NxeBo5Gf/3RIR+eMZSC9zm1QaNQkmbwNsl+Ef/S8/xjkYNF+Wr7oOIScq
+	 sZ9Dv/WhYDVvuUCyDKYzeX6dOVvLFVlZzjebWlrqG1x8pxWqvhEgwbqzA0zPNFASb6
+	 IjU0SoLrr8zku7v+v9vwve31+GBM1xo0+JnY7B90=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ye Bin <yebin10@huawei.com>,
-	Chuck Lever <chuck.lever@oracle.com>,
+	Jean-Michel Hautbois <jeanmichel.hautbois@yoseli.org>,
+	Greg Ungerer <gerg@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 528/826] svcrdma: fix miss destroy percpu_counter in svc_rdma_proc_init()
-Date: Tue,  3 Dec 2024 15:44:15 +0100
-Message-ID: <20241203144804.353452205@linuxfoundation.org>
+Subject: [PATCH 6.12 511/826] m68k: mcfgpio: Fix incorrect register offset for CONFIG_M5441x
+Date: Tue,  3 Dec 2024 15:43:58 +0100
+Message-ID: <20241203144803.689701955@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -51,98 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ye Bin <yebin10@huawei.com>
+From: Jean-Michel Hautbois <jeanmichel.hautbois@yoseli.org>
 
-[ Upstream commit ce89e742a4c12b20f09a43fec1b21db33f2166cd ]
+[ Upstream commit f212140962c93cd5da43283a18e31681540fc23d ]
 
-There's issue as follows:
-RPC: Registered rdma transport module.
-RPC: Registered rdma backchannel transport module.
-RPC: Unregistered rdma transport module.
-RPC: Unregistered rdma backchannel transport module.
-BUG: unable to handle page fault for address: fffffbfff80c609a
-PGD 123fee067 P4D 123fee067 PUD 123fea067 PMD 10c624067 PTE 0
-Oops: Oops: 0000 [#1] PREEMPT SMP KASAN NOPTI
-RIP: 0010:percpu_counter_destroy_many+0xf7/0x2a0
-Call Trace:
- <TASK>
- __die+0x1f/0x70
- page_fault_oops+0x2cd/0x860
- spurious_kernel_fault+0x36/0x450
- do_kern_addr_fault+0xca/0x100
- exc_page_fault+0x128/0x150
- asm_exc_page_fault+0x26/0x30
- percpu_counter_destroy_many+0xf7/0x2a0
- mmdrop+0x209/0x350
- finish_task_switch.isra.0+0x481/0x840
- schedule_tail+0xe/0xd0
- ret_from_fork+0x23/0x80
- ret_from_fork_asm+0x1a/0x30
- </TASK>
+Fix a typo in the CONFIG_M5441x preprocessor condition, where the GPIO
+register offset was incorrectly set to 8 instead of 0. This prevented
+proper GPIO configuration for m5441x targets.
 
-If register_sysctl() return NULL, then svc_rdma_proc_cleanup() will not
-destroy the percpu counters which init in svc_rdma_proc_init().
-If CONFIG_HOTPLUG_CPU is enabled, residual nodes may be in the
-'percpu_counters' list. The above issue may occur once the module is
-removed. If the CONFIG_HOTPLUG_CPU configuration is not enabled, memory
-leakage occurs.
-To solve above issue just destroy all percpu counters when
-register_sysctl() return NULL.
-
-Fixes: 1e7e55731628 ("svcrdma: Restore read and write stats")
-Fixes: 22df5a22462e ("svcrdma: Convert rdma_stat_sq_starve to a per-CPU counter")
-Fixes: df971cd853c0 ("svcrdma: Convert rdma_stat_recv to a per-CPU counter")
-Signed-off-by: Ye Bin <yebin10@huawei.com>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Fixes: bea8bcb12da0 ("m68knommu: Add support for the Coldfire m5441x.")
+Signed-off-by: Jean-Michel Hautbois <jeanmichel.hautbois@yoseli.org>
+Signed-off-by: Greg Ungerer <gerg@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/xprtrdma/svc_rdma.c | 19 ++++++++++++++-----
- 1 file changed, 14 insertions(+), 5 deletions(-)
+ arch/m68k/include/asm/mcfgpio.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/sunrpc/xprtrdma/svc_rdma.c b/net/sunrpc/xprtrdma/svc_rdma.c
-index 58ae6ec4f25b4..415c0310101f0 100644
---- a/net/sunrpc/xprtrdma/svc_rdma.c
-+++ b/net/sunrpc/xprtrdma/svc_rdma.c
-@@ -233,25 +233,34 @@ static int svc_rdma_proc_init(void)
- 
- 	rc = percpu_counter_init(&svcrdma_stat_read, 0, GFP_KERNEL);
- 	if (rc)
--		goto out_err;
-+		goto err;
- 	rc = percpu_counter_init(&svcrdma_stat_recv, 0, GFP_KERNEL);
- 	if (rc)
--		goto out_err;
-+		goto err_read;
- 	rc = percpu_counter_init(&svcrdma_stat_sq_starve, 0, GFP_KERNEL);
- 	if (rc)
--		goto out_err;
-+		goto err_recv;
- 	rc = percpu_counter_init(&svcrdma_stat_write, 0, GFP_KERNEL);
- 	if (rc)
--		goto out_err;
-+		goto err_sq;
- 
- 	svcrdma_table_header = register_sysctl("sunrpc/svc_rdma",
- 					       svcrdma_parm_table);
-+	if (!svcrdma_table_header)
-+		goto err_write;
-+
- 	return 0;
- 
--out_err:
-+err_write:
-+	rc = -ENOMEM;
-+	percpu_counter_destroy(&svcrdma_stat_write);
-+err_sq:
- 	percpu_counter_destroy(&svcrdma_stat_sq_starve);
-+err_recv:
- 	percpu_counter_destroy(&svcrdma_stat_recv);
-+err_read:
- 	percpu_counter_destroy(&svcrdma_stat_read);
-+err:
- 	return rc;
- }
- 
+diff --git a/arch/m68k/include/asm/mcfgpio.h b/arch/m68k/include/asm/mcfgpio.h
+index 019f244395464..9c91ecdafc453 100644
+--- a/arch/m68k/include/asm/mcfgpio.h
++++ b/arch/m68k/include/asm/mcfgpio.h
+@@ -136,7 +136,7 @@ static inline void gpio_free(unsigned gpio)
+  * read-modify-write as well as those controlled by the EPORT and GPIO modules.
+  */
+ #define MCFGPIO_SCR_START		40
+-#elif defined(CONFIGM5441x)
++#elif defined(CONFIG_M5441x)
+ /* The m5441x EPORT doesn't have its own GPIO port, uses PORT C */
+ #define MCFGPIO_SCR_START		0
+ #else
 -- 
 2.43.0
 
