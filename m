@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 832C81F76C0;
-	Tue,  3 Dec 2024 15:04:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4134C33FE;
+	Tue,  3 Dec 2024 15:04:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733238244; cv=none; b=WwAU0h0TKpDcLUvYmNQy+YDn1pQZGkQB6eY6QWNkxuoF11Sngvf7+OAlrZAjIFfFbWv9Iao4gqRv969TU3BfNPsU9HA3FoS70jvKOOdHPcHM3dPG9SyxYTK++NY8tZS3lj88v/lA552TEh22DJlKcYp8Tzk5bcQLDeL1B8M8tr0=
+	t=1733238247; cv=none; b=Cp3AcpwztTDXQ/1s0MTyrfurCLeGeDUawtD+nnwBYtcDhvHOxteOIhhGztOghmOyb88ApyU9YLU3QmkrQLaP8ZLDuxkQYEafjhLy1BckQ1mAgkRSi0vwm9AdL5aqMVMiXjaCBoTQHD2gC/yOAz/UVyyK9Sbu5db8PM8oxEETZwc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733238244; c=relaxed/simple;
-	bh=cMObaYSAlOOjxQohAm/+B8bkC3RfesLDmdVCxPgJUzw=;
+	s=arc-20240116; t=1733238247; c=relaxed/simple;
+	bh=0zel8kHPZ5uY/Mx02KSPhOlHIim/Cq2sdxdEZmehYXc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ig19BhIJ+yXVpQuKSeKlcacCHIOlYvwFNKCkmOAXG/z7wgDl5Q0Tbw3CmCZbIKzSaHYo0Ab2KKIgDIJ/g8NmJQqqs3i5G0Beq+aPgeox8DPtkaTYC835Bn5EQqfVA5olHek6FSDLlBl4QnprdgcHviPCYr0hMacfZyh8vxlwHFU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zIFw/oQX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=FNX3+54shI31RhxkmWD+T8dS3ak4PzZfbUKec6fC/fKmsh1mF0rZD7EP7e76I8luPNLiFTJx9SFmLIARtCW5juCw/ueunLWfIorV9r+l3Njo1SeeoER3M/cHkmf+z525Gc5nEaVrJv2UQvo7tY0MkYmLRISXUJqQ3oCRIhM5Nqg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uCAunBdm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zIFw/oQX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9E19C4CECF;
-	Tue,  3 Dec 2024 15:04:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uCAunBdm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79CD3C4CECF;
+	Tue,  3 Dec 2024 15:04:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733238244;
-	bh=cMObaYSAlOOjxQohAm/+B8bkC3RfesLDmdVCxPgJUzw=;
+	s=korg; t=1733238246;
+	bh=0zel8kHPZ5uY/Mx02KSPhOlHIim/Cq2sdxdEZmehYXc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zIFw/oQXBLJIe+jf396yV3gOLERv+CyRCXc83E2px1QnoNUQuRijlQOTQ2Guap20u
-	 g9VOv71rioxg/m105kIi0JtVaj6MYi3VuM18kzCg+8fTyXq1pd5R5pN1hewfIMB6Lb
-	 pD1H2y8nrajNrW+fB9Npn2ggfJ45X5nKt4G1VH0Y=
+	b=uCAunBdmXMfak9qADABh5jBDFP+ysf+6oDP0tljl+4LqoD48GBIYklb0UVaN/jcb1
+	 5+wuSCOJ4/QwQ0L6xtkuUgv2q4AvODMsI7ZQWEj9x2YoSbEjbIN9PuVtDr+HUFwZ5P
+	 CixfpUOeFDU+iT6R9/m8p8nkXmaeSlGBSTM/XxD4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Kelley <mhklinux@outlook.com>,
-	Vitaly Kuznetsov <vkuznets@redhat.com>,
-	Saurabh Sengar <ssengar@linux.microsoft.com>,
-	Jiri Kosina <jkosina@suse.com>,
+	Yao Zi <ziyao@disroot.org>,
+	Hans de Goede <hdegoede@redhat.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 212/817] HID: hyperv: streamline driver probe to avoid devres issues
-Date: Tue,  3 Dec 2024 15:36:24 +0100
-Message-ID: <20241203144004.025077832@linuxfoundation.org>
+Subject: [PATCH 6.11 213/817] platform/x86: panasonic-laptop: Return errno correctly in show callback
+Date: Tue,  3 Dec 2024 15:36:25 +0100
+Message-ID: <20241203144004.064377419@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -47,186 +46,61 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.11-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Vitaly Kuznetsov <vkuznets@redhat.com>
+From: Yao Zi <ziyao@disroot.org>
 
-[ Upstream commit 66ef47faa90d838cda131fe1f7776456cc3b59f2 ]
+[ Upstream commit 5c7bebc1a3f0661db558d60e14dde27fc216d9dc ]
 
-It was found that unloading 'hid_hyperv' module results in a devres
-complaint:
+When an error occurs in sysfs show callback, we should return the errno
+directly instead of formatting it as the result, which produces
+meaningless output and doesn't inform the userspace of the error.
 
- ...
- hv_vmbus: unregistering driver hid_hyperv
- ------------[ cut here ]------------
- WARNING: CPU: 2 PID: 3983 at drivers/base/devres.c:691 devres_release_group+0x1f2/0x2c0
- ...
- Call Trace:
-  <TASK>
-  ? devres_release_group+0x1f2/0x2c0
-  ? __warn+0xd1/0x1c0
-  ? devres_release_group+0x1f2/0x2c0
-  ? report_bug+0x32a/0x3c0
-  ? handle_bug+0x53/0xa0
-  ? exc_invalid_op+0x18/0x50
-  ? asm_exc_invalid_op+0x1a/0x20
-  ? devres_release_group+0x1f2/0x2c0
-  ? devres_release_group+0x90/0x2c0
-  ? rcu_is_watching+0x15/0xb0
-  ? __pfx_devres_release_group+0x10/0x10
-  hid_device_remove+0xf5/0x220
-  device_release_driver_internal+0x371/0x540
-  ? klist_put+0xf3/0x170
-  bus_remove_device+0x1f1/0x3f0
-  device_del+0x33f/0x8c0
-  ? __pfx_device_del+0x10/0x10
-  ? cleanup_srcu_struct+0x337/0x500
-  hid_destroy_device+0xc8/0x130
-  mousevsc_remove+0xd2/0x1d0 [hid_hyperv]
-  device_release_driver_internal+0x371/0x540
-  driver_detach+0xc5/0x180
-  bus_remove_driver+0x11e/0x2a0
-  ? __mutex_unlock_slowpath+0x160/0x5e0
-  vmbus_driver_unregister+0x62/0x2b0 [hv_vmbus]
-  ...
-
-And the issue seems to be that the corresponding devres group is not
-allocated. Normally, devres_open_group() is called from
-__hid_device_probe() but Hyper-V HID driver overrides 'hid_dev->driver'
-with 'mousevsc_hid_driver' stub and basically re-implements
-__hid_device_probe() by calling hid_parse() and hid_hw_start() but not
-devres_open_group(). hid_device_probe() does not call __hid_device_probe()
-for it. Later, when the driver is removed, hid_device_remove() calls
-devres_release_group() as it doesn't check whether hdev->driver was
-initially overridden or not.
-
-The issue seems to be related to the commit 62c68e7cee33 ("HID: ensure
-timely release of driver-allocated resources") but the commit itself seems
-to be correct.
-
-Fix the issue by dropping the 'hid_dev->driver' override and using
-hid_register_driver()/hid_unregister_driver() instead. Alternatively, it
-would have been possible to rely on the default handling but
-HID_CONNECT_DEFAULT implies HID_CONNECT_HIDRAW and it doesn't seem to work
-for mousevsc as-is.
-
-Fixes: 62c68e7cee33 ("HID: ensure timely release of driver-allocated resources")
-Suggested-by: Michael Kelley <mhklinux@outlook.com>
-Signed-off-by: Vitaly Kuznetsov <vkuznets@redhat.com>
-Reviewed-by: Michael Kelley <mhklinux@outlook.com>
-Tested-by: Saurabh Sengar <ssengar@linux.microsoft.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Fixes: 468f96bfa3a0 ("platform/x86: panasonic-laptop: Add support for battery charging threshold (eco mode)")
+Fixes: d5a81d8e864b ("platform/x86: panasonic-laptop: Add support for optical driver power in Y and W series")
+Signed-off-by: Yao Zi <ziyao@disroot.org>
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://lore.kernel.org/r/20241118064637.61832-3-ziyao@disroot.org
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-hyperv.c | 58 ++++++++++++++++++++++++++++------------
- 1 file changed, 41 insertions(+), 17 deletions(-)
+ drivers/platform/x86/panasonic-laptop.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/hid/hid-hyperv.c b/drivers/hid/hid-hyperv.c
-index f33485d83d24f..0fb210e40a412 100644
---- a/drivers/hid/hid-hyperv.c
-+++ b/drivers/hid/hid-hyperv.c
-@@ -422,6 +422,25 @@ static int mousevsc_hid_raw_request(struct hid_device *hid,
- 	return 0;
- }
- 
-+static int mousevsc_hid_probe(struct hid_device *hid_dev, const struct hid_device_id *id)
-+{
-+	int ret;
-+
-+	ret = hid_parse(hid_dev);
-+	if (ret) {
-+		hid_err(hid_dev, "parse failed\n");
-+		return ret;
-+	}
-+
-+	ret = hid_hw_start(hid_dev, HID_CONNECT_HIDINPUT | HID_CONNECT_HIDDEV);
-+	if (ret) {
-+		hid_err(hid_dev, "hw start failed\n");
-+		return ret;
-+	}
-+
-+	return 0;
-+}
-+
- static const struct hid_ll_driver mousevsc_ll_driver = {
- 	.parse = mousevsc_hid_parse,
- 	.open = mousevsc_hid_open,
-@@ -431,7 +450,16 @@ static const struct hid_ll_driver mousevsc_ll_driver = {
- 	.raw_request = mousevsc_hid_raw_request,
- };
- 
--static struct hid_driver mousevsc_hid_driver;
-+static const struct hid_device_id mousevsc_devices[] = {
-+	{ HID_DEVICE(BUS_VIRTUAL, HID_GROUP_ANY, 0x045E, 0x0621) },
-+	{ }
-+};
-+
-+static struct hid_driver mousevsc_hid_driver = {
-+	.name = "hid-hyperv",
-+	.id_table = mousevsc_devices,
-+	.probe = mousevsc_hid_probe,
-+};
- 
- static int mousevsc_probe(struct hv_device *device,
- 			const struct hv_vmbus_device_id *dev_id)
-@@ -473,7 +501,6 @@ static int mousevsc_probe(struct hv_device *device,
+diff --git a/drivers/platform/x86/panasonic-laptop.c b/drivers/platform/x86/panasonic-laptop.c
+index ebd81846e2d56..7365286f6d2dc 100644
+--- a/drivers/platform/x86/panasonic-laptop.c
++++ b/drivers/platform/x86/panasonic-laptop.c
+@@ -602,8 +602,7 @@ static ssize_t eco_mode_show(struct device *dev, struct device_attribute *attr,
+ 		result = 1;
+ 		break;
+ 	default:
+-		result = -EIO;
+-		break;
++		return -EIO;
  	}
- 
- 	hid_dev->ll_driver = &mousevsc_ll_driver;
--	hid_dev->driver = &mousevsc_hid_driver;
- 	hid_dev->bus = BUS_VIRTUAL;
- 	hid_dev->vendor = input_dev->hid_dev_info.vendor;
- 	hid_dev->product = input_dev->hid_dev_info.product;
-@@ -488,20 +515,6 @@ static int mousevsc_probe(struct hv_device *device,
- 	if (ret)
- 		goto probe_err2;
- 
--
--	ret = hid_parse(hid_dev);
--	if (ret) {
--		hid_err(hid_dev, "parse failed\n");
--		goto probe_err2;
--	}
--
--	ret = hid_hw_start(hid_dev, HID_CONNECT_HIDINPUT | HID_CONNECT_HIDDEV);
--
--	if (ret) {
--		hid_err(hid_dev, "hw start failed\n");
--		goto probe_err2;
--	}
--
- 	device_init_wakeup(&device->device, true);
- 
- 	input_dev->connected = true;
-@@ -579,12 +592,23 @@ static struct  hv_driver mousevsc_drv = {
- 
- static int __init mousevsc_init(void)
+ 	return sysfs_emit(buf, "%u\n", result);
+ }
+@@ -749,7 +748,12 @@ static ssize_t current_brightness_store(struct device *dev, struct device_attrib
+ static ssize_t cdpower_show(struct device *dev, struct device_attribute *attr,
+ 			    char *buf)
  {
--	return vmbus_driver_register(&mousevsc_drv);
-+	int ret;
+-	return sysfs_emit(buf, "%d\n", get_optd_power_state());
++	int state = get_optd_power_state();
 +
-+	ret = hid_register_driver(&mousevsc_hid_driver);
-+	if (ret)
-+		return ret;
++	if (state < 0)
++		return state;
 +
-+	ret = vmbus_driver_register(&mousevsc_drv);
-+	if (ret)
-+		hid_unregister_driver(&mousevsc_hid_driver);
-+
-+	return ret;
++	return sysfs_emit(buf, "%d\n", state);
  }
  
- static void __exit mousevsc_exit(void)
- {
- 	vmbus_driver_unregister(&mousevsc_drv);
-+	hid_unregister_driver(&mousevsc_hid_driver);
- }
- 
- MODULE_LICENSE("GPL");
+ static ssize_t cdpower_store(struct device *dev, struct device_attribute *attr,
 -- 
 2.43.0
 
