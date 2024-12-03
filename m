@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 695BF1FA82E;
-	Tue,  3 Dec 2024 15:10:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F37E1FA82E;
+	Tue,  3 Dec 2024 15:10:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733238655; cv=none; b=N7d9AQJgu9Qy3TYYkCnz0XAkDCzzrton6IwO9UuCdrhGi5bly9lJaN5EfhZiUo8nAGhhMvbw3vRHF6LMhrj29Ah4h8kXCo4TVVpR0K6ZNExWsJRwNkKWH+8eBlbPRWdWTIhecOlqxsTtSQMcOTRi2R9YqBihNtSEq5yq2CdQfyc=
+	t=1733238658; cv=none; b=MK6KHfdGrWNsVODaR2GajV4Nnz0XCylSO37gVQp1yq1u4R0CWlRbdanYWNTZSJ9msQAu7pBLTa9Y7jK4Oq1/GTVNY8QmZp+b7HqSiARWh3kUL1CyLIBPKQGTjOVZ4JaSmo4OA9jDGCn09T7lguUK8vjTPqaLKHtCBC4ZNUaGPEw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733238655; c=relaxed/simple;
-	bh=9vHMIdZ671aFAytUoDkiLnQ5FN9TrBZt4+QT8ROHzFg=;
+	s=arc-20240116; t=1733238658; c=relaxed/simple;
+	bh=zqr/zuLYxCXJ4mHhvJwNzfk/MMWCR0YP7KHKpzqtSlk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aaKHDFNpBs+Qi3n4VPtiy3Pr0vEwzAl1xkbE8K8PoO29LoNMNHOrpwaGQvzIXxMOVADGa3vEs8t4Jw9GFN8w6ix75YUnLx7p03t9UlBdh8sXrJ2Myx8WMShtBX3KXjApoSCq1gGbalb3I5fiif/uxjJvzKWBTZJJFjOl2snsvsI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kDEKhO66; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bWVKCQOwIzzq5XUPKonXMh9CAfvAYnf4gawA62KjI4eeZee6XOKJVtVY/k31WVymgqmxONjRSl72laZk/q2/zupCLwY8+uDX9U8t+vrAVjVHPl4UqqMcniWlv0g59DmcKwVf/XQ+8XL1eop3SymP1QCQvRcbXxzL0g97EPa1Wxg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kdx/5zV7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kDEKhO66"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E326DC4CED8;
-	Tue,  3 Dec 2024 15:10:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kdx/5zV7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC209C4CECF;
+	Tue,  3 Dec 2024 15:10:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733238655;
-	bh=9vHMIdZ671aFAytUoDkiLnQ5FN9TrBZt4+QT8ROHzFg=;
+	s=korg; t=1733238658;
+	bh=zqr/zuLYxCXJ4mHhvJwNzfk/MMWCR0YP7KHKpzqtSlk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kDEKhO66ecbNRAz3nPcpq4BvIl1WOJLV5/Fp627tPe037FQVhVmB3nKIjO2aRpDGF
-	 t6h2EQJe5eqDGsdWGn7/kD6RfOtC0hbxtM81Ro+jJfT/iXg7Zpd4Dg9mhLg5QtX805
-	 gi12+4368LvOtExs7vLWPJVyhxS++krml5nNM738=
+	b=Kdx/5zV7lGmWMtSDmXr2wlYcK7uF00FNkwSj7KVSfDHRBHxewFXumrGm9g6SMFnc0
+	 rdPDsimx9MBrpIzfuk68yVyCjWrsAptwxf4lmwLz3aezQYwr7/vKjN/B0OBe94zUSZ
+	 SDpKkwmXrgIxyS944ap/R1D1xsjjONnLo4ZbAiUI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
+	Igor Pylypiv <ipylypiv@google.com>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 353/817] ALSA: 6fire: Release resources at card release
-Date: Tue,  3 Dec 2024 15:38:45 +0100
-Message-ID: <20241203144009.610993608@linuxfoundation.org>
+Subject: [PATCH 6.11 354/817] i2c: dev: Fix memory leak when underlying adapter does not support I2C
+Date: Tue,  3 Dec 2024 15:38:46 +0100
+Message-ID: <20241203144009.650085137@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -50,76 +51,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Igor Pylypiv <ipylypiv@google.com>
 
-[ Upstream commit a0810c3d6dd2d29a9b92604d682eacd2902ce947 ]
+[ Upstream commit 48730a9d04ffccda541602d722d1ff81920a85d8 ]
 
-The current 6fire code tries to release the resources right after the
-call of usb6fire_chip_abort().  But at this moment, the card object
-might be still in use (as we're calling snd_card_free_when_closed()).
+Early return in i2cdev_ioctl_rdwr() failed to free the memory allocated
+by the caller. Move freeing the memory to the function where it has been
+allocated to prevent similar leaks in the future.
 
-For avoid potential UAFs, move the release of resources to the card's
-private_free instead of the manual call of usb6fire_chip_destroy() at
-the USB disconnect callback.
-
-Fixes: c6d43ba816d1 ("ALSA: usb/6fire - Driver for TerraTec DMX 6Fire USB")
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20241113111042.15058-6-tiwai@suse.de
+Fixes: 97ca843f6ad3 ("i2c: dev: Check for I2C_FUNC_I2C before calling i2c_transfer")
+Signed-off-by: Igor Pylypiv <ipylypiv@google.com>
+[wsa: replaced '== NULL' with '!']
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/6fire/chip.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/i2c/i2c-dev.c | 17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
 
-diff --git a/sound/usb/6fire/chip.c b/sound/usb/6fire/chip.c
-index 33e962178c936..d562a30b087f0 100644
---- a/sound/usb/6fire/chip.c
-+++ b/sound/usb/6fire/chip.c
-@@ -61,8 +61,10 @@ static void usb6fire_chip_abort(struct sfire_chip *chip)
+diff --git a/drivers/i2c/i2c-dev.c b/drivers/i2c/i2c-dev.c
+index f4fb212b7f392..db5f1498e8690 100644
+--- a/drivers/i2c/i2c-dev.c
++++ b/drivers/i2c/i2c-dev.c
+@@ -251,10 +251,8 @@ static noinline int i2cdev_ioctl_rdwr(struct i2c_client *client,
+ 		return -EOPNOTSUPP;
+ 
+ 	data_ptrs = kmalloc_array(nmsgs, sizeof(u8 __user *), GFP_KERNEL);
+-	if (data_ptrs == NULL) {
+-		kfree(msgs);
++	if (!data_ptrs)
+ 		return -ENOMEM;
+-	}
+ 
+ 	res = 0;
+ 	for (i = 0; i < nmsgs; i++) {
+@@ -302,7 +300,6 @@ static noinline int i2cdev_ioctl_rdwr(struct i2c_client *client,
+ 		for (j = 0; j < i; ++j)
+ 			kfree(msgs[j].buf);
+ 		kfree(data_ptrs);
+-		kfree(msgs);
+ 		return res;
  	}
- }
  
--static void usb6fire_chip_destroy(struct sfire_chip *chip)
-+static void usb6fire_card_free(struct snd_card *card)
- {
-+	struct sfire_chip *chip = card->private_data;
-+
- 	if (chip) {
- 		if (chip->pcm)
- 			usb6fire_pcm_destroy(chip);
-@@ -72,8 +74,6 @@ static void usb6fire_chip_destroy(struct sfire_chip *chip)
- 			usb6fire_comm_destroy(chip);
- 		if (chip->control)
- 			usb6fire_control_destroy(chip);
--		if (chip->card)
--			snd_card_free(chip->card);
+@@ -316,7 +313,6 @@ static noinline int i2cdev_ioctl_rdwr(struct i2c_client *client,
+ 		kfree(msgs[i].buf);
  	}
+ 	kfree(data_ptrs);
+-	kfree(msgs);
+ 	return res;
  }
  
-@@ -136,6 +136,7 @@ static int usb6fire_chip_probe(struct usb_interface *intf,
- 	chip->regidx = regidx;
- 	chip->intf_count = 1;
- 	chip->card = card;
-+	card->private_free = usb6fire_card_free;
+@@ -446,6 +442,7 @@ static long i2cdev_ioctl(struct file *file, unsigned int cmd, unsigned long arg)
+ 	case I2C_RDWR: {
+ 		struct i2c_rdwr_ioctl_data rdwr_arg;
+ 		struct i2c_msg *rdwr_pa;
++		int res;
  
- 	ret = usb6fire_comm_init(chip);
- 	if (ret < 0)
-@@ -162,7 +163,7 @@ static int usb6fire_chip_probe(struct usb_interface *intf,
- 	return 0;
+ 		if (copy_from_user(&rdwr_arg,
+ 				   (struct i2c_rdwr_ioctl_data __user *)arg,
+@@ -467,7 +464,9 @@ static long i2cdev_ioctl(struct file *file, unsigned int cmd, unsigned long arg)
+ 		if (IS_ERR(rdwr_pa))
+ 			return PTR_ERR(rdwr_pa);
  
- destroy_chip:
--	usb6fire_chip_destroy(chip);
-+	snd_card_free(card);
- 	return ret;
- }
+-		return i2cdev_ioctl_rdwr(client, rdwr_arg.nmsgs, rdwr_pa);
++		res = i2cdev_ioctl_rdwr(client, rdwr_arg.nmsgs, rdwr_pa);
++		kfree(rdwr_pa);
++		return res;
+ 	}
  
-@@ -181,7 +182,6 @@ static void usb6fire_chip_disconnect(struct usb_interface *intf)
+ 	case I2C_SMBUS: {
+@@ -540,7 +539,7 @@ static long compat_i2cdev_ioctl(struct file *file, unsigned int cmd, unsigned lo
+ 		struct i2c_rdwr_ioctl_data32 rdwr_arg;
+ 		struct i2c_msg32 __user *p;
+ 		struct i2c_msg *rdwr_pa;
+-		int i;
++		int i, res;
  
- 			chip->shutdown = true;
- 			usb6fire_chip_abort(chip);
--			usb6fire_chip_destroy(chip);
+ 		if (copy_from_user(&rdwr_arg,
+ 				   (struct i2c_rdwr_ioctl_data32 __user *)arg,
+@@ -573,7 +572,9 @@ static long compat_i2cdev_ioctl(struct file *file, unsigned int cmd, unsigned lo
+ 			};
  		}
+ 
+-		return i2cdev_ioctl_rdwr(client, rdwr_arg.nmsgs, rdwr_pa);
++		res = i2cdev_ioctl_rdwr(client, rdwr_arg.nmsgs, rdwr_pa);
++		kfree(rdwr_pa);
++		return res;
  	}
- }
+ 	case I2C_SMBUS: {
+ 		struct i2c_smbus_ioctl_data32	data32;
 -- 
 2.43.0
 
