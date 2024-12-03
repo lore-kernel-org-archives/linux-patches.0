@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2878E1F473A;
-	Tue,  3 Dec 2024 15:26:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 056781F7554;
+	Tue,  3 Dec 2024 15:26:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733239571; cv=none; b=Xeqh9k63ceVjvMYpuVlKTCKXDEOG0wXL7zJDFxM+iQbCgoqQTZdoRcPH+9WLvQogBZKT72CheUlW3NpTYcOZ05++9eYn5TU5kqr1qWqjQGy75KhtugB8A1z6EszVMJUuRa95g8tsAWsUkcNhZSaSshFoYZLr2sX4Ev+V8BDo2dY=
+	t=1733239574; cv=none; b=QBP2YCWJAQvROVCvc6S1khKrZevGU3T3jnKe7i1MJ6PWNkdb6omcamXiKNYtE3y2HT2nZFgiFxxNeMdESq1hvRwWnb2fpg9sRp2pOXOKOsiXsq/03SkCVnPqCjSdIFFVXdiyizPnWE9H2TKswIi5duTFX4CrcVndxaiRLv8ZqYY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733239571; c=relaxed/simple;
-	bh=yd5QCcFtEvqm9mYI2S/IVvdCMAdy/GLl6p4Vx0nNOLQ=;
+	s=arc-20240116; t=1733239574; c=relaxed/simple;
+	bh=Ejfn6XHQ6tRp3l1uTpr3+2SVcEuNevR8WuBPj/6RSqw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e0AWycfogZTOaT8fpufjQCOTpEaCGO9Wz6rU7V+NoObLM4IIz3gY075xzQdqBzvmbkVgF2/8gjTba/LfZES8WDfwTFtq05GY8iV73ioV8baRQF6Lwk6yU/jDGW+66UluBm7CvgVsJAwqru0+t6ihj0Ib3ZWuviAkvOb5qO2QXlA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fsGchAXc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hm6Zp+Ej7Gn5nFbHO+g4dmmJFy3O3rvJgna6wCt965eE9QL+v3TXmKPEmsBLIjk6OWeVoPbZGz8FCUG+tICz/gHkKrl038slXonjRE2MTggmWjuM17aB53itBTZHhsT9I8jxmraoqAwyBHdlQZqNp/pm+bKrhBMSbkoxlfYHk/s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0N9u0ssv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fsGchAXc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4965C4CECF;
-	Tue,  3 Dec 2024 15:26:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0N9u0ssv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 830A7C4CECF;
+	Tue,  3 Dec 2024 15:26:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733239571;
-	bh=yd5QCcFtEvqm9mYI2S/IVvdCMAdy/GLl6p4Vx0nNOLQ=;
+	s=korg; t=1733239573;
+	bh=Ejfn6XHQ6tRp3l1uTpr3+2SVcEuNevR8WuBPj/6RSqw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fsGchAXcfqaApMbcsRLdU4Vr6nlYkcnj8cDEOcnW3I6j0vD+DHxEbPzn5CVkL9Vu0
-	 WKeStn3wLWJLE+EMkAYnBvj5QPlZ2srnQ2gd1jVhmQ0lN0qutKXTy5ORQNMDM2q8yd
-	 GatjdQWd+dbfWFaJiFzJoW9VC0DVzWzp2/jvq+Ik=
+	b=0N9u0ssvHECVCfnDg102klcahs1K41rOSdYkQioFO9M+wgvMoDYQisVv6GdZWbUmO
+	 iw39pbcFg6uRB+eIqpYv/pmj7PAxqJloKpLaZ1ukYcmSM7+yBtMB38vtOJ1UwzHkEd
+	 hG3Nx+ywYzCZbj55oGnBUXMqEYeqU4zVB2O8peYQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miklos Szeredi <miklos@szeredi.hu>,
-	Amir Goldstein <amir73il@gmail.com>,
+	stable@kernel.org,
+	Jann Horn <jannh@google.com>,
 	Jan Kara <jack@suse.cz>
-Subject: [PATCH 6.11 660/817] fsnotify: fix sending inotify event with unexpected filename
-Date: Tue,  3 Dec 2024 15:43:52 +0100
-Message-ID: <20241203144021.720490929@linuxfoundation.org>
+Subject: [PATCH 6.11 661/817] fsnotify: Fix ordering of iput() and watched_objects decrement
+Date: Tue,  3 Dec 2024 15:43:53 +0100
+Message-ID: <20241203144021.760655080@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -51,90 +51,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Amir Goldstein <amir73il@gmail.com>
+From: Jann Horn <jannh@google.com>
 
-commit aa52c54da40d9eee3ba87c05cdcb0cd07c04fa13 upstream.
+commit 21d1b618b6b9da46c5116c640ac4b1cc8d40d63a upstream.
 
-We got a report that adding a fanotify filsystem watch prevents tail -f
-from receiving events.
+Ensure the superblock is kept alive until we're done with iput().
+Holding a reference to an inode is not allowed unless we ensure the
+superblock stays alive, which fsnotify does by keeping the
+watched_objects count elevated, so iput() must happen before the
+watched_objects decrement.
+This can lead to a UAF of something like sb->s_fs_info in tmpfs, but the
+UAF is hard to hit because race orderings that oops are more likely, thanks
+to the CHECK_DATA_CORRUPTION() block in generic_shutdown_super().
 
-Reproducer:
+Also, ensure that fsnotify_put_sb_watched_objects() doesn't call
+fsnotify_sb_watched_objects() on a superblock that may have already been
+freed, which would cause a UAF read of sb->s_fsnotify_info.
 
-1. Create 3 windows / login sessions. Become root in each session.
-2. Choose a mounted filesystem that is pretty quiet; I picked /boot.
-3. In the first window, run: fsnotifywait -S -m /boot
-4. In the second window, run: echo data >> /boot/foo
-5. In the third window, run: tail -f /boot/foo
-6. Go back to the second window and run: echo more data >> /boot/foo
-7. Observe that the tail command doesn't show the new data.
-8. In the first window, hit control-C to interrupt fsnotifywait.
-9. In the second window, run: echo still more data >> /boot/foo
-10. Observe that the tail command in the third window has now printed
-the missing data.
-
-When stracing tail, we observed that when fanotify filesystem mark is
-set, tail does get the inotify event, but the event is receieved with
-the filename:
-
-read(4, "\1\0\0\0\2\0\0\0\0\0\0\0\20\0\0\0foo\0\0\0\0\0\0\0\0\0\0\0\0\0",
-50) = 32
-
-This is unexpected, because tail is watching the file itself and not its
-parent and is inconsistent with the inotify event received by tail when
-fanotify filesystem mark is not set:
-
-read(4, "\1\0\0\0\2\0\0\0\0\0\0\0\0\0\0\0", 50) = 16
-
-The inteference between different fsnotify groups was caused by the fact
-that the mark on the sb requires the filename, so the filename is passed
-to fsnotify().  Later on, fsnotify_handle_event() tries to take care of
-not passing the filename to groups (such as inotify) that are interested
-in the filename only when the parent is watching.
-
-But the logic was incorrect for the case that no group is watching the
-parent, some groups are watching the sb and some watching the inode.
-
-Reported-by: Miklos Szeredi <miklos@szeredi.hu>
-Fixes: 7372e79c9eb9 ("fanotify: fix logic of reporting name info with watched parent")
-Cc: stable@vger.kernel.org # 5.10+
-Signed-off-by: Amir Goldstein <amir73il@gmail.com>
+Cc: stable@kernel.org
+Fixes: d2f277e26f52 ("fsnotify: rename fsnotify_{get,put}_sb_connectors()")
+Signed-off-by: Jann Horn <jannh@google.com>
 Signed-off-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/notify/fsnotify.c |   23 +++++++++++++----------
- 1 file changed, 13 insertions(+), 10 deletions(-)
+ fs/notify/mark.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
---- a/fs/notify/fsnotify.c
-+++ b/fs/notify/fsnotify.c
-@@ -333,16 +333,19 @@ static int fsnotify_handle_event(struct
- 	if (!inode_mark)
- 		return 0;
+diff --git a/fs/notify/mark.c b/fs/notify/mark.c
+index c45b222cf9c1..4981439e6209 100644
+--- a/fs/notify/mark.c
++++ b/fs/notify/mark.c
+@@ -138,8 +138,11 @@ static void fsnotify_get_sb_watched_objects(struct super_block *sb)
  
--	if (mask & FS_EVENT_ON_CHILD) {
--		/*
--		 * Some events can be sent on both parent dir and child marks
--		 * (e.g. FS_ATTRIB).  If both parent dir and child are
--		 * watching, report the event once to parent dir with name (if
--		 * interested) and once to child without name (if interested).
--		 * The child watcher is expecting an event without a file name
--		 * and without the FS_EVENT_ON_CHILD flag.
--		 */
--		mask &= ~FS_EVENT_ON_CHILD;
-+	/*
-+	 * Some events can be sent on both parent dir and child marks (e.g.
-+	 * FS_ATTRIB).  If both parent dir and child are watching, report the
-+	 * event once to parent dir with name (if interested) and once to child
-+	 * without name (if interested).
-+	 *
-+	 * In any case regardless whether the parent is watching or not, the
-+	 * child watcher is expecting an event without the FS_EVENT_ON_CHILD
-+	 * flag. The file name is expected if and only if this is a directory
-+	 * event.
-+	 */
-+	mask &= ~FS_EVENT_ON_CHILD;
-+	if (!(mask & ALL_FSNOTIFY_DIRENT_EVENTS)) {
- 		dir = NULL;
- 		name = NULL;
- 	}
+ static void fsnotify_put_sb_watched_objects(struct super_block *sb)
+ {
+-	if (atomic_long_dec_and_test(fsnotify_sb_watched_objects(sb)))
+-		wake_up_var(fsnotify_sb_watched_objects(sb));
++	atomic_long_t *watched_objects = fsnotify_sb_watched_objects(sb);
++
++	/* the superblock can go away after this decrement */
++	if (atomic_long_dec_and_test(watched_objects))
++		wake_up_var(watched_objects);
+ }
+ 
+ static void fsnotify_get_inode_ref(struct inode *inode)
+@@ -150,8 +153,11 @@ static void fsnotify_get_inode_ref(struct inode *inode)
+ 
+ static void fsnotify_put_inode_ref(struct inode *inode)
+ {
+-	fsnotify_put_sb_watched_objects(inode->i_sb);
++	/* read ->i_sb before the inode can go away */
++	struct super_block *sb = inode->i_sb;
++
+ 	iput(inode);
++	fsnotify_put_sb_watched_objects(sb);
+ }
+ 
+ /*
+-- 
+2.47.1
+
 
 
