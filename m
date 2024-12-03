@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7543C1F4276;
-	Tue,  3 Dec 2024 15:32:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5887B1F759C;
+	Tue,  3 Dec 2024 15:32:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733239963; cv=none; b=j9eQrf1fZfEMPX1AJ7fvgn++4pvAqG8aF4QTHe9f5KKDdJcOx7YCkrrnAFqY0Y2ENUSwIKQ2mFe6v4tFnf46oxyMgJ43mbBhXPwEWCMt+WB/83Jfn+FAzM3bw6t1XuIp0gxoRIN2fOnsDa5SWIYdmZdLyNRwKZLDh4zZxtF6bdI=
+	t=1733239966; cv=none; b=MUON2nDzDYfeHTZrpiRysETDbduoC7LfYytxGhop5nki4rHHtme7d63UDU8k+/A040B3v+ItkqZdNHiRQXEzxXhUERy7+7I9sIBhrXS8voG/cP6Qx7epoTm1T6ZYd2mQDAK5QwAQZ0ph7ccSnRGYwA32ProYfec7mRUeDjLeVfc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733239963; c=relaxed/simple;
-	bh=ropRXjPiDr2y5ufmCLZbnQGwtjuSukPhR4D06txVxeE=;
+	s=arc-20240116; t=1733239966; c=relaxed/simple;
+	bh=bqpo3tbcp1jZFa+MnelKu9aLLGrVihppMLuz+NA0PrY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=TgRRhYCmhbEiKDEbhUViRrdbLiRgQrLKyft6jnKwvDSQuyzT90gZ2mO6+2KcBGf98P370bFAxVu6YRtcSfUad6bN7SQsTkFMMQbSUY1yrPUnW9hk1s+WWIRnS111Z3lJXsFq5IWsA0vax0DZe6g2iO9XMghvV1OlAkboiD+Wnsc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JNbbDt4M; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=r9vUzwYBQTHDDkBjaAeYUSI4r6j41o73XZJGGosHoCae6uSQ20WcFgWdOe/nYQKFknJopF8ch8OdzsR1i/WMqcPm2dJEUGxcRwG5l2mCAn4+dOEkkzwTdkwF47eTV37FuABh81SxcLRKfJK9rBdqxlCsjJpAlcs/3XktD70NSyU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fdnqcX8j; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JNbbDt4M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F26DFC4CED8;
-	Tue,  3 Dec 2024 15:32:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fdnqcX8j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D53B4C4CECF;
+	Tue,  3 Dec 2024 15:32:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733239963;
-	bh=ropRXjPiDr2y5ufmCLZbnQGwtjuSukPhR4D06txVxeE=;
+	s=korg; t=1733239966;
+	bh=bqpo3tbcp1jZFa+MnelKu9aLLGrVihppMLuz+NA0PrY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JNbbDt4MPqyy5RFP815e2U+hQJPMGR7SQhiK6RYaxqj5iZpr4eB2YWrdi2C6oWgfX
-	 i68cgn7FjH4Gv+5sSZOkapxWeVrrqrj8Ki9beDBJlYtQUMJNtIvD4y9aszibZwg7ks
-	 ocTmSHrxh8Mg3300qsqVCb8ax9mwH/oOTCfsrgRM=
+	b=fdnqcX8j1zwQYVLr1PlnRevtJ17hvUjAUsghl7baB7Vqrh6IpklsTdzHF5Q+v6whj
+	 y2PCs9k1hVP9Mt41EV4nm79f4KrP3lThIfV4u12Oj9x/TbAAryRl3y5dimiss0N4I2
+	 lusS9SpPF2CWKdAJFVOz9VOdzGh5w25klC40mUXQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	Maxime Chevallier <maxime.chevallier@bootlin.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 795/817] cifs: Fix parsing reparse point with native symlink in SMB1 non-UNICODE session
-Date: Tue,  3 Dec 2024 15:46:07 +0100
-Message-ID: <20241203144027.044081897@linuxfoundation.org>
+Subject: [PATCH 6.11 796/817] rtc: ab-eoz9: dont fail temperature reads on undervoltage notification
+Date: Tue,  3 Dec 2024 15:46:08 +0100
+Message-ID: <20241203144027.083419293@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -45,53 +45,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.11-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pali Rohár <pali@kernel.org>
+From: Maxime Chevallier <maxime.chevallier@bootlin.com>
 
-[ Upstream commit f4ca4f5a36eac9b4da378a0f28cbbe38534a0901 ]
+[ Upstream commit e0779a0dcf41a6452ac0a169cd96863feb5787c7 ]
 
-SMB1 NT_TRANSACT_IOCTL/FSCTL_GET_REPARSE_POINT even in non-UNICODE mode
-returns reparse buffer in UNICODE/UTF-16 format.
+The undervoltage flags reported by the RTC are useful to know if the
+time and date are reliable after a reboot. Although the threshold VLOW1
+indicates that the thermometer has been shutdown and time compensation
+is off, it doesn't mean that the temperature readout is currently
+impossible.
 
-This is because FSCTL_GET_REPARSE_POINT is NT-based IOCTL which does not
-distinguish between 8-bit non-UNICODE and 16-bit UNICODE modes and its path
-buffers are always encoded in UTF-16.
+As the system is running, the RTC voltage is now fully established and
+we can read the temperature.
 
-This change fixes reading of native symlinks in SMB1 when UNICODE session
-is not active.
-
-Fixes: ed3e0a149b58 ("smb: client: implement ->query_reparse_point() for SMB1")
-Signed-off-by: Pali Rohár <pali@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fixes: 67075b63cce2 ("rtc: add AB-RTCMC-32.768kHz-EOZ9 RTC support")
+Signed-off-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
+Link: https://lore.kernel.org/r/20241122101031.68916-3-maxime.chevallier@bootlin.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/smb1ops.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/rtc/rtc-ab-eoz9.c | 7 -------
+ 1 file changed, 7 deletions(-)
 
-diff --git a/fs/smb/client/smb1ops.c b/fs/smb/client/smb1ops.c
-index 3c7f3c4b94c8d..c252447918d67 100644
---- a/fs/smb/client/smb1ops.c
-+++ b/fs/smb/client/smb1ops.c
-@@ -1000,12 +1000,11 @@ static int cifs_parse_reparse_point(struct cifs_sb_info *cifs_sb,
- {
- 	struct reparse_data_buffer *buf;
- 	TRANSACT_IOCTL_RSP *io = rsp_iov->iov_base;
--	bool unicode = !!(io->hdr.Flags2 & SMBFLG2_UNICODE);
- 	u32 plen = le16_to_cpu(io->ByteCount);
+diff --git a/drivers/rtc/rtc-ab-eoz9.c b/drivers/rtc/rtc-ab-eoz9.c
+index 02f7d07112877..e17bce9a27468 100644
+--- a/drivers/rtc/rtc-ab-eoz9.c
++++ b/drivers/rtc/rtc-ab-eoz9.c
+@@ -396,13 +396,6 @@ static int abeoz9z3_temp_read(struct device *dev,
+ 	if (ret < 0)
+ 		return ret;
  
- 	buf = (struct reparse_data_buffer *)((__u8 *)&io->hdr.Protocol +
- 					     le32_to_cpu(io->DataOffset));
--	return parse_reparse_point(buf, plen, cifs_sb, full_path, unicode, data);
-+	return parse_reparse_point(buf, plen, cifs_sb, full_path, true, data);
- }
- 
- static bool
+-	if ((val & ABEOZ9_REG_CTRL_STATUS_V1F) ||
+-	    (val & ABEOZ9_REG_CTRL_STATUS_V2F)) {
+-		dev_err(dev,
+-			"thermometer might be disabled due to low voltage\n");
+-		return -EINVAL;
+-	}
+-
+ 	switch (attr) {
+ 	case hwmon_temp_input:
+ 		ret = regmap_read(regmap, ABEOZ9_REG_REG_TEMP, &val);
 -- 
 2.43.0
 
