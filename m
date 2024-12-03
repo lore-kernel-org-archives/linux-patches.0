@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8972E5336E;
-	Tue,  3 Dec 2024 15:47:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D006E5336E;
+	Tue,  3 Dec 2024 15:47:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733240824; cv=none; b=KTyAzb2JDoaA3LK12Nhoi3R6InnHyJxu9ZX5TOenlPUoVJ4ur2s+leanHZgbM6Rw/LNfwgWto362UM0O+qnxqKS3/AkO6r5kcllMGHIzleGPlUICJFEO2Q8NenShIlqMsqV1DyZ8tdiNIE3Wve7XhQm/I32wokpPiaE7JkaNUPA=
+	t=1733240827; cv=none; b=YVheBtCGh+MfQg6kpxOgQSO45x5fBbhxWWm4wqZoyPTbJ8Zq+/NJfvmGZnqWe+SY5CR0orOubD0PbuAsXQfQXEpXLNJuINvgPErXthRx8y3A90KpkSHsbN/BpG2U4D3oxSXPDtli1r6h8OcZbuEbgFjMB3ItFmF6+repE4bv28g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733240824; c=relaxed/simple;
-	bh=U+900Lb/rZ+4XicT2WXBgAePZO4xN+MOdHnXrICZm/E=;
+	s=arc-20240116; t=1733240827; c=relaxed/simple;
+	bh=kqkJ366qg2BY6Z0cR5+B56q3CXP07dL2FD5nsWM/+pU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZrbwAKA5ux1Ej29YisYR0WCpfSCxdaaQdj8Sd9xwOK0svEDNNUQhDuaMZgKOh78zAw//JocvIjmnYn+5FECBByfB7UvCDw5je5x3NkIpw0uP2JUtroPoleXi5wYgXqrFcdH/zEPD78pte7IpUR8drOhHXqgok/J3au63Z1HIaCg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j/X5E9kG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=JJB0ARHXHvhFTVdbOzkARef8skVrGwITwBq8Ufvu2ZK6GBGcVxKRDXvAxnwhd2y/psgmIZ9YHPTbHiJL+wU0wJL3cbJzo73tV3DpCymS9SP7COfhjU1Ff09OYGPKb+FEpXvsSrq7M2+tEgyrv+zULUoWytRrea7HuCszXbJ4SlE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zLy1HYgb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j/X5E9kG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF27FC4CECF;
-	Tue,  3 Dec 2024 15:47:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zLy1HYgb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DEB6C4CECF;
+	Tue,  3 Dec 2024 15:47:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733240824;
-	bh=U+900Lb/rZ+4XicT2WXBgAePZO4xN+MOdHnXrICZm/E=;
+	s=korg; t=1733240827;
+	bh=kqkJ366qg2BY6Z0cR5+B56q3CXP07dL2FD5nsWM/+pU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j/X5E9kGqRujo7T4W3YNboa3VwbRtxHfY/P3VZjfV35r/Lh0naNkBHe63hEOx58i4
-	 60J0W8uAcmKop4O551L/oeELacr9UV0TppIuInh+kOZSU6k+HsraVosTMunKUi7o/F
-	 OYJK5767eMSRKeaonDsPfIT6Ea2LfT4xrZdfckKU=
+	b=zLy1HYgbbQZEzePqIPkiGcSxbsaCD0JWTRBm1pN5SKQjmExStvR30lXQWASl1xNPx
+	 T87AfrvlcblaLsFSxCD4wqpfsXzZUO60DzQyda64z/v1K9uvb0eNr0d9sJ59Ea+Vvw
+	 gksmSnxvkfPNCbjRBu1g4qYIRjDyvPFHpxjBCT6c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Philipp Zabel <p.zabel@pengutronix.de>,
-	Chris Healy <cphealy@gmail.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
+	Dave Stevenson <dave.stevenson@raspberrypi.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 203/826] drm/imx: parallel-display: switch to drm_panel_bridge
-Date: Tue,  3 Dec 2024 15:38:50 +0100
-Message-ID: <20241203144751.666134965@linuxfoundation.org>
+Subject: [PATCH 6.12 239/826] drm/vc4: Match drm_dev_enter and exit calls in vc4_hvs_lut_load
+Date: Tue,  3 Dec 2024 15:39:26 +0100
+Message-ID: <20241203144753.089465155@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -46,128 +46,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Dave Stevenson <dave.stevenson@raspberrypi.com>
 
-[ Upstream commit 5f6e56d3319d2fd20d4c81b4f0212f4d09d7c1f1 ]
+[ Upstream commit cf1c87d978d47339a39bfa7a6133ecd3f8f87525 ]
 
-Defer panel handling to drm_panel_bridge, unifying codepaths for the
-panel and bridge cases.
+Commit 52efe364d196 ("drm/vc4: hvs: Don't write gamma luts on 2711")
+added a return path to vc4_hvs_lut_load that had called
+drm_dev_enter, but not drm_dev_exit.
 
-Reviewed-by: Philipp Zabel <p.zabel@pengutronix.de>
-Tested-by: Chris Healy <cphealy@gmail.com>
-Tested-by: Philipp Zabel <p.zabel@pengutronix.de> # on imx6q-nitrogen6x
-Link: https://patchwork.freedesktop.org/patch/msgid/20240602-drm-imx-cleanup-v3-8-e549e2a43100@linaro.org
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Stable-dep-of: f673055a4678 ("drm/imx: Add missing DRM_BRIDGE_CONNECTOR dependency")
+Ensure we call drm_dev_exit.
+
+Fixes: 52efe364d196 ("drm/vc4: hvs: Don't write gamma luts on 2711")
+Reported-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Closes: https://lore.kernel.org/dri-devel/37051126-3921-4afe-a936-5f828bff5752@samsung.com/
+Tested-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Reviewed-by: Maíra Canal <mcanal@igalia.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20241008-drm-vc4-fixes-v1-1-9d0396ca9f42@raspberrypi.com
+Signed-off-by: Dave Stevenson <dave.stevenson@raspberrypi.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/imx/ipuv3/Kconfig            |  3 +-
- drivers/gpu/drm/imx/ipuv3/parallel-display.c | 36 +++++---------------
- 2 files changed, 10 insertions(+), 29 deletions(-)
+ drivers/gpu/drm/vc4/vc4_hvs.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/imx/ipuv3/Kconfig b/drivers/gpu/drm/imx/ipuv3/Kconfig
-index 6abcf9c833d44..f083d313d1d3a 100644
---- a/drivers/gpu/drm/imx/ipuv3/Kconfig
-+++ b/drivers/gpu/drm/imx/ipuv3/Kconfig
-@@ -11,8 +11,9 @@ config DRM_IMX
+diff --git a/drivers/gpu/drm/vc4/vc4_hvs.c b/drivers/gpu/drm/vc4/vc4_hvs.c
+index 3787c070d15e3..15e4c888c4afd 100644
+--- a/drivers/gpu/drm/vc4/vc4_hvs.c
++++ b/drivers/gpu/drm/vc4/vc4_hvs.c
+@@ -225,7 +225,7 @@ static void vc4_hvs_lut_load(struct vc4_hvs *hvs,
+ 		return;
  
- config DRM_IMX_PARALLEL_DISPLAY
- 	tristate "Support for parallel displays"
--	select DRM_PANEL
- 	depends on DRM_IMX
-+	select DRM_BRIDGE
-+	select DRM_PANEL_BRIDGE
- 	select VIDEOMODE_HELPERS
+ 	if (hvs->vc4->gen == VC4_GEN_4)
+-		return;
++		goto exit;
  
- config DRM_IMX_TVE
-diff --git a/drivers/gpu/drm/imx/ipuv3/parallel-display.c b/drivers/gpu/drm/imx/ipuv3/parallel-display.c
-index 4d17fb96e77c5..9ac2a94fa62be 100644
---- a/drivers/gpu/drm/imx/ipuv3/parallel-display.c
-+++ b/drivers/gpu/drm/imx/ipuv3/parallel-display.c
-@@ -18,7 +18,6 @@
- #include <drm/drm_bridge.h>
- #include <drm/drm_managed.h>
- #include <drm/drm_of.h>
--#include <drm/drm_panel.h>
- #include <drm/drm_probe_helper.h>
- #include <drm/drm_simple_kms_helper.h>
+ 	/* The LUT memory is laid out with each HVS channel in order,
+ 	 * each of which takes 256 writes for R, 256 for G, then 256
+@@ -242,6 +242,7 @@ static void vc4_hvs_lut_load(struct vc4_hvs *hvs,
+ 	for (i = 0; i < crtc->gamma_size; i++)
+ 		HVS_WRITE(SCALER_GAMDATA, vc4_crtc->lut_b[i]);
  
-@@ -36,7 +35,6 @@ struct imx_parallel_display {
- 	u32 bus_format;
- 	u32 bus_flags;
- 	struct drm_display_mode mode;
--	struct drm_panel *panel;
- 	struct drm_bridge *next_bridge;
- };
- 
-@@ -56,10 +54,6 @@ static int imx_pd_connector_get_modes(struct drm_connector *connector)
- 	struct device_node *np = imxpd->dev->of_node;
- 	int num_modes;
- 
--	num_modes = drm_panel_get_modes(imxpd->panel, connector);
--	if (num_modes > 0)
--		return num_modes;
--
- 	if (np) {
- 		struct drm_display_mode *mode = drm_mode_create(connector->dev);
- 		int ret;
-@@ -84,22 +78,6 @@ static int imx_pd_connector_get_modes(struct drm_connector *connector)
- 	return num_modes;
++exit:
+ 	drm_dev_exit(idx);
  }
  
--static void imx_pd_bridge_enable(struct drm_bridge *bridge)
--{
--	struct imx_parallel_display *imxpd = bridge_to_imxpd(bridge);
--
--	drm_panel_prepare(imxpd->panel);
--	drm_panel_enable(imxpd->panel);
--}
--
--static void imx_pd_bridge_disable(struct drm_bridge *bridge)
--{
--	struct imx_parallel_display *imxpd = bridge_to_imxpd(bridge);
--
--	drm_panel_disable(imxpd->panel);
--	drm_panel_unprepare(imxpd->panel);
--}
--
- static const u32 imx_pd_bus_fmts[] = {
- 	MEDIA_BUS_FMT_RGB888_1X24,
- 	MEDIA_BUS_FMT_BGR888_1X24,
-@@ -237,8 +215,6 @@ static const struct drm_connector_helper_funcs imx_pd_connector_helper_funcs = {
- };
- 
- static const struct drm_bridge_funcs imx_pd_bridge_funcs = {
--	.enable = imx_pd_bridge_enable,
--	.disable = imx_pd_bridge_disable,
- 	.atomic_reset = drm_atomic_helper_bridge_reset,
- 	.atomic_duplicate_state = drm_atomic_helper_bridge_duplicate_state,
- 	.atomic_destroy_state = drm_atomic_helper_bridge_destroy_state,
-@@ -315,10 +291,14 @@ static int imx_pd_probe(struct platform_device *pdev)
- 		return -ENOMEM;
- 
- 	/* port@1 is the output port */
--	ret = drm_of_find_panel_or_bridge(np, 1, 0, &imxpd->panel,
--					  &imxpd->next_bridge);
--	if (ret && ret != -ENODEV)
--		return ret;
-+	imxpd->next_bridge = devm_drm_of_get_bridge(dev, np, 1, 0);
-+	if (IS_ERR(imxpd->next_bridge)) {
-+		ret = PTR_ERR(imxpd->next_bridge);
-+		if (ret != -ENODEV)
-+			return ret;
-+
-+		imxpd->next_bridge = NULL;
-+	}
- 
- 	ret = of_property_read_string(np, "interface-pix-fmt", &fmt);
- 	if (!ret) {
 -- 
 2.43.0
 
