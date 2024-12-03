@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E6791E009A;
-	Tue,  3 Dec 2024 16:00:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D83781E3DCF;
+	Tue,  3 Dec 2024 16:00:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733241626; cv=none; b=XvqCFtRwo9nKtTfddop1AS5BVkPPOAiRFB11WbefJbbcgw2nE1pz2Ub+FE4HLBybk1DZJv/sEYgJgHDi0x6Bv9ptrjPNdwT+MExdglonY8UOlMa9v3h/bjkjf9C8jzPgSz5k37/CmlXG+7NblkFcCTurLmi1OIExKS4LNpjd/mc=
+	t=1733241630; cv=none; b=kkhrnesbCesulxIZmRFZeLser7QVbrPR+1gcSefKHpMa2OThbFeCDZGhlMBCvpMgVoB49Jqwa4AM6Sv3oGlzB8097lYYiVwuBDn2lA5qk4tx57cH9oIl1+ngz2JewznoIoMljkq952Dw0+eQaXonMLDl0CJd26Y//K/TpJemK08=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733241626; c=relaxed/simple;
-	bh=gJMq4p5r8zgBCTskEgvKeXeCKbwExGfuDnsK/H9vfOI=;
+	s=arc-20240116; t=1733241630; c=relaxed/simple;
+	bh=C6vp2ZumRNQSrx522167lTCUN6OothOBf29x/Qoow6s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QhVrW9X7hUJAX2Q0IZg1BFGgJ5TjgD38oV3AoSj02yrvrgoGHXFeq8sTTFvGwI+eJcON9ED7yBK7D6j/4mtjmytYFd9WxA2QSEso+zWNb+mnA3HS9x3+ZdNUMVnHmvCK3U0BwooWmFDnhREBFn4r+/uk42dq6YPK3VT68/rEXaA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZWyTKmsn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kZ8y8jz/J8wU03CJBMf3UpQpHjYEifh+yagQYzjod7GNNIeMcEgSj+CaEm/hQ36hOzGtlbHVE/21PMJeN/Jd94e0so/dLWhlaIy+QUDBgI1UgahTHliKxr2SP4mLJqDQht+Hm/ncoAMVSxJ0lc2bBc/LIDUMjmx7F6e7jbkFtjQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=glcXP92p; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZWyTKmsn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CCAFC4CECF;
-	Tue,  3 Dec 2024 16:00:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="glcXP92p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F03DC4CED6;
+	Tue,  3 Dec 2024 16:00:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733241626;
-	bh=gJMq4p5r8zgBCTskEgvKeXeCKbwExGfuDnsK/H9vfOI=;
+	s=korg; t=1733241629;
+	bh=C6vp2ZumRNQSrx522167lTCUN6OothOBf29x/Qoow6s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZWyTKmsnpEoMp/sOBQbe9GTvJvbeoD0Ey2I0TyKyE49SftsmE5t6++73v1kwtL0oW
-	 sSIAS4oT5qIcRxj/E1zGU0akmbQgjsVMwi5uLqfQLbSwAC49ryuNYT6oELewT5aJOz
-	 hd2PoXMLsGKy9eKlWKmF+6nnyNcreZkLR2WQQP24=
+	b=glcXP92pH9VzyBOeGR2p9nL2nKlWs+pUw77Ox3L+WLVvncK6oCf7m4E3+Qs8hqTrh
+	 OoRhxNLf4/T1Bq2uUw/V1a0FvNKhLBJLi2mqMml3Xf+OEAaceTbwKmPJ2jptHqMc8q
+	 IJo4FnzF8QrYMAiKhTrz0GritMBBX+eQUPRkDC+4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Thomas Falcon <thomas.falcon@intel.com>,
-	Leo Yan <leo.yan@arm.com>,
-	Namhyung Kim <namhyung@kernel.org>,
+	Zhen Lei <thunder.leizhen@huawei.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 471/826] perf mem: Fix printing PERF_MEM_LVLNUM_{L2_MHB|MSC}
-Date: Tue,  3 Dec 2024 15:43:18 +0100
-Message-ID: <20241203144802.136747222@linuxfoundation.org>
+Subject: [PATCH 6.12 445/826] fbdev: sh7760fb: Fix a possible memory leak in sh7760fb_alloc_mem()
+Date: Tue,  3 Dec 2024 15:42:52 +0100
+Message-ID: <20241203144801.119527223@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -53,62 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Falcon <thomas.falcon@intel.com>
+From: Zhen Lei <thunder.leizhen@huawei.com>
 
-[ Upstream commit 4f23fc34cc68812c68c3a3dec15e26e87565f430 ]
+[ Upstream commit f89d17ae2ac42931be2a0153fecbf8533280c927 ]
 
-With commit 8ec9497d3ef34 ("tools/include: Sync uapi/linux/perf.h
-with the kernel sources"), 'perf mem report' gives an incorrect memory
-access string.
-...
-0.02%	1	3644	L5 hit	[.] 0x0000000000009b0e	mlc	[.] 0x00007fce43f59480
-...
+When information such as info->screen_base is not ready, calling
+sh7760fb_free_mem() does not release memory correctly. Call
+dma_free_coherent() instead.
 
-This occurs because, if no entry exists in mem_lvlnum, perf_mem__lvl_scnprintf
-will default to 'L%d, lvl', which in this case for PERF_MEM_LVLNUM_L2_MHB is 0x05.
-Add entries for PERF_MEM_LVLNUM_L2_MHB and PERF_MEM_LVLNUM_MSC to mem_lvlnum,
-so that the correct strings are printed.
-...
-0.02%	1	3644	L2 MHB hit	[.] 0x0000000000009b0e	mlc	[.] 0x00007fce43f59480
-...
-
-Fixes: 8ec9497d3ef34 ("tools/include: Sync uapi/linux/perf.h with the kernel sources")
-Suggested-by: Kan Liang <kan.liang@linux.intel.com>
-Signed-off-by: Thomas Falcon <thomas.falcon@intel.com>
-Reviewed-by: Leo Yan <leo.yan@arm.com>
-Link: https://lore.kernel.org/r/20240926144040.77897-1-thomas.falcon@intel.com
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Fixes: 4a25e41831ee ("video: sh7760fb: SH7760/SH7763 LCDC framebuffer driver")
+Signed-off-by: Zhen Lei <thunder.leizhen@huawei.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/mem-events.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/video/fbdev/sh7760fb.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/tools/perf/util/mem-events.c b/tools/perf/util/mem-events.c
-index 051feb93ed8d4..bf5090f5220bb 100644
---- a/tools/perf/util/mem-events.c
-+++ b/tools/perf/util/mem-events.c
-@@ -366,6 +366,12 @@ static const char * const mem_lvl[] = {
- };
+diff --git a/drivers/video/fbdev/sh7760fb.c b/drivers/video/fbdev/sh7760fb.c
+index 3d2a27fefc874..130adef2e4686 100644
+--- a/drivers/video/fbdev/sh7760fb.c
++++ b/drivers/video/fbdev/sh7760fb.c
+@@ -409,12 +409,11 @@ static int sh7760fb_alloc_mem(struct fb_info *info)
+ 		vram = PAGE_SIZE;
  
- static const char * const mem_lvlnum[] = {
-+	[PERF_MEM_LVLNUM_L1] = "L1",
-+	[PERF_MEM_LVLNUM_L2] = "L2",
-+	[PERF_MEM_LVLNUM_L3] = "L3",
-+	[PERF_MEM_LVLNUM_L4] = "L4",
-+	[PERF_MEM_LVLNUM_L2_MHB] = "L2 MHB",
-+	[PERF_MEM_LVLNUM_MSC] = "Memory-side Cache",
- 	[PERF_MEM_LVLNUM_UNC] = "Uncached",
- 	[PERF_MEM_LVLNUM_CXL] = "CXL",
- 	[PERF_MEM_LVLNUM_IO] = "I/O",
-@@ -448,7 +454,7 @@ int perf_mem__lvl_scnprintf(char *out, size_t sz, const struct mem_info *mem_inf
- 		if (mem_lvlnum[lvl])
- 			l += scnprintf(out + l, sz - l, mem_lvlnum[lvl]);
- 		else
--			l += scnprintf(out + l, sz - l, "L%d", lvl);
-+			l += scnprintf(out + l, sz - l, "Unknown level %d", lvl);
+ 	fbmem = dma_alloc_coherent(info->device, vram, &par->fbdma, GFP_KERNEL);
+-
+ 	if (!fbmem)
+ 		return -ENOMEM;
  
- 		l += scnprintf(out + l, sz - l, " %s", hit_miss);
- 		return l;
+ 	if ((par->fbdma & SH7760FB_DMA_MASK) != SH7760FB_DMA_MASK) {
+-		sh7760fb_free_mem(info);
++		dma_free_coherent(info->device, vram, fbmem, par->fbdma);
+ 		dev_err(info->device, "kernel gave me memory at 0x%08lx, which is"
+ 			"unusable for the LCDC\n", (unsigned long)par->fbdma);
+ 		return -ENOMEM;
 -- 
 2.43.0
 
