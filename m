@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D73821DAC9F;
-	Tue,  3 Dec 2024 15:51:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A403C1F7561;
+	Tue,  3 Dec 2024 15:51:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733241067; cv=none; b=dyyMo/5UtfE+uxVYvgMD206r8TwvasaA04f3Z4PqBrQb6yl6Nw3zfILWKjnSOa9VprMbaNZ9eHg0B9tSh2r+5JseDxEFfRCiJIX+4LwkFVMhoAtI2TlURswsh3ypyU2tBTVKG4MugL6cxMfsTjBUzWpOVobi9vcoYk0TXd+jhio=
+	t=1733241071; cv=none; b=XNKC0VCw0iq1XKNOIa9dT5rrDl8Q+aI4pPdXSgZzHl7BkP17berOLKJt9tkkSLuhWSickelYVciavalNMWjH0KgENRriC7p7rxqv56X9OaFg8APipd3FCjF9d3RifJu8M7uqbjTqY3sFxQBCqgen4LP4iFcNmmWvnoL3MWxnhhg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733241067; c=relaxed/simple;
-	bh=ZAPbPNhvl6vIcOiCBBdy/vAaqcCyJBdNy6epXJFntrc=;
+	s=arc-20240116; t=1733241071; c=relaxed/simple;
+	bh=2ndcP1kAN5Pr6tAGEHajqlBS/hSuOzG121gBETvdDOE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IP6W5nY42KAnXB+bWKWYM7+K7P/Rp3aAoB7UvVIBTqyDqGIDhMF2BfEX5/j/G/XvCbV3tiaw7A4maeQHC1rKCXxrDuWlEZmIQR4LQXnKFfYdv40Q9FWcxymdYDUXyHFTy1VK3ANWDCNkIYbrj8NBJL0U3NOh6Nl4OG7igRCuDR8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TGTO6TjI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KMvl4FE4ZQjW2Is2deql5jkhvhHfhpCs9ad/wDjzEudKcQmaxGy+0cQAzJAnUCjkcUTT0/56NQVHzhjhv6pEey5VpE3fJ1yydM+bi6OHPpHng5nOpU05BnR3VIwhmaE6TM5tjsFBOm9YUfeyi51Mur5ZsLq4ytQvCZcaiTv7clg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oThAT9HE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TGTO6TjI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46214C4CECF;
-	Tue,  3 Dec 2024 15:51:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oThAT9HE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB2F7C4CECF;
+	Tue,  3 Dec 2024 15:51:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733241067;
-	bh=ZAPbPNhvl6vIcOiCBBdy/vAaqcCyJBdNy6epXJFntrc=;
+	s=korg; t=1733241071;
+	bh=2ndcP1kAN5Pr6tAGEHajqlBS/hSuOzG121gBETvdDOE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TGTO6TjIWLA5MEpl75m/vov2PKLH089Uc1atB1LfMmVkoERaHdk/xgKdOIKoMWVgl
-	 lH6euO7k3VuwngUEbJhQMPheSimPUp0fJyUjUSxKns3ALOkcjxmpjSAm4EqKix10Ri
-	 c/M+2EDhE+A37/CXknqJVEQZFMSy4841MEWRUlZU=
+	b=oThAT9HENQw9BgbR4vmTG7zAdpzqnBPAUBZ7UlG2u5Jx0Nc4mkr9U5/1cN+cYf6IJ
+	 R+Rt25snR/MpPCxUoVU+1a52sDMCi33LIyP1NCog6GOHG59ux52IqShyW0ItPPvoVc
+	 BK9yn9t9qQ/H7KIT861XQ3dm+c0COKt0Mxt+n57s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
-	David Ahern <dsahern@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Lingbo Kong <quic_lingbok@quicinc.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 316/826] selftests: net: really check for bg process completion
-Date: Tue,  3 Dec 2024 15:40:43 +0100
-Message-ID: <20241203144756.089327146@linuxfoundation.org>
+Subject: [PATCH 6.12 317/826] wifi: cfg80211: Remove the Medium Synchronization Delay validity check
+Date: Tue,  3 Dec 2024 15:40:44 +0100
+Message-ID: <20241203144756.128646961@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -52,41 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Lingbo Kong <quic_lingbok@quicinc.com>
 
-[ Upstream commit 52ed077aa6336dbef83a2d6d21c52d1706fb7f16 ]
+[ Upstream commit b4ebb58cb9a4b1b5cb5278b09d6afdcd71b2a6b4 ]
 
-A recent refactor transformed the check for process completion
-in a true statement, due to a typo.
+Currently, when the driver attempts to connect to an AP MLD with multiple
+APs, the cfg80211_mlme_check_mlo_compat() function requires the Medium
+Synchronization Delay values from different APs of the same AP MLD to be
+equal, which may result in connection failures.
 
-As a result, the relevant test-case is unable to catch the
-regression it was supposed to detect.
+This is because when the driver receives a multi-link probe response from
+an AP MLD with multiple APs, cfg80211 updates the Elements for each AP
+based on the multi-link probe response. If the Medium Synchronization Delay
+is set in the multi-link probe response, the Elements for each AP belonging
+to the same AP MLD will have the Medium Synchronization Delay set
+simultaneously. If non-multi-link probe responses are received from
+different APs of the same MLD AP, cfg80211 will still update the Elements
+based on the non-multi-link probe response. Since the non-multi-link probe
+response does not set the Medium Synchronization Delay
+(IEEE 802.11be-2024-35.3.4.4), if the Elements from a non-multi-link probe
+response overwrite those from a multi-link probe response that has set the
+Medium Synchronization Delay, the Medium Synchronization Delay values for
+APs belonging to the same AP MLD will not be equal. This discrepancy causes
+the cfg80211_mlme_check_mlo_compat() function to fail, leading to
+connection failures. Commit ccb964b4ab16
+("wifi: cfg80211: validate MLO connections better") did not take this into
+account.
 
-Restore the correct condition.
+To address this issue, remove this validity check.
 
-Fixes: 691bb4e49c98 ("selftests: net: avoid just another constant wait")
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://patch.msgid.link/0e6f213811f8e93a235307e683af8225cc6277ae.1730828007.git.pabeni@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: ccb964b4ab16 ("wifi: cfg80211: validate MLO connections better")
+Signed-off-by: Lingbo Kong <quic_lingbok@quicinc.com>
+Link: https://patch.msgid.link/20241031134223.970-1-quic_lingbok@quicinc.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/pmtu.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/wireless/mlme.c | 6 ------
+ 1 file changed, 6 deletions(-)
 
-diff --git a/tools/testing/selftests/net/pmtu.sh b/tools/testing/selftests/net/pmtu.sh
-index 569bce8b6383e..6c651c880fe83 100755
---- a/tools/testing/selftests/net/pmtu.sh
-+++ b/tools/testing/selftests/net/pmtu.sh
-@@ -2056,7 +2056,7 @@ check_running() {
- 	pid=${1}
- 	cmd=${2}
+diff --git a/net/wireless/mlme.c b/net/wireless/mlme.c
+index 4dac818547210..a5eb92d93074e 100644
+--- a/net/wireless/mlme.c
++++ b/net/wireless/mlme.c
+@@ -340,12 +340,6 @@ cfg80211_mlme_check_mlo_compat(const struct ieee80211_multi_link_elem *mle_a,
+ 		return -EINVAL;
+ 	}
  
--	[ "$(cat /proc/${pid}/cmdline 2>/dev/null | tr -d '\0')" = "{cmd}" ]
-+	[ "$(cat /proc/${pid}/cmdline 2>/dev/null | tr -d '\0')" = "${cmd}" ]
- }
- 
- test_cleanup_vxlanX_exception() {
+-	if (ieee80211_mle_get_eml_med_sync_delay((const u8 *)mle_a) !=
+-	    ieee80211_mle_get_eml_med_sync_delay((const u8 *)mle_b)) {
+-		NL_SET_ERR_MSG(extack, "link EML medium sync delay mismatch");
+-		return -EINVAL;
+-	}
+-
+ 	if (ieee80211_mle_get_eml_cap((const u8 *)mle_a) !=
+ 	    ieee80211_mle_get_eml_cap((const u8 *)mle_b)) {
+ 		NL_SET_ERR_MSG(extack, "link EML capabilities mismatch");
 -- 
 2.43.0
 
