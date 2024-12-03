@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44DFC20371A;
-	Tue,  3 Dec 2024 15:37:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E67151F8911;
+	Tue,  3 Dec 2024 15:37:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733240221; cv=none; b=nQRTfwzxEzoyuBZfR/qWp/kGu/WTR4Hv0jyAv70SQA8qgjx0X0viKkp5cD8hsC58SWX2jOvLeFKr3pCML4fm+CUhvAofNkAthCDSRCj4D7Mjtrcp5qg1zBviM1fX8qL+e9m5b8Hjyd4uFofPsDVBFm0UJW74RTS0pDGRK2SpeQw=
+	t=1733240224; cv=none; b=gHMEpi16T1CZQcISfy04Aas4ynfQlopDltOGtqSenGxebckBlFhYK4dShedD3Cj6fnFi/B+yk+lJDgjMSS2V7gsKqq5YZPJrvgA+WnfeZq2zs1CAMjwy0QHJKXnWkmc7kpqGPYUbEG2g4wU+H2i1pghohf34Jhhux95HM5f1jwI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733240221; c=relaxed/simple;
-	bh=ixUUu37UsiSeRSa1am3QUKiIj0Cn1z6PZDtZ9bZeDyA=;
+	s=arc-20240116; t=1733240224; c=relaxed/simple;
+	bh=VWZZwnrDZ30LGNeNCyVwSfmbW7d0dA3nMv2I4NJoPBM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oZtwtLfyeKHRF5h6Iy535Dji2ErP7Gpoz2ntwz/jWHsQgqhZEfjgPisg1dpBQAy7rDac35QEqNACQ409zPHQ2y1rM4GRJRyziyyvVF1nL949TnEZFhLjFGlgoASSCohQI47DmetUj+Rz1cnIWzgswK86irQRK6Ewc/DA1zt/Rsk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BZ3aea61; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bAU/HIanB2x55n1gJa7pL84E88VyDK/9G4uuN7PDmFpLC/jvng/isFTvj8W8OlU1tpRE+wuo9pbJqUZ4Ve+nG/DQfJH+eecJa7A49U1/4SDbGPtNq7kjIP92rbq1JfAcET3hzVKc82yO5A/0xdZNy8Ncu3mlB/KKzxJ6ARcOeCE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=exGol7Eh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BZ3aea61"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69AC5C4CED6;
-	Tue,  3 Dec 2024 15:37:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="exGol7Eh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30C13C4CECF;
+	Tue,  3 Dec 2024 15:37:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733240220;
-	bh=ixUUu37UsiSeRSa1am3QUKiIj0Cn1z6PZDtZ9bZeDyA=;
+	s=korg; t=1733240223;
+	bh=VWZZwnrDZ30LGNeNCyVwSfmbW7d0dA3nMv2I4NJoPBM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BZ3aea61mGHhWaBx2PwmnnauNcBpxgHC7FxjObJzxU2WBQrbCB0UeC5BXU2G+h5Xy
-	 IBMb4PKtKgvfZrBmVISZxPoyBNZrlOlwz6gVf7aRFoQIrj79hjz7fMgAlcRln3JqXj
-	 /Ozwtpbtm3cz4teurjr8330CZJqpTerHk5IMI4QQ=
+	b=exGol7EhmYBTijNM/TfkHj5G7/2MtO2H9mU0kL/oJzpm2g+Jrogv/hbRGhz9RV2Fq
+	 n3jx5egY6kRqey7PKnQCGfhTCvGVKamS3SJfqoL+fXLhZHJzvLf7jDIleRzog0/5NM
+	 xYLuZHbln/i3UZpeLYJtIuHHa4UGEwVK1Qy1oS7s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Orange Kao <orange@aiven.io>,
-	Tony Luck <tony.luck@intel.com>,
+	Wang Hai <wanghai38@huawei.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 063/826] EDAC/igen6: Avoid segmentation fault on module unload
-Date: Tue,  3 Dec 2024 15:36:30 +0100
-Message-ID: <20241203144745.931956136@linuxfoundation.org>
+Subject: [PATCH 6.12 064/826] crypto: qat - Fix missing destroy_workqueue in adf_init_aer()
+Date: Tue,  3 Dec 2024 15:36:31 +0100
+Message-ID: <20241203144745.969871930@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -51,54 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Orange Kao <orange@aiven.io>
+From: Wang Hai <wanghai38@huawei.com>
 
-[ Upstream commit fefaae90398d38a1100ccd73b46ab55ff4610fba ]
+[ Upstream commit d8920a722a8cec625267c09ed40af8fd433d7f9a ]
 
-The segmentation fault happens because:
+The adf_init_aer() won't destroy device_reset_wq when alloc_workqueue()
+for device_sriov_wq failed. Add destroy_workqueue for device_reset_wq to
+fix this issue.
 
-During modprobe:
-1. In igen6_probe(), igen6_pvt will be allocated with kzalloc()
-2. In igen6_register_mci(), mci->pvt_info will point to
-   &igen6_pvt->imc[mc]
-
-During rmmod:
-1. In mci_release() in edac_mc.c, it will kfree(mci->pvt_info)
-2. In igen6_remove(), it will kfree(igen6_pvt);
-
-Fix this issue by setting mci->pvt_info to NULL to avoid the double
-kfree.
-
-Fixes: 10590a9d4f23 ("EDAC/igen6: Add EDAC driver for Intel client SoCs using IBECC")
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=219360
-Signed-off-by: Orange Kao <orange@aiven.io>
-Signed-off-by: Tony Luck <tony.luck@intel.com>
-Link: https://lore.kernel.org/r/20241104124237.124109-2-orange@aiven.io
+Fixes: 4469f9b23468 ("crypto: qat - re-enable sriov after pf reset")
+Signed-off-by: Wang Hai <wanghai38@huawei.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/edac/igen6_edac.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/crypto/intel/qat/qat_common/adf_aer.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/edac/igen6_edac.c b/drivers/edac/igen6_edac.c
-index 189a2fc29e74f..07dacf8c10be3 100644
---- a/drivers/edac/igen6_edac.c
-+++ b/drivers/edac/igen6_edac.c
-@@ -1245,6 +1245,7 @@ static int igen6_register_mci(int mc, u64 mchbar, struct pci_dev *pdev)
- 	imc->mci = mci;
- 	return 0;
- fail3:
-+	mci->pvt_info = NULL;
- 	kfree(mci->ctl_name);
- fail2:
- 	edac_mc_free(mci);
-@@ -1269,6 +1270,7 @@ static void igen6_unregister_mcis(void)
+diff --git a/drivers/crypto/intel/qat/qat_common/adf_aer.c b/drivers/crypto/intel/qat/qat_common/adf_aer.c
+index ec7913ab00a2c..4cb8bd83f5707 100644
+--- a/drivers/crypto/intel/qat/qat_common/adf_aer.c
++++ b/drivers/crypto/intel/qat/qat_common/adf_aer.c
+@@ -281,8 +281,11 @@ int adf_init_aer(void)
+ 		return -EFAULT;
  
- 		edac_mc_del_mc(mci->pdev);
- 		kfree(mci->ctl_name);
-+		mci->pvt_info = NULL;
- 		edac_mc_free(mci);
- 		iounmap(imc->window);
- 	}
+ 	device_sriov_wq = alloc_workqueue("qat_device_sriov_wq", 0, 0);
+-	if (!device_sriov_wq)
++	if (!device_sriov_wq) {
++		destroy_workqueue(device_reset_wq);
++		device_reset_wq = NULL;
+ 		return -EFAULT;
++	}
+ 
+ 	return 0;
+ }
 -- 
 2.43.0
 
