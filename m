@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 775D51F6691;
-	Tue,  3 Dec 2024 15:06:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCDF31F130E;
+	Tue,  3 Dec 2024 15:06:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733238392; cv=none; b=PWMt+QHwa1l2RwVixY9QeOnGxEGAbV+lMgiGXf4j35G2KyYXEvOWshjz1YBKSLU596POqTYQVUApMhIiyKAxn+ZKEq50qnZ/BbxoBQ1ttfXcwM7gqxx2i5TThPnTXbv/ku5S2fZnWEo1ybEKaOWVzJI/1P7s4R9tRNZPEdJVQn0=
+	t=1733238396; cv=none; b=C7dqC7C1k9ufencXyBd2oMlyYIYyTcR/ecSXHOcYKmCupENmfLxNEGSugBF3CxxgBfmkj/xX75PUh1uF017In4B3SpswF6z2MVJso7MOSPeVkY9MyS2pma4E40eVbU76wtjOqNzvKqKRA1W7SgPHf4WQTuTNCA/PAdtcieEml8Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733238392; c=relaxed/simple;
-	bh=iJQz+2ZklzyMdcx211TTGgSEF7Xbl+EOdjdn00Dwn5g=;
+	s=arc-20240116; t=1733238396; c=relaxed/simple;
+	bh=8vv6Ch5QOBNoHOBMZcMbz1Cj0/MXTHUtx1kZ+V3ld9U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=slTezXKj5oEv5KbyWfZPMmf4PQ9G0ebRTLv//hRhp6pLN4ULsM96dThMgBgHNEAwBh5nn7JNF7BD67hGvVPabD9oJp4yftX6o7d7vp8cXkLtFHqoiLmjmqukys+R0QQA2Mtg1TH3YQYn29DzMZ/gNgkkeOX1pPuI1zxaZgS/w+Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D19IfN17; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JkCbsxvnvG+uS6dEXCR5QwPu+GuBwVh7SE/A8R6A9rlSnzmo6RsgweHtU/1wwPxl1Cyyt1p4dvJukW9P6OqZj/C0OzLR+3tuDnTUlTwl01SbaWXfDI2ZOgKbRkEy3zf8zIBbDYju1Q2R7xK+HNF4POv8DZD+p9zisqpQ45Pn+Go=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xh1R3CWQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D19IfN17"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC0A7C4CECF;
-	Tue,  3 Dec 2024 15:06:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xh1R3CWQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4C3AC4CECF;
+	Tue,  3 Dec 2024 15:06:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733238392;
-	bh=iJQz+2ZklzyMdcx211TTGgSEF7Xbl+EOdjdn00Dwn5g=;
+	s=korg; t=1733238395;
+	bh=8vv6Ch5QOBNoHOBMZcMbz1Cj0/MXTHUtx1kZ+V3ld9U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D19IfN17Zb/kMZoF9PLHVpfOdsHjQifFO7OU9+gc0XDv1sl3o0aTWVP/f9if+FrNu
-	 Rh7WXJX62sUyuoMKH105d7LeSWMXF+K3/gfEITEIGWVh7sMbE2pwKJ9zSNnxm5OQU6
-	 k0YL/V0oDVpdmzZWra9iqOI+WCpETLgh8sElJ4CU=
+	b=Xh1R3CWQvO+ROgvE35P2p6U143rK3TxOhODOVlPS6r9ljJSOaLx4lnBcrW01Vt+R8
+	 hrkbYdzHDHLmna4w+1NnkYl6eiURAZoXiYPSIaN/pz1HN8u58mMafJ1584Xr5PMkUg
+	 U3iRzIaF+ORpRcXDWnU9J8sMlcuRUhQ0W+8rRs54=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eduard Zingerman <eddyz87@gmail.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Tony Ambardar <tony.ambardar@gmail.com>,
-	Daniel Xu <dxu@dxuuu.xyz>,
+	Balaji Pothunoori <quic_bpothuno@quicinc.com>,
+	Jeff Johnson <quic_jjohnson@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 261/817] selftests/bpf: Fix backtrace printing for selftests crashes
-Date: Tue,  3 Dec 2024 15:37:13 +0100
-Message-ID: <20241203144005.976845027@linuxfoundation.org>
+Subject: [PATCH 6.11 262/817] wifi: ath11k: Fix CE offset address calculation for WCN6750 in SSR
+Date: Tue,  3 Dec 2024 15:37:14 +0100
+Message-ID: <20241203144006.015806047@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -53,102 +51,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eduard Zingerman <eddyz87@gmail.com>
+From: Balaji Pothunoori <quic_bpothuno@quicinc.com>
 
-[ Upstream commit 5bf1557e3d6a69113649d831276ea2f97585fc33 ]
+[ Upstream commit 4c57ec6c4bb9979b42ae7fa7273fc2d4a361d576 ]
 
-test_progs uses glibc specific functions backtrace() and
-backtrace_symbols_fd() to print backtrace in case of SIGSEGV.
+Currently, mem_ce and mem iomem addresses are used to calculate the
+CE offset address. mem_ce is initialized with mem address, and for
+targets where ce_remap is needed, mem_ce is remapped to a new address
+space during AHB probe.
 
-Recent commit (see fixes) updated test_progs.c to define stub versions
-of the same functions with attriubte "weak" in order to allow linking
-test_progs against musl libc. Unfortunately this broke the backtrace
-handling for glibc builds.
+For targets such as WCN6750 in which CE address space is same as WCSS
+address space (i.e. "ce_remap" hw_param is set to false), mem_ce and
+mem iomem addresses are same. In the initial SRNG setup for such targets,
+the CE offset address and hence CE register base addresses are
+calculated correctly in ath11k_hal_srng_init() as both mem and mem_ce
+are initialized with same iomem address.
 
-As it turns out, glibc defines backtrace() and backtrace_symbols_fd()
-as weak:
+Later, after the firmware download, mem is initialized with BAR address
+received in qmi_wlanfw_device_info_resp_msg_v01 QMI message, while mem_ce
+is not updated.
 
-  $ llvm-readelf --symbols /lib64/libc.so.6 \
-     | grep -P '( backtrace_symbols_fd| backtrace)$'
-  4910: 0000000000126b40   161 FUNC    WEAK   DEFAULT    16 backtrace
-  6843: 0000000000126f90   852 FUNC    WEAK   DEFAULT    16 backtrace_symbols_fd
+After initial setup success, during Subsystem Restart (SSR), as part
+of reinitialization, ath11k_hal_srng_init() will be called again,
+and CE offset address will be calculated incorrectly this time as mem_ce
+address was not updated. Due to the incorrect CE offset address,
+APPS accesses an invalid CE register address which leads to improper
+behavior in firmware after SSR is triggered.
 
-So does test_progs:
+To fix the above issue, update mem_ce to mem iomem address in
+ath11k_qmi_request_device_info() for targets which do not support
+ce_remap feature.
 
- $ llvm-readelf --symbols test_progs \
-    | grep -P '( backtrace_symbols_fd| backtrace)$'
-  2891: 00000000006ad190    15 FUNC    WEAK   DEFAULT    13 backtrace
- 11215: 00000000006ad1a0    41 FUNC    WEAK   DEFAULT    13 backtrace_symbols_fd
-
-In such situation dynamic linker is not obliged to favour glibc
-implementation over the one defined in test_progs.
-
-Compiling with the following simple modification to test_progs.c
-demonstrates the issue:
-
-  $ git diff
-  ...
-  \--- a/tools/testing/selftests/bpf/test_progs.c
-  \+++ b/tools/testing/selftests/bpf/test_progs.c
-  \@@ -1817,6 +1817,7 @@ int main(int argc, char **argv)
-          if (err)
-                  return err;
-
-  +       *(int *)0xdeadbeef  = 42;
-          err = cd_flavor_subdir(argv[0]);
-          if (err)
-                  return err;
-
-  $ ./test_progs
-  [0]: Caught signal #11!
-  Stack trace:
-  <backtrace not supported>
-  Segmentation fault (core dumped)
-
-Resolve this by hiding stub definitions behind __GLIBC__ macro check
-instead of using "weak" attribute.
-
-Fixes: c9a83e76b5a9 ("selftests/bpf: Fix compile if backtrace support missing in libc")
-Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Tested-by: Tony Ambardar <tony.ambardar@gmail.com>
-Reviewed-by: Tony Ambardar <tony.ambardar@gmail.com>
-Acked-by: Daniel Xu <dxu@dxuuu.xyz>
-Link: https://lore.kernel.org/bpf/20241003210307.3847907-1-eddyz87@gmail.com
+Signed-off-by: Balaji Pothunoori <quic_bpothuno@quicinc.com>
+Fixes: b42b3678c91f ("wifi: ath11k: remap ce register space for IPQ5018")
+Link: https://patch.msgid.link/20240927095825.22317-1-quic_bpothuno@quicinc.com
+Signed-off-by: Jeff Johnson <quic_jjohnson@quicinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/test_progs.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/net/wireless/ath/ath11k/qmi.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/tools/testing/selftests/bpf/test_progs.c b/tools/testing/selftests/bpf/test_progs.c
-index 05bd298b15f4c..080e4fd012d3d 100644
---- a/tools/testing/selftests/bpf/test_progs.c
-+++ b/tools/testing/selftests/bpf/test_progs.c
-@@ -20,11 +20,13 @@
+diff --git a/drivers/net/wireless/ath/ath11k/qmi.c b/drivers/net/wireless/ath/ath11k/qmi.c
+index f477afd325dea..7a22483b35cd9 100644
+--- a/drivers/net/wireless/ath/ath11k/qmi.c
++++ b/drivers/net/wireless/ath/ath11k/qmi.c
+@@ -2180,6 +2180,9 @@ static int ath11k_qmi_request_device_info(struct ath11k_base *ab)
+ 	ab->mem = bar_addr_va;
+ 	ab->mem_len = resp.bar_size;
  
- #include "network_helpers.h"
- 
-+/* backtrace() and backtrace_symbols_fd() are glibc specific,
-+ * use header file when glibc is available and provide stub
-+ * implementations when another libc implementation is used.
-+ */
- #ifdef __GLIBC__
- #include <execinfo.h> /* backtrace */
--#endif
--
--/* Default backtrace funcs if missing at link */
-+#else
- __weak int backtrace(void **buffer, int size)
- {
++	if (!ab->hw_params.ce_remap)
++		ab->mem_ce = ab->mem;
++
  	return 0;
-@@ -34,6 +36,7 @@ __weak void backtrace_symbols_fd(void *const *buffer, int size, int fd)
- {
- 	dprintf(fd, "<backtrace not supported>\n");
- }
-+#endif /*__GLIBC__ */
- 
- static bool verbose(void)
- {
+ out:
+ 	return ret;
 -- 
 2.43.0
 
