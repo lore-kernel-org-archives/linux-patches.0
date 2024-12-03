@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF7AA153800;
-	Tue,  3 Dec 2024 15:48:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 289492C80;
+	Tue,  3 Dec 2024 15:48:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733240935; cv=none; b=KsY9tC7CjiZ3LqvY7X95z4Clj7fb20YKiajJtVKz85vQHQGFT+Q0Ns19fXLpXbM4BlbnXi7YQRVbxNLGCoF+vc28jrANx5iiVv447YzQHZG6Srk7kNpTMONaRDbT2iZy6brb8uo7r30spRR7DBat8q4LVn84VtTzwAJUosQ7gAo=
+	t=1733240939; cv=none; b=Aa6RrBHJk9aQBXm2lw8KKWxm+VpB6aiXJEpWU77vbfT4leSxabvwErFksmhWgje0HHKn6d444BIabH+j3C43dLJqEIhAWpuzYdplhtNOJ6bt3wm1jMy4Jtk/IJCn9kKJvg9taR0dff3rjtwQ2pFHsWo202kI2H8MIxARfZJynUc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733240935; c=relaxed/simple;
-	bh=rUaCeZrKkk1ymLdGAYo6kGVbWvZfSmxDKgEZ/Y+AeYE=;
+	s=arc-20240116; t=1733240939; c=relaxed/simple;
+	bh=kdgIegqnMXy5Vkol5LVDTyuFoSqlhBh7cTXt1oMfSwc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uiR/sQ28nOjvOq2IN65EuGnD8JX4A8ng4A8VxMc+87s2nP32+QbxRswxSWTfEcIo6kOOak0wYuuTGqgLFQd41lvX/+/FUK3qF6s0bctNO7VtPXFDD//VdBrpgh0vJawRLFYdX4akoYt4SyTx+ScsCZBODwV14Y5Ye9IUyhmAuW8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P1gpyyM/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MYiZ5q8dvlpnsdshmkZyGLJy46DIv9foPNA0Ysr94kmwT1R8T9L8rdVc4YsP//zNGbwG+Yj7R8J1cGmIhC+9XeLz6zT4JdpEfMaGMfijVEaPBEOZa0SrKmD40T4WhJWbWAjzW/gob6UZMA/KiIjFRSgNsrOrrMD5m6HcIpJo/uY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eDYfjXIG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P1gpyyM/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFDA5C4CED6;
-	Tue,  3 Dec 2024 15:48:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eDYfjXIG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58FA8C4CECF;
+	Tue,  3 Dec 2024 15:48:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733240935;
-	bh=rUaCeZrKkk1ymLdGAYo6kGVbWvZfSmxDKgEZ/Y+AeYE=;
+	s=korg; t=1733240939;
+	bh=kdgIegqnMXy5Vkol5LVDTyuFoSqlhBh7cTXt1oMfSwc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P1gpyyM/5P0h7LZzt6Kn+4UuZBIi1IWK/iORP7VrqCbWpu8yLRtcYKcTDUEjh40Ss
-	 b2ZXy6sO6sQiVHLbSKc8mRxsIiDgJ2udnJDUiyryyX2btA9wIIhXJfLlrBEby3VDcF
-	 AZOS2poaUqzV/uUzFU5Har8GzfO2dfCHQ00C/cm4=
+	b=eDYfjXIGIFZga5YsimoKBABx4rgjrV6FBkcs0ZbN6m2jb8hBRL5Z8OSnE9HIZsOzX
+	 ve863AePPfAjPXv1lcmZxJKVIywIxoFmV+0iwcfn85tJhNgNuGVkkGVyhBmxpfFLcI
+	 08zS+IHmRTCR5Bf+golW6uxIwUSg5zUdsomV0J9M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxime Ripard <mripard@kernel.org>,
-	Dave Stevenson <dave.stevenson@raspberrypi.com>,
+	Zong-Zhe Yang <kevin_yang@realtek.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 238/826] drm/vc4: Introduce generation number enum
-Date: Tue,  3 Dec 2024 15:39:25 +0100
-Message-ID: <20241203144753.043617536@linuxfoundation.org>
+Subject: [PATCH 6.12 272/826] wifi: rtw89: refactor STA related func ahead for MLO
+Date: Tue,  3 Dec 2024 15:39:59 +0100
+Message-ID: <20241203144754.383686148@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -51,1029 +51,943 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maxime Ripard <mripard@kernel.org>
+From: Zong-Zhe Yang <kevin_yang@realtek.com>
 
-[ Upstream commit 24c5ed3ddf27313b248900455b0312bd7a9d3554 ]
+[ Upstream commit 72e9457c1954dc39a7059bd6d6346b60a24aa55e ]
 
-With the introduction of the BCM2712 support, we will get yet another
-generation of display engine to support.
+Refactor STA related functions, e.g. add/assoc/disassoc/disconnect/remove
+to separate most link stuffs into sub-functions for MLO reuse.
 
-The binary check of whether it's VC5 or not thus doesn't work anymore,
-especially since some parts of the driver will have changed with BCM2711,
-and some others with BCM2712.
-
-Let's introduce an enum to store the generation the driver is running
-on, which should provide more flexibility.
-
-Signed-off-by: Maxime Ripard <mripard@kernel.org>
-Reviewed-by: Maxime Ripard <mripard@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240621152055.4180873-21-dave.stevenson@raspberrypi.com
-Signed-off-by: Dave Stevenson <dave.stevenson@raspberrypi.com>
-Stable-dep-of: cf1c87d978d4 ("drm/vc4: Match drm_dev_enter and exit calls in vc4_hvs_lut_load")
+Signed-off-by: Zong-Zhe Yang <kevin_yang@realtek.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20240916053158.47350-7-pkshih@realtek.com
+Stable-dep-of: f16c40acd319 ("wifi: rtw89: Fix TX fail with A2DP after scanning")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/vc4/tests/vc4_mock.c       | 12 +++----
- drivers/gpu/drm/vc4/vc4_bo.c               | 28 +++++++--------
- drivers/gpu/drm/vc4/vc4_crtc.c             | 13 ++++---
- drivers/gpu/drm/vc4/vc4_drv.c              | 22 +++++++-----
- drivers/gpu/drm/vc4/vc4_drv.h              |  7 +++-
- drivers/gpu/drm/vc4/vc4_gem.c              | 24 ++++++-------
- drivers/gpu/drm/vc4/vc4_hdmi.c             |  2 +-
- drivers/gpu/drm/vc4/vc4_hvs.c              | 42 ++++++++++++----------
- drivers/gpu/drm/vc4/vc4_irq.c              | 10 +++---
- drivers/gpu/drm/vc4/vc4_kms.c              | 14 ++++----
- drivers/gpu/drm/vc4/vc4_perfmon.c          | 20 +++++------
- drivers/gpu/drm/vc4/vc4_plane.c            | 12 +++----
- drivers/gpu/drm/vc4/vc4_render_cl.c        |  2 +-
- drivers/gpu/drm/vc4/vc4_v3d.c              | 10 +++---
- drivers/gpu/drm/vc4/vc4_validate.c         |  8 ++---
- drivers/gpu/drm/vc4/vc4_validate_shaders.c |  2 +-
- 16 files changed, 121 insertions(+), 107 deletions(-)
+ drivers/net/wireless/realtek/rtw89/core.c     | 112 +++++--------
+ drivers/net/wireless/realtek/rtw89/core.h     |  40 +++--
+ drivers/net/wireless/realtek/rtw89/fw.c       |  17 +-
+ drivers/net/wireless/realtek/rtw89/fw.h       |  16 +-
+ drivers/net/wireless/realtek/rtw89/mac.c      |  42 +++--
+ drivers/net/wireless/realtek/rtw89/mac.h      |  20 ++-
+ drivers/net/wireless/realtek/rtw89/mac80211.c | 152 ++++++++++++++++--
+ drivers/net/wireless/realtek/rtw89/mac_be.c   |  22 +--
+ drivers/net/wireless/realtek/rtw89/phy.c      |   3 +-
+ drivers/net/wireless/realtek/rtw89/phy.h      |   2 +-
+ drivers/net/wireless/realtek/rtw89/wow.c      |   7 +-
+ 11 files changed, 261 insertions(+), 172 deletions(-)
 
-diff --git a/drivers/gpu/drm/vc4/tests/vc4_mock.c b/drivers/gpu/drm/vc4/tests/vc4_mock.c
-index 0731a7d85d7ab..922849dd4b478 100644
---- a/drivers/gpu/drm/vc4/tests/vc4_mock.c
-+++ b/drivers/gpu/drm/vc4/tests/vc4_mock.c
-@@ -155,11 +155,11 @@ KUNIT_DEFINE_ACTION_WRAPPER(kunit_action_drm_dev_unregister,
- 			    drm_dev_unregister,
- 			    struct drm_device *);
- 
--static struct vc4_dev *__mock_device(struct kunit *test, bool is_vc5)
-+static struct vc4_dev *__mock_device(struct kunit *test, enum vc4_gen gen)
- {
- 	struct drm_device *drm;
--	const struct drm_driver *drv = is_vc5 ? &vc5_drm_driver : &vc4_drm_driver;
--	const struct vc4_mock_desc *desc = is_vc5 ? &vc5_mock : &vc4_mock;
-+	const struct drm_driver *drv = (gen == VC4_GEN_5) ? &vc5_drm_driver : &vc4_drm_driver;
-+	const struct vc4_mock_desc *desc = (gen == VC4_GEN_5) ? &vc5_mock : &vc4_mock;
- 	struct vc4_dev *vc4;
- 	struct device *dev;
- 	int ret;
-@@ -173,7 +173,7 @@ static struct vc4_dev *__mock_device(struct kunit *test, bool is_vc5)
- 	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, vc4);
- 
- 	vc4->dev = dev;
--	vc4->is_vc5 = is_vc5;
-+	vc4->gen = gen;
- 
- 	vc4->hvs = __vc4_hvs_alloc(vc4, NULL);
- 	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, vc4->hvs);
-@@ -198,10 +198,10 @@ static struct vc4_dev *__mock_device(struct kunit *test, bool is_vc5)
- 
- struct vc4_dev *vc4_mock_device(struct kunit *test)
- {
--	return __mock_device(test, false);
-+	return __mock_device(test, VC4_GEN_4);
+diff --git a/drivers/net/wireless/realtek/rtw89/core.c b/drivers/net/wireless/realtek/rtw89/core.c
+index c6d3b8fd98b65..8d2cca0b0a18d 100644
+--- a/drivers/net/wireless/realtek/rtw89/core.c
++++ b/drivers/net/wireless/realtek/rtw89/core.c
+@@ -2746,8 +2746,8 @@ static void rtw89_core_ba_work(struct work_struct *work)
+ 	spin_unlock_bh(&rtwdev->ba_lock);
  }
  
- struct vc4_dev *vc5_mock_device(struct kunit *test)
+-static void rtw89_core_free_sta_pending_ba(struct rtw89_dev *rtwdev,
+-					   struct ieee80211_sta *sta)
++void rtw89_core_free_sta_pending_ba(struct rtw89_dev *rtwdev,
++				    struct ieee80211_sta *sta)
  {
--	return __mock_device(test, true);
-+	return __mock_device(test, VC4_GEN_5);
+ 	struct rtw89_txq *rtwtxq, *tmp;
+ 
+@@ -2761,8 +2761,8 @@ static void rtw89_core_free_sta_pending_ba(struct rtw89_dev *rtwdev,
+ 	spin_unlock_bh(&rtwdev->ba_lock);
  }
-diff --git a/drivers/gpu/drm/vc4/vc4_bo.c b/drivers/gpu/drm/vc4/vc4_bo.c
-index 3f72be7490d5b..2a85d08b19852 100644
---- a/drivers/gpu/drm/vc4/vc4_bo.c
-+++ b/drivers/gpu/drm/vc4/vc4_bo.c
-@@ -251,7 +251,7 @@ void vc4_bo_add_to_purgeable_pool(struct vc4_bo *bo)
+ 
+-static void rtw89_core_free_sta_pending_forbid_ba(struct rtw89_dev *rtwdev,
+-						  struct ieee80211_sta *sta)
++void rtw89_core_free_sta_pending_forbid_ba(struct rtw89_dev *rtwdev,
++					   struct ieee80211_sta *sta)
  {
- 	struct vc4_dev *vc4 = to_vc4_dev(bo->base.base.dev);
+ 	struct rtw89_txq *rtwtxq, *tmp;
  
--	if (WARN_ON_ONCE(vc4->is_vc5))
-+	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
- 		return;
+@@ -2778,8 +2778,8 @@ static void rtw89_core_free_sta_pending_forbid_ba(struct rtw89_dev *rtwdev,
+ 	spin_unlock_bh(&rtwdev->ba_lock);
+ }
  
- 	mutex_lock(&vc4->purgeable.lock);
-@@ -265,7 +265,7 @@ static void vc4_bo_remove_from_purgeable_pool_locked(struct vc4_bo *bo)
+-static void rtw89_core_free_sta_pending_roc_tx(struct rtw89_dev *rtwdev,
+-					       struct ieee80211_sta *sta)
++void rtw89_core_free_sta_pending_roc_tx(struct rtw89_dev *rtwdev,
++					struct ieee80211_sta *sta)
  {
- 	struct vc4_dev *vc4 = to_vc4_dev(bo->base.base.dev);
+ 	struct rtw89_sta_link *rtwsta_link = (struct rtw89_sta_link *)sta->drv_priv;
+ 	struct sk_buff *skb, *tmp;
+@@ -3525,26 +3525,19 @@ void rtw89_vif_type_mapping(struct rtw89_vif_link *rtwvif_link, bool assoc)
+ 	}
+ }
  
--	if (WARN_ON_ONCE(vc4->is_vc5))
-+	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
- 		return;
- 
- 	/* list_del_init() is used here because the caller might release
-@@ -396,7 +396,7 @@ struct drm_gem_object *vc4_create_object(struct drm_device *dev, size_t size)
- 	struct vc4_dev *vc4 = to_vc4_dev(dev);
- 	struct vc4_bo *bo;
- 
--	if (WARN_ON_ONCE(vc4->is_vc5))
-+	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
- 		return ERR_PTR(-ENODEV);
- 
- 	bo = kzalloc(sizeof(*bo), GFP_KERNEL);
-@@ -427,7 +427,7 @@ struct vc4_bo *vc4_bo_create(struct drm_device *dev, size_t unaligned_size,
- 	struct drm_gem_dma_object *dma_obj;
- 	struct vc4_bo *bo;
- 
--	if (WARN_ON_ONCE(vc4->is_vc5))
-+	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
- 		return ERR_PTR(-ENODEV);
- 
- 	if (size == 0)
-@@ -496,7 +496,7 @@ int vc4_bo_dumb_create(struct drm_file *file_priv,
- 	struct vc4_bo *bo = NULL;
- 	int ret;
- 
--	if (WARN_ON_ONCE(vc4->is_vc5))
-+	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
- 		return -ENODEV;
- 
- 	ret = vc4_dumb_fixup_args(args);
-@@ -622,7 +622,7 @@ int vc4_bo_inc_usecnt(struct vc4_bo *bo)
- 	struct vc4_dev *vc4 = to_vc4_dev(bo->base.base.dev);
- 	int ret;
- 
--	if (WARN_ON_ONCE(vc4->is_vc5))
-+	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
- 		return -ENODEV;
- 
- 	/* Fast path: if the BO is already retained by someone, no need to
-@@ -661,7 +661,7 @@ void vc4_bo_dec_usecnt(struct vc4_bo *bo)
+-int rtw89_core_sta_add(struct rtw89_dev *rtwdev,
+-		       struct ieee80211_vif *vif,
+-		       struct ieee80211_sta *sta)
++int rtw89_core_sta_link_add(struct rtw89_dev *rtwdev,
++			    struct rtw89_vif_link *rtwvif_link,
++			    struct rtw89_sta_link *rtwsta_link)
  {
- 	struct vc4_dev *vc4 = to_vc4_dev(bo->base.base.dev);
- 
--	if (WARN_ON_ONCE(vc4->is_vc5))
-+	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
- 		return;
- 
- 	/* Fast path: if the BO is still retained by someone, no need to test
-@@ -783,7 +783,7 @@ int vc4_create_bo_ioctl(struct drm_device *dev, void *data,
- 	struct vc4_bo *bo = NULL;
- 	int ret;
- 
--	if (WARN_ON_ONCE(vc4->is_vc5))
-+	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
- 		return -ENODEV;
- 
- 	ret = vc4_grab_bin_bo(vc4, vc4file);
-@@ -813,7 +813,7 @@ int vc4_mmap_bo_ioctl(struct drm_device *dev, void *data,
- 	struct drm_vc4_mmap_bo *args = data;
- 	struct drm_gem_object *gem_obj;
- 
--	if (WARN_ON_ONCE(vc4->is_vc5))
-+	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
- 		return -ENODEV;
- 
- 	gem_obj = drm_gem_object_lookup(file_priv, args->handle);
-@@ -839,7 +839,7 @@ vc4_create_shader_bo_ioctl(struct drm_device *dev, void *data,
- 	struct vc4_bo *bo = NULL;
- 	int ret;
- 
--	if (WARN_ON_ONCE(vc4->is_vc5))
-+	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
- 		return -ENODEV;
- 
- 	if (args->size == 0)
-@@ -918,7 +918,7 @@ int vc4_set_tiling_ioctl(struct drm_device *dev, void *data,
- 	struct vc4_bo *bo;
- 	bool t_format;
- 
--	if (WARN_ON_ONCE(vc4->is_vc5))
-+	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
- 		return -ENODEV;
- 
- 	if (args->flags != 0)
-@@ -964,7 +964,7 @@ int vc4_get_tiling_ioctl(struct drm_device *dev, void *data,
- 	struct drm_gem_object *gem_obj;
- 	struct vc4_bo *bo;
- 
--	if (WARN_ON_ONCE(vc4->is_vc5))
-+	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
- 		return -ENODEV;
- 
- 	if (args->flags != 0 || args->modifier != 0)
-@@ -1007,7 +1007,7 @@ int vc4_bo_cache_init(struct drm_device *dev)
- 	int ret;
+-	struct rtw89_vif_link *rtwvif_link = (struct rtw89_vif_link *)vif->drv_priv;
+-	struct rtw89_sta_link *rtwsta_link = (struct rtw89_sta_link *)sta->drv_priv;
++	struct ieee80211_vif *vif = rtwvif_to_vif(rtwvif_link);
++	struct ieee80211_sta *sta = rtwsta_to_sta(rtwsta_link);
+ 	struct rtw89_hal *hal = &rtwdev->hal;
+ 	u8 ant_num = hal->ant_diversity ? 2 : rtwdev->chip->rf_path_num;
  	int i;
- 
--	if (WARN_ON_ONCE(vc4->is_vc5))
-+	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
- 		return -ENODEV;
- 
- 	/* Create the initial set of BO labels that the kernel will
-@@ -1071,7 +1071,7 @@ int vc4_label_bo_ioctl(struct drm_device *dev, void *data,
- 	struct drm_gem_object *gem_obj;
- 	int ret = 0, label;
- 
--	if (WARN_ON_ONCE(vc4->is_vc5))
-+	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
- 		return -ENODEV;
- 
- 	if (!args->len)
-diff --git a/drivers/gpu/drm/vc4/vc4_crtc.c b/drivers/gpu/drm/vc4/vc4_crtc.c
-index 8b5a7e5eb1466..26a7cf7f64651 100644
---- a/drivers/gpu/drm/vc4/vc4_crtc.c
-+++ b/drivers/gpu/drm/vc4/vc4_crtc.c
-@@ -263,7 +263,7 @@ static u32 vc4_get_fifo_full_level(struct vc4_crtc *vc4_crtc, u32 format)
- 		 * Removing 1 from the FIFO full level however
- 		 * seems to completely remove that issue.
- 		 */
--		if (!vc4->is_vc5)
-+		if (vc4->gen == VC4_GEN_4)
- 			return fifo_len_bytes - 3 * HVS_FIFO_LATENCY_PIX - 1;
- 
- 		return fifo_len_bytes - 3 * HVS_FIFO_LATENCY_PIX;
-@@ -428,7 +428,7 @@ static void vc4_crtc_config_pv(struct drm_crtc *crtc, struct drm_encoder *encode
- 	if (is_dsi)
- 		CRTC_WRITE(PV_HACT_ACT, mode->hdisplay * pixel_rep);
- 
--	if (vc4->is_vc5)
-+	if (vc4->gen == VC4_GEN_5)
- 		CRTC_WRITE(PV_MUX_CFG,
- 			   VC4_SET_FIELD(PV_MUX_CFG_RGB_PIXEL_MUX_MODE_NO_SWAP,
- 					 PV_MUX_CFG_RGB_PIXEL_MUX_MODE));
-@@ -913,7 +913,7 @@ static int vc4_async_set_fence_cb(struct drm_device *dev,
- 	struct dma_fence *fence;
  	int ret;
  
--	if (!vc4->is_vc5) {
-+	if (vc4->gen == VC4_GEN_4) {
- 		struct vc4_bo *bo = to_vc4_bo(&dma_bo->base);
- 
- 		return vc4_queue_seqno_cb(dev, &flip_state->cb.seqno, bo->seqno,
-@@ -1000,7 +1000,7 @@ static int vc4_async_page_flip(struct drm_crtc *crtc,
- 	struct vc4_bo *bo = to_vc4_bo(&dma_bo->base);
- 	int ret;
- 
--	if (WARN_ON_ONCE(vc4->is_vc5))
-+	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
- 		return -ENODEV;
- 
- 	/*
-@@ -1043,7 +1043,7 @@ int vc4_page_flip(struct drm_crtc *crtc,
- 		struct drm_device *dev = crtc->dev;
- 		struct vc4_dev *vc4 = to_vc4_dev(dev);
- 
--		if (vc4->is_vc5)
-+		if (vc4->gen == VC4_GEN_5)
- 			return vc5_async_page_flip(crtc, fb, event, flags);
- 		else
- 			return vc4_async_page_flip(crtc, fb, event, flags);
-@@ -1338,9 +1338,8 @@ int __vc4_crtc_init(struct drm_device *drm,
- 
- 	drm_crtc_helper_add(crtc, crtc_helper_funcs);
- 
--	if (!vc4->is_vc5) {
-+	if (vc4->gen == VC4_GEN_4) {
- 		drm_mode_crtc_set_gamma_size(crtc, ARRAY_SIZE(vc4_crtc->lut_r));
+-	rtwsta_link->rtwdev = rtwdev;
+-	rtwsta_link->rtwvif_link = rtwvif_link;
+ 	rtwsta_link->prev_rssi = 0;
+ 	INIT_LIST_HEAD(&rtwsta_link->ba_cam_list);
+-	skb_queue_head_init(&rtwsta_link->roc_queue);
 -
- 		drm_crtc_enable_color_mgmt(crtc, 0, false, crtc->gamma_size);
+-	for (i = 0; i < ARRAY_SIZE(sta->txq); i++)
+-		rtw89_core_txq_init(rtwdev, sta->txq[i]);
+-
+ 	ewma_rssi_init(&rtwsta_link->avg_rssi);
+ 	ewma_snr_init(&rtwsta_link->avg_snr);
+ 	ewma_evm_init(&rtwsta_link->evm_1ss);
+@@ -3555,9 +3548,6 @@ int rtw89_core_sta_add(struct rtw89_dev *rtwdev,
+ 	}
  
- 		/* We support CTM, but only for one CRTC at a time. It's therefore
-diff --git a/drivers/gpu/drm/vc4/vc4_drv.c b/drivers/gpu/drm/vc4/vc4_drv.c
-index c133e96b8aca2..550324819f37f 100644
---- a/drivers/gpu/drm/vc4/vc4_drv.c
-+++ b/drivers/gpu/drm/vc4/vc4_drv.c
-@@ -98,7 +98,7 @@ static int vc4_get_param_ioctl(struct drm_device *dev, void *data,
- 	if (args->pad != 0)
- 		return -EINVAL;
- 
--	if (WARN_ON_ONCE(vc4->is_vc5))
-+	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
- 		return -ENODEV;
- 
- 	if (!vc4->v3d)
-@@ -147,7 +147,7 @@ static int vc4_open(struct drm_device *dev, struct drm_file *file)
- 	struct vc4_dev *vc4 = to_vc4_dev(dev);
- 	struct vc4_file *vc4file;
- 
--	if (WARN_ON_ONCE(vc4->is_vc5))
-+	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
- 		return -ENODEV;
- 
- 	vc4file = kzalloc(sizeof(*vc4file), GFP_KERNEL);
-@@ -165,7 +165,7 @@ static void vc4_close(struct drm_device *dev, struct drm_file *file)
- 	struct vc4_dev *vc4 = to_vc4_dev(dev);
- 	struct vc4_file *vc4file = file->driver_priv;
- 
--	if (WARN_ON_ONCE(vc4->is_vc5))
-+	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
- 		return;
- 
- 	if (vc4file->bin_bo_used)
-@@ -291,13 +291,17 @@ static int vc4_drm_bind(struct device *dev)
- 	struct vc4_dev *vc4;
- 	struct device_node *node;
- 	struct drm_crtc *crtc;
--	bool is_vc5;
-+	enum vc4_gen gen;
- 	int ret = 0;
- 
- 	dev->coherent_dma_mask = DMA_BIT_MASK(32);
- 
--	is_vc5 = of_device_is_compatible(dev->of_node, "brcm,bcm2711-vc5");
--	if (is_vc5)
-+	if (of_device_is_compatible(dev->of_node, "brcm,bcm2711-vc5"))
-+		gen = VC4_GEN_5;
-+	else
-+		gen = VC4_GEN_4;
-+
-+	if (gen == VC4_GEN_5)
- 		driver = &vc5_drm_driver;
- 	else
- 		driver = &vc4_drm_driver;
-@@ -315,13 +319,13 @@ static int vc4_drm_bind(struct device *dev)
- 	vc4 = devm_drm_dev_alloc(dev, driver, struct vc4_dev, base);
- 	if (IS_ERR(vc4))
- 		return PTR_ERR(vc4);
--	vc4->is_vc5 = is_vc5;
-+	vc4->gen = gen;
- 	vc4->dev = dev;
- 
- 	drm = &vc4->base;
- 	platform_set_drvdata(pdev, drm);
- 
--	if (!is_vc5) {
-+	if (gen == VC4_GEN_4) {
- 		ret = drmm_mutex_init(drm, &vc4->bin_bo_lock);
+ 	if (vif->type == NL80211_IFTYPE_STATION && !sta->tdls) {
+-		/* for station mode, assign the mac_id from itself */
+-		rtwsta_link->mac_id = rtwvif_link->mac_id;
+-
+ 		/* must do rtw89_reg_6ghz_recalc() before rfk channel */
+ 		ret = rtw89_reg_6ghz_recalc(rtwdev, rtwvif_link, true);
  		if (ret)
- 			goto err;
-@@ -335,7 +339,7 @@ static int vc4_drm_bind(struct device *dev)
- 	if (ret)
- 		goto err;
- 
--	if (!is_vc5) {
-+	if (gen == VC4_GEN_4) {
- 		ret = vc4_gem_init(drm);
+@@ -3567,13 +3557,8 @@ int rtw89_core_sta_add(struct rtw89_dev *rtwdev,
+ 					 BTC_ROLE_MSTS_STA_CONN_START);
+ 		rtw89_chip_rfk_channel(rtwdev, rtwvif_link);
+ 	} else if (vif->type == NL80211_IFTYPE_AP || sta->tdls) {
+-		rtwsta_link->mac_id = rtw89_acquire_mac_id(rtwdev);
+-		if (rtwsta_link->mac_id == RTW89_MAX_MAC_ID_NUM)
+-			return -ENOSPC;
+-
+ 		ret = rtw89_mac_set_macid_pause(rtwdev, rtwsta_link->mac_id, false);
+ 		if (ret) {
+-			rtw89_release_mac_id(rtwdev, rtwsta_link->mac_id);
+ 			rtw89_warn(rtwdev, "failed to send h2c macid pause\n");
+ 			return ret;
+ 		}
+@@ -3581,7 +3566,6 @@ int rtw89_core_sta_add(struct rtw89_dev *rtwdev,
+ 		ret = rtw89_fw_h2c_role_maintain(rtwdev, rtwvif_link, rtwsta_link,
+ 						 RTW89_ROLE_CREATE);
+ 		if (ret) {
+-			rtw89_release_mac_id(rtwdev, rtwsta_link->mac_id);
+ 			rtw89_warn(rtwdev, "failed to send h2c role info\n");
+ 			return ret;
+ 		}
+@@ -3593,44 +3577,33 @@ int rtw89_core_sta_add(struct rtw89_dev *rtwdev,
+ 		ret = rtw89_chip_h2c_default_dmac_tbl(rtwdev, rtwvif_link, rtwsta_link);
  		if (ret)
- 			goto err;
-diff --git a/drivers/gpu/drm/vc4/vc4_drv.h b/drivers/gpu/drm/vc4/vc4_drv.h
-index d463fabf5ecce..dd452e6a11430 100644
---- a/drivers/gpu/drm/vc4/vc4_drv.h
-+++ b/drivers/gpu/drm/vc4/vc4_drv.h
-@@ -80,11 +80,16 @@ struct vc4_perfmon {
- 	u64 counters[] __counted_by(ncounters);
- };
+ 			return ret;
+-
+-		rtw89_queue_chanctx_change(rtwdev, RTW89_CHANCTX_REMOTE_STA_CHANGE);
+ 	}
  
-+enum vc4_gen {
-+	VC4_GEN_4,
-+	VC4_GEN_5,
-+};
-+
- struct vc4_dev {
- 	struct drm_device base;
- 	struct device *dev;
+ 	return 0;
+ }
  
--	bool is_vc5;
-+	enum vc4_gen gen;
- 
- 	unsigned int irq;
- 
-diff --git a/drivers/gpu/drm/vc4/vc4_gem.c b/drivers/gpu/drm/vc4/vc4_gem.c
-index 24fb1b57e1dd9..be9c0b72ebe86 100644
---- a/drivers/gpu/drm/vc4/vc4_gem.c
-+++ b/drivers/gpu/drm/vc4/vc4_gem.c
-@@ -76,7 +76,7 @@ vc4_get_hang_state_ioctl(struct drm_device *dev, void *data,
- 	u32 i;
- 	int ret = 0;
- 
--	if (WARN_ON_ONCE(vc4->is_vc5))
-+	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
- 		return -ENODEV;
- 
- 	if (!vc4->v3d) {
-@@ -389,7 +389,7 @@ vc4_wait_for_seqno(struct drm_device *dev, uint64_t seqno, uint64_t timeout_ns,
- 	unsigned long timeout_expire;
- 	DEFINE_WAIT(wait);
- 
--	if (WARN_ON_ONCE(vc4->is_vc5))
-+	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
- 		return -ENODEV;
- 
- 	if (vc4->finished_seqno >= seqno)
-@@ -474,7 +474,7 @@ vc4_submit_next_bin_job(struct drm_device *dev)
- 	struct vc4_dev *vc4 = to_vc4_dev(dev);
- 	struct vc4_exec_info *exec;
- 
--	if (WARN_ON_ONCE(vc4->is_vc5))
-+	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
- 		return;
- 
- again:
-@@ -522,7 +522,7 @@ vc4_submit_next_render_job(struct drm_device *dev)
- 	if (!exec)
- 		return;
- 
--	if (WARN_ON_ONCE(vc4->is_vc5))
-+	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
- 		return;
- 
- 	/* A previous RCL may have written to one of our textures, and
-@@ -543,7 +543,7 @@ vc4_move_job_to_render(struct drm_device *dev, struct vc4_exec_info *exec)
- 	struct vc4_dev *vc4 = to_vc4_dev(dev);
- 	bool was_empty = list_empty(&vc4->render_job_list);
- 
--	if (WARN_ON_ONCE(vc4->is_vc5))
-+	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
- 		return;
- 
- 	list_move_tail(&exec->head, &vc4->render_job_list);
-@@ -970,7 +970,7 @@ vc4_job_handle_completed(struct vc4_dev *vc4)
- 	unsigned long irqflags;
- 	struct vc4_seqno_cb *cb, *cb_temp;
- 
--	if (WARN_ON_ONCE(vc4->is_vc5))
-+	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
- 		return;
- 
- 	spin_lock_irqsave(&vc4->job_lock, irqflags);
-@@ -1009,7 +1009,7 @@ int vc4_queue_seqno_cb(struct drm_device *dev,
- 	struct vc4_dev *vc4 = to_vc4_dev(dev);
- 	unsigned long irqflags;
- 
--	if (WARN_ON_ONCE(vc4->is_vc5))
-+	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
- 		return -ENODEV;
- 
- 	cb->func = func;
-@@ -1065,7 +1065,7 @@ vc4_wait_seqno_ioctl(struct drm_device *dev, void *data,
- 	struct vc4_dev *vc4 = to_vc4_dev(dev);
- 	struct drm_vc4_wait_seqno *args = data;
- 
--	if (WARN_ON_ONCE(vc4->is_vc5))
-+	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
- 		return -ENODEV;
- 
- 	return vc4_wait_for_seqno_ioctl_helper(dev, args->seqno,
-@@ -1082,7 +1082,7 @@ vc4_wait_bo_ioctl(struct drm_device *dev, void *data,
- 	struct drm_gem_object *gem_obj;
- 	struct vc4_bo *bo;
- 
--	if (WARN_ON_ONCE(vc4->is_vc5))
-+	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
- 		return -ENODEV;
- 
- 	if (args->pad != 0)
-@@ -1131,7 +1131,7 @@ vc4_submit_cl_ioctl(struct drm_device *dev, void *data,
- 				  args->shader_rec_size,
- 				  args->bo_handle_count);
- 
--	if (WARN_ON_ONCE(vc4->is_vc5))
-+	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
- 		return -ENODEV;
- 
- 	if (!vc4->v3d) {
-@@ -1267,7 +1267,7 @@ int vc4_gem_init(struct drm_device *dev)
- 	struct vc4_dev *vc4 = to_vc4_dev(dev);
- 	int ret;
- 
--	if (WARN_ON_ONCE(vc4->is_vc5))
-+	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
- 		return -ENODEV;
- 
- 	vc4->dma_fence_context = dma_fence_context_alloc(1);
-@@ -1326,7 +1326,7 @@ int vc4_gem_madvise_ioctl(struct drm_device *dev, void *data,
- 	struct vc4_bo *bo;
- 	int ret;
- 
--	if (WARN_ON_ONCE(vc4->is_vc5))
-+	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
- 		return -ENODEV;
- 
- 	switch (args->madv) {
-diff --git a/drivers/gpu/drm/vc4/vc4_hdmi.c b/drivers/gpu/drm/vc4/vc4_hdmi.c
-index 0117c5495b893..2d7d3e90f3be4 100644
---- a/drivers/gpu/drm/vc4/vc4_hdmi.c
-+++ b/drivers/gpu/drm/vc4/vc4_hdmi.c
-@@ -2109,7 +2109,7 @@ static int vc4_hdmi_audio_prepare(struct device *dev, void *data,
- 					     VC4_HDMI_AUDIO_PACKET_CEA_MASK);
- 
- 	/* Set the MAI threshold */
--	if (vc4->is_vc5)
-+	if (vc4->gen >= VC4_GEN_5)
- 		HDMI_WRITE(HDMI_MAI_THR,
- 			   VC4_SET_FIELD(0x10, VC4_HD_MAI_THR_PANICHIGH) |
- 			   VC4_SET_FIELD(0x10, VC4_HD_MAI_THR_PANICLOW) |
-diff --git a/drivers/gpu/drm/vc4/vc4_hvs.c b/drivers/gpu/drm/vc4/vc4_hvs.c
-index 1d011fa8a7eac..3787c070d15e3 100644
---- a/drivers/gpu/drm/vc4/vc4_hvs.c
-+++ b/drivers/gpu/drm/vc4/vc4_hvs.c
-@@ -224,7 +224,7 @@ static void vc4_hvs_lut_load(struct vc4_hvs *hvs,
- 	if (!drm_dev_enter(drm, &idx))
- 		return;
- 
--	if (hvs->vc4->is_vc5)
-+	if (hvs->vc4->gen == VC4_GEN_4)
- 		return;
- 
- 	/* The LUT memory is laid out with each HVS channel in order,
-@@ -296,7 +296,7 @@ int vc4_hvs_get_fifo_from_output(struct vc4_hvs *hvs, unsigned int output)
- 	u32 reg;
- 	int ret;
- 
--	if (!vc4->is_vc5)
-+	if (vc4->gen == VC4_GEN_4)
- 		return output;
- 
- 	/*
-@@ -377,7 +377,7 @@ static int vc4_hvs_init_channel(struct vc4_hvs *hvs, struct drm_crtc *crtc,
- 	dispctrl = SCALER_DISPCTRLX_ENABLE;
- 	dispbkgndx = HVS_READ(SCALER_DISPBKGNDX(chan));
- 
--	if (!vc4->is_vc5) {
-+	if (vc4->gen == VC4_GEN_4) {
- 		dispctrl |= VC4_SET_FIELD(mode->hdisplay,
- 					  SCALER_DISPCTRLX_WIDTH) |
- 			    VC4_SET_FIELD(mode->vdisplay,
-@@ -399,7 +399,7 @@ static int vc4_hvs_init_channel(struct vc4_hvs *hvs, struct drm_crtc *crtc,
- 	dispbkgndx &= ~SCALER_DISPBKGND_INTERLACE;
- 
- 	HVS_WRITE(SCALER_DISPBKGNDX(chan), dispbkgndx |
--		  ((!vc4->is_vc5) ? SCALER_DISPBKGND_GAMMA : 0) |
-+		  ((vc4->gen == VC4_GEN_4) ? SCALER_DISPBKGND_GAMMA : 0) |
- 		  (interlace ? SCALER_DISPBKGND_INTERLACE : 0));
- 
- 	/* Reload the LUT, since the SRAMs would have been disabled if
-@@ -671,7 +671,8 @@ void vc4_hvs_atomic_flush(struct drm_crtc *crtc,
- 
- void vc4_hvs_mask_underrun(struct vc4_hvs *hvs, int channel)
+-int rtw89_core_sta_disassoc(struct rtw89_dev *rtwdev,
+-			    struct ieee80211_vif *vif,
+-			    struct ieee80211_sta *sta)
++int rtw89_core_sta_link_disassoc(struct rtw89_dev *rtwdev,
++				 struct rtw89_vif_link *rtwvif_link,
++				 struct rtw89_sta_link *rtwsta_link)
  {
--	struct drm_device *drm = &hvs->vc4->base;
-+	struct vc4_dev *vc4 = hvs->vc4;
-+	struct drm_device *drm = &vc4->base;
- 	u32 dispctrl;
- 	int idx;
+-	struct rtw89_vif_link *rtwvif_link = (struct rtw89_vif_link *)vif->drv_priv;
+-	struct rtw89_sta_link *rtwsta_link = (struct rtw89_sta_link *)sta->drv_priv;
++	struct ieee80211_vif *vif = rtwvif_to_vif(rtwvif_link);
  
-@@ -679,8 +680,9 @@ void vc4_hvs_mask_underrun(struct vc4_hvs *hvs, int channel)
- 		return;
+ 	if (vif->type == NL80211_IFTYPE_STATION)
+-		rtw89_fw_h2c_set_bcn_fltr_cfg(rtwdev, vif, false);
+-
+-	rtwdev->total_sta_assoc--;
+-	if (sta->tdls)
+-		rtwvif_link->tdls_peer--;
+-	rtwsta_link->disassoc = true;
++		rtw89_fw_h2c_set_bcn_fltr_cfg(rtwdev, rtwvif_link, false);
  
- 	dispctrl = HVS_READ(SCALER_DISPCTRL);
--	dispctrl &= ~(hvs->vc4->is_vc5 ? SCALER5_DISPCTRL_DSPEISLUR(channel) :
--					 SCALER_DISPCTRL_DSPEISLUR(channel));
-+	dispctrl &= ~((vc4->gen == VC4_GEN_5) ?
-+		      SCALER5_DISPCTRL_DSPEISLUR(channel) :
-+		      SCALER_DISPCTRL_DSPEISLUR(channel));
+ 	return 0;
+ }
  
- 	HVS_WRITE(SCALER_DISPCTRL, dispctrl);
- 
-@@ -689,7 +691,8 @@ void vc4_hvs_mask_underrun(struct vc4_hvs *hvs, int channel)
- 
- void vc4_hvs_unmask_underrun(struct vc4_hvs *hvs, int channel)
+-int rtw89_core_sta_disconnect(struct rtw89_dev *rtwdev,
+-			      struct ieee80211_vif *vif,
+-			      struct ieee80211_sta *sta)
++int rtw89_core_sta_link_disconnect(struct rtw89_dev *rtwdev,
++				   struct rtw89_vif_link *rtwvif_link,
++				   struct rtw89_sta_link *rtwsta_link)
  {
--	struct drm_device *drm = &hvs->vc4->base;
-+	struct vc4_dev *vc4 = hvs->vc4;
-+	struct drm_device *drm = &vc4->base;
- 	u32 dispctrl;
- 	int idx;
+-	struct rtw89_vif_link *rtwvif_link = (struct rtw89_vif_link *)vif->drv_priv;
+-	struct rtw89_sta_link *rtwsta_link = (struct rtw89_sta_link *)sta->drv_priv;
++	struct ieee80211_vif *vif = rtwvif_to_vif(rtwvif_link);
++	struct ieee80211_sta *sta = rtwsta_to_sta(rtwsta_link);
+ 	int ret;
  
-@@ -697,8 +700,9 @@ void vc4_hvs_unmask_underrun(struct vc4_hvs *hvs, int channel)
- 		return;
+-	rtw89_mac_bf_monitor_calc(rtwdev, sta, true);
+-	rtw89_mac_bf_disassoc(rtwdev, vif, sta);
+-	rtw89_core_free_sta_pending_ba(rtwdev, sta);
+-	rtw89_core_free_sta_pending_forbid_ba(rtwdev, sta);
+-	rtw89_core_free_sta_pending_roc_tx(rtwdev, sta);
++	rtw89_mac_bf_monitor_calc(rtwdev, rtwsta_link, true);
++	rtw89_mac_bf_disassoc(rtwdev, rtwvif_link, rtwsta_link);
  
- 	dispctrl = HVS_READ(SCALER_DISPCTRL);
--	dispctrl |= (hvs->vc4->is_vc5 ? SCALER5_DISPCTRL_DSPEISLUR(channel) :
--					SCALER_DISPCTRL_DSPEISLUR(channel));
-+	dispctrl |= ((vc4->gen == VC4_GEN_5) ?
-+		     SCALER5_DISPCTRL_DSPEISLUR(channel) :
-+		     SCALER_DISPCTRL_DSPEISLUR(channel));
+ 	if (vif->type == NL80211_IFTYPE_AP || sta->tdls)
+ 		rtw89_cam_deinit_addr_cam(rtwdev, &rtwsta_link->addr_cam);
+@@ -3642,7 +3615,7 @@ int rtw89_core_sta_disconnect(struct rtw89_dev *rtwdev,
+ 		rtw89_fw_release_general_pkt_list_vif(rtwdev, rtwvif_link, true);
+ 	}
  
- 	HVS_WRITE(SCALER_DISPSTAT,
- 		  SCALER_DISPSTAT_EUFLOW(channel));
-@@ -741,8 +745,10 @@ static irqreturn_t vc4_hvs_irq_handler(int irq, void *data)
- 	control = HVS_READ(SCALER_DISPCTRL);
+-	ret = rtw89_chip_h2c_assoc_cmac_tbl(rtwdev, vif, sta);
++	ret = rtw89_chip_h2c_assoc_cmac_tbl(rtwdev, rtwvif_link, rtwsta_link);
+ 	if (ret) {
+ 		rtw89_warn(rtwdev, "failed to send h2c cmac table\n");
+ 		return ret;
+@@ -3664,12 +3637,12 @@ int rtw89_core_sta_disconnect(struct rtw89_dev *rtwdev,
+ 	return ret;
+ }
  
- 	for (channel = 0; channel < SCALER_CHANNELS_COUNT; channel++) {
--		dspeislur = vc4->is_vc5 ? SCALER5_DISPCTRL_DSPEISLUR(channel) :
--					  SCALER_DISPCTRL_DSPEISLUR(channel);
-+		dspeislur = (vc4->gen == VC4_GEN_5) ?
-+			SCALER5_DISPCTRL_DSPEISLUR(channel) :
-+			SCALER_DISPCTRL_DSPEISLUR(channel);
-+
- 		/* Interrupt masking is not always honored, so check it here. */
- 		if (status & SCALER_DISPSTAT_EUFLOW(channel) &&
- 		    control & dspeislur) {
-@@ -770,7 +776,7 @@ int vc4_hvs_debugfs_init(struct drm_minor *minor)
- 	if (!vc4->hvs)
- 		return -ENODEV;
- 
--	if (!vc4->is_vc5)
-+	if (vc4->gen == VC4_GEN_4)
- 		debugfs_create_bool("hvs_load_tracker", S_IRUGO | S_IWUSR,
- 				    minor->debugfs_root,
- 				    &vc4->load_tracker_enabled);
-@@ -813,7 +819,7 @@ struct vc4_hvs *__vc4_hvs_alloc(struct vc4_dev *vc4, struct platform_device *pde
- 	 * between planes when they don't overlap on the screen, but
- 	 * for now we just allocate globally.
- 	 */
--	if (!vc4->is_vc5)
-+	if (vc4->gen == VC4_GEN_4)
- 		/* 48k words of 2x12-bit pixels */
- 		drm_mm_init(&hvs->lbm_mm, 0, 48 * 1024);
- 	else
-@@ -847,7 +853,7 @@ static int vc4_hvs_bind(struct device *dev, struct device *master, void *data)
- 	hvs->regset.regs = hvs_regs;
- 	hvs->regset.nregs = ARRAY_SIZE(hvs_regs);
- 
--	if (vc4->is_vc5) {
-+	if (vc4->gen == VC4_GEN_5) {
- 		struct rpi_firmware *firmware;
- 		struct device_node *node;
- 		unsigned int max_rate;
-@@ -885,7 +891,7 @@ static int vc4_hvs_bind(struct device *dev, struct device *master, void *data)
+-int rtw89_core_sta_assoc(struct rtw89_dev *rtwdev,
+-			 struct ieee80211_vif *vif,
+-			 struct ieee80211_sta *sta)
++int rtw89_core_sta_link_assoc(struct rtw89_dev *rtwdev,
++			      struct rtw89_vif_link *rtwvif_link,
++			      struct rtw89_sta_link *rtwsta_link)
+ {
+-	struct rtw89_vif_link *rtwvif_link = (struct rtw89_vif_link *)vif->drv_priv;
+-	struct rtw89_sta_link *rtwsta_link = (struct rtw89_sta_link *)sta->drv_priv;
++	struct ieee80211_vif *vif = rtwvif_to_vif(rtwvif_link);
++	struct ieee80211_sta *sta = rtwsta_to_sta(rtwsta_link);
+ 	struct rtw89_bssid_cam_entry *bssid_cam = rtw89_get_bssid_cam_of(rtwvif_link,
+ 									 rtwsta_link);
+ 	const struct rtw89_chan *chan = rtw89_chan_get(rtwdev,
+@@ -3701,7 +3674,7 @@ int rtw89_core_sta_assoc(struct rtw89_dev *rtwdev,
  		}
  	}
  
--	if (!vc4->is_vc5)
-+	if (vc4->gen == VC4_GEN_4)
- 		hvs->dlist = hvs->regs + SCALER_DLIST_START;
- 	else
- 		hvs->dlist = hvs->regs + SCALER5_DLIST_START;
-@@ -926,7 +932,7 @@ static int vc4_hvs_bind(struct device *dev, struct device *master, void *data)
- 		    SCALER_DISPCTRL_DISPEIRQ(1) |
- 		    SCALER_DISPCTRL_DISPEIRQ(2);
- 
--	if (!vc4->is_vc5)
-+	if (vc4->gen == VC4_GEN_4)
- 		dispctrl &= ~(SCALER_DISPCTRL_DMAEIRQ |
- 			      SCALER_DISPCTRL_SLVWREIRQ |
- 			      SCALER_DISPCTRL_SLVRDEIRQ |
-@@ -970,7 +976,7 @@ static int vc4_hvs_bind(struct device *dev, struct device *master, void *data)
- 
- 	/* Recompute Composite Output Buffer (COB) allocations for the displays
- 	 */
--	if (!vc4->is_vc5) {
-+	if (vc4->gen == VC4_GEN_4) {
- 		/* The COB is 20736 pixels, or just over 10 lines at 2048 wide.
- 		 * The bottom 2048 pixels are full 32bpp RGBA (intended for the
- 		 * TXP composing RGBA to memory), whilst the remainder are only
-diff --git a/drivers/gpu/drm/vc4/vc4_irq.c b/drivers/gpu/drm/vc4/vc4_irq.c
-index ef93d8e22a35a..968356d1b91df 100644
---- a/drivers/gpu/drm/vc4/vc4_irq.c
-+++ b/drivers/gpu/drm/vc4/vc4_irq.c
-@@ -263,7 +263,7 @@ vc4_irq_enable(struct drm_device *dev)
- {
- 	struct vc4_dev *vc4 = to_vc4_dev(dev);
- 
--	if (WARN_ON_ONCE(vc4->is_vc5))
-+	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
- 		return;
- 
- 	if (!vc4->v3d)
-@@ -280,7 +280,7 @@ vc4_irq_disable(struct drm_device *dev)
- {
- 	struct vc4_dev *vc4 = to_vc4_dev(dev);
- 
--	if (WARN_ON_ONCE(vc4->is_vc5))
-+	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
- 		return;
- 
- 	if (!vc4->v3d)
-@@ -303,7 +303,7 @@ int vc4_irq_install(struct drm_device *dev, int irq)
- 	struct vc4_dev *vc4 = to_vc4_dev(dev);
- 	int ret;
- 
--	if (WARN_ON_ONCE(vc4->is_vc5))
-+	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
- 		return -ENODEV;
- 
- 	if (irq == IRQ_NOTCONNECTED)
-@@ -324,7 +324,7 @@ void vc4_irq_uninstall(struct drm_device *dev)
- {
- 	struct vc4_dev *vc4 = to_vc4_dev(dev);
- 
--	if (WARN_ON_ONCE(vc4->is_vc5))
-+	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
- 		return;
- 
- 	vc4_irq_disable(dev);
-@@ -337,7 +337,7 @@ void vc4_irq_reset(struct drm_device *dev)
- 	struct vc4_dev *vc4 = to_vc4_dev(dev);
- 	unsigned long irqflags;
- 
--	if (WARN_ON_ONCE(vc4->is_vc5))
-+	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
- 		return;
- 
- 	/* Acknowledge any stale IRQs. */
-diff --git a/drivers/gpu/drm/vc4/vc4_kms.c b/drivers/gpu/drm/vc4/vc4_kms.c
-index 5495f2a94fa92..bddfcad109501 100644
---- a/drivers/gpu/drm/vc4/vc4_kms.c
-+++ b/drivers/gpu/drm/vc4/vc4_kms.c
-@@ -369,7 +369,7 @@ static void vc4_atomic_commit_tail(struct drm_atomic_state *state)
- 		old_hvs_state->fifo_state[channel].pending_commit = NULL;
- 	}
- 
--	if (vc4->is_vc5) {
-+	if (vc4->gen == VC4_GEN_5) {
- 		unsigned long state_rate = max(old_hvs_state->core_clock_rate,
- 					       new_hvs_state->core_clock_rate);
- 		unsigned long core_rate = clamp_t(unsigned long, state_rate,
-@@ -388,7 +388,7 @@ static void vc4_atomic_commit_tail(struct drm_atomic_state *state)
- 
- 	vc4_ctm_commit(vc4, state);
- 
--	if (vc4->is_vc5)
-+	if (vc4->gen == VC4_GEN_5)
- 		vc5_hvs_pv_muxing_commit(vc4, state);
- 	else
- 		vc4_hvs_pv_muxing_commit(vc4, state);
-@@ -406,7 +406,7 @@ static void vc4_atomic_commit_tail(struct drm_atomic_state *state)
- 
- 	drm_atomic_helper_cleanup_planes(dev, state);
- 
--	if (vc4->is_vc5) {
-+	if (vc4->gen == VC4_GEN_5) {
- 		unsigned long core_rate = min_t(unsigned long,
- 						hvs->max_core_rate,
- 						new_hvs_state->core_clock_rate);
-@@ -461,7 +461,7 @@ static struct drm_framebuffer *vc4_fb_create(struct drm_device *dev,
- 	struct vc4_dev *vc4 = to_vc4_dev(dev);
- 	struct drm_mode_fb_cmd2 mode_cmd_local;
- 
--	if (WARN_ON_ONCE(vc4->is_vc5))
-+	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
- 		return ERR_PTR(-ENODEV);
- 
- 	/* If the user didn't specify a modifier, use the
-@@ -1040,7 +1040,7 @@ int vc4_kms_load(struct drm_device *dev)
- 	 * the BCM2711, but the load tracker computations are used for
- 	 * the core clock rate calculation.
- 	 */
--	if (!vc4->is_vc5) {
-+	if (vc4->gen == VC4_GEN_4) {
- 		/* Start with the load tracker enabled. Can be
- 		 * disabled through the debugfs load_tracker file.
- 		 */
-@@ -1056,7 +1056,7 @@ int vc4_kms_load(struct drm_device *dev)
+-	ret = rtw89_chip_h2c_assoc_cmac_tbl(rtwdev, vif, sta);
++	ret = rtw89_chip_h2c_assoc_cmac_tbl(rtwdev, rtwvif_link, rtwsta_link);
+ 	if (ret) {
+ 		rtw89_warn(rtwdev, "failed to send h2c cmac table\n");
+ 		return ret;
+@@ -3720,12 +3693,9 @@ int rtw89_core_sta_assoc(struct rtw89_dev *rtwdev,
  		return ret;
  	}
  
--	if (vc4->is_vc5) {
-+	if (vc4->gen == VC4_GEN_5) {
- 		dev->mode_config.max_width = 7680;
- 		dev->mode_config.max_height = 7680;
- 	} else {
-@@ -1064,7 +1064,7 @@ int vc4_kms_load(struct drm_device *dev)
- 		dev->mode_config.max_height = 2048;
- 	}
+-	rtwdev->total_sta_assoc++;
+-	if (sta->tdls)
+-		rtwvif_link->tdls_peer++;
+-	rtw89_phy_ra_assoc(rtwdev, sta);
+-	rtw89_mac_bf_assoc(rtwdev, vif, sta);
+-	rtw89_mac_bf_monitor_calc(rtwdev, sta, false);
++	rtw89_phy_ra_assoc(rtwdev, rtwsta_link);
++	rtw89_mac_bf_assoc(rtwdev, rtwvif_link, rtwsta_link);
++	rtw89_mac_bf_monitor_calc(rtwdev, rtwsta_link, false);
  
--	dev->mode_config.funcs = vc4->is_vc5 ? &vc5_mode_funcs : &vc4_mode_funcs;
-+	dev->mode_config.funcs = (vc4->gen > VC4_GEN_4) ? &vc5_mode_funcs : &vc4_mode_funcs;
- 	dev->mode_config.helper_private = &vc4_mode_config_helpers;
- 	dev->mode_config.preferred_depth = 24;
- 	dev->mode_config.async_page_flip = true;
-diff --git a/drivers/gpu/drm/vc4/vc4_perfmon.c b/drivers/gpu/drm/vc4/vc4_perfmon.c
-index c00a5cc2316d2..e4fda72c19f92 100644
---- a/drivers/gpu/drm/vc4/vc4_perfmon.c
-+++ b/drivers/gpu/drm/vc4/vc4_perfmon.c
-@@ -23,7 +23,7 @@ void vc4_perfmon_get(struct vc4_perfmon *perfmon)
- 		return;
- 
- 	vc4 = perfmon->dev;
--	if (WARN_ON_ONCE(vc4->is_vc5))
-+	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
- 		return;
- 
- 	refcount_inc(&perfmon->refcnt);
-@@ -37,7 +37,7 @@ void vc4_perfmon_put(struct vc4_perfmon *perfmon)
- 		return;
- 
- 	vc4 = perfmon->dev;
--	if (WARN_ON_ONCE(vc4->is_vc5))
-+	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
- 		return;
- 
- 	if (refcount_dec_and_test(&perfmon->refcnt))
-@@ -49,7 +49,7 @@ void vc4_perfmon_start(struct vc4_dev *vc4, struct vc4_perfmon *perfmon)
- 	unsigned int i;
- 	u32 mask;
- 
--	if (WARN_ON_ONCE(vc4->is_vc5))
-+	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
- 		return;
- 
- 	if (WARN_ON_ONCE(!perfmon || vc4->active_perfmon))
-@@ -69,7 +69,7 @@ void vc4_perfmon_stop(struct vc4_dev *vc4, struct vc4_perfmon *perfmon,
- {
- 	unsigned int i;
- 
--	if (WARN_ON_ONCE(vc4->is_vc5))
-+	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
- 		return;
- 
- 	if (WARN_ON_ONCE(!vc4->active_perfmon ||
-@@ -90,7 +90,7 @@ struct vc4_perfmon *vc4_perfmon_find(struct vc4_file *vc4file, int id)
- 	struct vc4_dev *vc4 = vc4file->dev;
- 	struct vc4_perfmon *perfmon;
- 
--	if (WARN_ON_ONCE(vc4->is_vc5))
-+	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
- 		return NULL;
- 
- 	mutex_lock(&vc4file->perfmon.lock);
-@@ -105,7 +105,7 @@ void vc4_perfmon_open_file(struct vc4_file *vc4file)
- {
- 	struct vc4_dev *vc4 = vc4file->dev;
- 
--	if (WARN_ON_ONCE(vc4->is_vc5))
-+	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
- 		return;
- 
- 	mutex_init(&vc4file->perfmon.lock);
-@@ -131,7 +131,7 @@ void vc4_perfmon_close_file(struct vc4_file *vc4file)
- {
- 	struct vc4_dev *vc4 = vc4file->dev;
- 
--	if (WARN_ON_ONCE(vc4->is_vc5))
-+	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
- 		return;
- 
- 	mutex_lock(&vc4file->perfmon.lock);
-@@ -151,7 +151,7 @@ int vc4_perfmon_create_ioctl(struct drm_device *dev, void *data,
- 	unsigned int i;
- 	int ret;
- 
--	if (WARN_ON_ONCE(vc4->is_vc5))
-+	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
- 		return -ENODEV;
- 
- 	if (!vc4->v3d) {
-@@ -205,7 +205,7 @@ int vc4_perfmon_destroy_ioctl(struct drm_device *dev, void *data,
- 	struct drm_vc4_perfmon_destroy *req = data;
- 	struct vc4_perfmon *perfmon;
- 
--	if (WARN_ON_ONCE(vc4->is_vc5))
-+	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
- 		return -ENODEV;
- 
- 	if (!vc4->v3d) {
-@@ -233,7 +233,7 @@ int vc4_perfmon_get_values_ioctl(struct drm_device *dev, void *data,
- 	struct vc4_perfmon *perfmon;
- 	int ret;
- 
--	if (WARN_ON_ONCE(vc4->is_vc5))
-+	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
- 		return -ENODEV;
- 
- 	if (!vc4->v3d) {
-diff --git a/drivers/gpu/drm/vc4/vc4_plane.c b/drivers/gpu/drm/vc4/vc4_plane.c
-index 07caf2a47c6ce..866bc46ee6d53 100644
---- a/drivers/gpu/drm/vc4/vc4_plane.c
-+++ b/drivers/gpu/drm/vc4/vc4_plane.c
-@@ -587,10 +587,10 @@ static u32 vc4_lbm_size(struct drm_plane_state *state)
- 	}
- 
- 	/* Align it to 64 or 128 (hvs5) bytes */
--	lbm = roundup(lbm, vc4->is_vc5 ? 128 : 64);
-+	lbm = roundup(lbm, vc4->gen == VC4_GEN_5 ? 128 : 64);
- 
- 	/* Each "word" of the LBM memory contains 2 or 4 (hvs5) pixels */
--	lbm /= vc4->is_vc5 ? 4 : 2;
-+	lbm /= vc4->gen == VC4_GEN_5 ? 4 : 2;
- 
- 	return lbm;
- }
-@@ -706,7 +706,7 @@ static int vc4_plane_allocate_lbm(struct drm_plane_state *state)
- 		ret = drm_mm_insert_node_generic(&vc4->hvs->lbm_mm,
- 						 &vc4_state->lbm,
- 						 lbm_size,
--						 vc4->is_vc5 ? 64 : 32,
-+						 vc4->gen == VC4_GEN_5 ? 64 : 32,
- 						 0, 0);
- 		spin_unlock_irqrestore(&vc4->hvs->mm_lock, irqflags);
- 
-@@ -1057,7 +1057,7 @@ static int vc4_plane_mode_set(struct drm_plane *plane,
- 	mix_plane_alpha = state->alpha != DRM_BLEND_ALPHA_OPAQUE &&
- 			  fb->format->has_alpha;
- 
--	if (!vc4->is_vc5) {
-+	if (vc4->gen == VC4_GEN_4) {
- 	/* Control word */
- 		vc4_dlist_write(vc4_state,
- 				SCALER_CTL0_VALID |
-@@ -1632,7 +1632,7 @@ struct drm_plane *vc4_plane_init(struct drm_device *dev,
- 	};
- 
- 	for (i = 0; i < ARRAY_SIZE(hvs_formats); i++) {
--		if (!hvs_formats[i].hvs5_only || vc4->is_vc5) {
-+		if (!hvs_formats[i].hvs5_only || vc4->gen == VC4_GEN_5) {
- 			formats[num_formats] = hvs_formats[i].drm;
- 			num_formats++;
+ 	if (vif->type == NL80211_IFTYPE_STATION && !sta->tdls) {
+ 		struct ieee80211_bss_conf *bss_conf;
+@@ -3750,18 +3720,18 @@ int rtw89_core_sta_assoc(struct rtw89_dev *rtwdev,
+ 			return ret;
  		}
-@@ -1647,7 +1647,7 @@ struct drm_plane *vc4_plane_init(struct drm_device *dev,
- 		return ERR_CAST(vc4_plane);
- 	plane = &vc4_plane->base;
  
--	if (vc4->is_vc5)
-+	if (vc4->gen == VC4_GEN_5)
- 		drm_plane_helper_add(plane, &vc5_plane_helper_funcs);
- 	else
- 		drm_plane_helper_add(plane, &vc4_plane_helper_funcs);
-diff --git a/drivers/gpu/drm/vc4/vc4_render_cl.c b/drivers/gpu/drm/vc4/vc4_render_cl.c
-index 1bda5010f15a8..ae4ad956f04ff 100644
---- a/drivers/gpu/drm/vc4/vc4_render_cl.c
-+++ b/drivers/gpu/drm/vc4/vc4_render_cl.c
-@@ -599,7 +599,7 @@ int vc4_get_rcl(struct drm_device *dev, struct vc4_exec_info *exec)
- 	bool has_bin = args->bin_cl_size != 0;
+-		rtw89_fw_h2c_set_bcn_fltr_cfg(rtwdev, vif, true);
++		rtw89_fw_h2c_set_bcn_fltr_cfg(rtwdev, rtwvif_link, true);
+ 	}
+ 
+ 	return ret;
+ }
+ 
+-int rtw89_core_sta_remove(struct rtw89_dev *rtwdev,
+-			  struct ieee80211_vif *vif,
+-			  struct ieee80211_sta *sta)
++int rtw89_core_sta_link_remove(struct rtw89_dev *rtwdev,
++			       struct rtw89_vif_link *rtwvif_link,
++			       struct rtw89_sta_link *rtwsta_link)
+ {
+-	struct rtw89_vif_link *rtwvif_link = (struct rtw89_vif_link *)vif->drv_priv;
+-	struct rtw89_sta_link *rtwsta_link = (struct rtw89_sta_link *)sta->drv_priv;
++	struct ieee80211_vif *vif = rtwvif_to_vif(rtwvif_link);
++	struct ieee80211_sta *sta = rtwsta_to_sta(rtwsta_link);
  	int ret;
  
--	if (WARN_ON_ONCE(vc4->is_vc5))
-+	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
- 		return -ENODEV;
+ 	if (vif->type == NL80211_IFTYPE_STATION && !sta->tdls) {
+@@ -3769,16 +3739,12 @@ int rtw89_core_sta_remove(struct rtw89_dev *rtwdev,
+ 		rtw89_btc_ntfy_role_info(rtwdev, rtwvif_link, rtwsta_link,
+ 					 BTC_ROLE_MSTS_STA_DIS_CONN);
+ 	} else if (vif->type == NL80211_IFTYPE_AP || sta->tdls) {
+-		rtw89_release_mac_id(rtwdev, rtwsta_link->mac_id);
+-
+ 		ret = rtw89_fw_h2c_role_maintain(rtwdev, rtwvif_link, rtwsta_link,
+ 						 RTW89_ROLE_REMOVE);
+ 		if (ret) {
+ 			rtw89_warn(rtwdev, "failed to send h2c role info\n");
+ 			return ret;
+ 		}
+-
+-		rtw89_queue_chanctx_change(rtwdev, RTW89_CHANCTX_REMOTE_STA_CHANGE);
+ 	}
  
- 	if (args->min_x_tile > args->max_x_tile ||
-diff --git a/drivers/gpu/drm/vc4/vc4_v3d.c b/drivers/gpu/drm/vc4/vc4_v3d.c
-index bf5c4e36c94e4..43f69d74e8761 100644
---- a/drivers/gpu/drm/vc4/vc4_v3d.c
-+++ b/drivers/gpu/drm/vc4/vc4_v3d.c
-@@ -127,7 +127,7 @@ static int vc4_v3d_debugfs_ident(struct seq_file *m, void *unused)
- int
- vc4_v3d_pm_get(struct vc4_dev *vc4)
- {
--	if (WARN_ON_ONCE(vc4->is_vc5))
-+	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
- 		return -ENODEV;
+ 	return 0;
+diff --git a/drivers/net/wireless/realtek/rtw89/core.h b/drivers/net/wireless/realtek/rtw89/core.h
+index 2b3976c6daf72..bfa3dba07fe1e 100644
+--- a/drivers/net/wireless/realtek/rtw89/core.h
++++ b/drivers/net/wireless/realtek/rtw89/core.h
+@@ -3656,8 +3656,8 @@ struct rtw89_chip_ops {
+ 				    struct rtw89_vif_link *rtwvif_link,
+ 				    struct rtw89_sta_link *rtwsta_link);
+ 	int (*h2c_assoc_cmac_tbl)(struct rtw89_dev *rtwdev,
+-				  struct ieee80211_vif *vif,
+-				  struct ieee80211_sta *sta);
++				  struct rtw89_vif_link *rtwvif_link,
++				  struct rtw89_sta_link *rtwsta_link);
+ 	int (*h2c_ampdu_cmac_tbl)(struct rtw89_dev *rtwdev,
+ 				  struct ieee80211_vif *vif,
+ 				  struct ieee80211_sta *sta);
+@@ -6656,21 +6656,21 @@ void rtw89_core_napi_start(struct rtw89_dev *rtwdev);
+ void rtw89_core_napi_stop(struct rtw89_dev *rtwdev);
+ int rtw89_core_napi_init(struct rtw89_dev *rtwdev);
+ void rtw89_core_napi_deinit(struct rtw89_dev *rtwdev);
+-int rtw89_core_sta_add(struct rtw89_dev *rtwdev,
+-		       struct ieee80211_vif *vif,
+-		       struct ieee80211_sta *sta);
+-int rtw89_core_sta_assoc(struct rtw89_dev *rtwdev,
+-			 struct ieee80211_vif *vif,
+-			 struct ieee80211_sta *sta);
+-int rtw89_core_sta_disassoc(struct rtw89_dev *rtwdev,
+-			    struct ieee80211_vif *vif,
+-			    struct ieee80211_sta *sta);
+-int rtw89_core_sta_disconnect(struct rtw89_dev *rtwdev,
+-			      struct ieee80211_vif *vif,
+-			      struct ieee80211_sta *sta);
+-int rtw89_core_sta_remove(struct rtw89_dev *rtwdev,
+-			  struct ieee80211_vif *vif,
+-			  struct ieee80211_sta *sta);
++int rtw89_core_sta_link_add(struct rtw89_dev *rtwdev,
++			    struct rtw89_vif_link *rtwvif_link,
++			    struct rtw89_sta_link *rtwsta_link);
++int rtw89_core_sta_link_assoc(struct rtw89_dev *rtwdev,
++			      struct rtw89_vif_link *rtwvif_link,
++			      struct rtw89_sta_link *rtwsta_link);
++int rtw89_core_sta_link_disassoc(struct rtw89_dev *rtwdev,
++				 struct rtw89_vif_link *rtwvif_link,
++				 struct rtw89_sta_link *rtwsta_link);
++int rtw89_core_sta_link_disconnect(struct rtw89_dev *rtwdev,
++				   struct rtw89_vif_link *rtwvif_link,
++				   struct rtw89_sta_link *rtwsta_link);
++int rtw89_core_sta_link_remove(struct rtw89_dev *rtwdev,
++			       struct rtw89_vif_link *rtwvif_link,
++			       struct rtw89_sta_link *rtwsta_link);
+ void rtw89_core_set_tid_config(struct rtw89_dev *rtwdev,
+ 			       struct ieee80211_sta *sta,
+ 			       struct cfg80211_tid_config *tid_config);
+@@ -6702,6 +6702,12 @@ int rtw89_core_acquire_sta_ba_entry(struct rtw89_dev *rtwdev,
+ int rtw89_core_release_sta_ba_entry(struct rtw89_dev *rtwdev,
+ 				    struct rtw89_sta_link *rtwsta_link, u8 tid,
+ 				    u8 *cam_idx);
++void rtw89_core_free_sta_pending_ba(struct rtw89_dev *rtwdev,
++				    struct ieee80211_sta *sta);
++void rtw89_core_free_sta_pending_forbid_ba(struct rtw89_dev *rtwdev,
++					   struct ieee80211_sta *sta);
++void rtw89_core_free_sta_pending_roc_tx(struct rtw89_dev *rtwdev,
++					struct ieee80211_sta *sta);
+ void rtw89_vif_type_mapping(struct rtw89_vif_link *rtwvif_link, bool assoc);
+ int rtw89_chip_info_setup(struct rtw89_dev *rtwdev);
+ void rtw89_chip_cfg_txpwr_ul_tb_offset(struct rtw89_dev *rtwdev,
+diff --git a/drivers/net/wireless/realtek/rtw89/fw.c b/drivers/net/wireless/realtek/rtw89/fw.c
+index 52e5dbe7e59db..8e890ebae6134 100644
+--- a/drivers/net/wireless/realtek/rtw89/fw.c
++++ b/drivers/net/wireless/realtek/rtw89/fw.c
+@@ -2831,12 +2831,11 @@ static void __get_sta_he_pkt_padding(struct rtw89_dev *rtwdev,
+ }
  
- 	mutex_lock(&vc4->power_lock);
-@@ -148,7 +148,7 @@ vc4_v3d_pm_get(struct vc4_dev *vc4)
- void
- vc4_v3d_pm_put(struct vc4_dev *vc4)
+ int rtw89_fw_h2c_assoc_cmac_tbl(struct rtw89_dev *rtwdev,
+-				struct ieee80211_vif *vif,
+-				struct ieee80211_sta *sta)
++				struct rtw89_vif_link *rtwvif_link,
++				struct rtw89_sta_link *rtwsta_link)
  {
--	if (WARN_ON_ONCE(vc4->is_vc5))
-+	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
++	struct ieee80211_vif *vif = rtwvif_to_vif(rtwvif_link);
+ 	const struct rtw89_chip_info *chip = rtwdev->chip;
+-	struct rtw89_sta_link *rtwsta_link = sta_to_rtwsta_safe(sta);
+-	struct rtw89_vif_link *rtwvif_link = (struct rtw89_vif_link *)vif->drv_priv;
+ 	const struct rtw89_chan *chan = rtw89_chan_get(rtwdev,
+ 						       rtwvif_link->chanctx_idx);
+ 	struct ieee80211_link_sta *link_sta;
+@@ -2979,11 +2978,10 @@ static void __get_sta_eht_pkt_padding(struct rtw89_dev *rtwdev,
+ }
+ 
+ int rtw89_fw_h2c_assoc_cmac_tbl_g7(struct rtw89_dev *rtwdev,
+-				   struct ieee80211_vif *vif,
+-				   struct ieee80211_sta *sta)
++				   struct rtw89_vif_link *rtwvif_link,
++				   struct rtw89_sta_link *rtwsta_link)
+ {
+-	struct rtw89_vif_link *rtwvif_link = (struct rtw89_vif_link *)vif->drv_priv;
+-	struct rtw89_sta_link *rtwsta_link = sta_to_rtwsta_safe(sta);
++	struct ieee80211_vif *vif = rtwvif_to_vif(rtwvif_link);
+ 	const struct rtw89_chan *chan = rtw89_chan_get(rtwdev, rtwvif_link->chanctx_idx);
+ 	u8 mac_id = rtwsta_link ? rtwsta_link->mac_id : rtwvif_link->mac_id;
+ 	struct rtw89_h2c_cctlinfo_ud_g7 *h2c;
+@@ -3788,10 +3786,9 @@ int rtw89_fw_h2c_set_ofld_cfg(struct rtw89_dev *rtwdev)
+ }
+ 
+ int rtw89_fw_h2c_set_bcn_fltr_cfg(struct rtw89_dev *rtwdev,
+-				  struct ieee80211_vif *vif,
++				  struct rtw89_vif_link *rtwvif_link,
+ 				  bool connect)
+ {
+-	struct rtw89_vif_link *rtwvif_link = vif_to_rtwvif_safe(vif);
+ 	struct ieee80211_bss_conf *bss_conf;
+ 	s32 thold = RTW89_DEFAULT_CQM_THOLD;
+ 	u32 hyst = RTW89_DEFAULT_CQM_HYST;
+diff --git a/drivers/net/wireless/realtek/rtw89/fw.h b/drivers/net/wireless/realtek/rtw89/fw.h
+index b13512c3feb28..17e952bd70e36 100644
+--- a/drivers/net/wireless/realtek/rtw89/fw.h
++++ b/drivers/net/wireless/realtek/rtw89/fw.h
+@@ -4413,11 +4413,11 @@ int rtw89_fw_h2c_default_dmac_tbl_v2(struct rtw89_dev *rtwdev,
+ 				     struct rtw89_vif_link *rtwvif_link,
+ 				     struct rtw89_sta_link *rtwsta_link);
+ int rtw89_fw_h2c_assoc_cmac_tbl(struct rtw89_dev *rtwdev,
+-				struct ieee80211_vif *vif,
+-				struct ieee80211_sta *sta);
++				struct rtw89_vif_link *rtwvif_link,
++				struct rtw89_sta_link *rtwsta_link);
+ int rtw89_fw_h2c_assoc_cmac_tbl_g7(struct rtw89_dev *rtwdev,
+-				   struct ieee80211_vif *vif,
+-				   struct ieee80211_sta *sta);
++				   struct rtw89_vif_link *rtwvif_link,
++				   struct rtw89_sta_link *rtwsta_link);
+ int rtw89_fw_h2c_ampdu_cmac_tbl_g7(struct rtw89_dev *rtwdev,
+ 				   struct ieee80211_vif *vif,
+ 				   struct ieee80211_sta *sta);
+@@ -4452,7 +4452,7 @@ int rtw89_fw_h2c_set_edca(struct rtw89_dev *rtwdev, struct rtw89_vif_link *rtwvi
+ 			  u8 ac, u32 val);
+ int rtw89_fw_h2c_set_ofld_cfg(struct rtw89_dev *rtwdev);
+ int rtw89_fw_h2c_set_bcn_fltr_cfg(struct rtw89_dev *rtwdev,
+-				  struct ieee80211_vif *vif,
++				  struct rtw89_vif_link *rtwvif_link,
+ 				  bool connect);
+ int rtw89_fw_h2c_rssi_offload(struct rtw89_dev *rtwdev,
+ 			      struct rtw89_rx_phy_ppdu *phy_ppdu);
+@@ -4654,12 +4654,12 @@ static inline int rtw89_chip_h2c_update_beacon(struct rtw89_dev *rtwdev,
+ }
+ 
+ static inline int rtw89_chip_h2c_assoc_cmac_tbl(struct rtw89_dev *rtwdev,
+-						struct ieee80211_vif *vif,
+-						struct ieee80211_sta *sta)
++						struct rtw89_vif_link *rtwvif_link,
++						struct rtw89_sta_link *rtwsta_link)
+ {
+ 	const struct rtw89_chip_info *chip = rtwdev->chip;
+ 
+-	return chip->ops->h2c_assoc_cmac_tbl(rtwdev, vif, sta);
++	return chip->ops->h2c_assoc_cmac_tbl(rtwdev, rtwvif_link, rtwsta_link);
+ }
+ 
+ static inline int rtw89_chip_h2c_ampdu_cmac_tbl(struct rtw89_dev *rtwdev,
+diff --git a/drivers/net/wireless/realtek/rtw89/mac.c b/drivers/net/wireless/realtek/rtw89/mac.c
+index a7b89a25d7c46..28cc4885105a5 100644
+--- a/drivers/net/wireless/realtek/rtw89/mac.c
++++ b/drivers/net/wireless/realtek/rtw89/mac.c
+@@ -4877,7 +4877,7 @@ rtw89_mac_bcn_fltr_rpt(struct rtw89_dev *rtwdev, struct rtw89_vif_link *rtwvif_l
+ 		if (!rtwdev->scanning && !rtwvif_link->offchan)
+ 			ieee80211_connection_loss(vif);
+ 		else
+-			rtw89_fw_h2c_set_bcn_fltr_cfg(rtwdev, vif, true);
++			rtw89_fw_h2c_set_bcn_fltr_cfg(rtwdev, rtwvif_link, true);
+ 		return;
+ 	case RTW89_BCN_FLTR_NOTIFY:
+ 		nl_event = NL80211_CQM_RSSI_THRESHOLD_EVENT_HIGH;
+@@ -5969,11 +5969,9 @@ static int rtw89_mac_init_bfee_ax(struct rtw89_dev *rtwdev, u8 mac_idx)
+ }
+ 
+ static int rtw89_mac_set_csi_para_reg_ax(struct rtw89_dev *rtwdev,
+-					 struct ieee80211_vif *vif,
+-					 struct ieee80211_sta *sta)
++					 struct rtw89_vif_link *rtwvif_link,
++					 struct rtw89_sta_link *rtwsta_link)
+ {
+-	struct rtw89_vif_link *rtwvif_link = (struct rtw89_vif_link *)vif->drv_priv;
+-	struct rtw89_sta_link *rtwsta_link = (struct rtw89_sta_link *)sta->drv_priv;
+ 	u8 nc = 1, nr = 3, ng = 0, cb = 1, cs = 1, ldpc_en = 1, stbc_en = 1;
+ 	struct ieee80211_link_sta *link_sta;
+ 	u8 mac_idx = rtwvif_link->mac_idx;
+@@ -6036,11 +6034,9 @@ static int rtw89_mac_set_csi_para_reg_ax(struct rtw89_dev *rtwdev,
+ }
+ 
+ static int rtw89_mac_csi_rrsc_ax(struct rtw89_dev *rtwdev,
+-				 struct ieee80211_vif *vif,
+-				 struct ieee80211_sta *sta)
++				 struct rtw89_vif_link *rtwvif_link,
++				 struct rtw89_sta_link *rtwsta_link)
+ {
+-	struct rtw89_vif_link *rtwvif_link = (struct rtw89_vif_link *)vif->drv_priv;
+-	struct rtw89_sta_link *rtwsta_link = (struct rtw89_sta_link *)sta->drv_priv;
+ 	u32 rrsc = BIT(RTW89_MAC_BF_RRSC_6M) | BIT(RTW89_MAC_BF_RRSC_24M);
+ 	struct ieee80211_link_sta *link_sta;
+ 	u8 mac_idx = rtwvif_link->mac_idx;
+@@ -6084,11 +6080,9 @@ static int rtw89_mac_csi_rrsc_ax(struct rtw89_dev *rtwdev,
+ }
+ 
+ static void rtw89_mac_bf_assoc_ax(struct rtw89_dev *rtwdev,
+-				  struct ieee80211_vif *vif,
+-				  struct ieee80211_sta *sta)
++				  struct rtw89_vif_link *rtwvif_link,
++				  struct rtw89_sta_link *rtwsta_link)
+ {
+-	struct rtw89_vif_link *rtwvif_link = (struct rtw89_vif_link *)vif->drv_priv;
+-	struct rtw89_sta_link *rtwsta_link = (struct rtw89_sta_link *)sta->drv_priv;
+ 	struct ieee80211_link_sta *link_sta;
+ 	bool has_beamformer_cap;
+ 
+@@ -6103,16 +6097,15 @@ static void rtw89_mac_bf_assoc_ax(struct rtw89_dev *rtwdev,
+ 		rtw89_debug(rtwdev, RTW89_DBG_BF,
+ 			    "initialize bfee for new association\n");
+ 		rtw89_mac_init_bfee_ax(rtwdev, rtwvif_link->mac_idx);
+-		rtw89_mac_set_csi_para_reg_ax(rtwdev, vif, sta);
+-		rtw89_mac_csi_rrsc_ax(rtwdev, vif, sta);
++		rtw89_mac_set_csi_para_reg_ax(rtwdev, rtwvif_link, rtwsta_link);
++		rtw89_mac_csi_rrsc_ax(rtwdev, rtwvif_link, rtwsta_link);
+ 	}
+ }
+ 
+-void rtw89_mac_bf_disassoc(struct rtw89_dev *rtwdev, struct ieee80211_vif *vif,
+-			   struct ieee80211_sta *sta)
++void rtw89_mac_bf_disassoc(struct rtw89_dev *rtwdev,
++			   struct rtw89_vif_link *rtwvif_link,
++			   struct rtw89_sta_link *rtwsta_link)
+ {
+-	struct rtw89_vif_link *rtwvif_link = (struct rtw89_vif_link *)vif->drv_priv;
+-
+ 	rtw89_mac_bfee_ctrl(rtwdev, rtwvif_link->mac_idx, false);
+ }
+ 
+@@ -6146,7 +6139,7 @@ void rtw89_mac_bf_set_gid_table(struct rtw89_dev *rtwdev, struct ieee80211_vif *
+ 
+ struct rtw89_mac_bf_monitor_iter_data {
+ 	struct rtw89_dev *rtwdev;
+-	struct ieee80211_sta *down_sta;
++	struct rtw89_sta_link *down_rtwsta_link;
+ 	int count;
+ };
+ 
+@@ -6156,11 +6149,11 @@ void rtw89_mac_bf_monitor_calc_iter(void *data, struct ieee80211_sta *sta)
+ 	struct rtw89_sta_link *rtwsta_link = (struct rtw89_sta_link *)sta->drv_priv;
+ 	struct rtw89_mac_bf_monitor_iter_data *iter_data =
+ 				(struct rtw89_mac_bf_monitor_iter_data *)data;
+-	struct ieee80211_sta *down_sta = iter_data->down_sta;
++	struct rtw89_sta_link *down_rtwsta_link = iter_data->down_rtwsta_link;
+ 	struct ieee80211_link_sta *link_sta;
+ 	int *count = &iter_data->count;
+ 
+-	if (down_sta == sta)
++	if (down_rtwsta_link == rtwsta_link)
  		return;
  
- 	mutex_lock(&vc4->power_lock);
-@@ -178,7 +178,7 @@ int vc4_v3d_get_bin_slot(struct vc4_dev *vc4)
- 	uint64_t seqno = 0;
- 	struct vc4_exec_info *exec;
+ 	rcu_read_lock();
+@@ -6173,12 +6166,13 @@ void rtw89_mac_bf_monitor_calc_iter(void *data, struct ieee80211_sta *sta)
+ }
  
--	if (WARN_ON_ONCE(vc4->is_vc5))
-+	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
- 		return -ENODEV;
- 
- try_again:
-@@ -325,7 +325,7 @@ int vc4_v3d_bin_bo_get(struct vc4_dev *vc4, bool *used)
+ void rtw89_mac_bf_monitor_calc(struct rtw89_dev *rtwdev,
+-			       struct ieee80211_sta *sta, bool disconnect)
++			       struct rtw89_sta_link *rtwsta_link,
++			       bool disconnect)
  {
- 	int ret = 0;
+ 	struct rtw89_mac_bf_monitor_iter_data data;
  
--	if (WARN_ON_ONCE(vc4->is_vc5))
-+	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
- 		return -ENODEV;
+ 	data.rtwdev = rtwdev;
+-	data.down_sta = disconnect ? sta : NULL;
++	data.down_rtwsta_link = disconnect ? rtwsta_link : NULL;
+ 	data.count = 0;
+ 	ieee80211_iterate_stations_atomic(rtwdev->hw,
+ 					  rtw89_mac_bf_monitor_calc_iter,
+diff --git a/drivers/net/wireless/realtek/rtw89/mac.h b/drivers/net/wireless/realtek/rtw89/mac.h
+index f2a31cba226e9..b781b823496f6 100644
+--- a/drivers/net/wireless/realtek/rtw89/mac.h
++++ b/drivers/net/wireless/realtek/rtw89/mac.h
+@@ -951,8 +951,9 @@ struct rtw89_mac_gen_def {
+ 	void (*dmac_func_pre_en)(struct rtw89_dev *rtwdev);
+ 	void (*dle_func_en)(struct rtw89_dev *rtwdev, bool enable);
+ 	void (*dle_clk_en)(struct rtw89_dev *rtwdev, bool enable);
+-	void (*bf_assoc)(struct rtw89_dev *rtwdev, struct ieee80211_vif *vif,
+-			 struct ieee80211_sta *sta);
++	void (*bf_assoc)(struct rtw89_dev *rtwdev,
++			 struct rtw89_vif_link *rtwvif_link,
++			 struct rtw89_sta_link *rtwsta_link);
  
- 	mutex_lock(&vc4->bin_bo_lock);
-@@ -360,7 +360,7 @@ static void bin_bo_release(struct kref *ref)
+ 	int (*typ_fltr_opt)(struct rtw89_dev *rtwdev,
+ 			    enum rtw89_machdr_frame_type type,
+@@ -1259,21 +1260,24 @@ void rtw89_mac_power_mode_change(struct rtw89_dev *rtwdev, bool enter);
+ void rtw89_mac_notify_wake(struct rtw89_dev *rtwdev);
  
- void vc4_v3d_bin_bo_put(struct vc4_dev *vc4)
+ static inline
+-void rtw89_mac_bf_assoc(struct rtw89_dev *rtwdev, struct ieee80211_vif *vif,
+-			struct ieee80211_sta *sta)
++void rtw89_mac_bf_assoc(struct rtw89_dev *rtwdev,
++			struct rtw89_vif_link *rtwvif_link,
++			struct rtw89_sta_link *rtwsta_link)
  {
--	if (WARN_ON_ONCE(vc4->is_vc5))
-+	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
+ 	const struct rtw89_mac_gen_def *mac = rtwdev->chip->mac_def;
+ 
+ 	if (mac->bf_assoc)
+-		mac->bf_assoc(rtwdev, vif, sta);
++		mac->bf_assoc(rtwdev, rtwvif_link, rtwsta_link);
+ }
+ 
+-void rtw89_mac_bf_disassoc(struct rtw89_dev *rtwdev, struct ieee80211_vif *vif,
+-			   struct ieee80211_sta *sta);
++void rtw89_mac_bf_disassoc(struct rtw89_dev *rtwdev,
++			   struct rtw89_vif_link *rtwvif_link,
++			   struct rtw89_sta_link *rtwsta_link);
+ void rtw89_mac_bf_set_gid_table(struct rtw89_dev *rtwdev, struct ieee80211_vif *vif,
+ 				struct ieee80211_bss_conf *conf);
+ void rtw89_mac_bf_monitor_calc(struct rtw89_dev *rtwdev,
+-			       struct ieee80211_sta *sta, bool disconnect);
++			       struct rtw89_sta_link *rtwsta_link,
++			       bool disconnect);
+ void _rtw89_mac_bf_monitor_track(struct rtw89_dev *rtwdev);
+ void rtw89_mac_bfee_ctrl(struct rtw89_dev *rtwdev, u8 mac_idx, bool en);
+ int rtw89_mac_vif_init(struct rtw89_dev *rtwdev, struct rtw89_vif_link *rtwvif_link);
+diff --git a/drivers/net/wireless/realtek/rtw89/mac80211.c b/drivers/net/wireless/realtek/rtw89/mac80211.c
+index d3fad66e56cd8..fc05ad1b799bf 100644
+--- a/drivers/net/wireless/realtek/rtw89/mac80211.c
++++ b/drivers/net/wireless/realtek/rtw89/mac80211.c
+@@ -456,10 +456,140 @@ static void rtw89_conf_tx(struct rtw89_dev *rtwdev,
+ 		__rtw89_conf_tx(rtwdev, rtwvif_link, ac);
+ }
+ 
++static int __rtw89_ops_sta_add(struct rtw89_dev *rtwdev,
++			       struct ieee80211_vif *vif,
++			       struct ieee80211_sta *sta)
++{
++	struct rtw89_vif_link *rtwvif_link = (struct rtw89_vif_link *)vif->drv_priv;
++	struct rtw89_sta_link *rtwsta_link = (struct rtw89_sta_link *)sta->drv_priv;
++	bool acquire_macid = false;
++	u8 macid;
++	int ret;
++	int i;
++
++	if (vif->type == NL80211_IFTYPE_STATION && !sta->tdls) {
++		/* for station mode, assign the mac_id from itself */
++		macid = rtwvif_link->mac_id;
++	} else {
++		macid = rtw89_acquire_mac_id(rtwdev);
++		if (macid == RTW89_MAX_MAC_ID_NUM)
++			return -ENOSPC;
++
++		acquire_macid = true;
++	}
++
++	rtwsta_link->rtwdev = rtwdev;
++	rtwsta_link->rtwvif_link = rtwvif_link;
++	rtwsta_link->mac_id = macid;
++
++	for (i = 0; i < ARRAY_SIZE(sta->txq); i++)
++		rtw89_core_txq_init(rtwdev, sta->txq[i]);
++
++	skb_queue_head_init(&rtwsta_link->roc_queue);
++
++	ret = rtw89_core_sta_link_add(rtwdev, rtwvif_link, rtwsta_link);
++	if (ret)
++		goto err;
++
++	if (vif->type == NL80211_IFTYPE_AP || sta->tdls)
++		rtw89_queue_chanctx_change(rtwdev, RTW89_CHANCTX_REMOTE_STA_CHANGE);
++
++	return 0;
++
++err:
++	if (acquire_macid)
++		rtw89_release_mac_id(rtwdev, macid);
++
++	return ret;
++}
++
++static int __rtw89_ops_sta_assoc(struct rtw89_dev *rtwdev,
++				 struct ieee80211_vif *vif,
++				 struct ieee80211_sta *sta,
++				 bool station_mode)
++{
++	struct rtw89_vif_link *rtwvif_link = (struct rtw89_vif_link *)vif->drv_priv;
++	struct rtw89_sta_link *rtwsta_link = (struct rtw89_sta_link *)sta->drv_priv;
++	int ret;
++
++	if (station_mode)
++		rtw89_vif_type_mapping(rtwvif_link, true);
++
++	ret = rtw89_core_sta_link_assoc(rtwdev, rtwvif_link, rtwsta_link);
++	if (ret)
++		return ret;
++
++	rtwdev->total_sta_assoc++;
++	if (sta->tdls)
++		rtwvif_link->tdls_peer++;
++
++	return 0;
++}
++
++static int __rtw89_ops_sta_disassoc(struct rtw89_dev *rtwdev,
++				    struct ieee80211_vif *vif,
++				    struct ieee80211_sta *sta)
++{
++	struct rtw89_vif_link *rtwvif_link = (struct rtw89_vif_link *)vif->drv_priv;
++	struct rtw89_sta_link *rtwsta_link = (struct rtw89_sta_link *)sta->drv_priv;
++	int ret;
++
++	ret = rtw89_core_sta_link_disassoc(rtwdev, rtwvif_link, rtwsta_link);
++	if (ret)
++		return ret;
++
++	rtwsta_link->disassoc = true;
++
++	rtwdev->total_sta_assoc--;
++	if (sta->tdls)
++		rtwvif_link->tdls_peer--;
++
++	return 0;
++}
++
++static int __rtw89_ops_sta_disconnect(struct rtw89_dev *rtwdev,
++				      struct ieee80211_vif *vif,
++				      struct ieee80211_sta *sta)
++{
++	struct rtw89_vif_link *rtwvif_link = (struct rtw89_vif_link *)vif->drv_priv;
++	struct rtw89_sta_link *rtwsta_link = (struct rtw89_sta_link *)sta->drv_priv;
++	int ret;
++
++	rtw89_core_free_sta_pending_ba(rtwdev, sta);
++	rtw89_core_free_sta_pending_forbid_ba(rtwdev, sta);
++	rtw89_core_free_sta_pending_roc_tx(rtwdev, sta);
++
++	ret = rtw89_core_sta_link_disconnect(rtwdev, rtwvif_link, rtwsta_link);
++	if (ret)
++		return ret;
++
++	return 0;
++}
++
++static int __rtw89_ops_sta_remove(struct rtw89_dev *rtwdev,
++				  struct ieee80211_vif *vif,
++				  struct ieee80211_sta *sta)
++{
++	struct rtw89_vif_link *rtwvif_link = (struct rtw89_vif_link *)vif->drv_priv;
++	struct rtw89_sta_link *rtwsta_link = (struct rtw89_sta_link *)sta->drv_priv;
++	u8 macid = rtwsta_link->mac_id;
++	int ret;
++
++	ret = rtw89_core_sta_link_remove(rtwdev, rtwvif_link, rtwsta_link);
++	if (ret)
++		return ret;
++
++	if (vif->type == NL80211_IFTYPE_AP || sta->tdls) {
++		rtw89_release_mac_id(rtwdev, macid);
++		rtw89_queue_chanctx_change(rtwdev, RTW89_CHANCTX_REMOTE_STA_CHANGE);
++	}
++
++	return 0;
++}
++
+ static void rtw89_station_mode_sta_assoc(struct rtw89_dev *rtwdev,
+ 					 struct ieee80211_vif *vif)
+ {
+-	struct rtw89_vif_link *rtwvif_link = (struct rtw89_vif_link *)vif->drv_priv;
+ 	struct ieee80211_sta *sta;
+ 
+ 	if (vif->type != NL80211_IFTYPE_STATION)
+@@ -471,9 +601,7 @@ static void rtw89_station_mode_sta_assoc(struct rtw89_dev *rtwdev,
  		return;
+ 	}
  
- 	mutex_lock(&vc4->bin_bo_lock);
-diff --git a/drivers/gpu/drm/vc4/vc4_validate.c b/drivers/gpu/drm/vc4/vc4_validate.c
-index 0c17284bf6f5b..f3d7fdbe9083c 100644
---- a/drivers/gpu/drm/vc4/vc4_validate.c
-+++ b/drivers/gpu/drm/vc4/vc4_validate.c
-@@ -109,7 +109,7 @@ vc4_use_bo(struct vc4_exec_info *exec, uint32_t hindex)
- 	struct drm_gem_dma_object *obj;
- 	struct vc4_bo *bo;
+-	rtw89_vif_type_mapping(rtwvif_link, true);
+-
+-	rtw89_core_sta_assoc(rtwdev, vif, sta);
++	__rtw89_ops_sta_assoc(rtwdev, vif, sta, true);
+ }
  
--	if (WARN_ON_ONCE(vc4->is_vc5))
-+	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
- 		return NULL;
+ static void __rtw89_ops_bss_link_assoc(struct rtw89_dev *rtwdev,
+@@ -552,7 +680,7 @@ static void rtw89_ops_link_info_changed(struct ieee80211_hw *hw,
+ 		rtw89_core_update_p2p_ps(rtwdev, rtwvif_link, conf);
  
- 	if (hindex >= exec->bo_count) {
-@@ -169,7 +169,7 @@ vc4_check_tex_size(struct vc4_exec_info *exec, struct drm_gem_dma_object *fbo,
- 	uint32_t utile_w = utile_width(cpp);
- 	uint32_t utile_h = utile_height(cpp);
+ 	if (changed & BSS_CHANGED_CQM)
+-		rtw89_fw_h2c_set_bcn_fltr_cfg(rtwdev, vif, true);
++		rtw89_fw_h2c_set_bcn_fltr_cfg(rtwdev, rtwvif_link, true);
  
--	if (WARN_ON_ONCE(vc4->is_vc5))
-+	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
- 		return false;
+ 	if (changed & BSS_CHANGED_TPE)
+ 		rtw89_reg_6ghz_recalc(rtwdev, rtwvif_link, true);
+@@ -582,7 +710,7 @@ static int rtw89_ops_start_ap(struct ieee80211_hw *hw,
+ 	ether_addr_copy(rtwvif_link->bssid, link_conf->bssid);
+ 	rtw89_cam_bssid_changed(rtwdev, rtwvif_link);
+ 	rtw89_mac_port_update(rtwdev, rtwvif_link);
+-	rtw89_chip_h2c_assoc_cmac_tbl(rtwdev, vif, NULL);
++	rtw89_chip_h2c_assoc_cmac_tbl(rtwdev, rtwvif_link, NULL);
+ 	rtw89_fw_h2c_role_maintain(rtwdev, rtwvif_link, NULL, RTW89_ROLE_TYPE_CHANGE);
+ 	rtw89_fw_h2c_join_info(rtwdev, rtwvif_link, NULL, true);
+ 	rtw89_fw_h2c_cam(rtwdev, rtwvif_link, NULL, NULL);
+@@ -603,7 +731,7 @@ void rtw89_ops_stop_ap(struct ieee80211_hw *hw, struct ieee80211_vif *vif,
  
- 	/* The shaded vertex format stores signed 12.4 fixed point
-@@ -495,7 +495,7 @@ vc4_validate_bin_cl(struct drm_device *dev,
- 	uint32_t dst_offset = 0;
- 	uint32_t src_offset = 0;
+ 	mutex_lock(&rtwdev->mutex);
+ 	rtw89_mac_stop_ap(rtwdev, rtwvif_link);
+-	rtw89_chip_h2c_assoc_cmac_tbl(rtwdev, vif, NULL);
++	rtw89_chip_h2c_assoc_cmac_tbl(rtwdev, rtwvif_link, NULL);
+ 	rtw89_fw_h2c_join_info(rtwdev, rtwvif_link, NULL, true);
+ 	mutex_unlock(&rtwdev->mutex);
+ }
+@@ -647,26 +775,26 @@ static int __rtw89_ops_sta_state(struct ieee80211_hw *hw,
  
--	if (WARN_ON_ONCE(vc4->is_vc5))
-+	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
- 		return -ENODEV;
+ 	if (old_state == IEEE80211_STA_NOTEXIST &&
+ 	    new_state == IEEE80211_STA_NONE)
+-		return rtw89_core_sta_add(rtwdev, vif, sta);
++		return __rtw89_ops_sta_add(rtwdev, vif, sta);
  
- 	while (src_offset < len) {
-@@ -942,7 +942,7 @@ vc4_validate_shader_recs(struct drm_device *dev,
- 	uint32_t i;
- 	int ret = 0;
+ 	if (old_state == IEEE80211_STA_AUTH &&
+ 	    new_state == IEEE80211_STA_ASSOC) {
+ 		if (vif->type == NL80211_IFTYPE_STATION && !sta->tdls)
+ 			return 0; /* defer to bss_info_changed to have vif info */
+-		return rtw89_core_sta_assoc(rtwdev, vif, sta);
++		return __rtw89_ops_sta_assoc(rtwdev, vif, sta, false);
+ 	}
  
--	if (WARN_ON_ONCE(vc4->is_vc5))
-+	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
- 		return -ENODEV;
+ 	if (old_state == IEEE80211_STA_ASSOC &&
+ 	    new_state == IEEE80211_STA_AUTH)
+-		return rtw89_core_sta_disassoc(rtwdev, vif, sta);
++		return __rtw89_ops_sta_disassoc(rtwdev, vif, sta);
  
- 	for (i = 0; i < exec->shader_state_count; i++) {
-diff --git a/drivers/gpu/drm/vc4/vc4_validate_shaders.c b/drivers/gpu/drm/vc4/vc4_validate_shaders.c
-index 9745f8810eca6..afb1a4d826846 100644
---- a/drivers/gpu/drm/vc4/vc4_validate_shaders.c
-+++ b/drivers/gpu/drm/vc4/vc4_validate_shaders.c
-@@ -786,7 +786,7 @@ vc4_validate_shader(struct drm_gem_dma_object *shader_obj)
- 	struct vc4_validated_shader_info *validated_shader = NULL;
- 	struct vc4_shader_validation_state validation_state;
+ 	if (old_state == IEEE80211_STA_AUTH &&
+ 	    new_state == IEEE80211_STA_NONE)
+-		return rtw89_core_sta_disconnect(rtwdev, vif, sta);
++		return __rtw89_ops_sta_disconnect(rtwdev, vif, sta);
  
--	if (WARN_ON_ONCE(vc4->is_vc5))
-+	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
- 		return NULL;
+ 	if (old_state == IEEE80211_STA_NONE &&
+ 	    new_state == IEEE80211_STA_NOTEXIST)
+-		return rtw89_core_sta_remove(rtwdev, vif, sta);
++		return __rtw89_ops_sta_remove(rtwdev, vif, sta);
  
- 	memset(&validation_state, 0, sizeof(validation_state));
+ 	return 0;
+ }
+diff --git a/drivers/net/wireless/realtek/rtw89/mac_be.c b/drivers/net/wireless/realtek/rtw89/mac_be.c
+index 184a014a56bfe..f22eaa83297fb 100644
+--- a/drivers/net/wireless/realtek/rtw89/mac_be.c
++++ b/drivers/net/wireless/realtek/rtw89/mac_be.c
+@@ -2091,11 +2091,9 @@ static int rtw89_mac_init_bfee_be(struct rtw89_dev *rtwdev, u8 mac_idx)
+ }
+ 
+ static int rtw89_mac_set_csi_para_reg_be(struct rtw89_dev *rtwdev,
+-					 struct ieee80211_vif *vif,
+-					 struct ieee80211_sta *sta)
++					 struct rtw89_vif_link *rtwvif_link,
++					 struct rtw89_sta_link *rtwsta_link)
+ {
+-	struct rtw89_vif_link *rtwvif_link = (struct rtw89_vif_link *)vif->drv_priv;
+-	struct rtw89_sta_link *rtwsta_link = (struct rtw89_sta_link *)sta->drv_priv;
+ 	u8 nc = 1, nr = 3, ng = 0, cb = 1, cs = 1, ldpc_en = 1, stbc_en = 1;
+ 	struct ieee80211_link_sta *link_sta;
+ 	u8 mac_idx = rtwvif_link->mac_idx;
+@@ -2162,11 +2160,9 @@ static int rtw89_mac_set_csi_para_reg_be(struct rtw89_dev *rtwdev,
+ }
+ 
+ static int rtw89_mac_csi_rrsc_be(struct rtw89_dev *rtwdev,
+-				 struct ieee80211_vif *vif,
+-				 struct ieee80211_sta *sta)
++				 struct rtw89_vif_link *rtwvif_link,
++				 struct rtw89_sta_link *rtwsta_link)
+ {
+-	struct rtw89_vif_link *rtwvif_link = (struct rtw89_vif_link *)vif->drv_priv;
+-	struct rtw89_sta_link *rtwsta_link = (struct rtw89_sta_link *)sta->drv_priv;
+ 	u32 rrsc = BIT(RTW89_MAC_BF_RRSC_6M) | BIT(RTW89_MAC_BF_RRSC_24M);
+ 	struct ieee80211_link_sta *link_sta;
+ 	u8 mac_idx = rtwvif_link->mac_idx;
+@@ -2210,11 +2206,9 @@ static int rtw89_mac_csi_rrsc_be(struct rtw89_dev *rtwdev,
+ }
+ 
+ static void rtw89_mac_bf_assoc_be(struct rtw89_dev *rtwdev,
+-				  struct ieee80211_vif *vif,
+-				  struct ieee80211_sta *sta)
++				  struct rtw89_vif_link *rtwvif_link,
++				  struct rtw89_sta_link *rtwsta_link)
+ {
+-	struct rtw89_vif_link *rtwvif_link = (struct rtw89_vif_link *)vif->drv_priv;
+-	struct rtw89_sta_link *rtwsta_link = (struct rtw89_sta_link *)sta->drv_priv;
+ 	struct ieee80211_link_sta *link_sta;
+ 	bool has_beamformer_cap;
+ 
+@@ -2229,8 +2223,8 @@ static void rtw89_mac_bf_assoc_be(struct rtw89_dev *rtwdev,
+ 		rtw89_debug(rtwdev, RTW89_DBG_BF,
+ 			    "initialize bfee for new association\n");
+ 		rtw89_mac_init_bfee_be(rtwdev, rtwvif_link->mac_idx);
+-		rtw89_mac_set_csi_para_reg_be(rtwdev, vif, sta);
+-		rtw89_mac_csi_rrsc_be(rtwdev, vif, sta);
++		rtw89_mac_set_csi_para_reg_be(rtwdev, rtwvif_link, rtwsta_link);
++		rtw89_mac_csi_rrsc_be(rtwdev, rtwvif_link, rtwsta_link);
+ 	}
+ }
+ 
+diff --git a/drivers/net/wireless/realtek/rtw89/phy.c b/drivers/net/wireless/realtek/rtw89/phy.c
+index f6f2b003c412f..da9491213b7b5 100644
+--- a/drivers/net/wireless/realtek/rtw89/phy.c
++++ b/drivers/net/wireless/realtek/rtw89/phy.c
+@@ -637,9 +637,8 @@ void rtw89_phy_ra_update(struct rtw89_dev *rtwdev)
+ 					  rtwdev);
+ }
+ 
+-void rtw89_phy_ra_assoc(struct rtw89_dev *rtwdev, struct ieee80211_sta *sta)
++void rtw89_phy_ra_assoc(struct rtw89_dev *rtwdev, struct rtw89_sta_link *rtwsta_link)
+ {
+-	struct rtw89_sta_link *rtwsta_link = (struct rtw89_sta_link *)sta->drv_priv;
+ 	struct rtw89_vif_link *rtwvif_link = rtwsta_link->rtwvif_link;
+ 	struct ieee80211_vif *vif = rtwvif_to_vif(rtwvif_link);
+ 	struct rtw89_ra_info *ra = &rtwsta_link->ra;
+diff --git a/drivers/net/wireless/realtek/rtw89/phy.h b/drivers/net/wireless/realtek/rtw89/phy.h
+index 882a473ecf7bc..7e335c02ee6fb 100644
+--- a/drivers/net/wireless/realtek/rtw89/phy.h
++++ b/drivers/net/wireless/realtek/rtw89/phy.h
+@@ -892,7 +892,7 @@ void rtw89_phy_set_txpwr_limit_ru(struct rtw89_dev *rtwdev,
+ 	phy->set_txpwr_limit_ru(rtwdev, chan, phy_idx);
+ }
+ 
+-void rtw89_phy_ra_assoc(struct rtw89_dev *rtwdev, struct ieee80211_sta *sta);
++void rtw89_phy_ra_assoc(struct rtw89_dev *rtwdev, struct rtw89_sta_link *rtwsta_link);
+ void rtw89_phy_ra_update(struct rtw89_dev *rtwdev);
+ void rtw89_phy_ra_update_sta(struct rtw89_dev *rtwdev, struct ieee80211_sta *sta,
+ 			     u32 changed);
+diff --git a/drivers/net/wireless/realtek/rtw89/wow.c b/drivers/net/wireless/realtek/rtw89/wow.c
+index 20b776ae634ea..97b527d04ad71 100644
+--- a/drivers/net/wireless/realtek/rtw89/wow.c
++++ b/drivers/net/wireless/realtek/rtw89/wow.c
+@@ -1240,7 +1240,7 @@ static int rtw89_wow_swap_fw(struct rtw89_dev *rtwdev, bool wow)
+ 		return ret;
+ 	}
+ 
+-	ret = rtw89_chip_h2c_assoc_cmac_tbl(rtwdev, wow_vif, wow_sta);
++	ret = rtw89_chip_h2c_assoc_cmac_tbl(rtwdev, rtwvif_link, rtwsta_link);
+ 	if (ret) {
+ 		rtw89_warn(rtwdev, "failed to send h2c assoc cmac tbl\n");
+ 		return ret;
+@@ -1267,7 +1267,7 @@ static int rtw89_wow_swap_fw(struct rtw89_dev *rtwdev, bool wow)
+ 			rtw89_warn(rtwdev, "failed to send h2c general packet\n");
+ 			return ret;
+ 		}
+-		rtw89_phy_ra_assoc(rtwdev, wow_sta);
++		rtw89_phy_ra_assoc(rtwdev, rtwsta_link);
+ 		rtw89_phy_set_bss_color(rtwdev, rtwvif_link);
+ 		rtw89_chip_cfg_txpwr_ul_tb_offset(rtwdev, rtwvif_link);
+ 	}
+@@ -1374,13 +1374,14 @@ static int rtw89_wow_disable_trx_post(struct rtw89_dev *rtwdev)
+ {
+ 	struct rtw89_wow_param *rtw_wow = &rtwdev->wow;
+ 	struct ieee80211_vif *vif = rtw_wow->wow_vif;
++	struct rtw89_vif_link *rtwvif_link = (struct rtw89_vif_link *)vif->drv_priv;
+ 	int ret;
+ 
+ 	ret = rtw89_mac_cfg_ppdu_status(rtwdev, RTW89_MAC_0, true);
+ 	if (ret)
+ 		rtw89_err(rtwdev, "cfg ppdu status\n");
+ 
+-	rtw89_fw_h2c_set_bcn_fltr_cfg(rtwdev, vif, true);
++	rtw89_fw_h2c_set_bcn_fltr_cfg(rtwdev, rtwvif_link, true);
+ 
+ 	return ret;
+ }
 -- 
 2.43.0
 
