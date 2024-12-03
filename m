@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC2A314A088;
-	Tue,  3 Dec 2024 16:04:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B45823CE;
+	Tue,  3 Dec 2024 16:04:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733241843; cv=none; b=ggAvU72EpHv1I2G8ZK57Xq8mcu+kUW/088g7yZ0iPhtszARmAhpT6eNubq1Ki6T2p3LgQgIqa9aQO8Os61F+h9uI9vrIcrtwJ9wjLlaN7MbwEWGzBYqZv75Rr/KlJSLxji1WjXnpuAUF9FdfXA5xos3UDf8Gvkph7MXSk0Cbsw4=
+	t=1733241846; cv=none; b=GkS6B76NrBGOMAoTfWy7EuTZSwTr+38HAPX+P4NonjWNnrTKMQpabJCaIyQ2SUwHLJGejmiyx2+nZp/T8i0Kty/oejSD11GSsAUxpfzlibAnf8xmFLvkMzbIyE4GJPCKJqXVShSxpzp4KwgMCWNh3QIfTwsf7BwHQPKBEHHNVVs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733241843; c=relaxed/simple;
-	bh=nyLOVgkDbbYxljtSMGz6dbag1MgXm3dcjURmpgIKP9s=;
+	s=arc-20240116; t=1733241846; c=relaxed/simple;
+	bh=k8P9bUTBc8tgfjCxL9LTxjBccqcuQY2iNmiRExnpijM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DsQN3t3h3l5nFFs8tXhIFzBV3nXAAFhZoltWCdo8OgSLwyKAgcgB2XunfqkMKm5WJn2Rpa8+tBkBfJSrbUbBXvxwIp6gDPu9gf1sJrFoSohmcZWSjTWj+smSrN+NfkOROwaNCuxxc8ElBUJbSwYVnfDv1syKmaEdHglG1ynPT0U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HOYT/V04; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JfjHVkWNC+GOrABpvN9wFtPXmmSHwqgWW1g03bZdG93jtfBxjGVdtPneFLp7VrDSqjtDEpO+E1YNB5aQg9fs6WUW2yYKG8MUk8ErfKS+riSyiyO13iHPOGAz9bL0h7mYmraGienz7ATUdGlwuh5wt/Do26tL98H0maL2diMC0bY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CXRZCMu6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HOYT/V04"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB93BC4CECF;
-	Tue,  3 Dec 2024 16:04:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CXRZCMu6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 053DEC4CECF;
+	Tue,  3 Dec 2024 16:04:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733241843;
-	bh=nyLOVgkDbbYxljtSMGz6dbag1MgXm3dcjURmpgIKP9s=;
+	s=korg; t=1733241846;
+	bh=k8P9bUTBc8tgfjCxL9LTxjBccqcuQY2iNmiRExnpijM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HOYT/V04PSF4CpVQohxcI2Jc+j1sqRNtmRVtn6Ll4mhO8KpRCyJ/9JF+xVHblGMzL
-	 CGWpZB5Ab2Jno2sUD6mgfrFtrhktDvlc/EHmeuO1X+NoTYCn+ebqJWo8jQG+wmxFUy
-	 OMuw+L54IGIvcBqvl4oux7BqC5SyZsc3dQw4UQtE=
+	b=CXRZCMu6HeVLWTGY8W6kOO0fx/87LGxovv+++V4r7Is2jyEUPycwRf7IToEbCGSXC
+	 wT/c5L6pfgCZXD14RYBw3zHhEj0Iq5I6D6w9sNWtwPzT4ASyNElEWDsfG+RIxtLXIk
+	 ZY9Jmj2pngWsqQQZVrSW8/OB/gFaex/pQ5bdMZIg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Murad Masimov <m.masimov@maxima.ru>,
+	Arne Schwabe <arne@rfc2549.org>,
+	Aleksa Savic <savicaleksa83@gmail.com>,
 	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 533/826] hwmon: (tps23861) Fix reporting of negative temperatures
-Date: Tue,  3 Dec 2024 15:44:20 +0100
-Message-ID: <20241203144804.546001191@linuxfoundation.org>
+Subject: [PATCH 6.12 534/826] hwmon: (aquacomputer_d5next) Fix length of speed_input array
+Date: Tue,  3 Dec 2024 15:44:21 +0100
+Message-ID: <20241203144804.586198089@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -51,40 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Murad Masimov <m.masimov@maxima.ru>
+From: Aleksa Savic <savicaleksa83@gmail.com>
 
-[ Upstream commit de2bf507fabba9c0c678cf5ed54beb546f5ca29a ]
+[ Upstream commit 998b5a78a9ce1cc4378e7281e4ea310e37596170 ]
 
-Negative temperatures are reported as large positive temperatures
-due to missing sign extension from unsigned int to long. Cast unsigned
-raw register values to signed before performing the calculations
-to fix the problem.
+Commit 120584c728a6 ("hwmon: (aquacomputer_d5next) Add support for Octo
+flow sensor") added support for reading Octo flow sensor, but didn't
+update the priv->speed_input array length. Since Octo has 8 fans, with
+the addition of the flow sensor the proper length for speed_input is 9.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+Reported by Arne Schwabe on Github [1], who received a UBSAN warning.
 
-Fixes: fff7b8ab2255 ("hwmon: add Texas Instruments TPS23861 driver")
-Signed-off-by: Murad Masimov <m.masimov@maxima.ru>
-Message-ID: <20241121173604.2021-1-m.masimov@maxima.ru>
-[groeck: Updated subject and description]
+Fixes: 120584c728a6 ("hwmon: (aquacomputer_d5next) Add support for Octo flow sensor")
+Closes: https://github.com/aleksamagicka/aquacomputer_d5next-hwmon/issues/100 [1]
+Reported-by: Arne Schwabe <arne@rfc2549.org>
+Signed-off-by: Aleksa Savic <savicaleksa83@gmail.com>
+Message-ID: <20241124152725.7205-1-savicaleksa83@gmail.com>
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/tps23861.c | 2 +-
+ drivers/hwmon/aquacomputer_d5next.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/hwmon/tps23861.c b/drivers/hwmon/tps23861.c
-index dfcfb09d9f3cd..80fb03f30c302 100644
---- a/drivers/hwmon/tps23861.c
-+++ b/drivers/hwmon/tps23861.c
-@@ -132,7 +132,7 @@ static int tps23861_read_temp(struct tps23861_data *data, long *val)
- 	if (err < 0)
- 		return err;
+diff --git a/drivers/hwmon/aquacomputer_d5next.c b/drivers/hwmon/aquacomputer_d5next.c
+index 34cac27e4ddec..0dcb8a3a691d6 100644
+--- a/drivers/hwmon/aquacomputer_d5next.c
++++ b/drivers/hwmon/aquacomputer_d5next.c
+@@ -597,7 +597,7 @@ struct aqc_data {
  
--	*val = (regval * TEMPERATURE_LSB) - 20000;
-+	*val = ((long)regval * TEMPERATURE_LSB) - 20000;
- 
- 	return 0;
- }
+ 	/* Sensor values */
+ 	s32 temp_input[20];	/* Max 4 physical and 16 virtual or 8 physical and 12 virtual */
+-	s32 speed_input[8];
++	s32 speed_input[9];
+ 	u32 speed_input_min[1];
+ 	u32 speed_input_target[1];
+ 	u32 speed_input_max[1];
 -- 
 2.43.0
 
