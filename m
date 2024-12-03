@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43A061F7594;
-	Tue,  3 Dec 2024 16:09:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FB4F1F759C;
+	Tue,  3 Dec 2024 16:09:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733242170; cv=none; b=g/gAyqPQtuxSftlmUaZeoxl4D/XcW0TilQImM0xs64C6h7GEjD7Em0HCtGPPOq8kKN0wCz30ZuCfuQLrs4JDkhKM3tpBTyzFToYQNpcGd++tTiuH3Fj1n1UwMH6ABbYpa3hKK+SYq8LJsOvuWxLsalxGP1znHGgGUwRLvtgVMu4=
+	t=1733242173; cv=none; b=WYBS1KXH22iIzGevECAF8M/PRBOleFB8KQuBZnCeWXcFNM/p8+Re/3wtjVz2/IJKFN+oKBSYqXlTs1mQHp3h4loLYw6eag1G+cMc5LeIAxLx+Z7tKLX33uwwv/Q+zJQtP9OMNUXOyI9G6y2bP70Q32GtMFn+XfXcoeJNuOPCQCM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733242170; c=relaxed/simple;
-	bh=umbg/WYitkCWXtcv3QZnQiPAnM+PiqIva8r5JhrENyk=;
+	s=arc-20240116; t=1733242173; c=relaxed/simple;
+	bh=Gq12G96hvRf600rs4co9QQ2eW8oNcSTIms2Lb/bVQCs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WWQ5uvhvIrG4YQX7Ya5P+gutAJbdGTNsYc4a8xIt1NNhaBuhUoHilM/JY7He/WvPJzRWRmInsiLsL08fdL0X1eENc80iQUQZYOjCO3iM6z6zUwkdjtjSRaIohK0k9HiBOrJH8pE9TLQe1r/hjl3FX8tlc75iwdORVde9TvybD14=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TxJ68xa5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lEVjly4FG5zHRZcF/MEBUAc8hGyOlDJlZUkEBqURhvL8zin++gdfVAJ3osHmGSJv8WqFnA9zVr+gf6te6lagboAc4zqHtJXnuidbqSCVb5PtNwcUhYxxx9TFB6UMguMIo13w5mvA2AzHMvFV9OBuzZdZp4xEI0oh2szSMLKDPls=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t1KQT0OX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TxJ68xa5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FE33C4CECF;
-	Tue,  3 Dec 2024 16:09:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t1KQT0OX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4763C4CECF;
+	Tue,  3 Dec 2024 16:09:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733242169;
-	bh=umbg/WYitkCWXtcv3QZnQiPAnM+PiqIva8r5JhrENyk=;
+	s=korg; t=1733242173;
+	bh=Gq12G96hvRf600rs4co9QQ2eW8oNcSTIms2Lb/bVQCs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TxJ68xa5BFys13Jb7cxtG/QIz/9gLAtklH6Q5S6vNdgprGu8K5gxfyccP4oskyJaZ
-	 xjkHOTHq8znuIg8qQOfbS3bC7ZeCgWkkNJIX7u/C/xPMFD+opxVea1iCBaX/IJ/s3r
-	 V+mA3MsjJXgMt99xFj7fbGfwz5OIsQUf+hv6DNQc=
+	b=t1KQT0OX7DShq01pVILrEkfs/1CJy/G//JgQodezo73Y3aOpqPAfmOtnGTUCSYqxj
+	 e8wrXSdXtV77ClVwz1315TJXA917TTQ0MIWhrfIReSwPaiVEC9YTK44NblkoFl7Y2T
+	 iFhD5q7JNAYviughOOWDpV1/Y9PgVU6wMgGDOPzo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abel Vesa <abel.vesa@linaro.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Subject: [PATCH 6.12 628/826] usb: typec: ucsi: glink: fix off-by-one in connector_status
-Date: Tue,  3 Dec 2024 15:45:55 +0100
-Message-ID: <20241203144808.250181705@linuxfoundation.org>
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Christoph Hellwig <hch@lst.de>
+Subject: [PATCH 6.12 629/826] xfs: fix simplify extent lookup in xfs_can_free_eofblocks
+Date: Tue,  3 Dec 2024 15:45:56 +0100
+Message-ID: <20241203144808.288987663@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -52,38 +50,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Darrick J. Wong <djwong@kernel.org>
 
-commit 4a22918810980897393fa1776ea3877e4baf8cca upstream.
+commit 62027820eb4486f075b89ec31c1548c6cb1bb13f upstream.
 
-UCSI connector's indices start from 1 up to 3, PMIC_GLINK_MAX_PORTS.
-Correct the condition in the pmic_glink_ucsi_connector_status()
-callback, fixing Type-C orientation reporting for the third USB-C
-connector.
+In commit 11f4c3a53adde, we tried to simplify the extent lookup in
+xfs_can_free_eofblocks so that it doesn't incur the overhead of all the
+extra stuff that xfs_bmapi_read does around the iext lookup.
 
-Fixes: 76716fd5bf09 ("usb: typec: ucsi: glink: move GPIO reading into connector_status callback")
-Cc: stable@vger.kernel.org
-Reported-by: Abel Vesa <abel.vesa@linaro.org>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
-Tested-by: Johan Hovold <johan+linaro@kernel.org>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20241109-ucsi-glue-fixes-v2-1-8b21ff4f9fbe@linaro.org
+Unfortunately, this causes regressions on generic/603, xfs/108,
+generic/219, xfs/173, generic/694, xfs/052, generic/230, and xfs/441
+when always_cow is turned on.  In all cases, the regressions take the
+form of alwayscow files consuming rather more space than the golden
+output is expecting.  I observed that in all these cases, the cause of
+the excess space usage was due to CoW fork delalloc reservations that go
+beyond EOF.
+
+For alwayscow files we allow posteof delalloc CoW reservations because
+all writes go through the CoW fork.  Recall that all extents in the CoW
+fork are accounted for via i_delayed_blks, which means that prior to
+this patch, we'd invoke xfs_free_eofblocks on first close if anything
+was in the CoW fork.  Now we don't do that.
+
+Fix the problem by reverting the removal of the i_delayed_blks check.
+
+Cc: <stable@vger.kernel.org> # v6.12-rc1
+Fixes: 11f4c3a53adde ("xfs: simplify extent lookup in xfs_can_free_eofblocks")
+Signed-off-by: Darrick J. Wong <djwong@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/ucsi/ucsi_glink.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/xfs/xfs_bmap_util.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/drivers/usb/typec/ucsi/ucsi_glink.c
-+++ b/drivers/usb/typec/ucsi/ucsi_glink.c
-@@ -185,7 +185,7 @@ static void pmic_glink_ucsi_connector_st
- 	struct pmic_glink_ucsi *ucsi = ucsi_get_drvdata(con->ucsi);
- 	int orientation;
+diff --git a/fs/xfs/xfs_bmap_util.c b/fs/xfs/xfs_bmap_util.c
+index 4719ec90029c..edaf193dbd5c 100644
+--- a/fs/xfs/xfs_bmap_util.c
++++ b/fs/xfs/xfs_bmap_util.c
+@@ -546,10 +546,14 @@ xfs_can_free_eofblocks(
+ 		return false;
  
--	if (con->num >= PMIC_GLINK_MAX_PORTS ||
-+	if (con->num > PMIC_GLINK_MAX_PORTS ||
- 	    !ucsi->port_orientation[con->num - 1])
- 		return;
- 
+ 	/*
+-	 * Check if there is an post-EOF extent to free.
++	 * Check if there is an post-EOF extent to free.  If there are any
++	 * delalloc blocks attached to the inode (data fork delalloc
++	 * reservations or CoW extents of any kind), we need to free them so
++	 * that inactivation doesn't fail to erase them.
+ 	 */
+ 	xfs_ilock(ip, XFS_ILOCK_SHARED);
+-	if (xfs_iext_lookup_extent(ip, &ip->i_df, end_fsb, &icur, &imap))
++	if (ip->i_delayed_blks ||
++	    xfs_iext_lookup_extent(ip, &ip->i_df, end_fsb, &icur, &imap))
+ 		found_blocks = true;
+ 	xfs_iunlock(ip, XFS_ILOCK_SHARED);
+ 	return found_blocks;
+-- 
+2.47.1
+
 
 
