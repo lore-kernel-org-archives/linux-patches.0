@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75892646;
-	Tue,  3 Dec 2024 15:27:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5544E646;
+	Tue,  3 Dec 2024 15:27:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733239675; cv=none; b=TMzNjnkGJXKHMY9zxwL8w37Kvu8oFl4vfL3Slrfu/ME6zrUqaw2f6vOG1wCRRT6psZlkB0x0vAcRPBD1E5cHENHbFUNI6NWqLCSlD6md2L6OR/OxT4dC2HfHtP1RnW3YnK2H6rgGoenIN23xDmK5kjoNLa7qLpB/jasxRyCEZTA=
+	t=1733239678; cv=none; b=ekyDsa+Mh+6ID5FO7qgTZcByozvTK9Uig3MhBHL3SydX23cyYJ1hHUVzBVWHwTbCprWMVA+rIW4M3f/1Ynu+h7eGwExNQ6yoVnKDFWZ0CI/85EIpo8EP4kp5yJHOVx8vc7xAfbPDsqomKRvEnenXVdQBF9tuRmAOqaaVan50G2E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733239675; c=relaxed/simple;
-	bh=8aFQ5BG0dj24QlLXTTTuqPT9ZH2MSkjgJj6u/n2jutM=;
+	s=arc-20240116; t=1733239678; c=relaxed/simple;
+	bh=04xIX9LovVNxuiEQLtxStMjdoEVIeSic7Vi60g5lyzA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GrZofJRN5AicHksd5O1PoYL0huWhJw+yKiHxBfY/7nBtDLGUwqeQmwbL97lIbX9Y5wy7Tcx8vReksl/iemAnktcaktb54a9mzuqkY0JgBxphz510gBc79l++hWVhdiNgD/a2dn10ntZ4zOP+j2tsJ+eezlhDCthHjLOMDnRLdfI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H3PgYNgE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=k9sDSg/+fIiITcyM9BlGQqoh5gZSIlyLIL+9A/zBrmTzeRo0nK0bB2Xze6KfQjjY5DaEKGtvYVrQh3yHIbrG5BesnfkrfbXl1MqVXK7QAuT/MkA3chBd1oZQWDOaoIJ/zCIBXWjvmJZ8mMIEEmyDOlxNcES5+MZhGMIaLNa13fI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2IgKU+75; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H3PgYNgE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1082C4CECF;
-	Tue,  3 Dec 2024 15:27:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2IgKU+75"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D43C4C4CECF;
+	Tue,  3 Dec 2024 15:27:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733239675;
-	bh=8aFQ5BG0dj24QlLXTTTuqPT9ZH2MSkjgJj6u/n2jutM=;
+	s=korg; t=1733239678;
+	bh=04xIX9LovVNxuiEQLtxStMjdoEVIeSic7Vi60g5lyzA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H3PgYNgE8m6ckcsZwJrOV2btlJzICJQnCNQmnA70gR4/n6bMLAhiK0PbbDw4sUvvJ
-	 lLNZ2ZwSKmxUNZ2ilYaU9tk5hrKWH5b/+u6wY+JkPUsODMSlfMvSzY8WoqVEDvRxAx
-	 dq3qalLBhQVupiYyNnwXEEEZ6kka8kdXczxVLokY=
+	b=2IgKU+75Kxc9+EmQcrayGRW+BogUxKyjvEaC2gzL5+TIEbs29iNUIh2tSUrOG3JYj
+	 G9JphuRx+EBXypUQkpWLLGqLlGCOIsywT/cUD4AMmnAxQs1yDKipDI6v47thntP8bl
+	 xXUZIrbNcSdPRa09NJdip7nR8gYdsDwVnYxaUFII=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Pecio <michal.pecio@gmail.com>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>
-Subject: [PATCH 6.11 678/817] usb: xhci: Limit Stop Endpoint retries
-Date: Tue,  3 Dec 2024 15:44:10 +0100
-Message-ID: <20241203144022.421972082@linuxfoundation.org>
+	Matthew McClain <mmcclain@noprivs.com>,
+	Sai Kumar Cholleti <skmr537@gmail.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Subject: [PATCH 6.11 696/817] gpio: exar: set value when external pull-up or pull-down is present
+Date: Tue,  3 Dec 2024 15:44:28 +0100
+Message-ID: <20241203144023.144648738@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -50,138 +52,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Pecio <michal.pecio@gmail.com>
+From: Sai Kumar Cholleti <skmr537@gmail.com>
 
-commit 42b7581376015c1bbcbe5831f043cd0ac119d028 upstream.
+commit 72cef64180de04a7b055b4773c138d78f4ebdb77 upstream.
 
-Some host controllers fail to atomically transition an endpoint to the
-Running state on a doorbell ring and enter a hidden "Restarting" state,
-which looks very much like Stopped, with the important difference that
-it will spontaneously transition to Running anytime soon.
+Setting GPIO direction = high, sometimes results in GPIO value = 0.
 
-A Stop Endpoint command queued in the Restarting state typically fails
-with Context State Error and the completion handler sees the Endpoint
-Context State as either still Stopped or already Running. Even a case
-of Halted was observed, when an error occurred right after the restart.
+If a GPIO is pulled high, the following construction results in the
+value being 0 when the desired value is 1:
 
-The Halted state is already recovered from by resetting the endpoint.
-The Running state is handled by retrying Stop Endpoint.
+$ echo "high" > /sys/class/gpio/gpio336/direction
+$ cat /sys/class/gpio/gpio336/value
+0
 
-The Stopped state was recognized as a problem on NEC controllers and
-worked around also by retrying, because the endpoint soon restarts and
-then stops for good. But there is a risk: the command may fail if the
-endpoint is "stopped for good" already, and retries will fail forever.
+Before the GPIO direction is changed from an input to an output,
+exar_set_value() is called with value = 1, but since the GPIO is an
+input when exar_set_value() is called, _regmap_update_bits() reads a 1
+due to an external pull-up.  regmap_set_bits() sets force_write =
+false, so the value (1) is not written.  When the direction is then
+changed, the GPIO becomes an output with the value of 0 (the hardware
+default).
 
-The possibility of this was not realized at the time, but a number of
-cases were discovered later and reproduced. Some proved difficult to
-deal with, and it is outright impossible to predict if an endpoint may
-fail to ever start at all due to a hardware bug. One such bug (albeit
-on ASM3142, not on NEC) was found to be reliably triggered simply by
-toggling an AX88179 NIC up/down in a tight loop for a few seconds.
+regmap_write_bits() sets force_write = true, so the value is always
+written by exar_set_value() and an external pull-up doesn't affect the
+outcome of setting direction = high.
 
-An endless retries storm is quite nasty. Besides putting needless load
-on the xHC and CPU, it causes URBs never to be given back, paralyzing
-the device and connection/disconnection logic for the whole bus if the
-device is unplugged. User processes waiting for URBs become unkillable,
-drivers and kworker threads lock up and xhci_hcd cannot be reloaded.
+The same can happen when a GPIO is pulled low, but the scenario is a
+little more complicated.
 
-For peace of mind, impose a timeout on Stop Endpoint retries in this
-case. If they don't succeed in 100ms, consider the endpoint stopped
-permanently for some reason and just give back the unlinked URBs. This
-failure case is rare already and work is under way to make it rarer.
+$ echo high > /sys/class/gpio/gpio351/direction
+$ cat /sys/class/gpio/gpio351/value
+1
 
-Start this work today by also handling one simple case of race with
-Reset Endpoint, because it costs just two lines to implement.
+$ echo in > /sys/class/gpio/gpio351/direction
+$ cat /sys/class/gpio/gpio351/value
+0
 
-Fixes: fd9d55d190c0 ("xhci: retry Stop Endpoint on buggy NEC controllers")
-CC: stable@vger.kernel.org
-Signed-off-by: Michal Pecio <michal.pecio@gmail.com>
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://lore.kernel.org/r/20241106101459.775897-32-mathias.nyman@linux.intel.com
+$ echo low > /sys/class/gpio/gpio351/direction
+$ cat /sys/class/gpio/gpio351/value
+1
+
+Fixes: 36fb7218e878 ("gpio: exar: switch to using regmap")
+Co-developed-by: Matthew McClain <mmcclain@noprivs.com>
+Signed-off-by: Matthew McClain <mmcclain@noprivs.com>
+Signed-off-by: Sai Kumar Cholleti <skmr537@gmail.com>
+Cc: stable@vger.kernel.org
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/20241105071523.2372032-1-skmr537@gmail.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/xhci-ring.c |   28 ++++++++++++++++++++++++----
- drivers/usb/host/xhci.c      |    2 ++
- drivers/usb/host/xhci.h      |    1 +
- 3 files changed, 27 insertions(+), 4 deletions(-)
+ drivers/gpio/gpio-exar.c |   10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
---- a/drivers/usb/host/xhci-ring.c
-+++ b/drivers/usb/host/xhci-ring.c
-@@ -52,6 +52,7 @@
-  *   endpoint rings; it generates events on the event ring for these.
-  */
+--- a/drivers/gpio/gpio-exar.c
++++ b/drivers/gpio/gpio-exar.c
+@@ -99,11 +99,13 @@ static void exar_set_value(struct gpio_c
+ 	struct exar_gpio_chip *exar_gpio = gpiochip_get_data(chip);
+ 	unsigned int addr = exar_offset_to_lvl_addr(exar_gpio, offset);
+ 	unsigned int bit = exar_offset_to_bit(exar_gpio, offset);
++	unsigned int bit_value = value ? BIT(bit) : 0;
  
-+#include <linux/jiffies.h>
- #include <linux/scatterlist.h>
- #include <linux/slab.h>
- #include <linux/dma-mapping.h>
-@@ -1151,16 +1152,35 @@ static void xhci_handle_cmd_stop_ep(stru
- 			return;
- 		case EP_STATE_STOPPED:
- 			/*
--			 * NEC uPD720200 sometimes sets this state and fails with
--			 * Context Error while continuing to process TRBs.
--			 * Be conservative and trust EP_CTX_STATE on other chips.
-+			 * Per xHCI 4.6.9, Stop Endpoint command on a Stopped
-+			 * EP is a Context State Error, and EP stays Stopped.
-+			 *
-+			 * But maybe it failed on Halted, and somebody ran Reset
-+			 * Endpoint later. EP state is now Stopped and EP_HALTED
-+			 * still set because Reset EP handler will run after us.
-+			 */
-+			if (ep->ep_state & EP_HALTED)
-+				break;
-+			/*
-+			 * On some HCs EP state remains Stopped for some tens of
-+			 * us to a few ms or more after a doorbell ring, and any
-+			 * new Stop Endpoint fails without aborting the restart.
-+			 * This handler may run quickly enough to still see this
-+			 * Stopped state, but it will soon change to Running.
-+			 *
-+			 * Assume this bug on unexpected Stop Endpoint failures.
-+			 * Keep retrying until the EP starts and stops again, on
-+			 * chips where this is known to help. Wait for 100ms.
- 			 */
- 			if (!(xhci->quirks & XHCI_NEC_HOST))
- 				break;
-+			if (time_is_before_jiffies(ep->stop_time + msecs_to_jiffies(100)))
-+				break;
- 			fallthrough;
- 		case EP_STATE_RUNNING:
- 			/* Race, HW handled stop ep cmd before ep was running */
--			xhci_dbg(xhci, "Stop ep completion ctx error, ep is running\n");
-+			xhci_dbg(xhci, "Stop ep completion ctx error, ctx_state %d\n",
-+					GET_EP_CTX_STATE(ep_ctx));
+-	if (value)
+-		regmap_set_bits(exar_gpio->regmap, addr, BIT(bit));
+-	else
+-		regmap_clear_bits(exar_gpio->regmap, addr, BIT(bit));
++	/*
++	 * regmap_write_bits() forces value to be written when an external
++	 * pull up/down might otherwise indicate value was already set.
++	 */
++	regmap_write_bits(exar_gpio->regmap, addr, BIT(bit), bit_value);
+ }
  
- 			command = xhci_alloc_command(xhci, false, GFP_ATOMIC);
- 			if (!command) {
---- a/drivers/usb/host/xhci.c
-+++ b/drivers/usb/host/xhci.c
-@@ -8,6 +8,7 @@
-  * Some code borrowed from the Linux EHCI driver.
-  */
- 
-+#include <linux/jiffies.h>
- #include <linux/pci.h>
- #include <linux/iommu.h>
- #include <linux/iopoll.h>
-@@ -1777,6 +1778,7 @@ static int xhci_urb_dequeue(struct usb_h
- 			ret = -ENOMEM;
- 			goto done;
- 		}
-+		ep->stop_time = jiffies;
- 		ep->ep_state |= EP_STOP_CMD_PENDING;
- 		xhci_queue_stop_endpoint(xhci, command, urb->dev->slot_id,
- 					 ep_index, 0);
---- a/drivers/usb/host/xhci.h
-+++ b/drivers/usb/host/xhci.h
-@@ -690,6 +690,7 @@ struct xhci_virt_ep {
- 	/* Bandwidth checking storage */
- 	struct xhci_bw_info	bw_info;
- 	struct list_head	bw_endpoint_list;
-+	unsigned long		stop_time;
- 	/* Isoch Frame ID checking storage */
- 	int			next_frame_id;
- 	/* Use new Isoch TRB layout needed for extended TBC support */
+ static int exar_direction_output(struct gpio_chip *chip, unsigned int offset,
 
 
