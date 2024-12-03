@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E4001F12E0;
-	Tue,  3 Dec 2024 15:42:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F9261F75A4;
+	Tue,  3 Dec 2024 15:42:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733240549; cv=none; b=Zqrf08e2NWw3VXmcoYa9CC+JCriRmYlrgL3oODGM/0kB/wtwH8slp6Q2MNiQiVIvvaueZazWOPvC09SkkwCAEOOoB+wpuWg/LQwo35flkuqvdOmOPiOJs5FOb30bUSfNtfqMIJTumtk3A6Lff+I5HE9e5sdfteMboevW3wY1TuM=
+	t=1733240552; cv=none; b=ezdFXDh4iCd9OgXtZTIF7H2rYXfImAXE7MWJjDgA312LRFaKXjzWinC2dzA9gIeJ6YYBRua7Pka2WVBq/LUQsYxpoutJFdqxXWkOK44AaEBOkb4u8no+ByVIGjaqOz4Myk9+fONtXOV4U4lQtW849KdzNzlvTMMew7FmdjszMCs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733240549; c=relaxed/simple;
-	bh=WigICqfbVrM9NEpgcZhxulR8ruVQtHU+1fcv9kMT4cg=;
+	s=arc-20240116; t=1733240552; c=relaxed/simple;
+	bh=DRdeuVY9+R7Xk6sIek5ata+mWhXnA+wPB16qDVXgsio=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s4527bLF2ZgLGN5lizgZRZsrRk4SITBZQvGbk0M2a2Vgau1ef7bLZwfCslbGY4l4awLLpgYXS1c48QCH8iFBZ9AxMbg/f0r9Ptd+DBk+kCZpj5wJWnIklgkd5ZT96GuMWMPKOB/vw5c7vsS6dAGx1B2Fg7ivcFjxM5EZ8J8D9Ac=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HCjw6MOD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YyXKOUHKAabKcdrPsrpY6z0dpdOmfS0vsViudV1Y9oPIagCe/LbvDRh9U3RvyLJgpPblXpbtMylHpiiNOfOtvhcCUxjH4LF2RpFpR/JMcoAir6/4N4KfE1l2snXj/WdZMGBo1Zto8ZblFH6Y9fUDxoA1+Ey+cQt/7+l5EeoIATk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FUIsLhO1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HCjw6MOD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97E2CC4CECF;
-	Tue,  3 Dec 2024 15:42:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FUIsLhO1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCBC4C4CECF;
+	Tue,  3 Dec 2024 15:42:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733240549;
-	bh=WigICqfbVrM9NEpgcZhxulR8ruVQtHU+1fcv9kMT4cg=;
+	s=korg; t=1733240552;
+	bh=DRdeuVY9+R7Xk6sIek5ata+mWhXnA+wPB16qDVXgsio=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HCjw6MODKn62iIstvKy2Tjj5ohuB0WTdMImx/HGgJlcJKxfA6aVT1iJ2MN+7gxkXw
-	 Ro6Y6eWM9VXshYRPLGwA+hc0+PJi8dbr93bwObaoTgux5TOlLJT7dYXfDJL88NN01g
-	 NXiyljPk9ILRfARkaGOmbYFhUNE/F3JTr6oZZWJ8=
+	b=FUIsLhO1cmQs99szkS3DRIvVkTYQMvKlFMsdnwHfB1BQQY5R2/D0KY7AV7W9Zaowb
+	 XAQWPz774R/2bGTFfdMBOXLjhApTsbtsYcV4jmj/n+Z2eiA4wCzS18r+Gt45nT+o14
+	 6RYozAF5skrBSfl7L/7Li/KKL0lit/qCx0G0HRuM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luo Qiu <luoqiu@kylinsec.com.cn>,
-	Sudeep Holla <sudeep.holla@arm.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Bingbu Cao <bingbu.cao@intel.com>,
+	Hans Verkuil <hverkuil@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 167/826] firmware: arm_scpi: Check the DVFS OPP count returned by the firmware
-Date: Tue,  3 Dec 2024 15:38:14 +0100
-Message-ID: <20241203144750.249237259@linuxfoundation.org>
+Subject: [PATCH 6.12 168/826] media: ipu6: Fix DMA and physical address debugging messages for 32-bit
+Date: Tue,  3 Dec 2024 15:38:15 +0100
+Message-ID: <20241203144750.287040084@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -51,91 +52,117 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luo Qiu <luoqiu@kylinsec.com.cn>
+From: Sakari Ailus <sakari.ailus@linux.intel.com>
 
-[ Upstream commit 109aa654f85c5141e813b2cd1bd36d90be678407 ]
+[ Upstream commit 199c204bcc732ec18dbaec2b9d6445addbd376ea ]
 
-Fix a kernel crash with the below call trace when the SCPI firmware
-returns OPP count of zero.
+Fix printing DMA and physical address printing on 32-bit platforms, by
+using correct types. Also cast DMA_BIT_MASK() result to dma_addr_t to make
+Clang happy.
 
-dvfs_info.opp_count may be zero on some platforms during the reboot
-test, and the kernel will crash after dereferencing the pointer to
-kcalloc(info->count, sizeof(*opp), GFP_KERNEL).
-
-  |  Unable to handle kernel NULL pointer dereference at virtual address 0000000000000028
-  |  Mem abort info:
-  |    ESR = 0x96000004
-  |    Exception class = DABT (current EL), IL = 32 bits
-  |    SET = 0, FnV = 0
-  |    EA = 0, S1PTW = 0
-  |  Data abort info:
-  |    ISV = 0, ISS = 0x00000004
-  |    CM = 0, WnR = 0
-  |  user pgtable: 4k pages, 48-bit VAs, pgdp = 00000000faefa08c
-  |  [0000000000000028] pgd=0000000000000000
-  |  Internal error: Oops: 96000004 [#1] SMP
-  |  scpi-hwmon: probe of PHYT000D:00 failed with error -110
-  |  Process systemd-udevd (pid: 1701, stack limit = 0x00000000aaede86c)
-  |  CPU: 2 PID: 1701 Comm: systemd-udevd Not tainted 4.19.90+ #1
-  |  Hardware name: PHYTIUM LTD Phytium FT2000/4/Phytium FT2000/4, BIOS
-  |  pstate: 60000005 (nZCv daif -PAN -UAO)
-  |  pc : scpi_dvfs_recalc_rate+0x40/0x58 [clk_scpi]
-  |  lr : clk_register+0x438/0x720
-  |  Call trace:
-  |   scpi_dvfs_recalc_rate+0x40/0x58 [clk_scpi]
-  |   devm_clk_hw_register+0x50/0xa0
-  |   scpi_clk_ops_init.isra.2+0xa0/0x138 [clk_scpi]
-  |   scpi_clocks_probe+0x528/0x70c [clk_scpi]
-  |   platform_drv_probe+0x58/0xa8
-  |   really_probe+0x260/0x3d0
-  |   driver_probe_device+0x12c/0x148
-  |   device_driver_attach+0x74/0x98
-  |   __driver_attach+0xb4/0xe8
-  |   bus_for_each_dev+0x88/0xe0
-  |   driver_attach+0x30/0x40
-  |   bus_add_driver+0x178/0x2b0
-  |   driver_register+0x64/0x118
-  |   __platform_driver_register+0x54/0x60
-  |   scpi_clocks_driver_init+0x24/0x1000 [clk_scpi]
-  |   do_one_initcall+0x54/0x220
-  |   do_init_module+0x54/0x1c8
-  |   load_module+0x14a4/0x1668
-  |   __se_sys_finit_module+0xf8/0x110
-  |   __arm64_sys_finit_module+0x24/0x30
-  |   el0_svc_common+0x78/0x170
-  |   el0_svc_handler+0x38/0x78
-  |   el0_svc+0x8/0x340
-  |  Code: 937d7c00 a94153f3 a8c27bfd f9400421 (b8606820)
-  |  ---[ end trace 06feb22469d89fa8 ]---
-  |  Kernel panic - not syncing: Fatal exception
-  |  SMP: stopping secondary CPUs
-  |  Kernel Offset: disabled
-  |  CPU features: 0x10,a0002008
-  |  Memory Limit: none
-
-Fixes: 8cb7cf56c9fe ("firmware: add support for ARM System Control and Power Interface(SCPI) protocol")
-Signed-off-by: Luo Qiu <luoqiu@kylinsec.com.cn>
-Message-Id: <55A2F7A784391686+20241101032115.275977-1-luoqiu@kylinsec.com.cn>
-Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Reviewed-by: Bingbu Cao <bingbu.cao@intel.com>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+Stable-dep-of: daabc5c64703 ("media: ipu6: not override the dma_ops of device in driver")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/arm_scpi.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/media/pci/intel/ipu6/ipu6-dma.c |  7 ++++---
+ drivers/media/pci/intel/ipu6/ipu6-mmu.c | 28 +++++++++++++++----------
+ 2 files changed, 21 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/firmware/arm_scpi.c b/drivers/firmware/arm_scpi.c
-index 94a6b4e667de1..f4d47577f83ee 100644
---- a/drivers/firmware/arm_scpi.c
-+++ b/drivers/firmware/arm_scpi.c
-@@ -630,6 +630,9 @@ static struct scpi_dvfs_info *scpi_dvfs_get_info(u8 domain)
- 	if (ret)
- 		return ERR_PTR(ret);
+diff --git a/drivers/media/pci/intel/ipu6/ipu6-dma.c b/drivers/media/pci/intel/ipu6/ipu6-dma.c
+index 92530a1cc90f5..801f6bd00a891 100644
+--- a/drivers/media/pci/intel/ipu6/ipu6-dma.c
++++ b/drivers/media/pci/intel/ipu6/ipu6-dma.c
+@@ -428,11 +428,12 @@ static int ipu6_dma_map_sg(struct device *dev, struct scatterlist *sglist,
  
-+	if (!buf.opp_count)
-+		return ERR_PTR(-ENOENT);
+ 	iova_addr = iova->pfn_lo;
+ 	for_each_sg(sglist, sg, count, i) {
++		phys_addr_t iova_pa;
+ 		int ret;
+ 
+-		dev_dbg(dev, "mapping entry %d: iova 0x%llx phy %pad size %d\n",
+-			i, PFN_PHYS(iova_addr), &sg_dma_address(sg),
+-			sg_dma_len(sg));
++		iova_pa = PFN_PHYS(iova_addr);
++		dev_dbg(dev, "mapping entry %d: iova %pap phy %pap size %d\n",
++			i, &iova_pa, &sg_dma_address(sg), sg_dma_len(sg));
+ 
+ 		ret = ipu6_mmu_map(mmu->dmap->mmu_info, PFN_PHYS(iova_addr),
+ 				   sg_dma_address(sg),
+diff --git a/drivers/media/pci/intel/ipu6/ipu6-mmu.c b/drivers/media/pci/intel/ipu6/ipu6-mmu.c
+index c3a20507d6dbc..57298ac73d072 100644
+--- a/drivers/media/pci/intel/ipu6/ipu6-mmu.c
++++ b/drivers/media/pci/intel/ipu6/ipu6-mmu.c
+@@ -97,13 +97,15 @@ static void page_table_dump(struct ipu6_mmu_info *mmu_info)
+ 	for (l1_idx = 0; l1_idx < ISP_L1PT_PTES; l1_idx++) {
+ 		u32 l2_idx;
+ 		u32 iova = (phys_addr_t)l1_idx << ISP_L1PT_SHIFT;
++		phys_addr_t l2_phys;
+ 
+ 		if (mmu_info->l1_pt[l1_idx] == mmu_info->dummy_l2_pteval)
+ 			continue;
 +
- 	info = kmalloc(sizeof(*info), GFP_KERNEL);
- 	if (!info)
- 		return ERR_PTR(-ENOMEM);
++		l2_phys = TBL_PHYS_ADDR(mmu_info->l1_pt[l1_idx];)
+ 		dev_dbg(mmu_info->dev,
+-			"l1 entry %u; iovas 0x%8.8x-0x%8.8x, at %pa\n",
+-			l1_idx, iova, iova + ISP_PAGE_SIZE,
+-			TBL_PHYS_ADDR(mmu_info->l1_pt[l1_idx]));
++			"l1 entry %u; iovas 0x%8.8x-0x%8.8x, at %pap\n",
++			l1_idx, iova, iova + ISP_PAGE_SIZE, &l2_phys);
+ 
+ 		for (l2_idx = 0; l2_idx < ISP_L2PT_PTES; l2_idx++) {
+ 			u32 *l2_pt = mmu_info->l2_pts[l1_idx];
+@@ -227,7 +229,7 @@ static u32 *alloc_l1_pt(struct ipu6_mmu_info *mmu_info)
+ 	}
+ 
+ 	mmu_info->l1_pt_dma = dma >> ISP_PADDR_SHIFT;
+-	dev_dbg(mmu_info->dev, "l1 pt %p mapped at %llx\n", pt, dma);
++	dev_dbg(mmu_info->dev, "l1 pt %p mapped at %pad\n", pt, &dma);
+ 
+ 	return pt;
+ 
+@@ -330,8 +332,8 @@ static int __ipu6_mmu_map(struct ipu6_mmu_info *mmu_info, unsigned long iova,
+ 	u32 iova_end = ALIGN(iova + size, ISP_PAGE_SIZE);
+ 
+ 	dev_dbg(mmu_info->dev,
+-		"mapping iova 0x%8.8x--0x%8.8x, size %zu at paddr 0x%10.10llx\n",
+-		iova_start, iova_end, size, paddr);
++		"mapping iova 0x%8.8x--0x%8.8x, size %zu at paddr %pap\n",
++		iova_start, iova_end, size, &paddr);
+ 
+ 	return l2_map(mmu_info, iova_start, paddr, size);
+ }
+@@ -361,10 +363,13 @@ static size_t l2_unmap(struct ipu6_mmu_info *mmu_info, unsigned long iova,
+ 	for (l2_idx = (iova_start & ISP_L2PT_MASK) >> ISP_L2PT_SHIFT;
+ 	     (iova_start & ISP_L1PT_MASK) + (l2_idx << ISP_PAGE_SHIFT)
+ 		     < iova_start + size && l2_idx < ISP_L2PT_PTES; l2_idx++) {
++		phys_addr_t pteval;
++
+ 		l2_pt = mmu_info->l2_pts[l1_idx];
++		pteval = TBL_PHYS_ADDR(l2_pt[l2_idx]);
+ 		dev_dbg(mmu_info->dev,
+-			"unmap l2 index %u with pteval 0x%10.10llx\n",
+-			l2_idx, TBL_PHYS_ADDR(l2_pt[l2_idx]));
++			"unmap l2 index %u with pteval 0x%p\n",
++			l2_idx, &pteval);
+ 		l2_pt[l2_idx] = mmu_info->dummy_page_pteval;
+ 
+ 		clflush_cache_range((void *)&l2_pt[l2_idx],
+@@ -525,9 +530,10 @@ static struct ipu6_mmu_info *ipu6_mmu_alloc(struct ipu6_device *isp)
+ 		return NULL;
+ 
+ 	mmu_info->aperture_start = 0;
+-	mmu_info->aperture_end = DMA_BIT_MASK(isp->secure_mode ?
+-					      IPU6_MMU_ADDR_BITS :
+-					      IPU6_MMU_ADDR_BITS_NON_SECURE);
++	mmu_info->aperture_end =
++		(dma_addr_t)DMA_BIT_MASK(isp->secure_mode ?
++					 IPU6_MMU_ADDR_BITS :
++					 IPU6_MMU_ADDR_BITS_NON_SECURE);
+ 	mmu_info->pgsize_bitmap = SZ_4K;
+ 	mmu_info->dev = &isp->pdev->dev;
+ 
 -- 
 2.43.0
 
