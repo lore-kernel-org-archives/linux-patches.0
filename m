@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04C321EE00B;
-	Tue,  3 Dec 2024 16:19:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 388BF1F7591;
+	Tue,  3 Dec 2024 16:19:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733242750; cv=none; b=oRW8b5MVDT6pjNSjBvoZBGra/k3nClsepa1kntDXrTHaFs01MVPZheNUMMPeT36vWT/SXWo7uAic8rHZkd7WF3BZCz6TnLY4GpSEr4Vad+z1NUbF858aF9saOTRScCq1TgRauKOOFaNcaufVo4Js1dk9PXJmzgbNYSWV8AOuqDo=
+	t=1733242753; cv=none; b=HNL0pW33DKYSeCf6LqzbjonmQxKNbqUikQaWyVv5NA15ADAXSX+oTnpHecq8YTOmVZaBrZ8VJ7reYdqv92OPJeTqITbXUk0drOQpd7XdfVOJZwhwDt/uLM/bxEixCEyFPoi0JrmeinNrAmvbua3u/K+cKz6gAw/RIh51WqHAXUw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733242750; c=relaxed/simple;
-	bh=RETFulDGBgSvDrvdJnt+Bhmc+FRylmQEhQaacXAIP3c=;
+	s=arc-20240116; t=1733242753; c=relaxed/simple;
+	bh=/tMEyqca0xP07793fPBQGxqBayD9AAtU4FKsOaPoY6c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uJ8w6+CTIbJRbzuDGlUyQBCfVg/Efd2bD/i6rPa/BKpaZGx/HLFCciwwjzJ/w8a4W9J4T9cwgPcHa98fZ92hkO8txnigoh6KTWifAVlS2ZVLMXxg0SCRIlZAmnq6+rHn2rymBsenMraO/pCuwi+kHvehnR3z7FK/Fjk3HWxWBeQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yIPJhnu1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Qt1aS8ieK09MrUvE10MZ7gz7NCfbt35nYIndiDn2TH933baOaF2+QCkjeHs0GD7SYQRacR6lw+VgNkvCFIh1DG4ritgVQsUV1sAxnJlL97mtkcR9Ol64NSLeftcmiaU++ZWVhb0GF1+1Q88LI6c5XaOfWZN81Xj0Jt58ExpKNBk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LZVBvksl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yIPJhnu1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72094C4CECF;
-	Tue,  3 Dec 2024 16:19:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LZVBvksl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94E1DC4CECF;
+	Tue,  3 Dec 2024 16:19:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733242749;
-	bh=RETFulDGBgSvDrvdJnt+Bhmc+FRylmQEhQaacXAIP3c=;
+	s=korg; t=1733242753;
+	bh=/tMEyqca0xP07793fPBQGxqBayD9AAtU4FKsOaPoY6c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yIPJhnu1j8yEsJ2JfswNcUmgg8bpW0ODxO8puP1aaad5n06+SoBTyFNVo2207oVUx
-	 DFDZnvTbk3YFfU6oR8piHvqYe94tZU/jjqzfFteWIQWs7X4Z4FO+mzmuShisz2cNs3
-	 xQlwg6NkrUc9zM6BkH8xe19XlYx1tHlYQRAo8Qu4=
+	b=LZVBvksl6XTDTAfRP8jG4ArVAkn+2BFLgJWusxsnOfTJo7I8f6uhTG400UmoTaRyY
+	 6k4RTegwISQBPky3qx9m0jLCGNRhmgqBx74T5bUorBpDq5y9bv80l0wvuwC7cNw7d3
+	 t8EkGYrWpTB+8MffbiCzD3BJWmghrxqXN+ZcyjqQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Greg Thelen <gthelen@google.com>,
 	Namhyung Kim <namhyung@kernel.org>,
-	Robin Murphy <robin.murphy@arm.com>,
-	Tuan Phan <tuanphan@os.amperecomputing.com>,
-	Chun-Tse Shao <ctshao@google.com>,
 	Will Deacon <will@kernel.org>,
+	Robin Murphy <robin.murphy@arm.com>,
 	Catalin Marinas <catalin.marinas@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 799/826] perf/arm-smmuv3: Fix lockdep assert in ->event_init()
-Date: Tue,  3 Dec 2024 15:48:46 +0100
-Message-ID: <20241203144814.926332472@linuxfoundation.org>
+Subject: [PATCH 6.12 800/826] perf/arm-cmn: Ensure port and device id bits are set properly
+Date: Tue,  3 Dec 2024 15:48:47 +0100
+Message-ID: <20241203144814.965579458@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -56,66 +53,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chun-Tse Shao <ctshao@google.com>
+From: Namhyung Kim <namhyung@kernel.org>
 
-[ Upstream commit 02a55f2743012a8089f09f6867220c3d57f16564 ]
+[ Upstream commit dfdf714fed559c09021df1d2a4bb64c0ad5f53bc ]
 
-Same as
-https://lore.kernel.org/all/20240514180050.182454-1-namhyung@kernel.org/,
-we should skip `for_each_sibling_event()` for group leader since it
-doesn't have the ctx yet.
+The portid_bits and deviceid_bits were set only for XP type nodes in
+the arm_cmn_discover() and it confused other nodes to find XP nodes.
+Copy the both bits from the XP nodes directly when it sets up a new
+node.
 
-Fixes: f3c0eba28704 ("perf: Add a few assertions")
-Reported-by: Greg Thelen <gthelen@google.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Robin Murphy <robin.murphy@arm.com>
-Cc: Tuan Phan <tuanphan@os.amperecomputing.com>
-Signed-off-by: Chun-Tse Shao <ctshao@google.com>
+Fixes: e79634b53e39 ("perf/arm-cmn: Refactor node ID handling. Again.")
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Acked-by: Will Deacon <will@kernel.org>
-Link: https://lore.kernel.org/r/20241108050806.3730811-1-ctshao@google.com
+Reviewed-by: Robin Murphy <robin.murphy@arm.com>
+Link: https://lore.kernel.org/r/20241121001334.331334-1-namhyung@kernel.org
 Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/perf/arm_smmuv3_pmu.c | 19 +++++++++++--------
- 1 file changed, 11 insertions(+), 8 deletions(-)
+ drivers/perf/arm-cmn.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/perf/arm_smmuv3_pmu.c b/drivers/perf/arm_smmuv3_pmu.c
-index d5fa92ba83739..dabdb9f7bb82c 100644
---- a/drivers/perf/arm_smmuv3_pmu.c
-+++ b/drivers/perf/arm_smmuv3_pmu.c
-@@ -431,6 +431,17 @@ static int smmu_pmu_event_init(struct perf_event *event)
- 			return -EINVAL;
- 	}
- 
-+	/*
-+	 * Ensure all events are on the same cpu so all events are in the
-+	 * same cpu context, to avoid races on pmu_enable etc.
-+	 */
-+	event->cpu = smmu_pmu->on_cpu;
-+
-+	hwc->idx = -1;
-+
-+	if (event->group_leader == event)
-+		return 0;
-+
- 	for_each_sibling_event(sibling, event->group_leader) {
- 		if (is_software_event(sibling))
+diff --git a/drivers/perf/arm-cmn.c b/drivers/perf/arm-cmn.c
+index 397a46410f7cb..30506c43776f1 100644
+--- a/drivers/perf/arm-cmn.c
++++ b/drivers/perf/arm-cmn.c
+@@ -2178,8 +2178,6 @@ static int arm_cmn_init_dtcs(struct arm_cmn *cmn)
  			continue;
-@@ -442,14 +453,6 @@ static int smmu_pmu_event_init(struct perf_event *event)
- 			return -EINVAL;
- 	}
  
--	hwc->idx = -1;
--
--	/*
--	 * Ensure all events are on the same cpu so all events are in the
--	 * same cpu context, to avoid races on pmu_enable etc.
--	 */
--	event->cpu = smmu_pmu->on_cpu;
--
- 	return 0;
- }
+ 		xp = arm_cmn_node_to_xp(cmn, dn);
+-		dn->portid_bits = xp->portid_bits;
+-		dn->deviceid_bits = xp->deviceid_bits;
+ 		dn->dtc = xp->dtc;
+ 		dn->dtm = xp->dtm;
+ 		if (cmn->multi_dtm)
+@@ -2420,6 +2418,8 @@ static int arm_cmn_discover(struct arm_cmn *cmn, unsigned int rgn_offset)
+ 			}
  
+ 			arm_cmn_init_node_info(cmn, reg & CMN_CHILD_NODE_ADDR, dn);
++			dn->portid_bits = xp->portid_bits;
++			dn->deviceid_bits = xp->deviceid_bits;
+ 
+ 			switch (dn->type) {
+ 			case CMN_TYPE_DTC:
 -- 
 2.43.0
 
