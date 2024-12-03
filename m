@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04C3717BB16;
-	Tue,  3 Dec 2024 14:39:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30DD81F4283;
+	Tue,  3 Dec 2024 14:39:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733236784; cv=none; b=YO+MZf8Yh8lEFjWhZ0o5QBHTXZCBEhr+tbUTXesWa76FOnoYGdWrh/ku+Cu4s53OGI+sIthe55Ks8D2yn2/hiwnuNNHeoekK5Z7KIp48ruRZ4q1SJixOBrAuvJuy7Ou5k1Q96DXMXcbET/ZEhHxhkq3/2UhVDL5f8At5EPpdhLo=
+	t=1733236787; cv=none; b=Ir3cXj04BzifUFaZzOukyAcJyIRtwZ9Nv2moe+Jr+mD/59N5h5AnVNhabQ+wLzmUIyxRFj/APdV93aL70lTHZID05sb3MxVXi73Bu6XPn8X9pYfhjDMh9MgJkF2bsGgoUc4qo96Ah1kRavudbpZM7aK7o455Ds3WyswRi1DGyS4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733236784; c=relaxed/simple;
-	bh=ScdG3CDh8b9GK0vF5W518esrVDIJ62Ii5tdx8NVHwV4=;
+	s=arc-20240116; t=1733236787; c=relaxed/simple;
+	bh=sXy7KNwz3RzfedcZnIALBJ6A6n4KYZ0694itxRZgiWQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KYXzx4OxYuLkhVtFW9KueQ05UvmCpj2y2KmS1EYFbRuW76f7vxAHYZcg7Wh+8g0Untnw+l1q2/INZhfKlB7H+xccQHeT8P3cFqHLDkCQInitvZyu5mJ6L3s5yA2D32ACl9I8M+SmD+zI/XtVSc+Jow1vX4d/Js1P65oA/tjVMCo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kfhd8j9y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=re7pQvocUYbC0aQ/7HoArXr+C+I0F+4mP4pjuFRxhxlprdgTx+Od6PM24L3dTmjZnE4U6s6646VQApHtLmtfg0O+BIU8ce1X4EWPElDgD/atEAlsCBmvlQoL9smIuDGjJ9S/tLd6M1roTyEDtMLkitwH1bo0U18SYZ95wzuoYns=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1yGFXjlL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kfhd8j9y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C7A8C4CECF;
-	Tue,  3 Dec 2024 14:39:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1yGFXjlL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FAD7C4CECF;
+	Tue,  3 Dec 2024 14:39:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733236783;
-	bh=ScdG3CDh8b9GK0vF5W518esrVDIJ62Ii5tdx8NVHwV4=;
+	s=korg; t=1733236787;
+	bh=sXy7KNwz3RzfedcZnIALBJ6A6n4KYZ0694itxRZgiWQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Kfhd8j9ySwlPzmqLSd80tyEsHzRyPZ8RWewkEbjSEZbXc6eiyStL2Q2qqDL81gMaV
-	 fvRDs8gRwCRPP4DPjTSRZfygjOK/90mxEVNfyy6SVli61t8jOk/GPHNHVISZAdbXbJ
-	 rbH5PSz2d6vHYDfAxgQEiHvYHP6FvG5zk7VsyHdg=
+	b=1yGFXjlLqRQBE1puU69GkT6WpYtd4W+D1UtG2HuWqGjph1Ox30ZHMRhuyK/pONC49
+	 vScUVUuQ8qhlSrCcMgpY5IQWgRBVbhd77nYXnD9AznZWxDYJ9uTRh5gTJpYqCgdqoC
+	 /dLH96AcBhjPyjZvK5Broy/e7OaeWXhEiefvT+kA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vitalii Mordan <mordan@ispras.ru>,
-	Alan Stern <stern@rowland.harvard.edu>
-Subject: [PATCH 4.19 099/138] usb: ehci-spear: fix call balance of sehci clk handling routines
-Date: Tue,  3 Dec 2024 15:32:08 +0100
-Message-ID: <20241203141927.351557517@linuxfoundation.org>
+	Tiwei Bie <tiwei.btw@antgroup.com>,
+	Anton Ivanov <anton.ivanov@cambridgegreys.com>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 4.19 117/138] um: vector: Do not use drvdata in release
+Date: Tue,  3 Dec 2024 15:32:26 +0100
+Message-ID: <20241203141928.041110126@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203141923.524658091@linuxfoundation.org>
 References: <20241203141923.524658091@linuxfoundation.org>
@@ -50,50 +51,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vitalii Mordan <mordan@ispras.ru>
+From: Tiwei Bie <tiwei.btw@antgroup.com>
 
-commit 40c974826734836402abfd44efbf04f63a2cc1c1 upstream.
+commit 51b39d741970742a5c41136241a9c48ac607cf82 upstream.
 
-If the clock sehci->clk was not enabled in spear_ehci_hcd_drv_probe,
-it should not be disabled in any path.
+The drvdata is not available in release. Let's just use container_of()
+to get the vector_device instance. Otherwise, removing a vector device
+will result in a crash:
 
-Conversely, if it was enabled in spear_ehci_hcd_drv_probe, it must be disabled
-in all error paths to ensure proper cleanup.
+RIP: 0033:vector_device_release+0xf/0x50
+RSP: 00000000e187bc40  EFLAGS: 00010202
+RAX: 0000000060028f61 RBX: 00000000600f1baf RCX: 00000000620074e0
+RDX: 000000006220b9c0 RSI: 0000000060551c80 RDI: 0000000000000000
+RBP: 00000000e187bc50 R08: 00000000603ad594 R09: 00000000e187bb70
+R10: 000000000000135a R11: 00000000603ad422 R12: 00000000623ae028
+R13: 000000006287a200 R14: 0000000062006d30 R15: 00000000623700b6
+Kernel panic - not syncing: Segfault with no mm
+CPU: 0 UID: 0 PID: 16 Comm: kworker/0:1 Not tainted 6.12.0-rc6-g59b723cd2adb #1
+Workqueue: events mc_work_proc
+Stack:
+ 60028f61 623ae028 e187bc80 60276fcd
+ 6220b9c0 603f5820 623ae028 00000000
+ e187bcb0 603a2bcd 623ae000 62370010
+Call Trace:
+ [<60028f61>] ? vector_device_release+0x0/0x50
+ [<60276fcd>] device_release+0x70/0xba
+ [<603a2bcd>] kobject_put+0xba/0xe7
+ [<60277265>] put_device+0x19/0x1c
+ [<60281266>] platform_device_put+0x26/0x29
+ [<60281e5f>] platform_device_unregister+0x2c/0x2e
+ [<60029422>] vector_remove+0x52/0x58
+ [<60031316>] ? mconsole_reply+0x0/0x50
+ [<600310c8>] mconsole_remove+0x160/0x1cc
+ [<603b19f4>] ? strlen+0x0/0x15
+ [<60066611>] ? __dequeue_entity+0x1a9/0x206
+ [<600666a7>] ? set_next_entity+0x39/0x63
+ [<6006666e>] ? set_next_entity+0x0/0x63
+ [<60038fa6>] ? um_set_signals+0x0/0x43
+ [<6003070c>] mc_work_proc+0x77/0x91
+ [<60057664>] process_scheduled_works+0x1b3/0x2dd
+ [<60055f32>] ? assign_work+0x0/0x58
+ [<60057f0a>] worker_thread+0x1e9/0x293
+ [<6005406f>] ? set_pf_worker+0x0/0x64
+ [<6005d65d>] ? arch_local_irq_save+0x0/0x2d
+ [<6005d748>] ? kthread_exit+0x0/0x3a
+ [<60057d21>] ? worker_thread+0x0/0x293
+ [<6005dbf1>] kthread+0x126/0x12b
+ [<600219c5>] new_thread_handler+0x85/0xb6
 
-Found by Linux Verification Center (linuxtesting.org) with Klever.
-
-Fixes: 7675d6ba436f ("USB: EHCI: make ehci-spear a separate driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Vitalii Mordan <mordan@ispras.ru>
-Acked-by: Alan Stern <stern@rowland.harvard.edu>
-Link: https://lore.kernel.org/r/20241114230310.432213-1-mordan@ispras.ru
+Signed-off-by: Tiwei Bie <tiwei.btw@antgroup.com>
+Acked-By: Anton Ivanov <anton.ivanov@cambridgegreys.com>
+Link: https://patch.msgid.link/20241104163203.435515-5-tiwei.btw@antgroup.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/ehci-spear.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ arch/um/drivers/vector_kern.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/host/ehci-spear.c
-+++ b/drivers/usb/host/ehci-spear.c
-@@ -110,7 +110,9 @@ static int spear_ehci_hcd_drv_probe(stru
- 	/* registers start at offset 0x0 */
- 	hcd_to_ehci(hcd)->caps = hcd->regs;
+--- a/arch/um/drivers/vector_kern.c
++++ b/arch/um/drivers/vector_kern.c
+@@ -797,7 +797,8 @@ static struct platform_driver uml_net_dr
  
--	clk_prepare_enable(sehci->clk);
-+	retval = clk_prepare_enable(sehci->clk);
-+	if (retval)
-+		goto err_put_hcd;
- 	retval = usb_add_hcd(hcd, irq, IRQF_SHARED);
- 	if (retval)
- 		goto err_stop_ehci;
-@@ -135,8 +137,7 @@ static int spear_ehci_hcd_drv_remove(str
+ static void vector_device_release(struct device *dev)
+ {
+-	struct vector_device *device = dev_get_drvdata(dev);
++	struct vector_device *device =
++		container_of(dev, struct vector_device, pdev.dev);
+ 	struct net_device *netdev = device->dev;
  
- 	usb_remove_hcd(hcd);
- 
--	if (sehci->clk)
--		clk_disable_unprepare(sehci->clk);
-+	clk_disable_unprepare(sehci->clk);
- 	usb_put_hcd(hcd);
- 
- 	return 0;
+ 	list_del(&device->list);
 
 
