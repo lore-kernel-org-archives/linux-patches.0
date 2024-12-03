@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3085B1F6698;
-	Tue,  3 Dec 2024 14:53:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93E5D1F6698;
+	Tue,  3 Dec 2024 14:53:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733237610; cv=none; b=GMB4zIP78B88KvMNkyaRN4ZzJNMO8laWweY+mRIBwQzZwCXk6yzx4Ai8phlDr4q3vXTEhfRSh9ELQzNEsH81sRcMTscOrApIfqLE1/zgmA96wmDnGY0Fw9vm5Xe73uh3eKq771I9WF85eAhHkbnG2l/9XFCqrhUTscOVJADQmdo=
+	t=1733237613; cv=none; b=VkJXlL4RDZIQxQSy7gWG2FKjTMuLHaiOo2jC4FREthSPJM2mE2TPD68LPujjSae4p4Q0GX4JPXZt8RWnH/CtU5vWgO0HONE0nl5Uu/iwmAe7ZsJzqDETBG7m2U+yhP2rb1oY3cnq0qoSzg6Cjqduum63GBGK3qs5gaVDDWoxZ1A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733237610; c=relaxed/simple;
-	bh=JiSnIzOal+Pav3ceDYVQ3Be8uuZur/6vHYNrfelAjlA=;
+	s=arc-20240116; t=1733237613; c=relaxed/simple;
+	bh=xSQbIVznNyfftIoXyPaSstSoXA65Jpmag9cUe/0S2ls=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=POonbXO+WdSGo0PSkoYh418L9q5T8kwds4WgiwCVxgx0mbBkzHWDY3VfzfyriTd/dyl9Z9BVriCW4or3Jd0OE5b/5BHxVCrnZTffrfFzRtE5j2yTUrWrwICOWumumt6vQaT0LUwbvRBfNt3NEJeC+xXanitCxtRsXNOk/IYeKsU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xYSaTBx3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SVJFJbbT2Z1JOrDu7W2dDvMU6PGfRBlJ3CxVNCC/bFbNx1V4WHxvHwrg6MYlxTjmSHpxqZ7MmRDkstPScPif0wPqtVNm/hrtPqDD9jOWIsVPF0W/WTss+ef6/XR87jkuC1cKnI/4sFkkHYO9eGX55BBO4fZh+JtmK/FEa7tcv+w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ljtkzczu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xYSaTBx3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9380CC4CECF;
-	Tue,  3 Dec 2024 14:53:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ljtkzczu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFE2BC4CECF;
+	Tue,  3 Dec 2024 14:53:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733237610;
-	bh=JiSnIzOal+Pav3ceDYVQ3Be8uuZur/6vHYNrfelAjlA=;
+	s=korg; t=1733237613;
+	bh=xSQbIVznNyfftIoXyPaSstSoXA65Jpmag9cUe/0S2ls=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xYSaTBx3nH7JbL259S0Uu65bn0wYr+wiJT8LUNIzRA5e/mjtWGuboTvGaCR7dic4m
-	 Ls/n/1BriAdWTPwtOQ6eAKB08hYVm2zVSvb+iI+mYFmuucxKmkxAssZ4zUTCVsVto8
-	 UUHS09rg3QyK3/ACVcTH2YkoKe5YA7MdWgGjA+vo=
+	b=LjtkzczuwV5b+tAkDj5oRshe4S+X6KY3t2hz5j9f+uCofXRa9JGO4W53IUlWTsKZ7
+	 hDjJhW/pyKwtT/QnCZGZF/wRv5LC4fsmBzIQRZ6mKDC8xGqxgn35nKH9LsgTkmMgS0
+	 0kDzknMN4IXieAi9+uvLKtMJtTCdXLajwW2x0+Zc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Remi Pommarel <repk@triplefau.lt>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Jiayuan Chen <mrpre@163.com>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 002/817] wifi: cfg80211: Add wiphy_delayed_work_pending()
-Date: Tue,  3 Dec 2024 15:32:54 +0100
-Message-ID: <20241203143955.714324907@linuxfoundation.org>
+Subject: [PATCH 6.11 020/817] bpf: fix filed access without lock
+Date: Tue,  3 Dec 2024 15:33:12 +0100
+Message-ID: <20241203143956.430935977@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -51,97 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Remi Pommarel <repk@triplefau.lt>
+From: Jiayuan Chen <mrpre@163.com>
 
-[ Upstream commit 68d0021fe7231eec0fb84cd110cf62a6e782b72d ]
+[ Upstream commit a32aee8f0d987a7cba7fcc28002553361a392048 ]
 
-Add wiphy_delayed_work_pending() to check if any delayed work timer is
-pending, that can be used to be sure that wiphy_delayed_work_queue()
-won't postpone an already pending delayed work.
+The tcp_bpf_recvmsg_parser() function, running in user context,
+retrieves seq_copied from tcp_sk without holding the socket lock, and
+stores it in a local variable seq. However, the softirq context can
+modify tcp_sk->seq_copied concurrently, for example, n tcp_read_sock().
 
-Signed-off-by: Remi Pommarel <repk@triplefau.lt>
-Link: https://patch.msgid.link/20240924192805.13859-2-repk@triplefau.lt
-[fix return value kernel-doc]
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+As a result, the seq value is stale when it is assigned back to
+tcp_sk->copied_seq at the end of tcp_bpf_recvmsg_parser(), leading to
+incorrect behavior.
+
+Due to concurrency, the copied_seq field in tcp_bpf_recvmsg_parser()
+might be set to an incorrect value (less than the actual copied_seq) at
+the end of function: 'WRITE_ONCE(tcp->copied_seq, seq)'. This causes the
+'offset' to be negative in tcp_read_sock()->tcp_recv_skb() when
+processing new incoming packets (sk->copied_seq - skb->seq becomes less
+than 0), and all subsequent packets will be dropped.
+
+Signed-off-by: Jiayuan Chen <mrpre@163.com>
+Link: https://lore.kernel.org/r/20241028065226.35568-1-mrpre@163.com
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/cfg80211.h | 44 ++++++++++++++++++++++++++++++++++++++++++
- net/wireless/core.c    |  7 +++++++
- 2 files changed, 51 insertions(+)
+ net/ipv4/tcp_bpf.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/include/net/cfg80211.h b/include/net/cfg80211.h
-index 192d72c8b4654..702653448d2fc 100644
---- a/include/net/cfg80211.h
-+++ b/include/net/cfg80211.h
-@@ -6129,6 +6129,50 @@ void wiphy_delayed_work_cancel(struct wiphy *wiphy,
- void wiphy_delayed_work_flush(struct wiphy *wiphy,
- 			      struct wiphy_delayed_work *dwork);
- 
-+/**
-+ * wiphy_delayed_work_pending - Find out whether a wiphy delayable
-+ * work item is currently pending.
-+ *
-+ * @wiphy: the wiphy, for debug purposes
-+ * @dwork: the delayed work in question
-+ *
-+ * Return: true if timer is pending, false otherwise
-+ *
-+ * How wiphy_delayed_work_queue() works is by setting a timer which
-+ * when it expires calls wiphy_work_queue() to queue the wiphy work.
-+ * Because wiphy_delayed_work_queue() uses mod_timer(), if it is
-+ * called twice and the second call happens before the first call
-+ * deadline, the work will rescheduled for the second deadline and
-+ * won't run before that.
-+ *
-+ * wiphy_delayed_work_pending() can be used to detect if calling
-+ * wiphy_work_delayed_work_queue() would start a new work schedule
-+ * or delayed a previous one. As seen below it cannot be used to
-+ * detect precisely if the work has finished to execute nor if it
-+ * is currently executing.
-+ *
-+ *      CPU0                                CPU1
-+ * wiphy_delayed_work_queue(wk)
-+ *  mod_timer(wk->timer)
-+ *                                     wiphy_delayed_work_pending(wk) -> true
-+ *
-+ * [...]
-+ * expire_timers(wk->timer)
-+ *  detach_timer(wk->timer)
-+ *                                     wiphy_delayed_work_pending(wk) -> false
-+ *  wk->timer->function()                          |
-+ *   wiphy_work_queue(wk)                          | delayed work pending
-+ *    list_add_tail()                              | returns false but
-+ *    queue_work(cfg80211_wiphy_work)              | wk->func() has not
-+ *                                                 | been run yet
-+ * [...]                                           |
-+ *  cfg80211_wiphy_work()                          |
-+ *   wk->func()                                    V
-+ *
-+ */
-+bool wiphy_delayed_work_pending(struct wiphy *wiphy,
-+				struct wiphy_delayed_work *dwork);
-+
- /**
-  * enum ieee80211_ap_reg_power - regulatory power for an Access Point
-  *
-diff --git a/net/wireless/core.c b/net/wireless/core.c
-index c9ebf9449fcc3..b2b512923ecee 100644
---- a/net/wireless/core.c
-+++ b/net/wireless/core.c
-@@ -1705,6 +1705,13 @@ void wiphy_delayed_work_flush(struct wiphy *wiphy,
- }
- EXPORT_SYMBOL_GPL(wiphy_delayed_work_flush);
- 
-+bool wiphy_delayed_work_pending(struct wiphy *wiphy,
-+				struct wiphy_delayed_work *dwork)
-+{
-+	return timer_pending(&dwork->timer);
-+}
-+EXPORT_SYMBOL_GPL(wiphy_delayed_work_pending);
-+
- static int __init cfg80211_init(void)
+diff --git a/net/ipv4/tcp_bpf.c b/net/ipv4/tcp_bpf.c
+index fe6178715ba05..915286c3615a2 100644
+--- a/net/ipv4/tcp_bpf.c
++++ b/net/ipv4/tcp_bpf.c
+@@ -221,11 +221,11 @@ static int tcp_bpf_recvmsg_parser(struct sock *sk,
+ 				  int flags,
+ 				  int *addr_len)
  {
- 	int err;
+-	struct tcp_sock *tcp = tcp_sk(sk);
+ 	int peek = flags & MSG_PEEK;
+-	u32 seq = tcp->copied_seq;
+ 	struct sk_psock *psock;
++	struct tcp_sock *tcp;
+ 	int copied = 0;
++	u32 seq;
+ 
+ 	if (unlikely(flags & MSG_ERRQUEUE))
+ 		return inet_recv_error(sk, msg, len, addr_len);
+@@ -238,7 +238,8 @@ static int tcp_bpf_recvmsg_parser(struct sock *sk,
+ 		return tcp_recvmsg(sk, msg, len, flags, addr_len);
+ 
+ 	lock_sock(sk);
+-
++	tcp = tcp_sk(sk);
++	seq = tcp->copied_seq;
+ 	/* We may have received data on the sk_receive_queue pre-accept and
+ 	 * then we can not use read_skb in this context because we haven't
+ 	 * assigned a sk_socket yet so have no link to the ops. The work-around
 -- 
 2.43.0
 
