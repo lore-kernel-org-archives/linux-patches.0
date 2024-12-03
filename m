@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13C5E81ADA;
-	Tue,  3 Dec 2024 16:10:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70BB31F8924;
+	Tue,  3 Dec 2024 16:10:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733242245; cv=none; b=ZwNlICPj77y1mQDGszlbTa1qSUuNcRD7HpPmuiGRi7g+31xUa/sdacKr55DWrJ/IZnFmzVW2GNcJ3hKd7VfTaENtbqe6OKc0dOals5dEn6d/C4wgqifHfM56l3A83AyDtrv45TRT+KupCQ3cWfEKx5p6JaSyGwUUNJofHe4++18=
+	t=1733242248; cv=none; b=eo8fJNlDIzc6OO60ICWqEGoBKoQ3rh/jAwofnBlzrcGMUFlDt1ehz5sEKaw9axCEb6SUBHr601I5YGDIHtbl+ReFfSkcrL6p7/NW8rG1hR9hjSCQt7BBup1BxTWxsf6AtRdMAVaPabIOJ3Pf4axp389mXEZg9Ixuq1ZguO5Uoyw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733242245; c=relaxed/simple;
-	bh=VEZEAUpfmbEC6+YHmAvJcDEx63bLyVPhyQ/gb/tK3eo=;
+	s=arc-20240116; t=1733242248; c=relaxed/simple;
+	bh=OL9EtpsDcJtUfuEqyV9mjklKEDJf4o3zVz4rY2n9/WE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oJkUnuptZ+DVf7UogaUwyuM7yjUo3WKaq4NwBWa0bHWfW6ZK9cRNVn1bzwgMisR58KigZScgL8ysQOn4oXlEVpMcJUSlRVW7IZLFBR9R1yqDuKQusWPYm4j5tGpyrcqclmXBP/ueC2w+bpx8GzwvFjDilaIdCpsclnLFYWlZEl4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iHxhaCBB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ko+OnmiFNpvbFUl6N9PJLxkquDKZGTGC2ALgbf1MXERDqET9qjHwG7uqMCNySlUQfkzWsQEjCPAD9Jr0l06sSkLGtBOpQkwZ58D/d2sxuipSs5VJHTEIv+18rMPOxqBRWneipXpgloy0BdzYC7GmD5tW4ImMrIclyGtvSDsGWtE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XztMbcJt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iHxhaCBB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7574FC4CECF;
-	Tue,  3 Dec 2024 16:10:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XztMbcJt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB6A6C4CECF;
+	Tue,  3 Dec 2024 16:10:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733242244;
-	bh=VEZEAUpfmbEC6+YHmAvJcDEx63bLyVPhyQ/gb/tK3eo=;
+	s=korg; t=1733242248;
+	bh=OL9EtpsDcJtUfuEqyV9mjklKEDJf4o3zVz4rY2n9/WE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iHxhaCBBS2pBJlUdNm85ogkT4RaeJQ2MZok9jpUhed07NX6RlE83d/YEPHUxTSgyc
-	 6iWjF5UWcwI3Tm8oT7Q/sS6cX97+snbrbppdaykAZMGiewv5274OHRTZ/9i0zJxugl
-	 KJDmGDkxLdu4yOCviCQPWXaLJYiHXvflGdcmKuBA=
+	b=XztMbcJt9U80vi8qf0+oGeZne9pgVE7/KGMxH5qPx8qeIrFNqjc6h1FU9x5JoeNqv
+	 REvnUWcjwL3EuyJs7b7kk8kdWDiaFAF9ipALsoxkfMKEnE/SigLH0DQt/Wr+d083mr
+	 kRcZsWGGmSa10G0FBI3yVCNN8OCoRC7UF2c5dW60=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zichen Xie <zichenxie0106@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Venkata Prasad Potturu <venkataprasad.potturu@amd.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 618/826] ALSA: core: Fix possible NULL dereference caused by kunit_kzalloc()
-Date: Tue,  3 Dec 2024 15:45:45 +0100
-Message-ID: <20241203144807.860982126@linuxfoundation.org>
+Subject: [PATCH 6.12 619/826] ASoC: amd: yc: Fix for enabling DMIC on acp6x via _DSD entry
+Date: Tue,  3 Dec 2024 15:45:46 +0100
+Message-ID: <20241203144807.898781012@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -51,77 +51,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zichen Xie <zichenxie0106@gmail.com>
+From: Venkata Prasad Potturu <venkataprasad.potturu@amd.com>
 
-[ Upstream commit 9ad467a2b2716d4ed12f003b041aa6c776a13ff5 ]
+[ Upstream commit 4095cf872084ecfdfdb0e681f3e9ff9745acfa75 ]
 
-kunit_kzalloc() may return a NULL pointer, dereferencing it without
-NULL check may lead to NULL dereference.
-Add NULL checks for all the kunit_kzalloc() in sound_kunit.c
+Add condition check to register ACP PDM sound card by reading
+_WOV acpi entry.
 
-Fixes: 3e39acf56ede ("ALSA: core: Add sound core KUnit test")
-Signed-off-by: Zichen Xie <zichenxie0106@gmail.com>
-Link: https://patch.msgid.link/20241126192448.12645-1-zichenxie0106@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 5426f506b584 ("ASoC: amd: Add support for enabling DMIC on acp6x via _DSD")
+
+Signed-off-by: Venkata Prasad Potturu <venkataprasad.potturu@amd.com>
+Link: https://patch.msgid.link/20241127112227.227106-1-venkataprasad.potturu@amd.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/sound_kunit.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ sound/soc/amd/yc/acp6x-mach.c | 18 +++++++++++++++++-
+ 1 file changed, 17 insertions(+), 1 deletion(-)
 
-diff --git a/sound/core/sound_kunit.c b/sound/core/sound_kunit.c
-index bfed1a25fc8f7..84e337ecbddd0 100644
---- a/sound/core/sound_kunit.c
-+++ b/sound/core/sound_kunit.c
-@@ -172,6 +172,7 @@ static void test_format_fill_silence(struct kunit *test)
- 	u32 i, j;
+diff --git a/sound/soc/amd/yc/acp6x-mach.c b/sound/soc/amd/yc/acp6x-mach.c
+index 2436e8deb2be4..639e7136ef2a7 100644
+--- a/sound/soc/amd/yc/acp6x-mach.c
++++ b/sound/soc/amd/yc/acp6x-mach.c
+@@ -537,8 +537,14 @@ static int acp6x_probe(struct platform_device *pdev)
+ 	struct acp6x_pdm *machine = NULL;
+ 	struct snd_soc_card *card;
+ 	struct acpi_device *adev;
++	acpi_handle handle;
++	acpi_integer dmic_status;
+ 	int ret;
++	bool is_dmic_enable, wov_en;
  
- 	buffer = kunit_kzalloc(test, SILENCE_BUFFER_SIZE, GFP_KERNEL);
-+	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, buffer);
++	/* IF WOV entry not found, enable dmic based on AcpDmicConnected entry*/
++	is_dmic_enable = false;
++	wov_en = true;
+ 	/* check the parent device's firmware node has _DSD or not */
+ 	adev = ACPI_COMPANION(pdev->dev.parent);
+ 	if (adev) {
+@@ -546,9 +552,19 @@ static int acp6x_probe(struct platform_device *pdev)
  
- 	for (i = 0; i < ARRAY_SIZE(buf_samples); i++) {
- 		for (j = 0; j < ARRAY_SIZE(valid_fmt); j++)
-@@ -208,8 +209,12 @@ static void test_playback_avail(struct kunit *test)
- 	struct snd_pcm_runtime *r = kunit_kzalloc(test, sizeof(*r), GFP_KERNEL);
- 	u32 i;
+ 		if (!acpi_dev_get_property(adev, "AcpDmicConnected", ACPI_TYPE_INTEGER, &obj) &&
+ 		    obj->integer.value == 1)
+-			platform_set_drvdata(pdev, &acp6x_card);
++			is_dmic_enable = true;
+ 	}
  
-+	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, r);
++	handle = ACPI_HANDLE(pdev->dev.parent);
++	ret = acpi_evaluate_integer(handle, "_WOV", NULL, &dmic_status);
++	if (!ACPI_FAILURE(ret))
++		wov_en = dmic_status;
 +
- 	r->status = kunit_kzalloc(test, sizeof(*r->status), GFP_KERNEL);
- 	r->control = kunit_kzalloc(test, sizeof(*r->control), GFP_KERNEL);
-+	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, r->status);
-+	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, r->control);
- 
- 	for (i = 0; i < ARRAY_SIZE(p_avail_data); i++) {
- 		r->buffer_size = p_avail_data[i].buffer_size;
-@@ -232,8 +237,12 @@ static void test_capture_avail(struct kunit *test)
- 	struct snd_pcm_runtime *r = kunit_kzalloc(test, sizeof(*r), GFP_KERNEL);
- 	u32 i;
- 
-+	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, r);
++	if (is_dmic_enable && wov_en)
++		platform_set_drvdata(pdev, &acp6x_card);
++	else
++		return 0;
 +
- 	r->status = kunit_kzalloc(test, sizeof(*r->status), GFP_KERNEL);
- 	r->control = kunit_kzalloc(test, sizeof(*r->control), GFP_KERNEL);
-+	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, r->status);
-+	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, r->control);
- 
- 	for (i = 0; i < ARRAY_SIZE(c_avail_data); i++) {
- 		r->buffer_size = c_avail_data[i].buffer_size;
-@@ -247,6 +256,7 @@ static void test_capture_avail(struct kunit *test)
- static void test_card_set_id(struct kunit *test)
- {
- 	struct snd_card *card = kunit_kzalloc(test, sizeof(*card), GFP_KERNEL);
-+	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, card);
- 
- 	snd_card_set_id(card, VALID_NAME);
- 	KUNIT_EXPECT_STREQ(test, card->id, VALID_NAME);
-@@ -280,6 +290,7 @@ static void test_pcm_format_name(struct kunit *test)
- static void test_card_add_component(struct kunit *test)
- {
- 	struct snd_card *card = kunit_kzalloc(test, sizeof(*card), GFP_KERNEL);
-+	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, card);
- 
- 	snd_component_add(card, TEST_FIRST_COMPONENT);
- 	KUNIT_ASSERT_STREQ(test, card->components, TEST_FIRST_COMPONENT);
+ 	/* check for any DMI overrides */
+ 	dmi_id = dmi_first_match(yc_acp_quirk_table);
+ 	if (dmi_id)
 -- 
 2.43.0
 
