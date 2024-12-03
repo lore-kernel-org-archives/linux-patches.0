@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1E165336E;
-	Tue,  3 Dec 2024 15:39:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1727F1F8AE1;
+	Tue,  3 Dec 2024 15:39:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733240350; cv=none; b=QEtxvGSQ3NTha4Ub0kICozvrYtxQJ4xC1N7SlH0Do0UyVR/071LEtqawbMEwIlFCYbmGgjegKJ0MAdOu07Xtp7GY/AbEU1oyAsTvWIYH5wkIBU4uSNlb777bEpxznwG4N6kZ2rTJae+Xr8sZPPs4ykuT9LBnWeHcLS5VjjXRo9Q=
+	t=1733240354; cv=none; b=oPRWFpkNiGi8ZIbUrlfiOIvnSotYoBW1FxaQh5JmB2oRwPu+FLnwwEaOeQHVNfjlS5JvxEyVksrzL4FaJNnqnWyTytJwqrksgbkeHT2sg6ABF6HcLpjikOTWe3ly8iJtRsKaS9hWcL3hKz4MMMts1rRFHNsbPkgfQN3AKWwRL+Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733240350; c=relaxed/simple;
-	bh=Vtvx8CPZTan3W/CK9wUEA/uDlg07JgRd6wnNvehI+Co=;
+	s=arc-20240116; t=1733240354; c=relaxed/simple;
+	bh=NY5GKipIU+64WwaYP1cP1Hl6v83XonnXcLdoq90F7OY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iUsUYVYYpTjAy3mL50J250kI3m9nFS9v5B0RIFZrY84w4SuctlCzfA2XeRDvZOPHHF46XTdHZxyLkvqZvHQkAVGL5+tdiQgYmLCHGnQEBwXrJvjisJmFk0753tsXKKjwDf2vU+2iZebWHgzgnw6KjwReC5eN20wu8jfTUhMbVbU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QKo/9VkI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=epiXL4dt9lN4dJ5CJfJtbGiHWTHo428Ln7Ks69HtMrlNiNo6hR9Tau/QMdRtOd9M0UBEKgVXcpQYoiFWqu4AkcozrO30xH0uduv8U008n0JY4EsBELRNsQsNO0JONn+Q+Frz8ug2I8czcEbUsH9a/LEsStSH9fEol7MBgT4Skqo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wBNUag/C; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QKo/9VkI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25FACC4CECF;
-	Tue,  3 Dec 2024 15:39:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wBNUag/C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85349C4CECF;
+	Tue,  3 Dec 2024 15:39:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733240350;
-	bh=Vtvx8CPZTan3W/CK9wUEA/uDlg07JgRd6wnNvehI+Co=;
+	s=korg; t=1733240353;
+	bh=NY5GKipIU+64WwaYP1cP1Hl6v83XonnXcLdoq90F7OY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QKo/9VkIgPfstfa42+cAGeIsGOJJGe/7VBAsVnsDA3VADs7jzSsyiTPRm4stc4kp1
-	 Uwur5JBRKlt4DYy2Ojz2fa1NnUDo8BS0e4tLwnKQOCOaT34QUNx978wMfR4WaCFoSg
-	 JRz6XqXzSUjtc67ETdAB6lBd8vkmj13zz3YC11Lg=
+	b=wBNUag/CHkP95+ke0bUom1eU73mOoHSDorSgugXnoZ7SNRJYbVrez7viy/THbt7sY
+	 3tb9/Q8zzqqAKmk3qTksBlIb/LbbtanVdCwjd4RJ19ANGKAkuw6PBv2LgSTOAgDyQQ
+	 vYTiJYxxF79ZwpBi6ZZb0+VdDDwD7CMiMpJkx3fs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pin-yen Lin <treapking@chromium.org>,
-	kernel test robot <lkp@intel.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Jinjie Ruan <ruanjinjie@huawei.com>,
+	Kevin Hilman <khilman@baylibre.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 110/826] arm64: dts: mt8183: Add port node to dpi node
-Date: Tue,  3 Dec 2024 15:37:17 +0100
-Message-ID: <20241203144748.035009825@linuxfoundation.org>
+Subject: [PATCH 6.12 111/826] soc: ti: smartreflex: Use IRQF_NO_AUTOEN flag in request_irq()
+Date: Tue,  3 Dec 2024 15:37:18 +0100
+Message-ID: <20241203144748.073506766@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -52,38 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pin-yen Lin <treapking@chromium.org>
+From: Jinjie Ruan <ruanjinjie@huawei.com>
 
-[ Upstream commit ec1a37b3cd0cf9a1bf88816a5342fb06e3316b34 ]
+[ Upstream commit 16a0a69244240cfa32c525c021c40f85e090557a ]
 
-Add the port node to fix the binding schema check.
+If request_irq() fails in sr_late_init(), there is no need to enable
+the irq, and if it succeeds, disable_irq() after request_irq() still has
+a time gap in which interrupts can come.
 
-Fixes: 009d855a26fd ("arm64: dts: mt8183: add dpi node to mt8183")
-Signed-off-by: Pin-yen Lin <treapking@chromium.org>
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202409110843.Hm5W9upr-lkp@intel.com/
-Link: https://lore.kernel.org/r/20240912144430.3161717-3-treapking@chromium.org
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+request_irq() with IRQF_NO_AUTOEN flag will disable IRQ auto-enable when
+request IRQ.
+
+Fixes: 1279ba5916f6 ("OMAP3+: SR: disable interrupt by default")
+Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+Link: https://lore.kernel.org/r/20240912034147.3014213-1-ruanjinjie@huawei.com
+Signed-off-by: Kevin Hilman <khilman@baylibre.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/mediatek/mt8183.dtsi | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/soc/ti/smartreflex.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/mediatek/mt8183.dtsi b/arch/arm64/boot/dts/mediatek/mt8183.dtsi
-index 266441e999f21..0a6578aacf828 100644
---- a/arch/arm64/boot/dts/mediatek/mt8183.dtsi
-+++ b/arch/arm64/boot/dts/mediatek/mt8183.dtsi
-@@ -1845,6 +1845,10 @@ dpi0: dpi@14015000 {
- 				 <&mmsys CLK_MM_DPI_MM>,
- 				 <&apmixedsys CLK_APMIXED_TVDPLL>;
- 			clock-names = "pixel", "engine", "pll";
-+
-+			port {
-+				dpi_out: endpoint { };
-+			};
- 		};
+diff --git a/drivers/soc/ti/smartreflex.c b/drivers/soc/ti/smartreflex.c
+index d6219060b616d..38add2ab56137 100644
+--- a/drivers/soc/ti/smartreflex.c
++++ b/drivers/soc/ti/smartreflex.c
+@@ -202,10 +202,10 @@ static int sr_late_init(struct omap_sr *sr_info)
  
- 		mutex: mutex@14016000 {
+ 	if (sr_class->notify && sr_class->notify_flags && sr_info->irq) {
+ 		ret = devm_request_irq(&sr_info->pdev->dev, sr_info->irq,
+-				       sr_interrupt, 0, sr_info->name, sr_info);
++				       sr_interrupt, IRQF_NO_AUTOEN,
++				       sr_info->name, sr_info);
+ 		if (ret)
+ 			goto error;
+-		disable_irq(sr_info->irq);
+ 	}
+ 
+ 	return ret;
 -- 
 2.43.0
 
