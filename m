@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD3BC1F890F;
-	Tue,  3 Dec 2024 16:18:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D05FD1F892E;
+	Tue,  3 Dec 2024 16:18:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733242691; cv=none; b=tYjRV7v9KWzTuCoF3v12ZotPs0ocbXY3kk5NmMMz9FfBvmf5ZUyU0/v5r3EdfAJItBlrTa6dizcR6o6Z8GNnJFpQKvz8gWAEHTvxOijhi75Y8xALCPKjLZBDlFVVMVsecia6RyvxM/zGWZblgO2YmR1QA8BL/E9B4YsDiutgLWo=
+	t=1733242694; cv=none; b=HxOjrr7klzhAdM5EQ90UQWdQVBUXim/Y8d19ef7RqXs25KPcQUOYYpAHAhbtGCcBLCZyXk22M5bi2bzi3nnQJSYl/7pqIFY/fs0r/n6ZzKr0chrS4g1xrgtlcENd98A362slWhUKXmmb365d071dPoFungHmPypneyrIci9Zdsc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733242691; c=relaxed/simple;
-	bh=apjnivYS//GBG9KUvmVg6dnCKzn7lCz0lq0gSqWXKeY=;
+	s=arc-20240116; t=1733242694; c=relaxed/simple;
+	bh=aQ087rllGSsPxNhyK11/q7sQNHDpjztEADyfP8hBYzo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e6r71v+UeuuQMWzCSN8qGoI3hQLQs7xmWr/qJqA8D1+AnENbBCtfGo1qqElmT/eJ81LqLMkVUOjrk+vPBTjndJpyTkQS0s1lFXVWkugF35yxqJ+zhu+W/AcCurqWDXeSAykoj3/TzOqLrjCOy98ImfkJS9D9CeG2ciJp6ppuSio=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N4x59m7R; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YcOef6X/2md3Hn/hygV9u5CPeVpuO7SDH2KVGqkgABoXDExe6S9BGGI9oLTsRa2L4QNhvj7jGp36klS6DYuqKn49KWpQlY2oic4c/3fj3w2vgXUOarZSd5mYm5KMiDXcoJTtpYyWJs8XsWDu9ar1Yu+H27WPwymXpsxJslN9r+Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lW4YvRKP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N4x59m7R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B82BEC4CED6;
-	Tue,  3 Dec 2024 16:18:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lW4YvRKP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2AC0C4CECF;
+	Tue,  3 Dec 2024 16:18:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733242691;
-	bh=apjnivYS//GBG9KUvmVg6dnCKzn7lCz0lq0gSqWXKeY=;
+	s=korg; t=1733242694;
+	bh=aQ087rllGSsPxNhyK11/q7sQNHDpjztEADyfP8hBYzo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N4x59m7RlPyXoKljZCoOSHkJUV8MAfKkeS1xnKS015jCtlbowpPYV8Kyjoro+f0zX
-	 sgzWQdKp+CVNhlVYFVs9Y2yFwkV6OP7XNsUcEhf/ubtj1njVmJLcLMicCIGqZdBWd5
-	 7emjVPJ/qji18rPmwFZIuAXxgaCa1HRQ/uZ3Glec=
+	b=lW4YvRKPuzZrBqU6BD+9pRfpVXBUm4lyxWNEX8mcz8oyQVvWhJWOM+V2f5rxmGH6X
+	 Bs9sbEjD57fxdAtGsv3dW3ZOuBZ/6TOaGywaCrm0vgNM6iFmcuIsoSHsUS6od0fBeP
+	 Q23KtwIEgMC4MvUCiJfFd4mO9vRlc8ZOz8ZmbjIU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinjie Ruan <ruanjinjie@huawei.com>,
+	Jeremy Gebben <jgebben@sweptlaser.com>,
+	Nobuhiro Iwamatsu <iwamatsu@nigauri.org>,
 	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 779/826] rtc: st-lpc: Use IRQF_NO_AUTOEN flag in request_irq()
-Date: Tue,  3 Dec 2024 15:48:26 +0100
-Message-ID: <20241203144814.152282304@linuxfoundation.org>
+Subject: [PATCH 6.12 780/826] rtc: abx80x: Fix WDT bit position of the status register
+Date: Tue,  3 Dec 2024 15:48:27 +0100
+Message-ID: <20241203144814.190695635@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -51,48 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinjie Ruan <ruanjinjie@huawei.com>
+From: Nobuhiro Iwamatsu <iwamatsu@nigauri.org>
 
-[ Upstream commit b6cd7adec0cf03f0aefc55676e71dd721cbc71a8 ]
+[ Upstream commit 10e078b273ee7a2b8b4f05a64ac458f5e652d18d ]
 
-If request_irq() fails in st_rtc_probe(), there is no need to enable
-the irq, and if it succeeds, disable_irq() after request_irq() still has
-a time gap in which interrupts can come.
+The WDT bit in the status register is 5, not 6. This fixes from 6 to 5.
 
-request_irq() with IRQF_NO_AUTOEN flag will disable IRQ auto-enable when
-request IRQ.
-
-Fixes: b5b2bdfc2893 ("rtc: st: Add new driver for ST's LPC RTC")
-Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-Link: https://lore.kernel.org/r/20240912033727.3013951-1-ruanjinjie@huawei.com
+Link: https://abracon.com/Support/AppsManuals/Precisiontiming/AB08XX-Application-Manual.pdf
+Link: https://www.microcrystal.com/fileadmin/Media/Products/RTC/App.Manual/RV-1805-C3_App-Manual.pdf
+Fixes: 749e36d0a0d7 ("rtc: abx80x: add basic watchdog support")
+Cc: Jeremy Gebben <jgebben@sweptlaser.com>
+Signed-off-by: Nobuhiro Iwamatsu <iwamatsu@nigauri.org>
+Link: https://lore.kernel.org/r/20241008041737.1640633-1-iwamatsu@nigauri.org
 Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-st-lpc.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/rtc/rtc-abx80x.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/rtc/rtc-st-lpc.c b/drivers/rtc/rtc-st-lpc.c
-index d492a2d26600c..c6d4522411b31 100644
---- a/drivers/rtc/rtc-st-lpc.c
-+++ b/drivers/rtc/rtc-st-lpc.c
-@@ -218,15 +218,14 @@ static int st_rtc_probe(struct platform_device *pdev)
- 		return -EINVAL;
- 	}
+diff --git a/drivers/rtc/rtc-abx80x.c b/drivers/rtc/rtc-abx80x.c
+index 1298962402ff4..3fee27914ba80 100644
+--- a/drivers/rtc/rtc-abx80x.c
++++ b/drivers/rtc/rtc-abx80x.c
+@@ -39,7 +39,7 @@
+ #define ABX8XX_REG_STATUS	0x0f
+ #define ABX8XX_STATUS_AF	BIT(2)
+ #define ABX8XX_STATUS_BLF	BIT(4)
+-#define ABX8XX_STATUS_WDT	BIT(6)
++#define ABX8XX_STATUS_WDT	BIT(5)
  
--	ret = devm_request_irq(&pdev->dev, rtc->irq, st_rtc_handler, 0,
--			       pdev->name, rtc);
-+	ret = devm_request_irq(&pdev->dev, rtc->irq, st_rtc_handler,
-+			       IRQF_NO_AUTOEN, pdev->name, rtc);
- 	if (ret) {
- 		dev_err(&pdev->dev, "Failed to request irq %i\n", rtc->irq);
- 		return ret;
- 	}
- 
- 	enable_irq_wake(rtc->irq);
--	disable_irq(rtc->irq);
- 
- 	rtc->clk = devm_clk_get_enabled(&pdev->dev, NULL);
- 	if (IS_ERR(rtc->clk))
+ #define ABX8XX_REG_CTRL1	0x10
+ #define ABX8XX_CTRL_WRITE	BIT(0)
 -- 
 2.43.0
 
