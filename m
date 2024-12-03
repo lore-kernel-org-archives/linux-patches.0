@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93BEF1AB6C9;
-	Tue,  3 Dec 2024 15:52:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4D5A1EF0AC;
+	Tue,  3 Dec 2024 15:52:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733241171; cv=none; b=krnK1U8ghZah662CIyaMMXBiCUQMwyGaDZ7m57J3gCWpMoKJG0aKFyWBBrMPohheUSjkRckkAW2dMgTvLf8x6lvs/D0PuL6eI2KTM8XGo4Z9QhqJNMkC/KpiKdwoTi2Fq0zh3EH8C86r9VYlkT0IxtStyyYgIclVc2fJhKJzqXM=
+	t=1733241174; cv=none; b=r0lWq9l7XGDda80iA6jAZF/1uVpD0Vprt/ftkkw569lnVpBj0B/ZIW4+exSY5Dd67xTrajQIgIKgHXAbDWgjIY9lzE/lfv7oJXKiOLemHfiaqkbAVY6jfPVlVQfX/V+e1VFkA8Ze5mzDtU3mteGSui4qH5mnsXHKIVYxDE7kMSQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733241171; c=relaxed/simple;
-	bh=mYNWszDRPm5aPU3/l3XqtfcWFT6V66RNcvGmPxz/cgM=;
+	s=arc-20240116; t=1733241174; c=relaxed/simple;
+	bh=A7ZY0AHz1OhaBFOw1iYU0uj8vqNl+bnOawQpL5WNM0s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=S+Y5OBV1CcrW6QM5ZfrS0YP3br3tRE27g5ICAJP/zHIUBVDuOfQut3bbnXx0y3M8Wtb2tH4zWuf71AJWAuCADJszPcTWGWvfYug8uhArHj9qTwn0HVxnjKuMFr1TOwTJo0YYwDYjPIOY8EOwpOXdBDKyMCIfSRRxiRXeDYrDYrI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=meH9VaMr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ABZ6XQVC8EeRtVWHZ08hRAe9+AvT20vxyRao6osS+3NDuCPP0zzdtVRbQKK6KsqfIz+PllSUh/vL57ra1V269EWGpwk5j9kwwJX5mooZm8r/AE7lZ3UFGjdAJSh3w4oc8SV2Qk2vnUeoKT26xEbLW4fN4JOBlk+7/rAGsrK/SKM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H38Sh8wu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="meH9VaMr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02E51C4CECF;
-	Tue,  3 Dec 2024 15:52:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H38Sh8wu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15AABC4CECF;
+	Tue,  3 Dec 2024 15:52:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733241171;
-	bh=mYNWszDRPm5aPU3/l3XqtfcWFT6V66RNcvGmPxz/cgM=;
+	s=korg; t=1733241174;
+	bh=A7ZY0AHz1OhaBFOw1iYU0uj8vqNl+bnOawQpL5WNM0s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=meH9VaMrE6qk8/SwxHxZKR9XAh6JLpT5Hqne9TNXq01aI9Jh8joj8m8dHeP1Pxp5U
-	 NWUL6TQcdDqJNjeFBDFdgHlWDUdZMlO1nAZU/pRQOtXEvVkWNFydFhqbN5rKhZDuWn
-	 EwbFJFjWatwoR1Lopjf+phfYV9HzgruGy3RKZ9BE=
+	b=H38Sh8wuRzTiOJfrod/T4URw+OVRx8oozYBP/pPUYdLMSZhJWV11Ouma6LxdDazOZ
+	 FxyRQ0p4sWUg7lzXAKr4k1gwXAjKoJQlTOToKT0+dHmyAiCVbYCyPsMofWuci8p8uO
+	 NGRfBPYy9rGqPm5/UeiAP5pVEYGSbAwfHwPf2r6M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Adri=C3=A1n=20Larumbe?= <adrian.larumbe@collabora.com>,
-	Steven Price <steven.price@arm.com>,
-	Boris Brezillon <boris.brezillon@collabora.com>,
+	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 305/826] drm/panthor: record current and maximum device clock frequencies
-Date: Tue,  3 Dec 2024 15:40:32 +0100
-Message-ID: <20241203144755.661333287@linuxfoundation.org>
+Subject: [PATCH 6.12 340/826] Bluetooth: btbcm: fix missing of_node_put() in btbcm_get_board_name()
+Date: Tue,  3 Dec 2024 15:41:07 +0100
+Message-ID: <20241203144757.024756397@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -46,107 +45,60 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Adrián Larumbe <adrian.larumbe@collabora.com>
+From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
 
-[ Upstream commit 37591ae11f89cdfc0a647945a589468642a44c17 ]
+[ Upstream commit e42eec0f182ac0605e658145f6fe3b6a7c256c45 ]
 
-In order to support UM in calculating rates of GPU utilisation, the current
-operating and maximum GPU clock frequencies must be recorded during device
-initialisation, and also during OPP state transitions.
+of_find_node_by_path() returns a pointer to a device_node with its
+refcount incremented, and a call to of_node_put() is required to
+decrement the refcount again and avoid leaking the resource.
 
-Signed-off-by: Adrián Larumbe <adrian.larumbe@collabora.com>
-Reviewed-by: Steven Price <steven.price@arm.com>
-Reviewed-by: Boris Brezillon <boris.brezillon@collabora.com>
-Signed-off-by: Boris Brezillon <boris.brezillon@collabora.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240923230912.2207320-3-adrian.larumbe@collabora.com
-Stable-dep-of: 21c23e4b64e3 ("drm/panthor: Fix OPP refcnt leaks in devfreq initialisation")
+If 'of_property_read_string_index(root, "compatible", 0, &tmp)' fails,
+the function returns without calling of_node_put(root) before doing so.
+
+The automatic cleanup attribute can be used by means of the __free()
+macro to automatically call of_node_put() when the variable goes out of
+scope, fixing the issue and also accounting for new error paths.
+
+Fixes: 63fac3343b99 ("Bluetooth: btbcm: Support per-board firmware variants")
+Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panthor/panthor_devfreq.c | 18 +++++++++++++++++-
- drivers/gpu/drm/panthor/panthor_device.h  |  6 ++++++
- 2 files changed, 23 insertions(+), 1 deletion(-)
+ drivers/bluetooth/btbcm.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/panthor/panthor_devfreq.c b/drivers/gpu/drm/panthor/panthor_devfreq.c
-index c6d3c327cc24c..9d0f891b9b534 100644
---- a/drivers/gpu/drm/panthor/panthor_devfreq.c
-+++ b/drivers/gpu/drm/panthor/panthor_devfreq.c
-@@ -62,14 +62,20 @@ static void panthor_devfreq_update_utilization(struct panthor_devfreq *pdevfreq)
- static int panthor_devfreq_target(struct device *dev, unsigned long *freq,
- 				  u32 flags)
+diff --git a/drivers/bluetooth/btbcm.c b/drivers/bluetooth/btbcm.c
+index eef00467905eb..a1153ada74d20 100644
+--- a/drivers/bluetooth/btbcm.c
++++ b/drivers/bluetooth/btbcm.c
+@@ -541,11 +541,10 @@ static const struct bcm_subver_table bcm_usb_subver_table[] = {
+ static const char *btbcm_get_board_name(struct device *dev)
  {
-+	struct panthor_device *ptdev = dev_get_drvdata(dev);
- 	struct dev_pm_opp *opp;
-+	int err;
+ #ifdef CONFIG_OF
+-	struct device_node *root;
++	struct device_node *root __free(device_node) = of_find_node_by_path("/");
+ 	char *board_type;
+ 	const char *tmp;
  
- 	opp = devfreq_recommended_opp(dev, freq, flags);
- 	if (IS_ERR(opp))
- 		return PTR_ERR(opp);
- 	dev_pm_opp_put(opp);
+-	root = of_find_node_by_path("/");
+ 	if (!root)
+ 		return NULL;
  
--	return dev_pm_opp_set_rate(dev, *freq);
-+	err = dev_pm_opp_set_rate(dev, *freq);
-+	if (!err)
-+		ptdev->current_frequency = *freq;
-+
-+	return err;
- }
+@@ -555,7 +554,6 @@ static const char *btbcm_get_board_name(struct device *dev)
+ 	/* get rid of any '/' in the compatible string */
+ 	board_type = devm_kstrdup(dev, tmp, GFP_KERNEL);
+ 	strreplace(board_type, '/', '-');
+-	of_node_put(root);
  
- static void panthor_devfreq_reset(struct panthor_devfreq *pdevfreq)
-@@ -130,6 +136,7 @@ int panthor_devfreq_init(struct panthor_device *ptdev)
- 	struct panthor_devfreq *pdevfreq;
- 	struct dev_pm_opp *opp;
- 	unsigned long cur_freq;
-+	unsigned long freq = ULONG_MAX;
- 	int ret;
- 
- 	pdevfreq = drmm_kzalloc(&ptdev->base, sizeof(*ptdev->devfreq), GFP_KERNEL);
-@@ -161,6 +168,7 @@ int panthor_devfreq_init(struct panthor_device *ptdev)
- 		return PTR_ERR(opp);
- 
- 	panthor_devfreq_profile.initial_freq = cur_freq;
-+	ptdev->current_frequency = cur_freq;
- 
- 	/* Regulator coupling only takes care of synchronizing/balancing voltage
- 	 * updates, but the coupled regulator needs to be enabled manually.
-@@ -204,6 +212,14 @@ int panthor_devfreq_init(struct panthor_device *ptdev)
- 
- 	dev_pm_opp_put(opp);
- 
-+	/* Find the fastest defined rate  */
-+	opp = dev_pm_opp_find_freq_floor(dev, &freq);
-+	if (IS_ERR(opp))
-+		return PTR_ERR(opp);
-+	ptdev->fast_rate = freq;
-+
-+	dev_pm_opp_put(opp);
-+
- 	/*
- 	 * Setup default thresholds for the simple_ondemand governor.
- 	 * The values are chosen based on experiments.
-diff --git a/drivers/gpu/drm/panthor/panthor_device.h b/drivers/gpu/drm/panthor/panthor_device.h
-index a48e30d0af309..2109905813e8c 100644
---- a/drivers/gpu/drm/panthor/panthor_device.h
-+++ b/drivers/gpu/drm/panthor/panthor_device.h
-@@ -184,6 +184,12 @@ struct panthor_device {
- 
- 	/** @profile_mask: User-set profiling flags for job accounting. */
- 	u32 profile_mask;
-+
-+	/** @current_frequency: Device clock frequency at present. Set by DVFS*/
-+	unsigned long current_frequency;
-+
-+	/** @fast_rate: Maximum device clock frequency. Set by DVFS */
-+	unsigned long fast_rate;
- };
- 
- /**
+ 	return board_type;
+ #else
 -- 
 2.43.0
 
