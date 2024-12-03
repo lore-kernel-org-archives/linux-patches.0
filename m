@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35F011DA3D;
-	Tue,  3 Dec 2024 15:19:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 274281DA3D;
+	Tue,  3 Dec 2024 15:19:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733239165; cv=none; b=X1Fw/MSM7i3YI/nBqeD4ig0dzO0grbUC33u5BUJkyBlkdq5JgZHJ7v5kMFEdknx8XWjxRvSgO9vmstspLvt9yEX34gtJbhdJARDo1kSr8HyDE5DQdkMgecZTpJBJq+05TXQvE/XVMVHZQi8CS7G9Hs/smbcmA4I5zWrEbcXVcYs=
+	t=1733239168; cv=none; b=mhmXAhKYsjQs0Njg5/ihTkrmlfpK0K2RSYaxl82VKE55LK0PelZdc+8BMVhr/eOPPwwWNx+JvGMSpM3XUahEcSOsWJTv2haOmjnU8cZqMe4Vbm7ZfzeqDC4zMq3yY1OeRbJxgUCN4RddoZHfjvMFIHLv02OaHueKgZhP5+b8JHY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733239165; c=relaxed/simple;
-	bh=tDMvxjc1Qhxpaxqa4xrloK421/y7i9lmCl0qM0BoqXc=;
+	s=arc-20240116; t=1733239168; c=relaxed/simple;
+	bh=z3dAoXdz6mHON2J5gZsWTTHiMF2ChJ40D5C2J9ZnpCc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iH1wvk8HPyieO1d3cSSkcjmSS1u3V9QwjNLva/M1ewMdMdI5Rj/XkBSv7ZmVnYplyIEQw4PHnTVrau45aNDDBWAYJPolodfq6UmQ4sxpXWGdwoW2aKNiww/vfcq/+thJ8KaovwvwgkyZc77m5rL7nsqa/Y3tSZFoyvAKG65YXdE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UwOzGN78; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rFhBSZBFMDKL8qxzbphK5RMyPjDhI16XRV+yhca633dhoIAmsPpGl2EXTK/XOTDcAeXtuFdAz26Uk/B/tqCfMfhohMeEjw6OLXcoSnGBEHmD35s9UhkfsEc2e1dv+gaoHb9O648cTn0MnpwR8M7VhRUWm4E91FOxUQAyr0FbweM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cuw3mGxG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UwOzGN78"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE705C4CECF;
-	Tue,  3 Dec 2024 15:19:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cuw3mGxG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F4D8C4CECF;
+	Tue,  3 Dec 2024 15:19:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733239165;
-	bh=tDMvxjc1Qhxpaxqa4xrloK421/y7i9lmCl0qM0BoqXc=;
+	s=korg; t=1733239168;
+	bh=z3dAoXdz6mHON2J5gZsWTTHiMF2ChJ40D5C2J9ZnpCc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UwOzGN78v3Wq8TtXvdcjuPKPbBLG8JePYvAuisykxFmpkbdB8WJ7gZRkpLvIzmey7
-	 7QP+tfqRax+4H0gFwVU17SJY1dZoIT3ZhBomCZRM/iZxyay+nDus91lmHRTXmAckcw
-	 ROteWTQb6vo8Yb3AxG+DYU075+zmfqzBABsyqAtc=
+	b=cuw3mGxGwgfo+3A8wndK6+LIFqLgPj99C89IGc/BRqA+Lqput3Z9iLBltcTmknlcN
+	 a3z1f+fR/Ufv5B5fbAF1zQlbWdyeuJf71Nn30slwoO23+g7tCcF/zhjvIbThmxCxB1
+	 qH23WpGeH2FtLqlteSVaecCNFKAiAj1iTDVxEbAQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Long Li <leo.lilong@huawei.com>,
+	kernel test robot <oliver.sang@intel.com>,
+	Cyril Hrubis <chrubis@suse.cz>,
 	Chao Yu <chao@kernel.org>,
 	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 522/817] f2fs: fix race in concurrent f2fs_stop_gc_thread
-Date: Tue,  3 Dec 2024 15:41:34 +0100
-Message-ID: <20241203144016.269152946@linuxfoundation.org>
+Subject: [PATCH 6.11 523/817] f2fs: fix to map blocks correctly for direct write
+Date: Tue,  3 Dec 2024 15:41:35 +0100
+Message-ID: <20241203144016.307467450@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -52,91 +53,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Long Li <leo.lilong@huawei.com>
+From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit 7b0033dbc48340a1c1c3f12448ba17d6587ca092 ]
+[ Upstream commit 5dd00ebda337b9295e7027691fa70540da369ff2 ]
 
-In my test case, concurrent calls to f2fs shutdown report the following
-stack trace:
+f2fs_map_blocks() supports to map continuous holes or preallocated
+address, we should avoid setting F2FS_MAP_MAPPED for these cases
+only, otherwise, it may fail f2fs_iomap_begin(), and make direct
+write fallbacking to use buffered IO and flush, result in performance
+regression.
 
- Oops: general protection fault, probably for non-canonical address 0xc6cfff63bb5513fc: 0000 [#1] PREEMPT SMP PTI
- CPU: 0 UID: 0 PID: 678 Comm: f2fs_rep_shutdo Not tainted 6.12.0-rc5-next-20241029-g6fb2fa9805c5-dirty #85
- Call Trace:
-  <TASK>
-  ? show_regs+0x8b/0xa0
-  ? __die_body+0x26/0xa0
-  ? die_addr+0x54/0x90
-  ? exc_general_protection+0x24b/0x5c0
-  ? asm_exc_general_protection+0x26/0x30
-  ? kthread_stop+0x46/0x390
-  f2fs_stop_gc_thread+0x6c/0x110
-  f2fs_do_shutdown+0x309/0x3a0
-  f2fs_ioc_shutdown+0x150/0x1c0
-  __f2fs_ioctl+0xffd/0x2ac0
-  f2fs_ioctl+0x76/0xe0
-  vfs_ioctl+0x23/0x60
-  __x64_sys_ioctl+0xce/0xf0
-  x64_sys_call+0x2b1b/0x4540
-  do_syscall_64+0xa7/0x240
-  entry_SYSCALL_64_after_hwframe+0x76/0x7e
-
-The root cause is a race condition in f2fs_stop_gc_thread() called from
-different f2fs shutdown paths:
-
-  [CPU0]                       [CPU1]
-  ----------------------       -----------------------
-  f2fs_stop_gc_thread          f2fs_stop_gc_thread
-                                 gc_th = sbi->gc_thread
-    gc_th = sbi->gc_thread
-    kfree(gc_th)
-    sbi->gc_thread = NULL
-                                 < gc_th != NULL >
-                                 kthread_stop(gc_th->f2fs_gc_task) //UAF
-
-The commit c7f114d864ac ("f2fs: fix to avoid use-after-free in
-f2fs_stop_gc_thread()") attempted to fix this issue by using a read
-semaphore to prevent races between shutdown and remount threads, but
-it fails to prevent all race conditions.
-
-Fix it by converting to write lock of s_umount in f2fs_do_shutdown().
-
-Fixes: 7950e9ac638e ("f2fs: stop gc/discard thread after fs shutdown")
-Signed-off-by: Long Li <leo.lilong@huawei.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
+Fixes: 9f0f6bf42714 ("f2fs: support to map continuous holes or preallocated address")
+Reported-by: kernel test robot <oliver.sang@intel.com>
+Closes: https://lore.kernel.org/oe-lkp/202409122103.e45aa13b-oliver.sang@intel.com
+Cc: Cyril Hrubis <chrubis@suse.cz>
+Signed-off-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/file.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ fs/f2fs/data.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/fs/f2fs/file.c b/fs/f2fs/file.c
-index 38d11635261ee..611c0aac721a3 100644
---- a/fs/f2fs/file.c
-+++ b/fs/f2fs/file.c
-@@ -2349,9 +2349,12 @@ int f2fs_do_shutdown(struct f2fs_sb_info *sbi, unsigned int flag,
- 	if (readonly)
- 		goto out;
+diff --git a/fs/f2fs/data.c b/fs/f2fs/data.c
+index 60a5aaefc5b63..1f2f397febcfa 100644
+--- a/fs/f2fs/data.c
++++ b/fs/f2fs/data.c
+@@ -1677,7 +1677,8 @@ int f2fs_map_blocks(struct inode *inode, struct f2fs_map_blocks *map, int flag)
+ 		/* reserved delalloc block should be mapped for fiemap. */
+ 		if (blkaddr == NEW_ADDR)
+ 			map->m_flags |= F2FS_MAP_DELALLOC;
+-		if (flag != F2FS_GET_BLOCK_DIO || !is_hole)
++		/* DIO READ and hole case, should not map the blocks. */
++		if (!(flag == F2FS_GET_BLOCK_DIO && is_hole && !map->m_may_create))
+ 			map->m_flags |= F2FS_MAP_MAPPED;
  
--	/* grab sb->s_umount to avoid racing w/ remount() */
-+	/*
-+	 * grab sb->s_umount to avoid racing w/ remount() and other shutdown
-+	 * paths.
-+	 */
- 	if (need_lock)
--		down_read(&sbi->sb->s_umount);
-+		down_write(&sbi->sb->s_umount);
- 
- 	f2fs_stop_gc_thread(sbi);
- 	f2fs_stop_discard_thread(sbi);
-@@ -2360,7 +2363,7 @@ int f2fs_do_shutdown(struct f2fs_sb_info *sbi, unsigned int flag,
- 	clear_opt(sbi, DISCARD);
- 
- 	if (need_lock)
--		up_read(&sbi->sb->s_umount);
-+		up_write(&sbi->sb->s_umount);
- 
- 	f2fs_update_time(sbi, REQ_TIME);
- out:
+ 		map->m_pblk = blkaddr;
 -- 
 2.43.0
 
