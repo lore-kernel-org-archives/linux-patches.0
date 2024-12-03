@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D6B11F7540;
-	Tue,  3 Dec 2024 15:09:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 677A71F890E;
+	Tue,  3 Dec 2024 15:09:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733238568; cv=none; b=edCLCio8HG2VvHHQdl3gY1dOg0zm3jo7Rn9sr5PYUOx4D6Xr8tNDPcCY7kH4bmFCbqT2WRES4cC8qHYav2Q+ioER99XVATgUqDglbDllL6Q4WM8uzbiEW9dN/ATDNLJa8xTTu/6LTI9FQg4RdeAD89PRlEwPKXH30PiiF6+9Y2A=
+	t=1733238569; cv=none; b=enl7brvnPExfGuzFUG3Hoid2HFdwAShn7YKF0sLLyjawBH6o71Su9ysKZDJJCvXWSTiiODUCW94b4hyxkknGJ0qZfg/IUZVOMRSNiPU9wS69Bq6FaN5azP5drAwfOJw/4K0x/lXHTYdcwYyq5IXc4+n5vDI452YPLZniEjPD2D0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733238568; c=relaxed/simple;
-	bh=boSsZ5KS+dMxat4ZTPPEis6WHQYi/cxBmen1GhorAF4=;
+	s=arc-20240116; t=1733238569; c=relaxed/simple;
+	bh=KXjZDVQbrfpbfmv6A/gvS4E7wN0qwI3/cEh6Fd2aA7g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ElRHi2DamebkK2o7dpCVVNbLt+Y+v69JlLVD4FOk1cApUuV8QQYH4m6GfCURg/r+iAod1AEdyCMy0IXXR6AnZrmI1YrMmCS4nP5m9eN/NZmysJBpVxrt9l0sFqRQNSMvVbdtpRsT9MfTy32WsRAze8idFrgjqALJgIaNGsU97hk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nRMDtkYL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tWuSd6/6T5JpKF6KUZ3hhOlXX6xrj/fZxiNt3CJF4zDcSXYFVO4m4INqke3idUzXtTXxZRM3aw3qL1qEXAGJc2VV4WvDic0wolkd5zrotdsbdlDDNCyJlWpA0eLxlM2MYF8aeI8WyUtIB+p6VhQ7H6zB0qRvXIm/CXoPjWrdkNE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oB4YpFhi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nRMDtkYL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84ECFC4CECF;
-	Tue,  3 Dec 2024 15:09:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oB4YpFhi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 685C7C4CEDD;
+	Tue,  3 Dec 2024 15:09:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733238565;
-	bh=boSsZ5KS+dMxat4ZTPPEis6WHQYi/cxBmen1GhorAF4=;
+	s=korg; t=1733238568;
+	bh=KXjZDVQbrfpbfmv6A/gvS4E7wN0qwI3/cEh6Fd2aA7g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nRMDtkYLAzpJdHIwOVXAct/L0t2PEY9CdUMFHoEaeNNhkp4QVFPM5agCHJXrnHueq
-	 62rCO1uSVnVIdpejI1nZF0F5OCzunONknGTyar41uIRtJyq17E92jhx5eYpGq/r8Uy
-	 +28vOxCWgD8OHKNhwOmDcM1rL4tOqK8Z1sv1HRVU=
+	b=oB4YpFhi7HDyY+zmUGCeeh930MYNyAPf8jhihpMSx4jQQ0bDI11iUBPX5I09aqFTH
+	 aIf37pgdoKTVazvnuAfRsqT90SOm2tBbE0hI5u5pu9WbuHCzZSBLtVavyX3EwlhSt1
+	 ZUgNH+T9wQMtXz290fjGF4n6+wBrHK0O0Jp9zqLY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Adri=C3=A1n=20Larumbe?= <adrian.larumbe@collabora.com>,
-	Steven Price <steven.price@arm.com>,
-	Liviu Dudau <liviu.dudau@arm.com>,
+	Steffen Dirkwinkel <s.dirkwinkel@beckhoff.com>,
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 322/817] drm/panfrost: Add missing OPP table refcnt decremental
-Date: Tue,  3 Dec 2024 15:38:14 +0100
-Message-ID: <20241203144008.388135577@linuxfoundation.org>
+Subject: [PATCH 6.11 305/817] drm: xlnx: zynqmp_disp: layer may be null while releasing
+Date: Tue,  3 Dec 2024 15:37:57 +0100
+Message-ID: <20241203144007.722083317@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -46,58 +45,42 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.11-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Adrián Larumbe <adrian.larumbe@collabora.com>
+From: Steffen Dirkwinkel <s.dirkwinkel@beckhoff.com>
 
-[ Upstream commit 043e8afebf6c19abde9da1ac3d5cbf8b7ac8393f ]
+[ Upstream commit 223842c7702b52846b1c5aef8aca7474ec1fd29b ]
 
-Commit f11b0417eec2 ("drm/panfrost: Add fdinfo support GPU load metrics")
-retrieves the OPP for the maximum device clock frequency, but forgets to
-keep the reference count balanced by putting the returned OPP object. This
-eventually leads to an OPP core warning when removing the device.
+layer->info can be null if we have an error on the first layer in
+zynqmp_disp_create_layers
 
-Fix it by putting OPP objects as many times as they're retrieved.
-
-Also remove an unnecessary whitespace.
-
-Signed-off-by: Adrián Larumbe <adrian.larumbe@collabora.com>
-Fixes: f11b0417eec2 ("drm/panfrost: Add fdinfo support GPU load metrics")
-Reviewed-by: Steven Price <steven.price@arm.com>
-Reviewed-by: Liviu Dudau <liviu.dudau@arm.com>
-Signed-off-by: Steven Price <steven.price@arm.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20241105205458.1318989-1-adrian.larumbe@collabora.com
+Fixes: 1836fd5ed98d ("drm: xlnx: zynqmp_dpsub: Minimize usage of global flag")
+Signed-off-by: Steffen Dirkwinkel <s.dirkwinkel@beckhoff.com>
+Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20241028133941.54264-1-lists@steffen.cc
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panfrost/panfrost_devfreq.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/xlnx/zynqmp_disp.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/gpu/drm/panfrost/panfrost_devfreq.c b/drivers/gpu/drm/panfrost/panfrost_devfreq.c
-index 2d30da38c2c3e..3385fd3ef41a4 100644
---- a/drivers/gpu/drm/panfrost/panfrost_devfreq.c
-+++ b/drivers/gpu/drm/panfrost/panfrost_devfreq.c
-@@ -38,7 +38,7 @@ static int panfrost_devfreq_target(struct device *dev, unsigned long *freq,
- 		return PTR_ERR(opp);
- 	dev_pm_opp_put(opp);
+diff --git a/drivers/gpu/drm/xlnx/zynqmp_disp.c b/drivers/gpu/drm/xlnx/zynqmp_disp.c
+index 9368acf56eaf7..e4e0e299e8a7d 100644
+--- a/drivers/gpu/drm/xlnx/zynqmp_disp.c
++++ b/drivers/gpu/drm/xlnx/zynqmp_disp.c
+@@ -1200,6 +1200,9 @@ static void zynqmp_disp_layer_release_dma(struct zynqmp_disp *disp,
+ {
+ 	unsigned int i;
  
--	err =  dev_pm_opp_set_rate(dev, *freq);
-+	err = dev_pm_opp_set_rate(dev, *freq);
- 	if (!err)
- 		ptdev->pfdevfreq.current_frequency = *freq;
++	if (!layer->info)
++		return;
++
+ 	for (i = 0; i < layer->info->num_channels; i++) {
+ 		struct zynqmp_disp_layer_dma *dma = &layer->dmas[i];
  
-@@ -182,6 +182,7 @@ int panfrost_devfreq_init(struct panfrost_device *pfdev)
- 	 * if any and will avoid a switch off by regulator_late_cleanup()
- 	 */
- 	ret = dev_pm_opp_set_opp(dev, opp);
-+	dev_pm_opp_put(opp);
- 	if (ret) {
- 		DRM_DEV_ERROR(dev, "Couldn't set recommended OPP\n");
- 		return ret;
 -- 
 2.43.0
 
