@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 987F523CE;
-	Tue,  3 Dec 2024 16:05:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9AE81F76CA;
+	Tue,  3 Dec 2024 16:05:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733241936; cv=none; b=nw/7/VT49FafWUAiDZbq9MGUhG0RRs08q6Ta4/Pf5w3lDkPFvbrSv91AlBRFuy9FS79YgH8n8h3A97Wvv7jqg1O6dy771qP9Uk85ojkLMhJA/eP5naMbD8tc1M8HsR0w0mAXzZTOkMevc9Mvnpnu31U9hWfDYKwV+FisLk7+71w=
+	t=1733241939; cv=none; b=nBrZeLMLMUpeOPtGNz50q+tD+YKXlu8MgtIMCwbKvUBKPHL26JtyUktfW8pt48tdr/7yoSG1sbpRV0vYmWsh/YQEBHgK6E2g7tS1UV2/Iglrw+oiNK05KrNpFCVunDcvqIG+yhel35sfHrxD7qEU65y12cktztrwiLd36edogws=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733241936; c=relaxed/simple;
-	bh=lygA2U4sZ93Ov89aWxS3ZShrHpSsefEBKdsFeRbmxA0=;
+	s=arc-20240116; t=1733241939; c=relaxed/simple;
+	bh=GXQyigtIEO/UC06iLbKlALXsDNvBYrcqzz+OrRQKMW8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BAYaoa/LORHgIa0jEj8Z7fRuMuFpSjdWP2l8qPPOitwAd3uvHfbM3I6tSew9MheSXeOLpH+kZXEJUxY8FfobILwqXNzKyrGu9gnCk+oHZiEvpojWp1qLJaJ7i5QD80LrbbkPDD0/5gFzcrABZW8uipAh9oVDYMFvSpTmo/C9Z1I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dZhVjX2/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=goQJKp/8+HFPZrg9P7LwuG5TS6YdxFhQpaMH8E8GXAD5KB+c+lA1lbOikfsB+SvtGmzxu5eO3VXkDcVhLGIkfltBM+TAs5sOQ6WPXiszW+YE3LABzzs7rZQYLeLbErEbjgSkrW5GndE3BcP/PgETWUdm3+dxhXTW8gYp3y4dA7g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=snK9ve29; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dZhVjX2/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6B1DC4CECF;
-	Tue,  3 Dec 2024 16:05:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="snK9ve29"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 202E3C4CECF;
+	Tue,  3 Dec 2024 16:05:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733241936;
-	bh=lygA2U4sZ93Ov89aWxS3ZShrHpSsefEBKdsFeRbmxA0=;
+	s=korg; t=1733241939;
+	bh=GXQyigtIEO/UC06iLbKlALXsDNvBYrcqzz+OrRQKMW8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dZhVjX2/zM9cFO/Df/8k46eODKg5DYRhIqz3IalU9JsbMy+rkp+4lOAbSGr0ZfdZ1
-	 8tFsSojD6DJWy/uliae16PtKVDJ3XhVlacWwLEQFU/8IedRGF4U/wRry+xtCFFvvfy
-	 fYZrNZfQiCm4HYwRmqWlWwH4o0OxbYrkzmh1DIF4=
+	b=snK9ve29zrddIpyZyvwSbW9lYZZqFplw/NncnbfZjM37Ba93YZUEOoj1YRFLsqQQP
+	 eK18onnu3ujyrf9yQieXMAJQXMhYnxwcdGq0BWmYKTqSqGgHH8M5rtQAduARYrr237
+	 cE09Ko5kfk/YrnVx/wyeiQ54qkuI3MkGW5rWJV2k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuezhang Mo <Yuezhang.Mo@sony.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
+	syzbot+332fe1e67018625f63c9@syzkaller.appspotmail.com,
+	James Chapman <jchapman@katalix.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 560/826] exfat: fix file being changed by unaligned direct write
-Date: Tue,  3 Dec 2024 15:44:47 +0100
-Message-ID: <20241203144805.589341817@linuxfoundation.org>
+Subject: [PATCH 6.12 561/826] net/l2tp: fix warning in l2tp_exit_net found by syzbot
+Date: Tue,  3 Dec 2024 15:44:48 +0100
+Message-ID: <20241203144805.628587912@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -51,45 +52,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuezhang Mo <Yuezhang.Mo@sony.com>
+From: James Chapman <jchapman@katalix.com>
 
-[ Upstream commit 2e94e5bb94a3e641a25716a560bf474225fda83c ]
+[ Upstream commit 5d066766c5f1252f98ff859265bcd1a5b52ac46c ]
 
-Unaligned direct writes are invalid and should return an error
-without making any changes, rather than extending ->valid_size
-and then returning an error. Therefore, alignment checking is
-required before extending ->valid_size.
+In l2tp's net exit handler, we check that an IDR is empty before
+destroying it:
 
-Fixes: 11a347fb6cef ("exfat: change to get file size from DataLength")
-Signed-off-by: Yuezhang Mo <Yuezhang.Mo@sony.com>
-Co-developed-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+	WARN_ON_ONCE(!idr_is_empty(&pn->l2tp_tunnel_idr));
+	idr_destroy(&pn->l2tp_tunnel_idr);
+
+By forcing memory allocation failures in idr_alloc_32, syzbot is able
+to provoke a condition where idr_is_empty returns false despite there
+being no items in the IDR. This turns out to be because the radix tree
+of the IDR contains only internal radix-tree nodes and it is this that
+causes idr_is_empty to return false. The internal nodes are cleaned by
+idr_destroy.
+
+Use idr_for_each to check that the IDR is empty instead of
+idr_is_empty to avoid the problem.
+
+Reported-by: syzbot+332fe1e67018625f63c9@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=332fe1e67018625f63c9
+Fixes: 73d33bd063c4 ("l2tp: avoid using drain_workqueue in l2tp_pre_exit_net")
+Signed-off-by: James Chapman <jchapman@katalix.com>
+Link: https://patch.msgid.link/20241118140411.1582555-1-jchapman@katalix.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/exfat/file.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ net/l2tp/l2tp_core.c | 22 +++++++++++++++++++---
+ 1 file changed, 19 insertions(+), 3 deletions(-)
 
-diff --git a/fs/exfat/file.c b/fs/exfat/file.c
-index a25d7eb789f4c..fb38769c3e39d 100644
---- a/fs/exfat/file.c
-+++ b/fs/exfat/file.c
-@@ -584,6 +584,16 @@ static ssize_t exfat_file_write_iter(struct kiocb *iocb, struct iov_iter *iter)
- 	if (ret < 0)
- 		goto unlock;
+diff --git a/net/l2tp/l2tp_core.c b/net/l2tp/l2tp_core.c
+index 3eec23ac5ab10..369a2f2e459cd 100644
+--- a/net/l2tp/l2tp_core.c
++++ b/net/l2tp/l2tp_core.c
+@@ -1870,15 +1870,31 @@ static __net_exit void l2tp_pre_exit_net(struct net *net)
+ 	}
+ }
  
-+	if (iocb->ki_flags & IOCB_DIRECT) {
-+		unsigned long align = pos | iov_iter_alignment(iter);
++static int l2tp_idr_item_unexpected(int id, void *p, void *data)
++{
++	const char *idr_name = data;
 +
-+		if (!IS_ALIGNED(align, i_blocksize(inode)) &&
-+		    !IS_ALIGNED(align, bdev_logical_block_size(inode->i_sb->s_bdev))) {
-+			ret = -EINVAL;
-+			goto unlock;
-+		}
-+	}
++	pr_err("l2tp: %s IDR not empty at net %d exit\n", idr_name, id);
++	WARN_ON_ONCE(1);
++	return 1;
++}
 +
- 	if (pos > valid_size) {
- 		ret = exfat_extend_valid_size(file, pos);
- 		if (ret < 0 && ret != -ENOSPC) {
+ static __net_exit void l2tp_exit_net(struct net *net)
+ {
+ 	struct l2tp_net *pn = l2tp_pernet(net);
+ 
+-	WARN_ON_ONCE(!idr_is_empty(&pn->l2tp_v2_session_idr));
++	/* Our per-net IDRs should be empty. Check that is so, to
++	 * help catch cleanup races or refcnt leaks.
++	 */
++	idr_for_each(&pn->l2tp_v2_session_idr, l2tp_idr_item_unexpected,
++		     "v2_session");
++	idr_for_each(&pn->l2tp_v3_session_idr, l2tp_idr_item_unexpected,
++		     "v3_session");
++	idr_for_each(&pn->l2tp_tunnel_idr, l2tp_idr_item_unexpected,
++		     "tunnel");
++
+ 	idr_destroy(&pn->l2tp_v2_session_idr);
+-	WARN_ON_ONCE(!idr_is_empty(&pn->l2tp_v3_session_idr));
+ 	idr_destroy(&pn->l2tp_v3_session_idr);
+-	WARN_ON_ONCE(!idr_is_empty(&pn->l2tp_tunnel_idr));
+ 	idr_destroy(&pn->l2tp_tunnel_idr);
+ }
+ 
 -- 
 2.43.0
 
