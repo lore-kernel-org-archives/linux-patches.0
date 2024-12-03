@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9C051F76C3;
-	Tue,  3 Dec 2024 15:31:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 915121F8AC8;
+	Tue,  3 Dec 2024 15:31:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733239873; cv=none; b=Lw91WobtiB9FCt89N7CvEGuxosEIcnddjjlmHbXGpRp0Rywjt7H3dKjrDfY4Va6sx83MLLNl6ldI5d1B+PA0vp6jlJQfO3w8yDSjt+SVjSh2VhXAKItabBro3Yc6tpmXr+WbyqrvmDdsVdfh81+I/RzR/LlTyIRMrVqvZMMfNiM=
+	t=1733239876; cv=none; b=goYc0O95HEyKLE1bi0hkKkr4Oa6iZoyFFBKQbx+VxiVZ4saW/zRbP+Iv886qXdD381j3onEOxvkLHVoxABzseWIRMFz6SLegXqyJ08VA18WRSPHNGmk4DXPFcX8tUjyjwTTOOeWuJWz9Twwr9A6CGxNv3WBb/70Y9QrbOGRO4SY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733239873; c=relaxed/simple;
-	bh=c9s/1MyX5Jx3lnSUSYvuvQ/31f7GELpy6mSKmzJBzy4=;
+	s=arc-20240116; t=1733239876; c=relaxed/simple;
+	bh=/3PfJj1qKtTNRKQXg0OTVl70GuPUiPyimNDrVwdNMY8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Fw271f0Pj1TPscnRJBprwvO8HUQgmvkynUAZT9BSQJk10E3EL6eQHiFV1Bf5WYktPXcRjfHhLqp8LQk6l3lufCLIUoI+axWIkqJnEj/OnbpnNvrMF30HGHv+bQIV/jkI4AvlYZm5zLSeF+1eX3pvr+hoB3UqyJoS7c7yY2j7+T4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B1mqykWa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ay4MfcI81sDpte6erSMaojCHIaOH2UYg7//ngSSbQoiSFNJMNecgC1JIps3/0qbkN+rf48ZG/ibnfzFC26adVYDI0ik9UJGhlxJ6PvEiPEiM59M95q90lMxwjYi3hb/Wx8plL6qZzIFa9Brl8whkGJYBscQ7l0DWq1YijbIphC0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K0OvHxj9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B1mqykWa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E334C4CED8;
-	Tue,  3 Dec 2024 15:31:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K0OvHxj9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 191BCC4CECF;
+	Tue,  3 Dec 2024 15:31:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733239873;
-	bh=c9s/1MyX5Jx3lnSUSYvuvQ/31f7GELpy6mSKmzJBzy4=;
+	s=korg; t=1733239876;
+	bh=/3PfJj1qKtTNRKQXg0OTVl70GuPUiPyimNDrVwdNMY8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B1mqykWasHCp4Lk3wigMyWKIsEEkvSaTvmj+oukSCTxwByJle7GQ+EcZYYd/XTDvH
-	 bLgeSM/kHKRjy8b1V9DuFzUFzzbCjlgdMXeZ7FFOZLx7z3G22KSau6ts+Tny6jrO48
-	 Aa+TvILCoDe2yRGgvIvyswkBJTHKSV2UMki0Xsc0=
+	b=K0OvHxj9Ju9IlODGpgXvAlG+STcvOV7vr4A3T9vj1fsvz5z1rcmSSFzEInPK2s2oZ
+	 QIDHDa7KnS92fPt+FFR3eKhT6uZCRk3H1AOnYTZfTnMYu5v3R4OuQwCBXg2oBhn6mi
+	 pYfr5RMviEoyS3XpHzWS9PPjaDIbQ0z3iWrBwfsE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.com>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.11 746/817] smb: client: handle max length for SMB symlinks
-Date: Tue,  3 Dec 2024 15:45:18 +0100
-Message-ID: <20241203144025.116702767@linuxfoundation.org>
+	Yang Erkun <yangerkun@huawei.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 6.11 764/817] SUNRPC: make sure cache entry active before cache_show
+Date: Tue,  3 Dec 2024 15:45:36 +0100
+Message-ID: <20241203144025.820051007@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -51,64 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paulo Alcantara <pc@manguebit.com>
+From: Yang Erkun <yangerkun@huawei.com>
 
-commit 0812340811e45ec4039d409049be53056182a552 upstream.
+commit 2862eee078a4d2d1f584e7f24fa50dddfa5f3471 upstream.
 
-We can't use PATH_MAX for SMB symlinks because
+The function `c_show` was called with protection from RCU. This only
+ensures that `cp` will not be freed. Therefore, the reference count for
+`cp` can drop to zero, which will trigger a refcount use-after-free
+warning when `cache_get` is called. To resolve this issue, use
+`cache_get_rcu` to ensure that `cp` remains active.
 
-  (1) Windows Server will fail FSCTL_SET_REPARSE_POINT with
-      STATUS_IO_REPARSE_DATA_INVALID when input buffer is larger than
-      16K, as specified in MS-FSA 2.1.5.10.37.
+------------[ cut here ]------------
+refcount_t: addition on 0; use-after-free.
+WARNING: CPU: 7 PID: 822 at lib/refcount.c:25
+refcount_warn_saturate+0xb1/0x120
+CPU: 7 UID: 0 PID: 822 Comm: cat Not tainted 6.12.0-rc3+ #1
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS
+1.16.1-2.fc37 04/01/2014
+RIP: 0010:refcount_warn_saturate+0xb1/0x120
 
-  (2) The client won't be able to parse large SMB responses that
-      includes SMB symlink path within SMB2_CREATE or SMB2_IOCTL
-      responses.
+Call Trace:
+ <TASK>
+ c_show+0x2fc/0x380 [sunrpc]
+ seq_read_iter+0x589/0x770
+ seq_read+0x1e5/0x270
+ proc_reg_read+0xe1/0x140
+ vfs_read+0x125/0x530
+ ksys_read+0xc1/0x160
+ do_syscall_64+0x5f/0x170
+ entry_SYSCALL_64_after_hwframe+0x76/0x7e
 
-Fix this by defining a maximum length value (4060) for SMB symlinks
-that both client and server can handle.
-
-Cc: David Howells <dhowells@redhat.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Paulo Alcantara (Red Hat) <pc@manguebit.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Cc: stable@vger.kernel.org # v4.20+
+Signed-off-by: Yang Erkun <yangerkun@huawei.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/reparse.c |    5 ++++-
- fs/smb/client/reparse.h |    2 ++
- 2 files changed, 6 insertions(+), 1 deletion(-)
+ net/sunrpc/cache.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/fs/smb/client/reparse.c
-+++ b/fs/smb/client/reparse.c
-@@ -35,6 +35,9 @@ int smb2_create_reparse_symlink(const un
- 	u16 len, plen;
- 	int rc = 0;
- 
-+	if (strlen(symname) > REPARSE_SYM_PATH_MAX)
-+		return -ENAMETOOLONG;
+--- a/net/sunrpc/cache.c
++++ b/net/sunrpc/cache.c
+@@ -1431,7 +1431,9 @@ static int c_show(struct seq_file *m, vo
+ 		seq_printf(m, "# expiry=%lld refcnt=%d flags=%lx\n",
+ 			   convert_to_wallclock(cp->expiry_time),
+ 			   kref_read(&cp->ref), cp->flags);
+-	cache_get(cp);
++	if (!cache_get_rcu(cp))
++		return 0;
 +
- 	sym = kstrdup(symname, GFP_KERNEL);
- 	if (!sym)
- 		return -ENOMEM;
-@@ -64,7 +67,7 @@ int smb2_create_reparse_symlink(const un
- 	if (rc < 0)
- 		goto out;
- 
--	plen = 2 * UniStrnlen((wchar_t *)path, PATH_MAX);
-+	plen = 2 * UniStrnlen((wchar_t *)path, REPARSE_SYM_PATH_MAX);
- 	len = sizeof(*buf) + plen * 2;
- 	buf = kzalloc(len, GFP_KERNEL);
- 	if (!buf) {
---- a/fs/smb/client/reparse.h
-+++ b/fs/smb/client/reparse.h
-@@ -12,6 +12,8 @@
- #include "fs_context.h"
- #include "cifsglob.h"
- 
-+#define REPARSE_SYM_PATH_MAX 4060
-+
- /*
-  * Used only by cifs.ko to ignore reparse points from files when client or
-  * server doesn't support FSCTL_GET_REPARSE_POINT.
+ 	if (cache_check(cd, cp, NULL))
+ 		/* cache_check does a cache_put on failure */
+ 		seq_puts(m, "# ");
 
 
