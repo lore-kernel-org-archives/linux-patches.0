@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F6941F8905;
-	Tue,  3 Dec 2024 16:15:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DC4417BB1C;
+	Tue,  3 Dec 2024 16:15:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733242506; cv=none; b=OOEkAyhjSnHJnAwChdt1Y59Fz6WCmdoXzmmjEzo9N0v9JvHd6kdkI2RZd9CnDeMvCreMWyRivWOCLjgDpZzDvsaUiJlYF8FxLuh0pXOdmVO2R6+Vo858pth1cTTsK7445vXYkj6FoiGk9Z+W3ETwjQCd135FrbMauIt0Jo+Wn98=
+	t=1733242509; cv=none; b=aUGydfOV1kM/oI/KWpHvDxp6gBDiNlbQgDk7o1Ene8RcqLVTy+t0K3ZX1TLSHagB3U9iM6R1VmkdtTQKGROxYLe/KcaUZgYcHCh5rlyodrI+JshujXoDQEo/jUHw+zSZXBgfrdlNQ9eTBRIqqdjocjzA6BcF9i+78l8dGZgkfT8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733242506; c=relaxed/simple;
-	bh=KGHRqexlZLxkQwzak2lddvbZ+M+Eb7NbwE9IGcGeWF0=;
+	s=arc-20240116; t=1733242509; c=relaxed/simple;
+	bh=yn7gQHVFru7Ld/bOb6UyDobEH1yRSn/VTh3u8lGF5F0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WVCRZfiLJv3ep+56YigtVSLF60Wb6Vk/bwicsLKQJQB9mb9RjP168mtQO0WEaxYMGi4DXL1Do6H0SFCyWerU/w6zIGa9lvjAdVMjkeJZl6XsJ5bzRnNHnRDQAy+W3aRBK/eJlYKE+xdgoWABmQN4LmdRXkOx/JdTAVUbcTkxH5Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mmh7GsoU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VHsoIFll+FdBkZU350bmGlaxc78YIZoW0f/Vg6EX6nFtxA8FqC+tTeYb7LNWfqk6Haa8eZiGFbcpfqcsA0o7p6izKrh+Gim4efnbbdsL2MUkuy6Cun/gP1Ag2vgMCokFYyNm98QBuuUhoJXgZdEnSMnp4AsnnpEG9jcqQh8jxcI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JsPIO1Jc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mmh7GsoU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32E25C4CECF;
-	Tue,  3 Dec 2024 16:15:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JsPIO1Jc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C905C4CECF;
+	Tue,  3 Dec 2024 16:15:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733242505;
-	bh=KGHRqexlZLxkQwzak2lddvbZ+M+Eb7NbwE9IGcGeWF0=;
+	s=korg; t=1733242508;
+	bh=yn7gQHVFru7Ld/bOb6UyDobEH1yRSn/VTh3u8lGF5F0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Mmh7GsoUSswmW4Kv3G+OlN1BSbDNYh90JksfiVhVolGmYo6SsPLtlR50bZsN/+ajg
-	 rtDkBTJsAfjp1R9ODQySVIDa5+RE2K30FpUgruB+YSI/ySOVf/ugSHVShRCrET25hF
-	 8A6MYVgOkHEyN3M5tIJ6uTBTwDgYdksuT04Togtk=
+	b=JsPIO1Jc3KqOTTZbYUuMAq61A8rjazHLeimIjNqSv6a82RfSrkrtyHJWPuVoxxcIk
+	 S0piApNTPyXxDETk2dUNdqRiRsV3nV2aXBqKZwhscXinpb6gn4CcRuF3lorjPGaQsg
+	 hRPDmavqG8kKuVm1zFa3IvmVBd/8+iOQOxdwJa14=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Muchun Song <songmuchun@bytedance.com>,
 	Ming Lei <ming.lei@redhat.com>,
 	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.12 725/826] block: fix ordering between checking QUEUE_FLAG_QUIESCED request adding
-Date: Tue,  3 Dec 2024 15:47:32 +0100
-Message-ID: <20241203144812.043852203@linuxfoundation.org>
+Subject: [PATCH 6.12 726/826] block: fix ordering between checking BLK_MQ_S_STOPPED request adding
+Date: Tue,  3 Dec 2024 15:47:33 +0100
+Message-ID: <20241203144812.082206615@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -54,111 +54,111 @@ Content-Transfer-Encoding: 8bit
 
 From: Muchun Song <songmuchun@bytedance.com>
 
-commit 6bda857bcbb86fb9d0e54fbef93a093d51172acc upstream.
+commit 96a9fe64bfd486ebeeacf1e6011801ffe89dae18 upstream.
 
-Supposing the following scenario.
+Supposing first scenario with a virtio_blk driver.
 
 CPU0                        CPU1
 
-blk_mq_insert_request()     1) store
-                            blk_mq_unquiesce_queue()
-                            blk_queue_flag_clear()                3) store
-                              blk_mq_run_hw_queues()
+blk_mq_try_issue_directly()
+  __blk_mq_issue_directly()
+    q->mq_ops->queue_rq()
+      virtio_queue_rq()
+        blk_mq_stop_hw_queue()
+                            virtblk_done()
+  blk_mq_request_bypass_insert()  1) store
+                              blk_mq_start_stopped_hw_queue()
+                                clear_bit(BLK_MQ_S_STOPPED)       3) store
                                 blk_mq_run_hw_queue()
                                   if (!blk_mq_hctx_has_pending()) 4) load
                                     return
-blk_mq_run_hw_queue()
-  if (blk_queue_quiesced()) 2) load
-    return
-  blk_mq_sched_dispatch_requests()
+                                  blk_mq_sched_dispatch_requests()
+  blk_mq_run_hw_queue()
+    if (!blk_mq_hctx_has_pending())
+      return
+    blk_mq_sched_dispatch_requests()
+      if (blk_mq_hctx_stopped())  2) load
+        return
+      __blk_mq_sched_dispatch_requests()
 
-The full memory barrier should be inserted between 1) and 2), as well as
-between 3) and 4) to make sure that either CPU0 sees QUEUE_FLAG_QUIESCED
-is cleared or CPU1 sees dispatch list or setting of bitmap of software
-queue. Otherwise, either CPU will not rerun the hardware queue causing
-starvation.
+Supposing another scenario.
 
-So the first solution is to 1) add a pair of memory barrier to fix the
-problem, another solution is to 2) use hctx->queue->queue_lock to
-synchronize QUEUE_FLAG_QUIESCED. Here, we chose 2) to fix it since
-memory barrier is not easy to be maintained.
+CPU0                        CPU1
 
-Fixes: f4560ffe8cec ("blk-mq: use QUEUE_FLAG_QUIESCED to quiesce queue")
+blk_mq_requeue_work()
+  blk_mq_insert_request() 1) store
+                            virtblk_done()
+                              blk_mq_start_stopped_hw_queue()
+  blk_mq_run_hw_queues()        clear_bit(BLK_MQ_S_STOPPED)       3) store
+                                blk_mq_run_hw_queue()
+                                  if (!blk_mq_hctx_has_pending()) 4) load
+                                    return
+                                  blk_mq_sched_dispatch_requests()
+    if (blk_mq_hctx_stopped())  2) load
+      continue
+    blk_mq_run_hw_queue()
+
+Both scenarios are similar, the full memory barrier should be inserted
+between 1) and 2), as well as between 3) and 4) to make sure that either
+CPU0 sees BLK_MQ_S_STOPPED is cleared or CPU1 sees dispatch list.
+Otherwise, either CPU will not rerun the hardware queue causing
+starvation of the request.
+
+The easy way to fix it is to add the essential full memory barrier into
+helper of blk_mq_hctx_stopped(). In order to not affect the fast path
+(hardware queue is not stopped most of the time), we only insert the
+barrier into the slow path. Actually, only slow path needs to care about
+missing of dispatching the request to the low-level device driver.
+
+Fixes: 320ae51feed5 ("blk-mq: new multi-queue block IO queueing mechanism")
 Cc: stable@vger.kernel.org
 Cc: Muchun Song <muchun.song@linux.dev>
 Signed-off-by: Muchun Song <songmuchun@bytedance.com>
 Reviewed-by: Ming Lei <ming.lei@redhat.com>
-Link: https://lore.kernel.org/r/20241014092934.53630-3-songmuchun@bytedance.com
+Link: https://lore.kernel.org/r/20241014092934.53630-4-songmuchun@bytedance.com
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- block/blk-mq.c |   49 +++++++++++++++++++++++++++++++++++--------------
- 1 file changed, 35 insertions(+), 14 deletions(-)
+ block/blk-mq.c |    6 ++++++
+ block/blk-mq.h |   13 +++++++++++++
+ 2 files changed, 19 insertions(+)
 
 --- a/block/blk-mq.c
 +++ b/block/blk-mq.c
-@@ -2200,6 +2200,24 @@ void blk_mq_delay_run_hw_queue(struct bl
- }
- EXPORT_SYMBOL(blk_mq_delay_run_hw_queue);
+@@ -2411,6 +2411,12 @@ void blk_mq_start_stopped_hw_queue(struc
+ 		return;
  
-+static inline bool blk_mq_hw_queue_need_run(struct blk_mq_hw_ctx *hctx)
-+{
-+	bool need_run;
+ 	clear_bit(BLK_MQ_S_STOPPED, &hctx->state);
++	/*
++	 * Pairs with the smp_mb() in blk_mq_hctx_stopped() to order the
++	 * clearing of BLK_MQ_S_STOPPED above and the checking of dispatch
++	 * list in the subsequent routine.
++	 */
++	smp_mb__after_atomic();
+ 	blk_mq_run_hw_queue(hctx, async);
+ }
+ EXPORT_SYMBOL_GPL(blk_mq_start_stopped_hw_queue);
+--- a/block/blk-mq.h
++++ b/block/blk-mq.h
+@@ -230,6 +230,19 @@ static inline struct blk_mq_tags *blk_mq
+ 
+ static inline bool blk_mq_hctx_stopped(struct blk_mq_hw_ctx *hctx)
+ {
++	/* Fast path: hardware queue is not stopped most of the time. */
++	if (likely(!test_bit(BLK_MQ_S_STOPPED, &hctx->state)))
++		return false;
 +
 +	/*
-+	 * When queue is quiesced, we may be switching io scheduler, or
-+	 * updating nr_hw_queues, or other things, and we can't run queue
-+	 * any more, even blk_mq_hctx_has_pending() can't be called safely.
-+	 *
-+	 * And queue will be rerun in blk_mq_unquiesce_queue() if it is
-+	 * quiesced.
++	 * This barrier is used to order adding of dispatch list before and
++	 * the test of BLK_MQ_S_STOPPED below. Pairs with the memory barrier
++	 * in blk_mq_start_stopped_hw_queue() so that dispatch code could
++	 * either see BLK_MQ_S_STOPPED is cleared or dispatch list is not
++	 * empty to avoid missing dispatching requests.
 +	 */
-+	__blk_mq_run_dispatch_ops(hctx->queue, false,
-+		need_run = !blk_queue_quiesced(hctx->queue) &&
-+		blk_mq_hctx_has_pending(hctx));
-+	return need_run;
-+}
++	smp_mb();
 +
- /**
-  * blk_mq_run_hw_queue - Start to run a hardware queue.
-  * @hctx: Pointer to the hardware queue to run.
-@@ -2220,20 +2238,23 @@ void blk_mq_run_hw_queue(struct blk_mq_h
+ 	return test_bit(BLK_MQ_S_STOPPED, &hctx->state);
+ }
  
- 	might_sleep_if(!async && hctx->flags & BLK_MQ_F_BLOCKING);
- 
--	/*
--	 * When queue is quiesced, we may be switching io scheduler, or
--	 * updating nr_hw_queues, or other things, and we can't run queue
--	 * any more, even __blk_mq_hctx_has_pending() can't be called safely.
--	 *
--	 * And queue will be rerun in blk_mq_unquiesce_queue() if it is
--	 * quiesced.
--	 */
--	__blk_mq_run_dispatch_ops(hctx->queue, false,
--		need_run = !blk_queue_quiesced(hctx->queue) &&
--		blk_mq_hctx_has_pending(hctx));
--
--	if (!need_run)
--		return;
-+	need_run = blk_mq_hw_queue_need_run(hctx);
-+	if (!need_run) {
-+		unsigned long flags;
-+
-+		/*
-+		 * Synchronize with blk_mq_unquiesce_queue(), because we check
-+		 * if hw queue is quiesced locklessly above, we need the use
-+		 * ->queue_lock to make sure we see the up-to-date status to
-+		 * not miss rerunning the hw queue.
-+		 */
-+		spin_lock_irqsave(&hctx->queue->queue_lock, flags);
-+		need_run = blk_mq_hw_queue_need_run(hctx);
-+		spin_unlock_irqrestore(&hctx->queue->queue_lock, flags);
-+
-+		if (!need_run)
-+			return;
-+	}
- 
- 	if (async || !cpumask_test_cpu(raw_smp_processor_id(), hctx->cpumask)) {
- 		blk_mq_delay_run_hw_queue(hctx, 0);
 
 
