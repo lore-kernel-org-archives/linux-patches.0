@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E931B3BB24;
-	Tue,  3 Dec 2024 14:38:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6920C17BB16;
+	Tue,  3 Dec 2024 14:38:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733236717; cv=none; b=q9Qb9+3G4jOVRH1cFHXzeusUaBkvsuvBfmxc7KRS8axI+NyXbMSoDBe3BIMaGdgoyYd+/UjO71s8ZReZOa5m+Wr9QM7Vncmd6fPVGmIbMrRk3to07afJ+YBkQBn20byeT0GGZIhTGua1GiJqwf77Lf8wYBdOgJeZCD7JfeVEo5o=
+	t=1733236720; cv=none; b=lCg5aI0AmIXDbdE+LV+ZDMSf0b7J22t87asEO2yUJSIBSidujxDq1sJNbeGPBINmIdKgFqEKd8gtFMaD2QAUvHlWbnGzgka6T01DS0Ur2yth4KeD97saARtxyua7NDIiLdvEReLQvBS3UI0LxmjZSIni3Tcb8FW+rzhcu2wAp00=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733236717; c=relaxed/simple;
-	bh=t/4azxRnvRYN1nlPqcWOvKLAie6eAZUEttMXQSR4pb4=;
+	s=arc-20240116; t=1733236720; c=relaxed/simple;
+	bh=QCJ0UPd41nDl/rFDhOMEbkHy653/JVAEHmoVKousizs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JmCk4M1pn4JBSN94ilJhpbftD1DQpAwFilXONhN0kKG5FOfi6qKrClE629mAZ+3AMkP240CNCA0xJzmYfVgAS5PiDb6XDYWQ1682Rq8zKxgUN5ZRsVzr8CHiXsRmEVRpxqj/x3VuE2eTWM7f1FWg8BpQGeRe0XAC5bKVwjOeIxE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V+qPqeSo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KjYwLM9wYv7Idy3EP+5Clu9/PsNYyqOqEbSh6j8RhQo10zfZuP4qeUGsaDeSXvM584M0bvU1cujnO0RQIIf2MPwMu/PASoDcpZEmZ8WtiS+7ySYWjokQDHBkC2yQOwU71okpEloUUiyEdp/9F7q0zCJ7ybIKH3+Zd0KSQlro59U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wxb3q551; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V+qPqeSo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 561F4C4CECF;
-	Tue,  3 Dec 2024 14:38:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wxb3q551"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9F9BC4CECF;
+	Tue,  3 Dec 2024 14:38:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733236716;
-	bh=t/4azxRnvRYN1nlPqcWOvKLAie6eAZUEttMXQSR4pb4=;
+	s=korg; t=1733236720;
+	bh=QCJ0UPd41nDl/rFDhOMEbkHy653/JVAEHmoVKousizs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V+qPqeSoEFEDT6AAbuAfpDoSSTqzBRgAwfmhbkEpsuaO3vCkhmabJavKe72LGc6SB
-	 ZRKPnMgO09eY8uxjJaenbqFRWQWsXMnxGRdP70EArutmlZCmyG+5K9Yhk8EAt5gW2J
-	 QPnkZgHljtaxwBaU1VIHREgTYMZGog6S8nKaUMs4=
+	b=wxb3q551YUbqV3qNnkU3ygiWkTDtAMexgXKQZ74pvx4qjHn6DtAs/9voPtyUYOiUD
+	 iSg+NkIPo54WArRNqekaFmp8aIUeJGjPwpBivXQVD/JC0xC761RO04cDbTjeuYBGx8
+	 h6tGAdQE6PFznqlAZLDBedX3yXIqtNZR23RYRUMg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zeng Heng <zengheng4@huawei.com>,
+	Zhen Lei <thunder.leizhen@huawei.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 066/138] scsi: fusion: Remove unused variable rc
-Date: Tue,  3 Dec 2024 15:31:35 +0100
-Message-ID: <20241203141926.084185059@linuxfoundation.org>
+Subject: [PATCH 4.19 067/138] scsi: qedi: Fix a possible memory leak in qedi_alloc_and_init_sb()
+Date: Tue,  3 Dec 2024 15:31:36 +0100
+Message-ID: <20241203141926.121766633@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203141923.524658091@linuxfoundation.org>
 References: <20241203141923.524658091@linuxfoundation.org>
@@ -51,44 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zeng Heng <zengheng4@huawei.com>
+From: Zhen Lei <thunder.leizhen@huawei.com>
 
-[ Upstream commit bd65694223f7ad11c790ab63ad1af87a771192ee ]
+[ Upstream commit 95bbdca4999bc59a72ebab01663d421d6ce5775d ]
 
-The return value of scsi_device_reprobe() is currently ignored in
-_scsih_reprobe_lun(). Fixing the calling code to deal with the potential
-error is non-trivial, so for now just WARN_ON().
+Hook "qedi_ops->common->sb_init = qed_sb_init" does not release the DMA
+memory sb_virt when it fails. Add dma_free_coherent() to free it. This
+is the same way as qedr_alloc_mem_sb() and qede_alloc_mem_sb().
 
-The handling of scsi_device_reprobe()'s return value refers to
-_scsih_reprobe_lun() and the following link:
-
-https://lore.kernel.org/all/094fdbf57487af4f395238c0525b2a560c8f68f0.1469766027.git.calvinowens@fb.com/
-
-Fixes: f99be43b3024 ("[SCSI] fusion: power pc and miscellaneous bug fixs")
-Signed-off-by: Zeng Heng <zengheng4@huawei.com>
-Link: https://lore.kernel.org/r/20241024084417.154655-1-zengheng4@huawei.com
+Fixes: ace7f46ba5fd ("scsi: qedi: Add QLogic FastLinQ offload iSCSI driver framework.")
+Signed-off-by: Zhen Lei <thunder.leizhen@huawei.com>
+Link: https://lore.kernel.org/r/20241026125711.484-3-thunder.leizhen@huawei.com
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/message/fusion/mptsas.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/scsi/qedi/qedi_main.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/message/fusion/mptsas.c b/drivers/message/fusion/mptsas.c
-index b8cf2658649ee..7c8924dff17ff 100644
---- a/drivers/message/fusion/mptsas.c
-+++ b/drivers/message/fusion/mptsas.c
-@@ -4206,10 +4206,8 @@ mptsas_find_phyinfo_by_phys_disk_num(MPT_ADAPTER *ioc, u8 phys_disk_num,
- static void
- mptsas_reprobe_lun(struct scsi_device *sdev, void *data)
- {
--	int rc;
--
- 	sdev->no_uld_attach = data ? 1 : 0;
--	rc = scsi_device_reprobe(sdev);
-+	WARN_ON(scsi_device_reprobe(sdev));
- }
- 
- static void
+diff --git a/drivers/scsi/qedi/qedi_main.c b/drivers/scsi/qedi/qedi_main.c
+index 7a179cfc01ed2..15567e60216ec 100644
+--- a/drivers/scsi/qedi/qedi_main.c
++++ b/drivers/scsi/qedi/qedi_main.c
+@@ -357,6 +357,7 @@ static int qedi_alloc_and_init_sb(struct qedi_ctx *qedi,
+ 	ret = qedi_ops->common->sb_init(qedi->cdev, sb_info, sb_virt, sb_phys,
+ 				       sb_id, QED_SB_TYPE_STORAGE);
+ 	if (ret) {
++		dma_free_coherent(&qedi->pdev->dev, sizeof(*sb_virt), sb_virt, sb_phys);
+ 		QEDI_ERR(&qedi->dbg_ctx,
+ 			 "Status block initialization failed for id = %d.\n",
+ 			  sb_id);
 -- 
 2.43.0
 
