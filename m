@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5A8A1EE00B;
-	Tue,  3 Dec 2024 16:16:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24B7A1F8912;
+	Tue,  3 Dec 2024 16:16:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733242589; cv=none; b=FqXzBC0c8WHY36FhuOm8GF+uCp/4yqwzezRvptrZzy5OBYr6xwPrrkH7lP9l6c5Yh1Zlxa/Aa652ody/ayQNiutP7ZApKV+rqeby307vK09HbotRBE1grfru3qHcOjDK1uyvgTaIifEkT4drxm/oVDCeLnrnn5ivH3rok27bxh4=
+	t=1733242593; cv=none; b=TBGVDphXQdpaExLXctcATkYKzCcmHPegs1CDIDnjqaryXiOom5d7Y3VNwxbuUGtaOs/D7uItBUb+o/L+FFtbUiad6+KxB8tzgKWoXbv/3J2a6u0oetZay6YuPEFQ2kpXWoBxqx0Ywhqkz0h0Tl779tFHxZE0ayCAttdS5K+Lz9c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733242589; c=relaxed/simple;
-	bh=HtuylQtVbhRKCwVbkXXh8MCLGZfqEqV7XD598rRHtsw=;
+	s=arc-20240116; t=1733242593; c=relaxed/simple;
+	bh=3xtWHADH6UFYgqNy1XmE22ZWcr/s2GVfG3iYQaVi+pA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AXUkKQAenHonbBzorLEB8TUpHuS5fh/OLO8YhRkY8lhrYQN7tyctTvkrU+02456HO1Nn9ygtXr/JxrWnQ7/nSlIoY9a46eGBuW2m07doro7JW9Z5pw/4rNadqwFtS0lBVErsh1fatYWJWv6pLVq8xSSe/OpfbbwkW58suYUZvjo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mBL8ykE/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KLFn3fabr4Z2qGOPTOF/uhypmdneQefD4dySoVTTC9VfPZUbFDsY0pphenNOazg2r30h83I9azJHasT7yUFzN9AMJPrekO2/cEB/cPmoekPIMf2OsenfKsKPcofTYS4jLq6GwIHi4Wwc1RQ71iKB9evytH3vldB4xM3tpzm9MT8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LKS59iky; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mBL8ykE/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 434A1C4CECF;
-	Tue,  3 Dec 2024 16:16:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LKS59iky"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EF14C4CECF;
+	Tue,  3 Dec 2024 16:16:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733242589;
-	bh=HtuylQtVbhRKCwVbkXXh8MCLGZfqEqV7XD598rRHtsw=;
+	s=korg; t=1733242593;
+	bh=3xtWHADH6UFYgqNy1XmE22ZWcr/s2GVfG3iYQaVi+pA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mBL8ykE/fTjOpKnC+Avbo+o9E5breqn1EN9oE19Jak5m0+OB8B55cHYUDtcjIPu7a
-	 vi5Jiymr2+0T99WyYrEhFhl8Vd4dj9UWYbxZ09VlmSNiJ6q+LBxaBPWnmr5rLb1IrY
-	 8TZBxDigw/okxUPguP85324SmihRQveHootF4+uY=
+	b=LKS59ikyLdFGcBzDuKqVoOlQ2qliRW+3i9/4HUZKntd6TutC6OgRMBxrOclicrY+Q
+	 H8BbBPixU9y59T1VyR1b3AL14pk+KVk3POpFTftEEbBc+E6aFnwBzAf68v9zkwsrih
+	 +8Y3suc/+oexXAueiYv5bxhoLq0uqRzNyykimZcc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.12 748/826] ALSA: hda/realtek: Apply quirk for Medion E15433
-Date: Tue,  3 Dec 2024 15:47:55 +0100
-Message-ID: <20241203144812.943559894@linuxfoundation.org>
+	Tiwei Bie <tiwei.btw@antgroup.com>,
+	Anton Ivanov <anton.ivanov@cambridgegreys.com>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 6.12 719/826] um: vector: Do not use drvdata in release
+Date: Tue,  3 Dec 2024 15:47:26 +0100
+Message-ID: <20241203144811.810449385@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -49,31 +51,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Tiwei Bie <tiwei.btw@antgroup.com>
 
-commit ca0f79f0286046f6a91c099dc941cf7afae198d6 upstream.
+commit 51b39d741970742a5c41136241a9c48ac607cf82 upstream.
 
-Medion E15433 laptop wich ALC269VC (SSID 2782:1705) needs the same
-workaround for the missing speaker as another model.
+The drvdata is not available in release. Let's just use container_of()
+to get the vector_device instance. Otherwise, removing a vector device
+will result in a crash:
 
-Link: https://bugzilla.suse.com/show_bug.cgi?id=1233298
-Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20241128072646.15659-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+RIP: 0033:vector_device_release+0xf/0x50
+RSP: 00000000e187bc40  EFLAGS: 00010202
+RAX: 0000000060028f61 RBX: 00000000600f1baf RCX: 00000000620074e0
+RDX: 000000006220b9c0 RSI: 0000000060551c80 RDI: 0000000000000000
+RBP: 00000000e187bc50 R08: 00000000603ad594 R09: 00000000e187bb70
+R10: 000000000000135a R11: 00000000603ad422 R12: 00000000623ae028
+R13: 000000006287a200 R14: 0000000062006d30 R15: 00000000623700b6
+Kernel panic - not syncing: Segfault with no mm
+CPU: 0 UID: 0 PID: 16 Comm: kworker/0:1 Not tainted 6.12.0-rc6-g59b723cd2adb #1
+Workqueue: events mc_work_proc
+Stack:
+ 60028f61 623ae028 e187bc80 60276fcd
+ 6220b9c0 603f5820 623ae028 00000000
+ e187bcb0 603a2bcd 623ae000 62370010
+Call Trace:
+ [<60028f61>] ? vector_device_release+0x0/0x50
+ [<60276fcd>] device_release+0x70/0xba
+ [<603a2bcd>] kobject_put+0xba/0xe7
+ [<60277265>] put_device+0x19/0x1c
+ [<60281266>] platform_device_put+0x26/0x29
+ [<60281e5f>] platform_device_unregister+0x2c/0x2e
+ [<60029422>] vector_remove+0x52/0x58
+ [<60031316>] ? mconsole_reply+0x0/0x50
+ [<600310c8>] mconsole_remove+0x160/0x1cc
+ [<603b19f4>] ? strlen+0x0/0x15
+ [<60066611>] ? __dequeue_entity+0x1a9/0x206
+ [<600666a7>] ? set_next_entity+0x39/0x63
+ [<6006666e>] ? set_next_entity+0x0/0x63
+ [<60038fa6>] ? um_set_signals+0x0/0x43
+ [<6003070c>] mc_work_proc+0x77/0x91
+ [<60057664>] process_scheduled_works+0x1b3/0x2dd
+ [<60055f32>] ? assign_work+0x0/0x58
+ [<60057f0a>] worker_thread+0x1e9/0x293
+ [<6005406f>] ? set_pf_worker+0x0/0x64
+ [<6005d65d>] ? arch_local_irq_save+0x0/0x2d
+ [<6005d748>] ? kthread_exit+0x0/0x3a
+ [<60057d21>] ? worker_thread+0x0/0x293
+ [<6005dbf1>] kthread+0x126/0x12b
+ [<600219c5>] new_thread_handler+0x85/0xb6
+
+Cc: stable@vger.kernel.org
+Signed-off-by: Tiwei Bie <tiwei.btw@antgroup.com>
+Acked-By: Anton Ivanov <anton.ivanov@cambridgegreys.com>
+Link: https://patch.msgid.link/20241104163203.435515-5-tiwei.btw@antgroup.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_realtek.c |    1 +
- 1 file changed, 1 insertion(+)
+ arch/um/drivers/vector_kern.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -11034,6 +11034,7 @@ static const struct snd_pci_quirk alc269
- 	SND_PCI_QUIRK(0x2782, 0x0228, "Infinix ZERO BOOK 13", ALC269VB_FIXUP_INFINIX_ZERO_BOOK_13),
- 	SND_PCI_QUIRK(0x2782, 0x0232, "CHUWI CoreBook XPro", ALC269VB_FIXUP_CHUWI_COREBOOK_XPRO),
- 	SND_PCI_QUIRK(0x2782, 0x1701, "Infinix Y4 Max", ALC269VC_FIXUP_INFINIX_Y4_MAX),
-+	SND_PCI_QUIRK(0x2782, 0x1705, "MEDION E15433", ALC269VC_FIXUP_INFINIX_Y4_MAX),
- 	SND_PCI_QUIRK(0x2782, 0x1707, "Vaio VJFE-ADL", ALC298_FIXUP_SPK_VOLUME),
- 	SND_PCI_QUIRK(0x2782, 0x4900, "MEDION E15443", ALC233_FIXUP_MEDION_MTL_SPK),
- 	SND_PCI_QUIRK(0x8086, 0x2074, "Intel NUC 8", ALC233_FIXUP_INTEL_NUC8_DMIC),
+--- a/arch/um/drivers/vector_kern.c
++++ b/arch/um/drivers/vector_kern.c
+@@ -815,7 +815,8 @@ static struct platform_driver uml_net_dr
+ 
+ static void vector_device_release(struct device *dev)
+ {
+-	struct vector_device *device = dev_get_drvdata(dev);
++	struct vector_device *device =
++		container_of(dev, struct vector_device, pdev.dev);
+ 	struct net_device *netdev = device->dev;
+ 
+ 	list_del(&device->list);
 
 
