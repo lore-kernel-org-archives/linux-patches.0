@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B7671E3DF9;
-	Tue,  3 Dec 2024 15:00:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35FF033FE;
+	Tue,  3 Dec 2024 15:00:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733238032; cv=none; b=i6j2buTBcz+13DEWYBKlO2w6cwuIyruYtxpJrDVtTQH0J4QG+n3qyUnNPH8XSs5s5PbWKg2r2/xFqNYgZEkR6ztf/4SL7M10WMtDt4oblkLJZAw8CTtNkwybWg5y91lxJNQuDpSgYSY5bsCJgAEblNFSQ3Q1vGSjnKDG+cfKBhQ=
+	t=1733238035; cv=none; b=H0D6BylZySHwQC138QVXQRdSD7GZSSxUx9CRx1e380eB+ZKRCBPizVv+rkLbc/SUers0xrbJDNRImTahzZtcbW2uieSEi1fVc/u/BVM1U6e27PuO40XhlJudmRGT4C1A+fUho4rHL7iZhPCLRRtQ9sFrwVPU4+pLdZ86fageC1c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733238032; c=relaxed/simple;
-	bh=J2T9JQHyLacT9Qrt1u+k06L1ITu0V+X8BRUAhphDawk=;
+	s=arc-20240116; t=1733238035; c=relaxed/simple;
+	bh=cJ+XkqpUwNutlNYpvrJZhwCx8dlIVvNNSqEiEl4638U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lkmgMLNoL7MpfxrPBKFEP61CtoBTpNLF3weXfL8g1rB8ocZiwBhv8YCiA1PluzNRH20IO0bF1FGwNwM5d9SvgotSnN010OJnMg/60dgdrO7iiI0TKMPzFb4cUlVBtlCevEFKFTziv2hHARfjVCaWm4VXl73vQshJKS3RNTDvYN0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BbfEADus; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HFirXhYzY0JwlXkuaQXoeJYP0E8bWjXOmCUbGN59t5X7jWEe4/NLdT13hRGWOg7rI448Yjzbe6vb3Mr6tMY2VkziOTQExj+UOOxnEScxGq1RYLAggO0UOJXIwHvcSOj5LL4W8Bp6dnL4SZVlilmtwIxhKufJh+DMXcihWGKtPWQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZoR15qaO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BbfEADus"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F213BC4CECF;
-	Tue,  3 Dec 2024 15:00:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZoR15qaO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B349C4CECF;
+	Tue,  3 Dec 2024 15:00:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733238031;
-	bh=J2T9JQHyLacT9Qrt1u+k06L1ITu0V+X8BRUAhphDawk=;
+	s=korg; t=1733238034;
+	bh=cJ+XkqpUwNutlNYpvrJZhwCx8dlIVvNNSqEiEl4638U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BbfEADusWFifWJyVl9mJSZj5dIyazk3cT+xogS29ArWRFMWEAo26fDbbsn2RHF+vW
-	 WyA23BFdudQHjm3TellEYbBK+lsvlDoVBcMG6ip5qValDYk7wr1dgMDUN6sBS00Lbz
-	 MOAPfywBqGK5g8pdbu7f9C2To8mL1jmRiXlD3+og=
+	b=ZoR15qaOwmffilybpArPKKbqbnPyPD32Xj72HYIKEmm4hAUlTRYOJAcrtbLcm+SXV
+	 61icsKIbQvDnkMFktUzhiNuUxQSGJa+X2Gwxk84wRjpVv8Mrwg1OepwVZIJpA+sMBF
+	 hqG+j/G2y1ecSValcta7iWuZPVHf05zEM+b8FG9U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Everest K.C." <everestkc@everestkc.com.np>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	"Gautham R. Shenoy" <gautham.shenoy@amd.com>,
+	Perry Yuan <perry.yuan@amd.com>,
+	Dhananjay Ugwekar <dhananjay.ugwekar@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 108/817] crypto: cavium - Fix the if condition to exit loop after timeout
-Date: Tue,  3 Dec 2024 15:34:40 +0100
-Message-ID: <20241203143959.927199141@linuxfoundation.org>
+Subject: [PATCH 6.11 109/817] cpufreq/amd-pstate: Dont update CPPC request in amd_pstate_cpu_boost_update()
+Date: Tue,  3 Dec 2024 15:34:41 +0100
+Message-ID: <20241203143959.965874942@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -51,51 +53,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Everest K.C <everestkc@everestkc.com.np>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-[ Upstream commit 53d91ca76b6c426c546542a44c78507b42008c9e ]
+[ Upstream commit 67c08d303e0a1a5665b3f198037c9fae2d808090 ]
 
-The while loop breaks in the first run because of incorrect
-if condition. It also causes the statements after the if to
-appear dead.
-Fix this by changing the condition from if(timeout--) to
-if(!timeout--).
+When boost is changed the CPPC value is changed in amd_pstate_cpu_boost_update()
+but then changed again when refresh_frequency_limits() and all it's callbacks
+occur.  The first is a pointless write, so instead just update the limits for
+the policy and let the policy refresh anchor everything properly.
 
-This bug was reported by Coverity Scan.
-Report:
-CID 1600859: (#1 of 1): Logically dead code (DEADCODE)
-dead_error_line: Execution cannot reach this statement: udelay(30UL);
-
-Fixes: 9e2c7d99941d ("crypto: cavium - Add Support for Octeon-tx CPT Engine")
-Signed-off-by: Everest K.C. <everestkc@everestkc.com.np>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: c8c68c38b56f ("cpufreq: amd-pstate: initialize core precision boost state")
+Reviewed-by: Gautham R. Shenoy <gautham.shenoy@amd.com>
+Reviewed-by: Perry Yuan <perry.yuan@amd.com>
+Tested-by: Dhananjay Ugwekar <dhananjay.ugwekar@amd.com>
+Link: https://lore.kernel.org/r/20241012174519.897-2-mario.limonciello@amd.com
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/cavium/cpt/cptpf_main.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/cpufreq/amd-pstate.c | 24 +-----------------------
+ 1 file changed, 1 insertion(+), 23 deletions(-)
 
-diff --git a/drivers/crypto/cavium/cpt/cptpf_main.c b/drivers/crypto/cavium/cpt/cptpf_main.c
-index 6872ac3440010..ec17beee24c07 100644
---- a/drivers/crypto/cavium/cpt/cptpf_main.c
-+++ b/drivers/crypto/cavium/cpt/cptpf_main.c
-@@ -44,7 +44,7 @@ static void cpt_disable_cores(struct cpt_device *cpt, u64 coremask,
- 		dev_err(dev, "Cores still busy %llx", coremask);
- 		grp = cpt_read_csr64(cpt->reg_base,
- 				     CPTX_PF_EXEC_BUSY(0));
--		if (timeout--)
-+		if (!timeout--)
- 			break;
+diff --git a/drivers/cpufreq/amd-pstate.c b/drivers/cpufreq/amd-pstate.c
+index 929b9097a6c17..62ae4ff290379 100644
+--- a/drivers/cpufreq/amd-pstate.c
++++ b/drivers/cpufreq/amd-pstate.c
+@@ -698,34 +698,12 @@ static void amd_pstate_adjust_perf(unsigned int cpu,
+ static int amd_pstate_cpu_boost_update(struct cpufreq_policy *policy, bool on)
+ {
+ 	struct amd_cpudata *cpudata = policy->driver_data;
+-	struct cppc_perf_ctrls perf_ctrls;
+-	u32 highest_perf, nominal_perf, nominal_freq, max_freq;
++	u32 nominal_freq, max_freq;
+ 	int ret = 0;
  
- 		udelay(CSR_DELAY);
-@@ -394,7 +394,7 @@ static void cpt_disable_all_cores(struct cpt_device *cpt)
- 		dev_err(dev, "Cores still busy");
- 		grp = cpt_read_csr64(cpt->reg_base,
- 				     CPTX_PF_EXEC_BUSY(0));
--		if (timeout--)
-+		if (!timeout--)
- 			break;
+-	highest_perf = READ_ONCE(cpudata->highest_perf);
+-	nominal_perf = READ_ONCE(cpudata->nominal_perf);
+ 	nominal_freq = READ_ONCE(cpudata->nominal_freq);
+ 	max_freq = READ_ONCE(cpudata->max_freq);
  
- 		udelay(CSR_DELAY);
+-	if (boot_cpu_has(X86_FEATURE_CPPC)) {
+-		u64 value = READ_ONCE(cpudata->cppc_req_cached);
+-
+-		value &= ~GENMASK_ULL(7, 0);
+-		value |= on ? highest_perf : nominal_perf;
+-		WRITE_ONCE(cpudata->cppc_req_cached, value);
+-
+-		wrmsrl_on_cpu(cpudata->cpu, MSR_AMD_CPPC_REQ, value);
+-	} else {
+-		perf_ctrls.max_perf = on ? highest_perf : nominal_perf;
+-		ret = cppc_set_perf(cpudata->cpu, &perf_ctrls);
+-		if (ret) {
+-			cpufreq_cpu_release(policy);
+-			pr_debug("Failed to set max perf on CPU:%d. ret:%d\n",
+-				cpudata->cpu, ret);
+-			return ret;
+-		}
+-	}
+-
+ 	if (on)
+ 		policy->cpuinfo.max_freq = max_freq;
+ 	else if (policy->cpuinfo.max_freq > nominal_freq * 1000)
 -- 
 2.43.0
 
