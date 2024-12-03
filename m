@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 497431F75B7;
-	Tue,  3 Dec 2024 15:21:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E6B71F75BC;
+	Tue,  3 Dec 2024 15:21:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733239268; cv=none; b=YmOcnNeJGF/r3DfHHFZUjujgczfWp/QlSwoU0GsSJp+gqMKZmORbDF1sYbPytR8eyWXujUcHF+ht149odH4Iu8AvTTUs3AEuxUHVXNvdi/J6K9GsqZLRYV2GPL1Zb7WYCRTd8A8QQJeLxlx/5LBppHwDdoH5btWrYAat5YKKw2I=
+	t=1733239271; cv=none; b=KlsxlK0/YNkFvNj51uhNCqWy2FSLvOeJ5syQPhipwOWPHDClGt8GcxpVNH+duC5pvTqImx5VSyn5R/XeODb+nAsWwtqNBDOiteidr+pVPm1ASbeFAINdgeRZSTVUNNhGiOTmByl7BMoQPSXCW5ceUOyOKXmKB4UwKcJf/8yfOHE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733239268; c=relaxed/simple;
-	bh=SVwssaSOts8tWeYSUyIv/QbT0Qz9LCftd4Xy9VqLcFg=;
+	s=arc-20240116; t=1733239271; c=relaxed/simple;
+	bh=zw1/m7qi+mr60LtK2kb/5L3sWLrv60zFpID40NcOtTo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q1eQI0v2Z2sCDoGNA/+MzKT9K7jedhImFklkSgF+tyFX6l62qsLU3nI3rRVLN9WwfSUPFyhxsoQnrhYMHL669/TO6vbk/AtaMVqtjFBDg7DyG/WpWuS4b+B+88h67GdqvEFVoFxP3soKNC4yPweW5Ys/grUDKR4nPsu6bkOD/Dg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NqYwLlwl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hmUe0wRYHIzOxJCFbsmZm88fs9hmw+lY9ChTWShOP1uV1Di/G5XLSehJJyyzQwpBie8ec5XSs8jcHGXe8MKv9VRA8IDBEoMWji7UV0tKOgUoQbndkbmh2Yj7jtBr83dBrtj3dS7pmo2Z4hqyGH4r0PlO6OMIHDkLvssTXCsFFm0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bTwMfnoX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NqYwLlwl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C47FAC4CEDA;
-	Tue,  3 Dec 2024 15:21:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bTwMfnoX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B57CBC4CECF;
+	Tue,  3 Dec 2024 15:21:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733239268;
-	bh=SVwssaSOts8tWeYSUyIv/QbT0Qz9LCftd4Xy9VqLcFg=;
+	s=korg; t=1733239271;
+	bh=zw1/m7qi+mr60LtK2kb/5L3sWLrv60zFpID40NcOtTo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NqYwLlwlUNuRQf2AV0i5y2IP6irnloD/2BPguS27KR1Abx5E1uwNbdUut8XCriVVa
-	 S7adjeREO4fzkuXlrQFWSSMpqvE2E5dEFfHS1P5CE5QjgR2Q8Rl+ec+6c2r/UDO6Av
-	 HBOFndugiJaF9kCRoThJfjCBSbbTgHZ2UGEGuWcw=
+	b=bTwMfnoXKRZzQ8lPoZkGArr7GUnybixvKhSqRJwHDL3MOVnkKTOC/XLF0aY6ZO3p3
+	 JrfVzxx9UcgXwHV6d/95xUSNtE8KpMhFuy96S1GU5pTMbN3BBpLupFcMNiJEM+eaPk
+	 wpjf40eoNT//enqfg+4YaSqYARjg+I5shX5J65i4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
-	Christian Brauner <brauner@kernel.org>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 556/817] selftests/mount_setattr: Fix failures on 64K PAGE_SIZE kernels
-Date: Tue,  3 Dec 2024 15:42:08 +0100
-Message-ID: <20241203144017.614773752@linuxfoundation.org>
+Subject: [PATCH 6.11 557/817] gpio: zevio: Add missed label initialisation
+Date: Tue,  3 Dec 2024 15:42:09 +0100
+Message-ID: <20241203144017.653077075@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -52,65 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Ellerman <mpe@ellerman.id.au>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit f13242a46438e690067a4bf47068fde4d5719947 ]
+[ Upstream commit 5bbed54ba66925ebca19092d0750630f943d7bf2 ]
 
-Currently the mount_setattr_test fails on machines with a 64K PAGE_SIZE,
-with errors such as:
+Initialise the GPIO chip label correctly as it was done by
+of_mm_gpiochip_add_data() before the below mentioned change.
 
-  #  RUN           mount_setattr_idmapped.invalid_fd_negative ...
-  mkfs.ext4: No space left on device while writing out and closing file system
-  # mount_setattr_test.c:1055:invalid_fd_negative:Expected system("mkfs.ext4 -q /mnt/C/ext4.img") (256) == 0 (0)
-  # invalid_fd_negative: Test terminated by assertion
-  #          FAIL  mount_setattr_idmapped.invalid_fd_negative
-  not ok 12 mount_setattr_idmapped.invalid_fd_negative
-
-The code creates a 100,000 byte tmpfs:
-
-	ASSERT_EQ(mount("testing", "/mnt", "tmpfs", MS_NOATIME | MS_NODEV,
-			"size=100000,mode=700"), 0);
-
-And then a little later creates a 2MB ext4 filesystem in that tmpfs:
-
-	ASSERT_EQ(ftruncate(img_fd, 1024 * 2048), 0);
-	ASSERT_EQ(system("mkfs.ext4 -q /mnt/C/ext4.img"), 0);
-
-At first glance it seems like that should never work, after all 2MB is
-larger than 100,000 bytes. However the filesystem image doesn't actually
-occupy 2MB on "disk" (actually RAM, due to tmpfs). On 4K kernels the
-ext4.img uses ~84KB of actual space (according to du), which just fits.
-
-However on 64K PAGE_SIZE kernels the ext4.img takes at least 256KB,
-which is too large to fit in the tmpfs, hence the errors.
-
-It seems fraught to rely on the ext4.img taking less space on disk than
-the allocated size, so instead create the tmpfs with a size of 2MB. With
-that all 21 tests pass on 64K PAGE_SIZE kernels.
-
-Fixes: 01eadc8dd96d ("tests: add mount_setattr() selftests")
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://lore.kernel.org/r/20241115134114.1219555-1-mpe@ellerman.id.au
-Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Fixes: cf8f4462e5fa ("gpio: zevio: drop of_gpio.h header")
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/20241118092729.516736-1-andriy.shevchenko@linux.intel.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/mount_setattr/mount_setattr_test.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpio/gpio-zevio.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/tools/testing/selftests/mount_setattr/mount_setattr_test.c b/tools/testing/selftests/mount_setattr/mount_setattr_test.c
-index c6a8c732b8021..304e6422a1f1c 100644
---- a/tools/testing/selftests/mount_setattr/mount_setattr_test.c
-+++ b/tools/testing/selftests/mount_setattr/mount_setattr_test.c
-@@ -1026,7 +1026,7 @@ FIXTURE_SETUP(mount_setattr_idmapped)
- 			"size=100000,mode=700"), 0);
+diff --git a/drivers/gpio/gpio-zevio.c b/drivers/gpio/gpio-zevio.c
+index 2de61337ad3b5..d7230fd83f5d6 100644
+--- a/drivers/gpio/gpio-zevio.c
++++ b/drivers/gpio/gpio-zevio.c
+@@ -11,6 +11,7 @@
+ #include <linux/io.h>
+ #include <linux/mod_devicetable.h>
+ #include <linux/platform_device.h>
++#include <linux/property.h>
+ #include <linux/slab.h>
+ #include <linux/spinlock.h>
  
- 	ASSERT_EQ(mount("testing", "/mnt", "tmpfs", MS_NOATIME | MS_NODEV,
--			"size=100000,mode=700"), 0);
-+			"size=2m,mode=700"), 0);
+@@ -169,6 +170,7 @@ static const struct gpio_chip zevio_gpio_chip = {
+ /* Initialization */
+ static int zevio_gpio_probe(struct platform_device *pdev)
+ {
++	struct device *dev = &pdev->dev;
+ 	struct zevio_gpio *controller;
+ 	int status, i;
  
- 	ASSERT_EQ(mkdir("/mnt/A", 0777), 0);
+@@ -180,6 +182,10 @@ static int zevio_gpio_probe(struct platform_device *pdev)
+ 	controller->chip = zevio_gpio_chip;
+ 	controller->chip.parent = &pdev->dev;
  
++	controller->chip.label = devm_kasprintf(dev, GFP_KERNEL, "%pfw", dev_fwnode(dev));
++	if (!controller->chip.label)
++		return -ENOMEM;
++
+ 	controller->regs = devm_platform_ioremap_resource(pdev, 0);
+ 	if (IS_ERR(controller->regs))
+ 		return dev_err_probe(&pdev->dev, PTR_ERR(controller->regs),
 -- 
 2.43.0
 
