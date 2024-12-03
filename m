@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09EE75C8F7;
-	Tue,  3 Dec 2024 15:43:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 708AF1F7561;
+	Tue,  3 Dec 2024 15:43:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733240633; cv=none; b=G8wuWp18ZXlZZ+KDIcRZxpBcyGt4ypxqkvLZVkKI+TcSfoQQaigi1ikR2ruz646alXpgP31BEyIb2qBQv4ZRX29fE7vfxa8awwNYRewYGe/stc9JO9H8rRyfEb5MS2K+2JRX3OMDCGscKwrRrFxyt81RbHOG9eiB2qTRT64DDNc=
+	t=1733240636; cv=none; b=sSXNtENhmPD91Kr/BoekOIv0WmyiY1XmMgEJN2X1Tav8cD4CvRpY7V+mcOPJs9MlXLbLJfvzz7PsC4wURhd5ZqBvU6dTPbn5YwU1kUyoNYI8AkKVz8gm6nDUQ7r5L9gT9+SuJPKRlz3pnjdTvvR2+NwTC7ZGh6emGuWTj65QspI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733240633; c=relaxed/simple;
-	bh=QObZRz0Sdqu4XZRC819SMsuPKCblmHGgwFxFq9djUkU=;
+	s=arc-20240116; t=1733240636; c=relaxed/simple;
+	bh=q+O94rqs10RUVYphMT/kuta7acEEuPKYh4/4jaDTm3w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=O2oM62efhu0OUsWECqY+52lbTWjlUfG7ljWuEYcoUdueyicUV+tMgADWbkKUUG1jWclYAgQFEAmK5Xw08qJbrQISD/Q8Cqz0ViT9cXzynoaWXd6oMQ1xaQSHBl5YPZg+1sy+JJa3BpAwvrP8HJlunnKxg+kyOkNqk2ywcIL6UrQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y8dfEcZm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=q3s3dZWC+/stvVdv0P23PDV7NniSAOPjYOv637P0jKptR39bGdi1NE5OASaXddhk27CSZ1tLMeo0//WWE9rrdm9NjlvGAVVtrrtZvvv2y1wxCYUw7WA1LxRzgpV+cph+bQHKJ1YglxZ6JOhVo5Fp8b6oJ8hM0oBuLZEM9SgB0xY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZCIuY0iO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y8dfEcZm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77304C4CECF;
-	Tue,  3 Dec 2024 15:43:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZCIuY0iO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3E78C4CED8;
+	Tue,  3 Dec 2024 15:43:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733240632;
-	bh=QObZRz0Sdqu4XZRC819SMsuPKCblmHGgwFxFq9djUkU=;
+	s=korg; t=1733240636;
+	bh=q+O94rqs10RUVYphMT/kuta7acEEuPKYh4/4jaDTm3w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y8dfEcZmacIkG/ZXS9XLIMGE6FT+mnSeL2XR+UHdD5FmJGaFhncCXMgI9FpcBDRwk
-	 rpwQBkqqclq5HqkuOIH6NbdnePEYvoSSdzBH/QwNwXsjtU/8I93TZ5bsBSzfu/BLzG
-	 vf4l2IJ3NtqMUF2N0vxCBbt+iL4q0H15/xJ5I9UE=
+	b=ZCIuY0iOTJsy/14wkw3Uql0TZBqJ8z9ZKDERGwHMYWQFJ9i13HtBcUjGMy97NLb7t
+	 WRwO+WMP60MQ1WCZUgxolBtsROSO5iC/RND6fafJmVV7iyVj/9/mxQ6rWcwdEcBV9C
+	 97K9MoVyoD8sMk+qR91WIhBbTQZTCVJ2Jldl8lRc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
-	Tvrtko Ursulin <tvrtko.ursulin@igalia.com>,
+	Jinjie Ruan <ruanjinjie@huawei.com>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 192/826] drm/v3d: Appease lockdep while updating GPU stats
-Date: Tue,  3 Dec 2024 15:38:39 +0100
-Message-ID: <20241203144751.235874302@linuxfoundation.org>
+Subject: [PATCH 6.12 193/826] wifi: p54: Use IRQF_NO_AUTOEN flag in request_irq()
+Date: Tue,  3 Dec 2024 15:38:40 +0100
+Message-ID: <20241203144751.276674287@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -45,164 +45,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
+From: Jinjie Ruan <ruanjinjie@huawei.com>
 
-[ Upstream commit 06c3c406850e5495bb56ccf624d0c9477e1ba901 ]
+[ Upstream commit bcd1371bd85e560ccc9159b7747f94bfe43b77a6 ]
 
-Lockdep thinks our seqcount_t usage is unsafe because the update path can
-be both from irq and worker context:
+disable_irq() after request_irq() still has a time gap in which
+interrupts can come. request_irq() with IRQF_NO_AUTOEN flag will
+disable IRQ auto-enable when request IRQ.
 
- [ ] ================================
- [ ] WARNING: inconsistent lock state
- [ ] 6.10.3-v8-16k-numa #159 Tainted: G        WC
- [ ] --------------------------------
- [ ] inconsistent {HARDIRQ-ON-W} -> {IN-HARDIRQ-W} usage.
- [ ] swapper/0/0 [HC1[1]:SC0[0]:HE0:SE1] takes:
- [ ] ffff80003d7c08d0 (&v3d_priv->stats[i].lock){?.+.}-{0:0}, at: v3d_irq+0xc8/0x660 [v3d]
- [ ] {HARDIRQ-ON-W} state was registered at:
- [ ]   lock_acquire+0x1f8/0x328
- [ ]   v3d_job_start_stats.isra.0+0xd8/0x218 [v3d]
- [ ]   v3d_bin_job_run+0x23c/0x388 [v3d]
- [ ]   drm_sched_run_job_work+0x520/0x6d0 [gpu_sched]
- [ ]   process_one_work+0x62c/0xb48
- [ ]   worker_thread+0x468/0x5b0
- [ ]   kthread+0x1c4/0x1e0
- [ ]   ret_from_fork+0x10/0x20
- [ ] irq event stamp: 337094
- [ ] hardirqs last  enabled at (337093): [<ffffc0008144ce7c>] default_idle_call+0x11c/0x140
- [ ] hardirqs last disabled at (337094): [<ffffc0008144a354>] el1_interrupt+0x24/0x58
- [ ] softirqs last  enabled at (337082): [<ffffc00080061d90>] handle_softirqs+0x4e0/0x538
- [ ] softirqs last disabled at (337073): [<ffffc00080010364>] __do_softirq+0x1c/0x28
- [ ]
-                other info that might help us debug this:
- [ ]  Possible unsafe locking scenario:
-
- [ ]        CPU0
- [ ]        ----
- [ ]   lock(&v3d_priv->stats[i].lock);
- [ ]   <Interrupt>
- [ ]     lock(&v3d_priv->stats[i].lock);
- [ ]
-                *** DEADLOCK ***
-
- [ ] no locks held by swapper/0/0.
- [ ]
-               stack backtrace:
- [ ] CPU: 0 PID: 0 Comm: swapper/0 Tainted: G        WC         6.10.3-v8-16k-numa #159
- [ ] Hardware name: Raspberry Pi 5 Model B Rev 1.0 (DT)
- [ ] Call trace:
- [ ]  dump_backtrace+0x170/0x1b8
- [ ]  show_stack+0x20/0x38
- [ ]  dump_stack_lvl+0xb4/0xd0
- [ ]  dump_stack+0x18/0x28
- [ ]  print_usage_bug+0x3cc/0x3f0
- [ ]  mark_lock+0x4d0/0x968
- [ ]  __lock_acquire+0x784/0x18c8
- [ ]  lock_acquire+0x1f8/0x328
- [ ]  v3d_job_update_stats+0xec/0x2e0 [v3d]
- [ ]  v3d_irq+0xc8/0x660 [v3d]
- [ ]  __handle_irq_event_percpu+0x1f8/0x488
- [ ]  handle_irq_event+0x88/0x128
- [ ]  handle_fasteoi_irq+0x298/0x408
- [ ]  generic_handle_domain_irq+0x50/0x78
-
-But it is a false positive because all the queue-stats pairs have their
-own lock and jobs are also one at a time.
-
-Nevertheless we can appease lockdep by disabling local interrupts to make
-it see lock usage is consistent.
-
-Cc: Maíra Canal <mcanal@igalia.com>
-Fixes: 6abe93b621ab ("drm/v3d: Fix race-condition between sysfs/fdinfo and interrupt handler")
-Signed-off-by: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
-Signed-off-by: Maíra Canal <mcanal@igalia.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240813102505.80512-2-tursulin@igalia.com
+Fixes: cd8d3d321285 ("p54spi: p54spi driver")
+Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://patch.msgid.link/20240910124314.698896-2-ruanjinjie@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/v3d/v3d_sched.c | 46 +++++++++++++++++++++++++++++----
- 1 file changed, 41 insertions(+), 5 deletions(-)
+ drivers/net/wireless/intersil/p54/p54spi.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/v3d/v3d_sched.c b/drivers/gpu/drm/v3d/v3d_sched.c
-index 08d2a27395828..4f935f1d50a94 100644
---- a/drivers/gpu/drm/v3d/v3d_sched.c
-+++ b/drivers/gpu/drm/v3d/v3d_sched.c
-@@ -135,8 +135,31 @@ v3d_job_start_stats(struct v3d_job *job, enum v3d_queue queue)
- 	struct v3d_stats *global_stats = &v3d->queue[queue].stats;
- 	struct v3d_stats *local_stats = &file->stats[queue];
- 	u64 now = local_clock();
+diff --git a/drivers/net/wireless/intersil/p54/p54spi.c b/drivers/net/wireless/intersil/p54/p54spi.c
+index d33a994906a7b..27f44a9f0bc1f 100644
+--- a/drivers/net/wireless/intersil/p54/p54spi.c
++++ b/drivers/net/wireless/intersil/p54/p54spi.c
+@@ -624,7 +624,7 @@ static int p54spi_probe(struct spi_device *spi)
+ 	gpio_direction_input(p54spi_gpio_irq);
+ 
+ 	ret = request_irq(gpio_to_irq(p54spi_gpio_irq),
+-			  p54spi_interrupt, 0, "p54spi",
++			  p54spi_interrupt, IRQF_NO_AUTOEN, "p54spi",
+ 			  priv->spi);
+ 	if (ret < 0) {
+ 		dev_err(&priv->spi->dev, "request_irq() failed");
+@@ -633,8 +633,6 @@ static int p54spi_probe(struct spi_device *spi)
+ 
+ 	irq_set_irq_type(gpio_to_irq(p54spi_gpio_irq), IRQ_TYPE_EDGE_RISING);
+ 
+-	disable_irq(gpio_to_irq(p54spi_gpio_irq));
 -
--	preempt_disable();
-+	unsigned long flags;
-+
-+	/*
-+	 * We only need to disable local interrupts to appease lockdep who
-+	 * otherwise would think v3d_job_start_stats vs v3d_stats_update has an
-+	 * unsafe in-irq vs no-irq-off usage problem. This is a false positive
-+	 * because all the locks are per queue and stats type, and all jobs are
-+	 * completely one at a time serialised. More specifically:
-+	 *
-+	 * 1. Locks for GPU queues are updated from interrupt handlers under a
-+	 *    spin lock and started here with preemption disabled.
-+	 *
-+	 * 2. Locks for CPU queues are updated from the worker with preemption
-+	 *    disabled and equally started here with preemption disabled.
-+	 *
-+	 * Therefore both are consistent.
-+	 *
-+	 * 3. Because next job can only be queued after the previous one has
-+	 *    been signaled, and locks are per queue, there is also no scope for
-+	 *    the start part to race with the update part.
-+	 */
-+	if (IS_ENABLED(CONFIG_LOCKDEP))
-+		local_irq_save(flags);
-+	else
-+		preempt_disable();
- 
- 	write_seqcount_begin(&local_stats->lock);
- 	local_stats->start_ns = now;
-@@ -146,7 +169,10 @@ v3d_job_start_stats(struct v3d_job *job, enum v3d_queue queue)
- 	global_stats->start_ns = now;
- 	write_seqcount_end(&global_stats->lock);
- 
--	preempt_enable();
-+	if (IS_ENABLED(CONFIG_LOCKDEP))
-+		local_irq_restore(flags);
-+	else
-+		preempt_enable();
- }
- 
- static void
-@@ -167,11 +193,21 @@ v3d_job_update_stats(struct v3d_job *job, enum v3d_queue queue)
- 	struct v3d_stats *global_stats = &v3d->queue[queue].stats;
- 	struct v3d_stats *local_stats = &file->stats[queue];
- 	u64 now = local_clock();
-+	unsigned long flags;
-+
-+	/* See comment in v3d_job_start_stats() */
-+	if (IS_ENABLED(CONFIG_LOCKDEP))
-+		local_irq_save(flags);
-+	else
-+		preempt_disable();
- 
--	preempt_disable();
- 	v3d_stats_update(local_stats, now);
- 	v3d_stats_update(global_stats, now);
--	preempt_enable();
-+
-+	if (IS_ENABLED(CONFIG_LOCKDEP))
-+		local_irq_restore(flags);
-+	else
-+		preempt_enable();
- }
- 
- static struct dma_fence *v3d_bin_job_run(struct drm_sched_job *sched_job)
+ 	INIT_WORK(&priv->work, p54spi_work);
+ 	init_completion(&priv->fw_comp);
+ 	INIT_LIST_HEAD(&priv->tx_pending);
 -- 
 2.43.0
 
