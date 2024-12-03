@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 871891F7065;
-	Tue,  3 Dec 2024 15:02:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05B751E3DF9;
+	Tue,  3 Dec 2024 15:02:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733238175; cv=none; b=cYCJy6Hg4OOn5nwYe+bhUOKoQGLWlxfvL3jW9ysXIKBfufC/Qvbk55gJtlfpt4+R8oHpSdkgNpIOeGaIurFlhsxbUv3W35B6bLflkBjF2AiC2BsJqLGw98iu09w5CH1eYsYNTfoTOlNJdrvcM9tnuJCcWDLaMuQMjwXjelvz18M=
+	t=1733238178; cv=none; b=ovTJVTXlHZNPYEu79RziLf8z+QXedBzks+eq6kB0/7i7a4Et4dGDx725jhtFZTeECQjvty0ZYcjBToBUq/TevRZ1bamvpRwjdpL2iyEuutlEVGpdRf3ZnKf5prqABe5xQOxa85es86hhc4T7FdS+IftysuJ3DPlxnSOeFGJdUQ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733238175; c=relaxed/simple;
-	bh=3hz7pIfjV8ng/ItavyUt07Lf5L9Wr38+mHDJaQixuS0=;
+	s=arc-20240116; t=1733238178; c=relaxed/simple;
+	bh=/hLnpbk7yzQ6RpYABG7VOSQ6hTh+s7Htlnwz4KHDick=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FkTfm9ZT3S8i3fjLBBxJ9Q4yUe0FQ+Mj3rhJKHIDa1mbpSF2uWSdJ1mv5xNnC9/BVAiTj8kck6wf8Q6NFieUqxlwISEdBPYMXQHW3vyZO663OkY9uk6aq6iRQKcE91eg/JhzaBmQKztRtG+l1PXAt4zuvMe24oz1crV1sXIMsZg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n/H7rmWN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cypSvorsg+NWEnyVYlNXKAmcGy7HteKUFEwZlRLWSCKs3jWfihGR2KrT/IrXkctx980MvOIjZrh/+CRUC2OnIC743KXQ7jeADPwNczAbxzftVvs4qjfSPJQ0Ay4YwsZWAnkU7qRYF51BXp8YNcOU3PGaiozCK8Gv3ECVip7WXn4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TCfktJue; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n/H7rmWN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C20BC4CED6;
-	Tue,  3 Dec 2024 15:02:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TCfktJue"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8264DC4CECF;
+	Tue,  3 Dec 2024 15:02:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733238175;
-	bh=3hz7pIfjV8ng/ItavyUt07Lf5L9Wr38+mHDJaQixuS0=;
+	s=korg; t=1733238177;
+	bh=/hLnpbk7yzQ6RpYABG7VOSQ6hTh+s7Htlnwz4KHDick=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n/H7rmWN6fW0WJCILtDlA/T8y9onnutov1oT3FJLZqxmDGPTrJHEwJlozDp98sxjB
-	 7EjAB9Ls620Q26AWEwCDtSaz3y+AJ74LNN8P0gv0gSZAzKQQL8vtNMHEl0CyNj+E96
-	 oPIaEysew7DzoXc0Ma485rRGuilzfJy8pktvGbi0=
+	b=TCfktJuehFA43CyWX954y27FquqCbCVsLM5rfBrEbcaRljX4nQZHZuWedULZYdDCk
+	 yPtqORoJuoz/mrYoodQecodWlnQr5Oui6twJhU8Ra2q8/7XABeYSyZwZYEUEhTkEZz
+	 qbXHFXLwZkc5FDgU/7/4VmJsd+HsjuKPR3/u+Ri0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fei Shao <fshao@chromium.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 170/817] arm64: dts: mediatek: mt8188: Fix USB3 PHY port default status
-Date: Tue,  3 Dec 2024 15:35:42 +0100
-Message-ID: <20241203144002.362130389@linuxfoundation.org>
+Subject: [PATCH 6.11 188/817] arm64: dts: qcom: x1e80100: Update C4/C5 residency/exit numbers
+Date: Tue,  3 Dec 2024 15:36:00 +0100
+Message-ID: <20241203144003.074926976@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -51,40 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fei Shao <fshao@chromium.org>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-[ Upstream commit 6bb64877a41561bc78e0f4e9e04d524a0155d6aa ]
+[ Upstream commit 2e65616ef07fa4c72c3898b22e5bede7d468cf32 ]
 
-The T-PHY controller at 0x11e40000 controls two underlying USB2 and USB3
-PHY ports. The USB3 port works normally just like the others, so there's
-no point in disabling it separately. Otherwise, board DTs would have to
-enable both the T-PHY controller and one of its sub-nodes in particular,
-which is slightly redundant and confusing.
+Update the numbers based on the information found in the DSDT.
 
-Remove the status line in the u3port1 node, so it's ready to be used
-once the T-PHY controller is enabled.
-
-Fixes: 9461e0caac9e ("arm64: dts: Add MediaTek MT8188 dts and evaluation board and Makefile")
-Signed-off-by: Fei Shao <fshao@chromium.org>
-Link: https://lore.kernel.org/r/20241021081311.543625-1-fshao@chromium.org
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Fixes: af16b00578a7 ("arm64: dts: qcom: Add base X1E80100 dtsi and the QCP dts")
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20240716-topic-h_bits-v1-2-f6c5d3ff982c@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/mediatek/mt8188.dtsi | 1 -
- 1 file changed, 1 deletion(-)
+ arch/arm64/boot/dts/qcom/x1e80100.dtsi | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/mediatek/mt8188.dtsi b/arch/arm64/boot/dts/mediatek/mt8188.dtsi
-index 041a85e1d9b55..b6193d73f688c 100644
---- a/arch/arm64/boot/dts/mediatek/mt8188.dtsi
-+++ b/arch/arm64/boot/dts/mediatek/mt8188.dtsi
-@@ -1219,7 +1219,6 @@ u3port1: usb-phy@700 {
- 					 <&clk26m>;
- 				clock-names = "ref", "da_ref";
- 				#phy-cells = <1>;
--				status = "disabled";
+diff --git a/arch/arm64/boot/dts/qcom/x1e80100.dtsi b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+index 2a03581b0ab56..db0304c564980 100644
+--- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
++++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+@@ -278,8 +278,8 @@ CLUSTER_C4: cpu-sleep-0 {
+ 				idle-state-name = "ret";
+ 				arm,psci-suspend-param = <0x00000004>;
+ 				entry-latency-us = <180>;
+-				exit-latency-us = <320>;
+-				min-residency-us = <1000>;
++				exit-latency-us = <500>;
++				min-residency-us = <600>;
  			};
  		};
  
+@@ -298,7 +298,7 @@ CLUSTER_CL5: cluster-sleep-1 {
+ 				idle-state-name = "ret-pll-off";
+ 				arm,psci-suspend-param = <0x01000054>;
+ 				entry-latency-us = <2200>;
+-				exit-latency-us = <2500>;
++				exit-latency-us = <4000>;
+ 				min-residency-us = <7000>;
+ 			};
+ 		};
 -- 
 2.43.0
 
