@@ -1,33 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73F1A1F75AE;
-	Tue,  3 Dec 2024 15:19:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 054181F706C;
+	Tue,  3 Dec 2024 15:20:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733239197; cv=none; b=SyQJ6RAIBguVExwW6gFQyNDVP/mXauBvks66QA2wLj4+1bRieXGDamR1b7dJybybeAB91kpF103joGjv2LgkbtRkPofPWB3/MjyBZsOd23o1bOHrhGLz83aJNTfKoTpnc+2uPOK3kKkWkKhey3gujsLuim2FsH5AqGdSknZVBYY=
+	t=1733239200; cv=none; b=dNs4UHwQ/ac96J94vgTz1ZLdIxPAqX2fSlmmcj8vBERjSD/1w7+or39vZYPGx7FlP5kvDI15KtE5fSrtabAHONtEnJEDT5hEO6DpV6X9g5uzqzI8YtplgQhAYcKb5mxjHOw9WctG5ZoVh7lzS/TAPB3fyt867rn+83JKYJNxJ7s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733239197; c=relaxed/simple;
-	bh=WUz+LhRNwa//lDttx+vUrxZ0gNmxKO7KELniIqmFtW8=;
+	s=arc-20240116; t=1733239200; c=relaxed/simple;
+	bh=sfBa2Aej9Df9/ZJmkoq79g5AvRdBohi2jnpF69pal3U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UTPoDHviHZZe+aLMvqiJA3xE3s63VkKWJMtk/JAoJ/ytsKlqjrXXfQb7Hzb3nFefznmXd5k8fD/2si1IX223fOCCPT2jdigL37ujrmc70nsh74ucd7nvKpSQGKZ/2NhrwOrNI/uMSxaIPxg5pIzsxDdokmWRWjC62RVxhUjdsmo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S/fjY9f/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=baA9fgxGNaHpeK0M2sXQIviwwIjPkGSimGF9MNuK3ZYkeo2Xj43hnSgJNJD0W/NN1Ijd7w9WHO8gVFg+vWMo23EzII5ewA8bZX7pVw+KpC4be9Fv04RqZ6F1D0wDtd84ZgJy1x6rgWNN/iZwu3t77rtntbMyEU9jURMhC0zyyNM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qkr0nrgL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S/fjY9f/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71340C4CEDA;
-	Tue,  3 Dec 2024 15:19:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qkr0nrgL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5750FC4CED8;
+	Tue,  3 Dec 2024 15:19:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733239197;
-	bh=WUz+LhRNwa//lDttx+vUrxZ0gNmxKO7KELniIqmFtW8=;
+	s=korg; t=1733239199;
+	bh=sfBa2Aej9Df9/ZJmkoq79g5AvRdBohi2jnpF69pal3U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S/fjY9f/eeJ2hN29Ot7KNtVONJuXmySmfRr1TAnUmeigjFUpLMvDwcqMRg6Rtqpqp
-	 AEAXVhPj7xNZNhdOr+f+40L2+CyEr/7l5Wt0aUkETa4XI9CO17gqqZbiujD5dKXXeN
-	 GV1s2aLh8YHH6BXy2NDsaTe/m+9WZGNiDdZnqdWA=
+	b=qkr0nrgL/NgMIZ2sNLXqD3FdrjXigpMPPpy1Jzt3OyhdYyXC2fA3x1b2ssJY0jLho
+	 KRpdmd+bROMd92ACh9XqsD1f7pZ6dzuzYYvG1PqMLI/4yVk7lC8LbgtlB+4Mt1iehv
+	 T2IOp2y6o9LJjFo4D49xyajifNofT1fni7aCHJAY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Benjamin Peterson <benjamin@engflow.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Howard Chu <howardchu95@gmail.com>,
 	Adrian Hunter <adrian.hunter@intel.com>,
 	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
@@ -38,11 +39,10 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Mark Rutland <mark.rutland@arm.com>,
 	Namhyung Kim <namhyung@kernel.org>,
 	Peter Zijlstra <peterz@infradead.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 532/817] perf trace: Do not lose last events in a race
-Date: Tue,  3 Dec 2024 15:41:44 +0100
-Message-ID: <20241203144016.665517080@linuxfoundation.org>
+Subject: [PATCH 6.11 533/817] perf trace: Avoid garbage when not printing a syscalls arguments
+Date: Tue,  3 Dec 2024 15:41:45 +0100
+Message-ID: <20241203144016.704406471@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -63,33 +63,19 @@ Content-Transfer-Encoding: 8bit
 
 From: Benjamin Peterson <benjamin@engflow.com>
 
-[ Upstream commit 3fd7c36973a250e17a4ee305a31545a9426021f4 ]
+[ Upstream commit 1302e352b26f34991b619b5d0b621b76d20a3883 ]
 
-If a perf trace event selector specifies a maximum number of events to output
-(i.e., "/nr=N/" syntax), the event printing handler, trace__event_handler,
-disables the event selector after the maximum number events are
-printed.
+syscall__scnprintf_args may not place anything in the output buffer
+(e.g., because the arguments are all zero). If that happened in
+trace__fprintf_sys_enter, its fprintf would receive an unitialized
+buffer leading to garbage output.
 
-Furthermore, trace__event_handler checked if the event selector was
-disabled before doing any work. This avoided exceeding the maximum
-number of events to print if more events were in the buffer before the
-selector was disabled.
+Fix the problem by passing the (possibly zero) bounds of the argument
+buffer to the output fprintf.
 
-However, the event selector can be disabled for reasons other than
-exceeding the maximum number of events. In particular, when the traced
-subprocess exits, the main loop disables all event selectors. This meant
-the last events of a traced subprocess might be lost to the printing
-handler's short-circuiting logic.
-
-This nondeterministic problem could be seen by running the following many times:
-
-  $ perf trace -e syscalls:sys_enter_exit_group true
-
-trace__event_handler should simply check for exceeding the maximum number of
-events to print rather than the state of the event selector.
-
-Fixes: a9c5e6c1e9bff42c ("perf trace: Introduce per-event maximum number of events property")
+Fixes: a98392bb1e169a04 ("perf trace: Use beautifiers on syscalls:sys_enter_ handlers")
 Signed-off-by: Benjamin Peterson <benjamin@engflow.com>
+Tested-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Tested-by: Howard Chu <howardchu95@gmail.com>
 Cc: Adrian Hunter <adrian.hunter@intel.com>
 Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
@@ -100,33 +86,36 @@ Cc: Kan Liang <kan.liang@linux.intel.com>
 Cc: Mark Rutland <mark.rutland@arm.com>
 Cc: Namhyung Kim <namhyung@kernel.org>
 Cc: Peter Zijlstra <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20241107232128.108981-1-benjamin@engflow.com
+Link: https://lore.kernel.org/r/20241107232128.108981-2-benjamin@engflow.com
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-trace.c | 9 ++-------
- 1 file changed, 2 insertions(+), 7 deletions(-)
+ tools/perf/builtin-trace.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
 diff --git a/tools/perf/builtin-trace.c b/tools/perf/builtin-trace.c
-index c9399bf07c4cf..fb1673f704a31 100644
+index fb1673f704a31..65cab0bdd668a 100644
 --- a/tools/perf/builtin-trace.c
 +++ b/tools/perf/builtin-trace.c
-@@ -2811,13 +2811,8 @@ static int trace__event_handler(struct trace *trace, struct evsel *evsel,
- {
- 	struct thread *thread;
- 	int callchain_ret = 0;
--	/*
--	 * Check if we called perf_evsel__disable(evsel) due to, for instance,
--	 * this event's max_events having been hit and this is an entry coming
--	 * from the ring buffer that we should discard, since the max events
--	 * have already been considered/printed.
--	 */
--	if (evsel->disabled)
-+
-+	if (evsel->nr_events_printed >= evsel->max_events)
- 		return 0;
+@@ -2423,6 +2423,7 @@ static int trace__fprintf_sys_enter(struct trace *trace, struct evsel *evsel,
+ 	char msg[1024];
+ 	void *args, *augmented_args = NULL;
+ 	int augmented_args_size;
++	size_t printed = 0;
  
- 	thread = machine__findnew_thread(trace->host, sample->pid, sample->tid);
+ 	if (sc == NULL)
+ 		return -1;
+@@ -2438,8 +2439,8 @@ static int trace__fprintf_sys_enter(struct trace *trace, struct evsel *evsel,
+ 
+ 	args = perf_evsel__sc_tp_ptr(evsel, args, sample);
+ 	augmented_args = syscall__augmented_args(sc, sample, &augmented_args_size, trace->raw_augmented_syscalls_args_size);
+-	syscall__scnprintf_args(sc, msg, sizeof(msg), args, augmented_args, augmented_args_size, trace, thread);
+-	fprintf(trace->output, "%s", msg);
++	printed += syscall__scnprintf_args(sc, msg, sizeof(msg), args, augmented_args, augmented_args_size, trace, thread);
++	fprintf(trace->output, "%.*s", (int)printed, msg);
+ 	err = 0;
+ out_put:
+ 	thread__put(thread);
 -- 
 2.43.0
 
