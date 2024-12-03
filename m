@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 052531F892B;
-	Tue,  3 Dec 2024 15:38:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E31281F76BB;
+	Tue,  3 Dec 2024 15:38:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733240287; cv=none; b=frnFa+cr/DgGb5T6IBWRbp7Q3F7VYl0oxU2w19opN4vaaGDrsPMBa6AqEIlP4Gn2N1yYxRpV65uRKICJ1+dUReIkJjo7YLvnprpQroEZAZyi5JIrv5q0KFmn/v6mBiKIWadoKRCiH3GGjWT1zOPow2XbD/2MxeFWbyjX2lMWRnY=
+	t=1733240290; cv=none; b=Muc9YTePLTcli/OPqvNf0auBJ/JnRH1rrjFlOqwyIuqq3BKaSOtvHuVZ65bJ967+Jebh0sDclOHyW88PQljGht9keM2WfrgkSiT7niP6mwSM64eBGsSP2fOYTnyabBF3xnMccUeEoGLFqSvl5HSkMpDgYjLIttE1WsHEhTCJ72I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733240287; c=relaxed/simple;
-	bh=yPoJ3IG1OCaoBPL3CJyR+MHq92eDtwjh2zp85yLSIY4=;
+	s=arc-20240116; t=1733240290; c=relaxed/simple;
+	bh=VOPlqoMUFwO10iTe/Z4xDOYNn/x24KZXfEYwPPB8wS4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QtmEvQbzCuu0tjnwtvotpDyzJX+oSJsiyVnqzJHoM7EYiBNNBrCRn/QPXen4JRGp+bSqlw8lGwAakgnoPER2KD9TfWzTJDyDSPC91PGJChtPxCMnTigS3twlb+rK9UqoB8rhuioV79fMrASQLfcE5D5m3NNoESXtXC89fD9fJyo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1332jkgy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AMZL4Nn84HnpvjXcM52vamDVwYqlyQeRBkpwolinKylRpcRfflWgnFVj8pYHx2MfgauKGl3gJlctYETjLH4UEXJuigfG3nhWfBB7liCXKwt6pgclSfSUBhrj0UsP757aNJw9SUsVvcHMm3HqeSIT6eORRhb92FSg+IpKzBeTXjk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FvyzHKSG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1332jkgy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83AEFC4CECF;
-	Tue,  3 Dec 2024 15:38:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FvyzHKSG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C809C4CED6;
+	Tue,  3 Dec 2024 15:38:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733240286;
-	bh=yPoJ3IG1OCaoBPL3CJyR+MHq92eDtwjh2zp85yLSIY4=;
+	s=korg; t=1733240289;
+	bh=VOPlqoMUFwO10iTe/Z4xDOYNn/x24KZXfEYwPPB8wS4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1332jkgyh6yPCttVaVM+flQKb82QShrQHELBbEYVquoywXuPVw7EKO4TMcFHICj5K
-	 WcBgCwohEXdsBkZfDef3/7G3MihH6GlTotTB0ozr+qvx0hjGVsKPc6puvOJGCRdeVH
-	 D6OiWZhahLuEMBhQ+ctrqMRjHauy4c3hVOsWZsjk=
+	b=FvyzHKSGueqMDO38j4YHT6PAavPdj1LfPyVT5svRbNXZGcUu5wEgr+vzBvEaVHTzF
+	 bslFmkDOb1+jvrCSIycG86HaP3UYyhmfEq5hoxze9TmDXs10MD5x8JAgeC7CPLNQwu
+	 GZwYRaEv5E0Jirlxfkx7rFLgYGH43vnYukMNdmf8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miguel Ojeda <ojeda@kernel.org>,
+	kernel test robot <oliver.sang@intel.com>,
 	Thomas Gleixner <tglx@linutronix.de>,
+	Frederic Weisbecker <frederic@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 087/826] time: Fix references to _msecs_to_jiffies() handling of values
-Date: Tue,  3 Dec 2024 15:36:54 +0100
-Message-ID: <20241203144747.124192562@linuxfoundation.org>
+Subject: [PATCH 6.12 088/826] timers: Add missing READ_ONCE() in __run_timer_base()
+Date: Tue,  3 Dec 2024 15:36:55 +0100
+Message-ID: <20241203144747.163662096@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -51,53 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miguel Ojeda <ojeda@kernel.org>
+From: Thomas Gleixner <tglx@linutronix.de>
 
-[ Upstream commit 92b043fd995a63a57aae29ff85a39b6f30cd440c ]
+[ Upstream commit 1d4199cbbe95efaba51304cfd844bd0ccd224e61 ]
 
-The details about the handling of the "normal" values were moved
-to the _msecs_to_jiffies() helpers in commit ca42aaf0c861 ("time:
-Refactor msecs_to_jiffies"). However, the same commit still mentioned
-__msecs_to_jiffies() in the added documentation.
+__run_timer_base() checks base::next_expiry without holding
+base::lock. That can race with a remote CPU updating next_expiry under the
+lock. This is an intentional and harmless data race, but lacks a
+READ_ONCE(), so KCSAN complains about this.
 
-Thus point to _msecs_to_jiffies() instead.
+Add the missing READ_ONCE(). All other places are covered already.
 
-Fixes: ca42aaf0c861 ("time: Refactor msecs_to_jiffies")
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+Fixes: 79f8b28e85f8 ("timers: Annotate possible non critical data race of next_expiry")
+Reported-by: kernel test robot <oliver.sang@intel.com>
 Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/all/20241025110141.157205-2-ojeda@kernel.org
+Reviewed-by: Frederic Weisbecker <frederic@kernel.org>
+Link: https://lore.kernel.org/all/87a5emyqk0.ffs@tglx
+Closes: https://lore.kernel.org/oe-lkp/202410301205.ef8e9743-lkp@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/jiffies.h | 2 +-
- kernel/time/time.c      | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ kernel/time/timer.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/include/linux/jiffies.h b/include/linux/jiffies.h
-index 1220f0fbe5bf9..5d21dacd62bc7 100644
---- a/include/linux/jiffies.h
-+++ b/include/linux/jiffies.h
-@@ -502,7 +502,7 @@ static inline unsigned long _msecs_to_jiffies(const unsigned int m)
-  * - all other values are converted to jiffies by either multiplying
-  *   the input value by a factor or dividing it with a factor and
-  *   handling any 32-bit overflows.
-- *   for the details see __msecs_to_jiffies()
-+ *   for the details see _msecs_to_jiffies()
-  *
-  * msecs_to_jiffies() checks for the passed in value being a constant
-  * via __builtin_constant_p() allowing gcc to eliminate most of the
-diff --git a/kernel/time/time.c b/kernel/time/time.c
-index e1879ca321033..1ad88e97b4ebc 100644
---- a/kernel/time/time.c
-+++ b/kernel/time/time.c
-@@ -556,7 +556,7 @@ EXPORT_SYMBOL(ns_to_timespec64);
-  * - all other values are converted to jiffies by either multiplying
-  *   the input value by a factor or dividing it with a factor and
-  *   handling any 32-bit overflows.
-- *   for the details see __msecs_to_jiffies()
-+ *   for the details see _msecs_to_jiffies()
-  *
-  * msecs_to_jiffies() checks for the passed in value being a constant
-  * via __builtin_constant_p() allowing gcc to eliminate most of the
+diff --git a/kernel/time/timer.c b/kernel/time/timer.c
+index 0fc9d066a7be4..7835f9b376e76 100644
+--- a/kernel/time/timer.c
++++ b/kernel/time/timer.c
+@@ -2422,7 +2422,8 @@ static inline void __run_timers(struct timer_base *base)
+ 
+ static void __run_timer_base(struct timer_base *base)
+ {
+-	if (time_before(jiffies, base->next_expiry))
++	/* Can race against a remote CPU updating next_expiry under the lock */
++	if (time_before(jiffies, READ_ONCE(base->next_expiry)))
+ 		return;
+ 
+ 	timer_base_lock_expiry(base);
 -- 
 2.43.0
 
