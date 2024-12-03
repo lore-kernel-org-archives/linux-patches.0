@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8CFA1F8913;
-	Tue,  3 Dec 2024 15:10:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C0271F8905;
+	Tue,  3 Dec 2024 15:10:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733238623; cv=none; b=jjllndytXBssRKWULrjhnLo5liALOlmw3fEX1XbWK+++dVzevdEx0BiwoYgQB3YDWyw3GKmZiSQ4tgQW83GINn62Vh2fAiB09y7rjCh3U6H6Eyvx8WcxRkEoGva9UKqMRO9PCKJiPVt+43Njx5kHBNVgsS1juP2r1yN7rdsVxio=
+	t=1733238628; cv=none; b=nz6Kk6cl96xDZib/FmcZ2gIRZuKGGJbJJJGy3xLUL4H65t0Frk36v5GXYGE+6jbT0s0EmazezweVVrLQNHoIFfgzmJETaLugI2PwVwSQoYLR3e81i7Swu+RAuiXKa7SnMD27vDH8uRW0qSu7DJW6yR+45hBdz58BZ4MQYXTRvhY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733238623; c=relaxed/simple;
-	bh=tjZ3k/fn+URv+YdrKM96uWgzh7G+vYS6Ghi0lZW/7/4=;
+	s=arc-20240116; t=1733238628; c=relaxed/simple;
+	bh=i5Nb/ytEBxSrfBGPE4JkxWUFfbWtAkqdAYMrNHSxWOQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Of7qp/LUABUb8BYelZSxresIAssXVuduzk+Sy9HNh7GjOaDM4fKfy4gTe9unViCR87UPauyMZLk8O3fhiFAWcm0Qwko5sCG0wLOF8B4HfYmjzsBNgt0wA6g6srMmPs8UjCYd00dfyb5iMRw5bRCWZkJXy9Id2Pw1ZSKDWoUcChI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hPdsbBv9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=DFB9dgwcpFrN7L0RYTjkSSb5fqz2ar7cq+Iy1LvfUsXyXkj24z1nDwTEtmvr5sS3MvqEt+Juqe3hSgvozCnyjG85MdiKDGoWUXzKljvGdTKxqPqwqiAWzVmbujNfhebkF4pOg7sQuG9hrGMlgDsXNOSEY2CAFKfFZazOkKPlL2c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YstJM8wM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hPdsbBv9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4270CC4CED6;
-	Tue,  3 Dec 2024 15:10:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YstJM8wM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26AB7C4CECF;
+	Tue,  3 Dec 2024 15:10:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733238623;
-	bh=tjZ3k/fn+URv+YdrKM96uWgzh7G+vYS6Ghi0lZW/7/4=;
+	s=korg; t=1733238626;
+	bh=i5Nb/ytEBxSrfBGPE4JkxWUFfbWtAkqdAYMrNHSxWOQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hPdsbBv9duEkNzgjBlO/REzXMZFhefG6Vsqv3AXXjGKfzjB4/Zah8HyJGVMBAX6jH
-	 uT2qQsQA6i4Htkbhnb3aYloGy8i3ml/RwanNkQW9gPOgWyigsfRC67m8WLOLfjeLZS
-	 pML1sPySvCN2H7FFs4cCEgLflM4cMwxn5QPwnhsc=
+	b=YstJM8wMiPbzayScCSEtYdAxDIGpoygVW7t03nljFmatTbgmD8Vs/Req3sCVuh/iC
+	 wdBrfqyAZRsZZpd2ULHpNFq23hs0Qgsyk3+urBWbgsVZOQgUTL0zWTyvpD4c0Z2VcL
+	 71bzR112QFUoxDsYGI/JWqu+ImuKykbfHJ9+TUdY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	=?UTF-8?q?Jos=C3=A9=20Exp=C3=B3sito?= <jose.exposito89@gmail.com>,
+	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
+	Louis Chauvet <louis.chauvet@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 310/817] bpf: Tighten tail call checks for lingering locks, RCU, preempt_disable
-Date: Tue,  3 Dec 2024 15:38:02 +0100
-Message-ID: <20241203144007.917808097@linuxfoundation.org>
+Subject: [PATCH 6.11 311/817] drm/vkms: Drop unnecessary call to drm_crtc_cleanup()
+Date: Tue,  3 Dec 2024 15:38:03 +0100
+Message-ID: <20241203144007.956049390@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -45,67 +46,54 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.11-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+From: José Expósito <jose.exposito89@gmail.com>
 
-[ Upstream commit 46f7ed32f7a873d6675ea72e1d6317df41a55f81 ]
+[ Upstream commit 1d43dddd7c38ea1aa93f78f7ee10087afb0a561f ]
 
-There are three situations when a program logically exits and transfers
-control to the kernel or another program: bpf_throw, BPF_EXIT, and tail
-calls. The former two check for any lingering locks and references, but
-tail calls currently do not. Expand the checks to check for spin locks,
-RCU read sections and preempt disabled sections.
+CRTC creation uses drmm_crtc_init_with_planes(), which automatically
+handles cleanup. However, an unnecessary call to drm_crtc_cleanup() is
+still present in the vkms_output_init() error path.
 
-Spin locks are indirectly preventing tail calls as function calls are
-disallowed, but the checks for preemption and RCU are more relaxed,
-hence ensure tail calls are prevented in their presence.
-
-Fixes: 9bb00b2895cb ("bpf: Add kfunc bpf_rcu_read_lock/unlock()")
-Fixes: fc7566ad0a82 ("bpf: Introduce bpf_preempt_[disable,enable] kfuncs")
-Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
-Link: https://lore.kernel.org/r/20241103225940.1408302-2-memxor@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: 99cc528ebe92 ("drm/vkms: Use drmm_crtc_init_with_planes()")
+Signed-off-by: José Expósito <jose.exposito89@gmail.com>
+Reviewed-by: Maíra Canal <mcanal@igalia.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20241031183835.3633-1-jose.exposito89@gmail.com
+Acked-by: Louis Chauvet <louis.chauvet@bootlin.com>
+Signed-off-by: Louis Chauvet <louis.chauvet@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ drivers/gpu/drm/vkms/vkms_output.c | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index a5a9b4e418a68..3bee91db81f0a 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -10459,11 +10459,26 @@ static int check_helper_call(struct bpf_verifier_env *env, struct bpf_insn *insn
+diff --git a/drivers/gpu/drm/vkms/vkms_output.c b/drivers/gpu/drm/vkms/vkms_output.c
+index 5ce70dd946aa6..24589b947dea3 100644
+--- a/drivers/gpu/drm/vkms/vkms_output.c
++++ b/drivers/gpu/drm/vkms/vkms_output.c
+@@ -84,7 +84,7 @@ int vkms_output_init(struct vkms_device *vkmsdev, int index)
+ 				 DRM_MODE_CONNECTOR_VIRTUAL);
+ 	if (ret) {
+ 		DRM_ERROR("Failed to init connector\n");
+-		goto err_connector;
++		return ret;
+ 	}
  
- 	switch (func_id) {
- 	case BPF_FUNC_tail_call:
-+		if (env->cur_state->active_lock.ptr) {
-+			verbose(env, "tail_call cannot be used inside bpf_spin_lock-ed region\n");
-+			return -EINVAL;
-+		}
-+
- 		err = check_reference_leak(env, false);
- 		if (err) {
- 			verbose(env, "tail_call would lead to reference leak\n");
- 			return err;
- 		}
-+
-+		if (env->cur_state->active_rcu_lock) {
-+			verbose(env, "tail_call cannot be used inside bpf_rcu_read_lock-ed region\n");
-+			return -EINVAL;
-+		}
-+
-+		if (env->cur_state->active_preempt_lock) {
-+			verbose(env, "tail_call cannot be used inside bpf_preempt_disable-ed region\n");
-+			return -EINVAL;
-+		}
- 		break;
- 	case BPF_FUNC_get_local_storage:
- 		/* check that flags argument in get_local_storage(map, flags) is 0,
+ 	drm_connector_helper_add(connector, &vkms_conn_helper_funcs);
+@@ -119,8 +119,5 @@ int vkms_output_init(struct vkms_device *vkmsdev, int index)
+ err_encoder:
+ 	drm_connector_cleanup(connector);
+ 
+-err_connector:
+-	drm_crtc_cleanup(crtc);
+-
+ 	return ret;
+ }
 -- 
 2.43.0
 
