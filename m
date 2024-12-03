@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B1581F7063;
-	Tue,  3 Dec 2024 15:57:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 150001DE8A5;
+	Tue,  3 Dec 2024 15:57:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733241465; cv=none; b=A4cijUU7hbvk5cT7mQvIfdMwu7AaXrjOpsHYf5MfWnQ2TWLWu7Cc21JanMeUtEP3A5BQbCTc6GVG74/4GKpET2nBcESiyQLID5/VcDEHUd+AgTvt/J6i4pBVX3yqDS4Iqk+5iOzCzjWohGb9M1NSCJ8FlFIrx1nre+bBwrKf1Fw=
+	t=1733241474; cv=none; b=bx9SRZsX1tRU/+rlpdiSndnkKAp5EXSTQzsDlAeL7nyzfCtddqy2zU3kFlTl7rE/OL9HqkRS0PUUfHdQNdHiChO0vRgve94a9CCHWPYQGIMFs+h9NnqkMiR1bEoa5L6Fzs5X0M0pVxQV2JM8cGE5dKQnfkmKrYEAn/q+ziD33rc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733241465; c=relaxed/simple;
-	bh=pzFCCkGSp9VjrLrsVnCdwhBOVUPDC41nJAot61r6keY=;
+	s=arc-20240116; t=1733241474; c=relaxed/simple;
+	bh=ZHSWK5nk19Q6Fub71iNiOiLCOvXyHna796nh8p71usM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D4JvQF+caEyxs5FoiUjPY83dwTcxzWLs3YfcCFqDp7MVUn2fnaa66w1j9k3LyOAlIJGPLZLutiDkZAnI9SAbLYbJ2vJ5uuBFcV+FOswmHRVnAhiZqj2/smxo0FgroCkZrztmZjlrJRRtw4gkpur1HSczTauWEKq1QBRW6ij6/u8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1CJfV9ps; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bVwKxvqiIPIHlwpjKyqXXfPjYl+XlVm6gnTnD5mmpkcd96dELSQoIVCLA+elcsWGixrdalwEQWwV5f2um5eB6C4Jkud1T5XkixyxkhCMaBOdQHLExsyfaghFjSiYLuBHgOHZgPCEfsn9OVXQLvwai4+MSlp693sp/foSDSKRc4k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tlzvHmGd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1CJfV9ps"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAB89C4CECF;
-	Tue,  3 Dec 2024 15:57:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tlzvHmGd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 491D9C4CECF;
+	Tue,  3 Dec 2024 15:57:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733241465;
-	bh=pzFCCkGSp9VjrLrsVnCdwhBOVUPDC41nJAot61r6keY=;
+	s=korg; t=1733241473;
+	bh=ZHSWK5nk19Q6Fub71iNiOiLCOvXyHna796nh8p71usM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1CJfV9psCPVAOta2cU5RlyGZiOlzDbrqBGQRvUSgro8EgXbCPwQPEssq4kFT4+kyK
-	 r69cJwiAEEcpkdi0pv7g6URt+YbScusLycAIsQN8RDhCp5UTQrgP75vUoheKJzSGhE
-	 uOQIjO9w8kEQbRbyaRS+S3ZCyc/xNr7zq1myMBdM=
+	b=tlzvHmGdnsOEh2x1dSvWnowZHGbBPkTqxXM9WL1Tv8WqaWW5sQdcdCelpZcChWeNp
+	 A3F15EdBfiKbrf2GTS0EXNK13p4HKwTg61GjcYCdU6r2LhbP56qiMtbeLvVg6oo2Yi
+	 DpVYURFyWkvMJ7gEtpH3lQ1yTRM20xUZG5/THJbA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hari Bathini <hbathini@linux.ibm.com>,
-	Sourabh Jain <sourabhjain@linux.ibm.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Zhenzhong Duan <zhenzhong.duan@intel.com>,
+	Lu Baolu <baolu.lu@linux.intel.com>,
+	Joerg Roedel <jroedel@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 427/826] fadump: reserve param area if below boot_mem_top
-Date: Tue,  3 Dec 2024 15:42:34 +0100
-Message-ID: <20241203144800.419912243@linuxfoundation.org>
+Subject: [PATCH 6.12 410/826] iommu/vt-d: Fix checks and print in dmar_fault_dump_ptes()
+Date: Tue,  3 Dec 2024 15:42:17 +0100
+Message-ID: <20241203144759.755372899@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -52,44 +52,129 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sourabh Jain <sourabhjain@linux.ibm.com>
+From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 
-[ Upstream commit fb90dca828b6070709093934c6dec56489a2d91d ]
+[ Upstream commit 6ceb93f952f6ca34823ce3650c902c31b8385b40 ]
 
-The param area is a memory region where the kernel places additional
-command-line arguments for fadump kernel. Currently, the param memory
-area is reserved in fadump kernel if it is above boot_mem_top. However,
-it should be reserved if it is below boot_mem_top because the fadump
-kernel already reserves memory from boot_mem_top to the end of DRAM.
+There are some issues in dmar_fault_dump_ptes():
 
-Currently, there is no impact from not reserving param memory if it is
-below boot_mem_top, as it is not used after the early boot phase of the
-fadump kernel. However, if this changes in the future, it could lead to
-issues in the fadump kernel.
+1. return value of phys_to_virt() is used for checking if an entry is
+   present.
+2. dump is confusing, e.g., "pasid table entry is not present", confusing
+   by unpresent pasid table vs. unpresent pasid table entry. Current code
+   means the former.
+3. pgtable_walk() is called without checking if page table is present.
 
-Fixes: 3416c9daa6b1 ("powerpc/fadump: pass additional parameters when fadump is active")
-Acked-by: Hari Bathini <hbathini@linux.ibm.com>
-Signed-off-by: Sourabh Jain <sourabhjain@linux.ibm.com>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://patch.msgid.link/20241107055817.489795-2-sourabhjain@linux.ibm.com
+Fix 1 by checking present bit of an entry before dump a lower level entry.
+Fix 2 by removing "entry" string, e.g., "pasid table is not present".
+Fix 3 by checking page table present before walk.
+
+Take issue 3 for example, before fix:
+
+[  442.240357] DMAR: pasid dir entry: 0x000000012c83e001
+[  442.246661] DMAR: pasid table entry[0]: 0x0000000000000000
+[  442.253429] DMAR: pasid table entry[1]: 0x0000000000000000
+[  442.260203] DMAR: pasid table entry[2]: 0x0000000000000000
+[  442.266969] DMAR: pasid table entry[3]: 0x0000000000000000
+[  442.273733] DMAR: pasid table entry[4]: 0x0000000000000000
+[  442.280479] DMAR: pasid table entry[5]: 0x0000000000000000
+[  442.287234] DMAR: pasid table entry[6]: 0x0000000000000000
+[  442.293989] DMAR: pasid table entry[7]: 0x0000000000000000
+[  442.300742] DMAR: PTE not present at level 2
+
+After fix:
+...
+[  357.241214] DMAR: pasid table entry[6]: 0x0000000000000000
+[  357.248022] DMAR: pasid table entry[7]: 0x0000000000000000
+[  357.254824] DMAR: scalable mode page table is not present
+
+Fixes: 914ff7719e8a ("iommu/vt-d: Dump DMAR translation structure when DMA fault occurs")
+Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+Link: https://lore.kernel.org/r/20241024092146.715063-2-zhenzhong.duan@intel.com
+Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/kernel/fadump.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iommu/intel/iommu.c | 29 ++++++++++++++++++++---------
+ 1 file changed, 20 insertions(+), 9 deletions(-)
 
-diff --git a/arch/powerpc/kernel/fadump.c b/arch/powerpc/kernel/fadump.c
-index 6ab7934d719f7..4641de75f7fc1 100644
---- a/arch/powerpc/kernel/fadump.c
-+++ b/arch/powerpc/kernel/fadump.c
-@@ -136,7 +136,7 @@ void __init fadump_append_bootargs(void)
- 	if (!fw_dump.dump_active || !fw_dump.param_area_supported || !fw_dump.param_area)
- 		return;
+diff --git a/drivers/iommu/intel/iommu.c b/drivers/iommu/intel/iommu.c
+index e860bc9439a28..29c4a3bf3acd0 100644
+--- a/drivers/iommu/intel/iommu.c
++++ b/drivers/iommu/intel/iommu.c
+@@ -737,11 +737,11 @@ void dmar_fault_dump_ptes(struct intel_iommu *iommu, u16 source_id,
+ 	pr_info("Dump %s table entries for IOVA 0x%llx\n", iommu->name, addr);
  
--	if (fw_dump.param_area >= fw_dump.boot_mem_top) {
-+	if (fw_dump.param_area < fw_dump.boot_mem_top) {
- 		if (memblock_reserve(fw_dump.param_area, COMMAND_LINE_SIZE)) {
- 			pr_warn("WARNING: Can't use additional parameters area!\n");
- 			fw_dump.param_area = 0;
+ 	/* root entry dump */
+-	rt_entry = &iommu->root_entry[bus];
+-	if (!rt_entry) {
+-		pr_info("root table entry is not present\n");
++	if (!iommu->root_entry) {
++		pr_info("root table is not present\n");
+ 		return;
+ 	}
++	rt_entry = &iommu->root_entry[bus];
+ 
+ 	if (sm_supported(iommu))
+ 		pr_info("scalable mode root entry: hi 0x%016llx, low 0x%016llx\n",
+@@ -752,7 +752,7 @@ void dmar_fault_dump_ptes(struct intel_iommu *iommu, u16 source_id,
+ 	/* context entry dump */
+ 	ctx_entry = iommu_context_addr(iommu, bus, devfn, 0);
+ 	if (!ctx_entry) {
+-		pr_info("context table entry is not present\n");
++		pr_info("context table is not present\n");
+ 		return;
+ 	}
+ 
+@@ -761,17 +761,23 @@ void dmar_fault_dump_ptes(struct intel_iommu *iommu, u16 source_id,
+ 
+ 	/* legacy mode does not require PASID entries */
+ 	if (!sm_supported(iommu)) {
++		if (!context_present(ctx_entry)) {
++			pr_info("legacy mode page table is not present\n");
++			return;
++		}
+ 		level = agaw_to_level(ctx_entry->hi & 7);
+ 		pgtable = phys_to_virt(ctx_entry->lo & VTD_PAGE_MASK);
+ 		goto pgtable_walk;
+ 	}
+ 
+-	/* get the pointer to pasid directory entry */
+-	dir = phys_to_virt(ctx_entry->lo & VTD_PAGE_MASK);
+-	if (!dir) {
+-		pr_info("pasid directory entry is not present\n");
++	if (!context_present(ctx_entry)) {
++		pr_info("pasid directory table is not present\n");
+ 		return;
+ 	}
++
++	/* get the pointer to pasid directory entry */
++	dir = phys_to_virt(ctx_entry->lo & VTD_PAGE_MASK);
++
+ 	/* For request-without-pasid, get the pasid from context entry */
+ 	if (intel_iommu_sm && pasid == IOMMU_PASID_INVALID)
+ 		pasid = IOMMU_NO_PASID;
+@@ -783,7 +789,7 @@ void dmar_fault_dump_ptes(struct intel_iommu *iommu, u16 source_id,
+ 	/* get the pointer to the pasid table entry */
+ 	entries = get_pasid_table_from_pde(pde);
+ 	if (!entries) {
+-		pr_info("pasid table entry is not present\n");
++		pr_info("pasid table is not present\n");
+ 		return;
+ 	}
+ 	index = pasid & PASID_PTE_MASK;
+@@ -791,6 +797,11 @@ void dmar_fault_dump_ptes(struct intel_iommu *iommu, u16 source_id,
+ 	for (i = 0; i < ARRAY_SIZE(pte->val); i++)
+ 		pr_info("pasid table entry[%d]: 0x%016llx\n", i, pte->val[i]);
+ 
++	if (!pasid_pte_is_present(pte)) {
++		pr_info("scalable mode page table is not present\n");
++		return;
++	}
++
+ 	if (pasid_pte_get_pgtt(pte) == PASID_ENTRY_PGTT_FL_ONLY) {
+ 		level = pte->val[2] & BIT_ULL(2) ? 5 : 4;
+ 		pgtable = phys_to_virt(pte->val[2] & VTD_PAGE_MASK);
 -- 
 2.43.0
 
