@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A3161E25E3;
-	Tue,  3 Dec 2024 16:20:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D7721E25E3;
+	Tue,  3 Dec 2024 16:20:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733242854; cv=none; b=jynarTC3bPVKiUMb5AnLoyJyCxdEReXnYMaVe8MATxYfGN3sm5NIctElTay6PSwZU6u5MKF6C+OiduzAuK8QmkJY0brkBf2vXOh16NJbYcjgvx5JAgSm2T8gBlHQJhqlFBSS9jycYw62R/4F2To/wMIMlrDtyepSQuZ0wAgAksE=
+	t=1733242857; cv=none; b=nYCissekioeUMED9IK9WP6schu6oZKKasIBEn1SYM/+2PWIuf6McHDm9FKawf0pngYeh0VkudzFyCibJGraZ8Ykt/VC2ONfvJkSyIfKkUKebiizgjO+eQOLkRLFaf3sxtpJLig1dUKHHDg0qQlfl8OsQJanL8oY2QLL6D7dVjf0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733242854; c=relaxed/simple;
-	bh=6bJMPvmDveS6ICk13Za5RzPUWJI8O+9SgwWHOmha3qg=;
+	s=arc-20240116; t=1733242857; c=relaxed/simple;
+	bh=hxK+8/sZCkPdG5cplcUQDh7wq78vHc4dPsVGN2/hGMw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AnsTotU79lIGjwulOTBvzC0PqPxadBfapQuNDgwhSCE/QffWOg7TwNX26H26wa0qkQ9XZKgIEvxZGDD6nT2uiSuFGDJzLXmNZvjtuuBuz8jztWoCDSE3HZylkvZhvlFpjik8Tn67TwNnBhSUl+saVmKVY4ueCUvvDEqlpc5PGOo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x+daS16H; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mj9MX1BSkgKzxe91FMHjXJuh4mc8U8QDpOYzWmoyEsbDbV+4bcnDBn01Ggry6MWwo3Cni4sI6xcvCripSWBlY9mXVjKwejell2XMj/ObTerBsdnhhzvLK02jH83mUASs+CeXRpcaBlnkmza+K6RwtawmvIx7TCKqlG4AoHqEOgA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iaElPLUP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x+daS16H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8654BC4CECF;
-	Tue,  3 Dec 2024 16:20:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iaElPLUP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFAAAC4CECF;
+	Tue,  3 Dec 2024 16:20:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733242853;
-	bh=6bJMPvmDveS6ICk13Za5RzPUWJI8O+9SgwWHOmha3qg=;
+	s=korg; t=1733242857;
+	bh=hxK+8/sZCkPdG5cplcUQDh7wq78vHc4dPsVGN2/hGMw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x+daS16HZaNBmdt4nBs64AHItYFmlcd3h4GDH5oXu7ECZKUUOStE7PGYgGv7iv3lW
-	 rA+pxVYh+DDryVBVACi/a9CEQldjdykZWH82qWJkzuJajZt+MVGmt2HZYCoqF2x6bD
-	 BH8pTpuFv92VKzIJveSr/SFvs0Ux4KDrHSIRKbIA=
+	b=iaElPLUPT41ze9ra0tRos7bOst1F6DVNpgB690LcJXh3MbtV05KmyZzy9CJ8/7yv0
+	 HQ1nOF8zWgI8ODH6jRUVLLon0ljJJcNAk9HP2MH7htoBT0lfbQfoEELXHzKEHM9qk9
+	 mJlreS/tdIpVZmfeAzBl2DQeNtmZLJs09BkT953o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
+	Zhang Rui <rui.zhang@intel.com>,
+	Len Brown <len.brown@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 822/826] sh: intc: Fix use-after-free bug in register_intc_controller()
-Date: Tue,  3 Dec 2024 15:49:09 +0100
-Message-ID: <20241203144815.816345570@linuxfoundation.org>
+Subject: [PATCH 6.12 823/826] tools/power turbostat: Fix trailing \n parsing
+Date: Tue,  3 Dec 2024 15:49:10 +0100
+Message-ID: <20241203144815.856271041@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -51,44 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Zhang Rui <rui.zhang@intel.com>
 
-[ Upstream commit 63e72e551942642c48456a4134975136cdcb9b3c ]
+[ Upstream commit fed8511cc8996989178823052dc0200643e1389a ]
 
-In the error handling for this function, d is freed without ever
-removing it from intc_list which would lead to a use after free.
-To fix this, let's only add it to the list after everything has
-succeeded.
+parse_cpu_string() parses the string input either from command line or
+from /sys/fs/cgroup/cpuset.cpus.effective to get a list of CPUs that
+turbostat can run with.
 
-Fixes: 2dcec7a988a1 ("sh: intc: set_irq_wake() support")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-Signed-off-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+The cpu string returned by /sys/fs/cgroup/cpuset.cpus.effective contains
+a trailing '\n', but strtoul() fails to treat this as an error.
+
+That says, for the code below
+	val = ("\n", NULL, 10);
+val returns 0, and errno is also not set.
+
+As a result, CPU0 is erroneously considered as allowed CPU and this
+causes failures when turbostat tries to run on CPU0.
+
+ get_counters: Could not migrate to CPU 0
+ ...
+ turbostat: re-initialized with num_cpus 8, allowed_cpus 5
+ get_counters: Could not migrate to CPU 0
+
+Add a check to return immediately if '\n' or '\0' is detected.
+
+Fixes: 8c3dd2c9e542 ("tools/power/turbostat: Abstrct function for parsing cpu string")
+Signed-off-by: Zhang Rui <rui.zhang@intel.com>
+Signed-off-by: Len Brown <len.brown@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/sh/intc/core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/power/x86/turbostat/turbostat.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/sh/intc/core.c b/drivers/sh/intc/core.c
-index 74350b5871dc8..ea571eeb30787 100644
---- a/drivers/sh/intc/core.c
-+++ b/drivers/sh/intc/core.c
-@@ -209,7 +209,6 @@ int __init register_intc_controller(struct intc_desc *desc)
- 		goto err0;
+diff --git a/tools/power/x86/turbostat/turbostat.c b/tools/power/x86/turbostat/turbostat.c
+index 089220aaa5c92..aa9200319d0ea 100644
+--- a/tools/power/x86/turbostat/turbostat.c
++++ b/tools/power/x86/turbostat/turbostat.c
+@@ -5385,6 +5385,9 @@ static int parse_cpu_str(char *cpu_str, cpu_set_t *cpu_set, int cpu_set_size)
+ 		if (*next == '-')	/* no negative cpu numbers */
+ 			return 1;
  
- 	INIT_LIST_HEAD(&d->list);
--	list_add_tail(&d->list, &intc_list);
++		if (*next == '\0' || *next == '\n')
++			break;
++
+ 		start = strtoul(next, &next, 10);
  
- 	raw_spin_lock_init(&d->lock);
- 	INIT_RADIX_TREE(&d->tree, GFP_ATOMIC);
-@@ -369,6 +368,7 @@ int __init register_intc_controller(struct intc_desc *desc)
- 
- 	d->skip_suspend = desc->skip_syscore_suspend;
- 
-+	list_add_tail(&d->list, &intc_list);
- 	nr_intc_controllers++;
- 
- 	return 0;
+ 		if (start >= CPU_SUBSET_MAXCPUS)
 -- 
 2.43.0
 
