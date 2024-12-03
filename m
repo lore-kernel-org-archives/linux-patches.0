@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4A7333FE;
-	Tue,  3 Dec 2024 15:01:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D7631F6696;
+	Tue,  3 Dec 2024 15:01:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733238108; cv=none; b=PL7IWWXHbnjsUyVBiG1YCt2nIt5W7aRO/E9fz/VBr7TYUNZfha409MAId9kMyDCoU5ewzumNuXA0Mqg6iwuJrHYkz6UY+BzGiRadqpY1IdCZhuUlj54v2TJvPBBHpUsPYmpdFVyxzUdhOEAomYr86RXnjkbvYnSZEzxFpmBx3QU=
+	t=1733238111; cv=none; b=UnoVT+KRWcSGFyys/ANbNgIAv7hPkIKQHB2KEo8MCAac/A1JypmVCYUeDFmQ1UV0wRQ0DIlrVgJiqsT4VnY0WpaHBw3fPkiQA9BTad5AN+kkO9f5EWUivitZd154rcaIHQCeo9VU3UilAUd5OgvHuqrSjnh7m1DFLL8yZEoGof0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733238108; c=relaxed/simple;
-	bh=ztIe/1kHR2CxHuroQu0Kh7GudSM8EnzMyJ1deFKMgmA=;
+	s=arc-20240116; t=1733238111; c=relaxed/simple;
+	bh=UIMYncGROH0B3g8x7PF2Uzl2L2cJfIvXJR+Nd/+yGKU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E/mVd98LxxgZOzVm2t65Emg9AQ3jaMwx60WnxkmIit9qKvKoDE5AldrCRNn46qAdkZb11Y9DgvrIqvBpmdfbz4Ou73eOLQJ0OiHjSjlDEb7SyuuXy+jVz1htrpkma1vwEpqQQd8SlDBtX6dNx/2shnmrNfRQm81NFoLrSHzjatg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pz+qqilv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cbQt7nsPQs2tmy4oqN21BGuKDptjB8F7cVtZYGyKZidMLYTfUVoRy0EhP3s/kiClHaZe8HV5bFHAS0cxkEanFGkFuccBctsQ4zVEYtzbEDc7/4Gmn3cI30LqXDUUs5OhF5SMXX7iJSU3B9GTyaStfOo6rybF2GE2AnQ++D7w1+s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eQZgdkE5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pz+qqilv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C146C4CECF;
-	Tue,  3 Dec 2024 15:01:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eQZgdkE5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 223FBC4CECF;
+	Tue,  3 Dec 2024 15:01:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733238108;
-	bh=ztIe/1kHR2CxHuroQu0Kh7GudSM8EnzMyJ1deFKMgmA=;
+	s=korg; t=1733238111;
+	bh=UIMYncGROH0B3g8x7PF2Uzl2L2cJfIvXJR+Nd/+yGKU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Pz+qqilvJrfbKdtQD6Tn2T29sWaflCCAGOxQKLf91f0wg8kPNxxJ3dqCqt26eYR/3
-	 roZEBLCS5uVGBFivQS3ownz2RjGbpqiylsfBSrqMOURAv1osgjQoH7PTowduyd+jPf
-	 Sl2r0YwBku73ciJu2oRC6SA6niCfNcjaMvUB35vk=
+	b=eQZgdkE533knvf+KiC/qhRTLmFTqs5XwRL/LZT6q++CmWcbpBy+HoVhpq9FCsqR6F
+	 1Q7iqJYl+aByZDfyqoiZEVyOtjcJHTpg8KsH1oG1Zu2XdZJ/uLHWr0xog7E3/VeKnB
+	 go3xFdXCCvyUhULgPJai15DNos+EsaHLLVZ1Fcvk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marco Elver <elver@google.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Hsin-Te Yuan <yuanhsinte@chromium.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 137/817] kcsan, seqlock: Fix incorrect assumption in read_seqbegin()
-Date: Tue,  3 Dec 2024 15:35:09 +0100
-Message-ID: <20241203144001.070292567@linuxfoundation.org>
+Subject: [PATCH 6.11 164/817] arm64: dts: mt8183: krane: Fix the address of eeprom at i2c4
+Date: Tue,  3 Dec 2024 15:35:36 +0100
+Message-ID: <20241203144002.129489857@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -51,76 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marco Elver <elver@google.com>
+From: Hsin-Te Yuan <yuanhsinte@chromium.org>
 
-[ Upstream commit 183ec5f26b2fc97a4a9871865bfe9b33c41fddb2 ]
+[ Upstream commit e9c60c34948662b5d47573490ee538439b29e462 ]
 
-During testing of the preceding changes, I noticed that in some cases,
-current->kcsan_ctx.in_flat_atomic remained true until task exit. This is
-obviously wrong, because _all_ accesses for the given task will be
-treated as atomic, resulting in false negatives i.e. missed data races.
+The address of eeprom should be 50.
 
-Debugging led to fs/dcache.c, where we can see this usage of seqlock:
-
-	struct dentry *d_lookup(const struct dentry *parent, const struct qstr *name)
-	{
-		struct dentry *dentry;
-		unsigned seq;
-
-		do {
-			seq = read_seqbegin(&rename_lock);
-			dentry = __d_lookup(parent, name);
-			if (dentry)
-				break;
-		} while (read_seqretry(&rename_lock, seq));
-	[...]
-
-As can be seen, read_seqretry() is never called if dentry != NULL;
-consequently, current->kcsan_ctx.in_flat_atomic will never be reset to
-false by read_seqretry().
-
-Give up on the wrong assumption of "assume closing read_seqretry()", and
-rely on the already-present annotations in read_seqcount_begin/retry().
-
-Fixes: 88ecd153be95 ("seqlock, kcsan: Add annotations for KCSAN")
-Signed-off-by: Marco Elver <elver@google.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20241104161910.780003-6-elver@google.com
+Fixes: cd894e274b74 ("arm64: dts: mt8183: Add krane-sku176 board")
+Signed-off-by: Hsin-Te Yuan <yuanhsinte@chromium.org>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Reviewed-by: Matthias Brugger <matthias.bgg@gmail.com>
+Link: https://lore.kernel.org/r/20240909-eeprom-v1-1-1ed2bc5064f4@chromium.org
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/seqlock.h | 12 +-----------
- 1 file changed, 1 insertion(+), 11 deletions(-)
+ arch/arm64/boot/dts/mediatek/mt8183-kukui-krane.dtsi | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/include/linux/seqlock.h b/include/linux/seqlock.h
-index c81164846f4a4..e1c11db880795 100644
---- a/include/linux/seqlock.h
-+++ b/include/linux/seqlock.h
-@@ -825,11 +825,7 @@ static __always_inline void write_seqcount_latch_end(seqcount_latch_t *s)
-  */
- static inline unsigned read_seqbegin(const seqlock_t *sl)
- {
--	unsigned ret = read_seqcount_begin(&sl->seqcount);
--
--	kcsan_atomic_next(0);  /* non-raw usage, assume closing read_seqretry() */
--	kcsan_flat_atomic_begin();
--	return ret;
-+	return read_seqcount_begin(&sl->seqcount);
- }
+diff --git a/arch/arm64/boot/dts/mediatek/mt8183-kukui-krane.dtsi b/arch/arm64/boot/dts/mediatek/mt8183-kukui-krane.dtsi
+index 0f5fa893a7742..8b56b8564ed7a 100644
+--- a/arch/arm64/boot/dts/mediatek/mt8183-kukui-krane.dtsi
++++ b/arch/arm64/boot/dts/mediatek/mt8183-kukui-krane.dtsi
+@@ -88,9 +88,9 @@ &i2c4 {
+ 	clock-frequency = <400000>;
+ 	vbus-supply = <&mt6358_vcn18_reg>;
  
- /**
-@@ -845,12 +841,6 @@ static inline unsigned read_seqbegin(const seqlock_t *sl)
-  */
- static inline unsigned read_seqretry(const seqlock_t *sl, unsigned start)
- {
--	/*
--	 * Assume not nested: read_seqretry() may be called multiple times when
--	 * completing read critical section.
--	 */
--	kcsan_flat_atomic_end();
--
- 	return read_seqcount_retry(&sl->seqcount, start);
- }
- 
+-	eeprom@54 {
++	eeprom@50 {
+ 		compatible = "atmel,24c32";
+-		reg = <0x54>;
++		reg = <0x50>;
+ 		pagesize = <32>;
+ 		vcc-supply = <&mt6358_vcn18_reg>;
+ 	};
 -- 
 2.43.0
 
