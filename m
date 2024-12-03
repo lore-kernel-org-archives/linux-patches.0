@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CAEC1F755C;
-	Tue,  3 Dec 2024 14:54:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E77B61F7560;
+	Tue,  3 Dec 2024 14:54:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733237669; cv=none; b=FwzHAAi0IDXga1m4Qzqgc27DQlQM9kJzCFz5QpFXxFVUcYp4aPBFu3VYQzub24/xXRFNX2cjLPLi2fXf3zY+1Z4YwHYhZtNIIdRtOkO6YkoMATFEjhJMZ8DBLkkaP5enEzJ9NjIg3HAA9XXfYTeyj0DkeNGUgY1sx8Ye2W7JtIg=
+	t=1733237673; cv=none; b=tqQkyO6bTTBbDmLXDlvz7FLxrY9Jc9tBo0qOsbXjOAyNUYBDZRbaubFE1/ik5GNL8OkPIJFss4x7dNGtp84TJoKDA9xYmghVEZPwmkfBuFv8YK7NkQSPK2tIbdro0i/ECTnIYKBKt138ffb1X3v3cH0nyHOs4mPXE341AgJoRw4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733237669; c=relaxed/simple;
-	bh=i+1RWF9cPGB27xeX/mjeTVHmbZFqYSrPoZRxfWkoCRc=;
+	s=arc-20240116; t=1733237673; c=relaxed/simple;
+	bh=SQwf3q//4/jXG9fRSDzq2m2sJM1ZKyB5B3r2bTXq0uw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=WmKGU6xdXe4xCbFMbFq7ITdKy98Thz5x58VlyxnAOxypLmpIzh7i8fJ/+Hk33SSBym568Pp03fDp9+Ef/xhaQTbTEwS1o0TJhcfcwi7COM46xHZRc8+YRajFSM2uj7IhMfpSFXYYVhq8pjVei+veaxsi/z9hbcJBXOeJ0S5xagw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dL1KYkkl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=anEhVPy4sC7L9YUWeaV03nP4cTys1au3fV7ZnrzN/O7jo0nEEaxDDXg19KCKNlAOT9ahqcFj8MWe8r2wo0xBZlYkbgel29ArG7zorvjXlaXs8f6ecId60iEWJ4IvjBD8uLwrf122AewU3mmBYG9wmMHrRAhDruWs55Yis3w67dQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v8xsq66/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dL1KYkkl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6ED3C4CECF;
-	Tue,  3 Dec 2024 14:54:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v8xsq66/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB534C4CECF;
+	Tue,  3 Dec 2024 14:54:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733237669;
-	bh=i+1RWF9cPGB27xeX/mjeTVHmbZFqYSrPoZRxfWkoCRc=;
+	s=korg; t=1733237672;
+	bh=SQwf3q//4/jXG9fRSDzq2m2sJM1ZKyB5B3r2bTXq0uw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dL1KYkklUj2pRYb6tHqCNF4G4uJJ6DAz5AadubMWpYd5QHy2WxbEoxb+MgIDnWS1D
-	 /RiwQiUnA2aO6Dyln/jnQrvVC+0BQtBnoe+m7x3q2tt6lvzn95Su7rHAY/8anZ6oo2
-	 1oLDeNVI+vyTaeJ6ze5xteaVo9Gegl0tkrWvDRbQ=
+	b=v8xsq66/fXeJ4BZj1yCRgnOgYNQJl/jZBfTZZC6OuvayLHK9YTbLhkWr9h8+RU0Uf
+	 wvvM5tqh3iG8mJrpRCV605LN31h2v54eFQ3u5SAHpXeVORjjIeDZIK1m1XYzxafbNF
+	 PvjEqx4gACQFPTgmc3ouVS8Fydsuhjew+V4q1Wt0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Hans de Goede <hdegoede@redhat.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 007/817] ASoC: Intel: bytcr_rt5640: Add support for non ACPI instantiated codec
-Date: Tue,  3 Dec 2024 15:32:59 +0100
-Message-ID: <20241203143955.914498596@linuxfoundation.org>
+Subject: [PATCH 6.11 008/817] ASoC: Intel: bytcr_rt5640: Add DMI quirk for Vexia Edu Atla 10 tablet
+Date: Tue,  3 Dec 2024 15:33:00 +0100
+Message-ID: <20241203143955.954916925@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -45,7 +45,6 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.11-stable review patch.  If anyone has any objections, please let me know.
@@ -54,85 +53,49 @@ Content-Transfer-Encoding: 8bit
 
 From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit d48696b915527b5bcdd207a299aec03fb037eb17 ]
+[ Upstream commit 0107f28f135231da22a9ad5756bb16bd5cada4d5 ]
 
-On some x86 Bay Trail tablets which shipped with Android as factory OS,
-the DSDT is so broken that the codec needs to be manually instantatiated
-by the special x86-android-tablets.ko "fixup" driver for cases like this.
+The Vexia Edu Atla 10 tablet mostly uses the BYTCR tablet defaults,
+but as happens on more models it is using IN1 instead of IN3 for
+its internal mic and JD_SRC_JD2_IN4N instead of JD_SRC_JD1_IN4P
+for jack-detection.
 
-This means that the codec-dev cannot be retrieved through its ACPI fwnode,
-add support to the bytcr_rt5640 machine driver for such manually
-instantiated rt5640 i2c_clients.
-
-An example of a tablet which needs this is the Vexia EDU ATLA 10 tablet,
-which has been distributed to schools in the Spanish Andalucía region.
+Add a DMI quirk for this to fix the internal-mic and jack-detection.
 
 Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://patch.msgid.link/20241024211615.79518-1-hdegoede@redhat.com
+Link: https://patch.msgid.link/20241024211615.79518-2-hdegoede@redhat.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/intel/boards/bytcr_rt5640.c | 33 ++++++++++++++++++++++++---
- 1 file changed, 30 insertions(+), 3 deletions(-)
+ sound/soc/intel/boards/bytcr_rt5640.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
 diff --git a/sound/soc/intel/boards/bytcr_rt5640.c b/sound/soc/intel/boards/bytcr_rt5640.c
-index 4479825c08b5e..ba4293ae7c24f 100644
+index ba4293ae7c24f..2e786836588fb 100644
 --- a/sound/soc/intel/boards/bytcr_rt5640.c
 +++ b/sound/soc/intel/boards/bytcr_rt5640.c
-@@ -17,6 +17,7 @@
- #include <linux/acpi.h>
- #include <linux/clk.h>
- #include <linux/device.h>
-+#include <linux/device/bus.h>
- #include <linux/dmi.h>
- #include <linux/gpio/consumer.h>
- #include <linux/gpio/machine.h>
-@@ -32,6 +33,8 @@
- #include "../atom/sst-atom-controls.h"
- #include "../common/soc-intel-quirks.h"
- 
-+#define BYT_RT5640_FALLBACK_CODEC_DEV_NAME	"i2c-rt5640"
-+
- enum {
- 	BYT_RT5640_DMIC1_MAP,
- 	BYT_RT5640_DMIC2_MAP,
-@@ -1698,9 +1701,33 @@ static int snd_byt_rt5640_mc_probe(struct platform_device *pdev)
- 
- 	codec_dev = acpi_get_first_physical_node(adev);
- 	acpi_dev_put(adev);
--	if (!codec_dev)
--		return -EPROBE_DEFER;
--	priv->codec_dev = get_device(codec_dev);
-+
-+	if (codec_dev) {
-+		priv->codec_dev = get_device(codec_dev);
-+	} else {
-+		/*
-+		 * Special case for Android tablets where the codec i2c_client
-+		 * has been manually instantiated by x86_android_tablets.ko due
-+		 * to a broken DSDT.
-+		 */
-+		codec_dev = bus_find_device_by_name(&i2c_bus_type, NULL,
-+					BYT_RT5640_FALLBACK_CODEC_DEV_NAME);
-+		if (!codec_dev)
-+			return -EPROBE_DEFER;
-+
-+		if (!i2c_verify_client(codec_dev)) {
-+			dev_err(dev, "Error '%s' is not an i2c_client\n",
-+				BYT_RT5640_FALLBACK_CODEC_DEV_NAME);
-+			put_device(codec_dev);
-+		}
-+
-+		/* fixup codec name */
-+		strscpy(byt_rt5640_codec_name, BYT_RT5640_FALLBACK_CODEC_DEV_NAME,
-+			sizeof(byt_rt5640_codec_name));
-+
-+		/* bus_find_device() returns a reference no need to get() */
-+		priv->codec_dev = codec_dev;
-+	}
- 
- 	/*
- 	 * swap SSP0 if bytcr is detected
+@@ -1132,6 +1132,21 @@ static const struct dmi_system_id byt_rt5640_quirk_table[] = {
+ 					BYT_RT5640_SSP0_AIF2 |
+ 					BYT_RT5640_MCLK_EN),
+ 	},
++	{	/* Vexia Edu Atla 10 tablet */
++		.matches = {
++			DMI_MATCH(DMI_BOARD_VENDOR, "AMI Corporation"),
++			DMI_MATCH(DMI_BOARD_NAME, "Aptio CRB"),
++			/* Above strings are too generic, also match on BIOS date */
++			DMI_MATCH(DMI_BIOS_DATE, "08/25/2014"),
++		},
++		.driver_data = (void *)(BYT_RT5640_IN1_MAP |
++					BYT_RT5640_JD_SRC_JD2_IN4N |
++					BYT_RT5640_OVCD_TH_2000UA |
++					BYT_RT5640_OVCD_SF_0P75 |
++					BYT_RT5640_DIFF_MIC |
++					BYT_RT5640_SSP0_AIF2 |
++					BYT_RT5640_MCLK_EN),
++	},
+ 	{	/* Voyo Winpad A15 */
+ 		.matches = {
+ 			DMI_MATCH(DMI_BOARD_VENDOR, "AMI Corporation"),
 -- 
 2.43.0
 
