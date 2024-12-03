@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A7391E3DED;
-	Tue,  3 Dec 2024 15:27:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC8FE1E3DED;
+	Tue,  3 Dec 2024 15:27:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733239652; cv=none; b=gTi8iICX8XzLAEGX+Drz3Oe6WG1FfU/oi///V3dmrmIcHWjPp7Sl7ITtlhrdAxL7FlX9Jjv9Gcg03QBmbbYRhT21FHCEwwhlfcTcmiUaie7Dkv62WeETpkvL3iICarMBHclhVd65iiJJNhIzZCHHUWi7lhOqRthJ8VmR4spw8VA=
+	t=1733239655; cv=none; b=WGIXso6uG3ngflBL141du9eAZ0WmgWA6LBO8JjDXe2NnqErfW7iXb6tO4CwT8K9zCk4GnUx9wdvbHDnQTh+dXGN5+exnjdHV3L9W2+jIZNayhk0ZpIUc9oP8t2kDn+qaRzmBYeawYwXFAfLGcCRw/FVj1lNbDEY+cANuMBiQtdA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733239652; c=relaxed/simple;
-	bh=Fpw5NOwRti/TB22iTiBywMQ7aX79BF8gzP+y7k8L2nE=;
+	s=arc-20240116; t=1733239655; c=relaxed/simple;
+	bh=jxz2bcEhwqnTHPpzGEvU3t/kPoFX4HwgBq1KMJ2BSLY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=D+66pLUuF9dU7LCQl/N6ahjDthuuqhZj5zqPIzTeuafusEnYjPZTD1i3UgAPGUxNNuq8CREtca3mqYqcfmD/r9Gqe6h9PZHq6U2YHM4vZK6hhTIOY7TFMWg+ZkeV2FXHwNoXnQKl7A2C+YNgelx82uRWqdr6JrU5yHxdr2Qgkv0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IjvnW6yR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GEL4iR2Z3vFbXmw/nDE5oK6hK9lkcS8DSnsfzpM3GEpfO3v6od/q9I/KlLSm9L8ZCr1aRrvyEZfBsrO9IPiQhuel/E40ne99jjHs3+W/7NG67Yg0gb5ZJ37G6asm9bHSAz+X1/J7a8LGGGItDObtDpNjxq74/hKm/tA8bzsWbEM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hC927Pbh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IjvnW6yR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87FF6C4CECF;
-	Tue,  3 Dec 2024 15:27:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hC927Pbh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7397DC4CECF;
+	Tue,  3 Dec 2024 15:27:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733239651;
-	bh=Fpw5NOwRti/TB22iTiBywMQ7aX79BF8gzP+y7k8L2nE=;
+	s=korg; t=1733239654;
+	bh=jxz2bcEhwqnTHPpzGEvU3t/kPoFX4HwgBq1KMJ2BSLY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IjvnW6yRU6VanWiurlpfLZEwXfbDmZXkA1RDlX1wHFuMivzGVAuwBPtXIcVg+v6vH
-	 tbSb0m2hAuN6aPzyGGfCPCHj34qFSA98g/7rreI2O/ay4ANHPgDfJlWyJI08kUj5La
-	 r1T/XdfcjsWaHkmWgonjILvbFr5cbLfRf2G5hcsE=
+	b=hC927PbhmmkfGUMEH4xD12TAO1YX065tOzTFDNYRiaxfR8Jx2Ieew6uKiXyo/VVso
+	 P+4vYZM3ITpOwabO1PPybDc0mVf4bCMF05PeAf/ZfK13D+bGQfmbtAFcU8qt9R1+yY
+	 CNxM0NT7RLpSC74IcUD9uE8uagXT2mPr/2WUcInk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Brauner <brauner@kernel.org>
-Subject: [PATCH 6.11 688/817] Revert "fs: dont block i_writecount during exec"
-Date: Tue,  3 Dec 2024 15:44:20 +0100
-Message-ID: <20241203144022.827574922@linuxfoundation.org>
+	Daniel Rosenberg <drosen@google.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>
+Subject: [PATCH 6.11 689/817] Revert "f2fs: remove unreachable lazytime mount option parsing"
+Date: Tue,  3 Dec 2024 15:44:21 +0100
+Message-ID: <20241203144022.867879792@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -43,233 +45,63 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.11-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: Jaegeuk Kim <jaegeuk@kernel.org>
 
-commit 3b832035387ff508fdcf0fba66701afc78f79e3d upstream.
+commit acff9409dd40beaca2bd982678d222e2740ad84b upstream.
 
-This reverts commit 2a010c41285345da60cece35575b4e0af7e7bf44.
+This reverts commit 54f43a10fa257ad4af02a1d157fefef6ebcfa7dc.
 
-Rui Ueyama <rui314@gmail.com> writes:
+The above commit broke the lazytime mount, given
 
-> I'm the creator and the maintainer of the mold linker
-> (https://github.com/rui314/mold). Recently, we discovered that mold
-> started causing process crashes in certain situations due to a change
-> in the Linux kernel. Here are the details:
->
-> - In general, overwriting an existing file is much faster than
-> creating an empty file and writing to it on Linux, so mold attempts to
-> reuse an existing executable file if it exists.
->
-> - If a program is running, opening the executable file for writing
-> previously failed with ETXTBSY. If that happens, mold falls back to
-> creating a new file.
->
-> - However, the Linux kernel recently changed the behavior so that
-> writing to an executable file is now always permitted
-> (https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=2a010c412853).
->
-> That caused mold to write to an executable file even if there's a
-> process running that file. Since changes to mmap'ed files are
-> immediately visible to other processes, any processes running that
-> file would almost certainly crash in a very mysterious way.
-> Identifying the cause of these random crashes took us a few days.
->
-> Rejecting writes to an executable file that is currently running is a
-> well-known behavior, and Linux had operated that way for a very long
-> time. So, I don’t believe relying on this behavior was our mistake;
-> rather, I see this as a regression in the Linux kernel.
+mount("/dev/vdb", "/mnt/test", "f2fs", 0, "lazytime");
 
-Quoting myself from commit 2a010c412853 ("fs: don't block i_writecount during exec")
-
-> Yes, someone in userspace could potentially be relying on this. It's not
-> completely out of the realm of possibility but let's find out if that's
-> actually the case and not guess.
-
-It seems we found out that someone is relying on this obscure behavior.
-So revert the change.
-
-Link: https://github.com/rui314/mold/issues/1361
-Link: https://lore.kernel.org/r/4a2bc207-76be-4715-8e12-7fc45a76a125@leemhuis.info
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
-[ revert the original, not the 6.13-rc1 version - gregkh ]
+CC: stable@vger.kernel.org # 6.11+
+Signed-off-by: Daniel Rosenberg <drosen@google.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/binfmt_elf.c       |    2 ++
- fs/binfmt_elf_fdpic.c |    5 ++++-
- fs/binfmt_misc.c      |    7 +++++--
- fs/exec.c             |   14 +++++++++++---
- kernel/fork.c         |   26 +++++++++++++++++++++++---
- 5 files changed, 45 insertions(+), 9 deletions(-)
+ fs/f2fs/super.c |   10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
---- a/fs/binfmt_elf.c
-+++ b/fs/binfmt_elf.c
-@@ -1251,6 +1251,7 @@ out_free_interp:
- 		}
- 		reloc_func_desc = interp_load_addr;
- 
-+		allow_write_access(interpreter);
- 		fput(interpreter);
- 
- 		kfree(interp_elf_ex);
-@@ -1342,6 +1343,7 @@ out_free_dentry:
- 	kfree(interp_elf_ex);
- 	kfree(interp_elf_phdata);
- out_free_file:
-+	allow_write_access(interpreter);
- 	if (interpreter)
- 		fput(interpreter);
- out_free_ph:
---- a/fs/binfmt_elf_fdpic.c
-+++ b/fs/binfmt_elf_fdpic.c
-@@ -394,6 +394,7 @@ static int load_elf_fdpic_binary(struct
- 			goto error;
- 		}
- 
-+		allow_write_access(interpreter);
- 		fput(interpreter);
- 		interpreter = NULL;
- 	}
-@@ -465,8 +466,10 @@ static int load_elf_fdpic_binary(struct
- 	retval = 0;
- 
- error:
--	if (interpreter)
-+	if (interpreter) {
-+		allow_write_access(interpreter);
- 		fput(interpreter);
-+	}
- 	kfree(interpreter_name);
- 	kfree(exec_params.phdrs);
- 	kfree(exec_params.loadmap);
---- a/fs/binfmt_misc.c
-+++ b/fs/binfmt_misc.c
-@@ -247,10 +247,13 @@ static int load_misc_binary(struct linux
- 	if (retval < 0)
- 		goto ret;
- 
--	if (fmt->flags & MISC_FMT_OPEN_FILE)
-+	if (fmt->flags & MISC_FMT_OPEN_FILE) {
- 		interp_file = file_clone_open(fmt->interp_file);
--	else
-+		if (!IS_ERR(interp_file))
-+			deny_write_access(interp_file);
-+	} else {
- 		interp_file = open_exec(fmt->interpreter);
-+	}
- 	retval = PTR_ERR(interp_file);
- 	if (IS_ERR(interp_file))
- 		goto ret;
---- a/fs/exec.c
-+++ b/fs/exec.c
-@@ -984,6 +984,10 @@ static struct file *do_open_execat(int f
- 			 path_noexec(&file->f_path)))
- 		goto exit;
- 
-+	err = deny_write_access(file);
-+	if (err)
-+		goto exit;
-+
- out:
- 	return file;
- 
-@@ -999,7 +1003,8 @@ exit:
-  *
-  * Returns ERR_PTR on failure or allocated struct file on success.
-  *
-- * As this is a wrapper for the internal do_open_execat(). Also see
-+ * As this is a wrapper for the internal do_open_execat(), callers
-+ * must call allow_write_access() before fput() on release. Also see
-  * do_close_execat().
-  */
- struct file *open_exec(const char *name)
-@@ -1551,8 +1556,10 @@ static int prepare_bprm_creds(struct lin
- /* Matches do_open_execat() */
- static void do_close_execat(struct file *file)
- {
--	if (file)
--		fput(file);
-+	if (!file)
-+		return;
-+	allow_write_access(file);
-+	fput(file);
- }
- 
- static void free_bprm(struct linux_binprm *bprm)
-@@ -1877,6 +1884,7 @@ static int exec_binprm(struct linux_binp
- 		bprm->file = bprm->interpreter;
- 		bprm->interpreter = NULL;
- 
-+		allow_write_access(exec);
- 		if (unlikely(bprm->have_execfd)) {
- 			if (bprm->executable) {
- 				fput(exec);
---- a/kernel/fork.c
-+++ b/kernel/fork.c
-@@ -621,6 +621,12 @@ static void dup_mm_exe_file(struct mm_st
- 
- 	exe_file = get_mm_exe_file(oldmm);
- 	RCU_INIT_POINTER(mm->exe_file, exe_file);
-+	/*
-+	 * We depend on the oldmm having properly denied write access to the
-+	 * exe_file already.
-+	 */
-+	if (exe_file && deny_write_access(exe_file))
-+		pr_warn_once("deny_write_access() failed in %s\n", __func__);
- }
- 
- #ifdef CONFIG_MMU
-@@ -1412,11 +1418,20 @@ int set_mm_exe_file(struct mm_struct *mm
- 	 */
- 	old_exe_file = rcu_dereference_raw(mm->exe_file);
- 
--	if (new_exe_file)
-+	if (new_exe_file) {
-+		/*
-+		 * We expect the caller (i.e., sys_execve) to already denied
-+		 * write access, so this is unlikely to fail.
-+		 */
-+		if (unlikely(deny_write_access(new_exe_file)))
-+			return -EACCES;
- 		get_file(new_exe_file);
-+	}
- 	rcu_assign_pointer(mm->exe_file, new_exe_file);
--	if (old_exe_file)
-+	if (old_exe_file) {
-+		allow_write_access(old_exe_file);
- 		fput(old_exe_file);
-+	}
- 	return 0;
- }
- 
-@@ -1455,6 +1470,9 @@ int replace_mm_exe_file(struct mm_struct
- 			return ret;
- 	}
- 
-+	ret = deny_write_access(new_exe_file);
-+	if (ret)
-+		return -EACCES;
- 	get_file(new_exe_file);
- 
- 	/* set the new file */
-@@ -1463,8 +1481,10 @@ int replace_mm_exe_file(struct mm_struct
- 	rcu_assign_pointer(mm->exe_file, new_exe_file);
- 	mmap_write_unlock(mm);
- 
--	if (old_exe_file)
-+	if (old_exe_file) {
-+		allow_write_access(old_exe_file);
- 		fput(old_exe_file);
-+	}
- 	return 0;
- }
- 
+--- a/fs/f2fs/super.c
++++ b/fs/f2fs/super.c
+@@ -151,6 +151,8 @@ enum {
+ 	Opt_mode,
+ 	Opt_fault_injection,
+ 	Opt_fault_type,
++	Opt_lazytime,
++	Opt_nolazytime,
+ 	Opt_quota,
+ 	Opt_noquota,
+ 	Opt_usrquota,
+@@ -227,6 +229,8 @@ static match_table_t f2fs_tokens = {
+ 	{Opt_mode, "mode=%s"},
+ 	{Opt_fault_injection, "fault_injection=%u"},
+ 	{Opt_fault_type, "fault_type=%u"},
++	{Opt_lazytime, "lazytime"},
++	{Opt_nolazytime, "nolazytime"},
+ 	{Opt_quota, "quota"},
+ 	{Opt_noquota, "noquota"},
+ 	{Opt_usrquota, "usrquota"},
+@@ -919,6 +923,12 @@ static int parse_options(struct super_bl
+ 			f2fs_info(sbi, "fault_type options not supported");
+ 			break;
+ #endif
++		case Opt_lazytime:
++			sb->s_flags |= SB_LAZYTIME;
++			break;
++		case Opt_nolazytime:
++			sb->s_flags &= ~SB_LAZYTIME;
++			break;
+ #ifdef CONFIG_QUOTA
+ 		case Opt_quota:
+ 		case Opt_usrquota:
 
 
