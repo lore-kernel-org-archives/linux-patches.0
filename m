@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FAE11F669E;
-	Tue,  3 Dec 2024 14:56:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B823D1F7071;
+	Tue,  3 Dec 2024 14:56:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733237796; cv=none; b=QBCeW6t0eTQ0Sqi6EFSIJVnXNFl6ezeSiY+nRE3OkDeMcuzO6Qu3Ok3wm1XulZWAp7Bsky4U8aGv+xbutLfiJNjfGgB+Aw/nl3AjT19PTEDXV3ez98DHVVSzrnYaNTQtl4iOQ81bm0NaMz934+hDVrKF722/z7SSojNbE1qcMOM=
+	t=1733237799; cv=none; b=twgrt4MPQvV2S3xN80vKUYpAGVjdW9jFx68iRmqk2Pv7cQujPRIXtPR2rRwaR9wRjX5cuFhLjvk9slO8DhUdX5h4gEd5559k3qE8g2DVXIygYaFEAiOxqCDpU7irTohmWJUZjxLQxIncY+MFiZrifxFloxwU9nu7s2Ui8E9RwyU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733237796; c=relaxed/simple;
-	bh=o29tiPNEIHXJ2Nkn1mslYGc2s6+naJYd1QK5EpLf4Rk=;
+	s=arc-20240116; t=1733237799; c=relaxed/simple;
+	bh=5roS7Dkt2H1iCAUY6BsjjorPuGBaBUNP7m5p2mC0yWE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V6k50q8hDNXxLpl4PIEYbMsDZ71tAWpksDGJLUTM5Gz58WAk5h5bSt8gFahItk4pLdoeK9C8C9MLa7XRJlljvI59ZxeI9TCxQ+nqnu+t5QKcbNBsLfIj1hP42q3ONngKYp8BXTSmFunylm5ZVwC6p6JXsp9PaHqsaEvTiZinXOw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SWPQBl7d; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mpa0fkzsfgaHHIA0/xR9PbEqqPRSbOkLAGbM2x+r4e+uu+dkkDVeHJ5vWcX0vIik0cUPSB+CyKeb+KkAGWUrWgFPeoAzFqGezihrvBhYt54I+6JsiGeAJW6U4lHPL93F7rXzIhRO3UhudOz676JW2ppsmecD5XHtQgQV1XJi3ls=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aT5Iw6JC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SWPQBl7d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BEF3C4CECF;
-	Tue,  3 Dec 2024 14:56:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aT5Iw6JC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC36EC4CECF;
+	Tue,  3 Dec 2024 14:56:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733237795;
-	bh=o29tiPNEIHXJ2Nkn1mslYGc2s6+naJYd1QK5EpLf4Rk=;
+	s=korg; t=1733237799;
+	bh=5roS7Dkt2H1iCAUY6BsjjorPuGBaBUNP7m5p2mC0yWE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SWPQBl7dmFuSRBnUK43Dikvtr0G9fwEXI5CdoxNUClPo+Rr7fanNDfkflFxthoyyE
-	 bI2XS5bfHe+tD5HaJmy7q+ZoYQpQMDsZ7o+3HE35PJFghre0HHwqb1u9Xe6bGImH3O
-	 LXKSq+BMPMmOLdMbJAVR0GOskEKTLYaPfvHr4TaA=
+	b=aT5Iw6JCJurlvoc18pYBH9xpKg4rB9D3KI5E1hXlMF5NttL7ax/Utm1mTlAUpX3C8
+	 xuLq+klFPQjWmV5A9rjC6+Tzm8s4vQsk3VHbiCX6vKK70ofpjc+OyXVTu88sdqbQpq
+	 zV/T6Eh0wB406D40/Ch0ULSzqcGlipOwgrU5btv8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Markus Petri <mp@mpetri.org>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 041/817] ASoC: max9768: Fix event generation for playback mute
-Date: Tue,  3 Dec 2024 15:33:33 +0100
-Message-ID: <20241203143957.263245924@linuxfoundation.org>
+Subject: [PATCH 6.11 032/817] ASoC: amd: yc: Support dmic on another model of Lenovo Thinkpad E14 Gen 6
+Date: Tue,  3 Dec 2024 15:33:24 +0100
+Message-ID: <20241203143956.903572213@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -50,47 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Brown <broonie@kernel.org>
+From: Markus Petri <mp@mpetri.org>
 
-[ Upstream commit 2ae6da569e34e1d26c5275442d17ffd75fd343b3 ]
+[ Upstream commit 8c21e40e1e481f7fef6e570089e317068b972c45 ]
 
-The max9768 has a custom control for playback mute which unconditionally
-returns 0 from the put() operation, rather than returning 1 on change to
-ensure notifications are generated to userspace. Check to see if the value
-has changed and return appropriately.
+Another model of Thinkpad E14 Gen 6 (21M4)
+needs a quirk entry for the dmic to be detected.
 
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Link: https://patch.msgid.link/20241112-asoc-max9768-event-v1-1-ba5d50599787@kernel.org
+Signed-off-by: Markus Petri <mp@mpetri.org>
+Link: https://patch.msgid.link/20241107094020.1050935-1-mp@localhost
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/max9768.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ sound/soc/amd/yc/acp6x-mach.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/sound/soc/codecs/max9768.c b/sound/soc/codecs/max9768.c
-index e4793a5d179ef..8af3c7e5317fb 100644
---- a/sound/soc/codecs/max9768.c
-+++ b/sound/soc/codecs/max9768.c
-@@ -54,10 +54,17 @@ static int max9768_set_gpio(struct snd_kcontrol *kcontrol,
- {
- 	struct snd_soc_component *c = snd_soc_kcontrol_component(kcontrol);
- 	struct max9768 *max9768 = snd_soc_component_get_drvdata(c);
-+	bool val = !ucontrol->value.integer.value[0];
-+	int ret;
- 
--	gpiod_set_value_cansleep(max9768->mute, !ucontrol->value.integer.value[0]);
-+	if (val != gpiod_get_value_cansleep(max9768->mute))
-+		ret = 1;
-+	else
-+		ret = 0;
- 
--	return 0;
-+	gpiod_set_value_cansleep(max9768->mute, val);
-+
-+	return ret;
- }
- 
- static const DECLARE_TLV_DB_RANGE(volume_tlv,
+diff --git a/sound/soc/amd/yc/acp6x-mach.c b/sound/soc/amd/yc/acp6x-mach.c
+index dc476bfb6da40..2436e8deb2be4 100644
+--- a/sound/soc/amd/yc/acp6x-mach.c
++++ b/sound/soc/amd/yc/acp6x-mach.c
+@@ -227,6 +227,13 @@ static const struct dmi_system_id yc_acp_quirk_table[] = {
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "21M3"),
+ 		}
+ 	},
++	{
++		.driver_data = &acp6x_card,
++		.matches = {
++			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "21M4"),
++		}
++	},
+ 	{
+ 		.driver_data = &acp6x_card,
+ 		.matches = {
 -- 
 2.43.0
 
