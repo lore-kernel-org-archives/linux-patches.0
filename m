@@ -1,46 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B66751F8928;
-	Tue,  3 Dec 2024 15:58:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FD201F76AA;
+	Tue,  3 Dec 2024 15:58:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733241525; cv=none; b=hI/5ej9D4IGTDJv+IytdspjiLDKNLbNw06fSxilrGnglAmb+Ll5jLnOfUJaBZCpICNsUHxuFOAh80EaJAuv5nPtHfK40tz8XkSygv6xgqSQTBmHC93vjfe+4CL98e5vMXPKt0s2V9sZBeyWUGgGtB3MHemcT9lRosAuNlhqL3PI=
+	t=1733241529; cv=none; b=hFVe7DkYhRlXtX5X2VmcyCowdG3tJebj/ZptJggcyfW6J//NeiNvar87h9gsL2yGz2CbrszzEFlK0h8v48f49ylgA8ymPS+1rrWRaHn8Q7SYIm8iCWFDsltEnKPrSzbNFRjAGZkv7ntDBbma2cv7K+TvSNP+rgB3nyEywXiv/KM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733241525; c=relaxed/simple;
-	bh=anm7Q1qTF7s27tXR9zP6HVZ7dXoXg5uNQXzlsZ42xec=;
+	s=arc-20240116; t=1733241529; c=relaxed/simple;
+	bh=sZopB5Cd4U4lWEh74mxgJrhmBlszxgmZzJy0xNjHzco=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=bV3hNrJT5ffT5SCjf2EzFaSSIlzjKHqWzL29jWk6b/ZrG9Y/6/ubwzf4XxVAzy8qEep0bZR+PkOzxCGFNiiwhm5okX4PlsIVciRDsoavG9zRDMsCeOGnD6Tuqk2vgwkoiQ4uHwxI6W7zfFHePh3z7ZALx6SDbBD8VXKGSxyq6oI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2ublVlR6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=q97QqrsIAuB3nb7EwczpFS79c7+bD3fChcKb2sZ60LcxiSMWk/jldZP+VhB+KE/xWOcqRZ/JZCK8dBla7fphIoBf/dR9tX97Yx4JFjr8ussIfztcpZW4sruPEE1SbT/ZmvhO1W/rifr85cEbkLkSnmbYhT1UZf77uG7aG51js/0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1H2PlaZr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2ublVlR6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D91C0C4CED6;
-	Tue,  3 Dec 2024 15:58:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1H2PlaZr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79412C4CED8;
+	Tue,  3 Dec 2024 15:58:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733241525;
-	bh=anm7Q1qTF7s27tXR9zP6HVZ7dXoXg5uNQXzlsZ42xec=;
+	s=korg; t=1733241529;
+	bh=sZopB5Cd4U4lWEh74mxgJrhmBlszxgmZzJy0xNjHzco=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2ublVlR6VPkIMGgqzUkRfr9KhbzsNel/EjixUJ2/+yGnK/2HJ7b6lTqcET+RuBCk9
-	 /+AnMrUwgWC3EZ+vOemNdpFqMifhtlZqC/Vd8EqJTwY64l9O5QIy0Dep6pptZDPOsu
-	 qVcfGhGhpTN7obufFDp7nvvOWrJ4NxZblp/dLciM=
+	b=1H2PlaZrucG8p4Wu+aFf193bdAvB/zr93TXH1xFNdublIxAmonjR4666ps44CFBPM
+	 R4rJIfiWwPgXfiOuG5D/43WFgHY1l4A3lyaDXmy8L/6HtWdzwyXq3KnrcV1sKsxeAH
+	 6qbIzm0v5Fn/STfcUYD6ioo2HVDNyZtyGwAbp7uQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tamir Duberstein <tamird@gmail.com>,
-	Andy Whitcroft <apw@canonical.com>,
-	Dwaipayan Ray <dwaipayanray1@gmail.com>,
-	Joe Perches <joe@perches.com>,
-	Louis Peens <louis.peens@corigine.com>,
-	Lukas Bulwahn <lukas.bulwahn@gmail.com>,
-	=?UTF-8?q?Niklas=20S=C3=B6derlund?= <niklas.soderlund+renesas@ragnatech.se>,
-	Philippe Schenker <philippe.schenker@toradex.com>,
-	Simon Horman <horms@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Zhang Changzhong <zhangchangzhong@huawei.com>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 412/826] checkpatch: always parse orig_commit in fixes tag
-Date: Tue,  3 Dec 2024 15:42:19 +0100
-Message-ID: <20241203144759.832203632@linuxfoundation.org>
+Subject: [PATCH 6.12 413/826] mfd: rt5033: Fix missing regmap_del_irq_chip()
+Date: Tue,  3 Dec 2024 15:42:20 +0100
+Message-ID: <20241203144759.871002930@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -53,122 +45,43 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tamir Duberstein <tamird@gmail.com>
+From: Zhang Changzhong <zhangchangzhong@huawei.com>
 
-[ Upstream commit 2f07b652384969f5d0b317e1daa5f2eb967bc73d ]
+[ Upstream commit d256d612f47529ed0b332298e2d5ea981a4dd5b8 ]
 
-Do not require the presence of `$balanced_parens` to get the commit SHA;
-this allows a `Fixes: deadbeef` tag to get a correct suggestion rather
-than a suggestion containing a reference to HEAD.
+Fix missing call to regmap_del_irq_chip() in error handling path by
+using devm_regmap_add_irq_chip().
 
-Given this patch:
-
-: From: Tamir Duberstein <tamird@gmail.com>
-: Subject: Test patch
-: Date: Fri, 25 Oct 2024 19:30:51 -0400
-:
-: This is a test patch.
-:
-: Fixes: bd17e036b495
-: Signed-off-by: Tamir Duberstein <tamird@gmail.com>
-: --- /dev/null
-: +++ b/new-file
-: @@ -0,0 +1 @@
-: +Test.
-
-Before:
-
-WARNING: Please use correct Fixes: style 'Fixes: <12 chars of sha1> ("<title line>")' - ie: 'Fixes: c10a7d25e68f ("Test patch")'
-
-After:
-
-WARNING: Please use correct Fixes: style 'Fixes: <12 chars of sha1> ("<title line>")' - ie: 'Fixes: bd17e036b495 ("checkpatch: warn for non-standard fixes tag style")'
-
-The prior behavior incorrectly suggested the patch's own SHA and title
-line rather than the referenced commit's.  This fixes that.
-
-Ironically this:
-
-Fixes: bd17e036b495 ("checkpatch: warn for non-standard fixes tag style")
-Signed-off-by: Tamir Duberstein <tamird@gmail.com>
-Cc: Andy Whitcroft <apw@canonical.com>
-Cc: Dwaipayan Ray <dwaipayanray1@gmail.com>
-Cc: Joe Perches <joe@perches.com>
-Cc: Louis Peens <louis.peens@corigine.com>
-Cc: Lukas Bulwahn <lukas.bulwahn@gmail.com>
-Cc: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
-Cc: Philippe Schenker <philippe.schenker@toradex.com>
-Cc: Simon Horman <horms@kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 0b271258544b ("mfd: rt5033: Add Richtek RT5033 driver core.")
+Signed-off-by: Zhang Changzhong <zhangchangzhong@huawei.com>
+Link: https://lore.kernel.org/r/1730302867-8391-1-git-send-email-zhangchangzhong@huawei.com
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/checkpatch.pl | 37 ++++++++++++++++---------------------
- 1 file changed, 16 insertions(+), 21 deletions(-)
+ drivers/mfd/rt5033.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/scripts/checkpatch.pl b/scripts/checkpatch.pl
-index 4427572b24771..b03d526e4c454 100755
---- a/scripts/checkpatch.pl
-+++ b/scripts/checkpatch.pl
-@@ -3209,36 +3209,31 @@ sub process {
+diff --git a/drivers/mfd/rt5033.c b/drivers/mfd/rt5033.c
+index 7e23ab3d5842c..84ebc96f58e48 100644
+--- a/drivers/mfd/rt5033.c
++++ b/drivers/mfd/rt5033.c
+@@ -81,8 +81,8 @@ static int rt5033_i2c_probe(struct i2c_client *i2c)
+ 	chip_rev = dev_id & RT5033_CHIP_REV_MASK;
+ 	dev_info(&i2c->dev, "Device found (rev. %d)\n", chip_rev);
  
- # Check Fixes: styles is correct
- 		if (!$in_header_lines &&
--		    $line =~ /^\s*fixes:?\s*(?:commit\s*)?[0-9a-f]{5,}\b/i) {
--			my $orig_commit = "";
--			my $id = "0123456789ab";
--			my $title = "commit title";
--			my $tag_case = 1;
--			my $tag_space = 1;
--			my $id_length = 1;
--			my $id_case = 1;
-+		    $line =~ /^\s*(fixes:?)\s*(?:commit\s*)?([0-9a-f]{5,40})(?:\s*($balanced_parens))?/i) {
-+			my $tag = $1;
-+			my $orig_commit = $2;
-+			my $title;
- 			my $title_has_quotes = 0;
- 			$fixes_tag = 1;
--
--			if ($line =~ /(\s*fixes:?)\s+([0-9a-f]{5,})\s+($balanced_parens)/i) {
--				my $tag = $1;
--				$orig_commit = $2;
--				$title = $3;
--
--				$tag_case = 0 if $tag eq "Fixes:";
--				$tag_space = 0 if ($line =~ /^fixes:? [0-9a-f]{5,} ($balanced_parens)/i);
--
--				$id_length = 0 if ($orig_commit =~ /^[0-9a-f]{12}$/i);
--				$id_case = 0 if ($orig_commit !~ /[A-F]/);
--
-+			if (defined $3) {
- 				# Always strip leading/trailing parens then double quotes if existing
--				$title = substr($title, 1, -1);
-+				$title = substr($3, 1, -1);
- 				if ($title =~ /^".*"$/) {
- 					$title = substr($title, 1, -1);
- 					$title_has_quotes = 1;
- 				}
-+			} else {
-+				$title = "commit title"
- 			}
- 
-+
-+			my $tag_case = not ($tag eq "Fixes:");
-+			my $tag_space = not ($line =~ /^fixes:? [0-9a-f]{5,40} ($balanced_parens)/i);
-+
-+			my $id_length = not ($orig_commit =~ /^[0-9a-f]{12}$/i);
-+			my $id_case = not ($orig_commit !~ /[A-F]/);
-+
-+			my $id = "0123456789ab";
- 			my ($cid, $ctitle) = git_commit_info($orig_commit, $id,
- 							     $title);
- 
+-	ret = regmap_add_irq_chip(rt5033->regmap, rt5033->irq,
+-			IRQF_TRIGGER_FALLING | IRQF_ONESHOT,
++	ret = devm_regmap_add_irq_chip(rt5033->dev, rt5033->regmap,
++			rt5033->irq, IRQF_TRIGGER_FALLING | IRQF_ONESHOT,
+ 			0, &rt5033_irq_chip, &rt5033->irq_data);
+ 	if (ret) {
+ 		dev_err(&i2c->dev, "Failed to request IRQ %d: %d\n",
 -- 
 2.43.0
 
