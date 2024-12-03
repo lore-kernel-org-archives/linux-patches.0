@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 729EE1F4276;
-	Tue,  3 Dec 2024 15:34:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E1A51FAC53;
+	Tue,  3 Dec 2024 15:34:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733240082; cv=none; b=lIbP7IDACrTciuXkcCJ7k6g7SiCJIN6RgzTR1ESmezCMmuyKu5MKUzxpBA8+7/VNz3YJQImTqII47U6swQeylVvhzbdJf3x8Hy0su8Sy+r40pUK4twQKtZoRocJStZcCuALKeortcJeuCeInG8aZTo3oJXipDzqZC+5u9yw5JlY=
+	t=1733240085; cv=none; b=q6WZvcQ2JoP8LB8xQ23C904slyTlAdQDR5/dTeXDBFVVqI18Yd3VwmSmRhMHKAo7ODHoKejIfxqyGU4/uyMjP/G8xEHwsQtqYeSt62BZQD+HgRMuBzE+MDhOa7rw5XtOw6WaKuFMTMtl/UeXytY+1hcMc+O9qH27xgwXZPHbsKM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733240082; c=relaxed/simple;
-	bh=YOBZBYJDlnNRIdaWm/92MQDR9Ta648h3poi3nWrtKRY=;
+	s=arc-20240116; t=1733240085; c=relaxed/simple;
+	bh=UHT1Dqjpfpe6iXKH3DGfu4Kh9GCImnBl/Bf25RdFuq8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U75dakAvom7l+oIXaVNNZ/pQJ3Zet6WKkhE5GHNOVDHOkAB2OXkUOo2X779uJ07PkOKurVEGIg0t1QWs/r8JWjwv9Y4Apg/s5tQHUm0HLiGQmtKygxLzHfHauAEpJol2Xwi38w8pO1rRreLuNsNY9TfkefGYydA2Bkbe7lo+2Yc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bs0moJHH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eh+BglC9GfabOpQSJO1aUIxZF8cPhTBbENmEWYdx4IIKTbbZxTAl4aYqB/r8BSknR6FEqOfhZ8pHaTRZKkyCaQuKtgqVN7l9iuPwOzga9SyFh8PEp9kFKRgUoUAizC25wTgzVnvHI2fa9TD0JbzSC2FxmtGO8799z54XrlimmN8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P6e3loYr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bs0moJHH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E983DC4CECF;
-	Tue,  3 Dec 2024 15:34:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P6e3loYr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6070C4CECF;
+	Tue,  3 Dec 2024 15:34:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733240082;
-	bh=YOBZBYJDlnNRIdaWm/92MQDR9Ta648h3poi3nWrtKRY=;
+	s=korg; t=1733240085;
+	bh=UHT1Dqjpfpe6iXKH3DGfu4Kh9GCImnBl/Bf25RdFuq8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Bs0moJHH7Icj1rma4bBhtEu5oUZGCX1mN4q+auseGFD3z+cSRDAWWLddU2/6BiR/I
-	 gdZhGUKMRvOnG9TBRTlY3C88hurmOXO/NoC0iiIVuydxxdDtuH5tsdvVMPmJJVfOCO
-	 sOw/WfRtJ+bjJp/EfveYT03ToQoajxBhhoJ+dJFY=
+	b=P6e3loYrR6s0VhRbW6AjMFMOEn8+D3JgPWwG7N2W1kIrwXPO0wHwKTfnLzvf8OIZC
+	 Fixz4o+n3idBwSnTgteuKuCkIjmvwOTaejBa0brlbFRecOf49ej3V9IWkzjZUe9jbz
+	 cQm5bH7SnLp1f0aFEPynq3gXdpNl6Lc3TYvtizfY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Stancek <jstancek@redhat.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
+	Jonas Gorski <jonas.gorski@gmail.com>,
+	"Maciej W. Rozycki" <macro@orcam.me.uk>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 017/826] ext4: avoid remount errors with abort mount option
-Date: Tue,  3 Dec 2024 15:35:44 +0100
-Message-ID: <20241203144744.128025404@linuxfoundation.org>
+Subject: [PATCH 6.12 018/826] mips: asm: fix warning when disabling MIPS_FP_SUPPORT
+Date: Tue,  3 Dec 2024 15:35:45 +0100
+Message-ID: <20241203144744.168314003@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -52,64 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jan Kara <jack@suse.cz>
+From: Jonas Gorski <jonas.gorski@gmail.com>
 
-[ Upstream commit 76486b104168ae59703190566e372badf433314b ]
+[ Upstream commit da09935975c8f8c90d6f57be2422dee5557206cd ]
 
-When we remount filesystem with 'abort' mount option while changing
-other mount options as well (as is LTP test doing), we can return error
-from the system call after commit d3476f3dad4a ("ext4: don't set
-SB_RDONLY after filesystem errors") because the application of mount
-option changes detects shutdown filesystem and refuses to do anything.
-The behavior of application of other mount options in presence of
-'abort' mount option is currently rather arbitary as some mount option
-changes are handled before 'abort' and some after it.
+When MIPS_FP_SUPPORT is disabled, __sanitize_fcr31() is defined as
+nothing, which triggers a gcc warning:
 
-Move aborting of the filesystem to the end of remount handling so all
-requested changes are properly applied before the filesystem is shutdown
-to have a reasonably consistent behavior.
+    In file included from kernel/sched/core.c:79:
+    kernel/sched/core.c: In function 'context_switch':
+    ./arch/mips/include/asm/switch_to.h:114:39: warning: suggest braces around empty body in an 'if' statement [-Wempty-body]
+      114 |                 __sanitize_fcr31(next);                                 \
+          |                                       ^
+    kernel/sched/core.c:5316:9: note: in expansion of macro 'switch_to'
+     5316 |         switch_to(prev, next, prev);
+          |         ^~~~~~~~~
 
-Fixes: d3476f3dad4a ("ext4: don't set SB_RDONLY after filesystem errors")
-Reported-by: Jan Stancek <jstancek@redhat.com>
-Link: https://lore.kernel.org/all/Zvp6L+oFnfASaoHl@t14s
-Signed-off-by: Jan Kara <jack@suse.cz>
-Tested-by: Jan Stancek <jstancek@redhat.com>
-Link: https://patch.msgid.link/20241004221556.19222-1-jack@suse.cz
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Fix this by providing an empty body for __sanitize_fcr31() like one is
+defined for __mips_mt_fpaff_switch_to().
+
+Fixes: 36a498035bd2 ("MIPS: Avoid FCSR sanitization when CONFIG_MIPS_FP_SUPPORT=n")
+Signed-off-by: Jonas Gorski <jonas.gorski@gmail.com>
+Reviewed-by: Maciej W. Rozycki <macro@orcam.me.uk>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/super.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ arch/mips/include/asm/switch_to.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/ext4/super.c b/fs/ext4/super.c
-index 16a4ce704460e..4645f16296732 100644
---- a/fs/ext4/super.c
-+++ b/fs/ext4/super.c
-@@ -6518,9 +6518,6 @@ static int __ext4_remount(struct fs_context *fc, struct super_block *sb)
- 		goto restore_opts;
- 	}
+diff --git a/arch/mips/include/asm/switch_to.h b/arch/mips/include/asm/switch_to.h
+index a4374b4cb88fd..d6ccd53440213 100644
+--- a/arch/mips/include/asm/switch_to.h
++++ b/arch/mips/include/asm/switch_to.h
+@@ -97,7 +97,7 @@ do {									\
+ 	}								\
+ } while (0)
+ #else
+-# define __sanitize_fcr31(next)
++# define __sanitize_fcr31(next) do { (void) (next); } while (0)
+ #endif
  
--	if (test_opt2(sb, ABORT))
--		ext4_abort(sb, ESHUTDOWN, "Abort forced by user");
--
- 	sb->s_flags = (sb->s_flags & ~SB_POSIXACL) |
- 		(test_opt(sb, POSIX_ACL) ? SB_POSIXACL : 0);
- 
-@@ -6689,6 +6686,14 @@ static int __ext4_remount(struct fs_context *fc, struct super_block *sb)
- 	if (!ext4_has_feature_mmp(sb) || sb_rdonly(sb))
- 		ext4_stop_mmpd(sbi);
- 
-+	/*
-+	 * Handle aborting the filesystem as the last thing during remount to
-+	 * avoid obsure errors during remount when some option changes fail to
-+	 * apply due to shutdown filesystem.
-+	 */
-+	if (test_opt2(sb, ABORT))
-+		ext4_abort(sb, ESHUTDOWN, "Abort forced by user");
-+
- 	return 0;
- 
- restore_opts:
+ /*
 -- 
 2.43.0
 
