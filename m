@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E20091EE001;
-	Tue,  3 Dec 2024 15:41:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95BFE1EE001;
+	Tue,  3 Dec 2024 15:41:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733240503; cv=none; b=QI9e7hIpY52KS5MQeSejXL6R9rlECgdc807zQpxQjTju9/60CAffaZBUKwPzETyOmfSkgbtoYrBC79T+IQvK3J+sQvSzie8o88eO0fqz8Rz+mZ6doYlLVNpsOew6lfxAQ4iM47EsDH0b2Th/FX7b3XCPQ8B55nsCwHrU7eXdmnU=
+	t=1733240506; cv=none; b=TU8xl6GXml78Piu2Wy21UgWLepTIMc7tHkJ3/jcMG338LYRjHK0hkqpI4oeTTukz3k4nEwrrK+hgh1GXGhj9BEYiXqjFglEiaem/jtkb2aJQG7x+8U3CyeiIMtq/LJkINZPIeJ1id4AwyHMcknTjV6RDUF+X+gZ9j1PWkkzqlow=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733240503; c=relaxed/simple;
-	bh=vSsfiB8NjEv79jM0l7BEd3zU4MMO1n/Ii84xpv19dSM=;
+	s=arc-20240116; t=1733240506; c=relaxed/simple;
+	bh=Qk4mqn/Kqaa/uBo9FxGaTLTXa+GIQDLwzv7oIHKTLDg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XzIu0H7D+KxMt0EQV8S+OmlkF4veCo86+iBAR72q37KZOpwxy+XAwCoujpOgsaFARcDe8lNbGhtulQP41GT9E1Yco1nOK7/TYZlcXXdXvScSfUKsO8KSllBFmLKIvViU+WkNxl1xjMTatpKjcYEZtJuLdNFuTNX4/L012W8BIOI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wbSi0MUn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=s2HFZOaOzfG4qqdwje++lG30TloRkA/3g2+iiVu2FRrGx68GP0Y/4lPe8Q2K7uqYvugQxqyFGtf3NOftW0oT2ZM6c4+Enat8DCQtR9mbFfRQ17245tWt7CKOmOWZJMGfCiQt0O82sNQKDRt0HU7JigZM+IkvvsMkIT3YJgkICqs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cR+7q8N/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wbSi0MUn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C635C4CED6;
-	Tue,  3 Dec 2024 15:41:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cR+7q8N/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7ED7C4CED8;
+	Tue,  3 Dec 2024 15:41:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733240502;
-	bh=vSsfiB8NjEv79jM0l7BEd3zU4MMO1n/Ii84xpv19dSM=;
+	s=korg; t=1733240506;
+	bh=Qk4mqn/Kqaa/uBo9FxGaTLTXa+GIQDLwzv7oIHKTLDg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wbSi0MUn+XQLFrkkRu8dMEidpznrwJLTRpAvXbLc2Fg9o7vYh/hTxx6ircrQYGqkX
-	 bw0CySu+89mv8Jy6Odr2xTRVHf3sWGaXBrWMeBz8smhjuOX0m5ZkI02llzHO1cDBKd
-	 +3sIobrUxbnERGe0Mgz1TNcFWIxSqXmCD3lPxuHI=
+	b=cR+7q8N/WqvyaU0HR8Qplt35Q0KqrLb4XErvJOOpuS3Xf7EQ+SibpWY9IZ/aTWq3u
+	 Ch/hY/HzUyJr+/y0GHdswDIqFkePWH9lZJ4rD/XiI2b21kifBFwJiNQuBwOtoOxwGo
+	 kxozd3M6Cpi/jgkn/E5nGfpKNTFXxVph1qk4vY9Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Diederik de Haas <didi.debian@cknow.org>,
-	Dragan Simic <dsimic@manjaro.org>,
-	Mark Brown <broonie@kernel.org>,
+	Zhang Zekun <zhangzekun11@huawei.com>,
+	Dhruva Gole <d-gole@ti.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 137/826] regulator: rk808: Restrict DVS GPIOs to the RK808 variant only
-Date: Tue,  3 Dec 2024 15:37:44 +0100
-Message-ID: <20241203144749.087393560@linuxfoundation.org>
+Subject: [PATCH 6.12 155/826] pmdomain: ti-sci: Add missing of_node_put() for args.np
+Date: Tue,  3 Dec 2024 15:38:02 +0100
+Message-ID: <20241203144749.789671921@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -52,104 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dragan Simic <dsimic@manjaro.org>
+From: Zhang Zekun <zhangzekun11@huawei.com>
 
-[ Upstream commit 0d214f27c0e3d9694284c95bac1502c2d247355b ]
+[ Upstream commit afc2331ef81657493c074592c409dac7c3cb8ccc ]
 
-The rk808-regulator driver supports multiple PMIC variants from the Rockckip
-RK80x and RK81x series, but the DVS GPIOs are supported on the RK808 variant
-only, according to the DT bindings [1][2][3][4][5][6] and the datasheets for
-the supported PMIC variants. [7][8][9][10][11][12]
+of_parse_phandle_with_args() needs to call of_node_put() to decrement
+the refcount of args.np. So, Add the missing of_node_put() in the loop.
 
-Thus, change the probe path so the "dvs-gpios" property is checked for and
-its value possibly used only when the handled PMIC variant is RK808.  There's
-no point in doing that on the other PMIC variants, because they don't support
-the DVS GPIOs, and it goes against the DT bindings to allow a possible out-
-of-place "dvs-gpios" property to actually be handled in the driver.
-
-This eliminates the following messages, emitted when the "dvs-gpios" property
-isn't found in the DT, from the kernel log on boards that actually don't use
-the RK808 variant, which may have provided a source of confusion:
-
-  rk808-regulator rk808-regulator.2.auto: there is no dvs0 gpio
-  rk808-regulator rk808-regulator.2.auto: there is no dvs1 gpio
-
-Furthermore, demote these kernel messages to debug messages, because they are
-useful during the board bringup phase only.  Emitting them afterwards, on the
-boards that use the RK808 variant, but actually don't use the DVS0/1 GPIOs,
-clutters the kernel log a bit, while they provide no value and may actually
-cause false impression that some PMIC-related issues are present.
-
-[1] Documentation/devicetree/bindings/mfd/rockchip,rk805.yaml
-[2] Documentation/devicetree/bindings/mfd/rockchip,rk806.yaml
-[3] Documentation/devicetree/bindings/mfd/rockchip,rk808.yaml
-[4] Documentation/devicetree/bindings/mfd/rockchip,rk816.yaml
-[5] Documentation/devicetree/bindings/mfd/rockchip,rk817.yaml
-[6] Documentation/devicetree/bindings/mfd/rockchip,rk818.yaml
-[7] https://rockchip.fr/RK805%20datasheet%20V1.2.pdf
-[8] https://wmsc.lcsc.com/wmsc/upload/file/pdf/v2/lcsc/2401261533_Rockchip-RK806-1_C5156483.pdf
-[9] https://rockchip.fr/RK808%20datasheet%20V1.4.pdf
-[10] https://rockchip.fr/RK816%20datasheet%20V1.3.pdf
-[11] https://rockchip.fr/RK817%20datasheet%20V1.01.pdf
-[12] https://rockchip.fr/RK818%20datasheet%20V1.0.pdf
-
-Fixes: 11375293530b ("regulator: rk808: Add regulator driver for RK818")
-Reported-by: Diederik de Haas <didi.debian@cknow.org>
-Signed-off-by: Dragan Simic <dsimic@manjaro.org>
-Link: https://patch.msgid.link/9a415c59699e76fc7b88a2552520a4ca2538f44e.1728902488.git.dsimic@manjaro.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: efa5c01cd7ee ("soc: ti: ti_sci_pm_domains: switch to use multiple genpds instead of one")
+Signed-off-by: Zhang Zekun <zhangzekun11@huawei.com>
+Reviewed-by: Dhruva Gole <d-gole@ti.com>
+Message-ID: <20241024030442.119506-2-zhangzekun11@huawei.com>
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/rk808-regulator.c | 15 ++++++++-------
- 1 file changed, 8 insertions(+), 7 deletions(-)
+ drivers/pmdomain/ti/ti_sci_pm_domains.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/regulator/rk808-regulator.c b/drivers/regulator/rk808-regulator.c
-index 01a8d04879184..37476d2558fda 100644
---- a/drivers/regulator/rk808-regulator.c
-+++ b/drivers/regulator/rk808-regulator.c
-@@ -1853,7 +1853,7 @@ static int rk808_regulator_dt_parse_pdata(struct device *dev,
- 		}
+diff --git a/drivers/pmdomain/ti/ti_sci_pm_domains.c b/drivers/pmdomain/ti/ti_sci_pm_domains.c
+index 1510d5ddae3de..0df3eb7ff09a3 100644
+--- a/drivers/pmdomain/ti/ti_sci_pm_domains.c
++++ b/drivers/pmdomain/ti/ti_sci_pm_domains.c
+@@ -161,6 +161,7 @@ static int ti_sci_pm_domain_probe(struct platform_device *pdev)
+ 				break;
  
- 		if (!pdata->dvs_gpio[i]) {
--			dev_info(dev, "there is no dvs%d gpio\n", i);
-+			dev_dbg(dev, "there is no dvs%d gpio\n", i);
- 			continue;
- 		}
+ 			if (args.args_count >= 1 && args.np == dev->of_node) {
++				of_node_put(args.np);
+ 				if (args.args[0] > max_id) {
+ 					max_id = args.args[0];
+ 				} else {
+@@ -192,7 +193,10 @@ static int ti_sci_pm_domain_probe(struct platform_device *pdev)
+ 				pm_genpd_init(&pd->pd, NULL, true);
  
-@@ -1889,12 +1889,6 @@ static int rk808_regulator_probe(struct platform_device *pdev)
- 	if (!pdata)
- 		return -ENOMEM;
- 
--	ret = rk808_regulator_dt_parse_pdata(&pdev->dev, regmap, pdata);
--	if (ret < 0)
--		return ret;
--
--	platform_set_drvdata(pdev, pdata);
--
- 	switch (rk808->variant) {
- 	case RK805_ID:
- 		regulators = rk805_reg;
-@@ -1905,6 +1899,11 @@ static int rk808_regulator_probe(struct platform_device *pdev)
- 		nregulators = ARRAY_SIZE(rk806_reg);
- 		break;
- 	case RK808_ID:
-+		/* DVS0/1 GPIOs are supported on the RK808 only */
-+		ret = rk808_regulator_dt_parse_pdata(&pdev->dev, regmap, pdata);
-+		if (ret < 0)
-+			return ret;
+ 				list_add(&pd->node, &pd_provider->pd_list);
++			} else {
++				of_node_put(args.np);
+ 			}
 +
- 		regulators = rk808_reg;
- 		nregulators = RK808_NUM_REGULATORS;
- 		break;
-@@ -1930,6 +1929,8 @@ static int rk808_regulator_probe(struct platform_device *pdev)
- 		return -EINVAL;
+ 			index++;
+ 		}
  	}
- 
-+	platform_set_drvdata(pdev, pdata);
-+
- 	config.dev = &pdev->dev;
- 	config.driver_data = pdata;
- 	config.regmap = regmap;
 -- 
 2.43.0
 
