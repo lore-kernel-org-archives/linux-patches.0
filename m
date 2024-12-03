@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25C5D1F76B0;
-	Tue,  3 Dec 2024 15:37:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A902F205E24;
+	Tue,  3 Dec 2024 15:37:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733240252; cv=none; b=FhFonZmm3U939G4GLXlVcD99f0yW5eKUMssBhQFRDKW5JZpPf+ifgtsAQwYbIFW8NrIO7rNh17qbfJrsvIwTMcTCbWnIEUI9reucLJqDqdDtyOm23rM2UeWMm3UZzc0Ylo3rJpBEL+9H9C+65a4WOF/9q08Jqz9lW6ZnREQcWWA=
+	t=1733240255; cv=none; b=VI2UkWPCParZkDZSduvIgElbHxEYYaG/qI3iGPhpX/JIkdD3KiMrZAclRh3i0riyllwRLhUNGq+1Deo4t26BSzBzylw9DDi4S3p4FVtblCdc6OlBrHqDIx+lbBOx2GbTk5pyYHFFSMycSNEB0hqJ8Hl74bAwlhUi6kvgbhHht+U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733240252; c=relaxed/simple;
-	bh=QnGtHT0vSrZP09lkM37ZP+X3HI1ADRn16q1AUYfY1YI=;
+	s=arc-20240116; t=1733240255; c=relaxed/simple;
+	bh=xFgJ/gNdD7+MvSJZWxI2TfeI82Z3z7QR0de4SMG8Q8M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ienZ5pYPDCpaszw9VL2ERpEEiSHQDFi1pA1rebhEGorTsnzrHXqJHZv/tWa97oc3s/7+PUdEHR4JEO+mUSGm7IulmuvY4PUjBZ6s3FX3wpotJLv/KL+KMU4kwG20kSzfx+DRwO9FJmroUbBTSqbWppQFzARoiQW2bsvnCrEeXZM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IfLXzSb0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oH+ewpRXM5D7/U9z17KCDP4+fPB8glYvy70hNKSUTgByROfIk8nPGs/BRPn41UpsLu5AIKXmINPDU+Mg32umkF1vEuA1s5myimgFliGSj2rz9VNvJ3w+vZmZGSeFES07IASfkrn/o9VdCyWNwsRc8kScsx9OLftEgGO+B+TBA3k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rxIv0MJh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IfLXzSb0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A27D6C4CECF;
-	Tue,  3 Dec 2024 15:37:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rxIv0MJh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B723C4CECF;
+	Tue,  3 Dec 2024 15:37:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733240252;
-	bh=QnGtHT0vSrZP09lkM37ZP+X3HI1ADRn16q1AUYfY1YI=;
+	s=korg; t=1733240255;
+	bh=xFgJ/gNdD7+MvSJZWxI2TfeI82Z3z7QR0de4SMG8Q8M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IfLXzSb0eAy75hCMGmxTfJHqIUVP1SrWvezb+2ynQYC/M6GKWlK+FpdSrf1nVLeFB
-	 6yx5AjZsUkwY4ln0a+uBRYiLI5nJ59iQW7B/qVcy+BovPsbX0h1dtM4UP4TCiqW2yb
-	 dmUoxxvXWffqhensgp4askPmQaASFjbGf1v2Ki14=
+	b=rxIv0MJhhJqoamXV//A5rfM1wSDyR5RVuQDuqgJ8Z0PrNT3oFzEPHvC2Xc0rC6aY5
+	 Jv6MUwZYxkhjy9FfaKBC2ezEyvpm1e8cK0yxmkQTpDzobQQYviDxOR8T+FFwyaozjY
+	 xMig0LTP8mS5TBLWEDXMG1Fk5PZxy5Ii3f9Tycyg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Chen Ridong <chenridong@huawei.com>,
-	Gaurav Jain <gaurav.jain@nxp.com>,
-	=?UTF-8?q?Horia=20Geant=C4=83?= <horia.geanta@nxp.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 076/826] crypto: caam - add error check to caam_rsa_set_priv_key_form
-Date: Tue,  3 Dec 2024 15:36:43 +0100
-Message-ID: <20241203144746.435739384@linuxfoundation.org>
+Subject: [PATCH 6.12 077/826] crypto: bcm - add error check in the ahash_hmac_init function
+Date: Tue,  3 Dec 2024 15:36:44 +0100
+Message-ID: <20241203144746.473682279@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -47,7 +45,6 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
@@ -56,71 +53,43 @@ Content-Transfer-Encoding: 8bit
 
 From: Chen Ridong <chenridong@huawei.com>
 
-[ Upstream commit b64140c74e954f1db6eae5548ca3a1f41b6fad79 ]
+[ Upstream commit 19630cf57233e845b6ac57c9c969a4888925467b ]
 
-The caam_rsa_set_priv_key_form did not check for memory allocation errors.
-Add the checks to the caam_rsa_set_priv_key_form functions.
+The ahash_init functions may return fails. The ahash_hmac_init should
+not return ok when ahash_init returns error. For an example, ahash_init
+will return -ENOMEM when allocation memory is error.
 
-Fixes: 52e26d77b8b3 ("crypto: caam - add support for RSA key form 2")
+Fixes: 9d12ba86f818 ("crypto: brcm - Add Broadcom SPU driver")
 Signed-off-by: Chen Ridong <chenridong@huawei.com>
-Reviewed-by: Gaurav Jain <gaurav.jain@nxp.com>
-Reviewed-by: Horia Geantă <horia.geanta@nxp.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/caam/caampkc.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ drivers/crypto/bcm/cipher.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/crypto/caam/caampkc.c b/drivers/crypto/caam/caampkc.c
-index 887a5f2fb9279..cb001aa1de661 100644
---- a/drivers/crypto/caam/caampkc.c
-+++ b/drivers/crypto/caam/caampkc.c
-@@ -984,7 +984,7 @@ static int caam_rsa_set_pub_key(struct crypto_akcipher *tfm, const void *key,
- 	return -ENOMEM;
- }
+diff --git a/drivers/crypto/bcm/cipher.c b/drivers/crypto/bcm/cipher.c
+index 1a3ecd44cbaf6..20f6453670aa4 100644
+--- a/drivers/crypto/bcm/cipher.c
++++ b/drivers/crypto/bcm/cipher.c
+@@ -2415,6 +2415,7 @@ static int ahash_hmac_setkey(struct crypto_ahash *ahash, const u8 *key,
  
--static void caam_rsa_set_priv_key_form(struct caam_rsa_ctx *ctx,
-+static int caam_rsa_set_priv_key_form(struct caam_rsa_ctx *ctx,
- 				       struct rsa_key *raw_key)
+ static int ahash_hmac_init(struct ahash_request *req)
  {
- 	struct caam_rsa_key *rsa_key = &ctx->key;
-@@ -994,7 +994,7 @@ static void caam_rsa_set_priv_key_form(struct caam_rsa_ctx *ctx,
++	int ret;
+ 	struct iproc_reqctx_s *rctx = ahash_request_ctx(req);
+ 	struct crypto_ahash *tfm = crypto_ahash_reqtfm(req);
+ 	struct iproc_ctx_s *ctx = crypto_ahash_ctx(tfm);
+@@ -2424,7 +2425,9 @@ static int ahash_hmac_init(struct ahash_request *req)
+ 	flow_log("ahash_hmac_init()\n");
  
- 	rsa_key->p = caam_read_raw_data(raw_key->p, &p_sz);
- 	if (!rsa_key->p)
--		return;
-+		return -ENOMEM;
- 	rsa_key->p_sz = p_sz;
- 
- 	rsa_key->q = caam_read_raw_data(raw_key->q, &q_sz);
-@@ -1029,7 +1029,7 @@ static void caam_rsa_set_priv_key_form(struct caam_rsa_ctx *ctx,
- 
- 	rsa_key->priv_form = FORM3;
- 
--	return;
-+	return 0;
- 
- free_dq:
- 	kfree_sensitive(rsa_key->dq);
-@@ -1043,6 +1043,7 @@ static void caam_rsa_set_priv_key_form(struct caam_rsa_ctx *ctx,
- 	kfree_sensitive(rsa_key->q);
- free_p:
- 	kfree_sensitive(rsa_key->p);
-+	return -ENOMEM;
- }
- 
- static int caam_rsa_set_priv_key(struct crypto_akcipher *tfm, const void *key,
-@@ -1088,7 +1089,9 @@ static int caam_rsa_set_priv_key(struct crypto_akcipher *tfm, const void *key,
- 	rsa_key->e_sz = raw_key.e_sz;
- 	rsa_key->n_sz = raw_key.n_sz;
- 
--	caam_rsa_set_priv_key_form(ctx, &raw_key);
-+	ret = caam_rsa_set_priv_key_form(ctx, &raw_key);
+ 	/* init the context as a hash */
+-	ahash_init(req);
++	ret = ahash_init(req);
 +	if (ret)
-+		goto err;
++		return ret;
  
- 	return 0;
- 
+ 	if (!spu_no_incr_hash(ctx)) {
+ 		/* SPU-M can do incr hashing but needs sw for outer HMAC */
 -- 
 2.43.0
 
