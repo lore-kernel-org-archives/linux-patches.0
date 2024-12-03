@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3AE41F890F;
-	Tue,  3 Dec 2024 16:17:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C233B1F7567;
+	Tue,  3 Dec 2024 16:17:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733242647; cv=none; b=sOtWyEjy2ucijmJsZxIesRWGmL0glfBTmTP8RrWzNPVkLWRiIg7LArZrCZktxWAA0KfLybuk0LBBg/zJYiCTWbEur8nmf1nV8LuIegV7tD2eMvqCVosurCaqRzMWBk8PjL72W9kXPcZ3UkhJuC2fn+txEH/YgL1W1BGubpHwUjk=
+	t=1733242650; cv=none; b=fGpyk4PKzTWQ+ThCoUvwOlPSCY6oxJWbQf0qEc/JHHZDqAfaLq4/uWfNd/AubJ5BKkUEGjusTK+eYuhv5g5c1U7Adn3eRnms/le9aJOng3nGtDqC0710Outcrxg0Taf2gSwYH1RC3aTpRUeZ4F+T762OixfzgUNes1HU0doMMTg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733242647; c=relaxed/simple;
-	bh=1xtGOh5yqhcc9KBL7ikqWNOst5dBO+j8zB8+bGgdJ1o=;
+	s=arc-20240116; t=1733242650; c=relaxed/simple;
+	bh=cAGurfIRCWAQfJ9HijU0u9PwuRQLsgKdp1XBbXtxqrE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F/gtcszno/m297Gr9dG82lUwLp9l5MVnmSkk+K19JGd0tDJ5fKD4a9700mXDE2D6m3j7c49aXeafaBH/1hNYUJzmZ3RoO3SPaGalMLFWhArfS9m1uX7nqYvi0tcPLw2vWwS3footfdlzuJACQb87QYDo94t08ZBjq1ay58lbHSA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PvFR2T6j; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=emfeHNAIDiw6Ajx7GmDdNzxyzJrujjhIyMGVRnTyQPr7E1T0xRiOdVtuGS4c8XXhUS6Vs79BBc6rdu8SCaEWoxUBRzBYXxxGsqjCSk/UcIUwxsO0/tQehXtzIxCZsEWZkNnRheMG7dYPkeltqyHTRmEZqIWTzJrJ5JLgWhziBDE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ow42VEfY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PvFR2T6j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30CABC4CECF;
-	Tue,  3 Dec 2024 16:17:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ow42VEfY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CB6FC4CECF;
+	Tue,  3 Dec 2024 16:17:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733242647;
-	bh=1xtGOh5yqhcc9KBL7ikqWNOst5dBO+j8zB8+bGgdJ1o=;
+	s=korg; t=1733242650;
+	bh=cAGurfIRCWAQfJ9HijU0u9PwuRQLsgKdp1XBbXtxqrE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PvFR2T6jqZaaZeKHzwDaQ5MNRyZHuvarqEbcfM9rX8LZ+mGJn+7/DpehDK80MesBA
-	 kgG6Yer8UhmQR97YbbdeNV6MHC6UPrzODxfiUZ8YobjoCdscGW20dukJRhDFmUD/R+
-	 VCo0fNqV010jabY2dN+KQ1HzMf261/vlKuC4tXrM=
+	b=ow42VEfYt0nnXKf1mx67v2RG+AR2T/WG14A1UF2YHayrXssDRekah41w+N5nUR7AB
+	 bm3MJxCcbEqoGS410b7wO/9bbgzUe4w6/rWdlfGKSR1ehOYJQEOO/YJCFE1DV03ilH
+	 mPmQPgOQEhlXxYmaKufR8cf4dHGfcOQHsDkF4zv8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+33379ce4ac76acf7d0c7@syzkaller.appspotmail.com,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>
-Subject: [PATCH 6.12 767/826] f2fs: fix to do sanity check on node blkaddr in truncate_node()
-Date: Tue,  3 Dec 2024 15:48:14 +0100
-Message-ID: <20241203144813.686275781@linuxfoundation.org>
+	Ma Wupeng <mawupeng1@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.12 768/826] ipc: fix memleak if msg_init_ns failed in create_ipc_ns
+Date: Tue,  3 Dec 2024 15:48:15 +0100
+Message-ID: <20241203144813.725214919@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -51,69 +50,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Ma Wupeng <mawupeng1@huawei.com>
 
-commit 6babe00ccd34fc65b78ef8b99754e32b4385f23d upstream.
+commit bc8f5921cd69188627c08041276238de222ab466 upstream.
 
-syzbot reports a f2fs bug as below:
+Percpu memory allocation may failed during create_ipc_ns however this
+fail is not handled properly since ipc sysctls and mq sysctls is not
+released properly. Fix this by release these two resource when failure.
 
-------------[ cut here ]------------
-kernel BUG at fs/f2fs/segment.c:2534!
-RIP: 0010:f2fs_invalidate_blocks+0x35f/0x370 fs/f2fs/segment.c:2534
-Call Trace:
- truncate_node+0x1ae/0x8c0 fs/f2fs/node.c:909
- f2fs_remove_inode_page+0x5c2/0x870 fs/f2fs/node.c:1288
- f2fs_evict_inode+0x879/0x15c0 fs/f2fs/inode.c:856
- evict+0x4e8/0x9b0 fs/inode.c:723
- f2fs_handle_failed_inode+0x271/0x2e0 fs/f2fs/inode.c:986
- f2fs_create+0x357/0x530 fs/f2fs/namei.c:394
- lookup_open fs/namei.c:3595 [inline]
- open_last_lookups fs/namei.c:3694 [inline]
- path_openat+0x1c03/0x3590 fs/namei.c:3930
- do_filp_open+0x235/0x490 fs/namei.c:3960
- do_sys_openat2+0x13e/0x1d0 fs/open.c:1415
- do_sys_open fs/open.c:1430 [inline]
- __do_sys_openat fs/open.c:1446 [inline]
- __se_sys_openat fs/open.c:1441 [inline]
- __x64_sys_openat+0x247/0x2a0 fs/open.c:1441
- do_syscall_x64 arch/x86/entry/common.c:52 [inline]
- do_syscall_64+0xf3/0x230 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-RIP: 0010:f2fs_invalidate_blocks+0x35f/0x370 fs/f2fs/segment.c:2534
+Here is the kmemleak stack when percpu failed:
 
-The root cause is: on a fuzzed image, blkaddr in nat entry may be
-corrupted, then it will cause system panic when using it in
-f2fs_invalidate_blocks(), to avoid this, let's add sanity check on
-nat blkaddr in truncate_node().
+unreferenced object 0xffff88819de2a600 (size 512):
+  comm "shmem_2nstest", pid 120711, jiffies 4300542254
+  hex dump (first 32 bytes):
+    60 aa 9d 84 ff ff ff ff fc 18 48 b2 84 88 ff ff  `.........H.....
+    04 00 00 00 a4 01 00 00 20 e4 56 81 ff ff ff ff  ........ .V.....
+  backtrace (crc be7cba35):
+    [<ffffffff81b43f83>] __kmalloc_node_track_caller_noprof+0x333/0x420
+    [<ffffffff81a52e56>] kmemdup_noprof+0x26/0x50
+    [<ffffffff821b2f37>] setup_mq_sysctls+0x57/0x1d0
+    [<ffffffff821b29cc>] copy_ipcs+0x29c/0x3b0
+    [<ffffffff815d6a10>] create_new_namespaces+0x1d0/0x920
+    [<ffffffff815d7449>] copy_namespaces+0x2e9/0x3e0
+    [<ffffffff815458f3>] copy_process+0x29f3/0x7ff0
+    [<ffffffff8154b080>] kernel_clone+0xc0/0x650
+    [<ffffffff8154b6b1>] __do_sys_clone+0xa1/0xe0
+    [<ffffffff843df8ff>] do_syscall_64+0xbf/0x1c0
+    [<ffffffff846000b0>] entry_SYSCALL_64_after_hwframe+0x4b/0x53
 
-Reported-by: syzbot+33379ce4ac76acf7d0c7@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/linux-f2fs-devel/0000000000009a6cd706224ca720@google.com/
-Cc: stable@vger.kernel.org
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Link: https://lkml.kernel.org/r/20241023093129.3074301-1-mawupeng1@huawei.com
+Fixes: 72d1e611082e ("ipc/msg: mitigate the lock contention with percpu counter")
+Signed-off-by: Ma Wupeng <mawupeng1@huawei.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/node.c |   10 ++++++++++
- 1 file changed, 10 insertions(+)
+ ipc/namespace.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/fs/f2fs/node.c
-+++ b/fs/f2fs/node.c
-@@ -905,6 +905,16 @@ static int truncate_node(struct dnode_of
- 	if (err)
- 		return err;
+--- a/ipc/namespace.c
++++ b/ipc/namespace.c
+@@ -83,13 +83,15 @@ static struct ipc_namespace *create_ipc_
  
-+	if (ni.blk_addr != NEW_ADDR &&
-+		!f2fs_is_valid_blkaddr(sbi, ni.blk_addr, DATA_GENERIC_ENHANCE)) {
-+		f2fs_err_ratelimited(sbi,
-+			"nat entry is corrupted, run fsck to fix it, ino:%u, "
-+			"nid:%u, blkaddr:%u", ni.ino, ni.nid, ni.blk_addr);
-+		set_sbi_flag(sbi, SBI_NEED_FSCK);
-+		f2fs_handle_error(sbi, ERROR_INCONSISTENT_NAT);
-+		return -EFSCORRUPTED;
-+	}
-+
- 	/* Deallocate node address */
- 	f2fs_invalidate_blocks(sbi, ni.blk_addr);
- 	dec_valid_node_count(sbi, dn->inode, dn->nid == dn->inode->i_ino);
+ 	err = msg_init_ns(ns);
+ 	if (err)
+-		goto fail_put;
++		goto fail_ipc;
+ 
+ 	sem_init_ns(ns);
+ 	shm_init_ns(ns);
+ 
+ 	return ns;
+ 
++fail_ipc:
++	retire_ipc_sysctls(ns);
+ fail_mq:
+ 	retire_mq_sysctls(ns);
+ 
 
 
