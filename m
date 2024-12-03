@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E9A81F8904;
-	Tue,  3 Dec 2024 15:33:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7034C1F8904;
+	Tue,  3 Dec 2024 15:33:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733239999; cv=none; b=Rdi8MBOkRbFJHlcJfCGvoAcrxo7M4CiIrGLtiEnMpGCXJdsMYSPbRvDB5LOGqqfXIxScY+Lz/5YPcjJvmilNN2FUS7oILs1RvFYdWcBtrAKtukPqu8uegiaQPM79FlA6qQVb6ehfbSVaprG06yre8iKYQkq7N+2IxPB8L4nYDx8=
+	t=1733240002; cv=none; b=P7R+UKI5JJ1fVQT8FTn+q7caAVF8ktrsCcnlFdcsgG0ifAGqWAXxSIcrCDISNWtFdWls0pD+hopz+Vbp8nXMJncf5INPLUxLub/FP+RaDu/aWmVrDtxGsRRaQf+TpnNK75lfuG+OMIyGtxJJaKjF0yIWq6UNMIV6dxaq7UrMEKs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733239999; c=relaxed/simple;
-	bh=8ltC9vGGrLx/JC3p0blwVN4KU6ejosvbhxthyniKuDU=;
+	s=arc-20240116; t=1733240002; c=relaxed/simple;
+	bh=lMa/mHHPLD4mpmQheRfyj61gmyCSsLMA+hjIuTctc5c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k3xF/O97J0wwnfOsReZYFyAp+oXlhyWpFBiJokIW9nmn0+Z9i+EfoBtJkDC475UBHzRG0M7dsj6syyrVEpToSvX4nM+x7KzE1+SimJ8R5GU0NjAMoqE0F7l7MOnBFUlkjymhMHPlBZgOquDWCaVElBNDHDEjLI/XDrhC03pghsw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RmIxmpLX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cKhcRvYccksHIoTaqEhqcY1+Fnx61I0/VK2/grqLIgSNM9wr10C93+1pXdBWMBLjL6fGVYxvWqU8Pu4HnhXCGdW8HU/9oxZTWbkUvoAz19cO4Vz1AmUuqMTOOciPSD8axrB5bTeiL37qfyv2I2fWgRa2mTbay2cNAHnThZutpVw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lxBGCEsh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RmIxmpLX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B92E7C4CECF;
-	Tue,  3 Dec 2024 15:33:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lxBGCEsh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A38FAC4CED6;
+	Tue,  3 Dec 2024 15:33:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733239998;
-	bh=8ltC9vGGrLx/JC3p0blwVN4KU6ejosvbhxthyniKuDU=;
+	s=korg; t=1733240001;
+	bh=lMa/mHHPLD4mpmQheRfyj61gmyCSsLMA+hjIuTctc5c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RmIxmpLXVWjm0nff3VbksloE+egyj8Tjf5kDvQLQxsyjCBkmduGrWvSUVs/qAv3ex
-	 gbdQQStaC8cTi7dO6DeqV7vmjXjP0YK6xCdDkG+oRWRycum2uxXAuu76cBTDTLcdHt
-	 49QIMTimiBxsSmUDBdkkkL1tjwIOJaw7ExYmsRpg=
+	b=lxBGCEshGfoIyrdGIm+O5NMmPqiHDKnArw9oY1Ba20nzBdfalOtyuh73fLpTIl/wA
+	 hsKxRma9tbpNI1lfpkfRSzKHvLMJzhREOxiAslTynHBtIko0VoxUR2BTVEPPpDNwAv
+	 rEzfoDkCHgGpxyq2BQyM2+Nl7+dqProkPiLZ3dYI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Lingfeng <lilingfeng3@huawei.com>,
-	Liu Jian <liujian56@huawei.com>,
+	Benjamin Coddington <bcodding@redhat.com>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 806/817] sunrpc: clear XPRT_SOCK_UPD_TIMEOUT when reset transport
-Date: Tue,  3 Dec 2024 15:46:18 +0100
-Message-ID: <20241203144027.913769870@linuxfoundation.org>
+Subject: [PATCH 6.11 807/817] SUNRPC: timeout and cancel TLS handshake with -ETIMEDOUT
+Date: Tue,  3 Dec 2024 15:46:19 +0100
+Message-ID: <20241203144027.953387755@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -52,36 +52,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Liu Jian <liujian56@huawei.com>
+From: Benjamin Coddington <bcodding@redhat.com>
 
-[ Upstream commit 4db9ad82a6c823094da27de4825af693a3475d51 ]
+[ Upstream commit d7bdd849ef1b681da03ac05ca0957b2cbe2d24b6 ]
 
-Since transport->sock has been set to NULL during reset transport,
-XPRT_SOCK_UPD_TIMEOUT also needs to be cleared. Otherwise, the
-xs_tcp_set_socket_timeouts() may be triggered in xs_tcp_send_request()
-to dereference the transport->sock that has been set to NULL.
+We've noticed a situation where an unstable TCP connection can cause the
+TLS handshake to timeout waiting for userspace to complete it.  When this
+happens, we don't want to return from xs_tls_handshake_sync() with zero, as
+this will cause the upper xprt to be set CONNECTED, and subsequent attempts
+to transmit will be returned with -EPIPE.  The sunrpc machine does not
+recover from this situation and will spin attempting to transmit.
 
-Fixes: 7196dbb02ea0 ("SUNRPC: Allow changing of the TCP timeout parameters on the fly")
-Signed-off-by: Li Lingfeng <lilingfeng3@huawei.com>
-Signed-off-by: Liu Jian <liujian56@huawei.com>
+The return value of tls_handshake_cancel() can be used to detect a race
+with completion:
+
+ * tls_handshake_cancel - cancel a pending handshake
+ * Return values:
+ *   %true - Uncompleted handshake request was canceled
+ *   %false - Handshake request already completed or not found
+
+If true, we do not want the upper xprt to be connected, so return
+-ETIMEDOUT.  If false, its possible the handshake request was lost and
+that may be the reason for our timeout.  Again we do not want the upper
+xprt to be connected, so return -ETIMEDOUT.
+
+Ensure that we alway return an error from xs_tls_handshake_sync() if we
+call tls_handshake_cancel().
+
+Signed-off-by: Benjamin Coddington <bcodding@redhat.com>
+Reviewed-by: Chuck Lever <chuck.lever@oracle.com>
+Fixes: 75eb6af7acdf ("SUNRPC: Add a TCP-with-TLS RPC transport class")
 Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/xprtsock.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/sunrpc/xprtsock.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
 diff --git a/net/sunrpc/xprtsock.c b/net/sunrpc/xprtsock.c
-index 1326fbf45a347..539cdda2093e5 100644
+index 539cdda2093e5..43fb96de8ebe5 100644
 --- a/net/sunrpc/xprtsock.c
 +++ b/net/sunrpc/xprtsock.c
-@@ -1198,6 +1198,7 @@ static void xs_sock_reset_state_flags(struct rpc_xprt *xprt)
- 	clear_bit(XPRT_SOCK_WAKE_WRITE, &transport->sock_state);
- 	clear_bit(XPRT_SOCK_WAKE_DISCONNECT, &transport->sock_state);
- 	clear_bit(XPRT_SOCK_NOSPACE, &transport->sock_state);
-+	clear_bit(XPRT_SOCK_UPD_TIMEOUT, &transport->sock_state);
- }
+@@ -2615,11 +2615,10 @@ static int xs_tls_handshake_sync(struct rpc_xprt *lower_xprt, struct xprtsec_par
+ 	rc = wait_for_completion_interruptible_timeout(&lower_transport->handshake_done,
+ 						       XS_TLS_HANDSHAKE_TO);
+ 	if (rc <= 0) {
+-		if (!tls_handshake_cancel(sk)) {
+-			if (rc == 0)
+-				rc = -ETIMEDOUT;
+-			goto out_put_xprt;
+-		}
++		tls_handshake_cancel(sk);
++		if (rc == 0)
++			rc = -ETIMEDOUT;
++		goto out_put_xprt;
+ 	}
  
- static void xs_run_error_worker(struct sock_xprt *transport, unsigned int nr)
+ 	rc = lower_transport->xprt_err;
 -- 
 2.43.0
 
