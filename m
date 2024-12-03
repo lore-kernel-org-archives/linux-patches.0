@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05A251F8AFF;
-	Tue,  3 Dec 2024 15:41:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5393D1F8AFF;
+	Tue,  3 Dec 2024 15:41:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733240475; cv=none; b=uui2L6ROX1QjisFx8XPGIf6MjA/kJuYqYmFpqJVJ3d52x4RJhW2eZLynDzOHI+L/lKXrlOujBTjErh0KAE8m77UIil3qvRBqgz4L9Rb9PbGYakuJHsyMB6P1xPgBLcUS2HGIlZ/UFb/GPcVuioY25RRcC8hCwEvEZ5afv+poQIQ=
+	t=1733240478; cv=none; b=d8NIGALYb19exswymRgg/recIC8JbLZfe9K5/3czayN5VGr5Aqg+tAu5KEkaN9vSPyz30cCFxKYLUPjqNklH3QntANnugADkgiz5+pxEWNE6KfgJVNRQDIEjlq/NqzrF71r3r8C3e858bXtsmnwNbvBSXmSc0SbGWs1o6r4qvJI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733240475; c=relaxed/simple;
-	bh=twepPB1QblaXbe4yUjs6IG+Iq36S7ZH6bZOFZEK5Gbs=;
+	s=arc-20240116; t=1733240478; c=relaxed/simple;
+	bh=8ZYc0NxV8EYV51Gbwk1Ns4Ps/9SdUxDfmmoUCZXJoFc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tMs0cPTwsQyg/5BjYKmuF0v39MjLnzTiDd+9rclN43JCkSOXYdPzCymDoQS41UYRCOhM1+zj09k9NMrhGuThthIxs/4Y5MPBzYBXY4yML96qN79+dVEvG2QKxQEvQEicJ4TbQxogdNARoKh9GRaiWC2OFsFdl35kM400wMoB/Ck=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UA3LKQwM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aei9XDSsUrGhxsibSvXFltOHV2FOewyJJq+uq3gXztsjjoiUAsGLFsznj7glqMSfcdeiHpIP3waoSXD1V4N7YLmJetT6LEiarNP1bUNo3/btfNoDlmIDDSylNPOhb3oCNVJDWhRkM6SOHgwrLdxhIKKnl4Sk2tKf625jGH5XJx8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K8bbpb+e; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UA3LKQwM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C9CFC4CECF;
-	Tue,  3 Dec 2024 15:41:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K8bbpb+e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B781FC4CECF;
+	Tue,  3 Dec 2024 15:41:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733240474;
-	bh=twepPB1QblaXbe4yUjs6IG+Iq36S7ZH6bZOFZEK5Gbs=;
+	s=korg; t=1733240478;
+	bh=8ZYc0NxV8EYV51Gbwk1Ns4Ps/9SdUxDfmmoUCZXJoFc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UA3LKQwMM8vEngBEycS6/JkD+29irQQVo1geG34ifjA7WSJ76MvgdgUc2L7AICcrn
-	 weKEK8eV2eKBBu6Ho3UKHP2M3ZoWxFaR/bkrlMe2BqHziw35tJcbUzipPh3BN8ycMV
-	 OhUAf3IwEYuNEFgLPeTJaQMsJU6D+O6wOyCJ4+Iw=
+	b=K8bbpb+ehnEvUmPH/mC8mL9xJ0Sx4J8vpifsCsBMNdHpi6CYzBtesAMRoYYl5DllG
+	 ujTXiSkHIwLbAqCOCKB4+2o4ycEW9vjcfyNoCyj5yZCbRdXT/Ie5MKj4u0lJbC3A/R
+	 Qub0w5lrXFcWrVQWAJr/zd9m5cjQ1PWt6ygVLP4w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Anurag Dutta <a-dutta@ti.com>,
 	Aniket Limaye <a-limaye@ti.com>,
-	Jared McArthur <j-mcarthur@ti.com>,
-	Vaishnav Achath <vaishnav.a@ti.com>,
 	Vignesh Raghavendra <vigneshr@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 147/826] arm64: dts: ti: k3-j7200: Fix register map for main domain pmx
-Date: Tue,  3 Dec 2024 15:37:54 +0100
-Message-ID: <20241203144749.480732590@linuxfoundation.org>
+Subject: [PATCH 6.12 148/826] arm64: dts: ti: k3-j7200: Fix clock ids for MCSPI instances
+Date: Tue,  3 Dec 2024 15:37:55 +0100
+Message-ID: <20241203144749.519620318@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -53,98 +52,137 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jared McArthur <j-mcarthur@ti.com>
+From: Anurag Dutta <a-dutta@ti.com>
 
-[ Upstream commit b7af8b4acb3e08c710cd48f098ce8cd07cf43a1e ]
+[ Upstream commit 3a47e381670f130870caef6e1155ac531b17b032 ]
 
-Commit 0d0a0b441346 ("arm64: dts: ti: k3-j7200: fix main pinmux
-range") split the main_pmx0 into two nodes: main_pmx0 and main_pmx1
-due to a non-addressable region, but incorrectly represented the
-ranges. As a result, the memory map for the pinctrl is incorrect. Fix
-this by introducing the correct ranges.
+The clock IDs for multiple MCSPI instances across wakeup as
+well as main domain in J7200 are incorrect when compared with
+documentation [1]. This results in kernel crashes when the said
+instances are enabled. Fix the clock ids to their appropriate
+values.
 
-The ranges are taken from the J7200 TRM [1] (Table 5-695. CTRL_MMR0
-Registers).
+[1]https://software-dl.ti.com/tisci/esd/latest/5_soc_doc/j7200/clocks.html
 
-Padconfig starting addresses and ranges:
--  0 to 66: 0x11c000, 0x10c
--       68: 0x11c110, 0x004
-- 71 to 73: 0x11c11c, 0x00c
-- 89 to 90: 0x11c164, 0x008
+Fixes: 8f6c475f4ca7 ("arm64: dts: ti: k3-j7200: Add MCSPI nodes")
 
-The datasheet [2] doesn't contain PADCONFIG63 (Table 6-106. Pin
-Multiplexing), but the pin is necessary for enabling the MMC1 CLKLP
-pad loopback and should be included in the pinmux register map.
-
-Due to the change in pinmux node addresses, change the pinmux node for
-the USB0_DRVVBUS pin to main_pmx2. The offset has not changed since the
-new main_pmx2 node has the same base address and range as the original
-main_pmx1 node. All other pinmuxing done within J7200 dts or dtso files
-only uses main_pmx0 which has not changed.
-
-[1] https://www.ti.com/lit/pdf/spruiu1
-[2] https://www.ti.com/lit/gpn/dra821u
-
-Fixes: 0d0a0b441346 ("arm64: dts: ti: k3-j7200: fix main pinmux range")
-Signed-off-by: Aniket Limaye <a-limaye@ti.com>
-Signed-off-by: Jared McArthur <j-mcarthur@ti.com>
-Reviewed-by: Vaishnav Achath <vaishnav.a@ti.com>
-Link: https://lore.kernel.org/r/20240926102533.398139-1-a-limaye@ti.com
+Signed-off-by: Anurag Dutta <a-dutta@ti.com>
+Reviewed-by: Aniket Limaye <a-limaye@ti.com>
+Link: https://lore.kernel.org/r/20241023104532.3438851-2-a-dutta@ti.com
 Signed-off-by: Vignesh Raghavendra <vigneshr@ti.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../dts/ti/k3-j7200-common-proc-board.dts     |  2 +-
- arch/arm64/boot/dts/ti/k3-j7200-main.dtsi     | 22 +++++++++++++++++--
- 2 files changed, 21 insertions(+), 3 deletions(-)
+ arch/arm64/boot/dts/ti/k3-j7200-main.dtsi       | 16 ++++++++--------
+ arch/arm64/boot/dts/ti/k3-j7200-mcu-wakeup.dtsi |  6 +++---
+ 2 files changed, 11 insertions(+), 11 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/ti/k3-j7200-common-proc-board.dts b/arch/arm64/boot/dts/ti/k3-j7200-common-proc-board.dts
-index 6593c5da82c06..df39f2b1ff6ba 100644
---- a/arch/arm64/boot/dts/ti/k3-j7200-common-proc-board.dts
-+++ b/arch/arm64/boot/dts/ti/k3-j7200-common-proc-board.dts
-@@ -254,7 +254,7 @@ J721E_IOPAD(0x38, PIN_OUTPUT, 0) /* (Y21) MCAN3_TX */
- 	};
- };
- 
--&main_pmx1 {
-+&main_pmx2 {
- 	main_usbss0_pins_default: main-usbss0-default-pins {
- 		pinctrl-single,pins = <
- 			J721E_IOPAD(0x04, PIN_OUTPUT, 0) /* (T4) USB0_DRVVBUS */
 diff --git a/arch/arm64/boot/dts/ti/k3-j7200-main.dtsi b/arch/arm64/boot/dts/ti/k3-j7200-main.dtsi
-index 9386bf3ef9f68..41adfa64418d0 100644
+index 41adfa64418d0..1d11da926a871 100644
 --- a/arch/arm64/boot/dts/ti/k3-j7200-main.dtsi
 +++ b/arch/arm64/boot/dts/ti/k3-j7200-main.dtsi
-@@ -426,10 +426,28 @@ main_pmx0: pinctrl@11c000 {
- 		pinctrl-single,function-mask = <0xffffffff>;
+@@ -1163,7 +1163,7 @@ main_spi0: spi@2100000 {
+ 		#address-cells = <1>;
+ 		#size-cells = <0>;
+ 		power-domains = <&k3_pds 266 TI_SCI_PD_EXCLUSIVE>;
+-		clocks = <&k3_clks 266 1>;
++		clocks = <&k3_clks 266 4>;
+ 		status = "disabled";
  	};
  
--	main_pmx1: pinctrl@11c11c {
-+	main_pmx1: pinctrl@11c110 {
- 		compatible = "ti,j7200-padconf", "pinctrl-single";
- 		/* Proxy 0 addressing */
--		reg = <0x00 0x11c11c 0x00 0xc>;
-+		reg = <0x00 0x11c110 0x00 0x004>;
-+		#pinctrl-cells = <1>;
-+		pinctrl-single,register-width = <32>;
-+		pinctrl-single,function-mask = <0xffffffff>;
-+	};
-+
-+	main_pmx2: pinctrl@11c11c {
-+		compatible = "ti,j7200-padconf", "pinctrl-single";
-+		/* Proxy 0 addressing */
-+		reg = <0x00 0x11c11c 0x00 0x00c>;
-+		#pinctrl-cells = <1>;
-+		pinctrl-single,register-width = <32>;
-+		pinctrl-single,function-mask = <0xffffffff>;
-+	};
-+
-+	main_pmx3: pinctrl@11c164 {
-+		compatible = "ti,j7200-padconf", "pinctrl-single";
-+		/* Proxy 0 addressing */
-+		reg = <0x00 0x11c164 0x00 0x008>;
- 		#pinctrl-cells = <1>;
- 		pinctrl-single,register-width = <32>;
- 		pinctrl-single,function-mask = <0xffffffff>;
+@@ -1174,7 +1174,7 @@ main_spi1: spi@2110000 {
+ 		#address-cells = <1>;
+ 		#size-cells = <0>;
+ 		power-domains = <&k3_pds 267 TI_SCI_PD_EXCLUSIVE>;
+-		clocks = <&k3_clks 267 1>;
++		clocks = <&k3_clks 267 4>;
+ 		status = "disabled";
+ 	};
+ 
+@@ -1185,7 +1185,7 @@ main_spi2: spi@2120000 {
+ 		#address-cells = <1>;
+ 		#size-cells = <0>;
+ 		power-domains = <&k3_pds 268 TI_SCI_PD_EXCLUSIVE>;
+-		clocks = <&k3_clks 268 1>;
++		clocks = <&k3_clks 268 4>;
+ 		status = "disabled";
+ 	};
+ 
+@@ -1196,7 +1196,7 @@ main_spi3: spi@2130000 {
+ 		#address-cells = <1>;
+ 		#size-cells = <0>;
+ 		power-domains = <&k3_pds 269 TI_SCI_PD_EXCLUSIVE>;
+-		clocks = <&k3_clks 269 1>;
++		clocks = <&k3_clks 269 4>;
+ 		status = "disabled";
+ 	};
+ 
+@@ -1207,7 +1207,7 @@ main_spi4: spi@2140000 {
+ 		#address-cells = <1>;
+ 		#size-cells = <0>;
+ 		power-domains = <&k3_pds 270 TI_SCI_PD_EXCLUSIVE>;
+-		clocks = <&k3_clks 270 1>;
++		clocks = <&k3_clks 270 2>;
+ 		status = "disabled";
+ 	};
+ 
+@@ -1218,7 +1218,7 @@ main_spi5: spi@2150000 {
+ 		#address-cells = <1>;
+ 		#size-cells = <0>;
+ 		power-domains = <&k3_pds 271 TI_SCI_PD_EXCLUSIVE>;
+-		clocks = <&k3_clks 271 1>;
++		clocks = <&k3_clks 271 4>;
+ 		status = "disabled";
+ 	};
+ 
+@@ -1229,7 +1229,7 @@ main_spi6: spi@2160000 {
+ 		#address-cells = <1>;
+ 		#size-cells = <0>;
+ 		power-domains = <&k3_pds 272 TI_SCI_PD_EXCLUSIVE>;
+-		clocks = <&k3_clks 272 1>;
++		clocks = <&k3_clks 272 4>;
+ 		status = "disabled";
+ 	};
+ 
+@@ -1240,7 +1240,7 @@ main_spi7: spi@2170000 {
+ 		#address-cells = <1>;
+ 		#size-cells = <0>;
+ 		power-domains = <&k3_pds 273 TI_SCI_PD_EXCLUSIVE>;
+-		clocks = <&k3_clks 273 1>;
++		clocks = <&k3_clks 273 4>;
+ 		status = "disabled";
+ 	};
+ 
+diff --git a/arch/arm64/boot/dts/ti/k3-j7200-mcu-wakeup.dtsi b/arch/arm64/boot/dts/ti/k3-j7200-mcu-wakeup.dtsi
+index 5097d192c2b20..b18b2f2deb969 100644
+--- a/arch/arm64/boot/dts/ti/k3-j7200-mcu-wakeup.dtsi
++++ b/arch/arm64/boot/dts/ti/k3-j7200-mcu-wakeup.dtsi
+@@ -494,7 +494,7 @@ mcu_spi0: spi@40300000 {
+ 		#address-cells = <1>;
+ 		#size-cells = <0>;
+ 		power-domains = <&k3_pds 274 TI_SCI_PD_EXCLUSIVE>;
+-		clocks = <&k3_clks 274 0>;
++		clocks = <&k3_clks 274 4>;
+ 		status = "disabled";
+ 	};
+ 
+@@ -505,7 +505,7 @@ mcu_spi1: spi@40310000 {
+ 		#address-cells = <1>;
+ 		#size-cells = <0>;
+ 		power-domains = <&k3_pds 275 TI_SCI_PD_EXCLUSIVE>;
+-		clocks = <&k3_clks 275 0>;
++		clocks = <&k3_clks 275 4>;
+ 		status = "disabled";
+ 	};
+ 
+@@ -516,7 +516,7 @@ mcu_spi2: spi@40320000 {
+ 		#address-cells = <1>;
+ 		#size-cells = <0>;
+ 		power-domains = <&k3_pds 276 TI_SCI_PD_EXCLUSIVE>;
+-		clocks = <&k3_clks 276 0>;
++		clocks = <&k3_clks 276 2>;
+ 		status = "disabled";
+ 	};
+ 
 -- 
 2.43.0
 
