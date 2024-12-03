@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEBAE23CE;
-	Tue,  3 Dec 2024 16:06:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46E191F76D9;
+	Tue,  3 Dec 2024 16:06:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733241984; cv=none; b=k0GfjR0MK9/QmTU5Ta2KixD0QAawdFbx7AKoYbCepBtfeuDG5HWl6sMv0acW1FomSnHPyXIykHCdOsrby2HBG/goW5r//E+7Fafw81ZHh55TFQk5Xe2AIFC22utGapt6bNMjeQEyjJ0tAc/VJOgOwkCMiROiBdwh2L5yMgxVKd8=
+	t=1733241987; cv=none; b=JNV5jGm7ZXQYn6lxeZ0TzjLBGzwH19l8vS6Tj4EbOynkbzKvVmhfibwWZ5jn7XQw4rX+nSS2gvEYgq04aUdSc3UANUewTrCSrboZLnku1m/+yDusQ9ZJFm90T5NrGUdPJDdvEbmED6yUQWt7e32wiyAYJWenL75d+CBFMrAHbsU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733241984; c=relaxed/simple;
-	bh=ymis7nneASo/qsy7PE5dovTRBWDkNrYglt1/HQsi/pw=;
+	s=arc-20240116; t=1733241987; c=relaxed/simple;
+	bh=e6hwQfJD/A8TDVxgSBW39uTnhqnilvyEA1azgXctm3U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ofTq7rN64aznVz04j69jMpHd/ycaSfjpOAfAPiyBBcy4ozbT6DWAD3Th6OCmPA1tt7P1WMu3sQuf9FpUVO5HiGhZJ4scUhw2+E3rnGbLMjFvXLCbUXHAzFOR16o24fDuckjC25b9cZRw6fOBWL0lsbtB4UYjWsNMGYPIKPZL0OE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jYBp9Uve; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nv/TIORsIghyODzs95ePtFsUNhXgAEb54kwsWYwYJMT2X80InkmBUrovKWziT/GItoZP7G7vZfGT/1yMKgAMi1IlVwqswjYXDXJrjsAeFV9tyk4mtiHcRoxGJruaXarVoBNtD3SyCejh4OQzDSaeKjzT2nrq1oANODvciawPufw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YspDb20d; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jYBp9Uve"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5ADFFC4CED6;
-	Tue,  3 Dec 2024 16:06:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YspDb20d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D39CC4CEE7;
+	Tue,  3 Dec 2024 16:06:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733241983;
-	bh=ymis7nneASo/qsy7PE5dovTRBWDkNrYglt1/HQsi/pw=;
+	s=korg; t=1733241987;
+	bh=e6hwQfJD/A8TDVxgSBW39uTnhqnilvyEA1azgXctm3U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jYBp9UveRtYrTLkjKn7QeQbUhTr2xhFg9UIdDbTFtdRjZAZ92TU46SPqEdPSGN2wq
-	 tlWPmtPxyAVNgTNXaqwvOFQUp5NX+hRrkSb1egAXdYnaN6Q+2LKawi5oj6jYt6nLa8
-	 /O4QZAv5yRRL54khFgAYbP8nqUBioV8EvjJrqfj0=
+	b=YspDb20dp8WxQ8YSuvQiWvZUmwph+Bgfmv25IvtiDCO2zEzgPX5e6jprXIMLK8BmT
+	 z1in+NkxJEBsWNLGE88kCey0K1SgnVVCnWhS385nSjE5pFajlflVnsg0Fhntl00wWw
+	 EJqireKWtRxXuBKrqdJ8w8FUZP/Kw1wqlhOGfYkI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hariprasad Kelam <hkelam@marvell.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	John Fastabend <john.fastabend@gmail.com>,
+	Tiezhu Yang <yangtiezhu@loongson.cn>,
+	Huacai Chen <chenhuacai@loongson.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 573/826] octeontx2-af: RPM: fix stale FCFEC counters
-Date: Tue,  3 Dec 2024 15:45:00 +0100
-Message-ID: <20241203144806.103431522@linuxfoundation.org>
+Subject: [PATCH 6.12 547/826] LoongArch: BPF: Sign-extend return values
+Date: Tue,  3 Dec 2024 15:44:34 +0100
+Message-ID: <20241203144805.088300048@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -51,88 +52,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hariprasad Kelam <hkelam@marvell.com>
+From: Tiezhu Yang <yangtiezhu@loongson.cn>
 
-[ Upstream commit 6fc2164108462b913a1290fa2c44054c70b060ef ]
+[ Upstream commit 73c359d1d356cf10236ccd358bd55edab33e9424 ]
 
-The corrected words register(FCFECX_VL0_CCW_LO)/Uncorrected words
-register (FCFECX_VL0_NCCW_LO) of FCFEC counter has different LMAC
-offset which needs to be accessed differently.
+(1) Description of Problem:
 
-Fixes: 84ad3642115d ("octeontx2-af: Add FEC stats for RPM/RPM_USX block")
-Signed-off-by: Hariprasad Kelam <hkelam@marvell.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+When testing BPF JIT with the latest compiler toolchains on LoongArch,
+there exist some strange failed test cases, dmesg shows something like
+this:
+
+  # dmesg -t | grep FAIL | head -1
+  ... ret -3 != -3 (0xfffffffd != 0xfffffffd)FAIL ...
+
+(2) Steps to Reproduce:
+
+  # echo 1 > /proc/sys/net/core/bpf_jit_enable
+  # modprobe test_bpf
+
+(3) Additional Info:
+
+There are no failed test cases compiled with the lower version of GCC
+such as 13.3.0, while the problems only appear with higher version of
+GCC such as 14.2.0.
+
+This is because the problems were hidden by the lower version of GCC due
+to redundant sign extension instructions generated by compiler, but with
+optimization of higher version of GCC, the sign extension instructions
+have been removed.
+
+(4) Root Cause Analysis:
+
+The LoongArch architecture does not expose sub-registers, and hold all
+32-bit values in a sign-extended format. While BPF, on the other hand,
+exposes sub-registers, and use zero-extension (similar to arm64/x86).
+
+This has led to some subtle bugs, where a BPF JITted program has not
+sign-extended the a0 register (return value in LoongArch land), passed
+the return value up the kernel, for example:
+
+  | int from_bpf(void);
+  |
+  | long foo(void)
+  | {
+  |    return from_bpf();
+  | }
+
+Here, a0 would be 0xffffffff instead of the expected 0xffffffffffffffff.
+
+Internally, the LoongArch JIT uses a5 as a dedicated register for BPF
+return values. That is to say, the LoongArch BPF uses a5 for BPF return
+values, which are zero-extended, whereas the LoongArch ABI uses a0 which
+is sign-extended.
+
+(5) Final Solution:
+
+Keep a5 zero-extended, but explicitly sign-extend a0 (which is used
+outside BPF land). Because libbpf currently defines the return value
+of an ebpf program as a 32-bit unsigned integer, just use addi.w to
+extend bit 31 into bits 63 through 32 of a5 to a0. This is similar to
+commit 2f1b0d3d7331 ("riscv, bpf: Sign-extend return values").
+
+Fixes: 5dc615520c4d ("LoongArch: Add BPF JIT support")
+Acked-by: John Fastabend <john.fastabend@gmail.com>
+Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/marvell/octeontx2/af/rpm.c   | 24 +++++++++----------
- .../net/ethernet/marvell/octeontx2/af/rpm.h   | 10 ++++----
- 2 files changed, 17 insertions(+), 17 deletions(-)
+ arch/loongarch/net/bpf_jit.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rpm.c b/drivers/net/ethernet/marvell/octeontx2/af/rpm.c
-index 70629f94c27ef..e97fcc51d7f24 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/rpm.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/rpm.c
-@@ -704,27 +704,27 @@ int rpm_get_fec_stats(void *rpmd, int lmac_id, struct cgx_fec_stats_rsp *rsp)
- 	 */
- 	mutex_lock(&rpm->lock);
- 	if (rpm->lmac_idmap[lmac_id]->link_info.fec == OTX2_FEC_BASER) {
--		val_lo = rpm_read(rpm, lmac_id, RPMX_MTI_FCFECX_VL0_CCW_LO);
--		val_hi = rpm_read(rpm, lmac_id, RPMX_MTI_FCFECX_CW_HI);
-+		val_lo = rpm_read(rpm, 0, RPMX_MTI_FCFECX_VL0_CCW_LO(lmac_id));
-+		val_hi = rpm_read(rpm, 0, RPMX_MTI_FCFECX_CW_HI(lmac_id));
- 		rsp->fec_corr_blks = (val_hi << 16 | val_lo);
+diff --git a/arch/loongarch/net/bpf_jit.c b/arch/loongarch/net/bpf_jit.c
+index 7dbefd4ba2107..dd350cba1252f 100644
+--- a/arch/loongarch/net/bpf_jit.c
++++ b/arch/loongarch/net/bpf_jit.c
+@@ -179,7 +179,7 @@ static void __build_epilogue(struct jit_ctx *ctx, bool is_tail_call)
  
--		val_lo = rpm_read(rpm, lmac_id, RPMX_MTI_FCFECX_VL0_NCCW_LO);
--		val_hi = rpm_read(rpm, lmac_id, RPMX_MTI_FCFECX_CW_HI);
-+		val_lo = rpm_read(rpm, 0, RPMX_MTI_FCFECX_VL0_NCCW_LO(lmac_id));
-+		val_hi = rpm_read(rpm, 0, RPMX_MTI_FCFECX_CW_HI(lmac_id));
- 		rsp->fec_uncorr_blks = (val_hi << 16 | val_lo);
- 
- 		/* 50G uses 2 Physical serdes lines */
- 		if (rpm->lmac_idmap[lmac_id]->link_info.lmac_type_id ==
- 		    LMAC_MODE_50G_R) {
--			val_lo = rpm_read(rpm, lmac_id,
--					  RPMX_MTI_FCFECX_VL1_CCW_LO);
--			val_hi = rpm_read(rpm, lmac_id,
--					  RPMX_MTI_FCFECX_CW_HI);
-+			val_lo = rpm_read(rpm, 0,
-+					  RPMX_MTI_FCFECX_VL1_CCW_LO(lmac_id));
-+			val_hi = rpm_read(rpm, 0,
-+					  RPMX_MTI_FCFECX_CW_HI(lmac_id));
- 			rsp->fec_corr_blks += (val_hi << 16 | val_lo);
- 
--			val_lo = rpm_read(rpm, lmac_id,
--					  RPMX_MTI_FCFECX_VL1_NCCW_LO);
--			val_hi = rpm_read(rpm, lmac_id,
--					  RPMX_MTI_FCFECX_CW_HI);
-+			val_lo = rpm_read(rpm, 0,
-+					  RPMX_MTI_FCFECX_VL1_NCCW_LO(lmac_id));
-+			val_hi = rpm_read(rpm, 0,
-+					  RPMX_MTI_FCFECX_CW_HI(lmac_id));
- 			rsp->fec_uncorr_blks += (val_hi << 16 | val_lo);
- 		}
+ 	if (!is_tail_call) {
+ 		/* Set return value */
+-		move_reg(ctx, LOONGARCH_GPR_A0, regmap[BPF_REG_0]);
++		emit_insn(ctx, addiw, LOONGARCH_GPR_A0, regmap[BPF_REG_0], 0);
+ 		/* Return to the caller */
+ 		emit_insn(ctx, jirl, LOONGARCH_GPR_RA, LOONGARCH_GPR_ZERO, 0);
  	} else {
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rpm.h b/drivers/net/ethernet/marvell/octeontx2/af/rpm.h
-index a5773fbacaff8..5194fec4c3b8e 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/rpm.h
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/rpm.h
-@@ -91,11 +91,11 @@
- #define RPMX_MTI_RSFEC_STAT_FAST_DATA_HI_CDC            0x40000
- #define RPMX_MTI_RSFEC_STAT_COUNTER_CAPTURE_2		0x40050
- #define RPMX_MTI_RSFEC_STAT_COUNTER_CAPTURE_3		0x40058
--#define RPMX_MTI_FCFECX_VL0_CCW_LO			0x38618
--#define RPMX_MTI_FCFECX_VL0_NCCW_LO			0x38620
--#define RPMX_MTI_FCFECX_VL1_CCW_LO			0x38628
--#define RPMX_MTI_FCFECX_VL1_NCCW_LO			0x38630
--#define RPMX_MTI_FCFECX_CW_HI				0x38638
-+#define RPMX_MTI_FCFECX_VL0_CCW_LO(a)			(0x38618 + ((a) * 0x40))
-+#define RPMX_MTI_FCFECX_VL0_NCCW_LO(a)			(0x38620 + ((a) * 0x40))
-+#define RPMX_MTI_FCFECX_VL1_CCW_LO(a)			(0x38628 + ((a) * 0x40))
-+#define RPMX_MTI_FCFECX_VL1_NCCW_LO(a)			(0x38630 + ((a) * 0x40))
-+#define RPMX_MTI_FCFECX_CW_HI(a)			(0x38638 + ((a) * 0x40))
- 
- /* CN10KB CSR Declaration */
- #define  RPM2_CMRX_SW_INT				0x1b0
 -- 
 2.43.0
 
