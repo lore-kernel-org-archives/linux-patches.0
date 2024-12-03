@@ -1,36 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C66F1F471B;
-	Tue,  3 Dec 2024 14:40:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5B3A1F471B;
+	Tue,  3 Dec 2024 14:40:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733236807; cv=none; b=e5MQNgD46QSZ+U5cM10LbZGKOWluSQskrbnq9GeVEl8NBMK8WBrx3wEDr3vMOSvRudcK5LP/iBI91j4qqNr86ReXN4SQwvRDVv6G8s9IveMkRuoDAVbShO6PuSP7OV0OBxhliEzsCMwE7uvJYKZJFo5roVRLYUhdny52k8Rfd+o=
+	t=1733236810; cv=none; b=qP9EWi3A+7Ih4IZpwipH9WCLmU+/0hp7yPHkfVqpyHurX2TJt9OPdNmp68vT1BZaUIi4oKJ3XKv+8CLOu8eNn53vi/0HnY0vhmS2KM6ygdHUK2qNB2p+/ohmfHxvY4+LGN70XC9SlbvzGR32owxN6LxGU488Ol3cNlRO3Ze+0pw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733236807; c=relaxed/simple;
-	bh=4CyB6gAQzdcoU6Zt77AeRSPY9vYItUE/NWWsBMZl8NI=;
+	s=arc-20240116; t=1733236810; c=relaxed/simple;
+	bh=EJiUNOd1hHL4BL33u2Xr33hc06Fby4HIRxEyHIu2fSc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mTXxUXef9h6mlwGk4KuYRoZ8Un72r38xtNc2tVt7hAjeyH5SucZD2xmt7lNXGbBHaKftp3ys3C4GcBv0kK0Bk78ruFk4VGCi5D0WvPe9ZRcErAMJ6+GgGjy93HgfO1Mz8SK9sbsl3fw8KrCySvKGfVZ5PfN11xTVN3K9cln+95A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uaUqXivM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XJmfNkVO5lXBF2ZtiHEOuZHw0jHXVB5UyM0RMZ7g/f36PYT68HmLHC0xxmyClnm3CKIOe+9Xvt8WybeldIRC3N2qfWnVtsZCTmWFIuf0oXgm81Ok7nefGgdR6EwVf4SbaDtjtfJy9YTXWO9Rtd8JQuGMS/iVRQ/sS+v7/Y1mvo4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cA9qTgNE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uaUqXivM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3F5BC4CECF;
-	Tue,  3 Dec 2024 14:40:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cA9qTgNE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C3C9C4CECF;
+	Tue,  3 Dec 2024 14:40:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733236807;
-	bh=4CyB6gAQzdcoU6Zt77AeRSPY9vYItUE/NWWsBMZl8NI=;
+	s=korg; t=1733236810;
+	bh=EJiUNOd1hHL4BL33u2Xr33hc06Fby4HIRxEyHIu2fSc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uaUqXivMPTJaRlF/l5J87RkSVyrp3Vko6U5iUaNFgppoyy3/BrlIUeo/Pmavpzusk
-	 7nqlYOY0+1YqKKymASq8TVKOqpTDrIpHJQX+9Gxv/CnuZZeXwQ0tVKBV1dcMFxkdTt
-	 yJh18cu64Vj+eT7IsRy0O510nflZ/km8PFmKPW4s=
+	b=cA9qTgNE7SOvOS3wCyGIdTagrPKQLL6H10V8y2T5IjKnZ5tivVV7sjwchNq1wfjec
+	 /AJbjstYTC2fqazPibhPE5IiCKawIBTgLpUIkM98FnBe/RdGpO/Re/vbRlKa/v2kw5
+	 9Kisvtas7G21l0VgM67FkCeZH8Ou89xssTn70SR0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Subject: [PATCH 4.19 123/138] usb: dwc3: gadget: Fix checking for number of TRBs left
-Date: Tue,  3 Dec 2024 15:32:32 +0100
-Message-ID: <20241203141928.273534198@linuxfoundation.org>
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Andy Shevchenko <andy@kernel.org>,
+	"James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>,
+	Kees Cook <kees@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 4.19 124/138] lib: string_helpers: silence snprintf() output truncation warning
+Date: Tue,  3 Dec 2024 15:32:33 +0100
+Message-ID: <20241203141928.311562580@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203141923.524658091@linuxfoundation.org>
 References: <20241203141923.524658091@linuxfoundation.org>
@@ -49,53 +53,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-commit 02a6982b0ccfcdc39e20016f5fc9a1b7826a6ee7 upstream.
+commit a508ef4b1dcc82227edc594ffae583874dd425d7 upstream.
 
-The check whether the TRB ring is full or empty in dwc3_calc_trbs_left()
-is insufficient. It assumes there are active TRBs if there's any request
-in the started_list. However, that's not the case for requests with a
-large SG list.
+The output of ".%03u" with the unsigned int in range [0, 4294966295] may
+get truncated if the target buffer is not 12 bytes. This can't really
+happen here as the 'remainder' variable cannot exceed 999 but the
+compiler doesn't know it. To make it happy just increase the buffer to
+where the warning goes away.
 
-That is, if we have a single usb request that requires more TRBs than
-the total TRBs in the TRB ring, the queued TRBs will be available when
-all the TRBs in the ring are completed. But the request is only
-partially completed and remains in the started_list. With the current
-logic, the TRB ring is empty, but dwc3_calc_trbs_left() returns 0.
-
-Fix this by additionally checking for the request->num_trbs for active
-TRB count.
-
+Fixes: 3c9f3681d0b4 ("[SCSI] lib: add generic helper to print sizes rounded to the correct SI range")
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Reviewed-by: Andy Shevchenko <andy@kernel.org>
+Cc: James E.J. Bottomley <James.Bottomley@HansenPartnership.com>
+Cc: Kees Cook <kees@kernel.org>
 Cc: stable@vger.kernel.org
-Fixes: 51f1954ad853 ("usb: dwc3: gadget: Fix dwc3_calc_trbs_left()")
-Signed-off-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Link: https://lore.kernel.org/r/708dc62b56b77da1f704cc2ae9b6ddb1f2dbef1f.1731545781.git.Thinh.Nguyen@synopsys.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Link: https://lore.kernel.org/r/20241101205453.9353-1-brgl@bgdev.pl
+Signed-off-by: Kees Cook <kees@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc3/gadget.c |    9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ lib/string_helpers.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/dwc3/gadget.c
-+++ b/drivers/usb/dwc3/gadget.c
-@@ -903,11 +903,14 @@ static u32 dwc3_calc_trbs_left(struct dw
- 	 * pending to be processed by the driver.
- 	 */
- 	if (dep->trb_enqueue == dep->trb_dequeue) {
-+		struct dwc3_request *req;
-+
- 		/*
--		 * If there is any request remained in the started_list at
--		 * this point, that means there is no TRB available.
-+		 * If there is any request remained in the started_list with
-+		 * active TRBs at this point, then there is no TRB available.
- 		 */
--		if (!list_empty(&dep->started_list))
-+		req = next_request(&dep->started_list);
-+		if (req && req->num_trbs)
- 			return 0;
+--- a/lib/string_helpers.c
++++ b/lib/string_helpers.c
+@@ -50,7 +50,7 @@ void string_get_size(u64 size, u64 blk_s
+ 	static const unsigned int rounding[] = { 500, 50, 5 };
+ 	int i = 0, j;
+ 	u32 remainder = 0, sf_cap;
+-	char tmp[8];
++	char tmp[12];
+ 	const char *unit;
  
- 		return DWC3_TRB_NUM - 1;
+ 	tmp[0] = '\0';
 
 
