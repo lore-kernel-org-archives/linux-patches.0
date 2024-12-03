@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01B291FECA7;
-	Tue,  3 Dec 2024 15:32:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB4421F75A4;
+	Tue,  3 Dec 2024 15:32:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733239975; cv=none; b=gZ4r5b+kLbcBzDBQNHtJbx97wIMDmleBPFCMyE0cNWKw+45W+AdUU44rKLpyqCrF7am0T/ERQwgsKsw6VVjVU+aySmrQXmtRJZjDxse/s73Kdo2qRDtuMjCnXq+6JJeTM/IfFCSGo2y4+tQktGb7eWnuBLA6MXugSHdpvIRcp2Y=
+	t=1733239978; cv=none; b=GsVL1labn4aNSHhcmw3gFCxrP4MDCMo+Y0+vIqukSlj3qB9vOMr+yi05heiwyrlfJ3P9uQt6y4R6H33rrVRVrhq8ZK5cBDPZKdah4Z673m58dUWaw7DxS5dGsYglrOmub3NrzYmFiUq+CL9B56LOS2oZ8Hlc61E0RabAeMXtkRw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733239975; c=relaxed/simple;
-	bh=0vJWsU3bOfSmqX384HK+XEmH9vYsEtZh2Pwz6k6NDes=;
+	s=arc-20240116; t=1733239978; c=relaxed/simple;
+	bh=8eDXQpC4ePyaAQ63NFtVRDTBgLw2F+zmxOX3zojT7nE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pjnS/X36m0Co9msPiS16xzxK76G00qcETRVxkhs8jHgNCZ0I5DDQDFCI1+MJ8SGcsL756lnuAWl0HFczChh3NOOFQbMBKjFXxzpMFGagTO//v58T0gZFqVN7t5ukfuvDSDufmGFMZd5G/jaOF3H9ZjKwB8nkZbtKMzYtUAuUwBA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sKX3V1E/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Mj0clsDzzRU3Sf+ZXgg/WDxoxpmJ3BWB4vShH9coARoaBIp1URlZOViXASndnoWGnywidV0mD13EXuCFrIJelRR6nsUn4ZjfFGsFcuGBQ0OdDqB4kmqiAwvQNaIbEZo23k2MDaJHKe9KoPjYmLjTe+zpOWYLZAzlq5RpSKUe6NE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0ZAXSG4l; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sKX3V1E/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79170C4CECF;
-	Tue,  3 Dec 2024 15:32:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0ZAXSG4l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5ED76C4CED8;
+	Tue,  3 Dec 2024 15:32:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733239974;
-	bh=0vJWsU3bOfSmqX384HK+XEmH9vYsEtZh2Pwz6k6NDes=;
+	s=korg; t=1733239977;
+	bh=8eDXQpC4ePyaAQ63NFtVRDTBgLw2F+zmxOX3zojT7nE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sKX3V1E/tUHiaWu32N/aJvp6VmbYM/VSxGPozMa/REkS7tZlbY/85yKnB94ztlejX
-	 D7SMNvz0bZfSTJ9+bkpSIib0jqiZ60Hy9EfO2ZnHlbXQvN+MtnELJUBoBoHtDV66O2
-	 LzOQKfoJ8xaLbR/88mMV2dBGPzuIESeEF5KYGLpc=
+	b=0ZAXSG4l/mbMaXOhh+0kfne4F2RirU7vPqdw08Ud7lRbEKGASKHlRikZjCY2lMZNh
+	 4pDErY8gKD3vo6/wLJ96PFOjgZryiva2L/1ks3YaYiKTh7GZJXLn1K1hVZvItlJWK9
+	 wu5eBUAX+dTJHWfJAoGr3ZNx7ms+txxAWGz02Gz4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Matt Fleming <mfleming@cloudflare.com>,
 	Masahiro Yamada <masahiroy@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 798/817] Rename .data.once to .data..once to fix resetting WARN*_ONCE
-Date: Tue,  3 Dec 2024 15:46:10 +0100
-Message-ID: <20241203144027.161390251@linuxfoundation.org>
+Subject: [PATCH 6.11 799/817] kbuild: deb-pkg: Dont fail if modules.order is missing
+Date: Tue,  3 Dec 2024 15:46:11 +0100
+Message-ID: <20241203144027.200159861@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -50,151 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Masahiro Yamada <masahiroy@kernel.org>
+From: Matt Fleming <mfleming@cloudflare.com>
 
-[ Upstream commit dbefa1f31a91670c9e7dac9b559625336206466f ]
+[ Upstream commit bcbbf493f2fa6fa1f0832f6b5b4c80a65de242d6 ]
 
-Commit b1fca27d384e ("kernel debug: support resetting WARN*_ONCE")
-added support for clearing the state of once warnings. However,
-it is not functional when CONFIG_LD_DEAD_CODE_DATA_ELIMINATION or
-CONFIG_LTO_CLANG is enabled, because .data.once matches the
-.data.[0-9a-zA-Z_]* pattern in the DATA_MAIN macro.
+Kernels built without CONFIG_MODULES might still want to create -dbg deb
+packages but install_linux_image_dbg() assumes modules.order always
+exists. This obviously isn't true if no modules were built, so we should
+skip reading modules.order in that case.
 
-Commit cb87481ee89d ("kbuild: linker script do not match C names unless
-LD_DEAD_CODE_DATA_ELIMINATION is configured") was introduced to suppress
-the issue for the default CONFIG_LD_DEAD_CODE_DATA_ELIMINATION=n case,
-providing a minimal fix for stable backporting. We were aware this did
-not address the issue for CONFIG_LD_DEAD_CODE_DATA_ELIMINATION=y. The
-plan was to apply correct fixes and then revert cb87481ee89d. [1]
-
-Seven years have passed since then, yet the #ifdef workaround remains in
-place. Meanwhile, commit b1fca27d384e introduced the .data.once section,
-and commit dc5723b02e52 ("kbuild: add support for Clang LTO") extended
-the #ifdef.
-
-Using a ".." separator in the section name fixes the issue for
-CONFIG_LD_DEAD_CODE_DATA_ELIMINATION and CONFIG_LTO_CLANG.
-
-[1]: https://lore.kernel.org/linux-kbuild/CAK7LNASck6BfdLnESxXUeECYL26yUDm0cwRZuM4gmaWUkxjL5g@mail.gmail.com/
-
-Fixes: b1fca27d384e ("kernel debug: support resetting WARN*_ONCE")
-Fixes: dc5723b02e52 ("kbuild: add support for Clang LTO")
+Fixes: 16c36f8864e3 ("kbuild: deb-pkg: use build ID instead of debug link for dbg package")
+Signed-off-by: Matt Fleming <mfleming@cloudflare.com>
 Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/asm-generic/vmlinux.lds.h | 2 +-
- include/linux/mmdebug.h           | 6 +++---
- include/linux/once.h              | 4 ++--
- include/linux/once_lite.h         | 2 +-
- include/net/net_debug.h           | 2 +-
- mm/internal.h                     | 2 +-
- 6 files changed, 9 insertions(+), 9 deletions(-)
+ scripts/package/builddeb | 22 ++++++++++++----------
+ 1 file changed, 12 insertions(+), 10 deletions(-)
 
-diff --git a/include/asm-generic/vmlinux.lds.h b/include/asm-generic/vmlinux.lds.h
-index bee5a71f4b41e..38d710f620efc 100644
---- a/include/asm-generic/vmlinux.lds.h
-+++ b/include/asm-generic/vmlinux.lds.h
-@@ -351,7 +351,7 @@
- 	*(.data..shared_aligned) /* percpu related */			\
- 	*(.data..unlikely)						\
- 	__start_once = .;						\
--	*(.data.once)							\
-+	*(.data..once)							\
- 	__end_once = .;							\
- 	STRUCT_ALIGN();							\
- 	*(__tracepoints)						\
-diff --git a/include/linux/mmdebug.h b/include/linux/mmdebug.h
-index 39a7714605a79..d7cb1e5ecbda9 100644
---- a/include/linux/mmdebug.h
-+++ b/include/linux/mmdebug.h
-@@ -46,7 +46,7 @@ void vma_iter_dump_tree(const struct vma_iterator *vmi);
- 		}							\
- 	} while (0)
- #define VM_WARN_ON_ONCE_PAGE(cond, page)	({			\
--	static bool __section(".data.once") __warned;			\
-+	static bool __section(".data..once") __warned;			\
- 	int __ret_warn_once = !!(cond);					\
- 									\
- 	if (unlikely(__ret_warn_once && !__warned)) {			\
-@@ -66,7 +66,7 @@ void vma_iter_dump_tree(const struct vma_iterator *vmi);
- 	unlikely(__ret_warn);						\
- })
- #define VM_WARN_ON_ONCE_FOLIO(cond, folio)	({			\
--	static bool __section(".data.once") __warned;			\
-+	static bool __section(".data..once") __warned;			\
- 	int __ret_warn_once = !!(cond);					\
- 									\
- 	if (unlikely(__ret_warn_once && !__warned)) {			\
-@@ -77,7 +77,7 @@ void vma_iter_dump_tree(const struct vma_iterator *vmi);
- 	unlikely(__ret_warn_once);					\
- })
- #define VM_WARN_ON_ONCE_MM(cond, mm)		({			\
--	static bool __section(".data.once") __warned;			\
-+	static bool __section(".data..once") __warned;			\
- 	int __ret_warn_once = !!(cond);					\
- 									\
- 	if (unlikely(__ret_warn_once && !__warned)) {			\
-diff --git a/include/linux/once.h b/include/linux/once.h
-index bc714d414448a..30346fcdc7995 100644
---- a/include/linux/once.h
-+++ b/include/linux/once.h
-@@ -46,7 +46,7 @@ void __do_once_sleepable_done(bool *done, struct static_key_true *once_key,
- #define DO_ONCE(func, ...)						     \
- 	({								     \
- 		bool ___ret = false;					     \
--		static bool __section(".data.once") ___done = false;	     \
-+		static bool __section(".data..once") ___done = false;	     \
- 		static DEFINE_STATIC_KEY_TRUE(___once_key);		     \
- 		if (static_branch_unlikely(&___once_key)) {		     \
- 			unsigned long ___flags;				     \
-@@ -64,7 +64,7 @@ void __do_once_sleepable_done(bool *done, struct static_key_true *once_key,
- #define DO_ONCE_SLEEPABLE(func, ...)						\
- 	({									\
- 		bool ___ret = false;						\
--		static bool __section(".data.once") ___done = false;		\
-+		static bool __section(".data..once") ___done = false;		\
- 		static DEFINE_STATIC_KEY_TRUE(___once_key);			\
- 		if (static_branch_unlikely(&___once_key)) {			\
- 			___ret = __do_once_sleepable_start(&___done);		\
-diff --git a/include/linux/once_lite.h b/include/linux/once_lite.h
-index b7bce4983638f..27de7bc32a061 100644
---- a/include/linux/once_lite.h
-+++ b/include/linux/once_lite.h
-@@ -12,7 +12,7 @@
+diff --git a/scripts/package/builddeb b/scripts/package/builddeb
+index c1757db6aa8a8..718fbf99e2cea 100755
+--- a/scripts/package/builddeb
++++ b/scripts/package/builddeb
+@@ -97,16 +97,18 @@ install_linux_image_dbg () {
  
- #define __ONCE_LITE_IF(condition)					\
- 	({								\
--		static bool __section(".data.once") __already_done;	\
-+		static bool __section(".data..once") __already_done;	\
- 		bool __ret_cond = !!(condition);			\
- 		bool __ret_once = false;				\
- 									\
-diff --git a/include/net/net_debug.h b/include/net/net_debug.h
-index 1e74684cbbdbc..4a79204c8d306 100644
---- a/include/net/net_debug.h
-+++ b/include/net/net_debug.h
-@@ -27,7 +27,7 @@ void netdev_info(const struct net_device *dev, const char *format, ...);
+ 	# Parse modules.order directly because 'make modules_install' may sign,
+ 	# compress modules, and then run unneeded depmod.
+-	while read -r mod; do
+-		mod="${mod%.o}.ko"
+-		dbg="${pdir}/usr/lib/debug/lib/modules/${KERNELRELEASE}/kernel/${mod}"
+-		buildid=$("${READELF}" -n "${mod}" | sed -n 's@^.*Build ID: \(..\)\(.*\)@\1/\2@p')
+-		link="${pdir}/usr/lib/debug/.build-id/${buildid}.debug"
+-
+-		mkdir -p "${dbg%/*}" "${link%/*}"
+-		"${OBJCOPY}" --only-keep-debug "${mod}" "${dbg}"
+-		ln -sf --relative "${dbg}" "${link}"
+-	done < modules.order
++	if is_enabled CONFIG_MODULES; then
++		while read -r mod; do
++			mod="${mod%.o}.ko"
++			dbg="${pdir}/usr/lib/debug/lib/modules/${KERNELRELEASE}/kernel/${mod}"
++			buildid=$("${READELF}" -n "${mod}" | sed -n 's@^.*Build ID: \(..\)\(.*\)@\1/\2@p')
++			link="${pdir}/usr/lib/debug/.build-id/${buildid}.debug"
++
++			mkdir -p "${dbg%/*}" "${link%/*}"
++			"${OBJCOPY}" --only-keep-debug "${mod}" "${dbg}"
++			ln -sf --relative "${dbg}" "${link}"
++		done < modules.order
++	fi
  
- #define netdev_level_once(level, dev, fmt, ...)			\
- do {								\
--	static bool __section(".data.once") __print_once;	\
-+	static bool __section(".data..once") __print_once;	\
- 								\
- 	if (!__print_once) {					\
- 		__print_once = true;				\
-diff --git a/mm/internal.h b/mm/internal.h
-index 7da580dfae6c5..c791312eae764 100644
---- a/mm/internal.h
-+++ b/mm/internal.h
-@@ -42,7 +42,7 @@ struct folio_batch;
-  * when we specify __GFP_NOWARN.
-  */
- #define WARN_ON_ONCE_GFP(cond, gfp)	({				\
--	static bool __section(".data.once") __warned;			\
-+	static bool __section(".data..once") __warned;			\
- 	int __ret_warn_once = !!(cond);					\
- 									\
- 	if (unlikely(!(gfp & __GFP_NOWARN) && __ret_warn_once && !__warned)) { \
+ 	# Build debug package
+ 	# Different tools want the image in different locations
 -- 
 2.43.0
 
