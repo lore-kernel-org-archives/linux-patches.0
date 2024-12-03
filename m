@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB0A41F473A;
-	Tue,  3 Dec 2024 15:26:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3A991F7577;
+	Tue,  3 Dec 2024 15:26:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733239576; cv=none; b=X89hUsajP3iKhdKtZKg26HRw5UrdkKU9qd0802NZpPJKJDvdGA+qW3kWklJZZ3AJoQ4zGbFrJkhcsKw7s8/VGqJgF/MFMElm5GsS8qWAqoypXOaNiDfMX0ppEAdIAJOjoqzzymUmAcKk9bAilwjJm+52d3Q2PPiAOQAnpo//xU0=
+	t=1733239579; cv=none; b=cQfQqfCj+OS5ZNraN2ISwUxdvMOcO0FCNnYdfVz1m3HpVcTOiU97DIurbGciR3pI4hucisixNCwJOuyo4tUkQwPBX+cs/jFZen+64skqarei4wAVUcrvolqlsD0DpXcTp2g6kM+xRkGrAOFJ/mrg+LRKj1YJN4Nhj9vd/SpWU6A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733239576; c=relaxed/simple;
-	bh=HeP3tSVro3OTqy9Zl0sT/uDGfi1t33sfig9tx131F1M=;
+	s=arc-20240116; t=1733239579; c=relaxed/simple;
+	bh=Irb24CWYwuPS4Zjt1yKB1rJAKAjJAVswIA+FO7/5mGI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o+/maleB0qx0ugRS1NrPM+XOqdPr9FUiQcVhEiCL/kksCI9IfnwF+05j9sAM9T/TCf+oPmDAZBv3356qM2AKDc/VlyDVrc3mPWxiGcd25FHZvpmAEeRY7Qdldol8v/RI3Jtrzk98HdcZkLaNCCkz/yONiurC8Gu6OfPqcGFhWUc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ckjRTZpu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kyYkHleDxNcMlChnwjxeIEj3KCSqSRWRK9dYtR3aAgaCylO8GZd+RuUuPYtMhW7bpueUHpZ/NEq2n4ePt1BsCosNW0/QCWG1lH/eww+FAV6l5Ro/239jXMUoY3xUvmvs1B/pCjrP9GwLOgzLzilgiRWn9SENsc1NceLadFe3ROY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MNnM7CIX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ckjRTZpu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 488E0C4CECF;
-	Tue,  3 Dec 2024 15:26:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MNnM7CIX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E897C4CECF;
+	Tue,  3 Dec 2024 15:26:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733239576;
-	bh=HeP3tSVro3OTqy9Zl0sT/uDGfi1t33sfig9tx131F1M=;
+	s=korg; t=1733239579;
+	bh=Irb24CWYwuPS4Zjt1yKB1rJAKAjJAVswIA+FO7/5mGI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ckjRTZpu5k3KMxR8cenzm1xAL800sLkRPvnkFuM0DYbUAmw//mSOW43+JulSze9BR
-	 rV8GFM7QYL5THwLFhTMEoMMZcP/kfVWiyztfMxvqmGlkYzuSuOp3LBf9ASux2MrEyv
-	 MZNl7azckfqBEKDaTF2TKk4ZS19uSdoh3cANU99Q=
+	b=MNnM7CIXq8mIUKR7wUWn66NWZ6GSS5Ub4Fou61U57GtEvUrilTYZgtZhN4X8JPOQa
+	 YxduUzrHe8O0N2XmcBXss8bDxJcex0QT1o8c+a2lJ1j5PGO7pVNbxZyQhU+g1mdnaC
+	 GBT60uBoDUZKAtM+iGFFP8wzskGOgAjY+5uhlxvU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ondrej Mosnacek <omosnace@redhat.com>,
-	Eric Biggers <ebiggers@google.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 6.11 644/817] crypto: x86/aegis128 - access 32-bit arguments as 32-bit
-Date: Tue,  3 Dec 2024 15:43:36 +0100
-Message-ID: <20241203144021.088943560@linuxfoundation.org>
+	Jann Horn <jannh@google.com>
+Subject: [PATCH 6.11 662/817] comedi: Flush partial mappings in error case
+Date: Tue,  3 Dec 2024 15:43:54 +0100
+Message-ID: <20241203144021.799920807@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -51,131 +49,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Biggers <ebiggers@google.com>
+From: Jann Horn <jannh@google.com>
 
-commit 3b2f2d22fb424e9bebda4dbf6676cbfc7f9f62cd upstream.
+commit ce8f9fb651fac95dd41f69afe54d935420b945bd upstream.
 
-Fix the AEGIS assembly code to access 'unsigned int' arguments as 32-bit
-values instead of 64-bit, since the upper bits of the corresponding
-64-bit registers are not guaranteed to be zero.
+If some remap_pfn_range() calls succeeded before one failed, we still have
+buffer pages mapped into the userspace page tables when we drop the buffer
+reference with comedi_buf_map_put(bm). The userspace mappings are only
+cleaned up later in the mmap error path.
 
-Note: there haven't been any reports of this bug actually causing
-incorrect behavior.  Neither gcc nor clang guarantee zero-extension to
-64 bits, but zero-extension is likely to happen in practice because most
-instructions that operate on 32-bit registers zero-extend to 64 bits.
+Fix it by explicitly flushing all mappings in our VMA on the error path.
 
-Fixes: 1d373d4e8e15 ("crypto: x86 - Add optimized AEGIS implementations")
+See commit 79a61cc3fc04 ("mm: avoid leaving partial pfn mappings around in
+error case").
+
 Cc: stable@vger.kernel.org
-Reviewed-by: Ondrej Mosnacek <omosnace@redhat.com>
-Signed-off-by: Eric Biggers <ebiggers@google.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: ed9eccbe8970 ("Staging: add comedi core")
+Signed-off-by: Jann Horn <jannh@google.com>
+Link: https://lore.kernel.org/r/20241017-comedi-tlb-v3-1-16b82f9372ce@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/crypto/aegis128-aesni-asm.S |   29 +++++++++++++++--------------
- 1 file changed, 15 insertions(+), 14 deletions(-)
+ drivers/comedi/comedi_fops.c |   12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
---- a/arch/x86/crypto/aegis128-aesni-asm.S
-+++ b/arch/x86/crypto/aegis128-aesni-asm.S
-@@ -21,7 +21,7 @@
- #define T1	%xmm7
+--- a/drivers/comedi/comedi_fops.c
++++ b/drivers/comedi/comedi_fops.c
+@@ -2407,6 +2407,18 @@ static int comedi_mmap(struct file *file
  
- #define STATEP	%rdi
--#define LEN	%rsi
-+#define LEN	%esi
- #define SRC	%rdx
- #define DST	%rcx
+ 			start += PAGE_SIZE;
+ 		}
++
++#ifdef CONFIG_MMU
++		/*
++		 * Leaving behind a partial mapping of a buffer we're about to
++		 * drop is unsafe, see remap_pfn_range_notrack().
++		 * We need to zap the range here ourselves instead of relying
++		 * on the automatic zapping in remap_pfn_range() because we call
++		 * remap_pfn_range() in a loop.
++		 */
++		if (retval)
++			zap_vma_ptes(vma, vma->vm_start, size);
++#endif
+ 	}
  
-@@ -76,32 +76,32 @@ SYM_FUNC_START_LOCAL(__load_partial)
- 	xor %r9d, %r9d
- 	pxor MSG, MSG
- 
--	mov LEN, %r8
-+	mov LEN, %r8d
- 	and $0x1, %r8
- 	jz .Lld_partial_1
- 
--	mov LEN, %r8
-+	mov LEN, %r8d
- 	and $0x1E, %r8
- 	add SRC, %r8
- 	mov (%r8), %r9b
- 
- .Lld_partial_1:
--	mov LEN, %r8
-+	mov LEN, %r8d
- 	and $0x2, %r8
- 	jz .Lld_partial_2
- 
--	mov LEN, %r8
-+	mov LEN, %r8d
- 	and $0x1C, %r8
- 	add SRC, %r8
- 	shl $0x10, %r9
- 	mov (%r8), %r9w
- 
- .Lld_partial_2:
--	mov LEN, %r8
-+	mov LEN, %r8d
- 	and $0x4, %r8
- 	jz .Lld_partial_4
- 
--	mov LEN, %r8
-+	mov LEN, %r8d
- 	and $0x18, %r8
- 	add SRC, %r8
- 	shl $32, %r9
-@@ -111,11 +111,11 @@ SYM_FUNC_START_LOCAL(__load_partial)
- .Lld_partial_4:
- 	movq %r9, MSG
- 
--	mov LEN, %r8
-+	mov LEN, %r8d
- 	and $0x8, %r8
- 	jz .Lld_partial_8
- 
--	mov LEN, %r8
-+	mov LEN, %r8d
- 	and $0x10, %r8
- 	add SRC, %r8
- 	pslldq $8, MSG
-@@ -139,7 +139,7 @@ SYM_FUNC_END(__load_partial)
-  *   %r10
-  */
- SYM_FUNC_START_LOCAL(__store_partial)
--	mov LEN, %r8
-+	mov LEN, %r8d
- 	mov DST, %r9
- 
- 	movq T0, %r10
-@@ -677,7 +677,7 @@ SYM_TYPED_FUNC_START(crypto_aegis128_aes
- 	call __store_partial
- 
- 	/* mask with byte count: */
--	movq LEN, T0
-+	movd LEN, T0
- 	punpcklbw T0, T0
- 	punpcklbw T0, T0
- 	punpcklbw T0, T0
-@@ -702,7 +702,8 @@ SYM_FUNC_END(crypto_aegis128_aesni_dec_t
- 
- /*
-  * void crypto_aegis128_aesni_final(void *state, void *tag_xor,
-- *                                  u64 assoclen, u64 cryptlen);
-+ *                                  unsigned int assoclen,
-+ *                                  unsigned int cryptlen);
-  */
- SYM_FUNC_START(crypto_aegis128_aesni_final)
- 	FRAME_BEGIN
-@@ -715,8 +716,8 @@ SYM_FUNC_START(crypto_aegis128_aesni_fin
- 	movdqu 0x40(STATEP), STATE4
- 
- 	/* prepare length block: */
--	movq %rdx, MSG
--	movq %rcx, T0
-+	movd %edx, MSG
-+	movd %ecx, T0
- 	pslldq $8, T0
- 	pxor T0, MSG
- 	psllq $3, MSG /* multiply by 8 (to get bit count) */
+ 	if (retval == 0) {
 
 
