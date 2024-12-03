@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29C711F4738;
-	Tue,  3 Dec 2024 14:35:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 431E91EF08A;
+	Tue,  3 Dec 2024 14:35:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733236531; cv=none; b=boqIzsKSEJ/ovxlTWUHzCEXerwef7NkmnO0Pht+/Z9C76ycDrpQRq+j/adKLBrPfCjaVx6MFxLIjhnJlwJb9n9jFkir2y/t21Ho2tuzbIHkrfJ9QDW748UHjyem4Vuek+7U+xtPMDdMAeawSZVJGZ21gWw8b5iewAiP7Yxetnx8=
+	t=1733236534; cv=none; b=sh2mSE8CAVQjoi+Bbmdsy4//zT/bFx6rXWlfKZnbMaIcwZ/LtYiaOYM8H3k8tywkfRdF7nB9eNKexBqtREcpdA0oaCVPdyl1+dkZAKKsG0bbN7oG4hAkBhgP+BJ4643p/uQXd3fi/puWVCXu72W48X/M0HBfrc6DeBRwEKINyig=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733236531; c=relaxed/simple;
-	bh=SmovDKHMlC+uKQPHfkGyWXn4LDQfvv57hh6kmIDufFs=;
+	s=arc-20240116; t=1733236534; c=relaxed/simple;
+	bh=MbMYqC7h2ro6GoH/iiSnoJyzFGpzOPLWHXtwwQ451lQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dH43gjw85eshIQl/AbQrnoQITQ0o8gMoZKChQYOqbFXV0IxRmJmUla28LCL79RG1OYkzGUhbG2ELyX0yf7xDL6Jvj9QeczC41y4MJStrWSFrjjGrYk1gx0T85/hZiidU7tPm9Lu4ocOC5wy/FxrZl1C+CYDxOolI51kmbP2VdS4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=akw8DpHB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=deviw0XJf0L91T93jaWs3OFjLzbHwQU73RaPjovyjDPfSmvNy7OZWk8duwYEIicldwL4slrH5TKDBFpzO5fhG1pqpHjE5FOXsZCvFKU1oU0FPeA545bmODm1xiJTR+XSxBGOUTTxrfqCXWy3pnHEuXuAJ7nCiomSAXds6pNMifw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HxkIsP1G; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="akw8DpHB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E320C4CECF;
-	Tue,  3 Dec 2024 14:35:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HxkIsP1G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A427CC4CED8;
+	Tue,  3 Dec 2024 14:35:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733236530;
-	bh=SmovDKHMlC+uKQPHfkGyWXn4LDQfvv57hh6kmIDufFs=;
+	s=korg; t=1733236534;
+	bh=MbMYqC7h2ro6GoH/iiSnoJyzFGpzOPLWHXtwwQ451lQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=akw8DpHB0rIqyH5j03CyTlOK4dyW/1YpyJFPsyQ5h9xaNCPLNldTe+Ygoi0rlx8q/
-	 zQlfw6KobjCgwqLnSR4OqK/GX1H7MSkyPsdVNCrFiA8jcq4rtl3GbuT72VXbhA7IfD
-	 ECA0qkB8F+GVtRsafgsM11Uw4uUQtfVcCbQjgjCs=
+	b=HxkIsP1Gh0vU3mCtr0Urx2ow4ijCYJpORdtKUQU8XHp/zpp9p0lVjX4aRuXiN4sEm
+	 FqwnZHmzDZFVGvCvKHZ2KcDPe9quiGz1hLPbcSyBsjeVMvpT74WTKRJ8CJAdGKPxWF
+	 f0jx3QHbyX/WICEt2hyEUjswyhpJ7MmVQ/+eLe/A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Sam Ravnborg <sam@ravnborg.org>,
+	Jinjie Ruan <ruanjinjie@huawei.com>,
+	Kevin Hilman <khilman@baylibre.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 047/138] drm/fsl-dcu: Convert to Linux IRQ interfaces
-Date: Tue,  3 Dec 2024 15:31:16 +0100
-Message-ID: <20241203141925.359456199@linuxfoundation.org>
+Subject: [PATCH 4.19 030/138] soc: ti: smartreflex: Use IRQF_NO_AUTOEN flag in request_irq()
+Date: Tue,  3 Dec 2024 15:30:59 +0100
+Message-ID: <20241203141924.708187589@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203141923.524658091@linuxfoundation.org>
 References: <20241203141923.524658091@linuxfoundation.org>
@@ -51,158 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Zimmermann <tzimmermann@suse.de>
+From: Jinjie Ruan <ruanjinjie@huawei.com>
 
-[ Upstream commit 03ac16e584e496230903ba20f2b4bbfd942a16b4 ]
+[ Upstream commit 16a0a69244240cfa32c525c021c40f85e090557a ]
 
-Drop the DRM IRQ midlayer in favor of Linux IRQ interfaces. DRM's
-IRQ helpers are mostly useful for UMS drivers. Modern KMS drivers
-don't benefit from using it. DRM IRQ callbacks are now being called
-directly or inlined.
+If request_irq() fails in sr_late_init(), there is no need to enable
+the irq, and if it succeeds, disable_irq() after request_irq() still has
+a time gap in which interrupts can come.
 
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Acked-by: Sam Ravnborg <sam@ravnborg.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20210803090704.32152-5-tzimmermann@suse.de
-Stable-dep-of: ffcde9e44d3e ("drm: fsl-dcu: enable PIXCLK on LS1021A")
+request_irq() with IRQF_NO_AUTOEN flag will disable IRQ auto-enable when
+request IRQ.
+
+Fixes: 1279ba5916f6 ("OMAP3+: SR: disable interrupt by default")
+Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+Link: https://lore.kernel.org/r/20240912034147.3014213-1-ruanjinjie@huawei.com
+Signed-off-by: Kevin Hilman <khilman@baylibre.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/fsl-dcu/fsl_dcu_drm_drv.c | 77 ++++++++++++++---------
- 1 file changed, 46 insertions(+), 31 deletions(-)
+ drivers/power/avs/smartreflex.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/fsl-dcu/fsl_dcu_drm_drv.c b/drivers/gpu/drm/fsl-dcu/fsl_dcu_drm_drv.c
-index c087ebc0ad4ed..7cc449e206435 100644
---- a/drivers/gpu/drm/fsl-dcu/fsl_dcu_drm_drv.c
-+++ b/drivers/gpu/drm/fsl-dcu/fsl_dcu_drm_drv.c
-@@ -53,7 +53,7 @@ static const struct regmap_config fsl_dcu_regmap_config = {
- 	.volatile_reg = fsl_dcu_drm_is_volatile_reg,
- };
+diff --git a/drivers/power/avs/smartreflex.c b/drivers/power/avs/smartreflex.c
+index 5ac122cd25b8c..015a406d67b8d 100644
+--- a/drivers/power/avs/smartreflex.c
++++ b/drivers/power/avs/smartreflex.c
+@@ -217,10 +217,10 @@ static int sr_late_init(struct omap_sr *sr_info)
  
--static void fsl_dcu_irq_uninstall(struct drm_device *dev)
-+static void fsl_dcu_irq_reset(struct drm_device *dev)
- {
- 	struct fsl_dcu_drm_device *fsl_dev = dev->dev_private;
- 
-@@ -61,6 +61,45 @@ static void fsl_dcu_irq_uninstall(struct drm_device *dev)
- 	regmap_write(fsl_dev->regmap, DCU_INT_MASK, ~0);
- }
- 
-+static irqreturn_t fsl_dcu_drm_irq(int irq, void *arg)
-+{
-+	struct drm_device *dev = arg;
-+	struct fsl_dcu_drm_device *fsl_dev = dev->dev_private;
-+	unsigned int int_status;
-+	int ret;
-+
-+	ret = regmap_read(fsl_dev->regmap, DCU_INT_STATUS, &int_status);
-+	if (ret) {
-+		dev_err(dev->dev, "read DCU_INT_STATUS failed\n");
-+		return IRQ_NONE;
-+	}
-+
-+	if (int_status & DCU_INT_STATUS_VBLANK)
-+		drm_handle_vblank(dev, 0);
-+
-+	regmap_write(fsl_dev->regmap, DCU_INT_STATUS, int_status);
-+
-+	return IRQ_HANDLED;
-+}
-+
-+static int fsl_dcu_irq_install(struct drm_device *dev, unsigned int irq)
-+{
-+	if (irq == IRQ_NOTCONNECTED)
-+		return -ENOTCONN;
-+
-+	fsl_dcu_irq_reset(dev);
-+
-+	return request_irq(irq, fsl_dcu_drm_irq, 0, dev->driver->name, dev);
-+}
-+
-+static void fsl_dcu_irq_uninstall(struct drm_device *dev)
-+{
-+	struct fsl_dcu_drm_device *fsl_dev = dev->dev_private;
-+
-+	fsl_dcu_irq_reset(dev);
-+	free_irq(fsl_dev->irq, dev);
-+}
-+
- static int fsl_dcu_load(struct drm_device *dev, unsigned long flags)
- {
- 	struct fsl_dcu_drm_device *fsl_dev = dev->dev_private;
-@@ -75,13 +114,13 @@ static int fsl_dcu_load(struct drm_device *dev, unsigned long flags)
- 	ret = drm_vblank_init(dev, dev->mode_config.num_crtc);
- 	if (ret < 0) {
- 		dev_err(dev->dev, "failed to initialize vblank\n");
--		goto done;
-+		goto done_vblank;
+ 	if (sr_class->notify && sr_class->notify_flags && sr_info->irq) {
+ 		ret = devm_request_irq(&sr_info->pdev->dev, sr_info->irq,
+-				       sr_interrupt, 0, sr_info->name, sr_info);
++				       sr_interrupt, IRQF_NO_AUTOEN,
++				       sr_info->name, sr_info);
+ 		if (ret)
+ 			goto error;
+-		disable_irq(sr_info->irq);
  	}
  
--	ret = drm_irq_install(dev, fsl_dev->irq);
-+	ret = fsl_dcu_irq_install(dev, fsl_dev->irq);
- 	if (ret < 0) {
- 		dev_err(dev->dev, "failed to install IRQ handler\n");
--		goto done;
-+		goto done_irq;
- 	}
- 
- 	if (legacyfb_depth != 16 && legacyfb_depth != 24 &&
-@@ -92,11 +131,11 @@ static int fsl_dcu_load(struct drm_device *dev, unsigned long flags)
- 	}
- 
- 	return 0;
--done:
-+done_irq:
- 	drm_kms_helper_poll_fini(dev);
- 
- 	drm_mode_config_cleanup(dev);
--	drm_irq_uninstall(dev);
-+done_vblank:
- 	dev->dev_private = NULL;
- 
- 	return ret;
-@@ -108,32 +147,11 @@ static void fsl_dcu_unload(struct drm_device *dev)
- 	drm_kms_helper_poll_fini(dev);
- 
- 	drm_mode_config_cleanup(dev);
--	drm_irq_uninstall(dev);
-+	fsl_dcu_irq_uninstall(dev);
- 
- 	dev->dev_private = NULL;
- }
- 
--static irqreturn_t fsl_dcu_drm_irq(int irq, void *arg)
--{
--	struct drm_device *dev = arg;
--	struct fsl_dcu_drm_device *fsl_dev = dev->dev_private;
--	unsigned int int_status;
--	int ret;
--
--	ret = regmap_read(fsl_dev->regmap, DCU_INT_STATUS, &int_status);
--	if (ret) {
--		dev_err(dev->dev, "read DCU_INT_STATUS failed\n");
--		return IRQ_NONE;
--	}
--
--	if (int_status & DCU_INT_STATUS_VBLANK)
--		drm_handle_vblank(dev, 0);
--
--	regmap_write(fsl_dev->regmap, DCU_INT_STATUS, int_status);
--
--	return IRQ_HANDLED;
--}
--
- DEFINE_DRM_GEM_CMA_FOPS(fsl_dcu_drm_fops);
- 
- static struct drm_driver fsl_dcu_drm_driver = {
-@@ -141,9 +159,6 @@ static struct drm_driver fsl_dcu_drm_driver = {
- 				| DRIVER_PRIME | DRIVER_ATOMIC,
- 	.load			= fsl_dcu_load,
- 	.unload			= fsl_dcu_unload,
--	.irq_handler		= fsl_dcu_drm_irq,
--	.irq_preinstall		= fsl_dcu_irq_uninstall,
--	.irq_uninstall		= fsl_dcu_irq_uninstall,
- 	DRM_GEM_CMA_DRIVER_OPS,
- 	.fops			= &fsl_dcu_drm_fops,
- 	.name			= "fsl-dcu-drm",
+ 	if (pdata && pdata->enable_on_init)
 -- 
 2.43.0
 
