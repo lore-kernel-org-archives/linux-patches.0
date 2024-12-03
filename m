@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95CEB1F6696;
-	Tue,  3 Dec 2024 15:16:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23537646;
+	Tue,  3 Dec 2024 15:16:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733238975; cv=none; b=Tt/P+SZ9ML6SU2QkI9RIzy4KmMiidT268+I5YPk2JUQe8oMCxIZR1sndj1o6vph7af0zyNi1OE+BfXChBJdi25uCkZKnLGApqQgvJREEEDUeJ/QlfxiES24I1wdkV1iWsfFjDHjAxVV7TOQ6dtTlDj71ylDkBr9fLR2SRJUMplI=
+	t=1733238978; cv=none; b=JDgzW8BS16a5cPBDMOLMI05jbU2WH7bIr8QA880T7teemImKqfwRmur/W5d4lDrMeU422xgOfaDnJ0AMd8lhFlSwGHgHLtBlOORHh9ReJ0h4F4J17RaMR/mWKGaICJTmb7Ne1OdCnIAHvkfLAhaa2PyrrCjC2TwuQuZoX3AJnUs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733238975; c=relaxed/simple;
-	bh=7ACmJdlaAgC1vGOS5L+p6UJOIGn2CxxFOdMkF4mF+YI=;
+	s=arc-20240116; t=1733238978; c=relaxed/simple;
+	bh=6StEq2IYly367fzpQMcTFrnX1/Q0miHZ51VhaHq9BUU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l4wb8OmEiF+Mozqg1lesRQ/5J4lWo2QIXxoZX1Np4jSJ6C1ShlsnTpzyndWR3ofyHXI7FDI658Ma9TVV/ZvoTvpps4H/9QLMmZG3gNW0ta16SDGxfTX0GQN7ExgHkR6J2n6r/yhMmrJSnMCBmSGPsPfxy2X6xNHAgKQ3hWhuL6o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V2Tyhcog; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Yrk4NaW7pJwc+oVsxi2b2Ql0AD5wNGf6+3gHmQuiVJ6DDBNJbm0uKa1F7cwAFwV/J1HG40iQzEQ2T7AY/wm18I/o+0otTP1ysMTRMmlYUzuQBQqc5rEj46nr8eW9A4skvUc4X/gN7eMVm04pQDzfESqaMwRPjSJRjQHLHEZ7Aq4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l5+uAp6/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V2Tyhcog"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEF8CC4CECF;
-	Tue,  3 Dec 2024 15:16:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l5+uAp6/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F7CAC4CECF;
+	Tue,  3 Dec 2024 15:16:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733238975;
-	bh=7ACmJdlaAgC1vGOS5L+p6UJOIGn2CxxFOdMkF4mF+YI=;
+	s=korg; t=1733238978;
+	bh=6StEq2IYly367fzpQMcTFrnX1/Q0miHZ51VhaHq9BUU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V2TyhcogqDUoLvZfTRHwllTKCJ4WaMELlVB9N1flh0gxCBEC4XkYgq+fI9zt4pwjo
-	 pfjZQtUGnUYqM3ES1E+ckqJi01C5ZHakkMkJdXfgF83fG8SIvfgIB6s5Ljgk9PkUHF
-	 etbuNBjZI8vEaKZR/DHps0WhfaJrZJePgO3gFHxQ=
+	b=l5+uAp6/J+vkr9gNmYjSwr4H43h91+k0DQTO158JpFC/ZK9ME0tk865RZ42c9sQKz
+	 PREOWTBhS7pzZX9e18/6SUzfbQCbMJw/zjiuSpfajMzRJgOSxtBF7xHwEygPRhzJdb
+	 rHT/kwWgTcSbuxU0FMWmot4ZoBM2IWpfWaJjvE6o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
-	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
-	Amit Machhiwal <amachhiw@linux.ibm.com>,
-	Kajol Jain <kjain@linux.ibm.com>,
+	Zhang Zekun <zhangzekun11@huawei.com>,
 	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 461/817] KVM: PPC: Book3S HV: Fix kmv -> kvm typo
-Date: Tue,  3 Dec 2024 15:40:33 +0100
-Message-ID: <20241203144013.870095723@linuxfoundation.org>
+Subject: [PATCH 6.11 462/817] powerpc/kexec: Fix return of uninitialized variable
+Date: Tue,  3 Dec 2024 15:40:34 +0100
+Message-ID: <20241203144013.908848194@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -54,79 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kajol Jain <kjain@linux.ibm.com>
+From: Zhang Zekun <zhangzekun11@huawei.com>
 
-[ Upstream commit 590d2f9347f7974d7954400e5d937672fd844a8b ]
+[ Upstream commit 83b5a407fbb73e6965adfb4bd0a803724bf87f96 ]
 
-Fix typo in the following kvm function names from:
+of_property_read_u64() can fail and leave the variable uninitialized,
+which will then be used. Return error if reading the property failed.
 
- kmvhv_counters_tracepoint_regfunc -> kvmhv_counters_tracepoint_regfunc
- kmvhv_counters_tracepoint_unregfunc -> kvmhv_counters_tracepoint_unregfunc
-
-Fixes: e1f288d2f9c6 ("KVM: PPC: Book3S HV nestedv2: Add support for reading VPA counters for pseries guests")
-Reported-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
-Reviewed-by: Amit Machhiwal <amachhiw@linux.ibm.com>
-Signed-off-by: Kajol Jain <kjain@linux.ibm.com>
+Fixes: 2e6bd221d96f ("powerpc/kexec_file: Enable early kernel OPAL calls")
+Signed-off-by: Zhang Zekun <zhangzekun11@huawei.com>
 Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://patch.msgid.link/20241114085020.1147912-1-kjain@linux.ibm.com
+Link: https://patch.msgid.link/20240930075628.125138-1-zhangzekun11@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/include/asm/kvm_book3s_64.h | 4 ++--
- arch/powerpc/kvm/book3s_hv.c             | 4 ++--
- arch/powerpc/kvm/trace_hv.h              | 2 +-
- 3 files changed, 5 insertions(+), 5 deletions(-)
+ arch/powerpc/kexec/file_load_64.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/arch/powerpc/include/asm/kvm_book3s_64.h b/arch/powerpc/include/asm/kvm_book3s_64.h
-index 2ef9a5f4e5d14..11065313d4c12 100644
---- a/arch/powerpc/include/asm/kvm_book3s_64.h
-+++ b/arch/powerpc/include/asm/kvm_book3s_64.h
-@@ -684,8 +684,8 @@ int kvmhv_nestedv2_set_ptbl_entry(unsigned long lpid, u64 dw0, u64 dw1);
- int kvmhv_nestedv2_parse_output(struct kvm_vcpu *vcpu);
- int kvmhv_nestedv2_set_vpa(struct kvm_vcpu *vcpu, unsigned long vpa);
+diff --git a/arch/powerpc/kexec/file_load_64.c b/arch/powerpc/kexec/file_load_64.c
+index 9738adabeb1fe..dc65c13911577 100644
+--- a/arch/powerpc/kexec/file_load_64.c
++++ b/arch/powerpc/kexec/file_load_64.c
+@@ -736,13 +736,18 @@ int setup_purgatory_ppc64(struct kimage *image, const void *slave_code,
+ 	if (dn) {
+ 		u64 val;
  
--int kmvhv_counters_tracepoint_regfunc(void);
--void kmvhv_counters_tracepoint_unregfunc(void);
-+int kvmhv_counters_tracepoint_regfunc(void);
-+void kvmhv_counters_tracepoint_unregfunc(void);
- int kvmhv_get_l2_counters_status(void);
- void kvmhv_set_l2_counters_status(int cpu, bool status);
+-		of_property_read_u64(dn, "opal-base-address", &val);
++		ret = of_property_read_u64(dn, "opal-base-address", &val);
++		if (ret)
++			goto out;
++
+ 		ret = kexec_purgatory_get_set_symbol(image, "opal_base", &val,
+ 						     sizeof(val), false);
+ 		if (ret)
+ 			goto out;
  
-diff --git a/arch/powerpc/kvm/book3s_hv.c b/arch/powerpc/kvm/book3s_hv.c
-index b0432e78fa629..45b24706f7512 100644
---- a/arch/powerpc/kvm/book3s_hv.c
-+++ b/arch/powerpc/kvm/book3s_hv.c
-@@ -4148,7 +4148,7 @@ void kvmhv_set_l2_counters_status(int cpu, bool status)
- 		lppaca_of(cpu).l2_counters_enable = 0;
- }
- 
--int kmvhv_counters_tracepoint_regfunc(void)
-+int kvmhv_counters_tracepoint_regfunc(void)
- {
- 	int cpu;
- 
-@@ -4158,7 +4158,7 @@ int kmvhv_counters_tracepoint_regfunc(void)
- 	return 0;
- }
- 
--void kmvhv_counters_tracepoint_unregfunc(void)
-+void kvmhv_counters_tracepoint_unregfunc(void)
- {
- 	int cpu;
- 
-diff --git a/arch/powerpc/kvm/trace_hv.h b/arch/powerpc/kvm/trace_hv.h
-index 77ebc724e6cdf..35fccaa575cc1 100644
---- a/arch/powerpc/kvm/trace_hv.h
-+++ b/arch/powerpc/kvm/trace_hv.h
-@@ -538,7 +538,7 @@ TRACE_EVENT_FN_COND(kvmppc_vcpu_stats,
- 	TP_printk("VCPU %d: l1_to_l2_cs_time=%llu ns l2_to_l1_cs_time=%llu ns l2_runtime=%llu ns",
- 		__entry->vcpu_id,  __entry->l1_to_l2_cs,
- 		__entry->l2_to_l1_cs, __entry->l2_runtime),
--	kmvhv_counters_tracepoint_regfunc, kmvhv_counters_tracepoint_unregfunc
-+	kvmhv_counters_tracepoint_regfunc, kvmhv_counters_tracepoint_unregfunc
- );
- #endif
- #endif /* _TRACE_KVM_HV_H */
+-		of_property_read_u64(dn, "opal-entry-address", &val);
++		ret = of_property_read_u64(dn, "opal-entry-address", &val);
++		if (ret)
++			goto out;
+ 		ret = kexec_purgatory_get_set_symbol(image, "opal_entry", &val,
+ 						     sizeof(val), false);
+ 	}
 -- 
 2.43.0
 
