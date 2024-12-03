@@ -1,148 +1,140 @@
-Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
+Received: from mail-ed1-f42.google.com (mail-ed1-f42.google.com [209.85.208.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3CE41E1C34
-	for <patches@lists.linux.dev>; Tue,  3 Dec 2024 22:36:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44C541DF268
+	for <patches@lists.linux.dev>; Tue,  3 Dec 2024 23:26:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733265415; cv=none; b=n/V4awnTm1mctevIZpBWWVEPhF7CgbdcZZBBGU+2R3KD9FVPHnXI4PcWS00+mqTzRNKnC0zgRabHVeB4JxDe+QpyRnuim+/O37xni8lLTmyQo31DVEc0+lEpNZCRMRrC6J+Erxxcx7Gzr/DeJzwW11NMfNagfm48NN4BxdsAap4=
+	t=1733268396; cv=none; b=keOEH8L2q3SVzdBXjW7ZKGpldl92USFQdj7srRrVynXCBvUCkgzwSiyoigIy+LDul53cN+YOCed3JJDocLhE1PyLI9L1SEmSVnAGkqTOVu0Lyir/owfIZ8k4Y6xg4JCpynaSCHUl7UlApLcAsLeY0uYw3jkkmTZHYmUJb2EvCBo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733265415; c=relaxed/simple;
-	bh=qOI/ig1QDv+Wtqaxl61xm8chjhmXcLx8lqKwGKoDZDk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ad3uwYmV1dprUk+zENC8jX0BiGTWEVI/67RcMm/S6MP/7mQwonfhgkT3iLs5g1WkBd/68/SvLg8WlqWGB2k6Qgp8oG3AMAQIsSdpFUCnmbE2J/9y9pWayBa5c4n7UARVdNCeVKtIj9i6CyrhRCIFqOApIMufreKNrwmKbnIvF3Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SPRu48bZ; arc=none smtp.client-ip=209.85.214.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1733268396; c=relaxed/simple;
+	bh=A+NygRxfATzmDDYl4BW+aoTxyFsALc+e05mYyvBpsWU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ZDxxxwjxrH3JAqOOF2Te7KH8gLbBTCQid+radA3Wm1I/Tm7YRJPeo0Z0Jpxc1nAyjdQs5MLHjolpHpUxZNh7puA76sU0quXwHmE1qXyIoePFfO+4n2pBwfo5fMXhCaTA6q+Er63yBBjV15Q7sTbBoI+HKK7YzgsYLPihxGVc1MA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=jVHe6JlO; arc=none smtp.client-ip=209.85.208.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SPRu48bZ"
-Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-215513ea198so2216815ad.1
-        for <patches@lists.linux.dev>; Tue, 03 Dec 2024 14:36:53 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="jVHe6JlO"
+Received: by mail-ed1-f42.google.com with SMTP id 4fb4d7f45d1cf-5d0c098c870so555911a12.1
+        for <patches@lists.linux.dev>; Tue, 03 Dec 2024 15:26:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1733265413; x=1733870213; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=c0MGb16YH2aWkzNnPP+Ws/sefGovgAngp5l3l7ZM9e8=;
-        b=SPRu48bZzapZC3Q+3umABb0TwD5WenjnxrOfu7EADpLCcwpI3G0VDZsOrV0zyH57q2
-         ZdS2I3IVDgWYFOpGhasCtXAph04pnYHRlsgjHBjXOLYVdl8gWSJSQ2iZcntj3McOq/k8
-         VPQ0RGpHHncqUkMYJb8pWkiGlizUDXD0Nf8lKFKRppIP/byjoBdn9CZwvMoRz0BVt/RP
-         /lOJqlwnLLscCfTmuUpsgqVMsWhvGe4/+TGzQAlka2l7R3i3vWWem/CSPjycJ0aDbtrS
-         oDZz2zJdzT0wQ7mne/3Vbqj4IijWeujyuV495n5xKwomui0ToABPXrvtMDohQZGhyB4T
-         kU3g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733265413; x=1733870213;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+        d=google.com; s=20230601; t=1733268393; x=1733873193; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=c0MGb16YH2aWkzNnPP+Ws/sefGovgAngp5l3l7ZM9e8=;
-        b=C9aA33A6LhOVTCm9BpdcSbNZSw4ScsX6p2/1SXT1QG6UaZqZvHauQ8ZiWIH9Lx6JS8
-         zOQHbU4Z7iCVMac+W6h7gBi4oXideL1xv/cgrRT+KXhgDdyZmQxztF9ztJA7Bg/Y0F8t
-         7RrDFNDg+b7t45HLWlyBwTXhpiPw9PesEc/SNTMq6AhnGR06YJvUSSPEa2X1aGh1HZG0
-         XdtgR2ivkMN1UOBqcVc/BNf5OxNEEsgFgTTh8J4zO54XsFPdgQGd9pXQvQj0IhZCJXzB
-         xbQjCUl3mbmsspKqF52Jyn7bD36Mz1RGWeMoEgRUk+Ukzbb8XkXLoa0+cGRjSKIhbjzj
-         teSw==
-X-Gm-Message-State: AOJu0Yz6bxY2VCSJX0fCvEGObz6JHkUjMqc0i+OLbNm7a7IwbTeaJDPw
-	7McIE57SQwEkZqZEMNa/kn3rqi3Pj/8HOrOHhhwdSzimVK8Zr6l6
-X-Gm-Gg: ASbGncvjm0CK2fTN6E02y71AXPAgAmjUgOj1PyaArJWQhTwsJ3ldtY/XqYouO238y9h
-	QQ8MofNGIYdQvZs3UjQaiVgSiy630jqOpDa76DD8hKrBHhMuQkrVkDcPhB8DY2R/0yWArNXh4cJ
-	E+7Yj+0u8z/NtqktNTVVVAUE5T8Lb3chjgMSaHq3ykYK4qlJ60hh6kTPGjDfcC6tciE/N+KcklJ
-	BuWDqkJbOEfVYNPtxOu1vePmfPL1h8u184q5bwrCjWiAp0kasmbe9ykesqQlLUNFMo8B7lsHZhC
-	tA==
-X-Google-Smtp-Source: AGHT+IHG8yy/5ZNzwUCkxKjCQQfRjePsw3KTiv6MjhBgxNc20eGp6xaX9Myomz22N9ui8afV0b1Keg==
-X-Received: by 2002:a17:902:db10:b0:215:65c2:f3f2 with SMTP id d9443c01a7336-21565c2f650mr243763255ad.6.1733265413165;
-        Tue, 03 Dec 2024 14:36:53 -0800 (PST)
-Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-21589aa5478sm45813675ad.59.2024.12.03.14.36.51
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 03 Dec 2024 14:36:52 -0800 (PST)
-Message-ID: <5eeb1f9c-2b9f-49f1-9861-051478a8630d@gmail.com>
-Date: Tue, 3 Dec 2024 14:36:50 -0800
+        bh=h0gsOOV1IK0tbYsC9eBpU6WfUiWf0dqVzzhWYdaHF04=;
+        b=jVHe6JlOsBZGVHCPGVVrJF01jf4d5x3APBK6/FgjVGy/+bjj6cI4wOLgK6dPp1X1bh
+         pc9fl2X0KBTm+c/WrO8Kc5PNQsVEJkwVssl5qfeNhYJbI0j/XFQ4roB2j5vAwUs6x8DO
+         1jfJOdeuuzCL/OwAg5ex62/oLu0IBC/QYliZGxhI71FjWFD/gQfE5cl/685XjqFoOmai
+         TbAd6ocM6GrNeiUAHIp9BBedzX6+x+vGoYRpnTKWpN8iBWBUyPcZsnOOPApwUdxMSK9C
+         sFxpoIFuB0Ud2ewt2jclp8/oq/FjHhvsQE6t3iNJhmfvfCEg7SWJbPFYTttaq07K0HJ9
+         KCuQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1733268393; x=1733873193;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=h0gsOOV1IK0tbYsC9eBpU6WfUiWf0dqVzzhWYdaHF04=;
+        b=YCCcbhoQSKAkzM6e+Njr6f/NMHNEYvM3f1JoUYlze26GgkLM9wB3WMz67Qf7xMEJ1w
+         GcCgJyh1Qaz7sAEMPdhNyChnUCtJGNymaWiSNyy1UaFY6BAptaeYuNoXjQrXil2sIbAR
+         Yk0gTGFRbGDAwGdI/72HfRL0m/gA+PhTveOT2/POxS5zYwY8HaCIhaa8SSzWHskR/dT4
+         dOuZJ+a0yMn5wq96ixtBqQK9/xZ38kSYztqiOtcrjjF8w82nwhfIo62Ma7NGWQItmSzg
+         UK+eSQVF7VHynxVQw2S65drjhgvJCB3FbWC32safJUuJ782oh+erPughoXtVmJdTQCp9
+         9Cmg==
+X-Forwarded-Encrypted: i=1; AJvYcCWCkvpkWUBYdBU36rZotH99eNTaxeIdwM4Cp1mpiUyTvKXJlSIuVaz/VEOQ9DUZpRsz9yCL07fC@lists.linux.dev
+X-Gm-Message-State: AOJu0YxYtGMGnNhixBz1qhA71+c/SEYqehvD/GjF2wljGwzUr4Fm5rH5
+	mIuEmZTT8zvqex3dHS5ZWQcUpB1e2HmHUtOw4Sq56YZ/TbbvQTo7EWxTcEGFhBT1YkWBs9cql9w
+	Z3VTnMIfwQjzQZIxD7gUiBqz7snnUU6lCCmEB
+X-Gm-Gg: ASbGncsA+jwgj5N8OijHi9TEtuWkln+X4ionxmHjIGa34lPsgYTpmo3+ji/6lkG+nCK
+	fN1tlW6gW18RoanCkM/KksRzSx6GjRq7AiGNcgLOEvGF93UL162P6RqXQTWFC32h6
+X-Google-Smtp-Source: AGHT+IG44HltO60JYgYmVvMEo3QlcFo1P0mYiAAGDSp4Skz4zAxbxt9ZfqfNSvUY79c414MNywqlUX98rVVFvuuFn2Y=
+X-Received: by 2002:a05:6402:1d49:b0:5d0:e9a8:4c96 with SMTP id
+ 4fb4d7f45d1cf-5d10c2498d8mr3918350a12.9.1733268392481; Tue, 03 Dec 2024
+ 15:26:32 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.12 000/826] 6.12.2-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
- conor@kernel.org, hargar@microsoft.com, broonie@kernel.org
-References: <20241203144743.428732212@linuxfoundation.org>
-Content-Language: en-US
-From: Florian Fainelli <f.fainelli@gmail.com>
-Autocrypt: addr=f.fainelli@gmail.com; keydata=
- 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
-In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <20241112184455.855133-1-ojeda@kernel.org> <CAH5fLghFZTG2X_mYE2yGJwPM31NrJdkA-cpZTCYsdghR8YdY8Q@mail.gmail.com>
+In-Reply-To: <CAH5fLghFZTG2X_mYE2yGJwPM31NrJdkA-cpZTCYsdghR8YdY8Q@mail.gmail.com>
+From: "Hong, Yifan" <elsk@google.com>
+Date: Tue, 3 Dec 2024 15:25:56 -0800
+Message-ID: <CAABy=s1sEzJZBR6Mt+ujFY_SSbU_OgKDtOs0+bxXQhTo9QZtGA@mail.gmail.com>
+Subject: Re: [PATCH v3] kbuild: rust: add PROCMACROLDFLAGS
+To: Alice Ryhl <aliceryhl@google.com>
+Cc: Miguel Ojeda <ojeda@kernel.org>, Masahiro Yamada <masahiroy@kernel.org>, 
+	Alex Gaynor <alex.gaynor@gmail.com>, Jonathan Corbet <corbet@lwn.net>, 
+	Nathan Chancellor <nathan@kernel.org>, Nicolas Schier <nicolas@fjasle.eu>, linux-kbuild@vger.kernel.org, 
+	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
+	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
+	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@kernel.org>, 
+	Trevor Gross <tmgross@umich.edu>, rust-for-linux@vger.kernel.org, 
+	linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	patches@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 12/3/24 06:35, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.12.2 release.
-> There are 826 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Thu, 05 Dec 2024 14:45:11 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.12.2-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.12.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+On Wed, Nov 13, 2024 at 5:34=E2=80=AFAM Alice Ryhl <aliceryhl@google.com> w=
+rote:
+>
+> On Tue, Nov 12, 2024 at 7:45=E2=80=AFPM Miguel Ojeda <ojeda@kernel.org> w=
+rote:
+> >
+> > From: HONG Yifan <elsk@google.com>
+> >
+> > These are flags to be passed when linking proc macros for the Rust
+> > toolchain. If unset, it defaults to $(KBUILD_HOSTLDFLAGS).
+> >
+> > This is needed because the list of flags to link hostprogs is not
+> > necessarily the same as the list of flags used to link libmacros.so.
+> > When we build proc macros, we need the latter, not the former (e.g. whe=
+n
+> > using a Rust compiler binary linked to a different C library than host
+> > programs).
+> >
+> > To distinguish between the two, introduce this new variable to stand
+> > out from KBUILD_HOSTLDFLAGS used to link other host progs.
+> >
+> > Signed-off-by: HONG Yifan <elsk@google.com>
+> > Link: https://lore.kernel.org/r/20241017210430.2401398-2-elsk@google.co=
+m
+> > [ v3:
+> >
+> >   - `export`ed the variable. Otherwise it would not be visible in
+> >     `rust/Makefile`.
+>
+> Despite the missing export, the previous version worked for us too.
+> I'm not sure why that is.
 
-Same build issue as the one reported for perf on 6.11.11-rc1:
+It happened to pass the build when KBUILD_HOSTLDFLAGS was empty, which
+was the case when it was not exported. But that was definitely not the
+original intention of this patch. Thanks for catching it! I have
+verified that v3 correctly exports the variable to sub-make and still
+works for our case.
 
-util/stat-display.c: In function 'uniquify_event_name':
-util/stat-display.c:895:45: error: 'struct evsel' has no member named 
-'alternate_hw_config'
-   895 |         if (counter->pmu->is_core && 
-counter->alternate_hw_config != PERF_COUNT_HW_MAX)
-       |                                             ^~
-
-caused by 629f9fa8142105b4cb07e9b4d4452dab0ca40914 ("perf stat: Uniquify 
-event name improvements")
--- 
-Florian
+>
+> >   - Removed "additional" from the documentation and commit message,
+> >     since this actually replaces the other flags, unlike other cases.
+> >
+> >   - Added example of use case to documentation and commit message.
+> >     Thanks Alice for the details on what Google needs!
+> >
+> >   - Instead of `HOSTLDFLAGS`, used `KBUILD_HOSTLDFLAGS` as the fallback
+> >     to preserve the previous behavior as much as possible, as discussed
+> >     with Alice/Yifan. Thus moved the variable down too (currently we
+> >     do not modify `KBUILD_HOSTLDFLAGS` elsewhere) and avoided
+> >     mentioning `HOSTLDFLAGS` directly in the documentation.
+> >
+> >   - Fixed documentation header formatting.
+> >
+> >   - Reworded slightly.
+> >
+> >          - Miguel ]
+> > Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+>
+> Tested-by: Alice Ryhl <aliceryhl@google.com>
+> Reviewed-by: Alice Ryhl <aliceryhl@google.com>
+Reviewed-by: HONG Yifan <elsk@google.com>
