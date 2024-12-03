@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACDFE1DA4E;
-	Tue,  3 Dec 2024 15:00:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F8401DA4E;
+	Tue,  3 Dec 2024 15:00:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733238021; cv=none; b=Irt2amrsL4mZ4Vg8IM98542SjbWJifbwJQf24THLgrF4Gh8dMjbAdHEXF8nZHfqkDhM//bFpt9VU8o6ar2mbPoH3ZH9YONPVEmpKdHE903BFEEpBOFqihi1VHy8FPSdeqHjS3D3ynYjT2LzRHCnI3W+CP3UUC2+qVyFdcNJuOwM=
+	t=1733238024; cv=none; b=CBPPyUMiM+hqJvT53718A5mM9CIScwu3nlMPoQo1i9pjVucWJhANdXikzzyAJKypnk8Xc5mVOcuaK7TpJ/qPhHXcrD0nDqHorGtBJRm1fmhle1BD36kWq3JTjlj2hWo8RsPrwpdHIN1bDYrnVgkgj9OM9TIiLr+FkYhRsay+kao=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733238021; c=relaxed/simple;
-	bh=7A5knFrkxNyYBx4FYtDhdpaSbg/ULhsLlQ0vL2avbkk=;
+	s=arc-20240116; t=1733238024; c=relaxed/simple;
+	bh=UyLc1KWnJOr8gc/r5FHWTli30Xvx3zdoBeaFhFTtJfk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dVaRgzdQinv3pl08RQpVsUvG9uPtEnr90HG4YSvH/xEvkAy7dcRORg/q94Zi1AnVpzMWNlAvz9HSiixv0Fj3cEB8KIAO45dJ9evepmdv2eJCSWdOtTIZuqmuPviwj8F6ChgaXerSuqYQVOfE/QnTEyoiddyXYsFj2vl9MYDhB2g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jbY55AqM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SG+6pGjFx5kbNd8v61NTKfZyIkSjKIKPlMS2+/yc75N5V9dSxzGG8fqYvPZXeeh4CsKvorOFtBTnjD+E9f3feZYh/SciyCe8ixH5TWiIhzpU94tkVTmq8i8ndIka7IczR4T75fRJuBRG9CeE8o8jrGr8iBNCTWFlK+sUOV3YOow=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kzvb2gxT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jbY55AqM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7E0AC4CECF;
-	Tue,  3 Dec 2024 15:00:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kzvb2gxT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E396AC4CECF;
+	Tue,  3 Dec 2024 15:00:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733238021;
-	bh=7A5knFrkxNyYBx4FYtDhdpaSbg/ULhsLlQ0vL2avbkk=;
+	s=korg; t=1733238024;
+	bh=UyLc1KWnJOr8gc/r5FHWTli30Xvx3zdoBeaFhFTtJfk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jbY55AqMfyYwSDCbLmvqUMijTCTm0KeD4K7na2DQqs2UJLs9dJMo3mYgGK/jjfSov
-	 UIP8Uhyv4A8yRDe0+UKwCaBI3IWGl+Cm80JKgWcV8kyV98/0NWR3P4u7/BpG0gIfkM
-	 CODfAkUWClxlGNEZgiKIunigmJP9lAxbYtdPd560=
+	b=Kzvb2gxTtAuyzIqdpvi0T4hTvD1R04B5byjJWZIRYvFE7jN5RhbvvjBijXlFJSEKg
+	 ltNgRqAlLY1n+sm6sTE78Cwigucbcko3H94R1FTQSqjurNLkGS1FrDzNOh8fMfYKFH
+	 gDoAmqWd5ZolqCOzIQRuL9qlAra+mZLozd/2wrUQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Tony Luck <tony.luck@intel.com>,
 	Diego Garcia Rodriguez <diego.garcia.rodriguez@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 105/817] EDAC/skx_common: Differentiate memory error sources
-Date: Tue,  3 Dec 2024 15:34:37 +0100
-Message-ID: <20241203143959.807402833@linuxfoundation.org>
+Subject: [PATCH 6.11 106/817] EDAC/{skx_common,i10nm}: Fix incorrect far-memory error source indicator
+Date: Tue,  3 Dec 2024 15:34:38 +0100
+Message-ID: <20241203143959.846732811@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -54,143 +54,102 @@ Content-Transfer-Encoding: 8bit
 
 From: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
 
-[ Upstream commit 2397f795735219caa9c2fe61e7bcdd0652e670d3 ]
+[ Upstream commit a36667037a0c0e36c59407f8ae636295390239a5 ]
 
-The current skx_common determines whether the memory error source is the
-near memory of the 2LM system and then retrieves the decoded error results
-from the ADXL components (near-memory vs. far-memory) accordingly.
+The Granite Rapids CPUs with Flat2LM memory configurations may
+mistakenly report near-memory errors as far-memory errors, resulting
+in the invalid decoded ADXL results:
 
-However, some memory controllers may have limitations in correctly
-reporting the memory error source, leading to the retrieval of incorrect
-decoded parts from the ADXL.
+  EDAC skx: Bad imc -1
 
-To address these limitations, instead of simply determining whether the
-memory error is from the near memory of the 2LM system, it is necessary to
-distinguish the memory error source details as follows:
-
-  Memory error from the near memory of the 2LM system.
-  Memory error from the far memory of the 2LM system.
-  Memory error from the 1LM system.
-  Not a memory error.
-
-This will enable the i10nm_edac driver to take appropriate actions for
-those memory controllers that have limitations in reporting the memory
-error source.
+Fix this incorrect far-memory error source indicator by prefetching the
+decoded far-memory controller ID, and adjust the error source indicator
+to near-memory if the far-memory controller ID is invalid.
 
 Fixes: ba987eaaabf9 ("EDAC/i10nm: Add Intel Granite Rapids server support")
 Signed-off-by: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
 Signed-off-by: Tony Luck <tony.luck@intel.com>
 Tested-by: Diego Garcia Rodriguez <diego.garcia.rodriguez@intel.com>
-Link: https://lore.kernel.org/r/20241015072236.24543-2-qiuxu.zhuo@intel.com
+Link: https://lore.kernel.org/r/20241015072236.24543-3-qiuxu.zhuo@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/edac/skx_common.c | 34 ++++++++++++++++------------------
- drivers/edac/skx_common.h |  7 +++++++
- 2 files changed, 23 insertions(+), 18 deletions(-)
+ drivers/edac/i10nm_base.c |  1 +
+ drivers/edac/skx_common.c | 23 +++++++++++++++++++++++
+ drivers/edac/skx_common.h |  1 +
+ 3 files changed, 25 insertions(+)
 
+diff --git a/drivers/edac/i10nm_base.c b/drivers/edac/i10nm_base.c
+index 24dd896d9a9d5..4e98fe16f0913 100644
+--- a/drivers/edac/i10nm_base.c
++++ b/drivers/edac/i10nm_base.c
+@@ -1089,6 +1089,7 @@ static int __init i10nm_init(void)
+ 		return -ENODEV;
+ 
+ 	cfg = (struct res_config *)id->driver_data;
++	skx_set_res_cfg(cfg);
+ 	res_cfg = cfg;
+ 
+ 	rc = skx_get_hi_lo(0x09a2, off, &tolm, &tohm);
 diff --git a/drivers/edac/skx_common.c b/drivers/edac/skx_common.c
-index 8d18099fd528c..42266120ef427 100644
+index 42266120ef427..0b8aaf5f77d9f 100644
 --- a/drivers/edac/skx_common.c
 +++ b/drivers/edac/skx_common.c
-@@ -119,7 +119,7 @@ void skx_adxl_put(void)
- }
- EXPORT_SYMBOL_GPL(skx_adxl_put);
+@@ -47,6 +47,7 @@ static skx_show_retry_log_f skx_show_retry_rd_err_log;
+ static u64 skx_tolm, skx_tohm;
+ static LIST_HEAD(dev_edac_list);
+ static bool skx_mem_cfg_2lm;
++static struct res_config *skx_res_cfg;
  
--static bool skx_adxl_decode(struct decoded_addr *res, bool error_in_1st_level_mem)
-+static bool skx_adxl_decode(struct decoded_addr *res, enum error_source err_src)
+ int skx_adxl_get(void)
  {
- 	struct skx_dev *d;
- 	int i, len = 0;
-@@ -136,7 +136,7 @@ static bool skx_adxl_decode(struct decoded_addr *res, bool error_in_1st_level_me
+@@ -135,6 +136,22 @@ static bool skx_adxl_decode(struct decoded_addr *res, enum error_source err_src)
+ 		return false;
  	}
  
- 	res->socket  = (int)adxl_values[component_indices[INDEX_SOCKET]];
--	if (error_in_1st_level_mem) {
-+	if (err_src == ERR_SRC_2LM_NM) {
- 		res->imc     = (adxl_nm_bitmap & BIT_NM_MEMCTRL) ?
- 			       (int)adxl_values[component_indices[INDEX_NM_MEMCTRL]] : -1;
- 		res->channel = (adxl_nm_bitmap & BIT_NM_CHANNEL) ?
-@@ -620,31 +620,27 @@ static void skx_mce_output_error(struct mem_ctl_info *mci,
- 			     optype, skx_msg);
- }
- 
--static bool skx_error_in_1st_level_mem(const struct mce *m)
-+static enum error_source skx_error_source(const struct mce *m)
- {
--	u32 errcode;
-+	u32 errcode = GET_BITFIELD(m->status, 0, 15) & MCACOD_MEM_ERR_MASK;
- 
--	if (!skx_mem_cfg_2lm)
--		return false;
--
--	errcode = GET_BITFIELD(m->status, 0, 15) & MCACOD_MEM_ERR_MASK;
--
--	return errcode == MCACOD_EXT_MEM_ERR;
--}
-+	if (errcode != MCACOD_MEM_CTL_ERR && errcode != MCACOD_EXT_MEM_ERR)
-+		return ERR_SRC_NOT_MEMORY;
- 
--static bool skx_error_in_mem(const struct mce *m)
--{
--	u32 errcode;
-+	if (!skx_mem_cfg_2lm)
-+		return ERR_SRC_1LM;
- 
--	errcode = GET_BITFIELD(m->status, 0, 15) & MCACOD_MEM_ERR_MASK;
-+	if (errcode == MCACOD_EXT_MEM_ERR)
-+		return ERR_SRC_2LM_NM;
- 
--	return (errcode == MCACOD_MEM_CTL_ERR || errcode == MCACOD_EXT_MEM_ERR);
-+	return ERR_SRC_2LM_FM;
- }
- 
- int skx_mce_check_error(struct notifier_block *nb, unsigned long val,
- 			void *data)
- {
- 	struct mce *mce = (struct mce *)data;
-+	enum error_source err_src;
- 	struct decoded_addr res;
- 	struct mem_ctl_info *mci;
- 	char *type;
-@@ -652,8 +648,10 @@ int skx_mce_check_error(struct notifier_block *nb, unsigned long val,
- 	if (mce->kflags & MCE_HANDLED_CEC)
- 		return NOTIFY_DONE;
- 
-+	err_src = skx_error_source(mce);
++	/*
++	 * GNR with a Flat2LM memory configuration may mistakenly classify
++	 * a near-memory error(DDR5) as a far-memory error(CXL), resulting
++	 * in the incorrect selection of decoded ADXL components.
++	 * To address this, prefetch the decoded far-memory controller ID
++	 * and adjust the error source to near-memory if the far-memory
++	 * controller ID is invalid.
++	 */
++	if (skx_res_cfg && skx_res_cfg->type == GNR && err_src == ERR_SRC_2LM_FM) {
++		res->imc = (int)adxl_values[component_indices[INDEX_MEMCTRL]];
++		if (res->imc == -1) {
++			err_src = ERR_SRC_2LM_NM;
++			edac_dbg(0, "Adjust the error source to near-memory.\n");
++		}
++	}
 +
- 	/* Ignore unless this is memory related with an address */
--	if (!skx_error_in_mem(mce) || !(mce->status & MCI_STATUS_ADDRV))
-+	if (err_src == ERR_SRC_NOT_MEMORY || !(mce->status & MCI_STATUS_ADDRV))
- 		return NOTIFY_DONE;
+ 	res->socket  = (int)adxl_values[component_indices[INDEX_SOCKET]];
+ 	if (err_src == ERR_SRC_2LM_NM) {
+ 		res->imc     = (adxl_nm_bitmap & BIT_NM_MEMCTRL) ?
+@@ -191,6 +208,12 @@ void skx_set_mem_cfg(bool mem_cfg_2lm)
+ }
+ EXPORT_SYMBOL_GPL(skx_set_mem_cfg);
  
- 	memset(&res, 0, sizeof(res));
-@@ -667,7 +665,7 @@ int skx_mce_check_error(struct notifier_block *nb, unsigned long val,
- 	/* Try driver decoder first */
- 	if (!(driver_decode && driver_decode(&res))) {
- 		/* Then try firmware decoder (ACPI DSM methods) */
--		if (!(adxl_component_count && skx_adxl_decode(&res, skx_error_in_1st_level_mem(mce))))
-+		if (!(adxl_component_count && skx_adxl_decode(&res, err_src)))
- 			return NOTIFY_DONE;
- 	}
- 
++void skx_set_res_cfg(struct res_config *cfg)
++{
++	skx_res_cfg = cfg;
++}
++EXPORT_SYMBOL_GPL(skx_set_res_cfg);
++
+ void skx_set_decode(skx_decode_f decode, skx_show_retry_log_f show_retry_log)
+ {
+ 	driver_decode = decode;
 diff --git a/drivers/edac/skx_common.h b/drivers/edac/skx_common.h
-index 473421ba7a18a..58b8ac62becf5 100644
+index 58b8ac62becf5..5a7111791c109 100644
 --- a/drivers/edac/skx_common.h
 +++ b/drivers/edac/skx_common.h
-@@ -146,6 +146,13 @@ enum {
- 	INDEX_MAX
- };
+@@ -241,6 +241,7 @@ int skx_adxl_get(void);
+ void skx_adxl_put(void);
+ void skx_set_decode(skx_decode_f decode, skx_show_retry_log_f show_retry_log);
+ void skx_set_mem_cfg(bool mem_cfg_2lm);
++void skx_set_res_cfg(struct res_config *cfg);
  
-+enum error_source {
-+	ERR_SRC_1LM,
-+	ERR_SRC_2LM_NM,
-+	ERR_SRC_2LM_FM,
-+	ERR_SRC_NOT_MEMORY,
-+};
-+
- #define BIT_NM_MEMCTRL	BIT_ULL(INDEX_NM_MEMCTRL)
- #define BIT_NM_CHANNEL	BIT_ULL(INDEX_NM_CHANNEL)
- #define BIT_NM_DIMM	BIT_ULL(INDEX_NM_DIMM)
+ int skx_get_src_id(struct skx_dev *d, int off, u8 *id);
+ int skx_get_node_id(struct skx_dev *d, u8 *id);
 -- 
 2.43.0
 
