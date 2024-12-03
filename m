@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C7051AB6C9;
-	Tue,  3 Dec 2024 16:20:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 916971E25E3;
+	Tue,  3 Dec 2024 16:20:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733242830; cv=none; b=YROiyaEKIKNFZSC9rmzBKbI9VIXLWD3z3CJVC90AsiwUtxQAGx6iM5qg8+czaL5UAUJhkaeoxR/PQRK2bDlfddyaNSqkagwII4Y2pVmkQUkmIBR7yZwIeJQkwvCWM3M6D3Yq9AHHQVwjs9zsKwkD/M/N2gR+/4rK8cVLXzr2Lfs=
+	t=1733242833; cv=none; b=uhsqwzfNtJuPB7C8GJqN8w+6YFTrKtG4mcC29TM0Z1zsmrCdXqncJMRrzOYuCciWhGjU+1qcYtcXXjC6dEaty0GuMmCGt/CmHPNwmP48dwjG1z8MFF+tQtogeLKptYv6gGhlFsy5hl4csn/FvNHYQLkXEMecWVKLoQq+H9cBrDU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733242830; c=relaxed/simple;
-	bh=raOQot7Fnce3bmbN5RPHHOr5b6t0xS3+ERXTeoNUPvE=;
+	s=arc-20240116; t=1733242833; c=relaxed/simple;
+	bh=XlakH/4w1RRqPn4Z66+m8ILItioAyhDyBIhsjzODBMA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CfloLl0FEwki1GSvdcsW6+2I1qNT09B2ctz5NcSUbiGpbEBqlKgzC+jDjaot1hvRkA99OTf/lV78gUJLz9grY4c9j7FYpP4Ci6UualtW2PWI/AndFeFtioCVtOKwitCntZ1k39fKV32ADC8kctg6gyKoAILzyxeRqfEaQPwPCV0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Flmdob7a; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IBD+5owJJ1AonSAwylY7M9SemiSzjYpOwmmxMdBLbK0fxcT0aOu0aZ7PPnot5qoRGe/lhPsDVwZs5hIHkchSomA5AfGvQXg9nd2gncz1bxkHIWE+1x1gTpLDnsjntMz3R8EAyU9ZSNJdzrk2P77fPuZDh4JCG8dQQHo/WTIz1Ms=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L4fDTS7T; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Flmdob7a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEAF7C4CECF;
-	Tue,  3 Dec 2024 16:20:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L4fDTS7T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E99BC4CECF;
+	Tue,  3 Dec 2024 16:20:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733242830;
-	bh=raOQot7Fnce3bmbN5RPHHOr5b6t0xS3+ERXTeoNUPvE=;
+	s=korg; t=1733242833;
+	bh=XlakH/4w1RRqPn4Z66+m8ILItioAyhDyBIhsjzODBMA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Flmdob7aVEPs4w3wvGYVCedbaPTamgQhzzO2vep8ydvhygdCs9XS2uh+3oFLVjQ+g
-	 9VB9sl5ud5ittAtP1ljJG9cSBaR3LO6Ijh+Og1OiPWIyAyOWjOqq/Kc+Ix8Y/8Q3il
-	 n0THRWsO3x+R6eN+Ddjz/53xIQa3Gy0d+k5JqKsc=
+	b=L4fDTS7TXweTCVq8gDc+JWRhqjW822GeLZXacQULZr0sQo6KN2umv2AO75xQrw8bT
+	 hN1Sg3PgQ4t8aIt9+nTe9nVaveJBKkk4MOQRpd0q+Vis6Fv1LwMepugvyRABDcUw9t
+	 re5MMi0dhl3ytLulRQ6kRP5rwKdTczdj7+7CU8y8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
-	Keith Busch <kbusch@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Ming Lei <ming.lei@redhat.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 791/826] nvme/multipath: Fix RCU list traversal to use SRCU primitive
-Date: Tue,  3 Dec 2024 15:48:38 +0100
-Message-ID: <20241203144814.616216360@linuxfoundation.org>
+Subject: [PATCH 6.12 792/826] blk-mq: add non_owner variant of start_freeze/unfreeze queue APIs
+Date: Tue,  3 Dec 2024 15:48:39 +0100
+Message-ID: <20241203144814.654464132@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -51,105 +52,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Ming Lei <ming.lei@redhat.com>
 
-[ Upstream commit 5dd18f09ce7399df6fffe80d1598add46c395ae9 ]
+[ Upstream commit 8acdd0e7bfadda6b5103f2960d293581954454ed ]
 
-The code currently uses list_for_each_entry_rcu() while holding an SRCU
-lock, triggering false positive warnings with CONFIG_PROVE_RCU=y
-enabled:
+Add non_owner variant of start_freeze/unfreeze queue APIs, so that the
+caller knows that what they are doing, and we can skip lockdep support
+for non_owner variant in per-call level.
 
-	drivers/nvme/host/multipath.c:168 RCU-list traversed in non-reader section!!
-	drivers/nvme/host/multipath.c:227 RCU-list traversed in non-reader section!!
-	drivers/nvme/host/multipath.c:260 RCU-list traversed in non-reader section!!
+Prepare for supporting lockdep for freezing/unfreezing queue.
 
-While the list is properly protected by SRCU lock, the code uses the
-wrong list traversal primitive. Replace list_for_each_entry_rcu() with
-list_for_each_entry_srcu() to correctly indicate SRCU-based protection
-and eliminate the false warning.
-
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Fixes: be647e2c76b2 ("nvme: use srcu for iterating namespace list")
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Suggested-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Ming Lei <ming.lei@redhat.com>
+Link: https://lore.kernel.org/r/20241025003722.3630252-2-ming.lei@redhat.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Stable-dep-of: 3802f73bd807 ("block: fix uaf for flush rq while iterating tags")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/multipath.c | 21 ++++++++++++++-------
- 1 file changed, 14 insertions(+), 7 deletions(-)
+ block/blk-mq.c         | 20 ++++++++++++++++++++
+ include/linux/blk-mq.h |  2 ++
+ 2 files changed, 22 insertions(+)
 
-diff --git a/drivers/nvme/host/multipath.c b/drivers/nvme/host/multipath.c
-index 6a15873055b95..f25582e4d88bb 100644
---- a/drivers/nvme/host/multipath.c
-+++ b/drivers/nvme/host/multipath.c
-@@ -165,7 +165,8 @@ void nvme_kick_requeue_lists(struct nvme_ctrl *ctrl)
- 	int srcu_idx;
+diff --git a/block/blk-mq.c b/block/blk-mq.c
+index fbd63d189c740..0beed0ae0aeba 100644
+--- a/block/blk-mq.c
++++ b/block/blk-mq.c
+@@ -196,6 +196,26 @@ void blk_mq_unfreeze_queue(struct request_queue *q)
+ }
+ EXPORT_SYMBOL_GPL(blk_mq_unfreeze_queue);
  
- 	srcu_idx = srcu_read_lock(&ctrl->srcu);
--	list_for_each_entry_rcu(ns, &ctrl->namespaces, list) {
-+	list_for_each_entry_srcu(ns, &ctrl->namespaces, list,
-+				 srcu_read_lock_held(&ctrl->srcu)) {
- 		if (!ns->head->disk)
- 			continue;
- 		kblockd_schedule_work(&ns->head->requeue_work);
-@@ -209,7 +210,8 @@ void nvme_mpath_clear_ctrl_paths(struct nvme_ctrl *ctrl)
- 	int srcu_idx;
++/*
++ * non_owner variant of blk_freeze_queue_start
++ *
++ * Unlike blk_freeze_queue_start, the queue doesn't need to be unfrozen
++ * by the same task.  This is fragile and should not be used if at all
++ * possible.
++ */
++void blk_freeze_queue_start_non_owner(struct request_queue *q)
++{
++	blk_freeze_queue_start(q);
++}
++EXPORT_SYMBOL_GPL(blk_freeze_queue_start_non_owner);
++
++/* non_owner variant of blk_mq_unfreeze_queue */
++void blk_mq_unfreeze_queue_non_owner(struct request_queue *q)
++{
++	__blk_mq_unfreeze_queue(q, false);
++}
++EXPORT_SYMBOL_GPL(blk_mq_unfreeze_queue_non_owner);
++
+ /*
+  * FIXME: replace the scsi_internal_device_*block_nowait() calls in the
+  * mpt3sas driver such that this function can be removed.
+diff --git a/include/linux/blk-mq.h b/include/linux/blk-mq.h
+index 4fecf46ef681b..c5063e0a38a05 100644
+--- a/include/linux/blk-mq.h
++++ b/include/linux/blk-mq.h
+@@ -925,6 +925,8 @@ void blk_freeze_queue_start(struct request_queue *q);
+ void blk_mq_freeze_queue_wait(struct request_queue *q);
+ int blk_mq_freeze_queue_wait_timeout(struct request_queue *q,
+ 				     unsigned long timeout);
++void blk_mq_unfreeze_queue_non_owner(struct request_queue *q);
++void blk_freeze_queue_start_non_owner(struct request_queue *q);
  
- 	srcu_idx = srcu_read_lock(&ctrl->srcu);
--	list_for_each_entry_rcu(ns, &ctrl->namespaces, list) {
-+	list_for_each_entry_srcu(ns, &ctrl->namespaces, list,
-+				 srcu_read_lock_held(&ctrl->srcu)) {
- 		nvme_mpath_clear_current_path(ns);
- 		kblockd_schedule_work(&ns->head->requeue_work);
- 	}
-@@ -224,7 +226,8 @@ void nvme_mpath_revalidate_paths(struct nvme_ns *ns)
- 	int srcu_idx;
- 
- 	srcu_idx = srcu_read_lock(&head->srcu);
--	list_for_each_entry_rcu(ns, &head->list, siblings) {
-+	list_for_each_entry_srcu(ns, &head->list, siblings,
-+				 srcu_read_lock_held(&head->srcu)) {
- 		if (capacity != get_capacity(ns->disk))
- 			clear_bit(NVME_NS_READY, &ns->flags);
- 	}
-@@ -257,7 +260,8 @@ static struct nvme_ns *__nvme_find_path(struct nvme_ns_head *head, int node)
- 	int found_distance = INT_MAX, fallback_distance = INT_MAX, distance;
- 	struct nvme_ns *found = NULL, *fallback = NULL, *ns;
- 
--	list_for_each_entry_rcu(ns, &head->list, siblings) {
-+	list_for_each_entry_srcu(ns, &head->list, siblings,
-+				 srcu_read_lock_held(&head->srcu)) {
- 		if (nvme_path_is_disabled(ns))
- 			continue;
- 
-@@ -356,7 +360,8 @@ static struct nvme_ns *nvme_queue_depth_path(struct nvme_ns_head *head)
- 	unsigned int min_depth_opt = UINT_MAX, min_depth_nonopt = UINT_MAX;
- 	unsigned int depth;
- 
--	list_for_each_entry_rcu(ns, &head->list, siblings) {
-+	list_for_each_entry_srcu(ns, &head->list, siblings,
-+				 srcu_read_lock_held(&head->srcu)) {
- 		if (nvme_path_is_disabled(ns))
- 			continue;
- 
-@@ -424,7 +429,8 @@ static bool nvme_available_path(struct nvme_ns_head *head)
- 	if (!test_bit(NVME_NSHEAD_DISK_LIVE, &head->flags))
- 		return NULL;
- 
--	list_for_each_entry_rcu(ns, &head->list, siblings) {
-+	list_for_each_entry_srcu(ns, &head->list, siblings,
-+				 srcu_read_lock_held(&head->srcu)) {
- 		if (test_bit(NVME_CTRL_FAILFAST_EXPIRED, &ns->ctrl->flags))
- 			continue;
- 		switch (nvme_ctrl_state(ns->ctrl)) {
-@@ -785,7 +791,8 @@ static int nvme_update_ana_state(struct nvme_ctrl *ctrl,
- 		return 0;
- 
- 	srcu_idx = srcu_read_lock(&ctrl->srcu);
--	list_for_each_entry_rcu(ns, &ctrl->namespaces, list) {
-+	list_for_each_entry_srcu(ns, &ctrl->namespaces, list,
-+				 srcu_read_lock_held(&ctrl->srcu)) {
- 		unsigned nsid;
- again:
- 		nsid = le32_to_cpu(desc->nsids[n]);
+ void blk_mq_map_queues(struct blk_mq_queue_map *qmap);
+ void blk_mq_update_nr_hw_queues(struct blk_mq_tag_set *set, int nr_hw_queues);
 -- 
 2.43.0
 
