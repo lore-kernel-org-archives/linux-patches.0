@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECC441F757D;
-	Tue,  3 Dec 2024 14:58:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 033C81F759F;
+	Tue,  3 Dec 2024 14:58:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733237885; cv=none; b=FPBj9mJrvR3reBsnU+RzTAQcWcppOvoxcOPFqjFxwJyiAt6JBZyTSKd6GuFC4JUWuMZtpoaPSZskLHfXL5Td+xQEoIlB8vkdA2zhGefafg45zWTb+hUuo6dU5Nqwri6SIG3g04mF5ciUyJ7HJenrXi5FCjw7ztfoHLqKTIjqdtI=
+	t=1733237888; cv=none; b=UHNt+owUO3yY54tyQYFk+VIju6IIgrCcvmsjPe2+Zomji9JR+oind866mMS+GW5sEENW6pxn6Mf2XIkE5+yPPeGEsCPSYRkJAmdh9P78l8iS9BTgLgIOmne90kTmSzyUb58vH6LWA3eNGCI5GJyPPRWl9SCDHTSQc5bXd6JApxI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733237885; c=relaxed/simple;
-	bh=ImtleR/QvrhR31ttJNSe0K1Zwgq5aetmeU0PuMg9dC0=;
+	s=arc-20240116; t=1733237888; c=relaxed/simple;
+	bh=ZO4Y2fA/V6S0dHp8vRxtT8IZlwKdPtnc9BYE1gc49Gc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QIDzil2qXUnXbZK3IIG+dHUIB++3joBlU7AXgi4ddr44EQ6a2xk2XMfcin9E1m1juZi+IzoqnX9+tkiWcLPKg+jmf2TdLgAtO51zYCqAnu/v4Ld4O0FH4spuY490vM4MnpoeBZPfutuaGC29d3smbomTfcwfOPvNtbbxrsphQmk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z5KM3EYk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZkTrY0SOKkIrymbyomYhdoajr1yRQID+M3L0U4LjArfrd/ZP2dZpNZSXnwnJB1bycrcFwBf7nXJF1HBQ3pdr/dBTyQfUxWgpt0bEHfhDGly6rAZofXOE4qjiNDIHYMDfntkkhyLvfZboIehKOkLCf4WRMDQAhW53B/NGaFYDk/0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q1fVtKZj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z5KM3EYk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CFF1C4CED6;
-	Tue,  3 Dec 2024 14:58:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q1fVtKZj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F013C4CECF;
+	Tue,  3 Dec 2024 14:58:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733237884;
-	bh=ImtleR/QvrhR31ttJNSe0K1Zwgq5aetmeU0PuMg9dC0=;
+	s=korg; t=1733237887;
+	bh=ZO4Y2fA/V6S0dHp8vRxtT8IZlwKdPtnc9BYE1gc49Gc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z5KM3EYkkFN+gFFVpRHaGwbRd1s+DufGTtu1OwitIONlSBx3LRwGplIcxpB1ZJP+E
-	 9NyKvvuQtGqk7gJGHwqJJfOL4EmhmolHOLEeZvFsoz28kKfv92rI8VIO1ieuInAx67
-	 9JQP6rqzafdO5rnC3I6Q0VuI/d3/etmQE8PGzr04=
+	b=Q1fVtKZjW5ftQIBveH9CdEsLCqHrMoAZT06MXLHA5gQXPGObe/AG6u89CSDNDiO02
+	 NG9fxH+QkLTTho9JlusN0fNBj2HuVUSs765RN4j08ejrkxXhtP/in5efEyDklZYB4l
+	 SkyIN9vTwccFDWLOQZt/dfu/Jzn/+J5dbEAfTJv4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Palmer <daniel@0x0f.com>,
-	Finn Thain <fthain@linux-m68k.org>,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
+	David Thompson <davthompson@nvidia.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Shravan Kumar Ramani <shravankr@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 069/817] m68k: mvme147: Reinstate early console
-Date: Tue,  3 Dec 2024 15:34:01 +0100
-Message-ID: <20241203143958.382264477@linuxfoundation.org>
+Subject: [PATCH 6.11 096/817] EDAC/bluefield: Fix potential integer overflow
+Date: Tue,  3 Dec 2024 15:34:28 +0100
+Message-ID: <20241203143959.452618319@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -52,111 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Palmer <daniel@0x0f.com>
+From: David Thompson <davthompson@nvidia.com>
 
-[ Upstream commit 077b33b9e2833ff25050d986178a2c4c4036cbac ]
+[ Upstream commit 1fe774a93b46bb029b8f6fa9d1f25affa53f06c6 ]
 
-Commit a38eaa07a0ce ("m68k/mvme147: config.c - Remove unused
-functions"), removed the console functionality for the mvme147 instead
-of wiring it up to an early console.  Put the console write function
-back and wire it up like mvme16x does so it's possible to see Linux boot
-on this fine hardware once more.
+The 64-bit argument for the "get DIMM info" SMC call consists of mem_ctrl_idx
+left-shifted 16 bits and OR-ed with DIMM index.  With mem_ctrl_idx defined as
+32-bits wide the left-shift operation truncates the upper 16 bits of
+information during the calculation of the SMC argument.
 
-Fixes: a38eaa07a0ce ("m68k/mvme147: config.c - Remove unused functions")
-Signed-off-by: Daniel Palmer <daniel@0x0f.com>
-Co-developed-by: Finn Thain <fthain@linux-m68k.org>
-Signed-off-by: Finn Thain <fthain@linux-m68k.org>
-Reviewed-by: Geert Uytterhoeven <geert@linux-m68k.org>
-Link: https://lore.kernel.org/a82e8f0068a8722996a0ccfe666abb5e0a5c120d.1730850684.git.fthain@linux-m68k.org
-Signed-off-by: Geert Uytterhoeven <geert@linux-m68k.org>
+The mem_ctrl_idx stack variable must be defined as 64-bits wide to prevent any
+potential integer overflow, i.e. loss of data from upper 16 bits.
+
+Fixes: 82413e562ea6 ("EDAC, mellanox: Add ECC support for BlueField DDR4")
+Signed-off-by: David Thompson <davthompson@nvidia.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Shravan Kumar Ramani <shravankr@nvidia.com>
+Link: https://lore.kernel.org/r/20240930151056.10158-1-davthompson@nvidia.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/m68k/kernel/early_printk.c |  5 ++++-
- arch/m68k/mvme147/config.c      | 30 ++++++++++++++++++++++++++++++
- arch/m68k/mvme147/mvme147.h     |  6 ++++++
- 3 files changed, 40 insertions(+), 1 deletion(-)
- create mode 100644 arch/m68k/mvme147/mvme147.h
+ drivers/edac/bluefield_edac.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/m68k/kernel/early_printk.c b/arch/m68k/kernel/early_printk.c
-index 3cc944df04f65..f11ef9f1f56fc 100644
---- a/arch/m68k/kernel/early_printk.c
-+++ b/arch/m68k/kernel/early_printk.c
-@@ -13,6 +13,7 @@
- #include <asm/setup.h>
- 
- 
-+#include "../mvme147/mvme147.h"
- #include "../mvme16x/mvme16x.h"
- 
- asmlinkage void __init debug_cons_nputs(const char *s, unsigned n);
-@@ -22,7 +23,9 @@ static void __ref debug_cons_write(struct console *c,
+diff --git a/drivers/edac/bluefield_edac.c b/drivers/edac/bluefield_edac.c
+index 5b3164560648e..0e539c1073510 100644
+--- a/drivers/edac/bluefield_edac.c
++++ b/drivers/edac/bluefield_edac.c
+@@ -180,7 +180,7 @@ static void bluefield_edac_check(struct mem_ctl_info *mci)
+ static void bluefield_edac_init_dimms(struct mem_ctl_info *mci)
  {
- #if !(defined(CONFIG_SUN3) || defined(CONFIG_M68000) || \
-       defined(CONFIG_COLDFIRE))
--	if (MACH_IS_MVME16x)
-+	if (MACH_IS_MVME147)
-+		mvme147_scc_write(c, s, n);
-+	else if (MACH_IS_MVME16x)
- 		mvme16x_cons_write(c, s, n);
- 	else
- 		debug_cons_nputs(s, n);
-diff --git a/arch/m68k/mvme147/config.c b/arch/m68k/mvme147/config.c
-index 8b5dc07f0811f..cc2fb0a83cf0b 100644
---- a/arch/m68k/mvme147/config.c
-+++ b/arch/m68k/mvme147/config.c
-@@ -32,6 +32,7 @@
- #include <asm/mvme147hw.h>
- #include <asm/config.h>
- 
-+#include "mvme147.h"
- 
- static void mvme147_get_model(char *model);
- extern void mvme147_sched_init(void);
-@@ -185,3 +186,32 @@ int mvme147_hwclk(int op, struct rtc_time *t)
- 	}
- 	return 0;
- }
-+
-+static void scc_delay(void)
-+{
-+	__asm__ __volatile__ ("nop; nop;");
-+}
-+
-+static void scc_write(char ch)
-+{
-+	do {
-+		scc_delay();
-+	} while (!(in_8(M147_SCC_A_ADDR) & BIT(2)));
-+	scc_delay();
-+	out_8(M147_SCC_A_ADDR, 8);
-+	scc_delay();
-+	out_8(M147_SCC_A_ADDR, ch);
-+}
-+
-+void mvme147_scc_write(struct console *co, const char *str, unsigned int count)
-+{
-+	unsigned long flags;
-+
-+	local_irq_save(flags);
-+	while (count--)	{
-+		if (*str == '\n')
-+			scc_write('\r');
-+		scc_write(*str++);
-+	}
-+	local_irq_restore(flags);
-+}
-diff --git a/arch/m68k/mvme147/mvme147.h b/arch/m68k/mvme147/mvme147.h
-new file mode 100644
-index 0000000000000..140bc98b0102a
---- /dev/null
-+++ b/arch/m68k/mvme147/mvme147.h
-@@ -0,0 +1,6 @@
-+/* SPDX-License-Identifier: GPL-2.0-only */
-+
-+struct console;
-+
-+/* config.c */
-+void mvme147_scc_write(struct console *co, const char *str, unsigned int count);
+ 	struct bluefield_edac_priv *priv = mci->pvt_info;
+-	int mem_ctrl_idx = mci->mc_idx;
++	u64 mem_ctrl_idx = mci->mc_idx;
+ 	struct dimm_info *dimm;
+ 	u64 smc_info, smc_arg;
+ 	int is_empty = 1, i;
 -- 
 2.43.0
 
