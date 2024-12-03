@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 579FC1F4283;
-	Tue,  3 Dec 2024 15:40:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B49D01F9AAC;
+	Tue,  3 Dec 2024 15:40:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733240408; cv=none; b=BdYpFPKfI90D2KAT0hdQ4iiRcd5NFx3IJbeLGeggrq8QnlStbYEtM+wxARjVkdVi7+fE3X0E6/QmGum+g318fYwXAhtDSILCfWAQbjm3JabUhiQoQoaC+BvOjGVfoIpX7w2d+7eAkBM+AS5j431jTflk0XjlwUWizJC5jkue738=
+	t=1733240411; cv=none; b=ZTMN/pal2fIs+v1D18HYnxWIjqtV09SWKnUk/MSODNtS0PbYz98gvnoMBZGSaNp5ZHhXHWlUeMZ7FaEFUisyZxTsLbEjamsMpIWWJeu5sVpzHMl6NZSrs8G//FxZ8c16JNJ6au8c2UvbzSIJWx7DbTPWEgcoW0KuiFMbJcHnN1A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733240408; c=relaxed/simple;
-	bh=RAFywRKsEoIap7+zxIq9DrGAeX0iwGvVHSpGGLEBe9U=;
+	s=arc-20240116; t=1733240411; c=relaxed/simple;
+	bh=9VrahmPl98BFixHfyQHDkRImKj7PuCWRsQxLrfJ0vk0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kNMySZXLtB+QLcKzPJ8E7oWhA3g46gD47wKXv+d6Kc8G6wrMgIBPVuT+oRD3AAmWQQlq9SSQEQz8pnTpsZbtqm8CkzyJQ9znTxLMU0FVfNNy5pN/nf3IMcok8YwnUf+mD2VrkLPsn5P4pGlTT5zwvB6ZfObjioT3Jas8LCCcST0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hhNBIACM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HKbOAxg73viZN0QIIMgTjxw4dlMjUarsY1HJPC2iSGQbYOHyZzOUIKIlYC+LeamabeeYm9ab3qnOIjvCYLnQxthB5YgcLTBff7lVdDfLLaKM/J4AY8ZQgWfD1yTtlbkQ6/jBUeqw+s66Jcruo9X1vaALqAAoLNu+6EPOblSlONU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zV/j8/Br; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hhNBIACM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A19F4C4CECF;
-	Tue,  3 Dec 2024 15:40:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zV/j8/Br"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D98A9C4CED8;
+	Tue,  3 Dec 2024 15:40:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733240408;
-	bh=RAFywRKsEoIap7+zxIq9DrGAeX0iwGvVHSpGGLEBe9U=;
+	s=korg; t=1733240411;
+	bh=9VrahmPl98BFixHfyQHDkRImKj7PuCWRsQxLrfJ0vk0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hhNBIACM++jiux28Lc6cB+jNHhXOX7CB5bKx0W1JtOG5abboIdSusRVcn/1AHaPGD
-	 L07eOao3giCQvX4dNmXM4SGhGtijNsSihtwM4zrxUUcf1hWVsUb7LvSE0DMFL7p1HL
-	 e+dm+FjXUq1LQoWY3afN59V2CQqMmu9aFuA1N63I=
+	b=zV/j8/BrZpXzKiJyINrhiX9N9V2Ah+u0BcL5spUOMRGUa1U25lLNkDeCM8ucAezbv
+	 JOZOmsoi6EhUCn0t4Mr0Byrybiyi47/8jKq6300v4nVjAjqU7ylTfAnUKbzfBdtNLR
+	 Bv4LkySxTYK1m1zG4IC3BxMXt6Xecuf6jCsGkVfY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Colin Ian King <colin.i.king@gmail.com>,
-	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+	Hsin-Te Yuan <yuanhsinte@chromium.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 125/826] media: i2c: ds90ub960: Fix missing return check on ub960_rxport_read call
-Date: Tue,  3 Dec 2024 15:37:32 +0100
-Message-ID: <20241203144748.618872304@linuxfoundation.org>
+Subject: [PATCH 6.12 126/826] arm64: dts: mt8183: krane: Fix the address of eeprom at i2c4
+Date: Tue,  3 Dec 2024 15:37:33 +0100
+Message-ID: <20241203144748.657831682@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -53,38 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Colin Ian King <colin.i.king@gmail.com>
+From: Hsin-Te Yuan <yuanhsinte@chromium.org>
 
-[ Upstream commit 24ad2d1f773a11f69eecec3ec37ea3d76f2e9e7d ]
+[ Upstream commit e9c60c34948662b5d47573490ee538439b29e462 ]
 
-The function ub960_rxport_read is being called and afterwards ret is
-being checked for any failures, however ret is not being assigned to
-the return of the function call. Fix this by assigning ret to the
-return of the call which appears to be missing.
+The address of eeprom should be 50.
 
-Fixes: afe267f2d368 ("media: i2c: add DS90UB960 driver")
-Signed-off-by: Colin Ian King <colin.i.king@gmail.com>
-Reviewed-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Fixes: cd894e274b74 ("arm64: dts: mt8183: Add krane-sku176 board")
+Signed-off-by: Hsin-Te Yuan <yuanhsinte@chromium.org>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Reviewed-by: Matthias Brugger <matthias.bgg@gmail.com>
+Link: https://lore.kernel.org/r/20240909-eeprom-v1-1-1ed2bc5064f4@chromium.org
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/ds90ub960.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/mediatek/mt8183-kukui-krane.dtsi | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/media/i2c/ds90ub960.c b/drivers/media/i2c/ds90ub960.c
-index ffe5f25f86476..58424d8f72af0 100644
---- a/drivers/media/i2c/ds90ub960.c
-+++ b/drivers/media/i2c/ds90ub960.c
-@@ -1286,7 +1286,7 @@ static int ub960_rxport_get_strobe_pos(struct ub960_data *priv,
+diff --git a/arch/arm64/boot/dts/mediatek/mt8183-kukui-krane.dtsi b/arch/arm64/boot/dts/mediatek/mt8183-kukui-krane.dtsi
+index 0f5fa893a7742..8b56b8564ed7a 100644
+--- a/arch/arm64/boot/dts/mediatek/mt8183-kukui-krane.dtsi
++++ b/arch/arm64/boot/dts/mediatek/mt8183-kukui-krane.dtsi
+@@ -88,9 +88,9 @@ &i2c4 {
+ 	clock-frequency = <400000>;
+ 	vbus-supply = <&mt6358_vcn18_reg>;
  
- 	clk_delay += v & UB960_IR_RX_ANA_STROBE_SET_CLK_DELAY_MASK;
- 
--	ub960_rxport_read(priv, nport, UB960_RR_SFILTER_STS_1, &v);
-+	ret = ub960_rxport_read(priv, nport, UB960_RR_SFILTER_STS_1, &v);
- 	if (ret)
- 		return ret;
- 
+-	eeprom@54 {
++	eeprom@50 {
+ 		compatible = "atmel,24c32";
+-		reg = <0x54>;
++		reg = <0x50>;
+ 		pagesize = <32>;
+ 		vcc-supply = <&mt6358_vcn18_reg>;
+ 	};
 -- 
 2.43.0
 
