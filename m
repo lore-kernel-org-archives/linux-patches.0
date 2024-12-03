@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44C741FA826;
-	Tue,  3 Dec 2024 15:40:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA19E1FA240;
+	Tue,  3 Dec 2024 15:41:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733240458; cv=none; b=b7XzfrzBIwx7OJXzALBAC0w+XmtE5aQLNkH+oO/77AQz277NbPsOiVVmkD82StEYXKSnXwiE+CKv2B1BfbNxqbuI0rIkCGAK0h6PaZjXZ0CHlkcJGRTuZBPS8qI4qwiX2AEE2DK98mkSRcP9LE8tpuu+LT2/MkyD8dmZ1/gPKA4=
+	t=1733240461; cv=none; b=ClNEK7fRX7yvC/AwOI5dGMYJ1aYMz1xpOm9wZXoGT6AZDx2sXdJOCm/4WKTQnx0zXHcvsIde/7IfgtUsczcfebqiB+W9Cim4GDOvs1d/yYqVOA1DkPQpLH0ZANOzJcjHyq5hZZabt4+LoL4Uyd83OhFkdDjYyPYlZuL3jR0MHKY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733240458; c=relaxed/simple;
-	bh=Uhbksr926N57CW8L2Mply8/+5NImd+0GmNthlSnHkWU=;
+	s=arc-20240116; t=1733240461; c=relaxed/simple;
+	bh=byJSuX5boShDdOdMGGrCTIlF5r+PbfqwWH5/p5qjpgc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LnoXm1KjlTvcS/hlR3K29Ju5soKEXbBuKb4yoi5WY/189EuTsuDz09Po+OQ9Jz+y7dsoVT5N7+G0aGht2IHWroGr+pL4SCiIGszX/rz7YWNfIsseQ/1wr/IVuWiaMR1HlXWwLrsN1MeG7yyeMF45tbV5OqUpaciKWW/j+yGotXk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QXfEyqwS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sO4CexFXHzwUfjwz21p4i7WKKYBnzE7h3SmtUcsJIRRX9K1aU/tJmqE1TNAAI3+UPRtd92pcOXUomQkILZCgXU6LbikkVeXpufTjJsR9vrimAlmA5gkyTNqhTi/xUTMGdfvzbUnqMYkuO6du2Mlx5RXvQivbc6Gwq7Zrl0uisBA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pB7F+l3U; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QXfEyqwS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9733C4CECF;
-	Tue,  3 Dec 2024 15:40:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pB7F+l3U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29B60C4CED6;
+	Tue,  3 Dec 2024 15:41:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733240458;
-	bh=Uhbksr926N57CW8L2Mply8/+5NImd+0GmNthlSnHkWU=;
+	s=korg; t=1733240461;
+	bh=byJSuX5boShDdOdMGGrCTIlF5r+PbfqwWH5/p5qjpgc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QXfEyqwSLvLIvV/vAVmdD3dH1QgD+uV+JITQisl3S6axFQQsaNS28ImtTE7s/T/Vh
-	 x7sNuBr+y8ddRW1xk76NCRrbUDe2HibD/0D7b08kj5RahPD5HFHGP6iCW+snxGA7wb
-	 x3gsmQwmQo3zmXAeKt/eJvlyvgmJ5norw9botweI=
+	b=pB7F+l3UB8VYGnn+OT5z2fGHAsj3O1jMBTwmBAi/p170i/r4iIpzlao+7Hn+WDprU
+	 95iSpko70QWL62qW2Tl42ZArAcqtQC32VyrR5xDRIf0v9po/sKbwkG7Yy/NU9FMBIO
+	 hTvCDLzy24q0cuGseZ09RZyqtI1LDUW49OxQ6yrU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alper Nebi Yasak <alpernebiyasak@gmail.com>,
-	Pin-yen Lin <treapking@chromium.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Jinjie Ruan <ruanjinjie@huawei.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 109/826] arm64: dts: mediatek: mt8183-kukui: Disable DPI display interface
-Date: Tue,  3 Dec 2024 15:37:16 +0100
-Message-ID: <20241203144747.997096131@linuxfoundation.org>
+Subject: [PATCH 6.12 100/826] spi: spi-fsl-lpspi: Use IRQF_NO_AUTOEN flag in request_irq()
+Date: Tue,  3 Dec 2024 15:37:07 +0100
+Message-ID: <20241203144747.633988959@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -52,52 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alper Nebi Yasak <alpernebiyasak@gmail.com>
+From: Jinjie Ruan <ruanjinjie@huawei.com>
 
-[ Upstream commit 377548f05bd0905db52a1d50e5b328b9b4eb049d ]
+[ Upstream commit 003c7e01916c5e2af95add9b0cbda2e6163873e8 ]
 
-Commit 009d855a26fd ("arm64: dts: mt8183: add dpi node to mt8183") adds
-a device-tree node for the DPI display interface that feeds the external
-display pipeline, to enable HDMI support on the Pumpkin board.
+disable_irq() after request_irq() still has a time gap in which
+interrupts can come. request_irq() with IRQF_NO_AUTOEN flag will
+disable IRQ auto-enable when request IRQ.
 
-However, the external display is not fully described on Chrome devices,
-blocked by further work on DP / USB-C muxing graph bindings. This
-incomplete description currently breaks internal display at least on the
-Cozmo board. The same issue was found and fixed on MT8186 devices with
-commit 3079fb09ddac ("arm64: dts: mediatek: mt8186-corsola: Disable DPI
-display interface"), but the MT8183 change wasn't merged until then.
-
-Disable the external display interface for the Kukui device family until
-the necessary work is done, like in the MT8186 Corsola case.
-
-Fixes: 009d855a26fd ("arm64: dts: mt8183: add dpi node to mt8183")
-Link: https://lore.kernel.org/linux-mediatek/20240821042836.2631815-1-wenst@chromium.org/
-Signed-off-by: Alper Nebi Yasak <alpernebiyasak@gmail.com>
-Reviewed-by: Pin-yen Lin <treapking@chromium.org>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://lore.kernel.org/r/20240916162956.267340-1-alpernebiyasak@gmail.com
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Fixes: 9728fb3ce117 ("spi: lpspi: disable lpspi module irq in DMA mode")
+Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+Link: https://patch.msgid.link/20240906022828.891812-1-ruanjinjie@huawei.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/mediatek/mt8183-kukui.dtsi | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/spi/spi-fsl-lpspi.c | 12 ++++--------
+ 1 file changed, 4 insertions(+), 8 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/mediatek/mt8183-kukui.dtsi b/arch/arm64/boot/dts/mediatek/mt8183-kukui.dtsi
-index 22924f61ec9ed..07ae3c8e897b7 100644
---- a/arch/arm64/boot/dts/mediatek/mt8183-kukui.dtsi
-+++ b/arch/arm64/boot/dts/mediatek/mt8183-kukui.dtsi
-@@ -290,6 +290,11 @@ dsi_out: endpoint {
- 	};
- };
+diff --git a/drivers/spi/spi-fsl-lpspi.c b/drivers/spi/spi-fsl-lpspi.c
+index 977e8b55c82b7..9573b8fa4fbfc 100644
+--- a/drivers/spi/spi-fsl-lpspi.c
++++ b/drivers/spi/spi-fsl-lpspi.c
+@@ -891,7 +891,7 @@ static int fsl_lpspi_probe(struct platform_device *pdev)
+ 		return ret;
+ 	}
  
-+&dpi0 {
-+	/* TODO Re-enable after DP to Type-C port muxing can be described */
-+	status = "disabled";
-+};
-+
- &gic {
- 	mediatek,broken-save-restore-fw;
- };
+-	ret = devm_request_irq(&pdev->dev, irq, fsl_lpspi_isr, 0,
++	ret = devm_request_irq(&pdev->dev, irq, fsl_lpspi_isr, IRQF_NO_AUTOEN,
+ 			       dev_name(&pdev->dev), fsl_lpspi);
+ 	if (ret) {
+ 		dev_err(&pdev->dev, "can't get irq%d: %d\n", irq, ret);
+@@ -948,14 +948,10 @@ static int fsl_lpspi_probe(struct platform_device *pdev)
+ 	ret = fsl_lpspi_dma_init(&pdev->dev, fsl_lpspi, controller);
+ 	if (ret == -EPROBE_DEFER)
+ 		goto out_pm_get;
+-	if (ret < 0)
++	if (ret < 0) {
+ 		dev_warn(&pdev->dev, "dma setup error %d, use pio\n", ret);
+-	else
+-		/*
+-		 * disable LPSPI module IRQ when enable DMA mode successfully,
+-		 * to prevent the unexpected LPSPI module IRQ events.
+-		 */
+-		disable_irq(irq);
++		enable_irq(irq);
++	}
+ 
+ 	ret = devm_spi_register_controller(&pdev->dev, controller);
+ 	if (ret < 0) {
 -- 
 2.43.0
 
