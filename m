@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5887B1F759C;
-	Tue,  3 Dec 2024 15:32:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46F201F9427;
+	Tue,  3 Dec 2024 15:32:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733239966; cv=none; b=MUON2nDzDYfeHTZrpiRysETDbduoC7LfYytxGhop5nki4rHHtme7d63UDU8k+/A040B3v+ItkqZdNHiRQXEzxXhUERy7+7I9sIBhrXS8voG/cP6Qx7epoTm1T6ZYd2mQDAK5QwAQZ0ph7ccSnRGYwA32ProYfec7mRUeDjLeVfc=
+	t=1733239969; cv=none; b=uxTlDHfbxIEDU1avHaEK/n2WeUvlP2hjSm+rUOTU5RMZjPVK41aEBEZPtICdrqGzCRDn6PEZPFjFPCJi3xgjWutbXA58vHoNut33kIaODNwTbbfi6bmH8YWgmUW28MLWD+JlrqAoyRBWEgIWXa1kwGygH1FUKXdwH/Lits+eb+Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733239966; c=relaxed/simple;
-	bh=bqpo3tbcp1jZFa+MnelKu9aLLGrVihppMLuz+NA0PrY=;
+	s=arc-20240116; t=1733239969; c=relaxed/simple;
+	bh=a1Lx1MyLFcfFzb/O/HMzJstB3gGifxbyaKax/XP/yEI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r9vUzwYBQTHDDkBjaAeYUSI4r6j41o73XZJGGosHoCae6uSQ20WcFgWdOe/nYQKFknJopF8ch8OdzsR1i/WMqcPm2dJEUGxcRwG5l2mCAn4+dOEkkzwTdkwF47eTV37FuABh81SxcLRKfJK9rBdqxlCsjJpAlcs/3XktD70NSyU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fdnqcX8j; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nVL4t78jIQU7C1F60/m6wqndIJvrq8Z40LAMKtPP+uDJu3JEp4BLlW2UneFtvM0m7BkyIdaN/i0FDB8c1IpW+5gqtFKp/8TsVU1NHE+ZKl5XQLuVYWgUHNeb/hVDg7abWNMdCHWGmy8SUnHvIZEn64pkUOrIEwBqEZZ/KqjE2xw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j2y4sDDF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fdnqcX8j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D53B4C4CECF;
-	Tue,  3 Dec 2024 15:32:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j2y4sDDF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0195C4CECF;
+	Tue,  3 Dec 2024 15:32:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733239966;
-	bh=bqpo3tbcp1jZFa+MnelKu9aLLGrVihppMLuz+NA0PrY=;
+	s=korg; t=1733239969;
+	bh=a1Lx1MyLFcfFzb/O/HMzJstB3gGifxbyaKax/XP/yEI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fdnqcX8j1zwQYVLr1PlnRevtJ17hvUjAUsghl7baB7Vqrh6IpklsTdzHF5Q+v6whj
-	 y2PCs9k1hVP9Mt41EV4nm79f4KrP3lThIfV4u12Oj9x/TbAAryRl3y5dimiss0N4I2
-	 lusS9SpPF2CWKdAJFVOz9VOdzGh5w25klC40mUXQ=
+	b=j2y4sDDFBjDAT/k4o+3+Nrx3Ka+87DMvtBiH6hHeWkjycRYwK69+IKQHVBWhKozLM
+	 E8jkHvBfLk6Vfq1N2B/xCSIaSSO/JX/PlbpYXreTNwwNJf6Y0KV547NoJFTRiamA0K
+	 uj5bk4L5+PptPOi5DLweMi79MgjeWKvhxXg9eP9A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Masahiro Yamada <masahiroy@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 796/817] rtc: ab-eoz9: dont fail temperature reads on undervoltage notification
-Date: Tue,  3 Dec 2024 15:46:08 +0100
-Message-ID: <20241203144027.083419293@linuxfoundation.org>
+Subject: [PATCH 6.11 797/817] Rename .data.unlikely to .data..unlikely
+Date: Tue,  3 Dec 2024 15:46:09 +0100
+Message-ID: <20241203144027.122250283@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -51,46 +50,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maxime Chevallier <maxime.chevallier@bootlin.com>
+From: Masahiro Yamada <masahiroy@kernel.org>
 
-[ Upstream commit e0779a0dcf41a6452ac0a169cd96863feb5787c7 ]
+[ Upstream commit bb43a59944f45e89aa158740b8a16ba8f0b0fa2b ]
 
-The undervoltage flags reported by the RTC are useful to know if the
-time and date are reliable after a reboot. Although the threshold VLOW1
-indicates that the thermometer has been shutdown and time compensation
-is off, it doesn't mean that the temperature readout is currently
-impossible.
+Commit 7ccaba5314ca ("consolidate WARN_...ONCE() static variables")
+was intended to collect all .data.unlikely sections into one chunk.
+However, this has not worked when CONFIG_LD_DEAD_CODE_DATA_ELIMINATION
+or CONFIG_LTO_CLANG is enabled, because .data.unlikely matches the
+.data.[0-9a-zA-Z_]* pattern in the DATA_MAIN macro.
 
-As the system is running, the RTC voltage is now fully established and
-we can read the temperature.
+Commit cb87481ee89d ("kbuild: linker script do not match C names unless
+LD_DEAD_CODE_DATA_ELIMINATION is configured") was introduced to suppress
+the issue for the default CONFIG_LD_DEAD_CODE_DATA_ELIMINATION=n case,
+providing a minimal fix for stable backporting. We were aware this did
+not address the issue for CONFIG_LD_DEAD_CODE_DATA_ELIMINATION=y. The
+plan was to apply correct fixes and then revert cb87481ee89d. [1]
 
-Fixes: 67075b63cce2 ("rtc: add AB-RTCMC-32.768kHz-EOZ9 RTC support")
-Signed-off-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Link: https://lore.kernel.org/r/20241122101031.68916-3-maxime.chevallier@bootlin.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Seven years have passed since then, yet the #ifdef workaround remains in
+place.
+
+Using a ".." separator in the section name fixes the issue for
+CONFIG_LD_DEAD_CODE_DATA_ELIMINATION and CONFIG_LTO_CLANG.
+
+[1]: https://lore.kernel.org/linux-kbuild/CAK7LNASck6BfdLnESxXUeECYL26yUDm0cwRZuM4gmaWUkxjL5g@mail.gmail.com/
+
+Fixes: cb87481ee89d ("kbuild: linker script do not match C names unless LD_DEAD_CODE_DATA_ELIMINATION is configured")
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-ab-eoz9.c | 7 -------
- 1 file changed, 7 deletions(-)
+ include/asm-generic/vmlinux.lds.h | 2 +-
+ include/linux/rcupdate.h          | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/rtc/rtc-ab-eoz9.c b/drivers/rtc/rtc-ab-eoz9.c
-index 02f7d07112877..e17bce9a27468 100644
---- a/drivers/rtc/rtc-ab-eoz9.c
-+++ b/drivers/rtc/rtc-ab-eoz9.c
-@@ -396,13 +396,6 @@ static int abeoz9z3_temp_read(struct device *dev,
- 	if (ret < 0)
- 		return ret;
- 
--	if ((val & ABEOZ9_REG_CTRL_STATUS_V1F) ||
--	    (val & ABEOZ9_REG_CTRL_STATUS_V2F)) {
--		dev_err(dev,
--			"thermometer might be disabled due to low voltage\n");
--		return -EINVAL;
--	}
--
- 	switch (attr) {
- 	case hwmon_temp_input:
- 		ret = regmap_read(regmap, ABEOZ9_REG_REG_TEMP, &val);
+diff --git a/include/asm-generic/vmlinux.lds.h b/include/asm-generic/vmlinux.lds.h
+index 1ae44793132a8..bee5a71f4b41e 100644
+--- a/include/asm-generic/vmlinux.lds.h
++++ b/include/asm-generic/vmlinux.lds.h
+@@ -349,7 +349,7 @@
+ 	*(.data..decrypted)						\
+ 	*(.ref.data)							\
+ 	*(.data..shared_aligned) /* percpu related */			\
+-	*(.data.unlikely)						\
++	*(.data..unlikely)						\
+ 	__start_once = .;						\
+ 	*(.data.once)							\
+ 	__end_once = .;							\
+diff --git a/include/linux/rcupdate.h b/include/linux/rcupdate.h
+index 13f6f00aecf9c..1986d017b67fb 100644
+--- a/include/linux/rcupdate.h
++++ b/include/linux/rcupdate.h
+@@ -390,7 +390,7 @@ static inline int debug_lockdep_rcu_enabled(void)
+  */
+ #define RCU_LOCKDEP_WARN(c, s)						\
+ 	do {								\
+-		static bool __section(".data.unlikely") __warned;	\
++		static bool __section(".data..unlikely") __warned;	\
+ 		if (debug_lockdep_rcu_enabled() && (c) &&		\
+ 		    debug_lockdep_rcu_enabled() && !__warned) {		\
+ 			__warned = true;				\
 -- 
 2.43.0
 
