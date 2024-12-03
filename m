@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69C6B2D7BF;
-	Tue,  3 Dec 2024 15:24:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C183F1F6696;
+	Tue,  3 Dec 2024 15:24:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733239480; cv=none; b=YWAGU0F2x0xYox6UxNntD88/xfj/18olWRFlYpsI4f2SG5slElPn3O0ucU70CwuZqeNBqd3XrkNn1CK3wduZvHNhsTFf5qdHgTSGf2NKPsI9rQ8F+AJAdSlTgVs5Fi4psHBlueZfiRrTseAHP6hKE/xMiG4awmWpbjQAgbmBzTw=
+	t=1733239483; cv=none; b=WqTrklmkaNU1JHNxA5U0urNrjTHqyvH0RFR7yydhQDYOBnoL0bnfCWfky0pvXYQcOsGPIRYZBRgHA6v80O3m/8V6xpxBcmlmgkCEPYa44O1YzhKe1g77XQtR4t2GwpxoiQIl7tgfUCA0IuUzacRWR4l8kq1+oAOofD0pLKT8s7c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733239480; c=relaxed/simple;
-	bh=gxLzONGDzUKvpHVFEKoRZ/9j/Z9mWzu1Ggmo1+u0aZA=;
+	s=arc-20240116; t=1733239483; c=relaxed/simple;
+	bh=Td8qliLq6kYdQJMfbavyDCIesQC3qppJrzOaS9CDxi4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=pzAvzZn5lt5n7tK9f0NI2A5rt5IwK86Fy3qMMl2ToqCf/hTHLn8c3kvY9RyPAOX7/NDZQkI51t0in0zGsoUQ0mo/LRmffhAomNpOxB/d2tUTAjITBAyAUyS8UJTdNcsVZxhOw5r8N8Bp6HvqvGorFtbv050g6566+EzxgF09kW4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GN4b25bN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Y+KYS9iaRua1pQa6srEp8Bakeh5T1e0Qb9+L1R2C6x74Nfbgpvvc3tBs6fuFBR1zf73lpKiMybAmAmV+Pa1sbAQHEM85nTYvW8sw3OZx9MLt8pDTjHUkxaOl3e/2iOgBPWZqcQJgGY7Tkw/LrdQsTncw19TI+sF14UddzzgYn9o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TzLajudk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GN4b25bN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7F19C4CECF;
-	Tue,  3 Dec 2024 15:24:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TzLajudk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC245C4CECF;
+	Tue,  3 Dec 2024 15:24:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733239480;
-	bh=gxLzONGDzUKvpHVFEKoRZ/9j/Z9mWzu1Ggmo1+u0aZA=;
+	s=korg; t=1733239483;
+	bh=Td8qliLq6kYdQJMfbavyDCIesQC3qppJrzOaS9CDxi4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GN4b25bNvG1rTRO2pTvUKs4AmZHuJQSpmUvPl2zmUb+UyUuAPIfis1OY2oN3OvVKT
-	 kcdEnQTLM9JCWM+2Vfwpkr3YKnnnsYnEptGmtYLZb+pocQ46LwPsLW/LPy/+ou22qk
-	 iliqUjIy+HIOrOFEnFc88P+e3dlOUTauS+MwAW1o=
+	b=TzLajudkJ64BA5ojyRwDHdfk6tD3inkAb60TrWuWiXSHM35QEr9fXq90OdxaDe93f
+	 i9AkuEB0nFcCZ9JfRrjuRNe/iG6cbh1GUwAzgVr7+ew9uS3R1rL12qyv484EKr5tjw
+	 S0lSHvBpmHZZxgbNqxBszXnUteEkFRzfc+Sb3PgY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	=?UTF-8?q?Beno=C3=AEt=20Sevens?= <bsevens@google.com>,
-	stable@kernel.org,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.11 628/817] ALSA: usb-audio: Fix potential out-of-bound accesses for Extigy and Mbox devices
-Date: Tue,  3 Dec 2024 15:43:20 +0100
-Message-ID: <20241203144020.451246153@linuxfoundation.org>
+Subject: [PATCH 6.11 629/817] ALSA: usb-audio: Fix out of bounds reads when finding clock sources
+Date: Tue,  3 Dec 2024 15:43:21 +0100
+Message-ID: <20241203144020.489362889@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -52,102 +51,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benoît Sevens <bsevens@google.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-commit b909df18ce2a998afef81d58bbd1a05dc0788c40 upstream.
+commit a3dd4d63eeb452cfb064a13862fb376ab108f6a6 upstream.
 
-A bogus device can provide a bNumConfigurations value that exceeds the
-initial value used in usb_get_configuration for allocating dev->config.
+The current USB-audio driver code doesn't check bLength of each
+descriptor at traversing for clock descriptors.  That is, when a
+device provides a bogus descriptor with a shorter bLength, the driver
+might hit out-of-bounds reads.
 
-This can lead to out-of-bounds accesses later, e.g. in
-usb_destroy_configuration.
+For addressing it, this patch adds sanity checks to the validator
+functions for the clock descriptor traversal.  When the descriptor
+length is shorter than expected, it's skipped in the loop.
 
-Signed-off-by: Benoît Sevens <bsevens@google.com>
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Cc: stable@kernel.org
-Link: https://patch.msgid.link/20241120124144.3814457-1-bsevens@google.com
+For the clock source and clock multiplier descriptors, we can just
+check bLength against the sizeof() of each descriptor type.
+OTOH, the clock selector descriptor of UAC2 and UAC3 has an array
+of bNrInPins elements and two more fields at its tail, hence those
+have to be checked in addition to the sizeof() check.
+
+Reported-by: Benoît Sevens <bsevens@google.com>
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/20241121140613.3651-1-bsevens@google.com
+Link: https://patch.msgid.link/20241125144629.20757-1-tiwai@suse.de
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/quirks.c |   27 +++++++++++++++++++++------
- 1 file changed, 21 insertions(+), 6 deletions(-)
+ sound/usb/clock.c |   24 +++++++++++++++++++++++-
+ 1 file changed, 23 insertions(+), 1 deletion(-)
 
---- a/sound/usb/quirks.c
-+++ b/sound/usb/quirks.c
-@@ -555,6 +555,7 @@ int snd_usb_create_quirk(struct snd_usb_
- static int snd_usb_extigy_boot_quirk(struct usb_device *dev, struct usb_interface *intf)
- {
- 	struct usb_host_config *config = dev->actconfig;
-+	struct usb_device_descriptor new_device_descriptor;
- 	int err;
+--- a/sound/usb/clock.c
++++ b/sound/usb/clock.c
+@@ -36,6 +36,12 @@ union uac23_clock_multiplier_desc {
+ 	struct uac_clock_multiplier_descriptor v3;
+ };
  
- 	if (le16_to_cpu(get_cfg_desc(config)->wTotalLength) == EXTIGY_FIRMWARE_SIZE_OLD ||
-@@ -566,10 +567,14 @@ static int snd_usb_extigy_boot_quirk(str
- 		if (err < 0)
- 			dev_dbg(&dev->dev, "error sending boot message: %d\n", err);
- 		err = usb_get_descriptor(dev, USB_DT_DEVICE, 0,
--				&dev->descriptor, sizeof(dev->descriptor));
--		config = dev->actconfig;
-+				&new_device_descriptor, sizeof(new_device_descriptor));
- 		if (err < 0)
- 			dev_dbg(&dev->dev, "error usb_get_descriptor: %d\n", err);
-+		if (new_device_descriptor.bNumConfigurations > dev->descriptor.bNumConfigurations)
-+			dev_dbg(&dev->dev, "error too large bNumConfigurations: %d\n",
-+				new_device_descriptor.bNumConfigurations);
-+		else
-+			memcpy(&dev->descriptor, &new_device_descriptor, sizeof(dev->descriptor));
- 		err = usb_reset_configuration(dev);
- 		if (err < 0)
- 			dev_dbg(&dev->dev, "error usb_reset_configuration: %d\n", err);
-@@ -901,6 +906,7 @@ static void mbox2_setup_48_24_magic(stru
- static int snd_usb_mbox2_boot_quirk(struct usb_device *dev)
- {
- 	struct usb_host_config *config = dev->actconfig;
-+	struct usb_device_descriptor new_device_descriptor;
- 	int err;
- 	u8 bootresponse[0x12];
- 	int fwsize;
-@@ -936,10 +942,14 @@ static int snd_usb_mbox2_boot_quirk(stru
- 	dev_dbg(&dev->dev, "device initialised!\n");
++/* check whether the descriptor bLength has the minimal length */
++#define DESC_LENGTH_CHECK(p, proto) \
++	((proto) == UAC_VERSION_3 ? \
++	 ((p)->v3.bLength >= sizeof((p)->v3)) :	\
++	 ((p)->v2.bLength >= sizeof((p)->v2)))
++
+ #define GET_VAL(p, proto, field) \
+ 	((proto) == UAC_VERSION_3 ? (p)->v3.field : (p)->v2.field)
  
- 	err = usb_get_descriptor(dev, USB_DT_DEVICE, 0,
--		&dev->descriptor, sizeof(dev->descriptor));
--	config = dev->actconfig;
-+		&new_device_descriptor, sizeof(new_device_descriptor));
- 	if (err < 0)
- 		dev_dbg(&dev->dev, "error usb_get_descriptor: %d\n", err);
-+	if (new_device_descriptor.bNumConfigurations > dev->descriptor.bNumConfigurations)
-+		dev_dbg(&dev->dev, "error too large bNumConfigurations: %d\n",
-+			new_device_descriptor.bNumConfigurations);
+@@ -58,6 +64,8 @@ static bool validate_clock_source(void *
+ {
+ 	union uac23_clock_source_desc *cs = p;
+ 
++	if (!DESC_LENGTH_CHECK(cs, proto))
++		return false;
+ 	return GET_VAL(cs, proto, bClockID) == id;
+ }
+ 
+@@ -65,13 +73,27 @@ static bool validate_clock_selector(void
+ {
+ 	union uac23_clock_selector_desc *cs = p;
+ 
+-	return GET_VAL(cs, proto, bClockID) == id;
++	if (!DESC_LENGTH_CHECK(cs, proto))
++		return false;
++	if (GET_VAL(cs, proto, bClockID) != id)
++		return false;
++	/* additional length check for baCSourceID array (in bNrInPins size)
++	 * and two more fields (which sizes depend on the protocol)
++	 */
++	if (proto == UAC_VERSION_3)
++		return cs->v3.bLength >= sizeof(cs->v3) + cs->v3.bNrInPins +
++			4 /* bmControls */ + 2 /* wCSelectorDescrStr */;
 +	else
-+		memcpy(&dev->descriptor, &new_device_descriptor, sizeof(dev->descriptor));
++		return cs->v2.bLength >= sizeof(cs->v2) + cs->v2.bNrInPins +
++			1 /* bmControls */ + 1 /* iClockSelector */;
+ }
  
- 	err = usb_reset_configuration(dev);
- 	if (err < 0)
-@@ -1249,6 +1259,7 @@ static void mbox3_setup_defaults(struct
- static int snd_usb_mbox3_boot_quirk(struct usb_device *dev)
+ static bool validate_clock_multiplier(void *p, int id, int proto)
  {
- 	struct usb_host_config *config = dev->actconfig;
-+	struct usb_device_descriptor new_device_descriptor;
- 	int err;
- 	int descriptor_size;
+ 	union uac23_clock_multiplier_desc *cs = p;
  
-@@ -1262,10 +1273,14 @@ static int snd_usb_mbox3_boot_quirk(stru
- 	dev_dbg(&dev->dev, "MBOX3: device initialised!\n");
++	if (!DESC_LENGTH_CHECK(cs, proto))
++		return false;
+ 	return GET_VAL(cs, proto, bClockID) == id;
+ }
  
- 	err = usb_get_descriptor(dev, USB_DT_DEVICE, 0,
--		&dev->descriptor, sizeof(dev->descriptor));
--	config = dev->actconfig;
-+		&new_device_descriptor, sizeof(new_device_descriptor));
- 	if (err < 0)
- 		dev_dbg(&dev->dev, "MBOX3: error usb_get_descriptor: %d\n", err);
-+	if (new_device_descriptor.bNumConfigurations > dev->descriptor.bNumConfigurations)
-+		dev_dbg(&dev->dev, "MBOX3: error too large bNumConfigurations: %d\n",
-+			new_device_descriptor.bNumConfigurations);
-+	else
-+		memcpy(&dev->descriptor, &new_device_descriptor, sizeof(dev->descriptor));
- 
- 	err = usb_reset_configuration(dev);
- 	if (err < 0)
 
 
