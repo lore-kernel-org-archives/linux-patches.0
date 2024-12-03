@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0DFF2D7BF;
-	Tue,  3 Dec 2024 15:16:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09B692D7BF;
+	Tue,  3 Dec 2024 15:16:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733238996; cv=none; b=So8rFCiaTvjJ9+WPFc0OYLPyRWDteMNhLlO4yIQrxPYRUQtfuttwr/2s+AGXS9/zslhyak7cktslz2dWD+z6MrZtSOIVS8wZ8w9Lipnwr6kOI3rwePqO2APhwlO9n8Jllc+MiEaiK4uxXl1Y+WpSSmp2xiIJEtTUWPSbR/BX33g=
+	t=1733238999; cv=none; b=HdtvohbUlhkEk8XPmrZeGaCqalKRTCArAS/KUIGFNPZA+nLL0tJHcYCuwfMTRUguSlpredQ7xGFmYT5roU8U+Qwh9Vz+RpP0+XdNX7gqPwEfuSZE+vmM8FbkM8AaeKoCSQI+C2ybNdaxJc9joZcxRhJ0owObY3/hRLKgGdLAfEA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733238996; c=relaxed/simple;
-	bh=+wKoZpIq0NiIipHBhms2ZsC6xznCqGFPr0T3aJKQyfc=;
+	s=arc-20240116; t=1733238999; c=relaxed/simple;
+	bh=KP2FjRCaZR0Ke94YqrpTHKC2eTpVvVTELUmmKFMUp7A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hGjpiID0FDG6cK79bnUIA/YaN/Ms1LFFzkQxpQQATI7gkDdnYd8tyqYfm01gq+Cy2SpAsGRU9mKxRaO3BwXu/Y+p6cbsla6ylc9ZyvGuYB8DMC1OL9+OWiQoVnyMOQsG97hNMl3OsrB52dEL6WfWdvuWXsMlOxmBzS1tj38zhk8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xARo3wgg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ilEr5roaWiRRL2lSXe10chION6HmaS/EJlnhph5XFSZxD808Gsih2oqwq0hsnLCLXHj+J/RrgP4EquNrdYREdLW6jFZ1qb0PdkGUp6vhFoaNkn15UNA2fye/3hSCug93Ppa17qDN8ol5mB/VnKHA9By9sNM3v5eiIyay5BbYgVI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iNxRQZjg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xARo3wgg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75CE2C4CECF;
-	Tue,  3 Dec 2024 15:16:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iNxRQZjg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83A29C4CECF;
+	Tue,  3 Dec 2024 15:16:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733238995;
-	bh=+wKoZpIq0NiIipHBhms2ZsC6xznCqGFPr0T3aJKQyfc=;
+	s=korg; t=1733238998;
+	bh=KP2FjRCaZR0Ke94YqrpTHKC2eTpVvVTELUmmKFMUp7A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xARo3wggRhbfIveK5Vxs/awroL3Wgq8uZO/3kcPkV7y1j18YNKADNn48OE+3RkKX1
-	 Dlb1G7Y75UPkjrYGUtGW4VQeDBjp/FBPm0SLRuzZnSbgH93q3+i+Z/pR/mGKvVjH0b
-	 u28Pua7SFtLRI0JGnbRToAS0yYqjK0AOpxS+b9fU=
+	b=iNxRQZjg3Xg6ecJ7td1gGRrHyWX+0mw9t5HC8bgqj/ItbDmFa7WpfBkUZHsAZblGm
+	 9nP/ylOFJbCImhMQyW4cfndVmYLx0sIJHNopvPIsS4ZOYGkeAbp56WYOfAKdqgw0HY
+	 ScvC0oXhrScwyzF1D8tCzSqXHyP20AGssEunqd3Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
-	Stephen Boyd <sboyd@kernel.org>,
+	Alan Stern <stern@rowland.harvard.edu>,
+	Douglas Gilbert <dgilbert@interlog.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 468/817] clk: en7523: remove REG_PCIE*_{MEM,MEM_MASK} configuration
-Date: Tue,  3 Dec 2024 15:40:40 +0100
-Message-ID: <20241203144014.140346034@linuxfoundation.org>
+Subject: [PATCH 6.11 442/817] scsi: sg: Enable runtime power management
+Date: Tue,  3 Dec 2024 15:40:14 +0100
+Message-ID: <20241203144013.133397214@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -51,69 +53,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenzo Bianconi <lorenzo@kernel.org>
+From: Bart Van Assche <bvanassche@acm.org>
 
-[ Upstream commit c31d1cdd7bff1d2c13d435bb9d0c76bfaa332097 ]
+[ Upstream commit 4045de893f691f75193c606aec440c365cf7a7be ]
 
-REG_PCIE*_MEM and REG_PCIE*_MEM_MASK regs (PBUS_CSR memory region) are not
-part of the scu block on the EN7581 SoC and they are used to select the
-PCIE ports on the PBUS, so remove this configuration from the clock driver
-and set these registers in the PCIE host driver instead.
-This patch does not introduce any backward incompatibility since the dts
-for EN7581 SoC is not upstream yet.
+In 2010, runtime power management support was implemented in the SCSI
+core.  The description of patch "[SCSI] implement runtime Power
+Management" mentions that the sg driver is skipped but not why. This
+patch enables runtime power management even if an instance of the sg
+driver is held open.  Enabling runtime PM for the sg driver is safe
+because all interactions of the sg driver with the SCSI device pass
+through the block layer (blk_execute_rq_nowait()) and the block layer
+already supports runtime PM.
 
-Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Link: https://lore.kernel.org/r/20241112-clk-en7581-syscon-v2-2-8ada5e394ae4@kernel.org
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
-Stable-dep-of: f98eded9e9ab ("clk: en7523: fix estimation of fixed rate for EN7581")
+Cc: Alan Stern <stern@rowland.harvard.edu>
+Cc: Douglas Gilbert <dgilbert@interlog.com>
+Fixes: bc4f24014de5 ("[SCSI] implement runtime Power Management")
+Signed-off-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://lore.kernel.org/r/20241030220310.1373569-1-bvanassche@acm.org
+Acked-by: Alan Stern <stern@rowland.harvard.edu>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/clk-en7523.c | 18 ------------------
- 1 file changed, 18 deletions(-)
+ drivers/scsi/sg.c | 9 +--------
+ 1 file changed, 1 insertion(+), 8 deletions(-)
 
-diff --git a/drivers/clk/clk-en7523.c b/drivers/clk/clk-en7523.c
-index 22fbea61c3dcc..ec6716844fdcf 100644
---- a/drivers/clk/clk-en7523.c
-+++ b/drivers/clk/clk-en7523.c
-@@ -31,12 +31,6 @@
- #define   REG_RESET_CONTROL_PCIE1	BIT(27)
- #define   REG_RESET_CONTROL_PCIE2	BIT(26)
- /* EN7581 */
--#define REG_PCIE0_MEM			0x00
--#define REG_PCIE0_MEM_MASK		0x04
--#define REG_PCIE1_MEM			0x08
--#define REG_PCIE1_MEM_MASK		0x0c
--#define REG_PCIE2_MEM			0x10
--#define REG_PCIE2_MEM_MASK		0x14
- #define REG_NP_SCU_PCIC			0x88
- #define REG_NP_SCU_SSTR			0x9c
- #define REG_PCIE_XSI0_SEL_MASK		GENMASK(14, 13)
-@@ -415,26 +409,14 @@ static void en7581_pci_disable(struct clk_hw *hw)
- static int en7581_clk_hw_init(struct platform_device *pdev,
- 			      void __iomem *np_base)
- {
--	void __iomem *pb_base;
- 	u32 val;
+diff --git a/drivers/scsi/sg.c b/drivers/scsi/sg.c
+index baf870a03ecf6..9e6eebf307d3a 100644
+--- a/drivers/scsi/sg.c
++++ b/drivers/scsi/sg.c
+@@ -307,10 +307,6 @@ sg_open(struct inode *inode, struct file *filp)
+ 	if (retval)
+ 		goto sg_put;
  
--	pb_base = devm_platform_ioremap_resource(pdev, 3);
--	if (IS_ERR(pb_base))
--		return PTR_ERR(pb_base);
+-	retval = scsi_autopm_get_device(device);
+-	if (retval)
+-		goto sdp_put;
 -
- 	val = readl(np_base + REG_NP_SCU_SSTR);
- 	val &= ~(REG_PCIE_XSI0_SEL_MASK | REG_PCIE_XSI1_SEL_MASK);
- 	writel(val, np_base + REG_NP_SCU_SSTR);
- 	val = readl(np_base + REG_NP_SCU_PCIC);
- 	writel(val | 3, np_base + REG_NP_SCU_PCIC);
+ 	/* scsi_block_when_processing_errors() may block so bypass
+ 	 * check if O_NONBLOCK. Permits SCSI commands to be issued
+ 	 * during error recovery. Tread carefully. */
+@@ -318,7 +314,7 @@ sg_open(struct inode *inode, struct file *filp)
+ 	      scsi_block_when_processing_errors(device))) {
+ 		retval = -ENXIO;
+ 		/* we are in error recovery for this device */
+-		goto error_out;
++		goto sdp_put;
+ 	}
  
--	writel(0x20000000, pb_base + REG_PCIE0_MEM);
--	writel(0xfc000000, pb_base + REG_PCIE0_MEM_MASK);
--	writel(0x24000000, pb_base + REG_PCIE1_MEM);
--	writel(0xfc000000, pb_base + REG_PCIE1_MEM_MASK);
--	writel(0x28000000, pb_base + REG_PCIE2_MEM);
--	writel(0xfc000000, pb_base + REG_PCIE2_MEM_MASK);
--
- 	return 0;
- }
+ 	mutex_lock(&sdp->open_rel_lock);
+@@ -371,8 +367,6 @@ sg_open(struct inode *inode, struct file *filp)
+ 	}
+ error_mutex_locked:
+ 	mutex_unlock(&sdp->open_rel_lock);
+-error_out:
+-	scsi_autopm_put_device(device);
+ sdp_put:
+ 	kref_put(&sdp->d_ref, sg_device_destroy);
+ 	scsi_device_put(device);
+@@ -392,7 +386,6 @@ sg_release(struct inode *inode, struct file *filp)
+ 	SCSI_LOG_TIMEOUT(3, sg_printk(KERN_INFO, sdp, "sg_release\n"));
+ 
+ 	mutex_lock(&sdp->open_rel_lock);
+-	scsi_autopm_put_device(sdp->device);
+ 	kref_put(&sfp->f_ref, sg_remove_sfp);
+ 	sdp->open_cnt--;
  
 -- 
 2.43.0
