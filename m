@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C9A21FCF72;
-	Tue,  3 Dec 2024 15:35:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08E241F759C;
+	Tue,  3 Dec 2024 15:35:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733240131; cv=none; b=BVoibvuM1ZZ/nPtRjqt4/p9isamDIvoZ/FOVoZzn/y+L4ps3WJdVTWWRSLoOaW/MItgcvZmk3rdU/+eULbazDUuYkf9P7QA4GSsAWtA6RMdDHHztekTnMrvy68s4Z2bSHmYjUXugFhK/g+f6pMS9sKLz9qqKzlH9SXAK3xeBrSU=
+	t=1733240134; cv=none; b=X9KHaRfzDCO5m6BvfSl0qVUFb9j+7haPk2c1AP6HGuJadxw9xlWY3RMQL3UzU4bs5tCym8U/WjiFgFy5ocR21NbEk1uWxW2qA1SfsMSL/u505FrY6sVFXNCu8x61GxhZwzpAo4NvbrLQuEhTV7a8sOUoBVbsg+FQ5k/0yiMgaxY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733240131; c=relaxed/simple;
-	bh=YKEcBRPbL08zVB+eghihwRrT1utGxznmLQyRlwQOqQs=;
+	s=arc-20240116; t=1733240134; c=relaxed/simple;
+	bh=NHWVEi4rcX3bNWgXSad3tTsf4eICe4ft4yUkW025LKk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Bn1IjqRdrCT7HL+3zB4nfm2FYXYHF9VrWYSC+BDJhl+cFKc9d6PkE6Pmvjxj+7kITT2jq3XiV/oxj+iZn6TpUAy9Qjv7BsU3AzeaasKK2hYrHNhMkba2enO3Nl58xU95aleVbeIGnn0SaieUUygNu+wvRHLQO7prmhwj/bHKGqw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c08tLfuC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ogwtMDWmmV/2w6vMrysxcQTJlotpJQEUiN6cYM8jnypZTSOcmZ59dZlCkaFaDo8VD+Qeo868YEezWi5BdBmpyHpTY/UcUnXBl60oTkIDy0zkAIzk82afIq2csE/h7dg6iT6YezjrRk6ZRiSlOF+SUvces44nLuj3GDhLxWgKnRo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CDAWx96Z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c08tLfuC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3C96C4CECF;
-	Tue,  3 Dec 2024 15:35:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CDAWx96Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81902C4CECF;
+	Tue,  3 Dec 2024 15:35:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733240131;
-	bh=YKEcBRPbL08zVB+eghihwRrT1utGxznmLQyRlwQOqQs=;
+	s=korg; t=1733240133;
+	bh=NHWVEi4rcX3bNWgXSad3tTsf4eICe4ft4yUkW025LKk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c08tLfuCV+g0rfiL592mMU9Lrhn/oQpcH8sz3EEHUcaMeo/g+3GFE6lTvTSqIm1ai
-	 taGCwwhfSWO/5Ku9+LhBh03CeMsBhpcqJkvvqrmbxRa2EbDBUNtg2TSMKAycvghb6C
-	 22GbU6rhf1V2oQaR2xjCA2+s7iaYehl7gHJznHk4=
+	b=CDAWx96ZDOEiEqQWGmhCXPn9KLGk2mk//l39dMPdzX75IMi7byIN4usUchss15chG
+	 Tj+vpihvj+HR7O/s69kB6kITjIS/dG25bm2jfdZauIJBnibwICWLJO173lRKdoPyZs
+	 5ue7kthJqdzzXwO2IF5YnfHiURiIlzW99fU0T3y8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gerd Bayer <gbayer@linux.ibm.com>,
+	Marc Hartmayer <mhartmay@linux.ibm.com>,
+	Eric Farman <farman@linux.ibm.com>,
+	Cornelia Huck <cohuck@redhat.com>,
+	Halil Pasic <pasic@linux.ibm.com>,
 	Heiko Carstens <hca@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 004/826] s390/facilities: Fix warning about shadow of global variable
-Date: Tue,  3 Dec 2024 15:35:31 +0100
-Message-ID: <20241203144743.615942614@linuxfoundation.org>
+Subject: [PATCH 6.12 005/826] s390/virtio_ccw: Fix dma_parm pointer not set up
+Date: Tue,  3 Dec 2024 15:35:32 +0100
+Message-ID: <20241203144743.654551103@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -51,84 +54,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gerd Bayer <gbayer@linux.ibm.com>
+From: Halil Pasic <pasic@linux.ibm.com>
 
-[ Upstream commit 61997c1e947dbf8bc625ef86ceee00fdf2a5dba1 ]
+[ Upstream commit 14c7579376279e507e52bf022192b46097a55377 ]
 
-Compiling the kernel with clang W=2 produces a warning that the
-parameter declarations in some routines would shadow the definition of
-the global variable stfle_fac_list. Address this warning by renaming the
-parameters to fac_list.
+At least since commit 334304ac2bac ("dma-mapping: don't return errors
+from dma_set_max_seg_size") setting up device.dma_parms is basically
+mandated by the DMA API. As of now Channel (CCW) I/O in general does not
+utilize the DMA API, except for virtio. For virtio-ccw however the
+common virtio DMA infrastructure is such that most of the DMA stuff
+hinges on the virtio parent device, which is a CCW device.
 
-Fixes: 17e89e1340a3 ("s390/facilities: move stfl information from lowcore to global data")
-Signed-off-by: Gerd Bayer <gbayer@linux.ibm.com>
+So lets set up the dma_parms pointer for the CCW parent device and hope
+for the best!
+
+Fixes: 334304ac2bac ("dma-mapping: don't return errors from dma_set_max_seg_size")
+Reported-by: Marc Hartmayer <mhartmay@linux.ibm.com>
+Reviewed-by: Eric Farman <farman@linux.ibm.com>
+Reviewed-by: Cornelia Huck <cohuck@redhat.com>
+Tested-by: Marc Hartmayer <mhartmay@linux.ibm.com>
+Link: https://lore.kernel.org/r/20241007201030.204028-1-pasic@linux.ibm.com
+Signed-off-by: Halil Pasic <pasic@linux.ibm.com>
 Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/include/asm/facility.h | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ drivers/s390/virtio/virtio_ccw.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/arch/s390/include/asm/facility.h b/arch/s390/include/asm/facility.h
-index 715bcf8fb69a5..5f5b1aa6c2331 100644
---- a/arch/s390/include/asm/facility.h
-+++ b/arch/s390/include/asm/facility.h
-@@ -88,7 +88,7 @@ static __always_inline bool test_facility(unsigned long nr)
- 	return __test_facility(nr, &stfle_fac_list);
+diff --git a/drivers/s390/virtio/virtio_ccw.c b/drivers/s390/virtio/virtio_ccw.c
+index 62eca9419ad76..21fa7ac849e5c 100644
+--- a/drivers/s390/virtio/virtio_ccw.c
++++ b/drivers/s390/virtio/virtio_ccw.c
+@@ -58,6 +58,8 @@ struct virtio_ccw_device {
+ 	struct virtio_device vdev;
+ 	__u8 config[VIRTIO_CCW_CONFIG_SIZE];
+ 	struct ccw_device *cdev;
++	/* we make cdev->dev.dma_parms point to this */
++	struct device_dma_parameters dma_parms;
+ 	__u32 curr_io;
+ 	int err;
+ 	unsigned int revision; /* Transport revision */
+@@ -1303,6 +1305,7 @@ static int virtio_ccw_offline(struct ccw_device *cdev)
+ 	unregister_virtio_device(&vcdev->vdev);
+ 	spin_lock_irqsave(get_ccwdev_lock(cdev), flags);
+ 	dev_set_drvdata(&cdev->dev, NULL);
++	cdev->dev.dma_parms = NULL;
+ 	spin_unlock_irqrestore(get_ccwdev_lock(cdev), flags);
+ 	return 0;
  }
- 
--static inline unsigned long __stfle_asm(u64 *stfle_fac_list, int size)
-+static inline unsigned long __stfle_asm(u64 *fac_list, int size)
- {
- 	unsigned long reg0 = size - 1;
- 
-@@ -96,7 +96,7 @@ static inline unsigned long __stfle_asm(u64 *stfle_fac_list, int size)
- 		"	lgr	0,%[reg0]\n"
- 		"	.insn	s,0xb2b00000,%[list]\n" /* stfle */
- 		"	lgr	%[reg0],0\n"
--		: [reg0] "+&d" (reg0), [list] "+Q" (*stfle_fac_list)
-+		: [reg0] "+&d" (reg0), [list] "+Q" (*fac_list)
- 		:
- 		: "memory", "cc", "0");
- 	return reg0;
-@@ -104,10 +104,10 @@ static inline unsigned long __stfle_asm(u64 *stfle_fac_list, int size)
- 
- /**
-  * stfle - Store facility list extended
-- * @stfle_fac_list: array where facility list can be stored
-+ * @fac_list: array where facility list can be stored
-  * @size: size of passed in array in double words
-  */
--static inline void __stfle(u64 *stfle_fac_list, int size)
-+static inline void __stfle(u64 *fac_list, int size)
- {
- 	unsigned long nr;
- 	u32 stfl_fac_list;
-@@ -116,20 +116,20 @@ static inline void __stfle(u64 *stfle_fac_list, int size)
- 		"	stfl	0(0)\n"
- 		: "=m" (get_lowcore()->stfl_fac_list));
- 	stfl_fac_list = get_lowcore()->stfl_fac_list;
--	memcpy(stfle_fac_list, &stfl_fac_list, 4);
-+	memcpy(fac_list, &stfl_fac_list, 4);
- 	nr = 4; /* bytes stored by stfl */
- 	if (stfl_fac_list & 0x01000000) {
- 		/* More facility bits available with stfle */
--		nr = __stfle_asm(stfle_fac_list, size);
-+		nr = __stfle_asm(fac_list, size);
- 		nr = min_t(unsigned long, (nr + 1) * 8, size * 8);
+@@ -1366,6 +1369,7 @@ static int virtio_ccw_online(struct ccw_device *cdev)
  	}
--	memset((char *) stfle_fac_list + nr, 0, size * 8 - nr);
-+	memset((char *)fac_list + nr, 0, size * 8 - nr);
- }
- 
--static inline void stfle(u64 *stfle_fac_list, int size)
-+static inline void stfle(u64 *fac_list, int size)
- {
- 	preempt_disable();
--	__stfle(stfle_fac_list, size);
-+	__stfle(fac_list, size);
- 	preempt_enable();
- }
- 
+ 	vcdev->vdev.dev.parent = &cdev->dev;
+ 	vcdev->cdev = cdev;
++	cdev->dev.dma_parms = &vcdev->dma_parms;
+ 	vcdev->dma_area = ccw_device_dma_zalloc(vcdev->cdev,
+ 						sizeof(*vcdev->dma_area),
+ 						&vcdev->dma_area_addr);
 -- 
 2.43.0
 
