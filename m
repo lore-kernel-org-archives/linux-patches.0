@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3F751F8909;
-	Tue,  3 Dec 2024 15:44:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D23E1F890A;
+	Tue,  3 Dec 2024 15:44:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733240682; cv=none; b=qhESrbpVUt9Ro5oI9vNDwiFCbxhHKIBF3sCrntG4svr4VmaNbvi5LX1B+D1yR+Pha6nzCpSYdPJD+BYr2X1PdrTMr/vJ1vo5qnYrDgZJ78/47UMclCu2GPaXzE4t1KEfn9nqbNYIdNAqaeqjNweXqqigQeDWSy8NU8NpKliRMpM=
+	t=1733240686; cv=none; b=T5yXZiQJoM++p6tL6pVkayb/8/wzKnEZxaOne8PPpVLjELjPPEcDsfoXGuyzbaRfQEk5CCu3qoQg5rrNulS1TotxvPy1zau1q7sBTpd48bamAq/SX4IO0KTQ9FYePtW8yCIvysmfS8UOeTCGZWOi6FyDoogYq+6kDbV4MRdoc3c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733240682; c=relaxed/simple;
-	bh=4W2gjRzGaFSljtG7fUD11lFy0wHbc3YZBbi3jWBHY2Y=;
+	s=arc-20240116; t=1733240686; c=relaxed/simple;
+	bh=1CK0rDkWUrBNdBYB9XF3HavWhp5EM5fk0ZvO0+GN5Zc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YkerPs+6NGtFtkn/1sltLuExK5+Q6SC+P5RQK3gGcxIIF4yirBHO/HekT4pKZ2tC+hi1qc8ca4QY5QMQ9MI5dS6JiGX2not1lQlo93xgjtAqhQlbFTdSWGEybO8Vhv5j5kMLPaBssgGwY3lnwaL540R2PF1tmIf0aa/4LxdIqdg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bPGOTVEp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DYI/gcWHZiYGApnYbh1nqqReMIzVLsy76uQ55OnbwSa6k+M4IV64Nk3Nrp5ZNYKNSpnEk0gbdSHbatE0u2oi7nFATmw50SjUU4+YHaXw0O8dX2ApjHL0Tm8Hqn07mXtDHvTW/ZG3dsTMq3EMTmP7TUi+HhrkQxDV3uCKYggZMHQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2pgWWczL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bPGOTVEp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4639C4CECF;
-	Tue,  3 Dec 2024 15:44:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2pgWWczL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3624BC4CECF;
+	Tue,  3 Dec 2024 15:44:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733240682;
-	bh=4W2gjRzGaFSljtG7fUD11lFy0wHbc3YZBbi3jWBHY2Y=;
+	s=korg; t=1733240685;
+	bh=1CK0rDkWUrBNdBYB9XF3HavWhp5EM5fk0ZvO0+GN5Zc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bPGOTVEprRaxV5wds3tr7KKybrNZNdorOgoF3aVH8IUu5MfFbzAup9hc5xz1PnSJj
-	 LjRfO0nNnGWM3SDq3Z6mOgA/k7GHlZrUPfDrL05PKpvDYkoe6GB/Ek+y2FhdXZxoNk
-	 6BoE3RWI9S0Lzh1IMzvcFgTz+6A34tGhUEDmlgpA=
+	b=2pgWWczL8TMkOkLKe0d7XAn30EWv9irTXrzVhoTfZmQQbn6/LwUIOGM6VDI5D+2ry
+	 xAElxUV55VTQEXZSIU/rN/7mEEh+svwRXdWaREht5DrLRoesVY+S0bNZBLG6l+oY4+
+	 nsvRIvLnElTmPBfOtbpuFLMNdcUBzguU8ab8XE2Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Huafei <lihuafei1@huawei.com>,
-	Andy Shevchenko <andy@kernel.org>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+	Chris Morgan <macromorgan@hotmail.com>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 174/826] media: atomisp: Add check for rgby_data memory allocation failure
-Date: Tue,  3 Dec 2024 15:38:21 +0100
-Message-ID: <20241203144750.525344108@linuxfoundation.org>
+Subject: [PATCH 6.12 175/826] arm64: dts: rockchip: correct analog audio name on Indiedroid Nova
+Date: Tue,  3 Dec 2024 15:38:22 +0100
+Message-ID: <20241203144750.562968425@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -53,40 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li Huafei <lihuafei1@huawei.com>
+From: Chris Morgan <macromorgan@hotmail.com>
 
-[ Upstream commit ed61c59139509f76d3592683c90dc3fdc6e23cd6 ]
+[ Upstream commit 42d85557527266804579bc5d20c101d93f6be3c6 ]
 
-In ia_css_3a_statistics_allocate(), there is no check on the allocation
-result of the rgby_data memory. If rgby_data is not successfully
-allocated, it may trigger the assert(host_stats->rgby_data) assertion in
-ia_css_s3a_hmem_decode(). Adding a check to fix this potential issue.
+Correct the audio name for the Indiedroid Nova from
+rockchip,es8388-codec to rockchip,es8388. This name change corrects a
+kernel log error of "ASoC: driver name too long 'rockchip,es8388-codec'
+-> 'rockchip_es8388'".
 
-Fixes: a49d25364dfb ("staging/atomisp: Add support for the Intel IPU v2")
-Signed-off-by: Li Huafei <lihuafei1@huawei.com>
-Reviewed-by: Andy Shevchenko <andy@kernel.org>
-Link: https://lore.kernel.org/r/20241104145051.3088231-1-lihuafei1@huawei.com
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Fixes: 3900160e164b ("arm64: dts: rockchip: Add Indiedroid Nova board")
+Signed-off-by: Chris Morgan <macromorgan@hotmail.com>
+Link: https://lore.kernel.org/r/20241031150505.967909-2-macroalpha82@gmail.com
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/media/atomisp/pci/sh_css_params.c | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/arm64/boot/dts/rockchip/rk3588s-indiedroid-nova.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/staging/media/atomisp/pci/sh_css_params.c b/drivers/staging/media/atomisp/pci/sh_css_params.c
-index 232744973ab88..b1feb6f6ebe89 100644
---- a/drivers/staging/media/atomisp/pci/sh_css_params.c
-+++ b/drivers/staging/media/atomisp/pci/sh_css_params.c
-@@ -4181,6 +4181,8 @@ ia_css_3a_statistics_allocate(const struct ia_css_3a_grid_info *grid)
- 		goto err;
- 	/* No weighted histogram, no structure, treat the histogram data as a byte dump in a byte array */
- 	me->rgby_data = kvmalloc(sizeof_hmem(HMEM0_ID), GFP_KERNEL);
-+	if (!me->rgby_data)
-+		goto err;
+diff --git a/arch/arm64/boot/dts/rockchip/rk3588s-indiedroid-nova.dts b/arch/arm64/boot/dts/rockchip/rk3588s-indiedroid-nova.dts
+index 8ba111d9283fe..d9d2bf822443b 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3588s-indiedroid-nova.dts
++++ b/arch/arm64/boot/dts/rockchip/rk3588s-indiedroid-nova.dts
+@@ -62,7 +62,7 @@ sdio_pwrseq: sdio-pwrseq {
  
- 	IA_CSS_LEAVE("return=%p", me);
- 	return me;
+ 	sound {
+ 		compatible = "audio-graph-card";
+-		label = "rockchip,es8388-codec";
++		label = "rockchip,es8388";
+ 		widgets = "Microphone", "Mic Jack",
+ 			  "Headphone", "Headphones";
+ 		routing = "LINPUT2", "Mic Jack",
 -- 
 2.43.0
 
