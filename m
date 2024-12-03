@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E9511F8913;
-	Tue,  3 Dec 2024 16:04:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8641823CE;
+	Tue,  3 Dec 2024 16:04:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733241885; cv=none; b=MQFGoSt9irg9UL/MRxRBJVgS2Nv1Rls8GajbRJIi0Z99GggKOh7XBXp4Y28l/NyV+M3vzndZL4Jrte4hTq8+m7cyuY2y4FH/iDMAtqDSd4wh94O7mmJWlK6dmqiVmUcTt7rlito3gZtNy03jS+Q2/d4wM18oxTm+6RkFFLAaS00=
+	t=1733241888; cv=none; b=qHkq8LlkoNNlyd9Cx1oE/YfhtEm71hZt6L8VHZmPOrnoBpOaeplgHkz9T1f51bkK/FaYrpOUxFDnvFJ1jrrHET9xZ2FTY0+knPUAT7D01nDKZrV2oGHErvKYqANkiBuo3KHa7MFy25Tk0AFR+7JVR5yu2M8X8WPYpIl4lHHlbTY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733241885; c=relaxed/simple;
-	bh=8pQj0EC4noJGdtxR3AUV9BmOHUQBBlgr+3ag0MRElBM=;
+	s=arc-20240116; t=1733241888; c=relaxed/simple;
+	bh=PfWCZpqWlwY33BPic0cW9bdU0kAcfBG63b3ErhJ0bqY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m+2GAeEiTpSnz0Up9eMTHP6zPmNqyd4l8bR+eNgCMkGO+VRyJl0e/Qu83PkZzO/feck5lbpoNrotRyoh4ayONsYeWL7Pb9V1WyThCvtTwmQtjs6k2oXbfi6+BsiBiqy1TSz4l4b11R1Y3n+LZtr3/1KkyOR6n20RxMo69F+e87w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TRJjVOyl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=I2yK8jJJ2F/42o16tkmCGzH19fGKE5Ty7Z/HJuiA0YRgVeHc5QOCBvmKQfTC1TjmiGQH4mnhsdlsEDvHjLp3k06PCDb08Jdby9bl9yKKGnAymtyOJ7vz+W5RZB05r1+Ralv/R6Ky8LGTTyovtvL5tslsxtvsFmEPlLSO2x3wpP0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KHALDG0O; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TRJjVOyl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80C08C4CED6;
-	Tue,  3 Dec 2024 16:04:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KHALDG0O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3116C4CECF;
+	Tue,  3 Dec 2024 16:04:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733241885;
-	bh=8pQj0EC4noJGdtxR3AUV9BmOHUQBBlgr+3ag0MRElBM=;
+	s=korg; t=1733241888;
+	bh=PfWCZpqWlwY33BPic0cW9bdU0kAcfBG63b3ErhJ0bqY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TRJjVOylQvBYPFJUjLg4n+3qDLWmzf/XQBKs4M8H+ddldkvAf+oyHmAWqYzHk7nDG
-	 j7J2XXwUShS/iU0TI6rnCURElz3LK9zcO6Hjbdq1ttINprmOVlNTx4o3Dt5v/VJqn6
-	 4FJuaBE589xui9o3+uVJxopkZkI+ccA7DlbBdDdo=
+	b=KHALDG0ODvRWwqvLZRryGj+8hz3+pQWGoLcyOVfyygBzAz7C6WbzgWwcoB3Msu4+q
+	 9LN7kdKMb0M9E09h1RayN5lS9rt3zNXk1GdXn5ECUL7YogTzkgG7ywz5pAOJXkXAN7
+	 IWPLpHCt2YetaXGX1dEGdJ7ZHST0oq128j1o27Dk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 543/826] gpio: zevio: Add missed label initialisation
-Date: Tue,  3 Dec 2024 15:44:30 +0100
-Message-ID: <20241203144804.934930831@linuxfoundation.org>
+Subject: [PATCH 6.12 513/826] svcrdma: Address an integer overflow
+Date: Tue,  3 Dec 2024 15:44:00 +0100
+Message-ID: <20241203144803.768272966@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -51,53 +52,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit 5bbed54ba66925ebca19092d0750630f943d7bf2 ]
+[ Upstream commit 3c63d8946e578663b868cb9912dac616ea68bfd0 ]
 
-Initialise the GPIO chip label correctly as it was done by
-of_mm_gpiochip_add_data() before the below mentioned change.
+Dan Carpenter reports:
+> Commit 78147ca8b4a9 ("svcrdma: Add a "parsed chunk list" data
+> structure") from Jun 22, 2020 (linux-next), leads to the following
+> Smatch static checker warning:
+>
+>	net/sunrpc/xprtrdma/svc_rdma_recvfrom.c:498 xdr_check_write_chunk()
+>	warn: potential user controlled sizeof overflow 'segcount * 4 * 4'
+>
+> net/sunrpc/xprtrdma/svc_rdma_recvfrom.c
+>     488 static bool xdr_check_write_chunk(struct svc_rdma_recv_ctxt *rctxt)
+>     489 {
+>     490         u32 segcount;
+>     491         __be32 *p;
+>     492
+>     493         if (xdr_stream_decode_u32(&rctxt->rc_stream, &segcount))
+>                                                               ^^^^^^^^
+>
+>     494                 return false;
+>     495
+>     496         /* A bogus segcount causes this buffer overflow check to fail. */
+>     497         p = xdr_inline_decode(&rctxt->rc_stream,
+> --> 498                               segcount * rpcrdma_segment_maxsz * sizeof(*p));
+>
+>
+> segcount is an untrusted u32.  On 32bit systems anything >= SIZE_MAX / 16 will
+> have an integer overflow and some those values will be accepted by
+> xdr_inline_decode().
 
-Fixes: cf8f4462e5fa ("gpio: zevio: drop of_gpio.h header")
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://lore.kernel.org/r/20241118092729.516736-1-andriy.shevchenko@linux.intel.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Fixes: 78147ca8b4a9 ("svcrdma: Add a "parsed chunk list" data structure")
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpio-zevio.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ net/sunrpc/xprtrdma/svc_rdma_recvfrom.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpio/gpio-zevio.c b/drivers/gpio/gpio-zevio.c
-index 2de61337ad3b5..d7230fd83f5d6 100644
---- a/drivers/gpio/gpio-zevio.c
-+++ b/drivers/gpio/gpio-zevio.c
-@@ -11,6 +11,7 @@
- #include <linux/io.h>
- #include <linux/mod_devicetable.h>
- #include <linux/platform_device.h>
-+#include <linux/property.h>
- #include <linux/slab.h>
- #include <linux/spinlock.h>
+diff --git a/net/sunrpc/xprtrdma/svc_rdma_recvfrom.c b/net/sunrpc/xprtrdma/svc_rdma_recvfrom.c
+index ae3fb9bc8a216..292022f0976e1 100644
+--- a/net/sunrpc/xprtrdma/svc_rdma_recvfrom.c
++++ b/net/sunrpc/xprtrdma/svc_rdma_recvfrom.c
+@@ -493,7 +493,13 @@ static bool xdr_check_write_chunk(struct svc_rdma_recv_ctxt *rctxt)
+ 	if (xdr_stream_decode_u32(&rctxt->rc_stream, &segcount))
+ 		return false;
  
-@@ -169,6 +170,7 @@ static const struct gpio_chip zevio_gpio_chip = {
- /* Initialization */
- static int zevio_gpio_probe(struct platform_device *pdev)
- {
-+	struct device *dev = &pdev->dev;
- 	struct zevio_gpio *controller;
- 	int status, i;
- 
-@@ -180,6 +182,10 @@ static int zevio_gpio_probe(struct platform_device *pdev)
- 	controller->chip = zevio_gpio_chip;
- 	controller->chip.parent = &pdev->dev;
- 
-+	controller->chip.label = devm_kasprintf(dev, GFP_KERNEL, "%pfw", dev_fwnode(dev));
-+	if (!controller->chip.label)
-+		return -ENOMEM;
+-	/* A bogus segcount causes this buffer overflow check to fail. */
++	/* Before trusting the segcount value enough to use it in
++	 * a computation, perform a simple range check. This is an
++	 * arbitrary but sensible limit (ie, not architectural).
++	 */
++	if (unlikely(segcount > RPCSVC_MAXPAGES))
++		return false;
 +
- 	controller->regs = devm_platform_ioremap_resource(pdev, 0);
- 	if (IS_ERR(controller->regs))
- 		return dev_err_probe(&pdev->dev, PTR_ERR(controller->regs),
+ 	p = xdr_inline_decode(&rctxt->rc_stream,
+ 			      segcount * rpcrdma_segment_maxsz * sizeof(*p));
+ 	return p != NULL;
 -- 
 2.43.0
 
