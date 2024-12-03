@@ -1,38 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 264FA1F76D1;
-	Tue,  3 Dec 2024 16:04:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8EEC1F76B5;
+	Tue,  3 Dec 2024 16:04:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733241892; cv=none; b=kGNQ0b+8KBn8ugvg5AdZTqU0k3Cp0sWN9dYYwXW+tp8Ki+tsdXmMFgueX8DWhj8m+mnStgTgmi4XN72R9udhysD1MJ0Pj95dxuACBkwQ9CsQA1SK2+nbhmplhIm8Bz3FzQHikfrw1FzLTXcv0vOQcdqaZgQeRigB5upLCbWNqqs=
+	t=1733241895; cv=none; b=RpowkIJp8x6Fe3DGHf5QXOjAsqWKmL9geR5ixpBmKB2DG6/MIs0HNixAtWY2PrBsZFLg1elSC0CwZ2QD6v5kNbFizM89h0Upk/cFKxPdAZEIiIqitORpN9K/foNwF/Q0KXpht3QzOBHF/1ADYtlNe+u9fafsv1uAoAsm5aDsgkI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733241892; c=relaxed/simple;
-	bh=Wf7RgiQm9ztBAv8bV4XZMV4tpIlZ+W6cw6xrO5SkEAs=;
+	s=arc-20240116; t=1733241895; c=relaxed/simple;
+	bh=fPurp834VLHUwqDNONFW77pGc6r03u3OCCSpZnwX4C8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a3cL2hFpsfCyDp5SxNQjlQqJo3zQlyManJ8O29AAGnqAuuD00KEaEeWP8fYtdmOD5nf9psrZNB/rJlpr3/GS4LeGLdxLM5RhPPpUMbWvYrxZkEOgzpXH6w8XfACnZflw49yvp3y3/p+PHPbaZs+HOmmRDb+pcAAzqMbZlZSBos4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Im3VYAki; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=k4b8qYADusLhEiQTI4pP8+//8cq6w0+Bt96xFYIKza1NV7Shz1LtAMKl4x+IhWYCpwYVyZyteONp2IIsh47gG6/AuOK+2vTzd2C8CBOC1txNDdNKPYpLVWKWEw5SfvA3Ht8xDP9PnjpmNv53rqxv2tqIXFHcYZwpR3t9EzucW/k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IVDtnqFb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Im3VYAki"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DD26C4CECF;
-	Tue,  3 Dec 2024 16:04:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IVDtnqFb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA91AC4CECF;
+	Tue,  3 Dec 2024 16:04:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733241892;
-	bh=Wf7RgiQm9ztBAv8bV4XZMV4tpIlZ+W6cw6xrO5SkEAs=;
+	s=korg; t=1733241895;
+	bh=fPurp834VLHUwqDNONFW77pGc6r03u3OCCSpZnwX4C8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Im3VYAkitm8uZI01i0WOnwqo2pC+hmIFrT6eKBy9bC9ieVmTRRQiNig50ptJK5iQ2
-	 Saq1u4nl/BPSxl5/jLNtLGhNiLbLnY229EVrrfIuDE99lM4hdjInVg+irpq9QmNql4
-	 x2B0MXzp80/9YR61trMiDswdGC1qwpOSgQIcN0yM=
+	b=IVDtnqFbVrlCJhzgXnrMXGFtasV3emVZAWkmAI1rstXXUu1xo49sLJycPne9KVOKv
+	 SKl6pWujfeNDjnapvGy1C/b0Qyhs+eunFwv9fPVk9KlNJC9BzutJt4jwyhc/zVqbq6
+	 /QWUdEmYVGac0bLBFIKIEQ2zft0uu3PH4rhyID8A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	Jean-Philippe Romain <jean-philippe.romain@foss.st.com>,
+	Ian Rogers <irogers@google.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Junhao He <hejunhao3@huawei.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 514/826] nfsd: drop inode parameter from nfsd4_change_attribute()
-Date: Tue,  3 Dec 2024 15:44:01 +0100
-Message-ID: <20241203144803.815182738@linuxfoundation.org>
+Subject: [PATCH 6.12 515/826] perf list: Fix topic and pmu_name argument order
+Date: Tue,  3 Dec 2024 15:44:02 +0100
+Message-ID: <20241203144803.853551961@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -51,154 +61,169 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeff Layton <jlayton@kernel.org>
+From: Jean-Philippe Romain <jean-philippe.romain@foss.st.com>
 
-[ Upstream commit f67eef8da0e8c54709fefdecd16ad8d70f0c9d20 ]
+[ Upstream commit d99b3125726aade4f5ec4aae04805134ab4b0abd ]
 
-The inode that nfs4_open_delegation() passes to this function is
-wrong, which throws off the result. The inode will end up getting a
-directory-style change attr instead of a regular-file-style one.
+Fix function definitions to match header file declaration. Fix two
+callers to pass the arguments in the right order.
 
-Fix up nfs4_delegation_stat() to fetch STATX_MODE, and then drop the
-inode parameter from nfsd4_change_attribute(), since it's no longer
-needed.
+On Intel Tigerlake, before:
+```
+$ perf list -j|grep "\"Topic\""|sort|uniq
+        "Topic": "cache",
+        "Topic": "cpu",
+        "Topic": "floating point",
+        "Topic": "frontend",
+        "Topic": "memory",
+        "Topic": "other",
+        "Topic": "pfm icl",
+        "Topic": "pfm ix86arch",
+        "Topic": "pfm perf_raw",
+        "Topic": "pipeline",
+        "Topic": "tool",
+        "Topic": "uncore interconnect",
+        "Topic": "uncore memory",
+        "Topic": "uncore other",
+        "Topic": "virtual memory",
+$ perf list -j|grep "\"Unit\""|sort|uniq
+        "Unit": "cache",
+        "Unit": "cpu",
+        "Unit": "cstate_core",
+        "Unit": "cstate_pkg",
+        "Unit": "i915",
+        "Unit": "icl",
+        "Unit": "intel_bts",
+        "Unit": "intel_pt",
+        "Unit": "ix86arch",
+        "Unit": "msr",
+        "Unit": "perf_raw",
+        "Unit": "power",
+        "Unit": "tool",
+        "Unit": "uncore_arb",
+        "Unit": "uncore_clock",
+        "Unit": "uncore_imc_free_running_0",
+        "Unit": "uncore_imc_free_running_1",
+```
 
-Fixes: c5967721e106 ("NFSD: handle GETATTR conflict with write delegation")
-Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+After:
+```
+$ perf list -j|grep "\"Topic\""|sort|uniq
+        "Topic": "cache",
+        "Topic": "floating point",
+        "Topic": "frontend",
+        "Topic": "memory",
+        "Topic": "other",
+        "Topic": "pfm icl",
+        "Topic": "pfm ix86arch",
+        "Topic": "pfm perf_raw",
+        "Topic": "pipeline",
+        "Topic": "tool",
+        "Topic": "uncore interconnect",
+        "Topic": "uncore memory",
+        "Topic": "uncore other",
+        "Topic": "virtual memory",
+$ perf list -j|grep "\"Unit\""|sort|uniq
+        "Unit": "cpu",
+        "Unit": "cstate_core",
+        "Unit": "cstate_pkg",
+        "Unit": "i915",
+        "Unit": "icl",
+        "Unit": "intel_bts",
+        "Unit": "intel_pt",
+        "Unit": "ix86arch",
+        "Unit": "msr",
+        "Unit": "perf_raw",
+        "Unit": "power",
+        "Unit": "tool",
+        "Unit": "uncore_arb",
+        "Unit": "uncore_clock",
+        "Unit": "uncore_imc_free_running_0",
+        "Unit": "uncore_imc_free_running_1",
+```
+
+Fixes: e5c6109f4813246a ("perf list: Reorganize to use callbacks to allow honouring command line options")
+Reviewed-by: Kan Liang <kan.liang@linux.intel.com>
+Signed-off-by: Jean-Philippe Romain <jean-philippe.romain@foss.st.com>
+Tested-by: Ian Rogers <irogers@google.com>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Junhao He <hejunhao3@huawei.com>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Link: https://lore.kernel.org/r/20241109025801.560378-1-irogers@google.com
+[ I fixed the two callers and added it to Jean-Phillippe's original change. ]
+Signed-off-by: Ian Rogers <irogers@google.com>
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs4state.c |  5 ++---
- fs/nfsd/nfs4xdr.c   |  2 +-
- fs/nfsd/nfsfh.c     | 20 ++++++++++++--------
- fs/nfsd/nfsfh.h     |  3 +--
- 4 files changed, 16 insertions(+), 14 deletions(-)
+ tools/perf/builtin-list.c | 4 ++--
+ tools/perf/util/pfm.c     | 4 ++--
+ tools/perf/util/pmus.c    | 2 +-
+ 3 files changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/fs/nfsd/nfs4state.c b/fs/nfsd/nfs4state.c
-index 551d2958ec290..d3cfc64715399 100644
---- a/fs/nfsd/nfs4state.c
-+++ b/fs/nfsd/nfs4state.c
-@@ -5957,7 +5957,7 @@ nfs4_delegation_stat(struct nfs4_delegation *dp, struct svc_fh *currentfh,
- 	path.dentry = file_dentry(nf->nf_file);
+diff --git a/tools/perf/builtin-list.c b/tools/perf/builtin-list.c
+index 65b8cba324be4..c5331721dfee9 100644
+--- a/tools/perf/builtin-list.c
++++ b/tools/perf/builtin-list.c
+@@ -112,7 +112,7 @@ static void wordwrap(FILE *fp, const char *s, int start, int max, int corr)
+ 	}
+ }
  
- 	rc = vfs_getattr(&path, stat,
--			 (STATX_SIZE | STATX_CTIME | STATX_CHANGE_COOKIE),
-+			 (STATX_MODE | STATX_SIZE | STATX_CTIME | STATX_CHANGE_COOKIE),
- 			 AT_STATX_SYNC_AS_STAT);
+-static void default_print_event(void *ps, const char *pmu_name, const char *topic,
++static void default_print_event(void *ps, const char *topic, const char *pmu_name,
+ 				const char *event_name, const char *event_alias,
+ 				const char *scale_unit __maybe_unused,
+ 				bool deprecated, const char *event_type_desc,
+@@ -353,7 +353,7 @@ static void fix_escape_fprintf(FILE *fp, struct strbuf *buf, const char *fmt, ..
+ 	fputs(buf->buf, fp);
+ }
  
- 	nfsd_file_put(nf);
-@@ -6041,8 +6041,7 @@ nfs4_open_delegation(struct nfsd4_open *open, struct nfs4_ol_stateid *stp,
- 		}
- 		open->op_delegate_type = NFS4_OPEN_DELEGATE_WRITE;
- 		dp->dl_cb_fattr.ncf_cur_fsize = stat.size;
--		dp->dl_cb_fattr.ncf_initial_cinfo =
--			nfsd4_change_attribute(&stat, d_inode(currentfh->fh_dentry));
-+		dp->dl_cb_fattr.ncf_initial_cinfo = nfsd4_change_attribute(&stat);
- 		trace_nfsd_deleg_write(&dp->dl_stid.sc_stateid);
- 	} else {
- 		open->op_delegate_type = NFS4_OPEN_DELEGATE_READ;
-diff --git a/fs/nfsd/nfs4xdr.c b/fs/nfsd/nfs4xdr.c
-index f118921250c31..8d25aef51ad15 100644
---- a/fs/nfsd/nfs4xdr.c
-+++ b/fs/nfsd/nfs4xdr.c
-@@ -3040,7 +3040,7 @@ static __be32 nfsd4_encode_fattr4_change(struct xdr_stream *xdr,
- 		return nfs_ok;
+-static void json_print_event(void *ps, const char *pmu_name, const char *topic,
++static void json_print_event(void *ps, const char *topic, const char *pmu_name,
+ 			     const char *event_name, const char *event_alias,
+ 			     const char *scale_unit,
+ 			     bool deprecated, const char *event_type_desc,
+diff --git a/tools/perf/util/pfm.c b/tools/perf/util/pfm.c
+index 5ccfe4b64cdfe..0dacc133ed396 100644
+--- a/tools/perf/util/pfm.c
++++ b/tools/perf/util/pfm.c
+@@ -233,7 +233,7 @@ print_libpfm_event(const struct print_callbacks *print_cb, void *print_state,
  	}
  
--	c = nfsd4_change_attribute(&args->stat, d_inode(args->dentry));
-+	c = nfsd4_change_attribute(&args->stat);
- 	return nfsd4_encode_changeid4(xdr, c);
- }
+ 	if (is_libpfm_event_supported(name, cpus, threads)) {
+-		print_cb->print_event(print_state, pinfo->name, topic,
++		print_cb->print_event(print_state, topic, pinfo->name,
+ 				      name, info->equiv,
+ 				      /*scale_unit=*/NULL,
+ 				      /*deprecated=*/NULL, "PFM event",
+@@ -267,8 +267,8 @@ print_libpfm_event(const struct print_callbacks *print_cb, void *print_state,
+ 				continue;
  
-diff --git a/fs/nfsd/nfsfh.c b/fs/nfsd/nfsfh.c
-index 40ad58a6a0361..96e19c50a5d7e 100644
---- a/fs/nfsd/nfsfh.c
-+++ b/fs/nfsd/nfsfh.c
-@@ -667,20 +667,18 @@ fh_update(struct svc_fh *fhp)
- __be32 __must_check fh_fill_pre_attrs(struct svc_fh *fhp)
- {
- 	bool v4 = (fhp->fh_maxsize == NFS4_FHSIZE);
--	struct inode *inode;
- 	struct kstat stat;
- 	__be32 err;
+ 			print_cb->print_event(print_state,
+-					pinfo->name,
+ 					topic,
++					pinfo->name,
+ 					name, /*alias=*/NULL,
+ 					/*scale_unit=*/NULL,
+ 					/*deprecated=*/NULL, "PFM event",
+diff --git a/tools/perf/util/pmus.c b/tools/perf/util/pmus.c
+index 52109af5f2f12..d7d67e09d759b 100644
+--- a/tools/perf/util/pmus.c
++++ b/tools/perf/util/pmus.c
+@@ -494,8 +494,8 @@ void perf_pmus__print_pmu_events(const struct print_callbacks *print_cb, void *p
+ 			goto free;
  
- 	if (fhp->fh_no_wcc || fhp->fh_pre_saved)
- 		return nfs_ok;
- 
--	inode = d_inode(fhp->fh_dentry);
- 	err = fh_getattr(fhp, &stat);
- 	if (err)
- 		return err;
- 
- 	if (v4)
--		fhp->fh_pre_change = nfsd4_change_attribute(&stat, inode);
-+		fhp->fh_pre_change = nfsd4_change_attribute(&stat);
- 
- 	fhp->fh_pre_mtime = stat.mtime;
- 	fhp->fh_pre_ctime = stat.ctime;
-@@ -697,7 +695,6 @@ __be32 __must_check fh_fill_pre_attrs(struct svc_fh *fhp)
- __be32 fh_fill_post_attrs(struct svc_fh *fhp)
- {
- 	bool v4 = (fhp->fh_maxsize == NFS4_FHSIZE);
--	struct inode *inode = d_inode(fhp->fh_dentry);
- 	__be32 err;
- 
- 	if (fhp->fh_no_wcc)
-@@ -713,7 +710,7 @@ __be32 fh_fill_post_attrs(struct svc_fh *fhp)
- 	fhp->fh_post_saved = true;
- 	if (v4)
- 		fhp->fh_post_change =
--			nfsd4_change_attribute(&fhp->fh_post_attr, inode);
-+			nfsd4_change_attribute(&fhp->fh_post_attr);
- 	return nfs_ok;
- }
- 
-@@ -804,7 +801,14 @@ enum fsid_source fsid_source(const struct svc_fh *fhp)
- 	return FSIDSOURCE_DEV;
- }
- 
--/*
-+/**
-+ * nfsd4_change_attribute - Generate an NFSv4 change_attribute value
-+ * @stat: inode attributes
-+ *
-+ * Caller must fill in @stat before calling, typically by invoking
-+ * vfs_getattr() with STATX_MODE, STATX_CTIME, and STATX_CHANGE_COOKIE.
-+ * Returns an unsigned 64-bit changeid4 value (RFC 8881 Section 3.2).
-+ *
-  * We could use i_version alone as the change attribute.  However, i_version
-  * can go backwards on a regular file after an unclean shutdown.  On its own
-  * that doesn't necessarily cause a problem, but if i_version goes backwards
-@@ -821,13 +825,13 @@ enum fsid_source fsid_source(const struct svc_fh *fhp)
-  * assume that the new change attr is always logged to stable storage in some
-  * fashion before the results can be seen.
-  */
--u64 nfsd4_change_attribute(const struct kstat *stat, const struct inode *inode)
-+u64 nfsd4_change_attribute(const struct kstat *stat)
- {
- 	u64 chattr;
- 
- 	if (stat->result_mask & STATX_CHANGE_COOKIE) {
- 		chattr = stat->change_cookie;
--		if (S_ISREG(inode->i_mode) &&
-+		if (S_ISREG(stat->mode) &&
- 		    !(stat->attributes & STATX_ATTR_CHANGE_MONOTONIC)) {
- 			chattr += (u64)stat->ctime.tv_sec << 30;
- 			chattr += stat->ctime.tv_nsec;
-diff --git a/fs/nfsd/nfsfh.h b/fs/nfsd/nfsfh.h
-index 5b7394801dc42..876152a91f122 100644
---- a/fs/nfsd/nfsfh.h
-+++ b/fs/nfsd/nfsfh.h
-@@ -297,8 +297,7 @@ static inline void fh_clear_pre_post_attrs(struct svc_fh *fhp)
- 	fhp->fh_pre_saved = false;
- }
- 
--u64 nfsd4_change_attribute(const struct kstat *stat,
--			   const struct inode *inode);
-+u64 nfsd4_change_attribute(const struct kstat *stat);
- __be32 __must_check fh_fill_pre_attrs(struct svc_fh *fhp);
- __be32 fh_fill_post_attrs(struct svc_fh *fhp);
- __be32 __must_check fh_fill_both_attrs(struct svc_fh *fhp);
+ 		print_cb->print_event(print_state,
+-				aliases[j].pmu_name,
+ 				aliases[j].topic,
++				aliases[j].pmu_name,
+ 				aliases[j].name,
+ 				aliases[j].alias,
+ 				aliases[j].scale_unit,
 -- 
 2.43.0
 
