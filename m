@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CA381F756E;
-	Tue,  3 Dec 2024 15:11:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FA081F76A4;
+	Tue,  3 Dec 2024 15:11:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733238711; cv=none; b=DEUmKVJar3UaKHyY+h7F4MNmcwjT//e/kaF9SEGkpsfEqpL5e29iVoTlYI74CKDPQebeumgI68ogKPF9/tVn8wQcwPj0Q0r8JaAkqjNlzlVhHZUjsqtrbn0v4LYg/6XM5WijFuEEWg1qSgEoMtesJJjKLC4jHgrwDbiGO9x0f5M=
+	t=1733238713; cv=none; b=Rp8cEXm0wsInMf4UwSRncsYOXJrjC2C4KkOdpzT2y/IN6VwU5IYqhR/awMURiPbXj9MoLTiJQG7LIIEbpyFO18pqUZEHU31OLzOJR0pOhgjLDrVoV1mrLHpokDUH2muG39ALczqUGrJg/oLdlGKOvYErNkmMJXIcIopFrNlxJoo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733238711; c=relaxed/simple;
-	bh=wiT4tEs9M5Bvfs3jfcPbfIwTVDwbq38f5BNOBKDc7GQ=;
+	s=arc-20240116; t=1733238713; c=relaxed/simple;
+	bh=9V10d8hD9tpnGVJjnkeRIGMbXc+CXWM8UVtK5GeUnhM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jVs4+fChHR0ZpW99o5wBSxK4qr4t8PXB2CfaQsnlD8CST2vrF5xfJr/BRTRk/C9VoIFet3ldzxUxAXwkCgWdOjnNu987f3E/GwGHRX+S0PAHmXzOxfogdHXMG+ERZ89n74RQM1C4MtZZnkg8Md2+82RY3mb8r5ObhlpPG8fDC5E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BoDiw4tb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JuKYzyP+83OnNp2pMrWFfQg8mGU0W8RmKtZXUzqpldQPq0pG2+66mhOV0dMhjmR2uR50u4z6kB0hYVPFBMAGZ3s+4Qs9xGBBvMT7NN130MI4KJtlgDmu4lkNE+g3nU47EL/a7WyJLYd2HhbZ2aggZw8LTrflBkWqe0s3iSxyqzk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NMtpxq2Q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BoDiw4tb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36538C4CECF;
-	Tue,  3 Dec 2024 15:11:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NMtpxq2Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B251C4CECF;
+	Tue,  3 Dec 2024 15:11:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733238710;
-	bh=wiT4tEs9M5Bvfs3jfcPbfIwTVDwbq38f5BNOBKDc7GQ=;
+	s=korg; t=1733238713;
+	bh=9V10d8hD9tpnGVJjnkeRIGMbXc+CXWM8UVtK5GeUnhM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BoDiw4tbegngi57d+QjJDA/eOGbxhO93DkEtOPjucUuXL2ktNYiU9exyTJikSNUjt
-	 avlmoDJMqEOahqQOypcF6+Kg5jtrbK/FgjSFjuPEjJo17VwNhWyIfopqdtHNxy1B8p
-	 Nia2r5fgA49/O0Z4oChBhIXNoBSnHMoqRGmjWDN8=
+	b=NMtpxq2QErIRbYMc89vZSwKZxMDslTrzruq3oOfFk/ebhknas86tmYpitLTVf/SF/
+	 kRdo8QjAdnQYyIsJDyGdP7F2brCdlgv4PIbwfXYDMxT8dWUhbmYJlDEmSmik2Kqwkl
+	 4TV8VA498Grn2VCuwQTK+wbdmPqGismgcHlvEuLg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiawen Wu <jiawenwu@trustnetic.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Yuan Can <yuancan@huawei.com>,
+	Felix Kuehling <felix.kuehling@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 370/817] net: txgbe: fix null pointer to pcs
-Date: Tue,  3 Dec 2024 15:39:02 +0100
-Message-ID: <20241203144010.283781512@linuxfoundation.org>
+Subject: [PATCH 6.11 341/817] drm/amdkfd: Fix wrong usage of INIT_WORK()
+Date: Tue,  3 Dec 2024 15:38:33 +0100
+Message-ID: <20241203144009.133049560@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -51,35 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiawen Wu <jiawenwu@trustnetic.com>
+From: Yuan Can <yuancan@huawei.com>
 
-[ Upstream commit 2160428bcb20f2f70a72ee84aba91a1264dc4ff3 ]
+[ Upstream commit 21cae8debc6a1d243f64fa82cd1b41cb612b5c61 ]
 
-For 1000BASE-X or SGMII interface mode, the PCS also need to be selected.
-Only return null pointer when there is a copper NIC with external PHY.
+In kfd_procfs_show(), the sdma_activity_work_handler is a local variable
+and the sdma_activity_work_handler.sdma_activity_work should initialize
+with INIT_WORK_ONSTACK() instead of INIT_WORK().
 
-Fixes: 02b2a6f91b90 ("net: txgbe: support copper NIC with external PHY")
-Signed-off-by: Jiawen Wu <jiawenwu@trustnetic.com>
-Link: https://patch.msgid.link/20241115073508.1130046-1-jiawenwu@trustnetic.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 32cb59f31362 ("drm/amdkfd: Track SDMA utilization per process")
+Signed-off-by: Yuan Can <yuancan@huawei.com>
+Signed-off-by: Felix Kuehling <felix.kuehling@amd.com>
+Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/wangxun/txgbe/txgbe_phy.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdkfd/kfd_process.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/wangxun/txgbe/txgbe_phy.c b/drivers/net/ethernet/wangxun/txgbe/txgbe_phy.c
-index 119cbd3466011..6544910535898 100644
---- a/drivers/net/ethernet/wangxun/txgbe/txgbe_phy.c
-+++ b/drivers/net/ethernet/wangxun/txgbe/txgbe_phy.c
-@@ -162,7 +162,7 @@ static struct phylink_pcs *txgbe_phylink_mac_select(struct phylink_config *confi
- 	struct wx *wx = phylink_to_wx(config);
- 	struct txgbe *txgbe = wx->priv;
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_process.c b/drivers/gpu/drm/amd/amdkfd/kfd_process.c
+index 8343b3e4de7b5..378ce360b861b 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_process.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_process.c
+@@ -312,8 +312,8 @@ static ssize_t kfd_procfs_show(struct kobject *kobj, struct attribute *attr,
+ 							      attr_sdma);
+ 		struct kfd_sdma_activity_handler_workarea sdma_activity_work_handler;
  
--	if (interface == PHY_INTERFACE_MODE_10GBASER)
-+	if (wx->media_type != sp_media_copper)
- 		return &txgbe->xpcs->pcs;
+-		INIT_WORK(&sdma_activity_work_handler.sdma_activity_work,
+-					kfd_sdma_activity_worker);
++		INIT_WORK_ONSTACK(&sdma_activity_work_handler.sdma_activity_work,
++				  kfd_sdma_activity_worker);
  
- 	return NULL;
+ 		sdma_activity_work_handler.pdd = pdd;
+ 		sdma_activity_work_handler.sdma_activity_counter = 0;
+@@ -321,6 +321,7 @@ static ssize_t kfd_procfs_show(struct kobject *kobj, struct attribute *attr,
+ 		schedule_work(&sdma_activity_work_handler.sdma_activity_work);
+ 
+ 		flush_work(&sdma_activity_work_handler.sdma_activity_work);
++		destroy_work_on_stack(&sdma_activity_work_handler.sdma_activity_work);
+ 
+ 		return snprintf(buffer, PAGE_SIZE, "%llu\n",
+ 				(sdma_activity_work_handler.sdma_activity_counter)/
 -- 
 2.43.0
 
