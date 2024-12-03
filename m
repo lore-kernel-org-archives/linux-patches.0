@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 388BF1F7591;
-	Tue,  3 Dec 2024 16:19:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C6021F7567;
+	Tue,  3 Dec 2024 16:19:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733242753; cv=none; b=HNL0pW33DKYSeCf6LqzbjonmQxKNbqUikQaWyVv5NA15ADAXSX+oTnpHecq8YTOmVZaBrZ8VJ7reYdqv92OPJeTqITbXUk0drOQpd7XdfVOJZwhwDt/uLM/bxEixCEyFPoi0JrmeinNrAmvbua3u/K+cKz6gAw/RIh51WqHAXUw=
+	t=1733242756; cv=none; b=HOBKlXrP1r/AJFij6DDGSrUWlTqGx8tbvg3YWG4gcmHzhfhVhyGRZzWeXUTQFPD10fKtZRaHeehWPXVU+lUPfhugT2A+LR5V+vBgJs+a5KfM1L/v/L4eJDUT+hsKEV4FKjgLw3HG4Dnt4rb0NAJtIXoTLPSmneGYExKpAchuPjg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733242753; c=relaxed/simple;
-	bh=/tMEyqca0xP07793fPBQGxqBayD9AAtU4FKsOaPoY6c=;
+	s=arc-20240116; t=1733242756; c=relaxed/simple;
+	bh=6QQBVPgRZtJaClNzS1YzmWuAOocWDlUAu25dBWUTWo8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Qt1aS8ieK09MrUvE10MZ7gz7NCfbt35nYIndiDn2TH933baOaF2+QCkjeHs0GD7SYQRacR6lw+VgNkvCFIh1DG4ritgVQsUV1sAxnJlL97mtkcR9Ol64NSLeftcmiaU++ZWVhb0GF1+1Q88LI6c5XaOfWZN81Xj0Jt58ExpKNBk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LZVBvksl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WGZKofv56J1S4lVu2Gcu9IT8iSS8Db67Vt05YN7qZwpLbEppHVmaIA3FLs8M/425wlQF6R8LHM6DRKoedW/K7k9gkl8lNLn4JZSyrK+40FMRpeD84v4gOr5uVDKhPYhvyEid/s9FtSEqbSfpTmyA4cMuiEjXgL0IlnE8i2z8R08=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GSl/YQ7J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LZVBvksl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94E1DC4CECF;
-	Tue,  3 Dec 2024 16:19:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GSl/YQ7J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEF2AC4CECF;
+	Tue,  3 Dec 2024 16:19:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733242753;
-	bh=/tMEyqca0xP07793fPBQGxqBayD9AAtU4FKsOaPoY6c=;
+	s=korg; t=1733242756;
+	bh=6QQBVPgRZtJaClNzS1YzmWuAOocWDlUAu25dBWUTWo8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LZVBvksl6XTDTAfRP8jG4ArVAkn+2BFLgJWusxsnOfTJo7I8f6uhTG400UmoTaRyY
-	 6k4RTegwISQBPky3qx9m0jLCGNRhmgqBx74T5bUorBpDq5y9bv80l0wvuwC7cNw7d3
-	 t8EkGYrWpTB+8MffbiCzD3BJWmghrxqXN+ZcyjqQ=
+	b=GSl/YQ7JODUt/3q+yy2dHhKJ5NOHc6Z02tXitzmUfdRtylKTEoNwJobNW36zCuo57
+	 +2zRfhj1HkQcB+wv6HDLU+8PGVWbh+rRKo2y8W5f8Ifr3IrNfMscr8yps2LN/zqXMU
+	 WVCTMBST7XBL9/Ju9oJ5uG4/5RRdHrkeBX8cSepo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namhyung Kim <namhyung@kernel.org>,
-	Will Deacon <will@kernel.org>,
-	Robin Murphy <robin.murphy@arm.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
+	"Paulo Alcantara (Red Hat)" <pc@manguebit.com>,
+	Enzo Matsumiya <ematsumiya@suse.de>,
+	Henrique Carvalho <henrique.carvalho@suse.com>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 800/826] perf/arm-cmn: Ensure port and device id bits are set properly
-Date: Tue,  3 Dec 2024 15:48:47 +0100
-Message-ID: <20241203144814.965579458@linuxfoundation.org>
+Subject: [PATCH 6.12 801/826] smb: client: disable directory caching when dir_cache_timeout is zero
+Date: Tue,  3 Dec 2024 15:48:48 +0100
+Message-ID: <20241203144815.004313356@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -53,48 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namhyung Kim <namhyung@kernel.org>
+From: Henrique Carvalho <henrique.carvalho@suse.com>
 
-[ Upstream commit dfdf714fed559c09021df1d2a4bb64c0ad5f53bc ]
+[ Upstream commit ceaf1451990e3ea7fb50aebb5a149f57945f6e9f ]
 
-The portid_bits and deviceid_bits were set only for XP type nodes in
-the arm_cmn_discover() and it confused other nodes to find XP nodes.
-Copy the both bits from the XP nodes directly when it sets up a new
-node.
+Setting dir_cache_timeout to zero should disable the caching of
+directory contents. Currently, even when dir_cache_timeout is zero,
+some caching related functions are still invoked, which is unintended
+behavior.
 
-Fixes: e79634b53e39 ("perf/arm-cmn: Refactor node ID handling. Again.")
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
-Acked-by: Will Deacon <will@kernel.org>
-Reviewed-by: Robin Murphy <robin.murphy@arm.com>
-Link: https://lore.kernel.org/r/20241121001334.331334-1-namhyung@kernel.org
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+Fix the issue by setting tcon->nohandlecache to true when
+dir_cache_timeout is zero, ensuring that directory handle caching
+is properly disabled.
+
+Fixes: 238b351d0935 ("smb3: allow controlling length of time directory entries are cached with dir leases")
+Reviewed-by: Paulo Alcantara (Red Hat) <pc@manguebit.com>
+Reviewed-by: Enzo Matsumiya <ematsumiya@suse.de>
+Signed-off-by: Henrique Carvalho <henrique.carvalho@suse.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/perf/arm-cmn.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/smb/client/connect.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/perf/arm-cmn.c b/drivers/perf/arm-cmn.c
-index 397a46410f7cb..30506c43776f1 100644
---- a/drivers/perf/arm-cmn.c
-+++ b/drivers/perf/arm-cmn.c
-@@ -2178,8 +2178,6 @@ static int arm_cmn_init_dtcs(struct arm_cmn *cmn)
- 			continue;
+diff --git a/fs/smb/client/connect.c b/fs/smb/client/connect.c
+index fa07708f2e320..a94c538ff8636 100644
+--- a/fs/smb/client/connect.c
++++ b/fs/smb/client/connect.c
+@@ -2594,7 +2594,7 @@ cifs_get_tcon(struct cifs_ses *ses, struct smb3_fs_context *ctx)
  
- 		xp = arm_cmn_node_to_xp(cmn, dn);
--		dn->portid_bits = xp->portid_bits;
--		dn->deviceid_bits = xp->deviceid_bits;
- 		dn->dtc = xp->dtc;
- 		dn->dtm = xp->dtm;
- 		if (cmn->multi_dtm)
-@@ -2420,6 +2418,8 @@ static int arm_cmn_discover(struct arm_cmn *cmn, unsigned int rgn_offset)
- 			}
- 
- 			arm_cmn_init_node_info(cmn, reg & CMN_CHILD_NODE_ADDR, dn);
-+			dn->portid_bits = xp->portid_bits;
-+			dn->deviceid_bits = xp->deviceid_bits;
- 
- 			switch (dn->type) {
- 			case CMN_TYPE_DTC:
+ 	if (ses->server->dialect >= SMB20_PROT_ID &&
+ 	    (ses->server->capabilities & SMB2_GLOBAL_CAP_DIRECTORY_LEASING))
+-		nohandlecache = ctx->nohandlecache;
++		nohandlecache = ctx->nohandlecache || !dir_cache_timeout;
+ 	else
+ 		nohandlecache = true;
+ 	tcon = tcon_info_alloc(!nohandlecache, netfs_trace_tcon_ref_new);
 -- 
 2.43.0
 
