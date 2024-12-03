@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C05B1F754A;
-	Tue,  3 Dec 2024 15:21:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11F611F7540;
+	Tue,  3 Dec 2024 15:21:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733239312; cv=none; b=jBAAECALm3P4jUWl12vXJVtssopBidYx2cfT/jkWyBqSk0gTgDiHfIxVZQrtyEsw8ydUMsBVljdZL8VyyCy1WhiFeEM2PQhZjok18Kwj0rYgVL+8QSXX+oFSwmewdBS+GVGK24b3l8YVWoeVIvjdLUUrS1cAy9g1MNVbM6XR5yY=
+	t=1733239315; cv=none; b=qx0cIJKlb3pAqLb2bzsaYvxpJ0iYL8udSQmBQ8xzsVu06qb8Xs9Ctgp9R5wSSK2fUIM1cxjF7bhkE2cSyaPaGUacUrCxI/gZvDaQO3q/t7r9dh5yw7FhxzLnmh81bGNdbGpEErBFEod/dGI6khbMyBRp2HTjwN4swJ9TdDLJUeU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733239312; c=relaxed/simple;
-	bh=ZhTKFNuSiLQdTJqPz2ZaTqGDusOuk7dUg+qL657swuQ=;
+	s=arc-20240116; t=1733239315; c=relaxed/simple;
+	bh=wcXYaZKWeObILCt77wMtVucDECpRNzutPiJWIICYgZI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BGAJPk5wJAM1XSKghl5/zgFlb1URbcbPfZPcs1mFurFxYkko1o6PJ33QyPQVtzSh9ahOQGg+TSHUKj+z6NRNr01//r00kvwQldexJjYXIxh+oocpRWR6u1AuGD79rJX9gBHpZ55R+E2uBfWSpejXHhAJVXV9TmBxszRJav7kzpU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jeBLxVom; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OU70nxDsQj2VoYansMkqp6OqvfeyA9xKDCSWgHFOsXZTb0jhc8eABv9dKApaI2UBKfTVNyYLppR1X9lCI3fryE23WyyW8PP+H7Foi5l6pt1dNvl51xg22+SpO79HkcXeRqwPxCmorm2sXPYc66bEcH52mZlif6WeEI76IdcxOYI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cSVQuHOt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jeBLxVom"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58811C4CECF;
-	Tue,  3 Dec 2024 15:21:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cSVQuHOt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40BEDC4CECF;
+	Tue,  3 Dec 2024 15:21:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733239311;
-	bh=ZhTKFNuSiLQdTJqPz2ZaTqGDusOuk7dUg+qL657swuQ=;
+	s=korg; t=1733239314;
+	bh=wcXYaZKWeObILCt77wMtVucDECpRNzutPiJWIICYgZI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jeBLxVom5A5cKaJsbtAsIfNWHa2TY8A1gQHsuZiEf3gkmxtzgtO2ubGMuxUNg6H6M
-	 jm+DI/zWrneDApOEyzBZ5LHIdh+TZ5CnoA4KYpOVU5WmsbdzG5T3Kylj3uXKczt1ur
-	 niEYDmoj2jlzqb5QmW5D47RboeM79qgimt9JWlig=
+	b=cSVQuHOtc3YrJpWeqJYIl83TqDVzHjR1oSTL4saIfyvi0IrzvUNIyPXev1XpKoV1N
+	 TimL0aGKSjvMnN2Mvi+gm/gYTqq2L+kNYSqIFVTf13TBTvfS40fHL1bAzgAOVeZnmg
+	 vJgjA1bcwFOpi2VzOCnWF5j2FYbGxBAichmKU13U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ye Bin <yebin10@huawei.com>,
-	Chuck Lever <chuck.lever@oracle.com>,
+	Steen Hegelund <steen.hegelund@microchip.com>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Daniel Machon <daniel.machon@microchip.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 543/817] svcrdma: fix miss destroy percpu_counter in svc_rdma_proc_init()
-Date: Tue,  3 Dec 2024 15:41:55 +0100
-Message-ID: <20241203144017.099356875@linuxfoundation.org>
+Subject: [PATCH 6.11 570/817] net: microchip: vcap: Add typegroup table terminators in kunit tests
+Date: Tue,  3 Dec 2024 15:42:22 +0100
+Message-ID: <20241203144018.162435815@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -51,98 +54,132 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ye Bin <yebin10@huawei.com>
+From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit ce89e742a4c12b20f09a43fec1b21db33f2166cd ]
+[ Upstream commit f164b296638d1eb1fb1c537e93ab5c8b49966546 ]
 
-There's issue as follows:
-RPC: Registered rdma transport module.
-RPC: Registered rdma backchannel transport module.
-RPC: Unregistered rdma transport module.
-RPC: Unregistered rdma backchannel transport module.
-BUG: unable to handle page fault for address: fffffbfff80c609a
-PGD 123fee067 P4D 123fee067 PUD 123fea067 PMD 10c624067 PTE 0
-Oops: Oops: 0000 [#1] PREEMPT SMP KASAN NOPTI
-RIP: 0010:percpu_counter_destroy_many+0xf7/0x2a0
-Call Trace:
- <TASK>
- __die+0x1f/0x70
- page_fault_oops+0x2cd/0x860
- spurious_kernel_fault+0x36/0x450
- do_kern_addr_fault+0xca/0x100
- exc_page_fault+0x128/0x150
- asm_exc_page_fault+0x26/0x30
- percpu_counter_destroy_many+0xf7/0x2a0
- mmdrop+0x209/0x350
- finish_task_switch.isra.0+0x481/0x840
- schedule_tail+0xe/0xd0
- ret_from_fork+0x23/0x80
- ret_from_fork_asm+0x1a/0x30
- </TASK>
+VCAP API unit tests fail randomly with errors such as
 
-If register_sysctl() return NULL, then svc_rdma_proc_cleanup() will not
-destroy the percpu counters which init in svc_rdma_proc_init().
-If CONFIG_HOTPLUG_CPU is enabled, residual nodes may be in the
-'percpu_counters' list. The above issue may occur once the module is
-removed. If the CONFIG_HOTPLUG_CPU configuration is not enabled, memory
-leakage occurs.
-To solve above issue just destroy all percpu counters when
-register_sysctl() return NULL.
+   # vcap_api_iterator_init_test: EXPECTATION FAILED at drivers/net/ethernet/microchip/vcap/vcap_api_kunit.c:387
+   Expected 134 + 7 == iter.offset, but
+       134 + 7 == 141 (0x8d)
+       iter.offset == 17214 (0x433e)
+   # vcap_api_iterator_init_test: EXPECTATION FAILED at drivers/net/ethernet/microchip/vcap/vcap_api_kunit.c:388
+   Expected 5 == iter.reg_idx, but
+       iter.reg_idx == 702 (0x2be)
+   # vcap_api_iterator_init_test: EXPECTATION FAILED at drivers/net/ethernet/microchip/vcap/vcap_api_kunit.c:389
+   Expected 11 == iter.reg_bitpos, but
+       iter.reg_bitpos == 15 (0xf)
+   # vcap_api_iterator_init_test: pass:0 fail:1 skip:0 total:1
 
-Fixes: 1e7e55731628 ("svcrdma: Restore read and write stats")
-Fixes: 22df5a22462e ("svcrdma: Convert rdma_stat_sq_starve to a per-CPU counter")
-Fixes: df971cd853c0 ("svcrdma: Convert rdma_stat_recv to a per-CPU counter")
-Signed-off-by: Ye Bin <yebin10@huawei.com>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Comments in the code state that "A typegroup table ends with an all-zero
+terminator". Add the missing terminators.
+
+Some of the typegroups did have a terminator of ".offset = 0, .width = 0,
+.value = 0,". Replace those terminators with "{ }" (no trailing ',') for
+consistency and to excplicitly state "this is a terminator".
+
+Fixes: 67d637516fa9 ("net: microchip: sparx5: Adding KUNIT test for the VCAP API")
+Cc: Steen Hegelund <steen.hegelund@microchip.com>
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Reviewed-by: Daniel Machon <daniel.machon@microchip.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Link: https://patch.msgid.link/20241119213202.2884639-1-linux@roeck-us.net
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/xprtrdma/svc_rdma.c | 19 ++++++++++++++-----
- 1 file changed, 14 insertions(+), 5 deletions(-)
+ .../ethernet/microchip/vcap/vcap_api_kunit.c    | 17 ++++++++++-------
+ 1 file changed, 10 insertions(+), 7 deletions(-)
 
-diff --git a/net/sunrpc/xprtrdma/svc_rdma.c b/net/sunrpc/xprtrdma/svc_rdma.c
-index 58ae6ec4f25b4..415c0310101f0 100644
---- a/net/sunrpc/xprtrdma/svc_rdma.c
-+++ b/net/sunrpc/xprtrdma/svc_rdma.c
-@@ -233,25 +233,34 @@ static int svc_rdma_proc_init(void)
+diff --git a/drivers/net/ethernet/microchip/vcap/vcap_api_kunit.c b/drivers/net/ethernet/microchip/vcap/vcap_api_kunit.c
+index 7251121ab196e..16eb3de60eb6d 100644
+--- a/drivers/net/ethernet/microchip/vcap/vcap_api_kunit.c
++++ b/drivers/net/ethernet/microchip/vcap/vcap_api_kunit.c
+@@ -366,12 +366,13 @@ static void vcap_api_iterator_init_test(struct kunit *test)
+ 	struct vcap_typegroup typegroups[] = {
+ 		{ .offset = 0, .width = 2, .value = 2, },
+ 		{ .offset = 156, .width = 1, .value = 0, },
+-		{ .offset = 0, .width = 0, .value = 0, },
++		{ }
+ 	};
+ 	struct vcap_typegroup typegroups2[] = {
+ 		{ .offset = 0, .width = 3, .value = 4, },
+ 		{ .offset = 49, .width = 2, .value = 0, },
+ 		{ .offset = 98, .width = 2, .value = 0, },
++		{ }
+ 	};
  
- 	rc = percpu_counter_init(&svcrdma_stat_read, 0, GFP_KERNEL);
- 	if (rc)
--		goto out_err;
-+		goto err;
- 	rc = percpu_counter_init(&svcrdma_stat_recv, 0, GFP_KERNEL);
- 	if (rc)
--		goto out_err;
-+		goto err_read;
- 	rc = percpu_counter_init(&svcrdma_stat_sq_starve, 0, GFP_KERNEL);
- 	if (rc)
--		goto out_err;
-+		goto err_recv;
- 	rc = percpu_counter_init(&svcrdma_stat_write, 0, GFP_KERNEL);
- 	if (rc)
--		goto out_err;
-+		goto err_sq;
+ 	vcap_iter_init(&iter, 52, typegroups, 86);
+@@ -399,6 +400,7 @@ static void vcap_api_iterator_next_test(struct kunit *test)
+ 		{ .offset = 147, .width = 3, .value = 0, },
+ 		{ .offset = 196, .width = 2, .value = 0, },
+ 		{ .offset = 245, .width = 1, .value = 0, },
++		{ }
+ 	};
+ 	int idx;
  
- 	svcrdma_table_header = register_sysctl("sunrpc/svc_rdma",
- 					       svcrdma_parm_table);
-+	if (!svcrdma_table_header)
-+		goto err_write;
-+
- 	return 0;
+@@ -433,7 +435,7 @@ static void vcap_api_encode_typegroups_test(struct kunit *test)
+ 		{ .offset = 147, .width = 3, .value = 5, },
+ 		{ .offset = 196, .width = 2, .value = 2, },
+ 		{ .offset = 245, .width = 5, .value = 27, },
+-		{ .offset = 0, .width = 0, .value = 0, },
++		{ }
+ 	};
  
--out_err:
-+err_write:
-+	rc = -ENOMEM;
-+	percpu_counter_destroy(&svcrdma_stat_write);
-+err_sq:
- 	percpu_counter_destroy(&svcrdma_stat_sq_starve);
-+err_recv:
- 	percpu_counter_destroy(&svcrdma_stat_recv);
-+err_read:
- 	percpu_counter_destroy(&svcrdma_stat_read);
-+err:
- 	return rc;
- }
+ 	vcap_encode_typegroups(stream, 49, typegroups, false);
+@@ -463,6 +465,7 @@ static void vcap_api_encode_bit_test(struct kunit *test)
+ 		{ .offset = 147, .width = 3, .value = 5, },
+ 		{ .offset = 196, .width = 2, .value = 2, },
+ 		{ .offset = 245, .width = 1, .value = 0, },
++		{ }
+ 	};
  
+ 	vcap_iter_init(&iter, 49, typegroups, 44);
+@@ -489,7 +492,7 @@ static void vcap_api_encode_field_test(struct kunit *test)
+ 		{ .offset = 147, .width = 3, .value = 5, },
+ 		{ .offset = 196, .width = 2, .value = 2, },
+ 		{ .offset = 245, .width = 5, .value = 27, },
+-		{ .offset = 0, .width = 0, .value = 0, },
++		{ }
+ 	};
+ 	struct vcap_field rf = {
+ 		.type = VCAP_FIELD_U32,
+@@ -538,7 +541,7 @@ static void vcap_api_encode_short_field_test(struct kunit *test)
+ 		{ .offset = 0, .width = 3, .value = 7, },
+ 		{ .offset = 21, .width = 2, .value = 3, },
+ 		{ .offset = 42, .width = 1, .value = 1, },
+-		{ .offset = 0, .width = 0, .value = 0, },
++		{ }
+ 	};
+ 	struct vcap_field rf = {
+ 		.type = VCAP_FIELD_U32,
+@@ -608,7 +611,7 @@ static void vcap_api_encode_keyfield_test(struct kunit *test)
+ 	struct vcap_typegroup tgt[] = {
+ 		{ .offset = 0, .width = 2, .value = 2, },
+ 		{ .offset = 156, .width = 1, .value = 1, },
+-		{ .offset = 0, .width = 0, .value = 0, },
++		{ }
+ 	};
+ 
+ 	vcap_test_api_init(&admin);
+@@ -671,7 +674,7 @@ static void vcap_api_encode_max_keyfield_test(struct kunit *test)
+ 	struct vcap_typegroup tgt[] = {
+ 		{ .offset = 0, .width = 2, .value = 2, },
+ 		{ .offset = 156, .width = 1, .value = 1, },
+-		{ .offset = 0, .width = 0, .value = 0, },
++		{ }
+ 	};
+ 	u32 keyres[] = {
+ 		0x928e8a84,
+@@ -732,7 +735,7 @@ static void vcap_api_encode_actionfield_test(struct kunit *test)
+ 		{ .offset = 0, .width = 2, .value = 2, },
+ 		{ .offset = 21, .width = 1, .value = 1, },
+ 		{ .offset = 42, .width = 1, .value = 0, },
+-		{ .offset = 0, .width = 0, .value = 0, },
++		{ }
+ 	};
+ 
+ 	vcap_encode_actionfield(&rule, &caf, &rf, tgt);
 -- 
 2.43.0
 
