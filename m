@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E89E923CE;
-	Tue,  3 Dec 2024 16:06:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 575E01F76DB;
+	Tue,  3 Dec 2024 16:06:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733242001; cv=none; b=oaUYQaNPf3VvrLcyDHqawFAm3BsESQClBmSicscZFsqiZ1+AQ+ox9mmnYNcC5K9Scl1Kj+236B+rTeONHN8JmjP35y5rHPva1PoilQl+znx4WtCS1EMjvNeD/pLDcvuAUnvL5LaevRxqg+yKrew7Ft7s0F7rqSvAUF9YVAuZtho=
+	t=1733242004; cv=none; b=pA8O6ujMG6i050k6B3E5iZENtWsPoYNVvWQ91ezj0e+a9zytEX4dE4wgF/5rQ7K1+2vovPE12TL+o190ysyFlkjrBSpROAfQ7TmOwFewI56Gs4RrDZP+Nk3G1JLtGJDUflzooaAK7mRIcRfuQ27DNU8vTOm9QvldDSzs7jwPAsE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733242001; c=relaxed/simple;
-	bh=U9+qp1AWwbSF9xWlJMHVZlanbitOVOzm8Y+oKdgLUnY=;
+	s=arc-20240116; t=1733242004; c=relaxed/simple;
+	bh=ffZOYcE8Xmu+LPX2AEBuLuNdqZcrHZ9k75QEzHc5oJg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nSuZQu63gWPE7XDKte/no2yEYx9lH8MniLv/NlWcI6RvL72k4Cbi7iA1y4wM8Ww27VDa/LmiC4pmVW1BxXUVfJ9n6zapSQafK2dQdpHp5K2/ECd+uZtb1vJNSfZFjaNoSJAAge5/ILuLELCWOU+mDSKQg5swoH3W1IJ3e85t2js=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ijujvw+u; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UzD+CtuUBprJs2hjOHrL9CndQqIJRZ/ZAfuQVE5bY5qF08kSjG2cGxfyoM3D3KGY18XueH/at4roZHXkGCCq4kXqunYx6Rz+N6GW/RKGSCfEw6jBBAQ/IPvquXC0v1GXYvimIEDOE4NLBFueiqVeLQHCZEFUWOT+jRHCOhv86C0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CqXZvLDF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ijujvw+u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5651DC4CECF;
-	Tue,  3 Dec 2024 16:06:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CqXZvLDF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5E3FC4CECF;
+	Tue,  3 Dec 2024 16:06:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733242000;
-	bh=U9+qp1AWwbSF9xWlJMHVZlanbitOVOzm8Y+oKdgLUnY=;
+	s=korg; t=1733242004;
+	bh=ffZOYcE8Xmu+LPX2AEBuLuNdqZcrHZ9k75QEzHc5oJg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ijujvw+uVXxlFyBpisYI/V84qq/HyB8KYJkxtsSjw+k0x8AM28LFpeFiGuYu6uz7Q
-	 JOSe97LIdwE2CRpzZcEtKzG5ErBhXJ7giExChOgaiIzvQV4MuC5MNdbwGQKMn2RAhX
-	 moKDe0FmZO0GCP4wR+zRBMXtNatdKUeb3WYuxcxo=
+	b=CqXZvLDFvWz7Ob9Ub+1f+27WBidw4+Jq2aCCzJbYLN5OssBUK7jZGynN8JJ+kNLRg
+	 IpIsDwQ3Mv4UBxMB/xKfeDKyjmz74gRv5zDaA4ewjQNPGOpU8NKyYXeeQGP9q5PDGM
+	 vY4HezkuQIBipDn8rnO4uQkKP9KPTG5zJft3hf3M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Somnath Kotur <somnath.kotur@broadcom.com>,
-	Pavan Chebbi <pavan.chebbi@broadcom.com>,
-	Kashyap Desai <kashyap.desai@broadcom.com>,
-	Saravanan Vajravel <saravanan.vajravel@broadcom.com>,
-	Michael Chan <michael.chan@broadcom.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Kyle Tso <kyletso@google.com>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 577/826] bnxt_en: Reserve rings after PCIe AER recovery if NIC interface is down
-Date: Tue,  3 Dec 2024 15:45:04 +0100
-Message-ID: <20241203144806.259457992@linuxfoundation.org>
+Subject: [PATCH 6.12 548/826] power: supply: core: Remove might_sleep() from power_supply_put()
+Date: Tue,  3 Dec 2024 15:44:35 +0100
+Message-ID: <20241203144805.126961428@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -55,51 +54,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Saravanan Vajravel <saravanan.vajravel@broadcom.com>
+From: Bart Van Assche <bvanassche@acm.org>
 
-[ Upstream commit 5311598f7f3293683cdc761df71ae3469327332c ]
+[ Upstream commit f6da4553ff24a5d1c959c9627c965323adc3d307 ]
 
-After successful PCIe AER recovery, FW will reset all resource
-reservations.  If it is IF_UP, the driver will call bnxt_open() and
-all resources will be reserved again.  It it is IF_DOWN, we should
-call bnxt_reserve_rings() so that we can reserve resources including
-RoCE resources to allow RoCE to resume after AER.  Without this
-patch, RoCE fails to resume in this IF_DOWN scenario.
+The put_device() call in power_supply_put() may call
+power_supply_dev_release(). The latter function does not sleep so
+power_supply_put() doesn't sleep either. Hence, remove the might_sleep()
+call from power_supply_put(). This patch suppresses false positive
+complaints about calling a sleeping function from atomic context if
+power_supply_put() is called from atomic context.
 
-Later, if it becomes IF_UP, bnxt_open() will see that resources have
-been reserved and will not reserve again.
-
-Fixes: fb1e6e562b37 ("bnxt_en: Fix AER recovery.")
-Reviewed-by: Somnath Kotur <somnath.kotur@broadcom.com>
-Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
-Reviewed-by: Kashyap Desai <kashyap.desai@broadcom.com>
-Signed-off-by: Saravanan Vajravel <saravanan.vajravel@broadcom.com>
-Signed-off-by: Michael Chan <michael.chan@broadcom.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Cc: Kyle Tso <kyletso@google.com>
+Cc: Krzysztof Kozlowski <krzk@kernel.org>
+Fixes: 1a352462b537 ("power_supply: Add power_supply_put for decrementing device reference counter")
+Signed-off-by: Bart Van Assche <bvanassche@acm.org>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/20240917193914.47566-1-bvanassche@acm.org
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/power/supply/power_supply_core.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-index 99d025b69079a..20a8cb26bc0a6 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-@@ -16232,8 +16232,12 @@ static void bnxt_io_resume(struct pci_dev *pdev)
- 	rtnl_lock();
- 
- 	err = bnxt_hwrm_func_qcaps(bp);
--	if (!err && netif_running(netdev))
--		err = bnxt_open(netdev);
-+	if (!err) {
-+		if (netif_running(netdev))
-+			err = bnxt_open(netdev);
-+		else
-+			err = bnxt_reserve_rings(bp, true);
-+	}
- 
- 	if (!err)
- 		netif_device_attach(netdev);
+diff --git a/drivers/power/supply/power_supply_core.c b/drivers/power/supply/power_supply_core.c
+index 49534458a9f7d..73cc9c236e833 100644
+--- a/drivers/power/supply/power_supply_core.c
++++ b/drivers/power/supply/power_supply_core.c
+@@ -484,8 +484,6 @@ EXPORT_SYMBOL_GPL(power_supply_get_by_name);
+  */
+ void power_supply_put(struct power_supply *psy)
+ {
+-	might_sleep();
+-
+ 	atomic_dec(&psy->use_cnt);
+ 	put_device(&psy->dev);
+ }
 -- 
 2.43.0
 
