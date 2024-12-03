@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83D271FA27C;
-	Tue,  3 Dec 2024 15:46:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 066E781ADA;
+	Tue,  3 Dec 2024 15:46:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733240793; cv=none; b=jP3NkPVIDcRfU03G6N9djZbTSIeh7O2LVKoHrJm8SRf6qye/uSgVc8XBXGtqujUt0eA+fZNBg1p8/lNFkiHyfxP/TY8cTAnv/dTXjclR1M9aLsUZA7mkpaUV+RiYf8T//58YKyAVldh0NJSDA3uX/eSDRcAO4OLZGuXmcfoMipI=
+	t=1733240797; cv=none; b=sa/TvwLnDtWtArY0Etiiawv0a9xdQUZlix8rkbNH96LuC1h3xg3UCDjBJd0wFBNTAHbvGEbkEmC7aNBmP1/JsDMHCS2mYJLz6JW4BUnur5uE9SC7xSrrha8JwUGl40RU9ZZd1UeZaEMm5E3LsBxUsJ6Y/IUCSI0Uf1LjuFAh/0I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733240793; c=relaxed/simple;
-	bh=A9X6OUJNnAhR89BKAClii9eqngW4ntngGpFl7tPXvXI=;
+	s=arc-20240116; t=1733240797; c=relaxed/simple;
+	bh=ykAUMsd1nYidCPqeNBafXCzkz75HNkQqs8jTXTYVq6Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T09nBvePAgD/s+9Y78NRwK4H4etqOu1PijqB+Mt34ZtFTWbEBO5a6XxHXayOHBPTULekYCrZos6U5ThTPrQSORdluFQl9TxNaorPzLofhGqWNaOqr2QWDgdhFUbh6zRWx+sKuKUTvIkUh2husZmvAdZ4nQBU6yLS0KAdzKli3Z8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c9sKP7eb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=vE2Ub6ms1Lp1nxuMmbJaaoAQnZg1iwWCB2tSrOwTf7koK6gDQlf79kpvV8HaRiYcD5gcfKOxd8jAs8rMfWFMJFufbIMpDt2gMj/2puqPpGpHRO4LrWRSWi/OjzvqC2U7kBJrylzIfgU9Fvl83fBLcDQk3XVv93z71niECDIDzgo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wrAB5aWd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c9sKP7eb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06476C4CECF;
-	Tue,  3 Dec 2024 15:46:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wrAB5aWd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6980CC4CECF;
+	Tue,  3 Dec 2024 15:46:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733240793;
-	bh=A9X6OUJNnAhR89BKAClii9eqngW4ntngGpFl7tPXvXI=;
+	s=korg; t=1733240796;
+	bh=ykAUMsd1nYidCPqeNBafXCzkz75HNkQqs8jTXTYVq6Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c9sKP7ebcC6tEI5yuUytnN8X9zX/m89sQtyZ2cuJzeY2iadnlM8cXFdGicgE+rMYM
-	 RzvFLdspjiwYEbeLoinpSgEN54RTDV4U9wA0HudI9ce56SazmYWxmJTO/HC1Fq9mh7
-	 SpalI4DXi+7NWLSWm41uosH+jebcimF/pAUndTHU=
+	b=wrAB5aWdM2ReSwhhLeCzS5pvTFmhXDWq9gcvAd2ER2dZrhioODiEkkil+dzAcAeoB
+	 HZrYVr6vCRG1nD1e/zdtgi7m6m0QaBw6BuyajqxDaYyn5fC2E++TJgmYRs1PpLxmC0
+	 +9+df5u+VqW5X+WDmO9UvwBZ+yMej0SelsHytk9Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karthikeyan Periyasamy <quic_periyasa@quicinc.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Rafal Romanowski <rafal.romanowski@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 235/826] wifi: cfg80211: check radio iface combination for multi radio per wiphy
-Date: Tue,  3 Dec 2024 15:39:22 +0100
-Message-ID: <20241203144752.921466750@linuxfoundation.org>
+Subject: [PATCH 6.12 236/826] ice: consistently use q_idx in ice_vc_cfg_qs_msg()
+Date: Tue,  3 Dec 2024 15:39:23 +0100
+Message-ID: <20241203144752.964587448@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -51,134 +52,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karthikeyan Periyasamy <quic_periyasa@quicinc.com>
+From: Jacob Keller <jacob.e.keller@intel.com>
 
-[ Upstream commit bd9813d13be439851a7ff3e6372e53caa6e387a6 ]
+[ Upstream commit a884c304e18a40e1c7a6525a9274e64c2c061c3f ]
 
-Currently, wiphy_verify_combinations() fails for the multi-radio per wiphy
-due to the condition check on new global interface combination that DFS
-only works on one channel. In a multi-radio scenario, new global interface
-combination encompasses the capabilities of all radio combinations, so it
-supports more than one channel with DFS. For multi-radio per wiphy,
-interface combination verification needs to be performed for radio specific
-interface combinations. This is necessary as the new global interface
-combination combines the capabilities of all radio combinations.
+The ice_vc_cfg_qs_msg() function is used to configure VF queues in response
+to a VIRTCHNL_OP_CONFIG_VSI_QUEUES command.
 
-Fixes: a01b1e9f9955 ("wifi: mac80211: add support for DFS with multiple radios")
-Signed-off-by: Karthikeyan Periyasamy <quic_periyasa@quicinc.com>
-Link: https://patch.msgid.link/20240917140239.886083-1-quic_periyasa@quicinc.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+The virtchnl command contains an array of queue pair data for configuring
+Tx and Rx queues. This data includes a queue ID. When configuring the
+queues, the driver generally uses this queue ID to determine which Tx and
+Rx ring to program. However, a handful of places use the index into the
+queue pair data from the VF. While most VF implementations appear to send
+this data in order, it is not mandated by the virtchnl and it is not
+verified that the queue pair data comes in order.
+
+Fix the driver to consistently use the q_idx field instead of the 'i'
+iterator value when accessing the rings. For the Rx case, introduce a local
+ring variable to keep lines short.
+
+Fixes: 7ad15440acf8 ("ice: Refactor VIRTCHNL_OP_CONFIG_VSI_QUEUES handling")
+Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
+Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/core.c | 64 ++++++++++++++++++++++++++++++++++++++-------
- 1 file changed, 54 insertions(+), 10 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_virtchnl.c | 21 +++++++++----------
+ 1 file changed, 10 insertions(+), 11 deletions(-)
 
-diff --git a/net/wireless/core.c b/net/wireless/core.c
-index 74ca18833df17..7d313fb66d76b 100644
---- a/net/wireless/core.c
-+++ b/net/wireless/core.c
-@@ -603,16 +603,20 @@ struct wiphy *wiphy_new_nm(const struct cfg80211_ops *ops, int sizeof_priv,
- }
- EXPORT_SYMBOL(wiphy_new_nm);
+diff --git a/drivers/net/ethernet/intel/ice/ice_virtchnl.c b/drivers/net/ethernet/intel/ice/ice_virtchnl.c
+index 59f62306b9cb0..b6ec01f6fa73e 100644
+--- a/drivers/net/ethernet/intel/ice/ice_virtchnl.c
++++ b/drivers/net/ethernet/intel/ice/ice_virtchnl.c
+@@ -1715,8 +1715,8 @@ static int ice_vc_cfg_qs_msg(struct ice_vf *vf, u8 *msg)
  
--static int wiphy_verify_combinations(struct wiphy *wiphy)
-+static
-+int wiphy_verify_iface_combinations(struct wiphy *wiphy,
-+				    const struct ieee80211_iface_combination *iface_comb,
-+				    int n_iface_comb,
-+				    bool combined_radio)
- {
- 	const struct ieee80211_iface_combination *c;
- 	int i, j;
+ 		/* copy Tx queue info from VF into VSI */
+ 		if (qpi->txq.ring_len > 0) {
+-			vsi->tx_rings[i]->dma = qpi->txq.dma_ring_addr;
+-			vsi->tx_rings[i]->count = qpi->txq.ring_len;
++			vsi->tx_rings[q_idx]->dma = qpi->txq.dma_ring_addr;
++			vsi->tx_rings[q_idx]->count = qpi->txq.ring_len;
  
--	for (i = 0; i < wiphy->n_iface_combinations; i++) {
-+	for (i = 0; i < n_iface_comb; i++) {
- 		u32 cnt = 0;
- 		u16 all_iftypes = 0;
+ 			/* Disable any existing queue first */
+ 			if (ice_vf_vsi_dis_single_txq(vf, vsi, q_idx))
+@@ -1725,7 +1725,7 @@ static int ice_vc_cfg_qs_msg(struct ice_vf *vf, u8 *msg)
+ 			/* Configure a queue with the requested settings */
+ 			if (ice_vsi_cfg_single_txq(vsi, vsi->tx_rings, q_idx)) {
+ 				dev_warn(ice_pf_to_dev(pf), "VF-%d failed to configure TX queue %d\n",
+-					 vf->vf_id, i);
++					 vf->vf_id, q_idx);
+ 				goto error_param;
+ 			}
+ 		}
+@@ -1733,24 +1733,23 @@ static int ice_vc_cfg_qs_msg(struct ice_vf *vf, u8 *msg)
+ 		/* copy Rx queue info from VF into VSI */
+ 		if (qpi->rxq.ring_len > 0) {
+ 			u16 max_frame_size = ice_vc_get_max_frame_size(vf);
++			struct ice_rx_ring *ring = vsi->rx_rings[q_idx];
+ 			u32 rxdid;
  
--		c = &wiphy->iface_combinations[i];
-+		c = &iface_comb[i];
+-			vsi->rx_rings[i]->dma = qpi->rxq.dma_ring_addr;
+-			vsi->rx_rings[i]->count = qpi->rxq.ring_len;
++			ring->dma = qpi->rxq.dma_ring_addr;
++			ring->count = qpi->rxq.ring_len;
  
- 		/*
- 		 * Combinations with just one interface aren't real,
-@@ -625,9 +629,13 @@ static int wiphy_verify_combinations(struct wiphy *wiphy)
- 		if (WARN_ON(!c->num_different_channels))
- 			return -EINVAL;
+ 			if (qpi->rxq.crc_disable)
+-				vsi->rx_rings[q_idx]->flags |=
+-					ICE_RX_FLAGS_CRC_STRIP_DIS;
++				ring->flags |= ICE_RX_FLAGS_CRC_STRIP_DIS;
+ 			else
+-				vsi->rx_rings[q_idx]->flags &=
+-					~ICE_RX_FLAGS_CRC_STRIP_DIS;
++				ring->flags &= ~ICE_RX_FLAGS_CRC_STRIP_DIS;
  
--		/* DFS only works on one channel. */
--		if (WARN_ON(c->radar_detect_widths &&
--			    (c->num_different_channels > 1)))
-+		/* DFS only works on one channel. Avoid this check
-+		 * for multi-radio global combination, since it hold
-+		 * the capabilities of all radio combinations.
-+		 */
-+		if (!combined_radio &&
-+		    WARN_ON(c->radar_detect_widths &&
-+			    c->num_different_channels > 1))
- 			return -EINVAL;
+ 			if (qpi->rxq.databuffer_size != 0 &&
+ 			    (qpi->rxq.databuffer_size > ((16 * 1024) - 128) ||
+ 			     qpi->rxq.databuffer_size < 1024))
+ 				goto error_param;
+ 			vsi->rx_buf_len = qpi->rxq.databuffer_size;
+-			vsi->rx_rings[i]->rx_buf_len = vsi->rx_buf_len;
++			ring->rx_buf_len = vsi->rx_buf_len;
+ 			if (qpi->rxq.max_pkt_size > max_frame_size ||
+ 			    qpi->rxq.max_pkt_size < 64)
+ 				goto error_param;
+@@ -1765,7 +1764,7 @@ static int ice_vc_cfg_qs_msg(struct ice_vf *vf, u8 *msg)
  
- 		if (WARN_ON(!c->n_limits))
-@@ -648,13 +656,21 @@ static int wiphy_verify_combinations(struct wiphy *wiphy)
- 			if (WARN_ON(wiphy->software_iftypes & types))
- 				return -EINVAL;
+ 			if (ice_vsi_cfg_single_rxq(vsi, q_idx)) {
+ 				dev_warn(ice_pf_to_dev(pf), "VF-%d failed to configure RX queue %d\n",
+-					 vf->vf_id, i);
++					 vf->vf_id, q_idx);
+ 				goto error_param;
+ 			}
  
--			/* Only a single P2P_DEVICE can be allowed */
--			if (WARN_ON(types & BIT(NL80211_IFTYPE_P2P_DEVICE) &&
-+			/* Only a single P2P_DEVICE can be allowed, avoid this
-+			 * check for multi-radio global combination, since it
-+			 * hold the capabilities of all radio combinations.
-+			 */
-+			if (!combined_radio &&
-+			    WARN_ON(types & BIT(NL80211_IFTYPE_P2P_DEVICE) &&
- 				    c->limits[j].max > 1))
- 				return -EINVAL;
- 
--			/* Only a single NAN can be allowed */
--			if (WARN_ON(types & BIT(NL80211_IFTYPE_NAN) &&
-+			/* Only a single NAN can be allowed, avoid this
-+			 * check for multi-radio global combination, since it
-+			 * hold the capabilities of all radio combinations.
-+			 */
-+			if (!combined_radio &&
-+			    WARN_ON(types & BIT(NL80211_IFTYPE_NAN) &&
- 				    c->limits[j].max > 1))
- 				return -EINVAL;
- 
-@@ -693,6 +709,34 @@ static int wiphy_verify_combinations(struct wiphy *wiphy)
- 	return 0;
- }
- 
-+static int wiphy_verify_combinations(struct wiphy *wiphy)
-+{
-+	int i, ret;
-+	bool combined_radio = false;
-+
-+	if (wiphy->n_radio) {
-+		for (i = 0; i < wiphy->n_radio; i++) {
-+			const struct wiphy_radio *radio = &wiphy->radio[i];
-+
-+			ret = wiphy_verify_iface_combinations(wiphy,
-+							      radio->iface_combinations,
-+							      radio->n_iface_combinations,
-+							      false);
-+			if (ret)
-+				return ret;
-+		}
-+
-+		combined_radio = true;
-+	}
-+
-+	ret = wiphy_verify_iface_combinations(wiphy,
-+					      wiphy->iface_combinations,
-+					      wiphy->n_iface_combinations,
-+					      combined_radio);
-+
-+	return ret;
-+}
-+
- int wiphy_register(struct wiphy *wiphy)
- {
- 	struct cfg80211_registered_device *rdev = wiphy_to_rdev(wiphy);
 -- 
 2.43.0
 
