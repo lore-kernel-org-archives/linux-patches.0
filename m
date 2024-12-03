@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6549B1F7566;
-	Tue,  3 Dec 2024 15:20:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF96E1F6696;
+	Tue,  3 Dec 2024 15:20:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733239206; cv=none; b=ZBYRWZVahXgtX8rN85haAI96KuhmAJPNm+LFTKOEupl1ejQjzQh4bWJa7anR9Umz3EM2iA+/sJCELLKN4Yc87+F9xg1vVtYAnu1+ca/ahb/xZQrdeVWsMjXs0r+Pm3zwgUvM4QH7TdklV/EMltqrheiLwozhBTUiWnwDOFEbImY=
+	t=1733239209; cv=none; b=SHBsp0JSAYbv7X7mp5valMcRZinMitsIHb75iLA2C+dMdlQZ+4jfuxisF362OnI/XuYoNr712fCu4nxUhlMx5x/2+Ec/dns49prEVXjQrL3DALD3vrT0g21Pb0kF1LUBVGi1sSUBzVzAi73btU4I189x4xUZyN41f6TOqFVMlCg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733239206; c=relaxed/simple;
-	bh=ytCMnM81aM0eHn3W9OueEmiS2Tr56KEZr8sp4vg5uzQ=;
+	s=arc-20240116; t=1733239209; c=relaxed/simple;
+	bh=jRZnISTpeeHMzze58iio5jFVX2uO9drP9skvJ6MKvEE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OeVzV+01CVJFjWqzfUEIB7XeH8uqeGdGBOMtALcjTGiq43ALuHZiu70cmEaW+lgI9jTeMHZl0RL2rosRA5O11836fEUO8II+hMJGfkPoh9gMO7XArMwk/NJtiO0HtDTcyLaeq+HbKCQG6PwV1naw1kcvi5T+6Xu40Q1nA4KB3K4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SmFZdxUf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZswLOQbCsSoEffDNAfrNAylI+BxZrDNNLpyyw8iVagp0x1lWzu8insU2D/peUH3JA+rUtVfHyLjxtaOq4YjOEFwQkd36LUFeIzzY61TNBStd/jYOsmZH10v5eWBTyl4n5SUxRf1apll7da4S3PeBAtt0dvXLcB8rAa2fXqhu8nI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ULiAbQz1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SmFZdxUf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7877EC4CECF;
-	Tue,  3 Dec 2024 15:20:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ULiAbQz1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60186C4CECF;
+	Tue,  3 Dec 2024 15:20:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733239205;
-	bh=ytCMnM81aM0eHn3W9OueEmiS2Tr56KEZr8sp4vg5uzQ=;
+	s=korg; t=1733239208;
+	bh=jRZnISTpeeHMzze58iio5jFVX2uO9drP9skvJ6MKvEE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SmFZdxUfc3LENEG+SuuJksCClIhoo2ovwI9GOGmQBqDFbqg5neosk3V66FGfX7Xeo
-	 4QvPmYwuib/lHKECTj8kcYAbXh4J84rQNgEqFTTOQmty0ttq7nx+uloMFOqq66Fea2
-	 qBED27r4pOQPWnzURObj6q4hIfsTLpaUyrY/F9ZU=
+	b=ULiAbQz1iQ6YMhqNsiMVx+KI/jEYDLXHwPSagYummEUUyqcoyNC82q68nOB4l/x4J
+	 PnItaVaPQ3FTir4NdXkeX5l03l2STVjl+I5Xw7gv7dWZ3DIYT9bLo5vRUgGyDEw8XW
+	 NhtPqHsRcD8cFVun0v+ht2esj9xEsruMHfs4xidk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Yongpeng Yang <yangyongpeng1@oppo.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 535/817] remoteproc: qcom: adsp: Remove subdevs on the error path of adsp_probe()
-Date: Tue,  3 Dec 2024 15:41:47 +0100
-Message-ID: <20241203144016.783299532@linuxfoundation.org>
+Subject: [PATCH 6.11 509/817] f2fs: check curseg->inited before write_sum_page in change_curseg
+Date: Tue,  3 Dec 2024 15:41:21 +0100
+Message-ID: <20241203144015.742660817@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -51,52 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
+From: Yongpeng Yang <yangyongpeng1@oppo.com>
 
-[ Upstream commit fe80d3205e91e36e67f4d3d6c326793298d15766 ]
+[ Upstream commit 43563069e1c1df417d2eed6eca8a22fc6b04691d ]
 
-Current implementation of adsp_probe() in qcom_q6v5_adsp.c and does not
-remove the subdevs of adsp on the error path. Fix this bug by calling
-qcom_remove_{ssr,sysmon,pdm,smd,glink}_subdev(), and qcom_q6v5_deinit()
-appropriately.
+In the __f2fs_init_atgc_curseg->get_atssr_segment calling,
+curseg->segno is NULL_SEGNO, indicating that there is no summary
+block that needs to be written.
 
-Fixes: dc160e449122 ("remoteproc: qcom: Introduce Non-PAS ADSP PIL driver")
-Signed-off-by: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
-Link: https://lore.kernel.org/r/fed3df4219543d46b88bacf87990d947f3fac8d7.1731038950.git.joe@pf.is.s.u-tokyo.ac.jp
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: 093749e296e2 ("f2fs: support age threshold based garbage collection")
+Signed-off-by: Yongpeng Yang <yangyongpeng1@oppo.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/remoteproc/qcom_q6v5_adsp.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ fs/f2fs/segment.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/remoteproc/qcom_q6v5_adsp.c b/drivers/remoteproc/qcom_q6v5_adsp.c
-index 572dcb0f055b7..223f6ca0745d3 100644
---- a/drivers/remoteproc/qcom_q6v5_adsp.c
-+++ b/drivers/remoteproc/qcom_q6v5_adsp.c
-@@ -734,15 +734,22 @@ static int adsp_probe(struct platform_device *pdev)
- 					      desc->ssctl_id);
- 	if (IS_ERR(adsp->sysmon)) {
- 		ret = PTR_ERR(adsp->sysmon);
--		goto disable_pm;
-+		goto deinit_remove_glink_pdm_ssr;
- 	}
+diff --git a/fs/f2fs/segment.c b/fs/f2fs/segment.c
+index 3f49a9e0ec642..6379d9c40a024 100644
+--- a/fs/f2fs/segment.c
++++ b/fs/f2fs/segment.c
+@@ -2926,7 +2926,8 @@ static int change_curseg(struct f2fs_sb_info *sbi, int type)
+ 	struct f2fs_summary_block *sum_node;
+ 	struct page *sum_page;
  
- 	ret = rproc_add(rproc);
- 	if (ret)
--		goto disable_pm;
-+		goto remove_sysmon;
+-	write_sum_page(sbi, curseg->sum_blk, GET_SUM_BLOCK(sbi, curseg->segno));
++	if (curseg->inited)
++		write_sum_page(sbi, curseg->sum_blk, GET_SUM_BLOCK(sbi, curseg->segno));
  
- 	return 0;
- 
-+remove_sysmon:
-+	qcom_remove_sysmon_subdev(adsp->sysmon);
-+deinit_remove_glink_pdm_ssr:
-+	qcom_q6v5_deinit(&adsp->q6v5);
-+	qcom_remove_glink_subdev(rproc, &adsp->glink_subdev);
-+	qcom_remove_pdm_subdev(rproc, &adsp->pdm_subdev);
-+	qcom_remove_ssr_subdev(rproc, &adsp->ssr_subdev);
- disable_pm:
- 	qcom_rproc_pds_detach(adsp);
+ 	__set_test_and_inuse(sbi, new_segno);
  
 -- 
 2.43.0
