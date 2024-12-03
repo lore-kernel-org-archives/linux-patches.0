@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2B3414A088;
-	Tue,  3 Dec 2024 16:07:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56CFB1F76CA;
+	Tue,  3 Dec 2024 16:07:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733242038; cv=none; b=YvRTdRVXWaTa66z+TQ3LjP/2nuCDMHo2Zzv/vXMfl4MyoQkOCNHKKW4bIJzT7fxDo/los4PSgYqdXwH8/Siu9UflChQk97SBAyFyVk+0k0R+0rWjzRerbiYcksgAVh6oG24EyvdDWom+hpV1z7V1Dbq49JUZPESriURNmoVMlMk=
+	t=1733242042; cv=none; b=K313hj1zBh1XrhTCaY9ouL7bpsGUIe52WcklaPAn2mNyuaLHcCLyLQp06Wwsi2oBUK3Y4fUtVNO+zuBMLFLNvuy/GiIB3/iuBT7a+ZxP9nwD1rMwrmVVnu51HOAKnNe4FnDxsIm0N2ud01b2cgJtDrg4cu3EWNm80fz5JyREF2o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733242038; c=relaxed/simple;
-	bh=lNBYxpwpn/PLIw6NJk3JKgt0MgiM2U5PKwWgSGvqfcU=;
+	s=arc-20240116; t=1733242042; c=relaxed/simple;
+	bh=go/KqF7Mh2jpL8bs2ojzHuvYFUp1vxQ+wdy2jDc/2fY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HyVoLKMDQlG+SPcOq2a6mpyjIp2lrgCNC4KWN/OCvz+aViK+NVy9Sy0+Dpz9vQ5kA8Sw8X3h4KF6cJZJ8NOlZshKZYcKQm3ukvVegUbEsRDZPnNuzSmyyonnGJAmNSdJwJZpO1ztE2hLymKKpeg8v0ogqV/1GwOTdGESTxNEZfw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S+6Grh1F; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kv56bcS1nMC6M0iqh/ySFGSjp/p9pPcQHjr602BkG6301IbF3D0+H7Uu7Pu6KCK37pYtC8gqJEVPfDAL7c2uxW0NdHSB9ndgkdJTK82GTUn7o07grncHrEi5q+cKJkNn2EsgUNMJB0LCU3kjU2T5la74adtcDG/dxLM5P5Fa2vs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pY0EeNtF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S+6Grh1F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD4C7C4CECF;
-	Tue,  3 Dec 2024 16:07:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pY0EeNtF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C3CCC4CECF;
+	Tue,  3 Dec 2024 16:07:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733242038;
-	bh=lNBYxpwpn/PLIw6NJk3JKgt0MgiM2U5PKwWgSGvqfcU=;
+	s=korg; t=1733242041;
+	bh=go/KqF7Mh2jpL8bs2ojzHuvYFUp1vxQ+wdy2jDc/2fY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S+6Grh1FjBdvHNOerzMvGdkDcZsN2d+4Cxsy2zbAM0nzI/Ev4+yhmbrnfCWieH+/v
-	 xFiGKC5VIVPgMiOZFqIK3AP91JDEzrh9DWn1DloquhMet+JkaH4DSFySqOkjuuHTOT
-	 a6vvrO5kD2nGAgDEBEDhe9c1f9KS4IyObN/L84VU=
+	b=pY0EeNtFpNnpgBX+hr2XdrXysWUAhG1q0xl0CyxxnQR3IIT/p3g86pIjwdwRJN7r1
+	 a/g4pZMzJ87vKBeXl8MtQgQBacNZdTNi9zXctq1FaBkqdFi3gmhWP+b+PEgsqw6Ym1
+	 2IBu9X/i6ELYHcCez+5BfurFhPbphWnfTc849DvQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Jeongjun Park <aha310510@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 590/826] iio: light: al3010: Fix an error handling path in al3010_probe()
-Date: Tue,  3 Dec 2024 15:45:17 +0100
-Message-ID: <20241203144806.763710196@linuxfoundation.org>
+Subject: [PATCH 6.12 591/826] usb: using mutex lock and supporting O_NONBLOCK flag in iowarrior_read()
+Date: Tue,  3 Dec 2024 15:45:18 +0100
+Message-ID: <20241203144806.810960936@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -51,56 +50,127 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Jeongjun Park <aha310510@gmail.com>
 
-[ Upstream commit a4b7064d34186cf4970fe0333c3b27346cf8f819 ]
+[ Upstream commit 44feafbaa66ec86232b123bb8437a6a262442025 ]
 
-If i2c_smbus_write_byte_data() fails in al3010_init(),
-al3010_set_pwr(false) is not called.
+iowarrior_read() uses the iowarrior dev structure, but does not use any
+lock on the structure. This can cause various bugs including data-races,
+so it is more appropriate to use a mutex lock to safely protect the
+iowarrior dev structure. When using a mutex lock, you should split the
+branch to prevent blocking when the O_NONBLOCK flag is set.
 
-In order to avoid such a situation, move the devm_add_action_or_reset()
-witch calls al3010_set_pwr(false) right after a successful
-al3010_set_pwr(true).
+In addition, it is unnecessary to check for NULL on the iowarrior dev
+structure obtained by reading file->private_data. Therefore, it is
+better to remove the check.
 
-Fixes: c36b5195ab70 ("iio: light: add Dyna-Image AL3010 driver")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Link: https://patch.msgid.link/ee5d10a2dd2b70f29772d5df33774d3974a80f30.1725993353.git.christophe.jaillet@wanadoo.fr
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Fixes: 946b960d13c1 ("USB: add driver for iowarrior devices.")
+Signed-off-by: Jeongjun Park <aha310510@gmail.com>
+Link: https://lore.kernel.org/r/20240919103403.3986-1-aha310510@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/light/al3010.c | 11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+ drivers/usb/misc/iowarrior.c | 46 ++++++++++++++++++++++++++++--------
+ 1 file changed, 36 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/iio/light/al3010.c b/drivers/iio/light/al3010.c
-index 53569587ccb7b..7cbb8b2033009 100644
---- a/drivers/iio/light/al3010.c
-+++ b/drivers/iio/light/al3010.c
-@@ -87,7 +87,12 @@ static int al3010_init(struct al3010_data *data)
- 	int ret;
+diff --git a/drivers/usb/misc/iowarrior.c b/drivers/usb/misc/iowarrior.c
+index 6d28467ce3522..a513766b4985d 100644
+--- a/drivers/usb/misc/iowarrior.c
++++ b/drivers/usb/misc/iowarrior.c
+@@ -277,28 +277,45 @@ static ssize_t iowarrior_read(struct file *file, char __user *buffer,
+ 	struct iowarrior *dev;
+ 	int read_idx;
+ 	int offset;
++	int retval;
  
- 	ret = al3010_set_pwr(data->client, true);
-+	if (ret < 0)
-+		return ret;
+ 	dev = file->private_data;
  
-+	ret = devm_add_action_or_reset(&data->client->dev,
-+				       al3010_set_pwr_off,
-+				       data);
- 	if (ret < 0)
- 		return ret;
++	if (file->f_flags & O_NONBLOCK) {
++		retval = mutex_trylock(&dev->mutex);
++		if (!retval)
++			return -EAGAIN;
++	} else {
++		retval = mutex_lock_interruptible(&dev->mutex);
++		if (retval)
++			return -ERESTARTSYS;
++	}
++
+ 	/* verify that the device wasn't unplugged */
+-	if (!dev || !dev->present)
+-		return -ENODEV;
++	if (!dev->present) {
++		retval = -ENODEV;
++		goto exit;
++	}
  
-@@ -190,12 +195,6 @@ static int al3010_probe(struct i2c_client *client)
- 		return ret;
- 	}
+ 	dev_dbg(&dev->interface->dev, "minor %d, count = %zd\n",
+ 		dev->minor, count);
  
--	ret = devm_add_action_or_reset(&client->dev,
--					al3010_set_pwr_off,
--					data);
--	if (ret < 0)
--		return ret;
--
- 	return devm_iio_device_register(&client->dev, indio_dev);
+ 	/* read count must be packet size (+ time stamp) */
+ 	if ((count != dev->report_size)
+-	    && (count != (dev->report_size + 1)))
+-		return -EINVAL;
++	    && (count != (dev->report_size + 1))) {
++		retval = -EINVAL;
++		goto exit;
++	}
+ 
+ 	/* repeat until no buffer overrun in callback handler occur */
+ 	do {
+ 		atomic_set(&dev->overflow_flag, 0);
+ 		if ((read_idx = read_index(dev)) == -1) {
+ 			/* queue empty */
+-			if (file->f_flags & O_NONBLOCK)
+-				return -EAGAIN;
++			if (file->f_flags & O_NONBLOCK) {
++				retval = -EAGAIN;
++				goto exit;
++			}
+ 			else {
+ 				//next line will return when there is either new data, or the device is unplugged
+ 				int r = wait_event_interruptible(dev->read_wait,
+@@ -309,28 +326,37 @@ static ssize_t iowarrior_read(struct file *file, char __user *buffer,
+ 								  -1));
+ 				if (r) {
+ 					//we were interrupted by a signal
+-					return -ERESTART;
++					retval = -ERESTART;
++					goto exit;
+ 				}
+ 				if (!dev->present) {
+ 					//The device was unplugged
+-					return -ENODEV;
++					retval = -ENODEV;
++					goto exit;
+ 				}
+ 				if (read_idx == -1) {
+ 					// Can this happen ???
+-					return 0;
++					retval = 0;
++					goto exit;
+ 				}
+ 			}
+ 		}
+ 
+ 		offset = read_idx * (dev->report_size + 1);
+ 		if (copy_to_user(buffer, dev->read_queue + offset, count)) {
+-			return -EFAULT;
++			retval = -EFAULT;
++			goto exit;
+ 		}
+ 	} while (atomic_read(&dev->overflow_flag));
+ 
+ 	read_idx = ++read_idx == MAX_INTERRUPT_BUFFER ? 0 : read_idx;
+ 	atomic_set(&dev->read_idx, read_idx);
++	mutex_unlock(&dev->mutex);
+ 	return count;
++
++exit:
++	mutex_unlock(&dev->mutex);
++	return retval;
  }
  
+ /*
 -- 
 2.43.0
 
