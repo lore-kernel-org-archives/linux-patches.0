@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0C531F76D1;
-	Tue,  3 Dec 2024 16:21:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D030C1F76D1;
+	Tue,  3 Dec 2024 16:21:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733242867; cv=none; b=oH8FY+VhK8BG9tz898e7VK4BFZJjuzhrCYnQuvpIVOG7LddPouqv4xvwbj+sqAuuSRQiSwyNjSfWy/NzUvFBzlLSQ3t/8UNTN4qZqCp6gziBqruOXZsDfCppOZl1cXLgdN2ckdvC15iXQMLV5LPxuFQ4okQblvE0pirOJoNgW2Y=
+	t=1733242870; cv=none; b=UTRL4uNf6+E3fimGn6UOPQWHZm5vkPbtZQY1GNcmdMNw/MCGOU/kEFjzDtL6qGPqSqo+5rHXu4lz/KmNwV6F91Rx6lrpVUd/uICU4VCOIeuBCIjBJ5RpPxCIg8DSAQX3bRe+X9ipOtj26bH6ggb2rJjO1+/Oo+IMu7QrE0JV+Ts=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733242867; c=relaxed/simple;
-	bh=SCbRFYA1M03yGQOLK7SJuki27Chq8PYvSqz125QU4t0=;
+	s=arc-20240116; t=1733242870; c=relaxed/simple;
+	bh=TO6XrHbC8m2CtJmCNBqVKdTI71/QsK4SZNAanj3qVzY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K7dsEi5Hereoq/D9PVcNRQMbKvmPloJywF70R0blixjAFBEX9vR7ViZUJLRI4Q7tw9wCd1ICjxDFHclXFTCck7GdqIwI6qcsuRHJ/gOJv0jW/y9FrqWRY+9w+PCQdy3M9pM1UXLcofKX2nyJX9R9U/sQhMAno1sfqBiA/xczKF0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FtL8VCx8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=c4j8beTUWyrFmGF9Tp22K2cD/soKwOL8pTxzzthYm2Ien15td00WEQMY2cZiG9eJW4yZUBy4wrtOlUEhiQyo4CddABdnt+CACBz/ygFa5pvkRV/lmnZ7Vio6tW2Zh7Y0VsSt+T4I5v01EsG4edITDSpBOVfQcesAnE2zNc8twao=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qcvtq1O0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FtL8VCx8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17D22C4CECF;
-	Tue,  3 Dec 2024 16:21:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qcvtq1O0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45109C4CED6;
+	Tue,  3 Dec 2024 16:21:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733242867;
-	bh=SCbRFYA1M03yGQOLK7SJuki27Chq8PYvSqz125QU4t0=;
+	s=korg; t=1733242870;
+	bh=TO6XrHbC8m2CtJmCNBqVKdTI71/QsK4SZNAanj3qVzY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FtL8VCx8AF8Rxl6n0T5lqxYIT6GNZ5FsvQhDSCZyq3nhKLE7HTsLksbohyIHR9Adl
-	 sfJ4ZzUiD9/JW2c6vR7p+QeF8QO0BLcPuj/auASmBjlkV0Lhe5DjKONEXP+1PU9dRX
-	 /TqXiPZspMmN+n0cu60Q5kIV2DTBQpbYKdJv/zLo=
+	b=Qcvtq1O0B/6YJkLmP43HZUfJ6bpmo16FVfvCei+4CoyvB6tuHWkdlglKCMH7Hh71w
+	 h5Lvy+WJ+1HcuBB9dM8E+sYtDM4ZtqJ5K1uPw9JygvDltSq1J08VGmbIkJ4dpbQY0U
+	 FNcYwx8rXv/k19QSsTkDMiqwL6g7JQ1PYyfeNVEo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Lai Yi <yi1.lai@linux.intel.com>,
-	Ming Lei <ming.lei@redhat.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.12 826/826] block: dont verify IO lock for freeze/unfreeze in elevator_init_mq()
-Date: Tue,  3 Dec 2024 15:49:13 +0100
-Message-ID: <20241203144815.973544410@linuxfoundation.org>
+	Benjamin Coddington <bcodding@redhat.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Chuck Lever <chuck.lever@oracle.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 818/826] nfs/blocklayout: Dont attempt unregister for invalid block device
+Date: Tue,  3 Dec 2024 15:49:05 +0100
+Message-ID: <20241203144815.660704758@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -52,50 +53,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ming Lei <ming.lei@redhat.com>
+From: Benjamin Coddington <bcodding@redhat.com>
 
-commit 357e1b7f730bd85a383e7afa75a3caba329c5707 upstream.
+[ Upstream commit 3a4ce14d9a6b868e0787e4582420b721c04ee41e ]
 
-elevator_init_mq() is only called at the entry of add_disk_fwnode() when
-disk IO isn't allowed yet.
+Since commit d869da91cccb ("nfs/blocklayout: Fix premature PR key
+unregistration") an unmount of a pNFS SCSI layout-enabled NFS may
+dereference a NULL block_device in:
 
-So not verify io lock(q->io_lockdep_map) for freeze & unfreeze in
-elevator_init_mq().
+  bl_unregister_scsi+0x16/0xe0 [blocklayoutdriver]
+  bl_free_device+0x70/0x80 [blocklayoutdriver]
+  bl_free_deviceid_node+0x12/0x30 [blocklayoutdriver]
+  nfs4_put_deviceid_node+0x60/0xc0 [nfsv4]
+  nfs4_deviceid_purge_client+0x132/0x190 [nfsv4]
+  unset_pnfs_layoutdriver+0x59/0x60 [nfsv4]
+  nfs4_destroy_server+0x36/0x70 [nfsv4]
+  nfs_free_server+0x23/0xe0 [nfs]
+  deactivate_locked_super+0x30/0xb0
+  cleanup_mnt+0xba/0x150
+  task_work_run+0x59/0x90
+  syscall_exit_to_user_mode+0x217/0x220
+  do_syscall_64+0x8e/0x160
 
-Reported-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Reported-by: Lai Yi <yi1.lai@linux.intel.com>
-Fixes: f1be1788a32e ("block: model freeze & enter queue as lock for supporting lockdep")
-Signed-off-by: Ming Lei <ming.lei@redhat.com>
-Link: https://lore.kernel.org/r/20241031133723.303835-5-ming.lei@redhat.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This happens because even though we were able to create the
+nfs4_deviceid_node, the lookup for the device was unable to attach the
+block device to the pnfs_block_dev.
+
+If we never found a block device to register, we can avoid this case with
+the PNFS_BDEV_REGISTERED flag.  Move the deref behind the test for the
+flag.
+
+Fixes: d869da91cccb ("nfs/blocklayout: Fix premature PR key unregistration")
+Signed-off-by: Benjamin Coddington <bcodding@redhat.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/elevator.c |   10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ fs/nfs/blocklayout/dev.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
---- a/block/elevator.c
-+++ b/block/elevator.c
-@@ -598,13 +598,19 @@ void elevator_init_mq(struct request_que
- 	 * drain any dispatch activities originated from passthrough
- 	 * requests, then no need to quiesce queue which may add long boot
- 	 * latency, especially when lots of disks are involved.
-+	 *
-+	 * Disk isn't added yet, so verifying queue lock only manually.
- 	 */
--	blk_mq_freeze_queue(q);
-+	blk_freeze_queue_start_non_owner(q);
-+	blk_freeze_acquire_lock(q, true, false);
-+	blk_mq_freeze_queue_wait(q);
-+
- 	blk_mq_cancel_work_sync(q);
+diff --git a/fs/nfs/blocklayout/dev.c b/fs/nfs/blocklayout/dev.c
+index 6252f44479457..cab8809f0e0f4 100644
+--- a/fs/nfs/blocklayout/dev.c
++++ b/fs/nfs/blocklayout/dev.c
+@@ -20,9 +20,6 @@ static void bl_unregister_scsi(struct pnfs_block_dev *dev)
+ 	const struct pr_ops *ops = bdev->bd_disk->fops->pr_ops;
+ 	int status;
  
- 	err = blk_mq_init_sched(q, e);
+-	if (!test_and_clear_bit(PNFS_BDEV_REGISTERED, &dev->flags))
+-		return;
+-
+ 	status = ops->pr_register(bdev, dev->pr_key, 0, false);
+ 	if (status)
+ 		trace_bl_pr_key_unreg_err(bdev, dev->pr_key, status);
+@@ -58,7 +55,8 @@ static void bl_unregister_dev(struct pnfs_block_dev *dev)
+ 		return;
+ 	}
  
--	blk_mq_unfreeze_queue(q);
-+	blk_unfreeze_release_lock(q, true, false);
-+	blk_mq_unfreeze_queue_non_owner(q);
+-	if (dev->type == PNFS_BLOCK_VOLUME_SCSI)
++	if (dev->type == PNFS_BLOCK_VOLUME_SCSI &&
++		test_and_clear_bit(PNFS_BDEV_REGISTERED, &dev->flags))
+ 		bl_unregister_scsi(dev);
+ }
  
- 	if (err) {
- 		pr_warn("\"%s\" elevator initialization failed, "
+-- 
+2.43.0
+
 
 
