@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5B3A1F471B;
-	Tue,  3 Dec 2024 14:40:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C34BD17BB16;
+	Tue,  3 Dec 2024 14:40:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733236810; cv=none; b=qP9EWi3A+7Ih4IZpwipH9WCLmU+/0hp7yPHkfVqpyHurX2TJt9OPdNmp68vT1BZaUIi4oKJ3XKv+8CLOu8eNn53vi/0HnY0vhmS2KM6ygdHUK2qNB2p+/ohmfHxvY4+LGN70XC9SlbvzGR32owxN6LxGU488Ol3cNlRO3Ze+0pw=
+	t=1733236813; cv=none; b=KW/JmSRCzOmRI2rzmY1DnyXB5m60n5HwVH8J9nKyIqwuNmtxu+JnFbK4kyAMXlkzDKtIeeMgSkiz4Le03Ww4FD+1MrrCGzzFyG8FiHk+DyQA5g1ADiwt1mTWE84RI92cnBcDOMV4l+0RqrgW/OC+Gg9WulZ7XSh+NolA96VP+LU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733236810; c=relaxed/simple;
-	bh=EJiUNOd1hHL4BL33u2Xr33hc06Fby4HIRxEyHIu2fSc=;
+	s=arc-20240116; t=1733236813; c=relaxed/simple;
+	bh=PfUB9fWs5la2RLWAPeZeCiRv0Z/eRDZtER/7qSvThHU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XJmfNkVO5lXBF2ZtiHEOuZHw0jHXVB5UyM0RMZ7g/f36PYT68HmLHC0xxmyClnm3CKIOe+9Xvt8WybeldIRC3N2qfWnVtsZCTmWFIuf0oXgm81Ok7nefGgdR6EwVf4SbaDtjtfJy9YTXWO9Rtd8JQuGMS/iVRQ/sS+v7/Y1mvo4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cA9qTgNE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pRHgQwd7yIFXJuVYbRIqLeGxMDkgYP/qsXghs6PO1Wgx1wdGFlMjLHA0GQw1KmhUNUm1abBFiY/DcvsZbrit0bR+J91KQXMes2DRKaw7Eokh9ult4dgSwAB76pDaQle+QZuQVn6j8GzxikvbdKBmqKFFeQvv663sTYp30JiOW+U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eKmuWG9e; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cA9qTgNE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C3C9C4CECF;
-	Tue,  3 Dec 2024 14:40:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eKmuWG9e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48DD1C4CED6;
+	Tue,  3 Dec 2024 14:40:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733236810;
-	bh=EJiUNOd1hHL4BL33u2Xr33hc06Fby4HIRxEyHIu2fSc=;
+	s=korg; t=1733236813;
+	bh=PfUB9fWs5la2RLWAPeZeCiRv0Z/eRDZtER/7qSvThHU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cA9qTgNE7SOvOS3wCyGIdTagrPKQLL6H10V8y2T5IjKnZ5tivVV7sjwchNq1wfjec
-	 /AJbjstYTC2fqazPibhPE5IiCKawIBTgLpUIkM98FnBe/RdGpO/Re/vbRlKa/v2kw5
-	 9Kisvtas7G21l0VgM67FkCeZH8Ou89xssTn70SR0=
+	b=eKmuWG9eo9X4WsXGTbzBGFVJhhErU3n7fX+Y33/+BIbG9GlkKL6ho6hjNBzpbCKdi
+	 VICJi1Z0ZCvS2gjEZ1OwYq5nwulVduDCcvDN3iUJTqLavGRzZrmb9CMnFhNoosXKm9
+	 sn8SsHK41VexZ29fCpsU7BzHfnNXsc8jOLH+H/p4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Andy Shevchenko <andy@kernel.org>,
-	"James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>,
-	Kees Cook <kees@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 4.19 124/138] lib: string_helpers: silence snprintf() output truncation warning
-Date: Tue,  3 Dec 2024 15:32:33 +0100
-Message-ID: <20241203141928.311562580@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 4.19 125/138] NFSD: Prevent a potential integer overflow
+Date: Tue,  3 Dec 2024 15:32:34 +0100
+Message-ID: <20241203141928.349671840@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203141923.524658091@linuxfoundation.org>
 References: <20241203141923.524658091@linuxfoundation.org>
@@ -53,40 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-commit a508ef4b1dcc82227edc594ffae583874dd425d7 upstream.
+commit 7f33b92e5b18e904a481e6e208486da43e4dc841 upstream.
 
-The output of ".%03u" with the unsigned int in range [0, 4294966295] may
-get truncated if the target buffer is not 12 bytes. This can't really
-happen here as the 'remainder' variable cannot exceed 999 but the
-compiler doesn't know it. To make it happy just increase the buffer to
-where the warning goes away.
+If the tag length is >= U32_MAX - 3 then the "length + 4" addition
+can result in an integer overflow. Address this by splitting the
+decoding into several steps so that decode_cb_compound4res() does
+not have to perform arithmetic on the unsafe length value.
 
-Fixes: 3c9f3681d0b4 ("[SCSI] lib: add generic helper to print sizes rounded to the correct SI range")
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Reviewed-by: Andy Shevchenko <andy@kernel.org>
-Cc: James E.J. Bottomley <James.Bottomley@HansenPartnership.com>
-Cc: Kees Cook <kees@kernel.org>
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
 Cc: stable@vger.kernel.org
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Link: https://lore.kernel.org/r/20241101205453.9353-1-brgl@bgdev.pl
-Signed-off-by: Kees Cook <kees@kernel.org>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/string_helpers.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/nfsd/nfs4callback.c |   14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
---- a/lib/string_helpers.c
-+++ b/lib/string_helpers.c
-@@ -50,7 +50,7 @@ void string_get_size(u64 size, u64 blk_s
- 	static const unsigned int rounding[] = { 500, 50, 5 };
- 	int i = 0, j;
- 	u32 remainder = 0, sf_cap;
--	char tmp[8];
-+	char tmp[12];
- 	const char *unit;
+--- a/fs/nfsd/nfs4callback.c
++++ b/fs/nfsd/nfs4callback.c
+@@ -283,17 +283,17 @@ static int decode_cb_compound4res(struct
+ 	u32 length;
+ 	__be32 *p;
  
- 	tmp[0] = '\0';
+-	p = xdr_inline_decode(xdr, 4 + 4);
++	p = xdr_inline_decode(xdr, XDR_UNIT);
+ 	if (unlikely(p == NULL))
+ 		goto out_overflow;
+-	hdr->status = be32_to_cpup(p++);
++	hdr->status = be32_to_cpup(p);
+ 	/* Ignore the tag */
+-	length = be32_to_cpup(p++);
+-	p = xdr_inline_decode(xdr, length + 4);
+-	if (unlikely(p == NULL))
++	if (xdr_stream_decode_u32(xdr, &length) < 0)
++		goto out_overflow;
++	if (xdr_inline_decode(xdr, length) == NULL)
++		goto out_overflow;
++	if (xdr_stream_decode_u32(xdr, &hdr->nops) < 0)
+ 		goto out_overflow;
+-	p += XDR_QUADLEN(length);
+-	hdr->nops = be32_to_cpup(p);
+ 	return 0;
+ out_overflow:
+ 	return -EIO;
 
 
