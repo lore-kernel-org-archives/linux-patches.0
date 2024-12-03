@@ -1,37 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFC041D9341;
-	Tue,  3 Dec 2024 15:17:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5EF02D7BF;
+	Tue,  3 Dec 2024 15:17:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733239039; cv=none; b=aXpV2uypsG5SEpnFhCjBDlLMkMlODCZE3ozaPG2lbsW8h/Nebzk/fik3Z1corPFC4NR5ILM6Kd6V4yUnvnYJNzkHNXqSxiDLOvsnxqTWFECZBsTFhWm4P9/P/bWmNW/G+wuqFh4d0XnLQQ67kKOrGf4OFmniEJl/8lpJNAtVxeM=
+	t=1733239043; cv=none; b=jQAkBFBKeqCORi1Xa82G2BjuVKpNDx1yZtrVnPRd7+8aY6JVVEcsl8HQ4sX48NS1xEQOvRUyD5g2J59erZEqe63TMARXAFWv/JV/P6iB6kMoDo/GCIQlsKlRmdc7AhDVPcNvhoe+LG+96oJ2VrXoAdL0W2sDTPJZulYRANP6ZQ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733239039; c=relaxed/simple;
-	bh=rDNCTsHOXLm4Q+uiqMd6W2qG1qqKikOebwQhoFMMEuc=;
+	s=arc-20240116; t=1733239043; c=relaxed/simple;
+	bh=3mnhTY1kFCcQ0IFjcP/IaJQ4ohipBqYxL8cclB2RGNU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GBt6ylMoG9euD1GwDV54inEpw6bCKLlUy3EMucYqEkc12c+UrMweAn/B2Otw7PP3l9AJyp8WiXuron1W5GO7RdW22vZ6aWcmgnSJ0cyNIQAemtTfqGWNbTo1pbvsE7GFTkT73EwykyCgnyt0p51g2T1bOuR386OZuqCn7dAy57E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LTd/RefH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IS4rQZp+VN5UhLd8zHwH8q9s4TtI+bmn5j59wYRfhV9+z+EOfYxLN7rXI0PrAYNndCuqAn1I8Hw2S6TB7OUB4DqTwk0C0YwGwC8FX0tLlDVQBnYWcrOF7gkX6NqVY3vOvhGBvNiFg7V9AkVfKn+qFk7Jc+HoSQ6vBmU7U/5wai0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=luSQ8iD3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LTd/RefH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36E71C4CECF;
-	Tue,  3 Dec 2024 15:17:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="luSQ8iD3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9723C4CED6;
+	Tue,  3 Dec 2024 15:17:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733239039;
-	bh=rDNCTsHOXLm4Q+uiqMd6W2qG1qqKikOebwQhoFMMEuc=;
+	s=korg; t=1733239042;
+	bh=3mnhTY1kFCcQ0IFjcP/IaJQ4ohipBqYxL8cclB2RGNU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LTd/RefHY9Q5L9CO3TCiYgHTs7dQ3nESPKNLJepIuuErO8HCmE9LpdXJa0vQsHAZh
-	 CyEiINctgpXA9DRruVmX+p6iHWnH5d+wFv64R/UxUCc9YIzU35dZ7UljM5pP8r5/LS
-	 YiuDccG0bfuHBd0wz22GFMQPuhktnlppzAnM4IwQ=
+	b=luSQ8iD3MGM8TP47GK8bOMgVsgE6B6hgemP7tgGQ8p0hXDDJUkAjjnqi9U3igS9ff
+	 ejLktJWx62ASPb9tMVyByLGwu4xumi4zwhZOG9+lIxfpyFKekrZAbHJavGbyXqb4sA
+	 vxMztGUSarPD1HjvCo50lsxli71XBblxSjwkXEgU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andreas Gruenbacher <agruenba@redhat.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Weilin Wang <weilin.wang@intel.com>,
+	Ian Rogers <irogers@google.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Caleb Biggers <caleb.biggers@intel.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	Perry Taylor <perry.taylor@intel.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Samantha Alt <samantha.alt@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 484/817] gfs2: Fix unlinked inode cleanup
-Date: Tue,  3 Dec 2024 15:40:56 +0100
-Message-ID: <20241203144014.764100129@linuxfoundation.org>
+Subject: [PATCH 6.11 485/817] perf test: Add test for Intel TPEBS counting mode
+Date: Tue,  3 Dec 2024 15:40:57 +0100
+Message-ID: <20241203144014.802305413@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -50,83 +62,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andreas Gruenbacher <agruenba@redhat.com>
+From: Weilin Wang <weilin.wang@intel.com>
 
-[ Upstream commit 7c6f714d88475ceae5342264858a641eafa19632 ]
+[ Upstream commit b2738fda24543777a623a7d1cc2a9985ab81b448 ]
 
-Before commit f0e56edc2ec7 ("gfs2: Split the two kinds of glock "delete"
-work"), function delete_work_func() was used to trigger the eviction of
-in-memory inodes from remote as well as deleting unlinked inodes at a
-later point.  These two kinds of work were then split into two kinds of
-work, and the two places in the code were deferred deletion of inodes is
-required accidentally ended up queuing the wrong kind of work.  This
-caused unlinked inodes to be left behind, which could in the worst case
-fill up filesystems and require a filesystem check to recover.
+Intel TPEBS sampling mode is supported through perf record. The counting mode
+code uses perf record to capture retire_latency value and use it in metric
+calculation. This test checks the counting mode code on Intel platforms.
 
-Fix that by queuing the right kind of work in try_rgrp_unlink() and
-gfs2_drop_inode().
+Committer testing:
 
-Fixes: f0e56edc2ec7 ("gfs2: Split the two kinds of glock "delete" work")
-Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
+  root@x1:~# perf test tpebs
+  123: test Intel TPEBS counting mode                                  : Ok
+  root@x1:~# set -o vi
+  root@x1:~# perf test tpebs
+  123: test Intel TPEBS counting mode                                  : Ok
+  root@x1:~# perf test -v tpebs
+  123: test Intel TPEBS counting mode                                  : Ok
+  root@x1:~# perf test -vvv tpebs
+  123: test Intel TPEBS counting mode:
+  --- start ---
+  test child forked, pid 16603
+  Testing without --record-tpebs
+  Testing with --record-tpebs
+  ---- end(0) ----
+  123: test Intel TPEBS counting mode                                  : Ok
+  root@x1:~#
+
+Reviewed-by: Namhyung Kim <namhyung@kernel.org>
+Signed-off-by: Weilin Wang <weilin.wang@intel.com>
+Acked-by: Ian Rogers <irogers@google.com>
+Tested-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Caleb Biggers <caleb.biggers@intel.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Kan Liang <kan.liang@linux.intel.com>
+Cc: Perry Taylor <perry.taylor@intel.com>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Samantha Alt <samantha.alt@intel.com>
+Link: https://lore.kernel.org/r/20240720062102.444578-9-weilin.wang@intel.com
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Stable-dep-of: 057f8bfc6f70 ("perf stat: Uniquify event name improvements")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/gfs2/glock.c | 2 +-
- fs/gfs2/glock.h | 1 +
- fs/gfs2/rgrp.c  | 2 +-
- fs/gfs2/super.c | 2 +-
- 4 files changed, 4 insertions(+), 3 deletions(-)
+ .../perf/tests/shell/test_stat_intel_tpebs.sh | 19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
+ create mode 100755 tools/perf/tests/shell/test_stat_intel_tpebs.sh
 
-diff --git a/fs/gfs2/glock.c b/fs/gfs2/glock.c
-index b7f5347e4b41b..3af6120d55b51 100644
---- a/fs/gfs2/glock.c
-+++ b/fs/gfs2/glock.c
-@@ -1013,7 +1013,7 @@ bool gfs2_queue_try_to_evict(struct gfs2_glock *gl)
- 				  &gl->gl_delete, 0);
- }
- 
--static bool gfs2_queue_verify_delete(struct gfs2_glock *gl, bool later)
-+bool gfs2_queue_verify_delete(struct gfs2_glock *gl, bool later)
- {
- 	struct gfs2_sbd *sdp = gl->gl_name.ln_sbd;
- 	unsigned long delay;
-diff --git a/fs/gfs2/glock.h b/fs/gfs2/glock.h
-index adf0091cc98f9..63e101d448e96 100644
---- a/fs/gfs2/glock.h
-+++ b/fs/gfs2/glock.h
-@@ -245,6 +245,7 @@ static inline int gfs2_glock_nq_init(struct gfs2_glock *gl,
- void gfs2_glock_cb(struct gfs2_glock *gl, unsigned int state);
- void gfs2_glock_complete(struct gfs2_glock *gl, int ret);
- bool gfs2_queue_try_to_evict(struct gfs2_glock *gl);
-+bool gfs2_queue_verify_delete(struct gfs2_glock *gl, bool later);
- void gfs2_cancel_delete_work(struct gfs2_glock *gl);
- void gfs2_flush_delete_work(struct gfs2_sbd *sdp);
- void gfs2_gl_hash_clear(struct gfs2_sbd *sdp);
-diff --git a/fs/gfs2/rgrp.c b/fs/gfs2/rgrp.c
-index 29c7728167652..5393031297153 100644
---- a/fs/gfs2/rgrp.c
-+++ b/fs/gfs2/rgrp.c
-@@ -1879,7 +1879,7 @@ static void try_rgrp_unlink(struct gfs2_rgrpd *rgd, u64 *last_unlinked, u64 skip
- 		 */
- 		ip = gl->gl_object;
- 
--		if (ip || !gfs2_queue_try_to_evict(gl))
-+		if (ip || !gfs2_queue_verify_delete(gl, false))
- 			gfs2_glock_put(gl);
- 		else
- 			found++;
-diff --git a/fs/gfs2/super.c b/fs/gfs2/super.c
-index 6678060ed4d2b..e22c1edc32b39 100644
---- a/fs/gfs2/super.c
-+++ b/fs/gfs2/super.c
-@@ -1045,7 +1045,7 @@ static int gfs2_drop_inode(struct inode *inode)
- 		struct gfs2_glock *gl = ip->i_iopen_gh.gh_gl;
- 
- 		gfs2_glock_hold(gl);
--		if (!gfs2_queue_try_to_evict(gl))
-+		if (!gfs2_queue_verify_delete(gl, true))
- 			gfs2_glock_put_async(gl);
- 		return 0;
- 	}
+diff --git a/tools/perf/tests/shell/test_stat_intel_tpebs.sh b/tools/perf/tests/shell/test_stat_intel_tpebs.sh
+new file mode 100755
+index 0000000000000..c60b29add9801
+--- /dev/null
++++ b/tools/perf/tests/shell/test_stat_intel_tpebs.sh
+@@ -0,0 +1,19 @@
++#!/bin/bash
++# test Intel TPEBS counting mode
++# SPDX-License-Identifier: GPL-2.0
++
++set -e
++grep -q GenuineIntel /proc/cpuinfo || { echo Skipping non-Intel; exit 2; }
++
++# Use this event for testing because it should exist in all platforms
++event=cache-misses:R
++
++# Without this cmd option, default value or zero is returned
++echo "Testing without --record-tpebs"
++result=$(perf stat -e "$event" true 2>&1)
++[[ "$result" =~ $event ]] || exit 1
++
++# In platforms that do not support TPEBS, it should execute without error.
++echo "Testing with --record-tpebs"
++result=$(perf stat -e "$event" --record-tpebs -a sleep 0.01 2>&1)
++[[ "$result" =~ "perf record" && "$result" =~ $event ]] || exit 1
 -- 
 2.43.0
 
