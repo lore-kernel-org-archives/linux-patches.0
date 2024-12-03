@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94C2A1F890F;
-	Tue,  3 Dec 2024 16:12:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99A491F890F;
+	Tue,  3 Dec 2024 16:12:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733242323; cv=none; b=OopikmvXI+WIu6BmqXLIWxNay5IKKfyWY6Y7waTlSB5SXSFQDtkdIOTX5L4qHU/D4QUhBwZnmxAqg1+n1NaOlqOSIpaSq6Fl8t8n2t8/vEuN99Wa6MRazdH6fy4wPp0Bde6FrEOOSbrEESwUbwbCEY59XKBJNLBp1IczUOBOHTY=
+	t=1733242326; cv=none; b=GyJzt8NpOJMS8T4+Tptg4NRhAoD1xIUMihjpOmCslU54kHBuxC0YRFTbKRRJh6L+TtHFqDbLRR4nSrnMW4cHydzkgVbunxieNAuWR2IiiMDkO5DA2BLf4sX6LdUlDHul7G8hJhvGrrDYvgz8MD4N9Kr0w9ltNcdJF8JET2JBTwo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733242323; c=relaxed/simple;
-	bh=+O9dB9ZHEa4Cd5KzZQADmuiMGtvTPmHWvPns8cZeKZU=;
+	s=arc-20240116; t=1733242326; c=relaxed/simple;
+	bh=GBFW4LRvA/+rZvheXNdz0AUo07S4G6/IJhHLlwpkNmc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T3f7x5CfFqSgJHHlmR1M8+8F8SnUbVrWZ+Yn1ghnq86HiiknmBv4DTzkNpbDX3GUUHBYdTm2hMbctcXNnliCLgNErZAqkE/ktMyeLdh41yrHdFmaPHOUnU1Gvzi+ssu2n0rxbojqJ8CbMAeu7uP8J0BifM3szHg9oIuGHeHNd9Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wDaRfYQg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ULpn9l4y95aq/C6r8S+XCwYiK1pPX9r7hoVmcsAHqgMmYcpJe/wcbTuoCS7xBNGQVQlLjyrjZWcAklpWLQL5bu/aBTFLF4EhGN8Hgh9htX+MPmba41iehLuC6RKd1uDKLKgI1/5f/tZRGxC4gcdgTXZeZsmmHnFKbh2rqNQa89c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XqnWP8ym; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wDaRfYQg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97A6AC4CECF;
-	Tue,  3 Dec 2024 16:12:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XqnWP8ym"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A89A8C4CECF;
+	Tue,  3 Dec 2024 16:12:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733242323;
-	bh=+O9dB9ZHEa4Cd5KzZQADmuiMGtvTPmHWvPns8cZeKZU=;
+	s=korg; t=1733242326;
+	bh=GBFW4LRvA/+rZvheXNdz0AUo07S4G6/IJhHLlwpkNmc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wDaRfYQgKoIEkH9Q+BQiByYog7VuTqp/rAwmRfSJwLwXzDd9R9iYxAdv1kjQ+DHfJ
-	 LteFQlc57+eN/2+mwV7PLaMrLPv/8SK1TCSn1ihtOH5s+U9fQD/AYQrSxzJnww5vNi
-	 ZKAK7vloD1Ck5MT5boh2QZDKec0+sPFEod7D1gow=
+	b=XqnWP8ymOcEPMYLHuevfwUU/YiTe1NVm+tuQzBCjTqS8B1rSswdxjp4cgfXGpzJsj
+	 wk3sE69loPMwUGEFKpQlW+0mYeAgRfhziYdiwATsz+cQ2kQVP0KQba0V5N7vsxXz8A
+	 FMRcKT9qdmH43nXx1jdEMzPMWlh6Wfqqs2lx58GM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Kuangyi Chiang <ki.chiang65@gmail.com>,
 	Mathias Nyman <mathias.nyman@linux.intel.com>
-Subject: [PATCH 6.12 672/826] xhci: Fix control transfer error on Etron xHCI host
-Date: Tue,  3 Dec 2024 15:46:39 +0100
-Message-ID: <20241203144809.966907584@linuxfoundation.org>
+Subject: [PATCH 6.12 673/826] xhci: Combine two if statements for Etron xHCI host
+Date: Tue,  3 Dec 2024 15:46:40 +0100
+Message-ID: <20241203144810.006717875@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -52,81 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Kuangyi Chiang <ki.chiang65@gmail.com>
 
-commit 5e1c67abc9301d05130b7e267c204e7005503b33 upstream.
+commit d7b11fe5790203fcc0db182249d7bfd945e44ccb upstream.
 
-Performing a stability stress test on a USB3.0 2.5G ethernet adapter
-results in errors like this:
+Combine two if statements, because these hosts have the same
+quirk flags applied.
 
-[   91.441469] r8152 2-3:1.0 eth3: get_registers -71
-[   91.458659] r8152 2-3:1.0 eth3: get_registers -71
-[   91.475911] r8152 2-3:1.0 eth3: get_registers -71
-[   91.493203] r8152 2-3:1.0 eth3: get_registers -71
-[   91.510421] r8152 2-3:1.0 eth3: get_registers -71
+[Mathias: has stable tag because other fixes in series depend on this]
 
-The r8152 driver will periodically issue lots of control-IN requests
-to access the status of ethernet adapter hardware registers during
-the test.
-
-This happens when the xHCI driver enqueue a control TD (which cross
-over the Link TRB between two ring segments, as shown) in the endpoint
-zero's transfer ring. Seems the Etron xHCI host can not perform this
-TD correctly, causing the USB transfer error occurred, maybe the upper
-driver retry that control-IN request can solve problem, but not all
-drivers do this.
-
-|     |
--------
-| TRB | Setup Stage
--------
-| TRB | Link
--------
--------
-| TRB | Data Stage
--------
-| TRB | Status Stage
--------
-|     |
-
-To work around this, the xHCI driver should enqueue a No Op TRB if
-next available TRB is the Link TRB in the ring segment, this can
-prevent the Setup and Data Stage TRB to be breaked by the Link TRB.
-
-Check if the XHCI_ETRON_HOST quirk flag is set before invoking the
-workaround in xhci_queue_ctrl_tx().
-
-Fixes: d0e96f5a71a0 ("USB: xhci: Control transfer support.")
+Fixes: 91f7a1524a92 ("xhci: Apply broken streams quirk to Etron EJ188 xHCI host")
 Cc: stable@vger.kernel.org
 Signed-off-by: Kuangyi Chiang <ki.chiang65@gmail.com>
 Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://lore.kernel.org/r/20241106101459.775897-20-mathias.nyman@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://lore.kernel.org/r/20241106101459.775897-18-mathias.nyman@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/xhci-ring.c |   14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ drivers/usb/host/xhci-pci.c |    8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
 
---- a/drivers/usb/host/xhci-ring.c
-+++ b/drivers/usb/host/xhci-ring.c
-@@ -3727,6 +3727,20 @@ int xhci_queue_ctrl_tx(struct xhci_hcd *
- 	if (!urb->setup_packet)
- 		return -EINVAL;
+--- a/drivers/usb/host/xhci-pci.c
++++ b/drivers/usb/host/xhci-pci.c
+@@ -395,12 +395,8 @@ static void xhci_pci_quirks(struct devic
+ 		xhci->quirks |= XHCI_DEFAULT_PM_RUNTIME_ALLOW;
  
-+	if ((xhci->quirks & XHCI_ETRON_HOST) &&
-+	    urb->dev->speed >= USB_SPEED_SUPER) {
-+		/*
-+		 * If next available TRB is the Link TRB in the ring segment then
-+		 * enqueue a No Op TRB, this can prevent the Setup and Data Stage
-+		 * TRB to be breaked by the Link TRB.
-+		 */
-+		if (trb_is_link(ep_ring->enqueue + 1)) {
-+			field = TRB_TYPE(TRB_TR_NOOP) | ep_ring->cycle_state;
-+			queue_trb(xhci, ep_ring, false, 0, 0,
-+					TRB_INTR_TARGET(0), field);
-+		}
-+	}
-+
- 	/* 1 TRB for setup, 1 for status */
- 	num_trbs = 2;
- 	/*
+ 	if (pdev->vendor == PCI_VENDOR_ID_ETRON &&
+-			pdev->device == PCI_DEVICE_ID_EJ168) {
+-		xhci->quirks |= XHCI_RESET_ON_RESUME;
+-		xhci->quirks |= XHCI_BROKEN_STREAMS;
+-	}
+-	if (pdev->vendor == PCI_VENDOR_ID_ETRON &&
+-			pdev->device == PCI_DEVICE_ID_EJ188) {
++	    (pdev->device == PCI_DEVICE_ID_EJ168 ||
++	     pdev->device == PCI_DEVICE_ID_EJ188)) {
+ 		xhci->quirks |= XHCI_RESET_ON_RESUME;
+ 		xhci->quirks |= XHCI_BROKEN_STREAMS;
+ 	}
 
 
