@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DED681ADA;
-	Tue,  3 Dec 2024 15:43:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C65F1F8930;
+	Tue,  3 Dec 2024 15:43:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733240599; cv=none; b=q1ckk5OE8reT7YB5qM8hdB1mrH3BopIjC5Mf60+R/bIeXudRiYaA/wLLAUizUxiFEwBTs9Zq1U9JJHPlj7LtM1hWwbKCs9PDE0QT1jclAz48FYmSbIR4d54RM+cNVu0iLB6jiV8D62PUsIhgMra6XUUpzi9LthpYehAxd2AUrdc=
+	t=1733240602; cv=none; b=t3yFqCf5hqVmdCA/rlv3MOWo9oE1cY1LifdTRkjZz8+onGgb21oWC/ueE8X2DJ0l961vmzA5BpgnfGn7nspibuNJWhVlPf5Mz8xTT5mgJPsnLJ+WM1KZ9jv2jWx6zwNa9rCBtbaGT6pppa3c+rXxl4DiB7jNl+jCR2fWT3lsujo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733240599; c=relaxed/simple;
-	bh=/5Y0Po6YBZqQtrCTHmbVxnnzAgL1rYu6SQgh2yREQ8U=;
+	s=arc-20240116; t=1733240602; c=relaxed/simple;
+	bh=B5cwMB8hJicCu7XHE6s7rxp6YSSBgbu+fOmxmVQWtVM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BRSkATWP1oumNzFYBm6VXiYKf+vwE9h4Es0wPhTqFVrFMjVeZLbR71xKLHiXhAbAQGV0TygXW2dxL4Fwc1DVeIU6MajikGtg2NuOnvvQ+djs1kpKaattlvE3jGfhEycj3LU+O8gEwo7nz37FLgLKkSTRbIao6IK0RH2xtNbhZXQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rr2KJIV5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eL/6uBEk0v5YlWuivspTFyTyJrTQhCxSwPeTauTEN2kIphq2VATHl5tlk+v+0mR6SKfI/oZ1G4v37HN06Pf+tnp5SnJYoi4o7g3xKgV3Zb9IR1CuiJSh+Jtl00+WgcixaN/tIpnU2MAcD9ag4g64fy9jwFyEWSqfP8BQWSHQTEY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ttHGewe4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rr2KJIV5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9936C4CECF;
-	Tue,  3 Dec 2024 15:43:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ttHGewe4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3629C4CECF;
+	Tue,  3 Dec 2024 15:43:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733240599;
-	bh=/5Y0Po6YBZqQtrCTHmbVxnnzAgL1rYu6SQgh2yREQ8U=;
+	s=korg; t=1733240602;
+	bh=B5cwMB8hJicCu7XHE6s7rxp6YSSBgbu+fOmxmVQWtVM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Rr2KJIV5OCe48+0BwGoLTzg8qp1mCVdlJG8KssJ6WX6KeYmvh1IULLlpdAdwVjpl6
-	 sgD+2M1yt79Dlhj6gT/s5iJ/onm1bDSK9sqQ9xjVU7bOjZPElYWFGWglYft4sV+yFV
-	 613KOn0rtMFWorFJ7M1U7CKUQPqUL+gi8g8NIb8M=
+	b=ttHGewe4IvlF8WSykdD40bUS6gA4baGjUdc1LfcasOUu8Ve5nMRVaOhh2ZK/hWrQs
+	 8RLMovxxy9hKyrfb+mnZ+xcesTTu+eM3Gpz+wn9p36mB02GDa9EDKSc0l5eO9q8XgP
+	 x3AQPqi/4lFHsJsaJ7moMyZPbHuILn7C8OVGHwKE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Jani Nikula <jani.nikula@intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Dave Stevenson <dave.stevenson@raspberrypi.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 183/826] drm/mm: Mark drm_mm_interval_tree*() functions with __maybe_unused
-Date: Tue,  3 Dec 2024 15:38:30 +0100
-Message-ID: <20241203144750.879846411@linuxfoundation.org>
+Subject: [PATCH 6.12 184/826] drm/vc4: hvs: Dont write gamma luts on 2711
+Date: Tue,  3 Dec 2024 15:38:31 +0100
+Message-ID: <20241203144750.919694232@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -51,50 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Dave Stevenson <dave.stevenson@raspberrypi.com>
 
-[ Upstream commit 53bd7c1c0077db533472ae32799157758302ef48 ]
+[ Upstream commit 52efe364d1968ee3e3ed45eb44eb924b63635315 ]
 
-The INTERVAL_TREE_DEFINE() uncoditionally provides a bunch of helper
-functions which in some cases may be not used. This, in particular,
-prevents kernel builds with clang, `make W=1` and CONFIG_WERROR=y:
+The gamma block has changed in 2711, therefore writing the lut
+in vc4_hvs_lut_load is incorrect.
 
-.../drm/drm_mm.c:152:1: error: unused function 'drm_mm_interval_tree_insert' [-Werror,-Wunused-function]
-  152 | INTERVAL_TREE_DEFINE(struct drm_mm_node, rb,
-      | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  153 |                      u64, __subtree_last,
-      |                      ~~~~~~~~~~~~~~~~~~~~
-  154 |                      START, LAST, static inline, drm_mm_interval_tree)
-      |                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Whilst the gamma property isn't created for 2711, it is called
+from vc4_hvs_init_channel, so abort if attempted.
 
-Fix this by marking drm_mm_interval_tree*() functions with __maybe_unused.
-
-See also commit 6863f5643dd7 ("kbuild: allow Clang to find unused static
-inline functions for W=1 build").
-
-Fixes: 202b52b7fbf7 ("drm: Track drm_mm nodes with an interval tree")
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Reviewed-by: Jani Nikula <jani.nikula@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240829154640.1120050-1-andriy.shevchenko@linux.intel.com
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+Fixes: c54619b0bfb3 ("drm/vc4: Add support for the BCM2711 HVS5")
+Reviewed-by: Maxime Ripard <mripard@kernel.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240621152055.4180873-15-dave.stevenson@raspberrypi.com
+Signed-off-by: Dave Stevenson <dave.stevenson@raspberrypi.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_mm.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/vc4/vc4_hvs.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/gpu/drm/drm_mm.c b/drivers/gpu/drm/drm_mm.c
-index 5ace481c19011..1ed68d3cd80ba 100644
---- a/drivers/gpu/drm/drm_mm.c
-+++ b/drivers/gpu/drm/drm_mm.c
-@@ -151,7 +151,7 @@ static void show_leaks(struct drm_mm *mm) { }
+diff --git a/drivers/gpu/drm/vc4/vc4_hvs.c b/drivers/gpu/drm/vc4/vc4_hvs.c
+index 2a835a5cff9dd..ac112dc3d592d 100644
+--- a/drivers/gpu/drm/vc4/vc4_hvs.c
++++ b/drivers/gpu/drm/vc4/vc4_hvs.c
+@@ -222,6 +222,9 @@ static void vc4_hvs_lut_load(struct vc4_hvs *hvs,
+ 	if (!drm_dev_enter(drm, &idx))
+ 		return;
  
- INTERVAL_TREE_DEFINE(struct drm_mm_node, rb,
- 		     u64, __subtree_last,
--		     START, LAST, static inline, drm_mm_interval_tree)
-+		     START, LAST, static inline __maybe_unused, drm_mm_interval_tree)
- 
- struct drm_mm_node *
- __drm_mm_interval_first(const struct drm_mm *mm, u64 start, u64 last)
++	if (hvs->vc4->is_vc5)
++		return;
++
+ 	/* The LUT memory is laid out with each HVS channel in order,
+ 	 * each of which takes 256 writes for R, 256 for G, then 256
+ 	 * for B.
 -- 
 2.43.0
 
