@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 835201F75A6;
-	Tue,  3 Dec 2024 15:36:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65DC7200B9B;
+	Tue,  3 Dec 2024 15:36:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733240177; cv=none; b=BHEgaJq+7WfUGPauOqAFkBjLY+IPn+Db3LCr4JDqHIRgaVQx4K/m5qrKHo35i2EQ0QICEKLYU6lP8JDviXftPYVg+ykyoSZUvKoQeO32nXD98VewKUTHDBZRtTY1Uy5YnM+2UQtwoZQiadAaQpCSm5p2IQZOpPJDBBx33QSnaXs=
+	t=1733240180; cv=none; b=ZcQzRjICzSwqJM72auuEx90RcdHMAnZ67ccrsfGQPvkGqhSLe1vx3gR4DfpV2/Rk3HzXddXLkIi8Nq1U3qacMosib1FEqRYdziAsHKZctBnH4Wl+rPuzdHPBg8ADCW4t0j1aTXAmVCPZzDLG/NnJoZ+o4p5wQEahOa3M+2iZetA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733240177; c=relaxed/simple;
-	bh=dMSpPAOfRPVbvKZ/8Biy4NOFtINOd7J5fYUTxxbMXnc=;
+	s=arc-20240116; t=1733240180; c=relaxed/simple;
+	bh=0sKiZ4g9VsPmHaDMRQn80Nz4rTgyCpotg6REG4aBEho=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c2P9JYASYP19vJkDiies3DrJ/QmxpjYrZWGE/OJCoKsAi9nzQbz5XiDWIXxJ/GXEp+cKjwjMAhP8td6D6NJ1uFywx0+m+LefWANfRMgi9953O3hKIhzv61BtljQycgQXKtyC9kLWidiiij/yYnyy+HRzE93hf0hFmb1zY+1FvmA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C5JDTZSi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OT5VlylaaoazAKoTGmf8dEc0uXyvm0Jfapn0SNKPD5XlvZsskbhqfxL9FU9KmUHu7Ow+EQxlWbnGuqlOIybKsV/ddUck6PuRojd6MPkd50oay/ocGKZ45TKXlYGSsB0DQC95qE4faAZJb2nicXFR3ZiW76JqV9HiWc5bvmqtQxU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c9i5+gA8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C5JDTZSi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AA64C4CECF;
-	Tue,  3 Dec 2024 15:36:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c9i5+gA8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E28F1C4CECF;
+	Tue,  3 Dec 2024 15:36:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733240177;
-	bh=dMSpPAOfRPVbvKZ/8Biy4NOFtINOd7J5fYUTxxbMXnc=;
+	s=korg; t=1733240180;
+	bh=0sKiZ4g9VsPmHaDMRQn80Nz4rTgyCpotg6REG4aBEho=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C5JDTZSigm7gvxRrE8LTDbcznBontsJwEEh7QDRuFC04P5AghT6hOueRUuDuzBrEP
-	 SZlFrisYt4+5Pm5tqbDn60HVNvAMTk7KxWGoHUDLOnBFkn763c6D6RZMcP4+kSo9u7
-	 0k/IZ02U23KGrrb/6PeEHJ9r/1KjGOEee9Xwo/QQ=
+	b=c9i5+gA8j26cbCGUcUULHRPftTDNqL5uIgr7jAPPqiz4Lvjisxy1WZvs1DLHcysl1
+	 uTw50+Yihn87DUXYnP3cofF6r/xrfpPshV0HMWQWgfGCVTF7mmsizmv+eWOXhaU4Gt
+	 cghYea9g8aLAAfdma2AzlkM43Nt3XVnXcdleCR7I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Lukasz Luba <lukasz.luba@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 050/826] thermal: core: Initialize thermal zones before registering them
-Date: Tue,  3 Dec 2024 15:36:17 +0100
-Message-ID: <20241203144745.421677252@linuxfoundation.org>
+Subject: [PATCH 6.12 051/826] thermal: core: Rearrange PM notification code
+Date: Tue,  3 Dec 2024 15:36:18 +0100
+Message-ID: <20241203144745.464923160@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -53,42 +53,138 @@ Content-Transfer-Encoding: 8bit
 
 From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit 662f920f7e390db5d1a6792a2b0ffa59b6c962fc ]
+[ Upstream commit 7ddca5885718c2683d75689aa065c9a3bb317e5a ]
 
-Since user space can start interacting with a new thermal zone as soon
-as device_register() called by thermal_zone_device_register_with_trips()
-returns, it is better to initialize the thermal zone before calling
-device_register() on it.
+Move the code run for each thermal zone by the thermal PM notify
+handler to separate functions.
 
-Fixes: d0df264fbd3c ("thermal/core: Remove pointless thermal_zone_device_reset() function")
+This will help to make some subsequent changes look somewhat more
+straightforward, among other things.
+
+No intentional functional impact.
+
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Link: https://patch.msgid.link/3336146.44csPzL39Z@rjwysocki.net
+Link: https://patch.msgid.link/2299090.iZASKD2KPV@rjwysocki.net
 Reviewed-by: Lukasz Luba <lukasz.luba@arm.com>
+Stable-dep-of: 7837fa8115e0 ("thermal: core: Mark thermal zones as initializing to start with")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thermal/thermal_core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/thermal/thermal_core.c | 88 ++++++++++++++++++----------------
+ 1 file changed, 46 insertions(+), 42 deletions(-)
 
 diff --git a/drivers/thermal/thermal_core.c b/drivers/thermal/thermal_core.c
-index 8f03985f971c3..7a138bd5d8841 100644
+index 7a138bd5d8841..9198861916969 100644
 --- a/drivers/thermal/thermal_core.c
 +++ b/drivers/thermal/thermal_core.c
-@@ -1465,6 +1465,7 @@ thermal_zone_device_register_with_trips(const char *type,
- 		thermal_zone_destroy_device_groups(tz);
- 		goto remove_id;
- 	}
-+	thermal_zone_device_init(tz);
- 	result = device_register(&tz->device);
- 	if (result)
- 		goto release_device;
-@@ -1503,7 +1504,6 @@ thermal_zone_device_register_with_trips(const char *type,
+@@ -1675,6 +1675,48 @@ static void thermal_zone_device_resume(struct work_struct *work)
+ 	mutex_unlock(&tz->lock);
+ }
  
- 	mutex_unlock(&thermal_list_lock);
++static void thermal_zone_pm_prepare(struct thermal_zone_device *tz)
++{
++	mutex_lock(&tz->lock);
++
++	if (tz->resuming) {
++		/*
++		 * thermal_zone_device_resume() queued up for this zone has not
++		 * acquired the lock yet, so release it to let the function run
++		 * and wait util it has done the work.
++		 */
++		mutex_unlock(&tz->lock);
++
++		wait_for_completion(&tz->resume);
++
++		mutex_lock(&tz->lock);
++	}
++
++	tz->suspended = true;
++
++	mutex_unlock(&tz->lock);
++}
++
++static void thermal_zone_pm_complete(struct thermal_zone_device *tz)
++{
++	mutex_lock(&tz->lock);
++
++	cancel_delayed_work(&tz->poll_queue);
++
++	reinit_completion(&tz->resume);
++	tz->resuming = true;
++
++	/*
++	 * Replace the work function with the resume one, which will restore the
++	 * original work function and schedule the polling work if needed.
++	 */
++	INIT_DELAYED_WORK(&tz->poll_queue, thermal_zone_device_resume);
++	/* Queue up the work without a delay. */
++	mod_delayed_work(system_freezable_power_efficient_wq, &tz->poll_queue, 0);
++
++	mutex_unlock(&tz->lock);
++}
++
+ static int thermal_pm_notify(struct notifier_block *nb,
+ 			     unsigned long mode, void *_unused)
+ {
+@@ -1686,27 +1728,8 @@ static int thermal_pm_notify(struct notifier_block *nb,
+ 	case PM_SUSPEND_PREPARE:
+ 		mutex_lock(&thermal_list_lock);
  
--	thermal_zone_device_init(tz);
- 	/* Update the new thermal zone and mark it as already updated. */
- 	if (atomic_cmpxchg(&tz->need_update, 1, 0))
- 		thermal_zone_device_update(tz, THERMAL_EVENT_UNSPECIFIED);
+-		list_for_each_entry(tz, &thermal_tz_list, node) {
+-			mutex_lock(&tz->lock);
+-
+-			if (tz->resuming) {
+-				/*
+-				 * thermal_zone_device_resume() queued up for
+-				 * this zone has not acquired the lock yet, so
+-				 * release it to let the function run and wait
+-				 * util it has done the work.
+-				 */
+-				mutex_unlock(&tz->lock);
+-
+-				wait_for_completion(&tz->resume);
+-
+-				mutex_lock(&tz->lock);
+-			}
+-
+-			tz->suspended = true;
+-
+-			mutex_unlock(&tz->lock);
+-		}
++		list_for_each_entry(tz, &thermal_tz_list, node)
++			thermal_zone_pm_prepare(tz);
+ 
+ 		mutex_unlock(&thermal_list_lock);
+ 		break;
+@@ -1715,27 +1738,8 @@ static int thermal_pm_notify(struct notifier_block *nb,
+ 	case PM_POST_SUSPEND:
+ 		mutex_lock(&thermal_list_lock);
+ 
+-		list_for_each_entry(tz, &thermal_tz_list, node) {
+-			mutex_lock(&tz->lock);
+-
+-			cancel_delayed_work(&tz->poll_queue);
+-
+-			reinit_completion(&tz->resume);
+-			tz->resuming = true;
+-
+-			/*
+-			 * Replace the work function with the resume one, which
+-			 * will restore the original work function and schedule
+-			 * the polling work if needed.
+-			 */
+-			INIT_DELAYED_WORK(&tz->poll_queue,
+-					  thermal_zone_device_resume);
+-			/* Queue up the work without a delay. */
+-			mod_delayed_work(system_freezable_power_efficient_wq,
+-					 &tz->poll_queue, 0);
+-
+-			mutex_unlock(&tz->lock);
+-		}
++		list_for_each_entry(tz, &thermal_tz_list, node)
++			thermal_zone_pm_complete(tz);
+ 
+ 		mutex_unlock(&thermal_list_lock);
+ 		break;
 -- 
 2.43.0
 
