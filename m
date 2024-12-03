@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 472CB1EF0BA;
-	Tue,  3 Dec 2024 14:56:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2842F1F669E;
+	Tue,  3 Dec 2024 14:56:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733237803; cv=none; b=K4881Ye7qw2hIU9q+hX7qdgcvWjkZhpvzJ0rONzfdIAuNKgsEGyDAmh0IRm5w45srqZbbE4Y1yK2/xTr55aEUOL+VMfEov07jY7wlneQ81bmDF5AFqb5IMkuwoTjy4bMkpfsm2ZcGZmsuSOF9LUPhFi0lJC5Sa8EA0N+JMt+hJo=
+	t=1733237806; cv=none; b=QqTaxN2KUh+9eDXJoIdL2DyWt6ZrgqdO6CU7ZLKVjwo/UpMSMcYDDMDgARFpuc9dIjMwy9vilECwnqQiwK614qQgjzq7kDA6Glty86WBxeLt+HaEtGyorx0UW6QSexoFQlSVhfuhNAILyLf3QhOANAEjm39e50Er07EwFRmdNOI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733237803; c=relaxed/simple;
-	bh=tXK/dPE5Qo8porZLaiQD8Fz3YRP3xB4M+fsfHBt7XgQ=;
+	s=arc-20240116; t=1733237806; c=relaxed/simple;
+	bh=EQTOsZVFhUzK/TSHlrs5HdYCW6AShYi9RZLicdBe8mc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tU482QI475rCzEmiWOuoEbkUIOZd10LmaiCRLRkS1MVuec0fboyy5WSTgBeUgVas+DdnO9egMtRUF0RRgS2AGkHmlDEkify4cIZJTN/JerFtzJgckWwl2smnUO1ZimcpJKd2+CsdYhqBp6EdZC+HY02UAwA/VBpl6eo8RXRaPLM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KuWNDSK0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZQfDM7UKE5r/6bg1ciBDG3WZPSYsmEvRhZBeUym9D+0i23rZZ/iXBjK4/6znhe5h0BtQVm+4BpUOsrFKwBtquI+DOlolPiQozCy2G65CYh6c6w030zDGl+uSBwSFYozX5/urIg8+Q12z/EztvigBsmcRsIVywBEV/T3G4sgjMCs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VIlJsvrx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KuWNDSK0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D78DC4CECF;
-	Tue,  3 Dec 2024 14:56:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VIlJsvrx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90752C4CECF;
+	Tue,  3 Dec 2024 14:56:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733237802;
-	bh=tXK/dPE5Qo8porZLaiQD8Fz3YRP3xB4M+fsfHBt7XgQ=;
+	s=korg; t=1733237805;
+	bh=EQTOsZVFhUzK/TSHlrs5HdYCW6AShYi9RZLicdBe8mc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KuWNDSK0J9ls84zz/TRUiJPQkO5oJ1CwcBhnhBTt2W08Ni2aOhWbJy875m1ZqjRMA
-	 nzCLqxegsHXUVJFV2dxZvo/0xKbilw3Cky7cQ6bstVLUvM7ojW06uQf8ozeSohg7xo
-	 1e6CQKJ8eXCxR8hcg+iEB62IjRPPX/r8iTZQeoRk=
+	b=VIlJsvrxINohN7kF/GFxw7PwkNwIU+QDDWLXC11pGzzYYpP2MFS2h7cyTeOQa/CAK
+	 s+BeyqUbhftsSplsd4R+IHQmsuW5YCJGUEV+9K2h6YJTVH2AwCgP/mqoEfzKdqhHIS
+	 djY3gs17TQvXxnoS/NVwbTkxzkczEbJNW/3oDXEQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Keith Busch <kbusch@kernel.org>,
+	Zizhi Wo <wozizhi@huawei.com>,
+	David Howells <dhowells@redhat.com>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 067/817] nvme-pci: fix freeing of the HMB descriptor table
-Date: Tue,  3 Dec 2024 15:33:59 +0100
-Message-ID: <20241203143958.304590637@linuxfoundation.org>
+Subject: [PATCH 6.11 076/817] netfs/fscache: Add a memory barrier for FSCACHE_VOLUME_CREATING
+Date: Tue,  3 Dec 2024 15:34:08 +0100
+Message-ID: <20241203143958.658380208@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -51,92 +52,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christoph Hellwig <hch@lst.de>
+From: Zizhi Wo <wozizhi@huawei.com>
 
-[ Upstream commit 3c2fb1ca8086eb139b2a551358137525ae8e0d7a ]
+[ Upstream commit 22f9400a6f3560629478e0a64247b8fcc811a24d ]
 
-The HMB descriptor table is sized to the maximum number of descriptors
-that could be used for a given device, but __nvme_alloc_host_mem could
-break out of the loop earlier on memory allocation failure and end up
-using less descriptors than planned for, which leads to an incorrect
-size passed to dma_free_coherent.
+In fscache_create_volume(), there is a missing memory barrier between the
+bit-clearing operation and the wake-up operation. This may cause a
+situation where, after a wake-up, the bit-clearing operation hasn't been
+detected yet, leading to an indefinite wait. The triggering process is as
+follows:
 
-In practice this was not showing up because the number of descriptors
-tends to be low and the dma coherent allocator always allocates and
-frees at least a page.
+  [cookie1]                [cookie2]                  [volume_work]
+fscache_perform_lookup
+  fscache_create_volume
+                        fscache_perform_lookup
+                          fscache_create_volume
+			                        fscache_create_volume_work
+                                                  cachefiles_acquire_volume
+                                                  clear_and_wake_up_bit
+    test_and_set_bit
+                            test_and_set_bit
+                              goto maybe_wait
+      goto no_wait
 
-Fixes: 87ad72a59a38 ("nvme-pci: implement host memory buffer support")
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+In the above process, cookie1 and cookie2 has the same volume. When cookie1
+enters the -no_wait- process, it will clear the bit and wake up the waiting
+process. If a barrier is missing, it may cause cookie2 to remain in the
+-wait- process indefinitely.
+
+In commit 3288666c7256 ("fscache: Use clear_and_wake_up_bit() in
+fscache_create_volume_work()"), barriers were added to similar operations
+in fscache_create_volume_work(), but fscache_create_volume() was missed.
+
+By combining the clear and wake operations into clear_and_wake_up_bit() to
+fix this issue.
+
+Fixes: bfa22da3ed65 ("fscache: Provide and use cache methods to lookup/create/free a volume")
+Signed-off-by: Zizhi Wo <wozizhi@huawei.com>
+Link: https://lore.kernel.org/r/20241107110649.3980193-6-wozizhi@huawei.com
+Acked-by: David Howells <dhowells@redhat.com>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/pci.c | 16 +++++++++-------
- 1 file changed, 9 insertions(+), 7 deletions(-)
+ fs/netfs/fscache_volume.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
-index 4b9fda0b1d9a3..34daf6d8db07b 100644
---- a/drivers/nvme/host/pci.c
-+++ b/drivers/nvme/host/pci.c
-@@ -153,6 +153,7 @@ struct nvme_dev {
- 	/* host memory buffer support: */
- 	u64 host_mem_size;
- 	u32 nr_host_mem_descs;
-+	u32 host_mem_descs_size;
- 	dma_addr_t host_mem_descs_dma;
- 	struct nvme_host_mem_buf_desc *host_mem_descs;
- 	void **host_mem_desc_bufs;
-@@ -1966,10 +1967,10 @@ static void nvme_free_host_mem(struct nvme_dev *dev)
- 
- 	kfree(dev->host_mem_desc_bufs);
- 	dev->host_mem_desc_bufs = NULL;
--	dma_free_coherent(dev->dev,
--			dev->nr_host_mem_descs * sizeof(*dev->host_mem_descs),
-+	dma_free_coherent(dev->dev, dev->host_mem_descs_size,
- 			dev->host_mem_descs, dev->host_mem_descs_dma);
- 	dev->host_mem_descs = NULL;
-+	dev->host_mem_descs_size = 0;
- 	dev->nr_host_mem_descs = 0;
+diff --git a/fs/netfs/fscache_volume.c b/fs/netfs/fscache_volume.c
+index cb75c07b5281a..ced14ac78cc1c 100644
+--- a/fs/netfs/fscache_volume.c
++++ b/fs/netfs/fscache_volume.c
+@@ -322,8 +322,7 @@ void fscache_create_volume(struct fscache_volume *volume, bool wait)
+ 	}
+ 	return;
+ no_wait:
+-	clear_bit_unlock(FSCACHE_VOLUME_CREATING, &volume->flags);
+-	wake_up_bit(&volume->flags, FSCACHE_VOLUME_CREATING);
++	clear_and_wake_up_bit(FSCACHE_VOLUME_CREATING, &volume->flags);
  }
  
-@@ -1977,7 +1978,7 @@ static int __nvme_alloc_host_mem(struct nvme_dev *dev, u64 preferred,
- 		u32 chunk_size)
- {
- 	struct nvme_host_mem_buf_desc *descs;
--	u32 max_entries, len;
-+	u32 max_entries, len, descs_size;
- 	dma_addr_t descs_dma;
- 	int i = 0;
- 	void **bufs;
-@@ -1990,8 +1991,9 @@ static int __nvme_alloc_host_mem(struct nvme_dev *dev, u64 preferred,
- 	if (dev->ctrl.hmmaxd && dev->ctrl.hmmaxd < max_entries)
- 		max_entries = dev->ctrl.hmmaxd;
- 
--	descs = dma_alloc_coherent(dev->dev, max_entries * sizeof(*descs),
--				   &descs_dma, GFP_KERNEL);
-+	descs_size = max_entries * sizeof(*descs);
-+	descs = dma_alloc_coherent(dev->dev, descs_size, &descs_dma,
-+			GFP_KERNEL);
- 	if (!descs)
- 		goto out;
- 
-@@ -2020,6 +2022,7 @@ static int __nvme_alloc_host_mem(struct nvme_dev *dev, u64 preferred,
- 	dev->host_mem_size = size;
- 	dev->host_mem_descs = descs;
- 	dev->host_mem_descs_dma = descs_dma;
-+	dev->host_mem_descs_size = descs_size;
- 	dev->host_mem_desc_bufs = bufs;
- 	return 0;
- 
-@@ -2034,8 +2037,7 @@ static int __nvme_alloc_host_mem(struct nvme_dev *dev, u64 preferred,
- 
- 	kfree(bufs);
- out_free_descs:
--	dma_free_coherent(dev->dev, max_entries * sizeof(*descs), descs,
--			descs_dma);
-+	dma_free_coherent(dev->dev, descs_size, descs, descs_dma);
- out:
- 	dev->host_mem_descs = NULL;
- 	return -ENOMEM;
+ /*
 -- 
 2.43.0
 
