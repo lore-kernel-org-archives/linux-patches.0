@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19A681F706C;
-	Tue,  3 Dec 2024 15:07:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1510F1F6691;
+	Tue,  3 Dec 2024 15:07:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733238439; cv=none; b=h+YIyHKJxOAGFqvJRDyKEhM7Cx9u0uA83uObC4f9q79c2e6EhxGzGMtcbCPpLM5Nb3cdebUEH5JdEt+Q84cPCyeWvnHXTpUVrPSXDTEmyEuYu75n4Zd2YgqYB8sHDbp91XHMpsTlfFv3rk7BE3EI3YMFfU7Xnv4uvuz2kuq822s=
+	t=1733238442; cv=none; b=Yn8OIpF5YDAyhnBBfsjyDOQP95eiTAJpDiIHhRDKbFX/oCt1MgESL8vsK7LY5MmNo6spZk06IgZUDLiZQsaInhWZunMXrviXcOFA5P3YVCwACcRcvDFoblIw3zNYFnreNjGLN51fbKe6IaPDSTHRAiG1UNlBjWQUXvHxowW360o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733238439; c=relaxed/simple;
-	bh=a6fWI4HPBZYzAT4fPcfZWz09WYM7XHHCwC35LDZKHf0=;
+	s=arc-20240116; t=1733238442; c=relaxed/simple;
+	bh=FNxd6J1liP/EgOIXfpDvfYUNDCWE0mDjcWPMzsCujTs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=IS6zmv/isvFCmg6jzqTGMHYmqxpL5ZYdUD201r1sAJ5znCOfcBiz++iK45V4kqny3ZSbL5lM6MFPnsvrE518wsgsE6JszUWlctefi7ONCIFGLv4bBplgdl3U4xwp2kRaz1U6LTv8T35SNfr11rNhnA2FTwVWuxggcc9+Cb3s8q8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GNThT+Fc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=jq5u+CT9gMhxdSa88Q8pfkdb5LH+gDXna9NZO27cRmErm/S6MYsZ3Mxn19Ku7FnPhPPG+E7ZKwBVhiF59ZtvNsANaVYWlFHozUXpB+Ba33HP+JMfTVHF7G/cYJiYacNxI9Zuubt+NM4NkX2HBcBNhl38wrxjGpY0DZw3YHCTmeA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CKzmebcC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GNThT+Fc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97DFEC4CECF;
-	Tue,  3 Dec 2024 15:07:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CKzmebcC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86838C4CECF;
+	Tue,  3 Dec 2024 15:07:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733238439;
-	bh=a6fWI4HPBZYzAT4fPcfZWz09WYM7XHHCwC35LDZKHf0=;
+	s=korg; t=1733238441;
+	bh=FNxd6J1liP/EgOIXfpDvfYUNDCWE0mDjcWPMzsCujTs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GNThT+Fc4i/ninnUl/NhlM7ZC8KkqZ0HZD3leQewHrI6zMdgJOiZmV5w16hhwBXC1
-	 Otu6i+7NaP6B7002/fAQpuGvlZcjqbePedfGTPsOxjb9F82e5f0jDq4Ziok2aP2CDl
-	 qv9a22MoeRm7sk6Va4OMGW3ICvXihZ3GKFTE+lJA=
+	b=CKzmebcC+SV4iu+4ZgXIIXFpXX/HfuYHEAM0/Z3PJJQY4Oy+kUDBCliiB8d6NBru9
+	 15+TvXkDF+ukmOzoOLnzzjNQ7+fOFq22YbgrkKpM17vGnBjt1r9Wxe+Kc/Au/PE72W
+	 DGymgov21t4YZxtR9F91My4ffctBr2lia0f+m3OM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
-	Dave Stevenson <dave.stevenson@raspberrypi.com>,
+	=?UTF-8?q?Alexis=20Lothor=C3=A9?= <alexis.lothore@bootlin.com>,
+	Marek Vasut <marex@denx.de>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 270/817] drm/vc4: Correct generation check in vc4_hvs_lut_load
-Date: Tue,  3 Dec 2024 15:37:22 +0100
-Message-ID: <20241203144006.335856132@linuxfoundation.org>
+Subject: [PATCH 6.11 279/817] wifi: wilc1000: Set MAC after operation mode
+Date: Tue,  3 Dec 2024 15:37:31 +0100
+Message-ID: <20241203144006.697127461@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -53,42 +53,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dave Stevenson <dave.stevenson@raspberrypi.com>
+From: Marek Vasut <marex@denx.de>
 
-[ Upstream commit 42aa18d1c3e7762bcebd89a5857ed7774e669d92 ]
+[ Upstream commit 29dd3e48b9bd88bf65a1e760126fa18d1def7b30 ]
 
-Commit 24c5ed3ddf27 ("drm/vc4: Introduce generation number enum")
-incorrectly swapped a check of hvs->vc4->is_vc5 to
-hvs->vc4->gen == VC4_GEN_4 in vc4_hvs_lut_load, hence breaking
-loading the gamma look up table on Pi0-3.
+It seems it is necessary to set WILC MAC address after operation mode,
+otherwise the MAC address of the WILC MAC is reset back to what is in
+nvmem. This causes a failure to associate with AP after the WILC MAC
+address was overridden by userspace.
 
-Correct that conditional.
+Test case:
+"
+ap$ cat << EOF > hostap.conf
+interface=wlan0
+ssid=ssid
+hw_mode=g
+channel=6
+wpa=2
+wpa_passphrase=pass
+wpa_key_mgmt=WPA-PSK
+EOF
+ap$ hostapd -d hostap.conf
+ap$ ifconfig wlan0 10.0.0.1
+"
 
-Fixes: 24c5ed3ddf27 ("drm/vc4: Introduce generation number enum")
-Reported-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Closes: https://lore.kernel.org/dri-devel/37051126-3921-4afe-a936-5f828bff5752@samsung.com/
-Tested-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Reviewed-by: Maíra Canal <mcanal@igalia.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20241008-drm-vc4-fixes-v1-3-9d0396ca9f42@raspberrypi.com
-Signed-off-by: Dave Stevenson <dave.stevenson@raspberrypi.com>
+"
+sta$ ifconfig wlan0 hw ether 00:11:22:33:44:55
+sta$ wpa_supplicant -i wlan0 -c <(wpa_passphrase ssid pass)
+sta$ ifconfig wlan0 10.0.0.2
+sta$ ping 10.0.0.1 # fails without this patch
+"
+
+AP still indicates SA with original MAC address from nvmem without this patch:
+"
+nl80211: RX frame da=ff:ff:ff:ff:ff:ff sa=60:01:23:45:67:89 bssid=ff:ff:ff:ff:ff:ff ...
+                                          ^^^^^^^^^^^^^^^^^
+"
+
+Fixes: 83d9b54ee5d4 ("wifi: wilc1000: read MAC address from fuse at probe")
+Tested-by: Alexis Lothoré <alexis.lothore@bootlin.com>
+Signed-off-by: Marek Vasut <marex@denx.de>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://patch.msgid.link/20241003132504.52233-1-marex@denx.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/vc4/vc4_hvs.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/microchip/wilc1000/netdev.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/vc4/vc4_hvs.c b/drivers/gpu/drm/vc4/vc4_hvs.c
-index 50bfc514943a1..df71bc68cdd00 100644
---- a/drivers/gpu/drm/vc4/vc4_hvs.c
-+++ b/drivers/gpu/drm/vc4/vc4_hvs.c
-@@ -224,7 +224,7 @@ static void vc4_hvs_lut_load(struct vc4_hvs *hvs,
- 	if (!drm_dev_enter(drm, &idx))
- 		return;
+diff --git a/drivers/net/wireless/microchip/wilc1000/netdev.c b/drivers/net/wireless/microchip/wilc1000/netdev.c
+index 9ecf3fb29b558..8bc127c5a538c 100644
+--- a/drivers/net/wireless/microchip/wilc1000/netdev.c
++++ b/drivers/net/wireless/microchip/wilc1000/netdev.c
+@@ -608,6 +608,9 @@ static int wilc_mac_open(struct net_device *ndev)
+ 		return ret;
+ 	}
  
--	if (hvs->vc4->gen == VC4_GEN_4)
-+	if (hvs->vc4->gen != VC4_GEN_4)
- 		goto exit;
++	wilc_set_operation_mode(vif, wilc_get_vif_idx(vif), vif->iftype,
++				vif->idx);
++
+ 	netdev_dbg(ndev, "Mac address: %pM\n", ndev->dev_addr);
+ 	ret = wilc_set_mac_address(vif, ndev->dev_addr);
+ 	if (ret) {
+@@ -618,9 +621,6 @@ static int wilc_mac_open(struct net_device *ndev)
+ 		return ret;
+ 	}
  
- 	/* The LUT memory is laid out with each HVS channel in order,
+-	wilc_set_operation_mode(vif, wilc_get_vif_idx(vif), vif->iftype,
+-				vif->idx);
+-
+ 	mgmt_regs.interface_stypes = vif->mgmt_reg_stypes;
+ 	/* so we detect a change */
+ 	vif->mgmt_reg_stypes = 0;
 -- 
 2.43.0
 
