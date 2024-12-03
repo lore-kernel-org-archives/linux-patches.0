@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0EE21F7088;
-	Tue,  3 Dec 2024 14:56:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC1601F6698;
+	Tue,  3 Dec 2024 14:56:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733237779; cv=none; b=DlXkYdiDix94I0lrj8RDn8vhQVvNcZ6OMxDN48AqQLplHRAvhJaT6xtepFDSeNud+cCFMpvGHs+qxyKBNLma4fPju22UIhvRK1ZjRYoW6+uqJ8Vh7l5kxx22OQSdumMdQJhBmOsfhDbwdV6ufn6VUwAIs+pcn7vDzFk2IbEYE9U=
+	t=1733237782; cv=none; b=Be3FxGivoZ0tcCcvmnxoFt5asTuW3TzsA/64fQK25BKYA1netQ33CNUgm0XudDL5CyEQ5A5GEngKCtHlNXaK2GjrB0OyP6YcQ45oAQzpcsRQgjp3FCsTiWeIDr6z1uX/h1AR8Elmno8TTHmj+rM5BlbUiAQX25Hl7D6sqLd4NX8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733237779; c=relaxed/simple;
-	bh=8quSxeUOsc4kzDT2pRYv1Wy/9oLnsuhuNnj2XVWmg30=;
+	s=arc-20240116; t=1733237782; c=relaxed/simple;
+	bh=H0xQND0Ka/zrpSzsyn3EdMIEqDjQL0wYcb0jsK6eJFk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RekcTrNgmx1qH6LTeeeWvUVyUFYXHVkWr4ZdMVNaNTE4jz9OW6BzG/YAA6z5H0QJdZ6E9C/vLJpCi2+Lm10XOIysV3ANY3ur28vXRS9ECg8RU84wwGBdx4wW2R7nD+2NOfyXcDuvFOpiJO+TeNhkh9X1Yu64RfjWRosTnusUD98=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KGR3vAEp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EBVYZD585IFJsxIauROak55KIOHVZUNJ37L/0i12EJyspKoN/2aCVjCE1ePZNZMNjifUsfCzFNnTO+J+t4IQHixx/30AKTjaW/nS9idTpoj/4i/6Qt1XnU6t8TWIgDBMGSwYft16jzqv/YT+KRV2DNJLVkAP4MRx/R+EWlAqZd8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U6fNNfGD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KGR3vAEp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAE1CC4CED6;
-	Tue,  3 Dec 2024 14:56:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U6fNNfGD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23CEAC4CED6;
+	Tue,  3 Dec 2024 14:56:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733237779;
-	bh=8quSxeUOsc4kzDT2pRYv1Wy/9oLnsuhuNnj2XVWmg30=;
+	s=korg; t=1733237782;
+	bh=H0xQND0Ka/zrpSzsyn3EdMIEqDjQL0wYcb0jsK6eJFk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KGR3vAEpU5FHO3dzWiKRK1tqwuW4r9/TtGIT+6gtFcPV4hJCZKlRefgjgWCwjZH2H
-	 BZ6sgEuSvTCPIC9aoBunngsAq1SWVQ7unEuafyqS4t4q3sivQ5nVAzR6Jf9ESvTUNd
-	 gTqhepHKwNN/Nv4KU8KCLxZS71oDEAm/YNh6+FNY=
+	b=U6fNNfGDJIrV2wan7hARGDAehItq/555OSz55QcGb/ztZooSAFPcSoxElW0pMVtjX
+	 UeCsx6l0LiYmaBqsclFQ0rZN3xcaPfq5+iWo7vM3KSHisEb+CGltN2Z49y3TW8jpEo
+	 CUfz9DfgQVwsgplvQW0dpbb/TImP8HPkPB6R+/FM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Wang <00107082@163.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
+	Roberto Sassu <roberto.sassu@huawei.com>,
+	Mimi Zohar <zohar@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 036/817] proc/softirqs: replace seq_printf with seq_put_decimal_ull_width
-Date: Tue,  3 Dec 2024 15:33:28 +0100
-Message-ID: <20241203143957.060832110@linuxfoundation.org>
+Subject: [PATCH 6.11 037/817] integrity: Use static_assert() to check struct sizes
+Date: Tue,  3 Dec 2024 15:33:29 +0100
+Message-ID: <20241203143957.100526724@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -51,37 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Wang <00107082@163.com>
+From: Gustavo A. R. Silva <gustavoars@kernel.org>
 
-[ Upstream commit 84b9749a3a704dcc824a88aa8267247c801d51e4 ]
+[ Upstream commit 08ae3e5f5fc8edb9bd0c7ef9696ff29ef18b26ef ]
 
-seq_printf is costy, on a system with n CPUs, reading /proc/softirqs
-would yield 10*n decimal values, and the extra cost parsing format string
-grows linearly with number of cpus. Replace seq_printf with
-seq_put_decimal_ull_width have significant performance improvement.
-On an 8CPUs system, reading /proc/softirqs show ~40% performance
-gain with this patch.
+Commit 38aa3f5ac6d2 ("integrity: Avoid -Wflex-array-member-not-at-end
+warnings") introduced tagged `struct evm_ima_xattr_data_hdr` and
+`struct ima_digest_data_hdr`. We want to ensure that when new members
+need to be added to the flexible structures, they are always included
+within these tagged structs.
 
-Signed-off-by: David Wang <00107082@163.com>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+So, we use `static_assert()` to ensure that the memory layout for
+both the flexible structure and the tagged struct is the same after
+any changes.
+
+Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+Tested-by: Roberto Sassu <roberto.sassu@huawei.com>
+Reviewed-by: Roberto Sassu <roberto.sassu@huawei.com>
+Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/proc/softirqs.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ security/integrity/integrity.h | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/fs/proc/softirqs.c b/fs/proc/softirqs.c
-index f4616083faef3..04bb29721419b 100644
---- a/fs/proc/softirqs.c
-+++ b/fs/proc/softirqs.c
-@@ -20,7 +20,7 @@ static int show_softirqs(struct seq_file *p, void *v)
- 	for (i = 0; i < NR_SOFTIRQS; i++) {
- 		seq_printf(p, "%12s:", softirq_to_name[i]);
- 		for_each_possible_cpu(j)
--			seq_printf(p, " %10u", kstat_softirqs_cpu(i, j));
-+			seq_put_decimal_ull_width(p, " ", kstat_softirqs_cpu(i, j), 10);
- 		seq_putc(p, '\n');
- 	}
- 	return 0;
+diff --git a/security/integrity/integrity.h b/security/integrity/integrity.h
+index 660f76cb69d37..c2c2da6911233 100644
+--- a/security/integrity/integrity.h
++++ b/security/integrity/integrity.h
+@@ -37,6 +37,8 @@ struct evm_ima_xattr_data {
+ 	);
+ 	u8 data[];
+ } __packed;
++static_assert(offsetof(struct evm_ima_xattr_data, data) == sizeof(struct evm_ima_xattr_data_hdr),
++	      "struct member likely outside of __struct_group()");
+ 
+ /* Only used in the EVM HMAC code. */
+ struct evm_xattr {
+@@ -65,6 +67,8 @@ struct ima_digest_data {
+ 	);
+ 	u8 digest[];
+ } __packed;
++static_assert(offsetof(struct ima_digest_data, digest) == sizeof(struct ima_digest_data_hdr),
++	      "struct member likely outside of __struct_group()");
+ 
+ /*
+  * Instead of wrapping the ima_digest_data struct inside a local structure
 -- 
 2.43.0
 
