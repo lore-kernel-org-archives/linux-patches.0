@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80BD23BB24;
-	Tue,  3 Dec 2024 14:36:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD3A41F669E;
+	Tue,  3 Dec 2024 14:36:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733236567; cv=none; b=TAlLrv2OP5uBwiirS/U2Z9jgTSVUHV3kBWLNvrpa00qIo1HdIIXwuyraZFG8WwVdPk3B0sX6SYmxovufuuleFaLZgOlazhkLHc3aje1UdZPVMf84J6XNcLM48lI7cTfQVi/QltibSeP4mdXq4BsrfRsBzfTwzHSKrJy6/ALYCzY=
+	t=1733236570; cv=none; b=YCDoNOi5UFiruztkS201Z6X80p/yYIT5wKnf0tbdUE7vh4M4Yzu8E5kSMNQ3HZsat4m5gWoN2ATR91s72z0ZNZu1bW3bYC3Bc1+FpDn6GepRzxaenunWf5bYihhxB1PfluLZAIBEaRU1aZNrjUYW7IiWcbeEXgHLJfftnNsBLQc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733236567; c=relaxed/simple;
-	bh=GoPszE0VJaWo/sTMhD5E1gBeedIKqd7xNm1Uj+RiFxQ=;
+	s=arc-20240116; t=1733236570; c=relaxed/simple;
+	bh=XbCaeUpmgzYDoIZ0PYspWPLSqdU71pcwvFR8nmH873E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Jh34a/Vqb5p2u73bgCv8CulbVxZ0bK3p7b2W0O+YncVA26Rgt19q2aP4IEbZrqujtFWL3boUSn4QlZQUMKHUtXHqv0CDuLo6TjfZb/wOQdrVyJfW+MZyh12rvhsJtj0Cp0P2KlWstaScbFMKlS/2lCoTpZhbZtA3jctc9qxx7Sg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WGYLQwqz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IkTPUoYOJ1k2PKJrrdLqVBNmsWDRbaQ2D5aNfHWWErYWIY/PzCiRXxZNteutnDbi0pbtxjatnWIY51lcPThb+/029HhTb8xJNNvlRJBOa04ex67yhiLwafHUUWGi4PJSXuxVHosFL9apqtg8DR1InBFH+09FI+GurdoZpMAf4qw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jGidVHdD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WGYLQwqz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7B38C4CECF;
-	Tue,  3 Dec 2024 14:36:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jGidVHdD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BB29C4CECF;
+	Tue,  3 Dec 2024 14:36:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733236567;
-	bh=GoPszE0VJaWo/sTMhD5E1gBeedIKqd7xNm1Uj+RiFxQ=;
+	s=korg; t=1733236570;
+	bh=XbCaeUpmgzYDoIZ0PYspWPLSqdU71pcwvFR8nmH873E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WGYLQwqzGN9e5O2oukPioqlflZPKlBanr4OV4Iu+Q1dn3tq0ALIMVP1RVE+Yb5jbO
-	 yL8z5966TMrFICxoWA0YLIf1hRyoOOM9+hdLnG9+CiSldWZU5KWJfS6DrBf2/VJQ1V
-	 nIFdMs5kb3mPFYzc17AX598juAr6RGgQlmTzGhr8=
+	b=jGidVHdDff9+geLFuCcWOp5bJZRuP4xtArEq1eofrFKy4TqmnXY5cwevzcBRLJJLp
+	 LOtKB47i3DLZQTWWD/ik1JiGhoXhdkvKl+JBHUbOEh/LMkLwqwISYSrxA8SSIAIwJ4
+	 rhGO8qIwfPCq9sIwRgI63uLgCuuGSVokA58xXw8I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
-	Michal Kubiak <michal.kubiak@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 057/138] netpoll: Use rcu_access_pointer() in netpoll_poll_lock
-Date: Tue,  3 Dec 2024 15:31:26 +0100
-Message-ID: <20241203141925.740526722@linuxfoundation.org>
+Subject: [PATCH 4.19 031/138] soc: qcom: geni-se: fix array underflow in geni_se_clk_tbl_get()
+Date: Tue,  3 Dec 2024 15:31:00 +0100
+Message-ID: <20241203141924.747441123@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203141923.524658091@linuxfoundation.org>
 References: <20241203141923.524658091@linuxfoundation.org>
@@ -52,43 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit a57d5a72f8dec7db8a79d0016fb0a3bdecc82b56 ]
+[ Upstream commit 78261cb08f06c93d362cab5c5034bf5899bc7552 ]
 
-The ndev->npinfo pointer in netpoll_poll_lock() is RCU-protected but is
-being accessed directly for a NULL check. While no RCU read lock is held
-in this context, we should still use proper RCU primitives for
-consistency and correctness.
+This loop is supposed to break if the frequency returned from
+clk_round_rate() is the same as on the previous iteration.  However,
+that check doesn't make sense on the first iteration through the loop.
+It leads to reading before the start of these->clk_perf_tbl[] array.
 
-Replace the direct NULL check with rcu_access_pointer(), which is the
-appropriate primitive when only checking for NULL without dereferencing
-the pointer. This function provides the necessary ordering guarantees
-without requiring RCU read-side protection.
-
-Fixes: bea3348eef27 ("[NET]: Make NAPI polling independent of struct net_device objects.")
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Reviewed-by: Michal Kubiak <michal.kubiak@intel.com>
-Link: https://patch.msgid.link/20241118-netpoll_rcu-v1-2-a1888dcb4a02@debian.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: eddac5af0654 ("soc: qcom: Add GENI based QUP Wrapper driver")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://lore.kernel.org/r/8cd12678-f44a-4b16-a579-c8f11175ee8c@stanley.mountain
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/netpoll.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/soc/qcom/qcom-geni-se.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/include/linux/netpoll.h b/include/linux/netpoll.h
-index 3ef82d3a78db5..c47f74e6bd2cb 100644
---- a/include/linux/netpoll.h
-+++ b/include/linux/netpoll.h
-@@ -80,7 +80,7 @@ static inline void *netpoll_poll_lock(struct napi_struct *napi)
- {
- 	struct net_device *dev = napi->dev;
+diff --git a/drivers/soc/qcom/qcom-geni-se.c b/drivers/soc/qcom/qcom-geni-se.c
+index 7369b061929bb..4e1c6c5ea9c92 100644
+--- a/drivers/soc/qcom/qcom-geni-se.c
++++ b/drivers/soc/qcom/qcom-geni-se.c
+@@ -542,7 +542,8 @@ int geni_se_clk_tbl_get(struct geni_se *se, unsigned long **tbl)
  
--	if (dev && dev->npinfo) {
-+	if (dev && rcu_access_pointer(dev->npinfo)) {
- 		int owner = smp_processor_id();
- 
- 		while (cmpxchg(&napi->poll_owner, -1, owner) != -1)
+ 	for (i = 0; i < MAX_CLK_PERF_LEVEL; i++) {
+ 		freq = clk_round_rate(se->clk, freq + 1);
+-		if (freq <= 0 || freq == se->clk_perf_tbl[i - 1])
++		if (freq <= 0 ||
++		    (i > 0 && freq == se->clk_perf_tbl[i - 1]))
+ 			break;
+ 		se->clk_perf_tbl[i] = freq;
+ 	}
 -- 
 2.43.0
 
