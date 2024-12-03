@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3D391F7591;
-	Tue,  3 Dec 2024 16:16:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BD171F8907;
+	Tue,  3 Dec 2024 16:16:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733242582; cv=none; b=lI3G8VU0ofaJ5QUa5eHFlX9S25x4moBtP6QonpPH7vvEvRjOpMlVebZPUhvHZ8lwq98oY8h/QslospoANZdHZjhunWVPk1Jtn9+NnoeZs0SHgpihho1zQAHbdgIhnBYwYuxMqqJNycNzvSWzfZ7H8v6QTa7t6pujeLdgMjKD9oU=
+	t=1733242586; cv=none; b=MnQwZt7WuGk9vriB0d0utaiwBiS5zCBRYqxmnbcR8wxI5I7V+G7lQRhZ5pE4bXrhgOUgvH0DMJlrqQnPBvbySWC+dXwM3Yi863kOkgvznIRxO2MmIINUuceR8ujmwwlr6BQMRsL5HZrsxGvmoYGgWWtXvM91yY7nm/3gfb4OvhY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733242582; c=relaxed/simple;
-	bh=wyDxYWovDAxvHtI/3kzviVQM3OuGV1a3jaeo7qwKIg4=;
+	s=arc-20240116; t=1733242586; c=relaxed/simple;
+	bh=LPdv59JMtj56EpbGdiZmMTT0Fqu4D6rNgzRsvavmcig=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bmoS4fmpqnXgVvNO8tdnsTt95Xo37C0EMYCJ11bPdBnnJv01vc6brccMYy2iFlIZ4nLAeXZrTLfo5NhIZh0QSKAlYD4ZghD4rzvVOyb5nFp5glWPqG02re2GUrt6OOzDY51vNjEaMG/3pHBgYoJ0eyblKKOSLLwPhNl5pVDY/Pw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KEdnjsoX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jRqSi/Ptium7+cFLz2G0nTOGBjI12BHYhiA5BA/QDNi9mIEVXIFDkfGNLC8ZwAwiq4DjG33RsLJX3RgLFk/ecoazotjMT2wCriIpUNCPwidMd7tVXbEj0cxabbXRORHaptURpW7lrjatstZeKPqL9Uj7R7dPGJp5Y5Z7VJMSgWQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1Bn9mWTb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KEdnjsoX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B736C4CECF;
-	Tue,  3 Dec 2024 16:16:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1Bn9mWTb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1FE2C4CECF;
+	Tue,  3 Dec 2024 16:16:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733242582;
-	bh=wyDxYWovDAxvHtI/3kzviVQM3OuGV1a3jaeo7qwKIg4=;
+	s=korg; t=1733242586;
+	bh=LPdv59JMtj56EpbGdiZmMTT0Fqu4D6rNgzRsvavmcig=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KEdnjsoXKMbU2SXI2kYy8iQoW4jqngp6cFzuWaKEDGub+IzygUAKEyJdc+DuQQskC
-	 wOA1W1g8k+Sg91CzoB44BXqV+7+cn7Z4Ns2obqL4u2bbigohjbmL8dqNODGltMftUh
-	 Bg5uirlBgxPCK9JW0SozzRB5Km7tDLx5NH7riAwc=
+	b=1Bn9mWTb3DgNTd2JKK+589gXxp2qF9z/E1p8rVg6LutzuS5gPHm9Xih6dwvJXC1b8
+	 i7I9ShSh+dH8jfpMvIQDrKN+YzMPIv6iYUJ6NisjHzCmCHoyPzoiuZbVwMgKDxpP+Y
+	 h6zEHwqXPiP5j8fZbJvUygRZecGOzRVn9kX5mkEo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dinesh Kumar <desikumar81@gmail.com>,
+	Dirk Su <dirk.su@canonical.com>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.12 746/826] ALSA: hda/realtek: Fix Internal Speaker and Mic boost of Infinix Y4 Max
-Date: Tue,  3 Dec 2024 15:47:53 +0100
-Message-ID: <20241203144812.863893041@linuxfoundation.org>
+Subject: [PATCH 6.12 747/826] ALSA: hda/realtek: fix mute/micmute LEDs dont work for EliteBook X G1i
+Date: Tue,  3 Dec 2024 15:47:54 +0100
+Message-ID: <20241203144812.904332878@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -50,59 +50,31 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dinesh Kumar <desikumar81@gmail.com>
+From: Dirk Su <dirk.su@canonical.com>
 
-commit 5ebe792a5139f1ce6e4aed22bef12e7e2660df96 upstream.
+commit 7ba81e4c3aa0ca25f06dc4456e7d36fa8e76385f upstream.
 
-Internal Speaker of Infinix Y4 Max remains muted due to incorrect
-Pin configuration, and the Internal Mic records high noise. This patch
-corrects the Pin configuration for the Internal Speaker and limits
-the Internal Mic boost.
-HW Probe for device: https://linux-hardware.org/?probe=6d4386c347
-Test: Internal Speaker works fine, Mic has low noise.
+HP EliteBook X G1i needs ALC285_FIXUP_HP_GPIO_LED quirk to
+make mic-mute/audio-mute working.
 
-Signed-off-by: Dinesh Kumar <desikumar81@gmail.com>
+Signed-off-by: Dirk Su <dirk.su@canonical.com>
 Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20241125092842.13208-1-desikumar81@gmail.com
+Link: https://patch.msgid.link/20241126060531.22759-1-dirk.su@canonical.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_realtek.c |   11 +++++++++++
- 1 file changed, 11 insertions(+)
+ sound/pci/hda/patch_realtek.c |    1 +
+ 1 file changed, 1 insertion(+)
 
 --- a/sound/pci/hda/patch_realtek.c
 +++ b/sound/pci/hda/patch_realtek.c
-@@ -7548,6 +7548,7 @@ enum {
- 	ALC269_FIXUP_THINKPAD_ACPI,
- 	ALC269_FIXUP_DMIC_THINKPAD_ACPI,
- 	ALC269VB_FIXUP_INFINIX_ZERO_BOOK_13,
-+	ALC269VC_FIXUP_INFINIX_Y4_MAX,
- 	ALC269VB_FIXUP_CHUWI_COREBOOK_XPRO,
- 	ALC255_FIXUP_ACER_MIC_NO_PRESENCE,
- 	ALC255_FIXUP_ASUS_MIC_NO_PRESENCE,
-@@ -8005,6 +8006,15 @@ static const struct hda_fixup alc269_fix
- 		.chained = true,
- 		.chain_id = ALC269_FIXUP_LIMIT_INT_MIC_BOOST
- 	},
-+	[ALC269VC_FIXUP_INFINIX_Y4_MAX] = {
-+		.type = HDA_FIXUP_PINS,
-+		.v.pins = (const struct hda_pintbl[]) {
-+			{ 0x1b, 0x90170150 }, /* use as internal speaker */
-+			{ }
-+		},
-+		.chained = true,
-+		.chain_id = ALC269_FIXUP_LIMIT_INT_MIC_BOOST
-+	},
- 	[ALC269VB_FIXUP_CHUWI_COREBOOK_XPRO] = {
- 		.type = HDA_FIXUP_PINS,
- 		.v.pins = (const struct hda_pintbl[]) {
-@@ -11022,6 +11032,7 @@ static const struct snd_pci_quirk alc269
- 	SND_PCI_QUIRK(0x2782, 0x0214, "VAIO VJFE-CL", ALC269_FIXUP_LIMIT_INT_MIC_BOOST),
- 	SND_PCI_QUIRK(0x2782, 0x0228, "Infinix ZERO BOOK 13", ALC269VB_FIXUP_INFINIX_ZERO_BOOK_13),
- 	SND_PCI_QUIRK(0x2782, 0x0232, "CHUWI CoreBook XPro", ALC269VB_FIXUP_CHUWI_COREBOOK_XPRO),
-+	SND_PCI_QUIRK(0x2782, 0x1701, "Infinix Y4 Max", ALC269VC_FIXUP_INFINIX_Y4_MAX),
- 	SND_PCI_QUIRK(0x2782, 0x1707, "Vaio VJFE-ADL", ALC298_FIXUP_SPK_VOLUME),
- 	SND_PCI_QUIRK(0x2782, 0x4900, "MEDION E15443", ALC233_FIXUP_MEDION_MTL_SPK),
- 	SND_PCI_QUIRK(0x8086, 0x2074, "Intel NUC 8", ALC233_FIXUP_INTEL_NUC8_DMIC),
+@@ -10592,6 +10592,7 @@ static const struct snd_pci_quirk alc269
+ 	SND_PCI_QUIRK(0x103c, 0x8cdf, "HP SnowWhite", ALC287_FIXUP_CS35L41_I2C_2_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8ce0, "HP SnowWhite", ALC287_FIXUP_CS35L41_I2C_2_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8cf5, "HP ZBook Studio 16", ALC245_FIXUP_CS35L41_SPI_4_HP_GPIO_LED),
++	SND_PCI_QUIRK(0x103c, 0x8d84, "HP EliteBook X G1i", ALC285_FIXUP_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x1043, 0x103e, "ASUS X540SA", ALC256_FIXUP_ASUS_MIC),
+ 	SND_PCI_QUIRK(0x1043, 0x103f, "ASUS TX300", ALC282_FIXUP_ASUS_TX300),
+ 	SND_PCI_QUIRK(0x1043, 0x106d, "Asus K53BE", ALC269_FIXUP_LIMIT_INT_MIC_BOOST),
 
 
