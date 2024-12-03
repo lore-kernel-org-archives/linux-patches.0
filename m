@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90EED1EBFFC;
-	Tue,  3 Dec 2024 15:30:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 810871F76A7;
+	Tue,  3 Dec 2024 15:30:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733239800; cv=none; b=riLEkwNRy0060it7ylJqci9sgKB8OiNbEqcUxPQUFz+pL6qop8j3w6nLziiJDCPUh137n8fb9aC/SBb0vg1w3ugaqRDC+v4gu+JlqomzEkLvVL5hQroGpYc4ECtuS/7Jz3Z/Nbne3zDZaIKkOy27Ctqld3HH/gnt03HYq3xQX3Q=
+	t=1733239803; cv=none; b=oWzEGhb9mH+DRqZjuOcyIMmHMKrBWwNURavo1xXze23HlNlCvcQu10nXnUS1g2MzIRFudrKkPES3ikksHPGFU18chq3LNBDYn/dy8Ne0Yp+nsYme4qcEoLepUysVETfwQvMXhsxPdwvMTgjTzm4ZLj3WSv+f/UcHKG8T77QL0Mk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733239800; c=relaxed/simple;
-	bh=eKd1hK11HmNzoa/jHZFWOs4wdsPRdzmk0oc0b/QDFrE=;
+	s=arc-20240116; t=1733239803; c=relaxed/simple;
+	bh=WmAa9FecibBuJt5WEbMrDLxgZGLobYPPt7MsL1LzBbc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WuJ6oM/0EKJ1BO8XQ2aA9gvzLSyrb9bV6/7h4xSxrTOioJ+tZ58N6F/xpqSPzvdxULE7akSsxqUFvsbipGnt2eRIx2k+WQ9cuuteNuuWgH5wnuCTB2e1D7OgCrUz3cpA0unMcNJDORBG1hkv6rAqZI38bKaTdJoCOMUNqobE4lQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NfHlcgzm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oB8O30UoM11DSjra4BI4wB1uQEsxV0WvyRYAz3VvwSUAD0cZ81Cp6o37IBU+iM3nNVQmVyDVQsamrvreEJJ51M0Y8MSPhKXHJfg+nMwKNYT0ajQ+xM+Mb9b9cr2emZ/FKhZMRYvwBLsShYOLnyBpF8Yj5YJYOwlmZRLlKUGFGQE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vDDQfAnl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NfHlcgzm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12D6BC4CED6;
-	Tue,  3 Dec 2024 15:29:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vDDQfAnl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F17E2C4CECF;
+	Tue,  3 Dec 2024 15:30:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733239800;
-	bh=eKd1hK11HmNzoa/jHZFWOs4wdsPRdzmk0oc0b/QDFrE=;
+	s=korg; t=1733239803;
+	bh=WmAa9FecibBuJt5WEbMrDLxgZGLobYPPt7MsL1LzBbc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NfHlcgzmHfHwRdSKLjzj6FEY5NaQ7DSAq8u5BnSOG4NBexhBbIyUfevJQ6nTyR6ZB
-	 uxgO4AxK4RiEaEBzOvN/6NOVcZW3727QoY9Zh2lFULNZ7jFLaRMxoObb7JaCjjtsB4
-	 kY9o7tckUJuXpvglCWYkzP3riw7fH7ce7EcW/WZU=
+	b=vDDQfAnljcRlog0uiavXn0RDT6/vv5yNZGFQOE/DnumIl7lvqGh/+dVBW8AFB57kc
+	 NPrCqs4NVZxy3RPxH6f0Vz4dYrAXbe7Bu6i2Gb4hP7BLI+Z4ZONBdkO7H7Tfebf7+I
+	 aDlFKBT5qkytqzweZ/A321C2cwlREpnHybGmlpuY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+351f8764833934c68836@syzkaller.appspotmail.com,
-	Eric Dumazet <eric.dumazet@gmail.com>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.11 738/817] ALSA: rawmidi: Fix kvfree() call in spinlock
-Date: Tue,  3 Dec 2024 15:45:10 +0100
-Message-ID: <20241203144024.805710120@linuxfoundation.org>
+Subject: [PATCH 6.11 739/817] ALSA: ump: Fix evaluation of MIDI 1.0 FB info
+Date: Tue,  3 Dec 2024 15:45:11 +0100
+Message-ID: <20241203144024.844231302@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -53,53 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 From: Takashi Iwai <tiwai@suse.de>
 
-commit 20c0c49720dc4e205d4c1d64add56a5043c5ec5f upstream.
+commit 7be34f6feedd60e418de1c2c48e661d70416635f upstream.
 
-At the conversion of locking with guard(), I overlooked that kvfree()
-must not be called inside the spinlock unlike kfree(), and this was
-caught by syzkaller now.
+The m1.0 field of UMP Function Block info specifies whether the given
+FB is a MIDI 1.0 port or not.  When implementing the UMP support on
+Linux, I somehow interpreted as if it were bit flags, but the field is
+actually an enumeration from 0 to 2, where 2 means MIDI 1.0 *and* low
+speed.
 
-This patch reverts the conversion partially for restoring the kvfree()
-call outside the spinlock.  It's not trivial to use guard() in this
-context, unfortunately.
+This patch corrects the interpretation and sets the right bit flags
+depending on the m1.0 field of FB Info.  This effectively fixes the
+missing detection of MIDI 1.0 FB when m1.0 is 2.
 
-Fixes: 84bb065b316e ("ALSA: rawmidi: Use guard() for locking")
-Reported-by: syzbot+351f8764833934c68836@syzkaller.appspotmail.com
-Reported-by: Eric Dumazet <eric.dumazet@gmail.com>
-Closes: https://lore.kernel.org/6744737b.050a0220.1cc393.007e.GAE@google.com
+Fixes: 37e0e14128e0 ("ALSA: ump: Support UMP Endpoint and Function Block parsing")
 Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20241125142041.16578-1-tiwai@suse.de
+Link: https://patch.msgid.link/20241127070059.8099-1-tiwai@suse.de
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/core/rawmidi.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ sound/core/ump.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/sound/core/rawmidi.c b/sound/core/rawmidi.c
-index 03306be5fa02..348ce1b7725e 100644
---- a/sound/core/rawmidi.c
-+++ b/sound/core/rawmidi.c
-@@ -724,8 +724,9 @@ static int resize_runtime_buffer(struct snd_rawmidi_substream *substream,
- 		newbuf = kvzalloc(params->buffer_size, GFP_KERNEL);
- 		if (!newbuf)
- 			return -ENOMEM;
--		guard(spinlock_irq)(&substream->lock);
-+		spin_lock_irq(&substream->lock);
- 		if (runtime->buffer_ref) {
-+			spin_unlock_irq(&substream->lock);
- 			kvfree(newbuf);
- 			return -EBUSY;
- 		}
-@@ -733,6 +734,7 @@ static int resize_runtime_buffer(struct snd_rawmidi_substream *substream,
- 		runtime->buffer = newbuf;
- 		runtime->buffer_size = params->buffer_size;
- 		__reset_runtime_ptrs(runtime, is_input);
-+		spin_unlock_irq(&substream->lock);
- 		kvfree(oldbuf);
- 	}
- 	runtime->avail_min = params->avail_min;
--- 
-2.47.1
-
+--- a/sound/core/ump.c
++++ b/sound/core/ump.c
+@@ -724,7 +724,10 @@ static void fill_fb_info(struct snd_ump_
+ 	info->ui_hint = buf->fb_info.ui_hint;
+ 	info->first_group = buf->fb_info.first_group;
+ 	info->num_groups = buf->fb_info.num_groups;
+-	info->flags = buf->fb_info.midi_10;
++	if (buf->fb_info.midi_10 < 2)
++		info->flags = buf->fb_info.midi_10;
++	else
++		info->flags = SNDRV_UMP_BLOCK_IS_MIDI1 | SNDRV_UMP_BLOCK_IS_LOWSPEED;
+ 	info->active = buf->fb_info.active;
+ 	info->midi_ci_version = buf->fb_info.midi_ci_version;
+ 	info->sysex8_streams = buf->fb_info.sysex8_streams;
 
 
