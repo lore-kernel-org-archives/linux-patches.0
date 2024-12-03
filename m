@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CC6C33FE;
-	Tue,  3 Dec 2024 15:04:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6808633FE;
+	Tue,  3 Dec 2024 15:04:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733238295; cv=none; b=iyEcJsuPpOyFViF46M6+36x9UJiZXyaEQrBFUfkqCqv/IUmtFJnibT9HqiDw9CYacOhKKvFJJBJKkahaBJu5e01JmJULaVQgXQjKt073UZHpyxiOnhKvjxGx6M/WO+8hg2wpBw6pZGSepaXslvCQSXTb3lRtOyqDD1rEZHMaZEg=
+	t=1733238298; cv=none; b=Dlyti7wDqd571mpXQiPTqY2ki6vwsIxnN2oxThaIctqGvqxnYSgWt5m7eSCe1mKjC3jIMwjRIQPUzZcGzqxy9XR9BKAr20PSsfjUelB0HCjq5YL1k723adD1xKSoVeBxyojeQs+dcyDN60fL6F2uqc7vb1hsCpWR53ylP+MIqxU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733238295; c=relaxed/simple;
-	bh=yp5uhLx432v4eQ5AL7YjTlmrhCMiV0wyec+EzLyktws=;
+	s=arc-20240116; t=1733238298; c=relaxed/simple;
+	bh=ZUEOGJGqa/IoHCQCBali8iS+CxVcNUmNntC5ePC1dVI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q09GJlcloSG+aVXy+cFT57Z1sJa1PALDl2NFeGgp8Thwx/TvQVKjTiIhBA1Xr7Dk0fcQRY6D6su/Waihyte3N3Nro+XQNjihLXqei3yV/8uJz5QwYOqjSG6HbkTXXkxZov7vPAuZE5n/hFkAfRfZo1ZsHnXzZGe71WIxVUaSwHk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0w8WmJ00; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GGvE8G0UgqEwGgNDrdXEjbNuxRf/lSBTjUcueG7SFfuKqq8ASxuEQ0141/BJVcfDkG7kAN+iWGH5mqQdrm/ZpBMVgQaeEC4gI6fGwgGWZ7mqhYZk5j65muhVCviTfpyDZDeRGxfchIWG8y4BDJks+G5lfFWRRM5QhopxiW08caA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Shy1d3Zt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0w8WmJ00"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 097FAC4CECF;
-	Tue,  3 Dec 2024 15:04:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Shy1d3Zt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4BB8C4CECF;
+	Tue,  3 Dec 2024 15:04:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733238295;
-	bh=yp5uhLx432v4eQ5AL7YjTlmrhCMiV0wyec+EzLyktws=;
+	s=korg; t=1733238298;
+	bh=ZUEOGJGqa/IoHCQCBali8iS+CxVcNUmNntC5ePC1dVI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0w8WmJ004RPbYxccVVAJFsvm7GfLE3mdrCZJYDPF7qZNAhKx1P7/5Kip5rKuxAsul
-	 +y3ehIu0A08TYIqaqFDOQmh99boUiK+qB/naQmzua3CdhcRGk2xvbYJ6DMkIJ5ns6o
-	 ph9V6Kyyf11/uQRP2DWP/BC0/VIx0w2qFlG6fo6M=
+	b=Shy1d3Zt8t1jhl0PLohsnIxlWynmZI8OCOZ+MlcenEgDUs9jnhaek0Ixgcwa6htZH
+	 8+GmUdZDouN3h2kKEO8TeksqM2usBlcCXnBYOnDGESQ60sWBRW2EsNefrVGIRU/KZG
+	 dbg/esvWAIuSOwW9Xdd+h1IE3tMWMCZqsNI9/ef0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vivek Kasireddy <vivek.kasireddy@intel.com>,
-	Huan Yang <link@vivo.com>,
+	Jinjie Ruan <ruanjinjie@huawei.com>,
+	Laurentiu Palcu <laurentiu.palcu@oss.nxp.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 229/817] udmabuf: fix vmap_udmabuf error page set
-Date: Tue,  3 Dec 2024 15:36:41 +0100
-Message-ID: <20241203144004.687281410@linuxfoundation.org>
+Subject: [PATCH 6.11 230/817] drm/imx/dcss: Use IRQF_NO_AUTOEN flag in request_irq()
+Date: Tue,  3 Dec 2024 15:36:42 +0100
+Message-ID: <20241203144004.726686546@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -51,84 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Huan Yang <link@vivo.com>
+From: Jinjie Ruan <ruanjinjie@huawei.com>
 
-[ Upstream commit 18d7de823b7150344d242c3677e65d68c5271b04 ]
+[ Upstream commit 1af01e14db7e0b45ae502d822776a58c86688763 ]
 
-Currently vmap_udmabuf set page's array by each folio.
-But, ubuf->folios is only contain's the folio's head page.
+disable_irq() after request_irq() still has a time gap in which
+interrupts can come. request_irq() with IRQF_NO_AUTOEN flag will
+disable IRQ auto-enable when request IRQ.
 
-That mean we repeatedly mapped the folio head page to the vmalloc area.
-
-Due to udmabuf can use hugetlb, if HVO enabled, tail page may not exist,
-so, we can't use page array to map, instead, use pfn array.
-
-By this, we removed page usage in udmabuf totally.
-
-Fixes: 5e72b2b41a21 ("udmabuf: convert udmabuf driver to use folios")
-Suggested-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
-Signed-off-by: Huan Yang <link@vivo.com>
-Acked-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
-Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240918025238.2957823-4-link@vivo.com
+Fixes: 9021c317b770 ("drm/imx: Add initial support for DCSS on iMX8MQ")
+Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+Reviewed-by: Laurentiu Palcu <laurentiu.palcu@oss.nxp.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240912083020.3720233-2-ruanjinjie@huawei.com
+[DB: fixed the subject]
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma-buf/Kconfig   |  1 +
- drivers/dma-buf/udmabuf.c | 22 +++++++++++++++-------
- 2 files changed, 16 insertions(+), 7 deletions(-)
+ drivers/gpu/drm/imx/dcss/dcss-crtc.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/dma-buf/Kconfig b/drivers/dma-buf/Kconfig
-index b46eb8a552d7b..fee04fdb08220 100644
---- a/drivers/dma-buf/Kconfig
-+++ b/drivers/dma-buf/Kconfig
-@@ -36,6 +36,7 @@ config UDMABUF
- 	depends on DMA_SHARED_BUFFER
- 	depends on MEMFD_CREATE || COMPILE_TEST
- 	depends on MMU
-+	select VMAP_PFN
- 	help
- 	  A driver to let userspace turn memfd regions into dma-bufs.
- 	  Qemu can use this to create host dmabufs for guest framebuffers.
-diff --git a/drivers/dma-buf/udmabuf.c b/drivers/dma-buf/udmabuf.c
-index bc94c194e172d..a3638ccc15f57 100644
---- a/drivers/dma-buf/udmabuf.c
-+++ b/drivers/dma-buf/udmabuf.c
-@@ -74,21 +74,29 @@ static int mmap_udmabuf(struct dma_buf *buf, struct vm_area_struct *vma)
- static int vmap_udmabuf(struct dma_buf *buf, struct iosys_map *map)
- {
- 	struct udmabuf *ubuf = buf->priv;
--	struct page **pages;
-+	unsigned long *pfns;
- 	void *vaddr;
- 	pgoff_t pg;
+diff --git a/drivers/gpu/drm/imx/dcss/dcss-crtc.c b/drivers/gpu/drm/imx/dcss/dcss-crtc.c
+index 31267c00782fc..af91e45b5d13b 100644
+--- a/drivers/gpu/drm/imx/dcss/dcss-crtc.c
++++ b/drivers/gpu/drm/imx/dcss/dcss-crtc.c
+@@ -206,15 +206,13 @@ int dcss_crtc_init(struct dcss_crtc *crtc, struct drm_device *drm)
+ 	if (crtc->irq < 0)
+ 		return crtc->irq;
  
- 	dma_resv_assert_held(buf->resv);
+-	ret = request_irq(crtc->irq, dcss_crtc_irq_handler,
+-			  0, "dcss_drm", crtc);
++	ret = request_irq(crtc->irq, dcss_crtc_irq_handler, IRQF_NO_AUTOEN,
++			  "dcss_drm", crtc);
+ 	if (ret) {
+ 		dev_err(dcss->dev, "irq request failed with %d.\n", ret);
+ 		return ret;
+ 	}
  
--	pages = kvmalloc_array(ubuf->pagecount, sizeof(*pages), GFP_KERNEL);
--	if (!pages)
-+	/**
-+	 * HVO may free tail pages, so just use pfn to map each folio
-+	 * into vmalloc area.
-+	 */
-+	pfns = kvmalloc_array(ubuf->pagecount, sizeof(*pfns), GFP_KERNEL);
-+	if (!pfns)
- 		return -ENOMEM;
- 
--	for (pg = 0; pg < ubuf->pagecount; pg++)
--		pages[pg] = &ubuf->folios[pg]->page;
-+	for (pg = 0; pg < ubuf->pagecount; pg++) {
-+		unsigned long pfn = folio_pfn(ubuf->folios[pg]);
- 
--	vaddr = vm_map_ram(pages, ubuf->pagecount, -1);
--	kvfree(pages);
-+		pfn += ubuf->offsets[pg] >> PAGE_SHIFT;
-+		pfns[pg] = pfn;
-+	}
-+
-+	vaddr = vmap_pfn(pfns, ubuf->pagecount, PAGE_KERNEL);
-+	kvfree(pfns);
- 	if (!vaddr)
- 		return -EINVAL;
+-	disable_irq(crtc->irq);
+-
+ 	return 0;
+ }
  
 -- 
 2.43.0
