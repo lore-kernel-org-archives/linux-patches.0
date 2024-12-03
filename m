@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE4911F8936;
-	Tue,  3 Dec 2024 15:41:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E20091EE001;
+	Tue,  3 Dec 2024 15:41:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733240498; cv=none; b=JQ9cjpYHrk15n7Zmx4Qhz7LOFPX/ROmC9l/Wu8gKs61dGKD7aP1Yx1h3voEfM+jvVTE9GkGZDTETg7T8xfLU1EuNfscuQD37NfRGpfWD5wGaDenoBPNUSW4r0M01jEMSwmvx5yv63rnAPixaHLs2denG7YDuBqAQObN5J3xOyJs=
+	t=1733240503; cv=none; b=QI9e7hIpY52KS5MQeSejXL6R9rlECgdc807zQpxQjTju9/60CAffaZBUKwPzETyOmfSkgbtoYrBC79T+IQvK3J+sQvSzie8o88eO0fqz8Rz+mZ6doYlLVNpsOew6lfxAQ4iM47EsDH0b2Th/FX7b3XCPQ8B55nsCwHrU7eXdmnU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733240498; c=relaxed/simple;
-	bh=WK49kwmOl9/UtwVif2sBOjnYC9TABESarqH6emVg0Pk=;
+	s=arc-20240116; t=1733240503; c=relaxed/simple;
+	bh=vSsfiB8NjEv79jM0l7BEd3zU4MMO1n/Ii84xpv19dSM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t/LPkkifFn/rncV22/6vjywp2Gec90SsJq2zKN1SytGyXv9Ko2FZmaqLOZlmgnxufn9oGb0anYDv542pvQrJjauA6VXo8h8z1l2gYqIkDOluwyMMvBtxR1Z1ybyfIExMeWoBo5YkE7yDb/h9jzFlnSTV0oW2LS1X6asfBbRorjs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hKHPNoZ4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XzIu0H7D+KxMt0EQV8S+OmlkF4veCo86+iBAR72q37KZOpwxy+XAwCoujpOgsaFARcDe8lNbGhtulQP41GT9E1Yco1nOK7/TYZlcXXdXvScSfUKsO8KSllBFmLKIvViU+WkNxl1xjMTatpKjcYEZtJuLdNFuTNX4/L012W8BIOI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wbSi0MUn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hKHPNoZ4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 391A1C4CED6;
-	Tue,  3 Dec 2024 15:41:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wbSi0MUn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C635C4CED6;
+	Tue,  3 Dec 2024 15:41:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733240498;
-	bh=WK49kwmOl9/UtwVif2sBOjnYC9TABESarqH6emVg0Pk=;
+	s=korg; t=1733240502;
+	bh=vSsfiB8NjEv79jM0l7BEd3zU4MMO1n/Ii84xpv19dSM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hKHPNoZ4fZiUmqTEnfj7usxWF8iPQ8LYo/itqRI1ez6eiyHzgZ2vxnNtytPfXX8Ci
-	 ZGi3W5GeV//OUKZnJLEbZ6H33CNhPTmhwIcum5PId5d3zpQpYB+Db7YDBkUE5Jfz3/
-	 VkXGTAa3P4psan9PgmloFPJOwX3JzbLV0zDh2hUU=
+	b=wbSi0MUn+XQLFrkkRu8dMEidpznrwJLTRpAvXbLc2Fg9o7vYh/hTxx6ircrQYGqkX
+	 bw0CySu+89mv8Jy6Odr2xTRVHf3sWGaXBrWMeBz8smhjuOX0m5ZkI02llzHO1cDBKd
+	 +3sIobrUxbnERGe0Mgz1TNcFWIxSqXmCD3lPxuHI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Usama Arif <usamaarif642@gmail.com>,
-	"Rob Herring (Arm)" <robh@kernel.org>,
+	Diederik de Haas <didi.debian@cknow.org>,
+	Dragan Simic <dsimic@manjaro.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 154/826] of/fdt: add dt_phys arg to early_init_dt_scan and early_init_dt_verify
-Date: Tue,  3 Dec 2024 15:38:01 +0100
-Message-ID: <20241203144749.750385585@linuxfoundation.org>
+Subject: [PATCH 6.12 137/826] regulator: rk808: Restrict DVS GPIOs to the RK808 variant only
+Date: Tue,  3 Dec 2024 15:37:44 +0100
+Message-ID: <20241203144749.087393560@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -53,383 +52,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Usama Arif <usamaarif642@gmail.com>
+From: Dragan Simic <dsimic@manjaro.org>
 
-[ Upstream commit b2473a359763e27567993e7d8f37de82f57a0829 ]
+[ Upstream commit 0d214f27c0e3d9694284c95bac1502c2d247355b ]
 
- __pa() is only intended to be used for linear map addresses and using
-it for initial_boot_params which is in fixmap for arm64 will give an
-incorrect value. Hence save the physical address when it is known at
-boot time when calling early_init_dt_scan for arm64 and use it at kexec
-time instead of converting the virtual address using __pa().
+The rk808-regulator driver supports multiple PMIC variants from the Rockckip
+RK80x and RK81x series, but the DVS GPIOs are supported on the RK808 variant
+only, according to the DT bindings [1][2][3][4][5][6] and the datasheets for
+the supported PMIC variants. [7][8][9][10][11][12]
 
-Note that arm64 doesn't need the FDT region reserved in the DT as the
-kernel explicitly reserves the passed in FDT. Therefore, only a debug
-warning is fixed with this change.
+Thus, change the probe path so the "dvs-gpios" property is checked for and
+its value possibly used only when the handled PMIC variant is RK808.  There's
+no point in doing that on the other PMIC variants, because they don't support
+the DVS GPIOs, and it goes against the DT bindings to allow a possible out-
+of-place "dvs-gpios" property to actually be handled in the driver.
 
-Reported-by: Breno Leitao <leitao@debian.org>
-Suggested-by: Mark Rutland <mark.rutland@arm.com>
-Signed-off-by: Usama Arif <usamaarif642@gmail.com>
-Fixes: ac10be5cdbfa ("arm64: Use common of_kexec_alloc_and_setup_fdt()")
-Link: https://lore.kernel.org/r/20241023171426.452688-1-usamaarif642@gmail.com
-Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
+This eliminates the following messages, emitted when the "dvs-gpios" property
+isn't found in the DT, from the kernel log on boards that actually don't use
+the RK808 variant, which may have provided a source of confusion:
+
+  rk808-regulator rk808-regulator.2.auto: there is no dvs0 gpio
+  rk808-regulator rk808-regulator.2.auto: there is no dvs1 gpio
+
+Furthermore, demote these kernel messages to debug messages, because they are
+useful during the board bringup phase only.  Emitting them afterwards, on the
+boards that use the RK808 variant, but actually don't use the DVS0/1 GPIOs,
+clutters the kernel log a bit, while they provide no value and may actually
+cause false impression that some PMIC-related issues are present.
+
+[1] Documentation/devicetree/bindings/mfd/rockchip,rk805.yaml
+[2] Documentation/devicetree/bindings/mfd/rockchip,rk806.yaml
+[3] Documentation/devicetree/bindings/mfd/rockchip,rk808.yaml
+[4] Documentation/devicetree/bindings/mfd/rockchip,rk816.yaml
+[5] Documentation/devicetree/bindings/mfd/rockchip,rk817.yaml
+[6] Documentation/devicetree/bindings/mfd/rockchip,rk818.yaml
+[7] https://rockchip.fr/RK805%20datasheet%20V1.2.pdf
+[8] https://wmsc.lcsc.com/wmsc/upload/file/pdf/v2/lcsc/2401261533_Rockchip-RK806-1_C5156483.pdf
+[9] https://rockchip.fr/RK808%20datasheet%20V1.4.pdf
+[10] https://rockchip.fr/RK816%20datasheet%20V1.3.pdf
+[11] https://rockchip.fr/RK817%20datasheet%20V1.01.pdf
+[12] https://rockchip.fr/RK818%20datasheet%20V1.0.pdf
+
+Fixes: 11375293530b ("regulator: rk808: Add regulator driver for RK818")
+Reported-by: Diederik de Haas <didi.debian@cknow.org>
+Signed-off-by: Dragan Simic <dsimic@manjaro.org>
+Link: https://patch.msgid.link/9a415c59699e76fc7b88a2552520a4ca2538f44e.1728902488.git.dsimic@manjaro.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arc/kernel/devtree.c              |  2 +-
- arch/arm/kernel/devtree.c              |  2 +-
- arch/arm64/kernel/setup.c              |  6 +++++-
- arch/csky/kernel/setup.c               |  4 ++--
- arch/loongarch/kernel/setup.c          |  2 +-
- arch/microblaze/kernel/prom.c          |  2 +-
- arch/mips/kernel/prom.c                |  2 +-
- arch/mips/kernel/relocate.c            |  2 +-
- arch/nios2/kernel/prom.c               |  4 ++--
- arch/openrisc/kernel/prom.c            |  2 +-
- arch/powerpc/kernel/dt_cpu_ftrs.c      |  2 +-
- arch/powerpc/kernel/prom.c             |  2 +-
- arch/powerpc/platforms/pseries/plpks.c |  2 +-
- arch/riscv/kernel/setup.c              |  2 +-
- arch/sh/kernel/setup.c                 |  2 +-
- arch/um/kernel/dtb.c                   |  2 +-
- arch/x86/kernel/devicetree.c           |  2 +-
- arch/xtensa/kernel/setup.c             |  2 +-
- drivers/of/fdt.c                       | 14 ++++++++------
- drivers/of/kexec.c                     |  2 +-
- include/linux/of_fdt.h                 |  5 +++--
- 21 files changed, 36 insertions(+), 29 deletions(-)
+ drivers/regulator/rk808-regulator.c | 15 ++++++++-------
+ 1 file changed, 8 insertions(+), 7 deletions(-)
 
-diff --git a/arch/arc/kernel/devtree.c b/arch/arc/kernel/devtree.c
-index 4c9e61457b2f6..cc6ac7d128aa1 100644
---- a/arch/arc/kernel/devtree.c
-+++ b/arch/arc/kernel/devtree.c
-@@ -62,7 +62,7 @@ const struct machine_desc * __init setup_machine_fdt(void *dt)
- 	const struct machine_desc *mdesc;
- 	unsigned long dt_root;
- 
--	if (!early_init_dt_scan(dt))
-+	if (!early_init_dt_scan(dt, __pa(dt)))
- 		return NULL;
- 
- 	mdesc = of_flat_dt_match_machine(NULL, arch_get_next_mach);
-diff --git a/arch/arm/kernel/devtree.c b/arch/arm/kernel/devtree.c
-index fdb74e64206a8..3b78966e750a2 100644
---- a/arch/arm/kernel/devtree.c
-+++ b/arch/arm/kernel/devtree.c
-@@ -200,7 +200,7 @@ const struct machine_desc * __init setup_machine_fdt(void *dt_virt)
- 
- 	mdesc_best = &__mach_desc_GENERIC_DT;
- 
--	if (!dt_virt || !early_init_dt_verify(dt_virt))
-+	if (!dt_virt || !early_init_dt_verify(dt_virt, __pa(dt_virt)))
- 		return NULL;
- 
- 	mdesc = of_flat_dt_match_machine(mdesc_best, arch_get_next_mach);
-diff --git a/arch/arm64/kernel/setup.c b/arch/arm64/kernel/setup.c
-index b22d28ec80284..87f61fd6783c2 100644
---- a/arch/arm64/kernel/setup.c
-+++ b/arch/arm64/kernel/setup.c
-@@ -175,7 +175,11 @@ static void __init setup_machine_fdt(phys_addr_t dt_phys)
- 	if (dt_virt)
- 		memblock_reserve(dt_phys, size);
- 
--	if (!dt_virt || !early_init_dt_scan(dt_virt)) {
-+	/*
-+	 * dt_virt is a fixmap address, hence __pa(dt_virt) can't be used.
-+	 * Pass dt_phys directly.
-+	 */
-+	if (!early_init_dt_scan(dt_virt, dt_phys)) {
- 		pr_crit("\n"
- 			"Error: invalid device tree blob at physical address %pa (virtual address 0x%px)\n"
- 			"The dtb must be 8-byte aligned and must not exceed 2 MB in size\n"
-diff --git a/arch/csky/kernel/setup.c b/arch/csky/kernel/setup.c
-index 51012e90780d6..fe715b707fd0a 100644
---- a/arch/csky/kernel/setup.c
-+++ b/arch/csky/kernel/setup.c
-@@ -112,9 +112,9 @@ asmlinkage __visible void __init csky_start(unsigned int unused,
- 	pre_trap_init();
- 
- 	if (dtb_start == NULL)
--		early_init_dt_scan(__dtb_start);
-+		early_init_dt_scan(__dtb_start, __pa(dtb_start));
- 	else
--		early_init_dt_scan(dtb_start);
-+		early_init_dt_scan(dtb_start, __pa(dtb_start));
- 
- 	start_kernel();
- 
-diff --git a/arch/loongarch/kernel/setup.c b/arch/loongarch/kernel/setup.c
-index cbd3c09a93c14..56934fe58170e 100644
---- a/arch/loongarch/kernel/setup.c
-+++ b/arch/loongarch/kernel/setup.c
-@@ -291,7 +291,7 @@ static void __init fdt_setup(void)
- 	if (!fdt_pointer || fdt_check_header(fdt_pointer))
- 		return;
- 
--	early_init_dt_scan(fdt_pointer);
-+	early_init_dt_scan(fdt_pointer, __pa(fdt_pointer));
- 	early_init_fdt_reserve_self();
- 
- 	max_low_pfn = PFN_PHYS(memblock_end_of_DRAM());
-diff --git a/arch/microblaze/kernel/prom.c b/arch/microblaze/kernel/prom.c
-index e424c796e297c..76ac4cfdfb42c 100644
---- a/arch/microblaze/kernel/prom.c
-+++ b/arch/microblaze/kernel/prom.c
-@@ -18,7 +18,7 @@ void __init early_init_devtree(void *params)
- {
- 	pr_debug(" -> early_init_devtree(%p)\n", params);
- 
--	early_init_dt_scan(params);
-+	early_init_dt_scan(params, __pa(params));
- 	if (!strlen(boot_command_line))
- 		strscpy(boot_command_line, cmd_line, COMMAND_LINE_SIZE);
- 
-diff --git a/arch/mips/kernel/prom.c b/arch/mips/kernel/prom.c
-index 6062e6fa589a8..4fd6da0a06c37 100644
---- a/arch/mips/kernel/prom.c
-+++ b/arch/mips/kernel/prom.c
-@@ -41,7 +41,7 @@ char *mips_get_machine_name(void)
- 
- void __init __dt_setup_arch(void *bph)
- {
--	if (!early_init_dt_scan(bph))
-+	if (!early_init_dt_scan(bph, __pa(bph)))
- 		return;
- 
- 	mips_set_machine_name(of_flat_dt_get_machine_name());
-diff --git a/arch/mips/kernel/relocate.c b/arch/mips/kernel/relocate.c
-index 7eeeaf1ff95d2..cda7983e7c18d 100644
---- a/arch/mips/kernel/relocate.c
-+++ b/arch/mips/kernel/relocate.c
-@@ -337,7 +337,7 @@ void *__init relocate_kernel(void)
- #if defined(CONFIG_USE_OF)
- 	/* Deal with the device tree */
- 	fdt = plat_get_fdt();
--	early_init_dt_scan(fdt);
-+	early_init_dt_scan(fdt, __pa(fdt));
- 	if (boot_command_line[0]) {
- 		/* Boot command line was passed in device tree */
- 		strscpy(arcs_cmdline, boot_command_line, COMMAND_LINE_SIZE);
-diff --git a/arch/nios2/kernel/prom.c b/arch/nios2/kernel/prom.c
-index 9a8393e6b4a85..db049249766fc 100644
---- a/arch/nios2/kernel/prom.c
-+++ b/arch/nios2/kernel/prom.c
-@@ -27,7 +27,7 @@ void __init early_init_devtree(void *params)
- 	if (be32_to_cpup((__be32 *)CONFIG_NIOS2_DTB_PHYS_ADDR) ==
- 		 OF_DT_HEADER) {
- 		params = (void *)CONFIG_NIOS2_DTB_PHYS_ADDR;
--		early_init_dt_scan(params);
-+		early_init_dt_scan(params, __pa(params));
- 		return;
- 	}
- #endif
-@@ -37,5 +37,5 @@ void __init early_init_devtree(void *params)
- 		params = (void *)__dtb_start;
- #endif
- 
--	early_init_dt_scan(params);
-+	early_init_dt_scan(params, __pa(params));
- }
-diff --git a/arch/openrisc/kernel/prom.c b/arch/openrisc/kernel/prom.c
-index 19e6008bf114c..e424e9bd12a79 100644
---- a/arch/openrisc/kernel/prom.c
-+++ b/arch/openrisc/kernel/prom.c
-@@ -22,6 +22,6 @@
- 
- void __init early_init_devtree(void *params)
- {
--	early_init_dt_scan(params);
-+	early_init_dt_scan(params, __pa(params));
- 	memblock_allow_resize();
- }
-diff --git a/arch/powerpc/kernel/dt_cpu_ftrs.c b/arch/powerpc/kernel/dt_cpu_ftrs.c
-index af4263594eb2c..1bee15c013e75 100644
---- a/arch/powerpc/kernel/dt_cpu_ftrs.c
-+++ b/arch/powerpc/kernel/dt_cpu_ftrs.c
-@@ -867,7 +867,7 @@ bool __init dt_cpu_ftrs_init(void *fdt)
- 	using_dt_cpu_ftrs = false;
- 
- 	/* Setup and verify the FDT, if it fails we just bail */
--	if (!early_init_dt_verify(fdt))
-+	if (!early_init_dt_verify(fdt, __pa(fdt)))
- 		return false;
- 
- 	if (!of_scan_flat_dt(fdt_find_cpu_features, NULL))
-diff --git a/arch/powerpc/kernel/prom.c b/arch/powerpc/kernel/prom.c
-index 0be07ed407c70..88cbe432cad59 100644
---- a/arch/powerpc/kernel/prom.c
-+++ b/arch/powerpc/kernel/prom.c
-@@ -791,7 +791,7 @@ void __init early_init_devtree(void *params)
- 	DBG(" -> early_init_devtree(%px)\n", params);
- 
- 	/* Too early to BUG_ON(), do it by hand */
--	if (!early_init_dt_verify(params))
-+	if (!early_init_dt_verify(params, __pa(params)))
- 		panic("BUG: Failed verifying flat device tree, bad version?");
- 
- 	of_scan_flat_dt(early_init_dt_scan_model, NULL);
-diff --git a/arch/powerpc/platforms/pseries/plpks.c b/arch/powerpc/platforms/pseries/plpks.c
-index 4a595493d28ae..b1667ed05f988 100644
---- a/arch/powerpc/platforms/pseries/plpks.c
-+++ b/arch/powerpc/platforms/pseries/plpks.c
-@@ -683,7 +683,7 @@ void __init plpks_early_init_devtree(void)
- out:
- 	fdt_nop_property(fdt, chosen_node, "ibm,plpks-pw");
- 	// Since we've cleared the password, we must update the FDT checksum
--	early_init_dt_verify(fdt);
-+	early_init_dt_verify(fdt, __pa(fdt));
- }
- 
- static __init int pseries_plpks_init(void)
-diff --git a/arch/riscv/kernel/setup.c b/arch/riscv/kernel/setup.c
-index a2cde65b69e95..26c886db4fb3d 100644
---- a/arch/riscv/kernel/setup.c
-+++ b/arch/riscv/kernel/setup.c
-@@ -227,7 +227,7 @@ static void __init init_resources(void)
- static void __init parse_dtb(void)
- {
- 	/* Early scan of device tree from init memory */
--	if (early_init_dt_scan(dtb_early_va)) {
-+	if (early_init_dt_scan(dtb_early_va, __pa(dtb_early_va))) {
- 		const char *name = of_flat_dt_get_machine_name();
- 
- 		if (name) {
-diff --git a/arch/sh/kernel/setup.c b/arch/sh/kernel/setup.c
-index 620e5cf8ae1e7..f2b6f16a46b85 100644
---- a/arch/sh/kernel/setup.c
-+++ b/arch/sh/kernel/setup.c
-@@ -255,7 +255,7 @@ void __ref sh_fdt_init(phys_addr_t dt_phys)
- 	dt_virt = phys_to_virt(dt_phys);
- #endif
- 
--	if (!dt_virt || !early_init_dt_scan(dt_virt)) {
-+	if (!dt_virt || !early_init_dt_scan(dt_virt, __pa(dt_virt))) {
- 		pr_crit("Error: invalid device tree blob"
- 			" at physical address %p\n", (void *)dt_phys);
- 
-diff --git a/arch/um/kernel/dtb.c b/arch/um/kernel/dtb.c
-index 4954188a6a090..8d78ced9e08f6 100644
---- a/arch/um/kernel/dtb.c
-+++ b/arch/um/kernel/dtb.c
-@@ -17,7 +17,7 @@ void uml_dtb_init(void)
- 
- 	area = uml_load_file(dtb, &size);
- 	if (area) {
--		if (!early_init_dt_scan(area)) {
-+		if (!early_init_dt_scan(area, __pa(area))) {
- 			pr_err("invalid DTB %s\n", dtb);
- 			memblock_free(area, size);
- 			return;
-diff --git a/arch/x86/kernel/devicetree.c b/arch/x86/kernel/devicetree.c
-index 64280879c68c0..59d23cdf4ed0f 100644
---- a/arch/x86/kernel/devicetree.c
-+++ b/arch/x86/kernel/devicetree.c
-@@ -305,7 +305,7 @@ void __init x86_flattree_get_config(void)
- 			map_len = size;
+diff --git a/drivers/regulator/rk808-regulator.c b/drivers/regulator/rk808-regulator.c
+index 01a8d04879184..37476d2558fda 100644
+--- a/drivers/regulator/rk808-regulator.c
++++ b/drivers/regulator/rk808-regulator.c
+@@ -1853,7 +1853,7 @@ static int rk808_regulator_dt_parse_pdata(struct device *dev,
  		}
  
--		early_init_dt_verify(dt);
-+		early_init_dt_verify(dt, __pa(dt));
+ 		if (!pdata->dvs_gpio[i]) {
+-			dev_info(dev, "there is no dvs%d gpio\n", i);
++			dev_dbg(dev, "there is no dvs%d gpio\n", i);
+ 			continue;
+ 		}
+ 
+@@ -1889,12 +1889,6 @@ static int rk808_regulator_probe(struct platform_device *pdev)
+ 	if (!pdata)
+ 		return -ENOMEM;
+ 
+-	ret = rk808_regulator_dt_parse_pdata(&pdev->dev, regmap, pdata);
+-	if (ret < 0)
+-		return ret;
+-
+-	platform_set_drvdata(pdev, pdata);
+-
+ 	switch (rk808->variant) {
+ 	case RK805_ID:
+ 		regulators = rk805_reg;
+@@ -1905,6 +1899,11 @@ static int rk808_regulator_probe(struct platform_device *pdev)
+ 		nregulators = ARRAY_SIZE(rk806_reg);
+ 		break;
+ 	case RK808_ID:
++		/* DVS0/1 GPIOs are supported on the RK808 only */
++		ret = rk808_regulator_dt_parse_pdata(&pdev->dev, regmap, pdata);
++		if (ret < 0)
++			return ret;
++
+ 		regulators = rk808_reg;
+ 		nregulators = RK808_NUM_REGULATORS;
+ 		break;
+@@ -1930,6 +1929,8 @@ static int rk808_regulator_probe(struct platform_device *pdev)
+ 		return -EINVAL;
  	}
  
- 	unflatten_and_copy_device_tree();
-diff --git a/arch/xtensa/kernel/setup.c b/arch/xtensa/kernel/setup.c
-index bdec4a773af09..e51f2060e8308 100644
---- a/arch/xtensa/kernel/setup.c
-+++ b/arch/xtensa/kernel/setup.c
-@@ -216,7 +216,7 @@ static int __init xtensa_dt_io_area(unsigned long node, const char *uname,
- 
- void __init early_init_devtree(void *params)
- {
--	early_init_dt_scan(params);
-+	early_init_dt_scan(params, __pa(params));
- 	of_scan_flat_dt(xtensa_dt_io_area, NULL);
- 
- 	if (!command_line[0])
-diff --git a/drivers/of/fdt.c b/drivers/of/fdt.c
-index 4d528c10df3a9..546e76ac407cf 100644
---- a/drivers/of/fdt.c
-+++ b/drivers/of/fdt.c
-@@ -457,6 +457,7 @@ int __initdata dt_root_addr_cells;
- int __initdata dt_root_size_cells;
- 
- void *initial_boot_params __ro_after_init;
-+phys_addr_t initial_boot_params_pa __ro_after_init;
- 
- #ifdef CONFIG_OF_EARLY_FLATTREE
- 
-@@ -1136,17 +1137,18 @@ static void * __init early_init_dt_alloc_memory_arch(u64 size, u64 align)
- 	return ptr;
- }
- 
--bool __init early_init_dt_verify(void *params)
-+bool __init early_init_dt_verify(void *dt_virt, phys_addr_t dt_phys)
- {
--	if (!params)
-+	if (!dt_virt)
- 		return false;
- 
- 	/* check device tree validity */
--	if (fdt_check_header(params))
-+	if (fdt_check_header(dt_virt))
- 		return false;
- 
- 	/* Setup flat device-tree pointer */
--	initial_boot_params = params;
-+	initial_boot_params = dt_virt;
-+	initial_boot_params_pa = dt_phys;
- 	of_fdt_crc32 = crc32_be(~0, initial_boot_params,
- 				fdt_totalsize(initial_boot_params));
- 
-@@ -1173,11 +1175,11 @@ void __init early_init_dt_scan_nodes(void)
- 	early_init_dt_check_for_usable_mem_range();
- }
- 
--bool __init early_init_dt_scan(void *params)
-+bool __init early_init_dt_scan(void *dt_virt, phys_addr_t dt_phys)
- {
- 	bool status;
- 
--	status = early_init_dt_verify(params);
-+	status = early_init_dt_verify(dt_virt, dt_phys);
- 	if (!status)
- 		return false;
- 
-diff --git a/drivers/of/kexec.c b/drivers/of/kexec.c
-index 9ccde2fd77cbf..5b924597a4deb 100644
---- a/drivers/of/kexec.c
-+++ b/drivers/of/kexec.c
-@@ -301,7 +301,7 @@ void *of_kexec_alloc_and_setup_fdt(const struct kimage *image,
- 	}
- 
- 	/* Remove memory reservation for the current device tree. */
--	ret = fdt_find_and_del_mem_rsv(fdt, __pa(initial_boot_params),
-+	ret = fdt_find_and_del_mem_rsv(fdt, initial_boot_params_pa,
- 				       fdt_totalsize(initial_boot_params));
- 	if (ret == -EINVAL) {
- 		pr_err("Error removing memory reservation.\n");
-diff --git a/include/linux/of_fdt.h b/include/linux/of_fdt.h
-index d69ad5bb1eb1e..b8d6c0c208760 100644
---- a/include/linux/of_fdt.h
-+++ b/include/linux/of_fdt.h
-@@ -31,6 +31,7 @@ extern void *of_fdt_unflatten_tree(const unsigned long *blob,
- extern int __initdata dt_root_addr_cells;
- extern int __initdata dt_root_size_cells;
- extern void *initial_boot_params;
-+extern phys_addr_t initial_boot_params_pa;
- 
- extern char __dtb_start[];
- extern char __dtb_end[];
-@@ -70,8 +71,8 @@ extern u64 dt_mem_next_cell(int s, const __be32 **cellp);
- /* Early flat tree scan hooks */
- extern int early_init_dt_scan_root(void);
- 
--extern bool early_init_dt_scan(void *params);
--extern bool early_init_dt_verify(void *params);
-+extern bool early_init_dt_scan(void *dt_virt, phys_addr_t dt_phys);
-+extern bool early_init_dt_verify(void *dt_virt, phys_addr_t dt_phys);
- extern void early_init_dt_scan_nodes(void);
- 
- extern const char *of_flat_dt_get_machine_name(void);
++	platform_set_drvdata(pdev, pdata);
++
+ 	config.dev = &pdev->dev;
+ 	config.driver_data = pdata;
+ 	config.regmap = regmap;
 -- 
 2.43.0
 
