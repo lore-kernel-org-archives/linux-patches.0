@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA19E1FA240;
-	Tue,  3 Dec 2024 15:41:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CDC31F8AFF;
+	Tue,  3 Dec 2024 15:41:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733240461; cv=none; b=ClNEK7fRX7yvC/AwOI5dGMYJ1aYMz1xpOm9wZXoGT6AZDx2sXdJOCm/4WKTQnx0zXHcvsIde/7IfgtUsczcfebqiB+W9Cim4GDOvs1d/yYqVOA1DkPQpLH0ZANOzJcjHyq5hZZabt4+LoL4Uyd83OhFkdDjYyPYlZuL3jR0MHKY=
+	t=1733240465; cv=none; b=u+rSu3OrR4Eh2UEi9dfNRfs2LG3H64Prfd/5bSCc6HrlPQx5g+6WKgNaFaJ+Uzcp6psYYrqr9HW0YGGu7y4gTDvw0AL4ouDGrY0sslP31s/yazD0hBDTOP7z19J3YF+Bfa8ENJxNUoodDjkSiNoClUAowM2GL/KJpN5szNHXShQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733240461; c=relaxed/simple;
-	bh=byJSuX5boShDdOdMGGrCTIlF5r+PbfqwWH5/p5qjpgc=;
+	s=arc-20240116; t=1733240465; c=relaxed/simple;
+	bh=S62T9uQ9zNmz08A1pkqckSPkZUcPiNv1yrtS3ESgZ/Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sO4CexFXHzwUfjwz21p4i7WKKYBnzE7h3SmtUcsJIRRX9K1aU/tJmqE1TNAAI3+UPRtd92pcOXUomQkILZCgXU6LbikkVeXpufTjJsR9vrimAlmA5gkyTNqhTi/xUTMGdfvzbUnqMYkuO6du2Mlx5RXvQivbc6Gwq7Zrl0uisBA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pB7F+l3U; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=F6j/PdTOCXrJCenSgAKoVBTfapb11vUgKBUV34imdCAbXAjrhp2iXKnDur4GIEZBFn6ZoKzPt217cMMchCnxMfS0yGR/GNCnHNnw71C4rP29OhFmoA7k39Emm+1SdfgChdJdWUlrIjwJQdcmrxlkNgtW8IWEPFgwAU63uDwz9TU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qCfEWSIt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pB7F+l3U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29B60C4CED6;
-	Tue,  3 Dec 2024 15:41:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qCfEWSIt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DAC4C4CECF;
+	Tue,  3 Dec 2024 15:41:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733240461;
-	bh=byJSuX5boShDdOdMGGrCTIlF5r+PbfqwWH5/p5qjpgc=;
+	s=korg; t=1733240464;
+	bh=S62T9uQ9zNmz08A1pkqckSPkZUcPiNv1yrtS3ESgZ/Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pB7F+l3UB8VYGnn+OT5z2fGHAsj3O1jMBTwmBAi/p170i/r4iIpzlao+7Hn+WDprU
-	 95iSpko70QWL62qW2Tl42ZArAcqtQC32VyrR5xDRIf0v9po/sKbwkG7Yy/NU9FMBIO
-	 hTvCDLzy24q0cuGseZ09RZyqtI1LDUW49OxQ6yrU=
+	b=qCfEWSItKrCeNnAwGXyBZBovaZNK/ndXsx6D0/6r14SJowLmyrbdD/z97/4A4rjM9
+	 JKMv+CxDkBkacwrCWn5kF/17MEb/jMFjjrTxVG3MWnawDC6KOTp6TKi8HcD8wJUGCY
+	 PB5OG9UAAiOqCIaTXyNTErotM6fDERSwF/cXVK7E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinjie Ruan <ruanjinjie@huawei.com>,
-	Mark Brown <broonie@kernel.org>,
+	Chen Ridong <chenridong@huawei.com>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 100/826] spi: spi-fsl-lpspi: Use IRQF_NO_AUTOEN flag in request_irq()
-Date: Tue,  3 Dec 2024 15:37:07 +0100
-Message-ID: <20241203144747.633988959@linuxfoundation.org>
+Subject: [PATCH 6.12 136/826] cgroup/bpf: only cgroup v2 can be attached by bpf programs
+Date: Tue,  3 Dec 2024 15:37:43 +0100
+Message-ID: <20241203144749.048898959@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -51,54 +51,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinjie Ruan <ruanjinjie@huawei.com>
+From: Chen Ridong <chenridong@huawei.com>
 
-[ Upstream commit 003c7e01916c5e2af95add9b0cbda2e6163873e8 ]
+[ Upstream commit 2190df6c91373fdec6db9fc07e427084f232f57e ]
 
-disable_irq() after request_irq() still has a time gap in which
-interrupts can come. request_irq() with IRQF_NO_AUTOEN flag will
-disable IRQ auto-enable when request IRQ.
+Only cgroup v2 can be attached by bpf programs, so this patch introduces
+that cgroup_bpf_inherit and cgroup_bpf_offline can only be called in
+cgroup v2, and this can fix the memleak mentioned by commit 04f8ef5643bc
+("cgroup: Fix memory leak caused by missing cgroup_bpf_offline"), which
+has been reverted.
 
-Fixes: 9728fb3ce117 ("spi: lpspi: disable lpspi module irq in DMA mode")
-Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-Link: https://patch.msgid.link/20240906022828.891812-1-ruanjinjie@huawei.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 2b0d3d3e4fcf ("percpu_ref: reduce memory footprint of percpu_ref in fast path")
+Fixes: 4bfc0bb2c60e ("bpf: decouple the lifetime of cgroup_bpf from cgroup itself")
+Link: https://lore.kernel.org/cgroups/aka2hk5jsel5zomucpwlxsej6iwnfw4qu5jkrmjhyfhesjlfdw@46zxhg5bdnr7/
+Signed-off-by: Chen Ridong <chenridong@huawei.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-fsl-lpspi.c | 12 ++++--------
- 1 file changed, 4 insertions(+), 8 deletions(-)
+ kernel/cgroup/cgroup.c | 17 +++++++++++------
+ 1 file changed, 11 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/spi/spi-fsl-lpspi.c b/drivers/spi/spi-fsl-lpspi.c
-index 977e8b55c82b7..9573b8fa4fbfc 100644
---- a/drivers/spi/spi-fsl-lpspi.c
-+++ b/drivers/spi/spi-fsl-lpspi.c
-@@ -891,7 +891,7 @@ static int fsl_lpspi_probe(struct platform_device *pdev)
- 		return ret;
- 	}
+diff --git a/kernel/cgroup/cgroup.c b/kernel/cgroup/cgroup.c
+index 30444e0960276..e275eaf2de7f8 100644
+--- a/kernel/cgroup/cgroup.c
++++ b/kernel/cgroup/cgroup.c
+@@ -2140,8 +2140,10 @@ int cgroup_setup_root(struct cgroup_root *root, u16 ss_mask)
+ 	if (ret)
+ 		goto exit_stats;
  
--	ret = devm_request_irq(&pdev->dev, irq, fsl_lpspi_isr, 0,
-+	ret = devm_request_irq(&pdev->dev, irq, fsl_lpspi_isr, IRQF_NO_AUTOEN,
- 			       dev_name(&pdev->dev), fsl_lpspi);
- 	if (ret) {
- 		dev_err(&pdev->dev, "can't get irq%d: %d\n", irq, ret);
-@@ -948,14 +948,10 @@ static int fsl_lpspi_probe(struct platform_device *pdev)
- 	ret = fsl_lpspi_dma_init(&pdev->dev, fsl_lpspi, controller);
- 	if (ret == -EPROBE_DEFER)
- 		goto out_pm_get;
--	if (ret < 0)
-+	if (ret < 0) {
- 		dev_warn(&pdev->dev, "dma setup error %d, use pio\n", ret);
--	else
--		/*
--		 * disable LPSPI module IRQ when enable DMA mode successfully,
--		 * to prevent the unexpected LPSPI module IRQ events.
--		 */
--		disable_irq(irq);
-+		enable_irq(irq);
+-	ret = cgroup_bpf_inherit(root_cgrp);
+-	WARN_ON_ONCE(ret);
++	if (root == &cgrp_dfl_root) {
++		ret = cgroup_bpf_inherit(root_cgrp);
++		WARN_ON_ONCE(ret);
 +	}
  
- 	ret = devm_spi_register_controller(&pdev->dev, controller);
- 	if (ret < 0) {
+ 	trace_cgroup_setup_root(root);
+ 
+@@ -5708,9 +5710,11 @@ static struct cgroup *cgroup_create(struct cgroup *parent, const char *name,
+ 	if (ret)
+ 		goto out_kernfs_remove;
+ 
+-	ret = cgroup_bpf_inherit(cgrp);
+-	if (ret)
+-		goto out_psi_free;
++	if (cgrp->root == &cgrp_dfl_root) {
++		ret = cgroup_bpf_inherit(cgrp);
++		if (ret)
++			goto out_psi_free;
++	}
+ 
+ 	/*
+ 	 * New cgroup inherits effective freeze counter, and
+@@ -6024,7 +6028,8 @@ static int cgroup_destroy_locked(struct cgroup *cgrp)
+ 
+ 	cgroup1_check_for_release(parent);
+ 
+-	cgroup_bpf_offline(cgrp);
++	if (cgrp->root == &cgrp_dfl_root)
++		cgroup_bpf_offline(cgrp);
+ 
+ 	/* put the base reference */
+ 	percpu_ref_kill(&cgrp->self.refcnt);
 -- 
 2.43.0
 
