@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FF5B1F9A94;
-	Tue,  3 Dec 2024 16:18:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD3BC1F890F;
+	Tue,  3 Dec 2024 16:18:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733242688; cv=none; b=JB3/XWIpOs3UHOUtBNAU+cBKumpvPMfnruwCtB1i2PypHR/Eai3f6i9EDVRsMFtjX3y4T2EtNSvzGJ8TJhDqeG5hYFxu++/knYyLPv6a37kTOQiPPazjZ37Z3I+74dG7jW23nxuCBNRr3uNSznWBXytFNSdsNEwAGzJvHfp62tU=
+	t=1733242691; cv=none; b=tYjRV7v9KWzTuCoF3v12ZotPs0ocbXY3kk5NmMMz9FfBvmf5ZUyU0/v5r3EdfAJItBlrTa6dizcR6o6Z8GNnJFpQKvz8gWAEHTvxOijhi75Y8xALCPKjLZBDlFVVMVsecia6RyvxM/zGWZblgO2YmR1QA8BL/E9B4YsDiutgLWo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733242688; c=relaxed/simple;
-	bh=vjSoRr/ljWFK04RfUFGxqGWtgspNiqVh4HiWJj4OVr0=;
+	s=arc-20240116; t=1733242691; c=relaxed/simple;
+	bh=apjnivYS//GBG9KUvmVg6dnCKzn7lCz0lq0gSqWXKeY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TzVLskOCHth5ypZWoqbKJMqW7bhaEnB8uuLJn1aDRefN1xj9uBOYUexjMH2pNoB4Tgl/inj4jAHgQnLdCTWfDBRLVHkye/epPkkG74tm/4mnRrpvumMhlc8sLY7BITYgQQGnE7JtlRyMQlc5NOhIAakVCJjwxTU45u0aNn1diKc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jdGnKhMn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=e6r71v+UeuuQMWzCSN8qGoI3hQLQs7xmWr/qJqA8D1+AnENbBCtfGo1qqElmT/eJ81LqLMkVUOjrk+vPBTjndJpyTkQS0s1lFXVWkugF35yxqJ+zhu+W/AcCurqWDXeSAykoj3/TzOqLrjCOy98ImfkJS9D9CeG2ciJp6ppuSio=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N4x59m7R; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jdGnKhMn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74B64C4CECF;
-	Tue,  3 Dec 2024 16:18:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N4x59m7R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B82BEC4CED6;
+	Tue,  3 Dec 2024 16:18:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733242687;
-	bh=vjSoRr/ljWFK04RfUFGxqGWtgspNiqVh4HiWJj4OVr0=;
+	s=korg; t=1733242691;
+	bh=apjnivYS//GBG9KUvmVg6dnCKzn7lCz0lq0gSqWXKeY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jdGnKhMnIIGnnjYWN2eNUGqwxqzHEa+qzqmNWUxtcjkyC0gtxuFNEKgSGJ+L1r0c9
-	 f8Qi4y8k1UlvtnL/YkRwV/WOAK/Yygo3r5+F2s74SjQx4VmsgYAtYB2G2uxZCbf7C5
-	 245TgqZxUis8j+Vb8I2IQjb+139I/Wr6gBQjpoHw=
+	b=N4x59m7RlPyXoKljZCoOSHkJUV8MAfKkeS1xnKS015jCtlbowpPYV8Kyjoro+f0zX
+	 sgzWQdKp+CVNhlVYFVs9Y2yFwkV6OP7XNsUcEhf/ubtj1njVmJLcLMicCIGqZdBWd5
+	 7emjVPJ/qji18rPmwFZIuAXxgaCa1HRQ/uZ3Glec=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.com>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.12 752/826] smb: client: handle max length for SMB symlinks
-Date: Tue,  3 Dec 2024 15:47:59 +0100
-Message-ID: <20241203144813.097373708@linuxfoundation.org>
+	Jinjie Ruan <ruanjinjie@huawei.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 779/826] rtc: st-lpc: Use IRQF_NO_AUTOEN flag in request_irq()
+Date: Tue,  3 Dec 2024 15:48:26 +0100
+Message-ID: <20241203144814.152282304@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -51,64 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paulo Alcantara <pc@manguebit.com>
+From: Jinjie Ruan <ruanjinjie@huawei.com>
 
-commit 0812340811e45ec4039d409049be53056182a552 upstream.
+[ Upstream commit b6cd7adec0cf03f0aefc55676e71dd721cbc71a8 ]
 
-We can't use PATH_MAX for SMB symlinks because
+If request_irq() fails in st_rtc_probe(), there is no need to enable
+the irq, and if it succeeds, disable_irq() after request_irq() still has
+a time gap in which interrupts can come.
 
-  (1) Windows Server will fail FSCTL_SET_REPARSE_POINT with
-      STATUS_IO_REPARSE_DATA_INVALID when input buffer is larger than
-      16K, as specified in MS-FSA 2.1.5.10.37.
+request_irq() with IRQF_NO_AUTOEN flag will disable IRQ auto-enable when
+request IRQ.
 
-  (2) The client won't be able to parse large SMB responses that
-      includes SMB symlink path within SMB2_CREATE or SMB2_IOCTL
-      responses.
-
-Fix this by defining a maximum length value (4060) for SMB symlinks
-that both client and server can handle.
-
-Cc: David Howells <dhowells@redhat.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Paulo Alcantara (Red Hat) <pc@manguebit.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: b5b2bdfc2893 ("rtc: st: Add new driver for ST's LPC RTC")
+Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+Link: https://lore.kernel.org/r/20240912033727.3013951-1-ruanjinjie@huawei.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/reparse.c |    5 ++++-
- fs/smb/client/reparse.h |    2 ++
- 2 files changed, 6 insertions(+), 1 deletion(-)
+ drivers/rtc/rtc-st-lpc.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
---- a/fs/smb/client/reparse.c
-+++ b/fs/smb/client/reparse.c
-@@ -35,6 +35,9 @@ int smb2_create_reparse_symlink(const un
- 	u16 len, plen;
- 	int rc = 0;
+diff --git a/drivers/rtc/rtc-st-lpc.c b/drivers/rtc/rtc-st-lpc.c
+index d492a2d26600c..c6d4522411b31 100644
+--- a/drivers/rtc/rtc-st-lpc.c
++++ b/drivers/rtc/rtc-st-lpc.c
+@@ -218,15 +218,14 @@ static int st_rtc_probe(struct platform_device *pdev)
+ 		return -EINVAL;
+ 	}
  
-+	if (strlen(symname) > REPARSE_SYM_PATH_MAX)
-+		return -ENAMETOOLONG;
-+
- 	sym = kstrdup(symname, GFP_KERNEL);
- 	if (!sym)
- 		return -ENOMEM;
-@@ -64,7 +67,7 @@ int smb2_create_reparse_symlink(const un
- 	if (rc < 0)
- 		goto out;
+-	ret = devm_request_irq(&pdev->dev, rtc->irq, st_rtc_handler, 0,
+-			       pdev->name, rtc);
++	ret = devm_request_irq(&pdev->dev, rtc->irq, st_rtc_handler,
++			       IRQF_NO_AUTOEN, pdev->name, rtc);
+ 	if (ret) {
+ 		dev_err(&pdev->dev, "Failed to request irq %i\n", rtc->irq);
+ 		return ret;
+ 	}
  
--	plen = 2 * UniStrnlen((wchar_t *)path, PATH_MAX);
-+	plen = 2 * UniStrnlen((wchar_t *)path, REPARSE_SYM_PATH_MAX);
- 	len = sizeof(*buf) + plen * 2;
- 	buf = kzalloc(len, GFP_KERNEL);
- 	if (!buf) {
---- a/fs/smb/client/reparse.h
-+++ b/fs/smb/client/reparse.h
-@@ -12,6 +12,8 @@
- #include "fs_context.h"
- #include "cifsglob.h"
+ 	enable_irq_wake(rtc->irq);
+-	disable_irq(rtc->irq);
  
-+#define REPARSE_SYM_PATH_MAX 4060
-+
- /*
-  * Used only by cifs.ko to ignore reparse points from files when client or
-  * server doesn't support FSCTL_GET_REPARSE_POINT.
+ 	rtc->clk = devm_clk_get_enabled(&pdev->dev, NULL);
+ 	if (IS_ERR(rtc->clk))
+-- 
+2.43.0
+
 
 
