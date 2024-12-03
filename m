@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B22C32D7BF;
-	Tue,  3 Dec 2024 15:18:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97E5E1DA3D;
+	Tue,  3 Dec 2024 15:19:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733239137; cv=none; b=AU3Vg9fWvVjUocVfJLFZ10CFV37raGC0P766Xa5zkwLIp4gmGGxMcsc7t8XfJO5S2WTc0oTgmcQNkpoJEQy/H30Ivkv8wZQbsFM55M2kddxEaQ3D5ORs8r1pno6V21+aXQ5DzOX+6xy15U27nxjdc+6a92V2LHX4nsKDV0SOg0E=
+	t=1733239140; cv=none; b=f1cQCzXGkZVJqR8Z1o92ILuoQtAQK5bMtrO326S8Rvzq8sTUjlHBxWtvpYTDWelCIENUXwjvDmZDx+bI7Sp9o9Sp9LGp9JOzllEfnOjbXHlhIJMzZCug2d54X99DoWWtqcOfWsb+T5SOB9jWaDnGPYtQ3XQq644xTNlxVQNIdw4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733239137; c=relaxed/simple;
-	bh=TPLC7YUa7g19iE9zFvz6LbG8juoE58rpMGIK//dOXZo=;
+	s=arc-20240116; t=1733239140; c=relaxed/simple;
+	bh=JDU+aB5kvJEkMj/BLRvuEC6mFAcU+cD/HUmllz0L3r8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=c2ViERHUndjo6SXEErSWov6TP4DlQD+JtbW30e8isTZ/wrz402noMptHd1A1+VPaYZR8uzkenlilvg6wCAqus6zqLm4wQYPOI3AJgKhuKT39RJ9ygdIyAzDR6jmpbQCwA3dUdTK4UZH+Pg0rXXyH/zdFlBb+KTo85xBUfHK1wy4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZAAn05Ei; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=FY1Gczi3MqpfLIWMpALq7HKThXdGszcdP6jhHM7obiwEM4E0V1AzLwsICs0lhmtz5y/XSh0kXCmlfO2en32GXPu3BoAtte/Thi53+g+OZRc1DZmhYFakTlliS1kgLgzqphmqrmzlaQgpiV+m3bZUj/40CS2sMTjUQn2Q2EX3ayw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oF/ePl9v; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZAAn05Ei"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38500C4CECF;
-	Tue,  3 Dec 2024 15:18:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oF/ePl9v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22636C4CECF;
+	Tue,  3 Dec 2024 15:18:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733239137;
-	bh=TPLC7YUa7g19iE9zFvz6LbG8juoE58rpMGIK//dOXZo=;
+	s=korg; t=1733239140;
+	bh=JDU+aB5kvJEkMj/BLRvuEC6mFAcU+cD/HUmllz0L3r8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZAAn05Ei/KCcGIl05PKpZqTwvqTyDQ0ecrpUeEsmQ4ibPt5SNDYE5ZFq41zgImCW6
-	 w/VjaFT50Ja13iMCXBh2DcDq6T3RuDVtCXLS28EQZML9kUQtLpdVDLClSY+T3YbnXx
-	 hR7WZr5ZIq+orhh4vRm51/hNg0sm8674bllKo0Ko=
+	b=oF/ePl9vycnW4ifWZq5O4SK1e3U9SeNjUrWAyxx1beW9xAKOw8pSDMRpzsOP7EWUh
+	 4ntTIJHaqLZn1apYFUaS4UcgC8BWqEZFpeMCsl4BE/e+LR7gEP4XEU8LVK6aiVdBAT
+	 3H3RR1OQ38nE7guorZZZI7IrQCE7Mx66frayRI9A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	=?UTF-8?q?Th=C3=A9o=20Lebrun?= <theo.lebrun@bootlin.com>,
 	Thomas Richard <thomas.richard@bootlin.com>,
 	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Siddharth Vadapalli <s-vadapalli@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 516/817] PCI: cadence: Set cdns_pcie_host_init() global
-Date: Tue,  3 Dec 2024 15:41:28 +0100
-Message-ID: <20241203144016.037324488@linuxfoundation.org>
+Subject: [PATCH 6.11 517/817] PCI: j721e: Add reset GPIO to struct j721e_pcie
+Date: Tue,  3 Dec 2024 15:41:29 +0100
+Message-ID: <20241203144016.075413643@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -53,73 +53,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Richard <thomas.richard@bootlin.com>
+From: Théo Lebrun <theo.lebrun@bootlin.com>
 
-[ Upstream commit 063c938928dc80c2bfd66f34df48344db22e009b ]
+[ Upstream commit b8600b8791cb2b7c8be894846b1ecddba7291680 ]
 
-During the resume sequence of the host, cdns_pcie_host_init() needs to be
-called, so set it global.
+Add reset GPIO to struct j721e_pcie, so it can be used at suspend and
+resume stages.
 
-The dev function parameter is removed, as it isn't used.
-
-Link: https://lore.kernel.org/linux-pci/20240102-j7200-pcie-s2r-v7-2-a2f9156da6c3@bootlin.com
+Link: https://lore.kernel.org/linux-pci/20240102-j7200-pcie-s2r-v7-4-a2f9156da6c3@bootlin.com
+Signed-off-by: Théo Lebrun <theo.lebrun@bootlin.com>
 Signed-off-by: Thomas Richard <thomas.richard@bootlin.com>
 Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
-Reviewed-by: Siddharth Vadapalli <s-vadapalli@ti.com>
 Stable-dep-of: 22a9120479a4 ("PCI: j721e: Deassert PERST# after a delay of PCIE_T_PVPERL_MS milliseconds")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/cadence/pcie-cadence-host.c | 5 ++---
- drivers/pci/controller/cadence/pcie-cadence.h      | 6 ++++++
- 2 files changed, 8 insertions(+), 3 deletions(-)
+ drivers/pci/controller/cadence/pci-j721e.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/pci/controller/cadence/pcie-cadence-host.c b/drivers/pci/controller/cadence/pcie-cadence-host.c
-index 93d9922730af5..8af95e9da7cec 100644
---- a/drivers/pci/controller/cadence/pcie-cadence-host.c
-+++ b/drivers/pci/controller/cadence/pcie-cadence-host.c
-@@ -485,8 +485,7 @@ static int cdns_pcie_host_init_address_translation(struct cdns_pcie_rc *rc)
- 	return cdns_pcie_host_map_dma_ranges(rc);
- }
+diff --git a/drivers/pci/controller/cadence/pci-j721e.c b/drivers/pci/controller/cadence/pci-j721e.c
+index 85718246016b7..d676a4ed57803 100644
+--- a/drivers/pci/controller/cadence/pci-j721e.c
++++ b/drivers/pci/controller/cadence/pci-j721e.c
+@@ -52,6 +52,7 @@ struct j721e_pcie {
+ 	u32			mode;
+ 	u32			num_lanes;
+ 	u32			max_lanes;
++	struct gpio_desc	*reset_gpio;
+ 	void __iomem		*user_cfg_base;
+ 	void __iomem		*intd_cfg_base;
+ 	u32			linkdown_irq_regfield;
+@@ -510,6 +511,7 @@ static int j721e_pcie_probe(struct platform_device *pdev)
+ 				dev_err(dev, "Failed to get reset GPIO\n");
+ 			goto err_get_sync;
+ 		}
++		pcie->reset_gpio = gpiod;
  
--static int cdns_pcie_host_init(struct device *dev,
--			       struct cdns_pcie_rc *rc)
-+int cdns_pcie_host_init(struct cdns_pcie_rc *rc)
- {
- 	int err;
- 
-@@ -564,7 +563,7 @@ int cdns_pcie_host_setup(struct cdns_pcie_rc *rc)
- 	for (bar = RP_BAR0; bar <= RP_NO_BAR; bar++)
- 		rc->avail_ib_bar[bar] = true;
- 
--	ret = cdns_pcie_host_init(dev, rc);
-+	ret = cdns_pcie_host_init(rc);
- 	if (ret)
- 		return ret;
- 
-diff --git a/drivers/pci/controller/cadence/pcie-cadence.h b/drivers/pci/controller/cadence/pcie-cadence.h
-index 1d37d5f9f811c..bb215aeebf20a 100644
---- a/drivers/pci/controller/cadence/pcie-cadence.h
-+++ b/drivers/pci/controller/cadence/pcie-cadence.h
-@@ -522,6 +522,7 @@ static inline bool cdns_pcie_link_up(struct cdns_pcie *pcie)
- 
- #ifdef CONFIG_PCIE_CADENCE_HOST
- int cdns_pcie_host_link_setup(struct cdns_pcie_rc *rc);
-+int cdns_pcie_host_init(struct cdns_pcie_rc *rc);
- int cdns_pcie_host_setup(struct cdns_pcie_rc *rc);
- void __iomem *cdns_pci_map_bus(struct pci_bus *bus, unsigned int devfn,
- 			       int where);
-@@ -531,6 +532,11 @@ static inline int cdns_pcie_host_link_setup(struct cdns_pcie_rc *rc)
- 	return 0;
- }
- 
-+static inline int cdns_pcie_host_init(struct cdns_pcie_rc *rc)
-+{
-+	return 0;
-+}
-+
- static inline int cdns_pcie_host_setup(struct cdns_pcie_rc *rc)
- {
- 	return 0;
+ 		ret = cdns_pcie_init_phy(dev, cdns_pcie);
+ 		if (ret) {
 -- 
 2.43.0
 
