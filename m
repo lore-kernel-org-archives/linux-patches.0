@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E1081F130E;
-	Tue,  3 Dec 2024 15:04:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 832C81F76C0;
+	Tue,  3 Dec 2024 15:04:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733238241; cv=none; b=OD/OpetPLWUsOb8O6a5J+IEmEjFGdgULggJ4CBbZjDepIAOoNthyuZWA71oLuKPA3lyl0XFmRlTWm1QR9p/1JOMd2KSl7CYvBpIdP/gx9uzErtVy1Le8rXTI+CLVUq334QdSmkrh6+tFg0rDUBBcbNj3uA1Dz/0z/KkJ+ckS3HM=
+	t=1733238244; cv=none; b=WwAU0h0TKpDcLUvYmNQy+YDn1pQZGkQB6eY6QWNkxuoF11Sngvf7+OAlrZAjIFfFbWv9Iao4gqRv969TU3BfNPsU9HA3FoS70jvKOOdHPcHM3dPG9SyxYTK++NY8tZS3lj88v/lA552TEh22DJlKcYp8Tzk5bcQLDeL1B8M8tr0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733238241; c=relaxed/simple;
-	bh=Xz8aWCWxwblNrrGWRoqxpjrQ7gjC+r8xroB0hQXyebo=;
+	s=arc-20240116; t=1733238244; c=relaxed/simple;
+	bh=cMObaYSAlOOjxQohAm/+B8bkC3RfesLDmdVCxPgJUzw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=kgBs56BCvOV3j9Dh+I/miL4J5ih5ndXAbmfx5GyORkj0f7n5V+A4o1O1GWMyNgmCAZp/8IdNLCTkIK6g8/dpa2qkjMB1jqkEuNJPuYTS2nr2p0dx6UCeVFInGVXGgF9+8DwZ0wg3ai/FrNAonfoAUMNWsiAEgJldx02tqbCG/i8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BOCRNAsd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ig19BhIJ+yXVpQuKSeKlcacCHIOlYvwFNKCkmOAXG/z7wgDl5Q0Tbw3CmCZbIKzSaHYo0Ab2KKIgDIJ/g8NmJQqqs3i5G0Beq+aPgeox8DPtkaTYC835Bn5EQqfVA5olHek6FSDLlBl4QnprdgcHviPCYr0hMacfZyh8vxlwHFU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zIFw/oQX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BOCRNAsd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4DC7C4CECF;
-	Tue,  3 Dec 2024 15:04:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zIFw/oQX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9E19C4CECF;
+	Tue,  3 Dec 2024 15:04:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733238241;
-	bh=Xz8aWCWxwblNrrGWRoqxpjrQ7gjC+r8xroB0hQXyebo=;
+	s=korg; t=1733238244;
+	bh=cMObaYSAlOOjxQohAm/+B8bkC3RfesLDmdVCxPgJUzw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BOCRNAsdGsPetOuKJ9PV4/Sq+YErL8J6/eYxO8ogwWko6WT0Mrly/EUr4V0UK6H9B
-	 zUCejRw054a0FwYUEZH3qsOm+7n1QSPmT/9jotVJY9OOvrP4DkxG5q4I9+13Q0nRSw
-	 n0ZVDfHfoMlcNygoQgUd2471NuBTsYPkVggOMaPI=
+	b=zIFw/oQXBLJIe+jf396yV3gOLERv+CyRCXc83E2px1QnoNUQuRijlQOTQ2Guap20u
+	 g9VOv71rioxg/m105kIi0JtVaj6MYi3VuM18kzCg+8fTyXq1pd5R5pN1hewfIMB6Lb
+	 pD1H2y8nrajNrW+fB9Npn2ggfJ45X5nKt4G1VH0Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Reinette Chatre <reinette.chatre@intel.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+	Michael Kelley <mhklinux@outlook.com>,
+	Vitaly Kuznetsov <vkuznets@redhat.com>,
+	Saurabh Sengar <ssengar@linux.microsoft.com>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 203/817] selftests/resctrl: Protect against array overrun during iMC config parsing
-Date: Tue,  3 Dec 2024 15:36:15 +0100
-Message-ID: <20241203144003.669334514@linuxfoundation.org>
+Subject: [PATCH 6.11 212/817] HID: hyperv: streamline driver probe to avoid devres issues
+Date: Tue,  3 Dec 2024 15:36:24 +0100
+Message-ID: <20241203144004.025077832@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -46,68 +47,186 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.11-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Reinette Chatre <reinette.chatre@intel.com>
+From: Vitaly Kuznetsov <vkuznets@redhat.com>
 
-[ Upstream commit 48ed4e799e8fbebae838dca404a8527763d41191 ]
+[ Upstream commit 66ef47faa90d838cda131fe1f7776456cc3b59f2 ]
 
-The MBM and MBA tests need to discover the event and umask with which to
-configure the performance event used to measure read memory bandwidth.
-This is done by parsing the
-/sys/bus/event_source/devices/uncore_imc_<imc instance>/events/cas_count_read
-file for each iMC instance that contains the formatted
-output: "event=<event>,umask=<umask>"
+It was found that unloading 'hid_hyperv' module results in a devres
+complaint:
 
-Parsing of cas_count_read contents is done by initializing an array of
-MAX_TOKENS elements with tokens (deliminated by "=,") from this file.
-Remove the unnecessary append of a delimiter to the string needing to be
-parsed. Per the strtok() man page: "delimiter bytes at the start or end of
-the string are ignored". This has no impact on the token placement within
-the array.
+ ...
+ hv_vmbus: unregistering driver hid_hyperv
+ ------------[ cut here ]------------
+ WARNING: CPU: 2 PID: 3983 at drivers/base/devres.c:691 devres_release_group+0x1f2/0x2c0
+ ...
+ Call Trace:
+  <TASK>
+  ? devres_release_group+0x1f2/0x2c0
+  ? __warn+0xd1/0x1c0
+  ? devres_release_group+0x1f2/0x2c0
+  ? report_bug+0x32a/0x3c0
+  ? handle_bug+0x53/0xa0
+  ? exc_invalid_op+0x18/0x50
+  ? asm_exc_invalid_op+0x1a/0x20
+  ? devres_release_group+0x1f2/0x2c0
+  ? devres_release_group+0x90/0x2c0
+  ? rcu_is_watching+0x15/0xb0
+  ? __pfx_devres_release_group+0x10/0x10
+  hid_device_remove+0xf5/0x220
+  device_release_driver_internal+0x371/0x540
+  ? klist_put+0xf3/0x170
+  bus_remove_device+0x1f1/0x3f0
+  device_del+0x33f/0x8c0
+  ? __pfx_device_del+0x10/0x10
+  ? cleanup_srcu_struct+0x337/0x500
+  hid_destroy_device+0xc8/0x130
+  mousevsc_remove+0xd2/0x1d0 [hid_hyperv]
+  device_release_driver_internal+0x371/0x540
+  driver_detach+0xc5/0x180
+  bus_remove_driver+0x11e/0x2a0
+  ? __mutex_unlock_slowpath+0x160/0x5e0
+  vmbus_driver_unregister+0x62/0x2b0 [hv_vmbus]
+  ...
 
-After initialization, the actual event and umask is determined by
-parsing the tokens directly following the "event" and "umask" tokens
-respectively.
+And the issue seems to be that the corresponding devres group is not
+allocated. Normally, devres_open_group() is called from
+__hid_device_probe() but Hyper-V HID driver overrides 'hid_dev->driver'
+with 'mousevsc_hid_driver' stub and basically re-implements
+__hid_device_probe() by calling hid_parse() and hid_hw_start() but not
+devres_open_group(). hid_device_probe() does not call __hid_device_probe()
+for it. Later, when the driver is removed, hid_device_remove() calls
+devres_release_group() as it doesn't check whether hdev->driver was
+initially overridden or not.
 
-Iterating through the array up to index "i < MAX_TOKENS" but then
-accessing index "i + 1" risks array overrun during the final iteration.
-Avoid array overrun by ensuring that the index used within for
-loop will always be valid.
+The issue seems to be related to the commit 62c68e7cee33 ("HID: ensure
+timely release of driver-allocated resources") but the commit itself seems
+to be correct.
 
-Fixes: 1d3f08687d76 ("selftests/resctrl: Read memory bandwidth from perf IMC counter and from resctrl file system")
-Signed-off-by: Reinette Chatre <reinette.chatre@intel.com>
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Fix the issue by dropping the 'hid_dev->driver' override and using
+hid_register_driver()/hid_unregister_driver() instead. Alternatively, it
+would have been possible to rely on the default handling but
+HID_CONNECT_DEFAULT implies HID_CONNECT_HIDRAW and it doesn't seem to work
+for mousevsc as-is.
+
+Fixes: 62c68e7cee33 ("HID: ensure timely release of driver-allocated resources")
+Suggested-by: Michael Kelley <mhklinux@outlook.com>
+Signed-off-by: Vitaly Kuznetsov <vkuznets@redhat.com>
+Reviewed-by: Michael Kelley <mhklinux@outlook.com>
+Tested-by: Saurabh Sengar <ssengar@linux.microsoft.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/resctrl/resctrl_val.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/hid/hid-hyperv.c | 58 ++++++++++++++++++++++++++++------------
+ 1 file changed, 41 insertions(+), 17 deletions(-)
 
-diff --git a/tools/testing/selftests/resctrl/resctrl_val.c b/tools/testing/selftests/resctrl/resctrl_val.c
-index 8c275f6b4dd77..f118f659e8960 100644
---- a/tools/testing/selftests/resctrl/resctrl_val.c
-+++ b/tools/testing/selftests/resctrl/resctrl_val.c
-@@ -83,13 +83,12 @@ void get_event_and_umask(char *cas_count_cfg, int count, bool op)
- 	char *token[MAX_TOKENS];
- 	int i = 0;
+diff --git a/drivers/hid/hid-hyperv.c b/drivers/hid/hid-hyperv.c
+index f33485d83d24f..0fb210e40a412 100644
+--- a/drivers/hid/hid-hyperv.c
++++ b/drivers/hid/hid-hyperv.c
+@@ -422,6 +422,25 @@ static int mousevsc_hid_raw_request(struct hid_device *hid,
+ 	return 0;
+ }
  
--	strcat(cas_count_cfg, ",");
- 	token[0] = strtok(cas_count_cfg, "=,");
++static int mousevsc_hid_probe(struct hid_device *hid_dev, const struct hid_device_id *id)
++{
++	int ret;
++
++	ret = hid_parse(hid_dev);
++	if (ret) {
++		hid_err(hid_dev, "parse failed\n");
++		return ret;
++	}
++
++	ret = hid_hw_start(hid_dev, HID_CONNECT_HIDINPUT | HID_CONNECT_HIDDEV);
++	if (ret) {
++		hid_err(hid_dev, "hw start failed\n");
++		return ret;
++	}
++
++	return 0;
++}
++
+ static const struct hid_ll_driver mousevsc_ll_driver = {
+ 	.parse = mousevsc_hid_parse,
+ 	.open = mousevsc_hid_open,
+@@ -431,7 +450,16 @@ static const struct hid_ll_driver mousevsc_ll_driver = {
+ 	.raw_request = mousevsc_hid_raw_request,
+ };
  
- 	for (i = 1; i < MAX_TOKENS; i++)
- 		token[i] = strtok(NULL, "=,");
+-static struct hid_driver mousevsc_hid_driver;
++static const struct hid_device_id mousevsc_devices[] = {
++	{ HID_DEVICE(BUS_VIRTUAL, HID_GROUP_ANY, 0x045E, 0x0621) },
++	{ }
++};
++
++static struct hid_driver mousevsc_hid_driver = {
++	.name = "hid-hyperv",
++	.id_table = mousevsc_devices,
++	.probe = mousevsc_hid_probe,
++};
  
--	for (i = 0; i < MAX_TOKENS; i++) {
-+	for (i = 0; i < MAX_TOKENS - 1; i++) {
- 		if (!token[i])
- 			break;
- 		if (strcmp(token[i], "event") == 0) {
+ static int mousevsc_probe(struct hv_device *device,
+ 			const struct hv_vmbus_device_id *dev_id)
+@@ -473,7 +501,6 @@ static int mousevsc_probe(struct hv_device *device,
+ 	}
+ 
+ 	hid_dev->ll_driver = &mousevsc_ll_driver;
+-	hid_dev->driver = &mousevsc_hid_driver;
+ 	hid_dev->bus = BUS_VIRTUAL;
+ 	hid_dev->vendor = input_dev->hid_dev_info.vendor;
+ 	hid_dev->product = input_dev->hid_dev_info.product;
+@@ -488,20 +515,6 @@ static int mousevsc_probe(struct hv_device *device,
+ 	if (ret)
+ 		goto probe_err2;
+ 
+-
+-	ret = hid_parse(hid_dev);
+-	if (ret) {
+-		hid_err(hid_dev, "parse failed\n");
+-		goto probe_err2;
+-	}
+-
+-	ret = hid_hw_start(hid_dev, HID_CONNECT_HIDINPUT | HID_CONNECT_HIDDEV);
+-
+-	if (ret) {
+-		hid_err(hid_dev, "hw start failed\n");
+-		goto probe_err2;
+-	}
+-
+ 	device_init_wakeup(&device->device, true);
+ 
+ 	input_dev->connected = true;
+@@ -579,12 +592,23 @@ static struct  hv_driver mousevsc_drv = {
+ 
+ static int __init mousevsc_init(void)
+ {
+-	return vmbus_driver_register(&mousevsc_drv);
++	int ret;
++
++	ret = hid_register_driver(&mousevsc_hid_driver);
++	if (ret)
++		return ret;
++
++	ret = vmbus_driver_register(&mousevsc_drv);
++	if (ret)
++		hid_unregister_driver(&mousevsc_hid_driver);
++
++	return ret;
+ }
+ 
+ static void __exit mousevsc_exit(void)
+ {
+ 	vmbus_driver_unregister(&mousevsc_drv);
++	hid_unregister_driver(&mousevsc_hid_driver);
+ }
+ 
+ MODULE_LICENSE("GPL");
 -- 
 2.43.0
 
