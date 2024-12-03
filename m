@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E5A51EF0AE;
-	Tue,  3 Dec 2024 15:20:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32D971DA3D;
+	Tue,  3 Dec 2024 15:20:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733239245; cv=none; b=YUxAraW2W6TNuIR2rBdGVgFhrhSBOQZXhFyFFa+d79j1M32GPNoS8ZbfhXqbAn3nCEmuBmLk0wThI8BPyDggU7HThr3+D1jEWWid1fphXmLd9i+gDwxPciB0sMc9QBtq6zGBlukdY/AqUHKwhF6SC4GqwTGet24OIzKguK/ur1k=
+	t=1733239248; cv=none; b=oY6Sun/ck9QIpdFbq7blewX0S9MLlqysGyUgSn4MFypVMuiqiuZD8iQlv0INbbkREf+zkhR6EhHPF5i3hgwaGOJToi+1iJFs+B3LubWfP0xt73Hm7isPT28/dk7sTLUI5e1WV4EJx1PQZAGjTN17Dpa9+OaulnjZMIW0d4Ntcro=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733239245; c=relaxed/simple;
-	bh=sk7oLW0krlDKf6VurJ75nkzqiBqw//+/PQons4MUPzg=;
+	s=arc-20240116; t=1733239248; c=relaxed/simple;
+	bh=wLB7Ouh0E5GRJ5xeshpEQFIr7iDyReE6zyCOlx4OP1M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QmxABHzyNb930OJPMMOrG0TY5Acv0uSLR107JtHT47pSQOHdrSCjQptyIAF31jRFqoYtTN1wi/ibnXeCRB8Gpb7Stbd1Rxvd7i7+ihmBnfmx9m9RRaNnvHabwLU+VQemNDeU6yunOBJwZ04b9hgSApdf6mIvFwP2q0TnlEd05aU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vPYmpb0y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O7kJDpEETXxtdLSElMnLTPb29Eabx3pbI5EiG6bmzgDBYeWEtdFBPbXC5YE32Ss2Lqc0pMG4c2THm7y/Zo1ktmfTJg+I3Ao4gU/HxcpehvX7Cx/LQsCvVm6CcX4w5ABGwqJJWcOvzMIVmnocB6W1a0exQdefmJ7BwXNtdHb64MM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LH/6h8hB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vPYmpb0y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4DD9C4CECF;
-	Tue,  3 Dec 2024 15:20:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LH/6h8hB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE3ADC4CED8;
+	Tue,  3 Dec 2024 15:20:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733239245;
-	bh=sk7oLW0krlDKf6VurJ75nkzqiBqw//+/PQons4MUPzg=;
+	s=korg; t=1733239248;
+	bh=wLB7Ouh0E5GRJ5xeshpEQFIr7iDyReE6zyCOlx4OP1M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vPYmpb0ymbjuI5eJK4i6Qc7IuLRi8QiVIyDWxm6rEDlYx9WRsSByG0G4G0RU8cNTp
-	 2PTzIYxLH+q+Xa7JwcLLnnjxcr2wWz4mJ04TIEGXuA0/pZjky4P+zdjbNw9MWtYlBn
-	 ojC0XUsjZMlPU4Sczjm9BiY8al9Bf+YvjYVsEqXs=
+	b=LH/6h8hBHkv0Gf5DaKK6g/AQRjRtgFOqUKIENbdnO/w15CJ3i/Yl+Vg23d5OKpfBt
+	 9EsPCF1wgOpIQR7dnZaY3L93Qy8TQl3oflTg0DsKZqi8XZny7iuU76GJFPT0urcS7J
+	 5DkiwPkk/lhRrKKr+yuaXcQIp3SRlRk4mDQ6k3Y8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	Gabriele Monaco <gmonaco@redhat.com>,
-	Namhyung Kim <namhyung@kernel.org>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 506/817] perf ftrace latency: Fix unit on histogram first entry when using --use-nsec
-Date: Tue,  3 Dec 2024 15:41:18 +0100
-Message-ID: <20241203144015.624107960@linuxfoundation.org>
+Subject: [PATCH 6.11 541/817] NFSD: Cap the number of bytes copied by nfs4_reset_recoverydir()
+Date: Tue,  3 Dec 2024 15:41:53 +0100
+Message-ID: <20241203144017.021968963@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -52,90 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnaldo Carvalho de Melo <acme@kernel.org>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit 064d569e20e82c065b1dec9d20c29c7087bb1a00 ]
+[ Upstream commit f64ea4af43161bb86ffc77e6aeb5bcf5c3229df0 ]
 
-The use_nsec arg wasn't being taken into account when printing the first
-histogram entry, fix it:
+It's only current caller already length-checks the string, but let's
+be safe.
 
-  root@number:~# perf ftrace latency --use-nsec -T switch_mm_irqs_off -a sleep 2
-  #   DURATION     |      COUNT | GRAPH                                          |
-       0 - 1    us |          0 |                                                |
-       1 - 2    ns |          0 |                                                |
-       2 - 4    ns |          0 |                                                |
-       4 - 8    ns |          0 |                                                |
-       8 - 16   ns |          0 |                                                |
-      16 - 32   ns |          0 |                                                |
-      32 - 64   ns |        125 |                                                |
-      64 - 128  ns |        335 |                                                |
-     128 - 256  ns |       2155 | ####                                           |
-     256 - 512  ns |       9996 | ###################                            |
-     512 - 1024 ns |       4958 | #########                                      |
-       1 - 2    us |       4636 | #########                                      |
-       2 - 4    us |       1053 | ##                                             |
-       4 - 8    us |         15 |                                                |
-       8 - 16   us |          1 |                                                |
-      16 - 32   us |          0 |                                                |
-      32 - 64   us |          0 |                                                |
-      64 - 128  us |          0 |                                                |
-     128 - 256  us |          0 |                                                |
-     256 - 512  us |          0 |                                                |
-     512 - 1024 us |          0 |                                                |
-       1 - ...  ms |          0 |                                                |
-  root@number:~#
-
-After:
-
-  root@number:~# perf ftrace latency --use-nsec -T switch_mm_irqs_off -a sleep 2
-  #   DURATION     |      COUNT | GRAPH                                          |
-       0 - 1    ns |          0 |                                                |
-       1 - 2    ns |          0 |                                                |
-       2 - 4    ns |          0 |                                                |
-       4 - 8    ns |          0 |                                                |
-       8 - 16   ns |          0 |                                                |
-      16 - 32   ns |          0 |                                                |
-      32 - 64   ns |         19 |                                                |
-      64 - 128  ns |         94 |                                                |
-     128 - 256  ns |       2191 | ####                                           |
-     256 - 512  ns |       9719 | ####################                           |
-     512 - 1024 ns |       5330 | ###########                                    |
-       1 - 2    us |       4104 | ########                                       |
-       2 - 4    us |        807 | #                                              |
-       4 - 8    us |          9 |                                                |
-       8 - 16   us |          0 |                                                |
-      16 - 32   us |          0 |                                                |
-      32 - 64   us |          0 |                                                |
-      64 - 128  us |          0 |                                                |
-     128 - 256  us |          0 |                                                |
-     256 - 512  us |          0 |                                                |
-     512 - 1024 us |          0 |                                                |
-       1 - ...  ms |          0 |                                                |
-  root@number:~#
-
-Fixes: 84005bb6148618cc ("perf ftrace latency: Add -n/--use-nsec option")
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Cc: Gabriele Monaco <gmonaco@redhat.com>
-Link: https://lore.kernel.org/r/ZyE3frB-hMXHCnMO@x1
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Fixes: 0964a3d3f1aa ("[PATCH] knfsd: nfsd4 reboot dirname fix")
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-ftrace.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/nfsd/nfs4recover.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/tools/perf/builtin-ftrace.c b/tools/perf/builtin-ftrace.c
-index eb30c8eca4887..8eab3cdb2c6de 100644
---- a/tools/perf/builtin-ftrace.c
-+++ b/tools/perf/builtin-ftrace.c
-@@ -771,7 +771,7 @@ static void display_histogram(int buckets[], bool use_nsec)
- 
- 	bar_len = buckets[0] * bar_total / total;
- 	printf("  %4d - %-4d %s | %10d | %.*s%*s |\n",
--	       0, 1, "us", buckets[0], bar_len, bar, bar_total - bar_len, "");
-+	       0, 1, use_nsec ? "ns" : "us", buckets[0], bar_len, bar, bar_total - bar_len, "");
- 
- 	for (i = 1; i < NUM_BUCKET - 1; i++) {
- 		int start = (1 << (i - 1));
+diff --git a/fs/nfsd/nfs4recover.c b/fs/nfsd/nfs4recover.c
+index 69a3a84e159e6..d92c650888312 100644
+--- a/fs/nfsd/nfs4recover.c
++++ b/fs/nfsd/nfs4recover.c
+@@ -659,7 +659,8 @@ nfs4_reset_recoverydir(char *recdir)
+ 		return status;
+ 	status = -ENOTDIR;
+ 	if (d_is_dir(path.dentry)) {
+-		strcpy(user_recovery_dirname, recdir);
++		strscpy(user_recovery_dirname, recdir,
++			sizeof(user_recovery_dirname));
+ 		status = 0;
+ 	}
+ 	path_put(&path);
 -- 
 2.43.0
 
