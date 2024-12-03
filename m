@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD0B61F7074;
-	Tue,  3 Dec 2024 14:39:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD5AD1F1313;
+	Tue,  3 Dec 2024 14:39:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733236769; cv=none; b=dqinAzzxC1uGOvKKcSe6OOntdXEY9M7f84kaPqhoqCNNOzI4tBNmCWKzaMIdnVB2zk0vVbERTqcvf6fN+jrVnBkvMrSm89/OGYxTTuidlQWbicuGxEY9yV/Vyy/VrZcJcN/NnSsqORmCXfDbAUZGL1cJO/hJU6OiyzGJ5dIQJJM=
+	t=1733236770; cv=none; b=Tyto+GmYDA98LXZOfAPQQSWHSfEnR5g22a+2KNzrlGaCJUC2L7NZrY1ciBH/3swh60xloJE+2VFkWLgXSeL8aPcu45mYp1Zwfnpiwzd3WEDwu0jhtAcH9hLvRnYgmZrP9GfUyfSaISo9MWApWRBq3+x9h086TnQ9eWGCQZKf43I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733236769; c=relaxed/simple;
-	bh=NSuo9D6AoKF1221hExFw51CjWhTO1/upi1N/76BYjnw=;
+	s=arc-20240116; t=1733236770; c=relaxed/simple;
+	bh=wb4iDFw0dLaBm8jpxmOlAvRNAf2wy+VoV2ce5XiC+NU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=hI1NhcfmzP0VkITuMB4WgVDm0RAdROjA/g3TE8wH2IlxlSC1hAt+PpcHVdLx7YviIzZJSxkUJFhbQ8c+mTizIN3nuH1PdankvkEuH3OywlAZ2Ys/ntzRlvdSIGDeziO6xQR0Z/wHpsz0tkf3LdecjDdb3ULsh0A6Sxw53ZyFs3A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yidqXFCu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=U/4dAv/31toreWTaRUeeXKcA+zMRT/6/bF/PzTLfjKhAtYgKepIZ3MkAlZFdPqB57ppc5XX1gtCB10iHNzWh0Kyuran+4r4Ma1Y2vXXFeXAfYGjGnTbfPsG28v1bA+weC+cr655rqRuZPi1+Mz4FP/VjPDnOIL9az1Ce7f8iLlk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UBfaNx89; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yidqXFCu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4E16C4CECF;
-	Tue,  3 Dec 2024 14:39:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UBfaNx89"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43614C4CECF;
+	Tue,  3 Dec 2024 14:39:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733236767;
-	bh=NSuo9D6AoKF1221hExFw51CjWhTO1/upi1N/76BYjnw=;
+	s=korg; t=1733236770;
+	bh=wb4iDFw0dLaBm8jpxmOlAvRNAf2wy+VoV2ce5XiC+NU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yidqXFCuyrF/NT2aqT+tdXb5UpYM39qDdwOk+z4hCPEhE5SRbq2KsmUgPg+ZWz8fx
-	 9DZeCPkYA35vYnbzkODXjvkwErl7O5lbTs3BfqK6kvnOOaXT6fbTdZ3/0nEhkdstru
-	 Z1GkXjWLPouhHclzcx2M1Y1Fq+FJ9rRRet6klAgM=
+	b=UBfaNx89wL6raJRVk2DqQqId3a0DoGdlIy9vPtHThLtGPVISSxKtCerOK2Oldhwo5
+	 xEtuxua+qDASQzUsjUIHGKSnZF4UoLXK7Btk2M9/HpSNaS84/s5dqsavSUtKhzphFC
+	 Grgye6WVA1HQCRIURyQdgRnRLgGDT1ZYJHWA/Fdc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
-	Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
-	=?UTF-8?q?Alexis=20Lothor=C3=A9?= <alexis.lothore@bootlin.com>
-Subject: [PATCH 4.19 112/138] spi: Fix acpi deferred irq probe
-Date: Tue,  3 Dec 2024 15:32:21 +0100
-Message-ID: <20241203141927.850260472@linuxfoundation.org>
+	Zhihao Cheng <chengzhihao1@huawei.com>,
+	Richard Weinberger <richard@nod.at>
+Subject: [PATCH 4.19 113/138] ubi: wl: Put source PEB into correct list if trying locking LEB failed
+Date: Tue,  3 Dec 2024 15:32:22 +0100
+Message-ID: <20241203141927.889968512@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203141923.524658091@linuxfoundation.org>
 References: <20241203141923.524658091@linuxfoundation.org>
@@ -46,67 +44,67 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 4.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>
+From: Zhihao Cheng <chengzhihao1@huawei.com>
 
-commit d24cfee7f63d6b44d45a67c5662bd1cc48e8b3ca upstream.
+commit d610020f030bec819f42de327c2bd5437d2766b3 upstream.
 
-When probing spi device take care of deferred probe of ACPI irq gpio
-similar like for OF/DT case.
+During wear-leveing work, the source PEB will be moved into scrub list
+when source LEB cannot be locked in ubi_eba_copy_leb(), which is wrong
+for non-scrub type source PEB. The problem could bring extra and
+ineffective wear-leveing jobs, which makes more or less negative effects
+for the life time of flash. Specifically, the process is divided 2 steps:
+1. wear_leveling_worker // generate false scrub type PEB
+     ubi_eba_copy_leb // MOVE_RETRY is returned
+       leb_write_trylock // trylock failed
+     scrubbing = 1;
+     e1 is put into ubi->scrub
+2. wear_leveling_worker // schedule false scrub type PEB for wl
+     scrubbing = 1
+     e1 = rb_entry(rb_first(&ubi->scrub))
 
->From practical standpoint this fixes issue with vsc-tp driver on
-Dell XP 9340 laptop, which try to request interrupt with spi->irq
-equal to -EPROBE_DEFER and fail to probe with the following error:
+The problem can be reproduced easily by running fsstress on a small
+UBIFS partition(<64M, simulated by nandsim) for 5~10mins
+(CONFIG_MTD_UBI_FASTMAP=y,CONFIG_MTD_UBI_WL_THRESHOLD=50). Following
+message is shown:
+ ubi0: scrubbed PEB 66 (LEB 0:10), data moved to PEB 165
 
-vsc-tp spi-INTC10D0:00: probe with driver vsc-tp failed with error -22
+Since scrub type source PEB has set variable scrubbing as '1', and
+variable scrubbing is checked before variable keep, so the problem can
+be fixed by setting keep variable as 1 directly if the source LEB cannot
+be locked.
 
-Suggested-by: Hans de Goede <hdegoede@redhat.com>
-Fixes: 33ada67da352 ("ACPI / spi: attach GPIO IRQ from ACPI description to SPI device")
-Cc: stable@vger.kernel.org
-Signed-off-by: Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Tested-by: Alexis Lothoré <alexis.lothore@bootlin.com> # Dell XPS9320, ov01a10
-Link: https://patch.msgid.link/20241122094224.226773-1-stanislaw.gruszka@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: e801e128b220 ("UBI: fix missing scrub when there is a bit-flip")
+CC: stable@vger.kernel.org
+Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
+Signed-off-by: Richard Weinberger <richard@nod.at>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi.c |   13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ drivers/mtd/ubi/wl.c |    9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
---- a/drivers/spi/spi.c
-+++ b/drivers/spi/spi.c
-@@ -358,6 +358,16 @@ static int spi_drv_probe(struct device *
- 			spi->irq = 0;
- 	}
- 
-+	if (has_acpi_companion(dev) && spi->irq < 0) {
-+		struct acpi_device *adev = to_acpi_device_node(dev->fwnode);
-+
-+		spi->irq = acpi_dev_gpio_irq_get(adev, 0);
-+		if (spi->irq == -EPROBE_DEFER)
-+			return -EPROBE_DEFER;
-+		if (spi->irq < 0)
-+			spi->irq = 0;
-+	}
-+
- 	ret = dev_pm_domain_attach(dev, true);
- 	if (ret)
- 		return ret;
-@@ -1843,9 +1853,6 @@ static acpi_status acpi_register_spi_dev
- 	acpi_set_modalias(adev, acpi_device_hid(adev), spi->modalias,
- 			  sizeof(spi->modalias));
- 
--	if (spi->irq < 0)
--		spi->irq = acpi_dev_gpio_irq_get(adev, 0);
--
- 	acpi_device_set_enumerated(adev);
- 
- 	adev->power.flags.ignore_parent = true;
+--- a/drivers/mtd/ubi/wl.c
++++ b/drivers/mtd/ubi/wl.c
+@@ -810,7 +810,14 @@ static int wear_leveling_worker(struct u
+ 			goto out_not_moved;
+ 		}
+ 		if (err == MOVE_RETRY) {
+-			scrubbing = 1;
++			/*
++			 * For source PEB:
++			 * 1. The scrubbing is set for scrub type PEB, it will
++			 *    be put back into ubi->scrub list.
++			 * 2. Non-scrub type PEB will be put back into ubi->used
++			 *    list.
++			 */
++			keep = 1;
+ 			dst_leb_clean = 1;
+ 			goto out_not_moved;
+ 		}
 
 
