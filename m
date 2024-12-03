@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 817E11F76BF;
-	Tue,  3 Dec 2024 16:09:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43A061F7594;
+	Tue,  3 Dec 2024 16:09:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733242166; cv=none; b=ojndw4dqpngN/4oOuhzFqtMAH0WwyzA1AgvVbLP6Vs4EXyXHYumR+SnX9XZ2Z8R5ItNNLrsG2YV+BBAymYJtEQdc6b66B8fP1P1TBL3sNzDoyy04l8aH7eMcTFlxOH51OsWYWoyIb2qDuTljRtOheDmiomttaReUpv9jYeTowmw=
+	t=1733242170; cv=none; b=g/gAyqPQtuxSftlmUaZeoxl4D/XcW0TilQImM0xs64C6h7GEjD7Em0HCtGPPOq8kKN0wCz30ZuCfuQLrs4JDkhKM3tpBTyzFToYQNpcGd++tTiuH3Fj1n1UwMH6ABbYpa3hKK+SYq8LJsOvuWxLsalxGP1znHGgGUwRLvtgVMu4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733242166; c=relaxed/simple;
-	bh=GMh0Kq2Yn2iuj7EINCqfOJjifsxNIrv7E16JA/5K+hQ=;
+	s=arc-20240116; t=1733242170; c=relaxed/simple;
+	bh=umbg/WYitkCWXtcv3QZnQiPAnM+PiqIva8r5JhrENyk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=khZ5gSdas8vWTBXKdpBOUYQvpFD2CUiNQ4Cbkn20wFjC+GrtuU8i7ky0oXPLO9ZtA/+r8gMrWmWNqR07mHMjmRUZHuBvkrr2DPcg5Up9fzmKIHn51yKsk/+nFSKj91G/cORPS9K9EnCJTtXjJY1OLWC63yCOQrEtfaeFppBSOhM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DcmZL43y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WWQ5uvhvIrG4YQX7Ya5P+gutAJbdGTNsYc4a8xIt1NNhaBuhUoHilM/JY7He/WvPJzRWRmInsiLsL08fdL0X1eENc80iQUQZYOjCO3iM6z6zUwkdjtjSRaIohK0k9HiBOrJH8pE9TLQe1r/hjl3FX8tlc75iwdORVde9TvybD14=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TxJ68xa5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DcmZL43y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4D44C4CECF;
-	Tue,  3 Dec 2024 16:09:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TxJ68xa5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FE33C4CECF;
+	Tue,  3 Dec 2024 16:09:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733242166;
-	bh=GMh0Kq2Yn2iuj7EINCqfOJjifsxNIrv7E16JA/5K+hQ=;
+	s=korg; t=1733242169;
+	bh=umbg/WYitkCWXtcv3QZnQiPAnM+PiqIva8r5JhrENyk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DcmZL43ymDpDkKMtYsx60x3bLpb9puVHUUcMJ34+F93iMqikELrHI+TAV87Qw/L3/
-	 Tjb7/V+ZADqzy2+mKyNPPLwPR8/1JT+64tHwlOWrbehjqRJlfyrrin0O/GDOuY3v1t
-	 tJ3YFNNuulv2jDsW/4vGPPlokEKe6/IrgucVPqao=
+	b=TxJ68xa5BFys13Jb7cxtG/QIz/9gLAtklH6Q5S6vNdgprGu8K5gxfyccP4oskyJaZ
+	 xjkHOTHq8znuIg8qQOfbS3bC7ZeCgWkkNJIX7u/C/xPMFD+opxVea1iCBaX/IJ/s3r
+	 V+mA3MsjJXgMt99xFj7fbGfwz5OIsQUf+hv6DNQc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vitalii Mordan <mordan@ispras.ru>,
-	Alan Stern <stern@rowland.harvard.edu>
-Subject: [PATCH 6.12 627/826] usb: ehci-spear: fix call balance of sehci clk handling routines
-Date: Tue,  3 Dec 2024 15:45:54 +0100
-Message-ID: <20241203144808.211485495@linuxfoundation.org>
+	Abel Vesa <abel.vesa@linaro.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Subject: [PATCH 6.12 628/826] usb: typec: ucsi: glink: fix off-by-one in connector_status
+Date: Tue,  3 Dec 2024 15:45:55 +0100
+Message-ID: <20241203144808.250181705@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -50,50 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vitalii Mordan <mordan@ispras.ru>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-commit 40c974826734836402abfd44efbf04f63a2cc1c1 upstream.
+commit 4a22918810980897393fa1776ea3877e4baf8cca upstream.
 
-If the clock sehci->clk was not enabled in spear_ehci_hcd_drv_probe,
-it should not be disabled in any path.
+UCSI connector's indices start from 1 up to 3, PMIC_GLINK_MAX_PORTS.
+Correct the condition in the pmic_glink_ucsi_connector_status()
+callback, fixing Type-C orientation reporting for the third USB-C
+connector.
 
-Conversely, if it was enabled in spear_ehci_hcd_drv_probe, it must be disabled
-in all error paths to ensure proper cleanup.
-
-Found by Linux Verification Center (linuxtesting.org) with Klever.
-
-Fixes: 7675d6ba436f ("USB: EHCI: make ehci-spear a separate driver")
+Fixes: 76716fd5bf09 ("usb: typec: ucsi: glink: move GPIO reading into connector_status callback")
 Cc: stable@vger.kernel.org
-Signed-off-by: Vitalii Mordan <mordan@ispras.ru>
-Acked-by: Alan Stern <stern@rowland.harvard.edu>
-Link: https://lore.kernel.org/r/20241114230310.432213-1-mordan@ispras.ru
+Reported-by: Abel Vesa <abel.vesa@linaro.org>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
+Tested-by: Johan Hovold <johan+linaro@kernel.org>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/r/20241109-ucsi-glue-fixes-v2-1-8b21ff4f9fbe@linaro.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/ehci-spear.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/usb/typec/ucsi/ucsi_glink.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/host/ehci-spear.c
-+++ b/drivers/usb/host/ehci-spear.c
-@@ -105,7 +105,9 @@ static int spear_ehci_hcd_drv_probe(stru
- 	/* registers start at offset 0x0 */
- 	hcd_to_ehci(hcd)->caps = hcd->regs;
+--- a/drivers/usb/typec/ucsi/ucsi_glink.c
++++ b/drivers/usb/typec/ucsi/ucsi_glink.c
+@@ -185,7 +185,7 @@ static void pmic_glink_ucsi_connector_st
+ 	struct pmic_glink_ucsi *ucsi = ucsi_get_drvdata(con->ucsi);
+ 	int orientation;
  
--	clk_prepare_enable(sehci->clk);
-+	retval = clk_prepare_enable(sehci->clk);
-+	if (retval)
-+		goto err_put_hcd;
- 	retval = usb_add_hcd(hcd, irq, IRQF_SHARED);
- 	if (retval)
- 		goto err_stop_ehci;
-@@ -130,8 +132,7 @@ static void spear_ehci_hcd_drv_remove(st
- 
- 	usb_remove_hcd(hcd);
- 
--	if (sehci->clk)
--		clk_disable_unprepare(sehci->clk);
-+	clk_disable_unprepare(sehci->clk);
- 	usb_put_hcd(hcd);
- }
+-	if (con->num >= PMIC_GLINK_MAX_PORTS ||
++	if (con->num > PMIC_GLINK_MAX_PORTS ||
+ 	    !ucsi->port_orientation[con->num - 1])
+ 		return;
  
 
 
