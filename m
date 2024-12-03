@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ACD01AB6C9;
-	Tue,  3 Dec 2024 15:54:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D2381AB6C9;
+	Tue,  3 Dec 2024 15:54:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733241276; cv=none; b=BSYrHBKVF0bIWyWKunUT3VvJxWLFQO0//cHAf/z7AmJSvnJ0WZru0SybPauLcYPWsSe4h+/k5VzyxkLV16s4Ja1YN72QoQAC1tvS/BTL+1ZM1wLUMTxgE2eaI7GlkTKQzEHAWUC+GgLN+1hI+XDmjdSTVkitgIKhpaPFinDunto=
+	t=1733241279; cv=none; b=mj+8y0OBsiDO+RdoM7q6cQWCVGi2GF8T0DjOVnOXh9B2g9WvO5AwK+ljH3DnGNPP08fWpicSugDH9R1gczBJK2IaNgnu9QH1Fs2vejv6JbDWXN/S69W2eygQDbcJjxDm5XJuCVfApkVwFNkyEx0m9b+4cP3rx+fg6vXiPrjdsis=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733241276; c=relaxed/simple;
-	bh=8HrfI6CATWI3b/4FQ8uv26zJj8gTyNvdywwJ5AUwk3Y=;
+	s=arc-20240116; t=1733241279; c=relaxed/simple;
+	bh=vNm7beoOGDLzFSlBYyx7PYcQ5e8kldJrWL3Jt40SbWo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A+bgRfYdY1r8Ll0whUp4FuvHW0ZC6UwOwBUnaJnzOW2XXPfSkEmGOMuL4TlTHdtqmwmZuE298v7fBqh2MuRtkAcjdLjLO+VgHCl/cp2SfTfww/LWJEhM0R5bCw3HpH+GCmuSE9uGgUHE6kiSgbv3Qm2mlC+t7BapVg896ZqMXqA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xnXOp7H2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lRvLdWycmxxonCP5Igp3THwijSuv20SPF7CqjZsP+qITpS61EsT2wsi/aYCVFEGS6lvO9ue+pW4kwTn2LfPOymi4q7NwUxCXLtzsQTuk7cnkSS3huGa2CQzDH1FBuIInnP6Z4aSAqYS0yp+P7P4o/PMfKmpkQlAJ8TMB78oMt5k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eDMEqBqk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xnXOp7H2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72090C4CEDE;
-	Tue,  3 Dec 2024 15:54:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eDMEqBqk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA154C4CECF;
+	Tue,  3 Dec 2024 15:54:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733241275;
-	bh=8HrfI6CATWI3b/4FQ8uv26zJj8gTyNvdywwJ5AUwk3Y=;
+	s=korg; t=1733241279;
+	bh=vNm7beoOGDLzFSlBYyx7PYcQ5e8kldJrWL3Jt40SbWo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xnXOp7H2B60VBW4NcTcqrzslg0kTovt7hiFDkb48ovCLH6Dkx/Ohw/0XRxdUidTJP
-	 44gi2LE2Cdwhwsc67orT4w/1hCkqriEdSpC2AzrENFYxuZzoNQ9LWsHR5GjALLf5o5
-	 5R5N6VnDhn/2gtKvpiQ+d3WZ/GIEuSEyeJXaWlOM=
+	b=eDMEqBqk/QOiIdWfRUNRZ0G0H4WPZgYBjwnFUK3anqSunQYw2vqYJRbIxIb9sIYfz
+	 7GHNN1vNTPdeW2fSO3iP/R5nY5W160R/rVTTTdBMgFKqqrJw4RLeCBogWY1UA8Y1ab
+	 1VJO6Fd1B+keYb4P2/lLbSCfRuEbYlKoRtibTVvI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Ning <zhangn1985@outlook.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Lee Jones <lee@kernel.org>,
+	Iulia Tanasescu <iulia.tanasescu@nxp.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 372/826] mfd: intel_soc_pmic_bxtwc: Use IRQ domain for USB Type-C device
-Date: Tue,  3 Dec 2024 15:41:39 +0100
-Message-ID: <20241203144758.275907741@linuxfoundation.org>
+Subject: [PATCH 6.12 343/826] Bluetooth: ISO: Do not emit LE BIG Create Sync if previous is pending
+Date: Tue,  3 Dec 2024 15:41:10 +0100
+Message-ID: <20241203144757.140190559@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -52,140 +51,282 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Iulia Tanasescu <iulia.tanasescu@nxp.com>
 
-[ Upstream commit 686fb77712a4bc94b76a0c5ae74c60118b7a0d79 ]
+[ Upstream commit 42ecf1947135110ea08abeaca39741636f9a2285 ]
 
-While design wise the idea of converting the driver to use
-the hierarchy of the IRQ chips is correct, the implementation
-has (inherited) flaws. This was unveiled when platform_get_irq()
-had started WARN() on IRQ 0 that is supposed to be a Linux
-IRQ number (also known as vIRQ).
+The Bluetooth Core spec does not allow a LE BIG Create sync command to be
+sent to Controller if another one is pending (Vol 4, Part E, page 2586).
 
-Rework the driver to respect IRQ domain when creating each MFD
-device separately, as the domain is not the same for all of them.
+In order to avoid this issue, the HCI_CONN_CREATE_BIG_SYNC was added
+to mark that the LE BIG Create Sync command has been sent for a hcon.
+Once the BIG Sync Established event is received, the hcon flag is
+erased and the next pending hcon is handled.
 
-Fixes: 9c6235c86332 ("mfd: intel_soc_pmic_bxtwc: Add bxt_wcove_usbc device")
-Fixes: d2061f9cc32d ("usb: typec: add driver for Intel Whiskey Cove PMIC USB Type-C PHY")
-Fixes: 57129044f504 ("mfd: intel_soc_pmic_bxtwc: Use chained IRQs for second level IRQ chips")
-Reported-by: Zhang Ning <zhangn1985@outlook.com>
-Closes: https://lore.kernel.org/r/TY2PR01MB3322FEDCDC048B7D3794F922CDBA2@TY2PR01MB3322.jpnprd01.prod.outlook.com
-Tested-by: Zhang Ning <zhangn1985@outlook.com>
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Link: https://lore.kernel.org/r/20241005193029.1929139-2-andriy.shevchenko@linux.intel.com
-Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Iulia Tanasescu <iulia.tanasescu@nxp.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Stable-dep-of: 07a9342b94a9 ("Bluetooth: ISO: Send BIG Create Sync via hci_sync")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/intel_soc_pmic_bxtwc.c | 57 +++++++++++++++++++++---------
- drivers/usb/typec/tcpm/wcove.c     |  4 ---
- 2 files changed, 40 insertions(+), 21 deletions(-)
+ include/net/bluetooth/hci.h      |  1 +
+ include/net/bluetooth/hci_core.h | 29 +++++++++++
+ net/bluetooth/hci_conn.c         | 87 +++++++++++++++++++++++++++-----
+ net/bluetooth/hci_event.c        | 20 +++++++-
+ net/bluetooth/iso.c              |  4 +-
+ 5 files changed, 125 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/mfd/intel_soc_pmic_bxtwc.c b/drivers/mfd/intel_soc_pmic_bxtwc.c
-index ccd76800d8e49..d72995a9e8207 100644
---- a/drivers/mfd/intel_soc_pmic_bxtwc.c
-+++ b/drivers/mfd/intel_soc_pmic_bxtwc.c
-@@ -240,16 +240,6 @@ static struct mfd_cell bxt_wc_dev[] = {
- 		.num_resources = ARRAY_SIZE(thermal_resources),
- 		.resources = thermal_resources,
- 	},
--	{
--		.name = "bxt_wcove_usbc",
--		.num_resources = ARRAY_SIZE(usbc_resources),
--		.resources = usbc_resources,
--	},
--	{
--		.name = "bxt_wcove_ext_charger",
--		.num_resources = ARRAY_SIZE(charger_resources),
--		.resources = charger_resources,
--	},
- 	{
- 		.name = "bxt_wcove_bcu",
- 		.num_resources = ARRAY_SIZE(bcu_resources),
-@@ -271,6 +261,19 @@ static struct mfd_cell bxt_wc_dev[] = {
- 	},
- };
+diff --git a/include/net/bluetooth/hci.h b/include/net/bluetooth/hci.h
+index 4734e9e99972f..a1864cff616ae 100644
+--- a/include/net/bluetooth/hci.h
++++ b/include/net/bluetooth/hci.h
+@@ -29,6 +29,7 @@
+ #define HCI_MAX_ACL_SIZE	1024
+ #define HCI_MAX_SCO_SIZE	255
+ #define HCI_MAX_ISO_SIZE	251
++#define HCI_MAX_ISO_BIS		31
+ #define HCI_MAX_EVENT_SIZE	260
+ #define HCI_MAX_FRAME_SIZE	(HCI_MAX_ACL_SIZE + 4)
  
-+static struct mfd_cell bxt_wc_chgr_dev[] = {
-+	{
-+		.name = "bxt_wcove_usbc",
-+		.num_resources = ARRAY_SIZE(usbc_resources),
-+		.resources = usbc_resources,
-+	},
-+	{
-+		.name = "bxt_wcove_ext_charger",
-+		.num_resources = ARRAY_SIZE(charger_resources),
-+		.resources = charger_resources,
-+	},
-+};
+diff --git a/include/net/bluetooth/hci_core.h b/include/net/bluetooth/hci_core.h
+index 494fcd68f8311..4c185a08c3a3a 100644
+--- a/include/net/bluetooth/hci_core.h
++++ b/include/net/bluetooth/hci_core.h
+@@ -711,6 +711,9 @@ struct hci_conn {
+ 	__s8		tx_power;
+ 	__s8		max_tx_power;
+ 	struct bt_iso_qos iso_qos;
++	__u8		num_bis;
++	__u8		bis[HCI_MAX_ISO_BIS];
 +
- static int regmap_ipc_byte_reg_read(void *context, unsigned int reg,
- 				    unsigned int *val)
- {
-@@ -425,6 +428,26 @@ static int bxtwc_add_chained_irq_chip(struct intel_soc_pmic *pmic,
- 					0, chip, data);
+ 	unsigned long	flags;
+ 
+ 	enum conn_reasons conn_reason;
+@@ -946,6 +949,7 @@ enum {
+ 	HCI_CONN_PER_ADV,
+ 	HCI_CONN_BIG_CREATED,
+ 	HCI_CONN_CREATE_CIS,
++	HCI_CONN_CREATE_BIG_SYNC,
+ 	HCI_CONN_BIG_SYNC,
+ 	HCI_CONN_BIG_SYNC_FAILED,
+ 	HCI_CONN_CREATE_PA_SYNC,
+@@ -1295,6 +1299,30 @@ static inline struct hci_conn *hci_conn_hash_lookup_big(struct hci_dev *hdev,
+ 	return NULL;
  }
  
-+static int bxtwc_add_chained_devices(struct intel_soc_pmic *pmic,
-+				     const struct mfd_cell *cells, int n_devs,
-+				     struct regmap_irq_chip_data *pdata,
-+				     int pirq, int irq_flags,
-+				     const struct regmap_irq_chip *chip,
-+				     struct regmap_irq_chip_data **data)
++static inline struct hci_conn *
++hci_conn_hash_lookup_big_sync_pend(struct hci_dev *hdev,
++				   __u8 handle, __u8 num_bis)
 +{
-+	struct device *dev = pmic->dev;
-+	struct irq_domain *domain;
-+	int ret;
++	struct hci_conn_hash *h = &hdev->conn_hash;
++	struct hci_conn  *c;
 +
-+	ret = bxtwc_add_chained_irq_chip(pmic, pdata, pirq, irq_flags, chip, data);
-+	if (ret)
-+		return dev_err_probe(dev, ret, "Failed to add %s IRQ chip\n", chip->name);
++	rcu_read_lock();
 +
-+	domain = regmap_irq_get_domain(*data);
++	list_for_each_entry_rcu(c, &h->list, list) {
++		if (c->type != ISO_LINK)
++			continue;
 +
-+	return devm_mfd_add_devices(dev, PLATFORM_DEVID_NONE, cells, n_devs, NULL, 0, domain);
++		if (handle == c->iso_qos.bcast.big && num_bis == c->num_bis) {
++			rcu_read_unlock();
++			return c;
++		}
++	}
++
++	rcu_read_unlock();
++
++	return NULL;
 +}
 +
- static int bxtwc_probe(struct platform_device *pdev)
+ static inline struct hci_conn *
+ hci_conn_hash_lookup_big_state(struct hci_dev *hdev, __u8 handle,  __u16 state)
  {
- 	struct device *dev = &pdev->dev;
-@@ -500,14 +523,14 @@ static int bxtwc_probe(struct platform_device *pdev)
- 	if (ret)
- 		return dev_err_probe(dev, ret, "Failed to add ADC IRQ chip\n");
+@@ -1479,6 +1507,7 @@ void hci_sco_setup(struct hci_conn *conn, __u8 status);
+ bool hci_iso_setup_path(struct hci_conn *conn);
+ int hci_le_create_cis_pending(struct hci_dev *hdev);
+ int hci_pa_create_sync_pending(struct hci_dev *hdev);
++int hci_le_big_create_sync_pending(struct hci_dev *hdev);
+ int hci_conn_check_create_cis(struct hci_conn *conn);
  
--	/* Add chained IRQ handler for CHGR IRQs */
--	ret = bxtwc_add_chained_irq_chip(pmic, pmic->irq_chip_data,
--					 BXTWC_CHGR_LVL1_IRQ,
--					 IRQF_ONESHOT,
--					 &bxtwc_regmap_irq_chip_chgr,
--					 &pmic->irq_chip_data_chgr);
-+	ret = bxtwc_add_chained_devices(pmic, bxt_wc_chgr_dev, ARRAY_SIZE(bxt_wc_chgr_dev),
-+					pmic->irq_chip_data,
-+					BXTWC_CHGR_LVL1_IRQ,
-+					IRQF_ONESHOT,
-+					&bxtwc_regmap_irq_chip_chgr,
-+					&pmic->irq_chip_data_chgr);
- 	if (ret)
--		return dev_err_probe(dev, ret, "Failed to add CHGR IRQ chip\n");
-+		return ret;
+ struct hci_conn *hci_conn_add(struct hci_dev *hdev, int type, bdaddr_t *dst,
+diff --git a/net/bluetooth/hci_conn.c b/net/bluetooth/hci_conn.c
+index 6878fc5206c0b..1ff62bf9d41b4 100644
+--- a/net/bluetooth/hci_conn.c
++++ b/net/bluetooth/hci_conn.c
+@@ -2180,34 +2180,93 @@ struct hci_conn *hci_pa_create_sync(struct hci_dev *hdev, bdaddr_t *dst,
+ 	return conn;
+ }
  
- 	/* Add chained IRQ handler for CRIT IRQs */
- 	ret = bxtwc_add_chained_irq_chip(pmic, pmic->irq_chip_data,
-diff --git a/drivers/usb/typec/tcpm/wcove.c b/drivers/usb/typec/tcpm/wcove.c
-index cf719307b3f6b..60b2766a69bf8 100644
---- a/drivers/usb/typec/tcpm/wcove.c
-+++ b/drivers/usb/typec/tcpm/wcove.c
-@@ -621,10 +621,6 @@ static int wcove_typec_probe(struct platform_device *pdev)
- 	if (irq < 0)
- 		return irq;
++static bool hci_conn_check_create_big_sync(struct hci_conn *conn)
++{
++	if (!conn->num_bis)
++		return false;
++
++	return true;
++}
++
++int hci_le_big_create_sync_pending(struct hci_dev *hdev)
++{
++	DEFINE_FLEX(struct hci_cp_le_big_create_sync, pdu, bis, num_bis, 0x11);
++	struct hci_conn *conn;
++
++	rcu_read_lock();
++
++	pdu->num_bis = 0;
++
++	/* The spec allows only one pending LE BIG Create Sync command at
++	 * a time. If the command is pending now, don't do anything. We
++	 * check for pending connections after each BIG Sync Established
++	 * event.
++	 *
++	 * BLUETOOTH CORE SPECIFICATION Version 5.3 | Vol 4, Part E
++	 * page 2586:
++	 *
++	 * If the Host sends this command when the Controller is in the
++	 * process of synchronizing to any BIG, i.e. the HCI_LE_BIG_Sync_
++	 * Established event has not been generated, the Controller shall
++	 * return the error code Command Disallowed (0x0C).
++	 */
++	list_for_each_entry_rcu(conn, &hdev->conn_hash.list, list) {
++		if (test_bit(HCI_CONN_CREATE_BIG_SYNC, &conn->flags))
++			goto unlock;
++	}
++
++	list_for_each_entry_rcu(conn, &hdev->conn_hash.list, list) {
++		if (hci_conn_check_create_big_sync(conn)) {
++			struct bt_iso_qos *qos = &conn->iso_qos;
++
++			set_bit(HCI_CONN_CREATE_BIG_SYNC, &conn->flags);
++
++			pdu->handle = qos->bcast.big;
++			pdu->sync_handle = cpu_to_le16(conn->sync_handle);
++			pdu->encryption = qos->bcast.encryption;
++			memcpy(pdu->bcode, qos->bcast.bcode,
++			       sizeof(pdu->bcode));
++			pdu->mse = qos->bcast.mse;
++			pdu->timeout = cpu_to_le16(qos->bcast.timeout);
++			pdu->num_bis = conn->num_bis;
++			memcpy(pdu->bis, conn->bis, conn->num_bis);
++
++			break;
++		}
++	}
++
++unlock:
++	rcu_read_unlock();
++
++	if (!pdu->num_bis)
++		return 0;
++
++	return hci_send_cmd(hdev, HCI_OP_LE_BIG_CREATE_SYNC,
++			    struct_size(pdu, bis, pdu->num_bis), pdu);
++}
++
+ int hci_le_big_create_sync(struct hci_dev *hdev, struct hci_conn *hcon,
+ 			   struct bt_iso_qos *qos,
+ 			   __u16 sync_handle, __u8 num_bis, __u8 bis[])
+ {
+-	DEFINE_FLEX(struct hci_cp_le_big_create_sync, pdu, bis, num_bis, 0x11);
+ 	int err;
  
--	irq = regmap_irq_get_virq(pmic->irq_chip_data_chgr, irq);
--	if (irq < 0)
--		return irq;
--
- 	ret = guid_parse(WCOVE_DSM_UUID, &wcove->guid);
- 	if (ret)
- 		return ret;
+-	if (num_bis < 0x01 || num_bis > pdu->num_bis)
++	if (num_bis < 0x01 || num_bis > ISO_MAX_NUM_BIS)
+ 		return -EINVAL;
+ 
+ 	err = qos_set_big(hdev, qos);
+ 	if (err)
+ 		return err;
+ 
+-	if (hcon)
+-		hcon->iso_qos.bcast.big = qos->bcast.big;
++	if (hcon) {
++		/* Update hcon QoS */
++		hcon->iso_qos = *qos;
+ 
+-	pdu->handle = qos->bcast.big;
+-	pdu->sync_handle = cpu_to_le16(sync_handle);
+-	pdu->encryption = qos->bcast.encryption;
+-	memcpy(pdu->bcode, qos->bcast.bcode, sizeof(pdu->bcode));
+-	pdu->mse = qos->bcast.mse;
+-	pdu->timeout = cpu_to_le16(qos->bcast.timeout);
+-	pdu->num_bis = num_bis;
+-	memcpy(pdu->bis, bis, num_bis);
++		hcon->num_bis = num_bis;
++		memcpy(hcon->bis, bis, num_bis);
++	}
+ 
+-	return hci_send_cmd(hdev, HCI_OP_LE_BIG_CREATE_SYNC,
+-			    struct_size(pdu, bis, num_bis), pdu);
++	return hci_le_big_create_sync_pending(hdev);
+ }
+ 
+ static void create_big_complete(struct hci_dev *hdev, void *data, int err)
+diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
+index 81001cd53e01c..2e4bd3e961ce0 100644
+--- a/net/bluetooth/hci_event.c
++++ b/net/bluetooth/hci_event.c
+@@ -6913,7 +6913,7 @@ static void hci_le_big_sync_established_evt(struct hci_dev *hdev, void *data,
+ 					    struct sk_buff *skb)
+ {
+ 	struct hci_evt_le_big_sync_estabilished *ev = data;
+-	struct hci_conn *bis;
++	struct hci_conn *bis, *conn;
+ 	int i;
+ 
+ 	bt_dev_dbg(hdev, "status 0x%2.2x", ev->status);
+@@ -6924,6 +6924,20 @@ static void hci_le_big_sync_established_evt(struct hci_dev *hdev, void *data,
+ 
+ 	hci_dev_lock(hdev);
+ 
++	conn = hci_conn_hash_lookup_big_sync_pend(hdev, ev->handle,
++						  ev->num_bis);
++	if (!conn) {
++		bt_dev_err(hdev,
++			   "Unable to find connection for big 0x%2.2x",
++			   ev->handle);
++		goto unlock;
++	}
++
++	clear_bit(HCI_CONN_CREATE_BIG_SYNC, &conn->flags);
++
++	conn->num_bis = 0;
++	memset(conn->bis, 0, sizeof(conn->num_bis));
++
+ 	for (i = 0; i < ev->num_bis; i++) {
+ 		u16 handle = le16_to_cpu(ev->bis[i]);
+ 		__le32 interval;
+@@ -6973,6 +6987,10 @@ static void hci_le_big_sync_established_evt(struct hci_dev *hdev, void *data,
+ 			hci_connect_cfm(bis, ev->status);
+ 		}
+ 
++unlock:
++	/* Handle any other pending BIG sync command */
++	hci_le_big_create_sync_pending(hdev);
++
+ 	hci_dev_unlock(hdev);
+ }
+ 
+diff --git a/net/bluetooth/iso.c b/net/bluetooth/iso.c
+index 109bf58c982ae..463c61712b249 100644
+--- a/net/bluetooth/iso.c
++++ b/net/bluetooth/iso.c
+@@ -1996,6 +1996,7 @@ int iso_connect_ind(struct hci_dev *hdev, bdaddr_t *bdaddr, __u8 *flags)
+ 
+ 		if (sk) {
+ 			int err;
++			struct hci_conn	*hcon = iso_pi(sk)->conn->hcon;
+ 
+ 			iso_pi(sk)->qos.bcast.encryption = ev2->encryption;
+ 
+@@ -2004,7 +2005,8 @@ int iso_connect_ind(struct hci_dev *hdev, bdaddr_t *bdaddr, __u8 *flags)
+ 
+ 			if (!test_bit(BT_SK_DEFER_SETUP, &bt_sk(sk)->flags) &&
+ 			    !test_and_set_bit(BT_SK_BIG_SYNC, &iso_pi(sk)->flags)) {
+-				err = hci_le_big_create_sync(hdev, NULL,
++				err = hci_le_big_create_sync(hdev,
++							     hcon,
+ 							     &iso_pi(sk)->qos,
+ 							     iso_pi(sk)->sync_handle,
+ 							     iso_pi(sk)->bc_num_bis,
 -- 
 2.43.0
 
