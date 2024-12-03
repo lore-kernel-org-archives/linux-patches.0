@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F11B41F6674;
-	Tue,  3 Dec 2024 14:40:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 553871F6664;
+	Tue,  3 Dec 2024 14:40:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733236846; cv=none; b=pLBQO6fVFEwmnidDMtC1+bmuPwupxttRp8IAp6eqd7heYfLn6xhOlLiEubT+QzSPj74YFOLtypaSMjUmQsZ4Dn/4FfpSQqBpcMoUkcC/nhCfw7nMTdSQeeBb88oPmYeCwnPZk/rdzcc2vVSfetZefPBpeiv50wujs3LiN/Kj/0o=
+	t=1733236849; cv=none; b=paYZ6ot7b9cDLH5ZKhx6becnKlrWSBx9HoOqghKoX9YfFHqEv9QWmMN/r9FTNaLbDT91mANpM7W3etdVO7LfspZRZMlYzr3uYPUGc8t9LwuEIL30ziscZc3gO8IFMX6e14y0W0hm5OM9rM6hY44HMcxON7RP1WQgfunCACgOr0k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733236846; c=relaxed/simple;
-	bh=W8WHrJE3DOOCB6OUuF2y2ge+1Hg/vZH+8fQMVaMK6sE=;
+	s=arc-20240116; t=1733236849; c=relaxed/simple;
+	bh=T4ogs0pIt26j/fagzUsHEqsoG/coqQYedfl94RGlCeE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M0q4zb70Zagva36m8kxXLyqMHu+L2ZUok9RIFHpx/GKGILnd75HrrXxnhbmL58s6enEL6uzksVnkOIwI2XwviFkXBX6p6PeMa6tOyogbZJ6pQ4Wafq1sEG7Aw7BIfkix3aphOMN3pMzpDfZIHT5jUnO3GLumkEt6Vxh06lXouo0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n1+8Z1wQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NgtjHVU52RWAtlpoD7FCcxnd722croNa7UfHmqsIo5ib4LnajLoSLvPajk8vuMJ9Z1MLDnk/LV9a9n1XShNRHyP2UB3FeQGO+aiDizf8KLp1YQPT6400FM1YMU3shpp6gY4gWzJ9I7rmLdG+S8jPRNMgNu5sJEkCuWG0YrGlrt4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HAve1XmV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n1+8Z1wQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C0AAC4CECF;
-	Tue,  3 Dec 2024 14:40:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HAve1XmV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB502C4CED6;
+	Tue,  3 Dec 2024 14:40:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733236845;
-	bh=W8WHrJE3DOOCB6OUuF2y2ge+1Hg/vZH+8fQMVaMK6sE=;
+	s=korg; t=1733236849;
+	bh=T4ogs0pIt26j/fagzUsHEqsoG/coqQYedfl94RGlCeE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n1+8Z1wQpG358KOGfZdccOrMx2qvuaDL0BSTnl+TB+o7KD8AOPfUKUaVDA0qfEgU5
-	 PDql0MIi1nBHD/eztBEkc+Y7TcBatDyaO4jybuUlujoivooBTE58KAJ1tSvWJgiDnq
-	 GucDj63qKWjFpfVdGoM/N4QO9LsU8zVMqrH/qMqA=
+	b=HAve1XmVIuBM22pvrCrPhXy66BR4aTCH1BfxSd3NB3IpY22baxpJZ25LytUe4jukh
+	 IJwUMSNlf0OHhAZljORYYr45nNiIgLvHjVx+6KNO7s1ZOmPaaHYnB/Ard0CyWGuULB
+	 uKDCseuBFfWLCef47X/4NSbpAq2rgK6O1Zo5DBMU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Artem Sadovnikov <ancowi69@gmail.com>,
-	Dave Kleikamp <dave.kleikamp@oracle.com>
-Subject: [PATCH 4.19 102/138] jfs: xattr: check invalid xattr size more strictly
-Date: Tue,  3 Dec 2024 15:32:11 +0100
-Message-ID: <20241203141927.467401351@linuxfoundation.org>
+	Qiu-ji Chen <chenqiuji666@gmail.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 4.19 103/138] ASoC: codecs: Fix atomicity violation in snd_soc_component_get_drvdata()
+Date: Tue,  3 Dec 2024 15:32:12 +0100
+Message-ID: <20241203141927.504644768@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203141923.524658091@linuxfoundation.org>
 References: <20241203141923.524658091@linuxfoundation.org>
@@ -50,38 +50,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Artem Sadovnikov <ancowi69@gmail.com>
+From: Qiu-ji Chen <chenqiuji666@gmail.com>
 
-commit d9f9d96136cba8fedd647d2c024342ce090133c2 upstream.
+commit 1157733344651ca505e259d6554591ff156922fa upstream.
 
-Commit 7c55b78818cf ("jfs: xattr: fix buffer overflow for invalid xattr")
-also addresses this issue but it only fixes it for positive values, while
-ea_size is an integer type and can take negative values, e.g. in case of
-a corrupted filesystem. This still breaks validation and would overflow
-because of implicit conversion from int to size_t in print_hex_dump().
+An atomicity violation occurs when the validity of the variables
+da7219->clk_src and da7219->mclk_rate is being assessed. Since the entire
+assessment is not protected by a lock, the da7219 variable might still be
+in flux during the assessment, rendering this check invalid.
 
-Fix this issue by clamping the ea_size value instead.
+To fix this issue, we recommend adding a lock before the block
+if ((da7219->clk_src == clk_id) && (da7219->mclk_rate == freq)) so that
+the legitimacy check for da7219->clk_src and da7219->mclk_rate is
+protected by the lock, ensuring the validity of the check.
 
-Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
+This possible bug is found by an experimental static analysis tool
+developed by our team. This tool analyzes the locking APIs
+to extract function pairs that can be concurrently executed, and then
+analyzes the instructions in the paired functions to identify possible
+concurrency bugs including data races and atomicity violations.
 
+Fixes: 6d817c0e9fd7 ("ASoC: codecs: Add da7219 codec driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Artem Sadovnikov <ancowi69@gmail.com>
-Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
+Signed-off-by: Qiu-ji Chen <chenqiuji666@gmail.com>
+Link: https://patch.msgid.link/20240930101216.23723-1-chenqiuji666@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/jfs/xattr.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/codecs/da7219.c |    9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
---- a/fs/jfs/xattr.c
-+++ b/fs/jfs/xattr.c
-@@ -572,7 +572,7 @@ static int ea_get(struct inode *inode, s
+--- a/sound/soc/codecs/da7219.c
++++ b/sound/soc/codecs/da7219.c
+@@ -1164,17 +1164,20 @@ static int da7219_set_dai_sysclk(struct
+ 	struct da7219_priv *da7219 = snd_soc_component_get_drvdata(component);
+ 	int ret = 0;
  
-       size_check:
- 	if (EALIST_SIZE(ea_buf->xattr) != ea_size) {
--		int size = min_t(int, EALIST_SIZE(ea_buf->xattr), ea_size);
-+		int size = clamp_t(int, ea_size, 0, EALIST_SIZE(ea_buf->xattr));
+-	if ((da7219->clk_src == clk_id) && (da7219->mclk_rate == freq))
++	mutex_lock(&da7219->pll_lock);
++
++	if ((da7219->clk_src == clk_id) && (da7219->mclk_rate == freq)) {
++		mutex_unlock(&da7219->pll_lock);
+ 		return 0;
++	}
  
- 		printk(KERN_ERR "ea_get: invalid extended attribute\n");
- 		print_hex_dump(KERN_ERR, "", DUMP_PREFIX_ADDRESS, 16, 1,
+ 	if ((freq < 2000000) || (freq > 54000000)) {
++		mutex_unlock(&da7219->pll_lock);
+ 		dev_err(codec_dai->dev, "Unsupported MCLK value %d\n",
+ 			freq);
+ 		return -EINVAL;
+ 	}
+ 
+-	mutex_lock(&da7219->pll_lock);
+-
+ 	switch (clk_id) {
+ 	case DA7219_CLKSRC_MCLK_SQR:
+ 		snd_soc_component_update_bits(component, DA7219_PLL_CTRL,
 
 
