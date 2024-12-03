@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE0CF1DE8A5;
-	Tue,  3 Dec 2024 16:01:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33F4223CE;
+	Tue,  3 Dec 2024 16:01:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733241680; cv=none; b=nDnxihiM3aC6zzl4+M9nC1qHAf2TJxfXpGEx4IcWZs2F2QXHjVL06VA0NrRZVIqJgp77S/Oi9vs+3rRHmjQuK6OpQbk6hVNdzBX8cxqnE2jUpmEprSPXPuuw/GDrioW69O2mTzfkIMbFJCWRa6TfXJkdixyOEQacR/e14gAT6Kw=
+	t=1733241684; cv=none; b=ZLEWGpZpm3ojTo595KPyTgSoERGrSCzg56aZ5czG2M7fjOTUzJVuslXs9JLkZC/pRs34JiU3Sx4rjJXGLWQ5BnyQVhlQ9GFe02bM7JcyCRx3hHZBSzLbQYBPJ4fF7PrkFancjWDPTP2c7hy0yuvUs0oR4wtlD2fKYvrWOPVOlUE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733241680; c=relaxed/simple;
-	bh=SC6qY179a8toCe4YFsv6z1vKE0MRX6+xxJZdFBnJ3mM=;
+	s=arc-20240116; t=1733241684; c=relaxed/simple;
+	bh=ob1TD0dRfB1ZyHqnmV615dqdwClBeFlk9zBTTV8w/uE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C/xWdPomAgeHJoookMdtIL6WpnxZBYbaV8lmdrJ5KLuMH2A3q+ZlddD0EONJkGQHHQIrXwmHTHoOcz2MLyBAddhmxTNsR3qAS/WbepFnFfAHYr7r8yWaI4qnQxwAwrn3GcZm1FvkaFlPoiktMX3y0rcsSUvrjhzunG+y/sLzxw4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aGMhmm8K; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VmdK8VA08O3PRf+yGdXUpd5O/aLpFeHd0/rNJgJeseDMSnnfcDvGKsrC+Ab0RLGu7tzyMD8u6QYu3RrjBwHSoVuu3ekENvQW2J5VdI1v4guIzhXVvSTX8swe1DjErwlRTXqw3spdkTmfHTlKtr2wlp8Is7UjwaU6AVJ6zN7bD7M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z4yw5vH1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aGMhmm8K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CE53C4CECF;
-	Tue,  3 Dec 2024 16:01:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z4yw5vH1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50A22C4CECF;
+	Tue,  3 Dec 2024 16:01:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733241680;
-	bh=SC6qY179a8toCe4YFsv6z1vKE0MRX6+xxJZdFBnJ3mM=;
+	s=korg; t=1733241683;
+	bh=ob1TD0dRfB1ZyHqnmV615dqdwClBeFlk9zBTTV8w/uE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aGMhmm8KFtnEJCPw8GAIGYLmvuo3h7tGsjvbd4Lp+1swuTtule083WbXJXg7N3rye
-	 gc/qQFREOthmvu4xIYR4Q0irlQNTEpiwSVN7SEYFO+ExnOcWnxXUVGB0z8xXLpbhSN
-	 LcklYDWwDLFnP+eTinAnxCnNSI6YEZhdnBn4RXSg=
+	b=z4yw5vH10nCV2H6guXVOx6rmySJjYkd5pLHJ430g6AccEeEzdISyEieTZOJuhKQRw
+	 zZmDozWQPN4TAfAz56faQVpBVTr6kAmkIJ97zTf6fV7z5fdeSFEWgMJn2+Y4tv+F2c
+	 g5GFI9NOttIH0j+AcWbjOg0SyYOPvKaCH5kD2RAY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yutaro Ohno <yutaro.ono.418@gmail.com>,
+	Paolo Bonzini <pbonzini@redhat.com>,
+	Alice Ryhl <aliceryhl@google.com>,
 	Miguel Ojeda <ojeda@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 488/826] rust: kernel: fix THIS_MODULE header path in ThisModule doc comment
-Date: Tue,  3 Dec 2024 15:43:35 +0100
-Message-ID: <20241203144802.794718972@linuxfoundation.org>
+Subject: [PATCH 6.12 489/826] rust: macros: fix documentation of the paste! macro
+Date: Tue,  3 Dec 2024 15:43:36 +0100
+Message-ID: <20241203144802.832437468@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -51,42 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yutaro Ohno <yutaro.ono.418@gmail.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
 
-[ Upstream commit 8b55dc8610acf816a66373be53ca6e3bbe2d313a ]
+[ Upstream commit 15541c9263ce34ff95a06bc68f45d9bc5c990bcd ]
 
-The doc comment for `ThisModule` incorrectly states the C header file
-for `THIS_MODULE` as `include/linux/export.h`, while the correct path is
-`include/linux/init.h`. This is because `THIS_MODULE` was moved in
-commit 5b20755b7780 ("init: move THIS_MODULE from <linux/export.h> to
-<linux/init.h>").
+One of the example in this section uses a curious mix of the constant
+and function declaration syntaxes; fix it.
 
-Update the doc comment for `ThisModule` to reflect the correct header
-file path for `THIS_MODULE`.
-
-Fixes: 5b20755b7780 ("init: move THIS_MODULE from <linux/export.h> to <linux/init.h>")
-Signed-off-by: Yutaro Ohno <yutaro.ono.418@gmail.com>
-Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Link: https://lore.kernel.org/r/ZxXDZwxWgoEiIYkj@ohnotp
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Reviewed-by: Alice Ryhl <aliceryhl@google.com>
+Fixes: 823d4737d4c2 ("rust: macros: add `paste!` proc macro")
+Link: https://lore.kernel.org/r/20241019072208.1016707-1-pbonzini@redhat.com
 Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- rust/kernel/lib.rs | 2 +-
+ rust/macros/lib.rs | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/rust/kernel/lib.rs b/rust/kernel/lib.rs
-index b5f4b3ce6b482..032c9089e6862 100644
---- a/rust/kernel/lib.rs
-+++ b/rust/kernel/lib.rs
-@@ -83,7 +83,7 @@ pub trait Module: Sized + Sync + Send {
- 
- /// Equivalent to `THIS_MODULE` in the C API.
- ///
--/// C header: [`include/linux/export.h`](srctree/include/linux/export.h)
-+/// C header: [`include/linux/init.h`](srctree/include/linux/init.h)
- pub struct ThisModule(*mut bindings::module);
- 
- // SAFETY: `THIS_MODULE` may be used from all threads within a module.
+diff --git a/rust/macros/lib.rs b/rust/macros/lib.rs
+index a626b1145e5c4..90e2202ba4d5a 100644
+--- a/rust/macros/lib.rs
++++ b/rust/macros/lib.rs
+@@ -359,7 +359,7 @@ pub fn pinned_drop(args: TokenStream, input: TokenStream) -> TokenStream {
+ /// macro_rules! pub_no_prefix {
+ ///     ($prefix:ident, $($newname:ident),+) => {
+ ///         kernel::macros::paste! {
+-///             $(pub(crate) const fn [<$newname:lower:span>]: u32 = [<$prefix $newname:span>];)+
++///             $(pub(crate) const fn [<$newname:lower:span>]() -> u32 { [<$prefix $newname:span>] })+
+ ///         }
+ ///     };
+ /// }
 -- 
 2.43.0
 
