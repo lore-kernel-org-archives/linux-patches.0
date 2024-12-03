@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5841C1F8AC9;
-	Tue,  3 Dec 2024 15:45:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 052702500B8;
+	Tue,  3 Dec 2024 15:45:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733240706; cv=none; b=eAmPkIMxSLm1hkPIfuMUfCIHs1V76qazFK0i4xJmUCyaAqwMIlwahIi4CTL+Mg8T29JXiFvGFRLMPwGSMb23KHSc48NdyAprUMizDhM39NdDTg0RuGaUPk3lyNRigl3GRhc0vjZsgZRUsLEeAVvOiEj/jyZ22Jf5Qlvzgyp3h7k=
+	t=1733240710; cv=none; b=F9nhqCIMKyH7ZJxdMFcAzSAYFqsvr06gmKWwn25FVpZkDOmm7Ak0aAdso9JqIo/Geo/ig+IDQC2SwJNGbOBrcIIjDualv3cBdtj7BInJWU8uOspg/uxv7A47O8Un7DGHXvEroGYIlz/NN11OKyHAXiIdsEXizUcsDd0W2S+BYws=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733240706; c=relaxed/simple;
-	bh=UwJLjNRnt+I6rsyNDMMVhVF3jy2Efyv3hpHlLUpLrmc=;
+	s=arc-20240116; t=1733240710; c=relaxed/simple;
+	bh=blz9RiiFqwRCqdwSra6G21ac7jZRz39HoDp9q9inDCM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ssjQgzepyLB0HaR3mMP/2UNmxkK/Tp9jrbk+F8yO82o6ERvNYAY/n4yu9Ihkx4Oyir1AmEfSgILdv5T0NX/0Q+NUynWFKag2nA8R9YRxtVva2CkiWjrLuY9MzobKOHxo4yx+l25acKEgRNiVC1H8hGXstZBp3BvKZyerClxyD88=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SA3jUVVI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NAyOwOaK/b17kEv8Kh3x7kQXBGiZ9Zgl8gwiuljZB9NpeQspsKCtk3M7AZHb5yANVqxdhSycIVl8LX6Q8Db0muV90sYV4P+jm17BVs9l/COMiwnCnCwMXR+SbR4KM8XOiHIdR/V4VuU2VJ3szbAxMcyQVsAxqpMA1UIBQQTa9AA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YF1vgC/h; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SA3jUVVI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4A35C4CECF;
-	Tue,  3 Dec 2024 15:45:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YF1vgC/h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14078C4CECF;
+	Tue,  3 Dec 2024 15:45:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733240706;
-	bh=UwJLjNRnt+I6rsyNDMMVhVF3jy2Efyv3hpHlLUpLrmc=;
+	s=korg; t=1733240709;
+	bh=blz9RiiFqwRCqdwSra6G21ac7jZRz39HoDp9q9inDCM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SA3jUVVIGyLTSjSE5fZGKfMw7mwDPxl+7m9u4b6AkHTmmSAkNZbGcvYar4u3wsXh5
-	 XGJDpc7qvRh5rhbczT/zatcL9ONSg5b2lVVnycUN+/fjLdYjEBMQvA8gfxHekI7fSf
-	 vgi+DE/2ltTUcD+A3p7m6BsPVzrrJ46oJ94cYvTI=
+	b=YF1vgC/h2hdlO1i2TUlH+dsJgEfx2kQP2B7/JadX51mxmqe4jOkIkN5c6Ljpqg+IW
+	 J5IDc0/81GIKsriqf5bFCQVvnZzyMAU/5U3q83ASJZNkp8hpq8WwISMIj1UMOjPPul
+	 idI8SOC+4cUBgmE3C5t0HNgIgUOoB2WvDep0dyLM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shengjiu Wang <shengjiu.wang@nxp.com>,
-	Daniel Baluta <daniel.baluta@nxp.com>,
+	Jiaxin Yu <jiaxin.yu@mediatek.com>,
+	Macpaul Lin <macpaul.lin@mediatek.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 213/826] ASoC: fsl_micfil: fix regmap_write_bits usage
-Date: Tue,  3 Dec 2024 15:39:00 +0100
-Message-ID: <20241203144752.053113829@linuxfoundation.org>
+Subject: [PATCH 6.12 214/826] ASoC: dt-bindings: mt6359: Update generic node name and dmic-mode
+Date: Tue,  3 Dec 2024 15:39:01 +0100
+Message-ID: <20241203144752.091864378@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -52,45 +53,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shengjiu Wang <shengjiu.wang@nxp.com>
+From: Macpaul Lin <macpaul.lin@mediatek.com>
 
-[ Upstream commit 06df673d20230afb0e383e39235a4fa8b9a62464 ]
+[ Upstream commit 4649cbd97fdae5069e9a71cd7669b62b90e03669 ]
 
-The last parameter 1 means BIT(0), which should be the
-correct BIT(X).
+Some fix and updates in the following items:
+1. examples:
+   Update generic node name to 'audio-codec' to comply with the
+   coming change in 'mt6359.dtsi'. This change is necessary to fix the
+   dtbs_check error:
+   pmic: 'mt6359codec' does not match any of the regexes: 'pinctrl-[0-9]+'
 
-Fixes: 47a70e6fc9a8 ("ASoC: Add MICFIL SoC Digital Audio Interface driver.")
-Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
-Reviewed-by: Daniel Baluta <daniel.baluta@nxp.com>
-Link: https://patch.msgid.link/1727424031-19551-2-git-send-email-shengjiu.wang@nxp.com
+2. mediatek,dmic-mode:
+   After inspecting the .dts and .dtsi files using 'mt6359-codec', it was
+   discovered that the definitions of 'two wires' and 'one wire' are
+   inverted compared to the DT schema.
+   For example, the following boards using MT6359 PMIC:
+    - mt8192-asurada.dtsi
+    - mt8195-cherry.dtsi
+   These boards use the same definitions of 'dmic-mode' as other boards
+   using MT6358 PMIC. The meaning of '0' or '1' has been noted as comments
+   in the device trees.
+
+   Upon examining the code in [1] and [2], it was confirmed that the
+   definitions of 'dmic-mode' are consistent between "MT6359 PMIC" and
+   "MT6358 PMIC". Therefore, the DT Schema should be correct as is.
+
+References:
+[1] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/sound/soc/codecs/mt6358.c#n1875
+[2] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/sound/soc/codecs/mt6359.c#L1515
+
+Fixes: 539237d1c609 ("dt-bindings: mediatek: mt6359: add codec document")
+Signed-off-by: Jiaxin Yu <jiaxin.yu@mediatek.com>
+Signed-off-by: Macpaul Lin <macpaul.lin@mediatek.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://patch.msgid.link/20240930075451.14196-1-macpaul.lin@mediatek.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/fsl/fsl_micfil.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ Documentation/devicetree/bindings/sound/mt6359.yaml | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/sound/soc/fsl/fsl_micfil.c b/sound/soc/fsl/fsl_micfil.c
-index 0c71a73476dfa..67c2d4cb0dea2 100644
---- a/sound/soc/fsl/fsl_micfil.c
-+++ b/sound/soc/fsl/fsl_micfil.c
-@@ -1061,7 +1061,7 @@ static irqreturn_t micfil_isr(int irq, void *devid)
- 			regmap_write_bits(micfil->regmap,
- 					  REG_MICFIL_STAT,
- 					  MICFIL_STAT_CHXF(i),
--					  1);
-+					  MICFIL_STAT_CHXF(i));
- 	}
+diff --git a/Documentation/devicetree/bindings/sound/mt6359.yaml b/Documentation/devicetree/bindings/sound/mt6359.yaml
+index 23d411fc4200e..128698630c865 100644
+--- a/Documentation/devicetree/bindings/sound/mt6359.yaml
++++ b/Documentation/devicetree/bindings/sound/mt6359.yaml
+@@ -23,8 +23,8 @@ properties:
+       Indicates how many data pins are used to transmit two channels of PDM
+       signal. 0 means two wires, 1 means one wire. Default value is 0.
+     enum:
+-      - 0 # one wire
+-      - 1 # two wires
++      - 0 # two wires
++      - 1 # one wire
  
- 	for (i = 0; i < MICFIL_FIFO_NUM; i++) {
-@@ -1096,7 +1096,7 @@ static irqreturn_t micfil_err_isr(int irq, void *devid)
- 	if (stat_reg & MICFIL_STAT_LOWFREQF) {
- 		dev_dbg(&pdev->dev, "isr: ipg_clk_app is too low\n");
- 		regmap_write_bits(micfil->regmap, REG_MICFIL_STAT,
--				  MICFIL_STAT_LOWFREQF, 1);
-+				  MICFIL_STAT_LOWFREQF, MICFIL_STAT_LOWFREQF);
- 	}
+   mediatek,mic-type-0:
+     $ref: /schemas/types.yaml#/definitions/uint32
+@@ -53,9 +53,9 @@ additionalProperties: false
  
- 	return IRQ_HANDLED;
+ examples:
+   - |
+-    mt6359codec: mt6359codec {
+-      mediatek,dmic-mode = <0>;
+-      mediatek,mic-type-0 = <2>;
++    mt6359codec: audio-codec {
++        mediatek,dmic-mode = <0>;
++        mediatek,mic-type-0 = <2>;
+     };
+ 
+ ...
 -- 
 2.43.0
 
