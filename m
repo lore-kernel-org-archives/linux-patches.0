@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D31133FE;
-	Tue,  3 Dec 2024 15:01:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 767801EF0BC;
+	Tue,  3 Dec 2024 15:01:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733238085; cv=none; b=co41b74eelDuNkh75F8zNvFeDjNT1MMb3PnEIRmcsu1n9r+VOqeDRvbKv2qNB1cK5202R7kxMmnLaDNcazn04HRyYEmiu8wIaQJe2XWtXhFsCSAYKTAti14Zaj3HIReHgCKEIPunHPlMgOPE2Jc52Aiy103gUb26zcpX64pu0qQ=
+	t=1733238088; cv=none; b=Nt5Tn92q9RIbcdQrAOgqJ8sZ/Gu+QA/Xcvm5VEWgmVn9DQ4U97+18ih21A8UgFjkSF95pdym1A5PtQuReTi/YW0P0F2F1MEtJ8/fsvIUjBN2htg/Sg5E+a+j+WaAOL9hj6B3a1+BjGkkUPBHGacd0fgQdwa+9aUMNcq7uHpBYCI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733238085; c=relaxed/simple;
-	bh=QJhiCAhNUTcP+RPiI3Q02tduZ0w0hmX7SWSpoyoxomE=;
+	s=arc-20240116; t=1733238088; c=relaxed/simple;
+	bh=1w9BD9vOCRA2IFHuc4rVrBfJdjZTuXhU0dr1F4W9/GM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Mj38F+UNfmuZ2qtdyelGXalSIrvzWbvguV4qSO+FvJYh1JNclkefk8HYCK5PysJ7UcTheONKctm3aeg0XSd/qyG0HE5+AtLkMA453pi/Ma22UNzpnjnl1dbXlmDwUOL5/CpkpqDndrrhxa/yvK/qdXotlopGsq686dGsj/XICqQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p+q44Qk8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=udP7ED0zo2iybE7TtjSwNGMRYCt/n1abeoVUU/Wqmkd6uqPbcT/mn3U4znY2MG2+7oXUXsOUgxOmp2qrFwdeb9f43v31z51XMuxDcipACbqDhlewJyeb2BJM9lSjqUTqxo2JTuO2UPvJR7liOElbEt6iy1ZdKgRVJus1I4i+wII=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Es6QCXxQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p+q44Qk8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEEA1C4CECF;
-	Tue,  3 Dec 2024 15:01:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Es6QCXxQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3A77C4CECF;
+	Tue,  3 Dec 2024 15:01:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733238085;
-	bh=QJhiCAhNUTcP+RPiI3Q02tduZ0w0hmX7SWSpoyoxomE=;
+	s=korg; t=1733238088;
+	bh=1w9BD9vOCRA2IFHuc4rVrBfJdjZTuXhU0dr1F4W9/GM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p+q44Qk89QZ8nx1xxIk06IxvggPrzMnww2gCS1ihj4P/fr2xmAbRcwaOc3r+CarrU
-	 UJxZSNuTuIWBwxt5G3+lC73SYtYPdnnF2MMNsFDHR6GK57CrdYgv+F2xrX5Wy6oEZ/
-	 wKw+ApdztTYo9ibfAQC2IYawuYXI7Pd7tj0YV6fc=
+	b=Es6QCXxQqq8jLsXo+6nqlOMxbmy3g3Jh/NXPkCQQT6TP8PM/XX7LQe8ZFiAb8I0Lb
+	 ShItcNydqaIIIRk/H7VAMYKE9ZWvEZRDALK0Pa+EqZ7s4buqahQPqyi6KbJltw0BC+
+	 zGsd3uiquiQMFKCPKr1wN/q2XBfAl1VON0cCia20=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen-Yu Tsai <wenst@chromium.org>,
-	Jonathan Corbet <corbet@lwn.net>,
+	Abel Vesa <abel.vesa@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 156/817] scripts/kernel-doc: Do not track section counter across processed files
-Date: Tue,  3 Dec 2024 15:35:28 +0100
-Message-ID: <20241203144001.815493409@linuxfoundation.org>
+Subject: [PATCH 6.11 157/817] arm64: dts: qcom: x1e80100-slim7x: Drop orientation-switch from USB SS[0-1] QMP PHYs
+Date: Tue,  3 Dec 2024 15:35:29 +0100
+Message-ID: <20241203144001.854929924@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -51,51 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen-Yu Tsai <wenst@chromium.org>
+From: Abel Vesa <abel.vesa@linaro.org>
 
-[ Upstream commit be9264110e4e874622d588a75daf930539fdf6ea ]
+[ Upstream commit eb2dd93d03b16ed0e8b09311f8d35cc5a691a9b7 ]
 
-The section counter tracks how many sections of kernel-doc were added.
-The only real use of the counter value is to check if anything was
-actually supposed to be output and give a warning is nothing is
-available.
+The orientation-switch is already set in the x1e80100 SoC dtsi,
+so drop from Slim 7X dts.
 
-The current logic of remembering the initial value and then resetting
-the value then when processing each file means that if a file has the
-same number of sections as the previously processed one, a warning is
-incorrectly given.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
-Signed-off-by: Jonathan Corbet <corbet@lwn.net>
-Link: https://lore.kernel.org/r/20241008082905.4005524-1-wenst@chromium.org
+Fixes: 45247fe17db2 ("arm64: dts: qcom: x1e80100: add Lenovo Thinkpad Yoga slim 7x devicetree")
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+Link: https://lore.kernel.org/r/20241014-x1e80100-dts-drop-orientation-switch-v1-1-26afa6d4afd9@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/kernel-doc | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts | 4 ----
+ 1 file changed, 4 deletions(-)
 
-diff --git a/scripts/kernel-doc b/scripts/kernel-doc
-index 2791f81952038..c608820f0bf51 100755
---- a/scripts/kernel-doc
-+++ b/scripts/kernel-doc
-@@ -2322,7 +2322,6 @@ sub process_inline($$) {
+diff --git a/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts b/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts
+index 884595d98e641..769040b50b04d 100644
+--- a/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts
++++ b/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts
+@@ -881,8 +881,6 @@ &usb_1_ss0_qmpphy {
+ 	vdda-phy-supply = <&vreg_l3e_1p2>;
+ 	vdda-pll-supply = <&vreg_l1j_0p8>;
  
- sub process_file($) {
-     my $file;
--    my $initial_section_counter = $section_counter;
-     my ($orig_file) = @_;
+-	orientation-switch;
+-
+ 	status = "okay";
+ };
  
-     $file = map_filename($orig_file);
-@@ -2360,8 +2359,7 @@ sub process_file($) {
-     }
+@@ -915,8 +913,6 @@ &usb_1_ss1_qmpphy {
+ 	vdda-phy-supply = <&vreg_l3e_1p2>;
+ 	vdda-pll-supply = <&vreg_l2d_0p9>;
  
-     # Make sure we got something interesting.
--    if ($initial_section_counter == $section_counter && $
--        output_mode ne "none") {
-+    if (!$section_counter && $output_mode ne "none") {
-         if ($output_selection == OUTPUT_INCLUDE) {
-             emit_warning("${file}:1", "'$_' not found\n")
-                 for keys %function_table;
+-	orientation-switch;
+-
+ 	status = "okay";
+ };
+ 
 -- 
 2.43.0
 
