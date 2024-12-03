@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93AF61DA4E;
-	Tue,  3 Dec 2024 15:00:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07E1F1DA4E;
+	Tue,  3 Dec 2024 15:00:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733238014; cv=none; b=bcoCPZTe9I9WHXKPzvZYAfIH3yhfVnY8miiP1226/1pGeLr+1L2X/uxDQYtXvqGJz5331pLVn7Mo6hY/c6mzkpqz384G7dusMRGEa6Q91Puzj72JDPvIukw1HMcWYHlQHaP2f+dPReJBGDMpNYsRdageTo8kOFKMD93hXt/DhoU=
+	t=1733238018; cv=none; b=qstMrWIwTTtsKGfQOUlr/IlTLz/jXFK5NLgHFtkrvqkboe6lruic8iKQcwzAw9V+yF6QT8bowKFeDJG40PCAe+6H2U2fsagC0/OhmithcvI8hp3j4tyrvpHBGo5vdhu2Y7zUB/nsqX1UtZKEKB3y4i+y+5tp+SdcxpyzVFUFW0U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733238014; c=relaxed/simple;
-	bh=nDlws/fnM9g1fNJpoFejq0VL5xbpuejMAbXf3l9+m5Y=;
+	s=arc-20240116; t=1733238018; c=relaxed/simple;
+	bh=6mWMaXo83ANg7XNK7cjO19cKZ1xfrfdACqrHv/oL0os=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YIN3vN6MV8l5zkrMDvMiasJz0qCONXQsPa4NEZMBy0Che+ynIShJ/g+zgHDMezrplZKGMFFoJrNu81eer9jR9X15nIucNiL2RgSr8NMZzDxc1muwHmlXC1978KGTJmDgZ3CSciEJ3fC0vj9y3bMeEKVQxqTJeW9WBbr9v5OOFWk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gL07AxzD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ocItknDEUX5GaJRNIEfcF+qAo+vztz1jy8SiI/gRAa1rGryYQClXh1Ru8CDFcehl3VSDWFBiYIJFMOX4sRJroLJo6+DgNMWDT/FyFQkmtlPr8m1hA2R9kE++nmmLeaUNz2c5vk702z078nmrh89iEYm7ifKlkINImjz2slNKtS8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CugzjO6t; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gL07AxzD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EB38C4CECF;
-	Tue,  3 Dec 2024 15:00:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CugzjO6t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E7E6C4CECF;
+	Tue,  3 Dec 2024 15:00:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733238014;
-	bh=nDlws/fnM9g1fNJpoFejq0VL5xbpuejMAbXf3l9+m5Y=;
+	s=korg; t=1733238017;
+	bh=6mWMaXo83ANg7XNK7cjO19cKZ1xfrfdACqrHv/oL0os=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gL07AxzDXz0MaEca6iakaVu66oBlSnQgoon2SNYmNh+PJqebhKzjKuTFnsIVGxGGc
-	 QotaG2eSwm5FYnwJnPFAimGeRncr4eIXbsbWSiI/xwjKawweL0j6KCMs+uBLBjJAvA
-	 UHP778it0QdhSIF0aVko1m94pDbAdNH7z18LEBKQ=
+	b=CugzjO6tqNVduTA43l4veDsZvY8coD4LVoJRS52lpbF5j4o+s4FJzoM3favy8jOzj
+	 4nwXVfRa8eF6U/Rtx+a6hyXQnsS23u+bQl3mCq/B96VSYFst6NMuuR0tlpO3hzTOvW
+	 oYfg4z4suOWAoUoYQPLt0JA+0DZcJhcWQWK3CiFM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miguel Ojeda <ojeda@kernel.org>,
-	Thomas Gleixner <tglx@linutronix.de>,
+	Priyanka Singh <priyanka.singh@nxp.com>,
+	Li Yang <leoyang.li@nxp.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 133/817] time: Fix references to _msecs_to_jiffies() handling of values
-Date: Tue,  3 Dec 2024 15:35:05 +0100
-Message-ID: <20241203144000.913762315@linuxfoundation.org>
+Subject: [PATCH 6.11 104/817] EDAC/fsl_ddr: Fix bad bit shift operations
+Date: Tue,  3 Dec 2024 15:34:36 +0100
+Message-ID: <20241203143959.767964107@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -51,53 +53,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miguel Ojeda <ojeda@kernel.org>
+From: Priyanka Singh <priyanka.singh@nxp.com>
 
-[ Upstream commit 92b043fd995a63a57aae29ff85a39b6f30cd440c ]
+[ Upstream commit 9ec22ac4fe766c6abba845290d5139a3fbe0153b ]
 
-The details about the handling of the "normal" values were moved
-to the _msecs_to_jiffies() helpers in commit ca42aaf0c861 ("time:
-Refactor msecs_to_jiffies"). However, the same commit still mentioned
-__msecs_to_jiffies() in the added documentation.
+Fix undefined behavior caused by left-shifting a negative value in the
+expression:
 
-Thus point to _msecs_to_jiffies() instead.
+    cap_high ^ (1 << (bad_data_bit - 32))
 
-Fixes: ca42aaf0c861 ("time: Refactor msecs_to_jiffies")
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/all/20241025110141.157205-2-ojeda@kernel.org
+The variable bad_data_bit ranges from 0 to 63. When it is less than 32,
+bad_data_bit - 32 becomes negative, and left-shifting by a negative
+value in C is undefined behavior.
+
+Fix this by combining cap_high and cap_low into a 64-bit variable.
+
+  [ bp: Massage commit message, simplify error bits handling. ]
+
+Fixes: ea2eb9a8b620 ("EDAC, fsl-ddr: Separate FSL DDR driver from MPC85xx")
+Signed-off-by: Priyanka Singh <priyanka.singh@nxp.com>
+Signed-off-by: Li Yang <leoyang.li@nxp.com>
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Link: https://lore.kernel.org/r/20241016-imx95_edac-v3-3-86ae6fc2756a@nxp.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/jiffies.h | 2 +-
- kernel/time/time.c      | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ drivers/edac/fsl_ddr_edac.c | 22 +++++++++++++---------
+ 1 file changed, 13 insertions(+), 9 deletions(-)
 
-diff --git a/include/linux/jiffies.h b/include/linux/jiffies.h
-index d9f1435a5a13c..26c7c0a4c7f8c 100644
---- a/include/linux/jiffies.h
-+++ b/include/linux/jiffies.h
-@@ -502,7 +502,7 @@ static inline unsigned long _msecs_to_jiffies(const unsigned int m)
-  * - all other values are converted to jiffies by either multiplying
-  *   the input value by a factor or dividing it with a factor and
-  *   handling any 32-bit overflows.
-- *   for the details see __msecs_to_jiffies()
-+ *   for the details see _msecs_to_jiffies()
-  *
-  * msecs_to_jiffies() checks for the passed in value being a constant
-  * via __builtin_constant_p() allowing gcc to eliminate most of the
-diff --git a/kernel/time/time.c b/kernel/time/time.c
-index e1879ca321033..1ad88e97b4ebc 100644
---- a/kernel/time/time.c
-+++ b/kernel/time/time.c
-@@ -556,7 +556,7 @@ EXPORT_SYMBOL(ns_to_timespec64);
-  * - all other values are converted to jiffies by either multiplying
-  *   the input value by a factor or dividing it with a factor and
-  *   handling any 32-bit overflows.
-- *   for the details see __msecs_to_jiffies()
-+ *   for the details see _msecs_to_jiffies()
-  *
-  * msecs_to_jiffies() checks for the passed in value being a constant
-  * via __builtin_constant_p() allowing gcc to eliminate most of the
+diff --git a/drivers/edac/fsl_ddr_edac.c b/drivers/edac/fsl_ddr_edac.c
+index d148d262d0d4d..339d94b3d04c7 100644
+--- a/drivers/edac/fsl_ddr_edac.c
++++ b/drivers/edac/fsl_ddr_edac.c
+@@ -328,21 +328,25 @@ static void fsl_mc_check(struct mem_ctl_info *mci)
+ 	 * TODO: Add support for 32-bit wide buses
+ 	 */
+ 	if ((err_detect & DDR_EDE_SBE) && (bus_width == 64)) {
++		u64 cap = (u64)cap_high << 32 | cap_low;
++		u32 s = syndrome;
++
+ 		sbe_ecc_decode(cap_high, cap_low, syndrome,
+ 				&bad_data_bit, &bad_ecc_bit);
+ 
+-		if (bad_data_bit != -1)
+-			fsl_mc_printk(mci, KERN_ERR,
+-				"Faulty Data bit: %d\n", bad_data_bit);
+-		if (bad_ecc_bit != -1)
+-			fsl_mc_printk(mci, KERN_ERR,
+-				"Faulty ECC bit: %d\n", bad_ecc_bit);
++		if (bad_data_bit >= 0) {
++			fsl_mc_printk(mci, KERN_ERR, "Faulty Data bit: %d\n", bad_data_bit);
++			cap ^= 1ULL << bad_data_bit;
++		}
++
++		if (bad_ecc_bit >= 0) {
++			fsl_mc_printk(mci, KERN_ERR, "Faulty ECC bit: %d\n", bad_ecc_bit);
++			s ^= 1 << bad_ecc_bit;
++		}
+ 
+ 		fsl_mc_printk(mci, KERN_ERR,
+ 			"Expected Data / ECC:\t%#8.8x_%08x / %#2.2x\n",
+-			cap_high ^ (1 << (bad_data_bit - 32)),
+-			cap_low ^ (1 << bad_data_bit),
+-			syndrome ^ (1 << bad_ecc_bit));
++			upper_32_bits(cap), lower_32_bits(cap), s);
+ 	}
+ 
+ 	fsl_mc_printk(mci, KERN_ERR,
 -- 
 2.43.0
 
