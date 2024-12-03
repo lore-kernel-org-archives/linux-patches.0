@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE6BA1F76D7;
-	Tue,  3 Dec 2024 16:10:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A1F61F76D7;
+	Tue,  3 Dec 2024 16:10:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733242217; cv=none; b=DZi0WQrp4vqX+/tcpUdMbJ4vsQegSwFh4iS/DRjXGB4z3299gD/jfRIWlLOPtbuJlCCBW03bWbvSpESgwdOxQWPWzfmfbVn6cx+8sEL4r/NTbqOjpU9oPTA+HiSi1uisiclRo3cPwLEKzuwvPnRVK4So/fxH4UyrycOEVJjEA3Q=
+	t=1733242221; cv=none; b=iizIjOa+v8Btbh0nYFfUBdNh+wOq+xRZTtuCwOKd7whj8D+6bWcAIBPTUOg60d29wBwD8npFkoa8ePcmtBtC6ohXO4Xmw9lLTWglU/TbOMATeQHja+g3PUk7q03aqSJ7+DIcySzX4FONjdF2chhOYocmRVF4OQtKiK7gEzdLHQ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733242217; c=relaxed/simple;
-	bh=82Vqr2URXD8KYmGcQot8Q9/OUgBHCGXK5FJha1E3EXE=;
+	s=arc-20240116; t=1733242221; c=relaxed/simple;
+	bh=92Sh+qUsR8EvdT80wUVF5lsWU1mIhbu2WvzHXzg8bBQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=CKWHnQwUoA0o3pwqO+rRyfSsSJGFUkj084WnOr1x2BDNwrDyk/V+hO38nFeHjuwpLiRaGypBxnZBCeYOfq5zvBmeLC+nBiGDulBfPELoVlPF6gPS3CqtEHmYSIGC+i1saUDWegYVdSf5a7p4wiNbUgDPN+gyD+icbyRhAMGUxtU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WOa+jPm6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=L3L7QUJgEcgSGXFiPjgVIi722tWGFjiRf7KLtXNS3J0+OAJcA+VLc+7g9hC61u0NDrjr11pDHZonGiSNhK3xTpax7a3+BWkV4IPL2mnIbsvkYBZgroF2zxy7j2jTlnNpZuC6RT/KS6a7bj3ZZemffXncfqM5KUIObM343q1MRJI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2FtG5/kH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WOa+jPm6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 389A6C4CECF;
-	Tue,  3 Dec 2024 16:10:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2FtG5/kH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8266EC4CECF;
+	Tue,  3 Dec 2024 16:10:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733242217;
-	bh=82Vqr2URXD8KYmGcQot8Q9/OUgBHCGXK5FJha1E3EXE=;
+	s=korg; t=1733242221;
+	bh=92Sh+qUsR8EvdT80wUVF5lsWU1mIhbu2WvzHXzg8bBQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WOa+jPm6exBVUo4fJd0LLE1F3h9vozDfOyLPeqfIWc1StCbZPm8TjTi+KrpiBqxKc
-	 vHCdSNkwGaIpyXlqYexMFfNXK7GpHtgbZb/u/rHJTOMqrPr4imOwVZGsdig2DrjD+I
-	 ptcl72BAWDtJkNGdKpqjfguwQR7WcmgNeLTs2BNs=
+	b=2FtG5/kHXmfKtmBEkUG2X1kysW2oSCEXvii2NLyXQX+wzqbZQPLkt69o77bw3dZ6a
+	 pPNcd7zU4fyuCCdWr6n5YcofXR5ql1JuIgPKDhuLQ0HId+5oBHWXG+Ti5BR9v95qjM
+	 taV0icqWInN+vmeyRZwET7fQG8qSzZsucY5zMvQc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
-	Sean Christopherson <seanjc@google.com>,
-	Dmitry Osipenko <dmitry.osipenko@collabora.com>,
-	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 6.12 641/826] KVM: x86/mmu: Skip the "try unsync" path iff the old SPTE was a leaf SPTE
-Date: Tue,  3 Dec 2024 15:46:08 +0100
-Message-ID: <20241203144808.755252704@linuxfoundation.org>
+	Charles Han <hanchunchao@inspur.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 615/826] ASoC: imx-audmix: Add NULL check in imx_audmix_probe
+Date: Tue,  3 Dec 2024 15:45:42 +0100
+Message-ID: <20241203144807.743601816@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -46,70 +45,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Charles Han <hanchunchao@inspur.com>
 
-commit 2867eb782cf7f64c2ac427596133b6f9c3f64b7a upstream.
+[ Upstream commit e038f43edaf0083f6aa7c9415d86cf28dfd152f9 ]
 
-Apply make_spte()'s optimization to skip trying to unsync shadow pages if
-and only if the old SPTE was a leaf SPTE, as non-leaf SPTEs in direct MMUs
-are always writable, i.e. could trigger a false positive and incorrectly
-lead to KVM creating a SPTE without write-protecting or marking shadow
-pages unsync.
+devm_kasprintf() can return a NULL pointer on failure,but this
+returned value in imx_audmix_probe() is not checked.
+Add NULL check in imx_audmix_probe(), to handle kernel NULL
+pointer dereference error.
 
-This bug only affects the TDP MMU, as the shadow MMU only overwrites a
-shadow-present SPTE when synchronizing SPTEs (and only 4KiB SPTEs can be
-unsync).  Specifically, mmu_set_spte() drops any non-leaf SPTEs *before*
-calling make_spte(), whereas the TDP MMU can do a direct replacement of a
-page table with the leaf SPTE.
-
-Opportunistically update the comment to explain why skipping the unsync
-stuff is safe, as opposed to simply saying "it's someone else's problem".
-
-Cc: stable@vger.kernel.org
-Tested-by: Alex Bennée <alex.bennee@linaro.org>
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Tested-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-Message-ID: <20241010182427.1434605-5-seanjc@google.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 05d996e11348 ("ASoC: imx-audmix: Split capture device for audmix")
+Signed-off-by: Charles Han <hanchunchao@inspur.com>
+Link: https://patch.msgid.link/20241118084553.4195-1-hanchunchao@inspur.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/mmu/spte.c |   18 +++++++++++++-----
- 1 file changed, 13 insertions(+), 5 deletions(-)
+ sound/soc/fsl/imx-audmix.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/arch/x86/kvm/mmu/spte.c
-+++ b/arch/x86/kvm/mmu/spte.c
-@@ -226,12 +226,20 @@ bool make_spte(struct kvm_vcpu *vcpu, st
- 		spte |= PT_WRITABLE_MASK | shadow_mmu_writable_mask;
+diff --git a/sound/soc/fsl/imx-audmix.c b/sound/soc/fsl/imx-audmix.c
+index 6fbcf33fd0dea..8e7b75cf64db4 100644
+--- a/sound/soc/fsl/imx-audmix.c
++++ b/sound/soc/fsl/imx-audmix.c
+@@ -275,6 +275,9 @@ static int imx_audmix_probe(struct platform_device *pdev)
+ 		/* Add AUDMIX Backend */
+ 		be_name = devm_kasprintf(&pdev->dev, GFP_KERNEL,
+ 					 "audmix-%d", i);
++		if (!be_name)
++			return -ENOMEM;
++
+ 		priv->dai[num_dai + i].cpus	= &dlc[1];
+ 		priv->dai[num_dai + i].codecs	= &snd_soc_dummy_dlc;
  
- 		/*
--		 * Optimization: for pte sync, if spte was writable the hash
--		 * lookup is unnecessary (and expensive). Write protection
--		 * is responsibility of kvm_mmu_get_page / kvm_mmu_sync_roots.
--		 * Same reasoning can be applied to dirty page accounting.
-+		 * When overwriting an existing leaf SPTE, and the old SPTE was
-+		 * writable, skip trying to unsync shadow pages as any relevant
-+		 * shadow pages must already be unsync, i.e. the hash lookup is
-+		 * unnecessary (and expensive).
-+		 *
-+		 * The same reasoning applies to dirty page/folio accounting;
-+		 * KVM will mark the folio dirty using the old SPTE, thus
-+		 * there's no need to immediately mark the new SPTE as dirty.
-+		 *
-+		 * Note, both cases rely on KVM not changing PFNs without first
-+		 * zapping the old SPTE, which is guaranteed by both the shadow
-+		 * MMU and the TDP MMU.
- 		 */
--		if (is_writable_pte(old_spte))
-+		if (is_last_spte(old_spte, level) && is_writable_pte(old_spte))
- 			goto out;
- 
- 		/*
+-- 
+2.43.0
+
 
 
