@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4A5B1F8934;
-	Tue,  3 Dec 2024 16:07:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20DAC1E766E;
+	Tue,  3 Dec 2024 16:07:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733242021; cv=none; b=YjTsn5zWxCH8WNqcMwfWYqHE/DsGWK2AgiB+1tzYHqGT5RRhew715lMlseqg+oM/U/caNMhF7SXTFRPAwhQ60KHZ6fEgI1bOpkLpb492r18f7YBBZi+w1TovGdm5pSjzmF4w9GZJViqKSrt+XmXt08KMAAGtbUAPLfUHU90LxDI=
+	t=1733242025; cv=none; b=ugXpDQVISQ61OMlIDGRuuTR3WzdOljcCMB/yGGkwU4Sru+nrqjVT4W2mfpmQi+abI96nF7Yej9YUpUbHjEyJZjBLV/7aoXDAgy0ZfyQuojwj5YI+p3aj6UrSR8mvk188KZJf27F848jaZlg9kF3Ex+DRNsISC3tVT7E3gPfeWMU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733242021; c=relaxed/simple;
-	bh=cfpgBeBWDVnt3UgyG386MX0x+1uUYHeAmO2wXqgHvFE=;
+	s=arc-20240116; t=1733242025; c=relaxed/simple;
+	bh=6DSky7qjKV/4vCsLBhE25kIJAT6Tm8epW2FdxdW0ywo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=szjQS+SM5J6x8B2n02pWPmlHIeGC7VncKUeli3lYR5z65c7la4GzglxzVSu+qnLcib+tihqsyT9t1c6Cri6c70fL/Bi754rHuh6lMDTKPwc4kAO8Yp3B4WsddE7xAMnmMwDEzHA6nbm/OL+pk1pDddNPwaEUnluCCqTAYFUo+L0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H5tMRI8y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sSMKHGuzG4bJzwYynr53hCkrXUYDZcqE8uqno39IGnj1O8/hRn0T7cKAEueV0KNBgjgbRfYvjFE+AmP0xFi3/KcZGfuChX2fCQzZvacbrrzV7c5FP+lUTOoGlAJs+nTdABHFw+uWMvzt54QCbEr/qJdlnDOhTCNueHPzuTsbAxc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o0SpWr5l; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H5tMRI8y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26810C4CED6;
-	Tue,  3 Dec 2024 16:07:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o0SpWr5l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AA3BC4CECF;
+	Tue,  3 Dec 2024 16:07:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733242021;
-	bh=cfpgBeBWDVnt3UgyG386MX0x+1uUYHeAmO2wXqgHvFE=;
+	s=korg; t=1733242025;
+	bh=6DSky7qjKV/4vCsLBhE25kIJAT6Tm8epW2FdxdW0ywo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H5tMRI8y4JuJnNdjMt5hw0FMc4gp6MCKuaXtnVu+rN7mgdhJddYoVCssrtszfcP6+
-	 kIWcGT+xOZZL+PftNJEi2lNQeI42FmuUpOFMvxMRk6FKt/kq8dxshEbtcc5xSeW7Eu
-	 JZYhdTK9UANCz11VMKQKgY0ajEFF7KeOZYCjrG3g=
+	b=o0SpWr5lwfNJaqZBykooC+gHErsym6puQIbmihTBvX3nWLK5Dvze3UMzAHcYnA9Ij
+	 8pEqe2jtbDqUVywsprCGeQlE/atL0XB58fltFz170WyTPaSoQHNd1HXLBn3Wm9Dlbq
+	 gpEw+mWpIu0a8CjmBHeLtsUyEjaY56CbO/Pa+i2w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Avihai Horon <avihaih@nvidia.com>,
+	Yi Liu <yi.l.liu@intel.com>,
+	Alex Williamson <alex.williamson@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 553/826] power: reset: ep93xx: add AUXILIARY_BUS dependency
-Date: Tue,  3 Dec 2024 15:44:40 +0100
-Message-ID: <20241203144805.320718764@linuxfoundation.org>
+Subject: [PATCH 6.12 544/826] vfio/pci: Properly hide first-in-list PCIe extended capability
+Date: Tue,  3 Dec 2024 15:44:31 +0100
+Message-ID: <20241203144804.973110704@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -51,40 +52,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Avihai Horon <avihaih@nvidia.com>
 
-[ Upstream commit b6d445f6724deda3fd87fa33358009d947a64c5d ]
+[ Upstream commit fe4bf8d0b6716a423b16495d55b35d3fe515905d ]
 
-This fails to link when compile-testing and the auxiliary bus is not built-in:
+There are cases where a PCIe extended capability should be hidden from
+the user. For example, an unknown capability (i.e., capability with ID
+greater than PCI_EXT_CAP_ID_MAX) or a capability that is intentionally
+chosen to be hidden from the user.
 
-x86_64-linux-ld: drivers/power/reset/ep93xx-restart.o: in function `ep93xx_reboot_driver_init':
-ep93xx-restart.c:(.init.text+0x11): undefined reference to `__auxiliary_driver_register'
-x86_64-linux-ld: drivers/power/reset/ep93xx-restart.o: in function `ep93xx_reboot_driver_exit':
-ep93xx-restart.c:(.exit.text+0x8): undefined reference to `auxiliary_driver_unregister'
+Hiding a capability is done by virtualizing and modifying the 'Next
+Capability Offset' field of the previous capability so it points to the
+capability after the one that should be hidden.
 
-Add the appropriate dependency.
+The special case where the first capability in the list should be hidden
+is handled differently because there is no previous capability that can
+be modified. In this case, the capability ID and version are zeroed
+while leaving the next pointer intact. This hides the capability and
+leaves an anchor for the rest of the capability list.
 
-Fixes: 9fa7cdb4368f ("power: reset: Add a driver for the ep93xx reset")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Link: https://lore.kernel.org/r/20241111104418.3891756-1-arnd@kernel.org
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+However, today, hiding the first capability in the list is not done
+properly if the capability is unknown, as struct
+vfio_pci_core_device->pci_config_map is set to the capability ID during
+initialization but the capability ID is not properly checked later when
+used in vfio_config_do_rw(). This leads to the following warning [1] and
+to an out-of-bounds access to ecap_perms array.
+
+Fix it by checking cap_id in vfio_config_do_rw(), and if it is greater
+than PCI_EXT_CAP_ID_MAX, use an alternative struct perm_bits for direct
+read only access instead of the ecap_perms array.
+
+Note that this is safe since the above is the only case where cap_id can
+exceed PCI_EXT_CAP_ID_MAX (except for the special capabilities, which
+are already checked before).
+
+[1]
+
+WARNING: CPU: 118 PID: 5329 at drivers/vfio/pci/vfio_pci_config.c:1900 vfio_pci_config_rw+0x395/0x430 [vfio_pci_core]
+CPU: 118 UID: 0 PID: 5329 Comm: simx-qemu-syste Not tainted 6.12.0+ #1
+(snip)
+Call Trace:
+ <TASK>
+ ? show_regs+0x69/0x80
+ ? __warn+0x8d/0x140
+ ? vfio_pci_config_rw+0x395/0x430 [vfio_pci_core]
+ ? report_bug+0x18f/0x1a0
+ ? handle_bug+0x63/0xa0
+ ? exc_invalid_op+0x19/0x70
+ ? asm_exc_invalid_op+0x1b/0x20
+ ? vfio_pci_config_rw+0x395/0x430 [vfio_pci_core]
+ ? vfio_pci_config_rw+0x244/0x430 [vfio_pci_core]
+ vfio_pci_rw+0x101/0x1b0 [vfio_pci_core]
+ vfio_pci_core_read+0x1d/0x30 [vfio_pci_core]
+ vfio_device_fops_read+0x27/0x40 [vfio]
+ vfs_read+0xbd/0x340
+ ? vfio_device_fops_unl_ioctl+0xbb/0x740 [vfio]
+ ? __rseq_handle_notify_resume+0xa4/0x4b0
+ __x64_sys_pread64+0x96/0xc0
+ x64_sys_call+0x1c3d/0x20d0
+ do_syscall_64+0x4d/0x120
+ entry_SYSCALL_64_after_hwframe+0x76/0x7e
+
+Fixes: 89e1f7d4c66d ("vfio: Add PCI device driver")
+Signed-off-by: Avihai Horon <avihaih@nvidia.com>
+Reviewed-by: Yi Liu <yi.l.liu@intel.com>
+Tested-by: Yi Liu <yi.l.liu@intel.com>
+Link: https://lore.kernel.org/r/20241124142739.21698-1-avihaih@nvidia.com
+Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/reset/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/vfio/pci/vfio_pci_config.c | 16 ++++++++++++++--
+ 1 file changed, 14 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/power/reset/Kconfig b/drivers/power/reset/Kconfig
-index 389d5a193e5dc..f5fc33a8bf443 100644
---- a/drivers/power/reset/Kconfig
-+++ b/drivers/power/reset/Kconfig
-@@ -79,6 +79,7 @@ config POWER_RESET_EP93XX
- 	bool "Cirrus EP93XX reset driver" if COMPILE_TEST
- 	depends on MFD_SYSCON
- 	default ARCH_EP93XX
-+	select AUXILIARY_BUS
- 	help
- 	  This driver provides restart support for Cirrus EP93XX SoC.
+diff --git a/drivers/vfio/pci/vfio_pci_config.c b/drivers/vfio/pci/vfio_pci_config.c
+index 97422aafaa7b5..ea2745c1ac5e6 100644
+--- a/drivers/vfio/pci/vfio_pci_config.c
++++ b/drivers/vfio/pci/vfio_pci_config.c
+@@ -313,6 +313,10 @@ static int vfio_virt_config_read(struct vfio_pci_core_device *vdev, int pos,
+ 	return count;
+ }
  
++static struct perm_bits direct_ro_perms = {
++	.readfn = vfio_direct_config_read,
++};
++
+ /* Default capability regions to read-only, no-virtualization */
+ static struct perm_bits cap_perms[PCI_CAP_ID_MAX + 1] = {
+ 	[0 ... PCI_CAP_ID_MAX] = { .readfn = vfio_direct_config_read }
+@@ -1897,9 +1901,17 @@ static ssize_t vfio_config_do_rw(struct vfio_pci_core_device *vdev, char __user
+ 		cap_start = *ppos;
+ 	} else {
+ 		if (*ppos >= PCI_CFG_SPACE_SIZE) {
+-			WARN_ON(cap_id > PCI_EXT_CAP_ID_MAX);
++			/*
++			 * We can get a cap_id that exceeds PCI_EXT_CAP_ID_MAX
++			 * if we're hiding an unknown capability at the start
++			 * of the extended capability list.  Use default, ro
++			 * access, which will virtualize the id and next values.
++			 */
++			if (cap_id > PCI_EXT_CAP_ID_MAX)
++				perm = &direct_ro_perms;
++			else
++				perm = &ecap_perms[cap_id];
+ 
+-			perm = &ecap_perms[cap_id];
+ 			cap_start = vfio_find_cap_start(vdev, *ppos);
+ 		} else {
+ 			WARN_ON(cap_id > PCI_CAP_ID_MAX);
 -- 
 2.43.0
 
