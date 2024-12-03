@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F7EA1362;
-	Tue,  3 Dec 2024 15:54:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAEB91362;
+	Tue,  3 Dec 2024 15:54:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733241240; cv=none; b=HHYZKXzOkMzqPPUvs/dW7WYgo4Q8R7As2IbPNCQ/oS8OlvHkkJPujoLE94XHRQ8acHuzRQbjGHKCjx539p0fuKyMiSmDjYdVKisYXotlJ7D2j9HHXrr368nW+VPPcuUxy4kdHZkxhzINl/WLAgwD3cHfR57r7AEzxmEeIopvuvo=
+	t=1733241244; cv=none; b=imY3v7v3CdgQCSfEpRNPlaOZfEXAK29HGcN4nRyQ/46uEySJdCytb7mgTscAafdOebNodbODUK9Qu62WqOzOHrGMDCyglzJz2tVDPOXv/HXO0ALQTmQOgfsk5ljwPK6mcEahMmPVlhaj5FjKvIjJRXYrfi5RFXvfYSyjqDpDrr0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733241240; c=relaxed/simple;
-	bh=MGSS+/ANOdC2wRihEbgO6Sn4iK3m7yiNmXv4+p37nMI=;
+	s=arc-20240116; t=1733241244; c=relaxed/simple;
+	bh=MVR32JMcRrNyrCKD3fpSK95t4sjMrmhKgTXiZx38QQQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PwA7CLfqhIcxHhOGh/CedFvdlCOzmsMAW4B+uoDc/Wgh0b/6id88dk7yJzpMfqy5Tg2rDMOn3JplJVsTCuyRnlw+XcBIDGxXs/TdynqL6e6ywXnkA2NxXwsYdCQs38nsyy3Vy8CaOJ9RX8jeWnrdTv+rdfUPWGs4U5a2+fGdlaU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zBstNnql; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=J2tJsfLu5evlpLTKdHd30jrkK7E/IRx7oV3A/pZ9vjASVy5hy1tVQ3KvOqIbEC7YZRraWH9m/Vwc57DR5kU0nPNKYDogUVM1LJMLg4N0pvKtSQakJ3M+FMs08nJKujjSeLjLQSeza0YGFmYmXAfaQzg/wKQmQdp3jt4ZvpUMGrw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eWy6TgCG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zBstNnql"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3E80C4CED6;
-	Tue,  3 Dec 2024 15:53:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eWy6TgCG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6422EC4CECF;
+	Tue,  3 Dec 2024 15:54:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733241240;
-	bh=MGSS+/ANOdC2wRihEbgO6Sn4iK3m7yiNmXv4+p37nMI=;
+	s=korg; t=1733241243;
+	bh=MVR32JMcRrNyrCKD3fpSK95t4sjMrmhKgTXiZx38QQQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zBstNnqlmCkQtRTKtoE8Q74Jp83Va7PDWXqr5tcGQF9Dpw5uVPoWyypbzsDzpSfzp
-	 zFDFC8MEo4PVK4cB4pjf2QPaQsZ+2qHduTT1CzZZzOAyV86BujrDquE9wdqg/jMlfx
-	 c5qgu2ac17zn1XRMM+k24X1XHHxJwf2DSKOHIx8g=
+	b=eWy6TgCG9Uvi4KC2X4nOm9npj/xGyJ+N8DXbcWMTQ84Hsm8rxor5mygPcHDok52I6
+	 GB5R9dL2TsQdhi4xFbSXFWa9T+SUeK6rvJ9cJX0VrfF6t4YrNsRe/TPG1LE3IAXTem
+	 YLm4eFEnYBgmc1o2BXwKnDyTfJ9MDdxUnSiQsSfo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	Biju Das <biju.das.jz@bp.renesas.com>,
+	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 364/826] pinctrl: zynqmp: drop excess struct member description
-Date: Tue,  3 Dec 2024 15:41:31 +0100
-Message-ID: <20241203144757.959367773@linuxfoundation.org>
+Subject: [PATCH 6.12 365/826] pinctrl: renesas: Select PINCTRL_RZG2L for RZ/V2H(P) SoC
+Date: Tue,  3 Dec 2024 15:41:32 +0100
+Message-ID: <20241203144757.998182602@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -51,34 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+From: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
 
-[ Upstream commit 2a85fc7044987d751f27d7f1e4423eebbcecc2c6 ]
+[ Upstream commit 5dcde519a067ac5c85c273e550dde1873e2199bf ]
 
-The 'node' member has never been part of this structure so drop its
-description.
+Add explicit selection of the PINCTRL_RZG2L config option for the
+RZ/V2H(P) (R9A09G057) SoC, ensuring pin control driver is enabled
+for this SoC.
 
-Fixes: 8b242ca700f8 ("pinctrl: Add Xilinx ZynqMP pinctrl driver support")
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Link: https://lore.kernel.org/20241010080432.7781-1-brgl@bgdev.pl
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Fixes: 9bd95ac86e70 ("pinctrl: renesas: rzg2l: Add support for RZ/V2H SoC")
+Reported-by: Biju Das <biju.das.jz@bp.renesas.com>
+Signed-off-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://lore.kernel.org/20241010132726.702658-1-prabhakar.mahadev-lad.rj@bp.renesas.com
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/pinctrl-zynqmp.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/pinctrl/renesas/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/pinctrl/pinctrl-zynqmp.c b/drivers/pinctrl/pinctrl-zynqmp.c
-index 3c6d56fdb8c96..93454d2a26bcc 100644
---- a/drivers/pinctrl/pinctrl-zynqmp.c
-+++ b/drivers/pinctrl/pinctrl-zynqmp.c
-@@ -49,7 +49,6 @@
-  * @name:	Name of the pin mux function
-  * @groups:	List of pin groups for this function
-  * @ngroups:	Number of entries in @groups
-- * @node:	Firmware node matching with the function
-  *
-  * This structure holds information about pin control function
-  * and function group names supporting that function.
+diff --git a/drivers/pinctrl/renesas/Kconfig b/drivers/pinctrl/renesas/Kconfig
+index 14bd55d647319..7f3f41c7fe54c 100644
+--- a/drivers/pinctrl/renesas/Kconfig
++++ b/drivers/pinctrl/renesas/Kconfig
+@@ -41,6 +41,7 @@ config PINCTRL_RENESAS
+ 	select PINCTRL_PFC_R8A779H0 if ARCH_R8A779H0
+ 	select PINCTRL_RZG2L if ARCH_RZG2L
+ 	select PINCTRL_RZV2M if ARCH_R9A09G011
++	select PINCTRL_RZG2L if ARCH_R9A09G057
+ 	select PINCTRL_PFC_SH7203 if CPU_SUBTYPE_SH7203
+ 	select PINCTRL_PFC_SH7264 if CPU_SUBTYPE_SH7264
+ 	select PINCTRL_PFC_SH7269 if CPU_SUBTYPE_SH7269
 -- 
 2.43.0
 
