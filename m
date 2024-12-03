@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37C58153800;
-	Tue,  3 Dec 2024 15:51:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F4A71F76A2;
+	Tue,  3 Dec 2024 15:51:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733241078; cv=none; b=PcXfICtybCjhvRTc+iPy5P7a9btqQj6vPSvuACdSOCDCsT5P77MjQ5JuBAf2G2LZfjIJqHbQo0BD51DyHfvY2UI2eNBVzbzOebKkUA9kaumIInZERdQ0CN2hGEJr1OPAFFp7XSms0Wtxy7vYoclEUcUdF2QazeIUGgyhB4Qr9Z8=
+	t=1733241081; cv=none; b=P/a5AafM0lux6MoH6V+s0+czIKqKVi7LNsS9rCpJ2Y8nud423QDh7We4jkkIRq3V/nE9e+K8LO92QSc8YMM9RNkTf4QRm+vjHQBPK90KtjGfuFqa6zks+NE7lmFzIjfc7aNsqkBXG34NhpQuSmdwxgYjgtMhbgJXPmghemE7QGU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733241078; c=relaxed/simple;
-	bh=O3kqrkvIRdTv8jk4Cirs6th06/lcV97ZJ3Qc1zmCUZo=;
+	s=arc-20240116; t=1733241081; c=relaxed/simple;
+	bh=yCyvTZynhZ8S9ypKO1/f4lO93u+pQKb4n21mDiiS9HI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ab0wnkNndJQh0geKO2yikxC7foU01xeONU1BVxh7vV8IJYCkuuSwEravVKqnaikUPWoq6V2BLSSXhriMoSSHqP264UlRixVV81XrVwlXicYuxuan7htbLJT6XXfJVipwtlbd89ya3vcX0ppa7Yhz+d9lYD/jiOHmt2XT0MYtSOI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QNvnDDom; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XIZAiNFaN1wpAeJ0giuyNV3wIcQdvtfHNpn/CNkITeYnRzmklj1sRbP5hsN6N4jAO110cM9eddONSBacliV7tIZpLj9ELdXJejX7jDN4FB7wGCan6dtAgaE0XuGxMV5Fj0OrpPUUzbnp5KaYoMxf5c99sIJ/4BmeHnMgrTKQURU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WTfG9sRu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QNvnDDom"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 993EEC4CECF;
-	Tue,  3 Dec 2024 15:51:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WTfG9sRu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2E1CC4CECF;
+	Tue,  3 Dec 2024 15:51:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733241078;
-	bh=O3kqrkvIRdTv8jk4Cirs6th06/lcV97ZJ3Qc1zmCUZo=;
+	s=korg; t=1733241081;
+	bh=yCyvTZynhZ8S9ypKO1/f4lO93u+pQKb4n21mDiiS9HI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QNvnDDomzg92Fgbr68NZNJb8TegxepA10783eRk/qZ8ge+V4s9Zajm9a/TiT1tPun
-	 xCEr2aKNc+2/hmQDZFQlN6MjQOE1+A6FfoqZVUSkMKCXYmB/ZYbeR9GkoQEmZr0h8p
-	 YByR2UXgNaM3Rzy9EczK6HUdjzRdkcsJo2wnKrS4=
+	b=WTfG9sRuXwjjxOp724t8iHyVutYEQOJTNJB0LIIUfDJ8IMpsHEQQYOFB+WQ3LARl7
+	 +M2E5S71zFAiNXF3ZYXbd1Xqv0iMWGfy1FOTAUc5rE/ftXE7GnNNBn6Y+hXuuIzdJZ
+	 wus094HUgOs1wH+A20s7UrYYOwrecA9LP0tQb548=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Yang Wang <kevinyang.wang@amd.com>,
+	Tao Zhou <tao.zhou1@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 319/826] wifi: iwlwifi: mvm: tell iwlmei when we finished suspending
-Date: Tue,  3 Dec 2024 15:40:46 +0100
-Message-ID: <20241203144756.205934131@linuxfoundation.org>
+Subject: [PATCH 6.12 320/826] drm/amdgpu: fix ACA bank count boundary check error
+Date: Tue,  3 Dec 2024 15:40:47 +0100
+Message-ID: <20241203144756.245535764@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -52,59 +52,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+From: Yang Wang <kevinyang.wang@amd.com>
 
-[ Upstream commit d1a54ec21b8e7bca59141ff1ac6ce73e07d744f2 ]
+[ Upstream commit 2bb7dced1c2f8c0e705cc74840f776406db492c3 ]
 
-Since we no longer shut down the device in suspend, we also no longer
-call iwl_mvm_mei_device_state() and this is a problem because iwlmei
-expects this to be called when it runs its own suspend sequence. It
-checks mei->device_down in iwl_mei_remove() which is called upon
-suspend.
+fix ACA bank count boundary check error.
 
-Fix this by telling iwlmei when we're done accessing the device.
-When we'll wake up, the device should be untouched if CSME didn't use it
-during the suspend time. If CSME used it, we'll notice it through the
-CSR_FUNC_SCRATCH register.
-
-Fixes: e8bb19c1d590 ("wifi: iwlwifi: support fast resume")
-Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20241028135215.525287b90af2.Ibf183824471ea5580d9276d104444e53191e6900@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: f5e4cc8461c4 ("drm/amdgpu: implement RAS ACA driver framework")
+Signed-off-by: Yang Wang <kevinyang.wang@amd.com>
+Reviewed-by: Tao Zhou <tao.zhou1@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_aca.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c b/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
-index eee7a385d9467..d37d83d246354 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
-@@ -1237,6 +1237,7 @@ int __iwl_mvm_mac_start(struct iwl_mvm *mvm)
- 	fast_resume = mvm->fast_resume;
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_aca.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_aca.c
+index 2ca1271731357..9d6345146495f 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_aca.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_aca.c
+@@ -158,7 +158,7 @@ static int aca_smu_get_valid_aca_banks(struct amdgpu_device *adev, enum aca_smu_
+ 		return -EINVAL;
+ 	}
  
- 	if (fast_resume) {
-+		iwl_mvm_mei_device_state(mvm, true);
- 		ret = iwl_mvm_fast_resume(mvm);
- 		if (ret) {
- 			iwl_mvm_stop_device(mvm);
-@@ -1377,10 +1378,13 @@ void __iwl_mvm_mac_stop(struct iwl_mvm *mvm, bool suspend)
- 		iwl_mvm_rm_aux_sta(mvm);
+-	if (start + count >= max_count)
++	if (start + count > max_count)
+ 		return -EINVAL;
  
- 	if (suspend &&
--	    mvm->trans->trans_cfg->device_family >= IWL_DEVICE_FAMILY_22000)
-+	    mvm->trans->trans_cfg->device_family >= IWL_DEVICE_FAMILY_22000) {
- 		iwl_mvm_fast_suspend(mvm);
--	else
-+		/* From this point on, we won't touch the device */
-+		iwl_mvm_mei_device_state(mvm, false);
-+	} else {
- 		iwl_mvm_stop_device(mvm);
-+	}
- 
- 	iwl_mvm_async_handlers_purge(mvm);
- 	/* async_handlers_list is empty and will stay empty: HW is stopped */
+ 	count = min_t(int, count, max_count);
 -- 
 2.43.0
 
