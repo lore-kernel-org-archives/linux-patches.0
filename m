@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFE181F7071;
-	Tue,  3 Dec 2024 15:46:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7192D5C8F7;
+	Tue,  3 Dec 2024 15:46:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733240804; cv=none; b=Tp6Nz5jx3YEdHyhXE5ZgiiuVJ3emqqUD86aLt1mVsunSL5e2ZSvORErLbWpW7LhVYa8s+gjOUSymcUEga4N2xjulwU9d1LBHZhy+b4XwHbXf1e+9Qe1TBhU/jqCX3YzDsNs8IocNt4K/WCfYawDTgvii1d4enfta7fJr055828Q=
+	t=1733240807; cv=none; b=icwJikk86c0oKHaHTClmeKoVu1i29ich2dO1JNLNuv/DsqKqGmzQtxYIZxJ78PT1qAKv7vl003KDG+EPoEjlCQYMBBZ2DXszom3ETr2ozj2O3B8vY4PdQ96cn6pVWvVadRzkF2r1B+RnCJu+TXFONZfZ+ZXJe5q8Tg+gtmCOAxU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733240804; c=relaxed/simple;
-	bh=JVRmrdGEvvYQIbfi76nj5Zkod4Z5T5UlQq7X64WbQTk=;
+	s=arc-20240116; t=1733240807; c=relaxed/simple;
+	bh=f5Dk7vto3FaWWsnyTF6LNdThR9VtICvRdXpAuieTfug=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=WuDsmqllSapftmYIHjDtE0D/XLu2vWUavOs+hOKc53gG2GwHvDakuYH5+YxXAFvlTPsSSlGhg3MtNcYgm9g35ekbPD8fJKJjgdN+ftjq+Fy2nhlRzJY8qTLmm8c32om6PpNI6bHJiZ9+BaQ9gbOrmyga30kBDbM3aPLya3QOIaE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uYCKKVwi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jT14gk++1w2pMVpMhV76oI9rzob+uneSt13f1xkSEvIF/v6vArBYm6bBVEOo1zdo0XR0hoRTWby6UqYxxj/yEsNRAOyisAP+QwSZhR2IlG9vK+vJeFsAfT7mhoXM2aa4XqItChrSYGWrkij1QsiSskGooDKh9xsNnnusSmRoI6w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sOt5seQF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uYCKKVwi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 613F4C4CECF;
-	Tue,  3 Dec 2024 15:46:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sOt5seQF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D64F6C4CECF;
+	Tue,  3 Dec 2024 15:46:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733240803;
-	bh=JVRmrdGEvvYQIbfi76nj5Zkod4Z5T5UlQq7X64WbQTk=;
+	s=korg; t=1733240807;
+	bh=f5Dk7vto3FaWWsnyTF6LNdThR9VtICvRdXpAuieTfug=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uYCKKVwiQ6gnEpNJ+4GRfawKHkE/6hEpRbw54YvKBUYkaENLBCeue2D/7Nri+T7zZ
-	 DL0weYt5nDzzc8k49E2gNH6Sp3Nj+qWw/RNLChoff7yiha6VFn/16N3zTO5aD4dD4F
-	 MJNcGtsETkyDTjSuaOUd+GBKMhFzBaM9A0gbOgDQ=
+	b=sOt5seQFS4KYwh/WvTAfAew0W+fkGXyJUMptHVkEl+46GqLt2hpeEYh/7FN9ROQ4I
+	 XwV//B9kBY81kWpOJUfPdwP96D+VXUnaVGFLEBXewOQgAK6MtegEY8zWAkoqS5Tjyr
+	 yH16f/BH8Qkpu6foshMb3TZsX/Vhof3hrjwOq7tE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
-	Iago Toral Quiroga <itoral@igalia.com>,
+	Lijo Lazar <lijo.lazar@amd.com>,
+	Leo Liu <leo.liu@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 207/826] drm/v3d: Flush the MMU before we supply more memory to the binner
-Date: Tue,  3 Dec 2024 15:38:54 +0100
-Message-ID: <20241203144751.821883165@linuxfoundation.org>
+Subject: [PATCH 6.12 208/826] drm/amdgpu: Fix JPEG v4.0.3 register write
+Date: Tue,  3 Dec 2024 15:38:55 +0100
+Message-ID: <20241203144751.860066569@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -45,70 +46,67 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maíra Canal <mcanal@igalia.com>
+From: Lijo Lazar <lijo.lazar@amd.com>
 
-[ Upstream commit d2fb8811108b2c1285c56f4fba4fff8fe3525593 ]
+[ Upstream commit 8c50bf9beb889fd2bdcbf95b27a5d101eede51fc ]
 
-We must ensure that the MMU is flushed before we supply more memory to
-the binner, otherwise we might end up with invalid MMU accesses by the
-GPU.
+EXTERNAL_REG_INTERNAL_OFFSET/EXTERNAL_REG_WRITE_ADDR should be used in
+pairs. If an external register shouldn't be written, both packets
+shouldn't be sent.
 
-Fixes: 57692c94dcbe ("drm/v3d: Introduce a new DRM driver for Broadcom V3D V3.x+")
-Signed-off-by: Maíra Canal <mcanal@igalia.com>
-Reviewed-by: Iago Toral Quiroga <itoral@igalia.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240923141348.2422499-3-mcanal@igalia.com
+Fixes: a78b48146972 ("drm/amdgpu: Skip PCTL0_MMHUB_DEEPSLEEP_IB write in jpegv4.0.3 under SRIOV")
+Signed-off-by: Lijo Lazar <lijo.lazar@amd.com>
+Acked-by: Leo Liu <leo.liu@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/v3d/v3d_drv.h | 1 +
- drivers/gpu/drm/v3d/v3d_irq.c | 2 ++
- drivers/gpu/drm/v3d/v3d_mmu.c | 2 +-
- 3 files changed, 4 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/jpeg_v4_0_3.c | 18 ++++++++++--------
+ 1 file changed, 10 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/gpu/drm/v3d/v3d_drv.h b/drivers/gpu/drm/v3d/v3d_drv.h
-index cf4b23369dc44..75b4725d49c7e 100644
---- a/drivers/gpu/drm/v3d/v3d_drv.h
-+++ b/drivers/gpu/drm/v3d/v3d_drv.h
-@@ -553,6 +553,7 @@ void v3d_irq_disable(struct v3d_dev *v3d);
- void v3d_irq_reset(struct v3d_dev *v3d);
+diff --git a/drivers/gpu/drm/amd/amdgpu/jpeg_v4_0_3.c b/drivers/gpu/drm/amd/amdgpu/jpeg_v4_0_3.c
+index 86958cb2c2ab2..aa5815bd633eb 100644
+--- a/drivers/gpu/drm/amd/amdgpu/jpeg_v4_0_3.c
++++ b/drivers/gpu/drm/amd/amdgpu/jpeg_v4_0_3.c
+@@ -674,11 +674,12 @@ void jpeg_v4_0_3_dec_ring_insert_start(struct amdgpu_ring *ring)
+ 		amdgpu_ring_write(ring, PACKETJ(regUVD_JRBC_EXTERNAL_REG_INTERNAL_OFFSET,
+ 			0, 0, PACKETJ_TYPE0));
+ 		amdgpu_ring_write(ring, 0x62a04); /* PCTL0_MMHUB_DEEPSLEEP_IB */
+-	}
  
- /* v3d_mmu.c */
-+int v3d_mmu_flush_all(struct v3d_dev *v3d);
- int v3d_mmu_set_page_table(struct v3d_dev *v3d);
- void v3d_mmu_insert_ptes(struct v3d_bo *bo);
- void v3d_mmu_remove_ptes(struct v3d_bo *bo);
-diff --git a/drivers/gpu/drm/v3d/v3d_irq.c b/drivers/gpu/drm/v3d/v3d_irq.c
-index d469bda52c1a5..20bf33702c3c4 100644
---- a/drivers/gpu/drm/v3d/v3d_irq.c
-+++ b/drivers/gpu/drm/v3d/v3d_irq.c
-@@ -70,6 +70,8 @@ v3d_overflow_mem_work(struct work_struct *work)
- 	list_add_tail(&bo->unref_head, &v3d->bin_job->render->unref_list);
- 	spin_unlock_irqrestore(&v3d->job_lock, irqflags);
+-	amdgpu_ring_write(ring, PACKETJ(JRBC_DEC_EXTERNAL_REG_WRITE_ADDR,
+-		0, 0, PACKETJ_TYPE0));
+-	amdgpu_ring_write(ring, 0x80004000);
++		amdgpu_ring_write(ring,
++				  PACKETJ(JRBC_DEC_EXTERNAL_REG_WRITE_ADDR, 0,
++					  0, PACKETJ_TYPE0));
++		amdgpu_ring_write(ring, 0x80004000);
++	}
+ }
  
-+	v3d_mmu_flush_all(v3d);
-+
- 	V3D_CORE_WRITE(0, V3D_PTB_BPOA, bo->node.start << V3D_MMU_PAGE_SHIFT);
- 	V3D_CORE_WRITE(0, V3D_PTB_BPOS, obj->size);
+ /**
+@@ -694,11 +695,12 @@ void jpeg_v4_0_3_dec_ring_insert_end(struct amdgpu_ring *ring)
+ 		amdgpu_ring_write(ring, PACKETJ(regUVD_JRBC_EXTERNAL_REG_INTERNAL_OFFSET,
+ 			0, 0, PACKETJ_TYPE0));
+ 		amdgpu_ring_write(ring, 0x62a04);
+-	}
  
-diff --git a/drivers/gpu/drm/v3d/v3d_mmu.c b/drivers/gpu/drm/v3d/v3d_mmu.c
-index e36ec3343b06e..5bb7821c0243c 100644
---- a/drivers/gpu/drm/v3d/v3d_mmu.c
-+++ b/drivers/gpu/drm/v3d/v3d_mmu.c
-@@ -28,7 +28,7 @@
- #define V3D_PTE_WRITEABLE BIT(29)
- #define V3D_PTE_VALID BIT(28)
+-	amdgpu_ring_write(ring, PACKETJ(JRBC_DEC_EXTERNAL_REG_WRITE_ADDR,
+-		0, 0, PACKETJ_TYPE0));
+-	amdgpu_ring_write(ring, 0x00004000);
++		amdgpu_ring_write(ring,
++				  PACKETJ(JRBC_DEC_EXTERNAL_REG_WRITE_ADDR, 0,
++					  0, PACKETJ_TYPE0));
++		amdgpu_ring_write(ring, 0x00004000);
++	}
+ }
  
--static int v3d_mmu_flush_all(struct v3d_dev *v3d)
-+int v3d_mmu_flush_all(struct v3d_dev *v3d)
- {
- 	int ret;
- 
+ /**
 -- 
 2.43.0
 
