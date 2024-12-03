@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EBF31F7540;
-	Tue,  3 Dec 2024 15:24:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F1DE2D7BF;
+	Tue,  3 Dec 2024 15:24:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733239451; cv=none; b=JDbvyoVuNj5LR2EYkWYca6h7QBH7OIBurypjXnH64YLl9wpPXw9sA51s+ReMxRkBNnHATAkpm3c1nU7ySeCtUmYo0wqIv7XuL+Rm9TEXPqm0lIbDMfflhpIMHoKmpTN9WRE/ykysq6QT/4Y/hPkYs7SKX3Kmif/udO51LOzVrQY=
+	t=1733239454; cv=none; b=g8OBS0+GSDIoDf7h9t059WfL9J39dRZJU6DA873xRYau/4+0o1Gp02XsQmN/pfi/9o5uR3DjmqP3KN4RBkBFPI2xUbdna069jkY3CKGDtJl9wiKu0JqzA8S2FIQ8KRaKLQNewpmz5ZgW85Cl/PjUS2HgeOua+89ATZtqE5WCA4c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733239451; c=relaxed/simple;
-	bh=Io010QnyGJjAvlZFTow6/npamr8NTA0EqIDuT19zEIs=;
+	s=arc-20240116; t=1733239454; c=relaxed/simple;
+	bh=/GBCHz1u8tL/WdKeYNS9ipXlpsB1D7kRrHBTVQ2jwDk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Gkmw2esh9dX9OI+XEHpWfNn+W/bLeGQg0ehqutj3I3NlhG0jTDStjOqd18Q/72CByabiuh+0TRFe1HSxpYe25tO7u4W08l3+HXch5/VuHvaW1dNOMMKjnJEOn2eh57D2yiUIYmmZ2QPPSwe9jZlkzRIIPDJcLI5HhTZDO7PGNvU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OkMNsx+q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=CcSGYN9xIkjXcAVmiucDh0AvhuGzpLC97XeWnm2npuQsPJg4WnF9xK3u4RFY5/OTADQn/aJAHCT62YgHZgsURb7oFYd4jvQIKe2WlPohy+runmzlVVLhJP8NWZrOfsiCz8X2Sb/fMLd+UWwex7WPg62mE6FC9nECUU1ES31UWMs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y3tzBWZm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OkMNsx+q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02A6FC4CECF;
-	Tue,  3 Dec 2024 15:24:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y3tzBWZm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC1B8C4CECF;
+	Tue,  3 Dec 2024 15:24:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733239451;
-	bh=Io010QnyGJjAvlZFTow6/npamr8NTA0EqIDuT19zEIs=;
+	s=korg; t=1733239454;
+	bh=/GBCHz1u8tL/WdKeYNS9ipXlpsB1D7kRrHBTVQ2jwDk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OkMNsx+qpfQJNixlOQolAk4I3ADHQpdbV1HV1MKFvrjy0o1EGXfFDq2X86dZmFoYe
-	 xY+vSwclPtSCmiZoOSWFe5Ql14DuYAb6Rb+VuxuEnarrE0tbyMz9LePrhEKjEMp0rP
-	 1i9KlpttVIunin5TlN2w/KkItx+NmjFAy6JQ/+Qg=
+	b=Y3tzBWZmFqlsNgZ2ryEZi8MtVMnakYWVssX7Z1izIbHZkwGqxwQhiP1wTG4oIj+/M
+	 Tp5zDctdXyuV06/McME5wh4bY/IeJeILfxeT4imp5ds2O/jsIKRV6YCZFFMh7heS59
+	 jyu2cchUAZeIeGCUiyhKXq6pUKgCG2Z5iOFWSKX0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Charles Han <hanchunchao@inspur.com>,
-	Mark Brown <broonie@kernel.org>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Nirmoy Das <nirmoy.das@intel.com>,
+	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 619/817] ASoC: imx-audmix: Add NULL check in imx_audmix_probe
-Date: Tue,  3 Dec 2024 15:43:11 +0100
-Message-ID: <20241203144020.097055976@linuxfoundation.org>
+Subject: [PATCH 6.11 620/817] drm/xe/ufence: Wake up waiters after setting ufence->signalled
+Date: Tue,  3 Dec 2024 15:43:12 +0100
+Message-ID: <20241203144020.136577901@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -45,43 +46,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.11-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Charles Han <hanchunchao@inspur.com>
+From: Nirmoy Das <nirmoy.das@intel.com>
 
-[ Upstream commit e038f43edaf0083f6aa7c9415d86cf28dfd152f9 ]
+[ Upstream commit 37a1cf288e4538eb39b38dbc745fe0da7ae53d94 ]
 
-devm_kasprintf() can return a NULL pointer on failure,but this
-returned value in imx_audmix_probe() is not checked.
-Add NULL check in imx_audmix_probe(), to handle kernel NULL
-pointer dereference error.
+If a previous ufence is not signalled, vm_bind will return -EBUSY.
+Delaying the modification of ufence->signalled can cause issues if the
+UMD reuses the same ufence so update ufence->signalled before waking up
+waiters.
 
-Fixes: 05d996e11348 ("ASoC: imx-audmix: Split capture device for audmix")
-Signed-off-by: Charles Han <hanchunchao@inspur.com>
-Link: https://patch.msgid.link/20241118084553.4195-1-hanchunchao@inspur.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Cc: Matthew Brost <matthew.brost@intel.com>
+Link: https://gitlab.freedesktop.org/drm/xe/kernel/-/issues/3233
+Fixes: 977e5b82e090 ("drm/xe: Expose user fence from xe_sync_entry")
+Reviewed-by: Matthew Brost <matthew.brost@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20241114150537.4161573-1-nirmoy.das@intel.com
+Signed-off-by: Nirmoy Das <nirmoy.das@intel.com>
+(cherry picked from commit 553a5d14fcd927194c409b10faced6a6dbc678d1)
+Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/fsl/imx-audmix.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/xe/xe_sync.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/sound/soc/fsl/imx-audmix.c b/sound/soc/fsl/imx-audmix.c
-index 6fbcf33fd0dea..8e7b75cf64db4 100644
---- a/sound/soc/fsl/imx-audmix.c
-+++ b/sound/soc/fsl/imx-audmix.c
-@@ -275,6 +275,9 @@ static int imx_audmix_probe(struct platform_device *pdev)
- 		/* Add AUDMIX Backend */
- 		be_name = devm_kasprintf(&pdev->dev, GFP_KERNEL,
- 					 "audmix-%d", i);
-+		if (!be_name)
-+			return -ENOMEM;
-+
- 		priv->dai[num_dai + i].cpus	= &dlc[1];
- 		priv->dai[num_dai + i].codecs	= &snd_soc_dummy_dlc;
+diff --git a/drivers/gpu/drm/xe/xe_sync.c b/drivers/gpu/drm/xe/xe_sync.c
+index 9d77f2d4096f5..6e17bace67dd1 100644
+--- a/drivers/gpu/drm/xe/xe_sync.c
++++ b/drivers/gpu/drm/xe/xe_sync.c
+@@ -85,8 +85,12 @@ static void user_fence_worker(struct work_struct *w)
+ 		mmput(ufence->mm);
+ 	}
+ 
+-	wake_up_all(&ufence->xe->ufence_wq);
++	/*
++	 * Wake up waiters only after updating the ufence state, allowing the UMD
++	 * to safely reuse the same ufence without encountering -EBUSY errors.
++	 */
+ 	WRITE_ONCE(ufence->signalled, 1);
++	wake_up_all(&ufence->xe->ufence_wq);
+ 	user_fence_put(ufence);
+ }
  
 -- 
 2.43.0
