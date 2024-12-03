@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ED521F7561;
-	Tue,  3 Dec 2024 15:23:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FF462D7BF;
+	Tue,  3 Dec 2024 15:23:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733239381; cv=none; b=Xmo4zHGowW240B7DXopR4gmP3dR93pJH3b7MxrAqil65ONY1ZRbFs6sd1CkQFyIti4WinygAN66HxgyWz/bMVr0gzsQzrTUD6YU2fOjX3buRwQ4qzSqc7qMd+hXhTJFO4N3fKtSZnlAnMMOygaVtAYhlMHanqRjT/DQ7wktcKcs=
+	t=1733239384; cv=none; b=aGVUSeOk/rOrKsmC2Lqf/SWA90LPQyqa05WbofGn1dwNtUmikflrJhK08W/zPqxIn55grrZjzJEsJCYRUUerPSiWn5V3ZsL/UdmEVKLhcMRYO7+rpLDW9I6n0Yr7jwAUQoXT8qD+anydpuqJQHmX79mWngf4Xy/7wLaejZaRyPY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733239381; c=relaxed/simple;
-	bh=y3qwlepG6EU/1sorVHovihlo1v8PtGvPPE6hFDyYtq8=;
+	s=arc-20240116; t=1733239384; c=relaxed/simple;
+	bh=GBlINIzAdqJ8m5sWxIljc0MLmE0GyQumEeJ0PtJ8UHA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IMHehlNE3not6nEDN7qSI4d6qg19M+lydVMWg7nHORevQ0YgrNQmOcdmjfRC74Tn8UdCmTQWEvxXoqaF1YcNrtFKLNZKdz6xw6WuhcRakr4plQR+QCmILnMCEUWOhP63ugTRqat1RnwqDRUtF4lrn0v3BnjAxJxWyNHVwSq2tQo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qOl/H52V; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PUWOJFRWVMGiuZEAMojo3HktzRp9SxROQws4Ylyv64shUirT12SoSXrvy/hZ364bouxrp9SssAsLPoRjFFH1rji3AXVjVUG9qQ2gn4AQOGkAU9xNlFM70KEB77ZMq9JOIaTU88ffdKi+jLfTmQv2Nfc0esk8/tAZaG8gv/rXvYE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iN84NRSz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qOl/H52V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 257C2C4CECF;
-	Tue,  3 Dec 2024 15:23:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iN84NRSz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 080DFC4CECF;
+	Tue,  3 Dec 2024 15:23:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733239381;
-	bh=y3qwlepG6EU/1sorVHovihlo1v8PtGvPPE6hFDyYtq8=;
+	s=korg; t=1733239384;
+	bh=GBlINIzAdqJ8m5sWxIljc0MLmE0GyQumEeJ0PtJ8UHA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qOl/H52VxE8KOeKzB9H4g2JbNGMgWkrvOzN+OkOFdRket0pUMc8kCFajVoUIUQaQH
-	 K9HO2TsRkTDQQwTGQ14CXA35x2T+1pNVJjpKKDXPcHT1x7QjJZ45UkSpM6kmjXCYB5
-	 kfsjA/tbP6FrTqPenNm6aFr1HDR4xhCmkSQIh2gg=
+	b=iN84NRSzY00jgrJGaRGyZn2owsSFRax1ACNfic8zcOWm3ZqkxVAjeW6fRadaWSFIN
+	 X4dADeKnHOXNkidbGmZnamHo8AHsMdieoQPaQY8/nURwgVxp+cc8dl/qVRFB9Uxj0C
+	 UyPMkkvYJldd2HjiLWvm3F3d8es5M652iRijFs3w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liu Jian <liujian56@huawei.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
-	Eric Dumazet <edumazet@google.com>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
+	David Ahern <dsahern@kernel.org>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 594/817] tcp: Fix use-after-free of nreq in reqsk_timer_handler().
-Date: Tue,  3 Dec 2024 15:42:46 +0100
-Message-ID: <20241203144019.110357585@linuxfoundation.org>
+Subject: [PATCH 6.11 595/817] ip6mr: fix tables suspicious RCU usage
+Date: Tue,  3 Dec 2024 15:42:47 +0100
+Message-ID: <20241203144019.149814050@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -55,47 +51,138 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Paolo Abeni <pabeni@redhat.com>
 
-[ Upstream commit c31e72d021db2714df03df6c42855a1db592716c ]
+[ Upstream commit f1553c9894b4dbeb10a2ab15ab1aa113b3b4047c ]
 
-The cited commit replaced inet_csk_reqsk_queue_drop_and_put() with
-__inet_csk_reqsk_queue_drop() and reqsk_put() in reqsk_timer_handler().
+Several places call ip6mr_get_table() with no RCU nor RTNL lock.
+Add RCU protection inside such helper and provide a lockless variant
+for the few callers that already acquired the relevant lock.
 
-Then, oreq should be passed to reqsk_put() instead of req; otherwise
-use-after-free of nreq could happen when reqsk is migrated but the
-retry attempt failed (e.g. due to timeout).
+Note that some users additionally reference the table outside the RCU
+lock. That is actually safe as the table deletion can happen only
+after all table accesses are completed.
 
-Let's pass oreq to reqsk_put().
-
-Fixes: e8c526f2bdf1 ("tcp/dccp: Don't use timer_pending() in reqsk_queue_unlink().")
-Reported-by: Liu Jian <liujian56@huawei.com>
-Closes: https://lore.kernel.org/netdev/1284490f-9525-42ee-b7b8-ccadf6606f6d@huawei.com/
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
-Reviewed-by: Liu Jian <liujian56@huawei.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Martin KaFai Lau <martin.lau@kernel.org>
-Link: https://patch.msgid.link/20241123174236.62438-1-kuniyu@amazon.com
+Fixes: e2d57766e674 ("net: Provide compat support for SIOCGETMIFCNT_IN6 and SIOCGETSGCNT_IN6.")
+Fixes: d7c31cbde4bc ("net: ip6mr: add RTM_GETROUTE netlink op")
+Reviewed-by: David Ahern <dsahern@kernel.org>
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/inet_connection_sock.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv6/ip6mr.c | 38 +++++++++++++++++++++++++++-----------
+ 1 file changed, 27 insertions(+), 11 deletions(-)
 
-diff --git a/net/ipv4/inet_connection_sock.c b/net/ipv4/inet_connection_sock.c
-index cd7989b514eaa..f5592670420b5 100644
---- a/net/ipv4/inet_connection_sock.c
-+++ b/net/ipv4/inet_connection_sock.c
-@@ -1188,7 +1188,7 @@ static void reqsk_timer_handler(struct timer_list *t)
- 
- drop:
- 	__inet_csk_reqsk_queue_drop(sk_listener, oreq, true);
--	reqsk_put(req);
-+	reqsk_put(oreq);
+diff --git a/net/ipv6/ip6mr.c b/net/ipv6/ip6mr.c
+index dd342e6ecf3f4..f2b1e9210905b 100644
+--- a/net/ipv6/ip6mr.c
++++ b/net/ipv6/ip6mr.c
+@@ -125,7 +125,7 @@ static struct mr_table *ip6mr_mr_table_iter(struct net *net,
+ 	return ret;
  }
  
- static bool reqsk_queue_hash_req(struct request_sock *req,
+-static struct mr_table *ip6mr_get_table(struct net *net, u32 id)
++static struct mr_table *__ip6mr_get_table(struct net *net, u32 id)
+ {
+ 	struct mr_table *mrt;
+ 
+@@ -136,6 +136,16 @@ static struct mr_table *ip6mr_get_table(struct net *net, u32 id)
+ 	return NULL;
+ }
+ 
++static struct mr_table *ip6mr_get_table(struct net *net, u32 id)
++{
++	struct mr_table *mrt;
++
++	rcu_read_lock();
++	mrt = __ip6mr_get_table(net, id);
++	rcu_read_unlock();
++	return mrt;
++}
++
+ static int ip6mr_fib_lookup(struct net *net, struct flowi6 *flp6,
+ 			    struct mr_table **mrt)
+ {
+@@ -177,7 +187,7 @@ static int ip6mr_rule_action(struct fib_rule *rule, struct flowi *flp,
+ 
+ 	arg->table = fib_rule_get_table(rule, arg);
+ 
+-	mrt = ip6mr_get_table(rule->fr_net, arg->table);
++	mrt = __ip6mr_get_table(rule->fr_net, arg->table);
+ 	if (!mrt)
+ 		return -EAGAIN;
+ 	res->mrt = mrt;
+@@ -304,6 +314,8 @@ static struct mr_table *ip6mr_get_table(struct net *net, u32 id)
+ 	return net->ipv6.mrt6;
+ }
+ 
++#define __ip6mr_get_table ip6mr_get_table
++
+ static int ip6mr_fib_lookup(struct net *net, struct flowi6 *flp6,
+ 			    struct mr_table **mrt)
+ {
+@@ -382,7 +394,7 @@ static struct mr_table *ip6mr_new_table(struct net *net, u32 id)
+ {
+ 	struct mr_table *mrt;
+ 
+-	mrt = ip6mr_get_table(net, id);
++	mrt = __ip6mr_get_table(net, id);
+ 	if (mrt)
+ 		return mrt;
+ 
+@@ -411,13 +423,15 @@ static void *ip6mr_vif_seq_start(struct seq_file *seq, loff_t *pos)
+ 	struct net *net = seq_file_net(seq);
+ 	struct mr_table *mrt;
+ 
+-	mrt = ip6mr_get_table(net, RT6_TABLE_DFLT);
+-	if (!mrt)
++	rcu_read_lock();
++	mrt = __ip6mr_get_table(net, RT6_TABLE_DFLT);
++	if (!mrt) {
++		rcu_read_unlock();
+ 		return ERR_PTR(-ENOENT);
++	}
+ 
+ 	iter->mrt = mrt;
+ 
+-	rcu_read_lock();
+ 	return mr_vif_seq_start(seq, pos);
+ }
+ 
+@@ -2275,11 +2289,13 @@ int ip6mr_get_route(struct net *net, struct sk_buff *skb, struct rtmsg *rtm,
+ 	struct mfc6_cache *cache;
+ 	struct rt6_info *rt = dst_rt6_info(skb_dst(skb));
+ 
+-	mrt = ip6mr_get_table(net, RT6_TABLE_DFLT);
+-	if (!mrt)
++	rcu_read_lock();
++	mrt = __ip6mr_get_table(net, RT6_TABLE_DFLT);
++	if (!mrt) {
++		rcu_read_unlock();
+ 		return -ENOENT;
++	}
+ 
+-	rcu_read_lock();
+ 	cache = ip6mr_cache_find(mrt, &rt->rt6i_src.addr, &rt->rt6i_dst.addr);
+ 	if (!cache && skb->dev) {
+ 		int vif = ip6mr_find_vif(mrt, skb->dev);
+@@ -2560,7 +2576,7 @@ static int ip6mr_rtm_getroute(struct sk_buff *in_skb, struct nlmsghdr *nlh,
+ 		grp = nla_get_in6_addr(tb[RTA_DST]);
+ 	tableid = tb[RTA_TABLE] ? nla_get_u32(tb[RTA_TABLE]) : 0;
+ 
+-	mrt = ip6mr_get_table(net, tableid ?: RT_TABLE_DEFAULT);
++	mrt = __ip6mr_get_table(net, tableid ?: RT_TABLE_DEFAULT);
+ 	if (!mrt) {
+ 		NL_SET_ERR_MSG_MOD(extack, "MR table does not exist");
+ 		return -ENOENT;
+@@ -2607,7 +2623,7 @@ static int ip6mr_rtm_dumproute(struct sk_buff *skb, struct netlink_callback *cb)
+ 	if (filter.table_id) {
+ 		struct mr_table *mrt;
+ 
+-		mrt = ip6mr_get_table(sock_net(skb->sk), filter.table_id);
++		mrt = __ip6mr_get_table(sock_net(skb->sk), filter.table_id);
+ 		if (!mrt) {
+ 			if (rtnl_msg_family(cb->nlh) != RTNL_FAMILY_IP6MR)
+ 				return skb->len;
 -- 
 2.43.0
 
