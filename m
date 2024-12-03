@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6EF21EE00B;
-	Tue,  3 Dec 2024 16:17:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 657971EE00B;
+	Tue,  3 Dec 2024 16:17:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733242634; cv=none; b=YwB+ZWJ1kMGm1t095ktoPqOcVwzLIDzB181zQ5GwtvImlFC1PGDCMPB5Mon5yTVNx/03aYw5hjaU6Xcs8Xz7V2T9c5vmZUiSnusCp4O9VYnLn7VGbw769k70P5ihnFC+m4aCBUnmxbGTUVQ3vX9MTH7RbTlAPjIUDsyAjTP33Ak=
+	t=1733242638; cv=none; b=ebPeCcPXoocSN9PjzQtiw4Kppl5zhxZFd3rzFr/K8/bqrc5uVCJyc3UvJnPsOYfGDCl+ELKfF9dVmZiXaworn5WOlHn/Hxut4J/NQNBEq4cdN7XHzbmjfpkpc4autKBdM38cLcjSGTjJ6bgi5W2DzW0ILfp7OZE1828E3S/2usE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733242634; c=relaxed/simple;
-	bh=jYFdMuF1mn/6BHDTSfBZtUTbMd6HusHtcLyeA2p5iws=;
+	s=arc-20240116; t=1733242638; c=relaxed/simple;
+	bh=4JHZdHN0l0nOC835NxMLSqdv5/24nPhsqkJ+m5vmbCc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BfeZGU4NkXw6bJb/qlU9QZfmGk9wZ+6B6uZSjC5/ZSUlRcjmOoNSVAhwigA43x0R4J4I5Dc/+MlTLf1i6+5lGvv2VPaoqvWidRTJqhZg/gec37dG6XvWSqgpicjYupK8+pct6G/p2MLu7L8dZCgHO/G6HfNomEB3oQygXAsT4UI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K6p5hqNZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iaiSEdS3I+zxHMp+qSYogwXj1hpcyo7DZUs+8enqrRcZXzQpErDJ12//IvMjMeZR83dQ42UZM/KhnRYzlBslBt1I3vyqTpJPuaX9SbvjKDcPnqd1m851cPjDPCXYfxoJh82il2VYG7rAd7PlgM9b3HWXn3eK/9mqOT7k8MnlSJs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LU/wlXHL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K6p5hqNZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 370CEC4CECF;
-	Tue,  3 Dec 2024 16:17:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LU/wlXHL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7F82C4CECF;
+	Tue,  3 Dec 2024 16:17:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733242634;
-	bh=jYFdMuF1mn/6BHDTSfBZtUTbMd6HusHtcLyeA2p5iws=;
+	s=korg; t=1733242638;
+	bh=4JHZdHN0l0nOC835NxMLSqdv5/24nPhsqkJ+m5vmbCc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K6p5hqNZr7JR/6fmdv+Dq39c7bdDetp504gFI+0hZzDhN5JwFyIAjQv67/cOgOmvU
-	 +gcyFw5tHRBPIoPLogyUulNVDI2lt+0o6nR5/raN3ahqgZNhrUsn8/kGh5sS9KrvYL
-	 8jCovKyx6UQnHLwuFK1KtVDcjq1AsU9fM6SfMraY=
+	b=LU/wlXHLCNUy5I/DGSZKY+H8Hc1V3fVt8hMeYEO7nMC7pK79qg2dXvt6i6L5pPAkr
+	 9ZA9ojZgFu5kdAbOAfKq3z5iPmi/sr32i4wHJ/6bUdMjedGFGEMNT2omIG3N4+Uis3
+	 aOZpoJzMMkZen51cHChKZTeEdvu2WlrF/eY2oRp8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Umang Jain <umang.jain@ideasonboard.com>
-Subject: [PATCH 6.12 763/826] staging: vchiq_arm: Fix missing refcount decrement in error path for fw_node
-Date: Tue,  3 Dec 2024 15:48:10 +0100
-Message-ID: <20241203144813.528779302@linuxfoundation.org>
+	William Breathitt Gray <wbg@kernel.org>
+Subject: [PATCH 6.12 764/826] counter: stm32-timer-cnt: fix device_node handling in probe_encoder()
+Date: Tue,  3 Dec 2024 15:48:11 +0100
+Message-ID: <20241203144813.567199023@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -53,56 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
 
-commit 22a3703af127e897dc7df89372b85bb9dc331c5f upstream.
+commit 147359e23e5c9652ff8c5a98a51a7323bd51c94a upstream.
 
-An error path was introduced without including the required call to
-of_node_put() to decrement the node's refcount and avoid leaking memory.
-If the call to kzalloc() for 'mgmt' fails, the probe returns without
-decrementing the refcount.
+Device nodes accessed via of_get_compatible_child() require
+of_node_put() to be called when the node is no longer required to avoid
+leaving a reference to the node behind, leaking the resource.
 
-Use the automatic cleanup facility to fix the bug and protect the code
-against new error paths where the call to of_node_put() might be missing
-again.
+In this case, the usage of 'tnode' is straightforward and there are no
+error paths, allowing for a single of_node_put() when 'tnode' is no
+longer required.
 
 Cc: stable@vger.kernel.org
-Fixes: 1c9e16b73166 ("staging: vc04_services: vchiq_arm: Split driver static and runtime data")
+Fixes: 29646ee33cc3 ("counter: stm32-timer-cnt: add checks on quadrature encoder capability")
 Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
-Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Umang Jain <umang.jain@ideasonboard.com>
-Link: https://lore.kernel.org/r/20241014-vchiq_arm-of_node_put-v2-2-cafe0a4c2666@gmail.com
+Link: https://lore.kernel.org/r/20241027-stm32-timer-cnt-of_node_put-v1-1-ebd903cdf7ac@gmail.com
+Signed-off-by: William Breathitt Gray <wbg@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/vc04_services/interface/vchiq_arm/vchiq_arm.c |    6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/counter/stm32-timer-cnt.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/staging/vc04_services/interface/vchiq_arm/vchiq_arm.c
-+++ b/drivers/staging/vc04_services/interface/vchiq_arm/vchiq_arm.c
-@@ -1715,7 +1715,6 @@ MODULE_DEVICE_TABLE(of, vchiq_of_match);
+--- a/drivers/counter/stm32-timer-cnt.c
++++ b/drivers/counter/stm32-timer-cnt.c
+@@ -700,6 +700,7 @@ static int stm32_timer_cnt_probe_encoder
+ 	}
  
- static int vchiq_probe(struct platform_device *pdev)
- {
--	struct device_node *fw_node;
- 	const struct vchiq_platform_info *info;
- 	struct vchiq_drv_mgmt *mgmt;
- 	int ret;
-@@ -1724,8 +1723,8 @@ static int vchiq_probe(struct platform_d
- 	if (!info)
- 		return -EINVAL;
- 
--	fw_node = of_find_compatible_node(NULL, NULL,
--					  "raspberrypi,bcm2835-firmware");
-+	struct device_node *fw_node __free(device_node) =
-+		of_find_compatible_node(NULL, NULL, "raspberrypi,bcm2835-firmware");
- 	if (!fw_node) {
- 		dev_err(&pdev->dev, "Missing firmware node\n");
- 		return -ENOENT;
-@@ -1736,7 +1735,6 @@ static int vchiq_probe(struct platform_d
- 		return -ENOMEM;
- 
- 	mgmt->fw = devm_rpi_firmware_get(&pdev->dev, fw_node);
--	of_node_put(fw_node);
- 	if (!mgmt->fw)
- 		return -EPROBE_DEFER;
- 
+ 	ret = of_property_read_u32(tnode, "reg", &idx);
++	of_node_put(tnode);
+ 	if (ret) {
+ 		dev_err(dev, "Can't get index (%d)\n", ret);
+ 		return ret;
 
 
