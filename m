@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CE151F893D;
-	Tue,  3 Dec 2024 15:38:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F73B1F892B;
+	Tue,  3 Dec 2024 15:38:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733240281; cv=none; b=gPaOTmO5c2JiAb0na4fjFiRsoU6CcSPedkJYa80/uFJkZTfhqDNjmCOhjZrRqyY6aP30NhF98IHCxj6cZbITKCKNsHsmJGTCFbJbsUH5bWE9sy4xvynBgKv8eCJ//x9t4DjmqJxoQ8tO0ce8hvfBaUKyf53uR24O56o2NbU0YAk=
+	t=1733240284; cv=none; b=JC94YM97iwFeBv0uCIH+XWjjC0Lfwy6LvfW3gxHV07iuROHFg40RLys2ywGFWisVM2GHCf9HREXcLp/zDLdrrjMRt3QFrBQrW4Tu6JgANu6ub41y52E0HeTye3C/luCVWa58+KD5yhIm22WGJyDvKeRDAX+ziIp1ypD4blHSsN0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733240281; c=relaxed/simple;
-	bh=by/h09U+gTUro1C3GMS0IFglHX3GNZsSsjWFL5qwIFc=;
+	s=arc-20240116; t=1733240284; c=relaxed/simple;
+	bh=dHGVSgarK0bcnz2zaFyGsWgjZspUSY+5lu+GR78+BVA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CO65GpLtc7p/LJw0sDczMcgfUT3qw4X8BPQKe5Y2ddwNUW9cFdgOVZqgNpvgaoCzJRy0N1RSqO7CXGhzS7BCee3OOHJT8kOA33iXsbUcAPshKBPmkSMUTq2+Ci2BkI2zY7XO4ur49ilCsQk1tPUURUpLFUU4i9+D/LmF5oBa380=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vj0TaiT6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oa+aJjPAPIJT7u8KAID6Zk5Q5UpodccB74BdSOkWUufXNl3bRY0hn1dPp+jtfi9uSD7usE3zTsT7O9HrCjlP8x1wcuuF+PMTLM/UvxSaHJZit/DK2K7rYSNovY2Vvbi5/GE4yaMaSsj9wL8bPtH7zUayJ7EVcB53GAcydBSiZu0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ORrffSSq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vj0TaiT6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9CA6C4CECF;
-	Tue,  3 Dec 2024 15:38:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ORrffSSq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB009C4CED8;
+	Tue,  3 Dec 2024 15:38:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733240281;
-	bh=by/h09U+gTUro1C3GMS0IFglHX3GNZsSsjWFL5qwIFc=;
+	s=korg; t=1733240284;
+	bh=dHGVSgarK0bcnz2zaFyGsWgjZspUSY+5lu+GR78+BVA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Vj0TaiT6zA4wIaWWJzWcgs9Ar4CIPaPjBBcFvASuzlC/HB9uZZ2rMZEVWTntG9T8I
-	 nImDM/HgSVyBg61TiJi1YpMycXpXMkbVmDZQAejOm+BLOu165qs+cxkN7R77qloWwY
-	 gE2UzIV++X49hkENywo/6LIOHVSOT4pLukyTPnZU=
+	b=ORrffSSqN5GdNbtx70wutf0BEyQRLtXj4UnaX16kZaYOW1CxvE+t4im0zr3J4GEiB
+	 DewJlcDlX/TCpQ5V8mPN1OlHDHTYOHJcjFJVzYj+/sfI1BC60BGMiRxQ2m7763pegk
+	 r/MNNVb2oGGwToPg/pVWnq9ZvZYjfveBD78DRUXE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	Michal Schmidt <mschmidt@redhat.com>,
-	Neeraj Upadhyay <Neeraj.Upadhyay@amd.com>,
-	Frederic Weisbecker <frederic@kernel.org>,
+	Miguel Ojeda <ojeda@kernel.org>,
+	Thomas Gleixner <tglx@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 068/826] rcu/srcutiny: dont return before reenabling preemption
-Date: Tue,  3 Dec 2024 15:36:35 +0100
-Message-ID: <20241203144746.124928446@linuxfoundation.org>
+Subject: [PATCH 6.12 086/826] time: Partially revert cleanup on msecs_to_jiffies() documentation
+Date: Tue,  3 Dec 2024 15:36:53 +0100
+Message-ID: <20241203144747.083665596@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -53,39 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Schmidt <mschmidt@redhat.com>
+From: Miguel Ojeda <ojeda@kernel.org>
 
-[ Upstream commit 0ea3acbc804c2d5a165442cdf9c0526f4d324888 ]
+[ Upstream commit b05aefc1f5886c8aece650c9c1639c87b976191a ]
 
-Code after the return statement is dead. Enable preemption before
-returning from srcu_drive_gp().
+The documentation's intention is to compare msecs_to_jiffies() (first
+sentence) with __msecs_to_jiffies() (second sentence), which is what the
+original documentation did. One of the cleanups in commit f3cb80804b82
+("time: Fix various kernel-doc problems") may have thought the paragraph
+was talking about the latter since that is what it is being documented.
 
-This will be important when/if PREEMPT_AUTO (lazy resched) gets merged.
+Thus revert that part of the change.
 
-Fixes: 65b4a59557f6 ("srcu: Make Tiny SRCU explicitly disable preemption")
-Reviewed-by: Paul E. McKenney <paulmck@kernel.org>
-Signed-off-by: Michal Schmidt <mschmidt@redhat.com>
-Reviewed-by: Neeraj Upadhyay <Neeraj.Upadhyay@amd.com>
-Signed-off-by: Frederic Weisbecker <frederic@kernel.org>
+Fixes: f3cb80804b82 ("time: Fix various kernel-doc problems")
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Link: https://lore.kernel.org/all/20241025110141.157205-1-ojeda@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/rcu/srcutiny.c | 2 +-
+ kernel/time/time.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/rcu/srcutiny.c b/kernel/rcu/srcutiny.c
-index 549c03336ee97..4dcbf8aa80ff7 100644
---- a/kernel/rcu/srcutiny.c
-+++ b/kernel/rcu/srcutiny.c
-@@ -122,8 +122,8 @@ void srcu_drive_gp(struct work_struct *wp)
- 	ssp = container_of(wp, struct srcu_struct, srcu_work);
- 	preempt_disable();  // Needed for PREEMPT_AUTO
- 	if (ssp->srcu_gp_running || ULONG_CMP_GE(ssp->srcu_idx, READ_ONCE(ssp->srcu_idx_max))) {
--		return; /* Already running or nothing to do. */
- 		preempt_enable();
-+		return; /* Already running or nothing to do. */
- 	}
- 
- 	/* Remove recently arrived callbacks and wait for readers. */
+diff --git a/kernel/time/time.c b/kernel/time/time.c
+index 642647f5046be..e1879ca321033 100644
+--- a/kernel/time/time.c
++++ b/kernel/time/time.c
+@@ -558,7 +558,7 @@ EXPORT_SYMBOL(ns_to_timespec64);
+  *   handling any 32-bit overflows.
+  *   for the details see __msecs_to_jiffies()
+  *
+- * __msecs_to_jiffies() checks for the passed in value being a constant
++ * msecs_to_jiffies() checks for the passed in value being a constant
+  * via __builtin_constant_p() allowing gcc to eliminate most of the
+  * code, __msecs_to_jiffies() is called if the value passed does not
+  * allow constant folding and the actual conversion must be done at
 -- 
 2.43.0
 
