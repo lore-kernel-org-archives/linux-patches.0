@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A0BC1F473A;
-	Tue,  3 Dec 2024 15:26:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E959B1F473A;
+	Tue,  3 Dec 2024 15:26:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733239585; cv=none; b=HImlDvwhWNgTu7twXqacgum3yxz2P74BEyFfOg3rfPFpktk7+de3LBiQtK7H15c/cRxMnJUwNa/nNRFRJy0hr5NGfcZyxMVTJk5M9sKU/0uDafY3VoTIqDm9SaZoSN4xtGCVddNFYhzuJejNhhC66qnlyDIjpKsh1HynFBicio0=
+	t=1733239589; cv=none; b=e5FgRNUiHPnmryPnWRsFEroqM6gZn2WOlPsXABTh9RnXzW1OTESZOaw/fMAPTQgkYWEeYd49HndYjtkCYrW0sPWEH5EKZ+DlLAuhDUPZo6+8QkcigvLu2YHjJVEP2iPSDEk73QsLbrs/vL+Dzi26BniKmXL4EZcsqkK6Xt1cjKM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733239585; c=relaxed/simple;
-	bh=BcVr/HrpGq7WS0ToFatRR3kb1L1RiTwJZAtyiyQ7JyE=;
+	s=arc-20240116; t=1733239589; c=relaxed/simple;
+	bh=+/Zq15sZbPJ4K0nbp8GzbQUAjpQcc8UAt7QM5rtdzcE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mKsgWA2BfBTthvAhL0vc2j3UWM27iSy/jIZUI9Kl7iRGX8zuTSTE1cohIdZJp2+obPkKdRMnvh3Om9WM9jCFkjkimuR6yLDfTqr49upwSXA+8GG8OXxeK+hptMhHnDAzPzcaflWKNj9+o/TIF4LLWCI29EDouxT8VIp3I+oD+s8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L/dgz/MS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CYrdRrf+Jai8d0CRgGyoiWNCVK8Eg3kwZ0RtV8eBgm0KI21OTiCtIxfFa+VZYhBflox3bfLM+tQov8It59euCYKlAX4Q995GQsyTcLGir2iPJju51qB7yS+bMAUFUR+/F07tjIhrk76SeexyQKCoO7DezajDFluLWRH2wV03L7A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WNmc/Udg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L/dgz/MS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9759C4CECF;
-	Tue,  3 Dec 2024 15:26:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WNmc/Udg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C80A5C4CECF;
+	Tue,  3 Dec 2024 15:26:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733239585;
-	bh=BcVr/HrpGq7WS0ToFatRR3kb1L1RiTwJZAtyiyQ7JyE=;
+	s=korg; t=1733239588;
+	bh=+/Zq15sZbPJ4K0nbp8GzbQUAjpQcc8UAt7QM5rtdzcE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L/dgz/MSuyMTbMwyK6TcsH2ekR7Npx5ml4e0T27m9/sq/BCQN888fN6UQ9nhWWtgu
-	 dElui3nYJ3SME3REIPjkgzfOb3sPFQInrwBTgOg2OBpSVaRsyvqTWcXOoD6gpYE8pz
-	 9eUNaNln0pQnHJ2lksDgj1cXtqRRBLnOrgSeZ5PI=
+	b=WNmc/UdgYndti/+iTcbnUNvXvfgd0Qoem6iHYdmoIlF7eZfVCnllJQmJl7EqsYEWa
+	 SJJzixNN4CyrC+5flssf/pVzDuZMrxL0H86lVJOOR2pO9Enn12rArkQfydkymrXEt2
+	 15dcZayLBmCvnsGJ2T3qftRnNRT8k9ExxobUqJho=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Angelo Dureghello <adureghello@baylibre.com>,
-	Nuno Sa <nuno.sa@analog.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.11 664/817] iio: dac: adi-axi-dac: fix wrong register bitfield
-Date: Tue,  3 Dec 2024 15:43:56 +0100
-Message-ID: <20241203144021.877105030@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Nicolas Bouchinet <nicolas.bouchinet@ssi.gouv.fr>,
+	Lin Feng <linf@wangsu.com>,
+	Jiri Slaby <jirislaby@kernel.org>
+Subject: [PATCH 6.11 665/817] tty: ldsic: fix tty_ldisc_autoload sysctls proc_handler
+Date: Tue,  3 Dec 2024 15:43:57 +0100
+Message-ID: <20241203144021.915430464@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -51,42 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Angelo Dureghello <adureghello@baylibre.com>
+From: Nicolas Bouchinet <nicolas.bouchinet@ssi.gouv.fr>
 
-commit 70602f529e4d76798c95aeed5ce2a8d36263abe5 upstream.
+commit 635a9fca54f4f4148be1ae1c7c6bd37af80f5773 upstream.
 
-Fix ADI_DAC_R1_MODE of AXI_DAC_REG_CNTRL_2.
+Commit 7c0cca7c847e ("tty: ldisc: add sysctl to prevent autoloading of
+ldiscs") introduces the tty_ldisc_autoload sysctl with the wrong
+proc_handler. .extra1 and .extra2 parameters are set to avoid other values
+thant SYSCTL_ZERO or SYSCTL_ONE to be set but proc_dointvec do not uses
+them.
 
-Both generic DAC and ad3552r DAC IPs docs are reporting
-bit 5 for it.
+This commit fixes this by using proc_dointvec_minmax instead of
+proc_dointvec.
 
-Link: https://wiki.analog.com/resources/fpga/docs/axi_dac_ip
-Fixes: 4e3949a192e4 ("iio: dac: add support for AXI DAC IP core")
-Cc: stable@vger.kernel.org
-Signed-off-by: Angelo Dureghello <adureghello@baylibre.com>
-Reviewed-by: Nuno Sa <nuno.sa@analog.com>
-Link: https://patch.msgid.link/20241008-wip-bl-ad3552r-axi-v0-iio-testing-v5-1-3d410944a63d@baylibre.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Fixes: 7c0cca7c847e ("tty: ldisc: add sysctl to prevent autoloading of ldiscs")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Nicolas Bouchinet <nicolas.bouchinet@ssi.gouv.fr>
+Reviewed-by: Lin Feng <linf@wangsu.com>
+Reviewed-by: Jiri Slaby <jirislaby@kernel.org>
+Link: https://lore.kernel.org/r/20241112131357.49582-4-nicolas.bouchinet@clip-os.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/dac/adi-axi-dac.c | 2 +-
+ drivers/tty/tty_io.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/iio/dac/adi-axi-dac.c b/drivers/iio/dac/adi-axi-dac.c
-index 0cb00f3bec04..b8b4171b8043 100644
---- a/drivers/iio/dac/adi-axi-dac.c
-+++ b/drivers/iio/dac/adi-axi-dac.c
-@@ -46,7 +46,7 @@
- #define AXI_DAC_REG_CNTRL_1		0x0044
- #define   AXI_DAC_SYNC			BIT(0)
- #define AXI_DAC_REG_CNTRL_2		0x0048
--#define	  ADI_DAC_R1_MODE		BIT(4)
-+#define	  ADI_DAC_R1_MODE		BIT(5)
- #define AXI_DAC_DRP_STATUS		0x0074
- #define   AXI_DAC_DRP_LOCKED		BIT(17)
- /* DAC Channel controls */
--- 
-2.47.1
-
+--- a/drivers/tty/tty_io.c
++++ b/drivers/tty/tty_io.c
+@@ -3631,7 +3631,7 @@ static struct ctl_table tty_table[] = {
+ 		.data		= &tty_ldisc_autoload,
+ 		.maxlen		= sizeof(tty_ldisc_autoload),
+ 		.mode		= 0644,
+-		.proc_handler	= proc_dointvec,
++		.proc_handler	= proc_dointvec_minmax,
+ 		.extra1		= SYSCTL_ZERO,
+ 		.extra2		= SYSCTL_ONE,
+ 	},
 
 
