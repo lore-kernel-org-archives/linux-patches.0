@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C1B11EE00E;
-	Tue,  3 Dec 2024 16:15:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A1791EE00E;
+	Tue,  3 Dec 2024 16:15:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733242516; cv=none; b=SkkSUz0UdgDW2GApgcVt7FGNoq35bQnGRKpyD2vXcRIgO8aR4qNTOmB8goH0wMC7PwQtJcEwvczcVZuF8tLcBVSnRxgMu5Cy5RdvAmTeina73Jgh4uO1M1HfEUZkPu9NsrVC4zpXT+StiqtHcVwiCNIs4Qt6ziDllgoCU2OLYdw=
+	t=1733242519; cv=none; b=orl6FfGbC5rhK6Z0tVVa2SxOU8w6GBT0mzkW58G6qdicC6KKBZ9em5brwM5BtBAbNs2ETrAr3AcxwVHXb44YDoeU9xOl6VZT0LvnEiadWuG63jrLKlVRzq2vdQNXo8wVf/tFK05R0szyJpWCToDDp/h1RA9+mqMCvJgxzgv+Mm8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733242516; c=relaxed/simple;
-	bh=GvAfllJtpXPLlgmfXWYlMRU0SMZaZLUNhejTQk0qkH8=;
+	s=arc-20240116; t=1733242519; c=relaxed/simple;
+	bh=Mn2dxGaNygUyf+XqaNlzAjyz8AIEymncgyZ7sYBjouc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RKOtS4yG9xVZSfdmUZ/Ow/D7kWyhxHTJOJtn41tQbAnTYuAYWsIHct5oFs9+YwdQ6LqKpaOLoTxAo6oLL/oqiISNljoy2b/AngR0BaqSBaPhFBNuiRruonrpyV9RZhd3NCrRP6MO+XCYjsbM1ZR4XvTjd2g9jQzI5ARSpcRhIoM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WCK/cJsY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=avvkUM9fRvxtXJ5k9xcF81pXbAes5l5IDXLmIM7l3XEIYNUYq7agvTwTuDgurUZJtFv3cw2MXZrHYe1eAZkI1xI2Yj/DjSV2/N0gpi8pM9DsaCj8YWtzQ9s2vmY2xsLSXgGBxSLV+zoZRK4X5ZBSCjmKoRjKi9nXcNXPl7X+bEw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LeuLEspP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WCK/cJsY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CC64C4CECF;
-	Tue,  3 Dec 2024 16:15:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LeuLEspP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D396C4CECF;
+	Tue,  3 Dec 2024 16:15:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733242515;
-	bh=GvAfllJtpXPLlgmfXWYlMRU0SMZaZLUNhejTQk0qkH8=;
+	s=korg; t=1733242519;
+	bh=Mn2dxGaNygUyf+XqaNlzAjyz8AIEymncgyZ7sYBjouc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WCK/cJsYzgtJP+mvlWJKUJq5Lywhni4BocJpes+OcACA13KbxeNdv8Da2aLyScqCc
-	 3uEzvUFO7KTQv7ylBqKrNYHxVfWLyP+W038C9VwGmxOksdRNFlsfc8/pEBTT7sOUa4
-	 tmJbAdga7vDPDC/BXFW+MWkfvrYADxuTwLCZSn2w=
+	b=LeuLEspPj/nCtWPe3Y1ISJGuhyVTMUxPPMZ1ciMaTztVhxZX/5G93481piCb4QaDE
+	 UVGU9M/ubPs9OFa47wDyI2wiO2J5WCUyM6skXiiiGe0pLWBam7E4KtCCIIIASetDAj
+	 5J0Y9hY2Aq7GRQDwOf79MFoQe3hOPzNknQarrM4Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ziwei Xiao <ziweixiao@google.com>,
-	Jeroen de Borst <jeroendb@google.com>,
-	Harshitha Ramamurthy <hramamurthy@google.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 728/826] gve: Flow steering trigger reset only for timeout error
-Date: Tue,  3 Dec 2024 15:47:35 +0100
-Message-ID: <20241203144812.160335929@linuxfoundation.org>
+	Jason Gerecke <jason.gerecke@wacom.com>,
+	Jiri Kosina <jkosina@suse.com>
+Subject: [PATCH 6.12 729/826] HID: wacom: Interpret tilt data from Intuos Pro BT as signed values
+Date: Tue,  3 Dec 2024 15:47:36 +0100
+Message-ID: <20241203144812.198535662@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -53,41 +50,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ziwei Xiao <ziweixiao@google.com>
+From: Jason Gerecke <jason.gerecke@wacom.com>
 
-commit 8ffade77b6337a8767fae9820d57d7a6413dd1a1 upstream.
+commit 49a397ad24ee5e2c53a59dada2780d7e71bd3f77 upstream.
 
-When configuring flow steering rules, the driver is currently going
-through a reset for all errors from the device. Instead, the driver
-should only reset when there's a timeout error from the device.
+The tilt data contained in the Bluetooth packets of an Intuos Pro are
+supposed to be interpreted as signed values. Simply casting the values
+to type `char` is not guaranteed to work since it is implementation-
+defined whether it is signed or unsigned. At least one user has noticed
+the data being reported incorrectly on their system. To ensure that the
+data is interpreted properly, we specifically cast to `signed char`
+instead.
 
-Fixes: 57718b60df9b ("gve: Add flow steering adminq commands")
-Cc: stable@vger.kernel.org
-Signed-off-by: Ziwei Xiao <ziweixiao@google.com>
-Signed-off-by: Jeroen de Borst <jeroendb@google.com>
-Reviewed-by: Harshitha Ramamurthy <hramamurthy@google.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20241113175930.2585680-1-jeroendb@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://github.com/linuxwacom/input-wacom/issues/445
+Fixes: 4922cd26f03c ("HID: wacom: Support 2nd-gen Intuos Pro's Bluetooth classic interface")
+CC: stable@vger.kernel.org # 4.11+
+Signed-off-by: Jason Gerecke <jason.gerecke@wacom.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/google/gve/gve_adminq.c |    4 ++--
+ drivers/hid/wacom_wac.c |    4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/net/ethernet/google/gve/gve_adminq.c
-+++ b/drivers/net/ethernet/google/gve/gve_adminq.c
-@@ -1248,10 +1248,10 @@ gve_adminq_configure_flow_rule(struct gv
- 			sizeof(struct gve_adminq_configure_flow_rule),
- 			flow_rule_cmd);
+--- a/drivers/hid/wacom_wac.c
++++ b/drivers/hid/wacom_wac.c
+@@ -1353,9 +1353,9 @@ static void wacom_intuos_pro2_bt_pen(str
+ 					rotation -= 1800;
  
--	if (err) {
-+	if (err == -ETIME) {
- 		dev_err(&priv->pdev->dev, "Timeout to configure the flow rule, trigger reset");
- 		gve_reset(priv, true);
--	} else {
-+	} else if (!err) {
- 		priv->flow_rules_cache.rules_cache_synced = false;
- 	}
- 
+ 				input_report_abs(pen_input, ABS_TILT_X,
+-						 (char)frame[7]);
++						 (signed char)frame[7]);
+ 				input_report_abs(pen_input, ABS_TILT_Y,
+-						 (char)frame[8]);
++						 (signed char)frame[8]);
+ 				input_report_abs(pen_input, ABS_Z, rotation);
+ 				input_report_abs(pen_input, ABS_WHEEL,
+ 						 get_unaligned_le16(&frame[11]));
 
 
