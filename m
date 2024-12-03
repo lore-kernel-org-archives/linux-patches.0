@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2766F1F7547;
-	Tue,  3 Dec 2024 15:07:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08ABB1F7070;
+	Tue,  3 Dec 2024 15:07:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733238468; cv=none; b=bYLXDr81tawvcJZfeKBtWcwvyPWyFrVgjRV8aTYW0lrsOnsXKvYCFrimgqCqbeKcuDpGUQyMlPOvgrrqWGvDoQiaeMhleN0siF0gTVipSb4hCaHyBoHloupTLLnsPznm5seCfbSQT1OqIkOiGFFT4eZLaW29j39DQMt1+uAAdwI=
+	t=1733238471; cv=none; b=mFVJKEZCaQrxTKg1srRvSoLHE5jpLGC4Ohs1UcNREqTeifC5b0b81JUGY2bfyX3jIRWEtSzJf+iH5WIRj1qvWLAU7TYQa+6nLYSJ36y6Byh0ROEXkh3cCKStRHfTnlcLmikch1MttNawNP7RDcgqumm7qwNDYanH7zNaEIR24Pw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733238468; c=relaxed/simple;
-	bh=Yi4FopZAWLsKfjEMISIR3LBCzTR27EyJkDtdZuATfH0=;
+	s=arc-20240116; t=1733238471; c=relaxed/simple;
+	bh=cKq/fa7Do4iFuPilynyp5ztYzt3DFWBjJ4HG6izOWt0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FIu0XytFS7URBYpOsWmHNM/d7Pe4vHZiGoXdsVRO0yu7Al+FPKNjM0dW+ox+OnV4rnqyEE6ZfVm7EgfzUSFtj3Em3vf2HG4DpmPAu4pcc4JHFRTQHbQII79GjhtDVdJHHakScnVTLasvgY1HnloYugEgsCs9XirTy1JRic/eyV4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bsrnZ7s2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SxUnILyPYl98zid9VN/juUS4sm9hONWRQ9PV1ITckfdrg9OSz0maJUXdhaIR4vZ6qyRUN1AkLAaYuygcSTIkTTaWUgtCVvCCcFWdfgfubtwGFEraNWrGGv63bNmf3cahzKr8TFeFxSEkDPaRzIgTXn8F0twoeCArZ11wvDawMJE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0EA9aYMf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bsrnZ7s2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1C5FC4CECF;
-	Tue,  3 Dec 2024 15:07:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0EA9aYMf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 856E0C4CECF;
+	Tue,  3 Dec 2024 15:07:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733238468;
-	bh=Yi4FopZAWLsKfjEMISIR3LBCzTR27EyJkDtdZuATfH0=;
+	s=korg; t=1733238470;
+	bh=cKq/fa7Do4iFuPilynyp5ztYzt3DFWBjJ4HG6izOWt0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bsrnZ7s2krMfK5/2Tbpc8A64fE9nJxjVrZSH86UCUVu6In6uVoMOBu9u4d4Eboesm
-	 fdYcnF1yXI9WnWNAV9D+AtQmVyIAePBMmRwDUydZUVb+U4gR3qU0mvdjZIhgijCNzG
-	 zKOZ7odby+0i2rG5olsFfjvWWhkN1yOh7D3faADc=
+	b=0EA9aYMfsw4hbySfgxJ6XMOnY5FjWUUq1lH71iwBby3PllnbQLeIDj9mOVjOgcp64
+	 8ksWkRdR6nbTbb0j1p19OjLva90mo+TcjgWtEduy1QPBptCnd9s6BUuqVdRCtGlXSA
+	 N9x/JA0EgQlK1NMuXnPFFMcft8xqitwkoIDlptsY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dipendra Khadka <kdipendra88@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	Andrew Lunn <andrew@lunn.ch>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 288/817] octeontx2-pf: handle otx2_mbox_get_rsp errors in otx2_flows.c
-Date: Tue,  3 Dec 2024 15:37:40 +0100
-Message-ID: <20241203144007.051096480@linuxfoundation.org>
+Subject: [PATCH 6.11 271/817] libbpf: fix sym_is_subprog() logic for weak global subprogs
+Date: Tue,  3 Dec 2024 15:37:23 +0100
+Message-ID: <20241203144006.374872071@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -52,58 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dipendra Khadka <kdipendra88@gmail.com>
+From: Andrii Nakryiko <andrii@kernel.org>
 
-[ Upstream commit bd3110bc102ab6292656b8118be819faa0de8dd0 ]
+[ Upstream commit 4073213488be542f563eb4b2457ab4cbcfc2b738 ]
 
-Adding error pointer check after calling otx2_mbox_get_rsp().
+sym_is_subprog() is incorrectly rejecting relocations against *weak*
+global subprogs. Fix that by realizing that STB_WEAK is also a global
+function.
 
-Fixes: 9917060fc30a ("octeontx2-pf: Cleanup flow rule management")
-Fixes: f0a1913f8a6f ("octeontx2-pf: Add support for ethtool ntuple filters")
-Fixes: 674b3e164238 ("octeontx2-pf: Add additional checks while configuring ucast/bcast/mcast rules")
-Signed-off-by: Dipendra Khadka <kdipendra88@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: Andrew Lunn <andrew@lunn.ch>
+While it seems like verifier doesn't support taking an address of
+non-static subprog right now, it's still best to fix support for it on
+libbpf side, otherwise users will get a very confusing error during BPF
+skeleton generation or static linking due to misinterpreted relocation:
+
+  libbpf: prog 'handle_tp': bad map relo against 'foo' in section '.text'
+  Error: failed to open BPF object file: Relocation failed
+
+It's clearly not a map relocation, but is treated and reported as such
+without this fix.
+
+Fixes: 53eddb5e04ac ("libbpf: Support subprog address relocation")
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/r/20241009011554.880168-1-andrii@kernel.org
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/marvell/octeontx2/nic/otx2_flows.c    | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ tools/lib/bpf/libbpf.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_flows.c b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_flows.c
-index 98c31a16c70b4..58720a161ee24 100644
---- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_flows.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_flows.c
-@@ -119,6 +119,8 @@ int otx2_alloc_mcam_entries(struct otx2_nic *pfvf, u16 count)
+diff --git a/tools/lib/bpf/libbpf.c b/tools/lib/bpf/libbpf.c
+index 22b8317b57036..98a6cc304bb21 100644
+--- a/tools/lib/bpf/libbpf.c
++++ b/tools/lib/bpf/libbpf.c
+@@ -3985,7 +3985,7 @@ static bool sym_is_subprog(const Elf64_Sym *sym, int text_shndx)
+ 		return true;
  
- 		rsp = (struct npc_mcam_alloc_entry_rsp *)otx2_mbox_get_rsp
- 			(&pfvf->mbox.mbox, 0, &req->hdr);
-+		if (IS_ERR(rsp))
-+			goto exit;
+ 	/* global function */
+-	return bind == STB_GLOBAL && type == STT_FUNC;
++	return (bind == STB_GLOBAL || bind == STB_WEAK) && type == STT_FUNC;
+ }
  
- 		for (ent = 0; ent < rsp->count; ent++)
- 			flow_cfg->flow_ent[ent + allocated] = rsp->entry_list[ent];
-@@ -197,6 +199,10 @@ int otx2_mcam_entry_init(struct otx2_nic *pfvf)
- 
- 	rsp = (struct npc_mcam_alloc_entry_rsp *)otx2_mbox_get_rsp
- 	       (&pfvf->mbox.mbox, 0, &req->hdr);
-+	if (IS_ERR(rsp)) {
-+		mutex_unlock(&pfvf->mbox.lock);
-+		return PTR_ERR(rsp);
-+	}
- 
- 	if (rsp->count != req->count) {
- 		netdev_info(pfvf->netdev,
-@@ -232,6 +238,10 @@ int otx2_mcam_entry_init(struct otx2_nic *pfvf)
- 
- 	frsp = (struct npc_get_field_status_rsp *)otx2_mbox_get_rsp
- 	       (&pfvf->mbox.mbox, 0, &freq->hdr);
-+	if (IS_ERR(frsp)) {
-+		mutex_unlock(&pfvf->mbox.lock);
-+		return PTR_ERR(frsp);
-+	}
- 
- 	if (frsp->enable) {
- 		pfvf->flags |= OTX2_FLAG_RX_VLAN_SUPPORT;
+ static int find_extern_btf_id(const struct btf *btf, const char *ext_name)
 -- 
 2.43.0
 
