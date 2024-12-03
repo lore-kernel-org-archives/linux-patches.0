@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2734F1F7584;
-	Tue,  3 Dec 2024 15:33:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A83D11F75B6;
+	Tue,  3 Dec 2024 15:33:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733240036; cv=none; b=VM7cUwRamzoCHV2ach8VkSLpI09JRWgwJKJV21lb/GhzDa7YH8zT8EFNFLy9HjwW05XTcFxZqS+1YPEr8QjZd8aeHtvZMtBm36xm5NVqYCSAR/LgkO1HwHAjiTELRy0yYxOoujrd+Bba9jwLPM8QsT3Lrzopk13USwyXBL85pEs=
+	t=1733240038; cv=none; b=QVx/77Ts0Pp1rzIhaNNjtWrFQox3UcqYUKeynK8uldsaFdk4KhthuVoKwe07eKsvdBjwf2C4H32zO9eRkc161koT6hisW71sLK1hA9VQ3H27qk9yND8FR4FKYFLx8zjSSDt4prQ5Dxq2s/4Pmx7b2+uX7LfYuNYs+0Pcqn0JE8U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733240036; c=relaxed/simple;
-	bh=famLKMmmULrNwF4kQLQh29iTI6ty2QOe9dB39G6mjyk=;
+	s=arc-20240116; t=1733240038; c=relaxed/simple;
+	bh=uJyb7gxqXkIZELQNYCRxul568AnVmgd+vS8EKZ/sApg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MNLZxAy+5KMbvuigW8q9ifhExwVGQzRH0k1qACkhk4Rm/H9EIlYjOAmN6iKJLGz6Gudc2/yvqWEpC24t6F7G+3WMyeZH4mmS7CsIvEsNppmiHFr3SUq2Jt9g/g0YZ6BXcBKf+x/N6ufxo1cb3kp8cGCRRUEYc1hcfAGZ8D99l80=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iccdhsap; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=plQOJpoDQREBIGow3F1jTCkJPkgwt3y3MCzNFWxIcLYVDnTundg5P4DmhCAciG+DIH6cwcvNEYHbs7P9VIwkLNcdi7+ZNhLb1CGkRyL+PvxDvOcFKaztCCsk0vD/wF9pniKQ8vbH3Ov2lMpwUrZ024GWjJBMD7za2Tm3JAMf+s8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VUtaskQo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iccdhsap"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43D5EC4CECF;
-	Tue,  3 Dec 2024 15:33:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VUtaskQo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3079CC4CECF;
+	Tue,  3 Dec 2024 15:33:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733240035;
-	bh=famLKMmmULrNwF4kQLQh29iTI6ty2QOe9dB39G6mjyk=;
+	s=korg; t=1733240038;
+	bh=uJyb7gxqXkIZELQNYCRxul568AnVmgd+vS8EKZ/sApg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iccdhsapx7D/ON9ALK8PGyj6oCPil96jkePlhhCqIP1lykma/RRLWXT6PruGX9dNP
-	 WASg5WlBGEikh9DlkWUzb8ceyz4kz+i1fvO5NyHNcyjtvh9JisOmJb5nrnmlRCaDTc
-	 fgPFtMUGvHO3GnLyk8eIszETHIUNwcp9IFyICtNE=
+	b=VUtaskQoBsZUO1+b6HOMZ+zRrj4DlORhic94H+QrLC49FI+aGwT/EyNl/YDQnAccx
+	 AQ5z71x8Lf08gWXCxSe5CL8kocEXjWA5Q5Q1AuXtvYld5yYMaOLp3OBhPpamU/S0Gl
+	 CX+inGLzTjTpqDPXxv0Qt6SMtWr4hBJUz36tQo9I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qingfang Deng <qingfang.deng@siflower.com.cn>,
-	Zhihao Cheng <chengzhihao1@huawei.com>,
-	Richard Weinberger <richard@nod.at>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 778/817] jffs2: fix use of uninitialized variable
-Date: Tue,  3 Dec 2024 15:45:50 +0100
-Message-ID: <20241203144026.380957167@linuxfoundation.org>
+Subject: [PATCH 6.11 813/817] sh: intc: Fix use-after-free bug in register_intc_controller()
+Date: Tue,  3 Dec 2024 15:46:25 +0100
+Message-ID: <20241203144028.189056375@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -52,55 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qingfang Deng <qingfang.deng@siflower.com.cn>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit 3ba44ee966bc3c41dd8a944f963466c8fcc60dc8 ]
+[ Upstream commit 63e72e551942642c48456a4134975136cdcb9b3c ]
 
-When building the kernel with -Wmaybe-uninitialized, the compiler
-reports this warning:
+In the error handling for this function, d is freed without ever
+removing it from intc_list which would lead to a use after free.
+To fix this, let's only add it to the list after everything has
+succeeded.
 
-In function 'jffs2_mark_erased_block',
-    inlined from 'jffs2_erase_pending_blocks' at fs/jffs2/erase.c:116:4:
-fs/jffs2/erase.c:474:9: warning: 'bad_offset' may be used uninitialized [-Wmaybe-uninitialized]
-  474 |         jffs2_erase_failed(c, jeb, bad_offset);
-      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-fs/jffs2/erase.c: In function 'jffs2_erase_pending_blocks':
-fs/jffs2/erase.c:402:18: note: 'bad_offset' was declared here
-  402 |         uint32_t bad_offset;
-      |                  ^~~~~~~~~~
-
-When mtd->point() is used, jffs2_erase_pending_blocks can return -EIO
-without initializing bad_offset, which is later used at the filebad
-label in jffs2_mark_erased_block.
-Fix it by initializing this variable.
-
-Fixes: 8a0f572397ca ("[JFFS2] Return values of jffs2_block_check_erase error paths")
-Signed-off-by: Qingfang Deng <qingfang.deng@siflower.com.cn>
-Reviewed-by: Zhihao Cheng <chengzhihao1@huawei.com>
-Signed-off-by: Richard Weinberger <richard@nod.at>
+Fixes: 2dcec7a988a1 ("sh: intc: set_irq_wake() support")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+Signed-off-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/jffs2/erase.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ drivers/sh/intc/core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/jffs2/erase.c b/fs/jffs2/erase.c
-index acd32f05b5198..ef3a1e1b6cb06 100644
---- a/fs/jffs2/erase.c
-+++ b/fs/jffs2/erase.c
-@@ -338,10 +338,9 @@ static int jffs2_block_check_erase(struct jffs2_sb_info *c, struct jffs2_erasebl
- 		} while(--retlen);
- 		mtd_unpoint(c->mtd, jeb->offset, c->sector_size);
- 		if (retlen) {
--			pr_warn("Newly-erased block contained word 0x%lx at offset 0x%08tx\n",
--				*wordebuf,
--				jeb->offset +
--				c->sector_size-retlen * sizeof(*wordebuf));
-+			*bad_offset = jeb->offset + c->sector_size - retlen * sizeof(*wordebuf);
-+			pr_warn("Newly-erased block contained word 0x%lx at offset 0x%08x\n",
-+				*wordebuf, *bad_offset);
- 			return -EIO;
- 		}
- 		return 0;
+diff --git a/drivers/sh/intc/core.c b/drivers/sh/intc/core.c
+index 74350b5871dc8..ea571eeb30787 100644
+--- a/drivers/sh/intc/core.c
++++ b/drivers/sh/intc/core.c
+@@ -209,7 +209,6 @@ int __init register_intc_controller(struct intc_desc *desc)
+ 		goto err0;
+ 
+ 	INIT_LIST_HEAD(&d->list);
+-	list_add_tail(&d->list, &intc_list);
+ 
+ 	raw_spin_lock_init(&d->lock);
+ 	INIT_RADIX_TREE(&d->tree, GFP_ATOMIC);
+@@ -369,6 +368,7 @@ int __init register_intc_controller(struct intc_desc *desc)
+ 
+ 	d->skip_suspend = desc->skip_syscore_suspend;
+ 
++	list_add_tail(&d->list, &intc_list);
+ 	nr_intc_controllers++;
+ 
+ 	return 0;
 -- 
 2.43.0
 
