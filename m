@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 025091F6698;
-	Tue,  3 Dec 2024 14:36:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C8F41F706A;
+	Tue,  3 Dec 2024 14:36:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733236588; cv=none; b=kDPdYGMV5u9ovliDfwReg0JCOkyJ0uSsG7m9cCORoZsXozTXACBgNSKn3bFInOk46xhP3Ktu3t3Of9U4e+JSfLS0FIk+Pt0j3EErM+4z/xNXlaDEn781Yv1HmTjIyg8H2QC2hPpNYgJvkgAd+c3hXlA1nQRask68My6k09nYnR4=
+	t=1733236591; cv=none; b=cNeGNghZTdlug4jOrpLADbrKrYEdGzoBFWGtdVxAxkI4u5MhyBkfjIB9S091pN18l30X8RTcrkLs3yRlVpcvxZ7GPqq0FVmMF9BJM/Xump14IYVKqBJKRbkM+EvzXhUa5+mxn82jOMig6DRh/adIYlw7hard1FbAJpHV1damphs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733236588; c=relaxed/simple;
-	bh=8UIKQwA/+tZopp8hVBrA6ngJgdGKUkv1ItXGl7qdqME=;
+	s=arc-20240116; t=1733236591; c=relaxed/simple;
+	bh=qVztrk/BZK3Nm7mSUVxID7RUlwuMHo99WkVgcYbNU3I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=gLU91hjNpGgUY4bYO4qgbT8DfNFpH0y7sSlXqwmOxtgykmSmTYkFOTu0IRSzTeaxI8ZuC0D1N8Lv9Ehs394e5aEXisyWZvQMEBlXAGZxuMBAbSyurcQcvkmuaW4ElW8Ey82ZIQBrb0k6hY1yyAAu4qCgEFmADhtLaVGOhjEucEY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JG86vYhE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Txtmy+ItB7vU0q7C0LJfvtEf8oKwdbF8QuiDS2WLNCVxEQPkdU9xnCutKgUh0r5WwJ2WK8jnEknw0isRfyd5C9x/syWq3XmGcEIAjevAVKMKFm9UdR+RRpYE5ZM8uf+aU0sJ64jR2ChIsw0yFDhE0AExvDLb8Ud8Jo0zr2yy0XA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rPj+4zKA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JG86vYhE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6891CC4CED8;
-	Tue,  3 Dec 2024 14:36:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rPj+4zKA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3D48C4CECF;
+	Tue,  3 Dec 2024 14:36:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733236587;
-	bh=8UIKQwA/+tZopp8hVBrA6ngJgdGKUkv1ItXGl7qdqME=;
+	s=korg; t=1733236591;
+	bh=qVztrk/BZK3Nm7mSUVxID7RUlwuMHo99WkVgcYbNU3I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JG86vYhEg30H4s1LHh+vd5IdFnDszRLs7GbefO9JMHeb0VGhN9a4t13+7g8yeiiR5
-	 xULE70Pjq8B95RzjP/6T2GhJdWAFdOP39DbBqjJUpcKnnpYfU5PI4sLRI5Dw2k9tSs
-	 XCT8i0TjeRDQdrVr+J8tZofN8QbXW506HDA7o0iE=
+	b=rPj+4zKArkopVR/RtcqOPqLJaZfO5v0pG1+dbwuY2OetFj/LhGFwntvdBGFglJo1E
+	 62mkijgSoAMNv0PIalMP26x4ocbSyBfstTZKZrT7UVLNI5ESyONp7jWzOf7CNeytEy
+	 Zri4ctqYO/PgzOXXrQRRButQghxA+HPq2e+WI5qM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+	Andre Przywara <andre.przywara@arm.com>,
+	Chen-Yu Tsai <wens@csie.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 032/138] mmc: mmc_spi: drop buggy snprintf()
-Date: Tue,  3 Dec 2024 15:31:01 +0100
-Message-ID: <20241203141924.785040768@linuxfoundation.org>
+Subject: [PATCH 4.19 033/138] ARM: dts: cubieboard4: Fix DCDC5 regulator constraints
+Date: Tue,  3 Dec 2024 15:31:02 +0100
+Message-ID: <20241203141924.823129598@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203141923.524658091@linuxfoundation.org>
 References: <20241203141923.524658091@linuxfoundation.org>
@@ -46,68 +45,60 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 4.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+From: Andre Przywara <andre.przywara@arm.com>
 
-[ Upstream commit 328bda09cc91b3d93bc64f4a4dadc44313dd8140 ]
+[ Upstream commit dd36ad71ad65968f97630808bc8d605c929b128e ]
 
-GCC 13 complains about the truncated output of snprintf():
+The DCDC5 voltage rail in the X-Powers AXP809 PMIC has a resolution of
+50mV, so the currently enforced limits of 1.475 and 1.525 volts cannot
+be set, when the existing regulator value is beyond this range.
 
-drivers/mmc/host/mmc_spi.c: In function ‘mmc_spi_response_get’:
-drivers/mmc/host/mmc_spi.c:227:64: error: ‘snprintf’ output may be truncated before the last format character [-Werror=format-truncation=]
-  227 |         snprintf(tag, sizeof(tag), "  ... CMD%d response SPI_%s",
-      |                                                                ^
-drivers/mmc/host/mmc_spi.c:227:9: note: ‘snprintf’ output between 26 and 43 bytes into a destination of size 32
-  227 |         snprintf(tag, sizeof(tag), "  ... CMD%d response SPI_%s",
-      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  228 |                 cmd->opcode, maptype(cmd));
+This will lead to the whole regulator driver to give up and fail
+probing, which in turn will hang the system, as essential devices depend
+on the PMIC.
+In this case a bug in U-Boot set the voltage to 1.75V (meant for DCDC4),
+and the AXP driver's attempt to correct this lead to this error:
+==================
+[    4.447653] axp20x-rsb sunxi-rsb-3a3: AXP20X driver loaded
+[    4.450066] vcc-dram: Bringing 1750000uV into 1575000-1575000uV
+[    4.460272] vcc-dram: failed to apply 1575000-1575000uV constraint: -EINVAL
+[    4.474788] axp20x-regulator axp20x-regulator.0: Failed to register dcdc5
+[    4.482276] axp20x-regulator axp20x-regulator.0: probe with driver axp20x-regulator failed with error -22
+==================
 
-Drop it and fold the string it generates into the only place where it's
-emitted - the dev_dbg() call at the end of the function.
+Set the limits to values that can be programmed, so any correction will
+be successful.
 
-Fixes: 15a0580ced08 ("mmc_spi host driver")
-Suggested-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Link: https://lore.kernel.org/r/20241008160134.69934-1-brgl@bgdev.pl
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Andre Przywara <andre.przywara@arm.com>
+Fixes: 1e1dea72651b ("ARM: dts: sun9i: cubieboard4: Add AXP809 PMIC device node and regulators")
+Link: https://patch.msgid.link/20241007222916.19013-1-andre.przywara@arm.com
+Signed-off-by: Chen-Yu Tsai <wens@csie.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/mmc_spi.c | 9 +++------
- 1 file changed, 3 insertions(+), 6 deletions(-)
+ arch/arm/boot/dts/sun9i-a80-cubieboard4.dts | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/mmc/host/mmc_spi.c b/drivers/mmc/host/mmc_spi.c
-index 24795454d1066..008a47842de0a 100644
---- a/drivers/mmc/host/mmc_spi.c
-+++ b/drivers/mmc/host/mmc_spi.c
-@@ -269,10 +269,6 @@ static int mmc_spi_response_get(struct mmc_spi_host *host,
- 	u8 	leftover = 0;
- 	unsigned short rotator;
- 	int 	i;
--	char	tag[32];
--
--	snprintf(tag, sizeof(tag), "  ... CMD%d response SPI_%s",
--		cmd->opcode, maptype(cmd));
+diff --git a/arch/arm/boot/dts/sun9i-a80-cubieboard4.dts b/arch/arm/boot/dts/sun9i-a80-cubieboard4.dts
+index 85da85faf869a..0e37ae46348ad 100644
+--- a/arch/arm/boot/dts/sun9i-a80-cubieboard4.dts
++++ b/arch/arm/boot/dts/sun9i-a80-cubieboard4.dts
+@@ -253,8 +253,8 @@ reg_dcdc4: dcdc4 {
  
- 	/* Except for data block reads, the whole response will already
- 	 * be stored in the scratch buffer.  It's somewhere after the
-@@ -422,8 +418,9 @@ static int mmc_spi_response_get(struct mmc_spi_host *host,
- 	}
+ 			reg_dcdc5: dcdc5 {
+ 				regulator-always-on;
+-				regulator-min-microvolt = <1425000>;
+-				regulator-max-microvolt = <1575000>;
++				regulator-min-microvolt = <1450000>;
++				regulator-max-microvolt = <1550000>;
+ 				regulator-name = "vcc-dram";
+ 			};
  
- 	if (value < 0)
--		dev_dbg(&host->spi->dev, "%s: resp %04x %08x\n",
--			tag, cmd->resp[0], cmd->resp[1]);
-+		dev_dbg(&host->spi->dev,
-+			"  ... CMD%d response SPI_%s: resp %04x %08x\n",
-+			cmd->opcode, maptype(cmd), cmd->resp[0], cmd->resp[1]);
- 
- 	/* disable chipselect on errors and some success cases */
- 	if (value >= 0 && cs_on)
 -- 
 2.43.0
 
