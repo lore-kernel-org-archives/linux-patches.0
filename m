@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7426074BE1;
-	Tue,  3 Dec 2024 16:08:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD07A1F12F7;
+	Tue,  3 Dec 2024 16:09:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733242134; cv=none; b=H7yDjHeOJ14MJO85HEu3vwQHQLML3jWohKmqA9Hs/Aj1JQx4nDg/UV2bSiaeBGCXSkY93LqWo21nyjbiTFzT5YyP1rjwtnzpIWUdQWI2YpuNwapS7294hq2elH2n0iu9YXkn4bXC6/gx6fklK1SyNJnkrnLeL6szzWsspiRiQjQ=
+	t=1733242142; cv=none; b=eIR79XEvGxsLSY42eS+O/npOPYlqXWgsNEnvRd/TEub8WaFOaGwkhuqwfWEZ8od4Sk1ARaJ2KJQHUpCFk74SBl80u6Y1dfUjRlclyUWAYyAvdshyWJFoxTpqUyj7Hin+mbkPfxI9QLoLvW2ugwV1Da26vFW97JEiz5hKogqgSTQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733242134; c=relaxed/simple;
-	bh=x1Z2qTaEnGlLZpCk6HKP5yxOXMKicNNBDRsHRVT5Nt8=;
+	s=arc-20240116; t=1733242142; c=relaxed/simple;
+	bh=Eo/kUvmhHG7DeT4kh/PRIfA4pasyiCzsFyTx6qWfwWs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OXrcNSJxPDC5lsT2aH3jd9xNQA3NAT9C6Nq8X+RQzYycY7tB3vUe6Q1tAZAaaUfLqRoNupt/MuDGC2m1Wu6K8pBV1GT3gXJGF9Cchzns5CMYgDYxO9O48LGx6qvMHAkGOEJ7QgNqFwlOwJelMm63dczIpHOPXZ9DbCV3fY1Gy+I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=necGDxWU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JBBqDvvHOHaqw3H+loLM1/RKX8wMMRGDFu9VwE0abBPmJArFWYdcJh2ZJlN2d4QbauTJwgCHLHkBpU2uXjKoPaFT3RCZpDLmP7qYOdm5q5ZzWIavSoXr8bnonNkvk4HRPlgbUZOD6uBizG2KxYfXLy5V1b5kZ7oG6tZ1vwti4WU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CrNrwsBp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="necGDxWU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8A21C4CECF;
-	Tue,  3 Dec 2024 16:08:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CrNrwsBp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D6E2C4CECF;
+	Tue,  3 Dec 2024 16:09:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733242134;
-	bh=x1Z2qTaEnGlLZpCk6HKP5yxOXMKicNNBDRsHRVT5Nt8=;
+	s=korg; t=1733242142;
+	bh=Eo/kUvmhHG7DeT4kh/PRIfA4pasyiCzsFyTx6qWfwWs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=necGDxWU6ouh05KYX6OUmwTzpiJ4MDtLNJplmn4nQ5BQfEWVs5PQKFEs/X0y+m2CO
-	 vGTrjthQRh13UHwkuowXJpsOizUVHxDi6Q/z2sRmMqepdsRuy3Q5y7G2mnJUd0UBkk
-	 jH285aeYEq3mAAv7/9rqfIlOSo+Our3XYPB3oL78=
+	b=CrNrwsBp7d3qVIl+edAgivEDwe9bLB2a84m8oa7LwArh/Vf+SOEozpqHeUqY3izP7
+	 ocsP/YS563B13KyRa4bCtRsW4gBnM2S479GhUD3HJZED/RrS7dwibNkmM/Lmtp4h9E
+	 NnKSHWe6AEYhQMdWR5dqi4nlDt4xS1miVHYRX/Xo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liu Jian <liujian56@huawei.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
-	Eric Dumazet <edumazet@google.com>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
+	Somnath Kotur <somnath.kotur@broadcom.com>,
+	Shravya KN <shravya.k-n@broadcom.com>,
+	Michael Chan <michael.chan@broadcom.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 587/826] tcp: Fix use-after-free of nreq in reqsk_timer_handler().
-Date: Tue,  3 Dec 2024 15:45:14 +0100
-Message-ID: <20241203144806.647305030@linuxfoundation.org>
+Subject: [PATCH 6.12 578/826] bnxt_en: Set backplane link modes correctly for ethtool
+Date: Tue,  3 Dec 2024 15:45:05 +0100
+Message-ID: <20241203144806.298033972@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -55,47 +53,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Shravya KN <shravya.k-n@broadcom.com>
 
-[ Upstream commit c31e72d021db2714df03df6c42855a1db592716c ]
+[ Upstream commit 5007991670941c132fb3bc0484c009cf4bcea30f ]
 
-The cited commit replaced inet_csk_reqsk_queue_drop_and_put() with
-__inet_csk_reqsk_queue_drop() and reqsk_put() in reqsk_timer_handler().
+Use the return value from bnxt_get_media() to determine the port and
+link modes.  bnxt_get_media() returns the proper BNXT_MEDIA_KR when
+the PHY is backplane.  This will correct the ethtool settings for
+backplane devices.
 
-Then, oreq should be passed to reqsk_put() instead of req; otherwise
-use-after-free of nreq could happen when reqsk is migrated but the
-retry attempt failed (e.g. due to timeout).
-
-Let's pass oreq to reqsk_put().
-
-Fixes: e8c526f2bdf1 ("tcp/dccp: Don't use timer_pending() in reqsk_queue_unlink().")
-Reported-by: Liu Jian <liujian56@huawei.com>
-Closes: https://lore.kernel.org/netdev/1284490f-9525-42ee-b7b8-ccadf6606f6d@huawei.com/
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
-Reviewed-by: Liu Jian <liujian56@huawei.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Martin KaFai Lau <martin.lau@kernel.org>
-Link: https://patch.msgid.link/20241123174236.62438-1-kuniyu@amazon.com
+Fixes: 5d4e1bf60664 ("bnxt_en: extend media types to supported and autoneg modes")
+Reviewed-by: Somnath Kotur <somnath.kotur@broadcom.com>
+Signed-off-by: Shravya KN <shravya.k-n@broadcom.com>
+Signed-off-by: Michael Chan <michael.chan@broadcom.com>
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/inet_connection_sock.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/net/ipv4/inet_connection_sock.c b/net/ipv4/inet_connection_sock.c
-index 2b698f8419fe2..fe7947f774062 100644
---- a/net/ipv4/inet_connection_sock.c
-+++ b/net/ipv4/inet_connection_sock.c
-@@ -1189,7 +1189,7 @@ static void reqsk_timer_handler(struct timer_list *t)
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c b/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c
+index f71cc8188b4e5..20ba14eb87e00 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c
+@@ -2838,19 +2838,24 @@ static int bnxt_get_link_ksettings(struct net_device *dev,
+ 	}
  
- drop:
- 	__inet_csk_reqsk_queue_drop(sk_listener, oreq, true);
--	reqsk_put(req);
-+	reqsk_put(oreq);
- }
+ 	base->port = PORT_NONE;
+-	if (link_info->media_type == PORT_PHY_QCFG_RESP_MEDIA_TYPE_TP) {
++	if (media == BNXT_MEDIA_TP) {
+ 		base->port = PORT_TP;
+ 		linkmode_set_bit(ETHTOOL_LINK_MODE_TP_BIT,
+ 				 lk_ksettings->link_modes.supported);
+ 		linkmode_set_bit(ETHTOOL_LINK_MODE_TP_BIT,
+ 				 lk_ksettings->link_modes.advertising);
++	} else if (media == BNXT_MEDIA_KR) {
++		linkmode_set_bit(ETHTOOL_LINK_MODE_Backplane_BIT,
++				 lk_ksettings->link_modes.supported);
++		linkmode_set_bit(ETHTOOL_LINK_MODE_Backplane_BIT,
++				 lk_ksettings->link_modes.advertising);
+ 	} else {
+ 		linkmode_set_bit(ETHTOOL_LINK_MODE_FIBRE_BIT,
+ 				 lk_ksettings->link_modes.supported);
+ 		linkmode_set_bit(ETHTOOL_LINK_MODE_FIBRE_BIT,
+ 				 lk_ksettings->link_modes.advertising);
  
- static bool reqsk_queue_hash_req(struct request_sock *req,
+-		if (link_info->media_type == PORT_PHY_QCFG_RESP_MEDIA_TYPE_DAC)
++		if (media == BNXT_MEDIA_CR)
+ 			base->port = PORT_DA;
+ 		else
+ 			base->port = PORT_FIBRE;
 -- 
 2.43.0
 
