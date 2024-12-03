@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2842F1F669E;
-	Tue,  3 Dec 2024 14:56:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9DB41DE2A1;
+	Tue,  3 Dec 2024 14:56:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733237806; cv=none; b=QqTaxN2KUh+9eDXJoIdL2DyWt6ZrgqdO6CU7ZLKVjwo/UpMSMcYDDMDgARFpuc9dIjMwy9vilECwnqQiwK614qQgjzq7kDA6Glty86WBxeLt+HaEtGyorx0UW6QSexoFQlSVhfuhNAILyLf3QhOANAEjm39e50Er07EwFRmdNOI=
+	t=1733237809; cv=none; b=rjr+lbnvKkguMI8uhRsUEdZkbuD0833QxNKLgn8EvmSBa+QPgX7Z/XKpznPQMTfMoYvV8pu3A5hoV+34Qb1VbTeFMJ5sUaYfAuIcJz0JlwG+mBIfSlEbpiVm28QtkgOmiHyln1N0xiuEUD4z7VkrqAGdxBNBINirrwoL0xXXePM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733237806; c=relaxed/simple;
-	bh=EQTOsZVFhUzK/TSHlrs5HdYCW6AShYi9RZLicdBe8mc=;
+	s=arc-20240116; t=1733237809; c=relaxed/simple;
+	bh=5jVhojByZ2RiCQM21qZnjkbE0k92n2F9l0JJS3NpUlU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZQfDM7UKE5r/6bg1ciBDG3WZPSYsmEvRhZBeUym9D+0i23rZZ/iXBjK4/6znhe5h0BtQVm+4BpUOsrFKwBtquI+DOlolPiQozCy2G65CYh6c6w030zDGl+uSBwSFYozX5/urIg8+Q12z/EztvigBsmcRsIVywBEV/T3G4sgjMCs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VIlJsvrx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bg7ZcM3uNt35LMLGQ5RmDmr/HWkX9Ro/b88uRIZjpsI+XcfqTBZUZHABLob4mV5Cvqf1oyUXrxi7HTRwW2FotzI32hARqSTcECrnNuoKl2BqK6n6ETwlSBN9QsiMP4TIvJ9ZuFdLHChl8YKrlRWpdRNed2K/q8Eofsn12p4WRRg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uoJV72sF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VIlJsvrx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90752C4CECF;
-	Tue,  3 Dec 2024 14:56:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uoJV72sF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D304DC4CECF;
+	Tue,  3 Dec 2024 14:56:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733237805;
-	bh=EQTOsZVFhUzK/TSHlrs5HdYCW6AShYi9RZLicdBe8mc=;
+	s=korg; t=1733237809;
+	bh=5jVhojByZ2RiCQM21qZnjkbE0k92n2F9l0JJS3NpUlU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VIlJsvrxINohN7kF/GFxw7PwkNwIU+QDDWLXC11pGzzYYpP2MFS2h7cyTeOQa/CAK
-	 s+BeyqUbhftsSplsd4R+IHQmsuW5YCJGUEV+9K2h6YJTVH2AwCgP/mqoEfzKdqhHIS
-	 djY3gs17TQvXxnoS/NVwbTkxzkczEbJNW/3oDXEQ=
+	b=uoJV72sFJBKFKUfVng3bW9quPlXt2jg9q6XkDsnzgjez5rCMaqy5ZgNJnFx+JXQgM
+	 lWxVsohW7gkKH7C+ep6X8kwy63j32IgOwODIjQ6PUrOYwh/FV0DRuDE/hqMFngUZc2
+	 W/c14IvzUVNTqhM9pjv25rUkzaOdGn0vpxMzAgeY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zizhi Wo <wozizhi@huawei.com>,
-	David Howells <dhowells@redhat.com>,
-	Christian Brauner <brauner@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Hans Holmberg <hans.holmberg@wdc.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 076/817] netfs/fscache: Add a memory barrier for FSCACHE_VOLUME_CREATING
-Date: Tue,  3 Dec 2024 15:34:08 +0100
-Message-ID: <20241203143958.658380208@linuxfoundation.org>
+Subject: [PATCH 6.11 077/817] block: constify the lim argument to queue_limits_max_zone_append_sectors
+Date: Tue,  3 Dec 2024 15:34:09 +0100
+Message-ID: <20241203143958.697315848@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -52,65 +53,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zizhi Wo <wozizhi@huawei.com>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit 22f9400a6f3560629478e0a64247b8fcc811a24d ]
+[ Upstream commit 379b122a3ec8033aa43cb70e8ecb6fb7f98aa68f ]
 
-In fscache_create_volume(), there is a missing memory barrier between the
-bit-clearing operation and the wake-up operation. This may cause a
-situation where, after a wake-up, the bit-clearing operation hasn't been
-detected yet, leading to an indefinite wait. The triggering process is as
-follows:
+queue_limits_max_zone_append_sectors doesn't change the lim argument,
+so mark it as const.
 
-  [cookie1]                [cookie2]                  [volume_work]
-fscache_perform_lookup
-  fscache_create_volume
-                        fscache_perform_lookup
-                          fscache_create_volume
-			                        fscache_create_volume_work
-                                                  cachefiles_acquire_volume
-                                                  clear_and_wake_up_bit
-    test_and_set_bit
-                            test_and_set_bit
-                              goto maybe_wait
-      goto no_wait
-
-In the above process, cookie1 and cookie2 has the same volume. When cookie1
-enters the -no_wait- process, it will clear the bit and wake up the waiting
-process. If a barrier is missing, it may cause cookie2 to remain in the
--wait- process indefinitely.
-
-In commit 3288666c7256 ("fscache: Use clear_and_wake_up_bit() in
-fscache_create_volume_work()"), barriers were added to similar operations
-in fscache_create_volume_work(), but fscache_create_volume() was missed.
-
-By combining the clear and wake operations into clear_and_wake_up_bit() to
-fix this issue.
-
-Fixes: bfa22da3ed65 ("fscache: Provide and use cache methods to lookup/create/free a volume")
-Signed-off-by: Zizhi Wo <wozizhi@huawei.com>
-Link: https://lore.kernel.org/r/20241107110649.3980193-6-wozizhi@huawei.com
-Acked-by: David Howells <dhowells@redhat.com>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Tested-by: Hans Holmberg <hans.holmberg@wdc.com>
+Reviewed-by: Hans Holmberg <hans.holmberg@wdc.com>
+Link: https://lore.kernel.org/r/20240826173820.1690925-3-hch@lst.de
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/netfs/fscache_volume.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ include/linux/blkdev.h | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/fs/netfs/fscache_volume.c b/fs/netfs/fscache_volume.c
-index cb75c07b5281a..ced14ac78cc1c 100644
---- a/fs/netfs/fscache_volume.c
-+++ b/fs/netfs/fscache_volume.c
-@@ -322,8 +322,7 @@ void fscache_create_volume(struct fscache_volume *volume, bool wait)
- 	}
- 	return;
- no_wait:
--	clear_bit_unlock(FSCACHE_VOLUME_CREATING, &volume->flags);
--	wake_up_bit(&volume->flags, FSCACHE_VOLUME_CREATING);
-+	clear_and_wake_up_bit(FSCACHE_VOLUME_CREATING, &volume->flags);
+diff --git a/include/linux/blkdev.h b/include/linux/blkdev.h
+index b7664d593486a..643c9020a35a6 100644
+--- a/include/linux/blkdev.h
++++ b/include/linux/blkdev.h
+@@ -1187,7 +1187,8 @@ static inline unsigned int queue_max_segment_size(const struct request_queue *q)
+ 	return q->limits.max_segment_size;
  }
  
- /*
+-static inline unsigned int queue_limits_max_zone_append_sectors(struct queue_limits *l)
++static inline unsigned int
++queue_limits_max_zone_append_sectors(const struct queue_limits *l)
+ {
+ 	unsigned int max_sectors = min(l->chunk_sectors, l->max_hw_sectors);
+ 
 -- 
 2.43.0
 
