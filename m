@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 096441F75B3;
-	Tue,  3 Dec 2024 15:13:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE38A1F893B;
+	Tue,  3 Dec 2024 15:13:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733238837; cv=none; b=WJOHqBBN38vfN31GrCNyHEhus8FrwGV4awmsXvRKtqLmpGhVm95APPoPsiTMUeOqP+VCshi/yBNZJDrSwfGYaeX61WqAEwImj7UQEoXqnnq9udUR3k21s5FiYbnB6br/72cx2jmZVZNDK2/DzNHH9h8hQGnu+yQ/I6w7njkXius=
+	t=1733238839; cv=none; b=SL2nkTPw1MQTQX/y+xHKvBXS5vC0RDFndYkjfcuep2Q9oglH34zX8H4FeBsH3Bsse7R/R+5utuJ/YCMYc2bXJKJDg+hQdBLhKRRT6LhHrWjcd4I0Lkxbu3+U+3uzdLPvk+ZrJE+4PIMCJ8NuLrJlX/JYkNQp6OFmvi9ST08uuXg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733238837; c=relaxed/simple;
-	bh=263pwEM8s73w7/afPP/zY5st0A8pfAm6qC3VteUJdos=;
+	s=arc-20240116; t=1733238839; c=relaxed/simple;
+	bh=1d6aBCRAsLl9TN0rvC1ZIzZWYaXvMMW9Dd3UgP3qizU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u5iILvmbxAs7qw/d6lqWrh7euX0knQB6YYfwsP4FbCRED5AkTKGxr98L980Cf4FMW8qTWC0DDGMJosc8deTdoayJnYBvDqRoJ4YU4DGOjSUe7dvizZg0bIQidpICLb5mk56z/fO82iG4ybTdeBWuyCtgY2Azp0bmLUCObODQyQU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A/ot4Zao; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bmEv5rGoDqlnHA0xJavKGaJ9iX0OrVitL0J9iAKvdRoBhzMCP87S08FAMONZoTPeu3788UKvxxZRfPtAu64IMQsl74y0sfLQyDD573P3sAe4wtp9bOPGi5wmhc12RddFCpyXkTuX1X5yQfFz/Yjr6xZyFq0XjvSkmwlCSUzAbvA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oO2N8p5G; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A/ot4Zao"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82FBEC4CECF;
-	Tue,  3 Dec 2024 15:13:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oO2N8p5G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4780BC4CECF;
+	Tue,  3 Dec 2024 15:13:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733238836;
-	bh=263pwEM8s73w7/afPP/zY5st0A8pfAm6qC3VteUJdos=;
+	s=korg; t=1733238839;
+	bh=1d6aBCRAsLl9TN0rvC1ZIzZWYaXvMMW9Dd3UgP3qizU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A/ot4ZaoEfr8FroRcaAzNmO7IYoTocYax/oR2i6bOgIsIKI9BUPYJsx+4euSPUClt
-	 YNY7QqbJk2L4Ln3MmVqIcMMAIeIjvziYmcXQ7EE3mZ+gGBrT7W84fTptoT7W2zPJA2
-	 b5pwgRleu4sTrZ587WYqzpl+6iSV48PiMciSdjvs=
+	b=oO2N8p5GW6LJWV8jtIg6jaK8K4ZyRuvEyTEghe7Uw1p2CWV/Kxk5cHvSQZKvUZXO/
+	 owTC5/WBqkFRZlz9YFUiigWnD3VyDTm/nUg8bJrE+CbFDBGBjA2NtPNPJt3krWDTyb
+	 XTJXybh959VzdVzQCSIW7lHVJ/xVXytiX6tlFU/o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinjie Ruan <ruanjinjie@huawei.com>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
+	Yuyu Li <liyuyu6@huawei.com>,
+	Junxian Huang <huangjunxian6@hisilicon.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 406/817] cpufreq: CPPC: Fix possible null-ptr-deref for cppc_get_cpu_cost()
-Date: Tue,  3 Dec 2024 15:39:38 +0100
-Message-ID: <20241203144011.722493001@linuxfoundation.org>
+Subject: [PATCH 6.11 415/817] RDMA/hns: Modify debugfs name
+Date: Tue,  3 Dec 2024 15:39:47 +0100
+Message-ID: <20241203144012.078909914@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -51,36 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinjie Ruan <ruanjinjie@huawei.com>
+From: Yuyu Li <liyuyu6@huawei.com>
 
-[ Upstream commit 1a1374bb8c5926674973d849feed500bc61ad535 ]
+[ Upstream commit 370a9351bf84afc5a56a3f02ba3805bbfcb53c32 ]
 
-cpufreq_cpu_get_raw() may return NULL if the cpu is not in
-policy->cpus cpu mask and it will cause null pointer dereference,
-so check NULL for cppc_get_cpu_cost().
+The sub-directory of hns_roce debugfs is named after the device's
+kernel name currently, but it will be inconvenient to use when
+the device is renamed.
 
-Fixes: 740fcdc2c20e ("cpufreq: CPPC: Register EM based on efficiency class information")
-Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+Modify the name to pci name as users can always easily find the
+correspondence between an RDMA device and its pci name.
+
+Fixes: eb7854d63db5 ("RDMA/hns: Support SW stats with debugfs")
+Signed-off-by: Yuyu Li <liyuyu6@huawei.com>
+Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
+Link: https://patch.msgid.link/20241024124000.2931869-4-huangjunxian6@hisilicon.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/cppc_cpufreq.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/infiniband/hw/hns/hns_roce_debugfs.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/cpufreq/cppc_cpufreq.c b/drivers/cpufreq/cppc_cpufreq.c
-index 32045075c596f..00556b4d83f83 100644
---- a/drivers/cpufreq/cppc_cpufreq.c
-+++ b/drivers/cpufreq/cppc_cpufreq.c
-@@ -493,6 +493,9 @@ static int cppc_get_cpu_cost(struct device *cpu_dev, unsigned long KHz,
- 	int step;
+diff --git a/drivers/infiniband/hw/hns/hns_roce_debugfs.c b/drivers/infiniband/hw/hns/hns_roce_debugfs.c
+index e8febb40f6450..b869cdc541189 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_debugfs.c
++++ b/drivers/infiniband/hw/hns/hns_roce_debugfs.c
+@@ -5,6 +5,7 @@
  
- 	policy = cpufreq_cpu_get_raw(cpu_dev->id);
-+	if (!policy)
-+		return 0;
-+
- 	cpu_data = policy->driver_data;
- 	perf_caps = &cpu_data->perf_caps;
- 	max_cap = arch_scale_cpu_capacity(cpu_dev->id);
+ #include <linux/debugfs.h>
+ #include <linux/device.h>
++#include <linux/pci.h>
+ 
+ #include "hns_roce_device.h"
+ 
+@@ -86,7 +87,7 @@ void hns_roce_register_debugfs(struct hns_roce_dev *hr_dev)
+ {
+ 	struct hns_roce_dev_debugfs *dbgfs = &hr_dev->dbgfs;
+ 
+-	dbgfs->root = debugfs_create_dir(dev_name(&hr_dev->ib_dev.dev),
++	dbgfs->root = debugfs_create_dir(pci_name(hr_dev->pci_dev),
+ 					 hns_roce_dbgfs_root);
+ 
+ 	create_sw_stat_debugfs(hr_dev, dbgfs->root);
 -- 
 2.43.0
 
