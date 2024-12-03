@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB1CE1EE001;
-	Tue,  3 Dec 2024 15:24:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B22E52D7BF;
+	Tue,  3 Dec 2024 15:24:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733239468; cv=none; b=QLn9kA1JsVofXuHKzpcqXnYGoqIXhgHIuK7prTunFfBjmAk+HKD21EHsfsRs3jZqZ6QzoiDk0J/DEXsAixmFZoBxcFh5yBWtaI6sSaI9KV9pc5JkjjBi40dFAPs2GnjV2HRmsnZVkr5LMRvpd9O9wGvtSK+9fVWyMeMZ79Fy268=
+	t=1733239471; cv=none; b=EGomRymEVzdlLzef8AEKFInU+oOWKPGRee7B+/6S5z6H5Cx49Ry9Sqfnf7vEV5JGbeFeu86uLpax+ZrYZNuvGmwI2YwvX0xp9INrey2TJP7Qax3nwvjMnGVwgOr6uKvN/H0+oyP4klHSdr6dee3zqwqxLC2KPqFDl/82ur2I5wM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733239468; c=relaxed/simple;
-	bh=L4txhazBCD/sbpctuQ1DjYAJBFd/5zR6qDPDzE8UANM=;
+	s=arc-20240116; t=1733239471; c=relaxed/simple;
+	bh=bIH1DQ/EmuhHrVVY87X4xLLY+A/Eeoo8vB0ne8KvVRc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DXAckZ16R9MHnvdthQLrFSlarqZiXnGd1qmQ83BjEI/rJWke1ZRqByWIsj5jYdYvXWtsS571D7xO467r9ijNuZy2yy6iFoe7HArqGx+MElU6tg3yQbycT6HJ6BVH4jl5J8Ymk6FbHGI0N/sr5LGCRZOkde3uFPhx8MoV3l9YHt0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t8W/1KOm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YNemvIY8zXFoHAbpwJYYGs3a75E36AaZPT+AIJ9burS7pvjw3x0sI2F9HlCaBLSf2v/Q+rYx2acWpxquegofAsTH4Smy8jHQ7HGlkr3ahc0wedc3ZPIMgqxG3adlcIpsXB6GUcMWKlnq4aobj+qEbafgpr+IfSF6bho4OYybCGA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bx8BrNl3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t8W/1KOm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52969C4CECF;
-	Tue,  3 Dec 2024 15:24:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bx8BrNl3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A2BDC4CED6;
+	Tue,  3 Dec 2024 15:24:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733239468;
-	bh=L4txhazBCD/sbpctuQ1DjYAJBFd/5zR6qDPDzE8UANM=;
+	s=korg; t=1733239471;
+	bh=bIH1DQ/EmuhHrVVY87X4xLLY+A/Eeoo8vB0ne8KvVRc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t8W/1KOmLdHMrUiyWkTpOkQUbUkl1DEgYiuYy7ku5OJ0YMFNE1/uQ2t0xoeibF0JZ
-	 zldkbRl6K+q9BsxOyhhlshVIQCu4MbQTFd1odfKWbJIwYWuJzcw5I5bfSxC4rXiviJ
-	 PmzV9OYCVBhegFAfIh636SN76T1FFVO5QiusFmVg=
+	b=bx8BrNl3XasBoZMDcv+tfOw/bHwFTYcD9oNe/rMjURAMyFPJ23zBezSoWuT4l4C7X
+	 QKc32TIjRCcbFeZgae+ygRoMLHZhAqQERSi5nEjST+KOse4IOi+kU/WNzgqG1qyPjq
+	 nMgx0wz7Gw4ecWWBp1It9Mfflhuq0iL5tQ0O8KMQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Rosato <mjrosato@linux.ibm.com>,
-	Gerd Bayer <gbayer@linux.ibm.com>,
-	Niklas Schnelle <schnelle@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 625/817] s390/pci: Fix potential double remove of hotplug slot
-Date: Tue,  3 Dec 2024 15:43:17 +0100
-Message-ID: <20241203144020.332902806@linuxfoundation.org>
+	Jakub Kicinski <kuba@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.11 626/817] net_sched: sch_fq: dont follow the fast path if Tx is behind now
+Date: Tue,  3 Dec 2024 15:43:18 +0100
+Message-ID: <20241203144020.371540547@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -53,94 +51,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Niklas Schnelle <schnelle@linux.ibm.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit c4a585e952ca403a370586d3f16e8331a7564901 ]
+commit 122aba8c80618eca904490b1733af27fb8f07528 upstream.
 
-In commit 6ee600bfbe0f ("s390/pci: remove hotplug slot when releasing the
-device") the zpci_exit_slot() was moved from zpci_device_reserved() to
-zpci_release_device() with the intention of keeping the hotplug slot
-around until the device is actually removed.
+Recent kernels cause a lot of TCP retransmissions
 
-Now zpci_release_device() is only called once all references are
-dropped. Since the zPCI subsystem only drops its reference once the
-device is in the reserved state it follows that zpci_release_device()
-must only deal with devices in the reserved state. Despite that it
-contains code to tear down from both configured and standby state. For
-the standby case this already includes the removal of the hotplug slot
-so would cause a double removal if a device was ever removed in
-either configured or standby state.
+[ ID] Interval           Transfer     Bitrate         Retr  Cwnd
+[  5]   0.00-1.00   sec  2.24 GBytes  19.2 Gbits/sec  2767    442 KBytes
+[  5]   1.00-2.00   sec  2.23 GBytes  19.1 Gbits/sec  2312    350 KBytes
+                                                      ^^^^
 
-Instead of causing a potential double removal in a case that should
-never happen explicitly WARN_ON() if a device in non-reserved state is
-released and get rid of the dead code cases.
+Replacing the qdisc with pfifo makes retransmissions go away.
 
-Fixes: 6ee600bfbe0f ("s390/pci: remove hotplug slot when releasing the device")
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
-Reviewed-by: Gerd Bayer <gbayer@linux.ibm.com>
-Tested-by: Gerd Bayer <gbayer@linux.ibm.com>
-Signed-off-by: Niklas Schnelle <schnelle@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+It appears that a flow may have a delayed packet with a very near
+Tx time. Later, we may get busy processing Rx and the target Tx time
+will pass, but we won't service Tx since the CPU is busy with Rx.
+If Rx sees an ACK and we try to push more data for the delayed flow
+we may fastpath the skb, not realizing that there are already "ready
+to send" packets for this flow sitting in the qdisc.
+
+Don't trust the fastpath if we are "behind" according to the projected
+Tx time for next flow waiting in the Qdisc. Because we consider anything
+within the offload window to be okay for fastpath we must consider
+the entire offload window as "now".
+
+Qdisc config:
+
+qdisc fq 8001: dev eth0 parent 1234:1 limit 10000p flow_limit 100p \
+  buckets 32768 orphan_mask 1023 bands 3 \
+  priomap 1 2 2 2 1 2 0 0 1 1 1 1 1 1 1 1 \
+  weights 589824 196608 65536 quantum 3028b initial_quantum 15140b \
+  low_rate_threshold 550Kbit \
+  refill_delay 40ms timer_slack 10us horizon 10s horizon_drop
+
+For iperf this change seems to do fine, the reordering is gone.
+The fastpath still gets used most of the time:
+
+  gc 0 highprio 0 fastpath 142614 throttled 418309 latency 19.1us
+   xx_behind 2731
+
+where "xx_behind" counts how many times we hit the new "return false".
+
+CC: stable@vger.kernel.org
+Fixes: 076433bd78d7 ("net_sched: sch_fq: add fast path for mostly idle qdisc")
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20241124022148.3126719-1-kuba@kernel.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+[stable: drop the offload horizon, it's not supported / 0]
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/pci/pci.c | 34 +++++++++-------------------------
- 1 file changed, 9 insertions(+), 25 deletions(-)
+ net/sched/sch_fq.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/arch/s390/pci/pci.c b/arch/s390/pci/pci.c
-index 759983d0e63ed..827b4c7b4688c 100644
---- a/arch/s390/pci/pci.c
-+++ b/arch/s390/pci/pci.c
-@@ -918,10 +918,8 @@ void zpci_device_reserved(struct zpci_dev *zdev)
- void zpci_release_device(struct kref *kref)
- {
- 	struct zpci_dev *zdev = container_of(kref, struct zpci_dev, kref);
--	int ret;
- 
--	if (zdev->has_hp_slot)
--		zpci_exit_slot(zdev);
-+	WARN_ON(zdev->state != ZPCI_FN_STATE_RESERVED);
- 
- 	if (zdev->zbus->bus)
- 		zpci_bus_remove_device(zdev, false);
-@@ -929,28 +927,14 @@ void zpci_release_device(struct kref *kref)
- 	if (zdev_enabled(zdev))
- 		zpci_disable_device(zdev);
- 
--	switch (zdev->state) {
--	case ZPCI_FN_STATE_CONFIGURED:
--		ret = sclp_pci_deconfigure(zdev->fid);
--		zpci_dbg(3, "deconf fid:%x, rc:%d\n", zdev->fid, ret);
--		fallthrough;
--	case ZPCI_FN_STATE_STANDBY:
--		if (zdev->has_hp_slot)
--			zpci_exit_slot(zdev);
--		spin_lock(&zpci_list_lock);
--		list_del(&zdev->entry);
--		spin_unlock(&zpci_list_lock);
--		zpci_dbg(3, "rsv fid:%x\n", zdev->fid);
--		fallthrough;
--	case ZPCI_FN_STATE_RESERVED:
--		if (zdev->has_resources)
--			zpci_cleanup_bus_resources(zdev);
--		zpci_bus_device_unregister(zdev);
--		zpci_destroy_iommu(zdev);
--		fallthrough;
--	default:
--		break;
--	}
-+	if (zdev->has_hp_slot)
-+		zpci_exit_slot(zdev);
+--- a/net/sched/sch_fq.c
++++ b/net/sched/sch_fq.c
+@@ -331,6 +331,12 @@ static bool fq_fastpath_check(const stru
+ 		 */
+ 		if (q->internal.qlen >= 8)
+ 			return false;
 +
-+	if (zdev->has_resources)
-+		zpci_cleanup_bus_resources(zdev);
-+
-+	zpci_bus_device_unregister(zdev);
-+	zpci_destroy_iommu(zdev);
- 	zpci_dbg(3, "rem fid:%x\n", zdev->fid);
- 	kfree_rcu(zdev, rcu);
- }
--- 
-2.43.0
-
++		/* Ordering invariants fall apart if some delayed flows
++		 * are ready but we haven't serviced them, yet.
++		 */
++		if (q->time_next_delayed_flow <= now)
++			return false;
+ 	}
+ 
+ 	sk = skb->sk;
 
 
