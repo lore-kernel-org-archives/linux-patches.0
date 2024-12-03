@@ -1,38 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D1E41DE8A5;
-	Tue,  3 Dec 2024 16:00:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9D8B1DE8A5;
+	Tue,  3 Dec 2024 16:00:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733241636; cv=none; b=ZJUZ1qsi4i3ZhSCuEmJfNA9JhHaUqRPWXgXog2Usmt0e5/b86y5UWnYU2jQX/dbX9PUz4eopf4uIwN0b8174Kwng3Tl5xE1NrNCrA5EVL4xpPumzXqTxLQPgrlSbTG/FxD8XKMzFVW5kKOf3Am+YKp2/y30XRj3sLEWBUIQvRW8=
+	t=1733241639; cv=none; b=BIdasHuASPeKrI4Q04Am1XzCeYMTyCTZJIbtPLIBq7GM65McF7v/w7LfvpISCT+6ABL5L2nJexCvUfoz4gS2EbLYcQfF9zR83Rx2Nu7nTbH9hiKIjVrmOQEpQoYg+aNsnynIhzQab/tqdymHoIyAks1EtWp8YUZGx/pCMncFMLc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733241636; c=relaxed/simple;
-	bh=rOBF4vZdgtHBC2gPWPDy2jg/9bWlyC0HRwf88BUj5Pg=;
+	s=arc-20240116; t=1733241639; c=relaxed/simple;
+	bh=RfEeNoP2ThHN5hwXj36cNd7N0CaTxOpkPhYehgrXj4A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xnb/+tE1cAzQSspz2ax3KxOMaQWGwqlbUtxsIzG/ZhOcdr3coaJ7xxHocRukvuEI3dntzkENY5TwxhZYfKz/QnZ258mrFwdB+SJf1qcsZWauypWD/n3JS+D76mwlzlicwRfqZjaK6MfFKrE8+vP4xUdOv7fu4seAYLNBIQyssHs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OuSNV3op; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Efn03SDrfaHlwk3CfvA7bH0+fG6aWq97ZeV72r4MvrcfrHrmdQNuyciIhk3JdY08nQ85qd2XIb21cka/jtOhDerYuvrs0yih4bfMoqRWjpSQEo/oOkIcTsCjF9W01OSVn4WJDihmA3pCAdJOS+UQfVVpmX+J/p4zuwptsQ1TzM8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VSA8A04M; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OuSNV3op"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8E01C4CECF;
-	Tue,  3 Dec 2024 16:00:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VSA8A04M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46862C4CECF;
+	Tue,  3 Dec 2024 16:00:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733241636;
-	bh=rOBF4vZdgtHBC2gPWPDy2jg/9bWlyC0HRwf88BUj5Pg=;
+	s=korg; t=1733241639;
+	bh=RfEeNoP2ThHN5hwXj36cNd7N0CaTxOpkPhYehgrXj4A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OuSNV3opMZlt76eWRK5JP1MJ1yWTDqFsl4iZGgR3bxeXTdxwnE40xdtIsjk5d4sKB
-	 nIbSCEG2ZMLcAObzMg4xNQrjg7h3UwE4JRJGaNfT74TKhJKU3na848IEZp7EMwhbYu
-	 4ypxP1LU4yJmVYUDdZA2CqlboGxvK+082Y/h/FzA=
+	b=VSA8A04MqAjyv/00E8FF9YXotVhtuvP424q5KOjX+PsorMkYsDV+0xXv4qyNpvK6C
+	 Ab9O+ABHDhfC92uyAZ7IcxAYjsES2Pv2vb8dTuvB9Cx/QfmCSR+FF+AU9ww8P64fqx
+	 RWJu5g4COHbIXwneenGEvRKWPfHDToYLAcVlm1Uk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Todd Kjos <tkjos@google.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+	kernel test robot <oliver.sang@intel.com>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	Ian Rogers <irogers@google.com>,
+	Sandipan Das <sandipan.das@amd.com>,
+	Benjamin Gray <bgray@linux.ibm.com>,
+	Xu Yang <xu.yang_2@nxp.com>,
+	John Garry <john.g.garry@oracle.com>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 473/826] PCI: Fix reset_method_store() memory leak
-Date: Tue,  3 Dec 2024 15:43:20 +0100
-Message-ID: <20241203144802.213553135@linuxfoundation.org>
+Subject: [PATCH 6.12 474/826] perf jevents: Dont stop at the first matched pmu when searching a events table
+Date: Tue,  3 Dec 2024 15:43:21 +0100
+Message-ID: <20241203144802.253432526@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -51,55 +57,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Todd Kjos <tkjos@google.com>
+From: Kan Liang <kan.liang@linux.intel.com>
 
-[ Upstream commit 2985b1844f3f3447f2d938eff1ef6762592065a5 ]
+[ Upstream commit 8d7f85e323ea402005fa83ddbdf5d00292d77098 ]
 
-In reset_method_store(), a string is allocated via kstrndup() and assigned
-to the local "options". options is then used in with strsep() to find
-spaces:
+The "perf all PMU test" fails on a Coffee Lake machine.
 
-  while ((name = strsep(&options, " ")) != NULL) {
+The failure is caused by the below change in the commit e2641db83f18
+("perf vendor events: Add/update skylake events/metrics").
 
-If there are no remaining spaces, then options is set to NULL by strsep(),
-so the subsequent kfree(options) doesn't free the memory allocated via
-kstrndup().
++    {
++        "BriefDescription": "This 48-bit fixed counter counts the UCLK cycles",
++        "Counter": "FIXED",
++        "EventCode": "0xff",
++        "EventName": "UNC_CLOCK.SOCKET",
++        "PerPkg": "1",
++        "PublicDescription": "This 48-bit fixed counter counts the UCLK cycles.",
++        "Unit": "cbox_0"
+     }
 
-Fix by using a separate tmp_options to iterate with strsep() so options is
-preserved.
+The other cbox events have the unit name "CBOX", while the fixed counter
+has a unit name "cbox_0". So the events_table will maintain separate
+entries for cbox and cbox_0.
 
-Link: https://lore.kernel.org/r/20241001231147.3583649-1-tkjos@google.com
-Fixes: d88f521da3ef ("PCI: Allow userspace to query and set device reset mechanism")
-Signed-off-by: Todd Kjos <tkjos@google.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+The perf_pmus__print_pmu_events() calculates the total number of events,
+allocate an aliases buffer, store all the events into the buffer, sort,
+and print all the aliases one by one.
+
+The problem is that the calculated total number of events doesn't match
+the stored events in the aliases buffer.
+
+The perf_pmu__num_events() is used to calculate the number of events. It
+invokes the pmu_events_table__num_events() to go through the entire
+events_table to find all events. Because of the
+pmu_uncore_alias_match(), the suffix of uncore PMU will be ignored. So
+the events for cbox and cbox_0 are all counted.
+
+When storing events into the aliases buffer, the
+perf_pmu__for_each_event() only process the events for cbox.
+
+Since a bigger buffer was allocated, the last entry are all 0.
+When printing all the aliases, null will be outputted, and trigger the
+failure.
+
+The mismatch was introduced from the commit e3edd6cf6399 ("perf
+pmu-events: Reduce processed events by passing PMU"). The
+pmu_events_table__for_each_event() stops immediately once a pmu is set.
+But for uncore, especially this case, the method is wrong and mismatch
+what perf does in the perf_pmu__num_events().
+
+With the patch,
+$ perf list pmu | grep -A 1 clock.socket
+   unc_clock.socket
+        [This 48-bit fixed counter counts the UCLK cycles. Unit: uncore_cbox_0
+$ perf test "perf all PMU test"
+  107: perf all PMU test                                               : Ok
+
+Reported-by: kernel test robot <oliver.sang@intel.com>
+Closes: https://lore.kernel.org/all/202407101021.2c8baddb-oliver.sang@intel.com/
+Fixes: e3edd6cf6399 ("perf pmu-events: Reduce processed events by passing PMU")
+Signed-off-by: Kan Liang <kan.liang@linux.intel.com>
+Reviewed-by: Ian Rogers <irogers@google.com>
+Cc: Sandipan Das <sandipan.das@amd.com>
+Cc: Benjamin Gray <bgray@linux.ibm.com>
+Cc: Xu Yang <xu.yang_2@nxp.com>
+Cc: John Garry <john.g.garry@oracle.com>
+Link: https://lore.kernel.org/r/20241001021431.814811-1-irogers@google.com
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/pci.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ tools/perf/pmu-events/empty-pmu-events.c | 2 +-
+ tools/perf/pmu-events/jevents.py         | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pci/pci.c b/drivers/pci/pci.c
-index 225a6cd2e9ca3..08f170fd3efb3 100644
---- a/drivers/pci/pci.c
-+++ b/drivers/pci/pci.c
-@@ -5248,7 +5248,7 @@ static ssize_t reset_method_store(struct device *dev,
- 				  const char *buf, size_t count)
- {
- 	struct pci_dev *pdev = to_pci_dev(dev);
--	char *options, *name;
-+	char *options, *tmp_options, *name;
- 	int m, n;
- 	u8 reset_methods[PCI_NUM_RESET_METHODS] = { 0 };
+diff --git a/tools/perf/pmu-events/empty-pmu-events.c b/tools/perf/pmu-events/empty-pmu-events.c
+index c592079982fbd..873e9fb2041f0 100644
+--- a/tools/perf/pmu-events/empty-pmu-events.c
++++ b/tools/perf/pmu-events/empty-pmu-events.c
+@@ -380,7 +380,7 @@ int pmu_events_table__for_each_event(const struct pmu_events_table *table,
+                         continue;
  
-@@ -5268,7 +5268,8 @@ static ssize_t reset_method_store(struct device *dev,
- 		return -ENOMEM;
+                 ret = pmu_events_table__for_each_event_pmu(table, table_pmu, fn, data);
+-                if (pmu || ret)
++                if (ret)
+                         return ret;
+         }
+         return 0;
+diff --git a/tools/perf/pmu-events/jevents.py b/tools/perf/pmu-events/jevents.py
+index bb0a5d92df4a1..d46a22fb5573d 100755
+--- a/tools/perf/pmu-events/jevents.py
++++ b/tools/perf/pmu-events/jevents.py
+@@ -930,7 +930,7 @@ int pmu_events_table__for_each_event(const struct pmu_events_table *table,
+                         continue;
  
- 	n = 0;
--	while ((name = strsep(&options, " ")) != NULL) {
-+	tmp_options = options;
-+	while ((name = strsep(&tmp_options, " ")) != NULL) {
- 		if (sysfs_streq(name, ""))
- 			continue;
- 
+                 ret = pmu_events_table__for_each_event_pmu(table, table_pmu, fn, data);
+-                if (pmu || ret)
++                if (ret)
+                         return ret;
+         }
+         return 0;
 -- 
 2.43.0
 
