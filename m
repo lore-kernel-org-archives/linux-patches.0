@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D44321F4279;
-	Tue,  3 Dec 2024 14:37:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12F221EF08A;
+	Tue,  3 Dec 2024 14:37:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733236653; cv=none; b=OpYiRcU3bgr8XW+OjXDs0BJTecwALSnNtMaHzvnoiPT50paueFWZn2k25Dw3PQjRbxxiH114ZrFDjhqIOUQG2C69oOS+cq0ubHCc/D0xm7H+fH6Wc9tKHZpJ2TPOL47mzX9OyS8UmRvdPzXviTfgmCX3eKuIbiQEYDKUtJZxn1s=
+	t=1733236657; cv=none; b=ntiuKPlymGKgoqeS68LLPkg8tlRr8XAjXHWwqzkAY2YwIXBuGLu8z2to4/Gw8zLvX4u5havysxWdgWtl3fjbxFOnemyAUQqC6rQ4KPwPKX9s6PSGK7i9U+nRtpBXxKXVlHYigjK6eFP/MAM+zUnBvJlbYl2Q9wCAwdD3kobi8Cs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733236653; c=relaxed/simple;
-	bh=Q01+UBs3Qa3zOkNdv/NF6Ok8ez8TzZJs7PbVRzJPXHU=;
+	s=arc-20240116; t=1733236657; c=relaxed/simple;
+	bh=bku0zaTENNU3BwjsS9hPpplm4e8skrT+LcJZmxlBtqs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d04UIZcVAjw0PW5cN0buY1e59vUygB+0JpYrDpW1d+qotUClj0E6nbZViGrN+9ktjbjT7Tjcko8pUKE5wyem5gQouFYPFJp533zsMHRmKy+DOaiHVA1y/545UACSgrHp/6lvHQKZ3AyH0qFr/piw/9tPEHgYe6ZSXaL0X5SIawg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RDO3QjRW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rtGWvPHrGAIiwXuJBuAviv1tDb2KyQ1wgvKXiBRxH8vdeSON8/iveih+z9LzbDhLT4q5/jWyuDAH1Lxd5eXJdLAA3OSVHkBSgMx+nmuqJm8mKOynakZheEODMTdZbDeiPBE4UBNOvH5/99+uts/SZ+cG9vniQE+4lrH0mbqW+PQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O0mJHgUb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RDO3QjRW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55B4AC4CECF;
-	Tue,  3 Dec 2024 14:37:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O0mJHgUb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49B83C4CECF;
+	Tue,  3 Dec 2024 14:37:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733236653;
-	bh=Q01+UBs3Qa3zOkNdv/NF6Ok8ez8TzZJs7PbVRzJPXHU=;
+	s=korg; t=1733236656;
+	bh=bku0zaTENNU3BwjsS9hPpplm4e8skrT+LcJZmxlBtqs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RDO3QjRWO0Ki44tDPJl/lWnsv2B7RzN/bZY8jDZUMRjIalf3LqlBf9M2pJJTFsJYR
-	 cHFLcWv6TXxEbCMoaZ3WSfvy3F4M+5XGyL5g3y2mbao17onShh9B9NvWIVN9C31+34
-	 vjkmLP3jBDvGyDwL3qNp74qqeoGtqA93RE+rpNxE=
+	b=O0mJHgUb2IQoiSUxXsUdfWFuCc4OHY+w5mbTtWfuDCpZc55AKGvx/cYLCkdwHJbjT
+	 Atm2niBozZLvBEnTd6dD8P85t887xJEVFeuhm8luwAW6JOS1TrAeyYbWfVi11n3lQ2
+	 RzeifQGzp0KV8e3bhMQLc8puNXNqybR6KqXqeNeg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Changzhong <zhangchangzhong@huawei.com>,
-	Lee Jones <lee@kernel.org>,
+	Deepak Kumar Singh <deesin@codeaurora.org>,
+	Arun Kumar Neelakantam <aneela@codeaurora.org>,
+	Bjorn Andersson <bjorn.andersson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 064/138] mfd: rt5033: Fix missing regmap_del_irq_chip()
-Date: Tue,  3 Dec 2024 15:31:33 +0100
-Message-ID: <20241203141926.008501253@linuxfoundation.org>
+Subject: [PATCH 4.19 082/138] rpmsg: glink: Send READ_NOTIFY command in FIFO full case
+Date: Tue,  3 Dec 2024 15:31:51 +0100
+Message-ID: <20241203141926.706479610@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203141923.524658091@linuxfoundation.org>
 References: <20241203141923.524658091@linuxfoundation.org>
@@ -51,37 +52,121 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Changzhong <zhangchangzhong@huawei.com>
+From: Arun Kumar Neelakantam <aneela@codeaurora.org>
 
-[ Upstream commit d256d612f47529ed0b332298e2d5ea981a4dd5b8 ]
+[ Upstream commit b16a37e1846c9573a847a56fa2f31ba833dae45a ]
 
-Fix missing call to regmap_del_irq_chip() in error handling path by
-using devm_regmap_add_irq_chip().
+The current design sleeps unconditionally in TX FIFO full case and
+wakeup only after sleep timer expires which adds random delays in
+clients TX path.
 
-Fixes: 0b271258544b ("mfd: rt5033: Add Richtek RT5033 driver core.")
-Signed-off-by: Zhang Changzhong <zhangchangzhong@huawei.com>
-Link: https://lore.kernel.org/r/1730302867-8391-1-git-send-email-zhangchangzhong@huawei.com
-Signed-off-by: Lee Jones <lee@kernel.org>
+Avoid sleep and use READ_NOTIFY command so that writer can be woken up
+when remote notifies about read completion by sending IRQ.
+
+Signed-off-by: Deepak Kumar Singh <deesin@codeaurora.org>
+Signed-off-by: Arun Kumar Neelakantam <aneela@codeaurora.org>
+Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Link: https://lore.kernel.org/r/1596086296-28529-7-git-send-email-deesin@codeaurora.org
+Stable-dep-of: 06c59d97f63c ("rpmsg: glink: use only lower 16-bits of param2 for CMD_OPEN name length")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/rt5033.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/rpmsg/qcom_glink_native.c | 36 ++++++++++++++++++++++++++++++-
+ 1 file changed, 35 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/mfd/rt5033.c b/drivers/mfd/rt5033.c
-index 94cdad91c0657..71f35bfac3f28 100644
---- a/drivers/mfd/rt5033.c
-+++ b/drivers/mfd/rt5033.c
-@@ -85,8 +85,8 @@ static int rt5033_i2c_probe(struct i2c_client *i2c,
- 	}
- 	dev_info(&i2c->dev, "Device found Device ID: %04x\n", dev_id);
+diff --git a/drivers/rpmsg/qcom_glink_native.c b/drivers/rpmsg/qcom_glink_native.c
+index 5a3ed96af87b8..3db5beb338cd3 100644
+--- a/drivers/rpmsg/qcom_glink_native.c
++++ b/drivers/rpmsg/qcom_glink_native.c
+@@ -92,6 +92,8 @@ struct glink_core_rx_intent {
+  * @rcids:	idr of all channels with a known remote channel id
+  * @features:	remote features
+  * @intentless:	flag to indicate that there is no intent
++ * @tx_avail_notify: Waitqueue for pending tx tasks
++ * @sent_read_notify: flag to check cmd sent or not
+  */
+ struct qcom_glink {
+ 	struct device *dev;
+@@ -118,6 +120,8 @@ struct qcom_glink {
+ 	unsigned long features;
  
--	ret = regmap_add_irq_chip(rt5033->regmap, rt5033->irq,
--			IRQF_TRIGGER_FALLING | IRQF_ONESHOT,
-+	ret = devm_regmap_add_irq_chip(rt5033->dev, rt5033->regmap,
-+			rt5033->irq, IRQF_TRIGGER_FALLING | IRQF_ONESHOT,
- 			0, &rt5033_irq_chip, &rt5033->irq_data);
- 	if (ret) {
- 		dev_err(&i2c->dev, "Failed to request IRQ %d: %d\n",
+ 	bool intentless;
++	wait_queue_head_t tx_avail_notify;
++	bool sent_read_notify;
+ };
+ 
+ enum {
+@@ -305,6 +309,20 @@ static void qcom_glink_tx_write(struct qcom_glink *glink,
+ 	glink->tx_pipe->write(glink->tx_pipe, hdr, hlen, data, dlen);
+ }
+ 
++static void qcom_glink_send_read_notify(struct qcom_glink *glink)
++{
++	struct glink_msg msg;
++
++	msg.cmd = cpu_to_le16(RPM_CMD_READ_NOTIF);
++	msg.param1 = 0;
++	msg.param2 = 0;
++
++	qcom_glink_tx_write(glink, &msg, sizeof(msg), NULL, 0);
++
++	mbox_send_message(glink->mbox_chan, NULL);
++	mbox_client_txdone(glink->mbox_chan, 0);
++}
++
+ static int qcom_glink_tx(struct qcom_glink *glink,
+ 			 const void *hdr, size_t hlen,
+ 			 const void *data, size_t dlen, bool wait)
+@@ -325,12 +343,21 @@ static int qcom_glink_tx(struct qcom_glink *glink,
+ 			goto out;
+ 		}
+ 
++		if (!glink->sent_read_notify) {
++			glink->sent_read_notify = true;
++			qcom_glink_send_read_notify(glink);
++		}
++
+ 		/* Wait without holding the tx_lock */
+ 		spin_unlock_irqrestore(&glink->tx_lock, flags);
+ 
+-		usleep_range(10000, 15000);
++		wait_event_timeout(glink->tx_avail_notify,
++				   qcom_glink_tx_avail(glink) >= tlen, 10 * HZ);
+ 
+ 		spin_lock_irqsave(&glink->tx_lock, flags);
++
++		if (qcom_glink_tx_avail(glink) >= tlen)
++			glink->sent_read_notify = false;
+ 	}
+ 
+ 	qcom_glink_tx_write(glink, hdr, hlen, data, dlen);
+@@ -991,6 +1018,9 @@ static irqreturn_t qcom_glink_native_intr(int irq, void *data)
+ 	unsigned int cmd;
+ 	int ret = 0;
+ 
++	/* To wakeup any blocking writers */
++	wake_up_all(&glink->tx_avail_notify);
++
+ 	for (;;) {
+ 		avail = qcom_glink_rx_avail(glink);
+ 		if (avail < sizeof(msg))
+@@ -1530,6 +1560,9 @@ static void qcom_glink_rx_close_ack(struct qcom_glink *glink, unsigned int lcid)
+ 	struct glink_channel *channel;
+ 	unsigned long flags;
+ 
++	/* To wakeup any blocking writers */
++	wake_up_all(&glink->tx_avail_notify);
++
+ 	spin_lock_irqsave(&glink->idr_lock, flags);
+ 	channel = idr_find(&glink->lcids, lcid);
+ 	if (WARN(!channel, "close ack on unknown channel\n")) {
+@@ -1636,6 +1669,7 @@ struct qcom_glink *qcom_glink_native_probe(struct device *dev,
+ 	spin_lock_init(&glink->rx_lock);
+ 	INIT_LIST_HEAD(&glink->rx_queue);
+ 	INIT_WORK(&glink->rx_work, qcom_glink_work);
++	init_waitqueue_head(&glink->tx_avail_notify);
+ 
+ 	spin_lock_init(&glink->idr_lock);
+ 	idr_init(&glink->lcids);
 -- 
 2.43.0
 
