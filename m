@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A73A1F75A8;
-	Tue,  3 Dec 2024 15:12:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A170D1F75A8;
+	Tue,  3 Dec 2024 15:12:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733238763; cv=none; b=M1aRQ6NS0U4kn5emi9ade29i7/PWJbe12YKkD7EJJ7DfHTOrTWnF1b2oxvxxfSbY61EASsLxk0ibz5rvFt+8bYij6xVTrNYH1IuxQNa/CYO+hF37rSj0CX8Z+VT0d7Lp/oN3KJpEIHeg1z9ZqQXVXosYMr5mGx6Tvvgyvh3dkSk=
+	t=1733238765; cv=none; b=qFVS96gJYbeK6bHYiOB+xlOGAc7UTiMWLg6dq6hCDeCaUaZxd8viMBwa5VVJm4EfG6VrssgZI34XuCLuYuqMEIMJ/FTyVrJHwnmjiZnBZ8g0neJ4qF+z861sWNOauVEN/WJiuu8JN7YuBDi7pnMAytb7lnwikP7jvjz0uhy/Seg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733238763; c=relaxed/simple;
-	bh=lpksFKOjvn2kPdDhVO8Fgx2h2UhMWK3Lu7MqpdNvh2A=;
+	s=arc-20240116; t=1733238765; c=relaxed/simple;
+	bh=xmObi7tLLuetvRIBhtWv4JZZZUi2VMiWQ/Pok2uLb1k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aQHvgetttbntzaIKhCPZF8MqaPhLo59zLnKNxB3gsLaCVLZs7+TMvPUFUGEDKz/dhzm8dNeWx7X3jP/wlS2eWPvCLfX9dqTG3HXfnCLV5EyVoM+k0jjo0ZNB4K1X/2qzVeCfzrBXz/okeLyh8g4iHcYZsRm9C6nnQHQwdckmZss=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w7ooLxNA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tmWrQYJdyaOiWpmabOrg0zuzMAWgfq9rQ+F7AcMvbiJNjiB/oZ4mxu1RcOwe/ExbWsoAx3cs61o8xwBe1VPlj93ReiKnVklSjcsm7dWlnRJXmwWTaYbKFQMOQ0ZS37GVBPEXqzcWkxBWAl3NWAntmH2sP9LH4EFs45jwqg9NVKA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z/RpNlT1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w7ooLxNA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F065C4CEDD;
-	Tue,  3 Dec 2024 15:12:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z/RpNlT1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 299C4C4CECF;
+	Tue,  3 Dec 2024 15:12:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733238762;
-	bh=lpksFKOjvn2kPdDhVO8Fgx2h2UhMWK3Lu7MqpdNvh2A=;
+	s=korg; t=1733238765;
+	bh=xmObi7tLLuetvRIBhtWv4JZZZUi2VMiWQ/Pok2uLb1k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w7ooLxNAHJio6j6JeieRbE0t9JbNpTGzXB2iCUOvVB7p+6PFhohsvWOunrUWQKEx9
-	 aCLnKvXGjHROBW7Z2lC+f/xqQGHYhqKhLqmvh0DRB+4/sH6Be8ziE3ZbZswX0AcEg6
-	 Wv+cjahjJJhdQ93oAnT0u1Gm4BSmDwSzsxkri4SI=
+	b=Z/RpNlT1JZVnV86bByNyIFDArJ678HOlx7vCi+lHIbivOWS08sYjhM6Wm+YUzImdl
+	 PXMMNHfYk/gQxcOoLs0WkEQ4hJyzSy8NnjvvnDsnLAoSdFWcYXxsmKuYuwrKTNvnhp
+	 8AcbCV7ZbvED7m7bMOLpB8xTqK3ghLHK7IjuC86k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Ning <zhangn1985@outlook.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Lee Jones <lee@kernel.org>,
+	Vincent Whitchurch <vincent.whitchurch@datadoghq.com>,
+	Jiayuan Chen <mrpre@163.com>,
+	John Fastabend <john.fastabend@gmail.com>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 390/817] mfd: intel_soc_pmic_bxtwc: Use IRQ domain for PMIC devices
-Date: Tue,  3 Dec 2024 15:39:22 +0100
-Message-ID: <20241203144011.094430947@linuxfoundation.org>
+Subject: [PATCH 6.11 373/817] bpf: fix recursive lock when verdict program return SK_PASS
+Date: Tue,  3 Dec 2024 15:39:05 +0100
+Message-ID: <20241203144010.405279897@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -52,116 +54,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Jiayuan Chen <mrpre@163.com>
 
-[ Upstream commit 0350d783ab888cb1cb48ced36cc28b372723f1a4 ]
+[ Upstream commit 8ca2a1eeadf09862190b2810697702d803ceef2d ]
 
-While design wise the idea of converting the driver to use
-the hierarchy of the IRQ chips is correct, the implementation
-has (inherited) flaws. This was unveiled when platform_get_irq()
-had started WARN() on IRQ 0 that is supposed to be a Linux
-IRQ number (also known as vIRQ).
+When the stream_verdict program returns SK_PASS, it places the received skb
+into its own receive queue, but a recursive lock eventually occurs, leading
+to an operating system deadlock. This issue has been present since v6.9.
 
-Rework the driver to respect IRQ domain when creating each MFD
-device separately, as the domain is not the same for all of them.
+'''
+sk_psock_strp_data_ready
+    write_lock_bh(&sk->sk_callback_lock)
+    strp_data_ready
+      strp_read_sock
+        read_sock -> tcp_read_sock
+          strp_recv
+            cb.rcv_msg -> sk_psock_strp_read
+              # now stream_verdict return SK_PASS without peer sock assign
+              __SK_PASS = sk_psock_map_verd(SK_PASS, NULL)
+              sk_psock_verdict_apply
+                sk_psock_skb_ingress_self
+                  sk_psock_skb_ingress_enqueue
+                    sk_psock_data_ready
+                      read_lock_bh(&sk->sk_callback_lock) <= dead lock
 
-Fixes: 57129044f504 ("mfd: intel_soc_pmic_bxtwc: Use chained IRQs for second level IRQ chips")
-Tested-by: Zhang Ning <zhangn1985@outlook.com>
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://lore.kernel.org/r/20241005193029.1929139-4-andriy.shevchenko@linux.intel.com
-Signed-off-by: Lee Jones <lee@kernel.org>
+'''
+
+This topic has been discussed before, but it has not been fixed.
+Previous discussion:
+https://lore.kernel.org/all/6684a5864ec86_403d20898@john.notmuch
+
+Fixes: 6648e613226e ("bpf, skmsg: Fix NULL pointer dereference in sk_psock_skb_ingress_enqueue")
+Reported-by: Vincent Whitchurch <vincent.whitchurch@datadoghq.com>
+Signed-off-by: Jiayuan Chen <mrpre@163.com>
+Signed-off-by: John Fastabend <john.fastabend@gmail.com>
+Acked-by: Martin KaFai Lau <martin.lau@kernel.org>
+Link: https://patch.msgid.link/20241118030910.36230-2-mrpre@163.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/intel_soc_pmic_bxtwc.c | 54 +++++++++++++++++-------------
- 1 file changed, 30 insertions(+), 24 deletions(-)
+ net/core/skmsg.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/mfd/intel_soc_pmic_bxtwc.c b/drivers/mfd/intel_soc_pmic_bxtwc.c
-index f4d50e35b8489..f588e0f1fd0ad 100644
---- a/drivers/mfd/intel_soc_pmic_bxtwc.c
-+++ b/drivers/mfd/intel_soc_pmic_bxtwc.c
-@@ -231,21 +231,11 @@ static const struct resource tmu_resources[] = {
- };
- 
- static struct mfd_cell bxt_wc_dev[] = {
--	{
--		.name = "bxt_wcove_gpadc",
--		.num_resources = ARRAY_SIZE(adc_resources),
--		.resources = adc_resources,
--	},
- 	{
- 		.name = "bxt_wcove_thermal",
- 		.num_resources = ARRAY_SIZE(thermal_resources),
- 		.resources = thermal_resources,
- 	},
--	{
--		.name = "bxt_wcove_bcu",
--		.num_resources = ARRAY_SIZE(bcu_resources),
--		.resources = bcu_resources,
--	},
- 	{
- 		.name = "bxt_wcove_gpio",
- 		.num_resources = ARRAY_SIZE(gpio_resources),
-@@ -264,6 +254,22 @@ static const struct mfd_cell bxt_wc_tmu_dev[] = {
- 	},
- };
- 
-+static const struct mfd_cell bxt_wc_bcu_dev[] = {
-+	{
-+		.name = "bxt_wcove_bcu",
-+		.num_resources = ARRAY_SIZE(bcu_resources),
-+		.resources = bcu_resources,
-+	},
-+};
-+
-+static const struct mfd_cell bxt_wc_adc_dev[] = {
-+	{
-+		.name = "bxt_wcove_gpadc",
-+		.num_resources = ARRAY_SIZE(adc_resources),
-+		.resources = adc_resources,
-+	},
-+};
-+
- static struct mfd_cell bxt_wc_chgr_dev[] = {
- 	{
- 		.name = "bxt_wcove_usbc",
-@@ -509,23 +515,23 @@ static int bxtwc_probe(struct platform_device *pdev)
- 	if (ret)
- 		return dev_err_probe(dev, ret, "Failed to add PWRBTN IRQ chip\n");
- 
--	/* Add chained IRQ handler for BCU IRQs */
--	ret = bxtwc_add_chained_irq_chip(pmic, pmic->irq_chip_data,
--					 BXTWC_BCU_LVL1_IRQ,
--					 IRQF_ONESHOT,
--					 &bxtwc_regmap_irq_chip_bcu,
--					 &pmic->irq_chip_data_bcu);
-+	ret = bxtwc_add_chained_devices(pmic, bxt_wc_bcu_dev, ARRAY_SIZE(bxt_wc_bcu_dev),
-+					pmic->irq_chip_data,
-+					BXTWC_BCU_LVL1_IRQ,
-+					IRQF_ONESHOT,
-+					&bxtwc_regmap_irq_chip_bcu,
-+					&pmic->irq_chip_data_bcu);
- 	if (ret)
--		return dev_err_probe(dev, ret, "Failed to add BUC IRQ chip\n");
-+		return ret;
- 
--	/* Add chained IRQ handler for ADC IRQs */
--	ret = bxtwc_add_chained_irq_chip(pmic, pmic->irq_chip_data,
--					 BXTWC_ADC_LVL1_IRQ,
--					 IRQF_ONESHOT,
--					 &bxtwc_regmap_irq_chip_adc,
--					 &pmic->irq_chip_data_adc);
-+	ret = bxtwc_add_chained_devices(pmic, bxt_wc_adc_dev, ARRAY_SIZE(bxt_wc_adc_dev),
-+					pmic->irq_chip_data,
-+					BXTWC_ADC_LVL1_IRQ,
-+					IRQF_ONESHOT,
-+					&bxtwc_regmap_irq_chip_adc,
-+					&pmic->irq_chip_data_adc);
- 	if (ret)
--		return dev_err_probe(dev, ret, "Failed to add ADC IRQ chip\n");
-+		return ret;
- 
- 	ret = bxtwc_add_chained_devices(pmic, bxt_wc_chgr_dev, ARRAY_SIZE(bxt_wc_chgr_dev),
- 					pmic->irq_chip_data,
+diff --git a/net/core/skmsg.c b/net/core/skmsg.c
+index bbf40b9997138..846fd672f0e52 100644
+--- a/net/core/skmsg.c
++++ b/net/core/skmsg.c
+@@ -1117,9 +1117,9 @@ static void sk_psock_strp_data_ready(struct sock *sk)
+ 		if (tls_sw_has_ctx_rx(sk)) {
+ 			psock->saved_data_ready(sk);
+ 		} else {
+-			write_lock_bh(&sk->sk_callback_lock);
++			read_lock_bh(&sk->sk_callback_lock);
+ 			strp_data_ready(&psock->strp);
+-			write_unlock_bh(&sk->sk_callback_lock);
++			read_unlock_bh(&sk->sk_callback_lock);
+ 		}
+ 	}
+ 	rcu_read_unlock();
 -- 
 2.43.0
 
