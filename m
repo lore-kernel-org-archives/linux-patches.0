@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6615133FE;
-	Tue,  3 Dec 2024 15:03:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4397D1E3DF9;
+	Tue,  3 Dec 2024 15:03:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733238204; cv=none; b=sZ4ULPQmsIaDH66oHE3HcuXTVxWxkt+gMAyltSl1KNoLsChG5ieMAdymMiUR5uX3l/3w+Ycq6LNZ2zsnELGjCTX41FMHlMGtIvbCukxxxyW87A8lVsJtBFQwVjYLaN+aNRqEJnv2dVjiQn0pqo4crqNgJCmfsroI6FT67YuCRT4=
+	t=1733238207; cv=none; b=IltGXM5UOn7HREvR1BA+zvFRV7W6JEJROzoCHj822TK8oTYOYvDh4Vpbqg9BHOsWOmMC7rb46L7mNJ59dmATDKTQdklNV0YC+u3Zk6/Kc75A7Dj+SsAtMlSJ+DOuwJ58CKsB02V3QN/iaCmT65ZZgwpjqxBGkLy0vOCO0+d4/UU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733238204; c=relaxed/simple;
-	bh=qy//g9q45qzI57+dQD2LPUn+4i+zlYToPxx1Ij8XTak=;
+	s=arc-20240116; t=1733238207; c=relaxed/simple;
+	bh=lPhay12moMPc49NaIFUyAXdHfzxnkP3O+ImEML+n5dA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sTuox6YX0KhSoDEYXggIPaj3JyluLesUROtDwKRxKWBISivHPIVXAhJ/Yo4FFTtEQ5EvYoGPW10iTflTelB5oxryqRiB+rdPSSKGU2c95M7CY2M1/1wGNENP79bnX3ML7+yz3mjvfw5hv4NXGHqzadItS5Qr/YzAxzLJJz1HG6M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EoZYM8MQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kLQKwC9gZfbHEE4emSTXiEt/EbWXFLOoWhyP97jV6y8hPn/MEAMUMBeGA+mAaHDxz6OS/j5KkLGJ6h3WU2J3odijT3pmJ/EUunVYKGFcI74YP6BXjiu8yk4V51XU6PLnIjlDrMk/o5whajwNSvWcAxLFNEwXrJL4yMEwF25Bc6A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PHfb6k8X; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EoZYM8MQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE752C4CECF;
-	Tue,  3 Dec 2024 15:03:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PHfb6k8X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD989C4CECF;
+	Tue,  3 Dec 2024 15:03:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733238204;
-	bh=qy//g9q45qzI57+dQD2LPUn+4i+zlYToPxx1Ij8XTak=;
+	s=korg; t=1733238207;
+	bh=lPhay12moMPc49NaIFUyAXdHfzxnkP3O+ImEML+n5dA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EoZYM8MQvkYwmeKK/bJ59tYO1CxEfdUkpCRSDkAcJydurzmcoEwpXwIRIq84S214q
-	 CQMqnvmRJXPRWG99g3R62zWwOQ1xMhWgRssc1IKya+hl8UQ2/m51+sJfTLTZ/nsw5X
-	 ax8KYTtrYYKfHYHRnuMK2L4hLWafYj9q6Z/6G4+o=
+	b=PHfb6k8XzJSDZDor+ApKed4Wrin6erA8mxJlTPDImFzx3cSEkf08BeQOpoegnmVqM
+	 Tw8QLXj/ikLdMsEoHgsk9d1Qkgk3rehfLgU3B0pKYRIEagWe988k5dYI69Yt6a1x4Y
+	 9aZeOoGfSR6PfPS0/QP7od2k0CzF3K882IeLAiYI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Fei Shao <fshao@chromium.org>,
 	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 197/817] arm64: dts: mediatek: Add ADC node on MT6357, MT6358, MT6359 PMICs
-Date: Tue,  3 Dec 2024 15:36:09 +0100
-Message-ID: <20241203144003.429982858@linuxfoundation.org>
+Subject: [PATCH 6.11 171/817] arm64: dts: mediatek: mt8195-cherry: Use correct audio codec DAI
+Date: Tue,  3 Dec 2024 15:35:43 +0100
+Message-ID: <20241203144002.406551841@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -50,72 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+From: Fei Shao <fshao@chromium.org>
 
-[ Upstream commit b0a4ce81f327eae06c1088f1a437edc48a94a3e8 ]
+[ Upstream commit 7d5794e6d964940e46286fadbe69a3245fa51e44 ]
 
-Add support for the ADC on MT6357/8/9 and keep it default enabled
-as this IP is always present on those PMICs.
-Users may use different IIO channels depending on board-specific
-routing.
+The RT5682i and RT5682s drivers describe two DAIs: AIF1 supports both
+playback and capture, while AIF2 supports capture only.
 
-Link: https://lore.kernel.org/r/20240604123008.327424-6-angelogioacchino.delregno@collabora.com
+Cherry doesn't specify which DAI to use. Although this doesn't cause
+real issues because AIF1 happens to be the first DAI, it should be
+corrected:
+    codec@1a: #sound-dai-cells: 1 was expected
+
+Update #sound-dai-cells to 1 and adjust DAI link usages accordingly.
+
+Fixes: 87728e3ccf35 ("arm64: dts: mediatek: mt8195-cherry: Specify sound DAI links and routing")
+Signed-off-by: Fei Shao <fshao@chromium.org>
+Link: https://lore.kernel.org/r/20241021114318.1358681-1-fshao@chromium.org
 Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Stable-dep-of: 76ab2ae0ab9e ("arm64: dts: mediatek: mt6358: fix dtbs_check error")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/mediatek/mt6357.dtsi | 5 +++++
- arch/arm64/boot/dts/mediatek/mt6358.dtsi | 5 +++++
- arch/arm64/boot/dts/mediatek/mt6359.dtsi | 5 +++++
- 3 files changed, 15 insertions(+)
+ arch/arm64/boot/dts/mediatek/mt8195-cherry.dtsi | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/mediatek/mt6357.dtsi b/arch/arm64/boot/dts/mediatek/mt6357.dtsi
-index 3330a03c2f745..5fafa842d312f 100644
---- a/arch/arm64/boot/dts/mediatek/mt6357.dtsi
-+++ b/arch/arm64/boot/dts/mediatek/mt6357.dtsi
-@@ -10,6 +10,11 @@ &pwrap {
- 	mt6357_pmic: pmic {
- 		compatible = "mediatek,mt6357";
+diff --git a/arch/arm64/boot/dts/mediatek/mt8195-cherry.dtsi b/arch/arm64/boot/dts/mediatek/mt8195-cherry.dtsi
+index d3a52acbe48a1..2960772cb9065 100644
+--- a/arch/arm64/boot/dts/mediatek/mt8195-cherry.dtsi
++++ b/arch/arm64/boot/dts/mediatek/mt8195-cherry.dtsi
+@@ -438,7 +438,7 @@ audio_codec: codec@1a {
+ 		/* Realtek RT5682i or RT5682s, sharing the same configuration */
+ 		reg = <0x1a>;
+ 		interrupts-extended = <&pio 89 IRQ_TYPE_EDGE_BOTH>;
+-		#sound-dai-cells = <0>;
++		#sound-dai-cells = <1>;
+ 		realtek,jd-src = <1>;
  
-+		pmic_adc: adc {
-+			compatible = "mediatek,mt6357-auxadc";
-+			#io-channel-cells = <1>;
-+		};
-+
- 		regulators {
- 			mt6357_vproc_reg: buck-vproc {
- 				regulator-name = "vproc";
-diff --git a/arch/arm64/boot/dts/mediatek/mt6358.dtsi b/arch/arm64/boot/dts/mediatek/mt6358.dtsi
-index a1b96013f8141..641d452fbc083 100644
---- a/arch/arm64/boot/dts/mediatek/mt6358.dtsi
-+++ b/arch/arm64/boot/dts/mediatek/mt6358.dtsi
-@@ -10,6 +10,11 @@ pmic: pmic {
- 		interrupt-controller;
- 		#interrupt-cells = <2>;
- 
-+		pmic_adc: adc {
-+			compatible = "mediatek,mt6358-auxadc";
-+			#io-channel-cells = <1>;
-+		};
-+
- 		mt6358codec: mt6358codec {
- 			compatible = "mediatek,mt6358-sound";
- 			mediatek,dmic-mode = <0>; /* two-wires */
-diff --git a/arch/arm64/boot/dts/mediatek/mt6359.dtsi b/arch/arm64/boot/dts/mediatek/mt6359.dtsi
-index df3e822232d34..8e1b8c85c6ede 100644
---- a/arch/arm64/boot/dts/mediatek/mt6359.dtsi
-+++ b/arch/arm64/boot/dts/mediatek/mt6359.dtsi
-@@ -9,6 +9,11 @@ pmic: pmic {
- 		interrupt-controller;
- 		#interrupt-cells = <2>;
- 
-+		pmic_adc: adc {
-+			compatible = "mediatek,mt6359-auxadc";
-+			#io-channel-cells = <1>;
-+		};
-+
- 		mt6359codec: mt6359codec {
+ 		AVDD-supply = <&mt6359_vio18_ldo_reg>;
+@@ -1181,7 +1181,7 @@ hs-playback-dai-link {
+ 		link-name = "ETDM1_OUT_BE";
+ 		mediatek,clk-provider = "cpu";
+ 		codec {
+-			sound-dai = <&audio_codec>;
++			sound-dai = <&audio_codec 0>;
  		};
+ 	};
+ 
+@@ -1189,7 +1189,7 @@ hs-capture-dai-link {
+ 		link-name = "ETDM2_IN_BE";
+ 		mediatek,clk-provider = "cpu";
+ 		codec {
+-			sound-dai = <&audio_codec>;
++			sound-dai = <&audio_codec 0>;
+ 		};
+ 	};
  
 -- 
 2.43.0
