@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE1F21E3DCF;
-	Tue,  3 Dec 2024 16:14:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE20B1E3DCF;
+	Tue,  3 Dec 2024 16:14:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733242473; cv=none; b=L22PxJtVO5nqq3M538LR+/eyA4tWmn7bZbykKqayilXQQg4AW06iBJxEPWZPYeF/kqjRo9HgoqEsUfcaki103rLnXHcJ78azMxJCf27b621R3fGagLQ+igoWkPsyhN+xvfs6XWtrNv8imHZTE7LtyrpEw6je/0OM3zOlfePP0vg=
+	t=1733242476; cv=none; b=rFZlmPA6JRflx/+0wa466biU1tNJnHTbW9UoktX5aWfcDE6IlMRez9tHnDpugEM/Ojzx5NljVdLF6K3PQWhQfzfJZLALUar+gGFlzv+ITBG0wxp70Gt3oxbpNbcof6i7ALKtPlohaypXE9ZRbk0A9cB4xioI0Q313fwewtb86v4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733242473; c=relaxed/simple;
-	bh=2Z514t5JWiyqkxp8ysje2g9aBw5vFJjvj3LzJj/B74E=;
+	s=arc-20240116; t=1733242476; c=relaxed/simple;
+	bh=B+H6IHQ12EU9QjHr1ZWfVT5C563SY02Plp1AYLCY3/M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q74Hr6AF5kOsQeFLSgLXyHd7uuTV86gm9HHzO4s1ifSVRiUqLdK7fyW/+vDtsgcMoRY2SmBFyncFyWmtUJx8jQ8eMjd8EVzOduND1A3mGk/qvO+Q2FQjlulsWOo7weBtTHemapUwn4Rgg5gX2Ul9TOtn4sg7K14Rw9KTJlxhFpQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fMlC3ajC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=G7xN+ZtOKRh7lyY7EwAXDZFNl4vR8ADkqRgUjtmdqegdJF45lnD9ZRuSBmBB6jetTzh+BvXiAKmzE3x4F8miu/n82YfL+DKoqcME/MmACFXvruMFX2t/CcgRzXgh3P26idmuaMInJrKTtU5VjfBBWGO1qyXhqoZv/qTyPUt4dC4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t5IuEy5x; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fMlC3ajC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FAABC4CED6;
-	Tue,  3 Dec 2024 16:14:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t5IuEy5x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72C0AC4CED6;
+	Tue,  3 Dec 2024 16:14:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733242472;
-	bh=2Z514t5JWiyqkxp8ysje2g9aBw5vFJjvj3LzJj/B74E=;
+	s=korg; t=1733242475;
+	bh=B+H6IHQ12EU9QjHr1ZWfVT5C563SY02Plp1AYLCY3/M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fMlC3ajCZ+nEWs9mjmlAK8zMNYcdaSfaBsdp7Tcfnsgr2+RfsY+MIxH8nfCkivvLJ
-	 JvitkXOREjpJJfKGAHqV2KgGDkPVDoCzGUhr4CJd3MN6OCQWChcHed8q5gHITDxOAJ
-	 3ZwlduQsjQkTWrr5jmLj7TAQb4GY5meUTR59GhBg=
+	b=t5IuEy5x5DAU6w9mDpLQz9rUxks38uws3f5vKKXwANgEvprqoZyZOW/5L7RX+YmI3
+	 eMqgO811JgKxVXsOxI0xikzLzm67Xol6YaHAZxyOb11iqY++e8eWXfcDPDCM698ZRJ
+	 tg0D3I4cyCe57cQbwTLZcTB0IxAGLBJKO/+zQmzY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bin Liu <b-liu@ti.com>,
-	Judith Mendez <jm@ti.com>,
-	Kevin Hilman <khilman@baylibre.com>
-Subject: [PATCH 6.12 713/826] serial: 8250: omap: Move pm_runtime_get_sync
-Date: Tue,  3 Dec 2024 15:47:20 +0100
-Message-ID: <20241203144811.573062075@linuxfoundation.org>
+	Kartik Rajput <kkartik@nvidia.com>,
+	Linus Walleij <linus.walleij@linaro.org>
+Subject: [PATCH 6.12 714/826] serial: amba-pl011: Fix RX stall when DMA is used
+Date: Tue,  3 Dec 2024 15:47:21 +0100
+Message-ID: <20241203144811.614048299@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -51,48 +50,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bin Liu <b-liu@ti.com>
+From: Kartik Rajput <kkartik@nvidia.com>
 
-commit bcc7ba668818dcadd2f1db66b39ed860a63ecf97 upstream.
+commit 2bcacc1c87acf9a8ebc17de18cb2b3cfeca547cf upstream.
 
-Currently in omap_8250_shutdown, the dma->rx_running flag is
-set to zero in omap_8250_rx_dma_flush. Next pm_runtime_get_sync
-is called, which is a runtime resume call stack which can
-re-set the flag. When the call omap_8250_shutdown returns, the
-flag is expected to be UN-SET, but this is not the case. This
-is causing issues the next time UART is re-opened and
-omap_8250_rx_dma is called. Fix by moving pm_runtime_get_sync
-before the omap_8250_rx_dma_flush.
+Function pl011_throttle_rx() calls pl011_stop_rx() to disable RX, which
+also disables the RX DMA by clearing the RXDMAE bit of the DMACR
+register. However, to properly unthrottle RX when DMA is used, the
+function pl011_unthrottle_rx() is expected to set the RXDMAE bit of
+the DMACR register, which it currently lacks. This causes RX to stall
+after the throttle API is called.
 
-cc: stable@vger.kernel.org
-Fixes: 0e31c8d173ab ("tty: serial: 8250_omap: add custom DMA-RX callback")
-Signed-off-by: Bin Liu <b-liu@ti.com>
-[Judith: Add commit message]
-Signed-off-by: Judith Mendez <jm@ti.com>
-Reviewed-by: Kevin Hilman <khilman@baylibre.com>
-Tested-by: Kevin Hilman <khilman@baylibre.com>
-Link: https://lore.kernel.org/r/20241031172315.453750-1-jm@ti.com
+Set RXDMAE bit in the DMACR register while unthrottling RX if RX DMA is
+used.
+
+Fixes: 211565b10099 ("serial: pl011: UPSTAT_AUTORTS requires .throttle/unthrottle")
+Cc: stable@vger.kernel.org
+Signed-off-by: Kartik Rajput <kkartik@nvidia.com>
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Link: https://lore.kernel.org/r/20241113092629.60226-1-kkartik@nvidia.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/8250/8250_omap.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/tty/serial/amba-pl011.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/tty/serial/8250/8250_omap.c
-+++ b/drivers/tty/serial/8250/8250_omap.c
-@@ -776,12 +776,12 @@ static void omap_8250_shutdown(struct ua
- 	struct uart_8250_port *up = up_to_u8250p(port);
- 	struct omap8250_priv *priv = port->private_data;
+--- a/drivers/tty/serial/amba-pl011.c
++++ b/drivers/tty/serial/amba-pl011.c
+@@ -1819,6 +1819,11 @@ static void pl011_unthrottle_rx(struct u
  
-+	pm_runtime_get_sync(port->dev);
+ 	pl011_write(uap->im, uap, REG_IMSC);
+ 
++	if (uap->using_rx_dma) {
++		uap->dmacr |= UART011_RXDMAE;
++		pl011_write(uap->dmacr, uap, REG_DMACR);
++	}
 +
- 	flush_work(&priv->qos_work);
- 	if (up->dma)
- 		omap_8250_rx_dma_flush(up);
+ 	uart_port_unlock_irqrestore(&uap->port, flags);
+ }
  
--	pm_runtime_get_sync(port->dev);
--
- 	serial_out(up, UART_OMAP_WER, 0);
- 	if (priv->habit & UART_HAS_EFR2)
- 		serial_out(up, UART_OMAP_EFR2, 0x0);
 
 
