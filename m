@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 708151F8AC6;
-	Tue,  3 Dec 2024 16:17:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F6181F8919;
+	Tue,  3 Dec 2024 16:17:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733242621; cv=none; b=qQETUlQisN70m4mzzDvr8bNHkWwJrFZZp06YwUgx1CyZUjC/Fa9nTWIco4q7d2yXdp8AdYUV3XtPfIEGnD6hIsrzjtT1xaKxCJzkCKCNPXblyIRCm2XSNXJUeiSL8VWaX4LUcAXsSCo7pXaCGefAc+iMRktoQp6qBWhyIedsNBg=
+	t=1733242624; cv=none; b=YNug3i7WozfIPtWlOPO0cL4LiLJ/Gxd+BYRZ327+d7VZ/lSDGj873WoxqxYVaYeIJobTHh628o5dG8EJBMNPhDwe3aihWS23xBRMI2CwVroJxdyQ6iVOPT08owP4Sw02b/oROuDK3W8bfq6sczS0GYl9BkW3E/I7fMY1G4Y2woY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733242621; c=relaxed/simple;
-	bh=4MMwSP1EV1PqYK43qq5aRXDkLkDqPZs3cyC2PG3aqls=;
+	s=arc-20240116; t=1733242624; c=relaxed/simple;
+	bh=R9ABN/1hsXsm6/rUg/AQFbjgs7Iv15cUa0rvU9l3qh0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ZOdLfrENWhHNqgjCv+q2p0grVWiThr0Qv06DB1jnYuD/rhQ1DkVAsc19t1kiJMVRGZXI/xcLtJMDydnF685CSUhrCN0U/gqZSSmTEjnT/C8wkph7w2d5fjHnv6ASby/wtPtkClIStZ48rYG/6cfIiujZLN+hqAFrb9YptD5ZxyY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IOgDIOVA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WtQipewzZwdUYYop3IHEBbMFl0vfB3N1zHepqeH9v2AEbVZnZsQSIDIk44z4oT2ooZFCEJkcLLelgoijx2aY3ohwhJQZpF4AMgDPS4pioJlp+NVX+tT0J47J++hO8JLBZG2niwUkaY8q977sJ4Tcj6DUh2D5llS57Q4VXTuovII=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xzYl1Wr9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IOgDIOVA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C2A4C4CECF;
-	Tue,  3 Dec 2024 16:17:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xzYl1Wr9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0AADC4CECF;
+	Tue,  3 Dec 2024 16:17:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733242621;
-	bh=4MMwSP1EV1PqYK43qq5aRXDkLkDqPZs3cyC2PG3aqls=;
+	s=korg; t=1733242624;
+	bh=R9ABN/1hsXsm6/rUg/AQFbjgs7Iv15cUa0rvU9l3qh0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IOgDIOVAzizhQlcoAk6572JqVzXaYlked0+BwTR7SGGrTwYS5AzlPf1ZY26p1Y31b
-	 iUe/Zqhuy2zPtlkO9CBkNuVJ4fkvyzIhcCfovTzLlWjdW7Vd5LYQjK/1xqxxxhXGBC
-	 rhA6lj5pSTpVNswaIl+puPDzdBGnOnpDg3IDpPfo=
+	b=xzYl1Wr9s7aPUgqfVKZitwFTbLi13Lia/9q0qry/KrB/lyZ8Edho3FukLN2aF1ZI7
+	 kTOMhvsYlnyZ3frUY73xvS9/mVckujXJ7GRgZWkQMu+LrL6osdz8wrncK5GuvfXZdr
+	 He8ZQ6A1ZrQboUMVNT29d1HoPxmxhBn9AGSqBbvk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Hubert=20Wi=C5=9Bniewski?= <hubert.wisniewski.25632@gmail.com>
-Subject: [PATCH 6.12 759/826] usb: musb: Fix hardware lockup on first Rx endpoint request
-Date: Tue,  3 Dec 2024 15:48:06 +0100
-Message-ID: <20241203144813.373667736@linuxfoundation.org>
+	Selvarasu Ganesan <selvarasu.g@samsung.com>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Subject: [PATCH 6.12 760/826] usb: dwc3: gadget: Add missing check for single port RAM in TxFIFO resizing logic
+Date: Tue,  3 Dec 2024 15:48:07 +0100
+Message-ID: <20241203144813.411587631@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -43,136 +44,166 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hubert Wiśniewski <hubert.wisniewski.25632@gmail.com>
+From: Selvarasu Ganesan <selvarasu.g@samsung.com>
 
-commit 3fc137386c4620305bbc2a216868c53f9245670a upstream.
+commit 61eb055cd3048ee01ca43d1be924167d33e16fdc upstream.
 
-There is a possibility that a request's callback could be invoked from
-usb_ep_queue() (call trace below, supplemented with missing calls):
+The existing implementation of the TxFIFO resizing logic only supports
+scenarios where more than one port RAM is used. However, there is a need
+to resize the TxFIFO in USB2.0-only mode where only a single port RAM is
+available. This commit introduces the necessary changes to support
+TxFIFO resizing in such scenarios by adding a missing check for single
+port RAM.
 
-req->complete from usb_gadget_giveback_request
-	(drivers/usb/gadget/udc/core.c:999)
-usb_gadget_giveback_request from musb_g_giveback
-	(drivers/usb/musb/musb_gadget.c:147)
-musb_g_giveback from rxstate
-	(drivers/usb/musb/musb_gadget.c:784)
-rxstate from musb_ep_restart
-	(drivers/usb/musb/musb_gadget.c:1169)
-musb_ep_restart from musb_ep_restart_resume_work
-	(drivers/usb/musb/musb_gadget.c:1176)
-musb_ep_restart_resume_work from musb_queue_resume_work
-	(drivers/usb/musb/musb_core.c:2279)
-musb_queue_resume_work from musb_gadget_queue
-	(drivers/usb/musb/musb_gadget.c:1241)
-musb_gadget_queue from usb_ep_queue
-	(drivers/usb/gadget/udc/core.c:300)
+This fix addresses certain platform configurations where the existing
+TxFIFO resizing logic does not work properly due to the absence of
+support for single port RAM. By adding this missing check, we ensure
+that the TxFIFO resizing logic works correctly in all scenarios,
+including those with a single port RAM.
 
-According to the docstring of usb_ep_queue(), this should not happen:
-
-"Note that @req's ->complete() callback must never be called from within
-usb_ep_queue() as that can create deadlock situations."
-
-In fact, a hardware lockup might occur in the following sequence:
-
-1. The gadget is initialized using musb_gadget_enable().
-2. Meanwhile, a packet arrives, and the RXPKTRDY flag is set, raising an
-   interrupt.
-3. If IRQs are enabled, the interrupt is handled, but musb_g_rx() finds an
-   empty queue (next_request() returns NULL). The interrupt flag has
-   already been cleared by the glue layer handler, but the RXPKTRDY flag
-   remains set.
-4. The first request is enqueued using usb_ep_queue(), leading to the call
-   of req->complete(), as shown in the call trace above.
-5. If the callback enables IRQs and another packet is waiting, step (3)
-   repeats. The request queue is empty because usb_g_giveback() removes the
-   request before invoking the callback.
-6. The endpoint remains locked up, as the interrupt triggered by hardware
-   setting the RXPKTRDY flag has been handled, but the flag itself remains
-   set.
-
-For this scenario to occur, it is only necessary for IRQs to be enabled at
-some point during the complete callback. This happens with the USB Ethernet
-gadget, whose rx_complete() callback calls netif_rx(). If called in the
-task context, netif_rx() disables the bottom halves (BHs). When the BHs are
-re-enabled, IRQs are also enabled to allow soft IRQs to be processed. The
-gadget itself is initialized at module load (or at boot if built-in), but
-the first request is enqueued when the network interface is brought up,
-triggering rx_complete() in the task context via ioctl(). If a packet
-arrives while the interface is down, it can prevent the interface from
-receiving any further packets from the USB host.
-
-The situation is quite complicated with many parties involved. This
-particular issue can be resolved in several possible ways:
-
-1. Ensure that callbacks never enable IRQs. This would be difficult to
-   enforce, as discovering how netif_rx() interacts with interrupts was
-   already quite challenging and u_ether is not the only function driver.
-   Similar "bugs" could be hidden in other drivers as well.
-2. Disable MUSB interrupts in musb_g_giveback() before calling the callback
-   and re-enable them afterwars (by calling musb_{dis,en}able_interrupts(),
-   for example). This would ensure that MUSB interrupts are not handled
-   during the callback, even if IRQs are enabled. In fact, it would allow
-   IRQs to be enabled when releasing the lock. However, this feels like an
-   inelegant hack.
-3. Modify the interrupt handler to clear the RXPKTRDY flag if the request
-   queue is empty. While this approach also feels like a hack, it wastes
-   CPU time by attempting to handle incoming packets when the software is
-   not ready to process them.
-4. Flush the Rx FIFO instead of calling rxstate() in musb_ep_restart().
-   This ensures that the hardware can receive packets when there is at
-   least one request in the queue. Once IRQs are enabled, the interrupt
-   handler will be able to correctly process the next incoming packet
-   (eventually calling rxstate()). This approach may cause one or two
-   packets to be dropped (two if double buffering is enabled), but this
-   seems to be a minor issue, as packet loss can occur when the software is
-   not yet ready to process them. Additionally, this solution makes the
-   gadget driver compliant with the rule mentioned in the docstring of
-   usb_ep_queue().
-
-There may be additional solutions, but from these four, the last one has
-been chosen as it seems to be the most appropriate, as it addresses the
-"bad" behavior of the driver.
-
-Fixes: baebdf48c360 ("net: dev: Makes sure netif_rx() can be invoked in any context.")
-Cc: stable@vger.kernel.org
-Signed-off-by: Hubert Wiśniewski <hubert.wisniewski.25632@gmail.com>
-Link: https://lore.kernel.org/r/4ee1ead4525f78fb5909a8cbf99513ad0082ad21.camel@gmail.com
+Fixes: 9f607a309fbe ("usb: dwc3: Resize TX FIFOs to meet EP bursting requirements")
+Cc: stable@vger.kernel.org # 6.12.x: fad16c82: usb: dwc3: gadget: Refine the logic for resizing Tx FIFOs
+Signed-off-by: Selvarasu Ganesan <selvarasu.g@samsung.com>
+Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Link: https://lore.kernel.org/r/20241112044807.623-1-selvarasu.g@samsung.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/musb/musb_gadget.c |   13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ drivers/usb/dwc3/core.h   |    4 +++
+ drivers/usb/dwc3/gadget.c |   54 +++++++++++++++++++++++++++++++++++++++-------
+ 2 files changed, 50 insertions(+), 8 deletions(-)
 
---- a/drivers/usb/musb/musb_gadget.c
-+++ b/drivers/usb/musb/musb_gadget.c
-@@ -1161,12 +1161,19 @@ void musb_free_request(struct usb_ep *ep
-  */
- void musb_ep_restart(struct musb *musb, struct musb_request *req)
- {
-+	u16 csr;
-+	void __iomem *epio = req->ep->hw_ep->regs;
+--- a/drivers/usb/dwc3/core.h
++++ b/drivers/usb/dwc3/core.h
+@@ -915,6 +915,7 @@ struct dwc3_hwparams {
+ #define DWC3_MODE(n)		((n) & 0x7)
+ 
+ /* HWPARAMS1 */
++#define DWC3_SPRAM_TYPE(n)	(((n) >> 23) & 1)
+ #define DWC3_NUM_INT(n)		(((n) & (0x3f << 15)) >> 15)
+ 
+ /* HWPARAMS3 */
+@@ -925,6 +926,9 @@ struct dwc3_hwparams {
+ #define DWC3_NUM_IN_EPS(p)	(((p)->hwparams3 &		\
+ 			(DWC3_NUM_IN_EPS_MASK)) >> 18)
+ 
++/* HWPARAMS6 */
++#define DWC3_RAM0_DEPTH(n)	(((n) & (0xffff0000)) >> 16)
 +
- 	trace_musb_req_start(req);
- 	musb_ep_select(musb->mregs, req->epnum);
--	if (req->tx)
-+	if (req->tx) {
- 		txstate(musb, req);
--	else
--		rxstate(musb, req);
-+	} else {
-+		csr = musb_readw(epio, MUSB_RXCSR);
-+		csr |= MUSB_RXCSR_FLUSHFIFO | MUSB_RXCSR_P_WZC_BITS;
-+		musb_writew(epio, MUSB_RXCSR, csr);
-+		musb_writew(epio, MUSB_RXCSR, csr);
-+	}
+ /* HWPARAMS7 */
+ #define DWC3_RAM1_DEPTH(n)	((n) & 0xffff)
+ 
+--- a/drivers/usb/dwc3/gadget.c
++++ b/drivers/usb/dwc3/gadget.c
+@@ -688,6 +688,44 @@ static int dwc3_gadget_calc_tx_fifo_size
  }
  
- static int musb_ep_restart_resume_work(struct musb *musb, void *data)
+ /**
++ * dwc3_gadget_calc_ram_depth - calculates the ram depth for txfifo
++ * @dwc: pointer to the DWC3 context
++ */
++static int dwc3_gadget_calc_ram_depth(struct dwc3 *dwc)
++{
++	int ram_depth;
++	int fifo_0_start;
++	bool is_single_port_ram;
++
++	/* Check supporting RAM type by HW */
++	is_single_port_ram = DWC3_SPRAM_TYPE(dwc->hwparams.hwparams1);
++
++	/*
++	 * If a single port RAM is utilized, then allocate TxFIFOs from
++	 * RAM0. otherwise, allocate them from RAM1.
++	 */
++	ram_depth = is_single_port_ram ? DWC3_RAM0_DEPTH(dwc->hwparams.hwparams6) :
++			DWC3_RAM1_DEPTH(dwc->hwparams.hwparams7);
++
++	/*
++	 * In a single port RAM configuration, the available RAM is shared
++	 * between the RX and TX FIFOs. This means that the txfifo can begin
++	 * at a non-zero address.
++	 */
++	if (is_single_port_ram) {
++		u32 reg;
++
++		/* Check if TXFIFOs start at non-zero addr */
++		reg = dwc3_readl(dwc->regs, DWC3_GTXFIFOSIZ(0));
++		fifo_0_start = DWC3_GTXFIFOSIZ_TXFSTADDR(reg);
++
++		ram_depth -= (fifo_0_start >> 16);
++	}
++
++	return ram_depth;
++}
++
++/**
+  * dwc3_gadget_clear_tx_fifos - Clears txfifo allocation
+  * @dwc: pointer to the DWC3 context
+  *
+@@ -753,7 +791,7 @@ static int dwc3_gadget_resize_tx_fifos(s
+ {
+ 	struct dwc3 *dwc = dep->dwc;
+ 	int fifo_0_start;
+-	int ram1_depth;
++	int ram_depth;
+ 	int fifo_size;
+ 	int min_depth;
+ 	int num_in_ep;
+@@ -773,7 +811,7 @@ static int dwc3_gadget_resize_tx_fifos(s
+ 	if (dep->flags & DWC3_EP_TXFIFO_RESIZED)
+ 		return 0;
+ 
+-	ram1_depth = DWC3_RAM1_DEPTH(dwc->hwparams.hwparams7);
++	ram_depth = dwc3_gadget_calc_ram_depth(dwc);
+ 
+ 	if ((dep->endpoint.maxburst > 1 &&
+ 	     usb_endpoint_xfer_bulk(dep->endpoint.desc)) ||
+@@ -794,7 +832,7 @@ static int dwc3_gadget_resize_tx_fifos(s
+ 
+ 	/* Reserve at least one FIFO for the number of IN EPs */
+ 	min_depth = num_in_ep * (fifo + 1);
+-	remaining = ram1_depth - min_depth - dwc->last_fifo_depth;
++	remaining = ram_depth - min_depth - dwc->last_fifo_depth;
+ 	remaining = max_t(int, 0, remaining);
+ 	/*
+ 	 * We've already reserved 1 FIFO per EP, so check what we can fit in
+@@ -820,9 +858,9 @@ static int dwc3_gadget_resize_tx_fifos(s
+ 		dwc->last_fifo_depth += DWC31_GTXFIFOSIZ_TXFDEP(fifo_size);
+ 
+ 	/* Check fifo size allocation doesn't exceed available RAM size. */
+-	if (dwc->last_fifo_depth >= ram1_depth) {
++	if (dwc->last_fifo_depth >= ram_depth) {
+ 		dev_err(dwc->dev, "Fifosize(%d) > RAM size(%d) %s depth:%d\n",
+-			dwc->last_fifo_depth, ram1_depth,
++			dwc->last_fifo_depth, ram_depth,
+ 			dep->endpoint.name, fifo_size);
+ 		if (DWC3_IP_IS(DWC3))
+ 			fifo_size = DWC3_GTXFIFOSIZ_TXFDEP(fifo_size);
+@@ -3075,7 +3113,7 @@ static int dwc3_gadget_check_config(stru
+ 	struct dwc3 *dwc = gadget_to_dwc(g);
+ 	struct usb_ep *ep;
+ 	int fifo_size = 0;
+-	int ram1_depth;
++	int ram_depth;
+ 	int ep_num = 0;
+ 
+ 	if (!dwc->do_fifo_resize)
+@@ -3098,8 +3136,8 @@ static int dwc3_gadget_check_config(stru
+ 	fifo_size += dwc->max_cfg_eps;
+ 
+ 	/* Check if we can fit a single fifo per endpoint */
+-	ram1_depth = DWC3_RAM1_DEPTH(dwc->hwparams.hwparams7);
+-	if (fifo_size > ram1_depth)
++	ram_depth = dwc3_gadget_calc_ram_depth(dwc);
++	if (fifo_size > ram_depth)
+ 		return -ENOMEM;
+ 
+ 	return 0;
 
 
