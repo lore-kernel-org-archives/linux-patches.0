@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8F5A33FE;
-	Tue,  3 Dec 2024 15:04:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98CFF1F7564;
+	Tue,  3 Dec 2024 15:04:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733238272; cv=none; b=WwcRkR6Xz6LjkkWosxulpbkKgBKMFUr0JXo6SZH0nJ3YJ5gLUqTrjv8wvimsljNc6CPlDbrITssEsy3IZ/lTketp6d3Pr/mLoHVEIUVz1X3vfDx1+vpAD2I7Qd3ujrrP0evoD9zzT0TDdBPuQXl3KoIXC9AsEFJcZGjTs4HcK7U=
+	t=1733238275; cv=none; b=aDV6qJqsKjC0I+FZzCO72fbx2gZaAYFK931v3WNYakkCwpTfShtRAsnB1Bmn49WKRPFiV+y6mFPz1EbpR2Dq1fOJJrT3CglL9/oY0rRXlbcA8/dvFzzlNilL+3dKIuXMPwLw2mN+aqRLZBrrRW2IwoD29GaQ28JrNOlaeKig01M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733238272; c=relaxed/simple;
-	bh=hMzc5qgybddAEwiqryWR92z862MTNVsF9nPGmM8vVOQ=;
+	s=arc-20240116; t=1733238275; c=relaxed/simple;
+	bh=rcNk6mfx7qQgMb3H+8bPY1B+wF2NYRjo0KwcM8xmNAA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZKDbw5GQOTKLrSqhAqiaF3CcFwY/ODLZ+uLEQwImuyEH8yNAFoYgb6OK4KuQaOhiTGTlDgBskST2ewYbQYWFiMy37fyXyXyf14PYyZnLYd0AcMuGvMUmO24l8pVkj9zLurkRvXOXNxB5K2WiQnR/asCDmfMpqwrQ0XZg2pmDNCs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mzsy41hg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=jRs6+fw0TYGeqFX2WitYYYvrH5txU665Ab/eoLUX8Q9nPy8/O5lppxxQLuov4/EJqyPcnKSRUKrEBG0r8GTpRDYBnkMftJupCKGEHd6UR7LP7kyYSw9uXYK8HwPRGTa5e/E34PwGl1G1NJl3k23pcCugQPnZFDXDdD/Waz5dQ1g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wPAvPYuq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mzsy41hg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E683C4CECF;
-	Tue,  3 Dec 2024 15:04:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wPAvPYuq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17D3EC4CECF;
+	Tue,  3 Dec 2024 15:04:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733238272;
-	bh=hMzc5qgybddAEwiqryWR92z862MTNVsF9nPGmM8vVOQ=;
+	s=korg; t=1733238275;
+	bh=rcNk6mfx7qQgMb3H+8bPY1B+wF2NYRjo0KwcM8xmNAA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mzsy41hgzmlPvqipzVaoeVGY6VoVsXKbFO2g9JpLpZMb+9QSaOM5Jf9rE/Y59FHVz
-	 mUlOP0uYkp004uv3k2voTu3154zhZ7FGb0O3BBVepuyJ0WykVwdE37ejqY+tNVuahu
-	 iSle2y3tuPKE3GAtsfURBpZ+qa28dtx38OqTo/pI=
+	b=wPAvPYuqJzqNgiaJpWz3oR60ow2e29mqr5du5UuTpc3dK2bFsXdCpAzTQLirH5P1i
+	 wUpfj7woJUbTWmpDQDDVc/bjFFE1RkXgm0FpertNLt9lEqvptIr+geayCJkxERGC41
+	 yClY1OnoO3+HEKB1Q0py0SlLzgHWc0lzeCS9ZQmw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luo Qiu <luoqiu@kylinsec.com.cn>,
-	Sudeep Holla <sudeep.holla@arm.com>,
+	Jeongjun Park <aha310510@gmail.com>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 204/817] firmware: arm_scpi: Check the DVFS OPP count returned by the firmware
-Date: Tue,  3 Dec 2024 15:36:16 +0100
-Message-ID: <20241203144003.707707787@linuxfoundation.org>
+Subject: [PATCH 6.11 222/817] wifi: ath9k: add range check for conn_rsp_epid in htc_connect_service()
+Date: Tue,  3 Dec 2024 15:36:34 +0100
+Message-ID: <20241203144004.415212411@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -45,97 +46,62 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.11-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Luo Qiu <luoqiu@kylinsec.com.cn>
+From: Jeongjun Park <aha310510@gmail.com>
 
-[ Upstream commit 109aa654f85c5141e813b2cd1bd36d90be678407 ]
+[ Upstream commit 8619593634cbdf5abf43f5714df49b04e4ef09ab ]
 
-Fix a kernel crash with the below call trace when the SCPI firmware
-returns OPP count of zero.
+I found the following bug in my fuzzer:
 
-dvfs_info.opp_count may be zero on some platforms during the reboot
-test, and the kernel will crash after dereferencing the pointer to
-kcalloc(info->count, sizeof(*opp), GFP_KERNEL).
+  UBSAN: array-index-out-of-bounds in drivers/net/wireless/ath/ath9k/htc_hst.c:26:51
+  index 255 is out of range for type 'htc_endpoint [22]'
+  CPU: 0 UID: 0 PID: 8 Comm: kworker/0:0 Not tainted 6.11.0-rc6-dirty #14
+  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
+  Workqueue: events request_firmware_work_func
+  Call Trace:
+   <TASK>
+   dump_stack_lvl+0x180/0x1b0
+   __ubsan_handle_out_of_bounds+0xd4/0x130
+   htc_issue_send.constprop.0+0x20c/0x230
+   ? _raw_spin_unlock_irqrestore+0x3c/0x70
+   ath9k_wmi_cmd+0x41d/0x610
+   ? mark_held_locks+0x9f/0xe0
+   ...
 
-  |  Unable to handle kernel NULL pointer dereference at virtual address 0000000000000028
-  |  Mem abort info:
-  |    ESR = 0x96000004
-  |    Exception class = DABT (current EL), IL = 32 bits
-  |    SET = 0, FnV = 0
-  |    EA = 0, S1PTW = 0
-  |  Data abort info:
-  |    ISV = 0, ISS = 0x00000004
-  |    CM = 0, WnR = 0
-  |  user pgtable: 4k pages, 48-bit VAs, pgdp = 00000000faefa08c
-  |  [0000000000000028] pgd=0000000000000000
-  |  Internal error: Oops: 96000004 [#1] SMP
-  |  scpi-hwmon: probe of PHYT000D:00 failed with error -110
-  |  Process systemd-udevd (pid: 1701, stack limit = 0x00000000aaede86c)
-  |  CPU: 2 PID: 1701 Comm: systemd-udevd Not tainted 4.19.90+ #1
-  |  Hardware name: PHYTIUM LTD Phytium FT2000/4/Phytium FT2000/4, BIOS
-  |  pstate: 60000005 (nZCv daif -PAN -UAO)
-  |  pc : scpi_dvfs_recalc_rate+0x40/0x58 [clk_scpi]
-  |  lr : clk_register+0x438/0x720
-  |  Call trace:
-  |   scpi_dvfs_recalc_rate+0x40/0x58 [clk_scpi]
-  |   devm_clk_hw_register+0x50/0xa0
-  |   scpi_clk_ops_init.isra.2+0xa0/0x138 [clk_scpi]
-  |   scpi_clocks_probe+0x528/0x70c [clk_scpi]
-  |   platform_drv_probe+0x58/0xa8
-  |   really_probe+0x260/0x3d0
-  |   driver_probe_device+0x12c/0x148
-  |   device_driver_attach+0x74/0x98
-  |   __driver_attach+0xb4/0xe8
-  |   bus_for_each_dev+0x88/0xe0
-  |   driver_attach+0x30/0x40
-  |   bus_add_driver+0x178/0x2b0
-  |   driver_register+0x64/0x118
-  |   __platform_driver_register+0x54/0x60
-  |   scpi_clocks_driver_init+0x24/0x1000 [clk_scpi]
-  |   do_one_initcall+0x54/0x220
-  |   do_init_module+0x54/0x1c8
-  |   load_module+0x14a4/0x1668
-  |   __se_sys_finit_module+0xf8/0x110
-  |   __arm64_sys_finit_module+0x24/0x30
-  |   el0_svc_common+0x78/0x170
-  |   el0_svc_handler+0x38/0x78
-  |   el0_svc+0x8/0x340
-  |  Code: 937d7c00 a94153f3 a8c27bfd f9400421 (b8606820)
-  |  ---[ end trace 06feb22469d89fa8 ]---
-  |  Kernel panic - not syncing: Fatal exception
-  |  SMP: stopping secondary CPUs
-  |  Kernel Offset: disabled
-  |  CPU features: 0x10,a0002008
-  |  Memory Limit: none
+Since this bug has been confirmed to be caused by insufficient verification
+of conn_rsp_epid, I think it would be appropriate to add a range check for
+conn_rsp_epid to htc_connect_service() to prevent the bug from occurring.
 
-Fixes: 8cb7cf56c9fe ("firmware: add support for ARM System Control and Power Interface(SCPI) protocol")
-Signed-off-by: Luo Qiu <luoqiu@kylinsec.com.cn>
-Message-Id: <55A2F7A784391686+20241101032115.275977-1-luoqiu@kylinsec.com.cn>
-Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
+Fixes: fb9987d0f748 ("ath9k_htc: Support for AR9271 chipset.")
+Signed-off-by: Jeongjun Park <aha310510@gmail.com>
+Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://patch.msgid.link/20240909103855.68006-1-aha310510@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/arm_scpi.c | 3 +++
+ drivers/net/wireless/ath/ath9k/htc_hst.c | 3 +++
  1 file changed, 3 insertions(+)
 
-diff --git a/drivers/firmware/arm_scpi.c b/drivers/firmware/arm_scpi.c
-index 94a6b4e667de1..f4d47577f83ee 100644
---- a/drivers/firmware/arm_scpi.c
-+++ b/drivers/firmware/arm_scpi.c
-@@ -630,6 +630,9 @@ static struct scpi_dvfs_info *scpi_dvfs_get_info(u8 domain)
- 	if (ret)
- 		return ERR_PTR(ret);
+diff --git a/drivers/net/wireless/ath/ath9k/htc_hst.c b/drivers/net/wireless/ath/ath9k/htc_hst.c
+index eb631fd3336d8..b5257b2b4aa52 100644
+--- a/drivers/net/wireless/ath/ath9k/htc_hst.c
++++ b/drivers/net/wireless/ath/ath9k/htc_hst.c
+@@ -294,6 +294,9 @@ int htc_connect_service(struct htc_target *target,
+ 		return -ETIMEDOUT;
+ 	}
  
-+	if (!buf.opp_count)
-+		return ERR_PTR(-ENOENT);
++	if (target->conn_rsp_epid < 0 || target->conn_rsp_epid >= ENDPOINT_MAX)
++		return -EINVAL;
 +
- 	info = kmalloc(sizeof(*info), GFP_KERNEL);
- 	if (!info)
- 		return ERR_PTR(-ENOMEM);
+ 	*conn_rsp_epid = target->conn_rsp_epid;
+ 	return 0;
+ err:
 -- 
 2.43.0
 
