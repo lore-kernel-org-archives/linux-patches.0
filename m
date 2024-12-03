@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F18541F759C;
-	Tue,  3 Dec 2024 15:20:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CD9C1F757E;
+	Tue,  3 Dec 2024 15:20:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733239215; cv=none; b=uCBfZDe/rZoHIIz7eGYb2ap/lcYXcfqvwg1K8aB1t0tJubt6Gwtg+ZsHEWeyV+tdjy9KCqwAtwws7CIT5NrwnftyC5727YDUwGsxmIfpXig+c8SkqICKl3UuOU5WyRR9/fetMgeSscFLaPRwRRYw30yPKSugRpkbL42ZaSMTwro=
+	t=1733239217; cv=none; b=W5VY0FEFyUesnDC8Yd/EPhEHnO4Tj8Y5Ky1kOS/Exvn8CEAWqz4aIuZCEuiGEJVqfWWN7+6GV7QB4SBGXioLqXpfdUPvCXxPqCWZ82+P9Sx613XjVopotTwqRwtH/9vZtx7FYFjIAC2tSMRPkh4jce/tTF5te16gi4dueexhkrY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733239215; c=relaxed/simple;
-	bh=xH7IvMOzHJWSvSIZuShZieSrvJQEvza0anuamhC8dZc=;
+	s=arc-20240116; t=1733239217; c=relaxed/simple;
+	bh=ueeSfx+oqPOB9zDTYjcGDhtjm3Z3W+HisNoiTBorL+I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l2G5p4tgfn2Nz2UP7ks8FhV3zJQotOvelY1V6QuKrIWOhss6uhrRlIoMHHsP74jFZ49WA34JnbDc7lxekLAPpzG4iCXWShuR6orskewk+I8XZyqdJCbFaKtPSUeHxFoT5XMBpmH1JX4ZxhLyGMTpFAcrAeFUQlH/M/ArhimAA4U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z8/RNEVy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hQP7V+1c7DP4hJG1wQQqghNVdgRIYCeK97qK+tIyeLExeC4CL+0zMeJ4ieSxYwqx5M+tRcsQihTicBFXBvKHtGMxeCJClbVThR7IlBP0wtc5+pzinCV8E0xLKSG303lviWOTK15KLmmyny3LF1gD3N2vCzETNkxhF8hPZa/XKds=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xx5UBhgD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z8/RNEVy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30A97C4CECF;
-	Tue,  3 Dec 2024 15:20:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xx5UBhgD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEA8AC4CECF;
+	Tue,  3 Dec 2024 15:20:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733239214;
-	bh=xH7IvMOzHJWSvSIZuShZieSrvJQEvza0anuamhC8dZc=;
+	s=korg; t=1733239217;
+	bh=ueeSfx+oqPOB9zDTYjcGDhtjm3Z3W+HisNoiTBorL+I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z8/RNEVy65bRv1VVbSCQPhyjbZAJ3DSt6HxPF193vHiS11SAdI691kNPSSFfmctWY
-	 avmbrsosXYjNcS2AuS6pF5Ulo3RHtq7MeHmIp6eJfG0w8GkkGasWSls4R6VzqUMp9H
-	 BJPebpihEgXw92ZJHTHTw/hoaVFW44mM409TipvY=
+	b=xx5UBhgDFzIBFb1U99NcZ8W7dFrmUjimmCT6zwPcAAa019jkbWQEGMNGtNYXGx4aM
+	 2VHGoM5dTrmjj05lEsatqBKW3+hjbL9VlXm5ljdvIfNdylE2RBMGzud7sFdOssRQRf
+	 7GVrQkrLDBDLT4c3dPSM6o3YYnNhwABoMEzCZATU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonathan Marek <jonathan@marek.ca>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Sibi Sankar <quic_sibis@quicinc.com>,
+	Douglas Anderson <dianders@chromium.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 537/817] rpmsg: glink: use only lower 16-bits of param2 for CMD_OPEN name length
-Date: Tue,  3 Dec 2024 15:41:49 +0100
-Message-ID: <20241203144016.862432492@linuxfoundation.org>
+Subject: [PATCH 6.11 538/817] remoteproc: qcom_q6v5_mss: Re-order writes to the IMEM region
+Date: Tue,  3 Dec 2024 15:41:50 +0100
+Message-ID: <20241203144016.903523296@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -52,41 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jonathan Marek <jonathan@marek.ca>
+From: Sibi Sankar <quic_sibis@quicinc.com>
 
-[ Upstream commit 06c59d97f63c1b8af521fa5aef8a716fb988b285 ]
+[ Upstream commit 7b22b7719fc17d5979a991c918c868ab041be5c8 ]
 
-The name len field of the CMD_OPEN packet is only 16-bits and the upper
-16-bits of "param2" are a different "prio" field, which can be nonzero in
-certain situations, and CMD_OPEN packets can be unexpectedly dropped
-because of this.
+Any write access to the IMEM region when the Q6 is setting up XPU
+protection on it will result in a XPU violation. Fix this by ensuring
+IMEM writes related to the MBA post-mortem logs happen before the Q6
+is brought out of reset.
 
-Fix this by masking out the upper 16 bits of param2.
-
-Fixes: b4f8e52b89f6 ("rpmsg: Introduce Qualcomm RPM glink driver")
-Signed-off-by: Jonathan Marek <jonathan@marek.ca>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20241007235935.6216-1-jonathan@marek.ca
+Fixes: 318130cc9362 ("remoteproc: qcom_q6v5_mss: Add MBA log extraction support")
+Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Tested-by: Douglas Anderson <dianders@chromium.org>
+Link: https://lore.kernel.org/r/20240819073020.3291287-1-quic_sibis@quicinc.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rpmsg/qcom_glink_native.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/remoteproc/qcom_q6v5_mss.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/rpmsg/qcom_glink_native.c b/drivers/rpmsg/qcom_glink_native.c
-index d877a1a1aeb4b..c7f91a82e634f 100644
---- a/drivers/rpmsg/qcom_glink_native.c
-+++ b/drivers/rpmsg/qcom_glink_native.c
-@@ -1117,7 +1117,8 @@ void qcom_glink_native_rx(struct qcom_glink *glink)
- 			qcom_glink_rx_advance(glink, ALIGN(sizeof(msg), 8));
- 			break;
- 		case GLINK_CMD_OPEN:
--			ret = qcom_glink_rx_defer(glink, param2);
-+			/* upper 16 bits of param2 are the "prio" field */
-+			ret = qcom_glink_rx_defer(glink, param2 & 0xffff);
- 			break;
- 		case GLINK_CMD_TX_DATA:
- 		case GLINK_CMD_TX_DATA_CONT:
+diff --git a/drivers/remoteproc/qcom_q6v5_mss.c b/drivers/remoteproc/qcom_q6v5_mss.c
+index 2a42215ce8e07..32c3531b20c70 100644
+--- a/drivers/remoteproc/qcom_q6v5_mss.c
++++ b/drivers/remoteproc/qcom_q6v5_mss.c
+@@ -1162,6 +1162,9 @@ static int q6v5_mba_load(struct q6v5 *qproc)
+ 		goto disable_active_clks;
+ 	}
+ 
++	if (qproc->has_mba_logs)
++		qcom_pil_info_store("mba", qproc->mba_phys, MBA_LOG_SIZE);
++
+ 	writel(qproc->mba_phys, qproc->rmb_base + RMB_MBA_IMAGE_REG);
+ 	if (qproc->dp_size) {
+ 		writel(qproc->mba_phys + SZ_1M, qproc->rmb_base + RMB_PMI_CODE_START_REG);
+@@ -1172,9 +1175,6 @@ static int q6v5_mba_load(struct q6v5 *qproc)
+ 	if (ret)
+ 		goto reclaim_mba;
+ 
+-	if (qproc->has_mba_logs)
+-		qcom_pil_info_store("mba", qproc->mba_phys, MBA_LOG_SIZE);
+-
+ 	ret = q6v5_rmb_mba_wait(qproc, 0, 5000);
+ 	if (ret == -ETIMEDOUT) {
+ 		dev_err(qproc->dev, "MBA boot timed out\n");
 -- 
 2.43.0
 
