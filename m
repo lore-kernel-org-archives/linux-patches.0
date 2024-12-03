@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 386D21F130E;
-	Tue,  3 Dec 2024 15:05:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBB6F1F130E;
+	Tue,  3 Dec 2024 15:05:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733238341; cv=none; b=TQ2iUC/Gs2FTcIJEoXMg4UoUFK8XQ4SR+FS0p3zI3P+4w7hHznIW46uE1zz9Xk2toqxdqnSaEj3HKicoFM7UGC8wfD+kYod7QW/LaixlxIqbPI/t9N432ClTVsxVtCuu9WdB1dFf0DUuyH7vNlsIGjJAcmNkbrPJ4GMCEOQNVvM=
+	t=1733238344; cv=none; b=a9igvW9usy7JgfrkEE7jXWXt/g72OOYau8ERuudF9S/dFa4WpUStL3rgiedIL6GiQLMDMXEVMHFeiVXKKD9LRWIfu2iF74bzinhO/HeWDDLfJg/cHIx1YYUHGw4591hdTIB+RD6Fq4UViy3tLteXEdvGA7f+6nPdbdBkwvUqqXM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733238341; c=relaxed/simple;
-	bh=A8K23B6c9A5BQhkAUoDy1ARdgTbZE8HGDSA5UK4syHc=;
+	s=arc-20240116; t=1733238344; c=relaxed/simple;
+	bh=OyqK2+Rwt4B6ooT6PNFqHXDNWALC9h8c+6FtS2zSP/k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AtThAzFbmDO+MV6g64d7LpvrKYI34LaHBgb15OyiCBeHx+vLbAwMUyVtPoqcLKpfPHN11Xa0BUXyMbGCWl3Bc4h1scT2k1vM7ETlE9OXHh97r3+ZrVPXuULqslHk4y5Ok8z/xrE3/BPtBtd4PyCEw7GZ+MKrcuk8h881Q73A3wE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K1A+FJnO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NqtGtNUeXo5Euvi9TGEeRmzL90pQ7Cp8SMjuNWNHzKkuPJ+eXILUhg/S+NKqjZ82DIDx9pJ2nOYvnrcy+MXXgkEEQpuALeUHfiwri1TtXMLHtRrUwLeW19I20nZqq52uryBctCwvwf88TDrmVnFTBaLlAgvCvfEx+6P+HNLY9Ic=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o0TxHsaC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K1A+FJnO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACFFEC4CECF;
-	Tue,  3 Dec 2024 15:05:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o0TxHsaC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 760DAC4CECF;
+	Tue,  3 Dec 2024 15:05:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733238341;
-	bh=A8K23B6c9A5BQhkAUoDy1ARdgTbZE8HGDSA5UK4syHc=;
+	s=korg; t=1733238343;
+	bh=OyqK2+Rwt4B6ooT6PNFqHXDNWALC9h8c+6FtS2zSP/k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K1A+FJnOLw1d0GzykEcB4K1JvvHZHIzNeUqdaGr5Ltpqe4+Fp7Rc468k7KfBuEe3m
-	 GNbkAkDf0mPBWZNYRDMqV9MZfmfA46w+Upxh9iUDwD1ziy/cpY+u/aBdaOI7txneW3
-	 pIs9uPdQBqWWrMl4BavlEfEOgDzwBFe4nwh089ec=
+	b=o0TxHsaCMBaH6YG2ic9kQamtTiLO4waowOSyEzUEXqhXvjaTOSFt1Hpt6OTDlOhUm
+	 Iy269ckUN/V1y4mkgM3nLyAwZASmf1KVtj+CrTz20WEHugXJPmkoovVwBZo4qRwM1a
+	 z5YvPXM/b5F2QIt1nK0juYhOuy1atS6RZl9Qs8Fw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Igor Prusov <ivprusov@salutedevices.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Shengjiu Wang <shengjiu.wang@nxp.com>,
+	Daniel Baluta <daniel.baluta@nxp.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 246/817] dt-bindings: vendor-prefixes: Add NeoFidelity, Inc
-Date: Tue,  3 Dec 2024 15:36:58 +0100
-Message-ID: <20241203144005.371342776@linuxfoundation.org>
+Subject: [PATCH 6.11 247/817] ASoC: fsl_micfil: fix regmap_write_bits usage
+Date: Tue,  3 Dec 2024 15:36:59 +0100
+Message-ID: <20241203144005.410786621@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -52,34 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Igor Prusov <ivprusov@salutedevices.com>
+From: Shengjiu Wang <shengjiu.wang@nxp.com>
 
-[ Upstream commit 5d9e6d6fc1b98c8c22d110ee931b3b233d43cd13 ]
+[ Upstream commit 06df673d20230afb0e383e39235a4fa8b9a62464 ]
 
-Add vendor prefix for NeoFidelity, Inc
+The last parameter 1 means BIT(0), which should be the
+correct BIT(X).
 
-Signed-off-by: Igor Prusov <ivprusov@salutedevices.com>
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://patch.msgid.link/20240925-ntp-amps-8918-8835-v3-1-e2459a8191a6@salutedevices.com
+Fixes: 47a70e6fc9a8 ("ASoC: Add MICFIL SoC Digital Audio Interface driver.")
+Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
+Reviewed-by: Daniel Baluta <daniel.baluta@nxp.com>
+Link: https://patch.msgid.link/1727424031-19551-2-git-send-email-shengjiu.wang@nxp.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/devicetree/bindings/vendor-prefixes.yaml | 2 ++
- 1 file changed, 2 insertions(+)
+ sound/soc/fsl/fsl_micfil.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/vendor-prefixes.yaml b/Documentation/devicetree/bindings/vendor-prefixes.yaml
-index a70ce43b3dc03..b18f6ee6d6de4 100644
---- a/Documentation/devicetree/bindings/vendor-prefixes.yaml
-+++ b/Documentation/devicetree/bindings/vendor-prefixes.yaml
-@@ -1009,6 +1009,8 @@ patternProperties:
-     description: Shanghai Neardi Technology Co., Ltd.
-   "^nec,.*":
-     description: NEC LCD Technologies, Ltd.
-+  "^neofidelity,.*":
-+    description: Neofidelity Inc.
-   "^neonode,.*":
-     description: Neonode Inc.
-   "^netgear,.*":
+diff --git a/sound/soc/fsl/fsl_micfil.c b/sound/soc/fsl/fsl_micfil.c
+index 1ecfa1184adac..8cda36e0ae4d4 100644
+--- a/sound/soc/fsl/fsl_micfil.c
++++ b/sound/soc/fsl/fsl_micfil.c
+@@ -1061,7 +1061,7 @@ static irqreturn_t micfil_isr(int irq, void *devid)
+ 			regmap_write_bits(micfil->regmap,
+ 					  REG_MICFIL_STAT,
+ 					  MICFIL_STAT_CHXF(i),
+-					  1);
++					  MICFIL_STAT_CHXF(i));
+ 	}
+ 
+ 	for (i = 0; i < MICFIL_FIFO_NUM; i++) {
+@@ -1096,7 +1096,7 @@ static irqreturn_t micfil_err_isr(int irq, void *devid)
+ 	if (stat_reg & MICFIL_STAT_LOWFREQF) {
+ 		dev_dbg(&pdev->dev, "isr: ipg_clk_app is too low\n");
+ 		regmap_write_bits(micfil->regmap, REG_MICFIL_STAT,
+-				  MICFIL_STAT_LOWFREQF, 1);
++				  MICFIL_STAT_LOWFREQF, MICFIL_STAT_LOWFREQF);
+ 	}
+ 
+ 	return IRQ_HANDLED;
 -- 
 2.43.0
 
