@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93E5D1F6698;
-	Tue,  3 Dec 2024 14:53:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F36EC1F6698;
+	Tue,  3 Dec 2024 14:53:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733237613; cv=none; b=VkJXlL4RDZIQxQSy7gWG2FKjTMuLHaiOo2jC4FREthSPJM2mE2TPD68LPujjSae4p4Q0GX4JPXZt8RWnH/CtU5vWgO0HONE0nl5Uu/iwmAe7ZsJzqDETBG7m2U+yhP2rb1oY3cnq0qoSzg6Cjqduum63GBGK3qs5gaVDDWoxZ1A=
+	t=1733237617; cv=none; b=rcmvP5Ail7pjjvRZpVFawNJjejeeSNpYYOVM1Ilq6D8Zn5it+7/7cRnZRXU6udx1WaCegXQjWBKMcCZyNh1bRk8cQKRMgocFIPyE0K+58RqhzYfANBKV/BIcfXqbDcXup9soAonIiljgp0Rw+UqhI6z+3cld8wtxzgvqeTRfM5c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733237613; c=relaxed/simple;
-	bh=xSQbIVznNyfftIoXyPaSstSoXA65Jpmag9cUe/0S2ls=;
+	s=arc-20240116; t=1733237617; c=relaxed/simple;
+	bh=fwnfC9YMduZ5BhKdjS6YVByYqTKnRH+m7bSnYUNb0IQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SVJFJbbT2Z1JOrDu7W2dDvMU6PGfRBlJ3CxVNCC/bFbNx1V4WHxvHwrg6MYlxTjmSHpxqZ7MmRDkstPScPif0wPqtVNm/hrtPqDD9jOWIsVPF0W/WTss+ef6/XR87jkuC1cKnI/4sFkkHYO9eGX55BBO4fZh+JtmK/FEa7tcv+w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ljtkzczu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=aT9XpfZCoZ5BJvHUUkMaq6tdQbb2TrS3DZ/7EBwmzoXY1tmHAeE2vugow2UF0fhF9Ev9FjnPLFN56A9aL/uKuS6o3NgK3JeuK3YE2XQX5rXn0sSBTPkb0vXF7W1d9vE6k1SNDrvttYMPBjqlEje95+J4eqD86qEWYFxi3o6A6Gc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vbkn4Sf1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ljtkzczu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFE2BC4CECF;
-	Tue,  3 Dec 2024 14:53:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vbkn4Sf1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57D31C4CECF;
+	Tue,  3 Dec 2024 14:53:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733237613;
-	bh=xSQbIVznNyfftIoXyPaSstSoXA65Jpmag9cUe/0S2ls=;
+	s=korg; t=1733237616;
+	bh=fwnfC9YMduZ5BhKdjS6YVByYqTKnRH+m7bSnYUNb0IQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LjtkzczuwV5b+tAkDj5oRshe4S+X6KY3t2hz5j9f+uCofXRa9JGO4W53IUlWTsKZ7
-	 hDjJhW/pyKwtT/QnCZGZF/wRv5LC4fsmBzIQRZ6mKDC8xGqxgn35nKH9LsgTkmMgS0
-	 0kDzknMN4IXieAi9+uvLKtMJtTCdXLajwW2x0+Zc=
+	b=Vbkn4Sf1vOO9UDwUWHy4LGWEh4upf9OhSZWcbxU95YQzWsTo3rPq1ZOkVQv+/W0oO
+	 Mihlskh75PZV/TztM4KB5Ml/ACi0jktt+YuaDzk/Ks2zQfEWyl8GQAh43QcIlhpU8Z
+	 6CtW0qE1ZjIR7waZQ8EKGbNaCJz5WsDgxp9Ph3Z8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiayuan Chen <mrpre@163.com>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
+	=?UTF-8?q?Beno=C3=AEt=20Monin?= <benoit.monin@gmx.fr>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 020/817] bpf: fix filed access without lock
-Date: Tue,  3 Dec 2024 15:33:12 +0100
-Message-ID: <20241203143956.430935977@linuxfoundation.org>
+Subject: [PATCH 6.11 021/817] net: usb: qmi_wwan: add Quectel RG650V
+Date: Tue,  3 Dec 2024 15:33:13 +0100
+Message-ID: <20241203143956.470875870@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -45,68 +46,67 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.11-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jiayuan Chen <mrpre@163.com>
+From: Benoît Monin <benoit.monin@gmx.fr>
 
-[ Upstream commit a32aee8f0d987a7cba7fcc28002553361a392048 ]
+[ Upstream commit 6b3f18a76be6bbd237c7594cf0bf2912b68084fe ]
 
-The tcp_bpf_recvmsg_parser() function, running in user context,
-retrieves seq_copied from tcp_sk without holding the socket lock, and
-stores it in a local variable seq. However, the softirq context can
-modify tcp_sk->seq_copied concurrently, for example, n tcp_read_sock().
+Add support for Quectel RG650V which is based on Qualcomm SDX65 chip.
+The composition is DIAG / NMEA / AT / AT / QMI.
 
-As a result, the seq value is stale when it is assigned back to
-tcp_sk->copied_seq at the end of tcp_bpf_recvmsg_parser(), leading to
-incorrect behavior.
+T: Bus=02 Lev=01 Prnt=01 Port=03 Cnt=01 Dev#=  4 Spd=5000 MxCh= 0
+D: Ver= 3.20 Cls=00(>ifc ) Sub=00 Prot=00 MxPS= 9 #Cfgs=  1
+P: Vendor=2c7c ProdID=0122 Rev=05.15
+S: Manufacturer=Quectel
+S: Product=RG650V-EU
+S: SerialNumber=xxxxxxx
+C: #Ifs= 5 Cfg#= 1 Atr=a0 MxPwr=896mA
+I: If#= 0 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+E: Ad=01(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E: Ad=81(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+I: If#= 1 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E: Ad=02(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E: Ad=82(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+I: If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E: Ad=03(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E: Ad=83(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E: Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=9ms
+I: If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E: Ad=04(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E: Ad=85(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E: Ad=86(I) Atr=03(Int.) MxPS=  10 Ivl=9ms
+I: If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=ff Driver=qmi_wwan
+E: Ad=05(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E: Ad=87(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E: Ad=88(I) Atr=03(Int.) MxPS=   8 Ivl=9ms
 
-Due to concurrency, the copied_seq field in tcp_bpf_recvmsg_parser()
-might be set to an incorrect value (less than the actual copied_seq) at
-the end of function: 'WRITE_ONCE(tcp->copied_seq, seq)'. This causes the
-'offset' to be negative in tcp_read_sock()->tcp_recv_skb() when
-processing new incoming packets (sk->copied_seq - skb->seq becomes less
-than 0), and all subsequent packets will be dropped.
-
-Signed-off-by: Jiayuan Chen <mrpre@163.com>
-Link: https://lore.kernel.org/r/20241028065226.35568-1-mrpre@163.com
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Signed-off-by: Benoît Monin <benoit.monin@gmx.fr>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20241024151113.53203-1-benoit.monin@gmx.fr
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_bpf.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/net/usb/qmi_wwan.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/ipv4/tcp_bpf.c b/net/ipv4/tcp_bpf.c
-index fe6178715ba05..915286c3615a2 100644
---- a/net/ipv4/tcp_bpf.c
-+++ b/net/ipv4/tcp_bpf.c
-@@ -221,11 +221,11 @@ static int tcp_bpf_recvmsg_parser(struct sock *sk,
- 				  int flags,
- 				  int *addr_len)
- {
--	struct tcp_sock *tcp = tcp_sk(sk);
- 	int peek = flags & MSG_PEEK;
--	u32 seq = tcp->copied_seq;
- 	struct sk_psock *psock;
-+	struct tcp_sock *tcp;
- 	int copied = 0;
-+	u32 seq;
- 
- 	if (unlikely(flags & MSG_ERRQUEUE))
- 		return inet_recv_error(sk, msg, len, addr_len);
-@@ -238,7 +238,8 @@ static int tcp_bpf_recvmsg_parser(struct sock *sk,
- 		return tcp_recvmsg(sk, msg, len, flags, addr_len);
- 
- 	lock_sock(sk);
--
-+	tcp = tcp_sk(sk);
-+	seq = tcp->copied_seq;
- 	/* We may have received data on the sk_receive_queue pre-accept and
- 	 * then we can not use read_skb in this context because we haven't
- 	 * assigned a sk_socket yet so have no link to the ops. The work-around
+diff --git a/drivers/net/usb/qmi_wwan.c b/drivers/net/usb/qmi_wwan.c
+index f137c82f1c0f7..0c011d8f5d4db 100644
+--- a/drivers/net/usb/qmi_wwan.c
++++ b/drivers/net/usb/qmi_wwan.c
+@@ -1076,6 +1076,7 @@ static const struct usb_device_id products[] = {
+ 		USB_DEVICE_AND_INTERFACE_INFO(0x03f0, 0x581d, USB_CLASS_VENDOR_SPEC, 1, 7),
+ 		.driver_info = (unsigned long)&qmi_wwan_info,
+ 	},
++	{QMI_MATCH_FF_FF_FF(0x2c7c, 0x0122)},	/* Quectel RG650V */
+ 	{QMI_MATCH_FF_FF_FF(0x2c7c, 0x0125)},	/* Quectel EC25, EC20 R2.0  Mini PCIe */
+ 	{QMI_MATCH_FF_FF_FF(0x2c7c, 0x0306)},	/* Quectel EP06/EG06/EM06 */
+ 	{QMI_MATCH_FF_FF_FF(0x2c7c, 0x0512)},	/* Quectel EG12/EM12 */
 -- 
 2.43.0
 
