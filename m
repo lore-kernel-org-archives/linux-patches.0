@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BF762C80;
-	Tue,  3 Dec 2024 15:49:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF8312C80;
+	Tue,  3 Dec 2024 15:49:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733240952; cv=none; b=oETEUUCpsRynLt1HuBE2ZMrKy5QJmiNat+8ay0SnWc6vHGmRJnMXcl3kk8uNs5y/xVZ/atR1QXunj+KraseMQdbzcGvhD4ROhJvoo7qvfxOXMMlVwtEYPMofPVm7EA+1N9WkIFFNGyg6dvEvTwsQE0ZahpiCtzK6CtbUKl6YWuM=
+	t=1733240955; cv=none; b=pplWlUMPXCD55zuDyff2bkhFsIuv8U4cpr9SEVc7PZ3siCWxcyuqHdm4ar/vQSvk+UklYdYYzbJ55Ysw1jwtOqh6ZZhL+nLUb9w3kzFEz2vcT8lXfH2kgEXNkQL5aQA4qE4qAcPg7ZvMplUlGtF4TrYVqNYL7vBZXVK8/tBsJgU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733240952; c=relaxed/simple;
-	bh=rxzI2t4FRiulTdKUS+x/RxzxieKiguvxUpidtdyE+Fw=;
+	s=arc-20240116; t=1733240955; c=relaxed/simple;
+	bh=vXT/QlB1u6fcoLaLAWylLsqUWLFcCqmsrVP4pfpCJ0k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t9cparLp3h5845EQYfLm/C9IjUtpQrzLKVu2IWHr+Ae5hxu4fDLVYRQmYz4gbbR3jD032O6THTf3gbEuXd2JgQjDn5nH/ZG55UpZm7ie136UoSsSXoXylpCEfUzUG++tP8bbJtiizYrt4CQENCrz8aMDB20+SnHk9yCKWEBxMEI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m6ZIFG/c; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=M+HWMqRQkJWmXSFpHTQ2qevhjn6H5oNmB3ZIdLUREsY4MFWsB3yLqVIC/4Xt74PIXWFTNl1itRXdTh+bU3DlisWX9+EtgO8DOb3n3dDTzTrHYh5XGcXRZ0fo1o6W5Sf5QD2sBaiuYnyA+88L6+3fb0/dkjS1moRRjPSuVgbyrYg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZdOyAugE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m6ZIFG/c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFD28C4CECF;
-	Tue,  3 Dec 2024 15:49:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZdOyAugE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 279D5C4CECF;
+	Tue,  3 Dec 2024 15:49:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733240952;
-	bh=rxzI2t4FRiulTdKUS+x/RxzxieKiguvxUpidtdyE+Fw=;
+	s=korg; t=1733240955;
+	bh=vXT/QlB1u6fcoLaLAWylLsqUWLFcCqmsrVP4pfpCJ0k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m6ZIFG/cHSHT3KXqF5EABSYDWFDk5BcrwaOKNx3BR9la/RREG/wHYl0ery4GCUtmU
-	 r7hWhRuJ/UhPNDsHqR3rR+Br8Z7dn0BkGOaEGpEWcnQDiBW3qoOb/ubqwVNq/CNVEE
-	 9bV7YbxYKJthAECiGga3X+EPaZG21/k2Oz+jtMEU=
+	b=ZdOyAugEt7ZzCD8QGoctwf+OjuaLQraDEinKWzb6KHqxrtlagtNInGJsYvFsuUCSl
+	 3TjjKdW0rHgBtXfTwK6lhlBjkkknGdqTT7lIIloB+NinNtBLjNLxdRr5yvizRxOIPq
+	 n4R1Msp72bp573/dOeQE7Sha6e0pU9Rd9KFw0YZ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Roman Li <roman.li@amd.com>,
-	Fangzhi Zuo <Jerry.Zuo@amd.com>,
-	Tom Chung <chiahsuan.chung@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Li Huafei <lihuafei1@huawei.com>,
+	Lyude Paul <lyude@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 284/826] drm/amd/display: Reduce HPD Detection Interval for IPS
-Date: Tue,  3 Dec 2024 15:40:11 +0100
-Message-ID: <20241203144754.848411040@linuxfoundation.org>
+Subject: [PATCH 6.12 285/826] drm/nouveau/gr/gf100: Fix missing unlock in gf100_gr_chan_new()
+Date: Tue,  3 Dec 2024 15:40:12 +0100
+Message-ID: <20241203144754.889327404@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -54,42 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fangzhi Zuo <Jerry.Zuo@amd.com>
+From: Li Huafei <lihuafei1@huawei.com>
 
-[ Upstream commit a88b19b13fb41a3fa03ec67b5f57cc267fbfb160 ]
+[ Upstream commit a2f599046c671d6b46d93aed95b37241ce4504cf ]
 
-Fix DP Compliance test 4.2.1.3, 4.2.2.8, 4.3.1.12, 4.3.1.13
-when IPS enabled.
+When the call to gf100_grctx_generate() fails, unlock gr->fecs.mutex
+before returning the error.
 
-Original HPD detection interval is set to 5s which violates DP
-compliance.
-Reduce the interval parameter, such that link training can be
-finished within 5 seconds.
+Fixes smatch warning:
 
-Fixes: afca033f10d3 ("drm/amd/display: Add periodic detection for IPS")
-Reviewed-by: Roman Li <roman.li@amd.com>
-Signed-off-by: Fangzhi Zuo <Jerry.Zuo@amd.com>
-Signed-off-by: Tom Chung <chiahsuan.chung@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+drivers/gpu/drm/nouveau/nvkm/engine/gr/gf100.c:480 gf100_gr_chan_new() warn: inconsistent returns '&gr->fecs.mutex'.
+
+Fixes: ca081fff6ecc ("drm/nouveau/gr/gf100-: generate golden context during first object alloc")
+Signed-off-by: Li Huafei <lihuafei1@huawei.com>
+Reviewed-by: Lyude Paul <lyude@redhat.com>
+Signed-off-by: Lyude Paul <lyude@redhat.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20241026173844.2392679-1-lihuafei1@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crtc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/nouveau/nvkm/engine/gr/gf100.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crtc.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crtc.c
-index 8780d4737680f..9be87b5325173 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crtc.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crtc.c
-@@ -35,7 +35,7 @@
- #include "amdgpu_dm_trace.h"
- #include "amdgpu_dm_debugfs.h"
- 
--#define HPD_DETECTION_PERIOD_uS 5000000
-+#define HPD_DETECTION_PERIOD_uS 2000000
- #define HPD_DETECTION_TIME_uS 100000
- 
- void amdgpu_dm_crtc_handle_vblank(struct amdgpu_crtc *acrtc)
+diff --git a/drivers/gpu/drm/nouveau/nvkm/engine/gr/gf100.c b/drivers/gpu/drm/nouveau/nvkm/engine/gr/gf100.c
+index 060c74a80eb14..3ea447f6a45b5 100644
+--- a/drivers/gpu/drm/nouveau/nvkm/engine/gr/gf100.c
++++ b/drivers/gpu/drm/nouveau/nvkm/engine/gr/gf100.c
+@@ -443,6 +443,7 @@ gf100_gr_chan_new(struct nvkm_gr *base, struct nvkm_chan *fifoch,
+ 		ret = gf100_grctx_generate(gr, chan, fifoch->inst);
+ 		if (ret) {
+ 			nvkm_error(&base->engine.subdev, "failed to construct context\n");
++			mutex_unlock(&gr->fecs.mutex);
+ 			return ret;
+ 		}
+ 	}
 -- 
 2.43.0
 
