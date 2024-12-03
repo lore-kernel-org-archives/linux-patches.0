@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23537646;
-	Tue,  3 Dec 2024 15:16:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B528646;
+	Tue,  3 Dec 2024 15:16:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733238978; cv=none; b=JDgzW8BS16a5cPBDMOLMI05jbU2WH7bIr8QA880T7teemImKqfwRmur/W5d4lDrMeU422xgOfaDnJ0AMd8lhFlSwGHgHLtBlOORHh9ReJ0h4F4J17RaMR/mWKGaICJTmb7Ne1OdCnIAHvkfLAhaa2PyrrCjC2TwuQuZoX3AJnUs=
+	t=1733238981; cv=none; b=n07iWA+swtFcDNLUDz/AajO3dqcfg20iThGaEeccVhthNVcJDEoHzaDzwxn/OI0fQm+7vok1ZvEarmYjsFk3WMI6euXzHHqVStb9EHu3wZEbN97LzRjJpxTXK8upxviUywYafPXR/g0m9OdxPojv55Qs4KGy6gJHO2OVOYULjWo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733238978; c=relaxed/simple;
-	bh=6StEq2IYly367fzpQMcTFrnX1/Q0miHZ51VhaHq9BUU=;
+	s=arc-20240116; t=1733238981; c=relaxed/simple;
+	bh=Iwq86FMKsBq7AqJE6GnZOPvlj5h/fUEs7C9OdOI0DR4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Yrk4NaW7pJwc+oVsxi2b2Ql0AD5wNGf6+3gHmQuiVJ6DDBNJbm0uKa1F7cwAFwV/J1HG40iQzEQ2T7AY/wm18I/o+0otTP1ysMTRMmlYUzuQBQqc5rEj46nr8eW9A4skvUc4X/gN7eMVm04pQDzfESqaMwRPjSJRjQHLHEZ7Aq4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l5+uAp6/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HL1amMxPAbpbzWvKJ2qh28Rv4II1L34s6gxQbivWdkCP6/l8SXPQPIZKXrowQ5+tDrBowFcffn1++AUg4mqe93D1MpcieHC93Z5q3tEmzLXPSnXKTBBpRpTIJuxcSW6v7Fgaxz8WRLUoS30B8VPtncwlcWbJhOApXHXYU66/n+w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nAA9hGQh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l5+uAp6/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F7CAC4CECF;
-	Tue,  3 Dec 2024 15:16:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nAA9hGQh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0CD3C4CECF;
+	Tue,  3 Dec 2024 15:16:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733238978;
-	bh=6StEq2IYly367fzpQMcTFrnX1/Q0miHZ51VhaHq9BUU=;
+	s=korg; t=1733238981;
+	bh=Iwq86FMKsBq7AqJE6GnZOPvlj5h/fUEs7C9OdOI0DR4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l5+uAp6/J+vkr9gNmYjSwr4H43h91+k0DQTO158JpFC/ZK9ME0tk865RZ42c9sQKz
-	 PREOWTBhS7pzZX9e18/6SUzfbQCbMJw/zjiuSpfajMzRJgOSxtBF7xHwEygPRhzJdb
-	 rHT/kwWgTcSbuxU0FMWmot4ZoBM2IWpfWaJjvE6o=
+	b=nAA9hGQhLekBBjCfsuOeKJFvahM6se3BndZtKnb4QBvxBI3CTEYizXe9rTwwaMZE/
+	 /vdrM87sUXnmcsdfiQGSKbLglXe5Sf6vA4fpNpxVnf1qkkJz09CDEujrO/7BpVK5aY
+	 RxInjqTQFoOVEKObUNVFMXqZjsuc202IA7DJf4xU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Zekun <zhangzekun11@huawei.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Zhen Lei <thunder.leizhen@huawei.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 462/817] powerpc/kexec: Fix return of uninitialized variable
-Date: Tue,  3 Dec 2024 15:40:34 +0100
-Message-ID: <20241203144013.908848194@linuxfoundation.org>
+Subject: [PATCH 6.11 463/817] fbdev: sh7760fb: Fix a possible memory leak in sh7760fb_alloc_mem()
+Date: Tue,  3 Dec 2024 15:40:35 +0100
+Message-ID: <20241203144013.947255467@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -51,47 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Zekun <zhangzekun11@huawei.com>
+From: Zhen Lei <thunder.leizhen@huawei.com>
 
-[ Upstream commit 83b5a407fbb73e6965adfb4bd0a803724bf87f96 ]
+[ Upstream commit f89d17ae2ac42931be2a0153fecbf8533280c927 ]
 
-of_property_read_u64() can fail and leave the variable uninitialized,
-which will then be used. Return error if reading the property failed.
+When information such as info->screen_base is not ready, calling
+sh7760fb_free_mem() does not release memory correctly. Call
+dma_free_coherent() instead.
 
-Fixes: 2e6bd221d96f ("powerpc/kexec_file: Enable early kernel OPAL calls")
-Signed-off-by: Zhang Zekun <zhangzekun11@huawei.com>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://patch.msgid.link/20240930075628.125138-1-zhangzekun11@huawei.com
+Fixes: 4a25e41831ee ("video: sh7760fb: SH7760/SH7763 LCDC framebuffer driver")
+Signed-off-by: Zhen Lei <thunder.leizhen@huawei.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/kexec/file_load_64.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/video/fbdev/sh7760fb.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/arch/powerpc/kexec/file_load_64.c b/arch/powerpc/kexec/file_load_64.c
-index 9738adabeb1fe..dc65c13911577 100644
---- a/arch/powerpc/kexec/file_load_64.c
-+++ b/arch/powerpc/kexec/file_load_64.c
-@@ -736,13 +736,18 @@ int setup_purgatory_ppc64(struct kimage *image, const void *slave_code,
- 	if (dn) {
- 		u64 val;
+diff --git a/drivers/video/fbdev/sh7760fb.c b/drivers/video/fbdev/sh7760fb.c
+index 08a4943dc5418..d0ee5fec647ad 100644
+--- a/drivers/video/fbdev/sh7760fb.c
++++ b/drivers/video/fbdev/sh7760fb.c
+@@ -409,12 +409,11 @@ static int sh7760fb_alloc_mem(struct fb_info *info)
+ 		vram = PAGE_SIZE;
  
--		of_property_read_u64(dn, "opal-base-address", &val);
-+		ret = of_property_read_u64(dn, "opal-base-address", &val);
-+		if (ret)
-+			goto out;
-+
- 		ret = kexec_purgatory_get_set_symbol(image, "opal_base", &val,
- 						     sizeof(val), false);
- 		if (ret)
- 			goto out;
+ 	fbmem = dma_alloc_coherent(info->device, vram, &par->fbdma, GFP_KERNEL);
+-
+ 	if (!fbmem)
+ 		return -ENOMEM;
  
--		of_property_read_u64(dn, "opal-entry-address", &val);
-+		ret = of_property_read_u64(dn, "opal-entry-address", &val);
-+		if (ret)
-+			goto out;
- 		ret = kexec_purgatory_get_set_symbol(image, "opal_entry", &val,
- 						     sizeof(val), false);
- 	}
+ 	if ((par->fbdma & SH7760FB_DMA_MASK) != SH7760FB_DMA_MASK) {
+-		sh7760fb_free_mem(info);
++		dma_free_coherent(info->device, vram, fbmem, par->fbdma);
+ 		dev_err(info->device, "kernel gave me memory at 0x%08lx, which is"
+ 			"unusable for the LCDC\n", (unsigned long)par->fbdma);
+ 		return -ENOMEM;
 -- 
 2.43.0
 
