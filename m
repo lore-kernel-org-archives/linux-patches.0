@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE2D91F12F7;
-	Tue,  3 Dec 2024 16:08:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 071521F76AD;
+	Tue,  3 Dec 2024 16:08:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733242098; cv=none; b=R5+3v8zoZ9y9JiIjPLjnVs2qK+P16XxnJSfrzUDtrEQ7iO2aEpf0dDIoDsMh6IvfapFcmB6VEtIUZ8UMeUT3kWab1+iohSNbKFFJLT7/tKIBbViUd7fyYommTyBPgLpqDXo1Fi0T7UKw2QRV7yZfhDo/89i9pfYdvwrJAn0afvM=
+	t=1733242102; cv=none; b=t45HyhyGlk1nJCiziMTyEQmyutr62uWD6sOZZqEJymPfmTfIVJ3UufCi1j8+SSrAfvjyZ18JHfLbrJQWfdbdygofcXB18KPUyooFxvk4j7ohA+UyByYgCBPitwjQBJy5Ocg8d5r6OhrNDQT6Mpe1YS6Wgv61MNnvGuLq4fI6K94=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733242098; c=relaxed/simple;
-	bh=7FQ82MbRvLK37NHaWaAJ94Prqk7Yvyb7bfEWslRSXTg=;
+	s=arc-20240116; t=1733242102; c=relaxed/simple;
+	bh=oj0BEKeV8TbzCXMKvar+d7ph1mrP2Q9V1D5opZ5IL/4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CccNoQCGY1G6GIhWFfwy+YOkQvxwieIfSfoe75tWBJSq1v5zyTOpkF3uM6PJz6IozoU+grxsMadB2CLzNDCuAb4RDFX6RMXu4ZGXtBe6T9dLlSPOrb6b/Nh0sDc/GDajonNjzTaBhr/+5EHyTGdJZrl64PaW0xioetq8qx6LrAU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mu06FOKq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dSyPoJV8AIFora+LrE0hyo5at+c3vnMLtmPtjN0zV0jcF6LAMwVzpb0B2991wpL8bjSBfGwVsYqum07Ay419kohcPkqxPadgZ7r0YSp+OORwzv1HqzcdTCQkZ06/xz9Mscb1vidTpLLr2K54iqYkGmFekfwfMui4VQ+2vq9D7FA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MccE3ISl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mu06FOKq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41A98C4CECF;
-	Tue,  3 Dec 2024 16:08:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MccE3ISl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78AA5C4CECF;
+	Tue,  3 Dec 2024 16:08:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733242098;
-	bh=7FQ82MbRvLK37NHaWaAJ94Prqk7Yvyb7bfEWslRSXTg=;
+	s=korg; t=1733242101;
+	bh=oj0BEKeV8TbzCXMKvar+d7ph1mrP2Q9V1D5opZ5IL/4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mu06FOKqCsXcsWe/0EvCx1yEzIJA56HThMKr2BSXmOxZfs7scDoZOBuW69U/eQRLa
-	 Kp+ngbCKn/MRTZwVFZpYxL6UVdSEWEb3zRdjjMYf9M3nmw/1xSHWQLgMgR/0u20tHk
-	 7R8dHkX1CTd5NAoygGzgNvvgI4fHIkSivvdcuuNU=
+	b=MccE3ISlL+p19tPqx5wnrN3y3yUEy5wApnI7BPj/cNFlP8cOP3cu/B8XDI+H2pSod
+	 9EM/KLxaILWg5h2H3fRQ6eU0+0t5faPgbfS8pUDnpwhTadczcT29t41Rt2In775yIb
+	 VHYaTKwZHzge23QjuSbyapXkDsMTnfXbOEn7P4JU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Julien Panis <jpanis@baylibre.com>,
-	Jiasheng Jiang <jiashengjiangcool@gmail.com>,
-	William Breathitt Gray <wbg@kernel.org>,
+	Somnath Kotur <somnath.kotur@broadcom.com>,
+	Pavan Chebbi <pavan.chebbi@broadcom.com>,
+	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
+	Michael Chan <michael.chan@broadcom.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 607/826] counter: ti-ecap-capture: Add check for clk_enable()
-Date: Tue,  3 Dec 2024 15:45:34 +0100
-Message-ID: <20241203144807.431579617@linuxfoundation.org>
+Subject: [PATCH 6.12 581/826] bnxt_en: Refactor bnxt_ptp_init()
+Date: Tue,  3 Dec 2024 15:45:08 +0100
+Message-ID: <20241203144806.413388296@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -52,42 +54,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiasheng Jiang <jiashengjiangcool@gmail.com>
+From: Michael Chan <michael.chan@broadcom.com>
 
-[ Upstream commit 1437d9f1c56fce9c24e566508bce1d218dd5497a ]
+[ Upstream commit 1e9614cd956268e10a669c0593e7e54d03d0c087 ]
 
-Add check for the return value of clk_enable() in order to catch the
-potential exception.
+Instead of passing the 2nd parameter phc_cfg to bnxt_ptp_init().
+Store it in bp->ptp_cfg so that the caller doesn't need to know what
+the value should be.
 
-Fixes: 4e2f42aa00b6 ("counter: ti-ecap-capture: capture driver support for ECAP")
-Reviewed-by: Julien Panis <jpanis@baylibre.com>
-Signed-off-by: Jiasheng Jiang <jiashengjiangcool@gmail.com>
-Link: https://lore.kernel.org/r/20241104194059.47924-1-jiashengjiangcool@gmail.com
-Signed-off-by: William Breathitt Gray <wbg@kernel.org>
+In the next patch, we'll need to call bnxt_ptp_init() in bnxt_resume()
+and this will make it easier.
+
+Reviewed-by: Somnath Kotur <somnath.kotur@broadcom.com>
+Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
+Reviewed-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
+Signed-off-by: Michael Chan <michael.chan@broadcom.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Stable-dep-of: 3661c05c54e8 ("bnxt_en: Unregister PTP during PCI shutdown and suspend")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/counter/ti-ecap-capture.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/broadcom/bnxt/bnxt.c     | 6 +++---
+ drivers/net/ethernet/broadcom/bnxt/bnxt_ptp.c | 4 ++--
+ drivers/net/ethernet/broadcom/bnxt/bnxt_ptp.h | 3 ++-
+ 3 files changed, 7 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/counter/ti-ecap-capture.c b/drivers/counter/ti-ecap-capture.c
-index 675447315cafb..b119aeede693e 100644
---- a/drivers/counter/ti-ecap-capture.c
-+++ b/drivers/counter/ti-ecap-capture.c
-@@ -574,8 +574,13 @@ static int ecap_cnt_resume(struct device *dev)
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+index 913acd80d6483..015ad2b0bcd1c 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+@@ -9053,7 +9053,6 @@ static int __bnxt_hwrm_ptp_qcfg(struct bnxt *bp)
+ 	struct hwrm_port_mac_ptp_qcfg_output *resp;
+ 	struct hwrm_port_mac_ptp_qcfg_input *req;
+ 	struct bnxt_ptp_cfg *ptp = bp->ptp_cfg;
+-	bool phc_cfg;
+ 	u8 flags;
+ 	int rc;
+ 
+@@ -9100,8 +9099,9 @@ static int __bnxt_hwrm_ptp_qcfg(struct bnxt *bp)
+ 		rc = -ENODEV;
+ 		goto exit;
+ 	}
+-	phc_cfg = (flags & PORT_MAC_PTP_QCFG_RESP_FLAGS_RTC_CONFIGURED) != 0;
+-	rc = bnxt_ptp_init(bp, phc_cfg);
++	ptp->rtc_configured =
++		(flags & PORT_MAC_PTP_QCFG_RESP_FLAGS_RTC_CONFIGURED) != 0;
++	rc = bnxt_ptp_init(bp);
+ 	if (rc)
+ 		netdev_warn(bp->dev, "PTP initialization failed.\n");
+ exit:
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_ptp.c b/drivers/net/ethernet/broadcom/bnxt/bnxt_ptp.c
+index fa514be876502..781225d3ba8ff 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt_ptp.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_ptp.c
+@@ -1024,7 +1024,7 @@ static void bnxt_ptp_free(struct bnxt *bp)
+ 	}
+ }
+ 
+-int bnxt_ptp_init(struct bnxt *bp, bool phc_cfg)
++int bnxt_ptp_init(struct bnxt *bp)
  {
- 	struct counter_device *counter_dev = dev_get_drvdata(dev);
- 	struct ecap_cnt_dev *ecap_dev = counter_priv(counter_dev);
-+	int ret;
+ 	struct bnxt_ptp_cfg *ptp = bp->ptp_cfg;
+ 	int rc;
+@@ -1047,7 +1047,7 @@ int bnxt_ptp_init(struct bnxt *bp, bool phc_cfg)
  
--	clk_enable(ecap_dev->clk);
-+	ret = clk_enable(ecap_dev->clk);
-+	if (ret) {
-+		dev_err(dev, "Cannot enable clock %d\n", ret);
-+		return ret;
-+	}
+ 	if (BNXT_PTP_USE_RTC(bp)) {
+ 		bnxt_ptp_timecounter_init(bp, false);
+-		rc = bnxt_ptp_init_rtc(bp, phc_cfg);
++		rc = bnxt_ptp_init_rtc(bp, ptp->rtc_configured);
+ 		if (rc)
+ 			goto out;
+ 	} else {
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_ptp.h b/drivers/net/ethernet/broadcom/bnxt/bnxt_ptp.h
+index f322466ecad35..61e89bb2d2690 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt_ptp.h
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_ptp.h
+@@ -133,6 +133,7 @@ struct bnxt_ptp_cfg {
+ 					 BNXT_PTP_MSG_PDELAY_REQ |	\
+ 					 BNXT_PTP_MSG_PDELAY_RESP)
+ 	u8			tx_tstamp_en:1;
++	u8			rtc_configured:1;
+ 	int			rx_filter;
+ 	u32			tstamp_filters;
  
- 	ecap_cnt_capture_set_evmode(counter_dev, ecap_dev->pm_ctx.ev_mode);
- 
+@@ -180,6 +181,6 @@ void bnxt_tx_ts_cmp(struct bnxt *bp, struct bnxt_napi *bnapi,
+ 		    struct tx_ts_cmp *tscmp);
+ void bnxt_ptp_rtc_timecounter_init(struct bnxt_ptp_cfg *ptp, u64 ns);
+ int bnxt_ptp_init_rtc(struct bnxt *bp, bool phc_cfg);
+-int bnxt_ptp_init(struct bnxt *bp, bool phc_cfg);
++int bnxt_ptp_init(struct bnxt *bp);
+ void bnxt_ptp_clear(struct bnxt *bp);
+ #endif
 -- 
 2.43.0
 
