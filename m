@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E35D1F76C9;
-	Tue,  3 Dec 2024 15:38:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59CA01F754A;
+	Tue,  3 Dec 2024 15:38:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733240318; cv=none; b=YUa9iR0Ix5b2AvFrm/bVSTGB8YgP+QND5M5QeWepJ3QnjhFaqA1Abq8ll2JtqrGsY9SfozcuzNEPVZzsJH07O1CcSGr45jOYJapsL9GkzKY2kpUkhnWmsf9Dt1FeWCGRkTDZ+o2Zt46wozunWSuRx5Fov3F4agO4IcBA1p/rWHA=
+	t=1733240321; cv=none; b=oyy/uNvbr+AWZHIf0LNzsIimwsjLTP3rrp0fjoaoL1lACsJWekOMMIDGubrsDMezBbwtKDA1SnB+mxm0/sfQmiprnzUhVBtAE6hSMl+LzCMl1Dg7lgAWSfmCMZgOKtz1Vy9zSSBEuHG79h1C/km22BBX8HaizxnuSqiP344fsuE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733240318; c=relaxed/simple;
-	bh=0m7ZTfkiLfmOL0Vw/1+UNCJJmj4Jv4KTwXoXkICWgEU=;
+	s=arc-20240116; t=1733240321; c=relaxed/simple;
+	bh=e0UZueV2MU3eZXli0a7Mn+HpN5CDD81Z54vhJlzdIEo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tHSlxdjZ74yHWTnLacRSEajeDmSqHh8C6fhd0e9/SN+kmtruDJZCMXtOZOQweEDvCzXmkxccpm5f9wxnjX7kl9qjApJzoNSqBzw9SrHkFjhnmM3bBqWYIIlK7KOJYzGDEHPHU0FtfmoS/ij5mzu+EL9qoXWXprvs+aCApt9A6IQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qq1rI4fe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Lne6X4UbN7o/EB8r3bwPiWhupHisiTgCRqTDU/+v4T49wbf/JweuRxdvHNEmtUG7iJy7e/scsFbr37arpGJGY65SUu23tTqrW4GG0g7gvcrQpMq1jnMF14DG64rmIw3u1vFj/tKfYGdFTcXABQTPhcho7aweeVcAEQGtfcj38pI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=otDgoc7E; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qq1rI4fe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E9C0C4CECF;
-	Tue,  3 Dec 2024 15:38:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="otDgoc7E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D778FC4CECF;
+	Tue,  3 Dec 2024 15:38:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733240318;
-	bh=0m7ZTfkiLfmOL0Vw/1+UNCJJmj4Jv4KTwXoXkICWgEU=;
+	s=korg; t=1733240321;
+	bh=e0UZueV2MU3eZXli0a7Mn+HpN5CDD81Z54vhJlzdIEo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qq1rI4fehfL5FhtvER69EgqV8DsUpENCV5mu2tL9/b+PlxNzWSdEo5NzHQ7uIb5or
-	 yYzTD6TbCBa49ZdR4Lv6JaKXfPw4QlTxn1iopQt8yqPf1Qlt2a3eWzLH+SKnNiZM2c
-	 jIB/6rC5gaJDuvQRALWB+cJQoqsZ2Sh0IkwlIVVI=
+	b=otDgoc7EcdzRcRti869OOnvmqmM/rG9sspy8DrU8sV1vw25STaBfvntCk+scI1wq0
+	 VgumdCVV3I5JMyASnFzfaFGfLQe9QskRFuQN0SjTaqgGLueHrXp7O0dRPXELwJDhmJ
+	 NmiWR0toynnFKNETMvcCKbqjx3AS4pd+UmeUk1wo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
-	Daniel Lezcano <daniel.lezcano@linaro.org>,
+	Samuel Holland <samuel.holland@sifive.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 097/826] clocksource/drivers/timer-ti-dm: Fix child node refcount handling
-Date: Tue,  3 Dec 2024 15:37:04 +0100
-Message-ID: <20241203144747.515928414@linuxfoundation.org>
+Subject: [PATCH 6.12 098/826] irqchip/riscv-aplic: Prevent crash when MSI domain is missing
+Date: Tue,  3 Dec 2024 15:37:05 +0100
+Message-ID: <20241203144747.555001581@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -51,44 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+From: Samuel Holland <samuel.holland@sifive.com>
 
-[ Upstream commit e5cfc0989d9a2849c51c720a16b90b2c061a1aeb ]
+[ Upstream commit 1f181d1cda56c2fbe379c5ace1aa1fac6306669e ]
 
-of_find_compatible_node() increments the node's refcount, and it must be
-decremented again with a call to of_node_put() when the pointer is no
-longer required to avoid leaking the resource.
+If the APLIC driver is probed before the IMSIC driver, the parent MSI
+domain will be missing, which causes a NULL pointer dereference in
+msi_create_device_irq_domain().
 
-Instead of adding the missing calls to of_node_put() in all execution
-paths, use the cleanup attribute for 'arm_timer' by means of the
-__free() macro, which automatically calls of_node_put() when the
-variable goes out of scope.
+Avoid this by deferring probe until the parent MSI domain is available. Use
+dev_err_probe() to avoid printing an error message when returning
+-EPROBE_DEFER.
 
-Fixes: 25de4ce5ed02 ("clocksource/drivers/timer-ti-dm: Handle dra7 timer wrap errata i940")
-Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
-Link: https://lore.kernel.org/r/20241031-timer-ti-dm-systimer-of_node_put-v3-1-063ee822b73a@gmail.com
-Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
+Fixes: ca8df97fe679 ("irqchip/riscv-aplic: Add support for MSI-mode")
+Signed-off-by: Samuel Holland <samuel.holland@sifive.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Link: https://lore.kernel.org/all/20241114200133.3069460-1-samuel.holland@sifive.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clocksource/timer-ti-dm-systimer.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/irqchip/irq-riscv-aplic-main.c | 3 ++-
+ drivers/irqchip/irq-riscv-aplic-msi.c  | 3 +++
+ 2 files changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/clocksource/timer-ti-dm-systimer.c b/drivers/clocksource/timer-ti-dm-systimer.c
-index c2dcd8d68e458..d1c144d6f328c 100644
---- a/drivers/clocksource/timer-ti-dm-systimer.c
-+++ b/drivers/clocksource/timer-ti-dm-systimer.c
-@@ -686,9 +686,9 @@ subsys_initcall(dmtimer_percpu_timer_startup);
+diff --git a/drivers/irqchip/irq-riscv-aplic-main.c b/drivers/irqchip/irq-riscv-aplic-main.c
+index 900e72541db9e..93e7c51f944ab 100644
+--- a/drivers/irqchip/irq-riscv-aplic-main.c
++++ b/drivers/irqchip/irq-riscv-aplic-main.c
+@@ -207,7 +207,8 @@ static int aplic_probe(struct platform_device *pdev)
+ 	else
+ 		rc = aplic_direct_setup(dev, regs);
+ 	if (rc)
+-		dev_err(dev, "failed to setup APLIC in %s mode\n", msi_mode ? "MSI" : "direct");
++		dev_err_probe(dev, rc, "failed to setup APLIC in %s mode\n",
++			      msi_mode ? "MSI" : "direct");
  
- static int __init dmtimer_percpu_quirk_init(struct device_node *np, u32 pa)
- {
--	struct device_node *arm_timer;
-+	struct device_node *arm_timer __free(device_node) =
-+		of_find_compatible_node(NULL, NULL, "arm,armv7-timer");
+ #ifdef CONFIG_ACPI
+ 	if (!acpi_disabled)
+diff --git a/drivers/irqchip/irq-riscv-aplic-msi.c b/drivers/irqchip/irq-riscv-aplic-msi.c
+index 945bff28265cd..fb8d1838609fb 100644
+--- a/drivers/irqchip/irq-riscv-aplic-msi.c
++++ b/drivers/irqchip/irq-riscv-aplic-msi.c
+@@ -266,6 +266,9 @@ int aplic_msi_setup(struct device *dev, void __iomem *regs)
+ 			if (msi_domain)
+ 				dev_set_msi_domain(dev, msi_domain);
+ 		}
++
++		if (!dev_get_msi_domain(dev))
++			return -EPROBE_DEFER;
+ 	}
  
--	arm_timer = of_find_compatible_node(NULL, NULL, "arm,armv7-timer");
- 	if (of_device_is_available(arm_timer)) {
- 		pr_warn_once("ARM architected timer wrap issue i940 detected\n");
- 		return 0;
+ 	if (!msi_create_device_irq_domain(dev, MSI_DEFAULT_DOMAIN, &aplic_msi_template,
 -- 
 2.43.0
 
