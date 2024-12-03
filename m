@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AA221E3DF9;
-	Tue,  3 Dec 2024 15:00:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00D941F75AE;
+	Tue,  3 Dec 2024 15:00:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733238044; cv=none; b=tUylpPDiXakioCW4y5gci82Yd/EKHi+7koqYGaSbp9e9UxnJpZ5iVNUXOhZYJ/Cv9JB8IKpExZlBva6bHKcKiVieJP++FCLWLkJzw4y9477H3IQKaVfQmBpLD8cZvq/J2c8GNo4ReeYBmC918zqc+3qxl9QEutHXyqzX5rZV6ps=
+	t=1733238048; cv=none; b=WZDa8HNs2tgFJNLyH+jEEPIyuUo8P7u+2YE51obHKE4b/Uh0/1Q9wc8TeLuhsHcUg0RVdlVc3xXW2xCJsLZpIuVq8usf8kLAOtavH4OoBM6QWMGFTbEVetlWI0j6H0Kf6xjVXPQj2fstQiuZpDLaYMSktNqjbErUmpn0/T1JBpM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733238044; c=relaxed/simple;
-	bh=aVncyru81RkUsL0++nNKCRJE60QBLxPUpVY7zZMhe6w=;
+	s=arc-20240116; t=1733238048; c=relaxed/simple;
+	bh=n9T0XJhE3B0JRL4zIn6nyENTL1QCKXawv5ImqUoJx7I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t05vV87qm6wbx0X8hj1L9Z3kqy84++QQTosWST/D9La+cDA8UT/b1cVoGLTQ4V/0yLNY+956BgeXtleqeynBzDEtIyCKh8pkjxPoBI3othb+843wP4rI7G1+SvaWxALPe5rd8tnIGMXGBvxHCrH8W9bMWoFmdq6newaxZJtx9Uk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e06iKKMT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LNoOwWFJwbdVTuRbNqiDr2zTyckzBOT0H7IdmmcBcCaCyjny0kmXRgCb/4C68JAwM5c6Pffy48AFnUuG/+7b5B2uddz0dVj/BjXMpPFzxUOXtFV+kpim8OFk3GiCuC6U2QHioEGq3RgPu+UOFWQSltN4kAI1UoQdcHa4oEbHDzY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qzn297W8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e06iKKMT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15B4BC4CECF;
-	Tue,  3 Dec 2024 15:00:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qzn297W8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21BCBC4CEDD;
+	Tue,  3 Dec 2024 15:00:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733238044;
-	bh=aVncyru81RkUsL0++nNKCRJE60QBLxPUpVY7zZMhe6w=;
+	s=korg; t=1733238047;
+	bh=n9T0XJhE3B0JRL4zIn6nyENTL1QCKXawv5ImqUoJx7I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e06iKKMTMBm8bV6kaOdWqyyY2ZNOdFogOtp2r44oXod2d0trm4gPH8/TVlbF+YTjK
-	 OA8XgVKXkZ37m3J3dA14ij/yYVc5pKlbTUhwt+Udluk5Dkzcww9giu/+Y62Ys/qdj6
-	 mLaqHpQYKZX+WrvO63JUSRHFmFmg+qsbn4tU3OX4=
+	b=Qzn297W8gta/MeaNMkmwpNVEHp4AgZT7B35wypLnO2sFTdeJ60PyXNI4Osjy7KFkD
+	 NDkji9fEfqXKAQDZbZHwCQAImr+X2QmdpeWuWqpgjjGunGbg18qTSLsy5Gh2vO/8pa
+	 gs7P0MgVy2NFeff8uBDTddKP8cVi0epl2XNayW4I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gaosheng Cui <cuigaosheng1@huawei.com>,
+	Jeff Johnson <quic_jjohnson@quicinc.com>,
 	Michal Simek <michal.simek@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 144/817] drivers: soc: xilinx: add the missing kfree in xlnx_add_cb_for_suspend()
-Date: Tue,  3 Dec 2024 15:35:16 +0100
-Message-ID: <20241203144001.347092224@linuxfoundation.org>
+Subject: [PATCH 6.11 145/817] microblaze: Export xmb_manager functions
+Date: Tue,  3 Dec 2024 15:35:17 +0100
+Message-ID: <20241203144001.387047476@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -51,39 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gaosheng Cui <cuigaosheng1@huawei.com>
+From: Michal Simek <michal.simek@amd.com>
 
-[ Upstream commit 44ed4f90a97ff6f339e50ac01db71544e0990efc ]
+[ Upstream commit badf752b5e4b17d281f93f409d4718388ff912e6 ]
 
-If we fail to allocate memory for cb_data by kmalloc, the memory
-allocation for eve_data is never freed, add the missing kfree()
-in the error handling path.
+When TMR_MANAGER is enabled as module there is a need to export functions
+which are present in architecture code.
 
-Fixes: 05e5ba40ea7a ("driver: soc: xilinx: Add support of multiple callbacks for same event in event management driver")
-Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
-Link: https://lore.kernel.org/r/20240706065155.452764-1-cuigaosheng1@huawei.com
+It has been found by running:
+make W=1 C=1 allmodconfig
+sed -i -e 's/WERROR=y/WERROR=n/g' .config
+make C=1 W=1
+
+which errors out like this:
+ERROR: modpost: "xmb_manager_register" [drivers/misc/xilinx_tmr_manager.ko] undefined!
+ERROR: modpost: "xmb_inject_err" [drivers/misc/xilinx_tmr_inject.ko] undefined!
+
+Fixes: a5e3aaa654c1 ("microblaze: Add xmb_manager_register function")
+Reported-by: Jeff Johnson <quic_jjohnson@quicinc.com>
 Signed-off-by: Michal Simek <michal.simek@amd.com>
+Link: https://lore.kernel.org/r/e322dbbbde0feef83f44304ea13249d365d1dc5f.1718799090.git.michal.simek@amd.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/xilinx/xlnx_event_manager.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ arch/microblaze/kernel/microblaze_ksyms.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/drivers/soc/xilinx/xlnx_event_manager.c b/drivers/soc/xilinx/xlnx_event_manager.c
-index f529e1346247c..85df6b9c04ee6 100644
---- a/drivers/soc/xilinx/xlnx_event_manager.c
-+++ b/drivers/soc/xilinx/xlnx_event_manager.c
-@@ -188,8 +188,10 @@ static int xlnx_add_cb_for_suspend(event_cb_func_t cb_fun, void *data)
- 	INIT_LIST_HEAD(&eve_data->cb_list_head);
+diff --git a/arch/microblaze/kernel/microblaze_ksyms.c b/arch/microblaze/kernel/microblaze_ksyms.c
+index c892e173ec990..a8553f54152b7 100644
+--- a/arch/microblaze/kernel/microblaze_ksyms.c
++++ b/arch/microblaze/kernel/microblaze_ksyms.c
+@@ -16,6 +16,7 @@
+ #include <asm/page.h>
+ #include <linux/ftrace.h>
+ #include <linux/uaccess.h>
++#include <asm/xilinx_mb_manager.h>
  
- 	cb_data = kmalloc(sizeof(*cb_data), GFP_KERNEL);
--	if (!cb_data)
-+	if (!cb_data) {
-+		kfree(eve_data);
- 		return -ENOMEM;
-+	}
- 	cb_data->eve_cb = cb_fun;
- 	cb_data->agent_data = data;
- 
+ #ifdef CONFIG_FUNCTION_TRACER
+ extern void _mcount(void);
+@@ -46,3 +47,12 @@ extern void __udivsi3(void);
+ EXPORT_SYMBOL(__udivsi3);
+ extern void __umodsi3(void);
+ EXPORT_SYMBOL(__umodsi3);
++
++#ifdef CONFIG_MB_MANAGER
++extern void xmb_manager_register(uintptr_t phys_baseaddr, u32 cr_val,
++				 void (*callback)(void *data),
++				 void *priv, void (*reset_callback)(void *data));
++EXPORT_SYMBOL(xmb_manager_register);
++extern asmlinkage void xmb_inject_err(void);
++EXPORT_SYMBOL(xmb_inject_err);
++#endif
 -- 
 2.43.0
 
