@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32B511F429B;
-	Tue,  3 Dec 2024 15:01:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63DF633FE;
+	Tue,  3 Dec 2024 15:01:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733238064; cv=none; b=u4X6IriMt5x3q5oJr95UAkzT8coVt0P9KLTSdkqh7q1NJdBILstWqR2PLyQuW+NHbcdtzZIWG6izg2ZQGFy8Pw3gA7kAVb9CORztj14eiLL+1hhUFh1rYkdV67WavOcLnkYMz0pYQeEpNX4Rq6avNRxy1QEfZfxz/XW4iESuR+o=
+	t=1733238067; cv=none; b=KofNsUlsLIG36XcEXlN139PJx+m3tzVefNQIScTfFVOEk8Bf2RI+9fYRLnP4XaQB6xTqpfYM4NPF2xr+OOyGhmoSAQDpetAWNH/uVw+bQCRrokD3mH3ocDRXUC1iwNO1HVpkGrKWy8zuH1aqviYS2Lq8/Kv7QW/htG0sSE+ZJd0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733238064; c=relaxed/simple;
-	bh=df9F+FekPvKw5Yykxyqs04a9/ypqm4pmq7zol0YimKE=;
+	s=arc-20240116; t=1733238067; c=relaxed/simple;
+	bh=owJY75CRqf06rHN05ueIbosMqrZuFBNRxJAaznAqx/s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O1SPC7UA2i3GC0WVSXKtsXUXSbShujtxt8a7eKEBzwf1YlYSwlNREbfWmoSxxpRCqxO78Vxco5LyymINhB9DgHYKtjo/F4cRjLt6NEbGAzFlH2WEayhHQ5FCNvxCtFWvS5DmXwu8QGE7IOJ8KKniTphpdPDV6MYcKFtywetIgGA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S7jfhkhr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uH20CmejYCUkR4DWT1yVA6HphmoLDbBajzrstXYk3DJiq36/F2XzLxl5O/2SkpoMRqShMoojDZGtwNbVLxB5NXz1dXvhcS3fhoecbGkveitMKfeg56zPkQcvHc3iS7/m10J6nG61tw4VoEPyPAinRnTunTJc/9lpHg8gtw9cS6A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mDzE9sqJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S7jfhkhr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB29DC4CECF;
-	Tue,  3 Dec 2024 15:01:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mDzE9sqJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8986C4CECF;
+	Tue,  3 Dec 2024 15:01:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733238064;
-	bh=df9F+FekPvKw5Yykxyqs04a9/ypqm4pmq7zol0YimKE=;
+	s=korg; t=1733238067;
+	bh=owJY75CRqf06rHN05ueIbosMqrZuFBNRxJAaznAqx/s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S7jfhkhrTxdr8M+Ap2JT0++IqHR3NdepiinbWxLAx2ZIl6GkOUqjchaGXTMJXEBuG
-	 K6Qw7DFd+6LZm8/Qd8kTt7I12rK4HQAq1y4jTB9H+tdpzhSp+TTNPYPL3i+ylCxBfg
-	 vcFVuMmpnW/PaUlhJDQz7oiG7fh/IcW+TczTWqFk=
+	b=mDzE9sqJnQ+VqutGmqKfmsMAwnmNwBS49hceg6RuOgMw3J0u3aCgG7RQd6QENdWPU
+	 duCwIHGBC0mt8DufW0SkGf+KL0SYbk4QQjELJABh8vijU3QIYb7DWfIWTSAUzYUvoO
+	 odPVBoDnOoq8bboscMrRal9AVMuv9uFmynlGCQI8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinjie Ruan <ruanjinjie@huawei.com>,
-	Kevin Hilman <khilman@baylibre.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 150/817] soc: ti: smartreflex: Use IRQF_NO_AUTOEN flag in request_irq()
-Date: Tue,  3 Dec 2024 15:35:22 +0100
-Message-ID: <20241203144001.582184450@linuxfoundation.org>
+Subject: [PATCH 6.11 151/817] soc: qcom: geni-se: fix array underflow in geni_se_clk_tbl_get()
+Date: Tue,  3 Dec 2024 15:35:23 +0100
+Message-ID: <20241203144001.620275524@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -51,43 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinjie Ruan <ruanjinjie@huawei.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit 16a0a69244240cfa32c525c021c40f85e090557a ]
+[ Upstream commit 78261cb08f06c93d362cab5c5034bf5899bc7552 ]
 
-If request_irq() fails in sr_late_init(), there is no need to enable
-the irq, and if it succeeds, disable_irq() after request_irq() still has
-a time gap in which interrupts can come.
+This loop is supposed to break if the frequency returned from
+clk_round_rate() is the same as on the previous iteration.  However,
+that check doesn't make sense on the first iteration through the loop.
+It leads to reading before the start of these->clk_perf_tbl[] array.
 
-request_irq() with IRQF_NO_AUTOEN flag will disable IRQ auto-enable when
-request IRQ.
-
-Fixes: 1279ba5916f6 ("OMAP3+: SR: disable interrupt by default")
-Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-Link: https://lore.kernel.org/r/20240912034147.3014213-1-ruanjinjie@huawei.com
-Signed-off-by: Kevin Hilman <khilman@baylibre.com>
+Fixes: eddac5af0654 ("soc: qcom: Add GENI based QUP Wrapper driver")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://lore.kernel.org/r/8cd12678-f44a-4b16-a579-c8f11175ee8c@stanley.mountain
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/ti/smartreflex.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/soc/qcom/qcom-geni-se.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/soc/ti/smartreflex.c b/drivers/soc/ti/smartreflex.c
-index d6219060b616d..38add2ab56137 100644
---- a/drivers/soc/ti/smartreflex.c
-+++ b/drivers/soc/ti/smartreflex.c
-@@ -202,10 +202,10 @@ static int sr_late_init(struct omap_sr *sr_info)
+diff --git a/drivers/soc/qcom/qcom-geni-se.c b/drivers/soc/qcom/qcom-geni-se.c
+index 2e8f24d5da80b..4cb959106efa9 100644
+--- a/drivers/soc/qcom/qcom-geni-se.c
++++ b/drivers/soc/qcom/qcom-geni-se.c
+@@ -585,7 +585,8 @@ int geni_se_clk_tbl_get(struct geni_se *se, unsigned long **tbl)
  
- 	if (sr_class->notify && sr_class->notify_flags && sr_info->irq) {
- 		ret = devm_request_irq(&sr_info->pdev->dev, sr_info->irq,
--				       sr_interrupt, 0, sr_info->name, sr_info);
-+				       sr_interrupt, IRQF_NO_AUTOEN,
-+				       sr_info->name, sr_info);
- 		if (ret)
- 			goto error;
--		disable_irq(sr_info->irq);
+ 	for (i = 0; i < MAX_CLK_PERF_LEVEL; i++) {
+ 		freq = clk_round_rate(se->clk, freq + 1);
+-		if (freq <= 0 || freq == se->clk_perf_tbl[i - 1])
++		if (freq <= 0 ||
++		    (i > 0 && freq == se->clk_perf_tbl[i - 1]))
+ 			break;
+ 		se->clk_perf_tbl[i] = freq;
  	}
- 
- 	return ret;
 -- 
 2.43.0
 
