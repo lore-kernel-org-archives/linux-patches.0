@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BB4C1F7560;
-	Tue,  3 Dec 2024 15:07:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F3CA1F7547;
+	Tue,  3 Dec 2024 15:07:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733238462; cv=none; b=DXsSaZYxVZTx5JZkq2GnpaMP45pAHbDn2QmDGtHF3qHGDSLYlq1vJE8ztLW7nzcJA47RxxY/dcXQ2ebqj9TYNQoHNeKIyNWKhGuGzuC6bDexto/Qmeb11o0oJZJsE3qIcG9JweMqLHhmz7665c2RKXBsMG5ow8lbwxj842B8SIM=
+	t=1733238465; cv=none; b=fRZYT+KSKz+3s4NXvNpNIzGBhSP5CMGu7tSKt7aKbpXMNXPfa0LuZIuHFf7iDcP9/R9hPhbHhDKphJBfn9zSs+tZ2uC1K4ec+RMOKhLMp9G59dvSUxdrPGKxFyFAQIxdiVmC+xs6TUTMU3RXmvJxnTI1A9AKJe+1R/F/TiZpkn0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733238462; c=relaxed/simple;
-	bh=jJPLmHiJKpiFjHo4qmHwNMrfUEpk+ujnxJXKB0vrVUA=;
+	s=arc-20240116; t=1733238465; c=relaxed/simple;
+	bh=a11dov/IHx/T8FK8CUdK+ulG6wex4qFRvw1RgJvKoK8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SoQtFd0GAeqiTbntDuyoms8hmfmnzQl439ZvhhiM8rXjm9KIQJZBduDyfB3Akmw8M78aoRKdiKX1fOP8ukEBeOBZFxTfvf9TfRJ/a1wHaQqw/poveCKnaQbCEYy29P/TR61h2ZeuxSvdn8B0jO8/qEsXBhkcAZDh+qGLetdf4EI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wx1a5cgx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=j1WPp9pVh0AC1IePIh7SgJQatbN6DTvi9UqP/KH5iOxRCzK3KEwd423bZtNbCL57y3lL+vNjz1QBoRhKN3cQYvRJxH7KYAhH4HzGpydx9scvRRifGFUUNda9sasLkZobLNV8GMXfVUzjdkWDG/5VnFVBA8B2D3CJk8cnwfi5Sms=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uQQuRoiG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wx1a5cgx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4D9AC4CED8;
-	Tue,  3 Dec 2024 15:07:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uQQuRoiG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAC81C4CED6;
+	Tue,  3 Dec 2024 15:07:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733238462;
-	bh=jJPLmHiJKpiFjHo4qmHwNMrfUEpk+ujnxJXKB0vrVUA=;
+	s=korg; t=1733238465;
+	bh=a11dov/IHx/T8FK8CUdK+ulG6wex4qFRvw1RgJvKoK8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Wx1a5cgx8KySahvcRxLWIM3XPmCksr+95jve1wrjaOmSq19kXxPidojtc1Ml0Q5aF
-	 XMgD/sqGSCKmS2MnfjSLJE3nERHPMpA7/8o89t4WwUlB4O6wwaVZxCVJuYsqz8mksK
-	 0TqhAkEdWB/8Fc3/K1B2hGk3VCuWI1vWfqylM7rY=
+	b=uQQuRoiGDnIOTVPaGQulg5FQ3Q8AKLjQNWI0Tr/psmRZiShzU2m5zO1gGO52MMLv+
+	 A0vBWOlwIBnuVPZ7SQEIS3GAHsKJzs7xe3esIl1hTTDHv0xl9BbtvccSqGjlMpJh4K
+	 ql1UbvG+wzfy0JO9FYcGg6k45X47VMiZvtKlrPao=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Simon Horman <horms@kernel.org>,
 	Andrew Lunn <andrew@lunn.ch>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 286/817] octeontx2-pf: handle otx2_mbox_get_rsp errors in otx2_common.c
-Date: Tue,  3 Dec 2024 15:37:38 +0100
-Message-ID: <20241203144006.973432080@linuxfoundation.org>
+Subject: [PATCH 6.11 287/817] octeontx2-pf: handle otx2_mbox_get_rsp errors in otx2_ethtool.c
+Date: Tue,  3 Dec 2024 15:37:39 +0100
+Message-ID: <20241203144007.012504679@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -54,34 +54,48 @@ Content-Transfer-Encoding: 8bit
 
 From: Dipendra Khadka <kdipendra88@gmail.com>
 
-[ Upstream commit 0fbc7a5027c6f7f2c785adae3dcec22b2f2b69b3 ]
+[ Upstream commit e26f8eac6bb20b20fdb8f7dc695711ebce4c7c5c ]
 
 Add error pointer check after calling otx2_mbox_get_rsp().
 
-Fixes: ab58a416c93f ("octeontx2-pf: cn10k: Get max mtu supported from admin function")
+Fixes: 75f36270990c ("octeontx2-pf: Support to enable/disable pause frames via ethtool")
+Fixes: d0cf9503e908 ("octeontx2-pf: ethtool fec mode support")
 Signed-off-by: Dipendra Khadka <kdipendra88@gmail.com>
 Reviewed-by: Simon Horman <horms@kernel.org>
 Signed-off-by: Andrew Lunn <andrew@lunn.ch>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ .../net/ethernet/marvell/octeontx2/nic/otx2_ethtool.c  | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.c b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.c
-index 87d5776e3b88e..7510a918d942c 100644
---- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.c
-@@ -1837,6 +1837,10 @@ u16 otx2_get_max_mtu(struct otx2_nic *pfvf)
- 	if (!rc) {
- 		rsp = (struct nix_hw_info *)
+diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_ethtool.c b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_ethtool.c
+index 0db62eb0dab3f..09317860e7382 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_ethtool.c
++++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_ethtool.c
+@@ -343,6 +343,11 @@ static void otx2_get_pauseparam(struct net_device *netdev,
+ 	if (!otx2_sync_mbox_msg(&pfvf->mbox)) {
+ 		rsp = (struct cgx_pause_frm_cfg *)
  		       otx2_mbox_get_rsp(&pfvf->mbox.mbox, 0, &req->hdr);
 +		if (IS_ERR(rsp)) {
-+			rc = PTR_ERR(rsp);
-+			goto out;
++			mutex_unlock(&pfvf->mbox.lock);
++			return;
 +		}
++
+ 		pause->rx_pause = rsp->rx_pause;
+ 		pause->tx_pause = rsp->tx_pause;
+ 	}
+@@ -1074,6 +1079,11 @@ static int otx2_set_fecparam(struct net_device *netdev,
  
- 		/* HW counts VLAN insertion bytes (8 for double tag)
- 		 * irrespective of whether SQE is requesting to insert VLAN
+ 	rsp = (struct fec_mode *)otx2_mbox_get_rsp(&pfvf->mbox.mbox,
+ 						   0, &req->hdr);
++	if (IS_ERR(rsp)) {
++		err = PTR_ERR(rsp);
++		goto end;
++	}
++
+ 	if (rsp->fec >= 0)
+ 		pfvf->linfo.fec = rsp->fec;
+ 	else
 -- 
 2.43.0
 
