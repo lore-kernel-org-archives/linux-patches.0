@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5A4C1F4735;
-	Tue,  3 Dec 2024 14:35:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F2431F667A;
+	Tue,  3 Dec 2024 14:35:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733236503; cv=none; b=lJWUSUPCUVy6OUL0zoCDYsdyrBLDkBzlThRJyKcB+n4d7WTpALkq07oVIPmrBLNR7x7uwzArGjp3Gs3iOBr7ev8lHR02ojur166JQnLpojxaWowJbJqxKCRyfYKoHZ339AZp5uxNVbWUvf1tTk+6uBfQmdlhQvtzNOusNAHMMf8=
+	t=1733236508; cv=none; b=RXyzmDP4dSGNRrnJWY3v18wHQk79gCl/fCo7pNSRK9/PzoInZnniSgBfaBe+SaakFFzlep6kWwuEfDij1Q+Xrwmbnn7R8Rp611l7A4dB/9n+m8v4H+aim+otH+F3BfmMDj3TDMv2rRh7cwNOsf8CRZdhROwJJasb8IL1SIKmqBo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733236503; c=relaxed/simple;
-	bh=9It3TFutqH38SJQiXYL9TbMf8OT3gd6wESj6tiJfjts=;
+	s=arc-20240116; t=1733236508; c=relaxed/simple;
+	bh=IrC4dveQN9KRatx/AZdOfqFrPYuHXVcpZ7cL1048L+U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UHJNdFI7Ent9wkG7MwkJSaUCzusGWBHj38kJCIkl1WS2XlsCwkHSi5tP6qp5+JOzfaRROYynaGflcjJDmBRWNS19Wz+XZwK0dy1gEw7AKN+ORKkVmGJdMZK7LO7hUzH3CUE7MFWNC4wlH94dKbo7+gySxq/uYVh6Ys5Nh2/++gs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wgN68wVJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=b/J7ug8NuyLxGB1wH9jxcGznHzZ2WEkt0PrfJ5V6Q9DgXO+mvDsBLhp3+dJ0K4QVS1FV7HMqYEmh9kCpPVHveeyz60aVQliJHZ9q+Ii4P22LxzMrfrIiBr0dNIpTBnvIDjUQvTiT4x/Gv4M4jgtYZ4Bm/ukTXOJGD9rg4S6KgAw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wtabtsP3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wgN68wVJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E77B2C4CECF;
-	Tue,  3 Dec 2024 14:35:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wtabtsP3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A173C4CED8;
+	Tue,  3 Dec 2024 14:35:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733236503;
-	bh=9It3TFutqH38SJQiXYL9TbMf8OT3gd6wESj6tiJfjts=;
+	s=korg; t=1733236506;
+	bh=IrC4dveQN9KRatx/AZdOfqFrPYuHXVcpZ7cL1048L+U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wgN68wVJGwv9JUEQdfsrOq2i75rV5TbFDRoaZy4GyZj7knSwEysNvL212h/Og0mDy
-	 DFwuNgWxs2MMUJnPTrWaVmih8Jgj8jUoi0WYqkGv9Z5n0TfErl2C7MIr+WJC2lgvFr
-	 oARvb9MNNyGbHSkYaoz8ldii1QQVkvPwS/+wA788=
+	b=wtabtsP3FSkgNLsP3UCgeEL7003Eks7C9czLVVnCP1uDUen9eQrg2JXcht2yLGUNM
+	 l6N5LGtlWdM8b52F3oS9I0AIEpgTYgjBtrxXEsmPBRxBItaj5jSaXPIRSprzs84kpu
+	 MNkvBcAEH5WlOeAwIX+qj35SYaLF8M6hoe5wvpL4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Jinjie Ruan <ruanjinjie@huawei.com>,
-	Philipp Zabel <p.zabel@pengutronix.de>,
+	Yuan Chen <chenyuan@kylinos.cn>,
+	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 039/138] drm/imx/ipuv3: Use IRQF_NO_AUTOEN flag in request_irq()
-Date: Tue,  3 Dec 2024 15:31:08 +0100
-Message-ID: <20241203141925.053113999@linuxfoundation.org>
+Subject: [PATCH 4.19 040/138] bpf: Fix the xdp_adjust_tail sample prog issue
+Date: Tue,  3 Dec 2024 15:31:09 +0100
+Message-ID: <20241203141925.092340932@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203141923.524658091@linuxfoundation.org>
 References: <20241203141923.524658091@linuxfoundation.org>
@@ -52,45 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinjie Ruan <ruanjinjie@huawei.com>
+From: Yuan Chen <chenyuan@kylinos.cn>
 
-[ Upstream commit 40004709a3d3b07041a473a163ca911ef04ab8bd ]
+[ Upstream commit 4236f114a3ffbbfd217436c08852e94cae372f57 ]
 
-disable_irq() after request_irq() still has a time gap in which
-interrupts can come. request_irq() with IRQF_NO_AUTOEN flag will
-disable IRQ auto-enable when request IRQ.
+During the xdp_adjust_tail test, probabilistic failure occurs and SKB package
+is discarded by the kernel. After checking the issues by tracking SKB package,
+it is identified that they were caused by checksum errors. Refer to checksum
+of the arch/arm64/include/asm/checksum.h for fixing.
 
-Fixes: 47b1be5c0f4e ("staging: imx/drm: request irq only after adding the crtc")
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-Reviewed-by: Philipp Zabel <p.zabel@pengutronix.de>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240912083020.3720233-4-ruanjinjie@huawei.com
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+v2: Based on Alexei Starovoitov's suggestions, it is necessary to keep the code
+ implementation consistent.
+
+Fixes: c6ffd1ff7856 (bpf: add bpf_xdp_adjust_tail sample prog)
+Signed-off-by: Yuan Chen <chenyuan@kylinos.cn>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20240930024115.52841-1-chenyuan_fl@163.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/imx/ipuv3-crtc.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ samples/bpf/xdp_adjust_tail_kern.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/imx/ipuv3-crtc.c b/drivers/gpu/drm/imx/ipuv3-crtc.c
-index 824c90dca7306..0bd1f9903f1aa 100644
---- a/drivers/gpu/drm/imx/ipuv3-crtc.c
-+++ b/drivers/gpu/drm/imx/ipuv3-crtc.c
-@@ -389,14 +389,12 @@ static int ipu_crtc_init(struct ipu_crtc *ipu_crtc,
- 	}
+diff --git a/samples/bpf/xdp_adjust_tail_kern.c b/samples/bpf/xdp_adjust_tail_kern.c
+index 411fdb21f8bcf..9783754bdd8bb 100644
+--- a/samples/bpf/xdp_adjust_tail_kern.c
++++ b/samples/bpf/xdp_adjust_tail_kern.c
+@@ -54,6 +54,7 @@ static __always_inline void swap_mac(void *data, struct ethhdr *orig_eth)
  
- 	ipu_crtc->irq = ipu_plane_irq(ipu_crtc->plane[0]);
--	ret = devm_request_irq(ipu_crtc->dev, ipu_crtc->irq, ipu_irq_handler, 0,
--			"imx_drm", ipu_crtc);
-+	ret = devm_request_irq(ipu_crtc->dev, ipu_crtc->irq, ipu_irq_handler,
-+			       IRQF_NO_AUTOEN, "imx_drm", ipu_crtc);
- 	if (ret < 0) {
- 		dev_err(ipu_crtc->dev, "irq request failed with %d.\n", ret);
- 		goto err_put_plane1_res;
- 	}
--	/* Only enable IRQ when we actually need it to trigger work. */
--	disable_irq(ipu_crtc->irq);
- 
- 	return 0;
+ static __always_inline __u16 csum_fold_helper(__u32 csum)
+ {
++	csum = (csum & 0xffff) + (csum >> 16);
+ 	return ~((csum & 0xffff) + (csum >> 16));
+ }
  
 -- 
 2.43.0
