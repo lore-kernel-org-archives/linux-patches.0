@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B0E71F75AC;
-	Tue,  3 Dec 2024 16:01:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F97D1F759C;
+	Tue,  3 Dec 2024 16:01:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733241660; cv=none; b=HBcr0UYTp5rPLxLGZbnlRTu5VYM1MvOGCQ6Fy8LTc2Nji+b6QRmPZGH331YmXJNhqbZFHIA0/x5HBzdQ1Ay/UMS62dbyMOvkIpp81PgvP0d0G5JBO5i+ohknt9eGn3XY2BLVlo3vmZ7Zo1dCCeK515ouJowJIzQWz7lwbUNG1SM=
+	t=1733241664; cv=none; b=dzGklc5FiCErXwBITrQKNSGNl5jxmocVfXcP5XfwqdDU65y6I0l5dDHe2OjkBXwr150hwKGW6K95Jp4pxUheH1MLuw8V1sf8QopR94IONQDN4G9otOuhYGenOx4psLTBrtMAFH4SBB1F37DH23kFJP4uAorwijVNQ1bClUU0S5w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733241660; c=relaxed/simple;
-	bh=C81ZVxQb9D1qlei+9YgNfqnzMESFRbeCPowNH34zFLA=;
+	s=arc-20240116; t=1733241664; c=relaxed/simple;
+	bh=m/+lPAikFkgY1UxJFuOWIizwEgQO3m7gA217pQTadlE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IzA2HhPWf4jeT8nddhMSKxg2H0crUSVsl3BHaZtLVYfu2AOCA24atMldWjnozOHLxsqUaUvoT8xaSs8ugpyHojQFZXhQ7rCiYyns2s8EIzipam7bJf5MnPDN+k8glW48Zt24cVCFa30+iak99rau183GKRqCcKRsTAUQbnqDV0U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BYbP7yGa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=I4u11G5OBWNbU206MWanbqxByvtDHv4edZEVUXJGRDXR8UXSMgVkBhUFeZAzl4QfV8IP9/ZzNr2S3ZlOd3m7uAcjRs0UIYibfFROfifqV5tN5Xx60ZQMa4TGnmmV7QhFPDZC7BXtz8mBuH8jO7FgTZWKbLfANBoz2DSqqDQmwKw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y1RMRFOH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BYbP7yGa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD07DC4CECF;
-	Tue,  3 Dec 2024 16:00:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y1RMRFOH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 269D2C4CECF;
+	Tue,  3 Dec 2024 16:01:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733241660;
-	bh=C81ZVxQb9D1qlei+9YgNfqnzMESFRbeCPowNH34zFLA=;
+	s=korg; t=1733241663;
+	bh=m/+lPAikFkgY1UxJFuOWIizwEgQO3m7gA217pQTadlE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BYbP7yGakLy0Qq3UdC8y1XmktOdwWEaafmjAqPHW5UE37D6Kb0t0EmaQg77VZ+ADq
-	 wxTtjZCFlo4e73O5pH4a2tehu7GpVKpI3KIZ76je9bFMXhdFOjvHNkqs6cH8viKRLi
-	 2hwhQev0B7santfaPe4oYN2/kfm0khVbNH2ZaW2A=
+	b=Y1RMRFOHmtv7vuAQ/TBQbVIqNDMCldOCX72C02/pVrzuuKTcsG0Y7WDyDizWSechE
+	 h+xdsy/67xk4hDPlIsIpjj22tGFCELRPQ2+aEbYYsZqe62+8fvfQ4v7o54/K1Sc0vs
+	 eFNaOT2FkvZNGOaOITSctiI5ooC4pA/e9B4uaous=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
-	Stephen Boyd <sboyd@kernel.org>,
+	Feng Fang <fangfeng4@huawei.com>,
+	Junxian Huang <huangjunxian6@hisilicon.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 451/826] clk: en7523: move clock_register in hw_init callback
-Date: Tue,  3 Dec 2024 15:42:58 +0100
-Message-ID: <20241203144801.351467662@linuxfoundation.org>
+Subject: [PATCH 6.12 442/826] RDMA/hns: Fix different dgids mapping to the same dip_idx
+Date: Tue,  3 Dec 2024 15:42:49 +0100
+Message-ID: <20241203144801.003505483@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -51,155 +52,310 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenzo Bianconi <lorenzo@kernel.org>
+From: Feng Fang <fangfeng4@huawei.com>
 
-[ Upstream commit b8bdfc666bc5f58caf46e67b615132fccbaca3d4 ]
+[ Upstream commit faa62440a5772b40bb7d78bf9e29556a82ecf153 ]
 
-Move en7523_register_clocks routine in hw_init callback.
-Introduce en7523_clk_hw_init callback for EN7523 SoC.
-This is a preliminary patch to differentiate IO mapped region between
-EN7523 and EN7581 SoCs in order to access chip-scu IO region
-<0x1fa20000 0x384> on EN7581 SoC as syscon device since it contains
-miscellaneous registers needed by multiple devices (clock, pinctrl ..).
+DIP algorithm requires a one-to-one mapping between dgid and dip_idx.
+Currently a queue 'spare_idx' is used to store QPN of QPs that use
+DIP algorithm. For a new dgid, use a QPN from spare_idx as dip_idx.
+This method lacks a mechanism for deduplicating QPN, which may result
+in different dgids sharing the same dip_idx and break the one-to-one
+mapping requirement.
 
-Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Link: https://lore.kernel.org/r/20241112-clk-en7581-syscon-v2-3-8ada5e394ae4@kernel.org
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
-Stable-dep-of: f98eded9e9ab ("clk: en7523: fix estimation of fixed rate for EN7581")
+This patch replaces spare_idx with xarray and introduces a refcnt of
+a dip_idx to indicate the number of QPs that using this dip_idx.
+
+The state machine for dip_idx management is implemented as:
+
+* The entry at an index in xarray is empty -- This indicates that the
+  corresponding dip_idx hasn't been created.
+
+* The entry at an index in xarray is not empty but with 0 refcnt --
+  This indicates that the corresponding dip_idx has been created but
+  not used as dip_idx yet.
+
+* The entry at an index in xarray is not empty and with non-0 refcnt --
+  This indicates that the corresponding dip_idx is being used by refcnt
+  number of DIP QPs.
+
+Fixes: eb653eda1e91 ("RDMA/hns: Bugfix for incorrect association between dip_idx and dgid")
+Fixes: f91696f2f053 ("RDMA/hns: Support congestion control type selection according to the FW")
+Signed-off-by: Feng Fang <fangfeng4@huawei.com>
+Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
+Link: https://patch.msgid.link/20241112055553.3681129-1-huangjunxian6@hisilicon.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/clk-en7523.c | 82 ++++++++++++++++++++++++----------------
- 1 file changed, 50 insertions(+), 32 deletions(-)
+ drivers/infiniband/hw/hns/hns_roce_device.h | 11 +--
+ drivers/infiniband/hw/hns/hns_roce_hw_v2.c  | 96 +++++++++++++++------
+ drivers/infiniband/hw/hns/hns_roce_hw_v2.h  |  2 +-
+ drivers/infiniband/hw/hns/hns_roce_main.c   |  2 -
+ drivers/infiniband/hw/hns/hns_roce_qp.c     |  8 +-
+ 5 files changed, 75 insertions(+), 44 deletions(-)
 
-diff --git a/drivers/clk/clk-en7523.c b/drivers/clk/clk-en7523.c
-index ec6716844fdcf..da112c9fe8ef9 100644
---- a/drivers/clk/clk-en7523.c
-+++ b/drivers/clk/clk-en7523.c
-@@ -78,7 +78,8 @@ struct en_clk_soc_data {
- 		const u16 *idx_map;
- 		u16 idx_map_nr;
- 	} reset;
--	int (*hw_init)(struct platform_device *pdev, void __iomem *np_base);
-+	int (*hw_init)(struct platform_device *pdev,
-+		       struct clk_hw_onecell_data *clk_data);
+diff --git a/drivers/infiniband/hw/hns/hns_roce_device.h b/drivers/infiniband/hw/hns/hns_roce_device.h
+index 9b51d5a1533f5..560a1d9de408f 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_device.h
++++ b/drivers/infiniband/hw/hns/hns_roce_device.h
+@@ -489,12 +489,6 @@ struct hns_roce_bank {
+ 	u32 next; /* Next ID to allocate. */
  };
  
- static const u32 gsw_base[] = { 400000000, 500000000 };
-@@ -406,20 +407,6 @@ static void en7581_pci_disable(struct clk_hw *hw)
- 	usleep_range(1000, 2000);
- }
- 
--static int en7581_clk_hw_init(struct platform_device *pdev,
--			      void __iomem *np_base)
--{
--	u32 val;
+-struct hns_roce_idx_table {
+-	u32 *spare_idx;
+-	u32 head;
+-	u32 tail;
+-};
 -
--	val = readl(np_base + REG_NP_SCU_SSTR);
--	val &= ~(REG_PCIE_XSI0_SEL_MASK | REG_PCIE_XSI1_SEL_MASK);
--	writel(val, np_base + REG_NP_SCU_SSTR);
--	val = readl(np_base + REG_NP_SCU_PCIC);
--	writel(val | 3, np_base + REG_NP_SCU_PCIC);
--
--	return 0;
--}
--
- static void en7523_register_clocks(struct device *dev, struct clk_hw_onecell_data *clk_data,
- 				   void __iomem *base, void __iomem *np_base)
- {
-@@ -449,6 +436,49 @@ static void en7523_register_clocks(struct device *dev, struct clk_hw_onecell_dat
- 	clk_data->num = EN7523_NUM_CLOCKS;
- }
- 
-+static int en7523_clk_hw_init(struct platform_device *pdev,
-+			      struct clk_hw_onecell_data *clk_data)
-+{
-+	void __iomem *base, *np_base;
-+
-+	base = devm_platform_ioremap_resource(pdev, 0);
-+	if (IS_ERR(base))
-+		return PTR_ERR(base);
-+
-+	np_base = devm_platform_ioremap_resource(pdev, 1);
-+	if (IS_ERR(np_base))
-+		return PTR_ERR(np_base);
-+
-+	en7523_register_clocks(&pdev->dev, clk_data, base, np_base);
-+
-+	return 0;
-+}
-+
-+static int en7581_clk_hw_init(struct platform_device *pdev,
-+			      struct clk_hw_onecell_data *clk_data)
-+{
-+	void __iomem *base, *np_base;
-+	u32 val;
-+
-+	base = devm_platform_ioremap_resource(pdev, 0);
-+	if (IS_ERR(base))
-+		return PTR_ERR(base);
-+
-+	np_base = devm_platform_ioremap_resource(pdev, 1);
-+	if (IS_ERR(np_base))
-+		return PTR_ERR(np_base);
-+
-+	en7523_register_clocks(&pdev->dev, clk_data, base, np_base);
-+
-+	val = readl(np_base + REG_NP_SCU_SSTR);
-+	val &= ~(REG_PCIE_XSI0_SEL_MASK | REG_PCIE_XSI1_SEL_MASK);
-+	writel(val, np_base + REG_NP_SCU_SSTR);
-+	val = readl(np_base + REG_NP_SCU_PCIC);
-+	writel(val | 3, np_base + REG_NP_SCU_PCIC);
-+
-+	return 0;
-+}
-+
- static int en7523_reset_update(struct reset_controller_dev *rcdev,
- 			       unsigned long id, bool assert)
- {
-@@ -543,31 +573,18 @@ static int en7523_clk_probe(struct platform_device *pdev)
- 	struct device_node *node = pdev->dev.of_node;
- 	const struct en_clk_soc_data *soc_data;
- 	struct clk_hw_onecell_data *clk_data;
--	void __iomem *base, *np_base;
- 	int r;
- 
--	base = devm_platform_ioremap_resource(pdev, 0);
--	if (IS_ERR(base))
--		return PTR_ERR(base);
--
--	np_base = devm_platform_ioremap_resource(pdev, 1);
--	if (IS_ERR(np_base))
--		return PTR_ERR(np_base);
--
--	soc_data = device_get_match_data(&pdev->dev);
--	if (soc_data->hw_init) {
--		r = soc_data->hw_init(pdev, np_base);
--		if (r)
--			return r;
--	}
--
- 	clk_data = devm_kzalloc(&pdev->dev,
- 				struct_size(clk_data, hws, EN7523_NUM_CLOCKS),
- 				GFP_KERNEL);
- 	if (!clk_data)
- 		return -ENOMEM;
- 
--	en7523_register_clocks(&pdev->dev, clk_data, base, np_base);
-+	soc_data = device_get_match_data(&pdev->dev);
-+	r = soc_data->hw_init(pdev, clk_data);
-+	if (r)
-+		return r;
- 
- 	r = of_clk_add_hw_provider(node, of_clk_hw_onecell_get, clk_data);
- 	if (r)
-@@ -590,6 +607,7 @@ static const struct en_clk_soc_data en7523_data = {
- 		.prepare = en7523_pci_prepare,
- 		.unprepare = en7523_pci_unprepare,
- 	},
-+	.hw_init = en7523_clk_hw_init,
+ struct hns_roce_qp_table {
+ 	struct hns_roce_hem_table	qp_table;
+ 	struct hns_roce_hem_table	irrl_table;
+@@ -503,7 +497,7 @@ struct hns_roce_qp_table {
+ 	struct mutex			scc_mutex;
+ 	struct hns_roce_bank bank[HNS_ROCE_QP_BANK_NUM];
+ 	struct mutex bank_mutex;
+-	struct hns_roce_idx_table	idx_table;
++	struct xarray			dip_xa;
  };
  
- static const struct en_clk_soc_data en7581_data = {
+ struct hns_roce_cq_table {
+@@ -658,6 +652,7 @@ struct hns_roce_qp {
+ 	u8			tc_mode;
+ 	u8			priority;
+ 	spinlock_t flush_lock;
++	struct hns_roce_dip *dip;
+ };
+ 
+ struct hns_roce_ib_iboe {
+@@ -984,8 +979,6 @@ struct hns_roce_dev {
+ 	enum hns_roce_device_state state;
+ 	struct list_head	qp_list; /* list of all qps on this dev */
+ 	spinlock_t		qp_list_lock; /* protect qp_list */
+-	struct list_head	dip_list; /* list of all dest ips on this dev */
+-	spinlock_t		dip_list_lock; /* protect dip_list */
+ 
+ 	struct list_head        pgdir_list;
+ 	struct mutex            pgdir_mutex;
+diff --git a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
+index 707e96ce222c5..697b17cca02e7 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
++++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
+@@ -2553,20 +2553,19 @@ static void hns_roce_free_link_table(struct hns_roce_dev *hr_dev)
+ 	free_link_table_buf(hr_dev, &priv->ext_llm);
+ }
+ 
+-static void free_dip_list(struct hns_roce_dev *hr_dev)
++static void free_dip_entry(struct hns_roce_dev *hr_dev)
+ {
+ 	struct hns_roce_dip *hr_dip;
+-	struct hns_roce_dip *tmp;
+-	unsigned long flags;
++	unsigned long idx;
+ 
+-	spin_lock_irqsave(&hr_dev->dip_list_lock, flags);
++	xa_lock(&hr_dev->qp_table.dip_xa);
+ 
+-	list_for_each_entry_safe(hr_dip, tmp, &hr_dev->dip_list, node) {
+-		list_del(&hr_dip->node);
++	xa_for_each(&hr_dev->qp_table.dip_xa, idx, hr_dip) {
++		__xa_erase(&hr_dev->qp_table.dip_xa, hr_dip->dip_idx);
+ 		kfree(hr_dip);
+ 	}
+ 
+-	spin_unlock_irqrestore(&hr_dev->dip_list_lock, flags);
++	xa_unlock(&hr_dev->qp_table.dip_xa);
+ }
+ 
+ static struct ib_pd *free_mr_init_pd(struct hns_roce_dev *hr_dev)
+@@ -2974,7 +2973,7 @@ static void hns_roce_v2_exit(struct hns_roce_dev *hr_dev)
+ 		hns_roce_free_link_table(hr_dev);
+ 
+ 	if (hr_dev->pci_dev->revision == PCI_REVISION_ID_HIP09)
+-		free_dip_list(hr_dev);
++		free_dip_entry(hr_dev);
+ }
+ 
+ static int hns_roce_mbox_post(struct hns_roce_dev *hr_dev,
+@@ -4694,26 +4693,49 @@ static int modify_qp_rtr_to_rts(struct ib_qp *ibqp, int attr_mask,
+ 	return 0;
+ }
+ 
++static int alloc_dip_entry(struct xarray *dip_xa, u32 qpn)
++{
++	struct hns_roce_dip *hr_dip;
++	int ret;
++
++	hr_dip = xa_load(dip_xa, qpn);
++	if (hr_dip)
++		return 0;
++
++	hr_dip = kzalloc(sizeof(*hr_dip), GFP_KERNEL);
++	if (!hr_dip)
++		return -ENOMEM;
++
++	ret = xa_err(xa_store(dip_xa, qpn, hr_dip, GFP_KERNEL));
++	if (ret)
++		kfree(hr_dip);
++
++	return ret;
++}
++
+ static int get_dip_ctx_idx(struct ib_qp *ibqp, const struct ib_qp_attr *attr,
+ 			   u32 *dip_idx)
+ {
+ 	const struct ib_global_route *grh = rdma_ah_read_grh(&attr->ah_attr);
+ 	struct hns_roce_dev *hr_dev = to_hr_dev(ibqp->device);
+-	u32 *spare_idx = hr_dev->qp_table.idx_table.spare_idx;
+-	u32 *head =  &hr_dev->qp_table.idx_table.head;
+-	u32 *tail =  &hr_dev->qp_table.idx_table.tail;
++	struct xarray *dip_xa = &hr_dev->qp_table.dip_xa;
++	struct hns_roce_qp *hr_qp = to_hr_qp(ibqp);
+ 	struct hns_roce_dip *hr_dip;
+-	unsigned long flags;
++	unsigned long idx;
+ 	int ret = 0;
+ 
+-	spin_lock_irqsave(&hr_dev->dip_list_lock, flags);
++	ret = alloc_dip_entry(dip_xa, ibqp->qp_num);
++	if (ret)
++		return ret;
+ 
+-	spare_idx[*tail] = ibqp->qp_num;
+-	*tail = (*tail == hr_dev->caps.num_qps - 1) ? 0 : (*tail + 1);
++	xa_lock(dip_xa);
+ 
+-	list_for_each_entry(hr_dip, &hr_dev->dip_list, node) {
+-		if (!memcmp(grh->dgid.raw, hr_dip->dgid, GID_LEN_V2)) {
++	xa_for_each(dip_xa, idx, hr_dip) {
++		if (hr_dip->qp_cnt &&
++		    !memcmp(grh->dgid.raw, hr_dip->dgid, GID_LEN_V2)) {
+ 			*dip_idx = hr_dip->dip_idx;
++			hr_dip->qp_cnt++;
++			hr_qp->dip = hr_dip;
+ 			goto out;
+ 		}
+ 	}
+@@ -4721,19 +4743,24 @@ static int get_dip_ctx_idx(struct ib_qp *ibqp, const struct ib_qp_attr *attr,
+ 	/* If no dgid is found, a new dip and a mapping between dgid and
+ 	 * dip_idx will be created.
+ 	 */
+-	hr_dip = kzalloc(sizeof(*hr_dip), GFP_ATOMIC);
+-	if (!hr_dip) {
+-		ret = -ENOMEM;
+-		goto out;
++	xa_for_each(dip_xa, idx, hr_dip) {
++		if (hr_dip->qp_cnt)
++			continue;
++
++		*dip_idx = idx;
++		memcpy(hr_dip->dgid, grh->dgid.raw, sizeof(grh->dgid.raw));
++		hr_dip->dip_idx = idx;
++		hr_dip->qp_cnt++;
++		hr_qp->dip = hr_dip;
++		break;
+ 	}
+ 
+-	memcpy(hr_dip->dgid, grh->dgid.raw, sizeof(grh->dgid.raw));
+-	hr_dip->dip_idx = *dip_idx = spare_idx[*head];
+-	*head = (*head == hr_dev->caps.num_qps - 1) ? 0 : (*head + 1);
+-	list_add_tail(&hr_dip->node, &hr_dev->dip_list);
++	/* This should never happen. */
++	if (WARN_ON_ONCE(!hr_qp->dip))
++		ret = -ENOSPC;
+ 
+ out:
+-	spin_unlock_irqrestore(&hr_dev->dip_list_lock, flags);
++	xa_unlock(dip_xa);
+ 	return ret;
+ }
+ 
+@@ -5587,6 +5614,20 @@ static int hns_roce_v2_destroy_qp_common(struct hns_roce_dev *hr_dev,
+ 	return ret;
+ }
+ 
++static void put_dip_ctx_idx(struct hns_roce_dev *hr_dev,
++			    struct hns_roce_qp *hr_qp)
++{
++	struct hns_roce_dip *hr_dip = hr_qp->dip;
++
++	xa_lock(&hr_dev->qp_table.dip_xa);
++
++	hr_dip->qp_cnt--;
++	if (!hr_dip->qp_cnt)
++		memset(hr_dip->dgid, 0, GID_LEN_V2);
++
++	xa_unlock(&hr_dev->qp_table.dip_xa);
++}
++
+ int hns_roce_v2_destroy_qp(struct ib_qp *ibqp, struct ib_udata *udata)
+ {
+ 	struct hns_roce_dev *hr_dev = to_hr_dev(ibqp->device);
+@@ -5600,6 +5641,9 @@ int hns_roce_v2_destroy_qp(struct ib_qp *ibqp, struct ib_udata *udata)
+ 	spin_unlock_irqrestore(&hr_qp->flush_lock, flags);
+ 	flush_work(&hr_qp->flush_work.work);
+ 
++	if (hr_qp->cong_type == CONG_TYPE_DIP)
++		put_dip_ctx_idx(hr_dev, hr_qp);
++
+ 	ret = hns_roce_v2_destroy_qp_common(hr_dev, hr_qp, udata);
+ 	if (ret)
+ 		ibdev_err_ratelimited(&hr_dev->ib_dev,
+diff --git a/drivers/infiniband/hw/hns/hns_roce_hw_v2.h b/drivers/infiniband/hw/hns/hns_roce_hw_v2.h
+index dedb1853e193e..cbdbc9edbce6e 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.h
++++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.h
+@@ -1348,7 +1348,7 @@ struct hns_roce_v2_priv {
+ struct hns_roce_dip {
+ 	u8 dgid[GID_LEN_V2];
+ 	u32 dip_idx;
+-	struct list_head node; /* all dips are on a list */
++	u32 qp_cnt;
+ };
+ 
+ struct fmea_ram_ecc {
+diff --git a/drivers/infiniband/hw/hns/hns_roce_main.c b/drivers/infiniband/hw/hns/hns_roce_main.c
+index 49315f39361de..ae24c81c9812d 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_main.c
++++ b/drivers/infiniband/hw/hns/hns_roce_main.c
+@@ -1135,8 +1135,6 @@ int hns_roce_init(struct hns_roce_dev *hr_dev)
+ 
+ 	INIT_LIST_HEAD(&hr_dev->qp_list);
+ 	spin_lock_init(&hr_dev->qp_list_lock);
+-	INIT_LIST_HEAD(&hr_dev->dip_list);
+-	spin_lock_init(&hr_dev->dip_list_lock);
+ 
+ 	ret = hns_roce_register_device(hr_dev);
+ 	if (ret)
+diff --git a/drivers/infiniband/hw/hns/hns_roce_qp.c b/drivers/infiniband/hw/hns/hns_roce_qp.c
+index 2ad03ecdbf8ec..9e2e76c594063 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_qp.c
++++ b/drivers/infiniband/hw/hns/hns_roce_qp.c
+@@ -1573,14 +1573,10 @@ int hns_roce_init_qp_table(struct hns_roce_dev *hr_dev)
+ 	unsigned int reserved_from_bot;
+ 	unsigned int i;
+ 
+-	qp_table->idx_table.spare_idx = kcalloc(hr_dev->caps.num_qps,
+-					sizeof(u32), GFP_KERNEL);
+-	if (!qp_table->idx_table.spare_idx)
+-		return -ENOMEM;
+-
+ 	mutex_init(&qp_table->scc_mutex);
+ 	mutex_init(&qp_table->bank_mutex);
+ 	xa_init(&hr_dev->qp_table_xa);
++	xa_init(&qp_table->dip_xa);
+ 
+ 	reserved_from_bot = hr_dev->caps.reserved_qps;
+ 
+@@ -1605,7 +1601,7 @@ void hns_roce_cleanup_qp_table(struct hns_roce_dev *hr_dev)
+ 
+ 	for (i = 0; i < HNS_ROCE_QP_BANK_NUM; i++)
+ 		ida_destroy(&hr_dev->qp_table.bank[i].ida);
++	xa_destroy(&hr_dev->qp_table.dip_xa);
+ 	mutex_destroy(&hr_dev->qp_table.bank_mutex);
+ 	mutex_destroy(&hr_dev->qp_table.scc_mutex);
+-	kfree(hr_dev->qp_table.idx_table.spare_idx);
+ }
 -- 
 2.43.0
 
