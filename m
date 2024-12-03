@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C1B620A5EA;
-	Tue,  3 Dec 2024 15:33:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEA551F9F69;
+	Tue,  3 Dec 2024 15:33:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733239986; cv=none; b=qn9pJjXjzklP/W6tI+Hqfm/VveTfUbu8BJqEjlsYgKcMWnSAXwvS1huOM0hacBQhp6lOJYF3A3vaq3k0v0JnZG5SlxPDBSyo/MHfsOhNENgOiUWDJY7UszRkzbkc/j22qYK9BBiFuRYOCW/LYgEn5CfVUHUhA88uTuO0ND0lYu8=
+	t=1733239990; cv=none; b=VVzMYc1IbNH7L4iWY7oscuy4rqS6BwQsrybLEjTa2t4a9G/FYBOL5y2+dxCTAUak4BYx80zhcAkKcMsAhsyxNkn/A6V9F08sP8W8XhKpTrcowpRak/O7/Q35yTnqbp5EXEPdO5eFJ32sQq8lCohMVwwmZRflBd4B+gbl7fhgPmw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733239986; c=relaxed/simple;
-	bh=I0uSYGxJRaWxfHgndYmwtokuYRQxAX/ligTSWELhSKE=;
+	s=arc-20240116; t=1733239990; c=relaxed/simple;
+	bh=lwKpGtQNgmHJIxGoUg8Jd/AzY2P0+VusoE6OF3u2vYw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=egQxmcMeonHioX3k9Dzrg0Eyveov3UYlCEZRjNuQ2ATp5N6Hbn6HGa4pYiexwz6R4eBt1nnEII26vakXFCbBJViYXfzcTi5Z1i4esDioh3Bww3QZ2Y722r1CNfQj9Ti1B8mwBdcnAvPYJRdVPC6tDXGvceNXcM0swyM6W2ZdBNM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ylxcHFR6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=j2Yw90oizDp928JIBdDR+PjeljvYooul/O5AZPT3PBwmKS8BW9nrtz6TdKwjeE/AukJwAst3iE3IYS2/1LitMPWvocItHBfZQpb+oldPPQfAomfL+nNY0Kb//EF1MMqAl57n3kqjL7/xoDRFWe3vBspd/i3TxtrIrOEJroFqOrI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GVTVbgoW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ylxcHFR6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24180C4CED6;
-	Tue,  3 Dec 2024 15:33:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GVTVbgoW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12D8BC4CECF;
+	Tue,  3 Dec 2024 15:33:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733239986;
-	bh=I0uSYGxJRaWxfHgndYmwtokuYRQxAX/ligTSWELhSKE=;
+	s=korg; t=1733239989;
+	bh=lwKpGtQNgmHJIxGoUg8Jd/AzY2P0+VusoE6OF3u2vYw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ylxcHFR6JCerOJqlm9Giy0KTHuIV1kGz/P8HE0SgM47b1bV+MxXxCcOUmQFTorBg7
-	 ZrL5sUqNqgp8vbisUX6kH+B/U8ULgjfeRyHyp3S3Ywmg75bNA0hi5NT1FpSYNQT4pr
-	 L/YYBCD01QmD3GueOA96wdjMabjG2EaX9uitSxxM=
+	b=GVTVbgoWp6WK6KMIKDD3cretLCknq9EB9+5pwr5CZWegOBRqda3ao0FiceGY2ZaN1
+	 DVLkY5kJWso/095KZi6xRSYVE4+iRk7vmC7tVOdJfW/J75/dY4fDomiAUWcWQDTPNx
+	 BVJqH43J08WmjhMBXSvxBniPrM0adZqDOnnb1u9E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masahiro Yamada <masahiroy@kernel.org>,
+	Shyam Prasad N <sprasad@microsoft.com>,
+	Meetakshi Setiya <msetiya@microsoft.com>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 802/817] modpost: remove incorrect code in do_eisa_entry()
-Date: Tue,  3 Dec 2024 15:46:14 +0100
-Message-ID: <20241203144027.715407979@linuxfoundation.org>
+Subject: [PATCH 6.11 803/817] cifs: during remount, make sure passwords are in sync
+Date: Tue,  3 Dec 2024 15:46:15 +0100
+Message-ID: <20241203144027.790527267@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -44,88 +46,170 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.11-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Masahiro Yamada <masahiroy@kernel.org>
+From: Shyam Prasad N <sprasad@microsoft.com>
 
-[ Upstream commit 0c3e091319e4748cb36ac9a50848903dc6f54054 ]
+[ Upstream commit 0f0e357902957fba28ed31bde0d6921c6bd1485d ]
 
-This function contains multiple bugs after the following commits:
+This fixes scenarios where remount can overwrite the only currently
+working password, breaking reconnect.
 
- - ac551828993e ("modpost: i2c aliases need no trailing wildcard")
- - 6543becf26ff ("mod/file2alias: make modalias generation safe for cross compiling")
+We recently introduced a password2 field in both ses and ctx structs.
+This was done so as to allow the client to rotate passwords for a mount
+without any downtime. However, when the client transparently handles
+password rotation, it can swap the values of the two password fields
+in the ses struct, but not in smb3_fs_context struct that hangs off
+cifs_sb. This can lead to a situation where a remount unintentionally
+overwrites a working password in the ses struct.
 
-Commit ac551828993e inserted the following code to do_eisa_entry():
+In order to fix this, we first get the passwords in ctx struct
+in-sync with ses struct, before replacing them with what the passwords
+that could be passed as a part of remount.
 
-    else
-            strcat(alias, "*");
+Also, in order to avoid race condition between smb2_reconnect and
+smb3_reconfigure, we make sure to lock session_mutex before changing
+password and password2 fields of the ses structure.
 
-This is incorrect because 'alias' is uninitialized. If it is not
-NULL-terminated, strcat() could cause a buffer overrun.
-
-Even if 'alias' happens to be zero-filled, it would output:
-
-    MODULE_ALIAS("*");
-
-This would match anything. As a result, the module could be loaded by
-any unrelated uevent from an unrelated subsystem.
-
-Commit ac551828993e introduced another bug.            
-
-Prior to that commit, the conditional check was:
-
-    if (eisa->sig[0])
-
-This checked if the first character of eisa_device_id::sig was not '\0'.
-
-However, commit ac551828993e changed it as follows:
-
-    if (sig[0])
-
-sig[0] is NOT the first character of the eisa_device_id::sig. The
-type of 'sig' is 'char (*)[8]', meaning that the type of 'sig[0]' is
-'char [8]' instead of 'char'. 'sig[0]' and 'symval' refer to the same
-address, which never becomes NULL.
-
-The correct conversion would have been:
-
-    if ((*sig)[0])
-
-However, this if-conditional was meaningless because the earlier change
-in commit ac551828993e was incorrect.
-
-This commit removes the entire incorrect code, which should never have
-been executed.
-
-Fixes: ac551828993e ("modpost: i2c aliases need no trailing wildcard")
-Fixes: 6543becf26ff ("mod/file2alias: make modalias generation safe for cross compiling")
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Fixes: 35f834265e0d ("smb3: fix broken reconnect when password changing on the server by allowing password rotation")
+Signed-off-by: Shyam Prasad N <sprasad@microsoft.com>
+Signed-off-by: Meetakshi Setiya <msetiya@microsoft.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/mod/file2alias.c | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ fs/smb/client/fs_context.c | 83 +++++++++++++++++++++++++++++++++-----
+ fs/smb/client/fs_context.h |  1 +
+ 2 files changed, 75 insertions(+), 9 deletions(-)
 
-diff --git a/scripts/mod/file2alias.c b/scripts/mod/file2alias.c
-index 5d1c61fa5a550..bcb5a7e20775e 100644
---- a/scripts/mod/file2alias.c
-+++ b/scripts/mod/file2alias.c
-@@ -809,10 +809,7 @@ static int do_eisa_entry(const char *filename, void *symval,
- 		char *alias)
+diff --git a/fs/smb/client/fs_context.c b/fs/smb/client/fs_context.c
+index 4069b69fbc7e0..e84660b48d533 100644
+--- a/fs/smb/client/fs_context.c
++++ b/fs/smb/client/fs_context.c
+@@ -890,12 +890,37 @@ do {									\
+ 	cifs_sb->ctx->field = NULL;					\
+ } while (0)
+ 
++int smb3_sync_session_ctx_passwords(struct cifs_sb_info *cifs_sb, struct cifs_ses *ses)
++{
++	if (ses->password &&
++	    cifs_sb->ctx->password &&
++	    strcmp(ses->password, cifs_sb->ctx->password)) {
++		kfree_sensitive(cifs_sb->ctx->password);
++		cifs_sb->ctx->password = kstrdup(ses->password, GFP_KERNEL);
++		if (!cifs_sb->ctx->password)
++			return -ENOMEM;
++	}
++	if (ses->password2 &&
++	    cifs_sb->ctx->password2 &&
++	    strcmp(ses->password2, cifs_sb->ctx->password2)) {
++		kfree_sensitive(cifs_sb->ctx->password2);
++		cifs_sb->ctx->password2 = kstrdup(ses->password2, GFP_KERNEL);
++		if (!cifs_sb->ctx->password2) {
++			kfree_sensitive(cifs_sb->ctx->password);
++			cifs_sb->ctx->password = NULL;
++			return -ENOMEM;
++		}
++	}
++	return 0;
++}
++
+ static int smb3_reconfigure(struct fs_context *fc)
  {
- 	DEF_FIELD_ADDR(symval, eisa_device_id, sig);
--	if (sig[0])
--		sprintf(alias, EISA_DEVICE_MODALIAS_FMT "*", *sig);
--	else
--		strcat(alias, "*");
-+	sprintf(alias, EISA_DEVICE_MODALIAS_FMT "*", *sig);
- 	return 1;
+ 	struct smb3_fs_context *ctx = smb3_fc2context(fc);
+ 	struct dentry *root = fc->root;
+ 	struct cifs_sb_info *cifs_sb = CIFS_SB(root->d_sb);
+ 	struct cifs_ses *ses = cifs_sb_master_tcon(cifs_sb)->ses;
++	char *new_password = NULL, *new_password2 = NULL;
+ 	bool need_recon = false;
+ 	int rc;
+ 
+@@ -915,21 +940,61 @@ static int smb3_reconfigure(struct fs_context *fc)
+ 	STEAL_STRING(cifs_sb, ctx, UNC);
+ 	STEAL_STRING(cifs_sb, ctx, source);
+ 	STEAL_STRING(cifs_sb, ctx, username);
++
+ 	if (need_recon == false)
+ 		STEAL_STRING_SENSITIVE(cifs_sb, ctx, password);
+ 	else  {
+-		kfree_sensitive(ses->password);
+-		ses->password = kstrdup(ctx->password, GFP_KERNEL);
+-		if (!ses->password)
+-			return -ENOMEM;
+-		kfree_sensitive(ses->password2);
+-		ses->password2 = kstrdup(ctx->password2, GFP_KERNEL);
+-		if (!ses->password2) {
+-			kfree_sensitive(ses->password);
+-			ses->password = NULL;
++		if (ctx->password) {
++			new_password = kstrdup(ctx->password, GFP_KERNEL);
++			if (!new_password)
++				return -ENOMEM;
++		} else
++			STEAL_STRING_SENSITIVE(cifs_sb, ctx, password);
++	}
++
++	/*
++	 * if a new password2 has been specified, then reset it's value
++	 * inside the ses struct
++	 */
++	if (ctx->password2) {
++		new_password2 = kstrdup(ctx->password2, GFP_KERNEL);
++		if (!new_password2) {
++			kfree_sensitive(new_password);
+ 			return -ENOMEM;
+ 		}
++	} else
++		STEAL_STRING_SENSITIVE(cifs_sb, ctx, password2);
++
++	/*
++	 * we may update the passwords in the ses struct below. Make sure we do
++	 * not race with smb2_reconnect
++	 */
++	mutex_lock(&ses->session_mutex);
++
++	/*
++	 * smb2_reconnect may swap password and password2 in case session setup
++	 * failed. First get ctx passwords in sync with ses passwords. It should
++	 * be okay to do this even if this function were to return an error at a
++	 * later stage
++	 */
++	rc = smb3_sync_session_ctx_passwords(cifs_sb, ses);
++	if (rc)
++		return rc;
++
++	/*
++	 * now that allocations for passwords are done, commit them
++	 */
++	if (new_password) {
++		kfree_sensitive(ses->password);
++		ses->password = new_password;
+ 	}
++	if (new_password2) {
++		kfree_sensitive(ses->password2);
++		ses->password2 = new_password2;
++	}
++
++	mutex_unlock(&ses->session_mutex);
++
+ 	STEAL_STRING(cifs_sb, ctx, domainname);
+ 	STEAL_STRING(cifs_sb, ctx, nodename);
+ 	STEAL_STRING(cifs_sb, ctx, iocharset);
+diff --git a/fs/smb/client/fs_context.h b/fs/smb/client/fs_context.h
+index cf577ec0dd0ac..bbd2063ab838d 100644
+--- a/fs/smb/client/fs_context.h
++++ b/fs/smb/client/fs_context.h
+@@ -298,6 +298,7 @@ static inline struct smb3_fs_context *smb3_fc2context(const struct fs_context *f
  }
  
+ extern int smb3_fs_context_dup(struct smb3_fs_context *new_ctx, struct smb3_fs_context *ctx);
++extern int smb3_sync_session_ctx_passwords(struct cifs_sb_info *cifs_sb, struct cifs_ses *ses);
+ extern void smb3_update_mnt_flags(struct cifs_sb_info *cifs_sb);
+ 
+ /*
 -- 
 2.43.0
 
