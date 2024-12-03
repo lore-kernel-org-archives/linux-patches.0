@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B0191FA16B;
-	Tue,  3 Dec 2024 15:46:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83D271FA27C;
+	Tue,  3 Dec 2024 15:46:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733240790; cv=none; b=i9OkUGBd9r7IvvliEodFV37XcnCXT+siKYCnVnEpe4E749Jo0s6e52LcP+vYzT4ArQlB1p+DRc2SVcVH0DwHr857NG4yy5RDEdAuR1Gfd/mn6P6PgmwvywjjqDtt9X4BXN1ISsU6EdJ2D5LXIBIT9ajfNvmX4JKWV6ecr2NqH+E=
+	t=1733240793; cv=none; b=jP3NkPVIDcRfU03G6N9djZbTSIeh7O2LVKoHrJm8SRf6qye/uSgVc8XBXGtqujUt0eA+fZNBg1p8/lNFkiHyfxP/TY8cTAnv/dTXjclR1M9aLsUZA7mkpaUV+RiYf8T//58YKyAVldh0NJSDA3uX/eSDRcAO4OLZGuXmcfoMipI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733240790; c=relaxed/simple;
-	bh=zBxLEB7n+JXIwu4m2tTtH1HsLgle8Iegu4SUp0IhVIE=;
+	s=arc-20240116; t=1733240793; c=relaxed/simple;
+	bh=A9X6OUJNnAhR89BKAClii9eqngW4ntngGpFl7tPXvXI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=RZ1Vjb+tHlTEdjalZXu0weJGMrVX59ezsBHzflom+lkIwcjJ1tTy0Nyh6y5AK8xHgyjsn6Ilk7V8Jfu4esvte5JioX5+Ltx3p5I0clu9uDBpsZ2Dmo4FaqNE7mxWEy9A5TpBGvVcxx6k9bAZh3OtaJiHSEEKJz2Uuh02fG129nI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MHNGDwbf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=T09nBvePAgD/s+9Y78NRwK4H4etqOu1PijqB+Mt34ZtFTWbEBO5a6XxHXayOHBPTULekYCrZos6U5ThTPrQSORdluFQl9TxNaorPzLofhGqWNaOqr2QWDgdhFUbh6zRWx+sKuKUTvIkUh2husZmvAdZ4nQBU6yLS0KAdzKli3Z8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c9sKP7eb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MHNGDwbf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C0F3C4CECF;
-	Tue,  3 Dec 2024 15:46:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c9sKP7eb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06476C4CECF;
+	Tue,  3 Dec 2024 15:46:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733240790;
-	bh=zBxLEB7n+JXIwu4m2tTtH1HsLgle8Iegu4SUp0IhVIE=;
+	s=korg; t=1733240793;
+	bh=A9X6OUJNnAhR89BKAClii9eqngW4ntngGpFl7tPXvXI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MHNGDwbfN8wwq9kcHU6yCqDEpFeX/0+WJdWGLZachowWLsjl5MVS5r8lvvYrLYyyO
-	 KyzoRAGgAxc1VSHWlqT7HDmE7WoyRN08hQV9yXhO0jZgyAHLv5lJymUBpjr1BcsRiZ
-	 oFmrYPUO4BLyncChQw8CxonngJ2JPr5T3CHYJFIE=
+	b=c9sKP7ebcC6tEI5yuUytnN8X9zX/m89sQtyZ2cuJzeY2iadnlM8cXFdGicgE+rMYM
+	 RzvFLdspjiwYEbeLoinpSgEN54RTDV4U9wA0HudI9ce56SazmYWxmJTO/HC1Fq9mh7
+	 SpalI4DXi+7NWLSWm41uosH+jebcimF/pAUndTHU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Alexis=20Lothor=C3=A9=20 ?= <alexis.lothore@bootlin.com>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
+	Karthikeyan Periyasamy <quic_periyasa@quicinc.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 234/826] selftests/bpf: add missing header include for htons
-Date: Tue,  3 Dec 2024 15:39:21 +0100
-Message-ID: <20241203144752.880915503@linuxfoundation.org>
+Subject: [PATCH 6.12 235/826] wifi: cfg80211: check radio iface combination for multi radio per wiphy
+Date: Tue,  3 Dec 2024 15:39:22 +0100
+Message-ID: <20241203144752.921466750@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -45,52 +45,140 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexis Lothoré (eBPF Foundation) <alexis.lothore@bootlin.com>
+From: Karthikeyan Periyasamy <quic_periyasa@quicinc.com>
 
-[ Upstream commit bc9b3fb827fceec4e05564d6e668280f4470ab5b ]
+[ Upstream commit bd9813d13be439851a7ff3e6372e53caa6e387a6 ]
 
-Including the network_helpers.h header in tests can lead to the following
-build error:
+Currently, wiphy_verify_combinations() fails for the multi-radio per wiphy
+due to the condition check on new global interface combination that DFS
+only works on one channel. In a multi-radio scenario, new global interface
+combination encompasses the capabilities of all radio combinations, so it
+supports more than one channel with DFS. For multi-radio per wiphy,
+interface combination verification needs to be performed for radio specific
+interface combinations. This is necessary as the new global interface
+combination combines the capabilities of all radio combinations.
 
-./network_helpers.h: In function ‘csum_tcpudp_magic’:
-./network_helpers.h:116:14: error: implicit declaration of function \
-  ‘htons’ [-Werror=implicit-function-declaration]
-  116 |         s += htons(proto + len);
-
-The error is avoided in many cases thanks to some other headers included
-earlier and bringing in arpa/inet.h (ie: test_progs.h).
-
-Make sure that test_progs build success does not depend on header ordering
-by adding the missing header include in network_helpers.h
-
-Fixes: f6642de0c3e9 ("selftests/bpf: Add csum helpers")
-Signed-off-by: Alexis Lothoré (eBPF Foundation) <alexis.lothore@bootlin.com>
-Link: https://lore.kernel.org/r/20241008-network_helpers_fix-v1-1-2c2ae03df7ef@bootlin.com
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Fixes: a01b1e9f9955 ("wifi: mac80211: add support for DFS with multiple radios")
+Signed-off-by: Karthikeyan Periyasamy <quic_periyasa@quicinc.com>
+Link: https://patch.msgid.link/20240917140239.886083-1-quic_periyasa@quicinc.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/network_helpers.h | 1 +
- 1 file changed, 1 insertion(+)
+ net/wireless/core.c | 64 ++++++++++++++++++++++++++++++++++++++-------
+ 1 file changed, 54 insertions(+), 10 deletions(-)
 
-diff --git a/tools/testing/selftests/bpf/network_helpers.h b/tools/testing/selftests/bpf/network_helpers.h
-index c72c16e1aff82..5764155b6d251 100644
---- a/tools/testing/selftests/bpf/network_helpers.h
-+++ b/tools/testing/selftests/bpf/network_helpers.h
-@@ -1,6 +1,7 @@
- /* SPDX-License-Identifier: GPL-2.0 */
- #ifndef __NETWORK_HELPERS_H
- #define __NETWORK_HELPERS_H
-+#include <arpa/inet.h>
- #include <sys/socket.h>
- #include <sys/types.h>
- #include <linux/types.h>
+diff --git a/net/wireless/core.c b/net/wireless/core.c
+index 74ca18833df17..7d313fb66d76b 100644
+--- a/net/wireless/core.c
++++ b/net/wireless/core.c
+@@ -603,16 +603,20 @@ struct wiphy *wiphy_new_nm(const struct cfg80211_ops *ops, int sizeof_priv,
+ }
+ EXPORT_SYMBOL(wiphy_new_nm);
+ 
+-static int wiphy_verify_combinations(struct wiphy *wiphy)
++static
++int wiphy_verify_iface_combinations(struct wiphy *wiphy,
++				    const struct ieee80211_iface_combination *iface_comb,
++				    int n_iface_comb,
++				    bool combined_radio)
+ {
+ 	const struct ieee80211_iface_combination *c;
+ 	int i, j;
+ 
+-	for (i = 0; i < wiphy->n_iface_combinations; i++) {
++	for (i = 0; i < n_iface_comb; i++) {
+ 		u32 cnt = 0;
+ 		u16 all_iftypes = 0;
+ 
+-		c = &wiphy->iface_combinations[i];
++		c = &iface_comb[i];
+ 
+ 		/*
+ 		 * Combinations with just one interface aren't real,
+@@ -625,9 +629,13 @@ static int wiphy_verify_combinations(struct wiphy *wiphy)
+ 		if (WARN_ON(!c->num_different_channels))
+ 			return -EINVAL;
+ 
+-		/* DFS only works on one channel. */
+-		if (WARN_ON(c->radar_detect_widths &&
+-			    (c->num_different_channels > 1)))
++		/* DFS only works on one channel. Avoid this check
++		 * for multi-radio global combination, since it hold
++		 * the capabilities of all radio combinations.
++		 */
++		if (!combined_radio &&
++		    WARN_ON(c->radar_detect_widths &&
++			    c->num_different_channels > 1))
+ 			return -EINVAL;
+ 
+ 		if (WARN_ON(!c->n_limits))
+@@ -648,13 +656,21 @@ static int wiphy_verify_combinations(struct wiphy *wiphy)
+ 			if (WARN_ON(wiphy->software_iftypes & types))
+ 				return -EINVAL;
+ 
+-			/* Only a single P2P_DEVICE can be allowed */
+-			if (WARN_ON(types & BIT(NL80211_IFTYPE_P2P_DEVICE) &&
++			/* Only a single P2P_DEVICE can be allowed, avoid this
++			 * check for multi-radio global combination, since it
++			 * hold the capabilities of all radio combinations.
++			 */
++			if (!combined_radio &&
++			    WARN_ON(types & BIT(NL80211_IFTYPE_P2P_DEVICE) &&
+ 				    c->limits[j].max > 1))
+ 				return -EINVAL;
+ 
+-			/* Only a single NAN can be allowed */
+-			if (WARN_ON(types & BIT(NL80211_IFTYPE_NAN) &&
++			/* Only a single NAN can be allowed, avoid this
++			 * check for multi-radio global combination, since it
++			 * hold the capabilities of all radio combinations.
++			 */
++			if (!combined_radio &&
++			    WARN_ON(types & BIT(NL80211_IFTYPE_NAN) &&
+ 				    c->limits[j].max > 1))
+ 				return -EINVAL;
+ 
+@@ -693,6 +709,34 @@ static int wiphy_verify_combinations(struct wiphy *wiphy)
+ 	return 0;
+ }
+ 
++static int wiphy_verify_combinations(struct wiphy *wiphy)
++{
++	int i, ret;
++	bool combined_radio = false;
++
++	if (wiphy->n_radio) {
++		for (i = 0; i < wiphy->n_radio; i++) {
++			const struct wiphy_radio *radio = &wiphy->radio[i];
++
++			ret = wiphy_verify_iface_combinations(wiphy,
++							      radio->iface_combinations,
++							      radio->n_iface_combinations,
++							      false);
++			if (ret)
++				return ret;
++		}
++
++		combined_radio = true;
++	}
++
++	ret = wiphy_verify_iface_combinations(wiphy,
++					      wiphy->iface_combinations,
++					      wiphy->n_iface_combinations,
++					      combined_radio);
++
++	return ret;
++}
++
+ int wiphy_register(struct wiphy *wiphy)
+ {
+ 	struct cfg80211_registered_device *rdev = wiphy_to_rdev(wiphy);
 -- 
 2.43.0
 
