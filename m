@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E24B61F12F7;
-	Tue,  3 Dec 2024 16:09:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4566A1F76AD;
+	Tue,  3 Dec 2024 16:09:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733242191; cv=none; b=DwrDbMeaatjQ7e68LLDGNvSKfoG0gvNKEK/zVYTfehOt4vLLFe9loHsIzFZ2viiE3cBFV5COQuKC1fcxlgXZFAgSfz4IUuLapBBQm0P5/JsxODmAtKmTYyfLDYgiKip1HwmsjvQyURnjXvPHjhALZODu2FLN4EXbguZ7k8fL0YA=
+	t=1733242194; cv=none; b=B/RQdJUV76yLrnObEZSqGIL8K09Xw4Ps8Whe9PrdKmA4QEkPHvTUq1L9cuHEzMdWIKcu4P89/GqVp/cmiyqZfHduSuXettdQ2fC5XvTCTv4yNmq0ctjm8KAf5yAfhDK8HiPxjPvwH21+gmajdLM2S3ukQytolhuGILJoA70mWbE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733242191; c=relaxed/simple;
-	bh=5EaBEboskAQ6m+RCSjedVR20IWQQh86vPr2LgNo3v30=;
+	s=arc-20240116; t=1733242194; c=relaxed/simple;
+	bh=Eoyka4hCb/yjSaTsFgmc0SEQP5gZ75B0nBdCDOTWvDg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s5SKHadDDDj2ZblOb2oh+JZAzNnOUg3ppQYIkKttNNQh69KsiqiLX6YgHfkJdX0C2qJw/dcYC+lrm+ZdHec9j8NTI5nsQZz29YFzunfBYQhLgzeJZt4y71hvmafktK7wtun+ArGRUs3j0dUnUsU4t3e3h8OYLZI1Zo8fB/MKI1c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=haiPUUKm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HQfzFi9ScUryRwlWCl9RSueCIp4MOVOCwylpuvtNHROOTeGw8mH0qF8kM5MnXrQ0laP6e6Eoqh+C/H7YXTC2aoprh+759/kz5PYEWKvwuoZtENQpMJfK2b1oFsC5Sa+ZPiZ8IitfjLJC7WQSMXe2UXNNj2MdIsGmnhIRTyyrQk8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lkV2oRso; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="haiPUUKm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DE3CC4CECF;
-	Tue,  3 Dec 2024 16:09:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lkV2oRso"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA4A8C4CECF;
+	Tue,  3 Dec 2024 16:09:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733242190;
-	bh=5EaBEboskAQ6m+RCSjedVR20IWQQh86vPr2LgNo3v30=;
+	s=korg; t=1733242194;
+	bh=Eoyka4hCb/yjSaTsFgmc0SEQP5gZ75B0nBdCDOTWvDg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=haiPUUKmZrOWFceslGMJVKTVigzYToO5K5eY3Vx7gjyTKwH8x9Scewx8r7Y6BzWrt
-	 CRqa8PBlyotA7MF+anUuI3hsYpCuA5RYnjJVP6jTQnQEBoykhwNI3IfNhu3hjkKilg
-	 V+EBCOhxCyY2u/y4znZSWmFm5x4wEDrwseB/044Q=
+	b=lkV2oRso3jZVvAgez2r3HZRzUR7cv7zKXehV5TGPQq9+7L3Ed2dzzvk8zCz1s4MMf
+	 MC60RJsdLWUfle1CKgj9mu15XBPmzFB6pWydUtqLLbToBI2sdGiGnib8QuIh+dGYSk
+	 +ofsSlQR0HGocqe6I1u1tBxBkwaa2/77WXK1n3PQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
-	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 6.12 633/826] docs: media: update location of the media patches
-Date: Tue,  3 Dec 2024 15:46:00 +0100
-Message-ID: <20241203144808.446618402@linuxfoundation.org>
+	Artem Sadovnikov <ancowi69@gmail.com>,
+	Dave Kleikamp <dave.kleikamp@oracle.com>
+Subject: [PATCH 6.12 634/826] jfs: xattr: check invalid xattr size more strictly
+Date: Tue,  3 Dec 2024 15:46:01 +0100
+Message-ID: <20241203144808.484615336@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -50,45 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+From: Artem Sadovnikov <ancowi69@gmail.com>
 
-commit 72ad4ff638047bbbdf3232178fea4bec1f429319 upstream.
+commit d9f9d96136cba8fedd647d2c024342ce090133c2 upstream.
 
-Due to recent changes on the way we're maintaining media, the
-location of the main tree was updated.
+Commit 7c55b78818cf ("jfs: xattr: fix buffer overflow for invalid xattr")
+also addresses this issue but it only fixes it for positive values, while
+ea_size is an integer type and can take negative values, e.g. in case of
+a corrupted filesystem. This still breaks validation and would overflow
+because of implicit conversion from int to size_t in print_hex_dump().
 
-Change docs accordingly.
+Fix this issue by clamping the ea_size value instead.
+
+Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
 
 Cc: stable@vger.kernel.org
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Reviewed-by: Hans Verkuil <hverkuil@xs4all.nl>
+Signed-off-by: Artem Sadovnikov <ancowi69@gmail.com>
+Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/admin-guide/media/building.rst |    2 +-
- Documentation/admin-guide/media/saa7134.rst  |    2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ fs/jfs/xattr.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/Documentation/admin-guide/media/building.rst
-+++ b/Documentation/admin-guide/media/building.rst
-@@ -15,7 +15,7 @@ Please notice, however, that, if:
+--- a/fs/jfs/xattr.c
++++ b/fs/jfs/xattr.c
+@@ -559,7 +559,7 @@ static int ea_get(struct inode *inode, s
  
- you should use the main media development tree ``master`` branch:
+       size_check:
+ 	if (EALIST_SIZE(ea_buf->xattr) != ea_size) {
+-		int size = min_t(int, EALIST_SIZE(ea_buf->xattr), ea_size);
++		int size = clamp_t(int, ea_size, 0, EALIST_SIZE(ea_buf->xattr));
  
--    https://git.linuxtv.org/media_tree.git/
-+    https://git.linuxtv.org/media.git/
- 
- In this case, you may find some useful information at the
- `LinuxTv wiki pages <https://linuxtv.org/wiki>`_:
---- a/Documentation/admin-guide/media/saa7134.rst
-+++ b/Documentation/admin-guide/media/saa7134.rst
-@@ -67,7 +67,7 @@ Changes / Fixes
- Please mail to linux-media AT vger.kernel.org unified diffs against
- the linux media git tree:
- 
--    https://git.linuxtv.org/media_tree.git/
-+    https://git.linuxtv.org/media.git/
- 
- This is done by committing a patch at a clone of the git tree and
- submitting the patch using ``git send-email``. Don't forget to
+ 		printk(KERN_ERR "ea_get: invalid extended attribute\n");
+ 		print_hex_dump(KERN_ERR, "", DUMP_PREFIX_ADDRESS, 16, 1,
 
 
