@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2050A1F7567;
-	Tue,  3 Dec 2024 16:17:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A30F614A088;
+	Tue,  3 Dec 2024 16:17:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733242660; cv=none; b=dxP45DwgzPlqikTfcBXrhc34vzfWE5hIa83lqQsRxzrtt01kM+Mc/v+IHgNxe1mfyadszAgWOTlz8frSgh75TKuzOBmdv7rDM6EiFy+pSXOdzUQ8NHE3qQm6HrtK0bsPQgjpJl9d/yOyR4Yo3vXKld+rqIrnIfP5L/fEzW5bUUU=
+	t=1733242663; cv=none; b=cf5T8P5tItOS1miX/jBh5Ui74P1s89cmyb0X0bZ1Uy89cd8xUdAJf0guBtYOjLGrSCJYQaEZb/4WQyRJYNCN9TTYjr/3vRJ46ocKHLlB2QuZ1g9t5ZW03DOoqYVDFrQjwp46YUuuDBTHX5rOraBZKzXYXRlSBySN3BQhw7xg5Ik=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733242660; c=relaxed/simple;
-	bh=BHFUG6v3E60hHsetNtGFNTRoHnjPKDn7ymeXT4ocbj0=;
+	s=arc-20240116; t=1733242663; c=relaxed/simple;
+	bh=hxxxVx4CJy2nPtIPa/XXRbwoV9EuxKuo0xoUTZ6ajB0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JOGDgWFKdV+7N2sT4H+SGwI5xljmYmePUZgzbQiZcN3u55OvTvUKVZYofEWQSZlS1wtKeMCWrPx32M2vrPUvGmKkZGb2Py0WVMOJjagerYwPNxP31blbI7U74OHDcgMbX37PPl4FzuzsfGNQUf/vwwq79oxesQTRMRIjpAXvB/Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vhoi7CMs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=opnokAWfMB374aXouWI+anPqs4n9dqBOc3Gz1Swy0J8KSnDZRAe55itS3z+xSqWfqCg735S2s6WHqpZ7yFbGcWYfvCkRuqr1swr56iK2QByvpJpULAguMlx3Bmfc2DQidRIBY6+fYFyxqOfku8TL+J1ACfuxfYoYSlidzvDrYb8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IQjWykCv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vhoi7CMs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B3FCC4CECF;
-	Tue,  3 Dec 2024 16:17:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IQjWykCv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD421C4CECF;
+	Tue,  3 Dec 2024 16:17:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733242660;
-	bh=BHFUG6v3E60hHsetNtGFNTRoHnjPKDn7ymeXT4ocbj0=;
+	s=korg; t=1733242663;
+	bh=hxxxVx4CJy2nPtIPa/XXRbwoV9EuxKuo0xoUTZ6ajB0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Vhoi7CMs2zBNxme0pZk9GlGAMVRkWMTTF96Sy0Q3iDCSMouTifV2slGVZsXJv26Ua
-	 O4NINOJbboDv1u07838zf31yhgrnqVeR1mZvBiPkXXtNNW/op9p1KMCraRIdZGvGJJ
-	 GpHlAwHIWf8sbJxxEXLlZ1pOVdmNz1cPVotJCgMQ=
+	b=IQjWykCvvbbCfc5DFB+FwykBEWsEBn+/xDEmTfGqaocHsVYo+7bAwf/gM1ZseJqvb
+	 K4RbUiZoHy3ScWI+gMA/aWCx7zeJQWfUTfUzqmhyH3b1+gwDsCrtaBmftGfoIfDAf4
+	 UlnSbiH8jpUsX23nmAs4wOdTc89fvx0EJfWvg5ks=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
+	Yang Erkun <yangerkun@huawei.com>,
 	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.12 770/826] NFSD: Prevent a potential integer overflow
-Date: Tue,  3 Dec 2024 15:48:17 +0100
-Message-ID: <20241203144813.800618131@linuxfoundation.org>
+Subject: [PATCH 6.12 771/826] SUNRPC: make sure cache entry active before cache_show
+Date: Tue,  3 Dec 2024 15:48:18 +0100
+Message-ID: <20241203144813.841670595@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -51,50 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Yang Erkun <yangerkun@huawei.com>
 
-commit 7f33b92e5b18e904a481e6e208486da43e4dc841 upstream.
+commit 2862eee078a4d2d1f584e7f24fa50dddfa5f3471 upstream.
 
-If the tag length is >= U32_MAX - 3 then the "length + 4" addition
-can result in an integer overflow. Address this by splitting the
-decoding into several steps so that decode_cb_compound4res() does
-not have to perform arithmetic on the unsafe length value.
+The function `c_show` was called with protection from RCU. This only
+ensures that `cp` will not be freed. Therefore, the reference count for
+`cp` can drop to zero, which will trigger a refcount use-after-free
+warning when `cache_get` is called. To resolve this issue, use
+`cache_get_rcu` to ensure that `cp` remains active.
 
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Cc: stable@vger.kernel.org
+------------[ cut here ]------------
+refcount_t: addition on 0; use-after-free.
+WARNING: CPU: 7 PID: 822 at lib/refcount.c:25
+refcount_warn_saturate+0xb1/0x120
+CPU: 7 UID: 0 PID: 822 Comm: cat Not tainted 6.12.0-rc3+ #1
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS
+1.16.1-2.fc37 04/01/2014
+RIP: 0010:refcount_warn_saturate+0xb1/0x120
+
+Call Trace:
+ <TASK>
+ c_show+0x2fc/0x380 [sunrpc]
+ seq_read_iter+0x589/0x770
+ seq_read+0x1e5/0x270
+ proc_reg_read+0xe1/0x140
+ vfs_read+0x125/0x530
+ ksys_read+0xc1/0x160
+ do_syscall_64+0x5f/0x170
+ entry_SYSCALL_64_after_hwframe+0x76/0x7e
+
+Cc: stable@vger.kernel.org # v4.20+
+Signed-off-by: Yang Erkun <yangerkun@huawei.com>
 Reviewed-by: Jeff Layton <jlayton@kernel.org>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs4callback.c |   14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ net/sunrpc/cache.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/fs/nfsd/nfs4callback.c
-+++ b/fs/nfsd/nfs4callback.c
-@@ -287,17 +287,17 @@ static int decode_cb_compound4res(struct
- 	u32 length;
- 	__be32 *p;
- 
--	p = xdr_inline_decode(xdr, 4 + 4);
-+	p = xdr_inline_decode(xdr, XDR_UNIT);
- 	if (unlikely(p == NULL))
- 		goto out_overflow;
--	hdr->status = be32_to_cpup(p++);
-+	hdr->status = be32_to_cpup(p);
- 	/* Ignore the tag */
--	length = be32_to_cpup(p++);
--	p = xdr_inline_decode(xdr, length + 4);
--	if (unlikely(p == NULL))
-+	if (xdr_stream_decode_u32(xdr, &length) < 0)
-+		goto out_overflow;
-+	if (xdr_inline_decode(xdr, length) == NULL)
-+		goto out_overflow;
-+	if (xdr_stream_decode_u32(xdr, &hdr->nops) < 0)
- 		goto out_overflow;
--	p += XDR_QUADLEN(length);
--	hdr->nops = be32_to_cpup(p);
- 	return 0;
- out_overflow:
- 	return -EIO;
+--- a/net/sunrpc/cache.c
++++ b/net/sunrpc/cache.c
+@@ -1427,7 +1427,9 @@ static int c_show(struct seq_file *m, vo
+ 		seq_printf(m, "# expiry=%lld refcnt=%d flags=%lx\n",
+ 			   convert_to_wallclock(cp->expiry_time),
+ 			   kref_read(&cp->ref), cp->flags);
+-	cache_get(cp);
++	if (!cache_get_rcu(cp))
++		return 0;
++
+ 	if (cache_check(cd, cp, NULL))
+ 		/* cache_check does a cache_put on failure */
+ 		seq_puts(m, "# ");
 
 
