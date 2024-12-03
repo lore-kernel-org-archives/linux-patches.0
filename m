@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B8F41AB6C9;
-	Tue,  3 Dec 2024 16:20:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C7051AB6C9;
+	Tue,  3 Dec 2024 16:20:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733242827; cv=none; b=fUng4C+HDhASSwBSACuXj8W4jmybTCvGw5876wnnF09ylO9Oe4Jo6tNJHv0xj28QDF0Vb+Smh+oGJhgszOa5ne9L3TsZDlfVAG1/UJPpBNLGpgBjZoF6qEQnwP0TDaIyHItdxC2iWzXPJRy63oAO6JqunjbdtPk/6ISZn2pWj9s=
+	t=1733242830; cv=none; b=YROiyaEKIKNFZSC9rmzBKbI9VIXLWD3z3CJVC90AsiwUtxQAGx6iM5qg8+czaL5UAUJhkaeoxR/PQRK2bDlfddyaNSqkagwII4Y2pVmkQUkmIBR7yZwIeJQkwvCWM3M6D3Yq9AHHQVwjs9zsKwkD/M/N2gR+/4rK8cVLXzr2Lfs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733242827; c=relaxed/simple;
-	bh=OTexgQ5/kTOJ4trrURVidr2BU+e/5tdemti/Pobzg0g=;
+	s=arc-20240116; t=1733242830; c=relaxed/simple;
+	bh=raOQot7Fnce3bmbN5RPHHOr5b6t0xS3+ERXTeoNUPvE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n4AvdMTHkSJyAQa2ROk+yJKu6I0nBHYIHLpc7ovOkTjeSC47WEDCYclBd+hroz/G3ElBGJ5IH8XAPo/bPUtfMbGmQmB7zl7tj67xDpAbz14bjCdJqbOgMtUD4yqu+3iGvrtxAnf0rMmzCbL58dI7ontj7jI6G9mjiKK0N5IN2o8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lsbJj4aX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CfloLl0FEwki1GSvdcsW6+2I1qNT09B2ctz5NcSUbiGpbEBqlKgzC+jDjaot1hvRkA99OTf/lV78gUJLz9grY4c9j7FYpP4Ci6UualtW2PWI/AndFeFtioCVtOKwitCntZ1k39fKV32ADC8kctg6gyKoAILzyxeRqfEaQPwPCV0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Flmdob7a; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lsbJj4aX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69B57C4CECF;
-	Tue,  3 Dec 2024 16:20:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Flmdob7a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEAF7C4CECF;
+	Tue,  3 Dec 2024 16:20:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733242826;
-	bh=OTexgQ5/kTOJ4trrURVidr2BU+e/5tdemti/Pobzg0g=;
+	s=korg; t=1733242830;
+	bh=raOQot7Fnce3bmbN5RPHHOr5b6t0xS3+ERXTeoNUPvE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lsbJj4aXTYkgvwZ1sLytK+lIB4yKnzWNZJIRD05Jp1C+UT8m40PJwsF9yL1t5TKKw
-	 uGEXwkvHESjEbYK9VvVk0FrjNFiFN1+UefnfEpbmYztS4S2u1gTzG5UaM6cNCB1OGk
-	 waIa/LERh48RyBYhqIWkvOfS/o0TtY7Buf9i5o+4=
+	b=Flmdob7aVEPs4w3wvGYVCedbaPTamgQhzzO2vep8ydvhygdCs9XS2uh+3oFLVjQ+g
+	 9VB9sl5ud5ittAtP1ljJG9cSBaR3LO6Ijh+Og1OiPWIyAyOWjOqq/Kc+Ix8Y/8Q3il
+	 n0THRWsO3x+R6eN+Ddjz/53xIQa3Gy0d+k5JqKsc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Igor Raits <igor@gooddata.com>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Breno Leitao <leitao@debian.org>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 790/826] Revert "nfs: dont reuse partially completed requests in nfs_lock_and_join_requests"
-Date: Tue,  3 Dec 2024 15:48:37 +0100
-Message-ID: <20241203144814.578185616@linuxfoundation.org>
+Subject: [PATCH 6.12 791/826] nvme/multipath: Fix RCU list traversal to use SRCU primitive
+Date: Tue,  3 Dec 2024 15:48:38 +0100
+Message-ID: <20241203144814.616216360@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -51,115 +51,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Trond Myklebust <trond.myklebust@hammerspace.com>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit 66f9dac9077c9c063552e465212abeb8f97d28a7 ]
+[ Upstream commit 5dd18f09ce7399df6fffe80d1598add46c395ae9 ]
 
-This reverts commit b571cfcb9dcac187c6d967987792d37cb0688610.
+The code currently uses list_for_each_entry_rcu() while holding an SRCU
+lock, triggering false positive warnings with CONFIG_PROVE_RCU=y
+enabled:
 
-This patch appears to assume that if one request is complete, then the
-others will complete too before unlocking. That is not a valid
-assumption, since other requests could hit a non-fatal error or a short
-write that would cause them not to complete.
+	drivers/nvme/host/multipath.c:168 RCU-list traversed in non-reader section!!
+	drivers/nvme/host/multipath.c:227 RCU-list traversed in non-reader section!!
+	drivers/nvme/host/multipath.c:260 RCU-list traversed in non-reader section!!
 
-Reported-by: Igor Raits <igor@gooddata.com>
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=219508
-Fixes: b571cfcb9dca ("nfs: don't reuse partially completed requests in nfs_lock_and_join_requests")
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+While the list is properly protected by SRCU lock, the code uses the
+wrong list traversal primitive. Replace list_for_each_entry_rcu() with
+list_for_each_entry_srcu() to correctly indicate SRCU-based protection
+and eliminate the false warning.
+
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Fixes: be647e2c76b2 ("nvme: use srcu for iterating namespace list")
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/write.c | 49 +++++++++++++++++++++++++++++--------------------
- 1 file changed, 29 insertions(+), 20 deletions(-)
+ drivers/nvme/host/multipath.c | 21 ++++++++++++++-------
+ 1 file changed, 14 insertions(+), 7 deletions(-)
 
-diff --git a/fs/nfs/write.c b/fs/nfs/write.c
-index ead2dc55952db..82ae2b85d393c 100644
---- a/fs/nfs/write.c
-+++ b/fs/nfs/write.c
-@@ -144,6 +144,31 @@ static void nfs_io_completion_put(struct nfs_io_completion *ioc)
- 		kref_put(&ioc->refcount, nfs_io_completion_release);
- }
+diff --git a/drivers/nvme/host/multipath.c b/drivers/nvme/host/multipath.c
+index 6a15873055b95..f25582e4d88bb 100644
+--- a/drivers/nvme/host/multipath.c
++++ b/drivers/nvme/host/multipath.c
+@@ -165,7 +165,8 @@ void nvme_kick_requeue_lists(struct nvme_ctrl *ctrl)
+ 	int srcu_idx;
  
-+static void
-+nfs_page_set_inode_ref(struct nfs_page *req, struct inode *inode)
-+{
-+	if (!test_and_set_bit(PG_INODE_REF, &req->wb_flags)) {
-+		kref_get(&req->wb_kref);
-+		atomic_long_inc(&NFS_I(inode)->nrequests);
-+	}
-+}
-+
-+static int
-+nfs_cancel_remove_inode(struct nfs_page *req, struct inode *inode)
-+{
-+	int ret;
-+
-+	if (!test_bit(PG_REMOVE, &req->wb_flags))
-+		return 0;
-+	ret = nfs_page_group_lock(req);
-+	if (ret)
-+		return ret;
-+	if (test_and_clear_bit(PG_REMOVE, &req->wb_flags))
-+		nfs_page_set_inode_ref(req, inode);
-+	nfs_page_group_unlock(req);
-+	return 0;
-+}
-+
- /**
-  * nfs_folio_find_head_request - find head request associated with a folio
-  * @folio: pointer to folio
-@@ -540,7 +565,6 @@ static struct nfs_page *nfs_lock_and_join_requests(struct folio *folio)
- 	struct inode *inode = folio->mapping->host;
- 	struct nfs_page *head, *subreq;
- 	struct nfs_commit_info cinfo;
--	bool removed;
- 	int ret;
+ 	srcu_idx = srcu_read_lock(&ctrl->srcu);
+-	list_for_each_entry_rcu(ns, &ctrl->namespaces, list) {
++	list_for_each_entry_srcu(ns, &ctrl->namespaces, list,
++				 srcu_read_lock_held(&ctrl->srcu)) {
+ 		if (!ns->head->disk)
+ 			continue;
+ 		kblockd_schedule_work(&ns->head->requeue_work);
+@@ -209,7 +210,8 @@ void nvme_mpath_clear_ctrl_paths(struct nvme_ctrl *ctrl)
+ 	int srcu_idx;
  
- 	/*
-@@ -565,18 +589,18 @@ static struct nfs_page *nfs_lock_and_join_requests(struct folio *folio)
- 		goto retry;
+ 	srcu_idx = srcu_read_lock(&ctrl->srcu);
+-	list_for_each_entry_rcu(ns, &ctrl->namespaces, list) {
++	list_for_each_entry_srcu(ns, &ctrl->namespaces, list,
++				 srcu_read_lock_held(&ctrl->srcu)) {
+ 		nvme_mpath_clear_current_path(ns);
+ 		kblockd_schedule_work(&ns->head->requeue_work);
  	}
+@@ -224,7 +226,8 @@ void nvme_mpath_revalidate_paths(struct nvme_ns *ns)
+ 	int srcu_idx;
  
--	ret = nfs_page_group_lock(head);
-+	ret = nfs_cancel_remove_inode(head, inode);
- 	if (ret < 0)
- 		goto out_unlock;
+ 	srcu_idx = srcu_read_lock(&head->srcu);
+-	list_for_each_entry_rcu(ns, &head->list, siblings) {
++	list_for_each_entry_srcu(ns, &head->list, siblings,
++				 srcu_read_lock_held(&head->srcu)) {
+ 		if (capacity != get_capacity(ns->disk))
+ 			clear_bit(NVME_NS_READY, &ns->flags);
+ 	}
+@@ -257,7 +260,8 @@ static struct nvme_ns *__nvme_find_path(struct nvme_ns_head *head, int node)
+ 	int found_distance = INT_MAX, fallback_distance = INT_MAX, distance;
+ 	struct nvme_ns *found = NULL, *fallback = NULL, *ns;
  
--	removed = test_bit(PG_REMOVE, &head->wb_flags);
-+	ret = nfs_page_group_lock(head);
-+	if (ret < 0)
-+		goto out_unlock;
+-	list_for_each_entry_rcu(ns, &head->list, siblings) {
++	list_for_each_entry_srcu(ns, &head->list, siblings,
++				 srcu_read_lock_held(&head->srcu)) {
+ 		if (nvme_path_is_disabled(ns))
+ 			continue;
  
- 	/* lock each request in the page group */
- 	for (subreq = head->wb_this_page;
- 	     subreq != head;
- 	     subreq = subreq->wb_this_page) {
--		if (test_bit(PG_REMOVE, &subreq->wb_flags))
--			removed = true;
- 		ret = nfs_page_group_lock_subreq(head, subreq);
- 		if (ret < 0)
- 			goto out_unlock;
-@@ -584,21 +608,6 @@ static struct nfs_page *nfs_lock_and_join_requests(struct folio *folio)
+@@ -356,7 +360,8 @@ static struct nvme_ns *nvme_queue_depth_path(struct nvme_ns_head *head)
+ 	unsigned int min_depth_opt = UINT_MAX, min_depth_nonopt = UINT_MAX;
+ 	unsigned int depth;
  
- 	nfs_page_group_unlock(head);
+-	list_for_each_entry_rcu(ns, &head->list, siblings) {
++	list_for_each_entry_srcu(ns, &head->list, siblings,
++				 srcu_read_lock_held(&head->srcu)) {
+ 		if (nvme_path_is_disabled(ns))
+ 			continue;
  
--	/*
--	 * If PG_REMOVE is set on any request, I/O on that request has
--	 * completed, but some requests were still under I/O at the time
--	 * we locked the head request.
--	 *
--	 * In that case the above wait for all requests means that all I/O
--	 * has now finished, and we can restart from a clean slate.  Let the
--	 * old requests go away and start from scratch instead.
--	 */
--	if (removed) {
--		nfs_unroll_locks(head, head);
--		nfs_unlock_and_release_request(head);
--		goto retry;
--	}
--
- 	nfs_init_cinfo_from_inode(&cinfo, inode);
- 	nfs_join_page_group(head, &cinfo, inode);
- 	return head;
+@@ -424,7 +429,8 @@ static bool nvme_available_path(struct nvme_ns_head *head)
+ 	if (!test_bit(NVME_NSHEAD_DISK_LIVE, &head->flags))
+ 		return NULL;
+ 
+-	list_for_each_entry_rcu(ns, &head->list, siblings) {
++	list_for_each_entry_srcu(ns, &head->list, siblings,
++				 srcu_read_lock_held(&head->srcu)) {
+ 		if (test_bit(NVME_CTRL_FAILFAST_EXPIRED, &ns->ctrl->flags))
+ 			continue;
+ 		switch (nvme_ctrl_state(ns->ctrl)) {
+@@ -785,7 +791,8 @@ static int nvme_update_ana_state(struct nvme_ctrl *ctrl,
+ 		return 0;
+ 
+ 	srcu_idx = srcu_read_lock(&ctrl->srcu);
+-	list_for_each_entry_rcu(ns, &ctrl->namespaces, list) {
++	list_for_each_entry_srcu(ns, &ctrl->namespaces, list,
++				 srcu_read_lock_held(&ctrl->srcu)) {
+ 		unsigned nsid;
+ again:
+ 		nsid = le32_to_cpu(desc->nsids[n]);
 -- 
 2.43.0
 
