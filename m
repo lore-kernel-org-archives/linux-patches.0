@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFA921E2613;
-	Tue,  3 Dec 2024 16:18:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C396314A088;
+	Tue,  3 Dec 2024 16:18:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733242681; cv=none; b=rajGNCa2oDySpGsyN9C6tUimq7Ds/5MocVjjO4EVDPWEkO5rC+lzGjfXzJ0vDZ2K3fs+HT6e2vLN8Foa+W1f7X6gfBoGMJZ/eY4UR1O+O7IDJb48N3SmVvee1OU8lkzOChm5kAi+pQYfSqpBayeEVCwD6wk6JidLOk47guGujsk=
+	t=1733242684; cv=none; b=cNo3dRHz28hJz4zQ0/ISzuAnkL51DCKLbilI4DvP1OW2DATuVM/3YoD+FQxQBqKjcdqyDZ1G+hBkCfKT4zVyZooCejxbHrNfBCPAnSIeHJPWk3PdFmpEeLGn7RjwR6N3Lwk2gQQZZE+mDZFoK5jDWrTuISwODTVtR+YDtp1VT7A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733242681; c=relaxed/simple;
-	bh=oi2y8Qdn6h4gLT3gjWWyo327eY0P+Ewqinfk1cvdPAI=;
+	s=arc-20240116; t=1733242684; c=relaxed/simple;
+	bh=IEqozqj1PHEDxnZKDwQdTtHAsv8d8YS9h8uiMlTzuTg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cY5oYyALbkkuZJnO9eKyQRv2MDB0mvNu+f4NK+v6QvOxag+T8ysnSwchfDD8/gNRxhEyyVABi2u5CeGuQP5WD3om9pLeHNRxs33bi9/YKbE7xVJtHx5ym2St4shJpIR7LAEgKICjbX4HfLx9J1t982q5jVU4ifnbxLZEpE0+jlY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1q5Ag9Nr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g9Jd+q4oHWsn4bCG9TTr3CcEMbreMjiNCKfkQvmJ/KkNy2ePqcF28yJhzxfo4ZFGr+b0EFBuuYHwPBOJ3swW3fVE4fwKJPwNx5jL3sxdObB75jQET0RVkDU2/2+pgnFNxu4saiNl0Wgwhma3dZs++ufPr2adNKKWJuw48PcHHu0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wk834+vX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1q5Ag9Nr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37B0DC4CECF;
-	Tue,  3 Dec 2024 16:18:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wk834+vX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49616C4CECF;
+	Tue,  3 Dec 2024 16:18:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733242681;
-	bh=oi2y8Qdn6h4gLT3gjWWyo327eY0P+Ewqinfk1cvdPAI=;
+	s=korg; t=1733242684;
+	bh=IEqozqj1PHEDxnZKDwQdTtHAsv8d8YS9h8uiMlTzuTg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1q5Ag9Nr9cZSQZUIqENc0+R3UwsPMXv6JM3OtHOJTrdLYaruF4SNH0XDBE43pDEUE
-	 /9CFucih3rdRke+ukEKj95Tljlet/YIzM3neba0zLWcx3YNPqFMZfio20mFV7iZ28m
-	 rdmdj5kjCv+bsNNZ3e3q7mLLG83OW/1XXf36otzs=
+	b=Wk834+vXK+eqc/aKpU2mkx0j6vL96iSq70yn5oIYGuea6ZmYg4Z/x35kE5qSLjIXW
+	 z8nYiwxe27rRW02h9NUBp2DtFhHCPu1EASCKzz8PpIJkTsHt3iyFTwS5qNFkPgB3rx
+	 cXN7TZ3BEq9rGfjgmsfdcTIhR+pEYnjzWRWE4gxc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Erkun <yangerkun@huawei.com>,
+	Mike Snitzer <snitzer@kernel.org>,
+	NeilBrown <neilb@suse.de>,
 	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 777/826] NFSv4.0: Fix a use-after-free problem in the asynchronous open()
-Date: Tue,  3 Dec 2024 15:48:24 +0100
-Message-ID: <20241203144814.075677959@linuxfoundation.org>
+Subject: [PATCH 6.12 778/826] nfs/localio: must clear res.replen in nfs_local_read_done
+Date: Tue,  3 Dec 2024 15:48:25 +0100
+Message-ID: <20241203144814.113938942@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -51,50 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Trond Myklebust <trond.myklebust@hammerspace.com>
+From: NeilBrown <neilb@suse.de>
 
-[ Upstream commit 2fdb05dc0931250574f0cb0ebeb5ed8e20f4a889 ]
+[ Upstream commit 650703bc4ed3edf841e851c99ab8e7ba9e5262a3 ]
 
-Yang Erkun reports that when two threads are opening files at the same
-time, and are forced to abort before a reply is seen, then the call to
-nfs_release_seqid() in nfs4_opendata_free() can result in a
-use-after-free of the pointer to the defunct rpc task of the other
-thread.
-The fix is to ensure that if the RPC call is aborted before the call to
-nfs_wait_on_sequence() is complete, then we must call nfs_release_seqid()
-in nfs4_open_release() before the rpc_task is freed.
+Otherwise memory corruption can occur due to NFSv3 LOCALIO reads
+leaving garbage in res.replen:
+- nfs3_read_done() copies that into server->read_hdrsize; from there
+  nfs3_proc_read_setup() copies it to args.replen in new requests.
+- nfs3_xdr_enc_read3args() passes that to rpc_prepare_reply_pages()
+  which includes it in hdrsize for xdr_init_pages, so that rq_rcv_buf
+  contains a ridiculous len.
+- This is copied to rq_private_buf and xs_read_stream_request()
+  eventually passes the kvec to sock_recvmsg() which receives incoming
+  data into entirely the wrong place.
 
-Reported-by: Yang Erkun <yangerkun@huawei.com>
-Fixes: 24ac23ab88df ("NFSv4: Convert open() into an asynchronous RPC call")
-Reviewed-by: Yang Erkun <yangerkun@huawei.com>
+This is easily reproduced with NFSv3 LOCALIO that is servicing reads
+when it is made to pivot back to using normal RPC.  This switch back
+to using normal NFSv3 with RPC can occur for a few reasons but this
+issue was exposed with a test that stops and then restarts the NFSv3
+server while LOCALIO is performing heavy read IO.
+
+Fixes: 70ba381e1a43 ("nfs: add LOCALIO support")
+Reported-by: Mike Snitzer <snitzer@kernel.org>
+Signed-off-by: NeilBrown <neilb@suse.de>
+Co-developed-by: Mike Snitzer <snitzer@kernel.org>
+Signed-off-by: Mike Snitzer <snitzer@kernel.org>
 Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/nfs4proc.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ fs/nfs/localio.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/fs/nfs/nfs4proc.c b/fs/nfs/nfs4proc.c
-index 9d40319e063de..405f17e6e0b45 100644
---- a/fs/nfs/nfs4proc.c
-+++ b/fs/nfs/nfs4proc.c
-@@ -2603,12 +2603,14 @@ static void nfs4_open_release(void *calldata)
- 	struct nfs4_opendata *data = calldata;
- 	struct nfs4_state *state = NULL;
+diff --git a/fs/nfs/localio.c b/fs/nfs/localio.c
+index 8f0ce82a677e1..637528e6368ef 100644
+--- a/fs/nfs/localio.c
++++ b/fs/nfs/localio.c
+@@ -354,6 +354,12 @@ nfs_local_read_done(struct nfs_local_kiocb *iocb, long status)
  
-+	/* In case of error, no cleanup! */
-+	if (data->rpc_status != 0 || !data->rpc_done) {
-+		nfs_release_seqid(data->o_arg.seqid);
-+		goto out_free;
-+	}
- 	/* If this request hasn't been cancelled, do nothing */
- 	if (!data->cancelled)
- 		goto out_free;
--	/* In case of error, no cleanup! */
--	if (data->rpc_status != 0 || !data->rpc_done)
--		goto out_free;
- 	/* In case we need an open_confirm, no cleanup! */
- 	if (data->o_res.rflags & NFS4_OPEN_RESULT_CONFIRM)
- 		goto out_free;
+ 	nfs_local_pgio_done(hdr, status);
+ 
++	/*
++	 * Must clear replen otherwise NFSv3 data corruption will occur
++	 * if/when switching from LOCALIO back to using normal RPC.
++	 */
++	hdr->res.replen = 0;
++
+ 	if (hdr->res.count != hdr->args.count ||
+ 	    hdr->args.offset + hdr->res.count >= i_size_read(file_inode(filp)))
+ 		hdr->res.eof = true;
 -- 
 2.43.0
 
