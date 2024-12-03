@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB2581EE029;
-	Tue,  3 Dec 2024 14:38:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45FE91EE029;
+	Tue,  3 Dec 2024 14:38:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733236706; cv=none; b=nqQp9PF8bieH1SABEXl/kquKn0uHdSJYDPywXg5sQBNdHIEV4roCFMMuz0ksW6hHOH0UuzCRyi3+INowiF+OqchX/BFdjADd8ubv56y80Dvjc3VH/pSebsr7hY8ZhU8VD3kMOBOiQMIMyfsIZywZT7D6h3w+PuBY0SFdaTAJ92Q=
+	t=1733236710; cv=none; b=h0zsSXGotXvpvA35AwP4Ydi1tAWw2VC3plzR40PVG9ZuiZkUHHCZo4knRZgOUBJh7MrS2i69W82O6NkdVQ5yfR0qJsvjFdXNnOg3MPn73DS6qfsdVtyB8WVWeqx8cRr3WVQMGbg4Xjch91hG0orYh0J0cykpXuWQVgBOQpIOehg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733236706; c=relaxed/simple;
-	bh=FBKRD4fTI3R7RqgjPTMGImvFTBa1ciqqDJqomsKRZyU=;
+	s=arc-20240116; t=1733236710; c=relaxed/simple;
+	bh=aukljZkplC27LGEAvNcXeEQMR73QrRM/ycenkvkKSls=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YJ5l8InCVjtmzvyvfc9kuKURYV5DS1SFe6upsPEenk4B3Ae3P2w1yQOofNWGPQswhjzCczpkQreeLJRyMXIU2r3eJOMuRQyPcPo0eNwYmTyBeY/m1OLf29Hupk8J5b2z34cdB8CpZsy3mM9JwJIQnQ5+FAhgQF2Y+UBLZ9ZteRY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rrXFqiFS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jKLXh1fpuDkFNIoB34nrWeHBKxGnVJtALAPr+rIkl1QUyR10pS1ihewGNQaRGXGHkZn0A/CrEVFhTiwX57o6/17cre/yOqKZpfuOliLfVN63YBOMvBK9qajwupMuaU+V1Nbjc8quH1B0BJgOkxCrEBBZz1MVz6Q7pp/PLLVpytw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ukHn+rCl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rrXFqiFS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D703C4CECF;
-	Tue,  3 Dec 2024 14:38:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ukHn+rCl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA460C4CECF;
+	Tue,  3 Dec 2024 14:38:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733236706;
-	bh=FBKRD4fTI3R7RqgjPTMGImvFTBa1ciqqDJqomsKRZyU=;
+	s=korg; t=1733236710;
+	bh=aukljZkplC27LGEAvNcXeEQMR73QrRM/ycenkvkKSls=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rrXFqiFSKkgcRJy8htHP/MOutyd/xqCUgNx7yGLYJ22vYI6sAGMC9ShYxlnuvcui3
-	 XxvaEInr4ekNNXQiqe0Yv/1cZOJb9QA8WxKz2DPfkgrnWl8wqcyRI7mEUvn6xIG/e4
-	 IAnQXBOMkeTCdXTZfTxfh07PAUzMmRRjoRPrpxmk=
+	b=ukHn+rCl0OguRaHWXie+c/kDrdrREQRZcX0keW+0IDMiu7vIRjadJj3bBaGiuy86g
+	 bwptS7ipgQX5K9nP9hMXHAC+GADa+Q+v6bqYsq9tTuol82pfo33l3ZYwJadTgiA9wN
+	 25OS5fLNLNYRUu8GkJiy8Da3YnCXdkI4hYdJEBX4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeongjun Park <aha310510@gmail.com>,
+	Oliver Neukum <oneukum@suse.com>,
+	syzbot+422188bce66e76020e55@syzkaller.appspotmail.com,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 094/138] usb: using mutex lock and supporting O_NONBLOCK flag in iowarrior_read()
-Date: Tue,  3 Dec 2024 15:32:03 +0100
-Message-ID: <20241203141927.163843273@linuxfoundation.org>
+Subject: [PATCH 4.19 095/138] USB: chaoskey: fail open after removal
+Date: Tue,  3 Dec 2024 15:32:04 +0100
+Message-ID: <20241203141927.200234826@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203141923.524658091@linuxfoundation.org>
 References: <20241203141923.524658091@linuxfoundation.org>
@@ -50,127 +51,144 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeongjun Park <aha310510@gmail.com>
+From: Oliver Neukum <oneukum@suse.com>
 
-[ Upstream commit 44feafbaa66ec86232b123bb8437a6a262442025 ]
+[ Upstream commit 422dc0a4d12d0b80dd3aab3fe5943f665ba8f041 ]
 
-iowarrior_read() uses the iowarrior dev structure, but does not use any
-lock on the structure. This can cause various bugs including data-races,
-so it is more appropriate to use a mutex lock to safely protect the
-iowarrior dev structure. When using a mutex lock, you should split the
-branch to prevent blocking when the O_NONBLOCK flag is set.
+chaoskey_open() takes the lock only to increase the
+counter of openings. That means that the mutual exclusion
+with chaoskey_disconnect() cannot prevent an increase
+of the counter and chaoskey_open() returning a success.
 
-In addition, it is unnecessary to check for NULL on the iowarrior dev
-structure obtained by reading file->private_data. Therefore, it is
-better to remove the check.
+If that race is hit, chaoskey_disconnect() will happily
+free all resources associated with the device after
+it has dropped the lock, as it has read the counter
+as zero.
 
-Fixes: 946b960d13c1 ("USB: add driver for iowarrior devices.")
-Signed-off-by: Jeongjun Park <aha310510@gmail.com>
-Link: https://lore.kernel.org/r/20240919103403.3986-1-aha310510@gmail.com
+To prevent this race chaoskey_open() has to check
+the presence of the device under the lock.
+However, the current per device lock cannot be used,
+because it is a part of the data structure to be
+freed. Hence an additional global mutex is needed.
+The issue is as old as the driver.
+
+Signed-off-by: Oliver Neukum <oneukum@suse.com>
+Reported-by: syzbot+422188bce66e76020e55@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=422188bce66e76020e55
+Fixes: 66e3e591891da ("usb: Add driver for Altus Metrum ChaosKey device (v2)")
+Rule: add
+Link: https://lore.kernel.org/stable/20241002132201.552578-1-oneukum%40suse.com
+Link: https://lore.kernel.org/r/20241002132201.552578-1-oneukum@suse.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/misc/iowarrior.c | 46 ++++++++++++++++++++++++++++--------
- 1 file changed, 36 insertions(+), 10 deletions(-)
+ drivers/usb/misc/chaoskey.c | 35 ++++++++++++++++++++++++-----------
+ 1 file changed, 24 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/usb/misc/iowarrior.c b/drivers/usb/misc/iowarrior.c
-index 8b04d27059203..44a70e0334680 100644
---- a/drivers/usb/misc/iowarrior.c
-+++ b/drivers/usb/misc/iowarrior.c
-@@ -281,28 +281,45 @@ static ssize_t iowarrior_read(struct file *file, char __user *buffer,
- 	struct iowarrior *dev;
- 	int read_idx;
- 	int offset;
-+	int retval;
+diff --git a/drivers/usb/misc/chaoskey.c b/drivers/usb/misc/chaoskey.c
+index 87067c3d6109b..32fa7fd50c380 100644
+--- a/drivers/usb/misc/chaoskey.c
++++ b/drivers/usb/misc/chaoskey.c
+@@ -27,6 +27,8 @@ static struct usb_class_driver chaoskey_class;
+ static int chaoskey_rng_read(struct hwrng *rng, void *data,
+ 			     size_t max, bool wait);
  
- 	dev = file->private_data;
- 
-+	if (file->f_flags & O_NONBLOCK) {
-+		retval = mutex_trylock(&dev->mutex);
-+		if (!retval)
-+			return -EAGAIN;
-+	} else {
-+		retval = mutex_lock_interruptible(&dev->mutex);
-+		if (retval)
-+			return -ERESTARTSYS;
-+	}
++static DEFINE_MUTEX(chaoskey_list_lock);
 +
- 	/* verify that the device wasn't unplugged */
--	if (!dev || !dev->present)
--		return -ENODEV;
-+	if (!dev->present) {
-+		retval = -ENODEV;
-+		goto exit;
-+	}
+ #define usb_dbg(usb_if, format, arg...) \
+ 	dev_dbg(&(usb_if)->dev, format, ## arg)
  
- 	dev_dbg(&dev->interface->dev, "minor %d, count = %zd\n",
- 		dev->minor, count);
+@@ -231,6 +233,7 @@ static void chaoskey_disconnect(struct usb_interface *interface)
+ 	if (dev->hwrng_registered)
+ 		hwrng_unregister(&dev->hwrng);
  
- 	/* read count must be packet size (+ time stamp) */
- 	if ((count != dev->report_size)
--	    && (count != (dev->report_size + 1)))
--		return -EINVAL;
-+	    && (count != (dev->report_size + 1))) {
-+		retval = -EINVAL;
-+		goto exit;
-+	}
++	mutex_lock(&chaoskey_list_lock);
+ 	usb_deregister_dev(interface, &chaoskey_class);
  
- 	/* repeat until no buffer overrun in callback handler occur */
- 	do {
- 		atomic_set(&dev->overflow_flag, 0);
- 		if ((read_idx = read_index(dev)) == -1) {
- 			/* queue empty */
--			if (file->f_flags & O_NONBLOCK)
--				return -EAGAIN;
-+			if (file->f_flags & O_NONBLOCK) {
-+				retval = -EAGAIN;
-+				goto exit;
-+			}
- 			else {
- 				//next line will return when there is either new data, or the device is unplugged
- 				int r = wait_event_interruptible(dev->read_wait,
-@@ -313,28 +330,37 @@ static ssize_t iowarrior_read(struct file *file, char __user *buffer,
- 								  -1));
- 				if (r) {
- 					//we were interrupted by a signal
--					return -ERESTART;
-+					retval = -ERESTART;
-+					goto exit;
- 				}
- 				if (!dev->present) {
- 					//The device was unplugged
--					return -ENODEV;
-+					retval = -ENODEV;
-+					goto exit;
- 				}
- 				if (read_idx == -1) {
- 					// Can this happen ???
--					return 0;
-+					retval = 0;
-+					goto exit;
- 				}
- 			}
- 		}
+ 	usb_set_intfdata(interface, NULL);
+@@ -245,6 +248,7 @@ static void chaoskey_disconnect(struct usb_interface *interface)
+ 	} else
+ 		mutex_unlock(&dev->lock);
  
- 		offset = read_idx * (dev->report_size + 1);
- 		if (copy_to_user(buffer, dev->read_queue + offset, count)) {
--			return -EFAULT;
-+			retval = -EFAULT;
-+			goto exit;
- 		}
- 	} while (atomic_read(&dev->overflow_flag));
- 
- 	read_idx = ++read_idx == MAX_INTERRUPT_BUFFER ? 0 : read_idx;
- 	atomic_set(&dev->read_idx, read_idx);
-+	mutex_unlock(&dev->mutex);
- 	return count;
-+
-+exit:
-+	mutex_unlock(&dev->mutex);
-+	return retval;
++	mutex_unlock(&chaoskey_list_lock);
+ 	usb_dbg(interface, "disconnect done");
  }
  
- /*
+@@ -252,6 +256,7 @@ static int chaoskey_open(struct inode *inode, struct file *file)
+ {
+ 	struct chaoskey *dev;
+ 	struct usb_interface *interface;
++	int rv = 0;
+ 
+ 	/* get the interface from minor number and driver information */
+ 	interface = usb_find_interface(&chaoskey_driver, iminor(inode));
+@@ -267,18 +272,23 @@ static int chaoskey_open(struct inode *inode, struct file *file)
+ 	}
+ 
+ 	file->private_data = dev;
++	mutex_lock(&chaoskey_list_lock);
+ 	mutex_lock(&dev->lock);
+-	++dev->open;
++	if (dev->present)
++		++dev->open;
++	else
++		rv = -ENODEV;
+ 	mutex_unlock(&dev->lock);
++	mutex_unlock(&chaoskey_list_lock);
+ 
+-	usb_dbg(interface, "open success");
+-	return 0;
++	return rv;
+ }
+ 
+ static int chaoskey_release(struct inode *inode, struct file *file)
+ {
+ 	struct chaoskey *dev = file->private_data;
+ 	struct usb_interface *interface;
++	int rv = 0;
+ 
+ 	if (dev == NULL)
+ 		return -ENODEV;
+@@ -287,14 +297,15 @@ static int chaoskey_release(struct inode *inode, struct file *file)
+ 
+ 	usb_dbg(interface, "release");
+ 
++	mutex_lock(&chaoskey_list_lock);
+ 	mutex_lock(&dev->lock);
+ 
+ 	usb_dbg(interface, "open count at release is %d", dev->open);
+ 
+ 	if (dev->open <= 0) {
+ 		usb_dbg(interface, "invalid open count (%d)", dev->open);
+-		mutex_unlock(&dev->lock);
+-		return -ENODEV;
++		rv = -ENODEV;
++		goto bail;
+ 	}
+ 
+ 	--dev->open;
+@@ -303,13 +314,15 @@ static int chaoskey_release(struct inode *inode, struct file *file)
+ 		if (dev->open == 0) {
+ 			mutex_unlock(&dev->lock);
+ 			chaoskey_free(dev);
+-		} else
+-			mutex_unlock(&dev->lock);
+-	} else
+-		mutex_unlock(&dev->lock);
+-
++			goto destruction;
++		}
++	}
++bail:
++	mutex_unlock(&dev->lock);
++destruction:
++	mutex_lock(&chaoskey_list_lock);
+ 	usb_dbg(interface, "release success");
+-	return 0;
++	return rv;
+ }
+ 
+ static void chaos_read_callback(struct urb *urb)
 -- 
 2.43.0
 
