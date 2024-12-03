@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE9AB1F76BC;
-	Tue,  3 Dec 2024 15:45:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5841C1F8AC9;
+	Tue,  3 Dec 2024 15:45:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733240703; cv=none; b=H6tf30NWP/NL+iuVg6iP025WJcRoSRK3HOSzUgaoL/cLCKZmQ8nF6fKpxnszBvWmYNkx4+o3XqedczK1dHIBuHRqZZxdcxGhjKINKfwImaR39qHsBhjW3ruO38q/SvdKt25/gGkwWI8KsSFWgs2aOVySjxeZDtwC2qu7tyvWuok=
+	t=1733240706; cv=none; b=eAmPkIMxSLm1hkPIfuMUfCIHs1V76qazFK0i4xJmUCyaAqwMIlwahIi4CTL+Mg8T29JXiFvGFRLMPwGSMb23KHSc48NdyAprUMizDhM39NdDTg0RuGaUPk3lyNRigl3GRhc0vjZsgZRUsLEeAVvOiEj/jyZ22Jf5Qlvzgyp3h7k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733240703; c=relaxed/simple;
-	bh=3PZQ9IbYp5s8WjFRIwfWwnfpbD321GI4EgHqSXPQnhw=;
+	s=arc-20240116; t=1733240706; c=relaxed/simple;
+	bh=UwJLjNRnt+I6rsyNDMMVhVF3jy2Efyv3hpHlLUpLrmc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q8xFTORreUvvaJJ4lAOW/nEc+78E8FqWY2fzWzA6U0wlefIBmq9CAiXTknOzK3zrKEJBFL85UT0tdveFqG5qOg0TMhbQvS9yWrj8Oy4XZt18sMnnKoLBX+Kfpcx2qUcPPNUWKlyMCx/NR9JtihtBCe6qVfnswpqGW/nFIQR0RDI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bgOXFRO9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ssjQgzepyLB0HaR3mMP/2UNmxkK/Tp9jrbk+F8yO82o6ERvNYAY/n4yu9Ihkx4Oyir1AmEfSgILdv5T0NX/0Q+NUynWFKag2nA8R9YRxtVva2CkiWjrLuY9MzobKOHxo4yx+l25acKEgRNiVC1H8hGXstZBp3BvKZyerClxyD88=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SA3jUVVI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bgOXFRO9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F935C4CECF;
-	Tue,  3 Dec 2024 15:45:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SA3jUVVI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4A35C4CECF;
+	Tue,  3 Dec 2024 15:45:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733240702;
-	bh=3PZQ9IbYp5s8WjFRIwfWwnfpbD321GI4EgHqSXPQnhw=;
+	s=korg; t=1733240706;
+	bh=UwJLjNRnt+I6rsyNDMMVhVF3jy2Efyv3hpHlLUpLrmc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bgOXFRO9Qfm7ne2q4Dv3JlxrDO+FWluaQSOc/sHp2bb34/you29D7j2x0Jb61Y5ap
-	 XAVb8H5mMHVnE3gFXWRY9R1nADLshJsDxzZR1W1mCTjemZinkD1dNMouUaxIZWzS/R
-	 uRJDqtfCZiL/oSsOws12JbbhObYTOf5fTmZShrtc=
+	b=SA3jUVVIGyLTSjSE5fZGKfMw7mwDPxl+7m9u4b6AkHTmmSAkNZbGcvYar4u3wsXh5
+	 XGJDpc7qvRh5rhbczT/zatcL9ONSg5b2lVVnycUN+/fjLdYjEBMQvA8gfxHekI7fSf
+	 vgi+DE/2ltTUcD+A3p7m6BsPVzrrJ46oJ94cYvTI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Stein <alexander.stein@ew.tq-group.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Philipp Zabel <p.zabel@pengutronix.de>,
+	Shengjiu Wang <shengjiu.wang@nxp.com>,
+	Daniel Baluta <daniel.baluta@nxp.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 204/826] drm/imx: Add missing DRM_BRIDGE_CONNECTOR dependency
-Date: Tue,  3 Dec 2024 15:38:51 +0100
-Message-ID: <20241203144751.705871287@linuxfoundation.org>
+Subject: [PATCH 6.12 213/826] ASoC: fsl_micfil: fix regmap_write_bits usage
+Date: Tue,  3 Dec 2024 15:39:00 +0100
+Message-ID: <20241203144752.053113829@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -52,44 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Stein <alexander.stein@ew.tq-group.com>
+From: Shengjiu Wang <shengjiu.wang@nxp.com>
 
-[ Upstream commit f673055a46784ccea04465b9213e999f7bc5187e ]
+[ Upstream commit 06df673d20230afb0e383e39235a4fa8b9a62464 ]
 
-When drm/bridge-connector was moved to DRM_DISPLAY_HELPER not all
-users were updated. Add missing Kconfig selections.
+The last parameter 1 means BIT(0), which should be the
+correct BIT(X).
 
-Fixes: 9da7ec9b19d8 ("drm/bridge-connector: move to DRM_DISPLAY_HELPER module")
-Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Acked-by: Philipp Zabel <p.zabel@pengutronix.de>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240906063857.2223442-1-alexander.stein@ew.tq-group.com
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Fixes: 47a70e6fc9a8 ("ASoC: Add MICFIL SoC Digital Audio Interface driver.")
+Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
+Reviewed-by: Daniel Baluta <daniel.baluta@nxp.com>
+Link: https://patch.msgid.link/1727424031-19551-2-git-send-email-shengjiu.wang@nxp.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/imx/ipuv3/Kconfig | 2 ++
- 1 file changed, 2 insertions(+)
+ sound/soc/fsl/fsl_micfil.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/imx/ipuv3/Kconfig b/drivers/gpu/drm/imx/ipuv3/Kconfig
-index f083d313d1d3a..7a427551f4341 100644
---- a/drivers/gpu/drm/imx/ipuv3/Kconfig
-+++ b/drivers/gpu/drm/imx/ipuv3/Kconfig
-@@ -13,6 +13,7 @@ config DRM_IMX_PARALLEL_DISPLAY
- 	tristate "Support for parallel displays"
- 	depends on DRM_IMX
- 	select DRM_BRIDGE
-+	select DRM_BRIDGE_CONNECTOR
- 	select DRM_PANEL_BRIDGE
- 	select VIDEOMODE_HELPERS
+diff --git a/sound/soc/fsl/fsl_micfil.c b/sound/soc/fsl/fsl_micfil.c
+index 0c71a73476dfa..67c2d4cb0dea2 100644
+--- a/sound/soc/fsl/fsl_micfil.c
++++ b/sound/soc/fsl/fsl_micfil.c
+@@ -1061,7 +1061,7 @@ static irqreturn_t micfil_isr(int irq, void *devid)
+ 			regmap_write_bits(micfil->regmap,
+ 					  REG_MICFIL_STAT,
+ 					  MICFIL_STAT_CHXF(i),
+-					  1);
++					  MICFIL_STAT_CHXF(i));
+ 	}
  
-@@ -31,6 +32,7 @@ config DRM_IMX_LDB
- 	depends on COMMON_CLK
- 	select MFD_SYSCON
- 	select DRM_BRIDGE
-+	select DRM_BRIDGE_CONNECTOR
- 	select DRM_PANEL_BRIDGE
- 	help
- 	  Choose this to enable the internal LVDS Display Bridge (LDB)
+ 	for (i = 0; i < MICFIL_FIFO_NUM; i++) {
+@@ -1096,7 +1096,7 @@ static irqreturn_t micfil_err_isr(int irq, void *devid)
+ 	if (stat_reg & MICFIL_STAT_LOWFREQF) {
+ 		dev_dbg(&pdev->dev, "isr: ipg_clk_app is too low\n");
+ 		regmap_write_bits(micfil->regmap, REG_MICFIL_STAT,
+-				  MICFIL_STAT_LOWFREQF, 1);
++				  MICFIL_STAT_LOWFREQF, MICFIL_STAT_LOWFREQF);
+ 	}
+ 
+ 	return IRQ_HANDLED;
 -- 
 2.43.0
 
