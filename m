@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D2961F7071;
-	Tue,  3 Dec 2024 15:38:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00CFE1F75BB;
+	Tue,  3 Dec 2024 15:38:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733240308; cv=none; b=WpAXbZ/7SMoynRyKd7nzYayNphBLB+bYVhfeJ85PK43dBiLIxuBGyYruV8FAXi6DwAqP0nQIbkS4bh9v1xm+GBG7fIO2tYslOu/SWe1v+wiJ9TiRe4/Kq74qTs/G+RWt0/iXcMyktnkY8abWeRWqNru0GelFT8Jx6aH57GRNnOc=
+	t=1733240310; cv=none; b=utHMxXMhKWoP5v77po+BT4y3xtfJtijGpEUmHHwO7DcoUY3+hSaRODAlbcrLdDlPfZQeS5xoc0X/IktVtvRpzqY1I7QIE+hUhyTosyjsjKmNTpzBwB8g2Gx6pINiqUAEV4HHktc8DRQT2cfrtdosQNfDiIOMU7qyDuSR2OmDp0c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733240308; c=relaxed/simple;
-	bh=kCykv8wtRFKguBE5ap5sa8ZZCg+JhUmlXEPCGmw+lCs=;
+	s=arc-20240116; t=1733240310; c=relaxed/simple;
+	bh=s1YNYW/fLp+knmiI8YEkokoc4ovIRFXtzneL9n86CBk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r045mokljALxdm6K0uZquMntOL61pR2bAsQB1mJU7cev5caij72xVKD/G9OIy7h+rRTVdAmLze7tLejvyPb9mnynrSxFW1WjIgG8Qwg9e//1n9oCdXuzO9iEv6ptn/kmd1dJ3tEqKeNXkWAp154BXdu7jFxAqGV5ZfomQX6/BMg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k/SIf+AB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uAm6J/tR6awIZRjBVcavjgeb6eQX0z0uaF2KEALpd0StXygfmeh0nMmH6dbxCLgzlZyvF7yv2oNH+TAmg8W+ftc1nQ5ASXD5uDlJtZaAEwBkJDDkEa42NIrQMIxh7F+X97QpwcpG5jt75zKkH12YJlAO+cIrteBiCRFU4KGfpM4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OZLh4HCa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k/SIf+AB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BDB7C4CECF;
-	Tue,  3 Dec 2024 15:38:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OZLh4HCa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C20DC4CECF;
+	Tue,  3 Dec 2024 15:38:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733240307;
-	bh=kCykv8wtRFKguBE5ap5sa8ZZCg+JhUmlXEPCGmw+lCs=;
+	s=korg; t=1733240309;
+	bh=s1YNYW/fLp+knmiI8YEkokoc4ovIRFXtzneL9n86CBk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k/SIf+AB92ucfgGspUR7G8ud3Q5MsyxtJPc19xHcQjJINELBiyXEezV2eK4DffSFm
-	 gtiPV2kvoxO+Ady83FMgDbJOS8JybQvpcsOCf1iyw36NO/7ic3wRTKd6syMEq5eEWs
-	 t9KfZwdiCTql9d8np8izKEqa5/JS3A1jec6RmFt0=
+	b=OZLh4HCawyVbWO64eA4hA5agAN95BGlt3wLZQVa7QAv28xEJpEmkbXH2DbX1j+/cv
+	 skauKf8yopa3gnAQgJZHGhjeIw6m3NfeQ5fHWHK0Ves0pPWQ++64DjaJ+v7KibJYaV
+	 Y+nhxAtJ4qmv02TFRM6eRhYRZTJ586euN357rdEM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Thomas Gleixner <tglx@linutronix.de>,
+	kernel test robot <lkp@intel.com>,
+	Eder Zulian <ezulian@redhat.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Boqun Feng <boqun.feng@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 094/826] locking/rt: Add sparse annotation PREEMPT_RTs sleeping locks.
-Date: Tue,  3 Dec 2024 15:37:01 +0100
-Message-ID: <20241203144747.398507244@linuxfoundation.org>
+Subject: [PATCH 6.12 095/826] rust: helpers: Avoid raw_spin_lock initialization for PREEMPT_RT
+Date: Tue,  3 Dec 2024 15:37:02 +0100
+Message-ID: <20241203144747.437570172@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -51,69 +53,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+From: Eder Zulian <ezulian@redhat.com>
 
-[ Upstream commit 52e0874fc16bd26e9ea1871e30ffb2c6dff187cf ]
+[ Upstream commit 5c2e7736e20d9b348a44cafbfa639fe2653fbc34 ]
 
-The sleeping locks on PREEMPT_RT (rt_spin_lock() and friends) lack
-sparse annotation. Therefore a missing spin_unlock() won't be spotted by
-sparse in a PREEMPT_RT build while it is noticed on a !PREEMPT_RT build.
+When PREEMPT_RT=y, spin locks are mapped to rt_mutex types, so using
+spinlock_check() + __raw_spin_lock_init() to initialize spin locks is
+incorrect, and would cause build errors.
 
-Add the __acquires/__releases macros to the lock/ unlock functions. The
-trylock functions already use the __cond_lock() wrapper.
+Introduce __spin_lock_init() to initialize a spin lock with lockdep
+rquired information for PREEMPT_RT builds, and use it in the Rust
+helper.
 
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/all/20240812104200.2239232-2-bigeasy@linutronix.de
-Stable-dep-of: 5c2e7736e20d ("rust: helpers: Avoid raw_spin_lock initialization for PREEMPT_RT")
+Fixes: d2d6422f8bd1 ("x86: Allow to enable PREEMPT_RT.")
+Closes: https://lore.kernel.org/oe-kbuild-all/202409251238.vetlgXE9-lkp@intel.com/
+Reported-by: kernel test robot <lkp@intel.com>
+Signed-off-by: Eder Zulian <ezulian@redhat.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Boqun Feng <boqun.feng@gmail.com>
+Tested-by: Boqun Feng <boqun.feng@gmail.com>
+Link: https://lore.kernel.org/r/20241107163223.2092690-2-ezulian@redhat.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/rwlock_rt.h   | 10 +++++-----
- include/linux/spinlock_rt.h |  8 ++++----
- 2 files changed, 9 insertions(+), 9 deletions(-)
+ include/linux/spinlock_rt.h | 15 +++++++--------
+ rust/helpers/spinlock.c     |  8 ++++++--
+ 2 files changed, 13 insertions(+), 10 deletions(-)
 
-diff --git a/include/linux/rwlock_rt.h b/include/linux/rwlock_rt.h
-index 8544ff05e594d..7d81fc6918ee8 100644
---- a/include/linux/rwlock_rt.h
-+++ b/include/linux/rwlock_rt.h
-@@ -24,13 +24,13 @@ do {							\
- 	__rt_rwlock_init(rwl, #rwl, &__key);		\
- } while (0)
- 
--extern void rt_read_lock(rwlock_t *rwlock);
-+extern void rt_read_lock(rwlock_t *rwlock)	__acquires(rwlock);
- extern int rt_read_trylock(rwlock_t *rwlock);
--extern void rt_read_unlock(rwlock_t *rwlock);
--extern void rt_write_lock(rwlock_t *rwlock);
--extern void rt_write_lock_nested(rwlock_t *rwlock, int subclass);
-+extern void rt_read_unlock(rwlock_t *rwlock)	__releases(rwlock);
-+extern void rt_write_lock(rwlock_t *rwlock)	__acquires(rwlock);
-+extern void rt_write_lock_nested(rwlock_t *rwlock, int subclass)	__acquires(rwlock);
- extern int rt_write_trylock(rwlock_t *rwlock);
--extern void rt_write_unlock(rwlock_t *rwlock);
-+extern void rt_write_unlock(rwlock_t *rwlock)	__releases(rwlock);
- 
- static __always_inline void read_lock(rwlock_t *rwlock)
- {
 diff --git a/include/linux/spinlock_rt.h b/include/linux/spinlock_rt.h
-index 61c49b16f69ab..babc3e0287791 100644
+index babc3e0287791..6175cd682ca0d 100644
 --- a/include/linux/spinlock_rt.h
 +++ b/include/linux/spinlock_rt.h
-@@ -32,10 +32,10 @@ do {								\
- 	__rt_spin_lock_init(slock, #slock, &__key, true);	\
+@@ -16,22 +16,21 @@ static inline void __rt_spin_lock_init(spinlock_t *lock, const char *name,
+ }
+ #endif
+ 
+-#define spin_lock_init(slock)					\
++#define __spin_lock_init(slock, name, key, percpu)		\
+ do {								\
+-	static struct lock_class_key __key;			\
+-								\
+ 	rt_mutex_base_init(&(slock)->lock);			\
+-	__rt_spin_lock_init(slock, #slock, &__key, false);	\
++	__rt_spin_lock_init(slock, name, key, percpu);		\
  } while (0)
  
--extern void rt_spin_lock(spinlock_t *lock);
--extern void rt_spin_lock_nested(spinlock_t *lock, int subclass);
--extern void rt_spin_lock_nest_lock(spinlock_t *lock, struct lockdep_map *nest_lock);
--extern void rt_spin_unlock(spinlock_t *lock);
-+extern void rt_spin_lock(spinlock_t *lock) __acquires(lock);
-+extern void rt_spin_lock_nested(spinlock_t *lock, int subclass)	__acquires(lock);
-+extern void rt_spin_lock_nest_lock(spinlock_t *lock, struct lockdep_map *nest_lock) __acquires(lock);
-+extern void rt_spin_unlock(spinlock_t *lock)	__releases(lock);
- extern void rt_spin_lock_unlock(spinlock_t *lock);
- extern int rt_spin_trylock_bh(spinlock_t *lock);
- extern int rt_spin_trylock(spinlock_t *lock);
+-#define local_spin_lock_init(slock)				\
++#define _spin_lock_init(slock, percpu)				\
+ do {								\
+ 	static struct lock_class_key __key;			\
+-								\
+-	rt_mutex_base_init(&(slock)->lock);			\
+-	__rt_spin_lock_init(slock, #slock, &__key, true);	\
++	__spin_lock_init(slock, #slock, &__key, percpu);	\
+ } while (0)
+ 
++#define spin_lock_init(slock)		_spin_lock_init(slock, false)
++#define local_spin_lock_init(slock)	_spin_lock_init(slock, true)
++
+ extern void rt_spin_lock(spinlock_t *lock) __acquires(lock);
+ extern void rt_spin_lock_nested(spinlock_t *lock, int subclass)	__acquires(lock);
+ extern void rt_spin_lock_nest_lock(spinlock_t *lock, struct lockdep_map *nest_lock) __acquires(lock);
+diff --git a/rust/helpers/spinlock.c b/rust/helpers/spinlock.c
+index acc1376b833c7..92f7fc4184253 100644
+--- a/rust/helpers/spinlock.c
++++ b/rust/helpers/spinlock.c
+@@ -7,10 +7,14 @@ void rust_helper___spin_lock_init(spinlock_t *lock, const char *name,
+ 				  struct lock_class_key *key)
+ {
+ #ifdef CONFIG_DEBUG_SPINLOCK
++# if defined(CONFIG_PREEMPT_RT)
++	__spin_lock_init(lock, name, key, false);
++# else /*!CONFIG_PREEMPT_RT */
+ 	__raw_spin_lock_init(spinlock_check(lock), name, key, LD_WAIT_CONFIG);
+-#else
++# endif /* CONFIG_PREEMPT_RT */
++#else /* !CONFIG_DEBUG_SPINLOCK */
+ 	spin_lock_init(lock);
+-#endif
++#endif /* CONFIG_DEBUG_SPINLOCK */
+ }
+ 
+ void rust_helper_spin_lock(spinlock_t *lock)
 -- 
 2.43.0
 
