@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4413D1F4711;
-	Tue,  3 Dec 2024 14:36:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 772B61F4704;
+	Tue,  3 Dec 2024 14:36:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733236612; cv=none; b=rFPCgfVUaJluKk1quUgEOWmnZoT00n3pY1eeG5zp9CPhBrhUKe4318zAXLUxdgMefj93wXYHu6VWACCGvbBGv994bMIVUrYuUUK2mm1w1mX6wL3BdARMA000zPB+legw7Z3ODqysqKHScxcmF8itx7ZiatMJShuwk8LitX1QEPE=
+	t=1733236615; cv=none; b=rbaCg59QKzLgc0iz5CktEdo/cJG4g3WWvkCooec285IBBd2sdWsD2Y5Rgci7tBWhRRBkjIhcW+YS4jSIyGo8Tb8jALWUuiWlNfImgA2ks1J8oWlKVaXlsUx9YDP4b1a6ZgLFHIVw/S2aHjIsLltFIMk0hhUFLPQwekkItVVgk1I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733236612; c=relaxed/simple;
-	bh=0qxcbxSd0yd9XYvPtKKm7t2vaHeJl8KANkIqEOzsHIc=;
+	s=arc-20240116; t=1733236615; c=relaxed/simple;
+	bh=gELBxtVtXdOBlYYehwNiTsat4Kdg8UaxNwJQjaVj9iY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IKZumwADUqoF4I5TfFVScmyLBpHGub3SaZN4WeaBzzLt81Rz+huTEik4/YPQiBAB4oI8a6qyJ/tN1ObJ3eZJwxmpLOjWyPEyN/rJu8SEtFoMOJC9cMjMBeGvKVqcATRoZkSMwEpspnVeUiaixm5PMXpA9+cwtUqMi5ccpP+FYwo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jmXgq9Nf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g0tQr5YQFB6Jp9aRj2knFUw72FiDjn5nybz++Yfc9p+DnCqZafupbXrsTZIcRIx2NgoeXlXf2YsxZBA6RtU/+YIdWw8Bm7gj78r2UD9EM5YjIIQefVx3lm0RfNejgOjptNr6cxZZhigvb0clWPCOICA+HyK1u519/Ht6dxs4FNE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mOA5/9GR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jmXgq9Nf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FDF5C4CECF;
-	Tue,  3 Dec 2024 14:36:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mOA5/9GR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D55A9C4CECF;
+	Tue,  3 Dec 2024 14:36:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733236611;
-	bh=0qxcbxSd0yd9XYvPtKKm7t2vaHeJl8KANkIqEOzsHIc=;
+	s=korg; t=1733236615;
+	bh=gELBxtVtXdOBlYYehwNiTsat4Kdg8UaxNwJQjaVj9iY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jmXgq9NfAd1YISfIsnc2skcowYjJjlNzE0wGfvKEATGzsIn/NwCG5fXQFr7wCjCz/
-	 SEL3gSLU4fvroV71D85LUiQDFcQ8arIQxYYca+QBhDCV0Kv68liWqj6GpujqlRKcvs
-	 e0IAcZN5T9sQ2iOk0Ego74eiBtpQoQCzVwD8HcqY=
+	b=mOA5/9GRrqUJ7a287k5uIofz2ZYn6lIANKg00AFoTCGIHgtJ60vm6DYBMpWDgrbdo
+	 XAQzvV5AFNJ2gRcJPg5xygg+pCRX2U6KMzvlFRLJ1UegDPkSfsUJqcuE+NJC6+QFU2
+	 dWLhgLFmYDFndsB7OJkw9EZ03QwUL1V0r/oo0/bI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kashyap Desai <kashyap.desai@broadcom.com>,
-	Selvin Xavier <selvin.xavier@broadcom.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Michael Hennerich <michael.hennerich@analog.com>,
+	Lars-Peter Clausen <lars@metafoo.de>,
+	Alexandru Ardelean <alexandru.ardelean@analog.com>,
+	Rob Herring <robh@kernel.org>,
+	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 063/138] RDMA/bnxt_re: Check cqe flags to know imm_data vs inv_irkey
-Date: Tue,  3 Dec 2024 15:31:32 +0100
-Message-ID: <20241203141925.970229193@linuxfoundation.org>
+Subject: [PATCH 4.19 072/138] dt-bindings: clock: adi,axi-clkgen: convert old binding to yaml format
+Date: Tue,  3 Dec 2024 15:31:41 +0100
+Message-ID: <20241203141926.317754506@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203141923.524658091@linuxfoundation.org>
 References: <20241203141923.524658091@linuxfoundation.org>
@@ -52,78 +54,124 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kashyap Desai <kashyap.desai@broadcom.com>
+From: Alexandru Ardelean <alexandru.ardelean@analog.com>
 
-[ Upstream commit 808ca6de989c598bc5af1ae0ad971a66077efac0 ]
+[ Upstream commit bd91abb218e0ac4a7402d6c25d383e2a706bb511 ]
 
-Invalidate rkey is cpu endian and immediate data is in big endian format.
-Both immediate data and invalidate the remote key returned by
-HW is in little endian format.
+This change converts the old binding for the AXI clkgen driver to a yaml
+format.
 
-While handling the commit in fixes tag, the difference between
-immediate data and invalidate rkey endianness was not considered.
+As maintainers, added:
+ - Lars-Peter Clausen <lars@metafoo.de> - as original author of driver &
+   binding
+ - Michael Hennerich <michael.hennerich@analog.com> - as supporter of
+   Analog Devices drivers
 
-Without changes of this patch, Kernel ULP was failing while processing
-inv_rkey.
-
-dmesg log snippet -
-nvme nvme0: Bogus remote invalidation for rkey 0x2000019Fix in this patch
-
-Do endianness conversion based on completion queue entry flag.
-Also, the HW completions are already converted to host endianness in
-bnxt_qplib_cq_process_res_rc and bnxt_qplib_cq_process_res_ud and there
-is no need to convert it again in bnxt_re_poll_cq. Modified the union to
-hold the correct data type.
-
-Fixes: 95b087f87b78 ("bnxt_re: Fix imm_data endianness")
-Signed-off-by: Kashyap Desai <kashyap.desai@broadcom.com>
-Signed-off-by: Selvin Xavier <selvin.xavier@broadcom.com>
-Link: https://patch.msgid.link/1730110014-20755-1-git-send-email-selvin.xavier@broadcom.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Acked-by: Michael Hennerich <michael.hennerich@analog.com>
+Acked-by: Lars-Peter Clausen <lars@metafoo.de>
+Signed-off-by: Alexandru Ardelean <alexandru.ardelean@analog.com>
+Link: https://lore.kernel.org/r/20201013143421.84188-1-alexandru.ardelean@analog.com
+Reviewed-by: Rob Herring <robh@kernel.org>
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Stable-dep-of: 47f3f5a82a31 ("dt-bindings: clock: axi-clkgen: include AXI clk")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/bnxt_re/ib_verbs.c | 7 +++++--
- drivers/infiniband/hw/bnxt_re/qplib_fp.h | 2 +-
- 2 files changed, 6 insertions(+), 3 deletions(-)
+ .../bindings/clock/adi,axi-clkgen.yaml        | 53 +++++++++++++++++++
+ .../devicetree/bindings/clock/axi-clkgen.txt  | 25 ---------
+ 2 files changed, 53 insertions(+), 25 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/clock/adi,axi-clkgen.yaml
+ delete mode 100644 Documentation/devicetree/bindings/clock/axi-clkgen.txt
 
-diff --git a/drivers/infiniband/hw/bnxt_re/ib_verbs.c b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
-index e2c93a50fe762..9b6ebf6356983 100644
---- a/drivers/infiniband/hw/bnxt_re/ib_verbs.c
-+++ b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
-@@ -3110,7 +3110,7 @@ static void bnxt_re_process_res_shadow_qp_wc(struct bnxt_re_qp *qp,
- 	wc->byte_len = orig_cqe->length;
- 	wc->qp = &qp1_qp->ib_qp;
- 
--	wc->ex.imm_data = cpu_to_be32(le32_to_cpu(orig_cqe->immdata));
-+	wc->ex.imm_data = cpu_to_be32(orig_cqe->immdata);
- 	wc->src_qp = orig_cqe->src_qp;
- 	memcpy(wc->smac, orig_cqe->smac, ETH_ALEN);
- 	if (bnxt_re_is_vlan_pkt(orig_cqe, &vlan_id, &sl)) {
-@@ -3231,7 +3231,10 @@ int bnxt_re_poll_cq(struct ib_cq *ib_cq, int num_entries, struct ib_wc *wc)
- 				continue;
- 			}
- 			wc->qp = &qp->ib_qp;
--			wc->ex.imm_data = cpu_to_be32(le32_to_cpu(cqe->immdata));
-+			if (cqe->flags & CQ_RES_RC_FLAGS_IMM)
-+				wc->ex.imm_data = cpu_to_be32(cqe->immdata);
-+			else
-+				wc->ex.invalidate_rkey = cqe->invrkey;
- 			wc->src_qp = cqe->src_qp;
- 			memcpy(wc->smac, cqe->smac, ETH_ALEN);
- 			wc->port_num = 1;
-diff --git a/drivers/infiniband/hw/bnxt_re/qplib_fp.h b/drivers/infiniband/hw/bnxt_re/qplib_fp.h
-index aed0c53d84be2..6c0129231c07b 100644
---- a/drivers/infiniband/hw/bnxt_re/qplib_fp.h
-+++ b/drivers/infiniband/hw/bnxt_re/qplib_fp.h
-@@ -349,7 +349,7 @@ struct bnxt_qplib_cqe {
- 	u32				length;
- 	u64				wr_id;
- 	union {
--		__le32			immdata;
-+		u32			immdata;
- 		u32			invrkey;
- 	};
- 	u64				qp_handle;
+diff --git a/Documentation/devicetree/bindings/clock/adi,axi-clkgen.yaml b/Documentation/devicetree/bindings/clock/adi,axi-clkgen.yaml
+new file mode 100644
+index 0000000000000..0d06387184d68
+--- /dev/null
++++ b/Documentation/devicetree/bindings/clock/adi,axi-clkgen.yaml
+@@ -0,0 +1,53 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/clock/adi,axi-clkgen.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Binding for Analog Devices AXI clkgen pcore clock generator
++
++maintainers:
++  - Lars-Peter Clausen <lars@metafoo.de>
++  - Michael Hennerich <michael.hennerich@analog.com>
++
++description: |
++  The axi_clkgen IP core is a software programmable clock generator,
++  that can be synthesized on various FPGA platforms.
++
++  Link: https://wiki.analog.com/resources/fpga/docs/axi_clkgen
++
++properties:
++  compatible:
++    enum:
++      - adi,axi-clkgen-2.00.a
++
++  clocks:
++    description:
++      Specifies the reference clock(s) from which the output frequency is
++      derived. This must either reference one clock if only the first clock
++      input is connected or two if both clock inputs are connected.
++    minItems: 1
++    maxItems: 2
++
++  '#clock-cells':
++    const: 0
++
++  reg:
++    maxItems: 1
++
++required:
++  - compatible
++  - reg
++  - clocks
++  - '#clock-cells'
++
++additionalProperties: false
++
++examples:
++  - |
++    clock-controller@ff000000 {
++      compatible = "adi,axi-clkgen-2.00.a";
++      #clock-cells = <0>;
++      reg = <0xff000000 0x1000>;
++      clocks = <&osc 1>;
++    };
+diff --git a/Documentation/devicetree/bindings/clock/axi-clkgen.txt b/Documentation/devicetree/bindings/clock/axi-clkgen.txt
+deleted file mode 100644
+index aca94fe9416f0..0000000000000
+--- a/Documentation/devicetree/bindings/clock/axi-clkgen.txt
++++ /dev/null
+@@ -1,25 +0,0 @@
+-Binding for the axi-clkgen clock generator
+-
+-This binding uses the common clock binding[1].
+-
+-[1] Documentation/devicetree/bindings/clock/clock-bindings.txt
+-
+-Required properties:
+-- compatible : shall be "adi,axi-clkgen-1.00.a" or "adi,axi-clkgen-2.00.a".
+-- #clock-cells : from common clock binding; Should always be set to 0.
+-- reg : Address and length of the axi-clkgen register set.
+-- clocks : Phandle and clock specifier for the parent clock(s). This must
+-	either reference one clock if only the first clock input is connected or two
+-	if both clock inputs are connected. For the later case the clock connected
+-	to the first input must be specified first.
+-
+-Optional properties:
+-- clock-output-names : From common clock binding.
+-
+-Example:
+-	clock@ff000000 {
+-		compatible = "adi,axi-clkgen";
+-		#clock-cells = <0>;
+-		reg = <0xff000000 0x1000>;
+-		clocks = <&osc 1>;
+-	};
 -- 
 2.43.0
 
