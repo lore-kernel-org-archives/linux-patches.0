@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D382E1F76AD;
-	Tue,  3 Dec 2024 15:50:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AAF21F8902;
+	Tue,  3 Dec 2024 15:50:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733241011; cv=none; b=CXUkxhkkp3RWpt1879K59jXyCf/Ic0Bh1WWj9ihc4/Plj61yzTLhiiwOueXo0/qD5VdLpZ36OL7DZ54NfNGCB/3Bhi3eHApfw3EyBxMhFPdkJkqchUxzTo2M78/xZFokbQ0+qc9QCINW/vdwfG2oImUu4LFdwLp0vqxDpmIRlCA=
+	t=1733241020; cv=none; b=RrER80PvyoENivMgmNb9tn+fwSXMtRCBs4KOUcmDcwrQtlantL4ssmv8zanD/hBKMDl41OaDVaUvaoPnGB0Gd7JTooPc3TObQnVa6qiByADMkZieSNfEMJsx1oEtKKjjG+n6mGnhZN4B90hHJzRMdHHDTyBxwVs/9p8fdB7W52A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733241011; c=relaxed/simple;
-	bh=iMeVggwM8z+Oorzea8Xu3URj7DDLR43OE3Y3D+0dq94=;
+	s=arc-20240116; t=1733241020; c=relaxed/simple;
+	bh=WuTuaKkpfFtqTnjkL1aYjZKvasMBfDNp6M78DyWlArI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eiZVvNUvFwsdu2V+2PLjEV3VjSyyyagn5E/LSbNgYhvUE65Y6lM5dfw4iV1jUN8qH52HSGXPtfN2RM3z6lcgTnDR/faImEHk9nLYBZP3X9adUmL8UFr2zImUj4zvkN0pgYQZLlBEyrRuDddBtBdVrvsysHdcos828t8ewbaCv2c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mP0Yvj8b; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WSPYHQEeqmnOquRhFBA0GrkjXY9ht6CeOnxrT+Go8WfxCPzSff+HZsdyj81mCaQ1HhVyBqAKQo0MGB4x2DAjSwiBZqOPORYpZCTjfcfsONdi43qSksD/EcbNe2syzbTuKiZi2kN4q9dTzmO4qEBgz1olmXH5NIQ6qmrWYmrtFvY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DPYfvpNy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mP0Yvj8b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 425E6C4CED6;
-	Tue,  3 Dec 2024 15:50:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DPYfvpNy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC400C4CECF;
+	Tue,  3 Dec 2024 15:50:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733241011;
-	bh=iMeVggwM8z+Oorzea8Xu3URj7DDLR43OE3Y3D+0dq94=;
+	s=korg; t=1733241020;
+	bh=WuTuaKkpfFtqTnjkL1aYjZKvasMBfDNp6M78DyWlArI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mP0Yvj8bi33MgDF6UEDT251SRbmlXuU9PL0C04FyZUYxKOdZkpdhlZX5q/Zl3Vr+4
-	 J4Lg03vakoni6mK7m3TNXLsbW7+R1ku378HadlmkwIQhezt7pmRY123Evnc3MvaVEs
-	 cwt9Qzlnq9ovf1UyrVdkdE06ioxmPdP6oRLOn2v8=
+	b=DPYfvpNyXXttx4443ol7UNjVI96DYw3MrPZTOzbrNDTqkJNdEE6wviLEWZcXcaC0E
+	 P7W9/SNMsx04X/IPk5AifyPNHdp/tkT9kuIhMivynrxD8jCw1+N/2LpWELXHRJZMS1
+	 j5MhYjbzYbCelJZigKzuBd3qPlH6k7HO3Bd+Ggyw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Po-Hao Huang <phhuang@realtek.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 300/826] netfilter: nf_tables: must hold rcu read lock while iterating object type list
-Date: Tue,  3 Dec 2024 15:40:27 +0100
-Message-ID: <20241203144755.467782370@linuxfoundation.org>
+Subject: [PATCH 6.12 274/826] wifi: rtw89: Fix TX fail with A2DP after scanning
+Date: Tue,  3 Dec 2024 15:40:01 +0100
+Message-ID: <20241203144754.465448837@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -51,72 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Po-Hao Huang <phhuang@realtek.com>
 
-[ Upstream commit cddc04275f95ca3b18da5c0fb111705ac173af89 ]
+[ Upstream commit f16c40acd31901ad0ba2554b60e0e2b0c7b59cde ]
 
-Update of stateful object triggers:
-WARNING: suspicious RCU usage
-net/netfilter/nf_tables_api.c:7759 RCU-list traversed in non-reader section!!
+There might be some racing between BT and WiFi after scan. Since
+one of the TX related register will be modified by both FW and
+rtw89_set_channel() in driver, which could cause Tx fail. Reorder
+the calling sequence to only notify coexistence mechanism after
+rtw89_set_channel() is called, so that there are no concurrent
+operations.
 
-other info that might help us debug this:
-rcu_scheduler_active = 2, debug_locks = 1
-1 lock held by nft/3060:
- #0: ffff88810f0578c8 (&nft_net->commit_mutex){+.+.}-{4:4}, [..]
-
-... but this list is not protected by the transaction mutex but the
-nfnl nftables subsystem mutex.
-
-Switch to nft_obj_type_get which will acquire rcu read lock,
-bump refcount, and returns the result.
-
-v3: Dan Carpenter points out nft_obj_type_get returns error pointer, not
-NULL, on error.
-
-Fixes: dad3bdeef45f ("netfilter: nf_tables: fix memory leak during stateful obj update").
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: 5f499ce69b8d ("wifi: rtw89: pause/proceed MCC for ROC and HW scan")
+Signed-off-by: Po-Hao Huang <phhuang@realtek.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20241021063219.22613-1-pkshih@realtek.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_tables_api.c | 13 ++++++-------
- 1 file changed, 6 insertions(+), 7 deletions(-)
+ drivers/net/wireless/realtek/rtw89/fw.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index 895e23d0dc36d..4a137afaf0b87 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -7805,9 +7805,7 @@ static int nf_tables_updobj(const struct nft_ctx *ctx,
- 	struct nft_trans *trans;
- 	int err = -ENOMEM;
+diff --git a/drivers/net/wireless/realtek/rtw89/fw.c b/drivers/net/wireless/realtek/rtw89/fw.c
+index 37f931e887917..13a7c39ceb6f5 100644
+--- a/drivers/net/wireless/realtek/rtw89/fw.c
++++ b/drivers/net/wireless/realtek/rtw89/fw.c
+@@ -6648,6 +6648,8 @@ void rtw89_hw_scan_complete(struct rtw89_dev *rtwdev,
+ 	if (!rtwvif_link)
+ 		return;
  
--	if (!try_module_get(type->owner))
--		return -ENOENT;
--
-+	/* caller must have obtained type->owner reference. */
- 	trans = nft_trans_alloc(ctx, NFT_MSG_NEWOBJ,
- 				sizeof(struct nft_trans_obj));
- 	if (!trans)
-@@ -7875,15 +7873,16 @@ static int nf_tables_newobj(struct sk_buff *skb, const struct nfnl_info *info,
- 		if (info->nlh->nlmsg_flags & NLM_F_REPLACE)
- 			return -EOPNOTSUPP;
- 
--		type = __nft_obj_type_get(objtype, family);
--		if (WARN_ON_ONCE(!type))
--			return -ENOENT;
--
- 		if (!obj->ops->update)
- 			return 0;
- 
-+		type = nft_obj_type_get(net, objtype, family);
-+		if (WARN_ON_ONCE(IS_ERR(type)))
-+			return PTR_ERR(type);
++	rtw89_chanctx_proceed(rtwdev);
 +
- 		nft_ctx_init(&ctx, net, skb, info->nlh, family, table, NULL, nla);
+ 	rtwvif = rtwvif_link->rtwvif;
  
-+		/* type->owner reference is put when transaction object is released. */
- 		return nf_tables_updobj(&ctx, type, nla[NFTA_OBJ_DATA], obj);
- 	}
+ 	rtw89_write32_mask(rtwdev,
+@@ -6667,8 +6669,6 @@ void rtw89_hw_scan_complete(struct rtw89_dev *rtwdev,
+ 	scan_info->last_chan_idx = 0;
+ 	scan_info->scanning_vif = NULL;
+ 	scan_info->abort = false;
+-
+-	rtw89_chanctx_proceed(rtwdev);
+ }
  
+ void rtw89_hw_scan_abort(struct rtw89_dev *rtwdev,
 -- 
 2.43.0
 
