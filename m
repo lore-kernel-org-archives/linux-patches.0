@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A0242500DA;
-	Tue,  3 Dec 2024 15:30:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06D892500DA;
+	Tue,  3 Dec 2024 15:30:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733239841; cv=none; b=TLGrK/aHGx/h1SzjZ+xWvl9ctmuYFftEj/6XPRaruAKX64S6rltObqfAKQwuUOVWlchOtYyEMnsTePvMENbf3XHQBindmMm5v+6RyQcrV1eyrwwamoCn26QtkHsjpS+QGIu0CFjqUct+0L4P0YZSe+uChUCDxpXhEbJu8RHp0q0=
+	t=1733239844; cv=none; b=GsMhXqFl5tIpK4Fh40gLGEacg58w5Xh/5Rswz7e2OomqHArcnm8UPwymWrZRKwUQ9pZNNkPT9ZfB5JDJNY1oq8/2pbi36ncW+CdVWf08557JCDffQkKcn3rWQopqf8zPNYLepwzqZVIb6P2+a6mIPoViYD86ZybRoMZYevT+dh8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733239841; c=relaxed/simple;
-	bh=FdyV5JA3T37IR2lSEGY6k8EsNFfbVeAMd7HmcCX7RZk=;
+	s=arc-20240116; t=1733239844; c=relaxed/simple;
+	bh=RS+dVs2hT6CMXIaiASaEb9uWrrzYKiZXLydFnwZ9rJM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SY8jECttYr7q+GBkLLKwGqzuupePVj9ChFihq14n36hPAKGkZAEShdoCseawOcXUBAFtxRtuWgPyh+S9GAtE8A9y/k7Ij6g9Z7qVI6ZeOMcEOIqH3fflemtI3zISY6Xqxd/kph++ylpso4hHLPfVNY39/N7U4ItJErBCI3Yxqkk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VFlaf7Mb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NQvdGVKQ1bGOQFCGOUzzPpl2Qg/rFgidvna6pZca7Op/5IRyYF4B89PpbmAryUxqBNL3xiYN1NpJE7gUMcS1RlOVjYj8wx+91o4GJqFRAElM72NeAL4Xdyr8qMjtQxntWY+h6hZr9tDccmA4XbNe80EKeP+E6HAfSEiBUFTkBRc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J9GMdQfk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VFlaf7Mb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B301C4CECF;
-	Tue,  3 Dec 2024 15:30:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J9GMdQfk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84307C4CED9;
+	Tue,  3 Dec 2024 15:30:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733239841;
-	bh=FdyV5JA3T37IR2lSEGY6k8EsNFfbVeAMd7HmcCX7RZk=;
+	s=korg; t=1733239843;
+	bh=RS+dVs2hT6CMXIaiASaEb9uWrrzYKiZXLydFnwZ9rJM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VFlaf7MbM9Xb8KHyV+UiFvVv5FoJu2rxePJgWDVQyRkcb+LCslQi1q9xEkhH8NyiW
-	 tZ+hRHHfxVlM5hw7040yCDlb2fMCFDXlXioxkc5WysVVb9/vJO8nknwE9gvsrH+3Hc
-	 sYVGtpbI8wBAJubnQ0LgO+XmrZK6FT4mLLGLa2Y0=
+	b=J9GMdQfk4469qASsM1fGvr06RRxYSAtuZ1DeWOXYgbUKQi2dU4vkls+FCeqa5IOxZ
+	 CztgaPG3Z5zqIsrdRfQiba+ZXsrczSVATrUrIBfufUxgTqWltfH6solBR2LvBNdgbE
+	 v2o8cuMGU4Dz4r+pCJLoXKIejzj0JlLr56rHRACg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.11 745/817] smb3: request handle caching when caching directories
-Date: Tue,  3 Dec 2024 15:45:17 +0100
-Message-ID: <20241203144025.077911147@linuxfoundation.org>
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Subject: [PATCH 6.11 754/817] usb: dwc3: gadget: Fix checking for number of TRBs left
+Date: Tue,  3 Dec 2024 15:45:26 +0100
+Message-ID: <20241203144025.427106039@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -49,33 +49,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steve French <stfrench@microsoft.com>
+From: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
 
-commit 9ed9d83a51a9636d367c796252409e7b2f4de4d4 upstream.
+commit 02a6982b0ccfcdc39e20016f5fc9a1b7826a6ee7 upstream.
 
-This client was only requesting READ caching, not READ and HANDLE caching
-in the LeaseState on the open requests we send for directories.  To
-delay closing a handle (e.g. for caching directory contents) we should
-be requesting HANDLE as well as READ (as we already do for deferred
-close of files).   See MS-SMB2 3.3.1.4 e.g.
+The check whether the TRB ring is full or empty in dwc3_calc_trbs_left()
+is insufficient. It assumes there are active TRBs if there's any request
+in the started_list. However, that's not the case for requests with a
+large SG list.
+
+That is, if we have a single usb request that requires more TRBs than
+the total TRBs in the TRB ring, the queued TRBs will be available when
+all the TRBs in the ring are completed. But the request is only
+partially completed and remains in the started_list. With the current
+logic, the TRB ring is empty, but dwc3_calc_trbs_left() returns 0.
+
+Fix this by additionally checking for the request->num_trbs for active
+TRB count.
 
 Cc: stable@vger.kernel.org
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fixes: 51f1954ad853 ("usb: dwc3: gadget: Fix dwc3_calc_trbs_left()")
+Signed-off-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Link: https://lore.kernel.org/r/708dc62b56b77da1f704cc2ae9b6ddb1f2dbef1f.1731545781.git.Thinh.Nguyen@synopsys.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/smb2ops.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/dwc3/gadget.c |    9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
---- a/fs/smb/client/smb2ops.c
-+++ b/fs/smb/client/smb2ops.c
-@@ -4078,7 +4078,7 @@ map_oplock_to_lease(u8 oplock)
- 	if (oplock == SMB2_OPLOCK_LEVEL_EXCLUSIVE)
- 		return SMB2_LEASE_WRITE_CACHING_LE | SMB2_LEASE_READ_CACHING_LE;
- 	else if (oplock == SMB2_OPLOCK_LEVEL_II)
--		return SMB2_LEASE_READ_CACHING_LE;
-+		return SMB2_LEASE_READ_CACHING_LE | SMB2_LEASE_HANDLE_CACHING_LE;
- 	else if (oplock == SMB2_OPLOCK_LEVEL_BATCH)
- 		return SMB2_LEASE_HANDLE_CACHING_LE | SMB2_LEASE_READ_CACHING_LE |
- 		       SMB2_LEASE_WRITE_CACHING_LE;
+--- a/drivers/usb/dwc3/gadget.c
++++ b/drivers/usb/dwc3/gadget.c
+@@ -1177,11 +1177,14 @@ static u32 dwc3_calc_trbs_left(struct dw
+ 	 * pending to be processed by the driver.
+ 	 */
+ 	if (dep->trb_enqueue == dep->trb_dequeue) {
++		struct dwc3_request *req;
++
+ 		/*
+-		 * If there is any request remained in the started_list at
+-		 * this point, that means there is no TRB available.
++		 * If there is any request remained in the started_list with
++		 * active TRBs at this point, then there is no TRB available.
+ 		 */
+-		if (!list_empty(&dep->started_list))
++		req = next_request(&dep->started_list);
++		if (req && req->num_trbs)
+ 			return 0;
+ 
+ 		return DWC3_TRB_NUM - 1;
 
 
