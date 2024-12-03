@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFA3617BB16;
-	Tue,  3 Dec 2024 14:38:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C80D17BB16;
+	Tue,  3 Dec 2024 14:38:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733236727; cv=none; b=XwYGZR/x5sMD9DEvTcSJAy9JMRlwKAwzjdLYpLlwePtQKyQXZSLwGOimw1IW/Krpz7sU2xQnQ3W4SVkXobE6OG/oo7PDkgGKHd2nDqdjdVzlzTDfX/LyJ7sZ2Wkrf4TjFti70RdH1tdf8GL744P3dKmnNrN3frhlxPYmcEofViU=
+	t=1733236731; cv=none; b=lYQpYRHzADAU1ELHpOTcmj8L/LwilVbTvobAnExf1lcyHMux50d1kFiI80CkgNM3awyymaVIEojooMGdUCLrkf8d7o62UoOh2dBHSxAhgP7SVuGQHOIbxmWkjbeuJ6qIltGS142VLNTq1YgQoODyJgv62SVPbJQ2bLj7wuOEOSA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733236727; c=relaxed/simple;
-	bh=usJyrJcHqEtR/rtAMBNxmqa/rdqO5ntMEZw8iozPfgI=;
+	s=arc-20240116; t=1733236731; c=relaxed/simple;
+	bh=Y2VP4nktkZt2UMWRkhncT3ZPNv8Ryfs8SjwnMOaEoG8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m+oJDNEOj9Gu6X3QiXkBcU/1x/gCu/35TUv9RIVCGABoEBP+wcjIJxtTjQ80WWIVqQh01TBd+BPkXkfszzq+35vd9fly15TPmS0AaV1Jm5HXsnW1Z3f5gZAnZih+K2WeKYeGMG0t9JpGtFSc1lhLdO6l6o5k64hT3/Kn8x1vheE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rmHGaxEE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=svi9VPR9ZLeFXsnrw6GEz3+gCbnnoxWR+xfToOA+z/eMUO7F1X8GsdR6i2H+HDyMw3sMtXR+vZtJ1FsAEx4DHa4zeg6E/MLgzfa/r3oUUAsIgHdG6Wu0jh7RkIAYpRSuAt+T6jb0E1vdLUjYRGx9Hm63qtLyufj0erXf6CAJrJg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bZmeEFrO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rmHGaxEE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C224CC4CED8;
-	Tue,  3 Dec 2024 14:38:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bZmeEFrO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DC21C4CECF;
+	Tue,  3 Dec 2024 14:38:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733236727;
-	bh=usJyrJcHqEtR/rtAMBNxmqa/rdqO5ntMEZw8iozPfgI=;
+	s=korg; t=1733236730;
+	bh=Y2VP4nktkZt2UMWRkhncT3ZPNv8Ryfs8SjwnMOaEoG8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rmHGaxEEHRMAS6twSJ9/ACUVe6bZmxhv5KeW4fTAF2M343nJtmEhoAlw4kPPbpHVR
-	 Sxb1tfSsbHErBlzD1zV2nlS3/s4/z+U7GuCsI7koCUC1iuSIP/kCLs2B2gkEBWJUbz
-	 eLccRoYA8VxlWZanJh8mOtMqG/vvU8VnSEiqxF1c=
+	b=bZmeEFrOVh3rLVxiQxG8ouAueGK1fx7VdEwa89GjJJQh5XlPqGGFqo3tnbGnGmlvY
+	 EVrMeGCIDL9lXpDagY118iOE6gjFVHoy/nNtrbSYopsNQwBnklkbg2GX86c2delLer
+	 +X3pzwKZLxeP84RTdIq8l9mlOdN9bUp7M8BqawqY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Suchanek <msuchanek@suse.de>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Javier Martinez Canillas <javierm@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 069/138] powerpc/sstep: make emulate_vsx_load and emulate_vsx_store static
-Date: Tue,  3 Dec 2024 15:31:38 +0100
-Message-ID: <20241203141926.199948314@linuxfoundation.org>
+Subject: [PATCH 4.19 070/138] fbdev/sh7760fb: Alloc DMA memory from hardware device
+Date: Tue,  3 Dec 2024 15:31:39 +0100
+Message-ID: <20241203141926.238443412@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203141923.524658091@linuxfoundation.org>
 References: <20241203141923.524658091@linuxfoundation.org>
@@ -51,74 +51,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Suchanek <msuchanek@suse.de>
+From: Thomas Zimmermann <tzimmermann@suse.de>
 
-[ Upstream commit a26c4dbb3d9c1821cb0fc11cb2dbc32d5bf3463b ]
+[ Upstream commit 8404e56f4bc1d1a65bfc98450ba3dae5e653dda1 ]
 
-These functions are not used outside of sstep.c
+Pass the hardware device to the DMA helpers dma_alloc_coherent() and
+dma_free_coherent(). The fbdev device that is currently being used is
+a software device and does not provide DMA memory. Also update the
+related dev_*() output statements similarly.
 
-Fixes: 350779a29f11 ("powerpc: Handle most loads and stores in instruction emulation code")
-Signed-off-by: Michal Suchanek <msuchanek@suse.de>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://patch.msgid.link/20241001130356.14664-1-msuchanek@suse.de
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230613110953.24176-28-tzimmermann@suse.de
+Stable-dep-of: f89d17ae2ac4 ("fbdev: sh7760fb: Fix a possible memory leak in sh7760fb_alloc_mem()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/include/asm/sstep.h |  5 -----
- arch/powerpc/lib/sstep.c         | 12 ++++--------
- 2 files changed, 4 insertions(+), 13 deletions(-)
+ drivers/video/fbdev/sh7760fb.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/arch/powerpc/include/asm/sstep.h b/arch/powerpc/include/asm/sstep.h
-index 4547891a684be..b1449ed56fce2 100644
---- a/arch/powerpc/include/asm/sstep.h
-+++ b/arch/powerpc/include/asm/sstep.h
-@@ -164,9 +164,4 @@ extern int emulate_step(struct pt_regs *regs, unsigned int instr);
-  */
- extern int emulate_loadstore(struct pt_regs *regs, struct instruction_op *op);
+diff --git a/drivers/video/fbdev/sh7760fb.c b/drivers/video/fbdev/sh7760fb.c
+index 96de91d766230..c8ba3aeb32778 100644
+--- a/drivers/video/fbdev/sh7760fb.c
++++ b/drivers/video/fbdev/sh7760fb.c
+@@ -362,7 +362,7 @@ static void sh7760fb_free_mem(struct fb_info *info)
+ 	if (!info->screen_base)
+ 		return;
  
--extern void emulate_vsx_load(struct instruction_op *op, union vsx_reg *reg,
--			     const void *mem, bool cross_endian);
--extern void emulate_vsx_store(struct instruction_op *op,
--			      const union vsx_reg *reg, void *mem,
--			      bool cross_endian);
- extern int emulate_dcbz(unsigned long ea, struct pt_regs *regs);
-diff --git a/arch/powerpc/lib/sstep.c b/arch/powerpc/lib/sstep.c
-index 3da6290e3cccb..8c645e0072c6f 100644
---- a/arch/powerpc/lib/sstep.c
-+++ b/arch/powerpc/lib/sstep.c
-@@ -667,8 +667,8 @@ static nokprobe_inline int emulate_stq(struct pt_regs *regs, unsigned long ea,
- #endif /* __powerpc64 */
+-	dma_free_coherent(info->dev, info->screen_size,
++	dma_free_coherent(info->device, info->screen_size,
+ 			  info->screen_base, par->fbdma);
  
- #ifdef CONFIG_VSX
--void emulate_vsx_load(struct instruction_op *op, union vsx_reg *reg,
--		      const void *mem, bool rev)
-+static nokprobe_inline void emulate_vsx_load(struct instruction_op *op, union vsx_reg *reg,
-+					     const void *mem, bool rev)
- {
- 	int size, read_size;
- 	int i, j;
-@@ -748,11 +748,9 @@ void emulate_vsx_load(struct instruction_op *op, union vsx_reg *reg,
- 		break;
+ 	par->fbdma = 0;
+@@ -411,14 +411,14 @@ static int sh7760fb_alloc_mem(struct fb_info *info)
+ 	if (vram < PAGE_SIZE)
+ 		vram = PAGE_SIZE;
+ 
+-	fbmem = dma_alloc_coherent(info->dev, vram, &par->fbdma, GFP_KERNEL);
++	fbmem = dma_alloc_coherent(info->device, vram, &par->fbdma, GFP_KERNEL);
+ 
+ 	if (!fbmem)
+ 		return -ENOMEM;
+ 
+ 	if ((par->fbdma & SH7760FB_DMA_MASK) != SH7760FB_DMA_MASK) {
+ 		sh7760fb_free_mem(info);
+-		dev_err(info->dev, "kernel gave me memory at 0x%08lx, which is"
++		dev_err(info->device, "kernel gave me memory at 0x%08lx, which is"
+ 			"unusable for the LCDC\n", (unsigned long)par->fbdma);
+ 		return -ENOMEM;
  	}
- }
--EXPORT_SYMBOL_GPL(emulate_vsx_load);
--NOKPROBE_SYMBOL(emulate_vsx_load);
+@@ -489,7 +489,7 @@ static int sh7760fb_probe(struct platform_device *pdev)
  
--void emulate_vsx_store(struct instruction_op *op, const union vsx_reg *reg,
--		       void *mem, bool rev)
-+static nokprobe_inline void emulate_vsx_store(struct instruction_op *op, const union vsx_reg *reg,
-+					      void *mem, bool rev)
- {
- 	int size, write_size;
- 	int i, j;
-@@ -824,8 +822,6 @@ void emulate_vsx_store(struct instruction_op *op, const union vsx_reg *reg,
- 		break;
+ 	ret = sh7760fb_alloc_mem(info);
+ 	if (ret) {
+-		dev_dbg(info->dev, "framebuffer memory allocation failed!\n");
++		dev_dbg(info->device, "framebuffer memory allocation failed!\n");
+ 		goto out_unmap;
  	}
- }
--EXPORT_SYMBOL_GPL(emulate_vsx_store);
--NOKPROBE_SYMBOL(emulate_vsx_store);
  
- static nokprobe_inline int do_vsx_load(struct instruction_op *op,
- 				       unsigned long ea, struct pt_regs *regs,
 -- 
 2.43.0
 
