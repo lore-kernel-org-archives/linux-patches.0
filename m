@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 554421F892A;
-	Tue,  3 Dec 2024 15:12:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF5211F7557;
+	Tue,  3 Dec 2024 15:12:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733238728; cv=none; b=u31o2eV1/HN26QKLzdsoYmegpMpo8V5oP1Y58pu0LwX+Kaw4LblZB172LyQke+7FTl8iBM06Acl5PtHaVvEpPQrCy4C1pgF18JGGo0fzcLEk+x31ZtF8HBCdGBXilYBiIk8nLSQdUaNRdrs/7xyOpUYUxlVOjr7FlQ32XRAD8M0=
+	t=1733238731; cv=none; b=tE/K/ppbnKcuG1xRUT41omZ60cuirJCROC5sR8M3vAYRiqegCd/C1Teiw7JMYj2CB3+8V9Oz3+DR0Lo9t+dKJCBxdgNcHbGCAKbT8rOVPrOxH8GRecbCdGMlc+NK0CzC429Mxtn6AYXS77RVriemu6Fbk1+APucJP8HLFLXWAqQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733238728; c=relaxed/simple;
-	bh=TPKs/hqV8Q3NgxhG5/mxTI7+Y6mNYhX1LZZP44Z8aiM=;
+	s=arc-20240116; t=1733238731; c=relaxed/simple;
+	bh=tcnyrzlua745ru1VbMNprsjgVfW/zcd8YR6ihpjJqBk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TQVGgMp8YYJo9WFUc91M6UEcqmy03WXhEHxBWfyJpe3BJL0hrYEIu6reiIA+1t1hdg55dh8HlTeFcNEx5qh9BEPk40YDFmp9XfhMWoXEy9CAIZZ0OTKseF1DfTxQQtcR1ynrEWnc6i9XCJDgOoqLXcKRpdS9c1NN3uPUbTceGeo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sxssyUBZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cz55o/hlIZGIOMV6/dXXl9dJnWhquD73OjAoGt6zhq6u11PiV7hvMta2AtyO1T9wrZb2fd7nVHgEcI5I0E8tXdHg3rAOTTtM81TL1eF5YFaOlfRekLQKwcyUUtXK4vrypK3jQehwMzSEMVUw1Z8O0hOFrjwVgDPf6VtPTttliJ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zt3vZfog; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sxssyUBZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F8C2C4CECF;
-	Tue,  3 Dec 2024 15:12:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zt3vZfog"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FBE5C4CECF;
+	Tue,  3 Dec 2024 15:12:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733238727;
-	bh=TPKs/hqV8Q3NgxhG5/mxTI7+Y6mNYhX1LZZP44Z8aiM=;
+	s=korg; t=1733238730;
+	bh=tcnyrzlua745ru1VbMNprsjgVfW/zcd8YR6ihpjJqBk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sxssyUBZd3VAAtEwnwgKf+iylSReMkt3F+x0twYJ4b4AA492h4m1GjqzfIgA1GXDp
-	 cNc+NRUElvKSpQMDbwh4Z1i/5sIQqq0Cq9StH4Go+RODT238+vZVTBMD49haSaiSPK
-	 +ePR27wMJp7uCMjal1mpSHwwT7Jt4fUTpvA8T3MI=
+	b=Zt3vZfog5tg33uhn1J+bexo7zIrOxNNCby/lk6P35C+iqiqG5gC03b/XFuhN0h9MN
+	 X6OgPL7/VFHOjgl5eHhobHe1Ib/8tZHRs6sYwoNnFWs/1rFkoKOmVifnGYq/C2YneC
+	 jI0dkkUHHZ9yrJFQ5QwGPXu1ux9cYRZ1LrXfMyto=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mingwei Zheng <zmw12306@gmail.com>,
-	Jiasheng Jiang <jiashengjiangcool@gmail.com>,
+	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 346/817] net: rfkill: gpio: Add check for clk_enable()
-Date: Tue,  3 Dec 2024 15:38:38 +0100
-Message-ID: <20241203144009.332342265@linuxfoundation.org>
+Subject: [PATCH 6.11 337/817] wifi: iwlwifi: allow fast resume on ax200
+Date: Tue,  3 Dec 2024 15:38:29 +0100
+Message-ID: <20241203144008.975792113@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -52,42 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mingwei Zheng <zmw12306@gmail.com>
+From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
 
-[ Upstream commit 8251e7621b25ccdb689f1dd9553b8789e3745ea1 ]
+[ Upstream commit e53ebc72054efca12e0329d69342e3daf7250a5a ]
 
-Add check for the return value of clk_enable() to catch the potential
-error.
+This feature can be used on ax200 as well. It'll avoid to restart the
+firmware upon suspend / resume flow. Doing so also avoids releasing and
+re-allocating all the device related memory which makes the memory's
+subsystem task easier.
 
-Fixes: 7176ba23f8b5 ("net: rfkill: add generic gpio rfkill driver")
-Signed-off-by: Mingwei Zheng <zmw12306@gmail.com>
-Signed-off-by: Jiasheng Jiang <jiashengjiangcool@gmail.com>
-Link: https://patch.msgid.link/20241108195341.1853080-1-zmw12306@gmail.com
+Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://patch.msgid.link/20241028135215.514efe0ce4c7.I60061277526302a75cadbba10452e94c54763f13@changeid
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Stable-dep-of: d1a54ec21b8e ("wifi: iwlwifi: mvm: tell iwlmei when we finished suspending")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rfkill/rfkill-gpio.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/rfkill/rfkill-gpio.c b/net/rfkill/rfkill-gpio.c
-index 84529886c2e66..bfd5ff967e903 100644
---- a/net/rfkill/rfkill-gpio.c
-+++ b/net/rfkill/rfkill-gpio.c
-@@ -31,8 +31,12 @@ static int rfkill_gpio_set_power(void *data, bool blocked)
- {
- 	struct rfkill_gpio_data *rfkill = data;
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c b/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
+index 63b2c6fe3f8ab..af4c2e7dab083 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
+@@ -1376,7 +1376,7 @@ void __iwl_mvm_mac_stop(struct iwl_mvm *mvm, bool suspend)
+ 		iwl_mvm_rm_aux_sta(mvm);
  
--	if (!blocked && !IS_ERR(rfkill->clk) && !rfkill->clk_enabled)
--		clk_enable(rfkill->clk);
-+	if (!blocked && !IS_ERR(rfkill->clk) && !rfkill->clk_enabled) {
-+		int ret = clk_enable(rfkill->clk);
-+
-+		if (ret)
-+			return ret;
-+	}
- 
- 	gpiod_set_value_cansleep(rfkill->shutdown_gpio, !blocked);
- 	gpiod_set_value_cansleep(rfkill->reset_gpio, !blocked);
+ 	if (suspend &&
+-	    mvm->trans->trans_cfg->device_family >= IWL_DEVICE_FAMILY_AX210)
++	    mvm->trans->trans_cfg->device_family >= IWL_DEVICE_FAMILY_22000)
+ 		iwl_mvm_fast_suspend(mvm);
+ 	else
+ 		iwl_mvm_stop_device(mvm);
 -- 
 2.43.0
 
