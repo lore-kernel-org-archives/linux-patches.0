@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15E931F4722;
-	Tue,  3 Dec 2024 14:41:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 872A21F754B;
+	Tue,  3 Dec 2024 14:41:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733236863; cv=none; b=cH1CSFh7P7Tvx7TU6apA5BSQ07Y0El4EkkPMwo+Uk43+d3dwxG+F2KppIv4x2pK/JEy+CEeWkwg2DUlBxDURLZMStn8fy4m1iJfdvplKmI3hy9mdlZC896yGcD0cEgRf6tdVC20q+Rok7yWesjMhIkPp0TLEZe+pxokBB5erXy8=
+	t=1733236866; cv=none; b=R4U7XM+HlXbP1iVp/J0+c0lZqugvPDzT+fP+kkUf2b29V5EDnRM/34jB140JgBmAas6Sv5EcPDPjIVULvOs1pGhE0RPJsA6YFwRhxcGrH70igvapi1GSuh4HewDzSl2bnKAR6rsRdpZDc9XLWPR2E8fzLMUTabyAgkW3OAOOLvw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733236863; c=relaxed/simple;
-	bh=DT3fnP3mPsYbPt6+2tVkZj9zlw7zcyQj8+a/851jZC4=;
+	s=arc-20240116; t=1733236866; c=relaxed/simple;
+	bh=syUJzqsdxZ9ea6nWtVzqBF+GaEVmBH3BYKo3Gc7m6HA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ubZcL9m2YrxlxZGfTBaO8laLR4nqQtQ3u18IBbO3w5vsBL1s5y0Owa50kWk7a114KVZxtWzztgfsajLGXqnXX7ci14AAOuKHH79flLeo/C1aIr+6yFbxuuawlQU9bn4Ld64rj3R3E0NiHlzUYngnlUuI98Egznp7wNKeViiu5To=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X0R0/mR7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=c5iz+kybMdkkBovRwRzAqMlKpPhl360gIqVb2y7X9q/cg1DUSHsPMrj/yWoH2YOUUrB/f/OaLRhJ97hFkgLkVLhCdyKkBkj03oYwBzFKc9H0HlMPVcSFBja2/rS489IvIhDCZCmAxl508QkVXPWudL5F0bDKEH0l3zYjfycVk5Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dwC8KtLm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X0R0/mR7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75DAAC4CECF;
-	Tue,  3 Dec 2024 14:41:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dwC8KtLm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E885FC4CECF;
+	Tue,  3 Dec 2024 14:41:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733236862;
-	bh=DT3fnP3mPsYbPt6+2tVkZj9zlw7zcyQj8+a/851jZC4=;
+	s=korg; t=1733236866;
+	bh=syUJzqsdxZ9ea6nWtVzqBF+GaEVmBH3BYKo3Gc7m6HA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X0R0/mR7hMhf7BzPcN++8b/2v+wQOhB2Sa36tkMnu+q3utGfLN6QV9rviSfjPqC90
-	 9ZvO+VjOMdqrexBYo5d0fAFA/T4KJptAV95VVJweSVqAyqbNRzrYklzwplbNanDbMn
-	 f/cBZDnkD/PB3T24Si3bk9prqz2wuJT23BcXqhMs=
+	b=dwC8KtLmQTB7EB5DE4y9MS+8OLtkYEPzz58t//l66vRc6MqEQMxODJO+ggEnA0j1a
+	 s3j05LS/6JXW1xtIVpSR74b8Glzz2QN5jiJoY2XYjLj8GDNzKudv8vdtJ0jOX7FLCa
+	 38r8zeGR0CP7bZUvsBQn6o3++BNyDRlLU4686EV0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinjie Ruan <ruanjinjie@huawei.com>,
+	Zhihao Cheng <chengzhihao1@huawei.com>,
+	Richard Weinberger <richard@nod.at>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 097/138] misc: apds990x: Fix missing pm_runtime_disable()
-Date: Tue,  3 Dec 2024 15:32:06 +0100
-Message-ID: <20241203141927.275921291@linuxfoundation.org>
+Subject: [PATCH 4.19 132/138] ubi: fastmap: Fix duplicate slab cache names while attaching
+Date: Tue,  3 Dec 2024 15:32:41 +0100
+Message-ID: <20241203141928.617601802@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203141923.524658091@linuxfoundation.org>
 References: <20241203141923.524658091@linuxfoundation.org>
@@ -50,65 +51,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinjie Ruan <ruanjinjie@huawei.com>
+From: Zhihao Cheng <chengzhihao1@huawei.com>
 
-[ Upstream commit 3c5d8b819d27012264edd17e6ae7fffda382fe44 ]
+[ Upstream commit bcddf52b7a17adcebc768d26f4e27cf79adb424c ]
 
-The pm_runtime_disable() is missing in probe error path,
-so add it to fix it.
+Since commit 4c39529663b9 ("slab: Warn on duplicate cache names when
+DEBUG_VM=y"), the duplicate slab cache names can be detected and a
+kernel WARNING is thrown out.
+In UBI fast attaching process, alloc_ai() could be invoked twice
+with the same slab cache name 'ubi_aeb_slab_cache', which will trigger
+following warning messages:
+ kmem_cache of name 'ubi_aeb_slab_cache' already exists
+ WARNING: CPU: 0 PID: 7519 at mm/slab_common.c:107
+          __kmem_cache_create_args+0x100/0x5f0
+ Modules linked in: ubi(+) nandsim [last unloaded: nandsim]
+ CPU: 0 UID: 0 PID: 7519 Comm: modprobe Tainted: G 6.12.0-rc2
+ RIP: 0010:__kmem_cache_create_args+0x100/0x5f0
+ Call Trace:
+   __kmem_cache_create_args+0x100/0x5f0
+   alloc_ai+0x295/0x3f0 [ubi]
+   ubi_attach+0x3c3/0xcc0 [ubi]
+   ubi_attach_mtd_dev+0x17cf/0x3fa0 [ubi]
+   ubi_init+0x3fb/0x800 [ubi]
+   do_init_module+0x265/0x7d0
+   __x64_sys_finit_module+0x7a/0xc0
 
-Fixes: 92b1f84d46b2 ("drivers/misc: driver for APDS990X ALS and proximity sensors")
-Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-Link: https://lore.kernel.org/r/20240923035556.3009105-1-ruanjinjie@huawei.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+The problem could be easily reproduced by loading UBI device by fastmap
+with CONFIG_DEBUG_VM=y.
+Fix it by using different slab names for alloc_ai() callers.
+
+Fixes: d2158f69a7d4 ("UBI: Remove alloc_ai() slab name from parameter list")
+Fixes: fdf10ed710c0 ("ubi: Rework Fastmap attach base code")
+Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
+Signed-off-by: Richard Weinberger <richard@nod.at>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/misc/apds990x.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ drivers/mtd/ubi/attach.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/misc/apds990x.c b/drivers/misc/apds990x.c
-index ed9412d750b74..871d2d42db938 100644
---- a/drivers/misc/apds990x.c
-+++ b/drivers/misc/apds990x.c
-@@ -1163,7 +1163,7 @@ static int apds990x_probe(struct i2c_client *client,
- 		err = chip->pdata->setup_resources();
- 		if (err) {
- 			err = -EINVAL;
--			goto fail3;
-+			goto fail4;
- 		}
- 	}
- 
-@@ -1171,7 +1171,7 @@ static int apds990x_probe(struct i2c_client *client,
- 				apds990x_attribute_group);
- 	if (err < 0) {
- 		dev_err(&chip->client->dev, "Sysfs registration failed\n");
--		goto fail4;
-+		goto fail5;
- 	}
- 
- 	err = request_threaded_irq(client->irq, NULL,
-@@ -1182,15 +1182,17 @@ static int apds990x_probe(struct i2c_client *client,
- 	if (err) {
- 		dev_err(&client->dev, "could not get IRQ %d\n",
- 			client->irq);
--		goto fail5;
-+		goto fail6;
- 	}
+diff --git a/drivers/mtd/ubi/attach.c b/drivers/mtd/ubi/attach.c
+index 93ceea4f27d57..d62e5b69ba4b2 100644
+--- a/drivers/mtd/ubi/attach.c
++++ b/drivers/mtd/ubi/attach.c
+@@ -1459,7 +1459,7 @@ static int scan_all(struct ubi_device *ubi, struct ubi_attach_info *ai,
  	return err;
--fail5:
-+fail6:
- 	sysfs_remove_group(&chip->client->dev.kobj,
- 			&apds990x_attribute_group[0]);
--fail4:
-+fail5:
- 	if (chip->pdata && chip->pdata->release_resources)
- 		chip->pdata->release_resources();
-+fail4:
-+	pm_runtime_disable(&client->dev);
- fail3:
- 	regulator_bulk_disable(ARRAY_SIZE(chip->regs), chip->regs);
- fail2:
+ }
+ 
+-static struct ubi_attach_info *alloc_ai(void)
++static struct ubi_attach_info *alloc_ai(const char *slab_name)
+ {
+ 	struct ubi_attach_info *ai;
+ 
+@@ -1473,7 +1473,7 @@ static struct ubi_attach_info *alloc_ai(void)
+ 	INIT_LIST_HEAD(&ai->alien);
+ 	INIT_LIST_HEAD(&ai->fastmap);
+ 	ai->volumes = RB_ROOT;
+-	ai->aeb_slab_cache = kmem_cache_create("ubi_aeb_slab_cache",
++	ai->aeb_slab_cache = kmem_cache_create(slab_name,
+ 					       sizeof(struct ubi_ainf_peb),
+ 					       0, 0, NULL);
+ 	if (!ai->aeb_slab_cache) {
+@@ -1503,7 +1503,7 @@ static int scan_fast(struct ubi_device *ubi, struct ubi_attach_info **ai)
+ 
+ 	err = -ENOMEM;
+ 
+-	scan_ai = alloc_ai();
++	scan_ai = alloc_ai("ubi_aeb_slab_cache_fastmap");
+ 	if (!scan_ai)
+ 		goto out;
+ 
+@@ -1569,7 +1569,7 @@ int ubi_attach(struct ubi_device *ubi, int force_scan)
+ 	int err;
+ 	struct ubi_attach_info *ai;
+ 
+-	ai = alloc_ai();
++	ai = alloc_ai("ubi_aeb_slab_cache");
+ 	if (!ai)
+ 		return -ENOMEM;
+ 
+@@ -1587,7 +1587,7 @@ int ubi_attach(struct ubi_device *ubi, int force_scan)
+ 		if (err > 0 || mtd_is_eccerr(err)) {
+ 			if (err != UBI_NO_FASTMAP) {
+ 				destroy_ai(ai);
+-				ai = alloc_ai();
++				ai = alloc_ai("ubi_aeb_slab_cache");
+ 				if (!ai)
+ 					return -ENOMEM;
+ 
+@@ -1626,7 +1626,7 @@ int ubi_attach(struct ubi_device *ubi, int force_scan)
+ 	if (ubi->fm && ubi_dbg_chk_fastmap(ubi)) {
+ 		struct ubi_attach_info *scan_ai;
+ 
+-		scan_ai = alloc_ai();
++		scan_ai = alloc_ai("ubi_aeb_slab_cache_dbg_chk_fastmap");
+ 		if (!scan_ai) {
+ 			err = -ENOMEM;
+ 			goto out_wl;
 -- 
 2.43.0
 
