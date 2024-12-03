@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 626611F8AFF;
-	Tue,  3 Dec 2024 15:41:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8E681FAC30;
+	Tue,  3 Dec 2024 15:41:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733240468; cv=none; b=IJtEjYYw5JwFbS8Rs0ys6LlAcIARQuiJ0BIYbNbYuWmOH8ARsRH0zBJ2Yogjlq2wBcyhIIDJzBWN5okQXFalbtoC+Kmrc7GqcPaNFVUJQD5Akv7xpDgCIZHz/UG2izNsNDA+GyyiUQFGma8G9ZcX/thk6j6I32vuyyNwB+QIYfc=
+	t=1733240471; cv=none; b=dpmH38Fhu9OThDXg8kSPSI1kWqIDv4a+Yp9zXqtuGidklXf80i5nXujrIVBVXpeCB4BHgUExJU2X4F3yACki8yYOGGBXuvpt8J9sM+xGCQCAJIw7WNy73Y3C95O7W4l5nbrKJEWIjpTDyBj85Xo6XNWAQr5ORCs4V6Zsa0kxfgE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733240468; c=relaxed/simple;
-	bh=aFOE/IIsPJw/q9N4tfj69AFc7geE3//zVdaqLAIFi2Q=;
+	s=arc-20240116; t=1733240471; c=relaxed/simple;
+	bh=NkZLoKTOL4extUlgFHJCwUU3OuWyybzyD7bIXDDfMG4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=hISKIoHTZTS+e1uiXuUsRK0RwYAxMcFxf81hDXB/oGyrv8Muu3sof4WG0YERAK+gOZunxEHPcvaZprQWIEnYfHbCoZJnM1lJx1+6CCbgN9U/CpskhAUuYm38M/9ByPppNRaGCLNrsMoyIy4DSTmf94hmKEZ4P4k9RMXsSgUIEPY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F4vxdjAX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Mf6Zqm/2oLAvmAMAUxYQPq4KBKlQZtq45/3t5EqO9FpFaIUV9mxdxX8tt7xEhs0yvBa0OX84dM8QdZRCbF08km1nCLB/zKY91/3mZ1ndLU3jNQkFg3P9p1zaEZsAugJohWExMt6rRobV8p8m1T0k/gjQfZi99dztW/rF2MFlZT8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YC7jzZrU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F4vxdjAX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9975C4CED6;
-	Tue,  3 Dec 2024 15:41:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YC7jzZrU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19A2CC4CECF;
+	Tue,  3 Dec 2024 15:41:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733240468;
-	bh=aFOE/IIsPJw/q9N4tfj69AFc7geE3//zVdaqLAIFi2Q=;
+	s=korg; t=1733240471;
+	bh=NkZLoKTOL4extUlgFHJCwUU3OuWyybzyD7bIXDDfMG4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F4vxdjAXpOK5FfJIzbXm6JV2Fu94vkueWMRAAn6G8JiYSM/Y2b6bWOz1/q3gdzyoQ
-	 2Ga5tyc6gWQAzZNe3D3hhqnUyx+AXUucW2h5KRjr7gHOpsaTZHW/t2RNzqLQMMCoQp
-	 uHe8ulw6yj8AbGBrm4FQS+uo0Ym9s0ZXbbhSt/vY=
+	b=YC7jzZrUzrUrdvJUiWic4QaIOMbNAwUyoPNMEUMbE1C7xgZexjTArt2FQwzmf6Cu1
+	 Ftgm5mElhl7/2tIQUF1OfhbfgwBiCQiWorEnS4o3EqNZ9FA0IrZN3qyV23iBCgUp/f
+	 kqfmRrcZvo0bdTA4QbY8Ajqn7ifHagKUxWDY0ykE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jun Li <jun.li@nxp.com>,
-	Clark Wang <xiaoning.wang@nxp.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@kernel.org>,
+	Andre Przywara <andre.przywara@arm.com>,
+	Chen-Yu Tsai <wens@csie.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 145/826] pwm: imx27: Workaround of the pwm output bug when decrease the duty cycle
-Date: Tue,  3 Dec 2024 15:37:52 +0100
-Message-ID: <20241203144749.402640127@linuxfoundation.org>
+Subject: [PATCH 6.12 146/826] ARM: dts: cubieboard4: Fix DCDC5 regulator constraints
+Date: Tue,  3 Dec 2024 15:37:53 +0100
+Message-ID: <20241203144749.441390965@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -47,190 +45,60 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Clark Wang <xiaoning.wang@nxp.com>
+From: Andre Przywara <andre.przywara@arm.com>
 
-[ Upstream commit a25351e4c7740eb22561a3ee4ef17611c6f410b0 ]
+[ Upstream commit dd36ad71ad65968f97630808bc8d605c929b128e ]
 
-Implement workaround for ERR051198
-(https://www.nxp.com/docs/en/errata/IMX8MN_0N14Y.pdf)
+The DCDC5 voltage rail in the X-Powers AXP809 PMIC has a resolution of
+50mV, so the currently enforced limits of 1.475 and 1.525 volts cannot
+be set, when the existing regulator value is beyond this range.
 
-PWM output may not function correctly if the FIFO is empty when a new SAR
-value is programmed.
+This will lead to the whole regulator driver to give up and fail
+probing, which in turn will hang the system, as essential devices depend
+on the PMIC.
+In this case a bug in U-Boot set the voltage to 1.75V (meant for DCDC4),
+and the AXP driver's attempt to correct this lead to this error:
+==================
+[    4.447653] axp20x-rsb sunxi-rsb-3a3: AXP20X driver loaded
+[    4.450066] vcc-dram: Bringing 1750000uV into 1575000-1575000uV
+[    4.460272] vcc-dram: failed to apply 1575000-1575000uV constraint: -EINVAL
+[    4.474788] axp20x-regulator axp20x-regulator.0: Failed to register dcdc5
+[    4.482276] axp20x-regulator axp20x-regulator.0: probe with driver axp20x-regulator failed with error -22
+==================
 
-Description:
-  When the PWM FIFO is empty, a new value programmed to the PWM Sample
-  register (PWM_PWMSAR) will be directly applied even if the current timer
-  period has not expired. If the new SAMPLE value programmed in the
-  PWM_PWMSAR register is less than the previous value, and the PWM counter
-  register (PWM_PWMCNR) that contains the current COUNT value is greater
-  than the new programmed SAMPLE value, the current period will not flip
-  the level. This may result in an output pulse with a duty cycle of 100%.
+Set the limits to values that can be programmed, so any correction will
+be successful.
 
-Workaround:
-  Program the current SAMPLE value in the PWM_PWMSAR register before
-  updating the new duty cycle to the SAMPLE value in the PWM_PWMSAR
-  register. This will ensure that the new SAMPLE value is modified during
-  a non-empty FIFO, and can be successfully updated after the period
-  expires.
-
-Write the old SAR value before updating the new duty cycle to SAR. This
-avoids writing the new value into an empty FIFO.
-
-This only resolves the issue when the PWM period is longer than 2us
-(or <500kHz) because write register is not quick enough when PWM period is
-very short.
-
-Reproduce steps:
-  cd /sys/class/pwm/pwmchip1/pwm0
-  echo 2000000000 > period     # It is easy to observe by using long period
-  echo 1000000000 > duty_cycle
-  echo 1 > enable
-  echo       8000 > duty_cycle # One full high pulse will be seen by scope
-
-Fixes: 166091b1894d ("[ARM] MXC: add pwm driver for i.MX SoCs")
-Reviewed-by: Jun Li <jun.li@nxp.com>
-Signed-off-by: Clark Wang <xiaoning.wang@nxp.com>
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
-Link: https://lore.kernel.org/r/20241008194123.1943141-1-Frank.Li@nxp.com
-Signed-off-by: Uwe Kleine-König <ukleinek@kernel.org>
+Signed-off-by: Andre Przywara <andre.przywara@arm.com>
+Fixes: 1e1dea72651b ("ARM: dts: sun9i: cubieboard4: Add AXP809 PMIC device node and regulators")
+Link: https://patch.msgid.link/20241007222916.19013-1-andre.przywara@arm.com
+Signed-off-by: Chen-Yu Tsai <wens@csie.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pwm/pwm-imx27.c | 98 ++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 96 insertions(+), 2 deletions(-)
+ arch/arm/boot/dts/allwinner/sun9i-a80-cubieboard4.dts | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pwm/pwm-imx27.c b/drivers/pwm/pwm-imx27.c
-index 9e2bbf5b4a8ce..0375987194318 100644
---- a/drivers/pwm/pwm-imx27.c
-+++ b/drivers/pwm/pwm-imx27.c
-@@ -26,6 +26,7 @@
- #define MX3_PWMSR			0x04    /* PWM Status Register */
- #define MX3_PWMSAR			0x0C    /* PWM Sample Register */
- #define MX3_PWMPR			0x10    /* PWM Period Register */
-+#define MX3_PWMCNR			0x14    /* PWM Counter Register */
+diff --git a/arch/arm/boot/dts/allwinner/sun9i-a80-cubieboard4.dts b/arch/arm/boot/dts/allwinner/sun9i-a80-cubieboard4.dts
+index c8ca8cb7f5c94..52ad95a2063aa 100644
+--- a/arch/arm/boot/dts/allwinner/sun9i-a80-cubieboard4.dts
++++ b/arch/arm/boot/dts/allwinner/sun9i-a80-cubieboard4.dts
+@@ -280,8 +280,8 @@ reg_dcdc4: dcdc4 {
  
- #define MX3_PWMCR_FWM			GENMASK(27, 26)
- #define MX3_PWMCR_STOPEN		BIT(25)
-@@ -219,10 +220,12 @@ static void pwm_imx27_wait_fifo_slot(struct pwm_chip *chip,
- static int pwm_imx27_apply(struct pwm_chip *chip, struct pwm_device *pwm,
- 			   const struct pwm_state *state)
- {
--	unsigned long period_cycles, duty_cycles, prescale;
-+	unsigned long period_cycles, duty_cycles, prescale, period_us, tmp;
- 	struct pwm_imx27_chip *imx = to_pwm_imx27_chip(chip);
- 	unsigned long long c;
- 	unsigned long long clkrate;
-+	unsigned long flags;
-+	int val;
- 	int ret;
- 	u32 cr;
+ 			reg_dcdc5: dcdc5 {
+ 				regulator-always-on;
+-				regulator-min-microvolt = <1425000>;
+-				regulator-max-microvolt = <1575000>;
++				regulator-min-microvolt = <1450000>;
++				regulator-max-microvolt = <1550000>;
+ 				regulator-name = "vcc-dram";
+ 			};
  
-@@ -263,7 +266,98 @@ static int pwm_imx27_apply(struct pwm_chip *chip, struct pwm_device *pwm,
- 		pwm_imx27_sw_reset(chip);
- 	}
- 
--	writel(duty_cycles, imx->mmio_base + MX3_PWMSAR);
-+	val = readl(imx->mmio_base + MX3_PWMPR);
-+	val = val >= MX3_PWMPR_MAX ? MX3_PWMPR_MAX : val;
-+	cr = readl(imx->mmio_base + MX3_PWMCR);
-+	tmp = NSEC_PER_SEC * (u64)(val + 2) * MX3_PWMCR_PRESCALER_GET(cr);
-+	tmp = DIV_ROUND_UP_ULL(tmp, clkrate);
-+	period_us = DIV_ROUND_UP_ULL(tmp, 1000);
-+
-+	/*
-+	 * ERR051198:
-+	 * PWM: PWM output may not function correctly if the FIFO is empty when
-+	 * a new SAR value is programmed
-+	 *
-+	 * Description:
-+	 * When the PWM FIFO is empty, a new value programmed to the PWM Sample
-+	 * register (PWM_PWMSAR) will be directly applied even if the current
-+	 * timer period has not expired.
-+	 *
-+	 * If the new SAMPLE value programmed in the PWM_PWMSAR register is
-+	 * less than the previous value, and the PWM counter register
-+	 * (PWM_PWMCNR) that contains the current COUNT value is greater than
-+	 * the new programmed SAMPLE value, the current period will not flip
-+	 * the level. This may result in an output pulse with a duty cycle of
-+	 * 100%.
-+	 *
-+	 * Consider a change from
-+	 *     ________
-+	 *    /        \______/
-+	 *    ^      *        ^
-+	 * to
-+	 *     ____
-+	 *    /    \__________/
-+	 *    ^               ^
-+	 * At the time marked by *, the new write value will be directly applied
-+	 * to SAR even the current period is not over if FIFO is empty.
-+	 *
-+	 *     ________        ____________________
-+	 *    /        \______/                    \__________/
-+	 *    ^               ^      *        ^               ^
-+	 *    |<-- old SAR -->|               |<-- new SAR -->|
-+	 *
-+	 * That is the output is active for a whole period.
-+	 *
-+	 * Workaround:
-+	 * Check new SAR less than old SAR and current counter is in errata
-+	 * windows, write extra old SAR into FIFO and new SAR will effect at
-+	 * next period.
-+	 *
-+	 * Sometime period is quite long, such as over 1 second. If add old SAR
-+	 * into FIFO unconditional, new SAR have to wait for next period. It
-+	 * may be too long.
-+	 *
-+	 * Turn off the interrupt to ensure that not IRQ and schedule happen
-+	 * during above operations. If any irq and schedule happen, counter
-+	 * in PWM will be out of data and take wrong action.
-+	 *
-+	 * Add a safety margin 1.5us because it needs some time to complete
-+	 * IO write.
-+	 *
-+	 * Use writel_relaxed() to minimize the interval between two writes to
-+	 * the SAR register to increase the fastest PWM frequency supported.
-+	 *
-+	 * When the PWM period is longer than 2us(or <500kHz), this workaround
-+	 * can solve this problem. No software workaround is available if PWM
-+	 * period is shorter than IO write. Just try best to fill old data
-+	 * into FIFO.
-+	 */
-+	c = clkrate * 1500;
-+	do_div(c, NSEC_PER_SEC);
-+
-+	local_irq_save(flags);
-+	val = FIELD_GET(MX3_PWMSR_FIFOAV, readl_relaxed(imx->mmio_base + MX3_PWMSR));
-+
-+	if (duty_cycles < imx->duty_cycle && (cr & MX3_PWMCR_EN)) {
-+		if (period_us < 2) { /* 2us = 500 kHz */
-+			/* Best effort attempt to fix up >500 kHz case */
-+			udelay(3 * period_us);
-+			writel_relaxed(imx->duty_cycle, imx->mmio_base + MX3_PWMSAR);
-+			writel_relaxed(imx->duty_cycle, imx->mmio_base + MX3_PWMSAR);
-+		} else if (val < MX3_PWMSR_FIFOAV_2WORDS) {
-+			val = readl_relaxed(imx->mmio_base + MX3_PWMCNR);
-+			/*
-+			 * If counter is close to period, controller may roll over when
-+			 * next IO write.
-+			 */
-+			if ((val + c >= duty_cycles && val < imx->duty_cycle) ||
-+			    val + c >= period_cycles)
-+				writel_relaxed(imx->duty_cycle, imx->mmio_base + MX3_PWMSAR);
-+		}
-+	}
-+	writel_relaxed(duty_cycles, imx->mmio_base + MX3_PWMSAR);
-+	local_irq_restore(flags);
-+
- 	writel(period_cycles, imx->mmio_base + MX3_PWMPR);
- 
- 	/*
 -- 
 2.43.0
 
