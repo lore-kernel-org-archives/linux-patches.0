@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 372771F6673;
-	Tue,  3 Dec 2024 14:38:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62C6F1F6694;
+	Tue,  3 Dec 2024 14:38:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733236692; cv=none; b=Ajy+m8sKwcaoIG5GImVCrOtjirK5ohZG48Cs9+fSfQ8GZFxWkmairtoBGvgHMx7u0JNi7HVVTq/szYcvdp/dy7L3HnD1WkfwBUEwh9Ii3gtiZjErRbQl7YEdR2qUpBrAYaJUkkqdFfiF01JxQ80Kk7XOC9qFUJnEj+EfD2eAkaA=
+	t=1733236695; cv=none; b=vCUBV3VdNfgHilkaMjrG5RULA7eG7RF1PGMJqkcKxrB5Q1tvhMQ4whPvWkq5u3kj5S0Q0OlSA11SqBIh3q2KyvFIquLizq6ybRTeA5Nhld/sFYsUumQN5VgghctFAkmF+DPSPCiQsSfKtqd9jjtZ6be+FVFupBynTucyh4TYqMw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733236692; c=relaxed/simple;
-	bh=sioVq7aNiU/4UMhmTyQaJGuzX5dD/QQ6mfadr2mrslw=;
+	s=arc-20240116; t=1733236695; c=relaxed/simple;
+	bh=rAkKprn/TSbaHjnqTaZw/w199xV9PR4Py0yfCzjSOkc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mKvidXqqPUm6uo+bIkTakCtaqmQss/qk5mcAl7wYPc3OoZWWkWoKO72lgdHSnx22YCYQoDsewg/kDc0+H8mxz1TfXQAJ0HZIcCgCr662XswRewCokGL13JICixcG+fXnHODIvEaDp8XnR8HGkmOeBZAiG8KQRI16c3sZT0qowHU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QU4dz/v1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aAXBSBcFWvBF3PxH0PRtIC69ogulCFjRSubXhRFEzxrVXn6Q7JtjEM2M7z43CAWLAKHtlLPqQHUV6Sohzah1J6lyXcprtoIXhYAQXeTpTcarWgOHqQT+9eq/IgrZQQipdlzVCA3ZSeAmnBu/FTsZ4zQbjD/r9E4DVV3pCQFZmzs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r7gJUhjC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QU4dz/v1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40844C4CECF;
-	Tue,  3 Dec 2024 14:38:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r7gJUhjC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82623C4CECF;
+	Tue,  3 Dec 2024 14:38:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733236691;
-	bh=sioVq7aNiU/4UMhmTyQaJGuzX5dD/QQ6mfadr2mrslw=;
+	s=korg; t=1733236695;
+	bh=rAkKprn/TSbaHjnqTaZw/w199xV9PR4Py0yfCzjSOkc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QU4dz/v1B3+CUSoG/Z/8EgBPv49iLgnSHMre4QdJzeQxIYHupBWFPpCGyiFnekEo2
-	 G6rwbXiKT72kApgq3HWLBh3RhHTh7O25xYkBDrmXeFuXuR31Yfb/5ACL1oh3n+0VRs
-	 qC4hZuzT/D+9IEiXBkF9qTOwZgyVCwmPyWOgnrWA=
+	b=r7gJUhjCPKTMXtn1BSLN9eFJ1FYFo/mXckj4KYlMsB0gkyVaen4ID7WwPtyPEA2aN
+	 HoRwExHDy4mmpbUdkwZ1WUxdhgeCEs/SrwlJJ992/kK0FBzXq/jx1YEoZV6bJf9G3j
+	 ahJ2A5SEeWBdTWoQlV5yA8RNWaT8GR3ZldpYNAec=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ye Bin <yebin10@huawei.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Vitalii Mordan <mordan@ispras.ru>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 065/138] scsi: bfa: Fix use-after-free in bfad_im_module_exit()
-Date: Tue,  3 Dec 2024 15:31:34 +0100
-Message-ID: <20241203141926.045544011@linuxfoundation.org>
+Subject: [PATCH 4.19 092/138] marvell: pxa168_eth: fix call balance of pep->clk handling routines
+Date: Tue,  3 Dec 2024 15:32:01 +0100
+Message-ID: <20241203141927.087895689@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203141923.524658091@linuxfoundation.org>
 References: <20241203141923.524658091@linuxfoundation.org>
@@ -51,107 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ye Bin <yebin10@huawei.com>
+From: Vitalii Mordan <mordan@ispras.ru>
 
-[ Upstream commit 178b8f38932d635e90f5f0e9af1986c6f4a89271 ]
+[ Upstream commit b032ae57d4fe2b2445e3bc190db6fcaa8c102f68 ]
 
-BUG: KASAN: slab-use-after-free in __lock_acquire+0x2aca/0x3a20
-Read of size 8 at addr ffff8881082d80c8 by task modprobe/25303
+If the clock pep->clk was not enabled in pxa168_eth_probe,
+it should not be disabled in any path.
 
-Call Trace:
- <TASK>
- dump_stack_lvl+0x95/0xe0
- print_report+0xcb/0x620
- kasan_report+0xbd/0xf0
- __lock_acquire+0x2aca/0x3a20
- lock_acquire+0x19b/0x520
- _raw_spin_lock+0x2b/0x40
- attribute_container_unregister+0x30/0x160
- fc_release_transport+0x19/0x90 [scsi_transport_fc]
- bfad_im_module_exit+0x23/0x60 [bfa]
- bfad_init+0xdb/0xff0 [bfa]
- do_one_initcall+0xdc/0x550
- do_init_module+0x22d/0x6b0
- load_module+0x4e96/0x5ff0
- init_module_from_file+0xcd/0x130
- idempotent_init_module+0x330/0x620
- __x64_sys_finit_module+0xb3/0x110
- do_syscall_64+0xc1/0x1d0
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
- </TASK>
+Conversely, if it was enabled in pxa168_eth_probe, it must be disabled
+in all error paths to ensure proper cleanup.
 
-Allocated by task 25303:
- kasan_save_stack+0x24/0x50
- kasan_save_track+0x14/0x30
- __kasan_kmalloc+0x7f/0x90
- fc_attach_transport+0x4f/0x4740 [scsi_transport_fc]
- bfad_im_module_init+0x17/0x80 [bfa]
- bfad_init+0x23/0xff0 [bfa]
- do_one_initcall+0xdc/0x550
- do_init_module+0x22d/0x6b0
- load_module+0x4e96/0x5ff0
- init_module_from_file+0xcd/0x130
- idempotent_init_module+0x330/0x620
- __x64_sys_finit_module+0xb3/0x110
- do_syscall_64+0xc1/0x1d0
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
+Use the devm_clk_get_enabled helper function to ensure proper call balance
+for pep->clk.
 
-Freed by task 25303:
- kasan_save_stack+0x24/0x50
- kasan_save_track+0x14/0x30
- kasan_save_free_info+0x3b/0x60
- __kasan_slab_free+0x38/0x50
- kfree+0x212/0x480
- bfad_im_module_init+0x7e/0x80 [bfa]
- bfad_init+0x23/0xff0 [bfa]
- do_one_initcall+0xdc/0x550
- do_init_module+0x22d/0x6b0
- load_module+0x4e96/0x5ff0
- init_module_from_file+0xcd/0x130
- idempotent_init_module+0x330/0x620
- __x64_sys_finit_module+0xb3/0x110
- do_syscall_64+0xc1/0x1d0
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
+Found by Linux Verification Center (linuxtesting.org) with Klever.
 
-Above issue happens as follows:
-
-bfad_init
-  error = bfad_im_module_init()
-    fc_release_transport(bfad_im_scsi_transport_template);
-  if (error)
-    goto ext;
-
-ext:
-  bfad_im_module_exit();
-    fc_release_transport(bfad_im_scsi_transport_template);
-    --> Trigger double release
-
-Don't call bfad_im_module_exit() if bfad_im_module_init() failed.
-
-Fixes: 7725ccfda597 ("[SCSI] bfa: Brocade BFA FC SCSI driver")
-Signed-off-by: Ye Bin <yebin10@huawei.com>
-Link: https://lore.kernel.org/r/20241023011809.63466-1-yebin@huaweicloud.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: a49f37eed22b ("net: add Fast Ethernet driver for PXA168.")
+Signed-off-by: Vitalii Mordan <mordan@ispras.ru>
+Link: https://patch.msgid.link/20241121200658.2203871-1-mordan@ispras.ru
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/bfa/bfad.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/net/ethernet/marvell/pxa168_eth.c | 13 ++++---------
+ 1 file changed, 4 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/scsi/bfa/bfad.c b/drivers/scsi/bfa/bfad.c
-index bd7e6a6fc1f18..7a2a9b05ed091 100644
---- a/drivers/scsi/bfa/bfad.c
-+++ b/drivers/scsi/bfa/bfad.c
-@@ -1711,9 +1711,8 @@ bfad_init(void)
+diff --git a/drivers/net/ethernet/marvell/pxa168_eth.c b/drivers/net/ethernet/marvell/pxa168_eth.c
+index 0d6a4e47e7a50..962d7046801cf 100644
+--- a/drivers/net/ethernet/marvell/pxa168_eth.c
++++ b/drivers/net/ethernet/marvell/pxa168_eth.c
+@@ -1417,18 +1417,15 @@ static int pxa168_eth_probe(struct platform_device *pdev)
  
- 	error = bfad_im_module_init();
- 	if (error) {
--		error = -ENOMEM;
- 		printk(KERN_WARNING "bfad_im_module_init failure\n");
--		goto ext;
-+		return -ENOMEM;
+ 	printk(KERN_NOTICE "PXA168 10/100 Ethernet Driver\n");
+ 
+-	clk = devm_clk_get(&pdev->dev, NULL);
++	clk = devm_clk_get_enabled(&pdev->dev, NULL);
+ 	if (IS_ERR(clk)) {
+-		dev_err(&pdev->dev, "Fast Ethernet failed to get clock\n");
++		dev_err(&pdev->dev, "Fast Ethernet failed to get and enable clock\n");
+ 		return -ENODEV;
  	}
+-	clk_prepare_enable(clk);
  
- 	if (strcmp(FCPI_NAME, " fcpim") == 0)
+ 	dev = alloc_etherdev(sizeof(struct pxa168_eth_private));
+-	if (!dev) {
+-		err = -ENOMEM;
+-		goto err_clk;
+-	}
++	if (!dev)
++		return -ENOMEM;
+ 
+ 	platform_set_drvdata(pdev, dev);
+ 	pep = netdev_priv(dev);
+@@ -1541,8 +1538,6 @@ static int pxa168_eth_probe(struct platform_device *pdev)
+ 	mdiobus_free(pep->smi_bus);
+ err_netdev:
+ 	free_netdev(dev);
+-err_clk:
+-	clk_disable_unprepare(clk);
+ 	return err;
+ }
+ 
 -- 
 2.43.0
 
