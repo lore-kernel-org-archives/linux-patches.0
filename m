@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52B581F472A;
-	Tue,  3 Dec 2024 15:25:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 353D31F130F;
+	Tue,  3 Dec 2024 15:25:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733239510; cv=none; b=rSZ30rB4uzIzF0kyTrygp47Lx/6hSKiaioKrJcA58wwLlyNitfDPEmRC2AUFA1PTmbWz52X4U2gHCdS30YqynC6GWzRL1dxlvbDdDPFLSgD0+/1BN7aOe/zr7AHP0oKhHzbG2K/QLhivZww+JIesMQqmx5jiymCnNHWgubAHGLc=
+	t=1733239513; cv=none; b=tHA3au01WhgpdESDcydks3DPx0Uqv3wbDzw9GJ5+qVf92m/EkPy/dwLVKI9rzsOyJRRhWKr5NC3Ywz7FHOFsoQm67OJp9lnnB8JEMbQMDNktSeccCowL4luTg8FAHOSylenGM7Yk7xLG1mUfNPTvxy72Hb3eXy2SC+7AIc8dwyM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733239510; c=relaxed/simple;
-	bh=eGciI+ZMTTs+2HA7z+tD0sFJeyLmLtwP7vWWyyURaR8=;
+	s=arc-20240116; t=1733239513; c=relaxed/simple;
+	bh=eyaH8wYdGIG9NVksKN+r03K70zhu4pq5leNm/D3zb1U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IvcCntVPdhi51qMMMiH4cKWnm6YTpKum97p29VIuCUV56P5Tf7TOwvcd9WNYb4n+s2jNnB4gS2t3F6R8N42Mwv8G1BuBZvIYTCoVjK6XQyJJlJjJNlTqYtLYqVejZvE+Rqkkw5hNt1WXEJ7ECphYAFOjMhQcgtFEt1HZxM+zmos=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jTtdG3a/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CnJKXYsOi1a+3diA6wK+hC0Awd7/Vj2+e2XsGoZlQxcw3LpsqirhBIsc4kWIF1wHG80CUq3xyZrLnxbrXjt1ksSUYsgw5sf5ekmoXjftpzL/5iHBnDMelPjlwm7RO1Yul3qUsZ3IejJ5yC3tm9WxRvLQR7I7jM4PhVA9W5P72z0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xYMgxDiN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jTtdG3a/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2A1BC4CECF;
-	Tue,  3 Dec 2024 15:25:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xYMgxDiN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABA67C4CECF;
+	Tue,  3 Dec 2024 15:25:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733239510;
-	bh=eGciI+ZMTTs+2HA7z+tD0sFJeyLmLtwP7vWWyyURaR8=;
+	s=korg; t=1733239513;
+	bh=eyaH8wYdGIG9NVksKN+r03K70zhu4pq5leNm/D3zb1U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jTtdG3a/ZYaWQKU7zyhOi+YDNsL4aRZY7qpB97ZZBtAKZ6Spml+N/nhqDWi/bsh4J
-	 bcuAVE/taRVvWO7lav6cHKhfVDYnY8aksXtHhSEyqmGzaFrOpYuOjWMMCV6uqaRCWC
-	 D5yx6xwP6j/0PHWYTUa9JKml9RQmMKuy/oxU/orw=
+	b=xYMgxDiNLpZF6AkC7ZZsio1XtDpGknchGH6/Jy2gJFdghpZnC7u2bGypRW6kJvlm3
+	 Qbg1ivQU9J9+3cW7PhZBT2hS7zVOjkbeYjHiscIo/LC/g0f4WVCLyRsgoWRR/lt1KN
+	 BxgtS0vQZz+Nu7AIO7AeHDySr0YIjPf8ABgYGWDM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 611/817] usb: typec: fix potential array underflow in ucsi_ccg_sync_control()
-Date: Tue,  3 Dec 2024 15:43:03 +0100
-Message-ID: <20241203144019.782907270@linuxfoundation.org>
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 6.11 638/817] ext4: fix FS_IOC_GETFSMAP handling
+Date: Tue,  3 Dec 2024 15:43:30 +0100
+Message-ID: <20241203144020.853556336@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -51,49 +49,158 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Theodore Ts'o <tytso@mit.edu>
 
-[ Upstream commit e56aac6e5a25630645607b6856d4b2a17b2311a5 ]
+commit 4a622e4d477bb12ad5ed4abbc7ad1365de1fa347 upstream.
 
-The "command" variable can be controlled by the user via debugfs.  The
-worry is that if con_index is zero then "&uc->ucsi->connector[con_index
-- 1]" would be an array underflow.
+The original implementation ext4's FS_IOC_GETFSMAP handling only
+worked when the range of queried blocks included at least one free
+(unallocated) block range.  This is because how the metadata blocks
+were emitted was as a side effect of ext4_mballoc_query_range()
+calling ext4_getfsmap_datadev_helper(), and that function was only
+called when a free block range was identified.  As a result, this
+caused generic/365 to fail.
 
-Fixes: 170a6726d0e2 ("usb: typec: ucsi: add support for separate DP altmode devices")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/c69ef0b3-61b0-4dde-98dd-97b97f81d912@stanley.mountain
+Fix this by creating a new function ext4_getfsmap_meta_helper() which
+gets called so that blocks before the first free block range in a
+block group can get properly reported.
+
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/typec/ucsi/ucsi_ccg.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ fs/ext4/fsmap.c   |   54 +++++++++++++++++++++++++++++++++++++++++++++++++++++-
+ fs/ext4/mballoc.c |   18 ++++++++++++++----
+ fs/ext4/mballoc.h |    1 +
+ 3 files changed, 68 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/usb/typec/ucsi/ucsi_ccg.c b/drivers/usb/typec/ucsi/ucsi_ccg.c
-index 763ff99f000d9..14c2dc9255b54 100644
---- a/drivers/usb/typec/ucsi/ucsi_ccg.c
-+++ b/drivers/usb/typec/ucsi/ucsi_ccg.c
-@@ -644,6 +644,10 @@ static int ucsi_ccg_sync_control(struct ucsi *ucsi, u64 command)
- 	    uc->has_multiple_dp) {
- 		con_index = (uc->last_cmd_sent >> 16) &
- 			UCSI_CMD_CONNECTOR_MASK;
-+		if (con_index == 0) {
-+			ret = -EINVAL;
-+			goto unlock;
+--- a/fs/ext4/fsmap.c
++++ b/fs/ext4/fsmap.c
+@@ -185,6 +185,56 @@ static inline ext4_fsblk_t ext4_fsmap_ne
+ 	return fmr->fmr_physical + fmr->fmr_length;
+ }
+ 
++static int ext4_getfsmap_meta_helper(struct super_block *sb,
++				     ext4_group_t agno, ext4_grpblk_t start,
++				     ext4_grpblk_t len, void *priv)
++{
++	struct ext4_getfsmap_info *info = priv;
++	struct ext4_fsmap *p;
++	struct ext4_fsmap *tmp;
++	struct ext4_sb_info *sbi = EXT4_SB(sb);
++	ext4_fsblk_t fsb, fs_start, fs_end;
++	int error;
++
++	fs_start = fsb = (EXT4_C2B(sbi, start) +
++			  ext4_group_first_block_no(sb, agno));
++	fs_end = fs_start + EXT4_C2B(sbi, len);
++
++	/* Return relevant extents from the meta_list */
++	list_for_each_entry_safe(p, tmp, &info->gfi_meta_list, fmr_list) {
++		if (p->fmr_physical < info->gfi_next_fsblk) {
++			list_del(&p->fmr_list);
++			kfree(p);
++			continue;
 +		}
- 		con = &uc->ucsi->connector[con_index - 1];
- 		ucsi_ccg_update_set_new_cam_cmd(uc, con, &command);
- 	}
-@@ -651,6 +655,7 @@ static int ucsi_ccg_sync_control(struct ucsi *ucsi, u64 command)
- 	ret = ucsi_sync_control_common(ucsi, command);
++		if (p->fmr_physical <= fs_start ||
++		    p->fmr_physical + p->fmr_length <= fs_end) {
++			/* Emit the retained free extent record if present */
++			if (info->gfi_lastfree.fmr_owner) {
++				error = ext4_getfsmap_helper(sb, info,
++							&info->gfi_lastfree);
++				if (error)
++					return error;
++				info->gfi_lastfree.fmr_owner = 0;
++			}
++			error = ext4_getfsmap_helper(sb, info, p);
++			if (error)
++				return error;
++			fsb = p->fmr_physical + p->fmr_length;
++			if (info->gfi_next_fsblk < fsb)
++				info->gfi_next_fsblk = fsb;
++			list_del(&p->fmr_list);
++			kfree(p);
++			continue;
++		}
++	}
++	if (info->gfi_next_fsblk < fsb)
++		info->gfi_next_fsblk = fsb;
++
++	return 0;
++}
++
++
+ /* Transform a blockgroup's free record into a fsmap */
+ static int ext4_getfsmap_datadev_helper(struct super_block *sb,
+ 					ext4_group_t agno, ext4_grpblk_t start,
+@@ -539,6 +589,7 @@ static int ext4_getfsmap_datadev(struct
+ 		error = ext4_mballoc_query_range(sb, info->gfi_agno,
+ 				EXT4_B2C(sbi, info->gfi_low.fmr_physical),
+ 				EXT4_B2C(sbi, info->gfi_high.fmr_physical),
++				ext4_getfsmap_meta_helper,
+ 				ext4_getfsmap_datadev_helper, info);
+ 		if (error)
+ 			goto err;
+@@ -560,7 +611,8 @@ static int ext4_getfsmap_datadev(struct
  
- 	pm_runtime_put_sync(uc->dev);
-+unlock:
- 	mutex_unlock(&uc->lock);
+ 	/* Report any gaps at the end of the bg */
+ 	info->gfi_last = true;
+-	error = ext4_getfsmap_datadev_helper(sb, end_ag, last_cluster, 0, info);
++	error = ext4_getfsmap_datadev_helper(sb, end_ag, last_cluster + 1,
++					     0, info);
+ 	if (error)
+ 		goto err;
  
- 	return ret;
--- 
-2.43.0
-
+--- a/fs/ext4/mballoc.c
++++ b/fs/ext4/mballoc.c
+@@ -6998,13 +6998,14 @@ int
+ ext4_mballoc_query_range(
+ 	struct super_block		*sb,
+ 	ext4_group_t			group,
+-	ext4_grpblk_t			start,
++	ext4_grpblk_t			first,
+ 	ext4_grpblk_t			end,
++	ext4_mballoc_query_range_fn	meta_formatter,
+ 	ext4_mballoc_query_range_fn	formatter,
+ 	void				*priv)
+ {
+ 	void				*bitmap;
+-	ext4_grpblk_t			next;
++	ext4_grpblk_t			start, next;
+ 	struct ext4_buddy		e4b;
+ 	int				error;
+ 
+@@ -7015,10 +7016,19 @@ ext4_mballoc_query_range(
+ 
+ 	ext4_lock_group(sb, group);
+ 
+-	start = max(e4b.bd_info->bb_first_free, start);
++	start = max(e4b.bd_info->bb_first_free, first);
+ 	if (end >= EXT4_CLUSTERS_PER_GROUP(sb))
+ 		end = EXT4_CLUSTERS_PER_GROUP(sb) - 1;
+-
++	if (meta_formatter && start != first) {
++		if (start > end)
++			start = end;
++		ext4_unlock_group(sb, group);
++		error = meta_formatter(sb, group, first, start - first,
++				       priv);
++		if (error)
++			goto out_unload;
++		ext4_lock_group(sb, group);
++	}
+ 	while (start <= end) {
+ 		start = mb_find_next_zero_bit(bitmap, end + 1, start);
+ 		if (start > end)
+--- a/fs/ext4/mballoc.h
++++ b/fs/ext4/mballoc.h
+@@ -259,6 +259,7 @@ ext4_mballoc_query_range(
+ 	ext4_group_t			agno,
+ 	ext4_grpblk_t			start,
+ 	ext4_grpblk_t			end,
++	ext4_mballoc_query_range_fn	meta_formatter,
+ 	ext4_mballoc_query_range_fn	formatter,
+ 	void				*priv);
+ 
 
 
