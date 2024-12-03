@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E94A123CE;
-	Tue,  3 Dec 2024 16:03:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D725F14A088;
+	Tue,  3 Dec 2024 16:03:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733241801; cv=none; b=mEVv8EPx04h6dD7JAtSEIKDwEAR19y82m44tTitXtsrjFI93OEpdOXwueDwDnwJqRmwcZKcASz5ZRaR6AvjIKyQuFfErEh3TmqcB9cAPq8JwhkS28azoTUkssc/T04ECHxQFHv7G08fBzkd/isP1tYAnBoMTk+ehFe5siW5fbSE=
+	t=1733241803; cv=none; b=gbEak4lBZuVFK5rUoDaO0ecjR7b2EzqYtrYI8WVepOnVmnjChBKNSqJtc7afw7XNMB89S3Q0FKtd1jJam9aHbTU5Qr5pwV9ft7Ww+EG5/nP+xmSQMo1yjVqSvVL9YRlIgMzXv0p/HFC2hmAmVTOLPfsHEa9pmxW6wqOinVERKvk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733241801; c=relaxed/simple;
-	bh=nhHPyBsbZbxozTJ4ze/xL0cM78VQM6+MGyws4tZgUBQ=;
+	s=arc-20240116; t=1733241803; c=relaxed/simple;
+	bh=s/01cRAyXFeeo1kI7/75JJgyvX1DpU1/VTAxSmUNXA0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T9/3qlFSqqpOv2XwiXTCqih/8Seau4Mc9KqSJkrb57nsnr086dOmVLoqyWcq/uPshTsenC6pCVEItLBJrVng4dhF14VS06QlCet9MRJHBqV9c7A7yDXjO5T+S0BVe00g4nHBuEWtPk3GpqaoRtclekJ88aJZzGdvpRfmLO9Tuck=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T3J9VDg0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Co7SPBhIKrppn/Zei72sI0IcvmD+dHM/mgt9IQGJuDOX9FOvltEVmXssTRDXRn0iiJigTsNP9zM3XRoPL4BcQ1ZvwrrVfBTdCF2Pm4yX41zkiexgS3VTYhGaZUCmA2Xds5X6qONDjqXLROeHV2Th+2rI+QHaIuBK7ZakC2mrR54=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x3eRN1IN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T3J9VDg0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 105ADC4CECF;
-	Tue,  3 Dec 2024 16:03:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x3eRN1IN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53057C4CECF;
+	Tue,  3 Dec 2024 16:03:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733241800;
-	bh=nhHPyBsbZbxozTJ4ze/xL0cM78VQM6+MGyws4tZgUBQ=;
+	s=korg; t=1733241803;
+	bh=s/01cRAyXFeeo1kI7/75JJgyvX1DpU1/VTAxSmUNXA0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T3J9VDg01p8c9Prynb+4Wu0kmp3XHV+5biKnY3ZnFrQCVvf3tHJW0ZO6h/DpbjAv0
-	 ole/FMpuMgpnY/C4vjzgkGPn72xtjZ0vf/gl7WU2vx9G8qK1PeLkFQAmYmwcNO05XA
-	 Pn1/JbVNefA79E7ecLWMOv6+mty8mVJ+G1cmwYn0=
+	b=x3eRN1INi2YE3ew6NrEwQgOuSxHSi0UJcWTMy5BrjWupw56rp0mQ2IqoOuXcoSYd8
+	 j7zylYhQ9vAmaFDv04EHopIKAxv2xVCfxIV6+cadoDjdpEp6OijkAqUxcjbR2R58iR
+	 CfyVIqnFolt26QslP19xqvABsTq56tqr/DhPaxVc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Jonathan Marek <jonathan@marek.ca>,
 	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 521/826] remoteproc: qcom: pas: add minidump_id to SM8350 resources
-Date: Tue,  3 Dec 2024 15:44:08 +0100
-Message-ID: <20241203144804.085819917@linuxfoundation.org>
+Subject: [PATCH 6.12 522/826] rpmsg: glink: use only lower 16-bits of param2 for CMD_OPEN name length
+Date: Tue,  3 Dec 2024 15:44:09 +0100
+Message-ID: <20241203144804.123342435@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -52,44 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Jonathan Marek <jonathan@marek.ca>
 
-[ Upstream commit e8983156d54f59f57e648ecd44f01c16572da842 ]
+[ Upstream commit 06c59d97f63c1b8af521fa5aef8a716fb988b285 ]
 
-Specify minidump_id for the SM8350 DSPs. It was omitted for in the
-original commit e8b4e9a21af7 ("remoteproc: qcom: pas: Add SM8350 PAS
-remoteprocs").
+The name len field of the CMD_OPEN packet is only 16-bits and the upper
+16-bits of "param2" are a different "prio" field, which can be nonzero in
+certain situations, and CMD_OPEN packets can be unexpectedly dropped
+because of this.
 
-Fixes: e8b4e9a21af7 ("remoteproc: qcom: pas: Add SM8350 PAS remoteprocs")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://lore.kernel.org/r/20241027-sar2130p-adsp-v1-2-bd204e39d24e@linaro.org
+Fix this by masking out the upper 16 bits of param2.
+
+Fixes: b4f8e52b89f6 ("rpmsg: Introduce Qualcomm RPM glink driver")
+Signed-off-by: Jonathan Marek <jonathan@marek.ca>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/r/20241007235935.6216-1-jonathan@marek.ca
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/remoteproc/qcom_q6v5_pas.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/rpmsg/qcom_glink_native.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
-index 27b23a000c7ae..f4f4b3df3884e 100644
---- a/drivers/remoteproc/qcom_q6v5_pas.c
-+++ b/drivers/remoteproc/qcom_q6v5_pas.c
-@@ -917,6 +917,7 @@ static const struct adsp_data sm8250_adsp_resource = {
- 	.crash_reason_smem = 423,
- 	.firmware_name = "adsp.mdt",
- 	.pas_id = 1,
-+	.minidump_id = 5,
- 	.auto_boot = true,
- 	.proxy_pd_names = (char*[]){
- 		"lcx",
-@@ -1134,6 +1135,7 @@ static const struct adsp_data sm8350_cdsp_resource = {
- 	.crash_reason_smem = 601,
- 	.firmware_name = "cdsp.mdt",
- 	.pas_id = 18,
-+	.minidump_id = 7,
- 	.auto_boot = true,
- 	.proxy_pd_names = (char*[]){
- 		"cx",
+diff --git a/drivers/rpmsg/qcom_glink_native.c b/drivers/rpmsg/qcom_glink_native.c
+index d3af1dfa3c7d7..a2f9d85c7156d 100644
+--- a/drivers/rpmsg/qcom_glink_native.c
++++ b/drivers/rpmsg/qcom_glink_native.c
+@@ -1204,7 +1204,8 @@ void qcom_glink_native_rx(struct qcom_glink *glink)
+ 			ret = qcom_glink_rx_open_ack(glink, param1);
+ 			break;
+ 		case GLINK_CMD_OPEN:
+-			ret = qcom_glink_rx_defer(glink, param2);
++			/* upper 16 bits of param2 are the "prio" field */
++			ret = qcom_glink_rx_defer(glink, param2 & 0xffff);
+ 			break;
+ 		case GLINK_CMD_TX_DATA:
+ 		case GLINK_CMD_TX_DATA_CONT:
 -- 
 2.43.0
 
