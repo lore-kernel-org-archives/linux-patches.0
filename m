@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 873791FC115;
-	Tue,  3 Dec 2024 15:32:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01B291FECA7;
+	Tue,  3 Dec 2024 15:32:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733239972; cv=none; b=ePZ31FfA0zGxMpuQ+b1v8pp8bhNWrRv4W5rjKkgiRYNXS6i0gkqH0p1I970IyNiEKQPo7h9WGKsoS2vQds/FJD++LVPkTTe4g/kcss1i3ZA4E5YIyhc70GLEd3eU+qoJ8cnzN8JqrQAonEl37WU+DtrY2ylfrfCVSJgxXumX55E=
+	t=1733239975; cv=none; b=gZ4r5b+kLbcBzDBQNHtJbx97wIMDmleBPFCMyE0cNWKw+45W+AdUU44rKLpyqCrF7am0T/ERQwgsKsw6VVjVU+aySmrQXmtRJZjDxse/s73Kdo2qRDtuMjCnXq+6JJeTM/IfFCSGo2y4+tQktGb7eWnuBLA6MXugSHdpvIRcp2Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733239972; c=relaxed/simple;
-	bh=AAYAHHfqNkUliyOh3kJgoBN7XMP93QSDeMQsEKyAbYc=;
+	s=arc-20240116; t=1733239975; c=relaxed/simple;
+	bh=0vJWsU3bOfSmqX384HK+XEmH9vYsEtZh2Pwz6k6NDes=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QRhVKq80cvDS5bWR1U9xtbIO3/dHNCx/kxIgEzfIko1SQHroTrfWcCtXZelGeol2uMSFBOM83rRdLwkpnS+7MngyA8p1LprcdG0F7SmG9OZWmoZapaJH8DhCr+s6YunEZGoHzwG2gjLcLSpbSlpNWE8B8fzC03I1KhebOwCWoIY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zRV3isAF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pjnS/X36m0Co9msPiS16xzxK76G00qcETRVxkhs8jHgNCZ0I5DDQDFCI1+MJ8SGcsL756lnuAWl0HFczChh3NOOFQbMBKjFXxzpMFGagTO//v58T0gZFqVN7t5ukfuvDSDufmGFMZd5G/jaOF3H9ZjKwB8nkZbtKMzYtUAuUwBA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sKX3V1E/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zRV3isAF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6AC2C4CED6;
-	Tue,  3 Dec 2024 15:32:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sKX3V1E/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79170C4CECF;
+	Tue,  3 Dec 2024 15:32:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733239972;
-	bh=AAYAHHfqNkUliyOh3kJgoBN7XMP93QSDeMQsEKyAbYc=;
+	s=korg; t=1733239974;
+	bh=0vJWsU3bOfSmqX384HK+XEmH9vYsEtZh2Pwz6k6NDes=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zRV3isAFWU1cxqt0iJHzl8ofof+fRVnM93c5EBRkLhMzpqVTTXfEpWtTcVMmFg2qY
-	 5H25uM8zqi7IiG4Jg1A//JNhSHu36XMIPTrm8oByvoaYN9KfcXpDrJ7PH/ciASUBvf
-	 A/rK2dtFsOiZolS3KVdCHLSjVqy+xe0unodCWR/Y=
+	b=sKX3V1E/tUHiaWu32N/aJvp6VmbYM/VSxGPozMa/REkS7tZlbY/85yKnB94ztlejX
+	 D7SMNvz0bZfSTJ9+bkpSIib0jqiZ60Hy9EfO2ZnHlbXQvN+MtnELJUBoBoHtDV66O2
+	 LzOQKfoJ8xaLbR/88mMV2dBGPzuIESeEF5KYGLpc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Igor Raits <igor@gooddata.com>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Masahiro Yamada <masahiroy@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 780/817] Revert "nfs: dont reuse partially completed requests in nfs_lock_and_join_requests"
-Date: Tue,  3 Dec 2024 15:45:52 +0100
-Message-ID: <20241203144026.460504654@linuxfoundation.org>
+Subject: [PATCH 6.11 798/817] Rename .data.once to .data..once to fix resetting WARN*_ONCE
+Date: Tue,  3 Dec 2024 15:46:10 +0100
+Message-ID: <20241203144027.161390251@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -51,115 +50,151 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Trond Myklebust <trond.myklebust@hammerspace.com>
+From: Masahiro Yamada <masahiroy@kernel.org>
 
-[ Upstream commit 66f9dac9077c9c063552e465212abeb8f97d28a7 ]
+[ Upstream commit dbefa1f31a91670c9e7dac9b559625336206466f ]
 
-This reverts commit b571cfcb9dcac187c6d967987792d37cb0688610.
+Commit b1fca27d384e ("kernel debug: support resetting WARN*_ONCE")
+added support for clearing the state of once warnings. However,
+it is not functional when CONFIG_LD_DEAD_CODE_DATA_ELIMINATION or
+CONFIG_LTO_CLANG is enabled, because .data.once matches the
+.data.[0-9a-zA-Z_]* pattern in the DATA_MAIN macro.
 
-This patch appears to assume that if one request is complete, then the
-others will complete too before unlocking. That is not a valid
-assumption, since other requests could hit a non-fatal error or a short
-write that would cause them not to complete.
+Commit cb87481ee89d ("kbuild: linker script do not match C names unless
+LD_DEAD_CODE_DATA_ELIMINATION is configured") was introduced to suppress
+the issue for the default CONFIG_LD_DEAD_CODE_DATA_ELIMINATION=n case,
+providing a minimal fix for stable backporting. We were aware this did
+not address the issue for CONFIG_LD_DEAD_CODE_DATA_ELIMINATION=y. The
+plan was to apply correct fixes and then revert cb87481ee89d. [1]
 
-Reported-by: Igor Raits <igor@gooddata.com>
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=219508
-Fixes: b571cfcb9dca ("nfs: don't reuse partially completed requests in nfs_lock_and_join_requests")
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Seven years have passed since then, yet the #ifdef workaround remains in
+place. Meanwhile, commit b1fca27d384e introduced the .data.once section,
+and commit dc5723b02e52 ("kbuild: add support for Clang LTO") extended
+the #ifdef.
+
+Using a ".." separator in the section name fixes the issue for
+CONFIG_LD_DEAD_CODE_DATA_ELIMINATION and CONFIG_LTO_CLANG.
+
+[1]: https://lore.kernel.org/linux-kbuild/CAK7LNASck6BfdLnESxXUeECYL26yUDm0cwRZuM4gmaWUkxjL5g@mail.gmail.com/
+
+Fixes: b1fca27d384e ("kernel debug: support resetting WARN*_ONCE")
+Fixes: dc5723b02e52 ("kbuild: add support for Clang LTO")
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/write.c | 49 +++++++++++++++++++++++++++++--------------------
- 1 file changed, 29 insertions(+), 20 deletions(-)
+ include/asm-generic/vmlinux.lds.h | 2 +-
+ include/linux/mmdebug.h           | 6 +++---
+ include/linux/once.h              | 4 ++--
+ include/linux/once_lite.h         | 2 +-
+ include/net/net_debug.h           | 2 +-
+ mm/internal.h                     | 2 +-
+ 6 files changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/fs/nfs/write.c b/fs/nfs/write.c
-index d074d0ceb4f01..1e2b9ee4222e7 100644
---- a/fs/nfs/write.c
-+++ b/fs/nfs/write.c
-@@ -144,6 +144,31 @@ static void nfs_io_completion_put(struct nfs_io_completion *ioc)
- 		kref_put(&ioc->refcount, nfs_io_completion_release);
- }
+diff --git a/include/asm-generic/vmlinux.lds.h b/include/asm-generic/vmlinux.lds.h
+index bee5a71f4b41e..38d710f620efc 100644
+--- a/include/asm-generic/vmlinux.lds.h
++++ b/include/asm-generic/vmlinux.lds.h
+@@ -351,7 +351,7 @@
+ 	*(.data..shared_aligned) /* percpu related */			\
+ 	*(.data..unlikely)						\
+ 	__start_once = .;						\
+-	*(.data.once)							\
++	*(.data..once)							\
+ 	__end_once = .;							\
+ 	STRUCT_ALIGN();							\
+ 	*(__tracepoints)						\
+diff --git a/include/linux/mmdebug.h b/include/linux/mmdebug.h
+index 39a7714605a79..d7cb1e5ecbda9 100644
+--- a/include/linux/mmdebug.h
++++ b/include/linux/mmdebug.h
+@@ -46,7 +46,7 @@ void vma_iter_dump_tree(const struct vma_iterator *vmi);
+ 		}							\
+ 	} while (0)
+ #define VM_WARN_ON_ONCE_PAGE(cond, page)	({			\
+-	static bool __section(".data.once") __warned;			\
++	static bool __section(".data..once") __warned;			\
+ 	int __ret_warn_once = !!(cond);					\
+ 									\
+ 	if (unlikely(__ret_warn_once && !__warned)) {			\
+@@ -66,7 +66,7 @@ void vma_iter_dump_tree(const struct vma_iterator *vmi);
+ 	unlikely(__ret_warn);						\
+ })
+ #define VM_WARN_ON_ONCE_FOLIO(cond, folio)	({			\
+-	static bool __section(".data.once") __warned;			\
++	static bool __section(".data..once") __warned;			\
+ 	int __ret_warn_once = !!(cond);					\
+ 									\
+ 	if (unlikely(__ret_warn_once && !__warned)) {			\
+@@ -77,7 +77,7 @@ void vma_iter_dump_tree(const struct vma_iterator *vmi);
+ 	unlikely(__ret_warn_once);					\
+ })
+ #define VM_WARN_ON_ONCE_MM(cond, mm)		({			\
+-	static bool __section(".data.once") __warned;			\
++	static bool __section(".data..once") __warned;			\
+ 	int __ret_warn_once = !!(cond);					\
+ 									\
+ 	if (unlikely(__ret_warn_once && !__warned)) {			\
+diff --git a/include/linux/once.h b/include/linux/once.h
+index bc714d414448a..30346fcdc7995 100644
+--- a/include/linux/once.h
++++ b/include/linux/once.h
+@@ -46,7 +46,7 @@ void __do_once_sleepable_done(bool *done, struct static_key_true *once_key,
+ #define DO_ONCE(func, ...)						     \
+ 	({								     \
+ 		bool ___ret = false;					     \
+-		static bool __section(".data.once") ___done = false;	     \
++		static bool __section(".data..once") ___done = false;	     \
+ 		static DEFINE_STATIC_KEY_TRUE(___once_key);		     \
+ 		if (static_branch_unlikely(&___once_key)) {		     \
+ 			unsigned long ___flags;				     \
+@@ -64,7 +64,7 @@ void __do_once_sleepable_done(bool *done, struct static_key_true *once_key,
+ #define DO_ONCE_SLEEPABLE(func, ...)						\
+ 	({									\
+ 		bool ___ret = false;						\
+-		static bool __section(".data.once") ___done = false;		\
++		static bool __section(".data..once") ___done = false;		\
+ 		static DEFINE_STATIC_KEY_TRUE(___once_key);			\
+ 		if (static_branch_unlikely(&___once_key)) {			\
+ 			___ret = __do_once_sleepable_start(&___done);		\
+diff --git a/include/linux/once_lite.h b/include/linux/once_lite.h
+index b7bce4983638f..27de7bc32a061 100644
+--- a/include/linux/once_lite.h
++++ b/include/linux/once_lite.h
+@@ -12,7 +12,7 @@
  
-+static void
-+nfs_page_set_inode_ref(struct nfs_page *req, struct inode *inode)
-+{
-+	if (!test_and_set_bit(PG_INODE_REF, &req->wb_flags)) {
-+		kref_get(&req->wb_kref);
-+		atomic_long_inc(&NFS_I(inode)->nrequests);
-+	}
-+}
-+
-+static int
-+nfs_cancel_remove_inode(struct nfs_page *req, struct inode *inode)
-+{
-+	int ret;
-+
-+	if (!test_bit(PG_REMOVE, &req->wb_flags))
-+		return 0;
-+	ret = nfs_page_group_lock(req);
-+	if (ret)
-+		return ret;
-+	if (test_and_clear_bit(PG_REMOVE, &req->wb_flags))
-+		nfs_page_set_inode_ref(req, inode);
-+	nfs_page_group_unlock(req);
-+	return 0;
-+}
-+
- /**
-  * nfs_folio_find_head_request - find head request associated with a folio
-  * @folio: pointer to folio
-@@ -540,7 +565,6 @@ static struct nfs_page *nfs_lock_and_join_requests(struct folio *folio)
- 	struct inode *inode = folio->mapping->host;
- 	struct nfs_page *head, *subreq;
- 	struct nfs_commit_info cinfo;
--	bool removed;
- 	int ret;
+ #define __ONCE_LITE_IF(condition)					\
+ 	({								\
+-		static bool __section(".data.once") __already_done;	\
++		static bool __section(".data..once") __already_done;	\
+ 		bool __ret_cond = !!(condition);			\
+ 		bool __ret_once = false;				\
+ 									\
+diff --git a/include/net/net_debug.h b/include/net/net_debug.h
+index 1e74684cbbdbc..4a79204c8d306 100644
+--- a/include/net/net_debug.h
++++ b/include/net/net_debug.h
+@@ -27,7 +27,7 @@ void netdev_info(const struct net_device *dev, const char *format, ...);
  
- 	/*
-@@ -565,18 +589,18 @@ static struct nfs_page *nfs_lock_and_join_requests(struct folio *folio)
- 		goto retry;
- 	}
- 
--	ret = nfs_page_group_lock(head);
-+	ret = nfs_cancel_remove_inode(head, inode);
- 	if (ret < 0)
- 		goto out_unlock;
- 
--	removed = test_bit(PG_REMOVE, &head->wb_flags);
-+	ret = nfs_page_group_lock(head);
-+	if (ret < 0)
-+		goto out_unlock;
- 
- 	/* lock each request in the page group */
- 	for (subreq = head->wb_this_page;
- 	     subreq != head;
- 	     subreq = subreq->wb_this_page) {
--		if (test_bit(PG_REMOVE, &subreq->wb_flags))
--			removed = true;
- 		ret = nfs_page_group_lock_subreq(head, subreq);
- 		if (ret < 0)
- 			goto out_unlock;
-@@ -584,21 +608,6 @@ static struct nfs_page *nfs_lock_and_join_requests(struct folio *folio)
- 
- 	nfs_page_group_unlock(head);
- 
--	/*
--	 * If PG_REMOVE is set on any request, I/O on that request has
--	 * completed, but some requests were still under I/O at the time
--	 * we locked the head request.
--	 *
--	 * In that case the above wait for all requests means that all I/O
--	 * has now finished, and we can restart from a clean slate.  Let the
--	 * old requests go away and start from scratch instead.
--	 */
--	if (removed) {
--		nfs_unroll_locks(head, head);
--		nfs_unlock_and_release_request(head);
--		goto retry;
--	}
--
- 	nfs_init_cinfo_from_inode(&cinfo, inode);
- 	nfs_join_page_group(head, &cinfo, inode);
- 	return head;
+ #define netdev_level_once(level, dev, fmt, ...)			\
+ do {								\
+-	static bool __section(".data.once") __print_once;	\
++	static bool __section(".data..once") __print_once;	\
+ 								\
+ 	if (!__print_once) {					\
+ 		__print_once = true;				\
+diff --git a/mm/internal.h b/mm/internal.h
+index 7da580dfae6c5..c791312eae764 100644
+--- a/mm/internal.h
++++ b/mm/internal.h
+@@ -42,7 +42,7 @@ struct folio_batch;
+  * when we specify __GFP_NOWARN.
+  */
+ #define WARN_ON_ONCE_GFP(cond, gfp)	({				\
+-	static bool __section(".data.once") __warned;			\
++	static bool __section(".data..once") __warned;			\
+ 	int __ret_warn_once = !!(cond);					\
+ 									\
+ 	if (unlikely(!(gfp & __GFP_NOWARN) && __ret_warn_once && !__warned)) { \
 -- 
 2.43.0
 
