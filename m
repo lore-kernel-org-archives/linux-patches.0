@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF2601E3DF9;
-	Tue,  3 Dec 2024 15:05:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4B3A33FE;
+	Tue,  3 Dec 2024 15:05:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733238307; cv=none; b=SDuqvMCn3qyywJcPL0hLs0kPIEWIHPIze2+48pqI21j13aOcukSZLuQT/PRxrn9/A3fjyKnoJ8uY+FKAfR7ZbP683JlfooDM56CnF9AZxsYuiXI3m7bIL6tSxRVd++PhVBWwAUu95UVS0SdOgYRU7BXP7TjYEkF6UWxnsdXGwys=
+	t=1733238309; cv=none; b=jvper7tm8cVVl2NZ1xQHonthT/l99TN7DRElcR1vt5vEitx0nm8wmASJteCDGIzESeLLRstMUksU4GUuKDJ4Eb7eIEFTY54R4Fp01xyhDhcyhmbeE66krTSPtWF4/D6YlhzIUOa1USPDwaubdZCpVsltzsu49fcKIs/dsXGmcAY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733238307; c=relaxed/simple;
-	bh=kj51eXIINTWsR+LMXBM3+65zTvomt5Pm5KnZAL0I/W0=;
+	s=arc-20240116; t=1733238309; c=relaxed/simple;
+	bh=5p34IGHjy3t6LXV7btZTxLBVMNxRa2zoTYkTICGpsp8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UiswLmWCXJ+gHHj2BYrmGum/+9P125YyMuYw/glzpkNVn8KDWemkyqQK1vdswArwnmo8XyTMRLEuTvkWYXUMcDKHHHaneMKC8nITXDVk/ToLV58Dc0b9HfM3T+vMxygwPsIckOfjWNcqyaeT7litvIJcnlk/r8hWVpdNnNUoeQs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p7q9teH3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=u9DO+mBriQ1Z+1ADJonsFqUP7EL+hnjhcb4gt9ODJUo6JdsfSVhKPxv/u9MI76oqyUOF9p1JPZRi8x8uxIgpvzclvnVmCkn+d9kGl/icCLAaA81aTzHWieou3RXV/+JIiy/4tRvd+6Pk34woMIBXWsLuVIZOuBAeFmKaoWu3qIQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n7XrKOk5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p7q9teH3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C080C4CED6;
-	Tue,  3 Dec 2024 15:05:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n7XrKOk5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A8E4C4CECF;
+	Tue,  3 Dec 2024 15:05:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733238306;
-	bh=kj51eXIINTWsR+LMXBM3+65zTvomt5Pm5KnZAL0I/W0=;
+	s=korg; t=1733238309;
+	bh=5p34IGHjy3t6LXV7btZTxLBVMNxRa2zoTYkTICGpsp8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p7q9teH3HGhSi6/vv31qshVSvQ90JxwKB9vfuXhcER7pN2Gwf31xwbaOTNikiajqp
-	 9xOufFYF71iGz1cdXmFeXNUXq6GjIcqZXK0Pau1TgEOsWGUR5FqEWxzx2tIbLtjzP5
-	 Too1fWLFw2tviiSNNM5BfJhNXum/ALb7VGRyZ31I=
+	b=n7XrKOk5AM+3Ztkw9hYGR5blxszgUs7jFYrm6qJFzvQoAr3PYmvw+QD5XrjnjLdDl
+	 DeXP6hNjIHRtrHm/sTL2SlF6kYNvmLVDByXRo9ynRkxR8msXfgYoA5RAJsYKebphoF
+	 92GgC7/tBbVNQbSLZwa8EOpx+vH0ts5vFpTqmxfE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Vetter <daniel.vetter@ffwll.ch>,
-	Jani Nikula <jani.nikula@intel.com>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
+	Rob Herring <robh@kernel.org>,
+	Chris Healy <cphealy@gmail.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 232/817] drm/ipuv3/parallel: convert to struct drm_edid
-Date: Tue,  3 Dec 2024 15:36:44 +0100
-Message-ID: <20241203144004.805068111@linuxfoundation.org>
+Subject: [PATCH 6.11 233/817] drm/imx: parallel-display: drop edid override support
+Date: Tue,  3 Dec 2024 15:36:45 +0100
+Message-ID: <20241203144004.844746235@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -51,66 +53,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jani Nikula <jani.nikula@intel.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit 42e08287a3185409a7a1923374a557e04fc36e48 ]
+[ Upstream commit fe30fabf229f7542a10dd249079fdb83844a7dba ]
 
-Prefer the struct drm_edid based functions for storing the EDID and
-updating the connector.
+None of the in-kernel DT files ever used edid override with the
+fsl-imx-drm driver. In case the EDID needs to be specified manually, DRM
+core allows one to either override it via the debugfs or to load it via
+request_firmware by using DRM_LOAD_EDID_FIRMWARE. In all other cases
+EDID and/or modes are to be provided as a part of the panel driver.
 
-Reviewed-by: Daniel Vetter <daniel.vetter@ffwll.ch>
-Link: https://patchwork.freedesktop.org/patch/msgid/a1698044d556072e79041d69b8702099fd17bd90.1724348429.git.jani.nikula@intel.com
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+Drop support for the edid property.
+
+Reviewed-by: Philipp Zabel <p.zabel@pengutronix.de>
+Acked-by: Rob Herring <robh@kernel.org>
+Tested-by: Chris Healy <cphealy@gmail.com>
+Tested-by: Philipp Zabel <p.zabel@pengutronix.de> # on imx6q-nitrogen6x
+Link: https://patchwork.freedesktop.org/patch/msgid/20240602-drm-imx-cleanup-v3-4-e549e2a43100@linaro.org
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Stable-dep-of: f673055a4678 ("drm/imx: Add missing DRM_BRIDGE_CONNECTOR dependency")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/imx/ipuv3/parallel-display.c | 14 +++++++++-----
- 1 file changed, 9 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/imx/ipuv3/parallel-display.c | 17 -----------------
+ 1 file changed, 17 deletions(-)
 
 diff --git a/drivers/gpu/drm/imx/ipuv3/parallel-display.c b/drivers/gpu/drm/imx/ipuv3/parallel-display.c
-index 55dedd73f528c..91d7808a2d8d3 100644
+index 91d7808a2d8d3..4d17fb96e77c5 100644
 --- a/drivers/gpu/drm/imx/ipuv3/parallel-display.c
 +++ b/drivers/gpu/drm/imx/ipuv3/parallel-display.c
-@@ -34,7 +34,7 @@ struct imx_parallel_display_encoder {
+@@ -16,7 +16,6 @@
+ 
+ #include <drm/drm_atomic_helper.h>
+ #include <drm/drm_bridge.h>
+-#include <drm/drm_edid.h>
+ #include <drm/drm_managed.h>
+ #include <drm/drm_of.h>
+ #include <drm/drm_panel.h>
+@@ -34,7 +33,6 @@ struct imx_parallel_display_encoder {
  
  struct imx_parallel_display {
  	struct device *dev;
--	void *edid;
-+	const struct drm_edid *drm_edid;
+-	const struct drm_edid *drm_edid;
  	u32 bus_format;
  	u32 bus_flags;
  	struct drm_display_mode mode;
-@@ -62,9 +62,9 @@ static int imx_pd_connector_get_modes(struct drm_connector *connector)
+@@ -62,11 +60,6 @@ static int imx_pd_connector_get_modes(struct drm_connector *connector)
  	if (num_modes > 0)
  		return num_modes;
  
--	if (imxpd->edid) {
--		drm_connector_update_edid_property(connector, imxpd->edid);
--		num_modes = drm_add_edid_modes(connector, imxpd->edid);
-+	if (imxpd->drm_edid) {
-+		drm_edid_connector_update(connector, imxpd->drm_edid);
-+		num_modes = drm_edid_connector_add_modes(connector);
- 	}
- 
+-	if (imxpd->drm_edid) {
+-		drm_edid_connector_update(connector, imxpd->drm_edid);
+-		num_modes = drm_edid_connector_add_modes(connector);
+-	}
+-
  	if (np) {
-@@ -331,7 +331,7 @@ static int imx_pd_probe(struct platform_device *pdev)
+ 		struct drm_display_mode *mode = drm_mode_create(connector->dev);
+ 		int ret;
+@@ -312,9 +305,7 @@ static int imx_pd_probe(struct platform_device *pdev)
+ {
+ 	struct device *dev = &pdev->dev;
+ 	struct device_node *np = dev->of_node;
+-	const u8 *edidp;
+ 	struct imx_parallel_display *imxpd;
+-	int edid_len;
+ 	int ret;
+ 	u32 bus_format = 0;
+ 	const char *fmt;
+@@ -329,10 +320,6 @@ static int imx_pd_probe(struct platform_device *pdev)
+ 	if (ret && ret != -ENODEV)
+ 		return ret;
  
- 	edidp = of_get_property(np, "edid", &edid_len);
- 	if (edidp)
--		imxpd->edid = devm_kmemdup(dev, edidp, edid_len, GFP_KERNEL);
-+		imxpd->drm_edid = drm_edid_alloc(edidp, edid_len);
- 
+-	edidp = of_get_property(np, "edid", &edid_len);
+-	if (edidp)
+-		imxpd->drm_edid = drm_edid_alloc(edidp, edid_len);
+-
  	ret = of_property_read_string(np, "interface-pix-fmt", &fmt);
  	if (!ret) {
-@@ -355,7 +355,11 @@ static int imx_pd_probe(struct platform_device *pdev)
+ 		if (!strcmp(fmt, "rgb24"))
+@@ -355,11 +342,7 @@ static int imx_pd_probe(struct platform_device *pdev)
  
  static void imx_pd_remove(struct platform_device *pdev)
  {
-+	struct imx_parallel_display *imxpd = platform_get_drvdata(pdev);
-+
+-	struct imx_parallel_display *imxpd = platform_get_drvdata(pdev);
+-
  	component_del(&pdev->dev, &imx_pd_ops);
-+
-+	drm_edid_free(imxpd->drm_edid);
+-
+-	drm_edid_free(imxpd->drm_edid);
  }
  
  static const struct of_device_id imx_pd_dt_ids[] = {
