@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEE531F12F7;
-	Tue,  3 Dec 2024 16:08:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC62B1F759C;
+	Tue,  3 Dec 2024 16:08:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733242086; cv=none; b=cn8EW/iO9w+bT0LgC3hPXQ2xzxmN7Gh7OeLWPJ6UzsbdqUPEIsy8p8/XqCzQwJTuK1HVEQr2+yF+YgI1948iRbmL0qnZJ/OczSMwyn+PnrlkNPNtllYQG6KrW1PlyBe/aKA+Pfj0wLuhz/p337tZWf9IX+jHwkGUkhKLuXtDbF8=
+	t=1733242088; cv=none; b=ZqyCIFrsDErsaElFKhVbmkrAal9MKyEwF0wA1haS0VrE9PNhh3GHapr+No2gfuDcA0gwDGLcRlZtv3lbgO3Hg+RqP7zEq77ib5ezIp4tV1HleGge/Y62f+YgikBAUVyTzP6bF+64z06yah2NzjcXhaSOPYaMYKEQNcdwqbxYHb0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733242086; c=relaxed/simple;
-	bh=y4XtsR+jC1aSBUyrikDzvZ2vluFNDR+iIZPZjA3DUrw=;
+	s=arc-20240116; t=1733242088; c=relaxed/simple;
+	bh=dYy0xzenxuJukqlE95VyuvQZqHOk9NmHthFXBVhvfD4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dOAotQQrl05z6KZ54S3lM11+GGofpUenpe9IGgoUIt6yPJMqYB9ZYS1jUe7B196dXwNexkFhFORKfIK9T+65H3zEeA73kBDR9646In4oMaQa9Bslayf8MkhoBXvEqivXDj8n4iIwIKtzp84Ymg9bqUGmOLwM+oqaDAewS3b7zHU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XHsFaIgS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=a8iwiF9RJXIK6/lldRa1sBtkjmQatZPCo2JsT3/0r9N8OcrltIqG2mNyXqsiy1HNmcDvYJPTjxWCKkSQwdQnrxl1huR5w20o4EFMAqlD0cGUh+8jYmzvDsrTw+/0BASnQ8HL0jCPbq5oNGhZztwPfZtThPtuFCLqX1zB3RUUv30=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d82809gd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XHsFaIgS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EC7DC4CECF;
-	Tue,  3 Dec 2024 16:08:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d82809gd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2732AC4CECF;
+	Tue,  3 Dec 2024 16:08:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733242085;
-	bh=y4XtsR+jC1aSBUyrikDzvZ2vluFNDR+iIZPZjA3DUrw=;
+	s=korg; t=1733242088;
+	bh=dYy0xzenxuJukqlE95VyuvQZqHOk9NmHthFXBVhvfD4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XHsFaIgSQPVhbpdp4wyZ8SHzcyOGerqa+1UDysyx48HXXY2KdLf4FBQ9Ah3e0Nl6o
-	 +mDZ9T0l5ZtTW8gJssdjutHTaWyKySbXwkMp6e9Ve9bvnslMzIoa4OxMJIpT2YzKIU
-	 FKWFREExr+3oToc+o/C8ibbnsCbsoKRi+vH3FEv0=
+	b=d82809gdFTrIhfJUrTxyg5V3m4T/nQiB7gT/xbUtl9sd6JOnBhCsd7M7vkAeuMj5U
+	 r9xrUxWybHRwMXi9o8SgKOBjOVtF2pPeZFfAfQXF0W4cGp/8OVBUnfOCD+TQWdcngL
+	 v/XNsmZ8lTSjWnQjarX7Y4lu4AF9wf8wvLhu8JLI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Antoniu Miclaus <antoniu.miclaus@analog.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Charles Han <hanchunchao@inspur.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 603/826] iio: accel: adxl380: fix raw sample read
-Date: Tue,  3 Dec 2024 15:45:30 +0100
-Message-ID: <20241203144807.278049701@linuxfoundation.org>
+Subject: [PATCH 6.12 604/826] phy: realtek: usb: fix NULL deref in rtk_usb2phy_probe
+Date: Tue,  3 Dec 2024 15:45:31 +0100
+Message-ID: <20241203144807.316626641@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -51,37 +50,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Antoniu Miclaus <antoniu.miclaus@analog.com>
+From: Charles Han <hanchunchao@inspur.com>
 
-[ Upstream commit bfa335f18d91c52fa0f8ba3e4d49afebbd9ee792 ]
+[ Upstream commit 04e3e9188291a183b27306ddb833722c0d083d6a ]
 
-The adxl380_read_chn function returns either a negative value in case an
-error occurs or the actual sample.
+In rtk_usb2phy_probe() devm_kzalloc() may return NULL
+but this returned value is not checked.
 
-Check only for negative values after a channel is read.
-
-Fixes: df36de13677a ("iio: accel: add ADXL380 driver")
-Signed-off-by: Antoniu Miclaus <antoniu.miclaus@analog.com>
-Link: https://patch.msgid.link/20241101095202.20121-1-antoniu.miclaus@analog.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Fixes: 134e6d25f6bd ("phy: realtek: usb: Add driver for the Realtek SoC USB 2.0 PHY")
+Signed-off-by: Charles Han <hanchunchao@inspur.com>
+Link: https://lore.kernel.org/r/20241025065912.143692-1-hanchunchao@inspur.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/accel/adxl380.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/phy/realtek/phy-rtk-usb2.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/iio/accel/adxl380.c b/drivers/iio/accel/adxl380.c
-index f80527d899be4..b19ee37df7f12 100644
---- a/drivers/iio/accel/adxl380.c
-+++ b/drivers/iio/accel/adxl380.c
-@@ -1181,7 +1181,7 @@ static int adxl380_read_raw(struct iio_dev *indio_dev,
+diff --git a/drivers/phy/realtek/phy-rtk-usb2.c b/drivers/phy/realtek/phy-rtk-usb2.c
+index e3ad7cea51099..e8ca2ec5998fe 100644
+--- a/drivers/phy/realtek/phy-rtk-usb2.c
++++ b/drivers/phy/realtek/phy-rtk-usb2.c
+@@ -1023,6 +1023,8 @@ static int rtk_usb2phy_probe(struct platform_device *pdev)
  
- 		ret = adxl380_read_chn(st, chan->address);
- 		iio_device_release_direct_mode(indio_dev);
--		if (ret)
-+		if (ret < 0)
- 			return ret;
+ 	rtk_phy->dev			= &pdev->dev;
+ 	rtk_phy->phy_cfg = devm_kzalloc(dev, sizeof(*phy_cfg), GFP_KERNEL);
++	if (!rtk_phy->phy_cfg)
++		return -ENOMEM;
  
- 		*val = sign_extend32(ret >> chan->scan_type.shift,
+ 	memcpy(rtk_phy->phy_cfg, phy_cfg, sizeof(*phy_cfg));
+ 
 -- 
 2.43.0
 
