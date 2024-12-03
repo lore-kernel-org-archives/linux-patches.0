@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B6051F130F;
-	Tue,  3 Dec 2024 15:24:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7DED1F130F;
+	Tue,  3 Dec 2024 15:25:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733239497; cv=none; b=PCM3x1r6GOBSLEG0hZiVeYxOEfQoRFNpH7TxnQn7TbSVr9W8OdHilhInzASsMJMk3Dn+gzwhuA5EtZfhGM+O9T92Vm8MqA9KnxRCP9H3qCN+C/ftODCZWgAct5Xililf2hT8SQJlVajNPqR31nfLolk0y4S0J7OljuM6bo7W1Bc=
+	t=1733239500; cv=none; b=I70/Br/CNJMdmF1x/gSzGeZ4i/WP20YHU41TgR+xFziMng7pJBZ6VeCTYgDw3bHkLYQw8NpJONC4bFjBGRHg+DknU0e9ygmTMK3D6WI8CcTV059ltFElyvYYM373mHjrBQMRiLY/hUjJ1eYQSvf7sas/glaWfiFEu5/WvJFx5nI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733239497; c=relaxed/simple;
-	bh=pCjMaHpeKfI8fJQdlrdzzoVNRolK4/RncLTAhOhDYCg=;
+	s=arc-20240116; t=1733239500; c=relaxed/simple;
+	bh=6EnsEyT/6nEEJVYa6Iy3hd3FLcylkmK8iwc3sIUqTTc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SqkMx7bnQrkR+tE5d60XhQnK5MSKLz50voM4BZFK2UhyvQTzqpXVO6sG0p+VgHf8daTCIItAnClUSWMgMo00JLnhw1BnnzP0aoK/liyZnBpLVL0CXja4N0VI7TIjGqk5nzBh1YXTlhm4bodp7/beJblZrw3RrOW6ocsF6/Cf2T0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fCGQ1HVp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WQTrMU8DHon27M/OJx6BwF3190XC5AQidJW5VY79S0dykbKxsaZ+0UI1h/3C/LWpklNOkeZnADldwVKowDIO2gl7C7UIJNOWuSGn7Jml6zk7Tv3+TuozHNYAv6N0vxS5IJGgrXhYsleHqGzfTe3Qvv3Hv+pe54CoPrEwr3JBeFI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EfZ0ALkr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fCGQ1HVp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B3DAC4CECF;
-	Tue,  3 Dec 2024 15:24:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EfZ0ALkr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46AE9C4CECF;
+	Tue,  3 Dec 2024 15:25:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733239497;
-	bh=pCjMaHpeKfI8fJQdlrdzzoVNRolK4/RncLTAhOhDYCg=;
+	s=korg; t=1733239500;
+	bh=6EnsEyT/6nEEJVYa6Iy3hd3FLcylkmK8iwc3sIUqTTc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fCGQ1HVp3OAF5d18Apr4U0bj+KjYNAI+ebVHjZw3C8LSOBTgyBWlzuTyUVoFBnUqb
-	 elR5wKOc8mqDYw7fY+DaHEIwUpFXOpTBBkugSGHh6dIoe7sbY4UuGV8eWSpcsHxBiM
-	 6AzLiwDRMekOACpbkTCjetggbODkDCr0qvwUZGcQ=
+	b=EfZ0ALkraKstqd0pAjs/xGPkIumv+hI68Kp+ygU/sH8PRLdIS2FX47D9wBRFW2ZoR
+	 gQeVrA5n3FydwtorNjiEBIBJ+8cnd0o9tDZWGpE/Qy3JMuEW9Uxy3FQDg9n5dbmcJs
+	 ZVXdMMdXnFGMapxNiJHnZH67x+7FfA0zVYMfiuAY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.11 634/817] ASoC: Intel: sst: Fix used of uninitialized ctx to log an error
-Date: Tue,  3 Dec 2024 15:43:26 +0100
-Message-ID: <20241203144020.684193114@linuxfoundation.org>
+	Manikanta Mylavarapu <quic_mmanikan@quicinc.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>
+Subject: [PATCH 6.11 635/817] soc: qcom: socinfo: fix revision check in qcom_socinfo_probe()
+Date: Tue,  3 Dec 2024 15:43:27 +0100
+Message-ID: <20241203144020.728091568@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -51,34 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
 
-commit c1895ba181e560144601fafe46aeedbafdf4dbc4 upstream.
+commit 128fdbf36cddc2a901c4889ba1c89fa9f2643f2c upstream.
 
-Fix the new "LPE0F28" code path using the uninitialized ctx variable
-to log an error.
+In success case, the revision holds a non-null pointer. The current
+logic incorrectly returns an error for a non-null pointer, whereas
+it should return an error for a null pointer.
 
-Fixes: 6668610b4d8c ("ASoC: Intel: sst: Support LPE0F28 ACPI HID")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202410261106.EBx49ssy-lkp@intel.com/
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://patch.msgid.link/20241026143615.171821-1-hdegoede@redhat.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+The socinfo driver for IPQ9574 and IPQ5332 is currently broken,
+resulting in the following error message
+qcom-socinfo qcom-socinfo: probe with driver qcom-socinfo failed with
+error -12
+
+Add a null check for the revision to ensure it returns an error only in
+failure case (null pointer).
+
+Fixes: e694d2b5c58b ("soc: qcom: Add check devm_kasprintf() returned value")
+Signed-off-by: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20241016144852.2888679-1-quic_mmanikan@quicinc.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/intel/atom/sst/sst_acpi.c |    2 +-
+ drivers/soc/qcom/socinfo.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/sound/soc/intel/atom/sst/sst_acpi.c
-+++ b/sound/soc/intel/atom/sst/sst_acpi.c
-@@ -308,7 +308,7 @@ static int sst_acpi_probe(struct platfor
- 		rsrc = platform_get_resource(pdev, IORESOURCE_MEM,
- 					     pdata->res_info->acpi_lpe_res_index);
- 		if (!rsrc) {
--			dev_err(ctx->dev, "Invalid SHIM base\n");
-+			dev_err(dev, "Invalid SHIM base\n");
- 			return -EIO;
- 		}
- 		rsrc->start -= pdata->res_info->shim_offset;
+--- a/drivers/soc/qcom/socinfo.c
++++ b/drivers/soc/qcom/socinfo.c
+@@ -782,7 +782,7 @@ static int qcom_socinfo_probe(struct pla
+ 	qs->attr.revision = devm_kasprintf(&pdev->dev, GFP_KERNEL, "%u.%u",
+ 					   SOCINFO_MAJOR(le32_to_cpu(info->ver)),
+ 					   SOCINFO_MINOR(le32_to_cpu(info->ver)));
+-	if (!qs->attr.soc_id || qs->attr.revision)
++	if (!qs->attr.soc_id || !qs->attr.revision)
+ 		return -ENOMEM;
+ 
+ 	if (offsetof(struct socinfo, serial_num) <= item_size) {
 
 
