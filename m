@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D46141DAC9F;
-	Tue,  3 Dec 2024 15:52:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E11A51DAC9F;
+	Tue,  3 Dec 2024 15:52:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733241151; cv=none; b=EEgOrUdhxgQvzIas3osChxlYjgbBSAngVTcKIoyTJ7/qWcowtpdMGa2v7rr+JY228GeaaLgKYNZJ+1b3CC9C0gjAQNGwDJDUO629IcBII8GltesAi8wPdn1YiDjXYmPz7Ux39tJ+4UyFDiWX86vu4OH7jiaDxyXzVZ7NtbRoGus=
+	t=1733241155; cv=none; b=IkvVImkYRBrSba4V/KJXf/tnZe+K0Ul5CdiI+FnLSHlO4Kf1lpXU57+5bcFYZcFhtxW59s36IksTdAG4x29kPF98XWSfwBwTLM69XeKTwos7zXzRK7qJwhewS8sOqZ0TS78r/ul2rgSCIdrC36z+dbC12d6aYu51RuUtNR/P89I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733241151; c=relaxed/simple;
-	bh=+EZTC8GVO7WHd7anZXSNsMY0ydGwG6Lo6S8l6QSbwC8=;
+	s=arc-20240116; t=1733241155; c=relaxed/simple;
+	bh=V7xsSRXk+ym1ejSRJ86HgqfTTwgm4wXyvvA4QMHp4Lk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AzuyfLL3pQw3QOKfMKjJjLDTTqiS/DA9l6FLrZiGulBAcXudl5syq+tvAFWD7DbJ4uK51RyQk7s+8XChgOq+TI8waST81p50FlTkNzMTKJkwARxFS9oIpPB/qAp04OKSHp3fPHeYyP0SnhSDGaTW81U+Cc4EKGqMzuMbWJRsriU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2dfrYbEL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eG3rgCcEfI8PBVcamBXM1XvU6wKR5AjAvuEdIY9xOI3DN8+XOd7WRAkuIkRlC6Uwip+Oj5vKFfSfj6T+WPInWogckXmLfjMUWtdqTD9GiTkMHdcwXWuNBoNNf5DkXZh2T3QJw2FnDiKcQdz9uXPWpfadr3eH6ReM9RDsBHchQhA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wZ9HaGzs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2dfrYbEL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 580AEC4CED6;
-	Tue,  3 Dec 2024 15:52:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wZ9HaGzs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E41AC4CED6;
+	Tue,  3 Dec 2024 15:52:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733241151;
-	bh=+EZTC8GVO7WHd7anZXSNsMY0ydGwG6Lo6S8l6QSbwC8=;
+	s=korg; t=1733241154;
+	bh=V7xsSRXk+ym1ejSRJ86HgqfTTwgm4wXyvvA4QMHp4Lk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2dfrYbEL4zfMo7qs/a9i6mhFMScbjmUxgt3ryCuRN2MgNUMobiVa6Y/BkZoWX7PCk
-	 dMb8wmBaQGWrJJeUSUF9Kw0r0UfCI7DClJG9dyYEbx/WYGVt9VuxKGYHhP+6hJTKa3
-	 Qr/tZH3WTImBPjaQIhBxIz2WvUTczjda/cLpILfM=
+	b=wZ9HaGzs1Ojdo11ajPeANN3zLr4WHeDzTMIhmmX3N7skMnXpWeyRlqLExLJ2ew6ul
+	 segHNPXiYD1J1ZjoCYhlfWSBU72Ie7Z+XERavHgWUz7+aF4IsuiNJ6JXCPme7CHmNc
+	 fOlFhdzPmvBuw96xKG9zPkVW2hk1ir3TSTNMPeWQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	John Fastabend <john.fastabend@gmail.com>,
 	Martin KaFai Lau <martin.lau@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 309/826] selftests/bpf: Fix SENDPAGE data logic in test_sockmap
-Date: Tue,  3 Dec 2024 15:40:36 +0100
-Message-ID: <20241203144755.815357411@linuxfoundation.org>
+Subject: [PATCH 6.12 310/826] selftests/bpf: Fix total_bytes in msg_loop_rx in test_sockmap
+Date: Tue,  3 Dec 2024 15:40:37 +0100
+Message-ID: <20241203144755.853722653@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -54,82 +54,67 @@ Content-Transfer-Encoding: 8bit
 
 From: Zijian Zhang <zijianzhang@bytedance.com>
 
-[ Upstream commit 4095031463d4e99b534d2cd82035a417295764ae ]
+[ Upstream commit 523dffccbadea0cfd65f1ff04944b864c558c4a8 ]
 
-In the SENDPAGE test, "opt->iov_length * cnt" size of data will be sent
-cnt times by sendfile.
-1. In push/pop tests, they will be invoked cnt times, for the simplicity of
-msg_verify_data, change chunk_sz to iov_length
-2. Change iov_length in test_send_large from 1024 to 8192. We have pop test
-where txmsg_start_pop is 4096. 4096 > 1024, an error will be returned.
+total_bytes in msg_loop_rx should also take push into account, otherwise
+total_bytes will be a smaller value, which makes the msg_loop_rx end early.
 
-Fixes: 328aa08a081b ("bpf: Selftests, break down test_sockmap into subtests")
+Besides, total_bytes has already taken pop into account, so we don't need
+to subtract some bytes from iov_buf in sendmsg_test. The additional
+subtraction may make total_bytes a negative number, and msg_loop_rx will
+just end without checking anything.
+
+Fixes: 18d4e900a450 ("bpf: Selftests, improve test_sockmap total bytes counter")
+Fixes: d69672147faa ("selftests, bpf: Add one test for sockmap with strparser")
 Signed-off-by: Zijian Zhang <zijianzhang@bytedance.com>
 Reviewed-by: John Fastabend <john.fastabend@gmail.com>
-Link: https://lore.kernel.org/r/20241106222520.527076-3-zijianzhang@bytedance.com
+Link: https://lore.kernel.org/r/20241106222520.527076-4-zijianzhang@bytedance.com
 Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/test_sockmap.c | 18 +++++++++++-------
- 1 file changed, 11 insertions(+), 7 deletions(-)
+ tools/testing/selftests/bpf/test_sockmap.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
 diff --git a/tools/testing/selftests/bpf/test_sockmap.c b/tools/testing/selftests/bpf/test_sockmap.c
-index 0f065273fde32..1d59bed90d80b 100644
+index 1d59bed90d80b..5f4558f1f0049 100644
 --- a/tools/testing/selftests/bpf/test_sockmap.c
 +++ b/tools/testing/selftests/bpf/test_sockmap.c
-@@ -420,16 +420,18 @@ static int msg_loop_sendpage(int fd, int iov_length, int cnt,
- {
- 	bool drop = opt->drop_expected;
- 	unsigned char k = 0;
-+	int i, j, fp;
- 	FILE *file;
--	int i, fp;
- 
- 	file = tmpfile();
- 	if (!file) {
- 		perror("create file for sendpage");
- 		return 1;
- 	}
--	for (i = 0; i < iov_length * cnt; i++, k++)
--		fwrite(&k, sizeof(char), 1, file);
-+	for (i = 0; i < cnt; i++, k = 0) {
-+		for (j = 0; j < iov_length; j++, k++)
-+			fwrite(&k, sizeof(char), 1, file);
-+	}
- 	fflush(file);
- 	fseek(file, 0, SEEK_SET);
- 
-@@ -623,7 +625,9 @@ static int msg_loop(int fd, int iov_count, int iov_length, int cnt,
- 		 * This is really only useful for testing edge cases in code
- 		 * paths.
- 		 */
--		total_bytes = (float)iov_count * (float)iov_length * (float)cnt;
-+		total_bytes = (float)iov_length * (float)cnt;
-+		if (!opt->sendpage)
-+			total_bytes *= (float)iov_count;
- 		if (txmsg_apply)
+@@ -606,8 +606,8 @@ static int msg_loop(int fd, int iov_count, int iov_length, int cnt,
+ 		}
+ 		clock_gettime(CLOCK_MONOTONIC, &s->end);
+ 	} else {
++		float total_bytes, txmsg_pop_total, txmsg_push_total;
+ 		int slct, recvp = 0, recv, max_fd = fd;
+-		float total_bytes, txmsg_pop_total;
+ 		int fd_flags = O_NONBLOCK;
+ 		struct timeval timeout;
+ 		unsigned char k = 0;
+@@ -628,10 +628,14 @@ static int msg_loop(int fd, int iov_count, int iov_length, int cnt,
+ 		total_bytes = (float)iov_length * (float)cnt;
+ 		if (!opt->sendpage)
+ 			total_bytes *= (float)iov_count;
+-		if (txmsg_apply)
++		if (txmsg_apply) {
++			txmsg_push_total = txmsg_end_push * (total_bytes / txmsg_apply);
  			txmsg_pop_total = txmsg_pop * (total_bytes / txmsg_apply);
- 		else
-@@ -701,7 +705,7 @@ static int msg_loop(int fd, int iov_count, int iov_length, int cnt,
+-		else
++		} else {
++			txmsg_push_total = txmsg_end_push * cnt;
+ 			txmsg_pop_total = txmsg_pop * cnt;
++		}
++		total_bytes += txmsg_push_total;
+ 		total_bytes -= txmsg_pop_total;
+ 		err = clock_gettime(CLOCK_MONOTONIC, &s->start);
+ 		if (err < 0)
+@@ -800,8 +804,6 @@ static int sendmsg_test(struct sockmap_options *opt)
  
- 			if (data) {
- 				int chunk_sz = opt->sendpage ?
--						iov_length * cnt :
-+						iov_length :
- 						iov_length * iov_count;
+ 	rxpid = fork();
+ 	if (rxpid == 0) {
+-		if (txmsg_pop || txmsg_start_pop)
+-			iov_buf -= (txmsg_pop - txmsg_start_pop + 1);
+ 		if (opt->drop_expected || txmsg_ktls_skb_drop)
+ 			_exit(0);
  
- 				errno = msg_verify_data(&msg, recv, chunk_sz, &k, &bytes_cnt);
-@@ -1466,8 +1470,8 @@ static void test_send_many(struct sockmap_options *opt, int cgrp)
- 
- static void test_send_large(struct sockmap_options *opt, int cgrp)
- {
--	opt->iov_length = 256;
--	opt->iov_count = 1024;
-+	opt->iov_length = 8192;
-+	opt->iov_count = 32;
- 	opt->rate = 2;
- 	test_exec(cgrp, opt);
- }
 -- 
 2.43.0
 
