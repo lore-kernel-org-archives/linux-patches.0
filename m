@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9046D1EE00B;
-	Tue,  3 Dec 2024 16:15:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11ADF1F8912;
+	Tue,  3 Dec 2024 16:15:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733242542; cv=none; b=Tll7MLKiGkS4v2sKF3n8zo0qZh2+JcDWQNy2hdUOVrIe0OC+uZWhsiGRwSjnMZjGYmt1NPJwXRgOu05+wjInu68XVmgG6M/RZXs+A4PsYpQ/cdjBjsOvOnv5u/VJTHMUMofwjiOtQ3jxh/Re4CBRLXfE1MM6uuxPR18IZGUN1Z0=
+	t=1733242546; cv=none; b=uu6kh8m8cisMSLffSMegqapa42ntuXKbTirLHRP7uBornUJk6unvF+JXq6dlfw2B5l5WCOexo9ne7EyEgVI0vwHwxm7hXk1wb9piD/CqrQCJ31Cyn5V79EoiaLon4cKH8Uj2HlI8pa2FxKD9RBMlrPVTX9Y7eiwfHRWc8FW8DD4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733242542; c=relaxed/simple;
-	bh=+5tSvB/PFcmvLNL4fgwg34PDZ6OTMGIlUYZvbuxZCLQ=;
+	s=arc-20240116; t=1733242546; c=relaxed/simple;
+	bh=dnWMmveqv87wK9Byky1qkb1Cwe3pbz6EwRMN3eOtKMs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iSx+er9fBX2ddlRLdU1kLqKOH7RemTO/HljKVXJGpHAtLhiy0QIh2UpJzhSTayAyYSMubn2jUP99vnQO6tbBw76p4j+L3I/uhtCyZsNRah4Hy/wUeoChVb1OTo4imGprG0KNTtSYZO40uDHOrFKFqcLfr9NgcIbEpxrpXq4MZ8o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YJxzyJAe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O2Fo4PynWKm2w1082+fWK2o+KTNCFnE+MeVaRw5xmboWmIBkVSV4cy2Ao8ZFTU7ciNBGPaSu8DUkpvQM8dfPiMQVjdUVOF6YPa3o/klr+dKWacn7y9KqedF9f4/KJeG7XKZflm3WW8jhPeKzF2UQwNe2V5RK3DmYNVxGkmFV1aY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gHLgp4qT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YJxzyJAe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB8D3C4CECF;
-	Tue,  3 Dec 2024 16:15:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gHLgp4qT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D4B9C4CECF;
+	Tue,  3 Dec 2024 16:15:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733242542;
-	bh=+5tSvB/PFcmvLNL4fgwg34PDZ6OTMGIlUYZvbuxZCLQ=;
+	s=korg; t=1733242545;
+	bh=dnWMmveqv87wK9Byky1qkb1Cwe3pbz6EwRMN3eOtKMs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YJxzyJAecB615+M8m3PNyk3nBITeg3hnLE6NZTKQIMahHnCHphLh2loxGEXR7rk/g
-	 GlEbUyejKPTg3AdN3ykiV6oCohqoOqQrAO/hQnMDh+BJ61yeP6TC43J3NfFSBKxgbm
-	 hYCTe93iI8qg6JhjP5Tz951teiXQkCT9y1d+RYNk=
+	b=gHLgp4qTOJv0SSH8EOZY9M6rnJkq5dv2X2MoLiyuIl8/QGZv9DzTDWupnafjxBStp
+	 yl8BFZdfjzaJnIst/eUFtkAVbR1h7VICsrmeTQFJ85fPGUkbJR4gSZkL5P6Egog7m+
+	 FsWmY/z5X0NGfIPuGaQmfm5eE7qQNjzy2OQFdPXE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Herve Codina <herve.codina@bootlin.com>,
+	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
 	Christophe Leroy <christophe.leroy@csgroup.eu>
-Subject: [PATCH 6.12 735/826] soc: fsl: cpm1: qmc: Set the ret error code on platform_get_irq() failure
-Date: Tue,  3 Dec 2024 15:47:42 +0100
-Message-ID: <20241203144812.437640030@linuxfoundation.org>
+Subject: [PATCH 6.12 736/826] soc: fsl: rcpm: fix missing of_node_put() in copy_ippdexpcr1_setting()
+Date: Tue,  3 Dec 2024 15:47:43 +0100
+Message-ID: <20241203144812.476346279@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -52,45 +50,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Herve Codina <herve.codina@bootlin.com>
+From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
 
-commit cb3daa51db819a172e9524e96e2ed96b4237e51a upstream.
+commit c9f1efabf8e3b3ff886a42669f7093789dbeca94 upstream.
 
-A kernel test robot detected a missing error code:
-   qmc.c:1942 qmc_probe() warn: missing error code 'ret'
+of_find_compatible_node() requires a call to of_node_put() when the
+pointer to the node is not required anymore to decrement its refcount
+and avoid leaking memory.
 
-Indeed, the error returned by platform_get_irq() is checked and the
-operation is aborted in case of failure but the ret error code is
-not set in that case.
+Add the missing call to of_node_put() after the node has been used.
 
-Set the ret error code.
-
-Reported-by: kernel test robot <lkp@intel.com>
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Closes: https://lore.kernel.org/r/202411051350.KNy6ZIWA-lkp@intel.com/
-Fixes: 3178d58e0b97 ("soc: fsl: cpm1: Add support for QMC")
 Cc: stable@vger.kernel.org
-Signed-off-by: Herve Codina <herve.codina@bootlin.com>
-Link: https://lore.kernel.org/r/20241105145623.401528-1-herve.codina@bootlin.com
+Fixes: e95f287deed2 ("soc: fsl: handle RCPM errata A-008646 on SoC LS1021A")
+Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+Link: https://lore.kernel.org/r/20241013-rcpm-of_node_put-v1-1-9a8e55a01eae@gmail.com
 Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/soc/fsl/qe/qmc.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/soc/fsl/rcpm.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/soc/fsl/qe/qmc.c
-+++ b/drivers/soc/fsl/qe/qmc.c
-@@ -2004,8 +2004,10 @@ static int qmc_probe(struct platform_dev
+--- a/drivers/soc/fsl/rcpm.c
++++ b/drivers/soc/fsl/rcpm.c
+@@ -36,6 +36,7 @@ static void copy_ippdexpcr1_setting(u32
+ 		return;
  
- 	/* Set the irq handler */
- 	irq = platform_get_irq(pdev, 0);
--	if (irq < 0)
-+	if (irq < 0) {
-+		ret = irq;
- 		goto err_exit_xcc;
-+	}
- 	ret = devm_request_irq(qmc->dev, irq, qmc_irq_handler, 0, "qmc", qmc);
- 	if (ret < 0)
- 		goto err_exit_xcc;
+ 	regs = of_iomap(np, 0);
++	of_node_put(np);
+ 	if (!regs)
+ 		return;
+ 
 
 
