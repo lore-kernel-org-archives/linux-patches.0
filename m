@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 862231F707A;
-	Tue,  3 Dec 2024 15:25:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B92C1F7561;
+	Tue,  3 Dec 2024 15:25:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733239545; cv=none; b=psUKs+M/B4cmtExt6kGL9N9CWNBRMBrbSr5CnbcHiC+ljaK7xh49pDL2AClh3Fa+kOmtOQ0gDcBRYt4AakTaSg8W7+VV8xZM6yrnJnIJUYJ8i5YEsNAUQ394ij/M9SQ8AxIvBsiBy4yI5kxX8RVepfoJliQ0ntMLvqXiccm94BU=
+	t=1733239548; cv=none; b=pqZP5mLZblNH3hzNFqt1B7WRyF/hHA2sM+HXCVlieKkkRbvWAv5s/Mnku4ACsqzyXz2YE4E/QjF0oCGrcrjZliShNa1T7FZ6FYWb8fJ9PHJVLofHhA3belyZm/JSWortfWzh6A05f5AwaAYOxkG5jA6iDO4YHH7hzCCHXT9Ljx0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733239545; c=relaxed/simple;
-	bh=oxfacvOLWJKt77afwpc65rBNyHHDpXA2dL0XGiQ+peQ=;
+	s=arc-20240116; t=1733239548; c=relaxed/simple;
+	bh=4IdiU15aKx15sM02WRq/9v+fp0BxVvyaM9s7hFNuvXg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AAcjzuVf6/N+eE6VUES0jemxt2xRvQHc2SEeJ+MFJWA3lr3pA3WAvul0DOwVcc84ySO1NA557XThf6McIYIyIydeC6v3FeaTpH9TQSz1/pk8P8+agvxXO0euBg7JLFvjHz/xctWb5hVeFaoO9e1jG9c4RtTLkEEJENHL22GnLxw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qJ5mheTV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lz/Fh9LOlneuyXXPz+gp6OYuFwiFpfVGO0PboyvcGk4ps1CQnDLVNqBBuNZkP9v9BRwApO7zhjhJY89rVDQkfl/aGaPGAAr0vIWAJpWzg9AgsBnB7/KJXPALleNUE1NH3cveLBj9UHuN4hS4PCeGBb0CyTt54a5f1hCca+8e+KE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ITfG3K8j; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qJ5mheTV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB555C4CECF;
-	Tue,  3 Dec 2024 15:25:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ITfG3K8j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 965F8C4CECF;
+	Tue,  3 Dec 2024 15:25:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733239545;
-	bh=oxfacvOLWJKt77afwpc65rBNyHHDpXA2dL0XGiQ+peQ=;
+	s=korg; t=1733239548;
+	bh=4IdiU15aKx15sM02WRq/9v+fp0BxVvyaM9s7hFNuvXg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qJ5mheTVDyV/ZUOFaekeRLQ+NAQ2KG2krFTtOAGQtfYvcAM7zHrJzI2Zvcr/RuwuK
-	 GPN3dfTORPDh8re2PRhC10/C/MyczQlC0KGazViPpjlXt/ohDUhmRhH07Xga7r6HGa
-	 VRluRNt43LSGQXk4DD9aFw3JY5TfZAiRi5lh7Q2I=
+	b=ITfG3K8jNjC2pW7mm5vigs2DBZbFeqZMG5KcfWSQ8R8pdcw73HgYbhnmS6NAPBeJ6
+	 F7GBxh/B40KsIdfcgHyLRWQA08mElyV932YrSGP8RlZk8C68L5NkTGH6DDvj8bEjHR
+	 EIVwYOMr1vXVSWQuuTTj7D8sreN+DFSCymoVN9Jo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>
-Subject: [PATCH 6.11 643/817] perf/x86/intel/pt: Fix buffer full but size is 0 case
-Date: Tue,  3 Dec 2024 15:43:35 +0100
-Message-ID: <20241203144021.049533284@linuxfoundation.org>
+	syzbot <syzkaller@googlegroups.com>,
+	Marc Zyngier <maz@kernel.org>,
+	Raghavendra Rao Ananta <rananta@google.com>,
+	Oliver Upton <oliver.upton@linux.dev>
+Subject: [PATCH 6.11 652/817] KVM: arm64: Get rid of userspace_irqchip_in_use
+Date: Tue,  3 Dec 2024 15:43:44 +0100
+Message-ID: <20241203144021.407739764@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -50,121 +52,168 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adrian Hunter <adrian.hunter@intel.com>
+From: Raghavendra Rao Ananta <rananta@google.com>
 
-commit 5b590160d2cf776b304eb054afafea2bd55e3620 upstream.
+commit 38d7aacca09230fdb98a34194fec2af597e8e20d upstream.
 
-If the trace data buffer becomes full, a truncated flag [T] is reported
-in PERF_RECORD_AUX.  In some cases, the size reported is 0, even though
-data must have been added to make the buffer full.
+Improper use of userspace_irqchip_in_use led to syzbot hitting the
+following WARN_ON() in kvm_timer_update_irq():
 
-That happens when the buffer fills up from empty to full before the
-Intel PT driver has updated the buffer position.  Then the driver
-calculates the new buffer position before calculating the data size.
-If the old and new positions are the same, the data size is reported
-as 0, even though it is really the whole buffer size.
+WARNING: CPU: 0 PID: 3281 at arch/arm64/kvm/arch_timer.c:459
+kvm_timer_update_irq+0x21c/0x394
+Call trace:
+  kvm_timer_update_irq+0x21c/0x394 arch/arm64/kvm/arch_timer.c:459
+  kvm_timer_vcpu_reset+0x158/0x684 arch/arm64/kvm/arch_timer.c:968
+  kvm_reset_vcpu+0x3b4/0x560 arch/arm64/kvm/reset.c:264
+  kvm_vcpu_set_target arch/arm64/kvm/arm.c:1553 [inline]
+  kvm_arch_vcpu_ioctl_vcpu_init arch/arm64/kvm/arm.c:1573 [inline]
+  kvm_arch_vcpu_ioctl+0x112c/0x1b3c arch/arm64/kvm/arm.c:1695
+  kvm_vcpu_ioctl+0x4ec/0xf74 virt/kvm/kvm_main.c:4658
+  vfs_ioctl fs/ioctl.c:51 [inline]
+  __do_sys_ioctl fs/ioctl.c:907 [inline]
+  __se_sys_ioctl fs/ioctl.c:893 [inline]
+  __arm64_sys_ioctl+0x108/0x184 fs/ioctl.c:893
+  __invoke_syscall arch/arm64/kernel/syscall.c:35 [inline]
+  invoke_syscall+0x78/0x1b8 arch/arm64/kernel/syscall.c:49
+  el0_svc_common+0xe8/0x1b0 arch/arm64/kernel/syscall.c:132
+  do_el0_svc+0x40/0x50 arch/arm64/kernel/syscall.c:151
+  el0_svc+0x54/0x14c arch/arm64/kernel/entry-common.c:712
+  el0t_64_sync_handler+0x84/0xfc arch/arm64/kernel/entry-common.c:730
+  el0t_64_sync+0x190/0x194 arch/arm64/kernel/entry.S:598
 
-Fix by detecting when the buffer position is wrapped, and adjust the
-data size calculation accordingly.
+The following sequence led to the scenario:
+ - Userspace creates a VM and a vCPU.
+ - The vCPU is initialized with KVM_ARM_VCPU_PMU_V3 during
+   KVM_ARM_VCPU_INIT.
+ - Without any other setup, such as vGIC or vPMU, userspace issues
+   KVM_RUN on the vCPU. Since the vPMU is requested, but not setup,
+   kvm_arm_pmu_v3_enable() fails in kvm_arch_vcpu_run_pid_change().
+   As a result, KVM_RUN returns after enabling the timer, but before
+   incrementing 'userspace_irqchip_in_use':
+   kvm_arch_vcpu_run_pid_change()
+       ret = kvm_arm_pmu_v3_enable()
+           if (!vcpu->arch.pmu.created)
+               return -EINVAL;
+       if (ret)
+           return ret;
+       [...]
+       if (!irqchip_in_kernel(kvm))
+           static_branch_inc(&userspace_irqchip_in_use);
+ - Userspace ignores the error and issues KVM_ARM_VCPU_INIT again.
+   Since the timer is already enabled, control moves through the
+   following flow, ultimately hitting the WARN_ON():
+   kvm_timer_vcpu_reset()
+       if (timer->enabled)
+          kvm_timer_update_irq()
+              if (!userspace_irqchip())
+                  ret = kvm_vgic_inject_irq()
+                      ret = vgic_lazy_init()
+                          if (unlikely(!vgic_initialized(kvm)))
+                              if (kvm->arch.vgic.vgic_model !=
+                                  KVM_DEV_TYPE_ARM_VGIC_V2)
+                                      return -EBUSY;
+                  WARN_ON(ret);
 
-Example
+Theoretically, since userspace_irqchip_in_use's functionality can be
+simply replaced by '!irqchip_in_kernel()', get rid of the static key
+to avoid the mismanagement, which also helps with the syzbot issue.
 
-  Use a very small buffer size (8K) and observe the size of truncated [T]
-  data. Before the fix, it is possible to see records of 0 size.
-
-  Before:
-
-    $ perf record -m,8K -e intel_pt// uname
-    Linux
-    [ perf record: Woken up 2 times to write data ]
-    [ perf record: Captured and wrote 0.105 MB perf.data ]
-    $ perf script -D --no-itrace | grep AUX | grep -F '[T]'
-    Warning:
-    AUX data lost 2 times out of 3!
-
-    5 19462712368111 0x19710 [0x40]: PERF_RECORD_AUX offset: 0 size: 0 flags: 0x1 [T]
-    5 19462712700046 0x19ba8 [0x40]: PERF_RECORD_AUX offset: 0x170 size: 0xe90 flags: 0x1 [T]
-
- After:
-
-    $ perf record -m,8K -e intel_pt// uname
-    Linux
-    [ perf record: Woken up 3 times to write data ]
-    [ perf record: Captured and wrote 0.040 MB perf.data ]
-    $ perf script -D --no-itrace | grep AUX | grep -F '[T]'
-    Warning:
-    AUX data lost 2 times out of 3!
-
-    1 113720802995 0x4948 [0x40]: PERF_RECORD_AUX offset: 0 size: 0x2000 flags: 0x1 [T]
-    1 113720979812 0x6b10 [0x40]: PERF_RECORD_AUX offset: 0x2000 size: 0x2000 flags: 0x1 [T]
-
-Fixes: 52ca9ced3f70 ("perf/x86/intel/pt: Add Intel PT PMU driver")
-Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Cc: stable@vger.kernel.org
-Link: https://lkml.kernel.org/r/20241022155920.17511-2-adrian.hunter@intel.com
+Cc: <stable@vger.kernel.org>
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Suggested-by: Marc Zyngier <maz@kernel.org>
+Signed-off-by: Raghavendra Rao Ananta <rananta@google.com>
+Signed-off-by: Oliver Upton <oliver.upton@linux.dev>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/events/intel/pt.c |   11 ++++++++---
- arch/x86/events/intel/pt.h |    2 ++
- 2 files changed, 10 insertions(+), 3 deletions(-)
+ arch/arm64/include/asm/kvm_host.h |    2 --
+ arch/arm64/kvm/arch_timer.c       |    3 +--
+ arch/arm64/kvm/arm.c              |   18 +++---------------
+ 3 files changed, 4 insertions(+), 19 deletions(-)
 
---- a/arch/x86/events/intel/pt.c
-+++ b/arch/x86/events/intel/pt.c
-@@ -828,11 +828,13 @@ static void pt_buffer_advance(struct pt_
- 	buf->cur_idx++;
+--- a/arch/arm64/include/asm/kvm_host.h
++++ b/arch/arm64/include/asm/kvm_host.h
+@@ -73,8 +73,6 @@ enum kvm_mode kvm_get_mode(void);
+ static inline enum kvm_mode kvm_get_mode(void) { return KVM_MODE_NONE; };
+ #endif
  
- 	if (buf->cur_idx == buf->cur->last) {
--		if (buf->cur == buf->last)
-+		if (buf->cur == buf->last) {
- 			buf->cur = buf->first;
--		else
-+			buf->wrapped = true;
-+		} else {
- 			buf->cur = list_entry(buf->cur->list.next, struct topa,
- 					      list);
-+		}
- 		buf->cur_idx = 0;
- 	}
- }
-@@ -846,8 +848,11 @@ static void pt_buffer_advance(struct pt_
- static void pt_update_head(struct pt *pt)
+-DECLARE_STATIC_KEY_FALSE(userspace_irqchip_in_use);
+-
+ extern unsigned int __ro_after_init kvm_sve_max_vl;
+ extern unsigned int __ro_after_init kvm_host_sve_max_vl;
+ int __init kvm_arm_init_sve(void);
+--- a/arch/arm64/kvm/arch_timer.c
++++ b/arch/arm64/kvm/arch_timer.c
+@@ -206,8 +206,7 @@ void get_timer_map(struct kvm_vcpu *vcpu
+ 
+ static inline bool userspace_irqchip(struct kvm *kvm)
  {
- 	struct pt_buffer *buf = perf_get_aux(&pt->handle);
-+	bool wrapped = buf->wrapped;
- 	u64 topa_idx, base, old;
+-	return static_branch_unlikely(&userspace_irqchip_in_use) &&
+-		unlikely(!irqchip_in_kernel(kvm));
++	return unlikely(!irqchip_in_kernel(kvm));
+ }
  
-+	buf->wrapped = false;
-+
- 	if (buf->single) {
- 		local_set(&buf->data_size, buf->output_off);
- 		return;
-@@ -865,7 +870,7 @@ static void pt_update_head(struct pt *pt
- 	} else {
- 		old = (local64_xchg(&buf->head, base) &
- 		       ((buf->nr_pages << PAGE_SHIFT) - 1));
--		if (base < old)
-+		if (base < old || (base == old && wrapped))
- 			base += buf->nr_pages << PAGE_SHIFT;
+ static void soft_timer_start(struct hrtimer *hrt, u64 ns)
+--- a/arch/arm64/kvm/arm.c
++++ b/arch/arm64/kvm/arm.c
+@@ -67,7 +67,6 @@ DECLARE_KVM_NVHE_PER_CPU(struct kvm_cpu_
+ static bool vgic_present, kvm_arm_initialised;
  
- 		local_add(base - old, &buf->data_size);
---- a/arch/x86/events/intel/pt.h
-+++ b/arch/x86/events/intel/pt.h
-@@ -65,6 +65,7 @@ struct pt_pmu {
-  * @head:	logical write offset inside the buffer
-  * @snapshot:	if this is for a snapshot/overwrite counter
-  * @single:	use Single Range Output instead of ToPA
-+ * @wrapped:	buffer advance wrapped back to the first topa table
-  * @stop_pos:	STOP topa entry index
-  * @intr_pos:	INT topa entry index
-  * @stop_te:	STOP topa entry pointer
-@@ -82,6 +83,7 @@ struct pt_buffer {
- 	local64_t		head;
- 	bool			snapshot;
- 	bool			single;
-+	bool			wrapped;
- 	long			stop_pos, intr_pos;
- 	struct topa_entry	*stop_te, *intr_te;
- 	void			**data_pages;
+ static DEFINE_PER_CPU(unsigned char, kvm_hyp_initialized);
+-DEFINE_STATIC_KEY_FALSE(userspace_irqchip_in_use);
+ 
+ bool is_kvm_arm_initialised(void)
+ {
+@@ -500,9 +499,6 @@ void kvm_arch_vcpu_postcreate(struct kvm
+ 
+ void kvm_arch_vcpu_destroy(struct kvm_vcpu *vcpu)
+ {
+-	if (vcpu_has_run_once(vcpu) && unlikely(!irqchip_in_kernel(vcpu->kvm)))
+-		static_branch_dec(&userspace_irqchip_in_use);
+-
+ 	kvm_mmu_free_memory_cache(&vcpu->arch.mmu_page_cache);
+ 	kvm_timer_vcpu_terminate(vcpu);
+ 	kvm_pmu_vcpu_destroy(vcpu);
+@@ -847,14 +843,6 @@ int kvm_arch_vcpu_run_pid_change(struct
+ 			return ret;
+ 	}
+ 
+-	if (!irqchip_in_kernel(kvm)) {
+-		/*
+-		 * Tell the rest of the code that there are userspace irqchip
+-		 * VMs in the wild.
+-		 */
+-		static_branch_inc(&userspace_irqchip_in_use);
+-	}
+-
+ 	/*
+ 	 * Initialize traps for protected VMs.
+ 	 * NOTE: Move to run in EL2 directly, rather than via a hypercall, once
+@@ -1074,7 +1062,7 @@ static bool kvm_vcpu_exit_request(struct
+ 	 * state gets updated in kvm_timer_update_run and
+ 	 * kvm_pmu_update_run below).
+ 	 */
+-	if (static_branch_unlikely(&userspace_irqchip_in_use)) {
++	if (unlikely(!irqchip_in_kernel(vcpu->kvm))) {
+ 		if (kvm_timer_should_notify_user(vcpu) ||
+ 		    kvm_pmu_should_notify_user(vcpu)) {
+ 			*ret = -EINTR;
+@@ -1196,7 +1184,7 @@ int kvm_arch_vcpu_ioctl_run(struct kvm_v
+ 			vcpu->mode = OUTSIDE_GUEST_MODE;
+ 			isb(); /* Ensure work in x_flush_hwstate is committed */
+ 			kvm_pmu_sync_hwstate(vcpu);
+-			if (static_branch_unlikely(&userspace_irqchip_in_use))
++			if (unlikely(!irqchip_in_kernel(vcpu->kvm)))
+ 				kvm_timer_sync_user(vcpu);
+ 			kvm_vgic_sync_hwstate(vcpu);
+ 			local_irq_enable();
+@@ -1242,7 +1230,7 @@ int kvm_arch_vcpu_ioctl_run(struct kvm_v
+ 		 * we don't want vtimer interrupts to race with syncing the
+ 		 * timer virtual interrupt state.
+ 		 */
+-		if (static_branch_unlikely(&userspace_irqchip_in_use))
++		if (unlikely(!irqchip_in_kernel(vcpu->kvm)))
+ 			kvm_timer_sync_user(vcpu);
+ 
+ 		kvm_arch_vcpu_ctxsync_fp(vcpu);
 
 
