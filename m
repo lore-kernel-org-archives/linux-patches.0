@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D03C21F75AE;
-	Tue,  3 Dec 2024 15:58:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E83A1F7591;
+	Tue,  3 Dec 2024 15:58:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733241505; cv=none; b=MEEKziiRamuAO5LWiwU/UPzBzjxB8ifARZ22pPAiyfcpfiTCceu+6Mu2IhNcZs+kmx8IQeNAVNnXvAURw8EngEGNT2ASWoyUhlUUixQ6h9DMnIMB06h/A/JFxmla2e5LexbPyXQADRp7H68rrL+spDxmaQmS3Bq5WYK6OlZMG3s=
+	t=1733241509; cv=none; b=c1Nd3bOgnSIVd2cp15KpH9+B97BKECgnVQMlSZplm4cw9SZ8Pzi5hazn5IA+MR0wkpIemp0Et5xUsY2E5V1IPJedyL9BZnqOkdJvKFMlnLsGWlA099RXsvpyb0siolz3GjXvhv9TwVRYNn8EpHXihednc1OTgSc9J5LWL2p10ck=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733241505; c=relaxed/simple;
-	bh=ael25QfdyRmdMYzNuAOub2aIEIb9wKH0ZBi1B3jXeSw=;
+	s=arc-20240116; t=1733241509; c=relaxed/simple;
+	bh=rL5Yzuop3P6VvjMObvV3rtxI5ublqh27wvlhgb9tEls=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tZwNBus4/8iFNoWZp8HjQuhgzIGqXmJyJvRiNHAJuYZdDT8eID20nEnZ4QGg2VeLYiHcmpQG4JkkDDJqdqvueXNwiAfnHnIH65G5ZSnfEBlJG0wr8WifQdTb5zVdyjdbnauZDh3Sy35hYqHQn/vcjNAYnSq8eL5qhAryMSoAeSk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iIkavq03; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TbTAdijxZVzpkyRna4tw6AUz5zULcRkcZy8N8wUI1Qo8WEGQINLqOqxNSRwqfJ7qYiX7pyzyAfb2zFH3e576bnJm5GWhzUp8yduNX9u/iTdoGkfxDEuHh3u3BAT04KdgX2JXLrryNefL+srIwaywijV6N33uw4AcGgjO1rWSxJM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T7KRIve4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iIkavq03"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DA46C4CECF;
-	Tue,  3 Dec 2024 15:58:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T7KRIve4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D51DC4CECF;
+	Tue,  3 Dec 2024 15:58:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733241505;
-	bh=ael25QfdyRmdMYzNuAOub2aIEIb9wKH0ZBi1B3jXeSw=;
+	s=korg; t=1733241509;
+	bh=rL5Yzuop3P6VvjMObvV3rtxI5ublqh27wvlhgb9tEls=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iIkavq03RsEU0OCsDPP5tp7LKLn6WSoMF5FtZiNSRnO39g3qYK4uTGgA+gZHaatDB
-	 1EVgoUuklEIG/P6JK9FIujdc5zngv5uwTni1eNz0EyBJPlwbPNwX4t98N5Krr54dd3
-	 PkkIQESssdH2DyOGTK1eK0JaD7truxjekX8+4Vzk=
+	b=T7KRIve4yl5fgIw62PJyX2KGmQtjaL7EPd006IF4IktpDCL+S01kqEzYTSVi7+Ekt
+	 s4DtqRi58ipDWkMRRIycghkvO1/Ni72qCIbFOS7oFjjLeMZHOjJgDSFL3Rg/XQRH9v
+	 JzBsHdgkiRXQpeda7FhCQ50LU+Wm4oKMStXUxFfA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolin Chen <nicolinc@nvidia.com>,
-	Will Deacon <will@kernel.org>,
+	Zhenzhong Duan <zhenzhong.duan@intel.com>,
+	Lu Baolu <baolu.lu@linux.intel.com>,
+	Joerg Roedel <jroedel@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 437/826] iommu/tegra241-cmdqv: Fix alignment failure at max_n_shift
-Date: Tue,  3 Dec 2024 15:42:44 +0100
-Message-ID: <20241203144800.809722948@linuxfoundation.org>
+Subject: [PATCH 6.12 411/826] iommu/vt-d: Fix checks and print in pgtable_walk()
+Date: Tue,  3 Dec 2024 15:42:18 +0100
+Message-ID: <20241203144759.793419413@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: <20241203144743.428732212@linuxfoundation.org>
@@ -51,44 +52,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicolin Chen <nicolinc@nvidia.com>
+From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 
-[ Upstream commit a3799717b881aa0f4e722afb70e7b8ba84ae4f36 ]
+[ Upstream commit f1645676f25d2c846798f0233c3a953efd62aafb ]
 
-When configuring a kernel with PAGE_SIZE=4KB, depending on its setting of
-CONFIG_CMA_ALIGNMENT, VCMDQ_LOG2SIZE_MAX=19 could fail the alignment test
-and trigger a WARN_ON:
-    WARNING: at drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c:3646
-    Call trace:
-     arm_smmu_init_one_queue+0x15c/0x210
-     tegra241_cmdqv_init_structures+0x114/0x338
-     arm_smmu_device_probe+0xb48/0x1d90
+There are some issues in pgtable_walk():
 
-Fix it by capping max_n_shift to CMDQ_MAX_SZ_SHIFT as SMMUv3 CMDQ does.
+1. Super page is dumped as non-present page
+2. dma_pte_superpage() should not check against leaf page table entries
+3. Pointer pte is never NULL so checking it is meaningless
+4. When an entry is not present, it still makes sense to dump the entry
+   content.
 
-Fixes: 918eb5c856f6 ("iommu/arm-smmu-v3: Add in-kernel support for NVIDIA Tegra241 (Grace) CMDQV")
-Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
-Link: https://lore.kernel.org/r/20241111030226.1940737-1-nicolinc@nvidia.com
-Signed-off-by: Will Deacon <will@kernel.org>
+Fix 1,2 by checking dma_pte_superpage()'s returned value after level check.
+Fix 3 by removing pte check.
+Fix 4 by checking present bit after printing.
+
+By this chance, change to print "page table not present" instead of "PTE
+not present" to be clearer.
+
+Fixes: 914ff7719e8a ("iommu/vt-d: Dump DMAR translation structure when DMA fault occurs")
+Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+Link: https://lore.kernel.org/r/20241024092146.715063-3-zhenzhong.duan@intel.com
+Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/iommu/intel/iommu.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c b/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c
-index a243c543598ce..6b479592140c4 100644
---- a/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c
-+++ b/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c
-@@ -509,7 +509,8 @@ static int tegra241_vcmdq_alloc_smmu_cmdq(struct tegra241_vcmdq *vcmdq)
+diff --git a/drivers/iommu/intel/iommu.c b/drivers/iommu/intel/iommu.c
+index 29c4a3bf3acd0..a167d59101ae2 100644
+--- a/drivers/iommu/intel/iommu.c
++++ b/drivers/iommu/intel/iommu.c
+@@ -707,14 +707,15 @@ static void pgtable_walk(struct intel_iommu *iommu, unsigned long pfn,
+ 	while (1) {
+ 		offset = pfn_level_offset(pfn, level);
+ 		pte = &parent[offset];
+-		if (!pte || (dma_pte_superpage(pte) || !dma_pte_present(pte))) {
+-			pr_info("PTE not present at level %d\n", level);
+-			break;
+-		}
  
- 	snprintf(name, 16, "vcmdq%u", vcmdq->idx);
+ 		pr_info("pte level: %d, pte value: 0x%016llx\n", level, pte->val);
  
--	q->llq.max_n_shift = VCMDQ_LOG2SIZE_MAX;
-+	/* Queue size, capped to ensure natural alignment */
-+	q->llq.max_n_shift = min_t(u32, CMDQ_MAX_SZ_SHIFT, VCMDQ_LOG2SIZE_MAX);
+-		if (level == 1)
++		if (!dma_pte_present(pte)) {
++			pr_info("page table not present at level %d\n", level - 1);
++			break;
++		}
++
++		if (level == 1 || dma_pte_superpage(pte))
+ 			break;
  
- 	/* Use the common helper to init the VCMDQ, and then... */
- 	ret = arm_smmu_init_one_queue(smmu, q, vcmdq->page0,
+ 		parent = phys_to_virt(dma_pte_addr(pte));
 -- 
 2.43.0
 
