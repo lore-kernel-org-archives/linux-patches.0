@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAAB21F76BE;
-	Tue,  3 Dec 2024 15:31:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 319B81F75B6;
+	Tue,  3 Dec 2024 15:32:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733239917; cv=none; b=NytXks9UfeePqQNK4QxjiMQv7CjNZRC9NMLiBNcR5oXioqBCIa5+kReGBl6jSrxCUlJo5uBqhA6vVdtCEsxqcubd0enh7a4fHFJ7Q/qsfPfNyOIt6m+7KIq+8WCTUoNFu7h3IXcH4hIPg2FuuhEZ58lp3EqgiaaAVkGX7thDmHc=
+	t=1733239920; cv=none; b=G3hmy7fhIMZbHsIjcR8rDKXbWezOcdslSawghxvrVwfnQz2LnRLqh/VDBrq0S4kU5gf5joHiXVGkGT+cvZjRd2kIBzZ74e7wolXZoae4rmFom+hzc+HgSJrwPQVTiXxfqrvDyvdlvwOHX2NKmWg+lzScbYVldNV1B4nHoWJmLYU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733239917; c=relaxed/simple;
-	bh=jw9bN+DLkkGt/jOYAQOQrfD2J02ixZLj+jAXu66QO54=;
+	s=arc-20240116; t=1733239920; c=relaxed/simple;
+	bh=p+aewyg41Gcbjq99dp+v3kTsmBQkuYpCIBomLmURJXg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ai3dEoIwE0EQ4njtDVzgUVx1gWcqaD5pxFL7eUTM1c+HSrmMWz4OpKKy0t+iUZCIw/Wtm+hU1SNWFUd/wLClVwM5MyVxHcjSGaTbdk4ug1hHFxgTKofy9SeaNarr8KJJ1EOR/krRySNcJI6YjROrq+w13U5fVxcsxpA80aoExvA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AEXl926C; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=i0K59DtKNo0TR8hQe+Y3fDNR98SZLIamzqzX1vGG2fJbCII3KoKa81BmmqMbAS5r/PWAvwTeTesTDwyPVfL9vzMmTyKdh2NdgDq8zgIBXGrcOm1DBhnsEMDCccPiMjqjF9dx80aoy+NZQhlODHAtxoyXzuNl7vce1NmgDpHBQRQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uspSBcij; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AEXl926C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3B29C4CEDA;
-	Tue,  3 Dec 2024 15:31:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uspSBcij"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE79AC4CECF;
+	Tue,  3 Dec 2024 15:31:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733239917;
-	bh=jw9bN+DLkkGt/jOYAQOQrfD2J02ixZLj+jAXu66QO54=;
+	s=korg; t=1733239920;
+	bh=p+aewyg41Gcbjq99dp+v3kTsmBQkuYpCIBomLmURJXg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AEXl926CFtq6mZknaXW0ai9U0tnyVVotsc6tAjYmHYDPprHTFh2O5Kt7KRLdoEcVu
-	 IXTdZTNqXdZluRaK01c7TR9M7Z5DHExPK6Ga6V+oOHtgmdwNDo2GZgyhyBOYX7McQC
-	 Z4YiPL2pddPmxlSTjcFk4IiquSSqk41QcEtGlVgA=
+	b=uspSBcijAks1zAt69kR+kHnxIMmtIUwI/pL/JjSuWqCV/hmkgPUC7AgF18S7U0PY+
+	 aXBmtnb70XBiK2QazaD7idcoEPaUvtXctbmteIPmxOfh0pMAz2gkbvOJ4FwK4UMdMD
+	 Djj8tKPe4AhwfKvdVH8eQTM0rKEwNMhI8rEFg9fs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Waqar Hameed <waqar.hameed@axis.com>,
-	Zhihao Cheng <chengzhihao1@huawei.com>,
-	Richard Weinberger <richard@nod.at>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 777/817] ubifs: authentication: Fix use-after-free in ubifs_tnc_end_commit
-Date: Tue,  3 Dec 2024 15:45:49 +0100
-Message-ID: <20241203144026.342011168@linuxfoundation.org>
+	Paul Aurich <paul@darkrain42.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.11 748/817] smb: prevent use-after-free due to open_cached_dir error paths
+Date: Tue,  3 Dec 2024 15:45:20 +0100
+Message-ID: <20241203144025.194261058@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: <20241203143955.605130076@linuxfoundation.org>
@@ -52,171 +50,246 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Waqar Hameed <waqar.hameed@axis.com>
+From: Paul Aurich <paul@darkrain42.org>
 
-[ Upstream commit 4617fb8fc15effe8eda4dd898d4e33eb537a7140 ]
+commit a9685b409a03b73d2980bbfa53eb47555802d0a9 upstream.
 
-After an insertion in TNC, the tree might split and cause a node to
-change its `znode->parent`. A further deletion of other nodes in the
-tree (which also could free the nodes), the aforementioned node's
-`znode->cparent` could still point to a freed node. This
-`znode->cparent` may not be updated when getting nodes to commit in
-`ubifs_tnc_start_commit()`. This could then trigger a use-after-free
-when accessing the `znode->cparent` in `write_index()` in
-`ubifs_tnc_end_commit()`.
+If open_cached_dir() encounters an error parsing the lease from the
+server, the error handling may race with receiving a lease break,
+resulting in open_cached_dir() freeing the cfid while the queued work is
+pending.
 
-This can be triggered by running
+Update open_cached_dir() to drop refs rather than directly freeing the
+cfid.
 
-  rm -f /etc/test-file.bin
-  dd if=/dev/urandom of=/etc/test-file.bin bs=1M count=60 conv=fsync
+Have cached_dir_lease_break(), cfids_laundromat_worker(), and
+invalidate_all_cached_dirs() clear has_lease immediately while still
+holding cfids->cfid_list_lock, and then use this to also simplify the
+reference counting in cfids_laundromat_worker() and
+invalidate_all_cached_dirs().
 
-in a loop, and with `CONFIG_UBIFS_FS_AUTHENTICATION`. KASAN then
-reports:
+Fixes this KASAN splat (which manually injects an error and lease break
+in open_cached_dir()):
 
-  BUG: KASAN: use-after-free in ubifs_tnc_end_commit+0xa5c/0x1950
-  Write of size 32 at addr ffffff800a3af86c by task ubifs_bgt0_20/153
+==================================================================
+BUG: KASAN: slab-use-after-free in smb2_cached_lease_break+0x27/0xb0
+Read of size 8 at addr ffff88811cc24c10 by task kworker/3:1/65
 
-  Call trace:
-   dump_backtrace+0x0/0x340
-   show_stack+0x18/0x24
-   dump_stack_lvl+0x9c/0xbc
-   print_address_description.constprop.0+0x74/0x2b0
-   kasan_report+0x1d8/0x1f0
-   kasan_check_range+0xf8/0x1a0
-   memcpy+0x84/0xf4
-   ubifs_tnc_end_commit+0xa5c/0x1950
-   do_commit+0x4e0/0x1340
-   ubifs_bg_thread+0x234/0x2e0
-   kthread+0x36c/0x410
-   ret_from_fork+0x10/0x20
+CPU: 3 UID: 0 PID: 65 Comm: kworker/3:1 Not tainted 6.12.0-rc6-g255cf264e6e5-dirty #87
+Hardware name: VMware, Inc. VMware Virtual Platform/440BX Desktop Reference Platform, BIOS 6.00 11/12/2020
+Workqueue: cifsiod smb2_cached_lease_break
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0x77/0xb0
+ print_report+0xce/0x660
+ kasan_report+0xd3/0x110
+ smb2_cached_lease_break+0x27/0xb0
+ process_one_work+0x50a/0xc50
+ worker_thread+0x2ba/0x530
+ kthread+0x17c/0x1c0
+ ret_from_fork+0x34/0x60
+ ret_from_fork_asm+0x1a/0x30
+ </TASK>
 
-  Allocated by task 401:
-   kasan_save_stack+0x38/0x70
-   __kasan_kmalloc+0x8c/0xd0
-   __kmalloc+0x34c/0x5bc
-   tnc_insert+0x140/0x16a4
-   ubifs_tnc_add+0x370/0x52c
-   ubifs_jnl_write_data+0x5d8/0x870
-   do_writepage+0x36c/0x510
-   ubifs_writepage+0x190/0x4dc
-   __writepage+0x58/0x154
-   write_cache_pages+0x394/0x830
-   do_writepages+0x1f0/0x5b0
-   filemap_fdatawrite_wbc+0x170/0x25c
-   file_write_and_wait_range+0x140/0x190
-   ubifs_fsync+0xe8/0x290
-   vfs_fsync_range+0xc0/0x1e4
-   do_fsync+0x40/0x90
-   __arm64_sys_fsync+0x34/0x50
-   invoke_syscall.constprop.0+0xa8/0x260
-   do_el0_svc+0xc8/0x1f0
-   el0_svc+0x34/0x70
-   el0t_64_sync_handler+0x108/0x114
-   el0t_64_sync+0x1a4/0x1a8
+Allocated by task 2464:
+ kasan_save_stack+0x33/0x60
+ kasan_save_track+0x14/0x30
+ __kasan_kmalloc+0xaa/0xb0
+ open_cached_dir+0xa7d/0x1fb0
+ smb2_query_path_info+0x43c/0x6e0
+ cifs_get_fattr+0x346/0xf10
+ cifs_get_inode_info+0x157/0x210
+ cifs_revalidate_dentry_attr+0x2d1/0x460
+ cifs_getattr+0x173/0x470
+ vfs_statx_path+0x10f/0x160
+ vfs_statx+0xe9/0x150
+ vfs_fstatat+0x5e/0xc0
+ __do_sys_newfstatat+0x91/0xf0
+ do_syscall_64+0x95/0x1a0
+ entry_SYSCALL_64_after_hwframe+0x76/0x7e
 
-  Freed by task 403:
-   kasan_save_stack+0x38/0x70
-   kasan_set_track+0x28/0x40
-   kasan_set_free_info+0x28/0x4c
-   __kasan_slab_free+0xd4/0x13c
-   kfree+0xc4/0x3a0
-   tnc_delete+0x3f4/0xe40
-   ubifs_tnc_remove_range+0x368/0x73c
-   ubifs_tnc_remove_ino+0x29c/0x2e0
-   ubifs_jnl_delete_inode+0x150/0x260
-   ubifs_evict_inode+0x1d4/0x2e4
-   evict+0x1c8/0x450
-   iput+0x2a0/0x3c4
-   do_unlinkat+0x2cc/0x490
-   __arm64_sys_unlinkat+0x90/0x100
-   invoke_syscall.constprop.0+0xa8/0x260
-   do_el0_svc+0xc8/0x1f0
-   el0_svc+0x34/0x70
-   el0t_64_sync_handler+0x108/0x114
-   el0t_64_sync+0x1a4/0x1a8
+Freed by task 2464:
+ kasan_save_stack+0x33/0x60
+ kasan_save_track+0x14/0x30
+ kasan_save_free_info+0x3b/0x60
+ __kasan_slab_free+0x51/0x70
+ kfree+0x174/0x520
+ open_cached_dir+0x97f/0x1fb0
+ smb2_query_path_info+0x43c/0x6e0
+ cifs_get_fattr+0x346/0xf10
+ cifs_get_inode_info+0x157/0x210
+ cifs_revalidate_dentry_attr+0x2d1/0x460
+ cifs_getattr+0x173/0x470
+ vfs_statx_path+0x10f/0x160
+ vfs_statx+0xe9/0x150
+ vfs_fstatat+0x5e/0xc0
+ __do_sys_newfstatat+0x91/0xf0
+ do_syscall_64+0x95/0x1a0
+ entry_SYSCALL_64_after_hwframe+0x76/0x7e
 
-The offending `memcpy()` in `ubifs_copy_hash()` has a use-after-free
-when a node becomes root in TNC but still has a `cparent` to an already
-freed node. More specifically, consider the following TNC:
+Last potentially related work creation:
+ kasan_save_stack+0x33/0x60
+ __kasan_record_aux_stack+0xad/0xc0
+ insert_work+0x32/0x100
+ __queue_work+0x5c9/0x870
+ queue_work_on+0x82/0x90
+ open_cached_dir+0x1369/0x1fb0
+ smb2_query_path_info+0x43c/0x6e0
+ cifs_get_fattr+0x346/0xf10
+ cifs_get_inode_info+0x157/0x210
+ cifs_revalidate_dentry_attr+0x2d1/0x460
+ cifs_getattr+0x173/0x470
+ vfs_statx_path+0x10f/0x160
+ vfs_statx+0xe9/0x150
+ vfs_fstatat+0x5e/0xc0
+ __do_sys_newfstatat+0x91/0xf0
+ do_syscall_64+0x95/0x1a0
+ entry_SYSCALL_64_after_hwframe+0x76/0x7e
 
-         zroot
-         /
-        /
-      zp1
-      /
-     /
-    zn
+The buggy address belongs to the object at ffff88811cc24c00
+ which belongs to the cache kmalloc-1k of size 1024
+The buggy address is located 16 bytes inside of
+ freed 1024-byte region [ffff88811cc24c00, ffff88811cc25000)
 
-Inserting a new node `zn_new` with a key smaller then `zn` will trigger
-a split in `tnc_insert()` if `zp1` is full:
-
-         zroot
-         /   \
-        /     \
-      zp1     zp2
-      /         \
-     /           \
-  zn_new          zn
-
-`zn->parent` has now been moved to `zp2`, *but* `zn->cparent` still
-points to `zp1`.
-
-Now, consider a removal of all the nodes _except_ `zn`. Just when
-`tnc_delete()` is about to delete `zroot` and `zp2`:
-
-         zroot
-             \
-              \
-              zp2
-                \
-                 \
-                 zn
-
-`zroot` and `zp2` get freed and the tree collapses:
-
-           zn
-
-`zn` now becomes the new `zroot`.
-
-`get_znodes_to_commit()` will now only find `zn`, the new `zroot`, and
-`write_index()` will check its `znode->cparent` that wrongly points to
-the already freed `zp1`. `ubifs_copy_hash()` thus gets wrongly called
-with `znode->cparent->zbranch[znode->iip].hash` that triggers the
-use-after-free!
-
-Fix this by explicitly setting `znode->cparent` to `NULL` in
-`get_znodes_to_commit()` for the root node. The search for the dirty
-nodes is bottom-up in the tree. Thus, when `find_next_dirty(znode)`
-returns NULL, the current `znode` _is_ the root node. Add an assert for
-this.
-
-Fixes: 16a26b20d2af ("ubifs: authentication: Add hashes to index nodes")
-Tested-by: Waqar Hameed <waqar.hameed@axis.com>
-Co-developed-by: Zhihao Cheng <chengzhihao1@huawei.com>
-Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
-Signed-off-by: Waqar Hameed <waqar.hameed@axis.com>
-Reviewed-by: Zhihao Cheng <chengzhihao1@huawei.com>
-Signed-off-by: Richard Weinberger <richard@nod.at>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Signed-off-by: Paul Aurich <paul@darkrain42.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ubifs/tnc_commit.c | 2 ++
- 1 file changed, 2 insertions(+)
+ fs/smb/client/cached_dir.c |   70 ++++++++++++++++++---------------------------
+ 1 file changed, 29 insertions(+), 41 deletions(-)
 
-diff --git a/fs/ubifs/tnc_commit.c b/fs/ubifs/tnc_commit.c
-index a55e04822d16e..7c43e0ccf6d47 100644
---- a/fs/ubifs/tnc_commit.c
-+++ b/fs/ubifs/tnc_commit.c
-@@ -657,6 +657,8 @@ static int get_znodes_to_commit(struct ubifs_info *c)
- 		znode->alt = 0;
- 		cnext = find_next_dirty(znode);
- 		if (!cnext) {
-+			ubifs_assert(c, !znode->parent);
-+			znode->cparent = NULL;
- 			znode->cnext = c->cnext;
- 			break;
+--- a/fs/smb/client/cached_dir.c
++++ b/fs/smb/client/cached_dir.c
+@@ -348,6 +348,7 @@ oshr_free:
+ 	SMB2_query_info_free(&rqst[1]);
+ 	free_rsp_buf(resp_buftype[0], rsp_iov[0].iov_base);
+ 	free_rsp_buf(resp_buftype[1], rsp_iov[1].iov_base);
++out:
+ 	if (rc) {
+ 		spin_lock(&cfids->cfid_list_lock);
+ 		if (cfid->on_list) {
+@@ -359,23 +360,14 @@ oshr_free:
+ 			/*
+ 			 * We are guaranteed to have two references at this
+ 			 * point. One for the caller and one for a potential
+-			 * lease. Release the Lease-ref so that the directory
+-			 * will be closed when the caller closes the cached
+-			 * handle.
++			 * lease. Release one here, and the second below.
+ 			 */
+ 			cfid->has_lease = false;
+-			spin_unlock(&cfids->cfid_list_lock);
+ 			kref_put(&cfid->refcount, smb2_close_cached_fid);
+-			goto out;
  		}
--- 
-2.43.0
-
+ 		spin_unlock(&cfids->cfid_list_lock);
+-	}
+-out:
+-	if (rc) {
+-		if (cfid->is_open)
+-			SMB2_close(0, cfid->tcon, cfid->fid.persistent_fid,
+-				   cfid->fid.volatile_fid);
+-		free_cached_dir(cfid);
++
++		kref_put(&cfid->refcount, smb2_close_cached_fid);
+ 	} else {
+ 		*ret_cfid = cfid;
+ 		atomic_inc(&tcon->num_remote_opens);
+@@ -513,25 +505,24 @@ void invalidate_all_cached_dirs(struct c
+ 		cfids->num_entries--;
+ 		cfid->is_open = false;
+ 		cfid->on_list = false;
+-		/* To prevent race with smb2_cached_lease_break() */
+-		kref_get(&cfid->refcount);
++		if (cfid->has_lease) {
++			/*
++			 * The lease was never cancelled from the server,
++			 * so steal that reference.
++			 */
++			cfid->has_lease = false;
++		} else
++			kref_get(&cfid->refcount);
+ 	}
+ 	spin_unlock(&cfids->cfid_list_lock);
+ 
+ 	list_for_each_entry_safe(cfid, q, &entry, entry) {
+ 		list_del(&cfid->entry);
+ 		cancel_work_sync(&cfid->lease_break);
+-		if (cfid->has_lease) {
+-			/*
+-			 * We lease was never cancelled from the server so we
+-			 * need to drop the reference.
+-			 */
+-			spin_lock(&cfids->cfid_list_lock);
+-			cfid->has_lease = false;
+-			spin_unlock(&cfids->cfid_list_lock);
+-			kref_put(&cfid->refcount, smb2_close_cached_fid);
+-		}
+-		/* Drop the extra reference opened above*/
++		/*
++		 * Drop the ref-count from above, either the lease-ref (if there
++		 * was one) or the extra one acquired.
++		 */
+ 		kref_put(&cfid->refcount, smb2_close_cached_fid);
+ 	}
+ }
+@@ -542,9 +533,6 @@ smb2_cached_lease_break(struct work_stru
+ 	struct cached_fid *cfid = container_of(work,
+ 				struct cached_fid, lease_break);
+ 
+-	spin_lock(&cfid->cfids->cfid_list_lock);
+-	cfid->has_lease = false;
+-	spin_unlock(&cfid->cfids->cfid_list_lock);
+ 	kref_put(&cfid->refcount, smb2_close_cached_fid);
+ }
+ 
+@@ -562,6 +550,7 @@ int cached_dir_lease_break(struct cifs_t
+ 		    !memcmp(lease_key,
+ 			    cfid->fid.lease_key,
+ 			    SMB2_LEASE_KEY_SIZE)) {
++			cfid->has_lease = false;
+ 			cfid->time = 0;
+ 			/*
+ 			 * We found a lease remove it from the list
+@@ -639,8 +628,14 @@ static void cfids_laundromat_worker(stru
+ 			cfid->on_list = false;
+ 			list_move(&cfid->entry, &entry);
+ 			cfids->num_entries--;
+-			/* To prevent race with smb2_cached_lease_break() */
+-			kref_get(&cfid->refcount);
++			if (cfid->has_lease) {
++				/*
++				 * Our lease has not yet been cancelled from the
++				 * server. Steal that reference.
++				 */
++				cfid->has_lease = false;
++			} else
++				kref_get(&cfid->refcount);
+ 		}
+ 	}
+ 	spin_unlock(&cfids->cfid_list_lock);
+@@ -652,17 +647,10 @@ static void cfids_laundromat_worker(stru
+ 		 * with it.
+ 		 */
+ 		cancel_work_sync(&cfid->lease_break);
+-		if (cfid->has_lease) {
+-			/*
+-			 * Our lease has not yet been cancelled from the server
+-			 * so we need to drop the reference.
+-			 */
+-			spin_lock(&cfids->cfid_list_lock);
+-			cfid->has_lease = false;
+-			spin_unlock(&cfids->cfid_list_lock);
+-			kref_put(&cfid->refcount, smb2_close_cached_fid);
+-		}
+-		/* Drop the extra reference opened above */
++		/*
++		 * Drop the ref-count from above, either the lease-ref (if there
++		 * was one) or the extra one acquired.
++		 */
+ 		kref_put(&cfid->refcount, smb2_close_cached_fid);
+ 	}
+ 	queue_delayed_work(cifsiod_wq, &cfids->laundromat_work,
 
 
