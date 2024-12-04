@@ -1,121 +1,118 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f41.google.com (mail-lf1-f41.google.com [209.85.167.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7D7D17D2;
-	Wed,  4 Dec 2024 00:24:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B680FC0B
+	for <patches@lists.linux.dev>; Wed,  4 Dec 2024 03:08:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733271872; cv=none; b=ESBDsZqmymrMX97R2W5r2HzJFxUjhsSP+9+5jwy/R0rbNFhABWJnM9Ce7HAp6ckISvLrTMr7hckoNxXBSYcoCoRCVEyYXU7WkqgPlXZyNOfLltO0lQEDhmuu6nu0P/1NPwQt9tOoM/dZVQ5LHc/ULf6ZZa1ZWDwrtQApgOhk1Zg=
+	t=1733281711; cv=none; b=PBwY/6hpklH5SyimQOVR/5yVEePI8SI2QPwXjjO6SaCiwppEVqDMyZW3HfUYDj4Af2wTlIacm5Me5xjQ41Mw1gDzogBmH6PIS/gHQFBK9eWpcSVMYDz72/W1+Rqml1YBw7lGaJr4qW3xLVY4COBochVKJhhAOvcUt1R643fNHWU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733271872; c=relaxed/simple;
-	bh=3aLL3OQ0JjPgJJ3AA938LY53kK42EWSLbYjymQP4luY=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=krFCtjg5wSoCCffpR5j8Nh3RD1v8DRlrlL1BBzgUDeRwargqUiscSixU5sCRf93fP7MLDpc9Xwnb2iMDJEt2AhEy5Bajsb8Tx12XabLBjJ+17y6R6uwY4PW0oZ3RuJfIA8FaLyZ1gNteDJFFantDsUz1WhfayuKWFNZIEprFojk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PaB/m/6u; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1733281711; c=relaxed/simple;
+	bh=Gx9TKyH/IiOvnCTOYjzUfxu+NCv+Qo0R5Stqwe7J2gA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=AgwMLWFDkZGmeZVbzKW7sfXzQY0GcwQpT2t8YmNHclGDXvuHos3zuv1XrDRSR657nFhsiemr0mSlCTGTcyW9kHcaYf7xndZyHYiwn1BgTSDc9v0cBZK5pAzL5BMaT7VlIn4TeiujFu9Zdv1G7DQ+5Fhq9sz2El+TKwzpx+J1Ek8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=YC/gHTSo; arc=none smtp.client-ip=209.85.167.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PaB/m/6u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01882C4CEDC;
-	Wed,  4 Dec 2024 00:24:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1733271872;
-	bh=3aLL3OQ0JjPgJJ3AA938LY53kK42EWSLbYjymQP4luY=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PaB/m/6uERNd567YnOCKJUOPEsELei5qjtUUcBVeRrkmf1f7CWg9t6slPQsKD0QWM
-	 pNQZNHGP0MHFJRqMOY7M0+jMKr/beWuEcisTare79cSFNGcKp3sMgVDC1z/VvFf6gS
-	 x/vF2/c3sHutKk1UMiGYXOlo/OCgSR6iyktp1ZLiNl2go8Dfjenim1XTb+jTxcHI6V
-	 R3TjkGxmEGn+vqoEPY6Ej/FJKNyhItqyeo5vJduU/K0Z651n/2jRSy4YXhW1MVne4C
-	 Kc1uSUQI0mWPoB0YDjqDBpn/1KcxmTbCjms7EgI+PGGMktCx68xkvOVVdfyPHTH2PI
-	 bhWGq2eFDpzfQ==
-From: SeongJae Park <sj@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: SeongJae Park <sj@kernel.org>,
-	stable@vger.kernel.org,
-	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net,
-	rwarsow@gmx.de,
-	conor@kernel.org,
-	hargar@microsoft.com,
-	broonie@kernel.org,
-	damon@lists.linux.dev
-Subject: Re: [PATCH 6.12 000/826] 6.12.2-rc1 review
-Date: Tue,  3 Dec 2024 16:24:29 -0800
-Message-Id: <20241204002429.85717-1-sj@kernel.org>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
-References: 
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="YC/gHTSo"
+Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-53de8ecb39bso7385461e87.2
+        for <patches@lists.linux.dev>; Tue, 03 Dec 2024 19:08:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1733281708; x=1733886508; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=mVmSqpdGxBu8j7ybmU1Q52YmQ/jiLnXY/vl/nUcqB8I=;
+        b=YC/gHTSosm+GiTupOhTB4R8C4t/f8L5Akym1tpGPleHq581b8ETE1DkuDVhJF/o4zK
+         nFwfSDOAyqjdBM+iq17nj/pQIY8sU3ir78MtFTkldn/bEZ7pYHvFvU4nbTqv7Mh2kRmu
+         zfVi4FKAO6TCV2lPKDCKm28DCQ+LO5sy2kL3WTQIdNByg3NKP29wVsDrc/rfHwo99QWp
+         fxCrVqEpV9lGQqjdb1y9jJOHpXcHG4uVo569hXBuDRQq3VxWWrDkS/hkDOBwbWXjzKCe
+         e6u8nO9qcUrzqj/0ce+MZ0MJc5g+Yx7Jsa3qRysArKh41BQtlaz3pPrb0KotoLjB/06H
+         dV4g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1733281708; x=1733886508;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=mVmSqpdGxBu8j7ybmU1Q52YmQ/jiLnXY/vl/nUcqB8I=;
+        b=oYxagW+xS3Up3N5j28w7j1PPq2q1pdyuKj76EOD/12dmNoqjR7CNnA84Gma3JRHa/4
+         stcN226hMbe/fT9BvyDZ3pLFTvwV5MrIwUdhJLP76IzkcvARnz1aYgOO8h/EOCThDd10
+         d2wWkUptSaR3G9hmxb3zU8JlO97sW1MJJkeC48caJAZa0OzUpEw7IOUHdBsrq7+Zk+r+
+         N944d7KvTaQ7En/7e3XmENXXgJt4SgNaSxHI3V63MyroQWzKsUfFF0ckh+pJo9vMhDRP
+         wrbhzfloMnvg8B8uUOjHTri6m87Bk6lT6m1FFFW47bhd9WP5XiQ4QJlfG+r+HUodt7WE
+         QjYQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVHZZytMLdt5jgTS0+etZFppENFjWqFYkOOug1Q0XZeE287X7mRF7jGruaGT/qR5M+txHeeW8o9@lists.linux.dev
+X-Gm-Message-State: AOJu0YyHn0HxVpE/QVv+Y+2hEM7ieLRMB59vi9MZa+osx12NaYZAEj0c
+	qkJWWZYLUIfdz+pmykKfz/ujwUNFZwtT4zbA3pgESUi3BlNaUp0y5c8NXiIu0e4rGrll3uRvieS
+	0G5P5bj2QB8+8z26yxEv/rLV6ZdjFEyWc4GS1
+X-Gm-Gg: ASbGncuV1WAYv/znTthXMLr2fuPr03Sy/8lcK1WNP7lsFXVLUTunUJvl2b9STlVovzJ
+	dazZlK15nM/YjQVBYBzlXx855y8oUMjJsQT51fLi5cZvLXsRAT2W6Wi3c/64N
+X-Google-Smtp-Source: AGHT+IFWrPHsG4uBMjv2tdZR6tlXbsKwqe+rRNrv2XPJXAVNi7kJ86S8IWFxXuMskg01ueFLy0zr2v3g9u+L67fH27I=
+X-Received: by 2002:a05:6512:148:b0:53e:12d6:8835 with SMTP id
+ 2adb3069b0e04-53e12d6883dmr2511065e87.46.1733281708120; Tue, 03 Dec 2024
+ 19:08:28 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20241204000415.2404264-1-swboyd@chromium.org>
+In-Reply-To: <20241204000415.2404264-1-swboyd@chromium.org>
+From: Saravana Kannan <saravanak@google.com>
+Date: Tue, 3 Dec 2024 19:07:51 -0800
+Message-ID: <CAGETcx8uJF30UvK_4PUu2R+juYa33CXEZrnSLG9nWXN2TPL4wg@mail.gmail.com>
+Subject: Re: [PATCH] of: Hide of_default_bus_match_table[]
+To: Stephen Boyd <swboyd@chromium.org>
+Cc: Rob Herring <robh@kernel.org>, linux-kernel@vger.kernel.org, patches@lists.linux.dev, 
+	devicetree@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hello,
+On Tue, Dec 3, 2024 at 4:04=E2=80=AFPM Stephen Boyd <swboyd@chromium.org> w=
+rote:
+>
+> This isn't used outside this file. Hide the array in the C file.
+>
+> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
 
-On Tue, 3 Dec 2024 15:35:27 +0100 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+Acked-by: Saravana Kannan <saravanak@google.com>
 
-> This is the start of the stable review cycle for the 6.12.2 release.
-> There are 826 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Thu, 05 Dec 2024 14:45:11 +0000.
-> Anything received after that time might be too late.
-
-This rc kernel passes DAMON functionality test[1] on my test machine.
-Attaching the test results summary below.  Please note that I retrieved the
-kernel from linux-stable-rc tree[2].
-
-Tested-by: SeongJae Park <sj@kernel.org>
-
-[1] https://github.com/damonitor/damon-tests/tree/next/corr
-[2] 1b3321bcbfba ("Linux 6.12.2-rc1")
-
-Thanks,
-SJ
-
-[...]
-
----
-
-ok 9 selftests: damon: damos_tried_regions.py
-ok 10 selftests: damon: damon_nr_regions.py
-ok 11 selftests: damon: reclaim.sh
-ok 12 selftests: damon: lru_sort.sh
-ok 13 selftests: damon: debugfs_empty_targets.sh
-ok 14 selftests: damon: debugfs_huge_count_read_write.sh
-ok 15 selftests: damon: debugfs_duplicate_context_creation.sh
-ok 16 selftests: damon: debugfs_rm_non_contexts.sh
-ok 17 selftests: damon: debugfs_target_ids_read_before_terminate_race.sh
-ok 18 selftests: damon: debugfs_target_ids_pid_leak.sh
-ok 19 selftests: damon: sysfs_update_removed_scheme_dir.sh
-ok 20 selftests: damon: sysfs_update_schemes_tried_regions_hang.py
-ok 1 selftests: damon-tests: kunit.sh
-ok 2 selftests: damon-tests: huge_count_read_write.sh
-ok 3 selftests: damon-tests: buffer_overflow.sh
-ok 4 selftests: damon-tests: rm_contexts.sh
-ok 5 selftests: damon-tests: record_null_deref.sh
-ok 6 selftests: damon-tests: dbgfs_target_ids_read_before_terminate_race.sh
-ok 7 selftests: damon-tests: dbgfs_target_ids_pid_leak.sh
-ok 8 selftests: damon-tests: damo_tests.sh
-ok 9 selftests: damon-tests: masim-record.sh
-ok 10 selftests: damon-tests: build_i386.sh
-ok 11 selftests: damon-tests: build_arm64.sh # SKIP
-ok 12 selftests: damon-tests: build_m68k.sh # SKIP
-ok 13 selftests: damon-tests: build_i386_idle_flag.sh
-ok 14 selftests: damon-tests: build_i386_highpte.sh
-ok 15 selftests: damon-tests: build_nomemcg.sh
- [33m
- [92mPASS [39m
+> ---
+>  drivers/of/platform.c       | 2 +-
+>  include/linux/of_platform.h | 2 --
+>  2 files changed, 1 insertion(+), 3 deletions(-)
+>
+> diff --git a/drivers/of/platform.c b/drivers/of/platform.c
+> index 9bafcff3e628..f09dc183975b 100644
+> --- a/drivers/of/platform.c
+> +++ b/drivers/of/platform.c
+> @@ -24,7 +24,7 @@
+>
+>  #include "of_private.h"
+>
+> -const struct of_device_id of_default_bus_match_table[] =3D {
+> +static const struct of_device_id of_default_bus_match_table[] =3D {
+>         { .compatible =3D "simple-bus", },
+>         { .compatible =3D "simple-mfd", },
+>         { .compatible =3D "isa", },
+> diff --git a/include/linux/of_platform.h b/include/linux/of_platform.h
+> index a2ff1ad48f7f..17471ef8e092 100644
+> --- a/include/linux/of_platform.h
+> +++ b/include/linux/of_platform.h
+> @@ -47,8 +47,6 @@ struct of_dev_auxdata {
+>         { .compatible =3D _compat, .phys_addr =3D _phys, .name =3D _name,=
+ \
+>           .platform_data =3D _pdata }
+>
+> -extern const struct of_device_id of_default_bus_match_table[];
+> -
+>  /* Platform drivers register/unregister */
+>  extern struct platform_device *of_device_alloc(struct device_node *np,
+>                                          const char *bus_id,
+>
+> base-commit: 40384c840ea1944d7c5a392e8975ed088ecf0b37
+> --
+> https://chromeos.dev
+>
