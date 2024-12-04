@@ -1,172 +1,124 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E426C4A28;
-	Wed,  4 Dec 2024 16:22:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55E16155A2F;
+	Wed,  4 Dec 2024 16:48:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733329344; cv=none; b=rdDV5SbyxTj36+pW+RVhBmcWx077d3jdG9CY0rbWBIJ3c6xVXzObJnotLqsqbvlXt465TZe562sbFj9E4K5FWw7PWIF7ZiFgpoWxudnY+IUNZE/xMmOIPNNWI9Fa7/VyZBLPHPUy6Y8u4F/PxnzyiDJO2Eh6pa2Qn6liFpSyo1A=
+	t=1733330937; cv=none; b=iCmNNuzruD9InW6ByNW6xMF7CIniM+JeVK0SZJXe3TxcDIvNtUqvV2McRUGEH1/KwM/367GCAfgFal7CVuT/YcWMn8/aKq3IL7q2RM89W+846Gv+JZGES3yv7ERtY4t2Fp+waq4JSW/3rpm21lNbvjO/Ok78EcwksqQFjrykLgI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733329344; c=relaxed/simple;
-	bh=A4oFzO9GNWTbQ3XOLyNV9MXETcpu40rt/iPXCpxt6O0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=JrToRck7zLqP/35QT578rbcZqX627SCfrctF13LSbxiRtUCnfWqANrEEaBfw/6hPcWyQJ/jXqaPn6i1cLx6U8VwgmI5/2rIDNovP0vF49OMN2RPcGo2o438XDJ2nU8ePeCd3FtYP/jpgEfpmSTI3ON+08CVJUr30o/ECEBhVkAM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fGpBkyII; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1733330937; c=relaxed/simple;
+	bh=stKYzQ0R9UHlbunEwTrubh6TmczNsMqKLnm63iCclNw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=NRKd4UFiQXV0IyYt/cFwF/Ck22RQrydFBGOIirt5pyVmARqlsC0o3XlbzQlo8I7py7mAxhmg4i/pq1AIPzzJYEeV6n4Wcc/MxB1eS2JaD23RrH9oPmQQ4aS/Gf86ckGuCbirRG4oMM7gQaBL8dIBA48fhPEQz3dd8YuhyXNqT0k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RODX1vKl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fGpBkyII"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A523C4CECD;
-	Wed,  4 Dec 2024 16:22:21 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RODX1vKl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A3C1C4CECD;
+	Wed,  4 Dec 2024 16:48:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1733329343;
-	bh=A4oFzO9GNWTbQ3XOLyNV9MXETcpu40rt/iPXCpxt6O0=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=fGpBkyII/weC405HQoEiRu/1XgL4ZBG+6mhNu9ctwnh6fUcZPAO4pV8h+1ZLFuFgW
-	 RS0QLciPWPQesBerPRF7xdvROL8vhmtOX2tkKHPuExWHhyPBztU4o7Dd6in+wQIrfR
-	 Sc02RTwLFsQrdwoI90q+HKv2fFDjndzvmKq0JcugC3/vvZg6T9mtKmet0O8JMyGg4x
-	 04pH28o3/WBnsxqgEUYED0NxsObiYrasGhQ6c7AueBA92UdxG31mR6qRC9Nscfxk9Z
-	 pxQXbjcj5kFbZwi6PRyu/X+QqmFpKHdn+MHhGQ1wurkMN16X4a9vamKrDsLbgbUFBr
-	 Q1ER1cgvPGCXw==
-Message-ID: <b04ee5e7-f654-4562-bc8e-2643f37f1ba3@kernel.org>
-Date: Wed, 4 Dec 2024 17:22:19 +0100
+	s=k20201202; t=1733330936;
+	bh=stKYzQ0R9UHlbunEwTrubh6TmczNsMqKLnm63iCclNw=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=RODX1vKlkCvETpQ5NpIm2OdX8o7qCEhp3Dmj1sPZkL/EWT6FiiYq7nV5/Vui3Ybsv
+	 jdgQQCBg1SM+GGVAdBFXbE/TqEYOPpaihjEYnrfBxpbGNdnQRWEMcik6wdKI2qCJwi
+	 hhX4jKWmpNSQhlumBc+AmYI4I7axb3IVP7Z7mkxuFRO46JYmskULr/mDbFqQvhLb80
+	 HCZFXsecssdLy+glJY28q5jk3YO+TFwK6js17ZpmeyJgjIjTjpT0cJKSirUh3XcLFu
+	 jrXJenR91EyCP+xzhO9pCjt9qSDT1AFcO9Yo7xsuU580vMXXYI8rA3nUXEimUYuqL6
+	 UAMF69blJoEVw==
+Date: Wed, 4 Dec 2024 09:48:53 -0700
+From: Nathan Chancellor <nathan@kernel.org>
+To: Naresh Kamboju <naresh.kamboju@linaro.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+	conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Anders Roxell <anders.roxell@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Alexander Stein <alexander.stein@ew.tq-group.com>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
+	Michal Suchanek <msuchanek@suse.de>,
+	Nicolai Stange <nstange@suse.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: Re: [PATCH 6.12 000/826] 6.12.2-rc1 review
+Message-ID: <20241204164853.GA3356373@thelio-3990X>
+References: <20241203144743.428732212@linuxfoundation.org>
+ <CA+G9fYu21yqTvL428TFueMJ1uU1H_u8Vc470dER2CTrNK=Js0g@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.12 043/826] crypto: powerpc/p10-aes-gcm - Register
- modules as SIMD
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
- Danny Tsen <dtsen@linux.ibm.com>, Herbert Xu <herbert@gondor.apana.org.au>,
- Sasha Levin <sashal@kernel.org>
-References: <20241203144743.428732212@linuxfoundation.org>
- <20241203144745.143525056@linuxfoundation.org>
- <2a720dd0-56a0-4781-81d3-118368613792@kernel.org>
- <2024120417-flattop-unpaired-fcf8@gregkh>
- <92315b46-db52-4640-b8b9-c2ddbef38a17@kernel.org>
- <2024120421-coming-snore-e6fc@gregkh>
-Content-Language: en-US
-From: Jiri Slaby <jirislaby@kernel.org>
-Autocrypt: addr=jirislaby@kernel.org; keydata=
- xsFNBE6S54YBEACzzjLwDUbU5elY4GTg/NdotjA0jyyJtYI86wdKraekbNE0bC4zV+ryvH4j
- rrcDwGs6tFVrAHvdHeIdI07s1iIx5R/ndcHwt4fvI8CL5PzPmn5J+h0WERR5rFprRh6axhOk
- rSD5CwQl19fm4AJCS6A9GJtOoiLpWn2/IbogPc71jQVrupZYYx51rAaHZ0D2KYK/uhfc6neJ
- i0WqPlbtIlIrpvWxckucNu6ZwXjFY0f3qIRg3Vqh5QxPkojGsq9tXVFVLEkSVz6FoqCHrUTx
- wr+aw6qqQVgvT/McQtsI0S66uIkQjzPUrgAEtWUv76rM4ekqL9stHyvTGw0Fjsualwb0Gwdx
- ReTZzMgheAyoy/umIOKrSEpWouVoBt5FFSZUyjuDdlPPYyPav+hpI6ggmCTld3u2hyiHji2H
- cDpcLM2LMhlHBipu80s9anNeZhCANDhbC5E+NZmuwgzHBcan8WC7xsPXPaiZSIm7TKaVoOcL
- 9tE5aN3jQmIlrT7ZUX52Ff/hSdx/JKDP3YMNtt4B0cH6ejIjtqTd+Ge8sSttsnNM0CQUkXps
- w98jwz+Lxw/bKMr3NSnnFpUZaxwji3BC9vYyxKMAwNelBCHEgS/OAa3EJoTfuYOK6wT6nadm
- YqYjwYbZE5V/SwzMbpWu7Jwlvuwyfo5mh7w5iMfnZE+vHFwp/wARAQABzSFKaXJpIFNsYWJ5
- IDxqaXJpc2xhYnlAa2VybmVsLm9yZz7CwXcEEwEIACEFAlW3RUwCGwMFCwkIBwIGFQgJCgsC
- BBYCAwECHgECF4AACgkQvSWxBAa0cEnVTg//TQpdIAr8Tn0VAeUjdVIH9XCFw+cPSU+zMSCH
- eCZoA/N6gitEcnvHoFVVM7b3hK2HgoFUNbmYC0RdcSc80pOF5gCnACSP9XWHGWzeKCARRcQR
- 4s5YD8I4VV5hqXcKo2DFAtIOVbHDW+0okOzcecdasCakUTr7s2fXz97uuoc2gIBB7bmHUGAH
- XQXHvdnCLjDjR+eJN+zrtbqZKYSfj89s/ZHn5Slug6w8qOPT1sVNGG+eWPlc5s7XYhT9z66E
- l5C0rG35JE4PhC+tl7BaE5IwjJlBMHf/cMJxNHAYoQ1hWQCKOfMDQ6bsEr++kGUCbHkrEFwD
- UVA72iLnnnlZCMevwE4hc0zVhseWhPc/KMYObU1sDGqaCesRLkE3tiE7X2cikmj/qH0CoMWe
- gjnwnQ2qVJcaPSzJ4QITvchEQ+tbuVAyvn9H+9MkdT7b7b2OaqYsUP8rn/2k1Td5zknUz7iF
- oJ0Z9wPTl6tDfF8phaMIPISYrhceVOIoL+rWfaikhBulZTIT5ihieY9nQOw6vhOfWkYvv0Dl
- o4GRnb2ybPQpfEs7WtetOsUgiUbfljTgILFw3CsPW8JESOGQc0Pv8ieznIighqPPFz9g+zSu
- Ss/rpcsqag5n9rQp/H3WW5zKUpeYcKGaPDp/vSUovMcjp8USIhzBBrmI7UWAtuedG9prjqfO
- wU0ETpLnhgEQAM+cDWLL+Wvc9cLhA2OXZ/gMmu7NbYKjfth1UyOuBd5emIO+d4RfFM02XFTI
- t4MxwhAryhsKQQcA4iQNldkbyeviYrPKWjLTjRXT5cD2lpWzr+Jx7mX7InV5JOz1Qq+P+nJW
- YIBjUKhI03ux89p58CYil24Zpyn2F5cX7U+inY8lJIBwLPBnc9Z0An/DVnUOD+0wIcYVnZAK
- DiIXODkGqTg3fhZwbbi+KAhtHPFM2fGw2VTUf62IHzV+eBSnamzPOBc1XsJYKRo3FHNeLuS8
- f4wUe7bWb9O66PPFK/RkeqNX6akkFBf9VfrZ1rTEKAyJ2uqf1EI1olYnENk4+00IBa+BavGQ
- 8UW9dGW3nbPrfuOV5UUvbnsSQwj67pSdrBQqilr5N/5H9z7VCDQ0dhuJNtvDSlTf2iUFBqgk
- 3smln31PUYiVPrMP0V4ja0i9qtO/TB01rTfTyXTRtqz53qO5dGsYiliJO5aUmh8swVpotgK4
- /57h3zGsaXO9PGgnnAdqeKVITaFTLY1ISg+Ptb4KoliiOjrBMmQUSJVtkUXMrCMCeuPDGHo7
- 39Xc75lcHlGuM3yEB//htKjyprbLeLf1y4xPyTeeF5zg/0ztRZNKZicgEmxyUNBHHnBKHQxz
- 1j+mzH0HjZZtXjGu2KLJ18G07q0fpz2ZPk2D53Ww39VNI/J9ABEBAAHCwV8EGAECAAkFAk6S
- 54YCGwwACgkQvSWxBAa0cEk3tRAAgO+DFpbyIa4RlnfpcW17AfnpZi9VR5+zr496n2jH/1ld
- wRO/S+QNSA8qdABqMb9WI4BNaoANgcg0AS429Mq0taaWKkAjkkGAT7mD1Q5PiLr06Y/+Kzdr
- 90eUVneqM2TUQQbK+Kh7JwmGVrRGNqQrDk+gRNvKnGwFNeTkTKtJ0P8jYd7P1gZb9Fwj9YLx
- jhn/sVIhNmEBLBoI7PL+9fbILqJPHgAwW35rpnq4f/EYTykbk1sa13Tav6btJ+4QOgbcezWI
- wZ5w/JVfEJW9JXp3BFAVzRQ5nVrrLDAJZ8Y5ioWcm99JtSIIxXxt9FJaGc1Bgsi5K/+dyTKL
- wLMJgiBzbVx8G+fCJJ9YtlNOPWhbKPlrQ8+AY52Aagi9WNhe6XfJdh5g6ptiOILm330mkR4g
- W6nEgZVyIyTq3ekOuruftWL99qpP5zi+eNrMmLRQx9iecDNgFr342R9bTDlb1TLuRb+/tJ98
- f/bIWIr0cqQmqQ33FgRhrG1+Xml6UXyJ2jExmlO8JljuOGeXYh6ZkIEyzqzffzBLXZCujlYQ
- DFXpyMNVJ2ZwPmX2mWEoYuaBU0JN7wM+/zWgOf2zRwhEuD3A2cO2PxoiIfyUEfB9SSmffaK/
- S4xXoB6wvGENZ85Hg37C7WDNdaAt6Xh2uQIly5grkgvWppkNy4ZHxE+jeNsU7tg=
-In-Reply-To: <2024120421-coming-snore-e6fc@gregkh>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CA+G9fYu21yqTvL428TFueMJ1uU1H_u8Vc470dER2CTrNK=Js0g@mail.gmail.com>
 
-On 04. 12. 24, 13:24, Greg Kroah-Hartman wrote:
-> On Wed, Dec 04, 2024 at 11:45:05AM +0100, Jiri Slaby wrote:
->> On 04. 12. 24, 11:34, Greg Kroah-Hartman wrote:
->>> On Wed, Dec 04, 2024 at 11:00:34AM +0100, Jiri Slaby wrote:
->>>> Hi,
->>>>
->>>> On 03. 12. 24, 15:36, Greg Kroah-Hartman wrote:
->>>>> 6.12-stable review patch.  If anyone has any objections, please let me know.
->>>>>
->>>>> ------------------
->>>>>
->>>>> From: Danny Tsen <dtsen@linux.ibm.com>
->>>>>
->>>>> [ Upstream commit c954b252dee956d33ee59f594710af28fb3037d9 ]
->>>>>
->>>>> This patch is to fix an issue when simd is not usable that data mismatch
->>>>> may occur. The fix is to register algs as SIMD modules so that the
->>>>> algorithm is excecuted when SIMD instructions is usable.  Called
->>>>> gcm_update() to generate the final digest if needed.
->>>>>
->>>>> A new module rfc4106(gcm(aes)) is also added.
->>>>>
->>>>> Fixes: cdcecfd9991f ("crypto: p10-aes-gcm - Glue code for AES/GCM stitched implementation")
->>>>>
->>>>> Signed-off-by: Danny Tsen <dtsen@linux.ibm.com>
->>>>> Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
->>>>> Signed-off-by: Sasha Levin <sashal@kernel.org>
->>>>> ---
->>>>>     arch/powerpc/crypto/aes-gcm-p10-glue.c | 141 +++++++++++++++++++++----
->>>>>     1 file changed, 118 insertions(+), 23 deletions(-)
->>>>>
->>>>> diff --git a/arch/powerpc/crypto/aes-gcm-p10-glue.c b/arch/powerpc/crypto/aes-gcm-p10-glue.c
->>>>> index f66ad56e765f0..4a029d2fe06ce 100644
->>>>> --- a/arch/powerpc/crypto/aes-gcm-p10-glue.c
->>>>> +++ b/arch/powerpc/crypto/aes-gcm-p10-glue.c
->>>> ...
->>>>> @@ -281,6 +295,7 @@ static int p10_aes_gcm_crypt(struct aead_request *req, int enc)
->>>>>     	/* Finalize hash */
->>>>>     	vsx_begin();
->>>>> +	gcm_update(gctx->iv, hash->Htable);
->>>>
->>>> Now I get:
->>>> ERROR: modpost: "gcm_update" [arch/powerpc/crypto/aes-gcm-p10-crypto.ko]
->>>> undefined!
->>>>
->>>> Only this:
->>>> commit 7aa747edcb266490f93651dd749c69b7eb8541d9
->>>> Author: Danny Tsen <dtsen@linux.ibm.com>
->>>> Date:   Mon Sep 23 09:30:38 2024 -0400
->>>>
->>>>       crypto: powerpc/p10-aes-gcm - Re-write AES/GCM stitched implementation
->>>>
->>>>
->>>>
->>>> added that function...
->>>
->>> Ah, thanks, I'll go drop this patch from everywhere.
->>
->> OK.
->>
->> Looking at the queue, it looks like a prereq for un-BROKEN-ing the module in
->> the next patch:
->>    8b6c1e466eec crypto: powerpc/p10-aes-gcm - Add dependency on
->> CRYPTO_SIMDand re-enable CRYPTO_AES_GCM_P10
+On Wed, Dec 04, 2024 at 06:30:47PM +0530, Naresh Kamboju wrote:
+> On Tue, 3 Dec 2024 at 21:06, Greg Kroah-Hartman
+> <gregkh@linuxfoundation.org> wrote:
+> > The whole patch series can be found in one patch at:
+> >         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.12.2-rc1.gz
+> > or in the git tree and branch at:
+> >         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.12.y
+> > and the diffstat can be found below
+...
+> 1) The allmodconfig builds failed on arm64, arm, riscv and x86_64
+>      due to following build warnings / errors.
 > 
-> No, I don't see a conflict here.  Are you sure you are?
+> Build errors for allmodconfig:
+> --------------
+> drivers/gpu/drm/imx/ipuv3/parallel-display.c:75:3: error: variable
+> 'num_modes' is uninitialized when used here [-Werror,-Wuninitialized]
+>    75 |                 num_modes++;
+>       |                 ^~~~~~~~~
+> drivers/gpu/drm/imx/ipuv3/parallel-display.c:55:15: note: initialize
+> the variable 'num_modes' to silence this warning
+>    55 |         int num_modes;
+>       |                      ^
+>       |                       = 0
+> 1 error generated.
+> make[8]: *** [scripts/Makefile.build:229:
+> drivers/gpu/drm/imx/ipuv3/parallel-display.o] Error 1
 
-Not sure at all about this crypto stuff. But this failing patch 
-introduces SIMD and the above 8b6c1e466eec adds a dep to SIMD and makes 
-the module nonBROKEN at the same time. So I assume the failing one is a 
-prereq to unbreak the module. Maintainers?
+Introduced by backporting commit 5f6e56d3319d ("drm/imx:
+parallel-display: switch to drm_panel_bridge") without
+commit f94b9707a1c9 ("drm/imx: parallel-display: switch to
+imx_legacy_bridge / drm_bridge_connector"). The latter change also had a
+follow up fix in commit ef214002e6b3 ("drm/imx: parallel-display: add
+legacy bridge Kconfig dependency").
 
--- 
-js
-suse labs
+> drivers/gpu/drm/imx/ipuv3/imx-ldb.c:143:3: error: variable 'num_modes'
+> is uninitialized when used here [-Werror,-Wuninitialized]
+>   143 |                 num_modes++;
+>       |                 ^~~~~~~~~
+> drivers/gpu/drm/imx/ipuv3/imx-ldb.c:133:15: note: initialize the
+> variable 'num_modes' to silence this warning
+>   133 |         int num_modes;
+>       |                      ^
+>       |                       = 0
+> 1 error generated.
+
+Introduced by backporting commit 5c5843b20bbb ("drm/imx: ldb: switch to
+drm_panel_bridge") without commit 4c3d525f6573 ("drm/imx: ldb: switch to
+imx_legacy_bridge / drm_bridge_connector").
+
+These are both upstream patch series bisectability issues, not anything
+that stable specifically did, as the num_nodes initialization was
+removed by the first change but the entire function containing num_nodes
+was removed by the second change so when the series was taken atomically
+upstream, nobody notices. However, I do wonder why these patches are
+being picked up, as they don't really read like fixes to me and the
+cover letter of the original series does not really make it seem like it
+either.
+
+Cheers,
+Nathan
