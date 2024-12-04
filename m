@@ -1,118 +1,100 @@
-Received: from mail-lf1-f41.google.com (mail-lf1-f41.google.com [209.85.167.41])
+Received: from mail-pg1-f175.google.com (mail-pg1-f175.google.com [209.85.215.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B680FC0B
-	for <patches@lists.linux.dev>; Wed,  4 Dec 2024 03:08:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2002B149C53
+	for <patches@lists.linux.dev>; Wed,  4 Dec 2024 03:10:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733281711; cv=none; b=PBwY/6hpklH5SyimQOVR/5yVEePI8SI2QPwXjjO6SaCiwppEVqDMyZW3HfUYDj4Af2wTlIacm5Me5xjQ41Mw1gDzogBmH6PIS/gHQFBK9eWpcSVMYDz72/W1+Rqml1YBw7lGaJr4qW3xLVY4COBochVKJhhAOvcUt1R643fNHWU=
+	t=1733281838; cv=none; b=HdMZNHWvaM+g6V5SlaIPFrKtXE5b50qNerS2MGBVYaEgiVEYLAlzLD1MGE3uNkBWi5SuDr3vs+7GBzxw+m3KxGrFOzuuQW/Wdk3Ds9maqT9pSDEahlsqTDd2FaCVD4Dckw5KOcohmyGsp2msN4qUw5yffIlwMmfqYD6qtix+USU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733281711; c=relaxed/simple;
-	bh=Gx9TKyH/IiOvnCTOYjzUfxu+NCv+Qo0R5Stqwe7J2gA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=AgwMLWFDkZGmeZVbzKW7sfXzQY0GcwQpT2t8YmNHclGDXvuHos3zuv1XrDRSR657nFhsiemr0mSlCTGTcyW9kHcaYf7xndZyHYiwn1BgTSDc9v0cBZK5pAzL5BMaT7VlIn4TeiujFu9Zdv1G7DQ+5Fhq9sz2El+TKwzpx+J1Ek8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=YC/gHTSo; arc=none smtp.client-ip=209.85.167.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1733281838; c=relaxed/simple;
+	bh=5BJcVqk6DTq3D6w4oC0l72ZIPdhLBjr1W7ee3Bk5PEs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=AhhQQXO7sazixMs7lXBxtr5fMVoFHj/y1XA6PDPQbQysuJSZ7mELW9ATagDC0CxYbKnRE4vO6OMBqES6zmnuJ/XAkwn9scIj78H4Mhg6oSEmRQhJB7OTbEmF8TIM+uj4ywU9h7WbjWPm/4OHmCCnO2pNYUZD9UCp8UMd+MO+qm4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=ANatuMYy; arc=none smtp.client-ip=209.85.215.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="YC/gHTSo"
-Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-53de8ecb39bso7385461e87.2
-        for <patches@lists.linux.dev>; Tue, 03 Dec 2024 19:08:29 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="ANatuMYy"
+Received: by mail-pg1-f175.google.com with SMTP id 41be03b00d2f7-7ea8de14848so4372935a12.2
+        for <patches@lists.linux.dev>; Tue, 03 Dec 2024 19:10:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1733281708; x=1733886508; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=mVmSqpdGxBu8j7ybmU1Q52YmQ/jiLnXY/vl/nUcqB8I=;
-        b=YC/gHTSosm+GiTupOhTB4R8C4t/f8L5Akym1tpGPleHq581b8ETE1DkuDVhJF/o4zK
-         nFwfSDOAyqjdBM+iq17nj/pQIY8sU3ir78MtFTkldn/bEZ7pYHvFvU4nbTqv7Mh2kRmu
-         zfVi4FKAO6TCV2lPKDCKm28DCQ+LO5sy2kL3WTQIdNByg3NKP29wVsDrc/rfHwo99QWp
-         fxCrVqEpV9lGQqjdb1y9jJOHpXcHG4uVo569hXBuDRQq3VxWWrDkS/hkDOBwbWXjzKCe
-         e6u8nO9qcUrzqj/0ce+MZ0MJc5g+Yx7Jsa3qRysArKh41BQtlaz3pPrb0KotoLjB/06H
-         dV4g==
+        d=chromium.org; s=google; t=1733281836; x=1733886636; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=iNiwGOMCqkTh/NdTdB70sdVoyZNDTHaO6MJHeQ4EdJQ=;
+        b=ANatuMYyj1wjCFM2rFCNPvijVJFYU0N7LpUGcGgMIoBrjOCYINUOdW6MEcYrq5afnA
+         khUjz2SmreyDy5j1fzxEpiLCU8jq/Gm7uO0R+wU1GREjkuTvlEulYnhjnkFrZ5ZNFyLe
+         xGAJIi4ykWBiTBRWk/tR3k+nvqxOALjxta04M=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733281708; x=1733886508;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=mVmSqpdGxBu8j7ybmU1Q52YmQ/jiLnXY/vl/nUcqB8I=;
-        b=oYxagW+xS3Up3N5j28w7j1PPq2q1pdyuKj76EOD/12dmNoqjR7CNnA84Gma3JRHa/4
-         stcN226hMbe/fT9BvyDZ3pLFTvwV5MrIwUdhJLP76IzkcvARnz1aYgOO8h/EOCThDd10
-         d2wWkUptSaR3G9hmxb3zU8JlO97sW1MJJkeC48caJAZa0OzUpEw7IOUHdBsrq7+Zk+r+
-         N944d7KvTaQ7En/7e3XmENXXgJt4SgNaSxHI3V63MyroQWzKsUfFF0ckh+pJo9vMhDRP
-         wrbhzfloMnvg8B8uUOjHTri6m87Bk6lT6m1FFFW47bhd9WP5XiQ4QJlfG+r+HUodt7WE
-         QjYQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVHZZytMLdt5jgTS0+etZFppENFjWqFYkOOug1Q0XZeE287X7mRF7jGruaGT/qR5M+txHeeW8o9@lists.linux.dev
-X-Gm-Message-State: AOJu0YyHn0HxVpE/QVv+Y+2hEM7ieLRMB59vi9MZa+osx12NaYZAEj0c
-	qkJWWZYLUIfdz+pmykKfz/ujwUNFZwtT4zbA3pgESUi3BlNaUp0y5c8NXiIu0e4rGrll3uRvieS
-	0G5P5bj2QB8+8z26yxEv/rLV6ZdjFEyWc4GS1
-X-Gm-Gg: ASbGncuV1WAYv/znTthXMLr2fuPr03Sy/8lcK1WNP7lsFXVLUTunUJvl2b9STlVovzJ
-	dazZlK15nM/YjQVBYBzlXx855y8oUMjJsQT51fLi5cZvLXsRAT2W6Wi3c/64N
-X-Google-Smtp-Source: AGHT+IFWrPHsG4uBMjv2tdZR6tlXbsKwqe+rRNrv2XPJXAVNi7kJ86S8IWFxXuMskg01ueFLy0zr2v3g9u+L67fH27I=
-X-Received: by 2002:a05:6512:148:b0:53e:12d6:8835 with SMTP id
- 2adb3069b0e04-53e12d6883dmr2511065e87.46.1733281708120; Tue, 03 Dec 2024
- 19:08:28 -0800 (PST)
+        d=1e100.net; s=20230601; t=1733281836; x=1733886636;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=iNiwGOMCqkTh/NdTdB70sdVoyZNDTHaO6MJHeQ4EdJQ=;
+        b=VWRxWawvKp3N8A9LOtVuTv7oia42hmCr22kuzmYu4A6FDdvkCnNFW/0ReWVaW9TlZC
+         Op7YhDUnAfa3+sHgZaNOGuML0xknhKPAK4eLmA3WMw8NmvMKbqF5ZXwKWVoLjlwgrUiz
+         S4Zf7Hc3M/r/QLe5urWd52RhMz+AzrZYmWsRmy4AjwVBOL7R1MJh4bUwmNVpTnja/NCS
+         f49tTWlNx4JwEko3fbYj0rdrKhTPBBc35YPmiv4aYdCweGSnxL2SXJIAMTerVWzmND7h
+         oK94rd1UQLkZa37muuel6SfK2wC2sQi0ISsVGXdH+IyP8Mu6f3vFOgNQmr+JydFhKDFU
+         iBhA==
+X-Forwarded-Encrypted: i=1; AJvYcCWSlelQclR0JZa0LdzxlBbfl3ZZ+xgoLNcw+ljHEpHFnRgWYuYzs5Hpv+4IbmyfQ4Samq64WVs0@lists.linux.dev
+X-Gm-Message-State: AOJu0YwTN/M4coDAQ+0p1mZYXfpYpIzyIWDm6tAsbLrUFtGwT1oqKu4D
+	H4mmnBR5XKYlOvZvvu8c7AKZGOOyUhr43niNN4tugg/Pmc4AIpdmFHopju1/Ug==
+X-Gm-Gg: ASbGnctWSvmj2rMEI/olAy0cAEOMxMBnxkzOyagTq24u5oBNh2DCNqRJURFRdtMncMS
+	+uH3oaI1i90EF6IqTK0sfRlbt7EdnXdqDw9e8N4cvMoRcOreDvMpgY7rFfJTjUh8WEyocYoxX4j
+	fNHHH7nFsji6oarJ+5a5E+0miHft3SwCx7hgeEABvVZzcVVsRu6WdkGqGx3aYF+juMkVwheoA3i
+	Mvp7YxDuR4P5g4mbdaCsHa9lGHRuRus1ACfaEouel7ddEB7Hg==
+X-Google-Smtp-Source: AGHT+IGOh6c6XB+Mf7vja/zLx4pOyQUTl+vZY1mp61nLNQMy+svMsSvj7/cb2KEHjHiTEcma/HAwBA==
+X-Received: by 2002:a05:6a21:78a8:b0:1e0:d632:b9e0 with SMTP id adf61e73a8af0-1e1653b7c5amr7319355637.13.1733281836467;
+        Tue, 03 Dec 2024 19:10:36 -0800 (PST)
+Received: from google.com ([2401:fa00:8f:203:f520:3e:d9a1:1de])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7259056e0d5sm151570b3a.81.2024.12.03.19.10.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 03 Dec 2024 19:10:36 -0800 (PST)
+Date: Wed, 4 Dec 2024 12:10:31 +0900
+From: Sergey Senozhatsky <senozhatsky@chromium.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	Tomasz Figa <tfiga@google.com>,
+	Sergey Senozhatsky <senozhatsky@chromium.org>,
+	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
+	Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+	Hans Verkuil <hverkuil@xs4all.nl>, Sasha Levin <sashal@kernel.org>
+Subject: Re: [PATCH 6.11 207/817] media: venus: fix enc/dec destruction order
+Message-ID: <20241204031031.GF886051@google.com>
+References: <20241203143955.605130076@linuxfoundation.org>
+ <20241203144003.826130114@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20241204000415.2404264-1-swboyd@chromium.org>
-In-Reply-To: <20241204000415.2404264-1-swboyd@chromium.org>
-From: Saravana Kannan <saravanak@google.com>
-Date: Tue, 3 Dec 2024 19:07:51 -0800
-Message-ID: <CAGETcx8uJF30UvK_4PUu2R+juYa33CXEZrnSLG9nWXN2TPL4wg@mail.gmail.com>
-Subject: Re: [PATCH] of: Hide of_default_bus_match_table[]
-To: Stephen Boyd <swboyd@chromium.org>
-Cc: Rob Herring <robh@kernel.org>, linux-kernel@vger.kernel.org, patches@lists.linux.dev, 
-	devicetree@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241203144003.826130114@linuxfoundation.org>
 
-On Tue, Dec 3, 2024 at 4:04=E2=80=AFPM Stephen Boyd <swboyd@chromium.org> w=
-rote:
->
-> This isn't used outside this file. Hide the array in the C file.
->
-> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+On (24/12/03 15:36), Greg Kroah-Hartman wrote:
+> 6.11-stable review patch.  If anyone has any objections, please let me know.
+> 
+> ------------------
+> 
+> From: Sergey Senozhatsky <senozhatsky@chromium.org>
+> 
+> [ Upstream commit 6c9934c5a00ae722a98d1a06ed44b673514407b5 ]
+> 
+> We destroy mutex-es too early as they are still taken in
+> v4l2_fh_exit()->v4l2_event_unsubscribe()->v4l2_ctrl_find().
+> 
+> We should destroy mutex-es right before kfree().  Also
+> do not vdec_ctrl_deinit() before v4l2_fh_exit().
 
-Acked-by: Saravana Kannan <saravanak@google.com>
+Hi Greg, I just received a regression report which potentially
+might have been caused by these venus patches.  Please do not
+take
 
-> ---
->  drivers/of/platform.c       | 2 +-
->  include/linux/of_platform.h | 2 --
->  2 files changed, 1 insertion(+), 3 deletions(-)
->
-> diff --git a/drivers/of/platform.c b/drivers/of/platform.c
-> index 9bafcff3e628..f09dc183975b 100644
-> --- a/drivers/of/platform.c
-> +++ b/drivers/of/platform.c
-> @@ -24,7 +24,7 @@
->
->  #include "of_private.h"
->
-> -const struct of_device_id of_default_bus_match_table[] =3D {
-> +static const struct of_device_id of_default_bus_match_table[] =3D {
->         { .compatible =3D "simple-bus", },
->         { .compatible =3D "simple-mfd", },
->         { .compatible =3D "isa", },
-> diff --git a/include/linux/of_platform.h b/include/linux/of_platform.h
-> index a2ff1ad48f7f..17471ef8e092 100644
-> --- a/include/linux/of_platform.h
-> +++ b/include/linux/of_platform.h
-> @@ -47,8 +47,6 @@ struct of_dev_auxdata {
->         { .compatible =3D _compat, .phys_addr =3D _phys, .name =3D _name,=
- \
->           .platform_data =3D _pdata }
->
-> -extern const struct of_device_id of_default_bus_match_table[];
-> -
->  /* Platform drivers register/unregister */
->  extern struct platform_device *of_device_alloc(struct device_node *np,
->                                          const char *bus_id,
->
-> base-commit: 40384c840ea1944d7c5a392e8975ed088ecf0b37
-> --
-> https://chromeos.dev
->
+	media: venus: sync with threaded IRQ during inst destruction
+	media: venus: fix enc/dec destruction order
+
+to any stable kernels yet.  I need to investigate first.
