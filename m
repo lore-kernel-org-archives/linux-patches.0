@@ -1,144 +1,226 @@
-Received: from mail-pj1-f41.google.com (mail-pj1-f41.google.com [209.85.216.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from NAM12-MW2-obe.outbound.protection.outlook.com (mail-mw2nam12on2069.outbound.protection.outlook.com [40.107.244.69])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC4C12391AA
-	for <patches@lists.linux.dev>; Wed,  4 Dec 2024 19:48:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.41
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733341690; cv=none; b=V1qR5OdjzKJnN4jcao1khh1hwTv4EZft17stOZ509edgvjLa0imvb6/Lhp2XpumwUEm4LM8LghJnSQ7BnqD3c3yrOxd9E5s0n/YjUICPeJSdYZEPNvWrBGCKltQIAq9S5422MxbpeUTCsZiLNBLLSAnSbLe0bjoLdVkf9V3s1eg=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733341690; c=relaxed/simple;
-	bh=q7JXgsd9lm7WjrZOIsZzvR9UT80iuPtsmbmChSe9FoY=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=NDsf6RXw7kDwiIBO5UdyWozisiybkyXToQf9rrhlEq8w0RGsUfSjOo6yy5rLmKdd/EHPvsGqAQcFYYiJPUcg7Gi7KafO4tD1zqy6VoUdV/z7RL9Y5wXpY/tW+tmdkDI3ahgs+V5Vt4AinvQNoqK6V9eIYsIcgsXNZRybTD87lTc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=ExX6mNds; arc=none smtp.client-ip=209.85.216.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 117521A8F6C;
+	Wed,  4 Dec 2024 20:13:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.244.69
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1733343225; cv=fail; b=eQ1jMLh+ejWtGAxN2TBrHhTCijlu4vZzVua45fePh3omzkMrYZDm81/gHkpImGW1Q2k7GGOGm1i7ylrmlD7+JhbIYSO0xffk8hRjNDGe/0DLq5X/l4pM0scWMt+eLKprY7Mq8f/ajjqE3Mf5+RU9deZf9H+ndV7KoFrymVmbfNY=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1733343225; c=relaxed/simple;
+	bh=PesF1/O1Xx0X3c33P0R4/MGYhje2RSn/mvbFRGWafiU=;
+	h=From:To:Cc:Subject:Date:Message-ID:Content-Type:MIME-Version; b=QdAcenYVMlr2r6C14icQtL3L7xmZFuT3sFdHW+lmuGiGyZ0iBcJsutU/Lm3RwtwLIqtW8bjlQBQ+ASAmJyo7wqKlrBrfYTKSARnoUaBsbGhEJfEF2Mp0t2HPFaCycIg2zL+Ydbi29hGGJZOdnWQqCNKLDUJEsnJlIPZor4Rtkf4=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=sWD2MpaU; arc=fail smtp.client-ip=40.107.244.69
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="ExX6mNds"
-Received: by mail-pj1-f41.google.com with SMTP id 98e67ed59e1d1-2ef28f07dbaso139583a91.2
-        for <patches@lists.linux.dev>; Wed, 04 Dec 2024 11:48:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1733341688; x=1733946488; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=ch5dOO0x4WGkBLvzcx+h/YLN0SfrSosFkimPazJD86Q=;
-        b=ExX6mNdssuMOgjA/zMWU1rK8WK/YFHPONtGuT7E+t8BuTnzl3sOkDOl2Lptfkm+V7b
-         4tb9irAKAAcYI+YGJ+9xhGUbi5Mgigqwt7KdHZttgL/+jsVQ5c1Yq+2GgwVnT2vnx5I6
-         8VGtpvq2yR9DMsokDYogUvHrZgNhu7JzRsx3w=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733341688; x=1733946488;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ch5dOO0x4WGkBLvzcx+h/YLN0SfrSosFkimPazJD86Q=;
-        b=SUOo7u26r7mxg+ipiR8Y2ie5yPvUFpv6igznzVnVZz7+rZgfJer5j/PxZmsZnUw8TR
-         8pYdCnWtfV35va9SEUBEiBFhpyQN5gqmJgJQ6fVTZrLabuNzzUDZ2xkNJeEXv3tKxqC5
-         AbjhPbvzWkq+QcjprdIJVb6ANXJgsZdE3b7Zz9b+ZzA759LhZDjC3UiouEwUL+f00SMb
-         idNuRnwByVbOaAgvFNO2OhGWqjTxuKHX7Ac4TViNwORKjJFO9hKflckzQwU0vUje/ib9
-         easHw4uWMeq7+IOfpDiYM6tmj1USCb3jZcs7ohNbldZmbIXSdM8SxHw+WgvcZhNeSCr3
-         hkRQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVy9uBLnC0Rd5ZWH+oiTarHNmA0aFrGOi/SIj072qm0XIj/g0jTZTgXXl2F8xKh3RQNVOEJIwVC@lists.linux.dev
-X-Gm-Message-State: AOJu0Yxsvt+arWMszFiKQIBMBXdc5+lZsUiuFbUKDlyAiC0hfRUbqNb+
-	6TUVao1vknKdf2CxUHihyMeR9+SMvblHXIbE/4vCrN/eesQXioA1gcW+8LdAjQ==
-X-Gm-Gg: ASbGncvF9WCF0SosOTrb3u7idotnGI5lcVGZqO5+WbewOKKQ4lO9hCukbBytep+JfkB
-	7fPbrpGR1QGELEm4AFf49Ifq/k9jt7JLPnMdxoPvRcftav0iDubER8zNI46/3l5lGnfLE7l3Vmw
-	YMVZ2FyVR+9TvoBQ0YPXob6lNFs07hByQ74vL8OaMu518A8BCQUqZ9sq9X1jBfpGax4M/eJd0ov
-	kQBCmJasxwj+lBS/4OqICzg8kfxem/be+HAmeaZdpaIVvnkLmPr4QoK0Yg7aLfWTjFNnh+20Y33
-	m5ggbqay+kAyOA==
-X-Google-Smtp-Source: AGHT+IGILSlTnkkdJXjpUeU7Jq5yUV8aGe7A7pj7PQfhAd5EJruxK5hvz9fCHF1b+UJK7pbGQjQY9Q==
-X-Received: by 2002:a17:90b:380c:b0:2ea:356f:51b4 with SMTP id 98e67ed59e1d1-2ef011fc89emr9494845a91.13.1733341688296;
-        Wed, 04 Dec 2024 11:48:08 -0800 (PST)
-Received: from localhost (188.139.125.34.bc.googleusercontent.com. [34.125.139.188])
-        by smtp.gmail.com with UTF8SMTPSA id d2e1a72fcca58-7254176fc40sm12709672b3a.71.2024.12.04.11.48.07
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 04 Dec 2024 11:48:07 -0800 (PST)
-From: Stephen Boyd <swboyd@chromium.org>
-To: Rob Herring <robh@kernel.org>,
-	Saravana Kannan <saravanak@google.com>
-Cc: linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev,
-	devicetree@vger.kernel.org
-Subject: [PATCH v2] of: Hide of_default_bus_match_table[]
-Date: Wed,  4 Dec 2024 11:48:05 -0800
-Message-ID: <20241204194806.2665589-1-swboyd@chromium.org>
-X-Mailer: git-send-email 2.47.0.338.g60cca15819-goog
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="sWD2MpaU"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=wwGYQgzfzoQrMLHcfJcq73Sow8ySWEkFQN+hTJ4LDdE4q4gUZUksdhA+wIzfbEtATyBJ4Qn8AFTTy59M10BHtm5VaLAYgMdQbgw0icVHIrwdQAa5P0ywb5245vX2o8hUmpPQmkQT/ALychbvFggPa5MlKC1A5JBq7zMaBHz4p2p9ckJwq9d98IpaP0Ff42k5qVn9YEZzYMiNYmb8oWG1IKZgtKj6K1i+K7v6l+AIb46pyb9wbwzuQLVNd/SWMIUJfZzllc79DDLRU3ijTPwhYaM4IVdO6kVSqhYMQqJ5oASwjx/2jkupABTO2JUtQWYjLZ7zWloZWufRruR72HJrqw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=2L/lET5BryDBLrkpIrNoKnQ23TVrQxyQVAgQZjnkLB8=;
+ b=JAClHxL5/uGnzy1LDToeGxFkb8UNbW8/oR923IT47aacFY6wpNf610yE8HpzF7OiDCNvbHfOWAz/8SRijK3Tspar9uIKAW8kDyVjK0yzytUO28AstUKi70ll03YQiiK+HbplF46JZP+o+qlyZ7KbLccIl25P2g0ZRa7yJB0006t0tz6Rdzt4vryhZnsd7AoPE3BbrvyGqyv8Mjk5C25Gy8RmEtFEf4BY1soaL4ZD6yCiaJABCZMSk1mw0F3ni3lon6AoOwYvdglp6Zpf5gEjK3X5MpCCe0r4+YyfTeB1UN1d+WqyYcwd5oWQhPAJHOK3lj6Xa5ydBq60H6YIrwUGDg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=2L/lET5BryDBLrkpIrNoKnQ23TVrQxyQVAgQZjnkLB8=;
+ b=sWD2MpaUDRQedxCBXZBSWzRWXwpTWf0Loks67ofGcz6+zWr7gIQUcQpV1yCgKHAXKCpOo93PmhPDCUyj+cT2qON4HU8ZaDLX8Zj+WB1KMAAqUdHNL39wWIQXymJA3XPQDX4OmHj+VIWDrVxZwIQY6mkRBoa29MuTnqHhkVIk5NlzVtGFnVzGquFtRltgn9EETnTQQVGUlZJkt6JuMS6Uqsiw8svXY8v1u+DYiVnHCwHuIxDWKpd0rJGdWQNLHOXAFWLBZDzjoDtXcN3odzZ+6dMFSExLIPeKjbGKslGOZk7PO9ACg/LHTH0zeKqRoodd8Y1w8rCzMaiCmRsssfvk4g==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from CH3PR12MB8659.namprd12.prod.outlook.com (2603:10b6:610:17c::13)
+ by MW4PR12MB7430.namprd12.prod.outlook.com (2603:10b6:303:224::14) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8207.19; Wed, 4 Dec
+ 2024 20:13:40 +0000
+Received: from CH3PR12MB8659.namprd12.prod.outlook.com
+ ([fe80::6eb6:7d37:7b4b:1732]) by CH3PR12MB8659.namprd12.prod.outlook.com
+ ([fe80::6eb6:7d37:7b4b:1732%5]) with mapi id 15.20.8230.010; Wed, 4 Dec 2024
+ 20:13:40 +0000
+From: Jason Gunthorpe <jgg@nvidia.com>
+To: iommu@lists.linux.dev,
+	Joerg Roedel <joro@8bytes.org>,
+	Kevin Tian <kevin.tian@intel.com>,
+	Robin Murphy <robin.murphy@arm.com>,
+	Will Deacon <will@kernel.org>
+Cc: patches@lists.linux.dev
+Subject: [PATCH] iommufd/selftest: Remove domain_alloc_paging()
+Date: Wed,  4 Dec 2024 16:13:39 -0400
+Message-ID: <0-v1-8a3e7e21ff6a+1745d-iommufd_paging_flags_jgg@nvidia.com>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: BL1PR13CA0122.namprd13.prod.outlook.com
+ (2603:10b6:208:2bb::7) To CH3PR12MB8659.namprd12.prod.outlook.com
+ (2603:10b6:610:17c::13)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH3PR12MB8659:EE_|MW4PR12MB7430:EE_
+X-MS-Office365-Filtering-Correlation-Id: 40da0b5e-b02d-40ed-2896-08dd14a024bb
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|366016|376014;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?62nsOyt90a8frGUttebXaxrnp/vEiwhAB/sQgqcwDLoxShcEu3AO2QL1xHhU?=
+ =?us-ascii?Q?Xygpw3QNrHS4FelUK+MgQ5lXJZHy5ByLsg9LsmrewGNNhJevdpns+RSnuJ4A?=
+ =?us-ascii?Q?TWcmOr8k6PzEy0XuaIlLjPXHlynB2QunwuorFJNzEqTmuj7S3Je/2H4c9cHI?=
+ =?us-ascii?Q?qFFZNhf3WUSkgSi0eE4u9RuyEcGqA+gaVv8aV+o67h3aMhZSBvcx/wjBXQUk?=
+ =?us-ascii?Q?3vTPE7QwGvUShadOuzWMMaoMizhwupxfOYSs9RLk/ZiD03C+TsZ+sIqD6Eet?=
+ =?us-ascii?Q?80y++0zBYMNByfzUtFPtzUhOj/hBXCkSQmatjWo6CzJ4PXaBGnHHYgkUvaXy?=
+ =?us-ascii?Q?u66R1wCIDqqUbDYhcYMxOG3MFrDJ/KUgZieGSHXzC1OLSyNqpOE4GYOq/uEV?=
+ =?us-ascii?Q?k7txUgORoVL4Xnc/kamvdKyngxtrKpJxyyaepBCZQ35FSWHZRakMqCZfJlR4?=
+ =?us-ascii?Q?XWBJzF2zly8JoMnpBwoQ1S/RD5FKWwyzmW9CaNDFl3MyX8QLh7LvdFMjhLIh?=
+ =?us-ascii?Q?YHmmNI7W4nsoiudkaoEmNo4y53ojny1QKSDimny1Vfa+JAzQhwKh9ZrD1JpR?=
+ =?us-ascii?Q?N1g8giCL+mxsL46+l9QeHNWOjCK9TTGj8XLGlkpf2EreBsQutOu6bqPGN1h6?=
+ =?us-ascii?Q?Tjm9GgMIzwUv0riKDHEPxCcUQnoVSPEx5Ma596605BhyKhm4sz7lG5D463/I?=
+ =?us-ascii?Q?Og654La5hEtE0qnxOa1ch8t9vlnBfHJkZucNSYb1Kpj7YUAq2rukNXz+fhwO?=
+ =?us-ascii?Q?Jz4gLPpXObU+i2ClAivfK5C3cdVmSom/5DzmxCssn8Rb09j5MnDVOSaCyL6Y?=
+ =?us-ascii?Q?Oro5W7UxGvjA31fsvZ0ZzaEN9QGwDZDpJOPS1ouZIACa+xx1A5rjK+KHY78L?=
+ =?us-ascii?Q?pxgCOYFnuxSyFrswMZK519fXPhjnTb4bGGva3AzjRkQ6e//FuPvJr3P4LhBW?=
+ =?us-ascii?Q?04yFdoKXqcsqqdCjt4dqWPjDvC0sdqBBtQpSpZ7Vsb8CNa8O0gx7J5yKUoYC?=
+ =?us-ascii?Q?nz3l+vv648qoOV7lYI/cP86J0aDQcJ5UdvubZS4Y8HCPVgmhWAKaD6KDkrqb?=
+ =?us-ascii?Q?UITFL3CGJw+8694/VqVzlaR2FkXWACFnNhb9zjzpT6Fm0dp4nWce2hrmG1Nt?=
+ =?us-ascii?Q?osqS7INqC02q6sbl0jxoo4m/3SukP7Vv5dgCQO4VFq4nGvqc+IffHvP844HP?=
+ =?us-ascii?Q?BTTpjzTxoozk44OjExBgmIHm0uY5o+pnlB79rU82cpb2y6eGLK91o86KNf/a?=
+ =?us-ascii?Q?SscMtXcYC5+ml5fvaYS9vJXbF2UoOYOYXETlNS2EBZNoZsPNlm8K9Ngf3VcB?=
+ =?us-ascii?Q?dzaeucP9ZIspaWR3pysHc65jsojPaY9hBkhOIpEcHykXTQ=3D=3D?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH3PR12MB8659.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(376014);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?VJLYOgGTVTw215GMcyUTlHZxz9eyXioFR+5JBpwnMnB2PQDv3zevdTPs0N3H?=
+ =?us-ascii?Q?aT3vv9pC7+eXNZO3oRwxhGl7bJJnZy9CtZ0tHS/BeUItMEH5TQ7yJe4cR2Y2?=
+ =?us-ascii?Q?lJMQKNTL1M6c/etThi2LXrkbRadxtUYPFFcrzvvxSVUkSzIa4wQS5q9Tic6v?=
+ =?us-ascii?Q?WTP5g+khqHnBdUho4tdJ2MK9gQPxZvPnrS/oWdvPKbG3hiagLruIUxep10xA?=
+ =?us-ascii?Q?HW1Ora1Mv1PhoOS9g8HT8BFHCn7EEgXhj1GXEYXZKakQ7hAqAKpbRvW32ut7?=
+ =?us-ascii?Q?xRr16p1LJ11ed4BSTHysyv6yyLJiFBqFisv6J6dbYG7nt3OKkmqW2oexJJW5?=
+ =?us-ascii?Q?wCNwMxa8TL5d+qTdtdPHItOvrlyqG1tULClB32GpS/kRv4tJ9UPghrNs+19W?=
+ =?us-ascii?Q?AboeKpHzaPVc3tc3ImIp8B8vp7qF7wQKlpdLLIwKHz9kCa/BFpo3LG3cP+yo?=
+ =?us-ascii?Q?2hCYNOQhhnkV+SiDdOE5bNZYU6vrABLF6/hDO5pDE4U1/xP7z8ihwouveEwb?=
+ =?us-ascii?Q?Um1rzzQEC0yPd42KaqSDLXO1V898k4OCVipBa9gwH9iBNThNwYDw6hjuelBY?=
+ =?us-ascii?Q?s2M2XokQ6DZLtgZfLCo5oPqFQGZ4qhBAGLgsKTJjudX0Q/kay27NN/8GZ1Qi?=
+ =?us-ascii?Q?ljZjsaZ0xITgIN9MZKcTjSonAJXaT1gYuo01zEa+eWaZPkStRP8ST0TWciP/?=
+ =?us-ascii?Q?aq8BoPT4Yx4+nNtBLcdHoQXVEPkM0Jn9N9AFr6K4wIssDfzTxjnmD5W4E0yt?=
+ =?us-ascii?Q?NzzR2TnNXEqxdiVzM0offE1Y19hT5eC3gWm4qxIi5hYUGk8UiGyGHyIU+w3Q?=
+ =?us-ascii?Q?1CGtYj+50nQTrZXeZ1dRj96cnWtaY7yXU82gDGlQKYKc1GRSkwk2TgaUqYa3?=
+ =?us-ascii?Q?QzPHRaCh50vrj3XKydDB9h+3Y523ATw0fJohZOPq64iDdxDzu4b+oSFH8gSX?=
+ =?us-ascii?Q?lTJMXKBGMaGtOzpbwuLkJ70wFisNse+TgRhLRogDM9JPbeewn0Dhem9n6ade?=
+ =?us-ascii?Q?h3wBfisMeBpFGp/kXd6057SsK2W5TEA12S2rED6KFBYAk2lnQdfv8oQ1y0f7?=
+ =?us-ascii?Q?l543Uy/MMZXssH7iUhc2k1VUaNXE/aYJBWBM3yLtaEwqYHnYZ+SxJjjPPDPN?=
+ =?us-ascii?Q?OLYbVjRvPPEDNv27M5PCfqEkFQZxKVshxCFS/+XXms/E1cYmGK+AQLOhU2Wj?=
+ =?us-ascii?Q?AL4Xi6X/ylZwSYUI5oUUU4GuK81nznpW4GMGd28ggVWnhnKSIUEauYmTdSTa?=
+ =?us-ascii?Q?JDqMdnv/waO56EFGe6KflU2Nbgp0eOUBr0gG8VprGvM/3G9ncNbxB0vte8gD?=
+ =?us-ascii?Q?z1B9bQZkuALe6U9pEO1FWIQSMJeDayMoVb+yiDZDBKPNIQwK+IAcB671vfwP?=
+ =?us-ascii?Q?TDvxovLVYNMVS2nq4AszxnCfO9fNToGu1y0QNDnroTMZOeUShgVSNoRBwDjO?=
+ =?us-ascii?Q?hgAJu42yKUIlx3v91SimJqVpoYWrHsdjkg1MMjNVLFuktoK1XBW/y3eVTmtr?=
+ =?us-ascii?Q?8U2vArBlDF5FFFXRaJbkAcAfHSSRHZIIaYxD/suzMv2WfTcL4QIS15tI6BxL?=
+ =?us-ascii?Q?rLJCB32jwMd6499e+MbcOf4Ik81ExELoA1fa6Kjd?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 40da0b5e-b02d-40ed-2896-08dd14a024bb
+X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB8659.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Dec 2024 20:13:40.1889
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: A5a9H6qDPMOaXJqLUz4nRhMhOk6T4tMG1O98hmkTn+rM7iSfvP/mKVAOlm6DE9ME
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW4PR12MB7430
 
-This isn't used outside this file. Hide the array in the C file.
+Since this implements domain_alloc_paging_flags() it only needs one
+op. Fold mock_domain_alloc_paging() into mock_domain_alloc_paging_flags().
 
-Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 ---
+ drivers/iommu/iommufd/selftest.c | 43 ++++++++++++--------------------
+ 1 file changed, 16 insertions(+), 27 deletions(-)
 
-Changes from v1 https://lore.kernel.org/r/20241204000415.2404264-1-swboyd@chromium.org
- * Move of_default_bus_match_table into function so it isn't unused in
-   different configs
-
- drivers/of/platform.c       | 23 +++++++++++------------
- include/linux/of_platform.h |  2 --
- 2 files changed, 11 insertions(+), 14 deletions(-)
-
-diff --git a/drivers/of/platform.c b/drivers/of/platform.c
-index 9bafcff3e628..c6d8afb284e8 100644
---- a/drivers/of/platform.c
-+++ b/drivers/of/platform.c
-@@ -24,16 +24,6 @@
+diff --git a/drivers/iommu/iommufd/selftest.c b/drivers/iommu/iommufd/selftest.c
+index a0de6d6d4e689c..6512c1d163481f 100644
+--- a/drivers/iommu/iommufd/selftest.c
++++ b/drivers/iommu/iommufd/selftest.c
+@@ -311,25 +311,6 @@ static const struct iommu_dirty_ops dirty_ops = {
+ 	.read_and_clear_dirty = mock_domain_read_and_clear_dirty,
+ };
  
- #include "of_private.h"
- 
--const struct of_device_id of_default_bus_match_table[] = {
--	{ .compatible = "simple-bus", },
--	{ .compatible = "simple-mfd", },
--	{ .compatible = "isa", },
--#ifdef CONFIG_ARM_AMBA
--	{ .compatible = "arm,amba-bus", },
--#endif /* CONFIG_ARM_AMBA */
--	{} /* Empty terminated list */
--};
+-static struct iommu_domain *mock_domain_alloc_paging(struct device *dev)
+-{
+-	struct mock_dev *mdev = to_mock_dev(dev);
+-	struct mock_iommu_domain *mock;
 -
- /**
-  * of_find_device_by_node - Find the platform_device associated with a node
-  * @np: Pointer to device tree node
-@@ -484,8 +474,17 @@ int of_platform_default_populate(struct device_node *root,
- 				 const struct of_dev_auxdata *lookup,
- 				 struct device *parent)
+-	mock = kzalloc(sizeof(*mock), GFP_KERNEL);
+-	if (!mock)
+-		return NULL;
+-	mock->domain.geometry.aperture_start = MOCK_APERTURE_START;
+-	mock->domain.geometry.aperture_end = MOCK_APERTURE_LAST;
+-	mock->domain.pgsize_bitmap = MOCK_IO_PAGE_SIZE;
+-	if (dev && mdev->flags & MOCK_FLAGS_DEVICE_HUGE_IOVA)
+-		mock->domain.pgsize_bitmap |= MOCK_HUGE_PAGE_SIZE;
+-	mock->domain.ops = mock_ops.default_domain_ops;
+-	mock->domain.type = IOMMU_DOMAIN_UNMANAGED;
+-	xa_init(&mock->pfns);
+-	return &mock->domain;
+-}
+-
+ static struct mock_iommu_domain_nested *
+ __mock_domain_alloc_nested(const struct iommu_user_data *user_data)
  {
--	return of_platform_populate(root, of_default_bus_match_table, lookup,
--				    parent);
-+	static const struct of_device_id match_table[] = {
-+		{ .compatible = "simple-bus", },
-+		{ .compatible = "simple-mfd", },
-+		{ .compatible = "isa", },
-+#ifdef CONFIG_ARM_AMBA
-+		{ .compatible = "arm,amba-bus", },
-+#endif /* CONFIG_ARM_AMBA */
-+		{} /* Empty terminated list */
-+	};
+@@ -385,21 +366,30 @@ mock_domain_alloc_paging_flags(struct device *dev, u32 flags,
+ 	bool has_dirty_flag = flags & IOMMU_HWPT_ALLOC_DIRTY_TRACKING;
+ 	const u32 PAGING_FLAGS = IOMMU_HWPT_ALLOC_DIRTY_TRACKING |
+ 				 IOMMU_HWPT_ALLOC_NEST_PARENT;
+-	bool no_dirty_ops = to_mock_dev(dev)->flags &
+-			    MOCK_FLAGS_DEVICE_NO_DIRTY;
+-	struct iommu_domain *domain;
++	struct mock_dev *mdev = to_mock_dev(dev);
++	bool no_dirty_ops = mdev->flags & MOCK_FLAGS_DEVICE_NO_DIRTY;
++	struct mock_iommu_domain *mock;
+ 
+ 	if (user_data)
+ 		return ERR_PTR(-EOPNOTSUPP);
+ 	if ((flags & ~PAGING_FLAGS) || (has_dirty_flag && no_dirty_ops))
+ 		return ERR_PTR(-EOPNOTSUPP);
+ 
+-	domain = mock_domain_alloc_paging(dev);
+-	if (!domain)
++	mock = kzalloc(sizeof(*mock), GFP_KERNEL);
++	if (!mock)
+ 		return ERR_PTR(-ENOMEM);
++	mock->domain.geometry.aperture_start = MOCK_APERTURE_START;
++	mock->domain.geometry.aperture_end = MOCK_APERTURE_LAST;
++	mock->domain.pgsize_bitmap = MOCK_IO_PAGE_SIZE;
++	if (dev && mdev->flags & MOCK_FLAGS_DEVICE_HUGE_IOVA)
++		mock->domain.pgsize_bitmap |= MOCK_HUGE_PAGE_SIZE;
++	mock->domain.ops = mock_ops.default_domain_ops;
++	mock->domain.type = IOMMU_DOMAIN_UNMANAGED;
++	xa_init(&mock->pfns);
 +
-+	return of_platform_populate(root, match_table, lookup, parent);
+ 	if (has_dirty_flag)
+-		domain->dirty_ops = &dirty_ops;
+-	return domain;
++		mock->domain.dirty_ops = &dirty_ops;
++	return &mock->domain;
  }
- EXPORT_SYMBOL_GPL(of_platform_default_populate);
  
-diff --git a/include/linux/of_platform.h b/include/linux/of_platform.h
-index a2ff1ad48f7f..17471ef8e092 100644
---- a/include/linux/of_platform.h
-+++ b/include/linux/of_platform.h
-@@ -47,8 +47,6 @@ struct of_dev_auxdata {
- 	{ .compatible = _compat, .phys_addr = _phys, .name = _name, \
- 	  .platform_data = _pdata }
- 
--extern const struct of_device_id of_default_bus_match_table[];
--
- /* Platform drivers register/unregister */
- extern struct platform_device *of_device_alloc(struct device_node *np,
- 					 const char *bus_id,
+ static void mock_domain_free(struct iommu_domain *domain)
+@@ -713,7 +703,6 @@ static const struct iommu_ops mock_ops = {
+ 	.owner = THIS_MODULE,
+ 	.pgsize_bitmap = MOCK_IO_PAGE_SIZE,
+ 	.hw_info = mock_domain_hw_info,
+-	.domain_alloc_paging = mock_domain_alloc_paging,
+ 	.domain_alloc_paging_flags = mock_domain_alloc_paging_flags,
+ 	.domain_alloc_nested = mock_domain_alloc_nested,
+ 	.capable = mock_domain_capable,
 
 base-commit: 40384c840ea1944d7c5a392e8975ed088ecf0b37
 -- 
-https://chromeos.dev
+2.43.0
 
