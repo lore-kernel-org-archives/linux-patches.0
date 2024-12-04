@@ -1,117 +1,124 @@
-Received: from jabberwock.ucw.cz (jabberwock.ucw.cz [46.255.230.98])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 256361AE863
-	for <patches@lists.linux.dev>; Wed,  4 Dec 2024 11:34:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.255.230.98
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DF261AF0A6;
+	Wed,  4 Dec 2024 12:24:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733312047; cv=none; b=fNNmMT4QDnXPkMdB06igH7PiD4KlVWJxzoxdJpttUHEL6KHRiHAMpm9qV3bNDHy4qfOSRCRLnLPYhpLbBm5jrPyB3W9FX/47WspThmsJiOctV/vpk1uXv5LRk6IU+6q6azEEEIybtfBj1nq11gNNKJBWrTtdywkiqkU+bhjY6b0=
+	t=1733315091; cv=none; b=uoDExQfHBTcWanxWbPCZ1GK/c9P/rdOKSW0BlTZOFgFkffAPsR3BhSCGJdC5nBI/DCGaQrXVsPBlviA+408EmT9+M7w+y8Vg9kdwbxtwYCOb+TF3hV1Y+Y1moft3GALSQbetSLzbUassrtoNctobxjeBcuojyyvx7jWCSoSdPJ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733312047; c=relaxed/simple;
-	bh=WOmmx/TYJt9siuctuf82NMwVd5HB06rxCXNrNMiCQ6k=;
+	s=arc-20240116; t=1733315091; c=relaxed/simple;
+	bh=RkNNygw7XCw7JUqiz54zg1qFks2WK0FKwWgqQMVbIz8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=c5gtR/yEjaZLkJgUXjDaCLSt4UDPmz+4K1HS4Y0I2uTFaBw2p9Gp6cknKyf1zgVy6dEUE5IBonsajeMP1QpJbK6+zBjYJPnh//awGLe6HS/wcX1aDRHMFIZCE0nv4NkZleW70OJmaIbxMe9BMlU1OrqB6oooDb6RQ9JfKKm+jBo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=denx.de; spf=fail smtp.mailfrom=denx.de; arc=none smtp.client-ip=46.255.230.98
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=denx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=denx.de
-Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
-	id CC1431C00A0; Wed,  4 Dec 2024 12:34:02 +0100 (CET)
-Date: Wed, 4 Dec 2024 12:34:02 +0100
-From: Pavel Machek <pavel@denx.de>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Pavel Machek <pavel@denx.de>, stable@vger.kernel.org,
-	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org, akpm@linux-foundation.org,
-	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
-	hargar@microsoft.com, broonie@kernel.org
-Subject: Re: [PATCH 4.19 000/138] 4.19.325-rc1 review
-Message-ID: <Z1A+Ku5D0OFOSUm4@duo.ucw.cz>
-References: <20241203141923.524658091@linuxfoundation.org>
- <Z09KXnGlTJZBpA90@duo.ucw.cz>
- <2024120424-diminish-staple-50d5@gregkh>
+	 Content-Type:Content-Disposition:In-Reply-To; b=KYPcltvGtmLtIlesOZJcOgGVTFOvRIOwRZojpyWxVZXhivQ+9Sb+xO5fRs9bHvbvfOxM5JlIOM1tRV1fIw99eKeki3TXGCiTLFNGNiGEDnC9epyfQg9oLF+SZQ3bwp2sVg3cN0mJ9lHf6Pa4WCznpjN8bll95bRHTOKJB56I6hI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BwMh0kot; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BwMh0kot"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88DB2C4CED1;
+	Wed,  4 Dec 2024 12:24:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1733315091;
+	bh=RkNNygw7XCw7JUqiz54zg1qFks2WK0FKwWgqQMVbIz8=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=BwMh0kotEqBwMw6RpqGwLr2MCwOJRv/lCd+ymZ1aCBgw4XstCtl7Z2B1rQp3LxMlt
+	 Mj9qQpnAUlgm9U6THkwMB6IeIhwCeYZzJwGg9643wB4yH533AFyGcTz0tmKeXf55FJ
+	 49loypaKRRj3bW74iZJZoKT2m4lPel6FQFjbEPTE=
+Date: Wed, 4 Dec 2024 13:24:45 +0100
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Jiri Slaby <jirislaby@kernel.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	Danny Tsen <dtsen@linux.ibm.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	Sasha Levin <sashal@kernel.org>
+Subject: Re: [PATCH 6.12 043/826] crypto: powerpc/p10-aes-gcm - Register
+ modules as SIMD
+Message-ID: <2024120421-coming-snore-e6fc@gregkh>
+References: <20241203144743.428732212@linuxfoundation.org>
+ <20241203144745.143525056@linuxfoundation.org>
+ <2a720dd0-56a0-4781-81d3-118368613792@kernel.org>
+ <2024120417-flattop-unpaired-fcf8@gregkh>
+ <92315b46-db52-4640-b8b9-c2ddbef38a17@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="rRJwBGNM29yCb0EE"
-Content-Disposition: inline
-In-Reply-To: <2024120424-diminish-staple-50d5@gregkh>
-
-
---rRJwBGNM29yCb0EE
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <92315b46-db52-4640-b8b9-c2ddbef38a17@kernel.org>
 
-Hi!
+On Wed, Dec 04, 2024 at 11:45:05AM +0100, Jiri Slaby wrote:
+> On 04. 12. 24, 11:34, Greg Kroah-Hartman wrote:
+> > On Wed, Dec 04, 2024 at 11:00:34AM +0100, Jiri Slaby wrote:
+> > > Hi,
+> > > 
+> > > On 03. 12. 24, 15:36, Greg Kroah-Hartman wrote:
+> > > > 6.12-stable review patch.  If anyone has any objections, please let me know.
+> > > > 
+> > > > ------------------
+> > > > 
+> > > > From: Danny Tsen <dtsen@linux.ibm.com>
+> > > > 
+> > > > [ Upstream commit c954b252dee956d33ee59f594710af28fb3037d9 ]
+> > > > 
+> > > > This patch is to fix an issue when simd is not usable that data mismatch
+> > > > may occur. The fix is to register algs as SIMD modules so that the
+> > > > algorithm is excecuted when SIMD instructions is usable.  Called
+> > > > gcm_update() to generate the final digest if needed.
+> > > > 
+> > > > A new module rfc4106(gcm(aes)) is also added.
+> > > > 
+> > > > Fixes: cdcecfd9991f ("crypto: p10-aes-gcm - Glue code for AES/GCM stitched implementation")
+> > > > 
+> > > > Signed-off-by: Danny Tsen <dtsen@linux.ibm.com>
+> > > > Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+> > > > Signed-off-by: Sasha Levin <sashal@kernel.org>
+> > > > ---
+> > > >    arch/powerpc/crypto/aes-gcm-p10-glue.c | 141 +++++++++++++++++++++----
+> > > >    1 file changed, 118 insertions(+), 23 deletions(-)
+> > > > 
+> > > > diff --git a/arch/powerpc/crypto/aes-gcm-p10-glue.c b/arch/powerpc/crypto/aes-gcm-p10-glue.c
+> > > > index f66ad56e765f0..4a029d2fe06ce 100644
+> > > > --- a/arch/powerpc/crypto/aes-gcm-p10-glue.c
+> > > > +++ b/arch/powerpc/crypto/aes-gcm-p10-glue.c
+> > > ...
+> > > > @@ -281,6 +295,7 @@ static int p10_aes_gcm_crypt(struct aead_request *req, int enc)
+> > > >    	/* Finalize hash */
+> > > >    	vsx_begin();
+> > > > +	gcm_update(gctx->iv, hash->Htable);
+> > > 
+> > > Now I get:
+> > > ERROR: modpost: "gcm_update" [arch/powerpc/crypto/aes-gcm-p10-crypto.ko]
+> > > undefined!
+> > > 
+> > > Only this:
+> > > commit 7aa747edcb266490f93651dd749c69b7eb8541d9
+> > > Author: Danny Tsen <dtsen@linux.ibm.com>
+> > > Date:   Mon Sep 23 09:30:38 2024 -0400
+> > > 
+> > >      crypto: powerpc/p10-aes-gcm - Re-write AES/GCM stitched implementation
+> > > 
+> > > 
+> > > 
+> > > added that function...
+> > 
+> > Ah, thanks, I'll go drop this patch from everywhere.
+> 
+> OK.
+> 
+> Looking at the queue, it looks like a prereq for un-BROKEN-ing the module in
+> the next patch:
+>   8b6c1e466eec crypto: powerpc/p10-aes-gcm - Add dependency on
+> CRYPTO_SIMDand re-enable CRYPTO_AES_GCM_P10
 
-> > > This is the start of the stable review cycle for the 4.19.325 release.
-> > > There are 138 patches in this series, all will be posted as a response
-> > > to this one.  If anyone has any issues with these being applied, plea=
-se
-> > > let me know.
-> >=20
-> > Build fails:
-> >=20
-> > https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/jobs/85=
-32423815
-> >=20
-> >   CC      drivers/pinctrl/uniphier/pinctrl-uniphier-pro4.o
-> > 3895
-> >   CC      drivers/pci/of.o
-> > 3896
-> > drivers/rtc/rtc-st-lpc.c: In function 'st_rtc_probe':
-> > 3897
-> > drivers/rtc/rtc-st-lpc.c:233:11: error: 'IRQF_NO_AUTOEN' undeclared (fi=
-rst use in this function); did you mean 'IRQ_NOAUTOEN'?
-> > 3898
-> >            IRQF_NO_AUTOEN, pdev->name, rtc);
-> > 3899
-> >            ^~~~~~~~~~~~~~
-> > 3900
-> >            IRQ_NOAUTOEN
-> > 3901
-> > drivers/rtc/rtc-st-lpc.c:233:11: note: each undeclared identifier is re=
-ported only once for each function it appears in
-> > 3902
-> >   CC      drivers/pci/quirks.o
-> > 3903
-> > make[2]: *** [scripts/Makefile.build:303: drivers/rtc/rtc-st-lpc.o] Err=
-or 1
-> > 3904
-> > make[1]: *** [scripts/Makefile.build:544: drivers/rtc] Error 2
-> > 3905
-> > make[1]: *** Waiting for unfinished jobs....
-> > 3906
-> >   CC      drivers/pinctrl/uniphier/pinctrl-uniphier-sld8.o
-> > 3907
-> >   CC      drivers/soc/renesas/r8a7743-sysc.o
->=20
-> What arch is this?  And can you not wrap error logs like this please?
+No, I don't see a conflict here.  Are you sure you are?
 
-Not easily. But you can easily get nicely formatted logs +
-architecture details by clicking the hyperlink above.
+> Dropping the two, this one has to be dropped too:
+> 3574a5168ff3 crypto: aes-gcm-p10 - Use the correct bit to test for P10
 
-Best regards,
-								Pavel
---=20
-DENX Software Engineering GmbH,        Managing Director: Erika Unter
-HRB 165235 Munich, Office: Kirchenstr.5, D-82194 Groebenzell, Germany
+I already dropped this one when I dropped the first.
 
---rRJwBGNM29yCb0EE
-Content-Type: application/pgp-signature; name="signature.asc"
+thanks,
 
------BEGIN PGP SIGNATURE-----
-
-iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCZ1A+KgAKCRAw5/Bqldv6
-8st2AKC74IP/4VCvOaJ9Mhd5CPms1awCbQCgh3KYxqrHsKB+NVWPrTEJlYJBAN0=
-=HNVQ
------END PGP SIGNATURE-----
-
---rRJwBGNM29yCb0EE--
+greg k-h
