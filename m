@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 489C61AB6FF;
-	Wed,  4 Dec 2024 09:43:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 997B619CC37;
+	Wed,  4 Dec 2024 09:48:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733305427; cv=none; b=GbeINpzuBwIXi0DtiLKLtTO5iTJb5KHtxbwSU70Uk1ZnQjuva1AuRSkfdWidWif/USWOTVK9XKQGgpbwWh3gboGEsoXzTbclRG5ujwG54Q0PtFFFRNbNR6WsUpeHdDQvcsW5grPqc25qMoftS1Z+mAlPgq/Rm+bOODCxcglCCdU=
+	t=1733305715; cv=none; b=dJJRXxY51d63Qw5hISxRC57SkNbgXuc5UyIVleRwhrT6fqJKxJTvnF08XxaZqlyB+CD4uFSPRpXFSca38NrmMGg7oIY22e8fg2+koKfCgcrvvyZNXkpex43Td//3F1SYhx6+9GkBl6A5G4lYOgcmJDMgb9rL7Ri45GKHmGXSxH4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733305427; c=relaxed/simple;
-	bh=PWrHeDKw+oq+b09wbyG1pzc83XNPY1LPkCYQjhR8i/w=;
+	s=arc-20240116; t=1733305715; c=relaxed/simple;
+	bh=u/P/hlu0k7735Cpyavyp1Y9i5sb+YioZt9K7R7M1cm0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=KEFkPYZDs6nWmM0xOtFhNQTG26DPh0O7zWQwTh34VGbQ8M/n3t4D1GD05yT6aJtMYcBWq8Tv5liTm22HXOco3HuP86XCnj5RCZ++yajJSFXKnZX29GIf/e5G5cRWUxoIU9/yD66JJmf/B07uGmJm3ZOJ7YkKXkH0YrFbDqNTSVs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MDaE2ndC; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=aB0msmJkiMRzyevbuaW0aUAs/nORKOgBmFj8jRVkTK45hhVebTY0SD4Jj6MI8TbSOGUf9d+NN2ZGkZoMxcb6cRBn05EWy+wxO80X0+NKMCWDf4brNAT9fA7dFPe05R8Icmc68VwITAxydMUIHHIxVLb4TEWIUyLNLiJXSoMheDk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s5AZSUID; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MDaE2ndC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3549FC4CED1;
-	Wed,  4 Dec 2024 09:43:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s5AZSUID"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78555C4CED1;
+	Wed,  4 Dec 2024 09:48:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733305426;
-	bh=PWrHeDKw+oq+b09wbyG1pzc83XNPY1LPkCYQjhR8i/w=;
+	s=korg; t=1733305715;
+	bh=u/P/hlu0k7735Cpyavyp1Y9i5sb+YioZt9K7R7M1cm0=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=MDaE2ndCiRt/0GQJtUi/NV4K0n8xuHlEaBNN5BuVUDMPXWXi0bxCRgNhF86ISsIqt
-	 aCAXE30DDeUXVKaWs9AiosQUu+uwy9G0+ySRmQ09eDxfn5yiAZSQA9l+DGH4T1+kif
-	 7NZYPchIRTh/hA6soAVzB8VLVUCazmxsUgr4FkXg=
-Date: Wed, 4 Dec 2024 10:43:43 +0100
+	b=s5AZSUID/ZrRS+n5uuGx6o364AU9I1Ita5ScStCBZsnm+ZW/FsdXH7MwhrBMlX7UB
+	 PzFk6m2X2/spcXqHJXJndzmbYdJyuUj/c7OV8Ql1Fc5XDFj2P3mq7DNhya5IZhidQC
+	 5PhuvgdsGBgldfMXKw9kHOLJQF+r+KfeYC8Aqrvo=
+Date: Wed, 4 Dec 2024 10:48:31 +0100
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Sergey Senozhatsky <senozhatsky@chromium.org>
+To: Pavel Machek <pavel@denx.de>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Tomasz Figa <tfiga@google.com>,
-	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
-	Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
-	Hans Verkuil <hverkuil@xs4all.nl>, Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 6.11 207/817] media: venus: fix enc/dec destruction order
-Message-ID: <2024120430-skillet-operator-4f78@gregkh>
-References: <20241203143955.605130076@linuxfoundation.org>
- <20241203144003.826130114@linuxfoundation.org>
- <20241204031031.GF886051@google.com>
- <2024120433-paternal-state-098e@gregkh>
- <20241204071642.GH886051@google.com>
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+	conor@kernel.org, hargar@microsoft.com, broonie@kernel.org
+Subject: Re: [PATCH 4.19 000/138] 4.19.325-rc1 review
+Message-ID: <2024120424-diminish-staple-50d5@gregkh>
+References: <20241203141923.524658091@linuxfoundation.org>
+ <Z09KXnGlTJZBpA90@duo.ucw.cz>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -46,38 +45,65 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20241204071642.GH886051@google.com>
+In-Reply-To: <Z09KXnGlTJZBpA90@duo.ucw.cz>
 
-On Wed, Dec 04, 2024 at 04:16:42PM +0900, Sergey Senozhatsky wrote:
-> On (24/12/04 08:10), Greg Kroah-Hartman wrote:
-> > > > From: Sergey Senozhatsky <senozhatsky@chromium.org>
-> > > > 
-> > > > [ Upstream commit 6c9934c5a00ae722a98d1a06ed44b673514407b5 ]
-> > > > 
-> > > > We destroy mutex-es too early as they are still taken in
-> > > > v4l2_fh_exit()->v4l2_event_unsubscribe()->v4l2_ctrl_find().
-> > > > 
-> > > > We should destroy mutex-es right before kfree().  Also
-> > > > do not vdec_ctrl_deinit() before v4l2_fh_exit().
-> > > 
-> > > Hi Greg, I just received a regression report which potentially
-> > > might have been caused by these venus patches.  Please do not
-> > > take
-> > > 
-> > > 	media: venus: sync with threaded IRQ during inst destruction
-> > > 	media: venus: fix enc/dec destruction order
-> > > 
-> > > to any stable kernels yet.  I need to investigate first.
-> > 
-> > What are the git commit id of these that I should be dropping?
+On Tue, Dec 03, 2024 at 07:13:50PM +0100, Pavel Machek wrote:
+> Hi!
 > 
-> Upstream:
+> > ------------------
+> > Note, this is the LAST 4.19.y kernel to be released.  After this one, it
+> > is end-of-life.  It's been 6 years, everyone should have moved off of it
+> > by now.
+> > ------------------
 > 
-> 	6c9934c5a00ae722a98d1a06ed44b673514407b5
-> 	45b1a1b348ec178a599323f1ce7d7932aea8c6d4
-> 
-> as far as I can tell.
+> Releasing 130 patches as end-of-life kernel is not good idea. There
+> may be regression hiding between them...
 
-Looks right, thanks, I'll go drop these from all stable queues now.
+It is better to have a regression for a fix then ignoring known fixes
+every time.  You seriously would want the final 4.19.y release to be
+missing 100+ known fixes?  That's just not ok for anyone who is waiting
+until the last week of this kernel to change (and I know many are, which
+is odd...)
+
+> > This is the start of the stable review cycle for the 4.19.325 release.
+> > There are 138 patches in this series, all will be posted as a response
+> > to this one.  If anyone has any issues with these being applied, please
+> > let me know.
+> 
+> Build fails:
+> 
+> https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/jobs/8532423815
+> 
+>   CC      drivers/pinctrl/uniphier/pinctrl-uniphier-pro4.o
+> 3895
+>   CC      drivers/pci/of.o
+> 3896
+> drivers/rtc/rtc-st-lpc.c: In function 'st_rtc_probe':
+> 3897
+> drivers/rtc/rtc-st-lpc.c:233:11: error: 'IRQF_NO_AUTOEN' undeclared (first use in this function); did you mean 'IRQ_NOAUTOEN'?
+> 3898
+>            IRQF_NO_AUTOEN, pdev->name, rtc);
+> 3899
+>            ^~~~~~~~~~~~~~
+> 3900
+>            IRQ_NOAUTOEN
+> 3901
+> drivers/rtc/rtc-st-lpc.c:233:11: note: each undeclared identifier is reported only once for each function it appears in
+> 3902
+>   CC      drivers/pci/quirks.o
+> 3903
+> make[2]: *** [scripts/Makefile.build:303: drivers/rtc/rtc-st-lpc.o] Error 1
+> 3904
+> make[1]: *** [scripts/Makefile.build:544: drivers/rtc] Error 2
+> 3905
+> make[1]: *** Waiting for unfinished jobs....
+> 3906
+>   CC      drivers/pinctrl/uniphier/pinctrl-uniphier-sld8.o
+> 3907
+>   CC      drivers/soc/renesas/r8a7743-sysc.o
+
+What arch is this?  And can you not wrap error logs like this please?
+
+thanks,
 
 greg k-h
