@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52BD81372;
-	Wed,  4 Dec 2024 00:23:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7D7D17D2;
+	Wed,  4 Dec 2024 00:24:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733271820; cv=none; b=NxePHYcCVLagpvodf6qShHq4JHKq37Q6U1emDXNVOC1OYzNBDYxaAs38IRuk0o/lmuXReLct2OR9UqSuBG+e1EaoQDtLpMKTtYjub07in1efUTvg1jmcLPRAVt/ZfElzmUmQHUVrCqX3HN63inBD4tPD2PEjDUighZxvsA30KzI=
+	t=1733271872; cv=none; b=ESBDsZqmymrMX97R2W5r2HzJFxUjhsSP+9+5jwy/R0rbNFhABWJnM9Ce7HAp6ckISvLrTMr7hckoNxXBSYcoCoRCVEyYXU7WkqgPlXZyNOfLltO0lQEDhmuu6nu0P/1NPwQt9tOoM/dZVQ5LHc/ULf6ZZa1ZWDwrtQApgOhk1Zg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733271820; c=relaxed/simple;
-	bh=mHyvXhKyZLMpFcnJTGgrfl8X1foUR+VJ2zARLjKgCCE=;
+	s=arc-20240116; t=1733271872; c=relaxed/simple;
+	bh=3aLL3OQ0JjPgJJ3AA938LY53kK42EWSLbYjymQP4luY=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=P3B11+NmLDgPA8bLiiTnNiTVwTW4a28GcHX+mzyDT58tJ0hyPNGQric3B23waT+fFW9fn4LBQTuiCsCcVWEJEFk+OpuYWzVRfgOD5DFPk6AU2ARBUIUUAzQsksjqladhpLb+4uRbrebEvt/y5CUj/S/3KBuGOFchtOS2OyfoAko=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sQfI+OWb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=krFCtjg5wSoCCffpR5j8Nh3RD1v8DRlrlL1BBzgUDeRwargqUiscSixU5sCRf93fP7MLDpc9Xwnb2iMDJEt2AhEy5Bajsb8Tx12XabLBjJ+17y6R6uwY4PW0oZ3RuJfIA8FaLyZ1gNteDJFFantDsUz1WhfayuKWFNZIEprFojk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PaB/m/6u; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sQfI+OWb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A64AC4CEDC;
-	Wed,  4 Dec 2024 00:23:38 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PaB/m/6u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01882C4CEDC;
+	Wed,  4 Dec 2024 00:24:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1733271819;
-	bh=mHyvXhKyZLMpFcnJTGgrfl8X1foUR+VJ2zARLjKgCCE=;
+	s=k20201202; t=1733271872;
+	bh=3aLL3OQ0JjPgJJ3AA938LY53kK42EWSLbYjymQP4luY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sQfI+OWbM5LibBB/dCMGRyqUWzriEf25PSRkcR5pIeh+6dsR9qgEXSrCpfyOQGy3a
-	 J6N5pK7z8VtyEVzddkC5TqCkUrosd6UXqNB7JUQeHQkp4YKDe3e8Z+htorZ5xB1Ug9
-	 8ZoKO/20JXkpqPqSvsAgQbuN8yU8cEpe6vMNOzQOJ02AZ7AIEbJgNko42Zni0TGKas
-	 rj1FF+ZlqVjErDbYeb/lsA4wkAHtCcLNqMBiISgnVQk+MGrqN2eRokOBnXosbIgQMp
-	 JPxodIZF+kTkwJiUt5Gk/+V/WvYC7vQoMADqQ5Ty6stKtm3qWPBcUGNXDj5rhoTQ/f
-	 lSWht1VZqPT9w==
+	b=PaB/m/6uERNd567YnOCKJUOPEsELei5qjtUUcBVeRrkmf1f7CWg9t6slPQsKD0QWM
+	 pNQZNHGP0MHFJRqMOY7M0+jMKr/beWuEcisTare79cSFNGcKp3sMgVDC1z/VvFf6gS
+	 x/vF2/c3sHutKk1UMiGYXOlo/OCgSR6iyktp1ZLiNl2go8Dfjenim1XTb+jTxcHI6V
+	 R3TjkGxmEGn+vqoEPY6Ej/FJKNyhItqyeo5vJduU/K0Z651n/2jRSy4YXhW1MVne4C
+	 Kc1uSUQI0mWPoB0YDjqDBpn/1KcxmTbCjms7EgI+PGGMktCx68xkvOVVdfyPHTH2PI
+	 bhWGq2eFDpzfQ==
 From: SeongJae Park <sj@kernel.org>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: SeongJae Park <sj@kernel.org>,
@@ -48,11 +48,11 @@ Cc: SeongJae Park <sj@kernel.org>,
 	hargar@microsoft.com,
 	broonie@kernel.org,
 	damon@lists.linux.dev
-Subject: Re: [PATCH 6.11 000/817] 6.11.11-rc1 review
-Date: Tue,  3 Dec 2024 16:23:35 -0800
-Message-Id: <20241204002335.85653-1-sj@kernel.org>
+Subject: Re: [PATCH 6.12 000/826] 6.12.2-rc1 review
+Date: Tue,  3 Dec 2024 16:24:29 -0800
+Message-Id: <20241204002429.85717-1-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
+In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
 References: 
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -64,19 +64,14 @@ Content-Transfer-Encoding: 8bit
 
 Hello,
 
-On Tue, 3 Dec 2024 15:32:52 +0100 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+On Tue, 3 Dec 2024 15:35:27 +0100 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
 
-> -----------
-> Note, this is will probably be the last 6.11.y kernel to be released.
-> Please move to the 6.12.y branch at this time.
-> -----------
-> 
-> This is the start of the stable review cycle for the 6.11.11 release.
-> There are 817 patches in this series, all will be posted as a response
+> This is the start of the stable review cycle for the 6.12.2 release.
+> There are 826 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 > 
-> Responses should be made by Thu, 05 Dec 2024 14:36:47 +0000.
+> Responses should be made by Thu, 05 Dec 2024 14:45:11 +0000.
 > Anything received after that time might be too late.
 
 This rc kernel passes DAMON functionality test[1] on my test machine.
@@ -86,7 +81,7 @@ kernel from linux-stable-rc tree[2].
 Tested-by: SeongJae Park <sj@kernel.org>
 
 [1] https://github.com/damonitor/damon-tests/tree/next/corr
-[2] 57f39ce086c9 ("Linux 6.11.11-rc1")
+[2] 1b3321bcbfba ("Linux 6.12.2-rc1")
 
 Thanks,
 SJ
