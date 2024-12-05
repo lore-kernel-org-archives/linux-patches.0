@@ -1,55 +1,55 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AB791D3566;
-	Thu,  5 Dec 2024 09:23:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3DA118E028;
+	Thu,  5 Dec 2024 09:27:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733390636; cv=none; b=taer3pbsiCbjWW9SWTHRLaTX+Eqiocprg9uU/9H7z2SvxsMGgGxBZ1f4u5ma32AVrRlyesskP+tykRXijkqkVBLcfmFKCYFhe/plnjhSFrYyK+NU8dyI8pKfseCV8PjqaEtmieXbCk1GQG9QfvnX/GDT6z5tFUG4areyGo3hnRU=
+	t=1733390857; cv=none; b=Qedt+GAtQAK2XSFMismHsSJiDDSXZzAtOuCLYaR+FG42flcBFcg5tILS5w6idM53U/C03MfldkrfWTznKV4e+kVuf9NHS5yuJ5Y3Sa5pzuxj5cSZNoviFy681CsJ7oMGjpsADgrZCV+jyALxOEWEn4q5woUe4QIvb7cKoP6XIac=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733390636; c=relaxed/simple;
-	bh=FeU74kM5djSKUVNu49yvDrxmNbLNHfa8te1RTZPrw3c=;
+	s=arc-20240116; t=1733390857; c=relaxed/simple;
+	bh=Kv1oegbIuBj+bRVgx2yuah3tYOZ7jP9hLeTNPPI8eM8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=iXxCD4lTXY43g58xYSdlfS5C9sQWib0ndBU39Mqr0fWgzIi23QQyUx2Uzth10L7laMUiMn/Eos5ohGucTV32I0D3Vye1mDY5TWFi0XiMeTgejquqxJXJyF69lfNor7XzRsS81Sj0tIZos2/wlgESuDdRI/eI335jcgqm8o3nE8g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=169qeRzw; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=lpq/zp4NgXTVDJLjPvdprbF/dY9YKfHinJLgiyjMUZ2h6z9PDx/z7hb7Yl05UAVFKpGlA+TaO6zm9V8jN+3VoG1XPFn1j/JFdHcyRBucG3qRsn3OEYdXkm3eavCz+xbev2AzdPt9G2dGjURkyi0Wfe2tDghwjT28asYV3DGiA/Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ruM+KNnv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="169qeRzw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12644C4CED6;
-	Thu,  5 Dec 2024 09:23:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ruM+KNnv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6B7AC4CED1;
+	Thu,  5 Dec 2024 09:27:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733390634;
-	bh=FeU74kM5djSKUVNu49yvDrxmNbLNHfa8te1RTZPrw3c=;
+	s=korg; t=1733390856;
+	bh=Kv1oegbIuBj+bRVgx2yuah3tYOZ7jP9hLeTNPPI8eM8=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=169qeRzwK9kvaClRWj3qEuj2uoF7rMB8dBGxPUQ6o3SoAKxtNqWaOobq1QCByRI7R
-	 VMljJxyFdWRe6oOZ9F1Dbdzwt+QbCxaR6oF+zgNsmvGovF7Zm13nAc5uBOD3bTSLqk
-	 cMl0qgr9unW86DRgz/ooQ4tUpH2KbmvcFO+70o6Y=
-Date: Thu, 5 Dec 2024 10:23:51 +0100
+	b=ruM+KNnvxw6+yXSZbjX1N1ZVvIpayLAnNfvrrzUofA4HmwnSYuS8iqQ7Fzv85jlmo
+	 Cm/X65LDu3iDj8muk7zzG6ZtsQS1dx9kmEHxL1Ll02s0lP/kGE9Gk0JOcnXNpo1owZ
+	 mAD3KHEIzfnt5e05qbrLYnwCXLoKCiLnIcjwe3eo=
+Date: Thu, 5 Dec 2024 10:27:33 +0100
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: Naresh Kamboju <naresh.kamboju@linaro.org>,
-	Sasha Levin <sashal@kernel.org>, stable@vger.kernel.org,
-	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org, akpm@linux-foundation.org,
-	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
-	hargar@microsoft.com, broonie@kernel.org,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Anders Roxell <anders.roxell@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Alexander Stein <alexander.stein@ew.tq-group.com>,
-	Philipp Zabel <p.zabel@pengutronix.de>,
-	Michal Suchanek <msuchanek@suse.de>,
-	Nicolai Stange <nstange@suse.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: Re: [PATCH 6.12 000/826] 6.12.2-rc1 review
-Message-ID: <2024120504-verbose-hurried-eb52@gregkh>
+To: James Clark <james.clark@linaro.org>
+Cc: Thorsten Leemhuis <linux@leemhuis.info>, stable@vger.kernel.org,
+	Sasha Levin <sashal@kernel.org>, Ian Rogers <irogers@google.com>,
+	patches@lists.linux.dev, Namhyung Kim <namhyung@kernel.org>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	Yang Jihong <yangjihong@bytedance.com>,
+	Dominique Martinet <asmadeus@codewreck.org>,
+	Colin Ian King <colin.i.king@gmail.com>,
+	Howard Chu <howardchu95@gmail.com>, Ze Gao <zegao2021@gmail.com>,
+	Yicong Yang <yangyicong@hisilicon.com>,
+	Weilin Wang <weilin.wang@intel.com>, Will Deacon <will@kernel.org>,
+	Mike Leach <mike.leach@linaro.org>,
+	Jing Zhang <renyu.zj@linux.alibaba.com>,
+	Yang Li <yang.lee@linux.alibaba.com>, Leo Yan <leo.yan@linux.dev>,
+	ak@linux.intel.com, Athira Rajeev <atrajeev@linux.vnet.ibm.com>,
+	linux-arm-kernel@lists.infradead.org,
+	Sun Haiyong <sunhaiyong@loongson.cn>,
+	John Garry <john.g.garry@oracle.com>,
+	Justin Forbes <jforbes@fedoraproject.org>
+Subject: Re: [PATCH 6.12 470/826] perf stat: Uniquify event name improvements
+Message-ID: <2024120517-reason-icing-8e77@gregkh>
 References: <20241203144743.428732212@linuxfoundation.org>
- <CA+G9fYu21yqTvL428TFueMJ1uU1H_u8Vc470dER2CTrNK=Js0g@mail.gmail.com>
- <20241204164853.GA3356373@thelio-3990X>
+ <20241203144802.097952233@linuxfoundation.org>
+ <f2ada8a7-165b-41fb-8b7b-3c0d16bb8216@leemhuis.info>
+ <deb83bf5-2342-479c-b1bd-7f8c49f5b1d4@linaro.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -58,67 +58,46 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20241204164853.GA3356373@thelio-3990X>
+In-Reply-To: <deb83bf5-2342-479c-b1bd-7f8c49f5b1d4@linaro.org>
 
-On Wed, Dec 04, 2024 at 09:48:53AM -0700, Nathan Chancellor wrote:
-> On Wed, Dec 04, 2024 at 06:30:47PM +0530, Naresh Kamboju wrote:
-> > On Tue, 3 Dec 2024 at 21:06, Greg Kroah-Hartman
-> > <gregkh@linuxfoundation.org> wrote:
-> > > The whole patch series can be found in one patch at:
-> > >         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.12.2-rc1.gz
-> > > or in the git tree and branch at:
-> > >         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.12.y
-> > > and the diffstat can be found below
-> ...
-> > 1) The allmodconfig builds failed on arm64, arm, riscv and x86_64
-> >      due to following build warnings / errors.
+On Thu, Dec 05, 2024 at 08:54:15AM +0000, James Clark wrote:
+> 
+> 
+> On 03/12/2024 5:24 pm, Thorsten Leemhuis wrote:
+> > On 03.12.24 15:43, Greg Kroah-Hartman wrote:
+> > > 6.12-stable review patch.  If anyone has any objections, please let me know.
+> > > 
+> > > ------------------
+> > > 
+> > > From: Ian Rogers <irogers@google.com>
+> > > 
+> > > [ Upstream commit 057f8bfc6f7070577523d1e3081081bbf4229c1c ]
+> > > 
+> > > Without aggregation on Intel:
 > > 
-> > Build errors for allmodconfig:
-> > --------------
-> > drivers/gpu/drm/imx/ipuv3/parallel-display.c:75:3: error: variable
-> > 'num_modes' is uninitialized when used here [-Werror,-Wuninitialized]
-> >    75 |                 num_modes++;
-> >       |                 ^~~~~~~~~
-> > drivers/gpu/drm/imx/ipuv3/parallel-display.c:55:15: note: initialize
-> > the variable 'num_modes' to silence this warning
-> >    55 |         int num_modes;
-> >       |                      ^
-> >       |                       = 0
-> > 1 error generated.
-> > make[8]: *** [scripts/Makefile.build:229:
-> > drivers/gpu/drm/imx/ipuv3/parallel-display.o] Error 1
+> > My 6.11.y-rc and 6.12.y-rc builds for Fedora failed when building perf.
+> > I did not bisect, but from a brief look at the error message (see
+> > below) I suspect it might be caused by this patch, which is the
+> > second of the patch-set "Event parsing fixes":
+> > https://lore.kernel.org/all/20240926144851.245903-1-james.clark@linaro.org/
+> > 
+> > To my untrained eyes and from a quick look I guess the first patch
+> > in the series needs to be backported as well:
+> > perf evsel: Add alternate_hw_config and use in evsel__match
+> > https://lore.kernel.org/all/20240926144851.245903-2-james.clark@linaro.org/
+> > 
+> > This is 22a4db3c36034e ("perf evsel: Add alternate_hw_config
+> > and use in evsel__match") in mainline. I tried to cherry-pick it
+> > on-top of 6.12.2-rc1, but there were a few small conflicts.
+> > 
+> > Ciao, Thorsten
+> > 
 > 
-> Introduced by backporting commit 5f6e56d3319d ("drm/imx:
-> parallel-display: switch to drm_panel_bridge") without
-> commit f94b9707a1c9 ("drm/imx: parallel-display: switch to
-> imx_legacy_bridge / drm_bridge_connector"). The latter change also had a
-> follow up fix in commit ef214002e6b3 ("drm/imx: parallel-display: add
-> legacy bridge Kconfig dependency").
-> 
-> > drivers/gpu/drm/imx/ipuv3/imx-ldb.c:143:3: error: variable 'num_modes'
-> > is uninitialized when used here [-Werror,-Wuninitialized]
-> >   143 |                 num_modes++;
-> >       |                 ^~~~~~~~~
-> > drivers/gpu/drm/imx/ipuv3/imx-ldb.c:133:15: note: initialize the
-> > variable 'num_modes' to silence this warning
-> >   133 |         int num_modes;
-> >       |                      ^
-> >       |                       = 0
-> > 1 error generated.
-> 
-> Introduced by backporting commit 5c5843b20bbb ("drm/imx: ldb: switch to
-> drm_panel_bridge") without commit 4c3d525f6573 ("drm/imx: ldb: switch to
-> imx_legacy_bridge / drm_bridge_connector").
-> 
-> These are both upstream patch series bisectability issues, not anything
-> that stable specifically did, as the num_nodes initialization was
-> removed by the first change but the entire function containing num_nodes
-> was removed by the second change so when the series was taken atomically
-> upstream, nobody notices. However, I do wonder why these patches are
-> being picked up, as they don't really read like fixes to me and the
-> cover letter of the original series does not really make it seem like it
-> either.
+> Yes I imagine both commits are required. Another option is to not backport
+> this one. It looks like it's mainly to fix a test, nothing is missing or
+> wrong from the output, just the formatting is off.
 
-Thanks, I'll just rip them both out now.
+
+Thanks, I'll just drop this patch from the stable queue for now.
 
 greg k-h
