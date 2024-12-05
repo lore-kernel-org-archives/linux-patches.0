@@ -1,119 +1,54 @@
-Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ADF51C36;
-	Thu,  5 Dec 2024 00:26:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.137.202.133
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90627522F;
+	Thu,  5 Dec 2024 03:48:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733358389; cv=none; b=MP8bhd8yIaMdVZExaPq7cJlM/6Hh733rEIphPg+PzRukEyhEIWvxaEKD+WUEU5jsBI91vpyNG0PGcYVSzaBSdvXzYZvRshH3AUe8R0Bwcz63sRcRR9mKR3nsXhuN71clwU3OmYevL/8eEJu5DGIOLkNdJhxArnv82IHqXqijWvc=
+	t=1733370492; cv=none; b=tQEtsSexaZVWzE2Q2/jnEaqZVpEuiPVVtpS1EcLYDERitJkMO7a7OwSgIHdCJwcRC/va4kKS1dh4DOeV0SoLX+6zNlSOfPcvBFMrv577qOHcLCnJUJ3Ph2CQvkubcFBM+pwN2ssucbv0lW9ofj4403HRFOn7W7p/2GAp2LDI1tQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733358389; c=relaxed/simple;
-	bh=hZq42RBJ1eHg0DT0y6H8DhVwVHSMTJaExIlIRRRKAa8=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=oC/0oTYsI/ul7eOoDeq/j2zpGnicXouYESIup7G5Rk4GSkewsuF/XP0IRLaZobzf1Ea8zwV40xIK24yc0PUgJVB30BXOXA0uWzA1TidBMF2TTzaTFjSaYGhm/r5/2xdPcFcwpsDdeMfp2Zd3uIm1iTLLfpWsuO7aCDUdGUyvJiQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=quarantine dis=none) header.from=kernel.org; spf=none smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=trKvKWmM; arc=none smtp.client-ip=198.137.202.133
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=quarantine dis=none) header.from=kernel.org
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=infradead.org
+	s=arc-20240116; t=1733370492; c=relaxed/simple;
+	bh=YKaeDk6x8sT94ZXgUpP0dQYXp4EizeeRTLfcbKqpifU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=j0J8cmYq0pWoIT0xi41n3WlTt7pU2tMZ0IiiqxiWLIVM4dTkiKBFY1+lCfDYzfzdbRJIgzM03IMYTxlIDkkhqwOM2IDHqaEvkieWBUFUtPZAj5FamgbhdjKJ30t3LNHDws0LwPzKig65MbJQs8HC3PrfZT8/Y+SBN73XVl8qVvY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ghXQR+uS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="trKvKWmM"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=bombadil.20210309; h=Sender:Content-Transfer-Encoding:
-	MIME-Version:Message-ID:Date:Subject:Cc:To:From:Reply-To:Content-Type:
-	Content-ID:Content-Description:In-Reply-To:References;
-	bh=J234ny5yyhrfseHzJ11zzCKLAAps5cwchYksQX/+uLU=; b=trKvKWmMXiTifUOHBUSFzB2Lfk
-	K3VfVSLkAS4ZJlUnxygy4g7Hk6sQNSzVNILE6KDjUuJ7M6DiwdqLoRSNJ9G6nwdOT/XTmPVOcigar
-	h4mONChVuuTQLb+p8HPShV7KLEw/DjLFChry+FvZ8fwl6sBT26YkJ1//zjegdkg8HPoMD5etci5hm
-	bROFjRNZ2N4QwF85hJyWlgK22Y7q82C0QJW3R4h+DEdZY2U0kydwVZKzNnBaIAWSZOVVB+Fbj+uI1
-	Jc7vbduz3sqR4fOmsxnXXXjGKAFLEdAP9eL/qRchcMSAQOah5Re6kGmGfhKfPnxjs+Ly1Q1ZfO293
-	rlRwxr9g==;
-Received: from mcgrof by bombadil.infradead.org with local (Exim 4.98 #2 (Red Hat Linux))
-	id 1tIzhJ-0000000ELpc-2AJI;
-	Thu, 05 Dec 2024 00:26:25 +0000
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ghXQR+uS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5587C4CED6;
+	Thu,  5 Dec 2024 03:48:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1733370491;
+	bh=YKaeDk6x8sT94ZXgUpP0dQYXp4EizeeRTLfcbKqpifU=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=ghXQR+uSMsWLYB7bsBrvH9swW+2/hvdprPESRAyIB0im9wrET7LmaFO1JJw99egI0
+	 u0Rn+M76NcbNFV6wlU1LWIqaZipVDSdW4fzO1xrOORbxHIEGCXiDzcVtMLtmBhChJI
+	 WKetL7RmcF/uwwfc116SzyaJxVHEGaVjm/3y1wTfNyhIKARVqYAFDiPNdS+lb4hUZr
+	 +tbbAZ7pk4o98Lt8X8Imx64Cx1QEMa2ejQYXQMJCS11Vf6+ZUUKWm1DtI5jNXQMhCp
+	 3f3hbVAG4l6mJQECFIsIBmjFf2n5P6M7Z/knbtSAwnpsO87DBkoHTr+Fb3M3zAgJ+L
+	 ahnVEkqIIOyxQ==
+Date: Wed, 4 Dec 2024 19:48:09 -0800
 From: Luis Chamberlain <mcgrof@kernel.org>
-To: patches@lists.linux.dev,
-	fstests@vger.kernel.org
-Cc: linux-fsdevel@vger.kernel.org,
-	gost.dev@samsung.com,
-	sandeen@redhat.com,
-	mcgrof@kernel.org
-Subject: [PATCH] common/config: use modprobe -w when supported
-Date: Wed,  4 Dec 2024 16:26:24 -0800
-Message-ID: <20241205002624.3420504-1-mcgrof@kernel.org>
-X-Mailer: git-send-email 2.47.0
+To: patches@lists.linux.dev, fstests@vger.kernel.org
+Cc: linux-fsdevel@vger.kernel.org, gost.dev@samsung.com, sandeen@redhat.com
+Subject: Re: [PATCH] common/config: use modprobe -w when supported
+Message-ID: <Z1EieZ5gXwpOeU3D@bombadil.infradead.org>
+References: <20241205002624.3420504-1-mcgrof@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Sender: Luis Chamberlain <mcgrof@infradead.org>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241205002624.3420504-1-mcgrof@kernel.org>
 
-We had added support for open coding a patient module remover long
-ago on fstests through commit d405c21d40aa1 ("common/module: add patient
-module rmmod support") to fix many flaky tests. This assumed we'd end up
-with modprobe -p -t <msec-timeout> but in the end kmod upstream just
-used modprobe -w <msec-timeout> through the respective kmod commit
-2b98ed888614 ("modprobe: Add --wait").
+On Wed, Dec 04, 2024 at 04:26:24PM -0800, Luis Chamberlain wrote:
+> -modprobe --help >& /dev/null && modprobe --help 2>&1 | grep -q -1 "remove-patiently"
+> +modprobe --help >& /dev/null && modprobe --help 2>&1 | grep -q -1 "wait TIMEOUT_MSEC"
 
-Take advantage of the upstream patient module remover support added
-since June 2022, so many distributions should already have support for
-this now.
+Silly me, this is wrong, this should be:
 
-Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
----
-
-Eric, I saw you mentioning on IRC you didn't understand *why*
-the patient module remover was added. Even though I thought the
-commit log explained it, let me summarize again: fix tons of
-flaky tests which assume module removal is being done correctly.
-It is not and fixing this is a module specific issue like with
-scsi_debug as documented in the commit log bugzilla references.
-So any sane test suite thing relying on module removal should use
-something like modprobe -w <timeout-in-ms>.
++modprobe --help >& /dev/null && modprobe --help 2>&1 | grep -q -1 "wait up to MSEC"
 
   Luis
-
- common/config | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
-
-diff --git a/common/config b/common/config
-index fcff0660b05a..d899129fd5f1 100644
---- a/common/config
-+++ b/common/config
-@@ -264,7 +264,7 @@ export UDEV_SETTLE_PROG
- # Set MODPROBE_PATIENT_RM_TIMEOUT_SECONDS to "forever" if you want the patient
- # modprobe removal to run forever trying to remove a module.
- MODPROBE_REMOVE_PATIENT=""
--modprobe --help >& /dev/null && modprobe --help 2>&1 | grep -q -1 "remove-patiently"
-+modprobe --help >& /dev/null && modprobe --help 2>&1 | grep -q -1 "wait TIMEOUT_MSEC"
- if [[ $? -ne 0 ]]; then
- 	if [[ -z "$MODPROBE_PATIENT_RM_TIMEOUT_SECONDS" ]]; then
- 		# We will open code our own implementation of patient module
-@@ -276,19 +276,19 @@ else
- 	if [[ ! -z "$MODPROBE_PATIENT_RM_TIMEOUT_SECONDS" ]]; then
- 		if [[ "$MODPROBE_PATIENT_RM_TIMEOUT_SECONDS" != "forever" ]]; then
- 			MODPROBE_PATIENT_RM_TIMEOUT_MS="$((MODPROBE_PATIENT_RM_TIMEOUT_SECONDS * 1000))"
--			MODPROBE_RM_PATIENT_TIMEOUT_ARGS="-t $MODPROBE_PATIENT_RM_TIMEOUT_MS"
-+			MODPROBE_RM_PATIENT_TIMEOUT_ARGS="-w $MODPROBE_PATIENT_RM_TIMEOUT_MS"
- 		fi
- 	else
- 		# We export MODPROBE_PATIENT_RM_TIMEOUT_SECONDS here for parity
--		# with environments without support for modprobe -p, but we
-+		# with environments without support for modprobe -w, but we
- 		# only really need it exported right now for environments which
--		# don't have support for modprobe -p to implement our own
-+		# don't have support for modprobe -w to implement our own
- 		# patient module removal support within fstests.
- 		export MODPROBE_PATIENT_RM_TIMEOUT_SECONDS="50"
- 		MODPROBE_PATIENT_RM_TIMEOUT_MS="$((MODPROBE_PATIENT_RM_TIMEOUT_SECONDS * 1000))"
--		MODPROBE_RM_PATIENT_TIMEOUT_ARGS="-t $MODPROBE_PATIENT_RM_TIMEOUT_MS"
-+		MODPROBE_RM_PATIENT_TIMEOUT_ARGS="-w $MODPROBE_PATIENT_RM_TIMEOUT_MS"
- 	fi
--	MODPROBE_REMOVE_PATIENT="modprobe -p $MODPROBE_RM_PATIENT_TIMEOUT_ARGS"
-+	MODPROBE_REMOVE_PATIENT="modprobe $MODPROBE_RM_PATIENT_TIMEOUT_ARGS"
- fi
- export MODPROBE_REMOVE_PATIENT
- 
--- 
-2.45.2
-
