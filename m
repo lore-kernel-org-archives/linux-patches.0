@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2816148832;
-	Fri,  6 Dec 2024 14:55:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D42821442E8;
+	Fri,  6 Dec 2024 14:55:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733496938; cv=none; b=GIpNOp4cF62U3qmzH9LxNDfmUY8YON7FRLNC7q3cLS0FmWjtzZv3OmOl5LX0t2eDbNTNSUFDryo8sahhvbCubkHaNVfEOLYqm3ngWdxRDX74qb3ARQ3wNEKhNbekgzXjK10pU51eDO+sW9MBWCJSFLvJEmRfy9TTiTu25+54Mj4=
+	t=1733496941; cv=none; b=UqRBxQP2CGkHMnJzDToU5DBQnKeYjbTIVgl32pN5uoZG2J56r2y/Oi+X0VmQ4thu7Vc6274/jVL/Oa9TEE/6M1BI7oIn+O1zrzY7dktnTFzLF1GgmEz0MLjal36occSkY27D1LdP8+BzI16lzVc8sLjoZzx2B69p9rSpxiui/LI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733496938; c=relaxed/simple;
-	bh=XXadmvkCFJFXaTE5ygj4lCzxSxopQKiR4ZDvKHE+rsU=;
+	s=arc-20240116; t=1733496941; c=relaxed/simple;
+	bh=DicICngrkr3vPMZ7Yw37fJO/ajv7nzKO2Tq7uaM5lnI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qBLAgqy4WNsX5mpAzhKH+7TEoVQKXjZWMvzty2pEq+mXXbWmm5NRkCDrPA3V/6GuxhYKFJGfolRbkpblBeUmuoBa97ykuWVQh40F1Wv1AxpDv8GAJAoJZ5rZW3iWulfRD5Hh6aTpXd2KMWSwTFuksllr5YwHHtq7xM4+BnMG+ec=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LpREbzMd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=q6fepj3BRF91lfDor8Afg4kxDBme8ZMBZhxDs9f1gKFjkKCbbqHvyey4K1rvRz6U5AHdaX26tr65KsIyei7d0lLt58vGvWW1Tjw5nXhj/Pv88B6Niam3OtB2nQ3Y19YMPbxDlgC5phOzGR0B0QaFbXGmlqfGL+dq8K+ChiyxHJs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oCP3M7O4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LpREbzMd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B50D8C4CED1;
-	Fri,  6 Dec 2024 14:55:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oCP3M7O4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35A80C4CED1;
+	Fri,  6 Dec 2024 14:55:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733496938;
-	bh=XXadmvkCFJFXaTE5ygj4lCzxSxopQKiR4ZDvKHE+rsU=;
+	s=korg; t=1733496941;
+	bh=DicICngrkr3vPMZ7Yw37fJO/ajv7nzKO2Tq7uaM5lnI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LpREbzMdz8wPonrjuiOT2ICgUTMn/rfreFD2IOhny7zB9rznHbTX6SaJipEQz09Nu
-	 DWVtN0CxksGDYlt5FgkLsQmSFoIyDnvmXl3/yTUFb+SfX89AA2fK/sWkHOB1R5yDV1
-	 GMF/2x5vuqLcZZZUUJOXsPL9mnKS7P2Oc30kgXvI=
+	b=oCP3M7O4slckZ6srH2UrgyvYc1WHwq8l1RfwDXLm/l6DdJGak+QTI4o4Fgkdz1FEr
+	 XIdOCCoiq2h0cOvspfJf+2teW6nSvbVRVm4sB0wtnWWroqITjI5oHc9fjPwu39lcZz
+	 2GSDb8SxmaVcLiKE/ggxYykl63hUSH9gLPiuqrvg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anurag Dutta <a-dutta@ti.com>,
-	Vignesh Raghavendra <vigneshr@ti.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 142/676] arm64: dts: ti: k3-j721s2: Fix clock IDs for MCSPI instances
-Date: Fri,  6 Dec 2024 15:29:21 +0100
-Message-ID: <20241206143658.899592654@linuxfoundation.org>
+Subject: [PATCH 6.6 151/676] arm64: dts: mediatek: Add ADC node on MT6357, MT6358, MT6359 PMICs
+Date: Fri,  6 Dec 2024 15:29:30 +0100
+Message-ID: <20241206143659.249581329@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -51,133 +50,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anurag Dutta <a-dutta@ti.com>
+From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 
-[ Upstream commit 891874f015e98f67ab2fda76f2e859921e136621 ]
+[ Upstream commit b0a4ce81f327eae06c1088f1a437edc48a94a3e8 ]
 
-The clock IDs for multiple MCSPI instances across wakeup domain
-in J721s2 are incorrect when compared with documentation [1]. Fix the
-clock IDs to their appropriate values.
+Add support for the ADC on MT6357/8/9 and keep it default enabled
+as this IP is always present on those PMICs.
+Users may use different IIO channels depending on board-specific
+routing.
 
-[1]https://software-dl.ti.com/tisci/esd/latest/5_soc_doc/j721s2/clocks.html
-
-Fixes: 04d7cb647b85 ("arm64: dts: ti: k3-j721s2: Add MCSPI nodes")
-
-Signed-off-by: Anurag Dutta <a-dutta@ti.com>
-Link: https://lore.kernel.org/r/20241023104532.3438851-4-a-dutta@ti.com
-Signed-off-by: Vignesh Raghavendra <vigneshr@ti.com>
+Link: https://lore.kernel.org/r/20240604123008.327424-6-angelogioacchino.delregno@collabora.com
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Stable-dep-of: 76ab2ae0ab9e ("arm64: dts: mediatek: mt6358: fix dtbs_check error")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/ti/k3-j721s2-main.dtsi       | 16 ++++++++--------
- arch/arm64/boot/dts/ti/k3-j721s2-mcu-wakeup.dtsi |  6 +++---
- 2 files changed, 11 insertions(+), 11 deletions(-)
+ arch/arm64/boot/dts/mediatek/mt6357.dtsi | 5 +++++
+ arch/arm64/boot/dts/mediatek/mt6358.dtsi | 5 +++++
+ arch/arm64/boot/dts/mediatek/mt6359.dtsi | 5 +++++
+ 3 files changed, 15 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/ti/k3-j721s2-main.dtsi b/arch/arm64/boot/dts/ti/k3-j721s2-main.dtsi
-index 084f8f5b66993..9484347acba79 100644
---- a/arch/arm64/boot/dts/ti/k3-j721s2-main.dtsi
-+++ b/arch/arm64/boot/dts/ti/k3-j721s2-main.dtsi
-@@ -1569,7 +1569,7 @@ main_spi0: spi@2100000 {
- 		#address-cells = <1>;
- 		#size-cells = <0>;
- 		power-domains = <&k3_pds 339 TI_SCI_PD_EXCLUSIVE>;
--		clocks = <&k3_clks 339 1>;
-+		clocks = <&k3_clks 339 2>;
- 		status = "disabled";
- 	};
+diff --git a/arch/arm64/boot/dts/mediatek/mt6357.dtsi b/arch/arm64/boot/dts/mediatek/mt6357.dtsi
+index 3330a03c2f745..5fafa842d312f 100644
+--- a/arch/arm64/boot/dts/mediatek/mt6357.dtsi
++++ b/arch/arm64/boot/dts/mediatek/mt6357.dtsi
+@@ -10,6 +10,11 @@ &pwrap {
+ 	mt6357_pmic: pmic {
+ 		compatible = "mediatek,mt6357";
  
-@@ -1580,7 +1580,7 @@ main_spi1: spi@2110000 {
- 		#address-cells = <1>;
- 		#size-cells = <0>;
- 		power-domains = <&k3_pds 340 TI_SCI_PD_EXCLUSIVE>;
--		clocks = <&k3_clks 340 1>;
-+		clocks = <&k3_clks 340 2>;
- 		status = "disabled";
- 	};
++		pmic_adc: adc {
++			compatible = "mediatek,mt6357-auxadc";
++			#io-channel-cells = <1>;
++		};
++
+ 		regulators {
+ 			mt6357_vproc_reg: buck-vproc {
+ 				regulator-name = "vproc";
+diff --git a/arch/arm64/boot/dts/mediatek/mt6358.dtsi b/arch/arm64/boot/dts/mediatek/mt6358.dtsi
+index b605313bed99d..8c9b6f662e9bc 100644
+--- a/arch/arm64/boot/dts/mediatek/mt6358.dtsi
++++ b/arch/arm64/boot/dts/mediatek/mt6358.dtsi
+@@ -12,6 +12,11 @@ pmic: pmic {
+ 		interrupts = <182 IRQ_TYPE_LEVEL_HIGH>;
+ 		#interrupt-cells = <2>;
  
-@@ -1591,7 +1591,7 @@ main_spi2: spi@2120000 {
- 		#address-cells = <1>;
- 		#size-cells = <0>;
- 		power-domains = <&k3_pds 341 TI_SCI_PD_EXCLUSIVE>;
--		clocks = <&k3_clks 341 1>;
-+		clocks = <&k3_clks 341 2>;
- 		status = "disabled";
- 	};
++		pmic_adc: adc {
++			compatible = "mediatek,mt6358-auxadc";
++			#io-channel-cells = <1>;
++		};
++
+ 		mt6358codec: mt6358codec {
+ 			compatible = "mediatek,mt6358-sound";
+ 			mediatek,dmic-mode = <0>; /* two-wires */
+diff --git a/arch/arm64/boot/dts/mediatek/mt6359.dtsi b/arch/arm64/boot/dts/mediatek/mt6359.dtsi
+index df3e822232d34..8e1b8c85c6ede 100644
+--- a/arch/arm64/boot/dts/mediatek/mt6359.dtsi
++++ b/arch/arm64/boot/dts/mediatek/mt6359.dtsi
+@@ -9,6 +9,11 @@ pmic: pmic {
+ 		interrupt-controller;
+ 		#interrupt-cells = <2>;
  
-@@ -1602,7 +1602,7 @@ main_spi3: spi@2130000 {
- 		#address-cells = <1>;
- 		#size-cells = <0>;
- 		power-domains = <&k3_pds 342 TI_SCI_PD_EXCLUSIVE>;
--		clocks = <&k3_clks 342 1>;
-+		clocks = <&k3_clks 342 2>;
- 		status = "disabled";
- 	};
- 
-@@ -1613,7 +1613,7 @@ main_spi4: spi@2140000 {
- 		#address-cells = <1>;
- 		#size-cells = <0>;
- 		power-domains = <&k3_pds 343 TI_SCI_PD_EXCLUSIVE>;
--		clocks = <&k3_clks 343 1>;
-+		clocks = <&k3_clks 343 2>;
- 		status = "disabled";
- 	};
- 
-@@ -1624,7 +1624,7 @@ main_spi5: spi@2150000 {
- 		#address-cells = <1>;
- 		#size-cells = <0>;
- 		power-domains = <&k3_pds 344 TI_SCI_PD_EXCLUSIVE>;
--		clocks = <&k3_clks 344 1>;
-+		clocks = <&k3_clks 344 2>;
- 		status = "disabled";
- 	};
- 
-@@ -1635,7 +1635,7 @@ main_spi6: spi@2160000 {
- 		#address-cells = <1>;
- 		#size-cells = <0>;
- 		power-domains = <&k3_pds 345 TI_SCI_PD_EXCLUSIVE>;
--		clocks = <&k3_clks 345 1>;
-+		clocks = <&k3_clks 345 2>;
- 		status = "disabled";
- 	};
- 
-@@ -1646,7 +1646,7 @@ main_spi7: spi@2170000 {
- 		#address-cells = <1>;
- 		#size-cells = <0>;
- 		power-domains = <&k3_pds 346 TI_SCI_PD_EXCLUSIVE>;
--		clocks = <&k3_clks 346 1>;
-+		clocks = <&k3_clks 346 2>;
- 		status = "disabled";
- 	};
- 
-diff --git a/arch/arm64/boot/dts/ti/k3-j721s2-mcu-wakeup.dtsi b/arch/arm64/boot/dts/ti/k3-j721s2-mcu-wakeup.dtsi
-index 71324fec415ae..6fc008fbfb003 100644
---- a/arch/arm64/boot/dts/ti/k3-j721s2-mcu-wakeup.dtsi
-+++ b/arch/arm64/boot/dts/ti/k3-j721s2-mcu-wakeup.dtsi
-@@ -416,7 +416,7 @@ mcu_spi0: spi@40300000 {
- 		#address-cells = <1>;
- 		#size-cells = <0>;
- 		power-domains = <&k3_pds 347 TI_SCI_PD_EXCLUSIVE>;
--		clocks = <&k3_clks 347 0>;
-+		clocks = <&k3_clks 347 2>;
- 		status = "disabled";
- 	};
- 
-@@ -427,7 +427,7 @@ mcu_spi1: spi@40310000 {
- 		#address-cells = <1>;
- 		#size-cells = <0>;
- 		power-domains = <&k3_pds 348 TI_SCI_PD_EXCLUSIVE>;
--		clocks = <&k3_clks 348 0>;
-+		clocks = <&k3_clks 348 2>;
- 		status = "disabled";
- 	};
- 
-@@ -438,7 +438,7 @@ mcu_spi2: spi@40320000 {
- 		#address-cells = <1>;
- 		#size-cells = <0>;
- 		power-domains = <&k3_pds 349 TI_SCI_PD_EXCLUSIVE>;
--		clocks = <&k3_clks 349 0>;
-+		clocks = <&k3_clks 349 2>;
- 		status = "disabled";
- 	};
++		pmic_adc: adc {
++			compatible = "mediatek,mt6359-auxadc";
++			#io-channel-cells = <1>;
++		};
++
+ 		mt6359codec: mt6359codec {
+ 		};
  
 -- 
 2.43.0
