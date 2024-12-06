@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE8EC148832;
-	Fri,  6 Dec 2024 15:12:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09CC9207E1E;
+	Fri,  6 Dec 2024 15:12:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733497941; cv=none; b=Wb/hcQTD3CdrIytVsD21QaKzWhWuosEu9dY8VgN1OPtaDH96mcPh8XRX5cAX6Jx9xVy4cEMt8YzIJYXnEAe5xWmOjMcvNIGDjB0ATw3gMOg6aLj06y8HNI7fIBZnGaGocf4esnCN1aFCZDLmwjxIl9DeFwEEqxMccHAxnt9aAWE=
+	t=1733497945; cv=none; b=ssUerS9X8SsP52aeDF4dsGafiwXdTPzBefr116DZdeaK7gnGhVcGctMS+fojzp938cxeA9drPHqq816lDq4czCN1j80t0ExtR/0FopfTjl0llM2aFgNHZkEJV+AJejV6dJ/8Z5LiO4yFUxq+IAF9FO5NUDjM8oimWkisq3WSn2A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733497941; c=relaxed/simple;
-	bh=ykb+FjwW5cbKjVXdlBmm2lGK1Pat6oE9Xw3OMl/hRB0=;
+	s=arc-20240116; t=1733497945; c=relaxed/simple;
+	bh=ecQ7D4AC8LQ2UxfDHWIEcmCxJU7+1w2EJ3W0Kpl1IaY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kaeqUXVEizEtMTl15JJzaIuLOYDDRfUr0n4U4lsPhF9n9LrH9ulsm2nuiLKt2C+vjWBmBXb4kWENQGobCs5TDG8rJTmBOawhKygNqll6eCuOzPTdacm9Kap5ZPlDqsl0HkOY0M/bWXavbJec42wuNRV6px53yhQJmKuhi01/xew=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z0m5OMsc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VE2LLqPj3umr8AY/Vl0Rtj4ot6ffQJyNpod5s7XFnxY2aRUN5H9p166MqGES8/dIFi84FjOOAa+1xrBUGfOXUSmWfeeqSlR6o7IK8o2vonk6ZSlb2HmzAuuMkHqePsc//9tHZrHDfi+aVGcHZpjPghHDp8/sLrbQhSMjmerciwc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aVwXHtNp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z0m5OMsc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55016C4CED1;
-	Fri,  6 Dec 2024 15:12:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aVwXHtNp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76D1CC4CED1;
+	Fri,  6 Dec 2024 15:12:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733497941;
-	bh=ykb+FjwW5cbKjVXdlBmm2lGK1Pat6oE9Xw3OMl/hRB0=;
+	s=korg; t=1733497944;
+	bh=ecQ7D4AC8LQ2UxfDHWIEcmCxJU7+1w2EJ3W0Kpl1IaY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z0m5OMscv/J0QXv7kT+3Jq+f+qK0EFlk110ea4GtR+yYGbL8z1HE0TQsm0vVVGm34
-	 d6TvFAK8Qy5KMLkSQFELPBY3aZ0cRNTzDcQe6BekLJePbHa8rXz0I1wdv4+Vm0Vz61
-	 geT7MTjte60oaPHNDBMIuWIPEd4GsQ07C6HiQQs4=
+	b=aVwXHtNpofdKGTC+j+U/bXolwFntN1d16qLkYHjoc7LBMEgVxXR/y4boluAt0JFVe
+	 WhM3k/9N+EJJvGRxp0rG9r/tzWok0qmSaYsgFrsei1vXhg0u5yNQNQ/2ugBFJ+2R9g
+	 j1/P+bRVhwHan8OnHsMNcnHAHGnLDSJ9uFBQmBCk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steven Steve Kendall <skend@chromium.org>,
+	Tom Chung <chiahsuan.chung@amd.com>,
+	Zicheng Qu <quzicheng@huawei.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 438/676] drm/radeon: Fix spurious unplug event on radeon HDMI
-Date: Fri,  6 Dec 2024 15:34:17 +0100
-Message-ID: <20241206143710.459606754@linuxfoundation.org>
+Subject: [PATCH 6.6 439/676] drm/amd/display: Fix null check for pipe_ctx->plane_state in hwss_setup_dpp
+Date: Fri,  6 Dec 2024 15:34:18 +0100
+Message-ID: <20241206143710.498109637@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -51,62 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steven 'Steve' Kendall <skend@chromium.org>
+From: Zicheng Qu <quzicheng@huawei.com>
 
-[ Upstream commit 7037bb04265ef05c6ffad56d884b0df76f57b095 ]
+[ Upstream commit 2bc96c95070571c6c824e0d4c7783bee25a37876 ]
 
-On several HP models (tested on HP 3125 and HP Probook 455 G2),
-spurious unplug events are emitted upon login on Chrome OS.
-This is likely due to the way Chrome OS restarts graphics
-upon login, so it's possible it's an issue on other
-distributions but not as common, though I haven't
-reproduced the issue elsewhere.
-Use logic from an earlier version of the merged change
-(see link below) which iterates over connectors and finds
-matching encoders, rather than the other way around.
-Also fixes an issue with screen mirroring on Chrome OS.
-I've deployed this patch on Fedora and did not observe
-any regression on these devices.
+This commit addresses a null pointer dereference issue in
+hwss_setup_dpp(). The issue could occur when pipe_ctx->plane_state is
+null. The fix adds a check to ensure `pipe_ctx->plane_state` is not null
+before accessing. This prevents a null pointer dereference.
 
-Link: https://gitlab.freedesktop.org/drm/amd/-/issues/1569#note_1603002
-Link: https://gitlab.freedesktop.org/drm/amd/-/issues/3771
-Fixes: 20ea34710f7b ("drm/radeon: Add HD-audio component notifier support (v6)")
-Signed-off-by: Steven 'Steve' Kendall <skend@chromium.org>
+Fixes: 0baae6246307 ("drm/amd/display: Refactor fast update to use new HWSS build sequence")
+Reviewed-by: Tom Chung <chiahsuan.chung@amd.com>
+Signed-off-by: Zicheng Qu <quzicheng@huawei.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/radeon/radeon_audio.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/amd/display/dc/core/dc_hw_sequencer.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/gpu/drm/radeon/radeon_audio.c b/drivers/gpu/drm/radeon/radeon_audio.c
-index ff0ff2642a8d0..fc22fe709b9c1 100644
---- a/drivers/gpu/drm/radeon/radeon_audio.c
-+++ b/drivers/gpu/drm/radeon/radeon_audio.c
-@@ -758,16 +758,20 @@ static int radeon_audio_component_get_eld(struct device *kdev, int port,
- 	if (!rdev->audio.enabled || !rdev->mode_info.mode_config_initialized)
- 		return 0;
+diff --git a/drivers/gpu/drm/amd/display/dc/core/dc_hw_sequencer.c b/drivers/gpu/drm/amd/display/dc/core/dc_hw_sequencer.c
+index f99ec1b0efaff..2eae1fd95fd06 100644
+--- a/drivers/gpu/drm/amd/display/dc/core/dc_hw_sequencer.c
++++ b/drivers/gpu/drm/amd/display/dc/core/dc_hw_sequencer.c
+@@ -727,6 +727,9 @@ void hwss_setup_dpp(union block_sequence_params *params)
+ 	struct dpp *dpp = pipe_ctx->plane_res.dpp;
+ 	struct dc_plane_state *plane_state = pipe_ctx->plane_state;
  
--	list_for_each_entry(encoder, &rdev_to_drm(rdev)->mode_config.encoder_list, head) {
-+	list_for_each_entry(connector, &dev->mode_config.connector_list, head) {
-+		const struct drm_connector_helper_funcs *connector_funcs =
-+				connector->helper_private;
-+		encoder = connector_funcs->best_encoder(connector);
++	if (!plane_state)
++		return;
 +
-+		if (!encoder)
-+			continue;
-+
- 		if (!radeon_encoder_is_digital(encoder))
- 			continue;
- 		radeon_encoder = to_radeon_encoder(encoder);
- 		dig = radeon_encoder->enc_priv;
- 		if (!dig->pin || dig->pin->id != port)
- 			continue;
--		connector = radeon_get_connector_for_encoder(encoder);
--		if (!connector)
--			continue;
- 		*enabled = true;
- 		ret = drm_eld_size(connector->eld);
- 		memcpy(buf, connector->eld, min(max_bytes, ret));
+ 	if (dpp && dpp->funcs->dpp_setup) {
+ 		// program the input csc
+ 		dpp->funcs->dpp_setup(dpp,
 -- 
 2.43.0
 
