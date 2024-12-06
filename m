@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D96981F4735;
-	Fri,  6 Dec 2024 15:25:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D6B01465AB;
+	Fri,  6 Dec 2024 15:25:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733498722; cv=none; b=dRESTfUDx81xmR1R1RA7vSiNha2kRfxiXE4oim6n1t2HT9lHCA06FtsxAH5kN/onEcFwHifOare9rq/QkBG39wEOyQljSUkoqMvrTu7cLHooiNUWWu16FU8HWjJAIOVCS1PzGcRT8MeigqhfACpW2jEBIiCAjnbl9Ix6NPDX34o=
+	t=1733498726; cv=none; b=ThyefEYXzbeAAQBaJkVKeX4oWt9na9qg7LWk5aKXoBtsYHmYWaHNM4A6XlHZ9u06XABan1/VA6odRV/0lu03rrCZm4b0Qoo/V7hUOJgHZHkMBih/gCe/iIt+YyGN8tmjgtMnYsoVyVqd4k+mTGlT8IwLYKE8yuKGS5VwIHoYRKY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733498722; c=relaxed/simple;
-	bh=Rvv4jMkJvjGwnN1LtEWQlunDRBZJFxKdtd/XEmvEhtA=;
+	s=arc-20240116; t=1733498726; c=relaxed/simple;
+	bh=lxE0m+joNnlxVDAoK3hKaBapEB3YHID5cZczI3U2P8s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H+wpRUciKJRYOHyQv6GXtXk4xH/djEPLoJZS2TyA+PUDBX8e5t8rMhB81R8uW2sbs8DSUhhmgU27E3GB6R7CVvhWB6UgLYIzddexKaEXA2L5oJ0fSKgGAJL96471Eo6PmegVDQZmg8iLhWS1edt++Dwli9u3Byad7XHZUDwgIHo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QvCKeyq+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LkOTpETumakbH76dSgsLUuGYb4UWvA9cgpOpCALd+//txqL9Mb+OfoTQmlUi9h1SyQz12i4oJDJJdukwaW5JGpYZRMBuFtHKovab/KrULRBxEn3RnTV987DpGGqWJpZw6Jka92S8mTjjr7J1Cuo/qTaxryd7JS+ZB4dr39+WPDk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pnBoWK8l; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QvCKeyq+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47905C4CED1;
-	Fri,  6 Dec 2024 15:25:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pnBoWK8l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCAE8C4CED1;
+	Fri,  6 Dec 2024 15:25:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733498722;
-	bh=Rvv4jMkJvjGwnN1LtEWQlunDRBZJFxKdtd/XEmvEhtA=;
+	s=korg; t=1733498726;
+	bh=lxE0m+joNnlxVDAoK3hKaBapEB3YHID5cZczI3U2P8s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QvCKeyq+7Y+N7wgkVf5nzW+wgmmE378OlR/Zk9VCdAoYS2aqFXdB6rUL26vW+uUKZ
-	 +PKju7wzR1KgIylqGudON3pF/P4Ptve4ti9GB6UOf5R9Opc3Io3usy3Ds5c2Phhm/8
-	 FddzCS7KNRnpCbDGlse7PsFwJgE/mBqu0ezHfsMk=
+	b=pnBoWK8l4Eftqc3cJ+cUCm/rjD3AlYJPN23vdgpHwnAbZGNG82RKET/LAVNw74AKU
+	 k2Z3ZtKwRxlRLVaZubeLC8VoCCtMOqm9X0uFZ7NXJl3WSXsZ45s/2eMTH7JsocRZB1
+	 Yc5qmkZQPDPjfVdhT7dPZmnujq4L1geK+rHzF+jM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ma Ke <make24@iscas.ac.cn>,
-	Alain Volmat <alain.volmat@foss.st.com>
-Subject: [PATCH 6.6 669/676] drm/sti: avoid potential dereference of error pointers
-Date: Fri,  6 Dec 2024 15:38:08 +0100
-Message-ID: <20241206143719.502701627@linuxfoundation.org>
+	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
+	CK Hu <ck.hu@mediatek.com>,
+	Chen-Yu Tsai <wenst@chromium.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Chun-Kuang Hu <chunkuang.hu@kernel.org>
+Subject: [PATCH 6.6 670/676] drm/mediatek: Fix child node refcount handling in early exit
+Date: Fri,  6 Dec 2024 15:38:09 +0100
+Message-ID: <20241206143719.541105099@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -50,35 +53,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ma Ke <make24@iscas.ac.cn>
+From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
 
-commit 831214f77037de02afc287eae93ce97f218d8c04 upstream.
+commit f708e8b4cfd16e5c8cd8d7fcfcb2fb2c6ed93af3 upstream.
 
-The return value of drm_atomic_get_crtc_state() needs to be
-checked. To avoid use of error pointer 'crtc_state' in case
-of the failure.
+Early exits (goto, break, return) from for_each_child_of_node() required
+an explicit call to of_node_put(), which was not introduced with the
+break if cnt == MAX_CRTC.
+
+Add the missing of_node_put() before the break.
 
 Cc: stable@vger.kernel.org
-Fixes: dd86dc2f9ae1 ("drm/sti: implement atomic_check for the planes")
-Signed-off-by: Ma Ke <make24@iscas.ac.cn>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240913090412.2022848-1-make24@iscas.ac.cn
-Signed-off-by: Alain Volmat <alain.volmat@foss.st.com>
+Fixes: d761b9450e31 ("drm/mediatek: Add cnt checking for coverity issue")
+
+Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+Reviewed-by: CK Hu <ck.hu@mediatek.com>
+Reviewed-by: Chen-Yu Tsai <wenst@chromium.org>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://patchwork.kernel.org/project/dri-devel/patch/20241011-mtk_drm_drv_memleak-v1-1-2b40c74c8d75@gmail.com/
+Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/sti/sti_cursor.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/mediatek/mtk_drm_drv.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/sti/sti_cursor.c
-+++ b/drivers/gpu/drm/sti/sti_cursor.c
-@@ -200,6 +200,9 @@ static int sti_cursor_atomic_check(struc
- 		return 0;
+--- a/drivers/gpu/drm/mediatek/mtk_drm_drv.c
++++ b/drivers/gpu/drm/mediatek/mtk_drm_drv.c
+@@ -378,8 +378,10 @@ static bool mtk_drm_get_all_drm_priv(str
+ 		if (all_drm_priv[cnt] && all_drm_priv[cnt]->mtk_drm_bound)
+ 			cnt++;
  
- 	crtc_state = drm_atomic_get_crtc_state(state, crtc);
-+	if (IS_ERR(crtc_state))
-+		return PTR_ERR(crtc_state);
-+
- 	mode = &crtc_state->mode;
- 	dst_x = new_plane_state->crtc_x;
- 	dst_y = new_plane_state->crtc_y;
+-		if (cnt == MAX_CRTC)
++		if (cnt == MAX_CRTC) {
++			of_node_put(node);
+ 			break;
++		}
+ 	}
+ 
+ 	if (drm_priv->data->mmsys_dev_num == cnt) {
 
 
