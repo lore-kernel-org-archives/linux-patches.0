@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1ABA653A7;
-	Fri,  6 Dec 2024 15:05:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6501D153836;
+	Fri,  6 Dec 2024 15:05:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733497541; cv=none; b=dTv6D/50i+0ryqIiQ/HrMCIjp5bcpmcrclSCOqYmVU9vAKn1/wvIzcMGAeVGgQQ8BqYWMxs6ww2A4cgZnpnT6+phhPDVWhiy4tMV6xlbuAhn3t0tS6zbW3RKwpkgTw9JHn3D8e/ULUo3Mh0knw2Vi4NbOhbcTlJjjrl2QVMBmV8=
+	t=1733497544; cv=none; b=G71v7USUip4AMJDllFmQeODR5Vb18ozA/cMRw+rsapMHJ687Us8EPE/x4DrU3o9aXpJElLXYXhtneo9fwnoANnW0UpPGw9vpgK6KMQxJDeHAigJQ92kZbyWw8MzhaPv0OyqYRXh6hkDtYeoQlkvZ202FxenPiAIl/6PzKMgRiuQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733497541; c=relaxed/simple;
-	bh=B177AZb1tq7UPsQlvUxDZ/hZJSjf/jwKE9oid/m/FuU=;
+	s=arc-20240116; t=1733497544; c=relaxed/simple;
+	bh=INvuq8DfAta+mrhN2t1RomIhoOzH8pK/jrnKo5MQD3U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K+zej8otd3hcVL1/gAv6pvlYv045QB968ohBQvZEjwFhT+TUV6oXeeLRinnEymDVzrWQs+W6C6Rh4KgXry1azYKezPiYPZzi8aP3z95VAPNfNRoJSKvjlmopHfPcK/sgvHZe2W4kKxY73rWmUYz6KPAioB2aV5D5tLl6IOWasNU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V/rCUWn7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Edm2smYaXInvacGcmzax9AMq/cczuEe4VeCZQDk2uoJUv7lvsb9mL5Vdc8v6kATB742/yx/Rza+LN1FC43UxUVutvE+Z2gcj1vvgf6Vef6f7M8AdsTUNVwTYiBzH1dkBVjfPtpzAwUZuz/litJC2UgqRa3jQL1floxfESEozRCo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HH4rcGV4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V/rCUWn7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3136FC4CED1;
-	Fri,  6 Dec 2024 15:05:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HH4rcGV4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1181C4CED1;
+	Fri,  6 Dec 2024 15:05:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733497540;
-	bh=B177AZb1tq7UPsQlvUxDZ/hZJSjf/jwKE9oid/m/FuU=;
+	s=korg; t=1733497544;
+	bh=INvuq8DfAta+mrhN2t1RomIhoOzH8pK/jrnKo5MQD3U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V/rCUWn7ZGaFlFEe7Jd3KlFLyMOAfTfbh1HItSvNjeYtQdhMbYr5J9oBJNzPDzGrj
-	 jSEFrNqbshIAddbiUr+mKUxzdPH0uVARekFN7TuX4ndYI8WKlyKFHHz/XapJmLk+Sj
-	 lIEWhmWioWA3INuQZyMsM91gfugnWjMq0LIRibqA=
+	b=HH4rcGV4lCuqOj5Flir2M0JeQkLE5lxjiVBr+NpU0UoJL5EuY5FcmhIzuYhWafVV8
+	 LqKYqCGHJcxjiP7cBnt0UhC4nj1uQMQmVKbeB/HJGrqpluJXJeY6JR+Akaou11lrvT
+	 MXXMbyTSFZgXF9srLQnLaQmq4LAQnD7flz0s/ZlI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junxian Huang <huangjunxian6@hisilicon.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Zhang Zekun <zhangzekun11@huawei.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 313/676] RDMA/hns: Fix out-of-order issue of requester when setting FENCE
-Date: Fri,  6 Dec 2024 15:32:12 +0100
-Message-ID: <20241206143705.564320790@linuxfoundation.org>
+Subject: [PATCH 6.6 322/676] powerpc/kexec: Fix return of uninitialized variable
+Date: Fri,  6 Dec 2024 15:32:21 +0100
+Message-ID: <20241206143705.922174085@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -51,56 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junxian Huang <huangjunxian6@hisilicon.com>
+From: Zhang Zekun <zhangzekun11@huawei.com>
 
-[ Upstream commit 5dbcb1c1900f45182b5651c89257c272f1f3ead7 ]
+[ Upstream commit 83b5a407fbb73e6965adfb4bd0a803724bf87f96 ]
 
-The FENCE indicator in hns WQE doesn't ensure that response data from
-a previous Read/Atomic operation has been written to the requester's
-memory before the subsequent Send/Write operation is processed. This
-may result in the subsequent Send/Write operation accessing the original
-data in memory instead of the expected response data.
+of_property_read_u64() can fail and leave the variable uninitialized,
+which will then be used. Return error if reading the property failed.
 
-Unlike FENCE, the SO (Strong Order) indicator blocks the subsequent
-operation until the previous response data is written to memory and a
-bresp is returned. Set the SO indicator instead of FENCE to maintain
-strict order.
-
-Fixes: 9a4435375cd1 ("IB/hns: Add driver files for hns RoCE driver")
-Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
-Link: https://patch.msgid.link/20241108075743.2652258-2-huangjunxian6@hisilicon.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: 2e6bd221d96f ("powerpc/kexec_file: Enable early kernel OPAL calls")
+Signed-off-by: Zhang Zekun <zhangzekun11@huawei.com>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://patch.msgid.link/20240930075628.125138-1-zhangzekun11@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hns/hns_roce_hw_v2.c | 2 +-
- drivers/infiniband/hw/hns/hns_roce_hw_v2.h | 1 +
- 2 files changed, 2 insertions(+), 1 deletion(-)
+ arch/powerpc/kexec/file_load_64.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-index b29c12e4e45c4..2824d390ec316 100644
---- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-+++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-@@ -578,7 +578,7 @@ static inline int set_rc_wqe(struct hns_roce_qp *qp,
- 	if (WARN_ON(ret))
- 		return ret;
+diff --git a/arch/powerpc/kexec/file_load_64.c b/arch/powerpc/kexec/file_load_64.c
+index a3de5369d22c2..7b71737ae24cc 100644
+--- a/arch/powerpc/kexec/file_load_64.c
++++ b/arch/powerpc/kexec/file_load_64.c
+@@ -916,13 +916,18 @@ int setup_purgatory_ppc64(struct kimage *image, const void *slave_code,
+ 	if (dn) {
+ 		u64 val;
  
--	hr_reg_write(rc_sq_wqe, RC_SEND_WQE_FENCE,
-+	hr_reg_write(rc_sq_wqe, RC_SEND_WQE_SO,
- 		     (wr->send_flags & IB_SEND_FENCE) ? 1 : 0);
+-		of_property_read_u64(dn, "opal-base-address", &val);
++		ret = of_property_read_u64(dn, "opal-base-address", &val);
++		if (ret)
++			goto out;
++
+ 		ret = kexec_purgatory_get_set_symbol(image, "opal_base", &val,
+ 						     sizeof(val), false);
+ 		if (ret)
+ 			goto out;
  
- 	hr_reg_write(rc_sq_wqe, RC_SEND_WQE_SE,
-diff --git a/drivers/infiniband/hw/hns/hns_roce_hw_v2.h b/drivers/infiniband/hw/hns/hns_roce_hw_v2.h
-index a401b607592b9..b8e17721f6fde 100644
---- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.h
-+++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.h
-@@ -899,6 +899,7 @@ struct hns_roce_v2_rc_send_wqe {
- #define RC_SEND_WQE_OWNER RC_SEND_WQE_FIELD_LOC(7, 7)
- #define RC_SEND_WQE_CQE RC_SEND_WQE_FIELD_LOC(8, 8)
- #define RC_SEND_WQE_FENCE RC_SEND_WQE_FIELD_LOC(9, 9)
-+#define RC_SEND_WQE_SO RC_SEND_WQE_FIELD_LOC(10, 10)
- #define RC_SEND_WQE_SE RC_SEND_WQE_FIELD_LOC(11, 11)
- #define RC_SEND_WQE_INLINE RC_SEND_WQE_FIELD_LOC(12, 12)
- #define RC_SEND_WQE_WQE_INDEX RC_SEND_WQE_FIELD_LOC(30, 15)
+-		of_property_read_u64(dn, "opal-entry-address", &val);
++		ret = of_property_read_u64(dn, "opal-entry-address", &val);
++		if (ret)
++			goto out;
+ 		ret = kexec_purgatory_get_set_symbol(image, "opal_entry", &val,
+ 						     sizeof(val), false);
+ 	}
 -- 
 2.43.0
 
