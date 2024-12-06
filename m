@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FF19207658;
-	Fri,  6 Dec 2024 15:19:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7345620C016;
+	Fri,  6 Dec 2024 15:19:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733498382; cv=none; b=cd+fOieaov8nBxO1BpioOIXWkYQSLNp6zgX2/P1XrgXYXYU48bSIVb2WCX6Z7MjHvn7pOFS3ec5lKbGmeDh2mclerSKGsYwyBdsUBUYszTQg4/Zrm4vTzPJX3oRglJK34TGr8xMbWVT8nZ6E+tLn6Fx2ItXMIPY5f8FeyzjNcpk=
+	t=1733498385; cv=none; b=rPRUSOtf4n0LpWJx7dxujI2B5i6eqntWJ79u2yASl+RA2LFXRwcIMPE+bXsuRWoIzOeBuLvTom6RNDcpnIK5PehLEytkvzg8Xhivmilws3O4FOFEWsKzy+4vb3IR/w8Ux/gunoq1/OYCAFQ0rEnIi3h1Dcmez4syMBH7+6zOzlY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733498382; c=relaxed/simple;
-	bh=On4X2aVokC9al2INLloeJBrPMl11hDj/Ee8kCRqmJr0=;
+	s=arc-20240116; t=1733498385; c=relaxed/simple;
+	bh=2YCMYZsliwyNJvj0FU1Xwu+CdtuLtiixfDwDIhLAAWI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Di+/vQ9onditXGvBUd6JkG2o3+yiZ23UDaPcFdGH00MBNhSs3j7Ma95YEMFVt5rd9pDWEPxbVsmwBFRSmo90yXg2QickPMCS5t2e4fAJN4Amg0oIuzZvBIjtRgUgAookinia+/wkAGnkWM5vl1w9iyKYglahAmFmta8jcRF1AGc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fXG+XSq0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PK5t6jOPyjy1ahuCnOam0qicdW5GISdeT8OyBGgrSRwOg60tnlPwUOOj5bgYTfrKUqLo+FL/FcmmuZHjzV/uWcmkegmXyFJiEmKLm4yz9HPLLRHj3o20PvJ1XtrsqYeqcgwMbQfhVUT++nRaFtIgXupBs1gvzIH3CacY+r2Rxf8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=siNIj8oO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fXG+XSq0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77864C4CEDE;
-	Fri,  6 Dec 2024 15:19:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="siNIj8oO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D573DC4CEDC;
+	Fri,  6 Dec 2024 15:19:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733498382;
-	bh=On4X2aVokC9al2INLloeJBrPMl11hDj/Ee8kCRqmJr0=;
+	s=korg; t=1733498385;
+	bh=2YCMYZsliwyNJvj0FU1Xwu+CdtuLtiixfDwDIhLAAWI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fXG+XSq0BeWuK34AxU61S5wH/OAEJp4LZ5QNIrF4q+ZI+EniT5rvFhFANP7AqWB+M
-	 YJ1+XtjgSg9WcD0ZL17hallpOA68Kp+mfwcht3wiJkZM2s4dornW797vkSctbDPukG
-	 nKeRDYGTdb9szly+e+lN6kWXcFrmwqPW5jpq0t8Q=
+	b=siNIj8oOr1/6O5yMxS5XUdZtYUU6KQbllUA6Iq7ShPCYClcyEter4PNQKR1sOlbpa
+	 /Mgo37II4sZ2VJ8RSlozwmvfodbvFB/vYSxd75BQQ0y6DCq0knTtCV4YrWA5VRubrz
+	 UNdop/35Var13YkOkxmSfD8B0y2fP+XeJTB/OT4s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hannes Reinecke <hare@kernel.org>,
-	Sagi Grimberg <sagi@grimberg.me>,
+	Breno Leitao <leitao@debian.org>,
 	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 569/676] nvme-multipath: avoid hang on inaccessible namespaces
-Date: Fri,  6 Dec 2024 15:36:28 +0100
-Message-ID: <20241206143715.586758691@linuxfoundation.org>
+Subject: [PATCH 6.6 570/676] nvme/multipath: Fix RCU list traversal to use SRCU primitive
+Date: Fri,  6 Dec 2024 15:36:29 +0100
+Message-ID: <20241206143715.624527627@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -52,88 +51,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hannes Reinecke <hare@kernel.org>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit 3b97f5a05cfc55e7729ff3769f63eef64e2178bb ]
+[ Upstream commit 5dd18f09ce7399df6fffe80d1598add46c395ae9 ]
 
-During repetitive namespace remapping operations on the target the
-namespace might have changed between the time the initial scan
-was performed, and partition scan was invoked by device_add_disk()
-in nvme_mpath_set_live(). We then end up with a stuck scanning process:
+The code currently uses list_for_each_entry_rcu() while holding an SRCU
+lock, triggering false positive warnings with CONFIG_PROVE_RCU=y
+enabled:
 
-[<0>] folio_wait_bit_common+0x12a/0x310
-[<0>] filemap_read_folio+0x97/0xd0
-[<0>] do_read_cache_folio+0x108/0x390
-[<0>] read_part_sector+0x31/0xa0
-[<0>] read_lba+0xc5/0x160
-[<0>] efi_partition+0xd9/0x8f0
-[<0>] bdev_disk_changed+0x23d/0x6d0
-[<0>] blkdev_get_whole+0x78/0xc0
-[<0>] bdev_open+0x2c6/0x3b0
-[<0>] bdev_file_open_by_dev+0xcb/0x120
-[<0>] disk_scan_partitions+0x5d/0x100
-[<0>] device_add_disk+0x402/0x420
-[<0>] nvme_mpath_set_live+0x4f/0x1f0 [nvme_core]
-[<0>] nvme_mpath_add_disk+0x107/0x120 [nvme_core]
-[<0>] nvme_alloc_ns+0xac6/0xe60 [nvme_core]
-[<0>] nvme_scan_ns+0x2dd/0x3e0 [nvme_core]
-[<0>] nvme_scan_work+0x1a3/0x490 [nvme_core]
+	drivers/nvme/host/multipath.c:168 RCU-list traversed in non-reader section!!
+	drivers/nvme/host/multipath.c:227 RCU-list traversed in non-reader section!!
+	drivers/nvme/host/multipath.c:260 RCU-list traversed in non-reader section!!
 
-This happens when we have several paths, some of which are inaccessible,
-and the active paths are removed first. Then nvme_find_path() will requeue
-I/O in the ns_head (as paths are present), but the requeue list is never
-triggered as all remaining paths are inactive.
+While the list is properly protected by SRCU lock, the code uses the
+wrong list traversal primitive. Replace list_for_each_entry_rcu() with
+list_for_each_entry_srcu() to correctly indicate SRCU-based protection
+and eliminate the false warning.
 
-This patch checks for NVME_NSHEAD_DISK_LIVE in nvme_available_path(),
-and requeue I/O after NVME_NSHEAD_DISK_LIVE has been cleared once
-the last path has been removed to properly terminate pending I/O.
-
-Signed-off-by: Hannes Reinecke <hare@kernel.org>
-Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Fixes: be647e2c76b2 ("nvme: use srcu for iterating namespace list")
 Signed-off-by: Keith Busch <kbusch@kernel.org>
-Stable-dep-of: 5dd18f09ce73 ("nvme/multipath: Fix RCU list traversal to use SRCU primitive")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/multipath.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ drivers/nvme/host/multipath.c | 21 ++++++++++++++-------
+ 1 file changed, 14 insertions(+), 7 deletions(-)
 
 diff --git a/drivers/nvme/host/multipath.c b/drivers/nvme/host/multipath.c
-index 2fa137738ac8d..989d1e50fb8cc 100644
+index 989d1e50fb8cc..32283301199f0 100644
 --- a/drivers/nvme/host/multipath.c
 +++ b/drivers/nvme/host/multipath.c
-@@ -420,6 +420,9 @@ static bool nvme_available_path(struct nvme_ns_head *head)
- {
- 	struct nvme_ns *ns;
+@@ -165,7 +165,8 @@ void nvme_kick_requeue_lists(struct nvme_ctrl *ctrl)
+ 	int srcu_idx;
  
-+	if (!test_bit(NVME_NSHEAD_DISK_LIVE, &head->flags))
-+		return NULL;
-+
- 	list_for_each_entry_rcu(ns, &head->list, siblings) {
+ 	srcu_idx = srcu_read_lock(&ctrl->srcu);
+-	list_for_each_entry_rcu(ns, &ctrl->namespaces, list) {
++	list_for_each_entry_srcu(ns, &ctrl->namespaces, list,
++				 srcu_read_lock_held(&ctrl->srcu)) {
+ 		if (!ns->head->disk)
+ 			continue;
+ 		kblockd_schedule_work(&ns->head->requeue_work);
+@@ -209,7 +210,8 @@ void nvme_mpath_clear_ctrl_paths(struct nvme_ctrl *ctrl)
+ 	int srcu_idx;
+ 
+ 	srcu_idx = srcu_read_lock(&ctrl->srcu);
+-	list_for_each_entry_rcu(ns, &ctrl->namespaces, list) {
++	list_for_each_entry_srcu(ns, &ctrl->namespaces, list,
++				 srcu_read_lock_held(&ctrl->srcu)) {
+ 		nvme_mpath_clear_current_path(ns);
+ 		kblockd_schedule_work(&ns->head->requeue_work);
+ 	}
+@@ -224,7 +226,8 @@ void nvme_mpath_revalidate_paths(struct nvme_ns *ns)
+ 	int srcu_idx;
+ 
+ 	srcu_idx = srcu_read_lock(&head->srcu);
+-	list_for_each_entry_rcu(ns, &head->list, siblings) {
++	list_for_each_entry_srcu(ns, &head->list, siblings,
++				 srcu_read_lock_held(&head->srcu)) {
+ 		if (capacity != get_capacity(ns->disk))
+ 			clear_bit(NVME_NS_READY, &ns->flags);
+ 	}
+@@ -256,7 +259,8 @@ static struct nvme_ns *__nvme_find_path(struct nvme_ns_head *head, int node)
+ 	int found_distance = INT_MAX, fallback_distance = INT_MAX, distance;
+ 	struct nvme_ns *found = NULL, *fallback = NULL, *ns;
+ 
+-	list_for_each_entry_rcu(ns, &head->list, siblings) {
++	list_for_each_entry_srcu(ns, &head->list, siblings,
++				 srcu_read_lock_held(&head->srcu)) {
+ 		if (nvme_path_is_disabled(ns))
+ 			continue;
+ 
+@@ -355,7 +359,8 @@ static struct nvme_ns *nvme_queue_depth_path(struct nvme_ns_head *head)
+ 	unsigned int min_depth_opt = UINT_MAX, min_depth_nonopt = UINT_MAX;
+ 	unsigned int depth;
+ 
+-	list_for_each_entry_rcu(ns, &head->list, siblings) {
++	list_for_each_entry_srcu(ns, &head->list, siblings,
++				 srcu_read_lock_held(&head->srcu)) {
+ 		if (nvme_path_is_disabled(ns))
+ 			continue;
+ 
+@@ -423,7 +428,8 @@ static bool nvme_available_path(struct nvme_ns_head *head)
+ 	if (!test_bit(NVME_NSHEAD_DISK_LIVE, &head->flags))
+ 		return NULL;
+ 
+-	list_for_each_entry_rcu(ns, &head->list, siblings) {
++	list_for_each_entry_srcu(ns, &head->list, siblings,
++				 srcu_read_lock_held(&head->srcu)) {
  		if (test_bit(NVME_CTRL_FAILFAST_EXPIRED, &ns->ctrl->flags))
  			continue;
-@@ -996,8 +999,7 @@ void nvme_mpath_shutdown_disk(struct nvme_ns_head *head)
- {
- 	if (!head->disk)
- 		return;
--	kblockd_schedule_work(&head->requeue_work);
--	if (test_bit(NVME_NSHEAD_DISK_LIVE, &head->flags)) {
-+	if (test_and_clear_bit(NVME_NSHEAD_DISK_LIVE, &head->flags)) {
- 		nvme_cdev_del(&head->cdev, &head->cdev_device);
- 		/*
- 		 * requeue I/O after NVME_NSHEAD_DISK_LIVE has been cleared
-@@ -1007,6 +1009,12 @@ void nvme_mpath_shutdown_disk(struct nvme_ns_head *head)
- 		kblockd_schedule_work(&head->requeue_work);
- 		del_gendisk(head->disk);
- 	}
-+	/*
-+	 * requeue I/O after NVME_NSHEAD_DISK_LIVE has been cleared
-+	 * to allow multipath to fail all I/O.
-+	 */
-+	synchronize_srcu(&head->srcu);
-+	kblockd_schedule_work(&head->requeue_work);
- }
+ 		switch (ns->ctrl->state) {
+@@ -784,7 +790,8 @@ static int nvme_update_ana_state(struct nvme_ctrl *ctrl,
+ 		return 0;
  
- void nvme_mpath_remove_disk(struct nvme_ns_head *head)
+ 	srcu_idx = srcu_read_lock(&ctrl->srcu);
+-	list_for_each_entry_rcu(ns, &ctrl->namespaces, list) {
++	list_for_each_entry_srcu(ns, &ctrl->namespaces, list,
++				 srcu_read_lock_held(&ctrl->srcu)) {
+ 		unsigned nsid;
+ again:
+ 		nsid = le32_to_cpu(desc->nsids[n]);
 -- 
 2.43.0
 
