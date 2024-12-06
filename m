@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4FB432C8B;
-	Fri,  6 Dec 2024 14:49:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21DDC32C8B;
+	Fri,  6 Dec 2024 14:49:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733496546; cv=none; b=WcLo7gJQRi4nVhYA06pOHQhsU5JpdtUk45yjmPnGCFzFFRY3DTSSUf5E6TikUS/Uqf6Lj4K11jSHdtoeZr42qNCfM+i8HsK1bF66UVcjxE+SPJZ/gjn4dfmnj/VoL8sRIfnmm+161YwnS3Jaw+ad+dqFexmJ1RR2Ha6+RmRzTkk=
+	t=1733496550; cv=none; b=XQKDrIF2bxGMAikHdC/a28vxAy9p7OFO+s3DHfvYcFW1agiCvkHBt83zY3vJTGDO1ClpLmGZBut1U1Fw1E1RqDvZ+aQCMZvVsfPoUZLTcfROpQQIJHIwzPClPp0wahmhMS5XTlPoBzzxh06DVQLW8o4X7boe48qd56j16VZ/1k4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733496546; c=relaxed/simple;
-	bh=bXupim2NDRNC98WcnaPOlOc8mEHAiSe0w3rH8J0zMbs=;
+	s=arc-20240116; t=1733496550; c=relaxed/simple;
+	bh=s5/rYCoV2g1bbwLT/gEFrLWcG92teFmWKRr2mvZBQgs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B84w1n6StDden/DkPEw2f4mLvW6urdHrmvjRn/GWMNnaxPK9TKG/PEUsKHCsaFchdfNvckAc+jM0ExNrEPSNZlaJ+AtuiVgMwNZGOqu+2ZhD9NTDWPnwZPwgK/ehTDOubI+hUH+8M2ksvN0dk89g3+4+RMBEVSeU66uHRjgaI0g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q6eATkxE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EIMeagdDDyz1rMRIPQ45D3kYbFqpe5dVg4NNJlMlYftjaEyMCAOX++nGjYTdiBK2IZIYzVGW01ApRONts9aIG779G83zg1kF7AsxWhC9rWkyymkT7j1awT7q7nW7XHEM6iaOXtwfrb96TNEuftSqksIsfVnQ+Ajaw8XjIGlUPJQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uzq5R0od; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q6eATkxE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24945C4CEE2;
-	Fri,  6 Dec 2024 14:49:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uzq5R0od"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8311BC4CEDC;
+	Fri,  6 Dec 2024 14:49:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733496546;
-	bh=bXupim2NDRNC98WcnaPOlOc8mEHAiSe0w3rH8J0zMbs=;
+	s=korg; t=1733496550;
+	bh=s5/rYCoV2g1bbwLT/gEFrLWcG92teFmWKRr2mvZBQgs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q6eATkxEDjtHFHzHzfFod5yMf7JfLsldwBGX/Gs3DslgyUSgJ8f8TzDBWDaqXbPbh
-	 NTP6FdankUSNrTVl1eMwfgkJSNb2/lwjgZykzDrwM7yK5oeid5XEyWCW8NYy07wwmR
-	 8KEJUyQMgjKnOdDErpKc/lM/UcfVmEbTiXKJ/nh0=
+	b=uzq5R0odENIZvX3/gT83VuCEGlHTpdwtR9t850hxFzu9FE2Sr1T2j5pgY8e/Qt3xk
+	 ZZ93kNytqlaWLp9zYgHbsQad8raH1AFzKraI5A1xI6WD2Oc63qYjNzYAPrOHPFcysg
+	 a+9XaK7kIV7SfToa1mlxoNQH6Tfqz4hZcy0gM+mU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harald Freudenberger <freude@linux.ibm.com>,
-	Ingo Franzki <ifranzki@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Holger Dengler <dengler@linux.ibm.com>,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Hugo Villeneuve <hvilleneuve@dimonoff.com>,
 	Bin Lan <bin.lan.cn@windriver.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 035/676] s390/pkey: Wipe copies of clear-key structures on failure
-Date: Fri,  6 Dec 2024 15:27:34 +0100
-Message-ID: <20241206143654.727190851@linuxfoundation.org>
+Subject: [PATCH 6.6 036/676] serial: sc16is7xx: fix invalid FIFO access with special register set
+Date: Fri,  6 Dec 2024 15:27:35 +0100
+Message-ID: <20241206143654.765180497@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -55,86 +51,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Holger Dengler <dengler@linux.ibm.com>
+From: Hugo Villeneuve <hvilleneuve@dimonoff.com>
 
-[ Upstream commit d65d76a44ffe74c73298ada25b0f578680576073 ]
+[ Upstream commit 7d3b793faaab1305994ce568b59d61927235f57b ]
 
-Wipe all sensitive data from stack for all IOCTLs, which convert a
-clear-key into a protected- or secure-key.
+When enabling access to the special register set, Receiver time-out and
+RHR interrupts can happen. In this case, the IRQ handler will try to read
+from the FIFO thru the RHR register at address 0x00, but address 0x00 is
+mapped to DLL register, resulting in erroneous FIFO reading.
 
-Reviewed-by: Harald Freudenberger <freude@linux.ibm.com>
-Reviewed-by: Ingo Franzki <ifranzki@linux.ibm.com>
-Acked-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Holger Dengler <dengler@linux.ibm.com>
-Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
-[ Resolve minor conflicts to fix CVE-2024-42156 ]
+Call graph example:
+    sc16is7xx_startup(): entry
+    sc16is7xx_ms_proc(): entry
+    sc16is7xx_set_termios(): entry
+    sc16is7xx_set_baud(): DLH/DLL = $009C --> access special register set
+    sc16is7xx_port_irq() entry            --> IIR is 0x0C
+    sc16is7xx_handle_rx() entry
+    sc16is7xx_fifo_read(): --> unable to access FIFO (RHR) because it is
+                               mapped to DLL (LCR=LCR_CONF_MODE_A)
+    sc16is7xx_set_baud(): exit --> Restore access to general register set
+
+Fix the problem by claiming the efr_lock mutex when accessing the Special
+register set.
+
+Fixes: dfeae619d781 ("serial: sc16is7xx")
+Cc: stable@vger.kernel.org
+Signed-off-by: Hugo Villeneuve <hvilleneuve@dimonoff.com>
+Link: https://lore.kernel.org/r/20240723125302.1305372-3-hugo@hugovil.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+[ Resolve minor conflicts ]
 Signed-off-by: Bin Lan <bin.lan.cn@windriver.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/s390/crypto/pkey_api.c | 16 +++++++++-------
- 1 file changed, 9 insertions(+), 7 deletions(-)
+ drivers/tty/serial/sc16is7xx.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/s390/crypto/pkey_api.c b/drivers/s390/crypto/pkey_api.c
-index d2ffdf2491da0..70fcb5c40cfe3 100644
---- a/drivers/s390/crypto/pkey_api.c
-+++ b/drivers/s390/crypto/pkey_api.c
-@@ -1366,9 +1366,7 @@ static long pkey_unlocked_ioctl(struct file *filp, unsigned int cmd,
- 		rc = cca_clr2seckey(kcs.cardnr, kcs.domain, kcs.keytype,
- 				    kcs.clrkey.clrkey, kcs.seckey.seckey);
- 		DEBUG_DBG("%s cca_clr2seckey()=%d\n", __func__, rc);
--		if (rc)
--			break;
--		if (copy_to_user(ucs, &kcs, sizeof(kcs)))
-+		if (!rc && copy_to_user(ucs, &kcs, sizeof(kcs)))
- 			rc = -EFAULT;
- 		memzero_explicit(&kcs, sizeof(kcs));
- 		break;
-@@ -1401,9 +1399,7 @@ static long pkey_unlocked_ioctl(struct file *filp, unsigned int cmd,
- 				      kcp.protkey.protkey,
- 				      &kcp.protkey.len, &kcp.protkey.type);
- 		DEBUG_DBG("%s pkey_clr2protkey()=%d\n", __func__, rc);
--		if (rc)
--			break;
--		if (copy_to_user(ucp, &kcp, sizeof(kcp)))
-+		if (!rc && copy_to_user(ucp, &kcp, sizeof(kcp)))
- 			rc = -EFAULT;
- 		memzero_explicit(&kcp, sizeof(kcp));
- 		break;
-@@ -1555,11 +1551,14 @@ static long pkey_unlocked_ioctl(struct file *filp, unsigned int cmd,
- 		if (copy_from_user(&kcs, ucs, sizeof(kcs)))
- 			return -EFAULT;
- 		apqns = _copy_apqns_from_user(kcs.apqns, kcs.apqn_entries);
--		if (IS_ERR(apqns))
-+		if (IS_ERR(apqns)) {
-+			memzero_explicit(&kcs, sizeof(kcs));
- 			return PTR_ERR(apqns);
-+		}
- 		kkey = kzalloc(klen, GFP_KERNEL);
- 		if (!kkey) {
- 			kfree(apqns);
-+			memzero_explicit(&kcs, sizeof(kcs));
- 			return -ENOMEM;
- 		}
- 		rc = pkey_clr2seckey2(apqns, kcs.apqn_entries,
-@@ -1569,15 +1568,18 @@ static long pkey_unlocked_ioctl(struct file *filp, unsigned int cmd,
- 		kfree(apqns);
- 		if (rc) {
- 			kfree(kkey);
-+			memzero_explicit(&kcs, sizeof(kcs));
- 			break;
- 		}
- 		if (kcs.key) {
- 			if (kcs.keylen < klen) {
- 				kfree(kkey);
-+				memzero_explicit(&kcs, sizeof(kcs));
- 				return -EINVAL;
- 			}
- 			if (copy_to_user(kcs.key, kkey, klen)) {
- 				kfree(kkey);
-+				memzero_explicit(&kcs, sizeof(kcs));
- 				return -EFAULT;
- 			}
- 		}
+diff --git a/drivers/tty/serial/sc16is7xx.c b/drivers/tty/serial/sc16is7xx.c
+index 7a9924d9b294e..f290fbe21d633 100644
+--- a/drivers/tty/serial/sc16is7xx.c
++++ b/drivers/tty/serial/sc16is7xx.c
+@@ -545,6 +545,8 @@ static int sc16is7xx_set_baud(struct uart_port *port, int baud)
+ 			      SC16IS7XX_MCR_CLKSEL_BIT,
+ 			      prescaler == 1 ? 0 : SC16IS7XX_MCR_CLKSEL_BIT);
+ 
++	mutex_lock(&one->efr_lock);
++
+ 	/* Open the LCR divisors for configuration */
+ 	sc16is7xx_port_write(port, SC16IS7XX_LCR_REG,
+ 			     SC16IS7XX_LCR_CONF_MODE_A);
+@@ -558,6 +560,8 @@ static int sc16is7xx_set_baud(struct uart_port *port, int baud)
+ 	/* Put LCR back to the normal mode */
+ 	sc16is7xx_port_write(port, SC16IS7XX_LCR_REG, lcr);
+ 
++	mutex_unlock(&one->efr_lock);
++
+ 	return DIV_ROUND_CLOSEST((clk / prescaler) / 16, div);
+ }
+ 
 -- 
 2.43.0
 
