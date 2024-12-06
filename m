@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 754AC13D516;
-	Fri,  6 Dec 2024 14:49:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4FB432C8B;
+	Fri,  6 Dec 2024 14:49:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733496543; cv=none; b=oc6rxs6B/2kKI+UsGfs3cucgK8hw437IKpMUo/8asGxgOlxqLu/iyOjcmQ5TcXNU6ylqaaxRkvmdX3QmzwqZ5kTHFiy5lJ3lmgQMU2Rzge0+y3nAfGSHrOKRuTJVchPq91GlVWSBSsQgIzKakv+oD3RQ92qnLCTLJZxvyR/WJJg=
+	t=1733496546; cv=none; b=WcLo7gJQRi4nVhYA06pOHQhsU5JpdtUk45yjmPnGCFzFFRY3DTSSUf5E6TikUS/Uqf6Lj4K11jSHdtoeZr42qNCfM+i8HsK1bF66UVcjxE+SPJZ/gjn4dfmnj/VoL8sRIfnmm+161YwnS3Jaw+ad+dqFexmJ1RR2Ha6+RmRzTkk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733496543; c=relaxed/simple;
-	bh=5jNcsOXPCC5S2Kl1TEXNq3TCvZ+ttT5Smgjc0q+4jbk=;
+	s=arc-20240116; t=1733496546; c=relaxed/simple;
+	bh=bXupim2NDRNC98WcnaPOlOc8mEHAiSe0w3rH8J0zMbs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ZAqiLptXIwWg6B3XU6ih5jMNJDQBAP35/a2awccdqsTmyFFN5qfyMStZ5rHcb5FBwzVVlTlfBycumbe3wDEod2cWd+ytUu73o/L2dY/ygfdiXLeWPM8Ldc3IMzT5SOmWjsWQkuxR1w1YTcKFvnhh6fQ2yL0jUqPj+uYi7u1blxk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gnuXisv0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=B84w1n6StDden/DkPEw2f4mLvW6urdHrmvjRn/GWMNnaxPK9TKG/PEUsKHCsaFchdfNvckAc+jM0ExNrEPSNZlaJ+AtuiVgMwNZGOqu+2ZhD9NTDWPnwZPwgK/ehTDOubI+hUH+8M2ksvN0dk89g3+4+RMBEVSeU66uHRjgaI0g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q6eATkxE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gnuXisv0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D75BBC4CED1;
-	Fri,  6 Dec 2024 14:49:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q6eATkxE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24945C4CEE2;
+	Fri,  6 Dec 2024 14:49:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733496543;
-	bh=5jNcsOXPCC5S2Kl1TEXNq3TCvZ+ttT5Smgjc0q+4jbk=;
+	s=korg; t=1733496546;
+	bh=bXupim2NDRNC98WcnaPOlOc8mEHAiSe0w3rH8J0zMbs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gnuXisv08LCPrTz+a1dEa9hUdNPRIItwC/jdpmnIg61iqmc90V+znIW4YDs5EB8Jq
-	 2o8Lxncq50He/ZjAScHK864xyC/gJaWmwQ0h3/pyGE7xT0x8/lCtEPHvenc4deH+8H
-	 dENYTFDJsKjvK4RbtIUc1/yKbspf674igrKYl18Q=
+	b=Q6eATkxEDjtHFHzHzfFod5yMf7JfLsldwBGX/Gs3DslgyUSgJ8f8TzDBWDaqXbPbh
+	 NTP6FdankUSNrTVl1eMwfgkJSNb2/lwjgZykzDrwM7yK5oeid5XEyWCW8NYy07wwmR
+	 8KEJUyQMgjKnOdDErpKc/lM/UcfVmEbTiXKJ/nh0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Stein <alexander.stein@ew.tq-group.com>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Andi Shyti <andi.shyti@kernel.org>,
+	Harald Freudenberger <freude@linux.ibm.com>,
+	Ingo Franzki <ifranzki@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Holger Dengler <dengler@linux.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
 	Bin Lan <bin.lan.cn@windriver.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 034/676] i2c: lpi2c: Avoid calling clk_get_rate during transfer
-Date: Fri,  6 Dec 2024 15:27:33 +0100
-Message-ID: <20241206143654.688723769@linuxfoundation.org>
+Subject: [PATCH 6.6 035/676] s390/pkey: Wipe copies of clear-key structures on failure
+Date: Fri,  6 Dec 2024 15:27:34 +0100
+Message-ID: <20241206143654.727190851@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -47,70 +49,92 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexander Stein <alexander.stein@ew.tq-group.com>
+From: Holger Dengler <dengler@linux.ibm.com>
 
-[ Upstream commit 4268254a39484fc11ba991ae148bacbe75d9cc0a ]
+[ Upstream commit d65d76a44ffe74c73298ada25b0f578680576073 ]
 
-Instead of repeatedly calling clk_get_rate for each transfer, lock
-the clock rate and cache the value.
-A deadlock has been observed while adding tlv320aic32x4 audio codec to
-the system. When this clock provider adds its clock, the clk mutex is
-locked already, it needs to access i2c, which in return needs the mutex
-for clk_get_rate as well.
+Wipe all sensitive data from stack for all IOCTLs, which convert a
+clear-key into a protected- or secure-key.
 
-Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
-Reviewed-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Reviewed-by: Andi Shyti <andi.shyti@kernel.org>
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-[ Resolve minor conflicts to fix CVE-2024-40965 ]
+Reviewed-by: Harald Freudenberger <freude@linux.ibm.com>
+Reviewed-by: Ingo Franzki <ifranzki@linux.ibm.com>
+Acked-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Holger Dengler <dengler@linux.ibm.com>
+Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
+[ Resolve minor conflicts to fix CVE-2024-42156 ]
 Signed-off-by: Bin Lan <bin.lan.cn@windriver.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-imx-lpi2c.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ drivers/s390/crypto/pkey_api.c | 16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/i2c/busses/i2c-imx-lpi2c.c b/drivers/i2c/busses/i2c-imx-lpi2c.c
-index 678b30e90492a..5d4f04a3c6d32 100644
---- a/drivers/i2c/busses/i2c-imx-lpi2c.c
-+++ b/drivers/i2c/busses/i2c-imx-lpi2c.c
-@@ -99,6 +99,7 @@ struct lpi2c_imx_struct {
- 	__u8			*rx_buf;
- 	__u8			*tx_buf;
- 	struct completion	complete;
-+	unsigned long		rate_per;
- 	unsigned int		msglen;
- 	unsigned int		delivered;
- 	unsigned int		block_data;
-@@ -207,9 +208,7 @@ static int lpi2c_imx_config(struct lpi2c_imx_struct *lpi2c_imx)
- 
- 	lpi2c_imx_set_mode(lpi2c_imx);
- 
--	clk_rate = clk_get_rate(lpi2c_imx->clks[0].clk);
--	if (!clk_rate)
--		return -EINVAL;
-+	clk_rate = lpi2c_imx->rate_per;
- 
- 	if (lpi2c_imx->mode == HS || lpi2c_imx->mode == ULTRA_FAST)
- 		filt = 0;
-@@ -590,6 +589,11 @@ static int lpi2c_imx_probe(struct platform_device *pdev)
- 	if (ret)
- 		return ret;
- 
-+	lpi2c_imx->rate_per = clk_get_rate(lpi2c_imx->clks[0].clk);
-+	if (!lpi2c_imx->rate_per)
-+		return dev_err_probe(&pdev->dev, -EINVAL,
-+				     "can't get I2C peripheral clock rate\n");
-+
- 	pm_runtime_set_autosuspend_delay(&pdev->dev, I2C_PM_TIMEOUT);
- 	pm_runtime_use_autosuspend(&pdev->dev);
- 	pm_runtime_get_noresume(&pdev->dev);
+diff --git a/drivers/s390/crypto/pkey_api.c b/drivers/s390/crypto/pkey_api.c
+index d2ffdf2491da0..70fcb5c40cfe3 100644
+--- a/drivers/s390/crypto/pkey_api.c
++++ b/drivers/s390/crypto/pkey_api.c
+@@ -1366,9 +1366,7 @@ static long pkey_unlocked_ioctl(struct file *filp, unsigned int cmd,
+ 		rc = cca_clr2seckey(kcs.cardnr, kcs.domain, kcs.keytype,
+ 				    kcs.clrkey.clrkey, kcs.seckey.seckey);
+ 		DEBUG_DBG("%s cca_clr2seckey()=%d\n", __func__, rc);
+-		if (rc)
+-			break;
+-		if (copy_to_user(ucs, &kcs, sizeof(kcs)))
++		if (!rc && copy_to_user(ucs, &kcs, sizeof(kcs)))
+ 			rc = -EFAULT;
+ 		memzero_explicit(&kcs, sizeof(kcs));
+ 		break;
+@@ -1401,9 +1399,7 @@ static long pkey_unlocked_ioctl(struct file *filp, unsigned int cmd,
+ 				      kcp.protkey.protkey,
+ 				      &kcp.protkey.len, &kcp.protkey.type);
+ 		DEBUG_DBG("%s pkey_clr2protkey()=%d\n", __func__, rc);
+-		if (rc)
+-			break;
+-		if (copy_to_user(ucp, &kcp, sizeof(kcp)))
++		if (!rc && copy_to_user(ucp, &kcp, sizeof(kcp)))
+ 			rc = -EFAULT;
+ 		memzero_explicit(&kcp, sizeof(kcp));
+ 		break;
+@@ -1555,11 +1551,14 @@ static long pkey_unlocked_ioctl(struct file *filp, unsigned int cmd,
+ 		if (copy_from_user(&kcs, ucs, sizeof(kcs)))
+ 			return -EFAULT;
+ 		apqns = _copy_apqns_from_user(kcs.apqns, kcs.apqn_entries);
+-		if (IS_ERR(apqns))
++		if (IS_ERR(apqns)) {
++			memzero_explicit(&kcs, sizeof(kcs));
+ 			return PTR_ERR(apqns);
++		}
+ 		kkey = kzalloc(klen, GFP_KERNEL);
+ 		if (!kkey) {
+ 			kfree(apqns);
++			memzero_explicit(&kcs, sizeof(kcs));
+ 			return -ENOMEM;
+ 		}
+ 		rc = pkey_clr2seckey2(apqns, kcs.apqn_entries,
+@@ -1569,15 +1568,18 @@ static long pkey_unlocked_ioctl(struct file *filp, unsigned int cmd,
+ 		kfree(apqns);
+ 		if (rc) {
+ 			kfree(kkey);
++			memzero_explicit(&kcs, sizeof(kcs));
+ 			break;
+ 		}
+ 		if (kcs.key) {
+ 			if (kcs.keylen < klen) {
+ 				kfree(kkey);
++				memzero_explicit(&kcs, sizeof(kcs));
+ 				return -EINVAL;
+ 			}
+ 			if (copy_to_user(kcs.key, kkey, klen)) {
+ 				kfree(kkey);
++				memzero_explicit(&kcs, sizeof(kcs));
+ 				return -EFAULT;
+ 			}
+ 		}
 -- 
 2.43.0
 
