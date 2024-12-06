@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B4C01474A9;
-	Fri,  6 Dec 2024 14:43:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC8AF1494D9;
+	Fri,  6 Dec 2024 14:43:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733496211; cv=none; b=hRdKaMu005AjhOvWcbdNqX7qPAmDN689kt9E5u8ocWWyxS0gtsgZwKWOxE+F/f/ktOdp4AJT1mfn8BOo3iFivq2LC2S3/BruxR2lADd85tDjOlXw35wM7Y2SkqKGMfSZq3u2c81tgFLdw/SbYDCJH5yVD9djVTVSo4Xvp6s2phw=
+	t=1733496214; cv=none; b=BCzb3HYRMsFv/LbVQMc/XTj8vvGzY9OFPgeBBA0TAioy4q7Ku4Q2wPoUhDDMGXNYB9iHvwDjisnPT5RmqPf5Xx4bfSxdD/wk0/i19Pnl4iVoGKQRwMg4M+Fp2vD80zXsPaTFoMhiJakvYRGFfC/V/sI8UKJEndGuGSJGtC1uYYs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733496211; c=relaxed/simple;
-	bh=NAmJDnPk+GijqrIOwUa8DzbgGjbRq9RG14wEA451LdY=;
+	s=arc-20240116; t=1733496214; c=relaxed/simple;
+	bh=k/DF4UjmyZbCkwCKn5W5a2tH1Z96639RpLHool5Qe2c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lLqAWiMQaIrGSUAIvCxWz6AMXBhLcr9r6g0D1PYz74vaP1lBl58wN+KnrDwRbbv5BUIsj9Ds+Z3uPAFTOEgR0kg4wwixcdm39N9fNFoBsUlE9FZiLiGuH/5XPiKpHUfvvrB/z8DFLwA8+/l31aJ7YdVPrRY6zciYxDK5ryYz8QY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kg40R/DS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RIg5v3+bENo8VRhWeVC47PkPsf+jhbVcJshPd0nIxlpagbNBUHr2/Tc82Mt8Obj+sGlPJNOR2qRXFT9riZ6xd/zMEwTaVAd8LIczPi07mzPf4kbdK7ZiDIrLs6v9FhkqigFHp6EpZvkpl+lB5wgMwvYG7CUInBs/MgcwMQLDIJE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q39FGKJf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kg40R/DS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C192EC4CED1;
-	Fri,  6 Dec 2024 14:43:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q39FGKJf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B42FC4CED1;
+	Fri,  6 Dec 2024 14:43:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733496211;
-	bh=NAmJDnPk+GijqrIOwUa8DzbgGjbRq9RG14wEA451LdY=;
+	s=korg; t=1733496214;
+	bh=k/DF4UjmyZbCkwCKn5W5a2tH1Z96639RpLHool5Qe2c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kg40R/DSOTXQV4sM0NuClA4nOR7D7a4ZL903dgkZRQC0oFWLktsYU3BrgRgNtqRDr
-	 /8ou5UAVCzPIq2TYtPWdCiz3Ip5whwZszduI5nlPXd77EiLDgXO45mUfvgTE47ms0r
-	 RRKVmjdkCzMuTm8w1WEA8GtyV+ECza5eRoOzSYgw=
+	b=Q39FGKJfk9CezEDJAOSK33MIIS9t3LFytB7FhqMy4NT6pw1/AsOdjIRSyDleEPSwg
+	 Ulgj6QNHP3qveCxPXnazjgntbyNbp9xseBwRNdwMtB86KGO4Qi3Y0jFVT4FhtJuBhO
+	 m+q+d3yqGFpGBBf9sgtP2lk/hqeax/Y46p4Ji8Ok=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	Michael Ellerman <mpe@ellerman.id.au>
-Subject: [PATCH 6.12 052/146] powerpc/vdso: Drop -mstack-protector-guard flags in 32-bit files with clang
-Date: Fri,  6 Dec 2024 15:36:23 +0100
-Message-ID: <20241206143529.666061912@linuxfoundation.org>
+	Sibi Sankar <quic_sibis@quicinc.com>,
+	Viresh Kumar <viresh.kumar@linaro.org>
+Subject: [PATCH 6.12 053/146] cpufreq: scmi: Fix cleanup path when boost enablement fails
+Date: Fri,  6 Dec 2024 15:36:24 +0100
+Message-ID: <20241206143529.705397434@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143527.654980698@linuxfoundation.org>
 References: <20241206143527.654980698@linuxfoundation.org>
@@ -50,53 +50,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Sibi Sankar <quic_sibis@quicinc.com>
 
-commit d677ce521334d8f1f327cafc8b1b7854b0833158 upstream.
+commit 8c776a54d9ef3e945db2fe407ad6ad4525422943 upstream.
 
-Under certain conditions, the 64-bit '-mstack-protector-guard' flags may
-end up in the 32-bit vDSO flags, resulting in build failures due to the
-structure of clang's argument parsing of the stack protector options,
-which validates the arguments of the stack protector guard flags
-unconditionally in the frontend, choking on the 64-bit values when
-targeting 32-bit:
+Include free_cpufreq_table in the cleanup path when boost enablement fails.
 
-  clang: error: invalid value 'r13' in 'mstack-protector-guard-reg=', expected one of: r2
-  clang: error: invalid value 'r13' in 'mstack-protector-guard-reg=', expected one of: r2
-  make[3]: *** [arch/powerpc/kernel/vdso/Makefile:85: arch/powerpc/kernel/vdso/vgettimeofday-32.o] Error 1
-  make[3]: *** [arch/powerpc/kernel/vdso/Makefile:87: arch/powerpc/kernel/vdso/vgetrandom-32.o] Error 1
-
-Remove these flags by adding them to the CC32FLAGSREMOVE variable, which
-already handles situations similar to this. Additionally, reformat and
-align a comment better for the expanding CONFIG_CC_IS_CLANG block.
-
-Cc: stable@vger.kernel.org # v6.1+
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://patch.msgid.link/20241030-powerpc-vdso-drop-stackp-flags-clang-v1-1-d95e7376d29c@kernel.org
+cc: stable@vger.kernel.org
+Fixes: a8e949d41c72 ("cpufreq: scmi: Enable boost support")
+Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/kernel/vdso/Makefile |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/cpufreq/scmi-cpufreq.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/arch/powerpc/kernel/vdso/Makefile
-+++ b/arch/powerpc/kernel/vdso/Makefile
-@@ -54,10 +54,14 @@ ldflags-y += $(filter-out $(CC_AUTO_VAR_
+--- a/drivers/cpufreq/scmi-cpufreq.c
++++ b/drivers/cpufreq/scmi-cpufreq.c
+@@ -287,7 +287,7 @@ static int scmi_cpufreq_init(struct cpuf
+ 		ret = cpufreq_enable_boost_support();
+ 		if (ret) {
+ 			dev_warn(cpu_dev, "failed to enable boost: %d\n", ret);
+-			goto out_free_opp;
++			goto out_free_table;
+ 		} else {
+ 			scmi_cpufreq_hw_attr[1] = &cpufreq_freq_attr_scaling_boost_freqs;
+ 			scmi_cpufreq_driver.boost_enabled = true;
+@@ -296,6 +296,8 @@ static int scmi_cpufreq_init(struct cpuf
  
- CC32FLAGS := -m32
- CC32FLAGSREMOVE := -mcmodel=medium -mabi=elfv1 -mabi=elfv2 -mcall-aixdesc
--  # This flag is supported by clang for 64-bit but not 32-bit so it will cause
--  # an unused command line flag warning for this file.
- ifdef CONFIG_CC_IS_CLANG
-+# This flag is supported by clang for 64-bit but not 32-bit so it will cause
-+# an unused command line flag warning for this file.
- CC32FLAGSREMOVE += -fno-stack-clash-protection
-+# -mstack-protector-guard values from the 64-bit build are not valid for the
-+# 32-bit one. clang validates the values passed to these arguments during
-+# parsing, even when -fno-stack-protector is passed afterwards.
-+CC32FLAGSREMOVE += -mstack-protector-guard%
- endif
- LD32FLAGS := -Wl,-soname=linux-vdso32.so.1
- AS32FLAGS := -D__VDSO32__
+ 	return 0;
+ 
++out_free_table:
++	dev_pm_opp_free_cpufreq_table(cpu_dev, &freq_table);
+ out_free_opp:
+ 	dev_pm_opp_remove_all_dynamic(cpu_dev);
+ 
 
 
