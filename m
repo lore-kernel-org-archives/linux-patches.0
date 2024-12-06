@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74726149C51;
-	Fri,  6 Dec 2024 14:52:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37E0C15575F;
+	Fri,  6 Dec 2024 14:52:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733496764; cv=none; b=CI6EZdQKbKEbYlllrbt2HaY1lywITocUZuEPTvrA94jehw+fm+aaC+Iuje7xWhixuKNY+Zn0XPHBhAbusfjjUci2VRh3qmmDhdL8lxcU1E+C9gyssJUmuxerdbH1+/L5VIwYrMYgGV/buxMI/SrinccWKwivA4OHA4V9wfyoVEU=
+	t=1733496767; cv=none; b=XyPZg5W3bnW/c6E96830S9wqWryHepmCH/kRdURcA+lF8zzb5Hgbf+OtY/Vw0MlR51D/9sFFiCLCUGEYSCiRzT+Xob8A4FUaTpflhn+2I7cgOpF5pUX9m7i8Skom32PgO0dJanjY/8A+2oSn/55u6WvDqurQg54Tt9Emx0LJ6Vw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733496764; c=relaxed/simple;
-	bh=DRd47WcRCBTy7kT/OkjgMqwudZYm55SKt8mm8P9v3Ow=;
+	s=arc-20240116; t=1733496767; c=relaxed/simple;
+	bh=JPJFMJcMuHxZoIedrojTWbCar78hFO70Zb8vO7MASZc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OalvJ4ic3BXJHp3lT/aQJkSJTiVGyn5g1Nchc81hykUrjsJ9SbaX9H9/pBbv4ymEg3BBTZb3fgAbaLIIqcKscXR1aG/kOwQ/Fl6jOZJ7K8H5e7oM5nNp6KqzsjgkP4tT6/cUbczh8nu2P6RB63NmwEW5lCfXJVyInL+BsvVEwGQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tZ4ve4dt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dWZUvqF+aVnzyi87NE+dyez7uLVGjB1jwPd2sDPzA6u2EfxCjtLEhtY6m3OfVBX42nKnWxNECmaetPcIwRDANPBiyHbutoi8ApWy+6kqlKNFDWf2zKzLXYgH3xISmdu2Xo2ESXmwme/LHlFJgPDl9tAtzbvN8XuVYUC8XjmHGgA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aE4W5V2C; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tZ4ve4dt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80AEFC4CEDE;
-	Fri,  6 Dec 2024 14:52:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aE4W5V2C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3CBAC4CED1;
+	Fri,  6 Dec 2024 14:52:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733496763;
-	bh=DRd47WcRCBTy7kT/OkjgMqwudZYm55SKt8mm8P9v3Ow=;
+	s=korg; t=1733496767;
+	bh=JPJFMJcMuHxZoIedrojTWbCar78hFO70Zb8vO7MASZc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tZ4ve4dtGQC24vmnWkyIZ6EqdWALIgFnhOV37mvnWMuB+apgBWn0L4kXlbRLpVZMb
-	 amctv86U77hR7okqCpr5hyOxf3fjN/xs70i7E6CmpcF5AGXtoQTcLXUgGgE3H2NmSP
-	 Yi+mkO9VrODW0fvHuDxDbNmrh5N24ntaM3NX9d7I=
+	b=aE4W5V2CGpkFd8XZbv/ODD+mIIv1tqWzjpM6cpBfRfqHiFsdpztZub3FFimzEEAe/
+	 Y8xMezCLYMGtwMMfwfqmeCX4J4cirdpWEyArJw2SeWJLkj5xNrLTHBJhiSANTbgMB6
+	 j+FhelWIyaUuOnmdzm6vGcIWpvvIyFlr39h+jl3U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Pei Xiao <xiaopei01@kylinos.cn>,
 	Guenter Roeck <linux@roeck-us.net>,
-	Jerome Brunet <jbrunet@baylibre.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 096/676] hwmon: (pmbus/core) clear faults after setting smbalert mask
-Date: Fri,  6 Dec 2024 15:28:35 +0100
-Message-ID: <20241206143657.110552596@linuxfoundation.org>
+Subject: [PATCH 6.6 097/676] hwmon: (nct6775-core) Fix overflows seen when writing limit attributes
+Date: Fri,  6 Dec 2024 15:28:36 +0100
+Message-ID: <20241206143657.148483011@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -51,59 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jerome Brunet <jbrunet@baylibre.com>
+From: Pei Xiao <xiaopei01@kylinos.cn>
 
-[ Upstream commit 509c3a362675bc995771df74d545548f98e37621 ]
+[ Upstream commit 57ee12b6c514146c19b6a159013b48727a012960 ]
 
-pmbus_write_smbalert_mask() ignores the errors if the chip can't set
-smbalert mask the standard way. It is not necessarily a problem for the irq
-support if the chip is otherwise properly setup but it may leave an
-uncleared fault behind.
+DIV_ROUND_CLOSEST() after kstrtoul() results in an overflow if a large
+number such as 18446744073709551615 is provided by the user.
+Fix it by reordering clamp_val() and DIV_ROUND_CLOSEST() operations.
 
-pmbus_core will pick the fault on the next register_check(). The register
-check will fails regardless of the actual register support by the chip.
-
-This leads to missing attributes or debugfs entries for chips that should
-provide them.
-
-We cannot rely on register_check() as PMBUS_SMBALERT_MASK may be read-only.
-
-Unconditionally clear the page fault after setting PMBUS_SMBALERT_MASK to
-avoid the problem.
-
-Suggested-by: Guenter Roeck <linux@roeck-us.net>
-Fixes: 221819ca4c36 ("hwmon: (pmbus/core) Add interrupt support")
-Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
-Message-ID: <20241105-tps25990-v4-5-0e312ac70b62@baylibre.com>
+Signed-off-by: Pei Xiao <xiaopei01@kylinos.cn>
+Fixes: c3963bc0a0cf ("hwmon: (nct6775) Split core and platform driver")
+Message-ID: <7d5084cea33f7c0fd0578c59adfff71f93de94d9.1731375425.git.xiaopei01@kylinos.cn>
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/pmbus/pmbus_core.c | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ drivers/hwmon/nct6775-core.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/hwmon/pmbus/pmbus_core.c b/drivers/hwmon/pmbus/pmbus_core.c
-index e592446b26653..019c5982ba564 100644
---- a/drivers/hwmon/pmbus/pmbus_core.c
-+++ b/drivers/hwmon/pmbus/pmbus_core.c
-@@ -3199,7 +3199,17 @@ static int pmbus_regulator_notify(struct pmbus_data *data, int page, int event)
+diff --git a/drivers/hwmon/nct6775-core.c b/drivers/hwmon/nct6775-core.c
+index 8da7aa1614d7d..16f6b7ba2a5de 100644
+--- a/drivers/hwmon/nct6775-core.c
++++ b/drivers/hwmon/nct6775-core.c
+@@ -2878,8 +2878,7 @@ store_target_temp(struct device *dev, struct device_attribute *attr,
+ 	if (err < 0)
+ 		return err;
  
- static int pmbus_write_smbalert_mask(struct i2c_client *client, u8 page, u8 reg, u8 val)
- {
--	return _pmbus_write_word_data(client, page, PMBUS_SMBALERT_MASK, reg | (val << 8));
-+	int ret;
-+
-+	ret = _pmbus_write_word_data(client, page, PMBUS_SMBALERT_MASK, reg | (val << 8));
-+
-+	/*
-+	 * Clear fault systematically in case writing PMBUS_SMBALERT_MASK
-+	 * is not supported by the chip.
-+	 */
-+	pmbus_clear_fault_page(client, page);
-+
-+	return ret;
- }
+-	val = clamp_val(DIV_ROUND_CLOSEST(val, 1000), 0,
+-			data->target_temp_mask);
++	val = DIV_ROUND_CLOSEST(clamp_val(val, 0, data->target_temp_mask * 1000), 1000);
  
- static irqreturn_t pmbus_fault_handler(int irq, void *pdata)
+ 	mutex_lock(&data->update_lock);
+ 	data->target_temp[nr] = val;
+@@ -2959,7 +2958,7 @@ store_temp_tolerance(struct device *dev, struct device_attribute *attr,
+ 		return err;
+ 
+ 	/* Limit tolerance as needed */
+-	val = clamp_val(DIV_ROUND_CLOSEST(val, 1000), 0, data->tolerance_mask);
++	val = DIV_ROUND_CLOSEST(clamp_val(val, 0, data->tolerance_mask * 1000), 1000);
+ 
+ 	mutex_lock(&data->update_lock);
+ 	data->temp_tolerance[index][nr] = val;
+@@ -3085,7 +3084,7 @@ store_weight_temp(struct device *dev, struct device_attribute *attr,
+ 	if (err < 0)
+ 		return err;
+ 
+-	val = clamp_val(DIV_ROUND_CLOSEST(val, 1000), 0, 255);
++	val = DIV_ROUND_CLOSEST(clamp_val(val, 0, 255000), 1000);
+ 
+ 	mutex_lock(&data->update_lock);
+ 	data->weight_temp[index][nr] = val;
 -- 
 2.43.0
 
