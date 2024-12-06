@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56C91146A87;
-	Fri,  6 Dec 2024 14:46:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1E4847F53;
+	Fri,  6 Dec 2024 14:46:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733496397; cv=none; b=RYYPYZ/10C1C6jlBvZ7pYcXbhkbhB72FZBHYXLXgoAnB+od5bWUOfw65hMOkkTz1mEMFyvEPJV4i5Cora3j+A3IhKv5O5hADIcPk4XR+AZmvP79XvDP85EJFGERIGdasz3xqpqk0TvLOkTHLz0ePL3cXAltUtqeaR0p9O5NRwm0=
+	t=1733496400; cv=none; b=ux+NshLxXXBIIDBw0LFtVRIni3P86vSZ4D7h5YB/GEQy7aq7AajMAIs+2Kb9HLg1xzEyQhICb9mdjClWIkwX3ZJ19bHb7OucF7m4+KMJ0mO2hp1idzxzryRorxsou7wSQgeBSM/v45KFM9Va0lupydp1TV/GXIWW9uCYQwRt8wg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733496397; c=relaxed/simple;
-	bh=ede44UVBAZK3Z8YdhW9I99A3uWOEj1jgyHX6cFwbJFs=;
+	s=arc-20240116; t=1733496400; c=relaxed/simple;
+	bh=jUn+HNFsLfoArHQZ6FCHWgJQWG+QBiB8mUOT6SJNTK8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qPgbd7ix/2B0qzz2puqixy26cE/qUBzk07/StWFN/Yy0SvIJkvAZfkEDSQFBZeglK571MNZxOCFLG6SZH6voK4sVwUIk/2+1ZIDO7MOP8UTXqFKQaW4d7MWdbdcICXgRStJjdspLLQxUrE2KvHRFXRNjJxdJ6xRQWb17l3iVQuc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eV+I3pt4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iS7Ki98Tqu/98XUMCO/vZwexzpp/NmIMnOjOcvbs6iTcyPlXv8WLEj9Zk6QwPm7RHeRdzuqbTLUs9efIPYBLfth4FFVaJCP+SQ6OH1PNmmKGtl4J0kAIandKtqGHt0VT2Dijz4GhfiYwJAs/d+heQZsxCjNmS0eRSMC1hvkBSrk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1HVfqG7V; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eV+I3pt4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2E5EC4CED1;
-	Fri,  6 Dec 2024 14:46:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1HVfqG7V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2152DC4CED1;
+	Fri,  6 Dec 2024 14:46:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733496397;
-	bh=ede44UVBAZK3Z8YdhW9I99A3uWOEj1jgyHX6cFwbJFs=;
+	s=korg; t=1733496400;
+	bh=jUn+HNFsLfoArHQZ6FCHWgJQWG+QBiB8mUOT6SJNTK8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eV+I3pt4AkGcE6rzbyO7A7zoYa6TkPzfsMKXNR1DXcDlF0OIU2YFakdPQCa/5IOdo
-	 O3A0iWnKgbvg45uS9VKdwjMTfnP2H6I3xRaHclVKfhaBO1USW7+Rj7tA08+NXjObyP
-	 yLsShsJnMV2qGkKQjQSlq+OiLhtJEYrP6SFia+9o=
+	b=1HVfqG7Vvzm+5SAd9R5x5jKBC3reQbpBw7saKwmN/uOm20NYNcsCkWaHb7WsnphUp
+	 ZOjwV9njUhpcJhGKh3lVOJ80LZWCFOYXyNK56ffylAxZzFypS0HG6KW2GU36S70Pmb
+	 V5/BzkuKgp/V6iZKE2fLvxDkJ3gp5w5X7qzaBS+4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Umio Yasuno <coelacanth_dream@protonmail.com>,
+	Kenneth Feng <kenneth.feng@amd.com>,
+	Lijo Lazar <lijo.lazar@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.12 140/146] drm/amd/pm: update current_socclk and current_uclk in gpu_metrics on smu v13.0.7
-Date: Fri,  6 Dec 2024 15:37:51 +0100
-Message-ID: <20241206143533.043148745@linuxfoundation.org>
+Subject: [PATCH 6.12 141/146] drm/amd/pm: disable pcie speed switching on Intel platform for smu v14.0.2/3
+Date: Fri,  6 Dec 2024 15:37:52 +0100
+Message-ID: <20241206143533.081490862@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143527.654980698@linuxfoundation.org>
 References: <20241206143527.654980698@linuxfoundation.org>
@@ -50,31 +51,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Umio Yasuno <coelacanth_dream@protonmail.com>
+From: Kenneth Feng <kenneth.feng@amd.com>
 
-commit 2abf2f7032df4c4e7f6cf7906da59d0e614897d6 upstream.
+commit b0df0e777874549c128b43f7bf4989a2ed24b37a upstream.
 
-These were missed before.
+disable pcie speed switching on Intel platform for smu v14.0.2/3
+based on Intel's requirement.
+v2: align the setting with smu v13.
 
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/3751
-Signed-off-by: Umio Yasuno <coelacanth_dream@protonmail.com>
+Signed-off-by: Kenneth Feng <kenneth.feng@amd.com>
+Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org
+Cc: stable@vger.kernel.org # 6.11.x
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/amd/pm/swsmu/smu14/smu_v14_0_2_ppt.c |   26 ++++++++++++++++---
+ 1 file changed, 23 insertions(+), 3 deletions(-)
 
---- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c
-@@ -2061,6 +2061,8 @@ static ssize_t smu_v13_0_7_get_gpu_metri
- 	gpu_metrics->average_dclk1_frequency = metrics->AverageDclk1Frequency;
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu14/smu_v14_0_2_ppt.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu14/smu_v14_0_2_ppt.c
+@@ -1477,15 +1477,35 @@ static int smu_v14_0_2_update_pcie_param
+ 	struct smu_14_0_dpm_context *dpm_context = smu->smu_dpm.dpm_context;
+ 	struct smu_14_0_pcie_table *pcie_table =
+ 				&dpm_context->dpm_tables.pcie_table;
++	int num_of_levels = pcie_table->num_of_link_levels;
+ 	uint32_t smu_pcie_arg;
+ 	int ret, i;
  
- 	gpu_metrics->current_gfxclk = metrics->CurrClock[PPCLK_GFXCLK];
-+	gpu_metrics->current_socclk = metrics->CurrClock[PPCLK_SOCCLK];
-+	gpu_metrics->current_uclk = metrics->CurrClock[PPCLK_UCLK];
- 	gpu_metrics->current_vclk0 = metrics->CurrClock[PPCLK_VCLK_0];
- 	gpu_metrics->current_dclk0 = metrics->CurrClock[PPCLK_DCLK_0];
- 	gpu_metrics->current_vclk1 = metrics->CurrClock[PPCLK_VCLK_1];
+-	for (i = 0; i < pcie_table->num_of_link_levels; i++) {
+-		if (pcie_table->pcie_gen[i] > pcie_gen_cap)
++	if (!num_of_levels)
++		return 0;
++
++	if (!(smu->adev->pm.pp_feature & PP_PCIE_DPM_MASK)) {
++		if (pcie_table->pcie_gen[num_of_levels - 1] < pcie_gen_cap)
++			pcie_gen_cap = pcie_table->pcie_gen[num_of_levels - 1];
++
++		if (pcie_table->pcie_lane[num_of_levels - 1] < pcie_width_cap)
++			pcie_width_cap = pcie_table->pcie_lane[num_of_levels - 1];
++
++		/* Force all levels to use the same settings */
++		for (i = 0; i < num_of_levels; i++) {
+ 			pcie_table->pcie_gen[i] = pcie_gen_cap;
+-		if (pcie_table->pcie_lane[i] > pcie_width_cap)
+ 			pcie_table->pcie_lane[i] = pcie_width_cap;
++		}
++	} else {
++		for (i = 0; i < num_of_levels; i++) {
++			if (pcie_table->pcie_gen[i] > pcie_gen_cap)
++				pcie_table->pcie_gen[i] = pcie_gen_cap;
++			if (pcie_table->pcie_lane[i] > pcie_width_cap)
++				pcie_table->pcie_lane[i] = pcie_width_cap;
++		}
++	}
+ 
++	for (i = 0; i < num_of_levels; i++) {
+ 		smu_pcie_arg = i << 16;
+ 		smu_pcie_arg |= pcie_table->pcie_gen[i] << 8;
+ 		smu_pcie_arg |= pcie_table->pcie_lane[i];
 
 
