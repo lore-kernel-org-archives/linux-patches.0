@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB7811442E8;
-	Fri,  6 Dec 2024 14:55:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2816148832;
+	Fri,  6 Dec 2024 14:55:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733496935; cv=none; b=m2vW+D2w5R72cSuXphMuK0FvOsJBD5A+7aIjNd6OVRVZxXhdipxGfJw/tkCMSXBQGk/lH6/A7HgorMdmOeGSeeB6PPLWiXhWHlXewUQYYrKBg0b1HiUI1RjPPJaHNph9CdCS2LMNko6fh++iT8vCsKrNihNIuRt3Li4IuX5SgSY=
+	t=1733496938; cv=none; b=GIpNOp4cF62U3qmzH9LxNDfmUY8YON7FRLNC7q3cLS0FmWjtzZv3OmOl5LX0t2eDbNTNSUFDryo8sahhvbCubkHaNVfEOLYqm3ngWdxRDX74qb3ARQ3wNEKhNbekgzXjK10pU51eDO+sW9MBWCJSFLvJEmRfy9TTiTu25+54Mj4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733496935; c=relaxed/simple;
-	bh=Voo8w02BcmBp/dr3Z8aNDTl4E+R+Yj9a8x31I0EYjrQ=;
+	s=arc-20240116; t=1733496938; c=relaxed/simple;
+	bh=XXadmvkCFJFXaTE5ygj4lCzxSxopQKiR4ZDvKHE+rsU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Nu7G0jzVTauqnKNfHYDGkvoiguzSyW8xFgKIoGutqW7yw6EA/lxJWTMRZ4eOzsnqfZtElczq8prtTBhunPa9TOKUl/6zr1Ao6ycS7rgH/FB6Vwk7Sv2Vn99o8ub937zPE8FfT+XZfXYxpRQpJ/97tDnbf0zZBJqEWDC2mFNXQ78=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YJ1d6E77; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qBLAgqy4WNsX5mpAzhKH+7TEoVQKXjZWMvzty2pEq+mXXbWmm5NRkCDrPA3V/6GuxhYKFJGfolRbkpblBeUmuoBa97ykuWVQh40F1Wv1AxpDv8GAJAoJZ5rZW3iWulfRD5Hh6aTpXd2KMWSwTFuksllr5YwHHtq7xM4+BnMG+ec=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LpREbzMd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YJ1d6E77"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 560DBC4CED1;
-	Fri,  6 Dec 2024 14:55:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LpREbzMd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B50D8C4CED1;
+	Fri,  6 Dec 2024 14:55:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733496934;
-	bh=Voo8w02BcmBp/dr3Z8aNDTl4E+R+Yj9a8x31I0EYjrQ=;
+	s=korg; t=1733496938;
+	bh=XXadmvkCFJFXaTE5ygj4lCzxSxopQKiR4ZDvKHE+rsU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YJ1d6E77JmKojf8xPmrFaDqqcn8voUR6bvNovPCvmR7mSfdxz+W0ebkn86IHn/How
-	 VfqgDVINzZqT6FX1U74WqhAmE6GYiqKWPK19oTsaKuGhIofQc0eDBLU0nxOf+idASk
-	 TiFVoUuXq0a0y0zyJ2DnEY7f0E1yWbmowwH5IQpc=
+	b=LpREbzMdz8wPonrjuiOT2ICgUTMn/rfreFD2IOhny7zB9rznHbTX6SaJipEQz09Nu
+	 DWVtN0CxksGDYlt5FgkLsQmSFoIyDnvmXl3/yTUFb+SfX89AA2fK/sWkHOB1R5yDV1
+	 GMF/2x5vuqLcZZZUUJOXsPL9mnKS7P2Oc30kgXvI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miguel Ojeda <ojeda@kernel.org>,
-	Thomas Gleixner <tglx@linutronix.de>,
+	Anurag Dutta <a-dutta@ti.com>,
+	Vignesh Raghavendra <vigneshr@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 107/676] time: Fix references to _msecs_to_jiffies() handling of values
-Date: Fri,  6 Dec 2024 15:28:46 +0100
-Message-ID: <20241206143657.539084767@linuxfoundation.org>
+Subject: [PATCH 6.6 142/676] arm64: dts: ti: k3-j721s2: Fix clock IDs for MCSPI instances
+Date: Fri,  6 Dec 2024 15:29:21 +0100
+Message-ID: <20241206143658.899592654@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -51,53 +51,134 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miguel Ojeda <ojeda@kernel.org>
+From: Anurag Dutta <a-dutta@ti.com>
 
-[ Upstream commit 92b043fd995a63a57aae29ff85a39b6f30cd440c ]
+[ Upstream commit 891874f015e98f67ab2fda76f2e859921e136621 ]
 
-The details about the handling of the "normal" values were moved
-to the _msecs_to_jiffies() helpers in commit ca42aaf0c861 ("time:
-Refactor msecs_to_jiffies"). However, the same commit still mentioned
-__msecs_to_jiffies() in the added documentation.
+The clock IDs for multiple MCSPI instances across wakeup domain
+in J721s2 are incorrect when compared with documentation [1]. Fix the
+clock IDs to their appropriate values.
 
-Thus point to _msecs_to_jiffies() instead.
+[1]https://software-dl.ti.com/tisci/esd/latest/5_soc_doc/j721s2/clocks.html
 
-Fixes: ca42aaf0c861 ("time: Refactor msecs_to_jiffies")
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/all/20241025110141.157205-2-ojeda@kernel.org
+Fixes: 04d7cb647b85 ("arm64: dts: ti: k3-j721s2: Add MCSPI nodes")
+
+Signed-off-by: Anurag Dutta <a-dutta@ti.com>
+Link: https://lore.kernel.org/r/20241023104532.3438851-4-a-dutta@ti.com
+Signed-off-by: Vignesh Raghavendra <vigneshr@ti.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/jiffies.h | 2 +-
- kernel/time/time.c      | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/ti/k3-j721s2-main.dtsi       | 16 ++++++++--------
+ arch/arm64/boot/dts/ti/k3-j721s2-mcu-wakeup.dtsi |  6 +++---
+ 2 files changed, 11 insertions(+), 11 deletions(-)
 
-diff --git a/include/linux/jiffies.h b/include/linux/jiffies.h
-index e0ae2a43e0ebd..03f38fe9b9a10 100644
---- a/include/linux/jiffies.h
-+++ b/include/linux/jiffies.h
-@@ -499,7 +499,7 @@ static inline unsigned long _msecs_to_jiffies(const unsigned int m)
-  * - all other values are converted to jiffies by either multiplying
-  *   the input value by a factor or dividing it with a factor and
-  *   handling any 32-bit overflows.
-- *   for the details see __msecs_to_jiffies()
-+ *   for the details see _msecs_to_jiffies()
-  *
-  * msecs_to_jiffies() checks for the passed in value being a constant
-  * via __builtin_constant_p() allowing gcc to eliminate most of the
-diff --git a/kernel/time/time.c b/kernel/time/time.c
-index e1879ca321033..1ad88e97b4ebc 100644
---- a/kernel/time/time.c
-+++ b/kernel/time/time.c
-@@ -556,7 +556,7 @@ EXPORT_SYMBOL(ns_to_timespec64);
-  * - all other values are converted to jiffies by either multiplying
-  *   the input value by a factor or dividing it with a factor and
-  *   handling any 32-bit overflows.
-- *   for the details see __msecs_to_jiffies()
-+ *   for the details see _msecs_to_jiffies()
-  *
-  * msecs_to_jiffies() checks for the passed in value being a constant
-  * via __builtin_constant_p() allowing gcc to eliminate most of the
+diff --git a/arch/arm64/boot/dts/ti/k3-j721s2-main.dtsi b/arch/arm64/boot/dts/ti/k3-j721s2-main.dtsi
+index 084f8f5b66993..9484347acba79 100644
+--- a/arch/arm64/boot/dts/ti/k3-j721s2-main.dtsi
++++ b/arch/arm64/boot/dts/ti/k3-j721s2-main.dtsi
+@@ -1569,7 +1569,7 @@ main_spi0: spi@2100000 {
+ 		#address-cells = <1>;
+ 		#size-cells = <0>;
+ 		power-domains = <&k3_pds 339 TI_SCI_PD_EXCLUSIVE>;
+-		clocks = <&k3_clks 339 1>;
++		clocks = <&k3_clks 339 2>;
+ 		status = "disabled";
+ 	};
+ 
+@@ -1580,7 +1580,7 @@ main_spi1: spi@2110000 {
+ 		#address-cells = <1>;
+ 		#size-cells = <0>;
+ 		power-domains = <&k3_pds 340 TI_SCI_PD_EXCLUSIVE>;
+-		clocks = <&k3_clks 340 1>;
++		clocks = <&k3_clks 340 2>;
+ 		status = "disabled";
+ 	};
+ 
+@@ -1591,7 +1591,7 @@ main_spi2: spi@2120000 {
+ 		#address-cells = <1>;
+ 		#size-cells = <0>;
+ 		power-domains = <&k3_pds 341 TI_SCI_PD_EXCLUSIVE>;
+-		clocks = <&k3_clks 341 1>;
++		clocks = <&k3_clks 341 2>;
+ 		status = "disabled";
+ 	};
+ 
+@@ -1602,7 +1602,7 @@ main_spi3: spi@2130000 {
+ 		#address-cells = <1>;
+ 		#size-cells = <0>;
+ 		power-domains = <&k3_pds 342 TI_SCI_PD_EXCLUSIVE>;
+-		clocks = <&k3_clks 342 1>;
++		clocks = <&k3_clks 342 2>;
+ 		status = "disabled";
+ 	};
+ 
+@@ -1613,7 +1613,7 @@ main_spi4: spi@2140000 {
+ 		#address-cells = <1>;
+ 		#size-cells = <0>;
+ 		power-domains = <&k3_pds 343 TI_SCI_PD_EXCLUSIVE>;
+-		clocks = <&k3_clks 343 1>;
++		clocks = <&k3_clks 343 2>;
+ 		status = "disabled";
+ 	};
+ 
+@@ -1624,7 +1624,7 @@ main_spi5: spi@2150000 {
+ 		#address-cells = <1>;
+ 		#size-cells = <0>;
+ 		power-domains = <&k3_pds 344 TI_SCI_PD_EXCLUSIVE>;
+-		clocks = <&k3_clks 344 1>;
++		clocks = <&k3_clks 344 2>;
+ 		status = "disabled";
+ 	};
+ 
+@@ -1635,7 +1635,7 @@ main_spi6: spi@2160000 {
+ 		#address-cells = <1>;
+ 		#size-cells = <0>;
+ 		power-domains = <&k3_pds 345 TI_SCI_PD_EXCLUSIVE>;
+-		clocks = <&k3_clks 345 1>;
++		clocks = <&k3_clks 345 2>;
+ 		status = "disabled";
+ 	};
+ 
+@@ -1646,7 +1646,7 @@ main_spi7: spi@2170000 {
+ 		#address-cells = <1>;
+ 		#size-cells = <0>;
+ 		power-domains = <&k3_pds 346 TI_SCI_PD_EXCLUSIVE>;
+-		clocks = <&k3_clks 346 1>;
++		clocks = <&k3_clks 346 2>;
+ 		status = "disabled";
+ 	};
+ 
+diff --git a/arch/arm64/boot/dts/ti/k3-j721s2-mcu-wakeup.dtsi b/arch/arm64/boot/dts/ti/k3-j721s2-mcu-wakeup.dtsi
+index 71324fec415ae..6fc008fbfb003 100644
+--- a/arch/arm64/boot/dts/ti/k3-j721s2-mcu-wakeup.dtsi
++++ b/arch/arm64/boot/dts/ti/k3-j721s2-mcu-wakeup.dtsi
+@@ -416,7 +416,7 @@ mcu_spi0: spi@40300000 {
+ 		#address-cells = <1>;
+ 		#size-cells = <0>;
+ 		power-domains = <&k3_pds 347 TI_SCI_PD_EXCLUSIVE>;
+-		clocks = <&k3_clks 347 0>;
++		clocks = <&k3_clks 347 2>;
+ 		status = "disabled";
+ 	};
+ 
+@@ -427,7 +427,7 @@ mcu_spi1: spi@40310000 {
+ 		#address-cells = <1>;
+ 		#size-cells = <0>;
+ 		power-domains = <&k3_pds 348 TI_SCI_PD_EXCLUSIVE>;
+-		clocks = <&k3_clks 348 0>;
++		clocks = <&k3_clks 348 2>;
+ 		status = "disabled";
+ 	};
+ 
+@@ -438,7 +438,7 @@ mcu_spi2: spi@40320000 {
+ 		#address-cells = <1>;
+ 		#size-cells = <0>;
+ 		power-domains = <&k3_pds 349 TI_SCI_PD_EXCLUSIVE>;
+-		clocks = <&k3_clks 349 0>;
++		clocks = <&k3_clks 349 2>;
+ 		status = "disabled";
+ 	};
+ 
 -- 
 2.43.0
 
