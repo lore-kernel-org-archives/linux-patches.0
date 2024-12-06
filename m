@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 273F114D2BD;
-	Fri,  6 Dec 2024 15:16:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FD3414D2BD;
+	Fri,  6 Dec 2024 15:17:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733498218; cv=none; b=glpHeOPsLQ5HG9G5ZfwlooFaOaOwyBv4SlkJzouRD92vE4IoIP5PKLuC0nVTaP3qwMw+rcUZgvt3TJkLydoCU+6NWGwv+fYcs6SptKolm5ePxMJ4WHjN2IxcG51v14d91jVU92wdMpLEB8oyxrzEtulaPC/8hX3tghJ2iP1EKaU=
+	t=1733498221; cv=none; b=D41XWKX7o69JKlJpFDIkNt2Ki+nBcCJyWh3oZn8a/QXJYIahepThJl3KCQIggtO5Uxi7o8OInPB30rjjVnDaGHXSrFzDzjvR8jJpF5Siob80P8v2CJdDg9lR6IrHsjbCSfbC9hO+lnO3tkspW99vMWjSuZ4osflgKFqLenHZHNI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733498218; c=relaxed/simple;
-	bh=Go5x1u4dbGhXjaKyuhKmOzDKL4OSErUUvUPBaYGhkls=;
+	s=arc-20240116; t=1733498221; c=relaxed/simple;
+	bh=pqEHftV9NTDNcrLG5Ur7zk1qtWlwK7KmxvSOXnr0CYw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Tn8k6+4nrB0KrvcNziSb+j5cm8U6CMbBr1oZPSRRV2a58GqF7v1kxx4J0/r+o5RRhuP4LZzwGBeuV5X+rldqZhhjCUhzvz5sxiOeXkc+kMasKRITISBpWjhZRBXhkBi5Tc16oEa5TpmSic4TweluDzbk2o9vapne/6huuScbIPE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tsoLGcj7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JeNy96Ft9LFuTtvl3TEE/i4AoWVkdMRP+kNdfgdMombaEIpBimRFu9JVTPVPE+0YqFWjujcc38ExjeE70ARY1Fs6Om3/t+TslumW98pFo1Ow3culu5nWE7aNfZqxscvPJ9DhybchtKvqOoonCvbTbJQ1RB8PHxmJPP89hgbba1o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H08pO1zY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tsoLGcj7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86B1BC4CED1;
-	Fri,  6 Dec 2024 15:16:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H08pO1zY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3075C4CED1;
+	Fri,  6 Dec 2024 15:17:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733498218;
-	bh=Go5x1u4dbGhXjaKyuhKmOzDKL4OSErUUvUPBaYGhkls=;
+	s=korg; t=1733498221;
+	bh=pqEHftV9NTDNcrLG5Ur7zk1qtWlwK7KmxvSOXnr0CYw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tsoLGcj7Lf1pUCv31IkdYnNNK2WBhVJDAqVBJm6FqzvUFUIhJnA4VQH5Zc2wI7Lm/
-	 7gBrgKVXdpTHibU0g37tbQOU7GzuJFz2wHlWlyQDg/APCQc2YklOAEjxICnOGlJRRW
-	 lUgkXSm2NraqpD6KhmFrEl4HKBPGT2wsgFUtNJq8=
+	b=H08pO1zYR/Jnk7W25RshTRHDfvt3FCO7c0+/x5++Sabm9aVcUrT1OOqVXDk2kijw1
+	 K5g/Ru2G3XlH4RD62qIO5REhYcWWwQm/IWjIAg5Z5rlK/kOLl1XxNJ6mD/yb2puE0E
+	 o4vWTR/h3cTazh/I4Ssk5Fd+YdSJLINSUGj6Y9k0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Nicolas Bouchinet <nicolas.bouchinet@ssi.gouv.fr>,
-	Lin Feng <linf@wangsu.com>,
-	Jiri Slaby <jirislaby@kernel.org>
-Subject: [PATCH 6.6 488/676] tty: ldsic: fix tty_ldisc_autoload sysctls proc_handler
-Date: Fri,  6 Dec 2024 15:35:07 +0100
-Message-ID: <20241206143712.422854005@linuxfoundation.org>
+	syzbot+7f4a6f7f7051474e40ad@syzkaller.appspotmail.com,
+	Ahmed Ehab <bottaawesome633@gmail.com>,
+	Boqun Feng <boqun.feng@gmail.com>
+Subject: [PATCH 6.6 489/676] locking/lockdep: Avoid creating new name string literals in lockdep_set_subclass()
+Date: Fri,  6 Dec 2024 15:35:08 +0100
+Message-ID: <20241206143712.461632866@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -52,40 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicolas Bouchinet <nicolas.bouchinet@ssi.gouv.fr>
+From: Ahmed Ehab <bottaawesome633@gmail.com>
 
-commit 635a9fca54f4f4148be1ae1c7c6bd37af80f5773 upstream.
+commit d7fe143cb115076fed0126ad8cf5ba6c3e575e43 upstream.
 
-Commit 7c0cca7c847e ("tty: ldisc: add sysctl to prevent autoloading of
-ldiscs") introduces the tty_ldisc_autoload sysctl with the wrong
-proc_handler. .extra1 and .extra2 parameters are set to avoid other values
-thant SYSCTL_ZERO or SYSCTL_ONE to be set but proc_dointvec do not uses
-them.
+Syzbot reports a problem that a warning will be triggered while
+searching a lock class in look_up_lock_class().
 
-This commit fixes this by using proc_dointvec_minmax instead of
-proc_dointvec.
+The cause of the issue is that a new name is created and used by
+lockdep_set_subclass() instead of using the existing one. This results
+in a lock instance has a different name pointer than previous registered
+one stored in lock class, and WARN_ONCE() is triggered because of that
+in look_up_lock_class().
 
-Fixes: 7c0cca7c847e ("tty: ldisc: add sysctl to prevent autoloading of ldiscs")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Nicolas Bouchinet <nicolas.bouchinet@ssi.gouv.fr>
-Reviewed-by: Lin Feng <linf@wangsu.com>
-Reviewed-by: Jiri Slaby <jirislaby@kernel.org>
-Link: https://lore.kernel.org/r/20241112131357.49582-4-nicolas.bouchinet@clip-os.org
+To fix this, change lockdep_set_subclass() to use the existing name
+instead of a new one. Hence, no new name will be created by
+lockdep_set_subclass(). Hence, the warning is avoided.
+
+[boqun: Reword the commit log to state the correct issue]
+
+Reported-by: <syzbot+7f4a6f7f7051474e40ad@syzkaller.appspotmail.com>
+Fixes: de8f5e4f2dc1f ("lockdep: Introduce wait-type checks")
+Cc: stable@vger.kernel.org
+Signed-off-by: Ahmed Ehab <bottaawesome633@gmail.com>
+Signed-off-by: Boqun Feng <boqun.feng@gmail.com>
+Link: https://lore.kernel.org/lkml/20240824221031.7751-1-bottaawesome633@gmail.com/
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/tty_io.c |    2 +-
+ include/linux/lockdep.h |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/tty/tty_io.c
-+++ b/drivers/tty/tty_io.c
-@@ -3607,7 +3607,7 @@ static struct ctl_table tty_table[] = {
- 		.data		= &tty_ldisc_autoload,
- 		.maxlen		= sizeof(tty_ldisc_autoload),
- 		.mode		= 0644,
--		.proc_handler	= proc_dointvec,
-+		.proc_handler	= proc_dointvec_minmax,
- 		.extra1		= SYSCTL_ZERO,
- 		.extra2		= SYSCTL_ONE,
- 	},
+--- a/include/linux/lockdep.h
++++ b/include/linux/lockdep.h
+@@ -230,7 +230,7 @@ static inline void lockdep_init_map(stru
+ 			      (lock)->dep_map.lock_type)
+ 
+ #define lockdep_set_subclass(lock, sub)					\
+-	lockdep_init_map_type(&(lock)->dep_map, #lock, (lock)->dep_map.key, sub,\
++	lockdep_init_map_type(&(lock)->dep_map, (lock)->dep_map.name, (lock)->dep_map.key, sub,\
+ 			      (lock)->dep_map.wait_type_inner,		\
+ 			      (lock)->dep_map.wait_type_outer,		\
+ 			      (lock)->dep_map.lock_type)
 
 
