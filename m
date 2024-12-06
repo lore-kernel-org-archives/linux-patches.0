@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 593AB1FC7CB;
-	Fri,  6 Dec 2024 15:22:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 018D5149E1A;
+	Fri,  6 Dec 2024 15:22:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733498545; cv=none; b=gzmwOz50UTEqQ+zVUriqit9lJDFhOqRp7nItjiNTfOtfxyl4pNGF3XUyW0btjgr8XKOwunGx3CS6wKkPkhs7F0yMEe0VVA+Qv2AfkkZqjakD1YbP8jGnVgIrsUwzONg3LxXE0hXPEqCP6GGcGMN3ENoxKQhOYr+w4nFs4+AU4dA=
+	t=1733498549; cv=none; b=V6Ibse/p+kqSt1bnstwGwnAxNfRDP5IMUmjEKzQ56EW+W/YaNFnRix4t1A9Jx/QiCcCHwVItyL0MSUd+Zo/7UulIdIigKixjksqbSCbKTPxpkuOWSzdEqgA2GCp9x6o1R9ji7u1wN0nexx8xI7P9k+IF+0w2vaNRapJO3oluuWA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733498545; c=relaxed/simple;
-	bh=uYz2qaF0VEvuF4eWuH0pnIB9yq4PAgnGMPUaL5CikrI=;
+	s=arc-20240116; t=1733498549; c=relaxed/simple;
+	bh=oB8hr/c2KMd6tzO0LEl5NF/p1Fo1NA7CZyCrumZJyhY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W1OC10rWUm1PjKoSYoCU2Rr6DeQj04L/DbGx/pusmiT3Tf/f84gHa3z3jHQOkpRzOVonC0AtzYGaVwo41viMCqiPPm4KvMpjDTxssbp2QS1AN4B3ct8dAj2JjAYgbAgaJrTiQdoumTspNfXqXbmxPcES/07pS5PWeJ4kzZlmMzg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FFXuic86; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q21L8P8kJlTHJNLFrXIwD5NJNhicDjlVolTX4DCsnbr0g6Ds2927/3NLXoGpamZ2B3Eg85//wLQ23rcd0sqDGVM5Zzg4HYmcId0OpZe165W5uVNKLj/qRkHEQF9xIj0lxrS/CCeczXIAJvaj9LLu6YxpiOAi3EJ+hRN+3dvAsCs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cR6Nk5Xi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FFXuic86"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBE2CC4CED1;
-	Fri,  6 Dec 2024 15:22:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cR6Nk5Xi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64001C4CED1;
+	Fri,  6 Dec 2024 15:22:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733498545;
-	bh=uYz2qaF0VEvuF4eWuH0pnIB9yq4PAgnGMPUaL5CikrI=;
+	s=korg; t=1733498548;
+	bh=oB8hr/c2KMd6tzO0LEl5NF/p1Fo1NA7CZyCrumZJyhY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FFXuic86BxWYF/DmUsCDuapUUXdT+OCF4ti0nWIHjJPxDoZXmjgjxAptx84WnMgvB
-	 hvbO6aH1Yn+ppWeaCnkpVWnGTUndk5tXZ5+LMRcMZnB945MlAS7+JLA7Q2PgRQSRYu
-	 kKerDWqNpQ6dvrAn6+QCQ4Dbum3GoxYWb7GWo5Ps=
+	b=cR6Nk5Xi+ko5UVFYDRXF4eJRDmBVAi6xL+A2swLMgwnXmZcc5RH9iAKgptrNuWDZF
+	 h+mbR8z11ks/eXtywor58xrf1CePUhQWtsEDSutmXbIxS8ZMqTMnzajswE0OY8Tfxs
+	 acQmFhHSaMzqJEr6aPIFsGVYCy+2AswsUr2UPtNI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ming Qian <ming.qian@nxp.com>,
-	TaoJiang <tao.jiang_2@nxp.com>,
+	Benjamin Gaignard <benjamin.gaignard@collabora.com>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
 	Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Subject: [PATCH 6.6 615/676] media: imx-jpeg: Ensure power suppliers be suspended before detach them
-Date: Fri,  6 Dec 2024 15:37:14 +0100
-Message-ID: <20241206143717.394874762@linuxfoundation.org>
+Subject: [PATCH 6.6 616/676] media: verisilicon: av1: Fix reference video buffer pointer assignment
+Date: Fri,  6 Dec 2024 15:37:15 +0100
+Message-ID: <20241206143717.432917298@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -51,78 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ming Qian <ming.qian@nxp.com>
+From: Benjamin Gaignard <benjamin.gaignard@collabora.com>
 
-commit fd0af4cd35da0eb550ef682b71cda70a4e36f6b9 upstream.
+commit 672f24ed6ebcd986688c6674a6d994a265fefc25 upstream.
 
-The power suppliers are always requested to suspend asynchronously,
-dev_pm_domain_detach() requires the caller to ensure proper
-synchronization of this function with power management callbacks.
-otherwise the detach may led to kernel panic, like below:
+Always get new destination buffer for reference frame because nothing
+garantees the one set previously is still valid or unused.
 
-[ 1457.107934] Unable to handle kernel NULL pointer dereference at virtual address 0000000000000040
-[ 1457.116777] Mem abort info:
-[ 1457.119589]   ESR = 0x0000000096000004
-[ 1457.123358]   EC = 0x25: DABT (current EL), IL = 32 bits
-[ 1457.128692]   SET = 0, FnV = 0
-[ 1457.131764]   EA = 0, S1PTW = 0
-[ 1457.134920]   FSC = 0x04: level 0 translation fault
-[ 1457.139812] Data abort info:
-[ 1457.142707]   ISV = 0, ISS = 0x00000004, ISS2 = 0x00000000
-[ 1457.148196]   CM = 0, WnR = 0, TnD = 0, TagAccess = 0
-[ 1457.153256]   GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
-[ 1457.158563] user pgtable: 4k pages, 48-bit VAs, pgdp=00000001138b6000
-[ 1457.165000] [0000000000000040] pgd=0000000000000000, p4d=0000000000000000
-[ 1457.171792] Internal error: Oops: 0000000096000004 [#1] PREEMPT SMP
-[ 1457.178045] Modules linked in: v4l2_jpeg wave6_vpu_ctrl(-) [last unloaded: mxc_jpeg_encdec]
-[ 1457.186383] CPU: 0 PID: 51938 Comm: kworker/0:3 Not tainted 6.6.36-gd23d64eea511 #66
-[ 1457.194112] Hardware name: NXP i.MX95 19X19 board (DT)
-[ 1457.199236] Workqueue: pm pm_runtime_work
-[ 1457.203247] pstate: 60400009 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-[ 1457.210188] pc : genpd_runtime_suspend+0x20/0x290
-[ 1457.214886] lr : __rpm_callback+0x48/0x1d8
-[ 1457.218968] sp : ffff80008250bc50
-[ 1457.222270] x29: ffff80008250bc50 x28: 0000000000000000 x27: 0000000000000000
-[ 1457.229394] x26: 0000000000000000 x25: 0000000000000008 x24: 00000000000f4240
-[ 1457.236518] x23: 0000000000000000 x22: ffff00008590f0e4 x21: 0000000000000008
-[ 1457.243642] x20: ffff80008099c434 x19: ffff00008590f000 x18: ffffffffffffffff
-[ 1457.250766] x17: 5300326563697665 x16: 645f676e696c6f6f x15: 63343a6d726f6674
-[ 1457.257890] x14: 0000000000000004 x13: 00000000000003a4 x12: 0000000000000002
-[ 1457.265014] x11: 0000000000000000 x10: 0000000000000a60 x9 : ffff80008250bbb0
-[ 1457.272138] x8 : ffff000092937200 x7 : ffff0003fdf6af80 x6 : 0000000000000000
-[ 1457.279262] x5 : 00000000410fd050 x4 : 0000000000200000 x3 : 0000000000000000
-[ 1457.286386] x2 : 0000000000000000 x1 : 0000000000000000 x0 : ffff00008590f000
-[ 1457.293510] Call trace:
-[ 1457.295946]  genpd_runtime_suspend+0x20/0x290
-[ 1457.300296]  __rpm_callback+0x48/0x1d8
-[ 1457.304038]  rpm_callback+0x6c/0x78
-[ 1457.307515]  rpm_suspend+0x10c/0x570
-[ 1457.311077]  pm_runtime_work+0xc4/0xc8
-[ 1457.314813]  process_one_work+0x138/0x248
-[ 1457.318816]  worker_thread+0x320/0x438
-[ 1457.322552]  kthread+0x110/0x114
-[ 1457.325767]  ret_from_fork+0x10/0x20
+Fixes this chromium test suite:
+https://chromium.googlesource.com/chromium/src/media/+/refs/heads/main/test/data/test-25fps.av1.ivf
 
-Fixes: 2db16c6ed72c ("media: imx-jpeg: Add V4L2 driver for i.MX8 JPEG Encoder/Decoder")
+Fixes: 727a400686a2 ("media: verisilicon: Add Rockchip AV1 decoder")
 Cc: <stable@vger.kernel.org>
-Signed-off-by: Ming Qian <ming.qian@nxp.com>
-Reviewed-by: TaoJiang <tao.jiang_2@nxp.com>
+Signed-off-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
+Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
 Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+[hverkuil: fix typo and add link to chromium test suite]
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/nxp/imx-jpeg/mxc-jpeg.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/media/platform/verisilicon/rockchip_vpu981_hw_av1_dec.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/drivers/media/platform/nxp/imx-jpeg/mxc-jpeg.c
-+++ b/drivers/media/platform/nxp/imx-jpeg/mxc-jpeg.c
-@@ -2674,6 +2674,8 @@ static void mxc_jpeg_detach_pm_domains(s
- 	int i;
+--- a/drivers/media/platform/verisilicon/rockchip_vpu981_hw_av1_dec.c
++++ b/drivers/media/platform/verisilicon/rockchip_vpu981_hw_av1_dec.c
+@@ -161,8 +161,7 @@ static int rockchip_vpu981_av1_dec_frame
+ 		av1_dec->frame_refs[i].timestamp = timestamp;
+ 		av1_dec->frame_refs[i].frame_type = frame->frame_type;
+ 		av1_dec->frame_refs[i].order_hint = frame->order_hint;
+-		if (!av1_dec->frame_refs[i].vb2_ref)
+-			av1_dec->frame_refs[i].vb2_ref = hantro_get_dst_buf(ctx);
++		av1_dec->frame_refs[i].vb2_ref = hantro_get_dst_buf(ctx);
  
- 	for (i = 0; i < jpeg->num_domains; i++) {
-+		if (jpeg->pd_dev[i] && !pm_runtime_suspended(jpeg->pd_dev[i]))
-+			pm_runtime_force_suspend(jpeg->pd_dev[i]);
- 		if (jpeg->pd_link[i] && !IS_ERR(jpeg->pd_link[i]))
- 			device_link_del(jpeg->pd_link[i]);
- 		if (jpeg->pd_dev[i] && !IS_ERR(jpeg->pd_dev[i]))
+ 		for (j = 0; j < V4L2_AV1_TOTAL_REFS_PER_FRAME; j++)
+ 			av1_dec->frame_refs[i].order_hints[j] = frame->order_hints[j];
 
 
