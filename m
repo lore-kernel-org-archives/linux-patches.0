@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AB2832C8B;
-	Fri,  6 Dec 2024 14:51:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80E1032C8B;
+	Fri,  6 Dec 2024 14:51:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733496661; cv=none; b=fYXvc0WwQ1rG7Tj4EKu2LZQcThWglp6WdFcpzKEDiXtCzW80qP26JpIGldRALWqJMESMrxK1VLseEKaJdZDxlC5JD3ncc1HJkkW4hqEdPXY6xPCv7ULLV3tVtujRhmCtA4vxtixjUUCq0omalVxIso1oSJkN92K4wgcydtXP7qY=
+	t=1733496664; cv=none; b=DfafVCVMBURtpUKQabU7hUP8LV0dP0Sq4cJoy6jAoQ8hUz1j3byKlpqPQLqKH085707NNTPuoH6yC6wNtjDKqic3SIETEEheB6El+DWhSJ6SEil3qzIrFMS/NsN49+KmfqaQUU7Dea4jJUb5/K+tY/+3pYdQrrWBMyv2Z1wI+R8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733496661; c=relaxed/simple;
-	bh=3GRJEfY2xYruKs/0JYwIFEpHwFUwRzamgjxhTPqQaAQ=;
+	s=arc-20240116; t=1733496664; c=relaxed/simple;
+	bh=yO6Q+Fan2Cky1QWkEwqLaY3pj6FPdgeaF1BNWRp3IHc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eh6qK5BNydr1VG9xDhUu8N11TsSev1TTtBl/b9aJLVz9dbLlVXqefQKJAEe+eQTBsm/o1JKP2fQfYbb/Kldb26eYRuvoGJ+FJbGX/x9jYPr9ilOgvvpmZXNzelHa+buqIfqF6ZPme+f5/YXZAx172jw/IQ0Y8kUqKqBtbQytVIs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yISlC8pv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TJdAv36dRSKbK/XDm+7NwgPNoPewqFZTr6lMoKK0fH/NfMgYT1ONYjoL+KEyZGoY8ndrQ9AYPtRb5UTctILLDBNtVnJig4e/SoJVtPzI/g6BQuWLL09o+5yWCX2MTH91r4twXT3anKIzG6rE7UvYEdjLQDIPR1MwqOYuQg928LA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N6oDKfmq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yISlC8pv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C7AAC4CED1;
-	Fri,  6 Dec 2024 14:51:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N6oDKfmq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E04ACC4CED1;
+	Fri,  6 Dec 2024 14:51:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733496660;
-	bh=3GRJEfY2xYruKs/0JYwIFEpHwFUwRzamgjxhTPqQaAQ=;
+	s=korg; t=1733496664;
+	bh=yO6Q+Fan2Cky1QWkEwqLaY3pj6FPdgeaF1BNWRp3IHc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yISlC8pv4o3xjx54FLCJaguepJfjGxuTXjHoDRvqlREqFG2frtQqsrYumk2uXPTKN
-	 5mTe5mAV+fPc50/mZCMsEpNxQLnst92Xn0bzgXUWl3yUyJm3Pq1wzrEiXfQAmpo0lb
-	 M4CGiHPc/en/9vT/pTKRi/L2zRqI59uJ0aqnpE14=
+	b=N6oDKfmqO2nYe76HhN+dcQEOxxcqN1VUs968wGBWOzvKFCIlcwwtOiNxQKkEvSl/O
+	 gf64Kc5H2/PIqpMomv+wLDF2vOUFyhpKObw+/wdnbU/R6Zxi1EiMmG19TEuvX98BQZ
+	 zMRI5bYgr1X07hjtF+4pRVvOb2xq+MjA4xB5MYvk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nevenko Stupar <nevenko.stupar@amd.com>,
-	Rodrigo Siqueira <rodrigo.siqueira@amd.com>,
-	Jerry Zuo <jerry.zuo@amd.com>,
-	Alex Hung <alex.hung@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Xiangyu Chen <xiangyu.chen@windriver.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 041/676] drm/amd/display: Check null-initialized variables
-Date: Fri,  6 Dec 2024 15:27:40 +0100
-Message-ID: <20241206143654.958411588@linuxfoundation.org>
+Subject: [PATCH 6.6 068/676] block: fix bio_split_rw_at to take zone_write_granularity into account
+Date: Fri,  6 Dec 2024 15:28:07 +0100
+Message-ID: <20241206143656.017303979@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -56,54 +53,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Hung <alex.hung@amd.com>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit 367cd9ceba1933b63bc1d87d967baf6d9fd241d2 ]
+[ Upstream commit 7ecd2cd4fae3e8410c0a6620f3a83dcdbb254f02 ]
 
-[WHAT & HOW]
-drr_timing and subvp_pipe are initialized to null and they are not
-always assigned new values. It is necessary to check for null before
-dereferencing.
+Otherwise it can create unaligned writes on zoned devices.
 
-This fixes 2 FORWARD_NULL issues reported by Coverity.
-
-Reviewed-by: Nevenko Stupar <nevenko.stupar@amd.com>
-Reviewed-by: Rodrigo Siqueira <rodrigo.siqueira@amd.com>
-Signed-off-by: Jerry Zuo <jerry.zuo@amd.com>
-Signed-off-by: Alex Hung <alex.hung@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Xiangyu Chen <xiangyu.chen@windriver.com>
+Fixes: a805a4fa4fa3 ("block: introduce zone_write_granularity limit")
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Link: https://lore.kernel.org/r/20241104062647.91160-3-hch@lst.de
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ block/blk-merge.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c b/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c
-index 3d82cbef12740..ac6357c089e70 100644
---- a/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c
-+++ b/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c
-@@ -932,8 +932,9 @@ static bool subvp_drr_schedulable(struct dc *dc, struct dc_state *context)
- 	 * for VBLANK: (VACTIVE region of the SubVP pipe can fit the MALL prefetch, VBLANK frame time,
- 	 * and the max of (VBLANK blanking time, MALL region)).
- 	 */
--	if (stretched_drr_us < (1 / (double)drr_timing->min_refresh_in_uhz) * 1000000 * 1000000 &&
--			subvp_active_us - prefetch_us - stretched_drr_us - max_vblank_mallregion > 0)
-+	if (drr_timing &&
-+	    stretched_drr_us < (1 / (double)drr_timing->min_refresh_in_uhz) * 1000000 * 1000000 &&
-+	    subvp_active_us - prefetch_us - stretched_drr_us - max_vblank_mallregion > 0)
- 		schedulable = true;
+diff --git a/block/blk-merge.c b/block/blk-merge.c
+index 07bf758c523a9..889ac59759a26 100644
+--- a/block/blk-merge.c
++++ b/block/blk-merge.c
+@@ -256,6 +256,14 @@ static bool bvec_split_segs(const struct queue_limits *lim,
+ 	return len > 0 || bv->bv_len > max_len;
+ }
  
- 	return schedulable;
-@@ -995,7 +996,7 @@ static bool subvp_vblank_schedulable(struct dc *dc, struct dc_state *context)
- 		if (!subvp_pipe && pipe->stream->mall_stream_config.type == SUBVP_MAIN)
- 			subvp_pipe = pipe;
- 	}
--	if (found) {
-+	if (found && subvp_pipe) {
- 		main_timing = &subvp_pipe->stream->timing;
- 		phantom_timing = &subvp_pipe->stream->mall_stream_config.paired_stream->timing;
- 		vblank_timing = &context->res_ctx.pipe_ctx[vblank_index].stream->timing;
++static unsigned int bio_split_alignment(struct bio *bio,
++		const struct queue_limits *lim)
++{
++	if (op_is_write(bio_op(bio)) && lim->zone_write_granularity)
++		return lim->zone_write_granularity;
++	return lim->logical_block_size;
++}
++
+ /**
+  * bio_split_rw - split a bio in two bios
+  * @bio:  [in] bio to be split
+@@ -326,7 +334,7 @@ struct bio *bio_split_rw(struct bio *bio, const struct queue_limits *lim,
+ 	 * split size so that each bio is properly block size aligned, even if
+ 	 * we do not use the full hardware limits.
+ 	 */
+-	bytes = ALIGN_DOWN(bytes, lim->logical_block_size);
++	bytes = ALIGN_DOWN(bytes, bio_split_alignment(bio, lim));
+ 
+ 	/*
+ 	 * Bio splitting may cause subtle trouble such as hang when doing sync
 -- 
 2.43.0
 
