@@ -1,37 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51A73153836;
-	Fri,  6 Dec 2024 15:13:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A96941FCF7D;
+	Fri,  6 Dec 2024 15:13:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733498000; cv=none; b=dXFVEFKGxiF8Dq0BFMK0T0/VHdFvkYmaaUgvSFOlUIbvcqDzshNhJaykjxwQo2gVgxUSj6m/9nFwZ5osRBd5rlkZFY+LstN+cDz1X94nZwNmCv7ivUSWLzTLWyWR3uGgjyjgCPXCcFhHOapb3vRiRb4uRPIOXEtHvH6e5DALCkI=
+	t=1733498003; cv=none; b=ipetK/yjC+Covf9/bznqgr2k1IfdWdaSchUlL4aE0EZtJ6CqqJTTQrvijr4fQDsI8TxVrQxncvQklWGdG1uv51pEbKXH/8fRqydJMIg8z9PCwK+4/kBveJuL8ETXT9XWdKdIludUMg83TGbQ5U5qB6ed43URwGJaBwCdcdlT8FA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733498000; c=relaxed/simple;
-	bh=NGRvskw8FvFr1zi1myAT42PVXmWZk0oyu5SiMsI//wo=;
+	s=arc-20240116; t=1733498003; c=relaxed/simple;
+	bh=NNCG6FO1dBvIE8Cs9ES2iZI848CLn4qkyY5/PJI9nP0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KOo7k5u9Sh1RgNy4zzfANMRhwtOyNAn6R3szQCVempeKUCknrx+FSZUIFY3LDx1U7Mf4U2BJhyyNTVOWAFiTKFIoLPMKiVkJzRiqUjWteuA5F6UukIYMytVt3W2M4D9yuuvSkAVmrXTYNwWjz+T8OIUc9tjO5GzW4kTRSRuR82o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EABjj0tB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RIIFm2ezCiD2RQ4uxCSOqk2dtmifv/Vd0ce6JXmcITJBZcznFuvS+ahwr+DeK9o6m0Aq97INm5Ep06+Mvk45jiltWMioCm1lYUGaFQ5MsCyR+K2hmHH94bmZzxLe/KfVeOs404k5MLVIS3VYQTA/idf46wCzaM5cB4ijF9/PV9Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=02ahwNW7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EABjj0tB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD4CEC4CED1;
-	Fri,  6 Dec 2024 15:13:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="02ahwNW7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E7BCC4CED1;
+	Fri,  6 Dec 2024 15:13:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733498000;
-	bh=NGRvskw8FvFr1zi1myAT42PVXmWZk0oyu5SiMsI//wo=;
+	s=korg; t=1733498003;
+	bh=NNCG6FO1dBvIE8Cs9ES2iZI848CLn4qkyY5/PJI9nP0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EABjj0tBTPOpigBYVIJvyKH49gWAIWN+Gf7M7nenP92ky1e71xo4z1p7kMw4MgxZM
-	 ETcUSpQcZykvhjsvYzNM5KzhHOX0B46N801qIbpagJJpz/b0je2yYDYADMe9QDAzbF
-	 4HUWKkH9Q+9ntn5yPCcPzJk5qhL/vnxEhlCoKWMU=
+	b=02ahwNW7aViLH2jLC0TzLjhm2ZpkQS8faeiQPx+5fDzPufW9XEXhA+wAb4YBlNBlf
+	 Uq1qCjuUt7IjDlXaG7KNnRgMQfna3A0VB0VpJprL53bR4WzKNIkf+fHz5I4F3+9VVL
+	 5jOZTq/26PVUB7Xdtb6LALhOdvLB+v1i8jVRULgw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qiu-ji Chen <chenqiuji666@gmail.com>,
-	Juergen Gross <jgross@suse.com>
-Subject: [PATCH 6.6 449/676] xen: Fix the issue of resource not being properly released in xenbus_dev_probe()
-Date: Fri,  6 Dec 2024 15:34:28 +0100
-Message-ID: <20241206143710.906412033@linuxfoundation.org>
+	Rodrigo Siqueira <rodrigo.siqueira@amd.com>,
+	Jerry Zuo <jerry.zuo@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Xiangyu Chen <xiangyu.chen@windriver.com>
+Subject: [PATCH 6.6 458/676] drm/amd/display: Check phantom_stream before it is used
+Date: Fri,  6 Dec 2024 15:34:37 +0100
+Message-ID: <20241206143711.258408681@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -50,66 +55,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qiu-ji Chen <chenqiuji666@gmail.com>
+From: Alex Hung <alex.hung@amd.com>
 
-commit afc545da381ba0c651b2658966ac737032676f01 upstream.
+commit 3718a619a8c0a53152e76bb6769b6c414e1e83f4 upstream.
 
-This patch fixes an issue in the function xenbus_dev_probe(). In the
-xenbus_dev_probe() function, within the if (err) branch at line 313, the
-program incorrectly returns err directly without releasing the resources
-allocated by err = drv->probe(dev, id). As the return value is non-zero,
-the upper layers assume the processing logic has failed. However, the probe
-operation was performed earlier without a corresponding remove operation.
-Since the probe actually allocates resources, failing to perform the remove
-operation could lead to problems.
+dcn32_enable_phantom_stream can return null, so returned value
+must be checked before used.
 
-To fix this issue, we followed the resource release logic of the
-xenbus_dev_remove() function by adding a new block fail_remove before the
-fail_put block. After entering the branch if (err) at line 313, the
-function will use a goto statement to jump to the fail_remove block,
-ensuring that the previously acquired resources are correctly released,
-thus preventing the reference count leak.
+This fixes 1 NULL_RETURNS issue reported by Coverity.
 
-This bug was identified by an experimental static analysis tool developed
-by our team. The tool specializes in analyzing reference count operations
-and detecting potential issues where resources are not properly managed.
-In this case, the tool flagged the missing release operation as a
-potential problem, which led to the development of this patch.
-
-Fixes: 4bac07c993d0 ("xen: add the Xenbus sysfs and virtual device hotplug driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Qiu-ji Chen <chenqiuji666@gmail.com>
-Reviewed-by: Juergen Gross <jgross@suse.com>
-Message-ID: <20241105130919.4621-1-chenqiuji666@gmail.com>
-Signed-off-by: Juergen Gross <jgross@suse.com>
+Reviewed-by: Rodrigo Siqueira <rodrigo.siqueira@amd.com>
+Signed-off-by: Jerry Zuo <jerry.zuo@amd.com>
+Signed-off-by: Alex Hung <alex.hung@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+[Xiangyu: BP to fix CVE: CVE-2024-49897, modified the source path]
+Signed-off-by: Xiangyu Chen <xiangyu.chen@windriver.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/xen/xenbus/xenbus_probe.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/display/dc/dcn32/dcn32_resource.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/xen/xenbus/xenbus_probe.c
-+++ b/drivers/xen/xenbus/xenbus_probe.c
-@@ -313,7 +313,7 @@ int xenbus_dev_probe(struct device *_dev
- 	if (err) {
- 		dev_warn(&dev->dev, "watch_otherend on %s failed.\n",
- 		       dev->nodename);
--		return err;
-+		goto fail_remove;
- 	}
+--- a/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_resource.c
++++ b/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_resource.c
+@@ -1786,6 +1786,9 @@ void dcn32_add_phantom_pipes(struct dc *
+ 	// be a valid candidate for SubVP (i.e. has a plane, stream, doesn't
+ 	// already have phantom pipe assigned, etc.) by previous checks.
+ 	phantom_stream = dcn32_enable_phantom_stream(dc, context, pipes, pipe_cnt, index);
++	if (!phantom_stream)
++		return;
++
+ 	dcn32_enable_phantom_plane(dc, context, phantom_stream, index);
  
- 	dev->spurious_threshold = 1;
-@@ -322,6 +322,12 @@ int xenbus_dev_probe(struct device *_dev
- 			 dev->nodename);
- 
- 	return 0;
-+fail_remove:
-+	if (drv->remove) {
-+		down(&dev->reclaim_sem);
-+		drv->remove(dev);
-+		up(&dev->reclaim_sem);
-+	}
- fail_put:
- 	module_put(drv->driver.owner);
- fail:
+ 	for (i = 0; i < dc->res_pool->pipe_count; i++) {
 
 
