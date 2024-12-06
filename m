@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51690149C51;
-	Fri,  6 Dec 2024 15:25:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE02D1465AB;
+	Fri,  6 Dec 2024 15:25:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733498733; cv=none; b=SBYWCLwQ5+ytoG3mAzcjyXPCsDN/YcoQk8tRTT5E0IoTJUG2FA4u0F5dEO9LOjeKK7/KW+Zq2pSd3gr664i0oyX69KkKzmQqEZ3fIe38giNEa6kEf43pbGhjl3yYK4+jQ0yWLyerWe2lkpfYjBuo/JpJWqbNFeP3DvIRIBIcEFo=
+	t=1733498736; cv=none; b=DvmDInAzp2n7EjLAGFVTl0kT6wTMzb+j2c49FXnOfr8x8miEGYoF7nz3DqrKvvzQ0NDVbCU1LK0mKPHMNB+8OFVzd6Vy4dC1S0Vkk+sEWCCce7PUtEY2D9p+8Mfzf23Dq/PGI4aelZCnW+7+yKa+LtjyX7d+eqhqel4VUTnj/J4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733498733; c=relaxed/simple;
-	bh=HVTlBSypLR2mIud434xm6/WU/QawF/UR4SF/+UY/zD8=;
+	s=arc-20240116; t=1733498736; c=relaxed/simple;
+	bh=BOq6ecHqKHvPeug6m/88nLdzp76Z60L86sNkva/MZ5I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b/+D8+lrhGSAQ7KYeNltxgv60/9vBO1oFmb2Na6KXSHdbw//C2ARHYHisGDLYNDx0IQbAH54VAvr9LNvZnzvnOsnnDQu8/uV+tGrdN3IOi3nuX0TTdABct1Fog6TwsE4jmhp6uoc2uSwyyIWfbZrin8iMpckCmCJSDSMJ6lHfVM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yuzNniXC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=rxjQJ9FohYQZrhlDgqrEtChqROteOY9ygFljdgtqueiMHgNbNfkdlqVLPcs6ngeXdN6KhySQzShHyrNQjqm9G9tZT9pSdwQV5vJm306XU5/sz3IZ4PCxEDdZDep7eIdKMg4OBYGYpMnT57VUVZLnJ72pHfqSl5H7AaHYQkwUzC8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yKonevVt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yuzNniXC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4BA8C4CED1;
-	Fri,  6 Dec 2024 15:25:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yKonevVt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33416C4CED1;
+	Fri,  6 Dec 2024 15:25:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733498733;
-	bh=HVTlBSypLR2mIud434xm6/WU/QawF/UR4SF/+UY/zD8=;
+	s=korg; t=1733498736;
+	bh=BOq6ecHqKHvPeug6m/88nLdzp76Z60L86sNkva/MZ5I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yuzNniXC1eFJnhNE84pIguHOjro6Kj0rBCb4MWBlATxTo/l4MspbYIDoGbWzaN+5g
-	 cZaLdLzdH8OSpF/GMFTAbMSX2+UX7aCFNPyuqkLUaX9kH2tWqBwj4UxzadkL5q+MhM
-	 WiFvipL5yQSZhwZAD+xOpfZPatsb7W7VRK5DGJWs=
+	b=yKonevVtvrZQ/iRuakEDpSD+0yayKLLr4ebi8i6ebLpAyA7OA4u64nHkosvZ4zaTa
+	 eK8SjutWEMYKhEWSyHdEv6a7W+I/O98W2XxSZFXwcBYlGSbb11a+3DEvG3+yR0Hy7v
+	 mr2uGRgZm92LDON7N2yphv3ZcxR0Y8TQy1Go407s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steffen Dirkwinkel <s.dirkwinkel@beckhoff.com>,
-	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-Subject: [PATCH 6.6 672/676] drm: xlnx: zynqmp_dpsub: fix hotplug detection
-Date: Fri,  6 Dec 2024 15:38:11 +0100
-Message-ID: <20241206143719.618807520@linuxfoundation.org>
+	Damien Le Moal <dlemoal@kernel.org>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>
+Subject: [PATCH 6.6 655/676] PCI: rockchip-ep: Fix address translation unit programming
+Date: Fri,  6 Dec 2024 15:37:54 +0100
+Message-ID: <20241206143718.953399158@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -44,46 +45,102 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Steffen Dirkwinkel <s.dirkwinkel@beckhoff.com>
+From: Damien Le Moal <dlemoal@kernel.org>
 
-commit 71ba1c9b1c717831920c3d432404ee5a707e04b4 upstream.
+commit 64f093c4d99d797b68b407a9d8767aadc3e3ea7a upstream.
 
-drm_kms_helper_poll_init needs to be called after zynqmp_dpsub_kms_init.
-zynqmp_dpsub_kms_init creates the connector and without it we don't
-enable hotplug detection.
+The Rockchip PCIe endpoint controller handles PCIe transfers addresses
+by masking the lower bits of the programmed PCI address and using the
+same number of lower bits masked from the CPU address space used for the
+mapping. For a PCI mapping of <size> bytes starting from <pci_addr>,
+the number of bits masked is the number of address bits changing in the
+address range [pci_addr..pci_addr + size - 1].
 
-Fixes: eb2d64bfcc17 ("drm: xlnx: zynqmp_dpsub: Report HPD through the bridge")
+However, rockchip_pcie_prog_ep_ob_atu() calculates num_pass_bits only
+using the size of the mapping, resulting in an incorrect number of mask
+bits depending on the value of the PCI address to map.
+
+Fix this by introducing the helper function
+rockchip_pcie_ep_ob_atu_num_bits() to correctly calculate the number of
+mask bits to use to program the address translation unit. The number of
+mask bits is calculated depending on both the PCI address and size of
+the mapping, and clamped between 8 and 20 using the macros
+ROCKCHIP_PCIE_AT_MIN_NUM_BITS and ROCKCHIP_PCIE_AT_MAX_NUM_BITS. As
+defined in the Rockchip RK3399 TRM V1.3 Part2, Sections 17.5.5.1.1 and
+17.6.8.2.1, this clamping is necessary because:
+
+  1) The lower 8 bits of the PCI address to be mapped by the outbound
+     region are ignored. So a minimum of 8 address bits are needed and
+     imply that the PCI address must be aligned to 256.
+
+  2) The outbound memory regions are 1MB in size. So while we can specify
+     up to 63-bits for the PCI address (num_bits filed uses bits 0 to 5 of
+     the outbound address region 0 register), we must limit the number of
+     valid address bits to 20 to match the memory window maximum size (1
+     << 20 = 1MB).
+
+Fixes: cf590b078391 ("PCI: rockchip: Add EP driver for Rockchip PCIe controller")
+Link: https://lore.kernel.org/r/20241017015849.190271-2-dlemoal@kernel.org
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Steffen Dirkwinkel <s.dirkwinkel@beckhoff.com>
-Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20241028134218.54727-1-lists@steffen.cc
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/xlnx/zynqmp_kms.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/pci/controller/pcie-rockchip-ep.c |   16 +++++++++++++---
+ drivers/pci/controller/pcie-rockchip.h    |    4 ++++
+ 2 files changed, 17 insertions(+), 3 deletions(-)
 
---- a/drivers/gpu/drm/xlnx/zynqmp_kms.c
-+++ b/drivers/gpu/drm/xlnx/zynqmp_kms.c
-@@ -506,12 +506,12 @@ int zynqmp_dpsub_drm_init(struct zynqmp_
- 	if (ret)
- 		return ret;
+--- a/drivers/pci/controller/pcie-rockchip-ep.c
++++ b/drivers/pci/controller/pcie-rockchip-ep.c
+@@ -63,15 +63,25 @@ static void rockchip_pcie_clear_ep_ob_at
+ 			    ROCKCHIP_PCIE_AT_OB_REGION_DESC1(region));
+ }
  
--	drm_kms_helper_poll_init(drm);
--
- 	ret = zynqmp_dpsub_kms_init(dpsub);
- 	if (ret < 0)
- 		goto err_poll_fini;
- 
-+	drm_kms_helper_poll_init(drm);
++static int rockchip_pcie_ep_ob_atu_num_bits(struct rockchip_pcie *rockchip,
++					    u64 pci_addr, size_t size)
++{
++	int num_pass_bits = fls64(pci_addr ^ (pci_addr + size - 1));
 +
- 	/* Reset all components and register the DRM device. */
- 	drm_mode_config_reset(drm);
++	return clamp(num_pass_bits,
++		     ROCKCHIP_PCIE_AT_MIN_NUM_BITS,
++		     ROCKCHIP_PCIE_AT_MAX_NUM_BITS);
++}
++
+ static void rockchip_pcie_prog_ep_ob_atu(struct rockchip_pcie *rockchip, u8 fn,
+ 					 u32 r, u64 cpu_addr, u64 pci_addr,
+ 					 size_t size)
+ {
+-	int num_pass_bits = fls64(size - 1);
++	int num_pass_bits;
+ 	u32 addr0, addr1, desc0;
  
+-	if (num_pass_bits < 8)
+-		num_pass_bits = 8;
++	num_pass_bits = rockchip_pcie_ep_ob_atu_num_bits(rockchip,
++							 pci_addr, size);
+ 
+ 	addr0 = ((num_pass_bits - 1) & PCIE_CORE_OB_REGION_ADDR0_NUM_BITS) |
+ 		(lower_32_bits(pci_addr) & PCIE_CORE_OB_REGION_ADDR0_LO_ADDR);
+--- a/drivers/pci/controller/pcie-rockchip.h
++++ b/drivers/pci/controller/pcie-rockchip.h
+@@ -245,6 +245,10 @@
+ 	(PCIE_EP_PF_CONFIG_REGS_BASE + (((fn) << 12) & GENMASK(19, 12)))
+ #define ROCKCHIP_PCIE_EP_VIRT_FUNC_BASE(fn) \
+ 	(PCIE_EP_PF_CONFIG_REGS_BASE + 0x10000 + (((fn) << 12) & GENMASK(19, 12)))
++
++#define ROCKCHIP_PCIE_AT_MIN_NUM_BITS  8
++#define ROCKCHIP_PCIE_AT_MAX_NUM_BITS  20
++
+ #define ROCKCHIP_PCIE_AT_IB_EP_FUNC_BAR_ADDR0(fn, bar) \
+ 	(PCIE_CORE_AXI_CONF_BASE + 0x0828 + (fn) * 0x0040 + (bar) * 0x0008)
+ #define ROCKCHIP_PCIE_AT_IB_EP_FUNC_BAR_ADDR1(fn, bar) \
 
 
