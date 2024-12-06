@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44FB910E0;
-	Fri,  6 Dec 2024 14:48:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 702B632C8B;
+	Fri,  6 Dec 2024 14:48:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733496526; cv=none; b=Xw4XkRFKkeww5h/FwTzTwdw+gAYfdIahl4gKkTZKC/9ntjaS8X0H7DcOTlM/AENoDHO2b5mFp3AJ0wh3SLKzd+9oxmU3YHGaSULRrFE7apN1QWcxZCG5AvBaR1BFSTJbEXSxjto3pXsHeu8Z3kpfVcnAxhK9BP/rVAE1TskJxBU=
+	t=1733496529; cv=none; b=MkA8cGhXzpd4Z3hS5Y8+Om4gTkt4un1u+mLyo/aT4dScIeQK46rjDuOw1fL6HuBgUgWmPW9n9FkBXD8IybyGVZTSKSRUVXE7/InaphtJI5GJ11uJii6GzhcTbtj9Aptun1dwTULvuhpl0+ttz3Tox55bYEEbsRFqFqT7CUK9juk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733496526; c=relaxed/simple;
-	bh=K6BsT2O59tS/3XYliLx2tcXoFYfPbi2Phxmpc25SqBw=;
+	s=arc-20240116; t=1733496529; c=relaxed/simple;
+	bh=6+PZ51upsEiJyIv24w69HYIfafI9a/xPJ9Cw3FqCOiA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U5Q93D64Mfmlc5hEdSmBGawBHkgXMrF1NCV0W9mBEUsp9Vhgw4YfxUAV9GO6tAuz6CcM6G4YciVa4BU8GwuGtptS5tkAt/Fu90j4UhEQz83YznfGmY49AQIDFJwy5HAatqNYxVU0ug0jBf8XQmov9vCFLpf1i71Hol78cl+wBEs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fxbbPeg0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Gx7tR0QXkixYCcEr2HFlWL/oOZnMD0kDYKZWSn16l9wW6VUN9XdYU0S663XtJ8ijBoYmD1xg1o797do9xZs7DB13nqPtXv5zNOk9Ndchg+UkVMwAcQSuP5Zu38p9o9KZrqLQwBw6izN4GZS999NxIEDK95ryIXTei8bL+KO/0oc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V+kFz+YD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fxbbPeg0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6618C4CED1;
-	Fri,  6 Dec 2024 14:48:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V+kFz+YD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAE48C4CED1;
+	Fri,  6 Dec 2024 14:48:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733496526;
-	bh=K6BsT2O59tS/3XYliLx2tcXoFYfPbi2Phxmpc25SqBw=;
+	s=korg; t=1733496529;
+	bh=6+PZ51upsEiJyIv24w69HYIfafI9a/xPJ9Cw3FqCOiA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fxbbPeg0PkrXt9/ZjXVpviJnMX+t5OsfeG0uEHEpnykpgqZeHkAadrOjjCymngRcG
-	 axUQmY4/MxlVQ3p0hKFX1GalFO98x34cYSE9zF1Y/re8hgityeE1j4pYEERGYpdPIN
-	 G4G9yoOpkuD2IOGa4WUEg/EH1kIi1V/w2yenumZ8=
+	b=V+kFz+YD5zKBviPl2iQrgRHqj77SohIfYVEMmvshj+BsFTMhxMycKNfRqtN0EXTep
+	 Es3+gAC3vSIssr2V26u27UHMUu6akgXk7ooxxK8KEzbBpf4bOXJjALQwGsNcjgM1/Y
+	 WfmhA3AMySvGGYRF1aOcd9GkOCRJC/LRoF4T/p+g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Guan <guanwentao@uniontech.com>,
-	Yuli Wang <wangyuli@uniontech.com>,
-	Huacai Chen <chenhuacai@loongson.cn>,
+	Eryk Zagorski <erykzagorski@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 030/676] LoongArch: Define a default value for VM_DATA_DEFAULT_FLAGS
-Date: Fri,  6 Dec 2024 15:27:29 +0100
-Message-ID: <20241206143654.532590210@linuxfoundation.org>
+Subject: [PATCH 6.6 031/676] ALSA: usb-audio: Fix Yamaha P-125 Quirk Entry
+Date: Fri,  6 Dec 2024 15:27:30 +0100
+Message-ID: <20241206143654.570662346@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -52,40 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuli Wang <wangyuli@uniontech.com>
+From: Eryk Zagorski <erykzagorski@gmail.com>
 
-[ Upstream commit c859900a841b0a6cd9a73d16426465e44cdde29c ]
+[ Upstream commit 6f891ca15b017707840c9e7f5afd9fc6cfd7d8b1 ]
 
-This is a trivial cleanup, commit c62da0c35d58518d ("mm/vma: define a
-default value for VM_DATA_DEFAULT_FLAGS") has unified default values of
-VM_DATA_DEFAULT_FLAGS across different platforms.
+This patch switches the P-125 quirk entry to use a composite quirk as the
+P-125 supplies both MIDI and Audio like many of the other Yamaha
+keyboards
 
-Apply the same consistency to LoongArch.
-
-Suggested-by: Wentao Guan <guanwentao@uniontech.com>
-Signed-off-by: Yuli Wang <wangyuli@uniontech.com>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Signed-off-by: Eryk Zagorski <erykzagorski@gmail.com>
+Link: https://patch.msgid.link/20241111164520.9079-2-erykzagorski@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/loongarch/include/asm/page.h | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ sound/usb/quirks-table.h | 14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
 
-diff --git a/arch/loongarch/include/asm/page.h b/arch/loongarch/include/asm/page.h
-index 63f137ce82a41..f49c2782c5c4d 100644
---- a/arch/loongarch/include/asm/page.h
-+++ b/arch/loongarch/include/asm/page.h
-@@ -94,10 +94,7 @@ typedef struct { unsigned long pgprot; } pgprot_t;
- extern int __virt_addr_valid(volatile void *kaddr);
- #define virt_addr_valid(kaddr)	__virt_addr_valid((volatile void *)(kaddr))
- 
--#define VM_DATA_DEFAULT_FLAGS \
--	(VM_READ | VM_WRITE | \
--	 ((current->personality & READ_IMPLIES_EXEC) ? VM_EXEC : 0) | \
--	 VM_MAYREAD | VM_MAYWRITE | VM_MAYEXEC)
-+#define VM_DATA_DEFAULT_FLAGS	VM_DATA_FLAGS_TSK_EXEC
- 
- #include <asm-generic/memory_model.h>
- #include <asm-generic/getorder.h>
+diff --git a/sound/usb/quirks-table.h b/sound/usb/quirks-table.h
+index 75cde5779f38d..d1bd8e0d60252 100644
+--- a/sound/usb/quirks-table.h
++++ b/sound/usb/quirks-table.h
+@@ -324,7 +324,6 @@ YAMAHA_DEVICE(0x105a, NULL),
+ YAMAHA_DEVICE(0x105b, NULL),
+ YAMAHA_DEVICE(0x105c, NULL),
+ YAMAHA_DEVICE(0x105d, NULL),
+-YAMAHA_DEVICE(0x1718, "P-125"),
+ {
+ 	USB_DEVICE(0x0499, 0x1503),
+ 	QUIRK_DRIVER_INFO {
+@@ -391,6 +390,19 @@ YAMAHA_DEVICE(0x1718, "P-125"),
+ 		}
+ 	}
+ },
++{
++	USB_DEVICE(0x0499, 0x1718),
++	QUIRK_DRIVER_INFO {
++		/* .vendor_name = "Yamaha", */
++		/* .product_name = "P-125", */
++		QUIRK_DATA_COMPOSITE {
++			{ QUIRK_DATA_STANDARD_AUDIO(1) },
++			{ QUIRK_DATA_STANDARD_AUDIO(2) },
++			{ QUIRK_DATA_MIDI_YAMAHA(3) },
++			QUIRK_COMPOSITE_END
++		}
++	}
++},
+ YAMAHA_DEVICE(0x2000, "DGP-7"),
+ YAMAHA_DEVICE(0x2001, "DGP-5"),
+ YAMAHA_DEVICE(0x2002, NULL),
 -- 
 2.43.0
 
