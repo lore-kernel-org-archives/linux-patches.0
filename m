@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B49AE1FF7D1;
-	Fri,  6 Dec 2024 14:58:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B012010E0;
+	Fri,  6 Dec 2024 14:58:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733497097; cv=none; b=Lr/lhOnzjcum9v9D0v8lO7hZ1UyqHeXCp/mW6wgFYBKzvn90YeobLnBkKQzC6p4J/UbY17x/v+aiRr8fL8i/Qu4vaRf6jdfy/t5tlHZuQmLPsLVCOuMo4wCGdfxCcV1DSb9WWqhOAjPl0gjF3yKklvOpS4/idlPq/9ubz8XAu64=
+	t=1733497099; cv=none; b=TG1BMQQdn6lmqY36qtZ/kdYhOF9Cni3Ed8Kr6vjCurhbt89Bqjq+wywL+OPt+SZzN6nU6x3RnmCZ6FiBgOjusaEwE8/TPQygVwL351INQtEne06kKk+OxLfy/42xHQnWHTCMaJWi3YzL6in/ZIb5JYoQn1i4iiFkGSg/v14oBp8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733497097; c=relaxed/simple;
-	bh=eB94w1RCwxEfzjyEc7NvzGVDXKDZWmXvp+MO8TnQr0o=;
+	s=arc-20240116; t=1733497099; c=relaxed/simple;
+	bh=LkmbFDorHNJ/kMChKwFcCeu7ZOehsge5FJGlnNvqipI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fOzrooHBqbxntbe/yjiUHvxvcOZefpxe2v1Q4uxVgvDBEL9I+lii2IVIfWqewiNHSjc0wD5P/nLMp+TWFTpwpoWy9ivp1dfr3TPRYDZrLnL8rYSM1aGyeGFqTHgnmWwGCA81wECXluxqx3hM1+eXIZusk9T0/Xaz2cwxifV/jPQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=awEvMxrd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=HE07D5JggXSzteFwSQS/EY7AYVJljhZ4o4QNju0/wNCQNnKlt99FAqoC3s09PzuX7NFMgO4HxtUI8S5AZQ8aigXvqmML+KVVfI9iT46ShOwhe4+LY74Y1/LGOyx5DrfdWyKhPtttoEo8XN6D0XxK7wu1z/OPeyJku90y8aYulW8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YPLQuas1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="awEvMxrd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE758C4CED1;
-	Fri,  6 Dec 2024 14:58:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YPLQuas1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20D04C4CED1;
+	Fri,  6 Dec 2024 14:58:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733497096;
-	bh=eB94w1RCwxEfzjyEc7NvzGVDXKDZWmXvp+MO8TnQr0o=;
+	s=korg; t=1733497099;
+	bh=LkmbFDorHNJ/kMChKwFcCeu7ZOehsge5FJGlnNvqipI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=awEvMxrdRFpr+9TljfhGRdQNd3o4icwq3+LSOeA26S8PKmrBJc8nfLJCUOgykZNo4
-	 5/o8rPrKGFlmL9GbOkRmpU3VQL70Gqt9FzHfUhN12KGJdZFJOCv76aMr8WrAcTL+A2
-	 R1MyyTBU8mPEoP6Y3b5S4Avm77bZGtJb1l6fuoks=
+	b=YPLQuas1NgiF1aZfOsFWrDhU9QWDOBh9zphtDT75KWHVRkRSxvfvq1rw6XVpviBVG
+	 Wovdongi6KoAidTKD+Cyaqv1y0gxYy2zHaa9st1KHFxcn6yWmEoTmBvMy5qKKNBAyb
+	 RU2OaRGlo63Mg3q5kRdyaMV1DE+qtwqimtYyPBKQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Alexei Starovoitov <ast@kernel.org>,
+	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
+	Iago Toral Quiroga <itoral@igalia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 194/676] libbpf: fix sym_is_subprog() logic for weak global subprogs
-Date: Fri,  6 Dec 2024 15:30:13 +0100
-Message-ID: <20241206143700.923258686@linuxfoundation.org>
+Subject: [PATCH 6.6 177/676] drm/v3d: Address race-condition in MMU flush
+Date: Fri,  6 Dec 2024 15:29:56 +0100
+Message-ID: <20241206143700.260765308@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -45,53 +45,82 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andrii Nakryiko <andrii@kernel.org>
+From: Maíra Canal <mcanal@igalia.com>
 
-[ Upstream commit 4073213488be542f563eb4b2457ab4cbcfc2b738 ]
+[ Upstream commit cf1becb7f996a0a23ea2c270cf6bb0911ec3ca1a ]
 
-sym_is_subprog() is incorrectly rejecting relocations against *weak*
-global subprogs. Fix that by realizing that STB_WEAK is also a global
-function.
+We must first flush the MMU cache and then, flush the TLB, not the other
+way around. Currently, we can see a race condition between the MMU cache
+and the TLB when running multiple rendering processes at the same time.
+This is evidenced by MMU errors triggered by the IRQ.
 
-While it seems like verifier doesn't support taking an address of
-non-static subprog right now, it's still best to fix support for it on
-libbpf side, otherwise users will get a very confusing error during BPF
-skeleton generation or static linking due to misinterpreted relocation:
+Fix the MMU flush order by flushing the MMU cache and then the TLB.
+Also, in order to address the race condition, wait for the MMU cache flush
+to finish before starting the TLB flush.
 
-  libbpf: prog 'handle_tp': bad map relo against 'foo' in section '.text'
-  Error: failed to open BPF object file: Relocation failed
-
-It's clearly not a map relocation, but is treated and reported as such
-without this fix.
-
-Fixes: 53eddb5e04ac ("libbpf: Support subprog address relocation")
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/r/20241009011554.880168-1-andrii@kernel.org
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: 57692c94dcbe ("drm/v3d: Introduce a new DRM driver for Broadcom V3D V3.x+")
+Signed-off-by: Maíra Canal <mcanal@igalia.com>
+Reviewed-by: Iago Toral Quiroga <itoral@igalia.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240923141348.2422499-2-mcanal@igalia.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/bpf/libbpf.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/v3d/v3d_mmu.c | 29 ++++++++++-------------------
+ 1 file changed, 10 insertions(+), 19 deletions(-)
 
-diff --git a/tools/lib/bpf/libbpf.c b/tools/lib/bpf/libbpf.c
-index 834b3e6bc72c3..d39b340222d61 100644
---- a/tools/lib/bpf/libbpf.c
-+++ b/tools/lib/bpf/libbpf.c
-@@ -3586,7 +3586,7 @@ static bool sym_is_subprog(const Elf64_Sym *sym, int text_shndx)
- 		return true;
+diff --git a/drivers/gpu/drm/v3d/v3d_mmu.c b/drivers/gpu/drm/v3d/v3d_mmu.c
+index 5a453532901f1..166d4a88daee5 100644
+--- a/drivers/gpu/drm/v3d/v3d_mmu.c
++++ b/drivers/gpu/drm/v3d/v3d_mmu.c
+@@ -34,32 +34,23 @@ static int v3d_mmu_flush_all(struct v3d_dev *v3d)
+ {
+ 	int ret;
  
- 	/* global function */
--	return bind == STB_GLOBAL && type == STT_FUNC;
-+	return (bind == STB_GLOBAL || bind == STB_WEAK) && type == STT_FUNC;
+-	/* Make sure that another flush isn't already running when we
+-	 * start this one.
+-	 */
+-	ret = wait_for(!(V3D_READ(V3D_MMU_CTL) &
+-			 V3D_MMU_CTL_TLB_CLEARING), 100);
+-	if (ret)
+-		dev_err(v3d->drm.dev, "TLB clear wait idle pre-wait failed\n");
+-
+-	V3D_WRITE(V3D_MMU_CTL, V3D_READ(V3D_MMU_CTL) |
+-		  V3D_MMU_CTL_TLB_CLEAR);
+-
+-	V3D_WRITE(V3D_MMUC_CONTROL,
+-		  V3D_MMUC_CONTROL_FLUSH |
++	V3D_WRITE(V3D_MMUC_CONTROL, V3D_MMUC_CONTROL_FLUSH |
+ 		  V3D_MMUC_CONTROL_ENABLE);
+ 
+-	ret = wait_for(!(V3D_READ(V3D_MMU_CTL) &
+-			 V3D_MMU_CTL_TLB_CLEARING), 100);
++	ret = wait_for(!(V3D_READ(V3D_MMUC_CONTROL) &
++			 V3D_MMUC_CONTROL_FLUSHING), 100);
+ 	if (ret) {
+-		dev_err(v3d->drm.dev, "TLB clear wait idle failed\n");
++		dev_err(v3d->drm.dev, "MMUC flush wait idle failed\n");
+ 		return ret;
+ 	}
+ 
+-	ret = wait_for(!(V3D_READ(V3D_MMUC_CONTROL) &
+-			 V3D_MMUC_CONTROL_FLUSHING), 100);
++	V3D_WRITE(V3D_MMU_CTL, V3D_READ(V3D_MMU_CTL) |
++		  V3D_MMU_CTL_TLB_CLEAR);
++
++	ret = wait_for(!(V3D_READ(V3D_MMU_CTL) &
++			 V3D_MMU_CTL_TLB_CLEARING), 100);
+ 	if (ret)
+-		dev_err(v3d->drm.dev, "MMUC flush wait idle failed\n");
++		dev_err(v3d->drm.dev, "MMU TLB clear wait idle failed\n");
+ 
+ 	return ret;
  }
- 
- static int find_extern_btf_id(const struct btf *btf, const char *ext_name)
 -- 
 2.43.0
 
