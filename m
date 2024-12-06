@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF1BE1494D9;
-	Fri,  6 Dec 2024 14:41:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A5A514B084;
+	Fri,  6 Dec 2024 14:42:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733496118; cv=none; b=bPrvuzocMkTTYhBtd8wCTW2rvyxBsN+9wpaidud+xydxg/8me8s16xF7fd2By3e/YKr0YJdgImHVhwSWV/QWNL0mywlWr7jttPnFcpBmoS+pDzp7PlkWqocw9JEm6zFf5Sbr1pH39JDA00ni/jMGIzRlw56haKbWE3OVNj7n85o=
+	t=1733496122; cv=none; b=LLtJqhL+oNaUdKDMNVitJl5aYYxRcLn7AChIsRGw05ETFquvJYmzAWINQvMOZK9vwyBKGCEvYs63BPZki3NAXsuXTETSEOclOZzIBOtiUtbCCJRQDykyJtceNqKtg95oWw5FMM9x2+64ePPNQhGEu4zAY/vnFXmgUwKC1emUmuw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733496118; c=relaxed/simple;
-	bh=zznU40bJ5NMvVuPckZnkDnrBHPV8aeJbFERu+2WWkcU=;
+	s=arc-20240116; t=1733496122; c=relaxed/simple;
+	bh=CcsaJwcPwyGQF6Th8/R/50wComTvj4gj/lm8IUpcV+E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uQeqU45GJZXr2O26fLtzFBYSY2GgyI2N2Pz9YInfhpCEFkuokQnNBIcurKlIzvqodzPDynewPGoWiVXZ/BNigBxcQMWr7jn8kKx+cEEgtmMzEwk+DXMNzTjzLRN7Yo2Vx42mvMytPlELoaVpuaUZS/5LlPuVEuoZEQTQ4JZMb+Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oxjaExpB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OS+yf2O1DWHwmoKzpxYU0aQpTWB5XpFSTnM+GpSPoAYPgl4yLkUi++uYuLeR/UxKyNzFu2XI4B0GuEQ0c1vEHtAMhwbJ8eTV7XckwGPzS53+HDBATD33tJ4Oa5lJLd9wDPEivDtC2gqzkicQAL6R5ebdHxVE9/U+WmOHM+r59AE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TXimZ7SJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oxjaExpB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E663C4CED1;
-	Fri,  6 Dec 2024 14:41:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TXimZ7SJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F1A1C4CED1;
+	Fri,  6 Dec 2024 14:42:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733496118;
-	bh=zznU40bJ5NMvVuPckZnkDnrBHPV8aeJbFERu+2WWkcU=;
+	s=korg; t=1733496122;
+	bh=CcsaJwcPwyGQF6Th8/R/50wComTvj4gj/lm8IUpcV+E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oxjaExpBHImfhzsjuFhK3zgy6/QVveLvpsN4HhtaQ/R7EDS3YQEHCoX++CqxHos5B
-	 wm/lqCNM5N/lFh62rTAgiAQ2tGNxBFcNWwQBFPGmoy08dDn4V8Cvico/GN+hxBdgF5
-	 lN+2jFHJSPcYoYnK+rTv9xcNOVT2Nmu9duIIwDoU=
+	b=TXimZ7SJl3ed+Ew68BnBRFS/POjf0MtiScLuPXUduiYnP2rg2fKdazp4xw7OL1ldk
+	 Ch6fnIZRi0ZEn04m6D7jvjPzkap4v25LcEbVkseCeNJpLCV+kasxxgtuTLw5xZL3mX
+	 2GqjG6M2fmH9WbUhhodOocxaChTv6FJldlMsrKiA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
-	stable <stable@kernel.org>,
-	Saravana Kannan <saravanak@google.com>
-Subject: [PATCH 6.12 057/146] driver core: fw_devlink: Stop trying to optimize cycle detection logic
-Date: Fri,  6 Dec 2024 15:36:28 +0100
-Message-ID: <20241206143529.857324807@linuxfoundation.org>
+	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Stephen Boyd <sboyd@kernel.org>
+Subject: [PATCH 6.12 058/146] spmi: pmic-arb: fix return path in for_each_available_child_of_node()
+Date: Fri,  6 Dec 2024 15:36:29 +0100
+Message-ID: <20241206143529.895782363@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143527.654980698@linuxfoundation.org>
 References: <20241206143527.654980698@linuxfoundation.org>
@@ -51,162 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Saravana Kannan <saravanak@google.com>
+From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
 
-commit bac3b10b78e54b7da3cede397258f75a2180609b upstream.
+commit 77adf4b1f3e1fdb319f7ee515e5924bb77df3916 upstream.
 
-In attempting to optimize fw_devlink runtime, I introduced numerous cycle
-detection bugs by foregoing cycle detection logic under specific
-conditions. Each fix has further narrowed the conditions for optimization.
+This loop requires explicit calls to of_node_put() upon early exits
+(break, goto, return) to decrement the child refcounter and avoid memory
+leaks if the child is not required out of the loop.
 
-It's time to give up on these optimization attempts and just run the cycle
-detection logic every time fw_devlink tries to create a device link.
+A more robust solution is using the scoped variant of the macro, which
+automatically calls of_node_put() when the child goes out of scope.
 
-The specific bug report that triggered this fix involved a supplier fwnode
-that never gets a device created for it. Instead, the supplier fwnode is
-represented by the device that corresponds to an ancestor fwnode.
-
-In this case, fw_devlink didn't do any cycle detection because the cycle
-detection logic is only run when a device link is created between the
-devices that correspond to the actual consumer and supplier fwnodes.
-
-With this change, fw_devlink will run cycle detection logic even when
-creating SYNC_STATE_ONLY proxy device links from a device that is an
-ancestor of a consumer fwnode.
-
-Reported-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-Closes: https://lore.kernel.org/all/1a1ab663-d068-40fb-8c94-f0715403d276@ideasonboard.com/
-Fixes: 6442d79d880c ("driver core: fw_devlink: Improve detection of overlapping cycles")
-Cc: stable <stable@kernel.org>
-Tested-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-Signed-off-by: Saravana Kannan <saravanak@google.com>
-Link: https://lore.kernel.org/r/20241030171009.1853340-1-saravanak@google.com
+Cc: stable@vger.kernel.org
+Fixes: 979987371739 ("spmi: pmic-arb: Add multi bus support")
+Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+Link: https://lore.kernel.org/r/20241001-spmi-pmic-arb-scoped-v1-1-5872bab34ed6@gmail.com
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Link: https://lore.kernel.org/r/20241109002829.160973-2-sboyd@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/base/core.c |   55 ++++++++++++++++++++++------------------------------
- 1 file changed, 24 insertions(+), 31 deletions(-)
+ drivers/spmi/spmi-pmic-arb.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/drivers/base/core.c
-+++ b/drivers/base/core.c
-@@ -1989,10 +1989,10 @@ static struct device *fwnode_get_next_pa
-  *
-  * Return true if one or more cycles were found. Otherwise, return false.
-  */
--static bool __fw_devlink_relax_cycles(struct device *con,
-+static bool __fw_devlink_relax_cycles(struct fwnode_handle *con_handle,
- 				 struct fwnode_handle *sup_handle)
+--- a/drivers/spmi/spmi-pmic-arb.c
++++ b/drivers/spmi/spmi-pmic-arb.c
+@@ -1763,14 +1763,13 @@ static int spmi_pmic_arb_register_buses(
  {
--	struct device *sup_dev = NULL, *par_dev = NULL;
-+	struct device *sup_dev = NULL, *par_dev = NULL, *con_dev = NULL;
- 	struct fwnode_link *link;
- 	struct device_link *dev_link;
- 	bool ret = false;
-@@ -2009,22 +2009,22 @@ static bool __fw_devlink_relax_cycles(st
+ 	struct device *dev = &pdev->dev;
+ 	struct device_node *node = dev->of_node;
+-	struct device_node *child;
+ 	int ret;
  
- 	sup_handle->flags |= FWNODE_FLAG_VISITED;
+ 	/* legacy mode doesn't provide child node for the bus */
+ 	if (of_device_is_compatible(node, "qcom,spmi-pmic-arb"))
+ 		return spmi_pmic_arb_bus_init(pdev, node, pmic_arb);
  
--	sup_dev = get_dev_from_fwnode(sup_handle);
--
- 	/* Termination condition. */
--	if (sup_dev == con) {
-+	if (sup_handle == con_handle) {
- 		pr_debug("----- cycle: start -----\n");
- 		ret = true;
- 		goto out;
- 	}
- 
-+	sup_dev = get_dev_from_fwnode(sup_handle);
-+	con_dev = get_dev_from_fwnode(con_handle);
- 	/*
- 	 * If sup_dev is bound to a driver and @con hasn't started binding to a
- 	 * driver, sup_dev can't be a consumer of @con. So, no need to check
- 	 * further.
- 	 */
- 	if (sup_dev && sup_dev->links.status ==  DL_DEV_DRIVER_BOUND &&
--	    con->links.status == DL_DEV_NO_DRIVER) {
-+	    con_dev && con_dev->links.status == DL_DEV_NO_DRIVER) {
- 		ret = false;
- 		goto out;
- 	}
-@@ -2033,7 +2033,7 @@ static bool __fw_devlink_relax_cycles(st
- 		if (link->flags & FWLINK_FLAG_IGNORE)
- 			continue;
- 
--		if (__fw_devlink_relax_cycles(con, link->supplier)) {
-+		if (__fw_devlink_relax_cycles(con_handle, link->supplier)) {
- 			__fwnode_link_cycle(link);
- 			ret = true;
- 		}
-@@ -2048,7 +2048,7 @@ static bool __fw_devlink_relax_cycles(st
- 	else
- 		par_dev = fwnode_get_next_parent_dev(sup_handle);
- 
--	if (par_dev && __fw_devlink_relax_cycles(con, par_dev->fwnode)) {
-+	if (par_dev && __fw_devlink_relax_cycles(con_handle, par_dev->fwnode)) {
- 		pr_debug("%pfwf: cycle: child of %pfwf\n", sup_handle,
- 			 par_dev->fwnode);
- 		ret = true;
-@@ -2066,7 +2066,7 @@ static bool __fw_devlink_relax_cycles(st
- 		    !(dev_link->flags & DL_FLAG_CYCLE))
- 			continue;
- 
--		if (__fw_devlink_relax_cycles(con,
-+		if (__fw_devlink_relax_cycles(con_handle,
- 					      dev_link->supplier->fwnode)) {
- 			pr_debug("%pfwf: cycle: depends on %pfwf\n", sup_handle,
- 				 dev_link->supplier->fwnode);
-@@ -2114,11 +2114,6 @@ static int fw_devlink_create_devlink(str
- 	if (link->flags & FWLINK_FLAG_IGNORE)
- 		return 0;
- 
--	if (con->fwnode == link->consumer)
--		flags = fw_devlink_get_flags(link->flags);
--	else
--		flags = FW_DEVLINK_FLAGS_PERMISSIVE;
--
- 	/*
- 	 * In some cases, a device P might also be a supplier to its child node
- 	 * C. However, this would defer the probe of C until the probe of P
-@@ -2139,25 +2134,23 @@ static int fw_devlink_create_devlink(str
- 		return -EINVAL;
- 
- 	/*
--	 * SYNC_STATE_ONLY device links don't block probing and supports cycles.
--	 * So, one might expect that cycle detection isn't necessary for them.
--	 * However, if the device link was marked as SYNC_STATE_ONLY because
--	 * it's part of a cycle, then we still need to do cycle detection. This
--	 * is because the consumer and supplier might be part of multiple cycles
--	 * and we need to detect all those cycles.
-+	 * Don't try to optimize by not calling the cycle detection logic under
-+	 * certain conditions. There's always some corner case that won't get
-+	 * detected.
- 	 */
--	if (!device_link_flag_is_sync_state_only(flags) ||
--	    flags & DL_FLAG_CYCLE) {
--		device_links_write_lock();
--		if (__fw_devlink_relax_cycles(con, sup_handle)) {
--			__fwnode_link_cycle(link);
--			flags = fw_devlink_get_flags(link->flags);
--			pr_debug("----- cycle: end -----\n");
--			dev_info(con, "Fixed dependency cycle(s) with %pfwf\n",
--				 sup_handle);
--		}
--		device_links_write_unlock();
-+	device_links_write_lock();
-+	if (__fw_devlink_relax_cycles(link->consumer, sup_handle)) {
-+		__fwnode_link_cycle(link);
-+		pr_debug("----- cycle: end -----\n");
-+		pr_info("%pfwf: Fixed dependency cycle(s) with %pfwf\n",
-+			link->consumer, sup_handle);
- 	}
-+	device_links_write_unlock();
-+
-+	if (con->fwnode == link->consumer)
-+		flags = fw_devlink_get_flags(link->flags);
-+	else
-+		flags = FW_DEVLINK_FLAGS_PERMISSIVE;
- 
- 	if (sup_handle->flags & FWNODE_FLAG_NOT_DEVICE)
- 		sup_dev = fwnode_get_next_parent_dev(sup_handle);
+-	for_each_available_child_of_node(node, child) {
++	for_each_available_child_of_node_scoped(node, child) {
+ 		if (of_node_name_eq(child, "spmi")) {
+ 			ret = spmi_pmic_arb_bus_init(pdev, child, pmic_arb);
+ 			if (ret)
 
 
