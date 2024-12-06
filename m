@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B51EB53A7;
-	Fri,  6 Dec 2024 15:08:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B9B553A7;
+	Fri,  6 Dec 2024 15:08:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733497704; cv=none; b=mGXtjhO69mRv927Y2p70IHNyMecDkijF2gLbor0Yfp3ykCdalrnP6cPUIISqfAx/NbFNs4X5pJOo3M0rFnAEzuOMAWsHAR0ghXzNOOLYbR6od/J2hZKLvh/qnqs1Eg/IBcGjK0cJHKLRaI+nyNf9WcfKtB6ZwuiPO3NtILJQ5xk=
+	t=1733497707; cv=none; b=MetHdG/vND5YwycTjsQK8PtHrtxYnGpiU7mZcp+z+D3uEqLtNTae/h2XvTpslFu/sgyDg3321phZcyiHqNrKE6PaCmQlGgWEC4ggRZeOFxnvm/Hbg3P/fnrUCD0SANWsCyo4Xx5JSd5HBPlww7U/s6r2lOQ/ROfokMAillnLuLk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733497704; c=relaxed/simple;
-	bh=H+7B2OMYYSuqmFyVbNcQvhtDQYH0j9yW56YUyKChz5s=;
+	s=arc-20240116; t=1733497707; c=relaxed/simple;
+	bh=eRFoh07s4Z5P54F6FkoqAwI1dsOlUb3T3z2M2ka29gQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nPCM8o3fNe2BeSdMsLWtIgpZwodKe7UbxCUo4htr6OFOWAHOVX4JnbDS3hGsbsAEHdAB7JpukXlRmkJHjuhDkD1HlMK9jKwk7iOIudrqyXgmeQ/CxNEatU68tx38pbu3/DNidKAfk5hN5SLCBU30orNoctPzckQLM/ZS0aPGjwg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2i/b2/X+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sxFfjHcKAVJshoR94j5ZdnLXyHTGL8664N8g9K9HUE7ru5j7/i1Ki5aU54SbcVxERopXKV9pKsWOsW5phUsptSREep6fP04vfjD0CKrqv+wcY+Aa8KSv0uPhmhoW4vIeXD5zszxGfEywqyIYi7oeXRRAx2hoXd94gX13rEHK6Lo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zw89aDn2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2i/b2/X+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5023C4CED1;
-	Fri,  6 Dec 2024 15:08:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zw89aDn2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10C26C4CED1;
+	Fri,  6 Dec 2024 15:08:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733497704;
-	bh=H+7B2OMYYSuqmFyVbNcQvhtDQYH0j9yW56YUyKChz5s=;
+	s=korg; t=1733497707;
+	bh=eRFoh07s4Z5P54F6FkoqAwI1dsOlUb3T3z2M2ka29gQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2i/b2/X+/iBJVTz/LmZsWPK+yvubbYNcomoYmRyrCmz0kNGpN/9n6weeLHTr/YVBX
-	 Wdl6tFsZ/dRAnP8JbCDF3zEBTYy21ENakapVd+0h02WGJSzFDBaEq3CEk7WF7665Pt
-	 U+XPcoPX2NmgaLa9ZDvkeLZHoNXHyZhuApczT9Xg=
+	b=zw89aDn22ex7boc3eMtH+cVwsKuDKS4uFCUZPFher+FvlsYmoA6PQz+H4gHg6mxRY
+	 f0veL5aQDTZn39RiSFm9ifIyn8vLxhauvgi0uVglb8oMtrcjdkEqUpz4er0G2Ho1r6
+	 +1/o5MXsDUGykxiuhXjz8ulzLzwWIPCmilxFFIDQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinsu Lee <jinsu1.lee@samsung.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Benjamin Peterson <benjamin@engflow.com>,
+	Howard Chu <howardchu95@gmail.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 368/676] f2fs: fix to avoid forcing direct write to use buffered IO on inline_data inode
-Date: Fri,  6 Dec 2024 15:33:07 +0100
-Message-ID: <20241206143707.721046403@linuxfoundation.org>
+Subject: [PATCH 6.6 369/676] perf trace: avoid garbage when not printing a trace events arguments
+Date: Fri,  6 Dec 2024 15:33:08 +0100
+Message-ID: <20241206143707.759472037@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -52,46 +53,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Benjamin Peterson <benjamin@engflow.com>
 
-[ Upstream commit 26e6f59d0bbaac76fa3413462d780bd2b5f9f653 ]
+[ Upstream commit 5fb8e56542a3cf469fdf25d77f50e21cbff3ae7e ]
 
-Jinsu Lee reported a performance regression issue, after commit
-5c8764f8679e ("f2fs: fix to force buffered IO on inline_data
-inode"), we forced direct write to use buffered IO on inline_data
-inode, it will cause performace regression due to memory copy
-and data flush.
+trace__fprintf_tp_fields may not print any tracepoint arguments. E.g., if the
+argument values are all zero. Previously, this would result in a totally
+uninitialized buffer being passed to fprintf, which could lead to garbage on the
+console. Fix the problem by passing the number of initialized bytes fprintf.
 
-It's fine to not force direct write to use buffered IO, as it
-can convert inline inode before committing direct write IO.
-
-Fixes: 5c8764f8679e ("f2fs: fix to force buffered IO on inline_data inode")
-Reported-by: Jinsu Lee <jinsu1.lee@samsung.com>
-Closes: https://lore.kernel.org/linux-f2fs-devel/af03dd2c-e361-4f80-b2fd-39440766cf6e@kernel.org
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Fixes: f11b2803bb88 ("perf trace: Allow choosing how to augment the tracepoint arguments")
+Signed-off-by: Benjamin Peterson <benjamin@engflow.com>
+Tested-by: Howard Chu <howardchu95@gmail.com>
+Tested-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Link: https://lore.kernel.org/r/20241103204816.7834-1-benjamin@engflow.com
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/file.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ tools/perf/builtin-trace.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/f2fs/file.c b/fs/f2fs/file.c
-index c6bc4cbd72b9d..196755a34833d 100644
---- a/fs/f2fs/file.c
-+++ b/fs/f2fs/file.c
-@@ -846,7 +846,11 @@ static bool f2fs_force_buffered_io(struct inode *inode, int rw)
- 		return true;
- 	if (f2fs_compressed_file(inode))
- 		return true;
--	if (f2fs_has_inline_data(inode))
-+	/*
-+	 * only force direct read to use buffered IO, for direct write,
-+	 * it expects inline data conversion before committing IO.
-+	 */
-+	if (f2fs_has_inline_data(inode) && rw == READ)
- 		return true;
+diff --git a/tools/perf/builtin-trace.c b/tools/perf/builtin-trace.c
+index 6fd30bddf0de9..916d2f6a6d79a 100644
+--- a/tools/perf/builtin-trace.c
++++ b/tools/perf/builtin-trace.c
+@@ -2803,7 +2803,7 @@ static size_t trace__fprintf_tp_fields(struct trace *trace, struct evsel *evsel,
+ 		printed += syscall_arg_fmt__scnprintf_val(arg, bf + printed, size - printed, &syscall_arg, val);
+ 	}
  
- 	/* disallow direct IO if any of devices has unaligned blksize */
+-	return printed + fprintf(trace->output, "%s", bf);
++	return printed + fprintf(trace->output, "%.*s", (int)printed, bf);
+ }
+ 
+ static int trace__event_handler(struct trace *trace, struct evsel *evsel,
 -- 
 2.43.0
 
