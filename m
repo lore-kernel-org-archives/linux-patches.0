@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00F6B149C69;
-	Fri,  6 Dec 2024 14:52:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE7C71494B2;
+	Fri,  6 Dec 2024 14:53:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733496779; cv=none; b=obQtdobks+fuzoe7t0wYe+rHCSPB5qwGn5sXDQ2SzMUjZUMisAqYWHiYeBqUGeecJcHHAjMVqeThHthP0hG629TVovNji1YTH5D4jcOAcfm9YUtXh/eisQppXr00MRl+gnx15IlUh2h1qJ43e5yyXqSKTg1GTBzY37rOw53My7U=
+	t=1733496782; cv=none; b=QmVFC9QgOHeHiod40nFgm9QWI6MIKmYRAuBOV7x6ZhgkQ4EsvxrtV7/gWQxHThMkHsJySHM5BEdl9TdRGlFfLZHYCSWOFGRGuetvGlHmYyEocThz+/uzV8Xke+QcGiCApStUh43L8j2lxfINUxHrt/xI1poK4QuSblJ+u4O00VQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733496779; c=relaxed/simple;
-	bh=qeIaPHyoVEXyYZJ7Bq/dlKlJOJEu6cH3ox5hdgR/oGE=;
+	s=arc-20240116; t=1733496782; c=relaxed/simple;
+	bh=3t+8oGxn4ic9Q465qBDBpUFJQ2kKWPWw30WcYo/Jhag=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S5+TC6tnaozgf6opHwlddW3ty6Tyr7ZSFou2ncWywccqINSMQR2Yi0GvlHLibHCkjcEH5FSt/dxnDqDeR5mbgcqK6+pgyJ5cmgCLVBZpq/ZKwYy6DsKJlI7UxsRHsaQatfo2wl02kQBQ/qYxZZ/LAQqdB5ots0Hsvv20X5QZBdQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2Z8+r+Et; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=addyWdkfARB7clymsX0M/aNWZk8PDbx7SIbV/kXst2dyIsnuaQjlY8c+XDx9Rj3BGDoPJ7cv6mu+RlvAttPdWCozL7VrwMdSVuv8tjUREvEsMrUq1Pk1zDrXyNfjfZp8Eb1iFxfu9zTI9fJKthqls8SRFc3uTj0AShK2buWRDSk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=owV1fMq6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2Z8+r+Et"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CCDAC4CED1;
-	Fri,  6 Dec 2024 14:52:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="owV1fMq6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C4E0C4CED1;
+	Fri,  6 Dec 2024 14:53:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733496778;
-	bh=qeIaPHyoVEXyYZJ7Bq/dlKlJOJEu6cH3ox5hdgR/oGE=;
+	s=korg; t=1733496781;
+	bh=3t+8oGxn4ic9Q465qBDBpUFJQ2kKWPWw30WcYo/Jhag=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2Z8+r+Etzz5FYrgwU0fiornA7qW6VVLLgdDomBMmn6I6cnOI2sLHfklXDeBwZQikx
-	 1bdBOsVSLrM5bY/DyheI14hr2SWQKFceRfZXwcmwh40BTRXXA3l9mnZQmCiNFHVkXd
-	 wp6VhfdKoXXSQQ1uNP8LZu4KEEuXkm7T2CKlFkuc=
+	b=owV1fMq6BxH9zv2lnd/eTZhGdSz2Gh1eqatVU7eeqx71/WpNyL3FxiGvfWDktT75/
+	 rggzOoQ5A850aTFUd5U8+Oe2yPNXFYbqsYF132xpDUrfLAfCELBSe64/L3rFWrWf3z
+	 M9J3y8VDcbSOCdWYsrVZ4qtAyVvY1O6TSq2BzNyA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Christoph Hellwig <hch@lst.de>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 101/676] crypto: cavium - Fix an error handling path in cpt_ucode_load_fw()
-Date: Fri,  6 Dec 2024 15:28:40 +0100
-Message-ID: <20241206143657.301639528@linuxfoundation.org>
+Subject: [PATCH 6.6 075/676] nvme-pci: reverse request order in nvme_queue_rqs
+Date: Fri,  6 Dec 2024 15:28:14 +0100
+Message-ID: <20241206143656.298950146@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -51,36 +51,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit 572b7cf08403b6c67dfe0dc3e0f2efb42443254f ]
+[ Upstream commit beadf0088501d9dcf2454b05d90d5d31ea3ba55f ]
 
-If do_cpt_init() fails, a previous dma_alloc_coherent() call needs to be
-undone.
+blk_mq_flush_plug_list submits requests in the reverse order that they
+were submitted, which leads to a rather suboptimal I/O pattern especially
+in rotational devices.  Fix this by rewriting nvme_queue_rqs so that it
+always pops the requests from the passed in request list, and then adds
+them to the head of a local submit list.  This actually simplifies the
+code a bit as it removes the complicated list splicing, at the cost of
+extra updates of the rq_next pointer.  As that should be cache hot
+anyway it should be an easy price to pay.
 
-Add the needed dma_free_coherent() before returning.
-
-Fixes: 9e2c7d99941d ("crypto: cavium - Add Support for Octeon-tx CPT Engine")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: d62cbcf62f2f ("nvme: add support for mq_ops->queue_rqs()")
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Link: https://lore.kernel.org/r/20241113152050.157179-2-hch@lst.de
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/cavium/cpt/cptpf_main.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/nvme/host/pci.c | 39 +++++++++++++++++----------------------
+ 1 file changed, 17 insertions(+), 22 deletions(-)
 
-diff --git a/drivers/crypto/cavium/cpt/cptpf_main.c b/drivers/crypto/cavium/cpt/cptpf_main.c
-index ec17beee24c07..54de869e5374c 100644
---- a/drivers/crypto/cavium/cpt/cptpf_main.c
-+++ b/drivers/crypto/cavium/cpt/cptpf_main.c
-@@ -302,6 +302,8 @@ static int cpt_ucode_load_fw(struct cpt_device *cpt, const u8 *fw, bool is_ae)
+diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
+index e0b502573b427..d525fa1229d79 100644
+--- a/drivers/nvme/host/pci.c
++++ b/drivers/nvme/host/pci.c
+@@ -905,9 +905,10 @@ static blk_status_t nvme_queue_rq(struct blk_mq_hw_ctx *hctx,
  
- 	ret = do_cpt_init(cpt, mcode);
- 	if (ret) {
-+		dma_free_coherent(&cpt->pdev->dev, mcode->code_size,
-+				  mcode->code, mcode->phys_base);
- 		dev_err(dev, "do_cpt_init failed with ret: %d\n", ret);
- 		goto fw_release;
+ static void nvme_submit_cmds(struct nvme_queue *nvmeq, struct request **rqlist)
+ {
++	struct request *req;
++
+ 	spin_lock(&nvmeq->sq_lock);
+-	while (!rq_list_empty(*rqlist)) {
+-		struct request *req = rq_list_pop(rqlist);
++	while ((req = rq_list_pop(rqlist))) {
+ 		struct nvme_iod *iod = blk_mq_rq_to_pdu(req);
+ 
+ 		nvme_sq_copy_cmd(nvmeq, &iod->cmd);
+@@ -933,31 +934,25 @@ static bool nvme_prep_rq_batch(struct nvme_queue *nvmeq, struct request *req)
+ 
+ static void nvme_queue_rqs(struct request **rqlist)
+ {
+-	struct request *req, *next, *prev = NULL;
++	struct request *submit_list = NULL;
+ 	struct request *requeue_list = NULL;
++	struct request **requeue_lastp = &requeue_list;
++	struct nvme_queue *nvmeq = NULL;
++	struct request *req;
+ 
+-	rq_list_for_each_safe(rqlist, req, next) {
+-		struct nvme_queue *nvmeq = req->mq_hctx->driver_data;
+-
+-		if (!nvme_prep_rq_batch(nvmeq, req)) {
+-			/* detach 'req' and add to remainder list */
+-			rq_list_move(rqlist, &requeue_list, req, prev);
+-
+-			req = prev;
+-			if (!req)
+-				continue;
+-		}
++	while ((req = rq_list_pop(rqlist))) {
++		if (nvmeq && nvmeq != req->mq_hctx->driver_data)
++			nvme_submit_cmds(nvmeq, &submit_list);
++		nvmeq = req->mq_hctx->driver_data;
+ 
+-		if (!next || req->mq_hctx != next->mq_hctx) {
+-			/* detach rest of list, and submit */
+-			req->rq_next = NULL;
+-			nvme_submit_cmds(nvmeq, rqlist);
+-			*rqlist = next;
+-			prev = NULL;
+-		} else
+-			prev = req;
++		if (nvme_prep_rq_batch(nvmeq, req))
++			rq_list_add(&submit_list, req); /* reverse order */
++		else
++			rq_list_add_tail(&requeue_lastp, req);
  	}
+ 
++	if (nvmeq)
++		nvme_submit_cmds(nvmeq, &submit_list);
+ 	*rqlist = requeue_list;
+ }
+ 
 -- 
 2.43.0
 
