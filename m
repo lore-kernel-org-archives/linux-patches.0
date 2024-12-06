@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81B5A207E05;
-	Fri,  6 Dec 2024 15:21:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD559207E0C;
+	Fri,  6 Dec 2024 15:21:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733498477; cv=none; b=Ku50kgLX9PWGchS3woIp/KzHNougDvsDFgJYICJk14cU4ZTJhUpuFpaptryw1Ntjfmhzn4NZccBwHDPYTSwEQnRATPv0Z6s6oowDrjCcWQFEeqcGozHY8u6JtjK4yCYmiTgHPK99gwfFbUF5nb0QyJAMKKCkKK+rTt34VlYcENI=
+	t=1733498481; cv=none; b=o/3GKxPKzWn/pcURPS5f0Es0KIOtsRZ6odSoEYw4F+6Rjs4DWG8D5QKn3PAQA1KhdTZzYJdgCb48oxLNpwj0YcU8aDcSrF86StR00Lhj938TLibTEhFHxPXxwtA7ejYCg1AJkosd+uY7IAdYmUMCfy/0KS7mjdTjYBpNqZIm6Z8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733498477; c=relaxed/simple;
-	bh=v4f0KF6eZIYf3K8cuRnulY9pUHuFiof8A78agaXjxQs=;
+	s=arc-20240116; t=1733498481; c=relaxed/simple;
+	bh=38f1Gr8xH7zXe00+2hYi5ISKbgIYI8XvFBgiGC2Jpes=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sjjP0KokYS/TMiquVSBGuDYHzFG1wSEpB38jFfZAHOqe+JJcnML2udzNU/CYvNDZJWD7AyAzd6kqrksgipbECSkCcIC9AIL2C1KocW0u6KwNJk6AboWTmwDh0xzizwQIorpjtg1Z4nhMqYhHZry9o+wKwCSffS6g0Sgcdp/9joI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a4Pf18Ea; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eGvNFeg9fD+iw+UcksssFJ61IKAbBHK+m18eHvDot1DWfC17D1GX4DCGc5l+HlPCFCf2YUAue/EkMNnBXjh3tbl1r3IUUNabgc0sIk5PDgnBeOJsIQTLqBdCwY28wIAn0cuXY8DVJvoCJBe2umRY5MTBFQo9v0O7BwkiYTlXuGw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X1cw9+iS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a4Pf18Ea"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4654C4CED1;
-	Fri,  6 Dec 2024 15:21:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X1cw9+iS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49C07C4CED1;
+	Fri,  6 Dec 2024 15:21:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733498477;
-	bh=v4f0KF6eZIYf3K8cuRnulY9pUHuFiof8A78agaXjxQs=;
+	s=korg; t=1733498480;
+	bh=38f1Gr8xH7zXe00+2hYi5ISKbgIYI8XvFBgiGC2Jpes=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a4Pf18EaM6Ax2upB5/O66GfR7xvwGJCyjKUzmui1uorp27b8SOPG5hijddhsUh/CN
-	 NGAhuSWa8oCRpNm6pMazBK4453zQAxyPPhtJOiIANDZMhWEmtbnWicE+gadG+BhuGD
-	 EWNnCZPVmQALut66ukGoCpy3CDU3WyWmIi3TRKUE=
+	b=X1cw9+iSuieBsXjp0w2CDK9QIyTruLU0ZwQ5c7L++qtEIbdHspKt3iBa3H5I+EpG9
+	 2ot1y5R5NdSY3U572QtDU3czK/z9VlxLWsqg7NB2KzgXiWH1K6ufi8cYwlTafQ7lu0
+	 CxEm09XHK9z0y9/IiGJZtSeRrLoYV7AxkGxqTj2E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liu Jian <liujian56@huawei.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Jan Kara <jack@suse.cz>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 597/676] sunrpc: fix one UAF issue caused by sunrpc kernel tcp socket
-Date: Fri,  6 Dec 2024 15:36:56 +0100
-Message-ID: <20241206143716.689818664@linuxfoundation.org>
+Subject: [PATCH 6.6 598/676] block, bfq: fix bfqq uaf in bfq_limit_depth()
+Date: Fri,  6 Dec 2024 15:36:57 +0100
+Message-ID: <20241206143716.729136881@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -53,163 +52,197 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Liu Jian <liujian56@huawei.com>
+From: Yu Kuai <yukuai3@huawei.com>
 
-[ Upstream commit 3f23f96528e8fcf8619895c4c916c52653892ec1 ]
+[ Upstream commit e8b8344de3980709080d86c157d24e7de07d70ad ]
 
-BUG: KASAN: slab-use-after-free in tcp_write_timer_handler+0x156/0x3e0
-Read of size 1 at addr ffff888111f322cd by task swapper/0/0
+Set new allocated bfqq to bic or remove freed bfqq from bic are both
+protected by bfqd->lock, however bfq_limit_depth() is deferencing bfqq
+from bic without the lock, this can lead to UAF if the io_context is
+shared by multiple tasks.
 
-CPU: 0 UID: 0 PID: 0 Comm: swapper/0 Not tainted 6.12.0-rc4-dirty #7
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1
+For example, test bfq with io_uring can trigger following UAF in v6.6:
+
+==================================================================
+BUG: KASAN: slab-use-after-free in bfqq_group+0x15/0x50
+
 Call Trace:
- <IRQ>
- dump_stack_lvl+0x68/0xa0
- print_address_description.constprop.0+0x2c/0x3d0
- print_report+0xb4/0x270
- kasan_report+0xbd/0xf0
- tcp_write_timer_handler+0x156/0x3e0
- tcp_write_timer+0x66/0x170
- call_timer_fn+0xfb/0x1d0
- __run_timers+0x3f8/0x480
- run_timer_softirq+0x9b/0x100
- handle_softirqs+0x153/0x390
- __irq_exit_rcu+0x103/0x120
- irq_exit_rcu+0xe/0x20
- sysvec_apic_timer_interrupt+0x76/0x90
- </IRQ>
  <TASK>
- asm_sysvec_apic_timer_interrupt+0x1a/0x20
-RIP: 0010:default_idle+0xf/0x20
-Code: 4c 01 c7 4c 29 c2 e9 72 ff ff ff 90 90 90 90 90 90 90 90 90 90 90 90
- 90 90 90 90 f3 0f 1e fa 66 90 0f 00 2d 33 f8 25 00 fb f4 <fa> c3 cc cc cc
- cc 66 66 2e 0f 1f 84 00 00 00 00 00 90 90 90 90 90
-RSP: 0018:ffffffffa2007e28 EFLAGS: 00000242
-RAX: 00000000000f3b31 RBX: 1ffffffff4400fc7 RCX: ffffffffa09c3196
-RDX: 0000000000000000 RSI: 0000000000000000 RDI: ffffffff9f00590f
-RBP: 0000000000000000 R08: 0000000000000001 R09: ffffed102360835d
-R10: ffff88811b041aeb R11: 0000000000000001 R12: 0000000000000000
-R13: ffffffffa202d7c0 R14: 0000000000000000 R15: 00000000000147d0
- default_idle_call+0x6b/0xa0
- cpuidle_idle_call+0x1af/0x1f0
- do_idle+0xbc/0x130
- cpu_startup_entry+0x33/0x40
- rest_init+0x11f/0x210
- start_kernel+0x39a/0x420
- x86_64_start_reservations+0x18/0x30
- x86_64_start_kernel+0x97/0xa0
- common_startup_64+0x13e/0x141
+ dump_stack_lvl+0x47/0x80
+ print_address_description.constprop.0+0x66/0x300
+ print_report+0x3e/0x70
+ kasan_report+0xb4/0xf0
+ bfqq_group+0x15/0x50
+ bfqq_request_over_limit+0x130/0x9a0
+ bfq_limit_depth+0x1b5/0x480
+ __blk_mq_alloc_requests+0x2b5/0xa00
+ blk_mq_get_new_requests+0x11d/0x1d0
+ blk_mq_submit_bio+0x286/0xb00
+ submit_bio_noacct_nocheck+0x331/0x400
+ __block_write_full_folio+0x3d0/0x640
+ writepage_cb+0x3b/0xc0
+ write_cache_pages+0x254/0x6c0
+ write_cache_pages+0x254/0x6c0
+ do_writepages+0x192/0x310
+ filemap_fdatawrite_wbc+0x95/0xc0
+ __filemap_fdatawrite_range+0x99/0xd0
+ filemap_write_and_wait_range.part.0+0x4d/0xa0
+ blkdev_read_iter+0xef/0x1e0
+ io_read+0x1b6/0x8a0
+ io_issue_sqe+0x87/0x300
+ io_wq_submit_work+0xeb/0x390
+ io_worker_handle_work+0x24d/0x550
+ io_wq_worker+0x27f/0x6c0
+ ret_from_fork_asm+0x1b/0x30
  </TASK>
 
-Allocated by task 595:
- kasan_save_stack+0x24/0x50
- kasan_save_track+0x14/0x30
- __kasan_slab_alloc+0x87/0x90
- kmem_cache_alloc_noprof+0x12b/0x3f0
- copy_net_ns+0x94/0x380
- create_new_namespaces+0x24c/0x500
- unshare_nsproxy_namespaces+0x75/0xf0
- ksys_unshare+0x24e/0x4f0
- __x64_sys_unshare+0x1f/0x30
- do_syscall_64+0x70/0x180
- entry_SYSCALL_64_after_hwframe+0x76/0x7e
+Allocated by task 808602:
+ kasan_save_stack+0x1e/0x40
+ kasan_set_track+0x21/0x30
+ __kasan_slab_alloc+0x83/0x90
+ kmem_cache_alloc_node+0x1b1/0x6d0
+ bfq_get_queue+0x138/0xfa0
+ bfq_get_bfqq_handle_split+0xe3/0x2c0
+ bfq_init_rq+0x196/0xbb0
+ bfq_insert_request.isra.0+0xb5/0x480
+ bfq_insert_requests+0x156/0x180
+ blk_mq_insert_request+0x15d/0x440
+ blk_mq_submit_bio+0x8a4/0xb00
+ submit_bio_noacct_nocheck+0x331/0x400
+ __blkdev_direct_IO_async+0x2dd/0x330
+ blkdev_write_iter+0x39a/0x450
+ io_write+0x22a/0x840
+ io_issue_sqe+0x87/0x300
+ io_wq_submit_work+0xeb/0x390
+ io_worker_handle_work+0x24d/0x550
+ io_wq_worker+0x27f/0x6c0
+ ret_from_fork+0x2d/0x50
+ ret_from_fork_asm+0x1b/0x30
 
-Freed by task 100:
- kasan_save_stack+0x24/0x50
- kasan_save_track+0x14/0x30
- kasan_save_free_info+0x3b/0x60
- __kasan_slab_free+0x54/0x70
- kmem_cache_free+0x156/0x5d0
- cleanup_net+0x5d3/0x670
- process_one_work+0x776/0xa90
- worker_thread+0x2e2/0x560
- kthread+0x1a8/0x1f0
- ret_from_fork+0x34/0x60
- ret_from_fork_asm+0x1a/0x30
+Freed by task 808589:
+ kasan_save_stack+0x1e/0x40
+ kasan_set_track+0x21/0x30
+ kasan_save_free_info+0x27/0x40
+ __kasan_slab_free+0x126/0x1b0
+ kmem_cache_free+0x10c/0x750
+ bfq_put_queue+0x2dd/0x770
+ __bfq_insert_request.isra.0+0x155/0x7a0
+ bfq_insert_request.isra.0+0x122/0x480
+ bfq_insert_requests+0x156/0x180
+ blk_mq_dispatch_plug_list+0x528/0x7e0
+ blk_mq_flush_plug_list.part.0+0xe5/0x590
+ __blk_flush_plug+0x3b/0x90
+ blk_finish_plug+0x40/0x60
+ do_writepages+0x19d/0x310
+ filemap_fdatawrite_wbc+0x95/0xc0
+ __filemap_fdatawrite_range+0x99/0xd0
+ filemap_write_and_wait_range.part.0+0x4d/0xa0
+ blkdev_read_iter+0xef/0x1e0
+ io_read+0x1b6/0x8a0
+ io_issue_sqe+0x87/0x300
+ io_wq_submit_work+0xeb/0x390
+ io_worker_handle_work+0x24d/0x550
+ io_wq_worker+0x27f/0x6c0
+ ret_from_fork+0x2d/0x50
+ ret_from_fork_asm+0x1b/0x30
 
-Reproduction script:
+Fix the problem by protecting bic_to_bfqq() with bfqd->lock.
 
-mkdir -p /mnt/nfsshare
-mkdir -p /mnt/nfs/netns_1
-mkfs.ext4 /dev/sdb
-mount /dev/sdb /mnt/nfsshare
-systemctl restart nfs-server
-chmod 777 /mnt/nfsshare
-exportfs -i -o rw,no_root_squash *:/mnt/nfsshare
-
-ip netns add netns_1
-ip link add name veth_1_peer type veth peer veth_1
-ifconfig veth_1_peer 11.11.0.254 up
-ip link set veth_1 netns netns_1
-ip netns exec netns_1 ifconfig veth_1 11.11.0.1
-
-ip netns exec netns_1 /root/iptables -A OUTPUT -d 11.11.0.254 -p tcp \
-	--tcp-flags FIN FIN  -j DROP
-
-(note: In my environment, a DESTROY_CLIENTID operation is always sent
- immediately, breaking the nfs tcp connection.)
-ip netns exec netns_1 timeout -s 9 300 mount -t nfs -o proto=tcp,vers=4.1 \
-	11.11.0.254:/mnt/nfsshare /mnt/nfs/netns_1
-
-ip netns del netns_1
-
-The reason here is that the tcp socket in netns_1 (nfs side) has been
-shutdown and closed (done in xs_destroy), but the FIN message (with ack)
-is discarded, and the nfsd side keeps sending retransmission messages.
-As a result, when the tcp sock in netns_1 processes the received message,
-it sends the message (FIN message) in the sending queue, and the tcp timer
-is re-established. When the network namespace is deleted, the net structure
-accessed by tcp's timer handler function causes problems.
-
-To fix this problem, let's hold netns refcnt for the tcp kernel socket as
-done in other modules. This is an ugly hack which can easily be backported
-to earlier kernels. A proper fix which cleans up the interfaces will
-follow, but may not be so easy to backport.
-
-Fixes: 26abe14379f8 ("net: Modify sk_alloc to not reference count the netns of kernel sockets.")
-Signed-off-by: Liu Jian <liujian56@huawei.com>
-Acked-by: Jeff Layton <jlayton@kernel.org>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+CC: Jan Kara <jack@suse.cz>
+Fixes: 76f1df88bbc2 ("bfq: Limit number of requests consumed by each cgroup")
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Link: https://lore.kernel.org/r/20241129091509.2227136-1-yukuai1@huaweicloud.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/svcsock.c  | 4 ++++
- net/sunrpc/xprtsock.c | 7 +++++++
- 2 files changed, 11 insertions(+)
+ block/bfq-iosched.c | 37 ++++++++++++++++++++++++-------------
+ 1 file changed, 24 insertions(+), 13 deletions(-)
 
-diff --git a/net/sunrpc/svcsock.c b/net/sunrpc/svcsock.c
-index 933e12e3a55c7..83996eea10062 100644
---- a/net/sunrpc/svcsock.c
-+++ b/net/sunrpc/svcsock.c
-@@ -1562,6 +1562,10 @@ static struct svc_xprt *svc_create_socket(struct svc_serv *serv,
- 	newlen = error;
+diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
+index 7e0dcded5713a..dd8ca3f7ba60a 100644
+--- a/block/bfq-iosched.c
++++ b/block/bfq-iosched.c
+@@ -582,23 +582,31 @@ static struct request *bfq_choose_req(struct bfq_data *bfqd,
+ #define BFQ_LIMIT_INLINE_DEPTH 16
  
- 	if (protocol == IPPROTO_TCP) {
-+		__netns_tracker_free(net, &sock->sk->ns_tracker, false);
-+		sock->sk->sk_net_refcnt = 1;
-+		get_net_track(net, &sock->sk->ns_tracker, GFP_KERNEL);
-+		sock_inuse_add(net, 1);
- 		if ((error = kernel_listen(sock, 64)) < 0)
- 			goto bummer;
- 	}
-diff --git a/net/sunrpc/xprtsock.c b/net/sunrpc/xprtsock.c
-index c528297245125..1c4bc8234ea87 100644
---- a/net/sunrpc/xprtsock.c
-+++ b/net/sunrpc/xprtsock.c
-@@ -1921,6 +1921,13 @@ static struct socket *xs_create_sock(struct rpc_xprt *xprt,
- 		goto out;
- 	}
+ #ifdef CONFIG_BFQ_GROUP_IOSCHED
+-static bool bfqq_request_over_limit(struct bfq_queue *bfqq, int limit)
++static bool bfqq_request_over_limit(struct bfq_data *bfqd,
++				    struct bfq_io_cq *bic, blk_opf_t opf,
++				    unsigned int act_idx, int limit)
+ {
+-	struct bfq_data *bfqd = bfqq->bfqd;
+-	struct bfq_entity *entity = &bfqq->entity;
+ 	struct bfq_entity *inline_entities[BFQ_LIMIT_INLINE_DEPTH];
+ 	struct bfq_entity **entities = inline_entities;
+-	int depth, level, alloc_depth = BFQ_LIMIT_INLINE_DEPTH;
+-	int class_idx = bfqq->ioprio_class - 1;
++	int alloc_depth = BFQ_LIMIT_INLINE_DEPTH;
+ 	struct bfq_sched_data *sched_data;
++	struct bfq_entity *entity;
++	struct bfq_queue *bfqq;
+ 	unsigned long wsum;
+ 	bool ret = false;
+-
+-	if (!entity->on_st_or_in_serv)
+-		return false;
++	int depth;
++	int level;
  
-+	if (protocol == IPPROTO_TCP) {
-+		__netns_tracker_free(xprt->xprt_net, &sock->sk->ns_tracker, false);
-+		sock->sk->sk_net_refcnt = 1;
-+		get_net_track(xprt->xprt_net, &sock->sk->ns_tracker, GFP_KERNEL);
-+		sock_inuse_add(xprt->xprt_net, 1);
-+	}
+ retry:
+ 	spin_lock_irq(&bfqd->lock);
++	bfqq = bic_to_bfqq(bic, op_is_sync(opf), act_idx);
++	if (!bfqq)
++		goto out;
 +
- 	filp = sock_alloc_file(sock, O_NONBLOCK, NULL);
- 	if (IS_ERR(filp))
- 		return ERR_CAST(filp);
++	entity = &bfqq->entity;
++	if (!entity->on_st_or_in_serv)
++		goto out;
++
+ 	/* +1 for bfqq entity, root cgroup not included */
+ 	depth = bfqg_to_blkg(bfqq_group(bfqq))->blkcg->css.cgroup->level + 1;
+ 	if (depth > alloc_depth) {
+@@ -643,7 +651,7 @@ static bool bfqq_request_over_limit(struct bfq_queue *bfqq, int limit)
+ 			 * class.
+ 			 */
+ 			wsum = 0;
+-			for (i = 0; i <= class_idx; i++) {
++			for (i = 0; i <= bfqq->ioprio_class - 1; i++) {
+ 				wsum = wsum * IOPRIO_BE_NR +
+ 					sched_data->service_tree[i].wsum;
+ 			}
+@@ -666,7 +674,9 @@ static bool bfqq_request_over_limit(struct bfq_queue *bfqq, int limit)
+ 	return ret;
+ }
+ #else
+-static bool bfqq_request_over_limit(struct bfq_queue *bfqq, int limit)
++static bool bfqq_request_over_limit(struct bfq_data *bfqd,
++				    struct bfq_io_cq *bic, blk_opf_t opf,
++				    unsigned int act_idx, int limit)
+ {
+ 	return false;
+ }
+@@ -704,8 +714,9 @@ static void bfq_limit_depth(blk_opf_t opf, struct blk_mq_alloc_data *data)
+ 	}
+ 
+ 	for (act_idx = 0; bic && act_idx < bfqd->num_actuators; act_idx++) {
+-		struct bfq_queue *bfqq =
+-			bic_to_bfqq(bic, op_is_sync(opf), act_idx);
++		/* Fast path to check if bfqq is already allocated. */
++		if (!bic_to_bfqq(bic, op_is_sync(opf), act_idx))
++			continue;
+ 
+ 		/*
+ 		 * Does queue (or any parent entity) exceed number of
+@@ -713,7 +724,7 @@ static void bfq_limit_depth(blk_opf_t opf, struct blk_mq_alloc_data *data)
+ 		 * limit depth so that it cannot consume more
+ 		 * available requests and thus starve other entities.
+ 		 */
+-		if (bfqq && bfqq_request_over_limit(bfqq, limit)) {
++		if (bfqq_request_over_limit(bfqd, bic, opf, act_idx, limit)) {
+ 			depth = 1;
+ 			break;
+ 		}
 -- 
 2.43.0
 
