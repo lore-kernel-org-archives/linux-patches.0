@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFF8614F9F4;
-	Fri,  6 Dec 2024 15:16:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4620C14F9F4;
+	Fri,  6 Dec 2024 15:16:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733498180; cv=none; b=TGwJfGz2doUg8zCLrlqFzEPKKkk1/rq18IGqtnqOuTUJNtJR0JrnB7AMWgGT9XVDGjlbZZdZojw8Q2WWBvKjvnh6u48EOyoLb032nENlEXO7vPIObSjNy6GyqG1EatuL+je8Fo41LIjjoZFMKS3WGpY11OJxJ5ydw9xxv7esYmI=
+	t=1733498184; cv=none; b=gAbdguCPtTG5gqN1Q48fFyrQhfB1DL8qH+K9Mugv+DTaxTuEYf1TIBRCCEKhOsBgscte0TA88l/FfH0WIvHq4gAjoadCvOGB4M/EE+s/LjmiaUp2iev8BrQRRcpFmnagdIVIphlf7IujsEfyLA8IRSRllNpn2/CT4xzwCheK6tc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733498180; c=relaxed/simple;
-	bh=VvDi/DZdjWBvMCM9MsOv0mLI+gM2sZrMlKt4m4EdZFQ=;
+	s=arc-20240116; t=1733498184; c=relaxed/simple;
+	bh=01MkATgIIngVAIX1fk/f7/4GSXmdLGT2TD5JsWYiYe0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kjvfyjTg6NaDsP2wD1H+HHis3FG9QUbxpLXk7idDCwmu4bYUEK5F0BeXwHUcLuOJQLdjjTOUAHRak2n9TTmp3QsUFkgwgDYx3VDYrSbjQsbq0P0IwckmgWoJJQq4lO8BsgLo//hG82rPBlu1F117UBV8pr6k3E0AsIHDYJgxSRg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a98YREiw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fv7MSA9JuXiR1S/qM4Y0FfDlVrjSGYt3Ra/oKIH7z21Ba1o+MKzVTOsDqaJ4sVIG2f6tWi0BdfkT0suExAcwWVyYo4FidigoUQgoO1GXm/z5T8oSbDXRtDr51p2QbNGcATdOrDg9xgRnrrLWM5etyMrSC4GtJUkDe0MqbCweGRA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u7EeClvk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a98YREiw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D02BC4CED1;
-	Fri,  6 Dec 2024 15:16:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u7EeClvk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AFF0C4CED1;
+	Fri,  6 Dec 2024 15:16:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733498180;
-	bh=VvDi/DZdjWBvMCM9MsOv0mLI+gM2sZrMlKt4m4EdZFQ=;
+	s=korg; t=1733498183;
+	bh=01MkATgIIngVAIX1fk/f7/4GSXmdLGT2TD5JsWYiYe0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a98YREiwdTSeE70gfI1dlQa/w6NxvHiSLqu/fcYv4AIKFR5hLyFeAwUcbFyOru17K
-	 HAqUlPt/D+4EOue9aehvhuQqsVqln94581o7+bwdZK9kUw9m+KjeYaLGUX61EvmYef
-	 a0gumWqn6paR47B5hMqbTekQRUt6cQmCmBBZ+rag=
+	b=u7EeClvkw0yKbAGe0isTqtoi5pXReOo6hMJty9f9L4PeQpgm3RJXcIaN2T6+Amdlw
+	 zigcvshfypxE45ZTYDffxBUKPpi6OpFTOxXQStQww8U7hMP+GXPKoxim4HEdd1CZ/a
+	 /6JbMYAGFWOXGe0aCx6ivj+nJJiCfC60nKXrZ+rg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pratyush Yadav <pratyush@kernel.org>,
-	Cheng Ming Lin <chengminglin@mxic.com.tw>,
-	Tudor Ambarus <tudor.ambarus@linaro.org>
-Subject: [PATCH 6.6 508/676] mtd: spi-nor: core: replace dummy buswidth from addr to data
-Date: Fri,  6 Dec 2024 15:35:27 +0100
-Message-ID: <20241206143713.197828463@linuxfoundation.org>
+	Lukasz Luba <lukasz.luba@arm.com>,
+	Jinjie Ruan <ruanjinjie@huawei.com>,
+	Viresh Kumar <viresh.kumar@linaro.org>
+Subject: [PATCH 6.6 509/676] cpufreq: mediatek-hw: Fix wrong return value in mtk_cpufreq_get_cpu_power()
+Date: Fri,  6 Dec 2024 15:35:28 +0100
+Message-ID: <20241206143713.237800596@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -51,44 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cheng Ming Lin <chengminglin@mxic.com.tw>
+From: Jinjie Ruan <ruanjinjie@huawei.com>
 
-commit 98d1fb94ce75f39febd456d6d3cbbe58b6678795 upstream.
+commit 172bf5ed04cb6c9e66d58de003938ed5c8756570 upstream.
 
-The default dummy cycle for Macronix SPI NOR flash in Octal Output
-Read Mode(1-1-8) is 20.
+mtk_cpufreq_get_cpu_power() return 0 if the policy is NULL. Then in
+em_create_perf_table(), the later zero check for power is not invalid
+as power is uninitialized. As Lukasz suggested, it must return -EINVAL when
+the 'policy' is not found. So return -EINVAL to fix it.
 
-Currently, the dummy buswidth is set according to the address bus width.
-In the 1-1-8 mode, this means the dummy buswidth is 1. When converting
-dummy cycles to bytes, this results in 20 x 1 / 8 = 2 bytes, causing the
-host to read data 4 cycles too early.
-
-Since the protocol data buswidth is always greater than or equal to the
-address buswidth. Setting the dummy buswidth to match the data buswidth
-increases the likelihood that the dummy cycle-to-byte conversion will be
-divisible, preventing the host from reading data prematurely.
-
-Fixes: 0e30f47232ab ("mtd: spi-nor: add support for DTR protocol")
 Cc: stable@vger.kernel.org
-Reviewed-by: Pratyush Yadav <pratyush@kernel.org>
-Signed-off-by: Cheng Ming Lin <chengminglin@mxic.com.tw>
-Link: https://lore.kernel.org/r/20241112075242.174010-2-linchengming884@gmail.com
-Signed-off-by: Tudor Ambarus <tudor.ambarus@linaro.org>
+Fixes: 4855e26bcf4d ("cpufreq: mediatek-hw: Add support for CPUFREQ HW")
+Reviewed-by: Lukasz Luba <lukasz.luba@arm.com>
+Suggested-by: Lukasz Luba <lukasz.luba@arm.com>
+Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/spi-nor/core.c |    2 +-
+ drivers/cpufreq/mediatek-cpufreq-hw.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/mtd/spi-nor/core.c
-+++ b/drivers/mtd/spi-nor/core.c
-@@ -89,7 +89,7 @@ void spi_nor_spimem_setup_op(const struc
- 		op->addr.buswidth = spi_nor_get_protocol_addr_nbits(proto);
+--- a/drivers/cpufreq/mediatek-cpufreq-hw.c
++++ b/drivers/cpufreq/mediatek-cpufreq-hw.c
+@@ -62,7 +62,7 @@ mtk_cpufreq_get_cpu_power(struct device
  
- 	if (op->dummy.nbytes)
--		op->dummy.buswidth = spi_nor_get_protocol_addr_nbits(proto);
-+		op->dummy.buswidth = spi_nor_get_protocol_data_nbits(proto);
+ 	policy = cpufreq_cpu_get_raw(cpu_dev->id);
+ 	if (!policy)
+-		return 0;
++		return -EINVAL;
  
- 	if (op->data.nbytes)
- 		op->data.buswidth = spi_nor_get_protocol_data_nbits(proto);
+ 	data = policy->driver_data;
+ 
 
 
