@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8375E13D516;
-	Fri,  6 Dec 2024 14:48:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B077110E0;
+	Fri,  6 Dec 2024 14:48:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733496503; cv=none; b=kmT8lO25gygDCfiNnSK41lSxE9ECrmK37pIsCCT7Z8ZcVlHAKZabE+d+T2Z/OuxxBAk9Ih7pYl2Bx9bjBSVc7Lf3zPqo0Kr6N+RmjfoqZcQJ2XF/kqzd9Y7WfGroUGLpD3jhKeqoCOyE2sb4KZCi0focUHIDEszUZxsZwrVgUzM=
+	t=1733496506; cv=none; b=XSHhN8fQ93iSIQdLxVCV1+nhho1Xrty88oWyFtsuVm5c+WbRHWP8FxQg1t8OZNiAcAdrL473saayNZoaahKHDGlB6VP0VPrlG5lIpJzF0XtF7vfQUkq5nx7RY2MB+9KRICKOwFAvM2T/qNphRtm6DFG7qL8CufeBx6aJSnkCmlc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733496503; c=relaxed/simple;
-	bh=zVCc/jRLrIlNufYv+LMZDqmvS6xDVHiqZ2aue7LITjk=;
+	s=arc-20240116; t=1733496506; c=relaxed/simple;
+	bh=Jt/DSZibWf3KmYz7SLCQW0sIjoLASoP03SLJxUQ+bmw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A9v9liO3qTyqmUDMTlXicEKPM/cDDRHglNxOyotka86qVkHtRdV6Slege40988Av2MxFaoOkrS/57sTxXTZ+P56Jo7iTtBt4vD7rPFW5iZkabfLPBsKxiIhS8+eWvqn3zjbLjbK3QnpgdGr2AueTfvzStyA2u2Q+6BYXiPZyDzU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sYlx9Kii; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MUUOgVswH63XR02c+CxbTRyo1y3osdtXoYrFeBjkmtidJd1F7E4ELUuceKXBSPSwaau5XNWRjUfXGSKRGRK5qOW8TqWuSA9hiAuELtymLYfwXONaF/mv1dCXc8TXWCgXbOR01LTTWeMCypVihRcPVtlRAv/400yMCdpb4uxDZiM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VSmnnEsW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sYlx9Kii"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05C58C4CED1;
-	Fri,  6 Dec 2024 14:48:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VSmnnEsW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 237B4C4CEDF;
+	Fri,  6 Dec 2024 14:48:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733496503;
-	bh=zVCc/jRLrIlNufYv+LMZDqmvS6xDVHiqZ2aue7LITjk=;
+	s=korg; t=1733496506;
+	bh=Jt/DSZibWf3KmYz7SLCQW0sIjoLASoP03SLJxUQ+bmw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sYlx9KiiXQ6T4nrSzCVvuVIwEC4DXfUgmI3m0W1a7iYpbqTpotXAHZHoVR1NQfXmG
-	 XSQghp10sTDGW/qH3OvxtZRhnwpM4Y/FY7BQP3U8AMdbbUiDI3eI5wywmm5IUWtwxw
-	 aET9NvAZDCbHT1jL7uiGFPIQ0u8oYgdFgf072ZW8=
+	b=VSmnnEsWiajCgjU+Dffq0FvPwrcnE7oB3k8nDbDvECcXcB2+nQWKgURIsncOT0T+I
+	 lrF+CMyfR7j5pfYzyFwHQ+o5mzEOXUog7g3+lCdL+ARwCfykhZH0otMgovWsj/pCLd
+	 /X9fQs8S2MvJpZogBaX15041GYRjV2B4rdrnFyxM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Gabay <daniel.gabay@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Markus Petri <mp@mpetri.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 006/676] wifi: iwlwifi: mvm: Use the sync timepoint API in suspend
-Date: Fri,  6 Dec 2024 15:27:05 +0100
-Message-ID: <20241206143653.605329801@linuxfoundation.org>
+Subject: [PATCH 6.6 024/676] ASoC: amd: yc: Support dmic on another model of Lenovo Thinkpad E14 Gen 6
+Date: Fri,  6 Dec 2024 15:27:23 +0100
+Message-ID: <20241206143654.303510662@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -52,62 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Gabay <daniel.gabay@intel.com>
+From: Markus Petri <mp@mpetri.org>
 
-[ Upstream commit 9715246ca0bfc9feaec1b4ff5b3d38de65a7025d ]
+[ Upstream commit 8c21e40e1e481f7fef6e570089e317068b972c45 ]
 
-When starting the suspend flow, HOST_D3_START triggers an _async_
-firmware dump collection for debugging purposes. The async worker
-may race with suspend flow and fail to get NIC access, resulting in
-the following warning:
-"Timeout waiting for hardware access (CSR_GP_CNTRL 0xffffffff)"
+Another model of Thinkpad E14 Gen 6 (21M4)
+needs a quirk entry for the dmic to be detected.
 
-Fix this by switching to the sync version to ensure the dump
-completes before proceeding with the suspend flow, avoiding
-potential race issues.
-
-Signed-off-by: Daniel Gabay <daniel.gabay@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20241010140328.9aae318cd593.I4b322009f39489c0b1d8893495c887870f73ed9c@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Markus Petri <mp@mpetri.org>
+Link: https://patch.msgid.link/20241107094020.1050935-1-mp@localhost
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/fw/init.c | 4 +++-
- drivers/net/wireless/intel/iwlwifi/mvm/d3.c  | 2 ++
- 2 files changed, 5 insertions(+), 1 deletion(-)
+ sound/soc/amd/yc/acp6x-mach.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/fw/init.c b/drivers/net/wireless/intel/iwlwifi/fw/init.c
-index 135bd48bfe9fa..cf02a2afbee56 100644
---- a/drivers/net/wireless/intel/iwlwifi/fw/init.c
-+++ b/drivers/net/wireless/intel/iwlwifi/fw/init.c
-@@ -39,10 +39,12 @@ void iwl_fw_runtime_init(struct iwl_fw_runtime *fwrt, struct iwl_trans *trans,
- }
- IWL_EXPORT_SYMBOL(iwl_fw_runtime_init);
- 
-+/* Assumes the appropriate lock is held by the caller */
- void iwl_fw_runtime_suspend(struct iwl_fw_runtime *fwrt)
- {
- 	iwl_fw_suspend_timestamp(fwrt);
--	iwl_dbg_tlv_time_point(fwrt, IWL_FW_INI_TIME_POINT_HOST_D3_START, NULL);
-+	iwl_dbg_tlv_time_point_sync(fwrt, IWL_FW_INI_TIME_POINT_HOST_D3_START,
-+				    NULL);
- }
- IWL_EXPORT_SYMBOL(iwl_fw_runtime_suspend);
- 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/d3.c b/drivers/net/wireless/intel/iwlwifi/mvm/d3.c
-index 08d1fab7f53c3..592b9157d50c6 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/d3.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/d3.c
-@@ -1382,7 +1382,9 @@ int iwl_mvm_suspend(struct ieee80211_hw *hw, struct cfg80211_wowlan *wowlan)
- 
- 	iwl_mvm_pause_tcm(mvm, true);
- 
-+	mutex_lock(&mvm->mutex);
- 	iwl_fw_runtime_suspend(&mvm->fwrt);
-+	mutex_unlock(&mvm->mutex);
- 
- 	return __iwl_mvm_suspend(hw, wowlan, false);
- }
+diff --git a/sound/soc/amd/yc/acp6x-mach.c b/sound/soc/amd/yc/acp6x-mach.c
+index 08f823cd88699..04700e7471ca5 100644
+--- a/sound/soc/amd/yc/acp6x-mach.c
++++ b/sound/soc/amd/yc/acp6x-mach.c
+@@ -227,6 +227,13 @@ static const struct dmi_system_id yc_acp_quirk_table[] = {
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "21M3"),
+ 		}
+ 	},
++	{
++		.driver_data = &acp6x_card,
++		.matches = {
++			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "21M4"),
++		}
++	},
+ 	{
+ 		.driver_data = &acp6x_card,
+ 		.matches = {
 -- 
 2.43.0
 
