@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7345620C016;
-	Fri,  6 Dec 2024 15:19:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10E4E153BE8;
+	Fri,  6 Dec 2024 15:19:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733498385; cv=none; b=rPRUSOtf4n0LpWJx7dxujI2B5i6eqntWJ79u2yASl+RA2LFXRwcIMPE+bXsuRWoIzOeBuLvTom6RNDcpnIK5PehLEytkvzg8Xhivmilws3O4FOFEWsKzy+4vb3IR/w8Ux/gunoq1/OYCAFQ0rEnIi3h1Dcmez4syMBH7+6zOzlY=
+	t=1733498390; cv=none; b=UisfAeeWqN/ylVKJZKqRaV/Avi1m66K89wFBSqd9qQgu6PrPlY91duUqM6YRHBSZqRrXYoZAK+delFXQ8vyYShEiopUoEZz3GZVFpxcaqmco67EAKdtGgR+2GNT2D+M5T3PIw5oGXs1lGe9G2KUv98Q36kNTo9BUgrvViHgLcLo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733498385; c=relaxed/simple;
-	bh=2YCMYZsliwyNJvj0FU1Xwu+CdtuLtiixfDwDIhLAAWI=;
+	s=arc-20240116; t=1733498390; c=relaxed/simple;
+	bh=X4NUAxY9KD636P/swKdeYgAkFf60PlxiX0tPrVKRFDY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PK5t6jOPyjy1ahuCnOam0qicdW5GISdeT8OyBGgrSRwOg60tnlPwUOOj5bgYTfrKUqLo+FL/FcmmuZHjzV/uWcmkegmXyFJiEmKLm4yz9HPLLRHj3o20PvJ1XtrsqYeqcgwMbQfhVUT++nRaFtIgXupBs1gvzIH3CacY+r2Rxf8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=siNIj8oO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mtn5ZdTtqOl6u8LHCIZFNZH+JigwEQakNe5EEsqYdVBoocaLRIWBV+sW+gKrdKCzZP1Btb8+H5ky0bJoeRYa/B7AxgX5dd7+01Pz/XK9ThAgf61i50xbVMc4lIPCQ6yZpotUBOnIaJUIKg91u24ndnCVw5m+yANEnZb3nnnYsN0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ozwpJgeC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="siNIj8oO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D573DC4CEDC;
-	Fri,  6 Dec 2024 15:19:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ozwpJgeC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25C42C4CED1;
+	Fri,  6 Dec 2024 15:19:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733498385;
-	bh=2YCMYZsliwyNJvj0FU1Xwu+CdtuLtiixfDwDIhLAAWI=;
+	s=korg; t=1733498388;
+	bh=X4NUAxY9KD636P/swKdeYgAkFf60PlxiX0tPrVKRFDY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=siNIj8oOr1/6O5yMxS5XUdZtYUU6KQbllUA6Iq7ShPCYClcyEter4PNQKR1sOlbpa
-	 /Mgo37II4sZ2VJ8RSlozwmvfodbvFB/vYSxd75BQQ0y6DCq0knTtCV4YrWA5VRubrz
-	 UNdop/35Var13YkOkxmSfD8B0y2fP+XeJTB/OT4s=
+	b=ozwpJgeC6ltQgEVMhSvovrARNUVRjz2Z7twNd6U6smlh/SA0HgmUHli6CrxRiDm4I
+	 p621wIGyxf9/EMVXGJJ+X/XN7lRfbqiym6q9SO2RtYKDJaDwitJceQSSwyrj1hyNdR
+	 VyHV+V7Xz639oAbi7PO6mDdwaekItIZYeUxPVWHk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
-	Keith Busch <kbusch@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 570/676] nvme/multipath: Fix RCU list traversal to use SRCU primitive
-Date: Fri,  6 Dec 2024 15:36:29 +0100
-Message-ID: <20241206143715.624527627@linuxfoundation.org>
+	Yang Erkun <yangerkun@huawei.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 6.6 553/676] SUNRPC: make sure cache entry active before cache_show
+Date: Fri,  6 Dec 2024 15:36:12 +0100
+Message-ID: <20241206143714.966922347@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -51,107 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Yang Erkun <yangerkun@huawei.com>
 
-[ Upstream commit 5dd18f09ce7399df6fffe80d1598add46c395ae9 ]
+commit 2862eee078a4d2d1f584e7f24fa50dddfa5f3471 upstream.
 
-The code currently uses list_for_each_entry_rcu() while holding an SRCU
-lock, triggering false positive warnings with CONFIG_PROVE_RCU=y
-enabled:
+The function `c_show` was called with protection from RCU. This only
+ensures that `cp` will not be freed. Therefore, the reference count for
+`cp` can drop to zero, which will trigger a refcount use-after-free
+warning when `cache_get` is called. To resolve this issue, use
+`cache_get_rcu` to ensure that `cp` remains active.
 
-	drivers/nvme/host/multipath.c:168 RCU-list traversed in non-reader section!!
-	drivers/nvme/host/multipath.c:227 RCU-list traversed in non-reader section!!
-	drivers/nvme/host/multipath.c:260 RCU-list traversed in non-reader section!!
+------------[ cut here ]------------
+refcount_t: addition on 0; use-after-free.
+WARNING: CPU: 7 PID: 822 at lib/refcount.c:25
+refcount_warn_saturate+0xb1/0x120
+CPU: 7 UID: 0 PID: 822 Comm: cat Not tainted 6.12.0-rc3+ #1
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS
+1.16.1-2.fc37 04/01/2014
+RIP: 0010:refcount_warn_saturate+0xb1/0x120
 
-While the list is properly protected by SRCU lock, the code uses the
-wrong list traversal primitive. Replace list_for_each_entry_rcu() with
-list_for_each_entry_srcu() to correctly indicate SRCU-based protection
-and eliminate the false warning.
+Call Trace:
+ <TASK>
+ c_show+0x2fc/0x380 [sunrpc]
+ seq_read_iter+0x589/0x770
+ seq_read+0x1e5/0x270
+ proc_reg_read+0xe1/0x140
+ vfs_read+0x125/0x530
+ ksys_read+0xc1/0x160
+ do_syscall_64+0x5f/0x170
+ entry_SYSCALL_64_after_hwframe+0x76/0x7e
 
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Fixes: be647e2c76b2 ("nvme: use srcu for iterating namespace list")
-Signed-off-by: Keith Busch <kbusch@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org # v4.20+
+Signed-off-by: Yang Erkun <yangerkun@huawei.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/host/multipath.c | 21 ++++++++++++++-------
- 1 file changed, 14 insertions(+), 7 deletions(-)
+ net/sunrpc/cache.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/nvme/host/multipath.c b/drivers/nvme/host/multipath.c
-index 989d1e50fb8cc..32283301199f0 100644
---- a/drivers/nvme/host/multipath.c
-+++ b/drivers/nvme/host/multipath.c
-@@ -165,7 +165,8 @@ void nvme_kick_requeue_lists(struct nvme_ctrl *ctrl)
- 	int srcu_idx;
- 
- 	srcu_idx = srcu_read_lock(&ctrl->srcu);
--	list_for_each_entry_rcu(ns, &ctrl->namespaces, list) {
-+	list_for_each_entry_srcu(ns, &ctrl->namespaces, list,
-+				 srcu_read_lock_held(&ctrl->srcu)) {
- 		if (!ns->head->disk)
- 			continue;
- 		kblockd_schedule_work(&ns->head->requeue_work);
-@@ -209,7 +210,8 @@ void nvme_mpath_clear_ctrl_paths(struct nvme_ctrl *ctrl)
- 	int srcu_idx;
- 
- 	srcu_idx = srcu_read_lock(&ctrl->srcu);
--	list_for_each_entry_rcu(ns, &ctrl->namespaces, list) {
-+	list_for_each_entry_srcu(ns, &ctrl->namespaces, list,
-+				 srcu_read_lock_held(&ctrl->srcu)) {
- 		nvme_mpath_clear_current_path(ns);
- 		kblockd_schedule_work(&ns->head->requeue_work);
- 	}
-@@ -224,7 +226,8 @@ void nvme_mpath_revalidate_paths(struct nvme_ns *ns)
- 	int srcu_idx;
- 
- 	srcu_idx = srcu_read_lock(&head->srcu);
--	list_for_each_entry_rcu(ns, &head->list, siblings) {
-+	list_for_each_entry_srcu(ns, &head->list, siblings,
-+				 srcu_read_lock_held(&head->srcu)) {
- 		if (capacity != get_capacity(ns->disk))
- 			clear_bit(NVME_NS_READY, &ns->flags);
- 	}
-@@ -256,7 +259,8 @@ static struct nvme_ns *__nvme_find_path(struct nvme_ns_head *head, int node)
- 	int found_distance = INT_MAX, fallback_distance = INT_MAX, distance;
- 	struct nvme_ns *found = NULL, *fallback = NULL, *ns;
- 
--	list_for_each_entry_rcu(ns, &head->list, siblings) {
-+	list_for_each_entry_srcu(ns, &head->list, siblings,
-+				 srcu_read_lock_held(&head->srcu)) {
- 		if (nvme_path_is_disabled(ns))
- 			continue;
- 
-@@ -355,7 +359,8 @@ static struct nvme_ns *nvme_queue_depth_path(struct nvme_ns_head *head)
- 	unsigned int min_depth_opt = UINT_MAX, min_depth_nonopt = UINT_MAX;
- 	unsigned int depth;
- 
--	list_for_each_entry_rcu(ns, &head->list, siblings) {
-+	list_for_each_entry_srcu(ns, &head->list, siblings,
-+				 srcu_read_lock_held(&head->srcu)) {
- 		if (nvme_path_is_disabled(ns))
- 			continue;
- 
-@@ -423,7 +428,8 @@ static bool nvme_available_path(struct nvme_ns_head *head)
- 	if (!test_bit(NVME_NSHEAD_DISK_LIVE, &head->flags))
- 		return NULL;
- 
--	list_for_each_entry_rcu(ns, &head->list, siblings) {
-+	list_for_each_entry_srcu(ns, &head->list, siblings,
-+				 srcu_read_lock_held(&head->srcu)) {
- 		if (test_bit(NVME_CTRL_FAILFAST_EXPIRED, &ns->ctrl->flags))
- 			continue;
- 		switch (ns->ctrl->state) {
-@@ -784,7 +790,8 @@ static int nvme_update_ana_state(struct nvme_ctrl *ctrl,
- 		return 0;
- 
- 	srcu_idx = srcu_read_lock(&ctrl->srcu);
--	list_for_each_entry_rcu(ns, &ctrl->namespaces, list) {
-+	list_for_each_entry_srcu(ns, &ctrl->namespaces, list,
-+				 srcu_read_lock_held(&ctrl->srcu)) {
- 		unsigned nsid;
- again:
- 		nsid = le32_to_cpu(desc->nsids[n]);
--- 
-2.43.0
-
+--- a/net/sunrpc/cache.c
++++ b/net/sunrpc/cache.c
+@@ -1431,7 +1431,9 @@ static int c_show(struct seq_file *m, vo
+ 		seq_printf(m, "# expiry=%lld refcnt=%d flags=%lx\n",
+ 			   convert_to_wallclock(cp->expiry_time),
+ 			   kref_read(&cp->ref), cp->flags);
+-	cache_get(cp);
++	if (!cache_get_rcu(cp))
++		return 0;
++
+ 	if (cache_check(cd, cp, NULL))
+ 		/* cache_check does a cache_put on failure */
+ 		seq_puts(m, "# ");
 
 
