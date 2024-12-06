@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C4341474AF;
-	Fri,  6 Dec 2024 15:04:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9558113E03A;
+	Fri,  6 Dec 2024 15:04:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733497484; cv=none; b=u6pPvHfaXszSfdhT2/NbOn5vm1cfnJCWXEV//dKZboxlg6r3S/MTNTYHTuY6iDZa4X9T/jAj8S1OogRt3fn+TB82/7WNLL2d2DOsEZ+M01k7E/3tM85RhokT6dfsaJUPze89CQ+tMz3ayFX0bJGFGKHUTpKWApK3aTVyCwW97Hs=
+	t=1733497493; cv=none; b=n2YymobA6snHzw7ePvYIbztHLlQrCfbZoRpVv4fobz2sap0JCG0IqNBzfK5j8s/8MXYk08KBBDMnSk7pQvJNNqvuISnqYX1ItK2zbT0Tz0caFxU09BKKK6FBm6+GXUWN8JTZ1JEYhKtImfwln2JLVqlcnQLLn2V3FWkSI9GLAmg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733497484; c=relaxed/simple;
-	bh=ggdb6dsZmfBOekTtTZpc0c6+2D7N9ooBfiWSoOQ5iYw=;
+	s=arc-20240116; t=1733497493; c=relaxed/simple;
+	bh=Upfg6QJbcaVN2wIyvCbnjuFjETMDnne5ryKcgEVdwMs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Zy6TS0vZ81kCpHl6BGxrsEguv8Lv6Yai6xNljesZv4rF4VO080PC3dT0zNMXDMxYLA4gbXtxjlBIJEeWkl9iZY9YcZh+br2SWnZvzVF2YWdbUvfZW5vGkRk0O12Wr5cQ0H3N/guPBPD2+aF0v1BeWehqIeh1zKrOmn6f83EI4QY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=knIW3uNj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TTRXq19AmTNpJ7CuK+hrmylmF4TCzEFZc++jb3lWsF5bRzDHC/5LCyeGekwNJoMIFN8uhlT8ik5zaziezsg/D5KV3IHaI+nNi/X479S/SCfHDgJadSAK/KYwMLp806as58qdI20xpexb1P4wOI/yWQ3qNmcccUrCJfghwV0Cgd8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KPKgLxek; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="knIW3uNj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AB6DC4CED1;
-	Fri,  6 Dec 2024 15:04:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KPKgLxek"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CBD6C4CED1;
+	Fri,  6 Dec 2024 15:04:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733497483;
-	bh=ggdb6dsZmfBOekTtTZpc0c6+2D7N9ooBfiWSoOQ5iYw=;
+	s=korg; t=1733497493;
+	bh=Upfg6QJbcaVN2wIyvCbnjuFjETMDnne5ryKcgEVdwMs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=knIW3uNjJHSFLFLN8FWr7x4bKNJ6s6Qdz4xn/ev+WTHc9W4hsVuLSVMWkFFvcuJBd
-	 LctfOjONeWJz38wsugxxzAjVJqxBB1nqElszjNhlkl8jJfNW84Vec76I1RFGhHw5gz
-	 zbPZfaaxUOjEI79nqsDPzTDd1VyuH++PoqJmpj7g=
+	b=KPKgLxekfyCCbPpO77Ua0id9yU8+gwY5AesmmJjGzWmmfBJLHFyFHbeplgCjfK+om
+	 ujm3jKnxbReMR74r9GOacQSZhO6Ldk33vlNOYmSra5vJFwdgNrTvt5KBxQl15WqeLa
+	 CHH/r+UT1g2J8m+bOK2zmuKmZB1MX4JO9772sLck=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Stern <stern@rowland.harvard.edu>,
-	Douglas Gilbert <dgilbert@interlog.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Kai Huang <kai.huang@intel.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 305/676] scsi: sg: Enable runtime power management
-Date: Fri,  6 Dec 2024 15:32:04 +0100
-Message-ID: <20241206143705.255224786@linuxfoundation.org>
+Subject: [PATCH 6.6 306/676] x86/tdx: Skip saving output regs when SEAMCALL fails with VMFailInvalid
+Date: Fri,  6 Dec 2024 15:32:05 +0100
+Message-ID: <20241206143705.293540160@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -53,72 +53,122 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bart Van Assche <bvanassche@acm.org>
+From: Kai Huang <kai.huang@intel.com>
 
-[ Upstream commit 4045de893f691f75193c606aec440c365cf7a7be ]
+[ Upstream commit 03a423d40cb30e0e1cb77a801acb56ddb0bf6f5e ]
 
-In 2010, runtime power management support was implemented in the SCSI
-core.  The description of patch "[SCSI] implement runtime Power
-Management" mentions that the sg driver is skipped but not why. This
-patch enables runtime power management even if an instance of the sg
-driver is held open.  Enabling runtime PM for the sg driver is safe
-because all interactions of the sg driver with the SCSI device pass
-through the block layer (blk_execute_rq_nowait()) and the block layer
-already supports runtime PM.
+If SEAMCALL fails with VMFailInvalid, the SEAM software (e.g., the TDX
+module) won't have chance to set any output register.  Skip saving the
+output registers to the structure in this case.
 
-Cc: Alan Stern <stern@rowland.harvard.edu>
-Cc: Douglas Gilbert <dgilbert@interlog.com>
-Fixes: bc4f24014de5 ("[SCSI] implement runtime Power Management")
-Signed-off-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://lore.kernel.org/r/20241030220310.1373569-1-bvanassche@acm.org
-Acked-by: Alan Stern <stern@rowland.harvard.edu>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Also, as '.Lno_output_struct' is the very last symbol before RET, rename
+it to '.Lout' to make it short.
+
+Opportunistically make the asm directives unindented.
+
+Suggested-by: Peter Zijlstra <peterz@infradead.org>
+Signed-off-by: Kai Huang <kai.huang@intel.com>
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Reviewed-by: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
+Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://lore.kernel.org/all/704088f5b4d72c7e24084f7f15bd1ac5005b7213.1692096753.git.kai.huang%40intel.com
+Stable-dep-of: f65aa0ad79fc ("x86/tdx: Dynamically disable SEPT violations from causing #VEs")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/sg.c | 9 +--------
- 1 file changed, 1 insertion(+), 8 deletions(-)
+ arch/x86/coco/tdx/tdcall.S      |  3 ---
+ arch/x86/virt/vmx/tdx/tdxcall.S | 29 ++++++++++++++++++++---------
+ 2 files changed, 20 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/scsi/sg.c b/drivers/scsi/sg.c
-index e6d8beb877766..dc9722b290f20 100644
---- a/drivers/scsi/sg.c
-+++ b/drivers/scsi/sg.c
-@@ -307,10 +307,6 @@ sg_open(struct inode *inode, struct file *filp)
- 	if (retval)
- 		goto sg_put;
+diff --git a/arch/x86/coco/tdx/tdcall.S b/arch/x86/coco/tdx/tdcall.S
+index 2eca5f43734fe..e5d4b7d8ecd4a 100644
+--- a/arch/x86/coco/tdx/tdcall.S
++++ b/arch/x86/coco/tdx/tdcall.S
+@@ -78,10 +78,7 @@
+  * Return status of TDCALL via RAX.
+  */
+ SYM_FUNC_START(__tdx_module_call)
+-	FRAME_BEGIN
+ 	TDX_MODULE_CALL host=0
+-	FRAME_END
+-	RET
+ SYM_FUNC_END(__tdx_module_call)
  
--	retval = scsi_autopm_get_device(device);
--	if (retval)
--		goto sdp_put;
+ /*
+diff --git a/arch/x86/virt/vmx/tdx/tdxcall.S b/arch/x86/virt/vmx/tdx/tdxcall.S
+index 49a54356ae992..6bdf6e1379534 100644
+--- a/arch/x86/virt/vmx/tdx/tdxcall.S
++++ b/arch/x86/virt/vmx/tdx/tdxcall.S
+@@ -1,5 +1,6 @@
+ /* SPDX-License-Identifier: GPL-2.0 */
+ #include <asm/asm-offsets.h>
++#include <asm/frame.h>
+ #include <asm/tdx.h>
+ 
+ /*
+@@ -18,6 +19,7 @@
+  *            TDX module.
+  */
+ .macro TDX_MODULE_CALL host:req
++	FRAME_BEGIN
+ 	/*
+ 	 * R12 will be used as temporary storage for struct tdx_module_output
+ 	 * pointer. Since R12-R15 registers are not used by TDCALL/SEAMCALL
+@@ -44,7 +46,7 @@
+ 	mov %rsi, %rcx
+ 	/* Leave input param 2 in RDX */
+ 
+-	.if \host
++.if \host
+ 	seamcall
+ 	/*
+ 	 * SEAMCALL instruction is essentially a VMExit from VMX root
+@@ -57,13 +59,10 @@
+ 	 * This value will never be used as actual SEAMCALL error code as
+ 	 * it is from the Reserved status code class.
+ 	 */
+-	jnc .Lno_vmfailinvalid
+-	mov $TDX_SEAMCALL_VMFAILINVALID, %rax
+-.Lno_vmfailinvalid:
 -
- 	/* scsi_block_when_processing_errors() may block so bypass
- 	 * check if O_NONBLOCK. Permits SCSI commands to be issued
- 	 * during error recovery. Tread carefully. */
-@@ -318,7 +314,7 @@ sg_open(struct inode *inode, struct file *filp)
- 	      scsi_block_when_processing_errors(device))) {
- 		retval = -ENXIO;
- 		/* we are in error recovery for this device */
--		goto error_out;
-+		goto sdp_put;
- 	}
+-	.else
++	jc .Lseamcall_vmfailinvalid
++.else
+ 	tdcall
+-	.endif
++.endif
  
- 	mutex_lock(&sdp->open_rel_lock);
-@@ -371,8 +367,6 @@ sg_open(struct inode *inode, struct file *filp)
- 	}
- error_mutex_locked:
- 	mutex_unlock(&sdp->open_rel_lock);
--error_out:
--	scsi_autopm_put_device(device);
- sdp_put:
- 	kref_put(&sdp->d_ref, sg_device_destroy);
- 	scsi_device_put(device);
-@@ -392,7 +386,6 @@ sg_release(struct inode *inode, struct file *filp)
- 	SCSI_LOG_TIMEOUT(3, sg_printk(KERN_INFO, sdp, "sg_release\n"));
+ 	/*
+ 	 * Fetch output pointer from stack to R12 (It is used
+@@ -80,7 +79,7 @@
+ 	 * Other registers may contain details of the failure.
+ 	 */
+ 	test %r12, %r12
+-	jz .Lno_output_struct
++	jz .Lout
  
- 	mutex_lock(&sdp->open_rel_lock);
--	scsi_autopm_put_device(sdp->device);
- 	kref_put(&sfp->f_ref, sg_remove_sfp);
- 	sdp->open_cnt--;
+ 	/* Copy result registers to output struct: */
+ 	movq %rcx, TDX_MODULE_rcx(%r12)
+@@ -90,7 +89,19 @@
+ 	movq %r10, TDX_MODULE_r10(%r12)
+ 	movq %r11, TDX_MODULE_r11(%r12)
  
+-.Lno_output_struct:
++.Lout:
+ 	/* Restore the state of R12 register */
+ 	pop %r12
++
++	FRAME_END
++	RET
++
++.if \host
++.Lseamcall_vmfailinvalid:
++	mov $TDX_SEAMCALL_VMFAILINVALID, %rax
++	/* pop the unused output pointer back to %r9 */
++	pop %r9
++	jmp .Lout
++.endif	/* \host */
++
+ .endm
 -- 
 2.43.0
 
