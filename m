@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0B531527AC;
-	Fri,  6 Dec 2024 15:13:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4054207A07;
+	Fri,  6 Dec 2024 15:13:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733497990; cv=none; b=HPmgS3uJO4BqhqYiZ+0rxsjKc2RfEbEQMwuHLil9d7iAdv7ptEVBNPI/q128sj5dHehdK5BDpaF6vQlliNzJRsEdBjx1Zip7BPCw87wrGhUW8yzFImHkopvNqF1kjzbAsf/R2ZN6p7nTYh2hDb8L4OP7uJpPlsv1lXnPCnJjUpA=
+	t=1733497993; cv=none; b=Ok6c9Mf1gB9bTPMxgfBfsoK1QDcQ9pegqysRG3hMsCc7KTyBUdH7ZOcCLyG+Gv6drdsuC0bos6m3EUPj2Xn/EtoChZ7ePSIa6ggZG9SlxzN+QsqhUWiJAftRd/CjEV2guRyEjZ2a743K3Q+3kQjb63BiX81mowDp/uxPVRYSfdw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733497990; c=relaxed/simple;
-	bh=0PGzdFV03C8OBb8Cy1TcnKT1cOI1NSbDuSZl2bshiI4=;
+	s=arc-20240116; t=1733497993; c=relaxed/simple;
+	bh=ju7u8C68GTgwsdZSQZCYKWqkebwHcccIKLFMtJtxdV0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NUFGkY6z752B5RPLBHtlw9KC64+4KB6s/1kn6XV6KyrSBHOFuxNa80oc4Su8rAL7OgE18zB17LzKZ1d57yYipsFL8lqPomFUwHHVSj+ZdW0xCJlAdaFILIfCED/pC6VRCNFJosC6eXo2a8xp/1d8LWHcAeX/FJM9w0qUGpoL6VU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ckR79gnK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QHlEdULPYR6xNpHstBK5UyMtpkYHEMFuPN2E5CGCcsUfKs7abZw/8h6cpvoW/exxihoPzvOTtRnwDYjfsxPpC4TrOC82CMwk//Kp99mpXJy+OiEStCWdJ3TIk5SAW2fXJx46m265vbCPFBTUe7nVP4JpT9jV6vwnZVg3/yRKZ2Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LGwHrREh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ckR79gnK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D32CC4CED1;
-	Fri,  6 Dec 2024 15:13:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LGwHrREh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DF26C4CED1;
+	Fri,  6 Dec 2024 15:13:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733497990;
-	bh=0PGzdFV03C8OBb8Cy1TcnKT1cOI1NSbDuSZl2bshiI4=;
+	s=korg; t=1733497993;
+	bh=ju7u8C68GTgwsdZSQZCYKWqkebwHcccIKLFMtJtxdV0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ckR79gnKDfXNFcRaTpxgTppdsmq8lI+RJURNYWMp/EfVW7kYHOGcp/gmdKaji4ek5
-	 5q6Mvhl2o0oaNOLgMtVtWeSwauwr3cFCdwLIybVKWQ8yYhS8QNd3u0Jua4sFmlp3Lg
-	 ysle3X/Jb37/dTjaUeq2VifZDh4bcuOr7VEDba9M=
+	b=LGwHrREhyZnSF4cTofxfreRwYPZG8s7hvaRxwquOm6G7Do7lFO4UKZKT+JFgLfsm5
+	 KSX9STrSsxFppcuMH8aOLCvrCFaQ25/CJ/mjpdAsI5Fln2M/NG+nAyqIH/iS4/emuv
+	 sVVpGjMjuEeW28mepqVXiJkD5JFvwjYcUmyRVtV8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Luczaj <mhal@rbox.co>,
+	Liu Jian <liujian56@huawei.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
+	Eric Dumazet <edumazet@google.com>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 422/676] rxrpc: Improve setsockopt() handling of malformed user input
-Date: Fri,  6 Dec 2024 15:34:01 +0100
-Message-ID: <20241206143709.829837357@linuxfoundation.org>
+Subject: [PATCH 6.6 423/676] tcp: Fix use-after-free of nreq in reqsk_timer_handler().
+Date: Fri,  6 Dec 2024 15:34:02 +0100
+Message-ID: <20241206143709.867723894@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -51,45 +55,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Luczaj <mhal@rbox.co>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit 02020056647017e70509bb58c3096448117099e1 ]
+[ Upstream commit c31e72d021db2714df03df6c42855a1db592716c ]
 
-copy_from_sockptr() does not return negative value on error; instead, it
-reports the number of bytes that failed to copy. Since it's deprecated,
-switch to copy_safe_from_sockptr().
+The cited commit replaced inet_csk_reqsk_queue_drop_and_put() with
+__inet_csk_reqsk_queue_drop() and reqsk_put() in reqsk_timer_handler().
 
-Note: Keeping the `optlen != sizeof(unsigned int)` check as
-copy_safe_from_sockptr() by itself would also accept
-optlen > sizeof(unsigned int). Which would allow a more lenient handling
-of inputs.
+Then, oreq should be passed to reqsk_put() instead of req; otherwise
+use-after-free of nreq could happen when reqsk is migrated but the
+retry attempt failed (e.g. due to timeout).
 
-Fixes: 17926a79320a ("[AF_RXRPC]: Provide secure RxRPC sockets for use by userspace and kernel both")
-Signed-off-by: Michal Luczaj <mhal@rbox.co>
+Let's pass oreq to reqsk_put().
+
+Fixes: e8c526f2bdf1 ("tcp/dccp: Don't use timer_pending() in reqsk_queue_unlink().")
+Reported-by: Liu Jian <liujian56@huawei.com>
+Closes: https://lore.kernel.org/netdev/1284490f-9525-42ee-b7b8-ccadf6606f6d@huawei.com/
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
+Reviewed-by: Liu Jian <liujian56@huawei.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Martin KaFai Lau <martin.lau@kernel.org>
+Link: https://patch.msgid.link/20241123174236.62438-1-kuniyu@amazon.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rxrpc/af_rxrpc.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ net/ipv4/inet_connection_sock.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/rxrpc/af_rxrpc.c b/net/rxrpc/af_rxrpc.c
-index fa8aec78f63d7..205e0d4d048ea 100644
---- a/net/rxrpc/af_rxrpc.c
-+++ b/net/rxrpc/af_rxrpc.c
-@@ -661,9 +661,10 @@ static int rxrpc_setsockopt(struct socket *sock, int level, int optname,
- 			ret = -EISCONN;
- 			if (rx->sk.sk_state != RXRPC_UNBOUND)
- 				goto error;
--			ret = copy_from_sockptr(&min_sec_level, optval,
--				       sizeof(unsigned int));
--			if (ret < 0)
-+			ret = copy_safe_from_sockptr(&min_sec_level,
-+						     sizeof(min_sec_level),
-+						     optval, optlen);
-+			if (ret)
- 				goto error;
- 			ret = -EINVAL;
- 			if (min_sec_level > RXRPC_SECURITY_MAX)
+diff --git a/net/ipv4/inet_connection_sock.c b/net/ipv4/inet_connection_sock.c
+index ca8cc0988b618..bd032ac2376ed 100644
+--- a/net/ipv4/inet_connection_sock.c
++++ b/net/ipv4/inet_connection_sock.c
+@@ -1124,7 +1124,7 @@ static void reqsk_timer_handler(struct timer_list *t)
+ 
+ drop:
+ 	__inet_csk_reqsk_queue_drop(sk_listener, oreq, true);
+-	reqsk_put(req);
++	reqsk_put(oreq);
+ }
+ 
+ static bool reqsk_queue_hash_req(struct request_sock *req,
 -- 
 2.43.0
 
