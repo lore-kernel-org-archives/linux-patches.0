@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 685A7207A07;
-	Fri,  6 Dec 2024 15:12:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFC191FCCFB;
+	Fri,  6 Dec 2024 15:12:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733497961; cv=none; b=bPYyg/ogIirYXI5hBRzB4dU1tIbZUtucGPdKtAeR6oCeyxZVQGZhyISv5Ut83B6QzSfp4EIdQICh3mGwYaO1JSUzHVxIBCNDhO5lTC2VcSNfGxt6BsYUwfbw528glAifgcxL/XJ7C2jFY8JjWktOT61AKtRUAvBE0rlDDeDajBE=
+	t=1733497965; cv=none; b=jmSg/HLN2LgJirocegQtZ/HaHYZAutnEwAucKULSIGG+h/XQ2GGG2avQaoQPaiygdZTPLTPRSq3KekmabtLw8sw6+VUKIwGTKIb2J0iRm1bKmrJm6CbuOUntVNEnlMiF0pURZEWLN6pDF0LWiDw3k309H+29OixE5XrkZvP8R3k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733497961; c=relaxed/simple;
-	bh=zeunuCxYMirkXYxp+4fXdTV7/XGuexvIYmPYVTRutqg=;
+	s=arc-20240116; t=1733497965; c=relaxed/simple;
+	bh=ssZgyWxwoKpT6MAS/eta8tPRUKncCBEbDxAxHo42OZo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D4hOE8o4vkSkxTjoZYX8Q4xpj62dDnn3CIPEv6eozT2cp2jhlDs0KfG2Z+WwvvThhk2+qTYyLUL378R9w2ptRoBQuT2lVWsXX46LXYb8MT76wa6E7KpSXRrEXjz25frXoS7KbFHuksjaV9WBWbNiNTubCICGDVysKciAPFY2hX8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wNmOEqx0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rQ/vmE9JrjUcs+K7XVwzalLMjyTcMSoBm8kyKj95YPPMj8D6Ri3fyH1+0XVnzltkcRAiJl3rj8q7eX6uHPK2jamAMOK7LML6Sq+LC92EL5MmGRaMPuETKjIeCtCJcyyBkUj/kvIcIGaIH3gbR8+oaI8/qJcGxrOMpGvieVGR7G8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RjL4mxQM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wNmOEqx0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD159C4CED1;
-	Fri,  6 Dec 2024 15:12:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RjL4mxQM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9659C4CED1;
+	Fri,  6 Dec 2024 15:12:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733497961;
-	bh=zeunuCxYMirkXYxp+4fXdTV7/XGuexvIYmPYVTRutqg=;
+	s=korg; t=1733497964;
+	bh=ssZgyWxwoKpT6MAS/eta8tPRUKncCBEbDxAxHo42OZo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wNmOEqx0A9ywYL+ybMxlcIoOckUgZT0RI3zrb19l/2T8ttrFPXe5GF7U9+FvJL0oT
-	 19RjKsbC0H7jUPPn7W5VgbD1lXJJlSj73+TTZOO8eFzchT5zd6lkOSHo7BLDPYlH83
-	 JohRzoP9oePPxIUptPO+rPT3AI5ubqtOnX+CYx20=
+	b=RjL4mxQMX57DJchoDZ9ZJMXKtA1iHuceCFVQ/6ETB9Ocdja1VJvv8E7D9a2goGPo2
+	 E5wZeYvv1y6i02EwHd9iWn6/e0Gt7Io2hXBPPc9zxRQYlwWELfdc0UoxL9VENb7zf8
+	 ZrVU4QqS+sT7JZ3jRm1xC4tNqVDj3nzHq4NYZYZw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Somnath Kotur <somnath.kotur@broadcom.com>,
-	Pavan Chebbi <pavan.chebbi@broadcom.com>,
-	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
-	Michael Chan <michael.chan@broadcom.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 417/676] bnxt_en: Refactor bnxt_ptp_init()
-Date: Fri,  6 Dec 2024 15:33:56 +0100
-Message-ID: <20241206143709.637341465@linuxfoundation.org>
+	Xiuhong Wang <xiuhong.wang@unisoc.com>,
+	Zhiguo Niu <zhiguo.niu@unisoc.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Daniel Rosenberg <drosen@google.com>
+Subject: [PATCH 6.6 444/676] f2fs: fix fiemap failure issue when page size is 16KB
+Date: Fri,  6 Dec 2024 15:34:23 +0100
+Message-ID: <20241206143710.701110527@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -54,98 +53,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Chan <michael.chan@broadcom.com>
+From: Xiuhong Wang <xiuhong.wang@unisoc.com>
 
-[ Upstream commit 1e9614cd956268e10a669c0593e7e54d03d0c087 ]
+commit a7a7c1d423a6351a6541e95c797da5358e5ad1ea upstream.
 
-Instead of passing the 2nd parameter phc_cfg to bnxt_ptp_init().
-Store it in bp->ptp_cfg so that the caller doesn't need to know what
-the value should be.
+After enable 16K page size, an infinite loop may occur in
+fiemap (fm_length=UINT64_MAX) on a file, such as the 16KB
+scratch.img during the remount operation in Android.
 
-In the next patch, we'll need to call bnxt_ptp_init() in bnxt_resume()
-and this will make it easier.
+The condition for whether fiemap continues to map is to check
+whether the number of bytes corresponding to the next map.m_lblk
+exceeds blks_to_bytes(inode,max_inode_blocks(inode)) if there are HOLE.
+The latter does not take into account the maximum size of a file with 16KB
+page size, so the loop cannot be jumped out.
 
-Reviewed-by: Somnath Kotur <somnath.kotur@broadcom.com>
-Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
-Reviewed-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
-Signed-off-by: Michael Chan <michael.chan@broadcom.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Stable-dep-of: 3661c05c54e8 ("bnxt_en: Unregister PTP during PCI shutdown and suspend")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+The following is the fail trace:
+When f2fs_map_blocks reaches map.m_lblk=3936, it needs to go to the
+first direct node block, so the map is 3936 + 4090 = 8026,
+The next map is the second direct node block, that is,
+8026 + 4090 = 12116,
+The next map is the first indirect node block, that is,
+12116 + 4090 * 4090 = 16740216,
+The next map is the second indirect node block, that is,
+16740216 + 4090 * 4090 = 33468316,
+The next map is the first double indirect node block, that is,
+33468316 + 4090 * 4090 * 4090 = 68451397316
+Since map.m_lblk represents the address of a block, which is 32
+bits, truncation will occur, that is, 68451397316 becomes
+4026887876, and the number of bytes corresponding to the block
+number does not exceed blks_to_bytes(inode,max_inode_blocks(inode)),
+so the loop will not be jumped out.
+The next time, it will be considered that it should still be a
+double indirect node block, that is,
+4026887876 + 4090 * 4090 * 4090 = 72444816876, which will be
+truncated to 3725340140, and the loop will not be jumped out.
+
+156.374871: f2fs_map_blocks: dev = (254,57), ino = 7449, file offset = 0, start blkaddr = 0x8e00, len = 0x200, flags = 2,seg_type = 8, may_create = 0, multidevice = 0, flag = 1, err = 0
+156.374916: f2fs_map_blocks: dev = (254,57), ino = 7449, file offset = 512, start blkaddr = 0x0, len = 0x0, flags = 0 , seg_type = 8, may_create = 0, multidevice = 0, flag = 1, err = 0
+156.374920: f2fs_map_blocks: dev = (254,57), ino = 7449, file offset = 513, start blkaddr = 0x0, len = 0x0, flags = 0, seg_type = 8, may_create = 0, multidevice = 0, flag = 1, err = 0
+......
+156.385747: f2fs_map_blocks: dev = (254,57), ino = 7449, file offset = 3935, start blkaddr = 0x0, len = 0x0, flags = 0, seg_type = 8, may_create = 0, multidevice = 0, flag = 1, err = 0
+156.385752: f2fs_map_blocks: dev = (254,57), ino = 7449, file offset = 3936, start blkaddr = 0x0, len = 0x0, flags = 0, seg_type = 8, may_create = 0, multidevice = 0, flag = 1, err = 0
+156.385755: f2fs_map_blocks: dev = (254,57), ino = 7449, file offset = 8026, start blkaddr = 0x0, len = 0x0, flags = 0, seg_type = 8, may_create = 0, multidevice = 0, flag = 1, err = 0
+156.385758: f2fs_map_blocks: dev = (254,57), ino = 7449, file offset = 12116, start blkaddr = 0x0, len = 0x0, flags = 0, seg_type = 8, may_create = 0, multidevice = 0, flag = 1, err = 0
+156.385761: f2fs_map_blocks: dev = (254,57), ino = 7449, file offset = 16740216, start blkaddr = 0x0, len = 0x0, flags = 0, seg_type = 8, may_create = 0, multidevice = 0, flag = 1, err = 0
+156.385764: f2fs_map_blocks: dev = (254,57), ino = 7449, file offset = 33468316, start blkaddr = 0x0, len = 0x0, flags = 0, seg_type = 8, may_create = 0, multidevice = 0, flag = 1, err = 0
+156.385767: f2fs_map_blocks: dev = (254,57), ino = 7449, file offset = 4026887876, start blkaddr = 0x0, len = 0x0, flags = 0, seg_type = 8, may_create = 0, multidevice = 0, flag = 1, err = 0
+156.385770: f2fs_map_blocks: dev = (254,57), ino = 7449, file offset = 3725340140, start blkaddr = 0x0, len = 0x0, flags = 0, seg_type = 8, may_create = 0, multidevice = 0, flag = 1, err = 0
+156.385772: f2fs_map_blocks: dev = (254,57), ino = 7449, file offset = 4026887876, start blkaddr = 0x0, len = 0x0, flags = 0, seg_type = 8, may_create = 0, multidevice = 0, flag = 1, err = 0
+156.385775: f2fs_map_blocks: dev = (254,57), ino = 7449, file offset = 3725340140, start blkaddr = 0x0, len = 0x0, flags = 0, seg_type = 8, may_create = 0, multidevice = 0, flag = 1, err = 0
+
+Commit a6a010f5def5 ("f2fs: Restrict max filesize for 16K f2fs")
+has set the maximum allowed file size to (U32_MAX + 1) * F2FS_BLKSIZE,
+so max_file_blocks should be used here to limit it, that is,
+maxbytes defined above. And the max_inode_blocks function is not
+called by other functions except here, so cleanup it.
+
+Signed-off-by: Xiuhong Wang <xiuhong.wang@unisoc.com>
+Signed-off-by: Zhiguo Niu <zhiguo.niu@unisoc.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Cc: Daniel Rosenberg <drosen@google.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt.c     | 6 +++---
- drivers/net/ethernet/broadcom/bnxt/bnxt_ptp.c | 4 ++--
- drivers/net/ethernet/broadcom/bnxt/bnxt_ptp.h | 3 ++-
- 3 files changed, 7 insertions(+), 6 deletions(-)
+ fs/f2fs/data.c |   22 +---------------------
+ 1 file changed, 1 insertion(+), 21 deletions(-)
 
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-index bc6206543e8e9..c216d95809282 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-@@ -7597,7 +7597,6 @@ static int __bnxt_hwrm_ptp_qcfg(struct bnxt *bp)
- 	struct hwrm_port_mac_ptp_qcfg_output *resp;
- 	struct hwrm_port_mac_ptp_qcfg_input *req;
- 	struct bnxt_ptp_cfg *ptp = bp->ptp_cfg;
--	bool phc_cfg;
- 	u8 flags;
- 	int rc;
- 
-@@ -7640,8 +7639,9 @@ static int __bnxt_hwrm_ptp_qcfg(struct bnxt *bp)
- 		rc = -ENODEV;
- 		goto exit;
- 	}
--	phc_cfg = (flags & PORT_MAC_PTP_QCFG_RESP_FLAGS_RTC_CONFIGURED) != 0;
--	rc = bnxt_ptp_init(bp, phc_cfg);
-+	ptp->rtc_configured =
-+		(flags & PORT_MAC_PTP_QCFG_RESP_FLAGS_RTC_CONFIGURED) != 0;
-+	rc = bnxt_ptp_init(bp);
- 	if (rc)
- 		netdev_warn(bp->dev, "PTP initialization failed.\n");
- exit:
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_ptp.c b/drivers/net/ethernet/broadcom/bnxt/bnxt_ptp.c
-index 6e3da3362bd61..bbe8657f6545b 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt_ptp.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_ptp.c
-@@ -922,7 +922,7 @@ static void bnxt_ptp_free(struct bnxt *bp)
- 	}
+--- a/fs/f2fs/data.c
++++ b/fs/f2fs/data.c
+@@ -1873,25 +1873,6 @@ static int f2fs_xattr_fiemap(struct inod
+ 	return (err < 0 ? err : 0);
  }
  
--int bnxt_ptp_init(struct bnxt *bp, bool phc_cfg)
-+int bnxt_ptp_init(struct bnxt *bp)
+-static loff_t max_inode_blocks(struct inode *inode)
+-{
+-	loff_t result = ADDRS_PER_INODE(inode);
+-	loff_t leaf_count = ADDRS_PER_BLOCK(inode);
+-
+-	/* two direct node blocks */
+-	result += (leaf_count * 2);
+-
+-	/* two indirect node blocks */
+-	leaf_count *= NIDS_PER_BLOCK;
+-	result += (leaf_count * 2);
+-
+-	/* one double indirect node block */
+-	leaf_count *= NIDS_PER_BLOCK;
+-	result += leaf_count;
+-
+-	return result;
+-}
+-
+ int f2fs_fiemap(struct inode *inode, struct fiemap_extent_info *fieinfo,
+ 		u64 start, u64 len)
  {
- 	struct bnxt_ptp_cfg *ptp = bp->ptp_cfg;
- 	int rc;
-@@ -944,7 +944,7 @@ int bnxt_ptp_init(struct bnxt *bp, bool phc_cfg)
+@@ -1964,8 +1945,7 @@ next:
+ 	if (!compr_cluster && !(map.m_flags & F2FS_MAP_FLAGS)) {
+ 		start_blk = next_pgofs;
  
- 	if (BNXT_PTP_USE_RTC(bp)) {
- 		bnxt_ptp_timecounter_init(bp, false);
--		rc = bnxt_ptp_init_rtc(bp, phc_cfg);
-+		rc = bnxt_ptp_init_rtc(bp, ptp->rtc_configured);
- 		if (rc)
- 			goto out;
- 	} else {
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_ptp.h b/drivers/net/ethernet/broadcom/bnxt/bnxt_ptp.h
-index 34162e07a1195..7d6a215b10b1f 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt_ptp.h
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_ptp.h
-@@ -115,6 +115,7 @@ struct bnxt_ptp_cfg {
- 					 BNXT_PTP_MSG_PDELAY_REQ |	\
- 					 BNXT_PTP_MSG_PDELAY_RESP)
- 	u8			tx_tstamp_en:1;
-+	u8			rtc_configured:1;
- 	int			rx_filter;
- 	u32			tstamp_filters;
+-		if (blks_to_bytes(inode, start_blk) < blks_to_bytes(inode,
+-						max_inode_blocks(inode)))
++		if (blks_to_bytes(inode, start_blk) < maxbytes)
+ 			goto prep_next;
  
-@@ -145,6 +146,6 @@ int bnxt_get_tx_ts_p5(struct bnxt *bp, struct sk_buff *skb);
- int bnxt_get_rx_ts_p5(struct bnxt *bp, u64 *ts, u32 pkt_ts);
- void bnxt_ptp_rtc_timecounter_init(struct bnxt_ptp_cfg *ptp, u64 ns);
- int bnxt_ptp_init_rtc(struct bnxt *bp, bool phc_cfg);
--int bnxt_ptp_init(struct bnxt *bp, bool phc_cfg);
-+int bnxt_ptp_init(struct bnxt *bp);
- void bnxt_ptp_clear(struct bnxt *bp);
- #endif
--- 
-2.43.0
-
+ 		flags |= FIEMAP_EXTENT_LAST;
 
 
