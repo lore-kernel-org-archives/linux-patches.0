@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93D381494D9;
-	Fri,  6 Dec 2024 14:42:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1413149E0E;
+	Fri,  6 Dec 2024 14:43:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733496177; cv=none; b=MYjLB74z5gLIi24/CkQIqj4qvYhzBlVRXEph+G33JO92eMc1jzKWHHGGFCEwrzaT5ISrNA5QUpbqFMW09FyEBj1IWWqAw93YFan8W9sUgyJwboYLyOoW3SVlGnltprTvO9KR4rGM4kLptPOZFcfz9EaWN58AvurAasO78kK+QkM=
+	t=1733496181; cv=none; b=nXizKdZNeJYmLZrhjGO6Cccfw3DKJMbYUbPG+Iq4Clr8MJ0OLlRulquGBJIGHBY2TkEsMi6YvOPhL1nFIFb/fzCROyAy22O5Zt3k5GsbN+dG9qSS9BHLd094Tpl6oTsOTL3FL1zTOxERylyOhARIlWaUmY8cYQyVX7Mey3WRpQU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733496177; c=relaxed/simple;
-	bh=UKHiYk4JvjJrvusc3qYxlGLtRUoA2BVqWrSbwYL4Gjo=;
+	s=arc-20240116; t=1733496181; c=relaxed/simple;
+	bh=5L5cC3BTW+MZVYhzjiSd6N/VCSgEgjMb7RKwiHwKWDQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lzSCw5PuGUVCR+BEn1iqDlhjSkuZYLjU9D/25sVUsUC4bmh5HypO4L7mkw21pyZKBEdKR8oPBsEnHdr+07tJmzMQ5Kc7BwVGjysJqTOuy92N0zfTB1Ny7GJbSVxQ8zNAMBJ7+xiKOBOJ16CI3+hxc6pX5fWVWjL/yrUMeLip+p0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vfHXCOE6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PtBmMWDjatu4MK6e7U6FYKI4EawbKgxKsSmwV/XPJw/KInLdI3q7IqZS/NjjGzy52WWKp/xhVq8JHmY/Ohgv58RwPTJrSSWjAD7E41M3x9WHoOJXTGHQ/i6pUN2IZyvg0bmAz9Zejrg4t+3+W845IJ1Odf4iznYumAmlI3gJcu0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kpq1xboi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vfHXCOE6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFC1EC4CED1;
-	Fri,  6 Dec 2024 14:42:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kpq1xboi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D993C4CED1;
+	Fri,  6 Dec 2024 14:43:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733496177;
-	bh=UKHiYk4JvjJrvusc3qYxlGLtRUoA2BVqWrSbwYL4Gjo=;
+	s=korg; t=1733496180;
+	bh=5L5cC3BTW+MZVYhzjiSd6N/VCSgEgjMb7RKwiHwKWDQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vfHXCOE6qv0VhrktmHJOaUWl54uNJcYdu9JyoghOzu/7CioSjtHoBwEHsNpH4Heim
-	 1AFPvmj30lU7A7DeapKlqliIsA0DlIGQx9chMxflkX5C8VUVTpjEQzznvYMSInzYaQ
-	 8in8iNRjQuNZFfppiawwQHSyKvsKa+N8u4xB7Yxw=
+	b=Kpq1xboiRKiZLXhMnb4zswd36IzILec0sqRLdwib37EjlzwZJPoqYZD7l6/Q6zeP3
+	 YUts+mdIau6T4EKJwwFMZ3RfcbfNWTYDaaac3C+adTG+wUIeN9iIpLADQHCMdUNsHg
+	 0bdVmIs3IjSTRmwMgsFugo7bBYkvN+Ux3S2/WVHA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
-	Frieder Schrempf <frieder.schrempf@kontron.de>
-Subject: [PATCH 6.12 074/146] mtd: spinand: winbond: Fix 512GW and 02JW OOB layout
-Date: Fri,  6 Dec 2024 15:36:45 +0100
-Message-ID: <20241206143530.512925044@linuxfoundation.org>
+	Mostafa Saleh <smostafa@google.com>,
+	Will Deacon <will@kernel.org>
+Subject: [PATCH 6.12 048/146] iommu/io-pgtable-arm: Fix stage-2 map/unmap for concatenated tables
+Date: Fri,  6 Dec 2024 15:36:19 +0100
+Message-ID: <20241206143529.514473676@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143527.654980698@linuxfoundation.org>
 References: <20241206143527.654980698@linuxfoundation.org>
@@ -50,42 +50,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miquel Raynal <miquel.raynal@bootlin.com>
+From: Mostafa Saleh <smostafa@google.com>
 
-commit c1247de51cab53fc357a73804c11fb4fba55b2d9 upstream.
+commit d71fa842d33c48ac2809ae11d2379b5a788792cb upstream.
 
-Both W25N512GW and W25N02JW chips have 64 bytes of OOB and thus cannot
-use the layout for 128 bytes OOB. Reference the correct layout instead.
+ARM_LPAE_LVL_IDX() takes into account concatenated PGDs and can return
+an index spanning multiple page-table pages given a sufficiently large
+input address. However, when the resulting index is used to calculate
+the number of remaining entries in the page, the possibility of
+concatenation is ignored and we end up computing a negative upper bound:
 
-Fixes: 6a804fb72de5 ("mtd: spinand: winbond: add support for serial NAND flash")
-Cc: stable@vger.kernel.org
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Reviewed-by: Frieder Schrempf <frieder.schrempf@kontron.de>
-Link: https://lore.kernel.org/linux-mtd/20241009125002.191109-2-miquel.raynal@bootlin.com
+	max_entries = ARM_LPAE_PTES_PER_TABLE(data) - map_idx_start;
+
+On the map path, this results in a negative 'mapped' value being
+returned but on the unmap path we can leak child tables if they are
+skipped in __arm_lpae_free_pgtable().
+
+Introduce an arm_lpae_max_entries() helper to convert a table index into
+the remaining number of entries within a single page-table page.
+
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Mostafa Saleh <smostafa@google.com>
+Link: https://lore.kernel.org/r/20241024162516.2005652-2-smostafa@google.com
+[will: Tweaked comment and commit message]
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/nand/spi/winbond.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/iommu/io-pgtable-arm.c |   18 +++++++++++++++---
+ 1 file changed, 15 insertions(+), 3 deletions(-)
 
---- a/drivers/mtd/nand/spi/winbond.c
-+++ b/drivers/mtd/nand/spi/winbond.c
-@@ -215,7 +215,7 @@ static const struct spinand_info winbond
- 					      &write_cache_variants,
- 					      &update_cache_variants),
- 		     0,
--		     SPINAND_ECCINFO(&w25n02kv_ooblayout, w25n02kv_ecc_get_status)),
-+		     SPINAND_ECCINFO(&w25m02gv_ooblayout, w25n02kv_ecc_get_status)),
- 	SPINAND_INFO("W25N512GW",
- 		     SPINAND_ID(SPINAND_READID_METHOD_OPCODE_DUMMY, 0xba, 0x20),
- 		     NAND_MEMORG(1, 2048, 64, 64, 512, 10, 1, 1, 1),
-@@ -224,7 +224,7 @@ static const struct spinand_info winbond
- 					      &write_cache_variants,
- 					      &update_cache_variants),
- 		     0,
--		     SPINAND_ECCINFO(&w25n02kv_ooblayout, w25n02kv_ecc_get_status)),
-+		     SPINAND_ECCINFO(&w25m02gv_ooblayout, w25n02kv_ecc_get_status)),
- 	SPINAND_INFO("W25N02KWZEIR",
- 		     SPINAND_ID(SPINAND_READID_METHOD_OPCODE_DUMMY, 0xba, 0x22),
- 		     NAND_MEMORG(1, 2048, 128, 64, 2048, 40, 1, 1, 1),
+--- a/drivers/iommu/io-pgtable-arm.c
++++ b/drivers/iommu/io-pgtable-arm.c
+@@ -199,6 +199,18 @@ static phys_addr_t iopte_to_paddr(arm_lp
+ 	return (paddr | (paddr << (48 - 12))) & (ARM_LPAE_PTE_ADDR_MASK << 4);
+ }
+ 
++/*
++ * Convert an index returned by ARM_LPAE_PGD_IDX(), which can point into
++ * a concatenated PGD, into the maximum number of entries that can be
++ * mapped in the same table page.
++ */
++static inline int arm_lpae_max_entries(int i, struct arm_lpae_io_pgtable *data)
++{
++	int ptes_per_table = ARM_LPAE_PTES_PER_TABLE(data);
++
++	return ptes_per_table - (i & (ptes_per_table - 1));
++}
++
+ static bool selftest_running = false;
+ 
+ static dma_addr_t __arm_lpae_dma_addr(void *pages)
+@@ -390,7 +402,7 @@ static int __arm_lpae_map(struct arm_lpa
+ 
+ 	/* If we can install a leaf entry at this level, then do so */
+ 	if (size == block_size) {
+-		max_entries = ARM_LPAE_PTES_PER_TABLE(data) - map_idx_start;
++		max_entries = arm_lpae_max_entries(map_idx_start, data);
+ 		num_entries = min_t(int, pgcount, max_entries);
+ 		ret = arm_lpae_init_pte(data, iova, paddr, prot, lvl, num_entries, ptep);
+ 		if (!ret)
+@@ -592,7 +604,7 @@ static size_t arm_lpae_split_blk_unmap(s
+ 
+ 	if (size == split_sz) {
+ 		unmap_idx_start = ARM_LPAE_LVL_IDX(iova, lvl, data);
+-		max_entries = ptes_per_table - unmap_idx_start;
++		max_entries = arm_lpae_max_entries(unmap_idx_start, data);
+ 		num_entries = min_t(int, pgcount, max_entries);
+ 	}
+ 
+@@ -650,7 +662,7 @@ static size_t __arm_lpae_unmap(struct ar
+ 
+ 	/* If the size matches this level, we're in the right place */
+ 	if (size == ARM_LPAE_BLOCK_SIZE(lvl, data)) {
+-		max_entries = ARM_LPAE_PTES_PER_TABLE(data) - unmap_idx_start;
++		max_entries = arm_lpae_max_entries(unmap_idx_start, data);
+ 		num_entries = min_t(int, pgcount, max_entries);
+ 
+ 		/* Find and handle non-leaf entries */
 
 
