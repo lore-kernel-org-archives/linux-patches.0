@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75DA913AA5F;
-	Fri,  6 Dec 2024 15:01:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E39C31E871;
+	Fri,  6 Dec 2024 15:01:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733497297; cv=none; b=dExaGnEjmTwHv/7nyXk1GrhWZ5DJFxR9Of6FYTfTnS+O55etOdCf/in25VmNpinsSy59Kne0H+pB+PnR6IkuTf9zOjt06Bvac+N2D6e60CkdgCz+p+ocKWoRadgx5ZBEGvi9FJNabu2rdtyWZx98J9hgvZySkentcBnsxEST+Q0=
+	t=1733497301; cv=none; b=Hgc53mYG5xsqDn2YAI7mVtT48sOVYIj0Am4Zmgn9bcmp0lOR6c7JO6Ju1FnYj/H+OxsWi2guZZ33Szw3uYi4VbkPs/FPDwGRkWUoWtge5lbZtKmKkizViEBDA98RI6sG7HdVPWpXZtkNFePXStBkDCuf/tF9Ly1gyyhwlclIrLE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733497297; c=relaxed/simple;
-	bh=puTe0Dp4sHDHETgXeCU2bYS1Z8hK2AQfnhbwPQ7dxls=;
+	s=arc-20240116; t=1733497301; c=relaxed/simple;
+	bh=KqZO6uSHWWhcP9/GWVumhjFJ1Yjm3bWHH2NvhrR9VXo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HTkjolDSNpG5EZdP1Bgi4AWHJzQ+FOWrTVpd8jb4NGKFhnmOreQYud0jQFIGu80X+Oa6IhyD6+TId4GuZLBWa/ZjbgH8ToZKtv7Gk6NZj6knxzLVIibuteNTU7iPO7GZP10pJLkmNlpEFlYmT3sZWAmT94MxY4gW9IUoqIWpBqc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t5OrfnGT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oc5nbDb/IPmN3Xyzh1KrP/CtW2ESDaoWREVNMCuTycgbv7L7OIieEnk+jH6jZcH3ARf9rL2k0VgcexKAjbNYM5B/DD/p6byM6fX1eboKFDZ0uxkuUZfFVD+88zBdK6CNM3uj/9phpoMopeKCMIuU8nGJwsucnh08nearDM8OMYY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q92K33od; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t5OrfnGT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3852C4AF09;
-	Fri,  6 Dec 2024 15:01:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q92K33od"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54FCCC4CED1;
+	Fri,  6 Dec 2024 15:01:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733497297;
-	bh=puTe0Dp4sHDHETgXeCU2bYS1Z8hK2AQfnhbwPQ7dxls=;
+	s=korg; t=1733497300;
+	bh=KqZO6uSHWWhcP9/GWVumhjFJ1Yjm3bWHH2NvhrR9VXo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t5OrfnGTJUQEE/27cOGWTLVZp0gJ6VA5vCoN0xYZYVw3Mjj5FuFJ/vg2Rb1fSoaA2
-	 iQtdXXe4RuezsNel2GPhWNKM7/lSzbT/TxOd2Twd7dUskCLfDdhXQmKpEGsP0qg9eG
-	 HpYLyd6mvIIVJ/SxutxxiioEIuTfMIOmuSfmZnFg=
+	b=Q92K33odASRAP4lRD0t9Mird1vziVGfT1FMNe+QuWEsQeOKtkwlh0c50JtttNGXMR
+	 2w+arraJpc9hh5EQ3ofjcfEczyPKRpJth7E5hlIK+mX2bRa660h9Lw0RDvslsRMP84
+	 sQriAAkoSsd9k2p+3BBD1AS0Pe+wcoF0caJ3I7jM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dipendra Khadka <kdipendra88@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	Andrew Lunn <andrew@lunn.ch>,
+	Paolo Abeni <pabeni@redhat.com>,
+	David Ahern <dsahern@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 210/676] octeontx2-pf: handle otx2_mbox_get_rsp errors in otx2_dmac_flt.c
-Date: Fri,  6 Dec 2024 15:30:29 +0100
-Message-ID: <20241206143701.545929467@linuxfoundation.org>
+Subject: [PATCH 6.6 245/676] selftests: net: really check for bg process completion
+Date: Fri,  6 Dec 2024 15:31:04 +0100
+Message-ID: <20241206143702.901696430@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -52,49 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dipendra Khadka <kdipendra88@gmail.com>
+From: Paolo Abeni <pabeni@redhat.com>
 
-[ Upstream commit f5b942e6c54b13246ee49d42dcfb71b7f29e3c64 ]
+[ Upstream commit 52ed077aa6336dbef83a2d6d21c52d1706fb7f16 ]
 
-Add error pointer checks after calling otx2_mbox_get_rsp().
+A recent refactor transformed the check for process completion
+in a true statement, due to a typo.
 
-Fixes: 79d2be385e9e ("octeontx2-pf: offload DMAC filters to CGX/RPM block")
-Fixes: fa5e0ccb8f3a ("octeontx2-pf: Add support for exact match table.")
-Signed-off-by: Dipendra Khadka <kdipendra88@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: Andrew Lunn <andrew@lunn.ch>
+As a result, the relevant test-case is unable to catch the
+regression it was supposed to detect.
+
+Restore the correct condition.
+
+Fixes: 691bb4e49c98 ("selftests: net: avoid just another constant wait")
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://patch.msgid.link/0e6f213811f8e93a235307e683af8225cc6277ae.1730828007.git.pabeni@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/marvell/octeontx2/nic/otx2_dmac_flt.c   | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ tools/testing/selftests/net/pmtu.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_dmac_flt.c b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_dmac_flt.c
-index 80d853b343f98..2046dd0da00d8 100644
---- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_dmac_flt.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_dmac_flt.c
-@@ -28,6 +28,11 @@ static int otx2_dmacflt_do_add(struct otx2_nic *pf, const u8 *mac,
- 	if (!err) {
- 		rsp = (struct cgx_mac_addr_add_rsp *)
- 			 otx2_mbox_get_rsp(&pf->mbox.mbox, 0, &req->hdr);
-+		if (IS_ERR(rsp)) {
-+			mutex_unlock(&pf->mbox.lock);
-+			return PTR_ERR(rsp);
-+		}
-+
- 		*dmac_index = rsp->index;
- 	}
+diff --git a/tools/testing/selftests/net/pmtu.sh b/tools/testing/selftests/net/pmtu.sh
+index d65fdd407d73f..1c0dd2f781678 100755
+--- a/tools/testing/selftests/net/pmtu.sh
++++ b/tools/testing/selftests/net/pmtu.sh
+@@ -1961,7 +1961,7 @@ check_running() {
+ 	pid=${1}
+ 	cmd=${2}
  
-@@ -200,6 +205,10 @@ int otx2_dmacflt_update(struct otx2_nic *pf, u8 *mac, u32 bit_pos)
+-	[ "$(cat /proc/${pid}/cmdline 2>/dev/null | tr -d '\0')" = "{cmd}" ]
++	[ "$(cat /proc/${pid}/cmdline 2>/dev/null | tr -d '\0')" = "${cmd}" ]
+ }
  
- 	rsp = (struct cgx_mac_addr_update_rsp *)
- 		otx2_mbox_get_rsp(&pf->mbox.mbox, 0, &req->hdr);
-+	if (IS_ERR(rsp)) {
-+		rc = PTR_ERR(rsp);
-+		goto out;
-+	}
- 
- 	pf->flow_cfg->bmap_to_dmacindex[bit_pos] = rsp->index;
- 
+ test_cleanup_vxlanX_exception() {
 -- 
 2.43.0
 
