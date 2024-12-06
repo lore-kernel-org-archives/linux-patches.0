@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EACB1FCF7D;
-	Fri,  6 Dec 2024 15:21:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 018B01FCF7D;
+	Fri,  6 Dec 2024 15:21:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733498460; cv=none; b=Yy5hLSDHt7NSzk3G/6Eyp5lwyZWW3i0zlnB/WFUU7oZ/6F08jWqCkHvA5kzaI2qbJXc8wX5Qq9/YPzeCAqLm0tkcMF6LWU6T/eoIHoTpmAUhLWvCLbkyAibU7UmNq3HG7GZHYzfF9EYbFKk9afOlhtAr7fkRfwaaydk3R50bRXE=
+	t=1733498464; cv=none; b=UBIcFzA/bRWNFOnyjF4JPckZmiDyQ7u1J/Qi+joPTgaNNjDdyGI58L+eJ9nsFcoB8GM8TCc+a5iS7wVMy+fU9ScQe+Askw8EHiHeVbltzrHHIkC4fMzvh52rQ4/KfXHNoYrT3DBhn4TBSuGozt8NOgXF16wx8OaidvqjwalwE9I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733498460; c=relaxed/simple;
-	bh=gwMiC+zk1LRNi9qwazw31bZ/qx3qpuGsZObfzOJFzR8=;
+	s=arc-20240116; t=1733498464; c=relaxed/simple;
+	bh=JNkTN7LIi53IbrPAHhY9mQBupC25d1qLkWH7IzOwlAE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JEXbzBB4G3sL2EbC1yM57lXOLgo52oqJOIvFJVFd5uGIc5eHYHx7Pfvai7zIsqgIRyGk2bm2sQlwyhxev+YanSnHGGOHc2IKX5DLxcMef6+i+LczWa55mLd8ipQV8TQA3wNwXnlVUrgHd1iKB4GWIvr2KFQEyBuxigmrTGQLh+I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I9OC6KgZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Pi2ozYbajBqeWEd0Ft0e8ReIMr6+auO5LW+jCGP9XUNNTDF3i8QIbPoNNNidp0b5lrqn6kbGulQrFA/iNqY3dkBi6pIif/zd/0gQeo+kDiX0rPxLAFWMw8BS/RmKWWCSfeb1vgUoNiOhNetxFiJtbqfB8qJdCy5pD5DcO3RQ0bs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qG4mqgY3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I9OC6KgZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3A34C4CED1;
-	Fri,  6 Dec 2024 15:20:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qG4mqgY3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16DB5C4CEDC;
+	Fri,  6 Dec 2024 15:21:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733498460;
-	bh=gwMiC+zk1LRNi9qwazw31bZ/qx3qpuGsZObfzOJFzR8=;
+	s=korg; t=1733498463;
+	bh=JNkTN7LIi53IbrPAHhY9mQBupC25d1qLkWH7IzOwlAE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I9OC6KgZzrtZqdVAppgKoorIcTRYDPSoBMbfA7qzQU2TgbRuYTs52uXn9JEovGppO
-	 SAYTAbuvpfUMCYFAYbip+FBhUoiV4MY7g6gcqFCWJ3Byq/xr0MU0iF8EsbhwlO0u9c
-	 h0SfYUTgo0CpMovVkauSZxQbiACee5NwHp+0vW94=
+	b=qG4mqgY3IvphAeUdewRO37uzQaVldIBbE1OvcWn+8UKv0U4TK9DJBV6JiXdPt9zgk
+	 ZIQBTkwZDqbTnIgBgmoVgLQk24i1bOKj03tUjCTRjC+jVcOQIYnqVJ25y52zSD1Fdt
+	 4FwYkdI+PxLVBryELctggxE3aB380h9mA+iq96hw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yongliang Gao <leonylgao@tencent.com>,
-	Jingqun Li <jingqunli@tencent.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 560/676] rtc: check if __rtc_read_time was successful in rtc_timer_do_work()
-Date: Fri,  6 Dec 2024 15:36:19 +0100
-Message-ID: <20241206143715.242501007@linuxfoundation.org>
+	Ma Wupeng <mawupeng1@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.6 551/676] ipc: fix memleak if msg_init_ns failed in create_ipc_ns
+Date: Fri,  6 Dec 2024 15:36:10 +0100
+Message-ID: <20241206143714.888937000@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -52,53 +50,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yongliang Gao <leonylgao@tencent.com>
+From: Ma Wupeng <mawupeng1@huawei.com>
 
-[ Upstream commit e8ba8a2bc4f60a1065f23d6a0e7cbea945a0f40d ]
+commit bc8f5921cd69188627c08041276238de222ab466 upstream.
 
-If the __rtc_read_time call fails,, the struct rtc_time tm; may contain
-uninitialized data, or an illegal date/time read from the RTC hardware.
+Percpu memory allocation may failed during create_ipc_ns however this
+fail is not handled properly since ipc sysctls and mq sysctls is not
+released properly. Fix this by release these two resource when failure.
 
-When calling rtc_tm_to_ktime later, the result may be a very large value
-(possibly KTIME_MAX). If there are periodic timers in rtc->timerqueue,
-they will continually expire, may causing kernel softlockup.
+Here is the kmemleak stack when percpu failed:
 
-Fixes: 6610e0893b8b ("RTC: Rework RTC code to use timerqueue for events")
-Signed-off-by: Yongliang Gao <leonylgao@tencent.com>
-Acked-by: Jingqun Li <jingqunli@tencent.com>
-Link: https://lore.kernel.org/r/20241011043153.3788112-1-leonylgao@gmail.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+unreferenced object 0xffff88819de2a600 (size 512):
+  comm "shmem_2nstest", pid 120711, jiffies 4300542254
+  hex dump (first 32 bytes):
+    60 aa 9d 84 ff ff ff ff fc 18 48 b2 84 88 ff ff  `.........H.....
+    04 00 00 00 a4 01 00 00 20 e4 56 81 ff ff ff ff  ........ .V.....
+  backtrace (crc be7cba35):
+    [<ffffffff81b43f83>] __kmalloc_node_track_caller_noprof+0x333/0x420
+    [<ffffffff81a52e56>] kmemdup_noprof+0x26/0x50
+    [<ffffffff821b2f37>] setup_mq_sysctls+0x57/0x1d0
+    [<ffffffff821b29cc>] copy_ipcs+0x29c/0x3b0
+    [<ffffffff815d6a10>] create_new_namespaces+0x1d0/0x920
+    [<ffffffff815d7449>] copy_namespaces+0x2e9/0x3e0
+    [<ffffffff815458f3>] copy_process+0x29f3/0x7ff0
+    [<ffffffff8154b080>] kernel_clone+0xc0/0x650
+    [<ffffffff8154b6b1>] __do_sys_clone+0xa1/0xe0
+    [<ffffffff843df8ff>] do_syscall_64+0xbf/0x1c0
+    [<ffffffff846000b0>] entry_SYSCALL_64_after_hwframe+0x4b/0x53
+
+Link: https://lkml.kernel.org/r/20241023093129.3074301-1-mawupeng1@huawei.com
+Fixes: 72d1e611082e ("ipc/msg: mitigate the lock contention with percpu counter")
+Signed-off-by: Ma Wupeng <mawupeng1@huawei.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/rtc/interface.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ ipc/namespace.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/rtc/interface.c b/drivers/rtc/interface.c
-index 0b23706d9fd3c..4a7c41a6c21e7 100644
---- a/drivers/rtc/interface.c
-+++ b/drivers/rtc/interface.c
-@@ -904,13 +904,18 @@ void rtc_timer_do_work(struct work_struct *work)
- 	struct timerqueue_node *next;
- 	ktime_t now;
- 	struct rtc_time tm;
-+	int err;
+--- a/ipc/namespace.c
++++ b/ipc/namespace.c
+@@ -83,13 +83,15 @@ static struct ipc_namespace *create_ipc_
  
- 	struct rtc_device *rtc =
- 		container_of(work, struct rtc_device, irqwork);
+ 	err = msg_init_ns(ns);
+ 	if (err)
+-		goto fail_put;
++		goto fail_ipc;
  
- 	mutex_lock(&rtc->ops_lock);
- again:
--	__rtc_read_time(rtc, &tm);
-+	err = __rtc_read_time(rtc, &tm);
-+	if (err) {
-+		mutex_unlock(&rtc->ops_lock);
-+		return;
-+	}
- 	now = rtc_tm_to_ktime(tm);
- 	while ((next = timerqueue_getnext(&rtc->timerqueue))) {
- 		if (next->expires > now)
--- 
-2.43.0
-
+ 	sem_init_ns(ns);
+ 	shm_init_ns(ns);
+ 
+ 	return ns;
+ 
++fail_ipc:
++	retire_ipc_sysctls(ns);
+ fail_mq:
+ 	retire_mq_sysctls(ns);
+ 
 
 
