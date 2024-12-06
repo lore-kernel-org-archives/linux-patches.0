@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E551E53A7;
-	Fri,  6 Dec 2024 15:05:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FEE413E03A;
+	Fri,  6 Dec 2024 15:05:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733497527; cv=none; b=fWHAQrfPqSxV4dk3lru2fd6uvhKzqdy2zG+oupMlRV+T0PlV1wxphkK7HAT5t26r+nR/uxU53ylHthlSRBQmLxu/ECH2t5YKOdw1ehxkkfYoVHdC1AxDJ4amw3Gy/6LjFq34fH1UGOuBrcHyO7ryZD9+3x9Srk47M/u/rck8nYE=
+	t=1733497530; cv=none; b=F1+SJIUSfX1vZpBtKxAHegtINdZ0SlgaFLEe0BwAwEj0ZCp/fB5nzTox7AaUj+NG0l4a6Q1Zcyg8xL3tLzWrPMghabqtNrkKYSnUQQgm16nauIhTR8IBqrQk3cWU4WRcrV+dhvG0X3WkiGViVktjJNgxqzTipjHwHubrvAZf/mQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733497527; c=relaxed/simple;
-	bh=CjygTBECd1zmu19l3m+mbTzkXyMjp6bfkR3NBHtE9gs=;
+	s=arc-20240116; t=1733497530; c=relaxed/simple;
+	bh=oVEZZiY1fBYleMZeKwxQi+oZA3tb0K8PJE6HEZhEBho=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=canz7NT/osNdwVgbaz/KaPE1TpEnuGb8qPv73Bwc6uaXu83owzV8rwwKMkcXspXZ5bMKOJw5WuK36IDTuEhv6z67JU6S13nKot8JzWhH0uHpGZRwSGI7VjOln+dUqsDvVE0HzQJcHoRfcO+CTl3hiKACDSqtrF2orUlClNmKGMY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YcbMFhSe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eDVm31Afv81YgtDj7+GVsHjp+V/M2zWrdhX3UY9r93AITZiGlEm+6iBoIZjeS1qikzDpEnmsGwSkTCMzO+VgapRrEc1+MVuIfSDyO991K040TTDr2we2TSYT/+j+IkXwNnuPLk7tLXWb5GR7bObqI9NeLeSxGpygGiu/9Y45hW8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TcQA/Bpp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YcbMFhSe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54A8EC4CED1;
-	Fri,  6 Dec 2024 15:05:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TcQA/Bpp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CD80C4CED1;
+	Fri,  6 Dec 2024 15:05:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733497526;
-	bh=CjygTBECd1zmu19l3m+mbTzkXyMjp6bfkR3NBHtE9gs=;
+	s=korg; t=1733497529;
+	bh=oVEZZiY1fBYleMZeKwxQi+oZA3tb0K8PJE6HEZhEBho=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YcbMFhSeiwdIva4See+LtYRX4+QlqJjxfV7nna7XPLb6zMpuHu0HYv9OUxMUtj3Yg
-	 dqHbRcSp+9oc1irpZY/ZBLocjhpNamKj48K2prXbSouG95dMtWqRPDGxpMgZq7TAMi
-	 20RpMn1N9p9Vn31usBlbr1HKFNMNKtnR3OWYCE5c=
+	b=TcQA/BppBFD4J8v4SC7pqqT3Fm6tuAb92/JD2F/8XtgdZZw5a5K8eGxe/sZbhTHXQ
+	 2O/PKT5VGCrKMhLVBaTQDzd6dGgxJuPiQLWUtR4ALiL8M6UJSgOaapJrlv07x8n9sh
+	 dlLGayekq7nRZx6H0eP9Hf/fNXmpe53uOkb+SiE0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kashyap Desai <kashyap.desai@broadcom.com>,
-	Selvin Xavier <selvin.xavier@broadcom.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Andre Przywara <andre.przywara@arm.com>,
+	Chen-Yu Tsai <wens@csie.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 285/676] RDMA/bnxt_re: Check cqe flags to know imm_data vs inv_irkey
-Date: Fri,  6 Dec 2024 15:31:44 +0100
-Message-ID: <20241206143704.474568018@linuxfoundation.org>
+Subject: [PATCH 6.6 286/676] clk: sunxi-ng: d1: Fix PLL_AUDIO0 preset
+Date: Fri,  6 Dec 2024 15:31:45 +0100
+Message-ID: <20241206143704.513297770@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -52,78 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kashyap Desai <kashyap.desai@broadcom.com>
+From: Andre Przywara <andre.przywara@arm.com>
 
-[ Upstream commit 808ca6de989c598bc5af1ae0ad971a66077efac0 ]
+[ Upstream commit e0f253a52ccee3cf3eb987e99756e20c68a1aac9 ]
 
-Invalidate rkey is cpu endian and immediate data is in big endian format.
-Both immediate data and invalidate the remote key returned by
-HW is in little endian format.
+To work around a limitation in our clock modelling, we try to force two
+bits in the AUDIO0 PLL to 0, in the CCU probe routine.
+However the ~ operator only applies to the first expression, and does
+not cover the second bit, so we end up clearing only bit 1.
 
-While handling the commit in fixes tag, the difference between
-immediate data and invalidate rkey endianness was not considered.
+Group the bit-ORing with parentheses, to make it both clearer to read
+and actually correct.
 
-Without changes of this patch, Kernel ULP was failing while processing
-inv_rkey.
-
-dmesg log snippet -
-nvme nvme0: Bogus remote invalidation for rkey 0x2000019Fix in this patch
-
-Do endianness conversion based on completion queue entry flag.
-Also, the HW completions are already converted to host endianness in
-bnxt_qplib_cq_process_res_rc and bnxt_qplib_cq_process_res_ud and there
-is no need to convert it again in bnxt_re_poll_cq. Modified the union to
-hold the correct data type.
-
-Fixes: 95b087f87b78 ("bnxt_re: Fix imm_data endianness")
-Signed-off-by: Kashyap Desai <kashyap.desai@broadcom.com>
-Signed-off-by: Selvin Xavier <selvin.xavier@broadcom.com>
-Link: https://patch.msgid.link/1730110014-20755-1-git-send-email-selvin.xavier@broadcom.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: 35b97bb94111 ("clk: sunxi-ng: Add support for the D1 SoC clocks")
+Signed-off-by: Andre Przywara <andre.przywara@arm.com>
+Link: https://patch.msgid.link/20241001105016.1068558-1-andre.przywara@arm.com
+Signed-off-by: Chen-Yu Tsai <wens@csie.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/bnxt_re/ib_verbs.c | 7 +++++--
- drivers/infiniband/hw/bnxt_re/qplib_fp.h | 2 +-
- 2 files changed, 6 insertions(+), 3 deletions(-)
+ drivers/clk/sunxi-ng/ccu-sun20i-d1.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/bnxt_re/ib_verbs.c b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
-index f20da108fb297..df58972606014 100644
---- a/drivers/infiniband/hw/bnxt_re/ib_verbs.c
-+++ b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
-@@ -3559,7 +3559,7 @@ static void bnxt_re_process_res_shadow_qp_wc(struct bnxt_re_qp *gsi_sqp,
- 	wc->byte_len = orig_cqe->length;
- 	wc->qp = &gsi_qp->ib_qp;
+diff --git a/drivers/clk/sunxi-ng/ccu-sun20i-d1.c b/drivers/clk/sunxi-ng/ccu-sun20i-d1.c
+index 48a8fb2c43b74..f95c3615ca772 100644
+--- a/drivers/clk/sunxi-ng/ccu-sun20i-d1.c
++++ b/drivers/clk/sunxi-ng/ccu-sun20i-d1.c
+@@ -1371,7 +1371,7 @@ static int sun20i_d1_ccu_probe(struct platform_device *pdev)
  
--	wc->ex.imm_data = cpu_to_be32(le32_to_cpu(orig_cqe->immdata));
-+	wc->ex.imm_data = cpu_to_be32(orig_cqe->immdata);
- 	wc->src_qp = orig_cqe->src_qp;
- 	memcpy(wc->smac, orig_cqe->smac, ETH_ALEN);
- 	if (bnxt_re_is_vlan_pkt(orig_cqe, &vlan_id, &sl)) {
-@@ -3704,7 +3704,10 @@ int bnxt_re_poll_cq(struct ib_cq *ib_cq, int num_entries, struct ib_wc *wc)
- 				 (unsigned long)(cqe->qp_handle),
- 				 struct bnxt_re_qp, qplib_qp);
- 			wc->qp = &qp->ib_qp;
--			wc->ex.imm_data = cpu_to_be32(le32_to_cpu(cqe->immdata));
-+			if (cqe->flags & CQ_RES_RC_FLAGS_IMM)
-+				wc->ex.imm_data = cpu_to_be32(cqe->immdata);
-+			else
-+				wc->ex.invalidate_rkey = cqe->invrkey;
- 			wc->src_qp = cqe->src_qp;
- 			memcpy(wc->smac, cqe->smac, ETH_ALEN);
- 			wc->port_num = 1;
-diff --git a/drivers/infiniband/hw/bnxt_re/qplib_fp.h b/drivers/infiniband/hw/bnxt_re/qplib_fp.h
-index 56ddff96b5083..5d4c49089a20f 100644
---- a/drivers/infiniband/hw/bnxt_re/qplib_fp.h
-+++ b/drivers/infiniband/hw/bnxt_re/qplib_fp.h
-@@ -389,7 +389,7 @@ struct bnxt_qplib_cqe {
- 	u16				cfa_meta;
- 	u64				wr_id;
- 	union {
--		__le32			immdata;
-+		u32			immdata;
- 		u32			invrkey;
- 	};
- 	u64				qp_handle;
+ 	/* Enforce m1 = 0, m0 = 0 for PLL_AUDIO0 */
+ 	val = readl(reg + SUN20I_D1_PLL_AUDIO0_REG);
+-	val &= ~BIT(1) | BIT(0);
++	val &= ~(BIT(1) | BIT(0));
+ 	writel(val, reg + SUN20I_D1_PLL_AUDIO0_REG);
+ 
+ 	/* Force fanout-27M factor N to 0. */
 -- 
 2.43.0
 
