@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34ECA1DFD89;
-	Fri,  6 Dec 2024 15:10:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87EEC153836;
+	Fri,  6 Dec 2024 15:10:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733497843; cv=none; b=PvVWi+honQUTs9ncVYHbe86A29AQuS8odFFV3erDMkiG6NkY/StxffNBFwuE0Yp7/e4/C3CbogsR+19r30tqVMsYbxD//IOHi0gyhyCj76jw7cX72vrDR5FOQiV4Zeh0VWwW5rbTVISm2CMvJf5ev+fGV1z39TN3C362HGhaUVI=
+	t=1733497846; cv=none; b=C872tU69glkey6Aa2hDkgNKkuaJ7QAAHel0Fn7ycF7TYZJTTRsfL1GSxzJ5RN93jKGAUkBuc90Lj0rx0CVwYk9hArKppO7ZykmadZ0Py95MPtpX/AMsZEf6TDPrCl/pPr5Viwy7pw+OicaupDmDbkaNaSOJGeQsWlP1r7oWL07w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733497843; c=relaxed/simple;
-	bh=io+YAiKYskJsbv+HzlFtktFCbHeRYlEjC5vTOq0BZe0=;
+	s=arc-20240116; t=1733497846; c=relaxed/simple;
+	bh=8TN3R2zdR7q9Ji4XXFQzV8HtUErzAasm2X+wiAs5UMI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ghQVe190BxclLLhdr1W77vCbpkC5jAzBxgzNhgaMVQ41NS0W9DNM2xYlF+VvD9ApVqMG36SQZGsSH3I9D+zE/AOzxo8HJMdv0BeBndlYRJHU42AaPRnbMlf/4CTsQ7OqSgyXBJ48aL9/yAHR4OH3DACfF0MObOB4D3M0pS/cbAE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gVIu+SMj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=snmurH0xcMTuxML+4IX7DLIfy+UVusla5+YsVToEFg+SICWzbotLNdWWj2c/g/WyZg+fo3TwgwBsSIUCo+isrJmzDZBA3suuN1XYRjeVRWcDMlVBkdluY6Fa+Pq939mvFrO0i+wu4ftxevaAFryPVwl4YW0tm9Vy6xSTXXpzjxw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EEwrz0Zk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gVIu+SMj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F1A3C2BCAF;
-	Fri,  6 Dec 2024 15:10:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EEwrz0Zk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97E82C4CEDC;
+	Fri,  6 Dec 2024 15:10:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733497842;
-	bh=io+YAiKYskJsbv+HzlFtktFCbHeRYlEjC5vTOq0BZe0=;
+	s=korg; t=1733497846;
+	bh=8TN3R2zdR7q9Ji4XXFQzV8HtUErzAasm2X+wiAs5UMI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gVIu+SMjKsB/l43Hep/kh/hLiEQVHO8yC0/KYgCvkuUp6VK6ep5zrCoF7pLLMPSjB
-	 bQHDbd6qBEou5NTLcsALu/EE38I/DmhUV60MKo/Hl1Gv4rjXOUGzLopBBe1JPsmnd3
-	 JlnGsJk7SU69wuTMrjAGXWVQs7D+ZQSS42M5bKbI=
+	b=EEwrz0ZkqlxaGVaF5YSJNZy7jRN13OSxZha3XgHsXaClWZEfkWkrouoeqFUT2vLtZ
+	 pqtUtO1qEBLIeNx66apNQwFXxK1yPH+LKljbPiutbCWWOrK3zWqtFJu5/7kadHHxzV
+	 wokoYHUVxkBCqPbWc47DJ8W3iMK0+eZdzZhms/Lk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hariprasad Kelam <hkelam@marvell.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Yang Erkun <yangerkun@huawei.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 409/676] octeontx2-af: RPM: Fix low network performance
-Date: Fri,  6 Dec 2024 15:33:48 +0100
-Message-ID: <20241206143709.323139063@linuxfoundation.org>
+Subject: [PATCH 6.6 383/676] nfsd: release svc_expkey/svc_export with rcu_work
+Date: Fri,  6 Dec 2024 15:33:22 +0100
+Message-ID: <20241206143708.306811872@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -51,155 +52,197 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hariprasad Kelam <hkelam@marvell.com>
+From: Yang Erkun <yangerkun@huawei.com>
 
-[ Upstream commit d1e8884e050c1255a9ceb477f5ff926ee9214a23 ]
+[ Upstream commit f8c989a0c89a75d30f899a7cabdc14d72522bb8d ]
 
-Low network performance is observed even on RPMs with larger
-FIFO lengths.
+The last reference for `cache_head` can be reduced to zero in `c_show`
+and `e_show`(using `rcu_read_lock` and `rcu_read_unlock`). Consequently,
+`svc_export_put` and `expkey_put` will be invoked, leading to two
+issues:
 
-The cn10kb silicon has three RPM blocks with the following
-FIFO sizes:
+1. The `svc_export_put` will directly free ex_uuid. However,
+   `e_show`/`c_show` will access `ex_uuid` after `cache_put`, which can
+   trigger a use-after-free issue, shown below.
 
-         --------------------
-         | RPM0  |   256KB  |
-         | RPM1  |   256KB  |
-         | RPM2  |   128KB  |
-         --------------------
+   ==================================================================
+   BUG: KASAN: slab-use-after-free in svc_export_show+0x362/0x430 [nfsd]
+   Read of size 1 at addr ff11000010fdc120 by task cat/870
 
-The current design stores the FIFO length in a common structure for all
-RPMs (mac_ops). As a result, the FIFO length of the last RPM is applied
-to all RPMs, leading to reduced network performance.
+   CPU: 1 UID: 0 PID: 870 Comm: cat Not tainted 6.12.0-rc3+ #1
+   Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS
+   1.16.1-2.fc37 04/01/2014
+   Call Trace:
+    <TASK>
+    dump_stack_lvl+0x53/0x70
+    print_address_description.constprop.0+0x2c/0x3a0
+    print_report+0xb9/0x280
+    kasan_report+0xae/0xe0
+    svc_export_show+0x362/0x430 [nfsd]
+    c_show+0x161/0x390 [sunrpc]
+    seq_read_iter+0x589/0x770
+    seq_read+0x1e5/0x270
+    proc_reg_read+0xe1/0x140
+    vfs_read+0x125/0x530
+    ksys_read+0xc1/0x160
+    do_syscall_64+0x5f/0x170
+    entry_SYSCALL_64_after_hwframe+0x76/0x7e
 
-This patch resolved the problem by storing the fifo length in per MAC
-structure (cgx).
+   Allocated by task 830:
+    kasan_save_stack+0x20/0x40
+    kasan_save_track+0x14/0x30
+    __kasan_kmalloc+0x8f/0xa0
+    __kmalloc_node_track_caller_noprof+0x1bc/0x400
+    kmemdup_noprof+0x22/0x50
+    svc_export_parse+0x8a9/0xb80 [nfsd]
+    cache_do_downcall+0x71/0xa0 [sunrpc]
+    cache_write_procfs+0x8e/0xd0 [sunrpc]
+    proc_reg_write+0xe1/0x140
+    vfs_write+0x1a5/0x6d0
+    ksys_write+0xc1/0x160
+    do_syscall_64+0x5f/0x170
+    entry_SYSCALL_64_after_hwframe+0x76/0x7e
 
-Fixes: b9d0fedc6234 ("octeontx2-af: cn10kb: Add RPM_USX MAC support")
-Signed-off-by: Hariprasad Kelam <hkelam@marvell.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+   Freed by task 868:
+    kasan_save_stack+0x20/0x40
+    kasan_save_track+0x14/0x30
+    kasan_save_free_info+0x3b/0x60
+    __kasan_slab_free+0x37/0x50
+    kfree+0xf3/0x3e0
+    svc_export_put+0x87/0xb0 [nfsd]
+    cache_purge+0x17f/0x1f0 [sunrpc]
+    nfsd_destroy_serv+0x226/0x2d0 [nfsd]
+    nfsd_svc+0x125/0x1e0 [nfsd]
+    write_threads+0x16a/0x2a0 [nfsd]
+    nfsctl_transaction_write+0x74/0xa0 [nfsd]
+    vfs_write+0x1a5/0x6d0
+    ksys_write+0xc1/0x160
+    do_syscall_64+0x5f/0x170
+    entry_SYSCALL_64_after_hwframe+0x76/0x7e
+
+2. We cannot sleep while using `rcu_read_lock`/`rcu_read_unlock`.
+   However, `svc_export_put`/`expkey_put` will call path_put, which
+   subsequently triggers a sleeping operation due to the following
+   `dput`.
+
+   =============================
+   WARNING: suspicious RCU usage
+   5.10.0-dirty #141 Not tainted
+   -----------------------------
+   ...
+   Call Trace:
+   dump_stack+0x9a/0xd0
+   ___might_sleep+0x231/0x240
+   dput+0x39/0x600
+   path_put+0x1b/0x30
+   svc_export_put+0x17/0x80
+   e_show+0x1c9/0x200
+   seq_read_iter+0x63f/0x7c0
+   seq_read+0x226/0x2d0
+   vfs_read+0x113/0x2c0
+   ksys_read+0xc9/0x170
+   do_syscall_64+0x33/0x40
+   entry_SYSCALL_64_after_hwframe+0x67/0xd1
+
+Fix these issues by using `rcu_work` to help release
+`svc_expkey`/`svc_export`. This approach allows for an asynchronous
+context to invoke `path_put` and also facilitates the freeing of
+`uuid/exp/key` after an RCU grace period.
+
+Fixes: 9ceddd9da134 ("knfsd: Allow lockless lookups of the exports")
+Signed-off-by: Yang Erkun <yangerkun@huawei.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/octeontx2/af/cgx.c         | 9 +++++++--
- drivers/net/ethernet/marvell/octeontx2/af/cgx.h         | 1 +
- drivers/net/ethernet/marvell/octeontx2/af/lmac_common.h | 5 ++++-
- drivers/net/ethernet/marvell/octeontx2/af/rpm.c         | 6 +++---
- drivers/net/ethernet/marvell/octeontx2/af/rvu_cgx.c     | 9 ++++-----
- 5 files changed, 19 insertions(+), 11 deletions(-)
+ fs/nfsd/export.c | 31 +++++++++++++++++++++++++------
+ fs/nfsd/export.h |  4 ++--
+ 2 files changed, 27 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/cgx.c b/drivers/net/ethernet/marvell/octeontx2/af/cgx.c
-index 2539c985f695a..aea963017d261 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/cgx.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/cgx.c
-@@ -110,6 +110,11 @@ struct mac_ops *get_mac_ops(void *cgxd)
- 	return ((struct cgx *)cgxd)->mac_ops;
- }
+diff --git a/fs/nfsd/export.c b/fs/nfsd/export.c
+index b7da17e530077..2964bdae6392d 100644
+--- a/fs/nfsd/export.c
++++ b/fs/nfsd/export.c
+@@ -40,15 +40,24 @@
+ #define	EXPKEY_HASHMAX		(1 << EXPKEY_HASHBITS)
+ #define	EXPKEY_HASHMASK		(EXPKEY_HASHMAX -1)
  
-+u32 cgx_get_fifo_len(void *cgxd)
-+{
-+	return ((struct cgx *)cgxd)->fifo_len;
+-static void expkey_put(struct kref *ref)
++static void expkey_put_work(struct work_struct *work)
+ {
+-	struct svc_expkey *key = container_of(ref, struct svc_expkey, h.ref);
++	struct svc_expkey *key =
++		container_of(to_rcu_work(work), struct svc_expkey, ek_rcu_work);
+ 
+ 	if (test_bit(CACHE_VALID, &key->h.flags) &&
+ 	    !test_bit(CACHE_NEGATIVE, &key->h.flags))
+ 		path_put(&key->ek_path);
+ 	auth_domain_put(key->ek_client);
+-	kfree_rcu(key, ek_rcu);
++	kfree(key);
 +}
 +
- void cgx_write(struct cgx *cgx, u64 lmac, u64 offset, u64 val)
- {
- 	writeq(val, cgx->reg_base + (lmac << cgx->mac_ops->lmac_offset) +
-@@ -499,7 +504,7 @@ static u32 cgx_get_lmac_fifo_len(void *cgxd, int lmac_id)
- 	u8 num_lmacs;
- 	u32 fifo_len;
- 
--	fifo_len = cgx->mac_ops->fifo_len;
-+	fifo_len = cgx->fifo_len;
- 	num_lmacs = cgx->mac_ops->get_nr_lmacs(cgx);
- 
- 	switch (num_lmacs) {
-@@ -1740,7 +1745,7 @@ static void cgx_populate_features(struct cgx *cgx)
- 	u64 cfg;
- 
- 	cfg = cgx_read(cgx, 0, CGX_CONST);
--	cgx->mac_ops->fifo_len = FIELD_GET(CGX_CONST_RXFIFO_SIZE, cfg);
-+	cgx->fifo_len = FIELD_GET(CGX_CONST_RXFIFO_SIZE, cfg);
- 	cgx->max_lmac_per_mac = FIELD_GET(CGX_CONST_MAX_LMACS, cfg);
- 
- 	if (is_dev_rpm(cgx))
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/cgx.h b/drivers/net/ethernet/marvell/octeontx2/af/cgx.h
-index 6f7d1dee58308..226ff7f0df52a 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/cgx.h
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/cgx.h
-@@ -184,4 +184,5 @@ int cgx_lmac_get_pfc_frm_cfg(void *cgxd, int lmac_id, u8 *tx_pause,
- int verify_lmac_fc_cfg(void *cgxd, int lmac_id, u8 tx_pause, u8 rx_pause,
- 		       int pfvf_idx);
- int cgx_lmac_reset(void *cgxd, int lmac_id, u8 pf_req_flr);
-+u32 cgx_get_fifo_len(void *cgxd);
- #endif /* CGX_H */
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/lmac_common.h b/drivers/net/ethernet/marvell/octeontx2/af/lmac_common.h
-index 0b4cba03f2e83..50fcc436d8a79 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/lmac_common.h
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/lmac_common.h
-@@ -72,7 +72,6 @@ struct mac_ops {
- 	u8			irq_offset;
- 	u8			int_ena_bit;
- 	u8			lmac_fwi;
--	u32			fifo_len;
- 	bool			non_contiguous_serdes_lane;
- 	/* RPM & CGX differs in number of Receive/transmit stats */
- 	u8			rx_stats_cnt;
-@@ -141,6 +140,10 @@ struct cgx {
- 	u8			lmac_count;
- 	/* number of LMACs per MAC could be 4 or 8 */
- 	u8			max_lmac_per_mac;
-+	/* length of fifo varies depending on the number
-+	 * of LMACS
-+	 */
-+	u32			fifo_len;
- #define MAX_LMAC_COUNT		8
- 	struct lmac             *lmac_idmap[MAX_LMAC_COUNT];
- 	struct			work_struct cgx_cmd_work;
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rpm.c b/drivers/net/ethernet/marvell/octeontx2/af/rpm.c
-index ce584b6aa6d65..4d2d15834f9df 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/rpm.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/rpm.c
-@@ -463,7 +463,7 @@ u32 rpm_get_lmac_fifo_len(void *rpmd, int lmac_id)
- 	u8 num_lmacs;
- 	u32 fifo_len;
- 
--	fifo_len = rpm->mac_ops->fifo_len;
-+	fifo_len = rpm->fifo_len;
- 	num_lmacs = rpm->mac_ops->get_nr_lmacs(rpm);
- 
- 	switch (num_lmacs) {
-@@ -516,9 +516,9 @@ u32 rpm2_get_lmac_fifo_len(void *rpmd, int lmac_id)
- 	 */
- 	max_lmac = (rpm_read(rpm, 0, CGX_CONST) >> 24) & 0xFF;
- 	if (max_lmac > 4)
--		fifo_len = rpm->mac_ops->fifo_len / 2;
-+		fifo_len = rpm->fifo_len / 2;
- 	else
--		fifo_len = rpm->mac_ops->fifo_len;
-+		fifo_len = rpm->fifo_len;
- 
- 	if (lmac_id < 4) {
- 		num_lmacs = hweight8(lmac_info & 0xF);
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_cgx.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_cgx.c
-index 19075f217d00c..898584b1aa608 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_cgx.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_cgx.c
-@@ -895,13 +895,12 @@ int rvu_mbox_handler_cgx_features_get(struct rvu *rvu,
- 
- u32 rvu_cgx_get_fifolen(struct rvu *rvu)
- {
--	struct mac_ops *mac_ops;
--	u32 fifo_len;
-+	void *cgxd = rvu_first_cgx_pdata(rvu);
- 
--	mac_ops = get_mac_ops(rvu_first_cgx_pdata(rvu));
--	fifo_len = mac_ops ? mac_ops->fifo_len : 0;
-+	if (!cgxd)
-+		return 0;
- 
--	return fifo_len;
-+	return cgx_get_fifo_len(cgxd);
++static void expkey_put(struct kref *ref)
++{
++	struct svc_expkey *key = container_of(ref, struct svc_expkey, h.ref);
++
++	INIT_RCU_WORK(&key->ek_rcu_work, expkey_put_work);
++	queue_rcu_work(system_wq, &key->ek_rcu_work);
  }
  
- u32 rvu_cgx_get_lmac_fifolen(struct rvu *rvu, int cgx, int lmac)
+ static int expkey_upcall(struct cache_detail *cd, struct cache_head *h)
+@@ -351,16 +360,26 @@ static void export_stats_destroy(struct export_stats *stats)
+ 					     EXP_STATS_COUNTERS_NUM);
+ }
+ 
+-static void svc_export_put(struct kref *ref)
++static void svc_export_put_work(struct work_struct *work)
+ {
+-	struct svc_export *exp = container_of(ref, struct svc_export, h.ref);
++	struct svc_export *exp =
++		container_of(to_rcu_work(work), struct svc_export, ex_rcu_work);
++
+ 	path_put(&exp->ex_path);
+ 	auth_domain_put(exp->ex_client);
+ 	nfsd4_fslocs_free(&exp->ex_fslocs);
+ 	export_stats_destroy(exp->ex_stats);
+ 	kfree(exp->ex_stats);
+ 	kfree(exp->ex_uuid);
+-	kfree_rcu(exp, ex_rcu);
++	kfree(exp);
++}
++
++static void svc_export_put(struct kref *ref)
++{
++	struct svc_export *exp = container_of(ref, struct svc_export, h.ref);
++
++	INIT_RCU_WORK(&exp->ex_rcu_work, svc_export_put_work);
++	queue_rcu_work(system_wq, &exp->ex_rcu_work);
+ }
+ 
+ static int svc_export_upcall(struct cache_detail *cd, struct cache_head *h)
+diff --git a/fs/nfsd/export.h b/fs/nfsd/export.h
+index ca9dc230ae3d0..9d895570ceba0 100644
+--- a/fs/nfsd/export.h
++++ b/fs/nfsd/export.h
+@@ -75,7 +75,7 @@ struct svc_export {
+ 	u32			ex_layout_types;
+ 	struct nfsd4_deviceid_map *ex_devid_map;
+ 	struct cache_detail	*cd;
+-	struct rcu_head		ex_rcu;
++	struct rcu_work		ex_rcu_work;
+ 	unsigned long		ex_xprtsec_modes;
+ 	struct export_stats	*ex_stats;
+ };
+@@ -92,7 +92,7 @@ struct svc_expkey {
+ 	u32			ek_fsid[6];
+ 
+ 	struct path		ek_path;
+-	struct rcu_head		ek_rcu;
++	struct rcu_work		ek_rcu_work;
+ };
+ 
+ #define EX_ISSYNC(exp)		(!((exp)->ex_flags & NFSEXP_ASYNC))
 -- 
 2.43.0
 
