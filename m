@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3237D207DFA;
-	Fri,  6 Dec 2024 15:24:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EBB0154449;
+	Fri,  6 Dec 2024 15:24:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733498658; cv=none; b=ZilR9x1knVY9vhIRrEuJKyyPZkK6aKe3KTMZnkoCYTTj6JVQFzU5sgfeldEnhzmZCyz7HuwaZl66MNUhZwt/6xLhUFHVKe4CKsVOrkWlqxOTujU0J65FmnVYipIgbya2oH/FiZ2Po1uZmYjxJpxbjDxeG4M5Dgr/gyZSI04pIoo=
+	t=1733498661; cv=none; b=AumQamHtau2HP/677/ytXIWudtwqIs59YuQkhqr+hu6otC1bYtYELH/Bt8+vcgdhrxBnhuNrzfVt8fyTUsn26OcUdrsEbxkPvmD2P0/72RjEhPsA87OgvBYrYNdO98liXuaOKcDh+rEYYShyYkLmuKhiTwMGbdV1AnooqDmEbT0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733498658; c=relaxed/simple;
-	bh=rADzKthc1PO98oMPjc7MRLui2koB0vFx48M7rGoe0Ng=;
+	s=arc-20240116; t=1733498661; c=relaxed/simple;
+	bh=MjqxAfiWQ9jAkU1EMjNx6yZdMwSBMf7FajJDJG0Pg+w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fDuE1+q1+RFURjGmhxH+eMpWARDTPuTaHBofEYZQWZg/V4ksQPSu5nRrklaKxaS/u2xT9waS1ZlVUzxRoTwkyEwanJ/zyLMo3Vrdl3XzZI7sZMoVuSgbdSlIVcSUS1yuerhwIBZ4KNNq8t94EV7ccxAOzgSRRPFIBSIOD+/ZwPk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=feuOy910; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VEysOqN2C90JlUCjSBYLAlkRE11X0Waq8g7DUbzBaCPFVWvmR1SOp4rz7ROIXCno5q7nO/0niY2Vx5WkQXmXtYM9Of3v+DRCgpFsp77vm3tdi9PvhdpeiU/NFINQb1UNpVNkUh2/p2F3GENuGrbI/6lHTto+kBSYCTnjdDDT0FY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RPNlggbP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="feuOy910"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BC20C4CED1;
-	Fri,  6 Dec 2024 15:24:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RPNlggbP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08BB2C4CED1;
+	Fri,  6 Dec 2024 15:24:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733498658;
-	bh=rADzKthc1PO98oMPjc7MRLui2koB0vFx48M7rGoe0Ng=;
+	s=korg; t=1733498661;
+	bh=MjqxAfiWQ9jAkU1EMjNx6yZdMwSBMf7FajJDJG0Pg+w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=feuOy910C1aLgAvK7tWU1C+YIBeQDCc0wFOTylSCd29kvhXsCROzKFkMP5DWjFjFv
-	 52gD9kmGl6EPbTR8QEGIj/aBKvq2+ISvTPFAF+GH/ZsBq7/aDRghga/boCGrQ1NJex
-	 AsPJzonDmhiMTPkZQV5UOpK3Z48ekcH8tU+drOrg=
+	b=RPNlggbPsZavYgfD67cHM0SCYfuyXFMMQlNRu+vDFd3ebxaRj3ewvUSBsBO7T2f+I
+	 tz7Z0kSTIUivAaAru6/oP9OjUYZ1/6+WotO7cDJ3mwB9XlKiasa8jDYnwOOLF62Itb
+	 gITQGXJ8twPWIGm47UXmdu5ZRZcJyE4/Y3/bVuFs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinjie Ruan <ruanjinjie@huawei.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 6.6 622/676] media: gspca: ov534-ov772x: Fix off-by-one error in set_frame_rate()
-Date: Fri,  6 Dec 2024 15:37:21 +0100
-Message-ID: <20241206143717.662822616@linuxfoundation.org>
+	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 6.6 649/676] thermal: int3400: Fix reading of current_uuid for active policy
+Date: Fri,  6 Dec 2024 15:37:48 +0100
+Message-ID: <20241206143718.718654638@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -51,37 +50,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinjie Ruan <ruanjinjie@huawei.com>
+From: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
 
-commit d2842dec577900031826dc44e9bf0c66416d7173 upstream.
+commit 7082503622986537f57bdb5ef23e69e70cfad881 upstream.
 
-In set_frame_rate(), select a rate in rate_0 or rate_1 by checking
-sd->frame_rate >= r->fps in a loop, but the loop condition terminates when
-the index reaches zero, which fails to check the last elememt in rate_0 or
-rate_1.
+When the current_uuid attribute is set to the active policy UUID,
+reading back the same attribute is returning "INVALID" instead of
+the active policy UUID on some platforms before Ice Lake.
 
-Check for >= 0 so that the last one in rate_0 or rate_1 is also checked.
+In platforms before Ice Lake, firmware provides a list of supported
+thermal policies. In this case, user space can select any of the
+supported thermal policies via a write to attribute "current_uuid".
 
-Fixes: 189d92af707e ("V4L/DVB (13422): gspca - ov534: ov772x changes from Richard Kaswy.")
-Cc: stable@vger.kernel.org
-Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+In commit c7ff29763989 ("thermal: int340x: Update OS policy capability
+handshake")', the OS policy handshake was updated to support Ice Lake
+and later platforms and it treated priv->current_uuid_index=0 as
+invalid. However, priv->current_uuid_index=0 is for the active policy,
+only priv->current_uuid_index=-1 is invalid.
+
+Fix this issue by updating the priv->current_uuid_index check.
+
+Fixes: c7ff29763989 ("thermal: int340x: Update OS policy capability handshake")
+Signed-off-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+Cc: 5.18+ <stable@vger.kernel.org> # 5.18+
+Link: https://patch.msgid.link/20241114200213.422303-1-srinivas.pandruvada@linux.intel.com
+[ rjw: Subject and changelog edits ]
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/usb/gspca/ov534.c |    2 +-
+ drivers/thermal/intel/int340x_thermal/int3400_thermal.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/media/usb/gspca/ov534.c
-+++ b/drivers/media/usb/gspca/ov534.c
-@@ -847,7 +847,7 @@ static void set_frame_rate(struct gspca_
- 		r = rate_1;
- 		i = ARRAY_SIZE(rate_1);
- 	}
--	while (--i > 0) {
-+	while (--i >= 0) {
- 		if (sd->frame_rate >= r->fps)
- 			break;
- 		r++;
+--- a/drivers/thermal/intel/int340x_thermal/int3400_thermal.c
++++ b/drivers/thermal/intel/int340x_thermal/int3400_thermal.c
+@@ -144,7 +144,7 @@ static ssize_t current_uuid_show(struct
+ 	struct int3400_thermal_priv *priv = dev_get_drvdata(dev);
+ 	int i, length = 0;
+ 
+-	if (priv->current_uuid_index > 0)
++	if (priv->current_uuid_index >= 0)
+ 		return sprintf(buf, "%s\n",
+ 			       int3400_thermal_uuids[priv->current_uuid_index]);
+ 
 
 
