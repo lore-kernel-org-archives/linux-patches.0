@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0C5A10E0;
-	Fri,  6 Dec 2024 14:47:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3F8B10E0;
+	Fri,  6 Dec 2024 14:47:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733496449; cv=none; b=Z/ISJ7DjHujVrOGYyPecJE/TRy76FZlvb+Ne9/jSUiN8BmXvImw6avGq/USQ0OCJDsTmO4VEt3kvjpjzUmwUwlj+SPz3UXVjf4SDlj1idxMduWWjF3Ihonvkr0hDa7NtTQrmYnQBwhlT/7a5MzDnHzMdMmbTEXZzimsh/xDJ81M=
+	t=1733496451; cv=none; b=JKkOvOtZaglUuM7O0TTQubFBYGGspFIVqss3aHZmnZVv/M7KERxuB65Lq33lEY91kmmpqVzCPlug0rTGP2XbfHPra3DvtfdwmCC3J0kgoyFe6paIpo0D8xDE6g8UQ/6+ogV67k31VTAom2GX1nMiSdpm4h/P95Jt8a+dYb97liI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733496449; c=relaxed/simple;
-	bh=NMepVzQn6MxgvZup+5rVs/A97z7oASIWDe9XBWXJREc=;
+	s=arc-20240116; t=1733496451; c=relaxed/simple;
+	bh=8VY+KzWHt/pIC+3XDFMNo7y9bhZCxaBf5tN6JQxsdr8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sgoN+s4Tnv3FyKj1HebqPx38zW8MXkIZ6LuuMxvsqPuMWw0TS3Y4AZ8oYzvWbEvrrX3dHrtVCrkXJWBCRHOcgFUNjdC2t5hlWnRDhbsUcvUdTkfk+hJ7YVFdv9ekTeg6nbgALqxgXY1qeKxhbm0pDDxLHzd4fRoDDJY7TJd0vg0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yAlaoJ6z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O7YoBidPx7/1ics+rdray1F8Z5a8zmw9DWGgPsbH2EhgVctxzmSByTwyop1kXTGY7yYZ5FuRYxnGzKBbzfsjMbwKAXHsUDkGzdfJCYNWD42ml1D08JbLWF44F/T2VIAOEtHxrUsPuM6BaKDyRXZuB6F3hhRx0z2xEFICsL6jHlg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0/BnCZqe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yAlaoJ6z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12EB6C4CED1;
-	Fri,  6 Dec 2024 14:47:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0/BnCZqe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6781CC4CED1;
+	Fri,  6 Dec 2024 14:47:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733496447;
-	bh=NMepVzQn6MxgvZup+5rVs/A97z7oASIWDe9XBWXJREc=;
+	s=korg; t=1733496450;
+	bh=8VY+KzWHt/pIC+3XDFMNo7y9bhZCxaBf5tN6JQxsdr8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yAlaoJ6z+wMFnPaHdeEHsfeKBvezZpOrGsZfeWvkSsHaSvTLqaoOtNRlU7J+DrjPm
-	 fWIV9Wbxbkuh6Zra7exKZaI6RWy7e9gG16cEPjApYuXZmxta5M66PM6u9j8xT4jZQ2
-	 7+n/6uNRuGIBYlW7akp3acVnQAui2LjXc5060sMM=
+	b=0/BnCZqec8tXTTkiT4/ilNDD3hlZ2sNjnz5i8RttBn951ex3Wj1hh/1lacCd0rD1/
+	 PwgYUWgDSImAPpjm7YH1iBcpXGz1FFYlCunmbPEyblGCFc+YdIrx6TfQRh5c493HYB
+	 DRzbWtSU4xyY6ove4FpTLKZsBIaqoAeIw+hIRXLE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 001/676] wifi: radiotap: Avoid -Wflex-array-member-not-at-end warnings
-Date: Fri,  6 Dec 2024 15:27:00 +0100
-Message-ID: <20241206143653.412492460@linuxfoundation.org>
+Subject: [PATCH 6.6 002/676] ASoC: codecs: rt5640: Always disable IRQs from rt5640_cancel_work()
+Date: Fri,  6 Dec 2024 15:27:01 +0100
+Message-ID: <20241206143653.451577838@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -51,224 +51,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gustavo A. R. Silva <gustavoars@kernel.org>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit 57be3d3562ca4aa62b8047bc681028cc402af8ce ]
+[ Upstream commit 032532f91a1d06d0750f16c49a9698ef5374a68f ]
 
--Wflex-array-member-not-at-end was introduced in GCC-14, and we are
-getting ready to enable it, globally.
+Disable IRQs from rt5640_cancel_work(), this fixes a crash caused by
+the IRQ never getting freed when the driver is unbound from the i2c_client
+with jack-detection active:
 
-So, in order to avoid ending up with a flexible-array member in the
-middle of multiple other structs, we use the `__struct_group()`
-helper to create a new tagged `struct ieee80211_radiotap_header_fixed`.
-This structure groups together all the members of the flexible
-`struct ieee80211_radiotap_header` except the flexible array.
+[  193.138780] rt5640 i2c-rt5640: ASoC: unknown pin LDO2
+[  193.138830] rt5640 i2c-rt5640: ASoC: unknown pin MICBIAS1
+[  193.671218] BUG: kernel NULL pointer dereference, address: 0000000000000078
+[  193.671239] #PF: supervisor read access in kernel mode
+[  193.671248] #PF: error_code(0x0000) - not-present page
+...
+[  193.671531]  ? asm_exc_page_fault+0x22/0x30
+[  193.671551]  ? rt5640_jack_inserted+0x10/0x80 [snd_soc_rt5640]
+[  193.671574]  rt5640_detect_headset+0x93/0x130 [snd_soc_rt5640]
+[  193.671596]  rt5640_jack_work+0x93/0x355 [snd_soc_rt5640]
 
-As a result, the array is effectively separated from the rest of the
-members without modifying the memory layout of the flexible structure.
-We then change the type of the middle struct members currently causing
-trouble from `struct ieee80211_radiotap_header` to `struct
-ieee80211_radiotap_header_fixed`.
-
-We also want to ensure that in case new members need to be added to the
-flexible structure, they are always included within the newly created
-tagged struct. For this, we use `static_assert()`. This ensures that the
-memory layout for both the flexible structure and the new tagged struct
-is the same after any changes.
-
-This approach avoids having to implement `struct ieee80211_radiotap_header_fixed`
-as a completely separate structure, thus preventing having to maintain
-two independent but basically identical structures, closing the door
-to potential bugs in the future.
-
-So, with these changes, fix the following warnings:
-drivers/net/wireless/ath/wil6210/txrx.c:309:50: warning: structure containing a flexible array member is not at the end of another structure [-Wflex-array-member-not-at-end]
-drivers/net/wireless/intel/ipw2x00/ipw2100.c:2521:50: warning: structure containing a flexible array member is not at the end of another structure [-Wflex-array-member-not-at-end]
-drivers/net/wireless/intel/ipw2x00/ipw2200.h:1146:42: warning: structure containing a flexible array member is not at the end of another structure [-Wflex-array-member-not-at-end]
-drivers/net/wireless/intel/ipw2x00/libipw.h:595:36: warning: structure containing a flexible array member is not at the end of another structure [-Wflex-array-member-not-at-end]
-drivers/net/wireless/marvell/libertas/radiotap.h:34:42: warning: structure containing a flexible array member is not at the end of another structure [-Wflex-array-member-not-at-end]
-drivers/net/wireless/marvell/libertas/radiotap.h:5:42: warning: structure containing a flexible array member is not at the end of another structure [-Wflex-array-member-not-at-end]
-drivers/net/wireless/microchip/wilc1000/mon.c:10:42: warning: structure containing a flexible array member is not at the end of another structure [-Wflex-array-member-not-at-end]
-drivers/net/wireless/microchip/wilc1000/mon.c:15:42: warning: structure containing a flexible array member is not at the end of another structure [-Wflex-array-member-not-at-end]
-drivers/net/wireless/virtual/mac80211_hwsim.c:758:42: warning: structure containing a flexible array member is not at the end of another structure [-Wflex-array-member-not-at-end]
-drivers/net/wireless/virtual/mac80211_hwsim.c:767:42: warning: structure containing a flexible array member is not at the end of another structure [-Wflex-array-member-not-at-end]
-
-Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
-Link: https://patch.msgid.link/ZwBMtBZKcrzwU7l4@kspp
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://patch.msgid.link/20241024215612.92147-1-hdegoede@redhat.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/wil6210/txrx.c       |  2 +-
- drivers/net/wireless/intel/ipw2x00/ipw2100.c  |  2 +-
- drivers/net/wireless/intel/ipw2x00/ipw2200.h  |  2 +-
- .../net/wireless/marvell/libertas/radiotap.h  |  4 +-
- drivers/net/wireless/microchip/wilc1000/mon.c |  4 +-
- drivers/net/wireless/virtual/mac80211_hwsim.c |  4 +-
- include/net/ieee80211_radiotap.h              | 43 +++++++++++--------
- 7 files changed, 33 insertions(+), 28 deletions(-)
+ sound/soc/codecs/rt5640.c | 27 +++++++++++++++------------
+ 1 file changed, 15 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/wil6210/txrx.c b/drivers/net/wireless/ath/wil6210/txrx.c
-index f29ac6de71399..19702b6f09c32 100644
---- a/drivers/net/wireless/ath/wil6210/txrx.c
-+++ b/drivers/net/wireless/ath/wil6210/txrx.c
-@@ -306,7 +306,7 @@ static void wil_rx_add_radiotap_header(struct wil6210_priv *wil,
- 				       struct sk_buff *skb)
+diff --git a/sound/soc/codecs/rt5640.c b/sound/soc/codecs/rt5640.c
+index e8cdc166bdaa9..1955d77cffd99 100644
+--- a/sound/soc/codecs/rt5640.c
++++ b/sound/soc/codecs/rt5640.c
+@@ -2422,10 +2422,20 @@ static irqreturn_t rt5640_jd_gpio_irq(int irq, void *data)
+ 	return IRQ_HANDLED;
+ }
+ 
+-static void rt5640_cancel_work(void *data)
++static void rt5640_disable_irq_and_cancel_work(void *data)
  {
- 	struct wil6210_rtap {
--		struct ieee80211_radiotap_header rthdr;
-+		struct ieee80211_radiotap_header_fixed rthdr;
- 		/* fields should be in the order of bits in rthdr.it_present */
- 		/* flags */
- 		u8 flags;
-diff --git a/drivers/net/wireless/intel/ipw2x00/ipw2100.c b/drivers/net/wireless/intel/ipw2x00/ipw2100.c
-index 0812db8936f13..9e9ff0cb724ca 100644
---- a/drivers/net/wireless/intel/ipw2x00/ipw2100.c
-+++ b/drivers/net/wireless/intel/ipw2x00/ipw2100.c
-@@ -2520,7 +2520,7 @@ static void isr_rx_monitor(struct ipw2100_priv *priv, int i,
- 	 * to build this manually element by element, we can write it much
- 	 * more efficiently than we can parse it. ORDER MATTERS HERE */
- 	struct ipw_rt_hdr {
--		struct ieee80211_radiotap_header rt_hdr;
-+		struct ieee80211_radiotap_header_fixed rt_hdr;
- 		s8 rt_dbmsignal; /* signal in dbM, kluged to signed */
- 	} *ipw_rt;
+ 	struct rt5640_priv *rt5640 = data;
  
-diff --git a/drivers/net/wireless/intel/ipw2x00/ipw2200.h b/drivers/net/wireless/intel/ipw2x00/ipw2200.h
-index 8ebf09121e173..226286cb7eb82 100644
---- a/drivers/net/wireless/intel/ipw2x00/ipw2200.h
-+++ b/drivers/net/wireless/intel/ipw2x00/ipw2200.h
-@@ -1143,7 +1143,7 @@ struct ipw_prom_priv {
-  * structure is provided regardless of any bits unset.
-  */
- struct ipw_rt_hdr {
--	struct ieee80211_radiotap_header rt_hdr;
-+	struct ieee80211_radiotap_header_fixed rt_hdr;
- 	u64 rt_tsf;      /* TSF */	/* XXX */
- 	u8 rt_flags;	/* radiotap packet flags */
- 	u8 rt_rate;	/* rate in 500kb/s */
-diff --git a/drivers/net/wireless/marvell/libertas/radiotap.h b/drivers/net/wireless/marvell/libertas/radiotap.h
-index 1ed5608d353ff..d543bfe739dcb 100644
---- a/drivers/net/wireless/marvell/libertas/radiotap.h
-+++ b/drivers/net/wireless/marvell/libertas/radiotap.h
-@@ -2,7 +2,7 @@
- #include <net/ieee80211_radiotap.h>
++	if (rt5640->jd_gpio_irq_requested) {
++		free_irq(rt5640->jd_gpio_irq, rt5640);
++		rt5640->jd_gpio_irq_requested = false;
++	}
++
++	if (rt5640->irq_requested) {
++		free_irq(rt5640->irq, rt5640);
++		rt5640->irq_requested = false;
++	}
++
+ 	cancel_delayed_work_sync(&rt5640->jack_work);
+ 	cancel_delayed_work_sync(&rt5640->bp_work);
+ }
+@@ -2466,13 +2476,7 @@ static void rt5640_disable_jack_detect(struct snd_soc_component *component)
+ 	if (!rt5640->jack)
+ 		return;
  
- struct tx_radiotap_hdr {
--	struct ieee80211_radiotap_header hdr;
-+	struct ieee80211_radiotap_header_fixed hdr;
- 	u8 rate;
- 	u8 txpower;
- 	u8 rts_retries;
-@@ -31,7 +31,7 @@ struct tx_radiotap_hdr {
- #define IEEE80211_FC_DSTODS          0x0300
- 
- struct rx_radiotap_hdr {
--	struct ieee80211_radiotap_header hdr;
-+	struct ieee80211_radiotap_header_fixed hdr;
- 	u8 flags;
- 	u8 rate;
- 	u8 antsignal;
-diff --git a/drivers/net/wireless/microchip/wilc1000/mon.c b/drivers/net/wireless/microchip/wilc1000/mon.c
-index 03b7229a0ff5a..c3d27aaec2974 100644
---- a/drivers/net/wireless/microchip/wilc1000/mon.c
-+++ b/drivers/net/wireless/microchip/wilc1000/mon.c
-@@ -7,12 +7,12 @@
- #include "cfg80211.h"
- 
- struct wilc_wfi_radiotap_hdr {
--	struct ieee80211_radiotap_header hdr;
-+	struct ieee80211_radiotap_header_fixed hdr;
- 	u8 rate;
- } __packed;
- 
- struct wilc_wfi_radiotap_cb_hdr {
--	struct ieee80211_radiotap_header hdr;
-+	struct ieee80211_radiotap_header_fixed hdr;
- 	u8 rate;
- 	u8 dump;
- 	u16 tx_flags;
-diff --git a/drivers/net/wireless/virtual/mac80211_hwsim.c b/drivers/net/wireless/virtual/mac80211_hwsim.c
-index 07be0adc13ec5..d86a1bd7aab08 100644
---- a/drivers/net/wireless/virtual/mac80211_hwsim.c
-+++ b/drivers/net/wireless/virtual/mac80211_hwsim.c
-@@ -736,7 +736,7 @@ static const struct rhashtable_params hwsim_rht_params = {
- };
- 
- struct hwsim_radiotap_hdr {
--	struct ieee80211_radiotap_header hdr;
-+	struct ieee80211_radiotap_header_fixed hdr;
- 	__le64 rt_tsft;
- 	u8 rt_flags;
- 	u8 rt_rate;
-@@ -745,7 +745,7 @@ struct hwsim_radiotap_hdr {
- } __packed;
- 
- struct hwsim_radiotap_ack_hdr {
--	struct ieee80211_radiotap_header hdr;
-+	struct ieee80211_radiotap_header_fixed hdr;
- 	u8 rt_flags;
- 	u8 pad;
- 	__le16 rt_channel;
-diff --git a/include/net/ieee80211_radiotap.h b/include/net/ieee80211_radiotap.h
-index 2338f8d2a8b33..c6cb6f6427423 100644
---- a/include/net/ieee80211_radiotap.h
-+++ b/include/net/ieee80211_radiotap.h
-@@ -24,25 +24,27 @@
-  * struct ieee80211_radiotap_header - base radiotap header
-  */
- struct ieee80211_radiotap_header {
--	/**
--	 * @it_version: radiotap version, always 0
--	 */
--	uint8_t it_version;
+-	if (rt5640->jd_gpio_irq_requested)
+-		free_irq(rt5640->jd_gpio_irq, rt5640);
 -
--	/**
--	 * @it_pad: padding (or alignment)
--	 */
--	uint8_t it_pad;
+-	if (rt5640->irq_requested)
+-		free_irq(rt5640->irq, rt5640);
 -
--	/**
--	 * @it_len: overall radiotap header length
--	 */
--	__le16 it_len;
--
--	/**
--	 * @it_present: (first) present word
--	 */
--	__le32 it_present;
-+	__struct_group(ieee80211_radiotap_header_fixed, hdr, __packed,
-+		/**
-+		 * @it_version: radiotap version, always 0
-+		 */
-+		uint8_t it_version;
-+
-+		/**
-+		 * @it_pad: padding (or alignment)
-+		 */
-+		uint8_t it_pad;
-+
-+		/**
-+		 * @it_len: overall radiotap header length
-+		 */
-+		__le16 it_len;
-+
-+		/**
-+		 * @it_present: (first) present word
-+		 */
-+		__le32 it_present;
-+	);
+-	rt5640_cancel_work(rt5640);
++	rt5640_disable_irq_and_cancel_work(rt5640);
  
- 	/**
- 	 * @it_optional: all remaining presence bitmaps
-@@ -50,6 +52,9 @@ struct ieee80211_radiotap_header {
- 	__le32 it_optional[];
- } __packed;
+ 	if (rt5640->jack->status & SND_JACK_MICROPHONE) {
+ 		rt5640_disable_micbias1_ovcd_irq(component);
+@@ -2480,8 +2484,6 @@ static void rt5640_disable_jack_detect(struct snd_soc_component *component)
+ 		snd_soc_jack_report(rt5640->jack, 0, SND_JACK_BTN_0);
+ 	}
  
-+static_assert(offsetof(struct ieee80211_radiotap_header, it_optional) == sizeof(struct ieee80211_radiotap_header_fixed),
-+	      "struct member likely outside of __struct_group()");
-+
- /* version is always 0 */
- #define PKTHDR_RADIOTAP_VERSION	0
+-	rt5640->jd_gpio_irq_requested = false;
+-	rt5640->irq_requested = false;
+ 	rt5640->jd_gpio = NULL;
+ 	rt5640->jack = NULL;
+ }
+@@ -2801,7 +2803,8 @@ static int rt5640_suspend(struct snd_soc_component *component)
+ 	if (rt5640->jack) {
+ 		/* disable jack interrupts during system suspend */
+ 		disable_irq(rt5640->irq);
+-		rt5640_cancel_work(rt5640);
++		cancel_delayed_work_sync(&rt5640->jack_work);
++		cancel_delayed_work_sync(&rt5640->bp_work);
+ 	}
+ 
+ 	snd_soc_component_force_bias_level(component, SND_SOC_BIAS_OFF);
+@@ -3035,7 +3038,7 @@ static int rt5640_i2c_probe(struct i2c_client *i2c)
+ 	INIT_DELAYED_WORK(&rt5640->jack_work, rt5640_jack_work);
+ 
+ 	/* Make sure work is stopped on probe-error / remove */
+-	ret = devm_add_action_or_reset(&i2c->dev, rt5640_cancel_work, rt5640);
++	ret = devm_add_action_or_reset(&i2c->dev, rt5640_disable_irq_and_cancel_work, rt5640);
+ 	if (ret)
+ 		return ret;
  
 -- 
 2.43.0
