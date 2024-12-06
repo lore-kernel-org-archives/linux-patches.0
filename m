@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCBEA1442E8;
-	Fri,  6 Dec 2024 14:55:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60A91149C69;
+	Fri,  6 Dec 2024 14:55:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733496911; cv=none; b=gFoOhrGAJFJkLHPuSGTWUehJpM1XeukXGJFV8ssq5pj/64GH73e86AoKPJrxhZYK/5anrfb9WCQmjY6iXJcgSGzXhIR3JpQG3GGSsoxxjtDDx4IEoUeDY4vp+BNEEi69OuY5OZcOX0eeIBlyVCYEmqjq/ETqjs95RNwylezbjVI=
+	t=1733496914; cv=none; b=ccz/HVrRk9fsRVKXtTVgv45uRa9HuxQm2xbGDpspVfBoS9TcQjUEA2R/FCf7rWFJmY1WQngqVohSewuV0qvJoEkxIgw0CwmeMLqpAPDfkl/yrf/cwmFV6UQ0Elor5swCugrGpPlSeYPtbFEF1l29G1yg/JHYg0DXryONQj6LNvs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733496911; c=relaxed/simple;
-	bh=yi+aO/yOefc9GDd0K298wxVKPlUx2SlhdA54B1mUeFs=;
+	s=arc-20240116; t=1733496914; c=relaxed/simple;
+	bh=knOJPnMh3Zz3FqeEDkqINw4fd2J4XRzgy0pSsxIPIbM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WejpJGszNdShr5wAAIDOK7Mcr9IaeK9WGQ9NNtfkzeJj/T1Ko89/MLrc0bueCsrC9YFHfAoNReqTjVSM8M3ExnbcIxCRDeilGd8uehHZ6lPv4uZ6xwXZIyoEj58Cq9KNfd7C/BkgK7eT6VM2KqkJ6/AjAEKcA11fVKVbfAicS5w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m5eBjH89; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JCjEhVd0IdOoSXLMxK7wtOOjOC8oZGMnUrkDs46XWH8K0/OF/L5pjTgqJ0bMrVhs6FsK6z34yiUUKgB8l0ISfgzApK/4TPScUycJvGy0zuciPqfWT4+3cInDST1QxBrAX4CIRh0X6fSTmOTKIwN329kE5zdj44p4pP5Xv9xHOX8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ewkksncs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m5eBjH89"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49737C4CED1;
-	Fri,  6 Dec 2024 14:55:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ewkksncs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B94A3C4CEE1;
+	Fri,  6 Dec 2024 14:55:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733496910;
-	bh=yi+aO/yOefc9GDd0K298wxVKPlUx2SlhdA54B1mUeFs=;
+	s=korg; t=1733496914;
+	bh=knOJPnMh3Zz3FqeEDkqINw4fd2J4XRzgy0pSsxIPIbM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m5eBjH893IKilE2+CZD/lQUXJ5mSPMQrtIh1SHdQH+nvmieZZvNbXyXW1AYKdnLj1
-	 Ndx0+FB0Y5BgsAiduArR7foeBpBM+N1uIxy/olNBwJL7vn7BF9VgohJ6765FNpkBM5
-	 Q26xTpDyYuPN2KvhSBYJt96kPmMu5LtPBYViDSIo=
+	b=EwkksncsQqbdOjfBd6EtJFnh6vBk6cRb3uxxBOVJ3I+YiI3AO9XAiH9kaSYy9I8yX
+	 8tKgTaJw6Spp+WYaFLyGzAQ6ka9jHO35YMWQm3wfK8CJOPsNkT9FliwYcaaXYCVSa0
+	 i9dyUMnCBJ7htXLYNLUzefSsoPyNRIUDdMN3N4Fk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anurag Dutta <a-dutta@ti.com>,
-	Aniket Limaye <a-limaye@ti.com>,
-	Vignesh Raghavendra <vigneshr@ti.com>,
+	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
+	Daniel Lezcano <daniel.lezcano@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 140/676] arm64: dts: ti: k3-j7200: Fix clock ids for MCSPI instances
-Date: Fri,  6 Dec 2024 15:29:19 +0100
-Message-ID: <20241206143658.823846772@linuxfoundation.org>
+Subject: [PATCH 6.6 111/676] clocksource/drivers/timer-ti-dm: Fix child node refcount handling
+Date: Fri,  6 Dec 2024 15:28:50 +0100
+Message-ID: <20241206143657.696025370@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -52,137 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anurag Dutta <a-dutta@ti.com>
+From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
 
-[ Upstream commit 3a47e381670f130870caef6e1155ac531b17b032 ]
+[ Upstream commit e5cfc0989d9a2849c51c720a16b90b2c061a1aeb ]
 
-The clock IDs for multiple MCSPI instances across wakeup as
-well as main domain in J7200 are incorrect when compared with
-documentation [1]. This results in kernel crashes when the said
-instances are enabled. Fix the clock ids to their appropriate
-values.
+of_find_compatible_node() increments the node's refcount, and it must be
+decremented again with a call to of_node_put() when the pointer is no
+longer required to avoid leaking the resource.
 
-[1]https://software-dl.ti.com/tisci/esd/latest/5_soc_doc/j7200/clocks.html
+Instead of adding the missing calls to of_node_put() in all execution
+paths, use the cleanup attribute for 'arm_timer' by means of the
+__free() macro, which automatically calls of_node_put() when the
+variable goes out of scope.
 
-Fixes: 8f6c475f4ca7 ("arm64: dts: ti: k3-j7200: Add MCSPI nodes")
-
-Signed-off-by: Anurag Dutta <a-dutta@ti.com>
-Reviewed-by: Aniket Limaye <a-limaye@ti.com>
-Link: https://lore.kernel.org/r/20241023104532.3438851-2-a-dutta@ti.com
-Signed-off-by: Vignesh Raghavendra <vigneshr@ti.com>
+Fixes: 25de4ce5ed02 ("clocksource/drivers/timer-ti-dm: Handle dra7 timer wrap errata i940")
+Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+Link: https://lore.kernel.org/r/20241031-timer-ti-dm-systimer-of_node_put-v3-1-063ee822b73a@gmail.com
+Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/ti/k3-j7200-main.dtsi       | 16 ++++++++--------
- arch/arm64/boot/dts/ti/k3-j7200-mcu-wakeup.dtsi |  6 +++---
- 2 files changed, 11 insertions(+), 11 deletions(-)
+ drivers/clocksource/timer-ti-dm-systimer.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/ti/k3-j7200-main.dtsi b/arch/arm64/boot/dts/ti/k3-j7200-main.dtsi
-index 6a221a50d7006..e5ff6f038a9ac 100644
---- a/arch/arm64/boot/dts/ti/k3-j7200-main.dtsi
-+++ b/arch/arm64/boot/dts/ti/k3-j7200-main.dtsi
-@@ -915,7 +915,7 @@ main_spi0: spi@2100000 {
- 		#address-cells = <1>;
- 		#size-cells = <0>;
- 		power-domains = <&k3_pds 266 TI_SCI_PD_EXCLUSIVE>;
--		clocks = <&k3_clks 266 1>;
-+		clocks = <&k3_clks 266 4>;
- 		status = "disabled";
- 	};
+diff --git a/drivers/clocksource/timer-ti-dm-systimer.c b/drivers/clocksource/timer-ti-dm-systimer.c
+index c2dcd8d68e458..d1c144d6f328c 100644
+--- a/drivers/clocksource/timer-ti-dm-systimer.c
++++ b/drivers/clocksource/timer-ti-dm-systimer.c
+@@ -686,9 +686,9 @@ subsys_initcall(dmtimer_percpu_timer_startup);
  
-@@ -926,7 +926,7 @@ main_spi1: spi@2110000 {
- 		#address-cells = <1>;
- 		#size-cells = <0>;
- 		power-domains = <&k3_pds 267 TI_SCI_PD_EXCLUSIVE>;
--		clocks = <&k3_clks 267 1>;
-+		clocks = <&k3_clks 267 4>;
- 		status = "disabled";
- 	};
+ static int __init dmtimer_percpu_quirk_init(struct device_node *np, u32 pa)
+ {
+-	struct device_node *arm_timer;
++	struct device_node *arm_timer __free(device_node) =
++		of_find_compatible_node(NULL, NULL, "arm,armv7-timer");
  
-@@ -937,7 +937,7 @@ main_spi2: spi@2120000 {
- 		#address-cells = <1>;
- 		#size-cells = <0>;
- 		power-domains = <&k3_pds 268 TI_SCI_PD_EXCLUSIVE>;
--		clocks = <&k3_clks 268 1>;
-+		clocks = <&k3_clks 268 4>;
- 		status = "disabled";
- 	};
- 
-@@ -948,7 +948,7 @@ main_spi3: spi@2130000 {
- 		#address-cells = <1>;
- 		#size-cells = <0>;
- 		power-domains = <&k3_pds 269 TI_SCI_PD_EXCLUSIVE>;
--		clocks = <&k3_clks 269 1>;
-+		clocks = <&k3_clks 269 4>;
- 		status = "disabled";
- 	};
- 
-@@ -959,7 +959,7 @@ main_spi4: spi@2140000 {
- 		#address-cells = <1>;
- 		#size-cells = <0>;
- 		power-domains = <&k3_pds 270 TI_SCI_PD_EXCLUSIVE>;
--		clocks = <&k3_clks 270 1>;
-+		clocks = <&k3_clks 270 2>;
- 		status = "disabled";
- 	};
- 
-@@ -970,7 +970,7 @@ main_spi5: spi@2150000 {
- 		#address-cells = <1>;
- 		#size-cells = <0>;
- 		power-domains = <&k3_pds 271 TI_SCI_PD_EXCLUSIVE>;
--		clocks = <&k3_clks 271 1>;
-+		clocks = <&k3_clks 271 4>;
- 		status = "disabled";
- 	};
- 
-@@ -981,7 +981,7 @@ main_spi6: spi@2160000 {
- 		#address-cells = <1>;
- 		#size-cells = <0>;
- 		power-domains = <&k3_pds 272 TI_SCI_PD_EXCLUSIVE>;
--		clocks = <&k3_clks 272 1>;
-+		clocks = <&k3_clks 272 4>;
- 		status = "disabled";
- 	};
- 
-@@ -992,7 +992,7 @@ main_spi7: spi@2170000 {
- 		#address-cells = <1>;
- 		#size-cells = <0>;
- 		power-domains = <&k3_pds 273 TI_SCI_PD_EXCLUSIVE>;
--		clocks = <&k3_clks 273 1>;
-+		clocks = <&k3_clks 273 4>;
- 		status = "disabled";
- 	};
- 
-diff --git a/arch/arm64/boot/dts/ti/k3-j7200-mcu-wakeup.dtsi b/arch/arm64/boot/dts/ti/k3-j7200-mcu-wakeup.dtsi
-index e5c35a53bb499..8e9d0a25e2366 100644
---- a/arch/arm64/boot/dts/ti/k3-j7200-mcu-wakeup.dtsi
-+++ b/arch/arm64/boot/dts/ti/k3-j7200-mcu-wakeup.dtsi
-@@ -481,7 +481,7 @@ mcu_spi0: spi@40300000 {
- 		#address-cells = <1>;
- 		#size-cells = <0>;
- 		power-domains = <&k3_pds 274 TI_SCI_PD_EXCLUSIVE>;
--		clocks = <&k3_clks 274 0>;
-+		clocks = <&k3_clks 274 4>;
- 		status = "disabled";
- 	};
- 
-@@ -492,7 +492,7 @@ mcu_spi1: spi@40310000 {
- 		#address-cells = <1>;
- 		#size-cells = <0>;
- 		power-domains = <&k3_pds 275 TI_SCI_PD_EXCLUSIVE>;
--		clocks = <&k3_clks 275 0>;
-+		clocks = <&k3_clks 275 4>;
- 		status = "disabled";
- 	};
- 
-@@ -503,7 +503,7 @@ mcu_spi2: spi@40320000 {
- 		#address-cells = <1>;
- 		#size-cells = <0>;
- 		power-domains = <&k3_pds 276 TI_SCI_PD_EXCLUSIVE>;
--		clocks = <&k3_clks 276 0>;
-+		clocks = <&k3_clks 276 2>;
- 		status = "disabled";
- 	};
- 
+-	arm_timer = of_find_compatible_node(NULL, NULL, "arm,armv7-timer");
+ 	if (of_device_is_available(arm_timer)) {
+ 		pr_warn_once("ARM architected timer wrap issue i940 detected\n");
+ 		return 0;
 -- 
 2.43.0
 
