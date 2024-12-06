@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAD6E149DF0;
-	Fri,  6 Dec 2024 14:48:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2AA110E0;
+	Fri,  6 Dec 2024 14:48:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733496480; cv=none; b=ossf8lkxC98MksH4v5qz4WTJAz2kL+ZbQhFysODUU1T1eqsvnuiynIOcmwMPxvxF6iQVqaiDR6I4RbVgbrh53JO0BxUBS+6ScJ/W4aB1sGdjEXXAKGyHJ/X9L44hM3VpCbwCPLqEuplvSU7d1Z1jR8ifm9Pc0bPPMFsA2Fmklak=
+	t=1733496490; cv=none; b=c9I2jNl1pBEfzPByJlSRVvhGzUDCCeex6snbzQYDF5zRjiYFUyD387i7kMBDSdzCdkGvqKpLmrV8sJR+o74Fg5V1ULkFEKa1Soy/PwU4hXHTxbquNCUWGFjqTCqyuknUTOynmtKSCg3Z1uLfBw9ZKpPy+e4KJsxlewsjeU2PjFs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733496480; c=relaxed/simple;
-	bh=P2baSDnTrzI/LE56adjkBSCyk8dHKuBaeherLDwW5Z4=;
+	s=arc-20240116; t=1733496490; c=relaxed/simple;
+	bh=y06kvIziHgVP5AcLqdpAZ8XGfihgeb0CB0VAZOulDXA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=lLBrA1hxHhaLzwYAYsk03vRZiYgKTPDTKioatuDVY2qn3V1/qeYNMxHfFaQ+FPV3z7y1rBigH62RqiVNOczF+edhMOT3y7X1vp0tPDiKJyLR/nUmLDp8X/PS1IXfzqppyesJHlrNYWHQNU4zid+aDM1+N3ZadawBHUV36pl1nGg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nyrdLnvi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EM3MMS42SiVuwi8uCXNJcBYf1pWsKP16iJX3rW38l46S5Qxgxp7dNSFdK1Pt2Bwoe+xM55HpQ7ZgS3EOYLA8nXrTVozmiXm3zSoYrP5kpH+vbXIyRLyV0NIu+bdZ6GPvm/BetJ6eGObID6pVecFRnomMyzHnZMmYgA3IxDG8QdM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xqezboBr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nyrdLnvi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26E97C4CED1;
-	Fri,  6 Dec 2024 14:47:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xqezboBr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2181EC4CED1;
+	Fri,  6 Dec 2024 14:48:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733496480;
-	bh=P2baSDnTrzI/LE56adjkBSCyk8dHKuBaeherLDwW5Z4=;
+	s=korg; t=1733496490;
+	bh=y06kvIziHgVP5AcLqdpAZ8XGfihgeb0CB0VAZOulDXA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nyrdLnvigs0oIjau169db7F21SAADnrV8gOPZX6UOao5KWpmr/2PQBkD9QZWFZx7b
-	 D1af02rUqOpJnodrb2Jst2bw638a7q3Xlbp62eiVu1ZTjIn5gDnMpmFdZwr7aNfBUb
-	 Eqx5xbYUYBuvHxLv6BfggMGLzbYc4/T5t+LN6uQk=
+	b=xqezboBrQhLctSgzxE5a17igUSgFw3bcxhyQahJMit0upZVzVsGnWn/usNaP5pZPv
+	 RhFA+g685E6KwaLpoxatDzooRQ0XStRyMSwd0wbLDYVDN7mxP+J3boFKQqA5KLBvGp
+	 wYDrOi5/7nufzrbnFNMEWBnhuSJSTx47ul+xjuKo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kurt Borja <kuurtb@gmail.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
-	Hans de Goede <hdegoede@redhat.com>,
+	Shenghao Ding <shenghao-ding@ti.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 019/676] platform/x86: dell-wmi-base: Handle META key Lock/Unlock events
-Date: Fri,  6 Dec 2024 15:27:18 +0100
-Message-ID: <20241206143654.111655563@linuxfoundation.org>
+Subject: [PATCH 6.6 020/676] ASoC: tas2781: Add new driver version for tas2563 & tas2781 qfn chip
+Date: Fri,  6 Dec 2024 15:27:19 +0100
+Message-ID: <20241206143654.150529714@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -47,54 +45,38 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kurt Borja <kuurtb@gmail.com>
+From: Shenghao Ding <shenghao-ding@ti.com>
 
-[ Upstream commit ec61f0bb4feec3345626a2b93b970b6719743997 ]
+[ Upstream commit fe09de2db2365eed8b44b572cff7d421eaf1754a ]
 
-Some Alienware devices have a key that locks/unlocks the Meta key. This
-key triggers a WMI event that should be ignored by the kernel, as it's
-handled by internally the firmware.
+Add new driver version to support tas2563 & tas2781 qfn chip
 
-There is no known way of changing this default behavior. The firmware
-would lock/unlock the Meta key, regardless of how the event is handled.
-
-Tested on an Alienware x15 R1.
-
-Signed-off-by: Kurt Borja <kuurtb@gmail.com>
-Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
-Acked-by: Pali Rohár <pali@kernel.org>
-Link: https://lore.kernel.org/r/20241031154441.6663-2-kuurtb@gmail.com
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Shenghao Ding <shenghao-ding@ti.com>
+Link: https://patch.msgid.link/20241104100055.48-1-shenghao-ding@ti.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/dell/dell-wmi-base.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ sound/soc/codecs/tas2781-fmwlib.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/platform/x86/dell/dell-wmi-base.c b/drivers/platform/x86/dell/dell-wmi-base.c
-index 24fd7ffadda95..841a5414d28a6 100644
---- a/drivers/platform/x86/dell/dell-wmi-base.c
-+++ b/drivers/platform/x86/dell/dell-wmi-base.c
-@@ -80,6 +80,12 @@ static const struct dmi_system_id dell_wmi_smbios_list[] __initconst = {
- static const struct key_entry dell_wmi_keymap_type_0000[] = {
- 	{ KE_IGNORE, 0x003a, { KEY_CAPSLOCK } },
- 
-+	/* Meta key lock */
-+	{ KE_IGNORE, 0xe000, { KEY_RIGHTMETA } },
-+
-+	/* Meta key unlock */
-+	{ KE_IGNORE, 0xe001, { KEY_RIGHTMETA } },
-+
- 	/* Key code is followed by brightness level */
- 	{ KE_KEY,    0xe005, { KEY_BRIGHTNESSDOWN } },
- 	{ KE_KEY,    0xe006, { KEY_BRIGHTNESSUP } },
+diff --git a/sound/soc/codecs/tas2781-fmwlib.c b/sound/soc/codecs/tas2781-fmwlib.c
+index 629e2195a890b..1cc64ed8de6da 100644
+--- a/sound/soc/codecs/tas2781-fmwlib.c
++++ b/sound/soc/codecs/tas2781-fmwlib.c
+@@ -2022,6 +2022,7 @@ static int tasdevice_dspfw_ready(const struct firmware *fmw,
+ 		break;
+ 	case 0x202:
+ 	case 0x400:
++	case 0x401:
+ 		tas_priv->fw_parse_variable_header =
+ 			fw_parse_variable_header_git;
+ 		tas_priv->fw_parse_program_data =
 -- 
 2.43.0
 
