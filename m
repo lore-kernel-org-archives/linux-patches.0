@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A9291FCCE5;
-	Fri,  6 Dec 2024 14:57:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CC9E148832;
+	Fri,  6 Dec 2024 14:57:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733497056; cv=none; b=jNHlR9aGvfzMbPlJCI4SuF8mNUEY5whqBluJ2HkYXJ4wwuSg5wqssoVekLIBbLbKQkJ2odQ/XyIWZ1F1Ld9cTPLMnkXqBdtFEFqFa7bLngpP8qo07CCOexZk7GdZefMAw16yz0sLjzEqCIT0BswZbuvIQ/8TUl95Y3fKusCXklE=
+	t=1733497059; cv=none; b=j/60gdEAKNRJhEUWss8B030TtzAghGgDrq7YcwNh6mQiCrBUsjCt2zN7W2SDeiTAfgWNUnSvaVq6XeK1eCLiqazwFrjfK9wlGJjgxZSk70hgFbyuCCQecwFmqRpjwwXlGrk24sxwNOsRC1X5n5RpAaPxlMhwrlWcBWmwBJ2pabg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733497056; c=relaxed/simple;
-	bh=Nuim2lq9JfEmfRSyyuhpIAcGMa0xMiqQyg0j9OGQSIQ=;
+	s=arc-20240116; t=1733497059; c=relaxed/simple;
+	bh=JjQfQXru1j4x+5QvWOPfuVKe7fbh2vLiLto3hGovUoE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NBAmCXxRDeE1SAOmOERxrb857rNVR7uVx/AppMrrO1ZCFbrtnP9go7owQALGr9+0seH5IZR+LcxQzH34m8YQKElhDzJx0DGzWGE0A07iCDErMozZxNlraTNDw3LhfJOiEkyXV52WOg3GpgE+kbUAYp25w5PHw3xDnRY+edlMfkQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QTT5vY7x; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NI0wxp+rlTsx2ZrVlVox+1rQ9RZlYXNjilfAjZv95zs0vEAVOaoBifFyGtC8Zn+VzzpF+qGSgXC0o+MdpL8Pi3uGzEKLwQW0WapcLh9cjnoYU6QXUzrmQhIKZM1AitBBDqpQfAQnT15EMGcBk11xtzsyMEXbJyPT7dx/RznOwBU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zKBEI/hb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QTT5vY7x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACD5AC4CEDC;
-	Fri,  6 Dec 2024 14:57:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zKBEI/hb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D02FEC4CED1;
+	Fri,  6 Dec 2024 14:57:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733497056;
-	bh=Nuim2lq9JfEmfRSyyuhpIAcGMa0xMiqQyg0j9OGQSIQ=;
+	s=korg; t=1733497059;
+	bh=JjQfQXru1j4x+5QvWOPfuVKe7fbh2vLiLto3hGovUoE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QTT5vY7x931xG3dnHgtvYRI3fXbWGzlGCEnQJQR8hRToWKZGSNcERu/YPGBHuwkgM
-	 HQAplEq1ftZCiMWbgffcCcLVQuPcmidMK5YDS7MeYmICEtJ6jhFNcYSwjfn8if4hu5
-	 reRg+qVaTwXRZCLej7pIklVDSjRGDNfEfgBF17lk=
+	b=zKBEI/hbUDWoT0mneW0tb3C4QajC03eRK0nUI8qnHJ3SFl3polOmtBPusWAB5SZ88
+	 wHxLB4hC4RcIEuwpNH3xHx693rls8ucBW3Ruh8K2RgIrNWBgfK9MT19pCwo995Hrs2
+	 rEL7Pyklvr0eSMieT8jdn0JkxLKvRi9GMszNe95A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
+	Anurag Dutta <a-dutta@ti.com>,
+	Vignesh Raghavendra <vigneshr@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 150/676] arm64: dts: renesas: hihope: Drop #sound-dai-cells
-Date: Fri,  6 Dec 2024 15:29:29 +0100
-Message-ID: <20241206143659.209967782@linuxfoundation.org>
+Subject: [PATCH 6.6 141/676] arm64: dts: ti: k3-j721e: Fix clock IDs for MCSPI instances
+Date: Fri,  6 Dec 2024 15:29:20 +0100
+Message-ID: <20241206143658.861934377@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -52,59 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+From: Anurag Dutta <a-dutta@ti.com>
 
-[ Upstream commit 9cc926e3fab42dd292219796cfc94e41f4ab749d ]
+[ Upstream commit ab09a68f3be04b2f9d1fc7cfc0e2225025cb9421 ]
 
-"#sound-dai-cells" is required if the board is using "simple-card".
-However, the HiHope board uses "audio-graph", thus remove the unneeded
-`#sound-dai-cells`.
+The clock IDs for multiple MCSPI instances across wakeup domain
+in J721e are incorrect when compared with documentation [1]. Fix
+the clock ids to their appropriate values.
 
-Commit 9e72606cd2db ("arm64: dts: renesas: #sound-dai-cells is used when
-simple-card") updated the comment regarding usage of "#sound-dai-cells"
-in the SoC DTSI but missed to remove "#sound-dai-cells" from board DTS
-files.
+[1]https://software-dl.ti.com/tisci/esd/latest/5_soc_doc/j721e/clocks.html
 
-Fixes: 9e72606cd2db ("arm64: dts: renesas: #sound-dai-cells is used when simple-card")
-Signed-off-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Acked-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
-Link: https://lore.kernel.org/20241010135332.710648-1-prabhakar.mahadev-lad.rj@bp.renesas.com
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Fixes: 76aa309f9fa7 ("arm64: dts: ti: k3-j721e: Add MCSPI nodes")
+
+Signed-off-by: Anurag Dutta <a-dutta@ti.com>
+Link: https://lore.kernel.org/r/20241023104532.3438851-3-a-dutta@ti.com
+Signed-off-by: Vignesh Raghavendra <vigneshr@ti.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/renesas/hihope-rev2.dtsi | 3 ---
- arch/arm64/boot/dts/renesas/hihope-rev4.dtsi | 3 ---
- 2 files changed, 6 deletions(-)
+ arch/arm64/boot/dts/ti/k3-j721e-mcu-wakeup.dtsi | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/renesas/hihope-rev2.dtsi b/arch/arm64/boot/dts/renesas/hihope-rev2.dtsi
-index 8e2db1d6ca81e..25c55b32aafe5 100644
---- a/arch/arm64/boot/dts/renesas/hihope-rev2.dtsi
-+++ b/arch/arm64/boot/dts/renesas/hihope-rev2.dtsi
-@@ -69,9 +69,6 @@ &rcar_sound {
+diff --git a/arch/arm64/boot/dts/ti/k3-j721e-mcu-wakeup.dtsi b/arch/arm64/boot/dts/ti/k3-j721e-mcu-wakeup.dtsi
+index 05d6ef127ba78..1893d611b1735 100644
+--- a/arch/arm64/boot/dts/ti/k3-j721e-mcu-wakeup.dtsi
++++ b/arch/arm64/boot/dts/ti/k3-j721e-mcu-wakeup.dtsi
+@@ -637,7 +637,7 @@ mcu_spi0: spi@40300000 {
+ 		#address-cells = <1>;
+ 		#size-cells = <0>;
+ 		power-domains = <&k3_pds 274 TI_SCI_PD_EXCLUSIVE>;
+-		clocks = <&k3_clks 274 0>;
++		clocks = <&k3_clks 274 1>;
+ 		status = "disabled";
+ 	};
  
- 	status = "okay";
+@@ -648,7 +648,7 @@ mcu_spi1: spi@40310000 {
+ 		#address-cells = <1>;
+ 		#size-cells = <0>;
+ 		power-domains = <&k3_pds 275 TI_SCI_PD_EXCLUSIVE>;
+-		clocks = <&k3_clks 275 0>;
++		clocks = <&k3_clks 275 1>;
+ 		status = "disabled";
+ 	};
  
--	/* Single DAI */
--	#sound-dai-cells = <0>;
--
- 	rsnd_port: port {
- 		rsnd_endpoint: endpoint {
- 			remote-endpoint = <&dw_hdmi0_snd_in>;
-diff --git a/arch/arm64/boot/dts/renesas/hihope-rev4.dtsi b/arch/arm64/boot/dts/renesas/hihope-rev4.dtsi
-index 7fc0339a3ac97..e59191562d06c 100644
---- a/arch/arm64/boot/dts/renesas/hihope-rev4.dtsi
-+++ b/arch/arm64/boot/dts/renesas/hihope-rev4.dtsi
-@@ -84,9 +84,6 @@ &rcar_sound {
- 	pinctrl-names = "default";
- 	status = "okay";
+@@ -659,7 +659,7 @@ mcu_spi2: spi@40320000 {
+ 		#address-cells = <1>;
+ 		#size-cells = <0>;
+ 		power-domains = <&k3_pds 276 TI_SCI_PD_EXCLUSIVE>;
+-		clocks = <&k3_clks 276 0>;
++		clocks = <&k3_clks 276 1>;
+ 		status = "disabled";
+ 	};
  
--	/* Single DAI */
--	#sound-dai-cells = <0>;
--
- 	/* audio_clkout0/1/2/3 */
- 	#clock-cells = <1>;
- 	clock-frequency = <12288000 11289600>;
 -- 
 2.43.0
 
