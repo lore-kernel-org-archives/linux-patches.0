@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B9162066F0;
-	Fri,  6 Dec 2024 14:49:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49F4315575F;
+	Fri,  6 Dec 2024 14:49:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733496571; cv=none; b=lb9oqSZ8RmoBhe1yJNOoZmePEK9u1OlaS69z1XvTWgHon64Ts4hI59LtQEeUnpUWdwXxDaE9nDMSDCzCrhYoBBA5Qe/n0roSZRO1aH52rVVlVF2nCRpl7K5iicnbSoMyuAfurI5Lc17BjQphanRmuxAjSOL8ZHD/kRf1jizcD68=
+	t=1733496574; cv=none; b=DoyNMaGulcchFEZ5X2qSEG7wfGTNSZC5IiPBY4f8FWOai3SYsjv1oK2y3HUjuow7C9sWnTis6uLnXACIWfYhll8vzWV1FvVaFkHhJ0r5nIHHKeyVO674vk5zax1BatYfKxaO7eQaWYn3agU+/ubciKTWIopbdu0TDjEi6M22BLA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733496571; c=relaxed/simple;
-	bh=oi2Tn8VPatbtRD+bdf9hbSbwiCmPd/HTF8baez/Bbjs=;
+	s=arc-20240116; t=1733496574; c=relaxed/simple;
+	bh=XEXw/KEtHuMxz9HhaLK9DDb+s2M11npcvYEqB8X8Y8s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=AH+izGE9jUO3YIqP3rRAgafPFFYnSBxl1sEvYdHzVWfss6ZpVMCOfJU4LyZJRswtRlkaph899Zsrj+UQ0pqgCyLvtPtuG6sbEiev4IIZ/1qjOa9mOa16hw0i9CG8hwcDdpT2Q8iaQIeZIYxTRPh9O3gTxguEFkx4+Ul3WVKiCVI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g+BIk1Oa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dYrx2nl7EU2NmU2luyl+ddsEFbOXVdJmPYj+CpQKO99HJ1t65NEAsfxrlrLFNzLrpZZAsBdMIPbnaIBxvUmEk0034i6t8dPb2n4rTXzaajPgp2Nwi18i2dJEq/82j1tQXoV0c3hojWBTB9TNgiPWQYLKfSh/o9NMsa0L9lO5Nrk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DPTFZGa8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g+BIk1Oa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF61EC4CEDE;
-	Fri,  6 Dec 2024 14:49:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DPTFZGa8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACB03C4CED1;
+	Fri,  6 Dec 2024 14:49:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733496570;
-	bh=oi2Tn8VPatbtRD+bdf9hbSbwiCmPd/HTF8baez/Bbjs=;
+	s=korg; t=1733496574;
+	bh=XEXw/KEtHuMxz9HhaLK9DDb+s2M11npcvYEqB8X8Y8s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g+BIk1Oa0QJH51+xtw1ZZimqjVUOnBtHP5m8fk3T1qxkTlpw6OEUgEBNU1Icm/Y2m
-	 RkQLcdJrcj0VZoykJL0F1QbkuO1S6d44Jveebo0ZSUdxLAr0ZOqbL346WdXPSAac68
-	 yddMOcT5qlsiUlPc0PuF/gRuH5PnZOWkbV2vZFgk=
+	b=DPTFZGa8eNWMASel8fvydqqEJPU9HryY7k5iExEMTRwECa4rnyvDrgjzUva8nhzN/
+	 ljG7hRfb5tlEN+S3LcyD5pCYKOJdtaX24RmS6Yq6NPRfzMNlZWScgCNxAqa7P85w2V
+	 1IWGTnLvJ4blD+dyLBYOKDzcQoO8IRI+eHPXTpKs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Jiayuan Chen <mrpre@163.com>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 012/676] x86/amd_nb: Fix compile-testing without CONFIG_AMD_NB
-Date: Fri,  6 Dec 2024 15:27:11 +0100
-Message-ID: <20241206143653.837564680@linuxfoundation.org>
+Subject: [PATCH 6.6 013/676] bpf: fix filed access without lock
+Date: Fri,  6 Dec 2024 15:27:12 +0100
+Message-ID: <20241206143653.876525531@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -46,55 +45,68 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Jiayuan Chen <mrpre@163.com>
 
-[ Upstream commit fce9642c765a18abd1db0339a7d832c29b68456a ]
+[ Upstream commit a32aee8f0d987a7cba7fcc28002553361a392048 ]
 
-node_to_amd_nb() is defined to NULL in non-AMD configs:
+The tcp_bpf_recvmsg_parser() function, running in user context,
+retrieves seq_copied from tcp_sk without holding the socket lock, and
+stores it in a local variable seq. However, the softirq context can
+modify tcp_sk->seq_copied concurrently, for example, n tcp_read_sock().
 
-  drivers/platform/x86/amd/hsmp/plat.c: In function 'init_platform_device':
-  drivers/platform/x86/amd/hsmp/plat.c:165:68: error: dereferencing 'void *' pointer [-Werror]
-    165 |                 sock->root                      = node_to_amd_nb(i)->root;
-        |                                                                    ^~
-  drivers/platform/x86/amd/hsmp/plat.c:165:68: error: request for member 'root' in something not a structure or union
+As a result, the seq value is stale when it is assigned back to
+tcp_sk->copied_seq at the end of tcp_bpf_recvmsg_parser(), leading to
+incorrect behavior.
 
-Users of the interface who also allow COMPILE_TEST will cause the above build
-error so provide an inline stub to fix that.
+Due to concurrency, the copied_seq field in tcp_bpf_recvmsg_parser()
+might be set to an incorrect value (less than the actual copied_seq) at
+the end of function: 'WRITE_ONCE(tcp->copied_seq, seq)'. This causes the
+'offset' to be negative in tcp_read_sock()->tcp_recv_skb() when
+processing new incoming packets (sk->copied_seq - skb->seq becomes less
+than 0), and all subsequent packets will be dropped.
 
-  [ bp: Massage commit message. ]
-
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Link: https://lore.kernel.org/r/20241029092329.3857004-1-arnd@kernel.org
+Signed-off-by: Jiayuan Chen <mrpre@163.com>
+Link: https://lore.kernel.org/r/20241028065226.35568-1-mrpre@163.com
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/include/asm/amd_nb.h | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ net/ipv4/tcp_bpf.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/arch/x86/include/asm/amd_nb.h b/arch/x86/include/asm/amd_nb.h
-index ed0eaf65c4372..c8cdc69aae098 100644
---- a/arch/x86/include/asm/amd_nb.h
-+++ b/arch/x86/include/asm/amd_nb.h
-@@ -116,7 +116,10 @@ static inline bool amd_gart_present(void)
+diff --git a/net/ipv4/tcp_bpf.c b/net/ipv4/tcp_bpf.c
+index fe6178715ba05..915286c3615a2 100644
+--- a/net/ipv4/tcp_bpf.c
++++ b/net/ipv4/tcp_bpf.c
+@@ -221,11 +221,11 @@ static int tcp_bpf_recvmsg_parser(struct sock *sk,
+ 				  int flags,
+ 				  int *addr_len)
+ {
+-	struct tcp_sock *tcp = tcp_sk(sk);
+ 	int peek = flags & MSG_PEEK;
+-	u32 seq = tcp->copied_seq;
+ 	struct sk_psock *psock;
++	struct tcp_sock *tcp;
+ 	int copied = 0;
++	u32 seq;
  
- #define amd_nb_num(x)		0
- #define amd_nb_has_feature(x)	false
--#define node_to_amd_nb(x)	NULL
-+static inline struct amd_northbridge *node_to_amd_nb(int node)
-+{
-+	return NULL;
-+}
- #define amd_gart_present(x)	false
+ 	if (unlikely(flags & MSG_ERRQUEUE))
+ 		return inet_recv_error(sk, msg, len, addr_len);
+@@ -238,7 +238,8 @@ static int tcp_bpf_recvmsg_parser(struct sock *sk,
+ 		return tcp_recvmsg(sk, msg, len, flags, addr_len);
  
- #endif
+ 	lock_sock(sk);
+-
++	tcp = tcp_sk(sk);
++	seq = tcp->copied_seq;
+ 	/* We may have received data on the sk_receive_queue pre-accept and
+ 	 * then we can not use read_skb in this context because we haven't
+ 	 * assigned a sk_socket yet so have no link to the ops. The work-around
 -- 
 2.43.0
 
