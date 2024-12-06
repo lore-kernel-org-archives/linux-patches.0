@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6362F32C8B;
-	Fri,  6 Dec 2024 14:51:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5748D32C8B;
+	Fri,  6 Dec 2024 14:51:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733496689; cv=none; b=BUvUyfEV9SWjMQ+nRwnLp2yXt0HlK7Tfuoa4Gzz8I+2nXrokuOa6DUFxqEzPaMNNIiqpbTXkq80kX3WwzY33iZW7sL1RfWwX6JqAptllX21rjfPWT3dczVwu8bcWMAE2g+iIyweNSP3FUwC3HDJNooJf3zXQEoV7zeeINR1Kpbg=
+	t=1733496692; cv=none; b=phoJKqT5I3Rewrvo4xl46tFi12N4EpI/eseLcIs1HxP0Ac56UAQAtx4GczkMYBJAcDMSilqXdYnz0whE/TOGnnbEMHVJRRgenr3Rd7D4XnkamyIGqdTsrmqLqfb7Poic9xgGCw5itlirSit8qNx6rEirawcjGLCY/0tRfY6Sxhc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733496689; c=relaxed/simple;
-	bh=Uy/v0kYPuQblYC+clOr7uYU18/mKr+/3O4ptba99Sj4=;
+	s=arc-20240116; t=1733496692; c=relaxed/simple;
+	bh=//mjzP98P3c9WXDyvl+H1755Zd3cjAAfHoXp5NQtIWY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UKV1HGTwLqLimeMdWabhFP15HMKAq600OJ4tJbWprux4XdwXI6tZL5UcteWIbXOQCwj6/fXUqcGGRHp/8O3LNjrTqjo/0fYG0AArB8gDSDCc/XR406D+QBHHG3CgNEEjYjeYpTxqk8zOXCChmpurp1exxhVYS+befntYp00bgN4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vaUXL3rk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KR1bzjHy9IDEDNuYSMEVi75hGOixc2RY7Z0XlR1/UtiTYJj0oSoKKVtkhbdGSalSrBMSRvt66bxA96YpK/F0k03gtPCCgVOdqU75WgnKvn9gd2Y8XseEFLyQVrV7ec713Y0hJu6gWgThj7tuMlod3lwyxBKi42dYW9V0B+UvWTI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e6Nn2bP5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vaUXL3rk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF255C4CED1;
-	Fri,  6 Dec 2024 14:51:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e6Nn2bP5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDA58C4CED1;
+	Fri,  6 Dec 2024 14:51:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733496689;
-	bh=Uy/v0kYPuQblYC+clOr7uYU18/mKr+/3O4ptba99Sj4=;
+	s=korg; t=1733496692;
+	bh=//mjzP98P3c9WXDyvl+H1755Zd3cjAAfHoXp5NQtIWY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vaUXL3rkw8ZhL/hfDoKTAKquqfa0dSS82S26KCe+W9VJJ+LCKPxamt8oFlwKzhY42
-	 st+wnIjeL2gmfimwhZ5H4yzofa3tDc+HQ4M/vUd+H+G6l6+0Ss5NvgCbi96B3h1skK
-	 r0h9y8kCEz1Et2bHvPG+xbgGcx1HDUbFquQ80npA=
+	b=e6Nn2bP5vzPt+KKAHgNQlAVz+uZZkZ3DxpN4qghaEIL55v3jvYnQzTcDZ3yo5zNRw
+	 bdRhyYxlhxCXXCmnczOVX29p1uZEBDeK1ehI86v6a0u+gPC2F6OxwPDTwkHfeRPkLT
+	 3343B/nb4LPmCRMWsLVDqcjhzH4qHYQKhN/fzvFM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Chaitanya Kulkarni <kch@nvidia.com>,
-	Keith Busch <kbusch@kernel.org>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Bin Lan <bin.lan.cn@windriver.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 044/676] nvme: apple: fix device reference counting
-Date: Fri,  6 Dec 2024 15:27:43 +0100
-Message-ID: <20241206143655.073842457@linuxfoundation.org>
+Subject: [PATCH 6.6 045/676] platform/x86: x86-android-tablets: Unregister devices in reverse order
+Date: Fri,  6 Dec 2024 15:27:44 +0100
+Message-ID: <20241206143655.114897494@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -53,87 +51,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Keith Busch <kbusch@kernel.org>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit b9ecbfa45516182cd062fecd286db7907ba84210 ]
+[ Upstream commit 3de0f2627ef849735f155c1818247f58404dddfe ]
 
-Drivers must call nvme_uninit_ctrl after a successful nvme_init_ctrl.
-Split the allocation side out to make the error handling boundary easier
-to navigate. The apple driver had been doing this wrong, leaking the
-controller device memory on a tagset failure.
+Not all subsystems support a device getting removed while there are
+still consumers of the device with a reference to the device.
 
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+One example of this is the regulator subsystem. If a regulator gets
+unregistered while there are still drivers holding a reference
+a WARN() at drivers/regulator/core.c:5829 triggers, e.g.:
+
+ WARNING: CPU: 1 PID: 1587 at drivers/regulator/core.c:5829 regulator_unregister
+ Hardware name: Intel Corp. VALLEYVIEW C0 PLATFORM/BYT-T FFD8, BIOS BLADE_21.X64.0005.R00.1504101516 FFD8_X64_R_2015_04_10_1516 04/10/2015
+ RIP: 0010:regulator_unregister
+ Call Trace:
+  <TASK>
+  regulator_unregister
+  devres_release_group
+  i2c_device_remove
+  device_release_driver_internal
+  bus_remove_device
+  device_del
+  device_unregister
+  x86_android_tablet_remove
+
+On the Lenovo Yoga Tablet 2 series the bq24190 charger chip also provides
+a 5V boost converter output for powering USB devices connected to the micro
+USB port, the bq24190-charger driver exports this as a Vbus regulator.
+
+On the 830 (8") and 1050 ("10") models this regulator is controlled by
+a platform_device and x86_android_tablet_remove() removes platform_device-s
+before i2c_clients so the consumer gets removed first.
+
+But on the 1380 (13") model there is a lc824206xa micro-USB switch
+connected over I2C and the extcon driver for that controls the regulator.
+The bq24190 i2c-client *must* be registered first, because that creates
+the regulator with the lc824206xa listed as its consumer. If the regulator
+has not been registered yet the lc824206xa driver will end up getting
+a dummy regulator.
+
+Since in this case both the regulator provider and consumer are I2C
+devices, the only way to ensure that the consumer is unregistered first
+is to unregister the I2C devices in reverse order of in which they were
+created.
+
+For consistency and to avoid similar problems in the future change
+x86_android_tablet_remove() to unregister all device types in reverse
+order.
+
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://lore.kernel.org/r/20240406125058.13624-1-hdegoede@redhat.com
 [ Resolve minor conflicts ]
 Signed-off-by: Bin Lan <bin.lan.cn@windriver.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/apple.c | 27 ++++++++++++++++++++++-----
- 1 file changed, 22 insertions(+), 5 deletions(-)
+ drivers/platform/x86/x86-android-tablets/core.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/nvme/host/apple.c b/drivers/nvme/host/apple.c
-index 596bb11eeba5a..396eb94376597 100644
---- a/drivers/nvme/host/apple.c
-+++ b/drivers/nvme/host/apple.c
-@@ -1387,7 +1387,7 @@ static void devm_apple_nvme_mempool_destroy(void *data)
- 	mempool_destroy(data);
- }
- 
--static int apple_nvme_probe(struct platform_device *pdev)
-+static struct apple_nvme *apple_nvme_alloc(struct platform_device *pdev)
+diff --git a/drivers/platform/x86/x86-android-tablets/core.c b/drivers/platform/x86/x86-android-tablets/core.c
+index a0fa0b6859c9c..63a348af83db1 100644
+--- a/drivers/platform/x86/x86-android-tablets/core.c
++++ b/drivers/platform/x86/x86-android-tablets/core.c
+@@ -230,20 +230,20 @@ static void x86_android_tablet_remove(struct platform_device *pdev)
  {
- 	struct device *dev = &pdev->dev;
- 	struct apple_nvme *anv;
-@@ -1395,7 +1395,7 @@ static int apple_nvme_probe(struct platform_device *pdev)
+ 	int i;
  
- 	anv = devm_kzalloc(dev, sizeof(*anv), GFP_KERNEL);
- 	if (!anv)
--		return -ENOMEM;
-+		return ERR_PTR(-ENOMEM);
- 
- 	anv->dev = get_device(dev);
- 	anv->adminq.is_adminq = true;
-@@ -1515,10 +1515,26 @@ static int apple_nvme_probe(struct platform_device *pdev)
- 		goto put_dev;
+-	for (i = 0; i < serdev_count; i++) {
++	for (i = serdev_count - 1; i >= 0; i--) {
+ 		if (serdevs[i])
+ 			serdev_device_remove(serdevs[i]);
  	}
  
-+	return anv;
-+put_dev:
-+	put_device(anv->dev);
-+	return ERR_PTR(ret);
-+}
-+
-+static int apple_nvme_probe(struct platform_device *pdev)
-+{
-+	struct apple_nvme *anv;
-+	int ret;
-+
-+	anv = apple_nvme_alloc(pdev);
-+	if (IS_ERR(anv))
-+		return PTR_ERR(anv);
-+
- 	anv->ctrl.admin_q = blk_mq_init_queue(&anv->admin_tagset);
- 	if (IS_ERR(anv->ctrl.admin_q)) {
- 		ret = -ENOMEM;
--		goto put_dev;
-+		anv->ctrl.admin_q = NULL;
-+		goto out_uninit_ctrl;
- 	}
+ 	kfree(serdevs);
  
- 	nvme_reset_ctrl(&anv->ctrl);
-@@ -1526,8 +1542,9 @@ static int apple_nvme_probe(struct platform_device *pdev)
+-	for (i = 0; i < pdev_count; i++)
++	for (i = pdev_count - 1; i >= 0; i--)
+ 		platform_device_unregister(pdevs[i]);
  
- 	return 0;
+ 	kfree(pdevs);
+ 	kfree(buttons);
  
--put_dev:
--	put_device(anv->dev);
-+out_uninit_ctrl:
-+	nvme_uninit_ctrl(&anv->ctrl);
-+	nvme_put_ctrl(&anv->ctrl);
- 	return ret;
- }
+-	for (i = 0; i < i2c_client_count; i++)
++	for (i = i2c_client_count - 1; i >= 0; i--)
+ 		i2c_unregister_device(i2c_clients[i]);
  
+ 	kfree(i2c_clients);
 -- 
 2.43.0
 
