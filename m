@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7D83149E0E;
-	Fri,  6 Dec 2024 14:55:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB7811442E8;
+	Fri,  6 Dec 2024 14:55:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733496931; cv=none; b=tkv9RhUVslht1f4EdpMn5i7em7FcXsEtG6MM/omUWd9SaBTs85d+w+lJhoPL+u2clEOVhN71DK7/h2zQXsBWMvYjEd/QfCenihMrWguyO8jJ8aLRqKdx/FYJbZAXeL0FvgZeDqDppTcdxlD/ElqsilqXfS1QOFbMD/L/YoAiKvg=
+	t=1733496935; cv=none; b=m2vW+D2w5R72cSuXphMuK0FvOsJBD5A+7aIjNd6OVRVZxXhdipxGfJw/tkCMSXBQGk/lH6/A7HgorMdmOeGSeeB6PPLWiXhWHlXewUQYYrKBg0b1HiUI1RjPPJaHNph9CdCS2LMNko6fh++iT8vCsKrNihNIuRt3Li4IuX5SgSY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733496931; c=relaxed/simple;
-	bh=/pZ8B7o6K+B06VJcuyC1eBxTHzFaW1YhGCxm4OHWA/k=;
+	s=arc-20240116; t=1733496935; c=relaxed/simple;
+	bh=Voo8w02BcmBp/dr3Z8aNDTl4E+R+Yj9a8x31I0EYjrQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OcsQFyXuJHu2N8czkh+TT04quXfU+H5CpJqW1JlRFUvzQmfj/cSk6qIubdHISfTGAhv6ADfADebcRoBRQjD8AURgWCYJxBE5wkY0Wex4eDoMJ9ZbS1kWBfOVrzeX/Lms3luSTS7q7461U5opNQ/Gz8uMMl6e8rNyuo9Ew86kpXI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=azPHQAn6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Nu7G0jzVTauqnKNfHYDGkvoiguzSyW8xFgKIoGutqW7yw6EA/lxJWTMRZ4eOzsnqfZtElczq8prtTBhunPa9TOKUl/6zr1Ao6ycS7rgH/FB6Vwk7Sv2Vn99o8ub937zPE8FfT+XZfXYxpRQpJ/97tDnbf0zZBJqEWDC2mFNXQ78=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YJ1d6E77; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="azPHQAn6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1746AC4CED1;
-	Fri,  6 Dec 2024 14:55:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YJ1d6E77"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 560DBC4CED1;
+	Fri,  6 Dec 2024 14:55:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733496931;
-	bh=/pZ8B7o6K+B06VJcuyC1eBxTHzFaW1YhGCxm4OHWA/k=;
+	s=korg; t=1733496934;
+	bh=Voo8w02BcmBp/dr3Z8aNDTl4E+R+Yj9a8x31I0EYjrQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=azPHQAn6H7WvCbLLzCk0iWOjBl9urcjdab/3Q4F/1oicDa1VJQrsl9O5UqmyfdnQc
-	 uKCIdPM7HgsRf3UNtu0a+kiYXMFYUs4Qn4l9Yh9PbLudyDXsSkl8XMrJZrs0RA7OvO
-	 28agwvZjYnGlCgOU7KlxXntAo1yrJlcXty7NthUo=
+	b=YJ1d6E77JmKojf8xPmrFaDqqcn8voUR6bvNovPCvmR7mSfdxz+W0ebkn86IHn/How
+	 VfqgDVINzZqT6FX1U74WqhAmE6GYiqKWPK19oTsaKuGhIofQc0eDBLU0nxOf+idASk
+	 TiFVoUuXq0a0y0zyJ2DnEY7f0E1yWbmowwH5IQpc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Macpaul Lin <macpaul.lin@mediatek.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Miguel Ojeda <ojeda@kernel.org>,
+	Thomas Gleixner <tglx@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 116/676] arm64: dts: mt8195: Fix dtbs_check error for infracfg_ao node
-Date: Fri,  6 Dec 2024 15:28:55 +0100
-Message-ID: <20241206143657.889631056@linuxfoundation.org>
+Subject: [PATCH 6.6 107/676] time: Fix references to _msecs_to_jiffies() handling of values
+Date: Fri,  6 Dec 2024 15:28:46 +0100
+Message-ID: <20241206143657.539084767@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -51,42 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Macpaul Lin <macpaul.lin@mediatek.com>
+From: Miguel Ojeda <ojeda@kernel.org>
 
-[ Upstream commit c14ab45f5d458073248ddc62d31045d5d616806f ]
+[ Upstream commit 92b043fd995a63a57aae29ff85a39b6f30cd440c ]
 
-The infracfg_ao node in mt8195.dtsi was causing a dtbs_check error.
-The error message was:
+The details about the handling of the "normal" values were moved
+to the _msecs_to_jiffies() helpers in commit ca42aaf0c861 ("time:
+Refactor msecs_to_jiffies"). However, the same commit still mentioned
+__msecs_to_jiffies() in the added documentation.
 
-syscon@10001000: compatible: ['mediatek,mt8195-infracfg_ao', 'syscon',
-                 'simple-mfd'] is too long
+Thus point to _msecs_to_jiffies() instead.
 
-To resolve this, remove 'simple-mfd' from the 'compatible' property of the
-infracfg_ao node.
-
-Fixes: 37f2582883be ("arm64: dts: Add mediatek SoC mt8195 and evaluation board")
-Signed-off-by: Macpaul Lin <macpaul.lin@mediatek.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://lore.kernel.org/r/20241002051620.2050-1-macpaul.lin@mediatek.com
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Fixes: ca42aaf0c861 ("time: Refactor msecs_to_jiffies")
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Link: https://lore.kernel.org/all/20241025110141.157205-2-ojeda@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/mediatek/mt8195.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/linux/jiffies.h | 2 +-
+ kernel/time/time.c      | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/mediatek/mt8195.dtsi b/arch/arm64/boot/dts/mediatek/mt8195.dtsi
-index e2bc4b0d8bc6c..5a087404ccc2d 100644
---- a/arch/arm64/boot/dts/mediatek/mt8195.dtsi
-+++ b/arch/arm64/boot/dts/mediatek/mt8195.dtsi
-@@ -487,7 +487,7 @@ topckgen: syscon@10000000 {
- 		};
- 
- 		infracfg_ao: syscon@10001000 {
--			compatible = "mediatek,mt8195-infracfg_ao", "syscon", "simple-mfd";
-+			compatible = "mediatek,mt8195-infracfg_ao", "syscon";
- 			reg = <0 0x10001000 0 0x1000>;
- 			#clock-cells = <1>;
- 			#reset-cells = <1>;
+diff --git a/include/linux/jiffies.h b/include/linux/jiffies.h
+index e0ae2a43e0ebd..03f38fe9b9a10 100644
+--- a/include/linux/jiffies.h
++++ b/include/linux/jiffies.h
+@@ -499,7 +499,7 @@ static inline unsigned long _msecs_to_jiffies(const unsigned int m)
+  * - all other values are converted to jiffies by either multiplying
+  *   the input value by a factor or dividing it with a factor and
+  *   handling any 32-bit overflows.
+- *   for the details see __msecs_to_jiffies()
++ *   for the details see _msecs_to_jiffies()
+  *
+  * msecs_to_jiffies() checks for the passed in value being a constant
+  * via __builtin_constant_p() allowing gcc to eliminate most of the
+diff --git a/kernel/time/time.c b/kernel/time/time.c
+index e1879ca321033..1ad88e97b4ebc 100644
+--- a/kernel/time/time.c
++++ b/kernel/time/time.c
+@@ -556,7 +556,7 @@ EXPORT_SYMBOL(ns_to_timespec64);
+  * - all other values are converted to jiffies by either multiplying
+  *   the input value by a factor or dividing it with a factor and
+  *   handling any 32-bit overflows.
+- *   for the details see __msecs_to_jiffies()
++ *   for the details see _msecs_to_jiffies()
+  *
+  * msecs_to_jiffies() checks for the passed in value being a constant
+  * via __builtin_constant_p() allowing gcc to eliminate most of the
 -- 
 2.43.0
 
