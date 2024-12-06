@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09CC9207E1E;
-	Fri,  6 Dec 2024 15:12:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FCC7148832;
+	Fri,  6 Dec 2024 15:12:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733497945; cv=none; b=ssUerS9X8SsP52aeDF4dsGafiwXdTPzBefr116DZdeaK7gnGhVcGctMS+fojzp938cxeA9drPHqq816lDq4czCN1j80t0ExtR/0FopfTjl0llM2aFgNHZkEJV+AJejV6dJ/8Z5LiO4yFUxq+IAF9FO5NUDjM8oimWkisq3WSn2A=
+	t=1733497948; cv=none; b=hebjM77+FQm/VzAMhnrFdJnu5Vr0QhTY4fVO7kZfu00VUGwb/R15WH6IP/EjXjt9A6z1R8mUhfPl1ADgYWdRU1slsf9M5DwvTasQQrK18KJzjVOMIwESN894rk3FvCqNYWL5sa99CnBfI9igf6puM9FyDQo9ROc6gUvKrlHz3yA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733497945; c=relaxed/simple;
-	bh=ecQ7D4AC8LQ2UxfDHWIEcmCxJU7+1w2EJ3W0Kpl1IaY=;
+	s=arc-20240116; t=1733497948; c=relaxed/simple;
+	bh=WHciIxuI5Mz31Md1FZ0vQiBdhjooWLb300sTRikSpIo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VE2LLqPj3umr8AY/Vl0Rtj4ot6ffQJyNpod5s7XFnxY2aRUN5H9p166MqGES8/dIFi84FjOOAa+1xrBUGfOXUSmWfeeqSlR6o7IK8o2vonk6ZSlb2HmzAuuMkHqePsc//9tHZrHDfi+aVGcHZpjPghHDp8/sLrbQhSMjmerciwc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aVwXHtNp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=noIKlxL9SKspiJQXTnhghgZKcpNBmPETsFMuJEIIAoQulOLAe/9fCLMbaSTRxwSl7+tLYpXdKJsvIRaSMArwo5pefCb/UGjOEXSBIKTUxbjJPrGrc5zLQaC7zGtqOkmhLSH0xoPaqj+kVLIgDfkR2eS4oi45KMG4lMqI67WI+fk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uD+Vnwyi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aVwXHtNp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76D1CC4CED1;
-	Fri,  6 Dec 2024 15:12:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uD+Vnwyi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FA94C4CED1;
+	Fri,  6 Dec 2024 15:12:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733497944;
-	bh=ecQ7D4AC8LQ2UxfDHWIEcmCxJU7+1w2EJ3W0Kpl1IaY=;
+	s=korg; t=1733497948;
+	bh=WHciIxuI5Mz31Md1FZ0vQiBdhjooWLb300sTRikSpIo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aVwXHtNpofdKGTC+j+U/bXolwFntN1d16qLkYHjoc7LBMEgVxXR/y4boluAt0JFVe
-	 WhM3k/9N+EJJvGRxp0rG9r/tzWok0qmSaYsgFrsei1vXhg0u5yNQNQ/2ugBFJ+2R9g
-	 j1/P+bRVhwHan8OnHsMNcnHAHGnLDSJ9uFBQmBCk=
+	b=uD+VnwyidVypzix+b7K1euQijS+4tXj7OMUyLasiBFC8wTcRFtKDP8/SHB6SsGSi/
+	 RkllNivOj1yPyvjhetvUUxsw0hSQCQSsxB/wUKMw6/uBIgGJKnSP3yj9ZFP1XAQfH7
+	 Vp7oz6W3U3cTIzezeuJTi9R8So8MSiDZMK2BCaBM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tom Chung <chiahsuan.chung@amd.com>,
-	Zicheng Qu <quzicheng@huawei.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	chao liu <liuzgyid@outlook.com>,
+	John Johansen <john.johansen@canonical.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 439/676] drm/amd/display: Fix null check for pipe_ctx->plane_state in hwss_setup_dpp
-Date: Fri,  6 Dec 2024 15:34:18 +0100
-Message-ID: <20241206143710.498109637@linuxfoundation.org>
+Subject: [PATCH 6.6 440/676] apparmor: fix Do simple duplicate message elimination
+Date: Fri,  6 Dec 2024 15:34:19 +0100
+Message-ID: <20241206143710.537668623@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -52,38 +51,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zicheng Qu <quzicheng@huawei.com>
+From: chao liu <liuzgyid@outlook.com>
 
-[ Upstream commit 2bc96c95070571c6c824e0d4c7783bee25a37876 ]
+[ Upstream commit 9b897132424fe76bf6c61f22f9cf12af7f1d1e6a ]
 
-This commit addresses a null pointer dereference issue in
-hwss_setup_dpp(). The issue could occur when pipe_ctx->plane_state is
-null. The fix adds a check to ensure `pipe_ctx->plane_state` is not null
-before accessing. This prevents a null pointer dereference.
+Multiple profiles shared 'ent->caps', so some logs missed.
 
-Fixes: 0baae6246307 ("drm/amd/display: Refactor fast update to use new HWSS build sequence")
-Reviewed-by: Tom Chung <chiahsuan.chung@amd.com>
-Signed-off-by: Zicheng Qu <quzicheng@huawei.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: 0ed3b28ab8bf ("AppArmor: mediation of non file objects")
+Signed-off-by: chao liu <liuzgyid@outlook.com>
+Signed-off-by: John Johansen <john.johansen@canonical.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/core/dc_hw_sequencer.c | 3 +++
- 1 file changed, 3 insertions(+)
+ security/apparmor/capability.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/core/dc_hw_sequencer.c b/drivers/gpu/drm/amd/display/dc/core/dc_hw_sequencer.c
-index f99ec1b0efaff..2eae1fd95fd06 100644
---- a/drivers/gpu/drm/amd/display/dc/core/dc_hw_sequencer.c
-+++ b/drivers/gpu/drm/amd/display/dc/core/dc_hw_sequencer.c
-@@ -727,6 +727,9 @@ void hwss_setup_dpp(union block_sequence_params *params)
- 	struct dpp *dpp = pipe_ctx->plane_res.dpp;
- 	struct dc_plane_state *plane_state = pipe_ctx->plane_state;
- 
-+	if (!plane_state)
-+		return;
-+
- 	if (dpp && dpp->funcs->dpp_setup) {
- 		// program the input csc
- 		dpp->funcs->dpp_setup(dpp,
+diff --git a/security/apparmor/capability.c b/security/apparmor/capability.c
+index 2fb6a2ea0b998..8248597200623 100644
+--- a/security/apparmor/capability.c
++++ b/security/apparmor/capability.c
+@@ -96,6 +96,8 @@ static int audit_caps(struct apparmor_audit_data *ad, struct aa_profile *profile
+ 		return error;
+ 	} else {
+ 		aa_put_profile(ent->profile);
++		if (profile != ent->profile)
++			cap_clear(ent->caps);
+ 		ent->profile = aa_get_profile(profile);
+ 		cap_raise(ent->caps, cap);
+ 	}
 -- 
 2.43.0
 
