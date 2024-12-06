@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9E8A1714DF;
-	Fri,  6 Dec 2024 15:19:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A473145A05;
+	Fri,  6 Dec 2024 15:19:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733498355; cv=none; b=iUqKf1jdejbBZlYtnrz5vE8deBT5+OLHRFqPXMFr/AYrN3Y9LOIWIpMwsNH6nVFUXJ/X2ackcS5GODOnN1LQCm4YQr7uC/P/fq87rsz8DT5CMjaObIxWSFexgFH0eaRkqwaNopZgmsYweJpCqjRiocKYn8EBzB5YxMv5sdWkzaA=
+	t=1733498358; cv=none; b=LS0XQ5qp3ZrprzCLbN4mdV1maVCJXveigUUtmiK+SSsAqwAC8zrW3esKxOjhwolzZ5hWI91xutZyiHGHGR7EEM3YwBO+sXUddfL6dhZnr5BuqT/8ctrzCqohhb5hjKxHvW2cEeM0Ok/UAHwftte2HoFkT+SRfDbmVVDimIJrEQY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733498355; c=relaxed/simple;
-	bh=7gXhpSyKCskfMaO4nUQomJoFcG0UdwoZov5JVxLN6EM=;
+	s=arc-20240116; t=1733498358; c=relaxed/simple;
+	bh=iSK/3iYXVRNwzOqi7auHpGoKWxDWEiHCkBsbqErqmds=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J3EfcwiPqfd02dU/1GBEcDIiOLiS/NiCDUzP6kQFu+ZtigvB5SXoFSZqpb7w+2g401f0kf/HYu1Wh2Of4SuNCtdIui3nBpk5/YJdIotdVGfP5dsHpjVmY9qtcyOUIF94KOHHEXq5sk3nvFrQODijG3FVjbBGE4RmG0rm//CFbCo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ef7UArWF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PKh5HyNy7R96c6mH/dLrVcU5/8kdGGf7b7DLJxZDq8r9Xr5p3Ai6N+sKV69dAMRM1RvE9GdEvGmzOuOxBo6k5EkFZOZiz0IZm1UlgM9gmaK6Yge/aOfhXYdgQ5/2eoEhae2WNrVq6RMkHsnGQz8xfVNW1rq9Y+CzOdg6aEknlcA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oRwOnsqq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ef7UArWF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CD78C4CEDE;
-	Fri,  6 Dec 2024 15:19:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oRwOnsqq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B6F1C4CED1;
+	Fri,  6 Dec 2024 15:19:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733498354;
-	bh=7gXhpSyKCskfMaO4nUQomJoFcG0UdwoZov5JVxLN6EM=;
+	s=korg; t=1733498358;
+	bh=iSK/3iYXVRNwzOqi7auHpGoKWxDWEiHCkBsbqErqmds=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ef7UArWFDWGvwYtzyiGHf+GFE8X5eqZwPSvtyuGcVSjwJFGCqRmXUAEe01QHt93XJ
-	 XsT+RJKvH7j5ZTtjWXnrIObjbd58xHbMs+wu14vkDTxsrV45i67sVm0I9ZM2BZJzhH
-	 YEbVPIAgoJyWRdzA1ee3JZ3NpMk61WvF+o6cYcTI=
+	b=oRwOnsqqcDC1oRsT1wQsUSKP0aD1t8I/D+suMVUvTIn7BtK6ltGT8q7Jv1opvhC+w
+	 Q0BuYnG9+xUGo4TxmyXaEvqHl5pQljT//ohQowR0f04+rC55ZhFmy24eL1rjHiWivI
+	 XELlzgw0+XEbeQ+MVs7Ui1FVbm55bR4iY5bHfXcc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Zhihao Cheng <chengzhihao1@huawei.com>,
 	Richard Weinberger <richard@nod.at>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 561/676] ubi: fastmap: wl: Schedule fm_work if wear-leveling pool is empty
-Date: Fri,  6 Dec 2024 15:36:20 +0100
-Message-ID: <20241206143715.280337383@linuxfoundation.org>
+Subject: [PATCH 6.6 562/676] ubifs: Correct the total block count by deducting journal reservation
+Date: Fri,  6 Dec 2024 15:36:21 +0100
+Message-ID: <20241206143715.318380849@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -53,94 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Zhihao Cheng <chengzhihao1@huawei.com>
 
-[ Upstream commit c4595fe394a289927077e3da561db27811919ee0 ]
+[ Upstream commit 84a2bee9c49769310efa19601157ef50a1df1267 ]
 
-Since commit 14072ee33d5a ("ubi: fastmap: Check wl_pool for free peb
-before wear leveling"), wear_leveling_worker() won't schedule fm_work
-if wear-leveling pool is empty, which could temporarily disable the
-wear-leveling until the fastmap is updated(eg. pool becomes empty).
-Fix it by scheduling fm_work if wl_pool is empty during wear-leveing.
+Since commit e874dcde1cbf ("ubifs: Reserve one leb for each journal
+head while doing budget"), available space is calulated by deducting
+reservation for all journal heads. However, the total block count (
+which is only used by statfs) is not updated yet, which will cause
+the wrong displaying for used space(total - available).
+Fix it by deducting reservation for all journal heads from total
+block count.
 
-Fixes: 14072ee33d5a ("ubi: fastmap: Check wl_pool for free peb before wear leveling")
+Fixes: e874dcde1cbf ("ubifs: Reserve one leb for each journal head while doing budget")
 Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
 Signed-off-by: Richard Weinberger <richard@nod.at>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/ubi/fastmap-wl.c | 19 ++++++++++++++++---
- drivers/mtd/ubi/wl.c         |  2 +-
- drivers/mtd/ubi/wl.h         |  3 ++-
- 3 files changed, 19 insertions(+), 5 deletions(-)
+ fs/ubifs/super.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/mtd/ubi/fastmap-wl.c b/drivers/mtd/ubi/fastmap-wl.c
-index 863f571f1adb5..79733163ab7d0 100644
---- a/drivers/mtd/ubi/fastmap-wl.c
-+++ b/drivers/mtd/ubi/fastmap-wl.c
-@@ -282,14 +282,27 @@ int ubi_wl_get_peb(struct ubi_device *ubi)
-  * WL sub-system.
-  *
-  * @ubi: UBI device description object
-+ * @need_fill: whether to fill wear-leveling pool when no PEBs are found
-  */
--static struct ubi_wl_entry *next_peb_for_wl(struct ubi_device *ubi)
-+static struct ubi_wl_entry *next_peb_for_wl(struct ubi_device *ubi,
-+					    bool need_fill)
- {
- 	struct ubi_fm_pool *pool = &ubi->fm_wl_pool;
- 	int pnum;
- 
--	if (pool->used == pool->size)
-+	if (pool->used == pool->size) {
-+		if (need_fill && !ubi->fm_work_scheduled) {
-+			/*
-+			 * We cannot update the fastmap here because this
-+			 * function is called in atomic context.
-+			 * Let's fail here and refill/update it as soon as
-+			 * possible.
-+			 */
-+			ubi->fm_work_scheduled = 1;
-+			schedule_work(&ubi->fm_work);
-+		}
- 		return NULL;
-+	}
- 
- 	pnum = pool->pebs[pool->used];
- 	return ubi->lookuptbl[pnum];
-@@ -311,7 +324,7 @@ static bool need_wear_leveling(struct ubi_device *ubi)
- 	if (!ubi->used.rb_node)
- 		return false;
- 
--	e = next_peb_for_wl(ubi);
-+	e = next_peb_for_wl(ubi, false);
- 	if (!e) {
- 		if (!ubi->free.rb_node)
- 			return false;
-diff --git a/drivers/mtd/ubi/wl.c b/drivers/mtd/ubi/wl.c
-index e510e2de2cfe0..886d44019401a 100644
---- a/drivers/mtd/ubi/wl.c
-+++ b/drivers/mtd/ubi/wl.c
-@@ -671,7 +671,7 @@ static int wear_leveling_worker(struct ubi_device *ubi, struct ubi_work *wrk,
- 	ubi_assert(!ubi->move_to_put);
- 
- #ifdef CONFIG_MTD_UBI_FASTMAP
--	if (!next_peb_for_wl(ubi) ||
-+	if (!next_peb_for_wl(ubi, true) ||
- #else
- 	if (!ubi->free.rb_node ||
- #endif
-diff --git a/drivers/mtd/ubi/wl.h b/drivers/mtd/ubi/wl.h
-index 5ebe374a08aed..1d83e552533a5 100644
---- a/drivers/mtd/ubi/wl.h
-+++ b/drivers/mtd/ubi/wl.h
-@@ -5,7 +5,8 @@
- static void update_fastmap_work_fn(struct work_struct *wrk);
- static struct ubi_wl_entry *find_anchor_wl_entry(struct rb_root *root);
- static struct ubi_wl_entry *get_peb_for_wl(struct ubi_device *ubi);
--static struct ubi_wl_entry *next_peb_for_wl(struct ubi_device *ubi);
-+static struct ubi_wl_entry *next_peb_for_wl(struct ubi_device *ubi,
-+					    bool need_fill);
- static bool need_wear_leveling(struct ubi_device *ubi);
- static void ubi_fastmap_close(struct ubi_device *ubi);
- static inline void ubi_fastmap_init(struct ubi_device *ubi, int *count)
+diff --git a/fs/ubifs/super.c b/fs/ubifs/super.c
+index b08fb28d16b55..3409488d39ba1 100644
+--- a/fs/ubifs/super.c
++++ b/fs/ubifs/super.c
+@@ -777,10 +777,10 @@ static void init_constants_master(struct ubifs_info *c)
+ 	 * necessary to report something for the 'statfs()' call.
+ 	 *
+ 	 * Subtract the LEB reserved for GC, the LEB which is reserved for
+-	 * deletions, minimum LEBs for the index, and assume only one journal
+-	 * head is available.
++	 * deletions, minimum LEBs for the index, the LEBs which are reserved
++	 * for each journal head.
+ 	 */
+-	tmp64 = c->main_lebs - 1 - 1 - MIN_INDEX_LEBS - c->jhead_cnt + 1;
++	tmp64 = c->main_lebs - 1 - 1 - MIN_INDEX_LEBS - c->jhead_cnt;
+ 	tmp64 *= (long long)c->leb_size - c->leb_overhead;
+ 	tmp64 = ubifs_reported_space(c, tmp64);
+ 	c->block_cnt = tmp64 >> UBIFS_BLOCK_SHIFT;
 -- 
 2.43.0
 
