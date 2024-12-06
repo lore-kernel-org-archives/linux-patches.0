@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67D741474AF;
-	Fri,  6 Dec 2024 15:05:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8345B13E03A;
+	Fri,  6 Dec 2024 15:05:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733497510; cv=none; b=pbHhkTL8BaNoBWoq7hOnp6elwh+GfRILr5x5zPjhB4XbbSCZPUrRRe4Upo9LPrJ+fnkxmd1fht6wIT+qsgxOHtOhCJGIpo8DnFxjFb5EzUieaMRRtLSzTmh66hBJAfIvXVWeXKLNaYiWsxI+6ofgqW2pD+rnDv4GCSNcy11emIs=
+	t=1733497513; cv=none; b=I2QUNEb+BQ7bl30nJqIKi4400ssDlCRO9c6FkpiwC4OIXb1W1yk4DZIODc8WKMR4sfydiWx7lPeE4qZ/d3GMULB5Pr2APnv3RjGiCDs9/vGXh46qqmHk85gGV1xRly3lCjUCxVTWRGrE2SWBNTQtldp/J6A+5M5TKP5yY2AVrOQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733497510; c=relaxed/simple;
-	bh=NdQ+dcc9PvEud9yRSTVr7Tw0Fwxs03e4YrATzIyAoF8=;
+	s=arc-20240116; t=1733497513; c=relaxed/simple;
+	bh=pzttmzl3/l+t+t0XIPy5D/aHt0zEaSta8K9k2iCDwgY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TuC7sh0GGyUkyyQLcaX6C8s4G+KIb4gznh39TIKT78YR39+al2lvnWsRm/ZO+gIWf9ViLcKuwTcSR4WZo++lCiqwS7CVOM039Sb0qsDVJT9j6nRLOWBLkHmnZIPrFK23sL8ls8IWhniUy6bdceOR3Qa3CyCJWlVKcdp32PTSiJk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=suY4Remz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=o1RDN1GeKlBlj+AgiebT+cdapDtr9s1zTlNya47KTF2BHMihiam9DTKWC5g+HCDFVcBDob4VGnBV1ZQex5FdtNvNbgsrxNKwJ+M7Z29EpDknyVfwCSYjcp8IFPm8L0dIWb6EsB4JFRLm1EO9c68Abz+yI/MMa2sq8LsxDekDyS0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RImQDIsw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="suY4Remz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A27BDC4CED1;
-	Fri,  6 Dec 2024 15:05:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RImQDIsw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0821C4CED1;
+	Fri,  6 Dec 2024 15:05:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733497510;
-	bh=NdQ+dcc9PvEud9yRSTVr7Tw0Fwxs03e4YrATzIyAoF8=;
+	s=korg; t=1733497513;
+	bh=pzttmzl3/l+t+t0XIPy5D/aHt0zEaSta8K9k2iCDwgY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=suY4Remz8sg59XoLeBHswYLiako905UttSSafxsr6GRdo9XVr0nlTN8322D76Sp+7
-	 pMMVfbPlmliDFGd/SAX9thcDsOikQo8VBm9eZV5W6tFoFGBHVw2E9oMManD/OSbUEw
-	 HL/xF+KeVQ17hdBcPmwvFui/OQFix1C1M4mWln4Q=
+	b=RImQDIsw0UMm+R+Lz/F5zV7oLKzxAUIPl2wcROwR3Gm+wk+RaAPV7kbQUfVSuoHJu
+	 1be288BBBTmqoD+cNwngkehZCqjX1t+W5LvqwdwkwvYxh/H+dkzkIP/9bkuSLj8UsC
+	 WUyNInO/Bl6o6GWM9jfvT2+mVEaL6zibdFy8OJWc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
 	Dave Hansen <dave.hansen@linux.intel.com>,
-	Kai Huang <kai.huang@intel.com>,
 	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
+	Kai Huang <kai.huang@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 310/676] x86/tdx: Introduce wrappers to read and write TD metadata
-Date: Fri,  6 Dec 2024 15:32:09 +0100
-Message-ID: <20241206143705.449250439@linuxfoundation.org>
+Subject: [PATCH 6.6 311/676] x86/tdx: Rename tdx_parse_tdinfo() to tdx_setup()
+Date: Fri,  6 Dec 2024 15:32:10 +0100
+Message-ID: <20241206143705.487034116@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -55,102 +55,63 @@ Content-Transfer-Encoding: 8bit
 
 From: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
 
-[ Upstream commit 5081e8fadb809253c911b349b01d87c5b4e3fec5 ]
+[ Upstream commit b064043d9565786b385f85e6436ca5716bbd5552 ]
 
-The TDG_VM_WR TDCALL is used to ask the TDX module to change some
-TD-specific VM configuration. There is currently only one user in the
-kernel of this TDCALL leaf.  More will be added shortly.
+Rename tdx_parse_tdinfo() to tdx_setup() and move setting NOTIFY_ENABLES
+there.
 
-Refactor to make way for more users of TDG_VM_WR who will need to modify
-other TD configuration values.
-
-Add a wrapper for the TDG_VM_RD TDCALL that requests TD-specific
-metadata from the TDX module. There are currently no users for
-TDG_VM_RD. Mark it as __maybe_unused until the first user appears.
-
-This is preparation for enumeration and enabling optional TD features.
+The function will be extended to adjust TD configuration.
 
 Signed-off-by: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
 Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
-Reviewed-by: Kai Huang <kai.huang@intel.com>
 Reviewed-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
-Link: https://lore.kernel.org/all/20241104103803.195705-2-kirill.shutemov%40linux.intel.com
+Reviewed-by: Kai Huang <kai.huang@intel.com>
+Link: https://lore.kernel.org/all/20241104103803.195705-3-kirill.shutemov%40linux.intel.com
 Stable-dep-of: f65aa0ad79fc ("x86/tdx: Dynamically disable SEPT violations from causing #VEs")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/coco/tdx/tdx.c           | 32 ++++++++++++++++++++++++++-----
- arch/x86/include/asm/shared/tdx.h |  1 +
- 2 files changed, 28 insertions(+), 5 deletions(-)
+ arch/x86/coco/tdx/tdx.c | 13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
 diff --git a/arch/x86/coco/tdx/tdx.c b/arch/x86/coco/tdx/tdx.c
-index d0d7a42230b84..0bb895344497e 100644
+index 0bb895344497e..de4ff833fcf00 100644
 --- a/arch/x86/coco/tdx/tdx.c
 +++ b/arch/x86/coco/tdx/tdx.c
-@@ -74,6 +74,32 @@ static inline void tdcall(u64 fn, struct tdx_module_args *args)
- 		panic("TDCALL %lld failed (Buggy TDX module!)\n", fn);
+@@ -169,7 +169,7 @@ static void __noreturn tdx_panic(const char *msg)
+ 		__tdx_hypercall(&args);
  }
  
-+/* Read TD-scoped metadata */
-+static inline u64 __maybe_unused tdg_vm_rd(u64 field, u64 *value)
-+{
-+	struct tdx_module_args args = {
-+		.rdx = field,
-+	};
-+	u64 ret;
-+
-+	ret = __tdcall_ret(TDG_VM_RD, &args);
-+	*value = args.r8;
-+
-+	return ret;
-+}
-+
-+/* Write TD-scoped metadata */
-+static inline u64 tdg_vm_wr(u64 field, u64 value, u64 mask)
-+{
-+	struct tdx_module_args args = {
-+		.rdx = field,
-+		.r8 = value,
-+		.r9 = mask,
-+	};
-+
-+	return __tdcall(TDG_VM_WR, &args);
-+}
-+
- /**
-  * tdx_mcall_get_report0() - Wrapper to get TDREPORT0 (a.k.a. TDREPORT
-  *                           subtype 0) using TDG.MR.REPORT TDCALL.
-@@ -767,10 +793,6 @@ static bool tdx_enc_status_change_finish(unsigned long vaddr, int numpages,
- 
- void __init tdx_early_init(void)
+-static void tdx_parse_tdinfo(u64 *cc_mask)
++static void tdx_setup(u64 *cc_mask)
  {
--	struct tdx_module_args args = {
--		.rdx = TDCS_NOTIFY_ENABLES,
--		.r9 = -1ULL,
--	};
- 	u64 cc_mask;
- 	u32 eax, sig[3];
+ 	struct tdx_module_args args = {};
+ 	unsigned int gpa_width;
+@@ -194,6 +194,9 @@ static void tdx_parse_tdinfo(u64 *cc_mask)
+ 	gpa_width = args.rcx & GENMASK(5, 0);
+ 	*cc_mask = BIT_ULL(gpa_width - 1);
  
-@@ -786,7 +808,7 @@ void __init tdx_early_init(void)
- 	cc_set_mask(cc_mask);
- 
- 	/* Kernel does not use NOTIFY_ENABLES and does not need random #VEs */
--	tdcall(TDG_VM_WR, &args);
++	/* Kernel does not use NOTIFY_ENABLES and does not need random #VEs */
 +	tdg_vm_wr(TDCS_NOTIFY_ENABLES, 0, -1ULL);
++
+ 	/*
+ 	 * The kernel can not handle #VE's when accessing normal kernel
+ 	 * memory.  Ensure that no #VE will be delivered for accesses to
+@@ -804,11 +807,11 @@ void __init tdx_early_init(void)
+ 	setup_force_cpu_cap(X86_FEATURE_TDX_GUEST);
+ 
+ 	cc_vendor = CC_VENDOR_INTEL;
+-	tdx_parse_tdinfo(&cc_mask);
+-	cc_set_mask(cc_mask);
+ 
+-	/* Kernel does not use NOTIFY_ENABLES and does not need random #VEs */
+-	tdg_vm_wr(TDCS_NOTIFY_ENABLES, 0, -1ULL);
++	/* Configure the TD */
++	tdx_setup(&cc_mask);
++
++	cc_set_mask(cc_mask);
  
  	/*
  	 * All bits above GPA width are reserved and kernel treats shared bit
-diff --git a/arch/x86/include/asm/shared/tdx.h b/arch/x86/include/asm/shared/tdx.h
-index 3606463ebf6fb..dfae78d2d4791 100644
---- a/arch/x86/include/asm/shared/tdx.h
-+++ b/arch/x86/include/asm/shared/tdx.h
-@@ -15,6 +15,7 @@
- #define TDG_VP_VEINFO_GET		3
- #define TDG_MR_REPORT			4
- #define TDG_MEM_PAGE_ACCEPT		6
-+#define TDG_VM_RD			7
- #define TDG_VM_WR			8
- 
- /* TDCS fields. To be used by TDG.VM.WR and TDG.VM.RD module calls */
 -- 
 2.43.0
 
