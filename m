@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E4FB202F7C;
-	Fri,  6 Dec 2024 15:00:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6069F1FF7D1;
+	Fri,  6 Dec 2024 15:00:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733497202; cv=none; b=hHD3TECLo8jCmWKEMl1hV4Ax3nga07qgZHLOCGRdN6oFZ7QZvLa+ubFDkMUV4Rc+ctuPESgWV9z0Lq55wFX3/uvv8mtlX88ZhXBXCvxzS8iY7cXTFBRv+elOpqgOdFtqXKVJPEla2j+4vep+yEZ+V8Ibktzc+psPKTkip56VOh4=
+	t=1733497205; cv=none; b=mYvDqOnOdwSioW4AZH3aXg5M57IDRcCM8lJcOQ6rbkL+5YC0IyYi3tVWd7J0rwsUVKWod7CjHJai33KSMZA/MpflKkYS2AmzORwPVzNZ4WeYLwk6s9OvY9SDQVPquTEK7xbVQ0bcSybCWgvcI8COmYg0lK6MQ3f7dus78c4kpAo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733497202; c=relaxed/simple;
-	bh=mr336uKddIgfOvJ8FFu/pB/bG9Uf1ulA5gA6EQhZRKI=;
+	s=arc-20240116; t=1733497205; c=relaxed/simple;
+	bh=U0GvVVfCRUc0arF2de6g62XRyRU6g7kgS/GMVWv2zas=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ivWQinU+tzF4xGUNp7P21/yNUmAKsWneBUJ5zgTvnxvHvrRLnpay119Zy2VvMuVCMsj4zNeapoJdy0sZBNtCNIKhvi60r0iQ9NoCLNV2y4BuQHps+1K4LBnrIk7o+gqXjhsCVGdGJFqblTcy6yrXA8/6JFVXrLARG0wyD3N+TLw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nqvaKGQm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mkGKtE7THN9i/2Fj/fSwUTvanu1dVRx7Mfhptgq4ZraamaIBpGEeF+/jqGL/Ak1zlphF6Y49qHWvSNObEl317aCVGrU7CBwXK3v9FbVMysqZyNfpiIjnMF+eIC/T0xBfTRaBUmLJpBvVNqROX1hA4/sio/bmo4QUKvHXge/KW8M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h9gMrSIT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nqvaKGQm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67CCEC4CED1;
-	Fri,  6 Dec 2024 15:00:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h9gMrSIT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5BE4C4CED1;
+	Fri,  6 Dec 2024 15:00:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733497201;
-	bh=mr336uKddIgfOvJ8FFu/pB/bG9Uf1ulA5gA6EQhZRKI=;
+	s=korg; t=1733497205;
+	bh=U0GvVVfCRUc0arF2de6g62XRyRU6g7kgS/GMVWv2zas=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nqvaKGQmYkfSz3bSFL76uPLa3kGdhamhHrotxt2qGj/ImAx0vT5TjWOn332RhbU8t
-	 diSj4IsvMY4W1+Mib5Z6DAs3DZYCXHiY+vuG/5KnG5RvMWpM9XedPnlGPKqAW6LB7C
-	 emAXfOreL9qZJawbli+RjBWY01hf/h2YDqJNkxAM=
+	b=h9gMrSITAGUCVlCH5WSXzFtxdFO79rJVWcGgPBMzuwCzz+nlHRC8QFb300noZZxlH
+	 BeeN5jh1kZ6+npT15RL8bPwxXlunumbcu3N9Nk51PrhuWwkoHAE1srEhnMgS6l1poT
+	 Ud3uGNaOBpbUp4toJ4QmRSPCU86tvDn6P8X6+hZA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Jos=C3=A9=20Exp=C3=B3sito?= <jose.exposito89@gmail.com>,
-	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
-	Louis Chauvet <louis.chauvet@bootlin.com>,
+	Jonathan Gray <jsg@jsg.id.au>,
+	Jani Nikula <jani.nikula@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 224/676] drm/vkms: Drop unnecessary call to drm_crtc_cleanup()
-Date: Fri,  6 Dec 2024 15:30:43 +0100
-Message-ID: <20241206143702.086619254@linuxfoundation.org>
+Subject: [PATCH 6.6 225/676] drm: use ATOMIC64_INIT() for atomic64_t
+Date: Fri,  6 Dec 2024 15:30:44 +0100
+Message-ID: <20241206143702.125570795@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -46,54 +45,41 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: José Expósito <jose.exposito89@gmail.com>
+From: Jonathan Gray <jsg@jsg.id.au>
 
-[ Upstream commit 1d43dddd7c38ea1aa93f78f7ee10087afb0a561f ]
+[ Upstream commit 9877bb2775d020fb7000af5ca989331d09d0e372 ]
 
-CRTC creation uses drmm_crtc_init_with_planes(), which automatically
-handles cleanup. However, an unnecessary call to drm_crtc_cleanup() is
-still present in the vkms_output_init() error path.
+use ATOMIC64_INIT() not ATOMIC_INIT() for atomic64_t
 
-Fixes: 99cc528ebe92 ("drm/vkms: Use drmm_crtc_init_with_planes()")
-Signed-off-by: José Expósito <jose.exposito89@gmail.com>
-Reviewed-by: Maíra Canal <mcanal@igalia.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20241031183835.3633-1-jose.exposito89@gmail.com
-Acked-by: Louis Chauvet <louis.chauvet@bootlin.com>
-Signed-off-by: Louis Chauvet <louis.chauvet@bootlin.com>
+Fixes: 3f09a0cd4ea3 ("drm: Add common fdinfo helper")
+Signed-off-by: Jonathan Gray <jsg@jsg.id.au>
+Reviewed-by: Jani Nikula <jani.nikula@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240111023045.50013-1-jsg@jsg.id.au
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/vkms/vkms_output.c | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ drivers/gpu/drm/drm_file.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/vkms/vkms_output.c b/drivers/gpu/drm/vkms/vkms_output.c
-index 5ce70dd946aa6..24589b947dea3 100644
---- a/drivers/gpu/drm/vkms/vkms_output.c
-+++ b/drivers/gpu/drm/vkms/vkms_output.c
-@@ -84,7 +84,7 @@ int vkms_output_init(struct vkms_device *vkmsdev, int index)
- 				 DRM_MODE_CONNECTOR_VIRTUAL);
- 	if (ret) {
- 		DRM_ERROR("Failed to init connector\n");
--		goto err_connector;
-+		return ret;
- 	}
- 
- 	drm_connector_helper_add(connector, &vkms_conn_helper_funcs);
-@@ -119,8 +119,5 @@ int vkms_output_init(struct vkms_device *vkmsdev, int index)
- err_encoder:
- 	drm_connector_cleanup(connector);
- 
--err_connector:
--	drm_crtc_cleanup(crtc);
--
- 	return ret;
- }
+diff --git a/drivers/gpu/drm/drm_file.c b/drivers/gpu/drm/drm_file.c
+index 48af0e2960a22..1d22dba69b275 100644
+--- a/drivers/gpu/drm/drm_file.c
++++ b/drivers/gpu/drm/drm_file.c
+@@ -149,7 +149,7 @@ bool drm_dev_needs_global_mutex(struct drm_device *dev)
+  */
+ struct drm_file *drm_file_alloc(struct drm_minor *minor)
+ {
+-	static atomic64_t ident = ATOMIC_INIT(0);
++	static atomic64_t ident = ATOMIC64_INIT(0);
+ 	struct drm_device *dev = minor->dev;
+ 	struct drm_file *file;
+ 	int ret;
 -- 
 2.43.0
 
