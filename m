@@ -1,39 +1,53 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AE021465AB;
-	Fri,  6 Dec 2024 15:25:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87A0053A7;
+	Fri,  6 Dec 2024 15:25:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733498709; cv=none; b=HeD+OVMl+w1+E/IGiI0j67C9/7zQxzQmD3+bLppc7z0ycKNmmT6Nw+7xKaIfN3UvUAhGZ1KK0UCNuIquR/LF1UVueU0nAiXUNU3HWatRqGFUK0dMyrZeJIxfaJYmhtFT30rPoonpfibmlebFa5OzTFGiCCmqmo5Y9kwQ/vnAATQ=
+	t=1733498712; cv=none; b=Yh2bQSckwwem6hFd61yHGMdZm6WmhvQN2Vg3aPNXfqBq2v7g4m26x1qV/7P2LMFT/1mMunPsPg+8UHoV2MEz5Ol+cCnzXJ3WedizJDoRIIyHh8yPrCkR9nWN5ikDBKDVMmuIs8IP4n7qGVbxLmJMO8Yy6/3McPNM9+jnGu3Nk1Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733498709; c=relaxed/simple;
-	bh=F0VAuDF9VpPhXf1H2J9hiIWZhQiNaP3oB624V4ThMAA=;
+	s=arc-20240116; t=1733498712; c=relaxed/simple;
+	bh=GY9kkZdyq1RET588CXM8+SuM2pXNDnisqRtg4d0UdJk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MB3w/j9OqjThdHYwbeeSWRUJPdCdY6m/vb265TI/QteXAXoP0fOfJojFKMerfdPZv1mFNT+fk7uKYbWKjACowfPDt1HhHaylMYXxsIqxojPJmpfJkt4zwUH6Y8F4xbB26XIHrXQs4G4CgNwdXVIqAy5tIoz60hu+LsUq1K69Dyw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eh2fU2/E; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GEpsEJPyV20g669uTK31bYDh8hocuzaz91czS6vATIxzP1qCKIQ5Utbqol1+ridnINeD207CjDSx6lyKiWSCcTnxXlyDBH2y45aQu34uTtWmnqoN5twQfm/N+9T6I9GE6ryQbz2rw8zx8o5WOq0RTJpTH7ZGp47SIkXCgtGHMHU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hVkNC884; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eh2fU2/E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3DACC4CED1;
-	Fri,  6 Dec 2024 15:25:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hVkNC884"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6514C4CED1;
+	Fri,  6 Dec 2024 15:25:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733498709;
-	bh=F0VAuDF9VpPhXf1H2J9hiIWZhQiNaP3oB624V4ThMAA=;
+	s=korg; t=1733498712;
+	bh=GY9kkZdyq1RET588CXM8+SuM2pXNDnisqRtg4d0UdJk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eh2fU2/ESU1RXGnZPiVYAmA3xNAmkAhNKLAdtqKgF5Li/q4lm3f/xImrBf/WqYxIv
-	 duz/V4iGAxfrFWX7msa9d+iQEu45ZtAsrTd2McY7bgMk8KC9aS60kfJIVwVrCb8fup
-	 EBL17zA/DifrRuLPmTAX+6sZCgFgY+vaJal/102s=
+	b=hVkNC884xOV68oDyNWmTFR6dlt4o6z4AgoNfCbyDaCeuDSK1ulBujMLPBZob3PEme
+	 u/BNrfjNBLSPMvjXKigZ8Sb6Dbmfyz64PV3dkDnpT0qMKvBIHSczJuqQEsJh2834Hn
+	 g3seukAlmGltYS9OcuO+KlrUccWTnfucRovCzhFM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mike Seo <mikeseohyungjin@gmail.com>,
-	Jerry Snitselaar <jsnitsel@redhat.com>,
-	Jarkko Sakkinen <jarkko@kernel.org>,
-	Bin Lan <bin.lan.cn@windriver.com>
-Subject: [PATCH 6.6 665/676] tpm: Lock TPM chip in tpm_pm_suspend() first
-Date: Fri,  6 Dec 2024 15:38:04 +0100
-Message-ID: <20241206143719.346600451@linuxfoundation.org>
+	Vivek Kasireddy <vivek.kasireddy@intel.com>,
+	David Hildenbrand <david@redhat.com>,
+	Dave Airlie <airlied@redhat.com>,
+	Gerd Hoffmann <kraxel@redhat.com>,
+	Daniel Vetter <daniel.vetter@ffwll.ch>,
+	Hugh Dickins <hughd@google.com>,
+	Peter Xu <peterx@redhat.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Dongwon Kim <dongwon.kim@intel.com>,
+	Junxiao Chang <junxiao.chang@intel.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Christoph Hellwig <hch@infradead.org>,
+	Christoph Hellwig <hch@lst.de>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Mike Kravetz <mike.kravetz@oracle.com>,
+	Oscar Salvador <osalvador@suse.de>,
+	Shuah Khan <shuah@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.6 666/676] udmabuf: use vmf_insert_pfn and VM_PFNMAP for handling mmap
+Date: Fri,  6 Dec 2024 15:38:05 +0100
+Message-ID: <20241206143719.386529805@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -52,109 +66,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jarkko Sakkinen <jarkko@kernel.org>
+From: Vivek Kasireddy <vivek.kasireddy@intel.com>
 
-commit 9265fed6db601ee2ec47577815387458ef4f047a upstream.
+commit 7d79cd784470395539bda91bf0b3505ff5b2ab6d upstream.
 
-Setting TPM_CHIP_FLAG_SUSPENDED in the end of tpm_pm_suspend() can be racy
-according, as this leaves window for tpm_hwrng_read() to be called while
-the operation is in progress. The recent bug report gives also evidence of
-this behaviour.
+Add VM_PFNMAP to vm_flags in the mmap handler to ensure that the mappings
+would be managed without using struct page.
 
-Aadress this by locking the TPM chip before checking any chip->flags both
-in tpm_pm_suspend() and tpm_hwrng_read(). Move TPM_CHIP_FLAG_SUSPENDED
-check inside tpm_get_random() so that it will be always checked only when
-the lock is reserved.
+And, in the vm_fault handler, use vmf_insert_pfn to share the page's pfn
+to userspace instead of directly sharing the page (via struct page *).
 
-Cc: stable@vger.kernel.org # v6.4+
-Fixes: 99d464506255 ("tpm: Prevent hwrng from activating during resume")
-Reported-by: Mike Seo <mikeseohyungjin@gmail.com>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=219383
-Reviewed-by: Jerry Snitselaar <jsnitsel@redhat.com>
-Tested-by: Mike Seo <mikeseohyungjin@gmail.com>
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
-[ Don't call tpm2_end_auth_session() for this function does not exist in 6.6.y.]
-Signed-off-by: Bin Lan <bin.lan.cn@windriver.com>
+Link: https://lkml.kernel.org/r/20240624063952.1572359-6-vivek.kasireddy@intel.com
+Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
+Suggested-by: David Hildenbrand <david@redhat.com>
+Acked-by: David Hildenbrand <david@redhat.com>
+Acked-by: Dave Airlie <airlied@redhat.com>
+Acked-by: Gerd Hoffmann <kraxel@redhat.com>
+Cc: Daniel Vetter <daniel.vetter@ffwll.ch>
+Cc: Hugh Dickins <hughd@google.com>
+Cc: Peter Xu <peterx@redhat.com>
+Cc: Jason Gunthorpe <jgg@nvidia.com>
+Cc: Dongwon Kim <dongwon.kim@intel.com>
+Cc: Junxiao Chang <junxiao.chang@intel.com>
+Cc: Arnd Bergmann <arnd@arndb.de>
+Cc: Christoph Hellwig <hch@infradead.org>
+Cc: Christoph Hellwig <hch@lst.de>
+Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: Mike Kravetz <mike.kravetz@oracle.com>
+Cc: Oscar Salvador <osalvador@suse.de>
+Cc: Shuah Khan <shuah@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/tpm/tpm-chip.c      |    4 ----
- drivers/char/tpm/tpm-interface.c |   29 +++++++++++++++++++++--------
- 2 files changed, 21 insertions(+), 12 deletions(-)
+ drivers/dma-buf/udmabuf.c |    8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
---- a/drivers/char/tpm/tpm-chip.c
-+++ b/drivers/char/tpm/tpm-chip.c
-@@ -519,10 +519,6 @@ static int tpm_hwrng_read(struct hwrng *
- {
- 	struct tpm_chip *chip = container_of(rng, struct tpm_chip, hwrng);
+--- a/drivers/dma-buf/udmabuf.c
++++ b/drivers/dma-buf/udmabuf.c
+@@ -35,12 +35,13 @@ static vm_fault_t udmabuf_vm_fault(struc
+ 	struct vm_area_struct *vma = vmf->vma;
+ 	struct udmabuf *ubuf = vma->vm_private_data;
+ 	pgoff_t pgoff = vmf->pgoff;
++	unsigned long pfn;
  
--	/* Give back zero bytes, as TPM chip has not yet fully resumed: */
--	if (chip->flags & TPM_CHIP_FLAG_SUSPENDED)
--		return 0;
--
- 	return tpm_get_random(chip, data, max);
+ 	if (pgoff >= ubuf->pagecount)
+ 		return VM_FAULT_SIGBUS;
+-	vmf->page = ubuf->pages[pgoff];
+-	get_page(vmf->page);
+-	return 0;
++
++	pfn = page_to_pfn(ubuf->pages[pgoff]);
++	return vmf_insert_pfn(vma, vmf->address, pfn);
  }
  
---- a/drivers/char/tpm/tpm-interface.c
-+++ b/drivers/char/tpm/tpm-interface.c
-@@ -394,6 +394,13 @@ int tpm_pm_suspend(struct device *dev)
- 	if (!chip)
- 		return -ENODEV;
+ static const struct vm_operations_struct udmabuf_vm_ops = {
+@@ -56,6 +57,7 @@ static int mmap_udmabuf(struct dma_buf *
  
-+	rc = tpm_try_get_ops(chip);
-+	if (rc) {
-+		/* Can be safely set out of locks, as no action cannot race: */
-+		chip->flags |= TPM_CHIP_FLAG_SUSPENDED;
-+		goto out;
-+	}
-+
- 	if (chip->flags & TPM_CHIP_FLAG_ALWAYS_POWERED)
- 		goto suspended;
- 
-@@ -401,19 +408,18 @@ int tpm_pm_suspend(struct device *dev)
- 	    !pm_suspend_via_firmware())
- 		goto suspended;
- 
--	rc = tpm_try_get_ops(chip);
--	if (!rc) {
--		if (chip->flags & TPM_CHIP_FLAG_TPM2)
--			tpm2_shutdown(chip, TPM2_SU_STATE);
--		else
--			rc = tpm1_pm_suspend(chip, tpm_suspend_pcr);
--
--		tpm_put_ops(chip);
-+	if (chip->flags & TPM_CHIP_FLAG_TPM2) {
-+		tpm2_shutdown(chip, TPM2_SU_STATE);
-+		goto suspended;
- 	}
- 
-+	rc = tpm1_pm_suspend(chip, tpm_suspend_pcr);
-+
- suspended:
- 	chip->flags |= TPM_CHIP_FLAG_SUSPENDED;
-+	tpm_put_ops(chip);
- 
-+out:
- 	if (rc)
- 		dev_err(dev, "Ignoring error %d while suspending\n", rc);
+ 	vma->vm_ops = &udmabuf_vm_ops;
+ 	vma->vm_private_data = ubuf;
++	vm_flags_set(vma, VM_PFNMAP | VM_DONTEXPAND | VM_DONTDUMP);
  	return 0;
-@@ -462,11 +468,18 @@ int tpm_get_random(struct tpm_chip *chip
- 	if (!chip)
- 		return -ENODEV;
- 
-+	/* Give back zero bytes, as TPM chip has not yet fully resumed: */
-+	if (chip->flags & TPM_CHIP_FLAG_SUSPENDED) {
-+		rc = 0;
-+		goto out;
-+	}
-+
- 	if (chip->flags & TPM_CHIP_FLAG_TPM2)
- 		rc = tpm2_get_random(chip, out, max);
- 	else
- 		rc = tpm1_get_random(chip, out, max);
- 
-+out:
- 	tpm_put_ops(chip);
- 	return rc;
  }
+ 
 
 
