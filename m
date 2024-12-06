@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 610B853A7;
-	Fri,  6 Dec 2024 15:25:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDCB91465AB;
+	Fri,  6 Dec 2024 15:25:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733498702; cv=none; b=amMnoKRt+Fl3KJ+hARaDN+6GvplDkPEUG46LC9etKjkmEzydOnSpsQdiM93xCunXrezuTLW5wPNaL8RXrRQFhGyPXFRncApR0bHafqiW4RZa9ZZ8NOrfupV/LWdm6lKK3p29jz2Cm+T4ApeelqvkQqAP5+gppGSaz5JEiFH+7+g=
+	t=1733498705; cv=none; b=ULZILdBGnOR4rgDTrbbNDb6I1Ev+K3G9xwWc/6ztoPvkU5k8dE2dxa2rsg721xOUFqs667rP6NcZM9UATz6ngAjVa1Litgb9/3Qxy6hVz3yyjEorf/hdQ+ofQm5M0WgNFTmRtybZy6bE15xc1bLmfW5ciwiRPTZo7l8KLWTX4Ik=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733498702; c=relaxed/simple;
-	bh=zyxUwRposS9yhXFQLM8CjE0T6/2RE/qaEmqpgpD2RJs=;
+	s=arc-20240116; t=1733498705; c=relaxed/simple;
+	bh=URZoPM8NR8rcMjrTAONQKn5SheyB/zaFKnJ7ANwHx2k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OVxXjHVjSUv3Esrlt8SY0x8CZBlDIHPjwxMM3/Vd1HQ6rOllrne1/BPciyF4Q6ZQpe/xoRYh5zFjzPniHLvnChxkavQt8TDv/wLR90Q3RrDIoS3gQ8qoIWHR4mtPAAO9SJKwcSl0WHv2ZzwvUS/jrRyKP7zf+sPUDwD4/4UsUow=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UsL0XtGV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qr5paZLx6iCiGbRrgR3jykIw1979AtJSJzx6DFOoEDn0BSUiZ1MTFcaWTY5N6ERbkVs6n+nXmrCTHr/5OgqzXbW0btfYBtTUb3Sappm08uJpum+UmF4XDYBbE9eMZv5ygm8qazicu0ks91qFoBExNwgGEv8kaNYaZ3QUlYvhBCM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l5dvnogg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UsL0XtGV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5B5AC4CED1;
-	Fri,  6 Dec 2024 15:25:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l5dvnogg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48846C4CED1;
+	Fri,  6 Dec 2024 15:25:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733498702;
-	bh=zyxUwRposS9yhXFQLM8CjE0T6/2RE/qaEmqpgpD2RJs=;
+	s=korg; t=1733498705;
+	bh=URZoPM8NR8rcMjrTAONQKn5SheyB/zaFKnJ7ANwHx2k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UsL0XtGVLEdCfO9XnC+5pSXhX4ZPQMEeIIKEsD4jTuGFA6ppg+R1iK8LJYQIhb6vs
-	 f2seR3is4VgCYAcrWUEhaiR7v+30A9jP/Zh/iKQaNHsinvAyT9dYb9smLmIxsuqwz6
-	 NBxDrCOg1WugE4RZe3HbWXGNo8jmCm5e6K2bPzi4=
+	b=l5dvnoggqHvjAOaHNU+T8QBY+fKIwajSkrIPannuIq22ggo0pGuwYSdiQ6fA3CWzf
+	 khxsd6ZpsS35nx4mxSpqYxsyoUiGtLMDa6ZvKLg//TO2DsJlPh7kx0UaFwX4SUbls2
+	 CmDu9sA+6+xvdxF8n/VRzUDDASvBO3n4DhgSD6SU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Keith Packard <keithp@keithp.com>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Michael Ellerman <mpe@ellerman.id.au>
-Subject: [PATCH 6.6 663/676] powerpc: Adjust adding stack protector flags to KBUILD_CLAGS for clang
-Date: Fri,  6 Dec 2024 15:38:02 +0100
-Message-ID: <20241206143719.267193811@linuxfoundation.org>
+	Josef Bacik <josef@toxicpanda.com>,
+	David Sterba <dsterba@suse.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Keerthana K <keerthana.kalyanasundaram@broadcom.com>
+Subject: [PATCH 6.6 664/676] btrfs: dont BUG_ON on ENOMEM from btrfs_lookup_extent_info() in walk_down_proc()
+Date: Fri,  6 Dec 2024 15:38:03 +0100
+Message-ID: <20241206143719.309158263@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -51,66 +52,31 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Josef Bacik <josef@toxicpanda.com>
 
-commit bee08a9e6ab03caf14481d97b35a258400ffab8f upstream.
+commit a580fb2c3479d993556e1c31b237c9e5be4944a3 upstream.
 
-After fixing the HAVE_STACKPROTECTER checks for clang's in-progress
-per-task stack protector support [1], the build fails during prepare0
-because '-mstack-protector-guard-offset' has not been added to
-KBUILD_CFLAGS yet but the other '-mstack-protector-guard' flags have.
+We handle errors here properly, ENOMEM isn't fatal, return the error.
 
-  clang: error: '-mstack-protector-guard=tls' is used without '-mstack-protector-guard-offset', and there is no default
-  clang: error: '-mstack-protector-guard=tls' is used without '-mstack-protector-guard-offset', and there is no default
-  make[4]: *** [scripts/Makefile.build:229: scripts/mod/empty.o] Error 1
-  make[4]: *** [scripts/Makefile.build:102: scripts/mod/devicetable-offsets.s] Error 1
-
-Mirror other architectures and add all '-mstack-protector-guard' flags
-to KBUILD_CFLAGS atomically during stack_protector_prepare, which
-resolves the issue and allows clang's implementation to fully work with
-the kernel.
-
-Cc: stable@vger.kernel.org # 6.1+
-Link: https://github.com/llvm/llvm-project/pull/110928 [1]
-Reviewed-by: Keith Packard <keithp@keithp.com>
-Tested-by: Keith Packard <keithp@keithp.com>
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://patch.msgid.link/20241009-powerpc-fix-stackprotector-test-clang-v2-2-12fb86b31857@kernel.org
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Keerthana K <keerthana.kalyanasundaram@broadcom.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/Makefile |   13 ++++---------
- 1 file changed, 4 insertions(+), 9 deletions(-)
+ fs/btrfs/extent-tree.c |    1 -
+ 1 file changed, 1 deletion(-)
 
---- a/arch/powerpc/Makefile
-+++ b/arch/powerpc/Makefile
-@@ -89,13 +89,6 @@ KBUILD_AFLAGS	+= -m$(BITS)
- KBUILD_LDFLAGS	+= -m elf$(BITS)$(LDEMULATION)
- endif
- 
--cflags-$(CONFIG_STACKPROTECTOR)	+= -mstack-protector-guard=tls
--ifdef CONFIG_PPC64
--cflags-$(CONFIG_STACKPROTECTOR)	+= -mstack-protector-guard-reg=r13
--else
--cflags-$(CONFIG_STACKPROTECTOR)	+= -mstack-protector-guard-reg=r2
--endif
--
- LDFLAGS_vmlinux-y := -Bstatic
- LDFLAGS_vmlinux-$(CONFIG_RELOCATABLE) := -pie
- LDFLAGS_vmlinux-$(CONFIG_RELOCATABLE) += -z notext
-@@ -389,9 +382,11 @@ prepare: stack_protector_prepare
- PHONY += stack_protector_prepare
- stack_protector_prepare: prepare0
- ifdef CONFIG_PPC64
--	$(eval KBUILD_CFLAGS += -mstack-protector-guard-offset=$(shell awk '{if ($$2 == "PACA_CANARY") print $$3;}' include/generated/asm-offsets.h))
-+	$(eval KBUILD_CFLAGS += -mstack-protector-guard=tls -mstack-protector-guard-reg=r13 \
-+				-mstack-protector-guard-offset=$(shell awk '{if ($$2 == "PACA_CANARY") print $$3;}' include/generated/asm-offsets.h))
- else
--	$(eval KBUILD_CFLAGS += -mstack-protector-guard-offset=$(shell awk '{if ($$2 == "TASK_CANARY") print $$3;}' include/generated/asm-offsets.h))
-+	$(eval KBUILD_CFLAGS += -mstack-protector-guard=tls -mstack-protector-guard-reg=r2 \
-+				-mstack-protector-guard-offset=$(shell awk '{if ($$2 == "TASK_CANARY") print $$3;}' include/generated/asm-offsets.h))
- endif
- endif
- 
+--- a/fs/btrfs/extent-tree.c
++++ b/fs/btrfs/extent-tree.c
+@@ -5170,7 +5170,6 @@ static noinline int walk_down_proc(struc
+ 					       eb->start, level, 1,
+ 					       &wc->refs[level],
+ 					       &wc->flags[level]);
+-		BUG_ON(ret == -ENOMEM);
+ 		if (ret)
+ 			return ret;
+ 		if (unlikely(wc->refs[level] == 0)) {
 
 
