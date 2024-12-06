@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B841C53A7;
-	Fri,  6 Dec 2024 15:03:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A82853A7;
+	Fri,  6 Dec 2024 15:03:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733497412; cv=none; b=HARgWn6fCQKpeml/xmFb0DKxFObGy3DgArZq38GAz6i8hs7Hvqawfd9Et3VlKqXygNHBVG4f0Pomk71JaVjqCT+Csh7TRpWQ5Etkeddo72hbfTi8jmfu0tM7gkraK8uXabqqCNoGSmIybc6s6G9peHYm5/oJ4bzJLW77U3qax0w=
+	t=1733497416; cv=none; b=Kd79IuP6Hw5DgH0N5mn1UGfhKet71aAQqwQ+o7X0IDms89d7bL0ebV63j3mhQ5zzqsDoL1Zta81bMDUEIcZJj8BjgqeKaa1FF4O1juV7p8gtdcI15VS3Z5OpZNJBl51wiMw3fhE7dfp9JZ6B+6CvrD14ZTVzB2wT04wbUL7HlVk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733497412; c=relaxed/simple;
-	bh=jsUG92OzEQCwDIq3KdnGWcMkr5jWZXxEWsS69/4rOEk=;
+	s=arc-20240116; t=1733497416; c=relaxed/simple;
+	bh=QLtpHCB8lSaToy/l1MS4HBz1yzt82sbyOOaEUxjps9c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dDUjj03PqpmhK51kfRjQheQEyUJ8f2oAHSONbIiP8J/bAF+5JsC3DVfjzPQlVYwiYOPoWyCioWO4xNlMkwB1fSL20QGHmI1/VIQZi08j3BQ2Z2+TwzCWMYavDEDOrAmC5BrNaqOyDqXobjc/6W8XP3RS3wGmg9cR8WU4BCYlAO4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ThA2CP/h; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HSVxrrjFmyOyyIfKgHrW7NTttGxhQL7bc1or+YUZUpL0ZjD9qPGBtOszxApbgkDWhfG6rz/I9yy4B1mWcnlHNHRqhTvJw+ZkkHS3w5Bsdcx+WiGSCaHqKomUHWniPDJXpX8XfcjqydpocmZcPrrf8Er/xo+LXroeHYKVq33IYOE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DtS6ajQo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ThA2CP/h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A40CC4CEDC;
-	Fri,  6 Dec 2024 15:03:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DtS6ajQo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D56AC4CEDC;
+	Fri,  6 Dec 2024 15:03:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733497412;
-	bh=jsUG92OzEQCwDIq3KdnGWcMkr5jWZXxEWsS69/4rOEk=;
+	s=korg; t=1733497415;
+	bh=QLtpHCB8lSaToy/l1MS4HBz1yzt82sbyOOaEUxjps9c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ThA2CP/hNtEXKxac7K9flOH1PmVScz7cph4Ei2+obbMnJijN7KBh7DR5Clv6pJUhN
-	 6Wy/ur3GxsJLe7nRZ/x6VSJZCtdQ+Hhm5XrO8/9g+Nw6WmQKBCJNQdj4g8C+PpF+wo
-	 EY4tEHTK3KfujGIljAZXdz6pvVDfUkftvh/mIDzA=
+	b=DtS6ajQo+VhOYjfnltqIPA8G4vJBlqIeTypwRbwb1APCC8RWE1A0+jbQci/OmW2Pa
+	 wJ2oVn+9vtCRYx9luDmfpORcwN5IgaMWx9MCl2ETFql/T4C53jGCniRpZMDGR9YCqD
+	 zVn9t17U49+FYZow79wRzduZIqECkJM/JgpAZE14=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+6cf5652d3df49fae2e3f@syzkaller.appspotmail.com,
-	Dmitry Antipov <dmantipov@yandex.ru>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Eric Dumazet <edumazet@google.com>,
+	David Ahern <dsahern@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 253/676] Bluetooth: fix use-after-free in device_for_each_child()
-Date: Fri,  6 Dec 2024 15:31:12 +0100
-Message-ID: <20241206143703.213627327@linuxfoundation.org>
+Subject: [PATCH 6.6 244/676] ipv6: release nexthop on device removal
+Date: Fri,  6 Dec 2024 15:31:03 +0100
+Message-ID: <20241206143702.862224624@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -52,148 +53,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Antipov <dmantipov@yandex.ru>
+From: Paolo Abeni <pabeni@redhat.com>
 
-[ Upstream commit 27aabf27fd014ae037cc179c61b0bee7cff55b3d ]
+[ Upstream commit eb02688c5c45c3e7af7e71f036a7144f5639cbfe ]
 
-Syzbot has reported the following KASAN splat:
+The CI is hitting some aperiodic hangup at device removal time in the
+pmtu.sh self-test:
 
-BUG: KASAN: slab-use-after-free in device_for_each_child+0x18f/0x1a0
-Read of size 8 at addr ffff88801f605308 by task kbnepd bnep0/4980
+unregister_netdevice: waiting for veth_A-R1 to become free. Usage count = 6
+ref_tracker: veth_A-R1@ffff888013df15d8 has 1/5 users at
+	dst_init+0x84/0x4a0
+	dst_alloc+0x97/0x150
+	ip6_dst_alloc+0x23/0x90
+	ip6_rt_pcpu_alloc+0x1e6/0x520
+	ip6_pol_route+0x56f/0x840
+	fib6_rule_lookup+0x334/0x630
+	ip6_route_output_flags+0x259/0x480
+	ip6_dst_lookup_tail.constprop.0+0x5c2/0x940
+	ip6_dst_lookup_flow+0x88/0x190
+	udp_tunnel6_dst_lookup+0x2a7/0x4c0
+	vxlan_xmit_one+0xbde/0x4a50 [vxlan]
+	vxlan_xmit+0x9ad/0xf20 [vxlan]
+	dev_hard_start_xmit+0x10e/0x360
+	__dev_queue_xmit+0xf95/0x18c0
+	arp_solicit+0x4a2/0xe00
+	neigh_probe+0xaa/0xf0
 
-CPU: 0 UID: 0 PID: 4980 Comm: kbnepd bnep0 Not tainted 6.12.0-rc4-00161-gae90f6a6170d #1
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.3-2.fc40 04/01/2014
-Call Trace:
- <TASK>
- dump_stack_lvl+0x100/0x190
- ? device_for_each_child+0x18f/0x1a0
- print_report+0x13a/0x4cb
- ? __virt_addr_valid+0x5e/0x590
- ? __phys_addr+0xc6/0x150
- ? device_for_each_child+0x18f/0x1a0
- kasan_report+0xda/0x110
- ? device_for_each_child+0x18f/0x1a0
- ? __pfx_dev_memalloc_noio+0x10/0x10
- device_for_each_child+0x18f/0x1a0
- ? __pfx_device_for_each_child+0x10/0x10
- pm_runtime_set_memalloc_noio+0xf2/0x180
- netdev_unregister_kobject+0x1ed/0x270
- unregister_netdevice_many_notify+0x123c/0x1d80
- ? __mutex_trylock_common+0xde/0x250
- ? __pfx_unregister_netdevice_many_notify+0x10/0x10
- ? trace_contention_end+0xe6/0x140
- ? __mutex_lock+0x4e7/0x8f0
- ? __pfx_lock_acquire.part.0+0x10/0x10
- ? rcu_is_watching+0x12/0xc0
- ? unregister_netdev+0x12/0x30
- unregister_netdevice_queue+0x30d/0x3f0
- ? __pfx_unregister_netdevice_queue+0x10/0x10
- ? __pfx_down_write+0x10/0x10
- unregister_netdev+0x1c/0x30
- bnep_session+0x1fb3/0x2ab0
- ? __pfx_bnep_session+0x10/0x10
- ? __pfx_lock_release+0x10/0x10
- ? __pfx_woken_wake_function+0x10/0x10
- ? __kthread_parkme+0x132/0x200
- ? __pfx_bnep_session+0x10/0x10
- ? kthread+0x13a/0x370
- ? __pfx_bnep_session+0x10/0x10
- kthread+0x2b7/0x370
- ? __pfx_kthread+0x10/0x10
- ret_from_fork+0x48/0x80
- ? __pfx_kthread+0x10/0x10
- ret_from_fork_asm+0x1a/0x30
- </TASK>
+While the first suspect is the dst_cache, explicitly tracking the dst
+owing the last device reference via probes proved such dst is held by
+the nexthop in the originating fib6_info.
 
-Allocated by task 4974:
- kasan_save_stack+0x30/0x50
- kasan_save_track+0x14/0x30
- __kasan_kmalloc+0xaa/0xb0
- __kmalloc_noprof+0x1d1/0x440
- hci_alloc_dev_priv+0x1d/0x2820
- __vhci_create_device+0xef/0x7d0
- vhci_write+0x2c7/0x480
- vfs_write+0x6a0/0xfc0
- ksys_write+0x12f/0x260
- do_syscall_64+0xc7/0x250
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
+Similar to commit f5b51fe804ec ("ipv6: route: purge exception on
+removal"), we need to explicitly release the originating fib info when
+disconnecting a to-be-removed device from a live ipv6 dst: move the
+fib6_info cleanup into ip6_dst_ifdown().
 
-Freed by task 4979:
- kasan_save_stack+0x30/0x50
- kasan_save_track+0x14/0x30
- kasan_save_free_info+0x3b/0x60
- __kasan_slab_free+0x4f/0x70
- kfree+0x141/0x490
- hci_release_dev+0x4d9/0x600
- bt_host_release+0x6a/0xb0
- device_release+0xa4/0x240
- kobject_put+0x1ec/0x5a0
- put_device+0x1f/0x30
- vhci_release+0x81/0xf0
- __fput+0x3f6/0xb30
- task_work_run+0x151/0x250
- do_exit+0xa79/0x2c30
- do_group_exit+0xd5/0x2a0
- get_signal+0x1fcd/0x2210
- arch_do_signal_or_restart+0x93/0x780
- syscall_exit_to_user_mode+0x140/0x290
- do_syscall_64+0xd4/0x250
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
+Tested running:
 
-In 'hci_conn_del_sysfs()', 'device_unregister()' may be called when
-an underlying (kobject) reference counter is greater than 1. This
-means that reparenting (happened when the device is actually freed)
-is delayed and, during that delay, parent controller device (hciX)
-may be deleted. Since the latter may create a dangling pointer to
-freed parent, avoid that scenario by reparenting to NULL explicitly.
+./pmtu.sh cleanup_ipv6_exception
 
-Reported-by: syzbot+6cf5652d3df49fae2e3f@syzkaller.appspotmail.com
-Tested-by: syzbot+6cf5652d3df49fae2e3f@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=6cf5652d3df49fae2e3f
-Fixes: a85fb91e3d72 ("Bluetooth: Fix double free in hci_conn_cleanup")
-Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+in a tight loop for more than 400 iterations with no spat, running an
+unpatched kernel  I observed a splat every ~10 iterations.
+
+Fixes: f88d8ea67fbd ("ipv6: Plumb support for nexthop object in a fib6_info")
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://patch.msgid.link/604c45c188c609b732286b47ac2a451a40f6cf6d.1730828007.git.pabeni@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_sysfs.c | 15 ++++-----------
- 1 file changed, 4 insertions(+), 11 deletions(-)
+ net/ipv6/route.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/net/bluetooth/hci_sysfs.c b/net/bluetooth/hci_sysfs.c
-index 367e32fe30eb8..4b54dbbf0729a 100644
---- a/net/bluetooth/hci_sysfs.c
-+++ b/net/bluetooth/hci_sysfs.c
-@@ -21,16 +21,6 @@ static const struct device_type bt_link = {
- 	.release = bt_link_release,
- };
- 
--/*
-- * The rfcomm tty device will possibly retain even when conn
-- * is down, and sysfs doesn't support move zombie device,
-- * so we should move the device before conn device is destroyed.
-- */
--static int __match_tty(struct device *dev, void *data)
--{
--	return !strncmp(dev_name(dev), "rfcomm", 6);
--}
--
- void hci_conn_init_sysfs(struct hci_conn *conn)
+diff --git a/net/ipv6/route.c b/net/ipv6/route.c
+index 341a42c2d6f14..e320dfa7fe7fc 100644
+--- a/net/ipv6/route.c
++++ b/net/ipv6/route.c
+@@ -376,6 +376,7 @@ static void ip6_dst_ifdown(struct dst_entry *dst, struct net_device *dev)
  {
- 	struct hci_dev *hdev = conn->hdev;
-@@ -73,10 +63,13 @@ void hci_conn_del_sysfs(struct hci_conn *conn)
- 		return;
+ 	struct rt6_info *rt = (struct rt6_info *)dst;
+ 	struct inet6_dev *idev = rt->rt6i_idev;
++	struct fib6_info *from;
+ 
+ 	if (idev && idev->dev != blackhole_netdev) {
+ 		struct inet6_dev *blackhole_idev = in6_dev_get(blackhole_netdev);
+@@ -385,6 +386,8 @@ static void ip6_dst_ifdown(struct dst_entry *dst, struct net_device *dev)
+ 			in6_dev_put(idev);
+ 		}
  	}
++	from = unrcu_pointer(xchg(&rt->from, NULL));
++	fib6_info_release(from);
+ }
  
-+	/* If there are devices using the connection as parent reset it to NULL
-+	 * before unregistering the device.
-+	 */
- 	while (1) {
- 		struct device *dev;
+ static bool __rt6_check_expired(const struct rt6_info *rt)
+@@ -1447,7 +1450,6 @@ static DEFINE_SPINLOCK(rt6_exception_lock);
+ static void rt6_remove_exception(struct rt6_exception_bucket *bucket,
+ 				 struct rt6_exception *rt6_ex)
+ {
+-	struct fib6_info *from;
+ 	struct net *net;
  
--		dev = device_find_child(&conn->dev, NULL, __match_tty);
-+		dev = device_find_any_child(&conn->dev);
- 		if (!dev)
- 			break;
- 		device_move(dev, NULL, DPM_ORDER_DEV_LAST);
+ 	if (!bucket || !rt6_ex)
+@@ -1459,8 +1461,6 @@ static void rt6_remove_exception(struct rt6_exception_bucket *bucket,
+ 	/* purge completely the exception to allow releasing the held resources:
+ 	 * some [sk] cache may keep the dst around for unlimited time
+ 	 */
+-	from = unrcu_pointer(xchg(&rt6_ex->rt6i->from, NULL));
+-	fib6_info_release(from);
+ 	dst_dev_put(&rt6_ex->rt6i->dst);
+ 
+ 	hlist_del_rcu(&rt6_ex->hlist);
 -- 
 2.43.0
 
