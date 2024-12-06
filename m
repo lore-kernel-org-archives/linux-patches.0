@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68498154BF5;
-	Fri,  6 Dec 2024 15:11:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AA2D154BF5;
+	Fri,  6 Dec 2024 15:11:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733497894; cv=none; b=PGC9rbNNtpEyMmtZ6f0j6LMZ69x6ysYC2CNtfY9gck98oPQzBwRiy56gtowUMO1G0Yx3lwUR0Ok/vC/ypWut8lpn639dswOROtym3P2zNzFf/pa7wnyH4DzOE7N3GulbgJYav5/mpVPvEXs0P0xZQ+x1UkijDuT2yvSlGkUNvJA=
+	t=1733497897; cv=none; b=bM5VePwHaysMTH/Ysjyb5YpZgjrzL4tORoEsPixNRfCfFzhxrxmbkCGau++bHMi2soKyjeU0Ez++j2hTciFEA3Rx4veO0duR4CamWyyaTpP87nv3Cg3SB/ugEV0tBx/qQJ8Eei3+jNNOMd6vrIBAh6g1+VwQg88Q6csPglarKZE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733497894; c=relaxed/simple;
-	bh=Q5uGKyQ2W7wCUWg/jfcJsoawsw7X61oS7qji7+uAge8=;
+	s=arc-20240116; t=1733497897; c=relaxed/simple;
+	bh=yQxGBMTZ5jPa2K2MGeg6/CoWvgPDU4ht+iwUB+khBYw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=udnjG7AhWSGB2WMuNKvVVhPpweZnLSYXEirGaRATYJlMYw5CTXxoKpPf0h1hVykFpPyzfHP7ZbJ0IkDhABzQXnGMQ2gG/EJGYnwl2b9qailzXhXdoQ13Cf2WhrdpYLsaz4Srf9/q7QP3FxfKfezub+u+pmYXFyROYHB7zNveZyo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KpjpzVf8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WE5P2xIyRW5aAq4IReq78G97uXWrLrxC0p9SFsHfy9XJDoGZRXVpgnXFCDJQOJbaS+60wGb4Vu01960uc/wciXAFHV/AkHnhtE52ZtBuZEpXNZE3XAQ9E5A4zuSnIdzbJVDkxKxusHA9MFVmcNTQUqgHdryZXnGRlahtM38Cq8w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WqmPVy+p; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KpjpzVf8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 884A3C4CEDC;
-	Fri,  6 Dec 2024 15:11:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WqmPVy+p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5378C4CEDC;
+	Fri,  6 Dec 2024 15:11:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733497894;
-	bh=Q5uGKyQ2W7wCUWg/jfcJsoawsw7X61oS7qji7+uAge8=;
+	s=korg; t=1733497897;
+	bh=yQxGBMTZ5jPa2K2MGeg6/CoWvgPDU4ht+iwUB+khBYw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KpjpzVf8nw4bRU99TrU9aqQrluLAVkHr5Mum6NS4rVLCXbFSK8obG3cNbdwdWDeAJ
-	 kJPiF78Siod1+LgmDuCG/dDL9wTwcOj+Kj0fxlcSQgVpr+FCJWuKRc0fYQORrCh6WT
-	 gQ7RYUVMrb0+LVpLBCz9k6x1iFhHvxPXsTA8SK54=
+	b=WqmPVy+po/4FB7qgom4NqRXj+FYJCYS5d6zcbt7vTBR3NG8K033TN/7AV6wJXX3Vg
+	 aoyK37wE255McZkC0aLNyD4XDcedb6GExtbY/whwJpKKvbALHxt5jjGfbp3CeWQM0m
+	 ZrXW0eTSU53dDVD6TpuNilbqn0PjaKJeJbUR9sg0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Ahern <dsahern@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 425/676] ipmr: fix tables suspicious RCU usage
-Date: Fri,  6 Dec 2024 15:34:04 +0100
-Message-ID: <20241206143709.944088993@linuxfoundation.org>
+Subject: [PATCH 6.6 426/676] iio: light: al3010: Fix an error handling path in al3010_probe()
+Date: Fri,  6 Dec 2024 15:34:05 +0100
+Message-ID: <20241206143709.983390770@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -51,150 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit fc9c273d6daaa9866f349bbe8cae25c67764c456 ]
+[ Upstream commit a4b7064d34186cf4970fe0333c3b27346cf8f819 ]
 
-Similar to the previous patch, plumb the RCU lock inside
-the ipmr_get_table(), provided a lockless variant and apply
-the latter in the few spots were the lock is already held.
+If i2c_smbus_write_byte_data() fails in al3010_init(),
+al3010_set_pwr(false) is not called.
 
-Fixes: 709b46e8d90b ("net: Add compat ioctl support for the ipv4 multicast ioctl SIOCGETSGCNT")
-Fixes: f0ad0860d01e ("ipv4: ipmr: support multiple tables")
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+In order to avoid such a situation, move the devm_add_action_or_reset()
+witch calls al3010_set_pwr(false) right after a successful
+al3010_set_pwr(true).
+
+Fixes: c36b5195ab70 ("iio: light: add Dyna-Image AL3010 driver")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Link: https://patch.msgid.link/ee5d10a2dd2b70f29772d5df33774d3974a80f30.1725993353.git.christophe.jaillet@wanadoo.fr
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/ipmr.c | 42 +++++++++++++++++++++++++++++-------------
- 1 file changed, 29 insertions(+), 13 deletions(-)
+ drivers/iio/light/al3010.c | 11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
-diff --git a/net/ipv4/ipmr.c b/net/ipv4/ipmr.c
-index 66eade3fb629f..dc0ad979a894a 100644
---- a/net/ipv4/ipmr.c
-+++ b/net/ipv4/ipmr.c
-@@ -136,7 +136,7 @@ static struct mr_table *ipmr_mr_table_iter(struct net *net,
- 	return ret;
- }
+diff --git a/drivers/iio/light/al3010.c b/drivers/iio/light/al3010.c
+index 8f0119f392b70..7d4053bfceea2 100644
+--- a/drivers/iio/light/al3010.c
++++ b/drivers/iio/light/al3010.c
+@@ -87,7 +87,12 @@ static int al3010_init(struct al3010_data *data)
+ 	int ret;
  
--static struct mr_table *ipmr_get_table(struct net *net, u32 id)
-+static struct mr_table *__ipmr_get_table(struct net *net, u32 id)
- {
- 	struct mr_table *mrt;
+ 	ret = al3010_set_pwr(data->client, true);
++	if (ret < 0)
++		return ret;
  
-@@ -147,6 +147,16 @@ static struct mr_table *ipmr_get_table(struct net *net, u32 id)
- 	return NULL;
- }
++	ret = devm_add_action_or_reset(&data->client->dev,
++				       al3010_set_pwr_off,
++				       data);
+ 	if (ret < 0)
+ 		return ret;
  
-+static struct mr_table *ipmr_get_table(struct net *net, u32 id)
-+{
-+	struct mr_table *mrt;
-+
-+	rcu_read_lock();
-+	mrt = __ipmr_get_table(net, id);
-+	rcu_read_unlock();
-+	return mrt;
-+}
-+
- static int ipmr_fib_lookup(struct net *net, struct flowi4 *flp4,
- 			   struct mr_table **mrt)
- {
-@@ -188,7 +198,7 @@ static int ipmr_rule_action(struct fib_rule *rule, struct flowi *flp,
- 
- 	arg->table = fib_rule_get_table(rule, arg);
- 
--	mrt = ipmr_get_table(rule->fr_net, arg->table);
-+	mrt = __ipmr_get_table(rule->fr_net, arg->table);
- 	if (!mrt)
- 		return -EAGAIN;
- 	res->mrt = mrt;
-@@ -314,6 +324,8 @@ static struct mr_table *ipmr_get_table(struct net *net, u32 id)
- 	return net->ipv4.mrt;
- }
- 
-+#define __ipmr_get_table ipmr_get_table
-+
- static int ipmr_fib_lookup(struct net *net, struct flowi4 *flp4,
- 			   struct mr_table **mrt)
- {
-@@ -402,7 +414,7 @@ static struct mr_table *ipmr_new_table(struct net *net, u32 id)
- 	if (id != RT_TABLE_DEFAULT && id >= 1000000000)
- 		return ERR_PTR(-EINVAL);
- 
--	mrt = ipmr_get_table(net, id);
-+	mrt = __ipmr_get_table(net, id);
- 	if (mrt)
- 		return mrt;
- 
-@@ -1373,7 +1385,7 @@ int ip_mroute_setsockopt(struct sock *sk, int optname, sockptr_t optval,
- 		goto out_unlock;
+@@ -190,12 +195,6 @@ static int al3010_probe(struct i2c_client *client)
+ 		return ret;
  	}
  
--	mrt = ipmr_get_table(net, raw_sk(sk)->ipmr_table ? : RT_TABLE_DEFAULT);
-+	mrt = __ipmr_get_table(net, raw_sk(sk)->ipmr_table ? : RT_TABLE_DEFAULT);
- 	if (!mrt) {
- 		ret = -ENOENT;
- 		goto out_unlock;
-@@ -2261,11 +2273,13 @@ int ipmr_get_route(struct net *net, struct sk_buff *skb,
- 	struct mr_table *mrt;
- 	int err;
- 
--	mrt = ipmr_get_table(net, RT_TABLE_DEFAULT);
--	if (!mrt)
-+	rcu_read_lock();
-+	mrt = __ipmr_get_table(net, RT_TABLE_DEFAULT);
-+	if (!mrt) {
-+		rcu_read_unlock();
- 		return -ENOENT;
-+	}
- 
--	rcu_read_lock();
- 	cache = ipmr_cache_find(mrt, saddr, daddr);
- 	if (!cache && skb->dev) {
- 		int vif = ipmr_find_vif(mrt, skb->dev);
-@@ -2550,7 +2564,7 @@ static int ipmr_rtm_getroute(struct sk_buff *in_skb, struct nlmsghdr *nlh,
- 	grp = tb[RTA_DST] ? nla_get_in_addr(tb[RTA_DST]) : 0;
- 	tableid = tb[RTA_TABLE] ? nla_get_u32(tb[RTA_TABLE]) : 0;
- 
--	mrt = ipmr_get_table(net, tableid ? tableid : RT_TABLE_DEFAULT);
-+	mrt = __ipmr_get_table(net, tableid ? tableid : RT_TABLE_DEFAULT);
- 	if (!mrt) {
- 		err = -ENOENT;
- 		goto errout_free;
-@@ -2602,7 +2616,7 @@ static int ipmr_rtm_dumproute(struct sk_buff *skb, struct netlink_callback *cb)
- 	if (filter.table_id) {
- 		struct mr_table *mrt;
- 
--		mrt = ipmr_get_table(sock_net(skb->sk), filter.table_id);
-+		mrt = __ipmr_get_table(sock_net(skb->sk), filter.table_id);
- 		if (!mrt) {
- 			if (rtnl_msg_family(cb->nlh) != RTNL_FAMILY_IPMR)
- 				return skb->len;
-@@ -2710,7 +2724,7 @@ static int rtm_to_ipmr_mfcc(struct net *net, struct nlmsghdr *nlh,
- 			break;
- 		}
- 	}
--	mrt = ipmr_get_table(net, tblid);
-+	mrt = __ipmr_get_table(net, tblid);
- 	if (!mrt) {
- 		ret = -ENOENT;
- 		goto out;
-@@ -2918,13 +2932,15 @@ static void *ipmr_vif_seq_start(struct seq_file *seq, loff_t *pos)
- 	struct net *net = seq_file_net(seq);
- 	struct mr_table *mrt;
- 
--	mrt = ipmr_get_table(net, RT_TABLE_DEFAULT);
--	if (!mrt)
-+	rcu_read_lock();
-+	mrt = __ipmr_get_table(net, RT_TABLE_DEFAULT);
-+	if (!mrt) {
-+		rcu_read_unlock();
- 		return ERR_PTR(-ENOENT);
-+	}
- 
- 	iter->mrt = mrt;
- 
--	rcu_read_lock();
- 	return mr_vif_seq_start(seq, pos);
+-	ret = devm_add_action_or_reset(&client->dev,
+-					al3010_set_pwr_off,
+-					data);
+-	if (ret < 0)
+-		return ret;
+-
+ 	return devm_iio_device_register(&client->dev, indio_dev);
  }
  
 -- 
