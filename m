@@ -1,146 +1,160 @@
-Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.15])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C52520626A
-	for <patches@lists.linux.dev>; Fri,  6 Dec 2024 16:38:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C85DD170A11
+	for <patches@lists.linux.dev>; Fri,  6 Dec 2024 17:03:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.15
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733503096; cv=none; b=ktJJuk8h0CTdlxGIL4PDQGLJNzKeV5q9tOFuXWqC6Zd6obYmUkM8F1lvkz8ByZA8dR1XkMI1mYR0O2Ts+bLcBTDjLX9zjY10QZO9FxIjNRQm92WLt1BtON0f6HwulwzhNx+yauNMRZtZAGYo5T4xN6zphH4qgHzGLWDGbrt35B4=
+	t=1733504589; cv=none; b=QBdb/Ye1wzAjzl9+iH+HtH7q8gsf1aj8muFZpo+UY8wXj1V958YgZiTtnkA7VzbNaIB/rTCY98X2zk1EFJmdBraatpK5lgc+waJsEJjc19hs8z/rmmHmi6Sn+NW09M89yOmB6R7QvGXFV+wlPjAV878dh26M3u+ZbSc2uohnzlI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733503096; c=relaxed/simple;
-	bh=FGnfniOj0Y6FgSXqJOpFrfLoZU988Gf5jVo3rNrTFME=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=gLRGHDRTU9FN2t+Mtqg1bgM/FFwIQLTWDLL7T4EOqRwhDuFkStE2xVptJcMSdS4F0ndjU7lY8xhThV+gTszegAZ7iAw5Ugm9T590bN1ANy+rSvajiyafugzk8UsMNGpFwJktmp/7KdNIhsc6FNyp6M1QRSI3TaneyYEOw0tVi2c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sandeen.net; spf=pass smtp.mailfrom=sandeen.net; dkim=pass (2048-bit key) header.d=sandeen.net header.i=@sandeen.net header.b=hG3rXntJ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=f7lF8o7Y; arc=none smtp.client-ip=202.12.124.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sandeen.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sandeen.net
+	s=arc-20240116; t=1733504589; c=relaxed/simple;
+	bh=RfsHPNYgh1DFwK0+tMUlaWkD46sOB2zw42A9uqDfe3o=;
+	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=VLKyr33Lua9bJ3VxrJK5fecNCzo39jJMH3w6sgzwCQ8r+6ZwMBo55LnYePQhrmOjPzkEkTa1t4YksxJAADLUl+3upUPAT3GiZbP/Ih+b02m9kgkLPVWZGHnhE+664fy5A3sIy4NxymC5cG5qvZJ1DJcZgFwZUY5FiQGwWPrtCyg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=gMKEJWD4; arc=none smtp.client-ip=198.175.65.15
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=sandeen.net header.i=@sandeen.net header.b="hG3rXntJ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="f7lF8o7Y"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfout.stl.internal (Postfix) with ESMTP id 8BA241140170;
-	Fri,  6 Dec 2024 11:38:13 -0500 (EST)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-12.internal (MEProxy); Fri, 06 Dec 2024 11:38:13 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sandeen.net; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1733503093;
-	 x=1733589493; bh=L8wQMVN3CA3vlvWokkwFyOCJdtQgbTsN9Yv6oOD1qYM=; b=
-	hG3rXntJBtqBKgg4TozOVwX4UpjLKyB0Ca8AouOX4bt92JGdtvT3YzIy3IBMBF1n
-	2g81pdUWxTiISDTD5K7Lw+Xh/THRvv7SHJ5mZMAOHJq5iyF+sYt1O9ctITYYCgnL
-	5idi9GscfbI9TUUL7fdXL9EDgpgzRZcZmWqFiiwiarP4w63wTzhR1yCtkME5ie/Y
-	jwlX+9bakoqW6G6bTatiegNJcD6jTjkeGUjWsTdV5ZhfDaTpNvC6VLE5TDfG2jxK
-	gp9ovGtAHuJDsOxKBVRY7Z5VgCiqA86B7L3eblIlBGv1mLaawV5lf2EbjPpQGYQF
-	1zx+ikK7RHvsaAeTUJ1F6A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1733503093; x=
-	1733589493; bh=L8wQMVN3CA3vlvWokkwFyOCJdtQgbTsN9Yv6oOD1qYM=; b=f
-	7lF8o7YgyRYwTz0ik1pkkH1xZ3kNQBw2Jhi3HuZE6OUj5/mj1YCpjUh+PyUU5b22
-	RPZr4gxVx3dqTGgvGBIzn0zJ/WZyrUvRuzOZzLfpb15wxEYObRAh7FBwtWEeJASA
-	Cpfzg5J9dmZuJcXdVVIy4i8EiyFsKS6jGHSziKVcKbnqGOKtfhU/sKPlxP9SkNkZ
-	FJy/SMCMf1vNlnR7ffsbSNXKmXHEOpQClggA7BAAlB91xqFPz+EQ2siSs4X64qHD
-	2Znx/asFSbiX2yyDNZeyvyLNRZ2GFgVsT074azxoI+vjZfYqQGbJR7qZCF3zxGhu
-	9zMXXbDmQqFaREKmqtpXg==
-X-ME-Sender: <xms:dChTZxkHZ4ihIXc5SH4x4Y8hErc8McgY9o5QMWEEaNFg_xBkoqn7bQ>
-    <xme:dChTZ82XQCUveY0CoFsgHNeGEuZhGUKfq6GKGjPzPWZsU9b9AhJNQ4P2VRim21K1v
-    XnO_5PrIsxkKKf708A>
-X-ME-Received: <xmr:dChTZ3ooP5ONhbl1-CPrfXjvUriKmo7IrccQ_sgwV0i4R_kkjp9vACq5jF_QUHTux_zWl3yIb-HZACo8zR1E00ZW5fw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrieelgdeltdcutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
-    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhepkfffgggfuf
-    fvvehfhfgjtgfgsehtjeertddtvdejnecuhfhrohhmpefgrhhitgcuufgrnhguvggvnhcu
-    oehsrghnuggvvghnsehsrghnuggvvghnrdhnvghtqeenucggtffrrghtthgvrhhnpeevie
-    ekueetfeeujedtheeffedvgeffiedvjeejleffhfeggeejuedtjeeulefhvdenucevlhhu
-    shhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehsrghnuggvvghnse
-    hsrghnuggvvghnrdhnvghtpdhnsggprhgtphhtthhopeeipdhmohguvgepshhmthhpohhu
-    thdprhgtphhtthhopehmtghgrhhofheskhgvrhhnvghlrdhorhhgpdhrtghpthhtohepsh
-    grnhguvggvnhesrhgvughhrghtrdgtohhmpdhrtghpthhtohepphgrthgthhgvsheslhhi
-    shhtshdrlhhinhhugidruggvvhdprhgtphhtthhopehfshhtvghsthhssehvghgvrhdrkh
-    gvrhhnvghlrdhorhhgpdhrtghpthhtoheplhhinhhugidqfhhsuggvvhgvlhesvhhgvghr
-    rdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgohhsthdruggvvhesshgrmhhsuhhngh
-    drtghomh
-X-ME-Proxy: <xmx:dChTZxlEndGndargkCiuTg7DTO6T2C4ZytgVwKwetfW_v8Utjo6b-A>
-    <xmx:dChTZ_04dDziGaCloDBl_23OqyAfGsRfDdKW4gZhirHScTx7iKfRig>
-    <xmx:dChTZwsu0pjhKauVJvOu84_UOHOF5ulPvQH6rix0kYr0ZwW9WGL7xw>
-    <xmx:dChTZzUOnVXmI5-VwaBlYdj5I584KmICgIrA5nCMioktssP_BJi5QA>
-    <xmx:dShTZ5pk-LLEhfDHvA65njFCtlSyAbOsE2_Q8bzYI5BrFtEHo-aSSHi8>
-Feedback-ID: i2b59495a:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 6 Dec 2024 11:38:12 -0500 (EST)
-Message-ID: <14e3c1fd-4c16-4676-8f66-81558febc4dd@sandeen.net>
-Date: Fri, 6 Dec 2024 10:38:11 -0600
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="gMKEJWD4"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1733504586; x=1765040586;
+  h=date:message-id:from:to:cc:subject:in-reply-to:
+   references:mime-version;
+  bh=RfsHPNYgh1DFwK0+tMUlaWkD46sOB2zw42A9uqDfe3o=;
+  b=gMKEJWD4fM/mwkd58bVQs27wHnrrFuphpLqLC78U0tleflpakFNXrvg7
+   0iaNtYeoULJJhEw6wxM6ycR+IzuxVEDosToYGuJ8yW6uf6HX3r9Ktl6zu
+   p79WVk25S9kvnkbDPeMbWdkCkRR3sXb2OM2AkBuUhHiwNmV/7O0VvjPak
+   ohnWhD6Qidyg4X2FvwmpopfPFH8/ZR2GS6MLgiiSs3yyzSdHSMsyBj8nl
+   mCLDZfciFEr1m4zJcX2ezKVYtj6hdz76RW0ZbQXDeFb/hOFTSt4jEzGbv
+   JYMmsQ/ES0CYK2/FBxyV9gPxdLfVUijVcmUpJT24dKOsrY2UXWxCL1gBG
+   g==;
+X-CSE-ConnectionGUID: wyMgy/7yQWO0xELcjLkrJw==
+X-CSE-MsgGUID: N5jcPAqAQeqfaTFFXs6Dpg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11278"; a="37543469"
+X-IronPort-AV: E=Sophos;i="6.12,213,1728975600"; 
+   d="scan'208";a="37543469"
+Received: from orviesa006.jf.intel.com ([10.64.159.146])
+  by orvoesa107.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Dec 2024 09:03:06 -0800
+X-CSE-ConnectionGUID: ppxmaOVER5ywcPBernrA3Q==
+X-CSE-MsgGUID: J3fm91SYTP+ak9GOlzVBBA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.12,213,1728975600"; 
+   d="scan'208";a="94553845"
+Received: from orsosgc001.jf.intel.com (HELO orsosgc001.intel.com) ([10.165.21.142])
+  by orviesa006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Dec 2024 09:03:06 -0800
+Date: Fri, 06 Dec 2024 09:03:06 -0800
+Message-ID: <85jzcc3fsl.wl-ashutosh.dixit@intel.com>
+From: "Dixit, Ashutosh" <ashutosh.dixit@intel.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org,
+	patches@lists.linux.dev,
+	Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>,
+	John Harrison <john.c.harrison@intel.com>,
+	Jonathan Cavitt <jonathan.cavitt@intel.com>
+Subject: Re: [PATCH 6.12 129/146] drm/xe/xe_guc_ads: save/restore OA registers and allowlist regs
+In-Reply-To: <20241206143532.618496043@linuxfoundation.org>
+References: <20241206143527.654980698@linuxfoundation.org>
+	<20241206143532.618496043@linuxfoundation.org>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?ISO-8859-4?Q?Goj=F2?=) APEL-LB/10.8 EasyPG/1.0.0
+ Emacs/28.2 (x86_64-redhat-linux-gnu) MULE/6.0 (HANACHIRUSATO)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] common/config: use modprobe -w when supported
-To: Luis Chamberlain <mcgrof@kernel.org>, Eric Sandeen <sandeen@redhat.com>
-Cc: patches@lists.linux.dev, fstests@vger.kernel.org,
- linux-fsdevel@vger.kernel.org, gost.dev@samsung.com
-References: <20241205002624.3420504-1-mcgrof@kernel.org>
- <0272e083-8915-407a-9d7f-0c1a253c32d7@redhat.com>
- <Z1IuphUjdnnRUWCg@bombadil.infradead.org>
-Content-Language: en-US
-From: Eric Sandeen <sandeen@sandeen.net>
-In-Reply-To: <Z1IuphUjdnnRUWCg@bombadil.infradead.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=US-ASCII
 
-On 12/5/24 4:52 PM, Luis Chamberlain wrote:
-> On Wed, Dec 04, 2024 at 10:35:45PM -0600, Eric Sandeen wrote:
->> but that probably has more to do with the test not realizing
->> /before it starts/ that the module cannot be removed and it
->> should not even try.
-> 
-> Right.
-> 
->> Darrick fixed that with:
->>
->> [PATCH 2/2] xfs/43[4-6]: implement impatient module reloading
-> 
-> Looks good to me.
-> 
->> but it's starting to feel like a bit of a complex house of cards
->> by now. We might need a more robust framework for determining whether
->> a module is removable /at all/ before we decide to wait patiently
->> for a thing that cannot ever happen?
-> 
-> I think the above is a good example of knowing userspace and knowing
-> that userspace may be doing something else and we're ok to fail.
-> Essentially, module removal is non-deterministic due to how finicky
-> and easy it is to bump the refcnt for arbitrary reasons which are
-> subsystem specific. The URLs in the commit log I added provide good
-> examples of this. It is up to each subsystem to ensure a proper
-> quiesce makes sense to ensure userspace won't do something stupid
-> later.
-> 
-> If one can control the test environment to quiesce first, then it
-> makes sense to patiently remove the module. Otherwise the optional
-> impatient removal makes sense.
+On Fri, 06 Dec 2024 06:37:40 -0800, Greg Kroah-Hartman wrote:
+>
 
-Not to belabor the point too much, but my gut feeling is there are
-cases where "quiescing" is not the issue at all - if the module is
-in use on the system somewhere outside of xfstests, no amount of
-quiescing or waiting will make it removable. Essentially, xfstests
-needs to figure out if it is the sole owner/user of a module before
-it tries to do any sort of waiting for removal, IMHO.
+Hi Greg,
 
-I haven't had the time to think through it much, just my spidey-
-sense tingling when looking at the xfs/43[4-6] problem and feeling
-like there's probably a better/cleaner/more explicit solution for
-some of this.
+> 6.12-stable review patch.  If anyone has any objections, please let me
+> know.
 
-Thanks,
--Eric
+No this patch should *NOT* be added. It was later reverted in:
 
->   Luis
-> 
+0191fddf5374 ("Revert "drm/xe/xe_guc_ads: save/restore OA registers and allowlist regs"")
 
+Thanks.
+--
+Ashutosh
+
+
+
+
+>
+> ------------------
+>
+> From: Jonathan Cavitt <jonathan.cavitt@intel.com>
+>
+> commit 55858fa7eb2f163f7aa34339fd3399ba4ff564c6 upstream.
+>
+> Several OA registers and allowlist registers were missing from the
+> save/restore list for GuC and could be lost during an engine reset.  Add
+> them to the list.
+>
+> v2:
+> - Fix commit message (Umesh)
+> - Add missing closes (Ashutosh)
+>
+> v3:
+> - Add missing fixes (Ashutosh)
+>
+> Closes: https://gitlab.freedesktop.org/drm/xe/kernel/-/issues/2249
+> Fixes: dd08ebf6c352 ("drm/xe: Introduce a new DRM driver for Intel GPUs")
+> Suggested-by: Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>
+> Suggested-by: John Harrison <john.c.harrison@intel.com>
+> Signed-off-by: Jonathan Cavitt <jonathan.cavitt@intel.com>
+> CC: stable@vger.kernel.org # v6.11+
+> Reviewed-by: Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>
+> Reviewed-by: Ashutosh Dixit <ashutosh.dixit@intel.com>
+> Signed-off-by: Ashutosh Dixit <ashutosh.dixit@intel.com>
+> Link: https://patchwork.freedesktop.org/patch/msgid/20241023200716.82624-1-jonathan.cavitt@intel.com
+> Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> ---
+>  drivers/gpu/drm/xe/xe_guc_ads.c |   14 ++++++++++++++
+>  1 file changed, 14 insertions(+)
+>
+> --- a/drivers/gpu/drm/xe/xe_guc_ads.c
+> +++ b/drivers/gpu/drm/xe/xe_guc_ads.c
+> @@ -13,6 +13,7 @@
+>  #include "regs/xe_engine_regs.h"
+>  #include "regs/xe_gt_regs.h"
+>  #include "regs/xe_guc_regs.h"
+> +#include "regs/xe_oa_regs.h"
+>  #include "xe_bo.h"
+>  #include "xe_gt.h"
+>  #include "xe_gt_ccs_mode.h"
+> @@ -601,6 +602,11 @@ static unsigned int guc_mmio_regset_writ
+>		guc_mmio_regset_write_one(ads, regset_map, e->reg, count++);
+>	}
+>
+> +	for (i = 0; i < RING_MAX_NONPRIV_SLOTS; i++)
+> +		guc_mmio_regset_write_one(ads, regset_map,
+> +					  RING_FORCE_TO_NONPRIV(hwe->mmio_base, i),
+> +					  count++);
+> +
+>	/* Wa_1607983814 */
+>	if (needs_wa_1607983814(xe) && hwe->class == XE_ENGINE_CLASS_RENDER) {
+>		for (i = 0; i < LNCFCMOCS_REG_COUNT; i++) {
+> @@ -609,6 +615,14 @@ static unsigned int guc_mmio_regset_writ
+>		}
+>	}
+>
+> +	guc_mmio_regset_write_one(ads, regset_map, EU_PERF_CNTL0, count++);
+> +	guc_mmio_regset_write_one(ads, regset_map, EU_PERF_CNTL1, count++);
+> +	guc_mmio_regset_write_one(ads, regset_map, EU_PERF_CNTL2, count++);
+> +	guc_mmio_regset_write_one(ads, regset_map, EU_PERF_CNTL3, count++);
+> +	guc_mmio_regset_write_one(ads, regset_map, EU_PERF_CNTL4, count++);
+> +	guc_mmio_regset_write_one(ads, regset_map, EU_PERF_CNTL5, count++);
+> +	guc_mmio_regset_write_one(ads, regset_map, EU_PERF_CNTL6, count++);
+> +
+>	return count;
+>  }
+>
+>
+>
