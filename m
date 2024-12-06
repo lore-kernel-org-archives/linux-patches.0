@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D6B4148832;
-	Fri,  6 Dec 2024 14:57:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA2101494A8;
+	Fri,  6 Dec 2024 14:57:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733497046; cv=none; b=psUFxmba9TTF6O+0nCMVcvNNzrgHSlxMMDDtjmS3DF1XONS6Hsq82VbmGq/8VeBVayO23rUB1QTzyQfTapYD0MJDANRgQdkV1kVoOv7ZiwWVw2YM5Jdc8ej91Uzdh8KAK7oBAvev7cmDsFN5IlIgD40Cg2mzH2w8FZRLfwXLEho=
+	t=1733497050; cv=none; b=aUcsoXcUpkVYWDnXgmhtRB/zNPEZlZjfW+5Bo9mPGBiWv8NLMyL9LQD7ZgtEEQlS+FuymTFZOI6AKEx2yYXitFCI4hs9NFNyZEYIaU3XzGoLWTmvXxbHHvc6R2NBZeOzhri4I4jHl3gg6a+9wCIvasKkhZCd10pbev+OSkhkMEg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733497046; c=relaxed/simple;
-	bh=xzYZw24BuXOpaoqXjCANAKlRCiIeyyTBvq23OJ91EQU=;
+	s=arc-20240116; t=1733497050; c=relaxed/simple;
+	bh=ZUkVIeiMnanU5OjtkKSeO8gbxoMaHCVg5znuxagsifY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=amhH8yxBstMfwXvlr9aJDGRhGjl0mI+kVmnkLK7CRAORj87N6vw7x/HpIFeSsI5XvCRlGCyyD5fArXowRjO8fZWexr5++bmu0R2MgznyBkLo6kqU7LDxIrNGFyoObrMhpqfYf6A9AxfDXDGd9Tp6dK0ER/meeecZV/OPWL1TnIo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rbxxQT2c; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mQpcPoMpb8VjU21Ju3HjINwTevU00kOctL3ZSabzEYEAFpfo1W0p0NvaDv/d7VeGUUrkSx3mlOJNmPv0I2MK5QqocYwRktouy6zYsLYN9O2Mvnf4MlXQ1nYZEWpSmhCDnRHqxiUXNzSAjzjhg5GpukkdsvLKmgC5KmI7tTY3LJ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x5p9mvrx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rbxxQT2c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5E84C4CED1;
-	Fri,  6 Dec 2024 14:57:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x5p9mvrx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70FEFC4CED1;
+	Fri,  6 Dec 2024 14:57:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733497046;
-	bh=xzYZw24BuXOpaoqXjCANAKlRCiIeyyTBvq23OJ91EQU=;
+	s=korg; t=1733497049;
+	bh=ZUkVIeiMnanU5OjtkKSeO8gbxoMaHCVg5znuxagsifY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rbxxQT2cF6oHJTIXUiaPvsXMoxk6w+eSaQ4Hsq8oupMXkKNWhWaogk3GJ9H0QYeb1
-	 t4yNYRJafkXRvU4z6PrtgnJqDyl0fmKYqdTnCSOZ2olTRltQ7vPmCxMxQ1i4OvdrTU
-	 W1nFN6tJYTqwB7+MYOj3M8HvSuHM1GB6fZKg+AxI=
+	b=x5p9mvrxwqOoY+bkPnzY6aiFuN2tQDiBTwj51BZvr9cY68weXJwEZbwoO3UGKeEDv
+	 xG9VH4k+8tCg9oMbGPiR6+jgL3p1dombWmqoXA88fxeV2bPmzjsUNLEyNV2BK9uRDL
+	 B7M9oOjt44kCOVkY/VPxXXk5Hp1Zvm5adzduXbiY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
+	Jinjie Ruan <ruanjinjie@huawei.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 147/676] spi: tegra210-quad: Avoid shift-out-of-bounds
-Date: Fri,  6 Dec 2024 15:29:26 +0100
-Message-ID: <20241206143659.093845157@linuxfoundation.org>
+Subject: [PATCH 6.6 148/676] =?UTF-8?q?spi:=20zynqmp-gqspi:=20Undo=20runtime=20PM=20changes=20?= =?UTF-8?q?at=20driver=20exit=20time=E2=80=8B?=
+Date: Fri,  6 Dec 2024 15:29:27 +0100
+Message-ID: <20241206143659.133526194@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -51,47 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Jinjie Ruan <ruanjinjie@huawei.com>
 
-[ Upstream commit f399051ec1ff02e74ae5c2517aed2cc486fd005b ]
+[ Upstream commit 2219576883e709737f3100aa9ded84976be49bd7 ]
 
-A shift-out-of-bounds issue was identified by UBSAN in the
-tegra_qspi_fill_tx_fifo_from_client_txbuf() function.
+It's important to undo pm_runtime_use_autosuspend() with
+pm_runtime_dont_use_autosuspend() at driver exit time.
 
-	 UBSAN: shift-out-of-bounds in drivers/spi/spi-tegra210-quad.c:345:27
-	 shift exponent 32 is too large for 32-bit type 'u32' (aka 'unsigned int')
-	 Call trace:
-	  tegra_qspi_start_cpu_based_transfer
+So, call pm_runtime_dont_use_autosuspend() at driver exit time
+to fix it.
 
-The problem arises when shifting the contents of tx_buf left by 8 times
-the value of i, which can exceed 4 and result in an exponent larger than
-32 bits.
-
-Resolve this by restrict the value of i to be less than 4, preventing
-the shift operation from overflowing.
-
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Fixes: 921fc1838fb0 ("spi: tegra210-quad: Add support for Tegra210 QSPI controller")
-Link: https://patch.msgid.link/20241004125400.1791089-1-leitao@debian.org
+Fixes: 9e3a000362ae ("spi: zynqmp: Add pm runtime support")
+Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+Link: https://patch.msgid.link/20240920091135.2741574-1-ruanjinjie@huawei.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-tegra210-quad.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/spi/spi-zynqmp-gqspi.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/spi/spi-tegra210-quad.c b/drivers/spi/spi-tegra210-quad.c
-index e9ad9b0b598b5..d1afa4140e8a2 100644
---- a/drivers/spi/spi-tegra210-quad.c
-+++ b/drivers/spi/spi-tegra210-quad.c
-@@ -341,7 +341,7 @@ tegra_qspi_fill_tx_fifo_from_client_txbuf(struct tegra_qspi *tqspi, struct spi_t
- 		for (count = 0; count < max_n_32bit; count++) {
- 			u32 x = 0;
+diff --git a/drivers/spi/spi-zynqmp-gqspi.c b/drivers/spi/spi-zynqmp-gqspi.c
+index 9a46b2478f4e9..3503e6c0a5c98 100644
+--- a/drivers/spi/spi-zynqmp-gqspi.c
++++ b/drivers/spi/spi-zynqmp-gqspi.c
+@@ -1341,6 +1341,7 @@ static int zynqmp_qspi_probe(struct platform_device *pdev)
  
--			for (i = 0; len && (i < bytes_per_word); i++, len--)
-+			for (i = 0; len && (i < min(4, bytes_per_word)); i++, len--)
- 				x |= (u32)(*tx_buf++) << (i * 8);
- 			tegra_qspi_writel(tqspi, x, QSPI_TX_FIFO);
- 		}
+ clk_dis_all:
+ 	pm_runtime_disable(&pdev->dev);
++	pm_runtime_dont_use_autosuspend(&pdev->dev);
+ 	pm_runtime_put_noidle(&pdev->dev);
+ 	pm_runtime_set_suspended(&pdev->dev);
+ 	clk_disable_unprepare(xqspi->refclk);
+@@ -1371,6 +1372,7 @@ static void zynqmp_qspi_remove(struct platform_device *pdev)
+ 	zynqmp_gqspi_write(xqspi, GQSPI_EN_OFST, 0x0);
+ 
+ 	pm_runtime_disable(&pdev->dev);
++	pm_runtime_dont_use_autosuspend(&pdev->dev);
+ 	pm_runtime_put_noidle(&pdev->dev);
+ 	pm_runtime_set_suspended(&pdev->dev);
+ 	clk_disable_unprepare(xqspi->refclk);
 -- 
 2.43.0
 
