@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80D091474AF;
-	Fri,  6 Dec 2024 15:04:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E9F91537D4;
+	Fri,  6 Dec 2024 15:04:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733497496; cv=none; b=Wl+iciyHVzt6caJplB2JDDCtAfGjgIoPaFxqk4gRz5GY04OMOvCOkPevQRY0s8bARDG063Ei9j+sgtH/ofsgN4ZtnREZPbbKonNOKk7iMyA45t19yz55zoCCd5z6wgq2rKRMWvfP80y4U9IdUpF84zPTrN5QG5TdK5iMC8kU4sU=
+	t=1733497499; cv=none; b=t14oVZikE4duvrJY1qAAjak9w8+iCbYrzxxKDD720T2GN9zfrgHAvS4w+nVvMNHXAYufXqk3aYyyai4RhmCHqhbOgZJ1rqdGbmvNWbLxQvt9W0MWzg3tFovJnQ/Re8n2WuUoEfK/uNtXf3w3+2dosCxUpYGUYbuhw280gVY+7NY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733497496; c=relaxed/simple;
-	bh=CRDYoJwHHra7UhdgCVZtTJ+jJdEZi73GihkqY+IJc8A=;
+	s=arc-20240116; t=1733497499; c=relaxed/simple;
+	bh=mM8Y4OLRTHv7/YMMvsvFC2E5Ct8JYSNgw3jbAFKyh8w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M1A0EtMIg1GSnla0E/ppuqaQRhWanurgwIDF7BREiNhly16ix9LZCZFwf1V04nyh31zOQ//F7JTlCkojzPDCkkzm91JBcWpPALtVEKEgeiW3NF2BCJzhoh4/Zjidh9/fg2I/OMK0jj12iRboqsC2CF5hLDdnCrdhbl3FbURvBFY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v0JrHlN6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SgTKhHAVQ2L+2rsvKHW4Jqi2L2UQM8SIJtc27lEmn1xLs7sODbv6XNhSjZj+tp8FSdWHcBRgimlPR+lukXVLzbBHdh584G7sluSxH+KBnTDDX1PUCjV7Vd5cY8ToagrP0y3WnD6tFqsOd1/VimCSAVGtq+hoeGd+HolnnX81Cqc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NisAyN2Q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v0JrHlN6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10A6AC4CEDC;
-	Fri,  6 Dec 2024 15:04:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NisAyN2Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03E4AC4CED1;
+	Fri,  6 Dec 2024 15:04:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733497496;
-	bh=CRDYoJwHHra7UhdgCVZtTJ+jJdEZi73GihkqY+IJc8A=;
+	s=korg; t=1733497499;
+	bh=mM8Y4OLRTHv7/YMMvsvFC2E5Ct8JYSNgw3jbAFKyh8w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v0JrHlN6+VppJENRalpKceBV0W0YBICXrV/njUGF6Q1zbVcDSK80Pns/Vg822Xt6K
-	 lJ4JjGx36nAjFpQ0q/zfGu783BV24gwyIEawx9NKbS1Awf9NgTeUxbKY/CIRePI1cM
-	 YFvLojbcSOZkTk6g0K3TEtOs7xIrzkJSn8i4tix4=
+	b=NisAyN2QDBloY62Rpn222dih6eDwP14ONZMv2AuAVYnwd3y6K/iRCTTYaGfoYDH/P
+	 GCVJBNzoThCRkN7SQWyU2qFzhsnoQnUvLX6L6THVAV856LG9ZK8kZ8Eqlo+Atm7x3n
+	 OyDUPpWQ63RK4f1Oj1jRVmT8H6sFm58h/bdfyhdM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kai Huang <kai.huang@intel.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
-	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	wenglianfa <wenglianfa@huawei.com>,
+	Junxian Huang <huangjunxian6@hisilicon.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 307/676] x86/tdx: Make macros of TDCALLs consistent with the spec
-Date: Fri,  6 Dec 2024 15:32:06 +0100
-Message-ID: <20241206143705.331505605@linuxfoundation.org>
+Subject: [PATCH 6.6 281/676] RDMA/hns: Fix an AEQE overflow error caused by untimely update of eq_db_ci
+Date: Fri,  6 Dec 2024 15:31:40 +0100
+Message-ID: <20241206143704.318378290@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -54,119 +52,289 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kai Huang <kai.huang@intel.com>
+From: wenglianfa <wenglianfa@huawei.com>
 
-[ Upstream commit f0024dbfc48d8814d915eb5bd5253496b9b8a6df ]
+[ Upstream commit 571e4ab8a45e530623ab129803f090a844dd3fe9 ]
 
-The TDX spec names all TDCALLs with prefix "TDG".  Currently, the kernel
-doesn't follow such convention for the macros of those TDCALLs but uses
-prefix "TDX_" for all of them.  Although it's arguable whether the TDX
-spec names those TDCALLs properly, it's better for the kernel to follow
-the spec when naming those macros.
+eq_db_ci is updated only after all AEQEs are processed in the AEQ
+interrupt handler, which is not timely enough and may result in
+AEQ overflow. Two optimization methods are proposed:
+1. Set an upper limit for AEQE processing.
+2. Move time-consuming operations such as printings to the bottom
+half of the interrupt.
 
-Change all macros of TDCALLs to make them consistent with the spec.  As
-a bonus, they get distinguished easily from the host-side SEAMCALLs,
-which all have prefix "TDH".
+cmd events and flush_cqe events are still fully processed in the top half
+to ensure timely handling.
 
-No functional change intended.
-
-Signed-off-by: Kai Huang <kai.huang@intel.com>
-Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
-Reviewed-by: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
-Reviewed-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
-Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lore.kernel.org/all/516dccd0bd8fb9a0b6af30d25bb2d971aa03d598.1692096753.git.kai.huang%40intel.com
-Stable-dep-of: f65aa0ad79fc ("x86/tdx: Dynamically disable SEPT violations from causing #VEs")
+Fixes: a5073d6054f7 ("RDMA/hns: Add eq support of hip08")
+Signed-off-by: wenglianfa <wenglianfa@huawei.com>
+Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
+Link: https://patch.msgid.link/20241024124000.2931869-2-huangjunxian6@hisilicon.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/coco/tdx/tdx-shared.c    |  4 ++--
- arch/x86/coco/tdx/tdx.c           |  8 ++++----
- arch/x86/include/asm/shared/tdx.h | 10 +++++-----
- 3 files changed, 11 insertions(+), 11 deletions(-)
+ drivers/infiniband/hw/hns/hns_roce_device.h |  1 +
+ drivers/infiniband/hw/hns/hns_roce_hw_v2.c  | 75 ++++++++++++++-------
+ drivers/infiniband/hw/hns/hns_roce_hw_v2.h  |  5 ++
+ drivers/infiniband/hw/hns/hns_roce_qp.c     | 54 +++++++++------
+ 4 files changed, 91 insertions(+), 44 deletions(-)
 
-diff --git a/arch/x86/coco/tdx/tdx-shared.c b/arch/x86/coco/tdx/tdx-shared.c
-index ef20ddc37b58a..f10cd3e4a04ed 100644
---- a/arch/x86/coco/tdx/tdx-shared.c
-+++ b/arch/x86/coco/tdx/tdx-shared.c
-@@ -35,7 +35,7 @@ static unsigned long try_accept_one(phys_addr_t start, unsigned long len,
+diff --git a/drivers/infiniband/hw/hns/hns_roce_device.h b/drivers/infiniband/hw/hns/hns_roce_device.h
+index cd593d651e4ca..21ef00fdb6563 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_device.h
++++ b/drivers/infiniband/hw/hns/hns_roce_device.h
+@@ -1236,6 +1236,7 @@ void hns_roce_cq_completion(struct hns_roce_dev *hr_dev, u32 cqn);
+ void hns_roce_cq_event(struct hns_roce_dev *hr_dev, u32 cqn, int event_type);
+ void flush_cqe(struct hns_roce_dev *dev, struct hns_roce_qp *qp);
+ void hns_roce_qp_event(struct hns_roce_dev *hr_dev, u32 qpn, int event_type);
++void hns_roce_flush_cqe(struct hns_roce_dev *hr_dev, u32 qpn);
+ void hns_roce_srq_event(struct hns_roce_dev *hr_dev, u32 srqn, int event_type);
+ void hns_roce_handle_device_err(struct hns_roce_dev *hr_dev);
+ int hns_roce_init(struct hns_roce_dev *hr_dev);
+diff --git a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
+index 8066750afab90..3c3be860e8180 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
++++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
+@@ -5820,11 +5820,10 @@ static int hns_roce_v2_query_mpt(struct hns_roce_dev *hr_dev, u32 key,
+ 	return ret;
+ }
+ 
+-static void hns_roce_irq_work_handle(struct work_struct *work)
++static void dump_aeqe_log(struct hns_roce_work *irq_work)
+ {
+-	struct hns_roce_work *irq_work =
+-				container_of(work, struct hns_roce_work, work);
+-	struct ib_device *ibdev = &irq_work->hr_dev->ib_dev;
++	struct hns_roce_dev *hr_dev = irq_work->hr_dev;
++	struct ib_device *ibdev = &hr_dev->ib_dev;
+ 
+ 	switch (irq_work->event_type) {
+ 	case HNS_ROCE_EVENT_TYPE_PATH_MIG:
+@@ -5868,6 +5867,8 @@ static void hns_roce_irq_work_handle(struct work_struct *work)
+ 	case HNS_ROCE_EVENT_TYPE_DB_OVERFLOW:
+ 		ibdev_warn(ibdev, "DB overflow.\n");
+ 		break;
++	case HNS_ROCE_EVENT_TYPE_MB:
++		break;
+ 	case HNS_ROCE_EVENT_TYPE_FLR:
+ 		ibdev_warn(ibdev, "function level reset.\n");
+ 		break;
+@@ -5878,8 +5879,46 @@ static void hns_roce_irq_work_handle(struct work_struct *work)
+ 		ibdev_err(ibdev, "invalid xrceth error.\n");
+ 		break;
+ 	default:
++		ibdev_info(ibdev, "Undefined event %d.\n",
++			   irq_work->event_type);
+ 		break;
+ 	}
++}
++
++static void hns_roce_irq_work_handle(struct work_struct *work)
++{
++	struct hns_roce_work *irq_work =
++				container_of(work, struct hns_roce_work, work);
++	struct hns_roce_dev *hr_dev = irq_work->hr_dev;
++	int event_type = irq_work->event_type;
++	u32 queue_num = irq_work->queue_num;
++
++	switch (event_type) {
++	case HNS_ROCE_EVENT_TYPE_PATH_MIG:
++	case HNS_ROCE_EVENT_TYPE_PATH_MIG_FAILED:
++	case HNS_ROCE_EVENT_TYPE_COMM_EST:
++	case HNS_ROCE_EVENT_TYPE_SQ_DRAINED:
++	case HNS_ROCE_EVENT_TYPE_WQ_CATAS_ERROR:
++	case HNS_ROCE_EVENT_TYPE_SRQ_LAST_WQE_REACH:
++	case HNS_ROCE_EVENT_TYPE_INV_REQ_LOCAL_WQ_ERROR:
++	case HNS_ROCE_EVENT_TYPE_LOCAL_WQ_ACCESS_ERROR:
++	case HNS_ROCE_EVENT_TYPE_XRCD_VIOLATION:
++	case HNS_ROCE_EVENT_TYPE_INVALID_XRCETH:
++		hns_roce_qp_event(hr_dev, queue_num, event_type);
++		break;
++	case HNS_ROCE_EVENT_TYPE_SRQ_LIMIT_REACH:
++	case HNS_ROCE_EVENT_TYPE_SRQ_CATAS_ERROR:
++		hns_roce_srq_event(hr_dev, queue_num, event_type);
++		break;
++	case HNS_ROCE_EVENT_TYPE_CQ_ACCESS_ERROR:
++	case HNS_ROCE_EVENT_TYPE_CQ_OVERFLOW:
++		hns_roce_cq_event(hr_dev, queue_num, event_type);
++		break;
++	default:
++		break;
++	}
++
++	dump_aeqe_log(irq_work);
+ 
+ 	kfree(irq_work);
+ }
+@@ -5940,14 +5979,14 @@ static struct hns_roce_aeqe *next_aeqe_sw_v2(struct hns_roce_eq *eq)
+ static irqreturn_t hns_roce_v2_aeq_int(struct hns_roce_dev *hr_dev,
+ 				       struct hns_roce_eq *eq)
+ {
+-	struct device *dev = hr_dev->dev;
+ 	struct hns_roce_aeqe *aeqe = next_aeqe_sw_v2(eq);
+ 	irqreturn_t aeqe_found = IRQ_NONE;
++	int num_aeqes = 0;
+ 	int event_type;
+ 	u32 queue_num;
+ 	int sub_type;
+ 
+-	while (aeqe) {
++	while (aeqe && num_aeqes < HNS_AEQ_POLLING_BUDGET) {
+ 		/* Make sure we read AEQ entry after we have checked the
+ 		 * ownership bit
+ 		 */
+@@ -5958,25 +5997,12 @@ static irqreturn_t hns_roce_v2_aeq_int(struct hns_roce_dev *hr_dev,
+ 		queue_num = hr_reg_read(aeqe, AEQE_EVENT_QUEUE_NUM);
+ 
+ 		switch (event_type) {
+-		case HNS_ROCE_EVENT_TYPE_PATH_MIG:
+-		case HNS_ROCE_EVENT_TYPE_PATH_MIG_FAILED:
+-		case HNS_ROCE_EVENT_TYPE_COMM_EST:
+-		case HNS_ROCE_EVENT_TYPE_SQ_DRAINED:
+ 		case HNS_ROCE_EVENT_TYPE_WQ_CATAS_ERROR:
+-		case HNS_ROCE_EVENT_TYPE_SRQ_LAST_WQE_REACH:
+ 		case HNS_ROCE_EVENT_TYPE_INV_REQ_LOCAL_WQ_ERROR:
+ 		case HNS_ROCE_EVENT_TYPE_LOCAL_WQ_ACCESS_ERROR:
+ 		case HNS_ROCE_EVENT_TYPE_XRCD_VIOLATION:
+ 		case HNS_ROCE_EVENT_TYPE_INVALID_XRCETH:
+-			hns_roce_qp_event(hr_dev, queue_num, event_type);
+-			break;
+-		case HNS_ROCE_EVENT_TYPE_SRQ_LIMIT_REACH:
+-		case HNS_ROCE_EVENT_TYPE_SRQ_CATAS_ERROR:
+-			hns_roce_srq_event(hr_dev, queue_num, event_type);
+-			break;
+-		case HNS_ROCE_EVENT_TYPE_CQ_ACCESS_ERROR:
+-		case HNS_ROCE_EVENT_TYPE_CQ_OVERFLOW:
+-			hns_roce_cq_event(hr_dev, queue_num, event_type);
++			hns_roce_flush_cqe(hr_dev, queue_num);
+ 			break;
+ 		case HNS_ROCE_EVENT_TYPE_MB:
+ 			hns_roce_cmd_event(hr_dev,
+@@ -5984,12 +6010,7 @@ static irqreturn_t hns_roce_v2_aeq_int(struct hns_roce_dev *hr_dev,
+ 					aeqe->event.cmd.status,
+ 					le64_to_cpu(aeqe->event.cmd.out_param));
+ 			break;
+-		case HNS_ROCE_EVENT_TYPE_DB_OVERFLOW:
+-		case HNS_ROCE_EVENT_TYPE_FLR:
+-			break;
+ 		default:
+-			dev_err(dev, "unhandled event %d on EQ %d at idx %u.\n",
+-				event_type, eq->eqn, eq->cons_index);
+ 			break;
+ 		}
+ 
+@@ -6001,6 +6022,7 @@ static irqreturn_t hns_roce_v2_aeq_int(struct hns_roce_dev *hr_dev,
+ 		hns_roce_v2_init_irq_work(hr_dev, eq, queue_num);
+ 
+ 		aeqe = next_aeqe_sw_v2(eq);
++		++num_aeqes;
  	}
  
- 	tdcall_rcx = start | page_size;
--	if (__tdx_module_call(TDX_ACCEPT_PAGE, tdcall_rcx, 0, 0, 0, NULL))
-+	if (__tdx_module_call(TDG_MEM_PAGE_ACCEPT, tdcall_rcx, 0, 0, 0, NULL))
- 		return 0;
+ 	update_eq_db(eq);
+@@ -6530,6 +6552,9 @@ static int hns_roce_v2_init_eq_table(struct hns_roce_dev *hr_dev)
+ 	int ret;
+ 	int i;
  
- 	return accept_size;
-@@ -45,7 +45,7 @@ bool tdx_accept_memory(phys_addr_t start, phys_addr_t end)
++	if (hr_dev->caps.aeqe_depth < HNS_AEQ_POLLING_BUDGET)
++		return -EINVAL;
++
+ 	other_num = hr_dev->caps.num_other_vectors;
+ 	comp_num = hr_dev->caps.num_comp_vectors;
+ 	aeq_num = hr_dev->caps.num_aeq_vectors;
+diff --git a/drivers/infiniband/hw/hns/hns_roce_hw_v2.h b/drivers/infiniband/hw/hns/hns_roce_hw_v2.h
+index cd97cbee682a6..a401b607592b9 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.h
++++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.h
+@@ -85,6 +85,11 @@
+ 
+ #define HNS_ROCE_V2_TABLE_CHUNK_SIZE		(1 << 18)
+ 
++/* budget must be smaller than aeqe_depth to guarantee that we update
++ * the ci before we polled all the entries in the EQ.
++ */
++#define HNS_AEQ_POLLING_BUDGET 64
++
+ enum {
+ 	HNS_ROCE_CMD_FLAG_IN = BIT(0),
+ 	HNS_ROCE_CMD_FLAG_OUT = BIT(1),
+diff --git a/drivers/infiniband/hw/hns/hns_roce_qp.c b/drivers/infiniband/hw/hns/hns_roce_qp.c
+index 04063cfacae5f..88a4777d29f8b 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_qp.c
++++ b/drivers/infiniband/hw/hns/hns_roce_qp.c
+@@ -39,6 +39,25 @@
+ #include "hns_roce_device.h"
+ #include "hns_roce_hem.h"
+ 
++static struct hns_roce_qp *hns_roce_qp_lookup(struct hns_roce_dev *hr_dev,
++					      u32 qpn)
++{
++	struct device *dev = hr_dev->dev;
++	struct hns_roce_qp *qp;
++	unsigned long flags;
++
++	xa_lock_irqsave(&hr_dev->qp_table_xa, flags);
++	qp = __hns_roce_qp_lookup(hr_dev, qpn);
++	if (qp)
++		refcount_inc(&qp->refcount);
++	xa_unlock_irqrestore(&hr_dev->qp_table_xa, flags);
++
++	if (!qp)
++		dev_warn(dev, "async event for bogus QP %08x\n", qpn);
++
++	return qp;
++}
++
+ static void flush_work_handle(struct work_struct *work)
  {
- 	/*
- 	 * For shared->private conversion, accept the page using
--	 * TDX_ACCEPT_PAGE TDX module call.
-+	 * TDG_MEM_PAGE_ACCEPT TDX module call.
- 	 */
- 	while (start < end) {
- 		unsigned long len = end - start;
-diff --git a/arch/x86/coco/tdx/tdx.c b/arch/x86/coco/tdx/tdx.c
-index 905ac8a3f7165..fd389b137fab8 100644
---- a/arch/x86/coco/tdx/tdx.c
-+++ b/arch/x86/coco/tdx/tdx.c
-@@ -93,7 +93,7 @@ int tdx_mcall_get_report0(u8 *reportdata, u8 *tdreport)
+ 	struct hns_roce_work *flush_work = container_of(work,
+@@ -95,31 +114,28 @@ void flush_cqe(struct hns_roce_dev *dev, struct hns_roce_qp *qp)
+ 
+ void hns_roce_qp_event(struct hns_roce_dev *hr_dev, u32 qpn, int event_type)
  {
- 	u64 ret;
+-	struct device *dev = hr_dev->dev;
+ 	struct hns_roce_qp *qp;
  
--	ret = __tdx_module_call(TDX_GET_REPORT, virt_to_phys(tdreport),
-+	ret = __tdx_module_call(TDG_MR_REPORT, virt_to_phys(tdreport),
- 				virt_to_phys(reportdata), TDREPORT_SUBTYPE_0,
- 				0, NULL);
- 	if (ret) {
-@@ -154,7 +154,7 @@ static void tdx_parse_tdinfo(u64 *cc_mask)
- 	 * Guest-Host-Communication Interface (GHCI), section 2.4.2 TDCALL
- 	 * [TDG.VP.INFO].
- 	 */
--	tdx_module_call(TDX_GET_INFO, 0, 0, 0, 0, &out);
-+	tdx_module_call(TDG_VP_INFO, 0, 0, 0, 0, &out);
+-	xa_lock(&hr_dev->qp_table_xa);
+-	qp = __hns_roce_qp_lookup(hr_dev, qpn);
+-	if (qp)
+-		refcount_inc(&qp->refcount);
+-	xa_unlock(&hr_dev->qp_table_xa);
+-
+-	if (!qp) {
+-		dev_warn(dev, "async event for bogus QP %08x\n", qpn);
++	qp = hns_roce_qp_lookup(hr_dev, qpn);
++	if (!qp)
+ 		return;
+-	}
  
- 	/*
- 	 * The highest bit of a guest physical address is the "sharing" bit.
-@@ -600,7 +600,7 @@ void tdx_get_ve_info(struct ve_info *ve)
- 	 * Note, the TDX module treats virtual NMIs as inhibited if the #VE
- 	 * valid flag is set. It means that NMI=>#VE will not result in a #DF.
- 	 */
--	tdx_module_call(TDX_GET_VEINFO, 0, 0, 0, 0, &out);
-+	tdx_module_call(TDG_VP_VEINFO_GET, 0, 0, 0, 0, &out);
+-	if (event_type == HNS_ROCE_EVENT_TYPE_WQ_CATAS_ERROR ||
+-	    event_type == HNS_ROCE_EVENT_TYPE_INV_REQ_LOCAL_WQ_ERROR ||
+-	    event_type == HNS_ROCE_EVENT_TYPE_LOCAL_WQ_ACCESS_ERROR ||
+-	    event_type == HNS_ROCE_EVENT_TYPE_XRCD_VIOLATION ||
+-	    event_type == HNS_ROCE_EVENT_TYPE_INVALID_XRCETH) {
+-		qp->state = IB_QPS_ERR;
++	qp->event(qp, (enum hns_roce_event)event_type);
  
- 	/* Transfer the output parameters */
- 	ve->exit_reason = out.rcx;
-@@ -780,7 +780,7 @@ void __init tdx_early_init(void)
- 	cc_set_mask(cc_mask);
+-		flush_cqe(hr_dev, qp);
+-	}
++	if (refcount_dec_and_test(&qp->refcount))
++		complete(&qp->free);
++}
  
- 	/* Kernel does not use NOTIFY_ENABLES and does not need random #VEs */
--	tdx_module_call(TDX_WR, 0, TDCS_NOTIFY_ENABLES, 0, -1ULL, NULL);
-+	tdx_module_call(TDG_VM_WR, 0, TDCS_NOTIFY_ENABLES, 0, -1ULL, NULL);
+-	qp->event(qp, (enum hns_roce_event)event_type);
++void hns_roce_flush_cqe(struct hns_roce_dev *hr_dev, u32 qpn)
++{
++	struct hns_roce_qp *qp;
++
++	qp = hns_roce_qp_lookup(hr_dev, qpn);
++	if (!qp)
++		return;
++
++	qp->state = IB_QPS_ERR;
++	flush_cqe(hr_dev, qp);
  
- 	/*
- 	 * All bits above GPA width are reserved and kernel treats shared bit
-diff --git a/arch/x86/include/asm/shared/tdx.h b/arch/x86/include/asm/shared/tdx.h
-index 7513b3bb69b7e..78f109446da6f 100644
---- a/arch/x86/include/asm/shared/tdx.h
-+++ b/arch/x86/include/asm/shared/tdx.h
-@@ -11,11 +11,11 @@
- #define TDX_IDENT		"IntelTDX    "
- 
- /* TDX module Call Leaf IDs */
--#define TDX_GET_INFO			1
--#define TDX_GET_VEINFO			3
--#define TDX_GET_REPORT			4
--#define TDX_ACCEPT_PAGE			6
--#define TDX_WR				8
-+#define TDG_VP_INFO			1
-+#define TDG_VP_VEINFO_GET		3
-+#define TDG_MR_REPORT			4
-+#define TDG_MEM_PAGE_ACCEPT		6
-+#define TDG_VM_WR			8
- 
- /* TDCS fields. To be used by TDG.VM.WR and TDG.VM.RD module calls */
- #define TDCS_NOTIFY_ENABLES		0x9100000000000010
+ 	if (refcount_dec_and_test(&qp->refcount))
+ 		complete(&qp->free);
 -- 
 2.43.0
 
