@@ -1,45 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEEDE53A7;
-	Fri,  6 Dec 2024 15:04:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45E0253A7;
+	Fri,  6 Dec 2024 15:04:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733497452; cv=none; b=hZxwS4Sn46OoMc9ATtzHTPyGw2M0WmmJOo8YU6y73LXRIJH9neG5+59Cd753ft2DSjJvF0DA8h6rhrnVcIzb9HFJPYNFgPJNeVS6GgeudGFC7pJv4tqsH89lDoLVZHJKLUFj/sXrtDQWbBZHm8nylArAd6BeEG/ZSc9aIf3phUU=
+	t=1733497456; cv=none; b=BGL7vXy4WbZ/IciD890f7RGRkizlFLSd4gHiydjm/0Gb1IES6Wg/okBQ3X1qoarKW1oFBPGsd74aQ+PUbq6mBIN785VWhWuJITALM4MfoxSd6Pk7cfUhx1nHI3B3WUJGWLowkvTondLZvEmG/mhLHVFFrxsPncDNuWqBb5uDuYY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733497452; c=relaxed/simple;
-	bh=Kr+iWPkFJjxnbqZmO59XvHgDmOk1Emxni5W6EzeiBHs=;
+	s=arc-20240116; t=1733497456; c=relaxed/simple;
+	bh=O+OmR7pue1mOBDNq9xpOM2f9VzlocpVCmQWoiYQjQMw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h5/R0LziHvVC4yQKWa7nrfa0wWzOSEuD8En6cQDlDLZhM1E2reqvfV72G9/ARifWwAzqskq4wSOLwG8rkfmnWWwUkXl4yyqzORwpAnBftnwROtG3YA6zAf3zhqsjBDRRoWiN157X7S0w1DpKQCwadEQqDIW8Oo0W2Qof3b0vcOU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2HJ8EUZn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uR2WjxoECZGxGrR2uc37GdBACrFxAkRo6cmpZgctnn0C9gysH0Lhrru9oP4joT3aivbcyhW0XSqTC2rJqIofcg93LwezCfrqM+NvQMI9ETAjxZPkbMh3jx6RlmI1X37Rkw/mJwOKYDj+5iwkmvjXuvCCJ/XCA3Qs7fN2kp2JYJY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TFPwkffm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2HJ8EUZn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 017C3C4CED1;
-	Fri,  6 Dec 2024 15:04:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TFPwkffm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A40AFC4CED1;
+	Fri,  6 Dec 2024 15:04:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733497452;
-	bh=Kr+iWPkFJjxnbqZmO59XvHgDmOk1Emxni5W6EzeiBHs=;
+	s=korg; t=1733497456;
+	bh=O+OmR7pue1mOBDNq9xpOM2f9VzlocpVCmQWoiYQjQMw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2HJ8EUZn7us7HySWIg9xmhyky0X0mqKGxgyGvXZFiUHQqzoTO3YVcg5qCboBjNOt7
-	 aIlq7lot72z5/KtW5oN7e5IdWaS5IKlBEHNYuGC4AL3poMi16eSdIX9njMR3azsVoT
-	 I4AQJbPJbHQNVQW7vjUnratxYfYRtLfKC+5ps+20=
+	b=TFPwkffm5p+lyOvPHczjZFodXSbhXOrJXv4ucVzvWVN6askGGWCVerlkJACelC+Qx
+	 O9fW8aN/ufJzo8hdIdkk/Z1z63m0ovmIhKoe8rZ/Myefgqnanup0MiRBSXRgD2A7aC
+	 TUBTj0vwgvRRqZWpSj1UUaezNTDra2W+Ir8E3/wA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Kees Cook <keescook@chromium.org>,
-	Andy Whitcroft <apw@canonical.com>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Dwaipayan Ray <dwaipayanray1@gmail.com>,
-	Joe Perches <joe@perches.com>,
-	Lukas Bulwahn <lukas.bulwahn@gmail.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Thorsten Leemhuis <linux@leemhuis.info>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6 297/676] checkpatch: check for missing Fixes tags
-Date: Fri,  6 Dec 2024 15:31:56 +0100
-Message-ID: <20241206143704.941321370@linuxfoundation.org>
+	Jinjie Ruan <ruanjinjie@huawei.com>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 280/676] cpufreq: CPPC: Fix possible null-ptr-deref for cppc_get_cpu_cost()
+Date: Fri,  6 Dec 2024 15:31:39 +0100
+Message-ID: <20241206143704.279475171@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -58,145 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Jinjie Ruan <ruanjinjie@huawei.com>
 
-[ Upstream commit d5d6281ae8e0c929c3ff188652f5b12c680fe8bf ]
+[ Upstream commit 1a1374bb8c5926674973d849feed500bc61ad535 ]
 
-This check looks for common words that probably indicate a patch
-is a fix.  For now the regex is:
+cpufreq_cpu_get_raw() may return NULL if the cpu is not in
+policy->cpus cpu mask and it will cause null pointer dereference,
+so check NULL for cppc_get_cpu_cost().
 
-	(?:(?:BUG: K.|UB)SAN: |Call Trace:|stable\@|syzkaller)/)
-
-Why are stable patches encouraged to have a fixes tag?  Some people mark
-their stable patches as "# 5.10" etc.  This is useful but a Fixes tag is
-still a good idea.  For example, the Fixes tag helps in review.  It
-helps people to not cherry-pick buggy patches without also
-cherry-picking the fix.
-
-Also if a bug affects the 5.7 kernel some people will round it up to
-5.10+ because 5.7 is not supported on kernel.org.  It's possible the Bad
-Binder bug was caused by this sort of gap where companies outside of
-kernel.org are supporting different kernels from kernel.org.
-
-Should it be counted as a Fix when a patch just silences harmless
-WARN_ON() stack trace.  Yes.  Definitely.
-
-Is silencing compiler warnings a fix?  It seems unfair to the original
-authors, but we use -Werror now, and warnings break the build so let's
-just add Fixes tags.  I tell people that silencing static checker
-warnings is not a fix but the rules on this vary by subsystem.
-
-Is fixing a minor LTP issue (Linux Test Project) a fix?  Probably?  It's
-hard to know what to do if the LTP test has technically always been
-broken.
-
-One clear false positive from this check is when someone updated their
-debug output and included before and after Call Traces.  Or when crashes
-are introduced deliberately for testing.  In those cases, you should
-just ignore checkpatch.
-
-Link: https://lkml.kernel.org/r/ZmhUgZBKeF_8ixA6@moroto
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Reviewed-by: Kees Cook <keescook@chromium.org>
-Cc: Andy Whitcroft <apw@canonical.com>
-Cc: Arnd Bergmann <arnd@arndb.de>
-Cc: Dwaipayan Ray <dwaipayanray1@gmail.com>
-Cc: Joe Perches <joe@perches.com>
-Cc: Lukas Bulwahn <lukas.bulwahn@gmail.com>
-Cc: Sasha Levin <sashal@kernel.org>
-Cc: Thorsten Leemhuis <linux@leemhuis.info>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Stable-dep-of: 2f07b6523849 ("checkpatch: always parse orig_commit in fixes tag")
+Fixes: 740fcdc2c20e ("cpufreq: CPPC: Register EM based on efficiency class information")
+Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/checkpatch.pl | 24 ++++++++++++++++++++++++
- 1 file changed, 24 insertions(+)
+ drivers/cpufreq/cppc_cpufreq.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/scripts/checkpatch.pl b/scripts/checkpatch.pl
-index 7d16f863edf1c..6b598f0858392 100755
---- a/scripts/checkpatch.pl
-+++ b/scripts/checkpatch.pl
-@@ -28,6 +28,7 @@ my %verbose_messages = ();
- my %verbose_emitted = ();
- my $tree = 1;
- my $chk_signoff = 1;
-+my $chk_fixes_tag = 1;
- my $chk_patch = 1;
- my $tst_only;
- my $emacs = 0;
-@@ -88,6 +89,7 @@ Options:
-   -v, --verbose              verbose mode
-   --no-tree                  run without a kernel tree
-   --no-signoff               do not check for 'Signed-off-by' line
-+  --no-fixes-tag             do not check for 'Fixes:' tag
-   --patch                    treat FILE as patchfile (default)
-   --emacs                    emacs compile window format
-   --terse                    one line per report
-@@ -295,6 +297,7 @@ GetOptions(
- 	'v|verbose!'	=> \$verbose,
- 	'tree!'		=> \$tree,
- 	'signoff!'	=> \$chk_signoff,
-+	'fixes-tag!'	=> \$chk_fixes_tag,
- 	'patch!'	=> \$chk_patch,
- 	'emacs!'	=> \$emacs,
- 	'terse!'	=> \$terse,
-@@ -1256,6 +1259,7 @@ sub git_commit_info {
- }
+diff --git a/drivers/cpufreq/cppc_cpufreq.c b/drivers/cpufreq/cppc_cpufreq.c
+index 284c328a1d3d1..866a0538ca896 100644
+--- a/drivers/cpufreq/cppc_cpufreq.c
++++ b/drivers/cpufreq/cppc_cpufreq.c
+@@ -498,6 +498,9 @@ static int cppc_get_cpu_cost(struct device *cpu_dev, unsigned long KHz,
+ 	int step;
  
- $chk_signoff = 0 if ($file);
-+$chk_fixes_tag = 0 if ($file);
- 
- my @rawlines = ();
- my @lines = ();
-@@ -2635,6 +2639,9 @@ sub process {
- 
- 	our $clean = 1;
- 	my $signoff = 0;
-+	my $fixes_tag = 0;
-+	my $is_revert = 0;
-+	my $needs_fixes_tag = "";
- 	my $author = '';
- 	my $authorsignoff = 0;
- 	my $author_sob = '';
-@@ -3188,6 +3195,16 @@ sub process {
- 			}
- 		}
- 
-+# These indicate a bug fix
-+		if (!$in_header_lines && !$is_patch &&
-+			$line =~ /^This reverts commit/) {
-+			$is_revert = 1;
-+		}
+ 	policy = cpufreq_cpu_get_raw(cpu_dev->id);
++	if (!policy)
++		return 0;
 +
-+		if (!$in_header_lines && !$is_patch &&
-+		    $line =~ /((?:(?:BUG: K.|UB)SAN: |Call Trace:|stable\@|syzkaller))/) {
-+			$needs_fixes_tag = $1;
-+		}
- 
- # Check Fixes: styles is correct
- 		if (!$in_header_lines &&
-@@ -3200,6 +3217,7 @@ sub process {
- 			my $id_length = 1;
- 			my $id_case = 1;
- 			my $title_has_quotes = 0;
-+			$fixes_tag = 1;
- 
- 			if ($line =~ /(\s*fixes:?)\s+([0-9a-f]{5,})\s+($balanced_parens)/i) {
- 				my $tag = $1;
-@@ -7680,6 +7698,12 @@ sub process {
- 		ERROR("NOT_UNIFIED_DIFF",
- 		      "Does not appear to be a unified-diff format patch\n");
- 	}
-+	if ($is_patch && $has_commit_log && $chk_fixes_tag) {
-+		if ($needs_fixes_tag ne "" && !$is_revert && !$fixes_tag) {
-+			WARN("MISSING_FIXES_TAG",
-+				 "The commit message has '$needs_fixes_tag', perhaps it also needs a 'Fixes:' tag?\n");
-+		}
-+	}
- 	if ($is_patch && $has_commit_log && $chk_signoff) {
- 		if ($signoff == 0) {
- 			ERROR("MISSING_SIGN_OFF",
+ 	cpu_data = policy->driver_data;
+ 	perf_caps = &cpu_data->perf_caps;
+ 	max_cap = arch_scale_cpu_capacity(cpu_dev->id);
 -- 
 2.43.0
 
