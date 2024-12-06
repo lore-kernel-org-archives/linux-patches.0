@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D5F4149C6F;
-	Fri,  6 Dec 2024 15:16:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B340149C6F;
+	Fri,  6 Dec 2024 15:16:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733498187; cv=none; b=YEPz1gRrv4uhPwsUFajep9+l4s4KuZi4ZwYiyi5iZCHw6iy3vXVtEJMW97dp+lbs2S6LO2ACPoN7k00DloP6AI/QE++ayrQZuazS4uywi3K2ToodmI7i9yKJRQJpW0x1G68gH3RkDdrippHaaGGGXvrbNT99f2UoVGRvV+up+Rc=
+	t=1733498191; cv=none; b=GuqwWDdojoFkKlgyVNApx61ARsL+bGwKpXFnMKN8SEf/xZwZJM90e8aEFZrwoytFA0OB/PBJLn3OlyfN7i/3MMAwe/KGomU44oHacJsDJpzOVUM5rU1RGXYBAr+MDpKRqYYSnF/V1+j0DNyd8siiTB7MAUPswlbSEgb1Uxw6tRo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733498187; c=relaxed/simple;
-	bh=xKyCXmP/NRFk6j9Wp5P3zOLw3DF1UOzACTnIX34O0fE=;
+	s=arc-20240116; t=1733498191; c=relaxed/simple;
+	bh=Au1iJ5w1Am7U5mQd8XP2NSujwtG2OxwB9Mjg4o7qmc8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uSBow7eOWSWn528RVbk9+SQCSyNDMi6aOmIIQiC2Rjji4768dc1YUoz0uCubeb0LTQPPKWws+o8emiCeyk7qaSJFbLKM++XGubkeR30LUoQCqt3JezE3v4nE3A3k9KwwG9c2D3ryIpRUjXAbvmU2YOJ2h+86A3v98eu7NzAmT2Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zyIj80LE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OFKtml8ViP+z14aOxHMchwUFuTXFl9q1X0bPBgSaO4ql8FdSFuRVMO2MKujFmF4ZU9GVhKL0PatRBlWcDbOCz9OH9Kwhucpc9MwDXQYFp8OM8GqHCur9Re155P+PvBETSnATVqtqNJo2TH8UTtlKLsjgPWTXeB9zxT0bubtsQxM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NXlPHgZ3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zyIj80LE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04D79C4CEDE;
-	Fri,  6 Dec 2024 15:16:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NXlPHgZ3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E9E8C4CED1;
+	Fri,  6 Dec 2024 15:16:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733498187;
-	bh=xKyCXmP/NRFk6j9Wp5P3zOLw3DF1UOzACTnIX34O0fE=;
+	s=korg; t=1733498191;
+	bh=Au1iJ5w1Am7U5mQd8XP2NSujwtG2OxwB9Mjg4o7qmc8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zyIj80LELXOCwEFUjyJy3kN3+laeZZScZ8sQakEgQD+vXnUjeZUTFbo7OIIUz+XiY
-	 qXkIbJ5pNgBt5FZWdXNpBk4TIpJ06ol2U2yi0ATYPNCiHiGOGDupapwfiWtzcnEFS4
-	 lzSieMeHZiWzjyKKR3o6LQfkgOeyGMtsXIaYQJ7I=
+	b=NXlPHgZ3g+L2ZA22CfUtmQwoCms+ohrKea42aYIfKx+GiklaU0rX0EHoAXKg0MKvy
+	 rHkmZun/MDzgkbbbrBcry9qJmMfrTP9MZ8twLadbmdPUEYPAAfXKiMboX8Y/28qRm4
+	 GFAoFfsLuzVgyNzHWbh1yOsl3f8PStmnl8Rr2RDU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Meetakshi Setiya <msetiya@microsoft.com>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.6 510/676] cifs: support mounting with alternate password to allow password rotation
-Date: Fri,  6 Dec 2024 15:35:29 +0100
-Message-ID: <20241206143713.276160098@linuxfoundation.org>
+	Josh Poimboeuf <jpoimboe@kernel.org>,
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 6.6 511/676] parisc/ftrace: Fix function graph tracing disablement
+Date: Fri,  6 Dec 2024 15:35:30 +0100
+Message-ID: <20241206143713.314528022@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -50,139 +50,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Meetakshi Setiya <msetiya@microsoft.com>
+From: Josh Poimboeuf <jpoimboe@kernel.org>
 
-commit b9aef1b13a0a92aa7058ba235afb24b5b89153ca upstream.
+commit a5f05a138a8cac035bf9da9b6ed0e532bc7942c8 upstream.
 
-Fixes the case for example where the password specified on mount is a
-recently expired password, but password2 is valid.  Without this patch
-this mount scenario would fail.
+Due to an apparent copy-paste bug, the parisc implementation of
+ftrace_disable_ftrace_graph_caller() doesn't actually do anything.
+It enables the (already-enabled) static key rather than disabling it.
 
-This patch introduces the following changes to support password rotation on
-mount:
+The result is that after function graph tracing has been "disabled", any
+subsequent (non-graph) function tracing will inadvertently also enable
+the slow fgraph return address hijacking.
 
-1. If an existing session is not found and the new session setup results in
-EACCES, EKEYEXPIRED or EKEYREVOKED, swap password and password2 (if
-available), and retry the mount.
-
-2. To match the new mount with an existing session, add conditions to check
-if a) password and password2 of the new mount and the existing session are
-the same, or b) password of the new mount is the same as the password2 of
-the existing session, and password2 of the new mount is the same as the
-password of the existing session.
-
-3. If an existing session is found, but needs reconnect, retry the session
-setup after swapping password and password2 (if available), in case the
-previous attempt results in EACCES, EKEYEXPIRED or EKEYREVOKED.
-
-Cc: stable@vger.kernel.org
-Signed-off-by: Meetakshi Setiya <msetiya@microsoft.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fixes: 98f2926171ae ("parisc/ftrace: use static key to enable/disable function graph tracer")
+Cc: stable@vger.kernel.org # 5.16+
+Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/connect.c |   57 ++++++++++++++++++++++++++++++++++++++++++------
- 1 file changed, 50 insertions(+), 7 deletions(-)
+ arch/parisc/kernel/ftrace.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/smb/client/connect.c
-+++ b/fs/smb/client/connect.c
-@@ -1908,11 +1908,35 @@ static int match_session(struct cifs_ses
- 			    CIFS_MAX_USERNAME_LEN))
- 			return 0;
- 		if ((ctx->username && strlen(ctx->username) != 0) &&
--		    ses->password != NULL &&
--		    strncmp(ses->password,
--			    ctx->password ? ctx->password : "",
--			    CIFS_MAX_PASSWORD_LEN))
--			return 0;
-+		    ses->password != NULL) {
-+
-+			/* New mount can only share sessions with an existing mount if:
-+			 * 1. Both password and password2 match, or
-+			 * 2. password2 of the old mount matches password of the new mount
-+			 *    and password of the old mount matches password2 of the new
-+			 *	  mount
-+			 */
-+			if (ses->password2 != NULL && ctx->password2 != NULL) {
-+				if (!((strncmp(ses->password, ctx->password ?
-+					ctx->password : "", CIFS_MAX_PASSWORD_LEN) == 0 &&
-+					strncmp(ses->password2, ctx->password2,
-+					CIFS_MAX_PASSWORD_LEN) == 0) ||
-+					(strncmp(ses->password, ctx->password2,
-+					CIFS_MAX_PASSWORD_LEN) == 0 &&
-+					strncmp(ses->password2, ctx->password ?
-+					ctx->password : "", CIFS_MAX_PASSWORD_LEN) == 0)))
-+					return 0;
-+
-+			} else if ((ses->password2 == NULL && ctx->password2 != NULL) ||
-+				(ses->password2 != NULL && ctx->password2 == NULL)) {
-+				return 0;
-+
-+			} else {
-+				if (strncmp(ses->password, ctx->password ?
-+					ctx->password : "", CIFS_MAX_PASSWORD_LEN))
-+					return 0;
-+			}
-+		}
- 	}
+--- a/arch/parisc/kernel/ftrace.c
++++ b/arch/parisc/kernel/ftrace.c
+@@ -87,7 +87,7 @@ int ftrace_enable_ftrace_graph_caller(vo
  
- 	if (strcmp(ctx->local_nls->charset, ses->local_nls->charset))
-@@ -2256,6 +2280,7 @@ struct cifs_ses *
- cifs_get_smb_ses(struct TCP_Server_Info *server, struct smb3_fs_context *ctx)
+ int ftrace_disable_ftrace_graph_caller(void)
  {
- 	int rc = 0;
-+	int retries = 0;
- 	unsigned int xid;
- 	struct cifs_ses *ses;
- 	struct sockaddr_in *addr = (struct sockaddr_in *)&server->dstaddr;
-@@ -2274,6 +2299,8 @@ cifs_get_smb_ses(struct TCP_Server_Info
- 			cifs_dbg(FYI, "Session needs reconnect\n");
- 
- 			mutex_lock(&ses->session_mutex);
-+
-+retry_old_session:
- 			rc = cifs_negotiate_protocol(xid, ses, server);
- 			if (rc) {
- 				mutex_unlock(&ses->session_mutex);
-@@ -2286,6 +2313,13 @@ cifs_get_smb_ses(struct TCP_Server_Info
- 			rc = cifs_setup_session(xid, ses, server,
- 						ctx->local_nls);
- 			if (rc) {
-+				if (((rc == -EACCES) || (rc == -EKEYEXPIRED) ||
-+					(rc == -EKEYREVOKED)) && !retries && ses->password2) {
-+					retries++;
-+					cifs_dbg(FYI, "Session reconnect failed, retrying with alternate password\n");
-+					swap(ses->password, ses->password2);
-+					goto retry_old_session;
-+				}
- 				mutex_unlock(&ses->session_mutex);
- 				/* problem -- put our reference */
- 				cifs_put_smb_ses(ses);
-@@ -2361,6 +2395,7 @@ cifs_get_smb_ses(struct TCP_Server_Info
- 	ses->chans_need_reconnect = 1;
- 	spin_unlock(&ses->chan_lock);
- 
-+retry_new_session:
- 	mutex_lock(&ses->session_mutex);
- 	rc = cifs_negotiate_protocol(xid, ses, server);
- 	if (!rc)
-@@ -2373,8 +2408,16 @@ cifs_get_smb_ses(struct TCP_Server_Info
- 	       sizeof(ses->smb3signingkey));
- 	spin_unlock(&ses->chan_lock);
- 
--	if (rc)
--		goto get_ses_fail;
-+	if (rc) {
-+		if (((rc == -EACCES) || (rc == -EKEYEXPIRED) ||
-+			(rc == -EKEYREVOKED)) && !retries && ses->password2) {
-+			retries++;
-+			cifs_dbg(FYI, "Session setup failed, retrying with alternate password\n");
-+			swap(ses->password, ses->password2);
-+			goto retry_new_session;
-+		} else
-+			goto get_ses_fail;
-+	}
- 
- 	/*
- 	 * success, put it on the list and add it as first channel
+-	static_key_enable(&ftrace_graph_enable.key);
++	static_key_disable(&ftrace_graph_enable.key);
+ 	return 0;
+ }
+ #endif
 
 
