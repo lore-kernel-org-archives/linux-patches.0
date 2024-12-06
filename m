@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41AC61FCD11;
-	Fri,  6 Dec 2024 15:18:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B99FE13A863;
+	Fri,  6 Dec 2024 15:18:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733498334; cv=none; b=rc2XhRAdN6KchhWpvaSGM4pyEvulvoUPXD/1MDil2d6/x9krrbqEfhdenP3Z6xa+N81gmASrq8++60KDO01rztqtEW7WUdy3rL1OzcyXeQZ+T8PCC4ea7auledbKjJkN4Bl+xJwITS9RMokX1pxzEZTvBPMiaBWUoiFmCKfi7zU=
+	t=1733498337; cv=none; b=gxPi+iGMzNt6jLSGUlswtu2bWFp9kC3YoAVWzl1V7MzVPgdIjx1s/dO8thC3x7apLxA6UBfFJ7ZHlaLQvKCsORda0YFq6HMDXxcwJZxJpm0ajNbl8Gs9FeQBO5o9RPqxkJbdKpIFN7MGDFEcGcmRJDwwvbgBb+fC82smo8A9F/g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733498334; c=relaxed/simple;
-	bh=uYz9QCrNB3VO5tkFHja7vzBVGTVqx+JTYw1l49Z8GVY=;
+	s=arc-20240116; t=1733498337; c=relaxed/simple;
+	bh=067crZF6AGYoXKQ0/AKIIHP/5DRg3Y+ffIXDWG7a4WU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UcZ2LmRDOUALWQibiAzLwGadG0Jm5cKb+qjt0CsLr4U+YECd7yeYJh8NtCDuLpX5kdxVGcfAyGwcGYBT2BecR0AJbDSmt+v6KyISeCovrApv4PGf2+7HeByX+TZ034x6QdKPCDEmX2i5byzhDgIby/zx7mThKqVkq4/gcsbQLOk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=13Y0zDNm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qEWKleTlf0CxYlcWZNhl1NsEos8L2XVCWFT1nSkRnu6OGJpK9euG0Ah11nVIeCBB6vBJ6K6Hn14pyr+DshzMg/zT3S2azZBQZVX2/1FXqlGRTR4i8qj2uyAFS+JTH/iDN946tbi7e5qkPvOrHhhYO6O//F2wwLkyfDgyMvhtJeU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g1EWFe3l; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="13Y0zDNm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A53AAC4CED1;
-	Fri,  6 Dec 2024 15:18:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g1EWFe3l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 277DBC4CED1;
+	Fri,  6 Dec 2024 15:18:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733498334;
-	bh=uYz9QCrNB3VO5tkFHja7vzBVGTVqx+JTYw1l49Z8GVY=;
+	s=korg; t=1733498337;
+	bh=067crZF6AGYoXKQ0/AKIIHP/5DRg3Y+ffIXDWG7a4WU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=13Y0zDNmGZId9GMRzxbz510IImQOmivhdZjfjSnhxfe7FgWSP1da1FPmr1aWAdocJ
-	 KhIcXIOKEbcRKIGQH3qklQ5QSIlMCv7RRJg65iLAGhyty7jxRI/k6GDCB81oWnzh60
-	 gBbRwOWO+z8zpuymZ+eldn2UFdl+FQSH+viSDMM8=
+	b=g1EWFe3lNIGKPjlvjlihEO+eUTQEDq0XJvFpO22hJ+O5qjYsi4PDlDXmb1wsp3SGA
+	 jT1uzgWZHB40l774/lkPJ0pltm4EWQ5ACDK0TdpoBsCx5l6r0BVsPPZrKrwqY+M39O
+	 fK2XXmtaD8LU3JKDVoOQ4KAnnKJFIz9t+YxZDBMQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Huacai Chen <chenhuacai@loongson.cn>,
-	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-Subject: [PATCH 6.6 522/676] sh: cpuinfo: Fix a warning for CONFIG_CPUMASK_OFFSTACK
-Date: Fri,  6 Dec 2024 15:35:41 +0100
-Message-ID: <20241206143713.750984970@linuxfoundation.org>
+	Zicheng Qu <quzicheng@huawei.com>,
+	Matti Vaittinen <mazziesaccount@gmail.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 6.6 523/676] iio: gts: Fix uninitialized symbol ret
+Date: Fri,  6 Dec 2024 15:35:42 +0100
+Message-ID: <20241206143713.789140934@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -50,64 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Huacai Chen <chenhuacai@loongson.cn>
+From: Zicheng Qu <quzicheng@huawei.com>
 
-commit 3c891f7c6a4e90bb1199497552f24b26e46383bc upstream.
+commit e2fb2f89faf87b681038475d093214f4cbe12ebb upstream.
 
-When CONFIG_CPUMASK_OFFSTACK and CONFIG_DEBUG_PER_CPU_MAPS are selected,
-cpu_max_bits_warn() generates a runtime warning similar as below when
-showing /proc/cpuinfo. Fix this by using nr_cpu_ids (the runtime limit)
-instead of NR_CPUS to iterate CPUs.
+Initialize the variable ret at the time of declaration to prevent it from
+being returned without a defined value. Fixes smatch warning:
+drivers/iio/industrialio-gts-helper.c:256 gain_to_scaletables() error:
+uninitialized symbol 'ret'.
 
-[    3.052463] ------------[ cut here ]------------
-[    3.059679] WARNING: CPU: 3 PID: 1 at include/linux/cpumask.h:108 show_cpuinfo+0x5e8/0x5f0
-[    3.070072] Modules linked in: efivarfs autofs4
-[    3.076257] CPU: 0 PID: 1 Comm: systemd Not tainted 5.19-rc5+ #1052
-[    3.099465] Stack : 9000000100157b08 9000000000f18530 9000000000cf846c 9000000100154000
-[    3.109127]         9000000100157a50 0000000000000000 9000000100157a58 9000000000ef7430
-[    3.118774]         90000001001578e8 0000000000000040 0000000000000020 ffffffffffffffff
-[    3.128412]         0000000000aaaaaa 1ab25f00eec96a37 900000010021de80 900000000101c890
-[    3.138056]         0000000000000000 0000000000000000 0000000000000000 0000000000aaaaaa
-[    3.147711]         ffff8000339dc220 0000000000000001 0000000006ab4000 0000000000000000
-[    3.157364]         900000000101c998 0000000000000004 9000000000ef7430 0000000000000000
-[    3.167012]         0000000000000009 000000000000006c 0000000000000000 0000000000000000
-[    3.176641]         9000000000d3de08 9000000001639390 90000000002086d8 00007ffff0080286
-[    3.186260]         00000000000000b0 0000000000000004 0000000000000000 0000000000071c1c
-[    3.195868]         ...
-[    3.199917] Call Trace:
-[    3.203941] [<90000000002086d8>] show_stack+0x38/0x14c
-[    3.210666] [<9000000000cf846c>] dump_stack_lvl+0x60/0x88
-[    3.217625] [<900000000023d268>] __warn+0xd0/0x100
-[    3.223958] [<9000000000cf3c90>] warn_slowpath_fmt+0x7c/0xcc
-[    3.231150] [<9000000000210220>] show_cpuinfo+0x5e8/0x5f0
-[    3.238080] [<90000000004f578c>] seq_read_iter+0x354/0x4b4
-[    3.245098] [<90000000004c2e90>] new_sync_read+0x17c/0x1c4
-[    3.252114] [<90000000004c5174>] vfs_read+0x138/0x1d0
-[    3.258694] [<90000000004c55f8>] ksys_read+0x70/0x100
-[    3.265265] [<9000000000cfde9c>] do_syscall+0x7c/0x94
-[    3.271820] [<9000000000202fe4>] handle_syscall+0xc4/0x160
-[    3.281824] ---[ end trace 8b484262b4b8c24c ]---
-
-Cc: stable@vger.kernel.org
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
-Reviewed-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-Tested-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-Signed-off-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+Cc: stable@vger.kernel.org # v6.6+
+Fixes: 38416c28e168 ("iio: light: Add gain-time-scale helpers")
+Signed-off-by: Zicheng Qu <quzicheng@huawei.com>
+Reviewed-by: Matti Vaittinen <mazziesaccount@gmail.com>
+Link: https://patch.msgid.link/20241031014505.2313035-1-quzicheng@huawei.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/sh/kernel/cpu/proc.c |    2 +-
+ drivers/iio/industrialio-gts-helper.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/sh/kernel/cpu/proc.c
-+++ b/arch/sh/kernel/cpu/proc.c
-@@ -132,7 +132,7 @@ static int show_cpuinfo(struct seq_file
+diff --git a/drivers/iio/industrialio-gts-helper.c b/drivers/iio/industrialio-gts-helper.c
+index 5f131bc1a01e..4ad949672210 100644
+--- a/drivers/iio/industrialio-gts-helper.c
++++ b/drivers/iio/industrialio-gts-helper.c
+@@ -167,7 +167,7 @@ static int iio_gts_gain_cmp(const void *a, const void *b)
  
- static void *c_start(struct seq_file *m, loff_t *pos)
+ static int gain_to_scaletables(struct iio_gts *gts, int **gains, int **scales)
  {
--	return *pos < NR_CPUS ? cpu_data + *pos : NULL;
-+	return *pos < nr_cpu_ids ? cpu_data + *pos : NULL;
- }
- static void *c_next(struct seq_file *m, void *v, loff_t *pos)
- {
+-	int ret, i, j, new_idx, time_idx;
++	int i, j, new_idx, time_idx, ret = 0;
+ 	int *all_gains;
+ 	size_t gain_bytes;
+ 
+-- 
+2.47.1
+
 
 
