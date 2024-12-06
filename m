@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C970E10E0;
-	Fri,  6 Dec 2024 14:48:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96AEB32C8B;
+	Fri,  6 Dec 2024 14:48:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733496532; cv=none; b=pWPBvEmucb3FknNj1Fp1MSQs+UTmyIbkpMhCTG3LAErQS9PWPIVcwCoY1UhUwCJa/r4YqD9ZwQDKgDMr5qb2Lf/tOBWGrLmBi1nwLS/JsH/mYk6awxeqSddsN/Xef7eG0lpmZfcR8tmBcgITJBFObcTGWosnNiMjfVCHq+6MiZU=
+	t=1733496536; cv=none; b=gqddD4vPAZMSJAG1aYAm7w/bbvTQOdoHDRVPPEBl4emrK1sXul46E6jn1V4ZeJIYhocPnkPbx7zraPBqLgwTxVb2HYLQhoUdnh3GCY3H1TkZegDgOz4ggPE0oBrB2IveqUcYpdI4Pk2QcAWQwI07EUvY5eEcopmseGrMZelGV0U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733496532; c=relaxed/simple;
-	bh=17es+liHbYqnaq4csyvQVEb4ag7ids/Qg7XvjPJp3HI=;
+	s=arc-20240116; t=1733496536; c=relaxed/simple;
+	bh=IX+nhiDldFzxsPwQeqEfERJvjCR+GAT7SX/KFb0Q/a0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gAtwzdrX0j2I9+1JzbKhvEkWad86HGHkSaUB6GrKmjSA/6c2EI9dkOJe/LWd5RppYbEbJU/gj5MgZlyFI54KbMoVbds5VP78lFza69wpDUFwb2e/8cvbS5721n+/B4v5UMljSNhWmEceNWKSli8D2yGekr/NhxaBbNk7hswmbPM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kcepKCNZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WWRt8dl/Qqrm4i0PuMzpgFMaRNDyVvGG+Cv9yzOpaOzMpFAxyhHr3gH1D4w6iHDkHAZ23XyEhS2/qxR5lKcDTd8Yd2henzaOs/NvLy9JADLxWcF4I8dAZpFF39BYQ+vyBSkpz0mhnlfySyKgpAHG20kLh3GmAQK2uY4ue6yXghk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ummMbaAh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kcepKCNZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 449C6C4CED1;
-	Fri,  6 Dec 2024 14:48:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ummMbaAh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05F99C4CED1;
+	Fri,  6 Dec 2024 14:48:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733496532;
-	bh=17es+liHbYqnaq4csyvQVEb4ag7ids/Qg7XvjPJp3HI=;
+	s=korg; t=1733496536;
+	bh=IX+nhiDldFzxsPwQeqEfERJvjCR+GAT7SX/KFb0Q/a0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kcepKCNZtENgOXyyag23aZAt5bC2cWau1GIPqbmL++sH/0eTSuCP5A7mhyg/0nAi5
-	 +W8jVrEbyOA1DtXGlO4uVLG3C9fZCpVmtOn3F0gRLQBXPgABOay/Rk1SGvE9jtZBl1
-	 jF9bq2KI9ATAF8NMEKMSVhD87qrnesmcK0Xq7lsU=
+	b=ummMbaAhpdNrYBrew8Ie21QP87HYac0k2Yx6jma0QqZFIjWesXnFHUmM13SakX1Lv
+	 D0s3FcuPKTd/NX/7D5pvKT+AUCJ/0+7xYwXayiyc2sTTWKCcYWDaHq9GJVXeanAJID
+	 C9vd8HzsoK4EbAS5Pb0UtZZLawGrovRSE69t1qNE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harith George <harith.g@alifsemi.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	Breno Leitao <leitao@debian.org>,
+	David Ahern <dsahern@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 032/676] ARM: 9420/1: smp: Fix SMP for xip kernels
-Date: Fri,  6 Dec 2024 15:27:31 +0100
-Message-ID: <20241206143654.609593015@linuxfoundation.org>
+Subject: [PATCH 6.6 033/676] ipmr: Fix access to mfc_cache_list without lock held
+Date: Fri,  6 Dec 2024 15:27:32 +0100
+Message-ID: <20241206143654.650622384@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -52,82 +52,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Harith G <harith.g@alifsemi.com>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit 9e9b0cf9319b4db143014477b0bc4b39894248f1 ]
+[ Upstream commit e28acc9c1ccfcb24c08e020828f69d0a915b06ae ]
 
-Fix the physical address calculation of the following to get smp working
-on xip kernels.
-- secondary_data needed for secondary cpu bootup.
-- secondary_startup address passed through psci.
-- identity mapped code region needed for enabling mmu for secondary cpus.
+Accessing `mr_table->mfc_cache_list` is protected by an RCU lock. In the
+following code flow, the RCU read lock is not held, causing the
+following error when `RCU_PROVE` is not held. The same problem might
+show up in the IPv6 code path.
 
-Signed-off-by: Harith George <harith.g@alifsemi.com>
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+	6.12.0-rc5-kbuilder-01145-gbac17284bdcb #33 Tainted: G            E    N
+	-----------------------------
+	net/ipv4/ipmr_base.c:313 RCU-list traversed in non-reader section!!
+
+	rcu_scheduler_active = 2, debug_locks = 1
+		   2 locks held by RetransmitAggre/3519:
+		    #0: ffff88816188c6c0 (nlk_cb_mutex-ROUTE){+.+.}-{3:3}, at: __netlink_dump_start+0x8a/0x290
+		    #1: ffffffff83fcf7a8 (rtnl_mutex){+.+.}-{3:3}, at: rtnl_dumpit+0x6b/0x90
+
+	stack backtrace:
+		    lockdep_rcu_suspicious
+		    mr_table_dump
+		    ipmr_rtm_dumproute
+		    rtnl_dump_all
+		    rtnl_dumpit
+		    netlink_dump
+		    __netlink_dump_start
+		    rtnetlink_rcv_msg
+		    netlink_rcv_skb
+		    netlink_unicast
+		    netlink_sendmsg
+
+This is not a problem per see, since the RTNL lock is held here, so, it
+is safe to iterate in the list without the RCU read lock, as suggested
+by Eric.
+
+To alleviate the concern, modify the code to use
+list_for_each_entry_rcu() with the RTNL-held argument.
+
+The annotation will raise an error only if RTNL or RCU read lock are
+missing during iteration, signaling a legitimate problem, otherwise it
+will avoid this false positive.
+
+This will solve the IPv6 case as well, since ip6mr_rtm_dumproute() calls
+this function as well.
+
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://patch.msgid.link/20241108-ipmr_rcu-v2-1-c718998e209b@debian.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/kernel/head.S     | 4 ++++
- arch/arm/kernel/psci_smp.c | 7 +++++++
- arch/arm/mm/idmap.c        | 7 +++++++
- 3 files changed, 18 insertions(+)
+ net/ipv4/ipmr_base.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm/kernel/head.S b/arch/arm/kernel/head.S
-index 28873cda464f5..f22c50d4bd417 100644
---- a/arch/arm/kernel/head.S
-+++ b/arch/arm/kernel/head.S
-@@ -411,7 +411,11 @@ ENTRY(secondary_startup)
- 	/*
- 	 * Use the page tables supplied from  __cpu_up.
- 	 */
-+#ifdef CONFIG_XIP_KERNEL
-+	ldr	r3, =(secondary_data + PLAT_PHYS_OFFSET - PAGE_OFFSET)
-+#else
- 	adr_l	r3, secondary_data
-+#endif
- 	mov_l	r12, __secondary_switched
- 	ldrd	r4, r5, [r3, #0]		@ get secondary_data.pgdir
- ARM_BE8(eor	r4, r4, r5)			@ Swap r5 and r4 in BE:
-diff --git a/arch/arm/kernel/psci_smp.c b/arch/arm/kernel/psci_smp.c
-index d4392e1774848..3bb0c4dcfc5c9 100644
---- a/arch/arm/kernel/psci_smp.c
-+++ b/arch/arm/kernel/psci_smp.c
-@@ -45,8 +45,15 @@ extern void secondary_startup(void);
- static int psci_boot_secondary(unsigned int cpu, struct task_struct *idle)
- {
- 	if (psci_ops.cpu_on)
-+#ifdef CONFIG_XIP_KERNEL
-+		return psci_ops.cpu_on(cpu_logical_map(cpu),
-+			((phys_addr_t)(&secondary_startup)
-+			- XIP_VIRT_ADDR(CONFIG_XIP_PHYS_ADDR)
-+			+ CONFIG_XIP_PHYS_ADDR));
-+#else
- 		return psci_ops.cpu_on(cpu_logical_map(cpu),
- 					virt_to_idmap(&secondary_startup));
-+#endif
- 	return -ENODEV;
- }
+diff --git a/net/ipv4/ipmr_base.c b/net/ipv4/ipmr_base.c
+index 271dc03fc6dbd..f0af12a2f70bc 100644
+--- a/net/ipv4/ipmr_base.c
++++ b/net/ipv4/ipmr_base.c
+@@ -310,7 +310,8 @@ int mr_table_dump(struct mr_table *mrt, struct sk_buff *skb,
+ 	if (filter->filter_set)
+ 		flags |= NLM_F_DUMP_FILTERED;
  
-diff --git a/arch/arm/mm/idmap.c b/arch/arm/mm/idmap.c
-index 448e57c6f6534..4a833e89782aa 100644
---- a/arch/arm/mm/idmap.c
-+++ b/arch/arm/mm/idmap.c
-@@ -84,8 +84,15 @@ static void identity_mapping_add(pgd_t *pgd, const char *text_start,
- 	unsigned long addr, end;
- 	unsigned long next;
- 
-+#ifdef CONFIG_XIP_KERNEL
-+	addr = (phys_addr_t)(text_start) - XIP_VIRT_ADDR(CONFIG_XIP_PHYS_ADDR)
-+		+ CONFIG_XIP_PHYS_ADDR;
-+	end = (phys_addr_t)(text_end) - XIP_VIRT_ADDR(CONFIG_XIP_PHYS_ADDR)
-+		+ CONFIG_XIP_PHYS_ADDR;
-+#else
- 	addr = virt_to_idmap(text_start);
- 	end = virt_to_idmap(text_end);
-+#endif
- 	pr_info("Setting up static identity map for 0x%lx - 0x%lx\n", addr, end);
- 
- 	prot |= PMD_TYPE_SECT | PMD_SECT_AP_WRITE | PMD_SECT_AF;
+-	list_for_each_entry_rcu(mfc, &mrt->mfc_cache_list, list) {
++	list_for_each_entry_rcu(mfc, &mrt->mfc_cache_list, list,
++				lockdep_rtnl_is_held()) {
+ 		if (e < s_e)
+ 			goto next_entry;
+ 		if (filter->dev &&
 -- 
 2.43.0
 
