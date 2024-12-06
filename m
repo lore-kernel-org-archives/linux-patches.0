@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A31F47F53;
-	Fri,  6 Dec 2024 14:59:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C51F110E0;
+	Fri,  6 Dec 2024 14:59:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733497181; cv=none; b=LCKMZssSyWUeQi6+oos4qEfQ8fIhOHmKYzQa7H2wF1APq8m63uc92jGdM8E3vxC30HOWRTBqzQ4xn6HjFbFuUhwlXhklBnfOnb2Wt0ZQGYsmqiMU5MYqjeKYxm136yGJJwBl9SYVWhLRhCKbwFPz4MHA/Bl/5wKNI4Wdy46iX/4=
+	t=1733497184; cv=none; b=Hon75QcIpA/3BRJnVN1qhTP6FqD1mvFz+Miw91qVfxy8o2lMf8gfmeFFvccKNW/LlCiPf0BC+nWIvyhavIHpGZfoUXBsup2xpbK5tZmt0oyAIG1Vae+Xqo2KiggPC5Of+b5rZRPXpUnlYAv6WFyIZIIJUivmT+tJkiQL7w4TKjk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733497181; c=relaxed/simple;
-	bh=JUvawU68qudSwXDcEtvs5yHiJP9pB/BBrQVJ1ndjTBw=;
+	s=arc-20240116; t=1733497184; c=relaxed/simple;
+	bh=DOcRT9SP3Gej1J1u8xZjuDHmgKbp73pY2l+YNCc3sM4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dv4CcMcwrxdOSMSL8X0OhedBddSmhXiaoN78AdEKC4Eqq44/tUN5qSynRhAdte6URW+Ixl1fEGWAQVzV2pZuSMNjA4p3wLq7hX0vs2qtSQ4TWEZYYiIfRXulJNgeSPg8OrPbvHpKENvlqLBmgjvtjJrUrY7O/zu9NqkS0lGdp9k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=heP36xz5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R7AJEEMF+suUWpvQBmzsWE51p80b66BoV6EZPkYvb5Ad0yIfqKHhhjlkyvI8VwDC17l7SuAVh4N0Y2JS32I4tSu/ZtLux+Jgd/8xAkXujbOlHFnI+vAADnphjyS8guHU1e+M/OpW1cv+ZqFxUQ1G1jj5s+SwXe7zRCnVcjTWlco=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LQBWwikW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="heP36xz5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEABAC4CED1;
-	Fri,  6 Dec 2024 14:59:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LQBWwikW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48ABAC4CED1;
+	Fri,  6 Dec 2024 14:59:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733497181;
-	bh=JUvawU68qudSwXDcEtvs5yHiJP9pB/BBrQVJ1ndjTBw=;
+	s=korg; t=1733497184;
+	bh=DOcRT9SP3Gej1J1u8xZjuDHmgKbp73pY2l+YNCc3sM4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=heP36xz5WIHRdUUyR7TrcoqtE8VtluB5GuXuyyI5pd1PBtxyZn4mVLtZPQnfcKzZ5
-	 S5MauwecsQRKuKy8vTf68eMcrAwp/Zny8eMETdAIcGjrnj0SEH+zLFmiSnI4EYQNWf
-	 Z6W0jOm0HzmllC6f4YUEKMRpU1yYoAue6tJaQ6Zo=
+	b=LQBWwikW5WYIJ/IKXaWlDC3k+ylQE0l7ISdqY9Qw0rP/9yLvGyn9+m2AwWLnY0798
+	 RGNO6wk7dEUZ1tTd6/MTlbU8UmE522JwCiw5X9WPsytTqnCbgbUt0c4MXNZTfboqTr
+	 mo0I3YApjqx4+8ubokgRCa1BPEckmLUer2h3ugP8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinjie Ruan <ruanjinjie@huawei.com>,
-	Laurentiu Palcu <laurentiu.palcu@oss.nxp.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Dipendra Khadka <kdipendra88@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Andrew Lunn <andrew@lunn.ch>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 175/676] drm/imx/dcss: Use IRQF_NO_AUTOEN flag in request_irq()
-Date: Fri,  6 Dec 2024 15:29:54 +0100
-Message-ID: <20241206143700.184492588@linuxfoundation.org>
+Subject: [PATCH 6.6 211/676] octeontx2-pf: handle otx2_mbox_get_rsp errors in otx2_dcbnl.c
+Date: Fri,  6 Dec 2024 15:30:30 +0100
+Message-ID: <20241206143701.584458730@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -52,47 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinjie Ruan <ruanjinjie@huawei.com>
+From: Dipendra Khadka <kdipendra88@gmail.com>
 
-[ Upstream commit 1af01e14db7e0b45ae502d822776a58c86688763 ]
+[ Upstream commit 69297b0d3369488af259e3a7cf53d69157938ea1 ]
 
-disable_irq() after request_irq() still has a time gap in which
-interrupts can come. request_irq() with IRQF_NO_AUTOEN flag will
-disable IRQ auto-enable when request IRQ.
+Add error pointer check after calling otx2_mbox_get_rsp().
 
-Fixes: 9021c317b770 ("drm/imx: Add initial support for DCSS on iMX8MQ")
-Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-Reviewed-by: Laurentiu Palcu <laurentiu.palcu@oss.nxp.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240912083020.3720233-2-ruanjinjie@huawei.com
-[DB: fixed the subject]
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Fixes: 8e67558177f8 ("octeontx2-pf: PFC config support with DCBx")
+Signed-off-by: Dipendra Khadka <kdipendra88@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: Andrew Lunn <andrew@lunn.ch>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/imx/dcss/dcss-crtc.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/marvell/octeontx2/nic/otx2_dcbnl.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/gpu/drm/imx/dcss/dcss-crtc.c b/drivers/gpu/drm/imx/dcss/dcss-crtc.c
-index 31267c00782fc..af91e45b5d13b 100644
---- a/drivers/gpu/drm/imx/dcss/dcss-crtc.c
-+++ b/drivers/gpu/drm/imx/dcss/dcss-crtc.c
-@@ -206,15 +206,13 @@ int dcss_crtc_init(struct dcss_crtc *crtc, struct drm_device *drm)
- 	if (crtc->irq < 0)
- 		return crtc->irq;
- 
--	ret = request_irq(crtc->irq, dcss_crtc_irq_handler,
--			  0, "dcss_drm", crtc);
-+	ret = request_irq(crtc->irq, dcss_crtc_irq_handler, IRQF_NO_AUTOEN,
-+			  "dcss_drm", crtc);
- 	if (ret) {
- 		dev_err(dcss->dev, "irq request failed with %d.\n", ret);
- 		return ret;
- 	}
- 
--	disable_irq(crtc->irq);
--
- 	return 0;
- }
- 
+diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_dcbnl.c b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_dcbnl.c
+index aa01110f04a33..294fba58b6709 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_dcbnl.c
++++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_dcbnl.c
+@@ -315,6 +315,11 @@ int otx2_config_priority_flow_ctrl(struct otx2_nic *pfvf)
+ 	if (!otx2_sync_mbox_msg(&pfvf->mbox)) {
+ 		rsp = (struct cgx_pfc_rsp *)
+ 		       otx2_mbox_get_rsp(&pfvf->mbox.mbox, 0, &req->hdr);
++		if (IS_ERR(rsp)) {
++			err = PTR_ERR(rsp);
++			goto unlock;
++		}
++
+ 		if (req->rx_pause != rsp->rx_pause || req->tx_pause != rsp->tx_pause) {
+ 			dev_warn(pfvf->dev,
+ 				 "Failed to config PFC\n");
 -- 
 2.43.0
 
