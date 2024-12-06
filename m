@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6879114B976;
-	Fri,  6 Dec 2024 14:40:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAC6E14A4D1;
+	Fri,  6 Dec 2024 14:40:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733496024; cv=none; b=iH7aLshVqJg+vpv2nWZJaUEGsllFe8qBASDrwlha4VZCcEm5CW/RI9MXhb/Su/q5A65NQnIBX/zcPDO+pA4oNEZ4e934XK2hQ3iaCcZ6phkpXQ1jjrtJwUcJcHMU7X+EYB/giX8OFFSbCkT4xwJHymLOPwUUF0yhtcJH+zzIjac=
+	t=1733496029; cv=none; b=neZ/Qo+Bd1nsqM8jyybPLYiRYPrEApsBNdm/5obCorWjVHNSU4+NKpTzNMim6KHqGAef8eVWxreeY+UfgYXqk2kQvM9OwSejq7VNJw/5cGyPUcXQqcoON7ckJzHmIfYVR0059dmilrUoT+HHfhhkcadHY6YbL4Fp0J3c5WRmzRQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733496024; c=relaxed/simple;
-	bh=8WZrRsEXgfrGRtIaSy/of9Za2uExTaxLpSI82jRknQk=;
+	s=arc-20240116; t=1733496029; c=relaxed/simple;
+	bh=UNho+dIgTbnh1EB/YaQay4umhd/AeSuFw+x1cqCItuQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qqXG8jtBmBCBggKtizG/2z3YPNx4CbX0sPtop/YtJCNuiE+O6oCtVntDaWe73/DBaC73q1bZ7ihKTFiCqU0UEwVTgWt8GzSoqlO8lnScsls7bbv1J0TZH+H4iXt1gUoTzr4A2h2EfqdckJXim8pNHOpHFxMFHgNfCaeguGfKiNQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PhCftqOc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NFBi50S09V9scVSMyfE5Ia4bIfggaqaEcr6Pi+hm0JcbfdUGkAJktkfu/cEt0V3y0fZwZFVW87D3IRSTPerBPiZXsI39SNwRBfD/npQcxD3vZjoBWyguPT2so39wraAJ9YszeHdteEGQyczmbYIIJbaRhVNOccRfuMP9rehPB5o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FkTrkDmJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PhCftqOc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C66D4C4CEDC;
-	Fri,  6 Dec 2024 14:40:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FkTrkDmJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49412C4CEDC;
+	Fri,  6 Dec 2024 14:40:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733496024;
-	bh=8WZrRsEXgfrGRtIaSy/of9Za2uExTaxLpSI82jRknQk=;
+	s=korg; t=1733496027;
+	bh=UNho+dIgTbnh1EB/YaQay4umhd/AeSuFw+x1cqCItuQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PhCftqOcMi1xwcjuKcOv1tuiVKkRkelny6FybUUfnIqON6xYyMqDe4Hyiv8egDMvI
-	 DquizJaqmv+FcUtW08rRHSuHynSCCoDzPOvwpX0s78m95kyWs/6HA+nQwkTX1sh0oG
-	 Uqd+2i8BRxfqxjRTz0rdlPb0AFk33952NVBsxJLg=
+	b=FkTrkDmJMnLPdutwL6c8V0vQWEtSe05CPu97IJZq0Z6RIeBCjSV5TEEZUwg/ux96W
+	 aAwEUj4aPcMRSEQk2etNMC+UH4qFs9L95lVG6Au13Dz79gfiLWTZL0BAWTfjlSvQA/
+	 +xMjQ5idaltXS7j8MmfC0qNpKsRpinMt04+oOwFc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Can <yuancan@huawei.com>,
-	Yu Kuai <yukuai3@huawei.com>,
-	Song Liu <song@kernel.org>
-Subject: [PATCH 6.12 013/146] md/md-bitmap: Add missing destroy_work_on_stack()
-Date: Fri,  6 Dec 2024 15:35:44 +0100
-Message-ID: <20241206143528.179932837@linuxfoundation.org>
+	Ard Biesheuvel <ardb@kernel.org>
+Subject: [PATCH 6.12 031/146] efi/libstub: Free correct pointer on failure
+Date: Fri,  6 Dec 2024 15:36:02 +0100
+Message-ID: <20241206143528.863342002@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143527.654980698@linuxfoundation.org>
 References: <20241206143527.654980698@linuxfoundation.org>
@@ -51,33 +49,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuan Can <yuancan@huawei.com>
+From: Ard Biesheuvel <ardb@kernel.org>
 
-commit 6012169e8aae9c0eda38bbedcd7a1540a81220ae upstream.
+commit 06d39d79cbd5a91a33707951ebf2512d0e759847 upstream.
 
-This commit add missed destroy_work_on_stack() operations for
-unplug_work.work in bitmap_unplug_async().
+cmdline_ptr is an out parameter, which is not allocated by the function
+itself, and likely points into the caller's stack.
 
-Fixes: a022325ab970 ("md/md-bitmap: add a new helper to unplug bitmap asynchrously")
-Cc: stable@vger.kernel.org
-Signed-off-by: Yuan Can <yuancan@huawei.com>
-Reviewed-by: Yu Kuai <yukuai3@huawei.com>
-Link: https://lore.kernel.org/r/20241105130105.127336-1-yuancan@huawei.com
-Signed-off-by: Song Liu <song@kernel.org>
+cmdline refers to the pool allocation that should be freed when cleaning
+up after a failure, so pass this instead to free_pool().
+
+Fixes: 42c8ea3dca09 ("efi: libstub: Factor out EFI stub entrypoint ...")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/md-bitmap.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/firmware/efi/libstub/efi-stub.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/md/md-bitmap.c
-+++ b/drivers/md/md-bitmap.c
-@@ -1285,6 +1285,7 @@ static void bitmap_unplug_async(struct b
+--- a/drivers/firmware/efi/libstub/efi-stub.c
++++ b/drivers/firmware/efi/libstub/efi-stub.c
+@@ -149,7 +149,7 @@ efi_status_t efi_handle_cmdline(efi_load
+ 	return EFI_SUCCESS;
  
- 	queue_work(md_bitmap_wq, &unplug_work.work);
- 	wait_for_completion(&done);
-+	destroy_work_on_stack(&unplug_work.work);
+ fail_free_cmdline:
+-	efi_bs_call(free_pool, cmdline_ptr);
++	efi_bs_call(free_pool, cmdline);
+ 	return status;
  }
  
- static void bitmap_unplug(struct mddev *mddev, bool sync)
 
 
