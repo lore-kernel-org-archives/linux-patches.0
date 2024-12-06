@@ -1,39 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E92CC1DFD89;
-	Fri,  6 Dec 2024 15:09:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CA7D53A7;
+	Fri,  6 Dec 2024 15:09:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733497775; cv=none; b=RCWLSHyVZ7HNbI9bm4sY5/Rei9HX+cdPa1lxC1RIApB7hXpTKsm1I3/YMXmTJ5Upx9G9CiMt0syozuwTBKBagQOIp+w6uerqZlJKiTCwNpuUOaQFERPS4cEgrDEhwaLlwjWi2Sj9/NDmVWlJZAd2biNaauJxEmRyeP0/XRe8fFA=
+	t=1733497778; cv=none; b=gDl3yGa51CIYM6CZ82h8G8BiKt0ZA4JhpdeTW6u2wMdZ7fVxafVIRW1mMhF6cIVELMpO9Jwz3iVwmDJEd3CN8yPMut4k9mW/D4Kf8eS1mDCdLUvSLvLCDY7pz0u4jL463X50u+SKorqmYqdqq6G9Mmf40681nzbx0Fzk4ijqYD4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733497775; c=relaxed/simple;
-	bh=5g/rZlAA67CMQFd4xZTOyoaDOZrcyYyNuiY1+X31iSU=;
+	s=arc-20240116; t=1733497778; c=relaxed/simple;
+	bh=8bdF//VF/Yqah0H58GsnbOgNrFZ3UFm2SlqMEGMvVuk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HQg6MHnZ0UGFhE+HweeHvR+t5EpZQa5CPAn1r4Kafs1MiYmEew4+uwqnBBA9dRQZI1hPV9yN7QNdY7hPp2SCgi8jcCL8ZNF+HJu4Fs5wYROR+0e28LU92jadj1lBwbM3TZ3XcyINcbW1s19lFBcqxkzbbnwycRC2Xrd+q6t703Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YDRBNstR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kAKnTjDHRvGnvNl/uTH0wPtevHBAXlzvhfxu1EmfHERFH5KgoW2DehzKfSiiOQesBrsZOsyCmWaGRvadYaMcr0H0NsMfbxjB57XRvzl6byUTiTwoso1TVHL7xflFtn5BQ74c6+53Tf/mso0COhrlF49s97DRKOKBsps1Pea3LGA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C93lbj+n; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YDRBNstR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58F74C4CED1;
-	Fri,  6 Dec 2024 15:09:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C93lbj+n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AC31C4CEDC;
+	Fri,  6 Dec 2024 15:09:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733497774;
-	bh=5g/rZlAA67CMQFd4xZTOyoaDOZrcyYyNuiY1+X31iSU=;
+	s=korg; t=1733497778;
+	bh=8bdF//VF/Yqah0H58GsnbOgNrFZ3UFm2SlqMEGMvVuk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YDRBNstRZMnt2xiTeFaZlhW2B00QlawsMKDT5AcDoc1XUQKKHpXNTFIKZ3kdTgx/h
-	 Jd/wvhomSgYYLCiE4TXXrJ5l647P9BBQMbb7GF8PTcilNPVogz9OW88lM2+Rwun6Fd
-	 i/MkzPgqP3/Y9JW9+n81Dkkfdnm6SFpNzSp9WRUI=
+	b=C93lbj+nuJTzfIieo+kvkZWMM0BqbhIbtB2JBYotZ5HV5XpOxevAVIw3t/ItQdMC4
+	 VduqdyWBMTIJtpwLlTzFFia4VQzBfOXZQjwpdAc7Wp9lmtQHKcx8gogisiBPMocEig
+	 aHZznNiV17pFnVnzBN6w95jbUEsm3+dSFYYE//Uk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Avihai Horon <avihaih@nvidia.com>,
-	Yi Liu <yi.l.liu@intel.com>,
-	Alex Williamson <alex.williamson@redhat.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Eric Sandeen <sandeen@redhat.com>,
+	David Howells <dhowells@redhat.com>,
+	Al Viro <viro@zeniv.linux.org.uk>,
+	Christian Brauner <brauner@kernel.org>,
+	Jan Kara <jack@suse.cz>,
+	Jonathan Corbet <corbet@lwn.net>,
+	linux-doc@vger.kernel.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 390/676] vfio/pci: Properly hide first-in-list PCIe extended capability
-Date: Fri,  6 Dec 2024 15:33:29 +0100
-Message-ID: <20241206143708.583762705@linuxfoundation.org>
+Subject: [PATCH 6.6 391/676] fs_parser: update mount_api doc to match function signature
+Date: Fri,  6 Dec 2024 15:33:30 +0100
+Message-ID: <20241206143708.622883163@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -52,113 +57,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Avihai Horon <avihaih@nvidia.com>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit fe4bf8d0b6716a423b16495d55b35d3fe515905d ]
+[ Upstream commit c66f759832a83cb273ba5a55c66dcc99384efa74 ]
 
-There are cases where a PCIe extended capability should be hidden from
-the user. For example, an unknown capability (i.e., capability with ID
-greater than PCI_EXT_CAP_ID_MAX) or a capability that is intentionally
-chosen to be hidden from the user.
+Add the missing 'name' parameter to the mount_api documentation for
+fs_validate_description().
 
-Hiding a capability is done by virtualizing and modifying the 'Next
-Capability Offset' field of the previous capability so it points to the
-capability after the one that should be hidden.
-
-The special case where the first capability in the list should be hidden
-is handled differently because there is no previous capability that can
-be modified. In this case, the capability ID and version are zeroed
-while leaving the next pointer intact. This hides the capability and
-leaves an anchor for the rest of the capability list.
-
-However, today, hiding the first capability in the list is not done
-properly if the capability is unknown, as struct
-vfio_pci_core_device->pci_config_map is set to the capability ID during
-initialization but the capability ID is not properly checked later when
-used in vfio_config_do_rw(). This leads to the following warning [1] and
-to an out-of-bounds access to ecap_perms array.
-
-Fix it by checking cap_id in vfio_config_do_rw(), and if it is greater
-than PCI_EXT_CAP_ID_MAX, use an alternative struct perm_bits for direct
-read only access instead of the ecap_perms array.
-
-Note that this is safe since the above is the only case where cap_id can
-exceed PCI_EXT_CAP_ID_MAX (except for the special capabilities, which
-are already checked before).
-
-[1]
-
-WARNING: CPU: 118 PID: 5329 at drivers/vfio/pci/vfio_pci_config.c:1900 vfio_pci_config_rw+0x395/0x430 [vfio_pci_core]
-CPU: 118 UID: 0 PID: 5329 Comm: simx-qemu-syste Not tainted 6.12.0+ #1
-(snip)
-Call Trace:
- <TASK>
- ? show_regs+0x69/0x80
- ? __warn+0x8d/0x140
- ? vfio_pci_config_rw+0x395/0x430 [vfio_pci_core]
- ? report_bug+0x18f/0x1a0
- ? handle_bug+0x63/0xa0
- ? exc_invalid_op+0x19/0x70
- ? asm_exc_invalid_op+0x1b/0x20
- ? vfio_pci_config_rw+0x395/0x430 [vfio_pci_core]
- ? vfio_pci_config_rw+0x244/0x430 [vfio_pci_core]
- vfio_pci_rw+0x101/0x1b0 [vfio_pci_core]
- vfio_pci_core_read+0x1d/0x30 [vfio_pci_core]
- vfio_device_fops_read+0x27/0x40 [vfio]
- vfs_read+0xbd/0x340
- ? vfio_device_fops_unl_ioctl+0xbb/0x740 [vfio]
- ? __rseq_handle_notify_resume+0xa4/0x4b0
- __x64_sys_pread64+0x96/0xc0
- x64_sys_call+0x1c3d/0x20d0
- do_syscall_64+0x4d/0x120
- entry_SYSCALL_64_after_hwframe+0x76/0x7e
-
-Fixes: 89e1f7d4c66d ("vfio: Add PCI device driver")
-Signed-off-by: Avihai Horon <avihaih@nvidia.com>
-Reviewed-by: Yi Liu <yi.l.liu@intel.com>
-Tested-by: Yi Liu <yi.l.liu@intel.com>
-Link: https://lore.kernel.org/r/20241124142739.21698-1-avihaih@nvidia.com
-Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
+Fixes: 96cafb9ccb15 ("fs_parser: remove fs_parameter_description name field")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Link: https://lore.kernel.org/r/20241125215021.231758-1-rdunlap@infradead.org
+Cc: Eric Sandeen <sandeen@redhat.com>
+Cc: David Howells <dhowells@redhat.com>
+Cc: Al Viro <viro@zeniv.linux.org.uk>
+Cc: Christian Brauner <brauner@kernel.org>
+Cc: Jan Kara <jack@suse.cz>
+Cc: Jonathan Corbet <corbet@lwn.net>
+Cc: linux-doc@vger.kernel.org
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vfio/pci/vfio_pci_config.c | 16 ++++++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
+ Documentation/filesystems/mount_api.rst | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/vfio/pci/vfio_pci_config.c b/drivers/vfio/pci/vfio_pci_config.c
-index 7e2e62ab0869c..a2ad4f7c716bf 100644
---- a/drivers/vfio/pci/vfio_pci_config.c
-+++ b/drivers/vfio/pci/vfio_pci_config.c
-@@ -313,6 +313,10 @@ static int vfio_virt_config_read(struct vfio_pci_core_device *vdev, int pos,
- 	return count;
- }
+diff --git a/Documentation/filesystems/mount_api.rst b/Documentation/filesystems/mount_api.rst
+index 9aaf6ef75eb53..0c69aa574ab9a 100644
+--- a/Documentation/filesystems/mount_api.rst
++++ b/Documentation/filesystems/mount_api.rst
+@@ -766,7 +766,8 @@ process the parameters it is given.
  
-+static struct perm_bits direct_ro_perms = {
-+	.readfn = vfio_direct_config_read,
-+};
-+
- /* Default capability regions to read-only, no-virtualization */
- static struct perm_bits cap_perms[PCI_CAP_ID_MAX + 1] = {
- 	[0 ... PCI_CAP_ID_MAX] = { .readfn = vfio_direct_config_read }
-@@ -1897,9 +1901,17 @@ static ssize_t vfio_config_do_rw(struct vfio_pci_core_device *vdev, char __user
- 		cap_start = *ppos;
- 	} else {
- 		if (*ppos >= PCI_CFG_SPACE_SIZE) {
--			WARN_ON(cap_id > PCI_EXT_CAP_ID_MAX);
-+			/*
-+			 * We can get a cap_id that exceeds PCI_EXT_CAP_ID_MAX
-+			 * if we're hiding an unknown capability at the start
-+			 * of the extended capability list.  Use default, ro
-+			 * access, which will virtualize the id and next values.
-+			 */
-+			if (cap_id > PCI_EXT_CAP_ID_MAX)
-+				perm = &direct_ro_perms;
-+			else
-+				perm = &ecap_perms[cap_id];
+    * ::
  
--			perm = &ecap_perms[cap_id];
- 			cap_start = vfio_find_cap_start(vdev, *ppos);
- 		} else {
- 			WARN_ON(cap_id > PCI_CAP_ID_MAX);
+-       bool fs_validate_description(const struct fs_parameter_description *desc);
++       bool fs_validate_description(const char *name,
++                                    const struct fs_parameter_description *desc);
+ 
+      This performs some validation checks on a parameter description.  It
+      returns true if the description is good and false if it is not.  It will
 -- 
 2.43.0
 
