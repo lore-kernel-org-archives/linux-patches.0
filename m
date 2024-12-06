@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52C2513E03A;
-	Fri,  6 Dec 2024 15:02:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EB6D53A7;
+	Fri,  6 Dec 2024 15:02:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733497373; cv=none; b=BswL2ibtCKCTslSEfM25omAv5ssWPDRshIodRhzWNA7Wtb14HW/8PxSgkUSKwxOnT0O57FRYym/VIz83wzm26qqKbWLdE/PUuZyD6tectXxzPnp63xnbEF2O48SuDyLVK8sZrlK+DcEXT4P6XlM/Et2bbVPHrdk7m3b2swaI1Ms=
+	t=1733497376; cv=none; b=EgTnR5qqhmLyKfZ0l4Nme8hARU+LgqHLhg2vUar3xAZRH4GK1suYudC4w/AtPl8yWuyVBNvfPhUSM7jRVG7eaEAeB7omq86Z4F0uAqjRIwfv86f+fyvYCL8rUC67PeUPSUB5oNlGOzKDRnho7E+fQE9VfSe494Q2batqJdXyljI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733497373; c=relaxed/simple;
-	bh=DtR76VFNG//jPbXTfFzsTfkm8yv1u3AuCGMK1eC6VRk=;
+	s=arc-20240116; t=1733497376; c=relaxed/simple;
+	bh=EoufOzY4ENeRsW6UFLBUxkM7QwjvtALVbEWPtZaMx9E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rmeWM7SICz23O0tPQWObfbuqUEKmas4ClErldFcq4gfzYQIlbMkxSNU5dEAwGc7tR370Yt4PPjgtLYbbz/7O1mm91uajgUvCbaREG3i6mOf/xYHxox3Dt+DuWXcDJrjEtykBdhNAoCNKgG1MFvN5on8kPxxeKeOYND0DPOTisoo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pfEvfQKv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=T418/jA1L06QF+/T+LsYrOdpKtFKMpjswTLOD199AqXe+NlgHWMAdTgQTJPd0n72rjB6Zw0nCWJI5CpAlxjsg2MF0oSCNyT/mRc2w/TRDe0rUXNbP81wbFitKzzB+uf5u2/F3cqPLkSIZyUtPUzwVWRYBaaF6QYsjN+gfiR6FMM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iwq/RMQS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pfEvfQKv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5BACC4CEDC;
-	Fri,  6 Dec 2024 15:02:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iwq/RMQS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F28B8C4CEDE;
+	Fri,  6 Dec 2024 15:02:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733497373;
-	bh=DtR76VFNG//jPbXTfFzsTfkm8yv1u3AuCGMK1eC6VRk=;
+	s=korg; t=1733497376;
+	bh=EoufOzY4ENeRsW6UFLBUxkM7QwjvtALVbEWPtZaMx9E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pfEvfQKvXWM4EHZx3k+OWlKH6EtA/muOr857dnNVccmGGBrogHZ9Vbc4DOSImY395
-	 j1aclJaRRMBQi+DI5+9BQjn37IrDfhg510nq6dZZ12DrT8ZW7Or+6tjULoy3GTjaxV
-	 okfXEzdb9BAhenyUlnVuu9coAHNlnzKM3LvBQaOc=
+	b=iwq/RMQSHDPKOGwSKF2eqQdY+PlYEJUFsuSCNX/tJHwkPtWorH29NDSVkSihlV2S1
+	 o1n54GNf8ZJYV/wFF0c3mQoPJM4W/lNAIPjnYlNJOtNCtULBS6wjpEfnQWm3LxMjgT
+	 s0RkLZRuEoUXY5fACJY2qc6cKmHY67pwjCzv1EDQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Hildenbrand <david@redhat.com>,
-	Sachin P Bappalige <sachinpb@linux.ibm.com>,
-	Hari Bathini <hbathini@linux.ibm.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
-	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Tudor Ambarus <tudor.ambarus@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 272/676] powerpc/fadump: Move fadump_cma_init to setup_arch() after initmem_init()
-Date: Fri,  6 Dec 2024 15:31:31 +0100
-Message-ID: <20241206143703.964864320@linuxfoundation.org>
+Subject: [PATCH 6.6 273/676] mtd: hyperbus: rpc-if: Convert to platform remove callback returning void
+Date: Fri,  6 Dec 2024 15:31:32 +0100
+Message-ID: <20241206143704.005339131@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -49,134 +46,67 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-[ Upstream commit 05b94cae1c47f94588c3e7096963c1007c4d9c1d ]
+[ Upstream commit baaa90c1c923ff2412fae0162eb66d036fd3be6b ]
 
-During early init CMA_MIN_ALIGNMENT_BYTES can be PAGE_SIZE,
-since pageblock_order is still zero and it gets initialized
-later during initmem_init() e.g.
-setup_arch() -> initmem_init() -> sparse_init() -> set_pageblock_order()
+The .remove() callback for a platform driver returns an int which makes
+many driver authors wrongly assume it's possible to do error handling by
+returning an error code. However the value returned is ignored (apart
+from emitting a warning) and this typically results in resource leaks.
 
-One such use case where this causes issue is -
-early_setup() -> early_init_devtree() -> fadump_reserve_mem() -> fadump_cma_init()
+To improve here there is a quest to make the remove callback return
+void. In the first step of this quest all drivers are converted to
+.remove_new(), which already returns void. Eventually after all drivers
+are converted, .remove_new() will be renamed to .remove().
 
-This causes CMA memory alignment check to be bypassed in
-cma_init_reserved_mem(). Then later cma_activate_area() can hit
-a VM_BUG_ON_PAGE(pfn & ((1 << order) - 1)) if the reserved memory
-area was not pageblock_order aligned.
+Trivially convert this driver from always returning zero in the remove
+callback to the void returning variant.
 
-Fix it by moving the fadump_cma_init() after initmem_init(),
-where other such cma reservations also gets called.
-
-<stack trace>
-==============
-page: refcount:0 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x10010
-flags: 0x13ffff800000000(node=1|zone=0|lastcpupid=0x7ffff) CMA
-raw: 013ffff800000000 5deadbeef0000100 5deadbeef0000122 0000000000000000
-raw: 0000000000000000 0000000000000000 00000000ffffffff 0000000000000000
-page dumped because: VM_BUG_ON_PAGE(pfn & ((1 << order) - 1))
-------------[ cut here ]------------
-kernel BUG at mm/page_alloc.c:778!
-
-Call Trace:
-__free_one_page+0x57c/0x7b0 (unreliable)
-free_pcppages_bulk+0x1a8/0x2c8
-free_unref_page_commit+0x3d4/0x4e4
-free_unref_page+0x458/0x6d0
-init_cma_reserved_pageblock+0x114/0x198
-cma_init_reserved_areas+0x270/0x3e0
-do_one_initcall+0x80/0x2f8
-kernel_init_freeable+0x33c/0x530
-kernel_init+0x34/0x26c
-ret_from_kernel_user_thread+0x14/0x1c
-
-Fixes: 11ac3e87ce09 ("mm: cma: use pageblock_order as the single alignment")
-Suggested-by: David Hildenbrand <david@redhat.com>
-Reported-by: Sachin P Bappalige <sachinpb@linux.ibm.com>
-Acked-by: Hari Bathini <hbathini@linux.ibm.com>
-Reviewed-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Signed-off-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://patch.msgid.link/3ae208e48c0d9cefe53d2dc4f593388067405b7d.1729146153.git.ritesh.list@gmail.com
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Acked-by: Tudor Ambarus <tudor.ambarus@linaro.org>
+Link: https://lore.kernel.org/linux-mtd/20231008200143.196369-11-u.kleine-koenig@pengutronix.de
+Stable-dep-of: 7d189579a287 ("mtd: hyperbus: rpc-if: Add missing MODULE_DEVICE_TABLE")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/include/asm/fadump.h  | 7 +++++++
- arch/powerpc/kernel/fadump.c       | 6 +-----
- arch/powerpc/kernel/setup-common.c | 6 ++++--
- 3 files changed, 12 insertions(+), 7 deletions(-)
+ drivers/mtd/hyperbus/rpc-if.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/arch/powerpc/include/asm/fadump.h b/arch/powerpc/include/asm/fadump.h
-index 526a6a6473128..daa44b2ef35ad 100644
---- a/arch/powerpc/include/asm/fadump.h
-+++ b/arch/powerpc/include/asm/fadump.h
-@@ -32,4 +32,11 @@ extern int early_init_dt_scan_fw_dump(unsigned long node, const char *uname,
- 				      int depth, void *data);
- extern int fadump_reserve_mem(void);
- #endif
-+
-+#if defined(CONFIG_FA_DUMP) && defined(CONFIG_CMA)
-+void fadump_cma_init(void);
-+#else
-+static inline void fadump_cma_init(void) { }
-+#endif
-+
- #endif /* _ASM_POWERPC_FADUMP_H */
-diff --git a/arch/powerpc/kernel/fadump.c b/arch/powerpc/kernel/fadump.c
-index 4722a9e606e61..1866bac234000 100644
---- a/arch/powerpc/kernel/fadump.c
-+++ b/arch/powerpc/kernel/fadump.c
-@@ -80,7 +80,7 @@ static struct cma *fadump_cma;
-  * But for some reason even if it fails we still have the memory reservation
-  * with us and we can still continue doing fadump.
-  */
--static void __init fadump_cma_init(void)
-+void __init fadump_cma_init(void)
- {
- 	unsigned long long base, size;
- 	int rc;
-@@ -124,8 +124,6 @@ static void __init fadump_cma_init(void)
- 		(unsigned long)cma_get_base(fadump_cma) >> 20,
- 		fw_dump.reserve_dump_area_size);
+diff --git a/drivers/mtd/hyperbus/rpc-if.c b/drivers/mtd/hyperbus/rpc-if.c
+index ef32fca5f785e..b22aa57119f23 100644
+--- a/drivers/mtd/hyperbus/rpc-if.c
++++ b/drivers/mtd/hyperbus/rpc-if.c
+@@ -154,20 +154,18 @@ static int rpcif_hb_probe(struct platform_device *pdev)
+ 	return error;
  }
--#else
--static void __init fadump_cma_init(void) { }
- #endif /* CONFIG_CMA */
  
- /* Scan the Firmware Assisted dump configuration details. */
-@@ -642,8 +640,6 @@ int __init fadump_reserve_mem(void)
+-static int rpcif_hb_remove(struct platform_device *pdev)
++static void rpcif_hb_remove(struct platform_device *pdev)
+ {
+ 	struct rpcif_hyperbus *hyperbus = platform_get_drvdata(pdev);
  
- 		pr_info("Reserved %lldMB of memory at %#016llx (System RAM: %lldMB)\n",
- 			(size >> 20), base, (memblock_phys_mem_size() >> 20));
+ 	hyperbus_unregister_device(&hyperbus->hbdev);
+ 
+ 	pm_runtime_disable(hyperbus->rpc.dev);
 -
--		fadump_cma_init();
- 	}
+-	return 0;
+ }
  
- 	return ret;
-diff --git a/arch/powerpc/kernel/setup-common.c b/arch/powerpc/kernel/setup-common.c
-index 03eaad5949f14..d43db8150767b 100644
---- a/arch/powerpc/kernel/setup-common.c
-+++ b/arch/powerpc/kernel/setup-common.c
-@@ -988,9 +988,11 @@ void __init setup_arch(char **cmdline_p)
- 	initmem_init();
- 
- 	/*
--	 * Reserve large chunks of memory for use by CMA for KVM and hugetlb. These must
--	 * be called after initmem_init(), so that pageblock_order is initialised.
-+	 * Reserve large chunks of memory for use by CMA for fadump, KVM and
-+	 * hugetlb. These must be called after initmem_init(), so that
-+	 * pageblock_order is initialised.
- 	 */
-+	fadump_cma_init();
- 	kvm_cma_reserve();
- 	gigantic_hugetlb_cma_reserve();
- 
+ static struct platform_driver rpcif_platform_driver = {
+ 	.probe	= rpcif_hb_probe,
+-	.remove	= rpcif_hb_remove,
++	.remove_new = rpcif_hb_remove,
+ 	.driver	= {
+ 		.name	= "rpc-if-hyperflash",
+ 	},
 -- 
 2.43.0
 
