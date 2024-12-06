@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FCC7148832;
-	Fri,  6 Dec 2024 15:12:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCF3D148832;
+	Fri,  6 Dec 2024 15:12:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733497948; cv=none; b=hebjM77+FQm/VzAMhnrFdJnu5Vr0QhTY4fVO7kZfu00VUGwb/R15WH6IP/EjXjt9A6z1R8mUhfPl1ADgYWdRU1slsf9M5DwvTasQQrK18KJzjVOMIwESN894rk3FvCqNYWL5sa99CnBfI9igf6puM9FyDQo9ROc6gUvKrlHz3yA=
+	t=1733497952; cv=none; b=H4K1kh9JfuZfsbRY0hmo0427PL8Bxk1fdxzyILBN/13yjzxRajQalKxhGmFITmea3+ZJAKxh7VShd3hkfLozqGnMtu3hf+56+rG7l/bQkjnH4XbisuHNg4CwoL+wLqJloypPN9iZ/7/8fz931QSw8LlrbyY2AiCGCdBxjBOt4Zg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733497948; c=relaxed/simple;
-	bh=WHciIxuI5Mz31Md1FZ0vQiBdhjooWLb300sTRikSpIo=;
+	s=arc-20240116; t=1733497952; c=relaxed/simple;
+	bh=9XzJJ4bXS9KV49LlcLXoM2L5Hb8n2AwWOCYCgnoM5WI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=noIKlxL9SKspiJQXTnhghgZKcpNBmPETsFMuJEIIAoQulOLAe/9fCLMbaSTRxwSl7+tLYpXdKJsvIRaSMArwo5pefCb/UGjOEXSBIKTUxbjJPrGrc5zLQaC7zGtqOkmhLSH0xoPaqj+kVLIgDfkR2eS4oi45KMG4lMqI67WI+fk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uD+Vnwyi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=p5YIiBhh3PhQ8WYJrf/Ld0HB4P/+SDxwZak9iFa93EGtbyL44GFFwBWz+2pOWmoSQoYwE31xamKlyHjW9AGcI/0RGB0XoWwKne7E/Xf5g5S2i4uciEg+cgTd5xH/lzo8EpSEd7xfCIWd63NLLAkRqAr/cTcp8OGua6kuifY7u+M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LYs4fsal; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uD+Vnwyi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FA94C4CED1;
-	Fri,  6 Dec 2024 15:12:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LYs4fsal"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12B3BC4CED1;
+	Fri,  6 Dec 2024 15:12:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733497948;
-	bh=WHciIxuI5Mz31Md1FZ0vQiBdhjooWLb300sTRikSpIo=;
+	s=korg; t=1733497951;
+	bh=9XzJJ4bXS9KV49LlcLXoM2L5Hb8n2AwWOCYCgnoM5WI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uD+VnwyidVypzix+b7K1euQijS+4tXj7OMUyLasiBFC8wTcRFtKDP8/SHB6SsGSi/
-	 RkllNivOj1yPyvjhetvUUxsw0hSQCQSsxB/wUKMw6/uBIgGJKnSP3yj9ZFP1XAQfH7
-	 Vp7oz6W3U3cTIzezeuJTi9R8So8MSiDZMK2BCaBM=
+	b=LYs4fsalxySvt/mYki9ItJyyyPlE3avB5uj9w2VeVAU/SSdhfpr6m64VIvOR81pNi
+	 Vg8UeAYQV6MvKM9bmSs9VSw0iqRaUZm9l354BJoDI6Gn/c04pA0MNWym1NFPQXDz8M
+	 ulVlbMY3wE1AjIsiG3wwLmHM5pfIBqx/hwnUqmmU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	chao liu <liuzgyid@outlook.com>,
-	John Johansen <john.johansen@canonical.com>,
+	Venkata Prasad Potturu <venkataprasad.potturu@amd.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 440/676] apparmor: fix Do simple duplicate message elimination
-Date: Fri,  6 Dec 2024 15:34:19 +0100
-Message-ID: <20241206143710.537668623@linuxfoundation.org>
+Subject: [PATCH 6.6 441/676] ASoC: amd: yc: Fix for enabling DMIC on acp6x via _DSD entry
+Date: Fri,  6 Dec 2024 15:34:20 +0100
+Message-ID: <20241206143710.583732530@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -51,33 +51,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: chao liu <liuzgyid@outlook.com>
+From: Venkata Prasad Potturu <venkataprasad.potturu@amd.com>
 
-[ Upstream commit 9b897132424fe76bf6c61f22f9cf12af7f1d1e6a ]
+[ Upstream commit 4095cf872084ecfdfdb0e681f3e9ff9745acfa75 ]
 
-Multiple profiles shared 'ent->caps', so some logs missed.
+Add condition check to register ACP PDM sound card by reading
+_WOV acpi entry.
 
-Fixes: 0ed3b28ab8bf ("AppArmor: mediation of non file objects")
-Signed-off-by: chao liu <liuzgyid@outlook.com>
-Signed-off-by: John Johansen <john.johansen@canonical.com>
+Fixes: 5426f506b584 ("ASoC: amd: Add support for enabling DMIC on acp6x via _DSD")
+
+Signed-off-by: Venkata Prasad Potturu <venkataprasad.potturu@amd.com>
+Link: https://patch.msgid.link/20241127112227.227106-1-venkataprasad.potturu@amd.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/apparmor/capability.c | 2 ++
- 1 file changed, 2 insertions(+)
+ sound/soc/amd/yc/acp6x-mach.c | 18 +++++++++++++++++-
+ 1 file changed, 17 insertions(+), 1 deletion(-)
 
-diff --git a/security/apparmor/capability.c b/security/apparmor/capability.c
-index 2fb6a2ea0b998..8248597200623 100644
---- a/security/apparmor/capability.c
-+++ b/security/apparmor/capability.c
-@@ -96,6 +96,8 @@ static int audit_caps(struct apparmor_audit_data *ad, struct aa_profile *profile
- 		return error;
- 	} else {
- 		aa_put_profile(ent->profile);
-+		if (profile != ent->profile)
-+			cap_clear(ent->caps);
- 		ent->profile = aa_get_profile(profile);
- 		cap_raise(ent->caps, cap);
+diff --git a/sound/soc/amd/yc/acp6x-mach.c b/sound/soc/amd/yc/acp6x-mach.c
+index 04700e7471ca5..f3c0db24bc76b 100644
+--- a/sound/soc/amd/yc/acp6x-mach.c
++++ b/sound/soc/amd/yc/acp6x-mach.c
+@@ -537,8 +537,14 @@ static int acp6x_probe(struct platform_device *pdev)
+ 	struct acp6x_pdm *machine = NULL;
+ 	struct snd_soc_card *card;
+ 	struct acpi_device *adev;
++	acpi_handle handle;
++	acpi_integer dmic_status;
+ 	int ret;
++	bool is_dmic_enable, wov_en;
+ 
++	/* IF WOV entry not found, enable dmic based on AcpDmicConnected entry*/
++	is_dmic_enable = false;
++	wov_en = true;
+ 	/* check the parent device's firmware node has _DSD or not */
+ 	adev = ACPI_COMPANION(pdev->dev.parent);
+ 	if (adev) {
+@@ -546,9 +552,19 @@ static int acp6x_probe(struct platform_device *pdev)
+ 
+ 		if (!acpi_dev_get_property(adev, "AcpDmicConnected", ACPI_TYPE_INTEGER, &obj) &&
+ 		    obj->integer.value == 1)
+-			platform_set_drvdata(pdev, &acp6x_card);
++			is_dmic_enable = true;
  	}
+ 
++	handle = ACPI_HANDLE(pdev->dev.parent);
++	ret = acpi_evaluate_integer(handle, "_WOV", NULL, &dmic_status);
++	if (!ACPI_FAILURE(ret))
++		wov_en = dmic_status;
++
++	if (is_dmic_enable && wov_en)
++		platform_set_drvdata(pdev, &acp6x_card);
++	else
++		return 0;
++
+ 	/* check for any DMI overrides */
+ 	dmi_id = dmi_first_match(yc_acp_quirk_table);
+ 	if (dmi_id)
 -- 
 2.43.0
 
