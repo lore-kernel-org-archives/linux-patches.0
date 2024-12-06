@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3B87148832;
-	Fri,  6 Dec 2024 14:55:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 530A114D29D;
+	Fri,  6 Dec 2024 14:55:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733496917; cv=none; b=Zw3P0hQQ2R6xm535heb7si1Q/6YEBdHLrCvknf+Uppswx1Ed+f9USPy8a2qxucuYeMxodMplTdjA+H/abDblC0T+3go7bImkdXTd3STaPYNOQRAxdF+V71ZDTfJPHO23Aa7MjUXSgtuje5t9+Tg9MKy7IXGV1wlCBzl6vOxT6T4=
+	t=1733496921; cv=none; b=torxBZnnKlRca/tYh3au6upftZ2DNkED/ZX+pgArR3Qt6448wKV/jvWPtwzfdNbsDl/m5buiK6rTAghbIlOXicD69QAC4ArWSnE90EoFYmHPNrArP0Nw5uuygEIJmzzUU5przr4ASI4uiyxM/ORB5vVIasBi/h3IGsX399oSdCY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733496917; c=relaxed/simple;
-	bh=7krwrZNkN+ia1qxArcojOZQhVy4+D3rSNZX6XQ+PNHc=;
+	s=arc-20240116; t=1733496921; c=relaxed/simple;
+	bh=c1uCvZoHpBWVwebBjnWE5jpvFQa5yW7fzISvIs2DUxE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C0DEs5GO1a+3aAEQhZVA4tOt5EBHIMcfpKKgHO2jNohTRsDQ8J5JZ/YdJDU4tOsgtWu22WK4ScIF5XvcPQrsy40iTRr9cISL03C3gZx7Nj+OOGR7WkgUjvtUFF3g6QUIGohF33eJeC2/rmMHnTAZxdcEpYiD61d2ewHeVlQ5E84=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WWmURIWm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ri9zaxK5ChgiHR/2q2nEhdpVf9o90Z42VKRauib2KIvMNJ+19zvwVA0313wXOLNSAgOpksJNS9v2iKBadrmKOOgbJJWuMlHJEIDIvnPBEKGiiRhdAlyJICv/9TJ6xj2RLRYM6EIPotGrTEt04m8u+2XCoUANhiDDM/aUAvusYu0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lvOSSpX7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WWmURIWm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 419CFC4CED1;
-	Fri,  6 Dec 2024 14:55:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lvOSSpX7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5E05C4CED1;
+	Fri,  6 Dec 2024 14:55:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733496917;
-	bh=7krwrZNkN+ia1qxArcojOZQhVy4+D3rSNZX6XQ+PNHc=;
+	s=korg; t=1733496921;
+	bh=c1uCvZoHpBWVwebBjnWE5jpvFQa5yW7fzISvIs2DUxE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WWmURIWmcez1o4ZdoFiN9Yu3Bqi/5tDod6LmmhaIup5ENqoimZouS9uM2cob831Wg
-	 9arBTnAeD0GRle83OvQSnomvsfUmNWRjyPVSxzIDJte6TKp7799VD8KL29QXpRb5nA
-	 Q6CykuLcpxbx90gtrxKBnvE5TivtP1FsyVmQwyUE=
+	b=lvOSSpX7OBYCOEZQgL9qcfj/8p8CTdmN+phcP7S1+kFEBHt7t4H8bMVhPkT7ehPtG
+	 HKno+YLJlWD6THoLUAoe+PuM2EoUphRTj23ua9mzlxFyvgg1O6yulvE0gU6RC1EEjb
+	 IfM9ZY/I4GpVqBfr1Uj5B7Bufs9+f+0zqSGw+SBs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinjie Ruan <ruanjinjie@huawei.com>,
-	Mark Brown <broonie@kernel.org>,
+	Gaosheng Cui <cuigaosheng1@huawei.com>,
+	Michal Simek <michal.simek@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 112/676] spi: spi-fsl-lpspi: Use IRQF_NO_AUTOEN flag in request_irq()
-Date: Fri,  6 Dec 2024 15:28:51 +0100
-Message-ID: <20241206143657.734948300@linuxfoundation.org>
+Subject: [PATCH 6.6 113/676] drivers: soc: xilinx: add the missing kfree in xlnx_add_cb_for_suspend()
+Date: Fri,  6 Dec 2024 15:28:52 +0100
+Message-ID: <20241206143657.773492892@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -51,54 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinjie Ruan <ruanjinjie@huawei.com>
+From: Gaosheng Cui <cuigaosheng1@huawei.com>
 
-[ Upstream commit 003c7e01916c5e2af95add9b0cbda2e6163873e8 ]
+[ Upstream commit 44ed4f90a97ff6f339e50ac01db71544e0990efc ]
 
-disable_irq() after request_irq() still has a time gap in which
-interrupts can come. request_irq() with IRQF_NO_AUTOEN flag will
-disable IRQ auto-enable when request IRQ.
+If we fail to allocate memory for cb_data by kmalloc, the memory
+allocation for eve_data is never freed, add the missing kfree()
+in the error handling path.
 
-Fixes: 9728fb3ce117 ("spi: lpspi: disable lpspi module irq in DMA mode")
-Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-Link: https://patch.msgid.link/20240906022828.891812-1-ruanjinjie@huawei.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 05e5ba40ea7a ("driver: soc: xilinx: Add support of multiple callbacks for same event in event management driver")
+Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
+Link: https://lore.kernel.org/r/20240706065155.452764-1-cuigaosheng1@huawei.com
+Signed-off-by: Michal Simek <michal.simek@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-fsl-lpspi.c | 12 ++++--------
- 1 file changed, 4 insertions(+), 8 deletions(-)
+ drivers/soc/xilinx/xlnx_event_manager.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/spi/spi-fsl-lpspi.c b/drivers/spi/spi-fsl-lpspi.c
-index 13313f07839b6..514a2c5c84226 100644
---- a/drivers/spi/spi-fsl-lpspi.c
-+++ b/drivers/spi/spi-fsl-lpspi.c
-@@ -891,7 +891,7 @@ static int fsl_lpspi_probe(struct platform_device *pdev)
- 		return ret;
- 	}
+diff --git a/drivers/soc/xilinx/xlnx_event_manager.c b/drivers/soc/xilinx/xlnx_event_manager.c
+index 098a2ecfd5c68..8f6a2614d8eb4 100644
+--- a/drivers/soc/xilinx/xlnx_event_manager.c
++++ b/drivers/soc/xilinx/xlnx_event_manager.c
+@@ -174,8 +174,10 @@ static int xlnx_add_cb_for_suspend(event_cb_func_t cb_fun, void *data)
+ 	INIT_LIST_HEAD(&eve_data->cb_list_head);
  
--	ret = devm_request_irq(&pdev->dev, irq, fsl_lpspi_isr, 0,
-+	ret = devm_request_irq(&pdev->dev, irq, fsl_lpspi_isr, IRQF_NO_AUTOEN,
- 			       dev_name(&pdev->dev), fsl_lpspi);
- 	if (ret) {
- 		dev_err(&pdev->dev, "can't get irq%d: %d\n", irq, ret);
-@@ -948,14 +948,10 @@ static int fsl_lpspi_probe(struct platform_device *pdev)
- 	ret = fsl_lpspi_dma_init(&pdev->dev, fsl_lpspi, controller);
- 	if (ret == -EPROBE_DEFER)
- 		goto out_pm_get;
--	if (ret < 0)
-+	if (ret < 0) {
- 		dev_warn(&pdev->dev, "dma setup error %d, use pio\n", ret);
--	else
--		/*
--		 * disable LPSPI module IRQ when enable DMA mode successfully,
--		 * to prevent the unexpected LPSPI module IRQ events.
--		 */
--		disable_irq(irq);
-+		enable_irq(irq);
+ 	cb_data = kmalloc(sizeof(*cb_data), GFP_KERNEL);
+-	if (!cb_data)
++	if (!cb_data) {
++		kfree(eve_data);
+ 		return -ENOMEM;
 +	}
+ 	cb_data->eve_cb = cb_fun;
+ 	cb_data->agent_data = data;
  
- 	ret = devm_spi_register_controller(&pdev->dev, controller);
- 	if (ret < 0) {
 -- 
 2.43.0
 
