@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B89631494D9;
-	Fri,  6 Dec 2024 14:40:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D1BD1494D9;
+	Fri,  6 Dec 2024 14:40:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733496034; cv=none; b=IG0uIRhqLhNaCf+rjSKCw+VbNJXMVw4ya9T3lNpqanrAagRcqMHoZfpqMoazHW0WJ3ef5V/dimklV4oPHq1d/So+aJk1Q5MutQCK4l7npUjA6tkPKR/IkpJzgOgxaqOCzQrZtNCDraSyZ4XOBQfhyR+iY0vtPQ1gMk+HqnKHfmY=
+	t=1733496043; cv=none; b=IrerSBBH/Qgxof60wGCI4hE7Mw+kmgnadBxTrEXtCqWIQ+w8IaAeYlg7bXQ1KZxJPCKF+aIyfNeesrgpLrsNntp6nAtm2bDgQEDLiLUyo2gWTIEpN6rHLasfJ4HmvFvpYArpLaWcKB8hEq0ZjUswbf9cwEMPhop2GXuSc6HL4KU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733496034; c=relaxed/simple;
-	bh=1D+cGQq5Tp+8T9SHa+soV+WIh0MquZxJ+D0yrE3VXWM=;
+	s=arc-20240116; t=1733496043; c=relaxed/simple;
+	bh=3p/tJlxvkIPv3twU+qTT5+d/xGwOc1eEdd/h2UItrXM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oJiW2Q0+SijCQft7Z37UlyvdRlw15TCN14n3kCjGpYGPdD+CN4u/Wn0jhohS15GpRXK2bLMCd8RGLidQ3z5ec3HC9bUKz63COz0ZyHOOVOtShrjXfCgm32uTrAjeneyFTEhhdLKg2puzf3JCcRhQoqVag56TKt3EErZBYi9ygfw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iai95OtA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MlaFLH6lGTHWX0bg4/EZXpEVBJfajyzlmtc3ASRo7ObD06/gZlqhc3MDuZL7/yRddcm5S7kRXfohqeJNo/2voXSx0pLC5ZJWB4Sa2UpKLdxI+cxZvItkEnLv8iMKBobheFtXpzVTE9m65DGnLGcXSarsNFyAsEZmDAdCta6KpPs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KMxIH2NC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iai95OtA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24674C4CEDC;
-	Fri,  6 Dec 2024 14:40:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KMxIH2NC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DE54C4CEDE;
+	Fri,  6 Dec 2024 14:40:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733496034;
-	bh=1D+cGQq5Tp+8T9SHa+soV+WIh0MquZxJ+D0yrE3VXWM=;
+	s=korg; t=1733496043;
+	bh=3p/tJlxvkIPv3twU+qTT5+d/xGwOc1eEdd/h2UItrXM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iai95OtAoHpC7LMQ19C6264OMqz/8/bjNaFT4Rki/dT/hz7hxrRv5ksF8xEcJ/g+H
-	 mWkvUBfuUj6NhxTK+MDijeQiGhNS8MJbYEESPCvX4x9Je9WZPDMxlOGci0MK+x7T6v
-	 1wV4Bb72q3bHWf/XfTR7lBHUjnbcWcEmF6avK7gY=
+	b=KMxIH2NC/rxRAgNykL/OZDTXZj/NdTYe/lrVbXCJwO/wduESCWCf4e8R5OWw7JffX
+	 ESHSf3JxpiwBEz7n6vAT9CIRlvYCp5iTJCfylkcim/DAY3nJz8H7DvAHz6YSv5jht1
+	 V/bnKuY1ZoWgF4ZUhs93S4dfz/9xO/EbEPp2Gorg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Jinjie Ruan <ruanjinjie@huawei.com>,
 	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
+	Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
 	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 6.12 033/146] media: amphion: Fix pm_runtime_set_suspended() with runtime pm enabled
-Date: Fri,  6 Dec 2024 15:36:04 +0100
-Message-ID: <20241206143528.939621658@linuxfoundation.org>
+Subject: [PATCH 6.12 034/146] media: venus: Fix pm_runtime_set_suspended() with runtime pm enabled
+Date: Fri,  6 Dec 2024 15:36:05 +0100
+Message-ID: <20241206143528.977643517@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143527.654980698@linuxfoundation.org>
 References: <20241206143527.654980698@linuxfoundation.org>
@@ -54,34 +55,35 @@ Content-Transfer-Encoding: 8bit
 
 From: Jinjie Ruan <ruanjinjie@huawei.com>
 
-commit 316e74500d1c6589cba28cebe2864a0bceeb2396 upstream.
+commit 2a20869f7d798aa2b69e45b863eaf1b1ecf98278 upstream.
 
 It is not valid to call pm_runtime_set_suspended() for devices
 with runtime PM enabled because it returns -EAGAIN if it is enabled
 already and working. So, call pm_runtime_disable() before to fix it.
 
 Cc: stable@vger.kernel.org
-Fixes: b50a64fc54af ("media: amphion: add amphion vpu device driver")
+Fixes: af2c3834c8ca ("[media] media: venus: adding core part and helper functions")
 Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
 Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Acked-by: Stanimir Varbanov <stanimir.k.varbanov@gmail.com>
 Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/amphion/vpu_drv.c |    2 +-
+ drivers/media/platform/qcom/venus/core.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/media/platform/amphion/vpu_drv.c
-+++ b/drivers/media/platform/amphion/vpu_drv.c
-@@ -151,8 +151,8 @@ err_add_decoder:
- 	media_device_cleanup(&vpu->mdev);
- 	v4l2_device_unregister(&vpu->v4l2_dev);
- err_vpu_deinit:
+--- a/drivers/media/platform/qcom/venus/core.c
++++ b/drivers/media/platform/qcom/venus/core.c
+@@ -412,8 +412,8 @@ err_of_depopulate:
+ 	of_platform_depopulate(dev);
+ err_runtime_disable:
+ 	pm_runtime_put_noidle(dev);
 -	pm_runtime_set_suspended(dev);
  	pm_runtime_disable(dev);
 +	pm_runtime_set_suspended(dev);
- 
- 	return ret;
- }
+ 	hfi_destroy(core);
+ err_core_deinit:
+ 	hfi_core_deinit(core, false);
 
 
