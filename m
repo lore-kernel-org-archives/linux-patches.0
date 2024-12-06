@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0491D153836;
-	Fri,  6 Dec 2024 15:12:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25CE2153836;
+	Fri,  6 Dec 2024 15:12:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733497925; cv=none; b=p+ae0XDsByW4DjtqPGGaDpFxn0yBNtaBDVQsxbOuBNQMp+uhVd/4wZiYe2J4tqZf6w2BX7AyMM/jLFiZ8pkFeTHqRl4u9BbiOfErE3Lc9xQYerEJa1LPPO+Izol91JVmKDjSf4O0QZZM92CbS/I4c+8rs37SFgoLZXEjkVLLZMk=
+	t=1733497928; cv=none; b=CtvWf5Kk9SiVKf/QlLt1bpc3w6oAvChV/afPhR26N7Tg3P+A0uPWDmsVxxwvQn7lgabE7g2gALOA1kdTQneukfz6iRfBfSmkjovB9ISnrZ2busQfTEo9ZMV7VM2LDqejobu0dT3+T+NI1JQA5pTQbRRMAbs+zSgjntzooIHbysU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733497925; c=relaxed/simple;
-	bh=RP9dilAXecx/BLdZPQW62sCiRhODFK1o8cDshhyfSI4=;
+	s=arc-20240116; t=1733497928; c=relaxed/simple;
+	bh=y/elpe2cfCQC9GxKS/qExqJ3Hxr4uSrFUIwcU070CnU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jwTYH1Tuh0toV5oUS584O0NL5zCjuN2nPdGrGiIf2l8aIlHAR0MSlWVtzf4V4LcrRuXBQdWmTeAciD7Q6+VSljA+jYTwyqoUmExVRyy/ZRuYRegz7uKvOQWoqpMFChhvmakHCItsZaRe1Ttj1SMsBnC1kcu7sB8QlCBhE4DJryI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dllDYQVG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=iM4ivFEixaZ/k17zAlI1zbtTGQQWfaw1fCYdwssrPnG8OkOiPii3OhSWZvSS/PKymZIStDMdpm4kyHdvEV0yxvvec9mS9uAOs9CqVVPDWTsJXBki3bjvj0ZmF6Rh6YP8BQF17ny/diMKMkN3dZ9xmnZxSCNd6obGVFabtSoLiWk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XICjboUW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dllDYQVG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 123E2C4CED1;
-	Fri,  6 Dec 2024 15:12:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XICjboUW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88300C4CEDC;
+	Fri,  6 Dec 2024 15:12:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733497924;
-	bh=RP9dilAXecx/BLdZPQW62sCiRhODFK1o8cDshhyfSI4=;
+	s=korg; t=1733497928;
+	bh=y/elpe2cfCQC9GxKS/qExqJ3Hxr4uSrFUIwcU070CnU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dllDYQVGdMrPoQIUocGS4PtCMTxMQ31JiwqKvIP+0E/DSgroST45qG/+sZ31xQs28
-	 /9VbUuwNLxV3PavtqxYanz23+Yz1Imp2oaHTYfbxzF65gFqqv8kJpQ7BcaR2/1x1oG
-	 72SyaAxgvThpjCLMXu6Pm17RPsRa9Odj5hZkmeTY=
+	b=XICjboUW74vzDOa9EHv94FJqEPkpp/yz7sCIL9uuIeedC/Ou6kg3vogFMPwiUuiKX
+	 TnlfX+Ong0Bk3Sx6MVluVL5otT20CUlLT6Vag1pp0Jg0z6kmDYg94ggsb1i3FezG/X
+	 Bcre6E999FuOV6lm9OKUsJCuWUIFUz+og9sMhOLU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Somnath Kotur <somnath.kotur@broadcom.com>,
-	Pavan Chebbi <pavan.chebbi@broadcom.com>,
-	Kashyap Desai <kashyap.desai@broadcom.com>,
-	Saravanan Vajravel <saravanan.vajravel@broadcom.com>,
-	Michael Chan <michael.chan@broadcom.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Gaosheng Cui <cuigaosheng1@huawei.com>,
+	=?UTF-8?q?Amadeusz=20S=C5=82awi=C5=84ski?= <amadeuszx.slawinski@linux.intel.com>,
+	Russ Weight <russ.weight@linux.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 416/676] bnxt_en: Reserve rings after PCIe AER recovery if NIC interface is down
-Date: Fri,  6 Dec 2024 15:33:55 +0100
-Message-ID: <20241206143709.598685005@linuxfoundation.org>
+Subject: [PATCH 6.6 434/676] firmware_loader: Fix possible resource leak in fw_log_firmware_info()
+Date: Fri,  6 Dec 2024 15:34:13 +0100
+Message-ID: <20241206143710.293873624@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -49,57 +46,60 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Saravanan Vajravel <saravanan.vajravel@broadcom.com>
+From: Gaosheng Cui <cuigaosheng1@huawei.com>
 
-[ Upstream commit 5311598f7f3293683cdc761df71ae3469327332c ]
+[ Upstream commit 369a9c046c2fdfe037f05b43b84c386bdbccc103 ]
 
-After successful PCIe AER recovery, FW will reset all resource
-reservations.  If it is IF_UP, the driver will call bnxt_open() and
-all resources will be reserved again.  It it is IF_DOWN, we should
-call bnxt_reserve_rings() so that we can reserve resources including
-RoCE resources to allow RoCE to resume after AER.  Without this
-patch, RoCE fails to resume in this IF_DOWN scenario.
+The alg instance should be released under the exception path, otherwise
+there may be resource leak here.
 
-Later, if it becomes IF_UP, bnxt_open() will see that resources have
-been reserved and will not reserve again.
+To mitigate this, free the alg instance with crypto_free_shash when kmalloc
+fails.
 
-Fixes: fb1e6e562b37 ("bnxt_en: Fix AER recovery.")
-Reviewed-by: Somnath Kotur <somnath.kotur@broadcom.com>
-Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
-Reviewed-by: Kashyap Desai <kashyap.desai@broadcom.com>
-Signed-off-by: Saravanan Vajravel <saravanan.vajravel@broadcom.com>
-Signed-off-by: Michael Chan <michael.chan@broadcom.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 02fe26f25325 ("firmware_loader: Add debug message with checksum for FW file")
+Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
+Reviewed-by: Amadeusz Sławiński <amadeuszx.slawinski@linux.intel.com>
+Reviewed-by: Russ Weight <russ.weight@linux.dev>
+Link: https://lore.kernel.org/r/20241016110335.3677924-1-cuigaosheng1@huawei.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/base/firmware_loader/main.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-index 58a7bb75506a3..bc6206543e8e9 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-@@ -14102,8 +14102,12 @@ static void bnxt_io_resume(struct pci_dev *pdev)
- 	rtnl_lock();
+diff --git a/drivers/base/firmware_loader/main.c b/drivers/base/firmware_loader/main.c
+index 0b18c6b46e65d..f3133ba831c5e 100644
+--- a/drivers/base/firmware_loader/main.c
++++ b/drivers/base/firmware_loader/main.c
+@@ -824,19 +824,18 @@ static void fw_log_firmware_info(const struct firmware *fw, const char *name, st
+ 	shash->tfm = alg;
  
- 	err = bnxt_hwrm_func_qcaps(bp);
--	if (!err && netif_running(netdev))
--		err = bnxt_open(netdev);
-+	if (!err) {
-+		if (netif_running(netdev))
-+			err = bnxt_open(netdev);
-+		else
-+			err = bnxt_reserve_rings(bp, true);
-+	}
+ 	if (crypto_shash_digest(shash, fw->data, fw->size, sha256buf) < 0)
+-		goto out_shash;
++		goto out_free;
  
- 	bnxt_ulp_start(bp, err);
- 	if (!err) {
+ 	for (int i = 0; i < SHA256_DIGEST_SIZE; i++)
+ 		sprintf(&outbuf[i * 2], "%02x", sha256buf[i]);
+ 	outbuf[SHA256_BLOCK_SIZE] = 0;
+ 	dev_dbg(device, "Loaded FW: %s, sha256: %s\n", name, outbuf);
+ 
+-out_shash:
+-	crypto_free_shash(alg);
+ out_free:
+ 	kfree(shash);
+ 	kfree(outbuf);
+ 	kfree(sha256buf);
++	crypto_free_shash(alg);
+ }
+ #else
+ static void fw_log_firmware_info(const struct firmware *fw, const char *name,
 -- 
 2.43.0
 
