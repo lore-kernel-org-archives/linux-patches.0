@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B63B13D516;
-	Fri,  6 Dec 2024 14:47:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C10F10E0;
+	Fri,  6 Dec 2024 14:47:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733496468; cv=none; b=QkosvR7mxwcTFhh/0u0vPFwVenPml0lo9gC4HosF9v0J+p29os1nHKrB27ycBuiRRuTuHV+cbljo65f/NNuK32tVisd5uaFo94B050+7mze5Pr5MvipkP4atoGXUGV707xqkyab+t11IbGNydaMNs+IoOyNkAS/0j1rF+ZFvs6o=
+	t=1733496471; cv=none; b=DpJtylQiBErJCZ/tmecVwFT58Dzl5aOqdcsJyM6OQanjZBkdQTbN5Mhd//4tnIp1oJEGBGwgTXQ5HVuKqcRRjh3xTHTkVL4g8aWLJ1RM9cSDtxfhsP2TNazBnSPxPuhtXsKPKQZPegPB6gTqRL2CKaTUiO/YKee67kki1w27QQo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733496468; c=relaxed/simple;
-	bh=HWFE/D1elPmXumwViKlt28qZbRCVbZQokoX8cCebv4U=;
+	s=arc-20240116; t=1733496471; c=relaxed/simple;
+	bh=D1XAZ3Hw+EaU7EI5RsQwiI0rtNTJf6CkB2JZq65S4xA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=azfIMPoSUYr+etfJD7fPXSulSaSSPfMirCalV3rVJOTctOyerZNCp6uNduW6s5yO6JRwVGsMK6Wwb+sCBKBWCs07a+YMg0AB48ZPVCj1Cm4lW736f21Uy1Fs7FyIYD0+279/CeTwSxV+n/yRH3eD6zhXgJ7yWXZKMyFzOcfCt0E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0bXi6c8k; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=q4XGDykhbfwlIs/Y49ACAiOeWzJlaWKxqm6UlPKcztUm1LmiwR1/160N3cWIOzDprb5RnbT2Myzd2MXqKeayRo82atMuq+Q6gxhXfoSb4KHCEsVJyEkLsqSxKLohG9xZwElzpiHiTfimZQMA9uJDZChG0W1F7cIz7xae+s21c6I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X432l4bp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0bXi6c8k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEAB1C4CED1;
-	Fri,  6 Dec 2024 14:47:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X432l4bp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC293C4CED1;
+	Fri,  6 Dec 2024 14:47:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733496468;
-	bh=HWFE/D1elPmXumwViKlt28qZbRCVbZQokoX8cCebv4U=;
+	s=korg; t=1733496471;
+	bh=D1XAZ3Hw+EaU7EI5RsQwiI0rtNTJf6CkB2JZq65S4xA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0bXi6c8ksAPorM/5/pusRfzq89v2qQG/qu+tSQgCPI+PwGAMbSiavNoDtL9DNEq0b
-	 PWNi3rkvJ+PXoY1xrXmBzy4jH6fWuRo2mDpOFw006sZG+soqQriJRLeMSlhorQ20A5
-	 NyPUsy54kzyz6ivGfGBmytBY7hzhZdQRS8F/o5Cw=
+	b=X432l4bpPYedz/YuUk3vg7n2PFvekBilH6wydIAgtRZvrSgBAUYzChSOXRObualE0
+	 oKy6U7m3uhMMKDZyhBiQJiB3GyOyHp0LLWSC1oBjAdUse5NtikJSBy4TZ71j5iYj0J
+	 hHRov/GllrUQYJC5zRExxHjrYltvUz+ZWMoPQ9Ag=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Charles Han <hanchunchao@inspur.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Cristian Marussi <cristian.marussi@arm.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Sudeep Holla <sudeep.holla@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 015/676] soc: qcom: Add check devm_kasprintf() returned value
-Date: Fri,  6 Dec 2024 15:27:14 +0100
-Message-ID: <20241206143653.953360599@linuxfoundation.org>
+Subject: [PATCH 6.6 016/676] firmware: arm_scmi: Reject clear channel request on A2P
+Date: Fri,  6 Dec 2024 15:27:15 +0100
+Message-ID: <20241206143653.991496122@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -51,43 +52,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Charles Han <hanchunchao@inspur.com>
+From: Cristian Marussi <cristian.marussi@arm.com>
 
-[ Upstream commit e694d2b5c58ba2d1e995d068707c8d966e7f5f2a ]
+[ Upstream commit a0a18e91eb3a6ef75a6de69dc00f206b913e3848 ]
 
-devm_kasprintf() can return a NULL pointer on failure but this
-returned value in qcom_socinfo_probe() is not checked.
+The clear channel transport operation is supposed to be called exclusively
+on the P2A channel from the agent, since it relinquishes the ownership of
+the channel to the platform, after this latter has initiated some sort of
+P2A communication.
 
-Signed-off-by: Charles Han <hanchunchao@inspur.com>
-Link: https://lore.kernel.org/r/20240929072349.202520-1-hanchunchao@inspur.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Make sure that, if it is ever called on a A2P, is logged and ignored.
+
+Signed-off-by: Cristian Marussi <cristian.marussi@arm.com>
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Message-Id: <20241021171544.2579551-1-cristian.marussi@arm.com>
+Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/qcom/socinfo.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/firmware/arm_scmi/common.h | 2 ++
+ drivers/firmware/arm_scmi/driver.c | 6 ++++++
+ 2 files changed, 8 insertions(+)
 
-diff --git a/drivers/soc/qcom/socinfo.c b/drivers/soc/qcom/socinfo.c
-index 880b41a57da01..f979ef420354f 100644
---- a/drivers/soc/qcom/socinfo.c
-+++ b/drivers/soc/qcom/socinfo.c
-@@ -757,10 +757,16 @@ static int qcom_socinfo_probe(struct platform_device *pdev)
- 	qs->attr.revision = devm_kasprintf(&pdev->dev, GFP_KERNEL, "%u.%u",
- 					   SOCINFO_MAJOR(le32_to_cpu(info->ver)),
- 					   SOCINFO_MINOR(le32_to_cpu(info->ver)));
--	if (offsetof(struct socinfo, serial_num) <= item_size)
-+	if (!qs->attr.soc_id || qs->attr.revision)
-+		return -ENOMEM;
-+
-+	if (offsetof(struct socinfo, serial_num) <= item_size) {
- 		qs->attr.serial_number = devm_kasprintf(&pdev->dev, GFP_KERNEL,
- 							"%u",
- 							le32_to_cpu(info->serial_num));
-+		if (!qs->attr.serial_number)
-+			return -ENOMEM;
+diff --git a/drivers/firmware/arm_scmi/common.h b/drivers/firmware/arm_scmi/common.h
+index 00b165d1f502d..039f686f4580d 100644
+--- a/drivers/firmware/arm_scmi/common.h
++++ b/drivers/firmware/arm_scmi/common.h
+@@ -163,6 +163,7 @@ void scmi_protocol_release(const struct scmi_handle *handle, u8 protocol_id);
+  *      used to initialize this channel
+  * @dev: Reference to device in the SCMI hierarchy corresponding to this
+  *	 channel
++ * @is_p2a: A flag to identify a channel as P2A (RX)
+  * @rx_timeout_ms: The configured RX timeout in milliseconds.
+  * @handle: Pointer to SCMI entity handle
+  * @no_completion_irq: Flag to indicate that this channel has no completion
+@@ -174,6 +175,7 @@ void scmi_protocol_release(const struct scmi_handle *handle, u8 protocol_id);
+ struct scmi_chan_info {
+ 	int id;
+ 	struct device *dev;
++	bool is_p2a;
+ 	unsigned int rx_timeout_ms;
+ 	struct scmi_handle *handle;
+ 	bool no_completion_irq;
+diff --git a/drivers/firmware/arm_scmi/driver.c b/drivers/firmware/arm_scmi/driver.c
+index 3962683e2af9d..efa9698c876a0 100644
+--- a/drivers/firmware/arm_scmi/driver.c
++++ b/drivers/firmware/arm_scmi/driver.c
+@@ -855,6 +855,11 @@ static inline void scmi_xfer_command_release(struct scmi_info *info,
+ static inline void scmi_clear_channel(struct scmi_info *info,
+ 				      struct scmi_chan_info *cinfo)
+ {
++	if (!cinfo->is_p2a) {
++		dev_warn(cinfo->dev, "Invalid clear on A2P channel !\n");
++		return;
 +	}
++
+ 	if (info->desc->ops->clear_channel)
+ 		info->desc->ops->clear_channel(cinfo);
+ }
+@@ -2319,6 +2324,7 @@ static int scmi_chan_setup(struct scmi_info *info, struct device_node *of_node,
+ 	if (!cinfo)
+ 		return -ENOMEM;
  
- 	qs->soc_dev = soc_device_register(&qs->attr);
- 	if (IS_ERR(qs->soc_dev))
++	cinfo->is_p2a = !tx;
+ 	cinfo->rx_timeout_ms = info->desc->max_rx_timeout_ms;
+ 
+ 	/* Create a unique name for this transport device */
 -- 
 2.43.0
 
