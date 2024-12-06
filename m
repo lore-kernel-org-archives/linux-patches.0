@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B11F953A7;
-	Fri,  6 Dec 2024 15:07:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C0B91494A8;
+	Fri,  6 Dec 2024 15:07:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733497666; cv=none; b=Wh+pbGs2ImZu5a3nucT6njgz9cIJa9SgPaSvMdhg3hEH0G9WlCmvxnXsMS+3QM+IEzbQQE1dbapowYkzGy+CvX7so/18rjgwuxB0Km6xINVEGPu6l0k/1xkX8PWu6JhWB0N8Rf4rVgn/ZsOn6RrqYRAQem9bo49GoZGqbUCtRxo=
+	t=1733497670; cv=none; b=Awf8vBn/IP3cPlLS9uxCGN1PIUGpcvcVOc5Kdt/Q3XHDqrLPROta4if8Q75cgLkNrYjlB7qRFUrex+rSTzqN5GJLbzVstS7MMWLdJDYAETXXzqHfyBdZzVmtP/rhHjxaC93AgOMPC+cmGN1rFE0mETUX/vxaGsh3eyrGP0o4csw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733497666; c=relaxed/simple;
-	bh=XQlOne5S20kuX2zHC3YnSV8nIQ0g1gmBsPg79LU1TlI=;
+	s=arc-20240116; t=1733497670; c=relaxed/simple;
+	bh=XSkFWBmMoiv/2fImnniJoTgIt31vClKPo/RfmwigCME=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SvIW/DKKGHyE+v2YIkD2ftZOTz9kjFwapmZbQQ6IvGc+GWb+o7O9fZgqyKG7dq0uVaQKOOiSmfEMGOuJHeKXPySbdvC62m9dS5dxGOIlcRZsnvarD4ya/oArmL1254IAJMdQMgP/K0gqlw+Y182b57suU8Lurv3sVci1shlRxkw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lt4Mho9Z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=RtKZYPCq1wlpVMXzLowsJYnPaREkfI7oFQjHfnbuBqrF3zlEl5x+DIdDGehEF6H+AmpENFrMYSJdxebtpzR9FMCuiv0+LOVnQgsnzqPrkTq+XBLPdlrNmlCgCAK8MW6Ds9QytY0G0WCrVIHAoauVbHkeNfiDMCNKo2FcvVJ7HqQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bTAE96uP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lt4Mho9Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3553CC4CED1;
-	Fri,  6 Dec 2024 15:07:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bTAE96uP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88DDCC4CEDE;
+	Fri,  6 Dec 2024 15:07:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733497666;
-	bh=XQlOne5S20kuX2zHC3YnSV8nIQ0g1gmBsPg79LU1TlI=;
+	s=korg; t=1733497669;
+	bh=XSkFWBmMoiv/2fImnniJoTgIt31vClKPo/RfmwigCME=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lt4Mho9ZEOroOASOYqTPMkkLR5cMLU3oM+FGjQ4tPIcOYYgLjxkvV9S2q2g8u6uSH
-	 B2pqm3UArDTtGRJ4W9iKuZ/dysTgOiDpv5vbr6JqpU5Q7qZXtRXwig3R2SAoUy/sLt
-	 QRE4aMNUVDwcj2qK2bmHsJhfmVVNyHaT+h7IiuGc=
+	b=bTAE96uP90Az1APKNKIZibZ0NTF5V1Tcv8lka7S2t2AknPrL10SpHEtphaVtKYjfW
+	 JegRC5qHUYkH/sZbrj8BofSLMaqu7350xlHpbDPyoLb2ATsdiq+tYpgmi3hpsC+BAP
+	 V6ZztVz5cOiIIGpL2ZTm8nzJjjIsgdPeoBKJH6T8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhiguo Niu <zhiguo.niu@unisoc.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Serge Semin <fancer.lancer@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 357/676] f2fs: fix to avoid use GC_AT when setting gc_mode as GC_URGENT_LOW or GC_URGENT_MID
-Date: Fri,  6 Dec 2024 15:32:56 +0100
-Message-ID: <20241206143707.293062974@linuxfoundation.org>
+Subject: [PATCH 6.6 358/676] PCI: Add T_PVPERL macro
+Date: Fri,  6 Dec 2024 15:32:57 +0100
+Message-ID: <20241206143707.331366347@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -46,73 +47,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhiguo Niu <zhiguo.niu@unisoc.com>
+From: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
 
-[ Upstream commit 296b8cb34e65fa93382cf919be5a056f719c9a26 ]
+[ Upstream commit 164f66be0c2523e65df41b755c41b7c9ff58035a ]
 
-If gc_mode is set to GC_URGENT_LOW or GC_URGENT_MID, cost benefit GC
-approach should be used, but if ATGC is enabled at the same time,
-Age-threshold approach will be selected, which can only do amount of
-GC and it is much less than the numbers of CB approach.
+According to the PCIe CEM r5.0, sec 2.9.2, Power stable to PERST#
+inactive interval is 100 ms as minimum. Add a macro so that the PCIe
+controller drivers can make use of it.
 
-some traces:
-  f2fs_gc-254:48-396     [007] ..... 2311600.684028: f2fs_gc_begin: dev = (254,48), gc_type = Background GC, no_background_GC = 0, nr_free_secs = 0, nodes = 1053, dents = 2, imeta = 18, free_sec:44898, free_seg:44898, rsv_seg:239, prefree_seg:0
-  f2fs_gc-254:48-396     [007] ..... 2311600.684527: f2fs_get_victim: dev = (254,48), type = No TYPE, policy = (Background GC, LFS-mode, Age-threshold), victim = 10, cost = 4294364975, ofs_unit = 1, pre_victim_secno = -1, prefree = 0, free = 44898
-  f2fs_gc-254:48-396     [007] ..... 2311600.714835: f2fs_gc_end: dev = (254,48), ret = 0, seg_freed = 0, sec_freed = 0, nodes = 1562, dents = 2, imeta = 18, free_sec:44898, free_seg:44898, rsv_seg:239, prefree_seg:0
-  f2fs_gc-254:48-396     [007] ..... 2311600.714843: f2fs_background_gc: dev = (254,48), wait_ms = 50, prefree = 0, free = 44898
-  f2fs_gc-254:48-396     [007] ..... 2311600.771785: f2fs_gc_begin: dev = (254,48), gc_type = Background GC, no_background_GC = 0, nr_free_secs = 0, nodes = 1562, dents = 2, imeta = 18, free_sec:44898, free_seg:44898, rsv_seg:239, prefree_seg:
-  f2fs_gc-254:48-396     [007] ..... 2311600.772275: f2fs_gc_end: dev = (254,48), ret = -61, seg_freed = 0, sec_freed = 0, nodes = 1562, dents = 2, imeta = 18, free_sec:44898, free_seg:44898, rsv_seg:239, prefree_seg:0
-
-Fixes: 0e5e81114de1 ("f2fs: add GC_URGENT_LOW mode in gc_urgent")
-Fixes: d98af5f45520 ("f2fs: introduce gc_urgent_mid mode")
-Signed-off-by: Zhiguo Niu <zhiguo.niu@unisoc.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Link: https://lore.kernel.org/linux-pci/20231018085631.1121289-2-yoshihiro.shimoda.uh@renesas.com
+Signed-off-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Reviewed-by: Serge Semin <fancer.lancer@gmail.com>
+Stable-dep-of: 22a9120479a4 ("PCI: j721e: Deassert PERST# after a delay of PCIE_T_PVPERL_MS milliseconds")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/ABI/testing/sysfs-fs-f2fs | 7 +++++--
- fs/f2fs/gc.c                            | 2 ++
- 2 files changed, 7 insertions(+), 2 deletions(-)
+ drivers/pci/pci.h | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/Documentation/ABI/testing/sysfs-fs-f2fs b/Documentation/ABI/testing/sysfs-fs-f2fs
-index 36c3cb5479013..33675e718a376 100644
---- a/Documentation/ABI/testing/sysfs-fs-f2fs
-+++ b/Documentation/ABI/testing/sysfs-fs-f2fs
-@@ -311,10 +311,13 @@ Description:	Do background GC aggressively when set. Set to 0 by default.
- 		GC approach and turns SSR mode on.
- 		gc urgent low(2): lowers the bar of checking I/O idling in
- 		order to process outstanding discard commands and GC a
--		little bit aggressively. uses cost benefit GC approach.
-+		little bit aggressively. always uses cost benefit GC approach,
-+		and will override age-threshold GC approach if ATGC is enabled
-+		at the same time.
- 		gc urgent mid(3): does GC forcibly in a period of given
- 		gc_urgent_sleep_time and executes a mid level of I/O idling check.
--		uses cost benefit GC approach.
-+		always uses cost benefit GC approach, and will override
-+		age-threshold GC approach if ATGC is enabled at the same time.
+diff --git a/drivers/pci/pci.h b/drivers/pci/pci.h
+index d5e9010a135a1..67ec4cf2fdb4c 100644
+--- a/drivers/pci/pci.h
++++ b/drivers/pci/pci.h
+@@ -13,6 +13,9 @@
  
- What:		/sys/fs/f2fs/<disk>/gc_urgent_sleep_time
- Date:		August 2017
-diff --git a/fs/f2fs/gc.c b/fs/f2fs/gc.c
-index 888c301ffe8f4..e990415824146 100644
---- a/fs/f2fs/gc.c
-+++ b/fs/f2fs/gc.c
-@@ -228,6 +228,8 @@ static int select_gc_type(struct f2fs_sb_info *sbi, int gc_type)
+ #define PCIE_LINK_RETRAIN_TIMEOUT_MS	1000
  
- 	switch (sbi->gc_mode) {
- 	case GC_IDLE_CB:
-+	case GC_URGENT_LOW:
-+	case GC_URGENT_MID:
- 		gc_mode = GC_CB;
- 		break;
- 	case GC_IDLE_GREEDY:
++/* Power stable to PERST# inactive from PCIe card Electromechanical Spec */
++#define PCIE_T_PVPERL_MS		100
++
+ /*
+  * PCIe r6.0, sec 5.3.3.2.1 <PME Synchronization>
+  * Recommends 1ms to 10ms timeout to check L2 ready.
 -- 
 2.43.0
 
