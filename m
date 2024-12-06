@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB9891474AF;
-	Fri,  6 Dec 2024 14:53:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1B081442E8;
+	Fri,  6 Dec 2024 14:53:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733496803; cv=none; b=hjL0ywPSxOhmVeXzBT1ycSRIPIV9kYEwiUgWdAL/2sSd91mnPlJJj8IEmGKJ199Ka685LaDy1CaMg9b5os3XEo1rTqeIWbo52ZVcZ9Qc9QW8bkzYZlKHDMhtMEz1lz245siZNH4oUW/w8Ol5+33FvXGfx4N7PEO9xHgZUz8u9cs=
+	t=1733496806; cv=none; b=Pgx5K6D+7Vy9ObYJ0d2EyHm7kR1HdH1gRjjtPqEdSoLPt8XsR/cPrW86+tYfAL6SkviY0apyXguBrIRSpLStowk8eWz+KZfM5Gg+iepPvEbAZv3uKmhuqR9V1b+mvKRqlWzkA7n57UY7BXMVE4ZHn4aePOH/LafgIKW1jJ9G2Jw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733496803; c=relaxed/simple;
-	bh=T0qzNhshEXA5e8ESb4JVny0UfjCsvvX6phn2KGYwfRc=;
+	s=arc-20240116; t=1733496806; c=relaxed/simple;
+	bh=6sEKwuwj5H+swAyKIBOfA0OqpapaGVJsIRfWLwkG6WM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Aoj5028CftYU8pnIczvb5GKdrkUQvd3bXJYM6ecaaR31LLxjfT93d2g6G2YyIVomW/KZtoCZybloaTsYLSqQ/z7Z3aFTgiE+nxjtNUNg5MzDNKcAetf8zY3kfBsncJRAPoqFlTDafXU1AyUpnrHtsSVhkBh6aibjz8h+a/3CEl4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qDC2H7KR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Io1LYDVB5r+LHCFhO5OciRKVxu7uo3c8h53rcBdzWukgqlZyGoaY72fMxwd2FJ7nLCHQUGEX1CgvHenCqwZD8GRJ8xW3s6Pxic7THWgvXYSRMDlAxGUlCpM2K6s27uiHOFhkpgOkgQJ7MNnGGZm3pA21awWosAp+t5VeSRBRfKg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h4kOC/nz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qDC2H7KR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E1DEC4CED1;
-	Fri,  6 Dec 2024 14:53:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h4kOC/nz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B2DAC4CED1;
+	Fri,  6 Dec 2024 14:53:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733496803;
-	bh=T0qzNhshEXA5e8ESb4JVny0UfjCsvvX6phn2KGYwfRc=;
+	s=korg; t=1733496806;
+	bh=6sEKwuwj5H+swAyKIBOfA0OqpapaGVJsIRfWLwkG6WM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qDC2H7KRSZNo+sYXk0X8sd4BTRI2+UyGAz1jIl/fLlEoQFcZuCDunbiLswsGE97ti
-	 9hCRZwrIqH9Yn6Vzxi3vcgVJuII7trwpA11ZayqvGE/WDJ3QPVO6qoylQiNgOQK/7O
-	 5wVxHSXZU/77KZAOeDVn/3CFghVm2MAftLwajya8=
+	b=h4kOC/nzdT0zOvaC1+noPgussKPFGyjXk3gk+OPJ48U7PFXJ38xYt3EtAHR67+do/
+	 fVTagFT/I7kI7vu1O0Hk8Seny7W6kkf+Txdpqu7yE8YqeS2e6jFy7QLSTlBFSgpDjq
+	 3QB6VP7tUznLpSAVLuXklQbGWryjv81o3TMA4/Xs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 077/676] crypto: caam - Fix the pointer passed to caam_qi_shutdown()
-Date: Fri,  6 Dec 2024 15:28:16 +0100
-Message-ID: <20241206143656.376477288@linuxfoundation.org>
+Subject: [PATCH 6.6 078/676] crypto: qat - remove check after debugfs_create_dir()
+Date: Fri,  6 Dec 2024 15:28:17 +0100
+Message-ID: <20241206143656.415023581@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -51,38 +51,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Cabiddu, Giovanni <giovanni.cabiddu@intel.com>
 
-[ Upstream commit ad980b04f51f7fb503530bd1cb328ba5e75a250e ]
+[ Upstream commit 23717055a79981daf7fafa09a4b0d7566f8384aa ]
 
-The type of the last parameter given to devm_add_action_or_reset() is
-"struct caam_drv_private *", but in caam_qi_shutdown(), it is casted to
-"struct device *".
+The debugfs functions are guaranteed to return a valid error code
+instead of NULL upon failure. Consequently, the driver can directly
+propagate any error returned without additional checks.
 
-Pass the correct parameter to devm_add_action_or_reset() so that the
-resources are released as expected.
+Remove the unnecessary `if` statement after debugfs_create_dir(). If
+this function fails, the error code is stored in accel_dev->debugfs_dir
+and utilized in subsequent debugfs calls.
 
-Fixes: f414de2e2fff ("crypto: caam - use devres to de-initialize QI")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Additionally, since accel_dev->debugfs_dir is assured to be non-NULL,
+remove the superfluous NULL pointer checks within the adf_dbgfs_add()
+and adf_dbgfs_rm().
+
+Fixes: 9260db6640a6 ("crypto: qat - move dbgfs init to separate file")
+Signed-off-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/caam/qi.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/crypto/intel/qat/qat_common/adf_dbgfs.c | 13 +------------
+ 1 file changed, 1 insertion(+), 12 deletions(-)
 
-diff --git a/drivers/crypto/caam/qi.c b/drivers/crypto/caam/qi.c
-index 46a083849a8ee..7a3a104557f03 100644
---- a/drivers/crypto/caam/qi.c
-+++ b/drivers/crypto/caam/qi.c
-@@ -772,7 +772,7 @@ int caam_qi_init(struct platform_device *caam_pdev)
+diff --git a/drivers/crypto/intel/qat/qat_common/adf_dbgfs.c b/drivers/crypto/intel/qat/qat_common/adf_dbgfs.c
+index 04845f8d72be6..056fc59b5ae61 100644
+--- a/drivers/crypto/intel/qat/qat_common/adf_dbgfs.c
++++ b/drivers/crypto/intel/qat/qat_common/adf_dbgfs.c
+@@ -19,18 +19,13 @@
+ void adf_dbgfs_init(struct adf_accel_dev *accel_dev)
+ {
+ 	char name[ADF_DEVICE_NAME_LENGTH];
+-	void *ret;
  
- 	caam_debugfs_qi_init(ctrlpriv);
+ 	/* Create dev top level debugfs entry */
+ 	snprintf(name, sizeof(name), "%s%s_%s", ADF_DEVICE_NAME_PREFIX,
+ 		 accel_dev->hw_device->dev_class->name,
+ 		 pci_name(accel_dev->accel_pci_dev.pci_dev));
  
--	err = devm_add_action_or_reset(qidev, caam_qi_shutdown, ctrlpriv);
-+	err = devm_add_action_or_reset(qidev, caam_qi_shutdown, qidev);
- 	if (err)
- 		return err;
+-	ret = debugfs_create_dir(name, NULL);
+-	if (IS_ERR_OR_NULL(ret))
+-		return;
+-
+-	accel_dev->debugfs_dir = ret;
++	accel_dev->debugfs_dir = debugfs_create_dir(name, NULL);
  
+ 	adf_cfg_dev_dbgfs_add(accel_dev);
+ }
+@@ -56,9 +51,6 @@ EXPORT_SYMBOL_GPL(adf_dbgfs_exit);
+  */
+ void adf_dbgfs_add(struct adf_accel_dev *accel_dev)
+ {
+-	if (!accel_dev->debugfs_dir)
+-		return;
+-
+ 	if (!accel_dev->is_vf) {
+ 		adf_fw_counters_dbgfs_add(accel_dev);
+ 		adf_heartbeat_dbgfs_add(accel_dev);
+@@ -71,9 +63,6 @@ void adf_dbgfs_add(struct adf_accel_dev *accel_dev)
+  */
+ void adf_dbgfs_rm(struct adf_accel_dev *accel_dev)
+ {
+-	if (!accel_dev->debugfs_dir)
+-		return;
+-
+ 	if (!accel_dev->is_vf) {
+ 		adf_heartbeat_dbgfs_rm(accel_dev);
+ 		adf_fw_counters_dbgfs_rm(accel_dev);
 -- 
 2.43.0
 
