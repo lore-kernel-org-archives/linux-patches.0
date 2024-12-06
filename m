@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFD1653A7;
-	Fri,  6 Dec 2024 15:06:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E5EF53A7;
+	Fri,  6 Dec 2024 15:06:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733497584; cv=none; b=I14Wkp7tesNQkHoA+8Wt0jm0O+wqgmYqJteXoj1O3alfeN8OStr+4A5Vzs1OYtqCnlUzSAtv0pAce7Pjnbk2MRnUzWhajLN2evW/m/czCgKQsW/7q7N4kXSanC/KjslK27ISvnpiVbEbUHQCLT80PWMzQX2IzgsIQqk0rtNcxvA=
+	t=1733497587; cv=none; b=roXU7HZmAzttMLlqVEvcwI2PkwMQ5mIAs3nIR+AD3gX9HdDJ860lxFWaeQjCtI5IErkppy04yHAFF++yHk/EyrvdaGRvjjjONlUX+OG02XVqJJ3u1o6l9zFQiKacZUofW7v4azmTXr2MK1CZciVUo5Xb0X9MaiTL+uEVJyp+vUM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733497584; c=relaxed/simple;
-	bh=BmTSPQeMUbl9005WIMbzK/xepUrniQ9qnoeMdFuyBE0=;
+	s=arc-20240116; t=1733497587; c=relaxed/simple;
+	bh=uKGhvVvE1VRWgqya0upR6IQfa09FBRnxC9Y3BmdV1uM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bbNk0Cm8T+/Ck61zUHez9wcJWUKjcq3aj8SBdrGHWv7pTzEp0JzacPAHRnZYZkTtyFsrxoC+DeTgDj2KkavK+5Gg+XjsjJ7CH02aPpG0dHq29KOMihWycJUIMpn3/xXidEwDXbDQhkTGSku6kHJVK8X9uRmY8cdVnsWmP3hNRF4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A6V+N4SZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lwjrnl9SiI9nq/s+hLuCH5pyWGWRawXFcHCMipYCn5YuaURY1ngfWY2o7CFQXDrr/V8Fd86LuRbQpkpF6jff7NGShBmX2z8u0LbEKiZmqbusImmvOpZ9AjP3bUNfyYssODrKbksgS6yHL/gQDhKAImKz+FLWNo75Tb60AGpCJoo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NJZI8bFV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A6V+N4SZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74E4DC4CED1;
-	Fri,  6 Dec 2024 15:06:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NJZI8bFV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B80C2C4CED1;
+	Fri,  6 Dec 2024 15:06:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733497583;
-	bh=BmTSPQeMUbl9005WIMbzK/xepUrniQ9qnoeMdFuyBE0=;
+	s=korg; t=1733497587;
+	bh=uKGhvVvE1VRWgqya0upR6IQfa09FBRnxC9Y3BmdV1uM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A6V+N4SZSBiHCL0RzhTp7a1B+sNC9mA/oIAgx2hDS6qbxUCO2EJR4FH7tWLa5Efwv
-	 PzVNfbHfGkjTqHhNoiAix54iGn3br4m0rSq/D2JvCnPW33HDs7L3Uw5iyvMOBJ2jsK
-	 9/T3Vp0HQR9HokgooeeHZR/SWS0rdUtLuMCj+h8A=
+	b=NJZI8bFVCHxd8drfwIMzWrw6UaeJ/1FzWpaN0LW3g5RNIlZ3xvixuZdadnmN7ogKg
+	 r2Ef4LQUbUQEFedFeiXouGBBMPp4IqC9nGHGVnIbGSdcVdA4Fcd2iuRwZy/452cgNZ
+	 ptY3brx3+I0RyEjYkl8mImaDKwSzdIV5AyyjOLh8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junxian Huang <huangjunxian6@hisilicon.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	zhang jiao <zhangjiao2@cmss.chinamobile.com>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 314/676] RDMA/hns: Fix NULL pointer derefernce in hns_roce_map_mr_sg()
-Date: Fri,  6 Dec 2024 15:32:13 +0100
-Message-ID: <20241206143705.602849031@linuxfoundation.org>
+Subject: [PATCH 6.6 332/676] pinctrl: k210: Undef K210_PC_DEFAULT
+Date: Fri,  6 Dec 2024 15:32:31 +0100
+Message-ID: <20241206143706.313734202@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -51,55 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junxian Huang <huangjunxian6@hisilicon.com>
+From: zhang jiao <zhangjiao2@cmss.chinamobile.com>
 
-[ Upstream commit 6b526d17eed850352d880b93b9bf20b93006bd92 ]
+[ Upstream commit 7e86490c5dee5c41a55f32d0dc34269e200e6909 ]
 
-ib_map_mr_sg() allows ULPs to specify NULL as the sg_offset argument.
-The driver needs to check whether it is a NULL pointer before
-dereferencing it.
+When the temporary macro K210_PC_DEFAULT is not needed anymore,
+use its name in the #undef statement instead of
+the incorrect "DEFAULT" name.
 
-Fixes: d387d4b54eb8 ("RDMA/hns: Fix missing pagesize and alignment check in FRMR")
-Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
-Link: https://patch.msgid.link/20241108075743.2652258-3-huangjunxian6@hisilicon.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: d4c34d09ab03 ("pinctrl: Add RISC-V Canaan Kendryte K210 FPIOA driver")
+Signed-off-by: zhang jiao <zhangjiao2@cmss.chinamobile.com>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Link: https://lore.kernel.org/20241113071201.5440-1-zhangjiao2@cmss.chinamobile.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hns/hns_roce_mr.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/pinctrl/pinctrl-k210.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/hns/hns_roce_mr.c b/drivers/infiniband/hw/hns/hns_roce_mr.c
-index b053f2f43dacd..7f29a55d378f0 100644
---- a/drivers/infiniband/hw/hns/hns_roce_mr.c
-+++ b/drivers/infiniband/hw/hns/hns_roce_mr.c
-@@ -415,15 +415,16 @@ static int hns_roce_set_page(struct ib_mr *ibmr, u64 addr)
- }
+diff --git a/drivers/pinctrl/pinctrl-k210.c b/drivers/pinctrl/pinctrl-k210.c
+index b6d1ed9ec9a3c..7c05dbf533e7a 100644
+--- a/drivers/pinctrl/pinctrl-k210.c
++++ b/drivers/pinctrl/pinctrl-k210.c
+@@ -183,7 +183,7 @@ static const u32 k210_pinconf_mode_id_to_mode[] = {
+ 	[K210_PC_DEFAULT_INT13] = K210_PC_MODE_IN | K210_PC_PU,
+ };
  
- int hns_roce_map_mr_sg(struct ib_mr *ibmr, struct scatterlist *sg, int sg_nents,
--		       unsigned int *sg_offset)
-+		       unsigned int *sg_offset_p)
- {
-+	unsigned int sg_offset = sg_offset_p ? *sg_offset_p : 0;
- 	struct hns_roce_dev *hr_dev = to_hr_dev(ibmr->device);
- 	struct ib_device *ibdev = &hr_dev->ib_dev;
- 	struct hns_roce_mr *mr = to_hr_mr(ibmr);
- 	struct hns_roce_mtr *mtr = &mr->pbl_mtr;
- 	int ret, sg_num = 0;
+-#undef DEFAULT
++#undef K210_PC_DEFAULT
  
--	if (!IS_ALIGNED(*sg_offset, HNS_ROCE_FRMR_ALIGN_SIZE) ||
-+	if (!IS_ALIGNED(sg_offset, HNS_ROCE_FRMR_ALIGN_SIZE) ||
- 	    ibmr->page_size < HNS_HW_PAGE_SIZE ||
- 	    ibmr->page_size > HNS_HW_MAX_PAGE_SIZE)
- 		return sg_num;
-@@ -434,7 +435,7 @@ int hns_roce_map_mr_sg(struct ib_mr *ibmr, struct scatterlist *sg, int sg_nents,
- 	if (!mr->page_list)
- 		return sg_num;
- 
--	sg_num = ib_sg_to_pages(ibmr, sg, sg_nents, sg_offset, hns_roce_set_page);
-+	sg_num = ib_sg_to_pages(ibmr, sg, sg_nents, sg_offset_p, hns_roce_set_page);
- 	if (sg_num < 1) {
- 		ibdev_err(ibdev, "failed to store sg pages %u %u, cnt = %d.\n",
- 			  mr->npages, mr->pbl_mtr.hem_cfg.buf_pg_count, sg_num);
+ /*
+  * Pin functions configuration information.
 -- 
 2.43.0
 
