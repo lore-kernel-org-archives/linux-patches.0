@@ -1,160 +1,82 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.15])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C85DD170A11
-	for <patches@lists.linux.dev>; Fri,  6 Dec 2024 17:03:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.15
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5330F2206A5;
+	Fri,  6 Dec 2024 18:06:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733504589; cv=none; b=QBdb/Ye1wzAjzl9+iH+HtH7q8gsf1aj8muFZpo+UY8wXj1V958YgZiTtnkA7VzbNaIB/rTCY98X2zk1EFJmdBraatpK5lgc+waJsEJjc19hs8z/rmmHmi6Sn+NW09M89yOmB6R7QvGXFV+wlPjAV878dh26M3u+ZbSc2uohnzlI=
+	t=1733508366; cv=none; b=q5sL5ulfCL4AXF4IKCvcDGOC+X6hf0BwJWpIahC4awI9zUfHgEVxsqhicMvkR0lh1mttBVg4rbT5PsPuRNgxeGGDAP08knTnUXJypc22JXukO5OEZxwrHivuJlP2SyemQ+dT3sFjSH5tghsa1LisE8M07tdxrQAx1+XYCpAJUV4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733504589; c=relaxed/simple;
-	bh=RfsHPNYgh1DFwK0+tMUlaWkD46sOB2zw42A9uqDfe3o=;
-	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=VLKyr33Lua9bJ3VxrJK5fecNCzo39jJMH3w6sgzwCQ8r+6ZwMBo55LnYePQhrmOjPzkEkTa1t4YksxJAADLUl+3upUPAT3GiZbP/Ih+b02m9kgkLPVWZGHnhE+664fy5A3sIy4NxymC5cG5qvZJ1DJcZgFwZUY5FiQGwWPrtCyg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=gMKEJWD4; arc=none smtp.client-ip=198.175.65.15
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	s=arc-20240116; t=1733508366; c=relaxed/simple;
+	bh=tDOBzYb2HXl7I0IlPve7Pi5OTtEoGEDn+/36WZdU/5Y=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ECcSuEpGC9hUi7gJdkWF6ZKxHgXZYsHfeqwJ/bgG0ZUVTppbeziMclb/E26EgvpyudPXOGm38IVzNRe08yWO2g81Wz7O8G3GvBTy4spdCyJb2x+ofbHwcYE7SDNOZEq572Tkc2EZ3hMx297RLq6zRznIAxAbJPL3QdM31zO/LPA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rkiOUZRO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="gMKEJWD4"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1733504586; x=1765040586;
-  h=date:message-id:from:to:cc:subject:in-reply-to:
-   references:mime-version;
-  bh=RfsHPNYgh1DFwK0+tMUlaWkD46sOB2zw42A9uqDfe3o=;
-  b=gMKEJWD4fM/mwkd58bVQs27wHnrrFuphpLqLC78U0tleflpakFNXrvg7
-   0iaNtYeoULJJhEw6wxM6ycR+IzuxVEDosToYGuJ8yW6uf6HX3r9Ktl6zu
-   p79WVk25S9kvnkbDPeMbWdkCkRR3sXb2OM2AkBuUhHiwNmV/7O0VvjPak
-   ohnWhD6Qidyg4X2FvwmpopfPFH8/ZR2GS6MLgiiSs3yyzSdHSMsyBj8nl
-   mCLDZfciFEr1m4zJcX2ezKVYtj6hdz76RW0ZbQXDeFb/hOFTSt4jEzGbv
-   JYMmsQ/ES0CYK2/FBxyV9gPxdLfVUijVcmUpJT24dKOsrY2UXWxCL1gBG
-   g==;
-X-CSE-ConnectionGUID: wyMgy/7yQWO0xELcjLkrJw==
-X-CSE-MsgGUID: N5jcPAqAQeqfaTFFXs6Dpg==
-X-IronPort-AV: E=McAfee;i="6700,10204,11278"; a="37543469"
-X-IronPort-AV: E=Sophos;i="6.12,213,1728975600"; 
-   d="scan'208";a="37543469"
-Received: from orviesa006.jf.intel.com ([10.64.159.146])
-  by orvoesa107.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Dec 2024 09:03:06 -0800
-X-CSE-ConnectionGUID: ppxmaOVER5ywcPBernrA3Q==
-X-CSE-MsgGUID: J3fm91SYTP+ak9GOlzVBBA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,213,1728975600"; 
-   d="scan'208";a="94553845"
-Received: from orsosgc001.jf.intel.com (HELO orsosgc001.intel.com) ([10.165.21.142])
-  by orviesa006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Dec 2024 09:03:06 -0800
-Date: Fri, 06 Dec 2024 09:03:06 -0800
-Message-ID: <85jzcc3fsl.wl-ashutosh.dixit@intel.com>
-From: "Dixit, Ashutosh" <ashutosh.dixit@intel.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rkiOUZRO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A990C4CED1;
+	Fri,  6 Dec 2024 18:06:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1733508365;
+	bh=tDOBzYb2HXl7I0IlPve7Pi5OTtEoGEDn+/36WZdU/5Y=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=rkiOUZROLoI/GwGy/sWi/jRXc/psp/cNeKcHz9zpiBbjIHGigY6plEmKE0s94e+gj
+	 5CNwQfZ8Zv7QsQakUZVooRk1WRoQN363STfiR2SOM989y4JuKmZolpL6exCEMOgHpw
+	 AnBU5VGb09F3iuf+1uJ/rost4yYHkrxeXBVN0hdPGMK1i8J6fG1v9vd22QOVLp4GEM
+	 IRGZryWBUlzTlAxLFE1bIWFd9PCkR9uGlpsdGE1qv/UaIF1+NFN7CtWYAYZUHaeK8O
+	 +hgMzL2LqTKcrVBLRdZuKT52ra8302EQl5mjVFRzeLGbxFBcN9CiXzNdbxP/vpdhty
+	 DqsbySMCEYR1w==
+Date: Fri, 6 Dec 2024 18:05:59 +0000
+From: Mark Brown <broonie@kernel.org>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org,
-	patches@lists.linux.dev,
-	Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>,
-	John Harrison <john.c.harrison@intel.com>,
-	Jonathan Cavitt <jonathan.cavitt@intel.com>
-Subject: Re: [PATCH 6.12 129/146] drm/xe/xe_guc_ads: save/restore OA registers and allowlist regs
-In-Reply-To: <20241206143532.618496043@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+	conor@kernel.org, hargar@microsoft.com
+Subject: Re: [PATCH 6.12 000/146] 6.12.4-rc1 review
+Message-ID: <f5a771f5-26be-47a2-a9df-ec901da6db1a@sirena.org.uk>
 References: <20241206143527.654980698@linuxfoundation.org>
-	<20241206143532.618496043@linuxfoundation.org>
-User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
- FLIM-LB/1.14.9 (=?ISO-8859-4?Q?Goj=F2?=) APEL-LB/10.8 EasyPG/1.0.0
- Emacs/28.2 (x86_64-redhat-linux-gnu) MULE/6.0 (HANACHIRUSATO)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
-Content-Type: text/plain; charset=US-ASCII
-
-On Fri, 06 Dec 2024 06:37:40 -0800, Greg Kroah-Hartman wrote:
->
-
-Hi Greg,
-
-> 6.12-stable review patch.  If anyone has any objections, please let me
-> know.
-
-No this patch should *NOT* be added. It was later reverted in:
-
-0191fddf5374 ("Revert "drm/xe/xe_guc_ads: save/restore OA registers and allowlist regs"")
-
-Thanks.
---
-Ashutosh
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="aEsuThH7BwHoOIz1"
+Content-Disposition: inline
+In-Reply-To: <20241206143527.654980698@linuxfoundation.org>
+X-Cookie: Sales tax applies.
 
 
+--aEsuThH7BwHoOIz1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
+On Fri, Dec 06, 2024 at 03:35:31PM +0100, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.12.4 release.
+> There are 146 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 
->
-> ------------------
->
-> From: Jonathan Cavitt <jonathan.cavitt@intel.com>
->
-> commit 55858fa7eb2f163f7aa34339fd3399ba4ff564c6 upstream.
->
-> Several OA registers and allowlist registers were missing from the
-> save/restore list for GuC and could be lost during an engine reset.  Add
-> them to the list.
->
-> v2:
-> - Fix commit message (Umesh)
-> - Add missing closes (Ashutosh)
->
-> v3:
-> - Add missing fixes (Ashutosh)
->
-> Closes: https://gitlab.freedesktop.org/drm/xe/kernel/-/issues/2249
-> Fixes: dd08ebf6c352 ("drm/xe: Introduce a new DRM driver for Intel GPUs")
-> Suggested-by: Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>
-> Suggested-by: John Harrison <john.c.harrison@intel.com>
-> Signed-off-by: Jonathan Cavitt <jonathan.cavitt@intel.com>
-> CC: stable@vger.kernel.org # v6.11+
-> Reviewed-by: Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>
-> Reviewed-by: Ashutosh Dixit <ashutosh.dixit@intel.com>
-> Signed-off-by: Ashutosh Dixit <ashutosh.dixit@intel.com>
-> Link: https://patchwork.freedesktop.org/patch/msgid/20241023200716.82624-1-jonathan.cavitt@intel.com
-> Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> ---
->  drivers/gpu/drm/xe/xe_guc_ads.c |   14 ++++++++++++++
->  1 file changed, 14 insertions(+)
->
-> --- a/drivers/gpu/drm/xe/xe_guc_ads.c
-> +++ b/drivers/gpu/drm/xe/xe_guc_ads.c
-> @@ -13,6 +13,7 @@
->  #include "regs/xe_engine_regs.h"
->  #include "regs/xe_gt_regs.h"
->  #include "regs/xe_guc_regs.h"
-> +#include "regs/xe_oa_regs.h"
->  #include "xe_bo.h"
->  #include "xe_gt.h"
->  #include "xe_gt_ccs_mode.h"
-> @@ -601,6 +602,11 @@ static unsigned int guc_mmio_regset_writ
->		guc_mmio_regset_write_one(ads, regset_map, e->reg, count++);
->	}
->
-> +	for (i = 0; i < RING_MAX_NONPRIV_SLOTS; i++)
-> +		guc_mmio_regset_write_one(ads, regset_map,
-> +					  RING_FORCE_TO_NONPRIV(hwe->mmio_base, i),
-> +					  count++);
-> +
->	/* Wa_1607983814 */
->	if (needs_wa_1607983814(xe) && hwe->class == XE_ENGINE_CLASS_RENDER) {
->		for (i = 0; i < LNCFCMOCS_REG_COUNT; i++) {
-> @@ -609,6 +615,14 @@ static unsigned int guc_mmio_regset_writ
->		}
->	}
->
-> +	guc_mmio_regset_write_one(ads, regset_map, EU_PERF_CNTL0, count++);
-> +	guc_mmio_regset_write_one(ads, regset_map, EU_PERF_CNTL1, count++);
-> +	guc_mmio_regset_write_one(ads, regset_map, EU_PERF_CNTL2, count++);
-> +	guc_mmio_regset_write_one(ads, regset_map, EU_PERF_CNTL3, count++);
-> +	guc_mmio_regset_write_one(ads, regset_map, EU_PERF_CNTL4, count++);
-> +	guc_mmio_regset_write_one(ads, regset_map, EU_PERF_CNTL5, count++);
-> +	guc_mmio_regset_write_one(ads, regset_map, EU_PERF_CNTL6, count++);
-> +
->	return count;
->  }
->
->
->
+Tested-by: Mark Brown <broonie@kernel.org>
+
+--aEsuThH7BwHoOIz1
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmdTPQYACgkQJNaLcl1U
+h9DBjwf+MqlAJIVrRny+siLkGs3mUfHlzsn5CNHVHXwJ8X0gUVkEU4TqRQZrW4es
+gV8Krctq04k+8lZlrAiKghQpcbWt4T/izHhBbZY3W5c75Oa+wS1HDR+8oPwY3tPw
+LvfZq76+KJ3Y+z1bwQLtk6HcEUTQ7hwNIZmbRMMyuoC6bObHAq9muaZso43Ak1V+
+IfDVPhf1hWJsyftXMCHuU5mavAv+QwHSfkb9ch2VlZGbT0b3+mOScj+1x201YiF+
+qf+CnnCeYOs9n/Jn5zEMvGTEounRgoGHSoDJpTR9b7Me0qfgIZM9/+72iKxiGCG/
+cT4NQUaMf3TSuFvdYUtGRFH0O1QMjg==
+=E8Li
+-----END PGP SIGNATURE-----
+
+--aEsuThH7BwHoOIz1--
