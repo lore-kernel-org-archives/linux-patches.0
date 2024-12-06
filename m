@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 793391494D9;
-	Fri,  6 Dec 2024 14:41:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAAB414B084;
+	Fri,  6 Dec 2024 14:41:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733496108; cv=none; b=ZBl92cZMFxIplBEZyEP8SJtNNG7Y/foUMx5diFPPHv1hAUli421Cwh858Rtgo+/F52s1UhLMKDgpBMlQ3NY5ya7WetpmBcgjLJdqfnWwL7wVuZxx/sLEFoELo6/wgRqWevCOQbb7oWi/dzTWpEygf531+gq/O0xyMdy0/HYbCys=
+	t=1733496111; cv=none; b=Xje70zl6LCgoEe2fCXZWUMUlR9HHVnXQCPN5J9z/zp3rpscc8gLxvBP2+R4vV2J6WiN7ALuPbTlHyJ0hTvFPO5niMLy8WItXpUZ0+Y33FQAD7eAMcIyyxf60RSVeqdKs5clM/xHAhNsrK3swjG1kmJX8b19TullF6AqKKZQr8Cw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733496108; c=relaxed/simple;
-	bh=bHWPgMhuH93nYpJC976ZNomkG7unt/JD3aV/DoLXXLQ=;
+	s=arc-20240116; t=1733496111; c=relaxed/simple;
+	bh=yYgkN+L1kTU6c3yPwxtOtd2ZLfjoFLxL8CZzbpaJ484=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tZSIol0rRUfP3Y9Nb7+MpmEu17+fmrgtVRli2kogevhFhT3+KJ00B6jDkN1B5TKU3AGlctmQo1WmAvd4DF/vRK1EuIZ22C9RT9IuE5/ney8YhJOZgTPNNU0xhCUs7YMiFnRq67PFeanBgs1h6TE/l6Nwbul7l95eoq+qIyvYr4Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C4dzoqnb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ogi3hMXckq+VgDPxJZ0y1eXvlaggsi6xOmWn+K8wzAzbF/QRmOd1A25tm3vpFdiK20KLdg/SgNnS4So56Yu9NoG17LY53qO8UG9TNoQ5eDa4X9TdsSn3an8iOJsW77GoxsD1ETnwi91ezsKf9OLfSRRBBhOHvePzxBXpsoALjPk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wxcUMcFJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C4dzoqnb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7FAEC4CED1;
-	Fri,  6 Dec 2024 14:41:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wxcUMcFJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57397C4CEDC;
+	Fri,  6 Dec 2024 14:41:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733496108;
-	bh=bHWPgMhuH93nYpJC976ZNomkG7unt/JD3aV/DoLXXLQ=;
+	s=korg; t=1733496111;
+	bh=yYgkN+L1kTU6c3yPwxtOtd2ZLfjoFLxL8CZzbpaJ484=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C4dzoqnb+KjTXmC1hEKAq2j5h9oFO4P3H+lkDwcSp1mNjPVkkpxmfvFJFfz+Y9ySF
-	 zaYkFw/7LHzG+aUgduCKyqbv79aikEnDTGpxAqsbwhvPtUi3Qp0JWLSWpVNiVZbF2P
-	 VxTMyaTdrqnN6meHqgUgfxPRB6vo6BEHEYIMVxhU=
+	b=wxcUMcFJgolVbuOiXgmFGqCH5Tz0Flob1Hkp8GLW3fyBabgp9T4y/YduB1YgzWl3r
+	 4DWl/G/0CsPZvkaoLv8d1SygBirKOHOQDCmm5J6JZ7q48hHWAc/D1ZVOxoCfWJveDM
+	 wLqxqlZdl5gp2aF1+lmypGA3X03hCfNdiilZGib8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	MengEn Sun <mengensun@tencent.com>,
-	JinLiang Zheng <alexjlzheng@tencent.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.12 046/146] vmstat: call fold_vm_zone_numa_events() before show per zone NUMA event
-Date: Fri,  6 Dec 2024 15:36:17 +0100
-Message-ID: <20241206143529.437637374@linuxfoundation.org>
+	Zicheng Qu <quzicheng@huawei.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 6.12 055/146] ad7780: fix division by zero in ad7780_write_raw()
+Date: Fri,  6 Dec 2024 15:36:26 +0100
+Message-ID: <20241206143529.780533305@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143527.654980698@linuxfoundation.org>
 References: <20241206143527.654980698@linuxfoundation.org>
@@ -51,46 +50,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: MengEn Sun <mengensun@tencent.com>
+From: Zicheng Qu <quzicheng@huawei.com>
 
-commit 2ea80b039b9af0b71c00378523b71c254fb99c23 upstream.
+commit c174b53e95adf2eece2afc56cd9798374919f99a upstream.
 
-Since 5.14-rc1, NUMA events will only be folded from per-CPU statistics to
-per zone and global statistics when the user actually needs it.
+In the ad7780_write_raw() , val2 can be zero, which might lead to a
+division by zero error in DIV_ROUND_CLOSEST(). The ad7780_write_raw()
+is based on iio_info's write_raw. While val is explicitly declared that
+can be zero (in read mode), val2 is not specified to be non-zero.
 
-Currently, the kernel has performs the fold operation when reading
-/proc/vmstat, but does not perform the fold operation in /proc/zoneinfo.
-This can lead to inaccuracies in the following statistics in zoneinfo:
-- numa_hit
-- numa_miss
-- numa_foreign
-- numa_interleave
-- numa_local
-- numa_other
-
-Therefore, before printing per-zone vm_numa_event when reading
-/proc/zoneinfo, we should also perform the fold operation.
-
-Link: https://lkml.kernel.org/r/1730433998-10461-1-git-send-email-mengensun@tencent.com
-Fixes: f19298b9516c ("mm/vmstat: convert NUMA statistics to basic NUMA counters")
-Signed-off-by: MengEn Sun <mengensun@tencent.com>
-Reviewed-by: JinLiang Zheng <alexjlzheng@tencent.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 9085daa4abcc ("staging: iio: ad7780: add gain & filter gpio support")
+Cc: stable@vger.kernel.org
+Signed-off-by: Zicheng Qu <quzicheng@huawei.com>
+Link: https://patch.msgid.link/20241028142027.1032332-1-quzicheng@huawei.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/vmstat.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/iio/adc/ad7780.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/mm/vmstat.c
-+++ b/mm/vmstat.c
-@@ -1780,6 +1780,7 @@ static void zoneinfo_show_print(struct s
- 			   zone_page_state(zone, i));
+--- a/drivers/iio/adc/ad7780.c
++++ b/drivers/iio/adc/ad7780.c
+@@ -152,7 +152,7 @@ static int ad7780_write_raw(struct iio_d
  
- #ifdef CONFIG_NUMA
-+	fold_vm_zone_numa_events(zone);
- 	for (i = 0; i < NR_VM_NUMA_EVENT_ITEMS; i++)
- 		seq_printf(m, "\n      %-12s %lu", numa_stat_name(i),
- 			   zone_numa_event_state(zone, i));
+ 	switch (m) {
+ 	case IIO_CHAN_INFO_SCALE:
+-		if (val != 0)
++		if (val != 0 || val2 == 0)
+ 			return -EINVAL;
+ 
+ 		vref = st->int_vref_mv * 1000000LL;
 
 
