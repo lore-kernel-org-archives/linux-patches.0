@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98BAA20C016;
-	Fri,  6 Dec 2024 15:15:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ABE5149C6F;
+	Fri,  6 Dec 2024 15:15:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733498114; cv=none; b=btVRqYMkmtOHgaSISLqaPh3A4zaIHQ0K6vHyuYEb9muH96TpaG0Eqzn9TSyUCuEJMxMwGt/koA1dwieq2CC4SbH7aY7ATR09NYWyslLbUCnWIyMnzPdR6RMJQw5Vi5Mx4EN17dhAQvI26fwB+w2Py5vFkCVA4haTxtJKtXuFZ3w=
+	t=1733498119; cv=none; b=ClOWaE0cI5CukksEZwS9gmYMV62keEJ7JuDpiK8PPzyZs5XBoyM7eZ6crnPcs2eq0PHuzskIP0IRi2/Rb1alKHZ4o6vGdjjC4FcpAijx9Qd+R01P2LhojBHyOugTC/vP8m3U98ElAEk+FkjVl1hlzlt7P/dkjXk9dVDpauss2I4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733498114; c=relaxed/simple;
-	bh=YjylkPL/paXeFXTMrOjBHXarQBUZb6H4Anb+IbHtM/k=;
+	s=arc-20240116; t=1733498119; c=relaxed/simple;
+	bh=++ZUuiR7MU4XB2MNVXpHi1iAZ93JVDnjkHuQRJVmZLU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GFzUdI7yvM6PJsUIpAyLSJDtYyp9+sedWprsUMYpKFtwSEly7nbTX8ualDanpg8aY+M3B7m7yKAUnnaV7krDXI31C7DcOvIhuVQn562IRpI2kKo9yFQQ/Mx+mSjIWApZQlfJzUC6RJaFlPG2Mncyp5oiP+GXpHYW8G0Fa0nBOrg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x5s2Ny5Q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TuLSC71DtqnbUOCD9I4Nrv5U275jKtsGEO7y9qlrQCKXHCPOMQ/RKNMhCIo9vQOd43DFj0+d7+PBKs/sTZauYQRweySSrxbSfTUh0FDC76m233FoHR0C5Lp4O+sxiEH217gI//UruYd1x1hMH0ZcDL9UuJhQCFmT/iQnlybYlkQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iDxwjExN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x5s2Ny5Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D727C4CEE0;
-	Fri,  6 Dec 2024 15:15:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iDxwjExN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E05DC4CED1;
+	Fri,  6 Dec 2024 15:15:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733498114;
-	bh=YjylkPL/paXeFXTMrOjBHXarQBUZb6H4Anb+IbHtM/k=;
+	s=korg; t=1733498118;
+	bh=++ZUuiR7MU4XB2MNVXpHi1iAZ93JVDnjkHuQRJVmZLU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x5s2Ny5QtnWMBEv66yhQusqjlBTfxUnHL9wJ4bXFNvXLop8dT/T9GIUqnnV2/4CZJ
-	 4LyP8IL3VBYv27gKUkxc8xTcq4S4PLP07HEgVYi0NaX0K8WT8pJIg9AygudTL6S0MM
-	 K5GJvrQPeRpEDZNNUmp454Jz63SBgC03Zg5h2OZY=
+	b=iDxwjExNhIUK6YfibXkE/8v9f5y9AVwECUfQ4rpDxawEs4IeVhheA4t30ubQbM80B
+	 D8K5IQCELyBAfVQIbs0vWpGI3VIzcobR0WcImOpovzXp5Ien7lmEX1ul0Dk50ZaAYE
+	 DIgmUWTT24VohSv6LGOg9A1LREaoxSVwAmOrNC80=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shusen Li <lishusen2@huawei.com>,
-	Kunkun Jiang <jiangkunkun@huawei.com>,
-	Jing Zhang <jingzhangos@google.com>,
-	Oliver Upton <oliver.upton@linux.dev>
-Subject: [PATCH 6.6 483/676] KVM: arm64: vgic-its: Clear DTE when MAPD unmaps a device
-Date: Fri,  6 Dec 2024 15:35:02 +0100
-Message-ID: <20241206143712.228450245@linuxfoundation.org>
+	Angelo Dureghello <adureghello@baylibre.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 6.6 492/676] dt-bindings: iio: dac: ad3552r: fix maximum spi speed
+Date: Fri,  6 Dec 2024 15:35:11 +0100
+Message-ID: <20241206143712.578217726@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -52,59 +51,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kunkun Jiang <jiangkunkun@huawei.com>
+From: Angelo Dureghello <adureghello@baylibre.com>
 
-commit e9649129d33dca561305fc590a7c4ba8c3e5675a upstream.
+commit d1d1c117f39b2057d1e978f26a8bd9631ddb193b upstream.
 
-vgic_its_save_device_tables will traverse its->device_list to
-save DTE for each device. vgic_its_restore_device_tables will
-traverse each entry of device table and check if it is valid.
-Restore if valid.
+Fix maximum SPI clock speed, as per datasheet (Rev. B, page 6).
 
-But when MAPD unmaps a device, it does not invalidate the
-corresponding DTE. In the scenario of continuous saves
-and restores, there may be a situation where a device's DTE
-is not saved but is restored. This is unreasonable and may
-cause restore to fail. This patch clears the corresponding
-DTE when MAPD unmaps a device.
-
+Fixes: b0a96c5f599e ("dt-bindings: iio: dac: Add adi,ad3552r.yaml")
 Cc: stable@vger.kernel.org
-Fixes: 57a9a117154c ("KVM: arm64: vgic-its: Device table save/restore")
-Co-developed-by: Shusen Li <lishusen2@huawei.com>
-Signed-off-by: Shusen Li <lishusen2@huawei.com>
-Signed-off-by: Kunkun Jiang <jiangkunkun@huawei.com>
-[Jing: Update with entry write helper]
-Signed-off-by: Jing Zhang <jingzhangos@google.com>
-Link: https://lore.kernel.org/r/20241107214137.428439-5-jingzhangos@google.com
-Signed-off-by: Oliver Upton <oliver.upton@linux.dev>
+Signed-off-by: Angelo Dureghello <adureghello@baylibre.com>
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://patch.msgid.link/20241003-wip-bl-ad3552r-axi-v0-iio-testing-v4-4-ceb157487329@baylibre.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kvm/vgic/vgic-its.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ Documentation/devicetree/bindings/iio/dac/adi,ad3552r.yaml |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/arm64/kvm/vgic/vgic-its.c
-+++ b/arch/arm64/kvm/vgic/vgic-its.c
-@@ -1215,9 +1215,11 @@ static int vgic_its_cmd_handle_mapd(stru
- 	bool valid = its_cmd_get_validbit(its_cmd);
- 	u8 num_eventid_bits = its_cmd_get_size(its_cmd);
- 	gpa_t itt_addr = its_cmd_get_ittaddr(its_cmd);
-+	int dte_esz = vgic_its_get_abi(its)->dte_esz;
- 	struct its_device *device;
-+	gpa_t gpa;
+--- a/Documentation/devicetree/bindings/iio/dac/adi,ad3552r.yaml
++++ b/Documentation/devicetree/bindings/iio/dac/adi,ad3552r.yaml
+@@ -26,7 +26,7 @@ properties:
+     maxItems: 1
  
--	if (!vgic_its_check_id(its, its->baser_device_table, device_id, NULL))
-+	if (!vgic_its_check_id(its, its->baser_device_table, device_id, &gpa))
- 		return E_ITS_MAPD_DEVICE_OOR;
+   spi-max-frequency:
+-    maximum: 30000000
++    maximum: 66000000
  
- 	if (valid && num_eventid_bits > VITS_TYPER_IDBITS)
-@@ -1238,7 +1240,7 @@ static int vgic_its_cmd_handle_mapd(stru
- 	 * is an error, so we are done in any case.
- 	 */
- 	if (!valid)
--		return 0;
-+		return vgic_its_write_entry_lock(its, gpa, 0, dte_esz);
- 
- 	device = vgic_its_alloc_device(its, device_id, itt_addr,
- 				       num_eventid_bits);
+   reset-gpios:
+     maxItems: 1
 
 
