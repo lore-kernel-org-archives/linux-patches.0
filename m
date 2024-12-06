@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22C851527AC;
-	Fri,  6 Dec 2024 15:12:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B24F2066EE;
+	Fri,  6 Dec 2024 15:12:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733497974; cv=none; b=rOFCwrvtgPfqytb7ofXRdnpND/PpB0kj8PF2JdhnRlNjWXmrm3w8LL+djg42sp8gQhus4PdQtsOBPNIokkcxGXhReo8n5nIti2cERXy9SfGhluwlemQcXHGTQSycAM1OQn05O7wbxCSZ6m7HL1zGzdRLWxY+fnNckGhN2osQxdU=
+	t=1733497977; cv=none; b=XyCbmUm9FhxjgSHu1INAtBYZ8/kVgr4zyrfS+n5YxgVWSdyGV6HdRY2/+5BPieXYKsB/VPAP8dF0W01I1tip6naVAcJPagwo0A39FTl4t2XpsnI6+jrP5MQLO0gZK3FS+/GBUDFa0tZbqNr8XI7BzKzfHDAVMLUff+b+4AhJTJQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733497974; c=relaxed/simple;
-	bh=W+a9ZDLBrEMbxi6c+8Og+iPDOcqabWt6qrMayfIk3vE=;
+	s=arc-20240116; t=1733497977; c=relaxed/simple;
+	bh=uGPkrlajw+VtYhVWahBC0EXFMZEETtOq8dQP15+0wx0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T4GtzS78pj4RXG90g36tvvTZ2g7YyPy0IGlsN6i0Zh7xvANd1iQcIvH+1GCHiPUakq3USuzQewlDfv3NJc+XBnCHY7Vp0jP9a3d9VXv+fmoIGLQ+NEXsQrZ3hwzWXPgd2eoeFtcLXdhI0o+ZNlyhwoAdjQNU84uadPI1tij4igg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gLcoSbMY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pYlDgk9qRVWF00K+EcW8AcYD+nr1I65m8aKaGrImzcLR1WiyJN6Grhyp6dA9vS0VEgha47KeHgVQxyh8EgbH42bMVs5T+7GtRA16WeY2xsqSaXteMFf0kERJ/Ixl3rKBR/C62ouMnozsKYkQ0i6Wwu7LESxwrulmSiNYuw4IPqY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C5Z9/pLX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gLcoSbMY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82638C4CED1;
-	Fri,  6 Dec 2024 15:12:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C5Z9/pLX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8647C4CED1;
+	Fri,  6 Dec 2024 15:12:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733497974;
-	bh=W+a9ZDLBrEMbxi6c+8Og+iPDOcqabWt6qrMayfIk3vE=;
+	s=korg; t=1733497977;
+	bh=uGPkrlajw+VtYhVWahBC0EXFMZEETtOq8dQP15+0wx0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gLcoSbMYGxLkx85CV7Qhu/fqneMb++/MZ17wCx6lYkPYETyNOWyeq4K67ULL3Nmpf
-	 V0coh5GtX12gKKjOaaHsL1RkxdFA4p2/R9W8hIIVDCxPOY5msKBp8lh0/VLnr001B0
-	 fpxrdim6+WuVnNs9WUt2fvIKFqMeeRk88ffmCAuA=
+	b=C5Z9/pLXZzgDokq4TS3O4fbej8M0nVCsE86odmlimt+1+C30OLzyQfDRM8MswGvOE
+	 3ZV3Q69XUCd4OcMWmdId+CLD3mt4t6P/uWN87UpSt1VhhUtu8urjvx8z5xB4LXrqSt
+	 ip0pT2eeZSy5II7I7O4hrwLblRVSFclawmq/w/1c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Puranjay Mohan <pjy@amazon.com>,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Anuj Gupta <anuj20.g@samsung.com>,
-	Keith Busch <kbusch@kernel.org>,
-	Hagar Hemdan <hagarhem@amazon.com>
-Subject: [PATCH 6.6 447/676] nvme: fix metadata handling in nvme-passthrough
-Date: Fri,  6 Dec 2024 15:34:26 +0100
-Message-ID: <20241206143710.829435088@linuxfoundation.org>
+	Richard Cochran <richardcochran@gmail.com>,
+	Somnath Kotur <somnath.kotur@broadcom.com>,
+	Pavan Chebbi <pavan.chebbi@broadcom.com>,
+	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
+	Michael Chan <michael.chan@broadcom.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 418/676] bnxt_en: Unregister PTP during PCI shutdown and suspend
+Date: Fri,  6 Dec 2024 15:33:57 +0100
+Message-ID: <20241206143709.676566794@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -54,70 +55,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Puranjay Mohan <pjy@amazon.com>
+From: Michael Chan <michael.chan@broadcom.com>
 
-commit 7c2fd76048e95dd267055b5f5e0a48e6e7c81fd9 upstream.
+[ Upstream commit 3661c05c54e8db7064aa96a0774654740974dffc ]
 
-On an NVMe namespace that does not support metadata, it is possible to
-send an IO command with metadata through io-passthru. This allows issues
-like [1] to trigger in the completion code path.
-nvme_map_user_request() doesn't check if the namespace supports metadata
-before sending it forward. It also allows admin commands with metadata to
-be processed as it ignores metadata when bdev == NULL and may report
-success.
+If we go through the PCI shutdown or suspend path, we shutdown the
+NIC but PTP remains registered.  If the kernel continues to run for
+a little bit, the periodic PTP .do_aux_work() function may be called
+and it will read the PHC from the BAR register.  Since the device
+has already been disabled, it will cause a PCIe completion timeout.
+Fix it by calling bnxt_ptp_clear() in the PCI shutdown/suspend
+handlers.  bnxt_ptp_clear() will unregister from PTP and
+.do_aux_work() will be canceled.
 
-Reject an IO command with metadata when the NVMe namespace doesn't
-support it and reject an admin command if it has metadata.
+In bnxt_resume(), we need to re-initialize PTP.
 
-[1] https://lore.kernel.org/all/mb61pcylvnym8.fsf@amazon.com/
-
-Suggested-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Puranjay Mohan <pjy@amazon.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
-Reviewed-by: Anuj Gupta <anuj20.g@samsung.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
-[ Minor changes to make it work on 6.6 ]
-Signed-off-by: Hagar Hemdan <hagarhem@amazon.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: a521c8a01d26 ("bnxt_en: Move bnxt_ptp_init() from bnxt_open() back to bnxt_init_one()")
+Cc: Richard Cochran <richardcochran@gmail.com>
+Reviewed-by: Somnath Kotur <somnath.kotur@broadcom.com>
+Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
+Reviewed-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
+Signed-off-by: Michael Chan <michael.chan@broadcom.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/ioctl.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/broadcom/bnxt/bnxt.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/nvme/host/ioctl.c
-+++ b/drivers/nvme/host/ioctl.c
-@@ -3,6 +3,7 @@
-  * Copyright (c) 2011-2014, Intel Corporation.
-  * Copyright (c) 2017-2021 Christoph Hellwig.
-  */
-+#include <linux/blk-integrity.h>
- #include <linux/ptrace.h>	/* for force_successful_syscall_return */
- #include <linux/nvme_ioctl.h>
- #include <linux/io_uring.h>
-@@ -171,10 +172,15 @@ static int nvme_map_user_request(struct
- 	struct request_queue *q = req->q;
- 	struct nvme_ns *ns = q->queuedata;
- 	struct block_device *bdev = ns ? ns->disk->part0 : NULL;
-+	bool supports_metadata = bdev && blk_get_integrity(bdev->bd_disk);
-+	bool has_metadata = meta_buffer && meta_len;
- 	struct bio *bio = NULL;
- 	void *meta = NULL;
- 	int ret;
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+index c216d95809282..c440f4d8d43a2 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+@@ -13857,6 +13857,7 @@ static void bnxt_shutdown(struct pci_dev *pdev)
+ 	if (netif_running(dev))
+ 		dev_close(dev);
  
-+	if (has_metadata && !supports_metadata)
-+		return -EINVAL;
-+
- 	if (ioucmd && (ioucmd->flags & IORING_URING_CMD_FIXED)) {
- 		struct iov_iter iter;
++	bnxt_ptp_clear(bp);
+ 	bnxt_clear_int_mode(bp);
+ 	pci_disable_device(pdev);
  
-@@ -198,7 +204,7 @@ static int nvme_map_user_request(struct
- 	if (bdev)
- 		bio_set_dev(bio, bdev);
+@@ -13883,6 +13884,7 @@ static int bnxt_suspend(struct device *device)
+ 		rc = bnxt_close(dev);
+ 	}
+ 	bnxt_hwrm_func_drv_unrgtr(bp);
++	bnxt_ptp_clear(bp);
+ 	pci_disable_device(bp->pdev);
+ 	bnxt_free_ctx_mem(bp);
+ 	kfree(bp->ctx);
+@@ -13926,6 +13928,10 @@ static int bnxt_resume(struct device *device)
+ 		goto resume_exit;
+ 	}
  
--	if (bdev && meta_buffer && meta_len) {
-+	if (has_metadata) {
- 		meta = nvme_add_user_metadata(req, meta_buffer, meta_len,
- 				meta_seed);
- 		if (IS_ERR(meta)) {
++	if (bnxt_ptp_init(bp)) {
++		kfree(bp->ptp_cfg);
++		bp->ptp_cfg = NULL;
++	}
+ 	bnxt_get_wol_settings(bp);
+ 	if (netif_running(dev)) {
+ 		rc = bnxt_open(dev);
+-- 
+2.43.0
+
 
 
