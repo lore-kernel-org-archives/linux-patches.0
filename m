@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89B71145A16;
-	Fri,  6 Dec 2024 15:18:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 006F6170A11;
+	Fri,  6 Dec 2024 15:18:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733498301; cv=none; b=qNbvpw9bjdQwMi6oQ7dvFK+DGcohIUL0GlqlGbz/ZOraqlSnR6YaHD/4wx48he5WiZwTaIe88OhUWeLyQ1wipqzpcb1R/R6nom8qd9rXaaDIZcQPXHfkPtr6H9VwLeg+WquBCvTygEWhJNMtRhxPSAE/nTXyy4Y2qI8RZGhgA+Q=
+	t=1733498305; cv=none; b=G3eUco3rgSj346/v5ZJdCI/w61U74pkIGH69j6ZSQd08wD09w71l1NUMdMxSddDb5aXjDrWo3Px4Fjcu+iYFFrYHrm/dZCOopSSiom8EXN80sB9jRGm2GzZINFCXbaHv4UaXh5M+BUgEfGgW7nndWvfeZptC3JUbrIrw11n+ATA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733498301; c=relaxed/simple;
-	bh=tcfMwO4LJoruO4MvQPhBwS1uWNtsoabSKOUfAIQ43aM=;
+	s=arc-20240116; t=1733498305; c=relaxed/simple;
+	bh=s8DTe+5yiLsS7FoKJ7YhxtZGAEXHQDKjyhbl3scBvUE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Fnn/BYt9vyP9xx4ihA3k2XLxYfAwIcl742PSVXZ6954MWlDZAgaBt4XkhOrULBV8txunDaqoXThB1GOgxGzkCM2il2PqvQVEPAb11iUdd5xSKB+8TZLGFRJkyEJeHgXcsPZhExMLQn+Ud5o4Knzkai3h+xAjls281M9kq4EBzKs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bi5EuiaI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=nAl5FjdEm6JIqWGBugLE89Ml8KcbiZ0olY6+2ghwoNo4bEgmaGd2EeGr4WRFvJ4yCF/g8eCLtt5Pc78D7hLgDg3dwE3mPzfyzHtwRVoMTXxYv2dEg0gTQLXMS9gZw7EhFfX6aDTwaJ6Mq7XtVnDibBf5ANxy2wVgAnPj/NiLcTg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ppXy3dG8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bi5EuiaI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CE8AC4CEDF;
-	Fri,  6 Dec 2024 15:18:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ppXy3dG8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B069C4CED1;
+	Fri,  6 Dec 2024 15:18:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733498301;
-	bh=tcfMwO4LJoruO4MvQPhBwS1uWNtsoabSKOUfAIQ43aM=;
+	s=korg; t=1733498304;
+	bh=s8DTe+5yiLsS7FoKJ7YhxtZGAEXHQDKjyhbl3scBvUE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Bi5EuiaIiaP39KVyxB3CwT5VGfTqgWIcoFicofhqc9zmJuZDIoAzzY/fpj7RqaYwk
-	 v8/JNrkJjXf6+O1TaR7YWDAmExOc0K7Gs41AeLfi6mXN+6npcSu/VsWhZd3v19Siti
-	 JrtRG8kRtep6m88Y5QMbW4arN04soIfuAyenBT+I=
+	b=ppXy3dG8/B9PCJEd7jCJdCv628YLaaF84WC/EBF9TzKFzw0axmAtQWajGpCMSEwTF
+	 6SR7VGQIXRa4E1uyX4K4b2+t4q2vJOuLmC64E7cbsRWLGNBn7S239/wJz/2Jg9ZPzu
+	 mkuOMs9LUfCs/egrWFkriYQgCz8BuN/yezBxyNvk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Aurich <paul@darkrain42.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.6 544/676] smb: During unmount, ensure all cached dir instances drop their dentry
-Date: Fri,  6 Dec 2024 15:36:03 +0100
-Message-ID: <20241206143714.608755067@linuxfoundation.org>
+	=?UTF-8?q?Hubert=20Wi=C5=9Bniewski?= <hubert.wisniewski.25632@gmail.com>
+Subject: [PATCH 6.6 545/676] usb: musb: Fix hardware lockup on first Rx endpoint request
+Date: Fri,  6 Dec 2024 15:36:04 +0100
+Message-ID: <20241206143714.647700286@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -44,455 +43,136 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Paul Aurich <paul@darkrain42.org>
+From: Hubert Wiśniewski <hubert.wisniewski.25632@gmail.com>
 
-commit 3fa640d035e5ae526769615c35cb9ed4be6e3662 upstream.
+commit 3fc137386c4620305bbc2a216868c53f9245670a upstream.
 
-The unmount process (cifs_kill_sb() calling close_all_cached_dirs()) can
-race with various cached directory operations, which ultimately results
-in dentries not being dropped and these kernel BUGs:
+There is a possibility that a request's callback could be invoked from
+usb_ep_queue() (call trace below, supplemented with missing calls):
 
-BUG: Dentry ffff88814f37e358{i=1000000000080,n=/}  still in use (2) [unmount of cifs cifs]
-VFS: Busy inodes after unmount of cifs (cifs)
-------------[ cut here ]------------
-kernel BUG at fs/super.c:661!
+req->complete from usb_gadget_giveback_request
+	(drivers/usb/gadget/udc/core.c:999)
+usb_gadget_giveback_request from musb_g_giveback
+	(drivers/usb/musb/musb_gadget.c:147)
+musb_g_giveback from rxstate
+	(drivers/usb/musb/musb_gadget.c:784)
+rxstate from musb_ep_restart
+	(drivers/usb/musb/musb_gadget.c:1169)
+musb_ep_restart from musb_ep_restart_resume_work
+	(drivers/usb/musb/musb_gadget.c:1176)
+musb_ep_restart_resume_work from musb_queue_resume_work
+	(drivers/usb/musb/musb_core.c:2279)
+musb_queue_resume_work from musb_gadget_queue
+	(drivers/usb/musb/musb_gadget.c:1241)
+musb_gadget_queue from usb_ep_queue
+	(drivers/usb/gadget/udc/core.c:300)
 
-This happens when a cfid is in the process of being cleaned up when, and
-has been removed from the cfids->entries list, including:
+According to the docstring of usb_ep_queue(), this should not happen:
 
-- Receiving a lease break from the server
-- Server reconnection triggers invalidate_all_cached_dirs(), which
-  removes all the cfids from the list
-- The laundromat thread decides to expire an old cfid.
+"Note that @req's ->complete() callback must never be called from within
+usb_ep_queue() as that can create deadlock situations."
 
-To solve these problems, dropping the dentry is done in queued work done
-in a newly-added cfid_put_wq workqueue, and close_all_cached_dirs()
-flushes that workqueue after it drops all the dentries of which it's
-aware. This is a global workqueue (rather than scoped to a mount), but
-the queued work is minimal.
+In fact, a hardware lockup might occur in the following sequence:
 
-The final cleanup work for cleaning up a cfid is performed via work
-queued in the serverclose_wq workqueue; this is done separate from
-dropping the dentries so that close_all_cached_dirs() doesn't block on
-any server operations.
+1. The gadget is initialized using musb_gadget_enable().
+2. Meanwhile, a packet arrives, and the RXPKTRDY flag is set, raising an
+   interrupt.
+3. If IRQs are enabled, the interrupt is handled, but musb_g_rx() finds an
+   empty queue (next_request() returns NULL). The interrupt flag has
+   already been cleared by the glue layer handler, but the RXPKTRDY flag
+   remains set.
+4. The first request is enqueued using usb_ep_queue(), leading to the call
+   of req->complete(), as shown in the call trace above.
+5. If the callback enables IRQs and another packet is waiting, step (3)
+   repeats. The request queue is empty because usb_g_giveback() removes the
+   request before invoking the callback.
+6. The endpoint remains locked up, as the interrupt triggered by hardware
+   setting the RXPKTRDY flag has been handled, but the flag itself remains
+   set.
 
-Both of these queued works expect to invoked with a cfid reference and
-a tcon reference to avoid those objects from being freed while the work
-is ongoing.
+For this scenario to occur, it is only necessary for IRQs to be enabled at
+some point during the complete callback. This happens with the USB Ethernet
+gadget, whose rx_complete() callback calls netif_rx(). If called in the
+task context, netif_rx() disables the bottom halves (BHs). When the BHs are
+re-enabled, IRQs are also enabled to allow soft IRQs to be processed. The
+gadget itself is initialized at module load (or at boot if built-in), but
+the first request is enqueued when the network interface is brought up,
+triggering rx_complete() in the task context via ioctl(). If a packet
+arrives while the interface is down, it can prevent the interface from
+receiving any further packets from the USB host.
 
-While we're here, add proper locking to close_all_cached_dirs(), and
-locking around the freeing of cfid->dentry.
+The situation is quite complicated with many parties involved. This
+particular issue can be resolved in several possible ways:
 
-Fixes: ebe98f1447bb ("cifs: enable caching of directories for which a lease is held")
+1. Ensure that callbacks never enable IRQs. This would be difficult to
+   enforce, as discovering how netif_rx() interacts with interrupts was
+   already quite challenging and u_ether is not the only function driver.
+   Similar "bugs" could be hidden in other drivers as well.
+2. Disable MUSB interrupts in musb_g_giveback() before calling the callback
+   and re-enable them afterwars (by calling musb_{dis,en}able_interrupts(),
+   for example). This would ensure that MUSB interrupts are not handled
+   during the callback, even if IRQs are enabled. In fact, it would allow
+   IRQs to be enabled when releasing the lock. However, this feels like an
+   inelegant hack.
+3. Modify the interrupt handler to clear the RXPKTRDY flag if the request
+   queue is empty. While this approach also feels like a hack, it wastes
+   CPU time by attempting to handle incoming packets when the software is
+   not ready to process them.
+4. Flush the Rx FIFO instead of calling rxstate() in musb_ep_restart().
+   This ensures that the hardware can receive packets when there is at
+   least one request in the queue. Once IRQs are enabled, the interrupt
+   handler will be able to correctly process the next incoming packet
+   (eventually calling rxstate()). This approach may cause one or two
+   packets to be dropped (two if double buffering is enabled), but this
+   seems to be a minor issue, as packet loss can occur when the software is
+   not yet ready to process them. Additionally, this solution makes the
+   gadget driver compliant with the rule mentioned in the docstring of
+   usb_ep_queue().
+
+There may be additional solutions, but from these four, the last one has
+been chosen as it seems to be the most appropriate, as it addresses the
+"bad" behavior of the driver.
+
+Fixes: baebdf48c360 ("net: dev: Makes sure netif_rx() can be invoked in any context.")
 Cc: stable@vger.kernel.org
-Signed-off-by: Paul Aurich <paul@darkrain42.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Hubert Wiśniewski <hubert.wisniewski.25632@gmail.com>
+Link: https://lore.kernel.org/r/4ee1ead4525f78fb5909a8cbf99513ad0082ad21.camel@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/cached_dir.c |  156 ++++++++++++++++++++++++++++++++++++---------
- fs/smb/client/cached_dir.h |    6 +
- fs/smb/client/cifsfs.c     |   12 +++
- fs/smb/client/cifsglob.h   |    3 
- fs/smb/client/inode.c      |    3 
- fs/smb/client/trace.h      |    3 
- 6 files changed, 147 insertions(+), 36 deletions(-)
+ drivers/usb/musb/musb_gadget.c |   13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
---- a/fs/smb/client/cached_dir.c
-+++ b/fs/smb/client/cached_dir.c
-@@ -17,6 +17,11 @@ static void free_cached_dir(struct cache
- static void smb2_close_cached_fid(struct kref *ref);
- static void cfids_laundromat_worker(struct work_struct *work);
- 
-+struct cached_dir_dentry {
-+	struct list_head entry;
-+	struct dentry *dentry;
-+};
-+
- static struct cached_fid *find_or_create_cached_dir(struct cached_fids *cfids,
- 						    const char *path,
- 						    bool lookup_only,
-@@ -470,7 +475,10 @@ void close_all_cached_dirs(struct cifs_s
- 	struct cifs_tcon *tcon;
- 	struct tcon_link *tlink;
- 	struct cached_fids *cfids;
-+	struct cached_dir_dentry *tmp_list, *q;
-+	LIST_HEAD(entry);
- 
-+	spin_lock(&cifs_sb->tlink_tree_lock);
- 	for (node = rb_first(root); node; node = rb_next(node)) {
- 		tlink = rb_entry(node, struct tcon_link, tl_rbnode);
- 		tcon = tlink_tcon(tlink);
-@@ -479,11 +487,30 @@ void close_all_cached_dirs(struct cifs_s
- 		cfids = tcon->cfids;
- 		if (cfids == NULL)
- 			continue;
-+		spin_lock(&cfids->cfid_list_lock);
- 		list_for_each_entry(cfid, &cfids->entries, entry) {
--			dput(cfid->dentry);
-+			tmp_list = kmalloc(sizeof(*tmp_list), GFP_ATOMIC);
-+			if (tmp_list == NULL)
-+				break;
-+			spin_lock(&cfid->fid_lock);
-+			tmp_list->dentry = cfid->dentry;
- 			cfid->dentry = NULL;
-+			spin_unlock(&cfid->fid_lock);
-+
-+			list_add_tail(&tmp_list->entry, &entry);
- 		}
-+		spin_unlock(&cfids->cfid_list_lock);
-+	}
-+	spin_unlock(&cifs_sb->tlink_tree_lock);
-+
-+	list_for_each_entry_safe(tmp_list, q, &entry, entry) {
-+		list_del(&tmp_list->entry);
-+		dput(tmp_list->dentry);
-+		kfree(tmp_list);
- 	}
-+
-+	/* Flush any pending work that will drop dentries */
-+	flush_workqueue(cfid_put_wq);
- }
- 
- /*
-@@ -494,14 +521,18 @@ void invalidate_all_cached_dirs(struct c
+--- a/drivers/usb/musb/musb_gadget.c
++++ b/drivers/usb/musb/musb_gadget.c
+@@ -1170,12 +1170,19 @@ struct free_record {
+  */
+ void musb_ep_restart(struct musb *musb, struct musb_request *req)
  {
- 	struct cached_fids *cfids = tcon->cfids;
- 	struct cached_fid *cfid, *q;
--	LIST_HEAD(entry);
- 
- 	if (cfids == NULL)
- 		return;
- 
-+	/*
-+	 * Mark all the cfids as closed, and move them to the cfids->dying list.
-+	 * They'll be cleaned up later by cfids_invalidation_worker. Take
-+	 * a reference to each cfid during this process.
-+	 */
- 	spin_lock(&cfids->cfid_list_lock);
- 	list_for_each_entry_safe(cfid, q, &cfids->entries, entry) {
--		list_move(&cfid->entry, &entry);
-+		list_move(&cfid->entry, &cfids->dying);
- 		cfids->num_entries--;
- 		cfid->is_open = false;
- 		cfid->on_list = false;
-@@ -514,26 +545,47 @@ void invalidate_all_cached_dirs(struct c
- 		} else
- 			kref_get(&cfid->refcount);
- 	}
-+	/*
-+	 * Queue dropping of the dentries once locks have been dropped
-+	 */
-+	if (!list_empty(&cfids->dying))
-+		queue_work(cfid_put_wq, &cfids->invalidation_work);
- 	spin_unlock(&cfids->cfid_list_lock);
--
--	list_for_each_entry_safe(cfid, q, &entry, entry) {
--		list_del(&cfid->entry);
--		cancel_work_sync(&cfid->lease_break);
--		/*
--		 * Drop the ref-count from above, either the lease-ref (if there
--		 * was one) or the extra one acquired.
--		 */
--		kref_put(&cfid->refcount, smb2_close_cached_fid);
--	}
- }
- 
- static void
--smb2_cached_lease_break(struct work_struct *work)
-+cached_dir_offload_close(struct work_struct *work)
- {
- 	struct cached_fid *cfid = container_of(work,
--				struct cached_fid, lease_break);
-+				struct cached_fid, close_work);
-+	struct cifs_tcon *tcon = cfid->tcon;
++	u16 csr;
++	void __iomem *epio = req->ep->hw_ep->regs;
 +
-+	WARN_ON(cfid->on_list);
- 
- 	kref_put(&cfid->refcount, smb2_close_cached_fid);
-+	cifs_put_tcon(tcon, netfs_trace_tcon_ref_put_cached_close);
-+}
-+
-+/*
-+ * Release the cached directory's dentry, and then queue work to drop cached
-+ * directory itself (closing on server if needed).
-+ *
-+ * Must be called with a reference to the cached_fid and a reference to the
-+ * tcon.
-+ */
-+static void cached_dir_put_work(struct work_struct *work)
-+{
-+	struct cached_fid *cfid = container_of(work, struct cached_fid,
-+					       put_work);
-+	struct dentry *dentry;
-+
-+	spin_lock(&cfid->fid_lock);
-+	dentry = cfid->dentry;
-+	cfid->dentry = NULL;
-+	spin_unlock(&cfid->fid_lock);
-+
-+	dput(dentry);
-+	queue_work(serverclose_wq, &cfid->close_work);
- }
- 
- int cached_dir_lease_break(struct cifs_tcon *tcon, __u8 lease_key[16])
-@@ -560,8 +612,10 @@ int cached_dir_lease_break(struct cifs_t
- 			cfid->on_list = false;
- 			cfids->num_entries--;
- 
--			queue_work(cifsiod_wq,
--				   &cfid->lease_break);
-+			++tcon->tc_count;
-+			trace_smb3_tcon_ref(tcon->debug_id, tcon->tc_count,
-+					    netfs_trace_tcon_ref_get_cached_lease_break);
-+			queue_work(cfid_put_wq, &cfid->put_work);
- 			spin_unlock(&cfids->cfid_list_lock);
- 			return true;
- 		}
-@@ -583,7 +637,8 @@ static struct cached_fid *init_cached_di
- 		return NULL;
- 	}
- 
--	INIT_WORK(&cfid->lease_break, smb2_cached_lease_break);
-+	INIT_WORK(&cfid->close_work, cached_dir_offload_close);
-+	INIT_WORK(&cfid->put_work, cached_dir_put_work);
- 	INIT_LIST_HEAD(&cfid->entry);
- 	INIT_LIST_HEAD(&cfid->dirents.entries);
- 	mutex_init(&cfid->dirents.de_mutex);
-@@ -596,6 +651,9 @@ static void free_cached_dir(struct cache
- {
- 	struct cached_dirent *dirent, *q;
- 
-+	WARN_ON(work_pending(&cfid->close_work));
-+	WARN_ON(work_pending(&cfid->put_work));
-+
- 	dput(cfid->dentry);
- 	cfid->dentry = NULL;
- 
-@@ -613,10 +671,30 @@ static void free_cached_dir(struct cache
- 	kfree(cfid);
- }
- 
-+static void cfids_invalidation_worker(struct work_struct *work)
-+{
-+	struct cached_fids *cfids = container_of(work, struct cached_fids,
-+						 invalidation_work);
-+	struct cached_fid *cfid, *q;
-+	LIST_HEAD(entry);
-+
-+	spin_lock(&cfids->cfid_list_lock);
-+	/* move cfids->dying to the local list */
-+	list_cut_before(&entry, &cfids->dying, &cfids->dying);
-+	spin_unlock(&cfids->cfid_list_lock);
-+
-+	list_for_each_entry_safe(cfid, q, &entry, entry) {
-+		list_del(&cfid->entry);
-+		/* Drop the ref-count acquired in invalidate_all_cached_dirs */
-+		kref_put(&cfid->refcount, smb2_close_cached_fid);
+ 	trace_musb_req_start(req);
+ 	musb_ep_select(musb->mregs, req->epnum);
+-	if (req->tx)
++	if (req->tx) {
+ 		txstate(musb, req);
+-	else
+-		rxstate(musb, req);
++	} else {
++		csr = musb_readw(epio, MUSB_RXCSR);
++		csr |= MUSB_RXCSR_FLUSHFIFO | MUSB_RXCSR_P_WZC_BITS;
++		musb_writew(epio, MUSB_RXCSR, csr);
++		musb_writew(epio, MUSB_RXCSR, csr);
 +	}
-+}
-+
- static void cfids_laundromat_worker(struct work_struct *work)
- {
- 	struct cached_fids *cfids;
- 	struct cached_fid *cfid, *q;
-+	struct dentry *dentry;
- 	LIST_HEAD(entry);
- 
- 	cfids = container_of(work, struct cached_fids, laundromat_work.work);
-@@ -642,18 +720,28 @@ static void cfids_laundromat_worker(stru
- 
- 	list_for_each_entry_safe(cfid, q, &entry, entry) {
- 		list_del(&cfid->entry);
--		/*
--		 * Cancel and wait for the work to finish in case we are racing
--		 * with it.
--		 */
--		cancel_work_sync(&cfid->lease_break);
--		/*
--		 * Drop the ref-count from above, either the lease-ref (if there
--		 * was one) or the extra one acquired.
--		 */
--		kref_put(&cfid->refcount, smb2_close_cached_fid);
-+
-+		spin_lock(&cfid->fid_lock);
-+		dentry = cfid->dentry;
-+		cfid->dentry = NULL;
-+		spin_unlock(&cfid->fid_lock);
-+
-+		dput(dentry);
-+		if (cfid->is_open) {
-+			spin_lock(&cifs_tcp_ses_lock);
-+			++cfid->tcon->tc_count;
-+			trace_smb3_tcon_ref(cfid->tcon->debug_id, cfid->tcon->tc_count,
-+					    netfs_trace_tcon_ref_get_cached_laundromat);
-+			spin_unlock(&cifs_tcp_ses_lock);
-+			queue_work(serverclose_wq, &cfid->close_work);
-+		} else
-+			/*
-+			 * Drop the ref-count from above, either the lease-ref (if there
-+			 * was one) or the extra one acquired.
-+			 */
-+			kref_put(&cfid->refcount, smb2_close_cached_fid);
- 	}
--	queue_delayed_work(cifsiod_wq, &cfids->laundromat_work,
-+	queue_delayed_work(cfid_put_wq, &cfids->laundromat_work,
- 			   dir_cache_timeout * HZ);
  }
  
-@@ -666,9 +754,11 @@ struct cached_fids *init_cached_dirs(voi
- 		return NULL;
- 	spin_lock_init(&cfids->cfid_list_lock);
- 	INIT_LIST_HEAD(&cfids->entries);
-+	INIT_LIST_HEAD(&cfids->dying);
- 
-+	INIT_WORK(&cfids->invalidation_work, cfids_invalidation_worker);
- 	INIT_DELAYED_WORK(&cfids->laundromat_work, cfids_laundromat_worker);
--	queue_delayed_work(cifsiod_wq, &cfids->laundromat_work,
-+	queue_delayed_work(cfid_put_wq, &cfids->laundromat_work,
- 			   dir_cache_timeout * HZ);
- 
- 	return cfids;
-@@ -687,12 +777,18 @@ void free_cached_dirs(struct cached_fids
- 		return;
- 
- 	cancel_delayed_work_sync(&cfids->laundromat_work);
-+	cancel_work_sync(&cfids->invalidation_work);
- 
- 	spin_lock(&cfids->cfid_list_lock);
- 	list_for_each_entry_safe(cfid, q, &cfids->entries, entry) {
- 		cfid->on_list = false;
- 		cfid->is_open = false;
- 		list_move(&cfid->entry, &entry);
-+	}
-+	list_for_each_entry_safe(cfid, q, &cfids->dying, entry) {
-+		cfid->on_list = false;
-+		cfid->is_open = false;
-+		list_move(&cfid->entry, &entry);
- 	}
- 	spin_unlock(&cfids->cfid_list_lock);
- 
---- a/fs/smb/client/cached_dir.h
-+++ b/fs/smb/client/cached_dir.h
-@@ -44,7 +44,8 @@ struct cached_fid {
- 	spinlock_t fid_lock;
- 	struct cifs_tcon *tcon;
- 	struct dentry *dentry;
--	struct work_struct lease_break;
-+	struct work_struct put_work;
-+	struct work_struct close_work;
- 	struct smb2_file_all_info file_all_info;
- 	struct cached_dirents dirents;
- };
-@@ -53,10 +54,13 @@ struct cached_fid {
- struct cached_fids {
- 	/* Must be held when:
- 	 * - accessing the cfids->entries list
-+	 * - accessing the cfids->dying list
- 	 */
- 	spinlock_t cfid_list_lock;
- 	int num_entries;
- 	struct list_head entries;
-+	struct list_head dying;
-+	struct work_struct invalidation_work;
- 	struct delayed_work laundromat_work;
- };
- 
---- a/fs/smb/client/cifsfs.c
-+++ b/fs/smb/client/cifsfs.c
-@@ -156,6 +156,7 @@ struct workqueue_struct	*fileinfo_put_wq
- struct workqueue_struct	*cifsoplockd_wq;
- struct workqueue_struct	*deferredclose_wq;
- struct workqueue_struct	*serverclose_wq;
-+struct workqueue_struct	*cfid_put_wq;
- __u32 cifs_lock_secret;
- 
- /*
-@@ -1899,9 +1900,16 @@ init_cifs(void)
- 		goto out_destroy_deferredclose_wq;
- 	}
- 
-+	cfid_put_wq = alloc_workqueue("cfid_put_wq",
-+				      WQ_FREEZABLE|WQ_MEM_RECLAIM, 0);
-+	if (!cfid_put_wq) {
-+		rc = -ENOMEM;
-+		goto out_destroy_serverclose_wq;
-+	}
-+
- 	rc = cifs_init_inodecache();
- 	if (rc)
--		goto out_destroy_serverclose_wq;
-+		goto out_destroy_cfid_put_wq;
- 
- 	rc = init_mids();
- 	if (rc)
-@@ -1963,6 +1971,8 @@ out_destroy_mids:
- 	destroy_mids();
- out_destroy_inodecache:
- 	cifs_destroy_inodecache();
-+out_destroy_cfid_put_wq:
-+	destroy_workqueue(cfid_put_wq);
- out_destroy_serverclose_wq:
- 	destroy_workqueue(serverclose_wq);
- out_destroy_deferredclose_wq:
---- a/fs/smb/client/cifsglob.h
-+++ b/fs/smb/client/cifsglob.h
-@@ -2022,7 +2022,7 @@ require use of the stronger protocol */
-  * cifsInodeInfo->lock_sem	cifsInodeInfo->llist		cifs_init_once
-  *				->can_cache_brlcks
-  * cifsInodeInfo->deferred_lock	cifsInodeInfo->deferred_closes	cifsInodeInfo_alloc
-- * cached_fid->fid_mutex		cifs_tcon->crfid		tcon_info_alloc
-+ * cached_fids->cfid_list_lock	cifs_tcon->cfids->entries	 init_cached_dirs
-  * cifsFileInfo->fh_mutex		cifsFileInfo			cifs_new_fileinfo
-  * cifsFileInfo->file_info_lock	cifsFileInfo->count		cifs_new_fileinfo
-  *				->invalidHandle			initiate_cifs_search
-@@ -2111,6 +2111,7 @@ extern struct workqueue_struct *fileinfo
- extern struct workqueue_struct *cifsoplockd_wq;
- extern struct workqueue_struct *deferredclose_wq;
- extern struct workqueue_struct *serverclose_wq;
-+extern struct workqueue_struct *cfid_put_wq;
- extern __u32 cifs_lock_secret;
- 
- extern mempool_t *cifs_sm_req_poolp;
---- a/fs/smb/client/inode.c
-+++ b/fs/smb/client/inode.c
-@@ -2412,13 +2412,10 @@ cifs_dentry_needs_reval(struct dentry *d
- 		return true;
- 
- 	if (!open_cached_dir_by_dentry(tcon, dentry->d_parent, &cfid)) {
--		spin_lock(&cfid->fid_lock);
- 		if (cfid->time && cifs_i->time > cfid->time) {
--			spin_unlock(&cfid->fid_lock);
- 			close_cached_dir(cfid);
- 			return false;
- 		}
--		spin_unlock(&cfid->fid_lock);
- 		close_cached_dir(cfid);
- 	}
- 	/*
---- a/fs/smb/client/trace.h
-+++ b/fs/smb/client/trace.h
-@@ -27,6 +27,8 @@
- 	EM(netfs_trace_tcon_ref_free_ipc,		"FRE Ipc   ") \
- 	EM(netfs_trace_tcon_ref_free_ipc_fail,		"FRE Ipc-F ") \
- 	EM(netfs_trace_tcon_ref_free_reconnect_server,	"FRE Reconn") \
-+	EM(netfs_trace_tcon_ref_get_cached_laundromat,	"GET Ch-Lau") \
-+	EM(netfs_trace_tcon_ref_get_cached_lease_break,	"GET Ch-Lea") \
- 	EM(netfs_trace_tcon_ref_get_cancelled_close,	"GET Cn-Cls") \
- 	EM(netfs_trace_tcon_ref_get_dfs_refer,		"GET DfsRef") \
- 	EM(netfs_trace_tcon_ref_get_find,		"GET Find  ") \
-@@ -35,6 +37,7 @@
- 	EM(netfs_trace_tcon_ref_new,			"NEW       ") \
- 	EM(netfs_trace_tcon_ref_new_ipc,		"NEW Ipc   ") \
- 	EM(netfs_trace_tcon_ref_new_reconnect_server,	"NEW Reconn") \
-+	EM(netfs_trace_tcon_ref_put_cached_close,	"PUT Ch-Cls") \
- 	EM(netfs_trace_tcon_ref_put_cancelled_close,	"PUT Cn-Cls") \
- 	EM(netfs_trace_tcon_ref_put_cancelled_close_fid, "PUT Cn-Fid") \
- 	EM(netfs_trace_tcon_ref_put_cancelled_mid,	"PUT Cn-Mid") \
+ static int musb_ep_restart_resume_work(struct musb *musb, void *data)
 
 
