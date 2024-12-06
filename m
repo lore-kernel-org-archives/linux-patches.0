@@ -1,40 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92C7A53A7;
-	Fri,  6 Dec 2024 15:08:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8F7853A7;
+	Fri,  6 Dec 2024 15:08:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733497691; cv=none; b=dwZdvlZu/bGF/kgfWt/QN4jXEfRCcGd9uR3ydj96WcIZmTyy10enJ5WjmEaf0YgFFgsswa/FRgu2sX1UeBTVC4C99UqpY54S1aakQ4nMgc7WNr4AVfZLlwaDYNncZ4Mf2Q1iRQ3K+9vM8ShJTFRLSE10zCnkPWMCB+9qauupFf8=
+	t=1733497694; cv=none; b=f3vXRCl58zjHzGyAyE6wFDLlLGLVlXLFmaY2KZyavN6te0OOreWkQUZ7mCOWQWDnTx2JsY+eci0yAdiaHxJ1+w55tixDoMM7evZSkm7uv01dswf9J3eJT4uy+byFP6PBgQpeihzC6JOarvFxAVi3+9ojDgn4HnznEGI2wv9nIJI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733497691; c=relaxed/simple;
-	bh=K0qdO5ow8kHT5eAMLg+vY3wpNn8SDOeB+euNBJUiCz4=;
+	s=arc-20240116; t=1733497694; c=relaxed/simple;
+	bh=K68Uj+ikDjmEQkHdcygpdKpsWF5m+YPp4e4nojavZfI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=eumyWdalG9Eg9iYyffG6Aa/tdmzcdooXIw0qquuqtyQUZEkyNmISJtlArhLKrS/qUE+UeDs2DD5hMumrJ6ZF1sEXJQioqdx6EfDUA+o7ZO4SBkSJqfPr5ggDgwEmqvBqC6nloE24JIRoH2i2J1IKiikUOm7CkHJUSxrxE4T5KO8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1kLsVAEi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AjvknyeeogSMDP7wVzTCxxkGgioeew5q7eCef3tXKVR7inb7cYZK6jHNJ5cPdffkYi7a4Omf6rmiur9z+ta21/Sp4KzJvoMM1cEp487yfQXWVSr6oeRijkAAqtlwITOafwVj91GFxdyMJKEDkXDT1mOy3UcmembzmH1Jemf2SwA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VytwOaOx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1kLsVAEi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C934C4CEDC;
-	Fri,  6 Dec 2024 15:08:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VytwOaOx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D768BC4CEDC;
+	Fri,  6 Dec 2024 15:08:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733497691;
-	bh=K0qdO5ow8kHT5eAMLg+vY3wpNn8SDOeB+euNBJUiCz4=;
+	s=korg; t=1733497694;
+	bh=K68Uj+ikDjmEQkHdcygpdKpsWF5m+YPp4e4nojavZfI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1kLsVAEigcIGPbD9NPm9aPu/kcPqzAOtrpuzD879NdezqwpnrYxf+VI82K0rbMkUC
-	 BOqsaG8/JKvwSmDMYeRjpfiZjFimvt0Wj04HXZJhGeWMPQXKv6SO0Ykw2XA8I+0aXj
-	 uzVZmmgFYXToLdNrIlRDkVROOuo06Nf4Xr1VnWzY=
+	b=VytwOaOxlP5Cz4/kxer+C9QepmOgO4XzAWHidnCLUBPK4nhh+WTbcps8clinfytO+
+	 R/EPMD/BX201IzsshiX3Zah7p+H+kDj1HEi+cfoih/Bs/+wMh6Yi956rBr0TOFZA/M
+	 W/ZWZwShXEYNkUR/nTEdgxRnglKRUqMZx6URuaJk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Th=C3=A9o=20Lebrun?= <theo.lebrun@bootlin.com>,
-	Thomas Richard <thomas.richard@bootlin.com>,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Siddharth Vadapalli <s-vadapalli@ti.com>,
+	Ian Rogers <irogers@google.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	"Steinar H. Gunderson" <sesse@google.com>,
+	Alexander Lobakin <aleksander.lobakin@intel.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Kajol Jain <kjain@linux.ibm.com>,
+	Athira Rajeev <atrajeev@linux.vnet.ibm.com>,
+	Hemant Kumar <hemant@linux.vnet.ibm.com>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 365/676] PCI: j721e: Add suspend and resume support
-Date: Fri,  6 Dec 2024 15:33:04 +0100
-Message-ID: <20241206143707.604944450@linuxfoundation.org>
+Subject: [PATCH 6.6 348/676] perf probe: Fix libdw memory leak
+Date: Fri,  6 Dec 2024 15:32:47 +0100
+Message-ID: <20241206143706.940565097@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -47,171 +52,73 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Théo Lebrun <theo.lebrun@bootlin.com>
+From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit c538d40f365b5b6d7433d371710f58e8b266fb19 ]
+[ Upstream commit 4585038b8e186252141ef86e9f0d8e97f11dce8d ]
 
-Add suspend and resume support. Only the Root Complex mode is supported.
+Add missing dwarf_cfi_end to free memory associated with probe_finder
+cfi_eh which is allocated and owned via a call to
+dwarf_getcfi_elf. Confusingly cfi_dbg shouldn't be freed as its memory
+is owned by the passed in debuginfo struct. Add comments to highlight
+this.
 
-During the suspend stage PERST# is asserted, then deasserted during the
-resume stage.
+This addresses leak sanitizer issues seen in:
+tools/perf/tests/shell/test_uprobe_from_different_cu.sh
 
-Link: https://lore.kernel.org/linux-pci/20240102-j7200-pcie-s2r-v7-7-a2f9156da6c3@bootlin.com
-Signed-off-by: Théo Lebrun <theo.lebrun@bootlin.com>
-Signed-off-by: Thomas Richard <thomas.richard@bootlin.com>
-[kwilczynski: commit log, update references to the PCI SIG specification]
-Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
-Reviewed-by: Siddharth Vadapalli <s-vadapalli@ti.com>
-Stable-dep-of: 22a9120479a4 ("PCI: j721e: Deassert PERST# after a delay of PCIE_T_PVPERL_MS milliseconds")
+Fixes: 270bde1e76f4 ("perf probe: Search both .eh_frame and .debug_frame sections for probe location")
+Signed-off-by: Ian Rogers <irogers@google.com>
+Cc: David S. Miller <davem@davemloft.net>
+Cc: Steinar H. Gunderson <sesse@google.com>
+Cc: Alexander Lobakin <aleksander.lobakin@intel.com>
+Cc: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Cc: Kajol Jain <kjain@linux.ibm.com>
+Cc: Athira Rajeev <atrajeev@linux.vnet.ibm.com>
+Cc: Hemant Kumar <hemant@linux.vnet.ibm.com>
+Link: https://lore.kernel.org/r/20241016235622.52166-3-irogers@google.com
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/cadence/pci-j721e.c | 98 ++++++++++++++++++++--
- 1 file changed, 92 insertions(+), 6 deletions(-)
+ tools/perf/util/probe-finder.c | 4 ++++
+ tools/perf/util/probe-finder.h | 4 ++--
+ 2 files changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pci/controller/cadence/pci-j721e.c b/drivers/pci/controller/cadence/pci-j721e.c
-index b83ae35a210fe..212b11c3145d8 100644
---- a/drivers/pci/controller/cadence/pci-j721e.c
-+++ b/drivers/pci/controller/cadence/pci-j721e.c
-@@ -7,6 +7,8 @@
-  */
+diff --git a/tools/perf/util/probe-finder.c b/tools/perf/util/probe-finder.c
+index f171360b0ef4d..c816191564bdf 100644
+--- a/tools/perf/util/probe-finder.c
++++ b/tools/perf/util/probe-finder.c
+@@ -1499,6 +1499,10 @@ int debuginfo__find_trace_events(struct debuginfo *dbg,
+ 	if (ret >= 0 && tf.pf.skip_empty_arg)
+ 		ret = fill_empty_trace_arg(pev, tf.tevs, tf.ntevs);
  
- #include <linux/clk.h>
-+#include <linux/clk-provider.h>
-+#include <linux/container_of.h>
- #include <linux/delay.h>
- #include <linux/gpio/consumer.h>
- #include <linux/io.h>
-@@ -22,6 +24,8 @@
- #include "../../pci.h"
- #include "pcie-cadence.h"
++#if _ELFUTILS_PREREQ(0, 142)
++	dwarf_cfi_end(tf.pf.cfi_eh);
++#endif
++
+ 	if (ret < 0 || tf.ntevs == 0) {
+ 		for (i = 0; i < tf.ntevs; i++)
+ 			clear_probe_trace_event(&tf.tevs[i]);
+diff --git a/tools/perf/util/probe-finder.h b/tools/perf/util/probe-finder.h
+index 8bc1c80d3c1c0..1f4650b955094 100644
+--- a/tools/perf/util/probe-finder.h
++++ b/tools/perf/util/probe-finder.h
+@@ -81,9 +81,9 @@ struct probe_finder {
  
-+#define cdns_pcie_to_rc(p) container_of(p, struct cdns_pcie_rc, pcie)
-+
- #define ENABLE_REG_SYS_2	0x108
- #define STATUS_REG_SYS_2	0x508
- #define STATUS_CLR_REG_SYS_2	0x708
-@@ -512,12 +516,12 @@ static int j721e_pcie_probe(struct platform_device *pdev)
- 		pcie->refclk = clk;
- 
- 		/*
--		 * "Power Sequencing and Reset Signal Timings" table in
--		 * PCI EXPRESS CARD ELECTROMECHANICAL SPECIFICATION, REV. 3.0
--		 * indicates PERST# should be deasserted after minimum of 100us
--		 * once REFCLK is stable. The REFCLK to the connector in RC
--		 * mode is selected while enabling the PHY. So deassert PERST#
--		 * after 100 us.
-+		 * The "Power Sequencing and Reset Signal Timings" table of the
-+		 * PCI Express Card Electromechanical Specification, Revision
-+		 * 5.1, Section 2.9.2, Symbol "T_PERST-CLK", indicates PERST#
-+		 * should be deasserted after minimum of 100us once REFCLK is
-+		 * stable. The REFCLK to the connector in RC mode is selected
-+		 * while enabling the PHY. So deassert PERST# after 100 us.
- 		 */
- 		if (gpiod) {
- 			fsleep(PCIE_T_PERST_CLK_US);
-@@ -569,6 +573,87 @@ static void j721e_pcie_remove(struct platform_device *pdev)
- 	pm_runtime_disable(dev);
- }
- 
-+static int j721e_pcie_suspend_noirq(struct device *dev)
-+{
-+	struct j721e_pcie *pcie = dev_get_drvdata(dev);
-+
-+	if (pcie->mode == PCI_MODE_RC) {
-+		gpiod_set_value_cansleep(pcie->reset_gpio, 0);
-+		clk_disable_unprepare(pcie->refclk);
-+	}
-+
-+	cdns_pcie_disable_phy(pcie->cdns_pcie);
-+
-+	return 0;
-+}
-+
-+static int j721e_pcie_resume_noirq(struct device *dev)
-+{
-+	struct j721e_pcie *pcie = dev_get_drvdata(dev);
-+	struct cdns_pcie *cdns_pcie = pcie->cdns_pcie;
-+	int ret;
-+
-+	ret = j721e_pcie_ctrl_init(pcie);
-+	if (ret < 0)
-+		return ret;
-+
-+	j721e_pcie_config_link_irq(pcie);
-+
-+	/*
-+	 * This is not called explicitly in the probe, it is called by
-+	 * cdns_pcie_init_phy().
-+	 */
-+	ret = cdns_pcie_enable_phy(pcie->cdns_pcie);
-+	if (ret < 0)
-+		return ret;
-+
-+	if (pcie->mode == PCI_MODE_RC) {
-+		struct cdns_pcie_rc *rc = cdns_pcie_to_rc(cdns_pcie);
-+
-+		ret = clk_prepare_enable(pcie->refclk);
-+		if (ret < 0)
-+			return ret;
-+
-+		/*
-+		 * The "Power Sequencing and Reset Signal Timings" table of the
-+		 * PCI Express Card Electromechanical Specification, Revision
-+		 * 5.1, Section 2.9.2, Symbol "T_PERST-CLK", indicates PERST#
-+		 * should be deasserted after minimum of 100us once REFCLK is
-+		 * stable. The REFCLK to the connector in RC mode is selected
-+		 * while enabling the PHY. So deassert PERST# after 100 us.
-+		 */
-+		if (pcie->reset_gpio) {
-+			fsleep(PCIE_T_PERST_CLK_US);
-+			gpiod_set_value_cansleep(pcie->reset_gpio, 1);
-+		}
-+
-+		ret = cdns_pcie_host_link_setup(rc);
-+		if (ret < 0) {
-+			clk_disable_unprepare(pcie->refclk);
-+			return ret;
-+		}
-+
-+		/*
-+		 * Reset internal status of BARs to force reinitialization in
-+		 * cdns_pcie_host_init().
-+		 */
-+		for (enum cdns_pcie_rp_bar bar = RP_BAR0; bar <= RP_NO_BAR; bar++)
-+			rc->avail_ib_bar[bar] = true;
-+
-+		ret = cdns_pcie_host_init(rc);
-+		if (ret) {
-+			clk_disable_unprepare(pcie->refclk);
-+			return ret;
-+		}
-+	}
-+
-+	return 0;
-+}
-+
-+static DEFINE_NOIRQ_DEV_PM_OPS(j721e_pcie_pm_ops,
-+			       j721e_pcie_suspend_noirq,
-+			       j721e_pcie_resume_noirq);
-+
- static struct platform_driver j721e_pcie_driver = {
- 	.probe  = j721e_pcie_probe,
- 	.remove_new = j721e_pcie_remove,
-@@ -576,6 +661,7 @@ static struct platform_driver j721e_pcie_driver = {
- 		.name	= "j721e-pcie",
- 		.of_match_table = of_j721e_pcie_match,
- 		.suppress_bind_attrs = true,
-+		.pm	= pm_sleep_ptr(&j721e_pcie_pm_ops),
- 	},
- };
- builtin_platform_driver(j721e_pcie_driver);
+ 	/* For variable searching */
+ #if _ELFUTILS_PREREQ(0, 142)
+-	/* Call Frame Information from .eh_frame */
++	/* Call Frame Information from .eh_frame. Owned by this struct. */
+ 	Dwarf_CFI		*cfi_eh;
+-	/* Call Frame Information from .debug_frame */
++	/* Call Frame Information from .debug_frame. Not owned. */
+ 	Dwarf_CFI		*cfi_dbg;
+ #endif
+ 	Dwarf_Op		*fb_ops;	/* Frame base attribute */
 -- 
 2.43.0
 
