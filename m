@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B13C632C8B;
-	Fri,  6 Dec 2024 14:50:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C59832C8B;
+	Fri,  6 Dec 2024 14:50:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733496613; cv=none; b=R0nrVotG7mP6LPkO+jo97ClDNsdOTo5M7Sg8uWy5kAvUKsCT3khmJnNorsguNX3nDcP6ahgrfKhEes/D1SgXHPE3WGAgxnv6e52AwlBzlrUszZUd+IRxlWVvQHvC3JV2WU7mrehj9z4c0YYoR3VAuH/yK82xal6eQ4Rfmq4DtfM=
+	t=1733496618; cv=none; b=AZm+JyiwjAtfGtp/V5bgEUKAzJtvX63wDh/JNdWHplKzaIFdv/RvUo7e62tSAnYk94wQHoxFenjWQSLm+/pBwDU/LIGmR/W29Jj7S1Uc9woa4kRsM3fVtxfohmg860ol37Q1kdod1JScWmTaP3GA6np4G8iKX2TaSeKYMkeHUcw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733496613; c=relaxed/simple;
-	bh=jn9SRKBJlTaWw+68Inb9fKrwKoXeTjHMZfkMv4mxunM=;
+	s=arc-20240116; t=1733496618; c=relaxed/simple;
+	bh=Q+lRkBaDMXpLVsW4IeczUx0uZGrXAM4Gghupz3fYzOI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hL/JPO7DXPk/DUfFcylBX2hWG+SZmFKDrBhN0hREK+n1s1Vi4cGXlYJgya3DHsL57BhBu8Z3r/1U4wjvw9hTII7ohEQb2tsctdu4YDhL5WkSGv9IR/8jOt81rOgXngXwu2WUeLJb4K/lvRSBKCzzcms1v+Lk+/VYKr4mQuQ4Bzw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xuq91LOz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Xn0fdyTfgGR1DrfnsFeXHLiF+v6/Kc8trEcRpHcM2h0Nqr9HvxSyR1k9LtcRETanruGTf+tRqQsnpdLRwSkD5tK+gA0J91L3B1JfSpaFO3o0mM/H1zwMDHY3S8xAOgVNmWY8+kIsHNrzzgIoN0ZEF3Z+bB1CDqbB9cHtCXzzCxU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UDqQCh3X; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xuq91LOz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EC21C4CED1;
-	Fri,  6 Dec 2024 14:50:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UDqQCh3X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B07DC4CED1;
+	Fri,  6 Dec 2024 14:50:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733496613;
-	bh=jn9SRKBJlTaWw+68Inb9fKrwKoXeTjHMZfkMv4mxunM=;
+	s=korg; t=1733496616;
+	bh=Q+lRkBaDMXpLVsW4IeczUx0uZGrXAM4Gghupz3fYzOI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xuq91LOzXYy3rfYMp3nZ5F/n85c2K27m10rszKfeeSXPL4TTKpY2nHGzLLGGDQ8pZ
-	 y8ZOOzmg/CqD783s6cRJHGHhOPyfVzE7rGtrdC/JckK2nWVH+7LUf4eTiaHSvNWI5h
-	 y6LXCUncQvHm2J7KDg6EjZA+3yHt1dusXW0NY31Q=
+	b=UDqQCh3XiiF8CAvJT8Ms4qUW1FIHwtD3b+UPwJjEvxsp9HNtUaQRKlvtCSNMuy6v1
+	 WH0GV7ORi75diTGnv61oO8HWIjPu/PsVSVyrC08f0rv73tFc508CF/kUHILyP0eoVf
+	 rffZiM0dTFlLpkTtG61yzdV7OhQV8szDR8dK/Who=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Andryuk <jason.andryuk@amd.com>,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Juergen Gross <jgross@suse.com>,
+	Wupeng Ma <mawupeng1@huawei.com>,
+	Yang Erkun <yangerkun@huawei.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 055/676] x86/pvh: Call C code via the kernel virtual mapping
-Date: Fri,  6 Dec 2024 15:27:54 +0100
-Message-ID: <20241206143655.501163124@linuxfoundation.org>
+Subject: [PATCH 6.6 056/676] brd: defer automatic disk creation until module initialization succeeds
+Date: Fri,  6 Dec 2024 15:27:55 +0100
+Message-ID: <20241206143655.540591162@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -52,52 +53,206 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ard Biesheuvel <ardb@kernel.org>
+From: Yang Erkun <yangerkun@huawei.com>
 
-[ Upstream commit e8fbc0d9cab6c1ee6403f42c0991b0c1d5dbc092 ]
+[ Upstream commit 826cc42adf44930a633d11a5993676d85ddb0842 ]
 
-Calling C code via a different mapping than it was linked at is
-problematic, because the compiler assumes that RIP-relative and absolute
-symbol references are interchangeable. GCC in particular may use
-RIP-relative per-CPU variable references even when not using -fpic.
+My colleague Wupeng found the following problems during fault injection:
 
-So call xen_prepare_pvh() via its kernel virtual mapping on x86_64, so
-that those RIP-relative references produce the correct values. This
-matches the pre-existing behavior for i386, which also invokes
-xen_prepare_pvh() via the kernel virtual mapping before invoking
-startup_32 with paging disabled again.
+BUG: unable to handle page fault for address: fffffbfff809d073
+PGD 6e648067 P4D 123ec8067 PUD 123ec4067 PMD 100e38067 PTE 0
+Oops: Oops: 0000 [#1] PREEMPT SMP KASAN NOPTI
+CPU: 5 UID: 0 PID: 755 Comm: modprobe Not tainted 6.12.0-rc3+ #17
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS
+1.16.1-2.fc37 04/01/2014
+RIP: 0010:__asan_load8+0x4c/0xa0
+...
+Call Trace:
+ <TASK>
+ blkdev_put_whole+0x41/0x70
+ bdev_release+0x1a3/0x250
+ blkdev_release+0x11/0x20
+ __fput+0x1d7/0x4a0
+ task_work_run+0xfc/0x180
+ syscall_exit_to_user_mode+0x1de/0x1f0
+ do_syscall_64+0x6b/0x170
+ entry_SYSCALL_64_after_hwframe+0x76/0x7e
 
-Fixes: 7243b93345f7 ("xen/pvh: Bootstrap PVH guest")
-Tested-by: Jason Andryuk <jason.andryuk@amd.com>
-Reviewed-by: Jason Andryuk <jason.andryuk@amd.com>
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
-Message-ID: <20241009160438.3884381-8-ardb+git@google.com>
-Signed-off-by: Juergen Gross <jgross@suse.com>
+loop_init() is calling loop_add() after __register_blkdev() succeeds and
+is ignoring disk_add() failure from loop_add(), for loop_add() failure
+is not fatal and successfully created disks are already visible to
+bdev_open().
+
+brd_init() is currently calling brd_alloc() before __register_blkdev()
+succeeds and is releasing successfully created disks when brd_init()
+returns an error. This can cause UAF for the latter two case:
+
+case 1:
+    T1:
+modprobe brd
+  brd_init
+    brd_alloc(0) // success
+      add_disk
+        disk_scan_partitions
+          bdev_file_open_by_dev // alloc file
+          fput // won't free until back to userspace
+    brd_alloc(1) // failed since mem alloc error inject
+  // error path for modprobe will release code segment
+  // back to userspace
+  __fput
+    blkdev_release
+      bdev_release
+        blkdev_put_whole
+          bdev->bd_disk->fops->release // fops is freed now, UAF!
+
+case 2:
+    T1:                            T2:
+modprobe brd
+  brd_init
+    brd_alloc(0) // success
+                                   open(/dev/ram0)
+    brd_alloc(1) // fail
+  // error path for modprobe
+
+                                   close(/dev/ram0)
+                                   ...
+                                   /* UAF! */
+                                   bdev->bd_disk->fops->release
+
+Fix this problem by following what loop_init() does. Besides,
+reintroduce brd_devices_mutex to help serialize modifications to
+brd_list.
+
+Fixes: 7f9b348cb5e9 ("brd: convert to blk_alloc_disk/blk_cleanup_disk")
+Reported-by: Wupeng Ma <mawupeng1@huawei.com>
+Signed-off-by: Yang Erkun <yangerkun@huawei.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Link: https://lore.kernel.org/r/20241030034914.907829-1-yangerkun@huaweicloud.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/platform/pvh/head.S | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/block/brd.c | 66 ++++++++++++++++++++++++++++++---------------
+ 1 file changed, 44 insertions(+), 22 deletions(-)
 
-diff --git a/arch/x86/platform/pvh/head.S b/arch/x86/platform/pvh/head.S
-index c994ea58bdf7a..008a805522245 100644
---- a/arch/x86/platform/pvh/head.S
-+++ b/arch/x86/platform/pvh/head.S
-@@ -107,7 +107,14 @@ SYM_CODE_START_LOCAL(pvh_start_xen)
- 	movq %rbp, %rbx
- 	subq $_pa(pvh_start_xen), %rbx
- 	movq %rbx, phys_base(%rip)
--	call xen_prepare_pvh
+diff --git a/drivers/block/brd.c b/drivers/block/brd.c
+index 970bd6ff38c49..d816d1512531e 100644
+--- a/drivers/block/brd.c
++++ b/drivers/block/brd.c
+@@ -310,8 +310,40 @@ __setup("ramdisk_size=", ramdisk_size);
+  * (should share code eventually).
+  */
+ static LIST_HEAD(brd_devices);
++static DEFINE_MUTEX(brd_devices_mutex);
+ static struct dentry *brd_debugfs_dir;
+ 
++static struct brd_device *brd_find_or_alloc_device(int i)
++{
++	struct brd_device *brd;
 +
-+	/* Call xen_prepare_pvh() via the kernel virtual mapping */
-+	leaq xen_prepare_pvh(%rip), %rax
-+	subq phys_base(%rip), %rax
-+	addq $__START_KERNEL_map, %rax
-+	ANNOTATE_RETPOLINE_SAFE
-+	call *%rax
++	mutex_lock(&brd_devices_mutex);
++	list_for_each_entry(brd, &brd_devices, brd_list) {
++		if (brd->brd_number == i) {
++			mutex_unlock(&brd_devices_mutex);
++			return ERR_PTR(-EEXIST);
++		}
++	}
 +
++	brd = kzalloc(sizeof(*brd), GFP_KERNEL);
++	if (!brd) {
++		mutex_unlock(&brd_devices_mutex);
++		return ERR_PTR(-ENOMEM);
++	}
++	brd->brd_number	= i;
++	list_add_tail(&brd->brd_list, &brd_devices);
++	mutex_unlock(&brd_devices_mutex);
++	return brd;
++}
++
++static void brd_free_device(struct brd_device *brd)
++{
++	mutex_lock(&brd_devices_mutex);
++	list_del(&brd->brd_list);
++	mutex_unlock(&brd_devices_mutex);
++	kfree(brd);
++}
++
+ static int brd_alloc(int i)
+ {
+ 	struct brd_device *brd;
+@@ -319,14 +351,9 @@ static int brd_alloc(int i)
+ 	char buf[DISK_NAME_LEN];
+ 	int err = -ENOMEM;
+ 
+-	list_for_each_entry(brd, &brd_devices, brd_list)
+-		if (brd->brd_number == i)
+-			return -EEXIST;
+-	brd = kzalloc(sizeof(*brd), GFP_KERNEL);
+-	if (!brd)
+-		return -ENOMEM;
+-	brd->brd_number		= i;
+-	list_add_tail(&brd->brd_list, &brd_devices);
++	brd = brd_find_or_alloc_device(i);
++	if (IS_ERR(brd))
++		return PTR_ERR(brd);
+ 
+ 	xa_init(&brd->brd_pages);
+ 
+@@ -369,8 +396,7 @@ static int brd_alloc(int i)
+ out_cleanup_disk:
+ 	put_disk(disk);
+ out_free_dev:
+-	list_del(&brd->brd_list);
+-	kfree(brd);
++	brd_free_device(brd);
+ 	return err;
+ }
+ 
+@@ -389,8 +415,7 @@ static void brd_cleanup(void)
+ 		del_gendisk(brd->brd_disk);
+ 		put_disk(brd->brd_disk);
+ 		brd_free_pages(brd);
+-		list_del(&brd->brd_list);
+-		kfree(brd);
++		brd_free_device(brd);
+ 	}
+ }
+ 
+@@ -417,16 +442,6 @@ static int __init brd_init(void)
+ {
+ 	int err, i;
+ 
+-	brd_check_and_reset_par();
+-
+-	brd_debugfs_dir = debugfs_create_dir("ramdisk_pages", NULL);
+-
+-	for (i = 0; i < rd_nr; i++) {
+-		err = brd_alloc(i);
+-		if (err)
+-			goto out_free;
+-	}
+-
  	/*
- 	 * Clear phys_base.  __startup_64 will *add* to its value,
- 	 * so reset to 0.
+ 	 * brd module now has a feature to instantiate underlying device
+ 	 * structure on-demand, provided that there is an access dev node.
+@@ -442,11 +457,18 @@ static int __init brd_init(void)
+ 	 *	dynamically.
+ 	 */
+ 
++	brd_check_and_reset_par();
++
++	brd_debugfs_dir = debugfs_create_dir("ramdisk_pages", NULL);
++
+ 	if (__register_blkdev(RAMDISK_MAJOR, "ramdisk", brd_probe)) {
+ 		err = -EIO;
+ 		goto out_free;
+ 	}
+ 
++	for (i = 0; i < rd_nr; i++)
++		brd_alloc(i);
++
+ 	pr_info("brd: module loaded\n");
+ 	return 0;
+ 
 -- 
 2.43.0
 
