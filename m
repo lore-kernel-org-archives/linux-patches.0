@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F23545BE3;
-	Fri,  6 Dec 2024 14:45:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 773CA45BE3;
+	Fri,  6 Dec 2024 14:45:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733496323; cv=none; b=m32EXWcGQPsJQYHMiyYRlifgKq139yHOQInqW9xTQbvKpe5ScHQVg+kCwphE4eDLmynrd0jxf9jqZGH2U1wd/6VJBEmAohZOUQXkY49cdS7TSWrnN1lvzs5yqL+73M1o2+2PImceCPySRbK1jVC3KWoQ2N4A7f5jUmJSUrpuFLs=
+	t=1733496326; cv=none; b=BO5yihBzgL3Vhor95wSnpcOYGyrOiKZO6j6mw2427zVpeLWnlmJizefg2qKUYFhJb5+V4tQxCOM4MownKCE/IhAL701YEMyMAaUjyMWS9S9449eLHufmvfH5hixL4voqvgNph6Y/DjcaziNqN/gRUdPsCRylLxakBhF7cU/P7LM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733496323; c=relaxed/simple;
-	bh=9t8yNb6glpZ+u97M4pCU2rrxNlmDknZhser4GwvfwoI=;
+	s=arc-20240116; t=1733496326; c=relaxed/simple;
+	bh=A/3XTpnvTuoXBIeNUFYtdzP9K2un/ONr54Yko/OuiYU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=R0sq+zGyEaMBPJOtDMxCoad+KaeMEkAxqeJnjkrK8B5XHv8TYkjkw5VRwuX08rCm3gNbNk4fq5V/66aMQYTAeeyarISeZpSDvE6Yci+4Aq0PjfwfLms9D7OAD7i9FBYZ+M8Fikwfd3OYPfS8omrC3Qq3VklfqTf0K/ompM3fmfw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Oj/NkW3b; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RQRBR7U20dLgBBmakelcnL/4Ea3pp4JTCUb3RzA2Fk4qRIyDj9MK6884/6k64iy+ldr6mVAGSSTk7q+b8gfMpBDkPTugTnMfMcuJdE/5fkMWi7VCKtBo69g0LaDF92hesEV5HBQzKvahuZ2PwMEY499H2cURGS8lPVFfgbVyluc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dCGzjZpW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Oj/NkW3b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C34CC4CED1;
-	Fri,  6 Dec 2024 14:45:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dCGzjZpW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA876C4CED1;
+	Fri,  6 Dec 2024 14:45:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733496323;
-	bh=9t8yNb6glpZ+u97M4pCU2rrxNlmDknZhser4GwvfwoI=;
+	s=korg; t=1733496326;
+	bh=A/3XTpnvTuoXBIeNUFYtdzP9K2un/ONr54Yko/OuiYU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Oj/NkW3bOVzMwUXciUOB+G73z9jxknjk4z7o1gvufniYbTq//gJdTf12SIxDKyjXG
-	 FLlOoq46XQwYpplp3kSv+AeAVdc7L5SvyUbbbFtLWoOviBDu+r/WB1cWgE9U9wiRY4
-	 h1ckcP6B4UvNkSEff6o7HVGSBh94M6ncciObjxxM=
+	b=dCGzjZpW14qYnUpKMvqVDezjX2l1K9vvgiboguYNc6BIdCo+dQIukoZQEe7cjJoyf
+	 aZvZDHL+gvJWZlPnyURPdum1EvdLS+C+PLT1JNGCz05xu36eYBKLH7LFZjeZur+eus
+	 q/fB3/8FpwxzJHxgnVLt7kgk7B+R6+OgTBzOVu0s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zijun Hu <quic_zijuhu@quicinc.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>
-Subject: [PATCH 6.12 087/146] PCI: endpoint: Clear secondary (not primary) EPC in pci_epc_remove_epf()
-Date: Fri,  6 Dec 2024 15:36:58 +0100
-Message-ID: <20241206143531.007183201@linuxfoundation.org>
+	Guenter Roeck <linux@roeck-us.net>,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
+	Jens Axboe <axboe@kernel.dk>,
+	Vlastimil Babka <vbabka@suse.cz>
+Subject: [PATCH 6.12 088/146] slab: Fix too strict alignment check in create_cache()
+Date: Fri,  6 Dec 2024 15:36:59 +0100
+Message-ID: <20241206143531.045229400@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143527.654980698@linuxfoundation.org>
 References: <20241206143527.654980698@linuxfoundation.org>
@@ -46,65 +46,65 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zijun Hu <quic_zijuhu@quicinc.com>
+From: Geert Uytterhoeven <geert@linux-m68k.org>
 
-commit 688d2eb4c6fcfdcdaed0592f9df9196573ff5ce2 upstream.
+commit 9008fe8fad8255edfdbecea32d7eb0485d939d0d upstream.
 
-In addition to a primary endpoint controller, an endpoint function may be
-associated with a secondary endpoint controller, epf->sec_epc, to provide
-NTB (non-transparent bridge) functionality.
+On m68k, where the minimum alignment of unsigned long is 2 bytes:
 
-Previously, pci_epc_remove_epf() incorrectly cleared epf->epc instead of
-epf->sec_epc when removing from the secondary endpoint controller.
+    Kernel panic - not syncing: __kmem_cache_create_args: Failed to create slab 'io_kiocb'. Error -22
+    CPU: 0 UID: 0 PID: 1 Comm: swapper Not tainted 6.12.0-atari-03776-g7eaa1f99261a #1783
+    Stack from 0102fe5c:
+	    0102fe5c 00514a2b 00514a2b ffffff00 00000001 0051f5ed 00425e78 00514a2b
+	    0041eb74 ffffffea 00000310 0051f5ed ffffffea ffffffea 00601f60 00000044
+	    0102ff20 000e7a68 0051ab8e 004383b8 0051f5ed ffffffea 000000b8 00000007
+	    01020c00 00000000 000e77f0 0041e5f0 005f67c0 0051f5ed 000000b6 0102fef4
+	    00000310 0102fef4 00000000 00000016 005f676c 0060a34c 00000010 00000004
+	    00000038 0000009a 01000000 000000b8 005f668e 0102e000 00001372 0102ff88
+    Call Trace: [<00425e78>] dump_stack+0xc/0x10
+     [<0041eb74>] panic+0xd8/0x26c
+     [<000e7a68>] __kmem_cache_create_args+0x278/0x2e8
+     [<000e77f0>] __kmem_cache_create_args+0x0/0x2e8
+     [<0041e5f0>] memset+0x0/0x8c
+     [<005f67c0>] io_uring_init+0x54/0xd2
 
-Extend the epc->list_lock coverage and clear either epf->epc or
-epf->sec_epc as indicated.
+The minimal alignment of an integral type may differ from its size,
+hence is not safe to assume that an arbitrary freeptr_t (which is
+basically an unsigned long) is always aligned to 4 or 8 bytes.
 
-Link: https://lore.kernel.org/r/20241107-epc_rfc-v2-2-da5b6a99a66f@quicinc.com
-Fixes: 63840ff53223 ("PCI: endpoint: Add support to associate secondary EPC with EPF")
-Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-[mani: reworded subject and description]
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-[bhelgaas: commit log]
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
-Cc: stable@vger.kernel.org
+As nothing seems to require the additional alignment, it is safe to fix
+this by relaxing the check to the actual minimum alignment of freeptr_t.
+
+Fixes: aaa736b186239b7d ("io_uring: specify freeptr usage for SLAB_TYPESAFE_BY_RCU io_kiocb cache")
+Fixes: d345bd2e9834e2da ("mm: add kmem_cache_create_rcu()")
+Reported-by: Guenter Roeck <linux@roeck-us.net>
+Closes: https://lore.kernel.org/37c588d4-2c32-4aad-a19e-642961f200d7@roeck-us.net
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Tested-by: Guenter Roeck <linux@roeck-us.net>
+Reviewed-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/endpoint/pci-epc-core.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ mm/slab_common.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/pci/endpoint/pci-epc-core.c
-+++ b/drivers/pci/endpoint/pci-epc-core.c
-@@ -660,18 +660,18 @@ void pci_epc_remove_epf(struct pci_epc *
- 	if (IS_ERR_OR_NULL(epc) || !epf)
- 		return;
+--- a/mm/slab_common.c
++++ b/mm/slab_common.c
+@@ -230,7 +230,7 @@ static struct kmem_cache *create_cache(c
+ 	if (args->use_freeptr_offset &&
+ 	    (args->freeptr_offset >= object_size ||
+ 	     !(flags & SLAB_TYPESAFE_BY_RCU) ||
+-	     !IS_ALIGNED(args->freeptr_offset, sizeof(freeptr_t))))
++	     !IS_ALIGNED(args->freeptr_offset, __alignof__(freeptr_t))))
+ 		goto out;
  
-+	mutex_lock(&epc->list_lock);
- 	if (type == PRIMARY_INTERFACE) {
- 		func_no = epf->func_no;
- 		list = &epf->list;
-+		epf->epc = NULL;
- 	} else {
- 		func_no = epf->sec_epc_func_no;
- 		list = &epf->sec_epc_list;
-+		epf->sec_epc = NULL;
- 	}
--
--	mutex_lock(&epc->list_lock);
- 	clear_bit(func_no, &epc->function_num_map);
- 	list_del(list);
--	epf->epc = NULL;
- 	mutex_unlock(&epc->list_lock);
- }
- EXPORT_SYMBOL_GPL(pci_epc_remove_epf);
+ 	err = -ENOMEM;
 
 
