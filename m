@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B90BC1527AC;
-	Fri,  6 Dec 2024 15:11:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04FD31527AC;
+	Fri,  6 Dec 2024 15:11:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733497880; cv=none; b=s3++SrX3X4wz09Z7gDRUtDVdOd6NYL91f06+i1qxFgQo6ZDEHH/1837NGyH5UuHV1EsUv/ZH2jkVf7lUj6AL8rt5TPzd8yK+3QulWUrXQFR7jnlr/xgolCy/FdFW1YiZQMj68YmOrOC4eEFGcOEz74EVgopsSkLXvHGbYgoG3/o=
+	t=1733497884; cv=none; b=tQ8Wd6JsWjysUKk18oGFWxQY0KiOwcM35C7vPPWy7kp77rRioqglA6fOJJRhvrLpY1ndY142CBhx9dfX6huIyl+WmcfGKe6QBCqV0fGSIH74M7G0ZObimeI7QKbg4zf8arHED0E+0Bm5l1ZOrz0G2B0xE99lyQxFw5p5pjwoTEE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733497880; c=relaxed/simple;
-	bh=eaFOhM2SdjLrAXNgdOjP/sWoNCABuh0v/zbqSfwyG/U=;
+	s=arc-20240116; t=1733497884; c=relaxed/simple;
+	bh=kNLEjfPvQH6A8/s0/SZAHDg5OEpNjq+YMecE9AOQ3FM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZMQumof76aodtInB1Ey/0BIDKhl6yAkaqIJDLsWJMzA2uz6xrkzcVk3lrGyeapOTQGU0VgTDBLQZIDfQFX62mqHGfV25Z4LyaIgfirZI9nbkDkxaDPIhym0d7LmJcI9rUxUGRA8nCA9U+G8zYZP8eGvulPmXLYYTfRseV3qm1i4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ISDZFG61; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=IzSFzqdwBOuSmiG1Fr7eY1TQqdig7fX5dD0yde274XoCeuFGaV9OvY7RVwjFBbQ+wZux6MYJYJY6Q1ta4mYmqQ9cEP8tkXQYCaDP7C9mhA7pXDTybEKjp45IGHAXXS4w7+KqR3KV/8UPC1AfjmVKF/nFRUyb/MworeAuq3Yc+3Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iCMJg2Mf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ISDZFG61"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3535DC4CEDC;
-	Fri,  6 Dec 2024 15:11:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iCMJg2Mf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E2C0C4CEDC;
+	Fri,  6 Dec 2024 15:11:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733497880;
-	bh=eaFOhM2SdjLrAXNgdOjP/sWoNCABuh0v/zbqSfwyG/U=;
+	s=korg; t=1733497883;
+	bh=kNLEjfPvQH6A8/s0/SZAHDg5OEpNjq+YMecE9AOQ3FM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ISDZFG610LfRW2UShcgHkr7QC23ClBjY3zm5PJtqFTL1mBMvFXnJg8ZodSacEuzFI
-	 JPXQtayenOYc4AXcZeFBu+fcSDAz1V2rpAAi4z4pCyMoeffXKW7e2CVMNd/Sg7U0Xg
-	 u65NC6Yj+rTgkhIJ7RreqEsb0MIvfUjvkQbtiZp0=
+	b=iCMJg2Mfj6LYymb7GtW852CysxeHmddgBdWpTDkBufvngts6FxgqQKypi5e9YJjtW
+	 d4WstCO1+Dlmpl3H91k8H4smdVMVaCTo2GTTyyxy3DYZzKj3DlB25tc9HpUS+2RNiD
+	 d9Fvwym5uLn6jtz04QfNPkFGXqKtfOOUvr9mp9As=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Zhongqiu Han <quic_zhonhan@quicinc.com>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Niklas Cassel <cassel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 389/676] gpio: zevio: Add missed label initialisation
-Date: Fri,  6 Dec 2024 15:33:28 +0100
-Message-ID: <20241206143708.541063356@linuxfoundation.org>
+Subject: [PATCH 6.6 380/676] PCI: endpoint: epf-mhi: Avoid NULL dereference if DT lacks mmio
+Date: Fri,  6 Dec 2024 15:33:19 +0100
+Message-ID: <20241206143708.190375200@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -45,59 +47,57 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Zhongqiu Han <quic_zhonhan@quicinc.com>
 
-[ Upstream commit 5bbed54ba66925ebca19092d0750630f943d7bf2 ]
+[ Upstream commit 5089b3d874e9933d9842e90410d3af1520494757 ]
 
-Initialise the GPIO chip label correctly as it was done by
-of_mm_gpiochip_add_data() before the below mentioned change.
+If platform_get_resource_byname() fails and returns NULL because DT lacks
+an 'mmio' property for the MHI endpoint, dereferencing res->start will
+cause a NULL pointer access. Add a check to prevent it.
 
-Fixes: cf8f4462e5fa ("gpio: zevio: drop of_gpio.h header")
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://lore.kernel.org/r/20241118092729.516736-1-andriy.shevchenko@linux.intel.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Fixes: 1bf5f25324f7 ("PCI: endpoint: Add PCI Endpoint function driver for MHI bus")
+Link: https://lore.kernel.org/r/20241105120735.1240728-1-quic_zhonhan@quicinc.com
+Signed-off-by: Zhongqiu Han <quic_zhonhan@quicinc.com>
+[kwilczynski: error message update per the review feedback]
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+[bhelgaas: commit log]
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Niklas Cassel <cassel@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpio-zevio.c | 6 ++++++
+ drivers/pci/endpoint/functions/pci-epf-mhi.c | 6 ++++++
  1 file changed, 6 insertions(+)
 
-diff --git a/drivers/gpio/gpio-zevio.c b/drivers/gpio/gpio-zevio.c
-index 2de61337ad3b5..d7230fd83f5d6 100644
---- a/drivers/gpio/gpio-zevio.c
-+++ b/drivers/gpio/gpio-zevio.c
-@@ -11,6 +11,7 @@
- #include <linux/io.h>
- #include <linux/mod_devicetable.h>
- #include <linux/platform_device.h>
-+#include <linux/property.h>
- #include <linux/slab.h>
- #include <linux/spinlock.h>
- 
-@@ -169,6 +170,7 @@ static const struct gpio_chip zevio_gpio_chip = {
- /* Initialization */
- static int zevio_gpio_probe(struct platform_device *pdev)
+diff --git a/drivers/pci/endpoint/functions/pci-epf-mhi.c b/drivers/pci/endpoint/functions/pci-epf-mhi.c
+index 34e7191f95086..87154992ea11b 100644
+--- a/drivers/pci/endpoint/functions/pci-epf-mhi.c
++++ b/drivers/pci/endpoint/functions/pci-epf-mhi.c
+@@ -600,12 +600,18 @@ static int pci_epf_mhi_bind(struct pci_epf *epf)
  {
-+	struct device *dev = &pdev->dev;
- 	struct zevio_gpio *controller;
- 	int status, i;
+ 	struct pci_epf_mhi *epf_mhi = epf_get_drvdata(epf);
+ 	struct pci_epc *epc = epf->epc;
++	struct device *dev = &epf->dev;
+ 	struct platform_device *pdev = to_platform_device(epc->dev.parent);
+ 	struct resource *res;
+ 	int ret;
  
-@@ -180,6 +182,10 @@ static int zevio_gpio_probe(struct platform_device *pdev)
- 	controller->chip = zevio_gpio_chip;
- 	controller->chip.parent = &pdev->dev;
- 
-+	controller->chip.label = devm_kasprintf(dev, GFP_KERNEL, "%pfw", dev_fwnode(dev));
-+	if (!controller->chip.label)
-+		return -ENOMEM;
+ 	/* Get MMIO base address from Endpoint controller */
+ 	res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "mmio");
++	if (!res) {
++		dev_err(dev, "Failed to get \"mmio\" resource\n");
++		return -ENODEV;
++	}
 +
- 	controller->regs = devm_platform_ioremap_resource(pdev, 0);
- 	if (IS_ERR(controller->regs))
- 		return dev_err_probe(&pdev->dev, PTR_ERR(controller->regs),
+ 	epf_mhi->mmio_phys = res->start;
+ 	epf_mhi->mmio_size = resource_size(res);
+ 
 -- 
 2.43.0
 
