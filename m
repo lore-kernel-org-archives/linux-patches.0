@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58D8F53A7;
-	Fri,  6 Dec 2024 15:08:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8498C53A7;
+	Fri,  6 Dec 2024 15:08:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733497685; cv=none; b=ZZXjG/Cb7Aoz8Ceisj2YBYNnnscQ4TY3YkbYWPRgJj4tF3mEfx1ZC0xRnsWJQwVNruw3P1PYE1B344BQY4c17foKwKl8bV2deuQGusvcnnV9Se0xLRoyXUsZYM3k0+rGi9HHfADrheN96QPnmnF7YCHFjZ46ToDunM2nUU+qFyc=
+	t=1733497688; cv=none; b=TDoELNL22MElK1MaaBCPpAqNgEflZ/Y9eeZChwXnkoV0dh6DwRQIEDBcE9rx6Cso4v+/+kbNIYJ912CsW51UxvT3wFldKY68sjWakKkP1N1LjQyUvAHxV1MCwV4aLdqe8UjcTuyBGYE5fhZ+76ue+pFO8nmGw2LSzrcjxO/VZBA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733497685; c=relaxed/simple;
-	bh=a5L2LjRv9nMLWwGm+Ei/EjbL2XiwjDiT4Lc4SHAb2Qw=;
+	s=arc-20240116; t=1733497688; c=relaxed/simple;
+	bh=QxLRjcNSUmJRZ5ySrfpkAQFSnE66IPCe/KO2NXFc1fI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ly48Emj1khPgTgEXN8iJmrVX6MVsiy9va+PAo74vntXJLrnfF1blMhe/7I3WF+8J8egeuN9PpQULO654sj6s9swe+ueO+FX9NpLvdGVq9aunJAJwOq2nkJNDHeazCqGyP4Am/JJ3ln91zb2EfROSyHNjcIUEj4vA8WCxM/2fDEk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C7qWOc2x; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=XKiTfN2UVZF6VV2MqjT0IZ5GJx6xOYgpcMHCkzoOieabkO7ADMl5w9F34Pd9QTUr8S6CtJcXAH7IB2h80PNU2Ylfgm3IgikDvO10pdKcwTnsgVQdNkQXtJekZWLd3EXFPtyeTIPTCzzAjevhl3893bkefV7/F//ezjFfJJ68bLg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aYZ18U+S; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C7qWOc2x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD7BBC4CED1;
-	Fri,  6 Dec 2024 15:08:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aYZ18U+S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E72C6C4CEDC;
+	Fri,  6 Dec 2024 15:08:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733497685;
-	bh=a5L2LjRv9nMLWwGm+Ei/EjbL2XiwjDiT4Lc4SHAb2Qw=;
+	s=korg; t=1733497688;
+	bh=QxLRjcNSUmJRZ5ySrfpkAQFSnE66IPCe/KO2NXFc1fI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C7qWOc2xDAT5w+S2P7U9BaP2r8KATzlen526byAVOcbresYOHqbrRhimzNPYXFySn
-	 66VvPkieJ8duU026qY6LOYDumEDbDhBo5eyVoky8wWelsrQLYESVUfiuRuUTOxnmGN
-	 vJlaCRwFQEsn5BDlCrBlKdqazlI07lq69lgW+zqk=
+	b=aYZ18U+S90BEbohbZp3LC+y8s/XCTl/UR/+6LbytPrRCJ80qouKK4tDtXRdvVFVVm
+	 gqDVnheYQhuhMu7Ht1lEIHKxLjsiM0Tm18D1UC+4UdV4h7PiLELkAo/C6/1+mAs/1y
+	 UztDFuQp3Kdz9GWP8XK8bwIuB7+lFdRuJluDRSZc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Th=C3=A9o=20Lebrun?= <theo.lebrun@bootlin.com>,
 	Thomas Richard <thomas.richard@bootlin.com>,
 	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 363/676] PCI: j721e: Add reset GPIO to struct j721e_pcie
-Date: Fri,  6 Dec 2024 15:33:02 +0100
-Message-ID: <20241206143707.524547245@linuxfoundation.org>
+Subject: [PATCH 6.6 364/676] PCI: j721e: Use T_PERST_CLK_US macro
+Date: Fri,  6 Dec 2024 15:33:03 +0100
+Message-ID: <20241206143707.564866607@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -53,43 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Théo Lebrun <theo.lebrun@bootlin.com>
+From: Thomas Richard <thomas.richard@bootlin.com>
 
-[ Upstream commit b8600b8791cb2b7c8be894846b1ecddba7291680 ]
+[ Upstream commit f96b6971373382855bc964f1c067bd6dc41cf0ab ]
 
-Add reset GPIO to struct j721e_pcie, so it can be used at suspend and
-resume stages.
+Use the T_PERST_CLK_US macro, and the fsleep() function instead of
+usleep_range().
 
-Link: https://lore.kernel.org/linux-pci/20240102-j7200-pcie-s2r-v7-4-a2f9156da6c3@bootlin.com
-Signed-off-by: Théo Lebrun <theo.lebrun@bootlin.com>
+Link: https://lore.kernel.org/linux-pci/20240102-j7200-pcie-s2r-v7-6-a2f9156da6c3@bootlin.com
 Signed-off-by: Thomas Richard <thomas.richard@bootlin.com>
 Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
 Stable-dep-of: 22a9120479a4 ("PCI: j721e: Deassert PERST# after a delay of PCIE_T_PVPERL_MS milliseconds")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/cadence/pci-j721e.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/pci/controller/cadence/pci-j721e.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/pci/controller/cadence/pci-j721e.c b/drivers/pci/controller/cadence/pci-j721e.c
-index 645597856a1d9..82f8c3a701c2f 100644
+index 82f8c3a701c2f..b83ae35a210fe 100644
 --- a/drivers/pci/controller/cadence/pci-j721e.c
 +++ b/drivers/pci/controller/cadence/pci-j721e.c
-@@ -52,6 +52,7 @@ struct j721e_pcie {
- 	u32			mode;
- 	u32			num_lanes;
- 	u32			max_lanes;
-+	struct gpio_desc	*reset_gpio;
- 	void __iomem		*user_cfg_base;
- 	void __iomem		*intd_cfg_base;
- 	u32			linkdown_irq_regfield;
-@@ -488,6 +489,7 @@ static int j721e_pcie_probe(struct platform_device *pdev)
- 				dev_err(dev, "Failed to get reset GPIO\n");
- 			goto err_get_sync;
+@@ -520,7 +520,7 @@ static int j721e_pcie_probe(struct platform_device *pdev)
+ 		 * after 100 us.
+ 		 */
+ 		if (gpiod) {
+-			usleep_range(100, 200);
++			fsleep(PCIE_T_PERST_CLK_US);
+ 			gpiod_set_value_cansleep(gpiod, 1);
  		}
-+		pcie->reset_gpio = gpiod;
  
- 		ret = cdns_pcie_init_phy(dev, cdns_pcie);
- 		if (ret) {
 -- 
 2.43.0
 
