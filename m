@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8545D14A4D1;
-	Fri,  6 Dec 2024 14:41:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B1F8149E0E;
+	Fri,  6 Dec 2024 14:41:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733496094; cv=none; b=m4rqgoqnWqt+On8YLRvfdB5az79Rh1uTkDsZTlWuupXCgWwsSHvcnpu9dpenOFHIS9Eol6DZ9QHsPXC6RIuDOw38V5PNpbwLwwz6RBySfRpBr/Pcg8EyOhZ/kZrFdlBrbqZOwDdqO2jY1RbHH6yNeKrUtH7QftAjz3C31PUA8cc=
+	t=1733496098; cv=none; b=uNTwfNznVX0D/sm0zo45jHogkQBVsjwVkRC1h4+R1ZjbYg6Efs7dNLIeujl/Ep5TsBvwo16PP85mBt0chjEkAm3gJ3tDo1x9LZnAegHPaBL8q2MHOWJeUYIpdOS9L4+PC7o3bh2Adh8sBPCGB1by1Tdx6GAGcrRHvf5bzcxuwJs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733496094; c=relaxed/simple;
-	bh=2pSm0EhsT7xAkDxwl8/ETIgul7gKxTkg1DXS/gCsw7k=;
+	s=arc-20240116; t=1733496098; c=relaxed/simple;
+	bh=rkzvOmwAr4OoPrtuXXNmUVFUICUGWwd3ngMcqusy7/M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QxwgBpp0n2VW8KVJApW1XxdhlN04yqbQAxb8dXvAcGAB+YnF4Fy9dWyzeaMR/U/FVR7ZDpZyhQqJ4xPiNbplIwWvsznEcA3+NGqSqK2FaZi6jkEDZJEDvkQz+a5Vj5FdBFLVvkxC68qneHB5ecraoe3yr/wgHmmbk/yFMiyoYfg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=af5r6nG0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qMVXsQeFoO72/L0RdHQdA8ZTQVuMm8Q622XRcCJ0gMq+XVnMoX5P3qO9B5Kua4Hl0aREMY2F8xDPvgKerIh5jTPuQ5DgjWYB+ewmQxIVXirjRYUHoxZoK+HWnPuOVAPa6ApvP6QMkx2HObY0eXakUHqS3CJZXNZzpIc6eOYol/0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a52el0Uc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="af5r6nG0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8F46C4CED1;
-	Fri,  6 Dec 2024 14:41:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a52el0Uc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B6B1C4CEE1;
+	Fri,  6 Dec 2024 14:41:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733496094;
-	bh=2pSm0EhsT7xAkDxwl8/ETIgul7gKxTkg1DXS/gCsw7k=;
+	s=korg; t=1733496097;
+	bh=rkzvOmwAr4OoPrtuXXNmUVFUICUGWwd3ngMcqusy7/M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=af5r6nG0a5qSiLy+Qkg4EWUroreJvmFF9KoJCOJlwmzF0zeKPBxdcRH78mQPw+TX8
-	 5eEDK9SwWr34aIu8nV02rscoyliST6Ezv7Yx5V9cJLKCOa/Fj0+jXVbUMf6wzU1WqH
-	 nCrvx46+KTfNOiByniGF6TQJL377cwKMkVLJZNx8=
+	b=a52el0UcT27BnQ3vDonPwMixdb8UbyVNwoyFqzOJj/h8urFQBsIuSJIhsOhbQljT0
+	 fT15BcNtHK7ELgOo2xGERYqfgYQZoUcqBqiwAxaQct2GQkA9+Y5G2HqQzEYDWVInSp
+	 zovqhS6cK5HJCRowDpkmpz4DqB8HPvkUmUKSFFOI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen-Yu Tsai <wenst@chromium.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Subject: [PATCH 6.12 018/146] arm64: dts: mediatek: mt8186-corsola: Fix IT6505 reset line polarity
-Date: Fri,  6 Dec 2024 15:35:49 +0100
-Message-ID: <20241206143528.369239003@linuxfoundation.org>
+	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Subject: [PATCH 6.12 019/146] media: qcom: camss: fix error path on configuration of power domains
+Date: Fri,  6 Dec 2024 15:35:50 +0100
+Message-ID: <20241206143528.406810804@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143527.654980698@linuxfoundation.org>
 References: <20241206143527.654980698@linuxfoundation.org>
@@ -50,41 +51,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen-Yu Tsai <wenst@chromium.org>
+From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
 
-commit fbcc95fceb6d179dd150df2dc613dfd9b013052c upstream.
+commit 4f45d65b781499d2a79eca12155532739c876aa2 upstream.
 
-The reset line of the IT6505 bridge chip is active low, not active high.
-It was incorrectly inverted in the device tree as the implementation at
-the time incorrectly inverted the polarity in its driver, due to a prior
-device having an inline inverting level shifter.
+There is a chance to meet runtime issues during configuration of CAMSS
+power domains, because on the error path dev_pm_domain_detach() is
+unexpectedly called with NULL or error pointer.
 
-Fix the polarity now while the external display pipeline is incomplete,
-thereby avoiding any impact to running systems.
+One of the simplest ways to reproduce the problem is to probe CAMSS
+driver before registration of CAMSS power domains, for instance if
+a platform CAMCC driver is simply not built.
 
-A matching fix for the driver should be included if this change is
-backported.
+Warning backtrace example:
 
-Fixes: 8855d01fb81f ("arm64: dts: mediatek: Add MT8186 Krabby platform based Tentacruel / Tentacool")
-Cc: stable@vger.kernel.org
-Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
-Link: https://lore.kernel.org/r/20241029100226.660263-1-wenst@chromium.org
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+    Unable to handle kernel NULL pointer dereference at virtual address 00000000000001a2
+
+    <snip>
+
+    pc : dev_pm_domain_detach+0x8/0x48
+    lr : camss_probe+0x374/0x9c0
+
+    <snip>
+
+    Call trace:
+     dev_pm_domain_detach+0x8/0x48
+     platform_probe+0x70/0xf0
+     really_probe+0xc4/0x2a8
+     __driver_probe_device+0x80/0x140
+     driver_probe_device+0x48/0x170
+     __device_attach_driver+0xc0/0x148
+     bus_for_each_drv+0x88/0xf0
+     __device_attach+0xb0/0x1c0
+     device_initial_probe+0x1c/0x30
+     bus_probe_device+0xb4/0xc0
+     deferred_probe_work_func+0x90/0xd0
+     process_one_work+0x164/0x3e0
+     worker_thread+0x310/0x420
+     kthread+0x120/0x130
+     ret_from_fork+0x10/0x20
+
+Fixes: 23aa4f0cd327 ("media: qcom: camss: Move VFE power-domain specifics into vfe.c")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/mediatek/mt8186-corsola.dtsi |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/platform/qcom/camss/camss.c |   19 ++++++++-----------
+ 1 file changed, 8 insertions(+), 11 deletions(-)
 
---- a/arch/arm64/boot/dts/mediatek/mt8186-corsola.dtsi
-+++ b/arch/arm64/boot/dts/mediatek/mt8186-corsola.dtsi
-@@ -423,7 +423,7 @@
- 		#sound-dai-cells = <0>;
- 		ovdd-supply = <&mt6366_vsim2_reg>;
- 		pwr18-supply = <&pp1800_dpbrdg_dx>;
--		reset-gpios = <&pio 177 GPIO_ACTIVE_HIGH>;
-+		reset-gpios = <&pio 177 GPIO_ACTIVE_LOW>;
+--- a/drivers/media/platform/qcom/camss/camss.c
++++ b/drivers/media/platform/qcom/camss/camss.c
+@@ -2130,10 +2130,8 @@ static int camss_configure_pd(struct cam
+ 	if (camss->res->pd_name) {
+ 		camss->genpd = dev_pm_domain_attach_by_name(camss->dev,
+ 							    camss->res->pd_name);
+-		if (IS_ERR(camss->genpd)) {
+-			ret = PTR_ERR(camss->genpd);
+-			goto fail_pm;
+-		}
++		if (IS_ERR(camss->genpd))
++			return PTR_ERR(camss->genpd);
+ 	}
  
- 		ports {
- 			#address-cells = <1>;
+ 	if (!camss->genpd) {
+@@ -2143,14 +2141,13 @@ static int camss_configure_pd(struct cam
+ 		 */
+ 		camss->genpd = dev_pm_domain_attach_by_id(camss->dev,
+ 							  camss->genpd_num - 1);
++		if (IS_ERR(camss->genpd))
++			return PTR_ERR(camss->genpd);
+ 	}
+-	if (IS_ERR_OR_NULL(camss->genpd)) {
+-		if (!camss->genpd)
+-			ret = -ENODEV;
+-		else
+-			ret = PTR_ERR(camss->genpd);
+-		goto fail_pm;
+-	}
++
++	if (!camss->genpd)
++		return -ENODEV;
++
+ 	camss->genpd_link = device_link_add(camss->dev, camss->genpd,
+ 					    DL_FLAG_STATELESS | DL_FLAG_PM_RUNTIME |
+ 					    DL_FLAG_RPM_ACTIVE);
 
 
