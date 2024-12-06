@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF7CF53A7;
-	Fri,  6 Dec 2024 15:08:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07B34207DE7;
+	Fri,  6 Dec 2024 15:08:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733497714; cv=none; b=HIBJBVpEnPIy5IvW/noOCCpFIdroSf3b5hRyU5/d65ZM7iwxtUOSLwnuZFepelbOIzgu3wJVZcO33R1o7tmppcTrbh1vTWTa7Adddh1wIC2ZaYARI5geu8Re7ipxsfbbGv+MxzdrCFxinVEqszc845YMvoIXQ43Qn0el8NfB5Aw=
+	t=1733497717; cv=none; b=SUQApi8p2UJoLEHl6+xtIOw8orrZ4kKaqWKujfpH5FW24ZCMljV87/1qPao5iD2gUyk9kgpXqTk9m5XPJGabg9SVf4j0n23UC3SJcnBxaPl6uX+p1Q8o5V532YWeYUw/ykj55e2xVgMDRYEYICOJYNlz8op24PxJoi79F3mh32Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733497714; c=relaxed/simple;
-	bh=NRSDyXZgV9WTvzCp7VTZn5fdOOlRl6xDaTch61+Q8f8=;
+	s=arc-20240116; t=1733497717; c=relaxed/simple;
+	bh=mp9owg9FrD6Vp4qKRD9pR1VSEN+z9IRn8obumDiWIrY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fXC1YbtWLbOWPkmltUxk64bs9FK3aigqU0el+KkeSK145xqOnUaHvtYzVT+FusCeVBV5EmrF4YlCWITZXlDpYwu10szDVRzoRslZOkAgBfQPJPJZyxummkfelbpFIDCa4VzpwhEto2FGv4GSbvssyFuXt5t2uGjmoKKZvZakcMU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WXXu3nD6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fbdbV/EL9ByMdc7o1E5BhtDLY75zGAoD4tsgFXnHr9lja2ssQtfRklxPZb5Np1u04fgL6EHww70pQbbS4Wd6iptbN0IS73QEf50Ys7SpC7iAuvyLAZ2bWHUH9xzcCX1NbOIS6sNaV+vkathU70yZRQ5oEhdhs753cMev7iHGNN8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mBfhv0T/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WXXu3nD6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 621DFC4CED1;
-	Fri,  6 Dec 2024 15:08:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mBfhv0T/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87E36C4CED1;
+	Fri,  6 Dec 2024 15:08:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733497713;
-	bh=NRSDyXZgV9WTvzCp7VTZn5fdOOlRl6xDaTch61+Q8f8=;
+	s=korg; t=1733497716;
+	bh=mp9owg9FrD6Vp4qKRD9pR1VSEN+z9IRn8obumDiWIrY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WXXu3nD62pPu2A3LlnQmdhlmNW5uRsHbhp1OaqeyOA1uG7TSrbnMPIjLozr5ffBGX
-	 AdFtEiNbdYf16oICg0zCJBIHSCn5CMPPZ1kemGoUg/vaguRQD8b0Fldrg/waNI7Qex
-	 Qt2g3V5nmvvvwoE7LXoRX48LZ7spSMP9Qn9+tm5U=
+	b=mBfhv0T/5esICvFc+ijE/aEFDxpL86E1ia0a/5Ye2LgRvS5fnY0Y9G0q7mXr7JpSr
+	 gt1yIGF12wvodLvGXrtbcj52nJvAABcnlWnkpl0LcHaC8cxpb7AdoiOfORFhlGByaQ
+	 25POHkCcSPC3KCYrOvjGJT62czi0XEN7F/tFZyXo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org,
-	Greg Ungerer <gerg@linux-m68k.org>,
-	Geert Uytterhoeven <geert@linux-m68k.org>
+To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	linux-m68k@lists.linux-m68k.org,
-	linux-kernel@vger.kernel.org,
-	Antonio Quartulli <antonio@mandelbit.com>,
-	Greg Ungerer <gerg@kernel.org>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 371/676] m68k: coldfire/device.c: only build FEC when HW macros are defined
-Date: Fri,  6 Dec 2024 15:33:10 +0100
-Message-ID: <20241206143707.838070352@linuxfoundation.org>
+Subject: [PATCH 6.6 372/676] svcrdma: Address an integer overflow
+Date: Fri,  6 Dec 2024 15:33:11 +0100
+Message-ID: <20241206143707.876245056@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -55,75 +52,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Antonio Quartulli <antonio@mandelbit.com>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit 63a24cf8cc330e5a68ebd2e20ae200096974c475 ]
+[ Upstream commit 3c63d8946e578663b868cb9912dac616ea68bfd0 ]
 
-When CONFIG_FEC is set (due to COMPILE_TEST) along with
-CONFIG_M54xx, coldfire/device.c has compile errors due to
-missing MCFEC_* and MCF_IRQ_FEC_* symbols.
+Dan Carpenter reports:
+> Commit 78147ca8b4a9 ("svcrdma: Add a "parsed chunk list" data
+> structure") from Jun 22, 2020 (linux-next), leads to the following
+> Smatch static checker warning:
+>
+>	net/sunrpc/xprtrdma/svc_rdma_recvfrom.c:498 xdr_check_write_chunk()
+>	warn: potential user controlled sizeof overflow 'segcount * 4 * 4'
+>
+> net/sunrpc/xprtrdma/svc_rdma_recvfrom.c
+>     488 static bool xdr_check_write_chunk(struct svc_rdma_recv_ctxt *rctxt)
+>     489 {
+>     490         u32 segcount;
+>     491         __be32 *p;
+>     492
+>     493         if (xdr_stream_decode_u32(&rctxt->rc_stream, &segcount))
+>                                                               ^^^^^^^^
+>
+>     494                 return false;
+>     495
+>     496         /* A bogus segcount causes this buffer overflow check to fail. */
+>     497         p = xdr_inline_decode(&rctxt->rc_stream,
+> --> 498                               segcount * rpcrdma_segment_maxsz * sizeof(*p));
+>
+>
+> segcount is an untrusted u32.  On 32bit systems anything >= SIZE_MAX / 16 will
+> have an integer overflow and some those values will be accepted by
+> xdr_inline_decode().
 
-Make the whole FEC blocks dependent on having the HW macros
-defined, rather than on CONFIG_FEC itself.
-
-This fix is very similar to commit e6e1e7b19fa1 ("m68k: coldfire/device.c: only build for MCF_EDMA when h/w macros are defined")
-
-Fixes: b7ce7f0d0efc ("m68knommu: merge common ColdFire FEC platform setup code")
-To: Greg Ungerer <gerg@linux-m68k.org>
-To: Geert Uytterhoeven <geert@linux-m68k.org>
-Cc: linux-m68k@lists.linux-m68k.org
-Cc: linux-kernel@vger.kernel.org
-Signed-off-by: Antonio Quartulli <antonio@mandelbit.com>
-Signed-off-by: Greg Ungerer <gerg@kernel.org>
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Fixes: 78147ca8b4a9 ("svcrdma: Add a "parsed chunk list" data structure")
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/m68k/coldfire/device.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ net/sunrpc/xprtrdma/svc_rdma_recvfrom.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/arch/m68k/coldfire/device.c b/arch/m68k/coldfire/device.c
-index 7dab46728aeda..b6958ec2a220c 100644
---- a/arch/m68k/coldfire/device.c
-+++ b/arch/m68k/coldfire/device.c
-@@ -93,7 +93,7 @@ static struct platform_device mcf_uart = {
- 	.dev.platform_data	= mcf_uart_platform_data,
- };
+diff --git a/net/sunrpc/xprtrdma/svc_rdma_recvfrom.c b/net/sunrpc/xprtrdma/svc_rdma_recvfrom.c
+index 3b05f90a3e50d..9cec7bcb8a976 100644
+--- a/net/sunrpc/xprtrdma/svc_rdma_recvfrom.c
++++ b/net/sunrpc/xprtrdma/svc_rdma_recvfrom.c
+@@ -478,7 +478,13 @@ static bool xdr_check_write_chunk(struct svc_rdma_recv_ctxt *rctxt)
+ 	if (xdr_stream_decode_u32(&rctxt->rc_stream, &segcount))
+ 		return false;
  
--#if IS_ENABLED(CONFIG_FEC)
-+#ifdef MCFFEC_BASE0
- 
- #ifdef CONFIG_M5441x
- #define FEC_NAME	"enet-fec"
-@@ -145,6 +145,7 @@ static struct platform_device mcf_fec0 = {
- 		.platform_data		= FEC_PDATA,
- 	}
- };
-+#endif /* MCFFEC_BASE0 */
- 
- #ifdef MCFFEC_BASE1
- static struct resource mcf_fec1_resources[] = {
-@@ -182,7 +183,6 @@ static struct platform_device mcf_fec1 = {
- 	}
- };
- #endif /* MCFFEC_BASE1 */
--#endif /* CONFIG_FEC */
- 
- #if IS_ENABLED(CONFIG_SPI_COLDFIRE_QSPI)
- /*
-@@ -624,12 +624,12 @@ static struct platform_device mcf_flexcan0 = {
- 
- static struct platform_device *mcf_devices[] __initdata = {
- 	&mcf_uart,
--#if IS_ENABLED(CONFIG_FEC)
-+#ifdef MCFFEC_BASE0
- 	&mcf_fec0,
-+#endif
- #ifdef MCFFEC_BASE1
- 	&mcf_fec1,
- #endif
--#endif
- #if IS_ENABLED(CONFIG_SPI_COLDFIRE_QSPI)
- 	&mcf_qspi,
- #endif
+-	/* A bogus segcount causes this buffer overflow check to fail. */
++	/* Before trusting the segcount value enough to use it in
++	 * a computation, perform a simple range check. This is an
++	 * arbitrary but sensible limit (ie, not architectural).
++	 */
++	if (unlikely(segcount > RPCSVC_MAXPAGES))
++		return false;
++
+ 	p = xdr_inline_decode(&rctxt->rc_stream,
+ 			      segcount * rpcrdma_segment_maxsz * sizeof(*p));
+ 	return p != NULL;
 -- 
 2.43.0
 
