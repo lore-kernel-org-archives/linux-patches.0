@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AD99145A16;
-	Fri,  6 Dec 2024 15:18:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2284E1714DF;
+	Fri,  6 Dec 2024 15:18:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733498308; cv=none; b=YHVRxlOgZvu2gUZ5MCGidV8uTgwNZZesOFXzJjiMdNv0H0jUM0A0hsbONNi3CDX9E6GsuGCrGu/SCOx/GKMKdJ1KKJi28DQID6DvdqfRfNumQpNZNq1s8S6MK497Q84aI4PQKhC3U6bv0IH1z7+aEIFfz4sCBEgUQevnAjtwKOI=
+	t=1733498311; cv=none; b=I6mfELDDFuRW5IFXdaHvVsD+aRC8sahG6FaeHeNMYw/Dc1w8JrGLFFU6XoIkWykMHGBkYI0YTkWisa63fCT7+xtWzGJ/ANc6hUqOcQxZvwwyZW3X0uJ/HMH3Plsvr+iSjOhWnfhWOYH3Ws0aNMwC9aQRT9PV4CpKz6kjD6r01xU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733498308; c=relaxed/simple;
-	bh=6VHIQHpc4Gsw7AjAdM1S9IH9w6tyjqwgNKcR6aRvXZg=;
+	s=arc-20240116; t=1733498311; c=relaxed/simple;
+	bh=5ag92K7qK6wrQg7jxkq1fgVyKF4jiKqk+mi3tY5di9o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r2MzuQ6eYiKyth7el2VwvYbpTRtul205PCUSfWEeekHrcjBsk1IsnJvqvGmiTZhdEsuAPRKQOKnzoyzAvJbelDLGGATVMPDkHLcYpKskbEkkFjIGy6tG0RZXk8IBKOiX2lafbLGbYxL/+KtNHEvUWb4W6sdrhXbedL+f33N2OB0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HdYHu9Se; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=G8PUMmEO8uA67rz3UJR6P7FCRVDZZ1q38NkGW/U8ULeX6ReLsbM/VBg/0lCRQOcankrc+kz1oZChO7Sr6qFw4n4lDDTC7sEK/dN1P8iZccHrBQm63Foza+GzU/AyutOOaU56GXtoawiI1r8HwpXcbRXO+bqk6h1KfCYr+7qJW7Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1fYcuaaz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HdYHu9Se"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A015C4CED1;
-	Fri,  6 Dec 2024 15:18:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1fYcuaaz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 827FAC4CED1;
+	Fri,  6 Dec 2024 15:18:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733498307;
-	bh=6VHIQHpc4Gsw7AjAdM1S9IH9w6tyjqwgNKcR6aRvXZg=;
+	s=korg; t=1733498311;
+	bh=5ag92K7qK6wrQg7jxkq1fgVyKF4jiKqk+mi3tY5di9o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HdYHu9SenMTwYHAKDgOsy+MmyKv/ATveI+789sqghUouzsHXoJ5VvxCWnTJpLILqr
-	 IE1ZKOphzlFBuv3yjQBfQ8BBPbRcHNgpT4POowR0s5WLb2rSz6kTB2ht9w85B7T2Fn
-	 JCfO0UsgStqfLnsaIcZYtJJOp0T0D61NrZW0e44Y=
+	b=1fYcuaazt/MIjqi5k/P6fQXBO0/cobSMQytjtbK+UdFaERlkIItjK9G7Uh+inbwMX
+	 KE9ZFeLNsOrQmyfE7ezoA2h4P1GWQBSPiOOyGDGshVSiFu4Ee5R0hdOwnRCgR1mM2N
+	 be2FZdWPywas8utIVgB73D6ZLPvTlQ9I49aaSU38=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Filip Brozovic <fbrozovic@gmail.com>,
-	stable <stable@kernel.org>
-Subject: [PATCH 6.6 519/676] serial: 8250_fintek: Add support for F81216E
-Date: Fri,  6 Dec 2024 15:35:38 +0100
-Message-ID: <20241206143713.633684304@linuxfoundation.org>
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Subject: [PATCH 6.6 546/676] usb: dwc3: gadget: Fix checking for number of TRBs left
+Date: Fri,  6 Dec 2024 15:36:05 +0100
+Message-ID: <20241206143714.685723121@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -50,92 +49,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filip Brozovic <fbrozovic@gmail.com>
+From: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
 
-commit 166105c9030a30ba08574a9998afc7b60bc72dd7 upstream.
+commit 02a6982b0ccfcdc39e20016f5fc9a1b7826a6ee7 upstream.
 
-The F81216E is a LPC/eSPI to 4 UART Super I/O and is mostly compatible with
-the F81216H, but does not support RS-485 auto-direction delays on any port.
+The check whether the TRB ring is full or empty in dwc3_calc_trbs_left()
+is insufficient. It assumes there are active TRBs if there's any request
+in the started_list. However, that's not the case for requests with a
+large SG list.
 
-Signed-off-by: Filip Brozovic <fbrozovic@gmail.com>
-Cc: stable <stable@kernel.org>
-Link: https://lore.kernel.org/r/20241110111703.15494-1-fbrozovic@gmail.com
+That is, if we have a single usb request that requires more TRBs than
+the total TRBs in the TRB ring, the queued TRBs will be available when
+all the TRBs in the ring are completed. But the request is only
+partially completed and remains in the started_list. With the current
+logic, the TRB ring is empty, but dwc3_calc_trbs_left() returns 0.
+
+Fix this by additionally checking for the request->num_trbs for active
+TRB count.
+
+Cc: stable@vger.kernel.org
+Fixes: 51f1954ad853 ("usb: dwc3: gadget: Fix dwc3_calc_trbs_left()")
+Signed-off-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Link: https://lore.kernel.org/r/708dc62b56b77da1f704cc2ae9b6ddb1f2dbef1f.1731545781.git.Thinh.Nguyen@synopsys.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/8250/8250_fintek.c |   14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
+ drivers/usb/dwc3/gadget.c |    9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
---- a/drivers/tty/serial/8250/8250_fintek.c
-+++ b/drivers/tty/serial/8250/8250_fintek.c
-@@ -21,6 +21,7 @@
- #define CHIP_ID_F81866 0x1010
- #define CHIP_ID_F81966 0x0215
- #define CHIP_ID_F81216AD 0x1602
-+#define CHIP_ID_F81216E 0x1617
- #define CHIP_ID_F81216H 0x0501
- #define CHIP_ID_F81216 0x0802
- #define VENDOR_ID1 0x23
-@@ -158,6 +159,7 @@ static int fintek_8250_check_id(struct f
- 	case CHIP_ID_F81866:
- 	case CHIP_ID_F81966:
- 	case CHIP_ID_F81216AD:
-+	case CHIP_ID_F81216E:
- 	case CHIP_ID_F81216H:
- 	case CHIP_ID_F81216:
- 		break;
-@@ -181,6 +183,7 @@ static int fintek_8250_get_ldn_range(str
- 		return 0;
- 
- 	case CHIP_ID_F81216AD:
-+	case CHIP_ID_F81216E:
- 	case CHIP_ID_F81216H:
- 	case CHIP_ID_F81216:
- 		*min = F81216_LDN_LOW;
-@@ -250,6 +253,7 @@ static void fintek_8250_set_irq_mode(str
- 		break;
- 
- 	case CHIP_ID_F81216AD:
-+	case CHIP_ID_F81216E:
- 	case CHIP_ID_F81216H:
- 	case CHIP_ID_F81216:
- 		sio_write_mask_reg(pdata, FINTEK_IRQ_MODE, IRQ_SHARE,
-@@ -263,7 +267,8 @@ static void fintek_8250_set_irq_mode(str
- static void fintek_8250_set_max_fifo(struct fintek_8250 *pdata)
- {
- 	switch (pdata->pid) {
--	case CHIP_ID_F81216H: /* 128Bytes FIFO */
-+	case CHIP_ID_F81216E: /* 128Bytes FIFO */
-+	case CHIP_ID_F81216H:
- 	case CHIP_ID_F81966:
- 	case CHIP_ID_F81866:
- 		sio_write_mask_reg(pdata, FIFO_CTRL,
-@@ -297,6 +302,7 @@ static void fintek_8250_set_termios(stru
- 		goto exit;
- 
- 	switch (pdata->pid) {
-+	case CHIP_ID_F81216E:
- 	case CHIP_ID_F81216H:
- 		reg = RS485;
- 		break;
-@@ -346,6 +352,7 @@ static void fintek_8250_set_termios_hand
- 	struct fintek_8250 *pdata = uart->port.private_data;
- 
- 	switch (pdata->pid) {
-+	case CHIP_ID_F81216E:
- 	case CHIP_ID_F81216H:
- 	case CHIP_ID_F81966:
- 	case CHIP_ID_F81866:
-@@ -438,6 +445,11 @@ static void fintek_8250_set_rs485_handle
- 			uart->port.rs485_supported = fintek_8250_rs485_supported;
- 		break;
- 
-+	case CHIP_ID_F81216E: /* F81216E does not support RS485 delays */
-+		uart->port.rs485_config = fintek_8250_rs485_config;
-+		uart->port.rs485_supported = fintek_8250_rs485_supported;
-+		break;
+--- a/drivers/usb/dwc3/gadget.c
++++ b/drivers/usb/dwc3/gadget.c
+@@ -1196,11 +1196,14 @@ static u32 dwc3_calc_trbs_left(struct dw
+ 	 * pending to be processed by the driver.
+ 	 */
+ 	if (dep->trb_enqueue == dep->trb_dequeue) {
++		struct dwc3_request *req;
 +
- 	default: /* No RS485 Auto direction functional */
- 		break;
- 	}
+ 		/*
+-		 * If there is any request remained in the started_list at
+-		 * this point, that means there is no TRB available.
++		 * If there is any request remained in the started_list with
++		 * active TRBs at this point, then there is no TRB available.
+ 		 */
+-		if (!list_empty(&dep->started_list))
++		req = next_request(&dep->started_list);
++		if (req && req->num_trbs)
+ 			return 0;
+ 
+ 		return DWC3_TRB_NUM - 1;
 
 
