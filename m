@@ -1,39 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 742FC1442E8;
-	Fri,  6 Dec 2024 14:56:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B34681442E8;
+	Fri,  6 Dec 2024 14:56:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733497016; cv=none; b=FGChvvVQ4ZKjG00Q3hRUHY3PdnDPVFrfjKl5GibS/z6LXSJE48aWBj4kynWeJT2LnB5SIiUX0Pk7BKXjcmwVZ7nBJZlry3oCwbJnAyljn1KXVMtQFCQUBdItByKs59+xX7uXfZYP/8YMOs8mP83Q8xhJz7hIuNS3LkNQD6ig7pk=
+	t=1733497019; cv=none; b=YcuE3wrC4OKGpJnqftSvLsqmseg0XXs6gRBxTak0RE7yb8SShiH+7cSuSnt0Aq9RYXXrZeYDZjLELPqMwVBPKE8RFIzhYijh/RF3BCtZrWLmkDAbEQdTm6/B9MVvpjVKCq9xceLenKm1yugY0isA1uI76jLR9IlSayVLoSQHsBE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733497016; c=relaxed/simple;
-	bh=c9mrA4ankSD0vPSH2zvnSdJt2UI/pcy9YDtVEKigvdU=;
+	s=arc-20240116; t=1733497019; c=relaxed/simple;
+	bh=A2IaY0duDk+jLtEtU3BtWgP0oJF0V7uHrWoYc2mcRis=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=d43PyPszgqqlzgDFIjGUMnoHLUMYx0A3q09VXnsBJY1OHpTDJImAKsNX3seWPhwFY3laKZh01jkoAt7PI9G4siZgZPvag4fJpwjt5aEQNJlRnJGdwUcIMVdIfj8wzfJ1ksLujztMgAZuYb7n12KLR3+dkWaPULW8YsloqhmUjmw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GgZoI6bG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=shU4Smv0kLQCAcq2I+JxdH73vG3vcJ/wybYlSQJcYTUjDjHdlfq19AavOKwYB6GkkuNsOuapNAFNuxixqZdUk/TNHa0wY0kRG5VAFS2euwUUYpmMqKf3Gp5LtWXnign+HFNYScdpnX1K5uOR900y+v25G+5+8vLKaebrBrnJJnA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OM/br4wb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GgZoI6bG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5CDCC4CED1;
-	Fri,  6 Dec 2024 14:56:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OM/br4wb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA0DDC4CED1;
+	Fri,  6 Dec 2024 14:56:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733497016;
-	bh=c9mrA4ankSD0vPSH2zvnSdJt2UI/pcy9YDtVEKigvdU=;
+	s=korg; t=1733497019;
+	bh=A2IaY0duDk+jLtEtU3BtWgP0oJF0V7uHrWoYc2mcRis=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GgZoI6bGgdEQ62y2Fb9uX4AENd03Lo1vvLLwtCmo4uVSAG1o6Bx5WTtTNvTyrOHhj
-	 8ZTCbrRCAmWDdTISWbhj7LugEtC2RUXeshQlUi8cW2566nq/CjZsozyXkfghf0tDNu
-	 75gGaRnICOx49UZreHI9B/MBMUGTn7UzEZWSF+4s=
+	b=OM/br4wbAsC97Ny1rE7joY2CCzv6EeK0633oGmu1MVnXXgS0AT6jNXqmwyjKPlkzT
+	 /PMg3WJorfAZfbWe9wm3MOwT7t8CdN+arMc/dnZDBlXkzg6VYw+IHYtH+nuXuLP61h
+	 Z8evbijTmpXWZ2VLsmOSeTeXbecaGuk8QtqAqxSI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeongjun Park <aha310510@gmail.com>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
-	Kalle Valo <quic_kvalo@quicinc.com>,
+	Rob Herring <robh+dt@kernel.org>,
+	Frank Rowand <frowand.list@gmail.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Ingo Molnar <mingo@redhat.com>,
+	Borislav Petkov <bp@alien8.de>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	x86@kernel.org,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	Saurabh Sengar <ssengar@linux.microsoft.com>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Rob Herring <robh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 170/676] wifi: ath9k: add range check for conn_rsp_epid in htc_connect_service()
-Date: Fri,  6 Dec 2024 15:29:49 +0100
-Message-ID: <20241206143659.991054770@linuxfoundation.org>
+Subject: [PATCH 6.6 144/676] x86/of: Unconditionally call unflatten_and_copy_device_tree()
+Date: Fri,  6 Dec 2024 15:29:23 +0100
+Message-ID: <20241206143658.977025897@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -46,62 +54,81 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jeongjun Park <aha310510@gmail.com>
+From: Stephen Boyd <sboyd@kernel.org>
 
-[ Upstream commit 8619593634cbdf5abf43f5714df49b04e4ef09ab ]
+[ Upstream commit 40f18dbbb42c56019b889b5b1fdce3da89e354da ]
 
-I found the following bug in my fuzzer:
+Call this function unconditionally so that we can populate an empty DTB
+on platforms that don't boot with a firmware provided or builtin DTB.
+There's no harm in calling unflatten_device_tree() unconditionally here.
+If there isn't a non-NULL 'initial_boot_params' pointer then
+unflatten_device_tree() returns early.
 
-  UBSAN: array-index-out-of-bounds in drivers/net/wireless/ath/ath9k/htc_hst.c:26:51
-  index 255 is out of range for type 'htc_endpoint [22]'
-  CPU: 0 UID: 0 PID: 8 Comm: kworker/0:0 Not tainted 6.11.0-rc6-dirty #14
-  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
-  Workqueue: events request_firmware_work_func
-  Call Trace:
-   <TASK>
-   dump_stack_lvl+0x180/0x1b0
-   __ubsan_handle_out_of_bounds+0xd4/0x130
-   htc_issue_send.constprop.0+0x20c/0x230
-   ? _raw_spin_unlock_irqrestore+0x3c/0x70
-   ath9k_wmi_cmd+0x41d/0x610
-   ? mark_held_locks+0x9f/0xe0
-   ...
-
-Since this bug has been confirmed to be caused by insufficient verification
-of conn_rsp_epid, I think it would be appropriate to add a range check for
-conn_rsp_epid to htc_connect_service() to prevent the bug from occurring.
-
-Fixes: fb9987d0f748 ("ath9k_htc: Support for AR9271 chipset.")
-Signed-off-by: Jeongjun Park <aha310510@gmail.com>
-Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://patch.msgid.link/20240909103855.68006-1-aha310510@gmail.com
+Cc: Rob Herring <robh+dt@kernel.org>
+Cc: Frank Rowand <frowand.list@gmail.com>
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Borislav Petkov <bp@alien8.de>
+Cc: Dave Hansen <dave.hansen@linux.intel.com>
+Cc: x86@kernel.org
+Cc: H. Peter Anvin <hpa@zytor.com>
+Tested-by: Saurabh Sengar <ssengar@linux.microsoft.com>
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Link: https://lore.kernel.org/r/20240217010557.2381548-5-sboyd@kernel.org
+Signed-off-by: Rob Herring <robh@kernel.org>
+Stable-dep-of: b2473a359763 ("of/fdt: add dt_phys arg to early_init_dt_scan and early_init_dt_verify")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath9k/htc_hst.c | 3 +++
- 1 file changed, 3 insertions(+)
+ arch/x86/kernel/devicetree.c | 26 ++++++++++++++------------
+ 1 file changed, 14 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath9k/htc_hst.c b/drivers/net/wireless/ath/ath9k/htc_hst.c
-index 99667aba289df..00dc97ac53b9d 100644
---- a/drivers/net/wireless/ath/ath9k/htc_hst.c
-+++ b/drivers/net/wireless/ath/ath9k/htc_hst.c
-@@ -294,6 +294,9 @@ int htc_connect_service(struct htc_target *target,
- 		return -ETIMEDOUT;
+diff --git a/arch/x86/kernel/devicetree.c b/arch/x86/kernel/devicetree.c
+index c13c9cb40b9b4..47fe7de1575dd 100644
+--- a/arch/x86/kernel/devicetree.c
++++ b/arch/x86/kernel/devicetree.c
+@@ -283,22 +283,24 @@ static void __init x86_flattree_get_config(void)
+ 	u32 size, map_len;
+ 	void *dt;
+ 
+-	if (!initial_dtb)
+-		return;
+-
+-	map_len = max(PAGE_SIZE - (initial_dtb & ~PAGE_MASK), (u64)128);
++	if (initial_dtb) {
++		map_len = max(PAGE_SIZE - (initial_dtb & ~PAGE_MASK), (u64)128);
++
++		dt = early_memremap(initial_dtb, map_len);
++		size = fdt_totalsize(dt);
++		if (map_len < size) {
++			early_memunmap(dt, map_len);
++			dt = early_memremap(initial_dtb, size);
++			map_len = size;
++		}
+ 
+-	dt = early_memremap(initial_dtb, map_len);
+-	size = fdt_totalsize(dt);
+-	if (map_len < size) {
+-		early_memunmap(dt, map_len);
+-		dt = early_memremap(initial_dtb, size);
+-		map_len = size;
++		early_init_dt_verify(dt);
  	}
  
-+	if (target->conn_rsp_epid < 0 || target->conn_rsp_epid >= ENDPOINT_MAX)
-+		return -EINVAL;
+-	early_init_dt_verify(dt);
+ 	unflatten_and_copy_device_tree();
+-	early_memunmap(dt, map_len);
 +
- 	*conn_rsp_epid = target->conn_rsp_epid;
- 	return 0;
- err:
++	if (initial_dtb)
++		early_memunmap(dt, map_len);
+ }
+ #else
+ static inline void x86_flattree_get_config(void) { }
 -- 
 2.43.0
 
