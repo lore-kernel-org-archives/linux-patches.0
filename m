@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCABA1494D9;
-	Fri,  6 Dec 2024 14:39:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7D041494D9;
+	Fri,  6 Dec 2024 14:39:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733495956; cv=none; b=qUGDdXY0JFJyyWsruCR4C3lCKCZx+5yW0GoCl0m9Zx+744kpOVZd77WLzsgas8+DN0S0ppvVqjGaIoeNYfsMwg+FCC4IJCnZVbCUm51CGQLUqDdH4weAm8SeGL4G3C3cg6SoVTUVJ8/MNKb2DSOIjlEgFng6cpAVyJDbSZ1QKd0=
+	t=1733495958; cv=none; b=sJsLajXA2IktIwTNTEUjlTZUyoaaqSbwnhuB9JF7m5fQW31PF3cts5skDuQ7dpjLTpUxtT5b8pDYT+OH+LMFwfEfC6TzGDAlvj7l6cwnf3o9s2heW7GRYI0OePQ1dHrbfj8ga0YIg2uTKzOmA+p/dggYXhWr5riH6HSE5h5WjTk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733495956; c=relaxed/simple;
-	bh=qZTImxgkxVkbJnfZC3KmzIJZt4FjRt0KDObnoLGIT/Y=;
+	s=arc-20240116; t=1733495958; c=relaxed/simple;
+	bh=9hMDqM4GmINMVfELQN2OM2kHd1HhHv4NCApXCe0k/0M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f/OW/BFteyEBnJAwEZU8hgePaUnzriQv7e2hnG9oZtTd5TJ2it/A3jDfFLrtPJY43fDqeIglQKo+VqkE2SeTCEnOZXlYKep72F3S0lR340D7Tkdcc4Kl2EiTKmlfjXvJgnkCUc+bb8TV5nnhQn5OksGcm3v3FyUyS8boI49g4Y4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aNP5sAQY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VE1scKJyhzS0SZlkavy7kasIX90QsX5QkxPLc8PAezMI7nhoAAHIfwMSsEpufeE2s0T9LUZZ0JLqU/6w7XAEkgPua5D/YRzlYeMP2LbCDFDylxRp2jvm68XY3T9pHIoe9qspt9YCFs1E0IOX0jdFTgEwProGZd7qwjWXZJw7TWw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iIXCKLhj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aNP5sAQY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D51B4C4CED1;
-	Fri,  6 Dec 2024 14:39:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iIXCKLhj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F258C4CED1;
+	Fri,  6 Dec 2024 14:39:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733495954;
-	bh=qZTImxgkxVkbJnfZC3KmzIJZt4FjRt0KDObnoLGIT/Y=;
+	s=korg; t=1733495958;
+	bh=9hMDqM4GmINMVfELQN2OM2kHd1HhHv4NCApXCe0k/0M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aNP5sAQYUgh6+N4x210EcCbtMAfYuGRWEcGdfS4KC2Sbqi/KtBKpfrr+RFN8EMrw4
-	 i79GlaZ5gjILg5ekxl2ctkCWE8JzS0lG8Wk+AtENaJuFWg/d5Yx+iyDvAC5Qev+6Wr
-	 wzFS+aGjrWyotNY7DK7wGk8u6x5BVk3XWOGRvZS4=
+	b=iIXCKLhjQMJMXsU+VFzXbBI230Q3HMpM6la9yXeHY5v3H6NHuFO6cJ9/2oogehEil
+	 gNlld3P7jIyfvx+Vr1ADPYqxjFSnXMFEg2Qz7ZpXkBV5WP8ihZ5Cg2WidSL/qLT/NV
+	 WCqt81JwZNuSza/YCtLPykzcFbYkFJuXfPGS3KqA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Disha Goel <disgoel@linux.ibm.com>,
-	Baokun Li <libaokun1@huawei.com>,
-	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
-	Jan Kara <jack@suse.cz>,
+	Anand Jain <anand.jain@oracle.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 002/146] quota: flush quota_release_work upon quota writeback
-Date: Fri,  6 Dec 2024 15:35:33 +0100
-Message-ID: <20241206143527.755848010@linuxfoundation.org>
+Subject: [PATCH 6.12 003/146] btrfs: drop unused parameter file_offset from btrfs_encoded_read_regular_fill_pages()
+Date: Fri,  6 Dec 2024 15:35:34 +0100
+Message-ID: <20241206143527.794228745@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143527.654980698@linuxfoundation.org>
 References: <20241206143527.654980698@linuxfoundation.org>
@@ -53,67 +51,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ojaswin Mujoo <ojaswin@linux.ibm.com>
+From: David Sterba <dsterba@suse.com>
 
-[ Upstream commit ac6f420291b3fee1113f21d612fa88b628afab5b ]
+[ Upstream commit 590168edbe6317ca9f4066215fb099f43ffe745c ]
 
-One of the paths quota writeback is called from is:
+The file_offset parameter used to be passed to encoded read struct but
+was removed in commit b665affe93d8 ("btrfs: remove unused members from
+struct btrfs_encoded_read_private").
 
-freeze_super()
-  sync_filesystem()
-    ext4_sync_fs()
-      dquot_writeback_dquots()
-
-Since we currently don't always flush the quota_release_work queue in
-this path, we can end up with the following race:
-
- 1. dquot are added to releasing_dquots list during regular operations.
- 2. FS Freeze starts, however, this does not flush the quota_release_work queue.
- 3. Freeze completes.
- 4. Kernel eventually tries to flush the workqueue while FS is frozen which
-    hits a WARN_ON since transaction gets started during frozen state:
-
-  ext4_journal_check_start+0x28/0x110 [ext4] (unreliable)
-  __ext4_journal_start_sb+0x64/0x1c0 [ext4]
-  ext4_release_dquot+0x90/0x1d0 [ext4]
-  quota_release_workfn+0x43c/0x4d0
-
-Which is the following line:
-
-  WARN_ON(sb->s_writers.frozen == SB_FREEZE_COMPLETE);
-
-Which ultimately results in generic/390 failing due to dmesg
-noise. This was detected on powerpc machine 15 cores.
-
-To avoid this, make sure to flush the workqueue during
-dquot_writeback_dquots() so we dont have any pending workitems after
-freeze.
-
-Reported-by: Disha Goel <disgoel@linux.ibm.com>
-CC: stable@vger.kernel.org
-Fixes: dabc8b207566 ("quota: fix dqput() to follow the guarantees dquot_srcu should provide")
-Reviewed-by: Baokun Li <libaokun1@huawei.com>
-Signed-off-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
-Signed-off-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/20241121123855.645335-2-ojaswin@linux.ibm.com
+Reviewed-by: Anand Jain <anand.jain@oracle.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Stable-dep-of: 05b36b04d74a ("btrfs: fix use-after-free in btrfs_encoded_read_endio()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/quota/dquot.c | 2 ++
- 1 file changed, 2 insertions(+)
+ fs/btrfs/btrfs_inode.h | 3 +--
+ fs/btrfs/inode.c       | 6 +++---
+ fs/btrfs/send.c        | 2 +-
+ 3 files changed, 5 insertions(+), 6 deletions(-)
 
-diff --git a/fs/quota/dquot.c b/fs/quota/dquot.c
-index b40410cd39af4..71c0ce31a4c4d 100644
---- a/fs/quota/dquot.c
-+++ b/fs/quota/dquot.c
-@@ -689,6 +689,8 @@ int dquot_writeback_dquots(struct super_block *sb, int type)
+diff --git a/fs/btrfs/btrfs_inode.h b/fs/btrfs/btrfs_inode.h
+index e152fde888fc9..5e2d93c2dfb5a 100644
+--- a/fs/btrfs/btrfs_inode.h
++++ b/fs/btrfs/btrfs_inode.h
+@@ -613,8 +613,7 @@ int btrfs_writepage_cow_fixup(struct folio *folio);
+ int btrfs_encoded_io_compression_from_extent(struct btrfs_fs_info *fs_info,
+ 					     int compress_type);
+ int btrfs_encoded_read_regular_fill_pages(struct btrfs_inode *inode,
+-					  u64 file_offset, u64 disk_bytenr,
+-					  u64 disk_io_size,
++					  u64 disk_bytenr, u64 disk_io_size,
+ 					  struct page **pages);
+ ssize_t btrfs_encoded_read(struct kiocb *iocb, struct iov_iter *iter,
+ 			   struct btrfs_ioctl_encoded_io_args *encoded);
+diff --git a/fs/btrfs/inode.c b/fs/btrfs/inode.c
+index 1e4ca1e7d2e58..753e9cb0c3717 100644
+--- a/fs/btrfs/inode.c
++++ b/fs/btrfs/inode.c
+@@ -9132,8 +9132,8 @@ static void btrfs_encoded_read_endio(struct btrfs_bio *bbio)
+ }
  
- 	WARN_ON_ONCE(!rwsem_is_locked(&sb->s_umount));
+ int btrfs_encoded_read_regular_fill_pages(struct btrfs_inode *inode,
+-					  u64 file_offset, u64 disk_bytenr,
+-					  u64 disk_io_size, struct page **pages)
++					  u64 disk_bytenr, u64 disk_io_size,
++					  struct page **pages)
+ {
+ 	struct btrfs_fs_info *fs_info = inode->root->fs_info;
+ 	struct btrfs_encoded_read_private priv = {
+@@ -9203,7 +9203,7 @@ static ssize_t btrfs_encoded_read_regular(struct kiocb *iocb,
+ 		goto out;
+ 		}
  
-+	flush_delayed_work(&quota_release_work);
-+
- 	for (cnt = 0; cnt < MAXQUOTAS; cnt++) {
- 		if (type != -1 && cnt != type)
- 			continue;
+-	ret = btrfs_encoded_read_regular_fill_pages(inode, start, disk_bytenr,
++	ret = btrfs_encoded_read_regular_fill_pages(inode, disk_bytenr,
+ 						    disk_io_size, pages);
+ 	if (ret)
+ 		goto out;
+diff --git a/fs/btrfs/send.c b/fs/btrfs/send.c
+index b068469871f8e..0cb11dcd10cd4 100644
+--- a/fs/btrfs/send.c
++++ b/fs/btrfs/send.c
+@@ -5677,7 +5677,7 @@ static int send_encoded_extent(struct send_ctx *sctx, struct btrfs_path *path,
+ 	 * Note that send_buf is a mapping of send_buf_pages, so this is really
+ 	 * reading into send_buf.
+ 	 */
+-	ret = btrfs_encoded_read_regular_fill_pages(BTRFS_I(inode), offset,
++	ret = btrfs_encoded_read_regular_fill_pages(BTRFS_I(inode),
+ 						    disk_bytenr, disk_num_bytes,
+ 						    sctx->send_buf_pages +
+ 						    (data_offset >> PAGE_SHIFT));
 -- 
 2.43.0
 
