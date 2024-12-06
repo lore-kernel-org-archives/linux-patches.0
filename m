@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2D531442E8;
-	Fri,  6 Dec 2024 14:55:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E5A51442E8;
+	Fri,  6 Dec 2024 14:55:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733496951; cv=none; b=sb+BQS0ZoLkFif/QvLFRgsrDbSKPplDlRIfnsr+E4fgwJWW3DKRqOqjv0gXHk0Ale7HV6kbw4rDbLFXZ0J3o5a2ucPAUs5b6zoQV1oSbATii2KY1Jj++WlJ1PeKjO4gWP0Bdrx42qEpKmhl+D80k9eHyfhTRhipWNw7UzQrVk0k=
+	t=1733496955; cv=none; b=e6mYDa6Gl4td6aiUPf8IZnvdLVTfgPkUyOcJYSNNN1beAx2ZueMp2gFUHtZImtR5d0hwIePhLiktEQsFh3dxlY9NwqC6AMLOtKp37rfpsY9O7MAObMmDZNniOGQtqwU8tydN9sLEjq7cm67a2fiwWGkPIQln8vnhh36OtdnGJZ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733496951; c=relaxed/simple;
-	bh=Kc/DeNInRQpamtgROuZyuq+3QL0BtxvZbs42rMcQt9g=;
+	s=arc-20240116; t=1733496955; c=relaxed/simple;
+	bh=SUyTDDNFcxeRCXMxt1/tPZq8hZE1HUTw0brMEAGZoOw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=joS043lWu82AHSMTbeQNDE6G0I+I/o6YnTzVY6ALOgsZI1QAbN/s4YaiKEU18WqsBnXshhVxy1Pjlp8HNdBnGX0CyvMbkAs9AAmA1Ykm8MqA08TWhRD1WYyylbRruU2/LEWJ8KIFwvH36YdDdLn04/e3I4OnYvnWJV4o710fQ40=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PtZ2XdUD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=q04ms/wpr1JFbuf87hAZRUb2brkiKqp7pOCYFeu5XLApKMLvtNsFkaJmaDdW9xM5Pp0WZzDuAXyK3Qs1K3N+TODxXojcA8WvI1s13lVmoh9vsGv5yLHVqVXvV++DysKwY1FY6UZEUCoUlW6AI3hk5IOWy1nUjqp4xfYW+xz6Zeo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g/lOaG65; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PtZ2XdUD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F303C4CED1;
-	Fri,  6 Dec 2024 14:55:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g/lOaG65"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C03EC4CED1;
+	Fri,  6 Dec 2024 14:55:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733496951;
-	bh=Kc/DeNInRQpamtgROuZyuq+3QL0BtxvZbs42rMcQt9g=;
+	s=korg; t=1733496955;
+	bh=SUyTDDNFcxeRCXMxt1/tPZq8hZE1HUTw0brMEAGZoOw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PtZ2XdUD1DFG4t5EYbDsy2+eOsmo5Iay88jkC2UZ6jOqHl1MPNHmE82FBeaH6ErHF
-	 E/qu65+AKHZamqizHA4nDHMRHzR12yEEXwReDQw3CpIwMAyuDufGb34+rMLhK+nZ/A
-	 f6hBOIIWSWDHq3K6BgbTfB5qWD2FMfpFNoPo7OYI=
+	b=g/lOaG657+SkJV/gH10JQupXdoPhv7lxnIp4VcOw3y1HpxYcp23xMlojXPt2fxasW
+	 lvuJRozkJ5UylH2rJIi1j8bC/eLxBN8op1ISR5vdiU5xIfBdiKMH49xwLS06epymIB
+	 PdeQ/7vN95PU56NMX5nZgkxax5aPsk2X13/uKcSc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen-Yu Tsai <wenst@chromium.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Fenghua Yu <fenghua.yu@intel.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Reinette Chatre <reinette.chatre@intel.com>,
+	Shuah Khan <skhan@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 154/676] arm64: dts: mediatek: mt8183-kukui-jacuzzi: Add supplies for fixed regulators
-Date: Fri,  6 Dec 2024 15:29:33 +0100
-Message-ID: <20241206143659.368803254@linuxfoundation.org>
+Subject: [PATCH 6.6 155/676] selftests/resctrl: Split fill_buf to allow tests finer-grained control
+Date: Fri,  6 Dec 2024 15:29:34 +0100
+Message-ID: <20241206143659.409715503@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -45,67 +47,93 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chen-Yu Tsai <wenst@chromium.org>
+From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 
-[ Upstream commit aaecb1da58a72bfbd2c35d4aadc43caa02f11862 ]
+[ Upstream commit f8f669699977db503569465b64dc5220ab21bb41 ]
 
-When the fixed regulators for the LCD panel and DP bridge were added,
-their supplies were not modeled in. These, except for the 1.0V supply,
-are just load switches, and need and have a supply.
+MBM, MBA and CMT test cases call run_fill_buf() that in turn calls
+fill_cache() to alloc and loop indefinitely around the buffer. This
+binds buffer allocation and running the benchmark into a single bundle
+so that a selftest cannot allocate a buffer once and reuse it. CAT test
+doesn't want to loop around the buffer continuously and after rewrite
+it needs the ability to allocate the buffer separately.
 
-Add the supplies for each of the fixed regulators.
+Split buffer allocation out of fill_cache() into alloc_buffer(). This
+change is part of preparation for the new CAT test that allocates a
+buffer and does multiple passes over the same buffer (but not in an
+infinite loop).
 
-Fixes: cabc71b08eb5 ("arm64: dts: mt8183: Add kukui-jacuzzi-damu board")
-Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
-Link: https://lore.kernel.org/r/20241030070224.1006331-4-wenst@chromium.org
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Co-developed-by: Fenghua Yu <fenghua.yu@intel.com>
+Signed-off-by: Fenghua Yu <fenghua.yu@intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Reviewed-by: Reinette Chatre <reinette.chatre@intel.com>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Stable-dep-of: caf02626b2bf ("selftests/resctrl: Fix memory overflow due to unhandled wraparound")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/mediatek/mt8183-kukui-jacuzzi.dtsi | 4 ++++
- 1 file changed, 4 insertions(+)
+ tools/testing/selftests/resctrl/fill_buf.c | 21 +++++++++++++++------
+ 1 file changed, 15 insertions(+), 6 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/mediatek/mt8183-kukui-jacuzzi.dtsi b/arch/arm64/boot/dts/mediatek/mt8183-kukui-jacuzzi.dtsi
-index beec6f0e4f274..629c4b7ecbc62 100644
---- a/arch/arm64/boot/dts/mediatek/mt8183-kukui-jacuzzi.dtsi
-+++ b/arch/arm64/boot/dts/mediatek/mt8183-kukui-jacuzzi.dtsi
-@@ -20,6 +20,7 @@ pp1000_mipibrdg: pp1000-mipibrdg {
- 		regulator-boot-on;
+diff --git a/tools/testing/selftests/resctrl/fill_buf.c b/tools/testing/selftests/resctrl/fill_buf.c
+index 0f6cca61ec94b..6d1d5eed595cd 100644
+--- a/tools/testing/selftests/resctrl/fill_buf.c
++++ b/tools/testing/selftests/resctrl/fill_buf.c
+@@ -135,24 +135,34 @@ static int fill_cache_write(unsigned char *buf, size_t buf_size, bool once)
+ 	return 0;
+ }
  
- 		gpio = <&pio 54 GPIO_ACTIVE_HIGH>;
-+		vin-supply = <&pp1800_alw>;
- 	};
+-static int fill_cache(size_t buf_size, int memflush, int op, bool once)
++static unsigned char *alloc_buffer(size_t buf_size, int memflush)
+ {
+ 	unsigned char *buf;
+-	int ret;
  
- 	pp1800_mipibrdg: pp1800-mipibrdg {
-@@ -32,6 +33,7 @@ pp1800_mipibrdg: pp1800-mipibrdg {
- 		regulator-boot-on;
+ 	buf = malloc_and_init_memory(buf_size);
+ 	if (!buf)
+-		return -1;
++		return NULL;
  
- 		gpio = <&pio 36 GPIO_ACTIVE_HIGH>;
-+		vin-supply = <&pp1800_alw>;
- 	};
+ 	/* Flush the memory before using to avoid "cache hot pages" effect */
+ 	if (memflush)
+ 		mem_flush(buf, buf_size);
  
- 	pp3300_panel: pp3300-panel {
-@@ -46,6 +48,7 @@ pp3300_panel: pp3300-panel {
- 		regulator-boot-on;
++	return buf;
++}
++
++static int fill_cache(size_t buf_size, int memflush, int op, bool once)
++{
++	unsigned char *buf;
++	int ret;
++
++	buf = alloc_buffer(buf_size, memflush);
++	if (!buf)
++		return -1;
++
+ 	if (op == 0)
+ 		ret = fill_cache_read(buf, buf_size, once);
+ 	else
+ 		ret = fill_cache_write(buf, buf_size, once);
+-
+ 	free(buf);
  
- 		gpio = <&pio 35 GPIO_ACTIVE_HIGH>;
-+		vin-supply = <&pp3300_alw>;
- 	};
+ 	if (ret) {
+@@ -160,8 +170,7 @@ static int fill_cache(size_t buf_size, int memflush, int op, bool once)
+ 		return -1;
+ 	}
  
- 	pp3300_mipibrdg: pp3300-mipibrdg {
-@@ -58,6 +61,7 @@ pp3300_mipibrdg: pp3300-mipibrdg {
- 		regulator-boot-on;
+-
+-	return 0;
++	return ret;
+ }
  
- 		gpio = <&pio 37 GPIO_ACTIVE_HIGH>;
-+		vin-supply = <&pp3300_alw>;
- 	};
- 
- 	volume_buttons: volume-buttons {
+ int run_fill_buf(size_t span, int memflush, int op, bool once)
 -- 
 2.43.0
 
