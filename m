@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0886D1465AB;
-	Fri,  6 Dec 2024 15:24:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E4411465AB;
+	Fri,  6 Dec 2024 15:24:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733498665; cv=none; b=KkdJd4kp0OPCs1hRmtTxVSJ4IrQqZ68K4K3i6mPHLiNK2Y5MnZ+3Gn+amg70hIpVTU2imDSTK7EfBKeO+HPX08lKiJlaNORBlKHWXWcNM9H82TepPyhFh8pQCRcKvdd191XtrsR5b5LfqCGi5OM6YFvlmXiKttgi4z/jfvvqRfI=
+	t=1733498668; cv=none; b=fF+2QvErbcvBChmguEFsSPsSsP1QmvgqUTx9W6Op3vFTV2Xt073Fz5fnUTK4zwLPbGQUEbv1f/QYLcqmxFnXkSAY6Ywt9eEUNfW8Iq4VR0u9YE1p/eg05AVnPLz8DtBFUH38ut+lX2yBhYb8k+/cRtbNRjs45b0Mwnl+irM5ahw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733498665; c=relaxed/simple;
-	bh=TdxCD/ciqSl2Yg9sgFTIc5t/b/11u3vcOte/nmLEh6M=;
+	s=arc-20240116; t=1733498668; c=relaxed/simple;
+	bh=j/Zb0GzUW6ARws7RZX5FhmWNuHrbjG+hjroxcZ1aMs0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Lj8bHYSU5sjSufuKzjIuLMBs6LjHljeqZNS1IkgtlmrcqBwseE+o2V7CYzDb+i00r9jPmq9bonErm0UEnbzPkp498ogf0fEMXQWPx7YxcfjL5dDWjgbbvaO7SovTwKEIMqeZ0pJsJ5ZhW2kYx6BtZJ65D5Nwkzn4X7PO9uR/wxo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aR/goTnH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jH/v3WEuchkvA7me/aMC0us045GY16U3uRS01iZBuYDHYYq1WCB8uIC3J5x7G3ZLhcfsNFIg4aw7GhMZtA/FIg70sDkAN7+3IxVeb9L0euCsuQGPd9qLmCEoR1jceYQr3MTXG6kkFip9XP/fM+/5MSypApLx/xEkfhR4PL0oQ9k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2jv64u77; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aR/goTnH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B35FC4CED1;
-	Fri,  6 Dec 2024 15:24:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2jv64u77"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFE03C4CED1;
+	Fri,  6 Dec 2024 15:24:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733498664;
-	bh=TdxCD/ciqSl2Yg9sgFTIc5t/b/11u3vcOte/nmLEh6M=;
+	s=korg; t=1733498668;
+	bh=j/Zb0GzUW6ARws7RZX5FhmWNuHrbjG+hjroxcZ1aMs0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aR/goTnHjy5IDArXJU8KRA4ow1lC05nxSDfFotUAsZOZ8bF7DsoDa3HJjqOe564zP
-	 EUybiRio6vbX1tvK1xU3BDDWX1REk2qaoIUVsJ+Ui1X5VPf8KKQAR7dEulttZyEyUn
-	 0zMrvFGKih759pwPzWOqaONHKOwXpH7C+MkVkLew=
+	b=2jv64u77covHS50BufilB/dT94KCYHGVOcdMoz/ryubjc+Z1nZHupVbX27OC8U0vL
+	 91Uc+BEeH3HgsVOycA6Lyw/IRmxiVI4++dmPUBQuyRYfBVpEUWiIqB/GfMaNV9AUVW
+	 BJY1na6m95c5RMTeH82ylKG8hk3gp8q8ttd/LhI8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
-	Lee Jones <lee@kernel.org>
-Subject: [PATCH 6.6 650/676] leds: flash: mt6360: Fix device_for_each_child_node() refcounting in error paths
-Date: Fri,  6 Dec 2024 15:37:49 +0100
-Message-ID: <20241206143718.758836450@linuxfoundation.org>
+	Oleksandr Tymoshenko <ovt@google.com>,
+	Amir Goldstein <amir73il@gmail.com>
+Subject: [PATCH 6.6 651/676] ovl: properly handle large files in ovl_security_fileattr
+Date: Fri,  6 Dec 2024 15:37:50 +0100
+Message-ID: <20241206143718.798493526@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -50,50 +50,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+From: Oleksandr Tymoshenko <ovt@google.com>
 
-commit 73b03b27736e440e3009fe1319cbc82d2cd1290c upstream.
+commit 3b6b99ef15ea37635604992ede9ebcccef38a239 upstream.
 
-The device_for_each_child_node() macro requires explicit calls to
-fwnode_handle_put() upon early exits to avoid memory leaks, and in
-this case the error paths are handled after jumping to
-'out_flash_realease', which misses that required call to
-to decrement the refcount of the child node.
+dentry_open in ovl_security_fileattr fails for any file
+larger than 2GB if open method of the underlying filesystem
+calls generic_file_open (e.g. fusefs).
 
-A more elegant and robust solution is using the scoped variant of the
-loop, which automatically handles such early exits.
+The issue can be reproduce using the following script:
+(passthrough_ll is an example app from libfuse).
 
-Fix the child node refcounting in the error paths by using
-device_for_each_child_node_scoped().
+  $ D=/opt/test/mnt
+  $ mkdir -p ${D}/{source,base,top/uppr,top/work,ovlfs}
+  $ dd if=/dev/zero of=${D}/source/zero.bin bs=1G count=2
+  $ passthrough_ll -o source=${D}/source ${D}/base
+  $ mount -t overlay overlay \
+      -olowerdir=${D}/base,upperdir=${D}/top/uppr,workdir=${D}/top/work \
+      ${D}/ovlfs
+  $ chmod 0777 ${D}/mnt/ovlfs/zero.bin
 
-Cc: stable@vger.kernel.org
-Fixes: 679f8652064b ("leds: Add mt6360 driver")
-Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
-Link: https://lore.kernel.org/r/20240927-leds_device_for_each_child_node_scoped-v1-1-95c0614b38c8@gmail.com
-Signed-off-by: Lee Jones <lee@kernel.org>
+Running this script results in "Value too large for defined data type"
+error message from chmod.
+
+Signed-off-by: Oleksandr Tymoshenko <ovt@google.com>
+Fixes: 72db82115d2b ("ovl: copy up sync/noatime fileattr flags")
+Cc: stable@vger.kernel.org # v5.15+
+Signed-off-by: Amir Goldstein <amir73il@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/leds/flash/leds-mt6360.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ fs/overlayfs/inode.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/drivers/leds/flash/leds-mt6360.c
-+++ b/drivers/leds/flash/leds-mt6360.c
-@@ -774,7 +774,6 @@ static void mt6360_v4l2_flash_release(st
- static int mt6360_led_probe(struct platform_device *pdev)
- {
- 	struct mt6360_priv *priv;
--	struct fwnode_handle *child;
- 	size_t count;
- 	int i = 0, ret;
+--- a/fs/overlayfs/inode.c
++++ b/fs/overlayfs/inode.c
+@@ -741,8 +741,13 @@ static int ovl_security_fileattr(const s
+ 	struct file *file;
+ 	unsigned int cmd;
+ 	int err;
++	unsigned int flags;
  
-@@ -801,7 +800,7 @@ static int mt6360_led_probe(struct platf
- 		return -ENODEV;
- 	}
+-	file = dentry_open(realpath, O_RDONLY, current_cred());
++	flags = O_RDONLY;
++	if (force_o_largefile())
++		flags |= O_LARGEFILE;
++
++	file = dentry_open(realpath, flags, current_cred());
+ 	if (IS_ERR(file))
+ 		return PTR_ERR(file);
  
--	device_for_each_child_node(&pdev->dev, child) {
-+	device_for_each_child_node_scoped(&pdev->dev, child) {
- 		struct mt6360_led *led = priv->leds + i;
- 		struct led_init_data init_data = { .fwnode = child, };
- 		u32 reg, led_color;
 
 
