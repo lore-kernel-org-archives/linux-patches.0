@@ -1,46 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 378C8203710;
-	Fri,  6 Dec 2024 15:15:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F69B207670;
+	Fri,  6 Dec 2024 15:15:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733498101; cv=none; b=sBYnX65iLFelqOHM8R8poa4eYfSZ8+2sDXSxp2Eag9IQcPPJUcuow1tabDGKH7izt7uKkJkIdMoyQPRHRWf/hgRmtMP+n6WmgQkdQqCFCMzGEJl4B4qbI6+K4uiw/s3PzAq8eOimob+WWzNtP/jSTC+F1aTwbrOJWvF+vKB18eE=
+	t=1733498104; cv=none; b=NFUhp+YesRJ5CBreguRrrLFjDseDeb/CGwRbWVrp5DBc948VySAd4b0nv0lko3jeJABYnnuow/f4Qo7luE43QMgiZu39xKdopmCeUPg9ZJDejtSC1mOktKE3jHUTB5Dh66j7JjV5DUjRcf5wcOaO96cg8cDNJuQpROYm32ko+8M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733498101; c=relaxed/simple;
-	bh=uahCp6zdbnCeNaUNPqn6tEVx+zXVLQyx+Po3uP+4L+U=;
+	s=arc-20240116; t=1733498104; c=relaxed/simple;
+	bh=TIrpBFYkjdluJCNiJPweekdFM/8dfa5Bm9fdDPP6xtk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JoqqQjXXu6sRSQP2vCOlWrKCxzxp+9MuzcZwFt4+NGVkC1Ak+DNR3vheeI34Y3dJ0oZW6f6djO442HIUZ1npXwzlG0/UcDRHlFRdUy1uKPOZL7AufRH325lux6XkpF55yETc8Na90KlTRpLranERARru2p8v4ZAwFsckgyqzZqs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NcZZSxIc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ItFSPhV3QYSiGAAvxZbHhkAfbAZwAw8RzcOpyt9GpiH1SJDXix6ydA9csv+67jxsQQgf6U/PcF8ZePGDW8DWVPbdhjBngjWfGBxcKSnpz9XSy/AP2IZ13Fb2HliU1572hOEzG4SqWVTOmDOpQgwD24AaLVklWjt3ZcEmg6wC8EQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C4uszUue; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NcZZSxIc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19D2EC4CEDC;
-	Fri,  6 Dec 2024 15:15:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C4uszUue"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0B4FC4CED1;
+	Fri,  6 Dec 2024 15:15:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733498100;
-	bh=uahCp6zdbnCeNaUNPqn6tEVx+zXVLQyx+Po3uP+4L+U=;
+	s=korg; t=1733498104;
+	bh=TIrpBFYkjdluJCNiJPweekdFM/8dfa5Bm9fdDPP6xtk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NcZZSxIcvdtldgEYDZ9ydSIFSOP8CIc42oIaHi3MIwQFYHUSJc5yPxrXl2ragG3W3
-	 acPaqj5mYebwGgHJF3WanABzgkuy/LhXM6r6efnjLqYEdBtb+gpLuvCjDKCnMG1ruf
-	 kPxb5FR6yFbavK8tlUQzIWM4JKXFI6w9WGCu79+U=
+	b=C4uszUueY9BZI9qme5nl5NWCEdOdxj/2ykd40cYeYMf5mjCODDGfiPMXqDSTAXjUs
+	 ivDw3LqnLBg+cHY2Y8edK1affzAC/qnobW5dvXi64qihsqYsq86VG/lvWRjcUDzc6N
+	 d4vquQt6Xx6PD8cC+cvTb95GQg7u73jhRXdZtlDs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tom Chung <chiahsuan.chung@amd.com>,
-	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
-	Roman Li <roman.li@amd.com>,
 	Alex Hung <alex.hung@amd.com>,
-	Aurabindo Pillai <aurabindo.pillai@amd.com>,
-	Harry Wentland <harry.wentland@amd.com>,
-	Hamza Mahfooz <hamza.mahfooz@amd.com>,
-	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
+	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
+	Tom Chung <chiahsuan.chung@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
-	Sasha Levin <sashal@kernel.org>,
 	Xiangyu Chen <xiangyu.chen@windriver.com>
-Subject: [PATCH 6.6 455/676] drm/amd/display: Add NULL check for clk_mgr in dcn32_init_hw
-Date: Fri,  6 Dec 2024 15:34:34 +0100
-Message-ID: <20241206143711.142357307@linuxfoundation.org>
+Subject: [PATCH 6.6 456/676] drm/amd/display: Check null pointer before try to access it
+Date: Fri,  6 Dec 2024 15:34:35 +0100
+Message-ID: <20241206143711.181762845@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -59,63 +54,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+From: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
 
-commit c395fd47d1565bd67671f45cca281b3acc2c31ef upstream.
+commit 1b686053c06ffb9f4524b288110cf2a831ff7a25 upstream.
 
-This commit addresses a potential null pointer dereference issue in the
-`dcn32_init_hw` function. The issue could occur when `dc->clk_mgr` is
-null.
+[why & how]
+Change the order of the pipe_ctx->plane_state check to ensure that
+plane_state is not null before accessing it.
 
-The fix adds a check to ensure `dc->clk_mgr` is not null before
-accessing its functions. This prevents a potential null pointer
-dereference.
-
-Reported by smatch:
-drivers/gpu/drm/amd/amdgpu/../display/dc/hwss/dcn32/dcn32_hwseq.c:961 dcn32_init_hw() error: we previously assumed 'dc->clk_mgr' could be null (see line 782)
-
-Cc: Tom Chung <chiahsuan.chung@amd.com>
-Cc: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
-Cc: Roman Li <roman.li@amd.com>
-Cc: Alex Hung <alex.hung@amd.com>
-Cc: Aurabindo Pillai <aurabindo.pillai@amd.com>
-Cc: Harry Wentland <harry.wentland@amd.com>
-Cc: Hamza Mahfooz <hamza.mahfooz@amd.com>
-Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
 Reviewed-by: Alex Hung <alex.hung@amd.com>
+Signed-off-by: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
+Signed-off-by: Tom Chung <chiahsuan.chung@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
-[Xiangyu: BP to fix CVE: CVE-2024-49915, modified the source path]
+[Xiangyu: BP to fix CVE: CVE-2024-49906, modified the source path]
 Signed-off-by: Xiangyu Chen <xiangyu.chen@windriver.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/dcn32/dcn32_hwseq.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hwseq.c |   10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_hwseq.c
-+++ b/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_hwseq.c
-@@ -773,7 +773,7 @@ void dcn32_init_hw(struct dc *dc)
- 	int edp_num;
- 	uint32_t backlight = MAX_BACKLIGHT_LEVEL;
+--- a/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hwseq.c
++++ b/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hwseq.c
+@@ -1741,13 +1741,17 @@ static void dcn20_program_pipe(
+ 	    (pipe_ctx->plane_state && pipe_ctx->plane_state->update_flags.bits.hdr_mult))
+ 		hws->funcs.set_hdr_multiplier(pipe_ctx);
  
--	if (dc->clk_mgr && dc->clk_mgr->funcs->init_clocks)
-+	if (dc->clk_mgr && dc->clk_mgr->funcs && dc->clk_mgr->funcs->init_clocks)
- 		dc->clk_mgr->funcs->init_clocks(dc->clk_mgr);
+-	if (pipe_ctx->update_flags.bits.enable ||
+-	    (pipe_ctx->plane_state &&
++	if ((pipe_ctx->plane_state && pipe_ctx->plane_state->update_flags.bits.hdr_mult) ||
++	    pipe_ctx->update_flags.bits.enable)
++		hws->funcs.set_hdr_multiplier(pipe_ctx);
++
++	if ((pipe_ctx->plane_state &&
+ 	     pipe_ctx->plane_state->update_flags.bits.in_transfer_func_change) ||
+ 	    (pipe_ctx->plane_state &&
+ 	     pipe_ctx->plane_state->update_flags.bits.gamma_change) ||
+ 	    (pipe_ctx->plane_state &&
+-	     pipe_ctx->plane_state->update_flags.bits.lut_3d))
++	     pipe_ctx->plane_state->update_flags.bits.lut_3d) ||
++	     pipe_ctx->update_flags.bits.enable)
+ 		hws->funcs.set_input_transfer_func(dc, pipe_ctx, pipe_ctx->plane_state);
  
- 	// Initialize the dccg
-@@ -950,10 +950,11 @@ void dcn32_init_hw(struct dc *dc)
- 	if (!dcb->funcs->is_accelerated_mode(dcb) && dc->res_pool->hubbub->funcs->init_watermarks)
- 		dc->res_pool->hubbub->funcs->init_watermarks(dc->res_pool->hubbub);
- 
--	if (dc->clk_mgr->funcs->notify_wm_ranges)
-+	if (dc->clk_mgr && dc->clk_mgr->funcs && dc->clk_mgr->funcs->notify_wm_ranges)
- 		dc->clk_mgr->funcs->notify_wm_ranges(dc->clk_mgr);
- 
--	if (dc->clk_mgr->funcs->set_hard_max_memclk && !dc->clk_mgr->dc_mode_softmax_enabled)
-+	if (dc->clk_mgr && dc->clk_mgr->funcs && dc->clk_mgr->funcs->set_hard_max_memclk &&
-+	    !dc->clk_mgr->dc_mode_softmax_enabled)
- 		dc->clk_mgr->funcs->set_hard_max_memclk(dc->clk_mgr);
- 
- 	if (dc->res_pool->hubbub->funcs->force_pstate_change_control)
+ 	/* dcn10_translate_regamma_to_hw_format takes 750us to finish
 
 
