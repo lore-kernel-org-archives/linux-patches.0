@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB1151527AC;
-	Fri,  6 Dec 2024 15:13:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F713207E19;
+	Fri,  6 Dec 2024 15:13:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733497984; cv=none; b=aS14hp9FasciVQgVROuwuKPoNgSMZCz1YWGeusgZMHxCX+Z2BELQdBm8DJiQEWj2Z5Xl3CC4dMaWZYSFKrZ9oFXeHzLntF9YVoq7sJwm7SzIijtO75dumu+4Kj/UZBZObddB2PH+mL2E+Uv8WjqrTv+NGGjfsjK6dVTVhSxJVFk=
+	t=1733497987; cv=none; b=Yrp7kGUNc6IEiY/YZbjQFSPs+acqfi+RCt4rrPUdNCelBgSai+w/PeCpVF0K2RoKnrKZi+4y9fTW2nQo8sE1OZaQHMPMnGCUl7CCv5aq52UXns+XYPRfL+6qtPJD7Gh9F/oA57wOW7lmEOIyuy9h90KCEL0LA34qX4uh3W/zdVM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733497984; c=relaxed/simple;
-	bh=U+ALeBYwxOqs8gvwzQ8NViuDDKQGrJYoVMlSf7DzRMk=;
+	s=arc-20240116; t=1733497987; c=relaxed/simple;
+	bh=ugZ0gHhv8NweBhHcLgrIbCOpj/Mg4p68pjsnfrQfeIw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uJcxwQwqFIcCvs4Zm41t79OnNeyT3GdoMNnps6CIc6IPIoENOqlMZyVCcN8RhBR/rVcSTdAOqajh4WWw5O37AeFPm2f2vOOUhjApPSUvYgR5rA+ns+sYbRIk69xw2SunhZlFnLgkVKdf+f6n541Tm72IONqmQ2kAwzgePNzSoQo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gIsDDsNi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uv2hQ6VIFEb2UtXwD136qJg8eNTkb09QPYAyuA50HZwNvsKhYifH0wBBXD6L7nbs/sYwpqX4C99tPqGJBHzjD+iF8x0ebteLbqza0nQx90qB3G8AnEOinv45ceVSRVzGk5CNTqOzz6iMDv+ds8PkThN1gJtr+rgnYqtmEz/mzXg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c7OBzL4M; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gIsDDsNi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4052BC4CED1;
-	Fri,  6 Dec 2024 15:13:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c7OBzL4M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B52FBC4CED1;
+	Fri,  6 Dec 2024 15:13:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733497983;
-	bh=U+ALeBYwxOqs8gvwzQ8NViuDDKQGrJYoVMlSf7DzRMk=;
+	s=korg; t=1733497987;
+	bh=ugZ0gHhv8NweBhHcLgrIbCOpj/Mg4p68pjsnfrQfeIw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gIsDDsNieuZKh3lRfl1uLQRvJoJKWKs2w/AempjedUzY5JIlYPae2g+tdP2zkW5Bd
-	 PHAthpUG9RPZcvfMO37xrBRGdVR/qw5yuhNsSbgU0Y/DtabW4XxRb7OC+q9VHdELix
-	 b2m5PHuvxP/J0/46A3JJ6ixZ35WGjjy41roaDETo=
+	b=c7OBzL4MhMFvEo4Zt2Xl4wy9r6cOcTZzWruXpLhpAZ95H6XHvr/yOxxcqXUOflTBA
+	 QeZnux+5U/Qz2MnnQPS9GIuqRdHX9Xai7mVRahCdexr4qHLTVwhQ4HXaXb+ew9bqF4
+	 ot6/6nvS4BNHn775Dd+jtzqrxAf0ZMLTgSTMwcoQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kiran K <kiran.k@intel.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	David Wei <dw@davidwei.uk>,
+	Michal Luczaj <mhal@rbox.co>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 420/676] Bluetooth: MGMT: Fix possible deadlocks
-Date: Fri,  6 Dec 2024 15:33:59 +0100
-Message-ID: <20241206143709.754033107@linuxfoundation.org>
+Subject: [PATCH 6.6 421/676] llc: Improve setsockopt() handling of malformed user input
+Date: Fri,  6 Dec 2024 15:34:00 +0100
+Message-ID: <20241206143709.791711803@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -51,148 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Michal Luczaj <mhal@rbox.co>
 
-[ Upstream commit a66dfaf18fd61bb75ef8cee83db46b2aadf153d0 ]
+[ Upstream commit 1465036b10be4b8b00eb31c879e86de633ad74c1 ]
 
-This fixes possible deadlocks like the following caused by
-hci_cmd_sync_dequeue causing the destroy function to run:
+copy_from_sockptr() is used incorrectly: return value is the number of
+bytes that could not be copied. Since it's deprecated, switch to
+copy_safe_from_sockptr().
 
- INFO: task kworker/u19:0:143 blocked for more than 120 seconds.
-       Tainted: G        W  O        6.8.0-2024-03-19-intel-next-iLS-24ww14 #1
- "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
- task:kworker/u19:0   state:D stack:0     pid:143   tgid:143   ppid:2      flags:0x00004000
- Workqueue: hci0 hci_cmd_sync_work [bluetooth]
- Call Trace:
-  <TASK>
-  __schedule+0x374/0xaf0
-  schedule+0x3c/0xf0
-  schedule_preempt_disabled+0x1c/0x30
-  __mutex_lock.constprop.0+0x3ef/0x7a0
-  __mutex_lock_slowpath+0x13/0x20
-  mutex_lock+0x3c/0x50
-  mgmt_set_connectable_complete+0xa4/0x150 [bluetooth]
-  ? kfree+0x211/0x2a0
-  hci_cmd_sync_dequeue+0xae/0x130 [bluetooth]
-  ? __pfx_cmd_complete_rsp+0x10/0x10 [bluetooth]
-  cmd_complete_rsp+0x26/0x80 [bluetooth]
-  mgmt_pending_foreach+0x4d/0x70 [bluetooth]
-  __mgmt_power_off+0x8d/0x180 [bluetooth]
-  ? _raw_spin_unlock_irq+0x23/0x40
-  hci_dev_close_sync+0x445/0x5b0 [bluetooth]
-  hci_set_powered_sync+0x149/0x250 [bluetooth]
-  set_powered_sync+0x24/0x60 [bluetooth]
-  hci_cmd_sync_work+0x90/0x150 [bluetooth]
-  process_one_work+0x13e/0x300
-  worker_thread+0x2f7/0x420
-  ? __pfx_worker_thread+0x10/0x10
-  kthread+0x107/0x140
-  ? __pfx_kthread+0x10/0x10
-  ret_from_fork+0x3d/0x60
-  ? __pfx_kthread+0x10/0x10
-  ret_from_fork_asm+0x1b/0x30
-  </TASK>
+Note: Keeping the `optlen != sizeof(int)` check as copy_safe_from_sockptr()
+by itself would also accept optlen > sizeof(int). Which would allow a more
+lenient handling of inputs.
 
-Tested-by: Kiran K <kiran.k@intel.com>
-Fixes: f53e1c9c726d ("Bluetooth: MGMT: Fix possible crash on mgmt_index_removed")
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Suggested-by: David Wei <dw@davidwei.uk>
+Signed-off-by: Michal Luczaj <mhal@rbox.co>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/mgmt.c | 27 ++++++++++++++++++---------
- 1 file changed, 18 insertions(+), 9 deletions(-)
+ net/llc/af_llc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
-index f84912552d294..1175248e4bec4 100644
---- a/net/bluetooth/mgmt.c
-+++ b/net/bluetooth/mgmt.c
-@@ -1510,7 +1510,8 @@ static void mgmt_set_discoverable_complete(struct hci_dev *hdev, void *data,
- 	bt_dev_dbg(hdev, "err %d", err);
- 
- 	/* Make sure cmd still outstanding. */
--	if (cmd != pending_find(MGMT_OP_SET_DISCOVERABLE, hdev))
-+	if (err == -ECANCELED ||
-+	    cmd != pending_find(MGMT_OP_SET_DISCOVERABLE, hdev))
- 		return;
- 
- 	hci_dev_lock(hdev);
-@@ -1684,7 +1685,8 @@ static void mgmt_set_connectable_complete(struct hci_dev *hdev, void *data,
- 	bt_dev_dbg(hdev, "err %d", err);
- 
- 	/* Make sure cmd still outstanding. */
--	if (cmd != pending_find(MGMT_OP_SET_CONNECTABLE, hdev))
-+	if (err == -ECANCELED ||
-+	    cmd != pending_find(MGMT_OP_SET_CONNECTABLE, hdev))
- 		return;
- 
- 	hci_dev_lock(hdev);
-@@ -1917,7 +1919,7 @@ static void set_ssp_complete(struct hci_dev *hdev, void *data, int err)
- 	bool changed;
- 
- 	/* Make sure cmd still outstanding. */
--	if (cmd != pending_find(MGMT_OP_SET_SSP, hdev))
-+	if (err == -ECANCELED || cmd != pending_find(MGMT_OP_SET_SSP, hdev))
- 		return;
- 
- 	if (err) {
-@@ -3782,7 +3784,8 @@ static void set_name_complete(struct hci_dev *hdev, void *data, int err)
- 
- 	bt_dev_dbg(hdev, "err %d", err);
- 
--	if (cmd != pending_find(MGMT_OP_SET_LOCAL_NAME, hdev))
-+	if (err == -ECANCELED ||
-+	    cmd != pending_find(MGMT_OP_SET_LOCAL_NAME, hdev))
- 		return;
- 
- 	if (status) {
-@@ -3957,7 +3960,8 @@ static void set_default_phy_complete(struct hci_dev *hdev, void *data, int err)
- 	struct sk_buff *skb = cmd->skb;
- 	u8 status = mgmt_status(err);
- 
--	if (cmd != pending_find(MGMT_OP_SET_PHY_CONFIGURATION, hdev))
-+	if (err == -ECANCELED ||
-+	    cmd != pending_find(MGMT_OP_SET_PHY_CONFIGURATION, hdev))
- 		return;
- 
- 	if (!status) {
-@@ -5848,13 +5852,16 @@ static void start_discovery_complete(struct hci_dev *hdev, void *data, int err)
- {
- 	struct mgmt_pending_cmd *cmd = data;
- 
-+	bt_dev_dbg(hdev, "err %d", err);
-+
-+	if (err == -ECANCELED)
-+		return;
-+
- 	if (cmd != pending_find(MGMT_OP_START_DISCOVERY, hdev) &&
- 	    cmd != pending_find(MGMT_OP_START_LIMITED_DISCOVERY, hdev) &&
- 	    cmd != pending_find(MGMT_OP_START_SERVICE_DISCOVERY, hdev))
- 		return;
- 
--	bt_dev_dbg(hdev, "err %d", err);
--
- 	mgmt_cmd_complete(cmd->sk, cmd->index, cmd->opcode, mgmt_status(err),
- 			  cmd->param, 1);
- 	mgmt_pending_remove(cmd);
-@@ -6087,7 +6094,8 @@ static void stop_discovery_complete(struct hci_dev *hdev, void *data, int err)
- {
- 	struct mgmt_pending_cmd *cmd = data;
- 
--	if (cmd != pending_find(MGMT_OP_STOP_DISCOVERY, hdev))
-+	if (err == -ECANCELED ||
-+	    cmd != pending_find(MGMT_OP_STOP_DISCOVERY, hdev))
- 		return;
- 
- 	bt_dev_dbg(hdev, "err %d", err);
-@@ -8032,7 +8040,8 @@ static void read_local_oob_ext_data_complete(struct hci_dev *hdev, void *data,
- 	u8 status = mgmt_status(err);
- 	u16 eir_len;
- 
--	if (cmd != pending_find(MGMT_OP_READ_LOCAL_OOB_EXT_DATA, hdev))
-+	if (err == -ECANCELED ||
-+	    cmd != pending_find(MGMT_OP_READ_LOCAL_OOB_EXT_DATA, hdev))
- 		return;
- 
- 	if (!status) {
+diff --git a/net/llc/af_llc.c b/net/llc/af_llc.c
+index fde1140d899ef..cc25fec44f850 100644
+--- a/net/llc/af_llc.c
++++ b/net/llc/af_llc.c
+@@ -1099,7 +1099,7 @@ static int llc_ui_setsockopt(struct socket *sock, int level, int optname,
+ 	lock_sock(sk);
+ 	if (unlikely(level != SOL_LLC || optlen != sizeof(int)))
+ 		goto out;
+-	rc = copy_from_sockptr(&opt, optval, sizeof(opt));
++	rc = copy_safe_from_sockptr(&opt, sizeof(opt), optval, optlen);
+ 	if (rc)
+ 		goto out;
+ 	rc = -EINVAL;
 -- 
 2.43.0
 
