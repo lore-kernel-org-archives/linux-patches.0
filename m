@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1150C13AA5F;
-	Fri,  6 Dec 2024 15:14:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8742918FDAA;
+	Fri,  6 Dec 2024 15:14:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733498087; cv=none; b=mh5dot3wnC4PUQBWVtfziGtM5hxbBO7WaB9gH81f8xEJJCY7lMD3qq/wEjytnoU7rfZAaT51FOFZfxTWWXK47WnWinw6/A6DAoxRBBsslD6AHxBR37HIb+mUKAWEARIo9UXa16Lg+efjsIDW2zoxtsfRdvlakwRu5775ypyz12M=
+	t=1733498090; cv=none; b=Q+ERHDDTH8wKefZFgagn/1FsNsNpJX9DosIvcpaACstp7uy4MiVoIuphKzUySr9kcxwEI1skLKk6KoW/oqdR29NEl/CyNSuamE5w13wj9Cxc16e+zllpXPoC1G3xXw46NN9sgfTYwjAZXbXOHQkPjmXBKyNwe4IwlG5pWd0LGpQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733498087; c=relaxed/simple;
-	bh=2mI3+2QjBqGNuB/fG5vta9S9jfABsjULoQvC+BFmsQs=;
+	s=arc-20240116; t=1733498090; c=relaxed/simple;
+	bh=CX3PmMDc0IE6zRxP7J5ZayhqsiSg6LM99Wi1xida6LA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KJ+HqVhWVqru+5bAy5LEAvtSCpfgGe2Ir9lcR6wBOYfq6tB/jihZEs43YaOpFUTgDo9P15MWgZVCJCx/dZDaXHWM1b+Ierr0XedNTjGvcSf42K5FgkCh+eVZSMbbiolrWkp8DUL8X9XD1xeJC6bBzxsWeHXQq3U0BNK7CMfTJEk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ehejB4wt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=i4skG7kDLZ3aeVtrNPD+PEA4ltywiu9BCkIdUds/tSZEGt1gHUcmesN5tLLI2VPl1HEHNR822TOzADuzHR8znGCZiidftgEcueNnxMbWThkR9P8S6R6WnekW6zXgi0QvBtHbjNB1kRd2bT2oda/f/fXwyyc2bMKtuScUZcvXtyo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OkspisAT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ehejB4wt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 756DEC4CED1;
-	Fri,  6 Dec 2024 15:14:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OkspisAT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB07BC4CED1;
+	Fri,  6 Dec 2024 15:14:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733498086;
-	bh=2mI3+2QjBqGNuB/fG5vta9S9jfABsjULoQvC+BFmsQs=;
+	s=korg; t=1733498090;
+	bh=CX3PmMDc0IE6zRxP7J5ZayhqsiSg6LM99Wi1xida6LA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ehejB4wtA+eCYYN8w8hiTJQ9mWyqhUK3740pHpjKA8BPwkBNvaysjJ3wL19ZyMtoy
-	 CJS0rKZQdm3zwd4SrZH+unqEXrshpsceksnsKoP6W+2fm0D1nz6WU4ZFfhb5b7WEt6
-	 p5xFCajK3OpivoFuT9OtWgYYhTV8+1RbzadDEd3I=
+	b=OkspisATn6vd2p9FQafh0mrTOo2EmkI6sQIPbl0dVevF9G4FcodzEs/s53H9YdVtP
+	 OSaFl6++Al3p7hPEAmx/5RXsc6qJ1T6Sr/Ej48iqfIi2F1xhbReVA/zYAe7KBDOfCQ
+	 XHc3R01jmO/+XQLtzTu5B+kRas9I2ZQzsX+9rMTA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Marc Zyngier <maz@kernel.org>,
-	Raghavendra Rao Ananta <rananta@google.com>,
-	Oliver Upton <oliver.upton@linux.dev>
-Subject: [PATCH 6.6 481/676] KVM: arm64: Get rid of userspace_irqchip_in_use
-Date: Fri,  6 Dec 2024 15:35:00 +0100
-Message-ID: <20241206143712.149320914@linuxfoundation.org>
+	Kent Overstreet <kent.overstreet@linux.dev>,
+	Bin Lan <bin.lan.cn@windriver.com>
+Subject: [PATCH 6.6 452/676] closures: Change BUG_ON() to WARN_ON()
+Date: Fri,  6 Dec 2024 15:34:31 +0100
+Message-ID: <20241206143711.026073055@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -52,168 +50,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Raghavendra Rao Ananta <rananta@google.com>
+From: Kent Overstreet <kent.overstreet@linux.dev>
 
-commit 38d7aacca09230fdb98a34194fec2af597e8e20d upstream.
+commit 339b84ab6b1d66900c27bd999271cb2ae40ce812 upstream.
 
-Improper use of userspace_irqchip_in_use led to syzbot hitting the
-following WARN_ON() in kvm_timer_update_irq():
+If a BUG_ON() can be hit in the wild, it shouldn't be a BUG_ON()
 
-WARNING: CPU: 0 PID: 3281 at arch/arm64/kvm/arch_timer.c:459
-kvm_timer_update_irq+0x21c/0x394
-Call trace:
-  kvm_timer_update_irq+0x21c/0x394 arch/arm64/kvm/arch_timer.c:459
-  kvm_timer_vcpu_reset+0x158/0x684 arch/arm64/kvm/arch_timer.c:968
-  kvm_reset_vcpu+0x3b4/0x560 arch/arm64/kvm/reset.c:264
-  kvm_vcpu_set_target arch/arm64/kvm/arm.c:1553 [inline]
-  kvm_arch_vcpu_ioctl_vcpu_init arch/arm64/kvm/arm.c:1573 [inline]
-  kvm_arch_vcpu_ioctl+0x112c/0x1b3c arch/arm64/kvm/arm.c:1695
-  kvm_vcpu_ioctl+0x4ec/0xf74 virt/kvm/kvm_main.c:4658
-  vfs_ioctl fs/ioctl.c:51 [inline]
-  __do_sys_ioctl fs/ioctl.c:907 [inline]
-  __se_sys_ioctl fs/ioctl.c:893 [inline]
-  __arm64_sys_ioctl+0x108/0x184 fs/ioctl.c:893
-  __invoke_syscall arch/arm64/kernel/syscall.c:35 [inline]
-  invoke_syscall+0x78/0x1b8 arch/arm64/kernel/syscall.c:49
-  el0_svc_common+0xe8/0x1b0 arch/arm64/kernel/syscall.c:132
-  do_el0_svc+0x40/0x50 arch/arm64/kernel/syscall.c:151
-  el0_svc+0x54/0x14c arch/arm64/kernel/entry-common.c:712
-  el0t_64_sync_handler+0x84/0xfc arch/arm64/kernel/entry-common.c:730
-  el0t_64_sync+0x190/0x194 arch/arm64/kernel/entry.S:598
+For reference, this has popped up once in the CI, and we'll need more
+info to debug it:
 
-The following sequence led to the scenario:
- - Userspace creates a VM and a vCPU.
- - The vCPU is initialized with KVM_ARM_VCPU_PMU_V3 during
-   KVM_ARM_VCPU_INIT.
- - Without any other setup, such as vGIC or vPMU, userspace issues
-   KVM_RUN on the vCPU. Since the vPMU is requested, but not setup,
-   kvm_arm_pmu_v3_enable() fails in kvm_arch_vcpu_run_pid_change().
-   As a result, KVM_RUN returns after enabling the timer, but before
-   incrementing 'userspace_irqchip_in_use':
-   kvm_arch_vcpu_run_pid_change()
-       ret = kvm_arm_pmu_v3_enable()
-           if (!vcpu->arch.pmu.created)
-               return -EINVAL;
-       if (ret)
-           return ret;
-       [...]
-       if (!irqchip_in_kernel(kvm))
-           static_branch_inc(&userspace_irqchip_in_use);
- - Userspace ignores the error and issues KVM_ARM_VCPU_INIT again.
-   Since the timer is already enabled, control moves through the
-   following flow, ultimately hitting the WARN_ON():
-   kvm_timer_vcpu_reset()
-       if (timer->enabled)
-          kvm_timer_update_irq()
-              if (!userspace_irqchip())
-                  ret = kvm_vgic_inject_irq()
-                      ret = vgic_lazy_init()
-                          if (unlikely(!vgic_initialized(kvm)))
-                              if (kvm->arch.vgic.vgic_model !=
-                                  KVM_DEV_TYPE_ARM_VGIC_V2)
-                                      return -EBUSY;
-                  WARN_ON(ret);
+03240 ------------[ cut here ]------------
+03240 kernel BUG at lib/closure.c:21!
+03240 kernel BUG at lib/closure.c:21!
+03240 Internal error: Oops - BUG: 00000000f2000800 [#1] SMP
+03240 Modules linked in:
+03240 CPU: 15 PID: 40534 Comm: kworker/u80:1 Not tainted 6.10.0-rc4-ktest-ga56da69799bd #25570
+03240 Hardware name: linux,dummy-virt (DT)
+03240 Workqueue: btree_update btree_interior_update_work
+03240 pstate: 00001005 (nzcv daif -PAN -UAO -TCO -DIT +SSBS BTYPE=--)
+03240 pc : closure_put+0x224/0x2a0
+03240 lr : closure_put+0x24/0x2a0
+03240 sp : ffff0000d12071c0
+03240 x29: ffff0000d12071c0 x28: dfff800000000000 x27: ffff0000d1207360
+03240 x26: 0000000000000040 x25: 0000000000000040 x24: 0000000000000040
+03240 x23: ffff0000c1f20180 x22: 0000000000000000 x21: ffff0000c1f20168
+03240 x20: 0000000040000000 x19: ffff0000c1f20140 x18: 0000000000000001
+03240 x17: 0000000000003aa0 x16: 0000000000003ad0 x15: 1fffe0001c326974
+03240 x14: 0000000000000a1e x13: 0000000000000000 x12: 1fffe000183e402d
+03240 x11: ffff6000183e402d x10: dfff800000000000 x9 : ffff6000183e402e
+03240 x8 : 0000000000000001 x7 : 00009fffe7c1bfd3 x6 : ffff0000c1f2016b
+03240 x5 : ffff0000c1f20168 x4 : ffff6000183e402e x3 : ffff800081391954
+03240 x2 : 0000000000000001 x1 : 0000000000000000 x0 : 00000000a8000000
+03240 Call trace:
+03240  closure_put+0x224/0x2a0
+03240  bch2_check_for_deadlock+0x910/0x1028
+03240  bch2_six_check_for_deadlock+0x1c/0x30
+03240  six_lock_slowpath.isra.0+0x29c/0xed0
+03240  six_lock_ip_waiter+0xa8/0xf8
+03240  __bch2_btree_node_lock_write+0x14c/0x298
+03240  bch2_trans_lock_write+0x6d4/0xb10
+03240  __bch2_trans_commit+0x135c/0x5520
+03240  btree_interior_update_work+0x1248/0x1c10
+03240  process_scheduled_works+0x53c/0xd90
+03240  worker_thread+0x370/0x8c8
+03240  kthread+0x258/0x2e8
+03240  ret_from_fork+0x10/0x20
+03240 Code: aa1303e0 d63f0020 a94363f7 17ffff8c (d4210000)
+03240 ---[ end trace 0000000000000000 ]---
+03240 Kernel panic - not syncing: Oops - BUG: Fatal exception
+03240 SMP: stopping secondary CPUs
+03241 SMP: failed to stop secondary CPUs 13,15
+03241 Kernel Offset: disabled
+03241 CPU features: 0x00,00000003,80000008,4240500b
+03241 Memory Limit: none
+03241 ---[ end Kernel panic - not syncing: Oops - BUG: Fatal exception ]---
+03246 ========= FAILED TIMEOUT copygc_torture_no_checksum in 7200s
 
-Theoretically, since userspace_irqchip_in_use's functionality can be
-simply replaced by '!irqchip_in_kernel()', get rid of the static key
-to avoid the mismanagement, which also helps with the syzbot issue.
-
-Cc: <stable@vger.kernel.org>
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Suggested-by: Marc Zyngier <maz@kernel.org>
-Signed-off-by: Raghavendra Rao Ananta <rananta@google.com>
-Signed-off-by: Oliver Upton <oliver.upton@linux.dev>
+Signed-off-by: Kent Overstreet <kent.overstreet@linux.dev>
+[ Resolve minor conflicts to fix CVE-2024-42252 ]
+Signed-off-by: Bin Lan <bin.lan.cn@windriver.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/include/asm/kvm_host.h |    2 --
- arch/arm64/kvm/arch_timer.c       |    3 +--
- arch/arm64/kvm/arm.c              |   18 +++---------------
- 3 files changed, 4 insertions(+), 19 deletions(-)
+ drivers/md/bcache/closure.c |   10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
---- a/arch/arm64/include/asm/kvm_host.h
-+++ b/arch/arm64/include/asm/kvm_host.h
-@@ -72,8 +72,6 @@ enum kvm_mode kvm_get_mode(void);
- static inline enum kvm_mode kvm_get_mode(void) { return KVM_MODE_NONE; };
- #endif
- 
--DECLARE_STATIC_KEY_FALSE(userspace_irqchip_in_use);
--
- extern unsigned int __ro_after_init kvm_sve_max_vl;
- int __init kvm_arm_init_sve(void);
- 
---- a/arch/arm64/kvm/arch_timer.c
-+++ b/arch/arm64/kvm/arch_timer.c
-@@ -206,8 +206,7 @@ void get_timer_map(struct kvm_vcpu *vcpu
- 
- static inline bool userspace_irqchip(struct kvm *kvm)
+--- a/drivers/md/bcache/closure.c
++++ b/drivers/md/bcache/closure.c
+@@ -17,10 +17,16 @@ static inline void closure_put_after_sub
  {
--	return static_branch_unlikely(&userspace_irqchip_in_use) &&
--		unlikely(!irqchip_in_kernel(kvm));
-+	return unlikely(!irqchip_in_kernel(kvm));
- }
+ 	int r = flags & CLOSURE_REMAINING_MASK;
  
- static void soft_timer_start(struct hrtimer *hrt, u64 ns)
---- a/arch/arm64/kvm/arm.c
-+++ b/arch/arm64/kvm/arm.c
-@@ -57,7 +57,6 @@ DECLARE_KVM_NVHE_PER_CPU(struct kvm_cpu_
- static bool vgic_present, kvm_arm_initialised;
+-	BUG_ON(flags & CLOSURE_GUARD_MASK);
+-	BUG_ON(!r && (flags & ~CLOSURE_DESTRUCTOR));
++	if (WARN(flags & CLOSURE_GUARD_MASK,
++		 "closure has guard bits set: %x (%u)",
++		 flags & CLOSURE_GUARD_MASK, (unsigned) __fls(r)))
++		r &= ~CLOSURE_GUARD_MASK;
  
- static DEFINE_PER_CPU(unsigned char, kvm_hyp_initialized);
--DEFINE_STATIC_KEY_FALSE(userspace_irqchip_in_use);
- 
- bool is_kvm_arm_initialised(void)
- {
-@@ -401,9 +400,6 @@ void kvm_arch_vcpu_postcreate(struct kvm
- 
- void kvm_arch_vcpu_destroy(struct kvm_vcpu *vcpu)
- {
--	if (vcpu_has_run_once(vcpu) && unlikely(!irqchip_in_kernel(vcpu->kvm)))
--		static_branch_dec(&userspace_irqchip_in_use);
--
- 	kvm_mmu_free_memory_cache(&vcpu->arch.mmu_page_cache);
- 	kvm_timer_vcpu_terminate(vcpu);
- 	kvm_pmu_vcpu_destroy(vcpu);
-@@ -627,14 +623,6 @@ int kvm_arch_vcpu_run_pid_change(struct
- 			return ret;
- 	}
- 
--	if (!irqchip_in_kernel(kvm)) {
--		/*
--		 * Tell the rest of the code that there are userspace irqchip
--		 * VMs in the wild.
--		 */
--		static_branch_inc(&userspace_irqchip_in_use);
--	}
--
- 	/*
- 	 * Initialize traps for protected VMs.
- 	 * NOTE: Move to run in EL2 directly, rather than via a hypercall, once
-@@ -856,7 +844,7 @@ static bool kvm_vcpu_exit_request(struct
- 	 * state gets updated in kvm_timer_update_run and
- 	 * kvm_pmu_update_run below).
- 	 */
--	if (static_branch_unlikely(&userspace_irqchip_in_use)) {
-+	if (unlikely(!irqchip_in_kernel(vcpu->kvm))) {
- 		if (kvm_timer_should_notify_user(vcpu) ||
- 		    kvm_pmu_should_notify_user(vcpu)) {
- 			*ret = -EINTR;
-@@ -975,7 +963,7 @@ int kvm_arch_vcpu_ioctl_run(struct kvm_v
- 			vcpu->mode = OUTSIDE_GUEST_MODE;
- 			isb(); /* Ensure work in x_flush_hwstate is committed */
- 			kvm_pmu_sync_hwstate(vcpu);
--			if (static_branch_unlikely(&userspace_irqchip_in_use))
-+			if (unlikely(!irqchip_in_kernel(vcpu->kvm)))
- 				kvm_timer_sync_user(vcpu);
- 			kvm_vgic_sync_hwstate(vcpu);
- 			local_irq_enable();
-@@ -1021,7 +1009,7 @@ int kvm_arch_vcpu_ioctl_run(struct kvm_v
- 		 * we don't want vtimer interrupts to race with syncing the
- 		 * timer virtual interrupt state.
- 		 */
--		if (static_branch_unlikely(&userspace_irqchip_in_use))
-+		if (unlikely(!irqchip_in_kernel(vcpu->kvm)))
- 			kvm_timer_sync_user(vcpu);
- 
- 		kvm_arch_vcpu_ctxsync_fp(vcpu);
+ 	if (!r) {
++		WARN(flags & ~CLOSURE_DESTRUCTOR,
++		     "closure ref hit 0 with incorrect flags set: %x (%u)",
++		     flags & ~CLOSURE_DESTRUCTOR, (unsigned) __fls(flags));
++
+ 		if (cl->fn && !(flags & CLOSURE_DESTRUCTOR)) {
+ 			atomic_set(&cl->remaining,
+ 				   CLOSURE_REMAINING_INITIALIZER);
 
 
