@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFC191FCCFB;
-	Fri,  6 Dec 2024 15:12:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A498F1527AC;
+	Fri,  6 Dec 2024 15:12:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733497965; cv=none; b=jmSg/HLN2LgJirocegQtZ/HaHYZAutnEwAucKULSIGG+h/XQ2GGG2avQaoQPaiygdZTPLTPRSq3KekmabtLw8sw6+VUKIwGTKIb2J0iRm1bKmrJm6CbuOUntVNEnlMiF0pURZEWLN6pDF0LWiDw3k309H+29OixE5XrkZvP8R3k=
+	t=1733497967; cv=none; b=hCE1fYk0nX8ViFXrB2oFfRUqCQMJZ3HVTV6l8uimTQZndJAf1ijWL1mhJXTmR8ISLFEHLDEqr/5jPKghwVlDMjPZEalz8ZaQ0VDRj7zFqyVF0YpywuZsxST2BYIq0jHTmgHgdu3/h/dO0PkLrYmT6LnZMrmzrhS3q3DDAeOAerw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733497965; c=relaxed/simple;
-	bh=ssZgyWxwoKpT6MAS/eta8tPRUKncCBEbDxAxHo42OZo=;
+	s=arc-20240116; t=1733497967; c=relaxed/simple;
+	bh=X/ODNXUpnPrvBsW0VRG2Wn9IUePjkECdIg5LhU5V/jM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rQ/vmE9JrjUcs+K7XVwzalLMjyTcMSoBm8kyKj95YPPMj8D6Ri3fyH1+0XVnzltkcRAiJl3rj8q7eX6uHPK2jamAMOK7LML6Sq+LC92EL5MmGRaMPuETKjIeCtCJcyyBkUj/kvIcIGaIH3gbR8+oaI8/qJcGxrOMpGvieVGR7G8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RjL4mxQM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WkAtZ1nd34ccC3jyOPqD3XFhduzhQ++oIEw4U8NJ32sPLGYUDan01aEEzJIqDnG+x6fxiqS5I+YG/YjY/+UV2xjdNh8rTip/AXygiDFoB7tGBMAyk5tCP+3sr6HM26CvLSce6RB+1HfdMZDOw3e2WCxg2Qk23Rhzv7vO9wzZG3Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pCjRYhSq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RjL4mxQM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9659C4CED1;
-	Fri,  6 Dec 2024 15:12:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pCjRYhSq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13655C4CED1;
+	Fri,  6 Dec 2024 15:12:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733497964;
-	bh=ssZgyWxwoKpT6MAS/eta8tPRUKncCBEbDxAxHo42OZo=;
+	s=korg; t=1733497967;
+	bh=X/ODNXUpnPrvBsW0VRG2Wn9IUePjkECdIg5LhU5V/jM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RjL4mxQMX57DJchoDZ9ZJMXKtA1iHuceCFVQ/6ETB9Ocdja1VJvv8E7D9a2goGPo2
-	 E5wZeYvv1y6i02EwHd9iWn6/e0Gt7Io2hXBPPc9zxRQYlwWELfdc0UoxL9VENb7zf8
-	 ZrVU4QqS+sT7JZ3jRm1xC4tNqVDj3nzHq4NYZYZw=
+	b=pCjRYhSqYV5VWOSnB8dfpJflksrycR0tEt9BmcSV4WYzEww/UjQNuzwaA5E6pIA0C
+	 MFGe94N8pwEOWtor/CzQJZfAxvaRyR3doQZ3W+mRE5FUMdAiWimAS+2HXxgmqcNPgp
+	 k0qrMXsl1kK2mSsv/E6i437ORaStmoUSwfTq+R6o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiuhong Wang <xiuhong.wang@unisoc.com>,
-	Zhiguo Niu <zhiguo.niu@unisoc.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
-	Daniel Rosenberg <drosen@google.com>
-Subject: [PATCH 6.6 444/676] f2fs: fix fiemap failure issue when page size is 16KB
-Date: Fri,  6 Dec 2024 15:34:23 +0100
-Message-ID: <20241206143710.701110527@linuxfoundation.org>
+	"Jason-JH.Lin" <jason-jh.lin@mediatek.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Jassi Brar <jassisinghbrar@gmail.com>,
+	Bin Lan <bin.lan.cn@windriver.com>
+Subject: [PATCH 6.6 445/676] mailbox: mtk-cmdq: Move devm_mbox_controller_register() after devm_pm_runtime_enable()
+Date: Fri,  6 Dec 2024 15:34:24 +0100
+Message-ID: <20241206143710.739512190@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -53,109 +52,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiuhong Wang <xiuhong.wang@unisoc.com>
+From: Jason-JH.Lin <jason-jh.lin@mediatek.com>
 
-commit a7a7c1d423a6351a6541e95c797da5358e5ad1ea upstream.
+commit a8bd68e4329f9a0ad1b878733e0f80be6a971649 upstream.
 
-After enable 16K page size, an infinite loop may occur in
-fiemap (fm_length=UINT64_MAX) on a file, such as the 16KB
-scratch.img during the remount operation in Android.
+When mtk-cmdq unbinds, a WARN_ON message with condition
+pm_runtime_get_sync() < 0 occurs.
 
-The condition for whether fiemap continues to map is to check
-whether the number of bytes corresponding to the next map.m_lblk
-exceeds blks_to_bytes(inode,max_inode_blocks(inode)) if there are HOLE.
-The latter does not take into account the maximum size of a file with 16KB
-page size, so the loop cannot be jumped out.
+According to the call tracei below:
+  cmdq_mbox_shutdown
+  mbox_free_channel
+  mbox_controller_unregister
+  __devm_mbox_controller_unregister
+  ...
 
-The following is the fail trace:
-When f2fs_map_blocks reaches map.m_lblk=3936, it needs to go to the
-first direct node block, so the map is 3936 + 4090 = 8026,
-The next map is the second direct node block, that is,
-8026 + 4090 = 12116,
-The next map is the first indirect node block, that is,
-12116 + 4090 * 4090 = 16740216,
-The next map is the second indirect node block, that is,
-16740216 + 4090 * 4090 = 33468316,
-The next map is the first double indirect node block, that is,
-33468316 + 4090 * 4090 * 4090 = 68451397316
-Since map.m_lblk represents the address of a block, which is 32
-bits, truncation will occur, that is, 68451397316 becomes
-4026887876, and the number of bytes corresponding to the block
-number does not exceed blks_to_bytes(inode,max_inode_blocks(inode)),
-so the loop will not be jumped out.
-The next time, it will be considered that it should still be a
-double indirect node block, that is,
-4026887876 + 4090 * 4090 * 4090 = 72444816876, which will be
-truncated to 3725340140, and the loop will not be jumped out.
+The root cause can be deduced to be calling pm_runtime_get_sync() after
+calling pm_runtime_disable() as observed below:
+1. CMDQ driver uses devm_mbox_controller_register() in cmdq_probe()
+   to bind the cmdq device to the mbox_controller, so
+   devm_mbox_controller_unregister() will automatically unregister
+   the device bound to the mailbox controller when the device-managed
+   resource is removed. That means devm_mbox_controller_unregister()
+   and cmdq_mbox_shoutdown() will be called after cmdq_remove().
+2. CMDQ driver also uses devm_pm_runtime_enable() in cmdq_probe() after
+   devm_mbox_controller_register(), so that devm_pm_runtime_disable()
+   will be called after cmdq_remove(), but before
+   devm_mbox_controller_unregister().
 
-156.374871: f2fs_map_blocks: dev = (254,57), ino = 7449, file offset = 0, start blkaddr = 0x8e00, len = 0x200, flags = 2,seg_type = 8, may_create = 0, multidevice = 0, flag = 1, err = 0
-156.374916: f2fs_map_blocks: dev = (254,57), ino = 7449, file offset = 512, start blkaddr = 0x0, len = 0x0, flags = 0 , seg_type = 8, may_create = 0, multidevice = 0, flag = 1, err = 0
-156.374920: f2fs_map_blocks: dev = (254,57), ino = 7449, file offset = 513, start blkaddr = 0x0, len = 0x0, flags = 0, seg_type = 8, may_create = 0, multidevice = 0, flag = 1, err = 0
-......
-156.385747: f2fs_map_blocks: dev = (254,57), ino = 7449, file offset = 3935, start blkaddr = 0x0, len = 0x0, flags = 0, seg_type = 8, may_create = 0, multidevice = 0, flag = 1, err = 0
-156.385752: f2fs_map_blocks: dev = (254,57), ino = 7449, file offset = 3936, start blkaddr = 0x0, len = 0x0, flags = 0, seg_type = 8, may_create = 0, multidevice = 0, flag = 1, err = 0
-156.385755: f2fs_map_blocks: dev = (254,57), ino = 7449, file offset = 8026, start blkaddr = 0x0, len = 0x0, flags = 0, seg_type = 8, may_create = 0, multidevice = 0, flag = 1, err = 0
-156.385758: f2fs_map_blocks: dev = (254,57), ino = 7449, file offset = 12116, start blkaddr = 0x0, len = 0x0, flags = 0, seg_type = 8, may_create = 0, multidevice = 0, flag = 1, err = 0
-156.385761: f2fs_map_blocks: dev = (254,57), ino = 7449, file offset = 16740216, start blkaddr = 0x0, len = 0x0, flags = 0, seg_type = 8, may_create = 0, multidevice = 0, flag = 1, err = 0
-156.385764: f2fs_map_blocks: dev = (254,57), ino = 7449, file offset = 33468316, start blkaddr = 0x0, len = 0x0, flags = 0, seg_type = 8, may_create = 0, multidevice = 0, flag = 1, err = 0
-156.385767: f2fs_map_blocks: dev = (254,57), ino = 7449, file offset = 4026887876, start blkaddr = 0x0, len = 0x0, flags = 0, seg_type = 8, may_create = 0, multidevice = 0, flag = 1, err = 0
-156.385770: f2fs_map_blocks: dev = (254,57), ino = 7449, file offset = 3725340140, start blkaddr = 0x0, len = 0x0, flags = 0, seg_type = 8, may_create = 0, multidevice = 0, flag = 1, err = 0
-156.385772: f2fs_map_blocks: dev = (254,57), ino = 7449, file offset = 4026887876, start blkaddr = 0x0, len = 0x0, flags = 0, seg_type = 8, may_create = 0, multidevice = 0, flag = 1, err = 0
-156.385775: f2fs_map_blocks: dev = (254,57), ino = 7449, file offset = 3725340140, start blkaddr = 0x0, len = 0x0, flags = 0, seg_type = 8, may_create = 0, multidevice = 0, flag = 1, err = 0
+To fix this problem, cmdq_probe() needs to move
+devm_mbox_controller_register() after devm_pm_runtime_enable() to make
+devm_pm_runtime_disable() be called after
+devm_mbox_controller_unregister().
 
-Commit a6a010f5def5 ("f2fs: Restrict max filesize for 16K f2fs")
-has set the maximum allowed file size to (U32_MAX + 1) * F2FS_BLKSIZE,
-so max_file_blocks should be used here to limit it, that is,
-maxbytes defined above. And the max_inode_blocks function is not
-called by other functions except here, so cleanup it.
-
-Signed-off-by: Xiuhong Wang <xiuhong.wang@unisoc.com>
-Signed-off-by: Zhiguo Niu <zhiguo.niu@unisoc.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
-Cc: Daniel Rosenberg <drosen@google.com>
+Fixes: 623a6143a845 ("mailbox: mediatek: Add Mediatek CMDQ driver")
+Signed-off-by: Jason-JH.Lin <jason-jh.lin@mediatek.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
+Signed-off-by: Bin Lan <bin.lan.cn@windriver.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/data.c |   22 +---------------------
- 1 file changed, 1 insertion(+), 21 deletions(-)
+ drivers/mailbox/mtk-cmdq-mailbox.c |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
---- a/fs/f2fs/data.c
-+++ b/fs/f2fs/data.c
-@@ -1873,25 +1873,6 @@ static int f2fs_xattr_fiemap(struct inod
- 	return (err < 0 ? err : 0);
+--- a/drivers/mailbox/mtk-cmdq-mailbox.c
++++ b/drivers/mailbox/mtk-cmdq-mailbox.c
+@@ -623,12 +623,6 @@ static int cmdq_probe(struct platform_de
+ 		cmdq->mbox.chans[i].con_priv = (void *)&cmdq->thread[i];
+ 	}
+ 
+-	err = devm_mbox_controller_register(dev, &cmdq->mbox);
+-	if (err < 0) {
+-		dev_err(dev, "failed to register mailbox: %d\n", err);
+-		return err;
+-	}
+-
+ 	platform_set_drvdata(pdev, cmdq);
+ 
+ 	WARN_ON(clk_bulk_prepare(cmdq->pdata->gce_num, cmdq->clocks));
+@@ -642,6 +636,12 @@ static int cmdq_probe(struct platform_de
+ 		return err;
+ 	}
+ 
++	err = devm_mbox_controller_register(dev, &cmdq->mbox);
++	if (err < 0) {
++		dev_err(dev, "failed to register mailbox: %d\n", err);
++		return err;
++	}
++
+ 	return 0;
  }
  
--static loff_t max_inode_blocks(struct inode *inode)
--{
--	loff_t result = ADDRS_PER_INODE(inode);
--	loff_t leaf_count = ADDRS_PER_BLOCK(inode);
--
--	/* two direct node blocks */
--	result += (leaf_count * 2);
--
--	/* two indirect node blocks */
--	leaf_count *= NIDS_PER_BLOCK;
--	result += (leaf_count * 2);
--
--	/* one double indirect node block */
--	leaf_count *= NIDS_PER_BLOCK;
--	result += leaf_count;
--
--	return result;
--}
--
- int f2fs_fiemap(struct inode *inode, struct fiemap_extent_info *fieinfo,
- 		u64 start, u64 len)
- {
-@@ -1964,8 +1945,7 @@ next:
- 	if (!compr_cluster && !(map.m_flags & F2FS_MAP_FLAGS)) {
- 		start_blk = next_pgofs;
- 
--		if (blks_to_bytes(inode, start_blk) < blks_to_bytes(inode,
--						max_inode_blocks(inode)))
-+		if (blks_to_bytes(inode, start_blk) < maxbytes)
- 			goto prep_next;
- 
- 		flags |= FIEMAP_EXTENT_LAST;
 
 
