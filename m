@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AB8F149E0E;
-	Fri,  6 Dec 2024 14:51:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC6BC1474AF;
+	Fri,  6 Dec 2024 14:51:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733496712; cv=none; b=r77l+wGgWF+n7q9ijgdH7FV5dvG0lwHY/RXUwTHC6oaQhRSW9PLXbrA4ls1PwxVdFcjihx53dXrhutMLQBF2keR0grjz39xGiT9qOHn1bG7ssPqaqaY7ASP/LzGPW+qZQqHUYLpexnhrV5yxBI78OAs1uMs43yV89bV6NOatAqw=
+	t=1733496716; cv=none; b=GoWQ3foSFcHbd+74cxBznwYrpVnohr2PL7QpXJRnKV6xW9dvM1rmEe74UDPgYH0e37Cr3oCIufk6BqpG87Kbhp0OZEVJghai2THz06Ke+bICuUYu1LS4rvEMmq8bvDIDNi9Z7CxOwtfUS5ltNRlv8esGYJzCgZcpLMVFi7fRD0Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733496712; c=relaxed/simple;
-	bh=RxIWZKxopvEm9LRXgDvuRW+3F/plREYZ47dBYJcGZzY=;
+	s=arc-20240116; t=1733496716; c=relaxed/simple;
+	bh=HJAkS7PnpjdkQu3/zVQlx/Z10T2lcOujL9WhJfMgfiU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XaAUNbH5tUmIyctiXRedLozimFrfrabaJ9xBZ6zmGd+zfpKVXJw/1stkeoBJNd/inF6Eo24FJHeKRfyTlC5WTyZydHradIJGGMzMHmSjv9KuyE7znnt7djXWgLpNEggKbRctdsy2PBDE1Fah5P5pwB55/qKDSbCzRX5uVvDJEys=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=crnoprZn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lwv//eIY89aNnFfPIQtxBfutWcLNyd9ocxcfWzOlO15FJBiF6iFtgm4VtrI9vbFKvkk6gAUJ5PydHEUV1A+kvQzqGJsW9WfxoTOfLmEDvTFtBd4dky/sw3W7Xr2mY79dQb2PgW08wsCy3VRP7h+iEF7dWRtZyP3dyI+3bQPri4Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ba7ff1ga; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="crnoprZn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10042C4CED1;
-	Fri,  6 Dec 2024 14:51:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ba7ff1ga"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CA18C4CEE0;
+	Fri,  6 Dec 2024 14:51:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733496712;
-	bh=RxIWZKxopvEm9LRXgDvuRW+3F/plREYZ47dBYJcGZzY=;
+	s=korg; t=1733496715;
+	bh=HJAkS7PnpjdkQu3/zVQlx/Z10T2lcOujL9WhJfMgfiU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=crnoprZnzOwL3RUU2/LzQTnnq/gjDT2WnTFpZgvx2MdKa/D6lT+YvMMDBAzd7G/c7
-	 UnEZrdd9gLGZCZD//O0kCvXBl5CaJjbZkbFucesRofLmEFyeAXbkDSArymkCf7LLPD
-	 2w/zIIymnlPd/KaeE8+peqSL+MUv0msVtGB3kZ9Q=
+	b=Ba7ff1gaYKOgyAuC6IZFc07R+6R/zReaJBBRPmMHnKkTGQtDL5LbnBqp5HWt4zlYz
+	 DMsGgZPdLMbLGuY7BxnXaWARonfhUcru3Z0BPOzbBe1LUnVmSruHeWRx5tIAZYqEXf
+	 lHG6jRSqZoz0Zqi/rRTUyZHtsYk5R8S1OETXACBE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Lukasz Luba <lukasz.luba@arm.com>,
+	Priyanka Singh <priyanka.singh@nxp.com>,
+	Li Yang <leoyang.li@nxp.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 083/676] thermal: core: Initialize thermal zones before registering them
-Date: Fri,  6 Dec 2024 15:28:22 +0100
-Message-ID: <20241206143656.606630820@linuxfoundation.org>
+Subject: [PATCH 6.6 084/676] EDAC/fsl_ddr: Fix bad bit shift operations
+Date: Fri,  6 Dec 2024 15:28:23 +0100
+Message-ID: <20241206143656.645049053@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -51,44 +53,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Priyanka Singh <priyanka.singh@nxp.com>
 
-[ Upstream commit 662f920f7e390db5d1a6792a2b0ffa59b6c962fc ]
+[ Upstream commit 9ec22ac4fe766c6abba845290d5139a3fbe0153b ]
 
-Since user space can start interacting with a new thermal zone as soon
-as device_register() called by thermal_zone_device_register_with_trips()
-returns, it is better to initialize the thermal zone before calling
-device_register() on it.
+Fix undefined behavior caused by left-shifting a negative value in the
+expression:
 
-Fixes: d0df264fbd3c ("thermal/core: Remove pointless thermal_zone_device_reset() function")
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Link: https://patch.msgid.link/3336146.44csPzL39Z@rjwysocki.net
-Reviewed-by: Lukasz Luba <lukasz.luba@arm.com>
+    cap_high ^ (1 << (bad_data_bit - 32))
+
+The variable bad_data_bit ranges from 0 to 63. When it is less than 32,
+bad_data_bit - 32 becomes negative, and left-shifting by a negative
+value in C is undefined behavior.
+
+Fix this by combining cap_high and cap_low into a 64-bit variable.
+
+  [ bp: Massage commit message, simplify error bits handling. ]
+
+Fixes: ea2eb9a8b620 ("EDAC, fsl-ddr: Separate FSL DDR driver from MPC85xx")
+Signed-off-by: Priyanka Singh <priyanka.singh@nxp.com>
+Signed-off-by: Li Yang <leoyang.li@nxp.com>
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Link: https://lore.kernel.org/r/20241016-imx95_edac-v3-3-86ae6fc2756a@nxp.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thermal/thermal_core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/edac/fsl_ddr_edac.c | 22 +++++++++++++---------
+ 1 file changed, 13 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/thermal/thermal_core.c b/drivers/thermal/thermal_core.c
-index d7ac7eef680e1..dad909547179f 100644
---- a/drivers/thermal/thermal_core.c
-+++ b/drivers/thermal/thermal_core.c
-@@ -1336,6 +1336,7 @@ thermal_zone_device_register_with_trips(const char *type, struct thermal_trip *t
- 		thermal_zone_destroy_device_groups(tz);
- 		goto remove_id;
+diff --git a/drivers/edac/fsl_ddr_edac.c b/drivers/edac/fsl_ddr_edac.c
+index b81757555a8a9..7809427c2dbeb 100644
+--- a/drivers/edac/fsl_ddr_edac.c
++++ b/drivers/edac/fsl_ddr_edac.c
+@@ -328,21 +328,25 @@ static void fsl_mc_check(struct mem_ctl_info *mci)
+ 	 * TODO: Add support for 32-bit wide buses
+ 	 */
+ 	if ((err_detect & DDR_EDE_SBE) && (bus_width == 64)) {
++		u64 cap = (u64)cap_high << 32 | cap_low;
++		u32 s = syndrome;
++
+ 		sbe_ecc_decode(cap_high, cap_low, syndrome,
+ 				&bad_data_bit, &bad_ecc_bit);
+ 
+-		if (bad_data_bit != -1)
+-			fsl_mc_printk(mci, KERN_ERR,
+-				"Faulty Data bit: %d\n", bad_data_bit);
+-		if (bad_ecc_bit != -1)
+-			fsl_mc_printk(mci, KERN_ERR,
+-				"Faulty ECC bit: %d\n", bad_ecc_bit);
++		if (bad_data_bit >= 0) {
++			fsl_mc_printk(mci, KERN_ERR, "Faulty Data bit: %d\n", bad_data_bit);
++			cap ^= 1ULL << bad_data_bit;
++		}
++
++		if (bad_ecc_bit >= 0) {
++			fsl_mc_printk(mci, KERN_ERR, "Faulty ECC bit: %d\n", bad_ecc_bit);
++			s ^= 1 << bad_ecc_bit;
++		}
+ 
+ 		fsl_mc_printk(mci, KERN_ERR,
+ 			"Expected Data / ECC:\t%#8.8x_%08x / %#2.2x\n",
+-			cap_high ^ (1 << (bad_data_bit - 32)),
+-			cap_low ^ (1 << bad_data_bit),
+-			syndrome ^ (1 << bad_ecc_bit));
++			upper_32_bits(cap), lower_32_bits(cap), s);
  	}
-+	thermal_zone_device_init(tz);
- 	result = device_register(&tz->device);
- 	if (result)
- 		goto release_device;
-@@ -1381,7 +1382,6 @@ thermal_zone_device_register_with_trips(const char *type, struct thermal_trip *t
  
- 	INIT_DELAYED_WORK(&tz->poll_queue, thermal_zone_device_check);
- 
--	thermal_zone_device_init(tz);
- 	/* Update the new thermal zone and mark it as already updated. */
- 	if (atomic_cmpxchg(&tz->need_update, 1, 0))
- 		thermal_zone_device_update(tz, THERMAL_EVENT_UNSPECIFIED);
+ 	fsl_mc_printk(mci, KERN_ERR,
 -- 
 2.43.0
 
