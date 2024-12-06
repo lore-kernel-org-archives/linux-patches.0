@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1F1D1474AF;
-	Fri,  6 Dec 2024 14:51:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10EF114D29D;
+	Fri,  6 Dec 2024 14:51:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733496706; cv=none; b=CeHyoQPGOl5x9G+nFbnwO5YkV14QlzYYfdeyh4Q7LtIXESGP5LRausk2artYPA3vnInKIx1QKT7Jgkm6DBP48hOY/yPR9teEyGEaLtrdNDyPKgD1fHK+SS5aPnZEs3C7V5p29oHfzxk/kCDfEWQIXnAy2rj1JkpHglmncglh9pU=
+	t=1733496709; cv=none; b=rjL6jZT1YFPMN6acX7x/An/CcsNSyo/gvXwAyqp90OvWJahggMXjuMwkqjivztQkfHy1E8YISGsvudRprpgDmqtFFvqe84y9lyqc7XR/dCwTjwfYxrArXjTm+5VDF9aUvrNsBa7WWqX2cPqmWPpNbbNpn2yfwmVOSkTEFe7p8fg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733496706; c=relaxed/simple;
-	bh=61AGTmzSRPa11sE5FuNQj2wb7AR1y+lpraJ7i2uyqvk=;
+	s=arc-20240116; t=1733496709; c=relaxed/simple;
+	bh=cE/5aEZ0O6z02pMkHlijrIKlkFZmptPVmWrnW/+WFWU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TfdS8KSgnMCeELYb0R6+WSlFu/a5/aleWTZAV1BLCyGdcXwvc/KsY9Da9S4HgcOSzJf0E+TyL0xubYE3l0VavM/LFdq6GTd6//zc0dunCdhSkfwdnePyZej5dZ2STzg0LhnkYdSPV0js+gogzOhM+yof8aB6UUtjC8HMMXEETxc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wYBmUGO7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mz7exs5wXYA/RQZ/rjmTQt7zfWrqmpur+ryMHr/6cwemAPJo2G67n4oi06AMzAubQ6libGyfjkh5oXnGpniO7qAIU4y7l3taX+x64iJZVeQWcR4ktMLjp1QOIcMw/jvixfSjNvohJtWumlULoLaaR3+DmoX7rp7ctgQxEJcCViw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ERlS71JH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wYBmUGO7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60B4FC4CED1;
-	Fri,  6 Dec 2024 14:51:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ERlS71JH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E97AC4CED1;
+	Fri,  6 Dec 2024 14:51:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733496705;
-	bh=61AGTmzSRPa11sE5FuNQj2wb7AR1y+lpraJ7i2uyqvk=;
+	s=korg; t=1733496708;
+	bh=cE/5aEZ0O6z02pMkHlijrIKlkFZmptPVmWrnW/+WFWU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wYBmUGO7lI5zsrZDm9ZppDyMY3d6y86MWZq12+UhxSr9NFm1IcdeSRIJIZpYPQ74G
-	 r8kXIl7nbz3gNQ5J29nhOG8jXkrJGwYfSdiMXbA7ougZcg04MJM1VI25u7v1bltvQI
-	 qqFs0smLNRS9H92kvH778OsSBJG093YC5w+4U5wo=
+	b=ERlS71JHrv8h8/J3gvAV2ZVUn6ePgM75hcnK+mPJ8ye3yd7YyZWM+lpx1xGmwUXBl
+	 wUUnQRWMA54TR5oBu9bJGmFH7GUwsMESP/yLOkCGaB/ODy2I55pojVBQNbbMKu5kmN
+	 JHGR7YX8S5wb9W5F8q7FVFVYjzwKvNOX/0Q5bTiY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Theodore Tso <tytso@mit.edu>,
+	Ahsan Atta <ahsan.atta@intel.com>,
+	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 073/676] ext4: remove array of buffer_heads from mext_page_mkuptodate()
-Date: Fri,  6 Dec 2024 15:28:12 +0100
-Message-ID: <20241206143656.217396388@linuxfoundation.org>
+Subject: [PATCH 6.6 082/676] crypto: qat - remove faulty arbiter config reset
+Date: Fri,  6 Dec 2024 15:28:21 +0100
+Message-ID: <20241206143656.567986799@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -51,77 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthew Wilcox (Oracle) <willy@infradead.org>
+From: Ahsan Atta <ahsan.atta@intel.com>
 
-[ Upstream commit a40759fb16ae839f8c769174fde017564ea564ff ]
+[ Upstream commit 70199359902f1c7187dcb28a1be679a7081de7cc ]
 
-Iterate the folio's list of buffer_heads twice instead of keeping
-an array of pointers.  This solves a too-large-array-for-stack problem
-on architectures with a ridiculoously large PAGE_SIZE and prepares
-ext4 to support larger folios.
+Resetting the service arbiter config can cause potential issues
+related to response ordering and ring flow control check in the
+event of AER or device hang. This is because it results in changing
+the default response ring size from 32 bytes to 16 bytes. The service
+arbiter config reset also disables response ring flow control check.
+Thus, by removing this reset we can prevent the service arbiter from
+being configured inappropriately, which leads to undesired device
+behaviour in the event of errors.
 
-Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
-Link: https://patch.msgid.link/20240718223005.568869-3-willy@infradead.org
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Stable-dep-of: 2f3d93e210b9 ("ext4: fix race in buffer_head read fault injection")
+Fixes: 7afa232e76ce ("crypto: qat - Intel(R) QAT DH895xcc accelerator")
+Signed-off-by: Ahsan Atta <ahsan.atta@intel.com>
+Reviewed-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/move_extent.c | 22 ++++++++++++----------
- 1 file changed, 12 insertions(+), 10 deletions(-)
+ drivers/crypto/intel/qat/qat_common/adf_hw_arbiter.c | 4 ----
+ 1 file changed, 4 deletions(-)
 
-diff --git a/fs/ext4/move_extent.c b/fs/ext4/move_extent.c
-index 28d59548770d7..f082bccdb01ad 100644
---- a/fs/ext4/move_extent.c
-+++ b/fs/ext4/move_extent.c
-@@ -165,15 +165,14 @@ mext_folio_double_lock(struct inode *inode1, struct inode *inode2,
- 	return 0;
- }
+diff --git a/drivers/crypto/intel/qat/qat_common/adf_hw_arbiter.c b/drivers/crypto/intel/qat/qat_common/adf_hw_arbiter.c
+index da69566992467..dd9a31c20bc9c 100644
+--- a/drivers/crypto/intel/qat/qat_common/adf_hw_arbiter.c
++++ b/drivers/crypto/intel/qat/qat_common/adf_hw_arbiter.c
+@@ -90,10 +90,6 @@ void adf_exit_arb(struct adf_accel_dev *accel_dev)
  
--/* Force page buffers uptodate w/o dropping page's lock */
--static int
--mext_page_mkuptodate(struct folio *folio, unsigned from, unsigned to)
-+/* Force folio buffers uptodate w/o dropping folio's lock */
-+static int mext_page_mkuptodate(struct folio *folio, size_t from, size_t to)
- {
- 	struct inode *inode = folio->mapping->host;
- 	sector_t block;
--	struct buffer_head *bh, *head, *arr[MAX_BUF_PER_PAGE];
-+	struct buffer_head *bh, *head;
- 	unsigned int blocksize, block_start, block_end;
--	int i, nr = 0;
-+	int nr = 0;
- 	bool partial = false;
+ 	hw_data->get_arb_info(&info);
  
- 	BUG_ON(!folio_test_locked(folio));
-@@ -216,20 +215,23 @@ mext_page_mkuptodate(struct folio *folio, unsigned from, unsigned to)
- 			continue;
- 		}
- 		ext4_read_bh_nowait(bh, 0, NULL);
--		BUG_ON(nr >= MAX_BUF_PER_PAGE);
--		arr[nr++] = bh;
-+		nr++;
- 	}
- 	/* No io required */
- 	if (!nr)
- 		goto out;
- 
--	for (i = 0; i < nr; i++) {
--		bh = arr[i];
-+	bh = head;
-+	do {
-+		if (bh_offset(bh) + blocksize <= from)
-+			continue;
-+		if (bh_offset(bh) > to)
-+			break;
- 		wait_on_buffer(bh);
- 		if (buffer_uptodate(bh))
- 			continue;
- 		return -EIO;
--	}
-+	} while ((bh = bh->b_this_page) != head);
- out:
- 	if (!partial)
- 		folio_mark_uptodate(folio);
+-	/* Reset arbiter configuration */
+-	for (i = 0; i < ADF_ARB_NUM; i++)
+-		WRITE_CSR_ARB_SARCONFIG(csr, arb_off, i, 0);
+-
+ 	/* Unmap worker threads to service arbiters */
+ 	for (i = 0; i < hw_data->num_engines; i++)
+ 		WRITE_CSR_ARB_WT2SAM(csr, arb_off, wt_off, i, 0);
 -- 
 2.43.0
 
