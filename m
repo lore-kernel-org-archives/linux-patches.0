@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6855C207650;
-	Fri,  6 Dec 2024 15:18:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD7FF17C208;
+	Fri,  6 Dec 2024 15:18:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733498285; cv=none; b=f5ZLM/oW2qkcxSGaPMZxJ1vpCKc20u37S7cxU4XWi5jktshA/RK7Ao4B5xLDGyZ1kMhpUp7t+M/h82NouA1yLzsbtGI0fM2n8j7rJdoBzbCh6Yef2vKoL4j2xpOUrx6bNNxnyQYCjtEdUVc4gvGXYD7WzEXH3CeFwoFuxWQtZSQ=
+	t=1733498288; cv=none; b=HH4xDE10DGS4ew8Tb0IvUXbCe+zqRHWBG9xTga/HRiUylNhtNb2okyZHXmiXYic3LJzWGc9rmG493rFwskn8lFDR59rtKV7vE9ETchemwsQ+sJ7kUyxp4bSxTn8rmK1c0knb29y4eHVudWpx66ZqAqUSOjuIXnCRLHvKS8qqEkA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733498285; c=relaxed/simple;
-	bh=+Xp9DPmAEXoF3BggKmXzgsV3CMDl6WMnA+aN6w+di0s=;
+	s=arc-20240116; t=1733498288; c=relaxed/simple;
+	bh=SAsFJPEiAE6FVRrz9h4buuBjUiUap7RBbYhZ3nKVMr8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TePKRDM0BZmP11gA2AWRYLeXJzdIAKxtebBOCCxwWyQNTwM73LRwCeENmO3q7SW/dQu8FHPAuLTW38n5C/3P17uyu6s4Gb3EqG2WLmb3eJAe6Gbipe3otonuHgxyDWkOE8K6tcCxURpPMUhoWO9KwdvvZRIGmY+qxA+WIeW5GJs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nW6gbhPB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LpwxmCKbKIhyfi4ZBKIOZ+mPGntFnC8lJkf+8aj7NDYWqdBgGPMY2X8+Qs6lgRHuAg6VgVpSe6DgPEhG76llvv2bbxeRxjkL92XjGwFNiKeSs/C7jZa3jqRZHp9Bysa2yM2xKSaW/0kMNqEzENwtU6eqSuzYthCObv2nxEzkoHg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=olxaM4tP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nW6gbhPB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBDE7C4CEDC;
-	Fri,  6 Dec 2024 15:18:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="olxaM4tP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 183DCC4CEDF;
+	Fri,  6 Dec 2024 15:18:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733498285;
-	bh=+Xp9DPmAEXoF3BggKmXzgsV3CMDl6WMnA+aN6w+di0s=;
+	s=korg; t=1733498288;
+	bh=SAsFJPEiAE6FVRrz9h4buuBjUiUap7RBbYhZ3nKVMr8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nW6gbhPBzXF8/kETFOkzmmspJjCiSpbNmmjpo+uDNBZO9+lmtTJplxuq+F6Fd2hpK
-	 pWqGxUEq1b5kMBGMX3Fhp8As+l1vhdr2hdgbHO6SY0zVnaqvRsY0Jistylh7KLPCtq
-	 RToFYYYc33lGzuytnHLlHt+8SOmqRoA3koBnUXjw=
+	b=olxaM4tPpbFOhYsJ5tTbOMvX08aFbsqesKIfoNksv4i+70j1ho9IwC5lOD4chgsSH
+	 peLRFTDVb0n/9hkM96/TwhFblUJlYXMdcMZXPx+Hm5jc/Fx+qzlpvuy2cifj6LV1Vw
+	 bNDq9eGeL5JbJj/OohUHDDohI0KS8LVsZfFqQOtI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.6 539/676] ALSA: hda/realtek: Apply quirk for Medion E15433
-Date: Fri,  6 Dec 2024 15:35:58 +0100
-Message-ID: <20241206143714.414347376@linuxfoundation.org>
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.6 540/676] smb3: request handle caching when caching directories
+Date: Fri,  6 Dec 2024 15:35:59 +0100
+Message-ID: <20241206143714.452639119@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -49,31 +49,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Steve French <stfrench@microsoft.com>
 
-commit ca0f79f0286046f6a91c099dc941cf7afae198d6 upstream.
+commit 9ed9d83a51a9636d367c796252409e7b2f4de4d4 upstream.
 
-Medion E15433 laptop wich ALC269VC (SSID 2782:1705) needs the same
-workaround for the missing speaker as another model.
+This client was only requesting READ caching, not READ and HANDLE caching
+in the LeaseState on the open requests we send for directories.  To
+delay closing a handle (e.g. for caching directory contents) we should
+be requesting HANDLE as well as READ (as we already do for deferred
+close of files).   See MS-SMB2 3.3.1.4 e.g.
 
-Link: https://bugzilla.suse.com/show_bug.cgi?id=1233298
-Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20241128072646.15659-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Cc: stable@vger.kernel.org
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_realtek.c |    1 +
- 1 file changed, 1 insertion(+)
+ fs/smb/client/smb2ops.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -10425,6 +10425,7 @@ static const struct snd_pci_quirk alc269
- 	SND_PCI_QUIRK(0x2782, 0x0228, "Infinix ZERO BOOK 13", ALC269VB_FIXUP_INFINIX_ZERO_BOOK_13),
- 	SND_PCI_QUIRK(0x2782, 0x0232, "CHUWI CoreBook XPro", ALC269VB_FIXUP_CHUWI_COREBOOK_XPRO),
- 	SND_PCI_QUIRK(0x2782, 0x1701, "Infinix Y4 Max", ALC269VC_FIXUP_INFINIX_Y4_MAX),
-+	SND_PCI_QUIRK(0x2782, 0x1705, "MEDION E15433", ALC269VC_FIXUP_INFINIX_Y4_MAX),
- 	SND_PCI_QUIRK(0x2782, 0x1707, "Vaio VJFE-ADL", ALC298_FIXUP_SPK_VOLUME),
- 	SND_PCI_QUIRK(0x8086, 0x2074, "Intel NUC 8", ALC233_FIXUP_INTEL_NUC8_DMIC),
- 	SND_PCI_QUIRK(0x8086, 0x2080, "Intel NUC 8 Rugged", ALC256_FIXUP_INTEL_NUC8_RUGGED),
+--- a/fs/smb/client/smb2ops.c
++++ b/fs/smb/client/smb2ops.c
+@@ -4016,7 +4016,7 @@ map_oplock_to_lease(u8 oplock)
+ 	if (oplock == SMB2_OPLOCK_LEVEL_EXCLUSIVE)
+ 		return SMB2_LEASE_WRITE_CACHING_LE | SMB2_LEASE_READ_CACHING_LE;
+ 	else if (oplock == SMB2_OPLOCK_LEVEL_II)
+-		return SMB2_LEASE_READ_CACHING_LE;
++		return SMB2_LEASE_READ_CACHING_LE | SMB2_LEASE_HANDLE_CACHING_LE;
+ 	else if (oplock == SMB2_OPLOCK_LEVEL_BATCH)
+ 		return SMB2_LEASE_HANDLE_CACHING_LE | SMB2_LEASE_READ_CACHING_LE |
+ 		       SMB2_LEASE_WRITE_CACHING_LE;
 
 
