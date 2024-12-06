@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D578145A16;
-	Fri,  6 Dec 2024 15:19:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A6F6149C6F;
+	Fri,  6 Dec 2024 15:19:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733498341; cv=none; b=QY8JmlRTGxzaYUGMRuSfeeNKnY0ynmnCH9Ilws+c/YYnHt3NGKOE7WDdJtXnjC/I8nO951nDcBYQcr01dczazW/+Jxs3Z40jRIMDTEWHy1gVQjIguSP9PP5HAY/SgOgZDg2qkqEagDjduIQkuZy8IzqCuQwMQbxFj1hIl0dR7R0=
+	t=1733498344; cv=none; b=YhsAPMTe68gh2tVZNGqBPURdpnyyQTEd4Sd316XM0cXaw6pu3WvqHA6UZYykPwWzkSvrlRv6Y91P/zjjUff0pFM1DLUenZcjglfKr7DUkp7aLeoN6XYXIug52eUJBNAjPhPKXo6QKbCwxXNq0Z4j7kDUsOw0wHmx3GFvFso7qcw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733498341; c=relaxed/simple;
-	bh=l4AZHE40Ei6d3RjzMs0zHl6M/nx3clON7NCrFSkCgrc=;
+	s=arc-20240116; t=1733498344; c=relaxed/simple;
+	bh=Nz0uIQANManWfL5ZDSbmeef8Y23XOlmKXOIrjwRLMCA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PIRLmdhdRBtZu2q4V0qoNDJzrCpdc1ldLMdDc5TlZDx9tGKg5Qk0Uhcx+AfM5ikjLfAvvm2wkPff28BSjStaqOmoPbV+tKm4iX4TJ+719CdUnxW9q79T/jOG1/6YmmnbO38j5BetUHidPF2lYLYsy/lpCjUtXyo593OBSb9QXG0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jny4HuLK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eNeJo+7uPLzgVpjNTwYLDVlsR5GGtdwtheNABvB/3JN83i1BrZBKSkmE/SvvIwBUlGxUE40j4GhFmM/asGxp+y3K8sH7tbA6od1Qtx2qyz6XOeGrmCIa+PT1GFxnOxB0Hul0TqF+fSr7HctioPGbSeZVnzezA+Kj0YkdJNgBlRw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ysXPyUbS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jny4HuLK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CA33C4CED1;
-	Fri,  6 Dec 2024 15:19:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ysXPyUbS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 042FEC4CED1;
+	Fri,  6 Dec 2024 15:19:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733498341;
-	bh=l4AZHE40Ei6d3RjzMs0zHl6M/nx3clON7NCrFSkCgrc=;
+	s=korg; t=1733498344;
+	bh=Nz0uIQANManWfL5ZDSbmeef8Y23XOlmKXOIrjwRLMCA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jny4HuLKeL/AmeCju2QuzsOJV3xg2GHBCQhoX+xgQKf1o8jbMNyFoExZ7xBWyzkhC
-	 NKnvp2SOtPETFi+FK5LKOx7myzNawo3J2MKdXphOS0talyCyj70dCJS0sxevxSOnOi
-	 ++mH0dm8gTzYfFEiDN826+ZBRwmcXMyI4sMCms6w=
+	b=ysXPyUbSj3tcagZ5Kx1/BLTaFXGZzqffMtG0q/nfEuOjEG3GRoy44MKACDLTaBsy8
+	 cckfYDyorogN/saMcqqmSQGqCOglr75VHd3vlPIyw3dV+9muW4MCqKn5BR5K8XHjhU
+	 F33VKaZDJ32nbvnl/rkKbhQAQwViVdnXZBU6Rrtg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ming Lei <ming.lei@redhat.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.6 524/676] ublk: fix ublk_ch_mmap() for 64K page size
-Date: Fri,  6 Dec 2024 15:35:43 +0100
-Message-ID: <20241206143713.828803511@linuxfoundation.org>
+	Mark Rutland <mark.rutland@arm.com>,
+	Will Deacon <will@kernel.org>,
+	Catalin Marinas <catalin.marinas@arm.com>
+Subject: [PATCH 6.6 525/676] arm64: tls: Fix context-switching of tpidrro_el0 when kpti is enabled
+Date: Fri,  6 Dec 2024 15:35:44 +0100
+Message-ID: <20241206143713.866593067@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -50,68 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ming Lei <ming.lei@redhat.com>
+From: Will Deacon <will@kernel.org>
 
-commit d369735e02ef122d19d4c3d093028da0eb400636 upstream.
+commit 67ab51cbdfee02ef07fb9d7d14cc0bf6cb5a5e5c upstream.
 
-In ublk_ch_mmap(), queue id is calculated in the following way:
+Commit 18011eac28c7 ("arm64: tls: Avoid unconditional zeroing of
+tpidrro_el0 for native tasks") tried to optimise the context switching
+of tpidrro_el0 by eliding the clearing of the register when switching
+to a native task with kpti enabled, on the erroneous assumption that
+the kpti trampoline entry code would already have taken care of the
+write.
 
-	(vma->vm_pgoff << PAGE_SHIFT) / `max_cmd_buf_size`
+Although the kpti trampoline does zero the register on entry from a
+native task, the check in tls_thread_switch() is on the *next* task and
+so we can end up leaving a stale, non-zero value in the register if the
+previous task was 32-bit.
 
-'max_cmd_buf_size' is equal to
+Drop the broken optimisation and zero tpidrro_el0 unconditionally when
+switching to a native 64-bit task.
 
-	`UBLK_MAX_QUEUE_DEPTH * sizeof(struct ublksrv_io_desc)`
-
-and UBLK_MAX_QUEUE_DEPTH is 4096 and part of UAPI, so 'max_cmd_buf_size'
-is always page aligned in 4K page size kernel. However, it isn't true in
-64K page size kernel.
-
-Fixes the issue by always rounding up 'max_cmd_buf_size' with PAGE_SIZE.
-
+Cc: Mark Rutland <mark.rutland@arm.com>
 Cc: stable@vger.kernel.org
-Fixes: 71f28f3136af ("ublk_drv: add io_uring based userspace block driver")
-Signed-off-by: Ming Lei <ming.lei@redhat.com>
-Link: https://lore.kernel.org/r/20241111110718.1394001-1-ming.lei@redhat.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 18011eac28c7 ("arm64: tls: Avoid unconditional zeroing of tpidrro_el0 for native tasks")
+Signed-off-by: Will Deacon <will@kernel.org>
+Acked-by: Mark Rutland <mark.rutland@arm.com>
+Link: https://lore.kernel.org/r/20241114095332.23391-1-will@kernel.org
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/block/ublk_drv.c |   15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+ arch/arm64/kernel/process.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/block/ublk_drv.c
-+++ b/drivers/block/ublk_drv.c
-@@ -713,12 +713,21 @@ static inline char *ublk_queue_cmd_buf(s
- 	return ublk_get_queue(ub, q_id)->io_cmd_buf;
- }
+--- a/arch/arm64/kernel/process.c
++++ b/arch/arm64/kernel/process.c
+@@ -429,7 +429,7 @@ static void tls_thread_switch(struct tas
  
-+static inline int __ublk_queue_cmd_buf_size(int depth)
-+{
-+	return round_up(depth * sizeof(struct ublksrv_io_desc), PAGE_SIZE);
-+}
-+
- static inline int ublk_queue_cmd_buf_size(struct ublk_device *ub, int q_id)
- {
- 	struct ublk_queue *ubq = ublk_get_queue(ub, q_id);
+ 	if (is_compat_thread(task_thread_info(next)))
+ 		write_sysreg(next->thread.uw.tp_value, tpidrro_el0);
+-	else if (!arm64_kernel_unmapped_at_el0())
++	else
+ 		write_sysreg(0, tpidrro_el0);
  
--	return round_up(ubq->q_depth * sizeof(struct ublksrv_io_desc),
--			PAGE_SIZE);
-+	return __ublk_queue_cmd_buf_size(ubq->q_depth);
-+}
-+
-+static int ublk_max_cmd_buf_size(void)
-+{
-+	return __ublk_queue_cmd_buf_size(UBLK_MAX_QUEUE_DEPTH);
- }
- 
- static inline bool ublk_queue_can_use_recovery_reissue(
-@@ -1387,7 +1396,7 @@ static int ublk_ch_mmap(struct file *fil
- {
- 	struct ublk_device *ub = filp->private_data;
- 	size_t sz = vma->vm_end - vma->vm_start;
--	unsigned max_sz = UBLK_MAX_QUEUE_DEPTH * sizeof(struct ublksrv_io_desc);
-+	unsigned max_sz = ublk_max_cmd_buf_size();
- 	unsigned long pfn, end, phys_off = vma->vm_pgoff << PAGE_SHIFT;
- 	int q_id, ret = 0;
- 
+ 	write_sysreg(*task_user_tls(next), tpidr_el0);
 
 
