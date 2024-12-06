@@ -1,47 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B34681442E8;
-	Fri,  6 Dec 2024 14:56:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 318261494A8;
+	Fri,  6 Dec 2024 14:57:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733497019; cv=none; b=YcuE3wrC4OKGpJnqftSvLsqmseg0XXs6gRBxTak0RE7yb8SShiH+7cSuSnt0Aq9RYXXrZeYDZjLELPqMwVBPKE8RFIzhYijh/RF3BCtZrWLmkDAbEQdTm6/B9MVvpjVKCq9xceLenKm1yugY0isA1uI76jLR9IlSayVLoSQHsBE=
+	t=1733497026; cv=none; b=XsPlW9JxCX1Go7X0kSPErlgtJAfhGZ8ohop7y1sdd1UQWsiXE/SWqJQs9Qsp58MScQ1w3mXxFrJ36/b0xdHLjy6IVTIYHIE1jkIRthEpCug9sGsBgLYY/CPq3lFjQkXr9gL2j2vT1KgzeqCYtADxyVGaZjNq6pO8qidqllYJNJo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733497019; c=relaxed/simple;
-	bh=A2IaY0duDk+jLtEtU3BtWgP0oJF0V7uHrWoYc2mcRis=;
+	s=arc-20240116; t=1733497026; c=relaxed/simple;
+	bh=ar5M2CtETQ7LffCerW3ynuKdBWAR7WQeSRU7nkmgto8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=shU4Smv0kLQCAcq2I+JxdH73vG3vcJ/wybYlSQJcYTUjDjHdlfq19AavOKwYB6GkkuNsOuapNAFNuxixqZdUk/TNHa0wY0kRG5VAFS2euwUUYpmMqKf3Gp5LtWXnign+HFNYScdpnX1K5uOR900y+v25G+5+8vLKaebrBrnJJnA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OM/br4wb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cuVjJ+2itQ9TlBLCPBmzypBtCoqWqXPB53CmlWENDhT8/56Lsa0EpdFviEZlkn3uQTua8wI9NvYGiI2HzLNn3dJlSpTGK5EACAb+hXC2KtBVNqVwFzjmZYhPi88l3Bv3/B8/9RypxUOiGiTqAU/uTE6GDhfCgFya7ve3yrO+IQM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zBqbfZ5P; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OM/br4wb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA0DDC4CED1;
-	Fri,  6 Dec 2024 14:56:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zBqbfZ5P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61A6AC4CED1;
+	Fri,  6 Dec 2024 14:57:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733497019;
-	bh=A2IaY0duDk+jLtEtU3BtWgP0oJF0V7uHrWoYc2mcRis=;
+	s=korg; t=1733497026;
+	bh=ar5M2CtETQ7LffCerW3ynuKdBWAR7WQeSRU7nkmgto8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OM/br4wbAsC97Ny1rE7joY2CCzv6EeK0633oGmu1MVnXXgS0AT6jNXqmwyjKPlkzT
-	 /PMg3WJorfAZfbWe9wm3MOwT7t8CdN+arMc/dnZDBlXkzg6VYw+IHYtH+nuXuLP61h
-	 Z8evbijTmpXWZ2VLsmOSeTeXbecaGuk8QtqAqxSI=
+	b=zBqbfZ5PROHs+TemSLe0FA488cYrQZGBhSiL/PaBEEXbNZoLnic2WXmSzWB8xGo3F
+	 IDkta514cMDXpTR3VOdrXEYW0UiApIL3hfQMaPKJxXZR1DzoLNFNxGd2CE/jT39qLP
+	 A14wZXynqNs/3P1dHZUpKl7A0bgD0KeK+yoFA+hU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rob Herring <robh+dt@kernel.org>,
-	Frank Rowand <frowand.list@gmail.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Ingo Molnar <mingo@redhat.com>,
-	Borislav Petkov <bp@alien8.de>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	x86@kernel.org,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	Saurabh Sengar <ssengar@linux.microsoft.com>,
-	Stephen Boyd <sboyd@kernel.org>,
-	Rob Herring <robh@kernel.org>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 144/676] x86/of: Unconditionally call unflatten_and_copy_device_tree()
-Date: Fri,  6 Dec 2024 15:29:23 +0100
-Message-ID: <20241206143658.977025897@linuxfoundation.org>
+Subject: [PATCH 6.6 171/676] drm/omap: Fix possible NULL dereference
+Date: Fri,  6 Dec 2024 15:29:50 +0100
+Message-ID: <20241206143700.029903010@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -60,75 +51,133 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stephen Boyd <sboyd@kernel.org>
+From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
 
-[ Upstream commit 40f18dbbb42c56019b889b5b1fdce3da89e354da ]
+[ Upstream commit a88fee2d67d9b78c24630a987a88ccf886b2498b ]
 
-Call this function unconditionally so that we can populate an empty DTB
-on platforms that don't boot with a firmware provided or builtin DTB.
-There's no harm in calling unflatten_device_tree() unconditionally here.
-If there isn't a non-NULL 'initial_boot_params' pointer then
-unflatten_device_tree() returns early.
+smatch reports:
 
-Cc: Rob Herring <robh+dt@kernel.org>
-Cc: Frank Rowand <frowand.list@gmail.com>
-Cc: Thomas Gleixner <tglx@linutronix.de>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Borislav Petkov <bp@alien8.de>
-Cc: Dave Hansen <dave.hansen@linux.intel.com>
-Cc: x86@kernel.org
-Cc: H. Peter Anvin <hpa@zytor.com>
-Tested-by: Saurabh Sengar <ssengar@linux.microsoft.com>
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
-Link: https://lore.kernel.org/r/20240217010557.2381548-5-sboyd@kernel.org
-Signed-off-by: Rob Herring <robh@kernel.org>
-Stable-dep-of: b2473a359763 ("of/fdt: add dt_phys arg to early_init_dt_scan and early_init_dt_verify")
+drivers/gpu/drm/omapdrm/dss/base.c:176 omapdss_device_disconnect() error: we previously assumed 'src' could be null (see line 169)
+
+This code is mostly from a time when omapdrm had its own display device
+model. I can't honestly remember the details, and I don't think it's
+worth digging in deeply into that for a legacy driver.
+
+However, it looks like we only call omapdss_device_disconnect() and
+omapdss_device_connect() with NULL as the src parameter. We can thus
+drop the src parameter from both functions, and fix the smatch warning.
+
+I don't think omapdss_device_disconnect() ever gets NULL for the dst
+parameter (if it did, we'd crash soon after returning from the
+function), but I have kept the !dst check, just in case, but I added a
+WARN_ON() there.
+
+Also, if the dst parameter can be NULL, we can't always get the struct
+dss_device pointer from dst->dss (which is only used for a debug print).
+To make sure we can't hit that issue, do it similarly to the
+omapdss_device_connect() function: add 'struct dss_device *dss' as the
+first parameter, so that we always have it regardless of the dst.
+
+Fixes: 79107f274b2f ("drm/omap: Add support for drm_bridge")
+Reviewed-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240806-omapdrm-misc-fixes-v1-1-15d31aea0831@ideasonboard.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/devicetree.c | 26 ++++++++++++++------------
- 1 file changed, 14 insertions(+), 12 deletions(-)
+ drivers/gpu/drm/omapdrm/dss/base.c    | 25 ++++++-------------------
+ drivers/gpu/drm/omapdrm/dss/omapdss.h |  3 +--
+ drivers/gpu/drm/omapdrm/omap_drv.c    |  4 ++--
+ 3 files changed, 9 insertions(+), 23 deletions(-)
 
-diff --git a/arch/x86/kernel/devicetree.c b/arch/x86/kernel/devicetree.c
-index c13c9cb40b9b4..47fe7de1575dd 100644
---- a/arch/x86/kernel/devicetree.c
-+++ b/arch/x86/kernel/devicetree.c
-@@ -283,22 +283,24 @@ static void __init x86_flattree_get_config(void)
- 	u32 size, map_len;
- 	void *dt;
- 
--	if (!initial_dtb)
--		return;
--
--	map_len = max(PAGE_SIZE - (initial_dtb & ~PAGE_MASK), (u64)128);
-+	if (initial_dtb) {
-+		map_len = max(PAGE_SIZE - (initial_dtb & ~PAGE_MASK), (u64)128);
-+
-+		dt = early_memremap(initial_dtb, map_len);
-+		size = fdt_totalsize(dt);
-+		if (map_len < size) {
-+			early_memunmap(dt, map_len);
-+			dt = early_memremap(initial_dtb, size);
-+			map_len = size;
-+		}
- 
--	dt = early_memremap(initial_dtb, map_len);
--	size = fdt_totalsize(dt);
--	if (map_len < size) {
--		early_memunmap(dt, map_len);
--		dt = early_memremap(initial_dtb, size);
--		map_len = size;
-+		early_init_dt_verify(dt);
- 	}
- 
--	early_init_dt_verify(dt);
- 	unflatten_and_copy_device_tree();
--	early_memunmap(dt, map_len);
-+
-+	if (initial_dtb)
-+		early_memunmap(dt, map_len);
+diff --git a/drivers/gpu/drm/omapdrm/dss/base.c b/drivers/gpu/drm/omapdrm/dss/base.c
+index 050ca7eafac58..556e0f9026bed 100644
+--- a/drivers/gpu/drm/omapdrm/dss/base.c
++++ b/drivers/gpu/drm/omapdrm/dss/base.c
+@@ -139,21 +139,13 @@ static bool omapdss_device_is_connected(struct omap_dss_device *dssdev)
  }
- #else
- static inline void x86_flattree_get_config(void) { }
+ 
+ int omapdss_device_connect(struct dss_device *dss,
+-			   struct omap_dss_device *src,
+ 			   struct omap_dss_device *dst)
+ {
+-	dev_dbg(&dss->pdev->dev, "connect(%s, %s)\n",
+-		src ? dev_name(src->dev) : "NULL",
++	dev_dbg(&dss->pdev->dev, "connect(%s)\n",
+ 		dst ? dev_name(dst->dev) : "NULL");
+ 
+-	if (!dst) {
+-		/*
+-		 * The destination is NULL when the source is connected to a
+-		 * bridge instead of a DSS device. Stop here, we will attach
+-		 * the bridge later when we will have a DRM encoder.
+-		 */
+-		return src && src->bridge ? 0 : -EINVAL;
+-	}
++	if (!dst)
++		return -EINVAL;
+ 
+ 	if (omapdss_device_is_connected(dst))
+ 		return -EBUSY;
+@@ -163,19 +155,14 @@ int omapdss_device_connect(struct dss_device *dss,
+ 	return 0;
+ }
+ 
+-void omapdss_device_disconnect(struct omap_dss_device *src,
++void omapdss_device_disconnect(struct dss_device *dss,
+ 			       struct omap_dss_device *dst)
+ {
+-	struct dss_device *dss = src ? src->dss : dst->dss;
+-
+-	dev_dbg(&dss->pdev->dev, "disconnect(%s, %s)\n",
+-		src ? dev_name(src->dev) : "NULL",
++	dev_dbg(&dss->pdev->dev, "disconnect(%s)\n",
+ 		dst ? dev_name(dst->dev) : "NULL");
+ 
+-	if (!dst) {
+-		WARN_ON(!src->bridge);
++	if (WARN_ON(!dst))
+ 		return;
+-	}
+ 
+ 	if (!dst->id && !omapdss_device_is_connected(dst)) {
+ 		WARN_ON(1);
+diff --git a/drivers/gpu/drm/omapdrm/dss/omapdss.h b/drivers/gpu/drm/omapdrm/dss/omapdss.h
+index 040d5a3e33d68..4c22c09c93d52 100644
+--- a/drivers/gpu/drm/omapdrm/dss/omapdss.h
++++ b/drivers/gpu/drm/omapdrm/dss/omapdss.h
+@@ -242,9 +242,8 @@ struct omap_dss_device *omapdss_device_get(struct omap_dss_device *dssdev);
+ void omapdss_device_put(struct omap_dss_device *dssdev);
+ struct omap_dss_device *omapdss_find_device_by_node(struct device_node *node);
+ int omapdss_device_connect(struct dss_device *dss,
+-			   struct omap_dss_device *src,
+ 			   struct omap_dss_device *dst);
+-void omapdss_device_disconnect(struct omap_dss_device *src,
++void omapdss_device_disconnect(struct dss_device *dss,
+ 			       struct omap_dss_device *dst);
+ 
+ int omap_dss_get_num_overlay_managers(void);
+diff --git a/drivers/gpu/drm/omapdrm/omap_drv.c b/drivers/gpu/drm/omapdrm/omap_drv.c
+index 21996b713d1c3..13790d3ac3b6a 100644
+--- a/drivers/gpu/drm/omapdrm/omap_drv.c
++++ b/drivers/gpu/drm/omapdrm/omap_drv.c
+@@ -307,7 +307,7 @@ static void omap_disconnect_pipelines(struct drm_device *ddev)
+ 	for (i = 0; i < priv->num_pipes; i++) {
+ 		struct omap_drm_pipeline *pipe = &priv->pipes[i];
+ 
+-		omapdss_device_disconnect(NULL, pipe->output);
++		omapdss_device_disconnect(priv->dss, pipe->output);
+ 
+ 		omapdss_device_put(pipe->output);
+ 		pipe->output = NULL;
+@@ -325,7 +325,7 @@ static int omap_connect_pipelines(struct drm_device *ddev)
+ 	int r;
+ 
+ 	for_each_dss_output(output) {
+-		r = omapdss_device_connect(priv->dss, NULL, output);
++		r = omapdss_device_connect(priv->dss, output);
+ 		if (r == -EPROBE_DEFER) {
+ 			omapdss_device_put(output);
+ 			return r;
 -- 
 2.43.0
 
