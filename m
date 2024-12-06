@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCB1653A7;
-	Fri,  6 Dec 2024 15:02:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCD3F13AA5F;
+	Fri,  6 Dec 2024 15:02:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733497321; cv=none; b=g8Xs95jnML52lcbVefNijVEjYggC/Dv9ItR488eHfkAvZRMZF6yuSgdkjHbn7HTtIFO7mJfJxq0AiyH05YxuzRQqcErAKwgUGwQou2gb2OVXP9rV6pk+cLWyDPsMxuL2arfg+QmlIY8bIo7UTky8jZy0GB0eeMidiWqqmr8I9uY=
+	t=1733497325; cv=none; b=pSKhTkkFAgumPn36xIKJllTZ7RNJjKcmVzZVteu2qJ1l337nlkndNcKCjhdSPDKR5rCZFnr5LzD5gL1IbdqJdzaMoiNRhitiQa+ZsuUCb326sVMOz4X7G0crPcVVjbWBST6Iku32jbX9pNX1UuEplH5+pX+rsO1oI14NjoLrX4g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733497321; c=relaxed/simple;
-	bh=fw6qYwIkL3uXzFi6csHQzItrap+6IQMSdjnYlrySE7o=;
+	s=arc-20240116; t=1733497325; c=relaxed/simple;
+	bh=BS+POV1ErYG7Jn15gRcVZNm3YktYLkY/iGOnrEGgrXA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p74cw7I0sLgUTOpgb22MAveCNh9HWEoyd38ueAtHFXs8ZTro366ZriOjRlS+f5uVJ9ulSOyRXFIxv9mvxya5Z5oOWcxYNHeB6zCIWvSzkDuvky8bWgcPODAlp+lZYSw1ZugwOCahVMnq/VdkQeXxESCedqRZjsJPgrF6XXVVBlM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qjYCTdB4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Nae18zEgpU7fGRp/eH6jWrLb+EUkKxbWhZhcmzlLKqXigtf2m14UZ0pBA3SmhS1h6i1N8JEDj4yhlCTy9F5I6lcRMexndluteDqXbn7kuf2XisNZ+cG/n+9ZhpYt45YlYadqLyC3Qz5MA2Rl6K6o5E4fo9IHFQZ5+1HhPz2m2sE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PY3Fuv+R; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qjYCTdB4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9597C4CED1;
-	Fri,  6 Dec 2024 15:02:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PY3Fuv+R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C700C4CED1;
+	Fri,  6 Dec 2024 15:02:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733497321;
-	bh=fw6qYwIkL3uXzFi6csHQzItrap+6IQMSdjnYlrySE7o=;
+	s=korg; t=1733497324;
+	bh=BS+POV1ErYG7Jn15gRcVZNm3YktYLkY/iGOnrEGgrXA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qjYCTdB4zaO6ClUdkJ7fdlnOhU6QeR236Vs8l4cfYhms8bSncHRAKYGvIWp+zcicK
-	 igdvTgketuvAOal3w/FaIPbNjdeNCrU5ZMq+5gKaZA+WSSJubX2LaGnbI7QcrqYpYq
-	 8jkgmgnFm1qSQiQhoxfEIek7Lq3DNSHWfRlFPWq0=
+	b=PY3Fuv+RCwmU/kweqTigO/s5WJN/mt1B23ovDF0bgODFguHBTjwZw6Abhk6jSoram
+	 XMHGA/a2ItQ2ON7P/M/ZpiyO/tycVj75gkkxVv0r5FbY6nPWqwsVU+6/nNAlzoFOdN
+	 3kP8XoC00X2be29mHLZVsPuS0nAeRU3GJRFNqe4E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jie Zhan <zhanjie9@hisilicon.com>,
-	Zeng Heng <zengheng4@huawei.com>,
-	Ionela Voinescu <ionela.voinescu@arm.com>,
-	Huisong Li <lihuisong@huawei.com>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
+	Lukas Bulwahn <lukas.bulwahn@redhat.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 259/676] cppc_cpufreq: Use desired perf if feedback ctrs are 0 or unchanged
-Date: Fri,  6 Dec 2024 15:31:18 +0100
-Message-ID: <20241206143703.448358871@linuxfoundation.org>
+Subject: [PATCH 6.6 260/676] clk: mediatek: drop two dead config options
+Date: Fri,  6 Dec 2024 15:31:19 +0100
+Message-ID: <20241206143703.487718728@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -54,126 +52,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jie Zhan <zhanjie9@hisilicon.com>
+From: Lukas Bulwahn <lukas.bulwahn@redhat.com>
 
-[ Upstream commit c47195631960b626058c335aec31f186fa854f97 ]
+[ Upstream commit 98619dc3cecc2b3943d6abe1db235c868dc72f8d ]
 
-The CPPC performance feedback counters could be 0 or unchanged when the
-target cpu is in a low-power idle state, e.g. power-gated or clock-gated.
+Commit 0f471d31e5e8 ("clk: mediatek: Split MT8195 clock drivers and allow
+module build") adds a number of new COMMON_CLK_MT8195_* config options.
+Among those, the config options COMMON_CLK_MT8195_AUDSYS and
+COMMON_CLK_MT8195_MSDC have no reference in the source tree and are not
+used in the Makefile to include a specific file.
 
-When the counters are 0, cppc_cpufreq_get_rate() returns 0 KHz, which makes
-cpufreq_online() get a false error and fail to generate a cpufreq policy.
+Drop the dead config options COMMON_CLK_MT8195_AUDSYS and
+COMMON_CLK_MT8195_MSDC.
 
-When the counters are unchanged, the existing cppc_perf_from_fbctrs()
-returns a cached desired perf, but some platforms may update the real
-frequency back to the desired perf reg.
-
-For the above cases in cppc_cpufreq_get_rate(), get the latest desired perf
-from the CPPC reg to reflect the frequency because some platforms may
-update the actual frequency back there; if failed, use the cached desired
-perf.
-
-Fixes: 6a4fec4f6d30 ("cpufreq: cppc: cppc_cpufreq_get_rate() returns zero in all error cases.")
-Signed-off-by: Jie Zhan <zhanjie9@hisilicon.com>
-Reviewed-by: Zeng Heng <zengheng4@huawei.com>
-Reviewed-by: Ionela Voinescu <ionela.voinescu@arm.com>
-Reviewed-by: Huisong Li <lihuisong@huawei.com>
-Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+Fixes: 0f471d31e5e8 ("clk: mediatek: Split MT8195 clock drivers and allow module build")
+Signed-off-by: Lukas Bulwahn <lukas.bulwahn@redhat.com>
+Link: https://lore.kernel.org/r/20240927092232.386511-1-lukas.bulwahn@redhat.com
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/cppc_cpufreq.c | 57 +++++++++++++++++++++++++++-------
- 1 file changed, 46 insertions(+), 11 deletions(-)
+ drivers/clk/mediatek/Kconfig | 15 ---------------
+ 1 file changed, 15 deletions(-)
 
-diff --git a/drivers/cpufreq/cppc_cpufreq.c b/drivers/cpufreq/cppc_cpufreq.c
-index 15f1d41920a33..9d476264075d8 100644
---- a/drivers/cpufreq/cppc_cpufreq.c
-+++ b/drivers/cpufreq/cppc_cpufreq.c
-@@ -118,6 +118,9 @@ static void cppc_scale_freq_workfn(struct kthread_work *work)
+diff --git a/drivers/clk/mediatek/Kconfig b/drivers/clk/mediatek/Kconfig
+index 48b42d11111cd..8ad02c1f035b3 100644
+--- a/drivers/clk/mediatek/Kconfig
++++ b/drivers/clk/mediatek/Kconfig
+@@ -878,13 +878,6 @@ config COMMON_CLK_MT8195_APUSYS
+ 	help
+ 	  This driver supports MediaTek MT8195 AI Processor Unit System clocks.
  
- 	perf = cppc_perf_from_fbctrs(cpu_data, &cppc_fi->prev_perf_fb_ctrs,
- 				     &fb_ctrs);
-+	if (!perf)
-+		return;
-+
- 	cppc_fi->prev_perf_fb_ctrs = fb_ctrs;
- 
- 	perf <<= SCHED_CAPACITY_SHIFT;
-@@ -730,13 +733,31 @@ static int cppc_perf_from_fbctrs(struct cppc_cpudata *cpu_data,
- 	delta_delivered = get_delta(fb_ctrs_t1->delivered,
- 				    fb_ctrs_t0->delivered);
- 
--	/* Check to avoid divide-by zero and invalid delivered_perf */
-+	/*
-+	 * Avoid divide-by zero and unchanged feedback counters.
-+	 * Leave it for callers to handle.
-+	 */
- 	if (!delta_reference || !delta_delivered)
--		return cpu_data->perf_ctrls.desired_perf;
-+		return 0;
- 
- 	return (reference_perf * delta_delivered) / delta_reference;
- }
- 
-+static int cppc_get_perf_ctrs_sample(int cpu,
-+				     struct cppc_perf_fb_ctrs *fb_ctrs_t0,
-+				     struct cppc_perf_fb_ctrs *fb_ctrs_t1)
-+{
-+	int ret;
-+
-+	ret = cppc_get_perf_ctrs(cpu, fb_ctrs_t0);
-+	if (ret)
-+		return ret;
-+
-+	udelay(2); /* 2usec delay between sampling */
-+
-+	return cppc_get_perf_ctrs(cpu, fb_ctrs_t1);
-+}
-+
- static unsigned int cppc_cpufreq_get_rate(unsigned int cpu)
- {
- 	struct cppc_perf_fb_ctrs fb_ctrs_t0 = {0}, fb_ctrs_t1 = {0};
-@@ -752,18 +773,32 @@ static unsigned int cppc_cpufreq_get_rate(unsigned int cpu)
- 
- 	cpufreq_cpu_put(policy);
- 
--	ret = cppc_get_perf_ctrs(cpu, &fb_ctrs_t0);
--	if (ret)
--		return 0;
+-config COMMON_CLK_MT8195_AUDSYS
+-	tristate "Clock driver for MediaTek MT8195 audsys"
+-	depends on COMMON_CLK_MT8195
+-	default COMMON_CLK_MT8195
+-	help
+-	  This driver supports MediaTek MT8195 audsys clocks.
 -
--	udelay(2); /* 2usec delay between sampling */
+ config COMMON_CLK_MT8195_IMP_IIC_WRAP
+ 	tristate "Clock driver for MediaTek MT8195 imp_iic_wrap"
+ 	depends on COMMON_CLK_MT8195
+@@ -899,14 +892,6 @@ config COMMON_CLK_MT8195_MFGCFG
+ 	help
+ 	  This driver supports MediaTek MT8195 mfgcfg clocks.
+ 
+-config COMMON_CLK_MT8195_MSDC
+-	tristate "Clock driver for MediaTek MT8195 msdc"
+-	depends on COMMON_CLK_MT8195
+-	default COMMON_CLK_MT8195
+-	help
+-	  This driver supports MediaTek MT8195 MMC and SD Controller's
+-	  msdc and msdc_top clocks.
 -
--	ret = cppc_get_perf_ctrs(cpu, &fb_ctrs_t1);
--	if (ret)
--		return 0;
-+	ret = cppc_get_perf_ctrs_sample(cpu, &fb_ctrs_t0, &fb_ctrs_t1);
-+	if (ret) {
-+		if (ret == -EFAULT)
-+			/* Any of the associated CPPC regs is 0. */
-+			goto out_invalid_counters;
-+		else
-+			return 0;
-+	}
- 
- 	delivered_perf = cppc_perf_from_fbctrs(cpu_data, &fb_ctrs_t0,
- 					       &fb_ctrs_t1);
-+	if (!delivered_perf)
-+		goto out_invalid_counters;
-+
-+	return cppc_perf_to_khz(&cpu_data->perf_caps, delivered_perf);
-+
-+out_invalid_counters:
-+	/*
-+	 * Feedback counters could be unchanged or 0 when a cpu enters a
-+	 * low-power idle state, e.g. clock-gated or power-gated.
-+	 * Use desired perf for reflecting frequency.  Get the latest register
-+	 * value first as some platforms may update the actual delivered perf
-+	 * there; if failed, resort to the cached desired perf.
-+	 */
-+	if (cppc_get_desired_perf(cpu, &delivered_perf))
-+		delivered_perf = cpu_data->perf_ctrls.desired_perf;
- 
- 	return cppc_perf_to_khz(&cpu_data->perf_caps, delivered_perf);
- }
+ config COMMON_CLK_MT8195_SCP_ADSP
+ 	tristate "Clock driver for MediaTek MT8195 scp_adsp"
+ 	depends on COMMON_CLK_MT8195
 -- 
 2.43.0
 
