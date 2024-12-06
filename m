@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9210A13AA5F;
-	Fri,  6 Dec 2024 15:00:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D93551E871;
+	Fri,  6 Dec 2024 15:00:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733497222; cv=none; b=RvJ3dekThznzUujiaoA1c5FS5iDuI8YdiwbRkpG/k5KD4UG5CEgw5XwkQcnIkWTGh3drn6W1jPGWvPyPmlDQtvJZv+wIo5cc/xD+sPhmxSjkEIK+d6cffwoqgXimTkP+eqgfQmgUeA5QG/kktRXx07NwHe7VXiU/QC6Vlan5hHk=
+	t=1733497225; cv=none; b=syLHIcr3APVm0gjglSg78lUC8i9heGPeb8Qye98yrhM09EE3oq4zKPpY3xQ4uiDylhZJ/WW9OP1lhPq95gAPdjPgKEM2n6uxvPYAeDljhTH0PWlm3WVceLjfTNDtJw4ceHgAXdHXeRlq3D+tJiNBM3UNNnkczh400axhRZYOs7U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733497222; c=relaxed/simple;
-	bh=xwKc2UONLDEE2gumSuKGcDYSV+hUXPRMUHKrW1A3uOs=;
+	s=arc-20240116; t=1733497225; c=relaxed/simple;
+	bh=qdrhLGeDVEYeL+X6sVoIjM6/7cWPLn96gLYwz+UVvWU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hRfDEKtaPS+nzi9QPl7cPyl8kcy2XO/qN9fBne/kqNQoodp9e44yFjB33nPOV3YDGixnIiTjmgUPLVtC+l8Pmca09AcsnCQWGrq9B6DAfFL9VUvsN1Mu1CMUTtw/tz2F0cMS33oWBaap8G4YbQHOguvt4p3Eg3RbuAN8iam4u88=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nee1NuUa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qfceJw9CBexpZNusqvTg9WBXXMbGJAiyrB7h/OAKxJyZL5RMcyaROR4rIX8lTWph83AUYw224X5xxzAnjhgmnMJZ3+8GyiU2GHaR7dgQ7Ua9xLdem1uZY2mlt/1fx1CGRfUn7tOPEFK+77dmPfvSisbGnoLHRHknjjmLzhcCMNE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gIjUPnn+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nee1NuUa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 017DCC4CED1;
-	Fri,  6 Dec 2024 15:00:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gIjUPnn+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 460B7C4CED1;
+	Fri,  6 Dec 2024 15:00:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733497222;
-	bh=xwKc2UONLDEE2gumSuKGcDYSV+hUXPRMUHKrW1A3uOs=;
+	s=korg; t=1733497225;
+	bh=qdrhLGeDVEYeL+X6sVoIjM6/7cWPLn96gLYwz+UVvWU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nee1NuUaU6TqPeI9YH7uHfg9e4HModNYUjI8OmNsb6QVn9Ltos8MIJVJ9xsIHQOfk
-	 cGAU13j/vpbLU3EOJcWAMGN8J/XQAriQ/GJWGA5wYyStu9Hv43QN/kdHWNwhq5cOZd
-	 iw5nD3IUs8U/KLpjPQoTEsuKU3MX2WZko+S75PxU=
+	b=gIjUPnn+jgG2xh7KAb/NuHpTsvPYfKeFTLIPjmhlWtam2myBEspm621LRtfICRFp3
+	 HbwU8rSgwhwZ2wEg4kO4wuyYeJZ2o4rgL7XOvvtg3MDNryQGqn8wvVQuZnzA6kBMTC
+	 cAqnTORIHQRtnLJ5za9xQUdDKPIAvh87C7lQzStU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 212/676] selftests/bpf: fix test_spin_lock_fail.cs global vars usage
-Date: Fri,  6 Dec 2024 15:30:31 +0100
-Message-ID: <20241206143701.623121452@linuxfoundation.org>
+Subject: [PATCH 6.6 230/676] netfilter: nf_tables: skip transaction if update object is not implemented
+Date: Fri,  6 Dec 2024 15:30:49 +0100
+Message-ID: <20241206143702.318666283@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -51,48 +50,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrii Nakryiko <andrii@kernel.org>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit 1b2bfc29695d273492c3dd8512775261f3272686 ]
+[ Upstream commit 84b1a0c0140a9a92ea108576c0002210f224ce59 ]
 
-Global variables of special types (like `struct bpf_spin_lock`) make
-underlying ARRAY maps non-mmapable. To make this work with libbpf's
-mmaping logic, application is expected to declare such special variables
-as static, so libbpf doesn't even attempt to mmap() such ARRAYs.
+Turn update into noop as a follow up for:
 
-test_spin_lock_fail.c didn't follow this rule, but given it relied on
-this test to trigger failures, this went unnoticed, as we never got to
-the step of mmap()'ing these ARRAY maps.
+  9fedd894b4e1 ("netfilter: nf_tables: fix unexpected EOPNOTSUPP error")
 
-It is fragile and relies on specific sequence of libbpf steps, which are
-an internal implementation details.
+instead of adding a transaction object which is simply discarded at a
+later stage of the commit protocol.
 
-Fix the test by marking lockA and lockB as static.
-
-Fixes: c48748aea4f8 ("selftests/bpf: Add failure test cases for spin lock pairing")
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/r/20241023043908.3834423-2-andrii@kernel.org
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Stable-dep-of: cddc04275f95 ("netfilter: nf_tables: must hold rcu read lock while iterating object type list")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/progs/test_spin_lock_fail.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/netfilter/nf_tables_api.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/tools/testing/selftests/bpf/progs/test_spin_lock_fail.c b/tools/testing/selftests/bpf/progs/test_spin_lock_fail.c
-index 86cd183ef6dc8..293ac1049d388 100644
---- a/tools/testing/selftests/bpf/progs/test_spin_lock_fail.c
-+++ b/tools/testing/selftests/bpf/progs/test_spin_lock_fail.c
-@@ -28,8 +28,8 @@ struct {
- 	},
- };
+diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
+index 5c4cd9646e71c..abab78148c6c8 100644
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -7689,6 +7689,9 @@ static int nf_tables_newobj(struct sk_buff *skb, const struct nfnl_info *info,
+ 		if (WARN_ON_ONCE(!type))
+ 			return -ENOENT;
  
--SEC(".data.A") struct bpf_spin_lock lockA;
--SEC(".data.B") struct bpf_spin_lock lockB;
-+static struct bpf_spin_lock lockA SEC(".data.A");
-+static struct bpf_spin_lock lockB SEC(".data.B");
++		if (!obj->ops->update)
++			return 0;
++
+ 		nft_ctx_init(&ctx, net, skb, info->nlh, family, table, NULL, nla);
  
- SEC("?tc")
- int lock_id_kptr_preserve(void *ctx)
+ 		return nf_tables_updobj(&ctx, type, nla[NFTA_OBJ_DATA], obj);
+@@ -9432,9 +9435,10 @@ static void nft_obj_commit_update(struct nft_trans *trans)
+ 	obj = nft_trans_obj(trans);
+ 	newobj = nft_trans_obj_newobj(trans);
+ 
+-	if (obj->ops->update)
+-		obj->ops->update(obj, newobj);
++	if (WARN_ON_ONCE(!obj->ops->update))
++		return;
+ 
++	obj->ops->update(obj, newobj);
+ 	nft_obj_destroy(&trans->ctx, newobj);
+ }
+ 
 -- 
 2.43.0
 
