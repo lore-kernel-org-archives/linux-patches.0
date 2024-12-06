@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 419FC153BE8;
-	Fri,  6 Dec 2024 15:22:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A35E253A7;
+	Fri,  6 Dec 2024 15:22:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733498522; cv=none; b=WxdZ8Ce5V/sWDGNqqSXONsYAbFX8ZUt5vC1Zxeyrnqpc2VuNA81QZtDKlBrE4ymlCjFnb1FYDHXQVXAC/55KK7Lfn1IbCehNGIZfe5HMMBSOsJJOKa+Oj+OG9z1sfz/SCjkGh4yNbhhesjoksiEH4ifQfZ3N1Ns2yBx9ah10SmU=
+	t=1733498525; cv=none; b=NXp5EGesOm7hodgJgB////24Jk5XvleASbTWFblolSbHKAmaNB5B0M5o+wf/PVvUUm1og3tHL68i1q9VjTLglQIutY9fl3KJ5/du9xxGRSBKcgSiGQq6U4rnaCnswC7ZZ0oqwmhn+qfj0L5TUuwa7JENKtmlicVAIwa99dzTT3Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733498522; c=relaxed/simple;
-	bh=2y7/MaHkRkDoqnwf5/njwbwiBlgNpllw8NQbMHj6u2o=;
+	s=arc-20240116; t=1733498525; c=relaxed/simple;
+	bh=VCK6Js+KTQstFwdeAsjzAySp7h1OprLCdx8YobiQPIQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IDDpDjmsTr4aJpxjSx8kUmOKTYIZfe/xGTs3a25GtpEu0KztiP0YOSVLsoTh58+LnAUlYC/2ITJjMn6ftGoal1zmdKlubDaKb3QkdMbAHkdsC0yp07ryhAWbI6Hj04lTz3LAU8pn1FsJIzVOvSi9PHgMANM9IM9kKICl+foVyJk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0vJ/4AKz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gOQmky4M4Y9k/EPxIFGVJHjt20EBEFfLygeNKhKZxuIVfh7i4H03b5+fyuROFGSz2IvHDFo5fZp5laQGGLQO8rTwK9oHkBOQxgJUE7elFtIE2/YizOdsDdJrrjbYpcvDNWsjPIrXFJe3n2VjGp/rtJnu9jAkmkL//3kJHm4ylyo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ChuQYZRQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0vJ/4AKz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A76FFC4CED1;
-	Fri,  6 Dec 2024 15:22:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ChuQYZRQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E1CAC4CED1;
+	Fri,  6 Dec 2024 15:22:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733498522;
-	bh=2y7/MaHkRkDoqnwf5/njwbwiBlgNpllw8NQbMHj6u2o=;
+	s=korg; t=1733498525;
+	bh=VCK6Js+KTQstFwdeAsjzAySp7h1OprLCdx8YobiQPIQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0vJ/4AKzHjmnsnaT265JoyB67bxlI0nXWDlyurM8AnK/WHh8hfpYcK2nzsHG/lhbe
-	 bkDuJ6qrVTDWKs+JjJB13ID2LMCrUhsQRi+LWdkztXqaS5liUkFNm8AXXnVDhBq4nH
-	 DbH64rWVQzDtPBPk6rXfnRaw3dWozdFLf7aN0riQ=
+	b=ChuQYZRQhWhZELQFRXyM/qW/5lwtBRIoyixuuBHV/VWALcUs94AIjGf3OhQxINgSA
+	 lUNgc1QTtrVEsz/dHpGGv5f8QIjf4wU/MpNLL9YOupAJtd0cDrhoTwAHWgljW4Nrxb
+	 0uxq8vrEHa4GBQ4WSiWupQl40xWiIEjIMrM01KhE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Ming Qian <ming.qian@nxp.com>,
 	TaoJiang <tao.jiang_2@nxp.com>,
 	Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Subject: [PATCH 6.6 609/676] media: amphion: Set video drvdata before register video device
-Date: Fri,  6 Dec 2024 15:37:08 +0100
-Message-ID: <20241206143717.161701652@linuxfoundation.org>
+Subject: [PATCH 6.6 610/676] media: imx-jpeg: Set video drvdata before register video device
+Date: Fri,  6 Dec 2024 15:37:09 +0100
+Message-ID: <20241206143717.200296973@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -53,39 +53,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Ming Qian <ming.qian@nxp.com>
 
-commit 8cbb1a7bd5973b57898b26eb804fe44af440bb63 upstream.
+commit d2b7ecc26bd5406d5ba927be1748aa99c568696c upstream.
 
 The video drvdata should be set before the video device is registered,
 otherwise video_drvdata() may return NULL in the open() file ops, and led
 to oops.
 
-Fixes: 3cd084519c6f ("media: amphion: add vpu v4l2 m2m support")
+Fixes: 2db16c6ed72c ("media: imx-jpeg: Add V4L2 driver for i.MX8 JPEG Encoder/Decoder")
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Ming Qian <ming.qian@nxp.com>
 Reviewed-by: TaoJiang <tao.jiang_2@nxp.com>
 Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/amphion/vpu_v4l2.c |    2 +-
+ drivers/media/platform/nxp/imx-jpeg/mxc-jpeg.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/media/platform/amphion/vpu_v4l2.c
-+++ b/drivers/media/platform/amphion/vpu_v4l2.c
-@@ -825,6 +825,7 @@ int vpu_add_func(struct vpu_dev *vpu, st
- 		vfd->fops = vdec_get_fops();
- 		vfd->ioctl_ops = vdec_get_ioctl_ops();
+--- a/drivers/media/platform/nxp/imx-jpeg/mxc-jpeg.c
++++ b/drivers/media/platform/nxp/imx-jpeg/mxc-jpeg.c
+@@ -2837,6 +2837,7 @@ static int mxc_jpeg_probe(struct platfor
+ 	jpeg->dec_vdev->vfl_dir = VFL_DIR_M2M;
+ 	jpeg->dec_vdev->device_caps = V4L2_CAP_STREAMING |
+ 					V4L2_CAP_VIDEO_M2M_MPLANE;
++	video_set_drvdata(jpeg->dec_vdev, jpeg);
+ 	if (mode == MXC_JPEG_ENCODE) {
+ 		v4l2_disable_ioctl(jpeg->dec_vdev, VIDIOC_DECODER_CMD);
+ 		v4l2_disable_ioctl(jpeg->dec_vdev, VIDIOC_TRY_DECODER_CMD);
+@@ -2849,7 +2850,6 @@ static int mxc_jpeg_probe(struct platfor
+ 		dev_err(dev, "failed to register video device\n");
+ 		goto err_vdev_register;
  	}
-+	video_set_drvdata(vfd, vpu);
- 
- 	ret = video_register_device(vfd, VFL_TYPE_VIDEO, -1);
- 	if (ret) {
-@@ -832,7 +833,6 @@ int vpu_add_func(struct vpu_dev *vpu, st
- 		v4l2_m2m_release(func->m2m_dev);
- 		return ret;
- 	}
--	video_set_drvdata(vfd, vpu);
- 	func->vfd = vfd;
- 
- 	ret = v4l2_m2m_register_media_controller(func->m2m_dev, func->vfd, func->function);
+-	video_set_drvdata(jpeg->dec_vdev, jpeg);
+ 	if (mode == MXC_JPEG_ENCODE)
+ 		v4l2_info(&jpeg->v4l2_dev,
+ 			  "encoder device registered as /dev/video%d (%d,%d)\n",
 
 
