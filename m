@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C0E3149C69;
-	Fri,  6 Dec 2024 14:50:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AC4F149C51;
+	Fri,  6 Dec 2024 14:50:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733496607; cv=none; b=NSnuaSnLY66CSYAT2QN6xVR4yE/yujXL12eocvlAh2IIegOx2IN7mUPEDRgvLqEBPdzehXOliOySuXmoCbiMhgPB3UW/sQArolpkq1w8GZzjtk6Mp7BodFGRgWXeWPXObHgxa8Y9xBIC0cPjDSklGT02xUMM1EVNFc9D/s19Dkw=
+	t=1733496610; cv=none; b=NmeZ24NOvkHlxx0JTqw1zK4mKpeam9mdGYfGHYikGG3U4Z2cL04Y7kgZal6vx2kpW4oFF0o8pCS07NbmaxW6hSmdrHt0il1QY+L+6gtPIiGsCRTPJz1P2DOfT077jmPeSOuxcjNEJcgX2NjrwdxcZ3cIVjnP4jGRB4w/5yw+TQM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733496607; c=relaxed/simple;
-	bh=gxMUlUBI/pRZoIPbNRU74VCeciBfFZWCN+cvfJ4CUb4=;
+	s=arc-20240116; t=1733496610; c=relaxed/simple;
+	bh=slBbcAjWKDsYIAThWXN2jhuUeZbvbHRosalH7XFsvc0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UCCL+Z2S8RpvhgBuPLFa3USyCFhzUh2aX9WOYh7IYDyAoW6+dEt7PcJKvn7Q0BEd4qwCg0JE0muC5bw4Tx9bSd23qX4VWzzuVJbmfdqXY+CJAoCJyPX71ZRLjtZZ4TRovrHyFjQlq11qxUopohvCQH6virAdD9YHp3r2KndwKE0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uDPCpxMY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tNT1mJ3St2787ikY6haCBZXIk0MF+akBOY19913gXlnI5je35EkHUuEYT+zJlZ8GwnwiFP7Yvp9vKn89joEn1zNt7pg7fMsDyIGnLTvyDUfG6nZMeaWv3VuQ9ZIu2JPy+OESPv6zs/Zkak8i09im62aeV/uunTjfMkHGo8OXHnA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tST28Qs1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uDPCpxMY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2969DC4CED1;
-	Fri,  6 Dec 2024 14:50:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tST28Qs1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84F44C4CED1;
+	Fri,  6 Dec 2024 14:50:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733496606;
-	bh=gxMUlUBI/pRZoIPbNRU74VCeciBfFZWCN+cvfJ4CUb4=;
+	s=korg; t=1733496610;
+	bh=slBbcAjWKDsYIAThWXN2jhuUeZbvbHRosalH7XFsvc0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uDPCpxMYdZVPFpqxw4kwwmqG+ihs8Ovasux5lcWN7Jx7LfbvD37LVGFldu1XqtfPQ
-	 hSuKn65M2RclIrhINFnBtvkclDrSEBWmDEidyhO48fGL2kH2J1AIBqxD6xwBcmpk4m
-	 FQEJa5lNJB30Vt14+vFqAE3XUwuwAGKwWQ8drEVQ=
+	b=tST28Qs1D21yRnCBzJg8BNpbm56p3XjTsf6njJGIOvoBUbLEtl25p7h+nz5P09JEA
+	 FzQDwPpVBaDOp6mZGFfvdHKKgTLNiqHyRsBLeEt3uO3R6X7ZfEIuGTHzqFNoNtBKag
+	 FxwE+/0zvMNiKWRnMYzvEPqFiqs5C7QEANR5VIhU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
+	Jason Andryuk <jason.andryuk@amd.com>,
+	Juergen Gross <jgross@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 053/676] s390/pageattr: Implement missing kernel_page_present()
-Date: Fri,  6 Dec 2024 15:27:52 +0100
-Message-ID: <20241206143655.423171355@linuxfoundation.org>
+Subject: [PATCH 6.6 054/676] x86/pvh: Set phys_base when calling xen_prepare_pvh()
+Date: Fri,  6 Dec 2024 15:27:53 +0100
+Message-ID: <20241206143655.462717781@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -52,66 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heiko Carstens <hca@linux.ibm.com>
+From: Jason Andryuk <jason.andryuk@amd.com>
 
-[ Upstream commit 2835f8bf5530750c3381166005934f996a83ad05 ]
+[ Upstream commit b464b461d27d564125db760938643374864c1b1f ]
 
-kernel_page_present() was intentionally not implemented when adding
-ARCH_HAS_SET_DIRECT_MAP support, since it was only used for suspend/resume
-which is not supported anymore on s390.
+phys_base needs to be set for __pa() to work in xen_pvh_init() when
+finding the hypercall page.  Set it before calling into
+xen_prepare_pvh(), which calls xen_pvh_init().  Clear it afterward to
+avoid __startup_64() adding to it and creating an incorrect value.
 
-A new bpf use case led to a compile error specific to s390. Even though
-this specific use case went away implement kernel_page_present(), so that
-the API is complete and potential future users won't run into this problem.
-
-Reported-by: Daniel Borkmann <daniel@iogearbox.net>
-Closes: https://lore.kernel.org/all/045de961-ac69-40cc-b141-ab70ec9377ec@iogearbox.net
-Fixes: 0490d6d7ba0a ("s390/mm: enable ARCH_HAS_SET_DIRECT_MAP")
-Reviewed-by: Alexander Gordeev <agordeev@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Jason Andryuk <jason.andryuk@amd.com>
+Reviewed-by: Juergen Gross <jgross@suse.com>
+Message-ID: <20240823193630.2583107-4-jason.andryuk@amd.com>
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Stable-dep-of: e8fbc0d9cab6 ("x86/pvh: Call C code via the kernel virtual mapping")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/include/asm/set_memory.h |  1 +
- arch/s390/mm/pageattr.c            | 15 +++++++++++++++
- 2 files changed, 16 insertions(+)
+ arch/x86/platform/pvh/head.S | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/arch/s390/include/asm/set_memory.h b/arch/s390/include/asm/set_memory.h
-index 06fbabe2f66c9..cb4cc0f59012f 100644
---- a/arch/s390/include/asm/set_memory.h
-+++ b/arch/s390/include/asm/set_memory.h
-@@ -62,5 +62,6 @@ __SET_MEMORY_FUNC(set_memory_4k, SET_MEMORY_4K)
+diff --git a/arch/x86/platform/pvh/head.S b/arch/x86/platform/pvh/head.S
+index c4365a05ab83b..c994ea58bdf7a 100644
+--- a/arch/x86/platform/pvh/head.S
++++ b/arch/x86/platform/pvh/head.S
+@@ -100,7 +100,20 @@ SYM_CODE_START_LOCAL(pvh_start_xen)
+ 	xor %edx, %edx
+ 	wrmsr
  
- int set_direct_map_invalid_noflush(struct page *page);
- int set_direct_map_default_noflush(struct page *page);
-+bool kernel_page_present(struct page *page);
++	/*
++	 * Calculate load offset and store in phys_base.  __pa() needs
++	 * phys_base set to calculate the hypercall page in xen_pvh_init().
++	 */
++	movq %rbp, %rbx
++	subq $_pa(pvh_start_xen), %rbx
++	movq %rbx, phys_base(%rip)
+ 	call xen_prepare_pvh
++	/*
++	 * Clear phys_base.  __startup_64 will *add* to its value,
++	 * so reset to 0.
++	 */
++	xor  %rbx, %rbx
++	movq %rbx, phys_base(%rip)
  
- #endif
-diff --git a/arch/s390/mm/pageattr.c b/arch/s390/mm/pageattr.c
-index 441f654d048d2..44271835c97e7 100644
---- a/arch/s390/mm/pageattr.c
-+++ b/arch/s390/mm/pageattr.c
-@@ -406,6 +406,21 @@ int set_direct_map_default_noflush(struct page *page)
- 	return __set_memory((unsigned long)page_to_virt(page), 1, SET_MEMORY_DEF);
- }
- 
-+bool kernel_page_present(struct page *page)
-+{
-+	unsigned long addr;
-+	unsigned int cc;
-+
-+	addr = (unsigned long)page_address(page);
-+	asm volatile(
-+		"	lra	%[addr],0(%[addr])\n"
-+		"	ipm	%[cc]\n"
-+		: [cc] "=d" (cc), [addr] "+a" (addr)
-+		:
-+		: "cc");
-+	return (cc >> 28) == 0;
-+}
-+
- #if defined(CONFIG_DEBUG_PAGEALLOC) || defined(CONFIG_KFENCE)
- 
- static void ipte_range(pte_t *pte, unsigned long address, int nr)
+ 	/* startup_64 expects boot_params in %rsi. */
+ 	mov $_pa(pvh_bootparams), %rsi
 -- 
 2.43.0
 
