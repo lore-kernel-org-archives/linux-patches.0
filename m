@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80E1032C8B;
-	Fri,  6 Dec 2024 14:51:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05E4C32C8B;
+	Fri,  6 Dec 2024 14:51:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733496664; cv=none; b=DfafVCVMBURtpUKQabU7hUP8LV0dP0Sq4cJoy6jAoQ8hUz1j3byKlpqPQLqKH085707NNTPuoH6yC6wNtjDKqic3SIETEEheB6El+DWhSJ6SEil3qzIrFMS/NsN49+KmfqaQUU7Dea4jJUb5/K+tY/+3pYdQrrWBMyv2Z1wI+R8=
+	t=1733496668; cv=none; b=NeT17mFR6qy0IikBlscJFkes2n6oomvgSn91yOAXLOK930rKURrLyLmIBlp/eHe7OsflqIKpwSZ68JHXgKUql2bB4brmUwJafISyxEv81Bgtt65bkB7ZVtwiyvMonemiWXfrETsMUR9tRCMikzVxI5+jKQuOB3Y/p6HMD1E8TTo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733496664; c=relaxed/simple;
-	bh=yO6Q+Fan2Cky1QWkEwqLaY3pj6FPdgeaF1BNWRp3IHc=;
+	s=arc-20240116; t=1733496668; c=relaxed/simple;
+	bh=60PtAAM1vASlRxycmQkEBN3F0LdVmVlPRQLXuJIE+6I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TJdAv36dRSKbK/XDm+7NwgPNoPewqFZTr6lMoKK0fH/NfMgYT1ONYjoL+KEyZGoY8ndrQ9AYPtRb5UTctILLDBNtVnJig4e/SoJVtPzI/g6BQuWLL09o+5yWCX2MTH91r4twXT3anKIzG6rE7UvYEdjLQDIPR1MwqOYuQg928LA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N6oDKfmq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jxUEQhXGdvXtgtPkg+5bf2xBC8wo/6zcx5RFE0AFxloEbKnurRJB88lCPBXhlR0Cwc6ZQYdlI8rEZz9mKg8iUCiI9CGdhebsZUPjldzSN7Vk4wdTdZmjxWaO+KwSCOyM209X7WwJJddR5TCLgkOzU7HfRxjA7RQLXMjyT58FOfU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UiGXyxDh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N6oDKfmq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E04ACC4CED1;
-	Fri,  6 Dec 2024 14:51:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UiGXyxDh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 637D8C4CED1;
+	Fri,  6 Dec 2024 14:51:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733496664;
-	bh=yO6Q+Fan2Cky1QWkEwqLaY3pj6FPdgeaF1BNWRp3IHc=;
+	s=korg; t=1733496667;
+	bh=60PtAAM1vASlRxycmQkEBN3F0LdVmVlPRQLXuJIE+6I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N6oDKfmqO2nYe76HhN+dcQEOxxcqN1VUs968wGBWOzvKFCIlcwwtOiNxQKkEvSl/O
-	 gf64Kc5H2/PIqpMomv+wLDF2vOUFyhpKObw+/wdnbU/R6Zxi1EiMmG19TEuvX98BQZ
-	 zMRI5bYgr1X07hjtF+4pRVvOb2xq+MjA4xB5MYvk=
+	b=UiGXyxDh1cJM6TnE6uu8E1tfoeh0NWwy7uYVDs/kWQuvHWWWv4iMCBXGfKlepftIS
+	 YFY23+dGy4hHXVlKkg2u9drZWXe6Mkg9pPQR9xunfxeXVEOdZtmf7exv/gssV1ejF9
+	 Zny1/lpRRe4M3u5qJcQ2YikvIuiZreulzEsB4ddM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Heiko Carstens <hca@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 068/676] block: fix bio_split_rw_at to take zone_write_granularity into account
-Date: Fri,  6 Dec 2024 15:28:07 +0100
-Message-ID: <20241206143656.017303979@linuxfoundation.org>
+Subject: [PATCH 6.6 069/676] s390/syscalls: Avoid creation of arch/arch/ directory
+Date: Fri,  6 Dec 2024 15:28:08 +0100
+Message-ID: <20241206143656.055095135@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -53,51 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christoph Hellwig <hch@lst.de>
+From: Masahiro Yamada <masahiroy@kernel.org>
 
-[ Upstream commit 7ecd2cd4fae3e8410c0a6620f3a83dcdbb254f02 ]
+[ Upstream commit 0708967e2d56e370231fd07defa0d69f9ad125e8 ]
 
-Otherwise it can create unaligned writes on zoned devices.
+Building the kernel with ARCH=s390 creates a weird arch/arch/ directory.
 
-Fixes: a805a4fa4fa3 ("block: introduce zone_write_granularity limit")
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Link: https://lore.kernel.org/r/20241104062647.91160-3-hch@lst.de
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+  $ find arch/arch
+  arch/arch
+  arch/arch/s390
+  arch/arch/s390/include
+  arch/arch/s390/include/generated
+  arch/arch/s390/include/generated/asm
+  arch/arch/s390/include/generated/uapi
+  arch/arch/s390/include/generated/uapi/asm
+
+The root cause is 'targets' in arch/s390/kernel/syscalls/Makefile,
+where the relative path is incorrect.
+
+Strictly speaking, 'targets' was not necessary in the first place
+because this Makefile uses 'filechk' instead of 'if_changed'.
+
+However, this commit keeps it, as it will be useful when converting
+'filechk' to 'if_changed' later.
+
+Fixes: 5c75824d915e ("s390/syscalls: add Makefile to generate system call header files")
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Link: https://lore.kernel.org/r/20241111134603.2063226-1-masahiroy@kernel.org
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-merge.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ arch/s390/kernel/syscalls/Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/block/blk-merge.c b/block/blk-merge.c
-index 07bf758c523a9..889ac59759a26 100644
---- a/block/blk-merge.c
-+++ b/block/blk-merge.c
-@@ -256,6 +256,14 @@ static bool bvec_split_segs(const struct queue_limits *lim,
- 	return len > 0 || bv->bv_len > max_len;
- }
+diff --git a/arch/s390/kernel/syscalls/Makefile b/arch/s390/kernel/syscalls/Makefile
+index fb85e797946db..2bd7756288df6 100644
+--- a/arch/s390/kernel/syscalls/Makefile
++++ b/arch/s390/kernel/syscalls/Makefile
+@@ -12,7 +12,7 @@ kapi-hdrs-y := $(kapi)/unistd_nr.h
+ uapi-hdrs-y := $(uapi)/unistd_32.h
+ uapi-hdrs-y += $(uapi)/unistd_64.h
  
-+static unsigned int bio_split_alignment(struct bio *bio,
-+		const struct queue_limits *lim)
-+{
-+	if (op_is_write(bio_op(bio)) && lim->zone_write_granularity)
-+		return lim->zone_write_granularity;
-+	return lim->logical_block_size;
-+}
-+
- /**
-  * bio_split_rw - split a bio in two bios
-  * @bio:  [in] bio to be split
-@@ -326,7 +334,7 @@ struct bio *bio_split_rw(struct bio *bio, const struct queue_limits *lim,
- 	 * split size so that each bio is properly block size aligned, even if
- 	 * we do not use the full hardware limits.
- 	 */
--	bytes = ALIGN_DOWN(bytes, lim->logical_block_size);
-+	bytes = ALIGN_DOWN(bytes, bio_split_alignment(bio, lim));
+-targets += $(addprefix ../../../,$(gen-y) $(kapi-hdrs-y) $(uapi-hdrs-y))
++targets += $(addprefix ../../../../,$(gen-y) $(kapi-hdrs-y) $(uapi-hdrs-y))
  
- 	/*
- 	 * Bio splitting may cause subtle trouble such as hang when doing sync
+ PHONY += kapi uapi
+ 
 -- 
 2.43.0
 
