@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4279149C51;
-	Fri,  6 Dec 2024 15:24:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C22D53A7;
+	Fri,  6 Dec 2024 15:24:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733498672; cv=none; b=APqCykeMeaf0upB1mHU5bKbH9yCClC2iJKiWP9kUujvuaOC5pUssXAB2lGkH1ZjBJ3dBGdd5mGbGnVUpiD0NDGX1EJvrThn1NP6fdkRm4d+2zBwTm77OzyUOzMCVJ73WAL8u5eBp3HKqIpZ6uSho52I9U2FcCRta3H//4t4QkP0=
+	t=1733498675; cv=none; b=YIjBTBb4OsUwmrfbq6MkFPL6TSTmHMXFIFyK1HH6ynNiYnptyuaDey/58F3Ze+GwTTbbBE0huzolMa2E9FG0EHwCWmHmMnakqXWCELwNhqcaXlj8tlVT6K9pBXrNiTINUzD2QDjtPFF0os7pJEbi01CEH5xkfxhZc+yDWKij9fc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733498672; c=relaxed/simple;
-	bh=NLkvdJs+bA+zkTv6vpmSHCZCwXyNnDRWhgy3Xnx0E64=;
+	s=arc-20240116; t=1733498675; c=relaxed/simple;
+	bh=M2ANb9yEMD56J8ZIB6Ka3bKHgCEaP04LGHKJIt25ecg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cdDsDtUQhyS04fiWdkgUxo+vbqKGT7q2f5k+ujLQZeDXdQ8moQVDGAKUpWimA/W0HrIs9w6v+koCsVcdRzl7mDY8FF31JUe3ATctggqA8bAZo4q8mMldIiX4xLECD3gFJ+1bwCh8NFzBG931jWRUcIGEvg1Lj3b004i00aVNJTQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IEWQyDEO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DdXxPZUMsn0kZEvSv0dUebGIgTFtLwAptqvNzdvSKVVncJCSqkxGU96KRz4pvga0+SYoGGi92ZbhMZdWrl0hl8ltiJJTPmr9JrG74roLz2NI3A7METB8cek+TeWvRjQFajsvJs0BkEgFtmlJrm099jOOmHgUzNY9ovpPN8/0PCM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lMFdBcgK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IEWQyDEO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A47CC4CED1;
-	Fri,  6 Dec 2024 15:24:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lMFdBcgK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDF34C4CED1;
+	Fri,  6 Dec 2024 15:24:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733498671;
-	bh=NLkvdJs+bA+zkTv6vpmSHCZCwXyNnDRWhgy3Xnx0E64=;
+	s=korg; t=1733498675;
+	bh=M2ANb9yEMD56J8ZIB6Ka3bKHgCEaP04LGHKJIt25ecg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IEWQyDEOKJzJGRit7nNlIMVeQc8aMcC+lQKdYlJ7Du7FCHhX+M8BhKAnkThf08L5J
-	 +W0GQO1d45ljCcMMX5a9+WW0UFd/e0JRb1DlNVFJ6CaFoppkxa4m+2Yh4wCfW3J7GK
-	 JnYMmdL1tpJo/4U+hmPN3r5JYZBPlWKa5Q175t7Y=
+	b=lMFdBcgKfAsmyCCiwXmFajDmui7BxAWxDdaheYq6Ny7BWzGWjB2AKnaPXj5V721Vk
+	 hF4kHyvHlIpakvHXHfUG56dC7RxlIjqPBbaB6ZH1XAsQ5DjMvY/SFVQmUgxmbjC1nd
+	 alISOIhXvoPd/sYopiGoaESIg+6eSzZB7m/6JaEI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ssuhung Yeh <ssuhung@gmail.com>,
-	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 6.6 652/676] dm: Fix typo in error message
-Date: Fri,  6 Dec 2024 15:37:51 +0100
-Message-ID: <20241206143718.837643154@linuxfoundation.org>
+	Gaosheng Cui <cuigaosheng1@huawei.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Subject: [PATCH 6.6 623/676] media: platform: allegro-dvt: Fix possible memory leak in allocate_buffers_internal()
+Date: Fri,  6 Dec 2024 15:37:22 +0100
+Message-ID: <20241206143717.702922399@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -50,38 +50,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ssuhung Yeh <ssuhung@gmail.com>
+From: Gaosheng Cui <cuigaosheng1@huawei.com>
 
-commit 2deb70d3e66d538404d9e71bff236e6d260da66e upstream.
+commit 0f514068fbc5d4d189c817adc7c4e32cffdc2e47 upstream.
 
-Remove the redundant "i" at the beginning of the error message. This "i"
-came from commit 1c1318866928 ("dm: prefer
-'"%s...", __func__'"), the "i" is accidentally left.
+The buffer in the loop should be released under the exception path,
+otherwise there may be a memory leak here.
 
-Signed-off-by: Ssuhung Yeh <ssuhung@gmail.com>
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Fixes: 1c1318866928 ("dm: prefer '"%s...", __func__'")
-Cc: stable@vger.kernel.org	# v6.3+
+To mitigate this, free the buffer when allegro_alloc_buffer fails.
+
+Fixes: f20387dfd065 ("media: allegro: add Allegro DVT video IP core driver")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/persistent-data/dm-space-map-common.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/platform/allegro-dvt/allegro-core.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/md/persistent-data/dm-space-map-common.c b/drivers/md/persistent-data/dm-space-map-common.c
-index 3a19124ee279..22a551c407da 100644
---- a/drivers/md/persistent-data/dm-space-map-common.c
-+++ b/drivers/md/persistent-data/dm-space-map-common.c
-@@ -51,7 +51,7 @@ static int index_check(const struct dm_block_validator *v,
- 					       block_size - sizeof(__le32),
- 					       INDEX_CSUM_XOR));
- 	if (csum_disk != mi_le->csum) {
--		DMERR_LIMIT("i%s failed: csum %u != wanted %u", __func__,
-+		DMERR_LIMIT("%s failed: csum %u != wanted %u", __func__,
- 			    le32_to_cpu(csum_disk), le32_to_cpu(mi_le->csum));
- 		return -EILSEQ;
+--- a/drivers/media/platform/allegro-dvt/allegro-core.c
++++ b/drivers/media/platform/allegro-dvt/allegro-core.c
+@@ -1509,8 +1509,10 @@ static int allocate_buffers_internal(str
+ 		INIT_LIST_HEAD(&buffer->head);
+ 
+ 		err = allegro_alloc_buffer(dev, buffer, size);
+-		if (err)
++		if (err) {
++			kfree(buffer);
+ 			goto err;
++		}
+ 		list_add(&buffer->head, list);
  	}
--- 
-2.47.1
-
+ 
 
 
