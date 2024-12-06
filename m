@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B307C1494D9;
-	Fri,  6 Dec 2024 14:40:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32B2214D717;
+	Fri,  6 Dec 2024 14:40:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733496046; cv=none; b=u/0qtpEXxnDEsUJMb3BW3BVGGT99xizCkwMfYpbDpw4Yaz4c11646F7IiU8DUNdOm0cUs0vSNmTvm2dT2csbdwVTGS5fDqZ74ag2koTgdprfK5ESaoR4HtQsPCOMu7FsDqv4erjfhUGDzuCEzuytcudGItDnG7qEztaeocoudcU=
+	t=1733496050; cv=none; b=Td1mqM2y5JNEzuuO6TWjG/wnq20113JbCGhg2IGo8x88M+ZVhTZVnfEctjG4n60DRWrVMG5YlROLJWndWst0jbTgd+BPLpFXyXNnDbZUctsZ+b/hEYwTpbY54IqsZrJzqehaDsW5Ve1gkJb1SQ3yOsQ7aREqI9/N8NOdUrKvFvs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733496046; c=relaxed/simple;
-	bh=UXdzxMEuuu1Mx/Ea37pfszdcx+0APprI9AUdApQgFKo=;
+	s=arc-20240116; t=1733496050; c=relaxed/simple;
+	bh=cm+sUET2mq4cXsYFBcgpebqqNaqUjWfXlOmX80vg8Og=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Jl6Dc6Lt4wwuS2SFH1Anwc3Jn0zD+r55RdTecJL9sV8PSJISKkg+/ajzCa9WvRN+GgQVYff411vG3zHUl9Bv6l9irXoxce4v73Ng7eDF2HLQO0efdx+Stg6UQuz0tLkQe8SbPZ4Bs2rD/Wv8AnotaKoQQkg09TxvMgEZOyVVR4I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vDyIPMZY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QJ/6r6Fbf18mTBVBFNbpVZ2qr0nkv4DJAFQRwz5fCjmQgXP/qJSZpZB9sAO1yVaNTiCWUqccEFMW/wegpPEWPTXGjJGbX0h7DhT3B+z8K9sxwSupi5Qe1DqTV44ipZS/2r7S4RcTHKkpFe9H6heY1u9oOWp1MKhO7Td/7aCf1yE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rYI3F+rv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vDyIPMZY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 207ABC4CEDC;
-	Fri,  6 Dec 2024 14:40:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rYI3F+rv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 968C4C4CEDC;
+	Fri,  6 Dec 2024 14:40:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733496046;
-	bh=UXdzxMEuuu1Mx/Ea37pfszdcx+0APprI9AUdApQgFKo=;
+	s=korg; t=1733496050;
+	bh=cm+sUET2mq4cXsYFBcgpebqqNaqUjWfXlOmX80vg8Og=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vDyIPMZY8XuN1QxECtZ5ZTCTvyVucyG2iVpZ9C1BuZSSbksut0f37h5sVHc0Swvhm
-	 zvYNuDq42DHTReTb325c9rD4GybZn4h4g0AEU2q6TlsRNu1ZXu3bEfQ794hWEkApcI
-	 JieZVwf4QknSuS3mWN+Y8ptiO+z7+TxDmpPSV7vI=
+	b=rYI3F+rv2zVPkb1rvlc684Swfei4tZYdBWsEDesqmK2+BKvtqsWoPH3I/kBQFlmRx
+	 8MY6tpep4rQy3Lkf+oFiSYSlq/3SLMtBywsOF5G3bPedkfUDfUt2Tw4rAcllN4KK2F
+	 g3zYIq5sMAMbl5t3jRgYjDhwOuB+7Lb9/CYA1JLM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinjie Ruan <ruanjinjie@huawei.com>,
+	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
 	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 6.12 035/146] media: gspca: ov534-ov772x: Fix off-by-one error in set_frame_rate()
-Date: Fri,  6 Dec 2024 15:36:06 +0100
-Message-ID: <20241206143529.015843723@linuxfoundation.org>
+Subject: [PATCH 6.12 036/146] media: ov08x40: Fix burst write sequence
+Date: Fri,  6 Dec 2024 15:36:07 +0100
+Message-ID: <20241206143529.053426675@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143527.654980698@linuxfoundation.org>
 References: <20241206143527.654980698@linuxfoundation.org>
@@ -51,37 +51,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinjie Ruan <ruanjinjie@huawei.com>
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
-commit d2842dec577900031826dc44e9bf0c66416d7173 upstream.
+commit d0fef6de4f1b957e35a05a5ba4aab2a2576d6686 upstream.
 
-In set_frame_rate(), select a rate in rate_0 or rate_1 by checking
-sd->frame_rate >= r->fps in a loop, but the loop condition terminates when
-the index reaches zero, which fails to check the last elememt in rate_0 or
-rate_1.
+It is necessary to account for I2C quirks in the burst mode path of this
+driver. Not all I2C controllers can accept arbitrarily long writes and this
+is represented in the quirks field of the adapter structure.
 
-Check for >= 0 so that the last one in rate_0 or rate_1 is also checked.
+Prior to this patch the following error message is seen on a Qualcomm
+X1E80100 CRD.
 
-Fixes: 189d92af707e ("V4L/DVB (13422): gspca - ov534: ov772x changes from Richard Kaswy.")
-Cc: stable@vger.kernel.org
-Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+[   38.773524] i2c i2c-2: adapter quirk: msg too long (addr 0x0036, size 290, write)
+[   38.781454] ov08x40 2-0036: Failed regs transferred: -95
+[   38.787076] ov08x40 2-0036: ov08x40_start_streaming failed to set regs
+
+Fix the error by breaking up the write sequence into the advertised maximum
+write size of the quirks field if the quirks field is populated.
+
+Fixes: 8f667d202384 ("media: ov08x40: Reduce start streaming time")
+Cc: stable@vger.kernel.org # v6.9+
+Tested-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org> # x1e80100-crd
+Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/usb/gspca/ov534.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/i2c/ov08x40.c |   33 ++++++++++++++++++++++++++++-----
+ 1 file changed, 28 insertions(+), 5 deletions(-)
 
---- a/drivers/media/usb/gspca/ov534.c
-+++ b/drivers/media/usb/gspca/ov534.c
-@@ -847,7 +847,7 @@ static void set_frame_rate(struct gspca_
- 		r = rate_1;
- 		i = ARRAY_SIZE(rate_1);
+--- a/drivers/media/i2c/ov08x40.c
++++ b/drivers/media/i2c/ov08x40.c
+@@ -1339,15 +1339,13 @@ static int ov08x40_read_reg(struct ov08x
+ 	return 0;
+ }
+ 
+-static int ov08x40_burst_fill_regs(struct ov08x40 *ov08x, u16 first_reg,
+-				   u16 last_reg,  u8 val)
++static int __ov08x40_burst_fill_regs(struct i2c_client *client, u16 first_reg,
++				     u16 last_reg, size_t num_regs, u8 val)
+ {
+-	struct i2c_client *client = v4l2_get_subdevdata(&ov08x->sd);
+ 	struct i2c_msg msgs;
+-	size_t i, num_regs;
++	size_t i;
+ 	int ret;
+ 
+-	num_regs = last_reg - first_reg + 1;
+ 	msgs.addr = client->addr;
+ 	msgs.flags = 0;
+ 	msgs.len = 2 + num_regs;
+@@ -1371,6 +1369,31 @@ static int ov08x40_burst_fill_regs(struc
  	}
--	while (--i > 0) {
-+	while (--i >= 0) {
- 		if (sd->frame_rate >= r->fps)
- 			break;
- 		r++;
+ 
+ 	return 0;
++}
++
++static int ov08x40_burst_fill_regs(struct ov08x40 *ov08x, u16 first_reg,
++				   u16 last_reg,  u8 val)
++{
++	struct i2c_client *client = v4l2_get_subdevdata(&ov08x->sd);
++	size_t num_regs, num_write_regs;
++	int ret;
++
++	num_regs = last_reg - first_reg + 1;
++	num_write_regs = num_regs;
++
++	if (client->adapter->quirks && client->adapter->quirks->max_write_len)
++		num_write_regs = client->adapter->quirks->max_write_len - 2;
++
++	while (first_reg < last_reg) {
++		ret = __ov08x40_burst_fill_regs(client, first_reg, last_reg,
++						num_write_regs, val);
++		if (ret)
++			return ret;
++
++		first_reg += num_write_regs;
++	}
++
++	return 0;
+ }
+ 
+ /* Write registers up to 4 at a time */
 
 
