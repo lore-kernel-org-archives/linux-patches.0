@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA2071FF7D1;
-	Fri,  6 Dec 2024 14:56:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 742FC1442E8;
+	Fri,  6 Dec 2024 14:56:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733497012; cv=none; b=berhb7HDrM49Jc9lRaSi0GAAIgcz4WPmcCEibIFCMJkWc8vOWMIE/a2X7YQF7vm/GKa3s5o9OHkNbOeQTgs72p+wFXsPc+aAnv804rHMwYEjwgxDz240Txoi+8v4Ots/8ciaM3VVaJy/KyA46TjLO2uJ//ZRb3ezCSdtRPBXlgY=
+	t=1733497016; cv=none; b=FGChvvVQ4ZKjG00Q3hRUHY3PdnDPVFrfjKl5GibS/z6LXSJE48aWBj4kynWeJT2LnB5SIiUX0Pk7BKXjcmwVZ7nBJZlry3oCwbJnAyljn1KXVMtQFCQUBdItByKs59+xX7uXfZYP/8YMOs8mP83Q8xhJz7hIuNS3LkNQD6ig7pk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733497012; c=relaxed/simple;
-	bh=QginPOWwUHoZwCGwnPyx3rsoEqTtOpxDUZxeM/yqbDs=;
+	s=arc-20240116; t=1733497016; c=relaxed/simple;
+	bh=c9mrA4ankSD0vPSH2zvnSdJt2UI/pcy9YDtVEKigvdU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A4fjiyJWmcwNP3D4VIwAPYozywgnt/iQAYklC/ySkXJYte8iZssQScYpLe9lI4PQWBFhP56DJXyMUnhVfSUnpVavDTxJNWGBHXA42p9T8goU7Uq+uCQl/t3HdAXEf5zx6XRM4tZtpZ2XaY2Ar9Oqu3Lm2ZuTPi5Tr/5S26jvQRY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z8qujCt4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=d43PyPszgqqlzgDFIjGUMnoHLUMYx0A3q09VXnsBJY1OHpTDJImAKsNX3seWPhwFY3laKZh01jkoAt7PI9G4siZgZPvag4fJpwjt5aEQNJlRnJGdwUcIMVdIfj8wzfJ1ksLujztMgAZuYb7n12KLR3+dkWaPULW8YsloqhmUjmw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GgZoI6bG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z8qujCt4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D3A4C4CED1;
-	Fri,  6 Dec 2024 14:56:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GgZoI6bG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5CDCC4CED1;
+	Fri,  6 Dec 2024 14:56:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733497012;
-	bh=QginPOWwUHoZwCGwnPyx3rsoEqTtOpxDUZxeM/yqbDs=;
+	s=korg; t=1733497016;
+	bh=c9mrA4ankSD0vPSH2zvnSdJt2UI/pcy9YDtVEKigvdU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z8qujCt4UU7Lx2uDcC12EpLeNEKrjEyhQmSg8vS7bPcCtb2dgQSDfGQ/NFso1cqeF
-	 t5AMNgenxPKyr4hAYVn86MxyrdpqY36EEedvJyhC7ZdFVPgkHxTnjHsE+KhkEc0bfZ
-	 vKiHNmexZaCrleEHT5U8NgQTE+kqg0f/4KJnz9Io=
+	b=GgZoI6bGgdEQ62y2Fb9uX4AENd03Lo1vvLLwtCmo4uVSAG1o6Bx5WTtTNvTyrOHhj
+	 8ZTCbrRCAmWDdTISWbhj7LugEtC2RUXeshQlUi8cW2566nq/CjZsozyXkfghf0tDNu
+	 75gGaRnICOx49UZreHI9B/MBMUGTn7UzEZWSF+4s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxime Ripard <mripard@kernel.org>,
-	Dave Stevenson <dave.stevenson@raspberrypi.com>,
+	Jeongjun Park <aha310510@gmail.com>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 169/676] drm/vc4: hvs: Correct logic on stopping an HVS channel
-Date: Fri,  6 Dec 2024 15:29:48 +0100
-Message-ID: <20241206143659.952361398@linuxfoundation.org>
+Subject: [PATCH 6.6 170/676] wifi: ath9k: add range check for conn_rsp_epid in htc_connect_service()
+Date: Fri,  6 Dec 2024 15:29:49 +0100
+Message-ID: <20241206143659.991054770@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -45,59 +46,62 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dave Stevenson <dave.stevenson@raspberrypi.com>
+From: Jeongjun Park <aha310510@gmail.com>
 
-[ Upstream commit 7ab6512e7942889c0962588355cb92424a690be6 ]
+[ Upstream commit 8619593634cbdf5abf43f5714df49b04e4ef09ab ]
 
-When factoring out __vc4_hvs_stop_channel, the logic got inverted from
-	if (condition)
-	  // stop channel
-to
-	if (condition)
-	  goto out
-	//stop channel
-	out:
-and also changed the exact register writes used to stop the channel.
+I found the following bug in my fuzzer:
 
-Correct the logic so that the channel is actually stopped, and revert
-to the original register writes.
+  UBSAN: array-index-out-of-bounds in drivers/net/wireless/ath/ath9k/htc_hst.c:26:51
+  index 255 is out of range for type 'htc_endpoint [22]'
+  CPU: 0 UID: 0 PID: 8 Comm: kworker/0:0 Not tainted 6.11.0-rc6-dirty #14
+  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
+  Workqueue: events request_firmware_work_func
+  Call Trace:
+   <TASK>
+   dump_stack_lvl+0x180/0x1b0
+   __ubsan_handle_out_of_bounds+0xd4/0x130
+   htc_issue_send.constprop.0+0x20c/0x230
+   ? _raw_spin_unlock_irqrestore+0x3c/0x70
+   ath9k_wmi_cmd+0x41d/0x610
+   ? mark_held_locks+0x9f/0xe0
+   ...
 
-Fixes: 6d01a106b4c8 ("drm/vc4: crtc: Move HVS init and close to a function")
-Reviewed-by: Maxime Ripard <mripard@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240621152055.4180873-32-dave.stevenson@raspberrypi.com
-Signed-off-by: Dave Stevenson <dave.stevenson@raspberrypi.com>
+Since this bug has been confirmed to be caused by insufficient verification
+of conn_rsp_epid, I think it would be appropriate to add a range check for
+conn_rsp_epid to htc_connect_service() to prevent the bug from occurring.
+
+Fixes: fb9987d0f748 ("ath9k_htc: Support for AR9271 chipset.")
+Signed-off-by: Jeongjun Park <aha310510@gmail.com>
+Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://patch.msgid.link/20240909103855.68006-1-aha310510@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/vc4/vc4_hvs.c | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ drivers/net/wireless/ath/ath9k/htc_hst.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/gpu/drm/vc4/vc4_hvs.c b/drivers/gpu/drm/vc4/vc4_hvs.c
-index 3e72219a6a75f..27c8fb9efa854 100644
---- a/drivers/gpu/drm/vc4/vc4_hvs.c
-+++ b/drivers/gpu/drm/vc4/vc4_hvs.c
-@@ -420,13 +420,11 @@ void vc4_hvs_stop_channel(struct vc4_hvs *hvs, unsigned int chan)
- 	if (!drm_dev_enter(drm, &idx))
- 		return;
+diff --git a/drivers/net/wireless/ath/ath9k/htc_hst.c b/drivers/net/wireless/ath/ath9k/htc_hst.c
+index 99667aba289df..00dc97ac53b9d 100644
+--- a/drivers/net/wireless/ath/ath9k/htc_hst.c
++++ b/drivers/net/wireless/ath/ath9k/htc_hst.c
+@@ -294,6 +294,9 @@ int htc_connect_service(struct htc_target *target,
+ 		return -ETIMEDOUT;
+ 	}
  
--	if (HVS_READ(SCALER_DISPCTRLX(chan)) & SCALER_DISPCTRLX_ENABLE)
-+	if (!(HVS_READ(SCALER_DISPCTRLX(chan)) & SCALER_DISPCTRLX_ENABLE))
- 		goto out;
- 
--	HVS_WRITE(SCALER_DISPCTRLX(chan),
--		  HVS_READ(SCALER_DISPCTRLX(chan)) | SCALER_DISPCTRLX_RESET);
--	HVS_WRITE(SCALER_DISPCTRLX(chan),
--		  HVS_READ(SCALER_DISPCTRLX(chan)) & ~SCALER_DISPCTRLX_ENABLE);
-+	HVS_WRITE(SCALER_DISPCTRLX(chan), SCALER_DISPCTRLX_RESET);
-+	HVS_WRITE(SCALER_DISPCTRLX(chan), 0);
- 
- 	/* Once we leave, the scaler should be disabled and its fifo empty. */
- 	WARN_ON_ONCE(HVS_READ(SCALER_DISPCTRLX(chan)) & SCALER_DISPCTRLX_RESET);
++	if (target->conn_rsp_epid < 0 || target->conn_rsp_epid >= ENDPOINT_MAX)
++		return -EINVAL;
++
+ 	*conn_rsp_epid = target->conn_rsp_epid;
+ 	return 0;
+ err:
 -- 
 2.43.0
 
