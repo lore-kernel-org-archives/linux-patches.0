@@ -1,47 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD12713A863;
-	Fri,  6 Dec 2024 15:19:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FF19207658;
+	Fri,  6 Dec 2024 15:19:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733498378; cv=none; b=eBE9C5SgwSSOENLd+bMXe1t7qPr6P/0wpG5zZtjgeXU0s9cQKFcBKt0L8KaDNJdODy1gR2OjToQDrnML0QpW3StzPtzPqc81QHfHF6h8BJvmWuzARfEKq8veYK21Zy942/sCvjsS+z4Odi25u0egdjIaAJJJyHovKT2aGc5KKSQ=
+	t=1733498382; cv=none; b=cd+fOieaov8nBxO1BpioOIXWkYQSLNp6zgX2/P1XrgXYXYU48bSIVb2WCX6Z7MjHvn7pOFS3ec5lKbGmeDh2mclerSKGsYwyBdsUBUYszTQg4/Zrm4vTzPJX3oRglJK34TGr8xMbWVT8nZ6E+tLn6Fx2ItXMIPY5f8FeyzjNcpk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733498378; c=relaxed/simple;
-	bh=n+uxrmsFWBC9HQD9GQngTQZ6V5lkaO2cpyQSb2Zvr7A=;
+	s=arc-20240116; t=1733498382; c=relaxed/simple;
+	bh=On4X2aVokC9al2INLloeJBrPMl11hDj/Ee8kCRqmJr0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uwNNwyReYMCCZBq0zYuvtkMaYG8p83LB2IWpaKj30+F2LqzUATmLVvAmMAnHXeRGzRJPFvkK2W6kyThovS9FeS4zg50byuklWOsA62fWyqmrTRi3XBqZzFeVQFaxjIYu59FHYMsu1N6v7xWYpkYnuaWodXTHc7atDrMutzPx3s8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AiaK7DhU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Di+/vQ9onditXGvBUd6JkG2o3+yiZ23UDaPcFdGH00MBNhSs3j7Ma95YEMFVt5rd9pDWEPxbVsmwBFRSmo90yXg2QickPMCS5t2e4fAJN4Amg0oIuzZvBIjtRgUgAookinia+/wkAGnkWM5vl1w9iyKYglahAmFmta8jcRF1AGc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fXG+XSq0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AiaK7DhU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95C50C4CED1;
-	Fri,  6 Dec 2024 15:19:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fXG+XSq0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77864C4CEDE;
+	Fri,  6 Dec 2024 15:19:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733498378;
-	bh=n+uxrmsFWBC9HQD9GQngTQZ6V5lkaO2cpyQSb2Zvr7A=;
+	s=korg; t=1733498382;
+	bh=On4X2aVokC9al2INLloeJBrPMl11hDj/Ee8kCRqmJr0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AiaK7DhU2ElnTGlSo/lfjs0Yj99D5cBZuQ+0+kntO5LC6FQZxlB+IfNrafH11gZ5I
-	 FzlVj6thdiAID6m00a25fADQu44QsuhxUxa34qVG6qdjO1yV50m7VK7i1QlBcK2oRs
-	 px88aw1ilRMqDW2C/LOsjl7NJD8oW4eEquWCy/qM=
+	b=fXG+XSq0BeWuK34AxU61S5wH/OAEJp4LZ5QNIrF4q+ZI+EniT5rvFhFANP7AqWB+M
+	 YJ1+XtjgSg9WcD0ZL17hallpOA68Kp+mfwcht3wiJkZM2s4dornW797vkSctbDPukG
+	 nKeRDYGTdb9szly+e+lN6kWXcFrmwqPW5jpq0t8Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Song <tsong@purestorage.com>,
-	"Ewan D. Milne" <emilne@redhat.com>,
-	John Meneghini <jmeneghi@redhat.com>,
-	Marco Patalano <mpatalan@redhat.com>,
-	Jyoti Rani <jrani@purestorage.com>,
-	Randy Jennings <randyj@purestorage.com>,
-	Hannes Reinecke <hare@suse.de>,
+	Hannes Reinecke <hare@kernel.org>,
 	Sagi Grimberg <sagi@grimberg.me>,
-	Chaitanya Kulkarni <kch@nvidia.com>,
-	Christoph Hellwig <hch@lst.de>,
 	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 568/676] nvme-multipath: implement "queue-depth" iopolicy
-Date: Fri,  6 Dec 2024 15:36:27 +0100
-Message-ID: <20241206143715.548073279@linuxfoundation.org>
+Subject: [PATCH 6.6 569/676] nvme-multipath: avoid hang on inaccessible namespaces
+Date: Fri,  6 Dec 2024 15:36:28 +0100
+Message-ID: <20241206143715.586758691@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -60,259 +52,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Song <tsong@purestorage.com>
+From: Hannes Reinecke <hare@kernel.org>
 
-[ Upstream commit f227345f0a70f011647ae7ae12778bf258ff71f2 ]
+[ Upstream commit 3b97f5a05cfc55e7729ff3769f63eef64e2178bb ]
 
-The round-robin path selector is inefficient in cases where there is a
-difference in latency between paths.  In the presence of one or more
-high latency paths the round-robin selector continues to use the high
-latency path equally. This results in a bias towards the highest latency
-path and can cause a significant decrease in overall performance as IOs
-pile on the highest latency path. This problem is acute with NVMe-oF
-controllers.
+During repetitive namespace remapping operations on the target the
+namespace might have changed between the time the initial scan
+was performed, and partition scan was invoked by device_add_disk()
+in nvme_mpath_set_live(). We then end up with a stuck scanning process:
 
-The queue-depth path selector sends I/O down the path with the lowest
-number of requests in its request queue. Paths with lower latency will
-clear requests more quickly and have less requests queued compared to
-higher latency paths. The goal of this path selector is to make more use
-of lower latency paths which will bring down overall IO latency and
-increase throughput and performance.
+[<0>] folio_wait_bit_common+0x12a/0x310
+[<0>] filemap_read_folio+0x97/0xd0
+[<0>] do_read_cache_folio+0x108/0x390
+[<0>] read_part_sector+0x31/0xa0
+[<0>] read_lba+0xc5/0x160
+[<0>] efi_partition+0xd9/0x8f0
+[<0>] bdev_disk_changed+0x23d/0x6d0
+[<0>] blkdev_get_whole+0x78/0xc0
+[<0>] bdev_open+0x2c6/0x3b0
+[<0>] bdev_file_open_by_dev+0xcb/0x120
+[<0>] disk_scan_partitions+0x5d/0x100
+[<0>] device_add_disk+0x402/0x420
+[<0>] nvme_mpath_set_live+0x4f/0x1f0 [nvme_core]
+[<0>] nvme_mpath_add_disk+0x107/0x120 [nvme_core]
+[<0>] nvme_alloc_ns+0xac6/0xe60 [nvme_core]
+[<0>] nvme_scan_ns+0x2dd/0x3e0 [nvme_core]
+[<0>] nvme_scan_work+0x1a3/0x490 [nvme_core]
 
-Signed-off-by: Thomas Song <tsong@purestorage.com>
-[emilne: commandeered patch developed by Thomas Song @ Pure Storage]
-Co-developed-by: Ewan D. Milne <emilne@redhat.com>
-Signed-off-by: Ewan D. Milne <emilne@redhat.com>
-Co-developed-by: John Meneghini <jmeneghi@redhat.com>
-Signed-off-by: John Meneghini <jmeneghi@redhat.com>
-Link: https://lore.kernel.org/linux-nvme/20240509202929.831680-1-jmeneghi@redhat.com/
-Tested-by: Marco Patalano <mpatalan@redhat.com>
-Tested-by: Jyoti Rani <jrani@purestorage.com>
-Tested-by: John Meneghini <jmeneghi@redhat.com>
-Reviewed-by: Randy Jennings <randyj@purestorage.com>
-Reviewed-by: Hannes Reinecke <hare@suse.de>
+This happens when we have several paths, some of which are inaccessible,
+and the active paths are removed first. Then nvme_find_path() will requeue
+I/O in the ns_head (as paths are present), but the requeue list is never
+triggered as all remaining paths are inactive.
+
+This patch checks for NVME_NSHEAD_DISK_LIVE in nvme_available_path(),
+and requeue I/O after NVME_NSHEAD_DISK_LIVE has been cleared once
+the last path has been removed to properly terminate pending I/O.
+
+Signed-off-by: Hannes Reinecke <hare@kernel.org>
 Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
-Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Keith Busch <kbusch@kernel.org>
 Stable-dep-of: 5dd18f09ce73 ("nvme/multipath: Fix RCU list traversal to use SRCU primitive")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/core.c      |  2 +-
- drivers/nvme/host/multipath.c | 86 +++++++++++++++++++++++++++++++++--
- drivers/nvme/host/nvme.h      |  4 ++
- 3 files changed, 87 insertions(+), 5 deletions(-)
+ drivers/nvme/host/multipath.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
-index 965ca7d7a3de2..5b6a6bd4e6e80 100644
---- a/drivers/nvme/host/core.c
-+++ b/drivers/nvme/host/core.c
-@@ -109,7 +109,7 @@ struct workqueue_struct *nvme_delete_wq;
- EXPORT_SYMBOL_GPL(nvme_delete_wq);
- 
- static LIST_HEAD(nvme_subsystems);
--static DEFINE_MUTEX(nvme_subsystems_lock);
-+DEFINE_MUTEX(nvme_subsystems_lock);
- 
- static DEFINE_IDA(nvme_instance_ida);
- static dev_t nvme_ctrl_base_chr_devt;
 diff --git a/drivers/nvme/host/multipath.c b/drivers/nvme/host/multipath.c
-index 53eee6fc68392..2fa137738ac8d 100644
+index 2fa137738ac8d..989d1e50fb8cc 100644
 --- a/drivers/nvme/host/multipath.c
 +++ b/drivers/nvme/host/multipath.c
-@@ -17,6 +17,7 @@ MODULE_PARM_DESC(multipath,
- static const char *nvme_iopolicy_names[] = {
- 	[NVME_IOPOLICY_NUMA]	= "numa",
- 	[NVME_IOPOLICY_RR]	= "round-robin",
-+	[NVME_IOPOLICY_QD]      = "queue-depth",
- };
- 
- static int iopolicy = NVME_IOPOLICY_NUMA;
-@@ -29,6 +30,8 @@ static int nvme_set_iopolicy(const char *val, const struct kernel_param *kp)
- 		iopolicy = NVME_IOPOLICY_NUMA;
- 	else if (!strncmp(val, "round-robin", 11))
- 		iopolicy = NVME_IOPOLICY_RR;
-+	else if (!strncmp(val, "queue-depth", 11))
-+		iopolicy = NVME_IOPOLICY_QD;
- 	else
- 		return -EINVAL;
- 
-@@ -43,7 +46,7 @@ static int nvme_get_iopolicy(char *buf, const struct kernel_param *kp)
- module_param_call(iopolicy, nvme_set_iopolicy, nvme_get_iopolicy,
- 	&iopolicy, 0644);
- MODULE_PARM_DESC(iopolicy,
--	"Default multipath I/O policy; 'numa' (default) or 'round-robin'");
-+	"Default multipath I/O policy; 'numa' (default), 'round-robin' or 'queue-depth'");
- 
- void nvme_mpath_default_iopolicy(struct nvme_subsystem *subsys)
+@@ -420,6 +420,9 @@ static bool nvme_available_path(struct nvme_ns_head *head)
  {
-@@ -128,6 +131,11 @@ void nvme_mpath_start_request(struct request *rq)
- 	struct nvme_ns *ns = rq->q->queuedata;
- 	struct gendisk *disk = ns->head->disk;
+ 	struct nvme_ns *ns;
  
-+	if (READ_ONCE(ns->head->subsys->iopolicy) == NVME_IOPOLICY_QD) {
-+		atomic_inc(&ns->ctrl->nr_active);
-+		nvme_req(rq)->flags |= NVME_MPATH_CNT_ACTIVE;
-+	}
++	if (!test_bit(NVME_NSHEAD_DISK_LIVE, &head->flags))
++		return NULL;
 +
- 	if (!blk_queue_io_stat(disk->queue) || blk_rq_is_passthrough(rq))
+ 	list_for_each_entry_rcu(ns, &head->list, siblings) {
+ 		if (test_bit(NVME_CTRL_FAILFAST_EXPIRED, &ns->ctrl->flags))
+ 			continue;
+@@ -996,8 +999,7 @@ void nvme_mpath_shutdown_disk(struct nvme_ns_head *head)
+ {
+ 	if (!head->disk)
  		return;
- 
-@@ -141,6 +149,9 @@ void nvme_mpath_end_request(struct request *rq)
- {
- 	struct nvme_ns *ns = rq->q->queuedata;
- 
-+	if (nvme_req(rq)->flags & NVME_MPATH_CNT_ACTIVE)
-+		atomic_dec_if_positive(&ns->ctrl->nr_active);
-+
- 	if (!(nvme_req(rq)->flags & NVME_MPATH_IO_STATS))
- 		return;
- 	bdev_end_io_acct(ns->head->disk->part0, req_op(rq),
-@@ -338,6 +349,42 @@ static struct nvme_ns *nvme_round_robin_path(struct nvme_ns_head *head)
- 	return found;
- }
- 
-+static struct nvme_ns *nvme_queue_depth_path(struct nvme_ns_head *head)
-+{
-+	struct nvme_ns *best_opt = NULL, *best_nonopt = NULL, *ns;
-+	unsigned int min_depth_opt = UINT_MAX, min_depth_nonopt = UINT_MAX;
-+	unsigned int depth;
-+
-+	list_for_each_entry_rcu(ns, &head->list, siblings) {
-+		if (nvme_path_is_disabled(ns))
-+			continue;
-+
-+		depth = atomic_read(&ns->ctrl->nr_active);
-+
-+		switch (ns->ana_state) {
-+		case NVME_ANA_OPTIMIZED:
-+			if (depth < min_depth_opt) {
-+				min_depth_opt = depth;
-+				best_opt = ns;
-+			}
-+			break;
-+		case NVME_ANA_NONOPTIMIZED:
-+			if (depth < min_depth_nonopt) {
-+				min_depth_nonopt = depth;
-+				best_nonopt = ns;
-+			}
-+			break;
-+		default:
-+			break;
-+		}
-+
-+		if (min_depth_opt == 0)
-+			return best_opt;
-+	}
-+
-+	return best_opt ? best_opt : best_nonopt;
-+}
-+
- static inline bool nvme_path_is_optimized(struct nvme_ns *ns)
- {
- 	return ns->ctrl->state == NVME_CTRL_LIVE &&
-@@ -359,9 +406,14 @@ static struct nvme_ns *nvme_numa_path(struct nvme_ns_head *head)
- 
- inline struct nvme_ns *nvme_find_path(struct nvme_ns_head *head)
- {
--	if (READ_ONCE(head->subsys->iopolicy) == NVME_IOPOLICY_RR)
-+	switch (READ_ONCE(head->subsys->iopolicy)) {
-+	case NVME_IOPOLICY_QD:
-+		return nvme_queue_depth_path(head);
-+	case NVME_IOPOLICY_RR:
- 		return nvme_round_robin_path(head);
--	return nvme_numa_path(head);
-+	default:
-+		return nvme_numa_path(head);
-+	}
- }
- 
- static bool nvme_available_path(struct nvme_ns_head *head)
-@@ -836,6 +888,29 @@ static ssize_t nvme_subsys_iopolicy_show(struct device *dev,
- 			  nvme_iopolicy_names[READ_ONCE(subsys->iopolicy)]);
- }
- 
-+static void nvme_subsys_iopolicy_update(struct nvme_subsystem *subsys,
-+		int iopolicy)
-+{
-+	struct nvme_ctrl *ctrl;
-+	int old_iopolicy = READ_ONCE(subsys->iopolicy);
-+
-+	if (old_iopolicy == iopolicy)
-+		return;
-+
-+	WRITE_ONCE(subsys->iopolicy, iopolicy);
-+
-+	/* iopolicy changes clear the mpath by design */
-+	mutex_lock(&nvme_subsystems_lock);
-+	list_for_each_entry(ctrl, &subsys->ctrls, subsys_entry)
-+		nvme_mpath_clear_ctrl_paths(ctrl);
-+	mutex_unlock(&nvme_subsystems_lock);
-+
-+	pr_notice("subsysnqn %s iopolicy changed from %s to %s\n",
-+			subsys->subnqn,
-+			nvme_iopolicy_names[old_iopolicy],
-+			nvme_iopolicy_names[iopolicy]);
-+}
-+
- static ssize_t nvme_subsys_iopolicy_store(struct device *dev,
- 		struct device_attribute *attr, const char *buf, size_t count)
- {
-@@ -845,7 +920,7 @@ static ssize_t nvme_subsys_iopolicy_store(struct device *dev,
- 
- 	for (i = 0; i < ARRAY_SIZE(nvme_iopolicy_names); i++) {
- 		if (sysfs_streq(buf, nvme_iopolicy_names[i])) {
--			WRITE_ONCE(subsys->iopolicy, i);
-+			nvme_subsys_iopolicy_update(subsys, i);
- 			return count;
- 		}
+-	kblockd_schedule_work(&head->requeue_work);
+-	if (test_bit(NVME_NSHEAD_DISK_LIVE, &head->flags)) {
++	if (test_and_clear_bit(NVME_NSHEAD_DISK_LIVE, &head->flags)) {
+ 		nvme_cdev_del(&head->cdev, &head->cdev_device);
+ 		/*
+ 		 * requeue I/O after NVME_NSHEAD_DISK_LIVE has been cleared
+@@ -1007,6 +1009,12 @@ void nvme_mpath_shutdown_disk(struct nvme_ns_head *head)
+ 		kblockd_schedule_work(&head->requeue_work);
+ 		del_gendisk(head->disk);
  	}
-@@ -963,6 +1038,9 @@ int nvme_mpath_init_identify(struct nvme_ctrl *ctrl, struct nvme_id_ctrl *id)
- 	    !(ctrl->subsys->cmic & NVME_CTRL_CMIC_ANA))
- 		return 0;
++	/*
++	 * requeue I/O after NVME_NSHEAD_DISK_LIVE has been cleared
++	 * to allow multipath to fail all I/O.
++	 */
++	synchronize_srcu(&head->srcu);
++	kblockd_schedule_work(&head->requeue_work);
+ }
  
-+	/* initialize this in the identify path to cover controller resets */
-+	atomic_set(&ctrl->nr_active, 0);
-+
- 	if (!ctrl->max_namespaces ||
- 	    ctrl->max_namespaces > le32_to_cpu(id->nn)) {
- 		dev_err(ctrl->device,
-diff --git a/drivers/nvme/host/nvme.h b/drivers/nvme/host/nvme.h
-index 14a867245c29f..bddc068d58c7e 100644
---- a/drivers/nvme/host/nvme.h
-+++ b/drivers/nvme/host/nvme.h
-@@ -48,6 +48,7 @@ extern unsigned int admin_timeout;
- extern struct workqueue_struct *nvme_wq;
- extern struct workqueue_struct *nvme_reset_wq;
- extern struct workqueue_struct *nvme_delete_wq;
-+extern struct mutex nvme_subsystems_lock;
- 
- /*
-  * List of workarounds for devices that required behavior not specified in
-@@ -199,6 +200,7 @@ enum {
- 	NVME_REQ_CANCELLED		= (1 << 0),
- 	NVME_REQ_USERCMD		= (1 << 1),
- 	NVME_MPATH_IO_STATS		= (1 << 2),
-+	NVME_MPATH_CNT_ACTIVE		= (1 << 3),
- };
- 
- static inline struct nvme_request *nvme_req(struct request *req)
-@@ -364,6 +366,7 @@ struct nvme_ctrl {
- 	size_t ana_log_size;
- 	struct timer_list anatt_timer;
- 	struct work_struct ana_work;
-+	atomic_t nr_active;
- #endif
- 
- #ifdef CONFIG_NVME_AUTH
-@@ -411,6 +414,7 @@ static inline enum nvme_ctrl_state nvme_ctrl_state(struct nvme_ctrl *ctrl)
- enum nvme_iopolicy {
- 	NVME_IOPOLICY_NUMA,
- 	NVME_IOPOLICY_RR,
-+	NVME_IOPOLICY_QD,
- };
- 
- struct nvme_subsystem {
+ void nvme_mpath_remove_disk(struct nvme_ns_head *head)
 -- 
 2.43.0
 
