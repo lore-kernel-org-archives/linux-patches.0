@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D93551E871;
-	Fri,  6 Dec 2024 15:00:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF3351E871;
+	Fri,  6 Dec 2024 15:00:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733497225; cv=none; b=syLHIcr3APVm0gjglSg78lUC8i9heGPeb8Qye98yrhM09EE3oq4zKPpY3xQ4uiDylhZJ/WW9OP1lhPq95gAPdjPgKEM2n6uxvPYAeDljhTH0PWlm3WVceLjfTNDtJw4ceHgAXdHXeRlq3D+tJiNBM3UNNnkczh400axhRZYOs7U=
+	t=1733497229; cv=none; b=HrH54s82DZr03uJlDYwkt9JE4WuJqKsIGqC3/OpvBlrTdcMaR4aB7Aksnn2bstXm3NBt1rnCMDlDiHwW97UR1fPELzuD+Cs6GZXLoWJdLGopqscw9uqN/RBm9i0rl/W5GAj7pBHsspeW+AbJ4qBcVl709OIpbuNhFdo0r6yUS/M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733497225; c=relaxed/simple;
-	bh=qdrhLGeDVEYeL+X6sVoIjM6/7cWPLn96gLYwz+UVvWU=;
+	s=arc-20240116; t=1733497229; c=relaxed/simple;
+	bh=6BNqBGCCLkBB+VMl/25Xi6/sqnB+DI494Xf1+wHfVks=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qfceJw9CBexpZNusqvTg9WBXXMbGJAiyrB7h/OAKxJyZL5RMcyaROR4rIX8lTWph83AUYw224X5xxzAnjhgmnMJZ3+8GyiU2GHaR7dgQ7Ua9xLdem1uZY2mlt/1fx1CGRfUn7tOPEFK+77dmPfvSisbGnoLHRHknjjmLzhcCMNE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gIjUPnn+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GZ1x8bOZEB0gxOWRvOS0a/EDn9DMgwJwoXJeQqUSn6K++1Kwm3tNm14F4lEYzOk7K+p0CtLDU4hQslseOMFtBIrda0E06hBiyIv1XXeU+891QS4RV0W7/QbgTN25U/qdR2z8/kJz6laCb8UeU4AwZ1XhN7XDwOjFRnmR+IexQgM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ID1gnGxi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gIjUPnn+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 460B7C4CED1;
-	Fri,  6 Dec 2024 15:00:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ID1gnGxi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB743C4CED1;
+	Fri,  6 Dec 2024 15:00:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733497225;
-	bh=qdrhLGeDVEYeL+X6sVoIjM6/7cWPLn96gLYwz+UVvWU=;
+	s=korg; t=1733497229;
+	bh=6BNqBGCCLkBB+VMl/25Xi6/sqnB+DI494Xf1+wHfVks=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gIjUPnn+jgG2xh7KAb/NuHpTsvPYfKeFTLIPjmhlWtam2myBEspm621LRtfICRFp3
-	 HbwU8rSgwhwZ2wEg4kO4wuyYeJZ2o4rgL7XOvvtg3MDNryQGqn8wvVQuZnzA6kBMTC
-	 cAqnTORIHQRtnLJ5za9xQUdDKPIAvh87C7lQzStU=
+	b=ID1gnGxi22Q/t1er7fBIJMVST3O/zMlQnHEsJ5SNj0V9G7ba1Heh3eZ0rNX8qWyeo
+	 jPbdrU3F93oM3msOtA8Bljk6Ch2b/kE1FDyeaaI7B1wk6GHmPjT9jVLt+7O9a7G6LC
+	 QkLjbjMoNu4AqOCn40c9rVDOKvRExBC7Z2ZtLULg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Florian Westphal <fw@strlen.de>,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 230/676] netfilter: nf_tables: skip transaction if update object is not implemented
-Date: Fri,  6 Dec 2024 15:30:49 +0100
-Message-ID: <20241206143702.318666283@linuxfoundation.org>
+Subject: [PATCH 6.6 231/676] netfilter: nf_tables: must hold rcu read lock while iterating object type list
+Date: Fri,  6 Dec 2024 15:30:50 +0100
+Message-ID: <20241206143702.356653840@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -50,50 +51,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit 84b1a0c0140a9a92ea108576c0002210f224ce59 ]
+[ Upstream commit cddc04275f95ca3b18da5c0fb111705ac173af89 ]
 
-Turn update into noop as a follow up for:
+Update of stateful object triggers:
+WARNING: suspicious RCU usage
+net/netfilter/nf_tables_api.c:7759 RCU-list traversed in non-reader section!!
 
-  9fedd894b4e1 ("netfilter: nf_tables: fix unexpected EOPNOTSUPP error")
+other info that might help us debug this:
+rcu_scheduler_active = 2, debug_locks = 1
+1 lock held by nft/3060:
+ #0: ffff88810f0578c8 (&nft_net->commit_mutex){+.+.}-{4:4}, [..]
 
-instead of adding a transaction object which is simply discarded at a
-later stage of the commit protocol.
+... but this list is not protected by the transaction mutex but the
+nfnl nftables subsystem mutex.
 
+Switch to nft_obj_type_get which will acquire rcu read lock,
+bump refcount, and returns the result.
+
+v3: Dan Carpenter points out nft_obj_type_get returns error pointer, not
+NULL, on error.
+
+Fixes: dad3bdeef45f ("netfilter: nf_tables: fix memory leak during stateful obj update").
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Stable-dep-of: cddc04275f95 ("netfilter: nf_tables: must hold rcu read lock while iterating object type list")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_tables_api.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ net/netfilter/nf_tables_api.c | 13 ++++++-------
+ 1 file changed, 6 insertions(+), 7 deletions(-)
 
 diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index 5c4cd9646e71c..abab78148c6c8 100644
+index abab78148c6c8..eee7997048fb9 100644
 --- a/net/netfilter/nf_tables_api.c
 +++ b/net/netfilter/nf_tables_api.c
-@@ -7689,6 +7689,9 @@ static int nf_tables_newobj(struct sk_buff *skb, const struct nfnl_info *info,
- 		if (WARN_ON_ONCE(!type))
- 			return -ENOENT;
+@@ -7615,9 +7615,7 @@ static int nf_tables_updobj(const struct nft_ctx *ctx,
+ 	struct nft_trans *trans;
+ 	int err = -ENOMEM;
  
-+		if (!obj->ops->update)
-+			return 0;
+-	if (!try_module_get(type->owner))
+-		return -ENOENT;
+-
++	/* caller must have obtained type->owner reference. */
+ 	trans = nft_trans_alloc(ctx, NFT_MSG_NEWOBJ,
+ 				sizeof(struct nft_trans_obj));
+ 	if (!trans)
+@@ -7685,15 +7683,16 @@ static int nf_tables_newobj(struct sk_buff *skb, const struct nfnl_info *info,
+ 		if (info->nlh->nlmsg_flags & NLM_F_REPLACE)
+ 			return -EOPNOTSUPP;
+ 
+-		type = __nft_obj_type_get(objtype, family);
+-		if (WARN_ON_ONCE(!type))
+-			return -ENOENT;
+-
+ 		if (!obj->ops->update)
+ 			return 0;
+ 
++		type = nft_obj_type_get(net, objtype, family);
++		if (WARN_ON_ONCE(IS_ERR(type)))
++			return PTR_ERR(type);
 +
  		nft_ctx_init(&ctx, net, skb, info->nlh, family, table, NULL, nla);
  
++		/* type->owner reference is put when transaction object is released. */
  		return nf_tables_updobj(&ctx, type, nla[NFTA_OBJ_DATA], obj);
-@@ -9432,9 +9435,10 @@ static void nft_obj_commit_update(struct nft_trans *trans)
- 	obj = nft_trans_obj(trans);
- 	newobj = nft_trans_obj_newobj(trans);
- 
--	if (obj->ops->update)
--		obj->ops->update(obj, newobj);
-+	if (WARN_ON_ONCE(!obj->ops->update))
-+		return;
- 
-+	obj->ops->update(obj, newobj);
- 	nft_obj_destroy(&trans->ctx, newobj);
- }
+ 	}
  
 -- 
 2.43.0
