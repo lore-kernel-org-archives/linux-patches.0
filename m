@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D6B01465AB;
-	Fri,  6 Dec 2024 15:25:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF2871F4735;
+	Fri,  6 Dec 2024 15:25:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733498726; cv=none; b=ThyefEYXzbeAAQBaJkVKeX4oWt9na9qg7LWk5aKXoBtsYHmYWaHNM4A6XlHZ9u06XABan1/VA6odRV/0lu03rrCZm4b0Qoo/V7hUOJgHZHkMBih/gCe/iIt+YyGN8tmjgtMnYsoVyVqd4k+mTGlT8IwLYKE8yuKGS5VwIHoYRKY=
+	t=1733498729; cv=none; b=ER7nos6d0kmov8IQ8TOLspCX5dqsPCusBy44zzwV/jWDsNB7a26LnuZ2qlE/JNqAJAV0nRYQCWzz7yTrQaet4zMVjSUqaNPiRGqRLxBpe/vD6LAdiVn8U6mPXBB4Pljw+ga1mMt4dDyYmBgK7yce1OE0Zfj6tL2qIPS2tA30ibM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733498726; c=relaxed/simple;
-	bh=lxE0m+joNnlxVDAoK3hKaBapEB3YHID5cZczI3U2P8s=;
+	s=arc-20240116; t=1733498729; c=relaxed/simple;
+	bh=wp62qq41ADrBwB+r3XhfXJPSNVbZRDJviAF/xBqDjeM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LkOTpETumakbH76dSgsLUuGYb4UWvA9cgpOpCALd+//txqL9Mb+OfoTQmlUi9h1SyQz12i4oJDJJdukwaW5JGpYZRMBuFtHKovab/KrULRBxEn3RnTV987DpGGqWJpZw6Jka92S8mTjjr7J1Cuo/qTaxryd7JS+ZB4dr39+WPDk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pnBoWK8l; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=b1pg4Q+voIAMkQJf9qMVNyt7vn7tM4hi7NDmq/WNgNxY7J4TWOkr3rU4K2jShyFSbs80yEsZNlj8nybTDnZemuKGlzZOWYzMOxadnkZEqWdOBY5yube/aRvoc5q1mTRRJ1uI4ioITAEoCs7UNncz6xPZzMHBJxBj/NxAjVBu9Lk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZPUQ0d+h; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pnBoWK8l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCAE8C4CED1;
-	Fri,  6 Dec 2024 15:25:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZPUQ0d+h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E1E8C4CEDC;
+	Fri,  6 Dec 2024 15:25:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733498726;
-	bh=lxE0m+joNnlxVDAoK3hKaBapEB3YHID5cZczI3U2P8s=;
+	s=korg; t=1733498729;
+	bh=wp62qq41ADrBwB+r3XhfXJPSNVbZRDJviAF/xBqDjeM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pnBoWK8l4Eftqc3cJ+cUCm/rjD3AlYJPN23vdgpHwnAbZGNG82RKET/LAVNw74AKU
-	 k2Z3ZtKwRxlRLVaZubeLC8VoCCtMOqm9X0uFZ7NXJl3WSXsZ45s/2eMTH7JsocRZB1
-	 Yc5qmkZQPDPjfVdhT7dPZmnujq4L1geK+rHzF+jM=
+	b=ZPUQ0d+h9SLrSURlevkIcPQYyDSJHn/TXPYQav6rUc/3k4wU7OKDMq13xvjVdkCms
+	 Z2mhdy1/5W58ofrHG/74Dj8+yyVSsP2BX4gm+JWG8jR++uuhVJQSFCB1OdNqNLzAph
+	 3JkHXsFGBDM8ryXE9O+RbmNTP4vTMfBb2GlglUSM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
-	CK Hu <ck.hu@mediatek.com>,
-	Chen-Yu Tsai <wenst@chromium.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Chun-Kuang Hu <chunkuang.hu@kernel.org>
-Subject: [PATCH 6.6 670/676] drm/mediatek: Fix child node refcount handling in early exit
-Date: Fri,  6 Dec 2024 15:38:09 +0100
-Message-ID: <20241206143719.541105099@linuxfoundation.org>
+	Christian Gmeiner <cgmeiner@igalia.com>,
+	Lucas Stach <l.stach@pengutronix.de>
+Subject: [PATCH 6.6 671/676] drm/etnaviv: flush shader L1 cache after user commandstream
+Date: Fri,  6 Dec 2024 15:38:10 +0100
+Message-ID: <20241206143719.579756812@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -53,43 +50,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+From: Lucas Stach <l.stach@pengutronix.de>
 
-commit f708e8b4cfd16e5c8cd8d7fcfcb2fb2c6ed93af3 upstream.
+commit 4f8dbadef085ab447a01a8d4806a3f629fea05ed upstream.
 
-Early exits (goto, break, return) from for_each_child_of_node() required
-an explicit call to of_node_put(), which was not introduced with the
-break if cnt == MAX_CRTC.
-
-Add the missing of_node_put() before the break.
+The shader L1 cache is a writeback cache for shader loads/stores
+and thus must be flushed before any BOs backing the shader buffers
+are potentially freed.
 
 Cc: stable@vger.kernel.org
-Fixes: d761b9450e31 ("drm/mediatek: Add cnt checking for coverity issue")
-
-Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
-Reviewed-by: CK Hu <ck.hu@mediatek.com>
-Reviewed-by: Chen-Yu Tsai <wenst@chromium.org>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://patchwork.kernel.org/project/dri-devel/patch/20241011-mtk_drm_drv_memleak-v1-1-2b40c74c8d75@gmail.com/
-Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
+Reviewed-by: Christian Gmeiner <cgmeiner@igalia.com>
+Signed-off-by: Lucas Stach <l.stach@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/mediatek/mtk_drm_drv.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/etnaviv/etnaviv_buffer.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/mediatek/mtk_drm_drv.c
-+++ b/drivers/gpu/drm/mediatek/mtk_drm_drv.c
-@@ -378,8 +378,10 @@ static bool mtk_drm_get_all_drm_priv(str
- 		if (all_drm_priv[cnt] && all_drm_priv[cnt]->mtk_drm_bound)
- 			cnt++;
- 
--		if (cnt == MAX_CRTC)
-+		if (cnt == MAX_CRTC) {
-+			of_node_put(node);
- 			break;
-+		}
- 	}
- 
- 	if (drm_priv->data->mmsys_dev_num == cnt) {
+--- a/drivers/gpu/drm/etnaviv/etnaviv_buffer.c
++++ b/drivers/gpu/drm/etnaviv/etnaviv_buffer.c
+@@ -482,7 +482,8 @@ void etnaviv_buffer_queue(struct etnaviv
+ 	} else {
+ 		CMD_LOAD_STATE(buffer, VIVS_GL_FLUSH_CACHE,
+ 				       VIVS_GL_FLUSH_CACHE_DEPTH |
+-				       VIVS_GL_FLUSH_CACHE_COLOR);
++				       VIVS_GL_FLUSH_CACHE_COLOR |
++				       VIVS_GL_FLUSH_CACHE_SHADER_L1);
+ 		if (has_blt) {
+ 			CMD_LOAD_STATE(buffer, VIVS_BLT_ENABLE, 0x1);
+ 			CMD_LOAD_STATE(buffer, VIVS_BLT_SET_COMMAND, 0x1);
 
 
