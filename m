@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D826114A4F0;
-	Fri,  6 Dec 2024 14:44:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C169145A05;
+	Fri,  6 Dec 2024 14:44:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733496295; cv=none; b=sPFyLGRKQ9EdjwAUQEB8hvE1ekzp87c+yQ1NWjQ5WVMvTOS0D2BcT3uIo8ES1BxJO5B3MAoHrQKidJI49qRN5s9z0T5IjMjyVqzjaYzq39SddoULxNo6OrSzVLhMOmNIS/YfcdrGPw9BU/hlak+zcJD8oWHsZSMOeNcu/UKwsNI=
+	t=1733496299; cv=none; b=qUq/5zqZb4yWt6XUeFxR+mzL+I/iC2Vfl9Kg9RvFCxOhH4zumxT3ZgLsl8JYQcNKP49COldaPR3sMoWSRbwlsQdUEIXxyRaiF8yxilv5G7+v8ccGhVMSFfQGH/E80KaTSmEdN0kQJ1t7DQVHA/3tlA+wjuIIghzNQGGaCBx+KwM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733496295; c=relaxed/simple;
-	bh=hplSOO+lV8ZjTey4X5TB8oIj0kenxuX/ZdcR0kzSfGI=;
+	s=arc-20240116; t=1733496299; c=relaxed/simple;
+	bh=PyUQZu60jJgX3eTXrZiGqeNjJr3DxVz8D7EaU2XmUI4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dkr5QNSdAwW29TYBCix5puk94MgM/qgIqs+WkagoavTBjgPIS7Pi1PSxL81to2hUKg7gkIBEZ5ix8s1G76IO/txgPBA+amoV1DA1y6QTV/xQDNOZe+feFnGqeBm+pfVXAMh6remhJnQeTvclLu14AfR98BLqaqkkmfEe8cXFOa0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A4gd4AuC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cQ+jWS4rNRvyu9RBoR4wg5RD1lXVVEdHoKTO+pPHhlDc1adqTMnx6/2NrqB+cG4IxPq9QwPVS0tlC9YzCLFvDNmUsGJkHduZjicLUr/CRPMNrXZjzJvJgWro0Rgm9sr+vv4h8xm+uG6dhpwym/8XNzG6P/NDxLzHAHl4zsb6IxQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z/WBF7jj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A4gd4AuC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBFA5C4CED1;
-	Fri,  6 Dec 2024 14:44:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z/WBF7jj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EB66C4CED1;
+	Fri,  6 Dec 2024 14:44:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733496295;
-	bh=hplSOO+lV8ZjTey4X5TB8oIj0kenxuX/ZdcR0kzSfGI=;
+	s=korg; t=1733496298;
+	bh=PyUQZu60jJgX3eTXrZiGqeNjJr3DxVz8D7EaU2XmUI4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A4gd4AuCrOAk5FwPeftzYl26dtYuCTYeL7dOY09EdoizZsJKGBK8EgjbJcpvKtTw/
-	 4K0jmm/cJp4f1eETHD6+wL0sdhwKSUgAhQraT0fl+launVGoRrAzfk3SM0S5gty6FJ
-	 1qZW18zY1mPoBcz36dnVzRLpKLUFcOUArc7ZR+38=
+	b=Z/WBF7jjMcu3IPfkM1IjYEINXPdNMF0LxI0abnffX8Ms+1/MjGi8SJTlVzrnuAG+s
+	 ldjQzDQi6a9kKImyUSbiJw9c6SVMx0RwlxaL1Gxar4865/LaxLWnkOoXCD+plDjygL
+	 WjpDM4lzNmgvtMnZhgJO8XrNa6Bq8TQrYAv9yupw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>
-Subject: [PATCH 6.12 083/146] i3c: master: svc: Modify enabled_events bit 7:0 to act as IBI enable counter
-Date: Fri,  6 Dec 2024 15:36:54 +0100
-Message-ID: <20241206143530.855233427@linuxfoundation.org>
+	Todd Kjos <tkjos@android.com>,
+	Alice Ryhl <aliceryhl@google.com>,
+	Carlos Llamas <cmllamas@google.com>
+Subject: [PATCH 6.12 110/146] binder: fix freeze UAF in binder_release_work()
+Date: Fri,  6 Dec 2024 15:37:21 +0100
+Message-ID: <20241206143531.892140569@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143527.654980698@linuxfoundation.org>
 References: <20241206143527.654980698@linuxfoundation.org>
@@ -52,65 +51,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Frank Li <Frank.Li@nxp.com>
+From: Carlos Llamas <cmllamas@google.com>
 
-commit 25bc99be5fe53853053ceeaa328068c49dc1e799 upstream.
+commit 7e20434cbca814cb91a0a261ca0106815ef48e5f upstream.
 
-Fix issue where disabling IBI on one device disables the entire IBI
-interrupt. Modify bit 7:0 of enabled_events to serve as an IBI enable
-counter, ensuring that the system IBI interrupt is disabled only when all
-I3C devices have IBI disabled.
+When a binder reference is cleaned up, any freeze work queued in the
+associated process should also be removed. Otherwise, the reference is
+freed while its ref->freeze.work is still queued in proc->work leading
+to a use-after-free issue as shown by the following KASAN report:
 
-Cc: stable@kernel.org
-Fixes: 7ff730ca458e ("i3c: master: svc: enable the interrupt in the enable ibi function")
-Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
-Link: https://lore.kernel.org/r/20241101165002.2479794-1-Frank.Li@nxp.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+  ==================================================================
+  BUG: KASAN: slab-use-after-free in binder_release_work+0x398/0x3d0
+  Read of size 8 at addr ffff31600ee91488 by task kworker/5:1/211
+
+  CPU: 5 UID: 0 PID: 211 Comm: kworker/5:1 Not tainted 6.11.0-rc7-00382-gfc6c92196396 #22
+  Hardware name: linux,dummy-virt (DT)
+  Workqueue: events binder_deferred_func
+  Call trace:
+   binder_release_work+0x398/0x3d0
+   binder_deferred_func+0xb60/0x109c
+   process_one_work+0x51c/0xbd4
+   worker_thread+0x608/0xee8
+
+  Allocated by task 703:
+   __kmalloc_cache_noprof+0x130/0x280
+   binder_thread_write+0xdb4/0x42a0
+   binder_ioctl+0x18f0/0x25ac
+   __arm64_sys_ioctl+0x124/0x190
+   invoke_syscall+0x6c/0x254
+
+  Freed by task 211:
+   kfree+0xc4/0x230
+   binder_deferred_func+0xae8/0x109c
+   process_one_work+0x51c/0xbd4
+   worker_thread+0x608/0xee8
+  ==================================================================
+
+This commit fixes the issue by ensuring any queued freeze work is removed
+when cleaning up a binder reference.
+
+Fixes: d579b04a52a1 ("binder: frozen notification")
+Cc: stable@vger.kernel.org
+Acked-by: Todd Kjos <tkjos@android.com>
+Reviewed-by: Alice Ryhl <aliceryhl@google.com>
+Signed-off-by: Carlos Llamas <cmllamas@google.com>
+Link: https://lore.kernel.org/r/20240926233632.821189-4-cmllamas@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i3c/master/svc-i3c-master.c |   10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/android/binder.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/i3c/master/svc-i3c-master.c
-+++ b/drivers/i3c/master/svc-i3c-master.c
-@@ -130,8 +130,8 @@
- #define SVC_I3C_PPBAUD_MAX 15
- #define SVC_I3C_QUICK_I2C_CLK 4170000
- 
--#define SVC_I3C_EVENT_IBI	BIT(0)
--#define SVC_I3C_EVENT_HOTJOIN	BIT(1)
-+#define SVC_I3C_EVENT_IBI	GENMASK(7, 0)
-+#define SVC_I3C_EVENT_HOTJOIN	BIT(31)
- 
- struct svc_i3c_cmd {
- 	u8 addr;
-@@ -214,7 +214,7 @@ struct svc_i3c_master {
- 		spinlock_t lock;
- 	} ibi;
- 	struct mutex lock;
--	int enabled_events;
-+	u32 enabled_events;
- 	u32 mctrl_config;
- };
- 
-@@ -1639,7 +1639,7 @@ static int svc_i3c_master_enable_ibi(str
- 		return ret;
+diff --git a/drivers/android/binder.c b/drivers/android/binder.c
+index 8bca2de6fa24..d955135ee37a 100644
+--- a/drivers/android/binder.c
++++ b/drivers/android/binder.c
+@@ -1225,6 +1225,12 @@ static void binder_cleanup_ref_olocked(struct binder_ref *ref)
+ 		binder_dequeue_work(ref->proc, &ref->death->work);
+ 		binder_stats_deleted(BINDER_STAT_DEATH);
  	}
++
++	if (ref->freeze) {
++		binder_dequeue_work(ref->proc, &ref->freeze->work);
++		binder_stats_deleted(BINDER_STAT_FREEZE);
++	}
++
+ 	binder_stats_deleted(BINDER_STAT_REF);
+ }
  
--	master->enabled_events |= SVC_I3C_EVENT_IBI;
-+	master->enabled_events++;
- 	svc_i3c_master_enable_interrupts(master, SVC_I3C_MINT_SLVSTART);
- 
- 	return i3c_master_enec_locked(m, dev->info.dyn_addr, I3C_CCC_EVENT_SIR);
-@@ -1651,7 +1651,7 @@ static int svc_i3c_master_disable_ibi(st
- 	struct svc_i3c_master *master = to_svc_i3c_master(m);
- 	int ret;
- 
--	master->enabled_events &= ~SVC_I3C_EVENT_IBI;
-+	master->enabled_events--;
- 	if (!master->enabled_events)
- 		svc_i3c_master_disable_interrupts(master);
- 
+-- 
+2.47.1
+
 
 
