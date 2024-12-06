@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EB6D53A7;
-	Fri,  6 Dec 2024 15:02:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C147213D508;
+	Fri,  6 Dec 2024 15:02:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733497376; cv=none; b=EgTnR5qqhmLyKfZ0l4Nme8hARU+LgqHLhg2vUar3xAZRH4GK1suYudC4w/AtPl8yWuyVBNvfPhUSM7jRVG7eaEAeB7omq86Z4F0uAqjRIwfv86f+fyvYCL8rUC67PeUPSUB5oNlGOzKDRnho7E+fQE9VfSe494Q2batqJdXyljI=
+	t=1733497379; cv=none; b=ZvxKBC9NIkCmKD8rHoA1jtQR2qwqXdhjbdW1FUzON9wctPx4yUlxUueRNIn7axXdI1kM29u8fZbtvpcDbrJH5+lR1kBydZfiMv05G88jPz7NacwkpviIHuP/icGnz1/vHcyp1E08ctqfi6sG+D8Qn331yNB2NZrkeFNb+RvCaLA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733497376; c=relaxed/simple;
-	bh=EoufOzY4ENeRsW6UFLBUxkM7QwjvtALVbEWPtZaMx9E=;
+	s=arc-20240116; t=1733497379; c=relaxed/simple;
+	bh=EKtj7PGMu8Mvn0H9ZBwfP5g3Pm7THM/nyUWOtSwwB9U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=T418/jA1L06QF+/T+LsYrOdpKtFKMpjswTLOD199AqXe+NlgHWMAdTgQTJPd0n72rjB6Zw0nCWJI5CpAlxjsg2MF0oSCNyT/mRc2w/TRDe0rUXNbP81wbFitKzzB+uf5u2/F3cqPLkSIZyUtPUzwVWRYBaaF6QYsjN+gfiR6FMM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iwq/RMQS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IA+rtmhIeHqJCjcDOHivxWObLCamJvYGieo0jS1YnqfmWFxqyRhfOd4F55XA8Cu8GwQFpI51lEjS+KnywJMHd5whwd26GVNgQQIVwSxEzlVNLUbbxVMgswarC9RjkQdy3guT345KvYDfKs+CLepqIIKtnHkt+lKu9DUFiyU/WDo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F5uO03ve; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iwq/RMQS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F28B8C4CEDE;
-	Fri,  6 Dec 2024 15:02:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F5uO03ve"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31BDDC4CED1;
+	Fri,  6 Dec 2024 15:02:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733497376;
-	bh=EoufOzY4ENeRsW6UFLBUxkM7QwjvtALVbEWPtZaMx9E=;
+	s=korg; t=1733497379;
+	bh=EKtj7PGMu8Mvn0H9ZBwfP5g3Pm7THM/nyUWOtSwwB9U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iwq/RMQSHDPKOGwSKF2eqQdY+PlYEJUFsuSCNX/tJHwkPtWorH29NDSVkSihlV2S1
-	 o1n54GNf8ZJYV/wFF0c3mQoPJM4W/lNAIPjnYlNJOtNCtULBS6wjpEfnQWm3LxMjgT
-	 s0RkLZRuEoUXY5fACJY2qc6cKmHY67pwjCzv1EDQ=
+	b=F5uO03velot6SGLjmCB/Cmv+pqK8siuWnXks09Jz9SSMXuLEw9mhv0PO0uMI7OpVt
+	 G1FzXGi6TS5B/ndy0lX+RECErs5cHmp3HK1swCLf0WYhLDpDljkz+KTuVNckjYd1wO
+	 LuUsssXMGlrS1kbMQGgLMQFVzzOV8ODnYWnq8Hvk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
-	Tudor Ambarus <tudor.ambarus@linaro.org>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Jiri Olsa <jolsa@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 273/676] mtd: hyperbus: rpc-if: Convert to platform remove callback returning void
-Date: Fri,  6 Dec 2024 15:31:32 +0100
-Message-ID: <20241206143704.005339131@linuxfoundation.org>
+Subject: [PATCH 6.6 247/676] bpf: Force uprobe bpf program to always return 0
+Date: Fri,  6 Dec 2024 15:31:06 +0100
+Message-ID: <20241206143702.981037411@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -46,67 +45,63 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+From: Jiri Olsa <jolsa@kernel.org>
 
-[ Upstream commit baaa90c1c923ff2412fae0162eb66d036fd3be6b ]
+[ Upstream commit f505005bc7426f4309880da94cfbfc37efa225bd ]
 
-The .remove() callback for a platform driver returns an int which makes
-many driver authors wrongly assume it's possible to do error handling by
-returning an error code. However the value returned is ignored (apart
-from emitting a warning) and this typically results in resource leaks.
+As suggested by Andrii make uprobe multi bpf programs to always return 0,
+so they can't force uprobe removal.
 
-To improve here there is a quest to make the remove callback return
-void. In the first step of this quest all drivers are converted to
-.remove_new(), which already returns void. Eventually after all drivers
-are converted, .remove_new() will be renamed to .remove().
+Keeping the int return type for uprobe_prog_run, because it will be used
+in following session changes.
 
-Trivially convert this driver from always returning zero in the remove
-callback to the void returning variant.
-
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Acked-by: Tudor Ambarus <tudor.ambarus@linaro.org>
-Link: https://lore.kernel.org/linux-mtd/20231008200143.196369-11-u.kleine-koenig@pengutronix.de
-Stable-dep-of: 7d189579a287 ("mtd: hyperbus: rpc-if: Add missing MODULE_DEVICE_TABLE")
+Fixes: 89ae89f53d20 ("bpf: Add multi uprobe link")
+Suggested-by: Andrii Nakryiko <andrii@kernel.org>
+Signed-off-by: Jiri Olsa <jolsa@kernel.org>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Acked-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20241108134544.480660-3-jolsa@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/hyperbus/rpc-if.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ kernel/trace/bpf_trace.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/mtd/hyperbus/rpc-if.c b/drivers/mtd/hyperbus/rpc-if.c
-index ef32fca5f785e..b22aa57119f23 100644
---- a/drivers/mtd/hyperbus/rpc-if.c
-+++ b/drivers/mtd/hyperbus/rpc-if.c
-@@ -154,20 +154,18 @@ static int rpcif_hb_probe(struct platform_device *pdev)
- 	return error;
+diff --git a/kernel/trace/bpf_trace.c b/kernel/trace/bpf_trace.c
+index 9064f75de7e46..e8fb6ada323c1 100644
+--- a/kernel/trace/bpf_trace.c
++++ b/kernel/trace/bpf_trace.c
+@@ -3098,7 +3098,6 @@ static int uprobe_prog_run(struct bpf_uprobe *uprobe,
+ 	struct bpf_prog *prog = link->link.prog;
+ 	bool sleepable = prog->aux->sleepable;
+ 	struct bpf_run_ctx *old_run_ctx;
+-	int err = 0;
+ 
+ 	if (link->task && current->mm != link->task->mm)
+ 		return 0;
+@@ -3111,7 +3110,7 @@ static int uprobe_prog_run(struct bpf_uprobe *uprobe,
+ 	migrate_disable();
+ 
+ 	old_run_ctx = bpf_set_run_ctx(&run_ctx.run_ctx);
+-	err = bpf_prog_run(link->link.prog, regs);
++	bpf_prog_run(link->link.prog, regs);
+ 	bpf_reset_run_ctx(old_run_ctx);
+ 
+ 	migrate_enable();
+@@ -3120,7 +3119,7 @@ static int uprobe_prog_run(struct bpf_uprobe *uprobe,
+ 		rcu_read_unlock_trace();
+ 	else
+ 		rcu_read_unlock();
+-	return err;
++	return 0;
  }
  
--static int rpcif_hb_remove(struct platform_device *pdev)
-+static void rpcif_hb_remove(struct platform_device *pdev)
- {
- 	struct rpcif_hyperbus *hyperbus = platform_get_drvdata(pdev);
- 
- 	hyperbus_unregister_device(&hyperbus->hbdev);
- 
- 	pm_runtime_disable(hyperbus->rpc.dev);
--
--	return 0;
- }
- 
- static struct platform_driver rpcif_platform_driver = {
- 	.probe	= rpcif_hb_probe,
--	.remove	= rpcif_hb_remove,
-+	.remove_new = rpcif_hb_remove,
- 	.driver	= {
- 		.name	= "rpc-if-hyperflash",
- 	},
+ static bool
 -- 
 2.43.0
 
