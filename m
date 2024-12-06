@@ -1,39 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C67771FBEB9;
-	Fri,  6 Dec 2024 14:51:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C45DA206F35;
+	Fri,  6 Dec 2024 14:51:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733496698; cv=none; b=MBl75K04lSyBtjHTAC76/UqwOkvRbsv5rZ8m8GMfc6nzonEhqF3vY2A8LGKFritTvQj3CUe3szf0munojlM/IYiUDxEA2UtvcLj9gbIiFCtW+SvQ1f4YizfUe7+DPFq6bxt/AMXKsaPTIMPPAi7yBzVDrqBnSn5Ljz5/kvPc1y0=
+	t=1733496701; cv=none; b=dNRpbyKKmjY3dbSpz26Lh+8UA4plso7vnQRvpwPdIGJaCTRkllAcOOkgQ19n5xnCryizbGFtmUANPv5SgrIpeKMKKSL1+2e/MS5zoGV4shi/Fi4GoPus396zGVtij9PqwFEOvfMIHDmh+WaG2uddOE8ZZ+Xv8KQtChtc91N5eg4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733496698; c=relaxed/simple;
-	bh=LiAqcIR9bCL6nMo5McySyRgUqBZrpL059ceUC1QAsvA=;
+	s=arc-20240116; t=1733496701; c=relaxed/simple;
+	bh=eUh5xHWr+unoHSCvskLv934g4waWWSl/sBOuR0QQI+A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uDh+viw+CAdZ8wPLolJ68PDKK7j91OCrYK1SRM3BP7BMxJhPGadnlDJ0O2HQG+7/1kBTNWixyik3FwbwCVFoD/IHidhdtt2JU6IbOm7ySdnsSUcq6g4dAeuqfCRo/mbNn7VB63DJs8L5ZLpUi3GX1QO5F+SlvFlXnaZ5yIxKR8Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Sy36sAci; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QwfFWUYnNr5k4R+JYu9xkRx3jOxFGfzmCHzYFbaBYfhHoS7aTJI+9zSUWjgeQ9knrY+mPdrRdNzFyoGGy2q2seCAJRew4fziYQvF0I11dyl7Q0bQhtqznYze9Q0MnAS2FiUlBKfb6YoRB9SJHSt8uAVhzJRFb0G7/yF+lXnKVRM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yRoikl1Q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sy36sAci"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50368C4CED1;
-	Fri,  6 Dec 2024 14:51:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yRoikl1Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18310C4CEDE;
+	Fri,  6 Dec 2024 14:51:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733496698;
-	bh=LiAqcIR9bCL6nMo5McySyRgUqBZrpL059ceUC1QAsvA=;
+	s=korg; t=1733496701;
+	bh=eUh5xHWr+unoHSCvskLv934g4waWWSl/sBOuR0QQI+A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Sy36sAciSEpEm3SbanVDrhPi6Vg1mA8drbfPHeCP9S2M5b3hosoyPdz4rgjDnt7GS
-	 dSFeF3yhhP0Y8OErmJsClD5/7HFKU9R3o9g8/ek3Nuj8J3HW4uXjpSfXcfqQQOsdo0
-	 8jd83sros1/Ic5S+tsIlV5944Yg2eIVORVNREu3k=
+	b=yRoikl1Qz2/zbtKms7tIbcZKb268gmRmVun3LJOR2/X98sYzcRtsQ6rG48xSBHJkP
+	 N5mKLUFM955kquhI3y5VuhmK342WeLktfQYL4jLau4Lmdlgu0Eq46QsS8z/87Wv2c/
+	 d6ou1TM0JEL/Ww4DkEOS0yUsajuwUdUfmMDxZqbI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Kandybka <d.kandybka@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Tom Chung <chiahsuan.chung@amd.com>,
+	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
+	Roman Li <roman.li@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Harry Wentland <harry.wentland@amd.com>,
+	Hamza Mahfooz <hamza.mahfooz@amd.com>,
+	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Xiangyu Chen <xiangyu.chen@windriver.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 047/676] mptcp: fix possible integer overflow in mptcp_reset_tout_timer
-Date: Fri,  6 Dec 2024 15:27:46 +0100
-Message-ID: <20241206143655.191874270@linuxfoundation.org>
+Subject: [PATCH 6.6 038/676] drm/amd/display: Add NULL check for function pointer in dcn32_set_output_transfer_func
+Date: Fri,  6 Dec 2024 15:27:37 +0100
+Message-ID: <20241206143654.843889172@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -52,44 +59,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Kandybka <d.kandybka@gmail.com>
+From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
 
-commit b169e76ebad22cbd055101ee5aa1a7bed0e66606 upstream.
+[ Upstream commit 28574b08c70e56d34d6f6379326a860b96749051 ]
 
-In 'mptcp_reset_tout_timer', promote 'probe_timestamp' to unsigned long
-to avoid possible integer overflow. Compile tested only.
+This commit adds a null check for the set_output_gamma function pointer
+in the dcn32_set_output_transfer_func function. Previously,
+set_output_gamma was being checked for null, but then it was being
+dereferenced without any null check. This could lead to a null pointer
+dereference if set_output_gamma is null.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+To fix this, we now ensure that set_output_gamma is not null before
+dereferencing it. We do this by adding a null check for set_output_gamma
+before the call to set_output_gamma.
 
-Signed-off-by: Dmitry Kandybka <d.kandybka@gmail.com>
-Link: https://patch.msgid.link/20241107103657.1560536-1-d.kandybka@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ Conflict in this version because commit d866ae9aaa43 ("mptcp: add a
-  new sysctl for make after break timeout") is not in this version, and
-  replaced TCP_TIMEWAIT_LEN in the expression. The fix can still be
-  applied the same way: by forcing a cast to unsigned long for the first
-  item. ]
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Cc: Tom Chung <chiahsuan.chung@amd.com>
+Cc: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
+Cc: Roman Li <roman.li@amd.com>
+Cc: Alex Hung <alex.hung@amd.com>
+Cc: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Cc: Harry Wentland <harry.wentland@amd.com>
+Cc: Hamza Mahfooz <hamza.mahfooz@amd.com>
+Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+Reviewed-by: Tom Chung <chiahsuan.chung@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Xiangyu Chen <xiangyu.chen@windriver.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mptcp/protocol.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/display/dc/dcn32/dcn32_hwseq.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/net/mptcp/protocol.c b/net/mptcp/protocol.c
-index b8357d7c6b3a1..01f6ce970918c 100644
---- a/net/mptcp/protocol.c
-+++ b/net/mptcp/protocol.c
-@@ -2691,8 +2691,8 @@ void mptcp_reset_tout_timer(struct mptcp_sock *msk, unsigned long fail_tout)
- 	if (!fail_tout && !inet_csk(sk)->icsk_mtup.probe_timestamp)
- 		return;
+diff --git a/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_hwseq.c b/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_hwseq.c
+index 650e1598bddcb..2289c17f6ead5 100644
+--- a/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_hwseq.c
++++ b/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_hwseq.c
+@@ -587,7 +587,9 @@ bool dcn32_set_output_transfer_func(struct dc *dc,
+ 		}
+ 	}
  
--	close_timeout = inet_csk(sk)->icsk_mtup.probe_timestamp - tcp_jiffies32 + jiffies +
--			TCP_TIMEWAIT_LEN;
-+	close_timeout = (unsigned long)inet_csk(sk)->icsk_mtup.probe_timestamp -
-+			tcp_jiffies32 + jiffies + TCP_TIMEWAIT_LEN;
+-	mpc->funcs->set_output_gamma(mpc, mpcc_id, params);
++	if (mpc->funcs->set_output_gamma)
++		mpc->funcs->set_output_gamma(mpc, mpcc_id, params);
++
+ 	return ret;
+ }
  
- 	/* the close timeout takes precedence on the fail one, and here at least one of
- 	 * them is active
 -- 
 2.43.0
 
