@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23AF31494D9;
-	Fri,  6 Dec 2024 14:43:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8DB61474A9;
+	Fri,  6 Dec 2024 14:43:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733496228; cv=none; b=Cp+naQM4/1s6wi7WtsTwJW/n6DNFXvzwR5X/jju32/KSBgbp+Gp7GfwIKc70Pv8DxqSak90/zOTu371GJgpKaAyUKo8hCpUQuQmfJDcOkylKoG6Nk+ylSQRJ/+yXYodQwSnqbOx3QZ6Ki9hF66/3EQJmnT0EsBR1Vy8o6ccgOB8=
+	t=1733496230; cv=none; b=enxrnVCulFi8B/hdOhbnkZT3ISlj1fEz/T2WZ2lYJbLhgvO/G7f7vDZkhFiFNbBd0gztgbh3TuBSOOVo3ztgxgGDKOH5Ff30JgzssqWCERDrmYCccFkMukCLM+r43tAo1RFcXVv48KFCvYu+BUESEkNh9SqWj1bBEzN4tJ4XMHg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733496228; c=relaxed/simple;
-	bh=S+2aXAO5aGXyZw3HUFuFBTj2MblcNepaIbmwaZ8Gezc=;
+	s=arc-20240116; t=1733496230; c=relaxed/simple;
+	bh=XZdQDbv00LXqjSH8GSWuwg2p6isgrCJNWZbhnpeEgkM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=plsFnKXUv42BIjfAvsc416TCQ07hsxeA5B8a6hrgoIwcK4bws6i0V0+t0YTEhSMSfs1BzVv8c96pRBe+WJmnS8QBY0zuPPLaSDfMLs+QmFZ2XZsjEqzaXOX7EOPAaFS4r1BqWBibzdb3VWgsIjLGlnzJEeYvUztQu8oabTMqliI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U8ecM1KX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dgOeh2E/zEiJZcBNv+1Vh6vvyN04yg2TxgceLqEIpK+pd+epXQOPjqxBIp8kR0lP08el2uiDoA+CxrMsNRPXaUEVzzOq9T86CylI28e9RlFYS1OXSO33Q5g6z2OVoI1NLolwNpAEvgEwvVuVRFiCEcoYPFEpf6Vku8QGIxnzcp8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ib3K1+zH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U8ecM1KX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E188C4CED1;
-	Fri,  6 Dec 2024 14:43:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ib3K1+zH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28416C4CED1;
+	Fri,  6 Dec 2024 14:43:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733496227;
-	bh=S+2aXAO5aGXyZw3HUFuFBTj2MblcNepaIbmwaZ8Gezc=;
+	s=korg; t=1733496230;
+	bh=XZdQDbv00LXqjSH8GSWuwg2p6isgrCJNWZbhnpeEgkM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U8ecM1KXUIDOWAM/7lyGkfXIJF7i9JvqHP6ZuCzzSVTHuAhswFCbxVlu9PVZEOCNa
-	 +UWT9OVM4ptfKVbGxm7GY+tpyF1FkY7RtLOypwr9dWabOXzTsF2g3sC3133W64BlC4
-	 oemO7mxiu0vdVdpLvT3AX7P0bkBjMUa2hW6Lk74Q=
+	b=Ib3K1+zHmPHzYX1//xqi8QnJSJqAtMQNUVptgaw47YKYnmG3p6Z/W04g9PmdlnxWt
+	 I/B1bqf7oE6ysNQf3ma1vGoN6/hAeDDYdk9XpH3fe9phMWw5wz9ijBFlA8UovKpFF7
+	 +8M2wXQxnMnjMvv8HOgRJAQ5vqVJ63+82eno7pNI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.12 090/146] thermal: int3400: Fix reading of current_uuid for active policy
-Date: Fri,  6 Dec 2024 15:37:01 +0100
-Message-ID: <20241206143531.120174083@linuxfoundation.org>
+	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
+	Lee Jones <lee@kernel.org>
+Subject: [PATCH 6.12 091/146] leds: flash: mt6360: Fix device_for_each_child_node() refcounting in error paths
+Date: Fri,  6 Dec 2024 15:37:02 +0100
+Message-ID: <20241206143531.159974370@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143527.654980698@linuxfoundation.org>
 References: <20241206143527.654980698@linuxfoundation.org>
@@ -50,47 +50,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
 
-commit 7082503622986537f57bdb5ef23e69e70cfad881 upstream.
+commit 73b03b27736e440e3009fe1319cbc82d2cd1290c upstream.
 
-When the current_uuid attribute is set to the active policy UUID,
-reading back the same attribute is returning "INVALID" instead of
-the active policy UUID on some platforms before Ice Lake.
+The device_for_each_child_node() macro requires explicit calls to
+fwnode_handle_put() upon early exits to avoid memory leaks, and in
+this case the error paths are handled after jumping to
+'out_flash_realease', which misses that required call to
+to decrement the refcount of the child node.
 
-In platforms before Ice Lake, firmware provides a list of supported
-thermal policies. In this case, user space can select any of the
-supported thermal policies via a write to attribute "current_uuid".
+A more elegant and robust solution is using the scoped variant of the
+loop, which automatically handles such early exits.
 
-In commit c7ff29763989 ("thermal: int340x: Update OS policy capability
-handshake")', the OS policy handshake was updated to support Ice Lake
-and later platforms and it treated priv->current_uuid_index=0 as
-invalid. However, priv->current_uuid_index=0 is for the active policy,
-only priv->current_uuid_index=-1 is invalid.
+Fix the child node refcounting in the error paths by using
+device_for_each_child_node_scoped().
 
-Fix this issue by updating the priv->current_uuid_index check.
-
-Fixes: c7ff29763989 ("thermal: int340x: Update OS policy capability handshake")
-Signed-off-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
-Cc: 5.18+ <stable@vger.kernel.org> # 5.18+
-Link: https://patch.msgid.link/20241114200213.422303-1-srinivas.pandruvada@linux.intel.com
-[ rjw: Subject and changelog edits ]
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Cc: stable@vger.kernel.org
+Fixes: 679f8652064b ("leds: Add mt6360 driver")
+Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+Link: https://lore.kernel.org/r/20240927-leds_device_for_each_child_node_scoped-v1-1-95c0614b38c8@gmail.com
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/thermal/intel/int340x_thermal/int3400_thermal.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/leds/flash/leds-mt6360.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/drivers/thermal/intel/int340x_thermal/int3400_thermal.c
-+++ b/drivers/thermal/intel/int340x_thermal/int3400_thermal.c
-@@ -137,7 +137,7 @@ static ssize_t current_uuid_show(struct
- 	struct int3400_thermal_priv *priv = dev_get_drvdata(dev);
- 	int i, length = 0;
+--- a/drivers/leds/flash/leds-mt6360.c
++++ b/drivers/leds/flash/leds-mt6360.c
+@@ -784,7 +784,6 @@ static void mt6360_v4l2_flash_release(st
+ static int mt6360_led_probe(struct platform_device *pdev)
+ {
+ 	struct mt6360_priv *priv;
+-	struct fwnode_handle *child;
+ 	size_t count;
+ 	int i = 0, ret;
  
--	if (priv->current_uuid_index > 0)
-+	if (priv->current_uuid_index >= 0)
- 		return sprintf(buf, "%s\n",
- 			       int3400_thermal_uuids[priv->current_uuid_index]);
+@@ -811,7 +810,7 @@ static int mt6360_led_probe(struct platf
+ 		return -ENODEV;
+ 	}
  
+-	device_for_each_child_node(&pdev->dev, child) {
++	device_for_each_child_node_scoped(&pdev->dev, child) {
+ 		struct mt6360_led *led = priv->leds + i;
+ 		struct led_init_data init_data = { .fwnode = child, };
+ 		u32 reg, led_color;
 
 
