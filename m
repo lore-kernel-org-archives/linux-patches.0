@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 848AD10E0;
-	Fri,  6 Dec 2024 14:59:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E4FB202F7C;
+	Fri,  6 Dec 2024 15:00:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733497198; cv=none; b=SVh/Eh7uY1N0ec+NQeHbEg57R81MEVYXYYfXIzNi/EC2yi+VVjhN389vx9t6uoBSrDCu3DE3mQXe2g09u+VsNe4nbdTQZ8a/60a9iE+CuaFfka4tYWeeQ+V95XrIIpIJ+ks1FPRtmMQpQKwRJ1XUO6/tnPk19d+dpftERA+NjTU=
+	t=1733497202; cv=none; b=hHD3TECLo8jCmWKEMl1hV4Ax3nga07qgZHLOCGRdN6oFZ7QZvLa+ubFDkMUV4Rc+ctuPESgWV9z0Lq55wFX3/uvv8mtlX88ZhXBXCvxzS8iY7cXTFBRv+elOpqgOdFtqXKVJPEla2j+4vep+yEZ+V8Ibktzc+psPKTkip56VOh4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733497198; c=relaxed/simple;
-	bh=LgNQ9mPQd3bVnK9+8TyuMNNCcdq/lLzaf+PJLFLi9o0=;
+	s=arc-20240116; t=1733497202; c=relaxed/simple;
+	bh=mr336uKddIgfOvJ8FFu/pB/bG9Uf1ulA5gA6EQhZRKI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LN0Ut999Kav5wF/Q1KTqxspcpWirczqsnpQ+YYpwJuafWtLytd5+gqDkgSABO0jLpJYHNT6LtCnTvnOqLuHyEPxcmA5lE/5JvcSqWr4Tw87+z955N8eWkZZDS9Qnrhvci1rdgkgOL6p/g3dYB6df/97pNsufymM+b97ZIsPDrYM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tZy/V4wL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ivWQinU+tzF4xGUNp7P21/yNUmAKsWneBUJ5zgTvnxvHvrRLnpay119Zy2VvMuVCMsj4zNeapoJdy0sZBNtCNIKhvi60r0iQ9NoCLNV2y4BuQHps+1K4LBnrIk7o+gqXjhsCVGdGJFqblTcy6yrXA8/6JFVXrLARG0wyD3N+TLw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nqvaKGQm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tZy/V4wL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1C71C4CED1;
-	Fri,  6 Dec 2024 14:59:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nqvaKGQm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67CCEC4CED1;
+	Fri,  6 Dec 2024 15:00:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733497198;
-	bh=LgNQ9mPQd3bVnK9+8TyuMNNCcdq/lLzaf+PJLFLi9o0=;
+	s=korg; t=1733497201;
+	bh=mr336uKddIgfOvJ8FFu/pB/bG9Uf1ulA5gA6EQhZRKI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tZy/V4wLdQoJG/JiyecYrffOffywJdOzGomEXUB02dIWjNbNlQ/+hIJXmlx8PwnX5
-	 QAwwytfPYJffHW5cdOzfjMUyv9YRDfkrFr/xFz5oYUwC/U3liB/xtwVRzSegSKdB3P
-	 SxEYTJdzail9hyvXTYPbSAzGEwDakpqiQ5V/D800=
+	b=nqvaKGQmYkfSz3bSFL76uPLa3kGdhamhHrotxt2qGj/ImAx0vT5TjWOn332RhbU8t
+	 diSj4IsvMY4W1+Mib5Z6DAs3DZYCXHiY+vuG/5KnG5RvMWpM9XedPnlGPKqAW6LB7C
+	 emAXfOreL9qZJawbli+RjBWY01hf/h2YDqJNkxAM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leon Hwang <leon.hwang@linux.dev>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Quentin Monnet <qmo@kernel.org>,
-	Yonghong Song <yonghong.song@linux.dev>,
+	=?UTF-8?q?Jos=C3=A9=20Exp=C3=B3sito?= <jose.exposito89@gmail.com>,
+	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
+	Louis Chauvet <louis.chauvet@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 223/676] bpf, bpftool: Fix incorrect disasm pc
-Date: Fri,  6 Dec 2024 15:30:42 +0100
-Message-ID: <20241206143702.048001993@linuxfoundation.org>
+Subject: [PATCH 6.6 224/676] drm/vkms: Drop unnecessary call to drm_crtc_cleanup()
+Date: Fri,  6 Dec 2024 15:30:43 +0100
+Message-ID: <20241206143702.086619254@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -47,167 +46,54 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Leon Hwang <leon.hwang@linux.dev>
+From: José Expósito <jose.exposito89@gmail.com>
 
-[ Upstream commit 4d99e509c161f8610de125202c648fa4acd00541 ]
+[ Upstream commit 1d43dddd7c38ea1aa93f78f7ee10087afb0a561f ]
 
-This patch addresses the bpftool issue "Wrong callq address displayed"[0].
+CRTC creation uses drmm_crtc_init_with_planes(), which automatically
+handles cleanup. However, an unnecessary call to drm_crtc_cleanup() is
+still present in the vkms_output_init() error path.
 
-The issue stemmed from an incorrect program counter (PC) value used during
-disassembly with LLVM or libbfd.
-
-For LLVM: The PC argument must represent the actual address in the kernel
-to compute the correct relative address.
-
-For libbfd: The relative address can be adjusted by adding func_ksym within
-the custom info->print_address_func to yield the correct address.
-
-Links:
-[0] https://github.com/libbpf/bpftool/issues/109
-
-Changes:
-v2 -> v3:
-  * Address comment from Quentin:
-    * Remove the typedef.
-
-v1 -> v2:
-  * Fix the broken libbfd disassembler.
-
-Fixes: e1947c750ffe ("bpftool: Refactor disassembler for JIT-ed programs")
-Signed-off-by: Leon Hwang <leon.hwang@linux.dev>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Tested-by: Quentin Monnet <qmo@kernel.org>
-Reviewed-by: Quentin Monnet <qmo@kernel.org>
-Acked-by: Yonghong Song <yonghong.song@linux.dev>
-Link: https://lore.kernel.org/bpf/20241031152844.68817-1-leon.hwang@linux.dev
+Fixes: 99cc528ebe92 ("drm/vkms: Use drmm_crtc_init_with_planes()")
+Signed-off-by: José Expósito <jose.exposito89@gmail.com>
+Reviewed-by: Maíra Canal <mcanal@igalia.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20241031183835.3633-1-jose.exposito89@gmail.com
+Acked-by: Louis Chauvet <louis.chauvet@bootlin.com>
+Signed-off-by: Louis Chauvet <louis.chauvet@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/bpf/bpftool/jit_disasm.c | 40 ++++++++++++++++++++++++----------
- 1 file changed, 29 insertions(+), 11 deletions(-)
+ drivers/gpu/drm/vkms/vkms_output.c | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
-diff --git a/tools/bpf/bpftool/jit_disasm.c b/tools/bpf/bpftool/jit_disasm.c
-index 7b8d9ec89ebd3..c032d2c6ab6d5 100644
---- a/tools/bpf/bpftool/jit_disasm.c
-+++ b/tools/bpf/bpftool/jit_disasm.c
-@@ -80,7 +80,8 @@ symbol_lookup_callback(__maybe_unused void *disasm_info,
- static int
- init_context(disasm_ctx_t *ctx, const char *arch,
- 	     __maybe_unused const char *disassembler_options,
--	     __maybe_unused unsigned char *image, __maybe_unused ssize_t len)
-+	     __maybe_unused unsigned char *image, __maybe_unused ssize_t len,
-+	     __maybe_unused __u64 func_ksym)
- {
- 	char *triple;
- 
-@@ -109,12 +110,13 @@ static void destroy_context(disasm_ctx_t *ctx)
- }
- 
- static int
--disassemble_insn(disasm_ctx_t *ctx, unsigned char *image, ssize_t len, int pc)
-+disassemble_insn(disasm_ctx_t *ctx, unsigned char *image, ssize_t len, int pc,
-+		 __u64 func_ksym)
- {
- 	char buf[256];
- 	int count;
- 
--	count = LLVMDisasmInstruction(*ctx, image + pc, len - pc, pc,
-+	count = LLVMDisasmInstruction(*ctx, image + pc, len - pc, func_ksym + pc,
- 				      buf, sizeof(buf));
- 	if (json_output)
- 		printf_json(buf);
-@@ -136,8 +138,21 @@ int disasm_init(void)
- #ifdef HAVE_LIBBFD_SUPPORT
- #define DISASM_SPACER "\t"
- 
-+struct disasm_info {
-+	struct disassemble_info info;
-+	__u64 func_ksym;
-+};
-+
-+static void disasm_print_addr(bfd_vma addr, struct disassemble_info *info)
-+{
-+	struct disasm_info *dinfo = container_of(info, struct disasm_info, info);
-+
-+	addr += dinfo->func_ksym;
-+	generic_print_address(addr, info);
-+}
-+
- typedef struct {
--	struct disassemble_info *info;
-+	struct disasm_info *info;
- 	disassembler_ftype disassemble;
- 	bfd *bfdf;
- } disasm_ctx_t;
-@@ -215,7 +230,7 @@ static int fprintf_json_styled(void *out,
- 
- static int init_context(disasm_ctx_t *ctx, const char *arch,
- 			const char *disassembler_options,
--			unsigned char *image, ssize_t len)
-+			unsigned char *image, ssize_t len, __u64 func_ksym)
- {
- 	struct disassemble_info *info;
- 	char tpath[PATH_MAX];
-@@ -238,12 +253,13 @@ static int init_context(disasm_ctx_t *ctx, const char *arch,
+diff --git a/drivers/gpu/drm/vkms/vkms_output.c b/drivers/gpu/drm/vkms/vkms_output.c
+index 5ce70dd946aa6..24589b947dea3 100644
+--- a/drivers/gpu/drm/vkms/vkms_output.c
++++ b/drivers/gpu/drm/vkms/vkms_output.c
+@@ -84,7 +84,7 @@ int vkms_output_init(struct vkms_device *vkmsdev, int index)
+ 				 DRM_MODE_CONNECTOR_VIRTUAL);
+ 	if (ret) {
+ 		DRM_ERROR("Failed to init connector\n");
+-		goto err_connector;
++		return ret;
  	}
- 	bfdf = ctx->bfdf;
  
--	ctx->info = malloc(sizeof(struct disassemble_info));
-+	ctx->info = malloc(sizeof(struct disasm_info));
- 	if (!ctx->info) {
- 		p_err("mem alloc failed");
- 		goto err_close;
- 	}
--	info = ctx->info;
-+	ctx->info->func_ksym = func_ksym;
-+	info = &ctx->info->info;
+ 	drm_connector_helper_add(connector, &vkms_conn_helper_funcs);
+@@ -119,8 +119,5 @@ int vkms_output_init(struct vkms_device *vkmsdev, int index)
+ err_encoder:
+ 	drm_connector_cleanup(connector);
  
- 	if (json_output)
- 		init_disassemble_info_compat(info, stdout,
-@@ -272,6 +288,7 @@ static int init_context(disasm_ctx_t *ctx, const char *arch,
- 		info->disassembler_options = disassembler_options;
- 	info->buffer = image;
- 	info->buffer_length = len;
-+	info->print_address_func = disasm_print_addr;
- 
- 	disassemble_init_for_target(info);
- 
-@@ -304,9 +321,10 @@ static void destroy_context(disasm_ctx_t *ctx)
- 
- static int
- disassemble_insn(disasm_ctx_t *ctx, __maybe_unused unsigned char *image,
--		 __maybe_unused ssize_t len, int pc)
-+		 __maybe_unused ssize_t len, int pc,
-+		 __maybe_unused __u64 func_ksym)
- {
--	return ctx->disassemble(pc, ctx->info);
-+	return ctx->disassemble(pc, &ctx->info->info);
+-err_connector:
+-	drm_crtc_cleanup(crtc);
+-
+ 	return ret;
  }
- 
- int disasm_init(void)
-@@ -331,7 +349,7 @@ int disasm_print_insn(unsigned char *image, ssize_t len, int opcodes,
- 	if (!len)
- 		return -1;
- 
--	if (init_context(&ctx, arch, disassembler_options, image, len))
-+	if (init_context(&ctx, arch, disassembler_options, image, len, func_ksym))
- 		return -1;
- 
- 	if (json_output)
-@@ -360,7 +378,7 @@ int disasm_print_insn(unsigned char *image, ssize_t len, int opcodes,
- 			printf("%4x:" DISASM_SPACER, pc);
- 		}
- 
--		count = disassemble_insn(&ctx, image, len, pc);
-+		count = disassemble_insn(&ctx, image, len, pc, func_ksym);
- 
- 		if (json_output) {
- 			/* Operand array, was started in fprintf_json. Before
 -- 
 2.43.0
 
