@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 795211442E8;
-	Fri,  6 Dec 2024 14:54:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D226148832;
+	Fri,  6 Dec 2024 14:54:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733496846; cv=none; b=EoJ3yuEIgb+JwUIAQklenjI8r3zGOFXnGeH1srb1f7Nu7pQ4fy2DsvKAq3Nttd2xzhI3VJKFNb3D+loTkL5v7ghWbKmjfQaFuOn8dEhUDoHlwlD86NGFSdO/KCpD1AlI6kr8uy2kLo/ESwChzt8U3XYYa7fcDcYh/Y6GOdo1OVU=
+	t=1733496850; cv=none; b=SCMdh7uoOsYvnwmpQP1/dT5FpoVUJYQL3gxDF5Sl3uSGXK8hDL2GGBjpVVx02ABQ3EDznzqeh+pn1lqNZYtP2QvmcQjUKjclHJR+muRVREKLEBPpkgD7x/EAq7+BCl44FA4aRTZCHD5fAFYQgt9DT3d2r9h/EZmpvdP3/Ru1cOo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733496846; c=relaxed/simple;
-	bh=yxWL4C1cf385/bc9LGY2CSb2M4yZ1FKvX7Hr8vN9zGk=;
+	s=arc-20240116; t=1733496850; c=relaxed/simple;
+	bh=QQysrNJQnj1saOTOBMSnJXnrYK+OxL5/49znArfW1+E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GTemdV+Kz3hZ0akBLK8D4Z/iiXuhjDZ5WRN8i4cUiMexJiGqNl2rYWNGfKAAliNvfHtXcZp3UmeOCnCcJ4oXArx5ehKHe9OG+NZqq7HpoLOZRKbx2W6gNQnz3w0OgvQvXONy2ahmOSafmeg1eEwTXM1jgCgO53shCmd9JqTa8KQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yCsBeGDW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mflDb0oZOIRtoZWldG5kcmphHSgBcoWguzqsyi00CMCpfT4WgMZzjjaKxXpJeeZZRjmDKvTYk5oa+YLfOjZaSslNhBLoWVj8Qcu/rXJafmBd8B38tPQUHzmXH/kPnMnbltsSrdW6h4QtteLzitLWSDKU9Bd0UbimrSFLlQGNax0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cf66d/zS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yCsBeGDW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9817C4CED1;
-	Fri,  6 Dec 2024 14:54:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cf66d/zS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29498C4CEDC;
+	Fri,  6 Dec 2024 14:54:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733496846;
-	bh=yxWL4C1cf385/bc9LGY2CSb2M4yZ1FKvX7Hr8vN9zGk=;
+	s=korg; t=1733496849;
+	bh=QQysrNJQnj1saOTOBMSnJXnrYK+OxL5/49znArfW1+E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yCsBeGDWrNjOVowINwQbU83LoPo9e4j55nRPvbFiUS+2x6CjAV23z1rJjK0D4bNOC
-	 1wdwsPyIaRtt+0H80CuiSPDFW9qy49ncj4E3W/SzRYi9HCxmBtmx11zePva428ZXig
-	 lZXOogdVb1vsUp77FCwWOUNiHDHHRQo3dzQjBR0M=
+	b=Cf66d/zSsvQ6qg7jdlD49fJCt88uiriBeuhtZb8fnCmZNkJsMoc61SuMYD12Fx+3C
+	 a+zvzjqQzcDifWBN+ux7SqWoMpRy9Xb6X7k0s+O12KC9bbD5r8U/WOsiJOPFF9ndwB
+	 SypswXZcXPMmlOlbxip1EcwJdZpG6FGqOwVv0N2A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonathan Marek <jonathan@marek.ca>,
+	Gregory Price <gourry@gourry.net>,
+	Ilias Apalodimas <ilias.apalodimas@linaro.org>,
 	Ard Biesheuvel <ardb@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 123/676] efi/libstub: fix efi_parse_options() ignoring the default command line
-Date: Fri,  6 Dec 2024 15:29:02 +0100
-Message-ID: <20241206143658.160337439@linuxfoundation.org>
+Subject: [PATCH 6.6 124/676] tpm: fix signed/unsigned bug when checking event logs
+Date: Fri,  6 Dec 2024 15:29:03 +0100
+Message-ID: <20241206143658.198529213@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -51,38 +52,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jonathan Marek <jonathan@marek.ca>
+From: Gregory Price <gourry@gourry.net>
 
-[ Upstream commit aacfa0ef247b0130b7a98bb52378f8cd727a66ca ]
+[ Upstream commit e6d654e9f5a97742cfe794b1c4bb5d3fb2d25e98 ]
 
-efi_convert_cmdline() always returns a size of at least 1 because it
-counts the NUL terminator, so the "cmdline_size == 0" condition is never
-satisfied.
+A prior bugfix that fixes a signed/unsigned error causes
+another signed unsigned error.
 
-Change it to check if the string starts with a NUL character to get the
-intended behavior: to use CONFIG_CMDLINE when load_options_size == 0.
+A situation where log_tbl->size is invalid can cause the
+size passed to memblock_reserve to become negative.
 
-Fixes: 60f38de7a8d4 ("efi/libstub: Unify command line param parsing")
-Signed-off-by: Jonathan Marek <jonathan@marek.ca>
+log_size from the main event log is an unsigned int, and
+the code reduces to the following
+
+u64 value = (int)unsigned_value;
+
+This results in sign extension, and the value sent to
+memblock_reserve becomes effectively negative.
+
+Fixes: be59d57f9806 ("efi/tpm: Fix sanity check of unsigned tbl_size being less than zero")
+Signed-off-by: Gregory Price <gourry@gourry.net>
+Reviewed-by: Ilias Apalodimas <ilias.apalodimas@linaro.org>
 Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/efi/libstub/efi-stub.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/firmware/efi/tpm.c | 17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/firmware/efi/libstub/efi-stub.c b/drivers/firmware/efi/libstub/efi-stub.c
-index f9c1e8a2bd1d3..c5732fb5a5654 100644
---- a/drivers/firmware/efi/libstub/efi-stub.c
-+++ b/drivers/firmware/efi/libstub/efi-stub.c
-@@ -129,7 +129,7 @@ efi_status_t efi_handle_cmdline(efi_loaded_image_t *image, char **cmdline_ptr)
+diff --git a/drivers/firmware/efi/tpm.c b/drivers/firmware/efi/tpm.c
+index e8d69bd548f3f..9c3613e6af158 100644
+--- a/drivers/firmware/efi/tpm.c
++++ b/drivers/firmware/efi/tpm.c
+@@ -40,7 +40,8 @@ int __init efi_tpm_eventlog_init(void)
+ {
+ 	struct linux_efi_tpm_eventlog *log_tbl;
+ 	struct efi_tcg2_final_events_table *final_tbl;
+-	int tbl_size;
++	unsigned int tbl_size;
++	int final_tbl_size;
+ 	int ret = 0;
  
- 	if (IS_ENABLED(CONFIG_CMDLINE_EXTEND) ||
- 	    IS_ENABLED(CONFIG_CMDLINE_FORCE) ||
--	    cmdline_size == 0) {
-+	    cmdline[0] == 0) {
- 		status = efi_parse_options(CONFIG_CMDLINE);
- 		if (status != EFI_SUCCESS) {
- 			efi_err("Failed to parse options\n");
+ 	if (efi.tpm_log == EFI_INVALID_TABLE_ADDR) {
+@@ -80,26 +81,26 @@ int __init efi_tpm_eventlog_init(void)
+ 		goto out;
+ 	}
+ 
+-	tbl_size = 0;
++	final_tbl_size = 0;
+ 	if (final_tbl->nr_events != 0) {
+ 		void *events = (void *)efi.tpm_final_log
+ 				+ sizeof(final_tbl->version)
+ 				+ sizeof(final_tbl->nr_events);
+ 
+-		tbl_size = tpm2_calc_event_log_size(events,
+-						    final_tbl->nr_events,
+-						    log_tbl->log);
++		final_tbl_size = tpm2_calc_event_log_size(events,
++							  final_tbl->nr_events,
++							  log_tbl->log);
+ 	}
+ 
+-	if (tbl_size < 0) {
++	if (final_tbl_size < 0) {
+ 		pr_err(FW_BUG "Failed to parse event in TPM Final Events Log\n");
+ 		ret = -EINVAL;
+ 		goto out_calc;
+ 	}
+ 
+ 	memblock_reserve(efi.tpm_final_log,
+-			 tbl_size + sizeof(*final_tbl));
+-	efi_tpm_final_log_size = tbl_size;
++			 final_tbl_size + sizeof(*final_tbl));
++	efi_tpm_final_log_size = final_tbl_size;
+ 
+ out_calc:
+ 	early_memunmap(final_tbl, sizeof(*final_tbl));
 -- 
 2.43.0
 
