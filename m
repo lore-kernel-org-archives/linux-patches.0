@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4779453A7;
-	Fri,  6 Dec 2024 15:03:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4E0553A7;
+	Fri,  6 Dec 2024 15:04:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733497439; cv=none; b=b71RfLXYJ3eaEeWOKeZ/Ve0rzQtkaLudXjo0nTjOWOOWOjt7cJPkGYDPtKU6EwaO0xXdtpW/OZTRafxi5e/Zip5H+oEnNR+xBOaOWwAoLuSF9PAr9iYypSF0aAt1Fsn7cFERGs6PpbDhyJ7XGnDazTdObMSVVzaOe4LzWBdZllE=
+	t=1733497442; cv=none; b=S0zcs26b2l2/LsI/PpnmwRwlssJ5BRFTsOKJX8eP2nN00hRlCofHWZMERcZYofYXyHPPdz3pOUflng0rv8iOJvymx6Ucb5WmKs9jFDy3W6HFf2VeT9ysB3Jy8VgEzcMT9jzwBGLj5XKQCLXE/vGFx+OdTGIj5hFd/RcXSVtzK9Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733497439; c=relaxed/simple;
-	bh=2DP6r0u3wz1ARozSHh4eYsgbdegCeoDr758wlxrspyQ=;
+	s=arc-20240116; t=1733497442; c=relaxed/simple;
+	bh=9hc4PXkQgnwkiD1J+cQkTj5N8oo95VRZs1d21F5wED8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hXUKJWO61cCBjACJruUjAUPlqCXjL4Z9PPmn1DGpXpL3Ff6h3O1d7nVgpiquYUYfJD8ZY4sP992Cmh9vU+38GyMBxTRK3gmlRFvtxIkc1brZr08zC7sS/0pa6eCdd6A3/qR4sSAO0Uti4fw1tLZD0LmNbow5iSL7L91poz9SNf0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vVLhamKK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ILM7nSRGs6Z0UU4de7BKzA7aKd+7SCcjsPLqK19UD1HNlkLFG4B6gvfRPG7dA2hS6prJNmEnxlxfMJT6US1jrKhnfBV6lvSlAfeNmsFaG4+Eoy7bT+3vb4d3Vq9eudlp5K2JyLYdAsa9Xh7WxdQQptriHAuFjcqZr+3mhJ+HdrI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FxG77vyP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vVLhamKK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 900F9C4CED1;
-	Fri,  6 Dec 2024 15:03:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FxG77vyP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11EFEC4CED1;
+	Fri,  6 Dec 2024 15:04:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733497439;
-	bh=2DP6r0u3wz1ARozSHh4eYsgbdegCeoDr758wlxrspyQ=;
+	s=korg; t=1733497442;
+	bh=9hc4PXkQgnwkiD1J+cQkTj5N8oo95VRZs1d21F5wED8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vVLhamKKXkG3dzLrRUa17jQy+hA5toF5xPBPPawxRnq9HoCOHZtZGE0OaEeZEzfNF
-	 1HgCpq+ATkSz2MhjpslXl4VepMzbUXBkomDbhB7/o2cWnZsHWJ1JccN+3V2ejFfaxm
-	 +lDiQiwCzHa0A6B+To9vGsuWa4ilgpf5VQEipj/E=
+	b=FxG77vyPTguQI2GUihLeP0WWZWjFGbnyANak0klEVHt2b+zDeHjT4/ojGq9Eccab3
+	 HvrjkAQS1kMFDaJnxXzr6Q6oTQmRgKyi8mtAMUndqSaK/ovnjxcnu//tH8udpcyIA+
+	 0WviAhJn0rQOaou7r4viPE7fvvKqh4WeCFzNeejc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Yang Yingliang <yangyingliang@huawei.com>,
 	Peng Fan <peng.fan@nxp.com>,
-	Carlos Song <carlos.song@nxp.com>,
-	Dong Aisheng <aisheng.dong@nxp.com>,
 	Abel Vesa <abel.vesa@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 293/676] clk: imx: clk-scu: fix clk enable state save and restore
-Date: Fri,  6 Dec 2024 15:31:52 +0100
-Message-ID: <20241206143704.788062336@linuxfoundation.org>
+Subject: [PATCH 6.6 294/676] clk: imx: imx8-acm: Fix return value check in clk_imx_acm_attach_pm_domains()
+Date: Fri,  6 Dec 2024 15:31:53 +0100
+Message-ID: <20241206143704.826614669@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -53,43 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dong Aisheng <aisheng.dong@nxp.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit e81361f6cf9bf4a1848b0813bc4becb2250870b8 ]
+[ Upstream commit 81a206d736c19139d3863b79e7174f9e98b45499 ]
 
-The scu clk_ops only inplements prepare() and unprepare() callback.
-Saving the clock state during suspend by checking clk_hw_is_enabled()
-is not safe as it's possible that some device drivers may only
-disable the clocks without unprepare. Then the state retention will not
-work for such clocks.
+If device_link_add() fails, it returns NULL pointer not ERR_PTR(),
+replace IS_ERR() with NULL pointer check, and return -EINVAL.
 
-Fixing it by checking clk_hw_is_prepared() which is more reasonable
-and safe.
-
-Fixes: d0409631f466 ("clk: imx: scu: add suspend/resume support")
+Fixes: d3a0946d7ac9 ("clk: imx: imx8: add audio clock mux driver")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
 Reviewed-by: Peng Fan <peng.fan@nxp.com>
-Tested-by: Carlos Song <carlos.song@nxp.com>
-Signed-off-by: Dong Aisheng <aisheng.dong@nxp.com>
-Link: https://lore.kernel.org/r/20241027-imx-clk-v1-v3-4-89152574d1d7@nxp.com
+Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
+Link: https://lore.kernel.org/r/20241026112452.1523-1-yangyingliang@huaweicloud.com
 Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/imx/clk-scu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/clk/imx/clk-imx8-acm.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/clk/imx/clk-scu.c b/drivers/clk/imx/clk-scu.c
-index cd83c52e9952a..564f549ec204f 100644
---- a/drivers/clk/imx/clk-scu.c
-+++ b/drivers/clk/imx/clk-scu.c
-@@ -594,7 +594,7 @@ static int __maybe_unused imx_clk_scu_suspend(struct device *dev)
- 		clk->rate = clk_scu_recalc_rate(&clk->hw, 0);
- 	else
- 		clk->rate = clk_hw_get_rate(&clk->hw);
--	clk->is_enabled = clk_hw_is_enabled(&clk->hw);
-+	clk->is_enabled = clk_hw_is_prepared(&clk->hw);
- 
- 	if (clk->parent)
- 		dev_dbg(dev, "save parent %s idx %u\n", clk_hw_get_name(clk->parent),
+diff --git a/drivers/clk/imx/clk-imx8-acm.c b/drivers/clk/imx/clk-imx8-acm.c
+index 1c95ae905eec8..b9ddb74b86f7a 100644
+--- a/drivers/clk/imx/clk-imx8-acm.c
++++ b/drivers/clk/imx/clk-imx8-acm.c
+@@ -289,9 +289,9 @@ static int clk_imx_acm_attach_pm_domains(struct device *dev,
+ 							 DL_FLAG_STATELESS |
+ 							 DL_FLAG_PM_RUNTIME |
+ 							 DL_FLAG_RPM_ACTIVE);
+-		if (IS_ERR(dev_pm->pd_dev_link[i])) {
++		if (!dev_pm->pd_dev_link[i]) {
+ 			dev_pm_domain_detach(dev_pm->pd_dev[i], false);
+-			ret = PTR_ERR(dev_pm->pd_dev_link[i]);
++			ret = -EINVAL;
+ 			goto detach_pm;
+ 		}
+ 	}
 -- 
 2.43.0
 
