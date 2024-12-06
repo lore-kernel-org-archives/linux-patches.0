@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6046853A7;
-	Fri,  6 Dec 2024 15:16:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D86EB14F9F4;
+	Fri,  6 Dec 2024 15:16:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733498211; cv=none; b=hN/yVGyj6MedzMcDmvIiP5rxCEOvCJ2uzWYT3MhttUkSm5zzscaN/4P9xoNxwPrcGr3DcztVghHjGM2YCq5po3tKZAxDNVvVqWk332U2aV4QO4v055VzBdF0q9KknsjzP//VsYVAOYS2LYxI2g4IIlOc4W5sV1ev8ewd3GONp4E=
+	t=1733498214; cv=none; b=UN6zEGU/wlQxaziE5gjMskZdLrn7TWlj/vwg5ZAfuCm0js3OSFWCqW+dLbMBtlRVXWw9FefdFGGQPA1pnGawffFOlt6CXRvdkj1mXN4fg9W6xYJXpjjNnB5t4f77YrhH3L9QqCRDmTlHzI2tLm3MLiTs27/ctx00nPt/MN5Z5dc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733498211; c=relaxed/simple;
-	bh=TxOiPWUvAJQWmbwh759B/+xzRxyrsXHzj5RbTq+ZqvM=;
+	s=arc-20240116; t=1733498214; c=relaxed/simple;
+	bh=7mAxMbMfWoE04Rg/4LnUj1MePdwZ0rR35CYrIoyhgyM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T8Zc/W54slHaiY3wittDFBCQv4LMMEOYXX2eiEaFjM0+SyjEctvMziaKwE/l48fCSeXzJmU6o4KYmF1KSbdUXoqIE8impJx+TlHgZewdkgG6+5u71W9q+XwvX4ErtuzvlQ8QQ8LZanmKA4k7zu7Vy5VvVGIvWOl4ZjsTsmYhwxg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZGb6iWZI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=j67XgY8Qp/tA0TGnxvAqRSOkIUOeWQnv9SgBIgAE8JIg6ARKFctuQUNGNNdcwYarIX9GCkdMhCJ2lBjj2lXaCT1ae8FF3Vnp9Sm0N0pRzQQZ/FGBia6sLWptVmS8s/G60AbI1VibcPPBnOZHuXFpp2EXMIlfp/bdachM83S50u8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZcdRcnlU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZGb6iWZI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2CAFC4CED1;
-	Fri,  6 Dec 2024 15:16:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZcdRcnlU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F3E7C4CED1;
+	Fri,  6 Dec 2024 15:16:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733498211;
-	bh=TxOiPWUvAJQWmbwh759B/+xzRxyrsXHzj5RbTq+ZqvM=;
+	s=korg; t=1733498214;
+	bh=7mAxMbMfWoE04Rg/4LnUj1MePdwZ0rR35CYrIoyhgyM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZGb6iWZIXJxbFlBArmAbFhH1cJK0JmdHRLDEQhu775NF/zRRvv3Ixw850E4cKxIfD
-	 wi23BVHC81X/UaL/WZnO5JqgmsAaP6biit+CUA9cheQuP62FHZ1lsCevQK2F65koIq
-	 tEBVXniEb6vKnWXXFLCaI4MlnxPkN6Cvv8BS/4dc=
+	b=ZcdRcnlUr9oPkpN0gT5YMMTxR6Vh+vO+xJWY2DTtORfByvFa/fPzfj072lzpa9z0U
+	 +hbsTe9IQlWhUOuKOtGDvbAQZHTlgftB/Ns3aAVDA8nCN0MlxZDHYKuKFCssM2B+8w
+	 4ScTHzbRdRGxb+oC8OKpinY+XIi5RyqdioYAAXck=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jann Horn <jannh@google.com>
-Subject: [PATCH 6.6 486/676] comedi: Flush partial mappings in error case
-Date: Fri,  6 Dec 2024 15:35:05 +0100
-Message-ID: <20241206143712.345255444@linuxfoundation.org>
+	Jinjie Ruan <ruanjinjie@huawei.com>,
+	John Johansen <john.johansen@canonical.com>
+Subject: [PATCH 6.6 487/676] apparmor: test: Fix memory leak for aa_unpack_strdup()
+Date: Fri,  6 Dec 2024 15:35:06 +0100
+Message-ID: <20241206143712.384337194@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -49,49 +50,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jann Horn <jannh@google.com>
+From: Jinjie Ruan <ruanjinjie@huawei.com>
 
-commit ce8f9fb651fac95dd41f69afe54d935420b945bd upstream.
+commit 7290f59231910ccba427d441a6e8b8c6f6112448 upstream.
 
-If some remap_pfn_range() calls succeeded before one failed, we still have
-buffer pages mapped into the userspace page tables when we drop the buffer
-reference with comedi_buf_map_put(bm). The userspace mappings are only
-cleaned up later in the mmap error path.
+The string allocated by kmemdup() in aa_unpack_strdup() is not
+freed and cause following memory leaks, free them to fix it.
 
-Fix it by explicitly flushing all mappings in our VMA on the error path.
-
-See commit 79a61cc3fc04 ("mm: avoid leaving partial pfn mappings around in
-error case").
+	unreferenced object 0xffffff80c6af8a50 (size 8):
+	  comm "kunit_try_catch", pid 225, jiffies 4294894407
+	  hex dump (first 8 bytes):
+	    74 65 73 74 69 6e 67 00                          testing.
+	  backtrace (crc 5eab668b):
+	    [<0000000001e3714d>] kmemleak_alloc+0x34/0x40
+	    [<000000006e6c7776>] __kmalloc_node_track_caller_noprof+0x300/0x3e0
+	    [<000000006870467c>] kmemdup_noprof+0x34/0x60
+	    [<000000001176bb03>] aa_unpack_strdup+0xd0/0x18c
+	    [<000000008ecde918>] policy_unpack_test_unpack_strdup_with_null_name+0xf8/0x3ec
+	    [<0000000032ef8f77>] kunit_try_run_case+0x13c/0x3ac
+	    [<00000000f3edea23>] kunit_generic_run_threadfn_adapter+0x80/0xec
+	    [<00000000adf936cf>] kthread+0x2e8/0x374
+	    [<0000000041bb1628>] ret_from_fork+0x10/0x20
+	unreferenced object 0xffffff80c2a29090 (size 8):
+	  comm "kunit_try_catch", pid 227, jiffies 4294894409
+	  hex dump (first 8 bytes):
+	    74 65 73 74 69 6e 67 00                          testing.
+	  backtrace (crc 5eab668b):
+	    [<0000000001e3714d>] kmemleak_alloc+0x34/0x40
+	    [<000000006e6c7776>] __kmalloc_node_track_caller_noprof+0x300/0x3e0
+	    [<000000006870467c>] kmemdup_noprof+0x34/0x60
+	    [<000000001176bb03>] aa_unpack_strdup+0xd0/0x18c
+	    [<0000000046a45c1a>] policy_unpack_test_unpack_strdup_with_name+0xd0/0x3c4
+	    [<0000000032ef8f77>] kunit_try_run_case+0x13c/0x3ac
+	    [<00000000f3edea23>] kunit_generic_run_threadfn_adapter+0x80/0xec
+	    [<00000000adf936cf>] kthread+0x2e8/0x374
+	    [<0000000041bb1628>] ret_from_fork+0x10/0x20
 
 Cc: stable@vger.kernel.org
-Fixes: ed9eccbe8970 ("Staging: add comedi core")
-Signed-off-by: Jann Horn <jannh@google.com>
-Link: https://lore.kernel.org/r/20241017-comedi-tlb-v3-1-16b82f9372ce@google.com
+Fixes: 4d944bcd4e73 ("apparmor: add AppArmor KUnit tests for policy unpack")
+Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+Signed-off-by: John Johansen <john.johansen@canonical.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/comedi/comedi_fops.c |   12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ security/apparmor/policy_unpack_test.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/comedi/comedi_fops.c
-+++ b/drivers/comedi/comedi_fops.c
-@@ -2407,6 +2407,18 @@ static int comedi_mmap(struct file *file
- 
- 			start += PAGE_SIZE;
- 		}
+--- a/security/apparmor/policy_unpack_test.c
++++ b/security/apparmor/policy_unpack_test.c
+@@ -281,6 +281,8 @@ static void policy_unpack_test_unpack_st
+ 			   ((uintptr_t)puf->e->start <= (uintptr_t)string)
+ 			   && ((uintptr_t)string <= (uintptr_t)puf->e->end));
+ 	KUNIT_EXPECT_STREQ(test, string, TEST_STRING_DATA);
 +
-+#ifdef CONFIG_MMU
-+		/*
-+		 * Leaving behind a partial mapping of a buffer we're about to
-+		 * drop is unsafe, see remap_pfn_range_notrack().
-+		 * We need to zap the range here ourselves instead of relying
-+		 * on the automatic zapping in remap_pfn_range() because we call
-+		 * remap_pfn_range() in a loop.
-+		 */
-+		if (retval)
-+			zap_vma_ptes(vma, vma->vm_start, size);
-+#endif
- 	}
++	kfree(string);
+ }
  
- 	if (retval == 0) {
+ static void policy_unpack_test_unpack_strdup_with_name(struct kunit *test)
+@@ -296,6 +298,8 @@ static void policy_unpack_test_unpack_st
+ 			   ((uintptr_t)puf->e->start <= (uintptr_t)string)
+ 			   && ((uintptr_t)string <= (uintptr_t)puf->e->end));
+ 	KUNIT_EXPECT_STREQ(test, string, TEST_STRING_DATA);
++
++	kfree(string);
+ }
+ 
+ static void policy_unpack_test_unpack_strdup_out_of_bounds(struct kunit *test)
+@@ -313,6 +317,8 @@ static void policy_unpack_test_unpack_st
+ 	KUNIT_EXPECT_EQ(test, size, 0);
+ 	KUNIT_EXPECT_NULL(test, string);
+ 	KUNIT_EXPECT_PTR_EQ(test, puf->e->pos, start);
++
++	kfree(string);
+ }
+ 
+ static void policy_unpack_test_unpack_nameX_with_null_name(struct kunit *test)
 
 
