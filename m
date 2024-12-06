@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2549F13A863;
-	Fri,  6 Dec 2024 15:16:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A11C513A863;
+	Fri,  6 Dec 2024 15:16:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733498167; cv=none; b=iFgYFpXciCzeqrZ5Z9M1LKNU/qRX8jsxUFcxI3j6Vtk0eoR+vwmhAx1Hui6hnAVEkh6j97KxaIp6PfFEUY3kqBve3e3sgNYxmejDwmxRDQOrs7XFF5JFKXc8Fb1jAbIVtKDHwxwEe4f8BFMvgx+pRrXzg9Sz0R3V0dJ27xVhXPs=
+	t=1733498170; cv=none; b=nNAzjRvxKKhkucZj69+dyVBLd5ieFcgn4GjMJyEOipnzIMeiDRQpq6oEWN6oE3+/K1JAmO0pkTu2FNnFB7CAME4kCrsOSgt3fCY7C7dPseKlc6fJpzQnhNeOOu1zYgItoVUEdMUBqum5UCO7Pa9SeYXIEeBV5f7x+Ml3mTQRPwQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733498167; c=relaxed/simple;
-	bh=EEPhOxzBcp09CleXW4aRinXkbuYe+TJkF0g+yGgNxG4=;
+	s=arc-20240116; t=1733498170; c=relaxed/simple;
+	bh=SI/zs/yfEhXmPMrCzz5eNPdOVlCcNWJqtbadxdRdRno=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JxFuY6Y8xs6FLRLKdtzLY3F49rcRlZyjcNqmkKgYjEjIW2eL3prhaNZB+aKvP4lkQIGyy9JYcEblsjlHUokVWNCOxWwrKRwCd4AMOKSG/UOQNQmYUVz039+eoawaDhSj6BJkYO95DjQtWc4rgPNA0t867UNZ9hPCcNlb/92hfRU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wjpl2EIr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=p9UfxFuVcO2h9wgF0Dz7LdRa1Wh7eCRZOzFvIzzbrxE4sx9XJnEoJo8RFG+oI6+KNNusAVwXfYDvG2c443prfq1qyVQgmT5Zo8d1e4C5Im9silFGKPO52Lf1Ou/BYIqH4XsQl1lCyfKXtK1L7G6lGGtD8r/WJNnW2wDs7Bp6VJw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qkxYGxJv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wjpl2EIr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88431C4CED1;
-	Fri,  6 Dec 2024 15:16:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qkxYGxJv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E46CCC4CED1;
+	Fri,  6 Dec 2024 15:16:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733498167;
-	bh=EEPhOxzBcp09CleXW4aRinXkbuYe+TJkF0g+yGgNxG4=;
+	s=korg; t=1733498170;
+	bh=SI/zs/yfEhXmPMrCzz5eNPdOVlCcNWJqtbadxdRdRno=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wjpl2EIrPJlbXCwV0K2yNoir2RjPZrUS0xDMnUyrWrUwUQjopoa+thtWZoej/8/t9
-	 R9zxuXkNRq/Iyfwp6KYq/K/Na8/ZZea8mxCB/5+61Wv7UuNfG0BbPXf4w3AcIrViYA
-	 c+gp3oJNFEq8hG30UNz6qQE8Czvhr7+jgZ5GXIVc=
+	b=qkxYGxJv0FSYOoZtyooGze3NYdfbqt5GovrArZlSWsvayglG9KZmgIZWNwiBi5Trh
+	 R8YAF6cACDmNuawvxB2+FvdkSlLRy4Yt3uCZkSnnVmET8VKagi6rJljX3fBf1SB/8E
+	 zBIOKdz+KGJoEB9aflINYuz4qgXw9Zne8DzDntm0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
-	stable <stable@kernel.org>,
-	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
-Subject: [PATCH 6.6 504/676] Revert "serial: sh-sci: Clean sci_ports[0] after at earlycon exit"
-Date: Fri,  6 Dec 2024 15:35:23 +0100
-Message-ID: <20241206143713.042640049@linuxfoundation.org>
+	Matthew McClain <mmcclain@noprivs.com>,
+	Sai Kumar Cholleti <skmr537@gmail.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Subject: [PATCH 6.6 505/676] gpio: exar: set value when external pull-up or pull-down is present
+Date: Fri,  6 Dec 2024 15:35:24 +0100
+Message-ID: <20241206143713.081548260@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -51,66 +52,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Sai Kumar Cholleti <skmr537@gmail.com>
 
-commit 718632467d88e98816fa01ab12681ef1c2aa56f8 upstream.
+commit 72cef64180de04a7b055b4773c138d78f4ebdb77 upstream.
 
-This reverts commit 3791ea69a4858b81e0277f695ca40f5aae40f312.
+Setting GPIO direction = high, sometimes results in GPIO value = 0.
 
-It was reported to cause boot-time issues, so revert it for now.
+If a GPIO is pulled high, the following construction results in the
+value being 0 when the desired value is 1:
 
-Reported-by: Geert Uytterhoeven <geert@linux-m68k.org>
-Fixes: 3791ea69a485 ("serial: sh-sci: Clean sci_ports[0] after at earlycon exit")
-Cc: stable <stable@kernel.org>
-Cc: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+$ echo "high" > /sys/class/gpio/gpio336/direction
+$ cat /sys/class/gpio/gpio336/value
+0
+
+Before the GPIO direction is changed from an input to an output,
+exar_set_value() is called with value = 1, but since the GPIO is an
+input when exar_set_value() is called, _regmap_update_bits() reads a 1
+due to an external pull-up.  regmap_set_bits() sets force_write =
+false, so the value (1) is not written.  When the direction is then
+changed, the GPIO becomes an output with the value of 0 (the hardware
+default).
+
+regmap_write_bits() sets force_write = true, so the value is always
+written by exar_set_value() and an external pull-up doesn't affect the
+outcome of setting direction = high.
+
+The same can happen when a GPIO is pulled low, but the scenario is a
+little more complicated.
+
+$ echo high > /sys/class/gpio/gpio351/direction
+$ cat /sys/class/gpio/gpio351/value
+1
+
+$ echo in > /sys/class/gpio/gpio351/direction
+$ cat /sys/class/gpio/gpio351/value
+0
+
+$ echo low > /sys/class/gpio/gpio351/direction
+$ cat /sys/class/gpio/gpio351/value
+1
+
+Fixes: 36fb7218e878 ("gpio: exar: switch to using regmap")
+Co-developed-by: Matthew McClain <mmcclain@noprivs.com>
+Signed-off-by: Matthew McClain <mmcclain@noprivs.com>
+Signed-off-by: Sai Kumar Cholleti <skmr537@gmail.com>
+Cc: stable@vger.kernel.org
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/20241105071523.2372032-1-skmr537@gmail.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/sh-sci.c |   28 ----------------------------
- 1 file changed, 28 deletions(-)
+ drivers/gpio/gpio-exar.c |   10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
---- a/drivers/tty/serial/sh-sci.c
-+++ b/drivers/tty/serial/sh-sci.c
-@@ -3505,32 +3505,6 @@ sh_early_platform_init_buffer("earlyprin
- #ifdef CONFIG_SERIAL_SH_SCI_EARLYCON
- static struct plat_sci_port port_cfg __initdata;
+--- a/drivers/gpio/gpio-exar.c
++++ b/drivers/gpio/gpio-exar.c
+@@ -99,11 +99,13 @@ static void exar_set_value(struct gpio_c
+ 	struct exar_gpio_chip *exar_gpio = gpiochip_get_data(chip);
+ 	unsigned int addr = exar_offset_to_lvl_addr(exar_gpio, offset);
+ 	unsigned int bit = exar_offset_to_bit(exar_gpio, offset);
++	unsigned int bit_value = value ? BIT(bit) : 0;
  
--static int early_console_exit(struct console *co)
--{
--	struct sci_port *sci_port = &sci_ports[0];
--	struct uart_port *port = &sci_port->port;
--	unsigned long flags;
--	int locked = 1;
--
--	if (port->sysrq)
--		locked = 0;
--	else if (oops_in_progress)
--		locked = uart_port_trylock_irqsave(port, &flags);
+-	if (value)
+-		regmap_set_bits(exar_gpio->regmap, addr, BIT(bit));
 -	else
--		uart_port_lock_irqsave(port, &flags);
--
--	/*
--	 * Clean the slot used by earlycon. A new SCI device might
--	 * map to this slot.
--	 */
--	memset(sci_ports, 0, sizeof(*sci_port));
--
--	if (locked)
--		uart_port_unlock_irqrestore(port, flags);
--
--	return 0;
--}
--
- static int __init early_console_setup(struct earlycon_device *device,
- 				      int type)
- {
-@@ -3549,8 +3523,6 @@ static int __init early_console_setup(st
- 		       SCSCR_RE | SCSCR_TE | port_cfg.scscr);
- 
- 	device->con->write = serial_console_write;
--	device->con->exit = early_console_exit;
--
- 	return 0;
+-		regmap_clear_bits(exar_gpio->regmap, addr, BIT(bit));
++	/*
++	 * regmap_write_bits() forces value to be written when an external
++	 * pull up/down might otherwise indicate value was already set.
++	 */
++	regmap_write_bits(exar_gpio->regmap, addr, BIT(bit), bit_value);
  }
- static int __init sci_early_console_setup(struct earlycon_device *device,
+ 
+ static int exar_direction_output(struct gpio_chip *chip, unsigned int offset,
 
 
