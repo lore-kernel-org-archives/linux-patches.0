@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E7C9149E0E;
-	Fri,  6 Dec 2024 14:58:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED8B210E0;
+	Fri,  6 Dec 2024 14:58:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733497125; cv=none; b=PdmWh2E7fYfGVImR10YbhAh3wVYXvjofkhUm41d+LHVdvxelMg9zQplViKoaI4YZIPQd9lc5f1SgP/ud+ZbYcNK0J/Ki/m5fA3pZLOnYQ4aNvcrDidoBUz54yIgqHN6wosdWieCf8JRtjSaK/+8Z+4qkPqIOJeQ+laIplmBRUpA=
+	t=1733497129; cv=none; b=AO0WtRvdYU5EROnh06YYwFwVUPBlZhjKoA9WAVrdemewa2e5F6kEEhZ+o+XDDZK/XuH5spVNhQrlfxILneoI+IEy6uu4g44T0C8LpuX5ADEf8hhdjq/72LmbD5bi7sMeOgrMRfwboxJbHAUuEtcs8McP76k55LNAiU3nj+0Nzd0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733497125; c=relaxed/simple;
-	bh=Yf31sM5fndmq5HSW0PNA9rIOOLRG88XiRbYuDDDQZlA=;
+	s=arc-20240116; t=1733497129; c=relaxed/simple;
+	bh=gp3O3/Q0jd8Nh+3rTu/WzYiHEbW1AGHUKrIo8FEZLb8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jceDl0bD8K3h6iDLUCbml9roXeBxgvTSiMBraApU8CFoAn7qim9Q2u9T2x33Cecsy/jRE6UTcoIXaWiFZcWOsQ6I90loWRy5BGfTZaTCztjDE3U80i3rBv4tdN/zxSyqzcrbMsqJ8gky+z1wrEx3o/t6EFZZN3uYmmHmcEgw//Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a4df+Y+e; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uUuG/8qMHwZWB/vSZLz9Vya6HEmlHYybGPOIfbw7IaNTIKqU+9aHbSru2XuWdoOV+aiJO+QGQMGl6XOqBj5xQfvGTtxuvmIp7hrXwLRjAgbrkrc6SrrVqcVpCBugg1gMsBkMw4wAJu6lQc1qdjeadJMpbwRdxhmRpBDWUChT6M4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w/X6bRCY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a4df+Y+e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB8A3C4CED1;
-	Fri,  6 Dec 2024 14:58:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w/X6bRCY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A273C4CED1;
+	Fri,  6 Dec 2024 14:58:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733497125;
-	bh=Yf31sM5fndmq5HSW0PNA9rIOOLRG88XiRbYuDDDQZlA=;
+	s=korg; t=1733497128;
+	bh=gp3O3/Q0jd8Nh+3rTu/WzYiHEbW1AGHUKrIo8FEZLb8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a4df+Y+ewTJ4EefmvQ+3K8sHbLFzjts+v/oQNjLDehio59/k139F2mG1Xx+95YxPh
-	 9TDrMedf2wz3I7b5xpmGqmZhYP00Rom+/AJx7VDRDUU8L4qAGAYp0yAcUT4XH4ilJb
-	 Ap4KnY1Ry8WFBqzSXCv6QKPxEwqFouVDnOwuMMrM=
+	b=w/X6bRCYSjLj2TAcmdPUblRcLX+un86gAnKNIqJqHIsz6KHiT7+SEq8rw++tmz2fs
+	 elXyQke/tyBUrUIkBX42nJq+2hZk2/UT4qhy5ZMOfffPo+sbX7s7A2RfOVnKmXAoPI
+	 B+gnPeb8yrOEwJxFbq1BJRxyTLVMG4hp+o551YG8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthias Schiffer <matthias.schiffer@tq-group.com>,
-	Alexander Stein <alexander.stein@ew.tq-group.com>,
 	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 202/676] drm: fsl-dcu: enable PIXCLK on LS1021A
-Date: Fri,  6 Dec 2024 15:30:21 +0100
-Message-ID: <20241206143701.236536395@linuxfoundation.org>
+Subject: [PATCH 6.6 203/676] drm/msm/dpu: on SDM845 move DSPP_3 to LM_5 block
+Date: Fri,  6 Dec 2024 15:30:22 +0100
+Message-ID: <20241206143701.274590991@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -52,85 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthias Schiffer <matthias.schiffer@tq-group.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit ffcde9e44d3e18fde3d18bfff8d9318935413bfd ]
+[ Upstream commit 768a272d5357269b17b4b06dd8647e21bdc0ca3c ]
 
-The PIXCLK needs to be enabled in SCFG before accessing certain DCU
-registers, or the access will hang. For simplicity, the PIXCLK is enabled
-unconditionally, resulting in increased power consumption.
+On the SDM845 platform the DSPP_3 is used by the LM_5. Correct
+corresponding entries in the sdm845_lm array.
 
-Signed-off-by: Matthias Schiffer <matthias.schiffer@tq-group.com>
-Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
-Fixes: 109eee2f2a18 ("drm/layerscape: Add Freescale DCU DRM driver")
-Acked-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240926055552.1632448-2-alexander.stein@ew.tq-group.com
+Fixes: c72375172194 ("drm/msm/dpu/catalog: define DSPP blocks found on sdm845")
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Patchwork: https://patchwork.freedesktop.org/patch/612584/
+Link: https://lore.kernel.org/r/20240905-dpu-fix-sdm845-catalog-v1-1-3363d03998bd@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/fsl-dcu/Kconfig           |  1 +
- drivers/gpu/drm/fsl-dcu/fsl_dcu_drm_drv.c | 15 +++++++++++++++
- drivers/gpu/drm/fsl-dcu/fsl_dcu_drm_drv.h |  3 +++
- 3 files changed, 19 insertions(+)
+ drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/fsl-dcu/Kconfig b/drivers/gpu/drm/fsl-dcu/Kconfig
-index 5ca71ef873259..c9ee98693b48a 100644
---- a/drivers/gpu/drm/fsl-dcu/Kconfig
-+++ b/drivers/gpu/drm/fsl-dcu/Kconfig
-@@ -8,6 +8,7 @@ config DRM_FSL_DCU
- 	select DRM_PANEL
- 	select REGMAP_MMIO
- 	select VIDEOMODE_HELPERS
-+	select MFD_SYSCON if SOC_LS1021A
- 	help
- 	  Choose this option if you have an Freescale DCU chipset.
- 	  If M is selected the module will be called fsl-dcu-drm.
-diff --git a/drivers/gpu/drm/fsl-dcu/fsl_dcu_drm_drv.c b/drivers/gpu/drm/fsl-dcu/fsl_dcu_drm_drv.c
-index a395f93449f36..a23f3f5c5530b 100644
---- a/drivers/gpu/drm/fsl-dcu/fsl_dcu_drm_drv.c
-+++ b/drivers/gpu/drm/fsl-dcu/fsl_dcu_drm_drv.c
-@@ -100,6 +100,7 @@ static void fsl_dcu_irq_uninstall(struct drm_device *dev)
- static int fsl_dcu_load(struct drm_device *dev, unsigned long flags)
- {
- 	struct fsl_dcu_drm_device *fsl_dev = dev->dev_private;
-+	struct regmap *scfg;
- 	int ret;
- 
- 	ret = fsl_dcu_drm_modeset_init(fsl_dev);
-@@ -108,6 +109,20 @@ static int fsl_dcu_load(struct drm_device *dev, unsigned long flags)
- 		return ret;
- 	}
- 
-+	scfg = syscon_regmap_lookup_by_compatible("fsl,ls1021a-scfg");
-+	if (PTR_ERR(scfg) != -ENODEV) {
-+		/*
-+		 * For simplicity, enable the PIXCLK unconditionally,
-+		 * resulting in increased power consumption. Disabling
-+		 * the clock in PM or on unload could be implemented as
-+		 * a future improvement.
-+		 */
-+		ret = regmap_update_bits(scfg, SCFG_PIXCLKCR, SCFG_PIXCLKCR_PXCEN,
-+					 SCFG_PIXCLKCR_PXCEN);
-+		if (ret < 0)
-+			return dev_err_probe(dev->dev, ret, "failed to enable pixclk\n");
-+	}
-+
- 	ret = drm_vblank_init(dev, dev->mode_config.num_crtc);
- 	if (ret < 0) {
- 		dev_err(dev->dev, "failed to initialize vblank\n");
-diff --git a/drivers/gpu/drm/fsl-dcu/fsl_dcu_drm_drv.h b/drivers/gpu/drm/fsl-dcu/fsl_dcu_drm_drv.h
-index e2049a0e8a92a..566396013c04a 100644
---- a/drivers/gpu/drm/fsl-dcu/fsl_dcu_drm_drv.h
-+++ b/drivers/gpu/drm/fsl-dcu/fsl_dcu_drm_drv.h
-@@ -160,6 +160,9 @@
- #define FSL_DCU_ARGB4444		12
- #define FSL_DCU_YUV422			14
- 
-+#define SCFG_PIXCLKCR			0x28
-+#define SCFG_PIXCLKCR_PXCEN		BIT(31)
-+
- #define VF610_LAYER_REG_NUM		9
- #define LS1021A_LAYER_REG_NUM		10
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h
+index 88a5177dfdb73..da0719588069b 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h
+@@ -162,7 +162,6 @@ static const struct dpu_lm_cfg sdm845_lm[] = {
+ 		.features = MIXER_SDM845_MASK,
+ 		.sblk = &sdm845_lm_sblk,
+ 		.pingpong = PINGPONG_NONE,
+-		.dspp = DSPP_3,
+ 	}, {
+ 		.name = "lm_4", .id = LM_4,
+ 		.base = 0x0, .len = 0x320,
+@@ -176,6 +175,7 @@ static const struct dpu_lm_cfg sdm845_lm[] = {
+ 		.sblk = &sdm845_lm_sblk,
+ 		.lm_pair = LM_2,
+ 		.pingpong = PINGPONG_3,
++		.dspp = DSPP_3,
+ 	},
+ };
  
 -- 
 2.43.0
