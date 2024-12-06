@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBA6A154BF5;
-	Fri,  6 Dec 2024 15:14:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FEAE13AA5F;
+	Fri,  6 Dec 2024 15:14:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733498060; cv=none; b=AMaLrYoLZ8oZuH9WRS+Vsb2XLnEDrbIoKN28Y2jzdt5F/MRGld6MB4ODtL+BeDTTmEWecBHg7027LsVRrBNY7rb7UuA76PB0ZFhMFfYTmxK2Wp5tyyhihcMgrPI+z+q0s1p63Uu7Bi8kAiXBeBhZUlOYcNP462FhFan+LC6N0fA=
+	t=1733498063; cv=none; b=K5dRRna7/sX8EceRc4nSrPb+HPgc6FAQ+W70lKeKuGG4LfC3vMBqXzgng+4ExpRjBo9hNUcacBLiKLbJowdES6e1c182TVLgkLytyGvSE7vanYlFQbtLqPrvkFwIP9J8dElrh31uh6x3OOnKFu9IWpuy9hbV8muVQvjbLGffHig=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733498060; c=relaxed/simple;
-	bh=z5BSwmxpt9bhVz1GuNq1M87Scy824ei94PBXjMOmAaA=;
+	s=arc-20240116; t=1733498063; c=relaxed/simple;
+	bh=D9FS1Yw8m6qRtR7r8P0FBXCChJwRJNAYtFyBh52/U5U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XlXNlI9C1PnVgbfpZFA+mHCuBBDS2Z91YbSfN7vAaYuKrxqKjelON5CYn+sYYAakySUbr7uc7fS3kt7OMCtiBnFrIcUMfkTs4luwGXTR3eNmRNTWIDi0/0B6HghYEP1VRyq5YyoC4R2h/Pw6Rud52DMnNiLhZwnyFfQTxeo2b+k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NsFiEMOc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TDJa5LXRaLd8vRqhtDbHQCHWHtvMGIux8fV2X86XnGefMiZ+zt7kxBKFjrjwd4I8IUVveiKypbg0+o+kcZoLhaP5eyG9ScKGXhPrLW04Rlr5x1wl/0DOCzoa1MSvuCpK1dlyXsXkOlhu6i+HUgH5tcLYhyv5bo+oiYKyGjVwRj0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nlKUiuod; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NsFiEMOc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53C28C4CEDC;
-	Fri,  6 Dec 2024 15:14:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nlKUiuod"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEAE1C4CEDC;
+	Fri,  6 Dec 2024 15:14:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733498059;
-	bh=z5BSwmxpt9bhVz1GuNq1M87Scy824ei94PBXjMOmAaA=;
+	s=korg; t=1733498063;
+	bh=D9FS1Yw8m6qRtR7r8P0FBXCChJwRJNAYtFyBh52/U5U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NsFiEMOcdVMNkUqHfoRtAPzGNMKoXz6tJE3r+q6DRiZA25423Hr/OgN7QSpJHLn8d
-	 6fYSM8rMvbHtevwwVBi78tgfWZyaSqeG9oDdKfLqO8SzY8sKKoj5tGrcQ+Mv7VqNrC
-	 lVvsAf81mK2tL85WKXniWsKESwP+s+/xj7L+RO/o=
+	b=nlKUiuodCIyhoQokPJAKrC2mj0H5QDRbBlgVIjSdbK9LwQ+8MQvCz14LVpeTPhe0n
+	 Imbog5dZaCfzHck5H8Gir4rs7XBOxI/kr3Bf/y5mF7KE1TKws/jaLC5YLxBZzB7EAV
+	 GFX6ln8HZ1SHyqzLDPOZ8bIfbzYCOhOmGCdiVDr0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>
-Subject: [PATCH 6.6 474/676] perf/x86/intel/pt: Fix buffer full but size is 0 case
-Date: Fri,  6 Dec 2024 15:34:53 +0100
-Message-ID: <20241206143711.880246854@linuxfoundation.org>
+	Ondrej Mosnacek <omosnace@redhat.com>,
+	Eric Biggers <ebiggers@google.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 6.6 475/676] crypto: x86/aegis128 - access 32-bit arguments as 32-bit
+Date: Fri,  6 Dec 2024 15:34:54 +0100
+Message-ID: <20241206143711.918521968@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -50,121 +51,131 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adrian Hunter <adrian.hunter@intel.com>
+From: Eric Biggers <ebiggers@google.com>
 
-commit 5b590160d2cf776b304eb054afafea2bd55e3620 upstream.
+commit 3b2f2d22fb424e9bebda4dbf6676cbfc7f9f62cd upstream.
 
-If the trace data buffer becomes full, a truncated flag [T] is reported
-in PERF_RECORD_AUX.  In some cases, the size reported is 0, even though
-data must have been added to make the buffer full.
+Fix the AEGIS assembly code to access 'unsigned int' arguments as 32-bit
+values instead of 64-bit, since the upper bits of the corresponding
+64-bit registers are not guaranteed to be zero.
 
-That happens when the buffer fills up from empty to full before the
-Intel PT driver has updated the buffer position.  Then the driver
-calculates the new buffer position before calculating the data size.
-If the old and new positions are the same, the data size is reported
-as 0, even though it is really the whole buffer size.
+Note: there haven't been any reports of this bug actually causing
+incorrect behavior.  Neither gcc nor clang guarantee zero-extension to
+64 bits, but zero-extension is likely to happen in practice because most
+instructions that operate on 32-bit registers zero-extend to 64 bits.
 
-Fix by detecting when the buffer position is wrapped, and adjust the
-data size calculation accordingly.
-
-Example
-
-  Use a very small buffer size (8K) and observe the size of truncated [T]
-  data. Before the fix, it is possible to see records of 0 size.
-
-  Before:
-
-    $ perf record -m,8K -e intel_pt// uname
-    Linux
-    [ perf record: Woken up 2 times to write data ]
-    [ perf record: Captured and wrote 0.105 MB perf.data ]
-    $ perf script -D --no-itrace | grep AUX | grep -F '[T]'
-    Warning:
-    AUX data lost 2 times out of 3!
-
-    5 19462712368111 0x19710 [0x40]: PERF_RECORD_AUX offset: 0 size: 0 flags: 0x1 [T]
-    5 19462712700046 0x19ba8 [0x40]: PERF_RECORD_AUX offset: 0x170 size: 0xe90 flags: 0x1 [T]
-
- After:
-
-    $ perf record -m,8K -e intel_pt// uname
-    Linux
-    [ perf record: Woken up 3 times to write data ]
-    [ perf record: Captured and wrote 0.040 MB perf.data ]
-    $ perf script -D --no-itrace | grep AUX | grep -F '[T]'
-    Warning:
-    AUX data lost 2 times out of 3!
-
-    1 113720802995 0x4948 [0x40]: PERF_RECORD_AUX offset: 0 size: 0x2000 flags: 0x1 [T]
-    1 113720979812 0x6b10 [0x40]: PERF_RECORD_AUX offset: 0x2000 size: 0x2000 flags: 0x1 [T]
-
-Fixes: 52ca9ced3f70 ("perf/x86/intel/pt: Add Intel PT PMU driver")
-Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Fixes: 1d373d4e8e15 ("crypto: x86 - Add optimized AEGIS implementations")
 Cc: stable@vger.kernel.org
-Link: https://lkml.kernel.org/r/20241022155920.17511-2-adrian.hunter@intel.com
+Reviewed-by: Ondrej Mosnacek <omosnace@redhat.com>
+Signed-off-by: Eric Biggers <ebiggers@google.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/events/intel/pt.c |   11 ++++++++---
- arch/x86/events/intel/pt.h |    2 ++
- 2 files changed, 10 insertions(+), 3 deletions(-)
+ arch/x86/crypto/aegis128-aesni-asm.S |   29 +++++++++++++++--------------
+ 1 file changed, 15 insertions(+), 14 deletions(-)
 
---- a/arch/x86/events/intel/pt.c
-+++ b/arch/x86/events/intel/pt.c
-@@ -827,11 +827,13 @@ static void pt_buffer_advance(struct pt_
- 	buf->cur_idx++;
+--- a/arch/x86/crypto/aegis128-aesni-asm.S
++++ b/arch/x86/crypto/aegis128-aesni-asm.S
+@@ -21,7 +21,7 @@
+ #define T1	%xmm7
  
- 	if (buf->cur_idx == buf->cur->last) {
--		if (buf->cur == buf->last)
-+		if (buf->cur == buf->last) {
- 			buf->cur = buf->first;
--		else
-+			buf->wrapped = true;
-+		} else {
- 			buf->cur = list_entry(buf->cur->list.next, struct topa,
- 					      list);
-+		}
- 		buf->cur_idx = 0;
- 	}
- }
-@@ -845,8 +847,11 @@ static void pt_buffer_advance(struct pt_
- static void pt_update_head(struct pt *pt)
- {
- 	struct pt_buffer *buf = perf_get_aux(&pt->handle);
-+	bool wrapped = buf->wrapped;
- 	u64 topa_idx, base, old;
+ #define STATEP	%rdi
+-#define LEN	%rsi
++#define LEN	%esi
+ #define SRC	%rdx
+ #define DST	%rcx
  
-+	buf->wrapped = false;
-+
- 	if (buf->single) {
- 		local_set(&buf->data_size, buf->output_off);
- 		return;
-@@ -864,7 +869,7 @@ static void pt_update_head(struct pt *pt
- 	} else {
- 		old = (local64_xchg(&buf->head, base) &
- 		       ((buf->nr_pages << PAGE_SHIFT) - 1));
--		if (base < old)
-+		if (base < old || (base == old && wrapped))
- 			base += buf->nr_pages << PAGE_SHIFT;
+@@ -76,32 +76,32 @@ SYM_FUNC_START_LOCAL(__load_partial)
+ 	xor %r9d, %r9d
+ 	pxor MSG, MSG
  
- 		local_add(base - old, &buf->data_size);
---- a/arch/x86/events/intel/pt.h
-+++ b/arch/x86/events/intel/pt.h
-@@ -65,6 +65,7 @@ struct pt_pmu {
-  * @head:	logical write offset inside the buffer
-  * @snapshot:	if this is for a snapshot/overwrite counter
-  * @single:	use Single Range Output instead of ToPA
-+ * @wrapped:	buffer advance wrapped back to the first topa table
-  * @stop_pos:	STOP topa entry index
-  * @intr_pos:	INT topa entry index
-  * @stop_te:	STOP topa entry pointer
-@@ -82,6 +83,7 @@ struct pt_buffer {
- 	local64_t		head;
- 	bool			snapshot;
- 	bool			single;
-+	bool			wrapped;
- 	long			stop_pos, intr_pos;
- 	struct topa_entry	*stop_te, *intr_te;
- 	void			**data_pages;
+-	mov LEN, %r8
++	mov LEN, %r8d
+ 	and $0x1, %r8
+ 	jz .Lld_partial_1
+ 
+-	mov LEN, %r8
++	mov LEN, %r8d
+ 	and $0x1E, %r8
+ 	add SRC, %r8
+ 	mov (%r8), %r9b
+ 
+ .Lld_partial_1:
+-	mov LEN, %r8
++	mov LEN, %r8d
+ 	and $0x2, %r8
+ 	jz .Lld_partial_2
+ 
+-	mov LEN, %r8
++	mov LEN, %r8d
+ 	and $0x1C, %r8
+ 	add SRC, %r8
+ 	shl $0x10, %r9
+ 	mov (%r8), %r9w
+ 
+ .Lld_partial_2:
+-	mov LEN, %r8
++	mov LEN, %r8d
+ 	and $0x4, %r8
+ 	jz .Lld_partial_4
+ 
+-	mov LEN, %r8
++	mov LEN, %r8d
+ 	and $0x18, %r8
+ 	add SRC, %r8
+ 	shl $32, %r9
+@@ -111,11 +111,11 @@ SYM_FUNC_START_LOCAL(__load_partial)
+ .Lld_partial_4:
+ 	movq %r9, MSG
+ 
+-	mov LEN, %r8
++	mov LEN, %r8d
+ 	and $0x8, %r8
+ 	jz .Lld_partial_8
+ 
+-	mov LEN, %r8
++	mov LEN, %r8d
+ 	and $0x10, %r8
+ 	add SRC, %r8
+ 	pslldq $8, MSG
+@@ -139,7 +139,7 @@ SYM_FUNC_END(__load_partial)
+  *   %r10
+  */
+ SYM_FUNC_START_LOCAL(__store_partial)
+-	mov LEN, %r8
++	mov LEN, %r8d
+ 	mov DST, %r9
+ 
+ 	movq T0, %r10
+@@ -677,7 +677,7 @@ SYM_TYPED_FUNC_START(crypto_aegis128_aes
+ 	call __store_partial
+ 
+ 	/* mask with byte count: */
+-	movq LEN, T0
++	movd LEN, T0
+ 	punpcklbw T0, T0
+ 	punpcklbw T0, T0
+ 	punpcklbw T0, T0
+@@ -702,7 +702,8 @@ SYM_FUNC_END(crypto_aegis128_aesni_dec_t
+ 
+ /*
+  * void crypto_aegis128_aesni_final(void *state, void *tag_xor,
+- *                                  u64 assoclen, u64 cryptlen);
++ *                                  unsigned int assoclen,
++ *                                  unsigned int cryptlen);
+  */
+ SYM_FUNC_START(crypto_aegis128_aesni_final)
+ 	FRAME_BEGIN
+@@ -715,8 +716,8 @@ SYM_FUNC_START(crypto_aegis128_aesni_fin
+ 	movdqu 0x40(STATEP), STATE4
+ 
+ 	/* prepare length block: */
+-	movq %rdx, MSG
+-	movq %rcx, T0
++	movd %edx, MSG
++	movd %ecx, T0
+ 	pslldq $8, T0
+ 	pxor T0, MSG
+ 	psllq $3, MSG /* multiply by 8 (to get bit count) */
 
 
