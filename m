@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25CE2153836;
-	Fri,  6 Dec 2024 15:12:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C260148832;
+	Fri,  6 Dec 2024 15:12:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733497928; cv=none; b=CtvWf5Kk9SiVKf/QlLt1bpc3w6oAvChV/afPhR26N7Tg3P+A0uPWDmsVxxwvQn7lgabE7g2gALOA1kdTQneukfz6iRfBfSmkjovB9ISnrZ2busQfTEo9ZMV7VM2LDqejobu0dT3+T+NI1JQA5pTQbRRMAbs+zSgjntzooIHbysU=
+	t=1733497931; cv=none; b=Om9gy96ZRH0xxv4Fijqog2ic5Xd+QbLTFKKXwfBK+Qs3DW3OGbIY5/iQUEcc+Dq7UVmLc/U3SvsJFbHDGLb5SCqGuJOl4a1RQnWtw4xKKQ4lS5iOkrQN0hnvHz0iXQnvq1oZOd0GZWPW4/aYFQ0Zt3Vhe+g+qJJ2tV8uJUb8pso=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733497928; c=relaxed/simple;
-	bh=y/elpe2cfCQC9GxKS/qExqJ3Hxr4uSrFUIwcU070CnU=;
+	s=arc-20240116; t=1733497931; c=relaxed/simple;
+	bh=EyHB4moF31JoniCoKEX6hcL2qVoITmYRClI+gybW4Zs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=iM4ivFEixaZ/k17zAlI1zbtTGQQWfaw1fCYdwssrPnG8OkOiPii3OhSWZvSS/PKymZIStDMdpm4kyHdvEV0yxvvec9mS9uAOs9CqVVPDWTsJXBki3bjvj0ZmF6Rh6YP8BQF17ny/diMKMkN3dZ9xmnZxSCNd6obGVFabtSoLiWk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XICjboUW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mwz/qKUv6AaPj8rVDQoGc6TlE914QcN8HR76Q+YQCKe9wZqO667nA3VBET4tU6yQ9k3BHLCDH+6MZ/MaxenoZuQ5t2o47NhTq5qcKWGtO3lHKoeJH2GJArZX9ACJBTY8YdYHHA9B6Gz8taCIsFMaDqUq4hTC30XhMctFFJN6ggA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CFWtGueL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XICjboUW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88300C4CEDC;
-	Fri,  6 Dec 2024 15:12:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CFWtGueL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 085D5C4CED1;
+	Fri,  6 Dec 2024 15:12:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733497928;
-	bh=y/elpe2cfCQC9GxKS/qExqJ3Hxr4uSrFUIwcU070CnU=;
+	s=korg; t=1733497931;
+	bh=EyHB4moF31JoniCoKEX6hcL2qVoITmYRClI+gybW4Zs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XICjboUW74vzDOa9EHv94FJqEPkpp/yz7sCIL9uuIeedC/Ou6kg3vogFMPwiUuiKX
-	 TnlfX+Ong0Bk3Sx6MVluVL5otT20CUlLT6Vag1pp0Jg0z6kmDYg94ggsb1i3FezG/X
-	 Bcre6E999FuOV6lm9OKUsJCuWUIFUz+og9sMhOLU=
+	b=CFWtGueLv+QgJxOy9/Vb8nTt1u+h2oUXM3W2kM1v3Q0i/wFhdwnf2rnCYdzGfaFl5
+	 R+7+7TRy4Lj0TZNfzSRAqJU42w/b47yquB/zGoWMQILJo6F2QxfXCyuzTc/C1tNdk/
+	 CFzyrJ8grIanCqmhs2nnqJw/CFDeRNf8KZ8SexO4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gaosheng Cui <cuigaosheng1@huawei.com>,
-	=?UTF-8?q?Amadeusz=20S=C5=82awi=C5=84ski?= <amadeuszx.slawinski@linux.intel.com>,
-	Russ Weight <russ.weight@linux.dev>,
+	Kailang Yang <kailang@realtek.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 434/676] firmware_loader: Fix possible resource leak in fw_log_firmware_info()
-Date: Fri,  6 Dec 2024 15:34:13 +0100
-Message-ID: <20241206143710.293873624@linuxfoundation.org>
+Subject: [PATCH 6.6 435/676] ALSA: hda/realtek: Update ALC256 depop procedure
+Date: Fri,  6 Dec 2024 15:34:14 +0100
+Message-ID: <20241206143710.333589669@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -46,60 +45,106 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Gaosheng Cui <cuigaosheng1@huawei.com>
+From: Kailang Yang <kailang@realtek.com>
 
-[ Upstream commit 369a9c046c2fdfe037f05b43b84c386bdbccc103 ]
+[ Upstream commit cc3d0b5dd989d3238d456f9fd385946379a9c13d ]
 
-The alg instance should be released under the exception path, otherwise
-there may be resource leak here.
+Old procedure has a chance to meet Headphone no output.
 
-To mitigate this, free the alg instance with crypto_free_shash when kmalloc
-fails.
-
-Fixes: 02fe26f25325 ("firmware_loader: Add debug message with checksum for FW file")
-Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
-Reviewed-by: Amadeusz Sławiński <amadeuszx.slawinski@linux.intel.com>
-Reviewed-by: Russ Weight <russ.weight@linux.dev>
-Link: https://lore.kernel.org/r/20241016110335.3677924-1-cuigaosheng1@huawei.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 4a219ef8f370 ("ALSA: hda/realtek - Add ALC256 HP depop function")
+Signed-off-by: Kailang Yang <kailang@realtek.com>
+Link: https://lore.kernel.org/463c5f93715d4714967041a0a8cec28e@realtek.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/firmware_loader/main.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ sound/pci/hda/patch_realtek.c | 42 ++++++++++++++++-------------------
+ 1 file changed, 19 insertions(+), 23 deletions(-)
 
-diff --git a/drivers/base/firmware_loader/main.c b/drivers/base/firmware_loader/main.c
-index 0b18c6b46e65d..f3133ba831c5e 100644
---- a/drivers/base/firmware_loader/main.c
-+++ b/drivers/base/firmware_loader/main.c
-@@ -824,19 +824,18 @@ static void fw_log_firmware_info(const struct firmware *fw, const char *name, st
- 	shash->tfm = alg;
+diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
+index 75be41086b462..839c0628f2792 100644
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -3602,25 +3602,22 @@ static void alc256_init(struct hda_codec *codec)
  
- 	if (crypto_shash_digest(shash, fw->data, fw->size, sha256buf) < 0)
--		goto out_shash;
-+		goto out_free;
+ 	hp_pin_sense = snd_hda_jack_detect(codec, hp_pin);
  
- 	for (int i = 0; i < SHA256_DIGEST_SIZE; i++)
- 		sprintf(&outbuf[i * 2], "%02x", sha256buf[i]);
- 	outbuf[SHA256_BLOCK_SIZE] = 0;
- 	dev_dbg(device, "Loaded FW: %s, sha256: %s\n", name, outbuf);
+-	if (hp_pin_sense)
++	if (hp_pin_sense) {
+ 		msleep(2);
++		alc_update_coefex_idx(codec, 0x57, 0x04, 0x0007, 0x1); /* Low power */
  
--out_shash:
--	crypto_free_shash(alg);
- out_free:
- 	kfree(shash);
- 	kfree(outbuf);
- 	kfree(sha256buf);
-+	crypto_free_shash(alg);
- }
- #else
- static void fw_log_firmware_info(const struct firmware *fw, const char *name,
+-	alc_update_coefex_idx(codec, 0x57, 0x04, 0x0007, 0x1); /* Low power */
+-
+-	snd_hda_codec_write(codec, hp_pin, 0,
+-			    AC_VERB_SET_AMP_GAIN_MUTE, AMP_OUT_MUTE);
+-
+-	if (hp_pin_sense || spec->ultra_low_power)
+-		msleep(85);
+-
+-	snd_hda_codec_write(codec, hp_pin, 0,
++		snd_hda_codec_write(codec, hp_pin, 0,
+ 			    AC_VERB_SET_PIN_WIDGET_CONTROL, PIN_OUT);
+ 
+-	if (hp_pin_sense || spec->ultra_low_power)
+-		msleep(100);
++		msleep(75);
++
++		snd_hda_codec_write(codec, hp_pin, 0,
++			    AC_VERB_SET_AMP_GAIN_MUTE, AMP_OUT_UNMUTE);
+ 
++		msleep(75);
++		alc_update_coefex_idx(codec, 0x57, 0x04, 0x0007, 0x4); /* Hight power */
++	}
+ 	alc_update_coef_idx(codec, 0x46, 3 << 12, 0);
+-	alc_update_coefex_idx(codec, 0x57, 0x04, 0x0007, 0x4); /* Hight power */
+ 	alc_update_coefex_idx(codec, 0x53, 0x02, 0x8000, 1 << 15); /* Clear bit */
+ 	alc_update_coefex_idx(codec, 0x53, 0x02, 0x8000, 0 << 15);
+ 	/*
+@@ -3644,29 +3641,28 @@ static void alc256_shutup(struct hda_codec *codec)
+ 	alc_update_coefex_idx(codec, 0x57, 0x04, 0x0007, 0x1); /* Low power */
+ 	hp_pin_sense = snd_hda_jack_detect(codec, hp_pin);
+ 
+-	if (hp_pin_sense)
++	if (hp_pin_sense) {
+ 		msleep(2);
+ 
+-	snd_hda_codec_write(codec, hp_pin, 0,
++		snd_hda_codec_write(codec, hp_pin, 0,
+ 			    AC_VERB_SET_AMP_GAIN_MUTE, AMP_OUT_MUTE);
+ 
+-	if (hp_pin_sense || spec->ultra_low_power)
+-		msleep(85);
++		msleep(75);
+ 
+ 	/* 3k pull low control for Headset jack. */
+ 	/* NOTE: call this before clearing the pin, otherwise codec stalls */
+ 	/* If disable 3k pulldown control for alc257, the Mic detection will not work correctly
+ 	 * when booting with headset plugged. So skip setting it for the codec alc257
+ 	 */
+-	if (spec->en_3kpull_low)
+-		alc_update_coef_idx(codec, 0x46, 0, 3 << 12);
++		if (spec->en_3kpull_low)
++			alc_update_coef_idx(codec, 0x46, 0, 3 << 12);
+ 
+-	if (!spec->no_shutup_pins)
+-		snd_hda_codec_write(codec, hp_pin, 0,
++		if (!spec->no_shutup_pins)
++			snd_hda_codec_write(codec, hp_pin, 0,
+ 				    AC_VERB_SET_PIN_WIDGET_CONTROL, 0x0);
+ 
+-	if (hp_pin_sense || spec->ultra_low_power)
+-		msleep(100);
++		msleep(75);
++	}
+ 
+ 	alc_auto_setup_eapd(codec, false);
+ 	alc_shutup_pins(codec);
 -- 
 2.43.0
 
