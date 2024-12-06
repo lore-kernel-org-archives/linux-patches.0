@@ -1,39 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07B34207DE7;
-	Fri,  6 Dec 2024 15:08:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DE751527AC;
+	Fri,  6 Dec 2024 15:08:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733497717; cv=none; b=SUQApi8p2UJoLEHl6+xtIOw8orrZ4kKaqWKujfpH5FW24ZCMljV87/1qPao5iD2gUyk9kgpXqTk9m5XPJGabg9SVf4j0n23UC3SJcnBxaPl6uX+p1Q8o5V532YWeYUw/ykj55e2xVgMDRYEYICOJYNlz8op24PxJoi79F3mh32Y=
+	t=1733497720; cv=none; b=XTxDgyA9rFjQrklqRG8JVXM8QHDZJz8r9hLk4XlXCUoxaOSbk40K65DRawuIOhJEoA+4M/ZFRcmIdtsZUUjWV1ADYK+ht0OIuFyVmcNPgKIwgVpebfjvP70zI/E9+aZeL/FcWTp3NyzZW0cIw5IhJqOFauCyndgYrtjmm7ADtMw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733497717; c=relaxed/simple;
-	bh=mp9owg9FrD6Vp4qKRD9pR1VSEN+z9IRn8obumDiWIrY=;
+	s=arc-20240116; t=1733497720; c=relaxed/simple;
+	bh=svwWuE5T0UxKRboHe8LJC3+OSKbYu3IZBM3ksdfmrfA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fbdbV/EL9ByMdc7o1E5BhtDLY75zGAoD4tsgFXnHr9lja2ssQtfRklxPZb5Np1u04fgL6EHww70pQbbS4Wd6iptbN0IS73QEf50Ys7SpC7iAuvyLAZ2bWHUH9xzcCX1NbOIS6sNaV+vkathU70yZRQ5oEhdhs753cMev7iHGNN8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mBfhv0T/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qKpaJNecRDpkQafuaelHcLvzP4XralQxx6wgTi//f3D9nV7H+W2NAMoH7lXI0Y8mktGjiqgb+5NXkrTcfF4igkGATJWbkmNwHbUqJYm8rWYpgUWm6ow6O0f8OxNKi4zvO32oS26708tp5+NGvqkbnFsCHBjqObWQLA0I/wrXmdY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=grrbLID7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mBfhv0T/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87E36C4CED1;
-	Fri,  6 Dec 2024 15:08:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="grrbLID7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 637DEC4CED1;
+	Fri,  6 Dec 2024 15:08:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733497716;
-	bh=mp9owg9FrD6Vp4qKRD9pR1VSEN+z9IRn8obumDiWIrY=;
+	s=korg; t=1733497720;
+	bh=svwWuE5T0UxKRboHe8LJC3+OSKbYu3IZBM3ksdfmrfA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mBfhv0T/5esICvFc+ijE/aEFDxpL86E1ia0a/5Ye2LgRvS5fnY0Y9G0q7mXr7JpSr
-	 gt1yIGF12wvodLvGXrtbcj52nJvAABcnlWnkpl0LcHaC8cxpb7AdoiOfORFhlGByaQ
-	 25POHkCcSPC3KCYrOvjGJT62czi0XEN7F/tFZyXo=
+	b=grrbLID7VKZ+kae0jkn7ELEsaa3zzhHjmYdUfBk8lh5KumxYzRM6117/rmFjzwbxd
+	 ZhAnJ/VGP7AewQKM/aLKpzwUudbVW47VUX3S/FmbH9ns/yEhyvgu4jQPalNvnWSYVt
+	 CG2ciem/+C/HhdEt8nqttv+rQ5FivyOnXl4Cg4pc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	Jean-Philippe Romain <jean-philippe.romain@foss.st.com>,
+	Ian Rogers <irogers@google.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Junhao He <hejunhao3@huawei.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 372/676] svcrdma: Address an integer overflow
-Date: Fri,  6 Dec 2024 15:33:11 +0100
-Message-ID: <20241206143707.876245056@linuxfoundation.org>
+Subject: [PATCH 6.6 373/676] perf list: Fix topic and pmu_name argument order
+Date: Fri,  6 Dec 2024 15:33:12 +0100
+Message-ID: <20241206143707.914592970@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -52,66 +61,169 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Jean-Philippe Romain <jean-philippe.romain@foss.st.com>
 
-[ Upstream commit 3c63d8946e578663b868cb9912dac616ea68bfd0 ]
+[ Upstream commit d99b3125726aade4f5ec4aae04805134ab4b0abd ]
 
-Dan Carpenter reports:
-> Commit 78147ca8b4a9 ("svcrdma: Add a "parsed chunk list" data
-> structure") from Jun 22, 2020 (linux-next), leads to the following
-> Smatch static checker warning:
->
->	net/sunrpc/xprtrdma/svc_rdma_recvfrom.c:498 xdr_check_write_chunk()
->	warn: potential user controlled sizeof overflow 'segcount * 4 * 4'
->
-> net/sunrpc/xprtrdma/svc_rdma_recvfrom.c
->     488 static bool xdr_check_write_chunk(struct svc_rdma_recv_ctxt *rctxt)
->     489 {
->     490         u32 segcount;
->     491         __be32 *p;
->     492
->     493         if (xdr_stream_decode_u32(&rctxt->rc_stream, &segcount))
->                                                               ^^^^^^^^
->
->     494                 return false;
->     495
->     496         /* A bogus segcount causes this buffer overflow check to fail. */
->     497         p = xdr_inline_decode(&rctxt->rc_stream,
-> --> 498                               segcount * rpcrdma_segment_maxsz * sizeof(*p));
->
->
-> segcount is an untrusted u32.  On 32bit systems anything >= SIZE_MAX / 16 will
-> have an integer overflow and some those values will be accepted by
-> xdr_inline_decode().
+Fix function definitions to match header file declaration. Fix two
+callers to pass the arguments in the right order.
 
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Fixes: 78147ca8b4a9 ("svcrdma: Add a "parsed chunk list" data structure")
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+On Intel Tigerlake, before:
+```
+$ perf list -j|grep "\"Topic\""|sort|uniq
+        "Topic": "cache",
+        "Topic": "cpu",
+        "Topic": "floating point",
+        "Topic": "frontend",
+        "Topic": "memory",
+        "Topic": "other",
+        "Topic": "pfm icl",
+        "Topic": "pfm ix86arch",
+        "Topic": "pfm perf_raw",
+        "Topic": "pipeline",
+        "Topic": "tool",
+        "Topic": "uncore interconnect",
+        "Topic": "uncore memory",
+        "Topic": "uncore other",
+        "Topic": "virtual memory",
+$ perf list -j|grep "\"Unit\""|sort|uniq
+        "Unit": "cache",
+        "Unit": "cpu",
+        "Unit": "cstate_core",
+        "Unit": "cstate_pkg",
+        "Unit": "i915",
+        "Unit": "icl",
+        "Unit": "intel_bts",
+        "Unit": "intel_pt",
+        "Unit": "ix86arch",
+        "Unit": "msr",
+        "Unit": "perf_raw",
+        "Unit": "power",
+        "Unit": "tool",
+        "Unit": "uncore_arb",
+        "Unit": "uncore_clock",
+        "Unit": "uncore_imc_free_running_0",
+        "Unit": "uncore_imc_free_running_1",
+```
+
+After:
+```
+$ perf list -j|grep "\"Topic\""|sort|uniq
+        "Topic": "cache",
+        "Topic": "floating point",
+        "Topic": "frontend",
+        "Topic": "memory",
+        "Topic": "other",
+        "Topic": "pfm icl",
+        "Topic": "pfm ix86arch",
+        "Topic": "pfm perf_raw",
+        "Topic": "pipeline",
+        "Topic": "tool",
+        "Topic": "uncore interconnect",
+        "Topic": "uncore memory",
+        "Topic": "uncore other",
+        "Topic": "virtual memory",
+$ perf list -j|grep "\"Unit\""|sort|uniq
+        "Unit": "cpu",
+        "Unit": "cstate_core",
+        "Unit": "cstate_pkg",
+        "Unit": "i915",
+        "Unit": "icl",
+        "Unit": "intel_bts",
+        "Unit": "intel_pt",
+        "Unit": "ix86arch",
+        "Unit": "msr",
+        "Unit": "perf_raw",
+        "Unit": "power",
+        "Unit": "tool",
+        "Unit": "uncore_arb",
+        "Unit": "uncore_clock",
+        "Unit": "uncore_imc_free_running_0",
+        "Unit": "uncore_imc_free_running_1",
+```
+
+Fixes: e5c6109f4813246a ("perf list: Reorganize to use callbacks to allow honouring command line options")
+Reviewed-by: Kan Liang <kan.liang@linux.intel.com>
+Signed-off-by: Jean-Philippe Romain <jean-philippe.romain@foss.st.com>
+Tested-by: Ian Rogers <irogers@google.com>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Junhao He <hejunhao3@huawei.com>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Link: https://lore.kernel.org/r/20241109025801.560378-1-irogers@google.com
+[ I fixed the two callers and added it to Jean-Phillippe's original change. ]
+Signed-off-by: Ian Rogers <irogers@google.com>
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/xprtrdma/svc_rdma_recvfrom.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ tools/perf/builtin-list.c | 4 ++--
+ tools/perf/util/pfm.c     | 4 ++--
+ tools/perf/util/pmus.c    | 2 +-
+ 3 files changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/net/sunrpc/xprtrdma/svc_rdma_recvfrom.c b/net/sunrpc/xprtrdma/svc_rdma_recvfrom.c
-index 3b05f90a3e50d..9cec7bcb8a976 100644
---- a/net/sunrpc/xprtrdma/svc_rdma_recvfrom.c
-+++ b/net/sunrpc/xprtrdma/svc_rdma_recvfrom.c
-@@ -478,7 +478,13 @@ static bool xdr_check_write_chunk(struct svc_rdma_recv_ctxt *rctxt)
- 	if (xdr_stream_decode_u32(&rctxt->rc_stream, &segcount))
- 		return false;
+diff --git a/tools/perf/builtin-list.c b/tools/perf/builtin-list.c
+index 61c2c96cc0701..c8c72fcf37e11 100644
+--- a/tools/perf/builtin-list.c
++++ b/tools/perf/builtin-list.c
+@@ -95,7 +95,7 @@ static void wordwrap(const char *s, int start, int max, int corr)
+ 	}
+ }
  
--	/* A bogus segcount causes this buffer overflow check to fail. */
-+	/* Before trusting the segcount value enough to use it in
-+	 * a computation, perform a simple range check. This is an
-+	 * arbitrary but sensible limit (ie, not architectural).
-+	 */
-+	if (unlikely(segcount > RPCSVC_MAXPAGES))
-+		return false;
-+
- 	p = xdr_inline_decode(&rctxt->rc_stream,
- 			      segcount * rpcrdma_segment_maxsz * sizeof(*p));
- 	return p != NULL;
+-static void default_print_event(void *ps, const char *pmu_name, const char *topic,
++static void default_print_event(void *ps, const char *topic, const char *pmu_name,
+ 				const char *event_name, const char *event_alias,
+ 				const char *scale_unit __maybe_unused,
+ 				bool deprecated, const char *event_type_desc,
+@@ -321,7 +321,7 @@ static void fix_escape_printf(struct strbuf *buf, const char *fmt, ...)
+ 	fputs(buf->buf, stdout);
+ }
+ 
+-static void json_print_event(void *ps, const char *pmu_name, const char *topic,
++static void json_print_event(void *ps, const char *topic, const char *pmu_name,
+ 			     const char *event_name, const char *event_alias,
+ 			     const char *scale_unit,
+ 			     bool deprecated, const char *event_type_desc,
+diff --git a/tools/perf/util/pfm.c b/tools/perf/util/pfm.c
+index 862e4a689868b..54421fceef5c7 100644
+--- a/tools/perf/util/pfm.c
++++ b/tools/perf/util/pfm.c
+@@ -220,7 +220,7 @@ print_libpfm_event(const struct print_callbacks *print_cb, void *print_state,
+ 	}
+ 
+ 	if (is_libpfm_event_supported(name, cpus, threads)) {
+-		print_cb->print_event(print_state, pinfo->name, topic,
++		print_cb->print_event(print_state, topic, pinfo->name,
+ 				      name, info->equiv,
+ 				      /*scale_unit=*/NULL,
+ 				      /*deprecated=*/NULL, "PFM event",
+@@ -254,8 +254,8 @@ print_libpfm_event(const struct print_callbacks *print_cb, void *print_state,
+ 				continue;
+ 
+ 			print_cb->print_event(print_state,
+-					pinfo->name,
+ 					topic,
++					pinfo->name,
+ 					name, /*alias=*/NULL,
+ 					/*scale_unit=*/NULL,
+ 					/*deprecated=*/NULL, "PFM event",
+diff --git a/tools/perf/util/pmus.c b/tools/perf/util/pmus.c
+index 54a237b2b8538..f0577aa7eca88 100644
+--- a/tools/perf/util/pmus.c
++++ b/tools/perf/util/pmus.c
+@@ -474,8 +474,8 @@ void perf_pmus__print_pmu_events(const struct print_callbacks *print_cb, void *p
+ 			goto free;
+ 
+ 		print_cb->print_event(print_state,
+-				aliases[j].pmu_name,
+ 				aliases[j].topic,
++				aliases[j].pmu_name,
+ 				aliases[j].name,
+ 				aliases[j].alias,
+ 				aliases[j].scale_unit,
 -- 
 2.43.0
 
