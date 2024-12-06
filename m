@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E87961494D9;
-	Fri,  6 Dec 2024 14:43:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23AF31494D9;
+	Fri,  6 Dec 2024 14:43:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733496225; cv=none; b=QxwSk73gVqAkC5wRd8WIqeyNHaC6ZOdXfH1lI0UIaMlhZetOa92ZJjXm5k7edphac/0Pbd2V3HNXGJlr3oSCjkncm518UaJLzgo0QRHe9RGW1qzyoLKPGxkWVhn25GxctD4sLazA2vcKGgjVEL4+EVJyGcLqgliYhG700YRcWwA=
+	t=1733496228; cv=none; b=Cp+naQM4/1s6wi7WtsTwJW/n6DNFXvzwR5X/jju32/KSBgbp+Gp7GfwIKc70Pv8DxqSak90/zOTu371GJgpKaAyUKo8hCpUQuQmfJDcOkylKoG6Nk+ylSQRJ/+yXYodQwSnqbOx3QZ6Ki9hF66/3EQJmnT0EsBR1Vy8o6ccgOB8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733496225; c=relaxed/simple;
-	bh=N5YJr9tdmGMD00tD4gdOPToWNb+ujozG7qjmMvwIXnQ=;
+	s=arc-20240116; t=1733496228; c=relaxed/simple;
+	bh=S+2aXAO5aGXyZw3HUFuFBTj2MblcNepaIbmwaZ8Gezc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GPuY8ZdQlsLKwwN41x1hOAwtevc8+iFFK9DudjiupJAxIvHfMvnj2Pu+NtfGafunil4aai6Qr3D5q9f884+s+p2squjV8LGu8Gf6iacRAtcfpIHpKH1FZX3A6Ki/oAbIdOyJ5mihlwQjDnToyeU+ZI/e4YXQ+8LdUnm8DSn89xo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MraL8uQN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=plsFnKXUv42BIjfAvsc416TCQ07hsxeA5B8a6hrgoIwcK4bws6i0V0+t0YTEhSMSfs1BzVv8c96pRBe+WJmnS8QBY0zuPPLaSDfMLs+QmFZ2XZsjEqzaXOX7EOPAaFS4r1BqWBibzdb3VWgsIjLGlnzJEeYvUztQu8oabTMqliI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U8ecM1KX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MraL8uQN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63C9FC4CED1;
-	Fri,  6 Dec 2024 14:43:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U8ecM1KX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E188C4CED1;
+	Fri,  6 Dec 2024 14:43:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733496224;
-	bh=N5YJr9tdmGMD00tD4gdOPToWNb+ujozG7qjmMvwIXnQ=;
+	s=korg; t=1733496227;
+	bh=S+2aXAO5aGXyZw3HUFuFBTj2MblcNepaIbmwaZ8Gezc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MraL8uQNFvIuX/2Elw62Be2SRaMZUuWevnby9Uz2Q6dW+Z1DSMzGVmOD/jTZnVfA1
-	 43/nB89RejPYINFA3ViyWxEVdrwhYD1GHLfg5+oY0UmhMX6tAs7zLmUfT5ZRVhpfpf
-	 uckAnAwY1RMsQm+k9+AobnLdH5+d1PhQ0V7I13Y8=
+	b=U8ecM1KXUIDOWAM/7lyGkfXIJF7i9JvqHP6ZuCzzSVTHuAhswFCbxVlu9PVZEOCNa
+	 +UWT9OVM4ptfKVbGxm7GY+tpyF1FkY7RtLOypwr9dWabOXzTsF2g3sC3133W64BlC4
+	 oemO7mxiu0vdVdpLvT3AX7P0bkBjMUa2hW6Lk74Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>
-Subject: [PATCH 6.12 081/146] i3c: master: Fix miss free init_dyn_addr at i3c_master_put_i3c_addrs()
-Date: Fri,  6 Dec 2024 15:36:52 +0100
-Message-ID: <20241206143530.779769348@linuxfoundation.org>
+	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 6.12 090/146] thermal: int3400: Fix reading of current_uuid for active policy
+Date: Fri,  6 Dec 2024 15:37:01 +0100
+Message-ID: <20241206143531.120174083@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143527.654980698@linuxfoundation.org>
 References: <20241206143527.654980698@linuxfoundation.org>
@@ -52,38 +50,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Frank Li <Frank.Li@nxp.com>
+From: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
 
-commit 3082990592f7c6d7510a9133afa46e31bbe26533 upstream.
+commit 7082503622986537f57bdb5ef23e69e70cfad881 upstream.
 
-if (dev->boardinfo && dev->boardinfo->init_dyn_addr)
-                                      ^^^ here check "init_dyn_addr"
-	i3c_bus_set_addr_slot_status(&master->bus, dev->info.dyn_addr, ...)
-						             ^^^^
-							free "dyn_addr"
-Fix copy/paste error "dyn_addr" by replacing it with "init_dyn_addr".
+When the current_uuid attribute is set to the active policy UUID,
+reading back the same attribute is returning "INVALID" instead of
+the active policy UUID on some platforms before Ice Lake.
 
-Cc: stable@kernel.org
-Fixes: 3a379bbcea0a ("i3c: Add core I3C infrastructure")
-Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
-Link: https://lore.kernel.org/r/20241001162608.224039-1-Frank.Li@nxp.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+In platforms before Ice Lake, firmware provides a list of supported
+thermal policies. In this case, user space can select any of the
+supported thermal policies via a write to attribute "current_uuid".
+
+In commit c7ff29763989 ("thermal: int340x: Update OS policy capability
+handshake")', the OS policy handshake was updated to support Ice Lake
+and later platforms and it treated priv->current_uuid_index=0 as
+invalid. However, priv->current_uuid_index=0 is for the active policy,
+only priv->current_uuid_index=-1 is invalid.
+
+Fix this issue by updating the priv->current_uuid_index check.
+
+Fixes: c7ff29763989 ("thermal: int340x: Update OS policy capability handshake")
+Signed-off-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+Cc: 5.18+ <stable@vger.kernel.org> # 5.18+
+Link: https://patch.msgid.link/20241114200213.422303-1-srinivas.pandruvada@linux.intel.com
+[ rjw: Subject and changelog edits ]
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i3c/master.c |    2 +-
+ drivers/thermal/intel/int340x_thermal/int3400_thermal.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/i3c/master.c
-+++ b/drivers/i3c/master.c
-@@ -1417,7 +1417,7 @@ static void i3c_master_put_i3c_addrs(str
- 					     I3C_ADDR_SLOT_FREE);
+--- a/drivers/thermal/intel/int340x_thermal/int3400_thermal.c
++++ b/drivers/thermal/intel/int340x_thermal/int3400_thermal.c
+@@ -137,7 +137,7 @@ static ssize_t current_uuid_show(struct
+ 	struct int3400_thermal_priv *priv = dev_get_drvdata(dev);
+ 	int i, length = 0;
  
- 	if (dev->boardinfo && dev->boardinfo->init_dyn_addr)
--		i3c_bus_set_addr_slot_status(&master->bus, dev->info.dyn_addr,
-+		i3c_bus_set_addr_slot_status(&master->bus, dev->boardinfo->init_dyn_addr,
- 					     I3C_ADDR_SLOT_FREE);
- }
+-	if (priv->current_uuid_index > 0)
++	if (priv->current_uuid_index >= 0)
+ 		return sprintf(buf, "%s\n",
+ 			       int3400_thermal_uuids[priv->current_uuid_index]);
  
 
 
