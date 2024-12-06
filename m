@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B405A206F1A;
-	Fri,  6 Dec 2024 15:24:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3237D207DFA;
+	Fri,  6 Dec 2024 15:24:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733498654; cv=none; b=oejlpqdZH6U4RBiNOQseBPrJ+M/5vl9V2dBBrvOO+m19ZTA8MIuYAIFklLQHN8ijwCA0dV4DRfG6jeKBPJx1+JH5tylstusuv7J/wC8XdrGl+v91P9+qFvPLYmG44vbIwH16azZFPaQJW1ab6ocwsIQevV99V4GE7w/wiq6xszg=
+	t=1733498658; cv=none; b=ZilR9x1knVY9vhIRrEuJKyyPZkK6aKe3KTMZnkoCYTTj6JVQFzU5sgfeldEnhzmZCyz7HuwaZl66MNUhZwt/6xLhUFHVKe4CKsVOrkWlqxOTujU0J65FmnVYipIgbya2oH/FiZ2Po1uZmYjxJpxbjDxeG4M5Dgr/gyZSI04pIoo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733498654; c=relaxed/simple;
-	bh=JXxrAiWFViuSH0PA0qEJIwdftgzrWy2bBBHHvZUKV5k=;
+	s=arc-20240116; t=1733498658; c=relaxed/simple;
+	bh=rADzKthc1PO98oMPjc7MRLui2koB0vFx48M7rGoe0Ng=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hMNzOCRZRDwgR7Rji9kNnXT7ExZBkBmVFdDClIOc5Lz8ZWHBURWLMvGiwcJi1LhlupDE9xbmrk2tTI9WZ8mmoMjEF+7s1E97Y5S0ITFTD2FUZx3YDb0MxhFoyyQnUhd/Z/aoTBJKKnuHvFHjdMK4DB7+B5l3z9sP+D/GZgQni0g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nGrTkcoo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fDuE1+q1+RFURjGmhxH+eMpWARDTPuTaHBofEYZQWZg/V4ksQPSu5nRrklaKxaS/u2xT9waS1ZlVUzxRoTwkyEwanJ/zyLMo3Vrdl3XzZI7sZMoVuSgbdSlIVcSUS1yuerhwIBZ4KNNq8t94EV7ccxAOzgSRRPFIBSIOD+/ZwPk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=feuOy910; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nGrTkcoo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA12EC4CEDF;
-	Fri,  6 Dec 2024 15:24:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="feuOy910"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BC20C4CED1;
+	Fri,  6 Dec 2024 15:24:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733498654;
-	bh=JXxrAiWFViuSH0PA0qEJIwdftgzrWy2bBBHHvZUKV5k=;
+	s=korg; t=1733498658;
+	bh=rADzKthc1PO98oMPjc7MRLui2koB0vFx48M7rGoe0Ng=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nGrTkcooKICS38g1lsxTW8uDfLAJERFk3ehPJ2IRxKdZ62xbjSAlZTDS29iYl0vo3
-	 auefMmwOqOVkHBn/R0Q85bgQPJ9MYL0a1xvCNvBKJ1GY1t2dfFtJgfj2If3awp2Zhw
-	 NRF/CWAmoQ1ej+5gJYt1d+CQNl88tQ4ap4pvOXFg=
+	b=feuOy910C1aLgAvK7tWU1C+YIBeQDCc0wFOTylSCd29kvhXsCROzKFkMP5DWjFjFv
+	 52gD9kmGl6EPbTR8QEGIj/aBKvq2+ISvTPFAF+GH/ZsBq7/aDRghga/boCGrQ1NJex
+	 AsPJzonDmhiMTPkZQV5UOpK3Z48ekcH8tU+drOrg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Christian Brauner <brauner@kernel.org>
-Subject: [PATCH 6.6 648/676] fs/proc/kcore.c: Clear ret value in read_kcore_iter after successful iov_iter_zero
-Date: Fri,  6 Dec 2024 15:37:47 +0100
-Message-ID: <20241206143718.678629005@linuxfoundation.org>
+	Jinjie Ruan <ruanjinjie@huawei.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Hans Verkuil <hverkuil@xs4all.nl>
+Subject: [PATCH 6.6 622/676] media: gspca: ov534-ov772x: Fix off-by-one error in set_frame_rate()
+Date: Fri,  6 Dec 2024 15:37:21 +0100
+Message-ID: <20241206143717.662822616@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -51,37 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiri Olsa <jolsa@kernel.org>
+From: Jinjie Ruan <ruanjinjie@huawei.com>
 
-commit 088f294609d8f8816dc316681aef2eb61982e0da upstream.
+commit d2842dec577900031826dc44e9bf0c66416d7173 upstream.
 
-If iov_iter_zero succeeds after failed copy_from_kernel_nofault,
-we need to reset the ret value to zero otherwise it will be returned
-as final return value of read_kcore_iter.
+In set_frame_rate(), select a rate in rate_0 or rate_1 by checking
+sd->frame_rate >= r->fps in a loop, but the loop condition terminates when
+the index reaches zero, which fails to check the last elememt in rate_0 or
+rate_1.
 
-This fixes objdump -d dump over /proc/kcore for me.
+Check for >= 0 so that the last one in rate_0 or rate_1 is also checked.
 
+Fixes: 189d92af707e ("V4L/DVB (13422): gspca - ov534: ov772x changes from Richard Kaswy.")
 Cc: stable@vger.kernel.org
-Cc: Alexander Gordeev <agordeev@linux.ibm.com>
-Fixes: 3d5854d75e31 ("fs/proc/kcore.c: allow translation of physical memory addresses")
-Signed-off-by: Jiri Olsa <jolsa@kernel.org>
-Link: https://lore.kernel.org/r/20241121231118.3212000-1-jolsa@kernel.org
-Acked-by: Alexander Gordeev <agordeev@linux.ibm.com>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/proc/kcore.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/media/usb/gspca/ov534.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/proc/kcore.c
-+++ b/fs/proc/kcore.c
-@@ -599,6 +599,7 @@ static ssize_t read_kcore_iter(struct ki
- 					ret = -EFAULT;
- 					goto out;
- 				}
-+				ret = 0;
- 			/*
- 			 * We know the bounce buffer is safe to copy from, so
- 			 * use _copy_to_iter() directly.
+--- a/drivers/media/usb/gspca/ov534.c
++++ b/drivers/media/usb/gspca/ov534.c
+@@ -847,7 +847,7 @@ static void set_frame_rate(struct gspca_
+ 		r = rate_1;
+ 		i = ARRAY_SIZE(rate_1);
+ 	}
+-	while (--i > 0) {
++	while (--i >= 0) {
+ 		if (sd->frame_rate >= r->fps)
+ 			break;
+ 		r++;
 
 
