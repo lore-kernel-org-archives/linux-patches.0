@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C260148832;
-	Fri,  6 Dec 2024 15:12:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A38E148832;
+	Fri,  6 Dec 2024 15:12:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733497931; cv=none; b=Om9gy96ZRH0xxv4Fijqog2ic5Xd+QbLTFKKXwfBK+Qs3DW3OGbIY5/iQUEcc+Dq7UVmLc/U3SvsJFbHDGLb5SCqGuJOl4a1RQnWtw4xKKQ4lS5iOkrQN0hnvHz0iXQnvq1oZOd0GZWPW4/aYFQ0Zt3Vhe+g+qJJ2tV8uJUb8pso=
+	t=1733497935; cv=none; b=QWRjRe5fhxFA1VHo2JqURPzG1TWVLkswRs8rnmbxx3wLsDJOwZ7AeLCs5N45YCtuodWS1EJQkrLtD6pvI1pSYsJ5k61Da0bfJxpzwHLw9w/dVvyeK8pdtfNxpvaOsTHokAVPi6qs0jKlNfGsleJ4GBDucsP+0DNzoelFpbGTyWs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733497931; c=relaxed/simple;
-	bh=EyHB4moF31JoniCoKEX6hcL2qVoITmYRClI+gybW4Zs=;
+	s=arc-20240116; t=1733497935; c=relaxed/simple;
+	bh=WQ5UtkYHfHRpJy/eiINNH5cGdeC9X2d1msWLW7KpIuM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mwz/qKUv6AaPj8rVDQoGc6TlE914QcN8HR76Q+YQCKe9wZqO667nA3VBET4tU6yQ9k3BHLCDH+6MZ/MaxenoZuQ5t2o47NhTq5qcKWGtO3lHKoeJH2GJArZX9ACJBTY8YdYHHA9B6Gz8taCIsFMaDqUq4hTC30XhMctFFJN6ggA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CFWtGueL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dtXxzEEr9ivlBz912QCcaPrIp/F3tLu0A6SSoLiUIcKklH3ozZFN4p2TY7xazYgLacLNoX7LQwFGEAcb9mIbimkx6+rvIAPPynX3trBGINax9T7KtIahN+dc1pDOqbLJXos2ebafFFON98KRiUCCbHrAtnNiKQ5+y4CMdiSFewE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RAcfsyXF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CFWtGueL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 085D5C4CED1;
-	Fri,  6 Dec 2024 15:12:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RAcfsyXF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D49DC4CED1;
+	Fri,  6 Dec 2024 15:12:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733497931;
-	bh=EyHB4moF31JoniCoKEX6hcL2qVoITmYRClI+gybW4Zs=;
+	s=korg; t=1733497935;
+	bh=WQ5UtkYHfHRpJy/eiINNH5cGdeC9X2d1msWLW7KpIuM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CFWtGueLv+QgJxOy9/Vb8nTt1u+h2oUXM3W2kM1v3Q0i/wFhdwnf2rnCYdzGfaFl5
-	 R+7+7TRy4Lj0TZNfzSRAqJU42w/b47yquB/zGoWMQILJo6F2QxfXCyuzTc/C1tNdk/
-	 CFzyrJ8grIanCqmhs2nnqJw/CFDeRNf8KZ8SexO4=
+	b=RAcfsyXFCJHfsgHJbMXtnqPVxwaRCm6QDYIJOt7r6S1I7TrTnNTKmke0gIOeif6P1
+	 i1c+O5kFZK17JYB9N+vpcTJXufMvWBgMqZmdHQ7FklRTkdIU3Dh+pzNBvkkhBWxZa6
+	 znCuhZcoE/5OSt34SgLlTJmoMBI/8pIaB6qtrep4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kailang Yang <kailang@realtek.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Wu Hoi Pok <wuhoipok@gmail.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 435/676] ALSA: hda/realtek: Update ALC256 depop procedure
-Date: Fri,  6 Dec 2024 15:34:14 +0100
-Message-ID: <20241206143710.333589669@linuxfoundation.org>
+Subject: [PATCH 6.6 436/676] drm/radeon: add helper rdev_to_drm(rdev)
+Date: Fri,  6 Dec 2024 15:34:15 +0100
+Message-ID: <20241206143710.372115412@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -51,100 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kailang Yang <kailang@realtek.com>
+From: Wu Hoi Pok <wuhoipok@gmail.com>
 
-[ Upstream commit cc3d0b5dd989d3238d456f9fd385946379a9c13d ]
+[ Upstream commit a6e23bec8ed184ed2a11080b28cdbd7a3024f0c0 ]
 
-Old procedure has a chance to meet Headphone no output.
+Add helper rdev_to_drm(rdev), similar to amdgpu, most function should
+access the "drm_device" with "rdev_to_drm(rdev)" instead, where amdgpu has
+"adev_to_drm(adev)". It also makes changing from "*drm_device" to "drm_device"
+in "radeon_devicce" later on easier.
 
-Fixes: 4a219ef8f370 ("ALSA: hda/realtek - Add ALC256 HP depop function")
-Signed-off-by: Kailang Yang <kailang@realtek.com>
-Link: https://lore.kernel.org/463c5f93715d4714967041a0a8cec28e@realtek.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
+Tested-by: Thomas Zimmermann <tzimmermann@suse.de>
+Signed-off-by: Wu Hoi Pok <wuhoipok@gmail.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Stable-dep-of: 7037bb04265e ("drm/radeon: Fix spurious unplug event on radeon HDMI")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_realtek.c | 42 ++++++++++++++++-------------------
- 1 file changed, 19 insertions(+), 23 deletions(-)
+ drivers/gpu/drm/radeon/radeon.h | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-index 75be41086b462..839c0628f2792 100644
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -3602,25 +3602,22 @@ static void alc256_init(struct hda_codec *codec)
+diff --git a/drivers/gpu/drm/radeon/radeon.h b/drivers/gpu/drm/radeon/radeon.h
+index 426a49851e349..e0a02b357ce72 100644
+--- a/drivers/gpu/drm/radeon/radeon.h
++++ b/drivers/gpu/drm/radeon/radeon.h
+@@ -2478,6 +2478,11 @@ void r100_io_wreg(struct radeon_device *rdev, u32 reg, u32 v);
+ u32 cik_mm_rdoorbell(struct radeon_device *rdev, u32 index);
+ void cik_mm_wdoorbell(struct radeon_device *rdev, u32 index, u32 v);
  
- 	hp_pin_sense = snd_hda_jack_detect(codec, hp_pin);
- 
--	if (hp_pin_sense)
-+	if (hp_pin_sense) {
- 		msleep(2);
-+		alc_update_coefex_idx(codec, 0x57, 0x04, 0x0007, 0x1); /* Low power */
- 
--	alc_update_coefex_idx(codec, 0x57, 0x04, 0x0007, 0x1); /* Low power */
--
--	snd_hda_codec_write(codec, hp_pin, 0,
--			    AC_VERB_SET_AMP_GAIN_MUTE, AMP_OUT_MUTE);
--
--	if (hp_pin_sense || spec->ultra_low_power)
--		msleep(85);
--
--	snd_hda_codec_write(codec, hp_pin, 0,
-+		snd_hda_codec_write(codec, hp_pin, 0,
- 			    AC_VERB_SET_PIN_WIDGET_CONTROL, PIN_OUT);
- 
--	if (hp_pin_sense || spec->ultra_low_power)
--		msleep(100);
-+		msleep(75);
++static inline struct drm_device *rdev_to_drm(struct radeon_device *rdev)
++{
++	return rdev->ddev;
++}
 +
-+		snd_hda_codec_write(codec, hp_pin, 0,
-+			    AC_VERB_SET_AMP_GAIN_MUTE, AMP_OUT_UNMUTE);
- 
-+		msleep(75);
-+		alc_update_coefex_idx(codec, 0x57, 0x04, 0x0007, 0x4); /* Hight power */
-+	}
- 	alc_update_coef_idx(codec, 0x46, 3 << 12, 0);
--	alc_update_coefex_idx(codec, 0x57, 0x04, 0x0007, 0x4); /* Hight power */
- 	alc_update_coefex_idx(codec, 0x53, 0x02, 0x8000, 1 << 15); /* Clear bit */
- 	alc_update_coefex_idx(codec, 0x53, 0x02, 0x8000, 0 << 15);
- 	/*
-@@ -3644,29 +3641,28 @@ static void alc256_shutup(struct hda_codec *codec)
- 	alc_update_coefex_idx(codec, 0x57, 0x04, 0x0007, 0x1); /* Low power */
- 	hp_pin_sense = snd_hda_jack_detect(codec, hp_pin);
- 
--	if (hp_pin_sense)
-+	if (hp_pin_sense) {
- 		msleep(2);
- 
--	snd_hda_codec_write(codec, hp_pin, 0,
-+		snd_hda_codec_write(codec, hp_pin, 0,
- 			    AC_VERB_SET_AMP_GAIN_MUTE, AMP_OUT_MUTE);
- 
--	if (hp_pin_sense || spec->ultra_low_power)
--		msleep(85);
-+		msleep(75);
- 
- 	/* 3k pull low control for Headset jack. */
- 	/* NOTE: call this before clearing the pin, otherwise codec stalls */
- 	/* If disable 3k pulldown control for alc257, the Mic detection will not work correctly
- 	 * when booting with headset plugged. So skip setting it for the codec alc257
- 	 */
--	if (spec->en_3kpull_low)
--		alc_update_coef_idx(codec, 0x46, 0, 3 << 12);
-+		if (spec->en_3kpull_low)
-+			alc_update_coef_idx(codec, 0x46, 0, 3 << 12);
- 
--	if (!spec->no_shutup_pins)
--		snd_hda_codec_write(codec, hp_pin, 0,
-+		if (!spec->no_shutup_pins)
-+			snd_hda_codec_write(codec, hp_pin, 0,
- 				    AC_VERB_SET_PIN_WIDGET_CONTROL, 0x0);
- 
--	if (hp_pin_sense || spec->ultra_low_power)
--		msleep(100);
-+		msleep(75);
-+	}
- 
- 	alc_auto_setup_eapd(codec, false);
- 	alc_shutup_pins(codec);
+ /*
+  * Cast helper
+  */
 -- 
 2.43.0
 
