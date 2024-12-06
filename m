@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D83DF53A7;
-	Fri,  6 Dec 2024 15:06:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CA2953A7;
+	Fri,  6 Dec 2024 15:07:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733497617; cv=none; b=T5bilmSzXeI0D7yndowrgxGd8Ypq2E8Gz/OCA+Nj/plbHvR6XgG0z4Stp01MUW+zHEMPYl7du47UaDWU5aa6a+9BFaZyJ4AluXu3KAcw5RFSnz+W0TbbdwLg7yh5scDyWarqwKr24fTaRDxA3FG7kZWO5VTg/OxAC2MQeLlw6W8=
+	t=1733497621; cv=none; b=q64az0BRrgz2J2lpghonvfupkSVnjLfTBwjMRt6MLL77Tz/E58A0FaJL0OF/LEtv9QE5HVjZNh1N/AQePpRgyXwaR5xdIdfqI0f2FfEieSDRKtkX3AYmpCZHAQYQh1XQldWIE8AMNPvwrdIuLq6V3jpXgJU1LWZth5o8Wfs9WC0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733497617; c=relaxed/simple;
-	bh=rPm1jrmVXU5a+rWVVfD8ArKWq4H8AGMa5tpIHZNGjNw=;
+	s=arc-20240116; t=1733497621; c=relaxed/simple;
+	bh=KVl3FwJ0mHmKUrHfRYPmB+Kgtni3IC9xV4uPItqrmu4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TwdlnjYstDHCFtYAsZm7+DyY+ZLqb/llbuEIhKfsuav/ElIA4O1awp3dtz82Z/uPVPa3tI3zRplGGqPSin5NZgyXaXqcvp/npob/PijYgNAgY1rBtoYxoGP1wkeMceyaUVMp307qw15cNSCJ7e3Gq+YBM9XNsjvS4qzesZzC96U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZcmK7YxH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=e6ZI0hfpVXLO7QsUeI1p11FeGRvN8WlAPto9v8QXXoSZiOXl8+y2KVurNuJPzJ/f4VWPttsLJ6GK9lQHpG0033NBloPtG8vKACxwsWhj4GdNmS/tbp4NKDlquMmhrNAk5byOGwGJxXTm+1WwehU8Ne1Vqojn1qUYRNuVPzDwAHc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JR2rVJQ2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZcmK7YxH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43D3FC4CED1;
-	Fri,  6 Dec 2024 15:06:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JR2rVJQ2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F9A6C4CED1;
+	Fri,  6 Dec 2024 15:07:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733497617;
-	bh=rPm1jrmVXU5a+rWVVfD8ArKWq4H8AGMa5tpIHZNGjNw=;
+	s=korg; t=1733497621;
+	bh=KVl3FwJ0mHmKUrHfRYPmB+Kgtni3IC9xV4uPItqrmu4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZcmK7YxHlR6MZ9ZhvSJEsKAbJihypghSncz3SGTkmLYX8jxFoe3ZnOAuLlXs5EO2k
-	 fDiXutgqMfvhKx2uZPLtso3f9lpBNwVg1gMlw1l95fjyJdebovfLO3hCfRsQyLmLWd
-	 zpUIBwGMabr9+KZgt8BEAkeow37YhOdae4lNYdcQ=
+	b=JR2rVJQ2mTWUxb+qXKKwpi7Bco+mT69m09GfwBfDi3DJ+abfjVTr091GefP31ttLv
+	 5n/ABTqc3Bwe8wD/84m1yNp44+7TXTEcR4LqF6u5Zihdnj4dDP28JYihr5sXEzq7rN
+	 SAVhvsJKuM+eChLCge5rKrPJdCuBiR6jriIN4b5k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Todd Kjos <tkjos@google.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Jinjie Ruan <ruanjinjie@huawei.com>,
+	Quentin Perret <qperret@google.com>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 341/676] PCI: Fix reset_method_store() memory leak
-Date: Fri,  6 Dec 2024 15:32:40 +0100
-Message-ID: <20241206143706.669847097@linuxfoundation.org>
+Subject: [PATCH 6.6 315/676] cpufreq: CPPC: Fix wrong return value in cppc_get_cpu_cost()
+Date: Fri,  6 Dec 2024 15:32:14 +0100
+Message-ID: <20241206143705.640819218@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -51,55 +53,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Todd Kjos <tkjos@google.com>
+From: Jinjie Ruan <ruanjinjie@huawei.com>
 
-[ Upstream commit 2985b1844f3f3447f2d938eff1ef6762592065a5 ]
+[ Upstream commit be392aa80f1e5b0b65ccc2a540b9304fefcfe3d8 ]
 
-In reset_method_store(), a string is allocated via kstrndup() and assigned
-to the local "options". options is then used in with strsep() to find
-spaces:
+cppc_get_cpu_cost() return 0 if the policy is NULL. Then in
+em_compute_costs(), the later zero check for cost is not valid
+as cost is uninitialized. As Quentin pointed out, kernel energy model
+core check the return value of get_cost() first, so if the callback
+failed it should tell the core. Return -EINVAL to fix it.
 
-  while ((name = strsep(&options, " ")) != NULL) {
-
-If there are no remaining spaces, then options is set to NULL by strsep(),
-so the subsequent kfree(options) doesn't free the memory allocated via
-kstrndup().
-
-Fix by using a separate tmp_options to iterate with strsep() so options is
-preserved.
-
-Link: https://lore.kernel.org/r/20241001231147.3583649-1-tkjos@google.com
-Fixes: d88f521da3ef ("PCI: Allow userspace to query and set device reset mechanism")
-Signed-off-by: Todd Kjos <tkjos@google.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Fixes: 1a1374bb8c59 ("cpufreq: CPPC: Fix possible null-ptr-deref for cppc_get_cpu_cost()")
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Closes: https://lore.kernel.org/all/c4765377-7830-44c2-84fa-706b6e304e10@stanley.mountain/
+Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+Suggested-by: Quentin Perret <qperret@google.com>
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/pci.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/cpufreq/cppc_cpufreq.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pci/pci.c b/drivers/pci/pci.c
-index 93f2f4dcf6d69..830877efe5059 100644
---- a/drivers/pci/pci.c
-+++ b/drivers/pci/pci.c
-@@ -5444,7 +5444,7 @@ static ssize_t reset_method_store(struct device *dev,
- 				  const char *buf, size_t count)
- {
- 	struct pci_dev *pdev = to_pci_dev(dev);
--	char *options, *name;
-+	char *options, *tmp_options, *name;
- 	int m, n;
- 	u8 reset_methods[PCI_NUM_RESET_METHODS] = { 0 };
+diff --git a/drivers/cpufreq/cppc_cpufreq.c b/drivers/cpufreq/cppc_cpufreq.c
+index 866a0538ca896..05a8418485079 100644
+--- a/drivers/cpufreq/cppc_cpufreq.c
++++ b/drivers/cpufreq/cppc_cpufreq.c
+@@ -499,7 +499,7 @@ static int cppc_get_cpu_cost(struct device *cpu_dev, unsigned long KHz,
  
-@@ -5464,7 +5464,8 @@ static ssize_t reset_method_store(struct device *dev,
- 		return -ENOMEM;
+ 	policy = cpufreq_cpu_get_raw(cpu_dev->id);
+ 	if (!policy)
+-		return 0;
++		return -EINVAL;
  
- 	n = 0;
--	while ((name = strsep(&options, " ")) != NULL) {
-+	tmp_options = options;
-+	while ((name = strsep(&tmp_options, " ")) != NULL) {
- 		if (sysfs_streq(name, ""))
- 			continue;
- 
+ 	cpu_data = policy->driver_data;
+ 	perf_caps = &cpu_data->perf_caps;
 -- 
 2.43.0
 
