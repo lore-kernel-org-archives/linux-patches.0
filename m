@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40ADD1494D9;
-	Fri,  6 Dec 2024 14:40:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73EF714A4F0;
+	Fri,  6 Dec 2024 14:40:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733496011; cv=none; b=FmJN6YQ6MuZiESO3K+B8ZeyIGxbquQKXKaXr7Qic2rsAokR45VcgyCkZkNJ7sXFalVtMoPMsOIJK3Io/GY3bRuEgm1oq1Vf+BND6jSApqQtC3E47bFy8uEv7SNjvDz3jLWzD2Tzadfeb0mYnEOpm5dXTHNw4vD9fUpwmS0UewXo=
+	t=1733496014; cv=none; b=OCgrMKL/i/vMgQJUM6V4EaeD1Yn5ec77ZT8TnbaNifVcM4GajaHtg501SyOG0CVKfNHZEAJNXZNqJDSF2P29rPrzxnFCOXrvivG8KdAECFt3bUCjlQWXLbNz2azogy3IDqbC+efn9r5yD+67lTGWxevooCoBEkeJPRXuYeuGeOA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733496011; c=relaxed/simple;
-	bh=mco0ndoLYL/8FAsbplILlJe8gHXc8SfBw0tRYkzyLBY=;
+	s=arc-20240116; t=1733496014; c=relaxed/simple;
+	bh=hIJX3LPTd+RxSEntcfbH/oA+VMRY6zlwEVuBH3Be0Y8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nPaq65F6pq6GhDqc807CodFenZ4lsix0DvNcIPqjoe5M007TSytZeke9katNXUF0/26+P80KlVR+5E6lPxdsyZO1TXwIqswFGIZVulg5MpaH0tskv1c2hntc4k0Hxzbeij0JojZQOD8SZCJIk0OGI6/4qOVCXXA6skbBjhJjQ0s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=06YhAxxE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=B4lcbU5ppc9JbMBblvdNQqMGcKfNhHczD6BHg8dZ4OPP67qMwuwxTuf7zkoeumF4UQlAxvOqrP1Nu1QxougcNKHo926fw1LkIrRlFED0R9UJMtEj4MicDxLW7YdZRH9L26rkpubHic7gQ3o+tFn+xcpVV8xRKYUi07BpY6JpUJg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d3TSp5KA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="06YhAxxE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6133FC4CEDC;
-	Fri,  6 Dec 2024 14:40:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d3TSp5KA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7525C4CEDC;
+	Fri,  6 Dec 2024 14:40:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733496010;
-	bh=mco0ndoLYL/8FAsbplILlJe8gHXc8SfBw0tRYkzyLBY=;
+	s=korg; t=1733496014;
+	bh=hIJX3LPTd+RxSEntcfbH/oA+VMRY6zlwEVuBH3Be0Y8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=06YhAxxE9dO/qlUfnP/7oWkrsEv3fod/i697pPZFxw9IdMdQ+WN6X26MZwMIPsU+r
-	 ajcRAhhMrFFasYJMEua8G0x07eN6zt1bmsSU3oNO5u0D690KKbCYhxCcRD+FSfi8bx
-	 tjnvJK8ZKY9UpyXml1X/WkbcFEG0xM5k4fRFPiqY=
+	b=d3TSp5KAGhHeY4CuGvfkOrt1MLohD1rzh5Z1mu0I0yvicyCUsC/oSsEcwcbOsw39w
+	 3RR5ykZdTDmjd/IfFfps2bnAmM98RSPEghouQKJdmHm/S1jj2wNs4213DyIIjLwMxa
+	 +xaFjzB7hReQKQJCVM31UiA64aBbYtdw036X9Kiw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Keeping <jkeeping@inmusicbrands.com>,
-	Michael Tretter <m.tretter@pengutronix.de>,
+	Benjamin Gaignard <benjamin.gaignard@collabora.com>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
 	Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Subject: [PATCH 6.12 027/146] media: platform: rga: fix 32-bit DMA limitation
-Date: Fri,  6 Dec 2024 15:35:58 +0100
-Message-ID: <20241206143528.712250683@linuxfoundation.org>
+Subject: [PATCH 6.12 028/146] media: verisilicon: av1: Fix reference video buffer pointer assignment
+Date: Fri,  6 Dec 2024 15:35:59 +0100
+Message-ID: <20241206143528.749300748@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143527.654980698@linuxfoundation.org>
 References: <20241206143527.654980698@linuxfoundation.org>
@@ -51,34 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Keeping <jkeeping@inmusicbrands.com>
+From: Benjamin Gaignard <benjamin.gaignard@collabora.com>
 
-commit 953c03d8cb41d08fe6994f5d94c4393ac9da2f13 upstream.
+commit 672f24ed6ebcd986688c6674a6d994a265fefc25 upstream.
 
-The destination buffer flags are assigned twice but source is not set in
-what looks like a copy+paste mistake.  Assign the source queue flags so
-the 32-bit DMA limitation is handled consistently.
+Always get new destination buffer for reference frame because nothing
+garantees the one set previously is still valid or unused.
 
-Fixes: ec9ef8dda2a2 ("media: rockchip: rga: set dma mask to 32 bits")
+Fixes this chromium test suite:
+https://chromium.googlesource.com/chromium/src/media/+/refs/heads/main/test/data/test-25fps.av1.ivf
+
+Fixes: 727a400686a2 ("media: verisilicon: Add Rockchip AV1 decoder")
 Cc: <stable@vger.kernel.org>
-Signed-off-by: John Keeping <jkeeping@inmusicbrands.com>
-Reviewed-by: Michael Tretter <m.tretter@pengutronix.de>
+Signed-off-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
+Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
 Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+[hverkuil: fix typo and add link to chromium test suite]
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/rockchip/rga/rga.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/platform/verisilicon/rockchip_vpu981_hw_av1_dec.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/drivers/media/platform/rockchip/rga/rga.c
-+++ b/drivers/media/platform/rockchip/rga/rga.c
-@@ -102,7 +102,7 @@ queue_init(void *priv, struct vb2_queue
- 	src_vq->drv_priv = ctx;
- 	src_vq->ops = &rga_qops;
- 	src_vq->mem_ops = &vb2_dma_sg_memops;
--	dst_vq->gfp_flags = __GFP_DMA32;
-+	src_vq->gfp_flags = __GFP_DMA32;
- 	src_vq->buf_struct_size = sizeof(struct rga_vb_buffer);
- 	src_vq->timestamp_flags = V4L2_BUF_FLAG_TIMESTAMP_COPY;
- 	src_vq->lock = &ctx->rga->mutex;
+--- a/drivers/media/platform/verisilicon/rockchip_vpu981_hw_av1_dec.c
++++ b/drivers/media/platform/verisilicon/rockchip_vpu981_hw_av1_dec.c
+@@ -161,8 +161,7 @@ static int rockchip_vpu981_av1_dec_frame
+ 		av1_dec->frame_refs[i].timestamp = timestamp;
+ 		av1_dec->frame_refs[i].frame_type = frame->frame_type;
+ 		av1_dec->frame_refs[i].order_hint = frame->order_hint;
+-		if (!av1_dec->frame_refs[i].vb2_ref)
+-			av1_dec->frame_refs[i].vb2_ref = hantro_get_dst_buf(ctx);
++		av1_dec->frame_refs[i].vb2_ref = hantro_get_dst_buf(ctx);
+ 
+ 		for (j = 0; j < V4L2_AV1_TOTAL_REFS_PER_FRAME; j++)
+ 			av1_dec->frame_refs[i].order_hints[j] = frame->order_hints[j];
 
 
