@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE896149C51;
-	Fri,  6 Dec 2024 14:49:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E1D61474AF;
+	Fri,  6 Dec 2024 14:49:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733496578; cv=none; b=eHncvUNowE2DKTMVBy5ekLpv2pycDDBE9s68XyfgKBiKUHSag3E1CW4uEPjCTVLAgp04qBXkYLfonaUT0NBTiIg+D67qUUZNsQcs6zwZFsn3PYyyFE6xFMMPab/YAdYFyrdxZCdnG/Dmuoo9v7NHL9iMVcPevpV6f1vl1taIoNc=
+	t=1733496582; cv=none; b=jltr5dzScE6prJCiS2LgKLdFcLT4bM+W9ni2s1fqBDSU6S7sVNMOMweUrtkfZQ0gGJF3ivuIeSqTid5u/pcV7cMs/MIvwTaIkmj9iRfjebKq92362eKjO+0aiX7Nj4LZBGGREX5L11Y8XgXZK/GTTUcLEqguiV9/AkdZAxm6S8g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733496578; c=relaxed/simple;
-	bh=3Q5lRCFmg0faDOHXKL7jRID5LHCiTwSRrzwUH0fSomQ=;
+	s=arc-20240116; t=1733496582; c=relaxed/simple;
+	bh=rob3UG7Luoio8NoVT942/7SjXGKe3Nt0W67gw9ZioPs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KFEsk/62qeOPjkTjIQcAkqPeQ41xX2GnbhMh1Qp6BK58pkUPTKxxk7/UHf1XZDRTG5txdv9G9buFdY83N5fvB3fsisVnEsgZqwSqpyDx60oqgMRvSKbNY8jBhkIWH8U85D+LU9yhtu2DYm7fb91WeVvTgH1d8tXN8gLM8NnRCyE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oc7/Cuza; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=M7Ny3UjLdhk9S8r2LDll8gXoIS6AC8+3OWkKrs+7ovIMYgYEIrdbQFlaavuVSetN+u5B3LG37SiW4dyLOzZTAL82eqW38IrQqjzqzU6YFKvCwyZ4HuqbqW5LqyG9+4Cq08iqrVb4Iyh8lUmcXF1cRoMzzUXjHLcvbonv1HXQ3FI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MSjOW2Xc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oc7/Cuza"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EFEFC4CED1;
-	Fri,  6 Dec 2024 14:49:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MSjOW2Xc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AFCFC4CED1;
+	Fri,  6 Dec 2024 14:49:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733496577;
-	bh=3Q5lRCFmg0faDOHXKL7jRID5LHCiTwSRrzwUH0fSomQ=;
+	s=korg; t=1733496581;
+	bh=rob3UG7Luoio8NoVT942/7SjXGKe3Nt0W67gw9ZioPs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oc7/CuzaCKhM5xWp4p1+zr0VPMvNJR5OYnYTK6ghJZoPsTqPevAK4JLf3sUdhVCC9
-	 X+51m4PQmHc7/P0RWDbjaltypTzY3LK6NWKUZZAqsnTG6NFcad/nJuJbDsJtErJnQc
-	 07N9QVZ5rrVuSZHavoSCLs+mHDzuWLCY+YskZHpA=
+	b=MSjOW2XceRKPyrtw5RtX99ama8bze4Yi/guqV2EZFpGgfoicAvGNPRXtmqzhPmVOh
+	 LzuPtfFcHQ6LZXgMfGCuiEhwynoaxymXv0aHu7OnCFKDv/rkezZSWDo4o0w9EfaBJ1
+	 DbS8vUDLrc1W32zZ0WGyEQoPiOfi+0iPFbAo3TlU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
-	Mark Brown <broonie@kernel.org>,
+	Harry Wentland <harry.wentland@amd.com>,
+	Jerry Zuo <jerry.zuo@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Xiangyu Chen <xiangyu.chen@windriver.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 004/676] ASoC: Intel: bytcr_rt5640: Add DMI quirk for Vexia Edu Atla 10 tablet
-Date: Fri,  6 Dec 2024 15:27:03 +0100
-Message-ID: <20241206143653.528716144@linuxfoundation.org>
+Subject: [PATCH 6.6 039/676] drm/amd/display: Initialize denominators default to 1
+Date: Fri,  6 Dec 2024 15:27:38 +0100
+Message-ID: <20241206143654.881661950@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -51,51 +55,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Alex Hung <alex.hung@amd.com>
 
-[ Upstream commit 0107f28f135231da22a9ad5756bb16bd5cada4d5 ]
+[ Upstream commit b995c0a6de6c74656a0c39cd57a0626351b13e3c ]
 
-The Vexia Edu Atla 10 tablet mostly uses the BYTCR tablet defaults,
-but as happens on more models it is using IN1 instead of IN3 for
-its internal mic and JD_SRC_JD2_IN4N instead of JD_SRC_JD1_IN4P
-for jack-detection.
+[WHAT & HOW]
+Variables used as denominators and maybe not assigned to other values,
+should not be 0. Change their default to 1 so they are never 0.
 
-Add a DMI quirk for this to fix the internal-mic and jack-detection.
+This fixes 10 DIVIDE_BY_ZERO issues reported by Coverity.
 
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://patch.msgid.link/20241024211615.79518-2-hdegoede@redhat.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Reviewed-by: Harry Wentland <harry.wentland@amd.com>
+Signed-off-by: Jerry Zuo <jerry.zuo@amd.com>
+Signed-off-by: Alex Hung <alex.hung@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+[Xiangyu: Bp to fix CVE: CVE-2024-49899
+Discard the dml2_core/dml2_core_shared.c due to this file no exists]
+Signed-off-by: Xiangyu Chen <xiangyu.chen@windriver.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/intel/boards/bytcr_rt5640.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ .../gpu/drm/amd/display/dc/dml/dcn20/display_rq_dlg_calc_20.c   | 2 +-
+ drivers/gpu/drm/amd/display/dc/dml/dml1_display_rq_dlg_calc.c   | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/intel/boards/bytcr_rt5640.c b/sound/soc/intel/boards/bytcr_rt5640.c
-index 79c50498144ec..ddf68be0af14a 100644
---- a/sound/soc/intel/boards/bytcr_rt5640.c
-+++ b/sound/soc/intel/boards/bytcr_rt5640.c
-@@ -1132,6 +1132,21 @@ static const struct dmi_system_id byt_rt5640_quirk_table[] = {
- 					BYT_RT5640_SSP0_AIF2 |
- 					BYT_RT5640_MCLK_EN),
- 	},
-+	{	/* Vexia Edu Atla 10 tablet */
-+		.matches = {
-+			DMI_MATCH(DMI_BOARD_VENDOR, "AMI Corporation"),
-+			DMI_MATCH(DMI_BOARD_NAME, "Aptio CRB"),
-+			/* Above strings are too generic, also match on BIOS date */
-+			DMI_MATCH(DMI_BIOS_DATE, "08/25/2014"),
-+		},
-+		.driver_data = (void *)(BYT_RT5640_IN1_MAP |
-+					BYT_RT5640_JD_SRC_JD2_IN4N |
-+					BYT_RT5640_OVCD_TH_2000UA |
-+					BYT_RT5640_OVCD_SF_0P75 |
-+					BYT_RT5640_DIFF_MIC |
-+					BYT_RT5640_SSP0_AIF2 |
-+					BYT_RT5640_MCLK_EN),
-+	},
- 	{	/* Voyo Winpad A15 */
- 		.matches = {
- 			DMI_MATCH(DMI_BOARD_VENDOR, "AMI Corporation"),
+diff --git a/drivers/gpu/drm/amd/display/dc/dml/dcn20/display_rq_dlg_calc_20.c b/drivers/gpu/drm/amd/display/dc/dml/dcn20/display_rq_dlg_calc_20.c
+index 548cdef8a8ade..543ce9a08cfd3 100644
+--- a/drivers/gpu/drm/amd/display/dc/dml/dcn20/display_rq_dlg_calc_20.c
++++ b/drivers/gpu/drm/amd/display/dc/dml/dcn20/display_rq_dlg_calc_20.c
+@@ -78,7 +78,7 @@ static void calculate_ttu_cursor(struct display_mode_lib *mode_lib,
+ 
+ static unsigned int get_bytes_per_element(enum source_format_class source_format, bool is_chroma)
+ {
+-	unsigned int ret_val = 0;
++	unsigned int ret_val = 1;
+ 
+ 	if (source_format == dm_444_16) {
+ 		if (!is_chroma)
+diff --git a/drivers/gpu/drm/amd/display/dc/dml/dml1_display_rq_dlg_calc.c b/drivers/gpu/drm/amd/display/dc/dml/dml1_display_rq_dlg_calc.c
+index 3df559c591f89..70df992f859d7 100644
+--- a/drivers/gpu/drm/amd/display/dc/dml/dml1_display_rq_dlg_calc.c
++++ b/drivers/gpu/drm/amd/display/dc/dml/dml1_display_rq_dlg_calc.c
+@@ -39,7 +39,7 @@
+ 
+ static unsigned int get_bytes_per_element(enum source_format_class source_format, bool is_chroma)
+ {
+-	unsigned int ret_val = 0;
++	unsigned int ret_val = 1;
+ 
+ 	if (source_format == dm_444_16) {
+ 		if (!is_chroma)
 -- 
 2.43.0
 
