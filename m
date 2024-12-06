@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DD051474A9;
-	Fri,  6 Dec 2024 14:44:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EF231474A9;
+	Fri,  6 Dec 2024 14:44:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733496255; cv=none; b=bx7o+dKKgtoZaLfdHRfbkMX4jkP68Gcfc4KRH3qNVTLPFKwdm2AOIc7Vwkut+XknmznYM5qTEy3k5JlVlLdEifmQX5sPGj5a8F+DHj38KE5wnK999e8e5SbFj8nFQvKOiYKrNDJzvUSjAt08a2Dk0l657yNbiLSfBkRlFE0mKF4=
+	t=1733496258; cv=none; b=bMPFUziaZrH4SPB6PxCnVSJx4izRcORobfb4KRJyIGlsjzOC3H5rQ/66b/CPHVCse2lSbpYjpaVi3ygoR2JmRX+GhQ0bPzwm+hx6emIedsvrKRarN1228ceL7nspS2UEGiwXB6zUOQfLefkxin+KLZn5euALZqmqjWM4z8U3r6M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733496255; c=relaxed/simple;
-	bh=B94fkzd6fBfw5zm8tF6q5sa/1pWs+3JhkdAcxNYMy04=;
+	s=arc-20240116; t=1733496258; c=relaxed/simple;
+	bh=oRFtiMj2VJpR9Py0oGGjoPoVrAImZcfsgLBLLTYML1M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uA4iIVLBYr9vBmT7UaqCkGVqLx0fviniuV4ed1aydudgefXX339lWVQ0dJidZQkIZnq2miFGuIr5eNzisHv1FUXFAxNAOAe4Cko5Cu1UFxPU1SW8fQiAELRCR7Spneoh0Ht2ahsT9S+8jpPbrzKITCM1205zT47ixO7h+6f9Jfk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KPjao5o3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FDv30ZgKOeC4f9b1h7RPDTI8mX+do/w8W6qS9agOKJS0tcqi1Li2VotP23uszXR/MrVTiiLyoV3RAHPN+ZIlRm9Ihqe6wJIErPcAwK4zph8SQjBw2k9hFQYXS9L/9XzpxNQVNrXDJnhjStjD5gQ5dds6msOYRUU4XTh1AXspsF8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HPxAkSCW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KPjao5o3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94C78C4CED1;
-	Fri,  6 Dec 2024 14:44:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HPxAkSCW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA745C4CED1;
+	Fri,  6 Dec 2024 14:44:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733496255;
-	bh=B94fkzd6fBfw5zm8tF6q5sa/1pWs+3JhkdAcxNYMy04=;
+	s=korg; t=1733496258;
+	bh=oRFtiMj2VJpR9Py0oGGjoPoVrAImZcfsgLBLLTYML1M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KPjao5o38jDzXw//ShJShzLIGEPO3qPP0vVv46zA0Q0mujHKVte7kzqlJhK5tyl1l
-	 aWUb/BTMLOw2ojUGjvaEHkXjcqD4Yn8+vgkMSSUP0t/Stwd2N6QekNnymdyYtEgR9H
-	 SpvkikV4FaCz0tZ8ODjyV051BZDuhg6qMjaWAP6o=
+	b=HPxAkSCWJHdWtp4Etp9qNdLLb9zUhnaP4pTnYhBvtH2F7/N2UcWfzC/SpkuKYMEwO
+	 Bdx95E3AMLvCqzhsIPcXV3kpwuWwrQuDYlk0Qy5OOFjnstLQ1MRZPr2PPD7MSMgYwW
+	 7oJMc7LgyTIGsQ1FhM77MDb+PSbPdQ8Qggag0wRU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Erkun <yangerkun@huawei.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.12 099/146] nfsd: make sure exp active before svc_export_show
-Date: Fri,  6 Dec 2024 15:37:10 +0100
-Message-ID: <20241206143531.465544938@linuxfoundation.org>
+	stable@kernel.org,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>
+Subject: [PATCH 6.12 082/146] i3c: master: svc: fix possible assignment of the same address to two devices
+Date: Fri,  6 Dec 2024 15:36:53 +0100
+Message-ID: <20241206143530.818041254@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143527.654980698@linuxfoundation.org>
 References: <20241206143527.654980698@linuxfoundation.org>
@@ -51,60 +52,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yang Erkun <yangerkun@huawei.com>
+From: Frank Li <Frank.Li@nxp.com>
 
-commit be8f982c369c965faffa198b46060f8853e0f1f0 upstream.
+commit 3b2ac810d86eb96e882db80a3320a3848b133208 upstream.
 
-The function `e_show` was called with protection from RCU. This only
-ensures that `exp` will not be freed. Therefore, the reference count for
-`exp` can drop to zero, which will trigger a refcount use-after-free
-warning when `exp_get` is called. To resolve this issue, use
-`cache_get_rcu` to ensure that `exp` remains active.
+svc_i3c_master_do_daa() {
+    ...
+    for (i = 0; i < dev_nb; i++) {
+        ret = i3c_master_add_i3c_dev_locked(m, addrs[i]);
+        if (ret)
+            goto rpm_out;
+    }
+}
 
-------------[ cut here ]------------
-refcount_t: addition on 0; use-after-free.
-WARNING: CPU: 3 PID: 819 at lib/refcount.c:25
-refcount_warn_saturate+0xb1/0x120
-CPU: 3 UID: 0 PID: 819 Comm: cat Not tainted 6.12.0-rc3+ #1
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS
-1.16.1-2.fc37 04/01/2014
-RIP: 0010:refcount_warn_saturate+0xb1/0x120
-...
-Call Trace:
- <TASK>
- e_show+0x20b/0x230 [nfsd]
- seq_read_iter+0x589/0x770
- seq_read+0x1e5/0x270
- vfs_read+0x125/0x530
- ksys_read+0xc1/0x160
- do_syscall_64+0x5f/0x170
- entry_SYSCALL_64_after_hwframe+0x76/0x7e
+If two devices (A and B) are detected in DAA and address 0xa is assigned to
+device A and 0xb to device B, a failure in i3c_master_add_i3c_dev_locked()
+for device A (addr: 0xa) could prevent device B (addr: 0xb) from being
+registered on the bus. The I3C stack might still consider 0xb a free
+address. If a subsequent Hotjoin occurs, 0xb might be assigned to Device A,
+causing both devices A and B to use the same address 0xb, violating the I3C
+specification.
 
-Fixes: bf18f163e89c ("NFSD: Using exp_get for export getting")
-Cc: stable@vger.kernel.org # 4.20+
-Signed-off-by: Yang Erkun <yangerkun@huawei.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+The return value for i3c_master_add_i3c_dev_locked() should not be checked
+because subsequent steps will scan the entire I3C bus, independent of
+whether i3c_master_add_i3c_dev_locked() returns success.
+
+If device A registration fails, there is still a chance to register device
+B. i3c_master_add_i3c_dev_locked() can reset DAA if a failure occurs while
+retrieving device information.
+
+Cc: stable@kernel.org
+Fixes: 317bacf960a4 ("i3c: master: add enable(disable) hot join in sys entry")
+Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
+Link: https://lore.kernel.org/r/20241002-svc-i3c-hj-v6-6-7e6e1d3569ae@nxp.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/export.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/i3c/master/svc-i3c-master.c |   27 +++++++++++++++++++++------
+ 1 file changed, 21 insertions(+), 6 deletions(-)
 
---- a/fs/nfsd/export.c
-+++ b/fs/nfsd/export.c
-@@ -1425,9 +1425,12 @@ static int e_show(struct seq_file *m, vo
- 		return 0;
- 	}
+--- a/drivers/i3c/master/svc-i3c-master.c
++++ b/drivers/i3c/master/svc-i3c-master.c
+@@ -1056,12 +1056,27 @@ static int svc_i3c_master_do_daa(struct
+ 	if (ret)
+ 		goto rpm_out;
  
--	exp_get(exp);
-+	if (!cache_get_rcu(&exp->h))
-+		return 0;
-+
- 	if (cache_check(cd, &exp->h, NULL))
- 		return 0;
-+
- 	exp_put(exp);
- 	return svc_export_show(m, cd, cp);
- }
+-	/* Register all devices who participated to the core */
+-	for (i = 0; i < dev_nb; i++) {
+-		ret = i3c_master_add_i3c_dev_locked(m, addrs[i]);
+-		if (ret)
+-			goto rpm_out;
+-	}
++	/*
++	 * Register all devices who participated to the core
++	 *
++	 * If two devices (A and B) are detected in DAA and address 0xa is assigned to
++	 * device A and 0xb to device B, a failure in i3c_master_add_i3c_dev_locked()
++	 * for device A (addr: 0xa) could prevent device B (addr: 0xb) from being
++	 * registered on the bus. The I3C stack might still consider 0xb a free
++	 * address. If a subsequent Hotjoin occurs, 0xb might be assigned to Device A,
++	 * causing both devices A and B to use the same address 0xb, violating the I3C
++	 * specification.
++	 *
++	 * The return value for i3c_master_add_i3c_dev_locked() should not be checked
++	 * because subsequent steps will scan the entire I3C bus, independent of
++	 * whether i3c_master_add_i3c_dev_locked() returns success.
++	 *
++	 * If device A registration fails, there is still a chance to register device
++	 * B. i3c_master_add_i3c_dev_locked() can reset DAA if a failure occurs while
++	 * retrieving device information.
++	 */
++	for (i = 0; i < dev_nb; i++)
++		i3c_master_add_i3c_dev_locked(m, addrs[i]);
+ 
+ 	/* Configure IBI auto-rules */
+ 	ret = svc_i3c_update_ibirules(master);
 
 
