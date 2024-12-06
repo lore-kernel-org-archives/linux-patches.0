@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FF0D1474AF;
-	Fri,  6 Dec 2024 14:49:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1754149C69;
+	Fri,  6 Dec 2024 14:49:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733496560; cv=none; b=S015r9ixfZIhGThP/n2MK1o8xq55DK+iw6Z/nttTiklr0PGL7ofSgwP4D9cdboy2uBs33qjyKE8k9rCcyjRvRtSkLzUeMvLm3evRgKP9hlQSdTOAYFrQnRA65NKgSWTrVWWk4TBpGLmKJqnE0EB2JESIyKz5q1uzJOYhmXeJiNs=
+	t=1733496563; cv=none; b=DF/VjfjivcXB+DlUnlGYMDsPDhwJky3Cil4ZeoQKENQmJf41Y+iBZU0uN4RRIk8zU/myhu7VlSIfUHGNI5Vh0vqeTAXXmWojY/b1iqoXY/XeF2eRa7AINcbC+99vAjPqqa/Cln+WH9MVVUi0cLQ0/wqgSUsB991JhLvwy8nt+pg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733496560; c=relaxed/simple;
-	bh=evWyYmpJO9kwd6znJXarpVlKWdjLjIxbXHB46sIRqlo=;
+	s=arc-20240116; t=1733496563; c=relaxed/simple;
+	bh=+Mcn2nOUJESUeLs0vGaVdrd38rGW6rzzFwpOIuz8iVE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cYd3LRCXuJNZDJpincCHkjPnkKJraaNJbH/uHmhV1CMmCfxPKFceQ1HDbGV2oIpOXp3Vm9C6DZXZXmURDPqVUwSw3/+/jojyUmlveYpmtZChkLaoEsaYR1rYHPxV22PH4tYQbx99waBw+MCNlqLQBYoP7ACl62jdsT3O+s1jZ0I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vjeHA8V5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mPio57l+LkK6GxMFUcGCyEBCRT8D4LLeWeCAoXi6SLdV5Wa00whKWQ9vRWVNUm7AH+YRWvhYh04qIev38F0aa6KN/Zd933YD5uekFk20yZX0Jw59p+dOm88FFtfr5BUMKGROMCWUrFM7sBQV7nQJd2X2hA85hkMzAF8jmuvol9Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K8+VlbfE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vjeHA8V5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEF96C4CEDC;
-	Fri,  6 Dec 2024 14:49:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K8+VlbfE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 272F3C4CEDC;
+	Fri,  6 Dec 2024 14:49:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733496560;
-	bh=evWyYmpJO9kwd6znJXarpVlKWdjLjIxbXHB46sIRqlo=;
+	s=korg; t=1733496563;
+	bh=+Mcn2nOUJESUeLs0vGaVdrd38rGW6rzzFwpOIuz8iVE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vjeHA8V5lXWHLvUTfFaKbLMsZkKf4IRTP72jb4wDS+9CO5XUANxw+V5ex5Bo/8IDW
-	 JKSJ8x4bVUbPdgvDypd5S/7ElsnXIpX9AHkOmGVpfZsCGBcAXpve7cY+n4h1zzi38e
-	 oMa9aZfaBTzwq/MpAs+Fswu9qwnd4UO3RrKVmyrA=
+	b=K8+VlbfEINMp1tTdPEFPPs9BnEGUGcb3snhEwc6r1ySYyY0a60ioOVo5hyR0lRwm3
+	 ayBFur9gSE8TapdLYoqjQx5Akt04G0SblpU/IcmMcYm2Bzf6P5BUYoai9kCgU0ouEH
+	 XEfHvqldFA3Z4R1lc2HaZ3jgNPR10m/Ilvp8Vpss=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
+	Li Zhijian <lizhijian@fujitsu.com>,
+	Shuah Khan <skhan@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 009/676] usb: typec: use cleanup facility for altmodes_node
-Date: Fri,  6 Dec 2024 15:27:08 +0100
-Message-ID: <20241206143653.721909823@linuxfoundation.org>
+Subject: [PATCH 6.6 010/676] selftests/watchdog-test: Fix system accidentally reset after watchdog-test
+Date: Fri,  6 Dec 2024 15:27:09 +0100
+Message-ID: <20241206143653.760640315@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -51,47 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+From: Li Zhijian <lizhijian@fujitsu.com>
 
-[ Upstream commit 1ab0b9ae587373f9f800b6fda01b8faf02b3530b ]
+[ Upstream commit dc1308bee1ed03b4d698d77c8bd670d399dcd04d ]
 
-Use the __free() macro for 'altmodes_node' to automatically release the
-node when it goes out of scope, removing the need for explicit calls to
-fwnode_handle_put().
+When running watchdog-test with 'make run_tests', the watchdog-test will
+be terminated by a timeout signal(SIGTERM) due to the test timemout.
 
-Suggested-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/20241021-typec-class-fwnode_handle_put-v2-2-3281225d3d27@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+And then, a system reboot would happen due to watchdog not stop. see
+the dmesg as below:
+```
+[ 1367.185172] watchdog: watchdog0: watchdog did not stop!
+```
+
+Fix it by registering more signals(including SIGTERM) in watchdog-test,
+where its signal handler will stop the watchdog.
+
+After that
+ # timeout 1 ./watchdog-test
+ Watchdog Ticking Away!
+ .
+ Stopping watchdog ticks...
+
+Link: https://lore.kernel.org/all/20241029031324.482800-1-lizhijian@fujitsu.com/
+Signed-off-by: Li Zhijian <lizhijian@fujitsu.com>
+Reviewed-by: Shuah Khan <skhan@linuxfoundation.org>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/typec/class.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ tools/testing/selftests/watchdog/watchdog-test.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/usb/typec/class.c b/drivers/usb/typec/class.c
-index 64bdba7ea9938..afb7192adc8e6 100644
---- a/drivers/usb/typec/class.c
-+++ b/drivers/usb/typec/class.c
-@@ -2147,14 +2147,16 @@ void typec_port_register_altmodes(struct typec_port *port,
- 	const struct typec_altmode_ops *ops, void *drvdata,
- 	struct typec_altmode **altmodes, size_t n)
- {
--	struct fwnode_handle *altmodes_node, *child;
-+	struct fwnode_handle *child;
- 	struct typec_altmode_desc desc;
- 	struct typec_altmode *alt;
- 	size_t index = 0;
- 	u32 svid, vdo;
- 	int ret;
+diff --git a/tools/testing/selftests/watchdog/watchdog-test.c b/tools/testing/selftests/watchdog/watchdog-test.c
+index bc71cbca0dde7..a1f506ba55786 100644
+--- a/tools/testing/selftests/watchdog/watchdog-test.c
++++ b/tools/testing/selftests/watchdog/watchdog-test.c
+@@ -334,7 +334,13 @@ int main(int argc, char *argv[])
  
--	altmodes_node = device_get_named_child_node(&port->dev, "altmodes");
-+	struct fwnode_handle *altmodes_node  __free(fwnode_handle) =
-+		device_get_named_child_node(&port->dev, "altmodes");
-+
- 	if (!altmodes_node)
- 		return; /* No altmodes specified */
+ 	printf("Watchdog Ticking Away!\n");
  
++	/*
++	 * Register the signals
++	 */
+ 	signal(SIGINT, term);
++	signal(SIGTERM, term);
++	signal(SIGKILL, term);
++	signal(SIGQUIT, term);
+ 
+ 	while (1) {
+ 		keep_alive();
 -- 
 2.43.0
 
