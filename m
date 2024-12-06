@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4AB113D516;
-	Fri,  6 Dec 2024 14:47:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F199710E0;
+	Fri,  6 Dec 2024 14:47:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733496434; cv=none; b=NpDM3pAyOeSkITHVRlB8uyYtUaOcJiWFRZwpmqaBar+lmwrzyDMAOr68nVJpnu4GR8kBQB74o1/BNoVJyQv2ggHYpYcRaT5mApz1nzv3hyFbuL81pcGS4PA9/8i92DH/aUTFtqm5x+W58VbWtpndXdjtADQ66zDQ4UG5mtb3X0I=
+	t=1733496438; cv=none; b=HUcarrcitDLBNjZSdMyQptnzQc08HxcJxv6Ot8UVM8C9ZL36x3N5JtMwp33At5GoU7Vpd7vm1C0MLd0p0HwF+6W8+fjOZ/XkJ+YJjlVKWT//AbH5XG5zNrD/gqB1P5eUoMPOLFWBCoXs+napigaJW2XdVpUyQmHC9MPEir0JwJo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733496434; c=relaxed/simple;
-	bh=8F4au+M7BRt2nZmCVvZD5JJTE6lCFVrG3p1y8tfILZ8=;
+	s=arc-20240116; t=1733496438; c=relaxed/simple;
+	bh=7m5eYa+Ob3wl0SgIiYfZ626dpyDQcUSXbQKnTa6Qiqg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s99Rb34GZ84dQQ0EsVwD2A2fS+anmpm7uCBTumRDc7xNZC8prUUVx3jnMWdQCU8nBYGUruOOF1oXXMMMZAjlhiHVjU3mRT6PFJXRNvB/iFFJ1Wf3min6m2xkY3QtPwB5OcriHRHGlfQ+1qALL3CXGrRJMflvpmfb7RoVHxt0XEA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bo36luZT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Rh1IFXou5sr2RWcZ86sshH8aqskbN30Z5h38FM0pfij5qZ7Q6x7e6xG3PBOzsZkf+DcJpDJbSso9Nyk8pPxv2dIgxTTr10IKpF70nGHXK8ODeDaDKrg1Ps+etZ1ki3vMvx+vzzj1EMZ/SO/ewbKuvEK5xyJAhjLdxzP+ICNcBPw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vWX4g5ht; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bo36luZT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20EDAC4CED1;
-	Fri,  6 Dec 2024 14:47:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vWX4g5ht"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61383C4CED1;
+	Fri,  6 Dec 2024 14:47:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733496434;
-	bh=8F4au+M7BRt2nZmCVvZD5JJTE6lCFVrG3p1y8tfILZ8=;
+	s=korg; t=1733496437;
+	bh=7m5eYa+Ob3wl0SgIiYfZ626dpyDQcUSXbQKnTa6Qiqg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Bo36luZTla23GbXSOt6EltlgzzDFPkw4DMlwbtGnNFLrCDE2VEv6d2xtWx0UIgMqA
-	 /HP+swTCT7AizE35SbTOUeY4iVD3W/nfC+3LqZ7MMD9hF/x3YsTK5Lz7tnOVJrfSNR
-	 2ppCi1UbRvMwcvcJFywXHgVLmejNH2P35CC/5BBM=
+	b=vWX4g5htBgYIoL+MjiEDrAx7ln6ZBk0A62BiLyvOB+zD+9J4ZkJEx8gr+r1yAW8yg
+	 VkwhT8MQnwLdUHyw6doCj6fuleQWMY6hG1VHzSSIlIWpHhC5IfSJs9m94i7tP1y5oK
+	 TTBlt2LS9G/JcMi3endQL/s3Nojycc52J4zuRn30=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ma Ke <make24@iscas.ac.cn>,
-	Alain Volmat <alain.volmat@foss.st.com>
-Subject: [PATCH 6.12 121/146] drm/sti: avoid potential dereference of error pointers in sti_gdp_atomic_check
-Date: Fri,  6 Dec 2024 15:37:32 +0100
-Message-ID: <20241206143532.313807630@linuxfoundation.org>
+	Hugo Villeneuve <hvilleneuve@dimonoff.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Jessica Zhang <quic_jesszhan@quicinc.com>
+Subject: [PATCH 6.12 122/146] drm: panel: jd9365da-h3: Remove unused num_init_cmds structure member
+Date: Fri,  6 Dec 2024 15:37:33 +0100
+Message-ID: <20241206143532.351548039@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143527.654980698@linuxfoundation.org>
 References: <20241206143527.654980698@linuxfoundation.org>
@@ -50,36 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ma Ke <make24@iscas.ac.cn>
+From: Hugo Villeneuve <hvilleneuve@dimonoff.com>
 
-commit e965e771b069421c233d674c3c8cd8c7f7245f42 upstream.
+commit 66ae275365be4f118abe2254a0ced1d913af93f2 upstream.
 
-The return value of drm_atomic_get_crtc_state() needs to be
-checked. To avoid use of error pointer 'crtc_state' in case
-of the failure.
+Now that the driver has been converted to use wrapped MIPI DCS functions,
+the num_init_cmds structure member is no longer needed, so remove it.
 
+Fixes: 35583e129995 ("drm/panel: panel-jadard-jd9365da-h3: use wrapped MIPI DCS functions")
 Cc: stable@vger.kernel.org
-Fixes: dd86dc2f9ae1 ("drm/sti: implement atomic_check for the planes")
-Signed-off-by: Ma Ke <make24@iscas.ac.cn>
-Acked-by: Alain Volmat <alain.volmat@foss.st.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240909063359.1197065-1-make24@iscas.ac.cn
-Signed-off-by: Alain Volmat <alain.volmat@foss.st.com>
+Signed-off-by: Hugo Villeneuve <hvilleneuve@dimonoff.com>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Reviewed-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+Link: https://lore.kernel.org/r/20240930170503.1324560-1-hugo@hugovil.com
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240930170503.1324560-1-hugo@hugovil.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/sti/sti_gdp.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/panel/panel-jadard-jd9365da-h3.c |    1 -
+ 1 file changed, 1 deletion(-)
 
---- a/drivers/gpu/drm/sti/sti_gdp.c
-+++ b/drivers/gpu/drm/sti/sti_gdp.c
-@@ -638,6 +638,9 @@ static int sti_gdp_atomic_check(struct d
- 
- 	mixer = to_sti_mixer(crtc);
- 	crtc_state = drm_atomic_get_crtc_state(state, crtc);
-+	if (IS_ERR(crtc_state))
-+		return PTR_ERR(crtc_state);
-+
- 	mode = &crtc_state->mode;
- 	dst_x = new_plane_state->crtc_x;
- 	dst_y = new_plane_state->crtc_y;
+--- a/drivers/gpu/drm/panel/panel-jadard-jd9365da-h3.c
++++ b/drivers/gpu/drm/panel/panel-jadard-jd9365da-h3.c
+@@ -26,7 +26,6 @@ struct jadard_panel_desc {
+ 	unsigned int lanes;
+ 	enum mipi_dsi_pixel_format format;
+ 	int (*init)(struct jadard *jadard);
+-	u32 num_init_cmds;
+ 	bool lp11_before_reset;
+ 	bool reset_before_power_off_vcioo;
+ 	unsigned int vcioo_to_lp11_delay_ms;
 
 
