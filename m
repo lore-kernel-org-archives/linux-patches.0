@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27F0632C8B;
-	Fri,  6 Dec 2024 14:51:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D32D32C8B;
+	Fri,  6 Dec 2024 14:51:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733496675; cv=none; b=QTxSzgBOnuwJ8pleSGi0eRikHnf90j8NXuvxP+x6fAsbYcS4e96WzM6pdlooa0e4pKTUOxxkUORj8sDtZozw+rnwhAHBDvoQHf0qRgVjiNCQhS3ikTd8Yh8Q1ipFVfPx7h1rehI/LbDlsNOyU16H43sl6OjFM3YepQm9XcNGedc=
+	t=1733496679; cv=none; b=hFfnZshz1zhXDRZmJMJKVsJV+UnDtCdcdn8NOYSJfwuvl9bY2ZEdJXFcE/VEit+FosERJ7I40QfbYtEPP5uYVC3oGA+vPoFwUI5q7zawDFOTU6J+hBaRp3DOc/2UoYUg6TiilBz4AqD9AqXr7vguKZfNH1UDsZGHCq/m6bYUSnc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733496675; c=relaxed/simple;
-	bh=13eSWcU4Nk/MMZfNkZzUcGKVyak+9ExtY9iKBuNzmRI=;
+	s=arc-20240116; t=1733496679; c=relaxed/simple;
+	bh=IZQXDEEM4oYvVEWUxw9qKP0WTErRUHgOVYZ7wxGNXGQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I9f4Xu1zaEJLjvKbUvz2nfRzoRqZt4IdHw4JruRrZ2q+CD1SWK91SRRkujAdXoPzMCrO76zXVzkEi7/5i36Un101TZu/ZvNxfOlKshFc95r/attZiW91S93uvM2TVTfoS6uvPdB6jEYTng90X02dUnaFXXkj1Tg2vJdTzfG7lJM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g/3dOn88; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tUFRRRblUS96QVky5GXy67OWjwnRsfpTAGv5WCtur6Cn2Cmk8sK7YylEKkFzRpGlp7OSR5+O+4oDBuCqxm7gt89YYnoM513GmZxbN20P/dseqnWreYXZYBsU6xcAPMX6BQPhlKv6/Vo3ct5hrP3UsXFIocj7KoIFgZeDEOw61Rc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GzxnB0U5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g/3dOn88"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 599F4C4CED1;
-	Fri,  6 Dec 2024 14:51:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GzxnB0U5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B56D6C4CED1;
+	Fri,  6 Dec 2024 14:51:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733496674;
-	bh=13eSWcU4Nk/MMZfNkZzUcGKVyak+9ExtY9iKBuNzmRI=;
+	s=korg; t=1733496678;
+	bh=IZQXDEEM4oYvVEWUxw9qKP0WTErRUHgOVYZ7wxGNXGQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g/3dOn88knoSEaiA7evhFbn3vU5dQd0hJYSMY7Mpiicwi1EA/1UiQ63nto56SCMsp
-	 npuIocTuSSE80apiMhCuTT2cXRK5v1g72f9YiVtjD98lz3CPxmDbP5KvDLUJ7JpzVh
-	 vpdYfKj7y2oC0u86rb67LvsSbUAxnqd8s3VWMA50=
+	b=GzxnB0U5N1W48/CcTvZE92Mnoju4rnSxJn/1nTut/xU3F0MGLQdAYjWY6UDXB/vyE
+	 Kq+KjzOZAUinN1HHFkIi0vnomZfgFXy4m8mUs1uITv3ZWlByY6575Lpo6oESS3+IhZ
+	 h0XH19d++FyQv2v62mS6oaz7an3nYKFYkjWvMOzk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Theodore Tso <tytso@mit.edu>,
-	Andreas Dilger <adilger.kernel@dilger.ca>,
-	linux-ext4@vger.kernel.org,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Jerry Zuo <jerry.zuo@amd.com>,
+	Zaeem Mohamed <zaeem.mohamed@amd.com>,
+	Wayne Lin <wayne.lin@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Bin Lan <bin.lan.cn@windriver.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 071/676] ext4: remove calls to to set/clear the folio error flag
-Date: Fri,  6 Dec 2024 15:28:10 +0100
-Message-ID: <20241206143656.132429280@linuxfoundation.org>
+Subject: [PATCH 6.6 042/676] drm/amd/display: Dont refer to dc_sink in is_dsc_need_re_compute
+Date: Fri,  6 Dec 2024 15:27:41 +0100
+Message-ID: <20241206143654.997133189@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -53,75 +55,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthew Wilcox (Oracle) <willy@infradead.org>
+From: Wayne Lin <wayne.lin@amd.com>
 
-[ Upstream commit ea4fd933ab4310822e244af28d22ff63785dea0e ]
+[ Upstream commit fcf6a49d79923a234844b8efe830a61f3f0584e4 ]
 
-Nobody checks this flag on ext4 folios, stop setting and clearing it.
+[Why]
+When unplug one of monitors connected after mst hub, encounter null pointer dereference.
 
-Cc: Theodore Ts'o <tytso@mit.edu>
-Cc: Andreas Dilger <adilger.kernel@dilger.ca>
-Cc: linux-ext4@vger.kernel.org
-Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
-Link: https://lore.kernel.org/r/20240420025029.2166544-11-willy@infradead.org
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Stable-dep-of: 2f3d93e210b9 ("ext4: fix race in buffer_head read fault injection")
+It's due to dc_sink get released immediately in early_unregister() or detect_ctx(). When
+commit new state which directly referring to info stored in dc_sink will cause null pointer
+dereference.
+
+[how]
+Remove redundant checking condition. Relevant condition should already be covered by checking
+if dsc_aux is null or not. Also reset dsc_aux to NULL when the connector is disconnected.
+
+Reviewed-by: Jerry Zuo <jerry.zuo@amd.com>
+Acked-by: Zaeem Mohamed <zaeem.mohamed@amd.com>
+Signed-off-by: Wayne Lin <wayne.lin@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+[ Resolve minor conflicts ]
+Signed-off-by: Bin Lan <bin.lan.cn@windriver.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/move_extent.c | 4 +---
- fs/ext4/page-io.c     | 3 ---
- fs/ext4/readpage.c    | 1 -
- 3 files changed, 1 insertion(+), 7 deletions(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/fs/ext4/move_extent.c b/fs/ext4/move_extent.c
-index 0bfd5ff103aa4..a3aa85795d4a1 100644
---- a/fs/ext4/move_extent.c
-+++ b/fs/ext4/move_extent.c
-@@ -200,10 +200,8 @@ mext_page_mkuptodate(struct folio *folio, unsigned from, unsigned to)
- 			continue;
- 		if (!buffer_mapped(bh)) {
- 			err = ext4_get_block(inode, block, bh, 0);
--			if (err) {
--				folio_set_error(folio);
-+			if (err)
- 				return err;
--			}
- 			if (!buffer_mapped(bh)) {
- 				folio_zero_range(folio, block_start, blocksize);
- 				set_buffer_uptodate(bh);
-diff --git a/fs/ext4/page-io.c b/fs/ext4/page-io.c
-index dfdd7e5cf0389..7ab4f5a9bf5b8 100644
---- a/fs/ext4/page-io.c
-+++ b/fs/ext4/page-io.c
-@@ -117,7 +117,6 @@ static void ext4_finish_bio(struct bio *bio)
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
+index d390e3d62e56e..9ec9792f115a8 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
+@@ -179,6 +179,8 @@ amdgpu_dm_mst_connector_early_unregister(struct drm_connector *connector)
+ 		dc_sink_release(dc_sink);
+ 		aconnector->dc_sink = NULL;
+ 		aconnector->edid = NULL;
++		aconnector->dsc_aux = NULL;
++		port->passthrough_aux = NULL;
+ 	}
  
- 		if (bio->bi_status) {
- 			int err = blk_status_to_errno(bio->bi_status);
--			folio_set_error(folio);
- 			mapping_set_error(folio->mapping, err);
- 		}
- 		bh = head = folio_buffers(folio);
-@@ -441,8 +440,6 @@ int ext4_bio_write_folio(struct ext4_io_submit *io, struct folio *folio,
- 	BUG_ON(!folio_test_locked(folio));
- 	BUG_ON(folio_test_writeback(folio));
+ 	aconnector->mst_status = MST_STATUS_DEFAULT;
+@@ -487,6 +489,8 @@ dm_dp_mst_detect(struct drm_connector *connector,
+ 		dc_sink_release(aconnector->dc_sink);
+ 		aconnector->dc_sink = NULL;
+ 		aconnector->edid = NULL;
++		aconnector->dsc_aux = NULL;
++		port->passthrough_aux = NULL;
  
--	folio_clear_error(folio);
--
- 	/*
- 	 * Comments copied from block_write_full_page:
- 	 *
-diff --git a/fs/ext4/readpage.c b/fs/ext4/readpage.c
-index 3e7d160f543f0..8cb83e7b699bd 100644
---- a/fs/ext4/readpage.c
-+++ b/fs/ext4/readpage.c
-@@ -296,7 +296,6 @@ int ext4_mpage_readpages(struct inode *inode,
- 
- 				if (ext4_map_blocks(NULL, inode, &map, 0) < 0) {
- 				set_error_page:
--					folio_set_error(folio);
- 					folio_zero_segment(folio, 0,
- 							  folio_size(folio));
- 					folio_unlock(folio);
+ 		amdgpu_dm_set_mst_status(&aconnector->mst_status,
+ 			MST_REMOTE_EDID | MST_ALLOCATE_NEW_PAYLOAD | MST_CLEAR_ALLOCATED_PAYLOAD,
 -- 
 2.43.0
 
