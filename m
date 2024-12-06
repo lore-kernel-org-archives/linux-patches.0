@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FD3414D2BD;
-	Fri,  6 Dec 2024 15:17:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02EEA13A863;
+	Fri,  6 Dec 2024 15:17:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733498221; cv=none; b=D41XWKX7o69JKlJpFDIkNt2Ki+nBcCJyWh3oZn8a/QXJYIahepThJl3KCQIggtO5Uxi7o8OInPB30rjjVnDaGHXSrFzDzjvR8jJpF5Siob80P8v2CJdDg9lR6IrHsjbCSfbC9hO+lnO3tkspW99vMWjSuZ4osflgKFqLenHZHNI=
+	t=1733498225; cv=none; b=u3ofVCrc8QliE4IEUB4s+57BDggc5E5JpuTlO2aSmNjMR1eYzMpROGGtkVfTr95SZ7UokbZMFRXDRhm4yyKYKsESD3vvkoO+J+gOKmgv+LQDvC9bTEZzwYF22yeqS/bVsvJXOzxTkQS8B5y0cM00W6NKlmIngA7IeYHN9Shc+qs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733498221; c=relaxed/simple;
-	bh=pqEHftV9NTDNcrLG5Ur7zk1qtWlwK7KmxvSOXnr0CYw=;
+	s=arc-20240116; t=1733498225; c=relaxed/simple;
+	bh=GORZNuPot/XAZs0ujYqcJWrId1GNcrurIqxq5wazflw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JeNy96Ft9LFuTtvl3TEE/i4AoWVkdMRP+kNdfgdMombaEIpBimRFu9JVTPVPE+0YqFWjujcc38ExjeE70ARY1Fs6Om3/t+TslumW98pFo1Ow3culu5nWE7aNfZqxscvPJ9DhybchtKvqOoonCvbTbJQ1RB8PHxmJPP89hgbba1o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H08pO1zY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ZeLbVnN+GLyYznu3sgwwlpHsYbAu5+tsHvnTsXcN0Fa+ePVb0kr3+ddfblzKpnpNU9scpTopD7I3rxAFIgriDi8czyIxxdPKtPS1QPxbEcnz7zHbZ/wuoavTzW8GzJzRRD1PdwsJFTf38r5QFpvFKH2eI4ilTV26y7vl13IgqVE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KcakuEqp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H08pO1zY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3075C4CED1;
-	Fri,  6 Dec 2024 15:17:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KcakuEqp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66757C4CED1;
+	Fri,  6 Dec 2024 15:17:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733498221;
-	bh=pqEHftV9NTDNcrLG5Ur7zk1qtWlwK7KmxvSOXnr0CYw=;
+	s=korg; t=1733498224;
+	bh=GORZNuPot/XAZs0ujYqcJWrId1GNcrurIqxq5wazflw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H08pO1zYR/Jnk7W25RshTRHDfvt3FCO7c0+/x5++Sabm9aVcUrT1OOqVXDk2kijw1
-	 K5g/Ru2G3XlH4RD62qIO5REhYcWWwQm/IWjIAg5Z5rlK/kOLl1XxNJ6mD/yb2puE0E
-	 o4vWTR/h3cTazh/I4Ssk5Fd+YdSJLINSUGj6Y9k0=
+	b=KcakuEqpQTntYLU9lkWcwXokz35Z5gJL1xrKr4Ki8+7S+EiJUsQbCRtnQ0bT0VSxl
+	 0YkLiqzc8+QPv0jyRDXzpvQkX114uX873M5/fDGsk4WzGd0bc4p1acWEp2/az0HU1/
+	 9eJk+Ia089WT2YlmDduRiF0/4uDO3yz0kJKtzDLY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+7f4a6f7f7051474e40ad@syzkaller.appspotmail.com,
-	Ahmed Ehab <bottaawesome633@gmail.com>,
-	Boqun Feng <boqun.feng@gmail.com>
-Subject: [PATCH 6.6 489/676] locking/lockdep: Avoid creating new name string literals in lockdep_set_subclass()
-Date: Fri,  6 Dec 2024 15:35:08 +0100
-Message-ID: <20241206143712.461632866@linuxfoundation.org>
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>
+Subject: [PATCH 6.6 490/676] tools/nolibc: s390: include std.h
+Date: Fri,  6 Dec 2024 15:35:09 +0100
+Message-ID: <20241206143712.500675326@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -45,52 +44,45 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ahmed Ehab <bottaawesome633@gmail.com>
+From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
 
-commit d7fe143cb115076fed0126ad8cf5ba6c3e575e43 upstream.
+commit 711b5875814b2a0e9a5aaf7a85ba7c80f5a389b1 upstream.
 
-Syzbot reports a problem that a warning will be triggered while
-searching a lock class in look_up_lock_class().
+arch-s390.h uses types from std.h, but does not include it.
+Depending on the inclusion order the compilation can fail.
+Include std.h explicitly to avoid these errors.
 
-The cause of the issue is that a new name is created and used by
-lockdep_set_subclass() instead of using the existing one. This results
-in a lock instance has a different name pointer than previous registered
-one stored in lock class, and WARN_ONCE() is triggered because of that
-in look_up_lock_class().
-
-To fix this, change lockdep_set_subclass() to use the existing name
-instead of a new one. Hence, no new name will be created by
-lockdep_set_subclass(). Hence, the warning is avoided.
-
-[boqun: Reword the commit log to state the correct issue]
-
-Reported-by: <syzbot+7f4a6f7f7051474e40ad@syzkaller.appspotmail.com>
-Fixes: de8f5e4f2dc1f ("lockdep: Introduce wait-type checks")
+Fixes: 404fa87c0eaf ("tools/nolibc: s390: provide custom implementation for sys_fork")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ahmed Ehab <bottaawesome633@gmail.com>
-Signed-off-by: Boqun Feng <boqun.feng@gmail.com>
-Link: https://lore.kernel.org/lkml/20240824221031.7751-1-bottaawesome633@gmail.com/
+Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+Link: https://lore.kernel.org/r/20240927-nolibc-s390-std-h-v1-1-30442339a6b9@linutronix.de
+Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/lockdep.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/include/nolibc/arch-s390.h | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/include/linux/lockdep.h
-+++ b/include/linux/lockdep.h
-@@ -230,7 +230,7 @@ static inline void lockdep_init_map(stru
- 			      (lock)->dep_map.lock_type)
+diff --git a/tools/include/nolibc/arch-s390.h b/tools/include/nolibc/arch-s390.h
+index 2ec13d8b9a2d..f9ab83a219b8 100644
+--- a/tools/include/nolibc/arch-s390.h
++++ b/tools/include/nolibc/arch-s390.h
+@@ -10,6 +10,7 @@
  
- #define lockdep_set_subclass(lock, sub)					\
--	lockdep_init_map_type(&(lock)->dep_map, #lock, (lock)->dep_map.key, sub,\
-+	lockdep_init_map_type(&(lock)->dep_map, (lock)->dep_map.name, (lock)->dep_map.key, sub,\
- 			      (lock)->dep_map.wait_type_inner,		\
- 			      (lock)->dep_map.wait_type_outer,		\
- 			      (lock)->dep_map.lock_type)
+ #include "compiler.h"
+ #include "crt.h"
++#include "std.h"
+ 
+ /* Syscalls for s390:
+  *   - registers are 64-bit
+-- 
+2.47.1
+
 
 
