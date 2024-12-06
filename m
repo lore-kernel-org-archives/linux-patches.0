@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F93153A7;
-	Fri,  6 Dec 2024 15:09:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8240B1DFD89;
+	Fri,  6 Dec 2024 15:09:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733497769; cv=none; b=Tx6JKGk2dqxlti+uZg6S6q1GVAAiHMvmUyCK98GzpmzYNBb/Mp0Yg2hT9rf2cR9o6UtELB52U+aPtFW4aLKX6ldLhAqoRHg6NAQAabCVNhmoG1B/jt9+xWHJ/fsIHixfY8LplcPGy23yE5tQmYGA5GvfkmLBd4Pfvx/wQQCjVqQ=
+	t=1733497771; cv=none; b=dsmIrYHfUChhCr6iQAiCNC62J45xqRgya7q7GhVAx0WsExZ1qa6YV8DDQbLphF3KkQuF/6TbtjbtFE+ldSKcRGU15PYBkRGDD99ZAtwF1MliVYSTMfOG624KBI9G4aNTu5fycbXU5h4UykcGUWeEfvoDQOXsR1yO76ny7TyKKKk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733497769; c=relaxed/simple;
-	bh=6FmHX+EDEOub3QKpcwvAim+Fw0l2bmerU3OiTYwZl/I=;
+	s=arc-20240116; t=1733497771; c=relaxed/simple;
+	bh=0n/Xgn8uDhps3cR1k0xVNVgclFhBU0+DFu+lVRuQCJE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aXKu1IT2plbtEDe8zQlC8TatkZUmL7hESbocmdqxrk0ch58TXZ2Rq6SgLUVtNNr1SSn0+l8rbIRRw+IQG+q78YYlRWvHI3trskVtASIaU/NMg2JsWLo0oGlSzhv0ITKtXFs9Y2lQeyckRA18AJFP8Ui/bY9lNHs//XEoI2VV8H4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e4rvQD1v; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fKllhKGkxUk5LZ96N2ylQDRneF7w4o0QhVric6V/ce+Zaqx6xe3wGuwdHyRtcN0ZBiJYLKjGHkfHCZZ8ZYBMx0uYx1f01H7osD2mWM4LSbg9yQVw+V0XNhPiQXIXG8ai3dS5WAGaqL3wAkZgOk5TMnB6f4/YYx4Ti/xXCXzFDzw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z13p1Le7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e4rvQD1v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AD45C4CED1;
-	Fri,  6 Dec 2024 15:09:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z13p1Le7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D799EC4CED1;
+	Fri,  6 Dec 2024 15:09:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733497768;
-	bh=6FmHX+EDEOub3QKpcwvAim+Fw0l2bmerU3OiTYwZl/I=;
+	s=korg; t=1733497771;
+	bh=0n/Xgn8uDhps3cR1k0xVNVgclFhBU0+DFu+lVRuQCJE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e4rvQD1vflmvEJBPDli4/BYc+Oc8Gm+iIa5ZUKQfQiQGAEjWkAySIG0rD0xWtABoU
-	 Wha92CtzlX7g0/tTo4iLim1wFn1G3ZpWhk7+cQ4SH6ybfduuLAiz9SFUGA4UqCWfYe
-	 UkaZ3l8e1ANEc6vuh23Ku8DTBBNnwzXPzLV9uuJA=
+	b=Z13p1Le7oYGC+ZZuo74fjY0OIPed6OHcH3ioA7gHaYrr9tToXD6VoR60wVbmfO378
+	 pvD+bV8JG+knv9KOx10B6zTdLz7GXwGBYoukriCKhzN9oRaSo0x54xrov/CnoSg1iY
+	 hRNRmOclZkEW6wppXWhS6LvsTRPM+5nkwq7iR52M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qi Han <hanqi@vivo.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 346/676] f2fs: compress: fix inconsistent update of i_blocks in release_compress_blocks and reserve_compress_blocks
-Date: Fri,  6 Dec 2024 15:32:45 +0100
-Message-ID: <20241206143706.863461483@linuxfoundation.org>
+Subject: [PATCH 6.6 381/676] NFSD: Prevent NULL dereference in nfsd4_process_cb_update()
+Date: Fri,  6 Dec 2024 15:33:20 +0100
+Message-ID: <20241206143708.228812953@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -52,64 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qi Han <hanqi@vivo.com>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit 26413ce18e85de3dda2cd3d72c3c3e8ab8f4f996 ]
+[ Upstream commit 1e02c641c3a43c88cecc08402000418e15578d38 ]
 
-After release a file and subsequently reserve it, the FSCK flag is set
-when the file is deleted, as shown in the following backtrace:
+@ses is initialized to NULL. If __nfsd4_find_backchannel() finds no
+available backchannel session, setup_callback_client() will try to
+dereference @ses and segfault.
 
-F2FS-fs (dm-48): Inconsistent i_blocks, ino:401231, iblocks:1448, sectors:1472
-fs_rec_info_write_type+0x58/0x274
-f2fs_rec_info_write+0x1c/0x2c
-set_sbi_flag+0x74/0x98
-dec_valid_block_count+0x150/0x190
-f2fs_truncate_data_blocks_range+0x2d4/0x3cc
-f2fs_do_truncate_blocks+0x2fc/0x5f0
-f2fs_truncate_blocks+0x68/0x100
-f2fs_truncate+0x80/0x128
-f2fs_evict_inode+0x1a4/0x794
-evict+0xd4/0x280
-iput+0x238/0x284
-do_unlinkat+0x1ac/0x298
-__arm64_sys_unlinkat+0x48/0x68
-invoke_syscall+0x58/0x11c
-
-For clusters of the following type, i_blocks are decremented by 1 and
-i_compr_blocks are incremented by 7 in release_compress_blocks, while
-updates to i_blocks and i_compr_blocks are skipped in reserve_compress_blocks.
-
-raw node:
-D D D D D D D D
-after compress:
-C D D D D D D D
-after reserve:
-C D D D D D D D
-
-Let's update i_blocks and i_compr_blocks properly in reserve_compress_blocks.
-
-Fixes: eb8fbaa53374 ("f2fs: compress: fix to check unreleased compressed cluster")
-Signed-off-by: Qi Han <hanqi@vivo.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Fixes: dcbeaa68dbbd ("nfsd4: allow backchannel recovery")
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/file.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/nfsd/nfs4callback.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/f2fs/file.c b/fs/f2fs/file.c
-index 74fac935bd092..ad26733f1f46c 100644
---- a/fs/f2fs/file.c
-+++ b/fs/f2fs/file.c
-@@ -3755,7 +3755,7 @@ static int reserve_compress_blocks(struct dnode_of_data *dn, pgoff_t count,
- 		to_reserved = cluster_size - compr_blocks - reserved;
+diff --git a/fs/nfsd/nfs4callback.c b/fs/nfsd/nfs4callback.c
+index 4039ffcf90ba5..bc2716c1bdeab 100644
+--- a/fs/nfsd/nfs4callback.c
++++ b/fs/nfsd/nfs4callback.c
+@@ -1379,6 +1379,8 @@ static void nfsd4_process_cb_update(struct nfsd4_callback *cb)
+ 		ses = c->cn_session;
+ 	}
+ 	spin_unlock(&clp->cl_lock);
++	if (!c)
++		return;
  
- 		/* for the case all blocks in cluster were reserved */
--		if (to_reserved == 1) {
-+		if (reserved && to_reserved == 1) {
- 			dn->ofs_in_node += cluster_size;
- 			goto next;
- 		}
+ 	err = setup_callback_client(clp, &conn, ses);
+ 	if (err) {
 -- 
 2.43.0
 
