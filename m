@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EED22145A05;
-	Fri,  6 Dec 2024 15:17:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33E51145A16;
+	Fri,  6 Dec 2024 15:17:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733498232; cv=none; b=Lo1Sjwbd8ULPgBUd6/JGJEV9Va7C9L2B7Ib2/gxyrF9PgIy/eL75kM9VUJrH9WSZIhwJHumaMHpp8nGNQ5+XbVUvWZgNWJhwopu5pTthgREwtbKw+K2/TrsBT+q2ZZPP5Bw1/YTA3mwftp6A11OlgwxE0oWV7JqyihB8XCN+Sys=
+	t=1733498235; cv=none; b=k/6nbdTb/2e7KOLgo5hR6OI1Rq+E9mZo0wvT9RWjfE8eNpILdAo0x2YVB9Hj+U5SjX+oY+D6qzpwPfwRrvcpRI6gdqMpnm3uVsVfdRCKF8CD0lu5ifdzTB6MlOYJesyJrnPBDN52X0eZzycKTvabKb68ac70D357U1VTR035SoI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733498232; c=relaxed/simple;
-	bh=MFr8n9+1W2ZzvJiF7CG2y9lRlzgcrr5qx4hlZx7ZzAU=;
+	s=arc-20240116; t=1733498235; c=relaxed/simple;
+	bh=BpYK+0CX8V0WnBn/5TzWbeMMfm7iV+06IITanUU4TYo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PbXM5peuW+E5cvgv+GD0BRQ1lw7Ml4BJlDgkM6Z83ocEmpmqqXl0bfMzlFyGJ3tWynO0aY8Juh7TnZkF+YuhI9xXdrKT5IuXkMJhcV0HztlE7MXAC5sFS1eUHr5bO74GV7Zju9rUq2umcuenwEKRE+Mq7HWx5QcN24ugmqSqrAI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IWo6IhYJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=h6FQ+XfeOyz+0502RVINZvzlgUBCbVJjGQSrHpNdncifPeRPoyOTMsf2wH1uoi3qpO9NEIWqiKjlcW+uS6+PxXWt8h7/N2bAqQCTzSLqYWbGpEGtOwmNLOP3d5ojrwfaZ8w8LintWxSOkK44GD1DyNlUVhZRNJEI2cdPjGj+hfs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TzVHd8ML; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IWo6IhYJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F120C4CED1;
-	Fri,  6 Dec 2024 15:17:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TzVHd8ML"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66854C4CED1;
+	Fri,  6 Dec 2024 15:17:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733498231;
-	bh=MFr8n9+1W2ZzvJiF7CG2y9lRlzgcrr5qx4hlZx7ZzAU=;
+	s=korg; t=1733498234;
+	bh=BpYK+0CX8V0WnBn/5TzWbeMMfm7iV+06IITanUU4TYo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IWo6IhYJW60ixHJcMHxjEkaF2pAPZy3NojFRbvrOijW7iZtpR4IpD4SUklsGcepkX
-	 fTj4B5ocLGDcVHz44ksahgMjE53TGpcSWPzSTp1QHRXDK9YXAEjzz+pw0MseWbloPd
-	 A/wX70bwF8NieAzs9ISHGIApLuxV53uDsdfBUpYY=
+	b=TzVHd8MLiLf3B+uPNeAdT+g2WUb++cmENczs2npB9pN7BrUsjYwuS1zxraPjY5226
+	 Zi8eQkmgmNY0/EO8Rh9gFQgNcNd5XLBMLv0Yt+2o89PJzXZ8BHMCwqMmu02DcBJK1A
+	 lx6Z6cbFnxvCV7C+X+QeMdUEizTEYKZFD87wx5qw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kunkun Jiang <jiangkunkun@huawei.com>,
-	Jing Zhang <jingzhangos@google.com>,
-	Oliver Upton <oliver.upton@linux.dev>
-Subject: [PATCH 6.6 482/676] KVM: arm64: vgic-its: Add a data length check in vgic_its_save_*
-Date: Fri,  6 Dec 2024 15:35:01 +0100
-Message-ID: <20241206143712.189670215@linuxfoundation.org>
+	Tiwei Bie <tiwei.btw@antgroup.com>,
+	Anton Ivanov <anton.ivanov@cambridgegreys.com>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 6.6 517/676] um: net: Do not use drvdata in release
+Date: Fri,  6 Dec 2024 15:35:36 +0100
+Message-ID: <20241206143713.556609179@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -51,137 +51,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jing Zhang <jingzhangos@google.com>
+From: Tiwei Bie <tiwei.btw@antgroup.com>
 
-commit 7fe28d7e68f92cc3d0668b8f2fbdf5c303ac3022 upstream.
+commit d1db692a9be3b4bd3473b64fcae996afaffe8438 upstream.
 
-In all the vgic_its_save_*() functinos, they do not check whether
-the data length is 8 bytes before calling vgic_write_guest_lock.
-This patch adds the check. To prevent the kernel from being blown up
-when the fault occurs, KVM_BUG_ON() is used. And the other BUG_ON()s
-are replaced together.
+The drvdata is not available in release. Let's just use container_of()
+to get the uml_net instance. Otherwise, removing a network device will
+result in a crash:
+
+RIP: 0033:net_device_release+0x10/0x6f
+RSP: 00000000e20c7c40  EFLAGS: 00010206
+RAX: 000000006002e4e7 RBX: 00000000600f1baf RCX: 00000000624074e0
+RDX: 0000000062778000 RSI: 0000000060551c80 RDI: 00000000627af028
+RBP: 00000000e20c7c50 R08: 00000000603ad594 R09: 00000000e20c7b70
+R10: 000000000000135a R11: 00000000603ad422 R12: 0000000000000000
+R13: 0000000062c7af00 R14: 0000000062406d60 R15: 00000000627700b6
+Kernel panic - not syncing: Segfault with no mm
+CPU: 0 UID: 0 PID: 29 Comm: kworker/0:2 Not tainted 6.12.0-rc6-g59b723cd2adb #1
+Workqueue: events mc_work_proc
+Stack:
+ 627af028 62c7af00 e20c7c80 60276fcd
+ 62778000 603f5820 627af028 00000000
+ e20c7cb0 603a2bcd 627af000 62770010
+Call Trace:
+ [<60276fcd>] device_release+0x70/0xba
+ [<603a2bcd>] kobject_put+0xba/0xe7
+ [<60277265>] put_device+0x19/0x1c
+ [<60281266>] platform_device_put+0x26/0x29
+ [<60281e5f>] platform_device_unregister+0x2c/0x2e
+ [<6002ec9c>] net_remove+0x63/0x69
+ [<60031316>] ? mconsole_reply+0x0/0x50
+ [<600310c8>] mconsole_remove+0x160/0x1cc
+ [<60087d40>] ? __remove_hrtimer+0x38/0x74
+ [<60087ff8>] ? hrtimer_try_to_cancel+0x8c/0x98
+ [<6006b3cf>] ? dl_server_stop+0x3f/0x48
+ [<6006b390>] ? dl_server_stop+0x0/0x48
+ [<600672e8>] ? dequeue_entities+0x327/0x390
+ [<60038fa6>] ? um_set_signals+0x0/0x43
+ [<6003070c>] mc_work_proc+0x77/0x91
+ [<60057664>] process_scheduled_works+0x1b3/0x2dd
+ [<60055f32>] ? assign_work+0x0/0x58
+ [<60057f0a>] worker_thread+0x1e9/0x293
+ [<6005406f>] ? set_pf_worker+0x0/0x64
+ [<6005d65d>] ? arch_local_irq_save+0x0/0x2d
+ [<6005d748>] ? kthread_exit+0x0/0x3a
+ [<60057d21>] ? worker_thread+0x0/0x293
+ [<6005dbf1>] kthread+0x126/0x12b
+ [<600219c5>] new_thread_handler+0x85/0xb6
 
 Cc: stable@vger.kernel.org
-Signed-off-by: Kunkun Jiang <jiangkunkun@huawei.com>
-[Jing: Update with the new entry read/write helpers]
-Signed-off-by: Jing Zhang <jingzhangos@google.com>
-Link: https://lore.kernel.org/r/20241107214137.428439-4-jingzhangos@google.com
-Signed-off-by: Oliver Upton <oliver.upton@linux.dev>
+Signed-off-by: Tiwei Bie <tiwei.btw@antgroup.com>
+Acked-By: Anton Ivanov <anton.ivanov@cambridgegreys.com>
+Link: https://patch.msgid.link/20241104163203.435515-4-tiwei.btw@antgroup.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kvm/vgic/vgic-its.c |   20 ++++++++------------
- arch/arm64/kvm/vgic/vgic.h     |   23 +++++++++++++++++++++++
- 2 files changed, 31 insertions(+), 12 deletions(-)
+ arch/um/drivers/net_kern.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/arm64/kvm/vgic/vgic-its.c
-+++ b/arch/arm64/kvm/vgic/vgic-its.c
-@@ -2211,7 +2211,6 @@ static int scan_its_table(struct vgic_it
- static int vgic_its_save_ite(struct vgic_its *its, struct its_device *dev,
- 			      struct its_ite *ite, gpa_t gpa, int ite_esz)
+--- a/arch/um/drivers/net_kern.c
++++ b/arch/um/drivers/net_kern.c
+@@ -336,7 +336,7 @@ static struct platform_driver uml_net_dr
+ 
+ static void net_device_release(struct device *dev)
  {
--	struct kvm *kvm = its->dev->kvm;
- 	u32 next_offset;
- 	u64 val;
+-	struct uml_net *device = dev_get_drvdata(dev);
++	struct uml_net *device = container_of(dev, struct uml_net, pdev.dev);
+ 	struct net_device *netdev = device->dev;
+ 	struct uml_net_private *lp = netdev_priv(netdev);
  
-@@ -2220,7 +2219,8 @@ static int vgic_its_save_ite(struct vgic
- 	       ((u64)ite->irq->intid << KVM_ITS_ITE_PINTID_SHIFT) |
- 		ite->collection->collection_id;
- 	val = cpu_to_le64(val);
--	return vgic_write_guest_lock(kvm, gpa, &val, ite_esz);
-+
-+	return vgic_its_write_entry_lock(its, gpa, val, ite_esz);
- }
- 
- /**
-@@ -2361,7 +2361,6 @@ static int vgic_its_restore_itt(struct v
- static int vgic_its_save_dte(struct vgic_its *its, struct its_device *dev,
- 			     gpa_t ptr, int dte_esz)
- {
--	struct kvm *kvm = its->dev->kvm;
- 	u64 val, itt_addr_field;
- 	u32 next_offset;
- 
-@@ -2372,7 +2371,8 @@ static int vgic_its_save_dte(struct vgic
- 	       (itt_addr_field << KVM_ITS_DTE_ITTADDR_SHIFT) |
- 		(dev->num_eventid_bits - 1));
- 	val = cpu_to_le64(val);
--	return vgic_write_guest_lock(kvm, ptr, &val, dte_esz);
-+
-+	return vgic_its_write_entry_lock(its, ptr, val, dte_esz);
- }
- 
- /**
-@@ -2559,7 +2559,8 @@ static int vgic_its_save_cte(struct vgic
- 	       ((u64)collection->target_addr << KVM_ITS_CTE_RDBASE_SHIFT) |
- 	       collection->collection_id);
- 	val = cpu_to_le64(val);
--	return vgic_write_guest_lock(its->dev->kvm, gpa, &val, esz);
-+
-+	return vgic_its_write_entry_lock(its, gpa, val, esz);
- }
- 
- /*
-@@ -2575,8 +2576,7 @@ static int vgic_its_restore_cte(struct v
- 	u64 val;
- 	int ret;
- 
--	BUG_ON(esz > sizeof(val));
--	ret = kvm_read_guest_lock(kvm, gpa, &val, esz);
-+	ret = vgic_its_read_entry_lock(its, gpa, &val, esz);
- 	if (ret)
- 		return ret;
- 	val = le64_to_cpu(val);
-@@ -2614,7 +2614,6 @@ static int vgic_its_save_collection_tabl
- 	u64 baser = its->baser_coll_table;
- 	gpa_t gpa = GITS_BASER_ADDR_48_to_52(baser);
- 	struct its_collection *collection;
--	u64 val;
- 	size_t max_size, filled = 0;
- 	int ret, cte_esz = abi->cte_esz;
- 
-@@ -2638,10 +2637,7 @@ static int vgic_its_save_collection_tabl
- 	 * table is not fully filled, add a last dummy element
- 	 * with valid bit unset
- 	 */
--	val = 0;
--	BUG_ON(cte_esz > sizeof(val));
--	ret = vgic_write_guest_lock(its->dev->kvm, gpa, &val, cte_esz);
--	return ret;
-+	return vgic_its_write_entry_lock(its, gpa, 0, cte_esz);
- }
- 
- /**
---- a/arch/arm64/kvm/vgic/vgic.h
-+++ b/arch/arm64/kvm/vgic/vgic.h
-@@ -145,6 +145,29 @@ static inline int vgic_write_guest_lock(
- 	return ret;
- }
- 
-+static inline int vgic_its_read_entry_lock(struct vgic_its *its, gpa_t eaddr,
-+					   u64 *eval, unsigned long esize)
-+{
-+	struct kvm *kvm = its->dev->kvm;
-+
-+	if (KVM_BUG_ON(esize != sizeof(*eval), kvm))
-+		return -EINVAL;
-+
-+	return kvm_read_guest_lock(kvm, eaddr, eval, esize);
-+
-+}
-+
-+static inline int vgic_its_write_entry_lock(struct vgic_its *its, gpa_t eaddr,
-+					    u64 eval, unsigned long esize)
-+{
-+	struct kvm *kvm = its->dev->kvm;
-+
-+	if (KVM_BUG_ON(esize != sizeof(eval), kvm))
-+		return -EINVAL;
-+
-+	return vgic_write_guest_lock(kvm, eaddr, &eval, esize);
-+}
-+
- /*
-  * This struct provides an intermediate representation of the fields contained
-  * in the GICH_VMCR and ICH_VMCR registers, such that code exporting the GIC
 
 
