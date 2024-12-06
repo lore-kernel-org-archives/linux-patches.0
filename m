@@ -1,243 +1,199 @@
-Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from NAM10-MW2-obe.outbound.protection.outlook.com (mail-mw2nam10on2074.outbound.protection.outlook.com [40.107.94.74])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 463101CEAB3
-	for <patches@lists.linux.dev>; Thu,  5 Dec 2024 23:40:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.50
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733442005; cv=none; b=oxFDzNBZZfkAfUSuJj6XEzUh/FSol22auQIsnDjE348ZwiuJJpAswEd+XutoxxI3yuwDBas00b3eU4xRvdKvE1sy9IDdTSOViqE3BzKFfdoW65bIRjljR7zm6Nwip0+YZbEWQ882yvFRIYV5d4vrmTdSvt1Ekhk/gpRzSk6bN3I=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733442005; c=relaxed/simple;
-	bh=xsaP4U5pHbcH6lrCPxKA+1Tf417cCvTSpwmt6Uxm9hU=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Tulb4fLDpTOb29Rw391ZuJJ8iG/pg/NkxabDXfpd0oLYRzUsrPgpmozD3JspVqNz79YrOcvzkrpKY2y/N6aF/ObExZKr7tegNdvtdrB4inpS5MJpgQPvzaIViHKARbX0/DN/Rnbu1KRECDUmulYUxGMjbBd+m9qebAXEoKXqdLc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=xv8TpBLD; arc=none smtp.client-ip=209.85.208.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2B9F29A2;
+	Fri,  6 Dec 2024 00:13:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.94.74
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1733444030; cv=fail; b=u0Z7H9BOOk6mz/b8CVoQR2GVM+pHTATRAQppq9zZgdePOF1FnFkobvEKzINPrWActygETMthQQ6+Fi9JLRJylrJuSkiQe7xMkpe8RHw3o4mXeUq/syoHdkz9h4jLeEDv5KlV6HcqbyZF/NBdQHv1Mmn4653448LiBDr15su464k=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1733444030; c=relaxed/simple;
+	bh=ykI3RGHLA0/uzw0jQnYmzVw9o2mjAZEWpoA7LhyRfdo=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=hAr21Vdj67BtNkmvqPlcsz4tQZRPwdrFCUBA2+wwvyXhksMQ288mjoWv3FNhtDP8A/CP7v8VOSkDKqQGfkAe1XBctrP0oNAI/Hu6dnJgMFXcaRsNhWoTCOdH0L8aZRxuT5jg994n+8y3PvJYQubAT1AYntsmj74IxWqBllcfT5Y=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=j9WBOjac; arc=fail smtp.client-ip=40.107.94.74
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="xv8TpBLD"
-Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-5ceca0ec4e7so1722501a12.0
-        for <patches@lists.linux.dev>; Thu, 05 Dec 2024 15:40:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1733442002; x=1734046802; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=L+MB5DA5Lyb0OmXYuKKW+jJvk7Dw23YqpgDd8tDMcjU=;
-        b=xv8TpBLDarG2APg2caeKy5kW8Der0OfnikWlcMKuCz7xzBlcIWiTjt+GQyV3ZOu9Bt
-         pcHV/0JxaZK9N2xgfy0C8pgOGDmuwrkTYBx1Yh790Ua4WVEchkkJI0+JVfHhXDm3ifLB
-         FE9rOvMupzLX0hgpPQ5TDBf+P/CmhCM8zUBMQ2EJ/9AocFPMAHHkvmO4bqnH/xvom0hP
-         2HOTE3z5tEceTITEN+GviAjo1gtmicUD1Y7HDhKKWDFlDW5ctAXt1rYfFohCjXUTl5Pk
-         U2T2fS9EymqY1CmQOMSfdvANKLxmzGlM4OYT5DmHGivDZy6aaNZNW4TfgoEo5ZB8ZKNy
-         F6BQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733442002; x=1734046802;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=L+MB5DA5Lyb0OmXYuKKW+jJvk7Dw23YqpgDd8tDMcjU=;
-        b=jkncDYGVxkphfKyzGcn9NaQgLZmpFdzSh3OPMWQi2coTqyq1fz2Ubq3kKkXxtV5ogH
-         MR8LcWyPuHAiLrHrvwIvIvPw8AlnopsC7HmAs5C5kF0dpNlvq1xP5eDAOVLsqeGx2U4r
-         msrLLAIjJEF61kRs7MtR1t0M/meTxod1PnFDrSLoHgxmoRszuNAaYvnqQOULp6R3jqbI
-         tdCXle19Pglnt+9b1Uy6Ym7ov6jQr1B95myKkWf3IZC0sD30dhKn4+2UxJdEdX5/aE1m
-         Gl7M1DcG5+ei383c35HhLlhgOXWAVajlWbpSXyk0hJdGc+TVXstjj8je3N7XB0ufZ8SS
-         p3+A==
-X-Forwarded-Encrypted: i=1; AJvYcCXmwzEfREp773/BBybygoSqGrx38+ZKTaEom7Meqi/HUfxhu702gx7s2OBwYgMZpxLwQMEXGUQ7@lists.linux.dev
-X-Gm-Message-State: AOJu0YziQtAuTq0MgD9iX7ryfWaKt33vF3paepY9W3BD9plp/rnHXP3B
-	pjavml/DM3YYRh9tQLAC79oMoIFUQgBmyDEiWiwc4ASi2uBsvZKeWe7SdaM6xdD1OK6KLqsbvcr
-	qEojzsC5dvx5q/xZtzUnMy9zdi8ZeX9zV0lH+jvs51FNClsyjwpA+
-X-Gm-Gg: ASbGncsuzpVmUYkFoNYhs6m5p5TjcuqcPYLo94TtuhQFPFPhr3UEEAeWbnvHtZKT0L0
-	sa9C8/N2hESzpLJ4qxjGuTNGzACTDpaz9+K3uvtuQLLNH6uo6+01Hbh2Kspy7eCI=
-X-Google-Smtp-Source: AGHT+IG0eJwol/pjrqooOab5q8PwKWmOD6RpXYtIUF7nN9ABJjk70oRCP9el2KO875OhTIaI5aGYBKKVTIFg4+EW1Cg=
-X-Received: by 2002:a05:6402:4497:b0:5d3:bc56:3b24 with SMTP id
- 4fb4d7f45d1cf-5d3be65a58bmr639866a12.4.1733442001551; Thu, 05 Dec 2024
- 15:40:01 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="j9WBOjac"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=BcJOrbp4EPrCU9jEdE1vuvz2gWFfnuyx+StpwRUo5Tamix0CbQfbJiKBrnk5oWXoN8apQIe16MDd3nKbyjxin/WCgYI9Po34qfkN0twKNC+UkSJGthK2iY/LDb28yyMLFCEWips9zlMjDT7WGE8qbF8JVnbqwg/A+L9+avmjBzmGlQL/M+/P29/9txhtEb8aW3hyAIoaP8iX9JECwXAwNglPbZnaG8GpwiAFtg5C8KBCOsonKpW49NporPEIkPR4kXVD4I6NEZuhzmDXvyA1ZtUO1SvSoLSRa+pUGPun7Y89VBbOD5ppZrwyJSFF7v79JQVeHykAhvWSCgPP4oQpfA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=V+KzuvBDYVJ7+5pXxkEO57o+NSzoIKixg3dpiW9IMYU=;
+ b=gpL7z1PLgVPktc7fMThC2imnzALqZDqnfkpYW+xrWZxa4ijR/6d1+OxO6yaDNwfLVBFi+mCj7PJ51fCL+NjEZ3hkkX16KY2Dh9K/rauWqIVkEbZPbZXXBok+2zA8pvmEMv6MugI1Yv80fcDJYBV2urMi9QMAIrMiOnt3jIxUrc9DrogGc6m5hMMc6ImWVWb7X75laR4IxrufWRwxln5ZfaZPrKBMvy8hbcYEMlUugfF7206IRnguSpPlop5/Hr0kB6GcOxYPU/lcUrP5zj+ePIxxHehXBbf/18mi2iWP2LsEFR1xSamotYYtJNx2u1FNDK2ldDFLFD5vGWqYbHfGOg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=V+KzuvBDYVJ7+5pXxkEO57o+NSzoIKixg3dpiW9IMYU=;
+ b=j9WBOjacER4RtD0uz0tu4zAXzXP1YjII9P99t6wUh+S2+NHqEJIdOHeOZnaZn67Qc2dmuDSlDz9RTFRgVdmFiWAqqqg51IqheyZ3h1jiwod0mst+AtI11om7F2wLMSaI1Rc8iiKId5Thbd+XQ9X/06+VPyLKSUZNtP3B+HJIFvpUnJ5aVw0Tj4SVYdk4cq8jni3yqa2e2MtQEV8bTP3UuMUL0kEPzAkVUtXnDy2gjR7/p/81cbqq1j0voJz3CbTlOuUNADsan8DUtdGDqLgLV9Iz9Oos1Pt8bfCL/YErnWn2dPOH0/bKoxIS3W6sofnIXmkwQp0H3/4Bf+9HX/kmTQ==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from CH3PR12MB8659.namprd12.prod.outlook.com (2603:10b6:610:17c::13)
+ by IA1PR12MB7496.namprd12.prod.outlook.com (2603:10b6:208:418::10) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8230.12; Fri, 6 Dec
+ 2024 00:13:45 +0000
+Received: from CH3PR12MB8659.namprd12.prod.outlook.com
+ ([fe80::6eb6:7d37:7b4b:1732]) by CH3PR12MB8659.namprd12.prod.outlook.com
+ ([fe80::6eb6:7d37:7b4b:1732%5]) with mapi id 15.20.8230.010; Fri, 6 Dec 2024
+ 00:13:44 +0000
+From: Jason Gunthorpe <jgg@nvidia.com>
+To: iommu@lists.linux.dev,
+	Joerg Roedel <joro@8bytes.org>,
+	Robin Murphy <robin.murphy@arm.com>,
+	Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
+	Will Deacon <will@kernel.org>
+Cc: Joerg Roedel <jroedel@suse.de>,
+	patches@lists.linux.dev,
+	Vasant Hegde <vasant.hegde@amd.com>
+Subject: [PATCH rc 1/2] iommu/amd: Put list_add/del(dev_data) back under the domain->lock
+Date: Thu,  5 Dec 2024 20:13:41 -0400
+Message-ID: <1-v1-3b9edcf8067d+3975-amd_dev_list_locking_jgg@nvidia.com>
+In-Reply-To: <0-v1-3b9edcf8067d+3975-amd_dev_list_locking_jgg@nvidia.com>
+References:
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: BL0PR05CA0027.namprd05.prod.outlook.com
+ (2603:10b6:208:91::37) To CH3PR12MB8659.namprd12.prod.outlook.com
+ (2603:10b6:610:17c::13)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20241112184455.855133-1-ojeda@kernel.org>
-In-Reply-To: <20241112184455.855133-1-ojeda@kernel.org>
-From: "Hong, Yifan" <elsk@google.com>
-Date: Thu, 5 Dec 2024 15:39:25 -0800
-Message-ID: <CAABy=s1u75ywAECbkCmGfyt+Yp5khnF0UVcezA-_BEDWUVrHkw@mail.gmail.com>
-Subject: Re: [PATCH v3] kbuild: rust: add PROCMACROLDFLAGS
-To: Miguel Ojeda <ojeda@kernel.org>
-Cc: Masahiro Yamada <masahiroy@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>, 
-	Jonathan Corbet <corbet@lwn.net>, Nathan Chancellor <nathan@kernel.org>, Nicolas Schier <nicolas@fjasle.eu>, 
-	linux-kbuild@vger.kernel.org, Boqun Feng <boqun.feng@gmail.com>, 
-	Gary Guo <gary@garyguo.net>, =?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
-	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@kernel.org>, 
-	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>, rust-for-linux@vger.kernel.org, 
-	linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	patches@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH3PR12MB8659:EE_|IA1PR12MB7496:EE_
+X-MS-Office365-Filtering-Correlation-Id: 4d9074f4-204d-4101-ed6b-08dd158ad80e
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|366016|1800799024;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?1dM3EhiECnSq4pmcAqt/xd9SgfRb6QBpBLoOQiLjBSvY3hOk6LgFj0ebYUGX?=
+ =?us-ascii?Q?owkkhd0BpWygsA3Xv9m90oDZE79/mb6GzRtN4VP/HO7u+gNjPakh+s7N45mw?=
+ =?us-ascii?Q?QmKedOK0NIxszAR0r5Y84USfzFEtX9e5yPeiE5bNBmfU22Ru/2wp42lz1B1O?=
+ =?us-ascii?Q?IAXWi7LfwZnqK+WXi3luEOm0rs8fbIm5Udy+jJkcflTR7R8aFXYpTL+uwrGY?=
+ =?us-ascii?Q?nAzSEuFy5FR3+jOnoF4YsPk+Qm459J93aCv/lNR1DTpnX5VwBJ2uLh1fjnS6?=
+ =?us-ascii?Q?BAUaqUnEXcWzNU16soD+aF08efgIkT4JPrbPVRCaICR7dYrwnLc0ddOADLSm?=
+ =?us-ascii?Q?AXi/t+01xDg4lFvglQ2zOiznNZrigbTTujZafpitVhLJEKRfFHvlLlxgIqPC?=
+ =?us-ascii?Q?sbQbVaE546QGQrAC8KkrtJEomMHJWL5NT13dBhxOGgnUZOaK2v3tleB67nmH?=
+ =?us-ascii?Q?Cvcj85IRzKRGdHuTqa9/6o4tsufVaZ9PA5PWQFWcR7573o8TSxGYKfi9VT6U?=
+ =?us-ascii?Q?t30WDMG425I07OW8o3iS0yvs8wRDT7uxua6TJo8Q1ll/Vo06VdW8uQ/Kx9D8?=
+ =?us-ascii?Q?h4yAEeB5M5Www1CD5MX+Y3erfwCKlaUP1WWgg+BZlwDPKORGxauSHUOYlDUV?=
+ =?us-ascii?Q?MomvTspFsdfZplotVRPjfgXcesAoMPnYbiIm/Af5EF168Jo25Rfxp+nlLxph?=
+ =?us-ascii?Q?DFw3Oln+4CvlNbhv4EPKnbcyFyiPXa0vHto3h/qy3mqU7Fr/MTk35u7MeuAV?=
+ =?us-ascii?Q?lnfbhwm/p3J8pbLZOOF8A5OkL9UEOr5OaQ6FszS0QpX0Hb1FXAGGGcjSul09?=
+ =?us-ascii?Q?o2LnhOE8VPrym1RoGxnKIrTKhUBp57k7L3lQ9zQ2OjapFHjqLhgzsLqqCi9N?=
+ =?us-ascii?Q?5IOokm73cFr3zgSEzMsU+hQVGG5vcmelnX+IxiuldLnneahWyHZrUa0ijazP?=
+ =?us-ascii?Q?bWH9N7SwIJcMzwRqGXiGMg7N39R6KnbsteVRQniYAJRGrk4ts4WG3V3xwGK0?=
+ =?us-ascii?Q?sEQ/LzremJqnSRAWb0lXMN+7OYgMWgLo7L2ygM5diwO/LxCA2PIRoEZNu88o?=
+ =?us-ascii?Q?t2Ma1xXCOxhp4mm/8xTfv3oKenzHLtMd31uxXCa0wa36l5X8hyI964XSrnK2?=
+ =?us-ascii?Q?KHGCaGEOfvacN9IF6PAfB4Vn49nUf+gRwb8iaafGdvtbKQ5A3KX9klEZ7Ds1?=
+ =?us-ascii?Q?olGju2RKw1raLLKWHlTJBXfAYv2Q7pPTal2qcsbRzf4Rj0WywoFdI/5Obzfq?=
+ =?us-ascii?Q?bMrU9rBAIUoeNrSjVdA8bFhgSO2Pk6gatpLRjNdBFwOjyJODrAvyazilc+yv?=
+ =?us-ascii?Q?dUP7JswgSDKGW4JVWASXdGG/i9vykr8ryMAP6cBKHF5CMA=3D=3D?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH3PR12MB8659.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(366016)(1800799024);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?ARLDL/Fy1p/Ibrc6ePkEoC6HDSmknztNfJgv+TNN+SjLdKBLTckcJAOsd8CM?=
+ =?us-ascii?Q?AGNbp4G5Itkw/cZZS2l+HnfdeW0v+B+umoDLUFGhKFDmGQ9SPXHNatWnXkdV?=
+ =?us-ascii?Q?Vyr9eSoypM4mFK/S3IUTofw5VWjhXSdlx7OR6/4zVeX/xxcBoKqWGVdhVmfo?=
+ =?us-ascii?Q?8w8M7+cs5j7RPA7pmTLGRvDIg0WymhE5mULXVJ3jy6IfzRLfQMcmpTAkomhA?=
+ =?us-ascii?Q?koaZ3/APYTqdzWrzWgOIvXCadbQBQu4h6PJQdTODyEcUNHTHbbTXSMLznr84?=
+ =?us-ascii?Q?/ro0pjmgblPv+MKxNv1lZHyVe4FNArOmWl9DP1wR4P4mr4xwMMNcBb+MJXvg?=
+ =?us-ascii?Q?kmWfI1+zcnsDCTWBX8xyKQb3GKCH736uhVeqAmfJc/FTNGZRKDW6iCwgfvLY?=
+ =?us-ascii?Q?Suvp2mrviW975cqb+q6qjeK3BGzoEytu+lMV3x0I3CfVdmFmaoLdLSGEc1n4?=
+ =?us-ascii?Q?bw2LKP5biz5Ji4TKNUqEVzYgP5ExHU50ERI1DFIYospK5YxQcb8uHWbXL63/?=
+ =?us-ascii?Q?qFgfrWzstBg6ib/CgvBCrXNfWt+yBH7fq43YcGpzEb+gs5wqfcCEgveIahoc?=
+ =?us-ascii?Q?IYYBnBIv2bhVcZI6bZMWRem8wI54obLRkkcMDpbgF4YRCL/RRA+vF8nk18hA?=
+ =?us-ascii?Q?yLPZxir4cdy1zFbEm7KWqLIrLc9VHrSrKGxoIWjCC7J0b2mxqA/id9QVPK2y?=
+ =?us-ascii?Q?RQnWH5HmIQ0nSfyaNKHZrsO88+WwiHwdhYZ1w1xxgsxCmSA90+VtdL7u7+WH?=
+ =?us-ascii?Q?WCJxNLAk93SWoaSXc5KSsGxb1IFvGyGMLVxCeMO0Ei6NjpetofSE03qR1A+j?=
+ =?us-ascii?Q?YKJxktSNPU7bIOHNBl/D4WSD1Gf7HGf/032Yga6U7XN+Q+jZT4I0c1VP+WGY?=
+ =?us-ascii?Q?IuJItk8VplLMIuOabD0ItUxXnHVKzP5wbb51bUuSlTHmRf/AaQ5L8O/BTNaf?=
+ =?us-ascii?Q?dZ/69DDdpKjA574CWg33m3mGlibEHOahYYdjabOmzE5hlzNoUcKd7VQFCFw7?=
+ =?us-ascii?Q?/gPpyDNvgV5Lq6E7cy64GPj4sa1FRG/bD8WcaLbVv+tn7EKS6tRB/CqL5vDl?=
+ =?us-ascii?Q?4aIsOoZCd2rxCn83eovlgOPKP4G65+wjFXoo4a9XJF5qXB7Z869o+q3qDBsB?=
+ =?us-ascii?Q?IxdP7iOPGLhkCJnDw8tEwg5r7qDLQomzk1HB6abeYb2TQCSmFR4NsvKjRiLk?=
+ =?us-ascii?Q?FjVNw1Qm8FBn4xIqKBPYOu2xNOnXp40KUvOnfm14hkRRBCR71129ZAJWvxO0?=
+ =?us-ascii?Q?n6wJmlJVBUovh8EJV9Eo/c3dP58bjTPiaV6vk+NbzkNLgDyNBI6YauzgBV5I?=
+ =?us-ascii?Q?e56ujJC9eGyOll0gEn8ceAtMACWdTsJLwKUkG7QRvm71zzRJxlwCMRprchhE?=
+ =?us-ascii?Q?jMMzMOLzvEaVMKo/rkX2W9vDdIJbpR1DD3J4/TMUKcc+IS/dYjZexIZcVtaN?=
+ =?us-ascii?Q?7SwxiS22xVBDUNdbgL0GWPIw26czfxkJnBLkKah3e9XIifFaM0HrJcTNH1sj?=
+ =?us-ascii?Q?JjKrKNVfpGRgShFppQE6FpM5so6Rm60CXKjdQNtNC7dEZVguFL2KJ09MxA/C?=
+ =?us-ascii?Q?Zg78PojHl0Mpdwp14Is+7V9e0U7jsZOZvDvvy4SH?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 4d9074f4-204d-4101-ed6b-08dd158ad80e
+X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB8659.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Dec 2024 00:13:43.2756
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 1WCZMDSCwqnXp+ouigoDFWlWvRsEEKq8E25lBoaF3KL4wGF5Eau/VFzl7ivbSuez
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR12MB7496
 
-On Tue, Nov 12, 2024 at 10:45=E2=80=AFAM Miguel Ojeda <ojeda@kernel.org> wr=
-ote:
->
-> From: HONG Yifan <elsk@google.com>
->
-> These are flags to be passed when linking proc macros for the Rust
-> toolchain. If unset, it defaults to $(KBUILD_HOSTLDFLAGS).
->
-> This is needed because the list of flags to link hostprogs is not
-> necessarily the same as the list of flags used to link libmacros.so.
-> When we build proc macros, we need the latter, not the former (e.g. when
-> using a Rust compiler binary linked to a different C library than host
-> programs).
->
-> To distinguish between the two, introduce this new variable to stand
-> out from KBUILD_HOSTLDFLAGS used to link other host progs.
->
-> Signed-off-by: HONG Yifan <elsk@google.com>
-> Link: https://lore.kernel.org/r/20241017210430.2401398-2-elsk@google.com
-> [ v3:
->
->   - `export`ed the variable. Otherwise it would not be visible in
->     `rust/Makefile`.
->
->   - Removed "additional" from the documentation and commit message,
->     since this actually replaces the other flags, unlike other cases.
->
->   - Added example of use case to documentation and commit message.
->     Thanks Alice for the details on what Google needs!
->
->   - Instead of `HOSTLDFLAGS`, used `KBUILD_HOSTLDFLAGS` as the fallback
->     to preserve the previous behavior as much as possible, as discussed
->     with Alice/Yifan. Thus moved the variable down too (currently we
->     do not modify `KBUILD_HOSTLDFLAGS` elsewhere) and avoided
->     mentioning `HOSTLDFLAGS` directly in the documentation.
->
->   - Fixed documentation header formatting.
->
->   - Reworded slightly.
->
->          - Miguel ]
-> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
-> ---
-> Masahiro: if Kbuild wants to pick this up, that is great. Otherwise, I am=
- happy
-> picking this up early next cycle, if you give an `Acked-by` since this is
-> changing the interface for Kbuild users given we are introducing a new
-> environment variable. Thanks!
->
-> Note that the `or` means if the string is empty, we will use the default =
-rather
-> than nothing. I didn't change that from Yifan's version, but maybe we wan=
-t to do
-> otherwise. Users can still provide e.g. an empty space to avoid any flag.
+The list domain->dev_list is protected by the domain->lock spinlock.
+Any iteration, addition or removal must be under the lock.
 
-I am not sure if I understand the implications here.
-https://www.gnu.org/software/make/manual/html_node/Conditional-Functions.ht=
-ml
-says:
+Move the list_del() up into the critical section. pdom_is_sva_capable(),
+and destroy_gcr3_table() do not interact with the list element.
 
-The or function provides a =E2=80=9Cshort-circuiting=E2=80=9D OR operation.=
- Each
-argument is expanded, in order. If an argument expands to a non-empty
-string the processing stops and the result of the expansion is that
-string. If, after all arguments are expanded, all of them are false
-(empty), then the result of the expansion is the empty string.
+Wrap the list_add() in a lock, it would make more sense if this was under
+the same critical section as adjusting the refcounts earlier, but that
+requires more complications.
 
-I am assuming that this means:
-- If PROCMACROLDFLAGS is not empty, KBUILD_PROCMACROLDFLAGS evaluates
-to PROCMACROLDFLAGS
-- Otherwise if KBUILD_HOSTLDFLAGS is not empty,
-KBUILD_PROCMACROLDFLAGS evaluates to KBUILD_HOSTLDFLAGS
-- Otherwise KBUILD_PROCMACROLDFLAGS is set to empty.
+Fixes: d6b47dec3684 ("iommu/amd: Reduce domain lock scope in attach device path")
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+---
+ drivers/iommu/amd/iommu.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-What do you mean by "use the default"?
+diff --git a/drivers/iommu/amd/iommu.c b/drivers/iommu/amd/iommu.c
+index 3f691e1fd22ce4..23a168e229b171 100644
+--- a/drivers/iommu/amd/iommu.c
++++ b/drivers/iommu/amd/iommu.c
+@@ -2073,6 +2073,7 @@ static int attach_device(struct device *dev,
+ 	struct iommu_dev_data *dev_data = dev_iommu_priv_get(dev);
+ 	struct amd_iommu *iommu = get_amd_iommu_from_dev_data(dev_data);
+ 	struct pci_dev *pdev;
++	unsigned long flags;
+ 	int ret = 0;
+ 
+ 	mutex_lock(&dev_data->mutex);
+@@ -2113,7 +2114,9 @@ static int attach_device(struct device *dev,
+ 
+ 	/* Update data structures */
+ 	dev_data->domain = domain;
++	spin_lock_irqsave(&domain->lock, flags);
+ 	list_add(&dev_data->list, &domain->dev_list);
++	spin_unlock_irqrestore(&domain->lock, flags);
+ 
+ 	/* Update device table */
+ 	dev_update_dte(dev_data, true);
+@@ -2160,6 +2163,7 @@ static void detach_device(struct device *dev)
+ 	/* Flush IOTLB and wait for the flushes to finish */
+ 	spin_lock_irqsave(&domain->lock, flags);
+ 	amd_iommu_domain_flush_all(domain);
++	list_del(&dev_data->list);
+ 	spin_unlock_irqrestore(&domain->lock, flags);
+ 
+ 	/* Clear GCR3 table */
+@@ -2168,7 +2172,6 @@ static void detach_device(struct device *dev)
+ 
+ 	/* Update data structures */
+ 	dev_data->domain = NULL;
+-	list_del(&dev_data->list);
+ 
+ 	/* decrease reference counters - needs to happen after the flushes */
+ 	pdom_detach_iommu(iommu, domain);
+-- 
+2.43.0
 
-
->
-> Yifan/Alice: please double-check the changes. Thanks!
->
-> v3: see changes above.
-> v2: https://lore.kernel.org/rust-for-linux/20241017210430.2401398-2-elsk@=
-google.com/
-> v1: https://lore.kernel.org/rust-for-linux/20241017200138.2390077-2-elsk@=
-google.com/
->
->  Documentation/kbuild/kbuild.rst | 11 +++++++++++
->  Makefile                        |  3 ++-
->  rust/Makefile                   |  2 +-
->  3 files changed, 14 insertions(+), 2 deletions(-)
->
-> diff --git a/Documentation/kbuild/kbuild.rst b/Documentation/kbuild/kbuil=
-d.rst
-> index 1796b3eba37b..9cb876ccc363 100644
-> --- a/Documentation/kbuild/kbuild.rst
-> +++ b/Documentation/kbuild/kbuild.rst
-> @@ -91,6 +91,17 @@ HOSTRUSTFLAGS
->  -------------
->  Additional flags to be passed to $(HOSTRUSTC) when building host program=
-s.
->
-> +PROCMACROLDFLAGS
-> +----------------
-> +Flags to be passed when linking Rust proc macros. Since proc macros are =
-loaded
-> +by rustc at build time, they must be linked in a way that is compatible =
-with
-> +the rustc toolchain being used.
-> +
-> +For instance, it can be useful when rustc uses a different C library tha=
-n
-> +the one the user wants to use for host programs.
-> +
-> +If unset, it defaults to the flags passed when linking host programs.
-> +
->  HOSTLDFLAGS
->  -----------
->  Additional flags to be passed when linking host programs.
-> diff --git a/Makefile b/Makefile
-> index a9e723cb0596..3efb001bada5 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -471,6 +471,7 @@ KBUILD_HOSTRUSTFLAGS :=3D $(rust_common_flags) -O -Cs=
-trip=3Ddebuginfo \
->                         -Zallow-features=3D $(HOSTRUSTFLAGS)
->  KBUILD_HOSTLDFLAGS  :=3D $(HOST_LFS_LDFLAGS) $(HOSTLDFLAGS)
->  KBUILD_HOSTLDLIBS   :=3D $(HOST_LFS_LIBS) $(HOSTLDLIBS)
-> +KBUILD_PROCMACROLDFLAGS :=3D $(or $(PROCMACROLDFLAGS),$(KBUILD_HOSTLDFLA=
-GS))
->
->  # Make variables (CC, etc...)
->  CPP            =3D $(CC) -E
-> @@ -595,7 +596,7 @@ export HOSTRUSTC KBUILD_HOSTRUSTFLAGS
->  export CPP AR NM STRIP OBJCOPY OBJDUMP READELF PAHOLE RESOLVE_BTFIDS LEX=
- YACC AWK INSTALLKERNEL
->  export PERL PYTHON3 CHECK CHECKFLAGS MAKE UTS_MACHINE HOSTCXX
->  export KGZIP KBZIP2 KLZOP LZMA LZ4 XZ ZSTD
-> -export KBUILD_HOSTCXXFLAGS KBUILD_HOSTLDFLAGS KBUILD_HOSTLDLIBS LDFLAGS_=
-MODULE
-> +export KBUILD_HOSTCXXFLAGS KBUILD_HOSTLDFLAGS KBUILD_HOSTLDLIBS KBUILD_P=
-ROCMACROLDFLAGS LDFLAGS_MODULE
->  export KBUILD_USERCFLAGS KBUILD_USERLDFLAGS
->
->  export KBUILD_CPPFLAGS NOSTDINC_FLAGS LINUXINCLUDE OBJCOPYFLAGS KBUILD_L=
-DFLAGS
-> diff --git a/rust/Makefile b/rust/Makefile
-> index f349e7b067ea..9f55c470aa2c 100644
-> --- a/rust/Makefile
-> +++ b/rust/Makefile
-> @@ -344,7 +344,7 @@ quiet_cmd_rustc_procmacro =3D $(RUSTC_OR_CLIPPY_QUIET=
-) P $@
->        cmd_rustc_procmacro =3D \
->         $(RUSTC_OR_CLIPPY) $(rust_common_flags) \
->                 -Clinker-flavor=3Dgcc -Clinker=3D$(HOSTCC) \
-> -               -Clink-args=3D'$(call escsq,$(KBUILD_HOSTLDFLAGS))' \
-> +               -Clink-args=3D'$(call escsq,$(KBUILD_PROCMACROLDFLAGS))' =
-\
->                 --emit=3Ddep-info=3D$(depfile) --emit=3Dlink=3D$@ --exter=
-n proc_macro \
->                 --crate-type proc-macro \
->                 --crate-name $(patsubst lib%.so,%,$(notdir $@)) $<
->
-> base-commit: d072acda4862f095ec9056979b654cc06a22cc68
-> --
-> 2.47.0
