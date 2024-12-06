@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6D131527AC;
-	Fri,  6 Dec 2024 15:12:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22C851527AC;
+	Fri,  6 Dec 2024 15:12:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733497970; cv=none; b=IDW+vZ52ZrGRC2a3QjIVfH77S9QoNAapeSSNHAQBcDBNltGKn3Fn5/TO2jUfJkwVeV+s+leUWqlRuD3TclgMTgJbD9c2/LI2aE5cAcRo6YfFTHcNPdJOY1PfNgP1Ty1cnw4/wjEMBAFII7y2hqwyJFbGWddJe1/WBMA8vwjeecI=
+	t=1733497974; cv=none; b=rOFCwrvtgPfqytb7ofXRdnpND/PpB0kj8PF2JdhnRlNjWXmrm3w8LL+djg42sp8gQhus4PdQtsOBPNIokkcxGXhReo8n5nIti2cERXy9SfGhluwlemQcXHGTQSycAM1OQn05O7wbxCSZ6m7HL1zGzdRLWxY+fnNckGhN2osQxdU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733497970; c=relaxed/simple;
-	bh=C3jVoX8ILyroaYxFQuI+A5A5grRL12DW/boFkIPFW0s=;
+	s=arc-20240116; t=1733497974; c=relaxed/simple;
+	bh=W+a9ZDLBrEMbxi6c+8Og+iPDOcqabWt6qrMayfIk3vE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LuNUdH25T/qgN5Uedw8mP/1+hgUTS2jRX3TcJ2glbrd7dtN+uIxQw9nvq8SFPSCMUNd2oVWYOUMasqHN3pL5lGhazEFNIeSkFBHwYL75H1ndrXpzOU7nS/OmVorKU7GZt7i7yTMVp8KoQ2z+OGgF8OoKnlwIBe0XKjhIad6siDY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NX5OrI3X; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=T4GtzS78pj4RXG90g36tvvTZ2g7YyPy0IGlsN6i0Zh7xvANd1iQcIvH+1GCHiPUakq3USuzQewlDfv3NJc+XBnCHY7Vp0jP9a3d9VXv+fmoIGLQ+NEXsQrZ3hwzWXPgd2eoeFtcLXdhI0o+ZNlyhwoAdjQNU84uadPI1tij4igg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gLcoSbMY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NX5OrI3X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E20EC4CED1;
-	Fri,  6 Dec 2024 15:12:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gLcoSbMY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82638C4CED1;
+	Fri,  6 Dec 2024 15:12:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733497970;
-	bh=C3jVoX8ILyroaYxFQuI+A5A5grRL12DW/boFkIPFW0s=;
+	s=korg; t=1733497974;
+	bh=W+a9ZDLBrEMbxi6c+8Og+iPDOcqabWt6qrMayfIk3vE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NX5OrI3XTmyHe8oNxkNvNkMX+YIreN9BRyI053s8z7fjGG9/Iy8W5u1xsfAobYQKk
-	 jza4hPqJuKEM1q4E4HceaU8hd94O1an+U9xk1ZFeZILUfMgzkF46sDC8wc9PSbzQVj
-	 aiIN1KDRc0xXJtqCrb1mUiAAM7vuhLH/mUE1Cz7Y=
+	b=gLcoSbMYGxLkx85CV7Qhu/fqneMb++/MZ17wCx6lYkPYETyNOWyeq4K67ULL3Nmpf
+	 V0coh5GtX12gKKjOaaHsL1RkxdFA4p2/R9W8hIIVDCxPOY5msKBp8lh0/VLnr001B0
+	 fpxrdim6+WuVnNs9WUt2fvIKFqMeeRk88ffmCAuA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Justin Tee <justin.tee@broadcom.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Xiangyu Chen <xiangyu.chen@windriver.com>
-Subject: [PATCH 6.6 446/676] scsi: lpfc: Validate hdwq pointers before dereferencing in reset/errata paths
-Date: Fri,  6 Dec 2024 15:34:25 +0100
-Message-ID: <20241206143710.787292717@linuxfoundation.org>
+	Christoph Hellwig <hch@lst.de>,
+	Puranjay Mohan <pjy@amazon.com>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	Anuj Gupta <anuj20.g@samsung.com>,
+	Keith Busch <kbusch@kernel.org>,
+	Hagar Hemdan <hagarhem@amazon.com>
+Subject: [PATCH 6.6 447/676] nvme: fix metadata handling in nvme-passthrough
+Date: Fri,  6 Dec 2024 15:34:26 +0100
+Message-ID: <20241206143710.829435088@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -51,86 +54,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Justin Tee <justin.tee@broadcom.com>
+From: Puranjay Mohan <pjy@amazon.com>
 
-commit 2be1d4f11944cd6283cb97268b3e17c4424945ca upstream.
+commit 7c2fd76048e95dd267055b5f5e0a48e6e7c81fd9 upstream.
 
-When the HBA is undergoing a reset or is handling an errata event, NULL ptr
-dereference crashes may occur in routines such as
-lpfc_sli_flush_io_rings(), lpfc_dev_loss_tmo_callbk(), or
-lpfc_abort_handler().
+On an NVMe namespace that does not support metadata, it is possible to
+send an IO command with metadata through io-passthru. This allows issues
+like [1] to trigger in the completion code path.
+nvme_map_user_request() doesn't check if the namespace supports metadata
+before sending it forward. It also allows admin commands with metadata to
+be processed as it ignores metadata when bdev == NULL and may report
+success.
 
-Add NULL ptr checks before dereferencing hdwq pointers that may have been
-freed due to operations colliding with a reset or errata event handler.
+Reject an IO command with metadata when the NVMe namespace doesn't
+support it and reject an admin command if it has metadata.
 
-Signed-off-by: Justin Tee <justin.tee@broadcom.com>
-Link: https://lore.kernel.org/r/20240726231512.92867-4-justintee8345@gmail.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-[Xiangyu: BP to fix CVE: CVE-2024-49891, no test_bit() conflict resolution]
-Signed-off-by: Xiangyu Chen <xiangyu.chen@windriver.com>
+[1] https://lore.kernel.org/all/mb61pcylvnym8.fsf@amazon.com/
+
+Suggested-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Puranjay Mohan <pjy@amazon.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
+Reviewed-by: Anuj Gupta <anuj20.g@samsung.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
+[ Minor changes to make it work on 6.6 ]
+Signed-off-by: Hagar Hemdan <hagarhem@amazon.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/lpfc/lpfc_hbadisc.c |    3 ++-
- drivers/scsi/lpfc/lpfc_scsi.c    |   13 +++++++++++--
- drivers/scsi/lpfc/lpfc_sli.c     |   11 +++++++++++
- 3 files changed, 24 insertions(+), 3 deletions(-)
+ drivers/nvme/host/ioctl.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/drivers/scsi/lpfc/lpfc_hbadisc.c
-+++ b/drivers/scsi/lpfc/lpfc_hbadisc.c
-@@ -175,7 +175,8 @@ lpfc_dev_loss_tmo_callbk(struct fc_rport
- 			 ndlp->nlp_state, ndlp->fc4_xpt_flags);
+--- a/drivers/nvme/host/ioctl.c
++++ b/drivers/nvme/host/ioctl.c
+@@ -3,6 +3,7 @@
+  * Copyright (c) 2011-2014, Intel Corporation.
+  * Copyright (c) 2017-2021 Christoph Hellwig.
+  */
++#include <linux/blk-integrity.h>
+ #include <linux/ptrace.h>	/* for force_successful_syscall_return */
+ #include <linux/nvme_ioctl.h>
+ #include <linux/io_uring.h>
+@@ -171,10 +172,15 @@ static int nvme_map_user_request(struct
+ 	struct request_queue *q = req->q;
+ 	struct nvme_ns *ns = q->queuedata;
+ 	struct block_device *bdev = ns ? ns->disk->part0 : NULL;
++	bool supports_metadata = bdev && blk_get_integrity(bdev->bd_disk);
++	bool has_metadata = meta_buffer && meta_len;
+ 	struct bio *bio = NULL;
+ 	void *meta = NULL;
+ 	int ret;
  
- 	/* Don't schedule a worker thread event if the vport is going down. */
--	if (vport->load_flag & FC_UNLOADING) {
-+	if ((vport->load_flag & FC_UNLOADING) ||
-+	    !(phba->hba_flag & HBA_SETUP)) {
- 		spin_lock_irqsave(&ndlp->lock, iflags);
- 		ndlp->rport = NULL;
++	if (has_metadata && !supports_metadata)
++		return -EINVAL;
++
+ 	if (ioucmd && (ioucmd->flags & IORING_URING_CMD_FIXED)) {
+ 		struct iov_iter iter;
  
---- a/drivers/scsi/lpfc/lpfc_scsi.c
-+++ b/drivers/scsi/lpfc/lpfc_scsi.c
-@@ -5546,11 +5546,20 @@ lpfc_abort_handler(struct scsi_cmnd *cmn
+@@ -198,7 +204,7 @@ static int nvme_map_user_request(struct
+ 	if (bdev)
+ 		bio_set_dev(bio, bdev);
  
- 	iocb = &lpfc_cmd->cur_iocbq;
- 	if (phba->sli_rev == LPFC_SLI_REV4) {
--		pring_s4 = phba->sli4_hba.hdwq[iocb->hba_wqidx].io_wq->pring;
--		if (!pring_s4) {
-+		/* if the io_wq & pring are gone, the port was reset. */
-+		if (!phba->sli4_hba.hdwq[iocb->hba_wqidx].io_wq ||
-+		    !phba->sli4_hba.hdwq[iocb->hba_wqidx].io_wq->pring) {
-+			lpfc_printf_vlog(vport, KERN_WARNING, LOG_FCP,
-+					 "2877 SCSI Layer I/O Abort Request "
-+					 "IO CMPL Status x%x ID %d LUN %llu "
-+					 "HBA_SETUP %d\n", FAILED,
-+					 cmnd->device->id,
-+					 (u64)cmnd->device->lun,
-+					 (HBA_SETUP & phba->hba_flag));
- 			ret = FAILED;
- 			goto out_unlock_hba;
- 		}
-+		pring_s4 = phba->sli4_hba.hdwq[iocb->hba_wqidx].io_wq->pring;
- 		spin_lock(&pring_s4->ring_lock);
- 	}
- 	/* the command is in process of being cancelled */
---- a/drivers/scsi/lpfc/lpfc_sli.c
-+++ b/drivers/scsi/lpfc/lpfc_sli.c
-@@ -4684,6 +4684,17 @@ lpfc_sli_flush_io_rings(struct lpfc_hba
- 	/* Look on all the FCP Rings for the iotag */
- 	if (phba->sli_rev >= LPFC_SLI_REV4) {
- 		for (i = 0; i < phba->cfg_hdw_queue; i++) {
-+			if (!phba->sli4_hba.hdwq ||
-+			    !phba->sli4_hba.hdwq[i].io_wq) {
-+				lpfc_printf_log(phba, KERN_ERR, LOG_SLI,
-+						"7777 hdwq's deleted %lx "
-+						"%lx %x %x\n",
-+						(unsigned long)phba->pport->load_flag,
-+						(unsigned long)phba->hba_flag,
-+						phba->link_state,
-+						phba->sli.sli_flag);
-+				return;
-+			}
- 			pring = phba->sli4_hba.hdwq[i].io_wq->pring;
- 
- 			spin_lock_irq(&pring->ring_lock);
+-	if (bdev && meta_buffer && meta_len) {
++	if (has_metadata) {
+ 		meta = nvme_add_user_metadata(req, meta_buffer, meta_len,
+ 				meta_seed);
+ 		if (IS_ERR(meta)) {
 
 
