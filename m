@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E045F1E871;
-	Fri,  6 Dec 2024 15:01:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EA8F53A7;
+	Fri,  6 Dec 2024 15:01:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733497274; cv=none; b=QBbl2nK5pXyfQXaEbdNFFZbByV0PHHLjj2Vye1e1d6If4ZF+R4RXdyOQ6qIEHJehHQtaBai5wBK0+aEKxUFlLZJvegIGtvQ2U4LUOJyd9cR0TQdckfWnG1+qoFjLhVjmZ80/YTETsdbG8ciTIT1sn8tKDbcJllxOwASEcP6iSlo=
+	t=1733497279; cv=none; b=UB65VO3w//7O4Ni3zqb76ouANzjIz9lijFwpggJUWmoP9l04ECtgMsnqyDECQhwntxYtJJOI1ppd9iSyLD+i1DzjpL6mL+cKChqcwImWqx799R3Gi2J6T88DEGEiWzJ4Vo7WEEDFxfuQBefd70wjCTbwyY1BRk2gy1lCMwhGzCA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733497274; c=relaxed/simple;
-	bh=UTlUjbh6pQHPLj3iG14rOnf6EbFoeHoHSON52BgXgwE=;
+	s=arc-20240116; t=1733497279; c=relaxed/simple;
+	bh=vTlIA4bpkKWStT390N/1GHyBViE+gPkhFWFywDtW2J0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=MnHqpYnw+j2yo2N3RvgU84L9Tw3bymuiJbY3VBG+/oILJ3l/DdCVsO00UOzy8AoGOfW4WwEn8lS5vYRlDUecaISiiCGAuDEYKfIRwie9UtDyK32o4vl6N5KSAMZUPSpYpCncRYWNtB3yiP8Ku2gdlnJpl2/hDkv60gtQKAyNMbI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WiQS9HDH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ewidN/UKEzYNfa97TTrnktFPaV+82wnXh+/yjcqOa+DwJEN2OQyzvpexV6NKpUSq6TAJd+HRPlH8KYH3VPRmNtdqjLeycUbzL6qVvrdYYUiEu4L8B+C9zub2VS28/s1nqlYTtS65EFuinPqyVTyPdn1KQjns8feCWAztRGYoGCs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qKPpgB7X; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WiQS9HDH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CE92C4CED1;
-	Fri,  6 Dec 2024 15:01:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qKPpgB7X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA963C4CED1;
+	Fri,  6 Dec 2024 15:01:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733497273;
-	bh=UTlUjbh6pQHPLj3iG14rOnf6EbFoeHoHSON52BgXgwE=;
+	s=korg; t=1733497277;
+	bh=vTlIA4bpkKWStT390N/1GHyBViE+gPkhFWFywDtW2J0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WiQS9HDHJrgHUi7CDQN7GoJTNPXNTsYUtCgBzqfV8Dg8XEoy4AsGmX3JJo6lk8uP+
-	 91UJLw9PItEEvFS7iYyZaKbXYaEdbGFyUAEBS19KA1eI9K0cdTyu99Qtl4ynNxZ4MN
-	 q0y0lva2DESCFPjJT0AqyGHlr8Mnaz7OgS80B9m8=
+	b=qKPpgB7Xmsu0ziID98FWYTXKfnrUupNvmNYbqDTLJeWfGdva9n6C7d2gCDwDcIGCg
+	 iwDbmq1S6QMC6eusxc/X1fENqC4rGYLOPxg7lsmL6svHyBvag0hA9nKIK1ElGKppwh
+	 A1HvzJh6X8n8S20r+KVf9Ve7yD6FyeBpPEts2d7Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Xu Kuohai <xukuohai@huawei.com>,
+	Puranjay Mohan <puranjay@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 243/676] net: use unrcu_pointer() helper
-Date: Fri,  6 Dec 2024 15:31:02 +0100
-Message-ID: <20241206143702.822958315@linuxfoundation.org>
+Subject: [PATCH 6.6 214/676] bpf, arm64: Remove garbage frame for struct_ops trampoline
+Date: Fri,  6 Dec 2024 15:30:33 +0100
+Message-ID: <20241206143701.700332577@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -46,253 +46,144 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Xu Kuohai <xukuohai@huawei.com>
 
-[ Upstream commit b4cb4a1391dcdc640c4ade003aaf0ee19cc8d509 ]
+[ Upstream commit 87cb58aebdf7005661a07e9fd5a900f924d48c75 ]
 
-Toke mentioned unrcu_pointer() existence, allowing
-to remove some of the ugly casts we have when using
-xchg() for rcu protected pointers.
+The callsite layout for arm64 fentry is:
 
-Also make inet_rcv_compat const.
+mov x9, lr
+nop
 
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Toke Høiland-Jørgensen <toke@redhat.com>
-Reviewed-by: Toke Høiland-Jørgensen <toke@redhat.com>
-Link: https://lore.kernel.org/r/20240604111603.45871-1-edumazet@google.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Stable-dep-of: eb02688c5c45 ("ipv6: release nexthop on device removal")
+When a bpf prog is attached, the nop instruction is patched to a call
+to bpf trampoline:
+
+mov x9, lr
+bl <bpf trampoline>
+
+So two return addresses are passed to bpf trampoline: the return address
+for the traced function/prog, stored in x9, and the return address for
+the bpf trampoline itself, stored in lr. To obtain a full and accurate
+call stack, the bpf trampoline constructs two fake function frames using
+x9 and lr.
+
+However, struct_ops progs are invoked directly as function callbacks,
+meaning that x9 is not set as it is in the fentry callsite. In this case,
+the frame constructed using x9 is garbage. The following stack trace for
+struct_ops, captured by perf sampling, illustrates this issue, where
+tcp_ack+0x404 is a garbage frame:
+
+ffffffc0801a04b4 bpf_prog_50992e55a0f655a9_bpf_cubic_cong_avoid+0x98 (bpf_prog_50992e55a0f655a9_bpf_cubic_cong_avoid)
+ffffffc0801a228c [unknown] ([kernel.kallsyms]) // bpf trampoline
+ffffffd08d362590 tcp_ack+0x798 ([kernel.kallsyms]) // caller for bpf trampoline
+ffffffd08d3621fc tcp_ack+0x404 ([kernel.kallsyms]) // garbage frame
+ffffffd08d36452c tcp_rcv_established+0x4ac ([kernel.kallsyms])
+ffffffd08d375c58 tcp_v4_do_rcv+0x1f0 ([kernel.kallsyms])
+ffffffd08d378630 tcp_v4_rcv+0xeb8 ([kernel.kallsyms])
+
+To fix it, construct only one frame using lr for struct_ops.
+
+The above stack trace also indicates that there is no kernel symbol for
+struct_ops bpf trampoline. This will be addressed in a follow-up patch.
+
+Fixes: efc9909fdce0 ("bpf, arm64: Add bpf trampoline for arm64")
+Signed-off-by: Xu Kuohai <xukuohai@huawei.com>
+Acked-by: Puranjay Mohan <puranjay@kernel.org>
+Tested-by: Puranjay Mohan <puranjay@kernel.org>
+Link: https://lore.kernel.org/r/20241025085220.533949-1-xukuohai@huaweicloud.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/sock.h       | 2 +-
- net/core/gen_estimator.c | 2 +-
- net/core/sock_diag.c     | 8 +++-----
- net/ipv4/cipso_ipv4.c    | 2 +-
- net/ipv4/tcp.c           | 2 +-
- net/ipv4/tcp_fastopen.c  | 7 ++++---
- net/ipv4/udp.c           | 2 +-
- net/ipv6/af_inet6.c      | 2 +-
- net/ipv6/ip6_fib.c       | 2 +-
- net/ipv6/ipv6_sockglue.c | 3 +--
- net/ipv6/route.c         | 6 +++---
- net/sched/act_api.c      | 2 +-
- 12 files changed, 19 insertions(+), 21 deletions(-)
+ arch/arm64/net/bpf_jit_comp.c | 47 +++++++++++++++++++++++------------
+ 1 file changed, 31 insertions(+), 16 deletions(-)
 
-diff --git a/include/net/sock.h b/include/net/sock.h
-index e0be8bd983960..a6b795ec7c9cb 100644
---- a/include/net/sock.h
-+++ b/include/net/sock.h
-@@ -2219,7 +2219,7 @@ sk_dst_set(struct sock *sk, struct dst_entry *dst)
- 
- 	sk_tx_queue_clear(sk);
- 	WRITE_ONCE(sk->sk_dst_pending_confirm, 0);
--	old_dst = xchg((__force struct dst_entry **)&sk->sk_dst_cache, dst);
-+	old_dst = unrcu_pointer(xchg(&sk->sk_dst_cache, RCU_INITIALIZER(dst)));
- 	dst_release(old_dst);
+diff --git a/arch/arm64/net/bpf_jit_comp.c b/arch/arm64/net/bpf_jit_comp.c
+index 166619348b98e..5074bd1d37b5f 100644
+--- a/arch/arm64/net/bpf_jit_comp.c
++++ b/arch/arm64/net/bpf_jit_comp.c
+@@ -1816,6 +1816,12 @@ static void restore_args(struct jit_ctx *ctx, int args_off, int nregs)
+ 	}
  }
  
-diff --git a/net/core/gen_estimator.c b/net/core/gen_estimator.c
-index fae9c4694186e..412816076b8bc 100644
---- a/net/core/gen_estimator.c
-+++ b/net/core/gen_estimator.c
-@@ -206,7 +206,7 @@ void gen_kill_estimator(struct net_rate_estimator __rcu **rate_est)
- {
- 	struct net_rate_estimator *est;
++static bool is_struct_ops_tramp(const struct bpf_tramp_links *fentry_links)
++{
++	return fentry_links->nr_links == 1 &&
++		fentry_links->links[0]->link.type == BPF_LINK_TYPE_STRUCT_OPS;
++}
++
+ /* Based on the x86's implementation of arch_prepare_bpf_trampoline().
+  *
+  * bpf prog and function entry before bpf trampoline hooked:
+@@ -1845,6 +1851,7 @@ static int prepare_trampoline(struct jit_ctx *ctx, struct bpf_tramp_image *im,
+ 	struct bpf_tramp_links *fmod_ret = &tlinks[BPF_TRAMP_MODIFY_RETURN];
+ 	bool save_ret;
+ 	__le32 **branches = NULL;
++	bool is_struct_ops = is_struct_ops_tramp(fentry);
  
--	est = xchg((__force struct net_rate_estimator **)rate_est, NULL);
-+	est = unrcu_pointer(xchg(rate_est, NULL));
- 	if (est) {
- 		timer_shutdown_sync(&est->timer);
- 		kfree_rcu(est, rcu);
-diff --git a/net/core/sock_diag.c b/net/core/sock_diag.c
-index 5c3666431df49..70007fc578a13 100644
---- a/net/core/sock_diag.c
-+++ b/net/core/sock_diag.c
-@@ -18,7 +18,7 @@
- 
- static const struct sock_diag_handler __rcu *sock_diag_handlers[AF_MAX];
- 
--static struct sock_diag_inet_compat __rcu *inet_rcv_compat;
-+static const struct sock_diag_inet_compat __rcu *inet_rcv_compat;
- 
- static struct workqueue_struct *broadcast_wq;
- 
-@@ -187,8 +187,7 @@ void sock_diag_broadcast_destroy(struct sock *sk)
- 
- void sock_diag_register_inet_compat(const struct sock_diag_inet_compat *ptr)
- {
--	xchg((__force const struct sock_diag_inet_compat **)&inet_rcv_compat,
--	     ptr);
-+	xchg(&inet_rcv_compat, RCU_INITIALIZER(ptr));
- }
- EXPORT_SYMBOL_GPL(sock_diag_register_inet_compat);
- 
-@@ -196,8 +195,7 @@ void sock_diag_unregister_inet_compat(const struct sock_diag_inet_compat *ptr)
- {
- 	const struct sock_diag_inet_compat *old;
- 
--	old = xchg((__force const struct sock_diag_inet_compat **)&inet_rcv_compat,
--		   NULL);
-+	old = unrcu_pointer(xchg(&inet_rcv_compat, NULL));
- 	WARN_ON_ONCE(old != ptr);
- }
- EXPORT_SYMBOL_GPL(sock_diag_unregister_inet_compat);
-diff --git a/net/ipv4/cipso_ipv4.c b/net/ipv4/cipso_ipv4.c
-index 685474ef11c40..8daa6418e25a0 100644
---- a/net/ipv4/cipso_ipv4.c
-+++ b/net/ipv4/cipso_ipv4.c
-@@ -1955,7 +1955,7 @@ int cipso_v4_req_setattr(struct request_sock *req,
- 	buf = NULL;
- 
- 	req_inet = inet_rsk(req);
--	opt = xchg((__force struct ip_options_rcu **)&req_inet->ireq_opt, opt);
-+	opt = unrcu_pointer(xchg(&req_inet->ireq_opt, RCU_INITIALIZER(opt)));
- 	if (opt)
- 		kfree_rcu(opt, rcu);
- 
-diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
-index 75371928d94f6..5e6615f69f175 100644
---- a/net/ipv4/tcp.c
-+++ b/net/ipv4/tcp.c
-@@ -3065,7 +3065,7 @@ int tcp_disconnect(struct sock *sk, int flags)
- 	icsk->icsk_ack.rcv_mss = TCP_MIN_MSS;
- 	memset(&tp->rx_opt, 0, sizeof(tp->rx_opt));
- 	__sk_dst_reset(sk);
--	dst_release(xchg((__force struct dst_entry **)&sk->sk_rx_dst, NULL));
-+	dst_release(unrcu_pointer(xchg(&sk->sk_rx_dst, NULL)));
- 	tcp_saved_syn_free(tp);
- 	tp->compressed_ack = 0;
- 	tp->segs_in = 0;
-diff --git a/net/ipv4/tcp_fastopen.c b/net/ipv4/tcp_fastopen.c
-index 8ed54e7334a9c..0f523cbfe329e 100644
---- a/net/ipv4/tcp_fastopen.c
-+++ b/net/ipv4/tcp_fastopen.c
-@@ -49,7 +49,7 @@ void tcp_fastopen_ctx_destroy(struct net *net)
- {
- 	struct tcp_fastopen_context *ctxt;
- 
--	ctxt = xchg((__force struct tcp_fastopen_context **)&net->ipv4.tcp_fastopen_ctx, NULL);
-+	ctxt = unrcu_pointer(xchg(&net->ipv4.tcp_fastopen_ctx, NULL));
- 
- 	if (ctxt)
- 		call_rcu(&ctxt->rcu, tcp_fastopen_ctx_free);
-@@ -80,9 +80,10 @@ int tcp_fastopen_reset_cipher(struct net *net, struct sock *sk,
- 
- 	if (sk) {
- 		q = &inet_csk(sk)->icsk_accept_queue.fastopenq;
--		octx = xchg((__force struct tcp_fastopen_context **)&q->ctx, ctx);
-+		octx = unrcu_pointer(xchg(&q->ctx, RCU_INITIALIZER(ctx)));
- 	} else {
--		octx = xchg((__force struct tcp_fastopen_context **)&net->ipv4.tcp_fastopen_ctx, ctx);
-+		octx = unrcu_pointer(xchg(&net->ipv4.tcp_fastopen_ctx,
-+					  RCU_INITIALIZER(ctx)));
- 	}
- 
- 	if (octx)
-diff --git a/net/ipv4/udp.c b/net/ipv4/udp.c
-index 73fb814460b6b..2e4e535603948 100644
---- a/net/ipv4/udp.c
-+++ b/net/ipv4/udp.c
-@@ -2232,7 +2232,7 @@ bool udp_sk_rx_dst_set(struct sock *sk, struct dst_entry *dst)
- 	struct dst_entry *old;
- 
- 	if (dst_hold_safe(dst)) {
--		old = xchg((__force struct dst_entry **)&sk->sk_rx_dst, dst);
-+		old = unrcu_pointer(xchg(&sk->sk_rx_dst, RCU_INITIALIZER(dst)));
- 		dst_release(old);
- 		return old != dst;
- 	}
-diff --git a/net/ipv6/af_inet6.c b/net/ipv6/af_inet6.c
-index b9c50cceba568..99843eb4d49b9 100644
---- a/net/ipv6/af_inet6.c
-+++ b/net/ipv6/af_inet6.c
-@@ -507,7 +507,7 @@ void inet6_cleanup_sock(struct sock *sk)
- 
- 	/* Free tx options */
- 
--	opt = xchg((__force struct ipv6_txoptions **)&np->opt, NULL);
-+	opt = unrcu_pointer(xchg(&np->opt, NULL));
- 	if (opt) {
- 		atomic_sub(opt->tot_len, &sk->sk_omem_alloc);
- 		txopt_put(opt);
-diff --git a/net/ipv6/ip6_fib.c b/net/ipv6/ip6_fib.c
-index 4356806b52bd5..afa9073567dc4 100644
---- a/net/ipv6/ip6_fib.c
-+++ b/net/ipv6/ip6_fib.c
-@@ -982,7 +982,7 @@ static void __fib6_drop_pcpu_from(struct fib6_nh *fib6_nh,
- 		if (pcpu_rt && rcu_access_pointer(pcpu_rt->from) == match) {
- 			struct fib6_info *from;
- 
--			from = xchg((__force struct fib6_info **)&pcpu_rt->from, NULL);
-+			from = unrcu_pointer(xchg(&pcpu_rt->from, NULL));
- 			fib6_info_release(from);
- 		}
- 	}
-diff --git a/net/ipv6/ipv6_sockglue.c b/net/ipv6/ipv6_sockglue.c
-index 0e2a0847b387f..f106b19b74dd7 100644
---- a/net/ipv6/ipv6_sockglue.c
-+++ b/net/ipv6/ipv6_sockglue.c
-@@ -111,8 +111,7 @@ struct ipv6_txoptions *ipv6_update_options(struct sock *sk,
- 			icsk->icsk_sync_mss(sk, icsk->icsk_pmtu_cookie);
- 		}
- 	}
--	opt = xchg((__force struct ipv6_txoptions **)&inet6_sk(sk)->opt,
--		   opt);
-+	opt = unrcu_pointer(xchg(&inet6_sk(sk)->opt, RCU_INITIALIZER(opt)));
- 	sk_dst_reset(sk);
- 
- 	return opt;
-diff --git a/net/ipv6/route.c b/net/ipv6/route.c
-index a9104c4c1c02d..341a42c2d6f14 100644
---- a/net/ipv6/route.c
-+++ b/net/ipv6/route.c
-@@ -368,7 +368,7 @@ static void ip6_dst_destroy(struct dst_entry *dst)
- 		in6_dev_put(idev);
- 	}
- 
--	from = xchg((__force struct fib6_info **)&rt->from, NULL);
-+	from = unrcu_pointer(xchg(&rt->from, NULL));
- 	fib6_info_release(from);
- }
- 
-@@ -1430,7 +1430,7 @@ static struct rt6_info *rt6_make_pcpu_route(struct net *net,
- 	if (res->f6i->fib6_destroying) {
- 		struct fib6_info *from;
- 
--		from = xchg((__force struct fib6_info **)&pcpu_rt->from, NULL);
-+		from = unrcu_pointer(xchg(&pcpu_rt->from, NULL));
- 		fib6_info_release(from);
- 	}
- 
-@@ -1459,7 +1459,7 @@ static void rt6_remove_exception(struct rt6_exception_bucket *bucket,
- 	/* purge completely the exception to allow releasing the held resources:
- 	 * some [sk] cache may keep the dst around for unlimited time
+ 	/* trampoline stack layout:
+ 	 *                  [ parent ip         ]
+@@ -1913,11 +1920,14 @@ static int prepare_trampoline(struct jit_ctx *ctx, struct bpf_tramp_image *im,
  	 */
--	from = xchg((__force struct fib6_info **)&rt6_ex->rt6i->from, NULL);
-+	from = unrcu_pointer(xchg(&rt6_ex->rt6i->from, NULL));
- 	fib6_info_release(from);
- 	dst_dev_put(&rt6_ex->rt6i->dst);
+ 	emit_bti(A64_BTI_JC, ctx);
  
-diff --git a/net/sched/act_api.c b/net/sched/act_api.c
-index 4572aa6e0273f..e509ac28c4929 100644
---- a/net/sched/act_api.c
-+++ b/net/sched/act_api.c
-@@ -62,7 +62,7 @@ static void tcf_set_action_cookie(struct tc_cookie __rcu **old_cookie,
- {
- 	struct tc_cookie *old;
+-	/* frame for parent function */
+-	emit(A64_PUSH(A64_FP, A64_R(9), A64_SP), ctx);
+-	emit(A64_MOV(1, A64_FP, A64_SP), ctx);
++	/* x9 is not set for struct_ops */
++	if (!is_struct_ops) {
++		/* frame for parent function */
++		emit(A64_PUSH(A64_FP, A64_R(9), A64_SP), ctx);
++		emit(A64_MOV(1, A64_FP, A64_SP), ctx);
++	}
  
--	old = xchg((__force struct tc_cookie **)old_cookie, new_cookie);
-+	old = unrcu_pointer(xchg(old_cookie, RCU_INITIALIZER(new_cookie)));
- 	if (old)
- 		call_rcu(&old->rcu, tcf_free_cookie_rcu);
- }
+-	/* frame for patched function */
++	/* frame for patched function for tracing, or caller for struct_ops */
+ 	emit(A64_PUSH(A64_FP, A64_LR, A64_SP), ctx);
+ 	emit(A64_MOV(1, A64_FP, A64_SP), ctx);
+ 
+@@ -2003,19 +2013,24 @@ static int prepare_trampoline(struct jit_ctx *ctx, struct bpf_tramp_image *im,
+ 	/* reset SP  */
+ 	emit(A64_MOV(1, A64_SP, A64_FP), ctx);
+ 
+-	/* pop frames  */
+-	emit(A64_POP(A64_FP, A64_LR, A64_SP), ctx);
+-	emit(A64_POP(A64_FP, A64_R(9), A64_SP), ctx);
+-
+-	if (flags & BPF_TRAMP_F_SKIP_FRAME) {
+-		/* skip patched function, return to parent */
+-		emit(A64_MOV(1, A64_LR, A64_R(9)), ctx);
+-		emit(A64_RET(A64_R(9)), ctx);
++	if (is_struct_ops) {
++		emit(A64_POP(A64_FP, A64_LR, A64_SP), ctx);
++		emit(A64_RET(A64_LR), ctx);
+ 	} else {
+-		/* return to patched function */
+-		emit(A64_MOV(1, A64_R(10), A64_LR), ctx);
+-		emit(A64_MOV(1, A64_LR, A64_R(9)), ctx);
+-		emit(A64_RET(A64_R(10)), ctx);
++		/* pop frames */
++		emit(A64_POP(A64_FP, A64_LR, A64_SP), ctx);
++		emit(A64_POP(A64_FP, A64_R(9), A64_SP), ctx);
++
++		if (flags & BPF_TRAMP_F_SKIP_FRAME) {
++			/* skip patched function, return to parent */
++			emit(A64_MOV(1, A64_LR, A64_R(9)), ctx);
++			emit(A64_RET(A64_R(9)), ctx);
++		} else {
++			/* return to patched function */
++			emit(A64_MOV(1, A64_R(10), A64_LR), ctx);
++			emit(A64_MOV(1, A64_LR, A64_R(9)), ctx);
++			emit(A64_RET(A64_R(10)), ctx);
++		}
+ 	}
+ 
+ 	if (ctx->image)
 -- 
 2.43.0
 
