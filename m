@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15AA814AD29;
-	Fri,  6 Dec 2024 14:58:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B49AE1FF7D1;
+	Fri,  6 Dec 2024 14:58:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733497093; cv=none; b=MOJUMs0HewV/Htc9VD4mzlImF1kdA9dshGDA0hrV3YFWAdmGOb+booJJvQtSFuo2YmMfaW9MV1OUY3C/hlp9ugR19i2/0JAewG25P9x7b/7FDEq445gYJ5VVcdfpDvSQ+8lgJauXS0IhvoejfbypjvGLrFUVdSfQtnEr41qAVQI=
+	t=1733497097; cv=none; b=Lr/lhOnzjcum9v9D0v8lO7hZ1UyqHeXCp/mW6wgFYBKzvn90YeobLnBkKQzC6p4J/UbY17x/v+aiRr8fL8i/Qu4vaRf6jdfy/t5tlHZuQmLPsLVCOuMo4wCGdfxCcV1DSb9WWqhOAjPl0gjF3yKklvOpS4/idlPq/9ubz8XAu64=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733497093; c=relaxed/simple;
-	bh=aDDs1wLZydfc8A5W8CuO6OkXbJHZG0PbgLeNsNRIOEE=;
+	s=arc-20240116; t=1733497097; c=relaxed/simple;
+	bh=eB94w1RCwxEfzjyEc7NvzGVDXKDZWmXvp+MO8TnQr0o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=iNuDl1zsCynuL1+6obeJRYte/hoQi62ZXz1AK1t3t5E6ETnq3QjG3hfsL3Y06AtM01DlSTOBOvBK4Rnwsl1eanQhyoreM7q+GQNQ8KSmu7QqNfhgNvjtt5ZwME7lHOlYx23F6HpAyWhfmQzHohY49gFSSCUhOs6Yw8dAICXph7s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bhU5No7d; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fOzrooHBqbxntbe/yjiUHvxvcOZefpxe2v1Q4uxVgvDBEL9I+lii2IVIfWqewiNHSjc0wD5P/nLMp+TWFTpwpoWy9ivp1dfr3TPRYDZrLnL8rYSM1aGyeGFqTHgnmWwGCA81wECXluxqx3hM1+eXIZusk9T0/Xaz2cwxifV/jPQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=awEvMxrd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bhU5No7d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71851C4CED1;
-	Fri,  6 Dec 2024 14:58:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="awEvMxrd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE758C4CED1;
+	Fri,  6 Dec 2024 14:58:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733497092;
-	bh=aDDs1wLZydfc8A5W8CuO6OkXbJHZG0PbgLeNsNRIOEE=;
+	s=korg; t=1733497096;
+	bh=eB94w1RCwxEfzjyEc7NvzGVDXKDZWmXvp+MO8TnQr0o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bhU5No7dwElEXr4pRlgJdDQHRUdBPv7dr7Q5JQqosTTBdaSseUEqcnjzIx2igP4DY
-	 CNKkUDA+kbnZUu7TodIbKMD3ZggCuqX/pPSNEWPRwWJKmHbdC6KESWdzopaDMynw7f
-	 ZPPZI18ahd8X4CSbPsDa94iO1eR3cTbGU3yYSrxg=
+	b=awEvMxrdRFpr+9TljfhGRdQNd3o4icwq3+LSOeA26S8PKmrBJc8nfLJCUOgykZNo4
+	 5/o8rPrKGFlmL9GbOkRmpU3VQL70Gqt9FzHfUhN12KGJdZFJOCv76aMr8WrAcTL+A2
+	 R1MyyTBU8mPEoP6Y3b5S4Avm77bZGtJb1l6fuoks=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
-	Dave Stevenson <dave.stevenson@raspberrypi.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 193/676] drm/vc4: Match drm_dev_enter and exit calls in vc4_hvs_atomic_flush
-Date: Fri,  6 Dec 2024 15:30:12 +0100
-Message-ID: <20241206143700.883300231@linuxfoundation.org>
+Subject: [PATCH 6.6 194/676] libbpf: fix sym_is_subprog() logic for weak global subprogs
+Date: Fri,  6 Dec 2024 15:30:13 +0100
+Message-ID: <20241206143700.923258686@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -46,53 +45,53 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dave Stevenson <dave.stevenson@raspberrypi.com>
+From: Andrii Nakryiko <andrii@kernel.org>
 
-[ Upstream commit 6b0bd1b02ea24b10522c92b2503981970b26d1a2 ]
+[ Upstream commit 4073213488be542f563eb4b2457ab4cbcfc2b738 ]
 
-Commit 92c17d16476c ("drm/vc4: hvs: Ignore atomic_flush if we're disabled")
-added a path which returned early without having called drm_dev_exit.
+sym_is_subprog() is incorrectly rejecting relocations against *weak*
+global subprogs. Fix that by realizing that STB_WEAK is also a global
+function.
 
-Ensure all paths call drm_dev_exit.
+While it seems like verifier doesn't support taking an address of
+non-static subprog right now, it's still best to fix support for it on
+libbpf side, otherwise users will get a very confusing error during BPF
+skeleton generation or static linking due to misinterpreted relocation:
 
-Fixes: 92c17d16476c ("drm/vc4: hvs: Ignore atomic_flush if we're disabled")
-Tested-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Reviewed-by: Maíra Canal <mcanal@igalia.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20241008-drm-vc4-fixes-v1-2-9d0396ca9f42@raspberrypi.com
-Signed-off-by: Dave Stevenson <dave.stevenson@raspberrypi.com>
+  libbpf: prog 'handle_tp': bad map relo against 'foo' in section '.text'
+  Error: failed to open BPF object file: Relocation failed
+
+It's clearly not a map relocation, but is treated and reported as such
+without this fix.
+
+Fixes: 53eddb5e04ac ("libbpf: Support subprog address relocation")
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/r/20241009011554.880168-1-andrii@kernel.org
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/vc4/vc4_hvs.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ tools/lib/bpf/libbpf.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/vc4/vc4_hvs.c b/drivers/gpu/drm/vc4/vc4_hvs.c
-index 27c8fb9efa854..008352166579e 100644
---- a/drivers/gpu/drm/vc4/vc4_hvs.c
-+++ b/drivers/gpu/drm/vc4/vc4_hvs.c
-@@ -583,7 +583,7 @@ void vc4_hvs_atomic_flush(struct drm_crtc *crtc,
- 	}
+diff --git a/tools/lib/bpf/libbpf.c b/tools/lib/bpf/libbpf.c
+index 834b3e6bc72c3..d39b340222d61 100644
+--- a/tools/lib/bpf/libbpf.c
++++ b/tools/lib/bpf/libbpf.c
+@@ -3586,7 +3586,7 @@ static bool sym_is_subprog(const Elf64_Sym *sym, int text_shndx)
+ 		return true;
  
- 	if (vc4_state->assigned_channel == VC4_HVS_CHANNEL_DISABLED)
--		return;
-+		goto exit;
- 
- 	if (debug_dump_regs) {
- 		DRM_INFO("CRTC %d HVS before:\n", drm_crtc_index(crtc));
-@@ -666,6 +666,7 @@ void vc4_hvs_atomic_flush(struct drm_crtc *crtc,
- 		vc4_hvs_dump_state(hvs);
- 	}
- 
-+exit:
- 	drm_dev_exit(idx);
+ 	/* global function */
+-	return bind == STB_GLOBAL && type == STT_FUNC;
++	return (bind == STB_GLOBAL || bind == STB_WEAK) && type == STT_FUNC;
  }
  
+ static int find_extern_btf_id(const struct btf *btf, const char *ext_name)
 -- 
 2.43.0
 
