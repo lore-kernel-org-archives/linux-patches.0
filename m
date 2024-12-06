@@ -1,44 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CA7D53A7;
-	Fri,  6 Dec 2024 15:09:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2023353A7;
+	Fri,  6 Dec 2024 15:09:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733497778; cv=none; b=gDl3yGa51CIYM6CZ82h8G8BiKt0ZA4JhpdeTW6u2wMdZ7fVxafVIRW1mMhF6cIVELMpO9Jwz3iVwmDJEd3CN8yPMut4k9mW/D4Kf8eS1mDCdLUvSLvLCDY7pz0u4jL463X50u+SKorqmYqdqq6G9Mmf40681nzbx0Fzk4ijqYD4=
+	t=1733497782; cv=none; b=U4DKjhy9VuWyFp8Hggex1+foMnEMQkcmNVRWgYSX4+FSoDnHWlhs6DGUrX94TBGc0TuuFA5mhRq8GSoTQtsqtXmu9t/q+dS4H0DrrY8cggcU9rzYjZdyMOsBmGrVehPvoB+bb7lRySHp2xMtF6zEtxc6GGp1Jw5KTO6IGvCXQv4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733497778; c=relaxed/simple;
-	bh=8bdF//VF/Yqah0H58GsnbOgNrFZ3UFm2SlqMEGMvVuk=;
+	s=arc-20240116; t=1733497782; c=relaxed/simple;
+	bh=h+6TfDb5l4ycomIsAGsvnUrxZEbZH6Bej5wfbdX6s1w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kAKnTjDHRvGnvNl/uTH0wPtevHBAXlzvhfxu1EmfHERFH5KgoW2DehzKfSiiOQesBrsZOsyCmWaGRvadYaMcr0H0NsMfbxjB57XRvzl6byUTiTwoso1TVHL7xflFtn5BQ74c6+53Tf/mso0COhrlF49s97DRKOKBsps1Pea3LGA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C93lbj+n; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lpLI4ntvH+klFzfj8ZMgPcQg/GTHYBHVUhlQpGBTxfMMgE1tntybSzVGMKjce9983lqVTQwdO2usZnHtlrXeFqYlcNgOnkntv7bfISt5PcXoYCL/wohDGe39mz7E46XPbz0fJmP49XQFbwBwuP44k219iNWdKlc3g8vt04EhD1o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y5ALRQ06; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C93lbj+n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AC31C4CEDC;
-	Fri,  6 Dec 2024 15:09:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y5ALRQ06"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8170DC4CED1;
+	Fri,  6 Dec 2024 15:09:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733497778;
-	bh=8bdF//VF/Yqah0H58GsnbOgNrFZ3UFm2SlqMEGMvVuk=;
+	s=korg; t=1733497782;
+	bh=h+6TfDb5l4ycomIsAGsvnUrxZEbZH6Bej5wfbdX6s1w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C93lbj+nuJTzfIieo+kvkZWMM0BqbhIbtB2JBYotZ5HV5XpOxevAVIw3t/ItQdMC4
-	 VduqdyWBMTIJtpwLlTzFFia4VQzBfOXZQjwpdAc7Wp9lmtQHKcx8gogisiBPMocEig
-	 aHZznNiV17pFnVnzBN6w95jbUEsm3+dSFYYE//Uk=
+	b=y5ALRQ06ARbWfE3nDETpBeQJUUxCZdZoLCmVGQ1cS2BkPFqUVHGij8SMvypwzv8Ox
+	 hKPqFAumuZC977ExNkkepVsL6aInjhwEmalY66Ph3NOgVzx+LN5Sgq2lkhK5FDT379
+	 3OM4erhQso1wimtAOEtbdDqpyRZYlt0lmoGLdMew=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Eric Sandeen <sandeen@redhat.com>,
-	David Howells <dhowells@redhat.com>,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	Christian Brauner <brauner@kernel.org>,
-	Jan Kara <jack@suse.cz>,
-	Jonathan Corbet <corbet@lwn.net>,
-	linux-doc@vger.kernel.org,
+	Tiezhu Yang <yangtiezhu@loongson.cn>,
+	Huacai Chen <chenhuacai@loongson.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 391/676] fs_parser: update mount_api doc to match function signature
-Date: Fri,  6 Dec 2024 15:33:30 +0100
-Message-ID: <20241206143708.622883163@linuxfoundation.org>
+Subject: [PATCH 6.6 392/676] LoongArch: Fix build failure with GCC 15 (-std=gnu23)
+Date: Fri,  6 Dec 2024 15:33:31 +0100
+Message-ID: <20241206143708.662678807@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -57,43 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Tiezhu Yang <yangtiezhu@loongson.cn>
 
-[ Upstream commit c66f759832a83cb273ba5a55c66dcc99384efa74 ]
+[ Upstream commit 947d5d036c788156f09e83e7f16322ffe8124384 ]
 
-Add the missing 'name' parameter to the mount_api documentation for
-fs_validate_description().
+Whenever I try to build the kernel with upcoming GCC 15 which defaults
+to -std=gnu23 I get a build failure:
 
-Fixes: 96cafb9ccb15 ("fs_parser: remove fs_parameter_description name field")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Link: https://lore.kernel.org/r/20241125215021.231758-1-rdunlap@infradead.org
-Cc: Eric Sandeen <sandeen@redhat.com>
-Cc: David Howells <dhowells@redhat.com>
-Cc: Al Viro <viro@zeniv.linux.org.uk>
-Cc: Christian Brauner <brauner@kernel.org>
-Cc: Jan Kara <jack@suse.cz>
-Cc: Jonathan Corbet <corbet@lwn.net>
-Cc: linux-doc@vger.kernel.org
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+  CC      arch/loongarch/vdso/vgetcpu.o
+In file included from ./include/uapi/linux/posix_types.h:5,
+                 from ./include/uapi/linux/types.h:14,
+                 from ./include/linux/types.h:6,
+                 from ./include/linux/kasan-checks.h:5,
+                 from ./include/asm-generic/rwonce.h:26,
+                 from ./arch/loongarch/include/generated/asm/rwonce.h:1,
+                 from ./include/linux/compiler.h:317,
+                 from ./include/asm-generic/bug.h:5,
+                 from ./arch/loongarch/include/asm/bug.h:60,
+                 from ./include/linux/bug.h:5,
+                 from ./include/linux/mmdebug.h:5,
+                 from ./include/linux/mm.h:6,
+                 from ./arch/loongarch/include/asm/vdso.h:10,
+                 from arch/loongarch/vdso/vgetcpu.c:6:
+./include/linux/stddef.h:11:9: error: expected identifier before 'false'
+   11 |         false   = 0,
+      |         ^~~~~
+./include/linux/types.h:35:33: error: two or more data types in declaration specifiers
+   35 | typedef _Bool                   bool;
+      |                                 ^~~~
+./include/linux/types.h:35:1: warning: useless type name in empty declaration
+   35 | typedef _Bool                   bool;
+      | ^~~~~~~
+
+The kernel builds explicitly with -std=gnu11 in top Makefile, but
+arch/loongarch/vdso does not use KBUILD_CFLAGS from the rest of the
+kernel, just add -std=gnu11 flag to arch/loongarch/vdso/Makefile.
+
+By the way, commit e8c07082a810 ("Kbuild: move to -std=gnu11") did a
+similar change for arch/arm64/kernel/vdso32/Makefile.
+
+Fixes: c6b99bed6b8f ("LoongArch: Add VDSO and VSYSCALL support")
+Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/filesystems/mount_api.rst | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/loongarch/vdso/Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/Documentation/filesystems/mount_api.rst b/Documentation/filesystems/mount_api.rst
-index 9aaf6ef75eb53..0c69aa574ab9a 100644
---- a/Documentation/filesystems/mount_api.rst
-+++ b/Documentation/filesystems/mount_api.rst
-@@ -766,7 +766,8 @@ process the parameters it is given.
- 
-    * ::
- 
--       bool fs_validate_description(const struct fs_parameter_description *desc);
-+       bool fs_validate_description(const char *name,
-+                                    const struct fs_parameter_description *desc);
- 
-      This performs some validation checks on a parameter description.  It
-      returns true if the description is good and false if it is not.  It will
+diff --git a/arch/loongarch/vdso/Makefile b/arch/loongarch/vdso/Makefile
+index f597cd08a96be..1a0f6ca0247b4 100644
+--- a/arch/loongarch/vdso/Makefile
++++ b/arch/loongarch/vdso/Makefile
+@@ -22,7 +22,7 @@ ccflags-vdso := \
+ cflags-vdso := $(ccflags-vdso) \
+ 	-isystem $(shell $(CC) -print-file-name=include) \
+ 	$(filter -W%,$(filter-out -Wa$(comma)%,$(KBUILD_CFLAGS))) \
+-	-O2 -g -fno-strict-aliasing -fno-common -fno-builtin \
++	-std=gnu11 -O2 -g -fno-strict-aliasing -fno-common -fno-builtin \
+ 	-fno-stack-protector -fno-jump-tables -DDISABLE_BRANCH_PROFILING \
+ 	$(call cc-option, -fno-asynchronous-unwind-tables) \
+ 	$(call cc-option, -fno-stack-protector)
 -- 
 2.43.0
 
