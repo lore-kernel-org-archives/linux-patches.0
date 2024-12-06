@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A6F6149C6F;
-	Fri,  6 Dec 2024 15:19:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 183FD145A05;
+	Fri,  6 Dec 2024 15:19:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733498344; cv=none; b=YhsAPMTe68gh2tVZNGqBPURdpnyyQTEd4Sd316XM0cXaw6pu3WvqHA6UZYykPwWzkSvrlRv6Y91P/zjjUff0pFM1DLUenZcjglfKr7DUkp7aLeoN6XYXIug52eUJBNAjPhPKXo6QKbCwxXNq0Z4j7kDUsOw0wHmx3GFvFso7qcw=
+	t=1733498348; cv=none; b=LzaRvTS4Lm4BoD8XW4k/LuhvADW2ih+YefN+9kmMh+8AP9dOzk7kgckXF3YJXJywuyJkSC2yHetjDIgA3rE0cLLTLkVzoXVh0rP6R2jZEf9sxRxvvQixj8oKVjuTzSR3leSzrepEpel5CAVpVY2dVMpS7OJlTD/JQlrlF7hOWZ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733498344; c=relaxed/simple;
-	bh=Nz0uIQANManWfL5ZDSbmeef8Y23XOlmKXOIrjwRLMCA=;
+	s=arc-20240116; t=1733498348; c=relaxed/simple;
+	bh=yPK8lWhgUiL4TqBNqYc8KqxmqrdjWz3qN9e6B1lErH8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eNeJo+7uPLzgVpjNTwYLDVlsR5GGtdwtheNABvB/3JN83i1BrZBKSkmE/SvvIwBUlGxUE40j4GhFmM/asGxp+y3K8sH7tbA6od1Qtx2qyz6XOeGrmCIa+PT1GFxnOxB0Hul0TqF+fSr7HctioPGbSeZVnzezA+Kj0YkdJNgBlRw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ysXPyUbS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YNwFXaTv/8XwsghQ58hcOOX+CQSjd1MQm9HxF5OrC7ZIxlGrjdAr5Lz/mzoo9ODksRezxal5LsVNVQYgLQqYdezseBHLMmgon1qVnh4Fc5KjDVh3ebv5mLVzwUrjfoI+MLQ2FhIzqan0R3dzcmzzSpYkU0G6ggT1XhbdyhUxmCs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f9VY7BMW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ysXPyUbS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 042FEC4CED1;
-	Fri,  6 Dec 2024 15:19:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f9VY7BMW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A0BBC4CED1;
+	Fri,  6 Dec 2024 15:19:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733498344;
-	bh=Nz0uIQANManWfL5ZDSbmeef8Y23XOlmKXOIrjwRLMCA=;
+	s=korg; t=1733498348;
+	bh=yPK8lWhgUiL4TqBNqYc8KqxmqrdjWz3qN9e6B1lErH8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ysXPyUbSj3tcagZ5Kx1/BLTaFXGZzqffMtG0q/nfEuOjEG3GRoy44MKACDLTaBsy8
-	 cckfYDyorogN/saMcqqmSQGqCOglr75VHd3vlPIyw3dV+9muW4MCqKn5BR5K8XHjhU
-	 F33VKaZDJ32nbvnl/rkKbhQAQwViVdnXZBU6Rrtg=
+	b=f9VY7BMWN4R5l0j60wJdKrjT6qTUWddYLwhoF+6w8kzJEqNe+93iLLaSN4PBlAUtz
+	 ckF7AvW5toBsDlkyG4WJaUAPW7AFOVtdIiWaDsHPCskIN/Qh2le3yDDXnBvJ1s3NWy
+	 LjEsu6ZIuLiKTDHYYQ/+h+SG82GBeBFPmJW/sOHk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Rutland <mark.rutland@arm.com>,
-	Will Deacon <will@kernel.org>,
-	Catalin Marinas <catalin.marinas@arm.com>
-Subject: [PATCH 6.6 525/676] arm64: tls: Fix context-switching of tpidrro_el0 when kpti is enabled
-Date: Fri,  6 Dec 2024 15:35:44 +0100
-Message-ID: <20241206143713.866593067@linuxfoundation.org>
+	Tiwei Bie <tiwei.btw@antgroup.com>,
+	Anton Ivanov <anton.ivanov@cambridgegreys.com>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 6.6 516/676] um: ubd: Do not use drvdata in release
+Date: Fri,  6 Dec 2024 15:35:35 +0100
+Message-ID: <20241206143713.516484007@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -51,47 +51,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Will Deacon <will@kernel.org>
+From: Tiwei Bie <tiwei.btw@antgroup.com>
 
-commit 67ab51cbdfee02ef07fb9d7d14cc0bf6cb5a5e5c upstream.
+commit 5bee35e5389f450a7eea7318deb9073e9414d3b1 upstream.
 
-Commit 18011eac28c7 ("arm64: tls: Avoid unconditional zeroing of
-tpidrro_el0 for native tasks") tried to optimise the context switching
-of tpidrro_el0 by eliding the clearing of the register when switching
-to a native task with kpti enabled, on the erroneous assumption that
-the kpti trampoline entry code would already have taken care of the
-write.
+The drvdata is not available in release. Let's just use container_of()
+to get the ubd instance. Otherwise, removing a ubd device will result
+in a crash:
 
-Although the kpti trampoline does zero the register on entry from a
-native task, the check in tls_thread_switch() is on the *next* task and
-so we can end up leaving a stale, non-zero value in the register if the
-previous task was 32-bit.
+RIP: 0033:blk_mq_free_tag_set+0x1f/0xba
+RSP: 00000000e2083bf0  EFLAGS: 00010246
+RAX: 000000006021463a RBX: 0000000000000348 RCX: 0000000062604d00
+RDX: 0000000004208060 RSI: 00000000605241a0 RDI: 0000000000000348
+RBP: 00000000e2083c10 R08: 0000000062414010 R09: 00000000601603f7
+R10: 000000000000133a R11: 000000006038c4bd R12: 0000000000000000
+R13: 0000000060213a5c R14: 0000000062405d20 R15: 00000000604f7aa0
+Kernel panic - not syncing: Segfault with no mm
+CPU: 0 PID: 17 Comm: kworker/0:1 Not tainted 6.8.0-rc3-00107-gba3f67c11638 #1
+Workqueue: events mc_work_proc
+Stack:
+ 00000000 604f7ef0 62c5d000 62405d20
+ e2083c30 6002c776 6002c755 600e47ff
+ e2083c60 6025ffe3 04208060 603d36e0
+Call Trace:
+ [<6002c776>] ubd_device_release+0x21/0x55
+ [<6002c755>] ? ubd_device_release+0x0/0x55
+ [<600e47ff>] ? kfree+0x0/0x100
+ [<6025ffe3>] device_release+0x70/0xba
+ [<60381d6a>] kobject_put+0xb5/0xe2
+ [<6026027b>] put_device+0x19/0x1c
+ [<6026a036>] platform_device_put+0x26/0x29
+ [<6026ac5a>] platform_device_unregister+0x2c/0x2e
+ [<6002c52e>] ubd_remove+0xb8/0xd6
+ [<6002bb74>] ? mconsole_reply+0x0/0x50
+ [<6002b926>] mconsole_remove+0x160/0x1cc
+ [<6002bbbc>] ? mconsole_reply+0x48/0x50
+ [<6003379c>] ? um_set_signals+0x3b/0x43
+ [<60061c55>] ? update_min_vruntime+0x14/0x70
+ [<6006251f>] ? dequeue_task_fair+0x164/0x235
+ [<600620aa>] ? update_cfs_group+0x0/0x40
+ [<603a0e77>] ? __schedule+0x0/0x3ed
+ [<60033761>] ? um_set_signals+0x0/0x43
+ [<6002af6a>] mc_work_proc+0x77/0x91
+ [<600520b4>] process_scheduled_works+0x1af/0x2c3
+ [<6004ede3>] ? assign_work+0x0/0x58
+ [<600527a1>] worker_thread+0x2f7/0x37a
+ [<6004ee3b>] ? set_pf_worker+0x0/0x64
+ [<6005765d>] ? arch_local_irq_save+0x0/0x2d
+ [<60058e07>] ? kthread_exit+0x0/0x3a
+ [<600524aa>] ? worker_thread+0x0/0x37a
+ [<60058f9f>] kthread+0x130/0x135
+ [<6002068e>] new_thread_handler+0x85/0xb6
 
-Drop the broken optimisation and zero tpidrro_el0 unconditionally when
-switching to a native 64-bit task.
-
-Cc: Mark Rutland <mark.rutland@arm.com>
 Cc: stable@vger.kernel.org
-Fixes: 18011eac28c7 ("arm64: tls: Avoid unconditional zeroing of tpidrro_el0 for native tasks")
-Signed-off-by: Will Deacon <will@kernel.org>
-Acked-by: Mark Rutland <mark.rutland@arm.com>
-Link: https://lore.kernel.org/r/20241114095332.23391-1-will@kernel.org
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+Signed-off-by: Tiwei Bie <tiwei.btw@antgroup.com>
+Acked-By: Anton Ivanov <anton.ivanov@cambridgegreys.com>
+Link: https://patch.msgid.link/20241104163203.435515-3-tiwei.btw@antgroup.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kernel/process.c |    2 +-
+ arch/um/drivers/ubd_kern.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/arm64/kernel/process.c
-+++ b/arch/arm64/kernel/process.c
-@@ -429,7 +429,7 @@ static void tls_thread_switch(struct tas
+--- a/arch/um/drivers/ubd_kern.c
++++ b/arch/um/drivers/ubd_kern.c
+@@ -799,7 +799,7 @@ static int ubd_open_dev(struct ubd *ubd_
  
- 	if (is_compat_thread(task_thread_info(next)))
- 		write_sysreg(next->thread.uw.tp_value, tpidrro_el0);
--	else if (!arm64_kernel_unmapped_at_el0())
-+	else
- 		write_sysreg(0, tpidrro_el0);
+ static void ubd_device_release(struct device *dev)
+ {
+-	struct ubd *ubd_dev = dev_get_drvdata(dev);
++	struct ubd *ubd_dev = container_of(dev, struct ubd, pdev.dev);
  
- 	write_sysreg(*task_user_tls(next), tpidr_el0);
+ 	blk_mq_free_tag_set(&ubd_dev->tag_set);
+ 	*ubd_dev = ((struct ubd) DEFAULT_UBD);
 
 
