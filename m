@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B9B553A7;
-	Fri,  6 Dec 2024 15:08:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B207753A7;
+	Fri,  6 Dec 2024 15:08:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733497707; cv=none; b=MetHdG/vND5YwycTjsQK8PtHrtxYnGpiU7mZcp+z+D3uEqLtNTae/h2XvTpslFu/sgyDg3321phZcyiHqNrKE6PaCmQlGgWEC4ggRZeOFxnvm/Hbg3P/fnrUCD0SANWsCyo4Xx5JSd5HBPlww7U/s6r2lOQ/ROfokMAillnLuLk=
+	t=1733497710; cv=none; b=tYutQZlE+srtbvAPr9upzkE9Gn7j2P8CzB3y4Cn19K6Vae1W57/M55GtQR9n8QM6BCnVp3G4rN3zuHaPNAjppLrmMriquNGV1ObQfPaDBdVu6f3TvyI1b6Fs5UHWcjYh2TBEDx5We++F1rih26YjsELV4pgcw5dlevWgauuY+Ok=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733497707; c=relaxed/simple;
-	bh=eRFoh07s4Z5P54F6FkoqAwI1dsOlUb3T3z2M2ka29gQ=;
+	s=arc-20240116; t=1733497710; c=relaxed/simple;
+	bh=+01wnaOqAmqcCeU4xOoNj5fJNJEcA8cZg4aeTfh92w4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sxFfjHcKAVJshoR94j5ZdnLXyHTGL8664N8g9K9HUE7ru5j7/i1Ki5aU54SbcVxERopXKV9pKsWOsW5phUsptSREep6fP04vfjD0CKrqv+wcY+Aa8KSv0uPhmhoW4vIeXD5zszxGfEywqyIYi7oeXRRAx2hoXd94gX13rEHK6Lo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zw89aDn2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oflWE89yIhOAPjSsvGGJhELxxorF+R0Oqfv7KjVI922sMcipP9IFnET1QPMWgZtwOecEwUDfeXxrOhyWdh4NLZFmjeMgb2BjIxjMKs8aeA2NLz+IT8u+OjlraoX0kXDQQaf1nRZyDjd0wCwKG4Yb43suVWD0MUOVZhUIuSslZzE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TYsYW3vI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zw89aDn2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10C26C4CED1;
-	Fri,  6 Dec 2024 15:08:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TYsYW3vI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 376DBC4CED1;
+	Fri,  6 Dec 2024 15:08:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733497707;
-	bh=eRFoh07s4Z5P54F6FkoqAwI1dsOlUb3T3z2M2ka29gQ=;
+	s=korg; t=1733497710;
+	bh=+01wnaOqAmqcCeU4xOoNj5fJNJEcA8cZg4aeTfh92w4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zw89aDn22ex7boc3eMtH+cVwsKuDKS4uFCUZPFher+FvlsYmoA6PQz+H4gHg6mxRY
-	 f0veL5aQDTZn39RiSFm9ifIyn8vLxhauvgi0uVglb8oMtrcjdkEqUpz4er0G2Ho1r6
-	 +1/o5MXsDUGykxiuhXjz8ulzLzwWIPCmilxFFIDQ=
+	b=TYsYW3vIz60D7o3CSK/G7MyBFyNIllMD3jTldUbGGgXJGc/D2rq27qTyj87CZFi9i
+	 flUhNkkrHdIWOmq1D6WLx4HvRVNcR1bKShsgqQZh4pJ4DTkRGX0uFlm2zjU1mH4RbN
+	 NYpTDtGNyo9gC8DFDiMjNINBr1t5R2+qMpfioDjA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Peterson <benjamin@engflow.com>,
-	Howard Chu <howardchu95@gmail.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	Namhyung Kim <namhyung@kernel.org>,
+	Jean-Michel Hautbois <jeanmichel.hautbois@yoseli.org>,
+	Greg Ungerer <gerg@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 369/676] perf trace: avoid garbage when not printing a trace events arguments
-Date: Fri,  6 Dec 2024 15:33:08 +0100
-Message-ID: <20241206143707.759472037@linuxfoundation.org>
+Subject: [PATCH 6.6 370/676] m68k: mcfgpio: Fix incorrect register offset for CONFIG_M5441x
+Date: Fri,  6 Dec 2024 15:33:09 +0100
+Message-ID: <20241206143707.799544899@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -53,39 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Peterson <benjamin@engflow.com>
+From: Jean-Michel Hautbois <jeanmichel.hautbois@yoseli.org>
 
-[ Upstream commit 5fb8e56542a3cf469fdf25d77f50e21cbff3ae7e ]
+[ Upstream commit f212140962c93cd5da43283a18e31681540fc23d ]
 
-trace__fprintf_tp_fields may not print any tracepoint arguments. E.g., if the
-argument values are all zero. Previously, this would result in a totally
-uninitialized buffer being passed to fprintf, which could lead to garbage on the
-console. Fix the problem by passing the number of initialized bytes fprintf.
+Fix a typo in the CONFIG_M5441x preprocessor condition, where the GPIO
+register offset was incorrectly set to 8 instead of 0. This prevented
+proper GPIO configuration for m5441x targets.
 
-Fixes: f11b2803bb88 ("perf trace: Allow choosing how to augment the tracepoint arguments")
-Signed-off-by: Benjamin Peterson <benjamin@engflow.com>
-Tested-by: Howard Chu <howardchu95@gmail.com>
-Tested-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Link: https://lore.kernel.org/r/20241103204816.7834-1-benjamin@engflow.com
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Fixes: bea8bcb12da0 ("m68knommu: Add support for the Coldfire m5441x.")
+Signed-off-by: Jean-Michel Hautbois <jeanmichel.hautbois@yoseli.org>
+Signed-off-by: Greg Ungerer <gerg@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-trace.c | 2 +-
+ arch/m68k/include/asm/mcfgpio.h | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/perf/builtin-trace.c b/tools/perf/builtin-trace.c
-index 6fd30bddf0de9..916d2f6a6d79a 100644
---- a/tools/perf/builtin-trace.c
-+++ b/tools/perf/builtin-trace.c
-@@ -2803,7 +2803,7 @@ static size_t trace__fprintf_tp_fields(struct trace *trace, struct evsel *evsel,
- 		printed += syscall_arg_fmt__scnprintf_val(arg, bf + printed, size - printed, &syscall_arg, val);
- 	}
- 
--	return printed + fprintf(trace->output, "%s", bf);
-+	return printed + fprintf(trace->output, "%.*s", (int)printed, bf);
- }
- 
- static int trace__event_handler(struct trace *trace, struct evsel *evsel,
+diff --git a/arch/m68k/include/asm/mcfgpio.h b/arch/m68k/include/asm/mcfgpio.h
+index 7abd322c019fc..295624d01d3dc 100644
+--- a/arch/m68k/include/asm/mcfgpio.h
++++ b/arch/m68k/include/asm/mcfgpio.h
+@@ -136,7 +136,7 @@ static inline void gpio_free(unsigned gpio)
+  * read-modify-write as well as those controlled by the EPORT and GPIO modules.
+  */
+ #define MCFGPIO_SCR_START		40
+-#elif defined(CONFIGM5441x)
++#elif defined(CONFIG_M5441x)
+ /* The m5441x EPORT doesn't have its own GPIO port, uses PORT C */
+ #define MCFGPIO_SCR_START		0
+ #else
 -- 
 2.43.0
 
