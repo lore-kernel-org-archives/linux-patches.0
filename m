@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6461B1474AF;
-	Fri,  6 Dec 2024 14:53:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 596D11442E8;
+	Fri,  6 Dec 2024 14:53:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733496791; cv=none; b=bAqS+UaLofKr0TFvlq6b6VGMmDCV69LQbdqf6uViLLvf4je23UhBidZxoKqAyjsoUTyh7yQgfPo2XDNfl4GYEaPMsxoIjfHKzfE3xinMFSd7QJJvw5San20T4x7TSf3IfPVHELh59f2rB00qxjvr8JKtkPThn+lgASNPuEDd5Lo=
+	t=1733496794; cv=none; b=A7URzGfs4d58FLRcNNgWvyGpNH8sskdWFW4+T9Kej9mOjMF7RkvEf9OmBRNcq5qieqDlr2HoC9W/Sq5kqtd7oUh8bjpprASduXqtQfEXuILDzObXRQpk3H5rBAlJUURYGK9jzxmYLQ36/Hq+sCjWVSJ4CXlHkU62BSr7mk9HoLw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733496791; c=relaxed/simple;
-	bh=xyuogGbdiFlALH4wqx6nDMaHgDcEydpL1xcS1QiR0Wk=;
+	s=arc-20240116; t=1733496794; c=relaxed/simple;
+	bh=pySCq+AoARyYNiNEGyxoGuiLocxDudvpQReY/lwXC/k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NFwpXw4UJx+JoDDabPGks5ORUl7u7i9+rkILgQ+nIq3hLpszeDdIgPrPdYkepxOSS/oUG0QdeWu/gOFF/caKrPnndUzsr8Fvq0PlTKazTrmm35eul2nrtQCWsko2d4ycY445uENl0Dp/g87rd53PvpX5T3Nlp7b9xX3zVFhrNqw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y0rWfLN7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dkS3ZA8B1QjteQt812zWYpB1LbcATD4W7Z06amBbIo1p5LdztUGYFvYydg9L8FI7zwNfrz4zfFBrsndV2vitA+8BBfaiVYQjru7qMPKuWoYdWvU8EjATJ+IRc45kTaPb7l9qZVOebZpA5iVg+tQnZI9gVWH9tnK+v0DE5iyKc2Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2PNusOha; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y0rWfLN7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC981C4CED1;
-	Fri,  6 Dec 2024 14:53:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2PNusOha"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2593C4CED1;
+	Fri,  6 Dec 2024 14:53:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733496791;
-	bh=xyuogGbdiFlALH4wqx6nDMaHgDcEydpL1xcS1QiR0Wk=;
+	s=korg; t=1733496794;
+	bh=pySCq+AoARyYNiNEGyxoGuiLocxDudvpQReY/lwXC/k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y0rWfLN7lhRjpuXCRILg/QAsoj98v+CE5+DHKE/46PLd8KMmUPK6EmvQVxvvJTzCK
-	 rZ5jkhnw6ZkPcmS40rwml0JdVl687C4tseIub+YL40WZ2SzenOEjkvQZUp5oDjowWa
-	 /wnszCGqRp0AV6ni5eifofY+CQhr6odguzcdNKj4=
+	b=2PNusOhayLb6jNCp7NzAe3uegMXRZg9Dh/AedoeCfm0HVQ/hQbmGmb+WY70zBysZ5
+	 FXWbAmAZFYRWoTOKUZT5oKdeAzCP0nMQVKONot5u5WfELyNLSiYXE9P2dTRSRFotyK
+	 HCV3jBXYazG+Fxnkf8WkXKcQue0o7O4Y6ssjxFsE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Lezcano <daniel.lezcano@linaro.org>,
-	Lukasz Luba <lukasz.luba@arm.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Zheng Yejian <zhengyejian@huaweicloud.com>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 104/676] thermal/lib: Fix memory leak on error in thermal_genl_auto()
-Date: Fri,  6 Dec 2024 15:28:43 +0100
-Message-ID: <20241206143657.420303278@linuxfoundation.org>
+Subject: [PATCH 6.6 105/676] x86/unwind/orc: Fix unwind for newly forked tasks
+Date: Fri,  6 Dec 2024 15:28:44 +0100
+Message-ID: <20241206143657.459680854@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -52,62 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Lezcano <daniel.lezcano@linaro.org>
+From: Zheng Yejian <zhengyejian@huaweicloud.com>
 
-[ Upstream commit 7569406e95f2353070d88ebc88e8c13698542317 ]
+[ Upstream commit 3bf19a0fb690022ec22ce87a5afeb1030cbcb56c ]
 
-The function thermal_genl_auto() does not free the allocated message
-in the error path. Fix that by putting a out label and jump to it
-which will free the message instead of directly returning an error.
+When arch_stack_walk_reliable() is called to unwind for newly forked
+tasks, the return value is negative which means the call stack is
+unreliable. This obviously does not meet expectations.
 
-Fixes: 47c4b0de080a ("tools/lib/thermal: Add a thermal library")
-Reported-by: Lukasz Luba <lukasz.luba@arm.com>
-Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
-Reviewed-by: Lukasz Luba <lukasz.luba@arm.com>
-Link: https://patch.msgid.link/20241024105938.1095358-1-daniel.lezcano@linaro.org
-[ rjw: Fixed up the !msg error path, added Fixes tag ]
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+The root cause is that after commit 3aec4ecb3d1f ("x86: Rewrite
+ ret_from_fork() in C"), the 'ret_addr' of newly forked task is changed
+to 'ret_from_fork_asm' (see copy_thread()), then at the start of the
+unwind, it is incorrectly interprets not as a "signal" one because
+'ret_from_fork' is still used to determine the initial "signal" (see
+__unwind_start()). Then the address gets incorrectly decremented in the
+call to orc_find() (see unwind_next_frame()) and resulting in the
+incorrect ORC data.
+
+To fix it, check 'ret_from_fork_asm' rather than 'ret_from_fork' in
+__unwind_start().
+
+Fixes: 3aec4ecb3d1f ("x86: Rewrite ret_from_fork() in C")
+Signed-off-by: Zheng Yejian <zhengyejian@huaweicloud.com>
+Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/thermal/commands.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ arch/x86/kernel/unwind_orc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/lib/thermal/commands.c b/tools/lib/thermal/commands.c
-index a9223df91dcf5..27b4442f0e347 100644
---- a/tools/lib/thermal/commands.c
-+++ b/tools/lib/thermal/commands.c
-@@ -279,6 +279,7 @@ static thermal_error_t thermal_genl_auto(struct thermal_handler *th, cmd_cb_t cm
- 					 struct cmd_param *param,
- 					 int cmd, int flags, void *arg)
- {
-+	thermal_error_t ret = THERMAL_ERROR;
- 	struct nl_msg *msg;
- 	void *hdr;
+diff --git a/arch/x86/kernel/unwind_orc.c b/arch/x86/kernel/unwind_orc.c
+index 7e574cf3bf8a2..7784076819de5 100644
+--- a/arch/x86/kernel/unwind_orc.c
++++ b/arch/x86/kernel/unwind_orc.c
+@@ -723,7 +723,7 @@ void __unwind_start(struct unwind_state *state, struct task_struct *task,
+ 		state->sp = task->thread.sp + sizeof(*frame);
+ 		state->bp = READ_ONCE_NOCHECK(frame->bp);
+ 		state->ip = READ_ONCE_NOCHECK(frame->ret_addr);
+-		state->signal = (void *)state->ip == ret_from_fork;
++		state->signal = (void *)state->ip == ret_from_fork_asm;
+ 	}
  
-@@ -289,17 +290,19 @@ static thermal_error_t thermal_genl_auto(struct thermal_handler *th, cmd_cb_t cm
- 	hdr = genlmsg_put(msg, NL_AUTO_PORT, NL_AUTO_SEQ, thermal_cmd_ops.o_id,
- 			  0, flags, cmd, THERMAL_GENL_VERSION);
- 	if (!hdr)
--		return THERMAL_ERROR;
-+		goto out;
- 
- 	if (cmd_cb && cmd_cb(msg, param))
--		return THERMAL_ERROR;
-+		goto out;
- 
- 	if (nl_send_msg(th->sk_cmd, th->cb_cmd, msg, genl_handle_msg, arg))
--		return THERMAL_ERROR;
-+		goto out;
- 
-+	ret = THERMAL_SUCCESS;
-+out:
- 	nlmsg_free(msg);
- 
--	return THERMAL_SUCCESS;
-+	return ret;
- }
- 
- thermal_error_t thermal_cmd_get_tz(struct thermal_handler *th, struct thermal_zone **tz)
+ 	if (get_stack_info((unsigned long *)state->sp, state->task,
 -- 
 2.43.0
 
