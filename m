@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 821D01494A8;
-	Fri,  6 Dec 2024 15:11:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51040154BF5;
+	Fri,  6 Dec 2024 15:11:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733497901; cv=none; b=RLittO2c/LHaSfSOEP/7T3Emal172N3epQW/q/GiGwVcf1JsEYw+/POMw+x4fvMLzMYqfKAB9uN1BCjVQH4RLHtJh2kWZIhNvZijjFLZc30SYW4DQxyCNdk5hP11Mznd1Fq33ncezs9FyMky0OAWeH7PZ21HVgVz+xLpJX7SBAE=
+	t=1733497904; cv=none; b=d3CA1a9EE73PZvU3HkbWVV6J4iq97JV0X8m2O2TuTPCauutcNQPJUPOd3+bKvv9adqSIvLe5wHxhtyY9kWsyaMygb4P3O1VGXwu1k5OchVocOmjbGnwshPpxhsxnTATIbFT6aJB3JWPOmIKf0pGvG0w5rRWDrND5kdhRATMj5GE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733497901; c=relaxed/simple;
-	bh=KxsVGKcQa/zKOn0zSL0uKeyZpxnIcr2wXrIhsoaE7nc=;
+	s=arc-20240116; t=1733497904; c=relaxed/simple;
+	bh=afS9EBqEWYn4S3XNzgvKyNyCQEf59q89lIs6I0269HY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DtsjgEnJDy9dBiaEx3PaNWvIsm+LxmFbsCXQIl/1eVrWm5YSHCb7AUDlRXHRCFMQpkzqX86qXdQiGKyN0J4xMfyxbGm0Smy3eMkSTSJU6TCdHzCvsjq99Ye6CHrcfozQmdZd/PFkh+lhRrVb2qR+zNCm3zVE0VERJs0XT7t5d2k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wBv+mPRq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ct7B0Dwa2RzsiA24LLupTC67FFpWtSD+bcPQRXxdYufARlYX75OTYXYF4jc++VXP+T8GGM5hJ7yw6jkSKKIloTJk8D4PpfQH9ajYu5kus3Xymo2hs7h1VFuTo1RxOXzYNDtxb9cGRS7pmAaVibwIpr3zugVc3Xyc5Szt4CL2uUw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pfKOE/VY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wBv+mPRq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 657E4C4CEDF;
-	Fri,  6 Dec 2024 15:11:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pfKOE/VY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B960DC4CED1;
+	Fri,  6 Dec 2024 15:11:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733497900;
-	bh=KxsVGKcQa/zKOn0zSL0uKeyZpxnIcr2wXrIhsoaE7nc=;
+	s=korg; t=1733497904;
+	bh=afS9EBqEWYn4S3XNzgvKyNyCQEf59q89lIs6I0269HY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wBv+mPRqkeAbBIMo6T6UhJrl+6BYxdZTmjijcRU/wH4UkaF5S4J50fLvb7yvlQJYf
-	 52CTW5rN6oKEj/J3ZHMncQbBHQy/JcNM44HNsKIP0Wqd6dvnloAjzXo3+ejtH+/AYE
-	 ZMSC2E7KzAjJPgSTb7fGGHeGWJuJtubOX9THv4TQ=
+	b=pfKOE/VYFASvkifFF4Ft85WiYmNSEIErL3HFBh4lcTfIevKkqpRLiGFpx89P5mJl9
+	 V2ufc87qhDKALh8NPNpTxjrqri2zVxYwOdrAmuz6Q9KvLK79e+5nKrvw7CGQ3Cck5j
+	 kR5OJrHGzQdNKOLa38HcmOa+tYch0Gu8i9qAt0eY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeongjun Park <aha310510@gmail.com>,
+	Oliver Neukum <oneukum@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 427/676] usb: using mutex lock and supporting O_NONBLOCK flag in iowarrior_read()
-Date: Fri,  6 Dec 2024 15:34:06 +0100
-Message-ID: <20241206143710.023242654@linuxfoundation.org>
+Subject: [PATCH 6.6 428/676] usb: yurex: make waiting on yurex_write interruptible
+Date: Fri,  6 Dec 2024 15:34:07 +0100
+Message-ID: <20241206143710.062148925@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -50,127 +50,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeongjun Park <aha310510@gmail.com>
+From: Oliver Neukum <oneukum@suse.com>
 
-[ Upstream commit 44feafbaa66ec86232b123bb8437a6a262442025 ]
+[ Upstream commit e0aa9614ab0fd35b404e4b16ebe879f9fc152591 ]
 
-iowarrior_read() uses the iowarrior dev structure, but does not use any
-lock on the structure. This can cause various bugs including data-races,
-so it is more appropriate to use a mutex lock to safely protect the
-iowarrior dev structure. When using a mutex lock, you should split the
-branch to prevent blocking when the O_NONBLOCK flag is set.
+The IO yurex_write() needs to wait for in order to have a device
+ready for writing again can take a long time time.
+Consequently the sleep is done in an interruptible state.
+Therefore others waiting for yurex_write() itself to finish should
+use mutex_lock_interruptible.
 
-In addition, it is unnecessary to check for NULL on the iowarrior dev
-structure obtained by reading file->private_data. Therefore, it is
-better to remove the check.
-
-Fixes: 946b960d13c1 ("USB: add driver for iowarrior devices.")
-Signed-off-by: Jeongjun Park <aha310510@gmail.com>
-Link: https://lore.kernel.org/r/20240919103403.3986-1-aha310510@gmail.com
+Signed-off-by: Oliver Neukum <oneukum@suse.com>
+Fixes: 6bc235a2e24a5 ("USB: add driver for Meywa-Denki & Kayac YUREX")
+Rule: add
+Link: https://lore.kernel.org/stable/20240924084415.300557-1-oneukum%40suse.com
+Link: https://lore.kernel.org/r/20240924084415.300557-1-oneukum@suse.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/misc/iowarrior.c | 46 ++++++++++++++++++++++++++++--------
- 1 file changed, 36 insertions(+), 10 deletions(-)
+ drivers/usb/misc/iowarrior.c | 4 ----
+ drivers/usb/misc/yurex.c     | 5 ++++-
+ 2 files changed, 4 insertions(+), 5 deletions(-)
 
 diff --git a/drivers/usb/misc/iowarrior.c b/drivers/usb/misc/iowarrior.c
-index 1e3df27bab58f..8cb78c0e2f415 100644
+index 8cb78c0e2f415..4fae04094021e 100644
 --- a/drivers/usb/misc/iowarrior.c
 +++ b/drivers/usb/misc/iowarrior.c
-@@ -277,28 +277,45 @@ static ssize_t iowarrior_read(struct file *file, char __user *buffer,
- 	struct iowarrior *dev;
- 	int read_idx;
- 	int offset;
-+	int retval;
+@@ -912,7 +912,6 @@ static int iowarrior_probe(struct usb_interface *interface,
+ static void iowarrior_disconnect(struct usb_interface *interface)
+ {
+ 	struct iowarrior *dev = usb_get_intfdata(interface);
+-	int minor = dev->minor;
  
- 	dev = file->private_data;
+ 	usb_deregister_dev(interface, &iowarrior_class);
  
-+	if (file->f_flags & O_NONBLOCK) {
-+		retval = mutex_trylock(&dev->mutex);
-+		if (!retval)
-+			return -EAGAIN;
-+	} else {
-+		retval = mutex_lock_interruptible(&dev->mutex);
-+		if (retval)
-+			return -ERESTARTSYS;
-+	}
-+
- 	/* verify that the device wasn't unplugged */
--	if (!dev || !dev->present)
--		return -ENODEV;
-+	if (!dev->present) {
-+		retval = -ENODEV;
-+		goto exit;
-+	}
- 
- 	dev_dbg(&dev->interface->dev, "minor %d, count = %zd\n",
- 		dev->minor, count);
- 
- 	/* read count must be packet size (+ time stamp) */
- 	if ((count != dev->report_size)
--	    && (count != (dev->report_size + 1)))
--		return -EINVAL;
-+	    && (count != (dev->report_size + 1))) {
-+		retval = -EINVAL;
-+		goto exit;
-+	}
- 
- 	/* repeat until no buffer overrun in callback handler occur */
- 	do {
- 		atomic_set(&dev->overflow_flag, 0);
- 		if ((read_idx = read_index(dev)) == -1) {
- 			/* queue empty */
--			if (file->f_flags & O_NONBLOCK)
--				return -EAGAIN;
-+			if (file->f_flags & O_NONBLOCK) {
-+				retval = -EAGAIN;
-+				goto exit;
-+			}
- 			else {
- 				//next line will return when there is either new data, or the device is unplugged
- 				int r = wait_event_interruptible(dev->read_wait,
-@@ -309,28 +326,37 @@ static ssize_t iowarrior_read(struct file *file, char __user *buffer,
- 								  -1));
- 				if (r) {
- 					//we were interrupted by a signal
--					return -ERESTART;
-+					retval = -ERESTART;
-+					goto exit;
- 				}
- 				if (!dev->present) {
- 					//The device was unplugged
--					return -ENODEV;
-+					retval = -ENODEV;
-+					goto exit;
- 				}
- 				if (read_idx == -1) {
- 					// Can this happen ???
--					return 0;
-+					retval = 0;
-+					goto exit;
- 				}
- 			}
- 		}
- 
- 		offset = read_idx * (dev->report_size + 1);
- 		if (copy_to_user(buffer, dev->read_queue + offset, count)) {
--			return -EFAULT;
-+			retval = -EFAULT;
-+			goto exit;
- 		}
- 	} while (atomic_read(&dev->overflow_flag));
- 
- 	read_idx = ++read_idx == MAX_INTERRUPT_BUFFER ? 0 : read_idx;
- 	atomic_set(&dev->read_idx, read_idx);
-+	mutex_unlock(&dev->mutex);
- 	return count;
-+
-+exit:
-+	mutex_unlock(&dev->mutex);
-+	return retval;
+@@ -936,9 +935,6 @@ static void iowarrior_disconnect(struct usb_interface *interface)
+ 		mutex_unlock(&dev->mutex);
+ 		iowarrior_delete(dev);
+ 	}
+-
+-	dev_info(&interface->dev, "I/O-Warror #%d now disconnected\n",
+-		 minor - IOWARRIOR_MINOR_BASE);
  }
  
- /*
+ /* usb specific object needed to register this driver with the usb subsystem */
+diff --git a/drivers/usb/misc/yurex.c b/drivers/usb/misc/yurex.c
+index c313cd41f7a5a..0eed614ac1273 100644
+--- a/drivers/usb/misc/yurex.c
++++ b/drivers/usb/misc/yurex.c
+@@ -441,7 +441,10 @@ static ssize_t yurex_write(struct file *file, const char __user *user_buffer,
+ 	if (count == 0)
+ 		goto error;
+ 
+-	mutex_lock(&dev->io_mutex);
++	retval = mutex_lock_interruptible(&dev->io_mutex);
++	if (retval < 0)
++		return -EINTR;
++
+ 	if (dev->disconnected) {		/* already disconnected */
+ 		mutex_unlock(&dev->io_mutex);
+ 		retval = -ENODEV;
 -- 
 2.43.0
 
