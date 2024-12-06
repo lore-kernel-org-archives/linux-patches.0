@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B811614A4F0;
-	Fri,  6 Dec 2024 14:43:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10D58149E0E;
+	Fri,  6 Dec 2024 14:43:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733496187; cv=none; b=iK0wwtoWhMu/EVUKBcqzjbG0jyg5znFP3njVStK5VXB9jY1H5wK4ZORYG1CJfaVpgNqiceBjOUGcHkcrEffojJKwF2u2JJ6jS7lQoynp0Ra/Zb40WURnTWjHtrfPZLum3WCgD0k3y6pTwDXvJfrpsx2j5jJPIRYuCMeCVVrZjS8=
+	t=1733496191; cv=none; b=KnpW9Ykzg1RN1kIcwcNmwmnSYdOqaW7/8eWTmopTK5WNxT8UB9t9ydfNSGQTQ3FTMyRiAtEIeZ8mT10fHDsyG89xowaAzDBAzaQNgfL5qBt9IcbNc4o17Ez+sj7Zk6O5HS574SgZ3cNxxnvxmHplaRuHCFfh1DmnPQlNGkUXwqY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733496187; c=relaxed/simple;
-	bh=H6YntZsSSJ9b5U0nvuPGcAv7cvEXglNZDhYWl8kUAmA=;
+	s=arc-20240116; t=1733496191; c=relaxed/simple;
+	bh=I0raEAbc7ik7xucTyAiUQ9uk0nvbjZ+jQ5UvS9Jb5HI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GFuh9NC6r5vZgzf2aiBlhOlteSdugeJEINXTdwEJalelObe0JDvCA+1N9Ew/6vKYRurTJ5wZLKC9nU8lPL7OVJNp7JxlG50krnIlMb1JcVYxfQmUAJxx0nm/847E7Pixvp7krbIJnTf1MEc3Q0EaUJbyMEtWp9IWM+ou8XXbV30=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QQyKPC23; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=j6ulzTd/yZg3gIATTqbZ6Hzahwq6dxMzEb0VxWA2JjCnv8QnhvIsVgYpvLZ+VyLAQ19bWjR7ohOGDslUhAoIvoC5MtsgHipbyXxDHY7aUWIe5unXga1dlxnaAMak3Bh1e+G528xr6h7gLMqrykmM/fItmT2ky79JmB//e/9NTLk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2UY9Sjvf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QQyKPC23"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23C0CC4CEDC;
-	Fri,  6 Dec 2024 14:43:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2UY9Sjvf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78425C4CEDF;
+	Fri,  6 Dec 2024 14:43:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733496187;
-	bh=H6YntZsSSJ9b5U0nvuPGcAv7cvEXglNZDhYWl8kUAmA=;
+	s=korg; t=1733496190;
+	bh=I0raEAbc7ik7xucTyAiUQ9uk0nvbjZ+jQ5UvS9Jb5HI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QQyKPC23A2yxtWRf8w4DZTOVG+9zOpf19P9eUXlrAL0BWZHUJE5rW6j4XZAcy8DUp
-	 DuSea/7vVBpT8FUVL41PNz1rPUUu5uTGPyZipVR74DJQWrgbOefI8R5emKEUYSMKhc
-	 t9uiV3+d2shjJyUQjYg3RLpKj+u2jaD14tTg+8/Y=
+	b=2UY9SjvfyAzUQB9sWh20nDi2nHlG9gZOPx8wUiBolejzctgN9m8XdZLEYGB3NX6Sp
+	 pySpfWMNICC+wsXZ37IxR9akr+1+wko9Od7mAdCG9bmr3+sCukkkBbQPCBcyoEy+f5
+	 JLtrXTfifACIMASRoOQQ/AdctAI3I/H66uzLDDT4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandru Ardelean <aardelean@baylibre.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.12 076/146] util_macros.h: fix/rework find_closest() macros
-Date: Fri,  6 Dec 2024 15:36:47 +0100
-Message-ID: <20241206143530.589284728@linuxfoundation.org>
+	Jens Remus <jremus@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>
+Subject: [PATCH 6.12 077/146] s390/stacktrace: Use break instead of return statement
+Date: Fri,  6 Dec 2024 15:36:48 +0100
+Message-ID: <20241206143530.627380747@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143527.654980698@linuxfoundation.org>
 References: <20241206143527.654980698@linuxfoundation.org>
@@ -51,188 +50,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexandru Ardelean <aardelean@baylibre.com>
+From: Heiko Carstens <hca@linux.ibm.com>
 
-commit bc73b4186736341ab5cd2c199da82db6e1134e13 upstream.
+commit 588a9836a4ef7ec3bfcffda526dfa399637e6cfc upstream.
 
-A bug was found in the find_closest() (find_closest_descending() is also
-affected after some testing), where for certain values with small
-progressions, the rounding (done by averaging 2 values) causes an
-incorrect index to be returned.  The rounding issues occur for
-progressions of 1, 2 and 3.  It goes away when the progression/interval
-between two values is 4 or larger.
+arch_stack_walk_user_common() contains a return statement instead of a
+break statement in case store_ip() fails while trying to store a callchain
+entry of a user space process.
+This may lead to a missing pagefault_enable() call.
 
-It's particularly bad for progressions of 1.  For example if there's an
-array of 'a = { 1, 2, 3 }', using 'find_closest(2, a ...)' would return 0
-(the index of '1'), rather than returning 1 (the index of '2').  This
-means that for exact values (with a progression of 1), find_closest() will
-misbehave and return the index of the value smaller than the one we're
-searching for.
+If this happens any subsequent page fault of the process won't be resolved
+by the page fault handler and this in turn will lead to the process being
+killed.
 
-For progressions of 2 and 3, the exact values are obtained correctly; but
-values aren't approximated correctly (as one would expect).  Starting with
-progressions of 4, all seems to be good (one gets what one would expect).
+Use a break instead of a return statement to fix this.
 
-While one could argue that 'find_closest()' should not be used for arrays
-with progressions of 1 (i.e. '{1, 2, 3, ...}', the macro should still
-behave correctly.
-
-The bug was found while testing the 'drivers/iio/adc/ad7606.c',
-specifically the oversampling feature.
-For reference, the oversampling values are listed as:
-   static const unsigned int ad7606_oversampling_avail[7] = {
-          1, 2, 4, 8, 16, 32, 64,
-   };
-
-When doing:
-  1. $ echo 1 > /sys/bus/iio/devices/iio\:device0/oversampling_ratio
-     $ cat /sys/bus/iio/devices/iio\:device0/oversampling_ratio
-     1  # this is fine
-  2. $ echo 2 > /sys/bus/iio/devices/iio\:device0/oversampling_ratio
-     $ cat /sys/bus/iio/devices/iio\:device0/oversampling_ratio
-     1  # this is wrong; 2 should be returned here
-  3. $ echo 3 > /sys/bus/iio/devices/iio\:device0/oversampling_ratio
-     $ cat /sys/bus/iio/devices/iio\:device0/oversampling_ratio
-     2  # this is fine
-  4. $ echo 4 > /sys/bus/iio/devices/iio\:device0/oversampling_ratio
-     $ cat /sys/bus/iio/devices/iio\:device0/oversampling_ratio
-     4  # this is fine
-And from here-on, the values are as correct (one gets what one would
-expect.)
-
-While writing a kunit test for this bug, a peculiar issue was found for the
-array in the 'drivers/hwmon/ina2xx.c' & 'drivers/iio/adc/ina2xx-adc.c'
-drivers. While running the kunit test (for 'ina226_avg_tab' from these
-drivers):
-  * idx = find_closest([-1 to 2], ina226_avg_tab, ARRAY_SIZE(ina226_avg_tab));
-    This returns idx == 0, so value.
-  * idx = find_closest(3, ina226_avg_tab, ARRAY_SIZE(ina226_avg_tab));
-    This returns idx == 0, value 1; and now one could argue whether 3 is
-    closer to 4 or to 1. This quirk only appears for value '3' in this
-    array, but it seems to be a another rounding issue.
-  * And from 4 onwards the 'find_closest'() works fine (one gets what one
-    would expect).
-
-This change reworks the find_closest() macros to also check the difference
-between the left and right elements when 'x'. If the distance to the right
-is smaller (than the distance to the left), the index is incremented by 1.
-This also makes redundant the need for using the DIV_ROUND_CLOSEST() macro.
-
-In order to accommodate for any mix of negative + positive values, the
-internal variables '__fc_x', '__fc_mid_x', '__fc_left' & '__fc_right' are
-forced to 'long' type. This also addresses any potential bugs/issues with
-'x' being of an unsigned type. In those situations any comparison between
-signed & unsigned would be promoted to a comparison between 2 unsigned
-numbers; this is especially annoying when '__fc_left' & '__fc_right'
-underflow.
-
-The find_closest_descending() macro was also reworked and duplicated from
-the find_closest(), and it is being iterated in reverse. The main reason
-for this is to get the same indices as 'find_closest()' (but in reverse).
-The comparison for '__fc_right < __fc_left' favors going the array in
-ascending order.
-For example for array '{ 1024, 512, 256, 128, 64, 16, 4, 1 }' and x = 3, we
-get:
-    __fc_mid_x = 2
-    __fc_left = -1
-    __fc_right = -2
-    Then '__fc_right < __fc_left' evaluates to true and '__fc_i++' becomes 7
-    which is not quite incorrect, but 3 is closer to 4 than to 1.
-
-This change has been validated with the kunit from the next patch.
-
-Link: https://lkml.kernel.org/r/20241105145406.554365-1-aardelean@baylibre.com
-Fixes: 95d119528b0b ("util_macros.h: add find_closest() macro")
-Signed-off-by: Alexandru Ardelean <aardelean@baylibre.com>
-Cc: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: ebd912ff9919 ("s390/stacktrace: Merge perf_callchain_user() and arch_stack_walk_user()")
+Cc: stable@vger.kernel.org
+Reviewed-by: Jens Remus <jremus@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/util_macros.h |   56 +++++++++++++++++++++++++++++++-------------
- 1 file changed, 40 insertions(+), 16 deletions(-)
+ arch/s390/kernel/stacktrace.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/include/linux/util_macros.h
-+++ b/include/linux/util_macros.h
-@@ -4,19 +4,6 @@
- 
- #include <linux/math.h>
- 
--#define __find_closest(x, a, as, op)					\
--({									\
--	typeof(as) __fc_i, __fc_as = (as) - 1;				\
--	typeof(x) __fc_x = (x);						\
--	typeof(*a) const *__fc_a = (a);					\
--	for (__fc_i = 0; __fc_i < __fc_as; __fc_i++) {			\
--		if (__fc_x op DIV_ROUND_CLOSEST(__fc_a[__fc_i] +	\
--						__fc_a[__fc_i + 1], 2))	\
--			break;						\
--	}								\
--	(__fc_i);							\
--})
--
- /**
-  * find_closest - locate the closest element in a sorted array
-  * @x: The reference value.
-@@ -25,8 +12,27 @@
-  * @as: Size of 'a'.
-  *
-  * Returns the index of the element closest to 'x'.
-+ * Note: If using an array of negative numbers (or mixed positive numbers),
-+ *       then be sure that 'x' is of a signed-type to get good results.
-  */
--#define find_closest(x, a, as) __find_closest(x, a, as, <=)
-+#define find_closest(x, a, as)						\
-+({									\
-+	typeof(as) __fc_i, __fc_as = (as) - 1;				\
-+	long __fc_mid_x, __fc_x = (x);					\
-+	long __fc_left, __fc_right;					\
-+	typeof(*a) const *__fc_a = (a);					\
-+	for (__fc_i = 0; __fc_i < __fc_as; __fc_i++) {			\
-+		__fc_mid_x = (__fc_a[__fc_i] + __fc_a[__fc_i + 1]) / 2;	\
-+		if (__fc_x <= __fc_mid_x) {				\
-+			__fc_left = __fc_x - __fc_a[__fc_i];		\
-+			__fc_right = __fc_a[__fc_i + 1] - __fc_x;	\
-+			if (__fc_right < __fc_left)			\
-+				__fc_i++;				\
-+			break;						\
-+		}							\
-+	}								\
-+	(__fc_i);							\
-+})
- 
- /**
-  * find_closest_descending - locate the closest element in a sorted array
-@@ -36,9 +42,27 @@
-  * @as: Size of 'a'.
-  *
-  * Similar to find_closest() but 'a' is expected to be sorted in descending
-- * order.
-+ * order. The iteration is done in reverse order, so that the comparison
-+ * of '__fc_right' & '__fc_left' also works for unsigned numbers.
-  */
--#define find_closest_descending(x, a, as) __find_closest(x, a, as, >=)
-+#define find_closest_descending(x, a, as)				\
-+({									\
-+	typeof(as) __fc_i, __fc_as = (as) - 1;				\
-+	long __fc_mid_x, __fc_x = (x);					\
-+	long __fc_left, __fc_right;					\
-+	typeof(*a) const *__fc_a = (a);					\
-+	for (__fc_i = __fc_as; __fc_i >= 1; __fc_i--) {			\
-+		__fc_mid_x = (__fc_a[__fc_i] + __fc_a[__fc_i - 1]) / 2;	\
-+		if (__fc_x <= __fc_mid_x) {				\
-+			__fc_left = __fc_x - __fc_a[__fc_i];		\
-+			__fc_right = __fc_a[__fc_i - 1] - __fc_x;	\
-+			if (__fc_right < __fc_left)			\
-+				__fc_i--;				\
-+			break;						\
-+		}							\
-+	}								\
-+	(__fc_i);							\
-+})
- 
- /**
-  * is_insidevar - check if the @ptr points inside the @var memory range.
+diff --git a/arch/s390/kernel/stacktrace.c b/arch/s390/kernel/stacktrace.c
+index 9f59837d159e..40edfde25f5b 100644
+--- a/arch/s390/kernel/stacktrace.c
++++ b/arch/s390/kernel/stacktrace.c
+@@ -151,7 +151,7 @@ void arch_stack_walk_user_common(stack_trace_consume_fn consume_entry, void *coo
+ 				break;
+ 		}
+ 		if (!store_ip(consume_entry, cookie, entry, perf, ip))
+-			return;
++			break;
+ 		first = false;
+ 	}
+ 	pagefault_enable();
+-- 
+2.47.1
+
 
 
