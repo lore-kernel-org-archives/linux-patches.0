@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E19D11442E8;
-	Fri,  6 Dec 2024 14:56:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3ADF8149E0E;
+	Fri,  6 Dec 2024 14:56:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733496969; cv=none; b=gaxt9Jn9UfPlMU2IIr8J8MMmUhSevLo7xKf644q+UJ9zWmenGhFLofalcikg8c9JhawMObvUxJzmabqnSwV416OVTTbRfjbMYKOYN7jfVYbIMU1UfpkWqDnk5BtKnREYd6XN5ODaTsKx5LdWNWm92PWzxPPSHb7c27hOlkVulZU=
+	t=1733496972; cv=none; b=PYxsKjDhoGzeZgeUWCQCuJiacixtYwep6a8MZr+zdKQzie3vy7FwFygJtLPFDy5XO8InXuJAQLPaCm92VuxS27NSKRoBzA1ijcTc7Oj8aKJ+947wz4Ee6oiDnEfwWpbx+4pMyPelXM0NZy6qWTqq970hhdl8pAQRihj67ObM+Uc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733496969; c=relaxed/simple;
-	bh=JmCWKpZl+Rn3K4el0o68POvUINbdiBscxB+Dgk7hMpM=;
+	s=arc-20240116; t=1733496972; c=relaxed/simple;
+	bh=TN579QSpoqpMtJUApThMUShLIfQPCez6dd0SH2Hq7dE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=clP3lcRK50hTaU9NVSMbWy+u3dOG7YfZWMwizESmMEBSQ1J5W+NTpjxGCtPMBwq+nDwt0Fy/IWBUH/OVvz/qYikAmI5GpuDqfNDVvMVAp3sqLaa1CVJ+F17ITX+wTrF8BlIXJ8sAxJ0FSWZkCaOBeEPZ1+Ne8jZSFtfI5DMias4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wenLkfRG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PbyQ01BpePtUSmfYVxGq2YG3AYHSqR7rbKKpr0x4LS5VFW0RudKAEZq/7SsSxtvqTF9TBYu+p0nnf4cueYQZc4V0ngQFdJ5RqzEIRWz6dUjwgCEcz/Q8ZSse0n+6kpdaNYhqLYoCZwv7QJIYGK6Bo8BIqTz1CfYJiU4UbEJjyTY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v1pBUEUc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wenLkfRG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56423C4CED1;
-	Fri,  6 Dec 2024 14:56:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v1pBUEUc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4BEEC4CED1;
+	Fri,  6 Dec 2024 14:56:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733496968;
-	bh=JmCWKpZl+Rn3K4el0o68POvUINbdiBscxB+Dgk7hMpM=;
+	s=korg; t=1733496972;
+	bh=TN579QSpoqpMtJUApThMUShLIfQPCez6dd0SH2Hq7dE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wenLkfRGOC+sgW3b/1rrHzu8vHF2mpSr0Jg7ALP3UNG8txl9YJEYDz0G2TMLNskHr
-	 PP6AFVS9XR7y4R8hH6FnpNeLpfepgG2qYG6Bo0x8ZsmSYynuwTZbiJKwAD3kb5L6Wl
-	 zWoit9ZFX/x9Yfeu77KpaWrFL+WlczQ1BuSm9tcQ=
+	b=v1pBUEUc15M6DCwJ59Sd7tv8sZmePqWP4r7C1v73kJ+fk0ZQ7fLXCsZ6KJ2bDmH7V
+	 kvU0JLePgAnj9ePPyCmYkFKsKXKLyRKHb6Rt3DCYgO7azja7K/Klt180n198/JRpjL
+	 8ffMS/dVh8djOZWwyj+GcI417KI4GUezIX3YwW84=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luo Qiu <luoqiu@kylinsec.com.cn>,
-	Sudeep Holla <sudeep.holla@arm.com>,
+	Li Huafei <lihuafei1@huawei.com>,
+	Andy Shevchenko <andy@kernel.org>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 159/676] firmware: arm_scpi: Check the DVFS OPP count returned by the firmware
-Date: Fri,  6 Dec 2024 15:29:38 +0100
-Message-ID: <20241206143659.564813976@linuxfoundation.org>
+Subject: [PATCH 6.6 160/676] media: atomisp: Add check for rgby_data memory allocation failure
+Date: Fri,  6 Dec 2024 15:29:39 +0100
+Message-ID: <20241206143659.603240520@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -51,91 +53,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luo Qiu <luoqiu@kylinsec.com.cn>
+From: Li Huafei <lihuafei1@huawei.com>
 
-[ Upstream commit 109aa654f85c5141e813b2cd1bd36d90be678407 ]
+[ Upstream commit ed61c59139509f76d3592683c90dc3fdc6e23cd6 ]
 
-Fix a kernel crash with the below call trace when the SCPI firmware
-returns OPP count of zero.
+In ia_css_3a_statistics_allocate(), there is no check on the allocation
+result of the rgby_data memory. If rgby_data is not successfully
+allocated, it may trigger the assert(host_stats->rgby_data) assertion in
+ia_css_s3a_hmem_decode(). Adding a check to fix this potential issue.
 
-dvfs_info.opp_count may be zero on some platforms during the reboot
-test, and the kernel will crash after dereferencing the pointer to
-kcalloc(info->count, sizeof(*opp), GFP_KERNEL).
-
-  |  Unable to handle kernel NULL pointer dereference at virtual address 0000000000000028
-  |  Mem abort info:
-  |    ESR = 0x96000004
-  |    Exception class = DABT (current EL), IL = 32 bits
-  |    SET = 0, FnV = 0
-  |    EA = 0, S1PTW = 0
-  |  Data abort info:
-  |    ISV = 0, ISS = 0x00000004
-  |    CM = 0, WnR = 0
-  |  user pgtable: 4k pages, 48-bit VAs, pgdp = 00000000faefa08c
-  |  [0000000000000028] pgd=0000000000000000
-  |  Internal error: Oops: 96000004 [#1] SMP
-  |  scpi-hwmon: probe of PHYT000D:00 failed with error -110
-  |  Process systemd-udevd (pid: 1701, stack limit = 0x00000000aaede86c)
-  |  CPU: 2 PID: 1701 Comm: systemd-udevd Not tainted 4.19.90+ #1
-  |  Hardware name: PHYTIUM LTD Phytium FT2000/4/Phytium FT2000/4, BIOS
-  |  pstate: 60000005 (nZCv daif -PAN -UAO)
-  |  pc : scpi_dvfs_recalc_rate+0x40/0x58 [clk_scpi]
-  |  lr : clk_register+0x438/0x720
-  |  Call trace:
-  |   scpi_dvfs_recalc_rate+0x40/0x58 [clk_scpi]
-  |   devm_clk_hw_register+0x50/0xa0
-  |   scpi_clk_ops_init.isra.2+0xa0/0x138 [clk_scpi]
-  |   scpi_clocks_probe+0x528/0x70c [clk_scpi]
-  |   platform_drv_probe+0x58/0xa8
-  |   really_probe+0x260/0x3d0
-  |   driver_probe_device+0x12c/0x148
-  |   device_driver_attach+0x74/0x98
-  |   __driver_attach+0xb4/0xe8
-  |   bus_for_each_dev+0x88/0xe0
-  |   driver_attach+0x30/0x40
-  |   bus_add_driver+0x178/0x2b0
-  |   driver_register+0x64/0x118
-  |   __platform_driver_register+0x54/0x60
-  |   scpi_clocks_driver_init+0x24/0x1000 [clk_scpi]
-  |   do_one_initcall+0x54/0x220
-  |   do_init_module+0x54/0x1c8
-  |   load_module+0x14a4/0x1668
-  |   __se_sys_finit_module+0xf8/0x110
-  |   __arm64_sys_finit_module+0x24/0x30
-  |   el0_svc_common+0x78/0x170
-  |   el0_svc_handler+0x38/0x78
-  |   el0_svc+0x8/0x340
-  |  Code: 937d7c00 a94153f3 a8c27bfd f9400421 (b8606820)
-  |  ---[ end trace 06feb22469d89fa8 ]---
-  |  Kernel panic - not syncing: Fatal exception
-  |  SMP: stopping secondary CPUs
-  |  Kernel Offset: disabled
-  |  CPU features: 0x10,a0002008
-  |  Memory Limit: none
-
-Fixes: 8cb7cf56c9fe ("firmware: add support for ARM System Control and Power Interface(SCPI) protocol")
-Signed-off-by: Luo Qiu <luoqiu@kylinsec.com.cn>
-Message-Id: <55A2F7A784391686+20241101032115.275977-1-luoqiu@kylinsec.com.cn>
-Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
+Fixes: a49d25364dfb ("staging/atomisp: Add support for the Intel IPU v2")
+Signed-off-by: Li Huafei <lihuafei1@huawei.com>
+Reviewed-by: Andy Shevchenko <andy@kernel.org>
+Link: https://lore.kernel.org/r/20241104145051.3088231-1-lihuafei1@huawei.com
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/arm_scpi.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/staging/media/atomisp/pci/sh_css_params.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/firmware/arm_scpi.c b/drivers/firmware/arm_scpi.c
-index 435d0e2658a42..3de25e9d18ef8 100644
---- a/drivers/firmware/arm_scpi.c
-+++ b/drivers/firmware/arm_scpi.c
-@@ -627,6 +627,9 @@ static struct scpi_dvfs_info *scpi_dvfs_get_info(u8 domain)
- 	if (ret)
- 		return ERR_PTR(ret);
+diff --git a/drivers/staging/media/atomisp/pci/sh_css_params.c b/drivers/staging/media/atomisp/pci/sh_css_params.c
+index 588f2adab058c..760fe9bef2119 100644
+--- a/drivers/staging/media/atomisp/pci/sh_css_params.c
++++ b/drivers/staging/media/atomisp/pci/sh_css_params.c
+@@ -4144,6 +4144,8 @@ ia_css_3a_statistics_allocate(const struct ia_css_3a_grid_info *grid)
+ 		goto err;
+ 	/* No weighted histogram, no structure, treat the histogram data as a byte dump in a byte array */
+ 	me->rgby_data = kvmalloc(sizeof_hmem(HMEM0_ID), GFP_KERNEL);
++	if (!me->rgby_data)
++		goto err;
  
-+	if (!buf.opp_count)
-+		return ERR_PTR(-ENOENT);
-+
- 	info = kmalloc(sizeof(*info), GFP_KERNEL);
- 	if (!info)
- 		return ERR_PTR(-ENOMEM);
+ 	IA_CSS_LEAVE("return=%p", me);
+ 	return me;
 -- 
 2.43.0
 
