@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1054832C8B;
-	Fri,  6 Dec 2024 14:50:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C735A149C51;
+	Fri,  6 Dec 2024 14:50:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733496627; cv=none; b=nhW/bIJFXwhKDpQYSkFFs/erbOWSNai+4d0twnA/jLamrzOOXGcKacdYigJcwZrcP2lFeG+my/F7t43ltvvHA33nDEvmbf1dgHiAy+a0lBUSjTTZyH61HMizgC9fMBhRuSxLoEliJvvJYTc6CIb6UERB74wnISX0iGpI85loCO8=
+	t=1733496630; cv=none; b=jVIW1BjS2S+ZNV3ovJERAV8ARI3ZcGykxVUkonLc9jPYYr3BNqRKFb9PkBEJQIekV+TDIkiytyl+cAXMxFPHloYMgXQVAyYLIJ3LcIFH7hOADDea+2/1H1KDabwTMIeU9ni1/7pn6jwY21a31gWzUQlvtnMgbmct79pAsNQQ9ts=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733496627; c=relaxed/simple;
-	bh=dSvcohG43wNPvRMMiCs6Dan7Yn+Hj99klYisyRN45iM=;
+	s=arc-20240116; t=1733496630; c=relaxed/simple;
+	bh=Mh5PrQ81df7VcjAF+larQohsrGR8yq2AShwmDyk/bjc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hM+oZ0IJZRSrPb+8HnohPR3AeDYUKtwPMfJM1KPRzvkxwng6OLVbL6/764Yt9b7sdnKlQggPDM0icHXE/DBNzilnPC40WSOxq1LEL2JAKF+skJzeqp/B9d8Vb8UBaC04fcI0c5bIL8OHN0P7U5us1rJtr9S9h5ZNQWPOCz0S3Ro=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KvPMSpyt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PXmaWf/Dilew4gd8y+XXK7Vz/4LMhDRT6JJParfDM1oxxCf7QCZN4i3Hvx8avs3E9R1u7JDBRl5dDxy5UhzOMq6Tw3IsHfddq3qVx3pz3g3logxmzdPW+4NQTIMxLTLE68CDP/rd/SiquDCH4g+XFSTFi6w1ONSCjIkGtS7B940=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y/FFuzvP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KvPMSpyt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C155C4CED1;
-	Fri,  6 Dec 2024 14:50:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y/FFuzvP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2104C4CED1;
+	Fri,  6 Dec 2024 14:50:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733496626;
-	bh=dSvcohG43wNPvRMMiCs6Dan7Yn+Hj99klYisyRN45iM=;
+	s=korg; t=1733496630;
+	bh=Mh5PrQ81df7VcjAF+larQohsrGR8yq2AShwmDyk/bjc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KvPMSpyt7E4bM5ce07Igdg3nFykpM3a4pU5jcu3HmeSuU8lCV95cRAxg7gtVqGE0I
-	 /rqqeboQWlGmzVY7wNQjKU7acMi9qDChVV+1ceu1uoeFH6zld0aBqRlAGnY+ZiYIZ0
-	 61lM9BRtoTg7TIRCXNpd32m69Kmy5lmFW6G8pqz4=
+	b=y/FFuzvPxXVrlZO+1w7gZbasqtTiqV7RNycjBiEtEzw0deo6aWdeXP3DoM3vXcSG0
+	 gBUTFnMyuQxkAIw5JxqCRxRDbmsWDmNXln00h/XCak1RkgpGD2NQ91HeDONDcQF87a
+	 XeRSjUelvGO6DcpIwaRYnhfSUyaJevTgD0wf58YM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonas Gorski <jonas.gorski@gmail.com>,
-	"Maciej W. Rozycki" <macro@orcam.me.uk>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	David Disseldorp <ddiss@suse.de>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 058/676] mips: asm: fix warning when disabling MIPS_FP_SUPPORT
-Date: Fri,  6 Dec 2024 15:27:57 +0100
-Message-ID: <20241206143655.631461326@linuxfoundation.org>
+Subject: [PATCH 6.6 059/676] initramfs: avoid filename buffer overrun
+Date: Fri,  6 Dec 2024 15:27:58 +0100
+Message-ID: <20241206143655.670385456@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -52,47 +51,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jonas Gorski <jonas.gorski@gmail.com>
+From: David Disseldorp <ddiss@suse.de>
 
-[ Upstream commit da09935975c8f8c90d6f57be2422dee5557206cd ]
+[ Upstream commit e017671f534dd3f568db9e47b0583e853d2da9b5 ]
 
-When MIPS_FP_SUPPORT is disabled, __sanitize_fcr31() is defined as
-nothing, which triggers a gcc warning:
+The initramfs filename field is defined in
+Documentation/driver-api/early-userspace/buffer-format.rst as:
 
-    In file included from kernel/sched/core.c:79:
-    kernel/sched/core.c: In function 'context_switch':
-    ./arch/mips/include/asm/switch_to.h:114:39: warning: suggest braces around empty body in an 'if' statement [-Wempty-body]
-      114 |                 __sanitize_fcr31(next);                                 \
-          |                                       ^
-    kernel/sched/core.c:5316:9: note: in expansion of macro 'switch_to'
-     5316 |         switch_to(prev, next, prev);
-          |         ^~~~~~~~~
+ 37 cpio_file := ALGN(4) + cpio_header + filename + "\0" + ALGN(4) + data
+...
+ 55 ============= ================== =========================
+ 56 Field name    Field size         Meaning
+ 57 ============= ================== =========================
+...
+ 70 c_namesize    8 bytes            Length of filename, including final \0
 
-Fix this by providing an empty body for __sanitize_fcr31() like one is
-defined for __mips_mt_fpaff_switch_to().
+When extracting an initramfs cpio archive, the kernel's do_name() path
+handler assumes a zero-terminated path at @collected, passing it
+directly to filp_open() / init_mkdir() / init_mknod().
 
-Fixes: 36a498035bd2 ("MIPS: Avoid FCSR sanitization when CONFIG_MIPS_FP_SUPPORT=n")
-Signed-off-by: Jonas Gorski <jonas.gorski@gmail.com>
-Reviewed-by: Maciej W. Rozycki <macro@orcam.me.uk>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+If a specially crafted cpio entry carries a non-zero-terminated filename
+and is followed by uninitialized memory, then a file may be created with
+trailing characters that represent the uninitialized memory. The ability
+to create an initramfs entry would imply already having full control of
+the system, so the buffer overrun shouldn't be considered a security
+vulnerability.
+
+Append the output of the following bash script to an existing initramfs
+and observe any created /initramfs_test_fname_overrunAA* path. E.g.
+  ./reproducer.sh | gzip >> /myinitramfs
+
+It's easiest to observe non-zero uninitialized memory when the output is
+gzipped, as it'll overflow the heap allocated @out_buf in __gunzip(),
+rather than the initrd_start+initrd_size block.
+
+---- reproducer.sh ----
+nilchar="A"	# change to "\0" to properly zero terminate / pad
+magic="070701"
+ino=1
+mode=$(( 0100777 ))
+uid=0
+gid=0
+nlink=1
+mtime=1
+filesize=0
+devmajor=0
+devminor=1
+rdevmajor=0
+rdevminor=0
+csum=0
+fname="initramfs_test_fname_overrun"
+namelen=$(( ${#fname} + 1 ))	# plus one to account for terminator
+
+printf "%s%08x%08x%08x%08x%08x%08x%08x%08x%08x%08x%08x%08x%08x%s" \
+	$magic $ino $mode $uid $gid $nlink $mtime $filesize \
+	$devmajor $devminor $rdevmajor $rdevminor $namelen $csum $fname
+
+termpadlen=$(( 1 + ((4 - ((110 + $namelen) & 3)) % 4) ))
+printf "%.s${nilchar}" $(seq 1 $termpadlen)
+---- reproducer.sh ----
+
+Symlink filename fields handled in do_symlink() won't overrun past the
+data segment, due to the explicit zero-termination of the symlink
+target.
+
+Fix filename buffer overrun by aborting the initramfs FSM if any cpio
+entry doesn't carry a zero-terminator at the expected (name_len - 1)
+offset.
+
+Fixes: 1da177e4c3f41 ("Linux-2.6.12-rc2")
+Signed-off-by: David Disseldorp <ddiss@suse.de>
+Link: https://lore.kernel.org/r/20241030035509.20194-2-ddiss@suse.de
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/include/asm/switch_to.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ init/initramfs.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-diff --git a/arch/mips/include/asm/switch_to.h b/arch/mips/include/asm/switch_to.h
-index a4374b4cb88fd..d6ccd53440213 100644
---- a/arch/mips/include/asm/switch_to.h
-+++ b/arch/mips/include/asm/switch_to.h
-@@ -97,7 +97,7 @@ do {									\
- 	}								\
- } while (0)
- #else
--# define __sanitize_fcr31(next)
-+# define __sanitize_fcr31(next) do { (void) (next); } while (0)
- #endif
+diff --git a/init/initramfs.c b/init/initramfs.c
+index efc477b905a48..148988bd8ab27 100644
+--- a/init/initramfs.c
++++ b/init/initramfs.c
+@@ -358,6 +358,15 @@ static int __init do_name(void)
+ {
+ 	state = SkipIt;
+ 	next_state = Reset;
++
++	/* name_len > 0 && name_len <= PATH_MAX checked in do_header */
++	if (collected[name_len - 1] != '\0') {
++		pr_err("initramfs name without nulterm: %.*s\n",
++		       (int)name_len, collected);
++		error("malformed archive");
++		return 1;
++	}
++
+ 	if (strcmp(collected, "TRAILER!!!") == 0) {
+ 		free_hash();
+ 		return 0;
+@@ -422,6 +431,12 @@ static int __init do_copy(void)
  
- /*
+ static int __init do_symlink(void)
+ {
++	if (collected[name_len - 1] != '\0') {
++		pr_err("initramfs symlink without nulterm: %.*s\n",
++		       (int)name_len, collected);
++		error("malformed archive");
++		return 1;
++	}
+ 	collected[N_ALIGN(name_len) + body_len] = '\0';
+ 	clean_path(collected, 0);
+ 	init_symlink(collected + N_ALIGN(name_len), collected);
 -- 
 2.43.0
 
