@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46BEA1474AF;
-	Fri,  6 Dec 2024 14:54:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAE401494B2;
+	Fri,  6 Dec 2024 14:54:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733496863; cv=none; b=fSfJ/+H9cgzwvmJ7iW3KHSrkWMrKm/tpiPjmxkmUJ91XKcY93bTEwKIhpfOPgzJJ/wTVj4o/rdzkkMh5dbHuGNzX4OwQZdM7zcog3Rrn7i+JhiypyE5p90Ym4Z3gf/s3TpZY9Aigs/Cij3yRVpLVCw9pD71DFyeWRXp0pZwe79o=
+	t=1733496868; cv=none; b=fwfDs5TT5Egh3S/DKQlQmv5x5JwS1BWQOSz5GnwO7/WErOTKCrmbr5hWN9YXjhs4My37ZNwQQ+nxPR8tyFQUW5jWyoT467oOdrNFT0DVTMMZTYNG9EuJ8HKHAMGk5duSBowsmXzJCfZMFYdoU3YX7BPPkdCHXdWCiWZzoNlFy8I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733496863; c=relaxed/simple;
-	bh=P+l5s6FLFoyiNfPf7jYLR/NiSD0eXoyv6X6lb2j+87U=;
+	s=arc-20240116; t=1733496868; c=relaxed/simple;
+	bh=d6xZ1LgLYBcXMeqifFejfsQR38JkRj3HDryCWsf3ILU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cq5LLGWiQxMZ/twTjXU5SmoWJ6A+EFXKsXjjYEDhFgRPcXHdxjuPjEaKaVONr0XbvH7VWXPzwQhEcZmMnOCu5PGi+JOY0/eXVc5NCf54GPfBOR1IOtKX/kDOVbvH7OD95KG4LeLHXRKMV/evfGKQYZTCg0TlsOwsi0yTTeWGKfc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b/HNSyr2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=id5UTALgYCfRpOYTqzsvs5/PIdisV4NxpEPiO8PEEjhCbftWVg6kRzm/iBGlhHvpyeEQZ22AwCR4JzQZajd8OTJsZfNXPymZ+Gw4OLnJPLbQP10fdOk/U4uUeaX/XcWq7clvAWuvlovS1ruo9b+/l+Z+ndd7UXCReygvcO6fggY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=llnAxSTf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b/HNSyr2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B548C4CED1;
-	Fri,  6 Dec 2024 14:54:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="llnAxSTf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B85BEC4CED1;
+	Fri,  6 Dec 2024 14:54:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733496862;
-	bh=P+l5s6FLFoyiNfPf7jYLR/NiSD0eXoyv6X6lb2j+87U=;
+	s=korg; t=1733496866;
+	bh=d6xZ1LgLYBcXMeqifFejfsQR38JkRj3HDryCWsf3ILU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b/HNSyr2iTDAN6qDBQjtWc8FfqJJ90s+EYJ3rzGhvWr/dWHx5cAyG1MqRJB0sMc6q
-	 U8rEz2LllcRwkbaM3Dcwb+8FA6O07XhjxyvVUQ98BHvdmY3rRXGSqcEImRuJRHTH9u
-	 HFDqNtmMiCuPQUapaKNSOChEVcLb1de635aSJLdw=
+	b=llnAxSTfmZ1T8f+HqqAnS0wpCTMUO9hVeOWAdhpLwUY7G+nJvtGKZ7NCM0orxBYuu
+	 9aEHNu1WqpLM8rVK+wp+2BXZkwi02LwjRQ1c0wEMoJhG+lB8NONqU8LGfbx0v3vP96
+	 K3UalXpPlHaK8JeZQH786ljQ4uwuYhYFEzHIM1Us=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hsin-Te Yuan <yuanhsinte@chromium.org>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
+	Chen-Yu Tsai <wenst@chromium.org>,
 	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 127/676] arm64: dts: mt8183: kukui: Fix the address of eeprom at i2c4
-Date: Fri,  6 Dec 2024 15:29:06 +0100
-Message-ID: <20241206143658.315606022@linuxfoundation.org>
+Subject: [PATCH 6.6 128/676] arm64: dts: mediatek: mt8173-elm-hana: Add vdd-supply to second source trackpad
+Date: Fri,  6 Dec 2024 15:29:07 +0100
+Message-ID: <20241206143658.355695576@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -52,57 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hsin-Te Yuan <yuanhsinte@chromium.org>
+From: Chen-Yu Tsai <wenst@chromium.org>
 
-[ Upstream commit edbde4923f208aa83abb48d4b2463299e5fc2586 ]
+[ Upstream commit f766fae08f6a2eaeb45d8d2c053724c91526835c ]
 
-The address of eeprom should be 50.
+The Hana device has a second source option trackpad, but it is missing
+its regulator supply. It only works because the regulator is marked as
+always-on.
 
-Fixes: ff33d889567e ("arm64: dts: mt8183: Add kukui kodama board")
-Fixes: d1eaf77f2c66 ("arm64: dts: mt8183: Add kukui kakadu board")
-Signed-off-by: Hsin-Te Yuan <yuanhsinte@chromium.org>
-Reviewed-by: Matthias Brugger <matthias.bgg@gmail.com>
+Add the regulator supply, but leave out the post-power-on delay. Instead,
+document the post-power-on delay along with the reason for not adding
+it in a comment.
+
+Fixes: 689b937bedde ("arm64: dts: mediatek: add mt8173 elm and hana board")
+Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
 Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://lore.kernel.org/r/20240909-eeprom-v1-2-1ed2bc5064f4@chromium.org
+Link: https://lore.kernel.org/r/20241018082001.1296963-1-wenst@chromium.org
 Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/mediatek/mt8183-kukui-kakadu.dtsi | 4 ++--
- arch/arm64/boot/dts/mediatek/mt8183-kukui-kodama.dtsi | 4 ++--
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ arch/arm64/boot/dts/mediatek/mt8173-elm-hana.dtsi | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/mediatek/mt8183-kukui-kakadu.dtsi b/arch/arm64/boot/dts/mediatek/mt8183-kukui-kakadu.dtsi
-index 0d3c7b8162ff0..9eca1c80fe010 100644
---- a/arch/arm64/boot/dts/mediatek/mt8183-kukui-kakadu.dtsi
-+++ b/arch/arm64/boot/dts/mediatek/mt8183-kukui-kakadu.dtsi
-@@ -105,9 +105,9 @@ &i2c4 {
- 	clock-frequency = <400000>;
- 	vbus-supply = <&mt6358_vcn18_reg>;
- 
--	eeprom@54 {
-+	eeprom@50 {
- 		compatible = "atmel,24c32";
--		reg = <0x54>;
-+		reg = <0x50>;
- 		pagesize = <32>;
- 		vcc-supply = <&mt6358_vcn18_reg>;
+diff --git a/arch/arm64/boot/dts/mediatek/mt8173-elm-hana.dtsi b/arch/arm64/boot/dts/mediatek/mt8173-elm-hana.dtsi
+index bdcd35cecad90..fd6230352f4fd 100644
+--- a/arch/arm64/boot/dts/mediatek/mt8173-elm-hana.dtsi
++++ b/arch/arm64/boot/dts/mediatek/mt8173-elm-hana.dtsi
+@@ -43,6 +43,14 @@ trackpad2: trackpad@2c {
+ 		interrupts = <117 IRQ_TYPE_LEVEL_LOW>;
+ 		reg = <0x2c>;
+ 		hid-descr-addr = <0x0020>;
++		/*
++		 * The trackpad needs a post-power-on delay of 100ms,
++		 * but at time of writing, the power supply for it on
++		 * this board is always on. The delay is therefore not
++		 * added to avoid impacting the readiness of the
++		 * trackpad.
++		 */
++		vdd-supply = <&mt6397_vgp6_reg>;
+ 		wakeup-source;
  	};
-diff --git a/arch/arm64/boot/dts/mediatek/mt8183-kukui-kodama.dtsi b/arch/arm64/boot/dts/mediatek/mt8183-kukui-kodama.dtsi
-index e73113cb51f53..29216ebe4de84 100644
---- a/arch/arm64/boot/dts/mediatek/mt8183-kukui-kodama.dtsi
-+++ b/arch/arm64/boot/dts/mediatek/mt8183-kukui-kodama.dtsi
-@@ -80,9 +80,9 @@ &i2c4 {
- 	clock-frequency = <400000>;
- 	vbus-supply = <&mt6358_vcn18_reg>;
- 
--	eeprom@54 {
-+	eeprom@50 {
- 		compatible = "atmel,24c64";
--		reg = <0x54>;
-+		reg = <0x50>;
- 		pagesize = <32>;
- 		vcc-supply = <&mt6358_vcn18_reg>;
- 	};
+ };
 -- 
 2.43.0
 
