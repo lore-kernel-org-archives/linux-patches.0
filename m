@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23AA020C03B;
-	Fri,  6 Dec 2024 15:12:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 685A7207A07;
+	Fri,  6 Dec 2024 15:12:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733497958; cv=none; b=By29ZEZEVU0F+yDWiRGKNwcUM7aqFtqEjbRj+IiKFR3d6V7VgJwlHGLloHAC57PUwU+YLXyAhqY2NCV2PomdVJN6ROfR7BmzdGsX05IrMCXU3TNMi2ntrvEXSvNIWmhT38zKuiMrniTt4UDScMeMsG11lh99TvMwnExdXdRUmuI=
+	t=1733497961; cv=none; b=bPYyg/ogIirYXI5hBRzB4dU1tIbZUtucGPdKtAeR6oCeyxZVQGZhyISv5Ut83B6QzSfp4EIdQICh3mGwYaO1JSUzHVxIBCNDhO5lTC2VcSNfGxt6BsYUwfbw528glAifgcxL/XJ7C2jFY8JjWktOT61AKtRUAvBE0rlDDeDajBE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733497958; c=relaxed/simple;
-	bh=TTSxrRgMlxRAxDmddcjSJAXy7eN/xKMavQBhjELIFJc=;
+	s=arc-20240116; t=1733497961; c=relaxed/simple;
+	bh=zeunuCxYMirkXYxp+4fXdTV7/XGuexvIYmPYVTRutqg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dUV1XYJnvl01UpXz/0dew9tRkbrUk8lD0Q8KEiz7q0R19F9ffXBkvU7TFisHDK507QZwK1+jJFBWwFrdNPgMcnHMhjtVnPuj4xZZC1HXfba7JuPfHWmLedbygSGgAXW3kmir8QXBU3Q3xMrC9s5lAVELyu4LYOaffVXC4PnG418=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Iakc7W/g; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=D4hOE8o4vkSkxTjoZYX8Q4xpj62dDnn3CIPEv6eozT2cp2jhlDs0KfG2Z+WwvvThhk2+qTYyLUL378R9w2ptRoBQuT2lVWsXX46LXYb8MT76wa6E7KpSXRrEXjz25frXoS7KbFHuksjaV9WBWbNiNTubCICGDVysKciAPFY2hX8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wNmOEqx0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Iakc7W/g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B75EC4CED1;
-	Fri,  6 Dec 2024 15:12:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wNmOEqx0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD159C4CED1;
+	Fri,  6 Dec 2024 15:12:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733497958;
-	bh=TTSxrRgMlxRAxDmddcjSJAXy7eN/xKMavQBhjELIFJc=;
+	s=korg; t=1733497961;
+	bh=zeunuCxYMirkXYxp+4fXdTV7/XGuexvIYmPYVTRutqg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Iakc7W/ghDhG7nYCisv8Cv4XozhfsoCUH8QB9Zq804XdkubA+8d7lQ+Xmj2jzICoc
-	 DFcULFAlavy4HxlRK6fKRUTh+oMIQqH+P6qraetct3ldVAjUr0N2lXrlm2c4Ch6Ifm
-	 2lGznHcTAvWBt82+pYD1pdXuiU08NcjA+4J4iBWs=
+	b=wNmOEqx0A9ywYL+ybMxlcIoOckUgZT0RI3zrb19l/2T8ttrFPXe5GF7U9+FvJL0oT
+	 19RjKsbC0H7jUPPn7W5VgbD1lXJJlSj73+TTZOO8eFzchT5zd6lkOSHo7BLDPYlH83
+	 JohRzoP9oePPxIUptPO+rPT3AI5ubqtOnX+CYx20=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andreas Gruenbacher <agruenba@redhat.com>,
+	Somnath Kotur <somnath.kotur@broadcom.com>,
+	Pavan Chebbi <pavan.chebbi@broadcom.com>,
+	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
+	Michael Chan <michael.chan@broadcom.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 443/676] gfs2: Remove and replace gfs2_glock_queue_work
-Date: Fri,  6 Dec 2024 15:34:22 +0100
-Message-ID: <20241206143710.661307442@linuxfoundation.org>
+Subject: [PATCH 6.6 417/676] bnxt_en: Refactor bnxt_ptp_init()
+Date: Fri,  6 Dec 2024 15:33:56 +0100
+Message-ID: <20241206143709.637341465@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -50,161 +54,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andreas Gruenbacher <agruenba@redhat.com>
+From: Michael Chan <michael.chan@broadcom.com>
 
-[ Upstream commit 1e86044402c45b70a9b31beeaefb5cc732a7470c ]
+[ Upstream commit 1e9614cd956268e10a669c0593e7e54d03d0c087 ]
 
-There are no more callers of gfs2_glock_queue_work() left, so remove
-that helper.  With that, we can now rename __gfs2_glock_queue_work()
-back to gfs2_glock_queue_work() to get rid of some unnecessary clutter.
+Instead of passing the 2nd parameter phc_cfg to bnxt_ptp_init().
+Store it in bp->ptp_cfg so that the caller doesn't need to know what
+the value should be.
 
-Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
+In the next patch, we'll need to call bnxt_ptp_init() in bnxt_resume()
+and this will make it easier.
+
+Reviewed-by: Somnath Kotur <somnath.kotur@broadcom.com>
+Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
+Reviewed-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
+Signed-off-by: Michael Chan <michael.chan@broadcom.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Stable-dep-of: 3661c05c54e8 ("bnxt_en: Unregister PTP during PCI shutdown and suspend")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/gfs2/glock.c | 35 +++++++++++++++--------------------
- 1 file changed, 15 insertions(+), 20 deletions(-)
+ drivers/net/ethernet/broadcom/bnxt/bnxt.c     | 6 +++---
+ drivers/net/ethernet/broadcom/bnxt/bnxt_ptp.c | 4 ++--
+ drivers/net/ethernet/broadcom/bnxt/bnxt_ptp.h | 3 ++-
+ 3 files changed, 7 insertions(+), 6 deletions(-)
 
-diff --git a/fs/gfs2/glock.c b/fs/gfs2/glock.c
-index f38d8558f4c18..2c0908a302102 100644
---- a/fs/gfs2/glock.c
-+++ b/fs/gfs2/glock.c
-@@ -274,7 +274,7 @@ static void gfs2_glock_remove_from_lru(struct gfs2_glock *gl)
-  * Enqueue the glock on the work queue.  Passes one glock reference on to the
-  * work queue.
-  */
--static void __gfs2_glock_queue_work(struct gfs2_glock *gl, unsigned long delay) {
-+static void gfs2_glock_queue_work(struct gfs2_glock *gl, unsigned long delay) {
- 	if (!queue_delayed_work(glock_workqueue, &gl->gl_work, delay)) {
- 		/*
- 		 * We are holding the lockref spinlock, and the work was still
-@@ -287,12 +287,6 @@ static void __gfs2_glock_queue_work(struct gfs2_glock *gl, unsigned long delay)
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+index bc6206543e8e9..c216d95809282 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+@@ -7597,7 +7597,6 @@ static int __bnxt_hwrm_ptp_qcfg(struct bnxt *bp)
+ 	struct hwrm_port_mac_ptp_qcfg_output *resp;
+ 	struct hwrm_port_mac_ptp_qcfg_input *req;
+ 	struct bnxt_ptp_cfg *ptp = bp->ptp_cfg;
+-	bool phc_cfg;
+ 	u8 flags;
+ 	int rc;
+ 
+@@ -7640,8 +7639,9 @@ static int __bnxt_hwrm_ptp_qcfg(struct bnxt *bp)
+ 		rc = -ENODEV;
+ 		goto exit;
+ 	}
+-	phc_cfg = (flags & PORT_MAC_PTP_QCFG_RESP_FLAGS_RTC_CONFIGURED) != 0;
+-	rc = bnxt_ptp_init(bp, phc_cfg);
++	ptp->rtc_configured =
++		(flags & PORT_MAC_PTP_QCFG_RESP_FLAGS_RTC_CONFIGURED) != 0;
++	rc = bnxt_ptp_init(bp);
+ 	if (rc)
+ 		netdev_warn(bp->dev, "PTP initialization failed.\n");
+ exit:
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_ptp.c b/drivers/net/ethernet/broadcom/bnxt/bnxt_ptp.c
+index 6e3da3362bd61..bbe8657f6545b 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt_ptp.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_ptp.c
+@@ -922,7 +922,7 @@ static void bnxt_ptp_free(struct bnxt *bp)
  	}
  }
  
--static void gfs2_glock_queue_work(struct gfs2_glock *gl, unsigned long delay) {
--	spin_lock(&gl->gl_lockref.lock);
--	__gfs2_glock_queue_work(gl, delay);
--	spin_unlock(&gl->gl_lockref.lock);
--}
--
- static void __gfs2_glock_put(struct gfs2_glock *gl)
+-int bnxt_ptp_init(struct bnxt *bp, bool phc_cfg)
++int bnxt_ptp_init(struct bnxt *bp)
  {
- 	struct gfs2_sbd *sdp = gl->gl_name.ln_sbd;
-@@ -337,7 +331,8 @@ void gfs2_glock_put_async(struct gfs2_glock *gl)
- 	if (lockref_put_or_lock(&gl->gl_lockref))
- 		return;
+ 	struct bnxt_ptp_cfg *ptp = bp->ptp_cfg;
+ 	int rc;
+@@ -944,7 +944,7 @@ int bnxt_ptp_init(struct bnxt *bp, bool phc_cfg)
  
--	__gfs2_glock_queue_work(gl, 0);
-+	GLOCK_BUG_ON(gl, gl->gl_lockref.count != 1);
-+	gfs2_glock_queue_work(gl, 0);
- 	spin_unlock(&gl->gl_lockref.lock);
- }
+ 	if (BNXT_PTP_USE_RTC(bp)) {
+ 		bnxt_ptp_timecounter_init(bp, false);
+-		rc = bnxt_ptp_init_rtc(bp, phc_cfg);
++		rc = bnxt_ptp_init_rtc(bp, ptp->rtc_configured);
+ 		if (rc)
+ 			goto out;
+ 	} else {
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_ptp.h b/drivers/net/ethernet/broadcom/bnxt/bnxt_ptp.h
+index 34162e07a1195..7d6a215b10b1f 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt_ptp.h
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_ptp.h
+@@ -115,6 +115,7 @@ struct bnxt_ptp_cfg {
+ 					 BNXT_PTP_MSG_PDELAY_REQ |	\
+ 					 BNXT_PTP_MSG_PDELAY_RESP)
+ 	u8			tx_tstamp_en:1;
++	u8			rtc_configured:1;
+ 	int			rx_filter;
+ 	u32			tstamp_filters;
  
-@@ -814,7 +809,7 @@ __acquires(&gl->gl_lockref.lock)
- 			 */
- 			clear_bit(GLF_LOCK, &gl->gl_flags);
- 			clear_bit(GLF_DEMOTE_IN_PROGRESS, &gl->gl_flags);
--			__gfs2_glock_queue_work(gl, GL_GLOCK_DFT_HOLD);
-+			gfs2_glock_queue_work(gl, GL_GLOCK_DFT_HOLD);
- 			return;
- 		} else {
- 			clear_bit(GLF_INVALIDATE_IN_PROGRESS, &gl->gl_flags);
-@@ -844,7 +839,7 @@ __acquires(&gl->gl_lockref.lock)
- 
- 	/* Complete the operation now. */
- 	finish_xmote(gl, target);
--	__gfs2_glock_queue_work(gl, 0);
-+	gfs2_glock_queue_work(gl, 0);
- }
- 
- /**
-@@ -891,7 +886,7 @@ __acquires(&gl->gl_lockref.lock)
- 	clear_bit(GLF_LOCK, &gl->gl_flags);
- 	smp_mb__after_atomic();
- 	gl->gl_lockref.count++;
--	__gfs2_glock_queue_work(gl, 0);
-+	gfs2_glock_queue_work(gl, 0);
- 	return;
- 
- out_unlock:
-@@ -1124,12 +1119,12 @@ static void glock_work_func(struct work_struct *work)
- 		drop_refs--;
- 		if (gl->gl_name.ln_type != LM_TYPE_INODE)
- 			delay = 0;
--		__gfs2_glock_queue_work(gl, delay);
-+		gfs2_glock_queue_work(gl, delay);
- 	}
- 
- 	/*
- 	 * Drop the remaining glock references manually here. (Mind that
--	 * __gfs2_glock_queue_work depends on the lockref spinlock begin held
-+	 * gfs2_glock_queue_work depends on the lockref spinlock begin held
- 	 * here as well.)
- 	 */
- 	gl->gl_lockref.count -= drop_refs;
-@@ -1616,7 +1611,7 @@ int gfs2_glock_nq(struct gfs2_holder *gh)
- 		     test_and_clear_bit(GLF_FROZEN, &gl->gl_flags))) {
- 		set_bit(GLF_REPLY_PENDING, &gl->gl_flags);
- 		gl->gl_lockref.count++;
--		__gfs2_glock_queue_work(gl, 0);
-+		gfs2_glock_queue_work(gl, 0);
- 	}
- 	run_queue(gl, 1);
- 	spin_unlock(&gl->gl_lockref.lock);
-@@ -1681,7 +1676,7 @@ static void __gfs2_glock_dq(struct gfs2_holder *gh)
- 		    !test_bit(GLF_DEMOTE, &gl->gl_flags) &&
- 		    gl->gl_name.ln_type == LM_TYPE_INODE)
- 			delay = gl->gl_hold_time;
--		__gfs2_glock_queue_work(gl, delay);
-+		gfs2_glock_queue_work(gl, delay);
- 	}
- }
- 
-@@ -1905,7 +1900,7 @@ void gfs2_glock_cb(struct gfs2_glock *gl, unsigned int state)
- 			delay = gl->gl_hold_time;
- 	}
- 	handle_callback(gl, state, delay, true);
--	__gfs2_glock_queue_work(gl, delay);
-+	gfs2_glock_queue_work(gl, delay);
- 	spin_unlock(&gl->gl_lockref.lock);
- }
- 
-@@ -1965,7 +1960,7 @@ void gfs2_glock_complete(struct gfs2_glock *gl, int ret)
- 
- 	gl->gl_lockref.count++;
- 	set_bit(GLF_REPLY_PENDING, &gl->gl_flags);
--	__gfs2_glock_queue_work(gl, 0);
-+	gfs2_glock_queue_work(gl, 0);
- 	spin_unlock(&gl->gl_lockref.lock);
- }
- 
-@@ -2025,7 +2020,7 @@ __acquires(&lru_lock)
- 		gl->gl_lockref.count++;
- 		if (demote_ok(gl))
- 			handle_callback(gl, LM_ST_UNLOCKED, 0, false);
--		__gfs2_glock_queue_work(gl, 0);
-+		gfs2_glock_queue_work(gl, 0);
- 		spin_unlock(&gl->gl_lockref.lock);
- 		cond_resched_lock(&lru_lock);
- 	}
-@@ -2163,7 +2158,7 @@ static void thaw_glock(struct gfs2_glock *gl)
- 
- 	spin_lock(&gl->gl_lockref.lock);
- 	set_bit(GLF_REPLY_PENDING, &gl->gl_flags);
--	__gfs2_glock_queue_work(gl, 0);
-+	gfs2_glock_queue_work(gl, 0);
- 	spin_unlock(&gl->gl_lockref.lock);
- }
- 
-@@ -2182,7 +2177,7 @@ static void clear_glock(struct gfs2_glock *gl)
- 		gl->gl_lockref.count++;
- 		if (gl->gl_state != LM_ST_UNLOCKED)
- 			handle_callback(gl, LM_ST_UNLOCKED, 0, false);
--		__gfs2_glock_queue_work(gl, 0);
-+		gfs2_glock_queue_work(gl, 0);
- 	}
- 	spin_unlock(&gl->gl_lockref.lock);
- }
+@@ -145,6 +146,6 @@ int bnxt_get_tx_ts_p5(struct bnxt *bp, struct sk_buff *skb);
+ int bnxt_get_rx_ts_p5(struct bnxt *bp, u64 *ts, u32 pkt_ts);
+ void bnxt_ptp_rtc_timecounter_init(struct bnxt_ptp_cfg *ptp, u64 ns);
+ int bnxt_ptp_init_rtc(struct bnxt *bp, bool phc_cfg);
+-int bnxt_ptp_init(struct bnxt *bp, bool phc_cfg);
++int bnxt_ptp_init(struct bnxt *bp);
+ void bnxt_ptp_clear(struct bnxt *bp);
+ #endif
 -- 
 2.43.0
 
