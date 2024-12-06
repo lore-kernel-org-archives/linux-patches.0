@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 055BD2066C5;
-	Fri,  6 Dec 2024 14:57:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A9291FCCE5;
+	Fri,  6 Dec 2024 14:57:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733497053; cv=none; b=WluYY4Wzbmzh3TGhbFXO84iNiQx6+dpAWEMUtW68Lu+Ve9crrrNsnuBqup1YiYVJlc4/V+u/K54aSA2/Bq78LIym6RxIW75Abo/ae575uzKWTQP7+M/TeGpNaAJH7xiIkM98YiY6oRNdILkWycsTvKgA3Rm6MD+SBDxUZilpSpw=
+	t=1733497056; cv=none; b=jNHlR9aGvfzMbPlJCI4SuF8mNUEY5whqBluJ2HkYXJ4wwuSg5wqssoVekLIBbLbKQkJ2odQ/XyIWZ1F1Ld9cTPLMnkXqBdtFEFqFa7bLngpP8qo07CCOexZk7GdZefMAw16yz0sLjzEqCIT0BswZbuvIQ/8TUl95Y3fKusCXklE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733497053; c=relaxed/simple;
-	bh=1s0UjNdk6zXMU9getTZ54t8SMA0K82KfkIM1mP6qW+Y=;
+	s=arc-20240116; t=1733497056; c=relaxed/simple;
+	bh=Nuim2lq9JfEmfRSyyuhpIAcGMa0xMiqQyg0j9OGQSIQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cUxLaJZCdezLCGNJd6nlVdGgoV5F2C+7QXjQeM8gZI+JSUp9ZtPFV0bsq/zxIFIYBVt9VN8pvCok1zISVSjQrM/iwDX8ubEBZdRmFfgjmGuMa+BrOzdPtVF2g/cO8h2rEbgUoxS0oiGmObqpnuhXocSVnfhYUCbVoSBfLwtE8Ew=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TpeB4fEZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NBAmCXxRDeE1SAOmOERxrb857rNVR7uVx/AppMrrO1ZCFbrtnP9go7owQALGr9+0seH5IZR+LcxQzH34m8YQKElhDzJx0DGzWGE0A07iCDErMozZxNlraTNDw3LhfJOiEkyXV52WOg3GpgE+kbUAYp25w5PHw3xDnRY+edlMfkQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QTT5vY7x; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TpeB4fEZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A309C4CEDE;
-	Fri,  6 Dec 2024 14:57:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QTT5vY7x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACD5AC4CEDC;
+	Fri,  6 Dec 2024 14:57:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733497052;
-	bh=1s0UjNdk6zXMU9getTZ54t8SMA0K82KfkIM1mP6qW+Y=;
+	s=korg; t=1733497056;
+	bh=Nuim2lq9JfEmfRSyyuhpIAcGMa0xMiqQyg0j9OGQSIQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TpeB4fEZr8+1hc9zwYhvze+qu8Ku+pkH5io0Wb+juiKFFr+ThmW5ChgTdNcgYD7N5
-	 qvBnTxPjtxo5igeS41v0Zbm2ff5uXKEa6eSRYNJMTygJOnRvQImDJVvRL+huSCNq4j
-	 AQAyNotvMNWtHrsLXsYm99soj+AiIkgCVFnv5AKg=
+	b=QTT5vY7x931xG3dnHgtvYRI3fXbWGzlGCEnQJQR8hRToWKZGSNcERu/YPGBHuwkgM
+	 HQAplEq1ftZCiMWbgffcCcLVQuPcmidMK5YDS7MeYmICEtJ6jhFNcYSwjfn8if4hu5
+	 reRg+qVaTwXRZCLej7pIklVDSjRGDNfEfgBF17lk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 149/676] regmap: irq: Set lockdep class for hierarchical IRQ domains
-Date: Fri,  6 Dec 2024 15:29:28 +0100
-Message-ID: <20241206143659.171348969@linuxfoundation.org>
+Subject: [PATCH 6.6 150/676] arm64: dts: renesas: hihope: Drop #sound-dai-cells
+Date: Fri,  6 Dec 2024 15:29:29 +0100
+Message-ID: <20241206143659.209967782@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -51,83 +52,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
 
-[ Upstream commit 953e549471cabc9d4980f1da2e9fa79f4c23da06 ]
+[ Upstream commit 9cc926e3fab42dd292219796cfc94e41f4ab749d ]
 
-Lockdep gives a false positive splat as it can't distinguish the lock
-which is taken by different IRQ descriptors from different IRQ chips
-that are organized in a way of a hierarchy:
+"#sound-dai-cells" is required if the board is using "simple-card".
+However, the HiHope board uses "audio-graph", thus remove the unneeded
+`#sound-dai-cells`.
 
-   ======================================================
-   WARNING: possible circular locking dependency detected
-   6.12.0-rc5-next-20241101-00148-g9fabf8160b53 #562 Tainted: G        W
-   ------------------------------------------------------
-   modprobe/141 is trying to acquire lock:
-   ffff899446947868 (intel_soc_pmic_bxtwc:502:(&bxtwc_regmap_config)->lock){+.+.}-{4:4}, at: regmap_update_bits_base+0x33/0x90
+Commit 9e72606cd2db ("arm64: dts: renesas: #sound-dai-cells is used when
+simple-card") updated the comment regarding usage of "#sound-dai-cells"
+in the SoC DTSI but missed to remove "#sound-dai-cells" from board DTS
+files.
 
-   but task is already holding lock:
-   ffff899446947c68 (&d->lock){+.+.}-{4:4}, at: __setup_irq+0x682/0x790
-
-   which lock already depends on the new lock.
-
-   -> #3 (&d->lock){+.+.}-{4:4}:
-   -> #2 (&desc->request_mutex){+.+.}-{4:4}:
-   -> #1 (ipclock){+.+.}-{4:4}:
-   -> #0 (intel_soc_pmic_bxtwc:502:(&bxtwc_regmap_config)->lock){+.+.}-{4:4}:
-
-   Chain exists of:
-     intel_soc_pmic_bxtwc:502:(&bxtwc_regmap_config)->lock --> &desc->request_mutex --> &d->lock
-
-    Possible unsafe locking scenario:
-
-          CPU0                    CPU1
-          ----                    ----
-     lock(&d->lock);
-                                  lock(&desc->request_mutex);
-                                  lock(&d->lock);
-     lock(intel_soc_pmic_bxtwc:502:(&bxtwc_regmap_config)->lock);
-
-    *** DEADLOCK ***
-
-   3 locks held by modprobe/141:
-    #0: ffff8994419368f8 (&dev->mutex){....}-{4:4}, at: __driver_attach+0xf6/0x250
-    #1: ffff89944690b250 (&desc->request_mutex){+.+.}-{4:4}, at: __setup_irq+0x1a2/0x790
-    #2: ffff899446947c68 (&d->lock){+.+.}-{4:4}, at: __setup_irq+0x682/0x790
-
-Set a lockdep class when we map the IRQ so that it doesn't warn about
-a lockdep bug that doesn't exist.
-
-Fixes: 4af8be67fd99 ("regmap: Convert regmap_irq to use irq_domain")
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://patch.msgid.link/20241101165553.4055617-1-andriy.shevchenko@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 9e72606cd2db ("arm64: dts: renesas: #sound-dai-cells is used when simple-card")
+Signed-off-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Acked-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
+Link: https://lore.kernel.org/20241010135332.710648-1-prabhakar.mahadev-lad.rj@bp.renesas.com
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/regmap/regmap-irq.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ arch/arm64/boot/dts/renesas/hihope-rev2.dtsi | 3 ---
+ arch/arm64/boot/dts/renesas/hihope-rev4.dtsi | 3 ---
+ 2 files changed, 6 deletions(-)
 
-diff --git a/drivers/base/regmap/regmap-irq.c b/drivers/base/regmap/regmap-irq.c
-index 45fd13ef13fc6..dceab5d013dec 100644
---- a/drivers/base/regmap/regmap-irq.c
-+++ b/drivers/base/regmap/regmap-irq.c
-@@ -514,12 +514,16 @@ static irqreturn_t regmap_irq_thread(int irq, void *d)
- 		return IRQ_NONE;
- }
+diff --git a/arch/arm64/boot/dts/renesas/hihope-rev2.dtsi b/arch/arm64/boot/dts/renesas/hihope-rev2.dtsi
+index 8e2db1d6ca81e..25c55b32aafe5 100644
+--- a/arch/arm64/boot/dts/renesas/hihope-rev2.dtsi
++++ b/arch/arm64/boot/dts/renesas/hihope-rev2.dtsi
+@@ -69,9 +69,6 @@ &rcar_sound {
  
-+static struct lock_class_key regmap_irq_lock_class;
-+static struct lock_class_key regmap_irq_request_class;
-+
- static int regmap_irq_map(struct irq_domain *h, unsigned int virq,
- 			  irq_hw_number_t hw)
- {
- 	struct regmap_irq_chip_data *data = h->host_data;
+ 	status = "okay";
  
- 	irq_set_chip_data(virq, data);
-+	irq_set_lockdep_class(virq, &regmap_irq_lock_class, &regmap_irq_request_class);
- 	irq_set_chip(virq, &data->irq_chip);
- 	irq_set_nested_thread(virq, 1);
- 	irq_set_parent(virq, data->irq);
+-	/* Single DAI */
+-	#sound-dai-cells = <0>;
+-
+ 	rsnd_port: port {
+ 		rsnd_endpoint: endpoint {
+ 			remote-endpoint = <&dw_hdmi0_snd_in>;
+diff --git a/arch/arm64/boot/dts/renesas/hihope-rev4.dtsi b/arch/arm64/boot/dts/renesas/hihope-rev4.dtsi
+index 7fc0339a3ac97..e59191562d06c 100644
+--- a/arch/arm64/boot/dts/renesas/hihope-rev4.dtsi
++++ b/arch/arm64/boot/dts/renesas/hihope-rev4.dtsi
+@@ -84,9 +84,6 @@ &rcar_sound {
+ 	pinctrl-names = "default";
+ 	status = "okay";
+ 
+-	/* Single DAI */
+-	#sound-dai-cells = <0>;
+-
+ 	/* audio_clkout0/1/2/3 */
+ 	#clock-cells = <1>;
+ 	clock-frequency = <12288000 11289600>;
 -- 
 2.43.0
 
