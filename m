@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE7C71494B2;
-	Fri,  6 Dec 2024 14:53:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69D3E1F8F13;
+	Fri,  6 Dec 2024 14:53:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733496782; cv=none; b=QmVFC9QgOHeHiod40nFgm9QWI6MIKmYRAuBOV7x6ZhgkQ4EsvxrtV7/gWQxHThMkHsJySHM5BEdl9TdRGlFfLZHYCSWOFGRGuetvGlHmYyEocThz+/uzV8Xke+QcGiCApStUh43L8j2lxfINUxHrt/xI1poK4QuSblJ+u4O00VQ=
+	t=1733496785; cv=none; b=gpyCqmkNLRlNK7BZBVIAbXDR6kD99Jj3F4Vq9ONI5hUATaucwTsTcteZkMA8R8mtUDxOkpi+gK2do58vLsNgstnQhi0B+yS9ar+pVq+ltY71VNXVPfYahqAp2/AL18YSvWdWs3DS2yvDhClxVNET16QqElybGOWFhHpXewlLcIk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733496782; c=relaxed/simple;
-	bh=3t+8oGxn4ic9Q465qBDBpUFJQ2kKWPWw30WcYo/Jhag=;
+	s=arc-20240116; t=1733496785; c=relaxed/simple;
+	bh=oihSPhjL3dbZQIU/qxX+sogyP8W+sy81ih0eCg8LFbs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=addyWdkfARB7clymsX0M/aNWZk8PDbx7SIbV/kXst2dyIsnuaQjlY8c+XDx9Rj3BGDoPJ7cv6mu+RlvAttPdWCozL7VrwMdSVuv8tjUREvEsMrUq1Pk1zDrXyNfjfZp8Eb1iFxfu9zTI9fJKthqls8SRFc3uTj0AShK2buWRDSk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=owV1fMq6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Hl2Mej9YnmdqT061zbXZEWoGoLyrLM2IhXWaGkc9eFsmQkKBnT/B8caAvNlVjTvyiCseTVWxg9LcgJWXnw3MudRcNM2+KaBuJAjerqPw5rYuYqPrCDUGCf5rAMUJ7DQNDNHZDarzKMei+aah+6gGvio5Rq0yQ8QygJaOI+/B2SY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QZvi7BYz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="owV1fMq6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C4E0C4CED1;
-	Fri,  6 Dec 2024 14:53:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QZvi7BYz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3C07C4CED1;
+	Fri,  6 Dec 2024 14:53:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733496781;
-	bh=3t+8oGxn4ic9Q465qBDBpUFJQ2kKWPWw30WcYo/Jhag=;
+	s=korg; t=1733496785;
+	bh=oihSPhjL3dbZQIU/qxX+sogyP8W+sy81ih0eCg8LFbs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=owV1fMq6BxH9zv2lnd/eTZhGdSz2Gh1eqatVU7eeqx71/WpNyL3FxiGvfWDktT75/
-	 rggzOoQ5A850aTFUd5U8+Oe2yPNXFYbqsYF132xpDUrfLAfCELBSe64/L3rFWrWf3z
-	 M9J3y8VDcbSOCdWYsrVZ4qtAyVvY1O6TSq2BzNyA=
+	b=QZvi7BYz/lQU54HajHY7kXvEBi2o82mvgiV+OlnSGEHzXqY6Ls5o3/zCL5FtpKYTD
+	 qwh+9s1zyuX7Um5NG56fbdadfl5F8mu6mYywWQlfgxYAqgh35lrht8ajjer4OLMF9i
+	 rDR6FXfPfXv25v6iu50tQFJXBgBLmtu3eltH6xgY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Jens Axboe <axboe@kernel.dk>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Neeraj Upadhyay <Neeraj.Upadhyay@amd.com>,
+	"Uladzislau Rezki (Sony)" <urezki@gmail.com>,
+	Frederic Weisbecker <frederic@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 075/676] nvme-pci: reverse request order in nvme_queue_rqs
-Date: Fri,  6 Dec 2024 15:28:14 +0100
-Message-ID: <20241206143656.298950146@linuxfoundation.org>
+Subject: [PATCH 6.6 102/676] rcuscale: Do a proper cleanup if kfree_scale_init() fails
+Date: Fri,  6 Dec 2024 15:28:41 +0100
+Message-ID: <20241206143657.340487079@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -51,90 +54,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christoph Hellwig <hch@lst.de>
+From: Uladzislau Rezki (Sony) <urezki@gmail.com>
 
-[ Upstream commit beadf0088501d9dcf2454b05d90d5d31ea3ba55f ]
+[ Upstream commit 812a1c3b9f7c36d9255f0d29d0a3d324e2f52321 ]
 
-blk_mq_flush_plug_list submits requests in the reverse order that they
-were submitted, which leads to a rather suboptimal I/O pattern especially
-in rotational devices.  Fix this by rewriting nvme_queue_rqs so that it
-always pops the requests from the passed in request list, and then adds
-them to the head of a local submit list.  This actually simplifies the
-code a bit as it removes the complicated list splicing, at the cost of
-extra updates of the rq_next pointer.  As that should be cache hot
-anyway it should be an easy price to pay.
+A static analyzer for C, Smatch, reports and triggers below
+warnings:
 
-Fixes: d62cbcf62f2f ("nvme: add support for mq_ops->queue_rqs()")
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Link: https://lore.kernel.org/r/20241113152050.157179-2-hch@lst.de
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+   kernel/rcu/rcuscale.c:1215 rcu_scale_init()
+   warn: inconsistent returns 'global &fullstop_mutex'.
+
+The checker complains about, we do not unlock the "fullstop_mutex"
+mutex, in case of hitting below error path:
+
+<snip>
+...
+    if (WARN_ON_ONCE(jiffies_at_lazy_cb - jif_start < 2 * HZ)) {
+        pr_alert("ERROR: call_rcu() CBs are not being lazy as expected!\n");
+        WARN_ON_ONCE(1);
+        return -1;
+        ^^^^^^^^^^
+...
+<snip>
+
+it happens because "-1" is returned right away instead of
+doing a proper unwinding.
+
+Fix it by jumping to "unwind" label instead of returning -1.
+
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: Paul E. McKenney <paulmck@kernel.org>
+Reviewed-by: Neeraj Upadhyay <Neeraj.Upadhyay@amd.com>
+Closes: https://lore.kernel.org/rcu/ZxfTrHuEGtgnOYWp@pc636/T/
+Fixes: 084e04fff160 ("rcuscale: Add laziness and kfree tests")
+Signed-off-by: Uladzislau Rezki (Sony) <urezki@gmail.com>
+Signed-off-by: Frederic Weisbecker <frederic@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/pci.c | 39 +++++++++++++++++----------------------
- 1 file changed, 17 insertions(+), 22 deletions(-)
+ kernel/rcu/rcuscale.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
-index e0b502573b427..d525fa1229d79 100644
---- a/drivers/nvme/host/pci.c
-+++ b/drivers/nvme/host/pci.c
-@@ -905,9 +905,10 @@ static blk_status_t nvme_queue_rq(struct blk_mq_hw_ctx *hctx,
+diff --git a/kernel/rcu/rcuscale.c b/kernel/rcu/rcuscale.c
+index ed46d9e8c0e43..902575db9aec3 100644
+--- a/kernel/rcu/rcuscale.c
++++ b/kernel/rcu/rcuscale.c
+@@ -780,13 +780,15 @@ kfree_scale_init(void)
+ 		if (WARN_ON_ONCE(jiffies_at_lazy_cb - jif_start < 2 * HZ)) {
+ 			pr_alert("ERROR: call_rcu() CBs are not being lazy as expected!\n");
+ 			WARN_ON_ONCE(1);
+-			return -1;
++			firsterr = -1;
++			goto unwind;
+ 		}
  
- static void nvme_submit_cmds(struct nvme_queue *nvmeq, struct request **rqlist)
- {
-+	struct request *req;
-+
- 	spin_lock(&nvmeq->sq_lock);
--	while (!rq_list_empty(*rqlist)) {
--		struct request *req = rq_list_pop(rqlist);
-+	while ((req = rq_list_pop(rqlist))) {
- 		struct nvme_iod *iod = blk_mq_rq_to_pdu(req);
- 
- 		nvme_sq_copy_cmd(nvmeq, &iod->cmd);
-@@ -933,31 +934,25 @@ static bool nvme_prep_rq_batch(struct nvme_queue *nvmeq, struct request *req)
- 
- static void nvme_queue_rqs(struct request **rqlist)
- {
--	struct request *req, *next, *prev = NULL;
-+	struct request *submit_list = NULL;
- 	struct request *requeue_list = NULL;
-+	struct request **requeue_lastp = &requeue_list;
-+	struct nvme_queue *nvmeq = NULL;
-+	struct request *req;
- 
--	rq_list_for_each_safe(rqlist, req, next) {
--		struct nvme_queue *nvmeq = req->mq_hctx->driver_data;
--
--		if (!nvme_prep_rq_batch(nvmeq, req)) {
--			/* detach 'req' and add to remainder list */
--			rq_list_move(rqlist, &requeue_list, req, prev);
--
--			req = prev;
--			if (!req)
--				continue;
--		}
-+	while ((req = rq_list_pop(rqlist))) {
-+		if (nvmeq && nvmeq != req->mq_hctx->driver_data)
-+			nvme_submit_cmds(nvmeq, &submit_list);
-+		nvmeq = req->mq_hctx->driver_data;
- 
--		if (!next || req->mq_hctx != next->mq_hctx) {
--			/* detach rest of list, and submit */
--			req->rq_next = NULL;
--			nvme_submit_cmds(nvmeq, rqlist);
--			*rqlist = next;
--			prev = NULL;
--		} else
--			prev = req;
-+		if (nvme_prep_rq_batch(nvmeq, req))
-+			rq_list_add(&submit_list, req); /* reverse order */
-+		else
-+			rq_list_add_tail(&requeue_lastp, req);
+ 		if (WARN_ON_ONCE(jiffies_at_lazy_cb - jif_start > 3 * HZ)) {
+ 			pr_alert("ERROR: call_rcu() CBs are being too lazy!\n");
+ 			WARN_ON_ONCE(1);
+-			return -1;
++			firsterr = -1;
++			goto unwind;
+ 		}
  	}
- 
-+	if (nvmeq)
-+		nvme_submit_cmds(nvmeq, &submit_list);
- 	*rqlist = requeue_list;
- }
  
 -- 
 2.43.0
