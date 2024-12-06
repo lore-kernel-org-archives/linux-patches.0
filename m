@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8339014D2BD;
-	Fri,  6 Dec 2024 15:20:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F9A653A7;
+	Fri,  6 Dec 2024 15:20:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733498426; cv=none; b=S9+WSCzxvmF8L7dfG2IdIPQ9SnHTifUJ5vSZgYzRnQ7iNOGfAdIQC5rSLTjwyFzjrWWZ0SPp1UAoRA8Z93nhU+fJLyOrNNQvU2aQlVmuPDOfxq+3S0mKfoOzojJvwSPyWMvwxDz3miRDQ8I/9XbbogO72/h91CE1k8vPRXrgjVE=
+	t=1733498430; cv=none; b=GPYElvODQvsOxYwXHuDPxtjLc+UoMqmLV3LdaTNhUn93BfuLLnEUla1P3zSqYG9rkT6BChDqBCjm+Zmpp1LTpAZ5mJlDdKCpkiRyPV7yT3RC9JQzAWAJpey0wAYdku1twOn7i/aZaSYsHv2Kw2K/SNG9yleYVr1kwgcTOxhJ170=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733498426; c=relaxed/simple;
-	bh=6qCkCkM8eGklvn1k/W9cl0X7y1PO8pnD3LG6PGZUBfM=;
+	s=arc-20240116; t=1733498430; c=relaxed/simple;
+	bh=3XzMYFM2rCZOARDJYIa0hEpx8y/DRVxkG0z2BzjxLsY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VqbeYKfgv6xQ0g2qLhfeEtGj8oSquSCo8H7jU079lBpma5xH//pK6cSeP28IE6klfhQxsLyRrngcwPXY2jYMdGqyiVu0XToge6VqysNK7CM3DUPrc2zzXHyp1+OPLCFQSbcUW7U1/nbM4UR5IgYOoMRMv9nnCIveCVsfHY//tCs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wY7YZlSV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lmBN/pypGdQoyV+LTeC74sN0Dv+9kh9rLg8UK1qnLeVDkK6ywlqC30S+ErILxMpNA0p8kTAWRZ1EW2g6p86qxW9rqDYNwlF29lXjdyhqXXNwEIQS1vjfHg+t8kEe/msMTTGjLtvekrZksG/WqZ4LYesjWtDD4qeWgAi52ku416U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JFVya6DI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wY7YZlSV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 045F1C4CEDE;
-	Fri,  6 Dec 2024 15:20:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JFVya6DI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 663A9C4CED1;
+	Fri,  6 Dec 2024 15:20:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733498426;
-	bh=6qCkCkM8eGklvn1k/W9cl0X7y1PO8pnD3LG6PGZUBfM=;
+	s=korg; t=1733498429;
+	bh=3XzMYFM2rCZOARDJYIa0hEpx8y/DRVxkG0z2BzjxLsY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wY7YZlSVlCx3BmBYMAF6c45d6NfkoI8/z6+eeCkraIHJjvreCgUCF97zZdZufz/2H
-	 TRvYCgS+2c1Dqfxz9VHbRm2wZYiVARJzphSXVfIaRoWiAstVCIoTRkXXZxlQhDcDeP
-	 iqcjRRxuDP2coVOkLsVEqno9Tr4NfYBwcsJKOtfQ=
+	b=JFVya6DITLviLHNV/ufyGmMPKSrVXE1fD4xdGWSfslcujtCzB1FrQVBXXOhLDny2g
+	 kfZcKZosChYHSKR8uoJRR6V3xiMcYH8sHIea7zBlXe4aQfhlQ1jF2alHKRrlJfY2lM
+	 kKU+IX2hhW9r73EC7eTGM5Q+iqCkW9b/1so0HIbY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tiwei Bie <tiwei.btw@antgroup.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Masahiro Yamada <masahiroy@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 554/676] um: Fix potential integer overflow during physmem setup
-Date: Fri,  6 Dec 2024 15:36:13 +0100
-Message-ID: <20241206143715.007463967@linuxfoundation.org>
+Subject: [PATCH 6.6 581/676] modpost: disallow *driver to reference .meminit* sections
+Date: Fri,  6 Dec 2024 15:36:40 +0100
+Message-ID: <20241206143716.055412668@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -51,48 +50,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tiwei Bie <tiwei.btw@antgroup.com>
+From: Masahiro Yamada <masahiroy@kernel.org>
 
-[ Upstream commit a98b7761f697e590ed5d610d87fa12be66f23419 ]
+[ Upstream commit 50cccec15c48814765895891ca0d95d989b6a419 ]
 
-This issue happens when the real map size is greater than LONG_MAX,
-which can be easily triggered on UML/i386.
+Drivers must not reference .meminit* sections, which are discarded
+when CONFIG_MEMORY_HOTPLUG=n.
 
-Fixes: fe205bdd1321 ("um: Print minimum physical memory requirement")
-Signed-off-by: Tiwei Bie <tiwei.btw@antgroup.com>
-Link: https://patch.msgid.link/20240916045950.508910-3-tiwei.btw@antgroup.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+The reason for whitelisting "*driver" in the section mismatch check
+was to allow drivers to reference symbols annotated as __devinit or
+__devexit that existed in the past.
+
+Those annotations were removed by the following commits:
+
+ - 54b956b90360 ("Remove __dev* markings from init.h")
+ - 92e9e6d1f984 ("modpost.c: Stop checking __dev* section mismatches")
+
+Remove the stale whitelist.
+
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Stable-dep-of: bb43a59944f4 ("Rename .data.unlikely to .data..unlikely")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/um/kernel/physmem.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ scripts/mod/modpost.c | 6 ------
+ 1 file changed, 6 deletions(-)
 
-diff --git a/arch/um/kernel/physmem.c b/arch/um/kernel/physmem.c
-index 91485119ae67a..4339580f5a4f6 100644
---- a/arch/um/kernel/physmem.c
-+++ b/arch/um/kernel/physmem.c
-@@ -80,10 +80,10 @@ void __init setup_physmem(unsigned long start, unsigned long reserve_end,
- 			  unsigned long len, unsigned long long highmem)
- {
- 	unsigned long reserve = reserve_end - start;
--	long map_size = len - reserve;
-+	unsigned long map_size = len - reserve;
- 	int err;
+diff --git a/scripts/mod/modpost.c b/scripts/mod/modpost.c
+index f6cbf70e455ee..7e88e6437540e 100644
+--- a/scripts/mod/modpost.c
++++ b/scripts/mod/modpost.c
+@@ -1007,12 +1007,6 @@ static int secref_whitelist(const char *fromsec, const char *fromsym,
+ 				    "*_console")))
+ 		return 0;
  
--	if(map_size <= 0) {
-+	if (len <= reserve) {
- 		os_warn("Too few physical memory! Needed=%lu, given=%lu\n",
- 			reserve, len);
- 		exit(1);
-@@ -94,7 +94,7 @@ void __init setup_physmem(unsigned long start, unsigned long reserve_end,
- 	err = os_map_memory((void *) reserve_end, physmem_fd, reserve,
- 			    map_size, 1, 1, 1);
- 	if (err < 0) {
--		os_warn("setup_physmem - mapping %ld bytes of memory at 0x%p "
-+		os_warn("setup_physmem - mapping %lu bytes of memory at 0x%p "
- 			"failed - errno = %d\n", map_size,
- 			(void *) reserve_end, err);
- 		exit(1);
+-	/* symbols in data sections that may refer to meminit sections */
+-	if (match(fromsec, PATTERNS(DATA_SECTIONS)) &&
+-	    match(tosec, PATTERNS(ALL_XXXINIT_SECTIONS)) &&
+-	    match(fromsym, PATTERNS("*driver")))
+-		return 0;
+-
+ 	/*
+ 	 * symbols in data sections must not refer to .exit.*, but there are
+ 	 * quite a few offenders, so hide these unless for W=1 builds until
 -- 
 2.43.0
 
