@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DC818F66;
-	Fri,  6 Dec 2024 05:48:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3333B1B78E7;
+	Fri,  6 Dec 2024 06:07:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733464117; cv=none; b=UqQ/D4MzDwfnQF0U2+tIeWz/ai9gan4LcfGAIJV0QRCKkbevAD2J/Fi8FBtUkw/wHmCzk4YSNbmi8dOvsUIrd19D0ZKIeLhws1eILMxxcmjQ0nA9ZO3HCKzanYRaqT7Wa6at87FqO3lalcCATF0GOVsxpfcOll1tJ6qls/txTik=
+	t=1733465269; cv=none; b=tmzNx5siMih5whNn3DRscYVXsSKDzdjbp20a7A07uJigIobkbFOMWqI4Juy1/Unfy8kNOaJfmQoicZo57t72oMU9tNJyc5S/8VarSG9WSs2Vd6K2EFuF1mrJo7uz5X0hzTUm/eZwJvVzmoHRUbdr6k2bcRfeUasvr+UFnHHlp6A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733464117; c=relaxed/simple;
-	bh=xg+DjJQ6I/sDSJBKmNObSmFLmoCZN9/zPk0XlV4Qdcc=;
+	s=arc-20240116; t=1733465269; c=relaxed/simple;
+	bh=bQTG4ROYlpWnNTZGt1f8lJv5nTc7ecS7XcpJ7b2lGCo=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=FNLsSumGg6wXGt4ZJP+0ggev3hlQfcStBhq8AEfXm0e0s/Bg4EyINi5euw+dwqsKwDPj4wWhi7DU0BUNS+OTocXsHGouJ0ToBpXLAUnkqOozGQl12qUptYXEYVBoFB6abnxE67u+Xw/Zqj85J8YrSupHMrZ0yLMfwqI0hm6Gd2I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YOxfhTIQ; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=WUvQQfFfeTSd8YhyctJKxoV1b9piMW6W47GMLd84tixWAICJO4wM3VaL69AHXRvt5QeksBAhVGR80IteWthZtqkakQ5Z+p8eBKVy1Eeq7YkxI0vFCCs74wDvVnmpSSn0Kzw1spYvD++h42N0gtuwrYiJNjvtAK8Jj1u6xl8f/ZE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SSs7cy/a; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YOxfhTIQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1F80C4CED1;
-	Fri,  6 Dec 2024 05:48:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SSs7cy/a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1B44C4CED1;
+	Fri,  6 Dec 2024 06:07:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733464116;
-	bh=xg+DjJQ6I/sDSJBKmNObSmFLmoCZN9/zPk0XlV4Qdcc=;
+	s=korg; t=1733465268;
+	bh=bQTG4ROYlpWnNTZGt1f8lJv5nTc7ecS7XcpJ7b2lGCo=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=YOxfhTIQWFNl58TEBIWVcCzwi4s5jqgKk0on1pIzMHDCjBb8rEGAu8U+eZ2F1/kNl
-	 TDwIYlfSDv1m39CD8uDE3cDqwRHeGG47QHtU+EKPFKItYmBNW8F/ZqM3wq2pFzlPhE
-	 C4BGVGdGjx2+o5tMOHaJ9ZHpcniamJ65UV9bkfwU=
-Date: Fri, 6 Dec 2024 06:48:33 +0100
+	b=SSs7cy/azJLZmwU+NobQjIYR5WBA37D3ZFDEc9Xp0fi620u7V6ucA+XA9s0jqZx4F
+	 oSK/GW0ZbVQb1aZxyq5UWhPqsB2sWQKzsPtJ+tIQEO6wUEsHA9R886165NHIPJ9Bii
+	 +YUlWr66DKqZ0ojkMA80+NHuiAvF0RiVnzUlBtDQ=
+Date: Fri, 6 Dec 2024 07:07:45 +0100
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: Peter Jung <ptr1337@cachyos.org>, stable@vger.kernel.org,
-	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
+To: Jon Hunter <jonathanh@nvidia.com>
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org, akpm@linux-foundation.org,
+	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, f.fainelli@gmail.com,
 	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org, hargar@microsoft.com, broonie@kernel.org
-Subject: Re: [PATCH 6.12 000/826] 6.12.2-rc1 review
-Message-ID: <2024120657-corsage-agonizing-2ec6@gregkh>
-References: <20241203144743.428732212@linuxfoundation.org>
- <efbda6ac-9482-4b37-90b7-829f2424f579@cachyos.org>
- <CAHk-=whGd0dfaJNiWSR60HH5iwxqhUZPDWgHCQd446gH2Wu0yQ@mail.gmail.com>
+	conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
+	linux-tegra@vger.kernel.org, stable@vger.kernel.org
+Subject: Re: [PATCH 4.19 000/138] 4.19.325-rc1 review
+Message-ID: <2024120623-chloride-harvest-91fe@gregkh>
+References: <20241203141923.524658091@linuxfoundation.org>
+ <71fc98de-2f61-4530-8c03-dcd7fa3bf470@rnnvmail204.nvidia.com>
+ <5a174c4b-fa2b-4180-af6b-ae50d76fef4d@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -46,23 +46,57 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAHk-=whGd0dfaJNiWSR60HH5iwxqhUZPDWgHCQd446gH2Wu0yQ@mail.gmail.com>
+In-Reply-To: <5a174c4b-fa2b-4180-af6b-ae50d76fef4d@nvidia.com>
 
-On Thu, Dec 05, 2024 at 09:51:37AM -0800, Linus Torvalds wrote:
-> On Thu, 5 Dec 2024 at 07:46, Peter Jung <ptr1337@cachyos.org> wrote:
-> >
-> > Reverting following commits makes the machine again bootable:
-> > acf588f9b6fb560e986365c6b175aaf589ef1f2a
-> > 09162013082267af54bb39091b523a8daaa28955
+On Thu, Dec 05, 2024 at 02:40:28PM +0000, Jon Hunter wrote:
 > 
-> Hmm. Thet commit
+> On 05/12/2024 14:38, Jon Hunter wrote:
+> > On Tue, 03 Dec 2024 15:30:29 +0100, Greg Kroah-Hartman wrote:
+> > > ------------------
+> > > Note, this is the LAST 4.19.y kernel to be released.  After this one, it
+> > > is end-of-life.  It's been 6 years, everyone should have moved off of it
+> > > by now.
+> > > ------------------
+> > > 
+> > > This is the start of the stable review cycle for the 4.19.325 release.
+> > > There are 138 patches in this series, all will be posted as a response
+> > > to this one.  If anyone has any issues with these being applied, please
+> > > let me know.
+> > > 
+> > > Responses should be made by Thu, 05 Dec 2024 14:18:57 +0000.
+> > > Anything received after that time might be too late.
+> > > 
+> > > The whole patch series can be found in one patch at:
+> > > 	https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.19.325-rc1.gz
+> > > or in the git tree and branch at:
+> > > 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-4.19.y
+> > > and the diffstat can be found below.
+> > > 
+> > > thanks,
+> > > 
+> > > greg k-h
+> > 
+> > Failures detected for Tegra ...
+> > 
+> > Test results for stable-v4.19:
+> >      10 builds:	6 pass, 4 fail
+> >      12 boots:	12 pass, 0 fail
+> >      21 tests:	21 pass, 0 fail
+> > 
+> > Linux version:	4.19.325-rc1-g1efbea5bef00
+> > Boards tested:	tegra124-jetson-tk1, tegra186-p2771-0000,
+> >                  tegra194-p2972-0000, tegra20-ventana,
+> >                  tegra210-p2371-2180, tegra30-cardhu-a04
+> > 
+> > Builds failed:	aarch64+defconfig+jetson, arm+multi_v7
 > 
->     091620130822 ("sched/ext: Remove sched_fork() hack")
 > 
-> depends on upstream commit b23decf8ac91 ("sched: Initialize idle tasks
-> only once") and does not work on its own.
+> This is the same build failure as reported here:
+> 
+> https://lore.kernel.org/stable/Z09KXnGlTJZBpA90@duo.ucw.cz/
 
-Ugh, missed that, odd that it didn't trigger in my testing here either.
-I'll go add that and do a new release right now, thanks.
+Great, hopefully I fixed that up in the real release :)
 
-greg k-hj
+thanks for testing this kernel all these years!
+
+greg k-h
