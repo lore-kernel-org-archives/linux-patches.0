@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EA9E14A4D1;
-	Fri,  6 Dec 2024 14:40:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CC71149E0E;
+	Fri,  6 Dec 2024 14:40:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733496004; cv=none; b=dnQjGEmtlQukdh1RsOITlZons5I4hW42bNMojarJozh3ELKrbRZwGIUB5dDM+axtGB+H8m9u5PmtyO8SyiP31w4JAGBtQCRMPRiM3fForsJsk/F8Gzy3CCfN9db9aHm4JnpL10r4NPOUaHNGkVs7Zj2htjPm/naXk+01p7SIhY4=
+	t=1733496007; cv=none; b=DbfY2IJ57IXFIWvVni/QgEAJhv4qWQ5c8KKz5eiwhPu33NN6QegyB/016ecscJIhHA0WLvpq/8h6TNUIIKm7vPbUr1Cvya8eIbD7B9Kmh7k+pujOIMqHIBg+/Qlq28XheILASyyxjdKnsJb+Z5VY/h+yneZfZ/5ljZSwICPlTsI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733496004; c=relaxed/simple;
-	bh=4O6ySUzHNikSBZgdG2vkA229nFrO2CmBqWePjMQlols=;
+	s=arc-20240116; t=1733496007; c=relaxed/simple;
+	bh=Wz0ydrHqn3O5LRHy7vAO9ZRKzrf5EajNtgxU5f5PoYI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=nO15tHtL74B5JH3YvbvUMFxUXYHvaOj8Xy/zgPRaUPLGNiV9Xk/Xf+KA/6XAf4tAV/JHqZ0DhZ6rMjIrFN1PWXovTW11OiI0VCQ/mM0sV6vTIN2vkbWUZRGihumeY0S62XsyWak/E3wwtI+4UnI3dXZRoFX8MP8ZH23q2wNQzV4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vi20xnJs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JVTzu7nplwf+WGwKT1RT6IpICY+M2fi7O5CvsxDMiU+DpnrNmDbffKHHISRNi/PHrfdc5XGjPZSXkOWglOXlejxlEhCvTDvgCBgZteObi5r4uRc16k3FDaMDXGtQc1vUgp3JhtAEowOqmGBGulgmBdEKo5wHmFmsUMSk4yor0ZQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2gBDUONA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vi20xnJs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99D6AC4CEDC;
-	Fri,  6 Dec 2024 14:40:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2gBDUONA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E00A9C4CEDC;
+	Fri,  6 Dec 2024 14:40:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733496004;
-	bh=4O6ySUzHNikSBZgdG2vkA229nFrO2CmBqWePjMQlols=;
+	s=korg; t=1733496007;
+	bh=Wz0ydrHqn3O5LRHy7vAO9ZRKzrf5EajNtgxU5f5PoYI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Vi20xnJsaVvEd3yZV0lknWW1stG3vIo0m1a8Y9YjvbKqYI9PHzrslGHC8J/J9jp6z
-	 rM83MdTp6CTIdBbPRuq7UNge/onMurAk84Pz4Brsl6nzqtWCFnwdlFPYO3F0qIa9oE
-	 5axFBo6QESfWgP+9G62TlZvNyfVyqtTniBLuhUWo=
+	b=2gBDUONAsa1bopWUn+bt5/LW+A560T9ni2GJHSLQSXHJ8pG94P7G1CKTIZ7qvK9jv
+	 3cIId4hf33BA1GY6c0GtkDUppCqu6aH7p5dK3nKhJRbGE4j7Zhf1grXoBMiNQhcycP
+	 uwskwaIhXZojaFncAFVyHM/+H5BPQ47oLkXew4Is=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Shiyan <eagle.alexander923@gmail.com>,
+	Ming Qian <ming.qian@nxp.com>,
+	TaoJiang <tao.jiang_2@nxp.com>,
 	Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Subject: [PATCH 6.12 025/146] media: i2c: tc358743: Fix crash in the probe error path when using polling
-Date: Fri,  6 Dec 2024 15:35:56 +0100
-Message-ID: <20241206143528.636095987@linuxfoundation.org>
+Subject: [PATCH 6.12 026/146] media: imx-jpeg: Ensure power suppliers be suspended before detach them
+Date: Fri,  6 Dec 2024 15:35:57 +0100
+Message-ID: <20241206143528.673846258@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143527.654980698@linuxfoundation.org>
 References: <20241206143527.654980698@linuxfoundation.org>
@@ -44,83 +45,84 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexander Shiyan <eagle.alexander923@gmail.com>
+From: Ming Qian <ming.qian@nxp.com>
 
-commit 869f38ae07f7df829da4951c3d1f7a2be09c2e9a upstream.
+commit fd0af4cd35da0eb550ef682b71cda70a4e36f6b9 upstream.
 
-If an error occurs in the probe() function, we should remove the polling
-timer that was alarmed earlier, otherwise the timer is called with
-arguments that are already freed, which results in a crash.
+The power suppliers are always requested to suspend asynchronously,
+dev_pm_domain_detach() requires the caller to ensure proper
+synchronization of this function with power management callbacks.
+otherwise the detach may led to kernel panic, like below:
 
-------------[ cut here ]------------
-WARNING: CPU: 3 PID: 0 at kernel/time/timer.c:1830 __run_timers+0x244/0x268
-Modules linked in:
-CPU: 3 UID: 0 PID: 0 Comm: swapper/3 Not tainted 6.11.0 #226
-Hardware name: Diasom DS-RK3568-SOM-EVB (DT)
-pstate: 804000c9 (Nzcv daIF +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-pc : __run_timers+0x244/0x268
-lr : __run_timers+0x1d4/0x268
-sp : ffffff80eff2baf0
-x29: ffffff80eff2bb50 x28: 7fffffffffffffff x27: ffffff80eff2bb00
-x26: ffffffc080f669c0 x25: ffffff80efef6bf0 x24: ffffff80eff2bb00
-x23: 0000000000000000 x22: dead000000000122 x21: 0000000000000000
-x20: ffffff80efef6b80 x19: ffffff80041c8bf8 x18: ffffffffffffffff
-x17: ffffffc06f146000 x16: ffffff80eff27dc0 x15: 000000000000003e
-x14: 0000000000000000 x13: 00000000000054da x12: 0000000000000000
-x11: 00000000000639c0 x10: 000000000000000c x9 : 0000000000000009
-x8 : ffffff80eff2cb40 x7 : ffffff80eff2cb40 x6 : ffffff8002bee480
-x5 : ffffffc080cb2220 x4 : ffffffc080cb2150 x3 : 00000000000f4240
-x2 : 0000000000000102 x1 : ffffff80eff2bb00 x0 : ffffff80041c8bf0
-Call trace:
- __run_timers+0x244/0x268
- timer_expire_remote+0x50/0x68
- tmigr_handle_remote+0x388/0x39c
- run_timer_softirq+0x38/0x44
- handle_softirqs+0x138/0x298
- __do_softirq+0x14/0x20
- ____do_softirq+0x10/0x1c
- call_on_irq_stack+0x24/0x4c
- do_softirq_own_stack+0x1c/0x2c
- irq_exit_rcu+0x9c/0xcc
- el1_interrupt+0x48/0xc0
- el1h_64_irq_handler+0x18/0x24
- el1h_64_irq+0x7c/0x80
- default_idle_call+0x34/0x68
- do_idle+0x23c/0x294
- cpu_startup_entry+0x38/0x3c
- secondary_start_kernel+0x128/0x160
- __secondary_switched+0xb8/0xbc
----[ end trace 0000000000000000 ]---
+[ 1457.107934] Unable to handle kernel NULL pointer dereference at virtual address 0000000000000040
+[ 1457.116777] Mem abort info:
+[ 1457.119589]   ESR = 0x0000000096000004
+[ 1457.123358]   EC = 0x25: DABT (current EL), IL = 32 bits
+[ 1457.128692]   SET = 0, FnV = 0
+[ 1457.131764]   EA = 0, S1PTW = 0
+[ 1457.134920]   FSC = 0x04: level 0 translation fault
+[ 1457.139812] Data abort info:
+[ 1457.142707]   ISV = 0, ISS = 0x00000004, ISS2 = 0x00000000
+[ 1457.148196]   CM = 0, WnR = 0, TnD = 0, TagAccess = 0
+[ 1457.153256]   GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
+[ 1457.158563] user pgtable: 4k pages, 48-bit VAs, pgdp=00000001138b6000
+[ 1457.165000] [0000000000000040] pgd=0000000000000000, p4d=0000000000000000
+[ 1457.171792] Internal error: Oops: 0000000096000004 [#1] PREEMPT SMP
+[ 1457.178045] Modules linked in: v4l2_jpeg wave6_vpu_ctrl(-) [last unloaded: mxc_jpeg_encdec]
+[ 1457.186383] CPU: 0 PID: 51938 Comm: kworker/0:3 Not tainted 6.6.36-gd23d64eea511 #66
+[ 1457.194112] Hardware name: NXP i.MX95 19X19 board (DT)
+[ 1457.199236] Workqueue: pm pm_runtime_work
+[ 1457.203247] pstate: 60400009 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+[ 1457.210188] pc : genpd_runtime_suspend+0x20/0x290
+[ 1457.214886] lr : __rpm_callback+0x48/0x1d8
+[ 1457.218968] sp : ffff80008250bc50
+[ 1457.222270] x29: ffff80008250bc50 x28: 0000000000000000 x27: 0000000000000000
+[ 1457.229394] x26: 0000000000000000 x25: 0000000000000008 x24: 00000000000f4240
+[ 1457.236518] x23: 0000000000000000 x22: ffff00008590f0e4 x21: 0000000000000008
+[ 1457.243642] x20: ffff80008099c434 x19: ffff00008590f000 x18: ffffffffffffffff
+[ 1457.250766] x17: 5300326563697665 x16: 645f676e696c6f6f x15: 63343a6d726f6674
+[ 1457.257890] x14: 0000000000000004 x13: 00000000000003a4 x12: 0000000000000002
+[ 1457.265014] x11: 0000000000000000 x10: 0000000000000a60 x9 : ffff80008250bbb0
+[ 1457.272138] x8 : ffff000092937200 x7 : ffff0003fdf6af80 x6 : 0000000000000000
+[ 1457.279262] x5 : 00000000410fd050 x4 : 0000000000200000 x3 : 0000000000000000
+[ 1457.286386] x2 : 0000000000000000 x1 : 0000000000000000 x0 : ffff00008590f000
+[ 1457.293510] Call trace:
+[ 1457.295946]  genpd_runtime_suspend+0x20/0x290
+[ 1457.300296]  __rpm_callback+0x48/0x1d8
+[ 1457.304038]  rpm_callback+0x6c/0x78
+[ 1457.307515]  rpm_suspend+0x10c/0x570
+[ 1457.311077]  pm_runtime_work+0xc4/0xc8
+[ 1457.314813]  process_one_work+0x138/0x248
+[ 1457.318816]  worker_thread+0x320/0x438
+[ 1457.322552]  kthread+0x110/0x114
+[ 1457.325767]  ret_from_fork+0x10/0x20
 
-Fixes: 4e66a52a2e4c ("[media] tc358743: Add support for platforms without IRQ line")
-Signed-off-by: Alexander Shiyan <eagle.alexander923@gmail.com>
-Cc: stable@vger.kernel.org
+Fixes: 2db16c6ed72c ("media: imx-jpeg: Add V4L2 driver for i.MX8 JPEG Encoder/Decoder")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Ming Qian <ming.qian@nxp.com>
+Reviewed-by: TaoJiang <tao.jiang_2@nxp.com>
 Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/i2c/tc358743.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/media/platform/nxp/imx-jpeg/mxc-jpeg.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/media/i2c/tc358743.c
-+++ b/drivers/media/i2c/tc358743.c
-@@ -2168,8 +2168,10 @@ static int tc358743_probe(struct i2c_cli
+--- a/drivers/media/platform/nxp/imx-jpeg/mxc-jpeg.c
++++ b/drivers/media/platform/nxp/imx-jpeg/mxc-jpeg.c
+@@ -2679,6 +2679,8 @@ static void mxc_jpeg_detach_pm_domains(s
+ 	int i;
  
- err_work_queues:
- 	cec_unregister_adapter(state->cec_adap);
--	if (!state->i2c_client->irq)
-+	if (!state->i2c_client->irq) {
-+		del_timer(&state->timer);
- 		flush_work(&state->work_i2c_poll);
-+	}
- 	cancel_delayed_work(&state->delayed_work_enable_hotplug);
- 	mutex_destroy(&state->confctl_mutex);
- err_hdl:
+ 	for (i = 0; i < jpeg->num_domains; i++) {
++		if (jpeg->pd_dev[i] && !pm_runtime_suspended(jpeg->pd_dev[i]))
++			pm_runtime_force_suspend(jpeg->pd_dev[i]);
+ 		if (jpeg->pd_link[i] && !IS_ERR(jpeg->pd_link[i]))
+ 			device_link_del(jpeg->pd_link[i]);
+ 		if (jpeg->pd_dev[i] && !IS_ERR(jpeg->pd_dev[i]))
 
 
