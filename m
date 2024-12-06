@@ -1,45 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8F7853A7;
-	Fri,  6 Dec 2024 15:08:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF93B53A7;
+	Fri,  6 Dec 2024 15:08:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733497694; cv=none; b=f3vXRCl58zjHzGyAyE6wFDLlLGLVlXLFmaY2KZyavN6te0OOreWkQUZ7mCOWQWDnTx2JsY+eci0yAdiaHxJ1+w55tixDoMM7evZSkm7uv01dswf9J3eJT4uy+byFP6PBgQpeihzC6JOarvFxAVi3+9ojDgn4HnznEGI2wv9nIJI=
+	t=1733497697; cv=none; b=eqgDuclg3eG2tvmyJswox975kayLbvGUen+WbB+VWFU52ycca0CpMmmQIR6G8hd80RC+bry+JVzIXWj7B/l0e4PxtnHVNm4HLqU7ty83/i8NpoFsPsy6JeoUT85M7I/b0LabL4PzhAoQJz1VBjfAmHEupD1EKx7j5fndKUxyB9s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733497694; c=relaxed/simple;
-	bh=K68Uj+ikDjmEQkHdcygpdKpsWF5m+YPp4e4nojavZfI=;
+	s=arc-20240116; t=1733497697; c=relaxed/simple;
+	bh=rwdleYKYcjXOxF5dXW+heraXgOuzK58KgOX9yvFTkSg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AjvknyeeogSMDP7wVzTCxxkGgioeew5q7eCef3tXKVR7inb7cYZK6jHNJ5cPdffkYi7a4Omf6rmiur9z+ta21/Sp4KzJvoMM1cEp487yfQXWVSr6oeRijkAAqtlwITOafwVj91GFxdyMJKEDkXDT1mOy3UcmembzmH1Jemf2SwA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VytwOaOx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=oS0XF1fbNhHzfSEaoKNfyGx8xzHa/ULSPRJcGuRe7lmcyBtXJNK1vreH1ubDdL+ogBL9Rxh0eMapie6N/OOz/fEMEpt3N4jssfk5u2YMIR57bAxI0WklegTqilXBPwKIpTez9047js595lgO2kpOI2DUaXfHWiFST2RCpgHJOJw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BmJL+fTY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VytwOaOx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D768BC4CEDC;
-	Fri,  6 Dec 2024 15:08:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BmJL+fTY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FDF1C4CED1;
+	Fri,  6 Dec 2024 15:08:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733497694;
-	bh=K68Uj+ikDjmEQkHdcygpdKpsWF5m+YPp4e4nojavZfI=;
+	s=korg; t=1733497697;
+	bh=rwdleYKYcjXOxF5dXW+heraXgOuzK58KgOX9yvFTkSg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VytwOaOxlP5Cz4/kxer+C9QepmOgO4XzAWHidnCLUBPK4nhh+WTbcps8clinfytO+
-	 R/EPMD/BX201IzsshiX3Zah7p+H+kDj1HEi+cfoih/Bs/+wMh6Yi956rBr0TOFZA/M
-	 W/ZWZwShXEYNkUR/nTEdgxRnglKRUqMZx6URuaJk=
+	b=BmJL+fTYqRsAhCmq9t9j3k9wzfkQ5vevIGDqaHoElNDJ/j/5uGzqty14FYSNy/Lc+
+	 G3ECI/k+P/ZjntjryiJRNcLJ2rQxJADdAII4uOYaViGsFKbCaMLusurrYpwCA+ZF5f
+	 mdeUWX48LWH3ET3nHFDON22vRootZvCz5MorfMf8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	"Steinar H. Gunderson" <sesse@google.com>,
-	Alexander Lobakin <aleksander.lobakin@intel.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Kajol Jain <kjain@linux.ibm.com>,
-	Athira Rajeev <atrajeev@linux.vnet.ibm.com>,
-	Hemant Kumar <hemant@linux.vnet.ibm.com>,
-	Namhyung Kim <namhyung@kernel.org>,
+	Siddharth Vadapalli <s-vadapalli@ti.com>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 348/676] perf probe: Fix libdw memory leak
-Date: Fri,  6 Dec 2024 15:32:47 +0100
-Message-ID: <20241206143706.940565097@linuxfoundation.org>
+Subject: [PATCH 6.6 366/676] PCI: j721e: Deassert PERST# after a delay of PCIE_T_PVPERL_MS milliseconds
+Date: Fri,  6 Dec 2024 15:33:05 +0100
+Message-ID: <20241206143707.643942620@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -52,73 +45,86 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ian Rogers <irogers@google.com>
+From: Siddharth Vadapalli <s-vadapalli@ti.com>
 
-[ Upstream commit 4585038b8e186252141ef86e9f0d8e97f11dce8d ]
+[ Upstream commit 22a9120479a40a56c13c5e473a0100fad2e017c0 ]
 
-Add missing dwarf_cfi_end to free memory associated with probe_finder
-cfi_eh which is allocated and owned via a call to
-dwarf_getcfi_elf. Confusingly cfi_dbg shouldn't be freed as its memory
-is owned by the passed in debuginfo struct. Add comments to highlight
-this.
+According to Section 2.2 of the PCI Express Card Electromechanical
+Specification (Revision 5.1), in order to ensure that the power and the
+reference clock are stable, PERST# has to be deasserted after a delay of
+100 milliseconds (TPVPERL).
 
-This addresses leak sanitizer issues seen in:
-tools/perf/tests/shell/test_uprobe_from_different_cu.sh
+Currently, it is being assumed that the power is already stable, which
+is not necessarily true.
 
-Fixes: 270bde1e76f4 ("perf probe: Search both .eh_frame and .debug_frame sections for probe location")
-Signed-off-by: Ian Rogers <irogers@google.com>
-Cc: David S. Miller <davem@davemloft.net>
-Cc: Steinar H. Gunderson <sesse@google.com>
-Cc: Alexander Lobakin <aleksander.lobakin@intel.com>
-Cc: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Cc: Kajol Jain <kjain@linux.ibm.com>
-Cc: Athira Rajeev <atrajeev@linux.vnet.ibm.com>
-Cc: Hemant Kumar <hemant@linux.vnet.ibm.com>
-Link: https://lore.kernel.org/r/20241016235622.52166-3-irogers@google.com
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Hence, change the delay to PCIE_T_PVPERL_MS to guarantee that power and
+reference clock are stable.
+
+Fixes: f3e25911a430 ("PCI: j721e: Add TI J721E PCIe driver")
+Fixes: f96b69713733 ("PCI: j721e: Use T_PERST_CLK_US macro")
+Link: https://lore.kernel.org/r/20241104074420.1862932-1-s-vadapalli@ti.com
+Signed-off-by: Siddharth Vadapalli <s-vadapalli@ti.com>
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/probe-finder.c | 4 ++++
- tools/perf/util/probe-finder.h | 4 ++--
- 2 files changed, 6 insertions(+), 2 deletions(-)
+ drivers/pci/controller/cadence/pci-j721e.c | 26 ++++++++++------------
+ 1 file changed, 12 insertions(+), 14 deletions(-)
 
-diff --git a/tools/perf/util/probe-finder.c b/tools/perf/util/probe-finder.c
-index f171360b0ef4d..c816191564bdf 100644
---- a/tools/perf/util/probe-finder.c
-+++ b/tools/perf/util/probe-finder.c
-@@ -1499,6 +1499,10 @@ int debuginfo__find_trace_events(struct debuginfo *dbg,
- 	if (ret >= 0 && tf.pf.skip_empty_arg)
- 		ret = fill_empty_trace_arg(pev, tf.tevs, tf.ntevs);
+diff --git a/drivers/pci/controller/cadence/pci-j721e.c b/drivers/pci/controller/cadence/pci-j721e.c
+index 212b11c3145d8..f76a358e2b5b6 100644
+--- a/drivers/pci/controller/cadence/pci-j721e.c
++++ b/drivers/pci/controller/cadence/pci-j721e.c
+@@ -516,15 +516,14 @@ static int j721e_pcie_probe(struct platform_device *pdev)
+ 		pcie->refclk = clk;
  
-+#if _ELFUTILS_PREREQ(0, 142)
-+	dwarf_cfi_end(tf.pf.cfi_eh);
-+#endif
-+
- 	if (ret < 0 || tf.ntevs == 0) {
- 		for (i = 0; i < tf.ntevs; i++)
- 			clear_probe_trace_event(&tf.tevs[i]);
-diff --git a/tools/perf/util/probe-finder.h b/tools/perf/util/probe-finder.h
-index 8bc1c80d3c1c0..1f4650b955094 100644
---- a/tools/perf/util/probe-finder.h
-+++ b/tools/perf/util/probe-finder.h
-@@ -81,9 +81,9 @@ struct probe_finder {
+ 		/*
+-		 * The "Power Sequencing and Reset Signal Timings" table of the
+-		 * PCI Express Card Electromechanical Specification, Revision
+-		 * 5.1, Section 2.9.2, Symbol "T_PERST-CLK", indicates PERST#
+-		 * should be deasserted after minimum of 100us once REFCLK is
+-		 * stable. The REFCLK to the connector in RC mode is selected
+-		 * while enabling the PHY. So deassert PERST# after 100 us.
++		 * Section 2.2 of the PCI Express Card Electromechanical
++		 * Specification (Revision 5.1) mandates that the deassertion
++		 * of the PERST# signal should be delayed by 100 ms (TPVPERL).
++		 * This shall ensure that the power and the reference clock
++		 * are stable.
+ 		 */
+ 		if (gpiod) {
+-			fsleep(PCIE_T_PERST_CLK_US);
++			msleep(PCIE_T_PVPERL_MS);
+ 			gpiod_set_value_cansleep(gpiod, 1);
+ 		}
  
- 	/* For variable searching */
- #if _ELFUTILS_PREREQ(0, 142)
--	/* Call Frame Information from .eh_frame */
-+	/* Call Frame Information from .eh_frame. Owned by this struct. */
- 	Dwarf_CFI		*cfi_eh;
--	/* Call Frame Information from .debug_frame */
-+	/* Call Frame Information from .debug_frame. Not owned. */
- 	Dwarf_CFI		*cfi_dbg;
- #endif
- 	Dwarf_Op		*fb_ops;	/* Frame base attribute */
+@@ -615,15 +614,14 @@ static int j721e_pcie_resume_noirq(struct device *dev)
+ 			return ret;
+ 
+ 		/*
+-		 * The "Power Sequencing and Reset Signal Timings" table of the
+-		 * PCI Express Card Electromechanical Specification, Revision
+-		 * 5.1, Section 2.9.2, Symbol "T_PERST-CLK", indicates PERST#
+-		 * should be deasserted after minimum of 100us once REFCLK is
+-		 * stable. The REFCLK to the connector in RC mode is selected
+-		 * while enabling the PHY. So deassert PERST# after 100 us.
++		 * Section 2.2 of the PCI Express Card Electromechanical
++		 * Specification (Revision 5.1) mandates that the deassertion
++		 * of the PERST# signal should be delayed by 100 ms (TPVPERL).
++		 * This shall ensure that the power and the reference clock
++		 * are stable.
+ 		 */
+ 		if (pcie->reset_gpio) {
+-			fsleep(PCIE_T_PERST_CLK_US);
++			msleep(PCIE_T_PVPERL_MS);
+ 			gpiod_set_value_cansleep(pcie->reset_gpio, 1);
+ 		}
+ 
 -- 
 2.43.0
 
