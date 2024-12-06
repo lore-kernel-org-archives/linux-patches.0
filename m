@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56A371514CE;
-	Fri,  6 Dec 2024 15:15:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC34E20ADCA;
+	Fri,  6 Dec 2024 15:15:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733498128; cv=none; b=JhwePXF4MTMRKvb1ACgqSCbfvHtX9XhndgHxo0Tylr6m62jeKTiG4ArrP3OkKB1pZ5SdaYDfAGkgdiy8HqyBq+eGen1idKaR3aPX1rfMqTkO/XoeQUEkkMutGUPgrq0AWzdCKCVAbm75dk9JFRfjEwH/vBlDqJu7CXLYdE12F04=
+	t=1733498131; cv=none; b=ahL8/qf+Yk0UPp4nXBTB3gLivT2Uo8qNd80oJAHRYXA4vkek9Zd8CrDXgF3rj03KnOD67So53Oq5PysqTKPGIx0WzDR1Mh1X4toPbe4LzpmHBYFIAGP5Ej7kPz7d23vGLyM050BmApiNbS2uVi8oNiUWYaETGsT/aLL1UPETmTw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733498128; c=relaxed/simple;
-	bh=r+85nlo7EiUVtJNdG1JB/rKv4KY7bKo5CQOxG4fjVIE=;
+	s=arc-20240116; t=1733498131; c=relaxed/simple;
+	bh=pZADnNhqGG43KDAqdvHhNKkv3/hziRl0G9oYH5rBGEs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GMolvL92oiD3Yxp0mELt0AAinSg/Z1QPcpnaifX2DDWxjOYdIEJ8cjxcLg1XR762QfDf8rzVX3cSbdIZdGDAnPDsXHc+zZeYN7HaiyWSIK91cbiyPTF+6jrdHrHo4uegtpGJzY/iz5IWS8/W61/T4OkDpM4RjORZYDd3CLopbYo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tiRTQF2o; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oZgIOO/zhvqrwhPBEeq7Jmq6weM07Omi/im9QsQeeirmIRNha7JCanQK6hnn5z0sBHaqElcW3sTJEHAYoIVFx8cPxCnZ4FHO4M27z50489i8/ZKsIjiDCKaIi7kNAJu9Tf1Xq+/5HkCGJIm+EwXZQF3eOlgZJqjuCWx0yY3qeXI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IT9o0vNz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tiRTQF2o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B727BC4CED1;
-	Fri,  6 Dec 2024 15:15:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IT9o0vNz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A864C4CED1;
+	Fri,  6 Dec 2024 15:15:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733498128;
-	bh=r+85nlo7EiUVtJNdG1JB/rKv4KY7bKo5CQOxG4fjVIE=;
+	s=korg; t=1733498131;
+	bh=pZADnNhqGG43KDAqdvHhNKkv3/hziRl0G9oYH5rBGEs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tiRTQF2oaPTbnZ8ewPEDwHpY8cPjhTu3NALBB2fb3pJQd4jfRJXnA690dR/bgtJ/j
-	 bRej5JmnJc8XP31tC92NUY7de5Ev/Fq6WqdI06PwvnXbsJ6iHQrak2rpddp9NBdKvJ
-	 59oTbBgPVlchqOgtpwcERCb5RipJ40mTX6oXZlQc=
+	b=IT9o0vNzx+NGIlmLT6dIAsdINvy07+2L4h3HYqszF510x3OnQz83Oa5YI9SeH7EPt
+	 GjMZIKV3jJCdLqktxecZzTvL8YiQLJav3+1QMhYBmjt6f2YEvU+tytTBJ6e0lluKML
+	 gv91CVYKVKfXlwbVnf7WXBWKGV58HVcBCWjtJB0w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	kernel test robot <oliver.sang@intel.com>,
-	Jan Hendrik Farr <kernel@jfarr.cc>,
-	Miguel Ojeda <ojeda@kernel.org>,
-	Thorsten Blum <thorsten.blum@linux.dev>,
-	Kees Cook <kees@kernel.org>
-Subject: [PATCH 6.6 495/676] Compiler Attributes: disable __counted_by for clang < 19.1.3
-Date: Fri,  6 Dec 2024 15:35:14 +0100
-Message-ID: <20241206143712.693511204@linuxfoundation.org>
+	Michal Pecio <michal.pecio@gmail.com>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>
+Subject: [PATCH 6.6 496/676] usb: xhci: Fix TD invalidation under pending Set TR Dequeue
+Date: Fri,  6 Dec 2024 15:35:15 +0100
+Message-ID: <20241206143712.733314820@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -54,127 +50,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jan Hendrik Farr <kernel@jfarr.cc>
+From: Michal Pecio <michal.pecio@gmail.com>
 
-commit f06e108a3dc53c0f5234d18de0bd224753db5019 upstream.
+commit 484c3bab2d5dfa13ff659a51a06e9a393141eefc upstream.
 
-This patch disables __counted_by for clang versions < 19.1.3 because
-of the two issues listed below. It does this by introducing
-CONFIG_CC_HAS_COUNTED_BY.
+xhci_invalidate_cancelled_tds() may not work correctly if the hardware
+is modifying endpoint or stream contexts at the same time by executing
+a Set TR Dequeue command. And even if it worked, it would be unable to
+queue Set TR Dequeue for the next stream, failing to clear xHC cache.
 
-1. clang < 19.1.2 has a bug that can lead to __bdos returning 0:
-https://github.com/llvm/llvm-project/pull/110497
+On stream endpoints, a chain of Set TR Dequeue commands may take some
+time to execute and we may want to cancel more TDs during this time.
+Currently this leads to Stop Endpoint completion handler calling this
+function without testing for SET_DEQ_PENDING, which will trigger the
+aforementioned problems when it happens.
 
-2. clang < 19.1.3 has a bug that can lead to __bdos being off by 4:
-https://github.com/llvm/llvm-project/pull/112636
+On all endpoints, a halt condition causes Reset Endpoint to be queued
+and an error status given to the class driver, which may unlink more
+URBs in response. Stop Endpoint is queued and its handler may execute
+concurrently with Set TR Dequeue queued by Reset Endpoint handler.
 
-Fixes: c8248faf3ca2 ("Compiler Attributes: counted_by: Adjust name and identifier expansion")
-Cc: stable@vger.kernel.org # 6.6.x: 16c31dd7fdf6: Compiler Attributes: counted_by: bump min gcc version
-Cc: stable@vger.kernel.org # 6.6.x: 2993eb7a8d34: Compiler Attributes: counted_by: fixup clang URL
-Cc: stable@vger.kernel.org # 6.6.x: 231dc3f0c936: lkdtm/bugs: Improve warning message for compilers without counted_by support
-Cc: stable@vger.kernel.org # 6.6.x
-Reported-by: Nathan Chancellor <nathan@kernel.org>
-Closes: https://lore.kernel.org/all/20240913164630.GA4091534@thelio-3990X/
-Reported-by: kernel test robot <oliver.sang@intel.com>
-Closes: https://lore.kernel.org/oe-lkp/202409260949.a1254989-oliver.sang@intel.com
-Link: https://lore.kernel.org/all/Zw8iawAF5W2uzGuh@archlinux/T/#m204c09f63c076586a02d194b87dffc7e81b8de7b
-Suggested-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Jan Hendrik Farr <kernel@jfarr.cc>
-Reviewed-by: Nathan Chancellor <nathan@kernel.org>
-Tested-by: Nathan Chancellor <nathan@kernel.org>
-Reviewed-by: Miguel Ojeda <ojeda@kernel.org>
-Reviewed-by: Thorsten Blum <thorsten.blum@linux.dev>
-Link: https://lore.kernel.org/r/20241029140036.577804-2-kernel@jfarr.cc
-Signed-off-by: Kees Cook <kees@kernel.org>
-Signed-off-by: Jan Hendrik Farr <kernel@jfarr.cc>
+(Reset Endpoint handler calls this function too, but there seems to
+be no possibility of it running concurrently with Set TR Dequeue).
+
+Fix xhci_invalidate_cancelled_tds() to work correctly under a pending
+Set TR Dequeue. Bail out of the function when SET_DEQ_PENDING is set,
+then make the completion handler call the function again and also call
+xhci_giveback_invalidated_tds(), which needs to be called next.
+
+This seems to fix another potential bug, where the handler would call
+xhci_invalidate_cancelled_tds(), which may clear some deferred TDs if
+a sanity check fails, and the TDs wouldn't be given back promptly.
+
+Said sanity check seems to be wrong and prone to false positives when
+the endpoint halts, but fixing it is beyond the scope of this change,
+besides ensuring that cleared TDs are given back properly.
+
+Fixes: 5ceac4402f5d ("xhci: Handle TD clearing for multiple streams case")
+CC: stable@vger.kernel.org
+Signed-off-by: Michal Pecio <michal.pecio@gmail.com>
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://lore.kernel.org/r/20241106101459.775897-33-mathias.nyman@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/lkdtm/bugs.c           |    4 ++--
- include/linux/compiler_attributes.h |   13 -------------
- include/linux/compiler_types.h      |   19 +++++++++++++++++++
- init/Kconfig                        |    9 +++++++++
- 4 files changed, 30 insertions(+), 15 deletions(-)
+ drivers/usb/host/xhci-ring.c |   18 +++++++++++++-----
+ 1 file changed, 13 insertions(+), 5 deletions(-)
 
---- a/drivers/misc/lkdtm/bugs.c
-+++ b/drivers/misc/lkdtm/bugs.c
-@@ -388,8 +388,8 @@ static void lkdtm_FAM_BOUNDS(void)
+--- a/drivers/usb/host/xhci-ring.c
++++ b/drivers/usb/host/xhci-ring.c
+@@ -994,6 +994,13 @@ static int xhci_invalidate_cancelled_tds
+ 	unsigned int		slot_id = ep->vdev->slot_id;
+ 	int			err;
  
- 	pr_err("FAIL: survived access of invalid flexible array member index!\n");
- 
--	if (!__has_attribute(__counted_by__))
--		pr_warn("This is expected since this %s was built a compiler supporting __counted_by\n",
-+	if (!IS_ENABLED(CONFIG_CC_HAS_COUNTED_BY))
-+		pr_warn("This is expected since this %s was built with a compiler that does not support __counted_by\n",
- 			lkdtm_kernel_info);
- 	else if (IS_ENABLED(CONFIG_UBSAN_BOUNDS))
- 		pr_expected_config(CONFIG_UBSAN_TRAP);
---- a/include/linux/compiler_attributes.h
-+++ b/include/linux/compiler_attributes.h
-@@ -95,19 +95,6 @@
- #endif
- 
- /*
-- * Optional: only supported since gcc >= 14
-- * Optional: only supported since clang >= 18
-- *
-- *   gcc: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=108896
-- * clang: https://reviews.llvm.org/D148381
-- */
--#if __has_attribute(__counted_by__)
--# define __counted_by(member)		__attribute__((__counted_by__(member)))
--#else
--# define __counted_by(member)
--#endif
--
--/*
-  * Optional: not supported by gcc
-  * Optional: only supported since clang >= 14.0
-  *
---- a/include/linux/compiler_types.h
-+++ b/include/linux/compiler_types.h
-@@ -295,6 +295,25 @@ struct ftrace_likely_data {
- #define __no_sanitize_or_inline __always_inline
- #endif
- 
-+/*
-+ * Optional: only supported since gcc >= 15
-+ * Optional: only supported since clang >= 18
-+ *
-+ *   gcc: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=108896
-+ * clang: https://github.com/llvm/llvm-project/pull/76348
-+ *
-+ * __bdos on clang < 19.1.2 can erroneously return 0:
-+ * https://github.com/llvm/llvm-project/pull/110497
-+ *
-+ * __bdos on clang < 19.1.3 can be off by 4:
-+ * https://github.com/llvm/llvm-project/pull/112636
-+ */
-+#ifdef CONFIG_CC_HAS_COUNTED_BY
-+# define __counted_by(member)		__attribute__((__counted_by__(member)))
-+#else
-+# define __counted_by(member)
-+#endif
++	/*
++	 * This is not going to work if the hardware is changing its dequeue
++	 * pointers as we look at them. Completion handler will call us later.
++	 */
++	if (ep->ep_state & SET_DEQ_PENDING)
++		return 0;
 +
- /* Section for code which can't be instrumented at all */
- #define __noinstr_section(section)					\
- 	noinline notrace __attribute((__section__(section)))		\
---- a/init/Kconfig
-+++ b/init/Kconfig
-@@ -107,6 +107,15 @@ config CC_HAS_ASM_INLINE
- config CC_HAS_NO_PROFILE_FN_ATTR
- 	def_bool $(success,echo '__attribute__((no_profile_instrument_function)) int x();' | $(CC) -x c - -c -o /dev/null -Werror)
+ 	xhci = ep->xhci;
  
-+config CC_HAS_COUNTED_BY
-+	# TODO: when gcc 15 is released remove the build test and add
-+	# a gcc version check
-+	def_bool $(success,echo 'struct flex { int count; int array[] __attribute__((__counted_by__(count))); };' | $(CC) $(CLANG_FLAGS) -x c - -c -o /dev/null -Werror)
-+	# clang needs to be at least 19.1.3 to avoid __bdos miscalculations
-+	# https://github.com/llvm/llvm-project/pull/110497
-+	# https://github.com/llvm/llvm-project/pull/112636
-+	depends on !(CC_IS_CLANG && CLANG_VERSION < 190103)
-+
- config PAHOLE_VERSION
- 	int
- 	default $(shell,$(srctree)/scripts/pahole-version.sh $(PAHOLE))
+ 	list_for_each_entry_safe(td, tmp_td, &ep->cancelled_td_list, cancelled_td_list) {
+@@ -1354,7 +1361,6 @@ static void xhci_handle_cmd_set_deq(stru
+ 	struct xhci_ep_ctx *ep_ctx;
+ 	struct xhci_slot_ctx *slot_ctx;
+ 	struct xhci_td *td, *tmp_td;
+-	bool deferred = false;
+ 
+ 	ep_index = TRB_TO_EP_INDEX(le32_to_cpu(trb->generic.field[3]));
+ 	stream_id = TRB_TO_STREAM_ID(le32_to_cpu(trb->generic.field[2]));
+@@ -1455,8 +1461,6 @@ static void xhci_handle_cmd_set_deq(stru
+ 			xhci_dbg(ep->xhci, "%s: Giveback cancelled URB %p TD\n",
+ 				 __func__, td->urb);
+ 			xhci_td_cleanup(ep->xhci, td, ep_ring, td->status);
+-		} else if (td->cancel_status == TD_CLEARING_CACHE_DEFERRED) {
+-			deferred = true;
+ 		} else {
+ 			xhci_dbg(ep->xhci, "%s: Keep cancelled URB %p TD as cancel_status is %d\n",
+ 				 __func__, td->urb, td->cancel_status);
+@@ -1467,11 +1471,15 @@ cleanup:
+ 	ep->queued_deq_seg = NULL;
+ 	ep->queued_deq_ptr = NULL;
+ 
+-	if (deferred) {
+-		/* We have more streams to clear */
++	/* Check for deferred or newly cancelled TDs */
++	if (!list_empty(&ep->cancelled_td_list)) {
+ 		xhci_dbg(ep->xhci, "%s: Pending TDs to clear, continuing with invalidation\n",
+ 			 __func__);
+ 		xhci_invalidate_cancelled_tds(ep);
++		/* Try to restart the endpoint if all is done */
++		ring_doorbell_for_active_rings(xhci, slot_id, ep_index);
++		/* Start giving back any TDs invalidated above */
++		xhci_giveback_invalidated_tds(ep);
+ 	} else {
+ 		/* Restart any rings with pending URBs */
+ 		xhci_dbg(ep->xhci, "%s: All TDs cleared, ring doorbell\n", __func__);
 
 
