@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2525014B084;
-	Fri,  6 Dec 2024 14:43:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BF30149E0E;
+	Fri,  6 Dec 2024 14:43:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733496201; cv=none; b=HXgV2GtFCIkKECmn/mH+aWeTyOiDm/kA0Bwiny3wqLaUGZi+YcQWhss0U5fIluKjYe22OdOAk3BzkXftWuLt7pSh6p9vBHUBCzgOMmEA8FoKwb25VaFNamMrUMlZx4ztJ0x42gIZlxJq37bYZHaJG6k2I0eap4IN2hTIauOsSFE=
+	t=1733496204; cv=none; b=s2XE/qXlBDZYS7I2qphiVQl/6u8kwFy8IpGgnIMDplKZ+NTxPOS8RHwven1aMIqQ+29ck/YeIisDJma2ZL4JBK+Dwq++jZ6fPA7PyoYIMCpUUlwqeftzNeVwXDJA8l+QbaFAY4+8BoGISeCVq5YNH5tuhNdPPvmc0bHJycRPsEQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733496201; c=relaxed/simple;
-	bh=nlpaO/EM0+Cmt+aujYHUZGtf16ii7YIwVIA5+W+6hdo=;
+	s=arc-20240116; t=1733496204; c=relaxed/simple;
+	bh=bbv4xK3erV5vFhtmm3Q9YHWEWveSeE9nWCoJVb+yob4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T64Ohkl48MCj6Ie6tHM2qTY54JeISIM7SskPQWQx5NIQAq4ppEaDeHz2AeY+904pIzcAvdoQpm9FenDNHAQH53IMUgzU4us82hVHvmDm95SSAPq0N3RqyVkav5RPyTPn98fYLG1Qj0iF7A/xgMguH9j/WvIJXhzrwlgJqgEFk8s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NY/g2+gq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=BR5zhDoCyLVmuLfHf9tFyEdx2nXitPgWuHdT9SeSYsGf/v35eDjvbcy5KSu9ZGjQ2vq9Ca1H9o9VAgFnZooW3Liq+nCX5JQWk/4BAvAfB4G/MBGn3R/aYtrgnI8XU9soX4ePZxIWBluBvs1lJXRhiCHCWIzbnSCqRJVlYLtasig=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k5SGVQVA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NY/g2+gq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 888C2C4CED1;
-	Fri,  6 Dec 2024 14:43:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k5SGVQVA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09F44C4CED1;
+	Fri,  6 Dec 2024 14:43:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733496201;
-	bh=nlpaO/EM0+Cmt+aujYHUZGtf16ii7YIwVIA5+W+6hdo=;
+	s=korg; t=1733496204;
+	bh=bbv4xK3erV5vFhtmm3Q9YHWEWveSeE9nWCoJVb+yob4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NY/g2+gqlCumLjAsbhfbguXumZ6YK30P3R/QYYF+hkbHHkpDA6YfpQ5e6ya9HmLnb
-	 hJzSmM3JEs/VLX98VQEEJ22eeVwsJ4U6Yd9cZqEg2qAAD/ah4zu455xgIh4z9VBjJ3
-	 itnocWMasLOUbIFOgn0fZxPa9St+XCWvxijUPqCc=
+	b=k5SGVQVALuBRVYyjxSDYF7B0DFGhWKPhOo0ABqYdKLP9Uu6Ge3Fc0cg+uFGX8syPl
+	 KU7cXQkABJ39zxkWaGdzbo3+Vy1/BFWxdft56q9iLIHyClV8GUepdcUAVoWXAv0xRW
+	 uW6NB6NOG6h/o5H80UJZ4QWgBmz866A5m+Y/8OwQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Prakash Gupta <quic_guptap@quicinc.com>,
-	Pratyush Brahma <quic_pbrahma@quicinc.com>,
-	Will Deacon <will@kernel.org>
-Subject: [PATCH 6.12 049/146] iommu/arm-smmu: Defer probe of clients after smmu device bound
-Date: Fri,  6 Dec 2024 15:36:20 +0100
-Message-ID: <20241206143529.552199607@linuxfoundation.org>
+	=?UTF-8?q?Michal=20Vok=C3=A1=C4=8D?= <michal.vokac@ysoft.com>,
+	Lee Jones <lee@kernel.org>
+Subject: [PATCH 6.12 050/146] leds: lp55xx: Remove redundant test for invalid channel number
+Date: Fri,  6 Dec 2024 15:36:21 +0100
+Message-ID: <20241206143529.590854461@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143527.654980698@linuxfoundation.org>
 References: <20241206143527.654980698@linuxfoundation.org>
@@ -45,87 +44,58 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pratyush Brahma <quic_pbrahma@quicinc.com>
+From: Michal Vokáč <michal.vokac@ysoft.com>
 
-commit 229e6ee43d2a160a1592b83aad620d6027084aad upstream.
+commit 09b1ef9813a0742674f7efe26104403ca94a1b4a upstream.
 
-Null pointer dereference occurs due to a race between smmu
-driver probe and client driver probe, when of_dma_configure()
-for client is called after the iommu_device_register() for smmu driver
-probe has executed but before the driver_bound() for smmu driver
-has been called.
+Since commit 92a81562e695 ("leds: lp55xx: Add multicolor framework
+support to lp55xx") there are two subsequent tests if the chan_nr
+(reg property) is in valid range. One in the lp55xx_init_led()
+function and one in the lp55xx_parse_common_child() function that
+was added with the mentioned commit.
 
-Following is how the race occurs:
+There are two issues with that.
 
-T1:Smmu device probe		T2: Client device probe
+First is in the lp55xx_parse_common_child() function where the reg
+property is tested right after it is read from the device tree.
+Test for the upper range is not correct though. Valid reg values are
+0 to (max_channel - 1) so it should be >=.
 
-really_probe()
-arm_smmu_device_probe()
-iommu_device_register()
-					really_probe()
-					platform_dma_configure()
-					of_dma_configure()
-					of_dma_configure_id()
-					of_iommu_configure()
-					iommu_probe_device()
-					iommu_init_device()
-					arm_smmu_probe_device()
-					arm_smmu_get_by_fwnode()
-						driver_find_device_by_fwnode()
-						driver_find_device()
-						next_device()
-						klist_next()
-						    /* null ptr
-						       assigned to smmu */
-					/* null ptr dereference
-					   while smmu->streamid_mask */
-driver_bound()
-	klist_add_tail()
+Second issue is that in case the parsed value is out of the range
+the probe just fails and no error message is shown as the code never
+reaches the second test that prints and error message.
 
-When this null smmu pointer is dereferenced later in
-arm_smmu_probe_device, the device crashes.
+Remove the test form lp55xx_parse_common_child() function completely
+and keep the one in lp55xx_init_led() function to deal with it.
 
-Fix this by deferring the probe of the client device
-until the smmu device has bound to the arm smmu driver.
-
-Fixes: 021bb8420d44 ("iommu/arm-smmu: Wire up generic configuration support")
+Fixes: 92a81562e695 ("leds: lp55xx: Add multicolor framework support to lp55xx")
 Cc: stable@vger.kernel.org
-Co-developed-by: Prakash Gupta <quic_guptap@quicinc.com>
-Signed-off-by: Prakash Gupta <quic_guptap@quicinc.com>
-Signed-off-by: Pratyush Brahma <quic_pbrahma@quicinc.com>
-Link: https://lore.kernel.org/r/20241004090428.2035-1-quic_pbrahma@quicinc.com
-[will: Add comment]
-Signed-off-by: Will Deacon <will@kernel.org>
+Signed-off-by: Michal Vokáč <michal.vokac@ysoft.com>
+Link: https://lore.kernel.org/r/20241017150812.3563629-1-michal.vokac@ysoft.com
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iommu/arm/arm-smmu/arm-smmu.c |   11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/leds/leds-lp55xx-common.c |    3 ---
+ 1 file changed, 3 deletions(-)
 
---- a/drivers/iommu/arm/arm-smmu/arm-smmu.c
-+++ b/drivers/iommu/arm/arm-smmu/arm-smmu.c
-@@ -1437,6 +1437,17 @@ static struct iommu_device *arm_smmu_pro
- 			goto out_free;
- 	} else {
- 		smmu = arm_smmu_get_by_fwnode(fwspec->iommu_fwnode);
-+
-+		/*
-+		 * Defer probe if the relevant SMMU instance hasn't finished
-+		 * probing yet. This is a fragile hack and we'd ideally
-+		 * avoid this race in the core code. Until that's ironed
-+		 * out, however, this is the most pragmatic option on the
-+		 * table.
-+		 */
-+		if (!smmu)
-+			return ERR_PTR(dev_err_probe(dev, -EPROBE_DEFER,
-+						"smmu dev has not bound yet\n"));
- 	}
+--- a/drivers/leds/leds-lp55xx-common.c
++++ b/drivers/leds/leds-lp55xx-common.c
+@@ -1132,9 +1132,6 @@ static int lp55xx_parse_common_child(str
+ 	if (ret)
+ 		return ret;
  
- 	ret = -EINVAL;
+-	if (*chan_nr < 0 || *chan_nr > cfg->max_channel)
+-		return -EINVAL;
+-
+ 	return 0;
+ }
+ 
 
 
