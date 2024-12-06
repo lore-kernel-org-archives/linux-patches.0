@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE2C313E03A;
-	Fri,  6 Dec 2024 15:07:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D82053A7;
+	Fri,  6 Dec 2024 15:07:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733497631; cv=none; b=PCm/m8a7rFoK9lmQfWNiHR9EprRrWD9RCGSptUf6SHHMmzEo9VmsfccPg86CUZJhfAdXFYMG/+9gPWs3yUPqtp6TMG8CgP3od/oZo/UaRbcsfOB0dE9OeIPO9XN1rybGZxrDbHaVuKxOrfhlms6uolhPxNJJZv9UGIuoFB+0lg4=
+	t=1733497635; cv=none; b=rfY9ssifKiVnxO6hvjACR2NOx5OvDpV3ey3kFMYYarNIybLCZjEQh4EwD4MoKUGAcObI5GWvAsxS204od+g5jBWmTRcAnMFw+oP98goxKuDDxfOmwUnB1i+IaCcsQBL/rIh8YhNDfzfW7pFfl6TKXPoXbrdK7SgXZ7kMYZ4NN2Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733497631; c=relaxed/simple;
-	bh=iAKN0xZrP5hQY1qq2z3VUUHo2jqXSc8eUtVGHaFoPpI=;
+	s=arc-20240116; t=1733497635; c=relaxed/simple;
+	bh=THqP8OYhv//W2FlwbgxriBdDfgWKmVr2usJjPDQRNn0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RM49YZfyRkzUwizsL1fg+dRnlA4UZ1cfrTRgtHYsVuqB501AiBXg86MwaV4UaOj1dayqDDVHDVz4dtP7I6+3WlxyEf7fuxruZsBAPxb3e+lzFQPp06KfcpO4J00xOhzB6y2D88zl7fUGlrY8y8W8lhZ+8mgnrWIG289kl1y0dwQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yd8cKJvd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cx/yzatFH2wEY2NHWJNZMK9crTWzY7Ily7I1TJyki2kWtPr8jczG3DvVo/6q9JE9R7AlNsV7scTConkJVjh5uYTxrpZMADFSt/rYpJ5OCwCT/ybKJtmYyA7BE7OXn+ZCbpJMRxDePSEOmNUq+PQLYmNTapoSfuTj75xwhHGDzCE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aS1B8lnt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yd8cKJvd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32E82C4CED1;
-	Fri,  6 Dec 2024 15:07:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aS1B8lnt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A73E4C4CED1;
+	Fri,  6 Dec 2024 15:07:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733497631;
-	bh=iAKN0xZrP5hQY1qq2z3VUUHo2jqXSc8eUtVGHaFoPpI=;
+	s=korg; t=1733497635;
+	bh=THqP8OYhv//W2FlwbgxriBdDfgWKmVr2usJjPDQRNn0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yd8cKJvd5H46LaDvizVwVLVtB7nAwBPCAH2djcBcQ+Ji5rM7zOUahTZTvzzS2fejw
-	 0JhPrYHYj5Vku5cjdKvgKrXsNgHkiEGafocaCtYYCqgef8MCYlIoMlm3rsjsGn+vfi
-	 oN3X/KWeBllqsyMzlFRVZZcSozjxjKKyJQfnBtpk=
+	b=aS1B8lntVkfLe/CMixaeqj3S55+0C3C0xjGgQcEp1/e82QaljW7MHiFlmFxnOoGIO
+	 uOdjJlTdXX+VdmPD6HPPKi4UbhH2ESflZUAemBfTXKshQysmy5xV7gKLZperC6OucL
+	 a6jJCzS45ETuRb5Kmuk/TyV/LpTedbkj48T8gmnY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Veronika Molnarova <vmolnaro@redhat.com>,
-	Michael Petlan <mpetlan@redhat.com>,
+	Ian Rogers <irogers@google.com>,
+	mpetlan@redhat.com,
 	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 344/676] perf trace: Keep exited threads for summary
-Date: Fri,  6 Dec 2024 15:32:43 +0100
-Message-ID: <20241206143706.783882403@linuxfoundation.org>
+Subject: [PATCH 6.6 345/676] perf test attr: Add back missing topdown events
+Date: Fri,  6 Dec 2024 15:32:44 +0100
+Message-ID: <20241206143706.824099384@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -52,75 +53,1003 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Petlan <mpetlan@redhat.com>
+From: Veronika Molnarova <vmolnaro@redhat.com>
 
-[ Upstream commit d29d92df410e2fb523f640478b18f70c1823e55e ]
+[ Upstream commit 6bff76af9635411214ca44ea38fc2781e78064b6 ]
 
-Since 9ffa6c7512ca ("perf machine thread: Remove exited threads by
-default") perf cleans exited threads up, but as said, sometimes they
-are necessary to be kept. The mentioned commit does not cover all the
-cases, we also need the information to construct the summary table in
-perf-trace.
+With the patch 0b6c5371c03c "Add missing topdown metrics events" eight
+topdown metric events with numbers ranging from 0x8000 to 0x8700 were
+added to the test since they were added as 'perf stat' default events.
+Later the patch 951efb9976ce "Update no event/metric expectations" kept
+only 4 of those events(0x8000-0x8300).
 
-Before:
-    # perf trace -s true
+Currently, the topdown events with numbers 0x8400 to 0x8700 are missing
+from the list of expected events resulting in a failure. Add back the
+missing topdown events.
 
-     Summary of events:
-
-After:
-    # perf trace -s -- true
-
-     Summary of events:
-
-     true (383382), 64 events, 91.4%
-
-       syscall            calls  errors  total       min       avg       max       stddev
-                                         (msec)    (msec)    (msec)    (msec)        (%)
-       --------------- --------  ------ -------- --------- --------- ---------     ------
-       mmap                   8      0     0.150     0.013     0.019     0.031     11.90%
-       mprotect               3      0     0.045     0.014     0.015     0.017      6.47%
-       openat                 2      0     0.014     0.006     0.007     0.007      9.73%
-       munmap                 1      0     0.009     0.009     0.009     0.009      0.00%
-       access                 1      1     0.009     0.009     0.009     0.009      0.00%
-       pread64                4      0     0.006     0.001     0.001     0.002      4.53%
-       fstat                  2      0     0.005     0.001     0.002     0.003     37.59%
-       arch_prctl             2      1     0.003     0.001     0.002     0.002     25.91%
-       read                   1      0     0.003     0.003     0.003     0.003      0.00%
-       close                  2      0     0.003     0.001     0.001     0.001      3.86%
-       brk                    1      0     0.002     0.002     0.002     0.002      0.00%
-       rseq                   1      0     0.001     0.001     0.001     0.001      0.00%
-       prlimit64              1      0     0.001     0.001     0.001     0.001      0.00%
-       set_robust_list        1      0     0.001     0.001     0.001     0.001      0.00%
-       set_tid_address        1      0     0.001     0.001     0.001     0.001      0.00%
-       execve                 1      0     0.000     0.000     0.000     0.000      0.00%
-
-[namhyung: simplified the condition]
-
-Fixes: 9ffa6c7512ca ("perf machine thread: Remove exited threads by default")
-Reported-by: Veronika Molnarova <vmolnaro@redhat.com>
-Signed-off-by: Michael Petlan <mpetlan@redhat.com>
-Link: https://lore.kernel.org/r/20240927151926.399474-1-mpetlan@redhat.com
+Fixes: 951efb9976ce ("perf test attr: Update no event/metric expectations")
+Signed-off-by: Veronika Molnarova <vmolnaro@redhat.com>
+Tested-by: Ian Rogers <irogers@google.com>
+Cc: mpetlan@redhat.com
+Link: https://lore.kernel.org/r/20240311081611.7835-1-vmolnaro@redhat.com
 Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-trace.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ tools/perf/tests/attr/test-stat-default    |  90 ++++++++++----
+ tools/perf/tests/attr/test-stat-detailed-1 | 106 +++++++++++-----
+ tools/perf/tests/attr/test-stat-detailed-2 | 130 ++++++++++++-------
+ tools/perf/tests/attr/test-stat-detailed-3 | 138 ++++++++++++++-------
+ 4 files changed, 320 insertions(+), 144 deletions(-)
 
-diff --git a/tools/perf/builtin-trace.c b/tools/perf/builtin-trace.c
-index e541d0e2777ab..6fd30bddf0de9 100644
---- a/tools/perf/builtin-trace.c
-+++ b/tools/perf/builtin-trace.c
-@@ -5031,6 +5031,10 @@ int cmd_trace(int argc, const char **argv)
- 	if (trace.summary_only)
- 		trace.summary = trace.summary_only;
+diff --git a/tools/perf/tests/attr/test-stat-default b/tools/perf/tests/attr/test-stat-default
+index a1e2da0a9a6dd..e47fb49446799 100644
+--- a/tools/perf/tests/attr/test-stat-default
++++ b/tools/perf/tests/attr/test-stat-default
+@@ -88,98 +88,142 @@ enable_on_exec=0
+ read_format=15
+ optional=1
  
-+	/* Keep exited threads, otherwise information might be lost for summary */
-+	if (trace.summary)
-+		symbol_conf.keep_exited_threads = true;
+-# PERF_TYPE_RAW / topdown-fe-bound (0x8200)
++# PERF_TYPE_RAW / topdown-bad-spec (0x8100)
+ [event13:base-stat]
+ fd=13
+ group_fd=11
+ type=4
+-config=33280
++config=33024
+ disabled=0
+ enable_on_exec=0
+ read_format=15
+ optional=1
+ 
+-# PERF_TYPE_RAW / topdown-be-bound (0x8300)
++# PERF_TYPE_RAW / topdown-fe-bound (0x8200)
+ [event14:base-stat]
+ fd=14
+ group_fd=11
+ type=4
+-config=33536
++config=33280
+ disabled=0
+ enable_on_exec=0
+ read_format=15
+ optional=1
+ 
+-# PERF_TYPE_RAW / topdown-bad-spec (0x8100)
++# PERF_TYPE_RAW / topdown-be-bound (0x8300)
+ [event15:base-stat]
+ fd=15
+ group_fd=11
+ type=4
+-config=33024
++config=33536
+ disabled=0
+ enable_on_exec=0
+ read_format=15
+ optional=1
+ 
+-# PERF_TYPE_RAW / INT_MISC.UOP_DROPPING
++# PERF_TYPE_RAW / topdown-heavy-ops (0x8400)
+ [event16:base-stat]
+ fd=16
++group_fd=11
+ type=4
+-config=4109
++config=33792
++disabled=0
++enable_on_exec=0
++read_format=15
+ optional=1
+ 
+-# PERF_TYPE_RAW / cpu/INT_MISC.RECOVERY_CYCLES,cmask=1,edge/
++# PERF_TYPE_RAW / topdown-br-mispredict (0x8500)
+ [event17:base-stat]
+ fd=17
++group_fd=11
+ type=4
+-config=17039629
++config=34048
++disabled=0
++enable_on_exec=0
++read_format=15
+ optional=1
+ 
+-# PERF_TYPE_RAW / CPU_CLK_UNHALTED.THREAD
++# PERF_TYPE_RAW / topdown-fetch-lat (0x8600)
+ [event18:base-stat]
+ fd=18
++group_fd=11
+ type=4
+-config=60
++config=34304
++disabled=0
++enable_on_exec=0
++read_format=15
+ optional=1
+ 
+-# PERF_TYPE_RAW / INT_MISC.RECOVERY_CYCLES_ANY
++# PERF_TYPE_RAW / topdown-mem-bound (0x8700)
+ [event19:base-stat]
+ fd=19
++group_fd=11
+ type=4
+-config=2097421
++config=34560
++disabled=0
++enable_on_exec=0
++read_format=15
+ optional=1
+ 
+-# PERF_TYPE_RAW / CPU_CLK_UNHALTED.REF_XCLK
++# PERF_TYPE_RAW / INT_MISC.UOP_DROPPING
+ [event20:base-stat]
+ fd=20
+ type=4
+-config=316
++config=4109
+ optional=1
+ 
+-# PERF_TYPE_RAW / IDQ_UOPS_NOT_DELIVERED.CORE
++# PERF_TYPE_RAW / cpu/INT_MISC.RECOVERY_CYCLES,cmask=1,edge/
+ [event21:base-stat]
+ fd=21
+ type=4
+-config=412
++config=17039629
+ optional=1
+ 
+-# PERF_TYPE_RAW / CPU_CLK_UNHALTED.ONE_THREAD_ACTIVE
++# PERF_TYPE_RAW / CPU_CLK_UNHALTED.THREAD
+ [event22:base-stat]
+ fd=22
+ type=4
+-config=572
++config=60
+ optional=1
+ 
+-# PERF_TYPE_RAW / UOPS_RETIRED.RETIRE_SLOTS
++# PERF_TYPE_RAW / INT_MISC.RECOVERY_CYCLES_ANY
+ [event23:base-stat]
+ fd=23
+ type=4
+-config=706
++config=2097421
+ optional=1
+ 
+-# PERF_TYPE_RAW / UOPS_ISSUED.ANY
++# PERF_TYPE_RAW / CPU_CLK_UNHALTED.REF_XCLK
+ [event24:base-stat]
+ fd=24
+ type=4
++config=316
++optional=1
 +
- 	if (output_name != NULL) {
- 		err = trace__open_output(&trace, output_name);
- 		if (err < 0) {
++# PERF_TYPE_RAW / IDQ_UOPS_NOT_DELIVERED.CORE
++[event25:base-stat]
++fd=25
++type=4
++config=412
++optional=1
++
++# PERF_TYPE_RAW / CPU_CLK_UNHALTED.ONE_THREAD_ACTIVE
++[event26:base-stat]
++fd=26
++type=4
++config=572
++optional=1
++
++# PERF_TYPE_RAW / UOPS_RETIRED.RETIRE_SLOTS
++[event27:base-stat]
++fd=27
++type=4
++config=706
++optional=1
++
++# PERF_TYPE_RAW / UOPS_ISSUED.ANY
++[event28:base-stat]
++fd=28
++type=4
+ config=270
+ optional=1
+diff --git a/tools/perf/tests/attr/test-stat-detailed-1 b/tools/perf/tests/attr/test-stat-detailed-1
+index 1c52cb05c900d..3d500d3e0c5c8 100644
+--- a/tools/perf/tests/attr/test-stat-detailed-1
++++ b/tools/perf/tests/attr/test-stat-detailed-1
+@@ -90,99 +90,143 @@ enable_on_exec=0
+ read_format=15
+ optional=1
+ 
+-# PERF_TYPE_RAW / topdown-fe-bound (0x8200)
++# PERF_TYPE_RAW / topdown-bad-spec (0x8100)
+ [event13:base-stat]
+ fd=13
+ group_fd=11
+ type=4
+-config=33280
++config=33024
+ disabled=0
+ enable_on_exec=0
+ read_format=15
+ optional=1
+ 
+-# PERF_TYPE_RAW / topdown-be-bound (0x8300)
++# PERF_TYPE_RAW / topdown-fe-bound (0x8200)
+ [event14:base-stat]
+ fd=14
+ group_fd=11
+ type=4
+-config=33536
++config=33280
+ disabled=0
+ enable_on_exec=0
+ read_format=15
+ optional=1
+ 
+-# PERF_TYPE_RAW / topdown-bad-spec (0x8100)
++# PERF_TYPE_RAW / topdown-be-bound (0x8300)
+ [event15:base-stat]
+ fd=15
+ group_fd=11
+ type=4
+-config=33024
++config=33536
+ disabled=0
+ enable_on_exec=0
+ read_format=15
+ optional=1
+ 
+-# PERF_TYPE_RAW / INT_MISC.UOP_DROPPING
++# PERF_TYPE_RAW / topdown-heavy-ops (0x8400)
+ [event16:base-stat]
+ fd=16
++group_fd=11
+ type=4
+-config=4109
++config=33792
++disabled=0
++enable_on_exec=0
++read_format=15
+ optional=1
+ 
+-# PERF_TYPE_RAW / cpu/INT_MISC.RECOVERY_CYCLES,cmask=1,edge/
++# PERF_TYPE_RAW / topdown-br-mispredict (0x8500)
+ [event17:base-stat]
+ fd=17
++group_fd=11
+ type=4
+-config=17039629
++config=34048
++disabled=0
++enable_on_exec=0
++read_format=15
+ optional=1
+ 
+-# PERF_TYPE_RAW / CPU_CLK_UNHALTED.THREAD
++# PERF_TYPE_RAW / topdown-fetch-lat (0x8600)
+ [event18:base-stat]
+ fd=18
++group_fd=11
+ type=4
+-config=60
++config=34304
++disabled=0
++enable_on_exec=0
++read_format=15
+ optional=1
+ 
+-# PERF_TYPE_RAW / INT_MISC.RECOVERY_CYCLES_ANY
++# PERF_TYPE_RAW / topdown-mem-bound (0x8700)
+ [event19:base-stat]
+ fd=19
++group_fd=11
+ type=4
+-config=2097421
++config=34560
++disabled=0
++enable_on_exec=0
++read_format=15
+ optional=1
+ 
+-# PERF_TYPE_RAW / CPU_CLK_UNHALTED.REF_XCLK
++# PERF_TYPE_RAW / INT_MISC.UOP_DROPPING
+ [event20:base-stat]
+ fd=20
+ type=4
+-config=316
++config=4109
+ optional=1
+ 
+-# PERF_TYPE_RAW / IDQ_UOPS_NOT_DELIVERED.CORE
++# PERF_TYPE_RAW / cpu/INT_MISC.RECOVERY_CYCLES,cmask=1,edge/
+ [event21:base-stat]
+ fd=21
+ type=4
+-config=412
++config=17039629
+ optional=1
+ 
+-# PERF_TYPE_RAW / CPU_CLK_UNHALTED.ONE_THREAD_ACTIVE
++# PERF_TYPE_RAW / CPU_CLK_UNHALTED.THREAD
+ [event22:base-stat]
+ fd=22
+ type=4
+-config=572
++config=60
+ optional=1
+ 
+-# PERF_TYPE_RAW / UOPS_RETIRED.RETIRE_SLOTS
++# PERF_TYPE_RAW / INT_MISC.RECOVERY_CYCLES_ANY
+ [event23:base-stat]
+ fd=23
+ type=4
+-config=706
++config=2097421
+ optional=1
+ 
+-# PERF_TYPE_RAW / UOPS_ISSUED.ANY
++# PERF_TYPE_RAW / CPU_CLK_UNHALTED.REF_XCLK
+ [event24:base-stat]
+ fd=24
+ type=4
++config=316
++optional=1
++
++# PERF_TYPE_RAW / IDQ_UOPS_NOT_DELIVERED.CORE
++[event25:base-stat]
++fd=25
++type=4
++config=412
++optional=1
++
++# PERF_TYPE_RAW / CPU_CLK_UNHALTED.ONE_THREAD_ACTIVE
++[event26:base-stat]
++fd=26
++type=4
++config=572
++optional=1
++
++# PERF_TYPE_RAW / UOPS_RETIRED.RETIRE_SLOTS
++[event27:base-stat]
++fd=27
++type=4
++config=706
++optional=1
++
++# PERF_TYPE_RAW / UOPS_ISSUED.ANY
++[event28:base-stat]
++fd=28
++type=4
+ config=270
+ optional=1
+ 
+@@ -190,8 +234,8 @@ optional=1
+ #  PERF_COUNT_HW_CACHE_L1D                <<  0  |
+ # (PERF_COUNT_HW_CACHE_OP_READ            <<  8) |
+ # (PERF_COUNT_HW_CACHE_RESULT_ACCESS      << 16)
+-[event25:base-stat]
+-fd=25
++[event29:base-stat]
++fd=29
+ type=3
+ config=0
+ optional=1
+@@ -200,8 +244,8 @@ optional=1
+ #  PERF_COUNT_HW_CACHE_L1D                <<  0  |
+ # (PERF_COUNT_HW_CACHE_OP_READ            <<  8) |
+ # (PERF_COUNT_HW_CACHE_RESULT_MISS        << 16)
+-[event26:base-stat]
+-fd=26
++[event30:base-stat]
++fd=30
+ type=3
+ config=65536
+ optional=1
+@@ -210,8 +254,8 @@ optional=1
+ #  PERF_COUNT_HW_CACHE_LL                 <<  0  |
+ # (PERF_COUNT_HW_CACHE_OP_READ            <<  8) |
+ # (PERF_COUNT_HW_CACHE_RESULT_ACCESS      << 16)
+-[event27:base-stat]
+-fd=27
++[event31:base-stat]
++fd=31
+ type=3
+ config=2
+ optional=1
+@@ -220,8 +264,8 @@ optional=1
+ #  PERF_COUNT_HW_CACHE_LL                 <<  0  |
+ # (PERF_COUNT_HW_CACHE_OP_READ            <<  8) |
+ # (PERF_COUNT_HW_CACHE_RESULT_MISS        << 16)
+-[event28:base-stat]
+-fd=28
++[event32:base-stat]
++fd=32
+ type=3
+ config=65538
+ optional=1
+diff --git a/tools/perf/tests/attr/test-stat-detailed-2 b/tools/perf/tests/attr/test-stat-detailed-2
+index 7e961d24a885a..01777a63752fe 100644
+--- a/tools/perf/tests/attr/test-stat-detailed-2
++++ b/tools/perf/tests/attr/test-stat-detailed-2
+@@ -90,99 +90,143 @@ enable_on_exec=0
+ read_format=15
+ optional=1
+ 
+-# PERF_TYPE_RAW / topdown-fe-bound (0x8200)
++# PERF_TYPE_RAW / topdown-bad-spec (0x8100)
+ [event13:base-stat]
+ fd=13
+ group_fd=11
+ type=4
+-config=33280
++config=33024
+ disabled=0
+ enable_on_exec=0
+ read_format=15
+ optional=1
+ 
+-# PERF_TYPE_RAW / topdown-be-bound (0x8300)
++# PERF_TYPE_RAW / topdown-fe-bound (0x8200)
+ [event14:base-stat]
+ fd=14
+ group_fd=11
+ type=4
+-config=33536
++config=33280
+ disabled=0
+ enable_on_exec=0
+ read_format=15
+ optional=1
+ 
+-# PERF_TYPE_RAW / topdown-bad-spec (0x8100)
++# PERF_TYPE_RAW / topdown-be-bound (0x8300)
+ [event15:base-stat]
+ fd=15
+ group_fd=11
+ type=4
+-config=33024
++config=33536
+ disabled=0
+ enable_on_exec=0
+ read_format=15
+ optional=1
+ 
+-# PERF_TYPE_RAW / INT_MISC.UOP_DROPPING
++# PERF_TYPE_RAW / topdown-heavy-ops (0x8400)
+ [event16:base-stat]
+ fd=16
++group_fd=11
+ type=4
+-config=4109
++config=33792
++disabled=0
++enable_on_exec=0
++read_format=15
+ optional=1
+ 
+-# PERF_TYPE_RAW / cpu/INT_MISC.RECOVERY_CYCLES,cmask=1,edge/
++# PERF_TYPE_RAW / topdown-br-mispredict (0x8500)
+ [event17:base-stat]
+ fd=17
++group_fd=11
+ type=4
+-config=17039629
++config=34048
++disabled=0
++enable_on_exec=0
++read_format=15
+ optional=1
+ 
+-# PERF_TYPE_RAW / CPU_CLK_UNHALTED.THREAD
++# PERF_TYPE_RAW / topdown-fetch-lat (0x8600)
+ [event18:base-stat]
+ fd=18
++group_fd=11
+ type=4
+-config=60
++config=34304
++disabled=0
++enable_on_exec=0
++read_format=15
+ optional=1
+ 
+-# PERF_TYPE_RAW / INT_MISC.RECOVERY_CYCLES_ANY
++# PERF_TYPE_RAW / topdown-mem-bound (0x8700)
+ [event19:base-stat]
+ fd=19
++group_fd=11
+ type=4
+-config=2097421
++config=34560
++disabled=0
++enable_on_exec=0
++read_format=15
+ optional=1
+ 
+-# PERF_TYPE_RAW / CPU_CLK_UNHALTED.REF_XCLK
++# PERF_TYPE_RAW / INT_MISC.UOP_DROPPING
+ [event20:base-stat]
+ fd=20
+ type=4
+-config=316
++config=4109
+ optional=1
+ 
+-# PERF_TYPE_RAW / IDQ_UOPS_NOT_DELIVERED.CORE
++# PERF_TYPE_RAW / cpu/INT_MISC.RECOVERY_CYCLES,cmask=1,edge/
+ [event21:base-stat]
+ fd=21
+ type=4
+-config=412
++config=17039629
+ optional=1
+ 
+-# PERF_TYPE_RAW / CPU_CLK_UNHALTED.ONE_THREAD_ACTIVE
++# PERF_TYPE_RAW / CPU_CLK_UNHALTED.THREAD
+ [event22:base-stat]
+ fd=22
+ type=4
+-config=572
++config=60
+ optional=1
+ 
+-# PERF_TYPE_RAW / UOPS_RETIRED.RETIRE_SLOTS
++# PERF_TYPE_RAW / INT_MISC.RECOVERY_CYCLES_ANY
+ [event23:base-stat]
+ fd=23
+ type=4
+-config=706
++config=2097421
+ optional=1
+ 
+-# PERF_TYPE_RAW / UOPS_ISSUED.ANY
++# PERF_TYPE_RAW / CPU_CLK_UNHALTED.REF_XCLK
+ [event24:base-stat]
+ fd=24
+ type=4
++config=316
++optional=1
++
++# PERF_TYPE_RAW / IDQ_UOPS_NOT_DELIVERED.CORE
++[event25:base-stat]
++fd=25
++type=4
++config=412
++optional=1
++
++# PERF_TYPE_RAW / CPU_CLK_UNHALTED.ONE_THREAD_ACTIVE
++[event26:base-stat]
++fd=26
++type=4
++config=572
++optional=1
++
++# PERF_TYPE_RAW / UOPS_RETIRED.RETIRE_SLOTS
++[event27:base-stat]
++fd=27
++type=4
++config=706
++optional=1
++
++# PERF_TYPE_RAW / UOPS_ISSUED.ANY
++[event28:base-stat]
++fd=28
++type=4
+ config=270
+ optional=1
+ 
+@@ -190,8 +234,8 @@ optional=1
+ #  PERF_COUNT_HW_CACHE_L1D                <<  0  |
+ # (PERF_COUNT_HW_CACHE_OP_READ            <<  8) |
+ # (PERF_COUNT_HW_CACHE_RESULT_ACCESS      << 16)
+-[event25:base-stat]
+-fd=25
++[event29:base-stat]
++fd=29
+ type=3
+ config=0
+ optional=1
+@@ -200,8 +244,8 @@ optional=1
+ #  PERF_COUNT_HW_CACHE_L1D                <<  0  |
+ # (PERF_COUNT_HW_CACHE_OP_READ            <<  8) |
+ # (PERF_COUNT_HW_CACHE_RESULT_MISS        << 16)
+-[event26:base-stat]
+-fd=26
++[event30:base-stat]
++fd=30
+ type=3
+ config=65536
+ optional=1
+@@ -210,8 +254,8 @@ optional=1
+ #  PERF_COUNT_HW_CACHE_LL                 <<  0  |
+ # (PERF_COUNT_HW_CACHE_OP_READ            <<  8) |
+ # (PERF_COUNT_HW_CACHE_RESULT_ACCESS      << 16)
+-[event27:base-stat]
+-fd=27
++[event31:base-stat]
++fd=31
+ type=3
+ config=2
+ optional=1
+@@ -220,8 +264,8 @@ optional=1
+ #  PERF_COUNT_HW_CACHE_LL                 <<  0  |
+ # (PERF_COUNT_HW_CACHE_OP_READ            <<  8) |
+ # (PERF_COUNT_HW_CACHE_RESULT_MISS        << 16)
+-[event28:base-stat]
+-fd=28
++[event32:base-stat]
++fd=32
+ type=3
+ config=65538
+ optional=1
+@@ -230,8 +274,8 @@ optional=1
+ #  PERF_COUNT_HW_CACHE_L1I                <<  0  |
+ # (PERF_COUNT_HW_CACHE_OP_READ            <<  8) |
+ # (PERF_COUNT_HW_CACHE_RESULT_ACCESS      << 16)
+-[event29:base-stat]
+-fd=29
++[event33:base-stat]
++fd=33
+ type=3
+ config=1
+ optional=1
+@@ -240,8 +284,8 @@ optional=1
+ #  PERF_COUNT_HW_CACHE_L1I                <<  0  |
+ # (PERF_COUNT_HW_CACHE_OP_READ            <<  8) |
+ # (PERF_COUNT_HW_CACHE_RESULT_MISS        << 16)
+-[event30:base-stat]
+-fd=30
++[event34:base-stat]
++fd=34
+ type=3
+ config=65537
+ optional=1
+@@ -250,8 +294,8 @@ optional=1
+ #  PERF_COUNT_HW_CACHE_DTLB               <<  0  |
+ # (PERF_COUNT_HW_CACHE_OP_READ            <<  8) |
+ # (PERF_COUNT_HW_CACHE_RESULT_ACCESS      << 16)
+-[event31:base-stat]
+-fd=31
++[event35:base-stat]
++fd=35
+ type=3
+ config=3
+ optional=1
+@@ -260,8 +304,8 @@ optional=1
+ #  PERF_COUNT_HW_CACHE_DTLB               <<  0  |
+ # (PERF_COUNT_HW_CACHE_OP_READ            <<  8) |
+ # (PERF_COUNT_HW_CACHE_RESULT_MISS        << 16)
+-[event32:base-stat]
+-fd=32
++[event36:base-stat]
++fd=36
+ type=3
+ config=65539
+ optional=1
+@@ -270,8 +314,8 @@ optional=1
+ #  PERF_COUNT_HW_CACHE_ITLB               <<  0  |
+ # (PERF_COUNT_HW_CACHE_OP_READ            <<  8) |
+ # (PERF_COUNT_HW_CACHE_RESULT_ACCESS      << 16)
+-[event33:base-stat]
+-fd=33
++[event37:base-stat]
++fd=37
+ type=3
+ config=4
+ optional=1
+@@ -280,8 +324,8 @@ optional=1
+ #  PERF_COUNT_HW_CACHE_ITLB               <<  0  |
+ # (PERF_COUNT_HW_CACHE_OP_READ            <<  8) |
+ # (PERF_COUNT_HW_CACHE_RESULT_MISS        << 16)
+-[event34:base-stat]
+-fd=34
++[event38:base-stat]
++fd=38
+ type=3
+ config=65540
+ optional=1
+diff --git a/tools/perf/tests/attr/test-stat-detailed-3 b/tools/perf/tests/attr/test-stat-detailed-3
+index e50535f45977c..8400abd7e1e48 100644
+--- a/tools/perf/tests/attr/test-stat-detailed-3
++++ b/tools/perf/tests/attr/test-stat-detailed-3
+@@ -90,99 +90,143 @@ enable_on_exec=0
+ read_format=15
+ optional=1
+ 
+-# PERF_TYPE_RAW / topdown-fe-bound (0x8200)
++# PERF_TYPE_RAW / topdown-bad-spec (0x8100)
+ [event13:base-stat]
+ fd=13
+ group_fd=11
+ type=4
+-config=33280
++config=33024
+ disabled=0
+ enable_on_exec=0
+ read_format=15
+ optional=1
+ 
+-# PERF_TYPE_RAW / topdown-be-bound (0x8300)
++# PERF_TYPE_RAW / topdown-fe-bound (0x8200)
+ [event14:base-stat]
+ fd=14
+ group_fd=11
+ type=4
+-config=33536
++config=33280
+ disabled=0
+ enable_on_exec=0
+ read_format=15
+ optional=1
+ 
+-# PERF_TYPE_RAW / topdown-bad-spec (0x8100)
++# PERF_TYPE_RAW / topdown-be-bound (0x8300)
+ [event15:base-stat]
+ fd=15
+ group_fd=11
+ type=4
+-config=33024
++config=33536
+ disabled=0
+ enable_on_exec=0
+ read_format=15
+ optional=1
+ 
+-# PERF_TYPE_RAW / INT_MISC.UOP_DROPPING
++# PERF_TYPE_RAW / topdown-heavy-ops (0x8400)
+ [event16:base-stat]
+ fd=16
++group_fd=11
+ type=4
+-config=4109
++config=33792
++disabled=0
++enable_on_exec=0
++read_format=15
+ optional=1
+ 
+-# PERF_TYPE_RAW / cpu/INT_MISC.RECOVERY_CYCLES,cmask=1,edge/
++# PERF_TYPE_RAW / topdown-br-mispredict (0x8500)
+ [event17:base-stat]
+ fd=17
++group_fd=11
+ type=4
+-config=17039629
++config=34048
++disabled=0
++enable_on_exec=0
++read_format=15
+ optional=1
+ 
+-# PERF_TYPE_RAW / CPU_CLK_UNHALTED.THREAD
++# PERF_TYPE_RAW / topdown-fetch-lat (0x8600)
+ [event18:base-stat]
+ fd=18
++group_fd=11
+ type=4
+-config=60
++config=34304
++disabled=0
++enable_on_exec=0
++read_format=15
+ optional=1
+ 
+-# PERF_TYPE_RAW / INT_MISC.RECOVERY_CYCLES_ANY
++# PERF_TYPE_RAW / topdown-mem-bound (0x8700)
+ [event19:base-stat]
+ fd=19
++group_fd=11
+ type=4
+-config=2097421
++config=34560
++disabled=0
++enable_on_exec=0
++read_format=15
+ optional=1
+ 
+-# PERF_TYPE_RAW / CPU_CLK_UNHALTED.REF_XCLK
++# PERF_TYPE_RAW / INT_MISC.UOP_DROPPING
+ [event20:base-stat]
+ fd=20
+ type=4
+-config=316
++config=4109
+ optional=1
+ 
+-# PERF_TYPE_RAW / IDQ_UOPS_NOT_DELIVERED.CORE
++# PERF_TYPE_RAW / cpu/INT_MISC.RECOVERY_CYCLES,cmask=1,edge/
+ [event21:base-stat]
+ fd=21
+ type=4
+-config=412
++config=17039629
+ optional=1
+ 
+-# PERF_TYPE_RAW / CPU_CLK_UNHALTED.ONE_THREAD_ACTIVE
++# PERF_TYPE_RAW / CPU_CLK_UNHALTED.THREAD
+ [event22:base-stat]
+ fd=22
+ type=4
+-config=572
++config=60
+ optional=1
+ 
+-# PERF_TYPE_RAW / UOPS_RETIRED.RETIRE_SLOTS
++# PERF_TYPE_RAW / INT_MISC.RECOVERY_CYCLES_ANY
+ [event23:base-stat]
+ fd=23
+ type=4
+-config=706
++config=2097421
+ optional=1
+ 
+-# PERF_TYPE_RAW / UOPS_ISSUED.ANY
++# PERF_TYPE_RAW / CPU_CLK_UNHALTED.REF_XCLK
+ [event24:base-stat]
+ fd=24
+ type=4
++config=316
++optional=1
++
++# PERF_TYPE_RAW / IDQ_UOPS_NOT_DELIVERED.CORE
++[event25:base-stat]
++fd=25
++type=4
++config=412
++optional=1
++
++# PERF_TYPE_RAW / CPU_CLK_UNHALTED.ONE_THREAD_ACTIVE
++[event26:base-stat]
++fd=26
++type=4
++config=572
++optional=1
++
++# PERF_TYPE_RAW / UOPS_RETIRED.RETIRE_SLOTS
++[event27:base-stat]
++fd=27
++type=4
++config=706
++optional=1
++
++# PERF_TYPE_RAW / UOPS_ISSUED.ANY
++[event28:base-stat]
++fd=28
++type=4
+ config=270
+ optional=1
+ 
+@@ -190,8 +234,8 @@ optional=1
+ #  PERF_COUNT_HW_CACHE_L1D                <<  0  |
+ # (PERF_COUNT_HW_CACHE_OP_READ            <<  8) |
+ # (PERF_COUNT_HW_CACHE_RESULT_ACCESS      << 16)
+-[event25:base-stat]
+-fd=25
++[event29:base-stat]
++fd=29
+ type=3
+ config=0
+ optional=1
+@@ -200,8 +244,8 @@ optional=1
+ #  PERF_COUNT_HW_CACHE_L1D                <<  0  |
+ # (PERF_COUNT_HW_CACHE_OP_READ            <<  8) |
+ # (PERF_COUNT_HW_CACHE_RESULT_MISS        << 16)
+-[event26:base-stat]
+-fd=26
++[event30:base-stat]
++fd=30
+ type=3
+ config=65536
+ optional=1
+@@ -210,8 +254,8 @@ optional=1
+ #  PERF_COUNT_HW_CACHE_LL                 <<  0  |
+ # (PERF_COUNT_HW_CACHE_OP_READ            <<  8) |
+ # (PERF_COUNT_HW_CACHE_RESULT_ACCESS      << 16)
+-[event27:base-stat]
+-fd=27
++[event31:base-stat]
++fd=31
+ type=3
+ config=2
+ optional=1
+@@ -220,8 +264,8 @@ optional=1
+ #  PERF_COUNT_HW_CACHE_LL                 <<  0  |
+ # (PERF_COUNT_HW_CACHE_OP_READ            <<  8) |
+ # (PERF_COUNT_HW_CACHE_RESULT_MISS        << 16)
+-[event28:base-stat]
+-fd=28
++[event32:base-stat]
++fd=32
+ type=3
+ config=65538
+ optional=1
+@@ -230,8 +274,8 @@ optional=1
+ #  PERF_COUNT_HW_CACHE_L1I                <<  0  |
+ # (PERF_COUNT_HW_CACHE_OP_READ            <<  8) |
+ # (PERF_COUNT_HW_CACHE_RESULT_ACCESS      << 16)
+-[event29:base-stat]
+-fd=29
++[event33:base-stat]
++fd=33
+ type=3
+ config=1
+ optional=1
+@@ -240,8 +284,8 @@ optional=1
+ #  PERF_COUNT_HW_CACHE_L1I                <<  0  |
+ # (PERF_COUNT_HW_CACHE_OP_READ            <<  8) |
+ # (PERF_COUNT_HW_CACHE_RESULT_MISS        << 16)
+-[event30:base-stat]
+-fd=30
++[event34:base-stat]
++fd=34
+ type=3
+ config=65537
+ optional=1
+@@ -250,8 +294,8 @@ optional=1
+ #  PERF_COUNT_HW_CACHE_DTLB               <<  0  |
+ # (PERF_COUNT_HW_CACHE_OP_READ            <<  8) |
+ # (PERF_COUNT_HW_CACHE_RESULT_ACCESS      << 16)
+-[event31:base-stat]
+-fd=31
++[event35:base-stat]
++fd=35
+ type=3
+ config=3
+ optional=1
+@@ -260,8 +304,8 @@ optional=1
+ #  PERF_COUNT_HW_CACHE_DTLB               <<  0  |
+ # (PERF_COUNT_HW_CACHE_OP_READ            <<  8) |
+ # (PERF_COUNT_HW_CACHE_RESULT_MISS        << 16)
+-[event32:base-stat]
+-fd=32
++[event36:base-stat]
++fd=36
+ type=3
+ config=65539
+ optional=1
+@@ -270,8 +314,8 @@ optional=1
+ #  PERF_COUNT_HW_CACHE_ITLB               <<  0  |
+ # (PERF_COUNT_HW_CACHE_OP_READ            <<  8) |
+ # (PERF_COUNT_HW_CACHE_RESULT_ACCESS      << 16)
+-[event33:base-stat]
+-fd=33
++[event37:base-stat]
++fd=37
+ type=3
+ config=4
+ optional=1
+@@ -280,8 +324,8 @@ optional=1
+ #  PERF_COUNT_HW_CACHE_ITLB               <<  0  |
+ # (PERF_COUNT_HW_CACHE_OP_READ            <<  8) |
+ # (PERF_COUNT_HW_CACHE_RESULT_MISS        << 16)
+-[event34:base-stat]
+-fd=34
++[event38:base-stat]
++fd=38
+ type=3
+ config=65540
+ optional=1
+@@ -290,8 +334,8 @@ optional=1
+ #  PERF_COUNT_HW_CACHE_L1D                <<  0  |
+ # (PERF_COUNT_HW_CACHE_OP_PREFETCH        <<  8) |
+ # (PERF_COUNT_HW_CACHE_RESULT_ACCESS      << 16)
+-[event35:base-stat]
+-fd=35
++[event39:base-stat]
++fd=39
+ type=3
+ config=512
+ optional=1
+@@ -300,8 +344,8 @@ optional=1
+ #  PERF_COUNT_HW_CACHE_L1D                <<  0  |
+ # (PERF_COUNT_HW_CACHE_OP_PREFETCH        <<  8) |
+ # (PERF_COUNT_HW_CACHE_RESULT_MISS        << 16)
+-[event36:base-stat]
+-fd=36
++[event40:base-stat]
++fd=40
+ type=3
+ config=66048
+ optional=1
 -- 
 2.43.0
 
