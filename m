@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CEE21474AF;
-	Fri,  6 Dec 2024 14:58:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F57810E0;
+	Fri,  6 Dec 2024 14:58:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733497083; cv=none; b=CyigHYDrvKBhDm6w295rsA/9X01h/RK/g7deN7xsWrBsckLcBTRCpL27YwzHqQUS/0A1u/eEE+4J5DwiEZVpc9L3M2VL5TO92oEi03OO9ZjaCVKDyTDXx3qcLbySNrS7Qshh4JqpJnsDyEPLwOrNyl19rb/v1rH/bRzGeXcxIwM=
+	t=1733497086; cv=none; b=o721dsMpiIfA9/SgpiLxpGiLvsR1vLBU/Aolf12VeX1b8n+plS3IVd40T/CXbjZVZ0S9op0Y8vIbOwn2lum4gV6skyo0g0qHQcDctC6InOPM3CjZRpRIPcV5gO8w81VZKyEB8+Hn/ne81TkpVcoc/G1BcnOFNw0Yu6dWI6aIeh0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733497083; c=relaxed/simple;
-	bh=NlTZvPAN/sNs3NNfhX050choukdc9xsARJSnwqw8pfA=;
+	s=arc-20240116; t=1733497086; c=relaxed/simple;
+	bh=VNp9/CeRnWaSGe9lrvSB132GdKF7N7/uWBfYDpUUVts=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ea9gFL50mPrCrmN2u8Re0gCkkqVT7VT+qqZTQK6i2E53urBITlOa0xi2cRhQyTa0qvGgEvdFquucVd0SdQ87NWHJenrlKlhZDH5UGz5/RGUDi12Q6g0aur/IeVay5qMoIN95zj28IiA1jZtKwRc6EMUEl6Ilg8ndH6o8udvTdHM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o8AYi/fP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JTGG4R61BQlXZKgYF/yhEWSTO8qqe5O/4sBFWrDrS+5dDbLs+EsLghHNHDfz/PP9FvxRTxlFBdvlkQqH8krPnwXWzVMnXUoVVVXC1jKnV6s68+IDsihlTTDtFXokrfpVkMR7hAGap8m1AvfF6ZmL1lHKQ61G37vyKIGsemdktcs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OG6kePo4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o8AYi/fP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF8F4C4CED1;
-	Fri,  6 Dec 2024 14:58:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OG6kePo4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E04AEC4CED1;
+	Fri,  6 Dec 2024 14:58:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733497083;
-	bh=NlTZvPAN/sNs3NNfhX050choukdc9xsARJSnwqw8pfA=;
+	s=korg; t=1733497086;
+	bh=VNp9/CeRnWaSGe9lrvSB132GdKF7N7/uWBfYDpUUVts=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o8AYi/fPU5vt8ZpaL/n2G+Bs6twN+unS3HAXmKD6yROzhe6eiW7E5BmX5R+BNKzwv
-	 EDzTD12a+7S/DQyeleuCi/wUJcWNZEBHJdYTx1GSBWLScfJ7ySirweIdnNzGmLHpLY
-	 9qXa7zlg+IBmAlFyPgpwItznCT2ZY4/xD9gAFcwA=
+	b=OG6kePo4zmJ9jehZyIXE/yXwjYQHPHvlGzrt7p420VyRg2u8Ax5BVNKbyk550U/HC
+	 nTbWLG2xW5eKRrbYT1pt3ETI2LIsoQqlAuUQDuyQTf1tLsXiAXHOAhEoifFu5SK1pQ
+	 +e2imNXDjpTynL1BB1dW5baK0lGNn1ULudP5LjM4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul M Stillwell Jr <paul.m.stillwell.jr@intel.com>,
+	Haiyue Wang <haiyue.wang@intel.com>,
 	Jesse Brandeburg <jesse.brandeburg@intel.com>,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
 	Ahmed Zaki <ahmed.zaki@intel.com>,
+	Rafal Romanowski <rafal.romanowski@intel.com>,
 	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 190/676] virtchnl: Add CRC stripping capability
-Date: Fri,  6 Dec 2024 15:30:09 +0100
-Message-ID: <20241206143700.768452829@linuxfoundation.org>
+Subject: [PATCH 6.6 191/676] ice: Support FCS/CRC strip disable for VF
+Date: Fri,  6 Dec 2024 15:30:10 +0100
+Message-ID: <20241206143700.806631194@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -54,62 +54,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paul M Stillwell Jr <paul.m.stillwell.jr@intel.com>
+From: Haiyue Wang <haiyue.wang@intel.com>
 
-[ Upstream commit 89de9921dfa77e43b985bde99a6031ab66511020 ]
+[ Upstream commit 730cb741815c71d9dd8d1bc7d0b7d9a0acc615a8 ]
 
-Some VFs may want to disable CRC stripping on incoming packets so create
-an offload for that. The VF already sends information about configuring
-its RX queues so use that structure to indicate that the CRC stripping
-should be enabled or not.
+To support CRC strip enable/disable functionality, VF needs the explicit
+request VIRTCHNL_VF_OFFLOAD_CRC offload. Then according to crc_disable
+flag of Rx queue configuration information to set up the queue context.
 
-Signed-off-by: Paul M Stillwell Jr <paul.m.stillwell.jr@intel.com>
+Signed-off-by: Haiyue Wang <haiyue.wang@intel.com>
 Reviewed-by: Jesse Brandeburg <jesse.brandeburg@intel.com>
-Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
 Signed-off-by: Ahmed Zaki <ahmed.zaki@intel.com>
+Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
 Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Stable-dep-of: a884c304e18a ("ice: consistently use q_idx in ice_vc_cfg_qs_msg()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/avf/virtchnl.h | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_virtchnl.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-diff --git a/include/linux/avf/virtchnl.h b/include/linux/avf/virtchnl.h
-index 6e950594215a0..99ae7960a8d13 100644
---- a/include/linux/avf/virtchnl.h
-+++ b/include/linux/avf/virtchnl.h
-@@ -245,6 +245,7 @@ VIRTCHNL_CHECK_STRUCT_LEN(16, virtchnl_vsi_resource);
- #define VIRTCHNL_VF_OFFLOAD_REQ_QUEUES		BIT(6)
- /* used to negotiate communicating link speeds in Mbps */
- #define VIRTCHNL_VF_CAP_ADV_LINK_SPEED		BIT(7)
-+#define  VIRTCHNL_VF_OFFLOAD_CRC		BIT(10)
- #define VIRTCHNL_VF_OFFLOAD_VLAN_V2		BIT(15)
- #define VIRTCHNL_VF_OFFLOAD_VLAN		BIT(16)
- #define VIRTCHNL_VF_OFFLOAD_RX_POLLING		BIT(17)
-@@ -300,7 +301,13 @@ VIRTCHNL_CHECK_STRUCT_LEN(24, virtchnl_txq_info);
- /* VIRTCHNL_OP_CONFIG_RX_QUEUE
-  * VF sends this message to set up parameters for one RX queue.
-  * External data buffer contains one instance of virtchnl_rxq_info.
-- * PF configures requested queue and returns a status code.
-+ * PF configures requested queue and returns a status code. The
-+ * crc_disable flag disables CRC stripping on the VF. Setting
-+ * the crc_disable flag to 1 will disable CRC stripping for each
-+ * queue in the VF where the flag is set. The VIRTCHNL_VF_OFFLOAD_CRC
-+ * offload must have been set prior to sending this info or the PF
-+ * will ignore the request. This flag should be set the same for
-+ * all of the queues for a VF.
-  */
+diff --git a/drivers/net/ethernet/intel/ice/ice_virtchnl.c b/drivers/net/ethernet/intel/ice/ice_virtchnl.c
+index 6c6f267dcccc3..216c029661db2 100644
+--- a/drivers/net/ethernet/intel/ice/ice_virtchnl.c
++++ b/drivers/net/ethernet/intel/ice/ice_virtchnl.c
+@@ -479,6 +479,9 @@ static int ice_vc_get_vf_res_msg(struct ice_vf *vf, u8 *msg)
+ 	if (vf->driver_caps & VIRTCHNL_VF_OFFLOAD_REQ_QUEUES)
+ 		vfres->vf_cap_flags |= VIRTCHNL_VF_OFFLOAD_REQ_QUEUES;
  
- /* Rx queue config info */
-@@ -312,7 +319,7 @@ struct virtchnl_rxq_info {
- 	u16 splithdr_enabled; /* deprecated with AVF 1.0 */
- 	u32 databuffer_size;
- 	u32 max_pkt_size;
--	u8 pad0;
-+	u8 crc_disable;
- 	u8 rxdid;
- 	u8 pad1[2];
- 	u64 dma_ring_addr;
++	if (vf->driver_caps & VIRTCHNL_VF_OFFLOAD_CRC)
++		vfres->vf_cap_flags |= VIRTCHNL_VF_OFFLOAD_CRC;
++
+ 	if (vf->driver_caps & VIRTCHNL_VF_CAP_ADV_LINK_SPEED)
+ 		vfres->vf_cap_flags |= VIRTCHNL_VF_CAP_ADV_LINK_SPEED;
+ 
+@@ -1665,6 +1668,18 @@ static int ice_vc_cfg_qs_msg(struct ice_vf *vf, u8 *msg)
+ 			vsi->rx_rings[i]->dma = qpi->rxq.dma_ring_addr;
+ 			vsi->rx_rings[i]->count = qpi->rxq.ring_len;
+ 
++			if (qpi->rxq.crc_disable &&
++			    !(vf->driver_caps & VIRTCHNL_VF_OFFLOAD_CRC)) {
++				goto error_param;
++			}
++
++			if (qpi->rxq.crc_disable)
++				vsi->rx_rings[q_idx]->flags |=
++					ICE_RX_FLAGS_CRC_STRIP_DIS;
++			else
++				vsi->rx_rings[q_idx]->flags &=
++					~ICE_RX_FLAGS_CRC_STRIP_DIS;
++
+ 			if (qpi->rxq.databuffer_size != 0 &&
+ 			    (qpi->rxq.databuffer_size > ((16 * 1024) - 128) ||
+ 			     qpi->rxq.databuffer_size < 1024))
 -- 
 2.43.0
 
