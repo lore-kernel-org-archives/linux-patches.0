@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E4411465AB;
-	Fri,  6 Dec 2024 15:24:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4279149C51;
+	Fri,  6 Dec 2024 15:24:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733498668; cv=none; b=fF+2QvErbcvBChmguEFsSPsSsP1QmvgqUTx9W6Op3vFTV2Xt073Fz5fnUTK4zwLPbGQUEbv1f/QYLcqmxFnXkSAY6Ywt9eEUNfW8Iq4VR0u9YE1p/eg05AVnPLz8DtBFUH38ut+lX2yBhYb8k+/cRtbNRjs45b0Mwnl+irM5ahw=
+	t=1733498672; cv=none; b=APqCykeMeaf0upB1mHU5bKbH9yCClC2iJKiWP9kUujvuaOC5pUssXAB2lGkH1ZjBJ3dBGdd5mGbGnVUpiD0NDGX1EJvrThn1NP6fdkRm4d+2zBwTm77OzyUOzMCVJ73WAL8u5eBp3HKqIpZ6uSho52I9U2FcCRta3H//4t4QkP0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733498668; c=relaxed/simple;
-	bh=j/Zb0GzUW6ARws7RZX5FhmWNuHrbjG+hjroxcZ1aMs0=;
+	s=arc-20240116; t=1733498672; c=relaxed/simple;
+	bh=NLkvdJs+bA+zkTv6vpmSHCZCwXyNnDRWhgy3Xnx0E64=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jH/v3WEuchkvA7me/aMC0us045GY16U3uRS01iZBuYDHYYq1WCB8uIC3J5x7G3ZLhcfsNFIg4aw7GhMZtA/FIg70sDkAN7+3IxVeb9L0euCsuQGPd9qLmCEoR1jceYQr3MTXG6kkFip9XP/fM+/5MSypApLx/xEkfhR4PL0oQ9k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2jv64u77; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cdDsDtUQhyS04fiWdkgUxo+vbqKGT7q2f5k+ujLQZeDXdQ8moQVDGAKUpWimA/W0HrIs9w6v+koCsVcdRzl7mDY8FF31JUe3ATctggqA8bAZo4q8mMldIiX4xLECD3gFJ+1bwCh8NFzBG931jWRUcIGEvg1Lj3b004i00aVNJTQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IEWQyDEO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2jv64u77"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFE03C4CED1;
-	Fri,  6 Dec 2024 15:24:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IEWQyDEO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A47CC4CED1;
+	Fri,  6 Dec 2024 15:24:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1733498668;
-	bh=j/Zb0GzUW6ARws7RZX5FhmWNuHrbjG+hjroxcZ1aMs0=;
+	s=korg; t=1733498671;
+	bh=NLkvdJs+bA+zkTv6vpmSHCZCwXyNnDRWhgy3Xnx0E64=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2jv64u77covHS50BufilB/dT94KCYHGVOcdMoz/ryubjc+Z1nZHupVbX27OC8U0vL
-	 91Uc+BEeH3HgsVOycA6Lyw/IRmxiVI4++dmPUBQuyRYfBVpEUWiIqB/GfMaNV9AUVW
-	 BJY1na6m95c5RMTeH82ylKG8hk3gp8q8ttd/LhI8=
+	b=IEWQyDEOKJzJGRit7nNlIMVeQc8aMcC+lQKdYlJ7Du7FCHhX+M8BhKAnkThf08L5J
+	 +W0GQO1d45ljCcMMX5a9+WW0UFd/e0JRb1DlNVFJ6CaFoppkxa4m+2Yh4wCfW3J7GK
+	 JnYMmdL1tpJo/4U+hmPN3r5JYZBPlWKa5Q175t7Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oleksandr Tymoshenko <ovt@google.com>,
-	Amir Goldstein <amir73il@gmail.com>
-Subject: [PATCH 6.6 651/676] ovl: properly handle large files in ovl_security_fileattr
-Date: Fri,  6 Dec 2024 15:37:50 +0100
-Message-ID: <20241206143718.798493526@linuxfoundation.org>
+	Ssuhung Yeh <ssuhung@gmail.com>,
+	Mikulas Patocka <mpatocka@redhat.com>
+Subject: [PATCH 6.6 652/676] dm: Fix typo in error message
+Date: Fri,  6 Dec 2024 15:37:51 +0100
+Message-ID: <20241206143718.837643154@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
 References: <20241206143653.344873888@linuxfoundation.org>
@@ -50,54 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oleksandr Tymoshenko <ovt@google.com>
+From: Ssuhung Yeh <ssuhung@gmail.com>
 
-commit 3b6b99ef15ea37635604992ede9ebcccef38a239 upstream.
+commit 2deb70d3e66d538404d9e71bff236e6d260da66e upstream.
 
-dentry_open in ovl_security_fileattr fails for any file
-larger than 2GB if open method of the underlying filesystem
-calls generic_file_open (e.g. fusefs).
+Remove the redundant "i" at the beginning of the error message. This "i"
+came from commit 1c1318866928 ("dm: prefer
+'"%s...", __func__'"), the "i" is accidentally left.
 
-The issue can be reproduce using the following script:
-(passthrough_ll is an example app from libfuse).
-
-  $ D=/opt/test/mnt
-  $ mkdir -p ${D}/{source,base,top/uppr,top/work,ovlfs}
-  $ dd if=/dev/zero of=${D}/source/zero.bin bs=1G count=2
-  $ passthrough_ll -o source=${D}/source ${D}/base
-  $ mount -t overlay overlay \
-      -olowerdir=${D}/base,upperdir=${D}/top/uppr,workdir=${D}/top/work \
-      ${D}/ovlfs
-  $ chmod 0777 ${D}/mnt/ovlfs/zero.bin
-
-Running this script results in "Value too large for defined data type"
-error message from chmod.
-
-Signed-off-by: Oleksandr Tymoshenko <ovt@google.com>
-Fixes: 72db82115d2b ("ovl: copy up sync/noatime fileattr flags")
-Cc: stable@vger.kernel.org # v5.15+
-Signed-off-by: Amir Goldstein <amir73il@gmail.com>
+Signed-off-by: Ssuhung Yeh <ssuhung@gmail.com>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Fixes: 1c1318866928 ("dm: prefer '"%s...", __func__'")
+Cc: stable@vger.kernel.org	# v6.3+
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/overlayfs/inode.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/md/persistent-data/dm-space-map-common.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/overlayfs/inode.c
-+++ b/fs/overlayfs/inode.c
-@@ -741,8 +741,13 @@ static int ovl_security_fileattr(const s
- 	struct file *file;
- 	unsigned int cmd;
- 	int err;
-+	unsigned int flags;
- 
--	file = dentry_open(realpath, O_RDONLY, current_cred());
-+	flags = O_RDONLY;
-+	if (force_o_largefile())
-+		flags |= O_LARGEFILE;
-+
-+	file = dentry_open(realpath, flags, current_cred());
- 	if (IS_ERR(file))
- 		return PTR_ERR(file);
- 
+diff --git a/drivers/md/persistent-data/dm-space-map-common.c b/drivers/md/persistent-data/dm-space-map-common.c
+index 3a19124ee279..22a551c407da 100644
+--- a/drivers/md/persistent-data/dm-space-map-common.c
++++ b/drivers/md/persistent-data/dm-space-map-common.c
+@@ -51,7 +51,7 @@ static int index_check(const struct dm_block_validator *v,
+ 					       block_size - sizeof(__le32),
+ 					       INDEX_CSUM_XOR));
+ 	if (csum_disk != mi_le->csum) {
+-		DMERR_LIMIT("i%s failed: csum %u != wanted %u", __func__,
++		DMERR_LIMIT("%s failed: csum %u != wanted %u", __func__,
+ 			    le32_to_cpu(csum_disk), le32_to_cpu(mi_le->csum));
+ 		return -EILSEQ;
+ 	}
+-- 
+2.47.1
+
 
 
