@@ -1,52 +1,43 @@
-Received: from omta034.useast.a.cloudfilter.net (omta034.useast.a.cloudfilter.net [44.202.169.33])
+Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA24913777F
-	for <patches@lists.linux.dev>; Sat,  7 Dec 2024 07:53:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=44.202.169.33
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733558031; cv=none; b=c6+3BpLTF5oH3H3RYZ92QYjLi1ZM9ZEzIdFvNE5DoMcIm9Vx15EZfRetemLCtXiNpYtPsrOdNFnNEpILKZS2wOByydAitCClDRuTnqlCy9SDu7LH3bjI6MnqFpzdN4Pl6aWiMqhrc/RvdyJDtU2iqgB1IVy0mNXartxMzQW8Tdg=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733558031; c=relaxed/simple;
-	bh=esN7QsntwI4AA1UJrsf/v0wSrB5LxUaOwlnCZFn0Rcg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Vff8vYvB1zfNPjwntr9GB7fi02+NgSxvgLDIojQcpTytBRoHGeYq8LIlEDuvxSUO2+jQgMPRwUiKo29wtl0UT8WubY04wkQn0GtMfhL0meFUrqVnLkFeWl4Y5TvNHU26ajwwuTuA7D0y32NnRv0HJQWIoJBVq5DV/hgwtP3bQzY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net; spf=pass smtp.mailfrom=w6rz.net; dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b=DmHAHXMO; arc=none smtp.client-ip=44.202.169.33
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=w6rz.net
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AE99D27E
+	for <patches@lists.linux.dev>; Sat,  7 Dec 2024 09:02:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1733562169; cv=pass; b=HWDzomcWkHQHVrSXI77HTxjnbBAdnkR/t0/VZnh7XRhcsh9NvV6t5Vzab0msNBjKySmBzn0V0Rhz/TMq2f2I84R3wQK/hIVGSxVbw7Ce1LAV5R8pSwgn02t4begpqbdDtvfTGxDVy0YS7vtR1RVB6c6ta2F+9pDUVI2gZUWTdCw=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1733562169; c=relaxed/simple;
+	bh=L2LIOUCvRcR7jZshB2PLw+tAEKABqaTdFKGOUdcuSYg=;
+	h=Message-ID:Date:MIME-Version:Cc:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=sWdUF31e1Gg2hPIcphaKAyXONHy+dovrUWtoOKGJYJH7swvJuHJdvjVfYRD745J0UsMjTfI2eZwjBsJvgNRHSD+6rkZkwt0ZBK3sKDol/oJ9XF4J00j+TXhnFx/5EKf1agYm0xgw1R8flM6lN9fljjvzhkIoCcWqbLuI8qHPYTo=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=Usama.Anjum@collabora.com header.b=Rv7bX8kZ; arc=pass smtp.client-ip=136.143.188.112
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b="DmHAHXMO"
-Received: from eig-obgw-5001a.ext.cloudfilter.net ([10.0.29.139])
-	by cmsmtp with ESMTPS
-	id JpGOtvYtjrKrbJpdMtQkgf; Sat, 07 Dec 2024 07:53:48 +0000
-Received: from box5620.bluehost.com ([162.241.219.59])
-	by cmsmtp with ESMTPS
-	id JpdLttFGJmNYjJpdLtvCs0; Sat, 07 Dec 2024 07:53:47 +0000
-X-Authority-Analysis: v=2.4 cv=fb9myFQF c=1 sm=1 tr=0 ts=6753ff0b
- a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
- a=IkcTkHD0fZMA:10 a=RZcAm9yDv7YA:10 a=7vwVE5O1G3EA:10 a=VwQbUJbxAAAA:8
- a=HaFmDPmJAAAA:8 a=49j0FZ7RFL9ueZfULrUA:9 a=QEXdDO2ut3YA:10
- a=nmWuMzfKamIsx3l42hEX:22 a=hTR6fmoedSdf3N0JiVF8:22
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
-	s=default; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
-	References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:
-	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=28vsWALzorOhdgl1oEpWYzWCOsWhDTgvkf0wFHoptoo=; b=DmHAHXMOEOQMZpqS0neCTg9Pdz
-	z7gD+QuNJY6CHnwzb/axj80jmxgy7Iu2UIp+y8tLH1v7mjYCaKievPdjHouSAvYuaOCqJ+EKTdPDm
-	HfEzbamnICk6Y2OOwakVUkOVZcuaRaR+WrMfZ+ZrA6OxTNUdiXJ9F5W+sPSuz0vJtSGIriJCRwAAu
-	svz7ozKpP26rf5I3reRftPuYYqyfejnJkE7a/q54QmjvwJxcRVYZ9Fv1BukX5R/kwKnorJb/bEvMM
-	w3MN4mu2Be9i2PsRMtXEMQYHpTGUnzdxb2TKapVoxJk6fuGeyTEjwgosYd3zoatirRAWRY7fqPFhZ
-	5AM+voiQ==;
-Received: from c-73-223-253-157.hsd1.ca.comcast.net ([73.223.253.157]:38480 helo=[10.0.1.115])
-	by box5620.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-	(Exim 4.96.2)
-	(envelope-from <re@w6rz.net>)
-	id 1tJpdK-0032ua-0h;
-	Sat, 07 Dec 2024 00:53:46 -0700
-Message-ID: <ea363e0e-1072-4c32-bdca-0175ab90fb16@w6rz.net>
-Date: Fri, 6 Dec 2024 23:53:44 -0800
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=Usama.Anjum@collabora.com header.b="Rv7bX8kZ"
+ARC-Seal: i=1; a=rsa-sha256; t=1733562140; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=I+uJ9hf3zgNOoCn/PdMjGHQ4uJaIYAV9URdzmh58avlyWsv9xNWNlDtEcKbo8FBiakn9BxLfRep0A5Wm0PFEIGywV75ZPHiAntXfO2fCTKoPflJfgggwacvLqbktuXGbawSedAiSke5xN5qb73gcxOiTzz8Huq8R0uWTO5F4RtU=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1733562140; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=fWaPHbQlQ8a672jJSJ50+u/C4nQekxrMIUfOuBB+fQE=; 
+	b=lkyRekQHMIiRfZnCuSJdYkeqs5gsmZR5of7LI5Avq/v3hZaLJRm1wIYBqwmHWptXcgf0szHGZzr6mhbCS93FzJyeaWg4Esjy/8zGrZks02iF+HLXSTQMj34fpCR2IZgC9CbudJK+/q3I1SQwNLvE/Fy7S6JG5TV2dyM1GRCViM8=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=collabora.com;
+	spf=pass  smtp.mailfrom=Usama.Anjum@collabora.com;
+	dmarc=pass header.from=<Usama.Anjum@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1733562140;
+	s=zohomail; d=collabora.com; i=Usama.Anjum@collabora.com;
+	h=Message-ID:Date:Date:MIME-Version:Cc:Cc:Subject:Subject:To:To:References:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+	bh=fWaPHbQlQ8a672jJSJ50+u/C4nQekxrMIUfOuBB+fQE=;
+	b=Rv7bX8kZD9IpxRXgHWbKGaYEPZIAZea2EMoo97n+C/fVEkRLjgxU3EDH6yIqiZkd
+	XfcMkzAVCcFiRwuZWUTj3HSNzDetMa0ZIsCCTYwx7VGP39+HAnDYRFSYiBYcKIzhoAK
+	B4GV6smfDuPXFumLMYSZezEKbKyzuSVzdo9W4j34=
+Received: by mx.zohomail.com with SMTPS id 1733562136875407.58675020965495;
+	Sat, 7 Dec 2024 01:02:16 -0800 (PST)
+Message-ID: <4b0cb363-1eb4-4203-bf05-fd3d495a9806@collabora.com>
+Date: Sat, 7 Dec 2024 14:02:16 +0500
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -54,61 +45,81 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.6 000/676] 6.6.64-rc1 review
+Cc: Usama.Anjum@collabora.com, patches@lists.linux.dev,
+ linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+ akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+ patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+ jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+ srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
+ hargar@microsoft.com, broonie@kernel.org
+Subject: Re: [PATCH 6.12 000/146] 6.12.4-rc1 review
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org
-References: <20241206143653.344873888@linuxfoundation.org>
+References: <20241206143527.654980698@linuxfoundation.org>
 Content-Language: en-US
-From: Ron Economos <re@w6rz.net>
-In-Reply-To: <20241206143653.344873888@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From: Muhammad Usama Anjum <Usama.Anjum@collabora.com>
+In-Reply-To: <20241206143527.654980698@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - box5620.bluehost.com
-X-AntiAbuse: Original Domain - lists.linux.dev
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - w6rz.net
-X-BWhitelist: no
-X-Source-IP: 73.223.253.157
-X-Source-L: No
-X-Exim-ID: 1tJpdK-0032ua-0h
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: c-73-223-253-157.hsd1.ca.comcast.net ([10.0.1.115]) [73.223.253.157]:38480
-X-Source-Auth: re@w6rz.net
-X-Email-Count: 36
-X-Org: HG=bhshared;ORG=bluehost;
-X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
-X-Local-Domain: yes
-X-CMAE-Envelope: MS4xfA5gLGaP1UqIEK2RE9y6wWQmsTCPuTqi7aDMAclttzoscZnVPhffZrpbU2xPCypbn56isPgPGGZmq4ZY60wCUeB6MjQO0LhlPOwSIwJOZtqNkhfgowOK
- hFvCoO+oZSuFfG91KUsAehoD9MKDrbK9UDqS2UjwlMfShU/VqHvncgUFHEoyOJV+SZmcMpv1bChq+g==
+X-ZohoMailClient: External
 
-On 12/6/24 06:26, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.6.64 release.
-> There are 676 patches in this series, all will be posted as a response
+On 12/6/24 7:35 PM, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.12.4 release.
+> There are 146 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
->
+> 
 > Responses should be made by Sun, 08 Dec 2024 14:34:52 +0000.
 > Anything received after that time might be too late.
->
+> 
 > The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.64-rc1.gz
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.12.4-rc1.gz
 > or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.12.y
 > and the diffstat can be found below.
->
+> 
 > thanks,
->
+> 
 > greg k-h
+> 
+> -------------
+OVERVIEW
 
-Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
+        Builds: 29 passed, 0 failed
 
-Tested-by: Ron Economos <re@w6rz.net>
+    Boot tests: 70 passed, 1 failed
+
+    CI systems: maestro
+
+REVISION
+
+    Commit
+        name: v6.12.3-146-ge572189f6a25
+        hash: 91ba615b0f093358fd3961fb76f3479193cd18f6
+    Checked out from
+        https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.12.y
+
+
+BUILDS
+
+    No build failures found
+
+BOOT TESTS
+
+    Failures
+
+      i386:(defconfig)
+      -hp-14b-na0052xx-zork
+      CI system: maestro
+      UBSAN: shift-out-of-bounds in drivers/net/wireless/intel/iwlwifi/iwl-dbg-tlv.c:1333:47
+      https://kcidb.kernelci.org/d/test/test?var-datasource=edquppk2ghfcwc&var-origin=maestro&var-build_architecture=$__all&var-build_config_name=$__all&var-id=maestro:6753358b6de2c3ffbb72658a&from=now-100y&to=now&timezone=browser&var-test_path=&var-issue_presence=$__all
+
+See complete and up-to-date report at:
+
+    https://kcidb.kernelci.org/d/revision/revision?orgId=1&var-git_commit_hash=91ba615b0f093358fd3961fb76f3479193cd18f6&var-patchset_hash=
+
+
+Tested-by: kernelci.org bot <bot@kernelci.org>
+
+Thanks,
+KernelCI team
 
