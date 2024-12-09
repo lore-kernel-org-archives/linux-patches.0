@@ -1,98 +1,91 @@
-Received: from mail.alien8.de (mail.alien8.de [65.109.113.108])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f47.google.com (mail-pj1-f47.google.com [209.85.216.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCAE71E515
-	for <patches@lists.linux.dev>; Mon,  9 Dec 2024 20:45:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=65.109.113.108
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 754A117BA5
+	for <patches@lists.linux.dev>; Mon,  9 Dec 2024 21:06:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733777150; cv=none; b=LRYKtKZ2GJxj/+JJShYqrp2DMIGs+VfYSb959xcQONdso787UA7opMJ5j9VwcDHBjkLNoQVyYlWBSSGZicupxTHomSxw6Mmotf1SxFpiFW8raDr+sYSpXUzHR+M55wtE3fsp/mrSudftb/XG8LwfbVx+OuxoGv9R5UMYBDEFXoY=
+	t=1733778364; cv=none; b=hH18SiwWgC/nrlcBqqGBjbM1hlKDHQGL9mCZTkWIYJuZFgDMMbwqqKTTq0tiqgKDaqGHb6GsPNkzLJiNI3bCJquTIdVfVihbcdinjx+09nyjZPHeIu2TFSyEeiH10m+fL3hOvPyVbAMCxyYNMcI0mGgJl8X+oPEq2EupK6gl+Hk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733777150; c=relaxed/simple;
-	bh=qUAagJIpDF3OqJgI/JNeO9p1jV5nt1/ZYM9qFh72Rq8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SD8KHHBBPnJodJkc58+rHla5NH8KxTgYZf+7BWoPn0/p9SOTEEwGholDApbZL5I4jxdwIM/wC66jyTsyCDoWdSJ9NiHcGX39sH4LEnBtB1wwTBARbST6CRks3WxIGjmbhj1HVseNo24VX9EgZWwKIu3Gas9Kk83k+3uCp+QHMVE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=alien8.de; spf=pass smtp.mailfrom=alien8.de; dkim=pass (4096-bit key) header.d=alien8.de header.i=@alien8.de header.b=NpOt3JcG; arc=none smtp.client-ip=65.109.113.108
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=alien8.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=alien8.de
+	s=arc-20240116; t=1733778364; c=relaxed/simple;
+	bh=IQz7I9YsENov3q06x8KJv/iXVsOJdNRaOPPv+jZyDqA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=osSWit8YtcEuBQKRYYSbmopt+f2JH0ssMy3udjrRiXcDxaW7U+HYGpck9O4oEyditghdx3NpMTl4qhEyEOvIcfwq1CFL/eV4/N/3IASp94qFQ/FWKUDGMDm0QB41FB4smoE7bxik2x+JTQ7PSIyFbHNoYg8o3rQ/pe27u4ab7+g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=S+1MSWCi; arc=none smtp.client-ip=209.85.216.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (4096-bit key) header.d=alien8.de header.i=@alien8.de header.b="NpOt3JcG"
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTP id 871AF40E015F;
-	Mon,  9 Dec 2024 20:45:46 +0000 (UTC)
-X-Virus-Scanned: Debian amavisd-new at mail.alien8.de
-Authentication-Results: mail.alien8.de (amavisd-new); dkim=pass (4096-bit key)
-	header.d=alien8.de
-Received: from mail.alien8.de ([127.0.0.1])
-	by localhost (mail.alien8.de [127.0.0.1]) (amavisd-new, port 10026)
-	with ESMTP id 5YwQo64KWpJT; Mon,  9 Dec 2024 20:45:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=alien8;
-	t=1733777143; bh=kdtyQcVH1bqzeynb/peFrnCJsVTPGjh/mPNrfJwpEjE=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=NpOt3JcGjtGqouCpns/G7Iu2UhQq3lgUnes35i81H5hOnKs/jUybDb1PUfNxCsC5A
-	 JYjerrRuWDdUngPoLP1s4x/uNHyoGaQkzBsSVuhrwnh3WK5hpMH0/WIkd3CzMptjnE
-	 DHmraw+pxNr63fLH/xKg502y39l3RE3JKw40z89+GuYUb04gXwKxAQpaq+LS0c0oRb
-	 a2xhPoXmIzBLFX96wI/ZRm17hrlEDoe6uKTvZMobSg7rLOakcdwP13t8m3ZvVrjyVc
-	 7iISXSTP4WSbNqh4RF14BI1RHz1VB6F36yLchyORusRWkLHpui7KvJ+Fxe9NVQTXns
-	 d4wJc7RH4+0DX2z6E6SRQbls6Hq0Quyw7mOwEprPCs8SdsaoEnT0w7sepSZJNSPDUZ
-	 ynPtDkqheg7IE2P1sDHqRpo08N/iBD6L4GTjQKzZyuMZtDBB7B5h4Xa9OHtleBDEFM
-	 8WVdMwphplpqWJx20c4U09RVxqA6kLksDsvE+30Gb4k5+By5HQxFNVD2eesi8Rci0B
-	 Ze80Lz4DA8Ua3PhNi1+S7Ll6kaE1tgIaS9WkMHaHB5GNPGJyOBEvtEMT//0RGugttv
-	 uz/byte27sFZOonhnLxDEXwJe7JoVSaDLsWSI5NNkY61uwSw5C47DLEd6T5uyLUhnR
-	 LSC4XDagtPKn3U4hF8VbMk9Y=
-Received: from zn.tnic (p200300EA971F9307329c23FFFeA6a903.dip0.t-ipconnect.de [IPv6:2003:ea:971f:9307:329c:23ff:fea6:a903])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature ECDSA (P-256) server-digest SHA256)
-	(No client certificate requested)
-	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id E0C3840E019C;
-	Mon,  9 Dec 2024 20:45:28 +0000 (UTC)
-Date: Mon, 9 Dec 2024 21:45:19 +0100
-From: Borislav Petkov <bp@alien8.de>
-To: Tony Luck <tony.luck@intel.com>
-Cc: Fenghua Yu <fenghua.yu@intel.com>,
-	Reinette Chatre <reinette.chatre@intel.com>,
-	Peter Newman <peternewman@google.com>,
-	Jonathan Corbet <corbet@lwn.net>, x86@kernel.org,
-	James Morse <james.morse@arm.com>,
-	Jamie Iles <quic_jiles@quicinc.com>,
-	Babu Moger <babu.moger@amd.com>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	"Shaopeng Tan (Fujitsu)" <tan.shaopeng@fujitsu.com>,
-	linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
-	patches@lists.linux.dev
-Subject: Re: [PATCH v11 2/8] x86/resctrl: Prepare for per-CTRL_MON group
- mba_MBps control
-Message-ID: <20241209204519.GAZ1dW3-NjcL4Sewaf@fat_crate.local>
-References: <20241206163148.83828-1-tony.luck@intel.com>
- <20241206163148.83828-3-tony.luck@intel.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="S+1MSWCi"
+Received: by mail-pj1-f47.google.com with SMTP id 98e67ed59e1d1-2ee534d6800so826531a91.2
+        for <patches@lists.linux.dev>; Mon, 09 Dec 2024 13:06:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1733778363; x=1734383163; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=IQz7I9YsENov3q06x8KJv/iXVsOJdNRaOPPv+jZyDqA=;
+        b=S+1MSWCiKNQPbcddsaCNg5taJvoTkUxgBQJA1Xvu1t/ift7zKJJou+mdNbQBIVNGY+
+         lti2o8iPMPHlaUTqijQeWvuHpRtur5x4EIjVY8kDF658BeWv4QlE3DC1c+z+32+P4w/q
+         AfRGDHaCVuwzIW6MxDcLaaWuFlzinLOQc7ES2ldlvyYDRtXelrZe7cOLG9HlAZrHPs9y
+         14v+lvDzkX5S8a2ck4QsJcVnqMrPjVwSWoEg8DKiJ7XM2ajZfbKO3fO0Eq1sTYLsOuna
+         tVWtY0fTMT9Jflllxgzu57ZZ5NIR/Nqs8XNpRsANIeodDG4HvxYu2rWACdULsZ/Pa25+
+         +PVw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1733778363; x=1734383163;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=IQz7I9YsENov3q06x8KJv/iXVsOJdNRaOPPv+jZyDqA=;
+        b=g2NuOTVXaU21lFU1TnUA9Ui8lY8pj7pqAD6/i+EgIAc06CVr9ijmYLdMfxHQWc9FrU
+         IkjK10fuoQI1z/ejHO5yiLdGbyr3BTC1JeEEghmvMRvZpQZXRBeLOt+QaFO7timq3NJA
+         T9UHRFlCR7RcdGzQKsReE4ThVj790XTJuuJBeK1XtWHHHS59X0hnq5VpQgNPF85nSn+o
+         jhK3IwgyRelExpxRpXux5vSW6kBW/NyWUMx1K2/ZJJTa4ER1Rg/GqzQDCbGqmKr0adPt
+         kpYJmrRur8uKQBojcj0E7EVOBy7xIetjEhu8qdDvhv3O2UJzxuE9V6eRq0sgAhvmbGFU
+         /Eig==
+X-Forwarded-Encrypted: i=1; AJvYcCU3te6A1fA3yJsDCM2MBahJnLsHZXsmI+5poDdCMqtixEbuLzm/Wo+P0eBEV3AIm5hupHzNS6GA@lists.linux.dev
+X-Gm-Message-State: AOJu0Yw79ktagz5TNSEh2RLoBTOzMX1d8PPHFsKQHvN2B7ctQRaQY4H3
+	+DnXneip5O7fETQW/ziYyn0NrwUlzpGXcBAmHkhH3/o+JKuU8avhTT4/npJcjQD0SP1g+djHzDH
+	QmjZUyvx5Atmt9kKJsk6ZRs3+20A=
+X-Gm-Gg: ASbGnctlYVZAna/Dl4ZZmea5nULo8XlH+10C35cPBnnMnWNzH+KTFgLKGq18OGJASZe
+	V7ZGocB/bYxjzG3/xsfnAdnkDYubXLN0=
+X-Google-Smtp-Source: AGHT+IEJuFSakMcUFac7J+27s9Uiqv0/HxdJEeZ6mEWsh67Ic0D1Vr0Ysw5dq2xEnh2AhHs3kAjxKYrNJLgxZGF1gY8=
+X-Received: by 2002:a17:90b:38cd:b0:2ee:6a70:c5d1 with SMTP id
+ 98e67ed59e1d1-2efd484c303mr569161a91.3.1733778362678; Mon, 09 Dec 2024
+ 13:06:02 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20241206163148.83828-3-tony.luck@intel.com>
+References: <20241125233332.697497-1-ojeda@kernel.org> <fe2a253c-4b2f-4cb3-b58d-66192044555f@redhat.com>
+In-Reply-To: <fe2a253c-4b2f-4cb3-b58d-66192044555f@redhat.com>
+From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Date: Mon, 9 Dec 2024 22:05:50 +0100
+Message-ID: <CANiq72=PB=r5UV_ekNGV+yewa7tHic8Gs9RTQo=YcB-Lu_nzNQ@mail.gmail.com>
+Subject: Re: [PATCH] drm/panic: remove spurious empty line to clean warning
+To: Jocelyn Falempe <jfalempe@redhat.com>
+Cc: Miguel Ojeda <ojeda@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>, 
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
+	Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
+	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
+	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
+	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@kernel.org>, 
+	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>, rust-for-linux@vger.kernel.org, 
+	dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
+	patches@lists.linux.dev, stable@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Fri, Dec 06, 2024 at 08:31:42AM -0800, Tony Luck wrote:
-> diff --git a/include/linux/resctrl.h b/include/linux/resctrl.h
-> index d94abba1c716..fd05b937e2f4 100644
-> --- a/include/linux/resctrl.h
-> +++ b/include/linux/resctrl.h
-> @@ -49,6 +49,8 @@ enum resctrl_event_id {
->  	QOS_L3_MBM_LOCAL_EVENT_ID	= 0x03,
->  };
->  
-> +extern enum resctrl_event_id mba_mbps_default_event;
+On Tue, Nov 26, 2024 at 10:04=E2=80=AFAM Jocelyn Falempe <jfalempe@redhat.c=
+om> wrote:
+>
+> Thanks for this patch, it looks good to me.
+>
+> Reviewed-by: Jocelyn Falempe <jfalempe@redhat.com>
 
-Any reason this extern isn't in 
+Thanks Jocelyn. I thought DRM would pick this one -- should I pick it
+through rust-fixes?
 
-arch/x86/kernel/cpu/resctrl/internal.h
-
-?
-
--- 
-Regards/Gruss,
-    Boris.
-
-https://people.kernel.org/tglx/notes-about-netiquette
+Cheers,
+Miguel
