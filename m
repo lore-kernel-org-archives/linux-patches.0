@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 232D1171D2;
-	Tue, 10 Dec 2024 00:17:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD84DB665;
+	Tue, 10 Dec 2024 00:17:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733789858; cv=none; b=fUovr8clbpEJLRmomD+PXXWjULYgTf2fscPwCLCOxrUasNW0EqL1i2p/x5JUVdW7NhsH5LLlaRfQ/SHtS+NT3lbr4yr5IhXs/iKZ5srnlHNjLwGt4swB4AglSvyZ1AAnl32xXol+wC4BcCXdsExAGZ0TVGNc9Wcymy1Ky4M+RK0=
+	t=1733789860; cv=none; b=eo+t73Lp6/s3pfkBr+Kc/IrzTFSB6z+6fh6N7JfWv9oCB2GJLverY13HnOFBdVKkx9vcr92wY71XphGIJrIV3rx321nSYYCE3ZGigXCZSbHMd9r6D4SPdHgyVkQUv/uf51SKJhm2KceiZGQ3pFfUjhASnPdwUwUrYSZY/OJtEkU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733789858; c=relaxed/simple;
-	bh=lSFohh6EEzkapzsoFRJjsaUOUmAfNgO9Vcd4zWYdiWA=;
+	s=arc-20240116; t=1733789860; c=relaxed/simple;
+	bh=NP473M91KfDU5hAbkVpyFF0JS9tQapuKfRqfLoOzGtA=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=pGFEDhCkZlHDXwJVEN8c3Dvpp1+uJSEH3Tzc6MHgnDzWLgdBU0EbkhlQ/+c8HbiWQjPUwmSbdeI//zYSskuY4npVCKJGsmUbPQwyrlkH3aVLt0WyHgksEe2reiQrHPWJObMm8q+7hASk8001xZGDbvzNrBsKsC8EP8K/EZz8SFU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RSip9Vr5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ob7BR6Piy4cXwOXJYEFHeUHyekdtrs7EaUehPk3imZ5NbtA6PXSC1WfMMdmSHrE+h15mZO9cMg9Kv+IAnuvqWjfVWh0KU/aJPqM9lvnmXGDwo0vYM+xtOI/5fwXk7cSr8ul2n8ipFSdYXt4CYXNI36fNQrkvDI22oVD9L2MTb1Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WDVfORut; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RSip9Vr5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06F7AC4CED1;
-	Tue, 10 Dec 2024 00:17:35 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WDVfORut"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F623C4CEE0;
+	Tue, 10 Dec 2024 00:17:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1733789857;
-	bh=lSFohh6EEzkapzsoFRJjsaUOUmAfNgO9Vcd4zWYdiWA=;
+	s=k20201202; t=1733789860;
+	bh=NP473M91KfDU5hAbkVpyFF0JS9tQapuKfRqfLoOzGtA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RSip9Vr5cEcHTGp8skeF2R+vmYNJK0fOli0FGaS4B4/2jFR6uUr9Ar9oxFRhhZ0XG
-	 h7DnSPZBbPEir7yU6wi5F3gVaxCUUvuih9pgU9oRcvvUm5cdokOwAANoKfuy8TVehD
-	 AtwBSYcG7WMUJXdTCLIQg9htAFXdzsZSg5dSDfMo8ZD9k7Hf0mPWfh8YRrwbPGRs5c
-	 1hZl1fhmqQ51axqxuoDdqEsMThQLf08L6MqtIDYXVHUttOqY5qyCFbRhymWXVl85y4
-	 70Zsm1C0qR+F7Aifyte5ixGte4GNOMas6cWVojmJDdxDitrNCUekC9WsMclLz8RTsK
-	 YLXjPWZfcXKAw==
+	b=WDVfORutvSU532Nrnz9oMLZZaXBASMmecU6EPI6cu2iXUWjbffC2s3iSrc0eA3ikK
+	 t6IB70kecdz6wQE2MX2hAcBXkc4O7J45203xCTKOyVzXVgiThv41/QYWP2D/H8qQru
+	 SP7JbB1IrEWZ/5GD4mbwNpF1lrAiLkINqaFEe1BKUq7gYqT5JvhjfRg9cNUZP1gfSN
+	 yEPYpidYlxkzYCHbFvZn7pd7v5gp2Q85jVNTATtmZCceilAjiA8tY5frxs6aP87wNA
+	 sSIneVYRs52/17P0h6txb97tvz8tWYr3ck0KDQAmwi/ErsP8fc1WlJEqw7gFuB6wbX
+	 3a5YcFMbi6Wxw==
 From: Will Deacon <will@kernel.org>
 To: iommu@lists.linux.dev,
 	Joerg Roedel <joro@8bytes.org>,
@@ -35,13 +35,17 @@ To: iommu@lists.linux.dev,
 Cc: catalin.marinas@arm.com,
 	kernel-team@android.com,
 	Will Deacon <will@kernel.org>,
-	patches@lists.linux.dev
-Subject: Re: [PATCH 0/3] iommu/arm-smmuv3: Update domain_alloc_paging_flags()
-Date: Tue, 10 Dec 2024 00:17:26 +0000
-Message-Id: <173378567932.4189360.5507988351679593105.b4-ty@kernel.org>
+	Jerry Snitselaar <jsnitsel@redhat.com>,
+	Michael Shavit <mshavit@google.com>,
+	Nicolin Chen <nicolinc@nvidia.com>,
+	patches@lists.linux.dev,
+	Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
+Subject: Re: [PATCH] iommu/arm-smmuv3: Update comments about ATS and bypass
+Date: Tue, 10 Dec 2024 00:17:27 +0000
+Message-Id: <173378410349.4185561.4875058023954953472.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.20.1
-In-Reply-To: <0-v1-0bb8d5313a27+27b-smmuv3_paging_flags_jgg@nvidia.com>
-References: <0-v1-0bb8d5313a27+27b-smmuv3_paging_flags_jgg@nvidia.com>
+In-Reply-To: <0-v1-f27174f44f39+27a33-smmuv3_ats_note_jgg@nvidia.com>
+References: <0-v1-f27174f44f39+27a33-smmuv3_ats_note_jgg@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -51,27 +55,22 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
-On Thu, 05 Dec 2024 11:43:26 -0400, Jason Gunthorpe wrote:
-> The last cycle saw the removal of the NULL device during domain allocation
-> and the introduction of domain_alloc_paging_flags(). Update smmuv3 to this
-> new design.
+On Thu, 05 Dec 2024 11:40:15 -0400, Jason Gunthorpe wrote:
+> The SMMUv3 spec has a note that BYPASS and ATS don't work together under
+> the STE EATS field definition. However there is another section "13.6.4
+> Full ATS skipping stage 1" that explains under certain conditions BYPASS
+> and ATS do work together if the STE is using S1DSS to select BYPASS and
+> the CD table has the possibility for a substream.
 > 
-> Jason Gunthorpe (3):
->   iommu/arm-smmu-v3: Remove arm_smmu_domain_finalise() during attach
->   iommu/arm-smmu-v3: Make domain_alloc_paging_flags() directly determine
->     the S1/S2
->   iommu/arm-smmu-v3: Remove domain_alloc_paging()
+> When these comments were written the understanding was that all forms of
+> BYPASS just didn't work and this was to be a future problem to solve.
 > 
 > [...]
 
-Applied to arm64 (for-joerg/arm-smmu/updates), thanks!
+Applied to will (for-joerg/arm-smmu/updates), thanks!
 
-[1/3] iommu/arm-smmu-v3: Remove arm_smmu_domain_finalise() during attach
-      https://git.kernel.org/arm64/c/48e7b8e284e5
-[2/3] iommu/arm-smmu-v3: Make domain_alloc_paging_flags() directly determine the S1/S2
-      https://git.kernel.org/arm64/c/bb857c5c0150
-[3/3] iommu/arm-smmu-v3: Remove domain_alloc_paging()
-      https://git.kernel.org/arm64/c/cdfb9840fcc6
+[1/1] iommu/arm-smmuv3: Update comments about ATS and bypass
+      https://git.kernel.org/will/c/9b640ae7fbba
 
 Cheers,
 -- 
