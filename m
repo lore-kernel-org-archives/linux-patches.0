@@ -1,117 +1,169 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.12])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f50.google.com (mail-pj1-f50.google.com [209.85.216.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDA3518E3F
-	for <patches@lists.linux.dev>; Tue, 10 Dec 2024 00:00:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.12
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 756701853
+	for <patches@lists.linux.dev>; Tue, 10 Dec 2024 00:09:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733788858; cv=none; b=egbCWdPcNoEr/ZzzXNq4a3mHXkU66DK8GfbizV6sPd+WBHvt/rPFakGM7ZjiWukLjzucAIwY9LGC3PihTPvxrFGPtbJYh52lxN8eMICHH+Kl6Y8YGdb+t5WfUqP5NVPQiH1fDxup4AyRNAeHyaM5w+3UMEjoqPeS/QYbn7ODaRE=
+	t=1733789372; cv=none; b=WWGLP/E9iK5UbREb/z+VxwJdoT3hUwRLGB66HOYW45CnmIPD9BOMiMJp0X0ahc18QBlcsAlQT+uvJ3MZuKjqatTso/W0rXbEeghME07y3NpYd2s1/ui0R2WccvdYl0JZTp7AObNveFGdznzG+OQ98y1C0WOXXKN713LcJZ7XC/I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733788858; c=relaxed/simple;
-	bh=Hx3TYCfv8vO1GHDfioqECB6aGnBv+pYMSPSzeHD0ACM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=E2JKweyjoHcD0SuYxeOVYUCjoZtdtjuato72EW5+jLiheTFFMprBVfo4cKTdn04Uchaw7kAVhdHCU/v+VKEHoCzmLpbEXXwJ2vzWLNyU+5Zb9Hl1zdmZjdGrzW82T1dzsmZ+tEbIUIX2gdWUi521tSykNdq7hEkeYAaAY1U5TDU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=kxiED/4q; arc=none smtp.client-ip=198.175.65.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	s=arc-20240116; t=1733789372; c=relaxed/simple;
+	bh=RCOVJWgFhXT6DmylXTsI1S6NIDyGF9sD4+HqK8vNzXU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=fY1lAeuVEQJTMDVvZoUG+RnckhabVaDtIHcSALLlNx6ILGxJCLpcwqsh7UJL9nINInWGehHM8xz6Yr1womUH/umoUvR78FYrlhpEt3GluDVk3g9/GKWEVXYJAnaB066LW2v8UbSSW/LaHBhJTpgKHrDPtxpp+jsnmxVfx2GTvNg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=O9DdHkot; arc=none smtp.client-ip=209.85.216.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="kxiED/4q"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1733788857; x=1765324857;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=Hx3TYCfv8vO1GHDfioqECB6aGnBv+pYMSPSzeHD0ACM=;
-  b=kxiED/4qWgdjC8syHpcQ/oBSt6TehmN8CqDPcrmesjwGYrR4b+zABNOR
-   pPka+VVmu0Ied4rHDt2RARryuxBEZtc+SmP8TI9abNm1UZ/GIFmQDUNL5
-   TGH3TIfjxHgiE2Ey3kn2joO0QnncLvj//19BafU9NFyMiIJNoUzyYl55+
-   G8YzMt/qpthbRSDQF27OUpEOPl1WgAI1BskUyRsyJwGqx/maGrb2yMD4w
-   m/Z/I+iFVuqYBXytHoFMDpuvbPhUg0Ykmiftl50xNG3Z4FN5OMl6YFR7K
-   Ctu//wNnA4tngjhOqc6fzn5oNN19B6M/R3YETqc90danguAbsxhIXko3C
-   Q==;
-X-CSE-ConnectionGUID: MsE5IyugTjy35BegJKvkzw==
-X-CSE-MsgGUID: SnLxmlckRFKkm6ZpgBx00Q==
-X-IronPort-AV: E=McAfee;i="6700,10204,11278"; a="45493625"
-X-IronPort-AV: E=Sophos;i="6.12,214,1728975600"; 
-   d="scan'208";a="45493625"
-Received: from orviesa009.jf.intel.com ([10.64.159.149])
-  by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Dec 2024 16:00:56 -0800
-X-CSE-ConnectionGUID: FrHyAsf+TsSInDwzX9C6WQ==
-X-CSE-MsgGUID: fvwvGNsbQQub6ODNnUFruA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,220,1728975600"; 
-   d="scan'208";a="95095907"
-Received: from agluck-desk3.sc.intel.com (HELO agluck-desk3) ([172.25.222.70])
-  by orviesa009-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Dec 2024 16:00:56 -0800
-Date: Mon, 9 Dec 2024 16:00:54 -0800
-From: "Luck, Tony" <tony.luck@intel.com>
-To: Reinette Chatre <reinette.chatre@intel.com>
-Cc: Borislav Petkov <bp@alien8.de>, "Yu, Fenghua" <fenghua.yu@intel.com>,
-	Peter Newman <peternewman@google.com>,
-	Jonathan Corbet <corbet@lwn.net>, "x86@kernel.org" <x86@kernel.org>,
-	James Morse <james.morse@arm.com>,
-	Jamie Iles <quic_jiles@quicinc.com>,
-	Babu Moger <babu.moger@amd.com>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	"Shaopeng Tan (Fujitsu)" <tan.shaopeng@fujitsu.com>,
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-	"linux-doc@vger.kernel.org" <linux-doc@vger.kernel.org>,
-	"patches@lists.linux.dev" <patches@lists.linux.dev>
-Subject: Re: [PATCH v11 2/8] x86/resctrl: Prepare for per-CTRL_MON group
- mba_MBps control
-Message-ID: <Z1eEti6Kswtb3HC5@agluck-desk3>
-References: <20241206163148.83828-1-tony.luck@intel.com>
- <20241206163148.83828-3-tony.luck@intel.com>
- <20241209204519.GAZ1dW3-NjcL4Sewaf@fat_crate.local>
- <SJ1PR11MB6083BA367F2CDFC92D87FDA1FC3C2@SJ1PR11MB6083.namprd11.prod.outlook.com>
- <20241209222047.GKZ1dtPxIu5_Hxs1fp@fat_crate.local>
- <SJ1PR11MB60830B8ED36CCA7E304D9E97FC3C2@SJ1PR11MB6083.namprd11.prod.outlook.com>
- <678cef69-78ef-4951-bd31-10abe646e6d8@intel.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="O9DdHkot"
+Received: by mail-pj1-f50.google.com with SMTP id 98e67ed59e1d1-2efdaa02378so22151a91.1
+        for <patches@lists.linux.dev>; Mon, 09 Dec 2024 16:09:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1733789370; x=1734394170; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Bqf9Pw5ygFqNWLQdG8eH/zSqStheh4qMrd/FdN0cEGA=;
+        b=O9DdHkotza8N6umbaTBJUz1RvmXgcMObH8q8oP2JyWREOj30WXnBhj8zGolvhIXunI
+         khaN3odMVHiz0ceVuWN9KshDg5UBQwZgfZOn209g2bdrUdyClEkz20KopUfmbQgZ0FNV
+         FvS+epwSQTgcFCnarKHk0sdAX0s2Amewed62OpXNF447y/lEG6cIvsvb5O6/k86OsIKI
+         5OIAuBhJBcDlxPyvy3xtjTayhOp4pgdssRPQSFEWeOD7v+LHwP6Yi2IK38FXd5BMBs+u
+         RdDG32jF5UCv6GnsYigbYOl+d5Vj/p6aB4U3C8mqoVl+dfGzH5jId3K1EtzpgYdIu3Hs
+         Mvaw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1733789370; x=1734394170;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Bqf9Pw5ygFqNWLQdG8eH/zSqStheh4qMrd/FdN0cEGA=;
+        b=ojA5jOHPXhAt/pBLdPSJvw666gv/m3eW2t4Foixb7GQjh6v7MIJkCfiVwy2GbsrI39
+         HIoHhU06WqKfkJzRDwVnQMyQcy5GdS5Bc6cS2h+saOds0Bb45nTJ6KW7qNErkJRnDR4H
+         dz2L8djT2wIKVRuhDsWgjRjG689SzhOTYlP4HjWKKIerQfMTJmfw/q4JcbjL8BWIln9K
+         t450JpdobpuVz6z+EJtFo++1d7IGuo9y/CBJ5mEC59r+nKb/0XVCgkXjXyRHRQzIk9Ew
+         exfW9X1ty3ru9g1MSRjoV9A8+ywBMiNUUl7xSDbdh69dwA3CGvlVfb0Op8VcZL+F0skm
+         YSUQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXa6/p0qOwrLf2yLc1GGiZsBYiMKLBbzevEcgy4DUu19KkgIj6GP+KmIR/fN4C6SLga1/7z0q4N@lists.linux.dev
+X-Gm-Message-State: AOJu0Yz4AZ3cGLYszwgH9wfcGqzG5KbyyK5zE51qrBFAWghYpfJmuKJZ
+	l8TK6LWbI6NcW3lW3YGqvqC40Kumw+tiJspce6z59bWCAvqoEvHj0TA7KENq7yqBP23eREBjFAf
+	Wec2DqjVDVsq2gheGFVwhXRT687A=
+X-Gm-Gg: ASbGncvcQeDpxd/gg33aq1tl4XVzFntWw0BPab4duCsL52CrMHIedmLxFyGQqZ6Ejvj
+	MMX7pv018ZPIdjtxxNO+JSyzFhOhf3+1N4Nc=
+X-Google-Smtp-Source: AGHT+IH0533Z0lG1cmsFMSYTQgHR047SqSc1dGT+SjioNScy/dOIbt6nmvrmg4TjnlVulh/A/8MXVpm+7Nk8kFeG7Q8=
+X-Received: by 2002:a17:90b:1b42:b0:2ee:6563:20b5 with SMTP id
+ 98e67ed59e1d1-2efd454dfb2mr887964a91.0.1733789369748; Mon, 09 Dec 2024
+ 16:09:29 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <678cef69-78ef-4951-bd31-10abe646e6d8@intel.com>
+References: <20241123180323.255997-1-ojeda@kernel.org>
+In-Reply-To: <20241123180323.255997-1-ojeda@kernel.org>
+From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Date: Tue, 10 Dec 2024 01:09:17 +0100
+Message-ID: <CANiq72kTX5o2rs=A51keKQiV=6fT0sN+FjWygL4=ddytnNM8Cg@mail.gmail.com>
+Subject: Re: [PATCH] rust: kbuild: set `bindgen`'s Rust target version
+To: Miguel Ojeda <ojeda@kernel.org>
+Cc: Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, 
+	Gary Guo <gary@garyguo.net>, =?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
+	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@kernel.org>, 
+	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>, rust-for-linux@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev, 
+	Christian Poveda <git@pvdrz.com>, =?UTF-8?Q?Emilio_Cobos_=C3=81lvarez?= <emilio@crisal.io>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, Dec 09, 2024 at 03:40:12PM -0800, Reinette Chatre wrote:
-> Hi Tony,
-> 
-> On 12/9/24 2:35 PM, Luck, Tony wrote:
-> >>> mba_mbps_default_event isn't architecture specific. The mba_MBps
-> >>> feedback code could be implemented on any architecture that supports
-> >>> both measurement and control of memory bandwidth.
-> >>
-> >> Yes, and it should be moved to that header then, right?
-> >>
-> >> But not earlier.
-> > 
-> > If you feel strongly about it then go ahead and cut the line from <linux/rectrl.h>
-> > and paste it into <asm/resctrl.h>
-> 
-> I am not sure about this ... I expect the code needing this initially will
-> form part of the filesystem code so it may be more intuitive to have it
-> be located in arch/x86/kernel/cpu/resctrl/internal.h as Boris suggested.
-> As part of the arch/fs split it may then move to fs/resctrl/internal.h
-> 
-> mba_mbps_default_event may even stay internal to the fs/resctrl code with an
-> arch helper created later to initialize it. This is because I think
-> the initialization of mba_mbps_default_event may move out of
-> get_rdt_mon_resources() into resctrl_mon_resource_init() that is being
-> created as part of the MPAM work [1]. An example of current fs initialization
-> done in arch code that is moved to it can be found in [2].
+On Sat, Nov 23, 2024 at 7:03=E2=80=AFPM Miguel Ojeda <ojeda@kernel.org> wro=
+te:
+>
+> Each `bindgen` release may upgrade the list of Rust targets. For instance=
+,
+> currently, in their master branch [1], the latest ones are:
+>
+>     Nightly =3D> {
+>         vectorcall_abi: #124485,
+>         ptr_metadata: #81513,
+>         layout_for_ptr: #69835,
+>     },
+>     Stable_1_77(77) =3D> { offset_of: #106655 },
+>     Stable_1_73(73) =3D> { thiscall_abi: #42202 },
+>     Stable_1_71(71) =3D> { c_unwind_abi: #106075 },
+>     Stable_1_68(68) =3D> { abi_efiapi: #105795 },
+>
+> By default, the highest stable release in their list is used, and users
+> are expected to set one if they need to support older Rust versions
+> (e.g. see [2]).
+>
+> Thus, over time, new Rust features are used by default, and at some
+> point, it is likely that `bindgen` will emit Rust code that requires a
+> Rust version higher than our minimum (or perhaps enabling an unstable
+> feature). Currently, there is no problem because the maximum they have,
+> as seen above, is Rust 1.77.0, and our current minimum is Rust 1.78.0.
+>
+> Therefore, set a Rust target explicitly now to prevent going forward in
+> time too much and thus getting potential build failures at some point.
+>
+> Since we also support a minimum `bindgen` version, and since `bindgen`
+> does not support passing unknown Rust target versions, we need to use
+> the list of our minimum `bindgen` version, rather than the latest. So,
+> since `bindgen` 0.65.1 had this list [3], we need to use Rust 1.68.0:
+>
+>     /// Rust stable 1.64
+>     ///  * `core_ffi_c` ([Tracking issue](https://github.com/rust-lang/ru=
+st/issues/94501))
+>     =3D> Stable_1_64 =3D> 1.64;
+>     /// Rust stable 1.68
+>     ///  * `abi_efiapi` calling convention ([Tracking issue](https://gith=
+ub.com/rust-lang/rust/issues/65815))
+>     =3D> Stable_1_68 =3D> 1.68;
+>     /// Nightly rust
+>     ///  * `thiscall` calling convention ([Tracking issue](https://github=
+.com/rust-lang/rust/issues/42202))
+>     ///  * `vectorcall` calling convention (no tracking issue)
+>     ///  * `c_unwind` calling convention ([Tracking issue](https://github=
+.com/rust-lang/rust/issues/74990))
+>     =3D> Nightly =3D> nightly;
+>
+>     ...
+>
+>     /// Latest stable release of Rust
+>     pub const LATEST_STABLE_RUST: RustTarget =3D RustTarget::Stable_1_68;
+>
+> Thus add the `--rust-target 1.68` parameter. Add a comment as well
+> explaining this.
+>
+> An alternative would be to use the currently running (i.e. actual) `rustc=
+`
+> and `bindgen` versions to pick a "better" Rust target version. However,
+> that would introduce more moving parts depending on the user setup and
+> is also more complex to implement.
+>
+> Cc: Christian Poveda <git@pvdrz.com>
+> Cc: Emilio Cobos =C3=81lvarez <emilio@crisal.io>
+> Link: https://github.com/rust-lang/rust-bindgen/blob/21c60f473f4e824d4aa9=
+b2b508056320d474b110/bindgen/features.rs#L97-L105 [1]
+> Link: https://github.com/rust-lang/rust-bindgen/issues/2960 [2]
+> Link: https://github.com/rust-lang/rust-bindgen/blob/7d243056d335fdc4537f=
+7bca73c06d01aae24ddc/bindgen/features.rs#L131-L150 [3]
+> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 
-Reinette is right. The post-split home of this is not <linux/resctrl.h>
-but fs/resctrl/internal.h which doesn't exist yet.
+Applied to `rust-fixes` -- thanks!
 
-So Boris is right, this declaration should be added to arch/x86/kernel/cpu/resctrl/internal.h
-by this patch to be moved later.
+I added the following note to the commit message and added a small
+sentence to the comment too:
 
-> 
-> [1] https://lore.kernel.org/all/20241004180347.19985-17-james.morse@arm.com/
-> [2] https://lore.kernel.org/all/20241004180347.19985-20-james.morse@arm.com/
+    Starting with `bindgen` 0.71.0 [4], we will be able to set any future
+    Rust version instead, i.e. we will be able to set here our minimum
+    supported Rust version. Christian implemented it [5] after seeing this
+    patch. Thanks!
 
--Tony
+I also queued it for stable:
+
+    Cc: stable@vger.kernel.org # needed for 6.12.y; unneeded for
+6.6.y; do not apply to 6.1.y
+    Fixes: c844fa64a2d4 ("rust: start supporting several `bindgen` versions=
+")
+
+Cheers,
+Miguel
