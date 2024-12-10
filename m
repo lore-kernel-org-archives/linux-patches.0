@@ -1,81 +1,149 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f44.google.com (mail-qv1-f44.google.com [209.85.219.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD84DB665;
-	Tue, 10 Dec 2024 00:17:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4699538FAD
+	for <patches@lists.linux.dev>; Tue, 10 Dec 2024 00:51:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733789860; cv=none; b=eo+t73Lp6/s3pfkBr+Kc/IrzTFSB6z+6fh6N7JfWv9oCB2GJLverY13HnOFBdVKkx9vcr92wY71XphGIJrIV3rx321nSYYCE3ZGigXCZSbHMd9r6D4SPdHgyVkQUv/uf51SKJhm2KceiZGQ3pFfUjhASnPdwUwUrYSZY/OJtEkU=
+	t=1733791885; cv=none; b=JdhQiM+jck+/RwoU5EcMj7HeKEYlQaK0YnclnpkOZfpqJ/bZBZtq4KrcIz4ZXgyC5bEsBJ3xTG9/ZFhPi+hhUnx2gwLhwq0jps6u7C8xdkmIfvhY6xnh0V2ucP17Tt+2fpORlZ72MqAKgofiqIg7Iq0zH4fu4W/BcSWKqcaTrkI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733789860; c=relaxed/simple;
-	bh=NP473M91KfDU5hAbkVpyFF0JS9tQapuKfRqfLoOzGtA=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ob7BR6Piy4cXwOXJYEFHeUHyekdtrs7EaUehPk3imZ5NbtA6PXSC1WfMMdmSHrE+h15mZO9cMg9Kv+IAnuvqWjfVWh0KU/aJPqM9lvnmXGDwo0vYM+xtOI/5fwXk7cSr8ul2n8ipFSdYXt4CYXNI36fNQrkvDI22oVD9L2MTb1Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WDVfORut; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1733791885; c=relaxed/simple;
+	bh=nEfEp69NvTTxONDAy+/5voS/7ePa27UpEn4sAPc0fxE=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Aey+x5Lo7WwZhFom0CPpPEbjoBsc+DFnTsreJ0mwCJbWCpyqEpN92EErUClwQYvxfk6amWlQeNabR9ZXWUtXEPVFT0mT3oFrx4KLuY6dlVJTOqIkV5BZhR3X1gPBnLH03v7K5nQdAgP1d5iJQDezgMS+W28w/7cU+53oTzq1hSg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=cyN0NwCG; arc=none smtp.client-ip=209.85.219.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WDVfORut"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F623C4CEE0;
-	Tue, 10 Dec 2024 00:17:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1733789860;
-	bh=NP473M91KfDU5hAbkVpyFF0JS9tQapuKfRqfLoOzGtA=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WDVfORutvSU532Nrnz9oMLZZaXBASMmecU6EPI6cu2iXUWjbffC2s3iSrc0eA3ikK
-	 t6IB70kecdz6wQE2MX2hAcBXkc4O7J45203xCTKOyVzXVgiThv41/QYWP2D/H8qQru
-	 SP7JbB1IrEWZ/5GD4mbwNpF1lrAiLkINqaFEe1BKUq7gYqT5JvhjfRg9cNUZP1gfSN
-	 yEPYpidYlxkzYCHbFvZn7pd7v5gp2Q85jVNTATtmZCceilAjiA8tY5frxs6aP87wNA
-	 sSIneVYRs52/17P0h6txb97tvz8tWYr3ck0KDQAmwi/ErsP8fc1WlJEqw7gFuB6wbX
-	 3a5YcFMbi6Wxw==
-From: Will Deacon <will@kernel.org>
-To: iommu@lists.linux.dev,
-	Joerg Roedel <joro@8bytes.org>,
-	linux-arm-kernel@lists.infradead.org,
-	Robin Murphy <robin.murphy@arm.com>,
-	Jason Gunthorpe <jgg@ziepe.ca>
-Cc: catalin.marinas@arm.com,
-	kernel-team@android.com,
-	Will Deacon <will@kernel.org>,
-	Jerry Snitselaar <jsnitsel@redhat.com>,
-	Michael Shavit <mshavit@google.com>,
-	Nicolin Chen <nicolinc@nvidia.com>,
-	patches@lists.linux.dev,
-	Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
-Subject: Re: [PATCH] iommu/arm-smmuv3: Update comments about ATS and bypass
-Date: Tue, 10 Dec 2024 00:17:27 +0000
-Message-Id: <173378410349.4185561.4875058023954953472.b4-ty@kernel.org>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <0-v1-f27174f44f39+27a33-smmuv3_ats_note_jgg@nvidia.com>
-References: <0-v1-f27174f44f39+27a33-smmuv3_ats_note_jgg@nvidia.com>
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="cyN0NwCG"
+Received: by mail-qv1-f44.google.com with SMTP id 6a1803df08f44-6d87ceb58a0so40401826d6.0
+        for <patches@lists.linux.dev>; Mon, 09 Dec 2024 16:51:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1733791881; x=1734396681; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=n0h2b9mjtuI2QArXe16Gccc3cHk96ybHu37fBVSwW9M=;
+        b=cyN0NwCGolHFZ88Fy21FmT4yWxAqBzUbHcmkfkY/hpNq8TguOhx2HXUsugsG01Ykc3
+         cXovQg1qHa7lbDOH77etJyYmVPY+rqVsawvLXOxd8YP0y4h5lUI2D8MDgE7piXf/krwO
+         Fj4X+42kvvB3uUhFLJmrZ7DLksBIakAU22/BbttmNq7Gp6jg/xb1NScWSn7ekyx0uICW
+         U32Grvj+a6RLFO7GdWCEiL4MbjE5JNbXRVhzpT0c313uneAvRXS9dz5TPbzBCv/1XjRq
+         1VpkEPN8KIqcRNTkzmYlv14L+C8YBQqdDrmqq340L3PSzUmblB0S7IDCjIMD/HC2MdHH
+         OqqA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1733791881; x=1734396681;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=n0h2b9mjtuI2QArXe16Gccc3cHk96ybHu37fBVSwW9M=;
+        b=UU1tJAranJbag/5SMl5IoyH5yXJwMZmOS6H387OA7QZI2KAj2/xOPRxtS2c0dagqAX
+         lfvspmJVqVX5FnAPQiYmdZZwrJLyY0vvZ5siPEH3EzzQ0Qx+gfuk593CZ+Mp+KotNhdP
+         zd6hHS81W00eq7W2g9La6YqgBgJ7TwVm3GLVknIg2Ir2OOHqtS71qXPk8M4b9EdLdkcw
+         4yjhftnWl0CUXoIeQ4OMH/MCBoUt87ocfRp9zIhJnYcNx6W9Q7JWDCFr3ioPodAB73xO
+         fMGoXUR/THvQBRqdcF1OnazY7CaOvry+iXWy/O4mtx75Ze7i81aco5hYPDwsq8wCs+Lx
+         msQw==
+X-Forwarded-Encrypted: i=1; AJvYcCU6sEem6ulo+kBazhUa1O3JCc5cMK18ovHtJQDlC8nRntLZxr5lPMKr88/TtwLd0Fh/R2cp9jQx@lists.linux.dev
+X-Gm-Message-State: AOJu0YypHH0y+DbdHH9dnX1V2PkqEZVfoREF40NoxQijnuK6zOGdaKOO
+	VfYkPMM1BsG3O//PpCtTaBg9nkaiBnf0zCtbfHY3hWdMp+8pF2l4WP+B3cp9nw2QwIiCjemCUf9
+	dA+yAGuXfz0e91wGonwylPLt9p0Ysm7kS2rIX
+X-Gm-Gg: ASbGncvMKtcVEdg1s2r0VV4DUZqlebOTxMWshpR6ob60txTlBBdrHF4CIps+4+1hXJh
+	mcgGkOtZYI/iAcBnYVb3O4qS4fgHG6D8svX3Ao35fRImkqXUDwBqdooJvPazNueZulZA=
+X-Google-Smtp-Source: AGHT+IEv6tYwzZCcY/GOnNZgDCbTNuvBneF8FHhUJ+RFI7vCCo2P0NeWoE+7XRtH4l48ug99YpLfJjAiat491cNQKC4=
+X-Received: by 2002:a05:6214:c8b:b0:6d8:b2f2:bcb8 with SMTP id
+ 6a1803df08f44-6d91e2f23c5mr42708296d6.8.1733791881156; Mon, 09 Dec 2024
+ 16:51:21 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+References: <20241112184455.855133-1-ojeda@kernel.org> <CANiq72=BvnriScFay8SpLNe9mNhjvGsBJ9W9UtdzU_6v_i+woA@mail.gmail.com>
+In-Reply-To: <CANiq72=BvnriScFay8SpLNe9mNhjvGsBJ9W9UtdzU_6v_i+woA@mail.gmail.com>
+From: "Hong, Yifan" <elsk@google.com>
+Date: Mon, 9 Dec 2024 16:50:45 -0800
+Message-ID: <CAABy=s12gOZadhYC+=6=TbbyN9j5L0B19ZLSGR_VFEdt1jhwEA@mail.gmail.com>
+Subject: Re: [PATCH v3] kbuild: rust: add PROCMACROLDFLAGS
+To: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Cc: Miguel Ojeda <ojeda@kernel.org>, Masahiro Yamada <masahiroy@kernel.org>, 
+	Alex Gaynor <alex.gaynor@gmail.com>, Jonathan Corbet <corbet@lwn.net>, 
+	Nathan Chancellor <nathan@kernel.org>, Nicolas Schier <nicolas@fjasle.eu>, linux-kbuild@vger.kernel.org, 
+	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
+	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
+	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@kernel.org>, 
+	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>, rust-for-linux@vger.kernel.org, 
+	linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	patches@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, 05 Dec 2024 11:40:15 -0400, Jason Gunthorpe wrote:
-> The SMMUv3 spec has a note that BYPASS and ATS don't work together under
-> the STE EATS field definition. However there is another section "13.6.4
-> Full ATS skipping stage 1" that explains under certain conditions BYPASS
-> and ATS do work together if the STE is using S1DSS to select BYPASS and
-> the CD table has the possibility for a substream.
-> 
-> When these comments were written the understanding was that all forms of
-> BYPASS just didn't work and this was to be a future problem to solve.
-> 
-> [...]
+On Mon, Dec 9, 2024 at 10:30=E2=80=AFAM Miguel Ojeda
+<miguel.ojeda.sandonis@gmail.com> wrote:
+>
+> On Tue, Nov 12, 2024 at 7:45=E2=80=AFPM Miguel Ojeda <ojeda@kernel.org> w=
+rote:
+> >
+> >   - Removed "additional" from the documentation and commit message,
+> >     since this actually replaces the other flags, unlike other cases.
+>
+> Some news regarding this: we asked upstream Rust about supporting
+> overriding all flags (including e.g. `--edition`, `--target` and
+> `--sysroot`) and apparently this was already accepted via an MCP
+> (thanks Oli Scherer for the pointer!):
+>
+>     https://github.com/rust-lang/compiler-team/issues/731
+>
+> So, in the future, `rustc` will likely get support for this. Thus it
+> may be best to go with an "additional" approach (rather than
+> "replace"), so that this environment variable works the same way as
+> the rest.
+>
+> We can do that by simply waiting until `rustc` implements it and we
+> upgrade the minimum, or by implementing a workaround on our side
+> meanwhile. For instance, something simple like:
+>
+>     $(filter-out --target=3D%,$(s)) $(lastword $(filter --target=3D%,$(s)=
+))
+>
+> would be probably enough to cover Android's use case since we use the
+> syntax with `=3D` elsewhere rather than with a space -- the equal sign
+> plays well with Make's string functions. We can also add other flags
+> if needed.
 
-Applied to will (for-joerg/arm-smmu/updates), thanks!
+My original intention was to have PROCMACROLDFLAGS to be a completely
+separate thing. That was partially why I used an $(or) there. This was
+because "the list of flags to link hostprogs is not necessarily the
+same as the list of flags used to link libmacros.so" (see commit
+message). The fallback to HOSTLDFLAGS was just to be backwards
+compatible so existing users don't get surprises.
 
-[1/1] iommu/arm-smmuv3: Update comments about ATS and bypass
-      https://git.kernel.org/will/c/9b640ae7fbba
+In details, here's what Android does with V3 of the patch, roughly:
 
-Cheers,
--- 
-Will
+HOSTLDFLAGS=3D
+    -L<paths>... -fuse-ld=3Dlld --rtlib=3Dcompiler-rt
+--sysroot=3D<musl_sysroot> -Wl,-rpath,<paths>
+PROCMACROLDFLAGS=3D
+    -fuse-ld=3Dlld --rtlib=3Dcompiler-rt --sysroot=3D<glibc_sysroot>
 
-https://fixes.arm64.dev
-https://next.arm64.dev
-https://will.arm64.dev
+With https://github.com/rust-lang/compiler-team/issues/731 fixed and
+this idea of appending flags, our --sysroot flag should be able to be
+properly overridden. But the -L and -Wl,-rpath's remains, and could
+potentially be disturbing.
+
+The reason for this difference is that we build hostprogs like
+sign-file, fixdep, etc. with prebuilt libraries (e.g. sign-file needs
+libcrypto, etc.) that were built against a prebuilt musl libc. On the
+other hand, the Rust toolchain we are using was built against glibc,
+and won't need these -L and -Wl,-rpath flags for the libraries.
+
+So if I understand what you mean correctly, with this:
+  KBUILD_PROCMACROLDFLAGS :=3D $(HOSTLDFLAGS) $(PROCMACROLDFLAGS)
+Android might need a separate mechanism (another variable?) to filter
+out our -L/-Wl,-rpath from HOSTLDFLAGS. (Dumb question: We can't take
+-L/-Wl,-rpath away by prepending/appending more flags, right?)
+
+>
+> I will send a v4 unless someone thinks it is a bad idea.
+>
+> Cheers,
+> Miguel
