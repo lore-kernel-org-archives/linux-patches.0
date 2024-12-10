@@ -1,129 +1,126 @@
-Received: from mail.alien8.de (mail.alien8.de [65.109.113.108])
+Received: from gimli.kloenk.de (gimli.kloenk.de [49.12.72.200])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BBA923DE8B
-	for <patches@lists.linux.dev>; Tue, 10 Dec 2024 10:14:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=65.109.113.108
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE4C423DE8D
+	for <patches@lists.linux.dev>; Tue, 10 Dec 2024 10:18:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=49.12.72.200
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733825647; cv=none; b=mst+mw4wgm34JygWPRZxvQdL1PKXvJXPUU0ZROF4kxL8Z+Ofk5HusN8wfNc6xGyoHgxn4aYWw6nOJnHm/RXPkqEZgxpN0IR3eRkYZ002fScSHTlIjhJAJozPkw94FtQR9HTwQ/NCW5y1x0UN7atZ3kbcLgAt+pk41YXMwsyrw5U=
+	t=1733825929; cv=none; b=p5BIWrdpDd1a+oupoD/M7sDrAoQnK8CImhSEB4Fp8WxZMuOqHFVX96efn6FUPEAQWS7qazXj1KKWBU1D9DBg3aoidMvdcs4i0V+glZ/4wfL2Rz5yCsiWEFX8bd8z4pcYSfOqtMlD95sRsrdhy8htIYWBR72bzGYsdFjcIUS8VZ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733825647; c=relaxed/simple;
-	bh=lujt3h3CG05++c6e+i+W692dngHXG+tuybMjifRcWR4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=MPf9PhUk+Fz1X3yJGlNXOUeapGc6LjnN7yCzASuzVCqHtT6yfpHf7AtJevqi8a6Socl57JUE426L5gVn0GJpXsxnN5gcTuyOSsHvC/Sq/4ITcS5YVRSj/0zexZUT8wA7BW6pjArGxZ7O8GN1vQh3EmOrngm35l+zGBJ6u588TH4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=alien8.de; spf=pass smtp.mailfrom=alien8.de; dkim=pass (4096-bit key) header.d=alien8.de header.i=@alien8.de header.b=TKGdfG99; arc=none smtp.client-ip=65.109.113.108
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=alien8.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=alien8.de
+	s=arc-20240116; t=1733825929; c=relaxed/simple;
+	bh=Nj05O/ueN/PMCm5p4N1zDixMdHIiDU9Yqel2bHGFdQE=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=jodLd1u095P7DMcbqN/VJwZT2+E7YvTBzV1wfOWOkB8iWNX0DTu3ra3R9zSiL3Fchrki4Qdh848hWE1PyHKkZzqzTJJ9FqjLK4Ew9oitH2d1AfBOKWj4G6G0uj020i0eX5aP+qmhCRuZLIM4U8CPdti2wUql3KjLPIfXGEaWcmA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=kloenk.dev; spf=pass smtp.mailfrom=kloenk.dev; dkim=pass (1024-bit key) header.d=kloenk.dev header.i=@kloenk.dev header.b=tCjew8Fl; arc=none smtp.client-ip=49.12.72.200
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=kloenk.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kloenk.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (4096-bit key) header.d=alien8.de header.i=@alien8.de header.b="TKGdfG99"
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTP id EF33640E02B9;
-	Tue, 10 Dec 2024 10:14:02 +0000 (UTC)
-X-Virus-Scanned: Debian amavisd-new at mail.alien8.de
-Authentication-Results: mail.alien8.de (amavisd-new); dkim=pass (4096-bit key)
-	header.d=alien8.de
-Received: from mail.alien8.de ([127.0.0.1])
-	by localhost (mail.alien8.de [127.0.0.1]) (amavisd-new, port 10026)
-	with ESMTP id Sowt0oMZdali; Tue, 10 Dec 2024 10:13:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=alien8;
-	t=1733825639; bh=yrGa7tpyKCRTPnqr9DVCHERHwkS6nI41a3G5vTxiZOA=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=TKGdfG99NQvFzj1PHJgtpk5QguaEOoOqzYZ+H7oUmDkZikMh28uI5CPlmBiqUohXS
-	 Ilzb14h0rxoxxjUbob34sNJ/4ZFVjnM9sDmoFdApmFQMvZqviITcs0A7FclutCiJmB
-	 vilryZ4AeWg7SK5V3mYGmgJoeC9wjtuPWrVUBEVdeefeZ78GFUBsHt7/PnS42idIvP
-	 A2Mww5ncWMq+vRThsnFbCFsRNqqbC7L3miqri5a7cRhE6SSBC2+UU3gOYynpQ/izpg
-	 FIKqKJNv9jrwZ5fM44ovGE4av8t5ZfhA1pj23GNukXlVTAVhveLW10QUsh08DMCLbl
-	 NmaOnJQhkQIZ/geAlGu3mnVLZdEcMagg8vx2uabE498hIaQMcjfUekDMqKUhG3QYOA
-	 0jR7QW4r3VeZSo8WWnX2Mf80BA97TPlIzZZ9zzvpFlVTh0b2JZuCt98dLj0z2chBeK
-	 yh1+cFHZYECg15fH4fCrwszq8yBCy+8wE8fmpZ/uHwJ5I7ELsrLwXGHSZmiV9JYaQC
-	 aS3M9OiE7x9lCdHVcfChKVVtLry8GwH47LJgC+DwDeCfP5sB/mJoH7eK44wmLx7rE0
-	 wmzFPvPEzgiW564DNxSIAiszWWG6pBM/Ti9DgGw1NiihSByksUUJsDsm0hddt7wUgg
-	 pVQnj2RsDd8ECv/LAHE3ZG98=
-Received: from zn.tnic (p200300ea971f9307329c23fffea6a903.dip0.t-ipconnect.de [IPv6:2003:ea:971f:9307:329c:23ff:fea6:a903])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature ECDSA (P-256) server-digest SHA256)
-	(No client certificate requested)
-	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id EC24040E0286;
-	Tue, 10 Dec 2024 10:13:44 +0000 (UTC)
-Date: Tue, 10 Dec 2024 11:13:39 +0100
-From: Borislav Petkov <bp@alien8.de>
-To: "Luck, Tony" <tony.luck@intel.com>
-Cc: Reinette Chatre <reinette.chatre@intel.com>,
-	"Yu, Fenghua" <fenghua.yu@intel.com>,
-	Peter Newman <peternewman@google.com>,
-	Jonathan Corbet <corbet@lwn.net>, "x86@kernel.org" <x86@kernel.org>,
-	James Morse <james.morse@arm.com>,
-	Jamie Iles <quic_jiles@quicinc.com>,
-	Babu Moger <babu.moger@amd.com>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	"Shaopeng Tan (Fujitsu)" <tan.shaopeng@fujitsu.com>,
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-	"linux-doc@vger.kernel.org" <linux-doc@vger.kernel.org>,
-	"patches@lists.linux.dev" <patches@lists.linux.dev>
-Subject: Re: [PATCH v11 2/8] x86/resctrl: Prepare for per-CTRL_MON group
- mba_MBps control
-Message-ID: <20241210101339.GBZ1gUU3LiI7wAS3vQ@fat_crate.local>
-References: <20241206163148.83828-1-tony.luck@intel.com>
- <20241206163148.83828-3-tony.luck@intel.com>
- <20241209204519.GAZ1dW3-NjcL4Sewaf@fat_crate.local>
- <SJ1PR11MB6083BA367F2CDFC92D87FDA1FC3C2@SJ1PR11MB6083.namprd11.prod.outlook.com>
- <20241209222047.GKZ1dtPxIu5_Hxs1fp@fat_crate.local>
- <SJ1PR11MB60830B8ED36CCA7E304D9E97FC3C2@SJ1PR11MB6083.namprd11.prod.outlook.com>
- <678cef69-78ef-4951-bd31-10abe646e6d8@intel.com>
- <Z1eEti6Kswtb3HC5@agluck-desk3>
+	dkim=pass (1024-bit key) header.d=kloenk.dev header.i=@kloenk.dev header.b="tCjew8Fl"
+From: Fiona Behrens <me@kloenk.dev>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kloenk.dev; s=mail;
+	t=1733825925; bh=znw9RaPDGdZv374XX1ZIqQi1J1m6y/QWq9gDvavyvQ4=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=tCjew8FlvciVZ73tkgrEjFvkxLIG2ETPTuX2yUH6sOfN9PSvC/Tj9w/ZjDjk7QETX
+	 eFXJZTRjtazxAW6uSvCx1t6pspw3r7pCn2C9ufb13O6B8PagnPxSEm081u5WfaRxbr
+	 InakM2F118yzlooG9tYTT1g/rsaFukzUYyXlHNmY=
+To: Miguel Ojeda <ojeda@kernel.org>
+Cc: Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>,
+ Gary Guo <gary@garyguo.net>,
+ =?utf-8?q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>,
+ Benno Lossin <benno.lossin@proton.me>,
+ Andreas Hindborg <a.hindborg@kernel.org>, Alice Ryhl <aliceryhl@google.com>,
+ Trevor Gross <tmgross@umich.edu>, rust-for-linux@vger.kernel.org,
+ linux-kernel@vger.kernel.org, patches@lists.linux.dev
+Subject: Re: [PATCH] rust: document `bindgen` 0.71.0 regression
+Date: Tue, 10 Dec 2024 11:18:44 +0100
+Message-ID: <AE7176FF-D196-4199-AA8C-B16FBC31B417@kloenk.dev>
+In-Reply-To: <20241209212544.1977065-1-ojeda@kernel.org>
+References: <20241209212544.1977065-1-ojeda@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <Z1eEti6Kswtb3HC5@agluck-desk3>
+Content-Type: text/plain
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, Dec 09, 2024 at 04:00:54PM -0800, Luck, Tony wrote:
-> Reinette is right. The post-split home of this is not <linux/resctrl.h>
-> but fs/resctrl/internal.h which doesn't exist yet.
-> 
-> So Boris is right, this declaration should be added to arch/x86/kernel/cpu/resctrl/internal.h
-> by this patch to be moved later.
 
-Done:
 
-diff --git a/arch/x86/kernel/cpu/resctrl/internal.h b/arch/x86/kernel/cpu/resctrl/internal.h
-index 485800055a7d..542d01c055aa 100644
---- a/arch/x86/kernel/cpu/resctrl/internal.h
-+++ b/arch/x86/kernel/cpu/resctrl/internal.h
-@@ -510,6 +510,7 @@ extern struct mutex rdtgroup_mutex;
- extern struct rdt_hw_resource rdt_resources_all[];
- extern struct rdtgroup rdtgroup_default;
- extern struct dentry *debugfs_resctrl;
-+extern enum resctrl_event_id mba_mbps_default_event;
- 
- enum resctrl_res_level {
- 	RDT_RESOURCE_L3,
-@@ -653,5 +654,4 @@ void resctrl_file_fflags_init(const char *config, unsigned long fflags);
- void rdt_staged_configs_clear(void);
- bool closid_allocated(unsigned int closid);
- int resctrl_find_cleanest_closid(void);
--
- #endif /* _ASM_X86_RESCTRL_INTERNAL_H */
-diff --git a/include/linux/resctrl.h b/include/linux/resctrl.h
-index fd05b937e2f4..d94abba1c716 100644
---- a/include/linux/resctrl.h
-+++ b/include/linux/resctrl.h
-@@ -49,8 +49,6 @@ enum resctrl_event_id {
- 	QOS_L3_MBM_LOCAL_EVENT_ID	= 0x03,
- };
- 
--extern enum resctrl_event_id mba_mbps_default_event;
--
- /**
-  * struct resctrl_staged_config - parsed configuration to be applied
-  * @new_ctrl:		new ctrl value to be loaded
+On 9 Dec 2024, at 22:25, Miguel Ojeda wrote:
 
--- 
-Regards/Gruss,
-    Boris.
+> `bindgen` 0.71.0 regressed [1] on the "`--version` requires header"
+> issue which appared in 0.69.0 first [2] and was fixed in 0.69.1. It has=
 
-https://people.kernel.org/tglx/notes-about-netiquette
+> been fixed again in 0.71.1 [3].
+>
+> Thus document it so that, when we upgrade the minimum past 0.69.0 in th=
+e
+> future, we do not forget that we cannot remove the workaround until we
+> arrive at 0.71.1 at least.
+>
+> Link: https://github.com/rust-lang/rust-bindgen/issues/3039 [1]
+> Link: https://github.com/rust-lang/rust-bindgen/issues/2677 [2]
+> Link: https://github.com/rust-lang/rust-bindgen/blob/main/CHANGELOG.md#=
+v0711-2024-12-09 [3]
+> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+
+Reviewed-by: Fiona Behrens <me@kloenk.dev>
+
+> ---
+>  init/Kconfig                 | 6 ++++--
+>  scripts/rust_is_available.sh | 6 ++++--
+>  2 files changed, 8 insertions(+), 4 deletions(-)
+>
+> diff --git a/init/Kconfig b/init/Kconfig
+> index a20e6efd3f0f..e8d2b5128f87 100644
+> --- a/init/Kconfig
+> +++ b/init/Kconfig
+> @@ -1989,8 +1989,10 @@ config BINDGEN_VERSION_TEXT
+>  	string
+>  	depends on RUST
+>  	# The dummy parameter `workaround-for-0.69.0` is required to support =
+0.69.0
+> -	# (https://github.com/rust-lang/rust-bindgen/pull/2678). It can be re=
+moved when
+> -	# the minimum version is upgraded past that (0.69.1 already fixed the=
+ issue).
+> +	# (https://github.com/rust-lang/rust-bindgen/pull/2678) and 0.71.0
+> +	# (https://github.com/rust-lang/rust-bindgen/pull/3040). It can be re=
+moved
+> +	# when the minimum version is upgraded past the latter (0.69.1 and 0.=
+71.1
+> +	# both fixed the issue).
+>  	default "$(shell,$(BINDGEN) --version workaround-for-0.69.0 2>/dev/nu=
+ll)"
+>
+>  #
+> diff --git a/scripts/rust_is_available.sh b/scripts/rust_is_available.s=
+h
+> index 93c0ef7fb3fb..d2323de0692c 100755
+> --- a/scripts/rust_is_available.sh
+> +++ b/scripts/rust_is_available.sh
+> @@ -123,8 +123,10 @@ fi
+>  # Non-stable and distributions' versions may have a version suffix, e.=
+g. `-dev`.
+>  #
+>  # The dummy parameter `workaround-for-0.69.0` is required to support 0=
+=2E69.0
+> -# (https://github.com/rust-lang/rust-bindgen/pull/2678). It can be rem=
+oved when
+> -# the minimum version is upgraded past that (0.69.1 already fixed the =
+issue).
+> +# (https://github.com/rust-lang/rust-bindgen/pull/2678) and 0.71.0
+> +# (https://github.com/rust-lang/rust-bindgen/pull/3040). It can be rem=
+oved when
+> +# the minimum version is upgraded past the latter (0.69.1 and 0.71.1 b=
+oth fixed
+> +# the issue).
+>  rust_bindings_generator_output=3D$( \
+>  	LC_ALL=3DC "$BINDGEN" --version workaround-for-0.69.0 2>/dev/null
+>  ) || rust_bindings_generator_code=3D$?
+>
+> base-commit: fac04efc5c793dccbd07e2d59af9f90b7fc0dca4
+> -- =
+
+> 2.47.1
