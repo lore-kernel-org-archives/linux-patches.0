@@ -1,137 +1,97 @@
-Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp-relay-canonical-0.canonical.com (smtp-relay-canonical-0.canonical.com [185.125.188.120])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FEC923DEAC
-	for <patches@lists.linux.dev>; Tue, 10 Dec 2024 10:36:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A34D2080F4
+	for <patches@lists.linux.dev>; Tue, 10 Dec 2024 11:31:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.125.188.120
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733826994; cv=none; b=qqwjzgol8IKkjk9N7CyeOzuEejInq0utz97s5eKoWmwoJMdH+hH0hn9BXkFdU6xoRvhDIpzJlnevkeb+Y6qbjK4dndOCuhnBvLbvrod0x8aY1l84NNAWj5yuIjPbIStq296kQy5FhwLpA9k8qqwfegr36X776d92PxRWG4TDaT8=
+	t=1733830309; cv=none; b=TB/o4Dj5tdsHKpl7kuA/iYyY0H45ab5DBPQaSf7k6pwkR75Z01mQUIh4Yz+MBZqrdIL/KB1Kpg+clEAkPncSr9s4HH39aW3/klP6WWOGjUT6UYbjZ5z7BNQnzBWBiCxy7iy/Eg0b6GMT9vIkt7NSdhBRkP7d4F1I07cfQ1n+82Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733826994; c=relaxed/simple;
-	bh=3jnRyQ7rzt93uh2WnUgyckAZtkPU9OY8jK+ghXc7XcY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ag0/jx7SO1Y9J5cLnuCyJCj0R+0yxysMRNHO2bOlblIxfP31hxZ1dESdUwTp0vLuOelHIGfgwrGvIEhIyAJfNDlg4W06Bm11P05XZRcVaSPKk0d5xLtc4n5Kqlif7EnM8Ri0HVbCfT+mQwU5lbjq95rGbHU4QyWFoAeWbxmqFHA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ffwll.ch; spf=none smtp.mailfrom=ffwll.ch; dkim=pass (1024-bit key) header.d=ffwll.ch header.i=@ffwll.ch header.b=a3p5CJAh; arc=none smtp.client-ip=209.85.128.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ffwll.ch
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ffwll.ch
+	s=arc-20240116; t=1733830309; c=relaxed/simple;
+	bh=cZ4sSOoGilGIPjML17LHic3HXreLrdsE7CJXpdJ3Wn8=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=lP8JdmE2FV4+rOpIByTAxYchRmsXEY3/ixVvBGtb/Uow4jjPd/R1IX6cyzd7CtNv5+0kPAF6vfzojOd1X2NnhM+Zys7FZKL5hPo5CUjGXHrvApv5nddnG+JguSbS1Zpk0b9JoONAaowMn4ZtgcjN/GgNRgNrNrrQtykslvyAUrk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=canonical.com; spf=pass smtp.mailfrom=canonical.com; dkim=pass (2048-bit key) header.d=canonical.com header.i=@canonical.com header.b=SWLjclN5; arc=none smtp.client-ip=185.125.188.120
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=canonical.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=canonical.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ffwll.ch header.i=@ffwll.ch header.b="a3p5CJAh"
-Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-434f74e59c7so22821365e9.3
-        for <patches@lists.linux.dev>; Tue, 10 Dec 2024 02:36:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ffwll.ch; s=google; t=1733826991; x=1734431791; darn=lists.linux.dev;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:mail-followup-to:message-id:subject:cc:to
-         :from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Sen+IiZX0S+/F0Se18eMG9OtCzCvDpM+sc9hXCEuRWM=;
-        b=a3p5CJAhXgDNNBGoqewe34zzdbgqAVqwhHxkC3AaK1izw3Hjlmi/1EEVOG2i0R2vxP
-         qFCO+R6kZb6NvriGk6fQd0OV2THhZSKp8Pf7PS6mWJuYaGAfIb4NNfr1N3QgjzkiXHLn
-         GyTI+qzdCniA3auS1phjM9SFKDC5rH7A6GT5E=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733826991; x=1734431791;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:mail-followup-to:message-id:subject:cc:to
-         :from:date:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Sen+IiZX0S+/F0Se18eMG9OtCzCvDpM+sc9hXCEuRWM=;
-        b=vJ97IgGyC0ymvtyFlLmL6MNCxZRyY1I5bgj+UQL/Ta2inv+YPDe4s8tDdk56lN7ZGG
-         AhF7R+qDqP9LZz5pCrXP2ePhPxR74ovL8jHMPwImTMxUahQqCXGugagvkmX3LIiUOaXO
-         mgC52gDv/2CRjpAfxNduLL3o65WQIZBUc9NFhaeZiSJFO1m5p7zjqM3cR6wV2KkkTHm6
-         Hb8FNOhAdsiEcSdqUPjrNAL6W1bD2ptU72jF74iSgtY4upiJKBr+JI+moPmCCl2T9nFL
-         qNtmEmq6yvKgXA6mB62X7v5saq2395Sp5E9xsZUIDV1q8quj/StuZgllewtvbaHEX/h2
-         aIcQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUW1/GjEqPEuByCaE7L5CQ7JCYEq8KFs7Tu9B1+6tNu06IKXKsyC/LYLwSginTgMvZcR894r3KW@lists.linux.dev
-X-Gm-Message-State: AOJu0YzuIraRdWqGXQ4OoKpB8T4wpKmwL83dVZaO1/uF0ceXt1K2fETx
-	iZml5KTGGdnB8mlzWeZhMk8TOM9osx9Mx34dtVcg5+irWlSawVJNskII2Fw0jYULszcrK4QCehH
-	n9cY=
-X-Gm-Gg: ASbGncueidUkP1sBeVFjA/MAw46i/uyEW6uJ0+KYq3KGvxnxS21nKqK/rRKrwESxvTW
-	0LclK+GpgH+Kp4/vjdghYpe5GWlzrxjyOnMWFpeRlS8dqTq9osPuFeHjmvFjlKFdN3J/yQsMwRp
-	XShzYmoUBw7iQ1lVDGsHNoC/aUNbSEmE2iKrcp3jIF53cYxpKvloOkzUzegXcTjSSkJA5PL+rnL
-	exmJPimdg5a0mMcLfwSA8drqBpi3ty8/yBIlkxoT2nfYeKA2awEERhOSuiR+nMhjw==
-X-Google-Smtp-Source: AGHT+IEV+bbBMZpk2sUNI7COIVamkfzNEBliCeF2KWN5595ZWc//07H+LLjAmbUId5CayTY1JHx5Ag==
-X-Received: by 2002:a05:600c:3b99:b0:434:a781:f5d9 with SMTP id 5b1f17b1804b1-434fff41467mr37221575e9.11.1733826990767;
-        Tue, 10 Dec 2024 02:36:30 -0800 (PST)
-Received: from phenom.ffwll.local ([2a02:168:57f4:0:5485:d4b2:c087:b497])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38621fbbc08sm15782423f8f.86.2024.12.10.02.36.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 10 Dec 2024 02:36:30 -0800 (PST)
-Date: Tue, 10 Dec 2024 11:36:28 +0100
-From: Simona Vetter <simona.vetter@ffwll.ch>
-To: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Cc: Jocelyn Falempe <jfalempe@redhat.com>, Miguel Ojeda <ojeda@kernel.org>,
-	Alex Gaynor <alex.gaynor@gmail.com>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>,
-	=?iso-8859-1?Q?Bj=F6rn?= Roy Baron <bjorn3_gh@protonmail.com>,
-	Benno Lossin <benno.lossin@proton.me>,
-	Andreas Hindborg <a.hindborg@kernel.org>,
-	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>,
-	rust-for-linux@vger.kernel.org, dri-devel@lists.freedesktop.org,
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev,
-	stable@vger.kernel.org
-Subject: Re: [PATCH] drm/panic: remove spurious empty line to clean warning
-Message-ID: <Z1gZrEbqzbf01WhE@phenom.ffwll.local>
-Mail-Followup-To: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>,
-	Jocelyn Falempe <jfalempe@redhat.com>,
-	Miguel Ojeda <ojeda@kernel.org>,
-	Alex Gaynor <alex.gaynor@gmail.com>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>,
-	=?iso-8859-1?Q?Bj=F6rn?= Roy Baron <bjorn3_gh@protonmail.com>,
-	Benno Lossin <benno.lossin@proton.me>,
-	Andreas Hindborg <a.hindborg@kernel.org>,
-	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>,
-	rust-for-linux@vger.kernel.org, dri-devel@lists.freedesktop.org,
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev,
-	stable@vger.kernel.org
-References: <20241125233332.697497-1-ojeda@kernel.org>
- <fe2a253c-4b2f-4cb3-b58d-66192044555f@redhat.com>
- <CANiq72=PB=r5UV_ekNGV+yewa7tHic8Gs9RTQo=YcB-Lu_nzNQ@mail.gmail.com>
- <e544c1c7-8b00-46d4-8d13-1303fd88dca3@redhat.com>
- <CANiq72m_b4y6bJJ6sB5gUe+rpa51FXtwpwENQy3zGGMtuFJ3Xg@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=canonical.com header.i=@canonical.com header.b="SWLjclN5"
+Received: from hwang4-ThinkPad-T14s-Gen-2a.. (unknown [120.85.107.173])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-relay-canonical-0.canonical.com (Postfix) with ESMTPSA id D1B9A3F783;
+	Tue, 10 Dec 2024 11:31:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
+	s=20210705; t=1733830299;
+	bh=qQ8en6fa7o9vYDJDzDILW8HVhQyOc7wmasOfhV+YsFM=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version;
+	b=SWLjclN5JUw1ll+49u6Hyk24/lSGsMUHPBMmlmgp0cxU5+mEjnX/e+FxVlXzb6YgN
+	 n7P+RGoVLKkaQMAV2Q1Pu3Xy0UDFIV8P/A7r5RUiH9jR510etbcGochJo8fhxCDiQU
+	 X0YGvexzJxL5TmJ1vFNjLV27EcutSAePlxNjrVcjiBvOhcUgmnimeLjXMfEtFOaQFc
+	 7+VjbxFyKrVsyi3feBKpemSYBWRbOzgL1/N8KqugvWc10U70OTw10hDesEkmEA/8Lp
+	 EciPIvjhNsa+2yaWJdWUnaRKggiphmIrNasF+DIYL+SW8IZLugV2v+KyAkQ7YaJhku
+	 0X4WPpEFlg6KQ==
+From: Hui Wang <hui.wang@canonical.com>
+To: stable@vger.kernel.org,
+	patches@lists.linux.dev,
+	gregkh@linuxfoundation.org,
+	sashal@kernel.org
+Cc: hvilleneuve@dimonoff.com,
+	hui.wang@canonical.com
+Subject: [stble-kernel][5.15.y][5.10.y][PATCH v2] serial: sc16is7xx: the reg needs to shift in regmap_noinc
+Date: Tue, 10 Dec 2024 19:31:26 +0800
+Message-Id: <20241210113126.46056-1-hui.wang@canonical.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CANiq72m_b4y6bJJ6sB5gUe+rpa51FXtwpwENQy3zGGMtuFJ3Xg@mail.gmail.com>
-X-Operating-System: Linux phenom 6.11.6-amd64 
 
-On Tue, Dec 10, 2024 at 12:10:31AM +0100, Miguel Ojeda wrote:
-> On Tue, Dec 10, 2024 at 12:05 AM Jocelyn Falempe <jfalempe@redhat.com> wrote:
-> >
-> > You can merge it through rust-fixes. I have another patch [1] under
-> > review that touches this file, but it shouldn't conflict, as the changes
-> > are far from this line.
-> 
-> Sounds good, thanks! (But of course please feel free to merge fixes through DRM)
+Recently we found the fifo_read() and fifo_write() are broken in our
+5.15 and 5.4 kernels after cherry-pick the commit e635f652696e
+("serial: sc16is7xx: convert from _raw_ to _noinc_ regmap functions
+for FIFO"), that is because the reg needs to shift if we don't
+cherry-pick a prerequisite commit 3837a0379533 ("serial: sc16is7xx:
+improve regmap debugfs by using one regmap per port").
 
-Yeah I think once rust lands in drm the patches should land through drm
-trees, or we'll have a bit of a mess. Of course with rust expert
-reviews/acks where needed.
--Sima
+It is hard to backport the prerequisite commit to 5.15.y and 5.10.y
+due to the significant conflict. To be safe, here fix it by shifting
+the reg as regmap_volatile() does.
 
-> > How do you test clippy, so I can check I won't introduce another warning
-> > with this series?
-> 
-> With `CLIPPY=1`, please see:
-> 
->     https://docs.kernel.org/rust/general-information.html#extra-lints
-> 
-> Cheers,
-> Miguel
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Hui Wang <hui.wang@canonical.com>
+---
+in the V2:
+ add Cc:
+ fix a typo on prerequisite
+ add explanation for not backporting the prerequisite patch to 5.15.y and 5.10.y
 
+ drivers/tty/serial/sc16is7xx.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/tty/serial/sc16is7xx.c b/drivers/tty/serial/sc16is7xx.c
+index d274a847c6ab..87e34099f369 100644
+--- a/drivers/tty/serial/sc16is7xx.c
++++ b/drivers/tty/serial/sc16is7xx.c
+@@ -487,7 +487,14 @@ static bool sc16is7xx_regmap_precious(struct device *dev, unsigned int reg)
+ 
+ static bool sc16is7xx_regmap_noinc(struct device *dev, unsigned int reg)
+ {
+-	return reg == SC16IS7XX_RHR_REG;
++	switch (reg >> SC16IS7XX_REG_SHIFT) {
++	case SC16IS7XX_RHR_REG:
++		return true;
++	default:
++		break;
++	}
++
++	return false;
+ }
+ 
+ /*
 -- 
-Simona Vetter
-Software Engineer, Intel Corporation
-http://blog.ffwll.ch
+2.34.1
+
