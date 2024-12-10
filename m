@@ -1,126 +1,137 @@
-Received: from gimli.kloenk.de (gimli.kloenk.de [49.12.72.200])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE4C423DE8D
-	for <patches@lists.linux.dev>; Tue, 10 Dec 2024 10:18:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=49.12.72.200
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FEC923DEAC
+	for <patches@lists.linux.dev>; Tue, 10 Dec 2024 10:36:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733825929; cv=none; b=p5BIWrdpDd1a+oupoD/M7sDrAoQnK8CImhSEB4Fp8WxZMuOqHFVX96efn6FUPEAQWS7qazXj1KKWBU1D9DBg3aoidMvdcs4i0V+glZ/4wfL2Rz5yCsiWEFX8bd8z4pcYSfOqtMlD95sRsrdhy8htIYWBR72bzGYsdFjcIUS8VZ0=
+	t=1733826994; cv=none; b=qqwjzgol8IKkjk9N7CyeOzuEejInq0utz97s5eKoWmwoJMdH+hH0hn9BXkFdU6xoRvhDIpzJlnevkeb+Y6qbjK4dndOCuhnBvLbvrod0x8aY1l84NNAWj5yuIjPbIStq296kQy5FhwLpA9k8qqwfegr36X776d92PxRWG4TDaT8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733825929; c=relaxed/simple;
-	bh=Nj05O/ueN/PMCm5p4N1zDixMdHIiDU9Yqel2bHGFdQE=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=jodLd1u095P7DMcbqN/VJwZT2+E7YvTBzV1wfOWOkB8iWNX0DTu3ra3R9zSiL3Fchrki4Qdh848hWE1PyHKkZzqzTJJ9FqjLK4Ew9oitH2d1AfBOKWj4G6G0uj020i0eX5aP+qmhCRuZLIM4U8CPdti2wUql3KjLPIfXGEaWcmA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=kloenk.dev; spf=pass smtp.mailfrom=kloenk.dev; dkim=pass (1024-bit key) header.d=kloenk.dev header.i=@kloenk.dev header.b=tCjew8Fl; arc=none smtp.client-ip=49.12.72.200
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=kloenk.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kloenk.dev
+	s=arc-20240116; t=1733826994; c=relaxed/simple;
+	bh=3jnRyQ7rzt93uh2WnUgyckAZtkPU9OY8jK+ghXc7XcY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ag0/jx7SO1Y9J5cLnuCyJCj0R+0yxysMRNHO2bOlblIxfP31hxZ1dESdUwTp0vLuOelHIGfgwrGvIEhIyAJfNDlg4W06Bm11P05XZRcVaSPKk0d5xLtc4n5Kqlif7EnM8Ri0HVbCfT+mQwU5lbjq95rGbHU4QyWFoAeWbxmqFHA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ffwll.ch; spf=none smtp.mailfrom=ffwll.ch; dkim=pass (1024-bit key) header.d=ffwll.ch header.i=@ffwll.ch header.b=a3p5CJAh; arc=none smtp.client-ip=209.85.128.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ffwll.ch
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ffwll.ch
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=kloenk.dev header.i=@kloenk.dev header.b="tCjew8Fl"
-From: Fiona Behrens <me@kloenk.dev>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kloenk.dev; s=mail;
-	t=1733825925; bh=znw9RaPDGdZv374XX1ZIqQi1J1m6y/QWq9gDvavyvQ4=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tCjew8FlvciVZ73tkgrEjFvkxLIG2ETPTuX2yUH6sOfN9PSvC/Tj9w/ZjDjk7QETX
-	 eFXJZTRjtazxAW6uSvCx1t6pspw3r7pCn2C9ufb13O6B8PagnPxSEm081u5WfaRxbr
-	 InakM2F118yzlooG9tYTT1g/rsaFukzUYyXlHNmY=
-To: Miguel Ojeda <ojeda@kernel.org>
-Cc: Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>,
- Gary Guo <gary@garyguo.net>,
- =?utf-8?q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>,
- Benno Lossin <benno.lossin@proton.me>,
- Andreas Hindborg <a.hindborg@kernel.org>, Alice Ryhl <aliceryhl@google.com>,
- Trevor Gross <tmgross@umich.edu>, rust-for-linux@vger.kernel.org,
- linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Subject: Re: [PATCH] rust: document `bindgen` 0.71.0 regression
-Date: Tue, 10 Dec 2024 11:18:44 +0100
-Message-ID: <AE7176FF-D196-4199-AA8C-B16FBC31B417@kloenk.dev>
-In-Reply-To: <20241209212544.1977065-1-ojeda@kernel.org>
-References: <20241209212544.1977065-1-ojeda@kernel.org>
+	dkim=pass (1024-bit key) header.d=ffwll.ch header.i=@ffwll.ch header.b="a3p5CJAh"
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-434f74e59c7so22821365e9.3
+        for <patches@lists.linux.dev>; Tue, 10 Dec 2024 02:36:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ffwll.ch; s=google; t=1733826991; x=1734431791; darn=lists.linux.dev;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:mail-followup-to:message-id:subject:cc:to
+         :from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=Sen+IiZX0S+/F0Se18eMG9OtCzCvDpM+sc9hXCEuRWM=;
+        b=a3p5CJAhXgDNNBGoqewe34zzdbgqAVqwhHxkC3AaK1izw3Hjlmi/1EEVOG2i0R2vxP
+         qFCO+R6kZb6NvriGk6fQd0OV2THhZSKp8Pf7PS6mWJuYaGAfIb4NNfr1N3QgjzkiXHLn
+         GyTI+qzdCniA3auS1phjM9SFKDC5rH7A6GT5E=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1733826991; x=1734431791;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:mail-followup-to:message-id:subject:cc:to
+         :from:date:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Sen+IiZX0S+/F0Se18eMG9OtCzCvDpM+sc9hXCEuRWM=;
+        b=vJ97IgGyC0ymvtyFlLmL6MNCxZRyY1I5bgj+UQL/Ta2inv+YPDe4s8tDdk56lN7ZGG
+         AhF7R+qDqP9LZz5pCrXP2ePhPxR74ovL8jHMPwImTMxUahQqCXGugagvkmX3LIiUOaXO
+         mgC52gDv/2CRjpAfxNduLL3o65WQIZBUc9NFhaeZiSJFO1m5p7zjqM3cR6wV2KkkTHm6
+         Hb8FNOhAdsiEcSdqUPjrNAL6W1bD2ptU72jF74iSgtY4upiJKBr+JI+moPmCCl2T9nFL
+         qNtmEmq6yvKgXA6mB62X7v5saq2395Sp5E9xsZUIDV1q8quj/StuZgllewtvbaHEX/h2
+         aIcQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUW1/GjEqPEuByCaE7L5CQ7JCYEq8KFs7Tu9B1+6tNu06IKXKsyC/LYLwSginTgMvZcR894r3KW@lists.linux.dev
+X-Gm-Message-State: AOJu0YzuIraRdWqGXQ4OoKpB8T4wpKmwL83dVZaO1/uF0ceXt1K2fETx
+	iZml5KTGGdnB8mlzWeZhMk8TOM9osx9Mx34dtVcg5+irWlSawVJNskII2Fw0jYULszcrK4QCehH
+	n9cY=
+X-Gm-Gg: ASbGncueidUkP1sBeVFjA/MAw46i/uyEW6uJ0+KYq3KGvxnxS21nKqK/rRKrwESxvTW
+	0LclK+GpgH+Kp4/vjdghYpe5GWlzrxjyOnMWFpeRlS8dqTq9osPuFeHjmvFjlKFdN3J/yQsMwRp
+	XShzYmoUBw7iQ1lVDGsHNoC/aUNbSEmE2iKrcp3jIF53cYxpKvloOkzUzegXcTjSSkJA5PL+rnL
+	exmJPimdg5a0mMcLfwSA8drqBpi3ty8/yBIlkxoT2nfYeKA2awEERhOSuiR+nMhjw==
+X-Google-Smtp-Source: AGHT+IEV+bbBMZpk2sUNI7COIVamkfzNEBliCeF2KWN5595ZWc//07H+LLjAmbUId5CayTY1JHx5Ag==
+X-Received: by 2002:a05:600c:3b99:b0:434:a781:f5d9 with SMTP id 5b1f17b1804b1-434fff41467mr37221575e9.11.1733826990767;
+        Tue, 10 Dec 2024 02:36:30 -0800 (PST)
+Received: from phenom.ffwll.local ([2a02:168:57f4:0:5485:d4b2:c087:b497])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38621fbbc08sm15782423f8f.86.2024.12.10.02.36.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 10 Dec 2024 02:36:30 -0800 (PST)
+Date: Tue, 10 Dec 2024 11:36:28 +0100
+From: Simona Vetter <simona.vetter@ffwll.ch>
+To: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Cc: Jocelyn Falempe <jfalempe@redhat.com>, Miguel Ojeda <ojeda@kernel.org>,
+	Alex Gaynor <alex.gaynor@gmail.com>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>,
+	=?iso-8859-1?Q?Bj=F6rn?= Roy Baron <bjorn3_gh@protonmail.com>,
+	Benno Lossin <benno.lossin@proton.me>,
+	Andreas Hindborg <a.hindborg@kernel.org>,
+	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>,
+	rust-for-linux@vger.kernel.org, dri-devel@lists.freedesktop.org,
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev,
+	stable@vger.kernel.org
+Subject: Re: [PATCH] drm/panic: remove spurious empty line to clean warning
+Message-ID: <Z1gZrEbqzbf01WhE@phenom.ffwll.local>
+Mail-Followup-To: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>,
+	Jocelyn Falempe <jfalempe@redhat.com>,
+	Miguel Ojeda <ojeda@kernel.org>,
+	Alex Gaynor <alex.gaynor@gmail.com>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>,
+	=?iso-8859-1?Q?Bj=F6rn?= Roy Baron <bjorn3_gh@protonmail.com>,
+	Benno Lossin <benno.lossin@proton.me>,
+	Andreas Hindborg <a.hindborg@kernel.org>,
+	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>,
+	rust-for-linux@vger.kernel.org, dri-devel@lists.freedesktop.org,
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev,
+	stable@vger.kernel.org
+References: <20241125233332.697497-1-ojeda@kernel.org>
+ <fe2a253c-4b2f-4cb3-b58d-66192044555f@redhat.com>
+ <CANiq72=PB=r5UV_ekNGV+yewa7tHic8Gs9RTQo=YcB-Lu_nzNQ@mail.gmail.com>
+ <e544c1c7-8b00-46d4-8d13-1303fd88dca3@redhat.com>
+ <CANiq72m_b4y6bJJ6sB5gUe+rpa51FXtwpwENQy3zGGMtuFJ3Xg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CANiq72m_b4y6bJJ6sB5gUe+rpa51FXtwpwENQy3zGGMtuFJ3Xg@mail.gmail.com>
+X-Operating-System: Linux phenom 6.11.6-amd64 
 
+On Tue, Dec 10, 2024 at 12:10:31AM +0100, Miguel Ojeda wrote:
+> On Tue, Dec 10, 2024 at 12:05 AM Jocelyn Falempe <jfalempe@redhat.com> wrote:
+> >
+> > You can merge it through rust-fixes. I have another patch [1] under
+> > review that touches this file, but it shouldn't conflict, as the changes
+> > are far from this line.
+> 
+> Sounds good, thanks! (But of course please feel free to merge fixes through DRM)
 
+Yeah I think once rust lands in drm the patches should land through drm
+trees, or we'll have a bit of a mess. Of course with rust expert
+reviews/acks where needed.
+-Sima
 
-On 9 Dec 2024, at 22:25, Miguel Ojeda wrote:
+> > How do you test clippy, so I can check I won't introduce another warning
+> > with this series?
+> 
+> With `CLIPPY=1`, please see:
+> 
+>     https://docs.kernel.org/rust/general-information.html#extra-lints
+> 
+> Cheers,
+> Miguel
 
-> `bindgen` 0.71.0 regressed [1] on the "`--version` requires header"
-> issue which appared in 0.69.0 first [2] and was fixed in 0.69.1. It has=
-
-> been fixed again in 0.71.1 [3].
->
-> Thus document it so that, when we upgrade the minimum past 0.69.0 in th=
-e
-> future, we do not forget that we cannot remove the workaround until we
-> arrive at 0.71.1 at least.
->
-> Link: https://github.com/rust-lang/rust-bindgen/issues/3039 [1]
-> Link: https://github.com/rust-lang/rust-bindgen/issues/2677 [2]
-> Link: https://github.com/rust-lang/rust-bindgen/blob/main/CHANGELOG.md#=
-v0711-2024-12-09 [3]
-> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
-
-Reviewed-by: Fiona Behrens <me@kloenk.dev>
-
-> ---
->  init/Kconfig                 | 6 ++++--
->  scripts/rust_is_available.sh | 6 ++++--
->  2 files changed, 8 insertions(+), 4 deletions(-)
->
-> diff --git a/init/Kconfig b/init/Kconfig
-> index a20e6efd3f0f..e8d2b5128f87 100644
-> --- a/init/Kconfig
-> +++ b/init/Kconfig
-> @@ -1989,8 +1989,10 @@ config BINDGEN_VERSION_TEXT
->  	string
->  	depends on RUST
->  	# The dummy parameter `workaround-for-0.69.0` is required to support =
-0.69.0
-> -	# (https://github.com/rust-lang/rust-bindgen/pull/2678). It can be re=
-moved when
-> -	# the minimum version is upgraded past that (0.69.1 already fixed the=
- issue).
-> +	# (https://github.com/rust-lang/rust-bindgen/pull/2678) and 0.71.0
-> +	# (https://github.com/rust-lang/rust-bindgen/pull/3040). It can be re=
-moved
-> +	# when the minimum version is upgraded past the latter (0.69.1 and 0.=
-71.1
-> +	# both fixed the issue).
->  	default "$(shell,$(BINDGEN) --version workaround-for-0.69.0 2>/dev/nu=
-ll)"
->
->  #
-> diff --git a/scripts/rust_is_available.sh b/scripts/rust_is_available.s=
-h
-> index 93c0ef7fb3fb..d2323de0692c 100755
-> --- a/scripts/rust_is_available.sh
-> +++ b/scripts/rust_is_available.sh
-> @@ -123,8 +123,10 @@ fi
->  # Non-stable and distributions' versions may have a version suffix, e.=
-g. `-dev`.
->  #
->  # The dummy parameter `workaround-for-0.69.0` is required to support 0=
-=2E69.0
-> -# (https://github.com/rust-lang/rust-bindgen/pull/2678). It can be rem=
-oved when
-> -# the minimum version is upgraded past that (0.69.1 already fixed the =
-issue).
-> +# (https://github.com/rust-lang/rust-bindgen/pull/2678) and 0.71.0
-> +# (https://github.com/rust-lang/rust-bindgen/pull/3040). It can be rem=
-oved when
-> +# the minimum version is upgraded past the latter (0.69.1 and 0.71.1 b=
-oth fixed
-> +# the issue).
->  rust_bindings_generator_output=3D$( \
->  	LC_ALL=3DC "$BINDGEN" --version workaround-for-0.69.0 2>/dev/null
->  ) || rust_bindings_generator_code=3D$?
->
-> base-commit: fac04efc5c793dccbd07e2d59af9f90b7fc0dca4
-> -- =
-
-> 2.47.1
+-- 
+Simona Vetter
+Software Engineer, Intel Corporation
+http://blog.ffwll.ch
