@@ -1,42 +1,47 @@
-Received: from mx0a-0064b401.pphosted.com (mx0a-0064b401.pphosted.com [205.220.166.238])
+Received: from mx0b-0064b401.pphosted.com (mx0b-0064b401.pphosted.com [205.220.178.238])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9922211A26
-	for <patches@lists.linux.dev>; Wed, 11 Dec 2024 09:18:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.166.238
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA3171EC4ED;
+	Wed, 11 Dec 2024 09:18:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.178.238
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733908686; cv=none; b=GD6PMYrl/ftFfCqfxiDyYSdhQfRMToU/aCUIzfIaBBrMeakYsF0Y2aeulJcFPXMkgSDeg1qbqDPMCML5cqR5Lp9E4TT620tPa4Z8cxt8/4XAtdF5FD+12ar3Nykuhu8P/XMXYnDhWCHj/27OHVbZIPtcigyDQWFgw55MlcLPnWI=
+	t=1733908691; cv=none; b=tRXp1eM8h3iWN65iKyxIIqpuQjSbyJDGYraCnUTGgARlwN0N563LLT0D8AKYBkZxLQguVMFUly6/uevFYdKDDp8XboLFG62OWxZacjYcL8QuNnafFHuT2Xq1Ke85gGEbLygUEUOge8enr9GnT0cspD4yuaBqT5kjwKBsR7T8BYs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733908686; c=relaxed/simple;
-	bh=kVo6a6DxVmOCyCoM54sp8e3Cs5dhcsi76qwqIuAEqeg=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=FmQfa6atfcvApLjxOWO35spujCkDRFDi+KW+IqPSStncri18TYYQyCi57sIrgZMmR2GrROA8ETgpk5+jANraZdTUo/1fMs/WqJszDXW2hwlNZ90ZUN0UmczuJZz8pSsXQIxcwmxKO/Kg7y7uVD9cfjIdHx+YNTUJEY5dgyOQ22k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=windriver.com; spf=pass smtp.mailfrom=windriver.com; arc=none smtp.client-ip=205.220.166.238
+	s=arc-20240116; t=1733908691; c=relaxed/simple;
+	bh=Ex9VcrgbblC510nuEbwyf/y+gulTHmjHFvcTt6Umtsc=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=PBL2bghrxHntJQoQLN+CP+QJKwQ2sUUWSZsUsqsQev6tLia0KaBTnKYqaWDXwMqfQFKfudCWgD0taNH2hhxlatd09BKfjdL4abkXOf2DRnTY9WC/TvKyRoRYw1CkC507pE10qaO2fxRVheM0Gerwc+mqAffS0HMJV2ZH09q7Ne8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=windriver.com; spf=pass smtp.mailfrom=windriver.com; arc=none smtp.client-ip=205.220.178.238
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=windriver.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=windriver.com
-Received: from pps.filterd (m0250809.ppops.net [127.0.0.1])
-	by mx0a-0064b401.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BB6o27q010580;
-	Wed, 11 Dec 2024 01:17:59 -0800
+Received: from pps.filterd (m0250812.ppops.net [127.0.0.1])
+	by mx0a-0064b401.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BB6LYxd017285;
+	Wed, 11 Dec 2024 09:17:48 GMT
 Received: from ala-exchng01.corp.ad.wrs.com (ala-exchng01.wrs.com [147.11.82.252])
-	by mx0a-0064b401.pphosted.com (PPS) with ESMTPS id 43cwy1v088-3
+	by mx0a-0064b401.pphosted.com (PPS) with ESMTPS id 43cwy3m00q-8
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT);
-	Wed, 11 Dec 2024 01:17:59 -0800 (PST)
+	Wed, 11 Dec 2024 09:17:48 +0000 (GMT)
 Received: from ALA-EXCHNG02.corp.ad.wrs.com (147.11.82.254) by
  ala-exchng01.corp.ad.wrs.com (147.11.82.252) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.43; Wed, 11 Dec 2024 01:17:48 -0800
+ 15.1.2507.43; Wed, 11 Dec 2024 01:17:36 -0800
 Received: from pek-lpg-core1.wrs.com (147.11.136.210) by
  ALA-EXCHNG02.corp.ad.wrs.com (147.11.82.254) with Microsoft SMTP Server id
- 15.1.2507.43 via Frontend Transport; Wed, 11 Dec 2024 01:17:45 -0800
+ 15.1.2507.43 via Frontend Transport; Wed, 11 Dec 2024 01:17:31 -0800
 From: <jianqi.ren.cn@windriver.com>
-To: <pc@manguebit.com>, <gregkh@linuxfoundation.org>
-CC: <patches@lists.linux.dev>, <stfrench@microsoft.com>,
-        <stable@vger.kernel.org>, <sfrench@samba.org>, <pc@cjr.nz>,
-        <lsahlber@redhat.com>, <sprasad@microsoft.com>, <tom@talpey.com>,
-        <linux-cifs@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <samba-technical@lists.samba.org>
-Subject: [PATCH 6.1.y] smb: client: fix potential UAF in cifs_dump_full_key()
-Date: Wed, 11 Dec 2024 18:15:39 +0800
-Message-ID: <20241211101539.2114503-1-jianqi.ren.cn@windriver.com>
+To: <n.zhandarovich@fintech.ru>, <wayne.lin@amd.com>,
+        <gregkh@linuxfoundation.org>
+CC: <patches@lists.linux.dev>, <alexander.deucher@amd.com>,
+        <stable@vger.kernel.org>, <harry.wentland@amd.com>,
+        <sunpeng.li@amd.com>, <Rodrigo.Siqueira@amd.com>,
+        <christian.koenig@amd.com>, <airlied@gmail.com>, <daniel@ffwll.ch>,
+        <Jerry.Zuo@amd.com>, <amd-gfx@lists.freedesktop.org>,
+        <dri-devel@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
+        <sashal@kernel.org>, <alex.hung@amd.com>, <mario.limonciello@amd.com>,
+        <chiahsuan.chung@amd.com>, <hersenxs.wu@amd.com>, <shenshih@amd.com>,
+        <Nicholas.Kazlauskas@amd.com>, <hanghong.ma@amd.com>
+Subject: [PATCH 6.1.y] drm/amd/display: fix NULL checks for adev->dm.dc in amdgpu_dm_fini()
+Date: Wed, 11 Dec 2024 18:15:25 +0800
+Message-ID: <20241211101525.2107003-1-jianqi.ren.cn@windriver.com>
 X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -46,61 +51,70 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-Proofpoint-ORIG-GUID: wgSGPHYKKJJDW4pYfP552ZVK9WX32QuP
-X-Authority-Analysis: v=2.4 cv=eePHf6EH c=1 sm=1 tr=0 ts=675958c7 cx=c_pps a=/ZJR302f846pc/tyiSlYyQ==:117 a=/ZJR302f846pc/tyiSlYyQ==:17 a=RZcAm9yDv7YA:10 a=Li1AiuEPAAAA:8 a=VwQbUJbxAAAA:8 a=yMhMjlubAAAA:8 a=t7CeM3EgAAAA:8 a=1_rInJw21EjIxf1COpsA:9
- a=qGKPP_lnpMOaqR3bcYHU:22 a=FdTzh2GWekK77mhwV6Dw:22
-X-Proofpoint-GUID: wgSGPHYKKJJDW4pYfP552ZVK9WX32QuP
+X-Proofpoint-GUID: r6iSbljGJraWYgEBXFDudMsIc-r1U8ym
+X-Proofpoint-ORIG-GUID: r6iSbljGJraWYgEBXFDudMsIc-r1U8ym
+X-Authority-Analysis: v=2.4 cv=D7O9KuRj c=1 sm=1 tr=0 ts=675958bc cx=c_pps a=/ZJR302f846pc/tyiSlYyQ==:117 a=/ZJR302f846pc/tyiSlYyQ==:17 a=RZcAm9yDv7YA:10 a=DFC7gQDcAAAA:8 a=HH5vDtPzAAAA:8 a=zd2uoN0lAAAA:8 a=t7CeM3EgAAAA:8 a=TusaAkCut-tyimdG5pgA:9
+ a=6mkBMmtgJpxIRZlSFNLW:22 a=QM_-zKB-Ew0MsOlNKMB5:22 a=FdTzh2GWekK77mhwV6Dw:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
  definitions=2024-12-11_09,2024-12-10_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 impostorscore=0
- lowpriorityscore=0 suspectscore=0 mlxlogscore=999 priorityscore=1501
- spamscore=0 phishscore=0 malwarescore=0 mlxscore=0 adultscore=0
- bulkscore=0 classifier=spam authscore=0 adjust=0 reason=mlx scancount=1
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
+ lowpriorityscore=0 bulkscore=0 mlxlogscore=999 spamscore=0 malwarescore=0
+ adultscore=0 priorityscore=1501 mlxscore=0 impostorscore=0 phishscore=0
+ clxscore=1011 classifier=spam authscore=0 adjust=0 reason=mlx scancount=1
  engine=8.21.0-2411120000 definitions=main-2412110070
 
-From: Paulo Alcantara <pc@manguebit.com>
+From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
 
-[ Upstream commit 58acd1f497162e7d282077f816faa519487be045 ]
+[ Upstream commit 2a3cfb9a24a28da9cc13d2c525a76548865e182c ]
 
-Skip sessions that are being teared down (status == SES_EXITING) to
-avoid UAF.
+Since 'adev->dm.dc' in amdgpu_dm_fini() might turn out to be NULL
+before the call to dc_enable_dmub_notifications(), check
+beforehand to ensure there will not be a possible NULL-ptr-deref
+there.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Paulo Alcantara (Red Hat) <pc@manguebit.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Also, since commit 1e88eb1b2c25 ("drm/amd/display: Drop
+CONFIG_DRM_AMD_DC_HDCP") there are two separate checks for NULL in
+'adev->dm.dc' before dc_deinit_callbacks() and dc_dmub_srv_destroy().
+Clean up by combining them all under one 'if'.
+
+Found by Linux Verification Center (linuxtesting.org) with static
+analysis tool SVACE.
+
+Fixes: 81927e2808be ("drm/amd/display: Support for DMUB AUX")
+Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Jianqi Ren <jianqi.ren.cn@windriver.com>
 ---
- fs/smb/client/ioctl.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/fs/smb/client/ioctl.c b/fs/smb/client/ioctl.c
-index ae9905e2b9d4..7402070b7a06 100644
---- a/fs/smb/client/ioctl.c
-+++ b/fs/smb/client/ioctl.c
-@@ -246,7 +246,9 @@ static int cifs_dump_full_key(struct cifs_tcon *tcon, struct smb3_full_key_debug
- 		spin_lock(&cifs_tcp_ses_lock);
- 		list_for_each_entry(server_it, &cifs_tcp_ses_list, tcp_ses_list) {
- 			list_for_each_entry(ses_it, &server_it->smb_ses_list, smb_ses_list) {
--				if (ses_it->Suid == out.session_id) {
-+				spin_lock(&ses_it->ses_lock);
-+				if (ses_it->ses_status != SES_EXITING &&
-+				    ses_it->Suid == out.session_id) {
- 					ses = ses_it;
- 					/*
- 					 * since we are using the session outside the crit
-@@ -254,9 +256,11 @@ static int cifs_dump_full_key(struct cifs_tcon *tcon, struct smb3_full_key_debug
- 					 * so increment its refcount
- 					 */
- 					ses->ses_count++;
-+					spin_unlock(&ses_it->ses_lock);
- 					found = true;
- 					goto search_end;
- 				}
-+				spin_unlock(&ses_it->ses_lock);
- 			}
- 		}
- search_end:
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+index 8dc0f70df24f..7b4d44dcb343 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -1882,14 +1882,14 @@ static void amdgpu_dm_fini(struct amdgpu_device *adev)
+ 		dc_deinit_callbacks(adev->dm.dc);
+ #endif
+ 
+-	if (adev->dm.dc)
++	if (adev->dm.dc) {
+ 		dc_dmub_srv_destroy(&adev->dm.dc->ctx->dmub_srv);
+-
+-	if (dc_enable_dmub_notifications(adev->dm.dc)) {
+-		kfree(adev->dm.dmub_notify);
+-		adev->dm.dmub_notify = NULL;
+-		destroy_workqueue(adev->dm.delayed_hpd_wq);
+-		adev->dm.delayed_hpd_wq = NULL;
++		if (dc_enable_dmub_notifications(adev->dm.dc)) {
++			kfree(adev->dm.dmub_notify);
++			adev->dm.dmub_notify = NULL;
++			destroy_workqueue(adev->dm.delayed_hpd_wq);
++			adev->dm.delayed_hpd_wq = NULL;
++		}
+ 	}
+ 
+ 	if (adev->dm.dmub_bo)
 -- 
 2.25.1
 
