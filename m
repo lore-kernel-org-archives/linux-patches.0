@@ -1,40 +1,40 @@
-Received: from mx0b-0064b401.pphosted.com (mx0b-0064b401.pphosted.com [205.220.178.238])
+Received: from mx0a-0064b401.pphosted.com (mx0a-0064b401.pphosted.com [205.220.166.238])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C04220967F
-	for <patches@lists.linux.dev>; Wed, 11 Dec 2024 09:15:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.178.238
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9628E1BCA0E;
+	Wed, 11 Dec 2024 09:17:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.166.238
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733908554; cv=none; b=pA0y+ooM2G6eu+xCNr3SB6BUIjGnT4VUqWJ7m0fozIzNuH3RYP0u6COyp5q/daA+I7TavygQCl0BPqqIv1eKHGmpBjJWlhNjyW01TGXS2Mf1rZ0vttfyvs+/R1pYZ+ByrdDLovMu6AeDLczdsn4/9W4PjNZ/AaZWb82UN5IsgFE=
+	t=1733908674; cv=none; b=Vkl9IoRAZGCAHSx6WLKrlgHuqee7EFBQjTKESCBmBT54yGrcteX14Wp0p0QJgy5m9b6Y1GzL9D27WTTdIZNoitNIABvVqJgICF/uDp4rhtYQ805es2zwqrwPiSrhwTaazbtLPH3wisvijyd++FSCd61dyXtoKSWnlGWyUiaXlv4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733908554; c=relaxed/simple;
-	bh=DpAHoxvmiwXP/aLXfZTq3taee0LbmccDW5qzfUr5CbU=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=Shbj7A0EEUwSSQU5BdLRCd9Ne3XqMOjDqbZYr39oJIR2CGA1uP8M0WlFogrBmPA/ZWjbDUO3EHUTl5HvFSHLk6YSkjT+J+MFr9fEW7O8cHF0ijGKqCw39tgedW6QRYwFlBhfN8qTP0XNLsrF8IauFy/zcd8u3xxDYMDFSBPoZVw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=windriver.com; spf=pass smtp.mailfrom=windriver.com; arc=none smtp.client-ip=205.220.178.238
+	s=arc-20240116; t=1733908674; c=relaxed/simple;
+	bh=pxVjJM3xlHmqsLWloFW4wOs0kH3D8fuPRBOZEI5nH0Y=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=UGS/4ngMhM4PEPepKTFuBBuBk/ylUSIvSE/VqYA8gHjpUqR2O3qluTQ9+DyaeWufQ6dUBlAJu0zwlJBI/S7EDWZyq91vZHz1iwONDj3m82+iT+6mMQ8Q+I7ZmRe0KGUfvrf7dOnB/eNHK1YY6R3BkHNIl8wE0c64ksbk5XGw964=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=windriver.com; spf=pass smtp.mailfrom=windriver.com; arc=none smtp.client-ip=205.220.166.238
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=windriver.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=windriver.com
-Received: from pps.filterd (m0250811.ppops.net [127.0.0.1])
-	by mx0a-0064b401.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BB6USMj026604;
-	Wed, 11 Dec 2024 09:15:48 GMT
+Received: from pps.filterd (m0250810.ppops.net [127.0.0.1])
+	by mx0a-0064b401.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BB5K1iM031960;
+	Wed, 11 Dec 2024 01:17:31 -0800
 Received: from ala-exchng01.corp.ad.wrs.com (ala-exchng01.wrs.com [147.11.82.252])
-	by mx0a-0064b401.pphosted.com (PPS) with ESMTPS id 43cx4xbyer-15
+	by mx0a-0064b401.pphosted.com (PPS) with ESMTPS id 43cx1u408p-9
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT);
-	Wed, 11 Dec 2024 09:15:47 +0000 (GMT)
+	Wed, 11 Dec 2024 01:17:31 -0800 (PST)
 Received: from ALA-EXCHNG02.corp.ad.wrs.com (147.11.82.254) by
  ala-exchng01.corp.ad.wrs.com (147.11.82.252) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.43; Wed, 11 Dec 2024 01:15:46 -0800
+ 15.1.2507.43; Wed, 11 Dec 2024 01:17:28 -0800
 Received: from pek-lpg-core1.wrs.com (147.11.136.210) by
  ALA-EXCHNG02.corp.ad.wrs.com (147.11.82.254) with Microsoft SMTP Server id
- 15.1.2507.43 via Frontend Transport; Wed, 11 Dec 2024 01:15:44 -0800
+ 15.1.2507.43 via Frontend Transport; Wed, 11 Dec 2024 01:17:26 -0800
 From: <jianqi.ren.cn@windriver.com>
-To: <quic_zijuhu@quicinc.com>, <jianqi.ren.cn@windriver.com>,
-        <gregkh@linuxfoundation.org>
-CC: <patches@lists.linux.dev>, <stable@vger.kernel.org>, <rafael@kernel.org>,
-        <linux-kernel@vger.kernel.org>
-Subject: [PATCH 6.1.y] driver core: bus: Fix double free in driver API bus_register()
-Date: Wed, 11 Dec 2024 18:13:38 +0800
-Message-ID: <20241211101338.2070869-1-jianqi.ren.cn@windriver.com>
+To: <abelova@astralinux.ru>, <gregkh@linuxfoundation.org>
+CC: <patches@lists.linux.dev>, <viresh.kumar@linaro.org>, <perry.yuan@amd.com>,
+        <stable@vger.kernel.org>, <ray.huang@amd.com>, <rafael@kernel.org>,
+        <linux-pm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+Subject: [PATCH 6.1.y] cpufreq: amd-pstate: add check for cpufreq_cpu_get's return value
+Date: Wed, 11 Dec 2024 18:15:20 +0800
+Message-ID: <20241211101520.2105475-1-jianqi.ren.cn@windriver.com>
 X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -44,49 +44,56 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-Proofpoint-GUID: LVyzbo0fMTCNvifZA8Oz0rYyICNmQkyv
-X-Proofpoint-ORIG-GUID: LVyzbo0fMTCNvifZA8Oz0rYyICNmQkyv
-X-Authority-Analysis: v=2.4 cv=Y/UCsgeN c=1 sm=1 tr=0 ts=67595843 cx=c_pps a=/ZJR302f846pc/tyiSlYyQ==:117 a=/ZJR302f846pc/tyiSlYyQ==:17 a=RZcAm9yDv7YA:10 a=VwQbUJbxAAAA:8 a=COk6AnOGAAAA:8 a=ag1SF4gXAAAA:8 a=t7CeM3EgAAAA:8 a=6aJXbah9MAW0KMSe_ywA:9
- a=TjNXssC_j7lpFel5tvFf:22 a=Yupwre4RP9_Eg_Bd0iYG:22 a=FdTzh2GWekK77mhwV6Dw:22
+X-Authority-Analysis: v=2.4 cv=H/shw/Yi c=1 sm=1 tr=0 ts=675958ab cx=c_pps a=/ZJR302f846pc/tyiSlYyQ==:117 a=/ZJR302f846pc/tyiSlYyQ==:17 a=RZcAm9yDv7YA:10 a=KP9VF9y3AAAA:8 a=HH5vDtPzAAAA:8 a=zd2uoN0lAAAA:8 a=KKAkSRfTAAAA:8 a=t7CeM3EgAAAA:8
+ a=T-_msMMreK8bA51VSmQA:9 a=4w0yzETBtB_scsjRCo-X:22 a=QM_-zKB-Ew0MsOlNKMB5:22 a=cvBusfyB2V15izCimMoJ:22 a=FdTzh2GWekK77mhwV6Dw:22
+X-Proofpoint-ORIG-GUID: YOgFNgtlFELGftkDp30WStXb3HIkerFT
+X-Proofpoint-GUID: YOgFNgtlFELGftkDp30WStXb3HIkerFT
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
  definitions=2024-12-11_09,2024-12-10_01,2024-11-22_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- bulkscore=0 mlxscore=0 clxscore=1015 malwarescore=0 priorityscore=1501
- phishscore=0 suspectscore=0 adultscore=0 mlxlogscore=999 spamscore=0
- impostorscore=0 classifier=spam authscore=0 adjust=0 reason=mlx
- scancount=1 engine=8.21.0-2411120000 definitions=main-2412110069
+ phishscore=0 mlxlogscore=999 suspectscore=0 spamscore=0 clxscore=1015
+ impostorscore=0 adultscore=0 priorityscore=1501 malwarescore=0 bulkscore=0
+ mlxscore=0 classifier=spam authscore=0 adjust=0 reason=mlx scancount=1
+ engine=8.21.0-2411120000 definitions=main-2412110069
 
-From: Zijun Hu <quic_zijuhu@quicinc.com>
+From: Anastasia Belova <abelova@astralinux.ru>
 
-[ Upstream commit bfa54a793ba77ef696755b66f3ac4ed00c7d1248 ]
+[ Upstream commit 5493f9714e4cdaf0ee7cec15899a231400cb1a9f ]
 
-For bus_register(), any error which happens after kset_register() will
-cause that @priv are freed twice, fixed by setting @priv with NULL after
-the first free.
+cpufreq_cpu_get may return NULL. To avoid NULL-dereference check it
+and return in case of error.
 
-Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
-Link: https://lore.kernel.org/r/20240727-bus_register_fix-v1-1-fed8dd0dba7a@quicinc.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-[ Using bus->p instead of priv which will be consistent with the context ]
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Signed-off-by: Anastasia Belova <abelova@astralinux.ru>
+Reviewed-by: Perry Yuan <perry.yuan@amd.com>
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
 Signed-off-by: Jianqi Ren <jianqi.ren.cn@windriver.com>
 ---
- drivers/base/bus.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/cpufreq/amd-pstate.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/base/bus.c b/drivers/base/bus.c
-index 339a9edcde5f..028e45d2f7fe 100644
---- a/drivers/base/bus.c
-+++ b/drivers/base/bus.c
-@@ -853,6 +853,8 @@ int bus_register(struct bus_type *bus)
- 	bus_remove_file(bus, &bus_attr_uevent);
- bus_uevent_fail:
- 	kset_unregister(&bus->p->subsys);
-+	/* Above kset_unregister() will kfree @priv */
-+	bus->p = NULL;
- out:
- 	kfree(bus->p);
- 	bus->p = NULL;
+diff --git a/drivers/cpufreq/amd-pstate.c b/drivers/cpufreq/amd-pstate.c
+index 90dcf26f0973..106aef210003 100644
+--- a/drivers/cpufreq/amd-pstate.c
++++ b/drivers/cpufreq/amd-pstate.c
+@@ -309,9 +309,14 @@ static void amd_pstate_adjust_perf(unsigned int cpu,
+ 	unsigned long max_perf, min_perf, des_perf,
+ 		      cap_perf, lowest_nonlinear_perf, max_freq;
+ 	struct cpufreq_policy *policy = cpufreq_cpu_get(cpu);
+-	struct amd_cpudata *cpudata = policy->driver_data;
++	struct amd_cpudata *cpudata;
+ 	unsigned int target_freq;
+ 
++	if (!policy)
++		return;
++
++	cpudata = policy->driver_data;
++
+ 	cap_perf = READ_ONCE(cpudata->highest_perf);
+ 	lowest_nonlinear_perf = READ_ONCE(cpudata->lowest_nonlinear_perf);
+ 	max_freq = READ_ONCE(cpudata->max_freq);
 -- 
 2.25.1
 
