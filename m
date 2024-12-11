@@ -1,63 +1,62 @@
-Received: from mail-yw1-f171.google.com (mail-yw1-f171.google.com [209.85.128.171])
+Received: from mail-yw1-f177.google.com (mail-yw1-f177.google.com [209.85.128.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B8D820A5F9
-	for <patches@lists.linux.dev>; Wed, 11 Dec 2024 21:11:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76AB01C5CDB
+	for <patches@lists.linux.dev>; Wed, 11 Dec 2024 21:17:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733951477; cv=none; b=btF6f3Q15bMM6TD4Ns7/0yxd8QZFIAUoCLpmu0m99TnQSzafOgQB/FYlr5JDDPClhWD3vLlewJ7JT4dln3hVd3GQteUZVKLgn+iWlZUkLhuZwsaSaNGesec9inKNLmda59MYPBl5u1ekW6q9FhE88Vt56RdCJtWja1PSHk237SA=
+	t=1733951830; cv=none; b=jVnxkayRoiy1R+5s/Ld7DcpUH58kh4LmxPk9mSgYFMKD5JW84RSBOVsbLySXa1MFpVYTam/54gNhZyD3RH+iRqd0XvS8LqvT/wgkxvWcf2eQN+xyDnXyOBIt8CNx1mjUaquxZqzN9GyS5MsCH5cC/q+rgVqo+a+FFqEcgS70fPc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733951477; c=relaxed/simple;
-	bh=fL4AZO7DuUqncD1hviX7Ju8fEoY0KFiDTXpqXPG3i0I=;
-	h=MIME-Version:In-Reply-To:References:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=nVl0LSxg2/8dDRGTHzGM4+FfBKxNR7ZE74YoVlQI3bMhugPluxPvJkOCDW3DLR2B8SpFzn7QMmZBDbCU1OoossXarbr4F196Ejl/mLfqRFFKpeV8JetbN5QJg5Z/b3dkIXSBacEGRkFzE3EvgULzxDKBgKVjylruU587fnMdS/I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=nT6157Yc; arc=none smtp.client-ip=209.85.128.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+	s=arc-20240116; t=1733951830; c=relaxed/simple;
+	bh=Gd2Z3aLtq0yk3TJ1sI0ESwqS2vGsvt4ZlCI44gpExwA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=d2NVIlh7L4HJQwpgU/DHLQz4IJSP2+MIWVFBvDWneICqBSDoVT0ysfb+whQLdgVOM3l4j334j2O3B+tPKH03z1R/hdLDPuX87l0BnSE4zF+ILePH0Ge9vmS8/k57s1Zs+Qzd4snpJxojWe0TCxhkB2rUQoumiG4qzMCbtIWv3ys=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=WQh7SIzj; arc=none smtp.client-ip=209.85.128.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="nT6157Yc"
-Received: by mail-yw1-f171.google.com with SMTP id 00721157ae682-6ef60e500d7so49692197b3.0
-        for <patches@lists.linux.dev>; Wed, 11 Dec 2024 13:11:16 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="WQh7SIzj"
+Received: by mail-yw1-f177.google.com with SMTP id 00721157ae682-6efeb120f4dso43473837b3.0
+        for <patches@lists.linux.dev>; Wed, 11 Dec 2024 13:17:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1733951475; x=1734556275; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:user-agent:from:references
-         :in-reply-to:mime-version:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=fL4AZO7DuUqncD1hviX7Ju8fEoY0KFiDTXpqXPG3i0I=;
-        b=nT6157Yc2zQV8aM71/ayOS7+mkGq+UQOsDYVsKHWKFDXfyBxD1OLcFoBG9eCgGKgHE
-         MlAZZlWZNT5PMv9WlITd2bf2pZ0Nr+e8j+axizqeIpAAMe2nLOwXwA1SM9yvIyksWsyD
-         XwYMR0R5pJIeqcQm0/A/oOL1Z/YtfQ7VRmLw0=
+        d=linaro.org; s=google; t=1733951827; x=1734556627; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=vbOAZlNnNpVSTQN+1o758lLTB1uimwZrSwxfkYzKt/0=;
+        b=WQh7SIzjmSJ1RHat/LQZMw3SdY+GMzhnyInh2SZStn08kQ5CdEf2ZYL+Yb32Sqg4/D
+         HZCv+vXlH/SVMxp88Ks9hsUsHW8cq9UZQAjKlL1uJOmonr4qU+Zxlhh31P0yEpODVgRb
+         CI2dkX8OUdvS73S92OSOB6Z+d0JRPsL/v1dz4X6tlFBVmrpBRJwA6itJVvJsTqZ8pKV1
+         ADX2rZY71aicrn9kYP0C+07/PCLc+QyTUbwmN3TRikBx+zC9JhZ0XH5w9XjH7QNBVC9r
+         ryWHrcljzYGnaV5bp/irMpdR4fo38m5TnRZDjueSpVjk7n48JkgfYGYUcK7OOeBXGr77
+         h3PA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733951475; x=1734556275;
-        h=cc:to:subject:message-id:date:user-agent:from:references
-         :in-reply-to:mime-version:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=fL4AZO7DuUqncD1hviX7Ju8fEoY0KFiDTXpqXPG3i0I=;
-        b=ZN5x92oYpjOzK3kjv6EF9u4WSiUbDo1eBofb2ktTEiT/YlTi7Lmv61dlMZZH9oYc56
-         nTkCJ+FuzdwUVWFck0HDokCvFVtzOpX+66hNH1jrOGcbUBY0JvvmDJgDJxggak8nNJnG
-         6XPQWX0pB2GybClcxR1sPbmsIdorxEVW0s8PEk0MLC+HIGMaYmPIGKHc788h9B4o8/Fg
-         QvOUfc+snLMyPRbPGHws7qOAwFUR/PkK3ZfeVCcpa7Q6WxH/XRh3dA0xxnfyccDMqeST
-         cCUJENYxXsOR98jxh8F1fDrEoN+8KbGBxBcfvVXPCOgPseeYIcldGA9bqGTmHM/jmIha
-         cBnA==
-X-Forwarded-Encrypted: i=1; AJvYcCU/TQaXFGxvi0Gb9SBu7AU6WOkdMwS/mHJP3RRLTB+VOwYqCTqN3MsOcTKlY6i5wyj/aGPJdYXe@lists.linux.dev
-X-Gm-Message-State: AOJu0YyzKXAupLQSyAwRXF7gf86SsyM6HFm3EZ+Qdrjdqx6UkjwZHVB1
-	8hmk7aba5NQJhN78U/ZaO6dPE/UN72yfh7jQIGhmNiKtWNH6gQSr9ufzE0llH0yEFDG84CPJmGP
-	qduiMH2SlWUNyvmcFQZeqSfwUqZvBG6Mbks1s
-X-Gm-Gg: ASbGncvneupWXHOsL526LEbdW3vgBeMp5mJ69865R9LkoYnQ8psX9+NRJcnxvJHaxIt
-	FkTRs+uE9/aN/bPQAbpFqwIOEAXuDQ6vej7hYy0X6INrsDCNQQ6iWP6x9h44JCPE=
-X-Google-Smtp-Source: AGHT+IGR6ED4gGgHGmi77s2dwB+gnLghGdTv2zo6xXg1u+pxnZVS/4VVQlWKhmq+504JY9ZZ4GSEuX2qWpyqxoxUo7A=
-X-Received: by 2002:a05:6902:1b87:b0:e39:7a24:a5c3 with SMTP id
- 3f1490d57ef6-e3da1eed190mr753786276.32.1733951475289; Wed, 11 Dec 2024
- 13:11:15 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 11 Dec 2024 13:11:14 -0800
+        d=1e100.net; s=20230601; t=1733951827; x=1734556627;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=vbOAZlNnNpVSTQN+1o758lLTB1uimwZrSwxfkYzKt/0=;
+        b=OizarP+GiMOvGMb9GbROL99GUar5EeYzvFrJ/qg7H/na22d/rVUBloAIhsgd8Z5XKE
+         FUvJKMWEOr5/Vz1UHduJvR02bi2DSC/CqIhu5rdqcVI6teLvGybkbchVVMQgNWE+tPQe
+         J0ZWm2Zqo5hpImT+t4QdE4KzFqqXQFH+J6l8owZL/A02sP6VaHHZZfSa1rd9+ZqliMGy
+         3LqfjqIZp2rEvTyYeoRaF9X2XUXNfLXSWojEoDHFx5i0GGtM01qliRwv4mqV/nIhz1vI
+         4Y4Q7WOeBgw+Ury4I2AeyDZkN3O//vEBRMMSuTfwmYzV4vm+94AE+rKzb6U4yjp2AGQY
+         7JOA==
+X-Forwarded-Encrypted: i=1; AJvYcCWOBVRCU4TBDeBNXPtoywy7gwXzkMzle078IX8s/ZtPEO4Y6mzD7cymU4/IjZRU0PLHRqLkmuyl@lists.linux.dev
+X-Gm-Message-State: AOJu0Ywd7xGSm1BfCawEiKmhTQMcNikFxu23aUndjPXClBepgjdwFwRN
+	9TP93ZEq29LXVnSsHywLoKEdpLZaAZAx78/NyAUBehgQBVSzphH8C5+fA+dbxBYkPyuM8kUCofl
+	vrav4Bz8DkeJ5FcEZRdXkRrLhSoq9NX9aAuuIeg==
+X-Gm-Gg: ASbGncsAuw5a6QweZDxgZvG7tdP71UIyJLY4O2XHzMcTJJowEYEy46vt0hpaLHWx2cm
+	R/124cLxeB69af32FfK0YIgH8z35mHBdp97k+
+X-Google-Smtp-Source: AGHT+IFfEcADkSKdG/yxS4NVADevkh5d06VtG5D2MymFrYSLQArMJkdl7zeaP7DPQ5MsRfbOG1YaN86DJzP4pureEqE=
+X-Received: by 2002:a05:690c:6f10:b0:6ee:a89e:af3b with SMTP id
+ 00721157ae682-6f198a3ce6amr10757187b3.9.1733951827476; Wed, 11 Dec 2024
+ 13:17:07 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-In-Reply-To: <kidsjzklpxvvamct3glvoawavoi5mjuyh3on5kbtfp6gavwxxn@eack224zuqa3>
 References: <yk3xidaisbd56yndaucax7otijjauqmm7lqm6q4q633kdawlqo@qaq27lwxmvwd>
  <gstohhcdnmnkszk4l2ikd5xiewtotgo5okia62paauj6zpaw7y@4wchyvoynm2p>
  <CAE-0n50z6MNa7WOsg-NU7k8BpFeJJyYfHX3ov6DsthLWauSNpA@mail.gmail.com>
@@ -66,14 +65,15 @@ References: <yk3xidaisbd56yndaucax7otijjauqmm7lqm6q4q633kdawlqo@qaq27lwxmvwd>
  <5kisfv22tgqwzjpxqrbx56ywr7l4r7pny3pl2r7crv4rijqbwk@azricdasttg7>
  <CAE-0n50Bxi2GfnxOmMwe-F+k5jMSiyAVPDb6K8pYm-i6hpJTOA@mail.gmail.com>
  <cartdeijkv6z23dgm7uif4lti3lahfqmuyxcmruzqbefhsp6yk@m6ocjhncs2ko>
- <CAE-0n51-QLLje0f7T4p3xK6Q-FRk4K0NUrVVm4cxkKoevuzktw@mail.gmail.com> <kidsjzklpxvvamct3glvoawavoi5mjuyh3on5kbtfp6gavwxxn@eack224zuqa3>
-From: Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.12.dev1+gaa8c22fdeedb
-Date: Wed, 11 Dec 2024 13:11:14 -0800
-Message-ID: <CAE-0n52F+cvVyXm8g8idN2eMfx4bpaEpWQRchr8=AO87N7E3fg@mail.gmail.com>
+ <CAE-0n51-QLLje0f7T4p3xK6Q-FRk4K0NUrVVm4cxkKoevuzktw@mail.gmail.com>
+ <kidsjzklpxvvamct3glvoawavoi5mjuyh3on5kbtfp6gavwxxn@eack224zuqa3> <CAE-0n52F+cvVyXm8g8idN2eMfx4bpaEpWQRchr8=AO87N7E3fg@mail.gmail.com>
+In-Reply-To: <CAE-0n52F+cvVyXm8g8idN2eMfx4bpaEpWQRchr8=AO87N7E3fg@mail.gmail.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Wed, 11 Dec 2024 23:16:56 +0200
+Message-ID: <CAA8EJppVgw1Qb4kGY1Y-A3-KrinKfX2zGUuwMCY_-gG96fgocA@mail.gmail.com>
 Subject: Re: [PATCH v4 15/18] dt-bindings: usb: Add ports to
  google,cros-ec-typec for DP altmode
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Stephen Boyd <swboyd@chromium.org>
 Cc: chrome-platform@lists.linux.dev, linux-kernel@vger.kernel.org, 
 	patches@lists.linux.dev, devicetree@vger.kernel.org, 
 	Douglas Anderson <dianders@chromium.org>, Pin-yen Lin <treapking@chromium.org>, 
@@ -97,23 +97,31 @@ Cc: chrome-platform@lists.linux.dev, linux-kernel@vger.kernel.org,
 	Vinod Koul <vkoul@kernel.org>, Rob Herring <robh@kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 
-Quoting Dmitry Baryshkov (2024-12-05 10:47:08)
-> On Tue, Dec 03, 2024 at 03:50:58PM -0800, Stephen Boyd wrote:
-> >
-> > The easiest way to imagine this is that we took the usb-c-connector and
-> > jammed an HDMI dongle in there with some glue so that it can never be
-> > removed. There isn't any USB going there either because it can't be
-> > used. I suppose we can continue to describe this with an
-> > altmodes/displayport node but then add some compatible like
-> > "usb-c-hdmi-connector" or another property to the altmodes/displayport
-> > node like "type = hdmi" that signifies this is a connector that only
-> > outputs HDMI.
+On Wed, 11 Dec 2024 at 23:11, Stephen Boyd <swboyd@chromium.org> wrote:
 >
-> Does that DP-to-HDMI bridge talk USB-C or just pure DP? In other words,
-> will it be properly discovered and handled if we just leave it as a
-> weird usb-c-connector (maybe with an additional annotation, we have
-> USB_PORT_CONNECT_TYPE_HARD_WIRED for USB ports, we might have something
-> similar for Type-C connectors).
+> Quoting Dmitry Baryshkov (2024-12-05 10:47:08)
+> > On Tue, Dec 03, 2024 at 03:50:58PM -0800, Stephen Boyd wrote:
+> > >
+> > > The easiest way to imagine this is that we took the usb-c-connector and
+> > > jammed an HDMI dongle in there with some glue so that it can never be
+> > > removed. There isn't any USB going there either because it can't be
+> > > used. I suppose we can continue to describe this with an
+> > > altmodes/displayport node but then add some compatible like
+> > > "usb-c-hdmi-connector" or another property to the altmodes/displayport
+> > > node like "type = hdmi" that signifies this is a connector that only
+> > > outputs HDMI.
+> >
+> > Does that DP-to-HDMI bridge talk USB-C or just pure DP? In other words,
+> > will it be properly discovered and handled if we just leave it as a
+> > weird usb-c-connector (maybe with an additional annotation, we have
+> > USB_PORT_CONNECT_TYPE_HARD_WIRED for USB ports, we might have something
+> > similar for Type-C connectors).
+>
+> It is pure DP. Maybe we can have a google,cros-ec-usbc-hdmi compatible
+> string here because this is a weird design.
 
-It is pure DP. Maybe we can have a google,cros-ec-usbc-hdmi compatible
-string here because this is a weird design.
+Just google,cros-ec-hdmi for the corresponding connector?
+
+-- 
+With best wishes
+Dmitry
