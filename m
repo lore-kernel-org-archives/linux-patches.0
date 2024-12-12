@@ -1,40 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE5C4215762;
-	Thu, 12 Dec 2024 17:12:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE0E72139D2;
+	Thu, 12 Dec 2024 17:12:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734023539; cv=none; b=UI+BoIhB3eFsRyjY7254zzJnyMzbhshyYYMxqX2CbuGApy4mprL+n+sg+r2n/dN94bww65kiL3LlIoRAjw7A58LI5B46RqxRWU/Cl4rI8C2syEvPXYr7jU5Ur7Z6qJWFXv2lzwBxA2I90K1LRICknJwoWAgEowlds9jhqjxqqpA=
+	t=1734023542; cv=none; b=d2zYvlGjhYdcq21ARoSQ978zml1fYXL18cXw0GGPz+VoFSERmu+EcE7bcv7gdCG1NUvzd9QrbASTWaAzawctqR6upMpkvwcubaCfMVjhCM+JMemV0Puit4w9oLXaxa6nXo3n7S/HLupII5uGHHEgq8rxCcLOqOETbWVGQdB3YCw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734023539; c=relaxed/simple;
-	bh=Bbc9MGE65AQE3Z8YccsBb8IAFdq7maCLKrtmZYN0N6o=;
+	s=arc-20240116; t=1734023542; c=relaxed/simple;
+	bh=51SCpxPzUkGZ9PbD0NS79+mbu28D4TNFrfwKGGZRqGw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bTQDqH8t+lfDqgOOwzu+msyG5aYyhKPNhnPvTRcoHZ7asD34eicBxWDcQuwpGzkaOpvidPW0ZTzGS26OWGg5BeQohDG50EYOPTA7x8ngac8FO0MRZeW29fMjiW61AqTihslTNYGCEiv+NhRFhfkZFNP0hJh2Zb9WH5d0k4v2JmA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EHt15GkD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bbUlOmNkjWxRp60Vup59DwXiSS2oPo4MGAsKvB8zrKEeatnDOmZ+bo7LTvG+YQEVIB84pepe001ApWAvvWB1ier0TTbCYvKEpcgWKzw16V7WrFGMEQLi53eWpjT4NNAtLK1rb/LW3Zcos0+/csD2DrV1l/9lbb6E8OP5y92UDFE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tol0uzep; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EHt15GkD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D9F5C4CED0;
-	Thu, 12 Dec 2024 17:12:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tol0uzep"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F73DC4CED0;
+	Thu, 12 Dec 2024 17:12:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734023538;
-	bh=Bbc9MGE65AQE3Z8YccsBb8IAFdq7maCLKrtmZYN0N6o=;
+	s=korg; t=1734023541;
+	bh=51SCpxPzUkGZ9PbD0NS79+mbu28D4TNFrfwKGGZRqGw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EHt15GkDwJ3Xor050uQO5ROlP9MkQKFPsIhwKmtsTtT1Ab20lkWz9wCw967RObo2m
-	 zuBXpNLnaXgxCN3hDx7Xdcv/nO9KKFLZsksV/oIkMmMvbBz1vIYFn+crvoi7W4SHtS
-	 IKmBCxueyQECbGRtBk+3Wl6VfSlOipnkrDsMNnH0=
+	b=tol0uzep5Aa9HU6sHTFOzE7OJx27U49tiHhL3PPcAhY+CcX3z474yBXlIuITJcVDv
+	 8pWX9tsPG/OXSwE+G5z+k8sltWja7Nx960lo/addA4Qghd06G4oGUSVLZHW9lTIb9A
+	 Y+Q7jIO70Q8Nz3Jrei55ysdScHgwUtULKBRRw+ng=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harry Wentland <harry.wentland@amd.com>,
-	Hamza Mahfooz <hamza.mahfooz@amd.com>,
-	Alex Hung <alex.hung@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Keerthana K <keerthana.kalyanasundaram@broadcom.com>
-Subject: [PATCH 5.15 548/565] drm/amd/display: Check BIOS images before it is used
-Date: Thu, 12 Dec 2024 16:02:23 +0100
-Message-ID: <20241212144333.517450355@linuxfoundation.org>
+	Heming Zhao <heming.zhao@suse.com>
+Subject: [PATCH 5.15 549/565] ocfs2: Revert "ocfs2: fix the la space leak when unmounting an ocfs2 volume"
+Date: Thu, 12 Dec 2024 16:02:24 +0100
+Message-ID: <20241212144333.556979035@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144311.432886635@linuxfoundation.org>
 References: <20241212144311.432886635@linuxfoundation.org>
@@ -53,82 +49,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Hung <alex.hung@amd.com>
+From: Heming Zhao <heming.zhao@suse.com>
 
-commit 8b0ddf19cca2a352b2a7e01d99d3ba949a99c84c upstream.
+This reverts commit dfe6c5692fb5 ("ocfs2: fix the la space leak when
+unmounting an ocfs2 volume").
 
-BIOS images may fail to load and null checks are added before they are
-used.
+In commit dfe6c5692fb5, the commit log "This bug has existed since the
+initial OCFS2 code." is wrong. The correct introduction commit is
+30dd3478c3cd ("ocfs2: correctly use ocfs2_find_next_zero_bit()").
 
-This fixes 6 NULL_RETURNS issues reported by Coverity.
+The influence of commit dfe6c5692fb5 is that it provides a correct
+fix for the latest kernel. however, it shouldn't be pushed to stable
+branches. Let's use this commit to revert all branches that include
+dfe6c5692fb5 and use a new fix method to fix commit 30dd3478c3cd.
 
-Reviewed-by: Harry Wentland <harry.wentland@amd.com>
-Acked-by: Hamza Mahfooz <hamza.mahfooz@amd.com>
-Signed-off-by: Alex Hung <alex.hung@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Keerthana K <keerthana.kalyanasundaram@broadcom.com>
+Fixes: dfe6c5692fb5 ("ocfs2: fix the la space leak when unmounting an ocfs2 volume")
+Signed-off-by: Heming Zhao <heming.zhao@suse.com>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/bios/bios_parser.c |   14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ fs/ocfs2/localalloc.c |   19 -------------------
+ 1 file changed, 19 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/dc/bios/bios_parser.c
-+++ b/drivers/gpu/drm/amd/display/dc/bios/bios_parser.c
-@@ -664,6 +664,9 @@ static enum bp_result get_ss_info_v3_1(
+--- a/fs/ocfs2/localalloc.c
++++ b/fs/ocfs2/localalloc.c
+@@ -1008,25 +1008,6 @@ static int ocfs2_sync_local_to_main(stru
+ 		start = bit_off + 1;
+ 	}
  
- 	ss_table_header_include = GET_IMAGE(ATOM_ASIC_INTERNAL_SS_INFO_V3,
- 		DATA_TABLES(ASIC_InternalSS_Info));
-+	if (!ss_table_header_include)
-+		return BP_RESULT_UNSUPPORTED;
-+
- 	table_size =
- 		(le16_to_cpu(ss_table_header_include->sHeader.usStructureSize)
- 				- sizeof(ATOM_COMMON_TABLE_HEADER))
-@@ -1031,6 +1034,8 @@ static enum bp_result get_ss_info_from_i
- 
- 	header = GET_IMAGE(ATOM_ASIC_INTERNAL_SS_INFO_V2,
- 		DATA_TABLES(ASIC_InternalSS_Info));
-+	if (!header)
-+		return result;
- 
- 	memset(info, 0, sizeof(struct spread_spectrum_info));
- 
-@@ -1104,6 +1109,8 @@ static enum bp_result get_ss_info_from_s
- 	get_atom_data_table_revision(header, &revision);
- 
- 	tbl = GET_IMAGE(ATOM_SPREAD_SPECTRUM_INFO, DATA_TABLES(SS_Info));
-+	if (!tbl)
-+		return result;
- 
- 	if (1 != revision.major || 2 > revision.minor)
- 		return result;
-@@ -1631,6 +1638,8 @@ static uint32_t get_ss_entry_number_from
- 
- 	tbl = GET_IMAGE(ATOM_SPREAD_SPECTRUM_INFO,
- 			DATA_TABLES(SS_Info));
-+	if (!tbl)
-+		return number;
- 
- 	if (1 != revision.major || 2 > revision.minor)
- 		return number;
-@@ -1711,6 +1720,8 @@ static uint32_t get_ss_entry_number_from
- 
- 	header_include = GET_IMAGE(ATOM_ASIC_INTERNAL_SS_INFO_V2,
- 			DATA_TABLES(ASIC_InternalSS_Info));
-+	if (!header_include)
-+		return 0;
- 
- 	size = (le16_to_cpu(header_include->sHeader.usStructureSize)
- 			- sizeof(ATOM_COMMON_TABLE_HEADER))
-@@ -1748,6 +1759,9 @@ static uint32_t get_ss_entry_number_from
- 
- 	header_include = GET_IMAGE(ATOM_ASIC_INTERNAL_SS_INFO_V3,
- 			DATA_TABLES(ASIC_InternalSS_Info));
-+	if (!header_include)
-+		return number;
-+
- 	size = (le16_to_cpu(header_include->sHeader.usStructureSize) -
- 			sizeof(ATOM_COMMON_TABLE_HEADER)) /
- 					sizeof(ATOM_ASIC_SS_ASSIGNMENT_V3);
+-	/* clear the contiguous bits until the end boundary */
+-	if (count) {
+-		blkno = la_start_blk +
+-			ocfs2_clusters_to_blocks(osb->sb,
+-					start - count);
+-
+-		trace_ocfs2_sync_local_to_main_free(
+-				count, start - count,
+-				(unsigned long long)la_start_blk,
+-				(unsigned long long)blkno);
+-
+-		status = ocfs2_release_clusters(handle,
+-				main_bm_inode,
+-				main_bm_bh, blkno,
+-				count);
+-		if (status < 0)
+-			mlog_errno(status);
+-	}
+-
+ bail:
+ 	if (status)
+ 		mlog_errno(status);
 
 
