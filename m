@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0295222D41;
-	Thu, 12 Dec 2024 15:42:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E98632185A8;
+	Thu, 12 Dec 2024 15:42:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734018173; cv=none; b=Wf1rrM3N2CB9i3EFc4cYNpHudt57s/+UT764L8IyA3d3V+5Ye40g7glkY7CznmElRcC19KhigK7gNT0IaW26Ki+Wx7ltbxlVwpsEZlkRjvVpJY2NwfQmGwMmHF3jKEuxpGyzoyR+B6QEhUzup84ZTUYdWr2eXQDu1j+oqwyfid0=
+	t=1734018177; cv=none; b=tyETZCtoazj3DyuBKKnkmgaccJ4KX0bv+YyOZ0qMCUvuBhHLU1ULlfXf9xDN2Dx6GVHcwrfE4zLPw5pJNBjFqdqz1GURB+UN+JLMzKMvX4s98i5Hmo4KnWHG4i91GiNL34arb4a82uTRr3bh2Dewjr9pj6e5LpAgkhAQJ326sv8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734018173; c=relaxed/simple;
-	bh=8Gx9v2TiUcU8RnSyTgqBQL2jWQWkh0loQTBqf0e54Ec=;
+	s=arc-20240116; t=1734018177; c=relaxed/simple;
+	bh=9adRds/7pEcKq8eJgr5Jnlqy0pHttk3HtY7D03Aqz5Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ATDnczeNR98AdYKFH9Jih9/OqeF8JddtraHvs83/iWHUmqGK2qlnYZcknR6kv8jO6y9OR6aBMUYdMrMUPUZ68nIOWu6ESUGUn/6O7uSqK+G3wq+Ck29z6uOCI7yebEyfNN7v8nVmhlDq8pL2MO0F15fHkDLr2UVIx5cFVKf7mec=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QSfKLg6y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TXJ8Q2W5/ZV43awIe6Wzmyy/BPvgHExsKUuHd92J95t0hGEiuk8wEYidRrmTFhUIUekPunpohcmmZqyktWLuNVJGHvuLqe1eo3CS0Mt4f3uthIYqzH4APpdx23VcwNeh6qzzG10xoAV7HwXE/lI54+jRPYN3Rkzk3pTF4r6eYUo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AkOfRp48; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QSfKLg6y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20EE2C4CECE;
-	Thu, 12 Dec 2024 15:42:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AkOfRp48"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68ACDC4CECE;
+	Thu, 12 Dec 2024 15:42:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734018173;
-	bh=8Gx9v2TiUcU8RnSyTgqBQL2jWQWkh0loQTBqf0e54Ec=;
+	s=korg; t=1734018176;
+	bh=9adRds/7pEcKq8eJgr5Jnlqy0pHttk3HtY7D03Aqz5Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QSfKLg6y1zuNWW809DZyesVJFrS4IfxcAbgcb+4E4gw8CDqlKNqyCwCTTdU95dh4T
-	 5Q6sVKHjgG4E0CskFcsNKdv1eOAe/86n/069tNbQnf5f4UGRkxbC5KllVoSaUkQltL
-	 A7Xrlq5ebKTXsX5Dh1MTAvsoMgI5Myu0C1Wc5eOY=
+	b=AkOfRp48v59sog9/+VTHIUl94S/sYjhBS/2yXa2rlqdjOOuxeUIUTQHA0tGhCUirW
+	 cRADVRVOZ5NvbLz7Sa0gaQzwg5V54WyHYz5OiHpsdHN6MbzMQ34QzkwgYABgoEHrvp
+	 YxLYtPhCdZnzq1IxBiH3rL7CELYm2+2OPQg6rR7o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
+	Tommy Giesler <tommy.giesler@hetzner.com>,
+	Sarah Maedel <sarah.maedel@hetzner-cloud.de>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 218/356] ALSA: hda/conexant: Use the new codec SSID matching
-Date: Thu, 12 Dec 2024 15:58:57 +0100
-Message-ID: <20241212144253.231369273@linuxfoundation.org>
+Subject: [PATCH 6.6 192/356] hwmon: (nct6775) Add 665-ACE/600M-CL to ASUS WMI monitoring list
+Date: Thu, 12 Dec 2024 15:58:31 +0100
+Message-ID: <20241212144252.214327831@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144244.601729511@linuxfoundation.org>
 References: <20241212144244.601729511@linuxfoundation.org>
@@ -50,74 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Sarah Maedel <sarah.maedel@hetzner-cloud.de>
 
-[ Upstream commit 1f55e3699fc9ced72400cdca39fe248bf2b288a2 ]
+[ Upstream commit ccae49e5cf6ebda1a7fa5d2ca99500987c7420c4 ]
 
-Now we can perform the codec ID matching primarily, and reduce the
-conditional application of the quirk for conflicting PCI SSID between
-System76 and Tuxedo devices.
+Boards such as
+* Pro WS 665-ACE
+* Pro WS 600M-CL
+have got a nct6775 chip, but by default there's no use of it
+because of resource conflict with WMI method.
 
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20241008120233.7154-3-tiwai@suse.de
+Add affected boards to the WMI monitoring list.
+
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=204807
+Co-developed-by: Tommy Giesler <tommy.giesler@hetzner.com>
+Signed-off-by: Tommy Giesler <tommy.giesler@hetzner.com>
+Signed-off-by: Sarah Maedel <sarah.maedel@hetzner-cloud.de>
+Message-ID: <20241018074611.358619-1-sarah.maedel@hetzner-cloud.de>
+[groeck: Change commit message to imperative mood]
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_conexant.c | 28 +++++++---------------------
- 1 file changed, 7 insertions(+), 21 deletions(-)
+ drivers/hwmon/nct6775-platform.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/sound/pci/hda/patch_conexant.c b/sound/pci/hda/patch_conexant.c
-index 5cd3589153b6d..b3208b068dd80 100644
---- a/sound/pci/hda/patch_conexant.c
-+++ b/sound/pci/hda/patch_conexant.c
-@@ -832,23 +832,6 @@ static const struct hda_pintbl cxt_pincfg_sws_js201d[] = {
- 	{}
- };
- 
--/* pincfg quirk for Tuxedo Sirius;
-- * unfortunately the (PCI) SSID conflicts with System76 Pangolin pang14,
-- * which has incompatible pin setup, so we check the codec SSID (luckily
-- * different one!) and conditionally apply the quirk here
-- */
--static void cxt_fixup_sirius_top_speaker(struct hda_codec *codec,
--					 const struct hda_fixup *fix,
--					 int action)
--{
--	/* ignore for incorrectly picked-up pang14 */
--	if (codec->core.subsystem_id == 0x278212b3)
--		return;
--	/* set up the top speaker pin */
--	if (action == HDA_FIXUP_ACT_PRE_PROBE)
--		snd_hda_codec_set_pincfg(codec, 0x1d, 0x82170111);
--}
--
- static const struct hda_fixup cxt_fixups[] = {
- 	[CXT_PINCFG_LENOVO_X200] = {
- 		.type = HDA_FIXUP_PINS,
-@@ -1013,8 +996,11 @@ static const struct hda_fixup cxt_fixups[] = {
- 		.v.pins = cxt_pincfg_sws_js201d,
- 	},
- 	[CXT_PINCFG_TOP_SPEAKER] = {
--		.type = HDA_FIXUP_FUNC,
--		.v.func = cxt_fixup_sirius_top_speaker,
-+		.type = HDA_FIXUP_PINS,
-+		.v.pins = (const struct hda_pintbl[]) {
-+			{ 0x1d, 0x82170111 },
-+			{ }
-+		},
- 	},
- };
- 
-@@ -1113,8 +1099,8 @@ static const struct hda_quirk cxt5066_fixups[] = {
- 	SND_PCI_QUIRK_VENDOR(0x17aa, "Thinkpad", CXT_FIXUP_THINKPAD_ACPI),
- 	SND_PCI_QUIRK(0x1c06, 0x2011, "Lemote A1004", CXT_PINCFG_LEMOTE_A1004),
- 	SND_PCI_QUIRK(0x1c06, 0x2012, "Lemote A1205", CXT_PINCFG_LEMOTE_A1205),
--	SND_PCI_QUIRK(0x2782, 0x12c3, "Sirius Gen1", CXT_PINCFG_TOP_SPEAKER),
--	SND_PCI_QUIRK(0x2782, 0x12c5, "Sirius Gen2", CXT_PINCFG_TOP_SPEAKER),
-+	HDA_CODEC_QUIRK(0x2782, 0x12c3, "Sirius Gen1", CXT_PINCFG_TOP_SPEAKER),
-+	HDA_CODEC_QUIRK(0x2782, 0x12c5, "Sirius Gen2", CXT_PINCFG_TOP_SPEAKER),
- 	{}
- };
- 
+diff --git a/drivers/hwmon/nct6775-platform.c b/drivers/hwmon/nct6775-platform.c
+index 706a662dd077d..7e0ac3fcbc050 100644
+--- a/drivers/hwmon/nct6775-platform.c
++++ b/drivers/hwmon/nct6775-platform.c
+@@ -1350,6 +1350,8 @@ static const char * const asus_msi_boards[] = {
+ 	"Pro H610M-CT D4",
+ 	"Pro H610T D4",
+ 	"Pro Q670M-C",
++	"Pro WS 600M-CL",
++	"Pro WS 665-ACE",
+ 	"Pro WS W680-ACE",
+ 	"Pro WS W680-ACE IPMI",
+ 	"Pro WS W790-ACE",
 -- 
 2.43.0
 
