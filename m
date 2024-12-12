@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE25F21660B;
-	Thu, 12 Dec 2024 17:15:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E5142210F2;
+	Thu, 12 Dec 2024 17:15:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734023750; cv=none; b=q1aVZq1guTuxYZyzolFVUlpVqy5c8wCoNZFsPeR4pmqWIYtJxcCcdvhQN6V3JLMrGVy7oWqEy+gkU+QE9Dhg+p5xNebTNA7DDZBFvncxqJa4i5H/DWiYF7AEjj4BwqLmYdN0Gju3zao0lnUc9HJcriFQNilePwca/kceevIRN/Y=
+	t=1734023753; cv=none; b=XaThK+CyE8pPTfKzqfBW741mKplo+PYIliASSo1naGb1sxo8ODPbv21VC/R+PK65gxGuo/ysTTg5/BGsy4FevZsXD3CuqHGN3DNvFT6ERmHrTUSplOFVEDo1WehPSFFrUcR3Dx2uCwpku8zZSxX56783GsRD1dQMfj9X+An0Krk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734023750; c=relaxed/simple;
-	bh=R8zBEynxiGfUsdbZKrzptpCZHV675EhszDQbW7Bgwac=;
+	s=arc-20240116; t=1734023753; c=relaxed/simple;
+	bh=jNdcefpTRRhwVQeCjvR0ef83DtXAGw1xYfYQegO+uxE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rwjZjTL+uOIqDfxlFRtbLU3sC+msIeB490cXzp704FQcAjS1+EEcfn8q9opGx4yWXQQuFTlUrxfwvvYuvZ0N0E4nMcoDyjiUfOjAMr6FHvEOR8tvxjOudZZWjdG9q8ONB0ggqEo4fEplSz5J0zdEXO6pZtO6CwfO7XNB2ZOu39Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jBEzhct3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LgxRDnI3ha8xty6RJXF28aRemkeZmyHCY4TOkXMA+2OCptrTG4+3wS6Nuf83HhuQJnMYCI+jVddDnL28iFqv9jZpaNbDHhsATU6388vmeMpLX0xaCthXnU8HBcqutQbKt96IV0uqIRtG3siSRKx04gAvWV++aQmD920ZFcc+4aU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V3O2tl5F; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jBEzhct3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5425CC4CECE;
-	Thu, 12 Dec 2024 17:15:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V3O2tl5F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FB63C4CECE;
+	Thu, 12 Dec 2024 17:15:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734023749;
-	bh=R8zBEynxiGfUsdbZKrzptpCZHV675EhszDQbW7Bgwac=;
+	s=korg; t=1734023752;
+	bh=jNdcefpTRRhwVQeCjvR0ef83DtXAGw1xYfYQegO+uxE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jBEzhct3BkiGb4DfaSI01YG6c3xYHPJ0xjTRTwDp8O8N+sKL0+PbcyJb805wubnaa
-	 Z+drEk7qVWK/i8/7K+y1cjNTX4bWdKfCT1R4aVOcs7YQWi/lzYpCoxxuqPpMbnuiQk
-	 DfSh1WkI1wmCHATHeQg6xsAnjD/gZkqIdJM2MElo=
+	b=V3O2tl5FGBIYZrecd19FNccLAxokEcvdMhGPl43fnAvooR+Er6hen8OadL7OY5Mz5
+	 u6bPdLgYfEUNuEA6dkJ5oSW+Jd0jBE9wC5aq5UgjCZslCKcrU3NHIVaMB4CTAfwsCa
+	 GIegYBFA70Mu7H2qKDaQobHHHWEoZbbe3n4AELpo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Priyanka Singh <priyanka.singh@nxp.com>,
-	Li Yang <leoyang.li@nxp.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Yi Yang <yiyang13@huawei.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 070/459] EDAC/fsl_ddr: Fix bad bit shift operations
-Date: Thu, 12 Dec 2024 15:56:48 +0100
-Message-ID: <20241212144256.289328414@linuxfoundation.org>
+Subject: [PATCH 5.10 071/459] crypto: pcrypt - Call crypto layer directly when padata_do_parallel() return -EBUSY
+Date: Thu, 12 Dec 2024 15:56:49 +0100
+Message-ID: <20241212144256.327915210@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144253.511169641@linuxfoundation.org>
 References: <20241212144253.511169641@linuxfoundation.org>
@@ -53,73 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Priyanka Singh <priyanka.singh@nxp.com>
+From: Yi Yang <yiyang13@huawei.com>
 
-[ Upstream commit 9ec22ac4fe766c6abba845290d5139a3fbe0153b ]
+[ Upstream commit 662f2f13e66d3883b9238b0b96b17886179e60e2 ]
 
-Fix undefined behavior caused by left-shifting a negative value in the
-expression:
+Since commit 8f4f68e788c3 ("crypto: pcrypt - Fix hungtask for
+PADATA_RESET"), the pcrypt encryption and decryption operations return
+-EAGAIN when the CPU goes online or offline. In alg_test(), a WARN is
+generated when pcrypt_aead_decrypt() or pcrypt_aead_encrypt() returns
+-EAGAIN, the unnecessary panic will occur when panic_on_warn set 1.
+Fix this issue by calling crypto layer directly without parallelization
+in that case.
 
-    cap_high ^ (1 << (bad_data_bit - 32))
-
-The variable bad_data_bit ranges from 0 to 63. When it is less than 32,
-bad_data_bit - 32 becomes negative, and left-shifting by a negative
-value in C is undefined behavior.
-
-Fix this by combining cap_high and cap_low into a 64-bit variable.
-
-  [ bp: Massage commit message, simplify error bits handling. ]
-
-Fixes: ea2eb9a8b620 ("EDAC, fsl-ddr: Separate FSL DDR driver from MPC85xx")
-Signed-off-by: Priyanka Singh <priyanka.singh@nxp.com>
-Signed-off-by: Li Yang <leoyang.li@nxp.com>
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Link: https://lore.kernel.org/r/20241016-imx95_edac-v3-3-86ae6fc2756a@nxp.com
+Fixes: 8f4f68e788c3 ("crypto: pcrypt - Fix hungtask for PADATA_RESET")
+Signed-off-by: Yi Yang <yiyang13@huawei.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/edac/fsl_ddr_edac.c | 22 +++++++++++++---------
- 1 file changed, 13 insertions(+), 9 deletions(-)
+ crypto/pcrypt.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/edac/fsl_ddr_edac.c b/drivers/edac/fsl_ddr_edac.c
-index 6d8ea226010d2..61e59341a41f9 100644
---- a/drivers/edac/fsl_ddr_edac.c
-+++ b/drivers/edac/fsl_ddr_edac.c
-@@ -331,21 +331,25 @@ static void fsl_mc_check(struct mem_ctl_info *mci)
- 	 * TODO: Add support for 32-bit wide buses
- 	 */
- 	if ((err_detect & DDR_EDE_SBE) && (bus_width == 64)) {
-+		u64 cap = (u64)cap_high << 32 | cap_low;
-+		u32 s = syndrome;
-+
- 		sbe_ecc_decode(cap_high, cap_low, syndrome,
- 				&bad_data_bit, &bad_ecc_bit);
+diff --git a/crypto/pcrypt.c b/crypto/pcrypt.c
+index 005a36cb21bc4..2d7f98709e97c 100644
+--- a/crypto/pcrypt.c
++++ b/crypto/pcrypt.c
+@@ -117,8 +117,10 @@ static int pcrypt_aead_encrypt(struct aead_request *req)
+ 	err = padata_do_parallel(ictx->psenc, padata, &ctx->cb_cpu);
+ 	if (!err)
+ 		return -EINPROGRESS;
+-	if (err == -EBUSY)
+-		return -EAGAIN;
++	if (err == -EBUSY) {
++		/* try non-parallel mode */
++		return crypto_aead_encrypt(creq);
++	}
  
--		if (bad_data_bit != -1)
--			fsl_mc_printk(mci, KERN_ERR,
--				"Faulty Data bit: %d\n", bad_data_bit);
--		if (bad_ecc_bit != -1)
--			fsl_mc_printk(mci, KERN_ERR,
--				"Faulty ECC bit: %d\n", bad_ecc_bit);
-+		if (bad_data_bit >= 0) {
-+			fsl_mc_printk(mci, KERN_ERR, "Faulty Data bit: %d\n", bad_data_bit);
-+			cap ^= 1ULL << bad_data_bit;
-+		}
-+
-+		if (bad_ecc_bit >= 0) {
-+			fsl_mc_printk(mci, KERN_ERR, "Faulty ECC bit: %d\n", bad_ecc_bit);
-+			s ^= 1 << bad_ecc_bit;
-+		}
+ 	return err;
+ }
+@@ -166,8 +168,10 @@ static int pcrypt_aead_decrypt(struct aead_request *req)
+ 	err = padata_do_parallel(ictx->psdec, padata, &ctx->cb_cpu);
+ 	if (!err)
+ 		return -EINPROGRESS;
+-	if (err == -EBUSY)
+-		return -EAGAIN;
++	if (err == -EBUSY) {
++		/* try non-parallel mode */
++		return crypto_aead_decrypt(creq);
++	}
  
- 		fsl_mc_printk(mci, KERN_ERR,
- 			"Expected Data / ECC:\t%#8.8x_%08x / %#2.2x\n",
--			cap_high ^ (1 << (bad_data_bit - 32)),
--			cap_low ^ (1 << bad_data_bit),
--			syndrome ^ (1 << bad_ecc_bit));
-+			upper_32_bits(cap), lower_32_bits(cap), s);
- 	}
- 
- 	fsl_mc_printk(mci, KERN_ERR,
+ 	return err;
+ }
 -- 
 2.43.0
 
