@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93AA223DEB9;
-	Thu, 12 Dec 2024 16:12:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E899823E6E1;
+	Thu, 12 Dec 2024 16:12:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734019948; cv=none; b=btRuJ/rg7ebFfJVYmXpxqeL44D98p2qpsL35yD8OnpFk63VaDAY5Jv0jahugdpYXGPWmA+vaLHzx2jm2yPqmmPMlW18+QBg9nhr3tlQdDB9Bv76GUclcNg+CnFjaZPC5tabVkKx46m2JILgdRpAHkNf5vQtF430nkeKKsSqHTYM=
+	t=1734019952; cv=none; b=HSFdY5cXblOZmVWe6sBnMyWLGUrMOPuCIWTPLoIHibEpIOpzNt7qyuXWNg4pMe5X/ULgxfoei+1lBTso2n0pUV2W2XAAZ9TYeKivk+O+OAjuRieUPLLQ/Gs2MtYolxeVVFbgCPWZYZD3PLaLybUdMjhRUvL4luQzyL3YZ5pdVrs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734019948; c=relaxed/simple;
-	bh=UR1n2SNN2/BSCRn77xD/X1E8lD630wGmhSYefoiNbDY=;
+	s=arc-20240116; t=1734019952; c=relaxed/simple;
+	bh=33ltpPNuJc7Sm9jYiAeBlbERv2QfcP9IiTvmVUh/Kw0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G/xfVSbunwzcBlM2xyuduXIYu6Y4A1X/B5HirlcDIWHOQimLlsye3eE+e7qkYBcHCZgU7Pz56yv5V+/+5T1nmYJblLvM81ZSOtagGdysHuy+iqvOhhNaBN96jGFIsph3oeqrofwoPLUXEN0gytZ88lamLNX8TmPPNfNYmyjeqEw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tilSJIdj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YA8xUcASxe/0bCy2EUQ7nF0bsqZOnHU7RQ/OU5YTfnVveoOF2/mdLcHZyPBdSx1uvBlnrYBjKQrylEt3YSEIwkjTs3Z8rtBNbOz485bbupLh6CRwGGxN0nrDIsTTn1Itwb5nnFzRMg3cOJB7JuuzNG/nl/0t6o2leWgHXPb/8Dw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A56VdTUz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tilSJIdj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7006C4CECE;
-	Thu, 12 Dec 2024 16:12:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A56VdTUz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 056EAC4CEE0;
+	Thu, 12 Dec 2024 16:12:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734019948;
-	bh=UR1n2SNN2/BSCRn77xD/X1E8lD630wGmhSYefoiNbDY=;
+	s=korg; t=1734019951;
+	bh=33ltpPNuJc7Sm9jYiAeBlbERv2QfcP9IiTvmVUh/Kw0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tilSJIdjUBs2sYsdHwpgut+dgs7vG5riwrWoY5GIGVbyrrj3nTHrT09jcJAHC0Wql
-	 +DnUjEGBBG3tF7VoZXWAHByEfZ9V/386dDIiqf0JbTcnRIQUFg2MO7jrytyJCBFfQX
-	 kLYQMUoYQkjR7rvGOsU5yL9xR5BpCW9aXNKyPUQc=
+	b=A56VdTUzrSEFMu/Y2OSbBccP8z91j3ZSjgwXI1h0ElfRe1Or+WKNcH6zQUbDVjCb2
+	 SikabEIvDNVbZCD3TM13p5kFA7JIUt3zS/yOYYeEiKCTyVQgPvbIa0nAC87PwltOx4
+	 NOwO5vXjj+kmffG7z3T+BddCSa1LDaCXFiHKBKI8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	lei lu <llfamsec@gmail.com>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
-	Bin Lan <bin.lan.cn@windriver.com>
-Subject: [PATCH 6.1 339/772] ntfs3: Add bounds checking to mi_enum_attr()
-Date: Thu, 12 Dec 2024 15:54:44 +0100
-Message-ID: <20241212144403.919775495@linuxfoundation.org>
+	Michal Luczaj <mhal@rbox.co>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 322/772] rxrpc: Improve setsockopt() handling of malformed user input
+Date: Thu, 12 Dec 2024 15:54:27 +0100
+Message-ID: <20241212144403.205057318@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -51,68 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: lei lu <llfamsec@gmail.com>
+From: Michal Luczaj <mhal@rbox.co>
 
-commit 556bdf27c2dd5c74a9caacbe524b943a6cd42d99 upstream.
+[ Upstream commit 02020056647017e70509bb58c3096448117099e1 ]
 
-Added bounds checking to make sure that every attr don't stray beyond
-valid memory region.
+copy_from_sockptr() does not return negative value on error; instead, it
+reports the number of bytes that failed to copy. Since it's deprecated,
+switch to copy_safe_from_sockptr().
 
-Signed-off-by: lei lu <llfamsec@gmail.com>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
-Signed-off-by: Bin Lan <bin.lan.cn@windriver.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Note: Keeping the `optlen != sizeof(unsigned int)` check as
+copy_safe_from_sockptr() by itself would also accept
+optlen > sizeof(unsigned int). Which would allow a more lenient handling
+of inputs.
+
+Fixes: 17926a79320a ("[AF_RXRPC]: Provide secure RxRPC sockets for use by userspace and kernel both")
+Signed-off-by: Michal Luczaj <mhal@rbox.co>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/record.c |   23 ++++++++++-------------
- 1 file changed, 10 insertions(+), 13 deletions(-)
+ net/rxrpc/af_rxrpc.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/fs/ntfs3/record.c
-+++ b/fs/ntfs3/record.c
-@@ -217,28 +217,19 @@ struct ATTRIB *mi_enum_attr(struct mft_i
- 		prev_type = 0;
- 		attr = Add2Ptr(rec, off);
- 	} else {
--		/* Check if input attr inside record. */
-+		/*
-+		 * We don't need to check previous attr here. There is
-+		 * a bounds checking in the previous round.
-+		 */
- 		off = PtrOffset(rec, attr);
--		if (off >= used)
--			return NULL;
- 
- 		asize = le32_to_cpu(attr->size);
--		if (asize < SIZEOF_RESIDENT) {
--			/* Impossible 'cause we should not return such attribute. */
--			return NULL;
--		}
--
--		/* Overflow check. */
--		if (off + asize < off)
--			return NULL;
- 
- 		prev_type = le32_to_cpu(attr->type);
- 		attr = Add2Ptr(attr, asize);
- 		off += asize;
- 	}
- 
--	asize = le32_to_cpu(attr->size);
--
- 	/* Can we use the first field (attr->type). */
- 	if (off + 8 > used) {
- 		static_assert(ALIGN(sizeof(enum ATTR_TYPE), 8) == 8);
-@@ -259,6 +250,12 @@ struct ATTRIB *mi_enum_attr(struct mft_i
- 	if (t32 < prev_type)
- 		return NULL;
- 
-+	asize = le32_to_cpu(attr->size);
-+	if (asize < SIZEOF_RESIDENT) {
-+		/* Impossible 'cause we should not return such attribute. */
-+		return NULL;
-+	}
-+
- 	/* Check overflow and boundary. */
- 	if (off + asize < off || off + asize > used)
- 		return NULL;
+diff --git a/net/rxrpc/af_rxrpc.c b/net/rxrpc/af_rxrpc.c
+index ceba28e9dce62..9b3efe6d580fe 100644
+--- a/net/rxrpc/af_rxrpc.c
++++ b/net/rxrpc/af_rxrpc.c
+@@ -641,9 +641,10 @@ static int rxrpc_setsockopt(struct socket *sock, int level, int optname,
+ 			ret = -EISCONN;
+ 			if (rx->sk.sk_state != RXRPC_UNBOUND)
+ 				goto error;
+-			ret = copy_from_sockptr(&min_sec_level, optval,
+-				       sizeof(unsigned int));
+-			if (ret < 0)
++			ret = copy_safe_from_sockptr(&min_sec_level,
++						     sizeof(min_sec_level),
++						     optval, optlen);
++			if (ret)
+ 				goto error;
+ 			ret = -EINVAL;
+ 			if (min_sec_level > RXRPC_SECURITY_MAX)
+-- 
+2.43.0
+
 
 
