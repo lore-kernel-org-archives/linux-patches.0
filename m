@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68C9222A7E2;
-	Thu, 12 Dec 2024 17:45:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C67D168C3F;
+	Thu, 12 Dec 2024 17:45:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734025503; cv=none; b=iB5mGh6VM8mIZT5eFo5P1ERpzkHZIYOopWjnsUY4UftVqA2GvjsOjTZyH3c3ex1kylv3BsvV7ArrspDo7OhQsc1EjoriR33A3Gi43+ousFD/mEMYfEvTzSIvu3ibBlefQg7qRTuPu3uLC6Adk7v4LhtpFWMSxW4+LwGXOM1yGjk=
+	t=1734025506; cv=none; b=XNzjkx2B8BIfPlejXeB8RpSO2zdkm9Xu0LrYVTxT2tdwYcS+vuasOwzH3SAWB5Y9RP4yGq+ByFw9NDeeXF6DwxtgeCqOnteE577j3CN4jG5UCcgGxr9OekSRpzH7rpMLzEs+oGjrIQq72+OGbN3ir5AnOATLJJQLaeweOzntoJs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734025503; c=relaxed/simple;
-	bh=xvbFgeJm16AbYjeUPBXQ7I3MZsG9dyE6tub/IdXjihg=;
+	s=arc-20240116; t=1734025506; c=relaxed/simple;
+	bh=FWpu0a2KpvG4/z6ipzsavYle9JlpQBR+/8emFzwD83U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u/PgHLYJiEIeeAhAXnSfOYflm6CuZuOnKmEDkn3+rZVLxL9WqzJEPt+C6k/oOoNilrWRM4gRyiTxNcWdMhEhV4uuTUnVrKgOZlSLfIUviSa7rmaDuvcYkoxpR6swZiHFmYEtW3SZZerMmU1UCC0Iw56Xt3qrpDtQs+1beVEkjpE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CBFQe5p/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ps9enxXlR6gtYcHzRWsv+7+bBchUxgLO1vDheEebSNGvQr30DpeWc1+bnM17vU6ZELkpA6JBAwY5v9Y6uFNT0RhQJgXfCgfZpqRT5GE5IyP8o1HlEfq5axqN13FxtwVC+Ddopdjw0ej5S88B5yn/LYAuDfUw003W80/IfVA2uJU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aQXOsgPI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CBFQe5p/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D30A8C4CECE;
-	Thu, 12 Dec 2024 17:45:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aQXOsgPI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5333C4CED0;
+	Thu, 12 Dec 2024 17:45:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734025503;
-	bh=xvbFgeJm16AbYjeUPBXQ7I3MZsG9dyE6tub/IdXjihg=;
+	s=korg; t=1734025506;
+	bh=FWpu0a2KpvG4/z6ipzsavYle9JlpQBR+/8emFzwD83U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CBFQe5p/l4ahjW81Y3FBewcSReyNHq17UQ8iZDJ7nDVYvMuSDqcTlXW0amxLZDjaM
-	 SMHGCsTgJaunJ1yCsmuxbmViFGXOlBb02sQQpy6xzG1PRkl3hEIy6h2Qm6HdaaqAQl
-	 1MV8aKNAswRtAUJHbm3Ii5OJDXn/t+wFu2eIQNg0=
+	b=aQXOsgPId0XqsR3O6l8d3sv7wF1qOKSlHFofwVUaJORcNPnsHwUSJ6E6B6CApfLBw
+	 cXpqTF7xoaLfNwU87Y/zAie3+Jzok+/Db4nNA2Lwvo1MmznG7paJcWxqcPdtgTytPP
+	 CHovOWWElw9G6xv7qmJd0FidKw1rfp/sTyuJTcMI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	John Garry <john.g.garry@oracle.com>,
-	Jens Axboe <axboe@kernel.dk>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 192/321] block: return unsigned int from bdev_io_min
-Date: Thu, 12 Dec 2024 16:01:50 +0100
-Message-ID: <20241212144237.569707071@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 5.4 175/321] NFSD: Prevent a potential integer overflow
+Date: Thu, 12 Dec 2024 16:01:33 +0100
+Message-ID: <20241212144236.896635325@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144229.291682835@linuxfoundation.org>
 References: <20241212144229.291682835@linuxfoundation.org>
@@ -53,39 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christoph Hellwig <hch@lst.de>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit 46fd48ab3ea3eb3bb215684bd66ea3d260b091a9 ]
+commit 7f33b92e5b18e904a481e6e208486da43e4dc841 upstream.
 
-The underlying limit is defined as an unsigned int, so return that from
-bdev_io_min as well.
+If the tag length is >= U32_MAX - 3 then the "length + 4" addition
+can result in an integer overflow. Address this by splitting the
+decoding into several steps so that decode_cb_compound4res() does
+not have to perform arithmetic on the unsafe length value.
 
-Fixes: ac481c20ef8f ("block: Topology ioctls")
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Martin K. Petersen <martin.petersen@oracle.com>
-Reviewed-by: John Garry <john.g.garry@oracle.com>
-Link: https://lore.kernel.org/r/20241119072602.1059488-1-hch@lst.de
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Cc: stable@vger.kernel.org
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/blkdev.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/nfsd/nfs4callback.c |   14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/include/linux/blkdev.h b/include/linux/blkdev.h
-index 5194467d7d753..92ec0b9dd1834 100644
---- a/include/linux/blkdev.h
-+++ b/include/linux/blkdev.h
-@@ -1333,7 +1333,7 @@ static inline unsigned int queue_io_min(const struct request_queue *q)
- 	return q->limits.io_min;
- }
+--- a/fs/nfsd/nfs4callback.c
++++ b/fs/nfsd/nfs4callback.c
+@@ -285,17 +285,17 @@ static int decode_cb_compound4res(struct
+ 	u32 length;
+ 	__be32 *p;
  
--static inline int bdev_io_min(struct block_device *bdev)
-+static inline unsigned int bdev_io_min(struct block_device *bdev)
- {
- 	return queue_io_min(bdev_get_queue(bdev));
- }
--- 
-2.43.0
-
+-	p = xdr_inline_decode(xdr, 4 + 4);
++	p = xdr_inline_decode(xdr, XDR_UNIT);
+ 	if (unlikely(p == NULL))
+ 		goto out_overflow;
+-	hdr->status = be32_to_cpup(p++);
++	hdr->status = be32_to_cpup(p);
+ 	/* Ignore the tag */
+-	length = be32_to_cpup(p++);
+-	p = xdr_inline_decode(xdr, length + 4);
+-	if (unlikely(p == NULL))
++	if (xdr_stream_decode_u32(xdr, &length) < 0)
++		goto out_overflow;
++	if (xdr_inline_decode(xdr, length) == NULL)
++		goto out_overflow;
++	if (xdr_stream_decode_u32(xdr, &hdr->nops) < 0)
+ 		goto out_overflow;
+-	p += XDR_QUADLEN(length);
+-	hdr->nops = be32_to_cpup(p);
+ 	return 0;
+ out_overflow:
+ 	return -EIO;
 
 
