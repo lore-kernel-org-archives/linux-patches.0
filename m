@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE77E218594;
-	Thu, 12 Dec 2024 17:31:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90035213E6F;
+	Thu, 12 Dec 2024 17:31:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734024681; cv=none; b=dUN3P4z/cREbFLAx3A8DrwFLgZb+UVYIZudAeRUbAL8NLOHz/yZssHtJUEaRV1V8BcThrWS20PPXLEHzM4DKO5JB6MaejKNcl9AfWGihnsGALV1porhuNODYq7n6xloBFyOFRQyjgh8Bgm2sgwgZ8eIf3Aan158JrrJhiJ5ky3o=
+	t=1734024684; cv=none; b=koU793t9GTO4Uy/YY8nWx+IyPi3TWnZnFERGLQLlpYCRu5S+kJq0mb0VLbRzAxmuo8HiSCuJEzg8vC09Jsm8awvJP4ovjB9GJ5ls0CF8m/kuumzpOs70JVsNaoy0Q6hvBdkFoEwOrBMuBxfmWG2M3ITcVl39KeiyfTghLhv7ARo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734024681; c=relaxed/simple;
-	bh=sEPO1rQs8JX7o8olek3a3ZY3COqvQZdqh7agPHWUn0g=;
+	s=arc-20240116; t=1734024684; c=relaxed/simple;
+	bh=CSUHbPe+swbeJg1sOVupj2BE4INH9hYN/tVkEAdZdCE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=CC02sQ/CrFe2ynGgB2sBfY9XcaZhUGLqytdXKLs3VCzh3kvxZEMynN6oPlCPmuW9yUiDzvR5s8+GzqcOACsJJAdTHgxMuuxWrd/yRwLpZItd3wdM+yWQpZjFbDUemOuG8XG0tbehDaWpjm6x2rpn6u0v+if4gNLQjBlRoOe8MHE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SXCDfhoB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZHWciQo5AHBv6ZX8vOWyK68t2x/5QEEgeToI6spGVBcEkaO4NWa+CbrwqX6RqO0WuvJEG6PraMJ3EKJYB806PVg+zfRdXfU1vkjXmJUbGsyx84YrDvUp6nxJPKk+bKP22jd7ljg8mkmypMmfLcnRAq3duXqwjlPO3yycU836MY0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yU5tlisb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SXCDfhoB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FC94C4CED3;
-	Thu, 12 Dec 2024 17:31:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yU5tlisb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19887C4CECE;
+	Thu, 12 Dec 2024 17:31:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734024681;
-	bh=sEPO1rQs8JX7o8olek3a3ZY3COqvQZdqh7agPHWUn0g=;
+	s=korg; t=1734024684;
+	bh=CSUHbPe+swbeJg1sOVupj2BE4INH9hYN/tVkEAdZdCE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SXCDfhoBIMEefvZkhmighp1Kmmjwiu/7pJ1d+8J/79N5+2J+flZgbvc2NKgnHSeW7
-	 6XGZpPax5x/Gj2UKMMv+COV+DNEq3+0m/RP1vAmrqs6d8yCDmS5MTtntnSg95eiOUH
-	 6saLD5v93HMg3lyzwNaF/HVqU7XbMBm0/j7UNJx8=
+	b=yU5tlisbryAqsGpK5hej/x5PKf3D24SvYKSZBu+kvRJqxbu3Lpkjn1em9yjmewGMZ
+	 aUho8d2g7LjWCsznfgqsOdj9770KjzjBQSLTOOGrDfBFVC2Jxl9VCxiqlC5tyZifjv
+	 7A0sCRfdpjo1VeXQ0vdqoMvPudOzgEYeSnVgz/HM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 5.10 375/459] mmc: sdhci-pci: Add DMI quirk for missing CD GPIO on Vexia Edu Atla 10 tablet
-Date: Thu, 12 Dec 2024 16:01:53 +0100
-Message-ID: <20241212144308.481977145@linuxfoundation.org>
+	Anthony Pighin <anthony.pighin@nokia.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
+	Adrian Hunter <adrian.hunter@intel.com>
+Subject: [PATCH 5.10 376/459] mmc: core: Further prevent card detect during shutdown
+Date: Thu, 12 Dec 2024 16:01:54 +0100
+Message-ID: <20241212144308.520246763@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144253.511169641@linuxfoundation.org>
 References: <20241212144253.511169641@linuxfoundation.org>
@@ -45,159 +45,62 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Ulf Hansson <ulf.hansson@linaro.org>
 
-commit 7f0fa47ceebcff0e3591bb7e32a71a2cd7846149 upstream.
+commit 87a0d90fcd31c0f36da0332428c9e1a1e0f97432 upstream.
 
-The Vexia Edu Atla 10 tablet distributed to schools in the Spanish
-Andalucía region has no ACPI fwnode associated with the SDHCI controller
-for its microsd-slot and thus has no ACPI GPIO resource info.
+Disabling card detect from the host's ->shutdown_pre() callback turned out
+to not be the complete solution. More precisely, beyond the point when the
+mmc_bus->shutdown() has been called, to gracefully power off the card, we
+need to prevent card detect. Otherwise the mmc_rescan work may poll for the
+card with a CMD13, to see if it's still alive, which then will fail and
+hang as the card has already been powered off.
 
-This causes the following error to be logged and the slot to not work:
-[   10.572113] sdhci-pci 0000:00:12.0: failed to setup card detect gpio
+To fix this problem, let's disable mmc_rescan prior to power off the card
+during shutdown.
 
-Add a DMI quirk table for providing gpiod_lookup_tables with manually
-provided CD GPIO info and use this DMI table to provide the CD GPIO info
-on this tablet. This fixes the microsd-slot not working.
-
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Reported-by: Anthony Pighin <anthony.pighin@nokia.com>
+Fixes: 66c915d09b94 ("mmc: core: Disable card detect during shutdown")
 Cc: stable@vger.kernel.org
-Message-ID: <20241118210049.311079-1-hdegoede@redhat.com>
 Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Reviewed-by: Adrian Hunter <adrian.hunter@intel.com>
+Closes: https://lore.kernel.org/all/BN0PR08MB695133000AF116F04C3A9FFE83212@BN0PR08MB6951.namprd08.prod.outlook.com/
+Tested-by: Anthony Pighin <anthony.pighin@nokia.com>
+Message-ID: <20241125122446.18684-1-ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/sdhci-pci-core.c |   72 ++++++++++++++++++++++++++++++++++++++
- drivers/mmc/host/sdhci-pci.h      |    1 
- 2 files changed, 73 insertions(+)
+ drivers/mmc/core/bus.c  |    2 ++
+ drivers/mmc/core/core.c |    3 +++
+ 2 files changed, 5 insertions(+)
 
---- a/drivers/mmc/host/sdhci-pci-core.c
-+++ b/drivers/mmc/host/sdhci-pci-core.c
-@@ -23,6 +23,7 @@
- #include <linux/io.h>
- #include <linux/iopoll.h>
- #include <linux/gpio.h>
-+#include <linux/gpio/machine.h>
- #include <linux/pm_runtime.h>
- #include <linux/pm_qos.h>
- #include <linux/debugfs.h>
-@@ -1292,6 +1293,29 @@ static const struct sdhci_pci_fixes sdhc
- 	.priv_size	= sizeof(struct intel_host),
- };
+--- a/drivers/mmc/core/bus.c
++++ b/drivers/mmc/core/bus.c
+@@ -160,6 +160,8 @@ static void mmc_bus_shutdown(struct devi
+ 	if (dev->driver && drv->shutdown)
+ 		drv->shutdown(card);
  
-+/* DMI quirks for devices with missing or broken CD GPIO info */
-+static const struct gpiod_lookup_table vexia_edu_atla10_cd_gpios = {
-+	.dev_id = "0000:00:12.0",
-+	.table = {
-+		GPIO_LOOKUP("INT33FC:00", 38, "cd", GPIO_ACTIVE_HIGH),
-+		{ }
-+	},
-+};
++	__mmc_stop_host(host);
 +
-+static const struct dmi_system_id sdhci_intel_byt_cd_gpio_override[] = {
-+	{
-+		/* Vexia Edu Atla 10 tablet 9V version */
-+		.matches = {
-+			DMI_MATCH(DMI_BOARD_VENDOR, "AMI Corporation"),
-+			DMI_MATCH(DMI_BOARD_NAME, "Aptio CRB"),
-+			/* Above strings are too generic, also match on BIOS date */
-+			DMI_MATCH(DMI_BIOS_DATE, "08/25/2014"),
-+		},
-+		.driver_data = (void *)&vexia_edu_atla10_cd_gpios,
-+	},
-+	{ }
-+};
-+
- static const struct sdhci_pci_fixes sdhci_intel_byt_sd = {
- #ifdef CONFIG_PM_SLEEP
- 	.resume		= byt_resume,
-@@ -1310,6 +1334,7 @@ static const struct sdhci_pci_fixes sdhc
- 	.add_host	= byt_add_host,
- 	.remove_slot	= byt_remove_slot,
- 	.ops		= &sdhci_intel_byt_ops,
-+	.cd_gpio_override = sdhci_intel_byt_cd_gpio_override,
- 	.priv_size	= sizeof(struct intel_host),
- };
+ 	if (host->bus_ops->shutdown) {
+ 		ret = host->bus_ops->shutdown(host);
+ 		if (ret)
+--- a/drivers/mmc/core/core.c
++++ b/drivers/mmc/core/core.c
+@@ -2345,6 +2345,9 @@ void mmc_start_host(struct mmc_host *hos
  
-@@ -2101,6 +2126,42 @@ static const struct dev_pm_ops sdhci_pci
-  *                                                                           *
- \*****************************************************************************/
- 
-+static struct gpiod_lookup_table *sdhci_pci_add_gpio_lookup_table(
-+	struct sdhci_pci_chip *chip)
-+{
-+	struct gpiod_lookup_table *cd_gpio_lookup_table;
-+	const struct dmi_system_id *dmi_id = NULL;
-+	size_t count;
+ void __mmc_stop_host(struct mmc_host *host)
+ {
++	if (host->rescan_disable)
++		return;
 +
-+	if (chip->fixes && chip->fixes->cd_gpio_override)
-+		dmi_id = dmi_first_match(chip->fixes->cd_gpio_override);
-+
-+	if (!dmi_id)
-+		return NULL;
-+
-+	cd_gpio_lookup_table = dmi_id->driver_data;
-+	for (count = 0; cd_gpio_lookup_table->table[count].key; count++)
-+		;
-+
-+	cd_gpio_lookup_table = kmemdup(dmi_id->driver_data,
-+				       /* count + 1 terminating entry */
-+				       struct_size(cd_gpio_lookup_table, table, count + 1),
-+				       GFP_KERNEL);
-+	if (!cd_gpio_lookup_table)
-+		return ERR_PTR(-ENOMEM);
-+
-+	gpiod_add_lookup_table(cd_gpio_lookup_table);
-+	return cd_gpio_lookup_table;
-+}
-+
-+static void sdhci_pci_remove_gpio_lookup_table(struct gpiod_lookup_table *lookup_table)
-+{
-+	if (lookup_table) {
-+		gpiod_remove_lookup_table(lookup_table);
-+		kfree(lookup_table);
-+	}
-+}
-+
- static struct sdhci_pci_slot *sdhci_pci_probe_slot(
- 	struct pci_dev *pdev, struct sdhci_pci_chip *chip, int first_bar,
- 	int slotno)
-@@ -2205,8 +2266,19 @@ static struct sdhci_pci_slot *sdhci_pci_
- 		device_init_wakeup(&pdev->dev, true);
- 
- 	if (slot->cd_idx >= 0) {
-+		struct gpiod_lookup_table *cd_gpio_lookup_table;
-+
-+		cd_gpio_lookup_table = sdhci_pci_add_gpio_lookup_table(chip);
-+		if (IS_ERR(cd_gpio_lookup_table)) {
-+			ret = PTR_ERR(cd_gpio_lookup_table);
-+			goto remove;
-+		}
-+
- 		ret = mmc_gpiod_request_cd(host->mmc, "cd", slot->cd_idx,
- 					   slot->cd_override_level, 0);
-+
-+		sdhci_pci_remove_gpio_lookup_table(cd_gpio_lookup_table);
-+
- 		if (ret && ret != -EPROBE_DEFER)
- 			ret = mmc_gpiod_request_cd(host->mmc, NULL,
- 						   slot->cd_idx,
---- a/drivers/mmc/host/sdhci-pci.h
-+++ b/drivers/mmc/host/sdhci-pci.h
-@@ -151,6 +151,7 @@ struct sdhci_pci_fixes {
- #endif
- 
- 	const struct sdhci_ops	*ops;
-+	const struct dmi_system_id *cd_gpio_override;
- 	size_t			priv_size;
- };
- 
+ 	if (host->slot.cd_irq >= 0) {
+ 		mmc_gpio_set_cd_wake(host, false);
+ 		disable_irq(host->slot.cd_irq);
 
 
