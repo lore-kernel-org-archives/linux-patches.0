@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37ECC213E99;
-	Thu, 12 Dec 2024 16:13:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC9B722654A;
+	Thu, 12 Dec 2024 16:13:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734019990; cv=none; b=jIfRBcY+yyfnQBYrxc2HpeMWNCmf2NFuJgVmRtd3ebLqZqJiyKgc0H40coFayuAIOcffvqEjQTtgB8CvElE53jpMrbZm1YOj+ouK2wcHGQ1jBI5eCS/Zoqk2tEMBDwHLXgCI4HWzpQ/e7aMYhvbL5ch0/DXYtD110Knqy0JUTsU=
+	t=1734019998; cv=none; b=ldEnRavdjKvgRJXcz1zusoaOKLCRq1WcYMEfLPVUq6N5BYgYXxd07PLBhSU2kloXrw+gIsutyA37a+ALBaM1c/h8waRoVa0chF+GJeGPCDy62mqtZdVugwgkNp5tTFRTqGZBiX8xdSCT1EEp5efqbW+lzyWLE+yGUcu6j4WKOBY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734019990; c=relaxed/simple;
-	bh=3MkJSMqCAPnGAszj4CIe+i7dIOhKLgx7seVjvcu7tU4=;
+	s=arc-20240116; t=1734019998; c=relaxed/simple;
+	bh=4lRJK/R2FDDknHaGuEjyWnQ6X/eY9v83W7HtQotP1lk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=axL6uFqmFcK4jwzbhn4KxX/urdH6oBatHjNVW46dZrBBglEPFUaVBBIETp1nQdIIBEMCBKxv0b0ijCXNFegnrZNAbhC/Dmih40+Bq25MhAuXRgCD7dA/hsuUfv489ugMpQgu8VsIjP31AvYtaIlzVYFfDRjFlFsDsEigNJyKp48=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n/OW4u0s; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dgnaDmiWfilihO5q5EL9wAhDPtxzC5+OdNHBx94aiozE5qyMwiH4Lt4mSZGIF/RbO6PpgfCFgj0mxgod5ctUR3XiKYU58lWCx4bfu/uwkG3QXOzhE8ZF8UpNA0KY2tIn4tcTNkluDVF0C0j0Sp2VYeqD/tTUOw9E1OxzaK4BENU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nIBERYJ0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n/OW4u0s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80784C4CECE;
-	Thu, 12 Dec 2024 16:13:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nIBERYJ0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D3C1C4CED0;
+	Thu, 12 Dec 2024 16:13:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734019990;
-	bh=3MkJSMqCAPnGAszj4CIe+i7dIOhKLgx7seVjvcu7tU4=;
+	s=korg; t=1734019998;
+	bh=4lRJK/R2FDDknHaGuEjyWnQ6X/eY9v83W7HtQotP1lk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n/OW4u0sSmCLw+ac5uijbFbuTWlCiJsNUXMMcDgD/guLIIBlIj0uSuUNj9fYseM7n
-	 d+DkIANSY+JWjx2rEYbbctWoTl2u+uw96nAMn1OwVckK8ZzFbpx/1E75bBebZkvvuS
-	 yvsLhm10F44h3SPKW34Ap9Q1WSZBgvqtplGMDryw=
+	b=nIBERYJ0SpETHEEnZJKw5t43wan1JpB/hEGNws2MZDDHOa8W/uAdwPAAe/Vy6isCl
+	 YMxOERB1R+YeLQe+M9ilbVHtCYXcvuNRM8fJEFhi/tYvYw2U0K80MMYG9It/Jd7iKI
+	 aisrCu9BcHxKLxjPUQamjDHCzrRLsG8/ADWbUmCI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liu Jian <liujian56@huawei.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
-	Eric Dumazet <edumazet@google.com>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 323/772] tcp: Fix use-after-free of nreq in reqsk_timer_handler().
-Date: Thu, 12 Dec 2024 15:54:28 +0100
-Message-ID: <20241212144403.252171928@linuxfoundation.org>
+	Rodrigo Siqueira <rodrigo.siqueira@amd.com>,
+	Jerry Zuo <jerry.zuo@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Xiangyu Chen <xiangyu.chen@windriver.com>
+Subject: [PATCH 6.1 350/772] drm/amd/display: Check phantom_stream before it is used
+Date: Thu, 12 Dec 2024 15:54:55 +0100
+Message-ID: <20241212144404.372524516@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -55,49 +55,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Alex Hung <alex.hung@amd.com>
 
-[ Upstream commit c31e72d021db2714df03df6c42855a1db592716c ]
+commit 3718a619a8c0a53152e76bb6769b6c414e1e83f4 upstream.
 
-The cited commit replaced inet_csk_reqsk_queue_drop_and_put() with
-__inet_csk_reqsk_queue_drop() and reqsk_put() in reqsk_timer_handler().
+dcn32_enable_phantom_stream can return null, so returned value
+must be checked before used.
 
-Then, oreq should be passed to reqsk_put() instead of req; otherwise
-use-after-free of nreq could happen when reqsk is migrated but the
-retry attempt failed (e.g. due to timeout).
+This fixes 1 NULL_RETURNS issue reported by Coverity.
 
-Let's pass oreq to reqsk_put().
-
-Fixes: e8c526f2bdf1 ("tcp/dccp: Don't use timer_pending() in reqsk_queue_unlink().")
-Reported-by: Liu Jian <liujian56@huawei.com>
-Closes: https://lore.kernel.org/netdev/1284490f-9525-42ee-b7b8-ccadf6606f6d@huawei.com/
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
-Reviewed-by: Liu Jian <liujian56@huawei.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Martin KaFai Lau <martin.lau@kernel.org>
-Link: https://patch.msgid.link/20241123174236.62438-1-kuniyu@amazon.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Rodrigo Siqueira <rodrigo.siqueira@amd.com>
+Signed-off-by: Jerry Zuo <jerry.zuo@amd.com>
+Signed-off-by: Alex Hung <alex.hung@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+[Xiangyu: BP to fix CVE: CVE-2024-49897, modified the source path]
+Signed-off-by: Xiangyu Chen <xiangyu.chen@windriver.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/inet_connection_sock.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/display/dc/dcn32/dcn32_resource.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/ipv4/inet_connection_sock.c b/net/ipv4/inet_connection_sock.c
-index 569186f741fb2..8fa56a17f03a6 100644
---- a/net/ipv4/inet_connection_sock.c
-+++ b/net/ipv4/inet_connection_sock.c
-@@ -1121,7 +1121,7 @@ static void reqsk_timer_handler(struct timer_list *t)
+--- a/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_resource.c
++++ b/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_resource.c
+@@ -1796,6 +1796,9 @@ void dcn32_add_phantom_pipes(struct dc *
+ 	// be a valid candidate for SubVP (i.e. has a plane, stream, doesn't
+ 	// already have phantom pipe assigned, etc.) by previous checks.
+ 	phantom_stream = dcn32_enable_phantom_stream(dc, context, pipes, pipe_cnt, index);
++	if (!phantom_stream)
++		return;
++
+ 	dcn32_enable_phantom_plane(dc, context, phantom_stream, index);
  
- drop:
- 	__inet_csk_reqsk_queue_drop(sk_listener, oreq, true);
--	reqsk_put(req);
-+	reqsk_put(oreq);
- }
- 
- static bool reqsk_queue_hash_req(struct request_sock *req,
--- 
-2.43.0
-
+ 	for (i = 0; i < dc->res_pool->pipe_count; i++) {
 
 
