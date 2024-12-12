@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B726B2153FC;
-	Thu, 12 Dec 2024 15:32:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D441813CA93;
+	Thu, 12 Dec 2024 15:32:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734017574; cv=none; b=qzjrjOITJLu5Ji1tq1FJRBF+yeneZ1AwYUcE4+EBOVts48onyFz9MP/gvhZNbHqHuxpohLAwzSYT40IKeBqLOqLWsBatX7B3D5uLe/k7mgRrHMz0tRNRKU8fe1Kwdb1pFI+SGOLtSSAyPUoEucuJ/mx1nV+9Z3HbLOmTQmkoHS4=
+	t=1734017577; cv=none; b=XCsW6CvyHD/C3eIHsQO+xxNxBEd4xgDCeB0sCrcXYuZdlvcYDb7PCmK3a7/rYKPgVXZO4oxqjQjR4RwpKW+Cj8zWvCSgLNYyk2780WwDJXClAgGtGifls+ImLckbk3NLLU48HYkjQBTYMO4j1Wif0xuLIRWieqUaVlAcnp0KoeY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734017574; c=relaxed/simple;
-	bh=RXk/DCPR5qRv5KPeOrDDQrQe/ub5nxb4g+on17t9dgg=;
+	s=arc-20240116; t=1734017577; c=relaxed/simple;
+	bh=cYmzr7sKdPIf/V3BPvS5EbdaaKu50YEGr2kqjJwGIGs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PTSrUqE8xP6CNL3tRB43YmWN/KhkKDjHsI2TcHwM7OK2b4ZlOZO5ZANk9/5MgW0vG49Y8AGtTMk80DkReRnPwXBuTeJ6Pd2nf8ykVMcA0Ye1lIv7bdr31YVOQh/Y8sWSJpPJ665DUX0BcC3FzUaPaZKpaQ+N8AYVFUmCazS0unE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lzqvfp8V; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VlSFcyqJvRHq8/kUfTgR+Zqizd4FCS/tCj9bZeY+/WPhycoPrUIkm9p1NGj38U5t1AJoUE1btecPaHEIP/nAsiFRPYrHOSR5wHEFWFYnIgAxwNJPUZ4Ly249kQSN+MbIPmPDGNux/LSovtvnyI8z9+xY4xTMFF7v28vA1caElrc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HotvUTcx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lzqvfp8V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 398A9C4CECE;
-	Thu, 12 Dec 2024 15:32:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HotvUTcx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57B1EC4CECE;
+	Thu, 12 Dec 2024 15:32:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734017574;
-	bh=RXk/DCPR5qRv5KPeOrDDQrQe/ub5nxb4g+on17t9dgg=;
+	s=korg; t=1734017577;
+	bh=cYmzr7sKdPIf/V3BPvS5EbdaaKu50YEGr2kqjJwGIGs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Lzqvfp8VH6zjq8Qv9b/9LX/3IQ3WA3+lH/mLLa7GHIqMWesY3Bbadw+Rn4RHcADEq
-	 XXIPq76L985/n4lDmWj40O1uxOXB8RIoEnS8RMtfXdW6c5f3lNlCGU0tibPP0B4Hkk
-	 55AvRZUqKs41eFhA79UahFucjVUi3IU3h5bC/xiU=
+	b=HotvUTcxiz5IbLPos4ZsXWGvVPQ0UFu48rozQoPY1yTEKB94SrNgsr+RemTtYP6Cr
+	 HSmBX11+nCfLmMh6cmadIDE1AXV8BI3SOxU/cD2QZdMf7nRM7oQg9kEwYRdgZbqCrv
+	 SaSImI/1erAgmVNuqQQSdvqrLJe2TgqcGg8AEIac=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Laurent Fasnacht <laurent.fasnacht@proton.ch>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Kory Maincent <kory.maincent@bootlin.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 052/356] netfilter: nft_set_hash: skip duplicated elements pending gc run
-Date: Thu, 12 Dec 2024 15:56:11 +0100
-Message-ID: <20241212144246.686214991@linuxfoundation.org>
+Subject: [PATCH 6.6 053/356] ethtool: Fix wrong mod state in case of verbose and no_mask bitset
+Date: Thu, 12 Dec 2024 15:56:12 +0100
+Message-ID: <20241212144246.726323497@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144244.601729511@linuxfoundation.org>
 References: <20241212144244.601729511@linuxfoundation.org>
@@ -51,94 +51,124 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Kory Maincent <kory.maincent@bootlin.com>
 
-[ Upstream commit 7ffc7481153bbabf3332c6a19b289730c7e1edf5 ]
+[ Upstream commit 910c4788d6155b2202ec88273376cd7ecdc24f0a ]
 
-rhashtable does not provide stable walk, duplicated elements are
-possible in case of resizing. I considered that checking for errors when
-calling rhashtable_walk_next() was sufficient to detect the resizing.
-However, rhashtable_walk_next() returns -EAGAIN only at the end of the
-iteration, which is too late, because a gc work containing duplicated
-elements could have been already scheduled for removal to the worker.
+A bitset without mask in a _SET request means we want exactly the bits in
+the bitset to be set. This works correctly for compact format but when
+verbose format is parsed, ethnl_update_bitset32_verbose() only sets the
+bits present in the request bitset but does not clear the rest. The commit
+6699170376ab ("ethtool: fix application of verbose no_mask bitset") fixes
+this issue by clearing the whole target bitmap before we start iterating.
+The solution proposed brought an issue with the behavior of the mod
+variable. As the bitset is always cleared the old value will always
+differ to the new value.
 
-Add a u32 gc worker sequence number per set, bump it on every workqueue
-run. Annotate gc worker sequence number on the expired element. Use it
-to skip those already seen in this gc workqueue run.
+Fix it by adding a new function to compare bitmaps and a temporary variable
+which save the state of the old bitmap.
 
-Note that this new field is never reset in case gc transaction fails, so
-next gc worker run on the expired element overrides it. Wraparound of gc
-worker sequence number should not be an issue with stale gc worker
-sequence number in the element, that would just postpone the element
-removal in one gc run.
-
-Note that it is not possible to use flags to annotate that element is
-pending gc run to detect duplicates, given that gc transaction can be
-invalidated in case of update from the control plane, therefore, not
-allowing to clear such flag.
-
-On x86_64, pahole reports no changes in the size of nft_rhash_elem.
-
-Fixes: f6c383b8c31a ("netfilter: nf_tables: adapt set backend to use GC transaction API")
-Reported-by: Laurent Fasnacht <laurent.fasnacht@proton.ch>
-Tested-by: Laurent Fasnacht <laurent.fasnacht@proton.ch>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: 6699170376ab ("ethtool: fix application of verbose no_mask bitset")
+Signed-off-by: Kory Maincent <kory.maincent@bootlin.com>
+Link: https://patch.msgid.link/20241202153358.1142095-1-kory.maincent@bootlin.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_set_hash.c | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ net/ethtool/bitset.c | 48 ++++++++++++++++++++++++++++++++++++++++----
+ 1 file changed, 44 insertions(+), 4 deletions(-)
 
-diff --git a/net/netfilter/nft_set_hash.c b/net/netfilter/nft_set_hash.c
-index 3a96d4a77a228..cc1ae18485faf 100644
---- a/net/netfilter/nft_set_hash.c
-+++ b/net/netfilter/nft_set_hash.c
-@@ -24,10 +24,12 @@
- struct nft_rhash {
- 	struct rhashtable		ht;
- 	struct delayed_work		gc_work;
-+	u32				wq_gc_seq;
- };
+diff --git a/net/ethtool/bitset.c b/net/ethtool/bitset.c
+index 0515d6604b3b9..f0883357d12e5 100644
+--- a/net/ethtool/bitset.c
++++ b/net/ethtool/bitset.c
+@@ -425,12 +425,32 @@ static int ethnl_parse_bit(unsigned int *index, bool *val, unsigned int nbits,
+ 	return 0;
+ }
  
- struct nft_rhash_elem {
- 	struct rhash_head		node;
-+	u32				wq_gc_seq;
- 	struct nft_set_ext		ext;
- };
- 
-@@ -331,6 +333,10 @@ static void nft_rhash_gc(struct work_struct *work)
- 	if (!gc)
- 		goto done;
- 
-+	/* Elements never collected use a zero gc worker sequence number. */
-+	if (unlikely(++priv->wq_gc_seq == 0))
-+		priv->wq_gc_seq++;
++/**
++ * ethnl_bitmap32_equal() - Compare two bitmaps
++ * @map1:  first bitmap
++ * @map2:  second bitmap
++ * @nbits: bit size to compare
++ *
++ * Return: true if first @nbits are equal, false if not
++ */
++static bool ethnl_bitmap32_equal(const u32 *map1, const u32 *map2,
++				 unsigned int nbits)
++{
++	if (memcmp(map1, map2, nbits / 32 * sizeof(u32)))
++		return false;
++	if (nbits % 32 == 0)
++		return true;
++	return !((map1[nbits / 32] ^ map2[nbits / 32]) &
++		 ethnl_lower_bits(nbits % 32));
++}
 +
- 	rhashtable_walk_enter(&priv->ht, &hti);
- 	rhashtable_walk_start(&hti);
- 
-@@ -348,6 +354,14 @@ static void nft_rhash_gc(struct work_struct *work)
- 			goto try_later;
- 		}
- 
-+		/* rhashtable walk is unstable, already seen in this gc run?
-+		 * Then, skip this element. In case of (unlikely) sequence
-+		 * wraparound and stale element wq_gc_seq, next gc run will
-+		 * just find this expired element.
-+		 */
-+		if (he->wq_gc_seq == priv->wq_gc_seq)
-+			continue;
-+
- 		if (nft_set_elem_is_dead(&he->ext))
- 			goto dead_elem;
- 
-@@ -364,6 +378,8 @@ static void nft_rhash_gc(struct work_struct *work)
- 		if (!gc)
- 			goto try_later;
- 
-+		/* annotate gc sequence for this attempt. */
-+		he->wq_gc_seq = priv->wq_gc_seq;
- 		nft_trans_gc_elem_add(gc, he);
+ static int
+ ethnl_update_bitset32_verbose(u32 *bitmap, unsigned int nbits,
+ 			      const struct nlattr *attr, struct nlattr **tb,
+ 			      ethnl_string_array_t names,
+ 			      struct netlink_ext_ack *extack, bool *mod)
+ {
++	u32 *saved_bitmap = NULL;
+ 	struct nlattr *bit_attr;
+ 	bool no_mask;
+ 	int rem;
+@@ -448,8 +468,20 @@ ethnl_update_bitset32_verbose(u32 *bitmap, unsigned int nbits,
  	}
+ 
+ 	no_mask = tb[ETHTOOL_A_BITSET_NOMASK];
+-	if (no_mask)
+-		ethnl_bitmap32_clear(bitmap, 0, nbits, mod);
++	if (no_mask) {
++		unsigned int nwords = DIV_ROUND_UP(nbits, 32);
++		unsigned int nbytes = nwords * sizeof(u32);
++		bool dummy;
++
++		/* The bitmap size is only the size of the map part without
++		 * its mask part.
++		 */
++		saved_bitmap = kcalloc(nwords, sizeof(u32), GFP_KERNEL);
++		if (!saved_bitmap)
++			return -ENOMEM;
++		memcpy(saved_bitmap, bitmap, nbytes);
++		ethnl_bitmap32_clear(bitmap, 0, nbits, &dummy);
++	}
+ 
+ 	nla_for_each_nested(bit_attr, tb[ETHTOOL_A_BITSET_BITS], rem) {
+ 		bool old_val, new_val;
+@@ -458,22 +490,30 @@ ethnl_update_bitset32_verbose(u32 *bitmap, unsigned int nbits,
+ 		if (nla_type(bit_attr) != ETHTOOL_A_BITSET_BITS_BIT) {
+ 			NL_SET_ERR_MSG_ATTR(extack, bit_attr,
+ 					    "only ETHTOOL_A_BITSET_BITS_BIT allowed in ETHTOOL_A_BITSET_BITS");
++			kfree(saved_bitmap);
+ 			return -EINVAL;
+ 		}
+ 		ret = ethnl_parse_bit(&idx, &new_val, nbits, bit_attr, no_mask,
+ 				      names, extack);
+-		if (ret < 0)
++		if (ret < 0) {
++			kfree(saved_bitmap);
+ 			return ret;
++		}
+ 		old_val = bitmap[idx / 32] & ((u32)1 << (idx % 32));
+ 		if (new_val != old_val) {
+ 			if (new_val)
+ 				bitmap[idx / 32] |= ((u32)1 << (idx % 32));
+ 			else
+ 				bitmap[idx / 32] &= ~((u32)1 << (idx % 32));
+-			*mod = true;
++			if (!no_mask)
++				*mod = true;
+ 		}
+ 	}
+ 
++	if (no_mask && !ethnl_bitmap32_equal(saved_bitmap, bitmap, nbits))
++		*mod = true;
++
++	kfree(saved_bitmap);
+ 	return 0;
+ }
  
 -- 
 2.43.0
