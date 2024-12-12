@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5C8D22652A;
-	Thu, 12 Dec 2024 16:23:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 388D723874D;
+	Thu, 12 Dec 2024 16:23:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734020600; cv=none; b=bN5DGSCB8EJwNpyTBk8ijspPkYdPo7x3v8qVftZ3kcz+g71T7MkB1o4VfpFGrm6tVuy0f6wbM84cKrWH8RrPG1Dzx1i7AJaCPVxZdXo+cKJgBb1H5zvKZIPc5m4n9o0pXvyf++E+XzqELmqI/U5dhm7aD8yxqgnz2cU6mL4Fsao=
+	t=1734020604; cv=none; b=Lzvm4Dr/yJIXYeWMSfujzlOumaLTofH/J5phxALtQsXQE+Fbu0e+u3/VTBLAFDYIWxcI2fEnZgEtTtw3Gh6TZy78XHmu0KU+EPMQqQ3vEGPaZuvusg1Rv75wJDrDob+2uqh6CH9J0Hol1kP4/SdjaSYseXZK+4tHLqFChR3vnbU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734020600; c=relaxed/simple;
-	bh=oqgEjLu5hwZ/5F9Ucbi4X2mrFPWdpk+buaQXhq5o6/o=;
+	s=arc-20240116; t=1734020604; c=relaxed/simple;
+	bh=MEKrE5vio2wtmTjOSBXzMuQBVypzB+nxwRIZAIe/nT8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l1lVAhLLEyKVsZUf3cP8BmO5LU3/BlI+mZ5qpWY0iHOqEVqXv0LPYZjR/wrZZ9xo58uusUHEpCjtOui4mpgQc2Nk7qxSIdIM4OgqymEsaqHFqiCzEPZEPikWgoQsvPUasQyrykHsAuA6ugB9KR0P9RjmC39BSyRRCSRXU/BgGGg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lzOI+OD8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=o6y3eM6F/V/yDm0uBUthXSyMXkyjgN9I6KTRglbz8nC+N5kc20598e5A34W6amnhjRfz9ivldHtltLmICe0VRc2PA+P7w4EQL4o1CRfer31TvpbujXKD43pHvwzaYKElc2P4Nd18NflBCtaI3Ui+cdavZtagNf4PdvFppzdexSs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vpN3UZsy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lzOI+OD8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7495C4CECE;
-	Thu, 12 Dec 2024 16:23:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vpN3UZsy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2EA8C4CED0;
+	Thu, 12 Dec 2024 16:23:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734020600;
-	bh=oqgEjLu5hwZ/5F9Ucbi4X2mrFPWdpk+buaQXhq5o6/o=;
+	s=korg; t=1734020604;
+	bh=MEKrE5vio2wtmTjOSBXzMuQBVypzB+nxwRIZAIe/nT8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lzOI+OD8GCfq+BX/fMHDWCceiw0GKSk1KybfO9Lp7QoBWoHbzZKFxm+yck/ludp7K
-	 lbtmS9PPMU8AQTaHQOiyo81MXrXIdvfvvb7PrBmcUmIth3dlPoG1Ew4dTmqOSLEQ8R
-	 FBep1fAtr1khbIU00sBGlAjNeSXAX2FlR40eC584=
+	b=vpN3UZsypFAhnfgXyKloZIcf1gRe5EBBuAvHDx8bLwI51cCB5LHu8j3rOg5FmOiLb
+	 UjxmfwLzys24e81Q/AtyA+z7gayNsrH9o0tKeE3UTwa2XbdS+Va8nAboyeW5+kc0oZ
+	 ftuxZJyztOuL6doKhtzPl+8VuqwnXkQdSTZdxslU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 510/772] can: gs_usb: remove leading space from goto labels
-Date: Thu, 12 Dec 2024 15:57:35 +0100
-Message-ID: <20241212144411.026316788@linuxfoundation.org>
+Subject: [PATCH 6.1 511/772] can: gs_usb: gs_usb_probe(): align block comment
+Date: Thu, 12 Dec 2024 15:57:36 +0100
+Message-ID: <20241212144411.066946220@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -52,66 +52,33 @@ Content-Transfer-Encoding: 8bit
 
 From: Marc Kleine-Budde <mkl@pengutronix.de>
 
-[ Upstream commit f1a14714bf48f87fa8e774f415ea9815daf3750d ]
+[ Upstream commit 5780148bedd6aa7e51d3a18cd70f5b9b6cefb79e ]
 
-Remove leading spaces from goto labels in accordance with the kernel
-encoding style.
+Indent block comment so that it aligns the * on each line.
 
-Link: https://lore.kernel.org/all/20230718-gs_usb-cleanups-v1-1-c3b9154ec605@pengutronix.de
+Link: https://lore.kernel.org/all/20230718-gs_usb-cleanups-v1-2-c3b9154ec605@pengutronix.de
 Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Stable-dep-of: 889b2ae9139a ("can: gs_usb: add usb endpoint address detection at driver probe step")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/usb/gs_usb.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/net/can/usb/gs_usb.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/net/can/usb/gs_usb.c b/drivers/net/can/usb/gs_usb.c
-index 264a0f764e011..1d089c9b46410 100644
+index 1d089c9b46410..cb96e42961109 100644
 --- a/drivers/net/can/usb/gs_usb.c
 +++ b/drivers/net/can/usb/gs_usb.c
-@@ -639,7 +639,7 @@ static void gs_usb_receive_bulk_callback(struct urb *urb)
- 		netif_rx(skb);
- 	}
+@@ -1400,8 +1400,8 @@ static int gs_usb_probe(struct usb_interface *intf,
+ 		dev->canch[i]->parent = dev;
  
-- resubmit_urb:
-+resubmit_urb:
- 	usb_fill_bulk_urb(urb, usbcan->udev,
- 			  usb_rcvbulkpipe(usbcan->udev, GS_USB_ENDPOINT_IN),
- 			  hf, dev->parent->hf_size_rx,
-@@ -649,7 +649,7 @@ static void gs_usb_receive_bulk_callback(struct urb *urb)
- 
- 	/* USB failure take down all interfaces */
- 	if (rc == -ENODEV) {
-- device_detach:
-+device_detach:
- 		for (rc = 0; rc < GS_MAX_INTF; rc++) {
- 			if (usbcan->canch[rc])
- 				netif_device_detach(usbcan->canch[rc]->netdev);
-@@ -814,12 +814,12 @@ static netdev_tx_t gs_can_start_xmit(struct sk_buff *skb,
- 
- 	return NETDEV_TX_OK;
- 
-- badidx:
-+badidx:
- 	kfree(hf);
-- nomem_hf:
-+nomem_hf:
- 	usb_free_urb(urb);
- 
-- nomem_urb:
-+nomem_urb:
- 	gs_free_tx_context(txc);
- 	dev_kfree_skb(skb);
- 	stats->tx_dropped++;
-@@ -1311,7 +1311,7 @@ static struct gs_can *gs_make_candev(unsigned int channel,
- 
- 	return dev;
- 
-- out_free_candev:
-+out_free_candev:
- 	free_candev(dev->netdev);
- 	return ERR_PTR(rc);
- }
+ 		/* set RX packet size based on FD and if hardware
+-                * timestamps are supported.
+-		*/
++		 * timestamps are supported.
++		 */
+ 		if (dev->canch[i]->can.ctrlmode_supported & CAN_CTRLMODE_FD) {
+ 			if (dev->canch[i]->feature & GS_CAN_FEATURE_HW_TIMESTAMP)
+ 				hf_size_rx = struct_size(hf, canfd_ts, 1);
 -- 
 2.43.0
 
