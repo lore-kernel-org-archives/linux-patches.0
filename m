@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F2D020A5EE;
-	Thu, 12 Dec 2024 17:41:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 935C415696E;
+	Thu, 12 Dec 2024 17:41:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734025267; cv=none; b=d6/T+2xsxdKNyoUsCnosXgZQcaPTbqZpsvf8FW17WqcEU78yCUsL6h1UqMVejv00FgKQaSVFbAU3/E7esFuxYKkjZP3KQ6eyYwWSMeIihfHOEUT0VqIE5fmpjKAKhmLqjkVeG4ovTexYcYxSJw7ouuXI8E3LAaH37+YOjldw3g0=
+	t=1734025270; cv=none; b=IlCaIggRLeSZKW/vIJuSb1Rkmrm/9mmyfNR35d6s8qwmvAeKDP+8mmDSAFT4ZsKIu6voimtlWuMXNKdX++R9EdzG7rEX/YkyQGBwDKRFEVZeioU8sCD3D+KT7bPkFWSpcMmK36zZX5EYeMfDGqti8sV8IzH92NA3zj2DoNLujLY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734025267; c=relaxed/simple;
-	bh=bqfOXGQFLp3zbhkmG69pDFno37rmDaL/yoitf6iI6yE=;
+	s=arc-20240116; t=1734025270; c=relaxed/simple;
+	bh=ETarZRPySSCyPI1AVPq48vIOyTXtY+jksDQWJlKF6N8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p/1UDlwb6nN85nvOjDaNi5oM5w4aFtwvB4zxHGeb8Ws2geSd91slTdjHikf1D8rPe7qcENZDd8RMKqfcVWBiPoEMXFQgSG36iaLolT9EyZ4BefmS6qyxNsvhPLRwG4movJ0+nbYNriz9BilISe5Fq2Vn0YfzthVc5lKcA6df3rM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IA+RGu1d; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=amp1Ado06ndVWkLIwQzeqGantkhT6WQVjoVtxhWTFk/ueWKnC/ZjuEI2l8F7z3YXc+9kGwSl3Dw5Aqgmb1kKolxiTuHBNlKzN2VkAe+oDJFtKoEpciQ3JF5q5nfoZomxVMeFrvzSqC/qf2ooyyxEOfZ6aVnLS02Qv7uAimEDKmg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cBxWrICA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IA+RGu1d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F25B9C4CECE;
-	Thu, 12 Dec 2024 17:41:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cBxWrICA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19509C4CED0;
+	Thu, 12 Dec 2024 17:41:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734025267;
-	bh=bqfOXGQFLp3zbhkmG69pDFno37rmDaL/yoitf6iI6yE=;
+	s=korg; t=1734025270;
+	bh=ETarZRPySSCyPI1AVPq48vIOyTXtY+jksDQWJlKF6N8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IA+RGu1dHWd9ePRsC7Ua6Uf9WGAKNZLFCXPm0xYty138Qq0VQAPLvAMGv2j5VeIFt
-	 cvVv68rYvT9lByl9PPKwfBlsQ7CW28bbGr16TCbI9NROQ9Fy4iKZk9Zts9VNGMF9iU
-	 eGliyowfCH8CkgSUJ6Nre3s9JOQTpDP5GhFNFZl4=
+	b=cBxWrICAudfCGL3AXTdge8iRotxVvPpZtzEjtj8H33fP6vE++md1XaXFAhVdbhhVJ
+	 oL/j93E1tG2uTB0F2YfplwcYx8+g3KbSUBFwWpxW7PeZNCHrCUI5zUabEYUnj1f09z
+	 RjVaHUYGM9PlKFVG8qCTH3KrdeqwzemWCPHufQO4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Jinjie Ruan <ruanjinjie@huawei.com>,
+	Rob Clark <robdclark@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 082/321] ALSA: us122l: Use snd_card_free_when_closed() at disconnection
-Date: Thu, 12 Dec 2024 16:00:00 +0100
-Message-ID: <20241212144233.223338813@linuxfoundation.org>
+Subject: [PATCH 5.4 073/321] drm/msm/adreno: Use IRQF_NO_AUTOEN flag in request_irq()
+Date: Thu, 12 Dec 2024 15:59:51 +0100
+Message-ID: <20241212144232.875887682@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144229.291682835@linuxfoundation.org>
 References: <20241212144229.291682835@linuxfoundation.org>
@@ -50,48 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Jinjie Ruan <ruanjinjie@huawei.com>
 
-[ Upstream commit b7df09bb348016943f56b09dcaafe221e3f73947 ]
+[ Upstream commit 394679f322649d06fea3c646ba65f5a0887f52c3 ]
 
-The USB disconnect callback is supposed to be short and not too-long
-waiting.  OTOH, the current code uses snd_card_free() at
-disconnection, but this waits for the close of all used fds, hence it
-can take long.  It eventually blocks the upper layer USB ioctls, which
-may trigger a soft lockup.
+disable_irq() after request_irq() still has a time gap in which
+interrupts can come. request_irq() with IRQF_NO_AUTOEN flag will
+disable IRQ auto-enable when request IRQ.
 
-An easy workaround is to replace snd_card_free() with
-snd_card_free_when_closed().  This variant returns immediately while
-the release of resources is done asynchronously by the card device
-release at the last close.
-
-The loop of us122l->mmap_count check is dropped as well.  The check is
-useless for the asynchronous operation with *_when_closed().
-
-Fixes: 030a07e44129 ("ALSA: Add USB US122L driver")
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20241113111042.15058-3-tiwai@suse.de
+Fixes: 4b565ca5a2cb ("drm/msm: Add A6XX device support")
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+Patchwork: https://patchwork.freedesktop.org/patch/614075/
+Signed-off-by: Rob Clark <robdclark@chromium.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/usx2y/us122l.c | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/sound/usb/usx2y/us122l.c b/sound/usb/usx2y/us122l.c
-index e82c5236482df..eb7e57c4a7fdb 100644
---- a/sound/usb/usx2y/us122l.c
-+++ b/sound/usb/usx2y/us122l.c
-@@ -636,10 +636,7 @@ static void snd_us122l_disconnect(struct usb_interface *intf)
- 	usb_put_intf(usb_ifnum_to_if(us122l->dev, 1));
- 	usb_put_dev(us122l->dev);
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+index 40431a09dc97c..55ff242292f3d 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+@@ -1233,15 +1233,13 @@ static int a6xx_gmu_get_irq(struct a6xx_gmu *gmu, struct platform_device *pdev,
  
--	while (atomic_read(&us122l->mmap_count))
--		msleep(500);
+ 	irq = platform_get_irq_byname(pdev, name);
+ 
+-	ret = request_irq(irq, handler, IRQF_TRIGGER_HIGH, name, gmu);
++	ret = request_irq(irq, handler, IRQF_TRIGGER_HIGH | IRQF_NO_AUTOEN, name, gmu);
+ 	if (ret) {
+ 		DRM_DEV_ERROR(&pdev->dev, "Unable to get interrupt %s %d\n",
+ 			      name, ret);
+ 		return ret;
+ 	}
+ 
+-	disable_irq(irq);
 -
--	snd_card_free(card);
-+	snd_card_free_when_closed(card);
+ 	return irq;
  }
  
- static int snd_us122l_suspend(struct usb_interface *intf, pm_message_t message)
 -- 
 2.43.0
 
