@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE03A22331F;
-	Thu, 12 Dec 2024 17:29:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F41B02206A5;
+	Thu, 12 Dec 2024 17:29:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734024578; cv=none; b=J0Ap9j3sULaOAlvhrP/Gc95fgbjlzOsaVdAHaXo0wA0o3x8StRVpppVTJe0RNIs19tg+mgGjR1C1+JjvKFdoSzuHVt/KYLja6olJ496IYx+MmaziZSfLww9nQ3iFE6MAC3MIusnwnbHXYE4AAwX75zym27e4jLOHGARpaH6GGgQ=
+	t=1734024581; cv=none; b=Lbehe2OEJkeLYayHSH7n1fNWgrktNI91755lvKb+dDB5+M8El5y9uOLwSHYd7JooaCSXeYzMIiwZNpK2HHIpTzz/0w8UFjlIBf8Wb9Wtwiuk+NTNzu7lFSppUp4o7lPuuzpgv2d+p1Mpq0UrlzHHs6ugatzqBv9cIf/7BuO1wjk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734024578; c=relaxed/simple;
-	bh=IjEGRm8osZZIAGMJV8pPSwVRgeA16Nowlg6IHRcRp5A=;
+	s=arc-20240116; t=1734024581; c=relaxed/simple;
+	bh=dgsUPlHfw/vh8oIUHJ/ERBDLcDei3VIPoFatt7obm2A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ps9dabshupv9wMA2h/NUSzlLTiavNvm2PMSJFNp2nYYu797XmavOb3VQdG2iRMcpGTIUzHJm4KB2zrNNyPRnnc8/v7ZTzhc1PTleIcNPWBW05pt9l/b5Qzx9frzXDHhh8h8nyfyjsEu5QYumvJWPuLKM6eqMe6vJjl89ZCgosZ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jllpn5zR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HlibMKrmlUlrgBF/GoDhlmkV579n1WU3WTAprW9MFd+TQ9SwqjLWHoYNXVqNnxNv1ziMD6/hkx5ALT1YOnoRC+o/25gxBvD/CdOoDk6nXJdFxLUOP7UneL2VrNR+z7qLQSWjGXpS2vvITdXeMAuMOZcf5QDLPiFLMJXO5jwJd2E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RNb4C69U; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jllpn5zR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BF59C4CED4;
-	Thu, 12 Dec 2024 17:29:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RNb4C69U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76DA4C4CECE;
+	Thu, 12 Dec 2024 17:29:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734024577;
-	bh=IjEGRm8osZZIAGMJV8pPSwVRgeA16Nowlg6IHRcRp5A=;
+	s=korg; t=1734024580;
+	bh=dgsUPlHfw/vh8oIUHJ/ERBDLcDei3VIPoFatt7obm2A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jllpn5zR7XnwvdUBbMUzVXB50PJtRV3xMzidiZ/n9edReg8Wl8z9VVaPO8EX+6Lbk
-	 iz+6+CGIp+G2ZOoy1rj50HK9tu/VzhryPA0apfZaMGSwiQ73EqvRKnUIyxbVGkr0K2
-	 18xc8LBibcETWjyW4eGrYC8Ya2xOyGNfg4uuqPgo=
+	b=RNb4C69UVgAwlB84ewhkBlw+N9Chn0dRGvLw9WFp3c5aJHYeMNm9zpVDJr4MXzYtL
+	 MBmM1XJMryuaJustbgmEvnrvJhCuFyHPwetplqktYgWzhOYFbZZDSibdsoQySW1EzZ
+	 rjcyhf97xJK4gdlu0gvxGDNp9ib3ptJ4tuE6ZBdU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zicheng Qu <quzicheng@huawei.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 5.10 315/459] ad7780: fix division by zero in ad7780_write_raw()
-Date: Thu, 12 Dec 2024 16:00:53 +0100
-Message-ID: <20241212144306.091086497@linuxfoundation.org>
+	Laurent Fasnacht <laurent.fasnacht@proton.ch>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 342/459] netfilter: nft_set_hash: skip duplicated elements pending gc run
+Date: Thu, 12 Dec 2024 16:01:20 +0100
+Message-ID: <20241212144307.174997441@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144253.511169641@linuxfoundation.org>
 References: <20241212144253.511169641@linuxfoundation.org>
@@ -50,35 +51,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zicheng Qu <quzicheng@huawei.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-commit c174b53e95adf2eece2afc56cd9798374919f99a upstream.
+[ Upstream commit 7ffc7481153bbabf3332c6a19b289730c7e1edf5 ]
 
-In the ad7780_write_raw() , val2 can be zero, which might lead to a
-division by zero error in DIV_ROUND_CLOSEST(). The ad7780_write_raw()
-is based on iio_info's write_raw. While val is explicitly declared that
-can be zero (in read mode), val2 is not specified to be non-zero.
+rhashtable does not provide stable walk, duplicated elements are
+possible in case of resizing. I considered that checking for errors when
+calling rhashtable_walk_next() was sufficient to detect the resizing.
+However, rhashtable_walk_next() returns -EAGAIN only at the end of the
+iteration, which is too late, because a gc work containing duplicated
+elements could have been already scheduled for removal to the worker.
 
-Fixes: 9085daa4abcc ("staging: iio: ad7780: add gain & filter gpio support")
-Cc: stable@vger.kernel.org
-Signed-off-by: Zicheng Qu <quzicheng@huawei.com>
-Link: https://patch.msgid.link/20241028142027.1032332-1-quzicheng@huawei.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Add a u32 gc worker sequence number per set, bump it on every workqueue
+run. Annotate gc worker sequence number on the expired element. Use it
+to skip those already seen in this gc workqueue run.
+
+Note that this new field is never reset in case gc transaction fails, so
+next gc worker run on the expired element overrides it. Wraparound of gc
+worker sequence number should not be an issue with stale gc worker
+sequence number in the element, that would just postpone the element
+removal in one gc run.
+
+Note that it is not possible to use flags to annotate that element is
+pending gc run to detect duplicates, given that gc transaction can be
+invalidated in case of update from the control plane, therefore, not
+allowing to clear such flag.
+
+On x86_64, pahole reports no changes in the size of nft_rhash_elem.
+
+Fixes: f6c383b8c31a ("netfilter: nf_tables: adapt set backend to use GC transaction API")
+Reported-by: Laurent Fasnacht <laurent.fasnacht@proton.ch>
+Tested-by: Laurent Fasnacht <laurent.fasnacht@proton.ch>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/adc/ad7780.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/netfilter/nft_set_hash.c | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
---- a/drivers/iio/adc/ad7780.c
-+++ b/drivers/iio/adc/ad7780.c
-@@ -152,7 +152,7 @@ static int ad7780_write_raw(struct iio_d
+diff --git a/net/netfilter/nft_set_hash.c b/net/netfilter/nft_set_hash.c
+index 2499d25a5c85f..8656cb61dd211 100644
+--- a/net/netfilter/nft_set_hash.c
++++ b/net/netfilter/nft_set_hash.c
+@@ -27,10 +27,12 @@ extern unsigned int nf_tables_net_id;
+ struct nft_rhash {
+ 	struct rhashtable		ht;
+ 	struct delayed_work		gc_work;
++	u32				wq_gc_seq;
+ };
  
- 	switch (m) {
- 	case IIO_CHAN_INFO_SCALE:
--		if (val != 0)
-+		if (val != 0 || val2 == 0)
- 			return -EINVAL;
+ struct nft_rhash_elem {
+ 	struct rhash_head		node;
++	u32				wq_gc_seq;
+ 	struct nft_set_ext		ext;
+ };
  
- 		vref = st->int_vref_mv * 1000000LL;
+@@ -325,6 +327,10 @@ static void nft_rhash_gc(struct work_struct *work)
+ 	if (!gc)
+ 		goto done;
+ 
++	/* Elements never collected use a zero gc worker sequence number. */
++	if (unlikely(++priv->wq_gc_seq == 0))
++		priv->wq_gc_seq++;
++
+ 	rhashtable_walk_enter(&priv->ht, &hti);
+ 	rhashtable_walk_start(&hti);
+ 
+@@ -342,6 +348,14 @@ static void nft_rhash_gc(struct work_struct *work)
+ 			goto try_later;
+ 		}
+ 
++		/* rhashtable walk is unstable, already seen in this gc run?
++		 * Then, skip this element. In case of (unlikely) sequence
++		 * wraparound and stale element wq_gc_seq, next gc run will
++		 * just find this expired element.
++		 */
++		if (he->wq_gc_seq == priv->wq_gc_seq)
++			continue;
++
+ 		if (nft_set_elem_is_dead(&he->ext))
+ 			goto dead_elem;
+ 
+@@ -362,6 +376,8 @@ static void nft_rhash_gc(struct work_struct *work)
+ 		if (!gc)
+ 			goto try_later;
+ 
++		/* annotate gc sequence for this attempt. */
++		he->wq_gc_seq = priv->wq_gc_seq;
+ 		nft_trans_gc_elem_add(gc, he);
+ 	}
+ 
+-- 
+2.43.0
+
 
 
