@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AF46211719;
-	Thu, 12 Dec 2024 17:18:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33343222D78;
+	Thu, 12 Dec 2024 17:18:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734023882; cv=none; b=L9yjBKbLyLEo1g2p1meldAIkkIn9Xw361XvCMbVbez3vyhYaegRuLpAX76W2aRONDKuXh4YFiUBZbmtxEOXxnhh7/nKvKXO9QVNs5TfCAkZhe5SoOmlREYB/osDQev+JWeRgyIbhnheN4/ix8xRYl7jXUIF8Jc/jlZWqMCoDqms=
+	t=1734023885; cv=none; b=QZrWjNIKFUpg1PY0/EUq+nFeoS/BeU5tN1L678YJ0taauRcITRein1h7P0BrbslIe90aw6YdsfqrjgGAtdRLWBPXHejJOqSJwi3Qcz5WDjq5UT83QH5+H4vcxjLI1AOWqjm/oAocWIXXk87ITNV2hzn6BX2OeamRUBFSIasBLrQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734023882; c=relaxed/simple;
-	bh=TfxLa6uE2eyubZ+gcvqABvVr9uaWegdrgylsUborHsE=;
+	s=arc-20240116; t=1734023885; c=relaxed/simple;
+	bh=VzOiSIVT2J1DOuswmQebJVe8XQfW8m47ow1lH9CPuoo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qEtBlMjs9+bJRvZkBt2jkxCVe0hVxxqnrUAmb1O/ugGli+MuPF7OIoaPhN6zWaAoGucGaiOunA7OlGCuC7PigBH6w6UkJ/qe4u3ckVmcwVtsQvIV2n74NTd6sdTdS1oZAVCx6zf5AWwqws7ecMv17yWVPgJy5MH3+buEnVyrEko=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vRKOZCBB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=G89+d68BG0TjFQBLBt09apkVIKy/i77Qvo0bHzEhP6K0t/LUUXh7pjGDXx61U/p2HrRGFKcTpaPJ1M9sFEKVmFMbXSQSZ0SaBJk9umVPWlS8ePxDF7YO8tuBtrbUTO1cW5sE2Tb64tuyeNzb/JYvwJMJ8g7YUfPb14/7MpBp75Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=twKlXlnK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vRKOZCBB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57E9CC4CECE;
-	Thu, 12 Dec 2024 17:18:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="twKlXlnK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67433C4CED0;
+	Thu, 12 Dec 2024 17:18:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734023881;
-	bh=TfxLa6uE2eyubZ+gcvqABvVr9uaWegdrgylsUborHsE=;
+	s=korg; t=1734023884;
+	bh=VzOiSIVT2J1DOuswmQebJVe8XQfW8m47ow1lH9CPuoo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vRKOZCBByF8VYz74ynSRihS8w4RmvDw/mtKiWXAovuzqBnfdklOl1KDB+9MQusNEr
-	 CiCa3FFPBqoTFh1TdprFXGzG1hhhsMsBD4ELxxOc08TLJrbyfqvipK6qDAbQGgjdzV
-	 xHIjzthaSDftxRkgWPlgTHKLc1+9OsCuAyV6qU4Q=
+	b=twKlXlnKGxxjOpBeVgJsbNitw4BNNVdOTuwXqrNv9Y2PS5RQqiI353+iGRClOXhsK
+	 qgzAXUGY1JgjvCiTdHfVVPOO9T8wfI3l/q7tVT7WJHz3jX1S3pWjCJFGbnv198HO3g
+	 RmCxPZz6Z4PlBn6QrV1quANPDK2KWjHaDqzh8v50=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiaxin Yu <jiaxin.yu@mediatek.com>,
-	Macpaul Lin <macpaul.lin@mediatek.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Mark Brown <broonie@kernel.org>,
+	Yuan Chen <chenyuan@kylinos.cn>,
+	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 113/459] ASoC: dt-bindings: mt6359: Update generic node name and dmic-mode
-Date: Thu, 12 Dec 2024 15:57:31 +0100
-Message-ID: <20241212144257.976016497@linuxfoundation.org>
+Subject: [PATCH 5.10 114/459] bpf: Fix the xdp_adjust_tail sample prog issue
+Date: Thu, 12 Dec 2024 15:57:32 +0100
+Message-ID: <20241212144258.014788592@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144253.511169641@linuxfoundation.org>
 References: <20241212144253.511169641@linuxfoundation.org>
@@ -53,75 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Macpaul Lin <macpaul.lin@mediatek.com>
+From: Yuan Chen <chenyuan@kylinos.cn>
 
-[ Upstream commit 4649cbd97fdae5069e9a71cd7669b62b90e03669 ]
+[ Upstream commit 4236f114a3ffbbfd217436c08852e94cae372f57 ]
 
-Some fix and updates in the following items:
-1. examples:
-   Update generic node name to 'audio-codec' to comply with the
-   coming change in 'mt6359.dtsi'. This change is necessary to fix the
-   dtbs_check error:
-   pmic: 'mt6359codec' does not match any of the regexes: 'pinctrl-[0-9]+'
+During the xdp_adjust_tail test, probabilistic failure occurs and SKB package
+is discarded by the kernel. After checking the issues by tracking SKB package,
+it is identified that they were caused by checksum errors. Refer to checksum
+of the arch/arm64/include/asm/checksum.h for fixing.
 
-2. mediatek,dmic-mode:
-   After inspecting the .dts and .dtsi files using 'mt6359-codec', it was
-   discovered that the definitions of 'two wires' and 'one wire' are
-   inverted compared to the DT schema.
-   For example, the following boards using MT6359 PMIC:
-    - mt8192-asurada.dtsi
-    - mt8195-cherry.dtsi
-   These boards use the same definitions of 'dmic-mode' as other boards
-   using MT6358 PMIC. The meaning of '0' or '1' has been noted as comments
-   in the device trees.
+v2: Based on Alexei Starovoitov's suggestions, it is necessary to keep the code
+ implementation consistent.
 
-   Upon examining the code in [1] and [2], it was confirmed that the
-   definitions of 'dmic-mode' are consistent between "MT6359 PMIC" and
-   "MT6358 PMIC". Therefore, the DT Schema should be correct as is.
-
-References:
-[1] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/sound/soc/codecs/mt6358.c#n1875
-[2] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/sound/soc/codecs/mt6359.c#L1515
-
-Fixes: 539237d1c609 ("dt-bindings: mediatek: mt6359: add codec document")
-Signed-off-by: Jiaxin Yu <jiaxin.yu@mediatek.com>
-Signed-off-by: Macpaul Lin <macpaul.lin@mediatek.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://patch.msgid.link/20240930075451.14196-1-macpaul.lin@mediatek.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: c6ffd1ff7856 (bpf: add bpf_xdp_adjust_tail sample prog)
+Signed-off-by: Yuan Chen <chenyuan@kylinos.cn>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20240930024115.52841-1-chenyuan_fl@163.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/devicetree/bindings/sound/mt6359.yaml | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ samples/bpf/xdp_adjust_tail_kern.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/Documentation/devicetree/bindings/sound/mt6359.yaml b/Documentation/devicetree/bindings/sound/mt6359.yaml
-index a54f466f769d4..74330f54d6db4 100644
---- a/Documentation/devicetree/bindings/sound/mt6359.yaml
-+++ b/Documentation/devicetree/bindings/sound/mt6359.yaml
-@@ -23,8 +23,8 @@ properties:
-       Indicates how many data pins are used to transmit two channels of PDM
-       signal. 0 means two wires, 1 means one wire. Default value is 0.
-     enum:
--      - 0 # one wire
--      - 1 # two wires
-+      - 0 # two wires
-+      - 1 # one wire
+diff --git a/samples/bpf/xdp_adjust_tail_kern.c b/samples/bpf/xdp_adjust_tail_kern.c
+index ffdd548627f0a..da67bcad1c638 100644
+--- a/samples/bpf/xdp_adjust_tail_kern.c
++++ b/samples/bpf/xdp_adjust_tail_kern.c
+@@ -57,6 +57,7 @@ static __always_inline void swap_mac(void *data, struct ethhdr *orig_eth)
  
-   mediatek,mic-type-0:
-     $ref: /schemas/types.yaml#/definitions/uint32
-@@ -53,9 +53,9 @@ additionalProperties: false
+ static __always_inline __u16 csum_fold_helper(__u32 csum)
+ {
++	csum = (csum & 0xffff) + (csum >> 16);
+ 	return ~((csum & 0xffff) + (csum >> 16));
+ }
  
- examples:
-   - |
--    mt6359codec: mt6359codec {
--      mediatek,dmic-mode = <0>;
--      mediatek,mic-type-0 = <2>;
-+    mt6359codec: audio-codec {
-+        mediatek,dmic-mode = <0>;
-+        mediatek,mic-type-0 = <2>;
-     };
- 
- ...
 -- 
 2.43.0
 
