@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8C0222969E;
-	Thu, 12 Dec 2024 16:55:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62B5522969E;
+	Thu, 12 Dec 2024 16:55:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734022523; cv=none; b=HnY50GOrijiKSyPUW1DheAh0aU46QSZtE441MRGyrQFhCs6Yi5xvgdUK/Xu+CM9hWQGMwcvMNgqAJ3FY5Hlp5iTTwLQuFRDBWpMUO9DRJAo9hjFA60oWqP5EI0WWbBsu6wEaqJl4ARjt138h+TRtB7slkTbYwE+6rwnXkbZlH0w=
+	t=1734022528; cv=none; b=ER58Mn+fbPg6A2Jl+Iq3eVGk75iByXWhBzSqujEGcRrYz1gMT80Oa7WuKwVpRNIiEHYgjQmkxp8ynMwiTEjvbO7s7LxtUTw25+NUEvVKy+eVZp4lHTtafpkVOBaDIH91W7BTZd8M1zHDYG/rnVm6nl7gyKul/7yetjtbTebLOJY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734022523; c=relaxed/simple;
-	bh=N7o0i0QyGuHNIOQFoRUnaC/yr9/5viZgsjfg9zxxwk8=;
+	s=arc-20240116; t=1734022528; c=relaxed/simple;
+	bh=DJBI4wOHV/oYlS0IzCgkvcd37mjDVb9p/VSvyf+5zWI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c4M05qr+fnajrxH7ksgSSlJeiOBRBVdV3fGEEKShb3ii+h/wzmTYSJnQIKOWXia7lovUNnwYgsbjNmBJadXZReTXXNOiMlc49lPJzLwDxAkNMeBbzZUpWOPZ0zj7YvGbi1ZCxjKe1ZOWLmBOAyk/GRfIa1wR4gbp9fgZM7kTgG4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oIAlyecH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=svO/nMpxyuJIRVGV29MWHQyH+6AOUMwUHq1qHRIjdtW/rd6bOYS9upYnicmLIhEe7dS8F6LHFzfHt6X9WFgwcv/IttFTlve79M9zkPvoMBpXihsDpMy9vY/2zPDYdHk4XpCzv4SH4veuVaQ9rdXOscsbg/OIChSaJ7p2OISDVYg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aKWeusBe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oIAlyecH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98DFCC4CECE;
-	Thu, 12 Dec 2024 16:55:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aKWeusBe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66B45C4CECE;
+	Thu, 12 Dec 2024 16:55:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734022523;
-	bh=N7o0i0QyGuHNIOQFoRUnaC/yr9/5viZgsjfg9zxxwk8=;
+	s=korg; t=1734022526;
+	bh=DJBI4wOHV/oYlS0IzCgkvcd37mjDVb9p/VSvyf+5zWI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oIAlyecHvoqxq6UlJt965O8Dcsjpvvm1OYNdI2Tz9wTb9FkEYUcd0hTC2Dp8MyD1b
-	 /UCbdXW1pdim2A4Qn60Gcz7m5JGz/MNqHxk9wrFTc3q7oHFmK9yTMJvJv/jNG36h+n
-	 ova+9Da1kH+e4sMHXk8/yLV5UwEjqr+qLLR7CdWA=
+	b=aKWeusBerI33JJvnn8DxH2tev+KaraTrVexQxjaOf1a5igVku7CZ6BSd7qgKWEwXa
+	 cYNjXrf7Ht9poTiUr1h48qCVW5InsZUVzvA220lhYc17++0sbH9ALmTf2szc0Asmcc
+	 at5wlMA71zi0T3z6HtLkZq2GBGbQdRfnTJyEJAP8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luis Chamberlain <mcgrof@kernel.org>,
-	Jeff Layton <jlayton@kernel.org>,
+	Ye Bin <yebin10@huawei.com>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 265/565] sunrpc: simplify two-level sysctl registration for svcrdma_parm_table
-Date: Thu, 12 Dec 2024 15:57:40 +0100
-Message-ID: <20241212144321.940792702@linuxfoundation.org>
+Subject: [PATCH 5.15 266/565] svcrdma: fix miss destroy percpu_counter in svc_rdma_proc_init()
+Date: Thu, 12 Dec 2024 15:57:41 +0100
+Message-ID: <20241212144321.982018151@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144311.432886635@linuxfoundation.org>
 References: <20241212144311.432886635@linuxfoundation.org>
@@ -52,63 +51,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luis Chamberlain <mcgrof@kernel.org>
+From: Ye Bin <yebin10@huawei.com>
 
-[ Upstream commit 376bcd9b37632cf191711a68aa25ab42f0048c2e ]
+[ Upstream commit ce89e742a4c12b20f09a43fec1b21db33f2166cd ]
 
-There is no need to declare two tables to just create directories,
-this can be easily be done with a prefix path with register_sysctl().
+There's issue as follows:
+RPC: Registered rdma transport module.
+RPC: Registered rdma backchannel transport module.
+RPC: Unregistered rdma transport module.
+RPC: Unregistered rdma backchannel transport module.
+BUG: unable to handle page fault for address: fffffbfff80c609a
+PGD 123fee067 P4D 123fee067 PUD 123fea067 PMD 10c624067 PTE 0
+Oops: Oops: 0000 [#1] PREEMPT SMP KASAN NOPTI
+RIP: 0010:percpu_counter_destroy_many+0xf7/0x2a0
+Call Trace:
+ <TASK>
+ __die+0x1f/0x70
+ page_fault_oops+0x2cd/0x860
+ spurious_kernel_fault+0x36/0x450
+ do_kern_addr_fault+0xca/0x100
+ exc_page_fault+0x128/0x150
+ asm_exc_page_fault+0x26/0x30
+ percpu_counter_destroy_many+0xf7/0x2a0
+ mmdrop+0x209/0x350
+ finish_task_switch.isra.0+0x481/0x840
+ schedule_tail+0xe/0xd0
+ ret_from_fork+0x23/0x80
+ ret_from_fork_asm+0x1a/0x30
+ </TASK>
 
-Simplify this registration.
+If register_sysctl() return NULL, then svc_rdma_proc_cleanup() will not
+destroy the percpu counters which init in svc_rdma_proc_init().
+If CONFIG_HOTPLUG_CPU is enabled, residual nodes may be in the
+'percpu_counters' list. The above issue may occur once the module is
+removed. If the CONFIG_HOTPLUG_CPU configuration is not enabled, memory
+leakage occurs.
+To solve above issue just destroy all percpu counters when
+register_sysctl() return NULL.
 
-Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Fixes: 1e7e55731628 ("svcrdma: Restore read and write stats")
+Fixes: 22df5a22462e ("svcrdma: Convert rdma_stat_sq_starve to a per-CPU counter")
+Fixes: df971cd853c0 ("svcrdma: Convert rdma_stat_recv to a per-CPU counter")
+Signed-off-by: Ye Bin <yebin10@huawei.com>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-Stable-dep-of: ce89e742a4c1 ("svcrdma: fix miss destroy percpu_counter in svc_rdma_proc_init()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/xprtrdma/svc_rdma.c | 21 ++-------------------
- 1 file changed, 2 insertions(+), 19 deletions(-)
+ net/sunrpc/xprtrdma/svc_rdma.c | 19 ++++++++++++++-----
+ 1 file changed, 14 insertions(+), 5 deletions(-)
 
 diff --git a/net/sunrpc/xprtrdma/svc_rdma.c b/net/sunrpc/xprtrdma/svc_rdma.c
-index 5bc20e9d09cd8..f0d5eeed4c886 100644
+index f0d5eeed4c886..e1d4e426b21fa 100644
 --- a/net/sunrpc/xprtrdma/svc_rdma.c
 +++ b/net/sunrpc/xprtrdma/svc_rdma.c
-@@ -212,24 +212,6 @@ static struct ctl_table svcrdma_parm_table[] = {
- 	{ },
- };
+@@ -234,25 +234,34 @@ static int svc_rdma_proc_init(void)
  
--static struct ctl_table svcrdma_table[] = {
--	{
--		.procname	= "svc_rdma",
--		.mode		= 0555,
--		.child		= svcrdma_parm_table
--	},
--	{ },
--};
--
--static struct ctl_table svcrdma_root_table[] = {
--	{
--		.procname	= "sunrpc",
--		.mode		= 0555,
--		.child		= svcrdma_table
--	},
--	{ },
--};
--
- static void svc_rdma_proc_cleanup(void)
- {
- 	if (!svcrdma_table_header)
-@@ -263,7 +245,8 @@ static int svc_rdma_proc_init(void)
+ 	rc = percpu_counter_init(&svcrdma_stat_read, 0, GFP_KERNEL);
  	if (rc)
- 		goto out_err;
+-		goto out_err;
++		goto err;
+ 	rc = percpu_counter_init(&svcrdma_stat_recv, 0, GFP_KERNEL);
+ 	if (rc)
+-		goto out_err;
++		goto err_read;
+ 	rc = percpu_counter_init(&svcrdma_stat_sq_starve, 0, GFP_KERNEL);
+ 	if (rc)
+-		goto out_err;
++		goto err_recv;
+ 	rc = percpu_counter_init(&svcrdma_stat_write, 0, GFP_KERNEL);
+ 	if (rc)
+-		goto out_err;
++		goto err_sq;
  
--	svcrdma_table_header = register_sysctl_table(svcrdma_root_table);
-+	svcrdma_table_header = register_sysctl("sunrpc/svc_rdma",
-+					       svcrdma_parm_table);
+ 	svcrdma_table_header = register_sysctl("sunrpc/svc_rdma",
+ 					       svcrdma_parm_table);
++	if (!svcrdma_table_header)
++		goto err_write;
++
  	return 0;
  
- out_err:
+-out_err:
++err_write:
++	rc = -ENOMEM;
++	percpu_counter_destroy(&svcrdma_stat_write);
++err_sq:
+ 	percpu_counter_destroy(&svcrdma_stat_sq_starve);
++err_recv:
+ 	percpu_counter_destroy(&svcrdma_stat_recv);
++err_read:
+ 	percpu_counter_destroy(&svcrdma_stat_read);
++err:
+ 	return rc;
+ }
+ 
 -- 
 2.43.0
 
