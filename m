@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D5AB22655E;
-	Thu, 12 Dec 2024 15:46:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0623F21578F;
+	Thu, 12 Dec 2024 15:46:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734018408; cv=none; b=NJYMuu4kFPHGhYbjhfTBXmMR0N9AvW55KCzCZQLdVOMV7FV/krRUrUg8/1Z3UGAPQ5THiSS8zJWvjXJRxzqNQfH2denQjbF3Wt5hf4OGW2jcTzomSi+wZgSmPrcnVrz46dlgA97FUikgDi3YfBiYz8JieyIXoOjn3+TgIbFSrdQ=
+	t=1734018412; cv=none; b=WJbKUl4jdGwvX2h2I7pdkSTvt8XSU9mIx3xcKOznY5Qqr3Ps1oo2ok6PezM0MnpgJ0Cn2XzLhzvDZP4JqX5XF7juqLgjwowgROR9VK2taOrwCHoVHwc0nZnzF4fa5mKzqbE8V1CuThCD9k9o57a6NedJ0XobIP04p5ZoXYm8u8Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734018408; c=relaxed/simple;
-	bh=SgTnMuJhIhk907cegzNkKUDzEXouJCkt/nfKa864JrU=;
+	s=arc-20240116; t=1734018412; c=relaxed/simple;
+	bh=97jZkKzCW67CJAnKX/zrtj7q3CJKd3P6kEcYyReL9OE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FgoeaK+4Qxjt9Mhsk1RVz/KgHCABzrvy9fdy1me/7l2NVippeKZfSVopk9VQY16KYgM+LXWcT3PncMAXQZnN0TBb81c/M8jsh2M6CUsV/95ldwv+VHHfTG9Zu9Jk+1DWE2AWX0a3eYzL0XA52NEdsaVvJB7sZd9LY4qTRPnnSuw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RHrb2tYB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=svvDb8mAtwIOoUMvLc0mJdV4VkAAiCaCL0b2r3FmALdyg/QmXsbbnz7zYMfGTgNJaKkdqAxWQRmFbWjFPyzxcJA03GGaV/FtNDc3cjdsXWsVyzQMuSbJPwOcASVXAA3d02CWvEiAq1qEP9I/LOqglPiyRSmgGo42/Yqq3ElxNQw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LT8vg91Z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RHrb2tYB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D77DC4CED4;
-	Thu, 12 Dec 2024 15:46:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LT8vg91Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65CF2C4CECE;
+	Thu, 12 Dec 2024 15:46:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734018408;
-	bh=SgTnMuJhIhk907cegzNkKUDzEXouJCkt/nfKa864JrU=;
+	s=korg; t=1734018411;
+	bh=97jZkKzCW67CJAnKX/zrtj7q3CJKd3P6kEcYyReL9OE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RHrb2tYBnUToxAzE7PXcgghBsoaBeiE1XE9IFBS3oXkTBVUYF6sPhyIVF1OP2hrk+
-	 n4/k9CvGpgRFm+73TSMJwXKvvhcQ3BhC2ppZgjD85GZgMbiTEvoVgRzSqaBZFEKOiS
-	 Hi6WbS1uRDoZQChNk9SLzMWGyc0t0udCa9SVzieY=
+	b=LT8vg91ZPAhHEeZtAeIev+xdDsPJUCedhwPfsA/o14EKWqaI47VdgrO1H2CcuwX46
+	 C2Enc3H0qX0U+H/TlRHOEqL2I0aTnHufT9s62XtK+Ij0ALRweDQcONhe7RJegNhP4n
+	 glmS3xwd01PbxlJ2UiDqRK986kgjO35RceGOseng=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yi Yang <yiyang13@huawei.com>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Ira Weiny <ira.weiny@intel.com>,
+	Kees Cook <kees@kernel.org>,
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 284/356] nvdimm: rectify the illogical code within nd_dax_probe()
-Date: Thu, 12 Dec 2024 16:00:03 +0100
-Message-ID: <20241212144255.799431050@linuxfoundation.org>
+Subject: [PATCH 6.6 285/356] smb: client: memcpy() with surrounding object base address
+Date: Thu, 12 Dec 2024 16:00:04 +0100
+Message-ID: <20241212144255.838016576@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144244.601729511@linuxfoundation.org>
 References: <20241212144244.601729511@linuxfoundation.org>
@@ -52,63 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yi Yang <yiyang13@huawei.com>
+From: Kees Cook <kees@kernel.org>
 
-[ Upstream commit b61352101470f8b68c98af674e187cfaa7c43504 ]
+[ Upstream commit f69b0187f8745a7a9584f6b13f5e792594b88b2e ]
 
-When nd_dax is NULL, nd_pfn is consequently NULL as well. Nevertheless,
-it is inadvisable to perform pointer arithmetic or address-taking on a
-NULL pointer.
-Introduce the nd_dax_devinit() function to enhance the code's logic and
-improve its readability.
+Like commit f1f047bd7ce0 ("smb: client: Fix -Wstringop-overflow issues"),
+adjust the memcpy() destination address to be based off the surrounding
+object rather than based off the 4-byte "Protocol" member. This avoids a
+build-time warning when compiling under CONFIG_FORTIFY_SOURCE with GCC 15:
 
-Signed-off-by: Yi Yang <yiyang13@huawei.com>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Link: https://patch.msgid.link/20241108085526.527957-1-yiyang13@huawei.com
-Signed-off-by: Ira Weiny <ira.weiny@intel.com>
+In function 'fortify_memcpy_chk',
+    inlined from 'CIFSSMBSetPathInfo' at ../fs/smb/client/cifssmb.c:5358:2:
+../include/linux/fortify-string.h:571:25: error: call to '__write_overflow_field' declared with attribute warning: detected write beyond size of field (1st parameter); maybe use struct_group()? [-Werror=attribute-warning]
+  571 |                         __write_overflow_field(p_size_field, size);
+      |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Signed-off-by: Kees Cook <kees@kernel.org>
+Reviewed-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvdimm/dax_devs.c | 4 ++--
- drivers/nvdimm/nd.h       | 7 +++++++
- 2 files changed, 9 insertions(+), 2 deletions(-)
+ fs/smb/client/cifssmb.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/nvdimm/dax_devs.c b/drivers/nvdimm/dax_devs.c
-index 3bd61f2457885..cfafe1fa77bab 100644
---- a/drivers/nvdimm/dax_devs.c
-+++ b/drivers/nvdimm/dax_devs.c
-@@ -106,12 +106,12 @@ int nd_dax_probe(struct device *dev, struct nd_namespace_common *ndns)
- 
- 	nvdimm_bus_lock(&ndns->dev);
- 	nd_dax = nd_dax_alloc(nd_region);
--	nd_pfn = &nd_dax->nd_pfn;
--	dax_dev = nd_pfn_devinit(nd_pfn, ndns);
-+	dax_dev = nd_dax_devinit(nd_dax, ndns);
- 	nvdimm_bus_unlock(&ndns->dev);
- 	if (!dax_dev)
- 		return -ENOMEM;
- 	pfn_sb = devm_kmalloc(dev, sizeof(*pfn_sb), GFP_KERNEL);
-+	nd_pfn = &nd_dax->nd_pfn;
- 	nd_pfn->pfn_sb = pfn_sb;
- 	rc = nd_pfn_validate(nd_pfn, DAX_SIG);
- 	dev_dbg(dev, "dax: %s\n", rc == 0 ? dev_name(dax_dev) : "<none>");
-diff --git a/drivers/nvdimm/nd.h b/drivers/nvdimm/nd.h
-index e8b9d27dbb3c3..12774334273c1 100644
---- a/drivers/nvdimm/nd.h
-+++ b/drivers/nvdimm/nd.h
-@@ -601,6 +601,13 @@ struct nd_dax *to_nd_dax(struct device *dev);
- int nd_dax_probe(struct device *dev, struct nd_namespace_common *ndns);
- bool is_nd_dax(const struct device *dev);
- struct device *nd_dax_create(struct nd_region *nd_region);
-+static inline struct device *nd_dax_devinit(struct nd_dax *nd_dax,
-+					    struct nd_namespace_common *ndns)
-+{
-+	if (!nd_dax)
-+		return NULL;
-+	return nd_pfn_devinit(&nd_dax->nd_pfn, ndns);
-+}
- #else
- static inline int nd_dax_probe(struct device *dev,
- 		struct nd_namespace_common *ndns)
+diff --git a/fs/smb/client/cifssmb.c b/fs/smb/client/cifssmb.c
+index 301189ee1335b..a34db419e46f7 100644
+--- a/fs/smb/client/cifssmb.c
++++ b/fs/smb/client/cifssmb.c
+@@ -5364,7 +5364,7 @@ CIFSSMBSetPathInfo(const unsigned int xid, struct cifs_tcon *tcon,
+ 	param_offset = offsetof(struct smb_com_transaction2_spi_req,
+ 				InformationLevel) - 4;
+ 	offset = param_offset + params;
+-	data_offset = (char *) (&pSMB->hdr.Protocol) + offset;
++	data_offset = (char *)pSMB + offsetof(typeof(*pSMB), hdr.Protocol) + offset;
+ 	pSMB->ParameterOffset = cpu_to_le16(param_offset);
+ 	pSMB->DataOffset = cpu_to_le16(offset);
+ 	pSMB->SetupCount = 1;
 -- 
 2.43.0
 
