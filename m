@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7A87242F07;
-	Thu, 12 Dec 2024 16:19:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEA6824354C;
+	Thu, 12 Dec 2024 16:19:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734020384; cv=none; b=RyPRxZypuTML4a1xwweTrKZD8HfW32949+uZSCeyEIDJRRPY7oReki+WjkMu9ojTlz5DBYEImFJniu2Uxt8cVIBsBkUGg7jWDq9uP2yl4QgI0ReQaHl4Poedn5EA7qP8PslYebWlKgYlIjIIEaBXbhyamwaG93k9LxJiSEeJ3fI=
+	t=1734020388; cv=none; b=GbgoXB/OccB6yI3GM/m/IrJJEOjfRq9cxLZOzWVLGC6s05iIrDFzOSm/O+DO0U15fVDX74P2E/kH2mnTPRhJ6Qsid/6/dzY8cwqBpsGBXHQbegrzFx+sTeq2esweuRS5BbsZiXMAOMTDZnM74lD7O1TrlRpeHnccB2nEMYpjbrc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734020384; c=relaxed/simple;
-	bh=/Kw01WspyqulwhkfUPX31RjFlwecJTPj/h5op6223Jk=;
+	s=arc-20240116; t=1734020388; c=relaxed/simple;
+	bh=Vkdln2D9V9BfXaQ77BAc8by+BSGCHwTtrxrjtb8p4G8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V6ZY48SBG4sgUMW+aUFgJolcVnDyszkD/fqOh3QM360+z7BW9E92i5fZXsPtsfr3hgM3ClzO1XjcOWaDSRGxU6KpEHd3l9ixefSDawVIwVDyA57v8tbhFHDF0GGpg3A/9HE/fvjdDjh4+ECsZCP0MTuq4sfSCp1KO5P0xSZH8cU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WT2vS8PC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fEyLlMyuTWFlrVoL3m3UqOOz0a/OWIfoAqNbFJHA25SMlw/Ohj/T8CYuAlIwpiZmStrWtSeKkl8I7fNeQqb1YbRszrEptjof1sNW7yZ7zSHvkAlSLow7jiTT9CqMvXuMhz6AhdYcmfAYQJuQa2MOyl+o8ffXqEyZ42rThB1KKYk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qdIafKfU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WT2vS8PC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FD07C4CECE;
-	Thu, 12 Dec 2024 16:19:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qdIafKfU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D527CC4CED3;
+	Thu, 12 Dec 2024 16:19:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734020384;
-	bh=/Kw01WspyqulwhkfUPX31RjFlwecJTPj/h5op6223Jk=;
+	s=korg; t=1734020388;
+	bh=Vkdln2D9V9BfXaQ77BAc8by+BSGCHwTtrxrjtb8p4G8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WT2vS8PCLnKKDALkku4tTi3Qd6NlLn2J1ndh7fAK0UHDYY9nnrIUEOCtFMu1TJ84I
-	 wXTo/zyOtkV6t4BYQRjVNIy2RgxkRLS+wKPPysHRnsmltG5t7fkRntuZU00YavgKhs
-	 mhpVrCvlkUS3hhnPDQzVx8z6bPoof0CkCT+Bso2A=
+	b=qdIafKfUfIjz2FIZz2Y3JjDOGHed92x+3ZjpsrmUSYckbH1fHvRjLXvXCRkZ+l/ek
+	 VxvKxgN/oKAwWE+gATiWD5eK8VWg478QyiwzbTNyA2WnAxt1ZNe5rC1elJtbiD+9Nu
+	 guNQXdUqWvdRzlaTj8nOsl6hejgfS72lXK+MB5sY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ma Wupeng <mawupeng1@huawei.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 423/772] ipc: fix memleak if msg_init_ns failed in create_ipc_ns
-Date: Thu, 12 Dec 2024 15:56:08 +0100
-Message-ID: <20241212144407.392511086@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 6.1 424/772] NFSD: Prevent a potential integer overflow
+Date: Thu, 12 Dec 2024 15:56:09 +0100
+Message-ID: <20241212144407.436181908@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -50,62 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ma Wupeng <mawupeng1@huawei.com>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-commit bc8f5921cd69188627c08041276238de222ab466 upstream.
+commit 7f33b92e5b18e904a481e6e208486da43e4dc841 upstream.
 
-Percpu memory allocation may failed during create_ipc_ns however this
-fail is not handled properly since ipc sysctls and mq sysctls is not
-released properly. Fix this by release these two resource when failure.
+If the tag length is >= U32_MAX - 3 then the "length + 4" addition
+can result in an integer overflow. Address this by splitting the
+decoding into several steps so that decode_cb_compound4res() does
+not have to perform arithmetic on the unsafe length value.
 
-Here is the kmemleak stack when percpu failed:
-
-unreferenced object 0xffff88819de2a600 (size 512):
-  comm "shmem_2nstest", pid 120711, jiffies 4300542254
-  hex dump (first 32 bytes):
-    60 aa 9d 84 ff ff ff ff fc 18 48 b2 84 88 ff ff  `.........H.....
-    04 00 00 00 a4 01 00 00 20 e4 56 81 ff ff ff ff  ........ .V.....
-  backtrace (crc be7cba35):
-    [<ffffffff81b43f83>] __kmalloc_node_track_caller_noprof+0x333/0x420
-    [<ffffffff81a52e56>] kmemdup_noprof+0x26/0x50
-    [<ffffffff821b2f37>] setup_mq_sysctls+0x57/0x1d0
-    [<ffffffff821b29cc>] copy_ipcs+0x29c/0x3b0
-    [<ffffffff815d6a10>] create_new_namespaces+0x1d0/0x920
-    [<ffffffff815d7449>] copy_namespaces+0x2e9/0x3e0
-    [<ffffffff815458f3>] copy_process+0x29f3/0x7ff0
-    [<ffffffff8154b080>] kernel_clone+0xc0/0x650
-    [<ffffffff8154b6b1>] __do_sys_clone+0xa1/0xe0
-    [<ffffffff843df8ff>] do_syscall_64+0xbf/0x1c0
-    [<ffffffff846000b0>] entry_SYSCALL_64_after_hwframe+0x4b/0x53
-
-Link: https://lkml.kernel.org/r/20241023093129.3074301-1-mawupeng1@huawei.com
-Fixes: 72d1e611082e ("ipc/msg: mitigate the lock contention with percpu counter")
-Signed-off-by: Ma Wupeng <mawupeng1@huawei.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Cc: stable@vger.kernel.org
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- ipc/namespace.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/nfsd/nfs4callback.c |   14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
---- a/ipc/namespace.c
-+++ b/ipc/namespace.c
-@@ -68,13 +68,15 @@ static struct ipc_namespace *create_ipc_
+--- a/fs/nfsd/nfs4callback.c
++++ b/fs/nfsd/nfs4callback.c
+@@ -297,17 +297,17 @@ static int decode_cb_compound4res(struct
+ 	u32 length;
+ 	__be32 *p;
  
- 	err = msg_init_ns(ns);
- 	if (err)
--		goto fail_put;
-+		goto fail_ipc;
- 
- 	sem_init_ns(ns);
- 	shm_init_ns(ns);
- 
- 	return ns;
- 
-+fail_ipc:
-+	retire_ipc_sysctls(ns);
- fail_mq:
- 	retire_mq_sysctls(ns);
- 
+-	p = xdr_inline_decode(xdr, 4 + 4);
++	p = xdr_inline_decode(xdr, XDR_UNIT);
+ 	if (unlikely(p == NULL))
+ 		goto out_overflow;
+-	hdr->status = be32_to_cpup(p++);
++	hdr->status = be32_to_cpup(p);
+ 	/* Ignore the tag */
+-	length = be32_to_cpup(p++);
+-	p = xdr_inline_decode(xdr, length + 4);
+-	if (unlikely(p == NULL))
++	if (xdr_stream_decode_u32(xdr, &length) < 0)
++		goto out_overflow;
++	if (xdr_inline_decode(xdr, length) == NULL)
++		goto out_overflow;
++	if (xdr_stream_decode_u32(xdr, &hdr->nops) < 0)
+ 		goto out_overflow;
+-	p += XDR_QUADLEN(length);
+-	hdr->nops = be32_to_cpup(p);
+ 	return 0;
+ out_overflow:
+ 	return -EIO;
 
 
