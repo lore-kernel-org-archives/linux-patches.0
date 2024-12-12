@@ -1,42 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D70342210FB;
-	Thu, 12 Dec 2024 15:50:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CEEA216E12;
+	Thu, 12 Dec 2024 15:50:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734018622; cv=none; b=qlUzvLylLJoNyGK6vgMbgTI7xup/Z7B2cu9b3KPexJUmn/tuQQ8K73+hn78GnNX1oS5EwwluqgBs7KKHKxiyy24B6LhwCKB+d0g/rzXA76A2SSIN8aS7l/67X/mf9zKPupOWAuYn9Ompz4ZnC6jK41kTA5LQGLFSuOGFMPQl348=
+	t=1734018626; cv=none; b=ZkbzA9/dXgVb12pHK+e73gf6zsL/2nc8iZdhx7wh032YNQYY5TUF+Co+1R1LguSGIKrfH1jKdUlT97f/cgV8AmD3XqmUu9N7wZfYY3HjY76hNGhoyANuibhU4yERsNm/rl9aO9wag/8SNctTk40jZYoyC2C17yKXmpejkakDMP8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734018622; c=relaxed/simple;
-	bh=2nNpABws69uasDsd1CuJgbO3WjorKreCrZsGJyJfuiQ=;
+	s=arc-20240116; t=1734018626; c=relaxed/simple;
+	bh=I8rDX3HHqPX0VJn8lYOYRU/UKQtw0/qWeg0s1+Demmw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g3IMHBuapDX7z0DvOyrkn1zQUKFX6fssE3lNyisVP1sKZCTAnzkxVBg4Kx5SWkqU4L/YihEzdf1JFQ9Jz7FbxZDt+tee4dP5o1fMPjTEWZnO5SrJEDgnCkyU0ILD//2DYZzQKT97Q9TIwxD4puqU2yh9xJk9el4bfkOfGcu02MQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R9gYFrdI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=EA4anaUICBEQa4kIUff2s732MPVbWxivrqdgRMFI5LOJ5MFh0rbDIaYuVKk/cdaMR/5xiqFx2F+1OdZmbgg24UOrSTrHx02wSPBXodmRu3VThX/exxGEUWkDGHTTOln2BS/e72lBGZra88p/JJ0IQhJK2JPVMaq/e9mRjNneWXU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A/0AZN3R; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R9gYFrdI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41ED3C4CECE;
-	Thu, 12 Dec 2024 15:50:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A/0AZN3R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C894C4CED0;
+	Thu, 12 Dec 2024 15:50:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734018622;
-	bh=2nNpABws69uasDsd1CuJgbO3WjorKreCrZsGJyJfuiQ=;
+	s=korg; t=1734018626;
+	bh=I8rDX3HHqPX0VJn8lYOYRU/UKQtw0/qWeg0s1+Demmw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R9gYFrdISafq+LmVlrOB/DYsyT4iYkCAbcjei6jNTC9GCGOfENWBrkSs0ggGSWFrO
-	 E6JgXqpPPq3FkZJ00g4r0FEChGTfqmZDCNoEcsEpLuUvI8BKP42vsrE6r4yDuJzM/R
-	 UZD+uPezS7mJzCQCTkH5NVqekm+f6nGZs1+UMYTY=
+	b=A/0AZN3RGWX9ptDMppvBjikxSTDxd6/AwDUg3kt1D6Ki658PNibYpdhoYRirBQbZw
+	 IVFlhxDyZ+L/VnXfHHdxZQKJz9SJdXa5fmHgIj47s+P45kY0ghsZscktBHNZaNEaXu
+	 D/0+hTAAqjVndHwb/YYDo62Xf3r7VSYEq+/a7uBg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zheng Yejian <zhengyejian@huaweicloud.com>,
-	SeongJae Park <sj@kernel.org>,
-	Fernand Sieber <sieberf@amazon.com>,
-	Leonard Foerster <foersleo@amazon.de>,
-	Shakeel Butt <shakeel.butt@linux.dev>,
-	Ye Weihua <yeweihua4@huawei.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6 342/356] mm/damon/vaddr: fix issue in damon_va_evenly_split_region()
-Date: Thu, 12 Dec 2024 16:01:01 +0100
-Message-ID: <20241212144258.080988235@linuxfoundation.org>
+	=?UTF-8?q?=C5=81ukasz=20Bartosik?= <ukaszb@chromium.org>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>
+Subject: [PATCH 6.6 343/356] xhci: dbc: Fix STALL transfer event handling
+Date: Thu, 12 Dec 2024 16:01:02 +0100
+Message-ID: <20241212144258.120512885@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144244.601729511@linuxfoundation.org>
 References: <20241212144244.601729511@linuxfoundation.org>
@@ -49,128 +44,298 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zheng Yejian <zhengyejian@huaweicloud.com>
+From: Mathias Nyman <mathias.nyman@linux.intel.com>
 
-commit f3c7a1ede435e2e45177d7a490a85fb0a0ec96d1 upstream.
+commit 9044ad57b60b0556d42b6f8aa218a68865e810a4 upstream.
 
-Patch series "mm/damon/vaddr: Fix issue in
-damon_va_evenly_split_region()".  v2.
+Don't flush all pending DbC data requests when an endpoint halts.
 
-According to the logic of damon_va_evenly_split_region(), currently
-following split case would not meet the expectation:
+An endpoint may halt and xHC DbC triggers a STALL error event if there's
+an issue with a bulk data transfer. The transfer should restart once xHC
+DbC receives a ClearFeature(ENDPOINT_HALT) request from the host.
 
-  Suppose DAMON_MIN_REGION=0x1000,
-  Case: Split [0x0, 0x3000) into 2 pieces, then the result would be
-        acutually 3 regions:
-          [0x0, 0x1000), [0x1000, 0x2000), [0x2000, 0x3000)
-        but NOT the expected 2 regions:
-          [0x0, 0x1000), [0x1000, 0x3000) !!!
+Once xHC DbC restarts it will start from the TRB pointed to by dequeue
+field in the endpoint context, which might be the same TRB we got the
+STALL event for. Turn the TRB to a no-op in this case to make sure xHC
+DbC doesn't reuse and tries to retransmit this same TRB after we already
+handled it, and gave its corresponding data request back.
 
-The root cause is that when calculating size of each split piece in
-damon_va_evenly_split_region():
+Other STALL events might be completely bogus.
+Lukasz Bartosik discovered that xHC DbC might issue spurious STALL events
+if hosts sends a ClearFeature(ENDPOINT_HALT) request to non-halted
+endpoints even without any active bulk transfers.
 
-  `sz_piece = ALIGN_DOWN(sz_orig / nr_pieces, DAMON_MIN_REGION);`
+Assume STALL event is spurious if it reports 0 bytes transferred, and
+the endpoint stopped on the STALLED TRB.
+Don't give back the data request corresponding to the TRB in this case.
 
-both the dividing and the ALIGN_DOWN may cause loss of precision, then
-each time split one piece of size 'sz_piece' from origin 'start' to 'end'
-would cause more pieces are split out than expected!!!
+The halted status is per endpoint. Track it with a per endpoint flag
+instead of the driver invented DbC wide DS_STALLED state.
+DbC remains in DbC-Configured state even if endpoints halt. There is no
+Stalled state in the DbC Port state Machine (xhci section 7.6.6)
 
-To fix it, count for each piece split and make sure no more than
-'nr_pieces'.  In addition, add above case into damon_test_split_evenly().
-
-And add 'nr_piece == 1' check in damon_va_evenly_split_region() for better
-code readability and add a corresponding kunit testcase.
-
-
-This patch (of 2):
-
-According to the logic of damon_va_evenly_split_region(), currently
-following split case would not meet the expectation:
-
-  Suppose DAMON_MIN_REGION=0x1000,
-  Case: Split [0x0, 0x3000) into 2 pieces, then the result would be
-        acutually 3 regions:
-          [0x0, 0x1000), [0x1000, 0x2000), [0x2000, 0x3000)
-        but NOT the expected 2 regions:
-          [0x0, 0x1000), [0x1000, 0x3000) !!!
-
-The root cause is that when calculating size of each split piece in
-damon_va_evenly_split_region():
-
-  `sz_piece = ALIGN_DOWN(sz_orig / nr_pieces, DAMON_MIN_REGION);`
-
-both the dividing and the ALIGN_DOWN may cause loss of precision,
-then each time split one piece of size 'sz_piece' from origin 'start' to
-'end' would cause more pieces are split out than expected!!!
-
-To fix it, count for each piece split and make sure no more than
-'nr_pieces'. In addition, add above case into damon_test_split_evenly().
-
-After this patch, damon-operations test passed:
-
- # ./tools/testing/kunit/kunit.py run damon-operations
- [...]
- ============== damon-operations (6 subtests) ===============
- [PASSED] damon_test_three_regions_in_vmas
- [PASSED] damon_test_apply_three_regions1
- [PASSED] damon_test_apply_three_regions2
- [PASSED] damon_test_apply_three_regions3
- [PASSED] damon_test_apply_three_regions4
- [PASSED] damon_test_split_evenly
- ================ [PASSED] damon-operations =================
-
-Link: https://lkml.kernel.org/r/20241022083927.3592237-1-zhengyejian@huaweicloud.com
-Link: https://lkml.kernel.org/r/20241022083927.3592237-2-zhengyejian@huaweicloud.com
-Fixes: 3f49584b262c ("mm/damon: implement primitives for the virtual memory address spaces")
-Signed-off-by: Zheng Yejian <zhengyejian@huaweicloud.com>
-Reviewed-by: SeongJae Park <sj@kernel.org>
-Cc: Fernand Sieber <sieberf@amazon.com>
-Cc: Leonard Foerster <foersleo@amazon.de>
-Cc: Shakeel Butt <shakeel.butt@linux.dev>
-Cc: Ye Weihua <yeweihua4@huawei.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reported-by: Łukasz Bartosik <ukaszb@chromium.org>
+Closes: https://lore.kernel.org/linux-usb/20240725074857.623299-1-ukaszb@chromium.org/
+Tested-by: Łukasz Bartosik <ukaszb@chromium.org>
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://lore.kernel.org/r/20240905143300.1959279-2-mathias.nyman@linux.intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/damon/vaddr-test.h |    1 +
- mm/damon/vaddr.c      |    4 ++--
- 2 files changed, 3 insertions(+), 2 deletions(-)
+ drivers/usb/host/xhci-dbgcap.c |  135 ++++++++++++++++++++++++-----------------
+ drivers/usb/host/xhci-dbgcap.h |    2 
+ 2 files changed, 83 insertions(+), 54 deletions(-)
 
---- a/mm/damon/vaddr-test.h
-+++ b/mm/damon/vaddr-test.h
-@@ -300,6 +300,7 @@ static void damon_test_split_evenly(stru
- 	damon_test_split_evenly_fail(test, 0, 100, 0);
- 	damon_test_split_evenly_succ(test, 0, 100, 10);
- 	damon_test_split_evenly_succ(test, 5, 59, 5);
-+	damon_test_split_evenly_succ(test, 0, 3, 2);
- 	damon_test_split_evenly_fail(test, 5, 6, 2);
+--- a/drivers/usb/host/xhci-dbgcap.c
++++ b/drivers/usb/host/xhci-dbgcap.c
+@@ -158,16 +158,18 @@ static void xhci_dbc_giveback(struct dbc
+ 	spin_lock(&dbc->lock);
  }
  
---- a/mm/damon/vaddr.c
-+++ b/mm/damon/vaddr.c
-@@ -67,6 +67,7 @@ static int damon_va_evenly_split_region(
- 	unsigned long sz_orig, sz_piece, orig_end;
- 	struct damon_region *n = NULL, *next;
- 	unsigned long start;
-+	unsigned int i;
+-static void xhci_dbc_flush_single_request(struct dbc_request *req)
++static void trb_to_noop(union xhci_trb *trb)
+ {
+-	union xhci_trb	*trb = req->trb;
+-
+ 	trb->generic.field[0]	= 0;
+ 	trb->generic.field[1]	= 0;
+ 	trb->generic.field[2]	= 0;
+ 	trb->generic.field[3]	&= cpu_to_le32(TRB_CYCLE);
+ 	trb->generic.field[3]	|= cpu_to_le32(TRB_TYPE(TRB_TR_NOOP));
++}
  
- 	if (!r || !nr_pieces)
- 		return -EINVAL;
-@@ -80,8 +81,7 @@ static int damon_va_evenly_split_region(
++static void xhci_dbc_flush_single_request(struct dbc_request *req)
++{
++	trb_to_noop(req->trb);
+ 	xhci_dbc_giveback(req, -ESHUTDOWN);
+ }
  
- 	r->ar.end = r->ar.start + sz_piece;
- 	next = damon_next_region(r);
--	for (start = r->ar.end; start + sz_piece <= orig_end;
--			start += sz_piece) {
-+	for (start = r->ar.end, i = 1; i < nr_pieces; start += sz_piece, i++) {
- 		n = damon_new_region(start, start + sz_piece);
- 		if (!n)
- 			return -ENOMEM;
+@@ -637,7 +639,6 @@ static void xhci_dbc_stop(struct xhci_db
+ 	case DS_DISABLED:
+ 		return;
+ 	case DS_CONFIGURED:
+-	case DS_STALLED:
+ 		if (dbc->driver->disconnect)
+ 			dbc->driver->disconnect(dbc);
+ 		break;
+@@ -658,6 +659,23 @@ static void xhci_dbc_stop(struct xhci_db
+ }
+ 
+ static void
++handle_ep_halt_changes(struct xhci_dbc *dbc, struct dbc_ep *dep, bool halted)
++{
++	if (halted) {
++		dev_info(dbc->dev, "DbC Endpoint halted\n");
++		dep->halted = 1;
++
++	} else if (dep->halted) {
++		dev_info(dbc->dev, "DbC Endpoint halt cleared\n");
++		dep->halted = 0;
++
++		if (!list_empty(&dep->list_pending))
++			writel(DBC_DOOR_BELL_TARGET(dep->direction),
++			       &dbc->regs->doorbell);
++	}
++}
++
++static void
+ dbc_handle_port_status(struct xhci_dbc *dbc, union xhci_trb *event)
+ {
+ 	u32			portsc;
+@@ -685,6 +703,7 @@ static void dbc_handle_xfer_event(struct
+ 	struct xhci_ring	*ring;
+ 	int			ep_id;
+ 	int			status;
++	struct xhci_ep_ctx	*ep_ctx;
+ 	u32			comp_code;
+ 	size_t			remain_length;
+ 	struct dbc_request	*req = NULL, *r;
+@@ -694,8 +713,30 @@ static void dbc_handle_xfer_event(struct
+ 	ep_id		= TRB_TO_EP_ID(le32_to_cpu(event->generic.field[3]));
+ 	dep		= (ep_id == EPID_OUT) ?
+ 				get_out_ep(dbc) : get_in_ep(dbc);
++	ep_ctx		= (ep_id == EPID_OUT) ?
++				dbc_bulkout_ctx(dbc) : dbc_bulkin_ctx(dbc);
+ 	ring		= dep->ring;
+ 
++	/* Match the pending request: */
++	list_for_each_entry(r, &dep->list_pending, list_pending) {
++		if (r->trb_dma == event->trans_event.buffer) {
++			req = r;
++			break;
++		}
++		if (r->status == -COMP_STALL_ERROR) {
++			dev_warn(dbc->dev, "Give back stale stalled req\n");
++			ring->num_trbs_free++;
++			xhci_dbc_giveback(r, 0);
++		}
++	}
++
++	if (!req) {
++		dev_warn(dbc->dev, "no matched request\n");
++		return;
++	}
++
++	trace_xhci_dbc_handle_transfer(ring, &req->trb->generic);
++
+ 	switch (comp_code) {
+ 	case COMP_SUCCESS:
+ 		remain_length = 0;
+@@ -706,31 +747,49 @@ static void dbc_handle_xfer_event(struct
+ 	case COMP_TRB_ERROR:
+ 	case COMP_BABBLE_DETECTED_ERROR:
+ 	case COMP_USB_TRANSACTION_ERROR:
+-	case COMP_STALL_ERROR:
+ 		dev_warn(dbc->dev, "tx error %d detected\n", comp_code);
+ 		status = -comp_code;
+ 		break;
++	case COMP_STALL_ERROR:
++		dev_warn(dbc->dev, "Stall error at bulk TRB %llx, remaining %zu, ep deq %llx\n",
++			 event->trans_event.buffer, remain_length, ep_ctx->deq);
++		status = 0;
++		dep->halted = 1;
++
++		/*
++		 * xHC DbC may trigger a STALL bulk xfer event when host sends a
++		 * ClearFeature(ENDPOINT_HALT) request even if there wasn't an
++		 * active bulk transfer.
++		 *
++		 * Don't give back this transfer request as hardware will later
++		 * start processing TRBs starting from this 'STALLED' TRB,
++		 * causing TRBs and requests to be out of sync.
++		 *
++		 * If STALL event shows some bytes were transferred then assume
++		 * it's an actual transfer issue and give back the request.
++		 * In this case mark the TRB as No-Op to avoid hw from using the
++		 * TRB again.
++		 */
++
++		if ((ep_ctx->deq & ~TRB_CYCLE) == event->trans_event.buffer) {
++			dev_dbg(dbc->dev, "Ep stopped on Stalled TRB\n");
++			if (remain_length == req->length) {
++				dev_dbg(dbc->dev, "Spurious stall event, keep req\n");
++				req->status = -COMP_STALL_ERROR;
++				req->actual = 0;
++				return;
++			}
++			dev_dbg(dbc->dev, "Give back stalled req, but turn TRB to No-op\n");
++			trb_to_noop(req->trb);
++		}
++		break;
++
+ 	default:
+ 		dev_err(dbc->dev, "unknown tx error %d\n", comp_code);
+ 		status = -comp_code;
+ 		break;
+ 	}
+ 
+-	/* Match the pending request: */
+-	list_for_each_entry(r, &dep->list_pending, list_pending) {
+-		if (r->trb_dma == event->trans_event.buffer) {
+-			req = r;
+-			break;
+-		}
+-	}
+-
+-	if (!req) {
+-		dev_warn(dbc->dev, "no matched request\n");
+-		return;
+-	}
+-
+-	trace_xhci_dbc_handle_transfer(ring, &req->trb->generic);
+-
+ 	ring->num_trbs_free++;
+ 	req->actual = req->length - remain_length;
+ 	xhci_dbc_giveback(req, status);
+@@ -750,7 +809,6 @@ static void inc_evt_deq(struct xhci_ring
+ static enum evtreturn xhci_dbc_do_handle_events(struct xhci_dbc *dbc)
+ {
+ 	dma_addr_t		deq;
+-	struct dbc_ep		*dep;
+ 	union xhci_trb		*evt;
+ 	u32			ctrl, portsc;
+ 	bool			update_erdp = false;
+@@ -802,43 +860,17 @@ static enum evtreturn xhci_dbc_do_handle
+ 			return EVT_DISC;
+ 		}
+ 
+-		/* Handle endpoint stall event: */
++		/* Check and handle changes in endpoint halt status */
+ 		ctrl = readl(&dbc->regs->control);
+-		if ((ctrl & DBC_CTRL_HALT_IN_TR) ||
+-		    (ctrl & DBC_CTRL_HALT_OUT_TR)) {
+-			dev_info(dbc->dev, "DbC Endpoint stall\n");
+-			dbc->state = DS_STALLED;
+-
+-			if (ctrl & DBC_CTRL_HALT_IN_TR) {
+-				dep = get_in_ep(dbc);
+-				xhci_dbc_flush_endpoint_requests(dep);
+-			}
+-
+-			if (ctrl & DBC_CTRL_HALT_OUT_TR) {
+-				dep = get_out_ep(dbc);
+-				xhci_dbc_flush_endpoint_requests(dep);
+-			}
+-
+-			return EVT_DONE;
+-		}
++		handle_ep_halt_changes(dbc, get_in_ep(dbc), ctrl & DBC_CTRL_HALT_IN_TR);
++		handle_ep_halt_changes(dbc, get_out_ep(dbc), ctrl & DBC_CTRL_HALT_OUT_TR);
+ 
+ 		/* Clear DbC run change bit: */
+ 		if (ctrl & DBC_CTRL_DBC_RUN_CHANGE) {
+ 			writel(ctrl, &dbc->regs->control);
+ 			ctrl = readl(&dbc->regs->control);
+ 		}
+-
+ 		break;
+-	case DS_STALLED:
+-		ctrl = readl(&dbc->regs->control);
+-		if (!(ctrl & DBC_CTRL_HALT_IN_TR) &&
+-		    !(ctrl & DBC_CTRL_HALT_OUT_TR) &&
+-		    (ctrl & DBC_CTRL_DBC_RUN)) {
+-			dbc->state = DS_CONFIGURED;
+-			break;
+-		}
+-
+-		return EVT_DONE;
+ 	default:
+ 		dev_err(dbc->dev, "Unknown DbC state %d\n", dbc->state);
+ 		break;
+@@ -941,9 +973,6 @@ static ssize_t dbc_show(struct device *d
+ 	case DS_CONFIGURED:
+ 		p = "configured";
+ 		break;
+-	case DS_STALLED:
+-		p = "stalled";
+-		break;
+ 	default:
+ 		p = "unknown";
+ 	}
+--- a/drivers/usb/host/xhci-dbgcap.h
++++ b/drivers/usb/host/xhci-dbgcap.h
+@@ -81,7 +81,6 @@ enum dbc_state {
+ 	DS_ENABLED,
+ 	DS_CONNECTED,
+ 	DS_CONFIGURED,
+-	DS_STALLED,
+ };
+ 
+ struct dbc_ep {
+@@ -89,6 +88,7 @@ struct dbc_ep {
+ 	struct list_head		list_pending;
+ 	struct xhci_ring		*ring;
+ 	unsigned int			direction:1;
++	unsigned int			halted:1;
+ };
+ 
+ #define DBC_QUEUE_SIZE			16
 
 
