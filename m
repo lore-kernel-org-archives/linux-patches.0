@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBA9721576E;
-	Thu, 12 Dec 2024 15:53:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D385C21576E;
+	Thu, 12 Dec 2024 15:53:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734018802; cv=none; b=sJJRUYBrI/SA33Sb5Zba6wq3MozGZiWUIQkFwSX6XaDkbVMTK8uLW5ufA9Bx7co+SGeo+m6xyOo4KvoAOCaxhFjeFX1Ss/cXoXOumzFwP3RVNVJr94RaTDJOv9BZs1+I5ezF/MhkhKBzrbkLMPJelmTegk0rGTj9rT739wxUMVQ=
+	t=1734018805; cv=none; b=PchOAnqwx7GOo3QMxwNFD7G7ybgR0ShCj5FRtwRmb6KicrXfQWr3vXqSriSFD+/o9bWCerN4tKHrzJ7q7rEbXo9KSIfwd0QAtPc0f2zBTQm0BedlijZeM3Ko/ySN0kByXiuSqQg+cJN7Qy1E2DsGarAm1Gv4spoNFboe7WrAOF8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734018802; c=relaxed/simple;
-	bh=Shf7CwIdTxJxgUg9wfJjjrWIWoLSY7sIY/mL1BAWcGc=;
+	s=arc-20240116; t=1734018805; c=relaxed/simple;
+	bh=ViOI00JDkvoDsA0G7ptylRfxwmHhvHf6SJEUMF9SCGM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U3O656kw4SNDmRAf2sTILxEnf42bnTKhQNmodMu1mPHxg539EzxaWcZtNcErU9Wv6qyELER7cjAZTQAodDNrfU0rOLe1eYNBwZ6EIvcuJWLLavMzZHdN4YUl1VYki/84AeYPeBqsQqBNn+s/HOhnqFAaSbwMwu7aAqQVEm/Ytls=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Eoh7GqgC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Hpe3xgd3pgfh8PnQKuUJR3DYqjC1YyR8yNyi4kOrL2Xn3RW2cQYR8EEWAZmmCw09Z6yc0rXY1RP0h//SAFYWMyL7Ec1yERD4iDrcYhf34rE8UIaBUroQy8ND7fK1g+LAEmByTJKH4ZgXOFx01yh5wmrWYQmiE8fqOLL9WLXvsu0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kcz8vQEA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Eoh7GqgC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0053C4CECE;
-	Thu, 12 Dec 2024 15:53:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kcz8vQEA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A081C4CECE;
+	Thu, 12 Dec 2024 15:53:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734018802;
-	bh=Shf7CwIdTxJxgUg9wfJjjrWIWoLSY7sIY/mL1BAWcGc=;
+	s=korg; t=1734018805;
+	bh=ViOI00JDkvoDsA0G7ptylRfxwmHhvHf6SJEUMF9SCGM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Eoh7GqgCeKpOSHUJl9KIpCzjLr6bM65fp3LOdV4YMzo9zWeXv5+N3v+r6DI4ZFDlW
-	 3OeZTooiPUEvPxjhx3DUaCBXq55Ui52q8BlITPaWiINEqyljdZcOrKSesqaT/LrflK
-	 jaMxBAChFYolZWAjxZosEIew8THEvmZsiIiW+tDg=
+	b=kcz8vQEA+aE/vebWCAAFHnUEzHdw9+zXMmg2OGXraPE37j9/gzok/B/iv8obAvBNj
+	 eP5/+hpJp6XHr4TaFOZ6WX4CoIfPN8+u0UMXBmhjwPLJbHI9+0u2xprqX1HiAHYlyp
+	 ypn7HGV9eqHpXDQ11fkzbAyu4eI5uRT8EqwdFcLc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	jiaymao <quic_jiaymao@quicinc.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Xiangyu Chen <xiangyu.chen@windriver.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 038/772] Bluetooth: hci_sync: Add helper functions to manipulate cmd_sync queue
-Date: Thu, 12 Dec 2024 15:49:43 +0100
-Message-ID: <20241212144351.515567719@linuxfoundation.org>
+Subject: [PATCH 6.1 039/772] Bluetooth: MGMT: Fix possible crash on mgmt_index_removed
+Date: Thu, 12 Dec 2024 15:49:44 +0100
+Message-ID: <20241212144351.553920247@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -53,206 +54,93 @@ Content-Transfer-Encoding: 8bit
 
 From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit 505ea2b295929e7be2b4e1bc86ee31cb7862fb01 ]
+[ Upstream commit f53e1c9c726d83092167f2226f32bd3b73f26c21 ]
 
-This adds functions to queue, dequeue and lookup into the cmd_sync
-list.
+If mgmt_index_removed is called while there are commands queued on
+cmd_sync it could lead to crashes like the bellow trace:
 
+0x0000053D: __list_del_entry_valid_or_report+0x98/0xdc
+0x0000053D: mgmt_pending_remove+0x18/0x58 [bluetooth]
+0x0000053E: mgmt_remove_adv_monitor_complete+0x80/0x108 [bluetooth]
+0x0000053E: hci_cmd_sync_work+0xbc/0x164 [bluetooth]
+
+So while handling mgmt_index_removed this attempts to dequeue
+commands passed as user_data to cmd_sync.
+
+Fixes: 7cf5c2978f23 ("Bluetooth: hci_sync: Refactor remove Adv Monitor")
+Reported-by: jiaymao <quic_jiaymao@quicinc.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+[Xiangyu: BP to fix CVE: CVE-2024-49951, Minor conflict resolution]
 Signed-off-by: Xiangyu Chen <xiangyu.chen@windriver.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/bluetooth/hci_sync.h |  12 +++
- net/bluetooth/hci_sync.c         | 132 +++++++++++++++++++++++++++++--
- 2 files changed, 136 insertions(+), 8 deletions(-)
+ net/bluetooth/mgmt.c | 23 ++++++++++++++---------
+ 1 file changed, 14 insertions(+), 9 deletions(-)
 
-diff --git a/include/net/bluetooth/hci_sync.h b/include/net/bluetooth/hci_sync.h
-index 7accd5ff0760b..3a7658d660224 100644
---- a/include/net/bluetooth/hci_sync.h
-+++ b/include/net/bluetooth/hci_sync.h
-@@ -47,6 +47,18 @@ int hci_cmd_sync_submit(struct hci_dev *hdev, hci_cmd_sync_work_func_t func,
- 			void *data, hci_cmd_sync_work_destroy_t destroy);
- int hci_cmd_sync_queue(struct hci_dev *hdev, hci_cmd_sync_work_func_t func,
- 		       void *data, hci_cmd_sync_work_destroy_t destroy);
-+struct hci_cmd_sync_work_entry *
-+hci_cmd_sync_lookup_entry(struct hci_dev *hdev, hci_cmd_sync_work_func_t func,
-+			  void *data, hci_cmd_sync_work_destroy_t destroy);
-+int hci_cmd_sync_queue_once(struct hci_dev *hdev, hci_cmd_sync_work_func_t func,
-+			    void *data, hci_cmd_sync_work_destroy_t destroy);
-+void hci_cmd_sync_cancel_entry(struct hci_dev *hdev,
-+			       struct hci_cmd_sync_work_entry *entry);
-+bool hci_cmd_sync_dequeue(struct hci_dev *hdev, hci_cmd_sync_work_func_t func,
-+			  void *data, hci_cmd_sync_work_destroy_t destroy);
-+bool hci_cmd_sync_dequeue_once(struct hci_dev *hdev,
-+			      hci_cmd_sync_work_func_t func, void *data,
-+			      hci_cmd_sync_work_destroy_t destroy);
+diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
+index 5a1015ccc0635..82edd9981ab07 100644
+--- a/net/bluetooth/mgmt.c
++++ b/net/bluetooth/mgmt.c
+@@ -1457,10 +1457,15 @@ static void cmd_status_rsp(struct mgmt_pending_cmd *cmd, void *data)
  
- int hci_update_eir_sync(struct hci_dev *hdev);
- int hci_update_class_sync(struct hci_dev *hdev);
-diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
-index 862ac5e1f4b49..b7a7b2afaa049 100644
---- a/net/bluetooth/hci_sync.c
-+++ b/net/bluetooth/hci_sync.c
-@@ -650,6 +650,17 @@ void hci_cmd_sync_init(struct hci_dev *hdev)
- 	INIT_DELAYED_WORK(&hdev->adv_instance_expire, adv_timeout_expire);
- }
- 
-+static void _hci_cmd_sync_cancel_entry(struct hci_dev *hdev,
-+				       struct hci_cmd_sync_work_entry *entry,
-+				       int err)
-+{
-+	if (entry->destroy)
-+		entry->destroy(hdev, entry->data, err);
-+
-+	list_del(&entry->list);
-+	kfree(entry);
-+}
-+
- void hci_cmd_sync_clear(struct hci_dev *hdev)
+ static void cmd_complete_rsp(struct mgmt_pending_cmd *cmd, void *data)
  {
- 	struct hci_cmd_sync_work_entry *entry, *tmp;
-@@ -658,13 +669,8 @@ void hci_cmd_sync_clear(struct hci_dev *hdev)
- 	cancel_work_sync(&hdev->reenable_adv_work);
+-	if (cmd->cmd_complete) {
+-		u8 *status = data;
++	struct cmd_lookup *match = data;
++
++	/* dequeue cmd_sync entries using cmd as data as that is about to be
++	 * removed/freed.
++	 */
++	hci_cmd_sync_dequeue(match->hdev, NULL, cmd, NULL);
  
- 	mutex_lock(&hdev->cmd_sync_work_lock);
--	list_for_each_entry_safe(entry, tmp, &hdev->cmd_sync_work_list, list) {
--		if (entry->destroy)
--			entry->destroy(hdev, entry->data, -ECANCELED);
--
--		list_del(&entry->list);
--		kfree(entry);
--	}
-+	list_for_each_entry_safe(entry, tmp, &hdev->cmd_sync_work_list, list)
-+		_hci_cmd_sync_cancel_entry(hdev, entry, -ECANCELED);
- 	mutex_unlock(&hdev->cmd_sync_work_lock);
- }
+-		cmd->cmd_complete(cmd, *status);
++	if (cmd->cmd_complete) {
++		cmd->cmd_complete(cmd, match->mgmt_status);
+ 		mgmt_pending_remove(cmd);
  
-@@ -756,6 +762,115 @@ int hci_cmd_sync_queue(struct hci_dev *hdev, hci_cmd_sync_work_func_t func,
- }
- EXPORT_SYMBOL(hci_cmd_sync_queue);
- 
-+static struct hci_cmd_sync_work_entry *
-+_hci_cmd_sync_lookup_entry(struct hci_dev *hdev, hci_cmd_sync_work_func_t func,
-+			   void *data, hci_cmd_sync_work_destroy_t destroy)
-+{
-+	struct hci_cmd_sync_work_entry *entry, *tmp;
-+
-+	list_for_each_entry_safe(entry, tmp, &hdev->cmd_sync_work_list, list) {
-+		if (func && entry->func != func)
-+			continue;
-+
-+		if (data && entry->data != data)
-+			continue;
-+
-+		if (destroy && entry->destroy != destroy)
-+			continue;
-+
-+		return entry;
-+	}
-+
-+	return NULL;
-+}
-+
-+/* Queue HCI command entry once:
-+ *
-+ * - Lookup if an entry already exist and only if it doesn't creates a new entry
-+ *   and queue it.
-+ */
-+int hci_cmd_sync_queue_once(struct hci_dev *hdev, hci_cmd_sync_work_func_t func,
-+			    void *data, hci_cmd_sync_work_destroy_t destroy)
-+{
-+	if (hci_cmd_sync_lookup_entry(hdev, func, data, destroy))
-+		return 0;
-+
-+	return hci_cmd_sync_queue(hdev, func, data, destroy);
-+}
-+EXPORT_SYMBOL(hci_cmd_sync_queue_once);
-+
-+/* Lookup HCI command entry:
-+ *
-+ * - Return first entry that matches by function callback or data or
-+ *   destroy callback.
-+ */
-+struct hci_cmd_sync_work_entry *
-+hci_cmd_sync_lookup_entry(struct hci_dev *hdev, hci_cmd_sync_work_func_t func,
-+			  void *data, hci_cmd_sync_work_destroy_t destroy)
-+{
-+	struct hci_cmd_sync_work_entry *entry;
-+
-+	mutex_lock(&hdev->cmd_sync_work_lock);
-+	entry = _hci_cmd_sync_lookup_entry(hdev, func, data, destroy);
-+	mutex_unlock(&hdev->cmd_sync_work_lock);
-+
-+	return entry;
-+}
-+EXPORT_SYMBOL(hci_cmd_sync_lookup_entry);
-+
-+/* Cancel HCI command entry */
-+void hci_cmd_sync_cancel_entry(struct hci_dev *hdev,
-+			       struct hci_cmd_sync_work_entry *entry)
-+{
-+	mutex_lock(&hdev->cmd_sync_work_lock);
-+	_hci_cmd_sync_cancel_entry(hdev, entry, -ECANCELED);
-+	mutex_unlock(&hdev->cmd_sync_work_lock);
-+}
-+EXPORT_SYMBOL(hci_cmd_sync_cancel_entry);
-+
-+/* Dequeue one HCI command entry:
-+ *
-+ * - Lookup and cancel first entry that matches.
-+ */
-+bool hci_cmd_sync_dequeue_once(struct hci_dev *hdev,
-+			       hci_cmd_sync_work_func_t func,
-+			       void *data, hci_cmd_sync_work_destroy_t destroy)
-+{
-+	struct hci_cmd_sync_work_entry *entry;
-+
-+	entry = hci_cmd_sync_lookup_entry(hdev, func, data, destroy);
-+	if (!entry)
-+		return false;
-+
-+	hci_cmd_sync_cancel_entry(hdev, entry);
-+
-+	return true;
-+}
-+EXPORT_SYMBOL(hci_cmd_sync_dequeue_once);
-+
-+/* Dequeue HCI command entry:
-+ *
-+ * - Lookup and cancel any entry that matches by function callback or data or
-+ *   destroy callback.
-+ */
-+bool hci_cmd_sync_dequeue(struct hci_dev *hdev, hci_cmd_sync_work_func_t func,
-+			  void *data, hci_cmd_sync_work_destroy_t destroy)
-+{
-+	struct hci_cmd_sync_work_entry *entry;
-+	bool ret = false;
-+
-+	mutex_lock(&hdev->cmd_sync_work_lock);
-+	while ((entry = _hci_cmd_sync_lookup_entry(hdev, func, data,
-+						   destroy))) {
-+		_hci_cmd_sync_cancel_entry(hdev, entry, -ECANCELED);
-+		ret = true;
-+	}
-+	mutex_unlock(&hdev->cmd_sync_work_lock);
-+
-+	return ret;
-+}
-+EXPORT_SYMBOL(hci_cmd_sync_dequeue);
-+
- int hci_update_eir_sync(struct hci_dev *hdev)
+ 		return;
+@@ -9424,14 +9429,14 @@ void mgmt_index_added(struct hci_dev *hdev)
+ void mgmt_index_removed(struct hci_dev *hdev)
  {
- 	struct hci_cp_write_eir cp;
-@@ -3023,7 +3138,8 @@ int hci_update_passive_scan(struct hci_dev *hdev)
- 	    hci_dev_test_flag(hdev, HCI_UNREGISTER))
- 		return 0;
+ 	struct mgmt_ev_ext_index ev;
+-	u8 status = MGMT_STATUS_INVALID_INDEX;
++	struct cmd_lookup match = { NULL, hdev, MGMT_STATUS_INVALID_INDEX };
  
--	return hci_cmd_sync_queue(hdev, update_passive_scan_sync, NULL, NULL);
-+	return hci_cmd_sync_queue_once(hdev, update_passive_scan_sync, NULL,
-+				       NULL);
- }
+ 	if (test_bit(HCI_QUIRK_RAW_DEVICE, &hdev->quirks))
+ 		return;
  
- int hci_write_sc_support_sync(struct hci_dev *hdev, u8 val)
+ 	switch (hdev->dev_type) {
+ 	case HCI_PRIMARY:
+-		mgmt_pending_foreach(0, hdev, cmd_complete_rsp, &status);
++		mgmt_pending_foreach(0, hdev, cmd_complete_rsp, &match);
+ 
+ 		if (hci_dev_test_flag(hdev, HCI_UNCONFIGURED)) {
+ 			mgmt_index_event(MGMT_EV_UNCONF_INDEX_REMOVED, hdev,
+@@ -9489,7 +9494,7 @@ void mgmt_power_on(struct hci_dev *hdev, int err)
+ void __mgmt_power_off(struct hci_dev *hdev)
+ {
+ 	struct cmd_lookup match = { NULL, hdev };
+-	u8 status, zero_cod[] = { 0, 0, 0 };
++	u8 zero_cod[] = { 0, 0, 0 };
+ 
+ 	mgmt_pending_foreach(MGMT_OP_SET_POWERED, hdev, settings_rsp, &match);
+ 
+@@ -9501,11 +9506,11 @@ void __mgmt_power_off(struct hci_dev *hdev)
+ 	 * status responses.
+ 	 */
+ 	if (hci_dev_test_flag(hdev, HCI_UNREGISTER))
+-		status = MGMT_STATUS_INVALID_INDEX;
++		match.mgmt_status = MGMT_STATUS_INVALID_INDEX;
+ 	else
+-		status = MGMT_STATUS_NOT_POWERED;
++		match.mgmt_status = MGMT_STATUS_NOT_POWERED;
+ 
+-	mgmt_pending_foreach(0, hdev, cmd_complete_rsp, &status);
++	mgmt_pending_foreach(0, hdev, cmd_complete_rsp, &match);
+ 
+ 	if (memcmp(hdev->dev_class, zero_cod, sizeof(zero_cod)) != 0) {
+ 		mgmt_limited_event(MGMT_EV_CLASS_OF_DEV_CHANGED, hdev,
 -- 
 2.43.0
 
