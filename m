@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E15BA22331E;
-	Thu, 12 Dec 2024 17:05:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 295F453365;
+	Thu, 12 Dec 2024 17:05:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734023112; cv=none; b=YDB4/BdsWAQM/G2fsxu/v/hse6Eu0+wpbNuAQMUY7ZIqaZApCcgKh4EOsVM+yvZlVqxHPWmxqkKSFmKSCFaysR2Pj/jtfDohF65yb8HnOWPbKnziyjJxFPSMQnXEqlXUdB4PkFotHUAAKRYro9dty0xr8BR4JHpk1xCTqhFJMKw=
+	t=1734023115; cv=none; b=ARj+FC2aQEKLAtt8OIQiz8e+o8+wHdcQnvFfjWMSqtU4YAycHWUabkXdGXnNCXhFhgG9bJ6B9qzXQmMvEI8uHFZHswuZJWo7XYn1y4jdI0089AcX3WI6kANHf0GplZ1HBFRdzKqmYisw83WLM31t7tiYORuLHU0UyJaXXlHzt/g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734023112; c=relaxed/simple;
-	bh=BOw44Ddd7yMlDYuJNMDXewucqNya6YZ4qLgWVH2E6NA=;
+	s=arc-20240116; t=1734023115; c=relaxed/simple;
+	bh=tGoQwn5IvNGkZsh9SfKIxYiCblZE8CcrSPLZKHDijnA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TKNzFdLGeCAnvNRw9HwdKrySEeVvttA1w+VlOgxfh/K2JTWmbqQpCVRCH95O0BQyNTmOsYmR1FE6P3kCwUi8rt+t2Xsg+3Iy5sz95pZZq4JuzRqmUbtXNqLYi9uqaV4+sr+D3XZzA8P7VmRuyx5LO/Zhp1ITWdqZwZcy6J8xUcQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dbs92sst; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lFZ0hA8w7MoY4d3a3LDmHkg3WDqdNFkV+2c6zHY5tE3vDZ0FHdPxR68Bzzi6Ex3ED8NPSH5BhG+csvnjK2SDMVsFJejQ9NY64y5GFWpapD723WB8dlv0LTfHjEbbibtZk/wPpxATies7UlDeX94ZE9xXiJsfetFLQRnjmZuKoTY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ijnIuUzK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dbs92sst"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60136C4CECE;
-	Thu, 12 Dec 2024 17:05:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ijnIuUzK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 995C8C4CECE;
+	Thu, 12 Dec 2024 17:05:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734023111;
-	bh=BOw44Ddd7yMlDYuJNMDXewucqNya6YZ4qLgWVH2E6NA=;
+	s=korg; t=1734023115;
+	bh=tGoQwn5IvNGkZsh9SfKIxYiCblZE8CcrSPLZKHDijnA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dbs92sst2QMsR+Ge/bCyP4RNKdinjHdmcm0x4uGl7F62qcvXy0107YR6MbwtbtoRb
-	 IL7dApyNNOlW+T16qxeqF75Qe70Ig3nPDgMSVzcTLE2vE62r1ClUKysSBrt5mtAmWy
-	 fTgj8VItW3PEAKOrbptvndGnQ6PNWa9NgY2lrA5k=
+	b=ijnIuUzKOALp2LTCA0edPBcc/qMPWZnni6/1YbOj+ttx50QVu/zVl0eOtSm5sIpZU
+	 yK4LLzgCfN//CGZpWc24u/kGyRZrFGxKGmRVXOuv+3dVURW/qdEFfWxS8CGs6SoWUB
+	 ooUbEqBD8VvrrstrXEa8ARFnoZy2ehzNCWQL8bpE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rob Herring <robh@kernel.org>,
-	Lino Sanfilippo <l.sanfilippo@kunbus.com>,
+	Michal Simek <michal.simek@amd.com>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 428/565] dt_bindings: rs485: Correct delay values
-Date: Thu, 12 Dec 2024 16:00:23 +0100
-Message-ID: <20241212144328.598560584@linuxfoundation.org>
+Subject: [PATCH 5.15 429/565] dt-bindings: serial: rs485: Fix rs485-rts-delay property
+Date: Thu, 12 Dec 2024 16:00:24 +0100
+Message-ID: <20241212144328.639686813@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144311.432886635@linuxfoundation.org>
 References: <20241212144311.432886635@linuxfoundation.org>
@@ -51,49 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lino Sanfilippo <l.sanfilippo@kunbus.com>
+From: Michal Simek <michal.simek@amd.com>
 
-[ Upstream commit 885dcb08c93d75b784468e65fd4f1f82d5313061 ]
+[ Upstream commit 12b3642b6c242061d3ba84e6e3050c3141ded14c ]
 
-Currently the documentation claims that a maximum of 1000 msecs is allowed
-for RTS delays. However nothing actually checks the values read from device
-tree/ACPI and so it is possible to set much higher values.
+Code expects array only with 2 items which should be checked.
+But also item checking is not working as it should likely because of
+incorrect items description.
 
-There is already a maximum of 100 ms enforced for RTS delays that are set
-via the UART TIOCSRS485 ioctl. To be consistent with that use the same
-limit for DT/ACPI values.
-
-Although this change is visible to userspace the risk of breaking anything
-when reducing the max delays from 1000 to 100 ms should be very low, since
-100 ms is already a very high maximum for delays that are usually rather in
-the usecs range.
-
-Acked-by: Rob Herring <robh@kernel.org>
-Signed-off-by: Lino Sanfilippo <l.sanfilippo@kunbus.com>
-Link: https://lore.kernel.org/r/20220710164442.2958979-7-LinoSanfilippo@gmx.de
+Fixes: d50f974c4f7f ("dt-bindings: serial: Convert rs485 bindings to json-schema")
+Signed-off-by: Michal Simek <michal.simek@amd.com>
+Cc: stable@vger.kernel.org
+Reviewed-by: Krzysztof Kozlowski <krzk@kernel.org>
+Link: https://lore.kernel.org/r/820c639b9e22fe037730ed44d1b044cdb6d28b75.1726480384.git.michal.simek@amd.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: 12b3642b6c24 ("dt-bindings: serial: rs485: Fix rs485-rts-delay property")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/devicetree/bindings/serial/rs485.yaml | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ .../devicetree/bindings/serial/rs485.yaml     | 19 +++++++++----------
+ 1 file changed, 9 insertions(+), 10 deletions(-)
 
 diff --git a/Documentation/devicetree/bindings/serial/rs485.yaml b/Documentation/devicetree/bindings/serial/rs485.yaml
-index 0c9fa694f85c8..518949737c86e 100644
+index 518949737c86e..bc43670c69fa9 100644
 --- a/Documentation/devicetree/bindings/serial/rs485.yaml
 +++ b/Documentation/devicetree/bindings/serial/rs485.yaml
-@@ -22,12 +22,12 @@ properties:
-         - description: Delay between rts signal and beginning of data sent in
-             milliseconds. It corresponds to the delay before sending data.
-           default: 0
--          maximum: 1000
-+          maximum: 100
-         - description: Delay between end of data sent and rts signal in milliseconds.
-             It corresponds to the delay after sending data and actual release
-             of the line.
-           default: 0
--          maximum: 1000
-+          maximum: 100
+@@ -18,16 +18,15 @@ properties:
+     description: prop-encoded-array <a b>
+     $ref: /schemas/types.yaml#/definitions/uint32-array
+     items:
+-      items:
+-        - description: Delay between rts signal and beginning of data sent in
+-            milliseconds. It corresponds to the delay before sending data.
+-          default: 0
+-          maximum: 100
+-        - description: Delay between end of data sent and rts signal in milliseconds.
+-            It corresponds to the delay after sending data and actual release
+-            of the line.
+-          default: 0
+-          maximum: 100
++      - description: Delay between rts signal and beginning of data sent in
++          milliseconds. It corresponds to the delay before sending data.
++        default: 0
++        maximum: 100
++      - description: Delay between end of data sent and rts signal in milliseconds.
++          It corresponds to the delay after sending data and actual release
++          of the line.
++        default: 0
++        maximum: 100
  
    rs485-rts-active-low:
      description: drive RTS low when sending (default is high).
