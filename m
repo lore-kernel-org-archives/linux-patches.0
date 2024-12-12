@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF01320A5EE;
-	Thu, 12 Dec 2024 17:37:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B734F15696E;
+	Thu, 12 Dec 2024 17:37:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734025068; cv=none; b=DHDpHmEBXJeTYSznxm1xhFRtuo6B67HZFcdmzoHwAydSK8LtYf//yqLS+/dx3dZESBzZOIyHbTsb0T9G+1MAsvo9ynO7paIxFsJc+Kns434cc7+r/gOWRUzrAekFGfAKkS50/2oZJQ8g746m+GWOQwRH5AurbEeWHaKTIpKc5Xg=
+	t=1734025071; cv=none; b=TtY3WGnCimXk7Atf2sCccIUr+r0FiSwP+A7UUTjfhL64jaQ82+eUngFvbSb8RWtxAYgfz/JLFl1fgFV/UUavae8KTbjsWAvwWgJzTdiV7NUzXhk3axL2m4cSFFPw0dIo6FAKCQdCxdY2iMZCwiZDBr8OOh1VUDrRtRb+9Sca2sQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734025068; c=relaxed/simple;
-	bh=woMTMZVZTWjWqsBKbKQMMoiSLUZsghH6iBCvoy99U08=;
+	s=arc-20240116; t=1734025071; c=relaxed/simple;
+	bh=V6sEPWFh1hvpe9V2IERpWvAuh8dfQWiyMaNBwZi6PFE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mdflJ3CNVMIjiBvgzvtvk6y0zXkOdJmu3ZAs+VCifadED+psiA1chmRH19aQkLs0JVK4dGN8xfCqUCXDrI94m9rHtAB1350dC0XkTbN3NZjFZmuWMEBpuFOhFH+zzFpTakQzhZ/vA+A++ILgtK96dlIUzpWGFazbVnqE0Fpaj40=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XqLIPplY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=H3FHFb0XbcJz6CtsiuSlN0Pi6rKgp0OE/xz5pzwZ5BXlzHhpkE8DiGHvt4pWJcpF6bNNz8GMq1nUfuHxL3dBNsuLY1UjT2/loX3sKVRqbPnmkgzMKN7qZ2+HGbgcI08qk02/tXhdLH+IFbDOFiHkKneW/uMI433tPjgL0XboVik=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZIVdmdfT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XqLIPplY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 350BBC4CECE;
-	Thu, 12 Dec 2024 17:37:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZIVdmdfT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 377C4C4CECE;
+	Thu, 12 Dec 2024 17:37:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734025068;
-	bh=woMTMZVZTWjWqsBKbKQMMoiSLUZsghH6iBCvoy99U08=;
+	s=korg; t=1734025071;
+	bh=V6sEPWFh1hvpe9V2IERpWvAuh8dfQWiyMaNBwZi6PFE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XqLIPplY5sbVkGjlIs5/1ZyP9OQeCi6ES+6cLFcRc4HJQgkSP4Gz/B5NefoTss6hP
-	 wITHfviDq/+eE9zlGw9TwJyKFb/wtZO3UkTltxCe3HhPJr1AZh+DU77kvodwEsoOHb
-	 5HVq5AlXp03PHFiQDoZoWddEWMel/dxx7mgmrGpM=
+	b=ZIVdmdfTeAYp0eTpTi9udiETwyRZNkls1VAlWRllZDuzYGBTglPrURS7NQhQ0Hk3R
+	 iEvfIq8z2uTD50VLyZ3xl/czr2haASbX567qfM4+Oxvo4eIwZPkp9NEsa6dYybBsU4
+	 DdaQ6inz65IC4EloXFbqH9dou+eSAFGJDiBhwNwY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Zhijian <lizhijian@fujitsu.com>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+	Piyush Raj Chouhan <piyushchouhan1598@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 015/321] selftests/watchdog-test: Fix system accidentally reset after watchdog-test
-Date: Thu, 12 Dec 2024 15:58:53 +0100
-Message-ID: <20241212144230.249734773@linuxfoundation.org>
+Subject: [PATCH 5.4 016/321] ALSA: hda/realtek: Add subwoofer quirk for Infinix ZERO BOOK 13
+Date: Thu, 12 Dec 2024 15:58:54 +0100
+Message-ID: <20241212144230.287235117@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144229.291682835@linuxfoundation.org>
 References: <20241212144229.291682835@linuxfoundation.org>
@@ -51,55 +51,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li Zhijian <lizhijian@fujitsu.com>
+From: Piyush Raj Chouhan <piyushchouhan1598@gmail.com>
 
-[ Upstream commit dc1308bee1ed03b4d698d77c8bd670d399dcd04d ]
+[ Upstream commit ef5fbdf732a158ec27eeba69d8be851351f29f73 ]
 
-When running watchdog-test with 'make run_tests', the watchdog-test will
-be terminated by a timeout signal(SIGTERM) due to the test timemout.
+Infinix ZERO BOOK 13 has a 2+2 speaker system which isn't probed correctly.
+This patch adds a quirk with the proper pin connections.
+Also The mic in this laptop suffers too high gain resulting in mostly
+fan noise being recorded,
+This patch Also limit mic boost.
 
-And then, a system reboot would happen due to watchdog not stop. see
-the dmesg as below:
-```
-[ 1367.185172] watchdog: watchdog0: watchdog did not stop!
-```
+HW Probe for device; https://linux-hardware.org/?probe=a2e892c47b
 
-Fix it by registering more signals(including SIGTERM) in watchdog-test,
-where its signal handler will stop the watchdog.
+Test: All 4 speaker works, Mic has low noise.
 
-After that
- # timeout 1 ./watchdog-test
- Watchdog Ticking Away!
- .
- Stopping watchdog ticks...
-
-Link: https://lore.kernel.org/all/20241029031324.482800-1-lizhijian@fujitsu.com/
-Signed-off-by: Li Zhijian <lizhijian@fujitsu.com>
-Reviewed-by: Shuah Khan <skhan@linuxfoundation.org>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Signed-off-by: Piyush Raj Chouhan <piyushchouhan1598@gmail.com>
+Link: https://patch.msgid.link/20241028155516.15552-1-piyuschouhan1598@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/watchdog/watchdog-test.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ sound/pci/hda/patch_realtek.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/tools/testing/selftests/watchdog/watchdog-test.c b/tools/testing/selftests/watchdog/watchdog-test.c
-index f45e510500c0d..09773695d219f 100644
---- a/tools/testing/selftests/watchdog/watchdog-test.c
-+++ b/tools/testing/selftests/watchdog/watchdog-test.c
-@@ -242,7 +242,13 @@ int main(int argc, char *argv[])
- 
- 	printf("Watchdog Ticking Away!\n");
- 
-+	/*
-+	 * Register the signals
-+	 */
- 	signal(SIGINT, term);
-+	signal(SIGTERM, term);
-+	signal(SIGKILL, term);
-+	signal(SIGQUIT, term);
- 
- 	while (1) {
- 		keep_alive();
+diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
+index 3ddbb6b953c1f..8122370106492 100644
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -6428,6 +6428,7 @@ enum {
+ 	ALC290_FIXUP_SUBWOOFER_HSJACK,
+ 	ALC269_FIXUP_THINKPAD_ACPI,
+ 	ALC269_FIXUP_DMIC_THINKPAD_ACPI,
++	ALC269VB_FIXUP_INFINIX_ZERO_BOOK_13,
+ 	ALC269VB_FIXUP_CHUWI_COREBOOK_XPRO,
+ 	ALC255_FIXUP_ACER_MIC_NO_PRESENCE,
+ 	ALC255_FIXUP_ASUS_MIC_NO_PRESENCE,
+@@ -6677,6 +6678,16 @@ static const struct hda_fixup alc269_fixups[] = {
+ 		.type = HDA_FIXUP_FUNC,
+ 		.v.func = alc269_fixup_pincfg_U7x7_headset_mic,
+ 	},
++	[ALC269VB_FIXUP_INFINIX_ZERO_BOOK_13] = {
++		.type = HDA_FIXUP_PINS,
++		.v.pins = (const struct hda_pintbl[]) {
++			{ 0x14, 0x90170151 }, /* use as internal speaker (LFE) */
++			{ 0x1b, 0x90170152 }, /* use as internal speaker (back) */
++			{ }
++		},
++		.chained = true,
++		.chain_id = ALC269_FIXUP_LIMIT_INT_MIC_BOOST
++	},
+ 	[ALC269VB_FIXUP_CHUWI_COREBOOK_XPRO] = {
+ 		.type = HDA_FIXUP_PINS,
+ 		.v.pins = (const struct hda_pintbl[]) {
+@@ -8533,6 +8544,7 @@ static const struct snd_pci_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x1d72, 0x1945, "Redmi G", ALC256_FIXUP_ASUS_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x1d72, 0x1947, "RedmiBook Air", ALC255_FIXUP_XIAOMI_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x2782, 0x0214, "VAIO VJFE-CL", ALC269_FIXUP_LIMIT_INT_MIC_BOOST),
++	SND_PCI_QUIRK(0x2782, 0x0228, "Infinix ZERO BOOK 13", ALC269VB_FIXUP_INFINIX_ZERO_BOOK_13),
+ 	SND_PCI_QUIRK(0x2782, 0x0232, "CHUWI CoreBook XPro", ALC269VB_FIXUP_CHUWI_COREBOOK_XPRO),
+ 	SND_PCI_QUIRK(0x2782, 0x1707, "Vaio VJFE-ADL", ALC298_FIXUP_SPK_VOLUME),
+ 	SND_PCI_QUIRK(0x8086, 0x2074, "Intel NUC 8", ALC233_FIXUP_INTEL_NUC8_DMIC),
 -- 
 2.43.0
 
