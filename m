@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 704412253FE;
-	Thu, 12 Dec 2024 16:51:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FB5D221D93;
+	Thu, 12 Dec 2024 16:51:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734022295; cv=none; b=tjfbKPSOu/SSGt4KJ1eAqQmqsZQ3I5N+aErlHnUUWrOhMq5PzE2OzaPMZfLl1QDmhojmtBv69PLlMD/EMpHH5f9Dnbs/Jty85DUg2JM6lgYlGE66I5sceG4N9g/SRjXgAYFF4B72kDxrA7yDiTLlFB96UlbtQzn2ogkVpmknEyA=
+	t=1734022298; cv=none; b=jyvAYOjb9SALElY72Oo28E9FRQDL+QCJ1GFwmKy2tQg4sb2yOTJv7ei/jN/ZmXsE7zbeJ169uAvJ0qEHjdAtxpEadEFCBNoZKtXmujVY5fneJKjb+2xA0KLmxORzmeWPktX1Hu01z5fWai9Go1s5KbRlIbEAOVUqClasB+vt630=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734022295; c=relaxed/simple;
-	bh=YSNcvKmYU0Y9yvweYJraQKXFL3NLxISA/qUZEZB+nkY=;
+	s=arc-20240116; t=1734022298; c=relaxed/simple;
+	bh=q2ddmTfjcwRJvh4KTEyNEDBFEZvk7pGZAG6nVjwt4Co=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZquhsDUFrBNL6q6APKvKI/gIK+bEnzDWTMDaXT6FYpf0eLpVpfcNjcaK8jGYW3kLPBGFKbJp5XbC9RiGGqqhToGX4QIg+KfyXhwoQjmj95SGGG5bk7xQzDfYtcTV9eUOBy2H/G9xDbAm4dFieaog5riS7ASXUxJuOfVYhRJ9DTk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jUtQspaV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RMNU4jX9C+T2gzCgedckoe3U/XhSxRLFXAJDmwTaBs7XtW8pas9EegTK1dbqCWeFxJzm5Vd1+tuJs1zJHwBY2fXbhKz6MLnszSiL4oqOt6HxqmVSq80jtMctgJ1HKJleTJZqu3ex+EIMfDAuQRcSC6Ky9t1mreiNjqK8KI7fQNE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k+1gfgvR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jUtQspaV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E68FEC4CECE;
-	Thu, 12 Dec 2024 16:51:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k+1gfgvR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20705C4CECE;
+	Thu, 12 Dec 2024 16:51:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734022295;
-	bh=YSNcvKmYU0Y9yvweYJraQKXFL3NLxISA/qUZEZB+nkY=;
+	s=korg; t=1734022298;
+	bh=q2ddmTfjcwRJvh4KTEyNEDBFEZvk7pGZAG6nVjwt4Co=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jUtQspaVmzecmt2/qOh/9LJ6FHNDMhmLtb4R9A4srsBDSn2rOhr52NuRqVdVtVAyn
-	 jGEMvF1LY/bTBACthjBSWKQuMa8lfJzrrIaThnsAhklZIPtpSClEgCj5q0PBPxXw4q
-	 8nmwl4ZhBjy6BHNPpGKaAPiUXGHs/rpYcWAKSCmI=
+	b=k+1gfgvRgXZizPyaBz9wcC2jefZTs1nr/5ngT1iEuJJ2LDU1pTh6MsaP4cKleX5c0
+	 TwMiucIeeWATrZppYN9ZCUwNuTvc9PNO85e5NEB+mb8KDdYxCStqtyr6aVUMwXo/me
+	 vi3TxHgAy1Jv1ndJVb7ACuI5ZPi5QiAgBME3Bldg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 203/565] ALSA: 6fire: Release resources at card release
-Date: Thu, 12 Dec 2024 15:56:38 +0100
-Message-ID: <20241212144319.516460783@linuxfoundation.org>
+Subject: [PATCH 5.15 204/565] driver core: Introduce device_find_any_child() helper
+Date: Thu, 12 Dec 2024 15:56:39 +0100
+Message-ID: <20241212144319.554565743@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144311.432886635@linuxfoundation.org>
 References: <20241212144311.432886635@linuxfoundation.org>
@@ -50,76 +51,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit a0810c3d6dd2d29a9b92604d682eacd2902ce947 ]
+[ Upstream commit 82b070beae1ef55b0049768c8dc91d87565bb191 ]
 
-The current 6fire code tries to release the resources right after the
-call of usb6fire_chip_abort().  But at this moment, the card object
-might be still in use (as we're calling snd_card_free_when_closed()).
+There are several places in the kernel where this kind of functionality is
+being used. Provide a generic helper for such cases.
 
-For avoid potential UAFs, move the release of resources to the card's
-private_free instead of the manual call of usb6fire_chip_destroy() at
-the USB disconnect callback.
-
-Fixes: c6d43ba816d1 ("ALSA: usb/6fire - Driver for TerraTec DMX 6Fire USB")
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20241113111042.15058-6-tiwai@suse.de
+Reviewed-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/20220610120219.18988-1-andriy.shevchenko@linux.intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 27aabf27fd01 ("Bluetooth: fix use-after-free in device_for_each_child()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/6fire/chip.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/base/core.c    | 20 ++++++++++++++++++++
+ include/linux/device.h |  2 ++
+ 2 files changed, 22 insertions(+)
 
-diff --git a/sound/usb/6fire/chip.c b/sound/usb/6fire/chip.c
-index 33e962178c936..d562a30b087f0 100644
---- a/sound/usb/6fire/chip.c
-+++ b/sound/usb/6fire/chip.c
-@@ -61,8 +61,10 @@ static void usb6fire_chip_abort(struct sfire_chip *chip)
- 	}
+diff --git a/drivers/base/core.c b/drivers/base/core.c
+index d995d768c362a..4fc62624a95e2 100644
+--- a/drivers/base/core.c
++++ b/drivers/base/core.c
+@@ -3829,6 +3829,26 @@ struct device *device_find_child_by_name(struct device *parent,
  }
+ EXPORT_SYMBOL_GPL(device_find_child_by_name);
  
--static void usb6fire_chip_destroy(struct sfire_chip *chip)
-+static void usb6fire_card_free(struct snd_card *card)
- {
-+	struct sfire_chip *chip = card->private_data;
++static int match_any(struct device *dev, void *unused)
++{
++	return 1;
++}
 +
- 	if (chip) {
- 		if (chip->pcm)
- 			usb6fire_pcm_destroy(chip);
-@@ -72,8 +74,6 @@ static void usb6fire_chip_destroy(struct sfire_chip *chip)
- 			usb6fire_comm_destroy(chip);
- 		if (chip->control)
- 			usb6fire_control_destroy(chip);
--		if (chip->card)
--			snd_card_free(chip->card);
- 	}
- }
- 
-@@ -136,6 +136,7 @@ static int usb6fire_chip_probe(struct usb_interface *intf,
- 	chip->regidx = regidx;
- 	chip->intf_count = 1;
- 	chip->card = card;
-+	card->private_free = usb6fire_card_free;
- 
- 	ret = usb6fire_comm_init(chip);
- 	if (ret < 0)
-@@ -162,7 +163,7 @@ static int usb6fire_chip_probe(struct usb_interface *intf,
- 	return 0;
- 
- destroy_chip:
--	usb6fire_chip_destroy(chip);
-+	snd_card_free(card);
- 	return ret;
- }
- 
-@@ -181,7 +182,6 @@ static void usb6fire_chip_disconnect(struct usb_interface *intf)
- 
- 			chip->shutdown = true;
- 			usb6fire_chip_abort(chip);
--			usb6fire_chip_destroy(chip);
- 		}
- 	}
- }
++/**
++ * device_find_any_child - device iterator for locating a child device, if any.
++ * @parent: parent struct device
++ *
++ * This is similar to the device_find_child() function above, but it
++ * returns a reference to a child device, if any.
++ *
++ * NOTE: you will need to drop the reference with put_device() after use.
++ */
++struct device *device_find_any_child(struct device *parent)
++{
++	return device_find_child(parent, NULL, match_any);
++}
++EXPORT_SYMBOL_GPL(device_find_any_child);
++
+ int __init devices_init(void)
+ {
+ 	devices_kset = kset_create_and_add("devices", &device_uevent_ops, NULL);
+diff --git a/include/linux/device.h b/include/linux/device.h
+index 3e04bd84f1264..440c9f1a3f350 100644
+--- a/include/linux/device.h
++++ b/include/linux/device.h
+@@ -830,6 +830,8 @@ struct device *device_find_child(struct device *dev, void *data,
+ 				 int (*match)(struct device *dev, void *data));
+ struct device *device_find_child_by_name(struct device *parent,
+ 					 const char *name);
++struct device *device_find_any_child(struct device *parent);
++
+ int device_rename(struct device *dev, const char *new_name);
+ int device_move(struct device *dev, struct device *new_parent,
+ 		enum dpm_order dpm_order);
 -- 
 2.43.0
 
