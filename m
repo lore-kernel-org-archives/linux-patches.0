@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EDB315696E;
-	Thu, 12 Dec 2024 17:36:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39F7D222D72;
+	Thu, 12 Dec 2024 17:37:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734025018; cv=none; b=vGHnyCmCgpGlellJtdYrvBCHzAI3lqupA8EiuI/i1vjWK+BufSi7fX8nDGRIEZj/35p7VfKWkcrJ+A4zk/xpu4nhuVpORv2OIEfGPEyfTyUdKSo2DQDx3+h9BBkPwu6sz8mkH0dk0j77Az33EPtnZ+xks1cQA9s0D5BcGq94Ghk=
+	t=1734025021; cv=none; b=DCAoU5xMgcACQ9MSz5oYpXacA9Q9FgjhW0hmsmAU1x7rMUIc3uiYBg2C57LFcSXKZ9KIK9HcCBz3qhOxIZ4wguahoLmCvVmc+6kw52zQKLRMsnUqsW4x+8Q9W716I4QMWH3qo8oFv51A2Ms48nMb03GgMsKXMSK75z1PcVSKQ2Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734025018; c=relaxed/simple;
-	bh=XpaH0DW6U8G7/pOFoocJ8v0cF6yOTdVTeIOdI07S07E=;
+	s=arc-20240116; t=1734025021; c=relaxed/simple;
+	bh=Iu9XWtfayiAdw0CLfSQmtjX26CMm3ledKM+TPqf5csk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X1nwO0KYiPr1GJbkAaKLkz7Qk0KjqgKuqUb7h2kvVblCQ2wI/SO9aAVCnuKVqfCGDqUQojvzR6FXUSa46thcLiCglSj37teNfd0AbvtW/51zkiDIw61yNTw9En3FCp98/PszG+R74+WswoyxlP77s0rITQzT4V+EcBzgBeyh6po=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e98KE+qE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Pob8NUYB0ANIWDysLWqoZTOXnfI0KquWRUG0Fw0zibazZzzER7ci5gB1SzfvpXFUqZN7T/wAsRGqjtNo9d9K+TfexGpGsd5wDbYQzgwhhgUtKw3u8OpGtxgY1X/mq7j/aFr4WRfKGmYiW+J3LqshOnRaOL04lfMi2uHaeHAPShk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fERhfqUA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e98KE+qE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA137C4CECE;
-	Thu, 12 Dec 2024 17:36:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fERhfqUA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B00DCC4CECE;
+	Thu, 12 Dec 2024 17:37:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734025018;
-	bh=XpaH0DW6U8G7/pOFoocJ8v0cF6yOTdVTeIOdI07S07E=;
+	s=korg; t=1734025021;
+	bh=Iu9XWtfayiAdw0CLfSQmtjX26CMm3ledKM+TPqf5csk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e98KE+qEaqBssQm2eKKK8m2zi0zd8IFPXF/x7qtRiKMv3b8Hu86dvA66v+5oGpxPd
-	 QVzt0z/UV5JubYE4xyrCzntL60wZNh/4Vb5XISngfjkaXfQ85u4MPFRCHyaLW7F/eq
-	 NoMPKHRopkOoiyqNIzMS4gbDfo+IcHFeQK4shpds=
+	b=fERhfqUAlN1/0Rv4jeaQ4x2ohKT096wm/w3n9OokVo53OY9FXau8DBuUN3H+rBC3J
+	 2gJYDO11hAWbpa61On2GKGBQ9l2Oi/lFZ+v8i4yTzQG5/UbrM+KEi+cUATZVGuSx7Z
+	 fO6dbvLQJ1pYlKvlVsELI+CQHQ3MdnW85guWqUJY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Boris Ostrovsky <boris.ostrovsky@oracle.com>,
-	Juergen Gross <jgross@suse.com>,
-	Josh Poimboeuf <jpoimboe@redhat.com>,
+	Jonas Gorski <jonas.gorski@gmail.com>,
+	"Maciej W. Rozycki" <macro@orcam.me.uk>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 028/321] x86/xen/pvh: Annotate indirect branch as safe
-Date: Thu, 12 Dec 2024 15:59:06 +0100
-Message-ID: <20241212144231.115210392@linuxfoundation.org>
+Subject: [PATCH 5.4 029/321] mips: asm: fix warning when disabling MIPS_FP_SUPPORT
+Date: Thu, 12 Dec 2024 15:59:07 +0100
+Message-ID: <20241212144231.154424873@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144229.291682835@linuxfoundation.org>
 References: <20241212144229.291682835@linuxfoundation.org>
@@ -52,44 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josh Poimboeuf <jpoimboe@redhat.com>
+From: Jonas Gorski <jonas.gorski@gmail.com>
 
-[ Upstream commit 82694854caa8badab7c5d3a19c0139e8b471b1d3 ]
+[ Upstream commit da09935975c8f8c90d6f57be2422dee5557206cd ]
 
-This indirect jump is harmless; annotate it to keep objtool's retpoline
-validation happy.
+When MIPS_FP_SUPPORT is disabled, __sanitize_fcr31() is defined as
+nothing, which triggers a gcc warning:
 
-Cc: Boris Ostrovsky <boris.ostrovsky@oracle.com>
-Cc: Juergen Gross <jgross@suse.com>
-Signed-off-by: Josh Poimboeuf <jpoimboe@redhat.com>
-Reviewed-by: Juergen Gross <jgross@suse.com>
-Link: https://lore.kernel.org/r/4797c72a258b26e06741c58ccd4a75c42db39c1d.1611263462.git.jpoimboe@redhat.com
-Stable-dep-of: e8fbc0d9cab6 ("x86/pvh: Call C code via the kernel virtual mapping")
+    In file included from kernel/sched/core.c:79:
+    kernel/sched/core.c: In function 'context_switch':
+    ./arch/mips/include/asm/switch_to.h:114:39: warning: suggest braces around empty body in an 'if' statement [-Wempty-body]
+      114 |                 __sanitize_fcr31(next);                                 \
+          |                                       ^
+    kernel/sched/core.c:5316:9: note: in expansion of macro 'switch_to'
+     5316 |         switch_to(prev, next, prev);
+          |         ^~~~~~~~~
+
+Fix this by providing an empty body for __sanitize_fcr31() like one is
+defined for __mips_mt_fpaff_switch_to().
+
+Fixes: 36a498035bd2 ("MIPS: Avoid FCSR sanitization when CONFIG_MIPS_FP_SUPPORT=n")
+Signed-off-by: Jonas Gorski <jonas.gorski@gmail.com>
+Reviewed-by: Maciej W. Rozycki <macro@orcam.me.uk>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/platform/pvh/head.S | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/mips/include/asm/switch_to.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/x86/platform/pvh/head.S b/arch/x86/platform/pvh/head.S
-index 1f8825bbaffbf..efd615d397d22 100644
---- a/arch/x86/platform/pvh/head.S
-+++ b/arch/x86/platform/pvh/head.S
-@@ -16,6 +16,7 @@
- #include <asm/boot.h>
- #include <asm/processor-flags.h>
- #include <asm/msr.h>
-+#include <asm/nospec-branch.h>
- #include <xen/interface/elfnote.h>
+diff --git a/arch/mips/include/asm/switch_to.h b/arch/mips/include/asm/switch_to.h
+index 09cbe9042828f..531eb245fc575 100644
+--- a/arch/mips/include/asm/switch_to.h
++++ b/arch/mips/include/asm/switch_to.h
+@@ -97,7 +97,7 @@ do {									\
+ 	}								\
+ } while (0)
+ #else
+-# define __sanitize_fcr31(next)
++# define __sanitize_fcr31(next) do { (void) (next); } while (0)
+ #endif
  
- 	__HEAD
-@@ -105,6 +106,7 @@ ENTRY(pvh_start_xen)
- 	/* startup_64 expects boot_params in %rsi. */
- 	mov $_pa(pvh_bootparams), %rsi
- 	mov $_pa(startup_64), %rax
-+	ANNOTATE_RETPOLINE_SAFE
- 	jmp *%rax
- 
- #else /* CONFIG_X86_64 */
+ /*
 -- 
 2.43.0
 
