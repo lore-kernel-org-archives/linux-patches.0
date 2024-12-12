@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EC442AF0E;
-	Thu, 12 Dec 2024 15:22:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF2A52AF0E;
+	Thu, 12 Dec 2024 15:22:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734016933; cv=none; b=mm8EQMXGh7QMWNHsQK/FuNwaqfoOfRrHcOwaUena163DKphccAQbMWLLU2qXQ7BDtx9pCc9/XQzlhHMLKPpoUKkfqtk9XR4uE21wxv30U6eRUT7IaDa5xaHuFljbNyScAQKB1QmYOlCz/Zd2CYAH4mEuHKfaA9Y5Imrc8wgY3iI=
+	t=1734016937; cv=none; b=lOop4vUhIWK7owPbcdwsVNH/qEolEsgdShBf+ySQeMX10pdDwABG75PubJdmS6svmxI8CxgQIK1NkmQlD/SfaELJOqxVVtBHTV1f3r6lkwazYpthCULzpggcQB0CZiu9fPRv2gTvgQBZKnf723vGIjKn+vSdA64jkYVIfPnj7io=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734016933; c=relaxed/simple;
-	bh=/MVwksO2mLQnqSCrzJskPMsUk4AJnETT2Of1oFwxMOg=;
+	s=arc-20240116; t=1734016937; c=relaxed/simple;
+	bh=aBsLMIFf7HSzqv5laf4878UAgLPtCcCYwGnDRLUoPnU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HyYwAGP8TcNy96ZsJjaT14c3/i65o86xYTrQ2JqluTotfs/CtLVyheAcSUj8jtjPWPe890RgK9xEOQi84GgkSo7lKUfSfyBf9vOEQp4sBWb/sMD7w1SvnEOVyghi5F28X002mCuZmex6cUqRh/jX3sYKktx9Kvgp17JFwVjxqu8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KEaJsuh+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gam9BMVVU9wzs4Y7507W5lv0wDKKkK8fNe9343joPwRTlRWFEhHs5sSNeSBgel8jA3mh/C5g3/RCLWZPUaYdONgVA0DC1Oy/MLbM4gjKcdObCocByrxtt7nAYPjPrsFMP+thdCothr+/z14altxsT53Nnv0B4bYX5HX9lGJ14V4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0ndcIC4c; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KEaJsuh+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE704C4CED4;
-	Thu, 12 Dec 2024 15:22:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0ndcIC4c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DA11C4CECE;
+	Thu, 12 Dec 2024 15:22:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734016933;
-	bh=/MVwksO2mLQnqSCrzJskPMsUk4AJnETT2Of1oFwxMOg=;
+	s=korg; t=1734016936;
+	bh=aBsLMIFf7HSzqv5laf4878UAgLPtCcCYwGnDRLUoPnU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KEaJsuh+Lvlf96TlGPAiOGmv16N3UWBb05MazfLv7XpcvZ/JtFn7unuJQ3xolA9ka
-	 f9UsdHAIfHqzZMTs1JJYRjx92G9gvzLwH2/dodIyuDeoZaLB99UHNHkLZerqG1wtYe
-	 SXqeYoQYfccO9r+O9CYRbGqXKlL9JLo/Vzr5GVAM=
+	b=0ndcIC4ckld/n3Aahf2q4C2hRG7hDeXIG51xJEgrPeSym2AeKItYb1OR8gisVrpff
+	 aMnvIywtNBsJNBXNNmC9cBZcY4VYHTpfcC+9xVpxsLQ2kF43qLDBlqJgCYvXSGxV+0
+	 6ztBuf18beRkz7VEfIliJdkyIiyRIiH3mh+8E8yc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Lunn <andrew@lunn.ch>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Jarkko Nikula <jarkko.nikula@linux.intel.com>,
+	Andi Shyti <andi.shyti@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 337/466] dsa: qca8k: Use nested lock to avoid splat
-Date: Thu, 12 Dec 2024 15:58:26 +0100
-Message-ID: <20241212144320.099878442@linuxfoundation.org>
+Subject: [PATCH 6.12 338/466] i2c: i801: Add support for Intel Panther Lake
+Date: Thu, 12 Dec 2024 15:58:27 +0100
+Message-ID: <20241212144320.138697456@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144306.641051666@linuxfoundation.org>
 References: <20241212144306.641051666@linuxfoundation.org>
@@ -51,37 +51,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrew Lunn <andrew@lunn.ch>
+From: Jarkko Nikula <jarkko.nikula@linux.intel.com>
 
-[ Upstream commit 078e0d596f7b5952dad8662ace8f20ed2165e2ce ]
+[ Upstream commit bd492b58371295d3ae26162b9666be584abad68a ]
 
-qca8k_phy_eth_command() is used to probe the child MDIO bus while the
-parent MDIO is locked. This causes lockdep splat, reporting a possible
-deadlock. It is not an actually deadlock, because different locks are
-used. By making use of mutex_lock_nested() we can avoid this false
-positive.
+Add SMBus PCI IDs on Intel Panther Lake-P and -U.
 
-Signed-off-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20241110175955.3053664-1-andrew@lunn.ch
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Jarkko Nikula <jarkko.nikula@linux.intel.com>
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/qca/qca8k-8xxx.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ Documentation/i2c/busses/i2c-i801.rst | 1 +
+ drivers/i2c/busses/Kconfig            | 1 +
+ drivers/i2c/busses/i2c-i801.c         | 6 ++++++
+ 3 files changed, 8 insertions(+)
 
-diff --git a/drivers/net/dsa/qca/qca8k-8xxx.c b/drivers/net/dsa/qca/qca8k-8xxx.c
-index f8d8c70642c4f..59b4a7240b583 100644
---- a/drivers/net/dsa/qca/qca8k-8xxx.c
-+++ b/drivers/net/dsa/qca/qca8k-8xxx.c
-@@ -673,7 +673,7 @@ qca8k_phy_eth_command(struct qca8k_priv *priv, bool read, int phy,
- 	 * We therefore need to lock the MDIO bus onto which the switch is
- 	 * connected.
- 	 */
--	mutex_lock(&priv->bus->mdio_lock);
-+	mutex_lock_nested(&priv->bus->mdio_lock, MDIO_MUTEX_NESTED);
+diff --git a/Documentation/i2c/busses/i2c-i801.rst b/Documentation/i2c/busses/i2c-i801.rst
+index c840b597912c8..47e8ac5b7099f 100644
+--- a/Documentation/i2c/busses/i2c-i801.rst
++++ b/Documentation/i2c/busses/i2c-i801.rst
+@@ -49,6 +49,7 @@ Supported adapters:
+   * Intel Meteor Lake (SOC and PCH)
+   * Intel Birch Stream (SOC)
+   * Intel Arrow Lake (SOC)
++  * Intel Panther Lake (SOC)
  
- 	/* Actually start the request:
- 	 * 1. Send mdio master packet
+    Datasheets: Publicly available at the Intel website
+ 
+diff --git a/drivers/i2c/busses/Kconfig b/drivers/i2c/busses/Kconfig
+index 6b3ba7e5723aa..2254abda5c46c 100644
+--- a/drivers/i2c/busses/Kconfig
++++ b/drivers/i2c/busses/Kconfig
+@@ -160,6 +160,7 @@ config I2C_I801
+ 	    Meteor Lake (SOC and PCH)
+ 	    Birch Stream (SOC)
+ 	    Arrow Lake (SOC)
++	    Panther Lake (SOC)
+ 
+ 	  This driver can also be built as a module.  If so, the module
+ 	  will be called i2c-i801.
+diff --git a/drivers/i2c/busses/i2c-i801.c b/drivers/i2c/busses/i2c-i801.c
+index 299fe9d3afab0..75dab01d43a75 100644
+--- a/drivers/i2c/busses/i2c-i801.c
++++ b/drivers/i2c/busses/i2c-i801.c
+@@ -81,6 +81,8 @@
+  * Meteor Lake PCH-S (PCH)	0x7f23	32	hard	yes	yes	yes
+  * Birch Stream (SOC)		0x5796	32	hard	yes	yes	yes
+  * Arrow Lake-H (SOC)		0x7722	32	hard	yes	yes	yes
++ * Panther Lake-H (SOC)		0xe322	32	hard	yes	yes	yes
++ * Panther Lake-P (SOC)		0xe422	32	hard	yes	yes	yes
+  *
+  * Features supported by this driver:
+  * Software PEC				no
+@@ -261,6 +263,8 @@
+ #define PCI_DEVICE_ID_INTEL_CANNONLAKE_H_SMBUS		0xa323
+ #define PCI_DEVICE_ID_INTEL_COMETLAKE_V_SMBUS		0xa3a3
+ #define PCI_DEVICE_ID_INTEL_METEOR_LAKE_SOC_S_SMBUS	0xae22
++#define PCI_DEVICE_ID_INTEL_PANTHER_LAKE_H_SMBUS	0xe322
++#define PCI_DEVICE_ID_INTEL_PANTHER_LAKE_P_SMBUS	0xe422
+ 
+ struct i801_mux_config {
+ 	char *gpio_chip;
+@@ -1055,6 +1059,8 @@ static const struct pci_device_id i801_ids[] = {
+ 	{ PCI_DEVICE_DATA(INTEL, METEOR_LAKE_PCH_S_SMBUS,	FEATURES_ICH5 | FEATURE_TCO_CNL) },
+ 	{ PCI_DEVICE_DATA(INTEL, BIRCH_STREAM_SMBUS,		FEATURES_ICH5 | FEATURE_TCO_CNL) },
+ 	{ PCI_DEVICE_DATA(INTEL, ARROW_LAKE_H_SMBUS,		FEATURES_ICH5 | FEATURE_TCO_CNL) },
++	{ PCI_DEVICE_DATA(INTEL, PANTHER_LAKE_H_SMBUS,		FEATURES_ICH5 | FEATURE_TCO_CNL) },
++	{ PCI_DEVICE_DATA(INTEL, PANTHER_LAKE_P_SMBUS,		FEATURES_ICH5 | FEATURE_TCO_CNL) },
+ 	{ 0, }
+ };
+ 
 -- 
 2.43.0
 
