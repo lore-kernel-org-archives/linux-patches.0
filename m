@@ -1,51 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 646C96F2FE;
-	Thu, 12 Dec 2024 17:42:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46E9D215710;
+	Thu, 12 Dec 2024 17:42:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734025349; cv=none; b=ajIFau89JaPcW01Nj7/KDYmy7rT6ijUwAejxUcyXd7x1qws92q0lTKBnUn2D8Kte9k1E/1yMtcRU7tJycS+ZfaWBQOQGTszDROmtBWCLFykZcOCjlN//vXjcWFJUlMsNoT0khY11yzLzq7LNPSNhYYXq2rk9ZBuZhLLYhAPWN3k=
+	t=1734025352; cv=none; b=NikSay7IK4STYQ/YRh7HFCJ8PrvtirTawURoDaRBKSFstt5tZ6ozAYX166U7yU8dXH5iydy03lY/n4p9Ilr5F6KAmCKrBrRrdGDuaRTI3PcbPF9LJFAr2AJPedyOPzAM8lvO9pVa6GbcMC094M70A15T2hY4ho6LgdF5Tvcx3IU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734025349; c=relaxed/simple;
-	bh=beZmLI04zK5ba0NwAQDHidY/hchb0WhSMRfj6cDFI1I=;
+	s=arc-20240116; t=1734025352; c=relaxed/simple;
+	bh=jPwdlVyvOAWhAbY3mRafTwv25zWcDzJOfD374VTU1Wk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sYag/mbdPUYzivHNAChSZWousFTG/vnmfZOFt/zFHVj+cxCaxMA6PgblDgeuhRukeVrJHbBopgDyQhUuzaDJcXvU33HO3zFjtj4K8PBrRE3lsAM6aSsk4U4ZNwhUm/7MoT5iPLuMLcRmIpQQQ246TgO5kkrcX2cvCxr4YNbiY48=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IUW2Pm5V; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SJY9L9L6eqGjd8dLiMH8e9u2etEl1hwh2O7m1ny4eoYj0/bU5n6WJRcS2vvY7P51iQawfKcGfVcWIuO0BtqmmME1AsFGsDadhGnXWSlPQuEG7ZVprJfYb0U2tMfxFsREETnNe9BL1F1XJgJ7med7LcEVoh/b8Zi4xZPfdHZO0yg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LtqgIVts; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IUW2Pm5V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEC73C4CED0;
-	Thu, 12 Dec 2024 17:42:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LtqgIVts"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2A55C4CECE;
+	Thu, 12 Dec 2024 17:42:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734025349;
-	bh=beZmLI04zK5ba0NwAQDHidY/hchb0WhSMRfj6cDFI1I=;
+	s=korg; t=1734025352;
+	bh=jPwdlVyvOAWhAbY3mRafTwv25zWcDzJOfD374VTU1Wk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IUW2Pm5VaXuMfEE/sRy4DVKKHzLZrl+lr6dGoO8bGnuicOk1elUnm6+tdsVl1gSnv
-	 d855RZEuWdZS9cHPC9BK9Q1WmWi1KyQvGnGM11pQq4ErKRiVB7RZQXmz1xGVYSOb3w
-	 ExVycnZPRgKgYSePSRL908HGIFNL8I0tYJ7D00xw=
+	b=LtqgIVtswBKKaZtvOVcTpiBWZCQtCDVlHxN3wAknpBak0qWS47483fp8zT/EMdWoV
+	 xEHcV+OZW0hxTbLxXY23iEe8Xz4S3JJpNmxkLWV9E5opx9rgRgeHtDKM9zyNcj0JHx
+	 fwFJ7yscqwXvC/XlYu2qrzrcCKYODwqo0Gg7miu0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ganapatrao Kulkarni <gankulkarni@os.amperecomputing.com>,
 	Leo Yan <leo.yan@arm.com>,
-	James Clark <james.clark@linaro.org>,
-	Ben Gainey <ben.gainey@arm.com>,
-	Suzuki K Poulose <suzuki.poulose@arm.com>,
-	Will Deacon <will@kernel.org>,
-	Mathieu Poirier <mathieu.poirier@linaro.org>,
-	Mike Leach <mike.leach@linaro.org>,
-	Ruidong Tian <tianruidong@linux.alibaba.com>,
-	Benjamin Gray <bgray@linux.ibm.com>,
-	linux-arm-kernel@lists.infradead.org,
-	coresight@lists.linaro.org,
-	John Garry <john.g.garry@oracle.com>,
-	scclevenger@os.amperecomputing.com,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
 	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 110/321] perf cs-etm: Dont flush when packet_queue fills up
-Date: Thu, 12 Dec 2024 16:00:28 +0100
-Message-ID: <20241212144234.330343381@linuxfoundation.org>
+Subject: [PATCH 5.4 111/321] perf probe: Correct demangled symbols in C++ program
+Date: Thu, 12 Dec 2024 16:00:29 +0100
+Message-ID: <20241212144234.369220274@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144229.291682835@linuxfoundation.org>
 References: <20241212144229.291682835@linuxfoundation.org>
@@ -64,119 +52,139 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: James Clark <james.clark@linaro.org>
+From: Leo Yan <leo.yan@arm.com>
 
-[ Upstream commit 5afd032961e8465808c4bc385c06e7676fbe1951 ]
+[ Upstream commit 314909f13cc12d47c468602c37dace512d225eeb ]
 
-cs_etm__flush(), like cs_etm__sample() is an operation that generates a
-sample and then swaps the current with the previous packet. Calling
-flush after processing the queues results in two swaps which corrupts
-the next sample. Therefore it wasn't appropriate to call flush here so
-remove it.
+An issue can be observed when probe C++ demangled symbol with steps:
 
-Flushing is still done on a discontinuity to explicitly clear the last
-branch buffer, but when the packet_queue fills up before reaching a
-timestamp, that's not a discontinuity and the call to
-cs_etm__process_traceid_queue() already generated samples and drained
-the buffers correctly.
+  # nm test_cpp_mangle | grep print_data
+    0000000000000c94 t _GLOBAL__sub_I__Z10print_datai
+    0000000000000afc T _Z10print_datai
+    0000000000000b38 T _Z10print_dataR5Point
 
-This is visible by looking for a branch that has the same target as the
-previous branch and the following source is before the address of the
-last target, which is impossible as execution would have had to have
-gone backwards:
+  # perf probe -x /home/niayan01/test_cpp_mangle -F --demangle
+    ...
+    print_data(Point&)
+    print_data(int)
+    ...
 
-  ffff800080849d40 _find_next_and_bit+0x78 => ffff80008011cadc update_sg_lb_stats+0x94
-   (packet_queue fills here before a timestamp, resulting in a flush and
-    branch target ffff80008011cadc is duplicated.)
-  ffff80008011cb1c update_sg_lb_stats+0xd4 => ffff80008011cadc update_sg_lb_stats+0x94
-  ffff8000801117c4 cpu_util+0x24 => ffff8000801117d4 cpu_util+0x34
+  # perf --debug verbose=3 probe -x test_cpp_mangle --add "test=print_data(int)"
+    probe-definition(0): test=print_data(int)
+    symbol:print_data(int) file:(null) line:0 offset:0 return:0 lazy:(null)
+    0 arguments
+    Open Debuginfo file: /home/niayan01/test_cpp_mangle
+    Try to find probe point from debuginfo.
+    Symbol print_data(int) address found : afc
+    Matched function: print_data [2ccf]
+    Probe point found: print_data+0
+    Found 1 probe_trace_events.
+    Opening /sys/kernel/tracing//uprobe_events write=1
+    Opening /sys/kernel/tracing//README write=0
+    Writing event: p:probe_test_cpp_mangle/test /home/niayan01/test_cpp_mangle:0xb38
+    ...
 
-After removing the flush the correct branch target is used for the
-second sample, and ffff8000801117c4 is no longer before the previous
-address:
+When tried to probe symbol "print_data(int)", the log shows:
 
-  ffff800080849d40 _find_next_and_bit+0x78 => ffff80008011cadc update_sg_lb_stats+0x94
-  ffff80008011cb1c update_sg_lb_stats+0xd4 => ffff8000801117a0 cpu_util+0x0
-  ffff8000801117c4 cpu_util+0x24 => ffff8000801117d4 cpu_util+0x34
+    Symbol print_data(int) address found : afc
 
-Make sure that a final branch stack is output at the end of the trace
-by calling cs_etm__end_block(). This is already done for both the
-timeless decode paths.
+The found address is 0xafc - which is right with verifying the output
+result from nm. Afterwards when write event, the command uses offset
+0xb38 in the last log, which is a wrong address.
 
-Fixes: 21fe8dc1191a ("perf cs-etm: Add support for CPU-wide trace scenarios")
-Reported-by: Ganapatrao Kulkarni <gankulkarni@os.amperecomputing.com>
-Closes: https://lore.kernel.org/all/20240719092619.274730-1-gankulkarni@os.amperecomputing.com/
-Reviewed-by: Leo Yan <leo.yan@arm.com>
-Signed-off-by: James Clark <james.clark@linaro.org>
-Tested-by: Ganapatrao Kulkarni <gankulkarni@os.amperecomputing.com>
-Cc: Ben Gainey <ben.gainey@arm.com>
-Cc: Suzuki K Poulose <suzuki.poulose@arm.com>
-Cc: Will Deacon <will@kernel.org>
-Cc: Mathieu Poirier <mathieu.poirier@linaro.org>
-Cc: Mike Leach <mike.leach@linaro.org>
-Cc: Ruidong Tian <tianruidong@linux.alibaba.com>
-Cc: Benjamin Gray <bgray@linux.ibm.com>
-Cc: linux-arm-kernel@lists.infradead.org
-Cc: coresight@lists.linaro.org
-Cc: John Garry <john.g.garry@oracle.com>
-Cc: scclevenger@os.amperecomputing.com
-Link: https://lore.kernel.org/r/20240916135743.1490403-2-james.clark@linaro.org
+The dwarf_diename() gets a common function name, in above case, it
+returns string "print_data". As a result, the tool parses the offset
+based on the common name. This leads to probe at the wrong symbol
+"print_data(Point&)".
+
+To fix the issue, use the die_get_linkage_name() function to retrieve
+the distinct linkage name - this is the mangled name for the C++ case.
+Based on this unique name, the tool can get a correct offset for
+probing. Based on DWARF doc, it is possible the linkage name is missed
+in the DIE, it rolls back to use dwarf_diename().
+
+After:
+
+  # perf --debug verbose=3 probe -x test_cpp_mangle --add "test=print_data(int)"
+    probe-definition(0): test=print_data(int)
+    symbol:print_data(int) file:(null) line:0 offset:0 return:0 lazy:(null)
+    0 arguments
+    Open Debuginfo file: /home/niayan01/test_cpp_mangle
+    Try to find probe point from debuginfo.
+    Symbol print_data(int) address found : afc
+    Matched function: print_data [2d06]
+    Probe point found: print_data+0
+    Found 1 probe_trace_events.
+    Opening /sys/kernel/tracing//uprobe_events write=1
+    Opening /sys/kernel/tracing//README write=0
+    Writing event: p:probe_test_cpp_mangle/test /home/niayan01/test_cpp_mangle:0xafc
+    Added new event:
+      probe_test_cpp_mangle:test (on print_data(int) in /home/niayan01/test_cpp_mangle)
+
+    You can now use it in all perf tools, such as:
+
+            perf record -e probe_test_cpp_mangle:test -aR sleep 1
+
+  # perf --debug verbose=3 probe -x test_cpp_mangle --add "test2=print_data(Point&)"
+    probe-definition(0): test2=print_data(Point&)
+    symbol:print_data(Point&) file:(null) line:0 offset:0 return:0 lazy:(null)
+    0 arguments
+    Open Debuginfo file: /home/niayan01/test_cpp_mangle
+    Try to find probe point from debuginfo.
+    Symbol print_data(Point&) address found : b38
+    Matched function: print_data [2ccf]
+    Probe point found: print_data+0
+    Found 1 probe_trace_events.
+    Opening /sys/kernel/tracing//uprobe_events write=1
+    Parsing probe_events: p:probe_test_cpp_mangle/test /home/niayan01/test_cpp_mangle:0x0000000000000afc
+    Group:probe_test_cpp_mangle Event:test probe:p
+    Opening /sys/kernel/tracing//README write=0
+    Writing event: p:probe_test_cpp_mangle/test2 /home/niayan01/test_cpp_mangle:0xb38
+    Added new event:
+      probe_test_cpp_mangle:test2 (on print_data(Point&) in /home/niayan01/test_cpp_mangle)
+
+    You can now use it in all perf tools, such as:
+
+            perf record -e probe_test_cpp_mangle:test2 -aR sleep 1
+
+Fixes: fb1587d869a3 ("perf probe: List probes with line number and file name")
+Signed-off-by: Leo Yan <leo.yan@arm.com>
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Link: https://lore.kernel.org/r/20241012141432.877894-1-leo.yan@arm.com
 Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/cs-etm.c | 25 ++++++++++++++++++-------
- 1 file changed, 18 insertions(+), 7 deletions(-)
+ tools/perf/util/probe-finder.c | 17 +++++++++++++++--
+ 1 file changed, 15 insertions(+), 2 deletions(-)
 
-diff --git a/tools/perf/util/cs-etm.c b/tools/perf/util/cs-etm.c
-index f5a9cb4088080..bd63bd14417fd 100644
---- a/tools/perf/util/cs-etm.c
-+++ b/tools/perf/util/cs-etm.c
-@@ -2066,12 +2066,6 @@ static void cs_etm__clear_all_traceid_queues(struct cs_etm_queue *etmq)
+diff --git a/tools/perf/util/probe-finder.c b/tools/perf/util/probe-finder.c
+index 849d8d2e5976b..261ad8d123af7 100644
+--- a/tools/perf/util/probe-finder.c
++++ b/tools/perf/util/probe-finder.c
+@@ -1604,8 +1604,21 @@ int debuginfo__find_probe_point(struct debuginfo *dbg, unsigned long addr,
  
- 		/* Ignore return value */
- 		cs_etm__process_traceid_queue(etmq, tidq);
--
--		/*
--		 * Generate an instruction sample with the remaining
--		 * branchstack entries.
--		 */
--		cs_etm__flush(etmq, tidq);
- 	}
- }
- 
-@@ -2154,7 +2148,7 @@ static int cs_etm__process_queues(struct cs_etm_auxtrace *etm)
- 
- 	while (1) {
- 		if (!etm->heap.heap_cnt)
--			goto out;
-+			break;
- 
- 		/* Take the entry at the top of the min heap */
- 		cs_queue_nr = etm->heap.heap_array[0].queue_nr;
-@@ -2237,6 +2231,23 @@ static int cs_etm__process_queues(struct cs_etm_auxtrace *etm)
- 		ret = auxtrace_heap__add(&etm->heap, cs_queue_nr, timestamp);
- 	}
- 
-+	for (i = 0; i < etm->queues.nr_queues; i++) {
-+		struct int_node *inode;
+ 	/* Find a corresponding function (name, baseline and baseaddr) */
+ 	if (die_find_realfunc(&cudie, (Dwarf_Addr)addr, &spdie)) {
+-		/* Get function entry information */
+-		func = basefunc = dwarf_diename(&spdie);
++		/*
++		 * Get function entry information.
++		 *
++		 * As described in the document DWARF Debugging Information
++		 * Format Version 5, section 2.22 Linkage Names, "mangled names,
++		 * are used in various ways, ... to distinguish multiple
++		 * entities that have the same name".
++		 *
++		 * Firstly try to get distinct linkage name, if fail then
++		 * rollback to get associated name in DIE.
++		 */
++		func = basefunc = die_get_linkage_name(&spdie);
++		if (!func)
++			func = basefunc = dwarf_diename(&spdie);
 +
-+		etmq = etm->queues.queue_array[i].priv;
-+		if (!etmq)
-+			continue;
-+
-+		intlist__for_each_entry(inode, etmq->traceid_queues_list) {
-+			int idx = (int)(intptr_t)inode->priv;
-+
-+			/* Flush any remaining branch stack entries */
-+			tidq = etmq->traceid_queues[idx];
-+			ret = cs_etm__end_block(etmq, tidq);
-+			if (ret)
-+				return ret;
-+		}
-+	}
- out:
- 	return ret;
- }
+ 		if (!func ||
+ 		    die_entrypc(&spdie, &baseaddr) != 0 ||
+ 		    dwarf_decl_line(&spdie, &baseline) != 0) {
 -- 
 2.43.0
 
