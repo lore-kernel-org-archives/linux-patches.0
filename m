@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03A96213E6F;
-	Thu, 12 Dec 2024 17:31:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66D9B20A5EE;
+	Thu, 12 Dec 2024 17:31:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734024700; cv=none; b=itUODtERjWeC4JSv3d7dfgaADxX/ji5kKiEonkKucuK0NYRXIv2fSa99uw3r97HZmqia7cBmjR+Kd/s4McuJFFHJa6a5RTDiD5dyQ6b7D5lgx8NxHJRGj+QkBNpPvfivO1YI3La9ZkL9UHCKS4LceOPFAsO81RfqK98+s0E2HEM=
+	t=1734024703; cv=none; b=bZVC71ks2iGK8o6n7yGWhM/dQBtZkwBnHT9Cl6o51LDLJdKA3ACWInt0qP6OaUBHVf+nIRXkuKaqDwppbXT52lr7KHLceFGBzpCt5E0RKK8lBB4dlGqlt+kDjcgFRgN4oVe42i0YJjom1Ie5CK4QBemG8kyLksD8Vb1UcO0Rs9Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734024700; c=relaxed/simple;
-	bh=g8K2gioxYmzVSFX+OSRWK50wJlWT8C6VCQnm6t0bSVw=;
+	s=arc-20240116; t=1734024703; c=relaxed/simple;
+	bh=5EBU3S51Dqoja7IoBWibr4zt2M9AyccyDEYulEAXx3Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n/QrLc07i613xdMGEbgQpUDkVGMX5Eg/pY5gJwF2rASIGbZAJsnjpf2eB0dTVf8ePSnMQhE3M9msH8fZQWbLI0ceXbJ/27uOp8XYnbvPHhYHj/+HM8z7sj9rRSR0huRNqjx6By+2R5UXrlkxP2vOqDCBySYgNxERJotlMYlWsRw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wZcdvN6w; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ow0JU/GpMQiiPIymAOHbIF5rRFWKBnZ3paO8v9rXBt/L6ypnFtjriypaUlfl+wP6p8iKaU/QKX/742XRb6I1PR/1Thxp4mZeOKFYH2ygRyENFS4UWEYhTgb12IO8uQs3LWn8yjElRQI63Gtgf++fsx0aXO503HJ4LfXAbnv8ANg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jz+GwpmL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wZcdvN6w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7599EC4CECE;
-	Thu, 12 Dec 2024 17:31:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jz+GwpmL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C91AC4CECE;
+	Thu, 12 Dec 2024 17:31:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734024699;
-	bh=g8K2gioxYmzVSFX+OSRWK50wJlWT8C6VCQnm6t0bSVw=;
+	s=korg; t=1734024703;
+	bh=5EBU3S51Dqoja7IoBWibr4zt2M9AyccyDEYulEAXx3Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wZcdvN6wbtYsh7JRzxZql32x47ZfP3Cblz5i3P/b1JaNRBQ8Oe3ihxhGFAt/13yW1
-	 iNspdMlY+RTnbvlIiyZxC1Jy1tv0GnbPDNbNEsh+Gi/B1DJSXBmhe+55yQZZT6VjrP
-	 8T0dFIJXVnbe0N12GV79ZBlRBHmVDrnhPmnf3SHY=
+	b=jz+GwpmLz4NQ4//5h8qlzmmxZQdv4fzYL+yaxiQfDfiL1+m8+rgtuowaD5dYsdECM
+	 NtWRewbA1No/v/oDkiNoqn0FqZHew5Jz5UEJgRbjcHDtQ1/5gU2+p5u/6XBAwTNtg8
+	 NwW5gVMWucvbKI9QVsL1pCc+aQh1egnKYOBQ4zcQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Pei Xiao <xiaopei01@kylinos.cn>,
-	Raphael Gallais-Pou <rgallaispou@gmail.com>,
-	Raphael Gallais-Pou <raphael.gallais-pou@foss.st.com>,
+	Zijian Zhang <zijianzhang@bytedance.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	John Fastabend <john.fastabend@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 353/459] drm/sti: Add __iomem for mixer_dbg_mxns parameter
-Date: Thu, 12 Dec 2024 16:01:31 +0100
-Message-ID: <20241212144307.601131585@linuxfoundation.org>
+Subject: [PATCH 5.10 354/459] tcp_bpf: Fix the sk_mem_uncharge logic in tcp_bpf_sendmsg
+Date: Thu, 12 Dec 2024 16:01:32 +0100
+Message-ID: <20241212144307.647916307@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144253.511169641@linuxfoundation.org>
 References: <20241212144253.511169641@linuxfoundation.org>
@@ -53,39 +52,163 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pei Xiao <xiaopei01@kylinos.cn>
+From: Zijian Zhang <zijianzhang@bytedance.com>
 
-[ Upstream commit 86e8f94789dd6f3e705bfa821e1e416f97a2f863 ]
+[ Upstream commit ca70b8baf2bd125b2a4d96e76db79375c07d7ff2 ]
 
-Sparse complains about incorrect type in argument 1.
-expected void const volatile  __iomem *ptr but got void *.
-so modify mixer_dbg_mxn's addr parameter.
+The current sk memory accounting logic in __SK_REDIRECT is pre-uncharging
+tosend bytes, which is either msg->sg.size or a smaller value apply_bytes.
 
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202411191809.6V3c826r-lkp@intel.com/
-Fixes: a5f81078a56c ("drm/sti: add debugfs entries for MIXER crtc")
-Signed-off-by: Pei Xiao <xiaopei01@kylinos.cn>
-Acked-by: Raphael Gallais-Pou <rgallaispou@gmail.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/c28f0dcb6a4526721d83ba1f659bba30564d3d54.1732087094.git.xiaopei01@kylinos.cn
-Signed-off-by: Raphael Gallais-Pou <raphael.gallais-pou@foss.st.com>
+Potential problems with this strategy are as follows:
+
+- If the actual sent bytes are smaller than tosend, we need to charge some
+  bytes back, as in line 487, which is okay but seems not clean.
+
+- When tosend is set to apply_bytes, as in line 417, and (ret < 0), we may
+  miss uncharging (msg->sg.size - apply_bytes) bytes.
+
+[...]
+415 tosend = msg->sg.size;
+416 if (psock->apply_bytes && psock->apply_bytes < tosend)
+417   tosend = psock->apply_bytes;
+[...]
+443 sk_msg_return(sk, msg, tosend);
+444 release_sock(sk);
+446 origsize = msg->sg.size;
+447 ret = tcp_bpf_sendmsg_redir(sk_redir, redir_ingress,
+448                             msg, tosend, flags);
+449 sent = origsize - msg->sg.size;
+[...]
+454 lock_sock(sk);
+455 if (unlikely(ret < 0)) {
+456   int free = sk_msg_free_nocharge(sk, msg);
+458   if (!cork)
+459     *copied -= free;
+460 }
+[...]
+487 if (eval == __SK_REDIRECT)
+488   sk_mem_charge(sk, tosend - sent);
+[...]
+
+When running the selftest test_txmsg_redir_wait_sndmem with txmsg_apply,
+the following warning will be reported:
+
+------------[ cut here ]------------
+WARNING: CPU: 6 PID: 57 at net/ipv4/af_inet.c:156 inet_sock_destruct+0x190/0x1a0
+Modules linked in:
+CPU: 6 UID: 0 PID: 57 Comm: kworker/6:0 Not tainted 6.12.0-rc1.bm.1-amd64+ #43
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.12.0-1 04/01/2014
+Workqueue: events sk_psock_destroy
+RIP: 0010:inet_sock_destruct+0x190/0x1a0
+RSP: 0018:ffffad0a8021fe08 EFLAGS: 00010206
+RAX: 0000000000000011 RBX: ffff9aab4475b900 RCX: ffff9aab481a0800
+RDX: 0000000000000303 RSI: 0000000000000011 RDI: ffff9aab4475b900
+RBP: ffff9aab4475b990 R08: 0000000000000000 R09: ffff9aab40050ec0
+R10: 0000000000000000 R11: ffff9aae6fdb1d01 R12: ffff9aab49c60400
+R13: ffff9aab49c60598 R14: ffff9aab49c60598 R15: dead000000000100
+FS:  0000000000000000(0000) GS:ffff9aae6fd80000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007ffec7e47bd8 CR3: 00000001a1a1c004 CR4: 0000000000770ef0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+PKRU: 55555554
+Call Trace:
+<TASK>
+? __warn+0x89/0x130
+? inet_sock_destruct+0x190/0x1a0
+? report_bug+0xfc/0x1e0
+? handle_bug+0x5c/0xa0
+? exc_invalid_op+0x17/0x70
+? asm_exc_invalid_op+0x1a/0x20
+? inet_sock_destruct+0x190/0x1a0
+__sk_destruct+0x25/0x220
+sk_psock_destroy+0x2b2/0x310
+process_scheduled_works+0xa3/0x3e0
+worker_thread+0x117/0x240
+? __pfx_worker_thread+0x10/0x10
+kthread+0xcf/0x100
+? __pfx_kthread+0x10/0x10
+ret_from_fork+0x31/0x40
+? __pfx_kthread+0x10/0x10
+ret_from_fork_asm+0x1a/0x30
+</TASK>
+---[ end trace 0000000000000000 ]---
+
+In __SK_REDIRECT, a more concise way is delaying the uncharging after sent
+bytes are finalized, and uncharge this value. When (ret < 0), we shall
+invoke sk_msg_free.
+
+Same thing happens in case __SK_DROP, when tosend is set to apply_bytes,
+we may miss uncharging (msg->sg.size - apply_bytes) bytes. The same
+warning will be reported in selftest.
+
+[...]
+468 case __SK_DROP:
+469 default:
+470 sk_msg_free_partial(sk, msg, tosend);
+471 sk_msg_apply_bytes(psock, tosend);
+472 *copied -= (tosend + delta);
+473 return -EACCES;
+[...]
+
+So instead of sk_msg_free_partial we can do sk_msg_free here.
+
+Fixes: 604326b41a6f ("bpf, sockmap: convert to generic sk_msg interface")
+Fixes: 8ec95b94716a ("bpf, sockmap: Fix the sk->sk_forward_alloc warning of sk_stream_kill_queues")
+Signed-off-by: Zijian Zhang <zijianzhang@bytedance.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Acked-by: John Fastabend <john.fastabend@gmail.com>
+Link: https://lore.kernel.org/bpf/20241016234838.3167769-3-zijianzhang@bytedance.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/sti/sti_mixer.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv4/tcp_bpf.c | 11 ++++-------
+ 1 file changed, 4 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/gpu/drm/sti/sti_mixer.c b/drivers/gpu/drm/sti/sti_mixer.c
-index 7e5f14646625b..06c1b81912f79 100644
---- a/drivers/gpu/drm/sti/sti_mixer.c
-+++ b/drivers/gpu/drm/sti/sti_mixer.c
-@@ -137,7 +137,7 @@ static void mixer_dbg_crb(struct seq_file *s, int val)
+diff --git a/net/ipv4/tcp_bpf.c b/net/ipv4/tcp_bpf.c
+index ade27d63655c2..85ae2c310148d 100644
+--- a/net/ipv4/tcp_bpf.c
++++ b/net/ipv4/tcp_bpf.c
+@@ -375,7 +375,6 @@ static int tcp_bpf_send_verdict(struct sock *sk, struct sk_psock *psock,
+ 			cork = true;
+ 			psock->cork = NULL;
+ 		}
+-		sk_msg_return(sk, msg, tosend);
+ 		release_sock(sk);
+ 
+ 		origsize = msg->sg.size;
+@@ -386,8 +385,9 @@ static int tcp_bpf_send_verdict(struct sock *sk, struct sk_psock *psock,
+ 			sock_put(sk_redir);
+ 
+ 		lock_sock(sk);
++		sk_mem_uncharge(sk, sent);
+ 		if (unlikely(ret < 0)) {
+-			int free = sk_msg_free_nocharge(sk, msg);
++			int free = sk_msg_free(sk, msg);
+ 
+ 			if (!cork)
+ 				*copied -= free;
+@@ -401,7 +401,7 @@ static int tcp_bpf_send_verdict(struct sock *sk, struct sk_psock *psock,
+ 		break;
+ 	case __SK_DROP:
+ 	default:
+-		sk_msg_free_partial(sk, msg, tosend);
++		sk_msg_free(sk, msg);
+ 		sk_msg_apply_bytes(psock, tosend);
+ 		*copied -= (tosend + delta);
+ 		return -EACCES;
+@@ -417,11 +417,8 @@ static int tcp_bpf_send_verdict(struct sock *sk, struct sk_psock *psock,
+ 		}
+ 		if (msg &&
+ 		    msg->sg.data[msg->sg.start].page_link &&
+-		    msg->sg.data[msg->sg.start].length) {
+-			if (eval == __SK_REDIRECT)
+-				sk_mem_charge(sk, tosend - sent);
++		    msg->sg.data[msg->sg.start].length)
+ 			goto more_data;
+-		}
  	}
+ 	return ret;
  }
- 
--static void mixer_dbg_mxn(struct seq_file *s, void *addr)
-+static void mixer_dbg_mxn(struct seq_file *s, void __iomem *addr)
- {
- 	int i;
- 
 -- 
 2.43.0
 
