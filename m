@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3949621504F;
-	Thu, 12 Dec 2024 15:12:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C823121504F;
+	Thu, 12 Dec 2024 15:12:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734016327; cv=none; b=HmbUBG8yYmeJcKMEvg/0xKCzBUDLIpuqfTrNVx5QjviOFDT/LlcFd38joaaJp/3HeuHvzS4AE3GeLKIgFQl+j52SXidsRCVMbpGyZcrrgWX7pkri6OoInJHa1hXoDn4SE16flMvRWz8m4SA+L5KIeRTX13gCqXR+wBF8qka7jDQ=
+	t=1734016330; cv=none; b=ICWPkEHo/+H1ob9i/ndSoSFG//UYSy57SFhIcfHNLDFZHFQ2UwY5Ab0+P4U2piR3Yf04letV792gn6pcOCH3m58OApVkfguRyyBoKkRGQwcU34/Ein7K5aQElGtx+eXxpAjmkwxHH3eDCs2A6vu8D1OMGXUOENsFD2ZnxkhpY4I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734016327; c=relaxed/simple;
-	bh=zMpPo/iL6JlyrrObBH7DXCkTX9upy+wGhrlj9g80tlM=;
+	s=arc-20240116; t=1734016330; c=relaxed/simple;
+	bh=MN9gVi7jp/3dkYnc4NZ1l1JgpG4aV/qUfQIqev0uGXA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ixl1djvwegabi0HyLg6exAGGsYbkPvym7qpZvbMg/sRvu0CBIDUs1q4EWQH/ZfiTD8SMkHyxT0FNZf7VKtuDbA619yfKRfRNCPrGcxPjZbhpkUxkAZzgAIbQW1fD/gEAEWTY1ccPPvoAIQvCrFQaWFjx9vUVnVpMl0CGMIdi/Sw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vJyB4Je3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LjcTCoE0NK8UR4nWR9O2O2zyLhVPAe+AxBgwKThrTA8gUm6PGszqlAGGI+s2+WVlHaEcLMXyblPReGFiG5dXRNNqDJlLy8bhMOLGk0CWvfRygxct8rfE88Zebfv/X6K1QgZbHR0pT8kt2pZUChoIpaItpsGgrg17U3eDzdAW0Cs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NLXiEk6a; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vJyB4Je3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EBC4C4CECE;
-	Thu, 12 Dec 2024 15:12:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NLXiEk6a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36227C4CECE;
+	Thu, 12 Dec 2024 15:12:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734016327;
-	bh=zMpPo/iL6JlyrrObBH7DXCkTX9upy+wGhrlj9g80tlM=;
+	s=korg; t=1734016330;
+	bh=MN9gVi7jp/3dkYnc4NZ1l1JgpG4aV/qUfQIqev0uGXA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vJyB4Je3gdzo+Id9mqQSDb1GqhY+8YXb67umf/eCKh8+s1qK6azcdTkCtmyTvzGdo
-	 SQUZhmvOhL8HnxGNK9MyDL1QyDPANnnh8RD/WTxUSU9s3p2kUY7JVbbGw/gQ4jK/cN
-	 Ir3g5Yv0iiTOdczAUMCTFaB1kjtxG1zhAnUqLrx4=
+	b=NLXiEk6ahUzu/9TI46Y/yNzOdCAzi55mYwf7T7X+cBbWcZdTEkzpLRLJe4pV+DiPs
+	 f7y9JkJcYcWci54cPZuOJi/tNJSl/ZxrebiQLU/+rjJRocFb3fbP4cOWTyDqO/LsOi
+	 o2AOGFRYE0X4BVcBle17SBpiaGKtfJFRZBiM4U4A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Yat Sin <David.YatSin@amd.com>,
-	Harish Kasiviswanathan <Harish.Kasiviswanathan@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.12 168/466] drm/amdkfd: hard-code cacheline for gc943,gc944
-Date: Thu, 12 Dec 2024 15:55:37 +0100
-Message-ID: <20241212144313.441280651@linuxfoundation.org>
+	Lyude Paul <lyude@redhat.com>,
+	Imre Deak <imre.deak@intel.com>
+Subject: [PATCH 6.12 169/466] drm/dp_mst: Fix MST sideband message body length check
+Date: Thu, 12 Dec 2024 15:55:38 +0100
+Message-ID: <20241212144313.478312977@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144306.641051666@linuxfoundation.org>
 References: <20241212144306.641051666@linuxfoundation.org>
@@ -51,63 +50,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Yat Sin <David.YatSin@amd.com>
+From: Imre Deak <imre.deak@intel.com>
 
-commit 55ed120dcfdde2478c3ebfa1c0ac4ed1e430053b upstream.
+commit bd2fccac61b40eaf08d9546acc9fef958bfe4763 upstream.
 
-Cacheline size is not available in IP discovery for gc943,gc944.
+Fix the MST sideband message body length check, which must be at least 1
+byte accounting for the message body CRC (aka message data CRC) at the
+end of the message.
 
-Signed-off-by: David Yat Sin <David.YatSin@amd.com>
-Reviewed-by: Harish Kasiviswanathan <Harish.Kasiviswanathan@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org
+This fixes a case where an MST branch device returns a header with a
+correct header CRC (indicating a correctly received body length), with
+the body length being incorrectly set to 0. This will later lead to a
+memory corruption in drm_dp_sideband_append_payload() and the following
+errors in dmesg:
+
+   UBSAN: array-index-out-of-bounds in drivers/gpu/drm/display/drm_dp_mst_topology.c:786:25
+   index -1 is out of range for type 'u8 [48]'
+   Call Trace:
+    drm_dp_sideband_append_payload+0x33d/0x350 [drm_display_helper]
+    drm_dp_get_one_sb_msg+0x3ce/0x5f0 [drm_display_helper]
+    drm_dp_mst_hpd_irq_handle_event+0xc8/0x1580 [drm_display_helper]
+
+   memcpy: detected field-spanning write (size 18446744073709551615) of single field "&msg->msg[msg->curlen]" at drivers/gpu/drm/display/drm_dp_mst_topology.c:791 (size 256)
+   Call Trace:
+    drm_dp_sideband_append_payload+0x324/0x350 [drm_display_helper]
+    drm_dp_get_one_sb_msg+0x3ce/0x5f0 [drm_display_helper]
+    drm_dp_mst_hpd_irq_handle_event+0xc8/0x1580 [drm_display_helper]
+
+Cc: <stable@vger.kernel.org>
+Cc: Lyude Paul <lyude@redhat.com>
+Reviewed-by: Lyude Paul <lyude@redhat.com>
+Signed-off-by: Imre Deak <imre.deak@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20241125205314.1725887-1-imre.deak@intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_crat.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/gpu/drm/display/drm_dp_mst_topology.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/gpu/drm/amd/amdkfd/kfd_crat.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_crat.c
-@@ -1509,6 +1509,8 @@ static int kfd_fill_gpu_cache_info_from_
- 	if (adev->gfx.config.gc_tcp_size_per_cu) {
- 		pcache_info[i].cache_size = adev->gfx.config.gc_tcp_size_per_cu;
- 		pcache_info[i].cache_level = 1;
-+		/* Cacheline size not available in IP discovery for gc943,gc944 */
-+		pcache_info[i].cache_line_size = 128;
- 		pcache_info[i].flags = (CRAT_CACHE_FLAGS_ENABLED |
- 					CRAT_CACHE_FLAGS_DATA_CACHE |
- 					CRAT_CACHE_FLAGS_SIMD_CACHE);
-@@ -1520,6 +1522,7 @@ static int kfd_fill_gpu_cache_info_from_
- 		pcache_info[i].cache_size =
- 			adev->gfx.config.gc_l1_instruction_cache_size_per_sqc;
- 		pcache_info[i].cache_level = 1;
-+		pcache_info[i].cache_line_size = 64;
- 		pcache_info[i].flags = (CRAT_CACHE_FLAGS_ENABLED |
- 					CRAT_CACHE_FLAGS_INST_CACHE |
- 					CRAT_CACHE_FLAGS_SIMD_CACHE);
-@@ -1530,6 +1533,7 @@ static int kfd_fill_gpu_cache_info_from_
- 	if (adev->gfx.config.gc_l1_data_cache_size_per_sqc) {
- 		pcache_info[i].cache_size = adev->gfx.config.gc_l1_data_cache_size_per_sqc;
- 		pcache_info[i].cache_level = 1;
-+		pcache_info[i].cache_line_size = 64;
- 		pcache_info[i].flags = (CRAT_CACHE_FLAGS_ENABLED |
- 					CRAT_CACHE_FLAGS_DATA_CACHE |
- 					CRAT_CACHE_FLAGS_SIMD_CACHE);
-@@ -1540,6 +1544,7 @@ static int kfd_fill_gpu_cache_info_from_
- 	if (adev->gfx.config.gc_tcc_size) {
- 		pcache_info[i].cache_size = adev->gfx.config.gc_tcc_size;
- 		pcache_info[i].cache_level = 2;
-+		pcache_info[i].cache_line_size = 128;
- 		pcache_info[i].flags = (CRAT_CACHE_FLAGS_ENABLED |
- 					CRAT_CACHE_FLAGS_DATA_CACHE |
- 					CRAT_CACHE_FLAGS_SIMD_CACHE);
-@@ -1550,6 +1555,7 @@ static int kfd_fill_gpu_cache_info_from_
- 	if (adev->gmc.mall_size) {
- 		pcache_info[i].cache_size = adev->gmc.mall_size / 1024;
- 		pcache_info[i].cache_level = 3;
-+		pcache_info[i].cache_line_size = 64;
- 		pcache_info[i].flags = (CRAT_CACHE_FLAGS_ENABLED |
- 					CRAT_CACHE_FLAGS_DATA_CACHE |
- 					CRAT_CACHE_FLAGS_SIMD_CACHE);
+--- a/drivers/gpu/drm/display/drm_dp_mst_topology.c
++++ b/drivers/gpu/drm/display/drm_dp_mst_topology.c
+@@ -320,6 +320,9 @@ static bool drm_dp_decode_sideband_msg_h
+ 	hdr->broadcast = (buf[idx] >> 7) & 0x1;
+ 	hdr->path_msg = (buf[idx] >> 6) & 0x1;
+ 	hdr->msg_len = buf[idx] & 0x3f;
++	if (hdr->msg_len < 1)		/* min space for body CRC */
++		return false;
++
+ 	idx++;
+ 	hdr->somt = (buf[idx] >> 7) & 0x1;
+ 	hdr->eomt = (buf[idx] >> 6) & 0x1;
 
 
