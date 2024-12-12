@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC07221578A;
-	Thu, 12 Dec 2024 15:14:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 566E62165F0;
+	Thu, 12 Dec 2024 15:14:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734016483; cv=none; b=mPuwj/gFn3BfbXTTkx6IXnCmXF3RYUrp52TxYBfDWgWh5nBf/4rhTXW8B1ESB7Mjxk7lfJHHfIyKhW+2aX8g6nLn1SuIgPGHBvcMyaG26twvspUTD5pF7A2jO98k0NN7KG/aC0HBdC1tdoHUzy/2GO2gvjf54WW756o0k/1soqo=
+	t=1734016487; cv=none; b=FUhGBV1WvAf2gHQ3U7FfKxnYDs/ZOqVvXfr1iuBgf5CkpgdyeCKUIEAEZAvbup21HSvSSpRouz83VUca4qoTqm91qSRcItgsEqz6AcoL6+h2wlT/EH4lkUIEcgbDHEdkbxuF72OtR+ukBHPNuXWD2zFFQKrywy/tvsTpe+78yds=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734016483; c=relaxed/simple;
-	bh=rHOmSHKtj7Fhf6ocDBQFZyzwf7NQ+HJxWafr2ha9S0o=;
+	s=arc-20240116; t=1734016487; c=relaxed/simple;
+	bh=qf0YsCJjncRWm6POVkpbfGAVEdkAsfLRIk5yNinUc7M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cLvPOq1POnUER8qqQ0QsFdkq/bY+BwFoOrlz9iWiJ4orGAI7602BX9NJOC/WIMjfHOA5alwfqi0luJczOxKxMrT/GNGtXQWMtG/UAH4NrpnkBJ1ZW67qqWx7z74jwPYRDU6CUq978ZSLkOnzD4BCRoE7OnAi6TNkk2ffhSsQIXY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=manFJElg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mlmBTLfLnm4Ucq3lhWKRVcZiKVQ42lIjcLfXvrqnUOcwKKbT++ud4yjd29GyjdRCwerSviYTkLvl8Dz1amsQPWXiP+hOgrAq5ESIday9ZnjHRPu4hgz4MArMDjxziOA9Tx4LYZFKhSCbpPZsvA/5oK80vKXr5mHJlY4UyyS7XcI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iYTKiJHR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="manFJElg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17BECC4CECE;
-	Thu, 12 Dec 2024 15:14:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iYTKiJHR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79FB6C4CED7;
+	Thu, 12 Dec 2024 15:14:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734016483;
-	bh=rHOmSHKtj7Fhf6ocDBQFZyzwf7NQ+HJxWafr2ha9S0o=;
+	s=korg; t=1734016487;
+	bh=qf0YsCJjncRWm6POVkpbfGAVEdkAsfLRIk5yNinUc7M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=manFJElg4zS2FsUVQW/tBWJPusTC7KEtt88co9eQfyD/xEiYyyu9ICV7BqQndblA9
-	 QOqqOXBT/uMxnnNsAM3wlL9ym74C8xxrY8QOP5r3PYwNkWQtE0VzoKMT9+UZ5hj6By
-	 3dfutRHx2ZO0ZYiajRW5MBOI/i1+OB9mhl8RJ4IM=
+	b=iYTKiJHR8WfDLErGe+DZE7qolhYGzEdw5Yse5PIq42JWBLlJj6eVf9Ici+FZpB5Bz
+	 cCys+Itqf/Chcm2rQbXQZF2MMC5bXb5rihbFNo78+asR8etWdub8S5wChidCLhrhK/
+	 geClmoKKvzRWcnO0D3sB3tMawRb6PqR583mSHDNw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Taylor <ade@hohum.me.uk>,
-	Gary Guo <gary@garyguo.net>,
-	Benno Lossin <benno.lossin@proton.me>,
-	Alice Ryhl <aliceryhl@google.com>,
-	Miguel Ojeda <ojeda@kernel.org>
-Subject: [PATCH 6.12 211/466] rust: enable arbitrary_self_types and remove `Receiver`
-Date: Thu, 12 Dec 2024 15:56:20 +0100
-Message-ID: <20241212144315.125422372@linuxfoundation.org>
+	Gerd Bayer <gbayer@linux.ibm.com>,
+	Niklas Schnelle <schnelle@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 212/466] s390/pci: Sort PCI functions prior to creating virtual busses
+Date: Thu, 12 Dec 2024 15:56:21 +0100
+Message-ID: <20241212144315.164355186@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144306.641051666@linuxfoundation.org>
 References: <20241212144306.641051666@linuxfoundation.org>
@@ -53,110 +52,283 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gary Guo <gary@garyguo.net>
+From: Niklas Schnelle <schnelle@linux.ibm.com>
 
-commit c95bbb59a9b22f9b838b15d28319185c1c884329 upstream.
+[ Upstream commit 0467cdde8c4320bbfdb31a8cff1277b202f677fc ]
 
-The term "receiver" means that a type can be used as the type of `self`,
-and thus enables method call syntax `foo.bar()` instead of
-`Foo::bar(foo)`. Stable Rust as of today (1.81) enables a limited
-selection of types (primitives and types in std, e.g. `Box` and `Arc`)
-to be used as receivers, while custom types cannot.
+Instead of relying on the observed but not architected firmware behavior
+that PCI functions from the same card are listed in ascending RID order
+in clp_list_pci() ensure this by sorting. To allow for sorting separate
+the initial clp_list_pci() and creation of the virtual PCI busses.
 
-We want the kernel `Arc` type to have the same functionality as the Rust
-std `Arc`, so we use the `Receiver` trait (gated behind `receiver_trait`
-unstable feature) to gain the functionality.
+Note that fundamentally in our per-PCI function hotplug design non RID
+order of discovery is still possible. For example when the two PFs of
+a two port NIC are hotplugged after initial boot and in descending RID
+order. In this case the virtual PCI bus would be created by the second
+PF using that PF's UID as domain number instead of that of the first PF.
+Thus the domain number would then change from the UID of the second PF
+to that of the first PF on reboot but there is really nothing we can do
+about that since changing domain numbers at runtime seems even worse.
+This only impacts the domain number as the RIDs are consistent and thus
+even with just the second PF visible it will show up in the correct
+position on the virtual bus.
 
-The `arbitrary_self_types` RFC [1] (tracking issue [2]) is accepted and
-it will allow all types that implement a new `Receiver` trait (different
-from today's unstable trait) to be used as receivers. This trait will be
-automatically implemented for all `Deref` types, which include our `Arc`
-type, so we no longer have to opt-in to be used as receiver. To prepare
-us for the change, remove the `Receiver` implementation and the
-associated feature. To still allow `Arc` and others to be used as method
-receivers, turn on `arbitrary_self_types` feature instead.
-
-This feature gate is introduced in 1.23.0. It used to enable both
-`Deref` types and raw pointer types to be used as receivers, but the
-latter is now split into a different feature gate in Rust 1.83 nightly.
-We do not need receivers on raw pointers so this change would not affect
-us and usage of `arbitrary_self_types` feature would work for all Rust
-versions that we support (>=1.78).
-
-Cc: Adrian Taylor <ade@hohum.me.uk>
-Link: https://github.com/rust-lang/rfcs/pull/3519 [1]
-Link: https://github.com/rust-lang/rust/issues/44874 [2]
-Signed-off-by: Gary Guo <gary@garyguo.net>
-Reviewed-by: Benno Lossin <benno.lossin@proton.me>
-Reviewed-by: Alice Ryhl <aliceryhl@google.com>
-Link: https://lore.kernel.org/r/20240915132734.1653004-1-gary@garyguo.net
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Gerd Bayer <gbayer@linux.ibm.com>
+Signed-off-by: Niklas Schnelle <schnelle@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- rust/kernel/lib.rs      |    2 +-
- rust/kernel/list/arc.rs |    3 ---
- rust/kernel/sync/arc.rs |    6 ------
- scripts/Makefile.build  |    2 +-
- 4 files changed, 2 insertions(+), 11 deletions(-)
+ arch/s390/include/asm/pci.h |  5 ++-
+ arch/s390/pci/pci.c         | 69 ++++++++++++++++++++++++++++++++-----
+ arch/s390/pci/pci_clp.c     | 12 ++++---
+ arch/s390/pci/pci_event.c   | 13 ++++---
+ 4 files changed, 82 insertions(+), 17 deletions(-)
 
---- a/rust/kernel/lib.rs
-+++ b/rust/kernel/lib.rs
-@@ -12,10 +12,10 @@
- //! do so first instead of bypassing this crate.
+diff --git a/arch/s390/include/asm/pci.h b/arch/s390/include/asm/pci.h
+index 30b20ce9a7003..b10801fa73569 100644
+--- a/arch/s390/include/asm/pci.h
++++ b/arch/s390/include/asm/pci.h
+@@ -129,6 +129,7 @@ struct zpci_dev {
+ 	u16		vfn;		/* virtual function number */
+ 	u16		pchid;		/* physical channel ID */
+ 	u16		maxstbl;	/* Maximum store block size */
++	u16		rid;		/* RID as supplied by firmware */
+ 	u8		pfgid;		/* function group ID */
+ 	u8		pft;		/* pci function type */
+ 	u8		port;
+@@ -210,12 +211,14 @@ extern struct airq_iv *zpci_aif_sbv;
+ ----------------------------------------------------------------------------- */
+ /* Base stuff */
+ struct zpci_dev *zpci_create_device(u32 fid, u32 fh, enum zpci_state state);
++int zpci_add_device(struct zpci_dev *zdev);
+ int zpci_enable_device(struct zpci_dev *);
+ int zpci_disable_device(struct zpci_dev *);
+ int zpci_scan_configured_device(struct zpci_dev *zdev, u32 fh);
+ int zpci_deconfigure_device(struct zpci_dev *zdev);
+ void zpci_device_reserved(struct zpci_dev *zdev);
+ bool zpci_is_device_configured(struct zpci_dev *zdev);
++int zpci_scan_devices(void);
  
- #![no_std]
-+#![feature(arbitrary_self_types)]
- #![feature(coerce_unsized)]
- #![feature(dispatch_from_dyn)]
- #![feature(new_uninit)]
--#![feature(receiver_trait)]
- #![feature(unsize)]
+ int zpci_hot_reset_device(struct zpci_dev *zdev);
+ int zpci_register_ioat(struct zpci_dev *, u8, u64, u64, u64, u8 *);
+@@ -225,7 +228,7 @@ void zpci_update_fh(struct zpci_dev *zdev, u32 fh);
  
- // Ensure conditional compilation based on the kernel configuration works;
---- a/rust/kernel/list/arc.rs
-+++ b/rust/kernel/list/arc.rs
-@@ -441,9 +441,6 @@ where
-     }
+ /* CLP */
+ int clp_setup_writeback_mio(void);
+-int clp_scan_pci_devices(void);
++int clp_scan_pci_devices(struct list_head *scan_list);
+ int clp_query_pci_fn(struct zpci_dev *zdev);
+ int clp_enable_fh(struct zpci_dev *zdev, u32 *fh, u8 nr_dma_as);
+ int clp_disable_fh(struct zpci_dev *zdev, u32 *fh);
+diff --git a/arch/s390/pci/pci.c b/arch/s390/pci/pci.c
+index 635fd8f2acbaa..2a5299888ca86 100644
+--- a/arch/s390/pci/pci.c
++++ b/arch/s390/pci/pci.c
+@@ -29,6 +29,7 @@
+ #include <linux/pci.h>
+ #include <linux/printk.h>
+ #include <linux/lockdep.h>
++#include <linux/list_sort.h>
+ 
+ #include <asm/isc.h>
+ #include <asm/airq.h>
+@@ -788,7 +789,6 @@ struct zpci_dev *zpci_create_device(u32 fid, u32 fh, enum zpci_state state)
+ 	struct zpci_dev *zdev;
+ 	int rc;
+ 
+-	zpci_dbg(1, "add fid:%x, fh:%x, c:%d\n", fid, fh, state);
+ 	zdev = kzalloc(sizeof(*zdev), GFP_KERNEL);
+ 	if (!zdev)
+ 		return ERR_PTR(-ENOMEM);
+@@ -808,6 +808,19 @@ struct zpci_dev *zpci_create_device(u32 fid, u32 fh, enum zpci_state state)
+ 	mutex_init(&zdev->fmb_lock);
+ 	mutex_init(&zdev->kzdev_lock);
+ 
++	return zdev;
++
++error:
++	zpci_dbg(0, "crt fid:%x, rc:%d\n", fid, rc);
++	kfree(zdev);
++	return ERR_PTR(rc);
++}
++
++int zpci_add_device(struct zpci_dev *zdev)
++{
++	int rc;
++
++	zpci_dbg(1, "add fid:%x, fh:%x, c:%d\n", zdev->fid, zdev->fh, zdev->state);
+ 	rc = zpci_init_iommu(zdev);
+ 	if (rc)
+ 		goto error;
+@@ -819,15 +832,13 @@ struct zpci_dev *zpci_create_device(u32 fid, u32 fh, enum zpci_state state)
+ 	spin_lock(&zpci_list_lock);
+ 	list_add_tail(&zdev->entry, &zpci_list);
+ 	spin_unlock(&zpci_list_lock);
+-
+-	return zdev;
++	return 0;
+ 
+ error_destroy_iommu:
+ 	zpci_destroy_iommu(zdev);
+ error:
+-	zpci_dbg(0, "add fid:%x, rc:%d\n", fid, rc);
+-	kfree(zdev);
+-	return ERR_PTR(rc);
++	zpci_dbg(0, "add fid:%x, rc:%d\n", zdev->fid, rc);
++	return rc;
  }
  
--// This is to allow [`ListArc`] (and variants) to be used as the type of `self`.
--impl<T, const ID: u64> core::ops::Receiver for ListArc<T, ID> where T: ListArcSafe<ID> + ?Sized {}
--
- // This is to allow coercion from `ListArc<T>` to `ListArc<U>` if `T` can be converted to the
- // dynamically-sized type (DST) `U`.
- impl<T, U, const ID: u64> core::ops::CoerceUnsized<ListArc<U, ID>> for ListArc<T, ID>
---- a/rust/kernel/sync/arc.rs
-+++ b/rust/kernel/sync/arc.rs
-@@ -171,9 +171,6 @@ impl<T: ?Sized> ArcInner<T> {
-     }
+ bool zpci_is_device_configured(struct zpci_dev *zdev)
+@@ -1069,6 +1080,49 @@ bool zpci_is_enabled(void)
+ 	return s390_pci_initialized;
  }
  
--// This is to allow [`Arc`] (and variants) to be used as the type of `self`.
--impl<T: ?Sized> core::ops::Receiver for Arc<T> {}
--
- // This is to allow coercion from `Arc<T>` to `Arc<U>` if `T` can be converted to the
- // dynamically-sized type (DST) `U`.
- impl<T: ?Sized + Unsize<U>, U: ?Sized> core::ops::CoerceUnsized<Arc<U>> for Arc<T> {}
-@@ -480,9 +477,6 @@ pub struct ArcBorrow<'a, T: ?Sized + 'a>
-     _p: PhantomData<&'a ()>,
++static int zpci_cmp_rid(void *priv, const struct list_head *a,
++			const struct list_head *b)
++{
++	struct zpci_dev *za = container_of(a, struct zpci_dev, entry);
++	struct zpci_dev *zb = container_of(b, struct zpci_dev, entry);
++
++	/*
++	 * PCI functions without RID available maintain original order
++	 * between themselves but sort before those with RID.
++	 */
++	if (za->rid == zb->rid)
++		return za->rid_available > zb->rid_available;
++	/*
++	 * PCI functions with RID sort by RID ascending.
++	 */
++	return za->rid > zb->rid;
++}
++
++static void zpci_add_devices(struct list_head *scan_list)
++{
++	struct zpci_dev *zdev, *tmp;
++
++	list_sort(NULL, scan_list, &zpci_cmp_rid);
++	list_for_each_entry_safe(zdev, tmp, scan_list, entry) {
++		list_del_init(&zdev->entry);
++		zpci_add_device(zdev);
++	}
++}
++
++int zpci_scan_devices(void)
++{
++	LIST_HEAD(scan_list);
++	int rc;
++
++	rc = clp_scan_pci_devices(&scan_list);
++	if (rc)
++		return rc;
++
++	zpci_add_devices(&scan_list);
++	zpci_bus_scan_busses();
++	return 0;
++}
++
+ static int __init pci_base_init(void)
+ {
+ 	int rc;
+@@ -1098,10 +1152,9 @@ static int __init pci_base_init(void)
+ 	if (rc)
+ 		goto out_irq;
+ 
+-	rc = clp_scan_pci_devices();
++	rc = zpci_scan_devices();
+ 	if (rc)
+ 		goto out_find;
+-	zpci_bus_scan_busses();
+ 
+ 	s390_pci_initialized = 1;
+ 	return 0;
+diff --git a/arch/s390/pci/pci_clp.c b/arch/s390/pci/pci_clp.c
+index 6f55a59a08711..f7430086e9739 100644
+--- a/arch/s390/pci/pci_clp.c
++++ b/arch/s390/pci/pci_clp.c
+@@ -164,8 +164,10 @@ static int clp_store_query_pci_fn(struct zpci_dev *zdev,
+ 	zdev->port = response->port;
+ 	zdev->uid = response->uid;
+ 	zdev->fmb_length = sizeof(u32) * response->fmb_len;
+-	zdev->rid_available = response->rid_avail;
+ 	zdev->is_physfn = response->is_physfn;
++	zdev->rid_available = response->rid_avail;
++	if (zdev->rid_available)
++		zdev->rid = response->rid;
+ 	if (!s390_pci_no_rid && zdev->rid_available)
+ 		zdev->devfn = response->rid & ZPCI_RID_MASK_DEVFN;
+ 
+@@ -407,6 +409,7 @@ static int clp_find_pci(struct clp_req_rsp_list_pci *rrb, u32 fid,
+ 
+ static void __clp_add(struct clp_fh_list_entry *entry, void *data)
+ {
++	struct list_head *scan_list = data;
+ 	struct zpci_dev *zdev;
+ 
+ 	if (!entry->vendor_id)
+@@ -417,10 +420,11 @@ static void __clp_add(struct clp_fh_list_entry *entry, void *data)
+ 		zpci_zdev_put(zdev);
+ 		return;
+ 	}
+-	zpci_create_device(entry->fid, entry->fh, entry->config_state);
++	zdev = zpci_create_device(entry->fid, entry->fh, entry->config_state);
++	list_add_tail(&zdev->entry, scan_list);
  }
  
--// This is to allow [`ArcBorrow`] (and variants) to be used as the type of `self`.
--impl<T: ?Sized> core::ops::Receiver for ArcBorrow<'_, T> {}
--
- // This is to allow `ArcBorrow<U>` to be dispatched on when `ArcBorrow<T>` can be coerced into
- // `ArcBorrow<U>`.
- impl<T: ?Sized + Unsize<U>, U: ?Sized> core::ops::DispatchFromDyn<ArcBorrow<'_, U>>
---- a/scripts/Makefile.build
-+++ b/scripts/Makefile.build
-@@ -248,7 +248,7 @@ $(obj)/%.lst: $(obj)/%.c FORCE
- # Compile Rust sources (.rs)
- # ---------------------------------------------------------------------------
+-int clp_scan_pci_devices(void)
++int clp_scan_pci_devices(struct list_head *scan_list)
+ {
+ 	struct clp_req_rsp_list_pci *rrb;
+ 	int rc;
+@@ -429,7 +433,7 @@ int clp_scan_pci_devices(void)
+ 	if (!rrb)
+ 		return -ENOMEM;
  
--rust_allowed_features := new_uninit
-+rust_allowed_features := arbitrary_self_types,new_uninit
+-	rc = clp_list_pci(rrb, NULL, __clp_add);
++	rc = clp_list_pci(rrb, scan_list, __clp_add);
  
- # `--out-dir` is required to avoid temporaries being created by `rustc` in the
- # current working directory, which may be not accessible in the out-of-tree
+ 	clp_free_block(rrb);
+ 	return rc;
+diff --git a/arch/s390/pci/pci_event.c b/arch/s390/pci/pci_event.c
+index d4f19d33914cb..47f934f4e828e 100644
+--- a/arch/s390/pci/pci_event.c
++++ b/arch/s390/pci/pci_event.c
+@@ -340,6 +340,7 @@ static void __zpci_event_availability(struct zpci_ccdf_avail *ccdf)
+ 			zdev = zpci_create_device(ccdf->fid, ccdf->fh, ZPCI_FN_STATE_CONFIGURED);
+ 			if (IS_ERR(zdev))
+ 				break;
++			zpci_add_device(zdev);
+ 		} else {
+ 			/* the configuration request may be stale */
+ 			if (zdev->state != ZPCI_FN_STATE_STANDBY)
+@@ -349,10 +350,14 @@ static void __zpci_event_availability(struct zpci_ccdf_avail *ccdf)
+ 		zpci_scan_configured_device(zdev, ccdf->fh);
+ 		break;
+ 	case 0x0302: /* Reserved -> Standby */
+-		if (!zdev)
+-			zpci_create_device(ccdf->fid, ccdf->fh, ZPCI_FN_STATE_STANDBY);
+-		else
++		if (!zdev) {
++			zdev = zpci_create_device(ccdf->fid, ccdf->fh, ZPCI_FN_STATE_STANDBY);
++			if (IS_ERR(zdev))
++				break;
++			zpci_add_device(zdev);
++		} else {
+ 			zpci_update_fh(zdev, ccdf->fh);
++		}
+ 		break;
+ 	case 0x0303: /* Deconfiguration requested */
+ 		if (zdev) {
+@@ -381,7 +386,7 @@ static void __zpci_event_availability(struct zpci_ccdf_avail *ccdf)
+ 		break;
+ 	case 0x0306: /* 0x308 or 0x302 for multiple devices */
+ 		zpci_remove_reserved_devices();
+-		clp_scan_pci_devices();
++		zpci_scan_devices();
+ 		break;
+ 	case 0x0308: /* Standby -> Reserved */
+ 		if (!zdev)
+-- 
+2.43.0
+
 
 
