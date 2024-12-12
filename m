@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 891A62156FF;
-	Thu, 12 Dec 2024 15:05:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEDBD2EAE5;
+	Thu, 12 Dec 2024 15:05:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734015940; cv=none; b=n9eansoLHg5ZmhTh9KxihcDd+G3U4T06RilUaH2q+hCG9v251KpOwQRPk0Wpr8yiLozSJQJuxZVCF3ov05zfUDW2nKj4zbWTqenv5xV+0CU04cKJ2GUop7YSKkZJBl9mZvhFXWr+R18eBgoADgypqW2cXSpncEwUmBFP7/9GFcU=
+	t=1734015943; cv=none; b=TQI3YV7oD4fctycvUpdPaxI/l3RdZhFwTC2Boe5tloEq/I9ePY0gOoZARtk78Z9gsPqq3yWkR8M1EqX6b64+/Wnlgfv38lKhenxn694lrVlMQ0qbSvzCvOIwZTTUw/T+3ymRs7S4ZX7wZKoVUrH8zH0C/C7O7HY9S6W09QSym8Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734015940; c=relaxed/simple;
-	bh=YlIq5ter9dMRQziWC5IE3jH9833ELXyYR9MIVNP9+aw=;
+	s=arc-20240116; t=1734015943; c=relaxed/simple;
+	bh=KVfr6ueNBobB2Yq1YZJtc1qXX+8xtR1OGs6cA5kJFV8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IDLvPzx3AihdFCFaiWgIS9vPnrbnYsNtxzWw22gFZFp2dsTYnBB5mz1OrW4E6or05Zb8QFM6wIvgqfX317/D9ZZfNhoW94IiT+RfF3T6kAukMrfb42TNlqlVw2r3n4e+i0O2W8/qoLf6oYooOpdDHog7lGPY6HQtk1Ep8xhpe70=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y8OWeIx6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=H0lboTq7/px7uErQ4Jl+bjVOHHY/V7zupSjSX5k509x/vB9YqcOoTUrHLo2Hw6PcHGfrwDNMFP++fYMQwZABcgdJzmCrdWoUWKTZNF7I890QJhmui4rrjWDBfVXT2fSfzRbdzQacTVzkzZwC1vxcAcejQO6sr4akHmbzpf0sUEU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YYHsNdqh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y8OWeIx6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA884C4CECE;
-	Thu, 12 Dec 2024 15:05:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YYHsNdqh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AF60C4CECE;
+	Thu, 12 Dec 2024 15:05:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734015940;
-	bh=YlIq5ter9dMRQziWC5IE3jH9833ELXyYR9MIVNP9+aw=;
+	s=korg; t=1734015943;
+	bh=KVfr6ueNBobB2Yq1YZJtc1qXX+8xtR1OGs6cA5kJFV8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y8OWeIx6u2OPmkMU9d936kTKqrWlgIafNF/THD7a5oTw6RrcTVeOEYYrMHZ2OZFiy
-	 Cuzgu5/fnjoZn25+HK2YQjVt7qYLrDXrJERuTEGB3iTzF9Ixx97vJ710Gep6BTfNw7
-	 ayIiZ73mMeml2TZzmU7+qmIi/ahw00BgCX0PS72E=
+	b=YYHsNdqhfjOmUm7vxxc4dIDZJUnvDQLok/v1VHk7zk0yx9phJzQ1W0ZbQLs0v/NGV
+	 EPITAgDNSGfvvrruH21VRqzpofIqSmIFlxSmne1jlM9I7NX7ERSPR9dGXCMJ5R6S40
+	 AYNVSUbsujUDpwwvA62+b45CLNp/i5zjcB/wb324=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amir Mohammadi <amiremohamadi@yahoo.com>,
-	Quentin Monnet <qmo@kernel.org>,
-	John Fastabend <john.fastabend@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	kernel test robot <lkp@intel.com>,
+	Pei Xiao <xiaopei01@kylinos.cn>,
+	Raphael Gallais-Pou <rgallaispou@gmail.com>,
+	Raphael Gallais-Pou <raphael.gallais-pou@foss.st.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 086/466] bpftool: fix potential NULL pointer dereferencing in prog_dump()
-Date: Thu, 12 Dec 2024 15:54:15 +0100
-Message-ID: <20241212144310.217662046@linuxfoundation.org>
+Subject: [PATCH 6.12 087/466] drm/sti: Add __iomem for mixer_dbg_mxns parameter
+Date: Thu, 12 Dec 2024 15:54:16 +0100
+Message-ID: <20241212144310.256042263@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144306.641051666@linuxfoundation.org>
 References: <20241212144306.641051666@linuxfoundation.org>
@@ -53,51 +53,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Amir Mohammadi <amirmohammadi1999.am@gmail.com>
+From: Pei Xiao <xiaopei01@kylinos.cn>
 
-[ Upstream commit ef3ba8c258ee368a5343fa9329df85b4bcb9e8b5 ]
+[ Upstream commit 86e8f94789dd6f3e705bfa821e1e416f97a2f863 ]
 
-A NULL pointer dereference could occur if ksyms
-is not properly checked before usage in the prog_dump() function.
+Sparse complains about incorrect type in argument 1.
+expected void const volatile  __iomem *ptr but got void *.
+so modify mixer_dbg_mxn's addr parameter.
 
-Fixes: b053b439b72a ("bpf: libbpf: bpftool: Print bpf_line_info during prog dump")
-Signed-off-by: Amir Mohammadi <amiremohamadi@yahoo.com>
-Reviewed-by: Quentin Monnet <qmo@kernel.org>
-Acked-by: John Fastabend <john.fastabend@gmail.com>
-Link: https://lore.kernel.org/r/20241121083413.7214-1-amiremohamadi@yahoo.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202411191809.6V3c826r-lkp@intel.com/
+Fixes: a5f81078a56c ("drm/sti: add debugfs entries for MIXER crtc")
+Signed-off-by: Pei Xiao <xiaopei01@kylinos.cn>
+Acked-by: Raphael Gallais-Pou <rgallaispou@gmail.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/c28f0dcb6a4526721d83ba1f659bba30564d3d54.1732087094.git.xiaopei01@kylinos.cn
+Signed-off-by: Raphael Gallais-Pou <raphael.gallais-pou@foss.st.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/bpf/bpftool/prog.c | 17 ++++++++++++-----
- 1 file changed, 12 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/sti/sti_mixer.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/bpf/bpftool/prog.c b/tools/bpf/bpftool/prog.c
-index 2ff949ea82fa6..e71be67f1d865 100644
---- a/tools/bpf/bpftool/prog.c
-+++ b/tools/bpf/bpftool/prog.c
-@@ -822,11 +822,18 @@ prog_dump(struct bpf_prog_info *info, enum dump_mode mode,
- 					printf("%s:\n", sym_name);
- 				}
+diff --git a/drivers/gpu/drm/sti/sti_mixer.c b/drivers/gpu/drm/sti/sti_mixer.c
+index 7e5f14646625b..06c1b81912f79 100644
+--- a/drivers/gpu/drm/sti/sti_mixer.c
++++ b/drivers/gpu/drm/sti/sti_mixer.c
+@@ -137,7 +137,7 @@ static void mixer_dbg_crb(struct seq_file *s, int val)
+ 	}
+ }
  
--				if (disasm_print_insn(img, lens[i], opcodes,
--						      name, disasm_opt, btf,
--						      prog_linfo, ksyms[i], i,
--						      linum))
--					goto exit_free;
-+				if (ksyms) {
-+					if (disasm_print_insn(img, lens[i], opcodes,
-+							      name, disasm_opt, btf,
-+							      prog_linfo, ksyms[i], i,
-+							      linum))
-+						goto exit_free;
-+				} else {
-+					if (disasm_print_insn(img, lens[i], opcodes,
-+							      name, disasm_opt, btf,
-+							      NULL, 0, 0, false))
-+						goto exit_free;
-+				}
- 
- 				img += lens[i];
+-static void mixer_dbg_mxn(struct seq_file *s, void *addr)
++static void mixer_dbg_mxn(struct seq_file *s, void __iomem *addr)
+ {
+ 	int i;
  
 -- 
 2.43.0
