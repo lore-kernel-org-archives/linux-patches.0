@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFB806F2FE;
-	Thu, 12 Dec 2024 15:39:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D695E6F2FE;
+	Thu, 12 Dec 2024 15:39:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734017986; cv=none; b=Ff9X+h3ghwNl7n+N32BFDr52/IefX3dz76XjiqvJgArJN0uqqm5GbHexsK56uTJywZV+MrsNl/kgREAHqIpXic7XwCQ19nQy4Wu+h05lSmt+J6aYQ71FA/AUQPuzHhaYx5lFfR5noxzOSFdcVIkKuJPHQNBftfB7dcQv6/4HYsg=
+	t=1734017990; cv=none; b=H8Zghrfa65/crBrJjDtsMXWmeQuwK0ynD90o2vty/MIJOoRymaymGrD/HnZOS80XBuN9hwE8l/XnqkMhGgc2EILjT+xIqwU2MNMP4s/0VMdgxfxxX1nXQuVyKSNqKC9NvCSzrHnD3kpW6h/5qvjkWVi2wu/XL6yAWGgj3SZzfYg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734017986; c=relaxed/simple;
-	bh=6/HOC1tZavkIT+IUwhmQPwbl6txPm3leAsWR65L+ZKo=;
+	s=arc-20240116; t=1734017990; c=relaxed/simple;
+	bh=p3VlkFzMXMXWWR6NJbYiQdDC5pdJj4MLNV+znOY5N0Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=niK72WuSXuLOeCCq2r7LaoN0JCFF5rgdGHwewE/WEddiwdFMg0SysiVuQn8uEWyZCeYulNDqo/JwiakYmYqlk+Km2d6oGhseRdkQI9JuOsWrjDHsM/MFlynctOVgjXsz55vm63iz/DO4hvtPk1RmNyroUnf0gF468EIay6Q5zng=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IPeaMHhC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PzQ99ravhLJJv51Hjp9r6ItObghQgeCoK1QxU+m6KGBAuNTwmmex8hUQb7YI6qdNLz/j2KaU2nhYf/4AHSVO5Gz1YNmi67DXWP9thZ12GPwK52ZkPuNdhnC4Q57e6XtWjrfKsvw9xgYJa2HZnz95l5nmuvPiuXLmE/S55SsKKHs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D1A9Inx5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IPeaMHhC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23914C4CED4;
-	Thu, 12 Dec 2024 15:39:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D1A9Inx5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22126C4CECE;
+	Thu, 12 Dec 2024 15:39:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734017986;
-	bh=6/HOC1tZavkIT+IUwhmQPwbl6txPm3leAsWR65L+ZKo=;
+	s=korg; t=1734017990;
+	bh=p3VlkFzMXMXWWR6NJbYiQdDC5pdJj4MLNV+znOY5N0Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IPeaMHhCEvMc3Zz4y9eYEWw6LmSRhHADrbnPDuKApUvEe8/cAoEa3JJrGokmE4YRL
-	 ZttgjAqig6o5Dl2VxpMqfwCjwX/JxsoHx0jqGjKkIt5wXuUnzkxH61cBCQir4fHmtG
-	 DYe5OZUuePs/YTCjQ1ZHsfXzmS/EMH7S7ZRk95RE=
+	b=D1A9Inx5AjbX943J1NiK6dLJVg8UwzGbT8IQjqQctyz5FighBoY5De1NEdCdWlriN
+	 fkcKu0BB6mseArE78KAbJNUqYOYa89nelOXGru7yeNUfAxJspQcB4hoFwkdNvoDMeQ
+	 me6jXTQGPv02eD9/Z2xlm709MFTNLCCJwS5bpcU0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Lyude Paul <lyude@redhat.com>,
 	Imre Deak <imre.deak@intel.com>
-Subject: [PATCH 6.6 166/356] drm/dp_mst: Fix MST sideband message body length check
-Date: Thu, 12 Dec 2024 15:58:05 +0100
-Message-ID: <20241212144251.195017625@linuxfoundation.org>
+Subject: [PATCH 6.6 167/356] drm/dp_mst: Verify request type in the corresponding down message reply
+Date: Thu, 12 Dec 2024 15:58:06 +0100
+Message-ID: <20241212144251.233989908@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144244.601729511@linuxfoundation.org>
 References: <20241212144244.601729511@linuxfoundation.org>
@@ -52,52 +52,75 @@ Content-Transfer-Encoding: 8bit
 
 From: Imre Deak <imre.deak@intel.com>
 
-commit bd2fccac61b40eaf08d9546acc9fef958bfe4763 upstream.
+commit 4d49e77a973d3b5d1881663c3f122906a0702940 upstream.
 
-Fix the MST sideband message body length check, which must be at least 1
-byte accounting for the message body CRC (aka message data CRC) at the
-end of the message.
+After receiving the response for an MST down request message, the
+response should be accepted/parsed only if the response type matches
+that of the request. Ensure this by checking if the request type code
+stored both in the request and the reply match, dropping the reply in
+case of a mismatch.
 
-This fixes a case where an MST branch device returns a header with a
-correct header CRC (indicating a correctly received body length), with
-the body length being incorrectly set to 0. This will later lead to a
-memory corruption in drm_dp_sideband_append_payload() and the following
-errors in dmesg:
+This fixes the topology detection for an MST hub, as described in the
+Closes link below, where the hub sends an incorrect reply message after
+a CLEAR_PAYLOAD_TABLE -> LINK_ADDRESS down request message sequence.
 
-   UBSAN: array-index-out-of-bounds in drivers/gpu/drm/display/drm_dp_mst_topology.c:786:25
-   index -1 is out of range for type 'u8 [48]'
-   Call Trace:
-    drm_dp_sideband_append_payload+0x33d/0x350 [drm_display_helper]
-    drm_dp_get_one_sb_msg+0x3ce/0x5f0 [drm_display_helper]
-    drm_dp_mst_hpd_irq_handle_event+0xc8/0x1580 [drm_display_helper]
-
-   memcpy: detected field-spanning write (size 18446744073709551615) of single field "&msg->msg[msg->curlen]" at drivers/gpu/drm/display/drm_dp_mst_topology.c:791 (size 256)
-   Call Trace:
-    drm_dp_sideband_append_payload+0x324/0x350 [drm_display_helper]
-    drm_dp_get_one_sb_msg+0x3ce/0x5f0 [drm_display_helper]
-    drm_dp_mst_hpd_irq_handle_event+0xc8/0x1580 [drm_display_helper]
-
-Cc: <stable@vger.kernel.org>
 Cc: Lyude Paul <lyude@redhat.com>
+Cc: <stable@vger.kernel.org>
+Closes: https://gitlab.freedesktop.org/drm/i915/kernel/-/issues/12804
 Reviewed-by: Lyude Paul <lyude@redhat.com>
 Signed-off-by: Imre Deak <imre.deak@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20241125205314.1725887-1-imre.deak@intel.com
+Link: https://patchwork.freedesktop.org/patch/msgid/20241203160223.2926014-3-imre.deak@intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/display/drm_dp_mst_topology.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/display/drm_dp_mst_topology.c |   31 ++++++++++++++++++++++++++
+ 1 file changed, 31 insertions(+)
 
 --- a/drivers/gpu/drm/display/drm_dp_mst_topology.c
 +++ b/drivers/gpu/drm/display/drm_dp_mst_topology.c
-@@ -319,6 +319,9 @@ static bool drm_dp_decode_sideband_msg_h
- 	hdr->broadcast = (buf[idx] >> 7) & 0x1;
- 	hdr->path_msg = (buf[idx] >> 6) & 0x1;
- 	hdr->msg_len = buf[idx] & 0x3f;
-+	if (hdr->msg_len < 1)		/* min space for body CRC */
-+		return false;
+@@ -3862,6 +3862,34 @@ drm_dp_get_one_sb_msg(struct drm_dp_mst_
+ 	return true;
+ }
+ 
++static int get_msg_request_type(u8 data)
++{
++	return data & 0x7f;
++}
 +
- 	idx++;
- 	hdr->somt = (buf[idx] >> 7) & 0x1;
- 	hdr->eomt = (buf[idx] >> 6) & 0x1;
++static bool verify_rx_request_type(struct drm_dp_mst_topology_mgr *mgr,
++				   const struct drm_dp_sideband_msg_tx *txmsg,
++				   const struct drm_dp_sideband_msg_rx *rxmsg)
++{
++	const struct drm_dp_sideband_msg_hdr *hdr = &rxmsg->initial_hdr;
++	const struct drm_dp_mst_branch *mstb = txmsg->dst;
++	int tx_req_type = get_msg_request_type(txmsg->msg[0]);
++	int rx_req_type = get_msg_request_type(rxmsg->msg[0]);
++	char rad_str[64];
++
++	if (tx_req_type == rx_req_type)
++		return true;
++
++	drm_dp_mst_rad_to_str(mstb->rad, mstb->lct, rad_str, sizeof(rad_str));
++	drm_dbg_kms(mgr->dev,
++		    "Got unexpected MST reply, mstb: %p seqno: %d lct: %d rad: %s rx_req_type: %s (%02x) != tx_req_type: %s (%02x)\n",
++		    mstb, hdr->seqno, mstb->lct, rad_str,
++		    drm_dp_mst_req_type_str(rx_req_type), rx_req_type,
++		    drm_dp_mst_req_type_str(tx_req_type), tx_req_type);
++
++	return false;
++}
++
+ static int drm_dp_mst_handle_down_rep(struct drm_dp_mst_topology_mgr *mgr)
+ {
+ 	struct drm_dp_sideband_msg_tx *txmsg;
+@@ -3891,6 +3919,9 @@ static int drm_dp_mst_handle_down_rep(st
+ 		goto out_clear_reply;
+ 	}
+ 
++	if (!verify_rx_request_type(mgr, txmsg, msg))
++		goto out_clear_reply;
++
+ 	drm_dp_sideband_parse_reply(mgr, msg, &txmsg->reply);
+ 
+ 	if (txmsg->reply.reply_type == DP_SIDEBAND_REPLY_NAK) {
 
 
