@@ -1,36 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F00920969B;
-	Thu, 12 Dec 2024 16:17:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AF8520969B;
+	Thu, 12 Dec 2024 16:17:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734020258; cv=none; b=OJc95W9WwJbpygTntioUVHkXciJXCJvy5tbBMAbYY5hLeD/KAtfv5eKuC7qiVEtjEdgGdO8NnPeBCA8ViCigdxB2y3SyeP1AeuYOlfRWVm777zeY2NzLKQwQf6aHQNxZAaayDYG+KHr0QDIt//I19tFbz9dCcpUSFF6SusmuENc=
+	t=1734020262; cv=none; b=Cqdskyg1j1wjWyOGgW6EZKkLsqctcGDI4olAk1IXVrRicnzN9uTZXfvLXiHabxtYtrtm28qmf0l+ck7GNkg3MMqgmglaLaWI8NDyTnQctmrK6Mojqt+DkFykIelEVEnPP1fSd/tV3WydHdoXSiDuawStcEKkEDpeWqks1nANMVk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734020258; c=relaxed/simple;
-	bh=E9e1LVWuTdqI2Yse27FPKH9NIbxYzZLO0xYfIsZ7yDw=;
+	s=arc-20240116; t=1734020262; c=relaxed/simple;
+	bh=3/zsq5+YcGEnbWBsovkix6w458X3zCmb7SjXTtqOyxc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=R204L2ZxE90NmswkwSYTtWifYboowJypABMBw8v/2Gdd051s0PqyTvjNayHY92HfmbzkY9PViBg1361JZWYt1UUj55D7pFu+3ULP0RO7Lq2MaXniyjp1TdDLkpnjAzmN79NCg2FdR5mN0G7yuY2DKK0LVhsDi89a32oqZAHmBz0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sIlAhQQw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pdO4mQHabtWP1PGLvwOXuezLa6q+XQDGMlAaX/kV+/gq85G6UnMwMviC9FxqL8wotRg1ot21n3cfcjYlQWhZZcoHQrqv416sypalTUtKSjbCGX7k72OVq9gkRKMr5BtCWfIDHh38bFKdSz+bDp6UXpJPluIIcjT3wjF1jeyAMRE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p7TJbZ8v; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sIlAhQQw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09997C4CECE;
-	Thu, 12 Dec 2024 16:17:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p7TJbZ8v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BD0EC4CECE;
+	Thu, 12 Dec 2024 16:17:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734020258;
-	bh=E9e1LVWuTdqI2Yse27FPKH9NIbxYzZLO0xYfIsZ7yDw=;
+	s=korg; t=1734020262;
+	bh=3/zsq5+YcGEnbWBsovkix6w458X3zCmb7SjXTtqOyxc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sIlAhQQw5+0xkBVUaJU3erKn5AiJCEVmZ0o+rbxaEg06hgLTHBJT/r0qX8OWec/UM
-	 xQTgxIyW+AHsCqLjOM6xhF7Xg7z1i2dHUQeGtibVCu7YtmZH5bQn3vvVS8BknZVLSe
-	 GAKCVENrgywEoCZSCGC2r8CC4DYO7BBXIQczVCvw=
+	b=p7TJbZ8vdVBKCB6akt4+oR+FyQV/zLHVzQFDQp9QskYt8KZWvSEW5FRFCR1JP/U6a
+	 Qwy4qjzhZ63/gQRaONi6Lil/KEoGIfaFpA4BSVlzjeIjKvXeFNsWq90w6ohVvr5H41
+	 9qktag91ZRNCzai7Isz+FWJT5E1hSCKDGEPLNODE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Hubert=20Wi=C5=9Bniewski?= <hubert.wisniewski.25632@gmail.com>
-Subject: [PATCH 6.1 418/772] usb: musb: Fix hardware lockup on first Rx endpoint request
-Date: Thu, 12 Dec 2024 15:56:03 +0100
-Message-ID: <20241212144407.184801152@linuxfoundation.org>
+	Matthew McClain <mmcclain@noprivs.com>,
+	Sai Kumar Cholleti <skmr537@gmail.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Subject: [PATCH 6.1 390/772] gpio: exar: set value when external pull-up or pull-down is present
+Date: Thu, 12 Dec 2024 15:55:35 +0100
+Message-ID: <20241212144406.021713835@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -43,136 +46,84 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hubert Wiśniewski <hubert.wisniewski.25632@gmail.com>
+From: Sai Kumar Cholleti <skmr537@gmail.com>
 
-commit 3fc137386c4620305bbc2a216868c53f9245670a upstream.
+commit 72cef64180de04a7b055b4773c138d78f4ebdb77 upstream.
 
-There is a possibility that a request's callback could be invoked from
-usb_ep_queue() (call trace below, supplemented with missing calls):
+Setting GPIO direction = high, sometimes results in GPIO value = 0.
 
-req->complete from usb_gadget_giveback_request
-	(drivers/usb/gadget/udc/core.c:999)
-usb_gadget_giveback_request from musb_g_giveback
-	(drivers/usb/musb/musb_gadget.c:147)
-musb_g_giveback from rxstate
-	(drivers/usb/musb/musb_gadget.c:784)
-rxstate from musb_ep_restart
-	(drivers/usb/musb/musb_gadget.c:1169)
-musb_ep_restart from musb_ep_restart_resume_work
-	(drivers/usb/musb/musb_gadget.c:1176)
-musb_ep_restart_resume_work from musb_queue_resume_work
-	(drivers/usb/musb/musb_core.c:2279)
-musb_queue_resume_work from musb_gadget_queue
-	(drivers/usb/musb/musb_gadget.c:1241)
-musb_gadget_queue from usb_ep_queue
-	(drivers/usb/gadget/udc/core.c:300)
+If a GPIO is pulled high, the following construction results in the
+value being 0 when the desired value is 1:
 
-According to the docstring of usb_ep_queue(), this should not happen:
+$ echo "high" > /sys/class/gpio/gpio336/direction
+$ cat /sys/class/gpio/gpio336/value
+0
 
-"Note that @req's ->complete() callback must never be called from within
-usb_ep_queue() as that can create deadlock situations."
+Before the GPIO direction is changed from an input to an output,
+exar_set_value() is called with value = 1, but since the GPIO is an
+input when exar_set_value() is called, _regmap_update_bits() reads a 1
+due to an external pull-up.  regmap_set_bits() sets force_write =
+false, so the value (1) is not written.  When the direction is then
+changed, the GPIO becomes an output with the value of 0 (the hardware
+default).
 
-In fact, a hardware lockup might occur in the following sequence:
+regmap_write_bits() sets force_write = true, so the value is always
+written by exar_set_value() and an external pull-up doesn't affect the
+outcome of setting direction = high.
 
-1. The gadget is initialized using musb_gadget_enable().
-2. Meanwhile, a packet arrives, and the RXPKTRDY flag is set, raising an
-   interrupt.
-3. If IRQs are enabled, the interrupt is handled, but musb_g_rx() finds an
-   empty queue (next_request() returns NULL). The interrupt flag has
-   already been cleared by the glue layer handler, but the RXPKTRDY flag
-   remains set.
-4. The first request is enqueued using usb_ep_queue(), leading to the call
-   of req->complete(), as shown in the call trace above.
-5. If the callback enables IRQs and another packet is waiting, step (3)
-   repeats. The request queue is empty because usb_g_giveback() removes the
-   request before invoking the callback.
-6. The endpoint remains locked up, as the interrupt triggered by hardware
-   setting the RXPKTRDY flag has been handled, but the flag itself remains
-   set.
+The same can happen when a GPIO is pulled low, but the scenario is a
+little more complicated.
 
-For this scenario to occur, it is only necessary for IRQs to be enabled at
-some point during the complete callback. This happens with the USB Ethernet
-gadget, whose rx_complete() callback calls netif_rx(). If called in the
-task context, netif_rx() disables the bottom halves (BHs). When the BHs are
-re-enabled, IRQs are also enabled to allow soft IRQs to be processed. The
-gadget itself is initialized at module load (or at boot if built-in), but
-the first request is enqueued when the network interface is brought up,
-triggering rx_complete() in the task context via ioctl(). If a packet
-arrives while the interface is down, it can prevent the interface from
-receiving any further packets from the USB host.
+$ echo high > /sys/class/gpio/gpio351/direction
+$ cat /sys/class/gpio/gpio351/value
+1
 
-The situation is quite complicated with many parties involved. This
-particular issue can be resolved in several possible ways:
+$ echo in > /sys/class/gpio/gpio351/direction
+$ cat /sys/class/gpio/gpio351/value
+0
 
-1. Ensure that callbacks never enable IRQs. This would be difficult to
-   enforce, as discovering how netif_rx() interacts with interrupts was
-   already quite challenging and u_ether is not the only function driver.
-   Similar "bugs" could be hidden in other drivers as well.
-2. Disable MUSB interrupts in musb_g_giveback() before calling the callback
-   and re-enable them afterwars (by calling musb_{dis,en}able_interrupts(),
-   for example). This would ensure that MUSB interrupts are not handled
-   during the callback, even if IRQs are enabled. In fact, it would allow
-   IRQs to be enabled when releasing the lock. However, this feels like an
-   inelegant hack.
-3. Modify the interrupt handler to clear the RXPKTRDY flag if the request
-   queue is empty. While this approach also feels like a hack, it wastes
-   CPU time by attempting to handle incoming packets when the software is
-   not ready to process them.
-4. Flush the Rx FIFO instead of calling rxstate() in musb_ep_restart().
-   This ensures that the hardware can receive packets when there is at
-   least one request in the queue. Once IRQs are enabled, the interrupt
-   handler will be able to correctly process the next incoming packet
-   (eventually calling rxstate()). This approach may cause one or two
-   packets to be dropped (two if double buffering is enabled), but this
-   seems to be a minor issue, as packet loss can occur when the software is
-   not yet ready to process them. Additionally, this solution makes the
-   gadget driver compliant with the rule mentioned in the docstring of
-   usb_ep_queue().
+$ echo low > /sys/class/gpio/gpio351/direction
+$ cat /sys/class/gpio/gpio351/value
+1
 
-There may be additional solutions, but from these four, the last one has
-been chosen as it seems to be the most appropriate, as it addresses the
-"bad" behavior of the driver.
-
-Fixes: baebdf48c360 ("net: dev: Makes sure netif_rx() can be invoked in any context.")
+Fixes: 36fb7218e878 ("gpio: exar: switch to using regmap")
+Co-developed-by: Matthew McClain <mmcclain@noprivs.com>
+Signed-off-by: Matthew McClain <mmcclain@noprivs.com>
+Signed-off-by: Sai Kumar Cholleti <skmr537@gmail.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Hubert Wiśniewski <hubert.wisniewski.25632@gmail.com>
-Link: https://lore.kernel.org/r/4ee1ead4525f78fb5909a8cbf99513ad0082ad21.camel@gmail.com
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/20241105071523.2372032-1-skmr537@gmail.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/musb/musb_gadget.c |   13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ drivers/gpio/gpio-exar.c |   10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
---- a/drivers/usb/musb/musb_gadget.c
-+++ b/drivers/usb/musb/musb_gadget.c
-@@ -1170,12 +1170,19 @@ struct free_record {
-  */
- void musb_ep_restart(struct musb *musb, struct musb_request *req)
- {
-+	u16 csr;
-+	void __iomem *epio = req->ep->hw_ep->regs;
-+
- 	trace_musb_req_start(req);
- 	musb_ep_select(musb->mregs, req->epnum);
--	if (req->tx)
-+	if (req->tx) {
- 		txstate(musb, req);
+--- a/drivers/gpio/gpio-exar.c
++++ b/drivers/gpio/gpio-exar.c
+@@ -99,11 +99,13 @@ static void exar_set_value(struct gpio_c
+ 	struct exar_gpio_chip *exar_gpio = gpiochip_get_data(chip);
+ 	unsigned int addr = exar_offset_to_lvl_addr(exar_gpio, offset);
+ 	unsigned int bit = exar_offset_to_bit(exar_gpio, offset);
++	unsigned int bit_value = value ? BIT(bit) : 0;
+ 
+-	if (value)
+-		regmap_set_bits(exar_gpio->regmap, addr, BIT(bit));
 -	else
--		rxstate(musb, req);
-+	} else {
-+		csr = musb_readw(epio, MUSB_RXCSR);
-+		csr |= MUSB_RXCSR_FLUSHFIFO | MUSB_RXCSR_P_WZC_BITS;
-+		musb_writew(epio, MUSB_RXCSR, csr);
-+		musb_writew(epio, MUSB_RXCSR, csr);
-+	}
+-		regmap_clear_bits(exar_gpio->regmap, addr, BIT(bit));
++	/*
++	 * regmap_write_bits() forces value to be written when an external
++	 * pull up/down might otherwise indicate value was already set.
++	 */
++	regmap_write_bits(exar_gpio->regmap, addr, BIT(bit), bit_value);
  }
  
- static int musb_ep_restart_resume_work(struct musb *musb, void *data)
+ static int exar_direction_output(struct gpio_chip *chip, unsigned int offset,
 
 
