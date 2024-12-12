@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45C9F21660B;
-	Thu, 12 Dec 2024 17:27:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61D97217F40;
+	Thu, 12 Dec 2024 17:27:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734024472; cv=none; b=BNp/ZUEq+R/89Q82/l2wr6riSuVV8kSGJfmU/CuG4F+Oqas/srGbQUaSXSiteJI+0nsKQweOW/3pKw9Lb1QcfVWaOcN0BSZGaqvyVkZ+TmkFlWriKGVJg4R6grDQD1WWQkaejzd4sX5AqOXXLuLNQRbJQRFmRM4ZFyEI+YjB6tg=
+	t=1734024475; cv=none; b=mSuL7JhCdo7WALdTN2Ord8nFO0cvJYFM4FQVPRKkY2MRjJERnCph1/ow7J1Ca6JRB1nAhxaDdv3JO34pH5C6Re3c26QD+RFw22/XW3PC5d6uM+Y/7mS0sLwX+Vm3KAyxzG8XcY5WBD6KIY/kR1jk6FxkSWEQs0/FCIn+Kt5He3s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734024472; c=relaxed/simple;
-	bh=FP0GY/1ncDyN2pzC6h4pDUuqwCiE8O5rGg7YoLaK8hg=;
+	s=arc-20240116; t=1734024475; c=relaxed/simple;
+	bh=Ws7HaOAx6Y5pVuolDF0CH31rEkOYNHVBox+VrMfF3v8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tph8KYbf/CrPtSLt6MWDGY3SFzA6FtWA51CYb9O5HiJAzn/2kyAUscIVuXFHw9QAziJdTzZshgOx9crNIggZFQMvTucfklfCm6eAJodjZxuv5E+KXUAHAx/I5dUR96f/GnSDBmcsSp5ZDfAGfRVZcrVoW/FKDQC7cK7gXFAzw6Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oUJj0nXm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GY9Gn/Gmdj82ZXR/YGuPcIIOQ1ov8Q2VySnESXqwTgNOB/4khFucrBwRS31aMSOSx0gK9H7+revJM6yP/T7G8bkjS/6vd+gAyp1O645E2kMi8tqtN9yoCWjr60t0Kl8eGc/DsTTnMVLr1Hqf7u7tKlmPeAl7M3UX6+KU1jnSptQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VSISjClB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oUJj0nXm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD8FCC4CECE;
-	Thu, 12 Dec 2024 17:27:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VSISjClB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D75D9C4CED3;
+	Thu, 12 Dec 2024 17:27:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734024472;
-	bh=FP0GY/1ncDyN2pzC6h4pDUuqwCiE8O5rGg7YoLaK8hg=;
+	s=korg; t=1734024475;
+	bh=Ws7HaOAx6Y5pVuolDF0CH31rEkOYNHVBox+VrMfF3v8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oUJj0nXmEP7wp9WPybnS3tH0hzg0Cpn/Z1VAJ2UPNM/Mam1MsZsga1VBnYuwSSGi8
-	 B1wWtuob8uBn0nZaHseeice9H+/5iq2DpwYrJgzVlSB+G9h8WoSIsbZaamxMnQ8hNu
-	 Imkg4a6hEvAmF5Vo3M7IgGYy+yd50IvQMCRHcrjE=
+	b=VSISjClBFvj2IdhHDHlqfBnw4ZnYL7HY79DE9LBVGVE6hJ96or/d/21kc2tXeUenM
+	 1BdtVYwAYWwHxd2C1V1U6FyEWRAMot1AZe3SbIkKO3PVqFVOn48I5LGSDqeL6NxVYr
+	 Fs31V8/aRcqT5Y3xVbNP9ZFLy2MLNEaj5rf86HTM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thiago Rafael Becker <trbecker@gmail.com>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 307/459] sunrpc: remove unnecessary test in rpc_task_set_client()
-Date: Thu, 12 Dec 2024 16:00:45 +0100
-Message-ID: <20241212144305.772346876@linuxfoundation.org>
+Subject: [PATCH 5.10 308/459] SUNRPC: Replace internal use of SOCKWQ_ASYNC_NOSPACE
+Date: Thu, 12 Dec 2024 16:00:46 +0100
+Message-ID: <20241212144305.811502279@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144253.511169641@linuxfoundation.org>
 References: <20241212144253.511169641@linuxfoundation.org>
@@ -51,65 +51,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thiago Rafael Becker <trbecker@gmail.com>
+From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-[ Upstream commit 023859ce6f88f7cfc223752fb56ec453a147b852 ]
+[ Upstream commit 2790a624d43084de590884934969e19c7a82316a ]
 
-In rpc_task_set_client(), testing for a NULL clnt is not necessary, as
-clnt should always be a valid pointer to a rpc_client.
+The socket's SOCKWQ_ASYNC_NOSPACE can be cleared by various actors in
+the socket layer, so replace it with our own flag in the transport
+sock_state field.
 
-Signed-off-by: Thiago Rafael Becker <trbecker@gmail.com>
+Reported-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Stable-dep-of: 4db9ad82a6c8 ("sunrpc: clear XPRT_SOCK_UPD_TIMEOUT when reset transport")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/clnt.c | 33 +++++++++++++++------------------
- 1 file changed, 15 insertions(+), 18 deletions(-)
+ include/linux/sunrpc/xprtsock.h |  1 +
+ net/sunrpc/xprtsock.c           | 22 ++++------------------
+ 2 files changed, 5 insertions(+), 18 deletions(-)
 
-diff --git a/net/sunrpc/clnt.c b/net/sunrpc/clnt.c
-index 457042b653bba..7ec5b0bc48ebf 100644
---- a/net/sunrpc/clnt.c
-+++ b/net/sunrpc/clnt.c
-@@ -1077,24 +1077,21 @@ void rpc_task_set_transport(struct rpc_task *task, struct rpc_clnt *clnt)
- static
- void rpc_task_set_client(struct rpc_task *task, struct rpc_clnt *clnt)
- {
+diff --git a/include/linux/sunrpc/xprtsock.h b/include/linux/sunrpc/xprtsock.h
+index 689062afdd610..3eb0079669c50 100644
+--- a/include/linux/sunrpc/xprtsock.h
++++ b/include/linux/sunrpc/xprtsock.h
+@@ -90,5 +90,6 @@ struct sock_xprt {
+ #define XPRT_SOCK_WAKE_PENDING	(6)
+ #define XPRT_SOCK_WAKE_DISCONNECT	(7)
+ #define XPRT_SOCK_CONNECT_SENT	(8)
++#define XPRT_SOCK_NOSPACE	(9)
+ 
+ #endif /* _LINUX_SUNRPC_XPRTSOCK_H */
+diff --git a/net/sunrpc/xprtsock.c b/net/sunrpc/xprtsock.c
+index 93e59d5a363d0..278d044e1fd4a 100644
+--- a/net/sunrpc/xprtsock.c
++++ b/net/sunrpc/xprtsock.c
+@@ -770,14 +770,8 @@ static int xs_nospace(struct rpc_rqst *req, struct sock_xprt *transport)
+ 
+ 	/* Don't race with disconnect */
+ 	if (xprt_connected(xprt)) {
+-		struct socket_wq *wq;
 -
--	if (clnt != NULL) {
--		rpc_task_set_transport(task, clnt);
--		task->tk_client = clnt;
--		refcount_inc(&clnt->cl_count);
--		if (clnt->cl_softrtry)
--			task->tk_flags |= RPC_TASK_SOFT;
--		if (clnt->cl_softerr)
--			task->tk_flags |= RPC_TASK_TIMEOUT;
--		if (clnt->cl_noretranstimeo)
--			task->tk_flags |= RPC_TASK_NO_RETRANS_TIMEOUT;
--		if (atomic_read(&clnt->cl_swapper))
--			task->tk_flags |= RPC_TASK_SWAPPER;
--		/* Add to the client's list of all tasks */
--		spin_lock(&clnt->cl_lock);
--		list_add_tail(&task->tk_task, &clnt->cl_tasks);
--		spin_unlock(&clnt->cl_lock);
--	}
-+	rpc_task_set_transport(task, clnt);
-+	task->tk_client = clnt;
-+	refcount_inc(&clnt->cl_count);
-+	if (clnt->cl_softrtry)
-+		task->tk_flags |= RPC_TASK_SOFT;
-+	if (clnt->cl_softerr)
-+		task->tk_flags |= RPC_TASK_TIMEOUT;
-+	if (clnt->cl_noretranstimeo)
-+		task->tk_flags |= RPC_TASK_NO_RETRANS_TIMEOUT;
-+	if (atomic_read(&clnt->cl_swapper))
-+		task->tk_flags |= RPC_TASK_SWAPPER;
-+	/* Add to the client's list of all tasks */
-+	spin_lock(&clnt->cl_lock);
-+	list_add_tail(&task->tk_task, &clnt->cl_tasks);
-+	spin_unlock(&clnt->cl_lock);
+-		rcu_read_lock();
+-		wq = rcu_dereference(sk->sk_wq);
+-		set_bit(SOCKWQ_ASYNC_NOSPACE, &wq->flags);
+-		rcu_read_unlock();
+-
+ 		/* wait for more buffer space */
++		set_bit(XPRT_SOCK_NOSPACE, &transport->sock_state);
+ 		set_bit(SOCK_NOSPACE, &sk->sk_socket->flags);
+ 		sk->sk_write_pending++;
+ 		xprt_wait_for_buffer_space(xprt);
+@@ -1134,6 +1128,7 @@ static void xs_sock_reset_state_flags(struct rpc_xprt *xprt)
+ 	clear_bit(XPRT_SOCK_WAKE_ERROR, &transport->sock_state);
+ 	clear_bit(XPRT_SOCK_WAKE_WRITE, &transport->sock_state);
+ 	clear_bit(XPRT_SOCK_WAKE_DISCONNECT, &transport->sock_state);
++	clear_bit(XPRT_SOCK_NOSPACE, &transport->sock_state);
  }
  
- static void
+ static void xs_run_error_worker(struct sock_xprt *transport, unsigned int nr)
+@@ -1497,7 +1492,6 @@ static void xs_tcp_state_change(struct sock *sk)
+ 
+ static void xs_write_space(struct sock *sk)
+ {
+-	struct socket_wq *wq;
+ 	struct sock_xprt *transport;
+ 	struct rpc_xprt *xprt;
+ 
+@@ -1508,15 +1502,10 @@ static void xs_write_space(struct sock *sk)
+ 	if (unlikely(!(xprt = xprt_from_sock(sk))))
+ 		return;
+ 	transport = container_of(xprt, struct sock_xprt, xprt);
+-	rcu_read_lock();
+-	wq = rcu_dereference(sk->sk_wq);
+-	if (!wq || test_and_clear_bit(SOCKWQ_ASYNC_NOSPACE, &wq->flags) == 0)
+-		goto out;
+-
++	if (!test_and_clear_bit(XPRT_SOCK_NOSPACE, &transport->sock_state))
++		return;
+ 	xs_run_error_worker(transport, XPRT_SOCK_WAKE_WRITE);
+ 	sk->sk_write_pending--;
+-out:
+-	rcu_read_unlock();
+ }
+ 
+ /**
+@@ -1860,7 +1849,6 @@ static int xs_local_finish_connecting(struct rpc_xprt *xprt,
+ 		sk->sk_user_data = xprt;
+ 		sk->sk_data_ready = xs_data_ready;
+ 		sk->sk_write_space = xs_udp_write_space;
+-		sock_set_flag(sk, SOCK_FASYNC);
+ 		sk->sk_error_report = xs_error_report;
+ 
+ 		xprt_clear_connected(xprt);
+@@ -2058,7 +2046,6 @@ static void xs_udp_finish_connecting(struct rpc_xprt *xprt, struct socket *sock)
+ 		sk->sk_user_data = xprt;
+ 		sk->sk_data_ready = xs_data_ready;
+ 		sk->sk_write_space = xs_udp_write_space;
+-		sock_set_flag(sk, SOCK_FASYNC);
+ 
+ 		xprt_set_connected(xprt);
+ 
+@@ -2214,7 +2201,6 @@ static int xs_tcp_finish_connecting(struct rpc_xprt *xprt, struct socket *sock)
+ 		sk->sk_data_ready = xs_data_ready;
+ 		sk->sk_state_change = xs_tcp_state_change;
+ 		sk->sk_write_space = xs_tcp_write_space;
+-		sock_set_flag(sk, SOCK_FASYNC);
+ 		sk->sk_error_report = xs_error_report;
+ 
+ 		/* socket options */
 -- 
 2.43.0
 
