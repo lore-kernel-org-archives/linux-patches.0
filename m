@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3114212D6A;
-	Thu, 12 Dec 2024 15:16:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4BE52EAE5;
+	Thu, 12 Dec 2024 15:16:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734016595; cv=none; b=DVDmlOoocA/GVAeMtXLq/7OhaLB5Bt42NXy2+pe+wHCo7yYYPnwtStrRQrsDr8/2lhcAodtTHjBL4/5To8v2fZBy1e09bYXLmFJAvBPxQyxlKl6ecq5decVNbyz+eIom8Q/hlsdPxLAfg7wbuEmrxW/0eyvcAFPSp3cQw9Q9eAs=
+	t=1734016598; cv=none; b=QUi7P5C2TPyvXX5ZBBkY3Ik9EVGj+/WJx/K8U47i/c3+WFmRF4Jv1y8Y94iWpC6IuPdjn29jjpngnXSKouqSFdqChTXhoqqNTVaH0SL/f1NbN81JyfP0MT+CwE6aYyyHCEbYOz+oJww8BFbr5W93eQOkKMVkD/6Wy7hvrhW/7+w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734016595; c=relaxed/simple;
-	bh=5D07K1MlGmSwp600FUznAVGlxrvVqvoeIFShIWJ7Cxo=;
+	s=arc-20240116; t=1734016598; c=relaxed/simple;
+	bh=sQ/pFhZAxKM2KLImzB/SFX6m0xBTWmKIXfHfd96rgLU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h7EsTTqeRk3pEMx16CFTP1alNZ6J43rr9YndxwfWxCmsbZsR+MLa4PnqLbwpkLKOFA55Jk6ef5WPRsroqMtUcTJswO5snASt5SO2e8fR6ZH9v37B2zomqVAFjsKkD8c62tqc9wJ4RllVF6rzodzVpGdp7uNXXUQ65PKGgwpfD3M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OxDB5YLe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ig+nZ3dO4k7lTV0wnLfsmhfcA1vR4QuQd3SKHBO/vSZ0cfn4hGTNdrBI3fed6Z9zqSpKI+IeUjQIcPmJDkdRNG/0CdLN9jgn4SwLk8IUSxp1UsiFUcjenEuMdD8pm7w4QhlZszwWEGz98LHw/URiYOmPqK/tZt8gHUQAuL6ldYo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KulT993h; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OxDB5YLe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64399C4CECE;
-	Thu, 12 Dec 2024 15:16:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KulT993h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30A33C4CECE;
+	Thu, 12 Dec 2024 15:16:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734016595;
-	bh=5D07K1MlGmSwp600FUznAVGlxrvVqvoeIFShIWJ7Cxo=;
+	s=korg; t=1734016598;
+	bh=sQ/pFhZAxKM2KLImzB/SFX6m0xBTWmKIXfHfd96rgLU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OxDB5YLeIXmxgZyhV3LHXa7ELLxqGojEyZBuvh89IfCjc5OM6y2IRJSWm+EzJNsXT
-	 v7/hePf0MpYlZ5+6mGZoZ6G9ZFM8vsqdTtDB8dvxP8+uw5WyL6a/S76FTrzIjP5phN
-	 YeFtEycwUNX+QtiU7mn/o7cMA9DBgov5L0zkHKsY=
+	b=KulT993h2NXqrG6+F7v7mJYlk6xt5R1wbDc1KTFGjryGW8MyTyP6dYB9aGJSQBZbs
+	 n2fUJr1cSnwWSuVFD/R9l7CgtChdB7yXgCLpiM9zyci3/RhNpoZyLDEMj+QmSE3wAa
+	 HKNTcLC8euKKnW0WyZeAnhLwJRDjR3HGW5BmtXB0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lukas Wunner <lukas@wunner.de>,
-	Stefan Berger <stefanb@linux.ibm.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Giuliano Lotta <giuliano.lotta@gmail.com>,
+	Ricardo Ribalda <ribalda@chromium.org>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 225/466] crypto: ecdsa - Avoid signed integer overflow on signature decoding
-Date: Thu, 12 Dec 2024 15:56:34 +0100
-Message-ID: <20241212144315.667525203@linuxfoundation.org>
+Subject: [PATCH 6.12 243/466] media: uvcvideo: Force UVC version to 1.0a for 0408:4033
+Date: Thu, 12 Dec 2024 15:56:52 +0100
+Message-ID: <20241212144316.385830644@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144306.641051666@linuxfoundation.org>
 References: <20241212144306.641051666@linuxfoundation.org>
@@ -53,80 +53,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lukas Wunner <lukas@wunner.de>
+From: Ricardo Ribalda <ribalda@chromium.org>
 
-[ Upstream commit 3b0565c703503f832d6cd7ba805aafa3b330cb9d ]
+[ Upstream commit c9df99302fff53b6007666136b9f43fbac7ee3d8 ]
 
-When extracting a signature component r or s from an ASN.1-encoded
-integer, ecdsa_get_signature_rs() subtracts the expected length
-"bufsize" from the ASN.1 length "vlen" (both of unsigned type size_t)
-and stores the result in "diff" (of signed type ssize_t).
+The Quanta ACER HD User Facing camera reports a UVC 1.50 version, but
+implements UVC 1.0a as shown by the UVC probe control being 26 bytes
+long. Force the UVC version for that device.
 
-This results in a signed integer overflow if vlen > SSIZE_MAX + bufsize.
-
-The kernel is compiled with -fno-strict-overflow, which implies -fwrapv,
-meaning signed integer overflow is not undefined behavior.  And the
-function does check for overflow:
-
-       if (-diff >= bufsize)
-               return -EINVAL;
-
-So the code is fine in principle but not very obvious.  In the future it
-might trigger a false-positive with CONFIG_UBSAN_SIGNED_WRAP=y.
-
-Avoid by comparing the two unsigned variables directly and erroring out
-if "vlen" is too large.
-
-Signed-off-by: Lukas Wunner <lukas@wunner.de>
-Reviewed-by: Stefan Berger <stefanb@linux.ibm.com>
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Reported-by: Giuliano Lotta <giuliano.lotta@gmail.com>
+Closes: https://lore.kernel.org/linux-media/fce4f906-d69b-417d-9f13-bf69fe5c81e3@koyu.space/
+Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Link: https://lore.kernel.org/r/20240924-uvc-quanta-v1-1-2de023863767@chromium.org
+Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- crypto/ecdsa.c | 19 +++++++------------
- 1 file changed, 7 insertions(+), 12 deletions(-)
+ drivers/media/usb/uvc/uvc_driver.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/crypto/ecdsa.c b/crypto/ecdsa.c
-index d5a10959ec281..80ef16ae6a40b 100644
---- a/crypto/ecdsa.c
-+++ b/crypto/ecdsa.c
-@@ -36,29 +36,24 @@ static int ecdsa_get_signature_rs(u64 *dest, size_t hdrlen, unsigned char tag,
- 				  const void *value, size_t vlen, unsigned int ndigits)
- {
- 	size_t bufsize = ndigits * sizeof(u64);
--	ssize_t diff = vlen - bufsize;
- 	const char *d = value;
- 
--	if (!value || !vlen)
-+	if (!value || !vlen || vlen > bufsize + 1)
- 		return -EINVAL;
- 
--	/* diff = 0: 'value' has exacly the right size
--	 * diff > 0: 'value' has too many bytes; one leading zero is allowed that
--	 *           makes the value a positive integer; error on more
--	 * diff < 0: 'value' is missing leading zeros
-+	/*
-+	 * vlen may be 1 byte larger than bufsize due to a leading zero byte
-+	 * (necessary if the most significant bit of the integer is set).
- 	 */
--	if (diff > 0) {
-+	if (vlen > bufsize) {
- 		/* skip over leading zeros that make 'value' a positive int */
- 		if (*d == 0) {
- 			vlen -= 1;
--			diff--;
- 			d++;
--		}
--		if (diff)
-+		} else {
- 			return -EINVAL;
-+		}
- 	}
--	if (-diff >= bufsize)
--		return -EINVAL;
- 
- 	ecc_digits_from_bytes(d, vlen, dest, ndigits);
- 
+diff --git a/drivers/media/usb/uvc/uvc_driver.c b/drivers/media/usb/uvc/uvc_driver.c
+index 17aa313613356..9f38a9b23c018 100644
+--- a/drivers/media/usb/uvc/uvc_driver.c
++++ b/drivers/media/usb/uvc/uvc_driver.c
+@@ -2479,6 +2479,17 @@ static const struct uvc_device_info uvc_quirk_force_y8 = {
+  */
+ static const struct usb_device_id uvc_ids[] = {
+ 	/* Quanta ACER HD User Facing */
++	{ .match_flags		= USB_DEVICE_ID_MATCH_DEVICE
++				| USB_DEVICE_ID_MATCH_INT_INFO,
++	  .idVendor		= 0x0408,
++	  .idProduct		= 0x4033,
++	  .bInterfaceClass	= USB_CLASS_VIDEO,
++	  .bInterfaceSubClass	= 1,
++	  .bInterfaceProtocol	= UVC_PC_PROTOCOL_15,
++	  .driver_info		= (kernel_ulong_t)&(const struct uvc_device_info){
++		.uvc_version = 0x010a,
++	  } },
++	/* Quanta ACER HD User Facing */
+ 	{ .match_flags		= USB_DEVICE_ID_MATCH_DEVICE
+ 				| USB_DEVICE_ID_MATCH_INT_INFO,
+ 	  .idVendor		= 0x0408,
 -- 
 2.43.0
 
