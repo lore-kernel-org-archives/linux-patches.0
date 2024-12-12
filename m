@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E715F239BA8;
-	Thu, 12 Dec 2024 16:46:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53148239BAA;
+	Thu, 12 Dec 2024 16:46:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734022000; cv=none; b=qwfbhUND4hjK+9zTw78mnsRSd5K6Ht360H1FR69bZHZiBglX7cYGLd0SmmuSHhzDRVdoXYtXI1jDFBY8Xg+SfHgHuqmi4USiPxz4AhhLs4kU3Y2SdgQbXQ7vZfkSE50gVtPNcgwTfHRCfeQMQUftEcqesDdDqbqVdB/OKeYRPIQ=
+	t=1734022003; cv=none; b=Stm0XxWUEOkNlKfNNJfxK9poRWMnq7MxMxtAF8ZQDg8nAa4UYVG4/5eMaQbOcG/8ioBj7VVaV78UcIWgTJj/VzLOoXoeqZVoA/n81LCPbpFyEL84QACp6Fued2RTffasIGZUtqmGj3UNXqIyiEDysYomyY4xXtzmTBdb7sMxAU0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734022000; c=relaxed/simple;
-	bh=Kzph2Ai97nC+190nLtzVOD2t20lx/22iYpnprRlb27w=;
+	s=arc-20240116; t=1734022003; c=relaxed/simple;
+	bh=/FINlOcDb4yFqWvfhGXJODOPl5jSmRVEIvK96JxSd5Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nDWomScyM/+yIEB/8MVBPU+slkpnf+lgyUB+AKQDt8hk6bf2PM0qwgUhZOSXWYtZW7UmgUyZB+O5MNd81Pa8cOW84nz77yx54islTC1taCDAIWxNKJQ8hvFOySw5F0Zac2YAUWF/nQ7KAUBb3VdeuuATFMVdetHtJkI8VyeU/aw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t6Ax7Hoi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FaEfSg4etSad6Wq0sV0pnNtqrSeyNBgm+ChaGMSAMnvitHRpUHTKpQO+PjLOkNXVxh9SDGZEsJVonhq+Vj4ReFG2noYUO4ItvhmxL2FdGnO9U+9BysoJzA6cBqLvDLf3L6F5m4vOYpphEYMB919emd/BQ2Ec61PyBu0EVl4h5vM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ysNiRpV8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t6Ax7Hoi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E44FC4CECE;
-	Thu, 12 Dec 2024 16:46:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ysNiRpV8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4444C4CECE;
+	Thu, 12 Dec 2024 16:46:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734021999;
-	bh=Kzph2Ai97nC+190nLtzVOD2t20lx/22iYpnprRlb27w=;
+	s=korg; t=1734022003;
+	bh=/FINlOcDb4yFqWvfhGXJODOPl5jSmRVEIvK96JxSd5Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t6Ax7HoiT255kkvulETzJYo/L60DHQ0LFQc4pS+4q9ZHO6s+enIGDT+x5jXjl9FAx
-	 Ka7Z2fuWEIbbFyQ9/+9241Il1PGEtpwQmdWXXIb2s28zHL5QpPVGBYQ/MrCabuaHiH
-	 JD/0lQncIs4+KBwkAS84c+H/39zAVr2LSMsvz7m8=
+	b=ysNiRpV8S2En5oy91g1/0GO2y+wlWw4WTNkIxFddZv+3M7KF5/Donq3g19BObB0LB
+	 zZ/QCkPhH55k9x9fNW0tvu2+K7oI0I83TTS8kX/KTSmIGJlhKm8bPp30lE6SxvcXzk
+	 ATfYTjLlVuzLU3pSxxPwSsTY6IWz3VK+BYJdtfB0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen-Yu Tsai <wenst@chromium.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Chen Ridong <chenridong@huawei.com>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 118/565] arm64: dts: mediatek: mt8173-elm-hana: Add vdd-supply to second source trackpad
-Date: Thu, 12 Dec 2024 15:55:13 +0100
-Message-ID: <20241212144316.150461714@linuxfoundation.org>
+Subject: [PATCH 5.15 119/565] Revert "cgroup: Fix memory leak caused by missing cgroup_bpf_offline"
+Date: Thu, 12 Dec 2024 15:55:14 +0100
+Message-ID: <20241212144316.189382107@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144311.432886635@linuxfoundation.org>
 References: <20241212144311.432886635@linuxfoundation.org>
@@ -51,47 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen-Yu Tsai <wenst@chromium.org>
+From: Chen Ridong <chenridong@huawei.com>
 
-[ Upstream commit f766fae08f6a2eaeb45d8d2c053724c91526835c ]
+[ Upstream commit feb301c60970bd2a1310a53ce2d6e4375397a51b ]
 
-The Hana device has a second source option trackpad, but it is missing
-its regulator supply. It only works because the regulator is marked as
-always-on.
+This reverts commit 04f8ef5643bcd8bcde25dfdebef998aea480b2ba.
 
-Add the regulator supply, but leave out the post-power-on delay. Instead,
-document the post-power-on delay along with the reason for not adding
-it in a comment.
+Only cgroup v2 can be attached by cgroup by BPF programs. Revert this
+commit and cgroup_bpf_inherit and cgroup_bpf_offline won't be called in
+cgroup v1. The memory leak issue will be fixed with next patch.
 
-Fixes: 689b937bedde ("arm64: dts: mediatek: add mt8173 elm and hana board")
-Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://lore.kernel.org/r/20241018082001.1296963-1-wenst@chromium.org
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Fixes: 04f8ef5643bc ("cgroup: Fix memory leak caused by missing cgroup_bpf_offline")
+Link: https://lore.kernel.org/cgroups/aka2hk5jsel5zomucpwlxsej6iwnfw4qu5jkrmjhyfhesjlfdw@46zxhg5bdnr7/
+Signed-off-by: Chen Ridong <chenridong@huawei.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/mediatek/mt8173-elm-hana.dtsi | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ kernel/cgroup/cgroup.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/mediatek/mt8173-elm-hana.dtsi b/arch/arm64/boot/dts/mediatek/mt8173-elm-hana.dtsi
-index bdcd35cecad90..fd6230352f4fd 100644
---- a/arch/arm64/boot/dts/mediatek/mt8173-elm-hana.dtsi
-+++ b/arch/arm64/boot/dts/mediatek/mt8173-elm-hana.dtsi
-@@ -43,6 +43,14 @@ trackpad2: trackpad@2c {
- 		interrupts = <117 IRQ_TYPE_LEVEL_LOW>;
- 		reg = <0x2c>;
- 		hid-descr-addr = <0x0020>;
-+		/*
-+		 * The trackpad needs a post-power-on delay of 100ms,
-+		 * but at time of writing, the power supply for it on
-+		 * this board is always on. The delay is therefore not
-+		 * added to avoid impacting the readiness of the
-+		 * trackpad.
-+		 */
-+		vdd-supply = <&mt6397_vgp6_reg>;
- 		wakeup-source;
- 	};
- };
+diff --git a/kernel/cgroup/cgroup.c b/kernel/cgroup/cgroup.c
+index 9ba87c5de1a87..7346197f464cb 100644
+--- a/kernel/cgroup/cgroup.c
++++ b/kernel/cgroup/cgroup.c
+@@ -2228,10 +2228,8 @@ static void cgroup_kill_sb(struct super_block *sb)
+ 	 * And don't kill the default root.
+ 	 */
+ 	if (list_empty(&root->cgrp.self.children) && root != &cgrp_dfl_root &&
+-	    !percpu_ref_is_dying(&root->cgrp.self.refcnt)) {
+-		cgroup_bpf_offline(&root->cgrp);
++	    !percpu_ref_is_dying(&root->cgrp.self.refcnt))
+ 		percpu_ref_kill(&root->cgrp.self.refcnt);
+-	}
+ 	cgroup_put(&root->cgrp);
+ 	kernfs_kill_sb(sb);
+ }
 -- 
 2.43.0
 
