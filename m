@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33A5F223C48;
-	Thu, 12 Dec 2024 17:10:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50AF42139D2;
+	Thu, 12 Dec 2024 17:10:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734023430; cv=none; b=GBiw53Q2KU8qkMXBZ+0rKvtUF0wtHr3SlwDfrvYHsHvWt6m6st7e9wRjJA10UDLmMMDspxCtQqkiPIwQ+9HILax+OqUkWXac8WGnBliir1LrTJsNCdjaxDaV+lQVF/2ie8qT/RPAkOM3C5dmRIdR49YS4IhUq21UOv/lkvwcJ0w=
+	t=1734023433; cv=none; b=uvOPGJgiBQQTWVkaPihV7L2omvhgH9HRDqR6hb6zNHq1a4trc2mYmAIhhQJEH9flB+xCtZaQfNBX0eMSVrY5of/GgXPupbBfwbLkM/qJ3U84JOgHYuQiaythZB/0CLbGaqP3ZeP/xYvZ3JvfL9G/f0NY+4W3zESGQTx2IZDYJ8Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734023430; c=relaxed/simple;
-	bh=8Mf/hwWS32SYbNB+cM+IBobhMRcZlUhNSLfcRshp9Cs=;
+	s=arc-20240116; t=1734023433; c=relaxed/simple;
+	bh=ZyU16AcwGxtwGmVQlT9yLe93eg2K+V2E9iLWPijRK8Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gAhUfMaRWZIOjt3jPp7tnH0ZrA1NrDbG8BWMZUkw9DDBh1dUXXKZQPwW1naInOggC2kr9ePM9dUTsJr0pixGoeqWAjsymgC4rc3yEp7JEpZ6Epk2poCCAjzJ2WBILFCmM5dIRZq6huRV3ovsmDqCYV1Z4T+1oxaSvoQdhauy2YM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f8JjCXG7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MttAciYIZ93BmAQH/UkwJoOstsAi/Vd1ADg+dtbEiTt01si2VLunFO4bUJX1pmXlli+pq8s31Ypj4DYOJBkQL0G+JsWmIUvp7aiQT6cAXD9Xj2HhH26LObKhQG3xJnIo0FSFjI+eCehbeHH+33q5hFbFcP5NAeGWg0eIzUFueT8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PqpMuT2B; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f8JjCXG7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACC4FC4CECE;
-	Thu, 12 Dec 2024 17:10:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PqpMuT2B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B93CFC4CED3;
+	Thu, 12 Dec 2024 17:10:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734023430;
-	bh=8Mf/hwWS32SYbNB+cM+IBobhMRcZlUhNSLfcRshp9Cs=;
+	s=korg; t=1734023433;
+	bh=ZyU16AcwGxtwGmVQlT9yLe93eg2K+V2E9iLWPijRK8Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f8JjCXG7Vnj3/q/w9/hi930ZQ9A3v2xwNbnFAyXqAZdKEWu1CMvF1tp0sjPTnuMbo
-	 wxs8rHCE6c3Ur/Re5PrxEZpsyuHDFJaFWEvqSsyXzl+yzwTudVTZdJTHD4ZwsYAdHs
-	 DATZgdx8XIxMTxmjEmHn6y6mOiAyQKbjMClA82Uc=
+	b=PqpMuT2Bf6aRX/AoU4NnjG8Um4pfQMlsQOWwTw67KYXmevsTcMMT6pYe+P95OJsJO
+	 0dqIm0B+HEx0KOTjZ8cJazVcHbvtlXZUnakP9AnCkLbppVs60imMW0+1L3yTcFhKHc
+	 PqbGIb0/lgFwkP8xaABwbCUfXRQ4YyQD6vyOL54k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yihang Li <liyihang9@huawei.com>,
-	Xiang Chen <chenxiang66@hisilicon.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	K Prateek Nayak <kprateek.nayak@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 514/565] scsi: hisi_sas: Add cond_resched() for no forced preemption model
-Date: Thu, 12 Dec 2024 16:01:49 +0100
-Message-ID: <20241212144332.102371270@linuxfoundation.org>
+Subject: [PATCH 5.15 532/565] sched/core: Remove the unnecessary need_resched() check in nohz_csd_func()
+Date: Thu, 12 Dec 2024 16:02:07 +0100
+Message-ID: <20241212144332.851083551@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144311.432886635@linuxfoundation.org>
 References: <20241212144311.432886635@linuxfoundation.org>
@@ -52,85 +51,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yihang Li <liyihang9@huawei.com>
+From: K Prateek Nayak <kprateek.nayak@amd.com>
 
-[ Upstream commit 2233c4a0b948211743659b24c13d6bd059fa75fc ]
+[ Upstream commit ea9cffc0a154124821531991d5afdd7e8b20d7aa ]
 
-For no forced preemption model kernel, in the scenario where the
-expander is connected to 12 high performance SAS SSDs, the following
-call trace may occur:
+The need_resched() check currently in nohz_csd_func() can be tracked
+to have been added in scheduler_ipi() back in 2011 via commit
+ca38062e57e9 ("sched: Use resched IPI to kick off the nohz idle balance")
 
-[  214.409199][  C240] watchdog: BUG: soft lockup - CPU#240 stuck for 22s! [irq/149-hisi_sa:3211]
-[  214.568533][  C240] pstate: 60400009 (nZCv daif +PAN -UAO -TCO BTYPE=--)
-[  214.575224][  C240] pc : fput_many+0x8c/0xdc
-[  214.579480][  C240] lr : fput+0x1c/0xf0
-[  214.583302][  C240] sp : ffff80002de2b900
-[  214.587298][  C240] x29: ffff80002de2b900 x28: ffff1082aa412000
-[  214.593291][  C240] x27: ffff3062a0348c08 x26: ffff80003a9f6000
-[  214.599284][  C240] x25: ffff1062bbac5c40 x24: 0000000000001000
-[  214.605277][  C240] x23: 000000000000000a x22: 0000000000000001
-[  214.611270][  C240] x21: 0000000000001000 x20: 0000000000000000
-[  214.617262][  C240] x19: ffff3062a41ae580 x18: 0000000000010000
-[  214.623255][  C240] x17: 0000000000000001 x16: ffffdb3a6efe5fc0
-[  214.629248][  C240] x15: ffffffffffffffff x14: 0000000003ffffff
-[  214.635241][  C240] x13: 000000000000ffff x12: 000000000000029c
-[  214.641234][  C240] x11: 0000000000000006 x10: ffff80003a9f7fd0
-[  214.647226][  C240] x9 : ffffdb3a6f0482fc x8 : 0000000000000001
-[  214.653219][  C240] x7 : 0000000000000002 x6 : 0000000000000080
-[  214.659212][  C240] x5 : ffff55480ee9b000 x4 : fffffde7f94c6554
-[  214.665205][  C240] x3 : 0000000000000002 x2 : 0000000000000020
-[  214.671198][  C240] x1 : 0000000000000021 x0 : ffff3062a41ae5b8
-[  214.677191][  C240] Call trace:
-[  214.680320][  C240]  fput_many+0x8c/0xdc
-[  214.684230][  C240]  fput+0x1c/0xf0
-[  214.687707][  C240]  aio_complete_rw+0xd8/0x1fc
-[  214.692225][  C240]  blkdev_bio_end_io+0x98/0x140
-[  214.696917][  C240]  bio_endio+0x160/0x1bc
-[  214.701001][  C240]  blk_update_request+0x1c8/0x3bc
-[  214.705867][  C240]  scsi_end_request+0x3c/0x1f0
-[  214.710471][  C240]  scsi_io_completion+0x7c/0x1a0
-[  214.715249][  C240]  scsi_finish_command+0x104/0x140
-[  214.720200][  C240]  scsi_softirq_done+0x90/0x180
-[  214.724892][  C240]  blk_mq_complete_request+0x5c/0x70
-[  214.730016][  C240]  scsi_mq_done+0x48/0xac
-[  214.734194][  C240]  sas_scsi_task_done+0xbc/0x16c [libsas]
-[  214.739758][  C240]  slot_complete_v3_hw+0x260/0x760 [hisi_sas_v3_hw]
-[  214.746185][  C240]  cq_thread_v3_hw+0xbc/0x190 [hisi_sas_v3_hw]
-[  214.752179][  C240]  irq_thread_fn+0x34/0xa4
-[  214.756435][  C240]  irq_thread+0xc4/0x130
-[  214.760520][  C240]  kthread+0x108/0x13c
-[  214.764430][  C240]  ret_from_fork+0x10/0x18
+Since then, it has travelled quite a bit but it seems like an idle_cpu()
+check currently is sufficient to detect the need to bail out from an
+idle load balancing. To justify this removal, consider all the following
+case where an idle load balancing could race with a task wakeup:
 
-This is because in the hisi_sas driver, both the hardware interrupt
-handler and the interrupt thread are executed on the same CPU. In the
-performance test scenario, function irq_wait_for_interrupt() will always
-return 0 if lots of interrupts occurs and the CPU will be continuously
-consumed. As a result, the CPU cannot run the watchdog thread. When the
-watchdog time exceeds the specified time, call trace occurs.
+o Since commit f3dd3f674555b ("sched: Remove the limitation of WF_ON_CPU
+  on wakelist if wakee cpu is idle") a target perceived to be idle
+  (target_rq->nr_running == 0) will return true for
+  ttwu_queue_cond(target) which will offload the task wakeup to the idle
+  target via an IPI.
 
-To fix it, add cond_resched() to execute the watchdog thread.
+  In all such cases target_rq->ttwu_pending will be set to 1 before
+  queuing the wake function.
 
-Signed-off-by: Yihang Li <liyihang9@huawei.com>
-Link: https://lore.kernel.org/r/20241008021822.2617339-8-liyihang9@huawei.com
-Reviewed-by: Xiang Chen <chenxiang66@hisilicon.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+  If an idle load balance races here, following scenarios are possible:
+
+  - The CPU is not in TIF_POLLING_NRFLAG mode in which case an actual
+    IPI is sent to the CPU to wake it out of idle. If the
+    nohz_csd_func() queues before sched_ttwu_pending(), the idle load
+    balance will bail out since idle_cpu(target) returns 0 since
+    target_rq->ttwu_pending is 1. If the nohz_csd_func() is queued after
+    sched_ttwu_pending() it should see rq->nr_running to be non-zero and
+    bail out of idle load balancing.
+
+  - The CPU is in TIF_POLLING_NRFLAG mode and instead of an actual IPI,
+    the sender will simply set TIF_NEED_RESCHED for the target to put it
+    out of idle and flush_smp_call_function_queue() in do_idle() will
+    execute the call function. Depending on the ordering of the queuing
+    of nohz_csd_func() and sched_ttwu_pending(), the idle_cpu() check in
+    nohz_csd_func() should either see target_rq->ttwu_pending = 1 or
+    target_rq->nr_running to be non-zero if there is a genuine task
+    wakeup racing with the idle load balance kick.
+
+o The waker CPU perceives the target CPU to be busy
+  (targer_rq->nr_running != 0) but the CPU is in fact going idle and due
+  to a series of unfortunate events, the system reaches a case where the
+  waker CPU decides to perform the wakeup by itself in ttwu_queue() on
+  the target CPU but target is concurrently selected for idle load
+  balance (XXX: Can this happen? I'm not sure, but we'll consider the
+  mother of all coincidences to estimate the worst case scenario).
+
+  ttwu_do_activate() calls enqueue_task() which would increment
+  "rq->nr_running" post which it calls wakeup_preempt() which is
+  responsible for setting TIF_NEED_RESCHED (via a resched IPI or by
+  setting TIF_NEED_RESCHED on a TIF_POLLING_NRFLAG idle CPU) The key
+  thing to note in this case is that rq->nr_running is already non-zero
+  in case of a wakeup before TIF_NEED_RESCHED is set which would
+  lead to idle_cpu() check returning false.
+
+In all cases, it seems that need_resched() check is unnecessary when
+checking for idle_cpu() first since an impending wakeup racing with idle
+load balancer will either set the "rq->ttwu_pending" or indicate a newly
+woken task via "rq->nr_running".
+
+Chasing the reason why this check might have existed in the first place,
+I came across  Peter's suggestion on the fist iteration of Suresh's
+patch from 2011 [1] where the condition to raise the SCHED_SOFTIRQ was:
+
+	sched_ttwu_do_pending(list);
+
+	if (unlikely((rq->idle == current) &&
+	    rq->nohz_balance_kick &&
+	    !need_resched()))
+		raise_softirq_irqoff(SCHED_SOFTIRQ);
+
+Since the condition to raise the SCHED_SOFIRQ was preceded by
+sched_ttwu_do_pending() (which is equivalent of sched_ttwu_pending()) in
+the current upstream kernel, the need_resched() check was necessary to
+catch a newly queued task. Peter suggested modifying it to:
+
+	if (idle_cpu() && rq->nohz_balance_kick && !need_resched())
+		raise_softirq_irqoff(SCHED_SOFTIRQ);
+
+where idle_cpu() seems to have replaced "rq->idle == current" check.
+
+Even back then, the idle_cpu() check would have been sufficient to catch
+a new task being enqueued. Since commit b2a02fc43a1f ("smp: Optimize
+send_call_function_single_ipi()") overloads the interpretation of
+TIF_NEED_RESCHED for TIF_POLLING_NRFLAG idling, remove the
+need_resched() check in nohz_csd_func() to raise SCHED_SOFTIRQ based
+on Peter's suggestion.
+
+Fixes: b2a02fc43a1f ("smp: Optimize send_call_function_single_ipi()")
+Suggested-by: Peter Zijlstra <peterz@infradead.org>
+Signed-off-by: K Prateek Nayak <kprateek.nayak@amd.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://lore.kernel.org/r/20241119054432.6405-3-kprateek.nayak@amd.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/hisi_sas/hisi_sas_v3_hw.c | 1 +
- 1 file changed, 1 insertion(+)
+ kernel/sched/core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c b/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
-index 1651d03d3b463..3f3d768548c57 100644
---- a/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
-+++ b/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
-@@ -2402,6 +2402,7 @@ static irqreturn_t  cq_thread_v3_hw(int irq_no, void *p)
- 	/* update rd_point */
- 	cq->rd_point = rd_point;
- 	hisi_sas_write32(hisi_hba, COMPL_Q_0_RD_PTR + (0x14 * queue), rd_point);
-+	cond_resched();
+diff --git a/kernel/sched/core.c b/kernel/sched/core.c
+index 21b4f96d80a1b..7946c73dca31d 100644
+--- a/kernel/sched/core.c
++++ b/kernel/sched/core.c
+@@ -1106,7 +1106,7 @@ static void nohz_csd_func(void *info)
+ 	WARN_ON(!(flags & NOHZ_KICK_MASK));
  
- 	return IRQ_HANDLED;
- }
+ 	rq->idle_balance = idle_cpu(cpu);
+-	if (rq->idle_balance && !need_resched()) {
++	if (rq->idle_balance) {
+ 		rq->nohz_idle_balance = flags;
+ 		raise_softirq_irqoff(SCHED_SOFTIRQ);
+ 	}
 -- 
 2.43.0
 
