@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D92A021660B;
-	Thu, 12 Dec 2024 17:29:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DE7821660B;
+	Thu, 12 Dec 2024 17:29:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734024565; cv=none; b=LaqloDKUZTmMIY6FR1CN7Zhbr6x3RRF3xDycDHvFzhJtmr4lVS7zzVRwznqA64uDiS1OCJqI5O1rm15boFmuXInOjLpXwtX17wMsZWoV2UPBd6NE76nxuUnzLNLnZY9r/tKiSFXXCOPNrkXo+sDdmWKdmpw9jkcLkyWFSBkEarM=
+	t=1734024569; cv=none; b=PJp4M8exNnHriNZSlV/5jBOeEnMN5jC5VIZTmFinkbk+5eax2jm4pmDizw+eX8iExX6fR2rJUTj2Kt38nxOEszEeyz00kt+I4Kdz20cmbPyOUo80/lOvF6YOjQIH/QKIzEr+sV3qIjHAT/mJPRX7X0B0CYBKsCRs8sOo/iB5joE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734024565; c=relaxed/simple;
-	bh=cgOggIt8dmFMtb0BYarIgRkuR//zBvvoQK9hXgC2ujM=;
+	s=arc-20240116; t=1734024569; c=relaxed/simple;
+	bh=341aEGF+F8lH+/C8i8/DKbhrOwuqmzCS532CuikGd2o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LBQbNtsyq+KirV39kU2eCW6K9VEC0yadPu01qdrMPwgipcNQ/TKxNtLEF/83JAStr8TWXQD6K/Ua57ry4vH1r/MuVEl5/iiJNkiLlDCnc6LIEf6swpwnje4M3axMWgr5jgYD951GSbk48raZoBIP9FIMp4CUtsu6Y3YxFva3vus=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=irhom9gS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mbVgnsoF/0FUvv4FYXLuAg4EVPTOiOZDowBNu6NKgsWasympI7nZR2v2gFAH3UK4+jP0ehbcrx1vOi40uUtSVyVnD0gPe1mFaKEpq3HBvSvgnOeGcVOQDZZx8ZSiSS/AHyA5TtSk2MLEnt5yz7hE8gj71XaGbvvM3k85tfvMzpY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zrnsIth+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="irhom9gS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1092C4CED0;
-	Thu, 12 Dec 2024 17:29:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zrnsIth+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A6FDC4CED0;
+	Thu, 12 Dec 2024 17:29:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734024565;
-	bh=cgOggIt8dmFMtb0BYarIgRkuR//zBvvoQK9hXgC2ujM=;
+	s=korg; t=1734024568;
+	bh=341aEGF+F8lH+/C8i8/DKbhrOwuqmzCS532CuikGd2o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=irhom9gS/VmQ/oA4uPtcIQftrskqnHiUzJL07jfhDdMIfUGA2bB9SslH1n7CDDDDP
-	 XSdPnJXM48H2TTakSRbYjEWTAZNQCd9AB8j113noOACzAPOXS3yfhSspvsPxAgD2jB
-	 c8gbI5JNGKwMX1ZZDp33Bhpomb6BG+qGt+JA902Y=
+	b=zrnsIth+ZDZ9Ri3dka4zPJV5KuQefnwWq8IW4ygQBm223F3pRlwBzwHl0YpY3VArB
+	 A74kAuViQ1pflF7VyWPgTFFNHKX5LAigiHlW4XysvU+6W/r1ZNDkl71RTGnpt67aV5
+	 NOt+4FDUHJFWaP554eWojfiy607sitpmcdAfx4lQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Forestier <florian@forestier.re>,
-	Louis Leseur <louis.leseur@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 338/459] net/qed: allow old cards not supporting "num_images" to work
-Date: Thu, 12 Dec 2024 16:01:16 +0100
-Message-ID: <20241212144307.012994117@linuxfoundation.org>
+	Yuan Can <yuancan@huawei.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
+Subject: [PATCH 5.10 339/459] igb: Fix potential invalid memory access in igb_init_module()
+Date: Thu, 12 Dec 2024 16:01:17 +0100
+Message-ID: <20241212144307.053988148@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144253.511169641@linuxfoundation.org>
 References: <20241212144253.511169641@linuxfoundation.org>
@@ -52,46 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Louis Leseur <louis.leseur@gmail.com>
+From: Yuan Can <yuancan@huawei.com>
 
-[ Upstream commit 7a0ea70da56ee8c2716d0b79e9959d3c47efab62 ]
+[ Upstream commit 0566f83d206c7a864abcd741fe39d6e0ae5eef29 ]
 
-Commit 43645ce03e00 ("qed: Populate nvm image attribute shadow.")
-added support for populating flash image attributes, notably
-"num_images". However, some cards were not able to return this
-information. In such cases, the driver would return EINVAL, causing the
-driver to exit.
+The pci_register_driver() can fail and when this happened, the dca_notifier
+needs to be unregistered, otherwise the dca_notifier can be called when
+igb fails to install, resulting to invalid memory access.
 
-Add check to return EOPNOTSUPP instead of EINVAL when the card is not
-able to return these information. The caller function already handles
-EOPNOTSUPP without error.
-
-Fixes: 43645ce03e00 ("qed: Populate nvm image attribute shadow.")
-Co-developed-by: Florian Forestier <florian@forestier.re>
-Signed-off-by: Florian Forestier <florian@forestier.re>
-Signed-off-by: Louis Leseur <louis.leseur@gmail.com>
-Link: https://patch.msgid.link/20241128083633.26431-1-louis.leseur@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: bbd98fe48a43 ("igb: Fix DCA errors and do not use context index for 82576")
+Signed-off-by: Yuan Can <yuancan@huawei.com>
+Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/qlogic/qed/qed_mcp.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/intel/igb/igb_main.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/net/ethernet/qlogic/qed/qed_mcp.c b/drivers/net/ethernet/qlogic/qed/qed_mcp.c
-index 2cd14ee95c1ff..a0c09a9172dc0 100644
---- a/drivers/net/ethernet/qlogic/qed/qed_mcp.c
-+++ b/drivers/net/ethernet/qlogic/qed/qed_mcp.c
-@@ -3262,7 +3262,9 @@ int qed_mcp_bist_nvm_get_num_images(struct qed_hwfn *p_hwfn,
- 	if (rc)
- 		return rc;
+diff --git a/drivers/net/ethernet/intel/igb/igb_main.c b/drivers/net/ethernet/intel/igb/igb_main.c
+index 17cdda3fe415a..7b89dadd41baf 100644
+--- a/drivers/net/ethernet/intel/igb/igb_main.c
++++ b/drivers/net/ethernet/intel/igb/igb_main.c
+@@ -666,6 +666,10 @@ static int __init igb_init_module(void)
+ 	dca_register_notify(&dca_notifier);
+ #endif
+ 	ret = pci_register_driver(&igb_driver);
++#ifdef CONFIG_IGB_DCA
++	if (ret)
++		dca_unregister_notify(&dca_notifier);
++#endif
+ 	return ret;
+ }
  
--	if (((rsp & FW_MSG_CODE_MASK) != FW_MSG_CODE_OK))
-+	if (((rsp & FW_MSG_CODE_MASK) == FW_MSG_CODE_UNSUPPORTED))
-+		rc = -EOPNOTSUPP;
-+	else if (((rsp & FW_MSG_CODE_MASK) != FW_MSG_CODE_OK))
- 		rc = -EINVAL;
- 
- 	return rc;
 -- 
 2.43.0
 
