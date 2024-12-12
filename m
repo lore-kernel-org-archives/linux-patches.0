@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 091C922371A;
-	Thu, 12 Dec 2024 16:00:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B12BA2144C4;
+	Thu, 12 Dec 2024 16:00:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734019214; cv=none; b=C3/riTL4t6TzZoNhjJc5fwkQUHQjecCs8Tq1SwwKKi2DCwVjjutTAtAlseMxVoqv9VaWzs2j7zqHyQnNAcBaIBKtSrH5DzZaQpa5dSwaFNFpdBOkK4ztfOehyJ7hNa8hHMjpXEm5JGk9WDxo3magaFUwu+DXaLA+eNBQGoKkQxE=
+	t=1734019217; cv=none; b=OmJqySyaf1uGXpiKXjZ7LrGYXOr8+CQsFKXRd/vVUBSIVn5FP5Hd5804V0dSnfR6CuQ5J3Qg1VRTJOF7/1a8cSb/M0a+CmX7d665MHrRGWcU/I8/lLpgldqvyan0RiWrL0iB2+GUY7vxjfBd3U725IIUz/QFIxb6g3+U6+uzJQQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734019214; c=relaxed/simple;
-	bh=kYagJ4ppruJgk7fRxdSCymeHQ60KtSf1QWRhZFs/jkk=;
+	s=arc-20240116; t=1734019217; c=relaxed/simple;
+	bh=t19Esap7OtOgaIOfpLYKbuAokMaphQUVqP/y6pWrBgU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fUVCZInUqvpO3fGYE+8pIt5T1EY7ZCwWv+ZoyuytKOUmLnE8IDdbpjdFg++nNv9Qz16mVgKxFg5jeSzXBytaQf67gDRhKVC6SArQNwGNksvPGmJe80qwT2dH7KscSMSdUcaBAnJ9TJcCYbbvj88K9eMLcL1x+a7+6iLdU9EjVgg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zR08EhBf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=NutCf5HlBeODjAOgTDgW+zVdBa1ZFO5+ccdA+T7dcJEW/CPJLctF/OdVLQ16p4CMbmpwbNSo21RBPYrRseZAh+KGcIHUPXCA+FLAaat9KpSHH85ej2HXzOyGALdQGc9P3C85c/ojAzKw3XACGDpRoe54y7tHqCak2JLtjDd33Bc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Awl2tjTN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zR08EhBf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E22CC4CECE;
-	Thu, 12 Dec 2024 16:00:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Awl2tjTN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 021E2C4CED0;
+	Thu, 12 Dec 2024 16:00:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734019213;
-	bh=kYagJ4ppruJgk7fRxdSCymeHQ60KtSf1QWRhZFs/jkk=;
+	s=korg; t=1734019217;
+	bh=t19Esap7OtOgaIOfpLYKbuAokMaphQUVqP/y6pWrBgU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zR08EhBfu6am6BpH7aMUdF895bT+fdjYSs98I8a2IOwTxbaoBmLIjZdhLrxpQxXBE
-	 +uZU1Mv3i9FS8YXLn1pifN4vENUNiSOfLb0N90uavUlVY/nAk5IXQ2pku5MwgE/RIx
-	 FqA2jm1ze2dCoO1kacB+oQyWTBtyrZ4GEzlOTWBo=
+	b=Awl2tjTNxwnwWiyU+75taO2oPNr5KP5RDE7aIdWR7G49cgIGbb1ueKeEIk7S6HJAP
+	 DgCeTVCSjOVWoKhyMRYde6gwhxHfyjYRZk+xjjH5kZv2D2h/2iLMv2xyApqISOno61
+	 9ynugoNQZsalOdl2Qtl5DCsvAKhjJH8dAPjdlLiI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eduard Zingerman <eddyz87@gmail.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Tony Ambardar <tony.ambardar@gmail.com>,
-	Daniel Xu <dxu@dxuuu.xyz>,
+	=?UTF-8?q?Alexis=20Lothor=C3=A9=20 ?= <alexis.lothore@bootlin.com>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 148/772] selftests/bpf: Fix backtrace printing for selftests crashes
-Date: Thu, 12 Dec 2024 15:51:33 +0100
-Message-ID: <20241212144356.055634072@linuxfoundation.org>
+Subject: [PATCH 6.1 149/772] selftests/bpf: add missing header include for htons
+Date: Thu, 12 Dec 2024 15:51:34 +0100
+Message-ID: <20241212144356.095368441@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -47,108 +45,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eduard Zingerman <eddyz87@gmail.com>
+From: Alexis Lothoré (eBPF Foundation) <alexis.lothore@bootlin.com>
 
-[ Upstream commit 5bf1557e3d6a69113649d831276ea2f97585fc33 ]
+[ Upstream commit bc9b3fb827fceec4e05564d6e668280f4470ab5b ]
 
-test_progs uses glibc specific functions backtrace() and
-backtrace_symbols_fd() to print backtrace in case of SIGSEGV.
+Including the network_helpers.h header in tests can lead to the following
+build error:
 
-Recent commit (see fixes) updated test_progs.c to define stub versions
-of the same functions with attriubte "weak" in order to allow linking
-test_progs against musl libc. Unfortunately this broke the backtrace
-handling for glibc builds.
+./network_helpers.h: In function ‘csum_tcpudp_magic’:
+./network_helpers.h:116:14: error: implicit declaration of function \
+  ‘htons’ [-Werror=implicit-function-declaration]
+  116 |         s += htons(proto + len);
 
-As it turns out, glibc defines backtrace() and backtrace_symbols_fd()
-as weak:
+The error is avoided in many cases thanks to some other headers included
+earlier and bringing in arpa/inet.h (ie: test_progs.h).
 
-  $ llvm-readelf --symbols /lib64/libc.so.6 \
-     | grep -P '( backtrace_symbols_fd| backtrace)$'
-  4910: 0000000000126b40   161 FUNC    WEAK   DEFAULT    16 backtrace
-  6843: 0000000000126f90   852 FUNC    WEAK   DEFAULT    16 backtrace_symbols_fd
+Make sure that test_progs build success does not depend on header ordering
+by adding the missing header include in network_helpers.h
 
-So does test_progs:
-
- $ llvm-readelf --symbols test_progs \
-    | grep -P '( backtrace_symbols_fd| backtrace)$'
-  2891: 00000000006ad190    15 FUNC    WEAK   DEFAULT    13 backtrace
- 11215: 00000000006ad1a0    41 FUNC    WEAK   DEFAULT    13 backtrace_symbols_fd
-
-In such situation dynamic linker is not obliged to favour glibc
-implementation over the one defined in test_progs.
-
-Compiling with the following simple modification to test_progs.c
-demonstrates the issue:
-
-  $ git diff
-  ...
-  \--- a/tools/testing/selftests/bpf/test_progs.c
-  \+++ b/tools/testing/selftests/bpf/test_progs.c
-  \@@ -1817,6 +1817,7 @@ int main(int argc, char **argv)
-          if (err)
-                  return err;
-
-  +       *(int *)0xdeadbeef  = 42;
-          err = cd_flavor_subdir(argv[0]);
-          if (err)
-                  return err;
-
-  $ ./test_progs
-  [0]: Caught signal #11!
-  Stack trace:
-  <backtrace not supported>
-  Segmentation fault (core dumped)
-
-Resolve this by hiding stub definitions behind __GLIBC__ macro check
-instead of using "weak" attribute.
-
-Fixes: c9a83e76b5a9 ("selftests/bpf: Fix compile if backtrace support missing in libc")
-Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Tested-by: Tony Ambardar <tony.ambardar@gmail.com>
-Reviewed-by: Tony Ambardar <tony.ambardar@gmail.com>
-Acked-by: Daniel Xu <dxu@dxuuu.xyz>
-Link: https://lore.kernel.org/bpf/20241003210307.3847907-1-eddyz87@gmail.com
+Fixes: f6642de0c3e9 ("selftests/bpf: Add csum helpers")
+Signed-off-by: Alexis Lothoré (eBPF Foundation) <alexis.lothore@bootlin.com>
+Link: https://lore.kernel.org/r/20241008-network_helpers_fix-v1-1-2c2ae03df7ef@bootlin.com
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/test_progs.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ tools/testing/selftests/bpf/network_helpers.h | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/tools/testing/selftests/bpf/test_progs.c b/tools/testing/selftests/bpf/test_progs.c
-index 11d4c51c7d211..6068f5bde8fd5 100644
---- a/tools/testing/selftests/bpf/test_progs.c
-+++ b/tools/testing/selftests/bpf/test_progs.c
-@@ -16,11 +16,13 @@
+diff --git a/tools/testing/selftests/bpf/network_helpers.h b/tools/testing/selftests/bpf/network_helpers.h
+index 2582ec56dcc50..535b72623dd4b 100644
+--- a/tools/testing/selftests/bpf/network_helpers.h
++++ b/tools/testing/selftests/bpf/network_helpers.h
+@@ -1,6 +1,7 @@
+ /* SPDX-License-Identifier: GPL-2.0 */
+ #ifndef __NETWORK_HELPERS_H
+ #define __NETWORK_HELPERS_H
++#include <arpa/inet.h>
  #include <sys/socket.h>
- #include <sys/un.h>
- 
-+/* backtrace() and backtrace_symbols_fd() are glibc specific,
-+ * use header file when glibc is available and provide stub
-+ * implementations when another libc implementation is used.
-+ */
- #ifdef __GLIBC__
- #include <execinfo.h> /* backtrace */
--#endif
--
--/* Default backtrace funcs if missing at link */
-+#else
- __weak int backtrace(void **buffer, int size)
- {
- 	return 0;
-@@ -30,6 +32,7 @@ __weak void backtrace_symbols_fd(void *const *buffer, int size, int fd)
- {
- 	dprintf(fd, "<backtrace not supported>\n");
- }
-+#endif /*__GLIBC__ */
- 
- static bool verbose(void)
- {
+ #include <sys/types.h>
+ #include <linux/types.h>
 -- 
 2.43.0
 
