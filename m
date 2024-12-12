@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFF7B2210F2;
-	Thu, 12 Dec 2024 16:16:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63A75211A34;
+	Thu, 12 Dec 2024 16:16:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734020199; cv=none; b=fEjg5ToGcF3+ZrIhAJEi42HSlPrnpkb6npHxAKam+jgVhluSlNaq++aeju5yo9Rftky0Mf/uizNqmz4fk9INE5BhYmWb1pSvna/IakLkeXMlQypb7fBRJsiPx0m3rdz1GdsJK2SYs9rkoqGG+x5ilW4g9f1kXlwiZBeMlx7093s=
+	t=1734020202; cv=none; b=ZO+eewuBNyMOAH0qcMZahXZ3Kpv/fJ0WJqx5n87X+ZqGbgauSyApRjvdinu7JL5h/IufiOczf0EFs0chcJLuX7NuWWdkoMxcmMUV9V8w7dL0nvEW1jGSIXYVUWN3+Qx6GnYVBv/o/ZTCYUE86W+bmWFmQ2yv5b8Q35JdnpLSypw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734020199; c=relaxed/simple;
-	bh=T7oaNOCvUdu10PIIiClt//de6Td99PJIRPzY+HDU6sg=;
+	s=arc-20240116; t=1734020202; c=relaxed/simple;
+	bh=rd56mwIlO2VdkmOpyU8RRa4SZG7uPoYj9lsPtQUQ15w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XAUvARWOgv6Cx0cwDSdRCRObKMZnj/xx0MsuY/IJ7BBEdOKYrtVvg1RRs9N9HofkpHsdch1rl85yW1rVWArARqr7JtMH41OnSBwWHulY13+b9Hf1KALh8EGUP0ussl258ZfodshRvJz8ymo6AyQMDTIQDh4hm9eU0YfvzFOq6z4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rMs8NfLv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FRUwJKs9i3JofvQSWxvrlhH2kDGpriZ0Ly7M0hAJnH9HkRxVuO3BfvGLWRyu4vX7P3CIQitVn4r2cYPnaz81BlsiP4YE0BjVviVCKBfgAKyaY6uWSQzIIlWaA1pIADe+gLkaIY1aiJXabsglCUbK07kUgt75yvQoyL68sYaoP14=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wcSpbxDO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rMs8NfLv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4ED85C4CED0;
-	Thu, 12 Dec 2024 16:16:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wcSpbxDO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C58C1C4CECE;
+	Thu, 12 Dec 2024 16:16:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734020198;
-	bh=T7oaNOCvUdu10PIIiClt//de6Td99PJIRPzY+HDU6sg=;
+	s=korg; t=1734020202;
+	bh=rd56mwIlO2VdkmOpyU8RRa4SZG7uPoYj9lsPtQUQ15w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rMs8NfLvQT/rFSBn2kmA+mhk1NpeR1/C0dY1g9GTT5B5SmtKYtDF0mCFiS4g3r7qe
-	 UoMF11htNCipKH50lA7C60Kyp6JbfOtyABGmNuFOTcNMho2RO3QNb1zXW6TD4qqACc
-	 2ipw3UQ1O+3I1oYmcCvWq63CAcClghpsEW0fkBPU=
+	b=wcSpbxDOXeQQ9z+CVUS7UKDNF/zIz1p062Z4LHY3CLH5WNL4t7IZ9pYSbbjl7EGA/
+	 uIXrACZ51yybzpDfy9pPY0SXCJNHI456JZOlq6kVZZGMX7R04mlNVz5AhGI1sWnRbY
+	 yIE8mFUuMZi0v62J/NgL4N8x0AA+NtPN+cMxkTB0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Huacai Chen <chenhuacai@loongson.cn>,
-	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-Subject: [PATCH 6.1 404/772] sh: cpuinfo: Fix a warning for CONFIG_CPUMASK_OFFSTACK
-Date: Thu, 12 Dec 2024 15:55:49 +0100
-Message-ID: <20241212144406.619794389@linuxfoundation.org>
+	Ming Lei <ming.lei@redhat.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.1 405/772] ublk: fix ublk_ch_mmap() for 64K page size
+Date: Thu, 12 Dec 2024 15:55:50 +0100
+Message-ID: <20241212144406.659624218@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -50,64 +50,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Huacai Chen <chenhuacai@loongson.cn>
+From: Ming Lei <ming.lei@redhat.com>
 
-commit 3c891f7c6a4e90bb1199497552f24b26e46383bc upstream.
+commit d369735e02ef122d19d4c3d093028da0eb400636 upstream.
 
-When CONFIG_CPUMASK_OFFSTACK and CONFIG_DEBUG_PER_CPU_MAPS are selected,
-cpu_max_bits_warn() generates a runtime warning similar as below when
-showing /proc/cpuinfo. Fix this by using nr_cpu_ids (the runtime limit)
-instead of NR_CPUS to iterate CPUs.
+In ublk_ch_mmap(), queue id is calculated in the following way:
 
-[    3.052463] ------------[ cut here ]------------
-[    3.059679] WARNING: CPU: 3 PID: 1 at include/linux/cpumask.h:108 show_cpuinfo+0x5e8/0x5f0
-[    3.070072] Modules linked in: efivarfs autofs4
-[    3.076257] CPU: 0 PID: 1 Comm: systemd Not tainted 5.19-rc5+ #1052
-[    3.099465] Stack : 9000000100157b08 9000000000f18530 9000000000cf846c 9000000100154000
-[    3.109127]         9000000100157a50 0000000000000000 9000000100157a58 9000000000ef7430
-[    3.118774]         90000001001578e8 0000000000000040 0000000000000020 ffffffffffffffff
-[    3.128412]         0000000000aaaaaa 1ab25f00eec96a37 900000010021de80 900000000101c890
-[    3.138056]         0000000000000000 0000000000000000 0000000000000000 0000000000aaaaaa
-[    3.147711]         ffff8000339dc220 0000000000000001 0000000006ab4000 0000000000000000
-[    3.157364]         900000000101c998 0000000000000004 9000000000ef7430 0000000000000000
-[    3.167012]         0000000000000009 000000000000006c 0000000000000000 0000000000000000
-[    3.176641]         9000000000d3de08 9000000001639390 90000000002086d8 00007ffff0080286
-[    3.186260]         00000000000000b0 0000000000000004 0000000000000000 0000000000071c1c
-[    3.195868]         ...
-[    3.199917] Call Trace:
-[    3.203941] [<90000000002086d8>] show_stack+0x38/0x14c
-[    3.210666] [<9000000000cf846c>] dump_stack_lvl+0x60/0x88
-[    3.217625] [<900000000023d268>] __warn+0xd0/0x100
-[    3.223958] [<9000000000cf3c90>] warn_slowpath_fmt+0x7c/0xcc
-[    3.231150] [<9000000000210220>] show_cpuinfo+0x5e8/0x5f0
-[    3.238080] [<90000000004f578c>] seq_read_iter+0x354/0x4b4
-[    3.245098] [<90000000004c2e90>] new_sync_read+0x17c/0x1c4
-[    3.252114] [<90000000004c5174>] vfs_read+0x138/0x1d0
-[    3.258694] [<90000000004c55f8>] ksys_read+0x70/0x100
-[    3.265265] [<9000000000cfde9c>] do_syscall+0x7c/0x94
-[    3.271820] [<9000000000202fe4>] handle_syscall+0xc4/0x160
-[    3.281824] ---[ end trace 8b484262b4b8c24c ]---
+	(vma->vm_pgoff << PAGE_SHIFT) / `max_cmd_buf_size`
+
+'max_cmd_buf_size' is equal to
+
+	`UBLK_MAX_QUEUE_DEPTH * sizeof(struct ublksrv_io_desc)`
+
+and UBLK_MAX_QUEUE_DEPTH is 4096 and part of UAPI, so 'max_cmd_buf_size'
+is always page aligned in 4K page size kernel. However, it isn't true in
+64K page size kernel.
+
+Fixes the issue by always rounding up 'max_cmd_buf_size' with PAGE_SIZE.
 
 Cc: stable@vger.kernel.org
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
-Reviewed-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-Tested-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-Signed-off-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+Fixes: 71f28f3136af ("ublk_drv: add io_uring based userspace block driver")
+Signed-off-by: Ming Lei <ming.lei@redhat.com>
+Link: https://lore.kernel.org/r/20241111110718.1394001-1-ming.lei@redhat.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/sh/kernel/cpu/proc.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/block/ublk_drv.c |   15 ++++++++++++---
+ 1 file changed, 12 insertions(+), 3 deletions(-)
 
---- a/arch/sh/kernel/cpu/proc.c
-+++ b/arch/sh/kernel/cpu/proc.c
-@@ -132,7 +132,7 @@ static int show_cpuinfo(struct seq_file
- 
- static void *c_start(struct seq_file *m, loff_t *pos)
- {
--	return *pos < NR_CPUS ? cpu_data + *pos : NULL;
-+	return *pos < nr_cpu_ids ? cpu_data + *pos : NULL;
+--- a/drivers/block/ublk_drv.c
++++ b/drivers/block/ublk_drv.c
+@@ -325,12 +325,21 @@ static inline char *ublk_queue_cmd_buf(s
+ 	return ublk_get_queue(ub, q_id)->io_cmd_buf;
  }
- static void *c_next(struct seq_file *m, void *v, loff_t *pos)
+ 
++static inline int __ublk_queue_cmd_buf_size(int depth)
++{
++	return round_up(depth * sizeof(struct ublksrv_io_desc), PAGE_SIZE);
++}
++
+ static inline int ublk_queue_cmd_buf_size(struct ublk_device *ub, int q_id)
  {
+ 	struct ublk_queue *ubq = ublk_get_queue(ub, q_id);
+ 
+-	return round_up(ubq->q_depth * sizeof(struct ublksrv_io_desc),
+-			PAGE_SIZE);
++	return __ublk_queue_cmd_buf_size(ubq->q_depth);
++}
++
++static int ublk_max_cmd_buf_size(void)
++{
++	return __ublk_queue_cmd_buf_size(UBLK_MAX_QUEUE_DEPTH);
+ }
+ 
+ static inline bool ublk_queue_can_use_recovery_reissue(
+@@ -930,7 +939,7 @@ static int ublk_ch_mmap(struct file *fil
+ {
+ 	struct ublk_device *ub = filp->private_data;
+ 	size_t sz = vma->vm_end - vma->vm_start;
+-	unsigned max_sz = UBLK_MAX_QUEUE_DEPTH * sizeof(struct ublksrv_io_desc);
++	unsigned max_sz = ublk_max_cmd_buf_size();
+ 	unsigned long pfn, end, phys_off = vma->vm_pgoff << PAGE_SHIFT;
+ 	int q_id, ret = 0;
+ 
 
 
