@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9478F2153EC;
-	Thu, 12 Dec 2024 17:32:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CC36213E6F;
+	Thu, 12 Dec 2024 17:32:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734024735; cv=none; b=snNxmq+e4ih2AQBnoPF1hGIgZ6VlVVzaXXmDkyjy8fvEuI4U1wkzfyPf6cHUXSP8jtc/8O3DyoRnPBRO4rza7t8/nFqM48icWn3PP4jsY4GhNTwvuiEWToCoOxMwcH5HotWW/knyAjFZXejw/DntBQEas0jgJ26hu/6bG39kgEo=
+	t=1734024738; cv=none; b=OBZZuPyTW035++8H4nKwX0G691jLCsBMAy0BiOlfDNWkpmaymYQWXmOH3u9cczBcVklFygREVVzWFDjNzqqd6yAz7G6a8dofvyUEc5KWlCu30rLvYT6qouPBW4YD6KYeGIojBYnH555nEMHnj9kJprCvVpS+tUs72ZFBAM10ljs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734024735; c=relaxed/simple;
-	bh=qO1tKx8zIn9EMGYZ84eg0rGvRV5O2nFxuMQdBa3oAxk=;
+	s=arc-20240116; t=1734024738; c=relaxed/simple;
+	bh=QzmlyQ+sIlatfFgy5H1f1PkNLmEcrD72h4sJpqTZslE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n4L2KPdrwlzDz8UKQzdaDayTXo6Bn5nF10fPKd6AabdY5pcGUXFeZ2fFs6OPqHyzaH3gigQ/Z+fM+L9hqroebMsRtr4EEMaWuQWcX5O4sIJ+474HEvnhROi0PG51g+cs+63iz9D3cYiIVvdlnKk6Y/8NsjtkvQS3JKEBtKcEnGk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UWJSwASt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bgcbHu2/8+19zL3KaSfPQifc2zRfUFzuzsQ9LULORgZXQj58Lu8HAWMTqCsekdCrweV+WgxAij0pC+2GOqC0XApAYUkPB5exqUvgVXm1phFqXV5UTfweN4//S5mseNw2CQ0Xx0d8oWVkO5nhquq/6rSL+d7aBsLv1lZeF7vqqas=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GxzIKjE8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UWJSwASt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1490DC4CECE;
-	Thu, 12 Dec 2024 17:32:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GxzIKjE8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A3C7C4CECE;
+	Thu, 12 Dec 2024 17:32:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734024735;
-	bh=qO1tKx8zIn9EMGYZ84eg0rGvRV5O2nFxuMQdBa3oAxk=;
+	s=korg; t=1734024738;
+	bh=QzmlyQ+sIlatfFgy5H1f1PkNLmEcrD72h4sJpqTZslE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UWJSwAStf9YJryaXNsjVV+J+3UCWV20lzlggFFC47SwZfitoAPwhcu6wDw2StzaQo
-	 ps4oEsOm6Sz/ZdlRWhFt01KZzrLqpcPbr2jb0Yvq/JbkfgZ8AhLX6hruNg/GriKjMT
-	 09Y0PKNv9jS7LyiBBv9X+KuKe/Sxa7SmS3IEWV4s=
+	b=GxzIKjE8S9sjKvQpqvGaPKOLIsNcht4pSHQMMTMzfHvggvJ+11j/a9GFARYmi/IBt
+	 1J/EQx0gp6PEltQ3rd29u27wo+4CTXFrrfXeyUryZFvMDzy8tMMCwbX+mTMsuOwrid
+	 msWXFPkTgq2c1lgUsuU19CzKctkYZXsGdK+k95gc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Ignat Korchagin <ignat@cloudflare.com>,
+	Vincent Mailhol <mailhol.vincent@wanadoo.fr>,
 	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Eric Dumazet <edumazet@google.com>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 395/459] Bluetooth: L2CAP: do not leave dangling sk pointer on error in l2cap_sock_create()
-Date: Thu, 12 Dec 2024 16:02:13 +0100
-Message-ID: <20241212144309.367995420@linuxfoundation.org>
+Subject: [PATCH 5.10 396/459] net: af_can: do not leave a dangling sk pointer in can_create()
+Date: Thu, 12 Dec 2024 16:02:14 +0100
+Message-ID: <20241212144309.406505337@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144253.511169641@linuxfoundation.org>
 References: <20241212144253.511169641@linuxfoundation.org>
@@ -55,35 +56,35 @@ Content-Transfer-Encoding: 8bit
 
 From: Ignat Korchagin <ignat@cloudflare.com>
 
-[ Upstream commit 7c4f78cdb8e7501e9f92d291a7d956591bf73be9 ]
+[ Upstream commit 811a7ca7320c062e15d0f5b171fe6ad8592d1434 ]
 
-bt_sock_alloc() allocates the sk object and attaches it to the provided
-sock object. On error l2cap_sock_alloc() frees the sk object, but the
-dangling pointer is still attached to the sock object, which may create
-use-after-free in other code.
+On error can_create() frees the allocated sk object, but sock_init_data()
+has already attached it to the provided sock object. This will leave a
+dangling sk pointer in the sock object and may cause use-after-free later.
 
 Signed-off-by: Ignat Korchagin <ignat@cloudflare.com>
+Reviewed-by: Vincent Mailhol <mailhol.vincent@wanadoo.fr>
 Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20241014153808.51894-3-ignat@cloudflare.com
+Reviewed-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Link: https://patch.msgid.link/20241014153808.51894-5-ignat@cloudflare.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/l2cap_sock.c | 1 +
+ net/can/af_can.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/net/bluetooth/l2cap_sock.c b/net/bluetooth/l2cap_sock.c
-index 93afa52c04660..cbaefbba6f4db 100644
---- a/net/bluetooth/l2cap_sock.c
-+++ b/net/bluetooth/l2cap_sock.c
-@@ -1864,6 +1864,7 @@ static struct sock *l2cap_sock_alloc(struct net *net, struct socket *sock,
- 	chan = l2cap_chan_create();
- 	if (!chan) {
- 		sk_free(sk);
+diff --git a/net/can/af_can.c b/net/can/af_can.c
+index 79f24c6f43c8c..de47c16b134bf 100644
+--- a/net/can/af_can.c
++++ b/net/can/af_can.c
+@@ -171,6 +171,7 @@ static int can_create(struct net *net, struct socket *sock, int protocol,
+ 		/* release sk on errors */
+ 		sock_orphan(sk);
+ 		sock_put(sk);
 +		sock->sk = NULL;
- 		return NULL;
  	}
  
+  errout:
 -- 
 2.43.0
 
