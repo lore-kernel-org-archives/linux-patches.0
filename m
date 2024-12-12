@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2198B2144C4;
-	Thu, 12 Dec 2024 16:00:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C5126F2FE;
+	Thu, 12 Dec 2024 16:00:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734019233; cv=none; b=HwEnXao/SFj86Gy+FniEKMu8j9jdDtTKFyzqhAnYHH6vNFsGWMEhWVkTxwa9Kx6zdB4zISbUiaMX9KoDiGlVp2vZUzPTKLFUtQaYPmqnvpsdM92hzALy2e94ZmExjap/HpcRIxwe5BatWYwjTHGSSptEXT8fxXr4hzdrx4eZkWQ=
+	t=1734019236; cv=none; b=ROJV9sprqqHhjp6UKksHKVpcJcorlIZmokoeu2SHV6NyqPxt0oFl8NIJV9igEjffM6d5GmzW19JZMKWFP7xPCAAG2TUdf/Uolir3ftnHH37s/QqZSMYt3Q0LSSiV06VnpbvXt+ZfDQ1B9niqTcfZ4fabKNRWn0wONFYD5WVQc5Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734019233; c=relaxed/simple;
-	bh=9ck7jag7Q1+IbMtRRE1ELj6pqeZ+Coq/n4u0A03JWhc=;
+	s=arc-20240116; t=1734019236; c=relaxed/simple;
+	bh=hLrf19LJ8FWF3KZdtsXgnH/i1fPhezgK+YlvXUGneQ8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tumOFCaPb/Q4SiuhUxehfcFo8XBnA3PvIRVPuUTqfBCTLvYp7D3zPJJZ7ufK8gVLjXbJAKdRGAjZ//xiEuWuCSsw+IDdKyol67ir+96fsFhRpX2i3fwuHNX0OyjnO5mYZuHINq+m9XjmjaTo+txUo9V0FO4T2HtmnOTXGEJxKh4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PDXp8Gnv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=N9CblI4HhvFy6VaXp0h+dNfNILbSbtv+74ZVm+Pkm/yIA0pbOAH3Sg2zyjJY4KDjbnAODiBHRurpuUm+qawgEVybqAtqCx7I6Anw8raUJY0GDnnBRBZzMLFsYqNHSEmaOWKo1y9IAYtmEsQqMJdrOdg71PtRNsMr5/NnzI6qDL0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K+0216Ya; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PDXp8Gnv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA76CC4CECE;
-	Thu, 12 Dec 2024 16:00:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K+0216Ya"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68A70C4CED3;
+	Thu, 12 Dec 2024 16:00:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734019232;
-	bh=9ck7jag7Q1+IbMtRRE1ELj6pqeZ+Coq/n4u0A03JWhc=;
+	s=korg; t=1734019235;
+	bh=hLrf19LJ8FWF3KZdtsXgnH/i1fPhezgK+YlvXUGneQ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PDXp8GnvSrRabak9IMD90R8SEF9kMb00VWsEf7PzBL+d6d/XeOaWm6XECAmwq3FBy
-	 g2QG+ahcz0uBXwmgJ3jl9ztWSPJ/uKAQxm78079YoxdpZaHkpfe6Inf8/nFW57JEhZ
-	 WR1qRcBU1sPBkVHQZ2TPLfN4HrhRYi5YPmvZBexg=
+	b=K+0216YaBIrZSmDT45V75g+4GSFOXm9hXlmirQy5YCwh8vjvoj0e4SstOeOMTYBuW
+	 GE/LfWAbYoaLXckagrmN06LbzjstvMN2uICGTys+JEL8W37nWTQwhOwQtgk6bQrV8t
+	 4qKgnmHA7Yj1WotP2xeDXVheMRJEdW65CMSKErIY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kiszka <jan.kiszka@siemens.com>,
-	Aradhya Bhatia <a-bhatia1@ti.com>,
-	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Dom Cobley <popcornmix@gmail.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Dave Stevenson <dave.stevenson@raspberrypi.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 153/772] drm/bridge: tc358767: Fix link properties discovery
-Date: Thu, 12 Dec 2024 15:51:38 +0100
-Message-ID: <20241212144356.252710886@linuxfoundation.org>
+Subject: [PATCH 6.1 127/772] drm/vc4: hdmi: Avoid hang with debug registers when suspended
+Date: Thu, 12 Dec 2024 15:51:12 +0100
+Message-ID: <20241212144355.175587513@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -53,58 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+From: Dom Cobley <popcornmix@gmail.com>
 
-[ Upstream commit 2d343723c7e1f9f6d64f721f07cfdfc2993758d1 ]
+[ Upstream commit 223ee2567a55e4f80315c768d2969e6a3b9fb23d ]
 
-When a display controller driver uses DRM_BRIDGE_ATTACH_NO_CONNECTOR,
-tc358767 will behave properly and skip the creation of the connector.
+Trying to read /sys/kernel/debug/dri/1/hdmi1_regs
+when the hdmi is disconnected results in a fatal system hang.
 
-However, tc_get_display_props(), which is used to find out about the DP
-monitor and link, is only called from two places: .atomic_enable() and
-tc_connector_get_modes(). The latter is only used when tc358767 creates
-its own connector, i.e. when DRM_BRIDGE_ATTACH_NO_CONNECTOR is _not_
-set.
+This is due to the pm suspend code disabling the dvp clock.
+That is just a gate of the 108MHz clock in DVP_HT_RPI_MISC_CONFIG,
+which results in accesses hanging AXI bus.
 
-Thus, the driver never finds out the link properties before get_edid()
-is called. With num_lanes of 0 and link_rate of 0 there are not many
-valid modes...
+Protect against this.
 
-Fix this by adding tc_get_display_props() call at the beginning of
-get_edid(), so that we have up to date information before looking at the
-modes.
-
-Reported-by: Jan Kiszka <jan.kiszka@siemens.com>
-Closes: https://lore.kernel.org/all/24282420-b4dd-45b3-bb1c-fc37fe4a8205@siemens.com/
-Fixes: de5e6c027ae6 ("drm/bridge: tc358767: add drm_panel_bridge support")
-Reviewed-by: Aradhya Bhatia <a-bhatia1@ti.com>
-Tested-by: Jan Kiszka <jan.kiszka@siemens.com>
-Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20231108-tc358767-v2-2-25c5f70a2159@ideasonboard.com
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Fixes: 25eb441d55d4 ("drm/vc4: hdmi: Add all the vc5 HDMI registers into the debugfs dumps")
+Signed-off-by: Dom Cobley <popcornmix@gmail.com>
+Reviewed-by: Maxime Ripard <mripard@kernel.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240621152055.4180873-17-dave.stevenson@raspberrypi.com
+Signed-off-by: Dave Stevenson <dave.stevenson@raspberrypi.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/tc358767.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/gpu/drm/vc4/vc4_hdmi.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/gpu/drm/bridge/tc358767.c b/drivers/gpu/drm/bridge/tc358767.c
-index 0af2bd8706e44..a6b3af902642f 100644
---- a/drivers/gpu/drm/bridge/tc358767.c
-+++ b/drivers/gpu/drm/bridge/tc358767.c
-@@ -1579,6 +1579,13 @@ static struct edid *tc_get_edid(struct drm_bridge *bridge,
- 				struct drm_connector *connector)
- {
- 	struct tc_data *tc = bridge_to_tc(bridge);
-+	int ret;
-+
-+	ret = tc_get_display_props(tc);
-+	if (ret < 0) {
-+		dev_err(tc->dev, "failed to read display props: %d\n", ret);
-+		return 0;
-+	}
+diff --git a/drivers/gpu/drm/vc4/vc4_hdmi.c b/drivers/gpu/drm/vc4/vc4_hdmi.c
+index 971801acbde60..649fd5c03f21d 100644
+--- a/drivers/gpu/drm/vc4/vc4_hdmi.c
++++ b/drivers/gpu/drm/vc4/vc4_hdmi.c
+@@ -170,6 +170,8 @@ static int vc4_hdmi_debugfs_regs(struct seq_file *m, void *unused)
+ 	if (!drm_dev_enter(drm, &idx))
+ 		return -ENODEV;
  
- 	return drm_get_edid(connector, &tc->aux.ddc);
- }
++	WARN_ON(pm_runtime_resume_and_get(&vc4_hdmi->pdev->dev));
++
+ 	drm_print_regset32(&p, &vc4_hdmi->hdmi_regset);
+ 	drm_print_regset32(&p, &vc4_hdmi->hd_regset);
+ 	drm_print_regset32(&p, &vc4_hdmi->cec_regset);
+@@ -179,6 +181,8 @@ static int vc4_hdmi_debugfs_regs(struct seq_file *m, void *unused)
+ 	drm_print_regset32(&p, &vc4_hdmi->ram_regset);
+ 	drm_print_regset32(&p, &vc4_hdmi->rm_regset);
+ 
++	pm_runtime_put(&vc4_hdmi->pdev->dev);
++
+ 	drm_dev_exit(idx);
+ 
+ 	return 0;
 -- 
 2.43.0
 
