@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B68B21E085;
-	Thu, 12 Dec 2024 16:07:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DBF3223E71;
+	Thu, 12 Dec 2024 16:07:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734019655; cv=none; b=MBEXKJoc+dhU1jh9LhVIJXWpqKJk00hCnZsu9Hdubxlhk2fqnjZQDHTmQhGbwQMy6WX0wPeWmDWZ3k9z4pWorPmW9zc6G445G7jb3iax29TUwFopp+WGZIzsY8utYhsAUqWeDCYFJMkuRCrX36tMHgaa6t8RewhEQeKvlnGegv0=
+	t=1734019659; cv=none; b=Sv90TuS+AEh04uzl01vTlfgzgG06LzY6GF+H1xKZ5ni9zMX9n8+uQ9IG109f8q5POoMDzJ3MWE4mADo2GptVYSUayOPrCWawK4Lpi4vbqMz/wfo6NZr+IVfePcqZgk2FQ0Iuxerl3S6+mPVos1b5b7CBR82ucphPIzIbCzLB25s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734019655; c=relaxed/simple;
-	bh=1LSG3thOsG0B4uNnVnOti/l5D5a57JO+RtLH/AYP2tw=;
+	s=arc-20240116; t=1734019659; c=relaxed/simple;
+	bh=hJYDUKstk0Dp5mxWZtfeIiqPOFwxl59MJw3jc8uKd6A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tmm4JZhX1J45u5QhGHxb9xOZ5gjdfBcrEhYqpgE37748AoL2JbDO5NlBkCsnEFL4/4+bPi1BJL8cnFyLRKru2AO0ek++0KA4TUABx9H3MzrPtOc5ISKhS2ts8h1NICdWXZ+aQvevCfXS2OfF1MBMpUZSNGa+gXKx4ReoYIc+ugU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hbEnUBA9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VTefGNE6qvX5jGzhsS1qcWJ/DVm5ux8uYVXgizOrP29f0Xs6dfqsqWlY8C/fNxprN6xIdpsFo9l7oCS0aBWk7mQwfJAWXwl/of889Z4QRd4hJEN78gXBS/lS/MUxubG4/VYBMT8eZw4XXwX/Dsjb8s4Jxwvx5fNysF0tIs/NKlI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IVu/D15Q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hbEnUBA9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7492EC4CECE;
-	Thu, 12 Dec 2024 16:07:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IVu/D15Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EC81C4CECE;
+	Thu, 12 Dec 2024 16:07:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734019655;
-	bh=1LSG3thOsG0B4uNnVnOti/l5D5a57JO+RtLH/AYP2tw=;
+	s=korg; t=1734019658;
+	bh=hJYDUKstk0Dp5mxWZtfeIiqPOFwxl59MJw3jc8uKd6A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hbEnUBA9SBoxyANAV3IPriWiCUNaQBF+IO+0KofKBD9Qot2OhAUYnBTdTQixcedlV
-	 07UPAUgGwGI7s8hPrQHdqqF6aa5hS4YTRXtfMgW8VJmZGGtYnNx9w3B4PBr2Sff66L
-	 r9WHDRy+UxhQ/SONb29ESoC1qtsZZr1dYKHaxiRk=
+	b=IVu/D15Q/aTon1k2heTei/hms8yH8vxTso7rSKVvtusQzSXr17ZQZMoelFZ7bg6iH
+	 6iCIIN1g3W+ClDNECdYvwfcxMudD0Uc1M5NNClp5mvllOTRcElA67dALZ/d8ntBXlu
+	 YqvO4AIH7BRtv7EloCSIi4ff+EyZONDt9KHPssQQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nuno Sa <nuno.sa@analog.com>,
-	Conor Dooley <conor.dooley@microchip.com>,
-	Stephen Boyd <sboyd@kernel.org>,
+	Qi Han <hanqi@vivo.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 256/772] dt-bindings: clock: axi-clkgen: include AXI clk
-Date: Thu, 12 Dec 2024 15:53:21 +0100
-Message-ID: <20241212144400.494539623@linuxfoundation.org>
+Subject: [PATCH 6.1 265/772] f2fs: compress: fix inconsistent update of i_blocks in release_compress_blocks and reserve_compress_blocks
+Date: Thu, 12 Dec 2024 15:53:30 +0100
+Message-ID: <20241212144400.862396912@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -52,70 +52,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nuno Sa <nuno.sa@analog.com>
+From: Qi Han <hanqi@vivo.com>
 
-[ Upstream commit 47f3f5a82a31527e027929c5cec3dd1ef5ef30f5 ]
+[ Upstream commit 26413ce18e85de3dda2cd3d72c3c3e8ab8f4f996 ]
 
-In order to access the registers of the HW, we need to make sure that
-the AXI bus clock is enabled. Hence let's increase the number of clocks
-by one and add clock-names to differentiate between parent clocks and
-the bus clock.
+After release a file and subsequently reserve it, the FSCK flag is set
+when the file is deleted, as shown in the following backtrace:
 
-Fixes: 0e646c52cf0e ("clk: Add axi-clkgen driver")
-Signed-off-by: Nuno Sa <nuno.sa@analog.com>
-Link: https://lore.kernel.org/r/20241029-axi-clkgen-fix-axiclk-v2-1-bc5e0733ad76@analog.com
-Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+F2FS-fs (dm-48): Inconsistent i_blocks, ino:401231, iblocks:1448, sectors:1472
+fs_rec_info_write_type+0x58/0x274
+f2fs_rec_info_write+0x1c/0x2c
+set_sbi_flag+0x74/0x98
+dec_valid_block_count+0x150/0x190
+f2fs_truncate_data_blocks_range+0x2d4/0x3cc
+f2fs_do_truncate_blocks+0x2fc/0x5f0
+f2fs_truncate_blocks+0x68/0x100
+f2fs_truncate+0x80/0x128
+f2fs_evict_inode+0x1a4/0x794
+evict+0xd4/0x280
+iput+0x238/0x284
+do_unlinkat+0x1ac/0x298
+__arm64_sys_unlinkat+0x48/0x68
+invoke_syscall+0x58/0x11c
+
+For clusters of the following type, i_blocks are decremented by 1 and
+i_compr_blocks are incremented by 7 in release_compress_blocks, while
+updates to i_blocks and i_compr_blocks are skipped in reserve_compress_blocks.
+
+raw node:
+D D D D D D D D
+after compress:
+C D D D D D D D
+after reserve:
+C D D D D D D D
+
+Let's update i_blocks and i_compr_blocks properly in reserve_compress_blocks.
+
+Fixes: eb8fbaa53374 ("f2fs: compress: fix to check unreleased compressed cluster")
+Signed-off-by: Qi Han <hanqi@vivo.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../bindings/clock/adi,axi-clkgen.yaml        | 22 +++++++++++++++----
- 1 file changed, 18 insertions(+), 4 deletions(-)
+ fs/f2fs/file.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/Documentation/devicetree/bindings/clock/adi,axi-clkgen.yaml b/Documentation/devicetree/bindings/clock/adi,axi-clkgen.yaml
-index 983033fe5b177..592285f616f57 100644
---- a/Documentation/devicetree/bindings/clock/adi,axi-clkgen.yaml
-+++ b/Documentation/devicetree/bindings/clock/adi,axi-clkgen.yaml
-@@ -26,9 +26,21 @@ properties:
-     description:
-       Specifies the reference clock(s) from which the output frequency is
-       derived. This must either reference one clock if only the first clock
--      input is connected or two if both clock inputs are connected.
--    minItems: 1
--    maxItems: 2
-+      input is connected or two if both clock inputs are connected. The last
-+      clock is the AXI bus clock that needs to be enabled so we can access the
-+      core registers.
-+    minItems: 2
-+    maxItems: 3
-+
-+  clock-names:
-+    oneOf:
-+      - items:
-+          - const: clkin1
-+          - const: s_axi_aclk
-+      - items:
-+          - const: clkin1
-+          - const: clkin2
-+          - const: s_axi_aclk
+diff --git a/fs/f2fs/file.c b/fs/f2fs/file.c
+index 6a2b5fcbe6799..a25b9bff76ffc 100644
+--- a/fs/f2fs/file.c
++++ b/fs/f2fs/file.c
+@@ -3703,7 +3703,7 @@ static int reserve_compress_blocks(struct dnode_of_data *dn, pgoff_t count,
+ 		to_reserved = cluster_size - compr_blocks - reserved;
  
-   '#clock-cells':
-     const: 0
-@@ -40,6 +52,7 @@ required:
-   - compatible
-   - reg
-   - clocks
-+  - clock-names
-   - '#clock-cells'
- 
- additionalProperties: false
-@@ -50,5 +63,6 @@ examples:
-       compatible = "adi,axi-clkgen-2.00.a";
-       #clock-cells = <0>;
-       reg = <0xff000000 0x1000>;
--      clocks = <&osc 1>;
-+      clocks = <&osc 1>, <&clkc 15>;
-+      clock-names = "clkin1", "s_axi_aclk";
-     };
+ 		/* for the case all blocks in cluster were reserved */
+-		if (to_reserved == 1) {
++		if (reserved && to_reserved == 1) {
+ 			dn->ofs_in_node += cluster_size;
+ 			goto next;
+ 		}
 -- 
 2.43.0
 
