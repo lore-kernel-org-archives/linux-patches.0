@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AEDF23EA7F;
-	Thu, 12 Dec 2024 16:26:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB8122054EF;
+	Thu, 12 Dec 2024 16:26:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734020774; cv=none; b=TNOTrVMn2nrMv0S1eF9IFsy9BjnkKwySUGNqtKdC67M+TAgOnk9TpMEIbhpsg500aQH9diBRMfTf9YIU0G+oEhb/wPmNm9a08Dslumpd6ge2L5x9x4/W1hVY5k9s0Qrnf6CLKLAWegpRqiw3A1EnOoF1abGktAVfg03xgACxiWE=
+	t=1734020777; cv=none; b=NCN7t1+30YlKed+QUv8+OULfi/uc1ASYQAm8m+ZRz2lRy2N113c5UPeeAw9j/uKQ0LEsgVEwbjYD8yoINrg9z1usRsY+/Db5VejYzzWI+sUgKSzOIG0AzKoYDpwMwTW3jlSbFewy99clX7sS/Rgkyz4UTbQa/X74HJLhu0PTf5Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734020774; c=relaxed/simple;
-	bh=EzVD0XXWuU0UwdD88ve0SmrJRywOYqnY0l6kx0KUqUQ=;
+	s=arc-20240116; t=1734020777; c=relaxed/simple;
+	bh=hMUdtS87Az8Kl18gdcQA/+ykVRj8FzOVPlwYtIItJQY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oBCcLn7y8fD72QYPcSfOQ8GJP2icT/crt8zTGGd7Jd+yZc092MH51JlaQn54FZ5Kr1G07vLrEv3dd3Dtgph59rl0hd3k+mF1Vi2FKO5xf4mJQki3AjOonIqcOBocmK8zTOhZuAVG3UcTLODwxM+XhXLJxNARD92lmtAZ62GHLgM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QmsJNviT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aLkSNdgkafRbMowG8mQusHuJy8Z8CTY+rFP7NvqhT4DbzzfD/iDd51VdpSdzWpJ45Q0OFPrBGxPiDllIW/1ujuuZwLw7tMk8xFiRQoP7PR0VWRagTJOn30ekxLO/2gIZP0bI+bGjLXj9AmlUEn6jmipGzQPzvIBWn7brVUpL51I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qbypnezw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QmsJNviT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31931C4CED0;
-	Thu, 12 Dec 2024 16:26:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qbypnezw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18454C4CED0;
+	Thu, 12 Dec 2024 16:26:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734020773;
-	bh=EzVD0XXWuU0UwdD88ve0SmrJRywOYqnY0l6kx0KUqUQ=;
+	s=korg; t=1734020777;
+	bh=hMUdtS87Az8Kl18gdcQA/+ykVRj8FzOVPlwYtIItJQY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QmsJNviTUnCPkwhpLYiVHAFmtWVy3FuJTju9g4WiJCZSwuEQ+OYaEkp0Ap8qhcOkq
-	 RVUl22E7hR4EIrCd9lGI9EFVs3MaOLLP70uLe8JzsT4Rs/wEWpx2wV9CI2Vwx/TH4L
-	 i7qqiHAtIitWS0/5HQrBCQNaUuSafaD8L0tIuhmY=
+	b=QbypnezwhloeAsHEoBLGmQ7EPlM+iuTvUO/zTIf+oL+ca0ha3f0I+vh9+ldXB/rDn
+	 32DpCoNLLC4wO4LH9P1nbcp/Q67rsxLXa7j1PBwknFel5DwVYOqA0CYb6vfm3eDdHH
+	 NObYOCNaCDFuGFjXKSJCXDgilH/x93KBK+ru3t8s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dario Binacchi <dario.binacchi@amarulasolutions.com>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Charles Han <hanchunchao@inspur.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 517/772] can: hi311x: hi3110_can_ist(): fix potential use-after-free
-Date: Thu, 12 Dec 2024 15:57:42 +0100
-Message-ID: <20241212144411.327934833@linuxfoundation.org>
+Subject: [PATCH 6.1 550/772] gpio: grgpio: Add NULL check in grgpio_probe
+Date: Thu, 12 Dec 2024 15:58:15 +0100
+Message-ID: <20241212144412.688340373@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -51,53 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dario Binacchi <dario.binacchi@amarulasolutions.com>
+From: Charles Han <hanchunchao@inspur.com>
 
-[ Upstream commit 9ad86d377ef4a19c75a9c639964879a5b25a433b ]
+[ Upstream commit 050b23d081da0f29474de043e9538c1f7a351b3b ]
 
-The commit a22bd630cfff ("can: hi311x: do not report txerr and rxerr
-during bus-off") removed the reporting of rxerr and txerr even in case
-of correct operation (i. e. not bus-off).
+devm_kasprintf() can return a NULL pointer on failure,but this
+returned value in grgpio_probe is not checked.
+Add NULL check in grgpio_probe, to handle kernel NULL
+pointer dereference error.
 
-The error count information added to the CAN frame after netif_rx() is
-a potential use after free, since there is no guarantee that the skb
-is in the same state. It might be freed or reused.
-
-Fix the issue by postponing the netif_rx() call in case of txerr and
-rxerr reporting.
-
-Fixes: a22bd630cfff ("can: hi311x: do not report txerr and rxerr during bus-off")
-Signed-off-by: Dario Binacchi <dario.binacchi@amarulasolutions.com>
-Link: https://patch.msgid.link/20241122221650.633981-5-dario.binacchi@amarulasolutions.com
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Cc: stable@vger.kernel.org
+Fixes: 7eb6ce2f2723 ("gpio: Convert to using %pOF instead of full_name")
+Signed-off-by: Charles Han <hanchunchao@inspur.com>
+Link: https://lore.kernel.org/r/20241114091822.78199-1-hanchunchao@inspur.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/spi/hi311x.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpio/gpio-grgpio.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/can/spi/hi311x.c b/drivers/net/can/spi/hi311x.c
-index e1b8533a602e2..fb58e294f7b79 100644
---- a/drivers/net/can/spi/hi311x.c
-+++ b/drivers/net/can/spi/hi311x.c
-@@ -671,9 +671,9 @@ static irqreturn_t hi3110_can_ist(int irq, void *dev_id)
- 			tx_state = txerr >= rxerr ? new_state : 0;
- 			rx_state = txerr <= rxerr ? new_state : 0;
- 			can_change_state(net, cf, tx_state, rx_state);
--			netif_rx(skb);
+diff --git a/drivers/gpio/gpio-grgpio.c b/drivers/gpio/gpio-grgpio.c
+index 56b6808c3e4a9..b7a9e5edd566f 100644
+--- a/drivers/gpio/gpio-grgpio.c
++++ b/drivers/gpio/gpio-grgpio.c
+@@ -362,6 +362,9 @@ static int grgpio_probe(struct platform_device *ofdev)
+ 	gc->owner = THIS_MODULE;
+ 	gc->to_irq = grgpio_to_irq;
+ 	gc->label = devm_kasprintf(dev, GFP_KERNEL, "%pOF", np);
++	if (!gc->label)
++		return -ENOMEM;
++
+ 	gc->base = -1;
  
- 			if (new_state == CAN_STATE_BUS_OFF) {
-+				netif_rx(skb);
- 				can_bus_off(net);
- 				if (priv->can.restart_ms == 0) {
- 					priv->force_quit = 1;
-@@ -684,6 +684,7 @@ static irqreturn_t hi3110_can_ist(int irq, void *dev_id)
- 				cf->can_id |= CAN_ERR_CNT;
- 				cf->data[6] = txerr;
- 				cf->data[7] = rxerr;
-+				netif_rx(skb);
- 			}
- 		}
- 
+ 	err = of_property_read_u32(np, "nbits", &prop);
 -- 
 2.43.0
 
