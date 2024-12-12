@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A575F223E71;
-	Thu, 12 Dec 2024 16:31:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57D0F223E71;
+	Thu, 12 Dec 2024 16:31:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734021079; cv=none; b=OuAzZNaeXGkByVWj1+E+CCzd8CJ3EVfntJsaoPW+EPgRUkbiOSijNRHw+GBAA3y1hu6xkfzY73StxC0s/Krgn7kbjUH4AFtdx+NOeqBgg6tGfMRo4050XxI2GWRDh7jkNzt5Bi/XGubkaqb4/c22f8q4qcr6vZCpboQ1aFpwFI8=
+	t=1734021083; cv=none; b=DgBfFTuohwolXZCttqWWg6/yKYdq5tab1I5pR/d7DyK4+OIq+kqrOCjPikdWtAqhGovRuIEmZaReDdCY9PARAc5QX91Hjw5cn0EmyXiRkenfWow9JsX6mwMmao1TB0Ej4cyUhfUWj/hgWBY8nCU5cL1PoH7Zm4R+wT7pcnB4Ikk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734021079; c=relaxed/simple;
-	bh=WaaOzXn1lzKTc8HKCkLo7mEbfEM2Gk4xFu2pn1mj2I4=;
+	s=arc-20240116; t=1734021083; c=relaxed/simple;
+	bh=gllV5/YkJQrqTvug+6HvCNVEAAuUwANpATpTkoOkvbQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tcm2tVhHZIDM+FeVMVijvHWOgOHAtlQfMG2AbqgknYm/8z7j1ahtLtHFg+emejWQzHmz8zVVAOICqOSDmFiFly9jHBxPEQm43Hi6HJbMBqq0Q2RSNrY16lGkhtPAXj14vDl9R84WIa80SiaKbqqiUeVHc+gzjxkemai0qEbZn44=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C6rdScpQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Rv36Ql7Zlm2avRGtAPxdegl+2S3suZ9lKZjXY3bt7XGe+kX9MrdBvWEoHfpAwTyGWTicQdi8trE5PWcCuWXpZoNZanhezxfP6xu7apbrBAqXSf12tzkvK/Utlk+0ujffLE4ivFn+1zm8z40AwJd22Q0wXIO2DIJIH/Tpy3WSXPM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wiQ5Y/RQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C6rdScpQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE808C4CECE;
-	Thu, 12 Dec 2024 16:31:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wiQ5Y/RQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9E3CC4CECE;
+	Thu, 12 Dec 2024 16:31:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734021079;
-	bh=WaaOzXn1lzKTc8HKCkLo7mEbfEM2Gk4xFu2pn1mj2I4=;
+	s=korg; t=1734021083;
+	bh=gllV5/YkJQrqTvug+6HvCNVEAAuUwANpATpTkoOkvbQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C6rdScpQCR/XljNeCYcF3pi1eQRsgE7a9peWd5cwA6xNOHv92WeHbCq817tTCcEJ5
-	 Yk8vYhG9PSqK3qHAop8xLIAxRhWht1RNwiQatdbahT0/pWRek8quOhPAannqB0+3AL
-	 DM2Hkv4yby1S6HQ1VsP1A+0JZfrxjlY+of39lB78=
+	b=wiQ5Y/RQcnuxQmnGiWB0Ql+slygOgWL+rEhD8I84LgdFXamyRClsEWfjlJoCqnhnu
+	 aPWgIJWGd3DZpPPIHhFuZyJOs+Slc7e34ry/ENB3GV2kNf9VzlJBCbkdqJoNOwIa/D
+	 wWqF/ldc0hwbJtdEywJaezbNnQSRFlOg6m6Dd5ww=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kees Cook <kees@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 639/772] lib: stackinit: hide never-taken branch from compiler
-Date: Thu, 12 Dec 2024 15:59:44 +0100
-Message-ID: <20241212144416.336523121@linuxfoundation.org>
+	Prakash Gupta <quic_guptap@quicinc.com>,
+	Pratyush Brahma <quic_pbrahma@quicinc.com>,
+	Will Deacon <will@kernel.org>,
+	Robin Murphy <robin.murphy@arm.com>
+Subject: [PATCH 6.1 640/772] iommu/arm-smmu: Defer probe of clients after smmu device bound
+Date: Thu, 12 Dec 2024 15:59:45 +0100
+Message-ID: <20241212144416.377889099@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -50,40 +52,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kees Cook <kees@kernel.org>
+From: Pratyush Brahma <quic_pbrahma@quicinc.com>
 
-commit 5c3793604f91123bf49bc792ce697a0bef4c173c upstream.
+commit 229e6ee43d2a160a1592b83aad620d6027084aad upstream.
 
-The never-taken branch leads to an invalid bounds condition, which is by
-design. To avoid the unwanted warning from the compiler, hide the
-variable from the optimizer.
+Null pointer dereference occurs due to a race between smmu
+driver probe and client driver probe, when of_dma_configure()
+for client is called after the iommu_device_register() for smmu driver
+probe has executed but before the driver_bound() for smmu driver
+has been called.
 
-../lib/stackinit_kunit.c: In function 'do_nothing_u16_zero':
-../lib/stackinit_kunit.c:51:49: error: array subscript 1 is outside array bounds of 'u16[0]' {aka 'short unsigned int[]'} [-Werror=array-bounds=]
-   51 | #define DO_NOTHING_RETURN_SCALAR(ptr)           *(ptr)
-      |                                                 ^~~~~~
-../lib/stackinit_kunit.c:219:24: note: in expansion of macro 'DO_NOTHING_RETURN_SCALAR'
-  219 |                 return DO_NOTHING_RETURN_ ## which(ptr + 1);    \
-      |                        ^~~~~~~~~~~~~~~~~~
+Following is how the race occurs:
 
-Link: https://lkml.kernel.org/r/20241117113813.work.735-kees@kernel.org
-Signed-off-by: Kees Cook <kees@kernel.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+T1:Smmu device probe		T2: Client device probe
+
+really_probe()
+arm_smmu_device_probe()
+iommu_device_register()
+					really_probe()
+					platform_dma_configure()
+					of_dma_configure()
+					of_dma_configure_id()
+					of_iommu_configure()
+					iommu_probe_device()
+					iommu_init_device()
+					arm_smmu_probe_device()
+					arm_smmu_get_by_fwnode()
+						driver_find_device_by_fwnode()
+						driver_find_device()
+						next_device()
+						klist_next()
+						    /* null ptr
+						       assigned to smmu */
+					/* null ptr dereference
+					   while smmu->streamid_mask */
+driver_bound()
+	klist_add_tail()
+
+When this null smmu pointer is dereferenced later in
+arm_smmu_probe_device, the device crashes.
+
+Fix this by deferring the probe of the client device
+until the smmu device has bound to the arm smmu driver.
+
+Fixes: 021bb8420d44 ("iommu/arm-smmu: Wire up generic configuration support")
+Cc: stable@vger.kernel.org
+Co-developed-by: Prakash Gupta <quic_guptap@quicinc.com>
+Signed-off-by: Prakash Gupta <quic_guptap@quicinc.com>
+Signed-off-by: Pratyush Brahma <quic_pbrahma@quicinc.com>
+Link: https://lore.kernel.org/r/20241004090428.2035-1-quic_pbrahma@quicinc.com
+[will: Add comment]
+Signed-off-by: Will Deacon <will@kernel.org>
+[rm: backport for context conflict prior to 6.8]
+Signed-off-by: Robin Murphy <robin.murphy@arm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/stackinit_kunit.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/iommu/arm/arm-smmu/arm-smmu.c |   11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
---- a/lib/stackinit_kunit.c
-+++ b/lib/stackinit_kunit.c
-@@ -199,6 +199,7 @@ static noinline void test_ ## name (stru
- static noinline DO_NOTHING_TYPE_ ## which(var_type)		\
- do_nothing_ ## name(var_type *ptr)				\
- {								\
-+	OPTIMIZER_HIDE_VAR(ptr);				\
- 	/* Will always be true, but compiler doesn't know. */	\
- 	if ((unsigned long)ptr > 0x2)				\
- 		return DO_NOTHING_RETURN_ ## which(ptr);	\
+--- a/drivers/iommu/arm/arm-smmu/arm-smmu.c
++++ b/drivers/iommu/arm/arm-smmu/arm-smmu.c
+@@ -1363,6 +1363,17 @@ static struct iommu_device *arm_smmu_pro
+ 			goto out_free;
+ 	} else if (fwspec && fwspec->ops == &arm_smmu_ops) {
+ 		smmu = arm_smmu_get_by_fwnode(fwspec->iommu_fwnode);
++
++		/*
++		 * Defer probe if the relevant SMMU instance hasn't finished
++		 * probing yet. This is a fragile hack and we'd ideally
++		 * avoid this race in the core code. Until that's ironed
++		 * out, however, this is the most pragmatic option on the
++		 * table.
++		 */
++		if (!smmu)
++			return ERR_PTR(dev_err_probe(dev, -EPROBE_DEFER,
++						"smmu dev has not bound yet\n"));
+ 	} else {
+ 		return ERR_PTR(-ENODEV);
+ 	}
 
 
