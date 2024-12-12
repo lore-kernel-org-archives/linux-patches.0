@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 800FC212F9E;
-	Thu, 12 Dec 2024 15:32:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD713212D6A;
+	Thu, 12 Dec 2024 15:32:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734017548; cv=none; b=LSXdMYPbasPWPe5xOjIwfXmLZM4Qj6uN97pKQMjgXWQaIfBcHxA27wZHotYrdO5rf3EE0dXV2Y84+hxqfNOCL2W4cwdS9xIjGEBC6RiyqMqqoqCGnww33ySXa8PyNMyxsE3DqhnmX+Z4NHHwbJX9emf584XCNCtlHr2EpH2JXR0=
+	t=1734017551; cv=none; b=hcHaG+7npAz6y9J8W1k0ox1yAuUQeJAIP+ntaY2jTAATxLFj1J7FBHlYtBaKaDfsP10SNLKFa6a0knMPnxHEcVEwyeupOuB3t9VIc+feyBdAfAn+THYJ7afCBS+6MEaqmHceuZ4+lbOfG4zf/23z1VFJvB0Oxar9DYdBAo1/lpw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734017548; c=relaxed/simple;
-	bh=JQKKiFysfi0GnxJ3SwuwgrfYZGRjuQ45y8/mR3LPfys=;
+	s=arc-20240116; t=1734017551; c=relaxed/simple;
+	bh=4nOxgON3Xy/eZO+QOWfy/fPre+lLZq6+fRkYQYd7yVY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OP3eG6s5kQKBnqiJUOt2Vu4Kp63cWyn6bt57yLlxf32nZjV1X15899EmuYS8DouXmWe/9HknV+jfLFFeHV80u1INXKUGofQzfSa9Ix8WpWaCBkP5Gj8obg4I6RhfLHL+vV7soHs2G/f/2d1sRiKWl0Ux10AT4+z4/n1TrPwv/uI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kXcw5JSh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=OE7YpATpYzK94G390my7NwQVODF7u2ctDF7520juqS/K4D6FxybpfGVQdEDg40hPW49+6/pegdZUqXKV2JcuMwbxbWs5gL7RfcLqNUTZOpoBBziacmI1dmpLDDSC05N5ckRUgxas++bEX1eejx63LjeDWmCt8ayck/U5nCZO77s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y0MQ9GKk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kXcw5JSh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 012D3C4CECE;
-	Thu, 12 Dec 2024 15:32:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y0MQ9GKk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 532E0C4CECE;
+	Thu, 12 Dec 2024 15:32:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734017548;
-	bh=JQKKiFysfi0GnxJ3SwuwgrfYZGRjuQ45y8/mR3LPfys=;
+	s=korg; t=1734017551;
+	bh=4nOxgON3Xy/eZO+QOWfy/fPre+lLZq6+fRkYQYd7yVY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kXcw5JSh92V+Ect7Mcl+NojO4yfaOEk8czM9E6BOQnThNeil+TBTndhuxkoYjeJ+E
-	 R+MzFJfgQR+wzlZ16lvyLssqUUYTsuSN50JJA6dWejNYeAtUWLJkEd3X5kjoEzXswb
-	 +k9ZbeSzKFySCtbruJL0f3aP6UOTNBF2+9mzw6qk=
+	b=Y0MQ9GKk39xak8P6iSZZyk7TsWzhSFp3/TOCQFJDrZXcjdrjw4exBszkErzE+/B7m
+	 T7QOnKWiXY/cdj6jmiNY/XdlTsj5ke77fSGEFLEjIpQUg4TsI4Wva1O9D27oyNkeGi
+	 OmhKtEeuMgc/uSsfoSFXCOzLJ2jLiZxnwyAzoR6k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Forestier <florian@forestier.re>,
-	Louis Leseur <louis.leseur@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	auslands-kv@gmx.de,
+	Armin Wolf <W_Armin@gmx.de>,
+	Hans de Goede <hdegoede@redhat.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 045/356] net/qed: allow old cards not supporting "num_images" to work
-Date: Thu, 12 Dec 2024 15:56:04 +0100
-Message-ID: <20241212144246.407345368@linuxfoundation.org>
+Subject: [PATCH 6.6 028/356] platform/x86: asus-wmi: Ignore return value when writing thermal policy
+Date: Thu, 12 Dec 2024 15:55:47 +0100
+Message-ID: <20241212144245.739417738@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144244.601729511@linuxfoundation.org>
 References: <20241212144244.601729511@linuxfoundation.org>
@@ -46,52 +47,72 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Louis Leseur <louis.leseur@gmail.com>
+From: Armin Wolf <W_Armin@gmx.de>
 
-[ Upstream commit 7a0ea70da56ee8c2716d0b79e9959d3c47efab62 ]
+[ Upstream commit 25fb5f47f34d90aceda2c47a4230315536e97fa8 ]
 
-Commit 43645ce03e00 ("qed: Populate nvm image attribute shadow.")
-added support for populating flash image attributes, notably
-"num_images". However, some cards were not able to return this
-information. In such cases, the driver would return EINVAL, causing the
-driver to exit.
+On some machines like the ASUS Vivobook S14 writing the thermal policy
+returns the currently writen thermal policy instead of an error code.
 
-Add check to return EOPNOTSUPP instead of EINVAL when the card is not
-able to return these information. The caller function already handles
-EOPNOTSUPP without error.
+Ignore the return code to avoid falsely returning an error when the
+thermal policy was written successfully.
 
-Fixes: 43645ce03e00 ("qed: Populate nvm image attribute shadow.")
-Co-developed-by: Florian Forestier <florian@forestier.re>
-Signed-off-by: Florian Forestier <florian@forestier.re>
-Signed-off-by: Louis Leseur <louis.leseur@gmail.com>
-Link: https://patch.msgid.link/20241128083633.26431-1-louis.leseur@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reported-by: auslands-kv@gmx.de
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=219517
+Fixes: 2daa86e78c49 ("platform/x86: asus_wmi: Support throttle thermal policy")
+Signed-off-by: Armin Wolf <W_Armin@gmx.de>
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://lore.kernel.org/r/20241124171941.29789-1-W_Armin@gmx.de
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/qlogic/qed/qed_mcp.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/platform/x86/asus-wmi.c | 11 ++---------
+ 1 file changed, 2 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/net/ethernet/qlogic/qed/qed_mcp.c b/drivers/net/ethernet/qlogic/qed/qed_mcp.c
-index 16e6bd4661433..6218d9c268554 100644
---- a/drivers/net/ethernet/qlogic/qed/qed_mcp.c
-+++ b/drivers/net/ethernet/qlogic/qed/qed_mcp.c
-@@ -3314,7 +3314,9 @@ int qed_mcp_bist_nvm_get_num_images(struct qed_hwfn *p_hwfn,
- 	if (rc)
- 		return rc;
+diff --git a/drivers/platform/x86/asus-wmi.c b/drivers/platform/x86/asus-wmi.c
+index e36c299dcfb17..1bf6178a3a105 100644
+--- a/drivers/platform/x86/asus-wmi.c
++++ b/drivers/platform/x86/asus-wmi.c
+@@ -3386,7 +3386,6 @@ static int asus_wmi_custom_fan_curve_init(struct asus_wmi *asus)
+ /* Throttle thermal policy ****************************************************/
+ static int throttle_thermal_policy_write(struct asus_wmi *asus)
+ {
+-	u32 retval;
+ 	u8 value;
+ 	int err;
  
--	if (((rsp & FW_MSG_CODE_MASK) != FW_MSG_CODE_OK))
-+	if (((rsp & FW_MSG_CODE_MASK) == FW_MSG_CODE_UNSUPPORTED))
-+		rc = -EOPNOTSUPP;
-+	else if (((rsp & FW_MSG_CODE_MASK) != FW_MSG_CODE_OK))
- 		rc = -EINVAL;
+@@ -3408,8 +3407,8 @@ static int throttle_thermal_policy_write(struct asus_wmi *asus)
+ 		value = asus->throttle_thermal_policy_mode;
+ 	}
  
- 	return rc;
+-	err = asus_wmi_set_devstate(asus->throttle_thermal_policy_dev,
+-				    value, &retval);
++	/* Some machines do not return an error code as a result, so we ignore it */
++	err = asus_wmi_set_devstate(asus->throttle_thermal_policy_dev, value, NULL);
+ 
+ 	sysfs_notify(&asus->platform_device->dev.kobj, NULL,
+ 			"throttle_thermal_policy");
+@@ -3419,12 +3418,6 @@ static int throttle_thermal_policy_write(struct asus_wmi *asus)
+ 		return err;
+ 	}
+ 
+-	if (retval != 1) {
+-		pr_warn("Failed to set throttle thermal policy (retval): 0x%x\n",
+-			retval);
+-		return -EIO;
+-	}
+-
+ 	/* Must set to disabled if mode is toggled */
+ 	if (asus->cpu_fan_curve_available)
+ 		asus->custom_fan_curves[FAN_CURVE_DEV_CPU].enabled = false;
 -- 
 2.43.0
 
