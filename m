@@ -1,38 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BF2220967D;
-	Thu, 12 Dec 2024 16:28:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAAB513792B;
+	Thu, 12 Dec 2024 16:28:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734020906; cv=none; b=m55gbeww4n0Mn3SDG/bvgmFe9XM9+FVFXe1p2Uz9Pe0TuAST5ZCFslasOwbyCutIEwcedQpcrg5/VMefDbbmZNJV5MgRyJxItU5EDxydcpFT0ITMOvAjRQL25dJrthe4cU4ckhKyHMZfmvtndsbNuYJXmZ+2ITPJQK+t28MHGHA=
+	t=1734020909; cv=none; b=ER06qBoaqqKLKePv5Lj7fFLOTTeygSzw7xSDBPNHr1AA70zTWbWuVzfwWHQkDSDSjVmxjx6Ga6cSaDmAGpuzRmnihSApm8hfJspWCaAsSa9En5mt92sI6Cd0cYJ9k6br//7ik/+SHREhOv4rTBBvxZhJUEi8eKS13Z0xFHmQCcI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734020906; c=relaxed/simple;
-	bh=yqAfXRkUiASummIQQJ3ktqL2SdArnUnz6BuFEWLbMzw=;
+	s=arc-20240116; t=1734020909; c=relaxed/simple;
+	bh=c06K5rSjIqMqBbDLOAXZzR19Ro4EvRPvswdigYLeiME=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=JwmAltflcW4Ofm66E1k70tLmX5HL0PrLIt+DGSgQljAaB8mXCOC6nofnC9R6q7uEesTRfskih375brxASd3W2671qFH2/lyyOGr9DSaD3nq8gHnkNdj5QPsWRfdF4hkVfttXeJIYgl8ElKi/sFyhkbqQDELTWiSVoQnNSdLjFyw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bgYfCl9w; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JNCnoRLF0VT/A6sdpskPnbuf8fdtlizU4JcTxr3MklJTwhCAZJ0hkqcSQ8N4RwKq7U2jm2u6BUAN8bUyktSsvaNqQgxiRR1tVvREGHLQYnxB8/xmV4mIrpTpZGzVA1IWCIxiD3jGwi18JPibYzv5oAszcSFho8n1fy8aVsmRTCI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nrkRNaF/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bgYfCl9w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEA8CC4CED0;
-	Thu, 12 Dec 2024 16:28:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nrkRNaF/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA799C4CED0;
+	Thu, 12 Dec 2024 16:28:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734020906;
-	bh=yqAfXRkUiASummIQQJ3ktqL2SdArnUnz6BuFEWLbMzw=;
+	s=korg; t=1734020909;
+	bh=c06K5rSjIqMqBbDLOAXZzR19Ro4EvRPvswdigYLeiME=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bgYfCl9wDgtxBWib29p3ni9KjD6Ssn2ynmeiFeRcIDDTaR740bMsferlMSecKXhI9
-	 1in6h+zYF8Lbd0GPB0+kCv4TBUBbrSRBWyWB9ziCYHDP1UR8L6CdqJYVEWhg0aPUnM
-	 Ztdc5xjyh/XijkStETONNcCs0xy5VL7RsMnX3+sU=
+	b=nrkRNaF/V/y4eHs5dMnv2ofqeRaBkCUcKbQodliv0J32BC5OaE7KjK+fW2kAnZhxJ
+	 7h4mgrTRs1ifQiwenNDde6lKNy5xKVNqvmzuEip47IzKCgbdZzMz9+XcdZjqXviEHB
+	 RpIBp3KWuwwOa/A49JeXLLfk3IbctK8QgUQFqBjg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
-	Iago Toral Quiroga <itoral@igalia.com>,
+	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
+	syzbot+0af00f6a2cba2058b5db@syzkaller.appspotmail.com,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Jun Piao <piaojun@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 594/772] drm/v3d: Enable Performance Counters before clearing them
-Date: Thu, 12 Dec 2024 15:58:59 +0100
-Message-ID: <20241212144414.474306352@linuxfoundation.org>
+Subject: [PATCH 6.1 595/772] ocfs2: free inode when ocfs2_get_init_inode() fails
+Date: Thu, 12 Dec 2024 15:59:00 +0100
+Message-ID: <20241212144414.514746666@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -45,54 +52,53 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maíra Canal <mcanal@igalia.com>
+From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
 
-[ Upstream commit c98b10496b2f3c4f576af3482c71aadcfcbf765e ]
+[ Upstream commit 965b5dd1894f4525f38c1b5f99b0106a07dbb5db ]
 
-On the Raspberry Pi 5, performance counters are not being cleared
-when `v3d_perfmon_start()` is called, even though we write to the
-CLR register. As a result, their values accumulate until they
-overflow.
+syzbot is reporting busy inodes after unmount, for commit 9c89fe0af826
+("ocfs2: Handle error from dquot_initialize()") forgot to call iput() when
+new_inode() succeeded and dquot_initialize() failed.
 
-The expected behavior is for performance counters to reset to zero
-at the start of a job. When the job finishes and the perfmon is
-stopped, the counters should accurately reflect the values for that
-specific job.
-
-To ensure this behavior, the performance counters are now enabled
-before being cleared. This allows the CLR register to function as
-intended, zeroing the counter values when the job begins.
-
-Fixes: 26a4dc29b74a ("drm/v3d: Expose performance counters to userspace")
-Signed-off-by: Maíra Canal <mcanal@igalia.com>
-Reviewed-by: Iago Toral Quiroga <itoral@igalia.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20241204122831.17015-1-mcanal@igalia.com
+Link: https://lkml.kernel.org/r/e68c0224-b7c6-4784-b4fa-a9fc8c675525@I-love.SAKURA.ne.jp
+Fixes: 9c89fe0af826 ("ocfs2: Handle error from dquot_initialize()")
+Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Reported-by: syzbot+0af00f6a2cba2058b5db@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=0af00f6a2cba2058b5db
+Tested-by: syzbot+0af00f6a2cba2058b5db@syzkaller.appspotmail.com
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Jun Piao <piaojun@huawei.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/v3d/v3d_perfmon.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ocfs2/namei.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/v3d/v3d_perfmon.c b/drivers/gpu/drm/v3d/v3d_perfmon.c
-index cb56627328bb0..101332775b6a7 100644
---- a/drivers/gpu/drm/v3d/v3d_perfmon.c
-+++ b/drivers/gpu/drm/v3d/v3d_perfmon.c
-@@ -49,9 +49,9 @@ void v3d_perfmon_start(struct v3d_dev *v3d, struct v3d_perfmon *perfmon)
- 		V3D_CORE_WRITE(0, V3D_V4_PCTR_0_SRC_X(source), channel);
- 	}
+diff --git a/fs/ocfs2/namei.c b/fs/ocfs2/namei.c
+index 8a0fa51c9ac68..63b06377f6305 100644
+--- a/fs/ocfs2/namei.c
++++ b/fs/ocfs2/namei.c
+@@ -200,8 +200,10 @@ static struct inode *ocfs2_get_init_inode(struct inode *dir, umode_t mode)
+ 	mode = mode_strip_sgid(&init_user_ns, dir, mode);
+ 	inode_init_owner(&init_user_ns, inode, dir, mode);
+ 	status = dquot_initialize(inode);
+-	if (status)
++	if (status) {
++		iput(inode);
+ 		return ERR_PTR(status);
++	}
  
-+	V3D_CORE_WRITE(0, V3D_V4_PCTR_0_EN, mask);
- 	V3D_CORE_WRITE(0, V3D_V4_PCTR_0_CLR, mask);
- 	V3D_CORE_WRITE(0, V3D_PCTR_0_OVERFLOW, mask);
--	V3D_CORE_WRITE(0, V3D_V4_PCTR_0_EN, mask);
- 
- 	v3d->active_perfmon = perfmon;
+ 	return inode;
  }
 -- 
 2.43.0
