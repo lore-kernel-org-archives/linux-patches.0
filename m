@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEF9322912F;
-	Thu, 12 Dec 2024 16:43:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B2272288CB;
+	Thu, 12 Dec 2024 16:43:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734021823; cv=none; b=AWqrbLhQHyGEzDBwd54crMg+JNGuN8kAQL6AECH4ZdNDCCu8tcl3mdyaYlRzCRutqzPH7gSx5PgoyoKd7AK/+enTxtJI1+Ds15bPNK6RkAFL8y5HkLU48rkfYbFQIR+5gVAkPbZXTMB1HxlbwUFnSDLRVBYYq5mpEOKd9aSSmag=
+	t=1734021827; cv=none; b=YwGGrZiAGK6I+aWdxsLo+CT2bSPOg57aLJEM/o0YRphc6OZejZ6VXZLKoWueW4+4qUFeeOvc4GZtRtUtS9RfSJvdn0oB4EnPaPRyoGwdYhjyL2jbdxox8Xj8Y7rO8hAVxPy/D2LpHp/KOfLWQnVBYkDFimsVgxWtIbbhcEPgxng=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734021823; c=relaxed/simple;
-	bh=Xz149ggTHoliDBnkrTEkSIjYhNGL+Y3OIGjJaInC2eo=;
+	s=arc-20240116; t=1734021827; c=relaxed/simple;
+	bh=JUB3OzHdnnYw5gBccm4K27R6yc+Kyhvc/gveh+BfEU0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UMTVSwZhMiEWYxS6mGQrIPI+JWXAcDQznj5do0MasG0ohBMdbWLOaOw36A8qJwuHqjX2L1XzEF5c85LXFxtH2JhSMP1rUa65R8g1fMIkhRozLz+DbZtZ/yP7RvFU2gaWJxvxaSKZWdN7hgIrqDrhGNEovj4AVZfG541QeCb7AuY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yCTJv2SB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=A6V0P161NcpX0EdaONTvOAsJ9xdeWp4rCrwm1M/ylePVq7wosqWSOIo7ErN3hXzBdoB1nD23QWJ4PXrwzr02ZPDVAebDK2Zkh24oOms0So8skEXrV2uXBK6c5GZ+FjL2Uir1vqUENCUi4ntwDEWm8KZV7Mxw16tiHac6tGQEzi8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L1kXE0j0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yCTJv2SB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 147E2C4CECE;
-	Thu, 12 Dec 2024 16:43:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L1kXE0j0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88355C4CECE;
+	Thu, 12 Dec 2024 16:43:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734021823;
-	bh=Xz149ggTHoliDBnkrTEkSIjYhNGL+Y3OIGjJaInC2eo=;
+	s=korg; t=1734021826;
+	bh=JUB3OzHdnnYw5gBccm4K27R6yc+Kyhvc/gveh+BfEU0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yCTJv2SBfBhsfdz8QFDkK/RDrhG2AnBtBsRXOGRM4UMUbRBzREKjgpIXMra4EXmap
-	 KwrXcIkoEQ7Md8bP32wCdZlBWdpfeZOBSV4ViUcEh+R8bg7Auf5bvZE9f5Y15L6GvW
-	 flZt6txjPlnoXpF0HAij5lpH0b3Z3zG7sSQhmHg8=
+	b=L1kXE0j08r8VoqYqfGSUAWpeR/29dd9/uiAVLNSJNm2LXex48j0NssJ0V8UO4vFpU
+	 XOfjL/ZkvA3gkR10EtHPSplZsyFlNMEgN3cBGUGj8Szet8UtXaqHrs4LJvhqQZXukp
+	 QHEUdXIbf2jpoMpJZPY5qToUOJQn2Dt5eaTCFXCE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Brian Gerst <brgerst@gmail.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Nathan Chancellor <nathan@kernel.org>,
+	=?UTF-8?q?Benjamin=20Gro=C3=9Fe?= <ste3ls@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 073/565] x86/stackprotector: Work around strict Clang TLS symbol requirements
-Date: Thu, 12 Dec 2024 15:54:28 +0100
-Message-ID: <20241212144314.376068717@linuxfoundation.org>
+Subject: [PATCH 5.15 056/565] usb: add support for new USB device ID 0x17EF:0x3098 for the r8152 driver
+Date: Thu, 12 Dec 2024 15:54:11 +0100
+Message-ID: <20241212144313.712272407@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144311.432886635@linuxfoundation.org>
 References: <20241212144311.432886635@linuxfoundation.org>
@@ -47,142 +46,42 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ard Biesheuvel <ardb@kernel.org>
+From: Benjamin Große <ste3ls@gmail.com>
 
-[ Upstream commit 577c134d311b9b94598d7a0c86be1f431f823003 ]
+[ Upstream commit 94c11e852955b2eef5c4f0b36cfeae7dcf11a759 ]
 
-GCC and Clang both implement stack protector support based on Thread Local
-Storage (TLS) variables, and this is used in the kernel to implement per-task
-stack cookies, by copying a task's stack cookie into a per-CPU variable every
-time it is scheduled in.
+This patch adds support for another Lenovo Mini dock 0x17EF:0x3098 to the
+r8152 driver. The device has been tested on NixOS, hotplugging and sleep
+included.
 
-Both now also implement -mstack-protector-guard-symbol=, which permits the TLS
-variable to be specified directly. This is useful because it will allow to
-move away from using a fixed offset of 40 bytes into the per-CPU area on
-x86_64, which requires a lot of special handling in the per-CPU code and the
-runtime relocation code.
-
-However, while GCC is rather lax in its implementation of this command line
-option, Clang actually requires that the provided symbol name refers to a TLS
-variable (i.e., one declared with __thread), although it also permits the
-variable to be undeclared entirely, in which case it will use an implicit
-declaration of the right type.
-
-The upshot of this is that Clang will emit the correct references to the stack
-cookie variable in most cases, e.g.,
-
-  10d:       64 a1 00 00 00 00       mov    %fs:0x0,%eax
-                     10f: R_386_32   __stack_chk_guard
-
-However, if a non-TLS definition of the symbol in question is visible in the
-same compilation unit (which amounts to the whole of vmlinux if LTO is
-enabled), it will drop the per-CPU prefix and emit a load from a bogus
-address.
-
-Work around this by using a symbol name that never occurs in C code, and emit
-it as an alias in the linker script.
-
-Fixes: 3fb0fdb3bbe7 ("x86/stackprotector/32: Make the canary into a regular percpu variable")
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
-Signed-off-by: Brian Gerst <brgerst@gmail.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Nathan Chancellor <nathan@kernel.org>
-Tested-by: Nathan Chancellor <nathan@kernel.org>
-Cc: stable@vger.kernel.org
-Link: https://github.com/ClangBuiltLinux/linux/issues/1854
-Link: https://lore.kernel.org/r/20241105155801.1779119-2-brgerst@gmail.com
+Signed-off-by: Benjamin Große <ste3ls@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20241020174128.160898-1-ste3ls@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/Makefile                     |  3 ++-
- arch/x86/entry/entry.S                | 15 +++++++++++++++
- arch/x86/include/asm/asm-prototypes.h |  3 +++
- arch/x86/kernel/cpu/common.c          |  2 ++
- arch/x86/kernel/vmlinux.lds.S         |  3 +++
- 5 files changed, 25 insertions(+), 1 deletion(-)
+ drivers/net/usb/r8152.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/x86/Makefile b/arch/x86/Makefile
-index 9c09bbd390cec..f8a7d2a654347 100644
---- a/arch/x86/Makefile
-+++ b/arch/x86/Makefile
-@@ -81,7 +81,8 @@ ifeq ($(CONFIG_X86_32),y)
- 
- 	ifeq ($(CONFIG_STACKPROTECTOR),y)
- 		ifeq ($(CONFIG_SMP),y)
--			KBUILD_CFLAGS += -mstack-protector-guard-reg=fs -mstack-protector-guard-symbol=__stack_chk_guard
-+			KBUILD_CFLAGS += -mstack-protector-guard-reg=fs \
-+					 -mstack-protector-guard-symbol=__ref_stack_chk_guard
- 		else
- 			KBUILD_CFLAGS += -mstack-protector-guard=global
- 		endif
-diff --git a/arch/x86/entry/entry.S b/arch/x86/entry/entry.S
-index f4419afc7147d..23f9efbe9d705 100644
---- a/arch/x86/entry/entry.S
-+++ b/arch/x86/entry/entry.S
-@@ -48,3 +48,18 @@ EXPORT_SYMBOL_GPL(mds_verw_sel);
- 
- .popsection
- 
-+#ifndef CONFIG_X86_64
-+/*
-+ * Clang's implementation of TLS stack cookies requires the variable in
-+ * question to be a TLS variable. If the variable happens to be defined as an
-+ * ordinary variable with external linkage in the same compilation unit (which
-+ * amounts to the whole of vmlinux with LTO enabled), Clang will drop the
-+ * segment register prefix from the references, resulting in broken code. Work
-+ * around this by avoiding the symbol used in -mstack-protector-guard-symbol=
-+ * entirely in the C code, and use an alias emitted by the linker script
-+ * instead.
-+ */
-+#ifdef CONFIG_STACKPROTECTOR
-+EXPORT_SYMBOL(__ref_stack_chk_guard);
-+#endif
-+#endif
-diff --git a/arch/x86/include/asm/asm-prototypes.h b/arch/x86/include/asm/asm-prototypes.h
-index 5cdccea455544..390b13db24b81 100644
---- a/arch/x86/include/asm/asm-prototypes.h
-+++ b/arch/x86/include/asm/asm-prototypes.h
-@@ -18,3 +18,6 @@
- extern void cmpxchg8b_emu(void);
- #endif
- 
-+#if defined(__GENKSYMS__) && defined(CONFIG_STACKPROTECTOR)
-+extern unsigned long __ref_stack_chk_guard;
-+#endif
-diff --git a/arch/x86/kernel/cpu/common.c b/arch/x86/kernel/cpu/common.c
-index f0cc4c616ceb3..5db433cfaaa78 100644
---- a/arch/x86/kernel/cpu/common.c
-+++ b/arch/x86/kernel/cpu/common.c
-@@ -2000,8 +2000,10 @@ EXPORT_PER_CPU_SYMBOL(cpu_current_top_of_stack);
- 
- #ifdef CONFIG_STACKPROTECTOR
- DEFINE_PER_CPU(unsigned long, __stack_chk_guard);
-+#ifndef CONFIG_SMP
- EXPORT_PER_CPU_SYMBOL(__stack_chk_guard);
- #endif
-+#endif
- 
- #endif	/* CONFIG_X86_64 */
- 
-diff --git a/arch/x86/kernel/vmlinux.lds.S b/arch/x86/kernel/vmlinux.lds.S
-index 351c604de263a..ab36dacb4cc50 100644
---- a/arch/x86/kernel/vmlinux.lds.S
-+++ b/arch/x86/kernel/vmlinux.lds.S
-@@ -490,6 +490,9 @@ SECTIONS
- 	ASSERT(SIZEOF(.rela.dyn) == 0, "Unexpected run-time relocations (.rela) detected!")
- }
- 
-+/* needed for Clang - see arch/x86/entry/entry.S */
-+PROVIDE(__ref_stack_chk_guard = __stack_chk_guard);
-+
- /*
-  * The ASSERT() sink to . is intentional, for binutils 2.14 compatibility:
-  */
+diff --git a/drivers/net/usb/r8152.c b/drivers/net/usb/r8152.c
+index e8fd743a1509d..abf4a488075ef 100644
+--- a/drivers/net/usb/r8152.c
++++ b/drivers/net/usb/r8152.c
+@@ -9843,6 +9843,7 @@ static const struct usb_device_id rtl8152_table[] = {
+ 	{ USB_DEVICE(VENDOR_ID_LENOVO,  0x3062) },
+ 	{ USB_DEVICE(VENDOR_ID_LENOVO,  0x3069) },
+ 	{ USB_DEVICE(VENDOR_ID_LENOVO,  0x3082) },
++	{ USB_DEVICE(VENDOR_ID_LENOVO,  0x3098) },
+ 	{ USB_DEVICE(VENDOR_ID_LENOVO,  0x7205) },
+ 	{ USB_DEVICE(VENDOR_ID_LENOVO,  0x720c) },
+ 	{ USB_DEVICE(VENDOR_ID_LENOVO,  0x7214) },
 -- 
 2.43.0
 
