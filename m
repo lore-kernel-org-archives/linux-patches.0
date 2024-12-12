@@ -1,38 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48C0B176AA1;
-	Thu, 12 Dec 2024 17:04:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9CD52253E0;
+	Thu, 12 Dec 2024 17:04:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734023066; cv=none; b=O7SDX7RRDFzT4c4l23BFAu3CY8F9LuurZbdT4WEacXtbBPqAFHLrw//PQcnc4c0n0HBtUaPlNC18s6O4B2ksFJC1Mm8E11ZSorTly/yF9jiCutS9b4b/0Ssr9Z7peX+R9SPTycVgU3It6elIM87Tz/ieNzJrdlRP+4/RmaNpxFo=
+	t=1734023069; cv=none; b=DU52GhF7y6VaFq4ANxUozY0EpTdLxZwiMjTs9dfbQz6vQGcuUZmRpB9yhsdq+TR4pQoIW4juuh3jqYeY9GGNCZygcMOGRUi0yHrDb32sE3AAdrn8E04dLWbOi4WOpFHIpyO1MLUoghWj5XN/fWtAxjTCSN4VNT0Rxz/yZakXCas=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734023066; c=relaxed/simple;
-	bh=Gdvb4BefB7JE5xp/wVxgH7BJEOmBAnGEKMGH3jtN6Gk=;
+	s=arc-20240116; t=1734023069; c=relaxed/simple;
+	bh=Pec7IZQb3KsBKISv1A/GDpv8ySzHVkl0WkxLFL5pCxU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o6+rTeQvJNrDlqxydxKyUC0emZmwA1RdxrM+/ghOLFGpouehcG3rC5xSby2toNqOKmPv1M2WWwnV+h3lzY/sQcGcvWkwCN3+WnQElhQcbnV62LqiJkxiEtnSNe2iMottLlqNcDLZt60T2IAflHQogjG+r/3CDq4t1muwFnoe5FQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M2Y0VagT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=axXDgze9sziTXHdvIMfPAxXqfwwPXnXo7qHlofr71wg/uhkL7t9H6U/9J+5X7V99CrqBonBHrErGGQFudAvnpSgAlvNx2chUNmpr/gpNAp0peCyt1vQPn15DC4740t28be6IYRfQnjrFTBXRaRvmJlgTUcRjv9TQJI0RS3zSJis=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VlMTIwXH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M2Y0VagT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0CD5C4CECE;
-	Thu, 12 Dec 2024 17:04:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VlMTIwXH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8F8CC4CECE;
+	Thu, 12 Dec 2024 17:04:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734023066;
-	bh=Gdvb4BefB7JE5xp/wVxgH7BJEOmBAnGEKMGH3jtN6Gk=;
+	s=korg; t=1734023069;
+	bh=Pec7IZQb3KsBKISv1A/GDpv8ySzHVkl0WkxLFL5pCxU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M2Y0VagTjcJMMcBAR6z5jOqpzkft+porveJigxbyQxAT3lNXCDG0YQAk7PwGgg3Ng
-	 oA4PVvpQjY6MRw5B6dgpTFKZ4Nw67rPY+WhGkpbC+E9fbqLqgwFqfjzDyXSOpN0ZQo
-	 rZH4cM054GhWGcIsTK62oQGBHF7BAGINe+8dwqDc=
+	b=VlMTIwXHlKwE8R2X1qZ780RsSjKORXWdvKGOswYlYCF/LSg0Xv6ETm7f61jkKqKjI
+	 YlkJHho9PM9U/2xMbhp01tg/+vsEHEcG4dtQNMclVIijtkrIUvxrZk6Nfy9ftOZw5H
+	 Jji+NcPzj9utiLjHh6mkfib/Es5xH1iV4uUJ7HQ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Griffin <peter.griffin@linaro.org>,
-	Tudor Ambarus <tudor.ambarus@linaro.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 5.15 385/565] scsi: ufs: exynos: Fix hibern8 notify callbacks
-Date: Thu, 12 Dec 2024 15:59:40 +0100
-Message-ID: <20241212144326.856932419@linuxfoundation.org>
+	syzbot+671e2853f9851d039551@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@google.com>,
+	WingMan Kwok <w-kwok2@ti.com>,
+	Murali Karicheri <m-karicheri2@ti.com>,
+	MD Danish Anwar <danishanwar@ti.com>,
+	Jiri Pirko <jiri@nvidia.com>,
+	George McCollister <george.mccollister@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 412/565] net: hsr: avoid potential out-of-bound access in fill_frame_info()
+Date: Thu, 12 Dec 2024 16:00:07 +0100
+Message-ID: <20241212144327.944525689@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144311.432886635@linuxfoundation.org>
 References: <20241212144311.432886635@linuxfoundation.org>
@@ -51,87 +57,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Griffin <peter.griffin@linaro.org>
+From: Eric Dumazet <edumazet@google.com>
 
-commit ceef938bbf8b93ba3a218b4adc244cde94b582aa upstream.
+[ Upstream commit b9653d19e556c6afd035602927a93d100a0d7644 ]
 
-v1 of the patch which introduced the ufshcd_vops_hibern8_notify()
-callback used a bool instead of an enum. In v2 this was updated to an
-enum based on the review feedback in [1].
+syzbot is able to feed a packet with 14 bytes, pretending
+it is a vlan one.
 
-ufs-exynos hibernate calls have always been broken upstream as it
-follows the v1 bool implementation.
+Since fill_frame_info() is relying on skb->mac_len already,
+extend the check to cover this case.
 
-Link: https://patchwork.kernel.org/project/linux-scsi/patch/001f01d23994$719997c0$54ccc740$@samsung.com/ [1]
-Fixes: 55f4b1f73631 ("scsi: ufs: ufs-exynos: Add UFS host support for Exynos SoCs")
-Signed-off-by: Peter Griffin <peter.griffin@linaro.org>
-Link: https://lore.kernel.org/r/20241031150033.3440894-13-peter.griffin@linaro.org
-Cc: stable@vger.kernel.org
-Reviewed-by: Tudor Ambarus <tudor.ambarus@linaro.org>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+BUG: KMSAN: uninit-value in fill_frame_info net/hsr/hsr_forward.c:709 [inline]
+ BUG: KMSAN: uninit-value in hsr_forward_skb+0x9ee/0x3b10 net/hsr/hsr_forward.c:724
+  fill_frame_info net/hsr/hsr_forward.c:709 [inline]
+  hsr_forward_skb+0x9ee/0x3b10 net/hsr/hsr_forward.c:724
+  hsr_dev_xmit+0x2f0/0x350 net/hsr/hsr_device.c:235
+  __netdev_start_xmit include/linux/netdevice.h:5002 [inline]
+  netdev_start_xmit include/linux/netdevice.h:5011 [inline]
+  xmit_one net/core/dev.c:3590 [inline]
+  dev_hard_start_xmit+0x247/0xa20 net/core/dev.c:3606
+  __dev_queue_xmit+0x366a/0x57d0 net/core/dev.c:4434
+  dev_queue_xmit include/linux/netdevice.h:3168 [inline]
+  packet_xmit+0x9c/0x6c0 net/packet/af_packet.c:276
+  packet_snd net/packet/af_packet.c:3146 [inline]
+  packet_sendmsg+0x91ae/0xa6f0 net/packet/af_packet.c:3178
+  sock_sendmsg_nosec net/socket.c:711 [inline]
+  __sock_sendmsg+0x30f/0x380 net/socket.c:726
+  __sys_sendto+0x594/0x750 net/socket.c:2197
+  __do_sys_sendto net/socket.c:2204 [inline]
+  __se_sys_sendto net/socket.c:2200 [inline]
+  __x64_sys_sendto+0x125/0x1d0 net/socket.c:2200
+  x64_sys_call+0x346a/0x3c30 arch/x86/include/generated/asm/syscalls_64.h:45
+  do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+  do_syscall_64+0xcd/0x1e0 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+Uninit was created at:
+  slab_post_alloc_hook mm/slub.c:4091 [inline]
+  slab_alloc_node mm/slub.c:4134 [inline]
+  kmem_cache_alloc_node_noprof+0x6bf/0xb80 mm/slub.c:4186
+  kmalloc_reserve+0x13d/0x4a0 net/core/skbuff.c:587
+  __alloc_skb+0x363/0x7b0 net/core/skbuff.c:678
+  alloc_skb include/linux/skbuff.h:1323 [inline]
+  alloc_skb_with_frags+0xc8/0xd00 net/core/skbuff.c:6612
+  sock_alloc_send_pskb+0xa81/0xbf0 net/core/sock.c:2881
+  packet_alloc_skb net/packet/af_packet.c:2995 [inline]
+  packet_snd net/packet/af_packet.c:3089 [inline]
+  packet_sendmsg+0x74c6/0xa6f0 net/packet/af_packet.c:3178
+  sock_sendmsg_nosec net/socket.c:711 [inline]
+  __sock_sendmsg+0x30f/0x380 net/socket.c:726
+  __sys_sendto+0x594/0x750 net/socket.c:2197
+  __do_sys_sendto net/socket.c:2204 [inline]
+  __se_sys_sendto net/socket.c:2200 [inline]
+  __x64_sys_sendto+0x125/0x1d0 net/socket.c:2200
+  x64_sys_call+0x346a/0x3c30 arch/x86/include/generated/asm/syscalls_64.h:45
+  do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+  do_syscall_64+0xcd/0x1e0 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+Fixes: 48b491a5cc74 ("net: hsr: fix mac_len checks")
+Reported-by: syzbot+671e2853f9851d039551@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/6745dc7f.050a0220.21d33d.0018.GAE@google.com/T/#u
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: WingMan Kwok <w-kwok2@ti.com>
+Cc: Murali Karicheri <m-karicheri2@ti.com>
+Cc: MD Danish Anwar <danishanwar@ti.com>
+Cc: Jiri Pirko <jiri@nvidia.com>
+Cc: George McCollister <george.mccollister@gmail.com>
+Link: https://patch.msgid.link/20241126144344.4177332-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/ufs/ufs-exynos.c |   16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ net/hsr/hsr_forward.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/scsi/ufs/ufs-exynos.c
-+++ b/drivers/scsi/ufs/ufs-exynos.c
-@@ -1038,12 +1038,12 @@ static void exynos_ufs_dev_hw_reset(stru
- 	hci_writel(ufs, 1 << 0, HCI_GPIO_OUT);
- }
+diff --git a/net/hsr/hsr_forward.c b/net/hsr/hsr_forward.c
+index e31747d328e70..20d4c3f8d8750 100644
+--- a/net/hsr/hsr_forward.c
++++ b/net/hsr/hsr_forward.c
+@@ -546,6 +546,8 @@ static int fill_frame_info(struct hsr_frame_info *frame,
+ 		frame->is_vlan = true;
  
--static void exynos_ufs_pre_hibern8(struct ufs_hba *hba, u8 enter)
-+static void exynos_ufs_pre_hibern8(struct ufs_hba *hba, enum uic_cmd_dme cmd)
- {
- 	struct exynos_ufs *ufs = ufshcd_get_variant(hba);
- 	struct exynos_ufs_uic_attr *attr = ufs->drv_data->uic_attr;
- 
--	if (!enter) {
-+	if (cmd == UIC_CMD_DME_HIBER_EXIT) {
- 		if (ufs->opts & EXYNOS_UFS_OPT_BROKEN_AUTO_CLK_CTRL)
- 			exynos_ufs_disable_auto_ctrl_hcc(ufs);
- 		exynos_ufs_ungate_clks(ufs);
-@@ -1071,11 +1071,11 @@ static void exynos_ufs_pre_hibern8(struc
- 	}
- }
- 
--static void exynos_ufs_post_hibern8(struct ufs_hba *hba, u8 enter)
-+static void exynos_ufs_post_hibern8(struct ufs_hba *hba, enum uic_cmd_dme cmd)
- {
- 	struct exynos_ufs *ufs = ufshcd_get_variant(hba);
- 
--	if (!enter) {
-+	if (cmd == UIC_CMD_DME_HIBER_EXIT) {
- 		u32 cur_mode = 0;
- 		u32 pwrmode;
- 
-@@ -1094,7 +1094,7 @@ static void exynos_ufs_post_hibern8(stru
- 
- 		if (!(ufs->opts & EXYNOS_UFS_OPT_SKIP_CONNECTION_ESTAB))
- 			exynos_ufs_establish_connt(ufs);
--	} else {
-+	} else if (cmd == UIC_CMD_DME_HIBER_ENTER) {
- 		ufs->entry_hibern8_t = ktime_get();
- 		exynos_ufs_gate_clks(ufs);
- 		if (ufs->opts & EXYNOS_UFS_OPT_BROKEN_AUTO_CLK_CTRL)
-@@ -1163,15 +1163,15 @@ static int exynos_ufs_pwr_change_notify(
- }
- 
- static void exynos_ufs_hibern8_notify(struct ufs_hba *hba,
--				     enum uic_cmd_dme enter,
-+				     enum uic_cmd_dme cmd,
- 				     enum ufs_notify_change_status notify)
- {
- 	switch ((u8)notify) {
- 	case PRE_CHANGE:
--		exynos_ufs_pre_hibern8(hba, enter);
-+		exynos_ufs_pre_hibern8(hba, cmd);
- 		break;
- 	case POST_CHANGE:
--		exynos_ufs_post_hibern8(hba, enter);
-+		exynos_ufs_post_hibern8(hba, cmd);
- 		break;
- 	}
- }
+ 	if (frame->is_vlan) {
++		if (skb->mac_len < offsetofend(struct hsr_vlan_ethhdr, vlanhdr))
++			return -EINVAL;
+ 		vlan_hdr = (struct hsr_vlan_ethhdr *)ethhdr;
+ 		proto = vlan_hdr->vlanhdr.h_vlan_encapsulated_proto;
+ 		/* FIXME: */
+-- 
+2.43.0
+
 
 
