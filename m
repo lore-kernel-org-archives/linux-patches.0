@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A172121577D;
-	Thu, 12 Dec 2024 15:17:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2365E2054F8;
+	Thu, 12 Dec 2024 15:17:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734016622; cv=none; b=dp0v5Kgaau2w0t8YsamlxhpYR0kWxmRjdgbdxRrAF0+0Eafgvdo9achxP9TH2PwUU0WlUd1AHuObOpO8T5ZazsZIL4bF7sS43KrUGJ2vAShikMvyOahSMVOWkdvBS184NV0eCXNwq3/FBuNQJBJYp0Y349+WchB+qOL97tqgA28=
+	t=1734016626; cv=none; b=tuXqX6uYbfKSK2F45YtYPxM0NMAjsaS6q2UFVo9oyrxYGay/A++KZI4D+VAhwIgcxmTbfjgkBo/o/NaZXoaxz2BdzuPAwAAEQ5lc2KnOqdOY6o3a1noKls1St/FuNQ1Df1Wzf89TEPxdR0lpYCkE/Er/A5iZx94+shPk1HuFv8E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734016622; c=relaxed/simple;
-	bh=7T/nTgNkvQRaDDTad6N2deyvrMYodeWNE6dpqSR9FMI=;
+	s=arc-20240116; t=1734016626; c=relaxed/simple;
+	bh=iu3DhkIypr2v/XyBJ1NGgFikZGar5I9BUvKkHsTVENY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=k/0d3b3nqHbOVVf+6DEy7o9f4IJHvjgxF0HDavnqpW0YOeM9TkLgiAwvfzU0LZlIKffjgMxrnD5qi1HqdQZOW1Y3qwo6K+8hsyZBG5wVdl+KHNJpJawvEZWP0D9N9+AcZbWLR/OyjBhRIexQlx2mrtLMZ6Nbbq/uqAngJwVgdTg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GXyWTz/f; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=n76ApP/nOJ5fEiLL+FdDOFLDYJ/YMtgDN+GDHVqURpXnvE7rVoGwpoVKx8JMpYCKaX7Up8S3uPcda7V+XD9md/mmuD/cet5g65dLiKLEiZ4Fg7TtHW1irQRErI1ljrZqP+QO9S4g+9VKdiXE8C4SZ+VGTihyp3NhdFTswFsAQAM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JKsawzkN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GXyWTz/f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E014C4CECE;
-	Thu, 12 Dec 2024 15:17:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JKsawzkN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83FCCC4CECE;
+	Thu, 12 Dec 2024 15:17:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734016622;
-	bh=7T/nTgNkvQRaDDTad6N2deyvrMYodeWNE6dpqSR9FMI=;
+	s=korg; t=1734016626;
+	bh=iu3DhkIypr2v/XyBJ1NGgFikZGar5I9BUvKkHsTVENY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GXyWTz/fU18FgrVna55TA2ig+YuLoQBABpYE/n87+hZAEzmH9lk8VkXKUdwiuQzYP
-	 GUpnRLEtHnxgG9UwbafdljmIvF757JMbOXffzsbJcRRzDJAsygLYSwqYQ/7CFVDGaq
-	 QvyDLsqsU7d/WZHtZAzEQL9y7Tn+KdDPLiW0PtgE=
+	b=JKsawzkNTAfy8yiXW6DSx+f2/7WGyO06OKjP9OZYQsed/qiDL+SQOZ7O61Gcvek/4
+	 SuEa8vY6tIq6wdGykRF6YyJXi6B8IExk/e0AmdiKlzjfuWbxbGG+70mOUzohUv3mcN
+	 7h09zg7t4ZtWH/4W8UmZY8cQQhvedfo8h92QTRWE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Reinette Chatre <reinette.chatre@intel.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+	Changwoo Min <changwoo@igalia.com>,
+	Andrea Righi <arighi@nvidia.com>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 250/466] selftests/resctrl: Protect against array overflow when reading strings
-Date: Thu, 12 Dec 2024 15:56:59 +0100
-Message-ID: <20241212144316.663522986@linuxfoundation.org>
+Subject: [PATCH 6.12 251/466] sched_ext: add a missing rcu_read_lock/unlock pair at scx_select_cpu_dfl()
+Date: Thu, 12 Dec 2024 15:57:00 +0100
+Message-ID: <20241212144316.704212358@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144306.641051666@linuxfoundation.org>
 References: <20241212144306.641051666@linuxfoundation.org>
@@ -46,79 +46,131 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Reinette Chatre <reinette.chatre@intel.com>
+From: Changwoo Min <multics69@gmail.com>
 
-[ Upstream commit 46058430fc5d39c114f7e1b9c6ff14c9f41bd531 ]
+[ Upstream commit f39489fea677ad78ca4ce1ab2d204a6639b868dc ]
 
-resctrl selftests discover system properties via a variety of sysfs files.
-The MBM and MBA tests need to discover the event and umask with which to
-configure the performance event used to measure read memory bandwidth.
-This is done by parsing the contents of
-/sys/bus/event_source/devices/uncore_imc_<imc instance>/events/cas_count_read
-Similarly, the resctrl selftests discover the cache size via
-/sys/bus/cpu/devices/cpu<id>/cache/index<index>/size.
+When getting an LLC CPU mask in the default CPU selection policy,
+scx_select_cpu_dfl(), a pointer to the sched_domain is dereferenced
+using rcu_read_lock() without holding rcu_read_lock(). Such an unprotected
+dereference often causes the following warning and can cause an invalid
+memory access in the worst case.
 
-Take care to do bounds checking when using fscanf() to read the
-contents of files into a string buffer because by default fscanf() assumes
-arbitrarily long strings. If the file contains more bytes than the array
-can accommodate then an overflow will occur.
+Therefore, protect dereference of a sched_domain pointer using a pair
+of rcu_read_lock() and unlock().
 
-Provide a maximum field width to the conversion specifier to protect
-against array overflow. The maximum is one less than the array size because
-string input stores a terminating null byte that is not covered by the
-maximum field width.
+[   20.996135] =============================
+[   20.996345] WARNING: suspicious RCU usage
+[   20.996563] 6.11.0-virtme #17 Tainted: G        W
+[   20.996576] -----------------------------
+[   20.996576] kernel/sched/ext.c:3323 suspicious rcu_dereference_check() usage!
+[   20.996576]
+[   20.996576] other info that might help us debug this:
+[   20.996576]
+[   20.996576]
+[   20.996576] rcu_scheduler_active = 2, debug_locks = 1
+[   20.996576] 4 locks held by kworker/8:1/140:
+[   20.996576]  #0: ffff8b18c00dd348 ((wq_completion)pm){+.+.}-{0:0}, at: process_one_work+0x4a0/0x590
+[   20.996576]  #1: ffffb3da01f67e58 ((work_completion)(&dev->power.work)){+.+.}-{0:0}, at: process_one_work+0x1ba/0x590
+[   20.996576]  #2: ffffffffa316f9f0 (&rcu_state.gp_wq){..-.}-{2:2}, at: swake_up_one+0x15/0x60
+[   20.996576]  #3: ffff8b1880398a60 (&p->pi_lock){-.-.}-{2:2}, at: try_to_wake_up+0x59/0x7d0
+[   20.996576]
+[   20.996576] stack backtrace:
+[   20.996576] CPU: 8 UID: 0 PID: 140 Comm: kworker/8:1 Tainted: G        W          6.11.0-virtme #17
+[   20.996576] Tainted: [W]=WARN
+[   20.996576] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS Arch Linux 1.16.3-1-1 04/01/2014
+[   20.996576] Workqueue: pm pm_runtime_work
+[   20.996576] Sched_ext: simple (disabling+all), task: runnable_at=-6ms
+[   20.996576] Call Trace:
+[   20.996576]  <IRQ>
+[   20.996576]  dump_stack_lvl+0x6f/0xb0
+[   20.996576]  lockdep_rcu_suspicious.cold+0x4e/0x96
+[   20.996576]  scx_select_cpu_dfl+0x234/0x260
+[   20.996576]  select_task_rq_scx+0xfb/0x190
+[   20.996576]  select_task_rq+0x47/0x110
+[   20.996576]  try_to_wake_up+0x110/0x7d0
+[   20.996576]  swake_up_one+0x39/0x60
+[   20.996576]  rcu_core+0xb08/0xe50
+[   20.996576]  ? srso_alias_return_thunk+0x5/0xfbef5
+[   20.996576]  ? mark_held_locks+0x40/0x70
+[   20.996576]  handle_softirqs+0xd3/0x410
+[   20.996576]  irq_exit_rcu+0x78/0xa0
+[   20.996576]  sysvec_apic_timer_interrupt+0x73/0x80
+[   20.996576]  </IRQ>
+[   20.996576]  <TASK>
+[   20.996576]  asm_sysvec_apic_timer_interrupt+0x1a/0x20
+[   20.996576] RIP: 0010:_raw_spin_unlock_irqrestore+0x36/0x70
+[   20.996576] Code: f5 53 48 8b 74 24 10 48 89 fb 48 83 c7 18 e8 11 b4 36 ff 48 89 df e8 99 0d 37 ff f7 c5 00 02 00 00 75 17 9c 58 f6 c4 02 75 2b <65> ff 0d 5b 55 3c 5e 74 16 5b 5d e9 95 8e 28 00 e8 a5 ee 44 ff 9c
+[   20.996576] RSP: 0018:ffffb3da01f67d20 EFLAGS: 00000246
+[   20.996576] RAX: 0000000000000002 RBX: ffffffffa4640220 RCX: 0000000000000040
+[   20.996576] RDX: 0000000000000000 RSI: 0000000000000000 RDI: ffffffffa1c7b27b
+[   20.996576] RBP: 0000000000000246 R08: 0000000000000001 R09: 0000000000000000
+[   20.996576] R10: 0000000000000001 R11: 000000000000021c R12: 0000000000000246
+[   20.996576] R13: ffff8b1881363958 R14: 0000000000000000 R15: ffff8b1881363800
+[   20.996576]  ? _raw_spin_unlock_irqrestore+0x4b/0x70
+[   20.996576]  serial_port_runtime_resume+0xd4/0x1a0
+[   20.996576]  ? __pfx_serial_port_runtime_resume+0x10/0x10
+[   20.996576]  __rpm_callback+0x44/0x170
+[   20.996576]  ? __pfx_serial_port_runtime_resume+0x10/0x10
+[   20.996576]  rpm_callback+0x55/0x60
+[   20.996576]  ? __pfx_serial_port_runtime_resume+0x10/0x10
+[   20.996576]  rpm_resume+0x582/0x7b0
+[   20.996576]  pm_runtime_work+0x7c/0xb0
+[   20.996576]  process_one_work+0x1fb/0x590
+[   20.996576]  worker_thread+0x18e/0x350
+[   20.996576]  ? __pfx_worker_thread+0x10/0x10
+[   20.996576]  kthread+0xe2/0x110
+[   20.996576]  ? __pfx_kthread+0x10/0x10
+[   20.996576]  ret_from_fork+0x34/0x50
+[   20.996576]  ? __pfx_kthread+0x10/0x10
+[   20.996576]  ret_from_fork_asm+0x1a/0x30
+[   20.996576]  </TASK>
+[   21.056592] sched_ext: BPF scheduler "simple" disabled (unregistered from user space)
 
-Signed-off-by: Reinette Chatre <reinette.chatre@intel.com>
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Signed-off-by: Changwoo Min <changwoo@igalia.com>
+Acked-by: Andrea Righi <arighi@nvidia.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/resctrl/resctrl_val.c | 4 ++--
- tools/testing/selftests/resctrl/resctrlfs.c   | 2 +-
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ kernel/sched/ext.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/tools/testing/selftests/resctrl/resctrl_val.c b/tools/testing/selftests/resctrl/resctrl_val.c
-index f118f659e8960..e92e4f463f37b 100644
---- a/tools/testing/selftests/resctrl/resctrl_val.c
-+++ b/tools/testing/selftests/resctrl/resctrl_val.c
-@@ -159,7 +159,7 @@ static int read_from_imc_dir(char *imc_dir, int count)
+diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
+index 16613631543f1..79bb18651cdb8 100644
+--- a/kernel/sched/ext.c
++++ b/kernel/sched/ext.c
+@@ -3105,6 +3105,12 @@ static s32 scx_select_cpu_dfl(struct task_struct *p, s32 prev_cpu,
  
- 		return -1;
- 	}
--	if (fscanf(fp, "%s", cas_count_cfg) <= 0) {
-+	if (fscanf(fp, "%1023s", cas_count_cfg) <= 0) {
- 		ksft_perror("Could not get iMC cas count read");
- 		fclose(fp);
+ 	*found = false;
  
-@@ -177,7 +177,7 @@ static int read_from_imc_dir(char *imc_dir, int count)
++
++	/*
++	 * This is necessary to protect llc_cpus.
++	 */
++	rcu_read_lock();
++
+ 	/*
+ 	 * If WAKE_SYNC, the waker's local DSQ is empty, and the system is
+ 	 * under utilized, wake up @p to the local DSQ of the waker. Checking
+@@ -3147,9 +3153,12 @@ static s32 scx_select_cpu_dfl(struct task_struct *p, s32 prev_cpu,
+ 	if (cpu >= 0)
+ 		goto cpu_found;
  
- 		return -1;
- 	}
--	if  (fscanf(fp, "%s", cas_count_cfg) <= 0) {
-+	if  (fscanf(fp, "%1023s", cas_count_cfg) <= 0) {
- 		ksft_perror("Could not get iMC cas count write");
- 		fclose(fp);
++	rcu_read_unlock();
+ 	return prev_cpu;
  
-diff --git a/tools/testing/selftests/resctrl/resctrlfs.c b/tools/testing/selftests/resctrl/resctrlfs.c
-index 250c320349a78..a53cd1cb6e0c6 100644
---- a/tools/testing/selftests/resctrl/resctrlfs.c
-+++ b/tools/testing/selftests/resctrl/resctrlfs.c
-@@ -182,7 +182,7 @@ int get_cache_size(int cpu_no, const char *cache_type, unsigned long *cache_size
- 
- 		return -1;
- 	}
--	if (fscanf(fp, "%s", cache_str) <= 0) {
-+	if (fscanf(fp, "%63s", cache_str) <= 0) {
- 		ksft_perror("Could not get cache_size");
- 		fclose(fp);
- 
+ cpu_found:
++	rcu_read_unlock();
++
+ 	*found = true;
+ 	return cpu;
+ }
 -- 
 2.43.0
 
