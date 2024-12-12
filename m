@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B72C8205501;
-	Thu, 12 Dec 2024 16:59:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF721205501;
+	Thu, 12 Dec 2024 16:59:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734022788; cv=none; b=ZeSJhJYGIcSAgb00+KJXomaCRLSpKdHBqQPJMtdEgXAteCSgqp+h7S+P98J4IdaqEzNn21i/+N2gpvH9hEykH6C693Z8YR4RGxAgPLWocC8xjG15w1oaYNDtVP5ie0NtMdFb3jGrKn8keNn7A74VO+Bm94OMtxF4qwXYkjOmbuw=
+	t=1734022792; cv=none; b=geZ89vsESaUaHmUc+34tQoBe4oTvtFJd0QxUAqnE3SzaDz1Ck6GvAnnqffzm4K6upYuniBpnQPap8Y4PLlczA4Rrx5Yl6rAI8OTMeO/xjOv2Ah0HpewU6ef0Ra2Du0qr/cisoEkSrhXyWRkyno1w1pKwnXM7u3Ph/rvU6FZdqrk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734022788; c=relaxed/simple;
-	bh=fdooQ5UR39K47E8PpeUWk7uQ34Ye3Z+neS+RTYfoZCI=;
+	s=arc-20240116; t=1734022792; c=relaxed/simple;
+	bh=zelIeGNPlxpGnNWCGRC2OBnjtwCXoMtCc6FsrpIu6m4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fAKceSCSh2XaEQsdm/yY0K57C6qHb9B/TGPFg17K8MtonP1eaazXLidN3ZbSpzyMgev+EDsNHziWAlmcAqbq3TjKJUMzVG77A+B5RujJTpAWc/KdIoJC7rfNCoLI5Tdq7E/Z9YBgqsnbpHEjfce0ifSptOgTl5VTDPCV9j2h1yg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k6d1yBGA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=P13OiUpPVXYt+J7eAJM8gNYZHRuediMcedAM0UVkLqO9AEZN3nt/TuAfXV+SUwBqq9sm8VoRoAWHQdqdAXpPd40F8DU2i7+wWc6ZeNTTbBmj1EqvKzwghaTQAB0nleKNsuVtcmRS21VXo3ElbSwP5Cinx+htJ1jisyy1GNHgJQQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VxwdKmLj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k6d1yBGA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 273E4C4CECE;
-	Thu, 12 Dec 2024 16:59:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VxwdKmLj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21B07C4CED0;
+	Thu, 12 Dec 2024 16:59:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734022788;
-	bh=fdooQ5UR39K47E8PpeUWk7uQ34Ye3Z+neS+RTYfoZCI=;
+	s=korg; t=1734022792;
+	bh=zelIeGNPlxpGnNWCGRC2OBnjtwCXoMtCc6FsrpIu6m4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k6d1yBGAMfTuE9dHTBhX2ksddexYNDRe8oxuUxCqBMsuSL2cYACMS2gg2T2/E9LSr
-	 FlB6KcQV9bD6xMR0dmzcIdcPOSABgdGVSHmGisYybpCkSuT4hFxC1oFiUCoCbQK1n6
-	 JTyBBxOmaMxBMdq2HQd6pxUMg0WsndaZ41dKlYNM=
+	b=VxwdKmLj40Od8yFVE76SoD25voyqE+ULQmMN53d+JHMDmiumlSOYEFw1LI3OcE0Q/
+	 Ebobprgt/jCz5VaSgG6xtofALxcxsMHWQXT8WJC3RroI0o8JDG8+1vbNIKOh2SKzcf
+	 l1i6m03iD6Wg+MF9HGlMMRbPBvmthw72yUVTOW/0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Huacai Chen <chenhuacai@loongson.cn>,
-	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-Subject: [PATCH 5.15 336/565] sh: cpuinfo: Fix a warning for CONFIG_CPUMASK_OFFSTACK
-Date: Thu, 12 Dec 2024 15:58:51 +0100
-Message-ID: <20241212144324.880130052@linuxfoundation.org>
+	Andrej Shadura <andrew.shadura@collabora.co.uk>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Aleksei Vetrov <vvvvvv@google.com>
+Subject: [PATCH 5.15 319/565] Bluetooth: Fix type of len in rfcomm_sock_getsockopt{,_old}()
+Date: Thu, 12 Dec 2024 15:58:34 +0100
+Message-ID: <20241212144324.210899887@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144311.432886635@linuxfoundation.org>
 References: <20241212144311.432886635@linuxfoundation.org>
@@ -50,64 +52,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Huacai Chen <chenhuacai@loongson.cn>
+From: Andrej Shadura <andrew.shadura@collabora.co.uk>
 
-commit 3c891f7c6a4e90bb1199497552f24b26e46383bc upstream.
+commit 5fe6caa62b07fd39cd6a28acc8f92ba2955e11a6 upstream.
 
-When CONFIG_CPUMASK_OFFSTACK and CONFIG_DEBUG_PER_CPU_MAPS are selected,
-cpu_max_bits_warn() generates a runtime warning similar as below when
-showing /proc/cpuinfo. Fix this by using nr_cpu_ids (the runtime limit)
-instead of NR_CPUS to iterate CPUs.
+Commit 9bf4e919ccad worked around an issue introduced after an innocuous
+optimisation change in LLVM main:
 
-[    3.052463] ------------[ cut here ]------------
-[    3.059679] WARNING: CPU: 3 PID: 1 at include/linux/cpumask.h:108 show_cpuinfo+0x5e8/0x5f0
-[    3.070072] Modules linked in: efivarfs autofs4
-[    3.076257] CPU: 0 PID: 1 Comm: systemd Not tainted 5.19-rc5+ #1052
-[    3.099465] Stack : 9000000100157b08 9000000000f18530 9000000000cf846c 9000000100154000
-[    3.109127]         9000000100157a50 0000000000000000 9000000100157a58 9000000000ef7430
-[    3.118774]         90000001001578e8 0000000000000040 0000000000000020 ffffffffffffffff
-[    3.128412]         0000000000aaaaaa 1ab25f00eec96a37 900000010021de80 900000000101c890
-[    3.138056]         0000000000000000 0000000000000000 0000000000000000 0000000000aaaaaa
-[    3.147711]         ffff8000339dc220 0000000000000001 0000000006ab4000 0000000000000000
-[    3.157364]         900000000101c998 0000000000000004 9000000000ef7430 0000000000000000
-[    3.167012]         0000000000000009 000000000000006c 0000000000000000 0000000000000000
-[    3.176641]         9000000000d3de08 9000000001639390 90000000002086d8 00007ffff0080286
-[    3.186260]         00000000000000b0 0000000000000004 0000000000000000 0000000000071c1c
-[    3.195868]         ...
-[    3.199917] Call Trace:
-[    3.203941] [<90000000002086d8>] show_stack+0x38/0x14c
-[    3.210666] [<9000000000cf846c>] dump_stack_lvl+0x60/0x88
-[    3.217625] [<900000000023d268>] __warn+0xd0/0x100
-[    3.223958] [<9000000000cf3c90>] warn_slowpath_fmt+0x7c/0xcc
-[    3.231150] [<9000000000210220>] show_cpuinfo+0x5e8/0x5f0
-[    3.238080] [<90000000004f578c>] seq_read_iter+0x354/0x4b4
-[    3.245098] [<90000000004c2e90>] new_sync_read+0x17c/0x1c4
-[    3.252114] [<90000000004c5174>] vfs_read+0x138/0x1d0
-[    3.258694] [<90000000004c55f8>] ksys_read+0x70/0x100
-[    3.265265] [<9000000000cfde9c>] do_syscall+0x7c/0x94
-[    3.271820] [<9000000000202fe4>] handle_syscall+0xc4/0x160
-[    3.281824] ---[ end trace 8b484262b4b8c24c ]---
+> len is defined as an 'int' because it is assigned from
+> '__user int *optlen'. However, it is clamped against the result of
+> sizeof(), which has a type of 'size_t' ('unsigned long' for 64-bit
+> platforms). This is done with min_t() because min() requires compatible
+> types, which results in both len and the result of sizeof() being casted
+> to 'unsigned int', meaning len changes signs and the result of sizeof()
+> is truncated. From there, len is passed to copy_to_user(), which has a
+> third parameter type of 'unsigned long', so it is widened and changes
+> signs again. This excessive casting in combination with the KCSAN
+> instrumentation causes LLVM to fail to eliminate the __bad_copy_from()
+> call, failing the build.
+
+The same issue occurs in rfcomm in functions rfcomm_sock_getsockopt and
+rfcomm_sock_getsockopt_old.
+
+Change the type of len to size_t in both rfcomm_sock_getsockopt and
+rfcomm_sock_getsockopt_old and replace min_t() with min().
 
 Cc: stable@vger.kernel.org
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
-Reviewed-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-Tested-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-Signed-off-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+Co-authored-by: Aleksei Vetrov <vvvvvv@google.com>
+Improves: 9bf4e919ccad ("Bluetooth: Fix type of len in {l2cap,sco}_sock_getsockopt_old()")
+Link: https://github.com/ClangBuiltLinux/linux/issues/2007
+Link: https://github.com/llvm/llvm-project/issues/85647
+Signed-off-by: Andrej Shadura <andrew.shadura@collabora.co.uk>
+Reviewed-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/sh/kernel/cpu/proc.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/bluetooth/rfcomm/sock.c |   10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
---- a/arch/sh/kernel/cpu/proc.c
-+++ b/arch/sh/kernel/cpu/proc.c
-@@ -132,7 +132,7 @@ static int show_cpuinfo(struct seq_file
+--- a/net/bluetooth/rfcomm/sock.c
++++ b/net/bluetooth/rfcomm/sock.c
+@@ -740,7 +740,8 @@ static int rfcomm_sock_getsockopt_old(st
+ 	struct sock *l2cap_sk;
+ 	struct l2cap_conn *conn;
+ 	struct rfcomm_conninfo cinfo;
+-	int len, err = 0;
++	int err = 0;
++	size_t len;
+ 	u32 opt;
  
- static void *c_start(struct seq_file *m, loff_t *pos)
+ 	BT_DBG("sk %p", sk);
+@@ -794,7 +795,7 @@ static int rfcomm_sock_getsockopt_old(st
+ 		cinfo.hci_handle = conn->hcon->handle;
+ 		memcpy(cinfo.dev_class, conn->hcon->dev_class, 3);
+ 
+-		len = min_t(unsigned int, len, sizeof(cinfo));
++		len = min(len, sizeof(cinfo));
+ 		if (copy_to_user(optval, (char *) &cinfo, len))
+ 			err = -EFAULT;
+ 
+@@ -813,7 +814,8 @@ static int rfcomm_sock_getsockopt(struct
  {
--	return *pos < NR_CPUS ? cpu_data + *pos : NULL;
-+	return *pos < nr_cpu_ids ? cpu_data + *pos : NULL;
- }
- static void *c_next(struct seq_file *m, void *v, loff_t *pos)
- {
+ 	struct sock *sk = sock->sk;
+ 	struct bt_security sec;
+-	int len, err = 0;
++	int err = 0;
++	size_t len;
+ 
+ 	BT_DBG("sk %p", sk);
+ 
+@@ -838,7 +840,7 @@ static int rfcomm_sock_getsockopt(struct
+ 		sec.level = rfcomm_pi(sk)->sec_level;
+ 		sec.key_size = 0;
+ 
+-		len = min_t(unsigned int, len, sizeof(sec));
++		len = min(len, sizeof(sec));
+ 		if (copy_to_user(optval, (char *) &sec, len))
+ 			err = -EFAULT;
+ 
 
 
