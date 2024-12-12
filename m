@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67F462210E2;
-	Thu, 12 Dec 2024 16:51:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52CEE215799;
+	Thu, 12 Dec 2024 16:51:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734022277; cv=none; b=j94ervY3URC+5Vk6EjVYnofXE+dxzmDKpUgJlTGvbZyrYzk9kV8Y/t00j2izttXRCvApyNeHxpDgXOUYkjSfq9SL1mQqNVymyBVurp/wNywhkI52EephwAESvr56YK1CURljZDv4foRQb8l6Ei0k0a7GRMqX07aVFWCVCzVo5Ss=
+	t=1734022281; cv=none; b=bi0CQnGYOYg6Gutf2OQQcdNNQpXr1jDd/agZvm1Pge0vXJnyNH57slcL83FchgvFUae8eLAunA8bHJT8T+QFGxcPAeQ0+nSHPC4FcABYMKJApvvct0jZ7MFttXxHOsMvPKsPRKCSPO6xEaIWbosJp6vkM5WrlJpPy5zg6LoZR6s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734022277; c=relaxed/simple;
-	bh=MAYYOnI+WIlV+eiteJnWevrswNY7rt6GJ/+8VXq5wsM=;
+	s=arc-20240116; t=1734022281; c=relaxed/simple;
+	bh=3lNxiGEJ7KkmRYPElCAU8H1ak7/gmAX5lTyRFb1F6NU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BZ9nTklPeegkNwxyazSu21yBWtdsg3yVcsBLZjg6PnWw3G141j82KmOD12LEz7oyvsqMyIEj3YuE393VPNJMIahsnosvlTRovrVhX5hXcHflkLcdgVcrGG/4uhZfMAjTHxKf5tbYYo+1ZAK7MBNYbU+nf+W2lZDMqhcGTANOzsA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HnPxV1Th; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=knBPDoDgO5y2A0Ws77htj3skYLPB874VpfxaYNJrHtJuJe/jA4i7RQ3MQmOPy6PGKY7/uhPhj90r9zkFPitClrz/UZ8L/67klU1D2PD2aQxt55TCXV1GUYYI/boAdV10zelc9Ml72DtZ1s//xrQp+r9+f5piDExv5HbEAJT7WAM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1BRso1Ja; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HnPxV1Th"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FFD4C4CECE;
-	Thu, 12 Dec 2024 16:51:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1BRso1Ja"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A1B8C4CED0;
+	Thu, 12 Dec 2024 16:51:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734022277;
-	bh=MAYYOnI+WIlV+eiteJnWevrswNY7rt6GJ/+8VXq5wsM=;
+	s=korg; t=1734022280;
+	bh=3lNxiGEJ7KkmRYPElCAU8H1ak7/gmAX5lTyRFb1F6NU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HnPxV1ThnUEk2p7Mh6Jzthr4o/JxMd391SxO+z943/DgYNqehkGD3S82M8E/V0SSo
-	 IM/QP1IjvS1rctBFuJqwhP/rPWjQD+2+K9E0hrjfzxqj5arjwe6doZ8mTljcn/xeA6
-	 WaVL9uHM/Avo9poyGEvTSjbWdMKWeQHbaXFxubIc=
+	b=1BRso1JaCRhRqRTZn/eD+dBfLlMAPgFs2avXxjLIhXUaAVL+W6eQHEmKqaGi7axIl
+	 4XrfKk6nC/sAGGslIp+uuchghM+sRT/YhLlOPDDoLt50/Yjd87jFz7AdLLa76jTyjR
+	 9nIiR5RNgtSTJNXfAk1CPBPJM5aBiMfA3fO2zc5U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
-	David Ahern <dsahern@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Yuan Can <yuancan@huawei.com>,
+	Felix Kuehling <felix.kuehling@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 197/565] selftests: net: really check for bg process completion
-Date: Thu, 12 Dec 2024 15:56:32 +0100
-Message-ID: <20241212144319.274481686@linuxfoundation.org>
+Subject: [PATCH 5.15 198/565] drm/amdkfd: Fix wrong usage of INIT_WORK()
+Date: Thu, 12 Dec 2024 15:56:33 +0100
+Message-ID: <20241212144319.315204058@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144311.432886635@linuxfoundation.org>
 References: <20241212144311.432886635@linuxfoundation.org>
@@ -52,41 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Yuan Can <yuancan@huawei.com>
 
-[ Upstream commit 52ed077aa6336dbef83a2d6d21c52d1706fb7f16 ]
+[ Upstream commit 21cae8debc6a1d243f64fa82cd1b41cb612b5c61 ]
 
-A recent refactor transformed the check for process completion
-in a true statement, due to a typo.
+In kfd_procfs_show(), the sdma_activity_work_handler is a local variable
+and the sdma_activity_work_handler.sdma_activity_work should initialize
+with INIT_WORK_ONSTACK() instead of INIT_WORK().
 
-As a result, the relevant test-case is unable to catch the
-regression it was supposed to detect.
-
-Restore the correct condition.
-
-Fixes: 691bb4e49c98 ("selftests: net: avoid just another constant wait")
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://patch.msgid.link/0e6f213811f8e93a235307e683af8225cc6277ae.1730828007.git.pabeni@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 32cb59f31362 ("drm/amdkfd: Track SDMA utilization per process")
+Signed-off-by: Yuan Can <yuancan@huawei.com>
+Signed-off-by: Felix Kuehling <felix.kuehling@amd.com>
+Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/pmtu.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdkfd/kfd_process.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/tools/testing/selftests/net/pmtu.sh b/tools/testing/selftests/net/pmtu.sh
-index 31e3d0db7a12e..84c05e533056d 100755
---- a/tools/testing/selftests/net/pmtu.sh
-+++ b/tools/testing/selftests/net/pmtu.sh
-@@ -1799,7 +1799,7 @@ check_running() {
- 	pid=${1}
- 	cmd=${2}
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_process.c b/drivers/gpu/drm/amd/amdkfd/kfd_process.c
+index 7f69031f2b61a..49810642bc2b8 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_process.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_process.c
+@@ -311,8 +311,8 @@ static ssize_t kfd_procfs_show(struct kobject *kobj, struct attribute *attr,
+ 							      attr_sdma);
+ 		struct kfd_sdma_activity_handler_workarea sdma_activity_work_handler;
  
--	[ "$(cat /proc/${pid}/cmdline 2>/dev/null | tr -d '\0')" = "{cmd}" ]
-+	[ "$(cat /proc/${pid}/cmdline 2>/dev/null | tr -d '\0')" = "${cmd}" ]
- }
+-		INIT_WORK(&sdma_activity_work_handler.sdma_activity_work,
+-					kfd_sdma_activity_worker);
++		INIT_WORK_ONSTACK(&sdma_activity_work_handler.sdma_activity_work,
++				  kfd_sdma_activity_worker);
  
- test_cleanup_vxlanX_exception() {
+ 		sdma_activity_work_handler.pdd = pdd;
+ 		sdma_activity_work_handler.sdma_activity_counter = 0;
+@@ -320,6 +320,7 @@ static ssize_t kfd_procfs_show(struct kobject *kobj, struct attribute *attr,
+ 		schedule_work(&sdma_activity_work_handler.sdma_activity_work);
+ 
+ 		flush_work(&sdma_activity_work_handler.sdma_activity_work);
++		destroy_work_on_stack(&sdma_activity_work_handler.sdma_activity_work);
+ 
+ 		return snprintf(buffer, PAGE_SIZE, "%llu\n",
+ 				(sdma_activity_work_handler.sdma_activity_counter)/
 -- 
 2.43.0
 
