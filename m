@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D55C20A5EE;
-	Thu, 12 Dec 2024 17:37:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C698223C4D;
+	Thu, 12 Dec 2024 17:38:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734025078; cv=none; b=Kw8aXheLGHXUYH3Cw7ww+iCHpTRba5uug+ZnygVE8y+xigylQ+EtWoQzhF3FQZkt+WgLgXbwRACEFRHqkc2WEhhDguflKrE11Khsyh+54mwowVMlQrNCsjMD04q79MKUL7sD7WxKQ/QdCCeKr1VQbd2oyHngHS053VMXJ6PtIsw=
+	t=1734025081; cv=none; b=erFbDiHLx1K+5gw7PbAiCgcRKgY6G7nbm7BPBm4fVYUOnaVCDrGk1PUi4ycm5WRUU6g2oJW/U+6tq3F6jWwnfj6Tl4VZtfXLT0SCkEp86I7IE58z/8yjvW88lqctvrSeVSFhvyc/o4mRajmlFQXU7DBafBLmnJwcwTCHX4o4iuE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734025078; c=relaxed/simple;
-	bh=x0X75XX+wit+juJuBd+9jf/yQRYKGbuGLL/2gDOWEgU=;
+	s=arc-20240116; t=1734025081; c=relaxed/simple;
+	bh=SF0RB7dBCrY+ZVkHfLv8RiXP87IQmRp7cTF2L6wBgDw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=scHskGdX2r7jBwmk9Sw9rKHqIbMtUH03rpxW/IoX3uppcbeoSc4vYQ35jWduZ3GEMmYWyw3Cxvbhg/17A6mPh3pumdhvt2S0dbxLfNS5q7qUek8zN8RiFahl63EJ0N/ZwwDUzx/yLNaDEt575sG2q+dYj0mfdDjMuZt5YOx57Y0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MtEV88f+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZbUvKwTNu+rKLHpYxoyj1ll6GoO4fdigBLFdmXbET6Etbp3NzGAYYLKhkPks7JZPOTS3w2rJ3fNsXVLNL62jg2O29ZZZd3Gpm+MKOdDB/kgO6EZ/mfuxEysoxVBzhvA4V97B61xdiLnaFE+Pqf29lpPqJxomDG7f2M/R6ntnJUA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DChVhCpH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MtEV88f+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BFE3C4CEDD;
-	Thu, 12 Dec 2024 17:37:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DChVhCpH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B20D4C4CED0;
+	Thu, 12 Dec 2024 17:38:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734025077;
-	bh=x0X75XX+wit+juJuBd+9jf/yQRYKGbuGLL/2gDOWEgU=;
+	s=korg; t=1734025081;
+	bh=SF0RB7dBCrY+ZVkHfLv8RiXP87IQmRp7cTF2L6wBgDw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MtEV88f+2uQL/9FzxYvJnKWTEJ1mavdscR3qv2hKV6k++eeK0G3YubNoEEklYRsJc
-	 6oqDKkz1+QzpNxQwZoje+IiKrG+2R+SVimRvWkGEAdisgIh0GqW0C1256LZjEo5lwv
-	 0shA/C/BOSGcIBdOvJWC31C+eEskuYF6AvKDvxxA=
+	b=DChVhCpHZDYFpIfs8/oF8Pyl4SsTE4W4r1M7SeoFs9Dg5bugc1xGNLLW0YZHq7ops
+	 BC3kZ0drmBMQLERiYyhVmA6XIHCsjtaoje2olnUgzhY5unekzmI6NNtfD0gLe7f7ZS
+	 /DIg2I4lwGfz4HaNEm1ueoaR4GsZfhsKLox9efiY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Priyanka Singh <priyanka.singh@nxp.com>,
-	Li Yang <leoyang.li@nxp.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Matthew Garrett <mjg59@google.com>,
+	Jarkko Sakkinen <jarkko@kernel.org>,
+	Bartosz Szczepanek <bsz@semihalf.com>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	Jerry Snitselaar <jsnitsel@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 041/321] EDAC/fsl_ddr: Fix bad bit shift operations
-Date: Thu, 12 Dec 2024 15:59:19 +0100
-Message-ID: <20241212144231.618601356@linuxfoundation.org>
+Subject: [PATCH 5.4 050/321] efi/tpm: Pass correct address to memblock_reserve
+Date: Thu, 12 Dec 2024 15:59:28 +0100
+Message-ID: <20241212144231.971847399@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144229.291682835@linuxfoundation.org>
 References: <20241212144229.291682835@linuxfoundation.org>
@@ -53,73 +54,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Priyanka Singh <priyanka.singh@nxp.com>
+From: Jerry Snitselaar <jsnitsel@redhat.com>
 
-[ Upstream commit 9ec22ac4fe766c6abba845290d5139a3fbe0153b ]
+[ Upstream commit f4cd18c5b2000df0c382f6530eeca9141ea41faf ]
 
-Fix undefined behavior caused by left-shifting a negative value in the
-expression:
+memblock_reserve() expects a physical address, but the address being
+passed for the TPM final events log is what was returned from
+early_memremap(). This results in something like the following:
 
-    cap_high ^ (1 << (bad_data_bit - 32))
+[    0.000000] memblock_reserve: [0xffffffffff2c0000-0xffffffffff2c00e4] efi_tpm_eventlog_init+0x324/0x370
 
-The variable bad_data_bit ranges from 0 to 63. When it is less than 32,
-bad_data_bit - 32 becomes negative, and left-shifting by a negative
-value in C is undefined behavior.
+Pass the address from efi like what is done for the TPM events log.
 
-Fix this by combining cap_high and cap_low into a 64-bit variable.
-
-  [ bp: Massage commit message, simplify error bits handling. ]
-
-Fixes: ea2eb9a8b620 ("EDAC, fsl-ddr: Separate FSL DDR driver from MPC85xx")
-Signed-off-by: Priyanka Singh <priyanka.singh@nxp.com>
-Signed-off-by: Li Yang <leoyang.li@nxp.com>
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Link: https://lore.kernel.org/r/20241016-imx95_edac-v3-3-86ae6fc2756a@nxp.com
+Fixes: c46f3405692d ("tpm: Reserve the TPM final events table")
+Cc: Matthew Garrett <mjg59@google.com>
+Cc: Jarkko Sakkinen <jarkko@kernel.org>
+Cc: Bartosz Szczepanek <bsz@semihalf.com>
+Cc: Ard Biesheuvel <ardb@kernel.org>
+Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
+Acked-by: Jarkko Sakkinen <jarkko@kernel.org>
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Stable-dep-of: e6d654e9f5a9 ("tpm: fix signed/unsigned bug when checking event logs")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/edac/fsl_ddr_edac.c | 22 +++++++++++++---------
- 1 file changed, 13 insertions(+), 9 deletions(-)
+ drivers/firmware/efi/tpm.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/edac/fsl_ddr_edac.c b/drivers/edac/fsl_ddr_edac.c
-index 6d8ea226010d2..61e59341a41f9 100644
---- a/drivers/edac/fsl_ddr_edac.c
-+++ b/drivers/edac/fsl_ddr_edac.c
-@@ -331,21 +331,25 @@ static void fsl_mc_check(struct mem_ctl_info *mci)
- 	 * TODO: Add support for 32-bit wide buses
- 	 */
- 	if ((err_detect & DDR_EDE_SBE) && (bus_width == 64)) {
-+		u64 cap = (u64)cap_high << 32 | cap_low;
-+		u32 s = syndrome;
-+
- 		sbe_ecc_decode(cap_high, cap_low, syndrome,
- 				&bad_data_bit, &bad_ecc_bit);
- 
--		if (bad_data_bit != -1)
--			fsl_mc_printk(mci, KERN_ERR,
--				"Faulty Data bit: %d\n", bad_data_bit);
--		if (bad_ecc_bit != -1)
--			fsl_mc_printk(mci, KERN_ERR,
--				"Faulty ECC bit: %d\n", bad_ecc_bit);
-+		if (bad_data_bit >= 0) {
-+			fsl_mc_printk(mci, KERN_ERR, "Faulty Data bit: %d\n", bad_data_bit);
-+			cap ^= 1ULL << bad_data_bit;
-+		}
-+
-+		if (bad_ecc_bit >= 0) {
-+			fsl_mc_printk(mci, KERN_ERR, "Faulty ECC bit: %d\n", bad_ecc_bit);
-+			s ^= 1 << bad_ecc_bit;
-+		}
- 
- 		fsl_mc_printk(mci, KERN_ERR,
- 			"Expected Data / ECC:\t%#8.8x_%08x / %#2.2x\n",
--			cap_high ^ (1 << (bad_data_bit - 32)),
--			cap_low ^ (1 << bad_data_bit),
--			syndrome ^ (1 << bad_ecc_bit));
-+			upper_32_bits(cap), lower_32_bits(cap), s);
+diff --git a/drivers/firmware/efi/tpm.c b/drivers/firmware/efi/tpm.c
+index 8f665678e9e39..e8d69bd548f3f 100644
+--- a/drivers/firmware/efi/tpm.c
++++ b/drivers/firmware/efi/tpm.c
+@@ -97,7 +97,7 @@ int __init efi_tpm_eventlog_init(void)
+ 		goto out_calc;
  	}
  
- 	fsl_mc_printk(mci, KERN_ERR,
+-	memblock_reserve((unsigned long)final_tbl,
++	memblock_reserve(efi.tpm_final_log,
+ 			 tbl_size + sizeof(*final_tbl));
+ 	efi_tpm_final_log_size = tbl_size;
+ 
 -- 
 2.43.0
 
