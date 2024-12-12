@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7968C2EAE5;
-	Thu, 12 Dec 2024 15:06:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45A3B215F5A;
+	Thu, 12 Dec 2024 15:06:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734016010; cv=none; b=BQ25BtwVjZWoSiq1chnAaRRQC0iwSHjGu6nKOVDkWBDODD7fAwsEKvSc22VBH52NZjJVaG7enyir/9lMJEeRILRAdQWHl3dre/qVR85U7PlnJwosYpafkPs31l+fiOapPWhatXnVTIa/fanOczOD90gI7JyXVrMnkPyxZfG09gY=
+	t=1734016014; cv=none; b=DDNyC8T2LNgHL64lK51VD6qXrzpG9QghJysPmTFa0bwy1MFlpXcB5U9vRza+4vAVtculbgXKEj67z9X4GHTFdV7dIP9I5p82OjNtIRIwL5weRITsTsjgz0Iza7vF3lO87tiSEoAztICu5lRHbj+XBDTPnm1xTGzQYCkXwBZRWE8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734016010; c=relaxed/simple;
-	bh=qizGT6EDJKsninS3o1N5zqa6K3ny2w9o9YmEZXOZI14=;
+	s=arc-20240116; t=1734016014; c=relaxed/simple;
+	bh=I/141KjWyUzlpdRZHgNSWfMGeerL4ZE2udK2uRjW54U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uVYM9CouJ9buY6aVvc5dPqe1bNpFyfibztv+fH2DA9Z+x4aV9LkG1sfMfBRq+ygQwE8rVIrSCF3bAZYhJXgKtdD1c+MqoDcvcUcVwAbogVN86HJpbxqZAOGrMoS6IiDL+Y8nFgae+b4KxEMMscK5PWTo3GTzOFDyzGnO8vB1iWk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CgseFGUX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dZngVvvPOerz7FwlnXa6JwSbWsF3I659IvBHSLRe/qxO/5yry86grzKXyykRXxDeHOpvHqb/ymwtn3bkT/F/LiMxKMWfDVra65L1Frtdo5II6Cpipu8ajxlzSmmvwvMd0h1AE+86h0q59BYg4UCzg3IacBrWX24Otyyrg7dsFug=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qdCD7X6L; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CgseFGUX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC14BC4CECE;
-	Thu, 12 Dec 2024 15:06:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qdCD7X6L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DBF7C4CED0;
+	Thu, 12 Dec 2024 15:06:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734016010;
-	bh=qizGT6EDJKsninS3o1N5zqa6K3ny2w9o9YmEZXOZI14=;
+	s=korg; t=1734016013;
+	bh=I/141KjWyUzlpdRZHgNSWfMGeerL4ZE2udK2uRjW54U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CgseFGUXWeRKTkbwQkuZWWWfRZ4oxmZGXi/j5mDLVY/YTT2jKByFs7J0OnlCtRlNA
-	 NLzTX2DBMg1WZOAZVWoagllK34F9tE+WJa51VlBrncEHnY7M1yHXROEFgfG5uBEasu
-	 HxeNhB3rpbK0CHF+zOD/J6IM/UwTp7xapx5CwTc4=
+	b=qdCD7X6LfblNdZ436v5Xcx57n3dCjdADR+QLHYDpWfNSPDoBUZZFBn8dl4A/gxvwm
+	 GOlqUBLdQPV3/YVVmreWvggx9KHuOdO7rxJVcDoIIV+lU4EFXTNBNFMByXEt85asio
+	 ZFHkmy74nA1A2JsxSrdXgrfZ75nTE8ta7xsiBWto=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Yingfu.zhou" <yingfu.zhou@shopee.com>,
-	"Chunguang.xu" <chunguang.xu@shopee.com>,
-	"Yue.zhao" <yue.zhao@shopee.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Hannes Reinecke <hare@suse.de>,
-	Keith Busch <kbusch@kernel.org>,
+	syzbot+7efb5850a17ba6ce098b@syzkaller.appspotmail.com,
+	Suraj Sonawane <surajsonawane0215@gmail.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 107/466] nvme-rdma: unquiesce admin_q before destroy it
-Date: Thu, 12 Dec 2024 15:54:36 +0100
-Message-ID: <20241212144311.045849513@linuxfoundation.org>
+Subject: [PATCH 6.12 108/466] scsi: sg: Fix slab-use-after-free read in sg_release()
+Date: Thu, 12 Dec 2024 15:54:37 +0100
+Message-ID: <20241212144311.086141528@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144306.641051666@linuxfoundation.org>
 References: <20241212144306.641051666@linuxfoundation.org>
@@ -55,67 +53,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chunguang.xu <chunguang.xu@shopee.com>
+From: Suraj Sonawane <surajsonawane0215@gmail.com>
 
-[ Upstream commit 5858b687559809f05393af745cbadf06dee61295 ]
+[ Upstream commit f10593ad9bc36921f623361c9e3dd96bd52d85ee ]
 
-Kernel will hang on destroy admin_q while we create ctrl failed, such
-as following calltrace:
+Fix a use-after-free bug in sg_release(), detected by syzbot with KASAN:
 
-PID: 23644    TASK: ff2d52b40f439fc0  CPU: 2    COMMAND: "nvme"
- #0 [ff61d23de260fb78] __schedule at ffffffff8323bc15
- #1 [ff61d23de260fc08] schedule at ffffffff8323c014
- #2 [ff61d23de260fc28] blk_mq_freeze_queue_wait at ffffffff82a3dba1
- #3 [ff61d23de260fc78] blk_freeze_queue at ffffffff82a4113a
- #4 [ff61d23de260fc90] blk_cleanup_queue at ffffffff82a33006
- #5 [ff61d23de260fcb0] nvme_rdma_destroy_admin_queue at ffffffffc12686ce
- #6 [ff61d23de260fcc8] nvme_rdma_setup_ctrl at ffffffffc1268ced
- #7 [ff61d23de260fd28] nvme_rdma_create_ctrl at ffffffffc126919b
- #8 [ff61d23de260fd68] nvmf_dev_write at ffffffffc024f362
- #9 [ff61d23de260fe38] vfs_write at ffffffff827d5f25
-    RIP: 00007fda7891d574  RSP: 00007ffe2ef06958  RFLAGS: 00000202
-    RAX: ffffffffffffffda  RBX: 000055e8122a4d90  RCX: 00007fda7891d574
-    RDX: 000000000000012b  RSI: 000055e8122a4d90  RDI: 0000000000000004
-    RBP: 00007ffe2ef079c0   R8: 000000000000012b   R9: 000055e8122a4d90
-    R10: 0000000000000000  R11: 0000000000000202  R12: 0000000000000004
-    R13: 000055e8122923c0  R14: 000000000000012b  R15: 00007fda78a54500
-    ORIG_RAX: 0000000000000001  CS: 0033  SS: 002b
+BUG: KASAN: slab-use-after-free in lock_release+0x151/0xa30
+kernel/locking/lockdep.c:5838
+__mutex_unlock_slowpath+0xe2/0x750 kernel/locking/mutex.c:912
+sg_release+0x1f4/0x2e0 drivers/scsi/sg.c:407
 
-This due to we have quiesced admi_q before cancel requests, but forgot
-to unquiesce before destroy it, as a result we fail to drain the
-pending requests, and hang on blk_mq_freeze_queue_wait() forever. Here
-try to reuse nvme_rdma_teardown_admin_queue() to fix this issue and
-simplify the code.
+In sg_release(), the function kref_put(&sfp->f_ref, sg_remove_sfp) is
+called before releasing the open_rel_lock mutex. The kref_put() call may
+decrement the reference count of sfp to zero, triggering its cleanup
+through sg_remove_sfp(). This cleanup includes scheduling deferred work
+via sg_remove_sfp_usercontext(), which ultimately frees sfp.
 
-Fixes: 958dc1d32c80 ("nvme-rdma: add clean action for failed reconnection")
-Reported-by: Yingfu.zhou <yingfu.zhou@shopee.com>
-Signed-off-by: Chunguang.xu <chunguang.xu@shopee.com>
-Signed-off-by: Yue.zhao <yue.zhao@shopee.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Hannes Reinecke <hare@suse.de>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+After kref_put(), sg_release() continues to unlock open_rel_lock and may
+reference sfp or sdp. If sfp has already been freed, this results in a
+slab-use-after-free error.
+
+Move the kref_put(&sfp->f_ref, sg_remove_sfp) call after unlocking the
+open_rel_lock mutex. This ensures:
+
+ - No references to sfp or sdp occur after the reference count is
+   decremented.
+
+ - Cleanup functions such as sg_remove_sfp() and
+   sg_remove_sfp_usercontext() can safely execute without impacting the
+   mutex handling in sg_release().
+
+The fix has been tested and validated by syzbot. This patch closes the
+bug reported at the following syzkaller link and ensures proper
+sequencing of resource cleanup and mutex operations, eliminating the
+risk of use-after-free errors in sg_release().
+
+Reported-by: syzbot+7efb5850a17ba6ce098b@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=7efb5850a17ba6ce098b
+Tested-by: syzbot+7efb5850a17ba6ce098b@syzkaller.appspotmail.com
+Fixes: cc833acbee9d ("sg: O_EXCL and other lock handling")
+Signed-off-by: Suraj Sonawane <surajsonawane0215@gmail.com>
+Link: https://lore.kernel.org/r/20241120125944.88095-1-surajsonawane0215@gmail.com
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/rdma.c | 8 +-------
- 1 file changed, 1 insertion(+), 7 deletions(-)
+ drivers/scsi/sg.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/nvme/host/rdma.c b/drivers/nvme/host/rdma.c
-index 24a2759798d01..913e6e5a80705 100644
---- a/drivers/nvme/host/rdma.c
-+++ b/drivers/nvme/host/rdma.c
-@@ -1091,13 +1091,7 @@ static int nvme_rdma_setup_ctrl(struct nvme_rdma_ctrl *ctrl, bool new)
+diff --git a/drivers/scsi/sg.c b/drivers/scsi/sg.c
+index 84334ab39c810..94127868bedf8 100644
+--- a/drivers/scsi/sg.c
++++ b/drivers/scsi/sg.c
+@@ -386,7 +386,6 @@ sg_release(struct inode *inode, struct file *filp)
+ 	SCSI_LOG_TIMEOUT(3, sg_printk(KERN_INFO, sdp, "sg_release\n"));
+ 
+ 	mutex_lock(&sdp->open_rel_lock);
+-	kref_put(&sfp->f_ref, sg_remove_sfp);
+ 	sdp->open_cnt--;
+ 
+ 	/* possibly many open()s waiting on exlude clearing, start many;
+@@ -398,6 +397,7 @@ sg_release(struct inode *inode, struct file *filp)
+ 		wake_up_interruptible(&sdp->open_wait);
  	}
- destroy_admin:
- 	nvme_stop_keep_alive(&ctrl->ctrl);
--	nvme_quiesce_admin_queue(&ctrl->ctrl);
--	blk_sync_queue(ctrl->ctrl.admin_q);
--	nvme_rdma_stop_queue(&ctrl->queues[0]);
--	nvme_cancel_admin_tagset(&ctrl->ctrl);
--	if (new)
--		nvme_remove_admin_tag_set(&ctrl->ctrl);
--	nvme_rdma_destroy_admin_queue(ctrl);
-+	nvme_rdma_teardown_admin_queue(ctrl, new);
- 	return ret;
+ 	mutex_unlock(&sdp->open_rel_lock);
++	kref_put(&sfp->f_ref, sg_remove_sfp);
+ 	return 0;
  }
  
 -- 
