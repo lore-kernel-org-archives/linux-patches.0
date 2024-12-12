@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4736A2210E8;
-	Thu, 12 Dec 2024 15:47:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8840A6F2FE;
+	Thu, 12 Dec 2024 15:47:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734018445; cv=none; b=K9fCWla87Oywy1ulgoCvRXeJX+WLC4npQ5hUR6ME1rO/+X6eWfIyFA6LCGDoUBo5Re2Xmppztjf1IqNXBrI4Kg9BlQRULHKNQGEQ+zMs6zMHCd+gGYJWU2kQsVk4OSncavnWgqJWn60T17hG9V8qaC6hlRIizwijjdQQp8HDCBI=
+	t=1734018448; cv=none; b=e1fTXKHxOMSuupmjsAo5WTxbQvWCyrj0dwAB3M06oKawKJi94UnnTLDbmY8AJfliBi4K/I4Oc1dxOpk4BK7qHTzvYi6/3SsenSRNC1inHk6+OYUAXRuuNV2GtFs8Ue3Ur9W6rEnnugBcmRbHWc1aRptSTWn/th3UloVEBq9qs/Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734018445; c=relaxed/simple;
-	bh=Re/SSBAZfaxoZBmTa0fklRQPLyrkS51pxoLbnD2HsX0=;
+	s=arc-20240116; t=1734018448; c=relaxed/simple;
+	bh=h60cScJ55Ja4VTWclSexthcOLMpFfXuY7Hc9N69JU14=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Inqzmw8wz+Zv+9PBqtcYwj1cxMsGYsXiR1N8aYmaesE6XZfy7rJNij2PkZV09DA+Yp5Z7R8ehm2UZlEgsOeXTPlzb5by5OOJOKp3NQCp2fmH4DGydooYMFLX4vM4J85t9bx6LpY7LfieqSkQeXOaM4hABFOrvdHhs0mdvL/Qfdk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rs+7e7RX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KVB1pZ1H5Yup2krgEgrtUgVzG3aiX+ah+XMhSrTFHpmq3hEggDpgW32jccjnotWBbB7SatbLDgB0YMLiOT7de5isCZ4ylz+91MMiIuKbSap6Cl2Q2LEh05eP2UND6G+p1fQKqwkOxCxWgl+UJ/eDDgWIbDUUVFs/h23H964SO6I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WmkzTPYd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rs+7e7RX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB5DDC4CED7;
-	Thu, 12 Dec 2024 15:47:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WmkzTPYd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 113AEC4CEDD;
+	Thu, 12 Dec 2024 15:47:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734018445;
-	bh=Re/SSBAZfaxoZBmTa0fklRQPLyrkS51pxoLbnD2HsX0=;
+	s=korg; t=1734018448;
+	bh=h60cScJ55Ja4VTWclSexthcOLMpFfXuY7Hc9N69JU14=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rs+7e7RX1yFbE4JC76/wcq2Zu7AivlnJGTAnI88Vt7bUsOdh0v0smFWBS1WwxrQtn
-	 PfhLKHqg8hpq+M330D+aaoWGFDj1HSywgtzRAa8V0HCMhhHb7p9WwNNg2ZXhM6FGsf
-	 r2eYMJq/yLRt2JD9hZFuGLex+Ffzzz1WfU8SC8to=
+	b=WmkzTPYdtuFb8GmAlFYTtnrMQlniro+p3JrZnUOvCzYNJN1kukCkW+KtBQpABPNbt
+	 yojJJMZMRIZSzpzBIhtmdqOUSnOLTt3hiIYvTtHTAb2Rq7MaQaWts8xAhZ6Kyiq/GV
+	 fZ2lj6947BC26KhcVByIcPeHnu3AVmR+5QHCbKrM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Kubiak <michal.kubiak@intel.com>,
-	Breno Leitao <leitao@debian.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	kernel test robot <lkp@intel.com>,
+	Esben Haabendal <esben@geanix.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 264/356] netpoll: Use rcu_access_pointer() in __netpoll_setup
-Date: Thu, 12 Dec 2024 15:59:43 +0100
-Message-ID: <20241212144255.024827021@linuxfoundation.org>
+Subject: [PATCH 6.6 265/356] pinctrl: freescale: fix COMPILE_TEST error with PINCTRL_IMX_SCU
+Date: Thu, 12 Dec 2024 15:59:44 +0100
+Message-ID: <20241212144255.063763545@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144244.601729511@linuxfoundation.org>
 References: <20241212144244.601729511@linuxfoundation.org>
@@ -52,42 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Esben Haabendal <esben@geanix.com>
 
-[ Upstream commit c69c5e10adb903ae2438d4f9c16eccf43d1fcbc1 ]
+[ Upstream commit 58414a31c5713afb5449fd74a26a843d34cc62e8 ]
 
-The ndev->npinfo pointer in __netpoll_setup() is RCU-protected but is being
-accessed directly for a NULL check. While no RCU read lock is held in this
-context, we should still use proper RCU primitives for consistency and
-correctness.
+When PINCTRL_IMX_SCU was selected by PINCTRL_IMX8DXL or PINCTRL_IMX8QM
+combined with COMPILE_TEST on a non-arm platforms, the IMX_SCU
+dependency could not be enabled.
 
-Replace the direct NULL check with rcu_access_pointer(), which is the
-appropriate primitive when only checking for NULL without dereferencing
-the pointer. This function provides the necessary ordering guarantees
-without requiring RCU read-side protection.
-
-Reviewed-by: Michal Kubiak <michal.kubiak@intel.com>
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Link: https://patch.msgid.link/20241118-netpoll_rcu-v1-1-a1888dcb4a02@debian.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202410031439.GyTSa0kX-lkp@intel.com/
+Closes: https://lore.kernel.org/oe-kbuild-all/202410030852.q0Hukplf-lkp@intel.com/
+Signed-off-by: Esben Haabendal <esben@geanix.com>
+Link: https://lore.kernel.org/20241003-imx-pinctrl-compile-test-fix-v1-1-145ca1948cc3@geanix.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/netpoll.c | 2 +-
+ drivers/pinctrl/freescale/Kconfig | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/core/netpoll.c b/net/core/netpoll.c
-index e082139004093..1791462f1600a 100644
---- a/net/core/netpoll.c
-+++ b/net/core/netpoll.c
-@@ -633,7 +633,7 @@ int __netpoll_setup(struct netpoll *np, struct net_device *ndev)
- 		goto out;
- 	}
+diff --git a/drivers/pinctrl/freescale/Kconfig b/drivers/pinctrl/freescale/Kconfig
+index 27bdc548f3a7d..a36dae526de12 100644
+--- a/drivers/pinctrl/freescale/Kconfig
++++ b/drivers/pinctrl/freescale/Kconfig
+@@ -9,7 +9,7 @@ config PINCTRL_IMX
  
--	if (!ndev->npinfo) {
-+	if (!rcu_access_pointer(ndev->npinfo)) {
- 		npinfo = kmalloc(sizeof(*npinfo), GFP_KERNEL);
- 		if (!npinfo) {
- 			err = -ENOMEM;
+ config PINCTRL_IMX_SCU
+ 	tristate
+-	depends on IMX_SCU
++	depends on IMX_SCU || COMPILE_TEST
+ 	select PINCTRL_IMX
+ 
+ config PINCTRL_IMX1_CORE
 -- 
 2.43.0
 
