@@ -1,123 +1,76 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 365B020C495;
-	Thu, 12 Dec 2024 12:17:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11275213E84;
+	Thu, 12 Dec 2024 13:44:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734005845; cv=none; b=a5GkFYn4/S0sFR/v87unFGT3iOE4W6W3noggKEtQTExdH2mmM+gBF51mmujXPxI0t6xTu+NixiqfCj2ub0xSEeX/jYVfiFpCQ06bcmlUOuSyZoRWYCQTxZO1aIckTmnPIEr+wG0kDWJJK1ZHRlc4DzkoDzOM7njDNUx3v0trHNQ=
+	t=1734011071; cv=none; b=DCeCkfv+kObvTQgJxWNuFItSk/KHe291VvexXrM18h3OniQ0YvkIcwrZCUjpGm2H0LU/0jQyJAJ0TEkMrUmvEzRhLPcmQXe1sOYcIR76b2GNBkbV2Z+B79KzD7FuVtzK3O66BfmbHulsQVIB/m3nL5S0iYm3HU1logn82GnsYSw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734005845; c=relaxed/simple;
-	bh=UIM6zMna/s3NSzkCEg6xzfrVqD4UMcFm3qN3oRpS6Yg=;
-	h=Subject:To:Cc:From:Date:In-Reply-To:Message-ID:MIME-Version:
-	 Content-Type; b=lPe0C3b8oCnigdhR96kI01aQEfWysVgBBzxhs2yExTRw24wtuygNMkqxvwXz7I0YWe6OEuW6RKntr+xTmBI+JRQE8t/GmMxH2ggSm9rT4KF7Kavu+uhOH6nE7AK8yZyODLakWrUyJxYaiPxORbBAqe7VhiAYmLc15zXikBQxrH4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kt/nNy29; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1734011071; c=relaxed/simple;
+	bh=Lit1VK9jGMpBkGX999PGGuTFC0FXWDKqYxr+W2P+bB0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Oj0aMI2kF0B7ZnPIRaT0xelC9P0kYm33HPlH1km3/9W4Q/tCfb4qgqEqCiy53tc80o/BWr/NnC6KwXetaKjS4hC3FxSrqDZr3rXnxXwvLgzhSCEKJCxs5LyV3QHqnUK/idUsm5RmW3OqPb5O2gyRKijnNLQ1rUsvd2xTO7Reb/E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l4UuxzQo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kt/nNy29"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37FD5C4CECE;
-	Thu, 12 Dec 2024 12:17:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l4UuxzQo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 289FFC4CECE;
+	Thu, 12 Dec 2024 13:44:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734005844;
-	bh=UIM6zMna/s3NSzkCEg6xzfrVqD4UMcFm3qN3oRpS6Yg=;
-	h=Subject:To:Cc:From:Date:In-Reply-To:From;
-	b=Kt/nNy291C7cMxRdPH44FBbb1XCVIYsEoC5TgY+SRMLXcl1+ugit5Lwubvt/y5sP9
-	 BnF3eN0HNuOZwqOvja8ok/er5PKoKHj2q6HOpxJ9f7m06zryKuEEfPlCRe/fnPvGhH
-	 RaKwmuocWbOIuNK8x55jMpueDjEX/WqZGmgiY9BU=
-Subject: Patch "[PATCH 6.1.y] drm/amd/display: Don't refer to dc_sink in is_dsc_need_re_compute" has been added to the 5.4-stable tree
-To: Jerry.Zuo@amd.com,Rodrigo.Siqueira@amd.com,airlied@gmail.com,alexander.deucher@amd.com,amd-gfx@lists.freedesktop.org,christian.koenig@amd.com,daniel.wheeler@amd.com,daniel@ffwll.ch,dri-devel@lists.freedesktop.org,gregkh@linuxfoundation.org,harry.wentland@amd.com,jerry.zuo@amd.com,jianqi.ren.cn@windriver.com,patches@lists.linux.dev,sunpeng.li@amd.com,wayne.lin@amd.com,zaeem.mohamed@amd.com
-Cc: <stable-commits@vger.kernel.org>
-From: <gregkh@linuxfoundation.org>
-Date: Thu, 12 Dec 2024 13:17:19 +0100
-In-Reply-To: <20241211101544.2121147-1-jianqi.ren.cn@windriver.com>
-Message-ID: <2024121217-rephrase-doctrine-7415@gregkh>
+	s=korg; t=1734011070;
+	bh=Lit1VK9jGMpBkGX999PGGuTFC0FXWDKqYxr+W2P+bB0=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=l4UuxzQoU4a8h5vOWcd9w2BjIG2cfOYh+oaP5YMkQJcW5hzhtgyFi2DqoWKsvo5RY
+	 Q+8EEZswMQClnmByB9ZrRgDOlQxXNWZ5dKvrwfdmXR95O1nhFFJiH/LbucZT210Sk+
+	 hAdt6W6lYcqOiDupwqIAmlFPmB2OWaj5DK4xt/d4=
+Date: Thu, 12 Dec 2024 14:44:27 +0100
+From: Greg KH <gregkh@linuxfoundation.org>
+To: Hui Wang <hui.wang@canonical.com>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, sashal@kernel.org,
+	hvilleneuve@dimonoff.com
+Subject: Re: [stable-kernel][5.15.y][PATCH 0/5] Fix a regression on sc16is7xx
+Message-ID: <2024121241-civil-diligence-dc09@gregkh>
+References: <20241211042545.202482-1-hui.wang@canonical.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=ANSI_X3.4-1968
-Content-Transfer-Encoding: 8bit
-X-stable: commit
-X-Patchwork-Hint: ignore 
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241211042545.202482-1-hui.wang@canonical.com>
 
+On Wed, Dec 11, 2024 at 12:25:39PM +0800, Hui Wang wrote:
+> Recently we found the fifo_read() and fifo_write() are broken in our
+> 5.15 kernel after rebase to the latest 5.15.y, the 5.15.y integrated
+> the commit e635f652696e ("serial: sc16is7xx: convert from _raw_ to
+> _noinc_ regmap functions for FIFO"), but it forgot to integrate a
+> prerequisite commit 3837a0379533 ("serial: sc16is7xx: improve regmap
+> debugfs by using one regmap per port").
+> 
+> And about the prerequisite commit, there are also 4 commits to fix it,
+> So in total, I backported 5 patches to 5.15.y to fix this regression.
+> 
+> 0002-xxx and 0004-xxx could be cleanly applied to 5.15.y, the remaining
+> 3 patches need to resolve some conflict.
+> 
+> Hugo Villeneuve (5):
+>   serial: sc16is7xx: improve regmap debugfs by using one regmap per port
+>   serial: sc16is7xx: remove wasteful static buffer in
+>     sc16is7xx_regmap_name()
+>   serial: sc16is7xx: remove global regmap from struct sc16is7xx_port
+>   serial: sc16is7xx: remove unused line structure member
+>   serial: sc16is7xx: change EFR lock to operate on each channels
+> 
+>  drivers/tty/serial/sc16is7xx.c | 185 +++++++++++++++++++--------------
+>  1 file changed, 107 insertions(+), 78 deletions(-)
 
-This is a note to let you know that I've just added the patch titled
+How well did you test this series?  It seems you forgot about commit
+133f4c00b8b2 ("serial: sc16is7xx: fix TX fifo corruption"), right?
 
-    [PATCH 6.1.y] drm/amd/display: Don't refer to dc_sink in is_dsc_need_re_compute
+Please do better testing and resend a working set of patches.
 
-to the 5.4-stable tree which can be found at:
-    http://www.kernel.org/git/?p=linux/kernel/git/stable/stable-queue.git;a=summary
+thanks,
 
-The filename of the patch is:
-     drm-amd-display-don-t-refer-to-dc_sink-in-is_dsc_need_re_compute.patch
-and it can be found in the queue-5.4 subdirectory.
-
-If you, or anyone else, feels it should not be added to the stable tree,
-please let <stable@vger.kernel.org> know about it.
-
-
-From jianqi.ren.cn@windriver.com  Thu Dec 12 13:11:21 2024
-From: <jianqi.ren.cn@windriver.com>
-Date: Wed, 11 Dec 2024 18:15:44 +0800
-Subject: [PATCH 6.1.y] drm/amd/display: Don't refer to dc_sink in is_dsc_need_re_compute
-To: <wayne.lin@amd.com>, <gregkh@linuxfoundation.org>
-Cc: <patches@lists.linux.dev>, <jerry.zuo@amd.com>, <zaeem.mohamed@amd.com>, <daniel.wheeler@amd.com>, <alexander.deucher@amd.com>, <stable@vger.kernel.org>, <harry.wentland@amd.com>, <sunpeng.li@amd.com>, <Rodrigo.Siqueira@amd.com>, <christian.koenig@amd.com>, <airlied@gmail.com>, <daniel@ffwll.ch>, <Jerry.Zuo@amd.com>, <amd-gfx@lists.freedesktop.org>, <dri-devel@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>
-Message-ID: <20241211101544.2121147-1-jianqi.ren.cn@windriver.com>
-
-
-From: Wayne Lin <wayne.lin@amd.com>
-
-[ Upstream commit fcf6a49d79923a234844b8efe830a61f3f0584e4 ]
-
-[Why]
-When unplug one of monitors connected after mst hub, encounter null pointer dereference.
-
-It's due to dc_sink get released immediately in early_unregister() or detect_ctx(). When
-commit new state which directly referring to info stored in dc_sink will cause null pointer
-dereference.
-
-[how]
-Remove redundant checking condition. Relevant condition should already be covered by checking
-if dsc_aux is null or not. Also reset dsc_aux to NULL when the connector is disconnected.
-
-Reviewed-by: Jerry Zuo <jerry.zuo@amd.com>
-Acked-by: Zaeem Mohamed <zaeem.mohamed@amd.com>
-Signed-off-by: Wayne Lin <wayne.lin@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Jianqi Ren <jianqi.ren.cn@windriver.com>
----
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c | 4 ++++
- 1 file changed, 4 insertions(+)
-
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
-index 1acef5f3838f..a1619f4569cf 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
-@@ -183,6 +183,8 @@ amdgpu_dm_mst_connector_early_unregister(struct drm_connector *connector)
- 		dc_sink_release(dc_sink);
- 		aconnector->dc_sink = NULL;
- 		aconnector->edid = NULL;
-+		aconnector->dsc_aux = NULL;
-+		port->passthrough_aux = NULL;
- 	}
- 
- 	aconnector->mst_status = MST_STATUS_DEFAULT;
-@@ -487,6 +489,8 @@ dm_dp_mst_detect(struct drm_connector *connector,
- 		dc_sink_release(aconnector->dc_sink);
- 		aconnector->dc_sink = NULL;
- 		aconnector->edid = NULL;
-+		aconnector->dsc_aux = NULL;
-+		port->passthrough_aux = NULL;
- 
- 		amdgpu_dm_set_mst_status(&aconnector->mst_status,
- 			MST_REMOTE_EDID | MST_ALLOCATE_NEW_PAYLOAD | MST_CLEAR_ALLOCATED_PAYLOAD,
--- 
-2.25.1
-
-
-
-Patches currently in stable-queue which might be from jianqi.ren.cn@windriver.com are
-
-queue-5.4/drm-amd-display-don-t-refer-to-dc_sink-in-is_dsc_need_re_compute.patch
+greg k-h
