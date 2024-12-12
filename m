@@ -1,45 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C8F62080FC;
-	Thu, 12 Dec 2024 15:07:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A36CA215773;
+	Thu, 12 Dec 2024 15:07:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734016031; cv=none; b=lZtBZU1ETZEQEys2ybRj6FS7Up6PPteYqyXyZP3m/xgAJ07yjo8SwXoZMF3b4hvUDc2SuFKapc3jwr2an8g8mwtecJ/LyTSdez4vkZhRzOzxwnnYn64yNdxkaD7fceVdz4vQlMoBhlYYbwifShc1JI8ArLQb2yLjqKy8zsFF/bQ=
+	t=1734016034; cv=none; b=l00C9GVCa4/KeP9RQ2dLZ9+bH4h5M7DOf4k+/lQVbkGTiHSBCsk+dmyzrkxvKHUALoS26Hh/nxPCG5bFs97yCSAmwauVUYiYy4rImmrIkw25zv0tulWFdV54YDuhAW/gmZuPNTee0kdmLimm9BnfwotzKrb+NUQv1Z9OBwaaCR0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734016031; c=relaxed/simple;
-	bh=ZNc2fwIO5rzVsdMc1wj8eHUCYGRcFqapnuMzHBXmPp0=;
+	s=arc-20240116; t=1734016034; c=relaxed/simple;
+	bh=BRKd7JFQtDk+RGaKdymorSuonRdtVBBMM8fmDk1mWzA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HpuoL+v+/+sXEkotBM9e2jDvWpuPZD3CkK8u9Ir3IwX0zQwpGHHIqx/DQFt/CKJnkBfcqVhTtpDsGX/vv/qJ6EK0gEUz/4TjowUHlnefylL9dVqGpAmnJRqOMKMbp+Z3Mmn+/8KzUViiq0ADh5XuU8qF5aRzNHoW8bSYCtzfbNc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pj1DrslM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QSB5afl9rg3YV2asl+CrBmKcfrUoY6m40mdGNCLX32t8KczHGIiVRVgxee2DsD+LYd5Qduf6tjl4Iw7ePBhZD+saf55UBXBcmvuIVAvDEf1Y2//qIx+eUA483JIzTkhfVyarh+VLwUZ2m30eHMu9xTvuVNmXU9RODXdboRDP+eU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VGe4SLqv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pj1DrslM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F12BC4CECE;
-	Thu, 12 Dec 2024 15:07:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VGe4SLqv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC382C4CECE;
+	Thu, 12 Dec 2024 15:07:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734016031;
-	bh=ZNc2fwIO5rzVsdMc1wj8eHUCYGRcFqapnuMzHBXmPp0=;
+	s=korg; t=1734016034;
+	bh=BRKd7JFQtDk+RGaKdymorSuonRdtVBBMM8fmDk1mWzA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Pj1DrslMA87JJEJOaueEAsGjajoRo93Bnd+UQZy04h9RXxaDgcGFvC0MCzqFqW5NQ
-	 ljSq+ERXJfkha35Ge41F4ZgApMtn0OqUgaaFm9VK5HRA9t+DkMfI5CgfNhy73ZGdDU
-	 yKhvtItc3sokzIRCwKMAKTfvB49ie9DLqfsCV05Y=
+	b=VGe4SLqvthasAE7QANnbi5GG+6hM7iEh6Kma7mMUrti3eaL8BBoytF9bEy02IqhIZ
+	 z7b0fT+NjFxtMvyUo352uukL6aAE27S+QSQtnW95Wi1h3r6jLl/1+Nu0UjNvBNST/U
+	 IyuOnacXXwSvg886FcqHeeYR+y2qExrh1xaOcsf4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
-	syzbot+0af00f6a2cba2058b5db@syzkaller.appspotmail.com,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Jun Piao <piaojun@huawei.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Logan Gunthorpe <logang@deltatee.com>,
+	Christoph Hellwig <hch@lst.de>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 112/466] ocfs2: free inode when ocfs2_get_init_inode() fails
-Date: Thu, 12 Dec 2024 15:54:41 +0100
-Message-ID: <20241212144311.243393303@linuxfoundation.org>
+Subject: [PATCH 6.12 113/466] scatterlist: fix incorrect func name in kernel-doc
+Date: Thu, 12 Dec 2024 15:54:42 +0100
+Message-ID: <20241212144311.282883742@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144306.641051666@linuxfoundation.org>
 References: <20241212144306.641051666@linuxfoundation.org>
@@ -58,48 +53,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit 965b5dd1894f4525f38c1b5f99b0106a07dbb5db ]
+[ Upstream commit d89c8ec0546184267cb211b579514ebaf8916100 ]
 
-syzbot is reporting busy inodes after unmount, for commit 9c89fe0af826
-("ocfs2: Handle error from dquot_initialize()") forgot to call iput() when
-new_inode() succeeded and dquot_initialize() failed.
+Fix a kernel-doc warning by making the kernel-doc function description
+match the function name:
 
-Link: https://lkml.kernel.org/r/e68c0224-b7c6-4784-b4fa-a9fc8c675525@I-love.SAKURA.ne.jp
-Fixes: 9c89fe0af826 ("ocfs2: Handle error from dquot_initialize()")
-Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
-Reported-by: syzbot+0af00f6a2cba2058b5db@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=0af00f6a2cba2058b5db
-Tested-by: syzbot+0af00f6a2cba2058b5db@syzkaller.appspotmail.com
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Jun Piao <piaojun@huawei.com>
+include/linux/scatterlist.h:323: warning: expecting prototype for sg_unmark_bus_address(). Prototype was for sg_dma_unmark_bus_address() instead
+
+Link: https://lkml.kernel.org/r/20241130022406.537973-1-rdunlap@infradead.org
+Fixes: 42399301203e ("lib/scatterlist: add flag for indicating P2PDMA segments in an SGL")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Cc: Logan Gunthorpe <logang@deltatee.com>
+Cc: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/namei.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ include/linux/scatterlist.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/ocfs2/namei.c b/fs/ocfs2/namei.c
-index 59c92353151a8..5550f8afa4380 100644
---- a/fs/ocfs2/namei.c
-+++ b/fs/ocfs2/namei.c
-@@ -200,8 +200,10 @@ static struct inode *ocfs2_get_init_inode(struct inode *dir, umode_t mode)
- 	mode = mode_strip_sgid(&nop_mnt_idmap, dir, mode);
- 	inode_init_owner(&nop_mnt_idmap, inode, dir, mode);
- 	status = dquot_initialize(inode);
--	if (status)
-+	if (status) {
-+		iput(inode);
- 		return ERR_PTR(status);
-+	}
- 
- 	return inode;
+diff --git a/include/linux/scatterlist.h b/include/linux/scatterlist.h
+index e61d164622db4..1bad36e3e4ef1 100644
+--- a/include/linux/scatterlist.h
++++ b/include/linux/scatterlist.h
+@@ -313,7 +313,7 @@ static inline void sg_dma_mark_bus_address(struct scatterlist *sg)
  }
+ 
+ /**
+- * sg_unmark_bus_address - Unmark the scatterlist entry as a bus address
++ * sg_dma_unmark_bus_address - Unmark the scatterlist entry as a bus address
+  * @sg:		 SG entry
+  *
+  * Description:
 -- 
 2.43.0
 
