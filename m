@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95F7313792B;
-	Thu, 12 Dec 2024 15:25:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3517213792B;
+	Thu, 12 Dec 2024 15:25:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734017149; cv=none; b=fXMdhslQdtLtHYWKFOhshTZjlLwKx4XvIDX9811oP3TEXTC51Y4dPNRPa9VCZAZ/RP073LrUs6xhkv6B2F+2pj4bM9PoY7GKhA/MYthMpgMbZkMIr5mWDYobnoF6U0hUpWZRK2idowro9BB+OqEXlsJON7mojw1QeBEWOiZ2diU=
+	t=1734017153; cv=none; b=Pem4irtkF+Q2ibU9aurU6Dtm4tivf79eBfb3RHc7Xbp+ZGnQ7gAkgyFcbyayzUtlZPp2qPx2ZH31Ngh5IO7j4PkqQ8y7Qc82e6pVVJmFjqBU0uw7SGwgZef0q7VmgnZ3i5PwUdkTwJY0wdATz5J+6OE0PT7F+7b5edonh7LEWLQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734017149; c=relaxed/simple;
-	bh=ZO43cznYBHTHlfdYf44pQFblYoLKWyLWVPxf60GmDxc=;
+	s=arc-20240116; t=1734017153; c=relaxed/simple;
+	bh=8Xig4ZtKgtvzl06w8O1ubjeJQ6PFhry+a0znc8bbVW8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eDAzkH5WD/EpZ52EqiEDofTMnuL9jCDLcJ8Gu7KdBN6oR8Ei1K+LDkbR+bm/aVEVC9w4xFRLEiIStfpY/ysR88zXzYkMUusFpkTv5q/y3wluJ6Elw1uLTSTA65YDVmCbhb/DUY9ge1JC31keDiYj+Vq19R0OXEYX91+JX0gKWgc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yWm8xz7i; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pGlKqC4ExGV3MTHPtzzJmlo0fL/C/dI6+LVIcPHY79aC5Lx5qtln8X9GKfs0uKdZHxyw/ZPwCkDdiV8h1NvXRQHYXrOTCHZe3l9v/3BoIb8vuDekOKdLubWQjgVt1aDzQ3f6rEhFa1mvt7yHGBrI2/S5ehTE+lhzGwwgLUpXbY0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=igGsxJvg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yWm8xz7i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03A97C4CECE;
-	Thu, 12 Dec 2024 15:25:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="igGsxJvg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 795B7C4CECE;
+	Thu, 12 Dec 2024 15:25:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734017149;
-	bh=ZO43cznYBHTHlfdYf44pQFblYoLKWyLWVPxf60GmDxc=;
+	s=korg; t=1734017153;
+	bh=8Xig4ZtKgtvzl06w8O1ubjeJQ6PFhry+a0znc8bbVW8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yWm8xz7i5rRtCIICJ3IkmocI3e6hzpW6+KdNhI0gIfy0E6qESPeHXYmLFE1gA6NhM
-	 7gRb+6+kCrST5sV0j+06sLt3OgbeptN/vihbpEPF0T5xIdlSXId/E6bh+BVa9ShFKh
-	 tlIJvsfZ3d5W4iS6UIEFz/0XJKNJgQrRoDoZvQx8=
+	b=igGsxJvgdkcyoVI+PSgVahSjjYRPiq8+REVX98sMejJj4cqLtWqazbgjP0t6ANkik
+	 lfbUtydDdtILLaBtUtdH2flyXXzX9JP0cpwPlDxvlNgJ0cmERQQZewIxKOs4Wj+RZ4
+	 sW7hcL1DbD7OrusLUetzb3y2OehcoiUkBHCJ6tRI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+aa0730b0a42646eb1359@syzkaller.appspotmail.com,
-	Qianqiang Liu <qianqiang.liu@163.com>,
-	Andreas Gruenbacher <agruenba@redhat.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 389/466] KMSAN: uninit-value in inode_go_dump (5)
-Date: Thu, 12 Dec 2024 15:59:18 +0100
-Message-ID: <20241212144322.141423582@linuxfoundation.org>
+Subject: [PATCH 6.12 398/466] remoteproc: qcom: pas: enable SAR2130P audio DSP support
+Date: Thu, 12 Dec 2024 15:59:27 +0100
+Message-ID: <20241212144322.486754088@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144306.641051666@linuxfoundation.org>
 References: <20241212144306.641051666@linuxfoundation.org>
@@ -52,40 +52,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qianqiang Liu <qianqiang.liu@163.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit f9417fcfca3c5e30a0b961e7250fab92cfa5d123 ]
+[ Upstream commit 009e288c989b3fe548a45c82da407d7bd00418a9 ]
 
-When mounting of a corrupted disk image fails, the error message printed
-can reference uninitialized inode fields.  To prevent that from happening,
-always initialize those fields.
+Enable support for the Audio DSP on the Qualcomm SAR2130P platform,
+reusing the SM8350 resources.
 
-Reported-by: syzbot+aa0730b0a42646eb1359@syzkaller.appspotmail.com
-Signed-off-by: Qianqiang Liu <qianqiang.liu@163.com>
-Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://lore.kernel.org/r/20241027-sar2130p-adsp-v1-3-bd204e39d24e@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/gfs2/super.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/remoteproc/qcom_q6v5_pas.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/gfs2/super.c b/fs/gfs2/super.c
-index e22c1edc32b39..b9cef63c78717 100644
---- a/fs/gfs2/super.c
-+++ b/fs/gfs2/super.c
-@@ -1537,11 +1537,13 @@ static struct inode *gfs2_alloc_inode(struct super_block *sb)
- 	if (!ip)
- 		return NULL;
- 	ip->i_no_addr = 0;
-+	ip->i_no_formal_ino = 0;
- 	ip->i_flags = 0;
- 	ip->i_gl = NULL;
- 	gfs2_holder_mark_uninitialized(&ip->i_iopen_gh);
- 	memset(&ip->i_res, 0, sizeof(ip->i_res));
- 	RB_CLEAR_NODE(&ip->i_res.rs_node);
-+	ip->i_diskflags = 0;
- 	ip->i_rahead = 0;
- 	return &ip->i_inode;
- }
+diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
+index 793b1d274be33..1a2d08ec9de9e 100644
+--- a/drivers/remoteproc/qcom_q6v5_pas.c
++++ b/drivers/remoteproc/qcom_q6v5_pas.c
+@@ -1433,6 +1433,7 @@ static const struct of_device_id adsp_of_match[] = {
+ 	{ .compatible = "qcom,sa8775p-cdsp1-pas", .data = &sa8775p_cdsp1_resource},
+ 	{ .compatible = "qcom,sa8775p-gpdsp0-pas", .data = &sa8775p_gpdsp0_resource},
+ 	{ .compatible = "qcom,sa8775p-gpdsp1-pas", .data = &sa8775p_gpdsp1_resource},
++	{ .compatible = "qcom,sar2130p-adsp-pas", .data = &sm8350_adsp_resource},
+ 	{ .compatible = "qcom,sc7180-adsp-pas", .data = &sm8250_adsp_resource},
+ 	{ .compatible = "qcom,sc7180-mpss-pas", .data = &mpss_resource_init},
+ 	{ .compatible = "qcom,sc7280-adsp-pas", .data = &sm8350_adsp_resource},
 -- 
 2.43.0
 
