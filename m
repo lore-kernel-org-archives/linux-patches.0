@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3609721504F;
-	Thu, 12 Dec 2024 15:13:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6FE121504F;
+	Thu, 12 Dec 2024 15:13:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734016429; cv=none; b=KZCynmbEw+KCFcU26/+paxYXe+YETMp1YhKnx8eSq9y16QJCQtIFqFdQ7tm5U3hSvBoFLnoELAkNmCWCNnQbdt75UA+bcDaW023YDV7QgnRFkqSoOMlgXHBzzZtgwkpND1aqkj2hX2PAAP8xCUMO1yNOdN9EpqEhPJv91as2tgw=
+	t=1734016433; cv=none; b=iwcjUi3m4D+BMilTKFk6C3kqK3wx/3WDFuGiS1x8C0B/dYzRsUdMroYmj88L6Lb/hQJHrUwGYjVow35EEhgbuNk73IZlDUodzFvRWff56tENK3TMzC++yagBmBk4yQnQxaJB/iXfQul9ayB3D9KhxA638QTB1ozSTlnqgUjTRSU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734016429; c=relaxed/simple;
-	bh=UXtYjpkSQIedFY2Nn21bINHNkJxKk6po8mHy5oKGO3c=;
+	s=arc-20240116; t=1734016433; c=relaxed/simple;
+	bh=pFcPm2LqaQp6XjRDIWka+JQRQ+8j2WVHSNTSBWaT/aU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WjSIb+HleWSMdAvAFguJ4+MdVCBgDHXV/vMkrk6pJB/AOBIoZNBdM3XGEPjq5TjLw1yxTV2bH58KFxCek3Onaew6S2fdZqIhDxS5F6dsF99oIxcrlI7C/2qhy4eJrZq/3/dTMT0MClXLBi7wdQ/QedLAbl4/iBmED6jKmH4iTBc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GGkWZ5QF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dpKkr5qB77c0GJSVlCrtRbSRlsKiiRVoBZZWWre7zvRzDSljFDi+QRYpk0R1EzchqwhMM3hpU0mZcLHW4MRMBPg7mmj3n1ZdWW67yXdzE21aCclBGmtMQBI68qJYdAAtHF1HdzT4d8gi8vPP0uzlqP+W9YmBuUjlpxGP8EbEpF0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KcB6j9W1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GGkWZ5QF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80835C4CEE3;
-	Thu, 12 Dec 2024 15:13:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KcB6j9W1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9EF4C4CEDF;
+	Thu, 12 Dec 2024 15:13:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734016429;
-	bh=UXtYjpkSQIedFY2Nn21bINHNkJxKk6po8mHy5oKGO3c=;
+	s=korg; t=1734016432;
+	bh=pFcPm2LqaQp6XjRDIWka+JQRQ+8j2WVHSNTSBWaT/aU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GGkWZ5QFsmJfnBPIGk/go8LIRff+J7+Iqt3VGdR5O/rPFYDyej44+4PWMfS69CAip
-	 1glX+uUPQQ0QJITAcin7gR2HQNl+oTPbOr2vhWrdyJL7Xlq5691qQEWEFbh97nmty4
-	 ZVX5eOenJPW6IhsPapydtjeDj2NL9Lj2VH1wgsKE=
+	b=KcB6j9W1DfHrflPwFwROBY4Rf+3GEeBN9GOBdLwtnsPonfPkrFUX4PM3VnuljMjFk
+	 RlvSf1SJN+xcvXumTYwAtoBriKEv2JTMCg3zzEZ6MKBVZEEetdSITYIYc5uusnn9NI
+	 Y8fPJUxdyhaP9OxZXPkI2RJnzeHXAeEFRm/QT+kI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ricardo Neri <ricardo.neri-calderon@linux.intel.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Radu Rendec <rrendec@redhat.com>,
-	Nikolay Borisov <nik.borisov@suse.com>,
-	Andreas Herrmann <aherrmann@suse.de>,
-	Sudeep Holla <sudeep.holla@arm.com>
-Subject: [PATCH 6.12 166/466] cacheinfo: Allocate memory during CPU hotplug if not done from the primary CPU
-Date: Thu, 12 Dec 2024 15:55:35 +0100
-Message-ID: <20241212144313.361489037@linuxfoundation.org>
+	"Paulo Alcantara (Red Hat)" <pc@manguebit.com>,
+	Ralph Boehme <slow@samba.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.12 157/466] fs/smb/client: Implement new SMB3 POSIX type
+Date: Thu, 12 Dec 2024 15:55:26 +0100
+Message-ID: <20241212144312.998395337@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144306.641051666@linuxfoundation.org>
 References: <20241212144306.641051666@linuxfoundation.org>
@@ -54,103 +51,346 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ricardo Neri <ricardo.neri-calderon@linux.intel.com>
+From: Ralph Boehme <slow@samba.org>
 
-commit b3fce429a1e030b50c1c91351d69b8667eef627b upstream.
+commit 6a832bc8bbb22350f7ffe6ecb2d36f261bb96023 upstream.
 
-Commit
+Fixes special files against current Samba.
 
-  5944ce092b97 ("arch_topology: Build cacheinfo from primary CPU")
+On the Samba server:
 
-adds functionality that architectures can use to optionally allocate and
-build cacheinfo early during boot. Commit
+insgesamt 20
+131958 brw-r--r--  1 root  root  0, 0 15. Nov 12:04 blockdev
+131965 crw-r--r--  1 root  root  1, 1 15. Nov 12:04 chardev
+131966 prw-r--r--  1 samba samba    0 15. Nov 12:05 fifo
+131953 -rw-rwxrw-+ 2 samba samba    4 18. Nov 11:37 file
+131953 -rw-rwxrw-+ 2 samba samba    4 18. Nov 11:37 hardlink
+131957 lrwxrwxrwx  1 samba samba    4 15. Nov 12:03 symlink -> file
+131954 -rwxrwxr-x+ 1 samba samba    0 18. Nov 15:28 symlinkoversmb
 
-  6539cffa9495 ("cacheinfo: Add arch specific early level initializer")
+Before:
 
-lets secondary CPUs correct (and reallocate memory) cacheinfo data if
-needed.
+ls: cannot access '/mnt/smb3unix/posix/blockdev': No data available
+ls: cannot access '/mnt/smb3unix/posix/chardev': No data available
+ls: cannot access '/mnt/smb3unix/posix/symlinkoversmb': No data available
+ls: cannot access '/mnt/smb3unix/posix/fifo': No data available
+ls: cannot access '/mnt/smb3unix/posix/symlink': No data available
+total 16
+     ? -????????? ? ?    ?     ?            ? blockdev
+     ? -????????? ? ?    ?     ?            ? chardev
+     ? -????????? ? ?    ?     ?            ? fifo
+131953 -rw-rwxrw- 2 root samba 4 Nov 18 11:37 file
+131953 -rw-rwxrw- 2 root samba 4 Nov 18 11:37 hardlink
+     ? -????????? ? ?    ?     ?            ? symlink
+     ? -????????? ? ?    ?     ?            ? symlinkoversmb
 
-If the early build functionality is not used and cacheinfo does not need
-correction, memory for cacheinfo is never allocated. x86 does not use
-the early build functionality. Consequently, during the cacheinfo CPU
-hotplug callback, last_level_cache_is_valid() attempts to dereference
-a NULL pointer:
+After:
 
-  BUG: kernel NULL pointer dereference, address: 0000000000000100
-  #PF: supervisor read access in kernel mode
-  #PF: error_code(0x0000) - not present page
-  PGD 0 P4D 0
-  Oops: 0000 [#1] PREEPMT SMP NOPTI
-  CPU: 0 PID 19 Comm: cpuhp/0 Not tainted 6.4.0-rc2 #1
-  RIP: 0010: last_level_cache_is_valid+0x95/0xe0a
+insgesamt 21
+131958 brw-r--r-- 1 root root  0, 0 15. Nov 12:04 blockdev
+131965 crw-r--r-- 1 root root  1, 1 15. Nov 12:04 chardev
+131966 prw-r--r-- 1 root samba    0 15. Nov 12:05 fifo
+131953 -rw-rwxrw- 2 root samba    4 18. Nov 11:37 file
+131953 -rw-rwxrw- 2 root samba    4 18. Nov 11:37 hardlink
+131957 lrwxrwxrwx 1 root samba    4 15. Nov 12:03 symlink -> file
+131954 lrwxrwxr-x 1 root samba   23 18. Nov 15:28 symlinkoversmb -> mnt/smb3unix/posix/file
 
-Allocate memory for cacheinfo during the cacheinfo CPU hotplug callback
-if not done earlier.
-
-Moreover, before determining the validity of the last-level cache info,
-ensure that it has been allocated. Simply checking for non-zero
-cache_leaves() is not sufficient, as some architectures (e.g., Intel
-processors) have non-zero cache_leaves() before allocation.
-
-Dereferencing NULL cacheinfo can occur in update_per_cpu_data_slice_size().
-This function iterates over all online CPUs. However, a CPU may have come
-online recently, but its cacheinfo may not have been allocated yet.
-
-While here, remove an unnecessary indentation in allocate_cache_info().
-
-  [ bp: Massage. ]
-
-Fixes: 6539cffa9495 ("cacheinfo: Add arch specific early level initializer")
-Signed-off-by: Ricardo Neri <ricardo.neri-calderon@linux.intel.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Radu Rendec <rrendec@redhat.com>
-Reviewed-by: Nikolay Borisov <nik.borisov@suse.com>
-Reviewed-by: Andreas Herrmann <aherrmann@suse.de>
-Reviewed-by: Sudeep Holla <sudeep.holla@arm.com>
-Cc: stable@vger.kernel.org # 6.3+
-Link: https://lore.kernel.org/r/20241128002247.26726-2-ricardo.neri-calderon@linux.intel.com
+Cc: stable@vger.kernel.org
+Acked-by: Paulo Alcantara (Red Hat) <pc@manguebit.com>
+Signed-off-by: Ralph Boehme <slow@samba.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/base/cacheinfo.c |   14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ fs/smb/client/cifsproto.h |    1 
+ fs/smb/client/inode.c     |   89 +++++++++++++++++++++++++++++++++++++++++-----
+ fs/smb/client/readdir.c   |   35 ++++++++----------
+ fs/smb/client/reparse.c   |   84 ++++++++++++++++++++++++++-----------------
+ 4 files changed, 149 insertions(+), 60 deletions(-)
 
---- a/drivers/base/cacheinfo.c
-+++ b/drivers/base/cacheinfo.c
-@@ -58,7 +58,7 @@ bool last_level_cache_is_valid(unsigned
- {
- 	struct cacheinfo *llc;
+--- a/fs/smb/client/cifsproto.h
++++ b/fs/smb/client/cifsproto.h
+@@ -677,6 +677,7 @@ int __cifs_sfu_make_node(unsigned int xi
+ int cifs_sfu_make_node(unsigned int xid, struct inode *inode,
+ 		       struct dentry *dentry, struct cifs_tcon *tcon,
+ 		       const char *full_path, umode_t mode, dev_t dev);
++umode_t wire_mode_to_posix(u32 wire);
  
--	if (!cache_leaves(cpu))
-+	if (!cache_leaves(cpu) || !per_cpu_cacheinfo(cpu))
- 		return false;
- 
- 	llc = per_cpu_cacheinfo_idx(cpu, cache_leaves(cpu) - 1);
-@@ -463,11 +463,9 @@ int __weak populate_cache_leaves(unsigne
- 	return -ENOENT;
+ #ifdef CONFIG_CIFS_DFS_UPCALL
+ static inline int get_dfs_path(const unsigned int xid, struct cifs_ses *ses,
+--- a/fs/smb/client/inode.c
++++ b/fs/smb/client/inode.c
+@@ -724,6 +724,84 @@ static int cifs_sfu_mode(struct cifs_fat
+ #endif
  }
  
--static inline
--int allocate_cache_info(int cpu)
-+static inline int allocate_cache_info(int cpu)
++#define POSIX_TYPE_FILE    0
++#define POSIX_TYPE_DIR     1
++#define POSIX_TYPE_SYMLINK 2
++#define POSIX_TYPE_CHARDEV 3
++#define POSIX_TYPE_BLKDEV  4
++#define POSIX_TYPE_FIFO    5
++#define POSIX_TYPE_SOCKET  6
++
++#define POSIX_X_OTH      0000001
++#define POSIX_W_OTH      0000002
++#define POSIX_R_OTH      0000004
++#define POSIX_X_GRP      0000010
++#define POSIX_W_GRP      0000020
++#define POSIX_R_GRP      0000040
++#define POSIX_X_USR      0000100
++#define POSIX_W_USR      0000200
++#define POSIX_R_USR      0000400
++#define POSIX_STICKY     0001000
++#define POSIX_SET_GID    0002000
++#define POSIX_SET_UID    0004000
++
++#define POSIX_OTH_MASK      0000007
++#define POSIX_GRP_MASK      0000070
++#define POSIX_USR_MASK      0000700
++#define POSIX_PERM_MASK     0000777
++#define POSIX_FILETYPE_MASK 0070000
++
++#define POSIX_FILETYPE_SHIFT 12
++
++static u32 wire_perms_to_posix(u32 wire)
++{
++	u32 mode = 0;
++
++	mode |= (wire & POSIX_X_OTH) ? S_IXOTH : 0;
++	mode |= (wire & POSIX_W_OTH) ? S_IWOTH : 0;
++	mode |= (wire & POSIX_R_OTH) ? S_IROTH : 0;
++	mode |= (wire & POSIX_X_GRP) ? S_IXGRP : 0;
++	mode |= (wire & POSIX_W_GRP) ? S_IWGRP : 0;
++	mode |= (wire & POSIX_R_GRP) ? S_IRGRP : 0;
++	mode |= (wire & POSIX_X_USR) ? S_IXUSR : 0;
++	mode |= (wire & POSIX_W_USR) ? S_IWUSR : 0;
++	mode |= (wire & POSIX_R_USR) ? S_IRUSR : 0;
++	mode |= (wire & POSIX_STICKY) ? S_ISVTX : 0;
++	mode |= (wire & POSIX_SET_GID) ? S_ISGID : 0;
++	mode |= (wire & POSIX_SET_UID) ? S_ISUID : 0;
++
++	return mode;
++}
++
++static u32 posix_filetypes[] = {
++	S_IFREG,
++	S_IFDIR,
++	S_IFLNK,
++	S_IFCHR,
++	S_IFBLK,
++	S_IFIFO,
++	S_IFSOCK
++};
++
++static u32 wire_filetype_to_posix(u32 wire_type)
++{
++	if (wire_type >= ARRAY_SIZE(posix_filetypes)) {
++		pr_warn("Unexpected type %u", wire_type);
++		return 0;
++	}
++	return posix_filetypes[wire_type];
++}
++
++umode_t wire_mode_to_posix(u32 wire)
++{
++	u32 wire_type;
++	u32 mode;
++
++	wire_type = (wire & POSIX_FILETYPE_MASK) >> POSIX_FILETYPE_SHIFT;
++	mode = (wire_perms_to_posix(wire) | wire_filetype_to_posix(wire_type));
++	return (umode_t)mode;
++}
++
+ /* Fill a cifs_fattr struct with info from POSIX info struct */
+ static void smb311_posix_info_to_fattr(struct cifs_fattr *fattr,
+ 				       struct cifs_open_info_data *data,
+@@ -760,20 +838,13 @@ static void smb311_posix_info_to_fattr(s
+ 	fattr->cf_bytes = le64_to_cpu(info->AllocationSize);
+ 	fattr->cf_createtime = le64_to_cpu(info->CreationTime);
+ 	fattr->cf_nlink = le32_to_cpu(info->HardLinks);
+-	fattr->cf_mode = (umode_t) le32_to_cpu(info->Mode);
++	fattr->cf_mode = wire_mode_to_posix(le32_to_cpu(info->Mode));
+ 
+ 	if (cifs_open_data_reparse(data) &&
+ 	    cifs_reparse_point_to_fattr(cifs_sb, fattr, data))
+ 		goto out_reparse;
+ 
+-	fattr->cf_mode &= ~S_IFMT;
+-	if (fattr->cf_cifsattrs & ATTR_DIRECTORY) {
+-		fattr->cf_mode |= S_IFDIR;
+-		fattr->cf_dtype = DT_DIR;
+-	} else { /* file */
+-		fattr->cf_mode |= S_IFREG;
+-		fattr->cf_dtype = DT_REG;
+-	}
++	fattr->cf_dtype = S_DT(fattr->cf_mode);
+ 
+ out_reparse:
+ 	if (S_ISLNK(fattr->cf_mode)) {
+--- a/fs/smb/client/readdir.c
++++ b/fs/smb/client/readdir.c
+@@ -241,31 +241,28 @@ cifs_posix_to_fattr(struct cifs_fattr *f
+ 	fattr->cf_nlink = le32_to_cpu(info->HardLinks);
+ 	fattr->cf_cifsattrs = le32_to_cpu(info->DosAttributes);
+ 
+-	/*
+-	 * Since we set the inode type below we need to mask off
+-	 * to avoid strange results if bits set above.
+-	 * XXX: why not make server&client use the type bits?
+-	 */
+-	fattr->cf_mode = le32_to_cpu(info->Mode) & ~S_IFMT;
++	if (fattr->cf_cifsattrs & ATTR_REPARSE)
++		fattr->cf_cifstag = le32_to_cpu(info->ReparseTag);
++
++	/* The Mode field in the response can now include the file type as well */
++	fattr->cf_mode = wire_mode_to_posix(le32_to_cpu(info->Mode));
++	fattr->cf_dtype = S_DT(le32_to_cpu(info->Mode));
++
++	switch (fattr->cf_mode & S_IFMT) {
++	case S_IFLNK:
++	case S_IFBLK:
++	case S_IFCHR:
++		fattr->cf_flags |= CIFS_FATTR_NEED_REVAL;
++		break;
++	default:
++		break;
++	}
+ 
+ 	cifs_dbg(FYI, "posix fattr: dev %d, reparse %d, mode %o\n",
+ 		 le32_to_cpu(info->DeviceId),
+ 		 le32_to_cpu(info->ReparseTag),
+ 		 le32_to_cpu(info->Mode));
+ 
+-	if (fattr->cf_cifsattrs & ATTR_DIRECTORY) {
+-		fattr->cf_mode |= S_IFDIR;
+-		fattr->cf_dtype = DT_DIR;
+-	} else {
+-		/*
+-		 * mark anything that is not a dir as regular
+-		 * file. special files should have the REPARSE
+-		 * attribute and will be marked as needing revaluation
+-		 */
+-		fattr->cf_mode |= S_IFREG;
+-		fattr->cf_dtype = DT_REG;
+-	}
+-
+ 	sid_to_id(cifs_sb, &parsed.owner, fattr, SIDOWNER);
+ 	sid_to_id(cifs_sb, &parsed.group, fattr, SIDGROUP);
+ }
+--- a/fs/smb/client/reparse.c
++++ b/fs/smb/client/reparse.c
+@@ -730,44 +730,60 @@ out:
+ 	fattr->cf_dtype = S_DT(fattr->cf_mode);
+ }
+ 
+-bool cifs_reparse_point_to_fattr(struct cifs_sb_info *cifs_sb,
+-				 struct cifs_fattr *fattr,
+-				 struct cifs_open_info_data *data)
++static bool posix_reparse_to_fattr(struct cifs_sb_info *cifs_sb,
++				   struct cifs_fattr *fattr,
++				   struct cifs_open_info_data *data)
  {
--	per_cpu_cacheinfo(cpu) = kcalloc(cache_leaves(cpu),
--					 sizeof(struct cacheinfo), GFP_ATOMIC);
-+	per_cpu_cacheinfo(cpu) = kcalloc(cache_leaves(cpu), sizeof(struct cacheinfo), GFP_ATOMIC);
- 	if (!per_cpu_cacheinfo(cpu)) {
- 		cache_leaves(cpu) = 0;
- 		return -ENOMEM;
-@@ -539,7 +537,11 @@ static inline int init_level_allocate_ci
- 	 */
- 	ci_cacheinfo(cpu)->early_ci_levels = false;
+ 	struct reparse_posix_data *buf = data->reparse.posix;
+-	u32 tag = data->reparse.tag;
  
--	if (cache_leaves(cpu) <= early_leaves)
-+	/*
-+	 * Some architectures (e.g., x86) do not use early initialization.
-+	 * Allocate memory now in such case.
-+	 */
-+	if (cache_leaves(cpu) <= early_leaves && per_cpu_cacheinfo(cpu))
- 		return 0;
+-	if (tag == IO_REPARSE_TAG_NFS && buf) {
+-		if (le16_to_cpu(buf->ReparseDataLength) < sizeof(buf->InodeType))
++
++	if (buf == NULL)
++		return true;
++
++	if (le16_to_cpu(buf->ReparseDataLength) < sizeof(buf->InodeType)) {
++		WARN_ON_ONCE(1);
++		return false;
++	}
++
++	switch (le64_to_cpu(buf->InodeType)) {
++	case NFS_SPECFILE_CHR:
++		if (le16_to_cpu(buf->ReparseDataLength) != sizeof(buf->InodeType) + 8) {
++			WARN_ON_ONCE(1);
+ 			return false;
+-		switch (le64_to_cpu(buf->InodeType)) {
+-		case NFS_SPECFILE_CHR:
+-			if (le16_to_cpu(buf->ReparseDataLength) != sizeof(buf->InodeType) + 8)
+-				return false;
+-			fattr->cf_mode |= S_IFCHR;
+-			fattr->cf_rdev = reparse_mkdev(buf->DataBuffer);
+-			break;
+-		case NFS_SPECFILE_BLK:
+-			if (le16_to_cpu(buf->ReparseDataLength) != sizeof(buf->InodeType) + 8)
+-				return false;
+-			fattr->cf_mode |= S_IFBLK;
+-			fattr->cf_rdev = reparse_mkdev(buf->DataBuffer);
+-			break;
+-		case NFS_SPECFILE_FIFO:
+-			fattr->cf_mode |= S_IFIFO;
+-			break;
+-		case NFS_SPECFILE_SOCK:
+-			fattr->cf_mode |= S_IFSOCK;
+-			break;
+-		case NFS_SPECFILE_LNK:
+-			fattr->cf_mode |= S_IFLNK;
+-			break;
+-		default:
++		}
++		fattr->cf_mode |= S_IFCHR;
++		fattr->cf_rdev = reparse_mkdev(buf->DataBuffer);
++		break;
++	case NFS_SPECFILE_BLK:
++		if (le16_to_cpu(buf->ReparseDataLength) != sizeof(buf->InodeType) + 8) {
+ 			WARN_ON_ONCE(1);
+ 			return false;
+ 		}
+-		goto out;
++		fattr->cf_mode |= S_IFBLK;
++		fattr->cf_rdev = reparse_mkdev(buf->DataBuffer);
++		break;
++	case NFS_SPECFILE_FIFO:
++		fattr->cf_mode |= S_IFIFO;
++		break;
++	case NFS_SPECFILE_SOCK:
++		fattr->cf_mode |= S_IFSOCK;
++		break;
++	case NFS_SPECFILE_LNK:
++		fattr->cf_mode |= S_IFLNK;
++		break;
++	default:
++		WARN_ON_ONCE(1);
++		return false;
+ 	}
++	return true;
++}
++
++bool cifs_reparse_point_to_fattr(struct cifs_sb_info *cifs_sb,
++				 struct cifs_fattr *fattr,
++				 struct cifs_open_info_data *data)
++{
++	u32 tag = data->reparse.tag;
++	bool ok;
  
- 	kfree(per_cpu_cacheinfo(cpu));
+ 	switch (tag) {
+ 	case IO_REPARSE_TAG_INTERNAL:
+@@ -787,15 +803,19 @@ bool cifs_reparse_point_to_fattr(struct
+ 	case IO_REPARSE_TAG_LX_BLK:
+ 		wsl_to_fattr(data, cifs_sb, tag, fattr);
+ 		break;
++	case IO_REPARSE_TAG_NFS:
++		ok = posix_reparse_to_fattr(cifs_sb, fattr, data);
++		if (!ok)
++			return false;
++		break;
+ 	case 0: /* SMB1 symlink */
+ 	case IO_REPARSE_TAG_SYMLINK:
+-	case IO_REPARSE_TAG_NFS:
+ 		fattr->cf_mode |= S_IFLNK;
+ 		break;
+ 	default:
+ 		return false;
+ 	}
+-out:
++
+ 	fattr->cf_dtype = S_DT(fattr->cf_mode);
+ 	return true;
+ }
 
 
