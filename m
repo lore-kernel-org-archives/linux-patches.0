@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96F6D2156FF;
-	Thu, 12 Dec 2024 15:17:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E44482EAE5;
+	Thu, 12 Dec 2024 15:17:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734016629; cv=none; b=M8zQodxj38PyG19tcj0LjcIg7zdTNbzkyQJ39cpnHOXPUqAtXnFi+lD4IIUm/wp4Jj3maWIE0LgmdGdssc97KmmXz0y/7GsOig4Me9gOWkpF7pVPuqVObh9MIivgtQJAYP9XxmOpF+lhw9z3eZGDsOGrtC6xOcYkkNhUTPDoWEQ=
+	t=1734016633; cv=none; b=hcFuT7cEM/9bRBx4Wj4b/js3kph4WU/C9bZkTdHsPJu2srJEmY9wKsh8isk6cHELNk454i/3FOvg/VkgW9qBYjL4Ai70xz4bYpLYDtmOx/0Izbzr85Bm2gus8675+A9YkwPr5CAeqv3FVXk0ipg6upIVwk34q9YE+J3oDiBXLmc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734016629; c=relaxed/simple;
-	bh=6oTYb9ov+P0MUqaDnhukkFaWqO4fawpAMg9HEO8rRtk=;
+	s=arc-20240116; t=1734016633; c=relaxed/simple;
+	bh=RqUd2VqAbtKcrsT7gNR/9Cz0PCcr2iMUtyzGaT9pcbQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=OlQiJt2Kv8DhiqsEXaCzRF+mLQujFv7PlsfBzEmED/MIFrdCWpwoXnHirP0KY9NwWZTso2n+6iFHfWmuMHIXK1sn5I1BF5huaytPS04gqXLjQOrInUYAR1qO4dMnLfr6sqAtRU1F/Sql9zg7qVmeTHnyV8vyHL3IhyU08nkHnuE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Quir1Mi8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pfgiVq55eY3+TXNvViQbavPGl1Jp4UOQn0tP9kmTM94cyLI2gwmsj4WYRcRYIg5ZfX8QgmTlYrusgBQMwsV6T1ZjR7MNwIW84wiNUqBW2y1zjlkio2R7PMtinYvQjfq58f5rptpCgNmLf7VVMjYJ7TviaRkFPIOsQ2Zx805KZrU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ag95hGyg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Quir1Mi8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 042DFC4CECE;
-	Thu, 12 Dec 2024 15:17:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ag95hGyg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 624C8C4CECE;
+	Thu, 12 Dec 2024 15:17:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734016629;
-	bh=6oTYb9ov+P0MUqaDnhukkFaWqO4fawpAMg9HEO8rRtk=;
+	s=korg; t=1734016632;
+	bh=RqUd2VqAbtKcrsT7gNR/9Cz0PCcr2iMUtyzGaT9pcbQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Quir1Mi8bLV+aTlXLicL2N+OzSId3lKA2sHC5unPcNN0FdLWYi0QZzyDVQfLcx291
-	 +FwjmtZWLfJjyo9HzPGKEHepeo7cHBTrYKdz99HWzGE2G6WMi3c1/1DysR96OE+yS6
-	 31hffPxL/Ryq/lO6pBPuJCYQNtUNr1o5kOsPhDfI=
+	b=Ag95hGygtE2twS6cEtDBC+Pu9aSildKyG0IEK+LxFHGtfrKRTAwpFECDdT+xH0bK5
+	 3jMo5Xl2WZDzypSHtDBarJ0JGROGOs0HvXmOX+5ZsJCVyCxnq6sYhprc9QWJTl6fUd
+	 Rz92ENwDrMhEzpZ54wRYzbeZdk5hh8l56HGDDuvU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Callahan Kovacs <callahankovacs@gmail.com>,
-	Jiri Kosina <jkosina@suse.com>,
+	Ran Xiaokai <ran.xiaokai@zte.com.cn>,
+	Marco Elver <elver@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 252/466] HID: magicmouse: Apple Magic Trackpad 2 USB-C driver support
-Date: Thu, 12 Dec 2024 15:57:01 +0100
-Message-ID: <20241212144316.742232588@linuxfoundation.org>
+Subject: [PATCH 6.12 226/466] kcsan: Turn report_filterlist_lock into a raw_spinlock
+Date: Thu, 12 Dec 2024 15:56:35 +0100
+Message-ID: <20241212144315.705899551@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144306.641051666@linuxfoundation.org>
 References: <20241212144306.641051666@linuxfoundation.org>
@@ -45,208 +45,216 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Callahan Kovacs <callahankovacs@gmail.com>
+From: Marco Elver <elver@google.com>
 
-[ Upstream commit 87a2f10395c82c2b4687bb8611a6c5663a12f9e7 ]
+[ Upstream commit 59458fa4ddb47e7891c61b4a928d13d5f5b00aa0 ]
 
-Adds driver support for the USB-C model of Apple's Magic Trackpad 2.
+Ran Xiaokai reports that with a KCSAN-enabled PREEMPT_RT kernel, we can see
+splats like:
 
-The 2024 USB-C model is compatible with the existing Magic Trackpad 2
-driver but has a different hardware ID.
+| BUG: sleeping function called from invalid context at kernel/locking/spinlock_rt.c:48
+| in_atomic(): 1, irqs_disabled(): 1, non_block: 0, pid: 0, name: swapper/1
+| preempt_count: 10002, expected: 0
+| RCU nest depth: 0, expected: 0
+| no locks held by swapper/1/0.
+| irq event stamp: 156674
+| hardirqs last  enabled at (156673): [<ffffffff81130bd9>] do_idle+0x1f9/0x240
+| hardirqs last disabled at (156674): [<ffffffff82254f84>] sysvec_apic_timer_interrupt+0x14/0xc0
+| softirqs last  enabled at (0): [<ffffffff81099f47>] copy_process+0xfc7/0x4b60
+| softirqs last disabled at (0): [<0000000000000000>] 0x0
+| Preemption disabled at:
+| [<ffffffff814a3e2a>] paint_ptr+0x2a/0x90
+| CPU: 1 UID: 0 PID: 0 Comm: swapper/1 Not tainted 6.11.0+ #3
+| Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.12.0-0-ga698c8995f-prebuilt.qemu.org 04/01/2014
+| Call Trace:
+|  <IRQ>
+|  dump_stack_lvl+0x7e/0xc0
+|  dump_stack+0x1d/0x30
+|  __might_resched+0x1a2/0x270
+|  rt_spin_lock+0x68/0x170
+|  kcsan_skip_report_debugfs+0x43/0xe0
+|  print_report+0xb5/0x590
+|  kcsan_report_known_origin+0x1b1/0x1d0
+|  kcsan_setup_watchpoint+0x348/0x650
+|  __tsan_unaligned_write1+0x16d/0x1d0
+|  hrtimer_interrupt+0x3d6/0x430
+|  __sysvec_apic_timer_interrupt+0xe8/0x3a0
+|  sysvec_apic_timer_interrupt+0x97/0xc0
+|  </IRQ>
 
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=219470
-Signed-off-by: Callahan Kovacs <callahankovacs@gmail.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+On a detected data race, KCSAN's reporting logic checks if it should
+filter the report. That list is protected by the report_filterlist_lock
+*non-raw* spinlock which may sleep on RT kernels.
+
+Since KCSAN may report data races in any context, convert it to a
+raw_spinlock.
+
+This requires being careful about when to allocate memory for the filter
+list itself which can be done via KCSAN's debugfs interface. Concurrent
+modification of the filter list via debugfs should be rare: the chosen
+strategy is to optimistically pre-allocate memory before the critical
+section and discard if unused.
+
+Link: https://lore.kernel.org/all/20240925143154.2322926-1-ranxiaokai627@163.com/
+Reported-by: Ran Xiaokai <ran.xiaokai@zte.com.cn>
+Tested-by: Ran Xiaokai <ran.xiaokai@zte.com.cn>
+Signed-off-by: Marco Elver <elver@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-ids.h        |  1 +
- drivers/hid/hid-magicmouse.c | 56 ++++++++++++++++++++++++++----------
- 2 files changed, 42 insertions(+), 15 deletions(-)
+ kernel/kcsan/debugfs.c | 74 ++++++++++++++++++++----------------------
+ 1 file changed, 36 insertions(+), 38 deletions(-)
 
-diff --git a/drivers/hid/hid-ids.h b/drivers/hid/hid-ids.h
-index 92cff3f2658cf..0f23be98c56e2 100644
---- a/drivers/hid/hid-ids.h
-+++ b/drivers/hid/hid-ids.h
-@@ -94,6 +94,7 @@
- #define USB_DEVICE_ID_APPLE_MAGICMOUSE2	0x0269
- #define USB_DEVICE_ID_APPLE_MAGICTRACKPAD	0x030e
- #define USB_DEVICE_ID_APPLE_MAGICTRACKPAD2	0x0265
-+#define USB_DEVICE_ID_APPLE_MAGICTRACKPAD2_USBC	0x0324
- #define USB_DEVICE_ID_APPLE_FOUNTAIN_ANSI	0x020e
- #define USB_DEVICE_ID_APPLE_FOUNTAIN_ISO	0x020f
- #define USB_DEVICE_ID_APPLE_GEYSER_ANSI	0x0214
-diff --git a/drivers/hid/hid-magicmouse.c b/drivers/hid/hid-magicmouse.c
-index 8a73b59e0827b..ec110dea87726 100644
---- a/drivers/hid/hid-magicmouse.c
-+++ b/drivers/hid/hid-magicmouse.c
-@@ -227,7 +227,9 @@ static void magicmouse_emit_touch(struct magicmouse_sc *msc, int raw_id, u8 *tda
- 		touch_minor = tdata[4];
- 		state = tdata[7] & TOUCH_STATE_MASK;
- 		down = state != TOUCH_STATE_NONE;
--	} else if (input->id.product == USB_DEVICE_ID_APPLE_MAGICTRACKPAD2) {
-+	} else if (input->id.product == USB_DEVICE_ID_APPLE_MAGICTRACKPAD2 ||
-+		   input->id.product ==
-+			   USB_DEVICE_ID_APPLE_MAGICTRACKPAD2_USBC) {
- 		id = tdata[8] & 0xf;
- 		x = (tdata[1] << 27 | tdata[0] << 19) >> 19;
- 		y = -((tdata[3] << 30 | tdata[2] << 22 | tdata[1] << 14) >> 19);
-@@ -259,8 +261,9 @@ static void magicmouse_emit_touch(struct magicmouse_sc *msc, int raw_id, u8 *tda
- 	/* If requested, emulate a scroll wheel by detecting small
- 	 * vertical touch motions.
- 	 */
--	if (emulate_scroll_wheel && (input->id.product !=
--			USB_DEVICE_ID_APPLE_MAGICTRACKPAD2)) {
-+	if (emulate_scroll_wheel &&
-+	    input->id.product != USB_DEVICE_ID_APPLE_MAGICTRACKPAD2 &&
-+	    input->id.product != USB_DEVICE_ID_APPLE_MAGICTRACKPAD2_USBC) {
- 		unsigned long now = jiffies;
- 		int step_x = msc->touches[id].scroll_x - x;
- 		int step_y = msc->touches[id].scroll_y - y;
-@@ -359,7 +362,9 @@ static void magicmouse_emit_touch(struct magicmouse_sc *msc, int raw_id, u8 *tda
- 		input_report_abs(input, ABS_MT_POSITION_X, x);
- 		input_report_abs(input, ABS_MT_POSITION_Y, y);
+diff --git a/kernel/kcsan/debugfs.c b/kernel/kcsan/debugfs.c
+index 53b21ae30e00e..b14072071889f 100644
+--- a/kernel/kcsan/debugfs.c
++++ b/kernel/kcsan/debugfs.c
+@@ -46,14 +46,8 @@ static struct {
+ 	int		used;		/* number of elements used */
+ 	bool		sorted;		/* if elements are sorted */
+ 	bool		whitelist;	/* if list is a blacklist or whitelist */
+-} report_filterlist = {
+-	.addrs		= NULL,
+-	.size		= 8,		/* small initial size */
+-	.used		= 0,
+-	.sorted		= false,
+-	.whitelist	= false,	/* default is blacklist */
+-};
+-static DEFINE_SPINLOCK(report_filterlist_lock);
++} report_filterlist;
++static DEFINE_RAW_SPINLOCK(report_filterlist_lock);
  
--		if (input->id.product == USB_DEVICE_ID_APPLE_MAGICTRACKPAD2)
-+		if (input->id.product == USB_DEVICE_ID_APPLE_MAGICTRACKPAD2 ||
-+		    input->id.product ==
-+			    USB_DEVICE_ID_APPLE_MAGICTRACKPAD2_USBC)
- 			input_report_abs(input, ABS_MT_PRESSURE, pressure);
+ /*
+  * The microbenchmark allows benchmarking KCSAN core runtime only. To run
+@@ -110,7 +104,7 @@ bool kcsan_skip_report_debugfs(unsigned long func_addr)
+ 		return false;
+ 	func_addr -= offset; /* Get function start */
  
- 		if (report_undeciphered) {
-@@ -367,7 +372,9 @@ static void magicmouse_emit_touch(struct magicmouse_sc *msc, int raw_id, u8 *tda
- 			    input->id.product == USB_DEVICE_ID_APPLE_MAGICMOUSE2)
- 				input_event(input, EV_MSC, MSC_RAW, tdata[7]);
- 			else if (input->id.product !=
--					USB_DEVICE_ID_APPLE_MAGICTRACKPAD2)
-+					 USB_DEVICE_ID_APPLE_MAGICTRACKPAD2 &&
-+				 input->id.product !=
-+					 USB_DEVICE_ID_APPLE_MAGICTRACKPAD2_USBC)
- 				input_event(input, EV_MSC, MSC_RAW, tdata[8]);
- 		}
+-	spin_lock_irqsave(&report_filterlist_lock, flags);
++	raw_spin_lock_irqsave(&report_filterlist_lock, flags);
+ 	if (report_filterlist.used == 0)
+ 		goto out;
+ 
+@@ -127,7 +121,7 @@ bool kcsan_skip_report_debugfs(unsigned long func_addr)
+ 		ret = !ret;
+ 
+ out:
+-	spin_unlock_irqrestore(&report_filterlist_lock, flags);
++	raw_spin_unlock_irqrestore(&report_filterlist_lock, flags);
+ 	return ret;
+ }
+ 
+@@ -135,9 +129,9 @@ static void set_report_filterlist_whitelist(bool whitelist)
+ {
+ 	unsigned long flags;
+ 
+-	spin_lock_irqsave(&report_filterlist_lock, flags);
++	raw_spin_lock_irqsave(&report_filterlist_lock, flags);
+ 	report_filterlist.whitelist = whitelist;
+-	spin_unlock_irqrestore(&report_filterlist_lock, flags);
++	raw_spin_unlock_irqrestore(&report_filterlist_lock, flags);
+ }
+ 
+ /* Returns 0 on success, error-code otherwise. */
+@@ -145,6 +139,9 @@ static ssize_t insert_report_filterlist(const char *func)
+ {
+ 	unsigned long flags;
+ 	unsigned long addr = kallsyms_lookup_name(func);
++	unsigned long *delay_free = NULL;
++	unsigned long *new_addrs = NULL;
++	size_t new_size = 0;
+ 	ssize_t ret = 0;
+ 
+ 	if (!addr) {
+@@ -152,32 +149,33 @@ static ssize_t insert_report_filterlist(const char *func)
+ 		return -ENOENT;
  	}
-@@ -493,7 +500,9 @@ static int magicmouse_raw_event(struct hid_device *hdev,
- 		magicmouse_emit_buttons(msc, clicks & 3);
- 		input_report_rel(input, REL_X, x);
- 		input_report_rel(input, REL_Y, y);
--	} else if (input->id.product == USB_DEVICE_ID_APPLE_MAGICTRACKPAD2) {
-+	} else if (input->id.product == USB_DEVICE_ID_APPLE_MAGICTRACKPAD2 ||
-+		   input->id.product ==
-+			   USB_DEVICE_ID_APPLE_MAGICTRACKPAD2_USBC) {
- 		input_mt_sync_frame(input);
- 		input_report_key(input, BTN_MOUSE, clicks & 1);
- 	} else { /* USB_DEVICE_ID_APPLE_MAGICTRACKPAD */
-@@ -545,7 +554,9 @@ static int magicmouse_setup_input(struct input_dev *input, struct hid_device *hd
- 			__set_bit(REL_WHEEL_HI_RES, input->relbit);
- 			__set_bit(REL_HWHEEL_HI_RES, input->relbit);
+ 
+-	spin_lock_irqsave(&report_filterlist_lock, flags);
++retry_alloc:
++	/*
++	 * Check if we need an allocation, and re-validate under the lock. Since
++	 * the report_filterlist_lock is a raw, cannot allocate under the lock.
++	 */
++	if (data_race(report_filterlist.used == report_filterlist.size)) {
++		new_size = (report_filterlist.size ?: 4) * 2;
++		delay_free = new_addrs = kmalloc_array(new_size, sizeof(unsigned long), GFP_KERNEL);
++		if (!new_addrs)
++			return -ENOMEM;
++	}
+ 
+-	if (report_filterlist.addrs == NULL) {
+-		/* initial allocation */
+-		report_filterlist.addrs =
+-			kmalloc_array(report_filterlist.size,
+-				      sizeof(unsigned long), GFP_ATOMIC);
+-		if (report_filterlist.addrs == NULL) {
+-			ret = -ENOMEM;
+-			goto out;
+-		}
+-	} else if (report_filterlist.used == report_filterlist.size) {
+-		/* resize filterlist */
+-		size_t new_size = report_filterlist.size * 2;
+-		unsigned long *new_addrs =
+-			krealloc(report_filterlist.addrs,
+-				 new_size * sizeof(unsigned long), GFP_ATOMIC);
+-
+-		if (new_addrs == NULL) {
+-			/* leave filterlist itself untouched */
+-			ret = -ENOMEM;
+-			goto out;
++	raw_spin_lock_irqsave(&report_filterlist_lock, flags);
++	if (report_filterlist.used == report_filterlist.size) {
++		/* Check we pre-allocated enough, and retry if not. */
++		if (report_filterlist.used >= new_size) {
++			raw_spin_unlock_irqrestore(&report_filterlist_lock, flags);
++			kfree(new_addrs); /* kfree(NULL) is safe */
++			delay_free = new_addrs = NULL;
++			goto retry_alloc;
  		}
--	} else if (input->id.product == USB_DEVICE_ID_APPLE_MAGICTRACKPAD2) {
-+	} else if (input->id.product == USB_DEVICE_ID_APPLE_MAGICTRACKPAD2 ||
-+		   input->id.product ==
-+			   USB_DEVICE_ID_APPLE_MAGICTRACKPAD2_USBC) {
- 		/* If the trackpad has been connected to a Mac, the name is
- 		 * automatically personalized, e.g., "José Expósito's Trackpad".
- 		 * When connected through Bluetooth, the personalized name is
-@@ -621,7 +632,9 @@ static int magicmouse_setup_input(struct input_dev *input, struct hid_device *hd
- 				  MOUSE_RES_X);
- 		input_abs_set_res(input, ABS_MT_POSITION_Y,
- 				  MOUSE_RES_Y);
--	} else if (input->id.product ==  USB_DEVICE_ID_APPLE_MAGICTRACKPAD2) {
-+	} else if (input->id.product == USB_DEVICE_ID_APPLE_MAGICTRACKPAD2 ||
-+		   input->id.product ==
-+			   USB_DEVICE_ID_APPLE_MAGICTRACKPAD2_USBC) {
- 		input_set_abs_params(input, ABS_MT_PRESSURE, 0, 253, 0, 0);
- 		input_set_abs_params(input, ABS_PRESSURE, 0, 253, 0, 0);
- 		input_set_abs_params(input, ABS_MT_ORIENTATION, -3, 4, 0, 0);
-@@ -660,7 +673,8 @@ static int magicmouse_setup_input(struct input_dev *input, struct hid_device *hd
- 	input_set_events_per_packet(input, 60);
  
- 	if (report_undeciphered &&
--	    input->id.product != USB_DEVICE_ID_APPLE_MAGICTRACKPAD2) {
-+	    input->id.product != USB_DEVICE_ID_APPLE_MAGICTRACKPAD2 &&
-+	    input->id.product != USB_DEVICE_ID_APPLE_MAGICTRACKPAD2_USBC) {
- 		__set_bit(EV_MSC, input->evbit);
- 		__set_bit(MSC_RAW, input->mscbit);
++		if (report_filterlist.used)
++			memcpy(new_addrs, report_filterlist.addrs, report_filterlist.used * sizeof(unsigned long));
++		delay_free = report_filterlist.addrs; /* free the old list */
++		report_filterlist.addrs = new_addrs;  /* switch to the new list */
+ 		report_filterlist.size = new_size;
+-		report_filterlist.addrs = new_addrs;
  	}
-@@ -685,7 +699,9 @@ static int magicmouse_input_mapping(struct hid_device *hdev,
  
- 	/* Magic Trackpad does not give relative data after switching to MT */
- 	if ((hi->input->id.product == USB_DEVICE_ID_APPLE_MAGICTRACKPAD ||
--	     hi->input->id.product == USB_DEVICE_ID_APPLE_MAGICTRACKPAD2) &&
-+	     hi->input->id.product == USB_DEVICE_ID_APPLE_MAGICTRACKPAD2 ||
-+	     hi->input->id.product ==
-+		     USB_DEVICE_ID_APPLE_MAGICTRACKPAD2_USBC) &&
- 	    field->flags & HID_MAIN_ITEM_RELATIVE)
- 		return -1;
+ 	/* Note: deduplicating should be done in userspace. */
+@@ -185,9 +183,9 @@ static ssize_t insert_report_filterlist(const char *func)
+ 		kallsyms_lookup_name(func);
+ 	report_filterlist.sorted = false;
  
-@@ -721,7 +737,8 @@ static int magicmouse_enable_multitouch(struct hid_device *hdev)
- 	int ret;
- 	int feature_size;
+-out:
+-	spin_unlock_irqrestore(&report_filterlist_lock, flags);
++	raw_spin_unlock_irqrestore(&report_filterlist_lock, flags);
  
--	if (hdev->product == USB_DEVICE_ID_APPLE_MAGICTRACKPAD2) {
-+	if (hdev->product == USB_DEVICE_ID_APPLE_MAGICTRACKPAD2 ||
-+	    hdev->product == USB_DEVICE_ID_APPLE_MAGICTRACKPAD2_USBC) {
- 		if (hdev->vendor == BT_VENDOR_ID_APPLE) {
- 			feature_size = sizeof(feature_mt_trackpad2_bt);
- 			feature = feature_mt_trackpad2_bt;
-@@ -766,7 +783,8 @@ static int magicmouse_fetch_battery(struct hid_device *hdev)
++	kfree(delay_free);
+ 	return ret;
+ }
  
- 	if (!hdev->battery || hdev->vendor != USB_VENDOR_ID_APPLE ||
- 	    (hdev->product != USB_DEVICE_ID_APPLE_MAGICMOUSE2 &&
--	     hdev->product != USB_DEVICE_ID_APPLE_MAGICTRACKPAD2))
-+	     hdev->product != USB_DEVICE_ID_APPLE_MAGICTRACKPAD2 &&
-+	     hdev->product != USB_DEVICE_ID_APPLE_MAGICTRACKPAD2_USBC))
- 		return -1;
+@@ -204,13 +202,13 @@ static int show_info(struct seq_file *file, void *v)
+ 	}
  
- 	report_enum = &hdev->report_enum[hdev->battery_report_type];
-@@ -835,7 +853,9 @@ static int magicmouse_probe(struct hid_device *hdev,
+ 	/* show filter functions, and filter type */
+-	spin_lock_irqsave(&report_filterlist_lock, flags);
++	raw_spin_lock_irqsave(&report_filterlist_lock, flags);
+ 	seq_printf(file, "\n%s functions: %s\n",
+ 		   report_filterlist.whitelist ? "whitelisted" : "blacklisted",
+ 		   report_filterlist.used == 0 ? "none" : "");
+ 	for (i = 0; i < report_filterlist.used; ++i)
+ 		seq_printf(file, " %ps\n", (void *)report_filterlist.addrs[i]);
+-	spin_unlock_irqrestore(&report_filterlist_lock, flags);
++	raw_spin_unlock_irqrestore(&report_filterlist_lock, flags);
  
- 	if (id->vendor == USB_VENDOR_ID_APPLE &&
- 	    (id->product == USB_DEVICE_ID_APPLE_MAGICMOUSE2 ||
--	     (id->product == USB_DEVICE_ID_APPLE_MAGICTRACKPAD2 && hdev->type != HID_TYPE_USBMOUSE)))
-+	     ((id->product == USB_DEVICE_ID_APPLE_MAGICTRACKPAD2 ||
-+	       id->product == USB_DEVICE_ID_APPLE_MAGICTRACKPAD2_USBC) &&
-+	      hdev->type != HID_TYPE_USBMOUSE)))
- 		return 0;
- 
- 	if (!msc->input) {
-@@ -850,7 +870,8 @@ static int magicmouse_probe(struct hid_device *hdev,
- 	else if (id->product == USB_DEVICE_ID_APPLE_MAGICMOUSE2)
- 		report = hid_register_report(hdev, HID_INPUT_REPORT,
- 			MOUSE2_REPORT_ID, 0);
--	else if (id->product == USB_DEVICE_ID_APPLE_MAGICTRACKPAD2) {
-+	else if (id->product == USB_DEVICE_ID_APPLE_MAGICTRACKPAD2 ||
-+		 id->product == USB_DEVICE_ID_APPLE_MAGICTRACKPAD2_USBC) {
- 		if (id->vendor == BT_VENDOR_ID_APPLE)
- 			report = hid_register_report(hdev, HID_INPUT_REPORT,
- 				TRACKPAD2_BT_REPORT_ID, 0);
-@@ -920,7 +941,8 @@ static const __u8 *magicmouse_report_fixup(struct hid_device *hdev, __u8 *rdesc,
- 	 */
- 	if (hdev->vendor == USB_VENDOR_ID_APPLE &&
- 	    (hdev->product == USB_DEVICE_ID_APPLE_MAGICMOUSE2 ||
--	     hdev->product == USB_DEVICE_ID_APPLE_MAGICTRACKPAD2) &&
-+	     hdev->product == USB_DEVICE_ID_APPLE_MAGICTRACKPAD2 ||
-+	     hdev->product == USB_DEVICE_ID_APPLE_MAGICTRACKPAD2_USBC) &&
- 	    *rsize == 83 && rdesc[46] == 0x84 && rdesc[58] == 0x85) {
- 		hid_info(hdev,
- 			 "fixing up magicmouse battery report descriptor\n");
-@@ -951,6 +973,10 @@ static const struct hid_device_id magic_mice[] = {
- 		USB_DEVICE_ID_APPLE_MAGICTRACKPAD2), .driver_data = 0 },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE,
- 		USB_DEVICE_ID_APPLE_MAGICTRACKPAD2), .driver_data = 0 },
-+	{ HID_BLUETOOTH_DEVICE(BT_VENDOR_ID_APPLE,
-+		USB_DEVICE_ID_APPLE_MAGICTRACKPAD2_USBC), .driver_data = 0 },
-+	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE,
-+		USB_DEVICE_ID_APPLE_MAGICTRACKPAD2_USBC), .driver_data = 0 },
- 	{ }
- };
- MODULE_DEVICE_TABLE(hid, magic_mice);
+ 	return 0;
+ }
 -- 
 2.43.0
 
