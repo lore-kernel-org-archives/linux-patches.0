@@ -1,45 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E90F72343C6;
-	Thu, 12 Dec 2024 16:06:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6075F2343A5;
+	Thu, 12 Dec 2024 16:06:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734019595; cv=none; b=kVuEC1ooPt6zcdVZ5gmCxoPaIIi8MNLgFZGqZheEcPRF4CUOwqvAXX4VvurJOI/82fhRvdBqKsuaBH2qEC4MpBsN5c8nbsDBiF0TXL7JD2HEgUFUN0MTpSTA9Ci1xvoGvOKLvApk7MqFMPgu9Nt8BtcFrexXST69WAlHEX/N0vw=
+	t=1734019598; cv=none; b=Y5qD7uvykPkVFMgcXSI7pymmaXbA3E5fbUW3Hm4ILzmcO6sKEJXZ4n5oWvbmjMRKtqm2L0N0EZGESjmqbCfx8Z87YsHipyKkXtX/H1uLpXVhPrLWlt7S0kuHoTINxWXBBPruQrsFN9ptoVJR9ssXDti4gwakPwaSTAQb4dA2SHw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734019595; c=relaxed/simple;
-	bh=mRxw+XFvgvnjrsIvDjOPJh2DaEobizhM/jy0UCBSqAk=;
+	s=arc-20240116; t=1734019598; c=relaxed/simple;
+	bh=uxuLlKcTvk2tuB6WAhLv3M9CG8RN46VkTZ53ToAJFKE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MAzI5j+vIxiCp35T8fSC4POTN/zpZWpLXmdmDkZ9MHH84FAliG3mXDeeVJvJq/9rGOtByO5oKuSv09gWE7Q2OLTMKHEEmKdfN/hEsbR7e8ACfvtoDHW9dzFP4FnVCIT5BrvCdls9c8AYwYLSXcwdzo7vedrCIAknxqKika5Ixns=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d2RFFoMv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IbaJShM43YwGhyvm6nlBUPpvj6GGwy8hdDcEbdFvVNRqt1DBUmF/snLlxomk/bm8EFNB6T4MlWwe+OVJDMg6JLIExBFtGGUuoE4s6V/zYjRo9t/aQRprH87qOVQ5ZbukX3eu0hzn8w9rW7tPwYHPQXHt/G5WnZNquoKKWVmyo5U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z2ofg+Cr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d2RFFoMv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B86C6C4CED0;
-	Thu, 12 Dec 2024 16:06:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z2ofg+Cr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68A49C4CECE;
+	Thu, 12 Dec 2024 16:06:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734019594;
-	bh=mRxw+XFvgvnjrsIvDjOPJh2DaEobizhM/jy0UCBSqAk=;
+	s=korg; t=1734019597;
+	bh=uxuLlKcTvk2tuB6WAhLv3M9CG8RN46VkTZ53ToAJFKE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d2RFFoMvBnX/sRASLylj+xU9X47lWFA/ibWkXKA5u1DAXhEzVuBw0WwbppT+vyrjh
-	 Y2njq9XMsaXWu+mhV7kKMqsCC65S+griRnpKq3xhwrvFfrSdI/KCOJo15ipoiOnj0E
-	 VDuF9xGbPLhyOmts9WuH3bNPtM5GbIXU0qm2dtCc=
+	b=Z2ofg+CrMr1dHMWHmtA/PbpLg/KroMDpGpUR7WbeQCBQFRPi51XTAGquhkfO+ZhTg
+	 /tPoHmX9QSwUMBt4JRTjvBUBS+q3+8phlGsLsLuURztjS+JzzKjxvFhIAULoumRPAK
+	 e3zC0cwD/i3XDgUOt7vYMl2m7XM08j8BmQAao2Sw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Antipov <dmantipov@yandex.ru>,
-	syzbot+a73e253cca4f0230a5a5@syzkaller.appspotmail.com,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Joseph Qi <jiangqi903@gmail.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Jun Piao <piaojun@huawei.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Vegard Nossum <vegard.nossum@oracle.com>,
+	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
+	Dan Williams <dan.j.williams@intel.com>,
+	Ira Weiny <ira.weiny@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 247/772] ocfs2: fix uninitialized value in ocfs2_file_read_iter()
-Date: Thu, 12 Dec 2024 15:53:12 +0100
-Message-ID: <20241212144400.113680689@linuxfoundation.org>
+Subject: [PATCH 6.1 248/772] dax: delete a stale directory pmem
+Date: Thu, 12 Dec 2024 15:53:13 +0100
+Message-ID: <20241212144400.163024984@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -58,96 +53,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Antipov <dmantipov@yandex.ru>
+From: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
 
-[ Upstream commit adc77b19f62d7e80f98400b2fca9d700d2afdd6f ]
+[ Upstream commit b8e6d7ce50673c39514921ac61f7af00bbb58b87 ]
 
-Syzbot has reported the following KMSAN splat:
+After commit: 83762cb5c7c4 ("dax: Kill DEV_DAX_PMEM_COMPAT") the pmem/
+directory is not needed anymore and Makefile changes were made
+accordingly in this commit, but there is a Makefile and pmem.c in pmem/
+which are now stale and pmem.c is empty, remove them.
 
-BUG: KMSAN: uninit-value in ocfs2_file_read_iter+0x9a4/0xf80
- ocfs2_file_read_iter+0x9a4/0xf80
- __io_read+0x8d4/0x20f0
- io_read+0x3e/0xf0
- io_issue_sqe+0x42b/0x22c0
- io_wq_submit_work+0xaf9/0xdc0
- io_worker_handle_work+0xd13/0x2110
- io_wq_worker+0x447/0x1410
- ret_from_fork+0x6f/0x90
- ret_from_fork_asm+0x1a/0x30
-
-Uninit was created at:
- __alloc_pages_noprof+0x9a7/0xe00
- alloc_pages_mpol_noprof+0x299/0x990
- alloc_pages_noprof+0x1bf/0x1e0
- allocate_slab+0x33a/0x1250
- ___slab_alloc+0x12ef/0x35e0
- kmem_cache_alloc_bulk_noprof+0x486/0x1330
- __io_alloc_req_refill+0x84/0x560
- io_submit_sqes+0x172f/0x2f30
- __se_sys_io_uring_enter+0x406/0x41c0
- __x64_sys_io_uring_enter+0x11f/0x1a0
- x64_sys_call+0x2b54/0x3ba0
- do_syscall_64+0xcd/0x1e0
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-Since an instance of 'struct kiocb' may be passed from the block layer
-with 'private' field uninitialized, introduce 'ocfs2_iocb_init_rw_locked()'
-and use it from where 'ocfs2_dio_end_io()' might take care, i.e. in
-'ocfs2_file_read_iter()' and 'ocfs2_file_write_iter()'.
-
-Link: https://lkml.kernel.org/r/20241029091736.1501946-1-dmantipov@yandex.ru
-Fixes: 7cdfc3a1c397 ("ocfs2: Remember rw lock level during direct io")
-Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
-Reported-by: syzbot+a73e253cca4f0230a5a5@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=a73e253cca4f0230a5a5
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Joseph Qi <jiangqi903@gmail.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Jun Piao <piaojun@huawei.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 83762cb5c7c4 ("dax: Kill DEV_DAX_PMEM_COMPAT")
+Suggested-by: Vegard Nossum <vegard.nossum@oracle.com>
+Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+Reviewed-by: Dan Williams <dan.j.williams@intel.com>
+Reviewed-by: Ira Weiny <ira.weiny@intel.com>
+Link: https://patch.msgid.link/20241017101144.1654085-1-harshit.m.mogalapalli@oracle.com
+Signed-off-by: Ira Weiny <ira.weiny@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/aops.h | 2 ++
- fs/ocfs2/file.c | 4 ++++
- 2 files changed, 6 insertions(+)
+ drivers/dax/pmem/Makefile |  7 -------
+ drivers/dax/pmem/pmem.c   | 10 ----------
+ 2 files changed, 17 deletions(-)
+ delete mode 100644 drivers/dax/pmem/Makefile
+ delete mode 100644 drivers/dax/pmem/pmem.c
 
-diff --git a/fs/ocfs2/aops.h b/fs/ocfs2/aops.h
-index 3a520117fa59f..a9ce7947228c8 100644
---- a/fs/ocfs2/aops.h
-+++ b/fs/ocfs2/aops.h
-@@ -70,6 +70,8 @@ enum ocfs2_iocb_lock_bits {
- 	OCFS2_IOCB_NUM_LOCKS
- };
- 
-+#define ocfs2_iocb_init_rw_locked(iocb) \
-+	(iocb->private = NULL)
- #define ocfs2_iocb_clear_rw_locked(iocb) \
- 	clear_bit(OCFS2_IOCB_RW_LOCK, (unsigned long *)&iocb->private)
- #define ocfs2_iocb_rw_locked_level(iocb) \
-diff --git a/fs/ocfs2/file.c b/fs/ocfs2/file.c
-index e96b947c3f5dd..e29e267472bf8 100644
---- a/fs/ocfs2/file.c
-+++ b/fs/ocfs2/file.c
-@@ -2398,6 +2398,8 @@ static ssize_t ocfs2_file_write_iter(struct kiocb *iocb,
- 	} else
- 		inode_lock(inode);
- 
-+	ocfs2_iocb_init_rw_locked(iocb);
-+
- 	/*
- 	 * Concurrent O_DIRECT writes are allowed with
- 	 * mount_option "coherency=buffered".
-@@ -2544,6 +2546,8 @@ static ssize_t ocfs2_file_read_iter(struct kiocb *iocb,
- 	if (!direct_io && nowait)
- 		return -EOPNOTSUPP;
- 
-+	ocfs2_iocb_init_rw_locked(iocb);
-+
- 	/*
- 	 * buffered reads protect themselves in ->read_folio().  O_DIRECT reads
- 	 * need locks to protect pending reads from racing with truncate.
+diff --git a/drivers/dax/pmem/Makefile b/drivers/dax/pmem/Makefile
+deleted file mode 100644
+index 191c31f0d4f00..0000000000000
+--- a/drivers/dax/pmem/Makefile
++++ /dev/null
+@@ -1,7 +0,0 @@
+-# SPDX-License-Identifier: GPL-2.0-only
+-obj-$(CONFIG_DEV_DAX_PMEM) += dax_pmem.o
+-obj-$(CONFIG_DEV_DAX_PMEM) += dax_pmem_core.o
+-
+-dax_pmem-y := pmem.o
+-dax_pmem_core-y := core.o
+-dax_pmem_compat-y := compat.o
+diff --git a/drivers/dax/pmem/pmem.c b/drivers/dax/pmem/pmem.c
+deleted file mode 100644
+index dfe91a2990fec..0000000000000
+--- a/drivers/dax/pmem/pmem.c
++++ /dev/null
+@@ -1,10 +0,0 @@
+-// SPDX-License-Identifier: GPL-2.0
+-/* Copyright(c) 2016 - 2018 Intel Corporation. All rights reserved. */
+-#include <linux/percpu-refcount.h>
+-#include <linux/memremap.h>
+-#include <linux/module.h>
+-#include <linux/pfn_t.h>
+-#include <linux/nd.h>
+-#include "../bus.h"
+-
+-
 -- 
 2.43.0
 
