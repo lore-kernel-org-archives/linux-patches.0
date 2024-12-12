@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A82F613CA81;
-	Thu, 12 Dec 2024 17:41:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C114221D93;
+	Thu, 12 Dec 2024 17:41:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734025261; cv=none; b=jxCNmG+Vj3A6/ug3Ma0WpNdT0VRmTWfA3h5vfSRXCm9eoQ7R5qzhOJOQLCUhoXSg6icbimpZzpZq46UZJGPFI6ufoz3a1g5ThQ7pEmmTs1yIpxhezt9mcdXnpgQXaEm07abhdbUDmPNDRyJvo4+MPH1I6SiqGfeqnRw1dIItpfo=
+	t=1734025264; cv=none; b=Wshk8mbmTtJMGjcx4uBSeCXvz3n7rfuIdUcnCN/0lHQrik/WqYjcY54K5oUh1rNzS1b1jyrU5uCO9ihVMyaZVFeMxWym8hT60RgKe0FFwvNWT8z4xVc8fzAFPR4SYD+RGKG8tRi14TfKmAKngNoVOtXX1KA3ELa8VGuKs3nJ/nE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734025261; c=relaxed/simple;
-	bh=bp+k4797OthKoVRrNEQjlsupK0m8Zg9tvVk800+EaKw=;
+	s=arc-20240116; t=1734025264; c=relaxed/simple;
+	bh=TxQDqGGb60iZ4ExVxFHCssDMY17FmHns/E7JUC1zG3Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RF23EAyTr33mNjxxL1noh2f7fmeEg+aiiH0IOJMihjx8I/783vhnJlXzxV6qy4HiPJE7QduwkYxhb/2G1m3y3ijIACCbgqoFmvIPjD6bUFBx9rYqlVmZK2Wb2EG1KTYWQ+DFuk7B1k4MgFchyF5fawIVBeWZyqcjSCPgEG9rT14=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZoFeU4b3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BYlhnIuBONu+/rl6c/43MN0TuGGvBnixj7rAVUDZ8zPCVOkVgpZcZ2/B1fX+vrOxODgxkFIHl8TPURznR+JUfmwh96iHgzsTYgpSuKzhsOTHzQcv6HFxqxQY2kjUEG2TcFFSQ84olpw15MRxNe7//TDCuS7RDcjEeClg9kRAdb4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SC0gNnfw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZoFeU4b3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C1CCC4CED3;
-	Thu, 12 Dec 2024 17:41:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SC0gNnfw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9988C4CED3;
+	Thu, 12 Dec 2024 17:41:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734025261;
-	bh=bp+k4797OthKoVRrNEQjlsupK0m8Zg9tvVk800+EaKw=;
+	s=korg; t=1734025264;
+	bh=TxQDqGGb60iZ4ExVxFHCssDMY17FmHns/E7JUC1zG3Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZoFeU4b3Ee6oODGqtsBrVL4ErCog4/iYKASbJK4zIB7YuaR8KKc4PMtpjsh0IUVNW
-	 BGRM5vvfmQabWqWj2Jjz161wN2imhunKt5UBAZ7cjh/bFIs2yxZiVOenbM8dsOIJJg
-	 iraw0YbomGW6efwmXWKYcJ2VctaxhmVfw+Ax3OyY=
+	b=SC0gNnfwW9CFXzTL8VtO3fhlk/nHKX3tRUE++7WZ999kxrggjN9UjMtWjtK8hWs7P
+	 1mR7DDnSwk2hlJadt9o2ZZYs3q6T3DcAJL9mD2Kgk8x4MMy3iGOmX8NJPcEokvDfqw
+	 7I5NyPdvsgAcXKkg2WwhrkVrLv4IUthIxWztUF9M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
-	David Ahern <dsahern@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Mingwei Zheng <zmw12306@gmail.com>,
+	Jiasheng Jiang <jiashengjiangcool@gmail.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 080/321] selftests: net: really check for bg process completion
-Date: Thu, 12 Dec 2024 15:59:58 +0100
-Message-ID: <20241212144233.146697678@linuxfoundation.org>
+Subject: [PATCH 5.4 081/321] net: rfkill: gpio: Add check for clk_enable()
+Date: Thu, 12 Dec 2024 15:59:59 +0100
+Message-ID: <20241212144233.185197045@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144229.291682835@linuxfoundation.org>
 References: <20241212144229.291682835@linuxfoundation.org>
@@ -52,41 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Mingwei Zheng <zmw12306@gmail.com>
 
-[ Upstream commit 52ed077aa6336dbef83a2d6d21c52d1706fb7f16 ]
+[ Upstream commit 8251e7621b25ccdb689f1dd9553b8789e3745ea1 ]
 
-A recent refactor transformed the check for process completion
-in a true statement, due to a typo.
+Add check for the return value of clk_enable() to catch the potential
+error.
 
-As a result, the relevant test-case is unable to catch the
-regression it was supposed to detect.
-
-Restore the correct condition.
-
-Fixes: 691bb4e49c98 ("selftests: net: avoid just another constant wait")
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://patch.msgid.link/0e6f213811f8e93a235307e683af8225cc6277ae.1730828007.git.pabeni@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 7176ba23f8b5 ("net: rfkill: add generic gpio rfkill driver")
+Signed-off-by: Mingwei Zheng <zmw12306@gmail.com>
+Signed-off-by: Jiasheng Jiang <jiashengjiangcool@gmail.com>
+Link: https://patch.msgid.link/20241108195341.1853080-1-zmw12306@gmail.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/pmtu.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/rfkill/rfkill-gpio.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/tools/testing/selftests/net/pmtu.sh b/tools/testing/selftests/net/pmtu.sh
-index a4dc32729749d..f72001008db00 100755
---- a/tools/testing/selftests/net/pmtu.sh
-+++ b/tools/testing/selftests/net/pmtu.sh
-@@ -1133,7 +1133,7 @@ check_running() {
- 	pid=${1}
- 	cmd=${2}
+diff --git a/net/rfkill/rfkill-gpio.c b/net/rfkill/rfkill-gpio.c
+index f74baefd855d3..2df5bf240b64a 100644
+--- a/net/rfkill/rfkill-gpio.c
++++ b/net/rfkill/rfkill-gpio.c
+@@ -30,8 +30,12 @@ static int rfkill_gpio_set_power(void *data, bool blocked)
+ {
+ 	struct rfkill_gpio_data *rfkill = data;
  
--	[ "$(cat /proc/${pid}/cmdline 2>/dev/null | tr -d '\0')" = "{cmd}" ]
-+	[ "$(cat /proc/${pid}/cmdline 2>/dev/null | tr -d '\0')" = "${cmd}" ]
- }
+-	if (!blocked && !IS_ERR(rfkill->clk) && !rfkill->clk_enabled)
+-		clk_enable(rfkill->clk);
++	if (!blocked && !IS_ERR(rfkill->clk) && !rfkill->clk_enabled) {
++		int ret = clk_enable(rfkill->clk);
++
++		if (ret)
++			return ret;
++	}
  
- test_cleanup_vxlanX_exception() {
+ 	gpiod_set_value_cansleep(rfkill->shutdown_gpio, !blocked);
+ 	gpiod_set_value_cansleep(rfkill->reset_gpio, !blocked);
 -- 
 2.43.0
 
