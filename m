@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07876223E65;
-	Thu, 12 Dec 2024 16:57:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5DBE223E65;
+	Thu, 12 Dec 2024 16:57:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734022669; cv=none; b=YgmKcimPviH4fDHHAG6cue53ST3I6dVrQIlxpUnIXTZgaXu4xdkCTrR6ai6JC05gaJ4p+yThbElfZdnFCyjmICzuynosV22xDnk1DJrPUiqpT8hMajfxU0/GO+OVoUMCEBgN1cZHvgms0FiyyJiZ6IxyOcBGvNQblHcmjF6QxrE=
+	t=1734022672; cv=none; b=jrohmYs5Ont9Al/G36a4tY+9ChxSLNzjw87GWNAfRxiOw9mqpmzd6GWunGCLGMN8eZhTPKz882FpzhByu6nI1dEpO//+pjFP1IzkD3lc/n48Nk8zr/RzFEXmMfSk0369AXC+UVIJUi+1sZibn/sS3Uz7HmtISZ9FpKv5M+SkVW4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734022669; c=relaxed/simple;
-	bh=MsbS9M1KTdtj91g7Ie7oOZM1yn5m0/LMXe0RzKy6kM8=;
+	s=arc-20240116; t=1734022672; c=relaxed/simple;
+	bh=RB76g3gKi60qy9CGzom6y/kNS/mpd2/XYYkrbPyAudA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=chIxl3RNKaaTYMgKSVbNKczY45AkaKpdiwKl/CTf5lK5nO/mRx8cEn0FpVg3vQ8UsDiXiAXXP0EOK3TVnff56kjOgByfkP8ZeCM3f9mpYqPSkgqKtAYvzoNuWxq7SHJNkokiG07xw53LUQmyc4ykxBbHzvjcA2UHTgbc1rMTFfE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UQ5rBnKH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WrfawKWvv/hMUPUUk4C3jmHEIQXa4xjQoonFSSGNkmFsCnxBH3co4dMYBF2nhJUiK8Wtcn1ZwdBrK3IoBaBpeXq0fF1IXdIG+M6ZYuc28EfC47SaF4Ryyky8VXutYrVGSFCSMjhBQa2DdSOjQQj5sWZCNcYNr1Si9RqbnbnwFTY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eRUQTTOB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UQ5rBnKH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53B2CC4CECE;
-	Thu, 12 Dec 2024 16:57:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eRUQTTOB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52EB5C4CECE;
+	Thu, 12 Dec 2024 16:57:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734022668;
-	bh=MsbS9M1KTdtj91g7Ie7oOZM1yn5m0/LMXe0RzKy6kM8=;
+	s=korg; t=1734022672;
+	bh=RB76g3gKi60qy9CGzom6y/kNS/mpd2/XYYkrbPyAudA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UQ5rBnKHMgFvwNIFpNnDWEO5erz0DXe42TdLCGP9sMMxhPtkIvcnTrbxZT9PU32xb
-	 Cs2iUDa0pqLocmP6tRlgYqpNQWUCZyH3FsKY3o+aCAu+woS60HFsMbl38tQmQY+2ke
-	 +c1E9Tir3of4h8N7+vZwJtm2e1KA/WCWTghBtmeo=
+	b=eRUQTTOBSef7hADu4YQAaLeLGkZpGh+yqwoxtniBE0whSy2pmUeo17epHkLErnR/a
+	 v6SKNJ19brfWYCoaHP3/rzQ4/PJsm+CaQE92gNtvVv5PrpC9PEHlyo+I730QF1QpQY
+	 8vqbLKsnpdRUfHLFCkooMd/gl8VgfrSPbu8hHfk8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 286/565] iio: light: al3010: Fix an error handling path in al3010_probe()
-Date: Thu, 12 Dec 2024 15:58:01 +0100
-Message-ID: <20241212144322.766638626@linuxfoundation.org>
+	Jeongjun Park <aha310510@gmail.com>,
+	Andreas Dilger <adilger@dilger.ca>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 5.15 304/565] ext4: supress data-race warnings in ext4_free_inodes_{count,set}()
+Date: Thu, 12 Dec 2024 15:58:19 +0100
+Message-ID: <20241212144323.485982420@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144311.432886635@linuxfoundation.org>
 References: <20241212144311.432886635@linuxfoundation.org>
@@ -51,58 +51,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Jeongjun Park <aha310510@gmail.com>
 
-[ Upstream commit a4b7064d34186cf4970fe0333c3b27346cf8f819 ]
+commit 902cc179c931a033cd7f4242353aa2733bf8524c upstream.
 
-If i2c_smbus_write_byte_data() fails in al3010_init(),
-al3010_set_pwr(false) is not called.
+find_group_other() and find_group_orlov() read *_lo, *_hi with
+ext4_free_inodes_count without additional locking. This can cause
+data-race warning, but since the lock is held for most writes and free
+inodes value is generally not a problem even if it is incorrect, it is
+more appropriate to use READ_ONCE()/WRITE_ONCE() than to add locking.
 
-In order to avoid such a situation, move the devm_add_action_or_reset()
-witch calls al3010_set_pwr(false) right after a successful
-al3010_set_pwr(true).
+==================================================================
+BUG: KCSAN: data-race in ext4_free_inodes_count / ext4_free_inodes_set
 
-Fixes: c36b5195ab70 ("iio: light: add Dyna-Image AL3010 driver")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Link: https://patch.msgid.link/ee5d10a2dd2b70f29772d5df33774d3974a80f30.1725993353.git.christophe.jaillet@wanadoo.fr
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+write to 0xffff88810404300e of 2 bytes by task 6254 on cpu 1:
+ ext4_free_inodes_set+0x1f/0x80 fs/ext4/super.c:405
+ __ext4_new_inode+0x15ca/0x2200 fs/ext4/ialloc.c:1216
+ ext4_symlink+0x242/0x5a0 fs/ext4/namei.c:3391
+ vfs_symlink+0xca/0x1d0 fs/namei.c:4615
+ do_symlinkat+0xe3/0x340 fs/namei.c:4641
+ __do_sys_symlinkat fs/namei.c:4657 [inline]
+ __se_sys_symlinkat fs/namei.c:4654 [inline]
+ __x64_sys_symlinkat+0x5e/0x70 fs/namei.c:4654
+ x64_sys_call+0x1dda/0x2d60 arch/x86/include/generated/asm/syscalls_64.h:267
+ do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+ do_syscall_64+0x54/0x120 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x76/0x7e
+
+read to 0xffff88810404300e of 2 bytes by task 6257 on cpu 0:
+ ext4_free_inodes_count+0x1c/0x80 fs/ext4/super.c:349
+ find_group_other fs/ext4/ialloc.c:594 [inline]
+ __ext4_new_inode+0x6ec/0x2200 fs/ext4/ialloc.c:1017
+ ext4_symlink+0x242/0x5a0 fs/ext4/namei.c:3391
+ vfs_symlink+0xca/0x1d0 fs/namei.c:4615
+ do_symlinkat+0xe3/0x340 fs/namei.c:4641
+ __do_sys_symlinkat fs/namei.c:4657 [inline]
+ __se_sys_symlinkat fs/namei.c:4654 [inline]
+ __x64_sys_symlinkat+0x5e/0x70 fs/namei.c:4654
+ x64_sys_call+0x1dda/0x2d60 arch/x86/include/generated/asm/syscalls_64.h:267
+ do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+ do_syscall_64+0x54/0x120 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x76/0x7e
+
+Cc: stable@vger.kernel.org
+Signed-off-by: Jeongjun Park <aha310510@gmail.com>
+Reviewed-by: Andreas Dilger <adilger@dilger.ca>
+Link: https://patch.msgid.link/20241003125337.47283-1-aha310510@gmail.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/light/al3010.c | 11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+ fs/ext4/super.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/iio/light/al3010.c b/drivers/iio/light/al3010.c
-index b4e9924094cd1..bd83e73e68026 100644
---- a/drivers/iio/light/al3010.c
-+++ b/drivers/iio/light/al3010.c
-@@ -87,7 +87,12 @@ static int al3010_init(struct al3010_data *data)
- 	int ret;
- 
- 	ret = al3010_set_pwr(data->client, true);
-+	if (ret < 0)
-+		return ret;
- 
-+	ret = devm_add_action_or_reset(&data->client->dev,
-+				       al3010_set_pwr_off,
-+				       data);
- 	if (ret < 0)
- 		return ret;
- 
-@@ -191,12 +196,6 @@ static int al3010_probe(struct i2c_client *client,
- 		return ret;
- 	}
- 
--	ret = devm_add_action_or_reset(&client->dev,
--					al3010_set_pwr_off,
--					data);
--	if (ret < 0)
--		return ret;
--
- 	return devm_iio_device_register(&client->dev, indio_dev);
+--- a/fs/ext4/super.c
++++ b/fs/ext4/super.c
+@@ -320,9 +320,9 @@ __u32 ext4_free_group_clusters(struct su
+ __u32 ext4_free_inodes_count(struct super_block *sb,
+ 			      struct ext4_group_desc *bg)
+ {
+-	return le16_to_cpu(bg->bg_free_inodes_count_lo) |
++	return le16_to_cpu(READ_ONCE(bg->bg_free_inodes_count_lo)) |
+ 		(EXT4_DESC_SIZE(sb) >= EXT4_MIN_DESC_SIZE_64BIT ?
+-		 (__u32)le16_to_cpu(bg->bg_free_inodes_count_hi) << 16 : 0);
++		 (__u32)le16_to_cpu(READ_ONCE(bg->bg_free_inodes_count_hi)) << 16 : 0);
  }
  
--- 
-2.43.0
-
+ __u32 ext4_used_dirs_count(struct super_block *sb,
+@@ -376,9 +376,9 @@ void ext4_free_group_clusters_set(struct
+ void ext4_free_inodes_set(struct super_block *sb,
+ 			  struct ext4_group_desc *bg, __u32 count)
+ {
+-	bg->bg_free_inodes_count_lo = cpu_to_le16((__u16)count);
++	WRITE_ONCE(bg->bg_free_inodes_count_lo, cpu_to_le16((__u16)count));
+ 	if (EXT4_DESC_SIZE(sb) >= EXT4_MIN_DESC_SIZE_64BIT)
+-		bg->bg_free_inodes_count_hi = cpu_to_le16(count >> 16);
++		WRITE_ONCE(bg->bg_free_inodes_count_hi, cpu_to_le16(count >> 16));
+ }
+ 
+ void ext4_used_dirs_set(struct super_block *sb,
 
 
