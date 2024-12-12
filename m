@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C77A2358BE;
-	Thu, 12 Dec 2024 16:32:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8256223C49;
+	Thu, 12 Dec 2024 16:32:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734021156; cv=none; b=RNOY5gm9kYUBJ/plBlF7wNcM1vxxLmnvKAWXF8pb5mQaZmmBwjvuUfD6icB+aMxHCwSZMxNRo8DYNx6kFe11JH0nDuqGX13c3ak3PEJd/wJkDAXvoUyiHR05OnlngRd+uJ/AymCW4fV+WzdUtdPun+zTBAll60CpZYzbPcwJAnM=
+	t=1734021159; cv=none; b=i9ShYrcZiLiz2gEQNawbOnBnCQeIY3akDSYJGNcNAv2/LLhz3V5ecFkaL/CunoA3wJTnhB3zCWu6M0eiJtAdKA6zhS78k2y0WYCrlaWcuK8O4ANJ5LsQ7O2IAjmXCbrNgQCsU75q3MiMqD0nYCq5spq8AHqFcgeUMxR9bOeygKg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734021156; c=relaxed/simple;
-	bh=LbyrZke7N84bR50kwa/3Kv74mn7skVbsQbyODq11HDs=;
+	s=arc-20240116; t=1734021159; c=relaxed/simple;
+	bh=elWaj7ZYSS0zBIfwZN/ArimQJ1UsZuPcwuw8+h3se1w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=PlGiRYf8qWzLRwt3WgUll6l7wRQvROF07Qb4sU/dcWC0wQfw5b/Sj7rBAXbgxWiFxTGiQC/RlsdjhKfiPPtfTROYYTKMnOgRetxUPKOtkQzuZZM73jJQ25EzD++e2qdYpPT15CAcAFrzHDstxe30mVpmCNzKCJ0af4pJvgAP0zk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cr/Ck72g; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=U6X9nSziNAkwwGgpxjAmejoG0x0vcGl+2vt/Ypq+DEfR/F9GTciIfIqVLvd84OuSe9mQ+3NmkzCPQziqnvsji7fVW+Of6FTYxV7IsMy3ruHL/+OHJWmdhr8aFoGOiPbZc7wmKoNHPllYmIk5HbpqvxiJrqKLEtBzRXYEOMDQRRw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XgsB3B8D; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cr/Ck72g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECE9BC4CED3;
-	Thu, 12 Dec 2024 16:32:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XgsB3B8D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 573FFC4CECE;
+	Thu, 12 Dec 2024 16:32:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734021156;
-	bh=LbyrZke7N84bR50kwa/3Kv74mn7skVbsQbyODq11HDs=;
+	s=korg; t=1734021159;
+	bh=elWaj7ZYSS0zBIfwZN/ArimQJ1UsZuPcwuw8+h3se1w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cr/Ck72g6+iAU0oMqvhzkp9qAMJH2rrPP6NDC53K/mroUFJezD36s8C+DMw/kTIPY
-	 1FDY7rOvLBQ/brF+5//z4hmCaeZLh7Js/JBZOIIv0kkmJ0OL3wqAMukHPNestFOqzk
-	 o7gB7MfSESwTmlIbzMtamWz1eN8h15p5+W1yPMn8=
+	b=XgsB3B8Due9Q0spBIXKX9Ex89MvgL8LdEyLswUaRK3p+DKiXhvZsMWoVNs35u4jYG
+	 Q0fFG4Lz59qyWvkmPvslsbZIeBWLkfP73KWCuZM0OHgahf7NMFdTrv78nhNueq2Z2R
+	 xxgWttlchpbSW4QBbg2S84V0a/r0YQg1uwELi1dk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brahmajit Das <brahmajit.xyz@gmail.com>,
-	Jani Nikula <jani.nikula@intel.com>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 661/772] drm/display: Fix building with GCC 15
-Date: Thu, 12 Dec 2024 16:00:06 +0100
-Message-ID: <20241212144417.233402321@linuxfoundation.org>
+Subject: [PATCH 6.1 662/772] r8169: dont apply UDP padding quirk on RTL8126A
+Date: Thu, 12 Dec 2024 16:00:07 +0100
+Message-ID: <20241212144417.271073623@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -45,57 +46,61 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Brahmajit Das <brahmajit.xyz@gmail.com>
+From: Heiner Kallweit <hkallweit1@gmail.com>
 
-[ Upstream commit a500f3751d3c861be7e4463c933cf467240cca5d ]
+[ Upstream commit 87e26448dbda4523b73a894d96f0f788506d3795 ]
 
-GCC 15 enables -Werror=unterminated-string-initialization by default.
-This results in the following build error
+Vendor drivers r8125/r8126 indicate that this quirk isn't needed
+any longer for RTL8126A. Mimic this in r8169.
 
-drivers/gpu/drm/display/drm_dp_dual_mode_helper.c: In function ‘is_hdmi_adaptor’:
-drivers/gpu/drm/display/drm_dp_dual_mode_helper.c:164:17: error: initializer-string for array of
- ‘char’ is too long [-Werror=unterminated-string-initialization]
-  164 |                 "DP-HDMI ADAPTOR\x04";
-      |                 ^~~~~~~~~~~~~~~~~~~~~
-
-After discussion with Ville, the fix was to increase the size of
-dp_dual_mode_hdmi_id array by one, so that it can accommodate the NULL
-line character. This should let us build the kernel with GCC 15.
-
-Signed-off-by: Brahmajit Das <brahmajit.xyz@gmail.com>
-Reviewed-by: Jani Nikula <jani.nikula@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20241002092311.942822-1-brahmajit.xyz@gmail.com
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/d1317187-aa81-4a69-b831-678436e4de62@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/display/drm_dp_dual_mode_helper.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/realtek/r8169_main.c | 14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/display/drm_dp_dual_mode_helper.c b/drivers/gpu/drm/display/drm_dp_dual_mode_helper.c
-index bd61e20770a5b..719da3610310f 100644
---- a/drivers/gpu/drm/display/drm_dp_dual_mode_helper.c
-+++ b/drivers/gpu/drm/display/drm_dp_dual_mode_helper.c
-@@ -160,11 +160,11 @@ EXPORT_SYMBOL(drm_dp_dual_mode_write);
- 
- static bool is_hdmi_adaptor(const char hdmi_id[DP_DUAL_MODE_HDMI_ID_LEN])
+diff --git a/drivers/net/ethernet/realtek/r8169_main.c b/drivers/net/ethernet/realtek/r8169_main.c
+index a74e33bf0302e..4b461e93ffe9d 100644
+--- a/drivers/net/ethernet/realtek/r8169_main.c
++++ b/drivers/net/ethernet/realtek/r8169_main.c
+@@ -4139,8 +4139,8 @@ static unsigned int rtl8125_quirk_udp_padto(struct rtl8169_private *tp,
  {
--	static const char dp_dual_mode_hdmi_id[DP_DUAL_MODE_HDMI_ID_LEN] =
-+	static const char dp_dual_mode_hdmi_id[DP_DUAL_MODE_HDMI_ID_LEN + 1] =
- 		"DP-HDMI ADAPTOR\x04";
+ 	unsigned int padto = 0, len = skb->len;
  
- 	return memcmp(hdmi_id, dp_dual_mode_hdmi_id,
--		      sizeof(dp_dual_mode_hdmi_id)) == 0;
-+		      DP_DUAL_MODE_HDMI_ID_LEN) == 0;
- }
+-	if (rtl_is_8125(tp) && len < 128 + RTL_MIN_PATCH_LEN &&
+-	    rtl_skb_is_udp(skb) && skb_transport_header_was_set(skb)) {
++	if (len < 128 + RTL_MIN_PATCH_LEN && rtl_skb_is_udp(skb) &&
++	    skb_transport_header_was_set(skb)) {
+ 		unsigned int trans_data_len = skb_tail_pointer(skb) -
+ 					      skb_transport_header(skb);
  
- static bool is_type1_adaptor(uint8_t adaptor_id)
+@@ -4164,9 +4164,15 @@ static unsigned int rtl8125_quirk_udp_padto(struct rtl8169_private *tp,
+ static unsigned int rtl_quirk_packet_padto(struct rtl8169_private *tp,
+ 					   struct sk_buff *skb)
+ {
+-	unsigned int padto;
++	unsigned int padto = 0;
+ 
+-	padto = rtl8125_quirk_udp_padto(tp, skb);
++	switch (tp->mac_version) {
++	case RTL_GIGA_MAC_VER_61 ... RTL_GIGA_MAC_VER_63:
++		padto = rtl8125_quirk_udp_padto(tp, skb);
++		break;
++	default:
++		break;
++	}
+ 
+ 	switch (tp->mac_version) {
+ 	case RTL_GIGA_MAC_VER_34:
 -- 
 2.43.0
 
