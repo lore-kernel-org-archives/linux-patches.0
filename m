@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 168F2235C26;
-	Thu, 12 Dec 2024 15:57:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 611DD235C34;
+	Thu, 12 Dec 2024 15:57:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734019075; cv=none; b=f6kSeM48FvgpUx7xXQsKhyP6LIvXz7uxxQF6sz4q3hfAeOwNyJ89hWpgX/zX71B0RbzsvItkLDDTwIj0PjuXbr4liJIaA1GjlvjrvaIonqV3yk0XQmDiOTF2lxDNXX6KkLWTDlojsz+o1t8NqrtLGGGPUbKdR1MGH6l0MKM+FUo=
+	t=1734019078; cv=none; b=bfduhEHIyTHoLnKr3RuUkdAE6gYwvxVHE+pzzRntAeJmLikt7Yx6NkT7fjDT3vIE1rAh/7EU+/mmGeVC0IDH3eTslVwDnWzu3CpMDVSWQq+V51f1KhNBRchbtmvJLHo6Rx9hPSKgKeeLZKVdRroiPSVlvfteSZd7b35ADXK/mLU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734019075; c=relaxed/simple;
-	bh=ySOlUiaMRYuqv2si610PpyMyFU4AoqNCdDYH9ycYRdE=;
+	s=arc-20240116; t=1734019078; c=relaxed/simple;
+	bh=FWV0/n6dTUUgNCdYPHmOKNjj8XeimOmyOUZ+vhyiLgU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=It+ARO3A8M7SlA0FPGZVrlnI3fbalemSl62pC6R8gKLz6Zri3byiIAVVEC3n+Ys5hY6whgDNlaO+rvURbCeXZ9RYa4Iwx3h+lU9yQcq7Egm2m5ZRzFL0bxf33CXfGztLLoWOD9n+RZhop6ef8it4JyDhjmhS60uicRjmIQFUaGM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bzA6c5lm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IOBFB+2tU2oIkj5xA1FZNJunsWsBoMFnJ5MVcKE6vN4e0ExYLuaB9VzLx15q2rlMyk6KcffjX4FjHw3aRLdZB9mNAbeYgtgDVdEKnd4CaH8YCw39DToHrBXQLKlMhjHfzfQ/poPistP19O29sub8zfjYH+nWYNiowG9h0JVJsAk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qucOSvd0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bzA6c5lm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27891C4CECE;
-	Thu, 12 Dec 2024 15:57:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qucOSvd0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D19CC4CED0;
+	Thu, 12 Dec 2024 15:57:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734019074;
-	bh=ySOlUiaMRYuqv2si610PpyMyFU4AoqNCdDYH9ycYRdE=;
+	s=korg; t=1734019078;
+	bh=FWV0/n6dTUUgNCdYPHmOKNjj8XeimOmyOUZ+vhyiLgU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bzA6c5lmE7+f+GlC067HUhgB/YwnanAtRKbVp1+6mKAFXimNGX1aVz8Mf9UZOoQ3x
-	 UHrOEI7VpUlK1Uo8ugGPlKiAnRQh5qcdNCW9L+y/Z+/MnRkSKnzaEYXRz62vfVw6F/
-	 JWAPCvnu32sl4IOpPETx3VECaFkXOXOKURnGt0Xw=
+	b=qucOSvd0Sumgzkv7jHiRwbBhGZXWA28M6wG4Yg6HpdwRm+uvcGPLckkjeo6MnI9Nm
+	 310nElCg8Z1UWSIeH8ztTN3oLk++JHmi50w/duPsWtkQEuG72gH5bqsl2EOv79rrjo
+	 wkM1S5Pfaafk2HPfEwBHENEkx7fsoIwMV2gtfRIg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinjie Ruan <ruanjinjie@huawei.com>,
-	Mark Brown <broonie@kernel.org>,
+	Andre Przywara <andre.przywara@arm.com>,
+	Chen-Yu Tsai <wens@csie.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 093/772] spi: spi-fsl-lpspi: Use IRQF_NO_AUTOEN flag in request_irq()
-Date: Thu, 12 Dec 2024 15:50:38 +0100
-Message-ID: <20241212144353.783930942@linuxfoundation.org>
+Subject: [PATCH 6.1 111/772] ARM: dts: cubieboard4: Fix DCDC5 regulator constraints
+Date: Thu, 12 Dec 2024 15:50:56 +0100
+Message-ID: <20241212144354.511078616@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -51,54 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinjie Ruan <ruanjinjie@huawei.com>
+From: Andre Przywara <andre.przywara@arm.com>
 
-[ Upstream commit 003c7e01916c5e2af95add9b0cbda2e6163873e8 ]
+[ Upstream commit dd36ad71ad65968f97630808bc8d605c929b128e ]
 
-disable_irq() after request_irq() still has a time gap in which
-interrupts can come. request_irq() with IRQF_NO_AUTOEN flag will
-disable IRQ auto-enable when request IRQ.
+The DCDC5 voltage rail in the X-Powers AXP809 PMIC has a resolution of
+50mV, so the currently enforced limits of 1.475 and 1.525 volts cannot
+be set, when the existing regulator value is beyond this range.
 
-Fixes: 9728fb3ce117 ("spi: lpspi: disable lpspi module irq in DMA mode")
-Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-Link: https://patch.msgid.link/20240906022828.891812-1-ruanjinjie@huawei.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+This will lead to the whole regulator driver to give up and fail
+probing, which in turn will hang the system, as essential devices depend
+on the PMIC.
+In this case a bug in U-Boot set the voltage to 1.75V (meant for DCDC4),
+and the AXP driver's attempt to correct this lead to this error:
+==================
+[    4.447653] axp20x-rsb sunxi-rsb-3a3: AXP20X driver loaded
+[    4.450066] vcc-dram: Bringing 1750000uV into 1575000-1575000uV
+[    4.460272] vcc-dram: failed to apply 1575000-1575000uV constraint: -EINVAL
+[    4.474788] axp20x-regulator axp20x-regulator.0: Failed to register dcdc5
+[    4.482276] axp20x-regulator axp20x-regulator.0: probe with driver axp20x-regulator failed with error -22
+==================
+
+Set the limits to values that can be programmed, so any correction will
+be successful.
+
+Signed-off-by: Andre Przywara <andre.przywara@arm.com>
+Fixes: 1e1dea72651b ("ARM: dts: sun9i: cubieboard4: Add AXP809 PMIC device node and regulators")
+Link: https://patch.msgid.link/20241007222916.19013-1-andre.przywara@arm.com
+Signed-off-by: Chen-Yu Tsai <wens@csie.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-fsl-lpspi.c | 12 ++++--------
- 1 file changed, 4 insertions(+), 8 deletions(-)
+ arch/arm/boot/dts/sun9i-a80-cubieboard4.dts | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/spi/spi-fsl-lpspi.c b/drivers/spi/spi-fsl-lpspi.c
-index b9e602447eca5..246d133238822 100644
---- a/drivers/spi/spi-fsl-lpspi.c
-+++ b/drivers/spi/spi-fsl-lpspi.c
-@@ -870,7 +870,7 @@ static int fsl_lpspi_probe(struct platform_device *pdev)
- 		goto out_controller_put;
- 	}
+diff --git a/arch/arm/boot/dts/sun9i-a80-cubieboard4.dts b/arch/arm/boot/dts/sun9i-a80-cubieboard4.dts
+index c8ca8cb7f5c94..52ad95a2063aa 100644
+--- a/arch/arm/boot/dts/sun9i-a80-cubieboard4.dts
++++ b/arch/arm/boot/dts/sun9i-a80-cubieboard4.dts
+@@ -280,8 +280,8 @@ reg_dcdc4: dcdc4 {
  
--	ret = devm_request_irq(&pdev->dev, irq, fsl_lpspi_isr, 0,
-+	ret = devm_request_irq(&pdev->dev, irq, fsl_lpspi_isr, IRQF_NO_AUTOEN,
- 			       dev_name(&pdev->dev), fsl_lpspi);
- 	if (ret) {
- 		dev_err(&pdev->dev, "can't get irq%d: %d\n", irq, ret);
-@@ -907,14 +907,10 @@ static int fsl_lpspi_probe(struct platform_device *pdev)
- 	ret = fsl_lpspi_dma_init(&pdev->dev, fsl_lpspi, controller);
- 	if (ret == -EPROBE_DEFER)
- 		goto out_pm_get;
--	if (ret < 0)
-+	if (ret < 0) {
- 		dev_warn(&pdev->dev, "dma setup error %d, use pio\n", ret);
--	else
--		/*
--		 * disable LPSPI module IRQ when enable DMA mode successfully,
--		 * to prevent the unexpected LPSPI module IRQ events.
--		 */
--		disable_irq(irq);
-+		enable_irq(irq);
-+	}
+ 			reg_dcdc5: dcdc5 {
+ 				regulator-always-on;
+-				regulator-min-microvolt = <1425000>;
+-				regulator-max-microvolt = <1575000>;
++				regulator-min-microvolt = <1450000>;
++				regulator-max-microvolt = <1550000>;
+ 				regulator-name = "vcc-dram";
+ 			};
  
- 	ret = devm_spi_register_controller(&pdev->dev, controller);
- 	if (ret < 0) {
 -- 
 2.43.0
 
