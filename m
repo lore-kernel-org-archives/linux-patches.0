@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4C972F44;
-	Thu, 12 Dec 2024 17:07:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D94E9222D4A;
+	Thu, 12 Dec 2024 17:07:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734023268; cv=none; b=dsN2oIfDRebH3xFR1IgTZ24wjZfG4tGqpZvETjEjm+Ju4GTLCUGaN/y4rLM54kD6/8Wr3FhCMYv0SOfpUUjxfJthaweKzY7eRJ/gUJxjPgWPILCV0zb1PQwJoBO5fCYGlyS+GIUkHvkVAVTke+P7VcfLoDXfTsZPTxFIw0gzXso=
+	t=1734023271; cv=none; b=rVKrrrYjpRk9WRZ72cGDEmtZrwzO/i+45ROdBYO9uxDgilMSktXTO03Nj4VTqWQqMh1AwFleamINa9I3l5zGhj5yF7SHCB7FZGeCDl+3ki7nuSKHvOO1x/C2JKGPWQ08KurYqihDzV+hiPDgM5EAEOZRRmdNZOULrt8+H7yaf2g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734023268; c=relaxed/simple;
-	bh=Qr0Sn5LAJiNTUPV/T4Ba8VpSJ3yuz+Z3NG/5/q5lMzc=;
+	s=arc-20240116; t=1734023271; c=relaxed/simple;
+	bh=QPkyRhBvoLowvRx7sQkNLxpD29QxGH/c4RuGPbIFSPQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=juwR7xeWxjxvXLLSKhSpyH4cqGfwt5xdhTG+q/dh3uFScWP2nYgZOKDsUgSePic6MZgObHi46TKb15P/7UiYlXtmEhISUN5FvlOBBnpoD4apgvXxmmTwQ7kmL96/rjQalDxj7xzHKdgDG4BTeyw/4y60WhXAotCyR43q/Sl+rwI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t2PrWAG+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=SCdlcvxAr8aw42e/Ed/kRJ9atQcQdJUfXi072yldmXVNCfS9PQSAbVzvpeWHzulWlX0XUO+PZXAv+m2Jn3lFu289rrudQqYewP77F67Mv5m6vfPdmXWXRN5RTb1aPl2ZIeat+CDs+7CbmAoC6B+wBr3rmsbbODQzsAvVIh+4mBs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dTkHEUpS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t2PrWAG+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35298C4CECE;
-	Thu, 12 Dec 2024 17:07:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dTkHEUpS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C187C4CECE;
+	Thu, 12 Dec 2024 17:07:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734023268;
-	bh=Qr0Sn5LAJiNTUPV/T4Ba8VpSJ3yuz+Z3NG/5/q5lMzc=;
+	s=korg; t=1734023271;
+	bh=QPkyRhBvoLowvRx7sQkNLxpD29QxGH/c4RuGPbIFSPQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t2PrWAG+qADTnharIn/VreFdXf0ofN/oAc2WhuG2Pt6hLwpWh9LPas//5g/jv2tf1
-	 t54sYJ0TQbiPK6bWgrr+dhm5ZnK74zsJuJJEG97/Lw3estCHO2hi9C+uxfkeoKOV5w
-	 trhjHR927f6paOcwJknFwUDTkK0zNfPPcTBXR4gQ=
+	b=dTkHEUpS6V4B/ST9p8c9c+pnJVNZ63epbBwGCs1JD4tCxz0z1m3Z8Lmb2fDyZVf3+
+	 T/4+gH3Uq+Biv0kzjHK+9IPExHVZyvDeMP+GNCVmxfCrCHtMc9wb4tiOZDsLcS+nEE
+	 LFO4KM9+4ukGIQChkZ3ZBDb5bh4JQiW7OsMVvhhE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxime Ripard <mripard@kernel.org>,
-	Dave Stevenson <dave.stevenson@raspberrypi.com>,
+	=?UTF-8?q?Joaqu=C3=ADn=20Ignacio=20Aramend=C3=ADa?= <samsagax@gmail.com>,
+	Tobias Jakobi <tjakobi@math.uni-bielefeld.de>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 477/565] drm/vc4: hvs: Set AXI panic modes for the HVS
-Date: Thu, 12 Dec 2024 16:01:12 +0100
-Message-ID: <20241212144330.609516856@linuxfoundation.org>
+Subject: [PATCH 5.15 478/565] drm: panel-orientation-quirks: Add quirk for AYA NEO 2 model
+Date: Thu, 12 Dec 2024 16:01:13 +0100
+Message-ID: <20241212144330.648840758@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144311.432886635@linuxfoundation.org>
 References: <20241212144311.432886635@linuxfoundation.org>
@@ -45,55 +47,53 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dave Stevenson <dave.stevenson@raspberrypi.com>
+From: Joaquín Ignacio Aramendía <samsagax@gmail.com>
 
-[ Upstream commit 014eccc9da7bfc76a3107fceea37dd60f1d63630 ]
+[ Upstream commit 361ebf5ef843b0aa1704c72eb26b91cf76c3c5b7 ]
 
-The HVS can change AXI request mode based on how full the COB
-FIFOs are.
-Until now the vc4 driver has been relying on the firmware to
-have set these to sensible values.
+Add quirk orientation for AYA NEO 2. The name appears without spaces in
+DMI strings. That made it difficult to reuse the 2021 match. Also the
+display is larger in resolution.
 
-With HVS channel 2 now being used for live video, change the
-panic mode for all channels to be explicitly set by the driver,
-and the same for all channels.
+Tested by the JELOS team that has been patching their own kernel for a
+while now and confirmed by users in the AYA NEO and ChimeraOS discord
+servers.
 
-Reviewed-by: Maxime Ripard <mripard@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240621152055.4180873-7-dave.stevenson@raspberrypi.com
-Signed-off-by: Dave Stevenson <dave.stevenson@raspberrypi.com>
+Signed-off-by: Joaquín Ignacio Aramendía <samsagax@gmail.com>
+Signed-off-by: Tobias Jakobi <tjakobi@math.uni-bielefeld.de>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/2b35545b77a9fd8c9699b751ca282226dcecb1dd.1726492131.git.tjakobi@math.uni-bielefeld.de
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/vc4/vc4_hvs.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/gpu/drm/drm_panel_orientation_quirks.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/gpu/drm/vc4/vc4_hvs.c b/drivers/gpu/drm/vc4/vc4_hvs.c
-index 3856ac289d380..69b2936a5f4ad 100644
---- a/drivers/gpu/drm/vc4/vc4_hvs.c
-+++ b/drivers/gpu/drm/vc4/vc4_hvs.c
-@@ -729,6 +729,17 @@ static int vc4_hvs_bind(struct device *dev, struct device *master, void *data)
- 	dispctrl |= VC4_SET_FIELD(2, SCALER_DISPCTRL_PANIC1);
- 	dispctrl |= VC4_SET_FIELD(2, SCALER_DISPCTRL_PANIC2);
- 
-+	/* Set AXI panic mode.
-+	 * VC4 panics when < 2 lines in FIFO.
-+	 * VC5 panics when less than 1 line in the FIFO.
-+	 */
-+	dispctrl &= ~(SCALER_DISPCTRL_PANIC0_MASK |
-+		      SCALER_DISPCTRL_PANIC1_MASK |
-+		      SCALER_DISPCTRL_PANIC2_MASK);
-+	dispctrl |= VC4_SET_FIELD(2, SCALER_DISPCTRL_PANIC0);
-+	dispctrl |= VC4_SET_FIELD(2, SCALER_DISPCTRL_PANIC1);
-+	dispctrl |= VC4_SET_FIELD(2, SCALER_DISPCTRL_PANIC2);
-+
- 	HVS_WRITE(SCALER_DISPCTRL, dispctrl);
- 
- 	ret = devm_request_irq(dev, platform_get_irq(pdev, 0),
+diff --git a/drivers/gpu/drm/drm_panel_orientation_quirks.c b/drivers/gpu/drm/drm_panel_orientation_quirks.c
+index f1091cb87de0c..bf90a5be956fe 100644
+--- a/drivers/gpu/drm/drm_panel_orientation_quirks.c
++++ b/drivers/gpu/drm/drm_panel_orientation_quirks.c
+@@ -166,6 +166,12 @@ static const struct dmi_system_id orientation_data[] = {
+ 		  DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "T103HAF"),
+ 		},
+ 		.driver_data = (void *)&lcd800x1280_rightside_up,
++	}, {	/* AYA NEO AYANEO 2 */
++		.matches = {
++		  DMI_EXACT_MATCH(DMI_SYS_VENDOR, "AYANEO"),
++		  DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "AYANEO 2"),
++		},
++		.driver_data = (void *)&lcd1200x1920_rightside_up,
+ 	}, {	/* AYA NEO 2021 */
+ 		.matches = {
+ 		  DMI_EXACT_MATCH(DMI_SYS_VENDOR, "AYADEVICE"),
 -- 
 2.43.0
 
