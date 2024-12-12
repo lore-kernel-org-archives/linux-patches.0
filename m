@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93A98223E62;
-	Thu, 12 Dec 2024 16:18:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F01D8223E62;
+	Thu, 12 Dec 2024 16:18:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734020321; cv=none; b=BkzdsmyMyVxB5mCxDqaba9MvUnCfmJhFkbf3gJ9Xy7DErHi4oHX2Ea1YJfov3qxJzFcgAH+iOdFy0vSHKNExjwQObdpMOkPnw2EwCHNkm3C9agJw/AufAXiIWMwzgdNtRvDLnPgP6/FX0l4ikMHmmQECeGgmRE8bKNGqbuWxsag=
+	t=1734020325; cv=none; b=IA5JjwvKBhtEEUbUt2Tdxw3OgfrJ0R4er40rJAsMqjmM3HsUZ2gSscxDOK13RuYvGlaCOK76lS/KKQ8/7iKshduSY4OKnqruwleI1zUqeTBm22LetastSzYDX9PiT0JTe2gdfEguWKPg30G94m6OIRQqlwOfezI+k1uXS5TCir4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734020321; c=relaxed/simple;
-	bh=g/kGIXYvrZDVzZxnm7273c6XuGeNY35kVzf7cimj184=;
+	s=arc-20240116; t=1734020325; c=relaxed/simple;
+	bh=PccT+95dxrx/baZTIyVjdkp5gQiY13JFdI0E4QymdO8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C8S98F6D6NqnpIYVkg5UvydSH0hCycLiVzvnJn1prh9/LQP1ZxCfWaqcG0+FKDcLG4nCSNbjWMT4FO1mvutJVjGHUMkw8P3s0WucXDDNEWouEokdxtzU9cixfb5INYRkVHrlWvBj2yaQLu2qHjev4JzWp9GQng6zyp9jTEHoykA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hUPRcWpl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WZLm/WM3CoYHDI9gsXOVPtSWEb3iGBRr59vBvxKoTRUY1fT/Q0JiH/HlpMoTonIH+LRZcT4imLHt4jJsVI6N0CIKCriPceAKhW9Hvf5MB4V2XjZCavQfkUBCkHIwEgsigszYjprqMJ6Riwy6OQJrKJxAaRhTmqUk/GRw6aME9QU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HkpDEfiC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hUPRcWpl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1F09C4CECE;
-	Thu, 12 Dec 2024 16:18:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HkpDEfiC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 662FAC4CECE;
+	Thu, 12 Dec 2024 16:18:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734020321;
-	bh=g/kGIXYvrZDVzZxnm7273c6XuGeNY35kVzf7cimj184=;
+	s=korg; t=1734020324;
+	bh=PccT+95dxrx/baZTIyVjdkp5gQiY13JFdI0E4QymdO8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hUPRcWpl2OGPrbQxDEXV10GOezpxc/gymJjHmLYrSvsr9Kse6wLhlGiHMSpEiBe5/
-	 74daFrGcJtzhSvBXg6qswP1I49gArs1kWhkWQETQk/Sz3kGwI4InfLJHItBmUyANJD
-	 exqLItA6e3GnHIAE32b0RKy0Q1bzBv4LSKc3VQrY=
+	b=HkpDEfiCysVc1L8JFDotJ9lQAdBy0FNvjcdd4CBjMNMDWw+5PfoIb670mqF+GJml6
+	 C8XHv/S5HnR4HAeFvS90HrnV/D4bokR5cp8oeAeiHsi1VkWFcA1RlviU7NLt/EHSmg
+	 8kqNeK+pmRcsOoz5QIgokIZQYGc7Bv7KjxFVJNR0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 438/772] rtc: rzn1: fix BCD to rtc_time conversion errors
-Date: Thu, 12 Dec 2024 15:56:23 +0100
-Message-ID: <20241212144408.026141667@linuxfoundation.org>
+	Ming Lei <ming.lei@redhat.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.1 421/772] ublk: fix error code for unsupported command
+Date: Thu, 12 Dec 2024 15:56:06 +0100
+Message-ID: <20241212144407.312023455@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -52,52 +50,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wolfram Sang <wsa+renesas@sang-engineering.com>
+From: Ming Lei <ming.lei@redhat.com>
 
-[ Upstream commit 55727188dfa3572aecd946e58fab9e4a64f06894 ]
+commit 34c1227035b3ab930a1ae6ab6f22fec1af8ab09e upstream.
 
-tm_mon describes months from 0 to 11, but the register contains BCD from
-1 to 12. tm_year contains years since 1900, but the BCD contains 20XX.
-Apply the offsets when converting these numbers.
+ENOTSUPP is for kernel use only, and shouldn't be sent to userspace.
 
-Fixes: deeb4b5393e1 ("rtc: rzn1: Add new RTC driver")
-Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://lore.kernel.org/r/20241113113032.27409-1-wsa+renesas@sang-engineering.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fix it by replacing it with EOPNOTSUPP.
+
+Cc: stable@vger.kernel.org
+Fixes: bfbcef036396 ("ublk_drv: move ublk_get_device_from_id into ublk_ctrl_uring_cmd")
+Signed-off-by: Ming Lei <ming.lei@redhat.com>
+Link: https://lore.kernel.org/r/20241119030646.2319030-1-ming.lei@redhat.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/rtc/rtc-rzn1.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/block/ublk_drv.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/rtc/rtc-rzn1.c b/drivers/rtc/rtc-rzn1.c
-index 0d36bc50197c1..ff094b3ce9e3c 100644
---- a/drivers/rtc/rtc-rzn1.c
-+++ b/drivers/rtc/rtc-rzn1.c
-@@ -111,8 +111,8 @@ static int rzn1_rtc_read_time(struct device *dev, struct rtc_time *tm)
- 	tm->tm_hour = bcd2bin(tm->tm_hour);
- 	tm->tm_wday = bcd2bin(tm->tm_wday);
- 	tm->tm_mday = bcd2bin(tm->tm_mday);
--	tm->tm_mon = bcd2bin(tm->tm_mon);
--	tm->tm_year = bcd2bin(tm->tm_year);
-+	tm->tm_mon = bcd2bin(tm->tm_mon) - 1;
-+	tm->tm_year = bcd2bin(tm->tm_year) + 100;
- 
- 	return 0;
- }
-@@ -128,8 +128,8 @@ static int rzn1_rtc_set_time(struct device *dev, struct rtc_time *tm)
- 	tm->tm_hour = bin2bcd(tm->tm_hour);
- 	tm->tm_wday = bin2bcd(rzn1_rtc_tm_to_wday(tm));
- 	tm->tm_mday = bin2bcd(tm->tm_mday);
--	tm->tm_mon = bin2bcd(tm->tm_mon);
--	tm->tm_year = bin2bcd(tm->tm_year);
-+	tm->tm_mon = bin2bcd(tm->tm_mon + 1);
-+	tm->tm_year = bin2bcd(tm->tm_year - 100);
- 
- 	val = readl(rtc->base + RZN1_RTC_CTL2);
- 	if (!(val & RZN1_RTC_CTL2_STOPPED)) {
--- 
-2.43.0
-
+--- a/drivers/block/ublk_drv.c
++++ b/drivers/block/ublk_drv.c
+@@ -2055,7 +2055,7 @@ static int ublk_ctrl_uring_cmd(struct io
+ 		ret = ublk_ctrl_end_recovery(ub, cmd);
+ 		break;
+ 	default:
+-		ret = -ENOTSUPP;
++		ret = -EOPNOTSUPP;
+ 		break;
+ 	}
+ 	if (ub)
 
 
