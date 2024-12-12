@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F198C13792B;
-	Thu, 12 Dec 2024 15:25:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFCE013792B;
+	Thu, 12 Dec 2024 15:26:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734017157; cv=none; b=sYBJdZvQPJyXVKcGtrUNfzpGCpWZ9477k6JDMYrgas2obZb3f4SEsR4r5kpKJIn34/vtkuUujQ1JfCuNeE54Dy7muYk2u5c2AM2uRq/dUyk22wSaPBI4rNMpJtYVz3B03cm+AY5bir7Wenwb8e/xpYTNCr3AlNprDI2V8SCs7bY=
+	t=1734017160; cv=none; b=mSsVP7xqLno0anDNrbDQ4xJ/PA/T65pzxtyguFLz1lguwehrEmUNueOZMpz4q1YgRlJX1wgE9XJjCYJnKa7ih/s76VOrkwwylmmURyJcAcJIAJIQvJo6M8yvysD2wXYHG/FkyxczWNPvylH7MnbCdLe55ovpekBSePx0s7+EwLg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734017157; c=relaxed/simple;
-	bh=h/PoRpNXDle4G/WSPSWWkzkvSRYmXBB08TGtgFzocIo=;
+	s=arc-20240116; t=1734017160; c=relaxed/simple;
+	bh=2QJbjF+6ZdLkOgShIGvqqtzeTVZQHE8mTj1PnYA4bxQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PxvN/jrT8NxzetF2nApj9b+vV2BQkxCTE8fmC24tAPAB4ZEnkhjmJWqCtFseFN8Xsj1PiDYcDFw5apjSoSoOUqZTY7LTDDUAoD0OhpcX1C18Q4rABRmX4ZlvTc33DzUohZxNggZG05XV7b4TfUJTBVamZLApWLmy7oq4BnHjlkY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IWuY/DDX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ha3JAmjqCCzA8GaqsNjSY6pgN4gkE/alfOf2Lxqak6ap85cj1Ej//YLpfhezNZAr2C5Rb6w9L8NdK+VTyyGGoZSdy9XRqze4cKBKrP92yI9FXH4Ts2bhEHA748m8lAZmrrN+d9qF1hgcO7qKMYquvxXZt6G+/vZDNNrI6nzLLNI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u4DVAAbR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IWuY/DDX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E8BCC4CECE;
-	Thu, 12 Dec 2024 15:25:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u4DVAAbR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 129DFC4CECE;
+	Thu, 12 Dec 2024 15:25:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734017156;
-	bh=h/PoRpNXDle4G/WSPSWWkzkvSRYmXBB08TGtgFzocIo=;
+	s=korg; t=1734017160;
+	bh=2QJbjF+6ZdLkOgShIGvqqtzeTVZQHE8mTj1PnYA4bxQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IWuY/DDXK99v2XUPSKix+92lLBePY7h40IXPiNOX7Qhca+w4W/rNDLUyQDBaQI0/X
-	 1SGlqL9YF/A1bUYMnR49PKp6F52E2tb4g7A5WKQn6gHO3uGAsz9nDEp5mHwIQo42fR
-	 1gpLy2veR0zGxtS94uysT0h+Tz5gRKhm5uAdXFFg=
+	b=u4DVAAbRybSQAErZKLE+rhKn9zdoz1p9/D3E9a5FYxtMcogHHT60iMGCFgK4Ui4Sx
+	 hIZXDQExIrcDCYo6Nz7MmBjF+ZnuTYWLnm2SzlAKytUebrpDrgj9AqIfc4K1XFX/cV
+	 O/+Fm8I2yV/QariBwm+vFI/axxENs+vlZEWFDRh8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Defa Li <defa.li@mediatek.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 399/466] i3c: Use i3cdev->desc->info instead of calling i3c_device_get_info() to avoid deadlock
-Date: Thu, 12 Dec 2024 15:59:28 +0100
-Message-ID: <20241212144322.524053303@linuxfoundation.org>
+Subject: [PATCH 6.12 400/466] f2fs: print message if fscorrupted was found in f2fs_new_node_page()
+Date: Thu, 12 Dec 2024 15:59:29 +0100
+Message-ID: <20241212144322.561872873@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144306.641051666@linuxfoundation.org>
 References: <20241212144306.641051666@linuxfoundation.org>
@@ -51,110 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Defa Li <defa.li@mediatek.com>
+From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit 6cf7b65f7029914dc0cd7db86fac9ee5159008c6 ]
+[ Upstream commit 81520c684ca67aea6a589461a3caebb9b11dcc90 ]
 
-A deadlock may happen since the i3c_master_register() acquires
-&i3cbus->lock twice. See the log below.
-Use i3cdev->desc->info instead of calling i3c_device_info() to
-avoid acquiring the lock twice.
+If fs corruption occurs in f2fs_new_node_page(), let's print
+more information about corrupted metadata into kernel log.
 
-v2:
-  - Modified the title and commit message
+Meanwhile, it updates to record ERROR_INCONSISTENT_NAT instead
+of ERROR_INVALID_BLKADDR if blkaddr in nat entry is not
+NULL_ADDR which means nat bitmap and nat entry is inconsistent.
 
-============================================
-WARNING: possible recursive locking detected
-6.11.0-mainline
---------------------------------------------
-init/1 is trying to acquire lock:
-f1ffff80a6a40dc0 (&i3cbus->lock){++++}-{3:3}, at: i3c_bus_normaluse_lock
-
-but task is already holding lock:
-f1ffff80a6a40dc0 (&i3cbus->lock){++++}-{3:3}, at: i3c_master_register
-
-other info that might help us debug this:
- Possible unsafe locking scenario:
-
-       CPU0
-       ----
-  lock(&i3cbus->lock);
-  lock(&i3cbus->lock);
-
- *** DEADLOCK ***
-
- May be due to missing lock nesting notation
-
-2 locks held by init/1:
- #0: fcffff809b6798f8 (&dev->mutex){....}-{3:3}, at: __driver_attach
- #1: f1ffff80a6a40dc0 (&i3cbus->lock){++++}-{3:3}, at: i3c_master_register
-
-stack backtrace:
-CPU: 6 UID: 0 PID: 1 Comm: init
-Call trace:
- dump_backtrace+0xfc/0x17c
- show_stack+0x18/0x28
- dump_stack_lvl+0x40/0xc0
- dump_stack+0x18/0x24
- print_deadlock_bug+0x388/0x390
- __lock_acquire+0x18bc/0x32ec
- lock_acquire+0x134/0x2b0
- down_read+0x50/0x19c
- i3c_bus_normaluse_lock+0x14/0x24
- i3c_device_get_info+0x24/0x58
- i3c_device_uevent+0x34/0xa4
- dev_uevent+0x310/0x384
- kobject_uevent_env+0x244/0x414
- kobject_uevent+0x14/0x20
- device_add+0x278/0x460
- device_register+0x20/0x34
- i3c_master_register_new_i3c_devs+0x78/0x154
- i3c_master_register+0x6a0/0x6d4
- mtk_i3c_master_probe+0x3b8/0x4d8
- platform_probe+0xa0/0xe0
- really_probe+0x114/0x454
- __driver_probe_device+0xa0/0x15c
- driver_probe_device+0x3c/0x1ac
- __driver_attach+0xc4/0x1f0
- bus_for_each_dev+0x104/0x160
- driver_attach+0x24/0x34
- bus_add_driver+0x14c/0x294
- driver_register+0x68/0x104
- __platform_driver_register+0x20/0x30
- init_module+0x20/0xfe4
- do_one_initcall+0x184/0x464
- do_init_module+0x58/0x1ec
- load_module+0xefc/0x10c8
- __arm64_sys_finit_module+0x238/0x33c
- invoke_syscall+0x58/0x10c
- el0_svc_common+0xa8/0xdc
- do_el0_svc+0x1c/0x28
- el0_svc+0x50/0xac
- el0t_64_sync_handler+0x70/0xbc
- el0t_64_sync+0x1a8/0x1ac
-
-Signed-off-by: Defa Li <defa.li@mediatek.com>
-Link: https://lore.kernel.org/r/20241107132549.25439-1-defa.li@mediatek.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Signed-off-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i3c/master.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/f2fs/node.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/i3c/master.c b/drivers/i3c/master.c
-index 770908cff2434..42310c9a00c2d 100644
---- a/drivers/i3c/master.c
-+++ b/drivers/i3c/master.c
-@@ -282,7 +282,8 @@ static int i3c_device_uevent(const struct device *dev, struct kobj_uevent_env *e
- 	struct i3c_device_info devinfo;
- 	u16 manuf, part, ext;
- 
--	i3c_device_get_info(i3cdev, &devinfo);
-+	if (i3cdev->desc)
-+		devinfo = i3cdev->desc->info;
- 	manuf = I3C_PID_MANUF_ID(devinfo.pid);
- 	part = I3C_PID_PART_ID(devinfo.pid);
- 	ext = I3C_PID_EXTRA_INFO(devinfo.pid);
+diff --git a/fs/f2fs/node.c b/fs/f2fs/node.c
+index af36c6d6542b8..4d7b9fd6ef31a 100644
+--- a/fs/f2fs/node.c
++++ b/fs/f2fs/node.c
+@@ -1341,7 +1341,12 @@ struct page *f2fs_new_node_page(struct dnode_of_data *dn, unsigned int ofs)
+ 		err = -EFSCORRUPTED;
+ 		dec_valid_node_count(sbi, dn->inode, !ofs);
+ 		set_sbi_flag(sbi, SBI_NEED_FSCK);
+-		f2fs_handle_error(sbi, ERROR_INVALID_BLKADDR);
++		f2fs_warn_ratelimited(sbi,
++			"f2fs_new_node_page: inconsistent nat entry, "
++			"ino:%u, nid:%u, blkaddr:%u, ver:%u, flag:%u",
++			new_ni.ino, new_ni.nid, new_ni.blk_addr,
++			new_ni.version, new_ni.flag);
++		f2fs_handle_error(sbi, ERROR_INCONSISTENT_NAT);
+ 		goto fail;
+ 	}
+ #endif
 -- 
 2.43.0
 
