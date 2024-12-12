@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A106223C5E;
-	Thu, 12 Dec 2024 16:53:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7A94223C5E;
+	Thu, 12 Dec 2024 16:53:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734022420; cv=none; b=sAdwHnN3OVxSnHrTdbt9PZ1+4q/vEkYS3h0cc6zAFg2boFr7WpqZKuJHrj7fnxeDE6sLUKV/fE0Uptou7wjCPpk3W7EeJk66nLpQ9HWc+rve1gOsD2074z71Nkj8gQbmWdSghcQaaGq6dL8dobSz6Or8iVArpOkes6/TQeD6z+8=
+	t=1734022423; cv=none; b=VY3ckUj2J74s79W+lCPK/bKjlYAcAj+iIFJbti6SkMP0R3VdtZWEhXJvKPtQIQrde6p7wzzeCpsf9VSbzf9EqnWCuC/r1Y0o2hH+S6DMQWX0iQY0ctVwH4UrLO27WCQujHji+VJieEZA0eGYbm26x3nACkXOuPeLARQ294YffSE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734022420; c=relaxed/simple;
-	bh=ds5W2oOkguem4g1A6muxtJXqcD/X8y+IGep99baELgM=;
+	s=arc-20240116; t=1734022423; c=relaxed/simple;
+	bh=wYWB6s1jcPEvv0m5TMb+AlO8UExbr45tbzr0STxI7Q8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YSRVMjZNdqOkYGKSytspV4llgSfT9iwnWPcZSVqtSuMMEt1/KQvS8/7qc9O1UeHaaOARmTYC+qErzeslI6RLPaVtxfJfz6MpIDZ3/S9dIIJFjKsx2oORzBRwUxmAxj8L3iPNHh07QlaRvuGdGAo+nEdhLOK8Ek6jwvCDPUlLirM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1Gx1uZqZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IJsIdyf//1OWBB36IUomc+mkfqzozkzoSDoYtOVMN+uEtt8MkK1+wSNBaUWGRosxlZzq9yVQl/N1dUiqq6U4subpeuOX7kR5GlmFbb0xDnbUoeaXUIL5jvCEPrANhOfCZftEaCMpIILN0AKVmaQn974goz/11IyCAbAtV5+OyQU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vKy+akWw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1Gx1uZqZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E148C4CECE;
-	Thu, 12 Dec 2024 16:53:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vKy+akWw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30DFAC4CECE;
+	Thu, 12 Dec 2024 16:53:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734022420;
-	bh=ds5W2oOkguem4g1A6muxtJXqcD/X8y+IGep99baELgM=;
+	s=korg; t=1734022423;
+	bh=wYWB6s1jcPEvv0m5TMb+AlO8UExbr45tbzr0STxI7Q8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1Gx1uZqZF/8wgLcGOIZa3st58JPiVOukHlIYJzy0yRL4vA29mSZGf/1FG7POI2LcY
-	 XTxm9YrgVMNjIhZcgu5sJ/xys/rSLo7F3HY7ZRZQdYOaMWvTnV2IHbmdDZqpi6b3Pz
-	 KPkXRyC7FjxOZbsBsEDYA00wuJDoVpSBNS6V7xzo=
+	b=vKy+akWwnrDeBRLKwrqskpY713omCXCYREJ4NqrZQQ2pxjA6l0M1Nv5W7BDePZpKO
+	 iJvtHqLJ+Y5LEOLrWbV7Rq1H24vnNlEhAcocl1goyTAw5xwVq+CfvE+psIaLSrOt7x
+	 2MWG5w35bnt5tFhCXjTCwNLgDnHrxG2/4iBZw778=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhen Lei <thunder.leizhen@huawei.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Helge Deller <deller@gmx.de>,
+	Nuno Sa <nuno.sa@analog.com>,
+	Conor Dooley <conor.dooley@microchip.com>,
+	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 236/565] fbdev: sh7760fb: Fix a possible memory leak in sh7760fb_alloc_mem()
-Date: Thu, 12 Dec 2024 15:57:11 +0100
-Message-ID: <20241212144320.811973524@linuxfoundation.org>
+Subject: [PATCH 5.15 237/565] dt-bindings: clock: axi-clkgen: include AXI clk
+Date: Thu, 12 Dec 2024 15:57:12 +0100
+Message-ID: <20241212144320.851197366@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144311.432886635@linuxfoundation.org>
 References: <20241212144311.432886635@linuxfoundation.org>
@@ -52,41 +52,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhen Lei <thunder.leizhen@huawei.com>
+From: Nuno Sa <nuno.sa@analog.com>
 
-[ Upstream commit f89d17ae2ac42931be2a0153fecbf8533280c927 ]
+[ Upstream commit 47f3f5a82a31527e027929c5cec3dd1ef5ef30f5 ]
 
-When information such as info->screen_base is not ready, calling
-sh7760fb_free_mem() does not release memory correctly. Call
-dma_free_coherent() instead.
+In order to access the registers of the HW, we need to make sure that
+the AXI bus clock is enabled. Hence let's increase the number of clocks
+by one and add clock-names to differentiate between parent clocks and
+the bus clock.
 
-Fixes: 4a25e41831ee ("video: sh7760fb: SH7760/SH7763 LCDC framebuffer driver")
-Signed-off-by: Zhen Lei <thunder.leizhen@huawei.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Fixes: 0e646c52cf0e ("clk: Add axi-clkgen driver")
+Signed-off-by: Nuno Sa <nuno.sa@analog.com>
+Link: https://lore.kernel.org/r/20241029-axi-clkgen-fix-axiclk-v2-1-bc5e0733ad76@analog.com
+Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/sh7760fb.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ .../bindings/clock/adi,axi-clkgen.yaml        | 22 +++++++++++++++----
+ 1 file changed, 18 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/video/fbdev/sh7760fb.c b/drivers/video/fbdev/sh7760fb.c
-index 6adf048c1bae8..62e28d315d815 100644
---- a/drivers/video/fbdev/sh7760fb.c
-+++ b/drivers/video/fbdev/sh7760fb.c
-@@ -409,12 +409,11 @@ static int sh7760fb_alloc_mem(struct fb_info *info)
- 		vram = PAGE_SIZE;
+diff --git a/Documentation/devicetree/bindings/clock/adi,axi-clkgen.yaml b/Documentation/devicetree/bindings/clock/adi,axi-clkgen.yaml
+index 983033fe5b177..592285f616f57 100644
+--- a/Documentation/devicetree/bindings/clock/adi,axi-clkgen.yaml
++++ b/Documentation/devicetree/bindings/clock/adi,axi-clkgen.yaml
+@@ -26,9 +26,21 @@ properties:
+     description:
+       Specifies the reference clock(s) from which the output frequency is
+       derived. This must either reference one clock if only the first clock
+-      input is connected or two if both clock inputs are connected.
+-    minItems: 1
+-    maxItems: 2
++      input is connected or two if both clock inputs are connected. The last
++      clock is the AXI bus clock that needs to be enabled so we can access the
++      core registers.
++    minItems: 2
++    maxItems: 3
++
++  clock-names:
++    oneOf:
++      - items:
++          - const: clkin1
++          - const: s_axi_aclk
++      - items:
++          - const: clkin1
++          - const: clkin2
++          - const: s_axi_aclk
  
- 	fbmem = dma_alloc_coherent(info->device, vram, &par->fbdma, GFP_KERNEL);
--
- 	if (!fbmem)
- 		return -ENOMEM;
+   '#clock-cells':
+     const: 0
+@@ -40,6 +52,7 @@ required:
+   - compatible
+   - reg
+   - clocks
++  - clock-names
+   - '#clock-cells'
  
- 	if ((par->fbdma & SH7760FB_DMA_MASK) != SH7760FB_DMA_MASK) {
--		sh7760fb_free_mem(info);
-+		dma_free_coherent(info->device, vram, fbmem, par->fbdma);
- 		dev_err(info->device, "kernel gave me memory at 0x%08lx, which is"
- 			"unusable for the LCDC\n", (unsigned long)par->fbdma);
- 		return -ENOMEM;
+ additionalProperties: false
+@@ -50,5 +63,6 @@ examples:
+       compatible = "adi,axi-clkgen-2.00.a";
+       #clock-cells = <0>;
+       reg = <0xff000000 0x1000>;
+-      clocks = <&osc 1>;
++      clocks = <&osc 1>, <&clkc 15>;
++      clock-names = "clkin1", "s_axi_aclk";
+     };
 -- 
 2.43.0
 
