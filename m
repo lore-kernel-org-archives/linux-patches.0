@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BAF51547F0;
-	Thu, 12 Dec 2024 15:43:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 992FF222D65;
+	Thu, 12 Dec 2024 15:43:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734018204; cv=none; b=hMs8eS99hHsCW7NcC1d/jrZEONhYD6qgaPvzPI8O0OUrGaVTIUcNv+G07a6UJzqKXRN6hEFDzzQu3/R3Tw6mUjFu+Ik8AvZNRmsCNhXrkUow+LyG60rtbWEF7b692PHt5n6nvvFgVHexup8/voFwI1ID7BNVkOMmJu5eoYN9iBs=
+	t=1734018207; cv=none; b=sYdq6qIme9SXYYZWaY6AgdsHwbQBOfDAdLEAV8d9CzjLm2RwByQhAlrgF9I5aIOqwoTu2oLwIG6EnOIQ1BcW3qQR+wdAq0k8um3p7cLdHaKouIkOPVh6ekhVB56Iz1O5G+TPffUlxEHix1Ft5QmwGZCc9g9rjCZifLOfq2NgdQo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734018204; c=relaxed/simple;
-	bh=SgEtKWQa3Q/0HLnB9OUxee6wRevaRy7cjSSVa2xuQqk=;
+	s=arc-20240116; t=1734018207; c=relaxed/simple;
+	bh=CNJvhRCi0JpVgZYknR90CACYTPsw2ObyzOBHQIrlzKw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Dtx3Na47fZu7YJ/F34ikt2DAw9xuzNrzMT6PePt4b4DS29Wz/RpnevP0Z3ebfPoXG8+FKZwZyR5+w8erzlUeQpn+wtz2qga388VL5Wa4N3QdzNmVm9WKCF0+OMnS1Ny6LMCLwpS7ua20qPYZv4HZfRD5kVGPAjfMxigUaLp4Q2U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OAdmSXK+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Gs+uJQtriSghQrTnDTugCI8rfrTFovTb/BdViIeWRra39ETIS68JTPx+bP+dDvhi/2X2mxtyEkBmU/4BbglREekIT/KNDT4oApl2J2QT1Qm4g8hNxg+mxlyAy90gmQhdXpUsPnTjZqASLWTYpygHxaeqY6zEXItPJiHck6VsSaY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rOa1n6bU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OAdmSXK+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8442AC4CECE;
-	Thu, 12 Dec 2024 15:43:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rOa1n6bU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 082CAC4CECE;
+	Thu, 12 Dec 2024 15:43:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734018203;
-	bh=SgEtKWQa3Q/0HLnB9OUxee6wRevaRy7cjSSVa2xuQqk=;
+	s=korg; t=1734018207;
+	bh=CNJvhRCi0JpVgZYknR90CACYTPsw2ObyzOBHQIrlzKw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OAdmSXK+W50a+Pfe43AVaEzkKUYGRPgMnYwDdGPcLUmat/HqQoUNExcJ4k24HRQNR
-	 mAf1j2z/zMPAvJRjlwzXmFlb8SQgITMSpYtwo9Mdc+NFIFyr1bLvs3UiHQXCk/SJyi
-	 kCuD9UiMmcj/c2GNEZE3CrTPlauEsG6ekhjFrSng=
+	b=rOa1n6bUpPq1gyCJ7uHZNX9mMCqFhhuCpn8TrETpxJ7wiZxYExOd7gyjBby0gtjJX
+	 Tq8cdI9XcqItlP2eGhRsszARJwbLBSMGEbxehZSZu9aixUSK3IsMh/NPh85/gPQHT+
+	 oQAwuSWqeA+yBAmhAps9FkSiCVyQPpAqDk8mbuVk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Hutterer <peter.hutterer@who-t.net>,
-	Benjamin Tissoires <bentiss@kernel.org>,
+	Dmitry Perchanov <dmitry.perchanov@intel.com>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 196/356] HID: add per device quirk to force bind to hid-generic
-Date: Thu, 12 Dec 2024 15:58:35 +0100
-Message-ID: <20241212144252.366959027@linuxfoundation.org>
+Subject: [PATCH 6.6 197/356] media: uvcvideo: RealSense D421 Depth module metadata
+Date: Thu, 12 Dec 2024 15:58:36 +0100
+Message-ID: <20241212144252.406613205@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144244.601729511@linuxfoundation.org>
 References: <20241212144244.601729511@linuxfoundation.org>
@@ -51,78 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Tissoires <bentiss@kernel.org>
+From: Dmitry Perchanov <dmitry.perchanov@intel.com>
 
-[ Upstream commit 645c224ac5f6e0013931c342ea707b398d24d410 ]
+[ Upstream commit c6104297c965a5ee9d4b9d0d5d9cdd224d8fd59e ]
 
-We already have the possibility to force not binding to hid-generic and
-rely on a dedicated driver, but we couldn't do the other way around.
+RealSense(R) D421 Depth module is low cost solution for 3D-stereo
+vision. The module supports extended sensor metadata format D4XX.
 
-This is useful for BPF programs where we are fixing the report descriptor
-and the events, but want to avoid a specialized driver to come after BPF
-which would unwind everything that is done there.
-
-Reviewed-by: Peter Hutterer <peter.hutterer@who-t.net>
-Link: https://patch.msgid.link/20241001-hid-bpf-hid-generic-v3-8-2ef1019468df@kernel.org
-Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
+Signed-off-by: Dmitry Perchanov <dmitry.perchanov@intel.com>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Link: https://lore.kernel.org/r/d1fbfbbff5c8247a3130499985a53218c5b55c61.camel@intel.com
+Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-core.c    | 5 +++--
- drivers/hid/hid-generic.c | 3 +++
- include/linux/hid.h       | 2 ++
- 3 files changed, 8 insertions(+), 2 deletions(-)
+ drivers/media/usb/uvc/uvc_driver.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/hid/hid-core.c b/drivers/hid/hid-core.c
-index 1467c5a732db4..558f3988fb2cf 100644
---- a/drivers/hid/hid-core.c
-+++ b/drivers/hid/hid-core.c
-@@ -2607,9 +2607,10 @@ static bool hid_check_device_match(struct hid_device *hdev,
- 	/*
- 	 * hid-generic implements .match(), so we must be dealing with a
- 	 * different HID driver here, and can simply check if
--	 * hid_ignore_special_drivers is set or not.
-+	 * hid_ignore_special_drivers or HID_QUIRK_IGNORE_SPECIAL_DRIVER
-+	 * are set or not.
- 	 */
--	return !hid_ignore_special_drivers;
-+	return !hid_ignore_special_drivers && !(hdev->quirks & HID_QUIRK_IGNORE_SPECIAL_DRIVER);
- }
- 
- static int __hid_device_probe(struct hid_device *hdev, struct hid_driver *hdrv)
-diff --git a/drivers/hid/hid-generic.c b/drivers/hid/hid-generic.c
-index f9db991d3c5a2..88882c1bfffe7 100644
---- a/drivers/hid/hid-generic.c
-+++ b/drivers/hid/hid-generic.c
-@@ -40,6 +40,9 @@ static bool hid_generic_match(struct hid_device *hdev,
- 	if (ignore_special_driver)
- 		return true;
- 
-+	if (hdev->quirks & HID_QUIRK_IGNORE_SPECIAL_DRIVER)
-+		return true;
-+
- 	if (hdev->quirks & HID_QUIRK_HAVE_SPECIAL_DRIVER)
- 		return false;
- 
-diff --git a/include/linux/hid.h b/include/linux/hid.h
-index 3b08a29572298..af55a25db91b0 100644
---- a/include/linux/hid.h
-+++ b/include/linux/hid.h
-@@ -359,6 +359,7 @@ struct hid_item {
-  * | @HID_QUIRK_NO_OUTPUT_REPORTS_ON_INTR_EP:
-  * | @HID_QUIRK_HAVE_SPECIAL_DRIVER:
-  * | @HID_QUIRK_INCREMENT_USAGE_ON_DUPLICATE:
-+ * | @HID_QUIRK_IGNORE_SPECIAL_DRIVER
-  * | @HID_QUIRK_FULLSPEED_INTERVAL:
-  * | @HID_QUIRK_NO_INIT_REPORTS:
-  * | @HID_QUIRK_NO_IGNORE:
-@@ -384,6 +385,7 @@ struct hid_item {
- #define HID_QUIRK_HAVE_SPECIAL_DRIVER		BIT(19)
- #define HID_QUIRK_INCREMENT_USAGE_ON_DUPLICATE	BIT(20)
- #define HID_QUIRK_NOINVERT			BIT(21)
-+#define HID_QUIRK_IGNORE_SPECIAL_DRIVER		BIT(22)
- #define HID_QUIRK_FULLSPEED_INTERVAL		BIT(28)
- #define HID_QUIRK_NO_INIT_REPORTS		BIT(29)
- #define HID_QUIRK_NO_IGNORE			BIT(30)
+diff --git a/drivers/media/usb/uvc/uvc_driver.c b/drivers/media/usb/uvc/uvc_driver.c
+index 1385cbf462d17..f85cbe56a679a 100644
+--- a/drivers/media/usb/uvc/uvc_driver.c
++++ b/drivers/media/usb/uvc/uvc_driver.c
+@@ -3229,6 +3229,15 @@ static const struct usb_device_id uvc_ids[] = {
+ 	  .bInterfaceSubClass	= 1,
+ 	  .bInterfaceProtocol	= 0,
+ 	  .driver_info		= UVC_INFO_META(V4L2_META_FMT_D4XX) },
++	/* Intel D421 Depth Module */
++	{ .match_flags		= USB_DEVICE_ID_MATCH_DEVICE
++				| USB_DEVICE_ID_MATCH_INT_INFO,
++	  .idVendor		= 0x8086,
++	  .idProduct		= 0x1155,
++	  .bInterfaceClass	= USB_CLASS_VIDEO,
++	  .bInterfaceSubClass	= 1,
++	  .bInterfaceProtocol	= 0,
++	  .driver_info		= UVC_INFO_META(V4L2_META_FMT_D4XX) },
+ 	/* Generic USB Video Class */
+ 	{ USB_INTERFACE_INFO(USB_CLASS_VIDEO, 1, UVC_PC_PROTOCOL_UNDEFINED) },
+ 	{ USB_INTERFACE_INFO(USB_CLASS_VIDEO, 1, UVC_PC_PROTOCOL_15) },
 -- 
 2.43.0
 
