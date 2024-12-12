@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 698BE22333E;
-	Thu, 12 Dec 2024 16:57:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97B8A22333E;
+	Thu, 12 Dec 2024 16:57:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734022649; cv=none; b=uwQdFn6qgQqIiGCGy+uazYhdnmSAUG6nbzrpta5y9dm8eUMFXc0MwHpUdARlbcQZw5qpDvXOeQ+QSHnyXRokPW+XOMTyJnoYUleP6yY7nBvDDNm2CoMsiq5OKsL1y340kszE7vVkVX65Qx3Yt8RwUwbsl9sK6P4N4lTgfF5aguw=
+	t=1734022652; cv=none; b=hggOktR3l8rhUA7Prv0b+fcH1vCnimAdgo9wcHptCD7JNMTpOc7uLGSPFWowv4MMfofT/Qk373NDzFIr8HaL59u7CJGnxXzoJgm1X6nKuWRy6Ww1X080To1gjh3ptTu+bBvgw2EY0h7XwitYvMXE2gFzqjPgO8Y5xvPUg+mA3wo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734022649; c=relaxed/simple;
-	bh=z5raXxXZR1+7KYOAYku4RvGdix8UCe3cJJ330Zc5Hvo=;
+	s=arc-20240116; t=1734022652; c=relaxed/simple;
+	bh=8IFiFRfat3al7HB9c2cgMOH3wcGPSvQQzXH/7y2Cj0Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=MgMACWXw62r9LYmhJvnI7s2Is+TkloOCU1UNxujruxQ2lsLh+Ke0zZ1RMGn+1Lh2x8Db4NBFb/13cJ7ZQt+qXtf3T1Z1eck3Z5wzkU1bE9b5PHZzV6c/JHFAyKE+FUNO4bU1nhUmmyedsN5KFbp6Ziz8AYgiGiTwLuHfLi0jGYg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=avuoOEFf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZuL88syHqX5LS42Nw7lVYpQGrZAq8BGehL+lji8CCA3yVX/P8UQWbTtB9a0f622jJZ+21LXKNHKgZdBLw0+fa+42ah5jQXbyZSD0rARFfFy24STnUAqgCJI+fFc5/oZ3CX/Tym8DezDky1kFEwX3t/GnOhpWXmQgJ7C0/A+PdXs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AVrLPm3w; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="avuoOEFf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DB09C4CECE;
-	Thu, 12 Dec 2024 16:57:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AVrLPm3w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10FDAC4CEDE;
+	Thu, 12 Dec 2024 16:57:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734022649;
-	bh=z5raXxXZR1+7KYOAYku4RvGdix8UCe3cJJ330Zc5Hvo=;
+	s=korg; t=1734022652;
+	bh=8IFiFRfat3al7HB9c2cgMOH3wcGPSvQQzXH/7y2Cj0Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=avuoOEFfwDHhNspdl7NqoGxJZNIfRUi1yeIVHMOngnLKvDYz8MdbvjRKfRZ6TMWxr
-	 D+D1Nk0PQu18ogLl4q2BYnMHuU3W1jbseCLavMmuDvgx3bJfQb1gVNj+HcOW6XiyF1
-	 FcXRb9Q2P6rSKTJvIpzWgcPBVT3pkiFQvYJIBjnA=
+	b=AVrLPm3wgsww6lDhu6PqTLSbT+auLxXcyLptAZqLItWqVbo422o8I/opp7Dbt9t73
+	 q3fkzLUTcJ+mlLwRnbJAi2xnyogWLEF5pHa9aj8+mwt2mOtjtCRI1dUqS9rOEJzwvg
+	 eUNaM2h3RwMeiUU5gZoaTmMPgBFzvd7X6zmw1vBI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Beno=C3=AEt=20Sevens?= <bsevens@google.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.15 298/565] ALSA: usb-audio: Fix out of bounds reads when finding clock sources
-Date: Thu, 12 Dec 2024 15:58:13 +0100
-Message-ID: <20241212144323.247206912@linuxfoundation.org>
+	Vitalii Mordan <mordan@ispras.ru>,
+	Alan Stern <stern@rowland.harvard.edu>
+Subject: [PATCH 5.15 299/565] usb: ehci-spear: fix call balance of sehci clk handling routines
+Date: Thu, 12 Dec 2024 15:58:14 +0100
+Message-ID: <20241212144323.286253915@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144311.432886635@linuxfoundation.org>
 References: <20241212144311.432886635@linuxfoundation.org>
@@ -44,94 +44,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Vitalii Mordan <mordan@ispras.ru>
 
-commit a3dd4d63eeb452cfb064a13862fb376ab108f6a6 upstream.
+commit 40c974826734836402abfd44efbf04f63a2cc1c1 upstream.
 
-The current USB-audio driver code doesn't check bLength of each
-descriptor at traversing for clock descriptors.  That is, when a
-device provides a bogus descriptor with a shorter bLength, the driver
-might hit out-of-bounds reads.
+If the clock sehci->clk was not enabled in spear_ehci_hcd_drv_probe,
+it should not be disabled in any path.
 
-For addressing it, this patch adds sanity checks to the validator
-functions for the clock descriptor traversal.  When the descriptor
-length is shorter than expected, it's skipped in the loop.
+Conversely, if it was enabled in spear_ehci_hcd_drv_probe, it must be disabled
+in all error paths to ensure proper cleanup.
 
-For the clock source and clock multiplier descriptors, we can just
-check bLength against the sizeof() of each descriptor type.
-OTOH, the clock selector descriptor of UAC2 and UAC3 has an array
-of bNrInPins elements and two more fields at its tail, hence those
-have to be checked in addition to the sizeof() check.
+Found by Linux Verification Center (linuxtesting.org) with Klever.
 
-Reported-by: Benoît Sevens <bsevens@google.com>
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/20241121140613.3651-1-bsevens@google.com
-Link: https://patch.msgid.link/20241125144629.20757-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 7675d6ba436f ("USB: EHCI: make ehci-spear a separate driver")
+Cc: stable@vger.kernel.org
+Signed-off-by: Vitalii Mordan <mordan@ispras.ru>
+Acked-by: Alan Stern <stern@rowland.harvard.edu>
+Link: https://lore.kernel.org/r/20241114230310.432213-1-mordan@ispras.ru
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/clock.c |   24 +++++++++++++++++++++++-
- 1 file changed, 23 insertions(+), 1 deletion(-)
+ drivers/usb/host/ehci-spear.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/sound/usb/clock.c
-+++ b/sound/usb/clock.c
-@@ -36,6 +36,12 @@ union uac23_clock_multiplier_desc {
- 	struct uac_clock_multiplier_descriptor v3;
- };
+--- a/drivers/usb/host/ehci-spear.c
++++ b/drivers/usb/host/ehci-spear.c
+@@ -108,7 +108,9 @@ static int spear_ehci_hcd_drv_probe(stru
+ 	/* registers start at offset 0x0 */
+ 	hcd_to_ehci(hcd)->caps = hcd->regs;
  
-+/* check whether the descriptor bLength has the minimal length */
-+#define DESC_LENGTH_CHECK(p, proto) \
-+	((proto) == UAC_VERSION_3 ? \
-+	 ((p)->v3.bLength >= sizeof((p)->v3)) :	\
-+	 ((p)->v2.bLength >= sizeof((p)->v2)))
-+
- #define GET_VAL(p, proto, field) \
- 	((proto) == UAC_VERSION_3 ? (p)->v3.field : (p)->v2.field)
+-	clk_prepare_enable(sehci->clk);
++	retval = clk_prepare_enable(sehci->clk);
++	if (retval)
++		goto err_put_hcd;
+ 	retval = usb_add_hcd(hcd, irq, IRQF_SHARED);
+ 	if (retval)
+ 		goto err_stop_ehci;
+@@ -133,8 +135,7 @@ static int spear_ehci_hcd_drv_remove(str
  
-@@ -58,6 +64,8 @@ static bool validate_clock_source(void *
- {
- 	union uac23_clock_source_desc *cs = p;
+ 	usb_remove_hcd(hcd);
  
-+	if (!DESC_LENGTH_CHECK(cs, proto))
-+		return false;
- 	return GET_VAL(cs, proto, bClockID) == id;
- }
+-	if (sehci->clk)
+-		clk_disable_unprepare(sehci->clk);
++	clk_disable_unprepare(sehci->clk);
+ 	usb_put_hcd(hcd);
  
-@@ -65,13 +73,27 @@ static bool validate_clock_selector(void
- {
- 	union uac23_clock_selector_desc *cs = p;
- 
--	return GET_VAL(cs, proto, bClockID) == id;
-+	if (!DESC_LENGTH_CHECK(cs, proto))
-+		return false;
-+	if (GET_VAL(cs, proto, bClockID) != id)
-+		return false;
-+	/* additional length check for baCSourceID array (in bNrInPins size)
-+	 * and two more fields (which sizes depend on the protocol)
-+	 */
-+	if (proto == UAC_VERSION_3)
-+		return cs->v3.bLength >= sizeof(cs->v3) + cs->v3.bNrInPins +
-+			4 /* bmControls */ + 2 /* wCSelectorDescrStr */;
-+	else
-+		return cs->v2.bLength >= sizeof(cs->v2) + cs->v2.bNrInPins +
-+			1 /* bmControls */ + 1 /* iClockSelector */;
- }
- 
- static bool validate_clock_multiplier(void *p, int id, int proto)
- {
- 	union uac23_clock_multiplier_desc *cs = p;
- 
-+	if (!DESC_LENGTH_CHECK(cs, proto))
-+		return false;
- 	return GET_VAL(cs, proto, bClockID) == id;
- }
- 
+ 	return 0;
 
 
