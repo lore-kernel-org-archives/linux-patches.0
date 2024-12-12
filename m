@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63AEB213E99;
-	Thu, 12 Dec 2024 15:56:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B850B226537;
+	Thu, 12 Dec 2024 15:56:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734019015; cv=none; b=Z2KMsTNg4Nx6fJGsrXMQIQKBEk6hQ03oH9tkLUAaD5vvjRUvhVB5ZYtoWXB2sOL+TSL8o1xK2PjqxKKfuov4C6555+uZXe3y2umdxBThWqs753vt8kXTLN+ENNxUK1vU1cy3V81FSL+JW5ghvsM96uNTYUjIHJh/RoWOF4YcIIc=
+	t=1734019018; cv=none; b=t3oDCfnwwITY615jg18r+j9cMc0siqusgVYn46z3/lR6cjegDO9Kux0R+80q3mai271shggo4Z3EeJjj1pDkzPltjZsMSGGOAiAcAljjfo1gEkpHtnbv7WejyIk3G9/+twHVGLN9eVsYKZSZTCnvVyT7RLyFFA8cc+mDzopjgf4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734019015; c=relaxed/simple;
-	bh=xN5vG9XQ83bDsqAB8NIJswWxAA3gjMX2qROyG2AqSMs=;
+	s=arc-20240116; t=1734019018; c=relaxed/simple;
+	bh=/e3sZ5iYMYh5Tmc3aNVXLcp+PhL0eOTf1/lXRu4c6Qg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RjSMyGsF6CQJ+bvKJKNHXm17fuxuazEUBrDHLXLvYYgNUzyqwmNsCozySuLJF83rn7FwkRfS+/YPWON6qGpsE2vsue0R8pNy2R3w+gC8mV5gpKyTAZhIeU8qUxX37deHeqa6BjiTvgpRtQTda1FsqoN8f784U/Zg3GUEu9zRMBg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zbNBw6OP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oLFhii28CEMy0wChhUio7A4eXVZYRRUoKsejyfORswHP4HDj2ZnXn9jwLbdGrcOQvg5/T3F/3R9NO1JV5IYH6QjOP2TFdGMXSYe6zkN9lmMm7Kmc9kp7je2O1AdhPz25No/sUucy8L3DSSDHQzYrr3/FLnxOxr7+4/L6YpA1mxQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pc5unsQG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zbNBw6OP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FE04C4CECE;
-	Thu, 12 Dec 2024 15:56:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pc5unsQG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FDC4C4CECE;
+	Thu, 12 Dec 2024 15:56:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734019015;
-	bh=xN5vG9XQ83bDsqAB8NIJswWxAA3gjMX2qROyG2AqSMs=;
+	s=korg; t=1734019018;
+	bh=/e3sZ5iYMYh5Tmc3aNVXLcp+PhL0eOTf1/lXRu4c6Qg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zbNBw6OPxC/tWPPgKxWLhdxuAC4WTfTlXuT82RQgkLkKrIA0HS2yYOc4I1tO7/EqD
-	 3md3t2Iu/mDDjVppzncY5hkX2/ZF9wjbPIR31vhrgrFqmyNlGzOKH/7a77CJgvxRJX
-	 skX7BTRCg3di4ZivnxukWIXdks6OHRcbuDoXr6RA=
+	b=Pc5unsQG9Aw46mrAngIc3qggsbhTgecO86SHeL5gNqfPg13SQFIOvoFoXesoGWXri
+	 +QgBPXb3jAPiJmMp0uQWXLa8wtGRyy6aqXX7N09dn6xVBHF1+o4nrmHL2rAqPgcuWC
+	 80qMjlQDSAOwYTUynk3qrTxpZXDqDTv/H619bLMU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Christoph Hellwig <hch@lst.de>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 065/772] nvme-pci: reverse request order in nvme_queue_rqs
-Date: Thu, 12 Dec 2024 15:50:10 +0100
-Message-ID: <20241212144352.627702890@linuxfoundation.org>
+Subject: [PATCH 6.1 066/772] virtio_blk: reverse request order in virtio_queue_rqs
+Date: Thu, 12 Dec 2024 15:50:11 +0100
+Message-ID: <20241212144352.668836819@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -53,86 +53,105 @@ Content-Transfer-Encoding: 8bit
 
 From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit beadf0088501d9dcf2454b05d90d5d31ea3ba55f ]
+[ Upstream commit 7f212e997edbb7a2cb85cef2ac14265dfaf88717 ]
 
 blk_mq_flush_plug_list submits requests in the reverse order that they
-were submitted, which leads to a rather suboptimal I/O pattern especially
-in rotational devices.  Fix this by rewriting nvme_queue_rqs so that it
-always pops the requests from the passed in request list, and then adds
-them to the head of a local submit list.  This actually simplifies the
-code a bit as it removes the complicated list splicing, at the cost of
-extra updates of the rq_next pointer.  As that should be cache hot
-anyway it should be an easy price to pay.
+were submitted, which leads to a rather suboptimal I/O pattern
+especially in rotational devices. Fix this by rewriting virtio_queue_rqs
+so that it always pops the requests from the passed in request list, and
+then adds them to the head of a local submit list. This actually
+simplifies the code a bit as it removes the complicated list splicing,
+at the cost of extra updates of the rq_next pointer. As that should be
+cache hot anyway it should be an easy price to pay.
 
-Fixes: d62cbcf62f2f ("nvme: add support for mq_ops->queue_rqs()")
+Fixes: 0e9911fa768f ("virtio-blk: support mq_ops->queue_rqs()")
 Signed-off-by: Christoph Hellwig <hch@lst.de>
-Link: https://lore.kernel.org/r/20241113152050.157179-2-hch@lst.de
+Link: https://lore.kernel.org/r/20241113152050.157179-3-hch@lst.de
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/pci.c | 39 +++++++++++++++++----------------------
- 1 file changed, 17 insertions(+), 22 deletions(-)
+ drivers/block/virtio_blk.c | 46 +++++++++++++++++---------------------
+ 1 file changed, 21 insertions(+), 25 deletions(-)
 
-diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
-index e09df396eb14c..fbc45b58099f9 100644
---- a/drivers/nvme/host/pci.c
-+++ b/drivers/nvme/host/pci.c
-@@ -952,9 +952,10 @@ static blk_status_t nvme_queue_rq(struct blk_mq_hw_ctx *hctx,
+diff --git a/drivers/block/virtio_blk.c b/drivers/block/virtio_blk.c
+index 505026f0025c7..28644729dc976 100644
+--- a/drivers/block/virtio_blk.c
++++ b/drivers/block/virtio_blk.c
+@@ -399,18 +399,18 @@ static bool virtblk_prep_rq_batch(struct request *req)
+ 	return virtblk_prep_rq(req->mq_hctx, vblk, req, vbr) == BLK_STS_OK;
+ }
  
- static void nvme_submit_cmds(struct nvme_queue *nvmeq, struct request **rqlist)
+-static bool virtblk_add_req_batch(struct virtio_blk_vq *vq,
++static void virtblk_add_req_batch(struct virtio_blk_vq *vq,
+ 					struct request **rqlist)
  {
 +	struct request *req;
-+
- 	spin_lock(&nvmeq->sq_lock);
+ 	unsigned long flags;
+-	int err;
+ 	bool kick;
+ 
+ 	spin_lock_irqsave(&vq->lock, flags);
+ 
 -	while (!rq_list_empty(*rqlist)) {
 -		struct request *req = rq_list_pop(rqlist);
 +	while ((req = rq_list_pop(rqlist))) {
- 		struct nvme_iod *iod = blk_mq_rq_to_pdu(req);
+ 		struct virtblk_req *vbr = blk_mq_rq_to_pdu(req);
++		int err;
  
- 		nvme_sq_copy_cmd(nvmeq, &iod->cmd);
-@@ -980,31 +981,25 @@ static bool nvme_prep_rq_batch(struct nvme_queue *nvmeq, struct request *req)
+ 		err = virtblk_add_req(vq->vq, vbr);
+ 		if (err) {
+@@ -423,37 +423,33 @@ static bool virtblk_add_req_batch(struct virtio_blk_vq *vq,
+ 	kick = virtqueue_kick_prepare(vq->vq);
+ 	spin_unlock_irqrestore(&vq->lock, flags);
  
- static void nvme_queue_rqs(struct request **rqlist)
+-	return kick;
++	if (kick)
++		virtqueue_notify(vq->vq);
+ }
+ 
+ static void virtio_queue_rqs(struct request **rqlist)
  {
 -	struct request *req, *next, *prev = NULL;
 +	struct request *submit_list = NULL;
  	struct request *requeue_list = NULL;
 +	struct request **requeue_lastp = &requeue_list;
-+	struct nvme_queue *nvmeq = NULL;
++	struct virtio_blk_vq *vq = NULL;
 +	struct request *req;
  
 -	rq_list_for_each_safe(rqlist, req, next) {
--		struct nvme_queue *nvmeq = req->mq_hctx->driver_data;
+-		struct virtio_blk_vq *vq = get_virtio_blk_vq(req->mq_hctx);
+-		bool kick;
 -
--		if (!nvme_prep_rq_batch(nvmeq, req)) {
--			/* detach 'req' and add to remainder list */
+-		if (!virtblk_prep_rq_batch(req)) {
 -			rq_list_move(rqlist, &requeue_list, req, prev);
--
 -			req = prev;
 -			if (!req)
 -				continue;
 -		}
 +	while ((req = rq_list_pop(rqlist))) {
-+		if (nvmeq && nvmeq != req->mq_hctx->driver_data)
-+			nvme_submit_cmds(nvmeq, &submit_list);
-+		nvmeq = req->mq_hctx->driver_data;
++		struct virtio_blk_vq *this_vq = get_virtio_blk_vq(req->mq_hctx);
  
 -		if (!next || req->mq_hctx != next->mq_hctx) {
--			/* detach rest of list, and submit */
 -			req->rq_next = NULL;
--			nvme_submit_cmds(nvmeq, rqlist);
+-			kick = virtblk_add_req_batch(vq, rqlist);
+-			if (kick)
+-				virtqueue_notify(vq->vq);
++		if (vq && vq != this_vq)
++			virtblk_add_req_batch(vq, &submit_list);
++		vq = this_vq;
+ 
 -			*rqlist = next;
 -			prev = NULL;
 -		} else
 -			prev = req;
-+		if (nvme_prep_rq_batch(nvmeq, req))
++		if (virtblk_prep_rq_batch(req))
 +			rq_list_add(&submit_list, req); /* reverse order */
 +		else
 +			rq_list_add_tail(&requeue_lastp, req);
  	}
  
-+	if (nvmeq)
-+		nvme_submit_cmds(nvmeq, &submit_list);
++	if (vq)
++		virtblk_add_req_batch(vq, &submit_list);
  	*rqlist = requeue_list;
  }
  
