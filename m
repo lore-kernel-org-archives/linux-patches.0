@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAB672288E1;
-	Thu, 12 Dec 2024 16:13:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56391218592;
+	Thu, 12 Dec 2024 16:13:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734020028; cv=none; b=ZQTtnPDM87f+fS6NrfoG4ImPDtaxapsAlJ6tpA829jwNUB22gFmPdM/hkVY0w52HsIHYUPElqzdYF9qtoA4kfM6DWLXySPgZcvdFaUhxJsVCjqB+vZDdW/7Ha0b6cy66yrn1K2spvfQ4NjJ8chPJODu/Ka/1ll/OYX7UegMZlpQ=
+	t=1734020032; cv=none; b=tvPAUn831KW58oNKmt6AUzzZZcRitWgW6HDijToXHa4tIIUpxoij+YEi6J4jI5yPneu3akqqMUveL8s5EV3PK9yBDYcUw2SBtDYfcJ5HA3OUbNusToDJ1cF0DopEX0UAL1pYVfWIreQTwl7OBZ2Qoc4bkeVOOyVtVc+CxVuAKeE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734020028; c=relaxed/simple;
-	bh=2Lv0FGaLzd3L9Uu7bVaZctjT8wh7teMXQeC3Xu2DdnQ=;
+	s=arc-20240116; t=1734020032; c=relaxed/simple;
+	bh=Z5OpGX3JcheUDWtVG42vW7XQG/m5U0gNjtSeuJ4s2ts=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KMWNX8U6QFg4lQDbvY02LLa1xGj/Iv+ocqJa8CGICUlx4kgc8U9gLxbf2ru0QPKsyCAWGL54GkRcoLSIYwyXoqytAO+MbRcxeo7ziHvmvw5IwU2W4qunUh9Ckq9vwXgPY3pf7DgmpeN8xpE37fdUxutJFRr6+wEqovMwzck/X2U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gKADY7kC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Jr8QgAWEMbws9Otx0H3hPji9i7VQFFiu4RvRsP79Vffjusqv+Bo1KSzchxGr+9TY5JvjHg8jjwrpM5MQbhQM9ww2PQcQd4CS6NHmC1ENlqtmQ2CJ1B9/uFdbxFtqynjk6tcv8d1mAKbjWmuoRQhWnJbO+T5vT3UN+QNIjeZEsOY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oU8i0OaU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gKADY7kC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE2FAC4CECE;
-	Thu, 12 Dec 2024 16:13:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oU8i0OaU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94EFBC4CECE;
+	Thu, 12 Dec 2024 16:13:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734020028;
-	bh=2Lv0FGaLzd3L9Uu7bVaZctjT8wh7teMXQeC3Xu2DdnQ=;
+	s=korg; t=1734020032;
+	bh=Z5OpGX3JcheUDWtVG42vW7XQG/m5U0gNjtSeuJ4s2ts=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gKADY7kCBn9F6DRkjbJhP9ylvswtX1MyCFTzBQAChjOEOkqJKF0LVbAx6kCxgzsx6
-	 OFuOK4nyzpSzs36lThmjEixp9aJAjbiEjcMbKiLfYGsyP4GOk1XYGrgF4z49pRoVVY
-	 UltCDf5yuS+h0bDqU/Lnsiu6+bWrwZDcSNCKMd/M=
+	b=oU8i0OaU47PbQoin6wHWKwSubB3DRF12chyz3aKMh3KyGe1Nn0NZRRsXkc/ht/eN+
+	 ylGQZd/9ZPLotXgq0M8lVD1fZvEawJGl11mOlYYv/PVL5g5mZ3/YwO8ftcuYnSFQOC
+	 jCirHnh50D39TqSRNhBBicFz7sOxekahj0Uri2iA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Neukum <oneukum@suse.com>,
-	syzbot+422188bce66e76020e55@syzkaller.appspotmail.com,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	Simon Horman <simon.horman@corigine.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 329/772] USB: chaoskey: fail open after removal
-Date: Thu, 12 Dec 2024 15:54:34 +0100
-Message-ID: <20241212144403.499291912@linuxfoundation.org>
+Subject: [PATCH 6.1 320/772] crypto: api - Add crypto_clone_tfm
+Date: Thu, 12 Dec 2024 15:54:25 +0100
+Message-ID: <20241212144403.123258296@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -51,144 +51,138 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Neukum <oneukum@suse.com>
+From: Herbert Xu <herbert@gondor.apana.org.au>
 
-[ Upstream commit 422dc0a4d12d0b80dd3aab3fe5943f665ba8f041 ]
+[ Upstream commit 3c3a24cb0ae46c9c45e4ce2272f84f0504831f59 ]
 
-chaoskey_open() takes the lock only to increase the
-counter of openings. That means that the mutual exclusion
-with chaoskey_disconnect() cannot prevent an increase
-of the counter and chaoskey_open() returning a success.
+This patch adds the helper crypto_clone_tfm.  The purpose is to
+allocate a tfm object with GFP_ATOMIC.  As we cannot sleep, the
+object has to be cloned from an existing tfm object.
 
-If that race is hit, chaoskey_disconnect() will happily
-free all resources associated with the device after
-it has dropped the lock, as it has read the counter
-as zero.
+This allows code paths that cannot otherwise allocate a crypto_tfm
+object to do so.  Once a new tfm has been obtained its key could
+then be changed without impacting other users.
 
-To prevent this race chaoskey_open() has to check
-the presence of the device under the lock.
-However, the current per device lock cannot be used,
-because it is a part of the data structure to be
-freed. Hence an additional global mutex is needed.
-The issue is as old as the driver.
-
-Signed-off-by: Oliver Neukum <oneukum@suse.com>
-Reported-by: syzbot+422188bce66e76020e55@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=422188bce66e76020e55
-Fixes: 66e3e591891da ("usb: Add driver for Altus Metrum ChaosKey device (v2)")
-Rule: add
-Link: https://lore.kernel.org/stable/20241002132201.552578-1-oneukum%40suse.com
-Link: https://lore.kernel.org/r/20241002132201.552578-1-oneukum@suse.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Stable-dep-of: 1465036b10be ("llc: Improve setsockopt() handling of malformed user input")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/misc/chaoskey.c | 35 ++++++++++++++++++++++++-----------
- 1 file changed, 24 insertions(+), 11 deletions(-)
+ crypto/api.c      | 59 +++++++++++++++++++++++++++++++++++++++--------
+ crypto/internal.h |  2 ++
+ 2 files changed, 52 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/usb/misc/chaoskey.c b/drivers/usb/misc/chaoskey.c
-index 87067c3d6109b..32fa7fd50c380 100644
---- a/drivers/usb/misc/chaoskey.c
-+++ b/drivers/usb/misc/chaoskey.c
-@@ -27,6 +27,8 @@ static struct usb_class_driver chaoskey_class;
- static int chaoskey_rng_read(struct hwrng *rng, void *data,
- 			     size_t max, bool wait);
+diff --git a/crypto/api.c b/crypto/api.c
+index c58774586d9fb..4308b1c8ca2ea 100644
+--- a/crypto/api.c
++++ b/crypto/api.c
+@@ -489,28 +489,44 @@ struct crypto_tfm *crypto_alloc_base(const char *alg_name, u32 type, u32 mask)
+ }
+ EXPORT_SYMBOL_GPL(crypto_alloc_base);
  
-+static DEFINE_MUTEX(chaoskey_list_lock);
+-void *crypto_create_tfm_node(struct crypto_alg *alg,
+-			const struct crypto_type *frontend,
+-			int node)
++static void *crypto_alloc_tfmmem(struct crypto_alg *alg,
++				 const struct crypto_type *frontend, int node,
++				 gfp_t gfp)
+ {
+-	char *mem;
+-	struct crypto_tfm *tfm = NULL;
++	struct crypto_tfm *tfm;
+ 	unsigned int tfmsize;
+ 	unsigned int total;
+-	int err = -ENOMEM;
++	char *mem;
+ 
+ 	tfmsize = frontend->tfmsize;
+ 	total = tfmsize + sizeof(*tfm) + frontend->extsize(alg);
+ 
+-	mem = kzalloc_node(total, GFP_KERNEL, node);
++	mem = kzalloc_node(total, gfp, node);
+ 	if (mem == NULL)
+-		goto out_err;
++		return ERR_PTR(-ENOMEM);
+ 
+ 	tfm = (struct crypto_tfm *)(mem + tfmsize);
+ 	tfm->__crt_alg = alg;
+ 	tfm->node = node;
+ 	refcount_set(&tfm->refcnt, 1);
+ 
++	return mem;
++}
 +
- #define usb_dbg(usb_if, format, arg...) \
- 	dev_dbg(&(usb_if)->dev, format, ## arg)
- 
-@@ -231,6 +233,7 @@ static void chaoskey_disconnect(struct usb_interface *interface)
- 	if (dev->hwrng_registered)
- 		hwrng_unregister(&dev->hwrng);
- 
-+	mutex_lock(&chaoskey_list_lock);
- 	usb_deregister_dev(interface, &chaoskey_class);
- 
- 	usb_set_intfdata(interface, NULL);
-@@ -245,6 +248,7 @@ static void chaoskey_disconnect(struct usb_interface *interface)
- 	} else
- 		mutex_unlock(&dev->lock);
- 
-+	mutex_unlock(&chaoskey_list_lock);
- 	usb_dbg(interface, "disconnect done");
++void *crypto_create_tfm_node(struct crypto_alg *alg,
++			     const struct crypto_type *frontend,
++			     int node)
++{
++	struct crypto_tfm *tfm;
++	char *mem;
++	int err;
++
++	mem = crypto_alloc_tfmmem(alg, frontend, node, GFP_KERNEL);
++	if (IS_ERR(mem))
++		goto out;
++
++	tfm = (struct crypto_tfm *)(mem + frontend->tfmsize);
++
+ 	err = frontend->init_tfm(tfm);
+ 	if (err)
+ 		goto out_free_tfm;
+@@ -526,13 +542,38 @@ void *crypto_create_tfm_node(struct crypto_alg *alg,
+ 	if (err == -EAGAIN)
+ 		crypto_shoot_alg(alg);
+ 	kfree(mem);
+-out_err:
+ 	mem = ERR_PTR(err);
+ out:
+ 	return mem;
  }
+ EXPORT_SYMBOL_GPL(crypto_create_tfm_node);
  
-@@ -252,6 +256,7 @@ static int chaoskey_open(struct inode *inode, struct file *file)
- {
- 	struct chaoskey *dev;
- 	struct usb_interface *interface;
-+	int rv = 0;
- 
- 	/* get the interface from minor number and driver information */
- 	interface = usb_find_interface(&chaoskey_driver, iminor(inode));
-@@ -267,18 +272,23 @@ static int chaoskey_open(struct inode *inode, struct file *file)
- 	}
- 
- 	file->private_data = dev;
-+	mutex_lock(&chaoskey_list_lock);
- 	mutex_lock(&dev->lock);
--	++dev->open;
-+	if (dev->present)
-+		++dev->open;
-+	else
-+		rv = -ENODEV;
- 	mutex_unlock(&dev->lock);
-+	mutex_unlock(&chaoskey_list_lock);
- 
--	usb_dbg(interface, "open success");
--	return 0;
-+	return rv;
- }
- 
- static int chaoskey_release(struct inode *inode, struct file *file)
- {
- 	struct chaoskey *dev = file->private_data;
- 	struct usb_interface *interface;
-+	int rv = 0;
- 
- 	if (dev == NULL)
- 		return -ENODEV;
-@@ -287,14 +297,15 @@ static int chaoskey_release(struct inode *inode, struct file *file)
- 
- 	usb_dbg(interface, "release");
- 
-+	mutex_lock(&chaoskey_list_lock);
- 	mutex_lock(&dev->lock);
- 
- 	usb_dbg(interface, "open count at release is %d", dev->open);
- 
- 	if (dev->open <= 0) {
- 		usb_dbg(interface, "invalid open count (%d)", dev->open);
--		mutex_unlock(&dev->lock);
--		return -ENODEV;
-+		rv = -ENODEV;
-+		goto bail;
- 	}
- 
- 	--dev->open;
-@@ -303,13 +314,15 @@ static int chaoskey_release(struct inode *inode, struct file *file)
- 		if (dev->open == 0) {
- 			mutex_unlock(&dev->lock);
- 			chaoskey_free(dev);
--		} else
--			mutex_unlock(&dev->lock);
--	} else
--		mutex_unlock(&dev->lock);
--
-+			goto destruction;
-+		}
++void *crypto_clone_tfm(const struct crypto_type *frontend,
++		       struct crypto_tfm *otfm)
++{
++	struct crypto_alg *alg = otfm->__crt_alg;
++	struct crypto_tfm *tfm;
++	char *mem;
++
++	mem = ERR_PTR(-ESTALE);
++	if (unlikely(!crypto_mod_get(alg)))
++		goto out;
++
++	mem = crypto_alloc_tfmmem(alg, frontend, otfm->node, GFP_ATOMIC);
++	if (IS_ERR(mem)) {
++		crypto_mod_put(alg);
++		goto out;
 +	}
-+bail:
-+	mutex_unlock(&dev->lock);
-+destruction:
-+	mutex_lock(&chaoskey_list_lock);
- 	usb_dbg(interface, "release success");
--	return 0;
-+	return rv;
- }
++
++	tfm = (struct crypto_tfm *)(mem + frontend->tfmsize);
++	tfm->crt_flags = otfm->crt_flags;
++	tfm->exit = otfm->exit;
++
++out:
++	return mem;
++}
++EXPORT_SYMBOL_GPL(crypto_clone_tfm);
++
+ struct crypto_alg *crypto_find_alg(const char *alg_name,
+ 				   const struct crypto_type *frontend,
+ 				   u32 type, u32 mask)
+diff --git a/crypto/internal.h b/crypto/internal.h
+index 521bc021c54bc..e81cd7594b35e 100644
+--- a/crypto/internal.h
++++ b/crypto/internal.h
+@@ -86,6 +86,8 @@ struct crypto_tfm *__crypto_alloc_tfm(struct crypto_alg *alg, u32 type,
+ 				      u32 mask);
+ void *crypto_create_tfm_node(struct crypto_alg *alg,
+ 			const struct crypto_type *frontend, int node);
++void *crypto_clone_tfm(const struct crypto_type *frontend,
++		       struct crypto_tfm *otfm);
  
- static void chaos_read_callback(struct urb *urb)
+ static inline void *crypto_create_tfm(struct crypto_alg *alg,
+ 			const struct crypto_type *frontend)
 -- 
 2.43.0
 
