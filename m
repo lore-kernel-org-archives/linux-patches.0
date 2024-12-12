@@ -1,38 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86312216E14;
-	Thu, 12 Dec 2024 16:54:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6AED216E14;
+	Thu, 12 Dec 2024 16:54:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734022444; cv=none; b=qMsWWVZYP6zsTQ1SCUYY1r5ya4aFTL3zwL/ZnhyodVcRaN6pX3nvRLfvlu0MfuH02q5ecpeetg/ZoAVoRoqqnmDEeos1RH6zIas42Zv9IF9FQxBy2tWAoqjAArYUGr+bG1kbd6LlullipErnmeD9BePwYphF6JYNWqZPiY2YE5k=
+	t=1734022447; cv=none; b=l3Qw+J7TMZDW1K+KtMv8KT4/q6AGOL8SofeyziyLk9x/sfG+RvJeOut8LFmHYs8ejXHEIp3JnyLNYg/TC1WtzMs+vneduMk8XG85ERHHJfhhWAUd1mHNcOaBmlM37N6iVTHp7aEqEePTzGSPtK1UX62CQtOnxiih6oNlap1IWg4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734022444; c=relaxed/simple;
-	bh=fwrOdF1q3ItXED9f9JZDdusB3cghkRFrdc1yJRI0pk8=;
+	s=arc-20240116; t=1734022447; c=relaxed/simple;
+	bh=evQ5CjMV8/CAV6hLpnZd7h9JUku/UHScOywszyjYBBo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FS2Bu0hu+4MSXbm6wKt27oIulsYnIzv0VSQqIY1Tjj/y7PRP8D+PIAuIh2dX/ezmy4JKRr1840TIT/CRQsr4zZBksDy1/FnxmHUzAw9zxW28TP2oqfSXenFfZOpyXvn1+IwCG1TT1KNKAxzBEBhUcXW0CGVKy523M5KTt48nNwk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Uk191Bw/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gwClVno06Ol4A/bYxki/eirbitaq2kNg/ouxpa2XSSBbZDoFozl30o1Q0UBVE5pEMuPzeZdVTFhxYgkkx8o6r7VjRMrl6xnfJkPAXJmQdhfeK0xlPl0Rd+DauBalwAAi3o6QAavjJEaIA6AjPP0mUPuToP/YAwvDKCf8b3HMifc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D5xwBrVK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Uk191Bw/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73531C4CECE;
-	Thu, 12 Dec 2024 16:54:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D5xwBrVK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5273C4CED3;
+	Thu, 12 Dec 2024 16:54:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734022444;
-	bh=fwrOdF1q3ItXED9f9JZDdusB3cghkRFrdc1yJRI0pk8=;
+	s=korg; t=1734022447;
+	bh=evQ5CjMV8/CAV6hLpnZd7h9JUku/UHScOywszyjYBBo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Uk191Bw/f7PZ7TL5BgQO+ACQZ+KOF4mV6hgTcrvG6V3LAHI70ba5uTbRgXqUzS+Ko
-	 nVAh5wgB3DZcrBtv7/pPoZloIeRgJlSyl2uQctGt0B4Czcyn+RKYKTNCc10QkNbpsN
-	 3Jp/nZ0emBqZmpV86HZsHHs34Gd5BBPX4xDItC3A=
+	b=D5xwBrVK4AvhOiZITTqvuFpF68+ijuS3l8bAriayITX1FPk/v5nZl8oTMOjzBr2UV
+	 oFXXe54Qtf5Ys27Moj9YiDuZQOo/gOtH6wUyOjK0hUfxl6q8gPjj55AKjirWI9fHev
+	 hCI58CXNSoXL6rZXpGCc8A5GOJUG2YmBCPkrfbUY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Todd Kjos <tkjos@google.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+	Ian Rogers <irogers@google.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	"Steinar H. Gunderson" <sesse@google.com>,
+	Alexander Lobakin <aleksander.lobakin@intel.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Kajol Jain <kjain@linux.ibm.com>,
+	Athira Rajeev <atrajeev@linux.vnet.ibm.com>,
+	Hemant Kumar <hemant@linux.vnet.ibm.com>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 242/565] PCI: Fix reset_method_store() memory leak
-Date: Thu, 12 Dec 2024 15:57:17 +0100
-Message-ID: <20241212144321.044066016@linuxfoundation.org>
+Subject: [PATCH 5.15 243/565] perf probe: Fix libdw memory leak
+Date: Thu, 12 Dec 2024 15:57:18 +0100
+Message-ID: <20241212144321.083866334@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144311.432886635@linuxfoundation.org>
 References: <20241212144311.432886635@linuxfoundation.org>
@@ -51,55 +58,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Todd Kjos <tkjos@google.com>
+From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit 2985b1844f3f3447f2d938eff1ef6762592065a5 ]
+[ Upstream commit 4585038b8e186252141ef86e9f0d8e97f11dce8d ]
 
-In reset_method_store(), a string is allocated via kstrndup() and assigned
-to the local "options". options is then used in with strsep() to find
-spaces:
+Add missing dwarf_cfi_end to free memory associated with probe_finder
+cfi_eh which is allocated and owned via a call to
+dwarf_getcfi_elf. Confusingly cfi_dbg shouldn't be freed as its memory
+is owned by the passed in debuginfo struct. Add comments to highlight
+this.
 
-  while ((name = strsep(&options, " ")) != NULL) {
+This addresses leak sanitizer issues seen in:
+tools/perf/tests/shell/test_uprobe_from_different_cu.sh
 
-If there are no remaining spaces, then options is set to NULL by strsep(),
-so the subsequent kfree(options) doesn't free the memory allocated via
-kstrndup().
-
-Fix by using a separate tmp_options to iterate with strsep() so options is
-preserved.
-
-Link: https://lore.kernel.org/r/20241001231147.3583649-1-tkjos@google.com
-Fixes: d88f521da3ef ("PCI: Allow userspace to query and set device reset mechanism")
-Signed-off-by: Todd Kjos <tkjos@google.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Fixes: 270bde1e76f4 ("perf probe: Search both .eh_frame and .debug_frame sections for probe location")
+Signed-off-by: Ian Rogers <irogers@google.com>
+Cc: David S. Miller <davem@davemloft.net>
+Cc: Steinar H. Gunderson <sesse@google.com>
+Cc: Alexander Lobakin <aleksander.lobakin@intel.com>
+Cc: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Cc: Kajol Jain <kjain@linux.ibm.com>
+Cc: Athira Rajeev <atrajeev@linux.vnet.ibm.com>
+Cc: Hemant Kumar <hemant@linux.vnet.ibm.com>
+Link: https://lore.kernel.org/r/20241016235622.52166-3-irogers@google.com
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/pci.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ tools/perf/util/probe-finder.c | 4 ++++
+ tools/perf/util/probe-finder.h | 4 ++--
+ 2 files changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pci/pci.c b/drivers/pci/pci.c
-index ee1d74f89a05f..09d1b69746602 100644
---- a/drivers/pci/pci.c
-+++ b/drivers/pci/pci.c
-@@ -5214,7 +5214,7 @@ static ssize_t reset_method_store(struct device *dev,
- 				  const char *buf, size_t count)
- {
- 	struct pci_dev *pdev = to_pci_dev(dev);
--	char *options, *name;
-+	char *options, *tmp_options, *name;
- 	int m, n;
- 	u8 reset_methods[PCI_NUM_RESET_METHODS] = { 0 };
+diff --git a/tools/perf/util/probe-finder.c b/tools/perf/util/probe-finder.c
+index 50d861a80f572..2f86103761ab2 100644
+--- a/tools/perf/util/probe-finder.c
++++ b/tools/perf/util/probe-finder.c
+@@ -1490,6 +1490,10 @@ int debuginfo__find_trace_events(struct debuginfo *dbg,
+ 	if (ret >= 0 && tf.pf.skip_empty_arg)
+ 		ret = fill_empty_trace_arg(pev, tf.tevs, tf.ntevs);
  
-@@ -5234,7 +5234,8 @@ static ssize_t reset_method_store(struct device *dev,
- 		return -ENOMEM;
++#if _ELFUTILS_PREREQ(0, 142)
++	dwarf_cfi_end(tf.pf.cfi_eh);
++#endif
++
+ 	if (ret < 0 || tf.ntevs == 0) {
+ 		for (i = 0; i < tf.ntevs; i++)
+ 			clear_probe_trace_event(&tf.tevs[i]);
+diff --git a/tools/perf/util/probe-finder.h b/tools/perf/util/probe-finder.h
+index 8bc1c80d3c1c0..1f4650b955094 100644
+--- a/tools/perf/util/probe-finder.h
++++ b/tools/perf/util/probe-finder.h
+@@ -81,9 +81,9 @@ struct probe_finder {
  
- 	n = 0;
--	while ((name = strsep(&options, " ")) != NULL) {
-+	tmp_options = options;
-+	while ((name = strsep(&tmp_options, " ")) != NULL) {
- 		if (sysfs_streq(name, ""))
- 			continue;
- 
+ 	/* For variable searching */
+ #if _ELFUTILS_PREREQ(0, 142)
+-	/* Call Frame Information from .eh_frame */
++	/* Call Frame Information from .eh_frame. Owned by this struct. */
+ 	Dwarf_CFI		*cfi_eh;
+-	/* Call Frame Information from .debug_frame */
++	/* Call Frame Information from .debug_frame. Not owned. */
+ 	Dwarf_CFI		*cfi_dbg;
+ #endif
+ 	Dwarf_Op		*fb_ops;	/* Frame base attribute */
 -- 
 2.43.0
 
