@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABB7021E0AA;
-	Thu, 12 Dec 2024 15:34:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 627231547F0;
+	Thu, 12 Dec 2024 15:35:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734017699; cv=none; b=TEXPTJDVr/xgc0mPOhnVcJ40j8a3TROJ0F67NtWL1jmRiYC5RCiJAjQ9ryB+aFLkWgT8xUeJPk9fpGhfYVA8l9YjY7cmMefM/jlnhHoQbF3frNCO1OuI/yTv+T65L+/mA/mmcyXKYBie4N3TzlbuakFCtYwou5OyQZp+fMvc9NI=
+	t=1734017703; cv=none; b=e9hzse6G0qv0HvcOmuSBtttTYhwxZ1rWCE61yFWo3l4CHZ7mrwdD1KHRmavT/z8pkFBuS5+pFuCv1XN5087vNFXB9fyDpr7goIYc+kOG0+dV4/s4HNnpg04h0wkqcpMnNST7iAqEFXMVoIhOo+/pt/JIbI614VYHvSONOKSDg3E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734017699; c=relaxed/simple;
-	bh=ugbCeKDnnJ+VuKZS7pK4HbcAFG+NSV1THlSwNyjpCnM=;
+	s=arc-20240116; t=1734017703; c=relaxed/simple;
+	bh=WC9Y1jjPRk1m8A71Rx+I1WWwj0iTqr2BjnPdIauYGOU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V6BO1dnWr3myC6hiYZ2HLMtDofenFMgdDJearSlSqTWA07GDm11wdScbdouF/t8VN7aIFUF4RiZFrcKX4U8qA/FUOg3q3lpPPb1zBynozj6Jn9dPd1z/uWDpC/RKX0wUPoafCcGfWfDU5C/llrCfl79T2e+c4kmpXYD6r391oGY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zwSXejiC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YBpziQkR4TpyLEFjpTNCKq0tIOicfzK5rVIYZKPlYJEsHrVC49SwCDmJ8NEgAVYDu1UrAfqBewxQlitmvHmCSzMlRaRZ2WDetecRT27pV2m4+hS+h3hqpml83YLfMVXLMJNIWIOr3mNz0SU8l9Q/W2/LU7fnt2sXwyk9hjFOdJs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iSvhyNwR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zwSXejiC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19D8BC4CECE;
-	Thu, 12 Dec 2024 15:34:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iSvhyNwR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAC05C4CECE;
+	Thu, 12 Dec 2024 15:35:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734017699;
-	bh=ugbCeKDnnJ+VuKZS7pK4HbcAFG+NSV1THlSwNyjpCnM=;
+	s=korg; t=1734017703;
+	bh=WC9Y1jjPRk1m8A71Rx+I1WWwj0iTqr2BjnPdIauYGOU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zwSXejiCe3rt+jh5eAGpHVi9x8BM9wkVizZeIredWakK6n3IAkeHnp5C5rs9qF8s3
-	 WKzvNLTuue1GG0JrX4gbcX5wl3bjQ/MCpe7nO/R+TP8xrtJFIfryKn6594kauC3hGP
-	 sJlcmZiawsSlmqUgC+BwCz04J3xe3N0oxqX6/NPs=
+	b=iSvhyNwR46x22zHZfS/pjL0z0cRClJ0TxCwMQX10ox5Vqij+ZVZNru91ViHZ/v+zo
+	 k9szhxzppIhp21JEOaRHIlxnxotkr+RAUYEcgPeCCnUr/M5MxOkTL3zGVYSvHiWMtG
+	 C/fRY6yLlirsywBOU5cf75lLu7iOBkPZw7qfMBiA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy-ld Lu <andy-ld.lu@mediatek.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+	Sergey Senozhatsky <senozhatsky@chromium.org>,
+	Minchan Kim <minchan@kernel.org>,
+	Dmytro Maluka <dmaluka@chromium.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 086/356] mmc: mtk-sd: Fix MMC_CAP2_CRYPTO flag setting
-Date: Thu, 12 Dec 2024 15:56:45 +0100
-Message-ID: <20241212144248.019722528@linuxfoundation.org>
+Subject: [PATCH 6.6 087/356] zram: split memory-tracking and ac-time tracking
+Date: Thu, 12 Dec 2024 15:56:46 +0100
+Message-ID: <20241212144248.058843550@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144244.601729511@linuxfoundation.org>
 References: <20241212144244.601729511@linuxfoundation.org>
@@ -51,43 +53,165 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy-ld Lu <andy-ld.lu@mediatek.com>
+From: Sergey Senozhatsky <senozhatsky@chromium.org>
 
-[ Upstream commit 2508925fb346661bad9f50b497d7ac7d0b6085d0 ]
+[ Upstream commit a7a0350583ba51d8cde6180bb51d704b89a3b29e ]
 
-Currently, the MMC_CAP2_CRYPTO flag is set by default for eMMC hosts.
-However, this flag should not be set for hosts that do not support inline
-encryption.
+ZRAM_MEMORY_TRACKING enables two features:
+- per-entry ac-time tracking
+- debugfs interface
 
-The 'crypto' clock, as described in the documentation, is used for data
-encryption and decryption. Therefore, only hosts that are configured with
-this 'crypto' clock should have the MMC_CAP2_CRYPTO flag set.
+The latter one is the reason why memory-tracking depends on DEBUG_FS,
+while the former one is used far beyond debugging these days.  Namely
+ac-time is used for fine grained writeback of idle entries (pages).
 
-Fixes: 7b438d0377fb ("mmc: mtk-sd: add Inline Crypto Engine clock control")
-Fixes: ed299eda8fbb ("mmc: mtk-sd: fix devm_clk_get_optional usage")
-Signed-off-by: Andy-ld Lu <andy-ld.lu@mediatek.com>
-Cc: stable@vger.kernel.org
-Message-ID: <20241111085039.26527-1-andy-ld.lu@mediatek.com>
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Move ac-time tracking under its own config option so that it can be
+enabled (along with writeback) on systems without DEBUG_FS.
+
+[senozhatsky@chromium.org: ifdef fixup, per Dmytro]
+  Link: https://lkml.kernel.org/r/20231117013543.540280-1-senozhatsky@chromium.org
+Link: https://lkml.kernel.org/r/20231115024223.4133148-1-senozhatsky@chromium.org
+Signed-off-by: Sergey Senozhatsky <senozhatsky@chromium.org>
+Cc: Minchan Kim <minchan@kernel.org>
+Cc: Dmytro Maluka <dmaluka@chromium.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: d37da422edb0 ("zram: clear IDLE flag in mark_idle()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/mtk-sd.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ Documentation/admin-guide/blockdev/zram.rst |  2 +-
+ drivers/block/zram/Kconfig                  | 11 ++++++++-
+ drivers/block/zram/zram_drv.c               | 27 ++++++++++-----------
+ drivers/block/zram/zram_drv.h               |  2 +-
+ 4 files changed, 25 insertions(+), 17 deletions(-)
 
-diff --git a/drivers/mmc/host/mtk-sd.c b/drivers/mmc/host/mtk-sd.c
-index c5e96a2c079e5..1896bf6746071 100644
---- a/drivers/mmc/host/mtk-sd.c
-+++ b/drivers/mmc/host/mtk-sd.c
-@@ -2712,7 +2712,8 @@ static int msdc_drv_probe(struct platform_device *pdev)
- 		host->crypto_clk = devm_clk_get_optional(&pdev->dev, "crypto");
- 		if (IS_ERR(host->crypto_clk))
- 			return PTR_ERR(host->crypto_clk);
--		mmc->caps2 |= MMC_CAP2_CRYPTO;
-+		else if (host->crypto_clk)
-+			mmc->caps2 |= MMC_CAP2_CRYPTO;
- 	}
+diff --git a/Documentation/admin-guide/blockdev/zram.rst b/Documentation/admin-guide/blockdev/zram.rst
+index e4551579cb128..ee2b0030d4168 100644
+--- a/Documentation/admin-guide/blockdev/zram.rst
++++ b/Documentation/admin-guide/blockdev/zram.rst
+@@ -328,7 +328,7 @@ as idle::
+ From now on, any pages on zram are idle pages. The idle mark
+ will be removed until someone requests access of the block.
+ IOW, unless there is access request, those pages are still idle pages.
+-Additionally, when CONFIG_ZRAM_MEMORY_TRACKING is enabled pages can be
++Additionally, when CONFIG_ZRAM_TRACK_ENTRY_ACTIME is enabled pages can be
+ marked as idle based on how long (in seconds) it's been since they were
+ last accessed::
  
- 	host->irq = platform_get_irq(pdev, 0);
+diff --git a/drivers/block/zram/Kconfig b/drivers/block/zram/Kconfig
+index 0386b7da02aa3..af201392ed52c 100644
+--- a/drivers/block/zram/Kconfig
++++ b/drivers/block/zram/Kconfig
+@@ -69,9 +69,18 @@ config ZRAM_WRITEBACK
+ 
+ 	 See Documentation/admin-guide/blockdev/zram.rst for more information.
+ 
++config ZRAM_TRACK_ENTRY_ACTIME
++	bool "Track access time of zram entries"
++	depends on ZRAM
++	help
++	  With this feature zram tracks access time of every stored
++	  entry (page), which can be used for a more fine grained IDLE
++	  pages writeback.
++
+ config ZRAM_MEMORY_TRACKING
+ 	bool "Track zRam block status"
+ 	depends on ZRAM && DEBUG_FS
++	select ZRAM_TRACK_ENTRY_ACTIME
+ 	help
+ 	  With this feature, admin can track the state of allocated blocks
+ 	  of zRAM. Admin could see the information via
+@@ -86,4 +95,4 @@ config ZRAM_MULTI_COMP
+ 	  This will enable multi-compression streams, so that ZRAM can
+ 	  re-compress pages using a potentially slower but more effective
+ 	  compression algorithm. Note, that IDLE page recompression
+-	  requires ZRAM_MEMORY_TRACKING.
++	  requires ZRAM_TRACK_ENTRY_ACTIME.
+diff --git a/drivers/block/zram/zram_drv.c b/drivers/block/zram/zram_drv.c
+index c29c471b6a182..582df13bfde94 100644
+--- a/drivers/block/zram/zram_drv.c
++++ b/drivers/block/zram/zram_drv.c
+@@ -174,6 +174,14 @@ static inline u32 zram_get_priority(struct zram *zram, u32 index)
+ 	return prio & ZRAM_COMP_PRIORITY_MASK;
+ }
+ 
++static void zram_accessed(struct zram *zram, u32 index)
++{
++	zram_clear_flag(zram, index, ZRAM_IDLE);
++#ifdef CONFIG_ZRAM_TRACK_ENTRY_ACTIME
++	zram->table[index].ac_time = ktime_get_boottime();
++#endif
++}
++
+ static inline void update_used_max(struct zram *zram,
+ 					const unsigned long pages)
+ {
+@@ -293,8 +301,9 @@ static void mark_idle(struct zram *zram, ktime_t cutoff)
+ 		zram_slot_lock(zram, index);
+ 		if (zram_allocated(zram, index) &&
+ 				!zram_test_flag(zram, index, ZRAM_UNDER_WB)) {
+-#ifdef CONFIG_ZRAM_MEMORY_TRACKING
+-			is_idle = !cutoff || ktime_after(cutoff, zram->table[index].ac_time);
++#ifdef CONFIG_ZRAM_TRACK_ENTRY_ACTIME
++			is_idle = !cutoff || ktime_after(cutoff,
++							 zram->table[index].ac_time);
+ #endif
+ 			if (is_idle)
+ 				zram_set_flag(zram, index, ZRAM_IDLE);
+@@ -317,7 +326,7 @@ static ssize_t idle_store(struct device *dev,
+ 		 */
+ 		u64 age_sec;
+ 
+-		if (IS_ENABLED(CONFIG_ZRAM_MEMORY_TRACKING) && !kstrtoull(buf, 0, &age_sec))
++		if (IS_ENABLED(CONFIG_ZRAM_TRACK_ENTRY_ACTIME) && !kstrtoull(buf, 0, &age_sec))
+ 			cutoff_time = ktime_sub(ktime_get_boottime(),
+ 					ns_to_ktime(age_sec * NSEC_PER_SEC));
+ 		else
+@@ -844,12 +853,6 @@ static void zram_debugfs_destroy(void)
+ 	debugfs_remove_recursive(zram_debugfs_root);
+ }
+ 
+-static void zram_accessed(struct zram *zram, u32 index)
+-{
+-	zram_clear_flag(zram, index, ZRAM_IDLE);
+-	zram->table[index].ac_time = ktime_get_boottime();
+-}
+-
+ static ssize_t read_block_state(struct file *file, char __user *buf,
+ 				size_t count, loff_t *ppos)
+ {
+@@ -933,10 +936,6 @@ static void zram_debugfs_unregister(struct zram *zram)
+ #else
+ static void zram_debugfs_create(void) {};
+ static void zram_debugfs_destroy(void) {};
+-static void zram_accessed(struct zram *zram, u32 index)
+-{
+-	zram_clear_flag(zram, index, ZRAM_IDLE);
+-};
+ static void zram_debugfs_register(struct zram *zram) {};
+ static void zram_debugfs_unregister(struct zram *zram) {};
+ #endif
+@@ -1257,7 +1256,7 @@ static void zram_free_page(struct zram *zram, size_t index)
+ {
+ 	unsigned long handle;
+ 
+-#ifdef CONFIG_ZRAM_MEMORY_TRACKING
++#ifdef CONFIG_ZRAM_TRACK_ENTRY_ACTIME
+ 	zram->table[index].ac_time = 0;
+ #endif
+ 	if (zram_test_flag(zram, index, ZRAM_IDLE))
+diff --git a/drivers/block/zram/zram_drv.h b/drivers/block/zram/zram_drv.h
+index ca7a15bd48456..35e3221446292 100644
+--- a/drivers/block/zram/zram_drv.h
++++ b/drivers/block/zram/zram_drv.h
+@@ -69,7 +69,7 @@ struct zram_table_entry {
+ 		unsigned long element;
+ 	};
+ 	unsigned long flags;
+-#ifdef CONFIG_ZRAM_MEMORY_TRACKING
++#ifdef CONFIG_ZRAM_TRACK_ENTRY_ACTIME
+ 	ktime_t ac_time;
+ #endif
+ };
 -- 
 2.43.0
 
