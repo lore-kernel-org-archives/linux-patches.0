@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEEB9209693;
-	Thu, 12 Dec 2024 15:23:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 209BA2080FC;
+	Thu, 12 Dec 2024 15:23:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734017011; cv=none; b=tCvMJjnCZk32gvg6ixo1+6E+QWGaK+kvgFRHwECAGpQYSM0askdmTungRospv5WtrcPWpVkZFWXSQIgnCEPbToyJ3ZA9Do8k7ziZ5R7BxB4adVrXzm8hbG6i5bwVqObIDVtajCFcLHfcia+oU/7G3J1V8l7MkE3h2xsA+ie/FbE=
+	t=1734017014; cv=none; b=dhpo0eGK+n9lS14i4qBXNBpWklRtaedm+ylh5CQitefZ28l/gqjuNGWz2ybtj35pD2a6SErNWEH0hKYtW0sqiQIMrkuT/mZ36sQk83N0bDefuuYdf6iN7VuJ0c9mea6DYZK3jqnv0yX4bqRfFrLlAVfcAI2DE7Vk8dm003rnFaM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734017011; c=relaxed/simple;
-	bh=XmFcFj63zSGG3wYCSF4r0D6KK0q6J/KytaZen57rN4A=;
+	s=arc-20240116; t=1734017014; c=relaxed/simple;
+	bh=oNDPXtHL6rsRSHaUvERmKumV2qDblZD0uTAe6cYnIgI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b/8yceiGbATfudA4qgqT/0C8Wiwv+8sfRMwtK8awmLxYtydPHWmQ/qg5JkcqeASxPlW78mHTz2psv0X6SKn4HIeb645JHDiNxCU9pJQirkx8ibOl4rY5t/aQPocFmmVGUB6pg/9BvAORSdaA0caam5fnG5w8nzyNJhGMpstkJl4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CbLMdezi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fm7zIRTVlF4paQ7SjpsX5+dhSxENly7gCp/uKHH9Hnkd+NfZ5PPjVjQkjbtzv0V/4VJ/6J5fxt9Y6faU3oFFaQnzYmo87beX8MnK6hQWudxUVlqW8/a53K6bQljTETOfTncn6TVS193y/nky/3f4yF5A6wkJSwC9wY3SlIO/gw0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1wZPWgNe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CbLMdezi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5ADF6C4CED0;
-	Thu, 12 Dec 2024 15:23:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1wZPWgNe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8130FC4CECE;
+	Thu, 12 Dec 2024 15:23:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734017010;
-	bh=XmFcFj63zSGG3wYCSF4r0D6KK0q6J/KytaZen57rN4A=;
+	s=korg; t=1734017014;
+	bh=oNDPXtHL6rsRSHaUvERmKumV2qDblZD0uTAe6cYnIgI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CbLMdeziUvmPAvnH+ueld5GNvncHbX2DzqJVFCVP9sNJrr4719tVuacL9frm0TkQq
-	 656en+LGdiDMHHmZHTUnHgJm1qieEvb2YUyeU/rsZRIE03WLRtWDf0m4hUkTEJMUma
-	 TlAaEBw8CibRQ8XRWPDiH9ivQyN22ZvbNtplezgw=
+	b=1wZPWgNeHvjxrapqK9jifkIZPOcX7mWxcF8ulRR/qADJL/WvF+cCoHDh4WcBxrW+R
+	 0dQm66A7Kro1hXizCfBzpMGrp0QKpePb6cvDguNNny2GG9fcxb2J6LgqAVp718L9dM
+	 xbtsTGWT8HvyaEnWYqYrOdWEu5DKH3BaPytFBLmg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Kacur <jkacur@redhat.com>,
-	Luis Goncalves <lgoncalv@redhat.com>,
-	Tomas Glozar <tglozar@redhat.com>,
-	Gabriele Monaco <gmonaco@redhat.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Charlene Liu <charlene.liu@amd.com>,
+	Ausef Yousof <Ausef.Yousof@amd.com>,
+	Zaeem Mohamed <zaeem.mohamed@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 355/466] rtla: Fix consistency in getopt_long for timerlat_hist
-Date: Thu, 12 Dec 2024 15:58:44 +0100
-Message-ID: <20241212144320.810951011@linuxfoundation.org>
+Subject: [PATCH 6.12 326/466] drm/amd/display: Remove hw w/a toggle if on DP2/HPO
+Date: Thu, 12 Dec 2024 15:58:15 +0100
+Message-ID: <20241212144319.669836624@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144306.641051666@linuxfoundation.org>
 References: <20241212144306.641051666@linuxfoundation.org>
@@ -54,43 +54,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gabriele Monaco <gmonaco@redhat.com>
+From: Ausef Yousof <Ausef.Yousof@amd.com>
 
-[ Upstream commit cfb1ea216c1656a4112becbc4bf757891933b902 ]
+[ Upstream commit b4c804628485af2b46f0d24a87190735cac37d61 ]
 
-Commit e9a4062e1527 ("rtla: Add --trace-buffer-size option") adds a new
-long option to rtla utilities, but among all affected files,
-timerlat_hist misses a trailing `:` in the corresponding short option
-inside the getopt string (e.g. `\3:`). This patch propagates the `:`.
+[why&how]
+Applying a hw w/a only relevant to DIG FIFO causing corruption
+using HPO, do not apply the w/a if on DP2/HPO
 
-Although this change is not functionally required, it improves
-consistency and slightly reduces the likelihood a future change would
-introduce a problem.
-
-Cc: John Kacur <jkacur@redhat.com>
-Cc: Luis Goncalves <lgoncalv@redhat.com>
-Cc: Tomas Glozar <tglozar@redhat.com>
-Link: https://lore.kernel.org/20240926143417.54039-1-gmonaco@redhat.com
-Signed-off-by: Gabriele Monaco <gmonaco@redhat.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Reviewed-by: Charlene Liu <charlene.liu@amd.com>
+Signed-off-by: Ausef Yousof <Ausef.Yousof@amd.com>
+Signed-off-by: Zaeem Mohamed <zaeem.mohamed@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/tracing/rtla/src/timerlat_hist.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../drm/amd/display/dc/clk_mgr/dcn35/dcn35_clk_mgr.c  | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/tools/tracing/rtla/src/timerlat_hist.c b/tools/tracing/rtla/src/timerlat_hist.c
-index 829511a712224..f6aa83ff15659 100644
---- a/tools/tracing/rtla/src/timerlat_hist.c
-+++ b/tools/tracing/rtla/src/timerlat_hist.c
-@@ -778,7 +778,7 @@ static struct timerlat_hist_params
- 		/* getopt_long stores the option index here. */
- 		int option_index = 0;
- 
--		c = getopt_long(argc, argv, "a:c:C::b:d:e:E:DhH:i:knp:P:s:t::T:uU0123456:7:8:9\1\2:\3",
-+		c = getopt_long(argc, argv, "a:c:C::b:d:e:E:DhH:i:knp:P:s:t::T:uU0123456:7:8:9\1\2:\3:",
- 				 long_options, &option_index);
- 
- 		/* detect the end of the options. */
+diff --git a/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn35/dcn35_clk_mgr.c b/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn35/dcn35_clk_mgr.c
+index 7d68006137a97..3bd0d46c17010 100644
+--- a/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn35/dcn35_clk_mgr.c
++++ b/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn35/dcn35_clk_mgr.c
+@@ -132,6 +132,8 @@ static void dcn35_disable_otg_wa(struct clk_mgr *clk_mgr_base, struct dc_state *
+ 	for (i = 0; i < dc->res_pool->pipe_count; ++i) {
+ 		struct pipe_ctx *old_pipe = &dc->current_state->res_ctx.pipe_ctx[i];
+ 		struct pipe_ctx *new_pipe = &context->res_ctx.pipe_ctx[i];
++		struct clk_mgr_internal *clk_mgr_internal = TO_CLK_MGR_INTERNAL(clk_mgr_base);
++		struct dccg *dccg = clk_mgr_internal->dccg;
+ 		struct pipe_ctx *pipe = safe_to_lower
+ 			? &context->res_ctx.pipe_ctx[i]
+ 			: &dc->current_state->res_ctx.pipe_ctx[i];
+@@ -148,8 +150,13 @@ static void dcn35_disable_otg_wa(struct clk_mgr *clk_mgr_base, struct dc_state *
+ 		new_pipe->stream_res.stream_enc &&
+ 		new_pipe->stream_res.stream_enc->funcs->is_fifo_enabled &&
+ 		new_pipe->stream_res.stream_enc->funcs->is_fifo_enabled(new_pipe->stream_res.stream_enc);
+-		if (pipe->stream && (pipe->stream->dpms_off || dc_is_virtual_signal(pipe->stream->signal) ||
+-			!pipe->stream->link_enc) && !stream_changed_otg_dig_on) {
++		bool has_active_hpo = dccg->ctx->dc->link_srv->dp_is_128b_132b_signal(old_pipe) && dccg->ctx->dc->link_srv->dp_is_128b_132b_signal(new_pipe);
++
++		if (!has_active_hpo && !dccg->ctx->dc->link_srv->dp_is_128b_132b_signal(pipe) &&
++					(pipe->stream && (pipe->stream->dpms_off || dc_is_virtual_signal(pipe->stream->signal) ||
++					!pipe->stream->link_enc) && !stream_changed_otg_dig_on)) {
++
++
+ 			/* This w/a should not trigger when we have a dig active */
+ 			if (disable) {
+ 				if (pipe->stream_res.tg && pipe->stream_res.tg->funcs->immediate_disable_crtc)
 -- 
 2.43.0
 
