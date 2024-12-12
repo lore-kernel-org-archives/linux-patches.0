@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9213214227;
-	Thu, 12 Dec 2024 17:10:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 982C12139C9;
+	Thu, 12 Dec 2024 17:10:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734023445; cv=none; b=fnH1M45nVoV15DpYRcdK8y1+e0x+X4p0oRfGjmWgoJZ1mwmBnjfMOhf1cSHKX9/P7fpaRjKoDVT0clKCSyX9hR/hHvQ9wVYfoBDal8ScQHbj8vtT9XLRQ+jij3YMZk2497jPwne55ezcZlVyyv0YG7T4JmgsGKBP1ofn9lSYc2I=
+	t=1734023448; cv=none; b=oIMBQnRcfH2rdim7LnbprnDrJeRgyGU/6NKrgLjH0xZwdw6AypZ39CvUlB2KMPl+2oktS5JJ8HZ1C+WZpYHIDJTTSElSDFCK0uK1hlzV9ouaI06AeI9rvRkYPT9IDdXk7kpFCS7o/nOJAC8Gn9oMaN3KUjd7XspV/AS+kug/7WE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734023445; c=relaxed/simple;
-	bh=SKIrCNKiNlOsnlbhZsw4fnOL9rZ/RfGa570izYahRus=;
+	s=arc-20240116; t=1734023448; c=relaxed/simple;
+	bh=Ib3Et3x/ijc8A2t8430+bMIcRXqahfOxW1YbLF9bk7A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aAwj+wsRbP09B2MDPRGfv2f+04AeOBUZerQiO3c8u5k/Gk4mPG1Iks7iHC9Wca79LVVoRYtq5v3MAdXy3c/3dZ6wCDQfbmBoigrUvuYCOQ4enz4f3A7kVGCPB3UZXv4Zo1YHt4WA7AwE2zrPnPGYVhCWVvpnIDVPvadz5PVcbeI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cHDZt5a/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sqa9RjadfvA5Vc8AKeZ+k8Xzhv4dSBfXQyEFHzujmlIDma9/F7836xd9HDe7dMxH5dnhIGRodrr4ur+ToPyV6S1xWmEDFfPM19tbnQ6DaFJrzJVSHm6r2hcnKl6oZ5wx3UXwORBwn7ggeptyX1UKuDwGJhST72w+rBZ2goNyYuc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qQ8zIz2S; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cHDZt5a/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4462C4CECE;
-	Thu, 12 Dec 2024 17:10:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qQ8zIz2S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 064BCC4CECE;
+	Thu, 12 Dec 2024 17:10:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734023445;
-	bh=SKIrCNKiNlOsnlbhZsw4fnOL9rZ/RfGa570izYahRus=;
+	s=korg; t=1734023448;
+	bh=Ib3Et3x/ijc8A2t8430+bMIcRXqahfOxW1YbLF9bk7A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cHDZt5a/nma2fo21Ax6QtzauekjhOrqKXCJWUVozBW/6GtoJIVWl606lKcVyXAMj6
-	 JO/lJUt7NHQDnhVacwsoUDP5gOU6HqYlfKkgO38DErDGAbQQFwb6u0qdOhnsbLKZ1K
-	 FQiA3juY91VV11mcFX8OF4akMd2PiLO58ya9ObvQ=
+	b=qQ8zIz2SP9uUjEgv4FZyZhuOzSKvgI6yY0Q4aFP9aQvhljjTnLOBmrwQscLTNWIJn
+	 E6Jyo6D5bYR3QclgpU3Mc6hCuX2QiuX8njU8QtrNEz8LOvvMHAWobRGXRcVAIOh/S/
+	 KB5o8YP7IL9yuoAi4tHtZ8mUh6XJAbzwk6NnjlCQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	David Sterba <dsterba@suse.com>,
-	Qu Wenruo <wqu@suse.com>,
-	Filipe Manana <fdmanana@suse.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 536/565] btrfs: fix missing snapshot drew unlock when root is dead during swap activation
-Date: Thu, 12 Dec 2024 16:02:11 +0100
-Message-ID: <20241212144333.022990579@linuxfoundation.org>
+Subject: [PATCH 5.15 537/565] tracing/eprobe: Fix to release eprobe when failed to add dyn_event
+Date: Thu, 12 Dec 2024 16:02:12 +0100
+Message-ID: <20241212144333.063161936@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144311.432886635@linuxfoundation.org>
 References: <20241212144311.432886635@linuxfoundation.org>
@@ -53,38 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-[ Upstream commit 9c803c474c6c002d8ade68ebe99026cc39c37f85 ]
+[ Upstream commit 494b332064c0ce2f7392fa92632bc50191c1b517 ]
 
-When activating a swap file we acquire the root's snapshot drew lock and
-then check if the root is dead, failing and returning with -EPERM if it's
-dead but without unlocking the root's snapshot lock. Fix this by adding
-the missing unlock.
+Fix eprobe event to unregister event call and release eprobe when it fails
+to add dynamic event correctly.
 
-Fixes: 60021bd754c6 ("btrfs: prevent subvol with swapfile from being deleted")
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Link: https://lore.kernel.org/all/173289886698.73724.1959899350183686006.stgit@devnote2/
+
+Fixes: 7491e2c44278 ("tracing: Add a probe that attaches to trace events")
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/inode.c | 1 +
- 1 file changed, 1 insertion(+)
+ kernel/trace/trace_eprobe.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/fs/btrfs/inode.c b/fs/btrfs/inode.c
-index eb12ba64ac7a7..8f048e517e656 100644
---- a/fs/btrfs/inode.c
-+++ b/fs/btrfs/inode.c
-@@ -10891,6 +10891,7 @@ static int btrfs_swap_activate(struct swap_info_struct *sis, struct file *file,
- 	if (btrfs_root_dead(root)) {
- 		spin_unlock(&root->root_item_lock);
- 
-+		btrfs_drew_write_unlock(&root->snapshot_lock);
- 		btrfs_exclop_finish(fs_info);
- 		btrfs_warn(fs_info,
- 		"cannot activate swapfile because subvolume %llu is being deleted",
+diff --git a/kernel/trace/trace_eprobe.c b/kernel/trace/trace_eprobe.c
+index 085f056e66f19..6ba95e32df388 100644
+--- a/kernel/trace/trace_eprobe.c
++++ b/kernel/trace/trace_eprobe.c
+@@ -979,6 +979,11 @@ static int __trace_eprobe_create(int argc, const char *argv[])
+ 		goto error;
+ 	}
+ 	ret = dyn_event_add(&ep->devent, &ep->tp.event->call);
++	if (ret < 0) {
++		trace_probe_unregister_event_call(&ep->tp);
++		mutex_unlock(&event_mutex);
++		goto error;
++	}
+ 	mutex_unlock(&event_mutex);
+ 	return ret;
+ parse_error:
 -- 
 2.43.0
 
