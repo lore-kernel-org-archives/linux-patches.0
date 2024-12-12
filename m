@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 450FB213E6F;
-	Thu, 12 Dec 2024 17:30:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 654F1218594;
+	Thu, 12 Dec 2024 17:30:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734024623; cv=none; b=HWMkPfMcFqwFYpTO4rg4uLwYLGzmlU0wufacTRKPZ94GHUo9Egap54mCpigA8LYVvl8pND6VYoS2p7SxjArvbngngBh8jp8xIwf0nDgQ3TZv7cXmPrifl7xWtArVbz7+TpfHDe43Y8a3QCvHdq6k6FfYqdhkS5UuNCJGb5IVuV0=
+	t=1734024626; cv=none; b=SM/VcgA59DLtrepiNmf5ghj5GVOaxr4dmB9H+PKdL1q0CWKfv4TQtZjl0+0oMPWNz/Atr8e+wG3jZIgNMvQ0jNedtiVoYE4V8NLgWKJOZwGB0g4Dfv8aF2nqFOz+Gkun6INGnx9vSTY2m3SSR/Pb1anJl9HHtXIPYJ6KhGPqiLI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734024623; c=relaxed/simple;
-	bh=JNpoIy/uOglrZ5FNrxeL0SazAfpzedbv4cmAoSJQTnY=;
+	s=arc-20240116; t=1734024626; c=relaxed/simple;
+	bh=XSfahffCUH3hhglZDix90mr0kSDSKDRq0WKhBx2G/UY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=kVFKo7Ka64GvKjefmIW1W6TB1ZRqV0AXeWbOre7NSGayKVngz7+kgH7j7kM9z/rOKbJEtX/X3WNnlrcTfUTagDmDKPlIZjA5UNWXzMQxs4Y3izSlS11UByXkmkk3doCyajP8S7yHf0hlwdKc6IipBgmTnSIGTdskTXdd4W8XBsg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w3L2bxQs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QKP9GQAgdSxCLpNAbP6nBqS1+Ui/YOtnTY3vpEmzzHhLkUe+VJhJkQt/j0mIp4uXwKwxrf/1tJDQ3+VaQA84vrGrqZnlBeitEnwv1CbcC5ulq9se/cf5eP14jdfCA5l2Lz/qJkqg9XbRM7IjPwv05fH+KJYLbhl3QAQnRa3xbGk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=08w0Ulx3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w3L2bxQs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFADCC4CECE;
-	Thu, 12 Dec 2024 17:30:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="08w0Ulx3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4741C4CECE;
+	Thu, 12 Dec 2024 17:30:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734024623;
-	bh=JNpoIy/uOglrZ5FNrxeL0SazAfpzedbv4cmAoSJQTnY=;
+	s=korg; t=1734024626;
+	bh=XSfahffCUH3hhglZDix90mr0kSDSKDRq0WKhBx2G/UY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w3L2bxQsfLNTy9zRvm3EnZw/Q9zOXbwOnr+qkM/quhmYlD/j1oACWVtSpPzNviGv1
-	 qhDunV1VUY5ZFUCVS1zX8zmmMoCaInAv6uDsKPW3eqDuNqvv+HbQ4I2BLHs5NFfUI4
-	 RnxL1KXYMD0DKrsievDH0d6cBy9vKYYy92vpUdvo=
+	b=08w0Ulx3xfvuX9pHdGPQXnKbHfOLbGCzi0k3zS1PkhI3yEULPuERxw5Vq+1Dv1TAa
+	 7/oNHQOWvingWGOe+jCGNqiJRhQMrxiWDpZn8J/ah0wgLZ1CvB9Z3wdarcEeHXWkDb
+	 IxVlRzMZW2OGm9fcAVx5er+F+FryJTQA6fxcR38o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
-	Hou Tao <houtao1@huawei.com>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 358/459] bpf: Fix exact match conditions in trie_get_next_key()
-Date: Thu, 12 Dec 2024 16:01:36 +0100
-Message-ID: <20241212144307.808264381@linuxfoundation.org>
+	Zhenxing Chen <chenzhenxing@uniontech.com>,
+	Xu Rao <raoxu@uniontech.com>,
+	WangYuli <wangyuli@uniontech.com>,
+	Benjamin Tissoires <bentiss@kernel.org>
+Subject: [PATCH 5.10 359/459] HID: wacom: fix when get product name maybe null pointer
+Date: Thu, 12 Dec 2024 16:01:37 +0100
+Message-ID: <20241212144307.856556592@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144253.511169641@linuxfoundation.org>
 References: <20241212144253.511169641@linuxfoundation.org>
@@ -46,64 +46,114 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hou Tao <houtao1@huawei.com>
+From: WangYuli <wangyuli@uniontech.com>
 
-[ Upstream commit 27abc7b3fa2e09bbe41e2924d328121546865eda ]
+commit 59548215b76be98cf3422eea9a67d6ea578aca3d upstream.
 
-trie_get_next_key() uses node->prefixlen == key->prefixlen to identify
-an exact match, However, it is incorrect because when the target key
-doesn't fully match the found node (e.g., node->prefixlen != matchlen),
-these two nodes may also have the same prefixlen. It will return
-expected result when the passed key exist in the trie. However when a
-recently-deleted key or nonexistent key is passed to
-trie_get_next_key(), it may skip keys and return incorrect result.
+Due to incorrect dev->product reporting by certain devices, null
+pointer dereferences occur when dev->product is empty, leading to
+potential system crashes.
 
-Fix it by using node->prefixlen == matchlen to identify exact matches.
-When the condition is true after the search, it also implies
-node->prefixlen equals key->prefixlen, otherwise, the search would
-return NULL instead.
+This issue was found on EXCELSIOR DL37-D05 device with
+Loongson-LS3A6000-7A2000-DL37 motherboard.
 
-Fixes: b471f2f1de8b ("bpf: implement MAP_GET_NEXT_KEY command for LPM_TRIE map")
-Reviewed-by: Toke Høiland-Jørgensen <toke@redhat.com>
-Signed-off-by: Hou Tao <houtao1@huawei.com>
-Link: https://lore.kernel.org/r/20241206110622.1161752-6-houtao@huaweicloud.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Kernel logs:
+[   56.470885] usb 4-3: new full-speed USB device number 4 using ohci-pci
+[   56.671638] usb 4-3: string descriptor 0 read error: -22
+[   56.671644] usb 4-3: New USB device found, idVendor=056a, idProduct=0374, bcdDevice= 1.07
+[   56.671647] usb 4-3: New USB device strings: Mfr=1, Product=2, SerialNumber=3
+[   56.678839] hid-generic 0003:056A:0374.0004: hiddev0,hidraw3: USB HID v1.10 Device [HID 056a:0374] on usb-0000:00:05.0-3/input0
+[   56.697719] CPU 2 Unable to handle kernel paging request at virtual address 0000000000000000, era == 90000000066e35c8, ra == ffff800004f98a80
+[   56.697732] Oops[#1]:
+[   56.697734] CPU: 2 PID: 2742 Comm: (udev-worker) Tainted: G           OE      6.6.0-loong64-desktop #25.00.2000.015
+[   56.697737] Hardware name: Inspur CE520L2/C09901N000000000, BIOS 2.09.00 10/11/2024
+[   56.697739] pc 90000000066e35c8 ra ffff800004f98a80 tp 9000000125478000 sp 900000012547b8a0
+[   56.697741] a0 0000000000000000 a1 ffff800004818b28 a2 0000000000000000 a3 0000000000000000
+[   56.697743] a4 900000012547b8f0 a5 0000000000000000 a6 0000000000000000 a7 0000000000000000
+[   56.697745] t0 ffff800004818b2d t1 0000000000000000 t2 0000000000000003 t3 0000000000000005
+[   56.697747] t4 0000000000000000 t5 0000000000000000 t6 0000000000000000 t7 0000000000000000
+[   56.697748] t8 0000000000000000 u0 0000000000000000 s9 0000000000000000 s0 900000011aa48028
+[   56.697750] s1 0000000000000000 s2 0000000000000000 s3 ffff800004818e80 s4 ffff800004810000
+[   56.697751] s5 90000001000b98d0 s6 ffff800004811f88 s7 ffff800005470440 s8 0000000000000000
+[   56.697753]    ra: ffff800004f98a80 wacom_update_name+0xe0/0x300 [wacom]
+[   56.697802]   ERA: 90000000066e35c8 strstr+0x28/0x120
+[   56.697806]  CRMD: 000000b0 (PLV0 -IE -DA +PG DACF=CC DACM=CC -WE)
+[   56.697816]  PRMD: 0000000c (PPLV0 +PIE +PWE)
+[   56.697821]  EUEN: 00000000 (-FPE -SXE -ASXE -BTE)
+[   56.697827]  ECFG: 00071c1d (LIE=0,2-4,10-12 VS=7)
+[   56.697831] ESTAT: 00010000 [PIL] (IS= ECode=1 EsubCode=0)
+[   56.697835]  BADV: 0000000000000000
+[   56.697836]  PRID: 0014d000 (Loongson-64bit, Loongson-3A6000)
+[   56.697838] Modules linked in: wacom(+) bnep bluetooth rfkill qrtr nls_iso8859_1 nls_cp437 snd_hda_codec_conexant snd_hda_codec_generic ledtrig_audio snd_hda_codec_hdmi snd_hda_intel snd_intel_dspcfg snd_hda_codec snd_hda_core snd_hwdep snd_pcm snd_timer snd soundcore input_leds mousedev led_class joydev deepin_netmonitor(OE) fuse nfnetlink dmi_sysfs ip_tables x_tables overlay amdgpu amdxcp drm_exec gpu_sched drm_buddy radeon drm_suballoc_helper i2c_algo_bit drm_ttm_helper r8169 ttm drm_display_helper spi_loongson_pci xhci_pci cec xhci_pci_renesas spi_loongson_core hid_generic realtek gpio_loongson_64bit
+[   56.697887] Process (udev-worker) (pid: 2742, threadinfo=00000000aee0d8b4, task=00000000a9eff1f3)
+[   56.697890] Stack : 0000000000000000 ffff800004817e00 0000000000000000 0000251c00000000
+[   56.697896]         0000000000000000 00000011fffffffd 0000000000000000 0000000000000000
+[   56.697901]         0000000000000000 1b67a968695184b9 0000000000000000 90000001000b98d0
+[   56.697906]         90000001000bb8d0 900000011aa48028 0000000000000000 ffff800004f9d74c
+[   56.697911]         90000001000ba000 ffff800004f9ce58 0000000000000000 ffff800005470440
+[   56.697916]         ffff800004811f88 90000001000b98d0 9000000100da2aa8 90000001000bb8d0
+[   56.697921]         0000000000000000 90000001000ba000 900000011aa48028 ffff800004f9d74c
+[   56.697926]         ffff8000054704e8 90000001000bb8b8 90000001000ba000 0000000000000000
+[   56.697931]         90000001000bb8d0 9000000006307564 9000000005e666e0 90000001752359b8
+[   56.697936]         9000000008cbe400 900000000804d000 9000000005e666e0 0000000000000000
+[   56.697941]         ...
+[   56.697944] Call Trace:
+[   56.697945] [<90000000066e35c8>] strstr+0x28/0x120
+[   56.697950] [<ffff800004f98a80>] wacom_update_name+0xe0/0x300 [wacom]
+[   56.698000] [<ffff800004f9ce58>] wacom_parse_and_register+0x338/0x900 [wacom]
+[   56.698050] [<ffff800004f9d74c>] wacom_probe+0x32c/0x420 [wacom]
+[   56.698099] [<9000000006307564>] hid_device_probe+0x144/0x260
+[   56.698103] [<9000000005e65d68>] really_probe+0x208/0x540
+[   56.698109] [<9000000005e661dc>] __driver_probe_device+0x13c/0x1e0
+[   56.698112] [<9000000005e66620>] driver_probe_device+0x40/0x100
+[   56.698116] [<9000000005e6680c>] __device_attach_driver+0x12c/0x180
+[   56.698119] [<9000000005e62bc8>] bus_for_each_drv+0x88/0x160
+[   56.698123] [<9000000005e66468>] __device_attach+0x108/0x260
+[   56.698126] [<9000000005e63918>] device_reprobe+0x78/0x100
+[   56.698129] [<9000000005e62a68>] bus_for_each_dev+0x88/0x160
+[   56.698132] [<9000000006304e54>] __hid_bus_driver_added+0x34/0x80
+[   56.698134] [<9000000005e62bc8>] bus_for_each_drv+0x88/0x160
+[   56.698137] [<9000000006304df0>] __hid_register_driver+0x70/0xa0
+[   56.698142] [<9000000004e10fe4>] do_one_initcall+0x104/0x320
+[   56.698146] [<9000000004f38150>] do_init_module+0x90/0x2c0
+[   56.698151] [<9000000004f3a3d8>] init_module_from_file+0xb8/0x120
+[   56.698155] [<9000000004f3a590>] idempotent_init_module+0x150/0x3a0
+[   56.698159] [<9000000004f3a890>] sys_finit_module+0xb0/0x140
+[   56.698163] [<900000000671e4e8>] do_syscall+0x88/0xc0
+[   56.698166] [<9000000004e12404>] handle_syscall+0xc4/0x160
+[   56.698171] Code: 0011958f  00150224  5800cd85 <2a00022c> 00150004  4000c180  0015022c  03400000  03400000
+[   56.698192] ---[ end trace 0000000000000000 ]---
+
+Fixes: 09dc28acaec7 ("HID: wacom: Improve generic name generation")
+Reported-by: Zhenxing Chen <chenzhenxing@uniontech.com>
+Co-developed-by: Xu Rao <raoxu@uniontech.com>
+Signed-off-by: Xu Rao <raoxu@uniontech.com>
+Signed-off-by: WangYuli <wangyuli@uniontech.com>
+Link: https://patch.msgid.link/B31757FE8E1544CF+20241125052616.18261-1-wangyuli@uniontech.com
+Cc: stable@vger.kernel.org
+Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/bpf/lpm_trie.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/hid/wacom_sys.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/bpf/lpm_trie.c b/kernel/bpf/lpm_trie.c
-index 07f11f108f6ab..d833d74c1c673 100644
---- a/kernel/bpf/lpm_trie.c
-+++ b/kernel/bpf/lpm_trie.c
-@@ -650,7 +650,7 @@ static int trie_get_next_key(struct bpf_map *map, void *_key, void *_next_key)
- 	struct lpm_trie_node **node_stack = NULL;
- 	int err = 0, stack_ptr = -1;
- 	unsigned int next_bit;
--	size_t matchlen;
-+	size_t matchlen = 0;
+--- a/drivers/hid/wacom_sys.c
++++ b/drivers/hid/wacom_sys.c
+@@ -2242,7 +2242,8 @@ static void wacom_update_name(struct wac
+ 		if (hid_is_usb(wacom->hdev)) {
+ 			struct usb_interface *intf = to_usb_interface(wacom->hdev->dev.parent);
+ 			struct usb_device *dev = interface_to_usbdev(intf);
+-			product_name = dev->product;
++			if (dev->product != NULL)
++				product_name = dev->product;
+ 		}
  
- 	/* The get_next_key follows postorder. For the 4 node example in
- 	 * the top of this file, the trie_get_next_key() returns the following
-@@ -689,7 +689,7 @@ static int trie_get_next_key(struct bpf_map *map, void *_key, void *_next_key)
- 		next_bit = extract_bit(key->data, node->prefixlen);
- 		node = rcu_dereference(node->child[next_bit]);
- 	}
--	if (!node || node->prefixlen != key->prefixlen ||
-+	if (!node || node->prefixlen != matchlen ||
- 	    (node->flags & LPM_TREE_NODE_FLAG_IM))
- 		goto find_leftmost;
- 
--- 
-2.43.0
-
+ 		if (wacom->hdev->bus == BUS_I2C) {
 
 
