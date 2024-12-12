@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3B55176AA1;
-	Thu, 12 Dec 2024 17:04:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B445176AA1;
+	Thu, 12 Dec 2024 17:04:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734023044; cv=none; b=TRoFpGLDk/Z0QMxoqVh74aO/t6kOfbtA5ZFl1jP0NknNTU5DhnGxQpdYPCRmbO1TN4nfjKV9KQXaNCNi2MY/QNHiRe8S/tqb9MAvgZkY3i03/NU1K9SS68jHaKn8zG1e8KEiIjGF6wn+CnclW3vdrQ50WGJcPv2CMN/uImh5kA0=
+	t=1734023047; cv=none; b=k04oO3GFY6Rswjk0a+bVJ0lBUMicvxVbKl/Sg4yBVOUenIUriStgfqrZOGrVBz68F4R4zfDkvc1d71nJs21oKc1lbUExqx+N5vJ1H9YVu2lyn7HIAKS68+7OzF2pSzDPTKdky1PyJfVE9Ms37riso6ZmWX0pJ5lkahiSUlee0LA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734023044; c=relaxed/simple;
-	bh=OnDeUvkC/qU/0VrPupZP+Y2CMRKNfMSp603XnVF0pkA=;
+	s=arc-20240116; t=1734023047; c=relaxed/simple;
+	bh=Pafk+zLs7KxTMR+EVdP9NodIdw4+UkpACOPMjmBnbCw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Is/segady48phpwUHfZBjZ/4UXDbSc8xZn7yY3I6JoQgLSMbgmmKLPGt/3D02zmzIo+VSGBw98edoCJNuWbakYrbWoysDxACVGNFjMGa+6BstUxRq16qs9Vn1y288EWVC1ccRHlTP2GhAjTViXzjU+4502acEbQvX9kuOpNMeOk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=szhetlel; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=owIpEMKuDGZDJqOFp2ZndO0qtUzUSt1dfYSAPo4+jB9yLtUrD59PsPWijLFvt64jLYNmVIOhKwdMTT9sBj/0pbG+Nly5T4nFsw9w5KEQ7r9GhjMHPOrVSE3KEBsjeTwbeNaXc6oe6DvqZrsQe4D6BiSAfcaI5lNfyxbPDowZa/c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AOrx/SJB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="szhetlel"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5431CC4CECE;
-	Thu, 12 Dec 2024 17:04:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AOrx/SJB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85DB6C4CECE;
+	Thu, 12 Dec 2024 17:04:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734023043;
-	bh=OnDeUvkC/qU/0VrPupZP+Y2CMRKNfMSp603XnVF0pkA=;
+	s=korg; t=1734023047;
+	bh=Pafk+zLs7KxTMR+EVdP9NodIdw4+UkpACOPMjmBnbCw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=szhetlelKTuQGg25kMzgwJiT6Hw2jQIUJxs9sgTm85XnC92EGzJ0nzCwR0+Z+6juX
-	 iRcYZRjbIcgMkRK2wHrRIzlKQWfJZ+y2tRtp/zDYLlUjznRcKoongVD7AY8hmaBUc8
-	 e8CE3UCv9L9Y7x9914x3iLJ9+fBibLZ/CC2pe1Y4=
+	b=AOrx/SJBA/Edm9hgsmIvdk5JzgbG560JNOuJq9GbpI+cSvnU5QpN4iGcVz6wUmp7W
+	 ZOkIkCGHWk5InQNLu1sxfsgFnhv2ljlb+AyFL0/d8tUEEL49kzgc/R0sqgpymU03KX
+	 E5cqRiefizGcR77T5H1rSBBA6rQ1kmVBZX8GTlXQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Dario Binacchi <dario.binacchi@amarulasolutions.com>,
-	Marek Vasut <marex@denx.de>,
 	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 405/565] can: ifi_canfd: ifi_canfd_handle_lec_err(): fix {rx,tx}_errors statistics
-Date: Thu, 12 Dec 2024 16:00:00 +0100
-Message-ID: <20241212144327.667657343@linuxfoundation.org>
+Subject: [PATCH 5.15 406/565] can: sun4i_can: sun4i_can_err(): fix {rx,tx}_errors statistics
+Date: Thu, 12 Dec 2024 16:00:01 +0100
+Message-ID: <20241212144327.707856268@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144311.432886635@linuxfoundation.org>
 References: <20241212144311.432886635@linuxfoundation.org>
@@ -54,113 +53,59 @@ Content-Transfer-Encoding: 8bit
 
 From: Dario Binacchi <dario.binacchi@amarulasolutions.com>
 
-[ Upstream commit bb03d568bb21b4afe7935d1943bcf68ddea3ea45 ]
+[ Upstream commit 595a81988a6fe06eb5849e972c8b9cb21c4e0d54 ]
 
-The ifi_canfd_handle_lec_err() function was incorrectly incrementing only
-the receive error counter, even in cases of bit or acknowledgment errors
-that occur during transmission.
+The sun4i_can_err() function only incremented the receive error counter
+and never the transmit error counter, even if the STA_ERR_DIR flag
+reported that an error had occurred during transmission.
 
-Fix the issue by incrementing the appropriate counter based on the
-type of error.
+Increment the receive/transmit error counter based on the value of the
+STA_ERR_DIR flag.
 
-Fixes: 5bbd655a8bd0 ("can: ifi: Add more detailed error reporting")
+Fixes: 0738eff14d81 ("can: Allwinner A10/A20 CAN Controller support - Kernel module")
 Signed-off-by: Dario Binacchi <dario.binacchi@amarulasolutions.com>
-Reviewed-by: Marek Vasut <marex@denx.de>
-Link: https://patch.msgid.link/20241122221650.633981-8-dario.binacchi@amarulasolutions.com
+Link: https://patch.msgid.link/20241122221650.633981-11-dario.binacchi@amarulasolutions.com
 Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/ifi_canfd/ifi_canfd.c | 58 ++++++++++++++++++---------
- 1 file changed, 40 insertions(+), 18 deletions(-)
+ drivers/net/can/sun4i_can.c | 14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/can/ifi_canfd/ifi_canfd.c b/drivers/net/can/ifi_canfd/ifi_canfd.c
-index e8318e984bf2f..6a66d63f25c1d 100644
---- a/drivers/net/can/ifi_canfd/ifi_canfd.c
-+++ b/drivers/net/can/ifi_canfd/ifi_canfd.c
-@@ -393,36 +393,55 @@ static int ifi_canfd_handle_lec_err(struct net_device *ndev)
- 		return 0;
+diff --git a/drivers/net/can/sun4i_can.c b/drivers/net/can/sun4i_can.c
+index aad1882a9be11..3e5aa2e0ea66e 100644
+--- a/drivers/net/can/sun4i_can.c
++++ b/drivers/net/can/sun4i_can.c
+@@ -563,11 +563,9 @@ static int sun4i_can_err(struct net_device *dev, u8 isrc, u8 status)
+ 		/* bus error interrupt */
+ 		netdev_dbg(dev, "bus error interrupt\n");
+ 		priv->can.can_stats.bus_error++;
+-		stats->rx_errors++;
++		ecc = readl(priv->base + SUN4I_REG_STA_ADDR);
  
- 	priv->can.can_stats.bus_error++;
--	stats->rx_errors++;
+ 		if (likely(skb)) {
+-			ecc = readl(priv->base + SUN4I_REG_STA_ADDR);
+-
+ 			cf->can_id |= CAN_ERR_PROT | CAN_ERR_BUSERROR;
  
- 	/* Propagate the error condition to the CAN stack. */
- 	skb = alloc_can_err_skb(ndev, &cf);
--	if (unlikely(!skb))
--		return 0;
- 
- 	/* Read the error counter register and check for new errors. */
--	cf->can_id |= CAN_ERR_PROT | CAN_ERR_BUSERROR;
-+	if (likely(skb))
-+		cf->can_id |= CAN_ERR_PROT | CAN_ERR_BUSERROR;
- 
--	if (errctr & IFI_CANFD_ERROR_CTR_OVERLOAD_FIRST)
--		cf->data[2] |= CAN_ERR_PROT_OVERLOAD;
-+	if (errctr & IFI_CANFD_ERROR_CTR_OVERLOAD_FIRST) {
-+		stats->rx_errors++;
-+		if (likely(skb))
-+			cf->data[2] |= CAN_ERR_PROT_OVERLOAD;
-+	}
- 
--	if (errctr & IFI_CANFD_ERROR_CTR_ACK_ERROR_FIRST)
--		cf->data[3] = CAN_ERR_PROT_LOC_ACK;
-+	if (errctr & IFI_CANFD_ERROR_CTR_ACK_ERROR_FIRST) {
-+		stats->tx_errors++;
-+		if (likely(skb))
-+			cf->data[3] = CAN_ERR_PROT_LOC_ACK;
-+	}
- 
--	if (errctr & IFI_CANFD_ERROR_CTR_BIT0_ERROR_FIRST)
--		cf->data[2] |= CAN_ERR_PROT_BIT0;
-+	if (errctr & IFI_CANFD_ERROR_CTR_BIT0_ERROR_FIRST) {
-+		stats->tx_errors++;
-+		if (likely(skb))
-+			cf->data[2] |= CAN_ERR_PROT_BIT0;
-+	}
- 
--	if (errctr & IFI_CANFD_ERROR_CTR_BIT1_ERROR_FIRST)
--		cf->data[2] |= CAN_ERR_PROT_BIT1;
-+	if (errctr & IFI_CANFD_ERROR_CTR_BIT1_ERROR_FIRST) {
-+		stats->tx_errors++;
-+		if (likely(skb))
-+			cf->data[2] |= CAN_ERR_PROT_BIT1;
-+	}
- 
--	if (errctr & IFI_CANFD_ERROR_CTR_STUFF_ERROR_FIRST)
--		cf->data[2] |= CAN_ERR_PROT_STUFF;
-+	if (errctr & IFI_CANFD_ERROR_CTR_STUFF_ERROR_FIRST) {
-+		stats->rx_errors++;
-+		if (likely(skb))
-+			cf->data[2] |= CAN_ERR_PROT_STUFF;
-+	}
- 
--	if (errctr & IFI_CANFD_ERROR_CTR_CRC_ERROR_FIRST)
--		cf->data[3] = CAN_ERR_PROT_LOC_CRC_SEQ;
-+	if (errctr & IFI_CANFD_ERROR_CTR_CRC_ERROR_FIRST) {
-+		stats->rx_errors++;
-+		if (likely(skb))
-+			cf->data[3] = CAN_ERR_PROT_LOC_CRC_SEQ;
-+	}
- 
--	if (errctr & IFI_CANFD_ERROR_CTR_FORM_ERROR_FIRST)
--		cf->data[2] |= CAN_ERR_PROT_FORM;
-+	if (errctr & IFI_CANFD_ERROR_CTR_FORM_ERROR_FIRST) {
-+		stats->rx_errors++;
-+		if (likely(skb))
-+			cf->data[2] |= CAN_ERR_PROT_FORM;
-+	}
- 
- 	/* Reset the error counter, ack the IRQ and re-enable the counter. */
- 	writel(IFI_CANFD_ERROR_CTR_ER_RESET, priv->base + IFI_CANFD_ERROR_CTR);
-@@ -430,6 +449,9 @@ static int ifi_canfd_handle_lec_err(struct net_device *ndev)
- 	       priv->base + IFI_CANFD_INTERRUPT);
- 	writel(IFI_CANFD_ERROR_CTR_ER_ENABLE, priv->base + IFI_CANFD_ERROR_CTR);
- 
-+	if (unlikely(!skb))
-+		return 0;
+ 			switch (ecc & SUN4I_STA_MASK_ERR) {
+@@ -585,9 +583,15 @@ static int sun4i_can_err(struct net_device *dev, u8 isrc, u8 status)
+ 					       >> 16;
+ 				break;
+ 			}
+-			/* error occurred during transmission? */
+-			if ((ecc & SUN4I_STA_ERR_DIR) == 0)
++		}
 +
- 	netif_receive_skb(skb);
- 
- 	return 1;
++		/* error occurred during transmission? */
++		if ((ecc & SUN4I_STA_ERR_DIR) == 0) {
++			if (likely(skb))
+ 				cf->data[2] |= CAN_ERR_PROT_TX;
++			stats->tx_errors++;
++		} else {
++			stats->rx_errors++;
+ 		}
+ 	}
+ 	if (isrc & SUN4I_INT_ERR_PASSIVE) {
 -- 
 2.43.0
 
