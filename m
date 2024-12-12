@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDA06241F40;
-	Thu, 12 Dec 2024 15:59:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FEB122653A;
+	Thu, 12 Dec 2024 15:59:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734019150; cv=none; b=t6P0GoHFtrBw1Ix7R/5Fzk2LxAR/EgoVJpMlDPTLcvnjkMTps+GLcHkC29ZoH/g1VbvwKp9sP5lS4pgRj2W2m5H2Ux4x/oRYFUxqhPoate64c1Hl6g+5sizug7E3T+KMDn3q5bxjsZo3dJ750zJUwpCb2nF3GgdKha9eaV2EiOY=
+	t=1734019154; cv=none; b=lf9/i6PlceZ2M3DcWxzSgYbaLVaHUbpOUF8HMEOZKQiJEDnSbzXwabhxhPrQ7nahjPQaEfSYwO89wttToJ19Vq+xJ4TM+BoM595A9O04s1O+CLi/xqEQRacT73ngrivZXvNJdl2+yHZzmT5l+pgfWT1vDZgD4s0CjFsMMmnz0bQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734019150; c=relaxed/simple;
-	bh=TELLZLcqINJvTCdCGp5jf/6HUqmeujhotutaeuQWH30=;
+	s=arc-20240116; t=1734019154; c=relaxed/simple;
+	bh=bCwfErPdbkmx/VsmotQDgd+xG0ZKBVnZEQ3fAtM5rkw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fFHXSo2JMwCtINzrgNfzS+7umxviqGe90BZUolRXJLTJOMGFJH9anY6S8fmfuxnw3Ly5Ugx43e+5QC6bWjzGeVsbl8P90+4Lr1Hk1PnB9hJB+dM9xBktfonFyPeUtTlCNV2bakiVJaV8rY053yJT5zuUU25G+ROkJx7DNy2tluw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uDD5ANC7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lttupwi0mMLVeY42PnbRWcM6WeFBLQjfvbmNK60xB10m4PhH59qb6N99Nm+YXx+MQ7ixC53diM9n6o28PhpdOtd39TgDohqLe6KWsDQyA5Skb9kVLiG3lLQEEjqTSjshUkBL8Vb/V8VZdviUUD/Mk4U7FQ2Ii6Mpr8rwMybxNmg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kO8r9Q7I; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uDD5ANC7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB0F8C4CED3;
-	Thu, 12 Dec 2024 15:59:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kO8r9Q7I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DF43C4CED3;
+	Thu, 12 Dec 2024 15:59:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734019150;
-	bh=TELLZLcqINJvTCdCGp5jf/6HUqmeujhotutaeuQWH30=;
+	s=korg; t=1734019154;
+	bh=bCwfErPdbkmx/VsmotQDgd+xG0ZKBVnZEQ3fAtM5rkw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uDD5ANC7xMQRyy9MYPJAlQEP8OCHE6PWZtZ/zpMELswFBBnH5smdomrSqRwCOnuOb
-	 swy5+O7aqT3x88MDpv7UR22A21cmn64zBG/moFwvLotycILBIrIxrdwN+w1L2rsImD
-	 /Z6SPb1kw1SUyn9xS57GOIApB4Vstg77VOmNTCWo=
+	b=kO8r9Q7I8gamfP48dJBvifxuT102R3JWy2H8XE3NJgm1BGAeMxFg3eQrPv0jGa6OF
+	 wTrL80rmSahRPeylL+hcBVInYgSz6VF0FRO1872+4UjRiJI81GUnr9QMyiCwztcfv7
+	 vAsnSc1S/GPeBtLLMI2UxM2vFScFeW/6s+CTJe3A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
-	Daniel Lezcano <daniel.lezcano@linaro.org>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Jani Nikula <jani.nikula@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 091/772] clocksource/drivers/timer-ti-dm: Fix child node refcount handling
-Date: Thu, 12 Dec 2024 15:50:36 +0100
-Message-ID: <20241212144353.706016634@linuxfoundation.org>
+Subject: [PATCH 6.1 125/772] drm/mm: Mark drm_mm_interval_tree*() functions with __maybe_unused
+Date: Thu, 12 Dec 2024 15:51:10 +0100
+Message-ID: <20241212144355.086870587@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -51,44 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit e5cfc0989d9a2849c51c720a16b90b2c061a1aeb ]
+[ Upstream commit 53bd7c1c0077db533472ae32799157758302ef48 ]
 
-of_find_compatible_node() increments the node's refcount, and it must be
-decremented again with a call to of_node_put() when the pointer is no
-longer required to avoid leaking the resource.
+The INTERVAL_TREE_DEFINE() uncoditionally provides a bunch of helper
+functions which in some cases may be not used. This, in particular,
+prevents kernel builds with clang, `make W=1` and CONFIG_WERROR=y:
 
-Instead of adding the missing calls to of_node_put() in all execution
-paths, use the cleanup attribute for 'arm_timer' by means of the
-__free() macro, which automatically calls of_node_put() when the
-variable goes out of scope.
+.../drm/drm_mm.c:152:1: error: unused function 'drm_mm_interval_tree_insert' [-Werror,-Wunused-function]
+  152 | INTERVAL_TREE_DEFINE(struct drm_mm_node, rb,
+      | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  153 |                      u64, __subtree_last,
+      |                      ~~~~~~~~~~~~~~~~~~~~
+  154 |                      START, LAST, static inline, drm_mm_interval_tree)
+      |                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Fixes: 25de4ce5ed02 ("clocksource/drivers/timer-ti-dm: Handle dra7 timer wrap errata i940")
-Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
-Link: https://lore.kernel.org/r/20241031-timer-ti-dm-systimer-of_node_put-v3-1-063ee822b73a@gmail.com
-Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
+Fix this by marking drm_mm_interval_tree*() functions with __maybe_unused.
+
+See also commit 6863f5643dd7 ("kbuild: allow Clang to find unused static
+inline functions for W=1 build").
+
+Fixes: 202b52b7fbf7 ("drm: Track drm_mm nodes with an interval tree")
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Reviewed-by: Jani Nikula <jani.nikula@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240829154640.1120050-1-andriy.shevchenko@linux.intel.com
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clocksource/timer-ti-dm-systimer.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/drm_mm.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/clocksource/timer-ti-dm-systimer.c b/drivers/clocksource/timer-ti-dm-systimer.c
-index 632523c1232f6..734920e8c5759 100644
---- a/drivers/clocksource/timer-ti-dm-systimer.c
-+++ b/drivers/clocksource/timer-ti-dm-systimer.c
-@@ -688,9 +688,9 @@ subsys_initcall(dmtimer_percpu_timer_startup);
+diff --git a/drivers/gpu/drm/drm_mm.c b/drivers/gpu/drm/drm_mm.c
+index 8257f9d4f6190..22a373eaffefd 100644
+--- a/drivers/gpu/drm/drm_mm.c
++++ b/drivers/gpu/drm/drm_mm.c
+@@ -151,7 +151,7 @@ static void show_leaks(struct drm_mm *mm) { }
  
- static int __init dmtimer_percpu_quirk_init(struct device_node *np, u32 pa)
- {
--	struct device_node *arm_timer;
-+	struct device_node *arm_timer __free(device_node) =
-+		of_find_compatible_node(NULL, NULL, "arm,armv7-timer");
+ INTERVAL_TREE_DEFINE(struct drm_mm_node, rb,
+ 		     u64, __subtree_last,
+-		     START, LAST, static inline, drm_mm_interval_tree)
++		     START, LAST, static inline __maybe_unused, drm_mm_interval_tree)
  
--	arm_timer = of_find_compatible_node(NULL, NULL, "arm,armv7-timer");
- 	if (of_device_is_available(arm_timer)) {
- 		pr_warn_once("ARM architected timer wrap issue i940 detected\n");
- 		return 0;
+ struct drm_mm_node *
+ __drm_mm_interval_first(const struct drm_mm *mm, u64 start, u64 last)
 -- 
 2.43.0
 
