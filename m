@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F8DF13CA93;
-	Thu, 12 Dec 2024 17:23:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50F9C13CA93;
+	Thu, 12 Dec 2024 17:23:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734024187; cv=none; b=KShYYoIMf187jioqpK5aJdEStWyt3PF67C/JK/hbD0TdIXVr0dHFuYZfuvTV8vbFKxs3Q+Y6boKBR147M+vMTQllVVCfQiPpngV8pPhXTAWCE0cfeaHCLYVf3tTPxl6ZaAZFx6bBsgoynbP23Y6vm9c7/qtuPiHgJc8gZJHeVW4=
+	t=1734024190; cv=none; b=r6KOyuZWArJMR64tUdUt761fYNTq5UN5KGercnNNM1cOpv4Db7XDCGeBViUsDdDqqqrh0BxkmexNGMR9fQow8hXdMzUa5hJ+7tZdvjBaNlNZPbuRkVI1StYi8UCcd9U+tjCC66WEgzYxSPFexP3++ivjaIvEKnzsUcFzUxI9xVw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734024187; c=relaxed/simple;
-	bh=CMlOVf6T5VAZDQWzW9ehbriSUqwVVYoiytnF1YL6Vrs=;
+	s=arc-20240116; t=1734024190; c=relaxed/simple;
+	bh=Ba8oJWJWeWcQKNPT1qjcrA6Arv6VJNb6VKRZamDOFTg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tHg4TrHSXKOvvRaESe8G9PSM1f9XS7mPJJVSgU1W8McFzOdPODaB7MYVpvQOjqGLjMMNtwPFTVkaf4YFqSbgoigprF73IQ9ag8CbWYlUZL2qW3eoycFQ4yGBLt18AfP+kYvpM6uC8bbQfXcB69KGu4PHueBHhwknSMVNEeh8iVU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1f3uEejt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qrooWPoVEs86K/BKBDhXi3BTOMMdW/l48hnHjbB2AvZfxZc+0juT6xiyG9YKLRZBjwBxMNq5gWzuH826k53T5n6d4DxIk7JS2mTqFfbSk0ZaRXHqrINoCuZzTVEcg9LcyhczYo3W4MOor8VWROBiux5Gkd5nWXDBDIYab4RqsaE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EC+MhXtB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1f3uEejt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B33EBC4CECE;
-	Thu, 12 Dec 2024 17:23:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EC+MhXtB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE68BC4CECE;
+	Thu, 12 Dec 2024 17:23:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734024187;
-	bh=CMlOVf6T5VAZDQWzW9ehbriSUqwVVYoiytnF1YL6Vrs=;
+	s=korg; t=1734024190;
+	bh=Ba8oJWJWeWcQKNPT1qjcrA6Arv6VJNb6VKRZamDOFTg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1f3uEejtD1xy/MkWIbQB4NkbrpmtpgbQtD43el1RJadAAO2b+8AJte7ggF0nbk1ce
-	 qTyb2Ngf6I8r/qzhecYc7Mxi6W4/5ZTKUuc9G9VpZu7t2zDGKWZRF7IPj5pk1sZHrC
-	 xlbHvztLmP7x/nb6D2+O8+MvAR1FVUzcXdgYvJNY=
+	b=EC+MhXtBauR0wXiMAKNV4/i0QcDJmLIDQBlb7GoeL8gXoV5cn//Mo6El/tShvxbkY
+	 j5l0BZmovF3oqpbGhEp2b6Tye/r4XbtY6f2uyAob+wr41H3E86pYO4TgZzInqSzo0s
+	 ouqSwlOQtaX253W70rrXjfIhYuwqRLsFChWyKQxc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>,
+	Michael Hennerich <michael.hennerich@analog.com>,
+	Lars-Peter Clausen <lars@metafoo.de>,
+	Alexandru Ardelean <alexandru.ardelean@analog.com>,
+	Rob Herring <robh@kernel.org>,
+	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 213/459] NFSD: Fix nfsd4_shutdown_copy()
-Date: Thu, 12 Dec 2024 15:59:11 +0100
-Message-ID: <20241212144301.985895730@linuxfoundation.org>
+Subject: [PATCH 5.10 186/459] dt-bindings: clock: adi,axi-clkgen: convert old binding to yaml format
+Date: Thu, 12 Dec 2024 15:58:44 +0100
+Message-ID: <20241212144300.905057578@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144253.511169641@linuxfoundation.org>
 References: <20241212144253.511169641@linuxfoundation.org>
@@ -51,71 +54,124 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Alexandru Ardelean <alexandru.ardelean@analog.com>
 
-[ Upstream commit 62a8642ba00aa8ceb0a02ade942f5ec52e877c95 ]
+[ Upstream commit bd91abb218e0ac4a7402d6c25d383e2a706bb511 ]
 
-nfsd4_shutdown_copy() is just this:
+This change converts the old binding for the AXI clkgen driver to a yaml
+format.
 
-	while ((copy = nfsd4_get_copy(clp)) != NULL)
-		nfsd4_stop_copy(copy);
+As maintainers, added:
+ - Lars-Peter Clausen <lars@metafoo.de> - as original author of driver &
+   binding
+ - Michael Hennerich <michael.hennerich@analog.com> - as supporter of
+   Analog Devices drivers
 
-nfsd4_get_copy() bumps @copy's reference count, preventing
-nfsd4_stop_copy() from releasing @copy.
-
-A while loop like this usually works by removing the first element
-of the list, but neither nfsd4_get_copy() nor nfsd4_stop_copy()
-alters the async_copies list.
-
-Best I can tell, then, is that nfsd4_shutdown_copy() continues to
-loop until other threads manage to remove all the items from this
-list. The spinning loop blocks shutdown until these items are gone.
-
-Possibly the reason we haven't seen this issue in the field is
-because client_has_state() prevents __destroy_client() from calling
-nfsd4_shutdown_copy() if there are any items on this list. In a
-subsequent patch I plan to remove that restriction.
-
-Fixes: e0639dc5805a ("NFSD introduce async copy feature")
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Acked-by: Michael Hennerich <michael.hennerich@analog.com>
+Acked-by: Lars-Peter Clausen <lars@metafoo.de>
+Signed-off-by: Alexandru Ardelean <alexandru.ardelean@analog.com>
+Link: https://lore.kernel.org/r/20201013143421.84188-1-alexandru.ardelean@analog.com
+Reviewed-by: Rob Herring <robh@kernel.org>
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Stable-dep-of: 47f3f5a82a31 ("dt-bindings: clock: axi-clkgen: include AXI clk")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs4proc.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ .../bindings/clock/adi,axi-clkgen.yaml        | 53 +++++++++++++++++++
+ .../devicetree/bindings/clock/axi-clkgen.txt  | 25 ---------
+ 2 files changed, 53 insertions(+), 25 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/clock/adi,axi-clkgen.yaml
+ delete mode 100644 Documentation/devicetree/bindings/clock/axi-clkgen.txt
 
-diff --git a/fs/nfsd/nfs4proc.c b/fs/nfsd/nfs4proc.c
-index 237e47896af86..8cf0e4e62bc84 100644
---- a/fs/nfsd/nfs4proc.c
-+++ b/fs/nfsd/nfs4proc.c
-@@ -1256,7 +1256,7 @@ static void nfsd4_stop_copy(struct nfsd4_copy *copy)
- 	nfs4_put_copy(copy);
- }
- 
--static struct nfsd4_copy *nfsd4_get_copy(struct nfs4_client *clp)
-+static struct nfsd4_copy *nfsd4_unhash_copy(struct nfs4_client *clp)
- {
- 	struct nfsd4_copy *copy = NULL;
- 
-@@ -1265,6 +1265,9 @@ static struct nfsd4_copy *nfsd4_get_copy(struct nfs4_client *clp)
- 		copy = list_first_entry(&clp->async_copies, struct nfsd4_copy,
- 					copies);
- 		refcount_inc(&copy->refcount);
-+		copy->cp_clp = NULL;
-+		if (!list_empty(&copy->copies))
-+			list_del_init(&copy->copies);
- 	}
- 	spin_unlock(&clp->async_lock);
- 	return copy;
-@@ -1274,7 +1277,7 @@ void nfsd4_shutdown_copy(struct nfs4_client *clp)
- {
- 	struct nfsd4_copy *copy;
- 
--	while ((copy = nfsd4_get_copy(clp)) != NULL)
-+	while ((copy = nfsd4_unhash_copy(clp)) != NULL)
- 		nfsd4_stop_copy(copy);
- }
- #ifdef CONFIG_NFSD_V4_2_INTER_SSC
+diff --git a/Documentation/devicetree/bindings/clock/adi,axi-clkgen.yaml b/Documentation/devicetree/bindings/clock/adi,axi-clkgen.yaml
+new file mode 100644
+index 0000000000000..0d06387184d68
+--- /dev/null
++++ b/Documentation/devicetree/bindings/clock/adi,axi-clkgen.yaml
+@@ -0,0 +1,53 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/clock/adi,axi-clkgen.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Binding for Analog Devices AXI clkgen pcore clock generator
++
++maintainers:
++  - Lars-Peter Clausen <lars@metafoo.de>
++  - Michael Hennerich <michael.hennerich@analog.com>
++
++description: |
++  The axi_clkgen IP core is a software programmable clock generator,
++  that can be synthesized on various FPGA platforms.
++
++  Link: https://wiki.analog.com/resources/fpga/docs/axi_clkgen
++
++properties:
++  compatible:
++    enum:
++      - adi,axi-clkgen-2.00.a
++
++  clocks:
++    description:
++      Specifies the reference clock(s) from which the output frequency is
++      derived. This must either reference one clock if only the first clock
++      input is connected or two if both clock inputs are connected.
++    minItems: 1
++    maxItems: 2
++
++  '#clock-cells':
++    const: 0
++
++  reg:
++    maxItems: 1
++
++required:
++  - compatible
++  - reg
++  - clocks
++  - '#clock-cells'
++
++additionalProperties: false
++
++examples:
++  - |
++    clock-controller@ff000000 {
++      compatible = "adi,axi-clkgen-2.00.a";
++      #clock-cells = <0>;
++      reg = <0xff000000 0x1000>;
++      clocks = <&osc 1>;
++    };
+diff --git a/Documentation/devicetree/bindings/clock/axi-clkgen.txt b/Documentation/devicetree/bindings/clock/axi-clkgen.txt
+deleted file mode 100644
+index aca94fe9416f0..0000000000000
+--- a/Documentation/devicetree/bindings/clock/axi-clkgen.txt
++++ /dev/null
+@@ -1,25 +0,0 @@
+-Binding for the axi-clkgen clock generator
+-
+-This binding uses the common clock binding[1].
+-
+-[1] Documentation/devicetree/bindings/clock/clock-bindings.txt
+-
+-Required properties:
+-- compatible : shall be "adi,axi-clkgen-1.00.a" or "adi,axi-clkgen-2.00.a".
+-- #clock-cells : from common clock binding; Should always be set to 0.
+-- reg : Address and length of the axi-clkgen register set.
+-- clocks : Phandle and clock specifier for the parent clock(s). This must
+-	either reference one clock if only the first clock input is connected or two
+-	if both clock inputs are connected. For the later case the clock connected
+-	to the first input must be specified first.
+-
+-Optional properties:
+-- clock-output-names : From common clock binding.
+-
+-Example:
+-	clock@ff000000 {
+-		compatible = "adi,axi-clkgen";
+-		#clock-cells = <0>;
+-		reg = <0xff000000 0x1000>;
+-		clocks = <&osc 1>;
+-	};
 -- 
 2.43.0
 
