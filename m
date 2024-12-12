@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F04E9223C7A;
-	Thu, 12 Dec 2024 16:28:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31DDB20969B;
+	Thu, 12 Dec 2024 16:28:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734020883; cv=none; b=Z9SCHCnSGH7uiJvjO5Yh4GMGVlfwnSXhF/KGTU784FRGMi55wN1UH/+s/XttCgIgVXDsj+HJZwyAWpnHbN8MGry21iQGxBeVbKitvhibsGkzLCz8pabeENoPikVM3KKrqiadgP/tahf6i24ni4Aje5PGYc3NiaAy3IIThuRT0yg=
+	t=1734020886; cv=none; b=By2AY+eCHbuPPKhLbiBMH3Lpnh5twuYWUs+mnThYeeT/oIxajI+/O0TG1VmsqhIEyOKyljLUonL0uOABiJ+CpkcdCu3JPycoUd7LWv4oKze8d+vjYnUOQWrscJ0ShfzHu0WFLQDN7AOJnAdVHrf2jy7rZD89BfVdY6h5Xzvbu0g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734020883; c=relaxed/simple;
-	bh=HphD5u/5pNAzWWqTlcfOmRLO1bealntrUiStxgsmOXc=;
+	s=arc-20240116; t=1734020886; c=relaxed/simple;
+	bh=QhXZg64Ig6KJmSZGcupjzC7icSlf6aYOcXjcFjf6wug=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hLzfGxxN50L/R2s54Ziz6hujAgY2UiAWpSemISi5gnsUmJtat6MrfUgkvOd7NPHhb0+srts95wnecBlnJW6g3OzhrOvl8yH7/FRuDajIUOlARzlFblkPUqAWM/sTmNvaRsS6doAzix5u/FUtzRtPSgvTYEUr6uKvPxdtWJdALS0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zi/JEnwj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UxnGRG6zhp1lmm23sJW3neUGsFiSbWIYeKP9Bd27RYGU6Jyuc+j0hj9j2p4oFEtyLrQ6T3fazqClbxgLWkj8sGp2D6nGxLmd9blQXN0s0q0SBbqbqb+eeUadZKVhB3VEgUE5NeqjexoHrzK7sdHbvo74C/s7QlaceSMvfLH8ApE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZbcKgBUx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zi/JEnwj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40758C4CECE;
-	Thu, 12 Dec 2024 16:28:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZbcKgBUx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A920C4CECE;
+	Thu, 12 Dec 2024 16:28:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734020882;
-	bh=HphD5u/5pNAzWWqTlcfOmRLO1bealntrUiStxgsmOXc=;
+	s=korg; t=1734020886;
+	bh=QhXZg64Ig6KJmSZGcupjzC7icSlf6aYOcXjcFjf6wug=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Zi/JEnwj9ZyMYErnNBHcZNvDB9sNIbst/loJScNY07oiv1NzerM8NfstOe5zVTWH9
-	 JbaSEQWyjskgIg4RrTHuTTPZF33dKHwxWoM5HqD9s6n8yx4I92/ixKWaiBVTY4cs8F
-	 lxS9pU6F6O+Fa/pWg6ALC6Bf47XEQV3YVyti/t2E=
+	b=ZbcKgBUxSfNWu8du2OJKnLWCoA2ZUdEmyn5C0YJ9B5vNbUJkNYUUHrQbyjkWY6M7a
+	 jBMsZN3ImILlydQwfuePz7f5eIdEPzg9fcrMLqrklcPTJT6mRxweHXI5JFrPM4JDw+
+	 CFVrfLhXtSOnrT95flS75WcjGQ1mvJaKSMT4PYWQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	"Naveen N. Rao" <naveen.n.rao@linux.vnet.ibm.com>,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
-	Sathvika Vasireddy <sv@linux.ibm.com>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Segher Boessenkool <segher@kernel.crashing.org>,
+	Linux Kernel Functional Testing <lkft@linaro.org>,
+	Anders Roxell <anders.roxell@linaro.org>,
 	Michael Ellerman <mpe@ellerman.id.au>,
+	Masahiro Yamada <masahiroy@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 556/772] powerpc/vdso: Skip objtool from running on VDSO files
-Date: Thu, 12 Dec 2024 15:58:21 +0100
-Message-ID: <20241212144412.942968747@linuxfoundation.org>
+Subject: [PATCH 6.1 557/772] powerpc/vdso: Remove unused -s flag from ASFLAGS
+Date: Thu, 12 Dec 2024 15:58:22 +0100
+Message-ID: <20241212144412.982712495@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -54,36 +56,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sathvika Vasireddy <sv@linux.ibm.com>
+From: Nathan Chancellor <nathan@kernel.org>
 
-[ Upstream commit d0160bd5d389da247fb5affb6a35ea393d22fedb ]
+[ Upstream commit 024734d132846dcb27f07deb1ec5be64d4cbfae9 ]
 
-Do not run objtool on VDSO files, by using OBJECT_FILES_NON_STANDARD.
+When clang's -Qunused-arguments is dropped from KBUILD_CPPFLAGS, it
+warns:
 
-Suggested-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Tested-by: Naveen N. Rao <naveen.n.rao@linux.vnet.ibm.com>
-Reviewed-by: Naveen N. Rao <naveen.n.rao@linux.vnet.ibm.com>
-Reviewed-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Acked-by: Josh Poimboeuf <jpoimboe@kernel.org>
-Signed-off-by: Sathvika Vasireddy <sv@linux.ibm.com>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://lore.kernel.org/r/20221114175754.1131267-8-sv@linux.ibm.com
+  clang-16: error: argument unused during compilation: '-s' [-Werror,-Wunused-command-line-argument]
+
+The compiler's '-s' flag is a linking option (it is passed along to the
+linker directly), which means it does nothing when the linker is not
+invoked by the compiler. The kernel builds all .o files with '-c', which
+stops the compilation pipeline before linking, so '-s' can be safely
+dropped from ASFLAGS.
+
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
+Reviewed-by: Segher Boessenkool <segher@kernel.crashing.org>
+Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
+Tested-by: Anders Roxell <anders.roxell@linaro.org>
+Acked-by: Michael Ellerman <mpe@ellerman.id.au>
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
 Stable-dep-of: d677ce521334 ("powerpc/vdso: Drop -mstack-protector-guard flags in 32-bit files with clang")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/kernel/vdso/Makefile | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/powerpc/kernel/vdso/Makefile | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/arch/powerpc/kernel/vdso/Makefile b/arch/powerpc/kernel/vdso/Makefile
-index a2e7b0ce5b191..6a977b0d8ffc3 100644
+index 6a977b0d8ffc3..45c0cc5d34b64 100644
 --- a/arch/powerpc/kernel/vdso/Makefile
 +++ b/arch/powerpc/kernel/vdso/Makefile
-@@ -102,3 +102,5 @@ quiet_cmd_vdso64ld_and_check = VDSO64L $@
-       cmd_vdso64ld_and_check = $(VDSOCC) $(c_flags) $(CC64FLAGS) -o $@ -Wl,-T$(filter %.lds,$^) $(filter %.o,$^) -z noexecstack ; $(cmd_vdso_check)
- quiet_cmd_vdso64as = VDSO64A $@
-       cmd_vdso64as = $(VDSOCC) $(a_flags) $(CC64FLAGS) $(AS64FLAGS) -c -o $@ $<
-+
-+OBJECT_FILES_NON_STANDARD := y
+@@ -51,10 +51,10 @@ ccflags-y := -shared -fno-common -fno-builtin -nostdlib -Wl,--hash-style=both
+ ccflags-$(CONFIG_LD_IS_LLD) += $(call cc-option,--ld-path=$(LD),-fuse-ld=lld)
+ 
+ CC32FLAGS := -Wl,-soname=linux-vdso32.so.1 -m32
+-AS32FLAGS := -D__VDSO32__ -s
++AS32FLAGS := -D__VDSO32__
+ 
+ CC64FLAGS := -Wl,-soname=linux-vdso64.so.1
+-AS64FLAGS := -D__VDSO64__ -s
++AS64FLAGS := -D__VDSO64__
+ 
+ targets += vdso32.lds
+ CPPFLAGS_vdso32.lds += -P -C -Upowerpc
 -- 
 2.43.0
 
