@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53D66228C8D;
-	Thu, 12 Dec 2024 16:14:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C6FF228C8D;
+	Thu, 12 Dec 2024 16:14:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734020071; cv=none; b=asPgvIxBzSizr2GUdtBQ2sX1Y4djCTQJ7kfVEMB/BB0pM4ELgqn/8isJKGNZKhb+dlgjlWpYxDeICcM96m+/oNqtNQBqBhT4A2cq2EQJheKiQszmAlU0ReutJ1hj52CKNlWrgR9s0e/SPwJz/EYRurFqQO7NghbWCBLOmExubGk=
+	t=1734020075; cv=none; b=kEeYcHbjSdzKBEUKeycsppfKotQAH0u6hqSy6s9TpB0tnqwZy32lX0ZPcII19zLjtYj2Nh6jXqHD7PzNA759jBrp8HmacWqoIjdj5TTCsImulCLZPBj/y7CZLE0YwE1yfcajNTkSIW4XlwnemFmDuhYKn3tPyXo+yw+AhKs6rds=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734020071; c=relaxed/simple;
-	bh=rufw4Vxv90xXQhhhJqyyLt/1ytHPmaMwB3sGScdZyBQ=;
+	s=arc-20240116; t=1734020075; c=relaxed/simple;
+	bh=q+x1aDQMZ2bNv1tqaKzneIrhFs6FFfjXX1Q/D3FFuM0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LuDGmzVyUDksokdKbFvrL5+qusSzssGTVxYlChAYqULEmk/ARc3CPtiTKxApid75g5INcOF4kpt0rq0z0kE3Fooy+2DPlJbDFtXSmjBz2l6Zgq1XwrSbPiiqfE8sRG4GKBEKTCicjhzs02Uxdm8qhmiyh6YKBddL0FnhaOD6HMg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xQDVvCyn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Rp6W2+Ix9VSjKrdGVWxep1acLYZn5E2B3g405vWVLF0zXeEDVgxF4kEwiROXd4AdSiXB6YEE8EyiT7khLBzRvFsJs4QkoyDz+aRdEOgr1zObtwcF1CtTeEin3pMX+zipOs6U/D2ZKCMb3exjYsz6ikNRKwqv/QFlFqjclafZgHM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PQO4wVQi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xQDVvCyn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F422C4CED0;
-	Thu, 12 Dec 2024 16:14:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PQO4wVQi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80605C4CECE;
+	Thu, 12 Dec 2024 16:14:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734020071;
-	bh=rufw4Vxv90xXQhhhJqyyLt/1ytHPmaMwB3sGScdZyBQ=;
+	s=korg; t=1734020075;
+	bh=q+x1aDQMZ2bNv1tqaKzneIrhFs6FFfjXX1Q/D3FFuM0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xQDVvCynU1JUgCkpjTl16zpOM9I/q4XOMcdVz6iIBjElEZfL6ZgBmJOFsXRzM1lG2
-	 XQorMmuyXboCxgaTBMmiNxpNG0ieXrLemg5FKDYZOGG7Ytf0p2ErU1rQ2aA+EDQlva
-	 SaOo+n3yM67pCQOn3xQ2qE3hv6RHGON6mDWIzRow=
+	b=PQO4wVQim8+ry7KrO5itAEOSrhJcMlS0n+yewSxmZyPb1LyU7su3eAmMzVwlWST14
+	 RdOtR3zWw2Q1oTiN7b+YPWF8ew7vnffRmiOCtXaodqnpNx8xSe67OirUlOg+QQ2XHc
+	 vRxwRYauGvL2m2H0FMIASjP+fGuComAffkLcCHcs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Potapenko <glider@google.com>,
+	Raghavendra Rao Ananta <rananta@google.com>,
 	Marc Zyngier <maz@kernel.org>,
 	Oliver Upton <oliver.upton@linux.dev>
-Subject: [PATCH 6.1 371/772] KVM: arm64: vgic-v3: Sanitise guest writes to GICR_INVLPIR
-Date: Thu, 12 Dec 2024 15:55:16 +0100
-Message-ID: <20241212144405.241000522@linuxfoundation.org>
+Subject: [PATCH 6.1 372/772] KVM: arm64: Ignore PMCNTENSET_EL0 while checking for overflow status
+Date: Thu, 12 Dec 2024 15:55:17 +0100
+Message-ID: <20241212144405.280122644@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -51,49 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Zyngier <maz@kernel.org>
+From: Raghavendra Rao Ananta <rananta@google.com>
 
-commit d561491ba927cb5634094ff311795e9d618e9b86 upstream.
+commit 54bbee190d42166209185d89070c58a343bf514b upstream.
 
-Make sure we filter out non-LPI invalidation when handling writes
-to GICR_INVLPIR.
+DDI0487K.a D13.3.1 describes the PMU overflow condition, which evaluates
+to true if any counter's global enable (PMCR_EL0.E), overflow flag
+(PMOVSSET_EL0[n]), and interrupt enable (PMINTENSET_EL1[n]) are all 1.
+Of note, this does not require a counter to be enabled
+(i.e. PMCNTENSET_EL0[n] = 1) to generate an overflow.
 
-Fixes: 4645d11f4a553 ("KVM: arm64: vgic-v3: Implement MMIO-based LPI invalidation")
-Reported-by: Alexander Potapenko <glider@google.com>
-Tested-by: Alexander Potapenko <glider@google.com>
-Signed-off-by: Marc Zyngier <maz@kernel.org>
+Align kvm_pmu_overflow_status() with the reality of the architecture
+and stop using PMCNTENSET_EL0 as part of the overflow condition. The
+bug was discovered while running an SBSA PMU test [*], which only sets
+PMCR.E, PMOVSSET<0>, PMINTENSET<0>, and expects an overflow interrupt.
+
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20241117165757.247686-2-maz@kernel.org
+Fixes: 76d883c4e640 ("arm64: KVM: Add access handler for PMOVSSET and PMOVSCLR register")
+Link: https://github.com/ARM-software/sbsa-acs/blob/master/test_pool/pmu/operating_system/test_pmu001.c
+Signed-off-by: Raghavendra Rao Ananta <rananta@google.com>
+[ oliver: massaged changelog ]
+Reviewed-by: Marc Zyngier <maz@kernel.org>
+Link: https://lore.kernel.org/r/20241120005230.2335682-2-oliver.upton@linux.dev
 Signed-off-by: Oliver Upton <oliver.upton@linux.dev>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kvm/vgic/vgic-mmio-v3.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ arch/arm64/kvm/pmu-emul.c |    1 -
+ 1 file changed, 1 deletion(-)
 
---- a/arch/arm64/kvm/vgic/vgic-mmio-v3.c
-+++ b/arch/arm64/kvm/vgic/vgic-mmio-v3.c
-@@ -555,6 +555,7 @@ static void vgic_mmio_write_invlpi(struc
- 				   unsigned long val)
- {
- 	struct vgic_irq *irq;
-+	u32 intid;
+--- a/arch/arm64/kvm/pmu-emul.c
++++ b/arch/arm64/kvm/pmu-emul.c
+@@ -294,7 +294,6 @@ static u64 kvm_pmu_overflow_status(struc
  
- 	/*
- 	 * If the guest wrote only to the upper 32bit part of the
-@@ -566,9 +567,13 @@ static void vgic_mmio_write_invlpi(struc
- 	if ((addr & 4) || !vgic_lpis_enabled(vcpu))
- 		return;
+ 	if ((__vcpu_sys_reg(vcpu, PMCR_EL0) & ARMV8_PMU_PMCR_E)) {
+ 		reg = __vcpu_sys_reg(vcpu, PMOVSSET_EL0);
+-		reg &= __vcpu_sys_reg(vcpu, PMCNTENSET_EL0);
+ 		reg &= __vcpu_sys_reg(vcpu, PMINTENSET_EL1);
+ 	}
  
-+	intid = lower_32_bits(val);
-+	if (intid < VGIC_MIN_LPI)
-+		return;
-+
- 	vgic_set_rdist_busy(vcpu, true);
- 
--	irq = vgic_get_irq(vcpu->kvm, NULL, lower_32_bits(val));
-+	irq = vgic_get_irq(vcpu->kvm, NULL, intid);
- 	if (irq) {
- 		vgic_its_inv_lpi(vcpu->kvm, irq);
- 		vgic_put_irq(vcpu->kvm, irq);
 
 
