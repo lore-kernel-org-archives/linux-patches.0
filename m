@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EDD0216E14;
-	Thu, 12 Dec 2024 16:53:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0C73227B9E;
+	Thu, 12 Dec 2024 16:53:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734022427; cv=none; b=Wax+sjpp7hG6UahslsTeYyHf8n1Oy0qGx4EgCR0GcZ5MR68JF9AUHSEKHH0e6rxnFUgLAgcM7/SeC3Bm7PHDRY2P5M6GE4MNEl9+P+NyADqP0ZPvUQcF8fl7gc7AFT8g342q9ATjyCwwNsXEsPTrJhn2ZA3Kizc4U3XkCB4MIA8=
+	t=1734022430; cv=none; b=Ay7494H7gP2QZZ3yJHW5CvnRpv6ou6siVSQJU3/m+ne5hW2+nAVE58PGj2V/cVgDUb44za0Rz+dWzJjLMau3Dbmc4d2dpv9R2ggXEn95MVwkrTt7eGmOj0sj+SMV463LblwJdSQJLUVqiRUbsIsMnu1hDa1umGZ86u64/ClIrw0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734022427; c=relaxed/simple;
-	bh=QJSzcQx/a0A3uq8agX1tvy2icS6pEVgtn8wFehXr0eQ=;
+	s=arc-20240116; t=1734022430; c=relaxed/simple;
+	bh=9hPHml+CckUmCe1dyGddOgMq21Wpfg6FIRPwI2X5gjg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eQAwEWG0DCQ/HphLv+bBp0VRcaUVi25vPAwOMrjG786OPOWs7z7Sq1rdwESki6TX51h3BfkT+8WepS8ftTxajWvpnop5xypobu7Ht647T6MKoG/SieyOc2069irc88/PcX/+H3AW1zcckyDc51ZeMVKdJE2h42Kbh5sbq5ArIPY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fyPc0G+z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WFj8Z8LVwjfBG9AH6gv8HkOwUht790F4TnzVkl8m4w4qu5W2KumcZVGxyr+VxEJBnpHDYTl50CmNkMT+0KQdy34dIwWQtuiydzXDY2aq5Zfl2gZ7SYQm0B1ET2DAUmXedLPTKxTp/v+zBLhKNiBPwXniZj7++C+EzMiJh/YsXag=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n8k68Dc1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fyPc0G+z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73A31C4CECE;
-	Thu, 12 Dec 2024 16:53:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n8k68Dc1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA057C4CECE;
+	Thu, 12 Dec 2024 16:53:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734022426;
-	bh=QJSzcQx/a0A3uq8agX1tvy2icS6pEVgtn8wFehXr0eQ=;
+	s=korg; t=1734022430;
+	bh=9hPHml+CckUmCe1dyGddOgMq21Wpfg6FIRPwI2X5gjg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fyPc0G+zvfHMJa8KhqA+xlJ+SwITdedKCiIXxgGjp5t1hpQnhdmWKjKRmIdClLYM7
-	 c8GzfZLGimGGwTytTpgSdci/9qU5eXk/tCgY8BLB1mNukdacDjlWb0aLs/P40pSMnu
-	 nJuj50L2k7QALSdg8UblkB4+79LMLMf1i2AQoLYQ=
+	b=n8k68Dc1Ji2aaFaEVtmUw1uKGYuOJN4kMPYBmDBfR5Q3MDCWuN7SHG0AEAr1nujfE
+	 sXxfs6yYHp/SogRPLk5yO+8Pfly0CLXjx+Z1s0/czSpe5D/MTJR8ptpK0pB8iUHER5
+	 d0nFpabv7OXkUukqB3DdQa3GYvzozCzqRLZe03sE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Disha Goel <disgoel@linux.ibm.com>,
-	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Nuno Sa <nuno.sa@analog.com>,
+	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 220/565] powerpc/mm/fault: Fix kfence page fault reporting
-Date: Thu, 12 Dec 2024 15:56:55 +0100
-Message-ID: <20241212144320.188498938@linuxfoundation.org>
+Subject: [PATCH 5.15 238/565] clk: clk-axi-clkgen: make sure to enable the AXI bus clock
+Date: Thu, 12 Dec 2024 15:57:13 +0100
+Message-ID: <20241212144320.890078870@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144311.432886635@linuxfoundation.org>
 References: <20241212144311.432886635@linuxfoundation.org>
@@ -53,83 +51,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+From: Nuno Sa <nuno.sa@analog.com>
 
-[ Upstream commit 06dbbb4d5f7126b6307ab807cbf04ecfc459b933 ]
+[ Upstream commit c64ef7e4851d1a9abbb7f7833e4936973ac5ba79 ]
 
-copy_from_kernel_nofault() can be called when doing read of /proc/kcore.
-/proc/kcore can have some unmapped kfence objects which when read via
-copy_from_kernel_nofault() can cause page faults. Since *_nofault()
-functions define their own fixup table for handling fault, use that
-instead of asking kfence to handle such faults.
+In order to access the registers of the HW, we need to make sure that
+the AXI bus clock is enabled. Hence let's increase the number of clocks
+by one.
 
-Hence we search the exception tables for the nip which generated the
-fault. If there is an entry then we let the fixup table handler handle the
-page fault by returning an error from within ___do_page_fault().
+In order to keep backward compatibility and make sure old DTs still work
+we check if clock-names is available or not. If it is, then we can
+disambiguate between really having the AXI clock or a parent clock and
+so we can enable the bus clock. If not, we fallback to what was done
+before and don't explicitly enable the AXI bus clock.
 
-This can be easily triggered if someone tries to do dd from /proc/kcore.
-eg. dd if=/proc/kcore of=/dev/null bs=1M
+Note that if clock-names is given, the axi clock must be the last one in
+the phandle array (also enforced in the DT bindings) so that we can reuse
+as much code as possible.
 
-Some example false negatives:
-
-  ===============================
-  BUG: KFENCE: invalid read in copy_from_kernel_nofault+0x9c/0x1a0
-  Invalid read at 0xc0000000fdff0000:
-   copy_from_kernel_nofault+0x9c/0x1a0
-   0xc00000000665f950
-   read_kcore_iter+0x57c/0xa04
-   proc_reg_read_iter+0xe4/0x16c
-   vfs_read+0x320/0x3ec
-   ksys_read+0x90/0x154
-   system_call_exception+0x120/0x310
-   system_call_vectored_common+0x15c/0x2ec
-
-  BUG: KFENCE: use-after-free read in copy_from_kernel_nofault+0x9c/0x1a0
-  Use-after-free read at 0xc0000000fe050000 (in kfence-#2):
-   copy_from_kernel_nofault+0x9c/0x1a0
-   0xc00000000665f950
-   read_kcore_iter+0x57c/0xa04
-   proc_reg_read_iter+0xe4/0x16c
-   vfs_read+0x320/0x3ec
-   ksys_read+0x90/0x154
-   system_call_exception+0x120/0x310
-   system_call_vectored_common+0x15c/0x2ec
-
-Fixes: 90cbac0e995d ("powerpc: Enable KFENCE for PPC32")
-Suggested-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Reported-by: Disha Goel <disgoel@linux.ibm.com>
-Signed-off-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
-Reviewed-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://patch.msgid.link/a411788081d50e3b136c6270471e35aba3dfafa3.1729271995.git.ritesh.list@gmail.com
+Fixes: 0e646c52cf0e ("clk: Add axi-clkgen driver")
+Signed-off-by: Nuno Sa <nuno.sa@analog.com>
+Link: https://lore.kernel.org/r/20241029-axi-clkgen-fix-axiclk-v2-2-bc5e0733ad76@analog.com
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/mm/fault.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/clk/clk-axi-clkgen.c | 22 ++++++++++++++++++++--
+ 1 file changed, 20 insertions(+), 2 deletions(-)
 
-diff --git a/arch/powerpc/mm/fault.c b/arch/powerpc/mm/fault.c
-index 4a15172dfef29..1e5fbef64076d 100644
---- a/arch/powerpc/mm/fault.c
-+++ b/arch/powerpc/mm/fault.c
-@@ -412,10 +412,16 @@ static int ___do_page_fault(struct pt_regs *regs, unsigned long address,
- 	/*
- 	 * The kernel should never take an execute fault nor should it
- 	 * take a page fault to a kernel address or a page fault to a user
--	 * address outside of dedicated places
-+	 * address outside of dedicated places.
-+	 *
-+	 * Rather than kfence directly reporting false negatives, search whether
-+	 * the NIP belongs to the fixup table for cases where fault could come
-+	 * from functions like copy_from_kernel_nofault().
- 	 */
- 	if (unlikely(!is_user && bad_kernel_fault(regs, error_code, address, is_write))) {
--		if (kfence_handle_page_fault(address, is_write, regs))
-+		if (is_kfence_address((void *)address) &&
-+		    !search_exception_tables(instruction_pointer(regs)) &&
-+		    kfence_handle_page_fault(address, is_write, regs))
- 			return 0;
+diff --git a/drivers/clk/clk-axi-clkgen.c b/drivers/clk/clk-axi-clkgen.c
+index ac6ff736ac8f6..bb5cd9d389930 100644
+--- a/drivers/clk/clk-axi-clkgen.c
++++ b/drivers/clk/clk-axi-clkgen.c
+@@ -7,6 +7,7 @@
+  */
  
- 		return SIGSEGV;
+ #include <linux/platform_device.h>
++#include <linux/clk.h>
+ #include <linux/clk-provider.h>
+ #include <linux/slab.h>
+ #include <linux/io.h>
+@@ -510,6 +511,7 @@ static int axi_clkgen_probe(struct platform_device *pdev)
+ 	struct clk_init_data init;
+ 	const char *parent_names[2];
+ 	const char *clk_name;
++	struct clk *axi_clk;
+ 	unsigned int i;
+ 	int ret;
+ 
+@@ -526,8 +528,24 @@ static int axi_clkgen_probe(struct platform_device *pdev)
+ 		return PTR_ERR(axi_clkgen->base);
+ 
+ 	init.num_parents = of_clk_get_parent_count(pdev->dev.of_node);
+-	if (init.num_parents < 1 || init.num_parents > 2)
+-		return -EINVAL;
++
++	axi_clk = devm_clk_get_enabled(&pdev->dev, "s_axi_aclk");
++	if (!IS_ERR(axi_clk)) {
++		if (init.num_parents < 2 || init.num_parents > 3)
++			return -EINVAL;
++
++		init.num_parents -= 1;
++	} else {
++		/*
++		 * Legacy... So that old DTs which do not have clock-names still
++		 * work. In this case we don't explicitly enable the AXI bus
++		 * clock.
++		 */
++		if (PTR_ERR(axi_clk) != -ENOENT)
++			return PTR_ERR(axi_clk);
++		if (init.num_parents < 1 || init.num_parents > 2)
++			return -EINVAL;
++	}
+ 
+ 	for (i = 0; i < init.num_parents; i++) {
+ 		parent_names[i] = of_clk_get_parent_name(pdev->dev.of_node, i);
 -- 
 2.43.0
 
