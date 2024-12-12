@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 137C8211476;
-	Thu, 12 Dec 2024 15:05:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E7552080FC;
+	Thu, 12 Dec 2024 15:05:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734015950; cv=none; b=gkQfxzv4FdRHzqz9jh9KcCHpaFfQ7HSg8upo/44M5UMfWOh32HDXiKbiYnFbhL1LYK+d71fnZPr0JtMEzUzengiriKMIV823nk8vb/xBE4ieRKFRq2rRT4KuvdY/s4uALrYM/M2HYn9tLmEEQMUH9vWHO+vMQlZfZqeVMFdQWb0=
+	t=1734015953; cv=none; b=rPmp0Q9rgd25WZ7qF3P3gZH5r7KZleZUG/0PI2ZvYKAmkG5XOEQElOg5Z7J9L+GVGUwdr2N3x8x+rcx5QoAW+Kg9Ty4vBHDdKR7ZyVbk3t3ziVcBxNurEy5YaSwsmS+AMTPAbscYa83XB87ch0unLYHsZaDV+7NkJ2oyiX6zuzY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734015950; c=relaxed/simple;
-	bh=cycqCYIeeLw6dSAVgFThldwCCdtpnF/DJVldsisrdXk=;
+	s=arc-20240116; t=1734015953; c=relaxed/simple;
+	bh=UT+2cNNATiI75AoYoournL7hOwCWTITHT+CU15Cl/hA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VjfXTxWua70OGxEqZNTVhdZ8OSJaegpUEV5UiCc6oiOpS4iZ79GrSjVl3IPLnCaosLUkQuoFyEKtHQXQKm1QM/Vv02obp/c+J/ToLrN+qFM9WCGRPioATIZujZEApiJu/XgRyqF0CqSBb43fiQjU1V8brX7ZxE1HE+I4LpPPlPY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ge3VxBAt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IZQX9BQOQBc6fya15vcV+M9ykvA3r2gd5Ffd+w5eXBeg4XPZBl8DqZDW1HSawPw4p0LjGYHmmE8RHckPZbF4mB5P2evErXxhdqlydZR8meJDalwdzy1hdc5V8Hqr9ZvKHenUDoQaQ+P+1hH73y8STV+qh8sOcG4X8BxJ+nIWOHU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q1ncEPxv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ge3VxBAt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91716C4CECE;
-	Thu, 12 Dec 2024 15:05:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q1ncEPxv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9EEDC4CED0;
+	Thu, 12 Dec 2024 15:05:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734015950;
-	bh=cycqCYIeeLw6dSAVgFThldwCCdtpnF/DJVldsisrdXk=;
+	s=korg; t=1734015953;
+	bh=UT+2cNNATiI75AoYoournL7hOwCWTITHT+CU15Cl/hA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ge3VxBAtXSMP4whFfPfbVzQzJJQ+/gjQmYAuPhERB9zT/7bgEWoNkapAfqACcmpLf
-	 M/uJQCnfLI77fBG3CVw91qYqvE/QsTN4VgSlXK3OaZ1Izj9kZUG8U8iUKnQy59lXxI
-	 8k5fNi+ji4eWS7k8APD4ZPQl9RlstKwUmLIevYE0=
+	b=q1ncEPxvr+KxmoTg6V51NX/UTrDAVok4rYEpfhLufv8QpmK+SAFYS71QUWsf4Ip9d
+	 pJXDRlAPb6aqExfcNRoYsybZRBunY8axQajkKZSsFykty3h7ybT0I8eJylr4/TZNZa
+	 wesynXeBLDz3bqNICRVFlpI1ZwoNDAWHhw6a3HhI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zijian Zhang <zijianzhang@bytedance.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	John Fastabend <john.fastabend@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 088/466] tcp_bpf: Fix the sk_mem_uncharge logic in tcp_bpf_sendmsg
-Date: Thu, 12 Dec 2024 15:54:17 +0100
-Message-ID: <20241212144310.294818328@linuxfoundation.org>
+Subject: [PATCH 6.12 089/466] ALSA: seq: ump: Fix seq port updates per FB info notify
+Date: Thu, 12 Dec 2024 15:54:18 +0100
+Message-ID: <20241212144310.333022086@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144306.641051666@linuxfoundation.org>
 References: <20241212144306.641051666@linuxfoundation.org>
@@ -52,163 +50,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zijian Zhang <zijianzhang@bytedance.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit ca70b8baf2bd125b2a4d96e76db79375c07d7ff2 ]
+[ Upstream commit aaa55faa2495320e44bc643a917c701f2cc89ee7 ]
 
-The current sk memory accounting logic in __SK_REDIRECT is pre-uncharging
-tosend bytes, which is either msg->sg.size or a smaller value apply_bytes.
+update_port_infos() is called when a UMP FB Info update notification
+is received, and this function is supposed to update the attributes of
+the corresponding sequencer port.  However, the function had a few
+issues and it brought to the incorrect states.  Namely:
 
-Potential problems with this strategy are as follows:
+- It tried to get a wrong sequencer info for the update without
+  correcting the port number with the group-offset 1
+- The loop exited immediately when a sequencer port isn't present;
+  this ended up with the truncation if a sequencer port in the middle
+  goes away
 
-- If the actual sent bytes are smaller than tosend, we need to charge some
-  bytes back, as in line 487, which is okay but seems not clean.
+This patch addresses those bugs.
 
-- When tosend is set to apply_bytes, as in line 417, and (ret < 0), we may
-  miss uncharging (msg->sg.size - apply_bytes) bytes.
-
-[...]
-415 tosend = msg->sg.size;
-416 if (psock->apply_bytes && psock->apply_bytes < tosend)
-417   tosend = psock->apply_bytes;
-[...]
-443 sk_msg_return(sk, msg, tosend);
-444 release_sock(sk);
-446 origsize = msg->sg.size;
-447 ret = tcp_bpf_sendmsg_redir(sk_redir, redir_ingress,
-448                             msg, tosend, flags);
-449 sent = origsize - msg->sg.size;
-[...]
-454 lock_sock(sk);
-455 if (unlikely(ret < 0)) {
-456   int free = sk_msg_free_nocharge(sk, msg);
-458   if (!cork)
-459     *copied -= free;
-460 }
-[...]
-487 if (eval == __SK_REDIRECT)
-488   sk_mem_charge(sk, tosend - sent);
-[...]
-
-When running the selftest test_txmsg_redir_wait_sndmem with txmsg_apply,
-the following warning will be reported:
-
-------------[ cut here ]------------
-WARNING: CPU: 6 PID: 57 at net/ipv4/af_inet.c:156 inet_sock_destruct+0x190/0x1a0
-Modules linked in:
-CPU: 6 UID: 0 PID: 57 Comm: kworker/6:0 Not tainted 6.12.0-rc1.bm.1-amd64+ #43
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.12.0-1 04/01/2014
-Workqueue: events sk_psock_destroy
-RIP: 0010:inet_sock_destruct+0x190/0x1a0
-RSP: 0018:ffffad0a8021fe08 EFLAGS: 00010206
-RAX: 0000000000000011 RBX: ffff9aab4475b900 RCX: ffff9aab481a0800
-RDX: 0000000000000303 RSI: 0000000000000011 RDI: ffff9aab4475b900
-RBP: ffff9aab4475b990 R08: 0000000000000000 R09: ffff9aab40050ec0
-R10: 0000000000000000 R11: ffff9aae6fdb1d01 R12: ffff9aab49c60400
-R13: ffff9aab49c60598 R14: ffff9aab49c60598 R15: dead000000000100
-FS:  0000000000000000(0000) GS:ffff9aae6fd80000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007ffec7e47bd8 CR3: 00000001a1a1c004 CR4: 0000000000770ef0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-PKRU: 55555554
-Call Trace:
-<TASK>
-? __warn+0x89/0x130
-? inet_sock_destruct+0x190/0x1a0
-? report_bug+0xfc/0x1e0
-? handle_bug+0x5c/0xa0
-? exc_invalid_op+0x17/0x70
-? asm_exc_invalid_op+0x1a/0x20
-? inet_sock_destruct+0x190/0x1a0
-__sk_destruct+0x25/0x220
-sk_psock_destroy+0x2b2/0x310
-process_scheduled_works+0xa3/0x3e0
-worker_thread+0x117/0x240
-? __pfx_worker_thread+0x10/0x10
-kthread+0xcf/0x100
-? __pfx_kthread+0x10/0x10
-ret_from_fork+0x31/0x40
-? __pfx_kthread+0x10/0x10
-ret_from_fork_asm+0x1a/0x30
-</TASK>
----[ end trace 0000000000000000 ]---
-
-In __SK_REDIRECT, a more concise way is delaying the uncharging after sent
-bytes are finalized, and uncharge this value. When (ret < 0), we shall
-invoke sk_msg_free.
-
-Same thing happens in case __SK_DROP, when tosend is set to apply_bytes,
-we may miss uncharging (msg->sg.size - apply_bytes) bytes. The same
-warning will be reported in selftest.
-
-[...]
-468 case __SK_DROP:
-469 default:
-470 sk_msg_free_partial(sk, msg, tosend);
-471 sk_msg_apply_bytes(psock, tosend);
-472 *copied -= (tosend + delta);
-473 return -EACCES;
-[...]
-
-So instead of sk_msg_free_partial we can do sk_msg_free here.
-
-Fixes: 604326b41a6f ("bpf, sockmap: convert to generic sk_msg interface")
-Fixes: 8ec95b94716a ("bpf, sockmap: Fix the sk->sk_forward_alloc warning of sk_stream_kill_queues")
-Signed-off-by: Zijian Zhang <zijianzhang@bytedance.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Acked-by: John Fastabend <john.fastabend@gmail.com>
-Link: https://lore.kernel.org/bpf/20241016234838.3167769-3-zijianzhang@bytedance.com
+Fixes: 4a16a3af0571 ("ALSA: seq: ump: Handle FB info update")
+Link: https://patch.msgid.link/20241128170423.23351-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_bpf.c | 11 ++++-------
- 1 file changed, 4 insertions(+), 7 deletions(-)
+ sound/core/seq/seq_ump_client.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/net/ipv4/tcp_bpf.c b/net/ipv4/tcp_bpf.c
-index 370993c03d313..99cef92e6290c 100644
---- a/net/ipv4/tcp_bpf.c
-+++ b/net/ipv4/tcp_bpf.c
-@@ -441,7 +441,6 @@ static int tcp_bpf_send_verdict(struct sock *sk, struct sk_psock *psock,
- 			cork = true;
- 			psock->cork = NULL;
- 		}
--		sk_msg_return(sk, msg, tosend);
- 		release_sock(sk);
+diff --git a/sound/core/seq/seq_ump_client.c b/sound/core/seq/seq_ump_client.c
+index e5d3f4d206bf6..e956f17f37928 100644
+--- a/sound/core/seq/seq_ump_client.c
++++ b/sound/core/seq/seq_ump_client.c
+@@ -257,12 +257,12 @@ static void update_port_infos(struct seq_ump_client *client)
+ 			continue;
  
- 		origsize = msg->sg.size;
-@@ -453,8 +452,9 @@ static int tcp_bpf_send_verdict(struct sock *sk, struct sk_psock *psock,
- 			sock_put(sk_redir);
- 
- 		lock_sock(sk);
-+		sk_mem_uncharge(sk, sent);
- 		if (unlikely(ret < 0)) {
--			int free = sk_msg_free_nocharge(sk, msg);
-+			int free = sk_msg_free(sk, msg);
- 
- 			if (!cork)
- 				*copied -= free;
-@@ -468,7 +468,7 @@ static int tcp_bpf_send_verdict(struct sock *sk, struct sk_psock *psock,
- 		break;
- 	case __SK_DROP:
- 	default:
--		sk_msg_free_partial(sk, msg, tosend);
-+		sk_msg_free(sk, msg);
- 		sk_msg_apply_bytes(psock, tosend);
- 		*copied -= (tosend + delta);
- 		return -EACCES;
-@@ -484,11 +484,8 @@ static int tcp_bpf_send_verdict(struct sock *sk, struct sk_psock *psock,
- 		}
- 		if (msg &&
- 		    msg->sg.data[msg->sg.start].page_link &&
--		    msg->sg.data[msg->sg.start].length) {
--			if (eval == __SK_REDIRECT)
--				sk_mem_charge(sk, tosend - sent);
-+		    msg->sg.data[msg->sg.start].length)
- 			goto more_data;
--		}
+ 		old->addr.client = client->seq_client;
+-		old->addr.port = i;
++		old->addr.port = ump_group_to_seq_port(i);
+ 		err = snd_seq_kernel_client_ctl(client->seq_client,
+ 						SNDRV_SEQ_IOCTL_GET_PORT_INFO,
+ 						old);
+ 		if (err < 0)
+-			return;
++			continue;
+ 		fill_port_info(new, client, &client->ump->groups[i]);
+ 		if (old->capability == new->capability &&
+ 		    !strcmp(old->name, new->name))
+@@ -271,7 +271,7 @@ static void update_port_infos(struct seq_ump_client *client)
+ 						SNDRV_SEQ_IOCTL_SET_PORT_INFO,
+ 						new);
+ 		if (err < 0)
+-			return;
++			continue;
+ 		/* notify to system port */
+ 		snd_seq_system_client_ev_port_change(client->seq_client, i);
  	}
- 	return ret;
- }
 -- 
 2.43.0
 
