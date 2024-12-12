@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 122DB222D54;
-	Thu, 12 Dec 2024 15:53:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A18D921578F;
+	Thu, 12 Dec 2024 15:53:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734018823; cv=none; b=uv7bn+EWDdUbfvoVxYeAoLJmsCvu8QM3krCIWqU8HEpsx/Xgcut2xwueYoAFFdtkV51piANYA0Mq6sf0cdh/gnFc/F7btgZODk2F4wLPfPU300OCqK7ZBgmK/JBsBCuicptAcWHpXHeF9FJX4wI2qpmt5WQzf5Pne4SIKsHpH6I=
+	t=1734018826; cv=none; b=m3LZkOkNXQWVBV9IBDg68pJK7h/tMy/ZzApHWn4KvtKPIC/BtwELrsAt6MKNgsHNlfyh7dOkPQr/waTbYdhDrUdkNLWZjAIPMleHhvH5w6as/KXli9SZZwtJ9Jfq5NupE1NhDymQxcggxbde6E7Y9TdH8o8RpYX89hIFEPBKRcM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734018823; c=relaxed/simple;
-	bh=IN4YstUWjP/asVNcZ8ItDWvUJexJjnUqTT/PaTZ0yP0=;
+	s=arc-20240116; t=1734018826; c=relaxed/simple;
+	bh=3RBSDGqJwOVYGcTJNoA19c+TWyLP2qVDU6BJleVu7oU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Kxmo+tx4OiACFyZXGk8C85eum6xE7qH6fX1Z2UX4ZwZPmIezKJJIKm5YOwoakx+HV/QAD+vEODLsTWmnzrLuzl5StKRdUxjBU+/6k/ZfvXsel1pt1gezIGezuP3AoKX9TF3GsbYyVTP7S27pcaYAhY6dpmb6sePSigDrmvpvx3E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fw9wf1j0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oj8cJI+GKA0Y+zJXu+4sulCQ4YXzKJNl6oK5c74Y9BemjG+sVyhRumux2Ed0WUkkc2X/YIKaATWPdsq6BVhc6sZ25dsK1OC/OPO9z463I37hByud1sgLTRgFf07diSJd4w9p79wUrubrsDaLooQLw2civ4Dwki7Lsgn0AU6QG2E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X2dZ+iPd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fw9wf1j0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FE3EC4CECE;
-	Thu, 12 Dec 2024 15:53:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X2dZ+iPd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6303C4CECE;
+	Thu, 12 Dec 2024 15:53:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734018822;
-	bh=IN4YstUWjP/asVNcZ8ItDWvUJexJjnUqTT/PaTZ0yP0=;
+	s=korg; t=1734018826;
+	bh=3RBSDGqJwOVYGcTJNoA19c+TWyLP2qVDU6BJleVu7oU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Fw9wf1j0PcDGHOA9031uX6ZJDQAibnClb8yERUUvwplB/Rm2c35cwJ7AsUK8Zoevr
-	 1Vs7tK7FP1F9aDazyQHAW5t6UqkDg6vaDczPcnZhw1W34K2vmpxv+RMIOFssqhPuHJ
-	 O+1TQVGYMLmuqXm8qG5DnbIg07H/CVetoSXGJhV4=
+	b=X2dZ+iPdK5/CF4r0u+9oueRCD5DP99jOdcPMNF9SW1CZFy+X+5ciR89QzJ++7oyPP
+	 ecykdDVTIz7RN2hpF65qSQqeRRCNCNHB4tfvi4Ge3Ye2HVqTRd/L30Fwpwv6uexbQA
+	 eFt6yjPa3bCNUyck2X6XZEELi852UzMWaEfxLFg0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Zhijian <lizhijian@fujitsu.com>,
-	Jan Kara <jack@suse.cz>,
-	Christian Brauner <brauner@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Xiangyu Chen <xiangyu.chen@windriver.com>
-Subject: [PATCH 6.1 044/772] fs/inode: Prevent dump_mapping() accessing invalid dentry.d_name.name
-Date: Thu, 12 Dec 2024 15:49:49 +0100
-Message-ID: <20241212144351.756738891@linuxfoundation.org>
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Kishon Vijay Abraham I <kvijayab@amd.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 045/772] x86/barrier: Do not serialize MSR accesses on AMD
+Date: Thu, 12 Dec 2024 15:49:50 +0100
+Message-ID: <20241212144351.795719195@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -53,138 +51,209 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li Zhijian <lizhijian@fujitsu.com>
+From: Borislav Petkov (AMD) <bp@alien8.de>
 
-[ Upstream commit 7f7b850689ac06a62befe26e1fd1806799e7f152 ]
+commit 04c3024560d3a14acd18d0a51a1d0a89d29b7eb5 upstream.
 
-It's observed that a crash occurs during hot-remove a memory device,
-in which user is accessing the hugetlb. See calltrace as following:
+AMD does not have the requirement for a synchronization barrier when
+acccessing a certain group of MSRs. Do not incur that unnecessary
+penalty there.
 
-------------[ cut here ]------------
-WARNING: CPU: 1 PID: 14045 at arch/x86/mm/fault.c:1278 do_user_addr_fault+0x2a0/0x790
-Modules linked in: kmem device_dax cxl_mem cxl_pmem cxl_port cxl_pci dax_hmem dax_pmem nd_pmem cxl_acpi nd_btt cxl_core crc32c_intel nvme virtiofs fuse nvme_core nfit libnvdimm dm_multipath scsi_dh_rdac scsi_dh_emc s
-mirror dm_region_hash dm_log dm_mod
-CPU: 1 PID: 14045 Comm: daxctl Not tainted 6.10.0-rc2-lizhijian+ #492
-Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.16.3-0-ga6ed6b701f0a-prebuilt.qemu.org 04/01/2014
-RIP: 0010:do_user_addr_fault+0x2a0/0x790
-Code: 48 8b 00 a8 04 0f 84 b5 fe ff ff e9 1c ff ff ff 4c 89 e9 4c 89 e2 be 01 00 00 00 bf 02 00 00 00 e8 b5 ef 24 00 e9 42 fe ff ff <0f> 0b 48 83 c4 08 4c 89 ea 48 89 ee 4c 89 e7 5b 5d 41 5c 41 5d 41
-RSP: 0000:ffffc90000a575f0 EFLAGS: 00010046
-RAX: ffff88800c303600 RBX: 0000000000000000 RCX: 0000000000000000
-RDX: 0000000000001000 RSI: ffffffff82504162 RDI: ffffffff824b2c36
-RBP: 0000000000000000 R08: 0000000000000000 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000000 R12: ffffc90000a57658
-R13: 0000000000001000 R14: ffff88800bc2e040 R15: 0000000000000000
-FS:  00007f51cb57d880(0000) GS:ffff88807fd00000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 0000000000001000 CR3: 00000000072e2004 CR4: 00000000001706f0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-Call Trace:
- <TASK>
- ? __warn+0x8d/0x190
- ? do_user_addr_fault+0x2a0/0x790
- ? report_bug+0x1c3/0x1d0
- ? handle_bug+0x3c/0x70
- ? exc_invalid_op+0x14/0x70
- ? asm_exc_invalid_op+0x16/0x20
- ? do_user_addr_fault+0x2a0/0x790
- ? exc_page_fault+0x31/0x200
- exc_page_fault+0x68/0x200
-<...snip...>
-BUG: unable to handle page fault for address: 0000000000001000
- #PF: supervisor read access in kernel mode
- #PF: error_code(0x0000) - not-present page
- PGD 800000000ad92067 P4D 800000000ad92067 PUD 7677067 PMD 0
- Oops: Oops: 0000 [#1] PREEMPT SMP PTI
- ---[ end trace 0000000000000000 ]---
- BUG: unable to handle page fault for address: 0000000000001000
- #PF: supervisor read access in kernel mode
- #PF: error_code(0x0000) - not-present page
- PGD 800000000ad92067 P4D 800000000ad92067 PUD 7677067 PMD 0
- Oops: Oops: 0000 [#1] PREEMPT SMP PTI
- CPU: 1 PID: 14045 Comm: daxctl Kdump: loaded Tainted: G        W          6.10.0-rc2-lizhijian+ #492
- Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.16.3-0-ga6ed6b701f0a-prebuilt.qemu.org 04/01/2014
- RIP: 0010:dentry_name+0x1f4/0x440
-<...snip...>
-? dentry_name+0x2fa/0x440
-vsnprintf+0x1f3/0x4f0
-vprintk_store+0x23a/0x540
-vprintk_emit+0x6d/0x330
-_printk+0x58/0x80
-dump_mapping+0x10b/0x1a0
-? __pfx_free_object_rcu+0x10/0x10
-__dump_page+0x26b/0x3e0
-? vprintk_emit+0xe0/0x330
-? _printk+0x58/0x80
-? dump_page+0x17/0x50
-dump_page+0x17/0x50
-do_migrate_range+0x2f7/0x7f0
-? do_migrate_range+0x42/0x7f0
-? offline_pages+0x2f4/0x8c0
-offline_pages+0x60a/0x8c0
-memory_subsys_offline+0x9f/0x1c0
-? lockdep_hardirqs_on+0x77/0x100
-? _raw_spin_unlock_irqrestore+0x38/0x60
-device_offline+0xe3/0x110
-state_store+0x6e/0xc0
-kernfs_fop_write_iter+0x143/0x200
-vfs_write+0x39f/0x560
-ksys_write+0x65/0xf0
-do_syscall_64+0x62/0x130
+There will be a CPUID bit which explicitly states that a MFENCE is not
+needed. Once that bit is added to the APM, this will be extended with
+it.
 
-Previously, some sanity check have been done in dump_mapping() before
-the print facility parsing '%pd' though, it's still possible to run into
-an invalid dentry.d_name.name.
+While at it, move to processor.h to avoid include hell. Untangling that
+file properly is a matter for another day.
 
-Since dump_mapping() only needs to dump the filename only, retrieve it
-by itself in a safer way to prevent an unnecessary crash.
+Some notes on the performance aspect of why this is relevant, courtesy
+of Kishon VijayAbraham <Kishon.VijayAbraham@amd.com>:
 
-Note that either retrieving the filename with '%pd' or
-strncpy_from_kernel_nofault(), the filename could be unreliable.
+On a AMD Zen4 system with 96 cores, a modified ipi-bench[1] on a VM
+shows x2AVIC IPI rate is 3% to 4% lower than AVIC IPI rate. The
+ipi-bench is modified so that the IPIs are sent between two vCPUs in the
+same CCX. This also requires to pin the vCPU to a physical core to
+prevent any latencies. This simulates the use case of pinning vCPUs to
+the thread of a single CCX to avoid interrupt IPI latency.
 
-Signed-off-by: Li Zhijian <lizhijian@fujitsu.com>
-Link: https://lore.kernel.org/r/20240826055503.1522320-1-lizhijian@fujitsu.com
-Reviewed-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
-[Xiangyu: Bp to fix CVE: CVE-2024-49934, modified strscpy step due to 6.1/6.6 need pass
-the max len to strscpy]
-Signed-off-by: Xiangyu Chen <xiangyu.chen@windriver.com>
+In order to avoid run-to-run variance (for both x2AVIC and AVIC), the
+below configurations are done:
+
+  1) Disable Power States in BIOS (to prevent the system from going to
+     lower power state)
+
+  2) Run the system at fixed frequency 2500MHz (to prevent the system
+     from increasing the frequency when the load is more)
+
+With the above configuration:
+
+*) Performance measured using ipi-bench for AVIC:
+  Average Latency:  1124.98ns [Time to send IPI from one vCPU to another vCPU]
+
+  Cumulative throughput: 42.6759M/s [Total number of IPIs sent in a second from
+  				     48 vCPUs simultaneously]
+
+*) Performance measured using ipi-bench for x2AVIC:
+  Average Latency:  1172.42ns [Time to send IPI from one vCPU to another vCPU]
+
+  Cumulative throughput: 40.9432M/s [Total number of IPIs sent in a second from
+  				     48 vCPUs simultaneously]
+
+>From above, x2AVIC latency is ~4% more than AVIC. However, the expectation is
+x2AVIC performance to be better or equivalent to AVIC. Upon analyzing
+the perf captures, it is observed significant time is spent in
+weak_wrmsr_fence() invoked by x2apic_send_IPI().
+
+With the fix to skip weak_wrmsr_fence()
+
+*) Performance measured using ipi-bench for x2AVIC:
+  Average Latency:  1117.44ns [Time to send IPI from one vCPU to another vCPU]
+
+  Cumulative throughput: 42.9608M/s [Total number of IPIs sent in a second from
+  				     48 vCPUs simultaneously]
+
+Comparing the performance of x2AVIC with and without the fix, it can be seen
+the performance improves by ~4%.
+
+Performance captured using an unmodified ipi-bench using the 'mesh-ipi' option
+with and without weak_wrmsr_fence() on a Zen4 system also showed significant
+performance improvement without weak_wrmsr_fence(). The 'mesh-ipi' option ignores
+CCX or CCD and just picks random vCPU.
+
+  Average throughput (10 iterations) with weak_wrmsr_fence(),
+        Cumulative throughput: 4933374 IPI/s
+
+  Average throughput (10 iterations) without weak_wrmsr_fence(),
+        Cumulative throughput: 6355156 IPI/s
+
+[1] https://github.com/bytedance/kvm-utils/tree/master/microbenchmark/ipi-bench
+
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Link: https://lore.kernel.org/r/20230622095212.20940-1-bp@alien8.de
+Signed-off-by: Kishon Vijay Abraham I <kvijayab@amd.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/inode.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ arch/x86/include/asm/barrier.h     | 18 ------------------
+ arch/x86/include/asm/cpufeatures.h |  1 +
+ arch/x86/include/asm/processor.h   | 18 ++++++++++++++++++
+ arch/x86/kernel/cpu/amd.c          |  3 +++
+ arch/x86/kernel/cpu/common.c       |  7 +++++++
+ arch/x86/kernel/cpu/hygon.c        |  3 +++
+ 6 files changed, 32 insertions(+), 18 deletions(-)
 
-diff --git a/fs/inode.c b/fs/inode.c
-index 5dd0f81e9721e..0036d5c68fd41 100644
---- a/fs/inode.c
-+++ b/fs/inode.c
-@@ -593,6 +593,7 @@ void dump_mapping(const struct address_space *mapping)
- 	struct hlist_node *dentry_first;
- 	struct dentry *dentry_ptr;
- 	struct dentry dentry;
-+	char fname[64] = {};
- 	unsigned long ino;
+diff --git a/arch/x86/include/asm/barrier.h b/arch/x86/include/asm/barrier.h
+index 35389b2af88ee..0216f63a366b5 100644
+--- a/arch/x86/include/asm/barrier.h
++++ b/arch/x86/include/asm/barrier.h
+@@ -81,22 +81,4 @@ do {									\
  
- 	/*
-@@ -628,11 +629,14 @@ void dump_mapping(const struct address_space *mapping)
- 		return;
- 	}
+ #include <asm-generic/barrier.h>
  
-+	if (strncpy_from_kernel_nofault(fname, dentry.d_name.name, 63) < 0)
-+		strscpy(fname, "<invalid>", 63);
- 	/*
--	 * if dentry is corrupted, the %pd handler may still crash,
--	 * but it's unlikely that we reach here with a corrupt mapping
-+	 * Even if strncpy_from_kernel_nofault() succeeded,
-+	 * the fname could be unreliable
- 	 */
--	pr_warn("aops:%ps ino:%lx dentry name:\"%pd\"\n", a_ops, ino, &dentry);
-+	pr_warn("aops:%ps ino:%lx dentry name(?):\"%s\"\n",
-+		a_ops, ino, fname);
+-/*
+- * Make previous memory operations globally visible before
+- * a WRMSR.
+- *
+- * MFENCE makes writes visible, but only affects load/store
+- * instructions.  WRMSR is unfortunately not a load/store
+- * instruction and is unaffected by MFENCE.  The LFENCE ensures
+- * that the WRMSR is not reordered.
+- *
+- * Most WRMSRs are full serializing instructions themselves and
+- * do not require this barrier.  This is only required for the
+- * IA32_TSC_DEADLINE and X2APIC MSRs.
+- */
+-static inline void weak_wrmsr_fence(void)
+-{
+-	asm volatile("mfence; lfence" : : : "memory");
+-}
+-
+ #endif /* _ASM_X86_BARRIER_H */
+diff --git a/arch/x86/include/asm/cpufeatures.h b/arch/x86/include/asm/cpufeatures.h
+index 91224a9261377..5709cbba28e7a 100644
+--- a/arch/x86/include/asm/cpufeatures.h
++++ b/arch/x86/include/asm/cpufeatures.h
+@@ -311,6 +311,7 @@
+ #define X86_FEATURE_SRSO		(11*32+24) /* "" AMD BTB untrain RETs */
+ #define X86_FEATURE_SRSO_ALIAS		(11*32+25) /* "" AMD BTB untrain RETs through aliasing */
+ #define X86_FEATURE_IBPB_ON_VMEXIT	(11*32+26) /* "" Issue an IBPB only on VMEXIT */
++#define X86_FEATURE_APIC_MSRS_FENCE	(11*32+27) /* "" IA32_TSC_DEADLINE and X2APIC MSRs need fencing */
+ 
+ /* Intel-defined CPU features, CPUID level 0x00000007:1 (EAX), word 12 */
+ #define X86_FEATURE_AVX_VNNI		(12*32+ 4) /* AVX VNNI instructions */
+diff --git a/arch/x86/include/asm/processor.h b/arch/x86/include/asm/processor.h
+index 3ed6cc7785037..d2b93b68fe563 100644
+--- a/arch/x86/include/asm/processor.h
++++ b/arch/x86/include/asm/processor.h
+@@ -868,4 +868,22 @@ bool arch_is_platform_page(u64 paddr);
+ 
+ extern bool gds_ucode_mitigated(void);
+ 
++/*
++ * Make previous memory operations globally visible before
++ * a WRMSR.
++ *
++ * MFENCE makes writes visible, but only affects load/store
++ * instructions.  WRMSR is unfortunately not a load/store
++ * instruction and is unaffected by MFENCE.  The LFENCE ensures
++ * that the WRMSR is not reordered.
++ *
++ * Most WRMSRs are full serializing instructions themselves and
++ * do not require this barrier.  This is only required for the
++ * IA32_TSC_DEADLINE and X2APIC MSRs.
++ */
++static inline void weak_wrmsr_fence(void)
++{
++	alternative("mfence; lfence", "", ALT_NOT(X86_FEATURE_APIC_MSRS_FENCE));
++}
++
+ #endif /* _ASM_X86_PROCESSOR_H */
+diff --git a/arch/x86/kernel/cpu/amd.c b/arch/x86/kernel/cpu/amd.c
+index 425092806f8fe..37796a1d0715f 100644
+--- a/arch/x86/kernel/cpu/amd.c
++++ b/arch/x86/kernel/cpu/amd.c
+@@ -1133,6 +1133,9 @@ static void init_amd(struct cpuinfo_x86 *c)
+ 	if (!cpu_has(c, X86_FEATURE_HYPERVISOR) &&
+ 	     cpu_has_amd_erratum(c, amd_erratum_1485))
+ 		msr_set_bit(MSR_ZEN4_BP_CFG, MSR_ZEN4_BP_CFG_SHARED_BTB_FIX_BIT);
++
++	/* AMD CPUs don't need fencing after x2APIC/TSC_DEADLINE MSR writes. */
++	clear_cpu_cap(c, X86_FEATURE_APIC_MSRS_FENCE);
  }
  
- void clear_inode(struct inode *inode)
+ #ifdef CONFIG_X86_32
+diff --git a/arch/x86/kernel/cpu/common.c b/arch/x86/kernel/cpu/common.c
+index b4e999048e9a4..e8daf4093eb8c 100644
+--- a/arch/x86/kernel/cpu/common.c
++++ b/arch/x86/kernel/cpu/common.c
+@@ -1883,6 +1883,13 @@ static void identify_cpu(struct cpuinfo_x86 *c)
+ 	c->apicid = apic->phys_pkg_id(c->initial_apicid, 0);
+ #endif
+ 
++
++	/*
++	 * Set default APIC and TSC_DEADLINE MSR fencing flag. AMD and
++	 * Hygon will clear it in ->c_init() below.
++	 */
++	set_cpu_cap(c, X86_FEATURE_APIC_MSRS_FENCE);
++
+ 	/*
+ 	 * Vendor-specific initialization.  In this section we
+ 	 * canonicalize the feature flags, meaning if there are
+diff --git a/arch/x86/kernel/cpu/hygon.c b/arch/x86/kernel/cpu/hygon.c
+index 9e8380bd4fb9f..8a80d5343f3a1 100644
+--- a/arch/x86/kernel/cpu/hygon.c
++++ b/arch/x86/kernel/cpu/hygon.c
+@@ -347,6 +347,9 @@ static void init_hygon(struct cpuinfo_x86 *c)
+ 		set_cpu_bug(c, X86_BUG_SYSRET_SS_ATTRS);
+ 
+ 	check_null_seg_clears_base(c);
++
++	/* Hygon CPUs don't need fencing after x2APIC/TSC_DEADLINE MSR writes. */
++	clear_cpu_cap(c, X86_FEATURE_APIC_MSRS_FENCE);
+ }
+ 
+ static void cpu_detect_tlb_hygon(struct cpuinfo_x86 *c)
 -- 
 2.43.0
 
