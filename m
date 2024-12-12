@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E1C522330D;
-	Thu, 12 Dec 2024 17:11:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C56322330D;
+	Thu, 12 Dec 2024 17:11:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734023508; cv=none; b=RasFRW8dQ4KgaN8zIAnUW4QQw5cE2nVV8v0GcpwTyRMOWAljJzwDiHuB83LBNg74+KxQ8ZavK6FJosuEgZH9krq9ZtFbTV3OXjTp9YB2kFERh1fkb0/bb3NauHaDojoskEORCAVZ5T+pL/D3n8ugXzGTcMaZbT93oWQ0+mJS9Mg=
+	t=1734023511; cv=none; b=UvdtqL1NUlVPNOGPlpLOybOSLROO5/1O9cIJImGz53poXfwtk3Gh2HjyirsrWrq4a05ylPkU3nTJ3xOs2LA7PXwa2ADPj6X/4Pvo0q8+10VBi95wghLlqofPJZ8/fmGntgl9EeOvLK1zN3/+U6fsn72Fq+HweYRG5DsoM+0mkeU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734023508; c=relaxed/simple;
-	bh=VonhVG+vi7D+meqy9QUqxUadMMxKY7FERYb/UPMw3Gs=;
+	s=arc-20240116; t=1734023511; c=relaxed/simple;
+	bh=k8Dui3AqocC5QVNmu65BBbNVHnMnpRrcZeCMtqRLxW0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aAuC1pHp3Q2bIQ2Wq2MHRQXoZ3EuP4vfi2Th5KwhelJ8naN1yvMLC3B9kLgVyY0dAYJMHOilG8+D9aG4RtIZxPvajj2XgwF/lUxTHZ65HFE8NzBEzjuM3cxujkqqxCCzOQPX9yCzAp9Zq4TqezK4cC43yNKt1pWsT2tkgEsZP9Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ra7/DcLk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PsCto4Ckwm0YUMo4Fei//66B2azfvE0QEip21HVb0mWyR2nBHB12rrXd/uk1ShSHOQrSf6atonjdp8sFGoeV1zrRvYeDWcxyZCqrsFz5u5mV2Anotnn6bGQ10lGQz7Ekex98y+eI5AVqZTlJkoWTsCMF+JbaFgN6W/hzxM1fJfE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vVwHLixZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ra7/DcLk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4A62C4CED0;
-	Thu, 12 Dec 2024 17:11:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vVwHLixZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFA98C4CED0;
+	Thu, 12 Dec 2024 17:11:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734023508;
-	bh=VonhVG+vi7D+meqy9QUqxUadMMxKY7FERYb/UPMw3Gs=;
+	s=korg; t=1734023511;
+	bh=k8Dui3AqocC5QVNmu65BBbNVHnMnpRrcZeCMtqRLxW0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ra7/DcLk+CGQ0yK0l8qWoQgAfV+hN2z+WoXJv0KODJYKbHN6LdWYlggHEnEYfwRDe
-	 H7ka1876bxeOCAVx/wfF88ao0scIjU50p3wsVavGSmIp/w3Tyao2mIqBW58NQG3mRC
-	 LXfSeciB7NiR64rT+icgFuEPAYvwKMA/WGD1XmK8=
+	b=vVwHLixZjM5vIPMJCJa7dS6Axg1YVJfx739afslx1YXRzsfV7eQKEpuxtyVlR1BVM
+	 G8Kkncy3e/3ihZHev9Bin3XUJaEWfH0o4aFLf4MdxexGcWLdvCKsqQGZNb4GqzOXd6
+	 /zU7eIZQKiClhlu5rfOXh/VjYEG0bQu5mxYQw7FE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Rutland <mark.rutland@arm.com>,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Marc Zyngier <maz@kernel.org>,
-	Mark Brown <broonie@kernel.org>,
-	Will Deacon <will@kernel.org>
-Subject: [PATCH 5.15 557/565] arm64: smccc: Remove broken support for SMCCCv1.3 SVE discard hint
-Date: Thu, 12 Dec 2024 16:02:32 +0100
-Message-ID: <20241212144333.880626464@linuxfoundation.org>
+	syzbot+c12e2f941af1feb5632c@syzkaller.appspotmail.com,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Xiangyu Chen <xiangyu.chen@windriver.com>,
+	Guocai He <guocai.he.cn@windriver.com>
+Subject: [PATCH 5.15 558/565] Bluetooth: L2CAP: Fix uaf in l2cap_connect
+Date: Thu, 12 Dec 2024 16:02:33 +0100
+Message-ID: <20241212144333.920101605@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144311.432886635@linuxfoundation.org>
 References: <20241212144311.432886635@linuxfoundation.org>
@@ -54,224 +52,123 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Rutland <mark.rutland@arm.com>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-commit 8c462d56487e3abdbf8a61cedfe7c795a54f4a78 upstream.
+commit 333b4fd11e89b29c84c269123f871883a30be586 upstream.
 
-SMCCCv1.3 added a hint bit which callers can set in an SMCCC function ID
-(AKA "FID") to indicate that it is acceptable for the SMCCC
-implementation to discard SVE and/or SME state over a specific SMCCC
-call. The kernel support for using this hint is broken and SMCCC calls
-may clobber the SVE and/or SME state of arbitrary tasks, though FPSIMD
-state is unaffected.
+[Syzbot reported]
+BUG: KASAN: slab-use-after-free in l2cap_connect.constprop.0+0x10d8/0x1270 net/bluetooth/l2cap_core.c:3949
+Read of size 8 at addr ffff8880241e9800 by task kworker/u9:0/54
 
-The kernel support is intended to use the hint when there is no SVE or
-SME state to save, and to do this it checks whether TIF_FOREIGN_FPSTATE
-is set or TIF_SVE is clear in assembly code:
+CPU: 0 UID: 0 PID: 54 Comm: kworker/u9:0 Not tainted 6.11.0-rc6-syzkaller-00268-g788220eee30d #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 08/06/2024
+Workqueue: hci2 hci_rx_work
+Call Trace:
+ <TASK>
+ __dump_stack lib/dump_stack.c:93 [inline]
+ dump_stack_lvl+0x116/0x1f0 lib/dump_stack.c:119
+ print_address_description mm/kasan/report.c:377 [inline]
+ print_report+0xc3/0x620 mm/kasan/report.c:488
+ kasan_report+0xd9/0x110 mm/kasan/report.c:601
+ l2cap_connect.constprop.0+0x10d8/0x1270 net/bluetooth/l2cap_core.c:3949
+ l2cap_connect_req net/bluetooth/l2cap_core.c:4080 [inline]
+ l2cap_bredr_sig_cmd net/bluetooth/l2cap_core.c:4772 [inline]
+ l2cap_sig_channel net/bluetooth/l2cap_core.c:5543 [inline]
+ l2cap_recv_frame+0xf0b/0x8eb0 net/bluetooth/l2cap_core.c:6825
+ l2cap_recv_acldata+0x9b4/0xb70 net/bluetooth/l2cap_core.c:7514
+ hci_acldata_packet net/bluetooth/hci_core.c:3791 [inline]
+ hci_rx_work+0xaab/0x1610 net/bluetooth/hci_core.c:4028
+ process_one_work+0x9c5/0x1b40 kernel/workqueue.c:3231
+ process_scheduled_works kernel/workqueue.c:3312 [inline]
+ worker_thread+0x6c8/0xed0 kernel/workqueue.c:3389
+ kthread+0x2c1/0x3a0 kernel/kthread.c:389
+ ret_from_fork+0x45/0x80 arch/x86/kernel/process.c:147
+ ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:244
+...
 
-|        ldr     <flags>, [<current_task>, #TSK_TI_FLAGS]
-|        tbnz    <flags>, #TIF_FOREIGN_FPSTATE, 1f   // Any live FP state?
-|        tbnz    <flags>, #TIF_SVE, 2f               // Does that state include SVE?
-|
-| 1:     orr     <fid>, <fid>, ARM_SMCCC_1_3_SVE_HINT
-| 2:
-|        << SMCCC call using FID >>
+Freed by task 5245:
+ kasan_save_stack+0x33/0x60 mm/kasan/common.c:47
+ kasan_save_track+0x14/0x30 mm/kasan/common.c:68
+ kasan_save_free_info+0x3b/0x60 mm/kasan/generic.c:579
+ poison_slab_object+0xf7/0x160 mm/kasan/common.c:240
+ __kasan_slab_free+0x32/0x50 mm/kasan/common.c:256
+ kasan_slab_free include/linux/kasan.h:184 [inline]
+ slab_free_hook mm/slub.c:2256 [inline]
+ slab_free mm/slub.c:4477 [inline]
+ kfree+0x12a/0x3b0 mm/slub.c:4598
+ l2cap_conn_free net/bluetooth/l2cap_core.c:1810 [inline]
+ kref_put include/linux/kref.h:65 [inline]
+ l2cap_conn_put net/bluetooth/l2cap_core.c:1822 [inline]
+ l2cap_conn_del+0x59d/0x730 net/bluetooth/l2cap_core.c:1802
+ l2cap_connect_cfm+0x9e6/0xf80 net/bluetooth/l2cap_core.c:7241
+ hci_connect_cfm include/net/bluetooth/hci_core.h:1960 [inline]
+ hci_conn_failed+0x1c3/0x370 net/bluetooth/hci_conn.c:1265
+ hci_abort_conn_sync+0x75a/0xb50 net/bluetooth/hci_sync.c:5583
+ abort_conn_sync+0x197/0x360 net/bluetooth/hci_conn.c:2917
+ hci_cmd_sync_work+0x1a4/0x410 net/bluetooth/hci_sync.c:328
+ process_one_work+0x9c5/0x1b40 kernel/workqueue.c:3231
+ process_scheduled_works kernel/workqueue.c:3312 [inline]
+ worker_thread+0x6c8/0xed0 kernel/workqueue.c:3389
+ kthread+0x2c1/0x3a0 kernel/kthread.c:389
+ ret_from_fork+0x45/0x80 arch/x86/kernel/process.c:147
+ ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:244
 
-This is not safe as-is:
-
-(1) SMCCC calls can be made in a preemptible context and preemption can
-    result in TIF_FOREIGN_FPSTATE being set or cleared at arbitrary
-    points in time. Thus checking for TIF_FOREIGN_FPSTATE provides no
-    guarantee.
-
-(2) TIF_FOREIGN_FPSTATE only indicates that the live FP/SVE/SME state in
-    the CPU does not belong to the current task, and does not indicate
-    that clobbering this state is acceptable.
-
-    When the live CPU state is clobbered it is necessary to update
-    fpsimd_last_state.st to ensure that a subsequent context switch will
-    reload FP/SVE/SME state from memory rather than consuming the
-    clobbered state. This and the SMCCC call itself must happen in a
-    critical section with preemption disabled to avoid races.
-
-(3) Live SVE/SME state can exist with TIF_SVE clear (e.g. with only
-    TIF_SME set), and checking TIF_SVE alone is insufficient.
-
-Remove the broken support for the SMCCCv1.3 SVE saving hint. This is
-effectively a revert of commits:
-
-* cfa7ff959a78 ("arm64: smccc: Support SMCCC v1.3 SVE register saving hint")
-* a7c3acca5380 ("arm64: smccc: Save lr before calling __arm_smccc_sve_check()")
-
-... leaving behind the ARM_SMCCC_VERSION_1_3 and ARM_SMCCC_1_3_SVE_HINT
-definitions, since these are simply definitions from the SMCCC
-specification, and the latter is used in KVM via ARM_SMCCC_CALL_HINTS.
-
-If we want to bring this back in future, we'll probably want to handle
-this logic in C where we can use all the usual FPSIMD/SVE/SME helper
-functions, and that'll likely require some rework of the SMCCC code
-and/or its callers.
-
-Fixes: cfa7ff959a78 ("arm64: smccc: Support SMCCC v1.3 SVE register saving hint")
-Signed-off-by: Mark Rutland <mark.rutland@arm.com>
-Cc: Ard Biesheuvel <ardb@kernel.org>
-Cc: Catalin Marinas <catalin.marinas@arm.com>
-Cc: Marc Zyngier <maz@kernel.org>
-Cc: Mark Brown <broonie@kernel.org>
-Cc: Will Deacon <will@kernel.org>
-Cc: stable@vger.kernel.org
-Reviewed-by: Mark Brown <broonie@kernel.org>
-Link: https://lore.kernel.org/r/20241106160448.2712997-1-mark.rutland@arm.com
-Signed-off-by: Will Deacon <will@kernel.org>
-[ Mark: fix conflicts in <linux/arm-smccc.h> and drivers/firmware/smccc/smccc.c ]
-Signed-off-by: Mark Rutland <mark.rutland@arm.com>
+Reported-by: syzbot+c12e2f941af1feb5632c@syzkaller.appspotmail.com
+Tested-by: syzbot+c12e2f941af1feb5632c@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=c12e2f941af1feb5632c
+Fixes: 7b064edae38d ("Bluetooth: Fix authentication if acl data comes before remote feature evt")
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Xiangyu Chen <xiangyu.chen@windriver.com>
+Signed-off-by: Guocai He <guocai.he.cn@windriver.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kernel/smccc-call.S |   35 +++--------------------------------
- drivers/firmware/smccc/smccc.c |    4 ----
- include/linux/arm-smccc.h      |   30 ++----------------------------
- 3 files changed, 5 insertions(+), 64 deletions(-)
+ net/bluetooth/hci_core.c   |    2 ++
+ net/bluetooth/hci_event.c  |    2 +-
+ net/bluetooth/l2cap_core.c |    9 ---------
+ 3 files changed, 3 insertions(+), 10 deletions(-)
 
---- a/arch/arm64/kernel/smccc-call.S
-+++ b/arch/arm64/kernel/smccc-call.S
-@@ -7,48 +7,19 @@
+--- a/net/bluetooth/hci_core.c
++++ b/net/bluetooth/hci_core.c
+@@ -4964,6 +4964,8 @@ static void hci_acldata_packet(struct hc
  
- #include <asm/asm-offsets.h>
- #include <asm/assembler.h>
--#include <asm/thread_info.h>
--
--/*
-- * If we have SMCCC v1.3 and (as is likely) no SVE state in
-- * the registers then set the SMCCC hint bit to say there's no
-- * need to preserve it.  Do this by directly adjusting the SMCCC
-- * function value which is already stored in x0 ready to be called.
-- */
--SYM_FUNC_START(__arm_smccc_sve_check)
--
--	ldr_l	x16, smccc_has_sve_hint
--	cbz	x16, 2f
--
--	get_current_task x16
--	ldr	x16, [x16, #TSK_TI_FLAGS]
--	tbnz	x16, #TIF_FOREIGN_FPSTATE, 1f	// Any live FP state?
--	tbnz	x16, #TIF_SVE, 2f		// Does that state include SVE?
--
--1:	orr	x0, x0, ARM_SMCCC_1_3_SVE_HINT
--
--2:	ret
--SYM_FUNC_END(__arm_smccc_sve_check)
--EXPORT_SYMBOL(__arm_smccc_sve_check)
+ 	hci_dev_lock(hdev);
+ 	conn = hci_conn_hash_lookup_handle(hdev, handle);
++	if (conn && hci_dev_test_flag(hdev, HCI_MGMT))
++		mgmt_device_connected(hdev, conn, NULL, 0);
+ 	hci_dev_unlock(hdev);
  
- 	.macro SMCCC instr
--	stp     x29, x30, [sp, #-16]!
--	mov	x29, sp
--alternative_if ARM64_SVE
--	bl	__arm_smccc_sve_check
--alternative_else_nop_endif
- 	\instr	#0
--	ldr	x4, [sp, #16]
-+	ldr	x4, [sp]
- 	stp	x0, x1, [x4, #ARM_SMCCC_RES_X0_OFFS]
- 	stp	x2, x3, [x4, #ARM_SMCCC_RES_X2_OFFS]
--	ldr	x4, [sp, #24]
-+	ldr	x4, [sp, #8]
- 	cbz	x4, 1f /* no quirk structure */
- 	ldr	x9, [x4, #ARM_SMCCC_QUIRK_ID_OFFS]
- 	cmp	x9, #ARM_SMCCC_QUIRK_QCOM_A6
- 	b.ne	1f
- 	str	x6, [x4, ARM_SMCCC_QUIRK_STATE_OFFS]
--1:	ldp     x29, x30, [sp], #16
--	ret
-+1:	ret
- 	.endm
+ 	if (conn) {
+--- a/net/bluetooth/hci_event.c
++++ b/net/bluetooth/hci_event.c
+@@ -3338,7 +3338,7 @@ static void hci_remote_features_evt(stru
+ 		goto unlock;
+ 	}
  
- /*
---- a/drivers/firmware/smccc/smccc.c
-+++ b/drivers/firmware/smccc/smccc.c
-@@ -16,7 +16,6 @@ static u32 smccc_version = ARM_SMCCC_VER
- static enum arm_smccc_conduit smccc_conduit = SMCCC_CONDUIT_NONE;
- 
- bool __ro_after_init smccc_trng_available = false;
--u64 __ro_after_init smccc_has_sve_hint = false;
- 
- void __init arm_smccc_version_init(u32 version, enum arm_smccc_conduit conduit)
+-	if (!ev->status && !test_bit(HCI_CONN_MGMT_CONNECTED, &conn->flags)) {
++	if (!ev->status) {
+ 		struct hci_cp_remote_name_req cp;
+ 		memset(&cp, 0, sizeof(cp));
+ 		bacpy(&cp.bdaddr, &conn->dst);
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -4276,18 +4276,9 @@ sendresp:
+ static int l2cap_connect_req(struct l2cap_conn *conn,
+ 			     struct l2cap_cmd_hdr *cmd, u16 cmd_len, u8 *data)
  {
-@@ -24,9 +23,6 @@ void __init arm_smccc_version_init(u32 v
- 	smccc_conduit = conduit;
+-	struct hci_dev *hdev = conn->hcon->hdev;
+-	struct hci_conn *hcon = conn->hcon;
+-
+ 	if (cmd_len < sizeof(struct l2cap_conn_req))
+ 		return -EPROTO;
  
- 	smccc_trng_available = smccc_probe_trng();
--	if (IS_ENABLED(CONFIG_ARM64_SVE) &&
--	    smccc_version >= ARM_SMCCC_VERSION_1_3)
--		smccc_has_sve_hint = true;
+-	hci_dev_lock(hdev);
+-	if (hci_dev_test_flag(hdev, HCI_MGMT) &&
+-	    !test_and_set_bit(HCI_CONN_MGMT_CONNECTED, &hcon->flags))
+-		mgmt_device_connected(hdev, hcon, NULL, 0);
+-	hci_dev_unlock(hdev);
+-
+ 	l2cap_connect(conn, cmd, data, L2CAP_CONN_RSP, 0);
+ 	return 0;
  }
- 
- enum arm_smccc_conduit arm_smccc_1_1_get_conduit(void)
---- a/include/linux/arm-smccc.h
-+++ b/include/linux/arm-smccc.h
-@@ -224,8 +224,6 @@ u32 arm_smccc_get_version(void);
- 
- void __init arm_smccc_version_init(u32 version, enum arm_smccc_conduit conduit);
- 
--extern u64 smccc_has_sve_hint;
--
- /**
-  * struct arm_smccc_res - Result from SMC/HVC call
-  * @a0-a3 result values from registers 0 to 3
-@@ -306,15 +304,6 @@ struct arm_smccc_quirk {
- };
- 
- /**
-- * __arm_smccc_sve_check() - Set the SVE hint bit when doing SMC calls
-- *
-- * Sets the SMCCC hint bit to indicate if there is live state in the SVE
-- * registers, this modifies x0 in place and should never be called from C
-- * code.
-- */
--asmlinkage unsigned long __arm_smccc_sve_check(unsigned long x0);
--
--/**
-  * __arm_smccc_smc() - make SMC calls
-  * @a0-a7: arguments passed in registers 0 to 7
-  * @res: result values from registers 0 to 3
-@@ -381,20 +370,6 @@ asmlinkage void __arm_smccc_hvc(unsigned
- 
- #endif
- 
--/* nVHE hypervisor doesn't have a current thread so needs separate checks */
--#if defined(CONFIG_ARM64_SVE) && !defined(__KVM_NVHE_HYPERVISOR__)
--
--#define SMCCC_SVE_CHECK ALTERNATIVE("nop \n",  "bl __arm_smccc_sve_check \n", \
--				    ARM64_SVE)
--#define smccc_sve_clobbers "x16", "x30", "cc",
--
--#else
--
--#define SMCCC_SVE_CHECK
--#define smccc_sve_clobbers
--
--#endif
--
- #define ___count_args(_0, _1, _2, _3, _4, _5, _6, _7, _8, x, ...) x
- 
- #define __count_args(...)						\
-@@ -462,7 +437,7 @@ asmlinkage void __arm_smccc_hvc(unsigned
- 
- #define ___constraints(count)						\
- 	: __constraint_read_ ## count					\
--	: smccc_sve_clobbers "memory"
-+	: "memory"
- #define __constraints(count)	___constraints(count)
- 
- /*
-@@ -477,8 +452,7 @@ asmlinkage void __arm_smccc_hvc(unsigned
- 		register unsigned long r2 asm("r2");			\
- 		register unsigned long r3 asm("r3"); 			\
- 		__declare_args(__count_args(__VA_ARGS__), __VA_ARGS__);	\
--		asm volatile(SMCCC_SVE_CHECK				\
--			     inst "\n" :				\
-+		asm volatile(inst "\n" :				\
- 			     "=r" (r0), "=r" (r1), "=r" (r2), "=r" (r3)	\
- 			     __constraints(__count_args(__VA_ARGS__)));	\
- 		if (___res)						\
 
 
