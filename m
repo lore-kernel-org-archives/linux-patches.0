@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88DBB217679;
-	Thu, 12 Dec 2024 15:34:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1163921765E;
+	Thu, 12 Dec 2024 15:34:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734017647; cv=none; b=o7y+BEQ8LHISUcTI6NiKyDZUl5LxvIxca20lOUX3c8g41JJor8IjP9D/NAG9adM3I550l89P+wrj7tH+3rzFBjnRMPfCI3dBzFIL98JiFx98rwGQd2P5ydPVQ6k8vI1T0cGZ/SQRFla97l+Gbfg+X5gB9VnLCmqm/3C9iSqlcew=
+	t=1734017651; cv=none; b=d5RPOn7Ogi+ac0aTojfMRXRxNyqRveASNVznYA985fuONOTvAiJjT5Zk8+XlM+6ckO36pQRl0GFb9avPoYXzxob310houBnMOoRfE64cM+hJAZd7jmRbcFovKPoc60gVDpqOx/n/5Ryt2uiKSsCV3uKLNGZMHOL2rDb4lBBDtnc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734017647; c=relaxed/simple;
-	bh=42YyYMwqORXGQPwGFL8A4R5LGLCBATbF0EYN/W4Hygw=;
+	s=arc-20240116; t=1734017651; c=relaxed/simple;
+	bh=0EIzCWmAMei+HYe4zNCPlH1KH07UjIg8+IISAOfM5ss=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LWODxOs4gGRYDfyuSfWn05NhgRJeHPSVWd1Cvz9pXqEVgV8BtrIe8HBB4flaa1ccj3d/7udP07CmI1S/T+xnJo/GZfDdNDYqiE5CZy/oLPkMiqIH/WZH91wcDGA2ZRXf/bgYWhFbk4ompgdAnvu+WXDYpwdYuLDYzI82BxGhhx0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mRM8oPt1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IqHfabfDd+wEYxW75QfwHHKBnm5AR9ybwUGduksYHIhBn2yY2NcWD4clp87YI+a/y0zJjCycTlabVIdOqwy8fCTsvWIuNDP8062c6Q8MA18gH4GVhbPwOo8HZu0QOh75DYlFKtnd50kyGwCVYugyl9zW2ZchHg5iT/gHpx1ZYdU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2NSjJbIG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mRM8oPt1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7951C4CED0;
-	Thu, 12 Dec 2024 15:34:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2NSjJbIG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 293F5C4CECE;
+	Thu, 12 Dec 2024 15:34:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734017647;
-	bh=42YyYMwqORXGQPwGFL8A4R5LGLCBATbF0EYN/W4Hygw=;
+	s=korg; t=1734017650;
+	bh=0EIzCWmAMei+HYe4zNCPlH1KH07UjIg8+IISAOfM5ss=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mRM8oPt1d9YVR6BLBNqQSElP/+Lg+2Ycp7Wfh4r3156cTGXmM4fh2FIpmwpNkqpNr
-	 ZoIMwIVCoQmN5iVJqB/QiG6qN+rvqiC+z6dmcMNc5XwcVsiRWigM8Z8ZzLlerIDgcw
-	 5k9Z3POiqo6XYAn+UB48/RSaA5pFDRx9Oghix+wg=
+	b=2NSjJbIGyCpGVTV6xLP9is70pw6WcUnyHQzbBlLEqm75EU1ASpdEmBVLQ/D9Rx2jL
+	 qrz27k3fKXID6c98Du9/WtuN5MF2MvrH2dim102HPzwYXJrXCwE9To7z7NiJxx2nVo
+	 VADc0QnOwEviYgvY3MkRcjflQNj5TpHsO/g6iYA4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Gleixner <tglx@linutronix.de>,
-	John Ogness <john.ogness@linutronix.de>,
+	Kartik Rajput <kkartik@nvidia.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 072/356] serial: amba-pl011: Use port lock wrappers
-Date: Thu, 12 Dec 2024 15:56:31 +0100
-Message-ID: <20241212144247.474153181@linuxfoundation.org>
+Subject: [PATCH 6.6 073/356] serial: amba-pl011: Fix RX stall when DMA is used
+Date: Thu, 12 Dec 2024 15:56:32 +0100
+Message-ID: <20241212144247.514807793@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144244.601729511@linuxfoundation.org>
 References: <20241212144244.601729511@linuxfoundation.org>
@@ -51,335 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Gleixner <tglx@linutronix.de>
+From: Kartik Rajput <kkartik@nvidia.com>
 
-[ Upstream commit 68ca3e72d7463d79d29b6e4961d6028df2a88e25 ]
+[ Upstream commit 2bcacc1c87acf9a8ebc17de18cb2b3cfeca547cf ]
 
-When a serial port is used for kernel console output, then all
-modifications to the UART registers which are done from other contexts,
-e.g. getty, termios, are interference points for the kernel console.
+Function pl011_throttle_rx() calls pl011_stop_rx() to disable RX, which
+also disables the RX DMA by clearing the RXDMAE bit of the DMACR
+register. However, to properly unthrottle RX when DMA is used, the
+function pl011_unthrottle_rx() is expected to set the RXDMAE bit of
+the DMACR register, which it currently lacks. This causes RX to stall
+after the throttle API is called.
 
-So far this has been ignored and the printk output is based on the
-principle of hope. The rework of the console infrastructure which aims to
-support threaded and atomic consoles, requires to mark sections which
-modify the UART registers as unsafe. This allows the atomic write function
-to make informed decisions and eventually to restore operational state. It
-also allows to prevent the regular UART code from modifying UART registers
-while printk output is in progress.
+Set RXDMAE bit in the DMACR register while unthrottling RX if RX DMA is
+used.
 
-All modifications of UART registers are guarded by the UART port lock,
-which provides an obvious synchronization point with the console
-infrastructure.
-
-To avoid adding this functionality to all UART drivers, wrap the
-spin_[un]lock*() invocations for uart_port::lock into helper functions
-which just contain the spin_[un]lock*() invocations for now. In a
-subsequent step these helpers will gain the console synchronization
-mechanisms.
-
-Converted with coccinelle. No functional change.
-
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Signed-off-by: John Ogness <john.ogness@linutronix.de>
-Link: https://lore.kernel.org/r/20230914183831.587273-18-john.ogness@linutronix.de
+Fixes: 211565b10099 ("serial: pl011: UPSTAT_AUTORTS requires .throttle/unthrottle")
+Cc: stable@vger.kernel.org
+Signed-off-by: Kartik Rajput <kkartik@nvidia.com>
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Link: https://lore.kernel.org/r/20241113092629.60226-1-kkartik@nvidia.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: 2bcacc1c87ac ("serial: amba-pl011: Fix RX stall when DMA is used")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/amba-pl011.c | 72 ++++++++++++++++-----------------
- 1 file changed, 36 insertions(+), 36 deletions(-)
+ drivers/tty/serial/amba-pl011.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
 diff --git a/drivers/tty/serial/amba-pl011.c b/drivers/tty/serial/amba-pl011.c
-index 362bbcdece0d7..16c7703110694 100644
+index 16c7703110694..08f80188f73dd 100644
 --- a/drivers/tty/serial/amba-pl011.c
 +++ b/drivers/tty/serial/amba-pl011.c
-@@ -347,9 +347,9 @@ static int pl011_fifo_to_tty(struct uart_amba_port *uap)
- 				flag = TTY_FRAME;
- 		}
- 
--		spin_unlock(&uap->port.lock);
-+		uart_port_unlock(&uap->port);
- 		sysrq = uart_handle_sysrq_char(&uap->port, ch & 255);
--		spin_lock(&uap->port.lock);
-+		uart_port_lock(&uap->port);
- 
- 		if (!sysrq)
- 			uart_insert_char(&uap->port, ch, UART011_DR_OE, ch, flag);
-@@ -544,7 +544,7 @@ static void pl011_dma_tx_callback(void *data)
- 	unsigned long flags;
- 	u16 dmacr;
- 
--	spin_lock_irqsave(&uap->port.lock, flags);
-+	uart_port_lock_irqsave(&uap->port, &flags);
- 	if (uap->dmatx.queued)
- 		dma_unmap_single(dmatx->chan->device->dev, dmatx->dma,
- 				dmatx->len, DMA_TO_DEVICE);
-@@ -565,7 +565,7 @@ static void pl011_dma_tx_callback(void *data)
- 	if (!(dmacr & UART011_TXDMAE) || uart_tx_stopped(&uap->port) ||
- 	    uart_circ_empty(&uap->port.state->xmit)) {
- 		uap->dmatx.queued = false;
--		spin_unlock_irqrestore(&uap->port.lock, flags);
-+		uart_port_unlock_irqrestore(&uap->port, flags);
- 		return;
- 	}
- 
-@@ -576,7 +576,7 @@ static void pl011_dma_tx_callback(void *data)
- 		 */
- 		pl011_start_tx_pio(uap);
- 
--	spin_unlock_irqrestore(&uap->port.lock, flags);
-+	uart_port_unlock_irqrestore(&uap->port, flags);
- }
- 
- /*
-@@ -1004,7 +1004,7 @@ static void pl011_dma_rx_callback(void *data)
- 	 * routine to flush out the secondary DMA buffer while
- 	 * we immediately trigger the next DMA job.
- 	 */
--	spin_lock_irq(&uap->port.lock);
-+	uart_port_lock_irq(&uap->port);
- 	/*
- 	 * Rx data can be taken by the UART interrupts during
- 	 * the DMA irq handler. So we check the residue here.
-@@ -1020,7 +1020,7 @@ static void pl011_dma_rx_callback(void *data)
- 	ret = pl011_dma_rx_trigger_dma(uap);
- 
- 	pl011_dma_rx_chars(uap, pending, lastbuf, false);
--	spin_unlock_irq(&uap->port.lock);
-+	uart_port_unlock_irq(&uap->port);
- 	/*
- 	 * Do this check after we picked the DMA chars so we don't
- 	 * get some IRQ immediately from RX.
-@@ -1086,11 +1086,11 @@ static void pl011_dma_rx_poll(struct timer_list *t)
- 	if (jiffies_to_msecs(jiffies - dmarx->last_jiffies)
- 			> uap->dmarx.poll_timeout) {
- 
--		spin_lock_irqsave(&uap->port.lock, flags);
-+		uart_port_lock_irqsave(&uap->port, &flags);
- 		pl011_dma_rx_stop(uap);
- 		uap->im |= UART011_RXIM;
- 		pl011_write(uap->im, uap, REG_IMSC);
--		spin_unlock_irqrestore(&uap->port.lock, flags);
-+		uart_port_unlock_irqrestore(&uap->port, flags);
- 
- 		uap->dmarx.running = false;
- 		dmaengine_terminate_all(rxchan);
-@@ -1186,10 +1186,10 @@ static void pl011_dma_shutdown(struct uart_amba_port *uap)
- 	while (pl011_read(uap, REG_FR) & uap->vendor->fr_busy)
- 		cpu_relax();
- 
--	spin_lock_irq(&uap->port.lock);
-+	uart_port_lock_irq(&uap->port);
- 	uap->dmacr &= ~(UART011_DMAONERR | UART011_RXDMAE | UART011_TXDMAE);
- 	pl011_write(uap->dmacr, uap, REG_DMACR);
--	spin_unlock_irq(&uap->port.lock);
-+	uart_port_unlock_irq(&uap->port);
- 
- 	if (uap->using_tx_dma) {
- 		/* In theory, this should already be done by pl011_dma_flush_buffer */
-@@ -1400,9 +1400,9 @@ static void pl011_throttle_rx(struct uart_port *port)
- {
- 	unsigned long flags;
- 
--	spin_lock_irqsave(&port->lock, flags);
-+	uart_port_lock_irqsave(port, &flags);
- 	pl011_stop_rx(port);
--	spin_unlock_irqrestore(&port->lock, flags);
-+	uart_port_unlock_irqrestore(port, flags);
- }
- 
- static void pl011_enable_ms(struct uart_port *port)
-@@ -1420,7 +1420,7 @@ __acquires(&uap->port.lock)
- {
- 	pl011_fifo_to_tty(uap);
- 
--	spin_unlock(&uap->port.lock);
-+	uart_port_unlock(&uap->port);
- 	tty_flip_buffer_push(&uap->port.state->port);
- 	/*
- 	 * If we were temporarily out of DMA mode for a while,
-@@ -1445,7 +1445,7 @@ __acquires(&uap->port.lock)
- #endif
- 		}
- 	}
--	spin_lock(&uap->port.lock);
-+	uart_port_lock(&uap->port);
- }
- 
- static bool pl011_tx_char(struct uart_amba_port *uap, unsigned char c,
-@@ -1551,7 +1551,7 @@ static irqreturn_t pl011_int(int irq, void *dev_id)
- 	unsigned int status, pass_counter = AMBA_ISR_PASS_LIMIT;
- 	int handled = 0;
- 
--	spin_lock_irqsave(&uap->port.lock, flags);
-+	uart_port_lock_irqsave(&uap->port, &flags);
- 	status = pl011_read(uap, REG_RIS) & uap->im;
- 	if (status) {
- 		do {
-@@ -1581,7 +1581,7 @@ static irqreturn_t pl011_int(int irq, void *dev_id)
- 		handled = 1;
- 	}
- 
--	spin_unlock_irqrestore(&uap->port.lock, flags);
-+	uart_port_unlock_irqrestore(&uap->port, flags);
- 
- 	return IRQ_RETVAL(handled);
- }
-@@ -1653,14 +1653,14 @@ static void pl011_break_ctl(struct uart_port *port, int break_state)
- 	unsigned long flags;
- 	unsigned int lcr_h;
- 
--	spin_lock_irqsave(&uap->port.lock, flags);
-+	uart_port_lock_irqsave(&uap->port, &flags);
- 	lcr_h = pl011_read(uap, REG_LCRH_TX);
- 	if (break_state == -1)
- 		lcr_h |= UART01x_LCRH_BRK;
- 	else
- 		lcr_h &= ~UART01x_LCRH_BRK;
- 	pl011_write(lcr_h, uap, REG_LCRH_TX);
--	spin_unlock_irqrestore(&uap->port.lock, flags);
-+	uart_port_unlock_irqrestore(&uap->port, flags);
- }
- 
- #ifdef CONFIG_CONSOLE_POLL
-@@ -1799,7 +1799,7 @@ static void pl011_enable_interrupts(struct uart_amba_port *uap)
- 	unsigned long flags;
- 	unsigned int i;
- 
--	spin_lock_irqsave(&uap->port.lock, flags);
-+	uart_port_lock_irqsave(&uap->port, &flags);
- 
- 	/* Clear out any spuriously appearing RX interrupts */
- 	pl011_write(UART011_RTIS | UART011_RXIS, uap, REG_ICR);
-@@ -1821,7 +1821,7 @@ static void pl011_enable_interrupts(struct uart_amba_port *uap)
- 	if (!pl011_dma_rx_running(uap))
- 		uap->im |= UART011_RXIM;
- 	pl011_write(uap->im, uap, REG_IMSC);
--	spin_unlock_irqrestore(&uap->port.lock, flags);
-+	uart_port_unlock_irqrestore(&uap->port, flags);
- }
- 
- static void pl011_unthrottle_rx(struct uart_port *port)
-@@ -1829,7 +1829,7 @@ static void pl011_unthrottle_rx(struct uart_port *port)
- 	struct uart_amba_port *uap = container_of(port, struct uart_amba_port, port);
- 	unsigned long flags;
- 
--	spin_lock_irqsave(&uap->port.lock, flags);
-+	uart_port_lock_irqsave(&uap->port, &flags);
- 
- 	uap->im = UART011_RTIM;
- 	if (!pl011_dma_rx_running(uap))
-@@ -1837,7 +1837,7 @@ static void pl011_unthrottle_rx(struct uart_port *port)
+@@ -1837,6 +1837,11 @@ static void pl011_unthrottle_rx(struct uart_port *port)
  
  	pl011_write(uap->im, uap, REG_IMSC);
  
--	spin_unlock_irqrestore(&uap->port.lock, flags);
-+	uart_port_unlock_irqrestore(&uap->port, flags);
++	if (uap->using_rx_dma) {
++		uap->dmacr |= UART011_RXDMAE;
++		pl011_write(uap->dmacr, uap, REG_DMACR);
++	}
++
+ 	uart_port_unlock_irqrestore(&uap->port, flags);
  }
  
- static int pl011_startup(struct uart_port *port)
-@@ -1857,7 +1857,7 @@ static int pl011_startup(struct uart_port *port)
- 
- 	pl011_write(uap->vendor->ifls, uap, REG_IFLS);
- 
--	spin_lock_irq(&uap->port.lock);
-+	uart_port_lock_irq(&uap->port);
- 
- 	cr = pl011_read(uap, REG_CR);
- 	cr &= UART011_CR_RTS | UART011_CR_DTR;
-@@ -1868,7 +1868,7 @@ static int pl011_startup(struct uart_port *port)
- 
- 	pl011_write(cr, uap, REG_CR);
- 
--	spin_unlock_irq(&uap->port.lock);
-+	uart_port_unlock_irq(&uap->port);
- 
- 	/*
- 	 * initialise the old status of the modem signals
-@@ -1929,12 +1929,12 @@ static void pl011_disable_uart(struct uart_amba_port *uap)
- 	unsigned int cr;
- 
- 	uap->port.status &= ~(UPSTAT_AUTOCTS | UPSTAT_AUTORTS);
--	spin_lock_irq(&uap->port.lock);
-+	uart_port_lock_irq(&uap->port);
- 	cr = pl011_read(uap, REG_CR);
- 	cr &= UART011_CR_RTS | UART011_CR_DTR;
- 	cr |= UART01x_CR_UARTEN | UART011_CR_TXE;
- 	pl011_write(cr, uap, REG_CR);
--	spin_unlock_irq(&uap->port.lock);
-+	uart_port_unlock_irq(&uap->port);
- 
- 	/*
- 	 * disable break condition and fifos
-@@ -1946,14 +1946,14 @@ static void pl011_disable_uart(struct uart_amba_port *uap)
- 
- static void pl011_disable_interrupts(struct uart_amba_port *uap)
- {
--	spin_lock_irq(&uap->port.lock);
-+	uart_port_lock_irq(&uap->port);
- 
- 	/* mask all interrupts and clear all pending ones */
- 	uap->im = 0;
- 	pl011_write(uap->im, uap, REG_IMSC);
- 	pl011_write(0xffff, uap, REG_ICR);
- 
--	spin_unlock_irq(&uap->port.lock);
-+	uart_port_unlock_irq(&uap->port);
- }
- 
- static void pl011_shutdown(struct uart_port *port)
-@@ -2098,7 +2098,7 @@ pl011_set_termios(struct uart_port *port, struct ktermios *termios,
- 
- 	bits = tty_get_frame_size(termios->c_cflag);
- 
--	spin_lock_irqsave(&port->lock, flags);
-+	uart_port_lock_irqsave(port, &flags);
- 
- 	/*
- 	 * Update the per-port timeout.
-@@ -2172,7 +2172,7 @@ pl011_set_termios(struct uart_port *port, struct ktermios *termios,
- 	old_cr |= UART011_CR_RXE;
- 	pl011_write(old_cr, uap, REG_CR);
- 
--	spin_unlock_irqrestore(&port->lock, flags);
-+	uart_port_unlock_irqrestore(port, flags);
- }
- 
- static void
-@@ -2190,10 +2190,10 @@ sbsa_uart_set_termios(struct uart_port *port, struct ktermios *termios,
- 	termios->c_cflag &= ~(CMSPAR | CRTSCTS);
- 	termios->c_cflag |= CS8 | CLOCAL;
- 
--	spin_lock_irqsave(&port->lock, flags);
-+	uart_port_lock_irqsave(port, &flags);
- 	uart_update_timeout(port, CS8, uap->fixed_baud);
- 	pl011_setup_status_masks(port, termios);
--	spin_unlock_irqrestore(&port->lock, flags);
-+	uart_port_unlock_irqrestore(port, flags);
- }
- 
- static const char *pl011_type(struct uart_port *port)
-@@ -2332,9 +2332,9 @@ pl011_console_write(struct console *co, const char *s, unsigned int count)
- 	if (uap->port.sysrq)
- 		locked = 0;
- 	else if (oops_in_progress)
--		locked = spin_trylock(&uap->port.lock);
-+		locked = uart_port_trylock(&uap->port);
- 	else
--		spin_lock(&uap->port.lock);
-+		uart_port_lock(&uap->port);
- 
- 	/*
- 	 *	First save the CR then disable the interrupts
-@@ -2360,7 +2360,7 @@ pl011_console_write(struct console *co, const char *s, unsigned int count)
- 		pl011_write(old_cr, uap, REG_CR);
- 
- 	if (locked)
--		spin_unlock(&uap->port.lock);
-+		uart_port_unlock(&uap->port);
- 	local_irq_restore(flags);
- 
- 	clk_disable(uap->clk);
 -- 
 2.43.0
 
