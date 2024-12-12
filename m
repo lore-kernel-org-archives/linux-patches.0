@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B9B24F218;
-	Thu, 12 Dec 2024 15:49:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C16C2135B0;
+	Thu, 12 Dec 2024 15:49:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734018577; cv=none; b=q5L/zKMJF5MYTGYibiFQ9Y6N0lv48goWzm7pvM+VZMcKPLXomVRHjlL+GknzffVAm9zcyP9glEoNrP3Qdkb21GUZkVqikOq/9vjAPoLxqqd+8MIbX5Ld3X469zsdoueDU+xh9k52ih7K+vGECg5HG3NTd3DSaWa0R8dBPu7vpIM=
+	t=1734018580; cv=none; b=Qy5l5If5zYeZTVg+aiOiW6au48wZLIkXovJ/+36u0hpv8FlpcWC7Qtzm59eNZjcAyi/XS8B+fxPxcOMguZutKiUbLL+qk1GkuHNeDq8mS+0JDywySJuthL3dPaWTXDry5i6Iz5vNamZ2fcN9BcUEDvfQq0lrGmHFl+8KrX5lHK4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734018577; c=relaxed/simple;
-	bh=7WAGjhHxE6RPL8rLrhdDmHjqiTul3nyViyIUWNrJ07c=;
+	s=arc-20240116; t=1734018580; c=relaxed/simple;
+	bh=aRIix01378oFnUwNYDAxQ7iKmPgAxptFBlG8yJlhuC0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Fnix/cRmJ1k7SLw6BG7Q4gKm00/D69qm4TpsfvE1AVeq42bpov2n3qisXOLpdNRIz9wJ3ZHtVJ2inImN/0NfCMqIDHe21ujaxPsDNSvv4SIiyVxrc+d9NFn8hfHOo7MZ9iYcv641bkanJ0mPwjnyIuLlbXcyjK/NfGwq2qXxzXE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y/xp/9bB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=usl5dAXtZlHPxzN2nlDvvEgRXP4lvpXax6Cp7bJCA6LWJ9ba/nF+Z6Axl/1I+6r57D6EHRPPfL/4D6kaeZqE9WTzulAD5zSg2pWSTy2nes9cgnkUYF/G3XSnIUydcsO7YTcz9c/UR0RqsYkC4PFwJe5uwtX5768FSa0w0k1cZaA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FhaDPJj4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y/xp/9bB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78718C4CECE;
-	Thu, 12 Dec 2024 15:49:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FhaDPJj4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED504C4CECE;
+	Thu, 12 Dec 2024 15:49:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734018577;
-	bh=7WAGjhHxE6RPL8rLrhdDmHjqiTul3nyViyIUWNrJ07c=;
+	s=korg; t=1734018580;
+	bh=aRIix01378oFnUwNYDAxQ7iKmPgAxptFBlG8yJlhuC0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y/xp/9bB138ZMblKNEPOMDIobJBx1SZRXaaedTvsu8JNJ51mia66VuHa5B/lOQ9GL
-	 AD0TvSfZ6K569X3NP/kxiVCSS29w7nzr4OQ8H6mpRujRsImv2Rg02w9pWOQnwIdqGU
-	 7CdpQ5mTr2IuPhMFUYis8wQ1Nc20p+JVdxExVknU=
+	b=FhaDPJj4mpC7oLKMlcixWql96nT4c/dqhwzhCXeZbTjZUjSCjyJLdozpOComRStqf
+	 uHnXU4EB0y0cL9/IcwwVbTEMjrBn8rSmMO9ByHc2qdtvTet0xEHClkxYGKAd9KDm91
+	 HtWU4w6V1ioP/bn3XWRjdXRT4BZEeYsAFeGYIkrg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ingo Molnar <mingo@kernel.org>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	David Sterba <dsterba@suse.com>,
+	Qu Wenruo <wqu@suse.com>,
+	Filipe Manana <fdmanana@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 323/356] sched/fair: Rename check_preempt_wakeup() to check_preempt_wakeup_fair()
-Date: Thu, 12 Dec 2024 16:00:42 +0100
-Message-ID: <20241212144257.317283395@linuxfoundation.org>
+Subject: [PATCH 6.6 332/356] btrfs: fix missing snapshot drew unlock when root is dead during swap activation
+Date: Thu, 12 Dec 2024 16:00:51 +0100
+Message-ID: <20241212144257.678906663@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144244.601729511@linuxfoundation.org>
 References: <20241212144244.601729511@linuxfoundation.org>
@@ -51,43 +53,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ingo Molnar <mingo@kernel.org>
+From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit 82845683ca6a15fe8c7912c6264bb0e84ec6f5fb ]
+[ Upstream commit 9c803c474c6c002d8ade68ebe99026cc39c37f85 ]
 
-Other scheduling classes already postfix their similar methods
-with the class name.
+When activating a swap file we acquire the root's snapshot drew lock and
+then check if the root is dead, failing and returning with -EPERM if it's
+dead but without unlocking the root's snapshot lock. Fix this by adding
+the missing unlock.
 
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Stable-dep-of: 0664e2c311b9 ("sched/deadline: Fix warning in migrate_enable for boosted tasks")
+Fixes: 60021bd754c6 ("btrfs: prevent subvol with swapfile from being deleted")
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/fair.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/btrfs/inode.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index d1a67776ecb5d..685774895bcec 100644
---- a/kernel/sched/fair.c
-+++ b/kernel/sched/fair.c
-@@ -8255,7 +8255,7 @@ static void set_next_buddy(struct sched_entity *se)
- /*
-  * Preempt the current task with a newly woken task if needed:
-  */
--static void check_preempt_wakeup(struct rq *rq, struct task_struct *p, int wake_flags)
-+static void check_preempt_wakeup_fair(struct rq *rq, struct task_struct *p, int wake_flags)
- {
- 	struct task_struct *curr = rq->curr;
- 	struct sched_entity *se = &curr->se, *pse = &p->se;
-@@ -13102,7 +13102,7 @@ DEFINE_SCHED_CLASS(fair) = {
- 	.yield_task		= yield_task_fair,
- 	.yield_to_task		= yield_to_task_fair,
+diff --git a/fs/btrfs/inode.c b/fs/btrfs/inode.c
+index ea19ea75674d2..035815c439498 100644
+--- a/fs/btrfs/inode.c
++++ b/fs/btrfs/inode.c
+@@ -10693,6 +10693,7 @@ static int btrfs_swap_activate(struct swap_info_struct *sis, struct file *file,
+ 	if (btrfs_root_dead(root)) {
+ 		spin_unlock(&root->root_item_lock);
  
--	.check_preempt_curr	= check_preempt_wakeup,
-+	.check_preempt_curr	= check_preempt_wakeup_fair,
- 
- 	.pick_next_task		= __pick_next_task_fair,
- 	.put_prev_task		= put_prev_task_fair,
++		btrfs_drew_write_unlock(&root->snapshot_lock);
+ 		btrfs_exclop_finish(fs_info);
+ 		btrfs_warn(fs_info,
+ 		"cannot activate swapfile because subvolume %llu is being deleted",
 -- 
 2.43.0
 
