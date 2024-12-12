@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A61A0236938;
-	Thu, 12 Dec 2024 16:45:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 040F5236938;
+	Thu, 12 Dec 2024 16:45:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734021939; cv=none; b=Oj+4rGbiQfwcsAAxkvLoqdvgwzgFVuXn04Py4byAq6ynwwLCLz/finr+2dIeFuh9iZRDyIaa1sbOGNkPABFMTHiz2VyzzN2varOVz7iLSHiYG0cpGf+Wa2r5p3u1RqOb0jR/dIbofnkVU+/7U2CYpkZJDZ9VPdnRi7oLPaAmaac=
+	t=1734021943; cv=none; b=b8U6ZGvSvFQnRYK9il/XlRu4Sj3260eBDNHiCqYt4MM2+aF0OBApAA8XSpX786V6/Nm5PFhNIc4TXSVpU+yskFEeehTaTsbQAqFeUYv+5JIsWd/bGDblOPB06+2TunT/rPLYDfBrRlzHoiTXCoypx2qsuEgpupR7qhirsvMv8qo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734021939; c=relaxed/simple;
-	bh=NHBdeuu+NC6slSKD5LLde8zfgGPpEKAsksPS9CgpkyY=;
+	s=arc-20240116; t=1734021943; c=relaxed/simple;
+	bh=7pWATYix23j5YJnrvGP6VkNvBbElK0xKwYgmVldAeI8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lcA01gwzxq08WqnckLjRGzs3Uq0XmxUwgbJCWUlDGE4W0kfwAlIxdYpQIfnfXbRy9iQsMaiR01MfNiHQFEm/tLFHUxEw6T5I9Ys4WYf847SKLXv2gj0+VtkZIWpioNob/2b9wz4Z/yijpPGDI1abwB5QvjHgKWHXtyW176rStAM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vnu3VeC2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hoIbZQO+dgSzCMcMuHqId0TNBb4Gp1CVg3g/RFonUjTwiIQZGvQPVikVZZDz0CECZwFhso9QaEdhF0a6l/wXZ7gaC+S+H+OM+tU078yEuMilRvyB47oZKIZhpSmJxDdquv5ffwFOxU4F/uAzLjEcnvX+h+2vfgpdrgJdflYDv+E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kSbjRfAs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vnu3VeC2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08DD9C4CECE;
-	Thu, 12 Dec 2024 16:45:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kSbjRfAs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65694C4CECE;
+	Thu, 12 Dec 2024 16:45:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734021939;
-	bh=NHBdeuu+NC6slSKD5LLde8zfgGPpEKAsksPS9CgpkyY=;
+	s=korg; t=1734021942;
+	bh=7pWATYix23j5YJnrvGP6VkNvBbElK0xKwYgmVldAeI8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Vnu3VeC2j7L5muCUtulJwJAqv11gmA6E7GvuiJCBfm5bEdBSXCd/6Sb532om6Egfg
-	 bg2ABWTPrCgCNvnF86cMOY0x16gvgitSvHIOPyr8/It67y+7ZzIzudTZglkjLG16xP
-	 GqiPiQxowuMWAmIc5OUELJmwJJdY7USqgrs0uNjk=
+	b=kSbjRfAsSo4RtiVLPIEJp1T72f+PeJgpFN3D/e34d4InQr5smS54IxOg5q0CI0cwx
+	 lv6+D6W21DRWM9kbCoQ1aZoHCPqdj9yB4qSqlS+VVGgdOu9A8oMv/HB1g0E+QFPebG
+	 t1cFzGasy8LYt6uCEkHyrfwVzNs4rCCVErOQG2RQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miguel Ojeda <ojeda@kernel.org>,
 	Thomas Gleixner <tglx@linutronix.de>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 104/565] time: Fix references to _msecs_to_jiffies() handling of values
-Date: Thu, 12 Dec 2024 15:54:59 +0100
-Message-ID: <20241212144315.590669309@linuxfoundation.org>
+Subject: [PATCH 5.15 105/565] timekeeping: Consolidate fast timekeeper
+Date: Thu, 12 Dec 2024 15:55:00 +0100
+Message-ID: <20241212144315.629803112@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144311.432886635@linuxfoundation.org>
 References: <20241212144311.432886635@linuxfoundation.org>
@@ -51,53 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miguel Ojeda <ojeda@kernel.org>
+From: Thomas Gleixner <tglx@linutronix.de>
 
-[ Upstream commit 92b043fd995a63a57aae29ff85a39b6f30cd440c ]
+[ Upstream commit 90be8d6c1f91e1e5121c219726524c91b52bfc20 ]
 
-The details about the handling of the "normal" values were moved
-to the _msecs_to_jiffies() helpers in commit ca42aaf0c861 ("time:
-Refactor msecs_to_jiffies"). However, the same commit still mentioned
-__msecs_to_jiffies() in the added documentation.
+Provide a inline function which replaces the copy & pasta.
 
-Thus point to _msecs_to_jiffies() instead.
-
-Fixes: ca42aaf0c861 ("time: Refactor msecs_to_jiffies")
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/all/20241025110141.157205-2-ojeda@kernel.org
+Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://lore.kernel.org/r/20220415091921.072296632@linutronix.de
+Stable-dep-of: 5c1806c41ce0 ("kcsan, seqlock: Support seqcount_latch_t")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/jiffies.h | 2 +-
- kernel/time/time.c      | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ kernel/time/timekeeping.c | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/include/linux/jiffies.h b/include/linux/jiffies.h
-index 5e13f801c9021..3778e26f7b14c 100644
---- a/include/linux/jiffies.h
-+++ b/include/linux/jiffies.h
-@@ -349,7 +349,7 @@ static inline unsigned long _msecs_to_jiffies(const unsigned int m)
-  * - all other values are converted to jiffies by either multiplying
-  *   the input value by a factor or dividing it with a factor and
-  *   handling any 32-bit overflows.
-- *   for the details see __msecs_to_jiffies()
-+ *   for the details see _msecs_to_jiffies()
-  *
-  * msecs_to_jiffies() checks for the passed in value being a constant
-  * via __builtin_constant_p() allowing gcc to eliminate most of the
-diff --git a/kernel/time/time.c b/kernel/time/time.c
-index 29923b20e0e47..a7fce68465a38 100644
---- a/kernel/time/time.c
-+++ b/kernel/time/time.c
-@@ -539,7 +539,7 @@ EXPORT_SYMBOL(ns_to_timespec64);
-  * - all other values are converted to jiffies by either multiplying
-  *   the input value by a factor or dividing it with a factor and
-  *   handling any 32-bit overflows.
-- *   for the details see __msecs_to_jiffies()
-+ *   for the details see _msecs_to_jiffies()
-  *
-  * msecs_to_jiffies() checks for the passed in value being a constant
-  * via __builtin_constant_p() allowing gcc to eliminate most of the
+diff --git a/kernel/time/timekeeping.c b/kernel/time/timekeeping.c
+index ce3d1377cbc7a..7f755127bee41 100644
+--- a/kernel/time/timekeeping.c
++++ b/kernel/time/timekeeping.c
+@@ -431,6 +431,14 @@ static void update_fast_timekeeper(const struct tk_read_base *tkr,
+ 	memcpy(base + 1, base, sizeof(*base));
+ }
+ 
++static __always_inline u64 fast_tk_get_delta_ns(struct tk_read_base *tkr)
++{
++	u64 delta, cycles = tk_clock_read(tkr);
++
++	delta = clocksource_delta(cycles, tkr->cycle_last, tkr->mask);
++	return timekeeping_delta_to_ns(tkr, delta);
++}
++
+ static __always_inline u64 __ktime_get_fast_ns(struct tk_fast *tkf)
+ {
+ 	struct tk_read_base *tkr;
+@@ -441,12 +449,7 @@ static __always_inline u64 __ktime_get_fast_ns(struct tk_fast *tkf)
+ 		seq = raw_read_seqcount_latch(&tkf->seq);
+ 		tkr = tkf->base + (seq & 0x01);
+ 		now = ktime_to_ns(tkr->base);
+-
+-		now += timekeeping_delta_to_ns(tkr,
+-				clocksource_delta(
+-					tk_clock_read(tkr),
+-					tkr->cycle_last,
+-					tkr->mask));
++		now += fast_tk_get_delta_ns(tkr);
+ 	} while (read_seqcount_latch_retry(&tkf->seq, seq));
+ 
+ 	return now;
+@@ -545,10 +548,7 @@ static __always_inline u64 __ktime_get_real_fast(struct tk_fast *tkf, u64 *mono)
+ 		tkr = tkf->base + (seq & 0x01);
+ 		basem = ktime_to_ns(tkr->base);
+ 		baser = ktime_to_ns(tkr->base_real);
+-
+-		delta = timekeeping_delta_to_ns(tkr,
+-				clocksource_delta(tk_clock_read(tkr),
+-				tkr->cycle_last, tkr->mask));
++		delta = fast_tk_get_delta_ns(tkr);
+ 	} while (read_seqcount_latch_retry(&tkf->seq, seq));
+ 
+ 	if (mono)
 -- 
 2.43.0
 
