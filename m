@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF206229679;
-	Thu, 12 Dec 2024 17:44:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9335D229675;
+	Thu, 12 Dec 2024 17:44:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734025486; cv=none; b=dQMLk6O84BHeEKUrilqsEIwSerBQndvp19c4ZIU72e2OSGNrSuRvV8F6Hc/64xkHar38ue0HiDaOJj+vxmXnb7cqLbD2t4FlAK4OecLI4La/0+sCd1UrBKWMIuHMVdFlmAccgLLcFhO1XuGrNdXneL2E4nba67COubPaqNSVPjQ=
+	t=1734025488; cv=none; b=Rr/KIEFBEAavKUg0BbNZAM7l+KdpQi9IrGAExHGX12OGPezvfurqYUncHpMwgN6qkFgpsoyA0mXielSX6Fwy655fWxsglYUnUM1Dc/HY3KNalcXiY/IVAIOwWQvxFD5wF3s/A6yRFx+J8cozSBEyAONpe5NPx+yPKdi0MWw0i/M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734025486; c=relaxed/simple;
-	bh=KCk3j4rJPTefhYnCQPH9ONRtRfnXNAJHQQ8DqIwMtOg=;
+	s=arc-20240116; t=1734025488; c=relaxed/simple;
+	bh=ypiEEEm+xZH9En+vaWUQ5MGHUy/U3/HOB4Yb1+dc2Tk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=blkL33rKuZ+J40PtiIw8DLC9o/IMOjdtKxHvCUYIAYDG7DWJ87PZME7jYTNO8+3l7dR5dzFus+VG+BV54Cgi+VLPXYAVvwMhcrgV4v+auG4pmUIYaK31d0ZUOL1dCbjDmlh2SwWstyf1QxQi9QuasRv4HE5mFwsa5nw+nhyzYY4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pOmRUcPC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WIR87zCwTWOrlALTAZMC8fPMpzTJIr6QPuZJ5vUEYTyahCR7MYV10yTI6pp6uR59yBC0ucPGgOdFmthZxk8o+9YwklOZY5+vrrMEVomvQSJqkFKNmkuBeAFm06OxMxCF6Kf4S6pJMOrSz6sbPRjpgbG8ZHpJr5QQNvDGcXdy1aQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ij6hFOrY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pOmRUcPC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03857C4CECE;
-	Thu, 12 Dec 2024 17:44:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ij6hFOrY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16AD6C4CED0;
+	Thu, 12 Dec 2024 17:44:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734025485;
-	bh=KCk3j4rJPTefhYnCQPH9ONRtRfnXNAJHQQ8DqIwMtOg=;
+	s=korg; t=1734025488;
+	bh=ypiEEEm+xZH9En+vaWUQ5MGHUy/U3/HOB4Yb1+dc2Tk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pOmRUcPCewRbl4Aa4RZIBpl0y/QQoGoHDpUNCzmfuJhvuKeWngsUKec2h0C+A+zmy
-	 xZIoE5DKWx2p5Tu2nZ9OGyTgALSApmIAQceoYgkU6soZTmLf6NPoxZ7g81bXGmbrNz
-	 GM5Pnc5S355nniz094ZUQOf+eaQjAedgjgsk+btQ=
+	b=Ij6hFOrYFv9pAby2vHnZJ7g1KqlSXW+Rx3sNcTYWYek/okZraNXmo9RFIao3l/pE2
+	 dWXC7+htUvjaNublVnIS7ut/6uP6LuFS1TwqD4pj6u29k4xfGtm/bjtkZWaFj1cd9P
+	 LV/5GlqUldsu0SmAsiHNcxlfBo4TC9LtkDuJND1Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeremy Gebben <jgebben@sweptlaser.com>,
-	Nobuhiro Iwamatsu <iwamatsu@nigauri.org>,
+	Yongliang Gao <leonylgao@tencent.com>,
+	Jingqun Li <jingqunli@tencent.com>,
 	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 186/321] rtc: abx80x: Fix WDT bit position of the status register
-Date: Thu, 12 Dec 2024 16:01:44 +0100
-Message-ID: <20241212144237.332965111@linuxfoundation.org>
+Subject: [PATCH 5.4 187/321] rtc: check if __rtc_read_time was successful in rtc_timer_do_work()
+Date: Thu, 12 Dec 2024 16:01:45 +0100
+Message-ID: <20241212144237.371500146@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144229.291682835@linuxfoundation.org>
 References: <20241212144229.291682835@linuxfoundation.org>
@@ -52,37 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nobuhiro Iwamatsu <iwamatsu@nigauri.org>
+From: Yongliang Gao <leonylgao@tencent.com>
 
-[ Upstream commit 10e078b273ee7a2b8b4f05a64ac458f5e652d18d ]
+[ Upstream commit e8ba8a2bc4f60a1065f23d6a0e7cbea945a0f40d ]
 
-The WDT bit in the status register is 5, not 6. This fixes from 6 to 5.
+If the __rtc_read_time call fails,, the struct rtc_time tm; may contain
+uninitialized data, or an illegal date/time read from the RTC hardware.
 
-Link: https://abracon.com/Support/AppsManuals/Precisiontiming/AB08XX-Application-Manual.pdf
-Link: https://www.microcrystal.com/fileadmin/Media/Products/RTC/App.Manual/RV-1805-C3_App-Manual.pdf
-Fixes: 749e36d0a0d7 ("rtc: abx80x: add basic watchdog support")
-Cc: Jeremy Gebben <jgebben@sweptlaser.com>
-Signed-off-by: Nobuhiro Iwamatsu <iwamatsu@nigauri.org>
-Link: https://lore.kernel.org/r/20241008041737.1640633-1-iwamatsu@nigauri.org
+When calling rtc_tm_to_ktime later, the result may be a very large value
+(possibly KTIME_MAX). If there are periodic timers in rtc->timerqueue,
+they will continually expire, may causing kernel softlockup.
+
+Fixes: 6610e0893b8b ("RTC: Rework RTC code to use timerqueue for events")
+Signed-off-by: Yongliang Gao <leonylgao@tencent.com>
+Acked-by: Jingqun Li <jingqunli@tencent.com>
+Link: https://lore.kernel.org/r/20241011043153.3788112-1-leonylgao@gmail.com
 Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-abx80x.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/rtc/interface.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/rtc/rtc-abx80x.c b/drivers/rtc/rtc-abx80x.c
-index 73830670a41f1..51cfe72787ce3 100644
---- a/drivers/rtc/rtc-abx80x.c
-+++ b/drivers/rtc/rtc-abx80x.c
-@@ -36,7 +36,7 @@
- #define ABX8XX_REG_STATUS	0x0f
- #define ABX8XX_STATUS_AF	BIT(2)
- #define ABX8XX_STATUS_BLF	BIT(4)
--#define ABX8XX_STATUS_WDT	BIT(6)
-+#define ABX8XX_STATUS_WDT	BIT(5)
+diff --git a/drivers/rtc/interface.c b/drivers/rtc/interface.c
+index d858cd819932f..1536d53a7af7f 100644
+--- a/drivers/rtc/interface.c
++++ b/drivers/rtc/interface.c
+@@ -894,13 +894,18 @@ void rtc_timer_do_work(struct work_struct *work)
+ 	struct timerqueue_node *next;
+ 	ktime_t now;
+ 	struct rtc_time tm;
++	int err;
  
- #define ABX8XX_REG_CTRL1	0x10
- #define ABX8XX_CTRL_WRITE	BIT(0)
+ 	struct rtc_device *rtc =
+ 		container_of(work, struct rtc_device, irqwork);
+ 
+ 	mutex_lock(&rtc->ops_lock);
+ again:
+-	__rtc_read_time(rtc, &tm);
++	err = __rtc_read_time(rtc, &tm);
++	if (err) {
++		mutex_unlock(&rtc->ops_lock);
++		return;
++	}
+ 	now = rtc_tm_to_ktime(tm);
+ 	while ((next = timerqueue_getnext(&rtc->timerqueue))) {
+ 		if (next->expires > now)
 -- 
 2.43.0
 
