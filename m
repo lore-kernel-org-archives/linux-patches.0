@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 524BC215777;
-	Thu, 12 Dec 2024 15:32:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BB212135C1;
+	Thu, 12 Dec 2024 15:32:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734017528; cv=none; b=FUqCbUR7mGw3tA7SfutZZCyTDg66YuGWCHoxszz/g5bTRESpdHaLHJOCJu/AcG+GOoSKe0Uafc/wbjNqWtMuIG+loww90keCF37Bg1zuNqs9Hmv3s0r3SrkyuNc/sQjwFW4ehzMr0Q4v1yGImt0WFfh33B0C/E8dUOgGXwdlljA=
+	t=1734017531; cv=none; b=P1Yc2zG0zvLE29QVHSCxXbI5tlYnOBBRKOeookC7SaWLV3+6XQ1ph6uuG7OpOhngOWk0vgt51TUdrWBCdGQcU2zcergjo/YKyP4hnOTrkOWxsoSxDjH0e9mE0bXxruRDfQsmsiVqL2QYKkx1lsqTDWm7tHfkO5R2o8UNLKyWuCI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734017528; c=relaxed/simple;
-	bh=HZagMqy40atOC7zuZrPeMmQkN1hTf/dxx6hKx6Ajt4k=;
+	s=arc-20240116; t=1734017531; c=relaxed/simple;
+	bh=ElEtl9VBboOKTbqMwuf7AvF/AITELJUzmAxvwViySqI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=STNf8VK3Wiv4Edy7W/Lzjv4SCDnieXUoSbOvFnwer2o2fPXCecE5CAfsbNnro0BmUoRus2BenDLf7Q+wJ/sZg+6HKMHzUEb6L14zKCItJPDJZTeimTm52QzlD+BY4I37Or+7fZ8vDxpLkczV1N7+yRRX48Ttqayc7rnqdtJxzpk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oEYAT7Z+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Fge8xdihBw+Oq+r47wsL1klYXc1tVcfcAcSdusia9hH2Koktw0iq9Q/94DYrWQeGUcUYNer+kdBZ8EKvZ6/nOLTYXoetHG0NGSMPWGLzCn0c1C0msMnF4Higiv6fdDARxiE4VQ0F7llbYjwOcAeaNONgQtL/DTYINks8rO7YOgA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e8+YpQ/z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oEYAT7Z+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FA5AC4CECE;
-	Thu, 12 Dec 2024 15:32:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e8+YpQ/z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D463FC4CECE;
+	Thu, 12 Dec 2024 15:32:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734017527;
-	bh=HZagMqy40atOC7zuZrPeMmQkN1hTf/dxx6hKx6Ajt4k=;
+	s=korg; t=1734017531;
+	bh=ElEtl9VBboOKTbqMwuf7AvF/AITELJUzmAxvwViySqI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oEYAT7Z+IqOPWfqoPJZBa7j3jh8lJhY16utM37K1aMGl3enIkmYGHklZG2huyNPKi
-	 OhXPdpFMA3iQIjfZn23UUos+mS3iw7/8KkeMEiomKxtww3V5mmEnVybLki1arytdwh
-	 u1xw2v1t/3KeAhWDVAvyvpHRBcXX0qSZjwkS7UWU=
+	b=e8+YpQ/z4dp6xQDQ2SOaEb7/KE1TN+d+yHTd8bF3QT7oFgMEAaCM/1YCAYwzhpR0E
+	 Wk3nWaHBRmWjb3X37bP/siaBLKUhABwVdWctUY75DhPq76xpReWx3Y5g3TW+riPaRx
+	 wVNvSBcxS9VxlNGbKM6p2IOf41kt2LFmm8h89whE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>,
 	Jan Karcher <jaka@linux.ibm.com>
-Subject: [PATCH 6.6 039/356] net/smc: mark optional smcd_ops and check for support when called
-Date: Thu, 12 Dec 2024 15:55:58 +0100
-Message-ID: <20241212144246.173452379@linuxfoundation.org>
+Subject: [PATCH 6.6 040/356] net/smc: add operations to merge sndbuf with peer DMB
+Date: Thu, 12 Dec 2024 15:55:59 +0100
+Message-ID: <20241212144246.212617801@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144244.601729511@linuxfoundation.org>
 References: <20241212144244.601729511@linuxfoundation.org>
@@ -55,10 +55,30 @@ Content-Transfer-Encoding: 8bit
 
 From: Wen Gu <guwen@linux.alibaba.com>
 
-[ Upstream commit d1d8d0b6c7c68b0665456831fa779174ebd78f90 ]
+[ Upstream commit 4398888268582cb51b69c6ee94f551bb8d37d12f ]
 
-Some operations are not supported by new introduced Emulated-ISM, so
-mark them as optional and check if the device supports them when called.
+In some scenarios using Emulated-ISM device, sndbuf can share the same
+physical memory region with peer DMB to avoid data copy from one side
+to the other. In such case the sndbuf is only a descriptor that
+describes the shared memory and does not actually occupy memory, it's
+more like a ghost buffer.
+
+      +----------+                     +----------+
+      | socket A |                     | socket B |
+      +----------+                     +----------+
+            |                               |
+       +--------+                       +--------+
+       | sndbuf |                       |  DMB   |
+       |  desc  |                       |  desc  |
+       +--------+                       +--------+
+            |                               |
+            |                          +----v-----+
+            +-------------------------->  memory  |
+                                       +----------+
+
+So here introduces three new SMC-D device operations to check if this
+feature is supported by device, and to {attach|detach} ghost sndbuf to
+peer DMB. For now only loopback-ism supports this.
 
 Signed-off-by: Wen Gu <guwen@linux.alibaba.com>
 Reviewed-by: Wenjia Zhang <wenjia@linux.ibm.com>
@@ -67,83 +87,91 @@ Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Stable-dep-of: 0541db8ee32c ("net/smc: initialize close_work early to avoid warning")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/smc.h | 14 ++++++++------
- net/smc/smc_ism.c |  9 ++++++++-
- 2 files changed, 16 insertions(+), 7 deletions(-)
+ include/net/smc.h |  3 +++
+ net/smc/smc_ism.c | 40 ++++++++++++++++++++++++++++++++++++++++
+ net/smc/smc_ism.h |  4 ++++
+ 3 files changed, 47 insertions(+)
 
 diff --git a/include/net/smc.h b/include/net/smc.h
-index a0dc1187e96ed..9dfe57f3e4f0b 100644
+index 9dfe57f3e4f0b..6fef76087b9ed 100644
 --- a/include/net/smc.h
 +++ b/include/net/smc.h
-@@ -63,12 +63,6 @@ struct smcd_ops {
- 	int (*register_dmb)(struct smcd_dev *dev, struct smcd_dmb *dmb,
- 			    struct ism_client *client);
- 	int (*unregister_dmb)(struct smcd_dev *dev, struct smcd_dmb *dmb);
--	int (*add_vlan_id)(struct smcd_dev *dev, u64 vlan_id);
--	int (*del_vlan_id)(struct smcd_dev *dev, u64 vlan_id);
--	int (*set_vlan_required)(struct smcd_dev *dev);
--	int (*reset_vlan_required)(struct smcd_dev *dev);
--	int (*signal_event)(struct smcd_dev *dev, struct smcd_gid *rgid,
--			    u32 trigger_irq, u32 event_code, u64 info);
- 	int (*move_data)(struct smcd_dev *dev, u64 dmb_tok, unsigned int idx,
- 			 bool sf, unsigned int offset, void *data,
- 			 unsigned int size);
-@@ -77,6 +71,14 @@ struct smcd_ops {
- 	void (*get_local_gid)(struct smcd_dev *dev, struct smcd_gid *gid);
- 	u16 (*get_chid)(struct smcd_dev *dev);
- 	struct device* (*get_dev)(struct smcd_dev *dev);
-+
-+	/* optional operations */
-+	int (*add_vlan_id)(struct smcd_dev *dev, u64 vlan_id);
-+	int (*del_vlan_id)(struct smcd_dev *dev, u64 vlan_id);
-+	int (*set_vlan_required)(struct smcd_dev *dev);
-+	int (*reset_vlan_required)(struct smcd_dev *dev);
-+	int (*signal_event)(struct smcd_dev *dev, struct smcd_gid *rgid,
-+			    u32 trigger_irq, u32 event_code, u64 info);
+@@ -79,6 +79,9 @@ struct smcd_ops {
+ 	int (*reset_vlan_required)(struct smcd_dev *dev);
+ 	int (*signal_event)(struct smcd_dev *dev, struct smcd_gid *rgid,
+ 			    u32 trigger_irq, u32 event_code, u64 info);
++	int (*support_dmb_nocopy)(struct smcd_dev *dev);
++	int (*attach_dmb)(struct smcd_dev *dev, struct smcd_dmb *dmb);
++	int (*detach_dmb)(struct smcd_dev *dev, u64 token);
  };
  
  struct smcd_dev {
 diff --git a/net/smc/smc_ism.c b/net/smc/smc_ism.c
-index a33f861cf7c19..3623df320de55 100644
+index 3623df320de55..61ffc72014013 100644
 --- a/net/smc/smc_ism.c
 +++ b/net/smc/smc_ism.c
-@@ -105,6 +105,8 @@ int smc_ism_get_vlan(struct smcd_dev *smcd, unsigned short vlanid)
+@@ -228,6 +228,46 @@ int smc_ism_register_dmb(struct smc_link_group *lgr, int dmb_len,
+ #endif
+ }
  
- 	if (!vlanid)			/* No valid vlan id */
- 		return -EINVAL;
-+	if (!smcd->ops->add_vlan_id)
-+		return -EOPNOTSUPP;
- 
- 	/* create new vlan entry, in case we need it */
- 	new_vlan = kzalloc(sizeof(*new_vlan), GFP_KERNEL);
-@@ -150,6 +152,8 @@ int smc_ism_put_vlan(struct smcd_dev *smcd, unsigned short vlanid)
- 
- 	if (!vlanid)			/* No valid vlan id */
- 		return -EINVAL;
-+	if (!smcd->ops->del_vlan_id)
-+		return -EOPNOTSUPP;
- 
- 	spin_lock_irqsave(&smcd->lock, flags);
- 	list_for_each_entry(vlan, &smcd->vlan, list) {
-@@ -351,7 +355,8 @@ static void smcd_handle_sw_event(struct smc_ism_event_work *wrk)
- 		smc_smcd_terminate(wrk->smcd, &peer_gid, ev_info.vlan_id);
- 		break;
- 	case ISM_EVENT_CODE_TESTLINK:	/* Activity timer */
--		if (ev_info.code == ISM_EVENT_REQUEST) {
-+		if (ev_info.code == ISM_EVENT_REQUEST &&
-+		    wrk->smcd->ops->signal_event) {
- 			ev_info.code = ISM_EVENT_RESPONSE;
- 			wrk->smcd->ops->signal_event(wrk->smcd,
- 						     &peer_gid,
-@@ -526,6 +531,8 @@ int smc_ism_signal_shutdown(struct smc_link_group *lgr)
- 
- 	if (lgr->peer_shutdown)
- 		return 0;
-+	if (!lgr->smcd->ops->signal_event)
-+		return 0;
- 
- 	memcpy(ev_info.uid, lgr->id, SMC_LGR_ID_SIZE);
- 	ev_info.vlan_id = lgr->vlan_id;
++bool smc_ism_support_dmb_nocopy(struct smcd_dev *smcd)
++{
++	/* for now only loopback-ism supports
++	 * merging sndbuf with peer DMB to avoid
++	 * data copies between them.
++	 */
++	return (smcd->ops->support_dmb_nocopy &&
++		smcd->ops->support_dmb_nocopy(smcd));
++}
++
++int smc_ism_attach_dmb(struct smcd_dev *dev, u64 token,
++		       struct smc_buf_desc *dmb_desc)
++{
++	struct smcd_dmb dmb;
++	int rc = 0;
++
++	if (!dev->ops->attach_dmb)
++		return -EINVAL;
++
++	memset(&dmb, 0, sizeof(dmb));
++	dmb.dmb_tok = token;
++	rc = dev->ops->attach_dmb(dev, &dmb);
++	if (!rc) {
++		dmb_desc->sba_idx = dmb.sba_idx;
++		dmb_desc->token = dmb.dmb_tok;
++		dmb_desc->cpu_addr = dmb.cpu_addr;
++		dmb_desc->dma_addr = dmb.dma_addr;
++		dmb_desc->len = dmb.dmb_len;
++	}
++	return rc;
++}
++
++int smc_ism_detach_dmb(struct smcd_dev *dev, u64 token)
++{
++	if (!dev->ops->detach_dmb)
++		return -EINVAL;
++
++	return dev->ops->detach_dmb(dev, token);
++}
++
+ static int smc_nl_handle_smcd_dev(struct smcd_dev *smcd,
+ 				  struct sk_buff *skb,
+ 				  struct netlink_callback *cb)
+diff --git a/net/smc/smc_ism.h b/net/smc/smc_ism.h
+index 0e5e563099ec3..8312c3586d2b3 100644
+--- a/net/smc/smc_ism.h
++++ b/net/smc/smc_ism.h
+@@ -41,6 +41,10 @@ int smc_ism_put_vlan(struct smcd_dev *dev, unsigned short vlan_id);
+ int smc_ism_register_dmb(struct smc_link_group *lgr, int buf_size,
+ 			 struct smc_buf_desc *dmb_desc);
+ int smc_ism_unregister_dmb(struct smcd_dev *dev, struct smc_buf_desc *dmb_desc);
++bool smc_ism_support_dmb_nocopy(struct smcd_dev *smcd);
++int smc_ism_attach_dmb(struct smcd_dev *dev, u64 token,
++		       struct smc_buf_desc *dmb_desc);
++int smc_ism_detach_dmb(struct smcd_dev *dev, u64 token);
+ int smc_ism_signal_shutdown(struct smc_link_group *lgr);
+ void smc_ism_get_system_eid(u8 **eid);
+ u16 smc_ism_get_chid(struct smcd_dev *dev);
 -- 
 2.43.0
 
