@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7683013792B;
-	Thu, 12 Dec 2024 17:02:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC71B13792B;
+	Thu, 12 Dec 2024 17:02:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734022947; cv=none; b=cw0bp0ogVNx3FaLOLNEot6hg5jli0hpQKYlvqIaBnZ6h7hvjVlvHvspAG6o8oj8+fEIt/KmmdBKVYx5Rgs5TeL3DG1XXv/ZTkpIxS0RG9SjXj1zxfhvi3bMIbg2jjGbiFwKF2VO3KR7ArQ9nNhQEC3E41dWJZb5Fp1K4RghMMbo=
+	t=1734022951; cv=none; b=rxHy4LdbXRgJ8J9sGZ2ndRHEG9QJbR/UgEpE9tEsbELhuiDuCjZfKhY3anJsiJsmF1A2eIFcFuKFJO8S4xzBisLhtvB4N6bpusIKLKMeHVK/ccpa16+yolZHdqBXQbBVkToSM6xgjPrl3wv6nc2FzOJel9UE76CB5gquCHJ7Frs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734022947; c=relaxed/simple;
-	bh=1/HAYwbjMOVTOIXPgJdMI1H/mdGYXyAY8m53SEd/SMw=;
+	s=arc-20240116; t=1734022951; c=relaxed/simple;
+	bh=YxyH301M1I4eGGU0ViY5Nh96A38eEPIUy6P6E3BLSkM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U9br5tASFDVPonmr8T9o8RCiYVcmxS6zZZrIRwWbrM8mbMwXpZTuFGsv6nHIreQAcBcyXdykZf6Q3BlMqd2zk1F16ujlBE+f3XrswBY8l8jzNGj+swET7KwRKn6sni0SuV+M+WzLvm+DaEhAcAxDYJ0+shHfE/aJqRXA2f6Sq74=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EmiahxFw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YKbf662Y5chLTUlw0n6fXnu+iCPgfZa14XvL1QqfHSnh1GO3awb0x4/Wsk6H0h26QsTxaRusVsCz+KW5LfkHmQPNgKZg6mLzH2UI/Noaaq6eVlv2tzMQ7RuEJ8x4nUb7GtKsAkgsFfmOK7Dq2sT+4HFMqdsafuYppGPjMOYWEr4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OGGZxse0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EmiahxFw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D70D8C4CECE;
-	Thu, 12 Dec 2024 17:02:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OGGZxse0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AE0EC4CECE;
+	Thu, 12 Dec 2024 17:02:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734022947;
-	bh=1/HAYwbjMOVTOIXPgJdMI1H/mdGYXyAY8m53SEd/SMw=;
+	s=korg; t=1734022950;
+	bh=YxyH301M1I4eGGU0ViY5Nh96A38eEPIUy6P6E3BLSkM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EmiahxFwCez7rVgg9YQ4uD09MMADWR4r1y6H2MINtPd+1yze97WyFQ+1Ns2iyz9t4
-	 MaLSpC82N9ZWiDsKMeQc1W9Cqp614/H7QABs3FK1UL7TiIoqNI4mJOd0uF+hgz9cQL
-	 aqjhMYbCc7ssG8/+Ii0vQoMwJmlCs5yeAWBEsbP4=
+	b=OGGZxse0V/YsHyuPORaLfFWIHcXZ1DUBBjdFCk5CX++3zyk8ZgJBjk9LUzICXIbQE
+	 GqRS5Kb3mOx/gnqSM58thLHHSAKqeej/79fxzvJyWgJMU54Pih9OdsTRojeTmGxIxa
+	 vkpmpA10WCndzNl13LGjj3NvjMVqiNb+h1CTl8oY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Long Li <leo.lilong@huawei.com>,
 	"Darrick J. Wong" <djwong@kernel.org>,
-	Dave Chinner <dchinner@redhat.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Carlos Maiolino <cem@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 376/565] xfs: fix log recovery when unknown rocompat bits are set
-Date: Thu, 12 Dec 2024 15:59:31 +0100
-Message-ID: <20241212144326.490898499@linuxfoundation.org>
+Subject: [PATCH 5.15 377/565] xfs: remove unknown compat feature check in superblock write validation
+Date: Thu, 12 Dec 2024 15:59:32 +0100
+Message-ID: <20241212144326.530483878@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144311.432886635@linuxfoundation.org>
 References: <20241212144311.432886635@linuxfoundation.org>
@@ -51,96 +53,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Darrick J. Wong <djwong@kernel.org>
+From: Long Li <leo.lilong@huawei.com>
 
-[ Upstream commit 74ad4693b6473950e971b3dc525b5ee7570e05d0 ]
+[ Upstream commit 652f03db897ba24f9c4b269e254ccc6cc01ff1b7 ]
 
-Log recovery has always run on read only mounts, even where the primary
-superblock advertises unknown rocompat bits.  Due to a misunderstanding
-between Eric and Darrick back in 2018, we accidentally changed the
-superblock write verifier to shutdown the fs over that exact scenario.
-As a result, the log cleaning that occurs at the end of the mounting
-process fails if there are unknown rocompat bits set.
+Compat features are new features that older kernels can safely ignore,
+allowing read-write mounts without issues. The current sb write validation
+implementation returns -EFSCORRUPTED for unknown compat features,
+preventing filesystem write operations and contradicting the feature's
+definition.
 
-As we now allow writing of the superblock if there are unknown rocompat
-bits set on a RO mount, we no longer want to turn off RO state to allow
-log recovery to succeed on a RO mount.  Hence we also remove all the
-(now unnecessary) RO state toggling from the log recovery path.
+Additionally, if the mounted image is unclean, the log recovery may need
+to write to the superblock. Returning an error for unknown compat features
+during sb write validation can cause mount failures.
 
-Fixes: 9e037cb7972f ("xfs: check for unknown v5 feature bits in superblock write verifier"
-Signed-off-by: Darrick J. Wong <djwong@kernel.org>
-Reviewed-by: Dave Chinner <dchinner@redhat.com>
-Stable-dep-of: 652f03db897b ("xfs: remove unknown compat feature check in superblock write validation")
+Although XFS currently does not use compat feature flags, this issue
+affects current kernels' ability to mount images that may use compat
+feature flags in the future.
+
+Since superblock read validation already warns about unknown compat
+features, it's unnecessary to repeat this warning during write validation.
+Therefore, the relevant code in write validation is being removed.
+
+Fixes: 9e037cb7972f ("xfs: check for unknown v5 feature bits in superblock write verifier")
+Cc: stable@vger.kernel.org # v4.19+
+Signed-off-by: Long Li <leo.lilong@huawei.com>
+Reviewed-by: Darrick J. Wong <djwong@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/xfs/libxfs/xfs_sb.c |  3 ++-
- fs/xfs/xfs_log.c       | 17 -----------------
- 2 files changed, 2 insertions(+), 18 deletions(-)
+ fs/xfs/libxfs/xfs_sb.c | 7 -------
+ 1 file changed, 7 deletions(-)
 
 diff --git a/fs/xfs/libxfs/xfs_sb.c b/fs/xfs/libxfs/xfs_sb.c
-index 26dd9ceb44b42..f867da8128ca6 100644
+index f867da8128ca6..3175e3620a418 100644
 --- a/fs/xfs/libxfs/xfs_sb.c
 +++ b/fs/xfs/libxfs/xfs_sb.c
-@@ -263,7 +263,8 @@ xfs_validate_sb_write(
- 		return -EFSCORRUPTED;
- 	}
- 
--	if (xfs_sb_has_ro_compat_feature(sbp, XFS_SB_FEAT_RO_COMPAT_UNKNOWN)) {
-+	if (!xfs_is_readonly(mp) &&
-+	    xfs_sb_has_ro_compat_feature(sbp, XFS_SB_FEAT_RO_COMPAT_UNKNOWN)) {
- 		xfs_alert(mp,
- "Corruption detected in superblock read-only compatible features (0x%x)!",
- 			(sbp->sb_features_ro_compat &
-diff --git a/fs/xfs/xfs_log.c b/fs/xfs/xfs_log.c
-index eba295f666acc..be2f714d1553a 100644
---- a/fs/xfs/xfs_log.c
-+++ b/fs/xfs/xfs_log.c
-@@ -707,15 +707,7 @@ xfs_log_mount(
- 	 * just worked.
+@@ -256,13 +256,6 @@ xfs_validate_sb_write(
+ 	 * the kernel cannot support since we checked for unsupported bits in
+ 	 * the read verifier, which means that memory is corrupt.
  	 */
- 	if (!xfs_has_norecovery(mp)) {
--		/*
--		 * log recovery ignores readonly state and so we need to clear
--		 * mount-based read only state so it can write to disk.
--		 */
--		bool	readonly = test_and_clear_bit(XFS_OPSTATE_READONLY,
--						&mp->m_opstate);
- 		error = xlog_recover(log);
--		if (readonly)
--			set_bit(XFS_OPSTATE_READONLY, &mp->m_opstate);
- 		if (error) {
- 			xfs_warn(mp, "log mount/recovery failed: error %d",
- 				error);
-@@ -764,7 +756,6 @@ xfs_log_mount_finish(
- 	struct xfs_mount	*mp)
- {
- 	struct xlog		*log = mp->m_log;
--	bool			readonly;
- 	int			error = 0;
- 
- 	if (xfs_has_norecovery(mp)) {
-@@ -772,12 +763,6 @@ xfs_log_mount_finish(
- 		return 0;
- 	}
- 
--	/*
--	 * log recovery ignores readonly state and so we need to clear
--	 * mount-based read only state so it can write to disk.
--	 */
--	readonly = test_and_clear_bit(XFS_OPSTATE_READONLY, &mp->m_opstate);
+-	if (xfs_sb_has_compat_feature(sbp, XFS_SB_FEAT_COMPAT_UNKNOWN)) {
+-		xfs_warn(mp,
+-"Corruption detected in superblock compatible features (0x%x)!",
+-			(sbp->sb_features_compat & XFS_SB_FEAT_COMPAT_UNKNOWN));
+-		return -EFSCORRUPTED;
+-	}
 -
- 	/*
- 	 * During the second phase of log recovery, we need iget and
- 	 * iput to behave like they do for an active filesystem.
-@@ -828,8 +813,6 @@ xfs_log_mount_finish(
- 	xfs_buftarg_drain(mp->m_ddev_targp);
- 
- 	clear_bit(XLOG_RECOVERY_NEEDED, &log->l_opstate);
--	if (readonly)
--		set_bit(XFS_OPSTATE_READONLY, &mp->m_opstate);
- 
- 	/* Make sure the log is dead if we're returning failure. */
- 	ASSERT(!error || xlog_is_shutdown(log));
+ 	if (!xfs_is_readonly(mp) &&
+ 	    xfs_sb_has_ro_compat_feature(sbp, XFS_SB_FEAT_RO_COMPAT_UNKNOWN)) {
+ 		xfs_alert(mp,
 -- 
 2.43.0
 
