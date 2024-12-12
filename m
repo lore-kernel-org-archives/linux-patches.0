@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22161226863;
-	Thu, 12 Dec 2024 17:00:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8379226863;
+	Thu, 12 Dec 2024 17:00:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734022808; cv=none; b=Q9gmIXbMLLkspD/DIZigpCnav4C/UVzu9U9M6Q35ZYj3YtNiPH09kqwPfAGyDZIzoLCfxfSCoqv7d1fzbXX0dzi3BJlNO9EnRNYXce1uwdpuQwZmxdTKYJ+6V7b52MDlDMStbUSGI98lmdOqLxmlkPooGW4L9PCtuZtJqplyF98=
+	t=1734022812; cv=none; b=C7XudF7o7ACi7Lsuv+Ia5IcTr9GGGcfKWuTTG8xH+Xwri08A4MUCWgTY2AJ/48Ax8u9hEO+hn2hHf1txPyrOnmzWnUqcLLiIBOOCOkrdlwDGKktejnL6ymbfF78M0vD+Ls9fK1Im8cYSAU8/UkyB/9CmeNILqThWZUdsJHjm4Do=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734022808; c=relaxed/simple;
-	bh=wSwpK8O1BpAleXMIT+8DNdqDug4CG19HH+4CbwC3g9I=;
+	s=arc-20240116; t=1734022812; c=relaxed/simple;
+	bh=L71/LaJPMpbjlIvWekaRt7OaD1MWJnhwkrztYYjp52s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ooWNp8g8onbFEBW7TV1YDBecrN9FXwiWF235Mw6xWtv85h0y4W4mG52YKRtk84AxdgInxHs/dJVZ4j7ywoXMwp09h0vEFrkvmFXdm3w5/wjEvVdin7UHFmy0OBkXMRPTIdhhVm5aTrfzolqmwc/UaGnodvT98My4vZw92Hp3jd4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AklwHIxe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SYcjzLJDiAFfHtxHyiBgDlv8z6xXQMfsEhKVRraydpup/0b1CLqqt0CH3hqrZWfsrwj3yMHSGuw15LtzWKcdqQ/nrfJm3kPXKYht+eCEcU321CCtvYyMPQ1oStsqPDqsh/GbTYRYUkJC+PHLdCBIq1GtYEtEFgpInOWYAShz1ZU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v1QgYnaK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AklwHIxe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18D50C4CECE;
-	Thu, 12 Dec 2024 17:00:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v1QgYnaK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FD30C4CECE;
+	Thu, 12 Dec 2024 17:00:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734022807;
-	bh=wSwpK8O1BpAleXMIT+8DNdqDug4CG19HH+4CbwC3g9I=;
+	s=korg; t=1734022811;
+	bh=L71/LaJPMpbjlIvWekaRt7OaD1MWJnhwkrztYYjp52s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AklwHIxeKb6AQSYY0eblNTarNZKQ7eURg60xAs0fWOQwnb87v+W2J+VB+ASiZQFKS
-	 t35rNVivTy0RxASZp8NavwfZKQ/d4WdAVS+Mam0T0xjgKZCA/p3D5UwRKzlZKgO0gX
-	 k07RKRW971JR/PcsnirDE1fLoGCazSzXv/tYzJDs=
+	b=v1QgYnaK7ZPerpnsktkUDDNBwtksCKciuHtTKTgxbCGxhtmt/JjpUCP/DWfou1V9M
+	 Cvr/HSDKwY/U8cNWEYyTCsO+Lz0+bcgBdVS1w3AtTARr5HJtZ1VYeT68R3eNMC6V7A
+	 oByvinoSIo9GFj4RlhWF0J4xQPyYQLJtxJxmYASw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qiu-ji Chen <chenqiuji666@gmail.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Subject: [PATCH 5.15 340/565] media: wl128x: Fix atomicity violation in fmc_send_cmd()
-Date: Thu, 12 Dec 2024 15:58:55 +0100
-Message-ID: <20241212144325.036655772@linuxfoundation.org>
+	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>
+Subject: [PATCH 5.15 341/565] soc: fsl: rcpm: fix missing of_node_put() in copy_ippdexpcr1_setting()
+Date: Thu, 12 Dec 2024 15:58:56 +0100
+Message-ID: <20241212144325.076059702@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144311.432886635@linuxfoundation.org>
 References: <20241212144311.432886635@linuxfoundation.org>
@@ -50,54 +50,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qiu-ji Chen <chenqiuji666@gmail.com>
+From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
 
-commit ca59f9956d4519ab18ab2270be47c6b8c6ced091 upstream.
+commit c9f1efabf8e3b3ff886a42669f7093789dbeca94 upstream.
 
-Atomicity violation occurs when the fmc_send_cmd() function is executed
-simultaneously with the modification of the fmdev->resp_skb value.
-Consider a scenario where, after passing the validity check within the
-function, a non-null fmdev->resp_skb variable is assigned a null value.
-This results in an invalid fmdev->resp_skb variable passing the validity
-check. As seen in the later part of the function, skb = fmdev->resp_skb;
-when the invalid fmdev->resp_skb passes the check, a null pointer
-dereference error may occur at line 478, evt_hdr = (void *)skb->data;
+of_find_compatible_node() requires a call to of_node_put() when the
+pointer to the node is not required anymore to decrement its refcount
+and avoid leaking memory.
 
-To address this issue, it is recommended to include the validity check of
-fmdev->resp_skb within the locked section of the function. This
-modification ensures that the value of fmdev->resp_skb does not change
-during the validation process, thereby maintaining its validity.
+Add the missing call to of_node_put() after the node has been used.
 
-This possible bug is found by an experimental static analysis tool
-developed by our team. This tool analyzes the locking APIs
-to extract function pairs that can be concurrently executed, and then
-analyzes the instructions in the paired functions to identify possible
-concurrency bugs including data races and atomicity violations.
-
-Fixes: e8454ff7b9a4 ("[media] drivers:media:radio: wl128x: FM Driver Common sources")
 Cc: stable@vger.kernel.org
-Signed-off-by: Qiu-ji Chen <chenqiuji666@gmail.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Fixes: e95f287deed2 ("soc: fsl: handle RCPM errata A-008646 on SoC LS1021A")
+Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+Link: https://lore.kernel.org/r/20241013-rcpm-of_node_put-v1-1-9a8e55a01eae@gmail.com
+Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/radio/wl128x/fmdrv_common.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/soc/fsl/rcpm.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/media/radio/wl128x/fmdrv_common.c
-+++ b/drivers/media/radio/wl128x/fmdrv_common.c
-@@ -465,11 +465,12 @@ int fmc_send_cmd(struct fmdev *fmdev, u8
- 			   jiffies_to_msecs(FM_DRV_TX_TIMEOUT) / 1000);
- 		return -ETIMEDOUT;
- 	}
-+	spin_lock_irqsave(&fmdev->resp_skb_lock, flags);
- 	if (!fmdev->resp_skb) {
-+		spin_unlock_irqrestore(&fmdev->resp_skb_lock, flags);
- 		fmerr("Response SKB is missing\n");
- 		return -EFAULT;
- 	}
--	spin_lock_irqsave(&fmdev->resp_skb_lock, flags);
- 	skb = fmdev->resp_skb;
- 	fmdev->resp_skb = NULL;
- 	spin_unlock_irqrestore(&fmdev->resp_skb_lock, flags);
+--- a/drivers/soc/fsl/rcpm.c
++++ b/drivers/soc/fsl/rcpm.c
+@@ -36,6 +36,7 @@ static void copy_ippdexpcr1_setting(u32
+ 		return;
+ 
+ 	regs = of_iomap(np, 0);
++	of_node_put(np);
+ 	if (!regs)
+ 		return;
+ 
 
 
