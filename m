@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9631513CA81;
-	Thu, 12 Dec 2024 17:28:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A228B13CA81;
+	Thu, 12 Dec 2024 17:28:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734024487; cv=none; b=cAB60OLyBNM3Ac5a7Z3QszRAKusdqNTs8r0pg7Lkfwkoa6XJ4B39dqNkahT2AYl0aO36eB6hxa1q29fcAR1Dds3ah2mnIOdI1TSiiaLFG3UJ+8UjMKq6wxV8gfncWoKQgpmt1a4zyLVR8uChNubFHogB7sNklUC9cryD3B9qeTg=
+	t=1734024490; cv=none; b=lWWddIHv+nW+g5D8wCQ7ppML79lWLXMGbMdvXKqwTUHuKglqFiwZia0KvNYrjIS/r8TmQYyW81M527LZOMKczmHl12uZQu/4Kuc7uDn9BIO/xKF4yOL3SdvWhWlLS0ynBR5sEmcZhjcao8G8ZXIwUMVHjh5t1WTxXBEg7fJpWm4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734024487; c=relaxed/simple;
-	bh=SuiL67DWljFw828X0+bRxXT2u2pQK/u3qW+7KgE14ck=;
+	s=arc-20240116; t=1734024490; c=relaxed/simple;
+	bh=G+d5wiZNPz1AO7i/3vfLj0SCLfKpbvvPI5prO8EVXVA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Wq8oG8QV/Ofxdh7Npl7+Lv92DrLC0FI2L5J6qT4Dh7xYJKsXpQ08Q3slARVmCNGrtd/IlIFR/Su9uoN+lCxq5BL529acclsdivxM385KOioK2f9bHJMvjaiNzsL8i7j8mO8gsEM77mq5kextQSFZJKBUXyMbkcbBL6E3l+Se4sg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eUn37oV1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ojxlY6ClrCiohfqYx25xfiieRajfqdju6ifLB4JsD/02o2gRA6MkkCvhLxKgF751D5ndA9+yFY0b+JUIPHivzq3hLjpkh8LSa9m7weEvEe0KszC2SJ6KJvQtDwWw10fq96HZ8phjvr63t80PYhMd2ZJHZDvX6Ab9ZCE0wOyxbcY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pn0+Y2sJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eUn37oV1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 112C0C4CED3;
-	Thu, 12 Dec 2024 17:28:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pn0+Y2sJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23928C4CED0;
+	Thu, 12 Dec 2024 17:28:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734024487;
-	bh=SuiL67DWljFw828X0+bRxXT2u2pQK/u3qW+7KgE14ck=;
+	s=korg; t=1734024490;
+	bh=G+d5wiZNPz1AO7i/3vfLj0SCLfKpbvvPI5prO8EVXVA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eUn37oV1oho8yvD2Ig9dnvRDK9RPEdlx69+BhUAXPfu50JARaxyjD0as7UzsWyuX/
-	 acn8IdTi3SM/xOTrb+TgBFrGUmW3ly74f/WCMxPVdFqvZEbFgpiJA7f5dtPh7CRLTr
-	 Ruxnab0Oj7niMeYW16VuUXEunM0vPat1XnBm54CU=
+	b=Pn0+Y2sJu2+XZ0MrxTeMulg2ImZIhmeaJNJcGPi1CNHdOiZEv81TeL94EquPo/clq
+	 2otcDtPWqW67mN0e6yZLRlBAv/P+268Hq58i2WjQPr7nlOCvCPxLbfhGFtHEdHjk7G
+	 tBUjsC5zJMuo5UUJ+aocVJEzVHe5KLf1+YvvO13o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shengjiu Wang <shengjiu.wang@nxp.com>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 5.10 311/459] ASoC: fsl_micfil: fix the naming style for mask definition
-Date: Thu, 12 Dec 2024 16:00:49 +0100
-Message-ID: <20241212144305.930142487@linuxfoundation.org>
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Subject: [PATCH 5.10 283/459] usb: dwc3: gadget: Fix looping of queued SG entries
+Date: Thu, 12 Dec 2024 16:00:21 +0100
+Message-ID: <20241212144304.812221979@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144253.511169641@linuxfoundation.org>
 References: <20241212144253.511169641@linuxfoundation.org>
@@ -51,45 +49,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shengjiu Wang <shengjiu.wang@nxp.com>
+From: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
 
-commit 101b096bc2549618f18bc08ae3a0e364b3c8fff1 upstream.
+commit b7fc65f5141c24785dc8c19249ca4efcf71b3524 upstream.
 
-Remove the _SHIFT for the mask definition.
+The dwc3_request->num_queued_sgs is decremented on completion. If a
+partially completed request is handled, then the
+dwc3_request->num_queued_sgs no longer reflects the total number of
+num_queued_sgs (it would be cleared).
 
-Fixes: 17f2142bae4b ("ASoC: fsl_micfil: use GENMASK to define register bit fields")
-Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
-Acked-by: Sascha Hauer <s.hauer@pengutronix.de>
-Link: https://lore.kernel.org/r/1651736047-28809-1-git-send-email-shengjiu.wang@nxp.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Correctly check the number of request SG entries remained to be prepare
+and queued. Failure to do this may cause null pointer dereference when
+accessing non-existent SG entry.
+
+Cc: stable@vger.kernel.org
+Fixes: c96e6725db9d ("usb: dwc3: gadget: Correct the logic for queuing sgs")
+Signed-off-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Link: https://lore.kernel.org/r/d07a7c4aa0fcf746cdca0515150dbe5c52000af7.1731545781.git.Thinh.Nguyen@synopsys.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/fsl/fsl_micfil.h |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/usb/dwc3/gadget.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/sound/soc/fsl/fsl_micfil.h
-+++ b/sound/soc/fsl/fsl_micfil.h
-@@ -75,9 +75,9 @@
- #define MICFIL_FIFO_STAT_FIFOX_UNDER(ch)	BIT((ch) + 8)
+--- a/drivers/usb/dwc3/gadget.c
++++ b/drivers/usb/dwc3/gadget.c
+@@ -1188,8 +1188,8 @@ static int dwc3_prepare_trbs_sg(struct d
+ 	struct scatterlist *s;
+ 	int		i;
+ 	unsigned int length = req->request.length;
+-	unsigned int remaining = req->request.num_mapped_sgs
+-		- req->num_queued_sgs;
++	unsigned int remaining = req->num_pending_sgs;
++	unsigned int num_queued_sgs = req->request.num_mapped_sgs - remaining;
+ 	unsigned int num_trbs = req->num_trbs;
+ 	bool needs_extra_trb = dwc3_needs_extra_trb(dep, req);
  
- /* MICFIL HWVAD0 Control 1 Register -- REG_MICFIL_VAD0_CTRL1*/
--#define MICFIL_VAD0_CTRL1_CHSEL_SHIFT	GENMASK(26, 24)
--#define MICFIL_VAD0_CTRL1_CICOSR_SHIFT	GENMASK(19, 16)
--#define MICFIL_VAD0_CTRL1_INITT_SHIFT	GENMASK(12, 8)
-+#define MICFIL_VAD0_CTRL1_CHSEL		GENMASK(26, 24)
-+#define MICFIL_VAD0_CTRL1_CICOSR	GENMASK(19, 16)
-+#define MICFIL_VAD0_CTRL1_INITT		GENMASK(12, 8)
- #define MICFIL_VAD0_CTRL1_ST10		BIT(4)
- #define MICFIL_VAD0_CTRL1_ERIE		BIT(3)
- #define MICFIL_VAD0_CTRL1_IE		BIT(2)
-@@ -107,7 +107,7 @@
+@@ -1197,7 +1197,7 @@ static int dwc3_prepare_trbs_sg(struct d
+ 	 * If we resume preparing the request, then get the remaining length of
+ 	 * the request and resume where we left off.
+ 	 */
+-	for_each_sg(req->request.sg, s, req->num_queued_sgs, i)
++	for_each_sg(req->request.sg, s, num_queued_sgs, i)
+ 		length -= sg_dma_len(s);
  
- /* MICFIL HWVAD0 Zero-Crossing Detector - REG_MICFIL_VAD0_ZCD */
- #define MICFIL_VAD0_ZCD_ZCDTH		GENMASK(25, 16)
--#define MICFIL_VAD0_ZCD_ZCDADJ_SHIFT	GENMASK(11, 8)
-+#define MICFIL_VAD0_ZCD_ZCDADJ		GENMASK(11, 8)
- #define MICFIL_VAD0_ZCD_ZCDAND		BIT(4)
- #define MICFIL_VAD0_ZCD_ZCDAUT		BIT(2)
- #define MICFIL_VAD0_ZCD_ZCDEN		BIT(0)
+ 	for_each_sg(sg, s, remaining, i) {
 
 
