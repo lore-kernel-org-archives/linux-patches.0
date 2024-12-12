@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C64E2241F5A;
-	Thu, 12 Dec 2024 16:36:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C42FD22A7EC;
+	Thu, 12 Dec 2024 16:36:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734021396; cv=none; b=lpe0d1OKW2iIohnLYQWsL0Xm6wQerhNq1fasENGBziQ/iTqDjuoAgcUj+MfSqKW3qabvWaVMpo/3c3Xnh89nFsk+9k9J/OrR3xbEs1hAvaqcsF+eFzMW0Q9udiaRPIrKH9dAipeIreAF+aMrK8xS9Bb+ua0dLLpc3pmeGCc9nP8=
+	t=1734021400; cv=none; b=GAOi6OTGxfGpU08W3L0ffbduv5cqkNf2QuHVNda0aAzyFq2qHwXALRWSWpHuwtD+yuhEW49pMhhQSPetgTbGLEqZ7VmXYKntufWfT+32TEnTuyrkWm3rjxoNMq7MMNXM+5kfIaurtgnj4DcqiPId+PJtQl0jZWPnXv64aBaPHqg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734021396; c=relaxed/simple;
-	bh=5prq6jdG3w6aousIoKPjqeem1tYaNbRW4+rG+miwwJg=;
+	s=arc-20240116; t=1734021400; c=relaxed/simple;
+	bh=PqdKa6tQRWXt/ZuKtmK0goSI3YIAIuJrG/4S70No520=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=u6hwJi2lU/Rl4ms8guZOK8hIYzWf+7Xw4RGE4TZbwpc71gleA0BFIC/SHK2DKptjj3zYnJKGXtBCTStMxYdf8k9mT2ahqeGAcNROO5g98P3g7PVi5ABOxmRRui7XG4knXVVQ17LB8jtgzx4jr7Sl49uk0m85HglBgRKMPjDErKQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WleH77fP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q8hOtDDrSoALSCMhuuhFCCewDv6S/Qj1kw8fSzed5n9/kGMbzmi7g4xKAE994AEj9mi7Tn86xdLV3yvWYU/rnEdnpljhZceVJwEF+xuBa+SFb+rpMq7LF9sfwe26e3kXVzI36RKjwvmgBXHmnsMw4a9mx+Fs+WaRICkogDmC2p0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c+sfDSYQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WleH77fP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B227C4CECE;
-	Thu, 12 Dec 2024 16:36:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c+sfDSYQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A82AC4CECE;
+	Thu, 12 Dec 2024 16:36:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734021396;
-	bh=5prq6jdG3w6aousIoKPjqeem1tYaNbRW4+rG+miwwJg=;
+	s=korg; t=1734021400;
+	bh=PqdKa6tQRWXt/ZuKtmK0goSI3YIAIuJrG/4S70No520=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WleH77fPad3jbZNe+QxZxGMVYn0NL4SnrdyEdznNhsAhW2Afg8S9ULoQT7OTWTWn0
-	 DMBefhRftL6CuIBmTV74guGhrYNpHz1ZxCJnOJCJCWjb9ZBPlcOcmgnb40lAjGwefM
-	 gvJfgSk+VQDvXVT9kGchqa9J3ifoZzFDMhtKjw8s=
+	b=c+sfDSYQkpwdpmRWAdkdTsvSxq6aet54+VIIyP0jRCAkF8HjwMx1Lc7EJkKgoamcx
+	 qkTeSQbb4mkB0X1KinRnoqt7MB0abdv3wK/j2Gz2ne7irHGdzc9Fj0+L6m1dSkBR1f
+	 pFJlfihi1mI2RcktqEbLuupuDPUmipZYYlbxH/8E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Inochi Amaoto <inochiama@gmail.com>,
+	syzbot+cc36d44ec9f368e443d3@syzkaller.appspotmail.com,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 727/772] serial: 8250_dw: Add Sophgo SG2044 quirk
-Date: Thu, 12 Dec 2024 16:01:12 +0100
-Message-ID: <20241212144419.932717083@linuxfoundation.org>
+Subject: [PATCH 6.1 728/772] io_uring/tctx: work around xa_store() allocation error issue
+Date: Thu, 12 Dec 2024 16:01:13 +0100
+Message-ID: <20241212144419.974130831@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -46,55 +45,66 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Inochi Amaoto <inochiama@gmail.com>
+From: Jens Axboe <axboe@kernel.dk>
 
-[ Upstream commit cad4dda82c7eedcfc22597267e710ccbcf39d572 ]
+[ Upstream commit 7eb75ce7527129d7f1fee6951566af409a37a1c4 ]
 
-SG2044 relys on an internal divisor when calculating bitrate, which
-means a wrong clock for the most common bitrates. So add a quirk for
-this uart device to skip the set rate call and only relys on the
-internal UART divisor.
+syzbot triggered the following WARN_ON:
 
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
-Link: https://lore.kernel.org/r/20241024062105.782330-4-inochiama@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+WARNING: CPU: 0 PID: 16 at io_uring/tctx.c:51 __io_uring_free+0xfa/0x140 io_uring/tctx.c:51
+
+which is the
+
+WARN_ON_ONCE(!xa_empty(&tctx->xa));
+
+sanity check in __io_uring_free() when a io_uring_task is going through
+its final put. The syzbot test case includes injecting memory allocation
+failures, and it very much looks like xa_store() can fail one of its
+memory allocations and end up with ->head being non-NULL even though no
+entries exist in the xarray.
+
+Until this issue gets sorted out, work around it by attempting to
+iterate entries in our xarray, and WARN_ON_ONCE() if one is found.
+
+Reported-by: syzbot+cc36d44ec9f368e443d3@syzkaller.appspotmail.com
+Link: https://lore.kernel.org/io-uring/673c1643.050a0220.87769.0066.GAE@google.com/
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/8250/8250_dw.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ io_uring/tctx.c | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/tty/serial/8250/8250_dw.c b/drivers/tty/serial/8250/8250_dw.c
-index a1f2259cc9a98..72f9aab75ab12 100644
---- a/drivers/tty/serial/8250/8250_dw.c
-+++ b/drivers/tty/serial/8250/8250_dw.c
-@@ -770,7 +770,7 @@ static const struct dw8250_platform_data dw8250_renesas_rzn1_data = {
- 	.quirks = DW_UART_QUIRK_IS_DMA_FC,
- };
+diff --git a/io_uring/tctx.c b/io_uring/tctx.c
+index 4324b1cf1f6af..51b05fda8e455 100644
+--- a/io_uring/tctx.c
++++ b/io_uring/tctx.c
+@@ -47,8 +47,19 @@ static struct io_wq *io_init_wq_offload(struct io_ring_ctx *ctx,
+ void __io_uring_free(struct task_struct *tsk)
+ {
+ 	struct io_uring_task *tctx = tsk->io_uring;
++	struct io_tctx_node *node;
++	unsigned long index;
  
--static const struct dw8250_platform_data dw8250_starfive_jh7100_data = {
-+static const struct dw8250_platform_data dw8250_skip_set_rate_data = {
- 	.usr_reg = DW_UART_USR,
- 	.quirks = DW_UART_QUIRK_SKIP_SET_RATE,
- };
-@@ -780,7 +780,8 @@ static const struct of_device_id dw8250_of_match[] = {
- 	{ .compatible = "cavium,octeon-3860-uart", .data = &dw8250_octeon_3860_data },
- 	{ .compatible = "marvell,armada-38x-uart", .data = &dw8250_armada_38x_data },
- 	{ .compatible = "renesas,rzn1-uart", .data = &dw8250_renesas_rzn1_data },
--	{ .compatible = "starfive,jh7100-uart", .data = &dw8250_starfive_jh7100_data },
-+	{ .compatible = "sophgo,sg2044-uart", .data = &dw8250_skip_set_rate_data },
-+	{ .compatible = "starfive,jh7100-uart", .data = &dw8250_skip_set_rate_data },
- 	{ /* Sentinel */ }
- };
- MODULE_DEVICE_TABLE(of, dw8250_of_match);
+-	WARN_ON_ONCE(!xa_empty(&tctx->xa));
++	/*
++	 * Fault injection forcing allocation errors in the xa_store() path
++	 * can lead to xa_empty() returning false, even though no actual
++	 * node is stored in the xarray. Until that gets sorted out, attempt
++	 * an iteration here and warn if any entries are found.
++	 */
++	xa_for_each(&tctx->xa, index, node) {
++		WARN_ON_ONCE(1);
++		break;
++	}
+ 	WARN_ON_ONCE(tctx->io_wq);
+ 	WARN_ON_ONCE(tctx->cached_refs);
+ 
 -- 
 2.43.0
 
