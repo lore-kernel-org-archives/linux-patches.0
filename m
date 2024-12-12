@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4DDD2080FC;
-	Thu, 12 Dec 2024 15:06:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9DBE2080FC;
+	Thu, 12 Dec 2024 15:06:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734015961; cv=none; b=tAbieqbwVps0bGGIHaE7WzFfu6pkgwLZLwbS4hecPt+ytOZGdNl+5vT/7yVjJAMrXIIRcsVgS1/IJz+J7pgMU2ISCq21lt7lyPaPFcWnP/d3aCNDAnpR84RGitjr1/5JY2U7Ev7cX4CGvJu6wYdk2aFW2uCetazgpISifjqwXx4=
+	t=1734015964; cv=none; b=ixdQ5r06gUyAvLiJ26OIcnhBEVsXH61x/7xUxk7QNr6vhjvDPboFS/RCoTFA8vOdsYdDQ0uVbS2KBCqc4tkxljxfpdiKKWJuGNprugWrpIsTIHVEkG+NbKnIb+Ls9HmacWKgslHqwqrdvAARK644kVeEkYY5FWhztM3UmgbLgyg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734015961; c=relaxed/simple;
-	bh=+LnLyNHi2Jv1aAcRHzFPkvn3VkqGI/iXfEiW/mPaBJY=;
+	s=arc-20240116; t=1734015964; c=relaxed/simple;
+	bh=dfRS6F9hnA1TiqsNMu0MqblvV/rqbmL9cHau3vwtAPw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OYCFTqLUu7pA2R2KFO8XnB1jlX618NKCb3zGbgG5lAt87w+y8V+OsBPMgFjJAmbD513660Rtr+ud9/HFMTBvso2yCAK+Su4ZGlr8GkGylXKU/ImYxvyxkjDjNnpEcGXL1oa7eCjtQeoxSG4gK3EipxQpaYTLagG8vojSEPUm5E8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Odbb9/Rz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IY9qV8yCptyaioSBBajEydEtpPZB0LLfoGmcCWqovYqVSnf9aMjipWhaJYgHtBLkjWfynTNAMHvRYTynzjFotDYqERF2AQi4ioClNNZ3WkAW48W6KOYzkbkHWVi51SGaS2t6zISQE7P0SuZAgCGqqMAslkV6GXmXrshw3BBRqlA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XczK13/P; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Odbb9/Rz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CABD4C4CECE;
-	Thu, 12 Dec 2024 15:05:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XczK13/P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 964B9C4CEE0;
+	Thu, 12 Dec 2024 15:06:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734015960;
-	bh=+LnLyNHi2Jv1aAcRHzFPkvn3VkqGI/iXfEiW/mPaBJY=;
+	s=korg; t=1734015964;
+	bh=dfRS6F9hnA1TiqsNMu0MqblvV/rqbmL9cHau3vwtAPw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Odbb9/Rzk/VisxGUNH5n1qn6llPZn5h9EPP2lM/5Cu4hOr+a3YUOjISko8x+Mwr5h
-	 6M2PY8LwhwzGDg+YZqhGStTJh0925TK9lmxOHiWQ7JBTrGkWDzQZdGYy0HLaejTCco
-	 f3iuwxjdVdyMWu81osvM8HYzunPvyUAbjOrZ/Uic=
+	b=XczK13/PoLMpkCgXkCzpndMerjLsVIyfBMUToX9LBVcbAs8txnMD38TsyzvufT7cS
+	 gp96JFTwjEKsYOH08uGADQWThT3k8QPHylNsl4Lwr091qyIJ5p+ZkUMMeU8W4yhwW9
+	 NS40+xQxx8pojK4Pm/obOb+JvbH2gLWJnrVBY/0s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Charles Han <hanchunchao@inspur.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Rosen Penev <rosenp@gmail.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 062/466] gpio: grgpio: Add NULL check in grgpio_probe
-Date: Thu, 12 Dec 2024 15:53:51 +0100
-Message-ID: <20241212144309.266627318@linuxfoundation.org>
+Subject: [PATCH 6.12 063/466] mmc: mtk-sd: use devm_mmc_alloc_host
+Date: Thu, 12 Dec 2024 15:53:52 +0100
+Message-ID: <20241212144309.304836496@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144306.641051666@linuxfoundation.org>
 References: <20241212144306.641051666@linuxfoundation.org>
@@ -51,39 +51,157 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Charles Han <hanchunchao@inspur.com>
+From: Rosen Penev <rosenp@gmail.com>
 
-[ Upstream commit 050b23d081da0f29474de043e9538c1f7a351b3b ]
+[ Upstream commit 7a2fa8eed936b33b22e49b1d2349cd7d02f22710 ]
 
-devm_kasprintf() can return a NULL pointer on failure,but this
-returned value in grgpio_probe is not checked.
-Add NULL check in grgpio_probe, to handle kernel NULL
-pointer dereference error.
+Allows removing several gotos.
 
-Cc: stable@vger.kernel.org
-Fixes: 7eb6ce2f2723 ("gpio: Convert to using %pOF instead of full_name")
-Signed-off-by: Charles Han <hanchunchao@inspur.com>
-Link: https://lore.kernel.org/r/20241114091822.78199-1-hanchunchao@inspur.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Also fixed some wrong ones.
+
+Added dev_err_probe where EPROBE_DEFER is possible.
+
+Signed-off-by: Rosen Penev <rosenp@gmail.com>
+Link: https://lore.kernel.org/r/20240930224919.355359-2-rosenp@gmail.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Stable-dep-of: 291220451c77 ("mmc: mtk-sd: Fix error handle of probe function")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpio-grgpio.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/mmc/host/mtk-sd.c | 55 ++++++++++++++-------------------------
+ 1 file changed, 20 insertions(+), 35 deletions(-)
 
-diff --git a/drivers/gpio/gpio-grgpio.c b/drivers/gpio/gpio-grgpio.c
-index 2d16ce13a804d..620793740c668 100644
---- a/drivers/gpio/gpio-grgpio.c
-+++ b/drivers/gpio/gpio-grgpio.c
-@@ -362,6 +362,9 @@ static int grgpio_probe(struct platform_device *ofdev)
- 	gc->owner = THIS_MODULE;
- 	gc->to_irq = grgpio_to_irq;
- 	gc->label = devm_kasprintf(dev, GFP_KERNEL, "%pOF", np);
-+	if (!gc->label)
-+		return -ENOMEM;
-+
- 	gc->base = -1;
+diff --git a/drivers/mmc/host/mtk-sd.c b/drivers/mmc/host/mtk-sd.c
+index 89018b6c97b9a..c607312dfe078 100644
+--- a/drivers/mmc/host/mtk-sd.c
++++ b/drivers/mmc/host/mtk-sd.c
+@@ -2736,20 +2736,18 @@ static int msdc_drv_probe(struct platform_device *pdev)
+ 	}
  
- 	err = of_property_read_u32(np, "nbits", &prop);
+ 	/* Allocate MMC host for this device */
+-	mmc = mmc_alloc_host(sizeof(struct msdc_host), &pdev->dev);
++	mmc = devm_mmc_alloc_host(&pdev->dev, sizeof(struct msdc_host));
+ 	if (!mmc)
+ 		return -ENOMEM;
+ 
+ 	host = mmc_priv(mmc);
+ 	ret = mmc_of_parse(mmc);
+ 	if (ret)
+-		goto host_free;
++		return ret;
+ 
+ 	host->base = devm_platform_ioremap_resource(pdev, 0);
+-	if (IS_ERR(host->base)) {
+-		ret = PTR_ERR(host->base);
+-		goto host_free;
+-	}
++	if (IS_ERR(host->base))
++		return PTR_ERR(host->base);
+ 
+ 	res = platform_get_resource(pdev, IORESOURCE_MEM, 1);
+ 	if (res) {
+@@ -2760,18 +2758,16 @@ static int msdc_drv_probe(struct platform_device *pdev)
+ 
+ 	ret = mmc_regulator_get_supply(mmc);
+ 	if (ret)
+-		goto host_free;
++		return ret;
+ 
+ 	ret = msdc_of_clock_parse(pdev, host);
+ 	if (ret)
+-		goto host_free;
++		return ret;
+ 
+ 	host->reset = devm_reset_control_get_optional_exclusive(&pdev->dev,
+ 								"hrst");
+-	if (IS_ERR(host->reset)) {
+-		ret = PTR_ERR(host->reset);
+-		goto host_free;
+-	}
++	if (IS_ERR(host->reset))
++		return PTR_ERR(host->reset);
+ 
+ 	/* only eMMC has crypto property */
+ 	if (!(mmc->caps2 & MMC_CAP2_NO_MMC)) {
+@@ -2783,30 +2779,24 @@ static int msdc_drv_probe(struct platform_device *pdev)
+ 	}
+ 
+ 	host->irq = platform_get_irq(pdev, 0);
+-	if (host->irq < 0) {
+-		ret = host->irq;
+-		goto host_free;
+-	}
++	if (host->irq < 0)
++		return host->irq;
+ 
+ 	host->pinctrl = devm_pinctrl_get(&pdev->dev);
+-	if (IS_ERR(host->pinctrl)) {
+-		ret = PTR_ERR(host->pinctrl);
+-		dev_err(&pdev->dev, "Cannot find pinctrl!\n");
+-		goto host_free;
+-	}
++	if (IS_ERR(host->pinctrl))
++		return dev_err_probe(&pdev->dev, PTR_ERR(host->pinctrl),
++				     "Cannot find pinctrl");
+ 
+ 	host->pins_default = pinctrl_lookup_state(host->pinctrl, "default");
+ 	if (IS_ERR(host->pins_default)) {
+-		ret = PTR_ERR(host->pins_default);
+ 		dev_err(&pdev->dev, "Cannot find pinctrl default!\n");
+-		goto host_free;
++		return PTR_ERR(host->pins_default);
+ 	}
+ 
+ 	host->pins_uhs = pinctrl_lookup_state(host->pinctrl, "state_uhs");
+ 	if (IS_ERR(host->pins_uhs)) {
+-		ret = PTR_ERR(host->pins_uhs);
+ 		dev_err(&pdev->dev, "Cannot find pinctrl uhs!\n");
+-		goto host_free;
++		return PTR_ERR(host->pins_uhs);
+ 	}
+ 
+ 	/* Support for SDIO eint irq ? */
+@@ -2895,14 +2885,14 @@ static int msdc_drv_probe(struct platform_device *pdev)
+ 					     GFP_KERNEL);
+ 		if (!host->cq_host) {
+ 			ret = -ENOMEM;
+-			goto host_free;
++			goto release_mem;
+ 		}
+ 		host->cq_host->caps |= CQHCI_TASK_DESC_SZ_128;
+ 		host->cq_host->mmio = host->base + 0x800;
+ 		host->cq_host->ops = &msdc_cmdq_ops;
+ 		ret = cqhci_init(host->cq_host, mmc, true);
+ 		if (ret)
+-			goto host_free;
++			goto release_mem;
+ 		mmc->max_segs = 128;
+ 		/* cqhci 16bit length */
+ 		/* 0 size, means 65536 so we don't have to -1 here */
+@@ -2939,11 +2929,8 @@ static int msdc_drv_probe(struct platform_device *pdev)
+ 			host->dma.gpd, host->dma.gpd_addr);
+ 	if (host->dma.bd)
+ 		dma_free_coherent(&pdev->dev,
+-			MAX_BD_NUM * sizeof(struct mt_bdma_desc),
+-			host->dma.bd, host->dma.bd_addr);
+-host_free:
+-	mmc_free_host(mmc);
+-
++				  MAX_BD_NUM * sizeof(struct mt_bdma_desc),
++				  host->dma.bd, host->dma.bd_addr);
+ 	return ret;
+ }
+ 
+@@ -2968,9 +2955,7 @@ static void msdc_drv_remove(struct platform_device *pdev)
+ 			2 * sizeof(struct mt_gpdma_desc),
+ 			host->dma.gpd, host->dma.gpd_addr);
+ 	dma_free_coherent(&pdev->dev, MAX_BD_NUM * sizeof(struct mt_bdma_desc),
+-			host->dma.bd, host->dma.bd_addr);
+-
+-	mmc_free_host(mmc);
++			  host->dma.bd, host->dma.bd_addr);
+ }
+ 
+ static void msdc_save_reg(struct msdc_host *host)
 -- 
 2.43.0
 
