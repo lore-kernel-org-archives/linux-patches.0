@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05CB41487CD;
-	Thu, 12 Dec 2024 15:29:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C48820969B;
+	Thu, 12 Dec 2024 15:29:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734017365; cv=none; b=r5TW/ZwI5VQXRbpgEFG+HvgXTbnna4b5u+Pm7a8Guobx9Y7PO5xqzFTnLhPh0tlrgEkZ0RBzeP1IbJh3UYa4J7gKtP9DjqGCd5ydc8Bi05VpU8rImtmjc4CHgFzQ0cHDCHdD9At666vsDBqopOD6zkY8NT+PuvplYFytDiJkY44=
+	t=1734017368; cv=none; b=skwTjBQxTDnpwO9Yuxq0V6Z7M2yGzT0L3b0O/y7EzOF0I8+zmoJKplnByJR1JxnuM9OuTnybcWyNK7a7bP+uGB2wPau6UnwV38u4sYL9t//J7SkftgBuI8TGOjFSKIQmYE8L89MyZH4G60dan8EJ9SG7PW1AP6gRuS9DFngkrko=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734017365; c=relaxed/simple;
-	bh=kSBtl29vcEYW1rY8Chtxun/wKTXvOvpuJnAWbhcSnTg=;
+	s=arc-20240116; t=1734017368; c=relaxed/simple;
+	bh=7ntHzSNyOsN4aJZHO3XWslkt8DF1ocyuzj801oYcl9o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z7MlVBhAlkTn//79yHxhYESEh6J1S+7D/1fk9CFF9MMSfk+5U+TM9KlrmQQBFsoQSMcfD+BXTjc7K24aDHpc2C/KqjnY+pArghkAHDhpFx8KIR9IXPbHQO4PpbHyImhoPG7LAmqd9ZkgNuedIanz5/wqdGWFuMoEuz7dltJ2fX0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eCOHO+rh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=X2BX5N2z7AHPpvObvoZPl3Dz+dXxmWdhzPhzl60zUIQe/q6uKWu7GtS7PoSEoASFuGbfxv108Gd4xukYoSc49yQXjjKgI3UL1xbFapIynecbVfbiUWTzZpzV101UEJDYSHSAKpK5AB0k964hJ9spOPZFsEgRfwyQbYz+NZ7dkFo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IV4k0now; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eCOHO+rh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26FD0C4CECE;
-	Thu, 12 Dec 2024 15:29:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IV4k0now"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C974C4CECE;
+	Thu, 12 Dec 2024 15:29:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734017364;
-	bh=kSBtl29vcEYW1rY8Chtxun/wKTXvOvpuJnAWbhcSnTg=;
+	s=korg; t=1734017368;
+	bh=7ntHzSNyOsN4aJZHO3XWslkt8DF1ocyuzj801oYcl9o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eCOHO+rhk+mhHx6r424jb3zFDbcm4Kwfoijqfi5x5UhXj3I6/uUmviQBk2GKDIN5X
-	 RA3SCiHo6Cn9DaMbZo4RWrpE+Dmo0hEWS3rqATI8kjMRSFmbeuoa0JFHPUUW4iZ57U
-	 SRtm+0XiEbNypkhTRbdB+nZ5Dz6a3melxJiTK6Q4=
+	b=IV4k0nowfUsMYy3rxl9rRIJipVre6Q/k+yj2vDi2a5kz1kVykFn4+tBd+SWHzxPmc
+	 dvnJnoJ1fNAgvd0LgKsBqV3Y3CC5Jx3JvToXTSkMt/myofZvffR6uKli6oDeVIHqQ1
+	 bJli17uJ+EmU61w1G/Y8AQAhT+SYIiuKvFGOUfHA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+cc36d44ec9f368e443d3@syzkaller.appspotmail.com,
-	Jens Axboe <axboe@kernel.dk>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Peter Wang <peter.wang@mediatek.com>,
+	Bean Huo <beanhuo@micron.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 429/466] io_uring/tctx: work around xa_store() allocation error issue
-Date: Thu, 12 Dec 2024 15:59:58 +0100
-Message-ID: <20241212144323.820070140@linuxfoundation.org>
+Subject: [PATCH 6.12 430/466] scsi: ufs: pltfrm: Dellocate HBA during ufshcd_pltfrm_remove()
+Date: Thu, 12 Dec 2024 15:59:59 +0100
+Message-ID: <20241212144323.860823793@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144306.641051666@linuxfoundation.org>
 References: <20241212144306.641051666@linuxfoundation.org>
@@ -51,60 +54,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-[ Upstream commit 7eb75ce7527129d7f1fee6951566af409a37a1c4 ]
+[ Upstream commit 897df60c16d54ad515a3d0887edab5c63da06d1f ]
 
-syzbot triggered the following WARN_ON:
+This will ensure that the scsi host is cleaned up properly using
+scsi_host_dev_release(). Otherwise, it may lead to memory leaks.
 
-WARNING: CPU: 0 PID: 16 at io_uring/tctx.c:51 __io_uring_free+0xfa/0x140 io_uring/tctx.c:51
-
-which is the
-
-WARN_ON_ONCE(!xa_empty(&tctx->xa));
-
-sanity check in __io_uring_free() when a io_uring_task is going through
-its final put. The syzbot test case includes injecting memory allocation
-failures, and it very much looks like xa_store() can fail one of its
-memory allocations and end up with ->head being non-NULL even though no
-entries exist in the xarray.
-
-Until this issue gets sorted out, work around it by attempting to
-iterate entries in our xarray, and WARN_ON_ONCE() if one is found.
-
-Reported-by: syzbot+cc36d44ec9f368e443d3@syzkaller.appspotmail.com
-Link: https://lore.kernel.org/io-uring/673c1643.050a0220.87769.0066.GAE@google.com/
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Cc: stable@vger.kernel.org # 4.4
+Fixes: 03b1781aa978 ("[SCSI] ufs: Add Platform glue driver for ufshcd")
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Link: https://lore.kernel.org/r/20241111-ufs_bug_fix-v1-5-45ad8b62f02e@linaro.org
+Reviewed-by: Peter Wang <peter.wang@mediatek.com>
+Reviewed-by: Bean Huo <beanhuo@micron.com>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/tctx.c | 13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ drivers/ufs/host/ufshcd-pltfrm.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/io_uring/tctx.c b/io_uring/tctx.c
-index c043fe93a3f23..84f6a83857204 100644
---- a/io_uring/tctx.c
-+++ b/io_uring/tctx.c
-@@ -47,8 +47,19 @@ static struct io_wq *io_init_wq_offload(struct io_ring_ctx *ctx,
- void __io_uring_free(struct task_struct *tsk)
- {
- 	struct io_uring_task *tctx = tsk->io_uring;
-+	struct io_tctx_node *node;
-+	unsigned long index;
+diff --git a/drivers/ufs/host/ufshcd-pltfrm.c b/drivers/ufs/host/ufshcd-pltfrm.c
+index b8dadd0a2f4c0..505572d4fa878 100644
+--- a/drivers/ufs/host/ufshcd-pltfrm.c
++++ b/drivers/ufs/host/ufshcd-pltfrm.c
+@@ -534,6 +534,7 @@ void ufshcd_pltfrm_remove(struct platform_device *pdev)
  
--	WARN_ON_ONCE(!xa_empty(&tctx->xa));
-+	/*
-+	 * Fault injection forcing allocation errors in the xa_store() path
-+	 * can lead to xa_empty() returning false, even though no actual
-+	 * node is stored in the xarray. Until that gets sorted out, attempt
-+	 * an iteration here and warn if any entries are found.
-+	 */
-+	xa_for_each(&tctx->xa, index, node) {
-+		WARN_ON_ONCE(1);
-+		break;
-+	}
- 	WARN_ON_ONCE(tctx->io_wq);
- 	WARN_ON_ONCE(tctx->cached_refs);
- 
+ 	pm_runtime_get_sync(&pdev->dev);
+ 	ufshcd_remove(hba);
++	ufshcd_dealloc_host(hba);
+ 	pm_runtime_disable(&pdev->dev);
+ 	pm_runtime_put_noidle(&pdev->dev);
+ }
 -- 
 2.43.0
 
