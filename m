@@ -1,38 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C42FD22A7EC;
-	Thu, 12 Dec 2024 16:36:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FA9F242AAD;
+	Thu, 12 Dec 2024 16:36:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734021400; cv=none; b=GAOi6OTGxfGpU08W3L0ffbduv5cqkNf2QuHVNda0aAzyFq2qHwXALRWSWpHuwtD+yuhEW49pMhhQSPetgTbGLEqZ7VmXYKntufWfT+32TEnTuyrkWm3rjxoNMq7MMNXM+5kfIaurtgnj4DcqiPId+PJtQl0jZWPnXv64aBaPHqg=
+	t=1734021404; cv=none; b=GPM9xdqj3Fqw4yAnXvYSPJAyaBt2xV4BT+fPgZbt+X0gzSGAF7jOQ5acXiFN/2GiqybFzOy5evB/IoMTEN9vwNTogWUueYojJXqutSeRT3KhuhpQ/lEZmIdTooBDjR/7hKAoNodR0/nnH/X5L03RX+ecmBqEDC9ZBAj09LI8b0Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734021400; c=relaxed/simple;
-	bh=PqdKa6tQRWXt/ZuKtmK0goSI3YIAIuJrG/4S70No520=;
+	s=arc-20240116; t=1734021404; c=relaxed/simple;
+	bh=IQwED83XV+d1H/AUB3tZC4DsSChVHmdtNq0xjzYqnHw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q8hOtDDrSoALSCMhuuhFCCewDv6S/Qj1kw8fSzed5n9/kGMbzmi7g4xKAE994AEj9mi7Tn86xdLV3yvWYU/rnEdnpljhZceVJwEF+xuBa+SFb+rpMq7LF9sfwe26e3kXVzI36RKjwvmgBXHmnsMw4a9mx+Fs+WaRICkogDmC2p0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c+sfDSYQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RcO1jFxXRys2iIOtUwDRV2a0xvg/d00DMWCCjT1l0sYfBWVDdc8vwzbOMBnUBrBddnPNM4+j0sl+jOf1n8Xms9JVoteUB0cnpbdMo18KmKffA7sZGXGueC/7MQrBGpW9OMYKNuL0mGpk4+AcnocizOuTe1ofSTvZsn5lSwOLq84=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L+YMSIjF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c+sfDSYQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A82AC4CECE;
-	Thu, 12 Dec 2024 16:36:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L+YMSIjF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79F73C4CECE;
+	Thu, 12 Dec 2024 16:36:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734021400;
-	bh=PqdKa6tQRWXt/ZuKtmK0goSI3YIAIuJrG/4S70No520=;
+	s=korg; t=1734021404;
+	bh=IQwED83XV+d1H/AUB3tZC4DsSChVHmdtNq0xjzYqnHw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c+sfDSYQkpwdpmRWAdkdTsvSxq6aet54+VIIyP0jRCAkF8HjwMx1Lc7EJkKgoamcx
-	 qkTeSQbb4mkB0X1KinRnoqt7MB0abdv3wK/j2Gz2ne7irHGdzc9Fj0+L6m1dSkBR1f
-	 pFJlfihi1mI2RcktqEbLuupuDPUmipZYYlbxH/8E=
+	b=L+YMSIjF5NQc2uiSaQpa9pQuk0PJh6J0xPSJ7O+8KNsJmzKhB/Vz3N9l2re75hGTr
+	 5uKb5tNwoYUtVKWutXguxhYqfkDXt7611nPfeHRfsGM5WrKEz0Q1UEks7tTcuKRHj9
+	 Ow1asxfTxcIRIHF7hwNC10d/RpjfhFeYTB82U55s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+cc36d44ec9f368e443d3@syzkaller.appspotmail.com,
-	Jens Axboe <axboe@kernel.dk>,
+	Andrey Konovalov <andreyknvl@google.com>,
+	Weizhao Ouyang <ouyangweizhao@zeku.com>,
+	Marco Elver <elver@google.com>,
+	Alexander Potapenko <glider@google.com>,
+	Andrey Ryabinin <ryabinin.a.a@gmail.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Dmitry Vyukov <dvyukov@google.com>,
+	Evgenii Stepanov <eugenis@google.com>,
+	Peter Collingbourne <pcc@google.com>,
+	Vincenzo Frascino <vincenzo.frascino@arm.com>,
+	Will Deacon <will@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 728/772] io_uring/tctx: work around xa_store() allocation error issue
-Date: Thu, 12 Dec 2024 16:01:13 +0100
-Message-ID: <20241212144419.974130831@linuxfoundation.org>
+Subject: [PATCH 6.1 729/772] kasan: suppress recursive reports for HW_TAGS
+Date: Thu, 12 Dec 2024 16:01:14 +0100
+Message-ID: <20241212144420.022501682@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -51,60 +61,180 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Andrey Konovalov <andreyknvl@google.com>
 
-[ Upstream commit 7eb75ce7527129d7f1fee6951566af409a37a1c4 ]
+[ Upstream commit c6a690e0c978bda8106e7a489c13323f90b087d0 ]
 
-syzbot triggered the following WARN_ON:
+KASAN suppresses reports for bad accesses done by the KASAN reporting
+code.  The reporting code might access poisoned memory for reporting
+purposes.
 
-WARNING: CPU: 0 PID: 16 at io_uring/tctx.c:51 __io_uring_free+0xfa/0x140 io_uring/tctx.c:51
+Software KASAN modes do this by suppressing reports during reporting via
+current->kasan_depth, the same way they suppress reports during accesses
+to poisoned slab metadata.
 
-which is the
+Hardware Tag-Based KASAN does not use current->kasan_depth, and instead
+resets pointer tags for accesses to poisoned memory done by the reporting
+code.
 
-WARN_ON_ONCE(!xa_empty(&tctx->xa));
+Despite that, a recursive report can still happen:
 
-sanity check in __io_uring_free() when a io_uring_task is going through
-its final put. The syzbot test case includes injecting memory allocation
-failures, and it very much looks like xa_store() can fail one of its
-memory allocations and end up with ->head being non-NULL even though no
-entries exist in the xarray.
+1. On hardware with faulty MTE support. This was observed by Weizhao
+   Ouyang on a faulty hardware that caused memory tags to randomly change
+   from time to time.
 
-Until this issue gets sorted out, work around it by attempting to
-iterate entries in our xarray, and WARN_ON_ONCE() if one is found.
+2. Theoretically, due to a previous MTE-undetected memory corruption.
 
-Reported-by: syzbot+cc36d44ec9f368e443d3@syzkaller.appspotmail.com
-Link: https://lore.kernel.org/io-uring/673c1643.050a0220.87769.0066.GAE@google.com/
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+A recursive report can happen via:
+
+1. Accessing a pointer with a non-reset tag in the reporting code, e.g.
+   slab->slab_cache, which is what Weizhao Ouyang observed.
+
+2. Theoretically, via external non-annotated routines, e.g. stackdepot.
+
+To resolve this issue, resetting tags for all of the pointers in the
+reporting code and all the used external routines would be impractical.
+
+Instead, disable tag checking done by the CPU for the duration of KASAN
+reporting for Hardware Tag-Based KASAN.
+
+Without this fix, Hardware Tag-Based KASAN reporting code might deadlock.
+
+[andreyknvl@google.com: disable preemption instead of migration, fix comment typo]
+  Link: https://lkml.kernel.org/r/d14417c8bc5eea7589e99381203432f15c0f9138.1680114854.git.andreyknvl@google.com
+Link: https://lkml.kernel.org/r/59f433e00f7fa985e8bf9f7caf78574db16b67ab.1678491668.git.andreyknvl@google.com
+Fixes: 2e903b914797 ("kasan, arm64: implement HW_TAGS runtime")
+Signed-off-by: Andrey Konovalov <andreyknvl@google.com>
+Reported-by: Weizhao Ouyang <ouyangweizhao@zeku.com>
+Reviewed-by: Marco Elver <elver@google.com>
+Cc: Alexander Potapenko <glider@google.com>
+Cc: Andrey Ryabinin <ryabinin.a.a@gmail.com>
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+Cc: Dmitry Vyukov <dvyukov@google.com>
+Cc: Evgenii Stepanov <eugenis@google.com>
+Cc: Peter Collingbourne <pcc@google.com>
+Cc: Vincenzo Frascino <vincenzo.frascino@arm.com>
+Cc: Will Deacon <will@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: e30a0361b851 ("kasan: make report_lock a raw spinlock")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/tctx.c | 13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ mm/kasan/report.c | 59 ++++++++++++++++++++++++++++++++++++++---------
+ 1 file changed, 48 insertions(+), 11 deletions(-)
 
-diff --git a/io_uring/tctx.c b/io_uring/tctx.c
-index 4324b1cf1f6af..51b05fda8e455 100644
---- a/io_uring/tctx.c
-+++ b/io_uring/tctx.c
-@@ -47,8 +47,19 @@ static struct io_wq *io_init_wq_offload(struct io_ring_ctx *ctx,
- void __io_uring_free(struct task_struct *tsk)
+diff --git a/mm/kasan/report.c b/mm/kasan/report.c
+index 5d9ae80df4954..821cd12e8c8a7 100644
+--- a/mm/kasan/report.c
++++ b/mm/kasan/report.c
+@@ -73,10 +73,18 @@ static int __init kasan_set_multi_shot(char *str)
+ __setup("kasan_multi_shot", kasan_set_multi_shot);
+ 
+ /*
+- * Used to suppress reports within kasan_disable/enable_current() critical
+- * sections, which are used for marking accesses to slab metadata.
++ * This function is used to check whether KASAN reports are suppressed for
++ * software KASAN modes via kasan_disable/enable_current() critical sections.
++ *
++ * This is done to avoid:
++ * 1. False-positive reports when accessing slab metadata,
++ * 2. Deadlocking when poisoned memory is accessed by the reporting code.
++ *
++ * Hardware Tag-Based KASAN instead relies on:
++ * For #1: Resetting tags via kasan_reset_tag().
++ * For #2: Suppression of tag checks via CPU, see report_suppress_start/end().
+  */
+-static bool report_suppressed(void)
++static bool report_suppressed_sw(void)
  {
- 	struct io_uring_task *tctx = tsk->io_uring;
-+	struct io_tctx_node *node;
-+	unsigned long index;
+ #if defined(CONFIG_KASAN_GENERIC) || defined(CONFIG_KASAN_SW_TAGS)
+ 	if (current->kasan_depth)
+@@ -85,6 +93,30 @@ static bool report_suppressed(void)
+ 	return false;
+ }
  
--	WARN_ON_ONCE(!xa_empty(&tctx->xa));
++static void report_suppress_start(void)
++{
++#ifdef CONFIG_KASAN_HW_TAGS
 +	/*
-+	 * Fault injection forcing allocation errors in the xa_store() path
-+	 * can lead to xa_empty() returning false, even though no actual
-+	 * node is stored in the xarray. Until that gets sorted out, attempt
-+	 * an iteration here and warn if any entries are found.
++	 * Disable preemption for the duration of printing a KASAN report, as
++	 * hw_suppress_tag_checks_start() disables checks on the current CPU.
 +	 */
-+	xa_for_each(&tctx->xa, index, node) {
-+		WARN_ON_ONCE(1);
-+		break;
-+	}
- 	WARN_ON_ONCE(tctx->io_wq);
- 	WARN_ON_ONCE(tctx->cached_refs);
++	preempt_disable();
++	hw_suppress_tag_checks_start();
++#else
++	kasan_disable_current();
++#endif
++}
++
++static void report_suppress_stop(void)
++{
++#ifdef CONFIG_KASAN_HW_TAGS
++	hw_suppress_tag_checks_stop();
++	preempt_enable();
++#else
++	kasan_enable_current();
++#endif
++}
++
+ /*
+  * Used to avoid reporting more than one KASAN bug unless kasan_multi_shot
+  * is enabled. Note that KASAN tests effectively enable kasan_multi_shot
+@@ -152,7 +184,7 @@ static void start_report(unsigned long *flags, bool sync)
+ 	/* Do not allow LOCKDEP mangling KASAN reports. */
+ 	lockdep_off();
+ 	/* Make sure we don't end up in loop. */
+-	kasan_disable_current();
++	report_suppress_start();
+ 	spin_lock_irqsave(&report_lock, *flags);
+ 	pr_err("==================================================================\n");
+ }
+@@ -170,7 +202,7 @@ static void end_report(unsigned long *flags, void *addr)
+ 		panic("kasan.fault=panic set ...\n");
+ 	add_taint(TAINT_BAD_PAGE, LOCKDEP_NOW_UNRELIABLE);
+ 	lockdep_on();
+-	kasan_enable_current();
++	report_suppress_stop();
+ }
  
+ static void print_error_description(struct kasan_report_info *info)
+@@ -439,9 +471,13 @@ void kasan_report_invalid_free(void *ptr, unsigned long ip, enum kasan_report_ty
+ 	struct kasan_report_info info;
+ 
+ 	/*
+-	 * Do not check report_suppressed(), as an invalid-free cannot be
+-	 * caused by accessing slab metadata and thus should not be
+-	 * suppressed by kasan_disable/enable_current() critical sections.
++	 * Do not check report_suppressed_sw(), as an invalid-free cannot be
++	 * caused by accessing poisoned memory and thus should not be suppressed
++	 * by kasan_disable/enable_current() critical sections.
++	 *
++	 * Note that for Hardware Tag-Based KASAN, kasan_report_invalid_free()
++	 * is triggered by explicit tag checks and not by the ones performed by
++	 * the CPU. Thus, reporting invalid-free is not suppressed as well.
+ 	 */
+ 	if (unlikely(!report_enabled()))
+ 		return;
+@@ -476,7 +512,7 @@ bool kasan_report(unsigned long addr, size_t size, bool is_write,
+ 	unsigned long irq_flags;
+ 	struct kasan_report_info info;
+ 
+-	if (unlikely(report_suppressed()) || unlikely(!report_enabled())) {
++	if (unlikely(report_suppressed_sw()) || unlikely(!report_enabled())) {
+ 		ret = false;
+ 		goto out;
+ 	}
+@@ -508,8 +544,9 @@ void kasan_report_async(void)
+ 	unsigned long flags;
+ 
+ 	/*
+-	 * Do not check report_suppressed(), as kasan_disable/enable_current()
+-	 * critical sections do not affect Hardware Tag-Based KASAN.
++	 * Do not check report_suppressed_sw(), as
++	 * kasan_disable/enable_current() critical sections do not affect
++	 * Hardware Tag-Based KASAN.
+ 	 */
+ 	if (unlikely(!report_enabled()))
+ 		return;
 -- 
 2.43.0
 
