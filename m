@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97B8A22333E;
-	Thu, 12 Dec 2024 16:57:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24CC82144C0;
+	Thu, 12 Dec 2024 16:57:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734022652; cv=none; b=hggOktR3l8rhUA7Prv0b+fcH1vCnimAdgo9wcHptCD7JNMTpOc7uLGSPFWowv4MMfofT/Qk373NDzFIr8HaL59u7CJGnxXzoJgm1X6nKuWRy6Ww1X080To1gjh3ptTu+bBvgw2EY0h7XwitYvMXE2gFzqjPgO8Y5xvPUg+mA3wo=
+	t=1734022656; cv=none; b=Kk/U1cATw6ycSufecS3n8JNvXey4YYp8zuudrty+icco9rjSSwTDFXBjRU9+DVeNpRmlwnB/WcQ32G+8b05A2oqEqya/9Do9tHoXmvuGu1d64tYPEteNLnmKGB6qAsP2otGsAbJW70DAEui7vuXusxF2M/QPV/I3G1xJlji0RZI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734022652; c=relaxed/simple;
-	bh=8IFiFRfat3al7HB9c2cgMOH3wcGPSvQQzXH/7y2Cj0Y=;
+	s=arc-20240116; t=1734022656; c=relaxed/simple;
+	bh=C7/Wv+YAdr8+JXUcUk0L1FIb9+vMnA+2ccs/w7VIQ6w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZuL88syHqX5LS42Nw7lVYpQGrZAq8BGehL+lji8CCA3yVX/P8UQWbTtB9a0f622jJZ+21LXKNHKgZdBLw0+fa+42ah5jQXbyZSD0rARFfFy24STnUAqgCJI+fFc5/oZ3CX/Tym8DezDky1kFEwX3t/GnOhpWXmQgJ7C0/A+PdXs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AVrLPm3w; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=C8qIgfv2zecb/qAL5CX+mtaC2xVBCXQp/jcOo2XABI4bCOthPnGvkT4MpjV4R/JHwDO1p6Fw0JezGZX2bNZ9WefQfzxl5Oi5nVy2OwKfZ/2LGccRymiEiUnTkO0+BUH0XXOpBlCyV4WNU6oFRJOvoatb3wvtkjCHTl9W6+YedjY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R9764gVC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AVrLPm3w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10FDAC4CEDE;
-	Thu, 12 Dec 2024 16:57:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R9764gVC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B3EBC4CED0;
+	Thu, 12 Dec 2024 16:57:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734022652;
-	bh=8IFiFRfat3al7HB9c2cgMOH3wcGPSvQQzXH/7y2Cj0Y=;
+	s=korg; t=1734022655;
+	bh=C7/Wv+YAdr8+JXUcUk0L1FIb9+vMnA+2ccs/w7VIQ6w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AVrLPm3wgsww6lDhu6PqTLSbT+auLxXcyLptAZqLItWqVbo422o8I/opp7Dbt9t73
-	 q3fkzLUTcJ+mlLwRnbJAi2xnyogWLEF5pHa9aj8+mwt2mOtjtCRI1dUqS9rOEJzwvg
-	 eUNaM2h3RwMeiUU5gZoaTmMPgBFzvd7X6zmw1vBI=
+	b=R9764gVCzsatZATbgJISxS9WPQPZlYXLYN6X3XpcrsljtZZXY2JbTszgHDED6s6ib
+	 F+IjwT5d0vHxqAJzTbi8u0NJUfiefhKEC+4k0zff13t22hQIVk5uW6m2DsaXdV56YA
+	 XC2umFtI1fZosYVZTxlA3iytCKUWits49rcqBsoQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vitalii Mordan <mordan@ispras.ru>,
-	Alan Stern <stern@rowland.harvard.edu>
-Subject: [PATCH 5.15 299/565] usb: ehci-spear: fix call balance of sehci clk handling routines
-Date: Thu, 12 Dec 2024 15:58:14 +0100
-Message-ID: <20241212144323.286253915@linuxfoundation.org>
+	Joel Guittet <jguittet.opensource@witekio.com>
+Subject: [PATCH 5.15 300/565] Revert "drivers: clk: zynqmp: update divider round rate logic"
+Date: Thu, 12 Dec 2024 15:58:15 +0100
+Message-ID: <20241212144323.324639672@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144311.432886635@linuxfoundation.org>
 References: <20241212144311.432886635@linuxfoundation.org>
@@ -50,50 +49,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vitalii Mordan <mordan@ispras.ru>
+From: Joel Guittet <jguittet@witekio.com>
 
-commit 40c974826734836402abfd44efbf04f63a2cc1c1 upstream.
+This reverts commit 9117fc44fd3a9538261e530ba5a022dfc9519620 which is
+commit 1fe15be1fb613534ecbac5f8c3f8744f757d237d upstream.
 
-If the clock sehci->clk was not enabled in spear_ehci_hcd_drv_probe,
-it should not be disabled in any path.
+It is reported to cause regressions in the 5.15.y tree, so revert it for
+now.
 
-Conversely, if it was enabled in spear_ehci_hcd_drv_probe, it must be disabled
-in all error paths to ensure proper cleanup.
-
-Found by Linux Verification Center (linuxtesting.org) with Klever.
-
-Fixes: 7675d6ba436f ("USB: EHCI: make ehci-spear a separate driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Vitalii Mordan <mordan@ispras.ru>
-Acked-by: Alan Stern <stern@rowland.harvard.edu>
-Link: https://lore.kernel.org/r/20241114230310.432213-1-mordan@ispras.ru
+Link: https://www.spinics.net/lists/kernel/msg5397998.html
+Signed-off-by: Joel Guittet <jguittet.opensource@witekio.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/ehci-spear.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/clk/zynqmp/divider.c |   66 +++++++++++++++++++++++++++++++++++++++----
+ 1 file changed, 61 insertions(+), 5 deletions(-)
 
---- a/drivers/usb/host/ehci-spear.c
-+++ b/drivers/usb/host/ehci-spear.c
-@@ -108,7 +108,9 @@ static int spear_ehci_hcd_drv_probe(stru
- 	/* registers start at offset 0x0 */
- 	hcd_to_ehci(hcd)->caps = hcd->regs;
+--- a/drivers/clk/zynqmp/divider.c
++++ b/drivers/clk/zynqmp/divider.c
+@@ -110,6 +110,52 @@ static unsigned long zynqmp_clk_divider_
+ 	return DIV_ROUND_UP_ULL(parent_rate, value);
+ }
  
--	clk_prepare_enable(sehci->clk);
-+	retval = clk_prepare_enable(sehci->clk);
-+	if (retval)
-+		goto err_put_hcd;
- 	retval = usb_add_hcd(hcd, irq, IRQF_SHARED);
- 	if (retval)
- 		goto err_stop_ehci;
-@@ -133,8 +135,7 @@ static int spear_ehci_hcd_drv_remove(str
++static void zynqmp_get_divider2_val(struct clk_hw *hw,
++				    unsigned long rate,
++				    struct zynqmp_clk_divider *divider,
++				    u32 *bestdiv)
++{
++	int div1;
++	int div2;
++	long error = LONG_MAX;
++	unsigned long div1_prate;
++	struct clk_hw *div1_parent_hw;
++	struct zynqmp_clk_divider *pdivider;
++	struct clk_hw *div2_parent_hw = clk_hw_get_parent(hw);
++
++	if (!div2_parent_hw)
++		return;
++
++	pdivider = to_zynqmp_clk_divider(div2_parent_hw);
++	if (!pdivider)
++		return;
++
++	div1_parent_hw = clk_hw_get_parent(div2_parent_hw);
++	if (!div1_parent_hw)
++		return;
++
++	div1_prate = clk_hw_get_rate(div1_parent_hw);
++	*bestdiv = 1;
++	for (div1 = 1; div1 <= pdivider->max_div;) {
++		for (div2 = 1; div2 <= divider->max_div;) {
++			long new_error = ((div1_prate / div1) / div2) - rate;
++
++			if (abs(new_error) < abs(error)) {
++				*bestdiv = div2;
++				error = new_error;
++			}
++			if (divider->flags & CLK_DIVIDER_POWER_OF_TWO)
++				div2 = div2 << 1;
++			else
++				div2++;
++		}
++		if (pdivider->flags & CLK_DIVIDER_POWER_OF_TWO)
++			div1 = div1 << 1;
++		else
++			div1++;
++	}
++}
++
+ /**
+  * zynqmp_clk_divider_round_rate() - Round rate of divider clock
+  * @hw:			handle between common and hardware-specific interfaces
+@@ -128,7 +174,6 @@ static long zynqmp_clk_divider_round_rat
+ 	u32 div_type = divider->div_type;
+ 	u32 bestdiv;
+ 	int ret;
+-	u8 width;
  
- 	usb_remove_hcd(hcd);
+ 	/* if read only, just return current value */
+ 	if (divider->flags & CLK_DIVIDER_READ_ONLY) {
+@@ -148,12 +193,23 @@ static long zynqmp_clk_divider_round_rat
+ 		return DIV_ROUND_UP_ULL((u64)*prate, bestdiv);
+ 	}
  
--	if (sehci->clk)
--		clk_disable_unprepare(sehci->clk);
-+	clk_disable_unprepare(sehci->clk);
- 	usb_put_hcd(hcd);
+-	width = fls(divider->max_div);
++	bestdiv = zynqmp_divider_get_val(*prate, rate, divider->flags);
++
++	/*
++	 * In case of two divisors, compute best divider values and return
++	 * divider2 value based on compute value. div1 will  be automatically
++	 * set to optimum based on required total divider value.
++	 */
++	if (div_type == TYPE_DIV2 &&
++	    (clk_hw_get_flags(hw) & CLK_SET_RATE_PARENT)) {
++		zynqmp_get_divider2_val(hw, rate, divider, &bestdiv);
++	}
  
- 	return 0;
+-	rate = divider_round_rate(hw, rate, prate, NULL, width, divider->flags);
++	if ((clk_hw_get_flags(hw) & CLK_SET_RATE_PARENT) && divider->is_frac)
++		bestdiv = rate % *prate ? 1 : bestdiv;
+ 
+-	if (divider->is_frac && (clk_hw_get_flags(hw) & CLK_SET_RATE_PARENT) && (rate % *prate))
+-		*prate = rate;
++	bestdiv = min_t(u32, bestdiv, divider->max_div);
++	*prate = rate * bestdiv;
+ 
+ 	return rate;
+ }
 
 
