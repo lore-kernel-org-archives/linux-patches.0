@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18AFD53365;
-	Thu, 12 Dec 2024 17:02:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C19F113792B;
+	Thu, 12 Dec 2024 17:02:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734022940; cv=none; b=MEM3n0Tfb5r96jl00ktaWVF3ie0fOBPGKwkCx4rVUzsnU3DKlSvH7tn1SFCB0WyhmTBdIAeAbt6733GBYNURVv6o+mDY3XfAYYrCJTcmgOjATy5NxPa2BeqAigXrOC/QxMVo0IMzG4TtQROovDAV4MX6Gy+yUDUopdSaV+wcfxc=
+	t=1734022943; cv=none; b=ieJCDS/0mDt72R0btTlCSG/V0gwRynXb6sPLzSAHSmjCO/+zgkFqGgiEJXBmBWpFp9Q9RMLgJVGjfZD4GS7sBATfBX7jst/9Yx6rinjUG2d+f0NCgcRQh1fX7c3WqBdyk7wfPkPAcbTLh/dU4H+kA47r5R5Kg3FQqDgFW+JRi7Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734022940; c=relaxed/simple;
-	bh=kfyhCfGCD/KoQv/Cg+P4mPoCIDOTzVN5Gea6Mqs/XhM=;
+	s=arc-20240116; t=1734022943; c=relaxed/simple;
+	bh=gVm0TGtWALYlTWx9uf7Uucd2O4ZRXDbQS7R/PQtOax8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GG9PSXLv5FpG6h19Gc6u4m3ypiZjmzhSuusKQf8QrtLjijKaQwKLLlbnYGk3bxbBByyWDosTJfKiW5crjdtJVkngMWVZMvCXEt20toHoQqH57g1HE59caOP3nsCIX7mbNLA3ygcXIA0rquV+1AR+ITGu4ima11viHhkGncQMDSM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b3SYQMN0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ESovNyLy1SM8VySBYpjnOIcqqShcDk2ltiLDPVJtn2CCQs3o40kmxoatY5SLRiQbMRFNjQEnyHDVD8nrvDZGmL9Y+3jbDUEXJitkNDXfOEO9jlmioAoqsArr7dpyam3/mDiir8GRHVJo3UEK8Jru9G+5obY/IVRNzI0Rprn+Ggw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CGaF0H/S; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b3SYQMN0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B40DC4CECE;
-	Thu, 12 Dec 2024 17:02:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CGaF0H/S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30127C4CED0;
+	Thu, 12 Dec 2024 17:02:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734022940;
-	bh=kfyhCfGCD/KoQv/Cg+P4mPoCIDOTzVN5Gea6Mqs/XhM=;
+	s=korg; t=1734022943;
+	bh=gVm0TGtWALYlTWx9uf7Uucd2O4ZRXDbQS7R/PQtOax8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b3SYQMN0fZDskkvTkks+JD+5x8TXEZ3Tvn+cxD2SKo12pXXK8v/SQUI+3p8Z8wuu9
-	 UCKlrN5yTYBY6HvSN41c42F6WQRxC9TUabLGwKAVFO0rfnXspgfgceJ7HVLTQFYhnO
-	 s+C6OlcMsjcSmDn+GKGEmhv4WkTIlk6vg5YwT3/g=
+	b=CGaF0H/SyQflyMvRHM5x7eOevlE1ZINWA7lAqAvo/XKuGBYE15L22RhlS8vyGRrXx
+	 tdiap6XL126QnTvgBHSo3crHbOz+IzPWtkv8mYzuU4hdd9Lk5sG9t+/KG/Q0LePHTJ
+	 p4nr7bzF9LjAaxKXIekYp8iBocyrJcO+8skX9BeY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 374/565] sh: intc: Fix use-after-free bug in register_intc_controller()
-Date: Thu, 12 Dec 2024 15:59:29 +0100
-Message-ID: <20241212144326.409063057@linuxfoundation.org>
+	Shengjiu Wang <shengjiu.wang@nxp.com>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 5.15 375/565] ASoC: fsl_micfil: fix the naming style for mask definition
+Date: Thu, 12 Dec 2024 15:59:30 +0100
+Message-ID: <20241212144326.447978230@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144311.432886635@linuxfoundation.org>
 References: <20241212144311.432886635@linuxfoundation.org>
@@ -51,46 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Shengjiu Wang <shengjiu.wang@nxp.com>
 
-[ Upstream commit 63e72e551942642c48456a4134975136cdcb9b3c ]
+commit 101b096bc2549618f18bc08ae3a0e364b3c8fff1 upstream.
 
-In the error handling for this function, d is freed without ever
-removing it from intc_list which would lead to a use after free.
-To fix this, let's only add it to the list after everything has
-succeeded.
+Remove the _SHIFT for the mask definition.
 
-Fixes: 2dcec7a988a1 ("sh: intc: set_irq_wake() support")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-Signed-off-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 17f2142bae4b ("ASoC: fsl_micfil: use GENMASK to define register bit fields")
+Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
+Acked-by: Sascha Hauer <s.hauer@pengutronix.de>
+Link: https://lore.kernel.org/r/1651736047-28809-1-git-send-email-shengjiu.wang@nxp.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/sh/intc/core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/fsl/fsl_micfil.h |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/sh/intc/core.c b/drivers/sh/intc/core.c
-index ca4f4ca413f11..b19388b349be3 100644
---- a/drivers/sh/intc/core.c
-+++ b/drivers/sh/intc/core.c
-@@ -209,7 +209,6 @@ int __init register_intc_controller(struct intc_desc *desc)
- 		goto err0;
+--- a/sound/soc/fsl/fsl_micfil.h
++++ b/sound/soc/fsl/fsl_micfil.h
+@@ -75,9 +75,9 @@
+ #define MICFIL_FIFO_STAT_FIFOX_UNDER(ch)	BIT((ch) + 8)
  
- 	INIT_LIST_HEAD(&d->list);
--	list_add_tail(&d->list, &intc_list);
+ /* MICFIL HWVAD0 Control 1 Register -- REG_MICFIL_VAD0_CTRL1*/
+-#define MICFIL_VAD0_CTRL1_CHSEL_SHIFT	GENMASK(26, 24)
+-#define MICFIL_VAD0_CTRL1_CICOSR_SHIFT	GENMASK(19, 16)
+-#define MICFIL_VAD0_CTRL1_INITT_SHIFT	GENMASK(12, 8)
++#define MICFIL_VAD0_CTRL1_CHSEL		GENMASK(26, 24)
++#define MICFIL_VAD0_CTRL1_CICOSR	GENMASK(19, 16)
++#define MICFIL_VAD0_CTRL1_INITT		GENMASK(12, 8)
+ #define MICFIL_VAD0_CTRL1_ST10		BIT(4)
+ #define MICFIL_VAD0_CTRL1_ERIE		BIT(3)
+ #define MICFIL_VAD0_CTRL1_IE		BIT(2)
+@@ -107,7 +107,7 @@
  
- 	raw_spin_lock_init(&d->lock);
- 	INIT_RADIX_TREE(&d->tree, GFP_ATOMIC);
-@@ -369,6 +368,7 @@ int __init register_intc_controller(struct intc_desc *desc)
- 
- 	d->skip_suspend = desc->skip_syscore_suspend;
- 
-+	list_add_tail(&d->list, &intc_list);
- 	nr_intc_controllers++;
- 
- 	return 0;
--- 
-2.43.0
-
+ /* MICFIL HWVAD0 Zero-Crossing Detector - REG_MICFIL_VAD0_ZCD */
+ #define MICFIL_VAD0_ZCD_ZCDTH		GENMASK(25, 16)
+-#define MICFIL_VAD0_ZCD_ZCDADJ_SHIFT	GENMASK(11, 8)
++#define MICFIL_VAD0_ZCD_ZCDADJ		GENMASK(11, 8)
+ #define MICFIL_VAD0_ZCD_ZCDAND		BIT(4)
+ #define MICFIL_VAD0_ZCD_ZCDAUT		BIT(2)
+ #define MICFIL_VAD0_ZCD_ZCDEN		BIT(0)
 
 
