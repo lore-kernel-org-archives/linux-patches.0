@@ -1,40 +1,52 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8549F13792B;
-	Thu, 12 Dec 2024 15:25:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 075A313792B;
+	Thu, 12 Dec 2024 15:25:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734017142; cv=none; b=ntohvlc/D0Etmt2eMqg0obssUWD/02DpIqOc0Ch0mLC7M7aIDiq1p0pdE7gYzr/cCJwg4vhYLbTI7jh9H0BQUmZBldcjn1RfR49pIkfih53ngq+oni20WG447XA3r0hidfyV/LAZ/mYRAqJ7I6hCMmX28cJIEUXVP59IpX9DWQQ=
+	t=1734017146; cv=none; b=KWYLYa7gRO7SG8TbfFgi0rHNXV4TgtmUkJ6ekkpEA06iScyvyW9Pgp6WUdUti1DLU2Jsg1zVCDmqsjgdNrnKCWz+cQ1QT034DqUFsdmg2bChR3bCt9VcRVXuw5TJLtS0T4H7ably0VIKud/p2z19BcsiM9EDS8EFm1bW/RUpbzg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734017142; c=relaxed/simple;
-	bh=iNzbhSh2BUdyKG6GZOGfJjIEIFeuXDgOOuIwcR5ycjg=;
+	s=arc-20240116; t=1734017146; c=relaxed/simple;
+	bh=AKDo7YFnQwyQMBe94YUXBK4uoriGyY4O/EJSn1FUVYI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=noj9JuFM6uWQpuEIFxbHoJax3F0b1Jj/YWb+n8uU1norvT5cdIg0tnPdDGXXV1mC9pXuxxRfkeVpD0DBYY9/kdxYoaJCFql1VV2gMCLgV0YyDBuzGs7HKTuXLvT9k5in/siYlqKzZmQwjNDqAdQbX1XLtT8N0UOyE7r2Sw8/fiE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wrkn6iyf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VT8Dj4pvuFKHgTOOJDjQq0PPgv7SogCRdeGXneQ5HInXkCfL3rI4TWfB7Q4XGGCLE0qBTcSxnOUEHC5/AY6J/+AolIiSvnLE7AtZtYeSoOx5+LaTmS+sIYBFTw3NyJoAnHdiuWv0tph8nQVHejyJ2VWPPi9B3fhc7HFY2VldwXA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rbQxJR9Z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wrkn6iyf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7FBFC4CECE;
-	Thu, 12 Dec 2024 15:25:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rbQxJR9Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39E88C4CECE;
+	Thu, 12 Dec 2024 15:25:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734017142;
-	bh=iNzbhSh2BUdyKG6GZOGfJjIEIFeuXDgOOuIwcR5ycjg=;
+	s=korg; t=1734017145;
+	bh=AKDo7YFnQwyQMBe94YUXBK4uoriGyY4O/EJSn1FUVYI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wrkn6iyfnSt+w9bLi2Mp9vjG5jElCv8avNXQjsKhyUKL7sJ31XZy2eCXTW450WlOc
-	 4kEmQGSpfnqHhEP6pv01E57OOySbN7L1YxF7+hugf2l1VjSkYWyNiM+M9t7ODJVTOj
-	 xRyrUOZmm7KPFGrMZo20QCjasrol0LTp+nfW1nTs=
+	b=rbQxJR9ZfuUqxKIrGcApRnauFzGDLySoraPNqpB0Rc3O0iyzZkpZIlhWjYS3/RJzB
+	 ohGbSf93S5NysRi0HemRTk6vo3HFnaV1XgdJTDJYY7R0/nBc8Y8LLOkmwDN8tOz61/
+	 k4YVaQKhjI8gh2x/MLINgr5R2Mv3RtasFiXFGLhU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bart Van Assche <bvanassche@acm.org>,
-	Avri Altman <Avri.Altman@wdc.com>,
-	Peter Wang <peter.wang@mediatek.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Michael Jeanson <mjeanson@efficios.com>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Yonghong Song <yhs@fb.com>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Ingo Molnar <mingo@redhat.com>,
+	Arnaldo Carvalho de Melo <acme@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Andrii Nakryiko <andrii.nakryiko@gmail.com>,
+	bpf@vger.kernel.org,
+	Joel Fernandes <joel@joelfernandes.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 365/466] scsi: ufs: core: Make DMA mask configuration more flexible
-Date: Thu, 12 Dec 2024 15:58:54 +0100
-Message-ID: <20241212144321.197424836@linuxfoundation.org>
+Subject: [PATCH 6.12 356/466] tracing/ftrace: disable preemption in syscall probe
+Date: Thu, 12 Dec 2024 15:58:45 +0100
+Message-ID: <20241212144320.848645313@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144306.641051666@linuxfoundation.org>
 References: <20241212144306.641051666@linuxfoundation.org>
@@ -53,117 +65,143 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bart Van Assche <bvanassche@acm.org>
+From: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
 
-[ Upstream commit 78bc671bd1501e2f6c571e063301a4fdc5db53b2 ]
+[ Upstream commit 13d750c2c03e9861e15268574ed2c239cca9c9d5 ]
 
-Replace UFSHCD_QUIRK_BROKEN_64BIT_ADDRESS with
-ufs_hba_variant_ops::set_dma_mask.  Update the Renesas driver
-accordingly.  This patch enables supporting other configurations than
-32-bit or 64-bit DMA addresses, e.g. 36-bit DMA addresses.
+In preparation for allowing system call enter/exit instrumentation to
+handle page faults, make sure that ftrace can handle this change by
+explicitly disabling preemption within the ftrace system call tracepoint
+probes to respect the current expectations within ftrace ring buffer
+code.
 
-Signed-off-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://lore.kernel.org/r/20241018194753.775074-1-bvanassche@acm.org
-Reviewed-by: Avri Altman <Avri.Altman@wdc.com>
-Reviewed-by: Peter Wang <peter.wang@mediatek.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+This change does not yet allow ftrace to take page faults per se within
+its probe, but allows its existing probes to adapt to the upcoming
+change.
+
+Cc: Michael Jeanson <mjeanson@efficios.com>
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Alexei Starovoitov <ast@kernel.org>
+Cc: Yonghong Song <yhs@fb.com>
+Cc: Paul E. McKenney <paulmck@kernel.org>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Arnaldo Carvalho de Melo <acme@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Andrii Nakryiko <andrii.nakryiko@gmail.com>
+Cc: bpf@vger.kernel.org
+Cc: Joel Fernandes <joel@joelfernandes.org>
+Link: https://lore.kernel.org/20241009010718.2050182-3-mathieu.desnoyers@efficios.com
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ufs/core/ufshcd.c      | 4 ++--
- drivers/ufs/host/ufs-renesas.c | 9 ++++++++-
- include/ufs/ufshcd.h           | 9 +++------
- 3 files changed, 13 insertions(+), 9 deletions(-)
+ include/trace/trace_events.h  | 36 +++++++++++++++++++++++++++++++----
+ kernel/trace/trace_syscalls.c | 12 ++++++++++++
+ 2 files changed, 44 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
-index b09198c69766b..cfebe4a1af9e8 100644
---- a/drivers/ufs/core/ufshcd.c
-+++ b/drivers/ufs/core/ufshcd.c
-@@ -2411,8 +2411,6 @@ static inline int ufshcd_hba_capabilities(struct ufs_hba *hba)
- 	int err;
+diff --git a/include/trace/trace_events.h b/include/trace/trace_events.h
+index c2f9cabf154d1..fa0d51cad57a8 100644
+--- a/include/trace/trace_events.h
++++ b/include/trace/trace_events.h
+@@ -244,6 +244,9 @@ static struct trace_event_fields trace_event_fields_##call[] = {	\
+ 	tstruct								\
+ 	{} };
  
- 	hba->capabilities = ufshcd_readl(hba, REG_CONTROLLER_CAPABILITIES);
--	if (hba->quirks & UFSHCD_QUIRK_BROKEN_64BIT_ADDRESS)
--		hba->capabilities &= ~MASK_64_ADDRESSING_SUPPORT;
++#undef DECLARE_EVENT_SYSCALL_CLASS
++#define DECLARE_EVENT_SYSCALL_CLASS DECLARE_EVENT_CLASS
++
+ #undef DEFINE_EVENT_PRINT
+ #define DEFINE_EVENT_PRINT(template, name, proto, args, print)
  
- 	/* nutrs and nutmrs are 0 based values */
- 	hba->nutrs = (hba->capabilities & MASK_TRANSFER_REQUESTS_SLOTS_SDB) + 1;
-@@ -10344,6 +10342,8 @@ EXPORT_SYMBOL_GPL(ufshcd_dealloc_host);
-  */
- static int ufshcd_set_dma_mask(struct ufs_hba *hba)
- {
-+	if (hba->vops && hba->vops->set_dma_mask)
-+		return hba->vops->set_dma_mask(hba);
- 	if (hba->capabilities & MASK_64_ADDRESSING_SUPPORT) {
- 		if (!dma_set_mask_and_coherent(hba->dev, DMA_BIT_MASK(64)))
- 			return 0;
-diff --git a/drivers/ufs/host/ufs-renesas.c b/drivers/ufs/host/ufs-renesas.c
-index b3a5fc2d44e72..21a64b34397d8 100644
---- a/drivers/ufs/host/ufs-renesas.c
-+++ b/drivers/ufs/host/ufs-renesas.c
-@@ -7,6 +7,7 @@
+@@ -374,11 +377,11 @@ static inline notrace int trace_event_get_offsets_##call(		\
  
- #include <linux/clk.h>
- #include <linux/delay.h>
-+#include <linux/dma-mapping.h>
- #include <linux/err.h>
- #include <linux/iopoll.h>
- #include <linux/kernel.h>
-@@ -364,14 +365,20 @@ static int ufs_renesas_init(struct ufs_hba *hba)
- 		return -ENOMEM;
- 	ufshcd_set_variant(hba, priv);
+ #include "stages/stage6_event_callback.h"
  
--	hba->quirks |= UFSHCD_QUIRK_BROKEN_64BIT_ADDRESS | UFSHCD_QUIRK_HIBERN_FASTAUTO;
-+	hba->quirks |= UFSHCD_QUIRK_HIBERN_FASTAUTO;
- 
- 	return 0;
+-#undef DECLARE_EVENT_CLASS
+-#define DECLARE_EVENT_CLASS(call, proto, args, tstruct, assign, print)	\
+-									\
++
++#undef __DECLARE_EVENT_CLASS
++#define __DECLARE_EVENT_CLASS(call, proto, args, tstruct, assign, print) \
+ static notrace void							\
+-trace_event_raw_event_##call(void *__data, proto)			\
++do_trace_event_raw_event_##call(void *__data, proto)			\
+ {									\
+ 	struct trace_event_file *trace_file = __data;			\
+ 	struct trace_event_data_offsets_##call __maybe_unused __data_offsets;\
+@@ -403,6 +406,29 @@ trace_event_raw_event_##call(void *__data, proto)			\
+ 									\
+ 	trace_event_buffer_commit(&fbuffer);				\
  }
- 
-+static int ufs_renesas_set_dma_mask(struct ufs_hba *hba)
-+{
-+	return dma_set_mask_and_coherent(hba->dev, DMA_BIT_MASK(32));
++
++#undef DECLARE_EVENT_CLASS
++#define DECLARE_EVENT_CLASS(call, proto, args, tstruct, assign, print)	\
++__DECLARE_EVENT_CLASS(call, PARAMS(proto), PARAMS(args), PARAMS(tstruct), \
++		      PARAMS(assign), PARAMS(print))			\
++static notrace void							\
++trace_event_raw_event_##call(void *__data, proto)			\
++{									\
++	do_trace_event_raw_event_##call(__data, args);			\
 +}
 +
- static const struct ufs_hba_variant_ops ufs_renesas_vops = {
- 	.name		= "renesas",
- 	.init		= ufs_renesas_init,
-+	.set_dma_mask	= ufs_renesas_set_dma_mask,
- 	.setup_clocks	= ufs_renesas_setup_clocks,
- 	.hce_enable_notify = ufs_renesas_hce_enable_notify,
- 	.dbg_register_dump = ufs_renesas_dbg_register_dump,
-diff --git a/include/ufs/ufshcd.h b/include/ufs/ufshcd.h
-index 1db754b4a4d62..8932ec5bd7c02 100644
---- a/include/ufs/ufshcd.h
-+++ b/include/ufs/ufshcd.h
-@@ -299,6 +299,8 @@ struct ufs_pwr_mode_info {
-  * @max_num_rtt: maximum RTT supported by the host
-  * @init: called when the driver is initialized
-  * @exit: called to cleanup everything done in init
-+ * @set_dma_mask: For setting another DMA mask than indicated by the 64AS
-+ *	capability bit.
-  * @get_ufs_hci_version: called to get UFS HCI version
-  * @clk_scale_notify: notifies that clks are scaled up/down
-  * @setup_clocks: called before touching any of the controller registers
-@@ -343,6 +345,7 @@ struct ufs_hba_variant_ops {
- 	int	(*init)(struct ufs_hba *);
- 	void    (*exit)(struct ufs_hba *);
- 	u32	(*get_ufs_hci_version)(struct ufs_hba *);
-+	int	(*set_dma_mask)(struct ufs_hba *);
- 	int	(*clk_scale_notify)(struct ufs_hba *, bool,
- 				    enum ufs_notify_change_status);
- 	int	(*setup_clocks)(struct ufs_hba *, bool,
-@@ -625,12 +628,6 @@ enum ufshcd_quirks {
- 	 */
- 	UFSHCD_QUIRK_SKIP_PH_CONFIGURATION		= 1 << 16,
++#undef DECLARE_EVENT_SYSCALL_CLASS
++#define DECLARE_EVENT_SYSCALL_CLASS(call, proto, args, tstruct, assign, print) \
++__DECLARE_EVENT_CLASS(call, PARAMS(proto), PARAMS(args), PARAMS(tstruct), \
++		      PARAMS(assign), PARAMS(print))			\
++static notrace void							\
++trace_event_raw_event_##call(void *__data, proto)			\
++{									\
++	preempt_disable_notrace();					\
++	do_trace_event_raw_event_##call(__data, args);			\
++	preempt_enable_notrace();					\
++}
++
+ /*
+  * The ftrace_test_probe is compiled out, it is only here as a build time check
+  * to make sure that if the tracepoint handling changes, the ftrace probe will
+@@ -418,6 +444,8 @@ static inline void ftrace_test_probe_##call(void)			\
  
--	/*
--	 * This quirk needs to be enabled if the host controller has
--	 * 64-bit addressing supported capability but it doesn't work.
--	 */
--	UFSHCD_QUIRK_BROKEN_64BIT_ADDRESS		= 1 << 17,
--
- 	/*
- 	 * This quirk needs to be enabled if the host controller has
- 	 * auto-hibernate capability but it's FASTAUTO only.
+ #include TRACE_INCLUDE(TRACE_INCLUDE_FILE)
+ 
++#undef __DECLARE_EVENT_CLASS
++
+ #include "stages/stage7_class_define.h"
+ 
+ #undef DECLARE_EVENT_CLASS
+diff --git a/kernel/trace/trace_syscalls.c b/kernel/trace/trace_syscalls.c
+index 785733245eadf..f9b21bac9d45e 100644
+--- a/kernel/trace/trace_syscalls.c
++++ b/kernel/trace/trace_syscalls.c
+@@ -299,6 +299,12 @@ static void ftrace_syscall_enter(void *data, struct pt_regs *regs, long id)
+ 	int syscall_nr;
+ 	int size;
+ 
++	/*
++	 * Syscall probe called with preemption enabled, but the ring
++	 * buffer and per-cpu data require preemption to be disabled.
++	 */
++	guard(preempt_notrace)();
++
+ 	syscall_nr = trace_get_syscall_nr(current, regs);
+ 	if (syscall_nr < 0 || syscall_nr >= NR_syscalls)
+ 		return;
+@@ -338,6 +344,12 @@ static void ftrace_syscall_exit(void *data, struct pt_regs *regs, long ret)
+ 	struct trace_event_buffer fbuffer;
+ 	int syscall_nr;
+ 
++	/*
++	 * Syscall probe called with preemption enabled, but the ring
++	 * buffer and per-cpu data require preemption to be disabled.
++	 */
++	guard(preempt_notrace)();
++
+ 	syscall_nr = trace_get_syscall_nr(current, regs);
+ 	if (syscall_nr < 0 || syscall_nr >= NR_syscalls)
+ 		return;
 -- 
 2.43.0
 
