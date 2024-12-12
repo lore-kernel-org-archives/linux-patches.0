@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D0FB216E3B;
-	Thu, 12 Dec 2024 17:28:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2D7E222D46;
+	Thu, 12 Dec 2024 17:28:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734024517; cv=none; b=WUwvI359639zFgOLMnVKqU0ZkM4Hk7z8eMmQg8JfDC38EEQ+GfOofIY6En8ichp0Y3KOu8ISum+aw6mlpOm+J5TaLfpE/Zc7nVVpI38Bw3UOIiiFK2aKQLCoOKeEQP+wv81drrr2m4u1lAkwRiIGo0o3IHtFwpQkNNoCGDO8HB4=
+	t=1734024520; cv=none; b=HyPfWp7n0Y84GKptCiocg8ik9rAn2eVuZ4Tsi2Cfn9GrG6Lb+AAdQ0WXoGOjvk3iUDHadUHGpfYMVFYIQ5rE/T/csBMsFkCVAXp7FAOyQR63lYcl37S3n/gJZm3q5TNbBe0wqpVKHYLhobtukHMDHkthtCm8f50FpQTKIoSfsMA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734024517; c=relaxed/simple;
-	bh=zFpPhaBXylhU5eea6N0yjF+nhg2x3quaeXr7hLYRbTU=;
+	s=arc-20240116; t=1734024520; c=relaxed/simple;
+	bh=PweHcaavH/1AoaRWq5d/cDMu/WOFI3AhYjCJJe9qx0c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UhaQTs8WhM1v4Hik4w+Cp6vjqf3pMmQeLIwxznFt4PhKJcb54set63hUyo+t+dy1ooCJjJQp39TcbXXUjRXi//73ZnotPtQuX0odbOOEMFgmFOzkri1rMNaBc4rDYoeUOE/apk4zCDrCH2DhQVEXjPKMjum/HrWfzfBFo+pR7TA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jEbOLlLD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gfRxrrgDHDd5aRq/4Sr0VLdLPEw48uhKKugaTlFEgXZTAPb38Rcx91Eu6nR31MFgUD7gmu+TEtNk1M3xk242gaJABs692wd/qR7eOnFiCKFcShcnpuFdBd4tmMpSdkf1qp/1dO+aWYgW81zZRkWWk0FwfiBBv6BdorxGgiaOsG8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R+ev+j4A; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jEbOLlLD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 008E9C4CED3;
-	Thu, 12 Dec 2024 17:28:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R+ev+j4A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CD2BC4CED0;
+	Thu, 12 Dec 2024 17:28:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734024517;
-	bh=zFpPhaBXylhU5eea6N0yjF+nhg2x3quaeXr7hLYRbTU=;
+	s=korg; t=1734024520;
+	bh=PweHcaavH/1AoaRWq5d/cDMu/WOFI3AhYjCJJe9qx0c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jEbOLlLDf7suCDT+SiQ933V3KXeRRq77OUvSLJxMHdn4X3zd0Ii5AbYeHtAqfIRPs
-	 aHDY9dxqTgh5Lmd4KDWBJGUuHWfqyalHlbnsaice3pIuijglu52BXyMKckUGpZEt+7
-	 w0wFXVu4dTZmkLG2Mc4vovVKFU1okU/OxrFx1efg=
+	b=R+ev+j4A8MzQpPnhbuZFG7p0bQhoNPtG6z6ni4IVxRIC78Qqufi1B//h1/8uEb4BJ
+	 vqrABIqzCFQFzN9NH+1d6+9Nf2GEyL5U5MdrDbWaByFK5ob99yW3phQ0GcTJk7db5l
+	 gtJ+gpZjh4cl7dddbV23q3I1wgjCmGXyz9trYcNc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	David Sterba <dsterba@suse.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Keerthana K <keerthana.kalyanasundaram@broadcom.com>
-Subject: [PATCH 5.10 323/459] btrfs: dont BUG_ON on ENOMEM from btrfs_lookup_extent_info() in walk_down_proc()
-Date: Thu, 12 Dec 2024 16:01:01 +0100
-Message-ID: <20241212144306.421471432@linuxfoundation.org>
+	Christian Gmeiner <cgmeiner@igalia.com>,
+	Lucas Stach <l.stach@pengutronix.de>
+Subject: [PATCH 5.10 324/459] drm/etnaviv: flush shader L1 cache after user commandstream
+Date: Thu, 12 Dec 2024 16:01:02 +0100
+Message-ID: <20241212144306.460291486@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144253.511169641@linuxfoundation.org>
 References: <20241212144253.511169641@linuxfoundation.org>
@@ -52,31 +50,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Lucas Stach <l.stach@pengutronix.de>
 
-commit a580fb2c3479d993556e1c31b237c9e5be4944a3 upstream.
+commit 4f8dbadef085ab447a01a8d4806a3f629fea05ed upstream.
 
-We handle errors here properly, ENOMEM isn't fatal, return the error.
+The shader L1 cache is a writeback cache for shader loads/stores
+and thus must be flushed before any BOs backing the shader buffers
+are potentially freed.
 
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Keerthana K <keerthana.kalyanasundaram@broadcom.com>
+Cc: stable@vger.kernel.org
+Reviewed-by: Christian Gmeiner <cgmeiner@igalia.com>
+Signed-off-by: Lucas Stach <l.stach@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/extent-tree.c |    1 -
- 1 file changed, 1 deletion(-)
+ drivers/gpu/drm/etnaviv/etnaviv_buffer.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/fs/btrfs/extent-tree.c
-+++ b/fs/btrfs/extent-tree.c
-@@ -4878,7 +4878,6 @@ static noinline int walk_down_proc(struc
- 					       eb->start, level, 1,
- 					       &wc->refs[level],
- 					       &wc->flags[level]);
--		BUG_ON(ret == -ENOMEM);
- 		if (ret)
- 			return ret;
- 		if (unlikely(wc->refs[level] == 0)) {
+--- a/drivers/gpu/drm/etnaviv/etnaviv_buffer.c
++++ b/drivers/gpu/drm/etnaviv/etnaviv_buffer.c
+@@ -481,7 +481,8 @@ void etnaviv_buffer_queue(struct etnaviv
+ 	} else {
+ 		CMD_LOAD_STATE(buffer, VIVS_GL_FLUSH_CACHE,
+ 				       VIVS_GL_FLUSH_CACHE_DEPTH |
+-				       VIVS_GL_FLUSH_CACHE_COLOR);
++				       VIVS_GL_FLUSH_CACHE_COLOR |
++				       VIVS_GL_FLUSH_CACHE_SHADER_L1);
+ 		if (has_blt) {
+ 			CMD_LOAD_STATE(buffer, VIVS_BLT_ENABLE, 0x1);
+ 			CMD_LOAD_STATE(buffer, VIVS_BLT_SET_COMMAND, 0x1);
 
 
