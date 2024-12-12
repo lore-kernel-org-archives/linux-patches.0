@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D34CC2185A8;
-	Thu, 12 Dec 2024 15:43:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BAF51547F0;
+	Thu, 12 Dec 2024 15:43:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734018200; cv=none; b=Mh979I6ovJjzTDZ6aHrEqZ/u3qg6290O6ZqTNXjpe8jjyce0fWJiYCvXsJEh10858lbO3abve45nsYXJIyPqgH6PQimfCvf6wFWIP9EZmT9L/6kp1KGaIZbbwhgStKjNIq9XnZNWpj+arfnaBm+QsulA+6I0UiKQkCssflbEHqo=
+	t=1734018204; cv=none; b=hMs8eS99hHsCW7NcC1d/jrZEONhYD6qgaPvzPI8O0OUrGaVTIUcNv+G07a6UJzqKXRN6hEFDzzQu3/R3Tw6mUjFu+Ik8AvZNRmsCNhXrkUow+LyG60rtbWEF7b692PHt5n6nvvFgVHexup8/voFwI1ID7BNVkOMmJu5eoYN9iBs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734018200; c=relaxed/simple;
-	bh=LdLm1OfITKhkodrSSeYJ72j1Hv20X3s3gPoG+UUePpo=;
+	s=arc-20240116; t=1734018204; c=relaxed/simple;
+	bh=SgEtKWQa3Q/0HLnB9OUxee6wRevaRy7cjSSVa2xuQqk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WevfzUvdjUuPUlezF/ARtaTIujr8X5pgTCYj0pWnx5qB+1YPc/yjY9F9W9Zb+RryKOD9tqT2Mcorv0j29JVV2VPiO5/RnhXaZkU+07XhkMw/lnYQongDGA7taRfAkZqb4f73vsUEkPDLKRPl/NHqrOpW5V34gxOy59Nk5fVePfU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eaGuauF5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Dtx3Na47fZu7YJ/F34ikt2DAw9xuzNrzMT6PePt4b4DS29Wz/RpnevP0Z3ebfPoXG8+FKZwZyR5+w8erzlUeQpn+wtz2qga388VL5Wa4N3QdzNmVm9WKCF0+OMnS1Ny6LMCLwpS7ua20qPYZv4HZfRD5kVGPAjfMxigUaLp4Q2U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OAdmSXK+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eaGuauF5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 416C3C4CECE;
-	Thu, 12 Dec 2024 15:43:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OAdmSXK+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8442AC4CECE;
+	Thu, 12 Dec 2024 15:43:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734018200;
-	bh=LdLm1OfITKhkodrSSeYJ72j1Hv20X3s3gPoG+UUePpo=;
+	s=korg; t=1734018203;
+	bh=SgEtKWQa3Q/0HLnB9OUxee6wRevaRy7cjSSVa2xuQqk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eaGuauF52xYWQ4YEAdjYSL57ZPlDj0viLFagTUpwI6uig8NXolP3i90WqmLODSP2y
-	 1k/HNloiXTFvIO9gDbbbplhAH8IPGEg4c26LUfKTGoXBYj3NQ+2XBZtnyhT9/Oln+/
-	 sKo3qSnnxsr7FxMzgD1kXuVccf1s24q9LF5IQq5s=
+	b=OAdmSXK+W50a+Pfe43AVaEzkKUYGRPgMnYwDdGPcLUmat/HqQoUNExcJ4k24HRQNR
+	 mAf1j2z/zMPAvJRjlwzXmFlb8SQgITMSpYtwo9Mdc+NFIFyr1bLvs3UiHQXCk/SJyi
+	 kCuD9UiMmcj/c2GNEZE3CrTPlauEsG6ekhjFrSng=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Wahren <wahrenst@gmx.net>,
-	Frank Li <Frank.Li@nxp.com>,
-	Mark Brown <broonie@kernel.org>,
+	Peter Hutterer <peter.hutterer@who-t.net>,
+	Benjamin Tissoires <bentiss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 195/356] spi: spi-fsl-lpspi: Adjust type of scldiv
-Date: Thu, 12 Dec 2024 15:58:34 +0100
-Message-ID: <20241212144252.329932320@linuxfoundation.org>
+Subject: [PATCH 6.6 196/356] HID: add per device quirk to force bind to hid-generic
+Date: Thu, 12 Dec 2024 15:58:35 +0100
+Message-ID: <20241212144252.366959027@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144244.601729511@linuxfoundation.org>
 References: <20241212144244.601729511@linuxfoundation.org>
@@ -52,56 +51,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefan Wahren <wahrenst@gmx.net>
+From: Benjamin Tissoires <bentiss@kernel.org>
 
-[ Upstream commit fa8ecda9876ac1e7b29257aa82af1fd0695496e2 ]
+[ Upstream commit 645c224ac5f6e0013931c342ea707b398d24d410 ]
 
-The target value of scldiv is just a byte, but its calculation in
-fsl_lpspi_set_bitrate could be negative. So use an adequate type to store
-the result and avoid overflows. After that this needs range check
-adjustments, but this should make the code less opaque.
+We already have the possibility to force not binding to hid-generic and
+rely on a dedicated driver, but we couldn't do the other way around.
 
-Signed-off-by: Stefan Wahren <wahrenst@gmx.net>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20240930093056.93418-2-wahrenst@gmx.net
-Signed-off-by: Mark Brown <broonie@kernel.org>
+This is useful for BPF programs where we are fixing the report descriptor
+and the events, but want to avoid a specialized driver to come after BPF
+which would unwind everything that is done there.
+
+Reviewed-by: Peter Hutterer <peter.hutterer@who-t.net>
+Link: https://patch.msgid.link/20241001-hid-bpf-hid-generic-v3-8-2ef1019468df@kernel.org
+Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-fsl-lpspi.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/hid/hid-core.c    | 5 +++--
+ drivers/hid/hid-generic.c | 3 +++
+ include/linux/hid.h       | 2 ++
+ 3 files changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/spi/spi-fsl-lpspi.c b/drivers/spi/spi-fsl-lpspi.c
-index 514a2c5c84226..9e2541dee56e5 100644
---- a/drivers/spi/spi-fsl-lpspi.c
-+++ b/drivers/spi/spi-fsl-lpspi.c
-@@ -315,9 +315,10 @@ static void fsl_lpspi_set_watermark(struct fsl_lpspi_data *fsl_lpspi)
- static int fsl_lpspi_set_bitrate(struct fsl_lpspi_data *fsl_lpspi)
- {
- 	struct lpspi_config config = fsl_lpspi->config;
--	unsigned int perclk_rate, scldiv, div;
-+	unsigned int perclk_rate, div;
- 	u8 prescale_max;
- 	u8 prescale;
-+	int scldiv;
+diff --git a/drivers/hid/hid-core.c b/drivers/hid/hid-core.c
+index 1467c5a732db4..558f3988fb2cf 100644
+--- a/drivers/hid/hid-core.c
++++ b/drivers/hid/hid-core.c
+@@ -2607,9 +2607,10 @@ static bool hid_check_device_match(struct hid_device *hdev,
+ 	/*
+ 	 * hid-generic implements .match(), so we must be dealing with a
+ 	 * different HID driver here, and can simply check if
+-	 * hid_ignore_special_drivers is set or not.
++	 * hid_ignore_special_drivers or HID_QUIRK_IGNORE_SPECIAL_DRIVER
++	 * are set or not.
+ 	 */
+-	return !hid_ignore_special_drivers;
++	return !hid_ignore_special_drivers && !(hdev->quirks & HID_QUIRK_IGNORE_SPECIAL_DRIVER);
+ }
  
- 	perclk_rate = clk_get_rate(fsl_lpspi->clk_per);
- 	prescale_max = fsl_lpspi->devtype_data->prescale_max;
-@@ -338,13 +339,13 @@ static int fsl_lpspi_set_bitrate(struct fsl_lpspi_data *fsl_lpspi)
+ static int __hid_device_probe(struct hid_device *hdev, struct hid_driver *hdrv)
+diff --git a/drivers/hid/hid-generic.c b/drivers/hid/hid-generic.c
+index f9db991d3c5a2..88882c1bfffe7 100644
+--- a/drivers/hid/hid-generic.c
++++ b/drivers/hid/hid-generic.c
+@@ -40,6 +40,9 @@ static bool hid_generic_match(struct hid_device *hdev,
+ 	if (ignore_special_driver)
+ 		return true;
  
- 	for (prescale = 0; prescale <= prescale_max; prescale++) {
- 		scldiv = div / (1 << prescale) - 2;
--		if (scldiv < 256) {
-+		if (scldiv >= 0 && scldiv < 256) {
- 			fsl_lpspi->config.prescale = prescale;
- 			break;
- 		}
- 	}
++	if (hdev->quirks & HID_QUIRK_IGNORE_SPECIAL_DRIVER)
++		return true;
++
+ 	if (hdev->quirks & HID_QUIRK_HAVE_SPECIAL_DRIVER)
+ 		return false;
  
--	if (scldiv >= 256)
-+	if (scldiv < 0 || scldiv >= 256)
- 		return -EINVAL;
- 
- 	writel(scldiv | (scldiv << 8) | ((scldiv >> 1) << 16),
+diff --git a/include/linux/hid.h b/include/linux/hid.h
+index 3b08a29572298..af55a25db91b0 100644
+--- a/include/linux/hid.h
++++ b/include/linux/hid.h
+@@ -359,6 +359,7 @@ struct hid_item {
+  * | @HID_QUIRK_NO_OUTPUT_REPORTS_ON_INTR_EP:
+  * | @HID_QUIRK_HAVE_SPECIAL_DRIVER:
+  * | @HID_QUIRK_INCREMENT_USAGE_ON_DUPLICATE:
++ * | @HID_QUIRK_IGNORE_SPECIAL_DRIVER
+  * | @HID_QUIRK_FULLSPEED_INTERVAL:
+  * | @HID_QUIRK_NO_INIT_REPORTS:
+  * | @HID_QUIRK_NO_IGNORE:
+@@ -384,6 +385,7 @@ struct hid_item {
+ #define HID_QUIRK_HAVE_SPECIAL_DRIVER		BIT(19)
+ #define HID_QUIRK_INCREMENT_USAGE_ON_DUPLICATE	BIT(20)
+ #define HID_QUIRK_NOINVERT			BIT(21)
++#define HID_QUIRK_IGNORE_SPECIAL_DRIVER		BIT(22)
+ #define HID_QUIRK_FULLSPEED_INTERVAL		BIT(28)
+ #define HID_QUIRK_NO_INIT_REPORTS		BIT(29)
+ #define HID_QUIRK_NO_IGNORE			BIT(30)
 -- 
 2.43.0
 
