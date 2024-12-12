@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B86D221DA4;
-	Thu, 12 Dec 2024 17:49:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76516205E2E;
+	Thu, 12 Dec 2024 17:49:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734025748; cv=none; b=Q4QQQG0H3d32u7PYewWhA3YI5Zi+NaVUJCb16PqARseq3z8GOUxN/mDCQNKGYkFasVDxDBoYoFZr5Q3Vql0PTrczG48ZNLjmr6yVIW3ZSRCPXsEJ5q4UZ+hyI1QwWINmNSyQ+NXhsS2Za+oZ53Q+M6+jujlnyqGcpJ/cVFnE/zY=
+	t=1734025751; cv=none; b=Laog1Gp3IsaqYbE/UbncVADvFYm4p4pKHmRqgO0oBnxlVIsvRzrVo/6kZOsMEg/9q6Y3fMflcYS6tIw1oGV1hsKSC7m8r5UiKzq0a5Bs+cZh498Byx0o+OA7ziI7Glo7f1Iw0NjiMIdF9WgCocGKBfirbUqGM3DUkhw9CgGTcEY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734025748; c=relaxed/simple;
-	bh=T398Q6XmdGD4VamuqF2YDiuAWZdrrjgqCEIw+w/yopw=;
+	s=arc-20240116; t=1734025751; c=relaxed/simple;
+	bh=SqlVzSh0pK/4biKXCG01gkiHD8er8FO05TY0rNlIU5k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OFAd3CjuXFRHSTtyjVb8Z44kKs4Dorcqf5aprT+0W+vXgtmhTJjA5gxsC7AZfJ0ZhXgqvDq6A6BAG5ckgCMUtDsoJmBE3ezj+RH+Rd+8rpXETE0oSAKPh5rQZWHuZEDhrREbabIE2Qu/xX7xHtPEW6YuBnZGWy6h4/At7Anq7Js=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F5PRDxNf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=u8XmC69u2RTDhP7i6ngW+Pe7k7qTZ0kxmfQFuh1qbyOaT9N+Px5vSYPzxDp5Xe5sD0oJU7ajuKzNha+g0nlXVox1WmAP0NOdG57tuRu93lkZT5bvmbuATDYbt4JxKr5BhK6PYK3p7HW5a2aI8ewgAbvAaDsynFpj/r9zzsgujjs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XEjI9yUd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F5PRDxNf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02999C4CED1;
-	Thu, 12 Dec 2024 17:49:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XEjI9yUd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F036FC4CECE;
+	Thu, 12 Dec 2024 17:49:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734025748;
-	bh=T398Q6XmdGD4VamuqF2YDiuAWZdrrjgqCEIw+w/yopw=;
+	s=korg; t=1734025751;
+	bh=SqlVzSh0pK/4biKXCG01gkiHD8er8FO05TY0rNlIU5k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F5PRDxNfodGGW/Dsh8INjsFrPBOEqqpXcoqDtkf97FG2sT2QmXvCP/BcLJVC0iMtn
-	 eTUlMdqNkLnW/NEnWW23UI31lWskrH2DIu6aegDjS9YafaQql/LPCkFYuLdj9dBYL1
-	 LVqjEYPJwPEYkwEX8Q42FjizB7xHKP8qkqZ0D/Ac=
+	b=XEjI9yUdc6vff/zUytU3g4Mdvr7PPegzlkkbcZ3fe/SlG/dKXgOqdSd0JzA4/86j7
+	 PvZsPI88vLqFQrQhuH52e4pa1c/tpKJIE+ehpo7X5ZBDp2Yj9yS9Vx0vJhBsJSVfIN
+	 yS0d7wCnBgpt5x7kdCzTJQZtTD1urpLhLBrA95+M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ondrej Mosnacek <omosnace@redhat.com>,
-	Eric Biggers <ebiggers@google.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 244/321] crypto: x86/aegis128 - access 32-bit arguments as 32-bit
-Date: Thu, 12 Dec 2024 16:02:42 +0100
-Message-ID: <20241212144239.612367366@linuxfoundation.org>
+Subject: [PATCH 5.4 245/321] gpio: grgpio: use a helper variable to store the address of ofdev->dev
+Date: Thu, 12 Dec 2024 16:02:43 +0100
+Message-ID: <20241212144239.650715804@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144229.291682835@linuxfoundation.org>
 References: <20241212144229.291682835@linuxfoundation.org>
@@ -52,134 +50,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Biggers <ebiggers@google.com>
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-[ Upstream commit 3b2f2d22fb424e9bebda4dbf6676cbfc7f9f62cd ]
+[ Upstream commit d036ae41cebdfae92666024163c109b8fef516fa ]
 
-Fix the AEGIS assembly code to access 'unsigned int' arguments as 32-bit
-values instead of 64-bit, since the upper bits of the corresponding
-64-bit registers are not guaranteed to be zero.
+Instead of dereferencing the platform device pointer repeatedly, just
+store its address in a helper variable.
 
-Note: there haven't been any reports of this bug actually causing
-incorrect behavior.  Neither gcc nor clang guarantee zero-extension to
-64 bits, but zero-extension is likely to happen in practice because most
-instructions that operate on 32-bit registers zero-extend to 64 bits.
-
-Fixes: 1d373d4e8e15 ("crypto: x86 - Add optimized AEGIS implementations")
-Cc: stable@vger.kernel.org
-Reviewed-by: Ondrej Mosnacek <omosnace@redhat.com>
-Signed-off-by: Eric Biggers <ebiggers@google.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Link: https://lore.kernel.org/r/20241015131832.44678-3-brgl@bgdev.pl
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Stable-dep-of: 050b23d081da ("gpio: grgpio: Add NULL check in grgpio_probe")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/crypto/aegis128-aesni-asm.S | 29 ++++++++++++++--------------
- 1 file changed, 15 insertions(+), 14 deletions(-)
+ drivers/gpio/gpio-grgpio.c | 23 ++++++++++++-----------
+ 1 file changed, 12 insertions(+), 11 deletions(-)
 
-diff --git a/arch/x86/crypto/aegis128-aesni-asm.S b/arch/x86/crypto/aegis128-aesni-asm.S
-index b7026fdef4ff2..6c5048605a664 100644
---- a/arch/x86/crypto/aegis128-aesni-asm.S
-+++ b/arch/x86/crypto/aegis128-aesni-asm.S
-@@ -20,7 +20,7 @@
- #define T1	%xmm7
+diff --git a/drivers/gpio/gpio-grgpio.c b/drivers/gpio/gpio-grgpio.c
+index 3224933f4c8f4..62ba651fef658 100644
+--- a/drivers/gpio/gpio-grgpio.c
++++ b/drivers/gpio/gpio-grgpio.c
+@@ -328,6 +328,7 @@ static const struct irq_domain_ops grgpio_irq_domain_ops = {
+ static int grgpio_probe(struct platform_device *ofdev)
+ {
+ 	struct device_node *np = ofdev->dev.of_node;
++	struct device *dev = &ofdev->dev;
+ 	void  __iomem *regs;
+ 	struct gpio_chip *gc;
+ 	struct grgpio_priv *priv;
+@@ -337,7 +338,7 @@ static int grgpio_probe(struct platform_device *ofdev)
+ 	int size;
+ 	int i;
  
- #define STATEP	%rdi
--#define LEN	%rsi
-+#define LEN	%esi
- #define SRC	%rdx
- #define DST	%rcx
+-	priv = devm_kzalloc(&ofdev->dev, sizeof(*priv), GFP_KERNEL);
++	priv = devm_kzalloc(dev, sizeof(*priv), GFP_KERNEL);
+ 	if (!priv)
+ 		return -ENOMEM;
  
-@@ -75,32 +75,32 @@ SYM_FUNC_START_LOCAL(__load_partial)
- 	xor %r9d, %r9d
- 	pxor MSG, MSG
+@@ -346,29 +347,29 @@ static int grgpio_probe(struct platform_device *ofdev)
+ 		return PTR_ERR(regs);
  
--	mov LEN, %r8
-+	mov LEN, %r8d
- 	and $0x1, %r8
- 	jz .Lld_partial_1
+ 	gc = &priv->gc;
+-	err = bgpio_init(gc, &ofdev->dev, 4, regs + GRGPIO_DATA,
++	err = bgpio_init(gc, dev, 4, regs + GRGPIO_DATA,
+ 			 regs + GRGPIO_OUTPUT, NULL, regs + GRGPIO_DIR, NULL,
+ 			 BGPIOF_BIG_ENDIAN_BYTE_ORDER);
+ 	if (err) {
+-		dev_err(&ofdev->dev, "bgpio_init() failed\n");
++		dev_err(dev, "bgpio_init() failed\n");
+ 		return err;
+ 	}
  
--	mov LEN, %r8
-+	mov LEN, %r8d
- 	and $0x1E, %r8
- 	add SRC, %r8
- 	mov (%r8), %r9b
+ 	priv->regs = regs;
+ 	priv->imask = gc->read_reg(regs + GRGPIO_IMASK);
+-	priv->dev = &ofdev->dev;
++	priv->dev = dev;
  
- .Lld_partial_1:
--	mov LEN, %r8
-+	mov LEN, %r8d
- 	and $0x2, %r8
- 	jz .Lld_partial_2
+ 	gc->of_node = np;
+ 	gc->owner = THIS_MODULE;
+ 	gc->to_irq = grgpio_to_irq;
+-	gc->label = devm_kasprintf(&ofdev->dev, GFP_KERNEL, "%pOF", np);
++	gc->label = devm_kasprintf(dev, GFP_KERNEL, "%pOF", np);
+ 	gc->base = -1;
  
--	mov LEN, %r8
-+	mov LEN, %r8d
- 	and $0x1C, %r8
- 	add SRC, %r8
- 	shl $0x10, %r9
- 	mov (%r8), %r9w
+ 	err = of_property_read_u32(np, "nbits", &prop);
+ 	if (err || prop <= 0 || prop > GRGPIO_MAX_NGPIO) {
+ 		gc->ngpio = GRGPIO_MAX_NGPIO;
+-		dev_dbg(&ofdev->dev,
+-			"No or invalid nbits property: assume %d\n", gc->ngpio);
++		dev_dbg(dev, "No or invalid nbits property: assume %d\n",
++			gc->ngpio);
+ 	} else {
+ 		gc->ngpio = prop;
+ 	}
+@@ -380,7 +381,7 @@ static int grgpio_probe(struct platform_device *ofdev)
+ 	irqmap = (s32 *)of_get_property(np, "irqmap", &size);
+ 	if (irqmap) {
+ 		if (size < gc->ngpio) {
+-			dev_err(&ofdev->dev,
++			dev_err(dev,
+ 				"irqmap shorter than ngpio (%d < %d)\n",
+ 				size, gc->ngpio);
+ 			return -EINVAL;
+@@ -390,7 +391,7 @@ static int grgpio_probe(struct platform_device *ofdev)
+ 						     &grgpio_irq_domain_ops,
+ 						     priv);
+ 		if (!priv->domain) {
+-			dev_err(&ofdev->dev, "Could not add irq domain\n");
++			dev_err(dev, "Could not add irq domain\n");
+ 			return -EINVAL;
+ 		}
  
- .Lld_partial_2:
--	mov LEN, %r8
-+	mov LEN, %r8d
- 	and $0x4, %r8
- 	jz .Lld_partial_4
+@@ -420,13 +421,13 @@ static int grgpio_probe(struct platform_device *ofdev)
  
--	mov LEN, %r8
-+	mov LEN, %r8d
- 	and $0x18, %r8
- 	add SRC, %r8
- 	shl $32, %r9
-@@ -110,11 +110,11 @@ SYM_FUNC_START_LOCAL(__load_partial)
- .Lld_partial_4:
- 	movq %r9, MSG
+ 	err = gpiochip_add_data(gc, priv);
+ 	if (err) {
+-		dev_err(&ofdev->dev, "Could not add gpiochip\n");
++		dev_err(dev, "Could not add gpiochip\n");
+ 		if (priv->domain)
+ 			irq_domain_remove(priv->domain);
+ 		return err;
+ 	}
  
--	mov LEN, %r8
-+	mov LEN, %r8d
- 	and $0x8, %r8
- 	jz .Lld_partial_8
+-	dev_info(&ofdev->dev, "regs=0x%p, base=%d, ngpio=%d, irqs=%s\n",
++	dev_info(dev, "regs=0x%p, base=%d, ngpio=%d, irqs=%s\n",
+ 		 priv->regs, gc->base, gc->ngpio, priv->domain ? "on" : "off");
  
--	mov LEN, %r8
-+	mov LEN, %r8d
- 	and $0x10, %r8
- 	add SRC, %r8
- 	pslldq $8, MSG
-@@ -138,7 +138,7 @@ SYM_FUNC_END(__load_partial)
-  *   %r10
-  */
- SYM_FUNC_START_LOCAL(__store_partial)
--	mov LEN, %r8
-+	mov LEN, %r8d
- 	mov DST, %r9
- 
- 	movq T0, %r10
-@@ -676,7 +676,7 @@ ENTRY(crypto_aegis128_aesni_dec_tail)
- 	call __store_partial
- 
- 	/* mask with byte count: */
--	movq LEN, T0
-+	movd LEN, T0
- 	punpcklbw T0, T0
- 	punpcklbw T0, T0
- 	punpcklbw T0, T0
-@@ -701,7 +701,8 @@ ENDPROC(crypto_aegis128_aesni_dec_tail)
- 
- /*
-  * void crypto_aegis128_aesni_final(void *state, void *tag_xor,
-- *                                  u64 assoclen, u64 cryptlen);
-+ *                                  unsigned int assoclen,
-+ *                                  unsigned int cryptlen);
-  */
- ENTRY(crypto_aegis128_aesni_final)
- 	FRAME_BEGIN
-@@ -714,8 +715,8 @@ ENTRY(crypto_aegis128_aesni_final)
- 	movdqu 0x40(STATEP), STATE4
- 
- 	/* prepare length block: */
--	movq %rdx, MSG
--	movq %rcx, T0
-+	movd %edx, MSG
-+	movd %ecx, T0
- 	pslldq $8, T0
- 	pxor T0, MSG
- 	psllq $3, MSG /* multiply by 8 (to get bit count) */
+ 	return 0;
 -- 
 2.43.0
 
