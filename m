@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6075F2343A5;
-	Thu, 12 Dec 2024 16:06:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 262D9223E6C;
+	Thu, 12 Dec 2024 16:06:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734019598; cv=none; b=Y5qD7uvykPkVFMgcXSI7pymmaXbA3E5fbUW3Hm4ILzmcO6sKEJXZ4n5oWvbmjMRKtqm2L0N0EZGESjmqbCfx8Z87YsHipyKkXtX/H1uLpXVhPrLWlt7S0kuHoTINxWXBBPruQrsFN9ptoVJR9ssXDti4gwakPwaSTAQb4dA2SHw=
+	t=1734019602; cv=none; b=uy8RPI0G8bkNS0YF/b0Yrpvvv9WTfTWgogEMYVPxbn8N9tP/6FYmK2GdT9YyyeC2eN+siU5OIBth14Bo1XvxrazXbZGUgrYMaDV+C6bSc5VTAKeceZ+oJY/LngEnWMuZYlpdg5yWSfqo3rzgQb/yArBS/2SveG+5z0QuD5RHxLk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734019598; c=relaxed/simple;
-	bh=uxuLlKcTvk2tuB6WAhLv3M9CG8RN46VkTZ53ToAJFKE=;
+	s=arc-20240116; t=1734019602; c=relaxed/simple;
+	bh=OW+huyKUCbBQ8J0KNGUA9l1D9N/BMjxxwWadysmBeQ0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IbaJShM43YwGhyvm6nlBUPpvj6GGwy8hdDcEbdFvVNRqt1DBUmF/snLlxomk/bm8EFNB6T4MlWwe+OVJDMg6JLIExBFtGGUuoE4s6V/zYjRo9t/aQRprH87qOVQ5ZbukX3eu0hzn8w9rW7tPwYHPQXHt/G5WnZNquoKKWVmyo5U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z2ofg+Cr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=q27xh0/6sPlErziLSaVGT7UEa+hHXje1E4iJ45fWFH2jptRpjhQ5w5elh9K6mNQe+zWfWMvo4DPkeXGDMH/HDGespB4PYbM1STDb9k2Twrz1v6p6v5P/Uok/w5yBgZHZFU7jrvd0ULbMz/rgyDoGfMnAhRoHruOIyyCEan9juIY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UMCNXD+S; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z2ofg+Cr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68A49C4CECE;
-	Thu, 12 Dec 2024 16:06:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UMCNXD+S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 814DDC4CED3;
+	Thu, 12 Dec 2024 16:06:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734019597;
-	bh=uxuLlKcTvk2tuB6WAhLv3M9CG8RN46VkTZ53ToAJFKE=;
+	s=korg; t=1734019602;
+	bh=OW+huyKUCbBQ8J0KNGUA9l1D9N/BMjxxwWadysmBeQ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z2ofg+CrMr1dHMWHmtA/PbpLg/KroMDpGpUR7WbeQCBQFRPi51XTAGquhkfO+ZhTg
-	 /tPoHmX9QSwUMBt4JRTjvBUBS+q3+8phlGsLsLuURztjS+JzzKjxvFhIAULoumRPAK
-	 e3zC0cwD/i3XDgUOt7vYMl2m7XM08j8BmQAao2Sw=
+	b=UMCNXD+Sjks7u/C6PpuXs2LMruFRNYKIbP7MHJmOyYWLkD427XcPFGMeiV2WyHQ/L
+	 h/8RLmdzKt3DWrnIIqobisnBCUvMoON+r4wqq0rWoBSv3dmyTOk5/Qe3JbTlzc6u8E
+	 bbwCHYCrntIdrwgEp2CtO1LD3PSzzFLCtRB2ViUc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vegard Nossum <vegard.nossum@oracle.com>,
-	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
-	Dan Williams <dan.j.williams@intel.com>,
-	Ira Weiny <ira.weiny@intel.com>,
+	Gautam Menghani <gautam@linux.ibm.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 248/772] dax: delete a stale directory pmem
-Date: Thu, 12 Dec 2024 15:53:13 +0100
-Message-ID: <20241212144400.163024984@linuxfoundation.org>
+Subject: [PATCH 6.1 249/772] KVM: PPC: Book3S HV: Stop using vc->dpdes for nested KVM guests
+Date: Thu, 12 Dec 2024 15:53:14 +0100
+Message-ID: <20241212144400.205093358@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -53,59 +51,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+From: Gautam Menghani <gautam@linux.ibm.com>
 
-[ Upstream commit b8e6d7ce50673c39514921ac61f7af00bbb58b87 ]
+[ Upstream commit 0d3c6b28896f9889c8864dab469e0343a0ad1c0c ]
 
-After commit: 83762cb5c7c4 ("dax: Kill DEV_DAX_PMEM_COMPAT") the pmem/
-directory is not needed anymore and Makefile changes were made
-accordingly in this commit, but there is a Makefile and pmem.c in pmem/
-which are now stale and pmem.c is empty, remove them.
+commit 6398326b9ba1 ("KVM: PPC: Book3S HV P9: Stop using vc->dpdes")
+introduced an optimization to use only vcpu->doorbell_request for SMT
+emulation for Power9 and above guests, but the code for nested guests
+still relies on the old way of handling doorbells, due to which an L2
+guest (see [1]) cannot be booted with XICS with SMT>1. The command to
+repro this issue is:
 
-Fixes: 83762cb5c7c4 ("dax: Kill DEV_DAX_PMEM_COMPAT")
-Suggested-by: Vegard Nossum <vegard.nossum@oracle.com>
-Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Reviewed-by: Dan Williams <dan.j.williams@intel.com>
-Reviewed-by: Ira Weiny <ira.weiny@intel.com>
-Link: https://patch.msgid.link/20241017101144.1654085-1-harshit.m.mogalapalli@oracle.com
-Signed-off-by: Ira Weiny <ira.weiny@intel.com>
+// To be run in L1
+
+qemu-system-ppc64 \
+	-drive file=rhel.qcow2,format=qcow2 \
+	-m 20G \
+	-smp 8,cores=1,threads=8 \
+	-cpu  host \
+	-nographic \
+	-machine pseries,ic-mode=xics -accel kvm
+
+Fix the plumbing to utilize vcpu->doorbell_request instead of vcore->dpdes
+for nested KVM guests on P9 and above.
+
+[1] Terminology
+1. L0 : PowerNV linux running with HV privileges
+2. L1 : Pseries KVM guest running on top of L0
+2. L2 : Nested KVM guest running on top of L1
+
+Fixes: 6398326b9ba1 ("KVM: PPC: Book3S HV P9: Stop using vc->dpdes")
+Signed-off-by: Gautam Menghani <gautam@linux.ibm.com>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://patch.msgid.link/20241109063301.105289-3-gautam@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dax/pmem/Makefile |  7 -------
- drivers/dax/pmem/pmem.c   | 10 ----------
- 2 files changed, 17 deletions(-)
- delete mode 100644 drivers/dax/pmem/Makefile
- delete mode 100644 drivers/dax/pmem/pmem.c
+ arch/powerpc/kvm/book3s_hv.c        |  9 +++++++++
+ arch/powerpc/kvm/book3s_hv_nested.c | 14 ++++++++++----
+ 2 files changed, 19 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/dax/pmem/Makefile b/drivers/dax/pmem/Makefile
-deleted file mode 100644
-index 191c31f0d4f00..0000000000000
---- a/drivers/dax/pmem/Makefile
-+++ /dev/null
-@@ -1,7 +0,0 @@
--# SPDX-License-Identifier: GPL-2.0-only
--obj-$(CONFIG_DEV_DAX_PMEM) += dax_pmem.o
--obj-$(CONFIG_DEV_DAX_PMEM) += dax_pmem_core.o
--
--dax_pmem-y := pmem.o
--dax_pmem_core-y := core.o
--dax_pmem_compat-y := compat.o
-diff --git a/drivers/dax/pmem/pmem.c b/drivers/dax/pmem/pmem.c
-deleted file mode 100644
-index dfe91a2990fec..0000000000000
---- a/drivers/dax/pmem/pmem.c
-+++ /dev/null
-@@ -1,10 +0,0 @@
--// SPDX-License-Identifier: GPL-2.0
--/* Copyright(c) 2016 - 2018 Intel Corporation. All rights reserved. */
--#include <linux/percpu-refcount.h>
--#include <linux/memremap.h>
--#include <linux/module.h>
--#include <linux/pfn_t.h>
--#include <linux/nd.h>
--#include "../bus.h"
--
--
+diff --git a/arch/powerpc/kvm/book3s_hv.c b/arch/powerpc/kvm/book3s_hv.c
+index 6ba68dd6190bd..479218389e7cd 100644
+--- a/arch/powerpc/kvm/book3s_hv.c
++++ b/arch/powerpc/kvm/book3s_hv.c
+@@ -4062,6 +4062,15 @@ static int kvmhv_vcpu_entry_p9_nested(struct kvm_vcpu *vcpu, u64 time_limit, uns
+ 	}
+ 	hvregs.hdec_expiry = time_limit;
+ 
++	/*
++	 * hvregs has the doorbell status, so zero it here which
++	 * enables us to receive doorbells when H_ENTER_NESTED is
++	 * in progress for this vCPU
++	 */
++
++	if (vcpu->arch.doorbell_request)
++		vcpu->arch.doorbell_request = 0;
++
+ 	/*
+ 	 * When setting DEC, we must always deal with irq_work_raise
+ 	 * via NMI vs setting DEC. The problem occurs right as we
+diff --git a/arch/powerpc/kvm/book3s_hv_nested.c b/arch/powerpc/kvm/book3s_hv_nested.c
+index 5a64a1341e6f1..bc71a90c7cc76 100644
+--- a/arch/powerpc/kvm/book3s_hv_nested.c
++++ b/arch/powerpc/kvm/book3s_hv_nested.c
+@@ -32,7 +32,7 @@ void kvmhv_save_hv_regs(struct kvm_vcpu *vcpu, struct hv_guest_state *hr)
+ 	struct kvmppc_vcore *vc = vcpu->arch.vcore;
+ 
+ 	hr->pcr = vc->pcr | PCR_MASK;
+-	hr->dpdes = vc->dpdes;
++	hr->dpdes = vcpu->arch.doorbell_request;
+ 	hr->hfscr = vcpu->arch.hfscr;
+ 	hr->tb_offset = vc->tb_offset;
+ 	hr->dawr0 = vcpu->arch.dawr0;
+@@ -105,7 +105,7 @@ static void save_hv_return_state(struct kvm_vcpu *vcpu,
+ {
+ 	struct kvmppc_vcore *vc = vcpu->arch.vcore;
+ 
+-	hr->dpdes = vc->dpdes;
++	hr->dpdes = vcpu->arch.doorbell_request;
+ 	hr->purr = vcpu->arch.purr;
+ 	hr->spurr = vcpu->arch.spurr;
+ 	hr->ic = vcpu->arch.ic;
+@@ -143,7 +143,7 @@ static void restore_hv_regs(struct kvm_vcpu *vcpu, const struct hv_guest_state *
+ 	struct kvmppc_vcore *vc = vcpu->arch.vcore;
+ 
+ 	vc->pcr = hr->pcr | PCR_MASK;
+-	vc->dpdes = hr->dpdes;
++	vcpu->arch.doorbell_request = hr->dpdes;
+ 	vcpu->arch.hfscr = hr->hfscr;
+ 	vcpu->arch.dawr0 = hr->dawr0;
+ 	vcpu->arch.dawrx0 = hr->dawrx0;
+@@ -170,7 +170,13 @@ void kvmhv_restore_hv_return_state(struct kvm_vcpu *vcpu,
+ {
+ 	struct kvmppc_vcore *vc = vcpu->arch.vcore;
+ 
+-	vc->dpdes = hr->dpdes;
++	/*
++	 * This L2 vCPU might have received a doorbell while H_ENTER_NESTED was being handled.
++	 * Make sure we preserve the doorbell if it was either:
++	 *   a) Sent after H_ENTER_NESTED was called on this vCPU (arch.doorbell_request would be 1)
++	 *   b) Doorbell was not handled and L2 exited for some other reason (hr->dpdes would be 1)
++	 */
++	vcpu->arch.doorbell_request = vcpu->arch.doorbell_request | hr->dpdes;
+ 	vcpu->arch.hfscr = hr->hfscr;
+ 	vcpu->arch.purr = hr->purr;
+ 	vcpu->arch.spurr = hr->spurr;
 -- 
 2.43.0
 
