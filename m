@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC77E23EA9F;
-	Thu, 12 Dec 2024 15:58:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E1E323EC14;
+	Thu, 12 Dec 2024 15:58:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734019124; cv=none; b=pTfAhWrkVWI41WA27l1EZwf5T1tzyPulPT/fp1hcJso2vLc4p1I1SHMqQqwVtVGsoHn27CZkcuzbyWoVcWvEkTOJZ42cCZZBP/9A84Rs8qSd6bJ41YQHsI57f+LQyRsv3IBF0LN6tMf9DvwSd9wUDwqWf2oHLjZ5mADCHjRzA6w=
+	t=1734019127; cv=none; b=T9r9BP8u0T5vGOQmIfIIcJXJ1ubwx+Vamoeec0qkI4ru16tfT4iPZt4VGOZ+eiXrgWKk4BWHmppUDXuxEh0paKLKWHtIVX/x70ZlfK4sGu/Q0j1EXRd1uiAwBihKHTi60AZZcxpDQE/XPLOSFGyprsx+q6gkM6XmOnW+lfdbg28=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734019124; c=relaxed/simple;
-	bh=33LF8wwrzjuwh7lGnjsOWuBTwW5YDkbI2k5Z475Ealw=;
+	s=arc-20240116; t=1734019127; c=relaxed/simple;
+	bh=DU5ZProBw0nO+oAUYS3Wc8GGXZmJIk6YV6a33KTL+qI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WIGee7Uu8V959sTeyaYduTiy1MosZd8nlTBmmlTNhqcvOthHsj1E1LzKe3gYNBSXyluba5hT1giNuyUBXmWoSDzMt1uyRikSWT8BJ+PDN6xXFNMGu7WHJkb7kgKQ40mAGCiOI6j1TgU8f7kyFBDF0oW1NAkq4fSS46yS4UtMeR0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r51Oz3VU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TO9MNcfpThQwmIpsJtUcnxT4/FiV/u5UMgb/+jjnx/PergfSnvqhp9sM2ZdQ71fAIw1wmckeRt7spKwimhklkNR+K5TTQVPPhBMkS8+sFBUtMXtOvoWmKXl29VL+WlrTdX6yyL7sS6zX0rTopqez3IOZ/V1BIAFNP9NdacnTHx4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YjJavzfC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r51Oz3VU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96B3BC4CEDF;
-	Thu, 12 Dec 2024 15:58:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YjJavzfC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E76F3C4CECE;
+	Thu, 12 Dec 2024 15:58:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734019124;
-	bh=33LF8wwrzjuwh7lGnjsOWuBTwW5YDkbI2k5Z475Ealw=;
+	s=korg; t=1734019127;
+	bh=DU5ZProBw0nO+oAUYS3Wc8GGXZmJIk6YV6a33KTL+qI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r51Oz3VUjW8b0gCH/iE5yb7Cvl3omyQqojaStKt3KdQ+a3ww7KMkI2Uz61rfYvU0O
-	 1RvZKyjorrHCkP1Akp4KUjU7iM4S6E5j9VRthofX9tE53a1venKK5YDdFCkebogMwm
-	 OFHU1r9QznXApMQIBjQNeHunEMxGFWybYWQYaVaI=
+	b=YjJavzfCNBH7Sr3vbXHj6SOV4K2Dg/mottiiO/eFoGvkPkm1DoGmXoNv0BGq+ph41
+	 Ip/XJH4V/NCnhYca7REkhEEgVLp05DMG1ISgHX+zjlwwFuw6Xj7tTsxKUBsyBZzsHW
+	 oLMOi4xumEj0vLhYHGpQt1qDh/s6j3nQVqBBDZa8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Huafei <lihuafei1@huawei.com>,
-	Andy Shevchenko <andy@kernel.org>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+	Jeff Johnson <quic_jjohnson@quicinc.com>,
+	Michal Simek <michal.simek@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 123/772] media: atomisp: Add check for rgby_data memory allocation failure
-Date: Thu, 12 Dec 2024 15:51:08 +0100
-Message-ID: <20241212144355.006929733@linuxfoundation.org>
+Subject: [PATCH 6.1 095/772] microblaze: Export xmb_manager functions
+Date: Thu, 12 Dec 2024 15:50:40 +0100
+Message-ID: <20241212144353.861899358@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -53,40 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li Huafei <lihuafei1@huawei.com>
+From: Michal Simek <michal.simek@amd.com>
 
-[ Upstream commit ed61c59139509f76d3592683c90dc3fdc6e23cd6 ]
+[ Upstream commit badf752b5e4b17d281f93f409d4718388ff912e6 ]
 
-In ia_css_3a_statistics_allocate(), there is no check on the allocation
-result of the rgby_data memory. If rgby_data is not successfully
-allocated, it may trigger the assert(host_stats->rgby_data) assertion in
-ia_css_s3a_hmem_decode(). Adding a check to fix this potential issue.
+When TMR_MANAGER is enabled as module there is a need to export functions
+which are present in architecture code.
 
-Fixes: a49d25364dfb ("staging/atomisp: Add support for the Intel IPU v2")
-Signed-off-by: Li Huafei <lihuafei1@huawei.com>
-Reviewed-by: Andy Shevchenko <andy@kernel.org>
-Link: https://lore.kernel.org/r/20241104145051.3088231-1-lihuafei1@huawei.com
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+It has been found by running:
+make W=1 C=1 allmodconfig
+sed -i -e 's/WERROR=y/WERROR=n/g' .config
+make C=1 W=1
+
+which errors out like this:
+ERROR: modpost: "xmb_manager_register" [drivers/misc/xilinx_tmr_manager.ko] undefined!
+ERROR: modpost: "xmb_inject_err" [drivers/misc/xilinx_tmr_inject.ko] undefined!
+
+Fixes: a5e3aaa654c1 ("microblaze: Add xmb_manager_register function")
+Reported-by: Jeff Johnson <quic_jjohnson@quicinc.com>
+Signed-off-by: Michal Simek <michal.simek@amd.com>
+Link: https://lore.kernel.org/r/e322dbbbde0feef83f44304ea13249d365d1dc5f.1718799090.git.michal.simek@amd.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/media/atomisp/pci/sh_css_params.c | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/microblaze/kernel/microblaze_ksyms.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/drivers/staging/media/atomisp/pci/sh_css_params.c b/drivers/staging/media/atomisp/pci/sh_css_params.c
-index 67915d76a87f2..34113bea31d58 100644
---- a/drivers/staging/media/atomisp/pci/sh_css_params.c
-+++ b/drivers/staging/media/atomisp/pci/sh_css_params.c
-@@ -4137,6 +4137,8 @@ ia_css_3a_statistics_allocate(const struct ia_css_3a_grid_info *grid)
- 		goto err;
- 	/* No weighted histogram, no structure, treat the histogram data as a byte dump in a byte array */
- 	me->rgby_data = kvmalloc(sizeof_hmem(HMEM0_ID), GFP_KERNEL);
-+	if (!me->rgby_data)
-+		goto err;
+diff --git a/arch/microblaze/kernel/microblaze_ksyms.c b/arch/microblaze/kernel/microblaze_ksyms.c
+index c892e173ec990..a8553f54152b7 100644
+--- a/arch/microblaze/kernel/microblaze_ksyms.c
++++ b/arch/microblaze/kernel/microblaze_ksyms.c
+@@ -16,6 +16,7 @@
+ #include <asm/page.h>
+ #include <linux/ftrace.h>
+ #include <linux/uaccess.h>
++#include <asm/xilinx_mb_manager.h>
  
- 	IA_CSS_LEAVE("return=%p", me);
- 	return me;
+ #ifdef CONFIG_FUNCTION_TRACER
+ extern void _mcount(void);
+@@ -46,3 +47,12 @@ extern void __udivsi3(void);
+ EXPORT_SYMBOL(__udivsi3);
+ extern void __umodsi3(void);
+ EXPORT_SYMBOL(__umodsi3);
++
++#ifdef CONFIG_MB_MANAGER
++extern void xmb_manager_register(uintptr_t phys_baseaddr, u32 cr_val,
++				 void (*callback)(void *data),
++				 void *priv, void (*reset_callback)(void *data));
++EXPORT_SYMBOL(xmb_manager_register);
++extern asmlinkage void xmb_inject_err(void);
++EXPORT_SYMBOL(xmb_inject_err);
++#endif
 -- 
 2.43.0
 
