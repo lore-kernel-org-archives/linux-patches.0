@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 650061487CD;
-	Thu, 12 Dec 2024 15:24:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92ED72054F8;
+	Thu, 12 Dec 2024 15:24:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734017065; cv=none; b=WWokSq1g/1G76Pkd3QZNeXoVz4m/in0aeIog5769ElnKDz9uUvGxckG+bNIZIZcLmgwQ57mc1cYGIEq1JY6eY8dCTJXKSGD1+tjg9kD7sczLJNhhHs28GpHa3SwHdJM7KdcL8xZRP/etyQYZ7KZ8OVOmXABZbz1ZOUX5S19RGcI=
+	t=1734017069; cv=none; b=hGvL3P5fiJx/JcSzltNUzhqhOr+m+4VrmKUYzH8UaMkMhDWjrQIlAMv37Y9VJZUOVFYCuq9p3PauaCbxaIq8R8vmbvrW7woFTovnAEvqQeauPb1Ty10ZAqNTC9v4NPsDlKzZEeK5M0m4PprJwQusowxkqP+bvOr+reZickPut/M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734017065; c=relaxed/simple;
-	bh=MnNF9z6M6wNSdzZkKHuY8uDjBPJ83J4jZqkoYCm5NAo=;
+	s=arc-20240116; t=1734017069; c=relaxed/simple;
+	bh=h2KL4ohGEM0pF88tzoMv5+dSjRX1EUCZU+oySuldiZk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CWMaoIygngmO5u5LP6h6dfPvOWKT9pj7PfG/KgAeNoaKxnjK2YmolhSwc0Z3c1hYU4OJ415cF7IkBl3QdzZq15SxBrS+zf93yepDRWxcRq/M6RpXec1emEVn3ivTXXZrL4TUluLna/WSE7E9JEH7c/E8gHHEsc1/bejNYs6TIBg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=brQXeOj9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=urZ4lVb1OXMLrjoTIuIhwmozqz4qzQUwLXZtt+dW38KLKfymC83uV0jHL52brwSlHfbuxSAq08nvqxPv+Q8GUh/5SAe31/FgtA1dm+jSsxWi7izLvlKZfmO6+JbUHVhUxM07saOazyBe6TEWJ+u6nuYTvz9Ar9hpsJ6Z0/IlzMU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XmW5HxvH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="brQXeOj9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABF30C4CECE;
-	Thu, 12 Dec 2024 15:24:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XmW5HxvH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9403C4CECE;
+	Thu, 12 Dec 2024 15:24:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734017065;
-	bh=MnNF9z6M6wNSdzZkKHuY8uDjBPJ83J4jZqkoYCm5NAo=;
+	s=korg; t=1734017069;
+	bh=h2KL4ohGEM0pF88tzoMv5+dSjRX1EUCZU+oySuldiZk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=brQXeOj9uJ5FsWSAJS2kPBXNxoqwRUxmTv3HB/5EFvsq7CunxFpkWCGoUNUlJdTMY
-	 e2hRcNLMpWemdEEzFmn8E/Q4EVtKP9A2ba8ZY9B8+Mttbpe2ijl3NWsiAlM9P6urRn
-	 TdKHX3eYXrp5cPfBrT01sA3T3wSPfa1epAXxdnZk=
+	b=XmW5HxvHGcitsjzZ4BeozFjFo3b9yO4r1CN71BTas8JK31a+tMP01mcxCfQ/V4MfY
+	 G0ppMAfdTBStbiGxN/p3Yf0dHoiVDmRi4CvRfTUuONkQQpKEypuRr5n2aKhJPHiqW9
+	 FM0SgK5DdImvDMK21FOI2PkOAKor5W1++CW0qPNs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
 	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 373/466] clk: qcom: tcsrcc-sm8550: add SAR2130P support
-Date: Thu, 12 Dec 2024 15:59:02 +0100
-Message-ID: <20241212144321.514694388@linuxfoundation.org>
+Subject: [PATCH 6.12 374/466] clk: qcom: dispcc-sm8550: enable support for SAR2130P
+Date: Thu, 12 Dec 2024 15:59:03 +0100
+Message-ID: <20241212144321.552825176@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144306.641051666@linuxfoundation.org>
 References: <20241212144306.641051666@linuxfoundation.org>
@@ -54,71 +55,97 @@ Content-Transfer-Encoding: 8bit
 
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit d2e0a043530b9d6f37a8de8f05e0725667aba0a6 ]
+[ Upstream commit 1335c7eb7012f23dc073b8ae4ffcfc1f6e69cfb3 ]
 
-The SAR2130P platform has the same TCSR Clock Controller as the SM8550,
-except for the lack of the UFS clocks. Extend the SM8550 TCSRCC driver
-to support SAR2130P.
+The display clock controller on SAR2130P is very close to the clock
+controller on SM8550 (and SM8650). Reuse existing driver to add support
+for the controller on SAR2130P.
 
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
 Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20241027-sar2130p-clocks-v5-9-ecad2a1432ba@linaro.org
+Link: https://lore.kernel.org/r/20241027-sar2130p-clocks-v5-10-ecad2a1432ba@linaro.org
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/tcsrcc-sm8550.c | 18 ++++++++++++++++--
- 1 file changed, 16 insertions(+), 2 deletions(-)
+ drivers/clk/qcom/Kconfig         |  4 ++--
+ drivers/clk/qcom/dispcc-sm8550.c | 18 ++++++++++++++++--
+ 2 files changed, 18 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/clk/qcom/tcsrcc-sm8550.c b/drivers/clk/qcom/tcsrcc-sm8550.c
-index e5e8f2e82b949..41d73f92a000a 100644
---- a/drivers/clk/qcom/tcsrcc-sm8550.c
-+++ b/drivers/clk/qcom/tcsrcc-sm8550.c
-@@ -129,6 +129,13 @@ static struct clk_branch tcsr_usb3_clkref_en = {
+diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
+index 4444dafa4e3df..9ba675f229b14 100644
+--- a/drivers/clk/qcom/Kconfig
++++ b/drivers/clk/qcom/Kconfig
+@@ -959,10 +959,10 @@ config SM_DISPCC_8450
+ config SM_DISPCC_8550
+ 	tristate "SM8550 Display Clock Controller"
+ 	depends on ARM64 || COMPILE_TEST
+-	depends on SM_GCC_8550 || SM_GCC_8650
++	depends on SM_GCC_8550 || SM_GCC_8650 || SAR_GCC_2130P
+ 	help
+ 	  Support for the display clock controller on Qualcomm Technologies, Inc
+-	  SM8550 or SM8650 devices.
++	  SAR2130P, SM8550 or SM8650 devices.
+ 	  Say Y if you want to support display devices and functionality such as
+ 	  splash screen.
+ 
+diff --git a/drivers/clk/qcom/dispcc-sm8550.c b/drivers/clk/qcom/dispcc-sm8550.c
+index 7f9021ca0ecb0..e41d4104d7702 100644
+--- a/drivers/clk/qcom/dispcc-sm8550.c
++++ b/drivers/clk/qcom/dispcc-sm8550.c
+@@ -75,7 +75,7 @@ static struct pll_vco lucid_ole_vco[] = {
+ 	{ 249600000, 2000000000, 0 },
+ };
+ 
+-static const struct alpha_pll_config disp_cc_pll0_config = {
++static struct alpha_pll_config disp_cc_pll0_config = {
+ 	.l = 0xd,
+ 	.alpha = 0x6492,
+ 	.config_ctl_val = 0x20485699,
+@@ -106,7 +106,7 @@ static struct clk_alpha_pll disp_cc_pll0 = {
  	},
  };
  
-+static struct clk_regmap *tcsr_cc_sar2130p_clocks[] = {
-+	[TCSR_PCIE_0_CLKREF_EN] = &tcsr_pcie_0_clkref_en.clkr,
-+	[TCSR_PCIE_1_CLKREF_EN] = &tcsr_pcie_1_clkref_en.clkr,
-+	[TCSR_USB2_CLKREF_EN] = &tcsr_usb2_clkref_en.clkr,
-+	[TCSR_USB3_CLKREF_EN] = &tcsr_usb3_clkref_en.clkr,
-+};
-+
- static struct clk_regmap *tcsr_cc_sm8550_clocks[] = {
- 	[TCSR_PCIE_0_CLKREF_EN] = &tcsr_pcie_0_clkref_en.clkr,
- 	[TCSR_PCIE_1_CLKREF_EN] = &tcsr_pcie_1_clkref_en.clkr,
-@@ -146,6 +153,12 @@ static const struct regmap_config tcsr_cc_sm8550_regmap_config = {
- 	.fast_io = true,
- };
- 
-+static const struct qcom_cc_desc tcsr_cc_sar2130p_desc = {
-+	.config = &tcsr_cc_sm8550_regmap_config,
-+	.clks = tcsr_cc_sar2130p_clocks,
-+	.num_clks = ARRAY_SIZE(tcsr_cc_sar2130p_clocks),
-+};
-+
- static const struct qcom_cc_desc tcsr_cc_sm8550_desc = {
- 	.config = &tcsr_cc_sm8550_regmap_config,
- 	.clks = tcsr_cc_sm8550_clocks,
-@@ -153,7 +166,8 @@ static const struct qcom_cc_desc tcsr_cc_sm8550_desc = {
- };
- 
- static const struct of_device_id tcsr_cc_sm8550_match_table[] = {
--	{ .compatible = "qcom,sm8550-tcsr" },
-+	{ .compatible = "qcom,sar2130p-tcsr", .data = &tcsr_cc_sar2130p_desc },
-+	{ .compatible = "qcom,sm8550-tcsr", .data = &tcsr_cc_sm8550_desc },
+-static const struct alpha_pll_config disp_cc_pll1_config = {
++static struct alpha_pll_config disp_cc_pll1_config = {
+ 	.l = 0x1f,
+ 	.alpha = 0x4000,
+ 	.config_ctl_val = 0x20485699,
+@@ -594,6 +594,13 @@ static const struct freq_tbl ftbl_disp_cc_mdss_mdp_clk_src[] = {
  	{ }
  };
- MODULE_DEVICE_TABLE(of, tcsr_cc_sm8550_match_table);
-@@ -162,7 +176,7 @@ static int tcsr_cc_sm8550_probe(struct platform_device *pdev)
- {
- 	struct regmap *regmap;
  
--	regmap = qcom_cc_map(pdev, &tcsr_cc_sm8550_desc);
-+	regmap = qcom_cc_map(pdev, of_device_get_match_data(&pdev->dev));
- 	if (IS_ERR(regmap))
- 		return PTR_ERR(regmap);
++static const struct freq_tbl ftbl_disp_cc_mdss_mdp_clk_src_sar2130p[] = {
++	F(200000000, P_DISP_CC_PLL0_OUT_MAIN, 3, 0, 0),
++	F(325000000, P_DISP_CC_PLL0_OUT_MAIN, 3, 0, 0),
++	F(514000000, P_DISP_CC_PLL0_OUT_MAIN, 3, 0, 0),
++	{ }
++};
++
+ static const struct freq_tbl ftbl_disp_cc_mdss_mdp_clk_src_sm8650[] = {
+ 	F(19200000, P_BI_TCXO, 1, 0, 0),
+ 	F(85714286, P_DISP_CC_PLL0_OUT_MAIN, 3, 0, 0),
+@@ -1750,6 +1757,7 @@ static struct qcom_cc_desc disp_cc_sm8550_desc = {
+ };
  
+ static const struct of_device_id disp_cc_sm8550_match_table[] = {
++	{ .compatible = "qcom,sar2130p-dispcc" },
+ 	{ .compatible = "qcom,sm8550-dispcc" },
+ 	{ .compatible = "qcom,sm8650-dispcc" },
+ 	{ }
+@@ -1780,6 +1788,12 @@ static int disp_cc_sm8550_probe(struct platform_device *pdev)
+ 		disp_cc_mdss_mdp_clk_src.freq_tbl = ftbl_disp_cc_mdss_mdp_clk_src_sm8650;
+ 		disp_cc_mdss_dptx1_usb_router_link_intf_clk.clkr.hw.init->parent_hws[0] =
+ 			&disp_cc_mdss_dptx1_link_div_clk_src.clkr.hw;
++	} else if (of_device_is_compatible(pdev->dev.of_node, "qcom,sar2130p-dispcc")) {
++		disp_cc_pll0_config.l = 0x1f;
++		disp_cc_pll0_config.alpha = 0x4000;
++		disp_cc_pll0_config.user_ctl_val = 0x1;
++		disp_cc_pll1_config.user_ctl_val = 0x1;
++		disp_cc_mdss_mdp_clk_src.freq_tbl = ftbl_disp_cc_mdss_mdp_clk_src_sar2130p;
+ 	}
+ 
+ 	clk_lucid_ole_pll_configure(&disp_cc_pll0, regmap, &disp_cc_pll0_config);
 -- 
 2.43.0
 
