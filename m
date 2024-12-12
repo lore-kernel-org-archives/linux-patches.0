@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E137021421C;
-	Thu, 12 Dec 2024 17:51:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C069216E2D;
+	Thu, 12 Dec 2024 17:51:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734025869; cv=none; b=G/pG/aK9mjqLvNzoLgeFpOFzOuiwijLmf9jq+6FRXaVb9YEEKDwsMh4q9lGOl5F/TWnB9iyhZ8pXz9weD4e7PJL24gDy4X63c/4Rcaf6+JD3EG7hgWwmyK2tHnyb3TLa7teQ49qQnnl/EKrQ2oxuFsNBndWhWTlVAJ7Y1rVy+nI=
+	t=1734025872; cv=none; b=syh9wKFj6cdAGk3D5Ptb4k3CEQrRO6NW9f54Vt5FPuPi/B30HQ4HQKo654VLtm1Tm8ueDTE1Gu/A50amrst4jsMSKgTDkNRlAhHfuZ+wDxLreLCBCLZVRmILKpmwwK/zGmciLS0CijWaZ3uTQ8GniOYrEvts90ax6h6T0txl6zA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734025869; c=relaxed/simple;
-	bh=YYvAVRVOaF/MYFAjKNoXDMMuj6RaFmcPz5sJcquS0DY=;
+	s=arc-20240116; t=1734025872; c=relaxed/simple;
+	bh=Lf4u2uhb2AsEW/WY2wik3dFaCFEtf6iN14VMDXtpGSk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iIlatlT6NVcHokvDSgt3p5nIvfTqyvcN78jNt2qQrkVWkBIvwRfvrH/TdR/lVSFKQA4DrcgQuG/q/Ns72wogNZ4OlE+DcS86X5rxS6Rbn2UjB+ceZos3zI6Jp/cDG77ghHPvcDLRKYucAHq5d01vSxTLCOKSAOW+MglmVu9iCR0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IrUoVerA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LaiC/QGns4B76VEief1LmwDk9rETjnoPqdSxRWZJJdYxVrYpdkUYenrrNPZQJ6XPPvdb5rUTFKHXiKicUtvoGefbFnp5APeh7lqMt96RF4SFQrgdYrd1TGB4ENVrcFoi8w9KVnfYWIOE7Eo0LIUlYdpF/gvcwQNMA1Lej0RkG6c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rL+EVk0H; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IrUoVerA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B728C4CECE;
-	Thu, 12 Dec 2024 17:51:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rL+EVk0H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5274EC4CED1;
+	Thu, 12 Dec 2024 17:51:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734025868;
-	bh=YYvAVRVOaF/MYFAjKNoXDMMuj6RaFmcPz5sJcquS0DY=;
+	s=korg; t=1734025871;
+	bh=Lf4u2uhb2AsEW/WY2wik3dFaCFEtf6iN14VMDXtpGSk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IrUoVerAzMpfrEz2sd/wT/TwC0wf83xCKZepOEPRe7m5YcY4K98CFKTkdaCuJJfzy
-	 vpblyUoikKMqrRiQi7ltPGyiAKrBUhnduuHfPEpp1oDzYgNPOvh65e/UsT0okpKhpp
-	 6HUeNfdVhnPRG5VMSj7/iSQWFOsBxHw7QuyBYu9E=
+	b=rL+EVk0HAmTbxcqDooaWdaMmSzNuuUKDrEZhKnZBCajzsh/jvovlX0FHqdqmeVsvv
+	 owsHrSoSbzv/hpDLtJMuZVRMYqEIFW4wDYSDoc5qsd5L7CWkJ8KwEQp69WcZONT8KU
+	 WlV6hXaeuQcbcEPFWkGgnUsCdpSH7tENx1Rm9MVQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kinsey Moore <kinsey.moore@oarcorp.com>,
-	Richard Weinberger <richard@nod.at>
-Subject: [PATCH 5.4 315/321] jffs2: Fix rtime decompressor
-Date: Thu, 12 Dec 2024 16:03:53 +0100
-Message-ID: <20241212144242.427013195@linuxfoundation.org>
+	Heming Zhao <heming.zhao@suse.com>
+Subject: [PATCH 5.4 316/321] ocfs2: Revert "ocfs2: fix the la space leak when unmounting an ocfs2 volume"
+Date: Thu, 12 Dec 2024 16:03:54 +0100
+Message-ID: <20241212144242.464535549@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144229.291682835@linuxfoundation.org>
 References: <20241212144229.291682835@linuxfoundation.org>
@@ -50,32 +49,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Richard Weinberger <richard@nod.at>
+From: Heming Zhao <heming.zhao@suse.com>
 
-commit b29bf7119d6bbfd04aabb8d82b060fe2a33ef890 upstream.
+This reverts commit dfe6c5692fb5 ("ocfs2: fix the la space leak when
+unmounting an ocfs2 volume").
 
-The fix for a memory corruption contained a off-by-one error and
-caused the compressor to fail in legit cases.
+In commit dfe6c5692fb5, the commit log "This bug has existed since the
+initial OCFS2 code." is wrong. The correct introduction commit is
+30dd3478c3cd ("ocfs2: correctly use ocfs2_find_next_zero_bit()").
 
-Cc: Kinsey Moore <kinsey.moore@oarcorp.com>
-Cc: stable@vger.kernel.org
-Fixes: fe051552f5078 ("jffs2: Prevent rtime decompress memory corruption")
-Signed-off-by: Richard Weinberger <richard@nod.at>
+The influence of commit dfe6c5692fb5 is that it provides a correct
+fix for the latest kernel. however, it shouldn't be pushed to stable
+branches. Let's use this commit to revert all branches that include
+dfe6c5692fb5 and use a new fix method to fix commit 30dd3478c3cd.
+
+Fixes: dfe6c5692fb5 ("ocfs2: fix the la space leak when unmounting an ocfs2 volume")
+Signed-off-by: Heming Zhao <heming.zhao@suse.com>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/jffs2/compr_rtime.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ocfs2/localalloc.c |   19 -------------------
+ 1 file changed, 19 deletions(-)
 
---- a/fs/jffs2/compr_rtime.c
-+++ b/fs/jffs2/compr_rtime.c
-@@ -95,7 +95,7 @@ static int jffs2_rtime_decompress(unsign
+--- a/fs/ocfs2/localalloc.c
++++ b/fs/ocfs2/localalloc.c
+@@ -1010,25 +1010,6 @@ static int ocfs2_sync_local_to_main(stru
+ 		start = bit_off + 1;
+ 	}
  
- 		positions[value]=outpos;
- 		if (repeat) {
--			if ((outpos + repeat) >= destlen) {
-+			if ((outpos + repeat) > destlen) {
- 				return 1;
- 			}
- 			if (backoffs + repeat >= outpos) {
+-	/* clear the contiguous bits until the end boundary */
+-	if (count) {
+-		blkno = la_start_blk +
+-			ocfs2_clusters_to_blocks(osb->sb,
+-					start - count);
+-
+-		trace_ocfs2_sync_local_to_main_free(
+-				count, start - count,
+-				(unsigned long long)la_start_blk,
+-				(unsigned long long)blkno);
+-
+-		status = ocfs2_release_clusters(handle,
+-				main_bm_inode,
+-				main_bm_bh, blkno,
+-				count);
+-		if (status < 0)
+-			mlog_errno(status);
+-	}
+-
+ bail:
+ 	if (status)
+ 		mlog_errno(status);
 
 
