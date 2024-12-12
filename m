@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DB9C223E9C;
-	Thu, 12 Dec 2024 16:19:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77FBD235C3B;
+	Thu, 12 Dec 2024 16:19:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734020377; cv=none; b=oZVJfE64k6U98U+NBBiFyBwVJzXkwlZZeYRuxpVdXRfmm4JqAcfOq3cwi/IMuJGjucu53a/FnHZ1WL1pzhM+7IhCGalSWSumN0JvjSlMHrZL5m+slWSGkEI8NxkG/SiI8LrjccIjs/vt0ey7Jl4RRkQYDEURTzhZ3SZl4iZcOFU=
+	t=1734020381; cv=none; b=pXjex7MwzJ8bF+GZMYSXJQoKLCTd16h4sdQ+0zopbLTbZGybm9UCIBy1xe00FxyFZjfusDZbcCkx3KR9qwm85X7S+6z5b/JXiCg9K/tfFvv4/bA7UC9vAYZQWqscIZ1GR6ztLUWcJwzkQT9Qd2XPH2S0FNYAMdQR27SHDmr82fs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734020377; c=relaxed/simple;
-	bh=IrRd5xV/HESlEMuIT8nuEz/3AswLsdA14s3/D7HHG10=;
+	s=arc-20240116; t=1734020381; c=relaxed/simple;
+	bh=BwWQeu5WYgoNe3ZL0EvAi5/GgSGVwVh9DliZP3hBntQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Mwh4+8AjCam7JyDJoQnHLW1Bg6EfPYsL2A0zaYu4wGtyH11SUPdzjc6il5RHrjMe0Mi3fmJH4SFmekeIJMC09RAGmWQvglk+4CgaVtuXqfRyr4nX8sxsiqoGzubD46hZ8MM6NhtrOfrtEdDtfn1DI2LdtqYBD2SuEuaxsMbRL2E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VDzuNMjW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=odoXzK+WRZv0AlfBPaxWm6sKl7gUe3dq/1Qv0EEF1YimzKO3qfDT89O5M5SoExatzHBYsh2POCIY7GE4NxWrK4ZAvvybUT6QDtqAIzkGr7XE5DuNiCC49cDB+Ekg8hcmS3WezHcG+OEGKq/yGw40fZ0k97jg9QtP2/fFC7qC+Dk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W2CfyBkk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VDzuNMjW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48A50C4CED4;
-	Thu, 12 Dec 2024 16:19:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W2CfyBkk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91E09C4CECE;
+	Thu, 12 Dec 2024 16:19:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734020376;
-	bh=IrRd5xV/HESlEMuIT8nuEz/3AswLsdA14s3/D7HHG10=;
+	s=korg; t=1734020381;
+	bh=BwWQeu5WYgoNe3ZL0EvAi5/GgSGVwVh9DliZP3hBntQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VDzuNMjW29OGu+FzDCnTx6mHSv3fKPn6k326xylCWCgKVpv9ndB5qkKoRSLAs6dIM
-	 h72t0eMBUrRlZfEpssJyd5UOy9QfaubCXIk+/w1m+n6lmsEBhlWRwxDPk9WN/xyw1Z
-	 IVuOBvjtq1w2l7MNmBL3bhduWuwCSNr6az57rgZM=
+	b=W2CfyBkkr+IVHP+RFy460F/LVfwK8Nth2Cz/Vl+T2kWbUl6TJJbGMdOllCayjx+2Z
+	 h6QYc182C2iZOE8xZJgxE9tvDrZyenru18qyom8qP0+zp5/fhhXbnEOYXD8jyGvmLK
+	 KO5n71ab8yi2I7LYMjLRDqJFAlJNF+Ke+Wgs+AvM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Disha Goel <disgoel@linux.ibm.com>,
-	Baokun Li <libaokun1@huawei.com>,
-	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
-	Jan Kara <jack@suse.cz>,
+	Josef Bacik <josef@toxicpanda.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 450/772] quota: flush quota_release_work upon quota writeback
-Date: Thu, 12 Dec 2024 15:56:35 +0100
-Message-ID: <20241212144408.521481237@linuxfoundation.org>
+Subject: [PATCH 6.1 451/772] btrfs: dont loop for nowait writes when checking for cross references
+Date: Thu, 12 Dec 2024 15:56:36 +0100
+Message-ID: <20241212144408.564802633@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -53,67 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ojaswin Mujoo <ojaswin@linux.ibm.com>
+From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit ac6f420291b3fee1113f21d612fa88b628afab5b ]
+[ Upstream commit ed67f2a913a4f0fc505db29805c41dd07d3cb356 ]
 
-One of the paths quota writeback is called from is:
+When checking for delayed refs when verifying if there are cross
+references for a data extent, we stop if the path has nowait set and we
+can't try lock the delayed ref head's mutex, returning -EAGAIN with the
+goal of making a write fallback to a blocking context. However we ignore
+the -EAGAIN at btrfs_cross_ref_exist() when check_delayed_ref() returns
+it, and keep looping instead of immediately returning the -EAGAIN to the
+caller.
 
-freeze_super()
-  sync_filesystem()
-    ext4_sync_fs()
-      dquot_writeback_dquots()
+Fix this by not looping if we get -EAGAIN and we have a nowait path.
 
-Since we currently don't always flush the quota_release_work queue in
-this path, we can end up with the following race:
-
- 1. dquot are added to releasing_dquots list during regular operations.
- 2. FS Freeze starts, however, this does not flush the quota_release_work queue.
- 3. Freeze completes.
- 4. Kernel eventually tries to flush the workqueue while FS is frozen which
-    hits a WARN_ON since transaction gets started during frozen state:
-
-  ext4_journal_check_start+0x28/0x110 [ext4] (unreliable)
-  __ext4_journal_start_sb+0x64/0x1c0 [ext4]
-  ext4_release_dquot+0x90/0x1d0 [ext4]
-  quota_release_workfn+0x43c/0x4d0
-
-Which is the following line:
-
-  WARN_ON(sb->s_writers.frozen == SB_FREEZE_COMPLETE);
-
-Which ultimately results in generic/390 failing due to dmesg
-noise. This was detected on powerpc machine 15 cores.
-
-To avoid this, make sure to flush the workqueue during
-dquot_writeback_dquots() so we dont have any pending workitems after
-freeze.
-
-Reported-by: Disha Goel <disgoel@linux.ibm.com>
-CC: stable@vger.kernel.org
-Fixes: dabc8b207566 ("quota: fix dqput() to follow the guarantees dquot_srcu should provide")
-Reviewed-by: Baokun Li <libaokun1@huawei.com>
-Signed-off-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
-Signed-off-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/20241121123855.645335-2-ojaswin@linux.ibm.com
+Fixes: 26ce91144631 ("btrfs: make can_nocow_extent nowait compatible")
+CC: stable@vger.kernel.org # 6.1+
+Reviewed-by: Josef Bacik <josef@toxicpanda.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/quota/dquot.c | 2 ++
- 1 file changed, 2 insertions(+)
+ fs/btrfs/extent-tree.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/quota/dquot.c b/fs/quota/dquot.c
-index f7ab6b44011b5..0f82db69d2d86 100644
---- a/fs/quota/dquot.c
-+++ b/fs/quota/dquot.c
-@@ -690,6 +690,8 @@ int dquot_writeback_dquots(struct super_block *sb, int type)
+diff --git a/fs/btrfs/extent-tree.c b/fs/btrfs/extent-tree.c
+index 0d97c8ee6b4fb..2ac060dc65000 100644
+--- a/fs/btrfs/extent-tree.c
++++ b/fs/btrfs/extent-tree.c
+@@ -2372,7 +2372,7 @@ int btrfs_cross_ref_exist(struct btrfs_root *root, u64 objectid, u64 offset,
+ 			goto out;
  
- 	WARN_ON_ONCE(!rwsem_is_locked(&sb->s_umount));
+ 		ret = check_delayed_ref(root, path, objectid, offset, bytenr);
+-	} while (ret == -EAGAIN);
++	} while (ret == -EAGAIN && !path->nowait);
  
-+	flush_delayed_work(&quota_release_work);
-+
- 	for (cnt = 0; cnt < MAXQUOTAS; cnt++) {
- 		if (type != -1 && cnt != type)
- 			continue;
+ out:
+ 	btrfs_release_path(path);
 -- 
 2.43.0
 
