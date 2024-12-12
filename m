@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47BE9221D93;
-	Thu, 12 Dec 2024 16:58:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D7F4221D93;
+	Thu, 12 Dec 2024 16:59:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734022739; cv=none; b=hXeK+aDEsqVjB2VksxPfcIfUobMimr/SozCUgK0aExpuBH1zTzYoAQS15Eqpx6D0dhAa2Hs5r2oQf9L9ydWQdRQO+7lO5hO9i7bBQNggUOq3s2DUC8vqvj+A6r+gzH6ipw59xGWiwzaNYdjZi76LFVl1dgUvMuhJya82luIs5IM=
+	t=1734022743; cv=none; b=ORaTZ5fRcQ8Vl/LJysX/wUC4/qt7POSDsZSK3N6fAPwzpSiuTpJsIoo+58xOIPH65MVAqRQj/pLHxfbp/a63E1vxatnX1NHe+M+desfyAD4FlRkbnpJNpriCOLpfQyk7ew6eHX3xNi4WtUaw04s55Rohj0JY8EQspxdVyBNUyxc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734022739; c=relaxed/simple;
-	bh=j2ZCfIoC/miUnN113aiN4icgT2pkfqbfZdzBipICShk=;
+	s=arc-20240116; t=1734022743; c=relaxed/simple;
+	bh=eOQwtLx3dcQQoHV4gG4vJyRa8YgLuetE62B1NuFT3Lg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XhqNn87poU+B41KZwQoTfY4ov0b6ICBhqodqocofESM8sxTywuIcgP58G1OlXJb3OOMck6eM9QJcKqSj/B2IjUPhLMbcgLjP1SUBCiqo+sCIvIKvaqZdhkBgcaFNnDlBivOCwapl4v83UFUizeOWVRIq2JW3X1qWyv1IujkaF1A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X561ISe/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bF0T8WRgKYnokMu3XRk4nUbC4SqQZaliKJMBbfJjGBBT7Mx94h5CAr7qi3hOaNDEN1MKDoDu1vsVqYGoSSD5tfT8jYqvYAW4WgW3xzTSHdqrOl4E3CHCa+BtnQ4uRurBDGYxMNcw/dE5FVRl01sVepGfnxpV0SpGqTZhKp4Nocs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zRx0OBE5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X561ISe/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9EB8C4CECE;
-	Thu, 12 Dec 2024 16:58:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zRx0OBE5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C380C4CECE;
+	Thu, 12 Dec 2024 16:59:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734022739;
-	bh=j2ZCfIoC/miUnN113aiN4icgT2pkfqbfZdzBipICShk=;
+	s=korg; t=1734022743;
+	bh=eOQwtLx3dcQQoHV4gG4vJyRa8YgLuetE62B1NuFT3Lg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X561ISe/7tFua1PUsp5Cg2q/4EX2QeqBJVB0QS8Zc2CoehMplnskhm4ZgvSifbd5Y
-	 jnht3JXZpMOtfDLcyQ1UFclg2uRRxthH0jDs4IyBn64tD51ZLKyLeA3ILu3vOtvdZF
-	 0zmpcNogRjcZvpCmB3F7Ykc6pWKxRsSBFyrawRXo=
+	b=zRx0OBE5k0zAIm0gNa+Se9ZeaOkLxF3IsTixz45A5Mf5RFsIeJNRB2sW0IEJDiEgW
+	 XrKsFP05EEVXoUIVKSmQYllE95VLWObqUDFI0RVzCWdKYkaQGQAdBsiHZFjBbghVgw
+	 aeccfXIaA0gC09pySCBj5/dmZ/rElAxTynws+2aQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kailang Yang <kailang@realtek.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Somnath Kotur <somnath.kotur@broadcom.com>,
+	Pavan Chebbi <pavan.chebbi@broadcom.com>,
+	Kashyap Desai <kashyap.desai@broadcom.com>,
+	Saravanan Vajravel <saravanan.vajravel@broadcom.com>,
+	Michael Chan <michael.chan@broadcom.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 293/565] ALSA: hda/realtek: Update ALC256 depop procedure
-Date: Thu, 12 Dec 2024 15:58:08 +0100
-Message-ID: <20241212144323.048495341@linuxfoundation.org>
+Subject: [PATCH 5.15 284/565] bnxt_en: Reserve rings after PCIe AER recovery if NIC interface is down
+Date: Thu, 12 Dec 2024 15:57:59 +0100
+Message-ID: <20241212144322.678438296@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144311.432886635@linuxfoundation.org>
 References: <20241212144311.432886635@linuxfoundation.org>
@@ -51,100 +55,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kailang Yang <kailang@realtek.com>
+From: Saravanan Vajravel <saravanan.vajravel@broadcom.com>
 
-[ Upstream commit cc3d0b5dd989d3238d456f9fd385946379a9c13d ]
+[ Upstream commit 5311598f7f3293683cdc761df71ae3469327332c ]
 
-Old procedure has a chance to meet Headphone no output.
+After successful PCIe AER recovery, FW will reset all resource
+reservations.  If it is IF_UP, the driver will call bnxt_open() and
+all resources will be reserved again.  It it is IF_DOWN, we should
+call bnxt_reserve_rings() so that we can reserve resources including
+RoCE resources to allow RoCE to resume after AER.  Without this
+patch, RoCE fails to resume in this IF_DOWN scenario.
 
-Fixes: 4a219ef8f370 ("ALSA: hda/realtek - Add ALC256 HP depop function")
-Signed-off-by: Kailang Yang <kailang@realtek.com>
-Link: https://lore.kernel.org/463c5f93715d4714967041a0a8cec28e@realtek.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Later, if it becomes IF_UP, bnxt_open() will see that resources have
+been reserved and will not reserve again.
+
+Fixes: fb1e6e562b37 ("bnxt_en: Fix AER recovery.")
+Reviewed-by: Somnath Kotur <somnath.kotur@broadcom.com>
+Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
+Reviewed-by: Kashyap Desai <kashyap.desai@broadcom.com>
+Signed-off-by: Saravanan Vajravel <saravanan.vajravel@broadcom.com>
+Signed-off-by: Michael Chan <michael.chan@broadcom.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_realtek.c | 42 ++++++++++++++++-------------------
- 1 file changed, 19 insertions(+), 23 deletions(-)
+ drivers/net/ethernet/broadcom/bnxt/bnxt.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-index 637180c774d7d..abba6c71fa2e1 100644
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -3593,25 +3593,22 @@ static void alc256_init(struct hda_codec *codec)
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+index f3c6a122a079a..127f7d238a041 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+@@ -13692,8 +13692,12 @@ static void bnxt_io_resume(struct pci_dev *pdev)
+ 	rtnl_lock();
  
- 	hp_pin_sense = snd_hda_jack_detect(codec, hp_pin);
- 
--	if (hp_pin_sense)
-+	if (hp_pin_sense) {
- 		msleep(2);
-+		alc_update_coefex_idx(codec, 0x57, 0x04, 0x0007, 0x1); /* Low power */
- 
--	alc_update_coefex_idx(codec, 0x57, 0x04, 0x0007, 0x1); /* Low power */
--
--	snd_hda_codec_write(codec, hp_pin, 0,
--			    AC_VERB_SET_AMP_GAIN_MUTE, AMP_OUT_MUTE);
--
--	if (hp_pin_sense || spec->ultra_low_power)
--		msleep(85);
--
--	snd_hda_codec_write(codec, hp_pin, 0,
-+		snd_hda_codec_write(codec, hp_pin, 0,
- 			    AC_VERB_SET_PIN_WIDGET_CONTROL, PIN_OUT);
- 
--	if (hp_pin_sense || spec->ultra_low_power)
--		msleep(100);
-+		msleep(75);
-+
-+		snd_hda_codec_write(codec, hp_pin, 0,
-+			    AC_VERB_SET_AMP_GAIN_MUTE, AMP_OUT_UNMUTE);
- 
-+		msleep(75);
-+		alc_update_coefex_idx(codec, 0x57, 0x04, 0x0007, 0x4); /* Hight power */
-+	}
- 	alc_update_coef_idx(codec, 0x46, 3 << 12, 0);
--	alc_update_coefex_idx(codec, 0x57, 0x04, 0x0007, 0x4); /* Hight power */
- 	alc_update_coefex_idx(codec, 0x53, 0x02, 0x8000, 1 << 15); /* Clear bit */
- 	alc_update_coefex_idx(codec, 0x53, 0x02, 0x8000, 0 << 15);
- 	/*
-@@ -3635,29 +3632,28 @@ static void alc256_shutup(struct hda_codec *codec)
- 	alc_update_coefex_idx(codec, 0x57, 0x04, 0x0007, 0x1); /* Low power */
- 	hp_pin_sense = snd_hda_jack_detect(codec, hp_pin);
- 
--	if (hp_pin_sense)
-+	if (hp_pin_sense) {
- 		msleep(2);
- 
--	snd_hda_codec_write(codec, hp_pin, 0,
-+		snd_hda_codec_write(codec, hp_pin, 0,
- 			    AC_VERB_SET_AMP_GAIN_MUTE, AMP_OUT_MUTE);
- 
--	if (hp_pin_sense || spec->ultra_low_power)
--		msleep(85);
-+		msleep(75);
- 
- 	/* 3k pull low control for Headset jack. */
- 	/* NOTE: call this before clearing the pin, otherwise codec stalls */
- 	/* If disable 3k pulldown control for alc257, the Mic detection will not work correctly
- 	 * when booting with headset plugged. So skip setting it for the codec alc257
- 	 */
--	if (spec->en_3kpull_low)
--		alc_update_coef_idx(codec, 0x46, 0, 3 << 12);
-+		if (spec->en_3kpull_low)
-+			alc_update_coef_idx(codec, 0x46, 0, 3 << 12);
- 
--	if (!spec->no_shutup_pins)
--		snd_hda_codec_write(codec, hp_pin, 0,
-+		if (!spec->no_shutup_pins)
-+			snd_hda_codec_write(codec, hp_pin, 0,
- 				    AC_VERB_SET_PIN_WIDGET_CONTROL, 0x0);
- 
--	if (hp_pin_sense || spec->ultra_low_power)
--		msleep(100);
-+		msleep(75);
+ 	err = bnxt_hwrm_func_qcaps(bp);
+-	if (!err && netif_running(netdev))
+-		err = bnxt_open(netdev);
++	if (!err) {
++		if (netif_running(netdev))
++			err = bnxt_open(netdev);
++		else
++			err = bnxt_reserve_rings(bp, true);
 +	}
  
- 	alc_auto_setup_eapd(codec, false);
- 	alc_shutup_pins(codec);
+ 	bnxt_ulp_start(bp, err);
+ 	if (!err) {
 -- 
 2.43.0
 
