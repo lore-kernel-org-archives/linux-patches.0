@@ -1,104 +1,109 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9335D229675;
-	Thu, 12 Dec 2024 17:44:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D808225A21;
+	Thu, 12 Dec 2024 17:44:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734025488; cv=none; b=Rr/KIEFBEAavKUg0BbNZAM7l+KdpQi9IrGAExHGX12OGPezvfurqYUncHpMwgN6qkFgpsoyA0mXielSX6Fwy655fWxsglYUnUM1Dc/HY3KNalcXiY/IVAIOwWQvxFD5wF3s/A6yRFx+J8cozSBEyAONpe5NPx+yPKdi0MWw0i/M=
+	t=1734025489; cv=none; b=gosvCpc09dkOQsPYLSaurKO59YTEiEZIYgkgqoxsAuQMwSzh/zq5fKKV3VPe8SiDdMXyLqAbdbdPFYjeOV1mEJKIOfTRNz1YZ4cAYKdzPDhftKFKsmIX6jWeNU1zlrT+/ATILhzB37ThcBNY0DVhHCr/F1j++RHM5FC7LwOs2r8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734025488; c=relaxed/simple;
-	bh=ypiEEEm+xZH9En+vaWUQ5MGHUy/U3/HOB4Yb1+dc2Tk=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WIR87zCwTWOrlALTAZMC8fPMpzTJIr6QPuZJ5vUEYTyahCR7MYV10yTI6pp6uR59yBC0ucPGgOdFmthZxk8o+9YwklOZY5+vrrMEVomvQSJqkFKNmkuBeAFm06OxMxCF6Kf4S6pJMOrSz6sbPRjpgbG8ZHpJr5QQNvDGcXdy1aQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ij6hFOrY; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1734025489; c=relaxed/simple;
+	bh=9tKjhSY0qkGEtTedwIdJnqlX2zVR0a9N/gnmnBVr8Xg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=BStbIw/mfA6PsMPcSof8VvpOHmOplCypNzT035tBA/MQjl4qtr6Jt+D2K86ivP1CNW7bXAfNpBx2UvHhhWkEMZt6yBh0Ftk+w87yyuBbIRgcHusCZ4tfOc0l42/UdZfE/1l6KkW/4EH6xkJLsYJwEqHOysfJL4uu12bBz7AG/eg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AZ/lQM3Z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ij6hFOrY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16AD6C4CED0;
-	Thu, 12 Dec 2024 17:44:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734025488;
-	bh=ypiEEEm+xZH9En+vaWUQ5MGHUy/U3/HOB4Yb1+dc2Tk=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ij6hFOrYFv9pAby2vHnZJ7g1KqlSXW+Rx3sNcTYWYek/okZraNXmo9RFIao3l/pE2
-	 dWXC7+htUvjaNublVnIS7ut/6uP6LuFS1TwqD4pj6u29k4xfGtm/bjtkZWaFj1cd9P
-	 LV/5GlqUldsu0SmAsiHNcxlfBo4TC9LtkDuJND1Q=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Yongliang Gao <leonylgao@tencent.com>,
-	Jingqun Li <jingqunli@tencent.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 187/321] rtc: check if __rtc_read_time was successful in rtc_timer_do_work()
-Date: Thu, 12 Dec 2024 16:01:45 +0100
-Message-ID: <20241212144237.371500146@linuxfoundation.org>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20241212144229.291682835@linuxfoundation.org>
-References: <20241212144229.291682835@linuxfoundation.org>
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AZ/lQM3Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0240C4CECE;
+	Thu, 12 Dec 2024 17:44:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1734025489;
+	bh=9tKjhSY0qkGEtTedwIdJnqlX2zVR0a9N/gnmnBVr8Xg=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=AZ/lQM3ZxOQj99+ru5U9GsTlZXmtrv+GycdFGABcKJfO9Q+DJwIQDnhUhtIo2WGDD
+	 0O7N12jymgot0QCYpOQsOQWkA4IlP7n5+kS1u5HGaRIFZ1n+TlnqoEHJaE2cNyM1GK
+	 yVDuEx5J3ZBDI5UfdmEWkDJtHEr/xuOCwvKbCHKdkPj0BFq+CIhRji3Jj/I+Tu4rOr
+	 F2jaTLwG29mt7Yf1PjVYwms8TI08NDirPHha8hmieFpPg+CpkSphA8Jw1gojDo1txk
+	 PNfR0bmasi8JPKfolBueyWqBpfWZ3NKX9O/Jzq/1wFXsLhprLL+bdrMv/ZbX9lfv9u
+	 3cOKTDkWORYJw==
+Date: Thu, 12 Dec 2024 10:44:44 -0700
+From: Nathan Chancellor <nathan@kernel.org>
+To: Tejun Heo <tj@kernel.org>
+Cc: Josef Bacik <josef@toxicpanda.com>, Jens Axboe <axboe@kernel.dk>,
+	cgroups@vger.kernel.org, linux-block@vger.kernel.org,
+	llvm@lists.linux.dev, patches@lists.linux.dev,
+	David Laight <david.laight@aculab.com>,
+	Linux Kernel Functional Testing <lkft@linaro.org>,
+	kernel test robot <lkp@intel.com>
+Subject: Re: [PATCH] blk-iocost: Avoid using clamp() on inuse in
+ __propagate_weights()
+Message-ID: <20241212174444.GB2149156@ax162>
+References: <20241212-blk-iocost-fix-clamp-error-v1-1-b925491bc7d3@kernel.org>
+ <Z1sbG2zh8xmb-lxu@slm.duckdns.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Z1sbG2zh8xmb-lxu@slm.duckdns.org>
 
-5.4-stable review patch.  If anyone has any objections, please let me know.
+On Thu, Dec 12, 2024 at 07:19:23AM -1000, Tejun Heo wrote:
+> On Thu, Dec 12, 2024 at 10:13:29AM -0700, Nathan Chancellor wrote:
+> > After a recent change to clamp() and its variants [1] that increases the
+> > coverage of the check that high is greater than low because it can be
+> > done through inlining, certain build configurations (such as s390
+> > defconfig) fail to build with clang with:
+> > 
+> >   block/blk-iocost.c:1101:11: error: call to '__compiletime_assert_557' declared with 'error' attribute: clamp() low limit 1 greater than high limit active
+> >    1101 |                 inuse = clamp_t(u32, inuse, 1, active);
+> >         |                         ^
+> >   include/linux/minmax.h:218:36: note: expanded from macro 'clamp_t'
+> >     218 | #define clamp_t(type, val, lo, hi) __careful_clamp(type, val, lo, hi)
+> >         |                                    ^
+> >   include/linux/minmax.h:195:2: note: expanded from macro '__careful_clamp'
+> >     195 |         __clamp_once(type, val, lo, hi, __UNIQUE_ID(v_), __UNIQUE_ID(l_), __UNIQUE_ID(h_))
+> >         |         ^
+> >   include/linux/minmax.h:188:2: note: expanded from macro '__clamp_once'
+> >     188 |         BUILD_BUG_ON_MSG(statically_true(ulo > uhi),                            \
+> >         |         ^
+> > 
+> > __propagate_weights() is called with an active value of zero in
+> > ioc_check_iocgs(), which results in the high value being less than the
+> > low value, which is undefined because the value returned depends on the
+> > order of the comparisons.
+> > 
+> > The purpose of this expression is to ensure inuse is not more than
+> > active and at least 1. This could be written more simply with a ternary
+> > expression that uses min(inuse, active) as the condition so that the
+> > value of that condition can be used if it is not zero and one if it is.
+> > Do this conversion to resolve the error and add a comment to deter
+> > people from turning this back into clamp().
+> > 
+> > Link: https://lore.kernel.org/r/34d53778977747f19cce2abb287bb3e6@AcuMS.aculab.com/ [1]
+> > Suggested-by: David Laight <david.laight@aculab.com>
+> > Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+> > Closes: https://lore.kernel.org/llvm/CA+G9fYsD7mw13wredcZn0L-KBA3yeoVSTuxnss-AEWMN3ha0cA@mail.gmail.com/
+> > Reported-by: kernel test robot <lkp@intel.com>
+> > Closes: https://lore.kernel.org/oe-kbuild-all/202412120322.3GfVe3vF-lkp@intel.com/
+> > Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+> 
+> Acked-by: Tejun Heo <tj@kernel.org>
 
-------------------
+Thanks for the quick response!
 
-From: Yongliang Gao <leonylgao@tencent.com>
+> This likely deserves:
+> 
+> Fixes: 7caa47151ab2 ("blkcg: implement blk-iocost")
+> Cc: stable@vger.kernel.org # v5.4+
 
-[ Upstream commit e8ba8a2bc4f60a1065f23d6a0e7cbea945a0f40d ]
+Thanks, I was wondering if I should have provided those. I'll carry them
+forward on any future revisions, as I assume Jens can pick those up with
+your tag if this is good enough.
 
-If the __rtc_read_time call fails,, the struct rtc_time tm; may contain
-uninitialized data, or an illegal date/time read from the RTC hardware.
-
-When calling rtc_tm_to_ktime later, the result may be a very large value
-(possibly KTIME_MAX). If there are periodic timers in rtc->timerqueue,
-they will continually expire, may causing kernel softlockup.
-
-Fixes: 6610e0893b8b ("RTC: Rework RTC code to use timerqueue for events")
-Signed-off-by: Yongliang Gao <leonylgao@tencent.com>
-Acked-by: Jingqun Li <jingqunli@tencent.com>
-Link: https://lore.kernel.org/r/20241011043153.3788112-1-leonylgao@gmail.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- drivers/rtc/interface.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
-
-diff --git a/drivers/rtc/interface.c b/drivers/rtc/interface.c
-index d858cd819932f..1536d53a7af7f 100644
---- a/drivers/rtc/interface.c
-+++ b/drivers/rtc/interface.c
-@@ -894,13 +894,18 @@ void rtc_timer_do_work(struct work_struct *work)
- 	struct timerqueue_node *next;
- 	ktime_t now;
- 	struct rtc_time tm;
-+	int err;
- 
- 	struct rtc_device *rtc =
- 		container_of(work, struct rtc_device, irqwork);
- 
- 	mutex_lock(&rtc->ops_lock);
- again:
--	__rtc_read_time(rtc, &tm);
-+	err = __rtc_read_time(rtc, &tm);
-+	if (err) {
-+		mutex_unlock(&rtc->ops_lock);
-+		return;
-+	}
- 	now = rtc_tm_to_ktime(tm);
- 	while ((next = timerqueue_getnext(&rtc->timerqueue))) {
- 		if (next->expires > now)
--- 
-2.43.0
-
-
-
+> 
+> -- 
+> tejun
+> 
