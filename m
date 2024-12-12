@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9D862139B2;
-	Thu, 12 Dec 2024 15:06:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8EA42156FF;
+	Thu, 12 Dec 2024 15:07:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734016017; cv=none; b=EljyeOEKHgRQY4t4p+7gMz76s6MZHKO6Ynlw5CqT/w03154G6sL8LtKFX+GTjr5Hi64vRgGPR8Ci5AzJNSTDaMTI8F4rdYrImcucEG8Hb/sFBXt9LPry83du4Y+dYV2pFRl9g/ZHFofHVXcUmi4tZASLbVCsIaZwvthY9NYJBH4=
+	t=1734016021; cv=none; b=BD6/W0qadgyxtSY2mKeB//bGe0uvCvzygV31IwwaEf15csW5sq4ceiDzWcIyFfDuTBvnoiIOrf5vizTxrvyNu+ckYM7iaIkNQ5vpZrhUBgaI5/+1YYerpJOlEmKU0Z/JuNb+hcx5AjojKYdnPeJkX09LbPuGq1Ts2F5VaeZkSmE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734016017; c=relaxed/simple;
-	bh=m//KzxoVHbm6kcz+63yoo9sevjYvxxDf6pAxNBgAdIU=;
+	s=arc-20240116; t=1734016021; c=relaxed/simple;
+	bh=eVXmPmI44n9+i/GQlD5bbFqbR2SrFZQin2QURVEvm4s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JFnK6G+lYAJciTvjez89rvUp0zDixkEPTq3efkCFPbO8drXhbSw5MSS7Dn5sxuT8ZVBwSK8NfluUyTghonQri6/kkIpxlWbF243/37A3XiBytM2YNz8ehyaWaAaNzPhgybzNyIOtnMzAWgIhmfDF3vdkRdxcKmNfXu4CQaFnvuQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DrpMZ/XO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=nZj3tZgbPjnCK6abs3Iwrehtu4IoIltVA9KUdhCw6fv8G7XIbjvz7uF76oluTjtbexmmGTuP1lqHuN7sgX+mhUt0KrYAPiDDLuncY+8H2WLDUDPmHwusywsYZvC5LFnqTK51X5+586T4MTEfee6UrwXLDy4WKOVU/9367wQlFOs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1q2DjHoh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DrpMZ/XO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB106C4CECE;
-	Thu, 12 Dec 2024 15:06:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1q2DjHoh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 676F8C4CECE;
+	Thu, 12 Dec 2024 15:07:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734016017;
-	bh=m//KzxoVHbm6kcz+63yoo9sevjYvxxDf6pAxNBgAdIU=;
+	s=korg; t=1734016020;
+	bh=eVXmPmI44n9+i/GQlD5bbFqbR2SrFZQin2QURVEvm4s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DrpMZ/XOGQx5ioA3/2BXF3yyjgIV18TEzTcVpAHcNWQ7LshsK84jPml5wCejt8v+c
-	 F7UWlmxuoky4uek6BdDX16CjzKyKaSZWKIZ9E4Dn33n5x+EtoiD5HRAHuydO8ZJsHl
-	 Byiu6GgUuFTcW53AXJR3fI9gdPsZg6RMsKJuR49E=
+	b=1q2DjHohiCduaf70+BOMmmbdyEM4b8U/vRVMZlz9TiLjmyRz0gjcxEN+fz+1UVybf
+	 7qmWqMTs7C60tWuDud2BGICDEXXz3vtpJx8dqygePxUdwSX9rndKqNxRN4HMopvyYJ
+	 al62m3DFHhG1WTalfhMe4hIU0njXuD1j+4hFkyzc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Garry <john.g.garry@oracle.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	"=?UTF-8?q?N=C3=ADcolas=20F . =20R . =20A . =20Prado?=" <nfraprado@collabora.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 109/466] scsi: scsi_debug: Fix hrtimer support for ndelay
-Date: Thu, 12 Dec 2024 15:54:38 +0100
-Message-ID: <20241212144311.124282866@linuxfoundation.org>
+Subject: [PATCH 6.12 110/466] ASoC: mediatek: mt8188-mt6359: Remove hardcoded dmic codec
+Date: Thu, 12 Dec 2024 15:54:39 +0100
+Message-ID: <20241212144311.164064924@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144306.641051666@linuxfoundation.org>
 References: <20241212144306.641051666@linuxfoundation.org>
@@ -45,46 +46,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: John Garry <john.g.garry@oracle.com>
+From: Nícolas F. R. A. Prado <nfraprado@collabora.com>
 
-[ Upstream commit 6918141d815acef056a0d10e966a027d869a922d ]
+[ Upstream commit ec16a3cdf37e507013062f9c4a2067eacdd12b62 ]
 
-Since commit 771f712ba5b0 ("scsi: scsi_debug: Fix cmd duration
-calculation"), ns_from_boot value is only evaluated in schedule_resp()
-for polled requests.
+Remove hardcoded dmic codec from the UL_SRC dai link to avoid requiring
+a dmic codec to be present for the driver to probe, as not every
+MT8188-based platform might need a dmic codec. The codec can be assigned
+to the dai link through the dai-link property in Devicetree on the
+platforms where it is needed.
 
-However, ns_from_boot is also required for hrtimer support for when
-ndelay is less than INCLUSIVE_TIMING_MAX_NS, so fix up the logic to
-decide when to evaluate ns_from_boot.
+No Devicetree currently relies on it so it is safe to remove without
+worrying about backward compatibility.
 
-Fixes: 771f712ba5b0 ("scsi: scsi_debug: Fix cmd duration calculation")
-Signed-off-by: John Garry <john.g.garry@oracle.com>
-Link: https://lore.kernel.org/r/20241202130045.2335194-1-john.g.garry@oracle.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: 9f08dcbddeb3 ("ASoC: mediatek: mt8188-mt6359: support new board with nau88255")
+Signed-off-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://patch.msgid.link/20241203-mt8188-6359-unhardcode-dmic-v1-1-346e3e5cbe6d@collabora.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/scsi_debug.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/mediatek/mt8188/mt8188-mt6359.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/scsi/scsi_debug.c b/drivers/scsi/scsi_debug.c
-index b52513eeeafa7..680ba180a6725 100644
---- a/drivers/scsi/scsi_debug.c
-+++ b/drivers/scsi/scsi_debug.c
-@@ -6447,7 +6447,7 @@ static int schedule_resp(struct scsi_cmnd *cmnd, struct sdebug_dev_info *devip,
- 	}
- 	sd_dp = &sqcp->sd_dp;
+diff --git a/sound/soc/mediatek/mt8188/mt8188-mt6359.c b/sound/soc/mediatek/mt8188/mt8188-mt6359.c
+index 4eed90d13a532..62429e8e57b55 100644
+--- a/sound/soc/mediatek/mt8188/mt8188-mt6359.c
++++ b/sound/soc/mediatek/mt8188/mt8188-mt6359.c
+@@ -188,9 +188,7 @@ SND_SOC_DAILINK_DEFS(pcm1,
+ SND_SOC_DAILINK_DEFS(ul_src,
+ 		     DAILINK_COMP_ARRAY(COMP_CPU("UL_SRC")),
+ 		     DAILINK_COMP_ARRAY(COMP_CODEC("mt6359-sound",
+-						   "mt6359-snd-codec-aif1"),
+-					COMP_CODEC("dmic-codec",
+-						   "dmic-hifi")),
++						   "mt6359-snd-codec-aif1")),
+ 		     DAILINK_COMP_ARRAY(COMP_EMPTY()));
  
--	if (polled)
-+	if (polled || (ndelay > 0 && ndelay < INCLUSIVE_TIMING_MAX_NS))
- 		ns_from_boot = ktime_get_boottime_ns();
- 
- 	/* one of the resp_*() response functions is called here */
+ SND_SOC_DAILINK_DEFS(AFE_SOF_DL2,
 -- 
 2.43.0
 
