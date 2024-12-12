@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96CED2054F8;
-	Thu, 12 Dec 2024 16:34:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 863EE235C30;
+	Thu, 12 Dec 2024 16:34:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734021264; cv=none; b=O9c1qbF2RYyxg2opCIQMfy3NL9grWHLUSKz2dgkHjZa715G4ZrolrnsUImZBSkXncLqaQXMcbcKxDaYfI7t8wO7onRNpvN2EdqpfXc8stVVwhbWKU1DYwiPzMFKXwVHoat8SR0jO7uEJTnHJzolYpcgnNbWv09qCTZ+K7iUkhCY=
+	t=1734021269; cv=none; b=cAoI1H+91/TxNW9Wn14rnlsv057yFzVtazOzVQNAzG+AyjvU0nOfGY1866w+tNfb36tS52Tkf5jNYGCBOq1Nz1dlWSJSxr64O35SSZOhqQtaDxI6LOgJyW83IJOjRrUvoWetlkb39o1RCRGyULXZP5acday1McG+KTwfw2++9Mk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734021264; c=relaxed/simple;
-	bh=IZWcq7SsygHkpqBQ1Kk9cA83MXdSmetXEI9OUAuSzEg=;
+	s=arc-20240116; t=1734021269; c=relaxed/simple;
+	bh=eb+veMoFlfWWc1x7v17+JW77YA768+ChP/lJ+tjgVYI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YjER1Mfdrg0mc99uzZ44TEJnWCvesOUbZmB+xms7X/xcuaZtPYXNDgE9LIoJuweAgQRWaFuJhm6w7VPXRWPBadB+iXxxYJkltQDOKMBjH9N9Hoo5QUvE4GNgQeuOVH2fGzVqR3kUWP3xZrvPs1n+kNDIut26xjcHrt82zc2FBvM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=poqY2Fc+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=j478JjohjZpZmrKwkNam9hmsGoPV5jPkaj9pEuoz/D4J6AUhHf+9n7m2cBpeOS7rkMSZrYiDYY6zaMZ7LshdgiPVB5JtGawioaMkxugZtJ/aQPMZ/m9ABFp682hinfD2wz/NP+bSmzp8STnnj0zhJo+KVceIIJDZ2joB2Y1OwKE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vHOMRHZ1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="poqY2Fc+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF20AC4CECE;
-	Thu, 12 Dec 2024 16:34:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vHOMRHZ1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7999AC4CECE;
+	Thu, 12 Dec 2024 16:34:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734021264;
-	bh=IZWcq7SsygHkpqBQ1Kk9cA83MXdSmetXEI9OUAuSzEg=;
+	s=korg; t=1734021268;
+	bh=eb+veMoFlfWWc1x7v17+JW77YA768+ChP/lJ+tjgVYI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=poqY2Fc+nJQFvLq91BXI68Iv8qqW1fyg2F9u0FF1/CwIhv+Vgqb84mhLRbCmS0OfF
-	 xDfw6qpb7dGutohHNurdjuqqNeMgAPCk1q/Os2Gbbx5BI83XNWFa8jt7iqaDfcHSqV
-	 4ZM2YUisd3AyVVgk6ljPc77nGE8hN1T+O0dnd+Zo=
+	b=vHOMRHZ19Yz/VOQQtuMi6rVAFz9/S/lhvqtpXELBMVtuy/bOWMPHfmtZF7cUvLnHG
+	 Jj5MnzaxiuBZDuZa5Y3ockc7zZBLx4wNCSo5cHYdFBIoplgZ8T0JBm84hVEOK3w2wq
+	 sLFRMz7ea4eZ+INQ8Z5NfzRNrhARGMSVyjdt1C9k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Norbert van Bolhuis <nvbolhuis@gmail.com>,
-	Kalle Valo <kvalo@kernel.org>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 691/772] wifi: brcmfmac: Fix oops due to NULL pointer dereference in brcmf_sdiod_sglist_rw()
-Date: Thu, 12 Dec 2024 16:00:36 +0100
-Message-ID: <20241212144418.461709079@linuxfoundation.org>
+Subject: [PATCH 6.1 692/772] dsa: qca8k: Use nested lock to avoid splat
+Date: Thu, 12 Dec 2024 16:00:37 +0100
+Message-ID: <20241212144418.500435526@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -51,49 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Norbert van Bolhuis <nvbolhuis@gmail.com>
+From: Andrew Lunn <andrew@lunn.ch>
 
-[ Upstream commit 857282b819cbaa0675aaab1e7542e2c0579f52d7 ]
+[ Upstream commit 078e0d596f7b5952dad8662ace8f20ed2165e2ce ]
 
-This patch fixes a NULL pointer dereference bug in brcmfmac that occurs
-when a high 'sd_sgentry_align' value applies (e.g. 512) and a lot of queued SKBs
-are sent from the pkt queue.
+qca8k_phy_eth_command() is used to probe the child MDIO bus while the
+parent MDIO is locked. This causes lockdep splat, reporting a possible
+deadlock. It is not an actually deadlock, because different locks are
+used. By making use of mutex_lock_nested() we can avoid this false
+positive.
 
-The problem is the number of entries in the pre-allocated sgtable, it is
-nents = max(rxglom_size, txglom_size) + max(rxglom_size, txglom_size) >> 4 + 1.
-Given the default [rt]xglom_size=32 it's actually 35 which is too small.
-Worst case, the pkt queue can end up with 64 SKBs. This occurs when a new SKB
-is added for each original SKB if tailroom isn't enough to hold tail_pad.
-At least one sg entry is needed for each SKB. So, eventually the "skb_queue_walk loop"
-in brcmf_sdiod_sglist_rw may run out of sg entries. This makes sg_next return
-NULL and this causes the oops.
-
-The patch sets nents to max(rxglom_size, txglom_size) * 2 to be able handle
-the worst-case.
-Btw. this requires only 64-35=29 * 16 (or 20 if CONFIG_NEED_SG_DMA_LENGTH) = 464
-additional bytes of memory.
-
-Signed-off-by: Norbert van Bolhuis <nvbolhuis@gmail.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://patch.msgid.link/20241107132903.13513-1-nvbolhuis@gmail.com
+Signed-off-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/20241110175955.3053664-1-andrew@lunn.ch
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c | 2 +-
+ drivers/net/dsa/qca/qca8k-8xxx.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c
-index e300278ea38c6..9217e9f6e9076 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c
-@@ -770,7 +770,7 @@ void brcmf_sdiod_sgtable_alloc(struct brcmf_sdio_dev *sdiodev)
+diff --git a/drivers/net/dsa/qca/qca8k-8xxx.c b/drivers/net/dsa/qca/qca8k-8xxx.c
+index 641692f716f86..47e9b2c303831 100644
+--- a/drivers/net/dsa/qca/qca8k-8xxx.c
++++ b/drivers/net/dsa/qca/qca8k-8xxx.c
+@@ -551,7 +551,7 @@ qca8k_phy_eth_command(struct qca8k_priv *priv, bool read, int phy,
+ 	 * We therefore need to lock the MDIO bus onto which the switch is
+ 	 * connected.
+ 	 */
+-	mutex_lock(&priv->bus->mdio_lock);
++	mutex_lock_nested(&priv->bus->mdio_lock, MDIO_MUTEX_NESTED);
  
- 	nents = max_t(uint, BRCMF_DEFAULT_RXGLOM_SIZE,
- 		      sdiodev->settings->bus.sdio.txglomsz);
--	nents += (nents >> 4) + 1;
-+	nents *= 2;
- 
- 	WARN_ON(nents > sdiodev->max_segment_count);
- 
+ 	/* Actually start the request:
+ 	 * 1. Send mdio master packet
 -- 
 2.43.0
 
