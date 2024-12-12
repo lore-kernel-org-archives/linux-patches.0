@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C114221D93;
-	Thu, 12 Dec 2024 17:41:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F2D020A5EE;
+	Thu, 12 Dec 2024 17:41:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734025264; cv=none; b=Wshk8mbmTtJMGjcx4uBSeCXvz3n7rfuIdUcnCN/0lHQrik/WqYjcY54K5oUh1rNzS1b1jyrU5uCO9ihVMyaZVFeMxWym8hT60RgKe0FFwvNWT8z4xVc8fzAFPR4SYD+RGKG8tRi14TfKmAKngNoVOtXX1KA3ELa8VGuKs3nJ/nE=
+	t=1734025267; cv=none; b=d6/T+2xsxdKNyoUsCnosXgZQcaPTbqZpsvf8FW17WqcEU78yCUsL6h1UqMVejv00FgKQaSVFbAU3/E7esFuxYKkjZP3KQ6eyYwWSMeIihfHOEUT0VqIE5fmpjKAKhmLqjkVeG4ovTexYcYxSJw7ouuXI8E3LAaH37+YOjldw3g0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734025264; c=relaxed/simple;
-	bh=TxQDqGGb60iZ4ExVxFHCssDMY17FmHns/E7JUC1zG3Y=;
+	s=arc-20240116; t=1734025267; c=relaxed/simple;
+	bh=bqfOXGQFLp3zbhkmG69pDFno37rmDaL/yoitf6iI6yE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BYlhnIuBONu+/rl6c/43MN0TuGGvBnixj7rAVUDZ8zPCVOkVgpZcZ2/B1fX+vrOxODgxkFIHl8TPURznR+JUfmwh96iHgzsTYgpSuKzhsOTHzQcv6HFxqxQY2kjUEG2TcFFSQ84olpw15MRxNe7//TDCuS7RDcjEeClg9kRAdb4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SC0gNnfw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=p/1UDlwb6nN85nvOjDaNi5oM5w4aFtwvB4zxHGeb8Ws2geSd91slTdjHikf1D8rPe7qcENZDd8RMKqfcVWBiPoEMXFQgSG36iaLolT9EyZ4BefmS6qyxNsvhPLRwG4movJ0+nbYNriz9BilISe5Fq2Vn0YfzthVc5lKcA6df3rM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IA+RGu1d; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SC0gNnfw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9988C4CED3;
-	Thu, 12 Dec 2024 17:41:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IA+RGu1d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F25B9C4CECE;
+	Thu, 12 Dec 2024 17:41:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734025264;
-	bh=TxQDqGGb60iZ4ExVxFHCssDMY17FmHns/E7JUC1zG3Y=;
+	s=korg; t=1734025267;
+	bh=bqfOXGQFLp3zbhkmG69pDFno37rmDaL/yoitf6iI6yE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SC0gNnfwW9CFXzTL8VtO3fhlk/nHKX3tRUE++7WZ999kxrggjN9UjMtWjtK8hWs7P
-	 1mR7DDnSwk2hlJadt9o2ZZYs3q6T3DcAJL9mD2Kgk8x4MMy3iGOmX8NJPcEokvDfqw
-	 7I5NyPdvsgAcXKkg2WwhrkVrLv4IUthIxWztUF9M=
+	b=IA+RGu1dHWd9ePRsC7Ua6Uf9WGAKNZLFCXPm0xYty138Qq0VQAPLvAMGv2j5VeIFt
+	 cvVv68rYvT9lByl9PPKwfBlsQ7CW28bbGr16TCbI9NROQ9Fy4iKZk9Zts9VNGMF9iU
+	 eGliyowfCH8CkgSUJ6Nre3s9JOQTpDP5GhFNFZl4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mingwei Zheng <zmw12306@gmail.com>,
-	Jiasheng Jiang <jiashengjiangcool@gmail.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 081/321] net: rfkill: gpio: Add check for clk_enable()
-Date: Thu, 12 Dec 2024 15:59:59 +0100
-Message-ID: <20241212144233.185197045@linuxfoundation.org>
+Subject: [PATCH 5.4 082/321] ALSA: us122l: Use snd_card_free_when_closed() at disconnection
+Date: Thu, 12 Dec 2024 16:00:00 +0100
+Message-ID: <20241212144233.223338813@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144229.291682835@linuxfoundation.org>
 References: <20241212144229.291682835@linuxfoundation.org>
@@ -52,42 +50,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mingwei Zheng <zmw12306@gmail.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 8251e7621b25ccdb689f1dd9553b8789e3745ea1 ]
+[ Upstream commit b7df09bb348016943f56b09dcaafe221e3f73947 ]
 
-Add check for the return value of clk_enable() to catch the potential
-error.
+The USB disconnect callback is supposed to be short and not too-long
+waiting.  OTOH, the current code uses snd_card_free() at
+disconnection, but this waits for the close of all used fds, hence it
+can take long.  It eventually blocks the upper layer USB ioctls, which
+may trigger a soft lockup.
 
-Fixes: 7176ba23f8b5 ("net: rfkill: add generic gpio rfkill driver")
-Signed-off-by: Mingwei Zheng <zmw12306@gmail.com>
-Signed-off-by: Jiasheng Jiang <jiashengjiangcool@gmail.com>
-Link: https://patch.msgid.link/20241108195341.1853080-1-zmw12306@gmail.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+An easy workaround is to replace snd_card_free() with
+snd_card_free_when_closed().  This variant returns immediately while
+the release of resources is done asynchronously by the card device
+release at the last close.
+
+The loop of us122l->mmap_count check is dropped as well.  The check is
+useless for the asynchronous operation with *_when_closed().
+
+Fixes: 030a07e44129 ("ALSA: Add USB US122L driver")
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20241113111042.15058-3-tiwai@suse.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rfkill/rfkill-gpio.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ sound/usb/usx2y/us122l.c | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
-diff --git a/net/rfkill/rfkill-gpio.c b/net/rfkill/rfkill-gpio.c
-index f74baefd855d3..2df5bf240b64a 100644
---- a/net/rfkill/rfkill-gpio.c
-+++ b/net/rfkill/rfkill-gpio.c
-@@ -30,8 +30,12 @@ static int rfkill_gpio_set_power(void *data, bool blocked)
- {
- 	struct rfkill_gpio_data *rfkill = data;
+diff --git a/sound/usb/usx2y/us122l.c b/sound/usb/usx2y/us122l.c
+index e82c5236482df..eb7e57c4a7fdb 100644
+--- a/sound/usb/usx2y/us122l.c
++++ b/sound/usb/usx2y/us122l.c
+@@ -636,10 +636,7 @@ static void snd_us122l_disconnect(struct usb_interface *intf)
+ 	usb_put_intf(usb_ifnum_to_if(us122l->dev, 1));
+ 	usb_put_dev(us122l->dev);
  
--	if (!blocked && !IS_ERR(rfkill->clk) && !rfkill->clk_enabled)
--		clk_enable(rfkill->clk);
-+	if (!blocked && !IS_ERR(rfkill->clk) && !rfkill->clk_enabled) {
-+		int ret = clk_enable(rfkill->clk);
-+
-+		if (ret)
-+			return ret;
-+	}
+-	while (atomic_read(&us122l->mmap_count))
+-		msleep(500);
+-
+-	snd_card_free(card);
++	snd_card_free_when_closed(card);
+ }
  
- 	gpiod_set_value_cansleep(rfkill->shutdown_gpio, !blocked);
- 	gpiod_set_value_cansleep(rfkill->reset_gpio, !blocked);
+ static int snd_us122l_suspend(struct usb_interface *intf, pm_message_t message)
 -- 
 2.43.0
 
