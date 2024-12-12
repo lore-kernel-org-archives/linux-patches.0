@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 672386F2FE;
-	Thu, 12 Dec 2024 15:36:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9E7C6F2FE;
+	Thu, 12 Dec 2024 15:36:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734017777; cv=none; b=d1skODxraRXc0PVZTXu1RBWH621u6XVZfODk2ZxcN6ev9jObjhu6xjc2FXugpkw9H5MRj2wwPXXm6/B8wu5tBPU8RgxcSAjc4p9LuM+DeE1GoUggU9MTWgttEzQXhSaNAnKUdLdvaO3sJ6Jz4KfOBbIExpBJv28uEgyeHtbLvsA=
+	t=1734017781; cv=none; b=j95vMjYjA0iJPAr7YAdNQvlPchSBGqiUAlNo2Em5UsD0tuzbt+Bu/VXnFzDNzvB8wKE9nlyGSJIFhejqlsHwKWo4DZ23NvG2oENphVFO1q6N30ap2vYG8COninp5RXbzA9tkjUFnJ4VFArkj3p5WQowrvbMeBbj1U1UzNnbkBeY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734017777; c=relaxed/simple;
-	bh=1KtkCpTod7W/5RU8GSTWvPVYq6dodiMC6tS4ZJONzzo=;
+	s=arc-20240116; t=1734017781; c=relaxed/simple;
+	bh=QFNU3KM+h4oy4akbGs9yK5v/8jgVhzS8kkKMT/EsXO4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OssaHKlitVG+7lQGNh75xnfbIMh7sQenJsONyAxxa+uNJZaV8WS4MaXZIfX9MLKcfYex6w9Ryz+OZ4QLA3cqyMbmB1OlH7qfelX3ccgmzW7kUrH1WKiM8lOc6fIAjx1HTZrbA+7IG6GQ6vqHFKfboLGgImPvH917XtCnQzQaHlE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DKphNoV3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OYHggO2EL5rQaHrKdlVb0uG2iAX6/UkMEclOzRA3DbDoK6oDR6Em0JCOW53hIy3NZQvVCyJAH65OrnWKGqDzsblqMGBgdcAZ/a8jBMLXU515s8VQ43daSKW+/4ICuOOH23g7vy6a51AuBtDHtfV4NyTPOLoC7XEeBn5dh80iyVY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qzvTysTL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DKphNoV3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9E7AC4CECE;
-	Thu, 12 Dec 2024 15:36:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qzvTysTL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49B38C4CECE;
+	Thu, 12 Dec 2024 15:36:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734017777;
-	bh=1KtkCpTod7W/5RU8GSTWvPVYq6dodiMC6tS4ZJONzzo=;
+	s=korg; t=1734017780;
+	bh=QFNU3KM+h4oy4akbGs9yK5v/8jgVhzS8kkKMT/EsXO4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DKphNoV3vQmPnNjLVVFSlOb9V/3P6nALQYFbl8Rjpyw3kenEtbuBShBKOn4mNsm9+
-	 ZorlzrFHyR7qgCV13xQfjXa8eclGeUf/qw3PlMMG7YxcxfxocSiLrL2atJA7vqhT6q
-	 jeHjuxf4z4yC65AOh1F4sE5sPxWIIndk/Hx8yIs0=
+	b=qzvTysTLHjH+M1QnmJGQeD6qi655Bztf7E3Jy4oHcfcvoF1ziBfIJiBIo4Vtvv0u7
+	 TQz77NubO7fpBUJP9kzmqhlcIt9PSI8BRI/arH9X+vKbfbwOoM+uCjJP895luGrtkg
+	 ophgtXfsswrZV+haom1gedRkOm9LBEe/6o9lMSUo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Chen-Yu Tsai <wenst@chromium.org>,
+	Peter Wang <peter.wang@mediatek.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 108/356] drm/bridge: it6505: Fix inverted reset polarity
-Date: Thu, 12 Dec 2024 15:57:07 +0100
-Message-ID: <20241212144248.903219559@linuxfoundation.org>
+Subject: [PATCH 6.6 109/356] scsi: ufs: core: Always initialize the UIC done completion
+Date: Thu, 12 Dec 2024 15:57:08 +0100
+Message-ID: <20241212144248.941386497@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144244.601729511@linuxfoundation.org>
 References: <20241212144244.601729511@linuxfoundation.org>
@@ -52,72 +52,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen-Yu Tsai <wenst@chromium.org>
+From: Bart Van Assche <bvanassche@acm.org>
 
-[ Upstream commit c5f3f21728b069412e8072b8b1d0a3d9d3ab0265 ]
+[ Upstream commit b1e8c53749adb795bfb0bf4e2f7836e26684bb90 ]
 
-The IT6505 bridge chip has a active low reset line. Since it is a
-"reset" and not an "enable" line, the GPIO should be asserted to
-put it in reset and deasserted to bring it out of reset during
-the power on sequence.
+Simplify __ufshcd_send_uic_cmd() by always initializing the
+uic_cmd::done completion. This is fine since the time required to
+initialize a completion is small compared to the time required to
+process an UIC command.
 
-The polarity was inverted when the driver was first introduced, likely
-because the device family that was targeted had an inverting level
-shifter on the reset line.
-
-The MT8186 Corsola devices already have the IT6505 in their device tree,
-but the whole display pipeline is actually disabled and won't be enabled
-until some remaining issues are sorted out. The other known user is
-the MT8183 Kukui / Jacuzzi family; their device trees currently do not
-have the IT6505 included.
-
-Fix the polarity in the driver while there are no actual users.
-
-Fixes: b5c84a9edcd4 ("drm/bridge: add it6505 driver")
-Cc: stable@vger.kernel.org
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20241029095411.657616-1-wenst@chromium.org
-Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
+Reviewed-by: Peter Wang <peter.wang@mediatek.com>
+Signed-off-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://lore.kernel.org/r/20240912223019.3510966-5-bvanassche@acm.org
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Stable-dep-of: 60b4dd1460f6 ("scsi: ufs: core: Add ufshcd_send_bsg_uic_cmd() for UFS BSG")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/ite-it6505.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/ufs/core/ufshcd.c | 11 ++++-------
+ 1 file changed, 4 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/gpu/drm/bridge/ite-it6505.c b/drivers/gpu/drm/bridge/ite-it6505.c
-index fda2c565fdb31..2a7c620626a03 100644
---- a/drivers/gpu/drm/bridge/ite-it6505.c
-+++ b/drivers/gpu/drm/bridge/ite-it6505.c
-@@ -2611,9 +2611,9 @@ static int it6505_poweron(struct it6505 *it6505)
- 	/* time interval between OVDD and SYSRSTN at least be 10ms */
- 	if (pdata->gpiod_reset) {
- 		usleep_range(10000, 20000);
--		gpiod_set_value_cansleep(pdata->gpiod_reset, 0);
--		usleep_range(1000, 2000);
- 		gpiod_set_value_cansleep(pdata->gpiod_reset, 1);
-+		usleep_range(1000, 2000);
-+		gpiod_set_value_cansleep(pdata->gpiod_reset, 0);
- 		usleep_range(25000, 35000);
+diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
+index db4044358e22d..44b2cd66b8189 100644
+--- a/drivers/ufs/core/ufshcd.c
++++ b/drivers/ufs/core/ufshcd.c
+@@ -2399,13 +2399,11 @@ ufshcd_wait_for_uic_cmd(struct ufs_hba *hba, struct uic_command *uic_cmd)
+  * __ufshcd_send_uic_cmd - Send UIC commands and retrieve the result
+  * @hba: per adapter instance
+  * @uic_cmd: UIC command
+- * @completion: initialize the completion only if this is set to true
+  *
+  * Return: 0 only if success.
+  */
+ static int
+-__ufshcd_send_uic_cmd(struct ufs_hba *hba, struct uic_command *uic_cmd,
+-		      bool completion)
++__ufshcd_send_uic_cmd(struct ufs_hba *hba, struct uic_command *uic_cmd)
+ {
+ 	lockdep_assert_held(&hba->uic_cmd_mutex);
+ 
+@@ -2415,8 +2413,7 @@ __ufshcd_send_uic_cmd(struct ufs_hba *hba, struct uic_command *uic_cmd,
+ 		return -EIO;
  	}
  
-@@ -2640,7 +2640,7 @@ static int it6505_poweroff(struct it6505 *it6505)
+-	if (completion)
+-		init_completion(&uic_cmd->done);
++	init_completion(&uic_cmd->done);
+ 
+ 	uic_cmd->cmd_active = 1;
+ 	ufshcd_dispatch_uic_cmd(hba, uic_cmd);
+@@ -2442,7 +2439,7 @@ int ufshcd_send_uic_cmd(struct ufs_hba *hba, struct uic_command *uic_cmd)
+ 	mutex_lock(&hba->uic_cmd_mutex);
+ 	ufshcd_add_delay_before_dme_cmd(hba);
+ 
+-	ret = __ufshcd_send_uic_cmd(hba, uic_cmd, true);
++	ret = __ufshcd_send_uic_cmd(hba, uic_cmd);
+ 	if (!ret)
+ 		ret = ufshcd_wait_for_uic_cmd(hba, uic_cmd);
+ 
+@@ -4154,7 +4151,7 @@ static int ufshcd_uic_pwr_ctrl(struct ufs_hba *hba, struct uic_command *cmd)
+ 		reenable_intr = true;
  	}
- 
- 	if (pdata->gpiod_reset)
--		gpiod_set_value_cansleep(pdata->gpiod_reset, 0);
-+		gpiod_set_value_cansleep(pdata->gpiod_reset, 1);
- 
- 	if (pdata->pwr18) {
- 		err = regulator_disable(pdata->pwr18);
-@@ -3132,7 +3132,7 @@ static int it6505_init_pdata(struct it6505 *it6505)
- 		return PTR_ERR(pdata->ovdd);
- 	}
- 
--	pdata->gpiod_reset = devm_gpiod_get(dev, "reset", GPIOD_OUT_LOW);
-+	pdata->gpiod_reset = devm_gpiod_get(dev, "reset", GPIOD_OUT_HIGH);
- 	if (IS_ERR(pdata->gpiod_reset)) {
- 		dev_err(dev, "gpiod_reset gpio not found");
- 		return PTR_ERR(pdata->gpiod_reset);
+ 	spin_unlock_irqrestore(hba->host->host_lock, flags);
+-	ret = __ufshcd_send_uic_cmd(hba, cmd, false);
++	ret = __ufshcd_send_uic_cmd(hba, cmd);
+ 	if (ret) {
+ 		dev_err(hba->dev,
+ 			"pwr ctrl cmd 0x%x with mode 0x%x uic error %d\n",
 -- 
 2.43.0
 
