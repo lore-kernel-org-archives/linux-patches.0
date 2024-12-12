@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 125E321E085;
-	Thu, 12 Dec 2024 15:42:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1C832185A0;
+	Thu, 12 Dec 2024 15:42:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734018146; cv=none; b=Kw23qn1vcl1TeuCtWDf8iIdEaTmWID3cRUwBpKQ0yQxBTQkKINS5V6zlxxFVzPHniOz9gnAsJAuEG3HGjmGX4/2oVzUBRnmPBVpLvsV3ryLCyDy+5OW37IksiOhTPi9sinKsqe69JyDasaiQTaElZ9RODFEbsy4DsCwMp5x8m+E=
+	t=1734018149; cv=none; b=p1pkqBmHsTOx1rzkXlWfa8qTYis5ODPRCb2I4JG8PynZfiZnmO+0ISSKgW5a9ERgHG2uaJGqzhbHQAt0BV7yz7/yECTbVvKVaGOJ4urSsnN18S/V02ssKvchpdV+mTFx4NwiJt2c+xysW6XKyAHbq5jzFEoLospYdivG3BeFXAE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734018146; c=relaxed/simple;
-	bh=O/XHJIlVdj47wLwJJQRm9/KHC4IMYOBgv+ExBSo+Yu4=;
+	s=arc-20240116; t=1734018149; c=relaxed/simple;
+	bh=cCbHH3W3g7TU33sAcOU5DJ5sCsoy6LL1Qt3kbVA9gNI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=pLaFBsYEvDE5Bm5/CwgGTDIWTCOjuUtprQ7QNF5azrIiU32IWVL6q5V5i1bSC2mVFQnCLGBDgcnxKfMRSLXzj16fvtPszgbK0Fu/0iojI/iU082oUblc/OhHS6BjYOWwlwzELsb96tZE0jLWyA6LVh8cpQYkmSZ7DYR3btnb2Ig=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lt3Pu5e9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WCGsTcTap8u+gUAlMjnGEnC/kKE2kPTAxAxneEQvkcCCaEb+J+2BIKN6j3oUsse+k/y2MXaOQFb7gyHg4RrLsOD8E9fjgRtJgOWdSbuH+bvXiEl9Ke0TJIwGyohO7Fg6EgxMVdM5+4pQMZStODHh2sjSytNZcHAuGcfDMe8AH54=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JdJdJ4X/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lt3Pu5e9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D9C7C4CECE;
-	Thu, 12 Dec 2024 15:42:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JdJdJ4X/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C9CBC4CECE;
+	Thu, 12 Dec 2024 15:42:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734018145;
-	bh=O/XHJIlVdj47wLwJJQRm9/KHC4IMYOBgv+ExBSo+Yu4=;
+	s=korg; t=1734018149;
+	bh=cCbHH3W3g7TU33sAcOU5DJ5sCsoy6LL1Qt3kbVA9gNI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Lt3Pu5e96WE5WWOCDGTl2HXZBAX4sHSadeDve7DH/txKbQ6dXDFw7P8PFDq5Vb7GQ
-	 PKyvDvfa6eKTLvGFpQ5WLq6jV2p3RuQa8MRxzPA02KKtcjwUCKBJ060zXucuEgOyjD
-	 ZAYjijwnXtJ8Oz8xKmTYhQ2OMXx3yyknvb9Y/r2g=
+	b=JdJdJ4X/JPzGVTkeMMZNQXAsi9FW+/5a5EzajCP3c8/Gtdz8ZYHPYaEafgISX+Ps/
+	 m6OhejfiTVFdah6n6m5+KTexJGRgzcnsKmfy2toOgUyFlpwnz0QlIbKFmBaJpK7SJY
+	 //Z7IUsyy6Qqc/hYTzRa0rx7kkSLj5NqgDp1EKhs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Joaqu=C3=ADn=20Ignacio=20Aramend=C3=ADa?= <samsagax@gmail.com>,
-	Tobias Jakobi <tjakobi@math.uni-bielefeld.de>,
+	Liao Chen <liaochen4@huawei.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 210/356] drm: panel-orientation-quirks: Add quirk for AYA NEO GEEK
-Date: Thu, 12 Dec 2024 15:58:49 +0100
-Message-ID: <20241212144252.911608109@linuxfoundation.org>
+Subject: [PATCH 6.6 211/356] drm/bridge: it6505: Enable module autoloading
+Date: Thu, 12 Dec 2024 15:58:50 +0100
+Message-ID: <20241212144252.951620296@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144244.601729511@linuxfoundation.org>
 References: <20241212144244.601729511@linuxfoundation.org>
@@ -47,54 +46,40 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Joaquín Ignacio Aramendía <samsagax@gmail.com>
+From: Liao Chen <liaochen4@huawei.com>
 
-[ Upstream commit 428656feb972ca99200fc127b5aecb574efd9d3d ]
+[ Upstream commit 1e2ab24cd708b1c864ff983ee1504c0a409d2f8e ]
 
-Add quirk orientation for AYA NEO GEEK. The name appears without
-spaces in DMI strings. The board name is completely different to
-the previous models making it difficult to reuse their quirks
-despite being the same resolution and using the same orientation.
+Add MODULE_DEVICE_TABLE(), so modules could be properly autoloaded based
+on the alias from of_device_id table.
 
-Tested by the JELOS team that has been patching their own kernel for a
-while now and confirmed by users in the AYA NEO and ChimeraOS discord
-servers.
-
-Signed-off-by: Joaquín Ignacio Aramendía <samsagax@gmail.com>
-Signed-off-by: Tobias Jakobi <tjakobi@math.uni-bielefeld.de>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/40350b0d63fe2b54e7cba1e14be50917203f0079.1726492131.git.tjakobi@math.uni-bielefeld.de
+Signed-off-by: Liao Chen <liaochen4@huawei.com>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240902113320.903147-2-liaochen4@huawei.com
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_panel_orientation_quirks.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/gpu/drm/bridge/ite-it6505.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/drm_panel_orientation_quirks.c b/drivers/gpu/drm/drm_panel_orientation_quirks.c
-index 2ee14c6b6fd62..c00f6f16244c0 100644
---- a/drivers/gpu/drm/drm_panel_orientation_quirks.c
-+++ b/drivers/gpu/drm/drm_panel_orientation_quirks.c
-@@ -208,6 +208,12 @@ static const struct dmi_system_id orientation_data[] = {
- 		  DMI_MATCH(DMI_PRODUCT_NAME, "AYA NEO Founder"),
- 		},
- 		.driver_data = (void *)&lcd800x1280_rightside_up,
-+	}, {	/* AYA NEO GEEK */
-+		.matches = {
-+		  DMI_EXACT_MATCH(DMI_SYS_VENDOR, "AYANEO"),
-+		  DMI_MATCH(DMI_PRODUCT_NAME, "GEEK"),
-+		},
-+		.driver_data = (void *)&lcd800x1280_rightside_up,
- 	}, {	/* AYA NEO NEXT */
- 		.matches = {
- 		  DMI_EXACT_MATCH(DMI_BOARD_VENDOR, "AYANEO"),
+diff --git a/drivers/gpu/drm/bridge/ite-it6505.c b/drivers/gpu/drm/bridge/ite-it6505.c
+index 2a7c620626a03..26d3b9b843267 100644
+--- a/drivers/gpu/drm/bridge/ite-it6505.c
++++ b/drivers/gpu/drm/bridge/ite-it6505.c
+@@ -3503,6 +3503,7 @@ static const struct of_device_id it6505_of_match[] = {
+ 	{ .compatible = "ite,it6505" },
+ 	{ }
+ };
++MODULE_DEVICE_TABLE(of, it6505_of_match);
+ 
+ static struct i2c_driver it6505_i2c_driver = {
+ 	.driver = {
 -- 
 2.43.0
 
