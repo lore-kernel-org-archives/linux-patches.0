@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06E07205501;
-	Thu, 12 Dec 2024 16:33:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F63E205501;
+	Thu, 12 Dec 2024 16:33:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734021227; cv=none; b=NwnFKg4vI+JtSWUStXlzr3E5Jv+Z8uH6Vxx+kbLQEmcjcSz8ObyAQIg4Z4Y3Ruc0OOGIazn08QYZcmWBhf0vBV2T6vP5lD1HWs6sbRRoRdLAKARmZhphSAS0k7gLqWtFONhHShZXZjA1VXDTHFn8HKtqijnTUYV6C6woVTV+7Jw=
+	t=1734021230; cv=none; b=nL2yYgjl617ucN2bKXG0yinQQJfTuWNhGxTP4u+S3P8ZmBxCAFHLpQKXRp5YgQJrC5vQv3yN94CgRMGQLSTyMDgyr8A6/owrM+JhhsE6D06Oe1qAmoKJdGuFLWivwm6X+zxZi4xaZG31e8TFsbDD+OJmAQomF0kyn+tLtbuluQc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734021227; c=relaxed/simple;
-	bh=LCqL/CZzeEid/CUdUp4wvN6XM6WyN166o8hEu1HRVZg=;
+	s=arc-20240116; t=1734021230; c=relaxed/simple;
+	bh=4ivx6Gs/h4jkwd2BZ4Y+5A54/fxRAofKIbNg8OzYeWk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t5jAqclLNmAjqzZC07OQAge6ymcs/JjoDMqYSujA/Oi5rrMY0D6hgQgJZ6XnI/bktKfv5yE13KDFUxbMIMR/dal16OpCyGwPHvjxrxqKNepaHxnRRjUy4yUDBSSuJyja3G8UMp0z5GCKA8dCj0FHr0rWDwzesuijipqT27qRmpw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ElD6vT5+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=tdxtsNOCX1+6PV87PX9O/AJmzywWRF03ziyJ+ESPItMjphxDndonTzzPctanyqOV6GLajIouO/nGrSr2UB6DGbaDqDtO5qFRFqrk7iLXWlcrkSbVQ8p68yJDbG1ZaqnyfmEIhIJGvTNL4qcqe8b9qMz5rrBkyr2TNUiKXx9tCCQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yKz90UvC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ElD6vT5+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37A64C4CECE;
-	Thu, 12 Dec 2024 16:33:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yKz90UvC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E04F9C4CECE;
+	Thu, 12 Dec 2024 16:33:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734021226;
-	bh=LCqL/CZzeEid/CUdUp4wvN6XM6WyN166o8hEu1HRVZg=;
+	s=korg; t=1734021230;
+	bh=4ivx6Gs/h4jkwd2BZ4Y+5A54/fxRAofKIbNg8OzYeWk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ElD6vT5+YAFPquul8qbGoW67vN04nRckEpBPzq1uAR4/5dLNzDrZ4ftjCbhb552sw
-	 +sMzzdmzu3rNOAhL71saAvuWg4P0rb4gPx+7LxqcKCm4bJSLjyKCtOEf6aSmknrDMk
-	 JvKUpUFsCnFd5avz6AeiohEXvopGp1VUzUt/B7iI=
+	b=yKz90UvCiSbl6IcoZeF/j41/v1gbU2EWnpvNqxkuUW+n35/zkuhSaP0n6kGJDlKYv
+	 v6cNam/v6OBcScpd0reIzyXazdIH9ZvPHUAqBso5gVFZV+4rxCAS4QT0baQiNYwtKl
+	 QfUef8LIojkBiSLjl4KRfjVORcI3xozR3BX9fmCM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Vasut <marex@denx.de>,
-	Shawn Guo <shawnguo@kernel.org>,
+	Callahan Kovacs <callahankovacs@gmail.com>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 651/772] soc: imx8m: Probe the SoC driver as platform driver
-Date: Thu, 12 Dec 2024 15:59:56 +0100
-Message-ID: <20241212144416.821805739@linuxfoundation.org>
+Subject: [PATCH 6.1 652/772] HID: magicmouse: Apple Magic Trackpad 2 USB-C driver support
+Date: Thu, 12 Dec 2024 15:59:57 +0100
+Message-ID: <20241212144416.861472028@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -45,275 +45,208 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Marek Vasut <marex@denx.de>
+From: Callahan Kovacs <callahankovacs@gmail.com>
 
-[ Upstream commit 9cc832d37799dbea950c4c8a34721b02b8b5a8ff ]
+[ Upstream commit 87a2f10395c82c2b4687bb8611a6c5663a12f9e7 ]
 
-With driver_async_probe=* on kernel command line, the following trace is
-produced because on i.MX8M Plus hardware because the soc-imx8m.c driver
-calls of_clk_get_by_name() which returns -EPROBE_DEFER because the clock
-driver is not yet probed. This was not detected during regular testing
-without driver_async_probe.
+Adds driver support for the USB-C model of Apple's Magic Trackpad 2.
 
-Convert the SoC code to platform driver and instantiate a platform device
-in its current device_initcall() to probe the platform driver. Rework
-.soc_revision callback to always return valid error code and return SoC
-revision via parameter. This way, if anything in the .soc_revision callback
-return -EPROBE_DEFER, it gets propagated to .probe and the .probe will get
-retried later.
+The 2024 USB-C model is compatible with the existing Magic Trackpad 2
+driver but has a different hardware ID.
 
-"
-------------[ cut here ]------------
-WARNING: CPU: 1 PID: 1 at drivers/soc/imx/soc-imx8m.c:115 imx8mm_soc_revision+0xdc/0x180
-CPU: 1 UID: 0 PID: 1 Comm: swapper/0 Not tainted 6.11.0-next-20240924-00002-g2062bb554dea #603
-Hardware name: DH electronics i.MX8M Plus DHCOM Premium Developer Kit (3) (DT)
-pstate: 20000005 (nzCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-pc : imx8mm_soc_revision+0xdc/0x180
-lr : imx8mm_soc_revision+0xd0/0x180
-sp : ffff8000821fbcc0
-x29: ffff8000821fbce0 x28: 0000000000000000 x27: ffff800081810120
-x26: ffff8000818a9970 x25: 0000000000000006 x24: 0000000000824311
-x23: ffff8000817f42c8 x22: ffff0000df8be210 x21: fffffffffffffdfb
-x20: ffff800082780000 x19: 0000000000000001 x18: ffffffffffffffff
-x17: ffff800081fff418 x16: ffff8000823e1000 x15: ffff0000c03b65e8
-x14: ffff0000c00051b0 x13: ffff800082790000 x12: 0000000000000801
-x11: ffff80008278ffff x10: ffff80008209d3a6 x9 : ffff80008062e95c
-x8 : ffff8000821fb9a0 x7 : 0000000000000000 x6 : 00000000000080e3
-x5 : ffff0000df8c03d8 x4 : 0000000000000000 x3 : 0000000000000000
-x2 : 0000000000000000 x1 : fffffffffffffdfb x0 : fffffffffffffdfb
-Call trace:
- imx8mm_soc_revision+0xdc/0x180
- imx8_soc_init+0xb0/0x1e0
- do_one_initcall+0x94/0x1a8
- kernel_init_freeable+0x240/0x2a8
- kernel_init+0x28/0x140
- ret_from_fork+0x10/0x20
----[ end trace 0000000000000000 ]---
-SoC: i.MX8MP revision 1.1
-"
-
-Signed-off-by: Marek Vasut <marex@denx.de>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=219470
+Signed-off-by: Callahan Kovacs <callahankovacs@gmail.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/imx/soc-imx8m.c | 107 ++++++++++++++++++++++++++++--------
- 1 file changed, 85 insertions(+), 22 deletions(-)
+ drivers/hid/hid-ids.h        |  1 +
+ drivers/hid/hid-magicmouse.c | 56 ++++++++++++++++++++++++++----------
+ 2 files changed, 42 insertions(+), 15 deletions(-)
 
-diff --git a/drivers/soc/imx/soc-imx8m.c b/drivers/soc/imx/soc-imx8m.c
-index 08197b03955dd..a160854a19178 100644
---- a/drivers/soc/imx/soc-imx8m.c
-+++ b/drivers/soc/imx/soc-imx8m.c
-@@ -30,7 +30,7 @@
+diff --git a/drivers/hid/hid-ids.h b/drivers/hid/hid-ids.h
+index f1c106f5e90b9..790966e5b6ec4 100644
+--- a/drivers/hid/hid-ids.h
++++ b/drivers/hid/hid-ids.h
+@@ -94,6 +94,7 @@
+ #define USB_DEVICE_ID_APPLE_MAGICMOUSE2	0x0269
+ #define USB_DEVICE_ID_APPLE_MAGICTRACKPAD	0x030e
+ #define USB_DEVICE_ID_APPLE_MAGICTRACKPAD2	0x0265
++#define USB_DEVICE_ID_APPLE_MAGICTRACKPAD2_USBC	0x0324
+ #define USB_DEVICE_ID_APPLE_FOUNTAIN_ANSI	0x020e
+ #define USB_DEVICE_ID_APPLE_FOUNTAIN_ISO	0x020f
+ #define USB_DEVICE_ID_APPLE_GEYSER_ANSI	0x0214
+diff --git a/drivers/hid/hid-magicmouse.c b/drivers/hid/hid-magicmouse.c
+index c9c968d4b36a3..9bb8daf7f7860 100644
+--- a/drivers/hid/hid-magicmouse.c
++++ b/drivers/hid/hid-magicmouse.c
+@@ -224,7 +224,9 @@ static void magicmouse_emit_touch(struct magicmouse_sc *msc, int raw_id, u8 *tda
+ 		touch_minor = tdata[4];
+ 		state = tdata[7] & TOUCH_STATE_MASK;
+ 		down = state != TOUCH_STATE_NONE;
+-	} else if (input->id.product == USB_DEVICE_ID_APPLE_MAGICTRACKPAD2) {
++	} else if (input->id.product == USB_DEVICE_ID_APPLE_MAGICTRACKPAD2 ||
++		   input->id.product ==
++			   USB_DEVICE_ID_APPLE_MAGICTRACKPAD2_USBC) {
+ 		id = tdata[8] & 0xf;
+ 		x = (tdata[1] << 27 | tdata[0] << 19) >> 19;
+ 		y = -((tdata[3] << 30 | tdata[2] << 22 | tdata[1] << 14) >> 19);
+@@ -256,8 +258,9 @@ static void magicmouse_emit_touch(struct magicmouse_sc *msc, int raw_id, u8 *tda
+ 	/* If requested, emulate a scroll wheel by detecting small
+ 	 * vertical touch motions.
+ 	 */
+-	if (emulate_scroll_wheel && (input->id.product !=
+-			USB_DEVICE_ID_APPLE_MAGICTRACKPAD2)) {
++	if (emulate_scroll_wheel &&
++	    input->id.product != USB_DEVICE_ID_APPLE_MAGICTRACKPAD2 &&
++	    input->id.product != USB_DEVICE_ID_APPLE_MAGICTRACKPAD2_USBC) {
+ 		unsigned long now = jiffies;
+ 		int step_x = msc->touches[id].scroll_x - x;
+ 		int step_y = msc->touches[id].scroll_y - y;
+@@ -356,7 +359,9 @@ static void magicmouse_emit_touch(struct magicmouse_sc *msc, int raw_id, u8 *tda
+ 		input_report_abs(input, ABS_MT_POSITION_X, x);
+ 		input_report_abs(input, ABS_MT_POSITION_Y, y);
  
- struct imx8_soc_data {
- 	char *name;
--	u32 (*soc_revision)(void);
-+	int (*soc_revision)(u32 *socrev);
+-		if (input->id.product == USB_DEVICE_ID_APPLE_MAGICTRACKPAD2)
++		if (input->id.product == USB_DEVICE_ID_APPLE_MAGICTRACKPAD2 ||
++		    input->id.product ==
++			    USB_DEVICE_ID_APPLE_MAGICTRACKPAD2_USBC)
+ 			input_report_abs(input, ABS_MT_PRESSURE, pressure);
+ 
+ 		if (report_undeciphered) {
+@@ -364,7 +369,9 @@ static void magicmouse_emit_touch(struct magicmouse_sc *msc, int raw_id, u8 *tda
+ 			    input->id.product == USB_DEVICE_ID_APPLE_MAGICMOUSE2)
+ 				input_event(input, EV_MSC, MSC_RAW, tdata[7]);
+ 			else if (input->id.product !=
+-					USB_DEVICE_ID_APPLE_MAGICTRACKPAD2)
++					 USB_DEVICE_ID_APPLE_MAGICTRACKPAD2 &&
++				 input->id.product !=
++					 USB_DEVICE_ID_APPLE_MAGICTRACKPAD2_USBC)
+ 				input_event(input, EV_MSC, MSC_RAW, tdata[8]);
+ 		}
+ 	}
+@@ -490,7 +497,9 @@ static int magicmouse_raw_event(struct hid_device *hdev,
+ 		magicmouse_emit_buttons(msc, clicks & 3);
+ 		input_report_rel(input, REL_X, x);
+ 		input_report_rel(input, REL_Y, y);
+-	} else if (input->id.product == USB_DEVICE_ID_APPLE_MAGICTRACKPAD2) {
++	} else if (input->id.product == USB_DEVICE_ID_APPLE_MAGICTRACKPAD2 ||
++		   input->id.product ==
++			   USB_DEVICE_ID_APPLE_MAGICTRACKPAD2_USBC) {
+ 		input_mt_sync_frame(input);
+ 		input_report_key(input, BTN_MOUSE, clicks & 1);
+ 	} else { /* USB_DEVICE_ID_APPLE_MAGICTRACKPAD */
+@@ -542,7 +551,9 @@ static int magicmouse_setup_input(struct input_dev *input, struct hid_device *hd
+ 			__set_bit(REL_WHEEL_HI_RES, input->relbit);
+ 			__set_bit(REL_HWHEEL_HI_RES, input->relbit);
+ 		}
+-	} else if (input->id.product == USB_DEVICE_ID_APPLE_MAGICTRACKPAD2) {
++	} else if (input->id.product == USB_DEVICE_ID_APPLE_MAGICTRACKPAD2 ||
++		   input->id.product ==
++			   USB_DEVICE_ID_APPLE_MAGICTRACKPAD2_USBC) {
+ 		/* If the trackpad has been connected to a Mac, the name is
+ 		 * automatically personalized, e.g., "José Expósito's Trackpad".
+ 		 * When connected through Bluetooth, the personalized name is
+@@ -618,7 +629,9 @@ static int magicmouse_setup_input(struct input_dev *input, struct hid_device *hd
+ 				  MOUSE_RES_X);
+ 		input_abs_set_res(input, ABS_MT_POSITION_Y,
+ 				  MOUSE_RES_Y);
+-	} else if (input->id.product ==  USB_DEVICE_ID_APPLE_MAGICTRACKPAD2) {
++	} else if (input->id.product == USB_DEVICE_ID_APPLE_MAGICTRACKPAD2 ||
++		   input->id.product ==
++			   USB_DEVICE_ID_APPLE_MAGICTRACKPAD2_USBC) {
+ 		input_set_abs_params(input, ABS_MT_PRESSURE, 0, 253, 0, 0);
+ 		input_set_abs_params(input, ABS_PRESSURE, 0, 253, 0, 0);
+ 		input_set_abs_params(input, ABS_MT_ORIENTATION, -3, 4, 0, 0);
+@@ -657,7 +670,8 @@ static int magicmouse_setup_input(struct input_dev *input, struct hid_device *hd
+ 	input_set_events_per_packet(input, 60);
+ 
+ 	if (report_undeciphered &&
+-	    input->id.product != USB_DEVICE_ID_APPLE_MAGICTRACKPAD2) {
++	    input->id.product != USB_DEVICE_ID_APPLE_MAGICTRACKPAD2 &&
++	    input->id.product != USB_DEVICE_ID_APPLE_MAGICTRACKPAD2_USBC) {
+ 		__set_bit(EV_MSC, input->evbit);
+ 		__set_bit(MSC_RAW, input->mscbit);
+ 	}
+@@ -682,7 +696,9 @@ static int magicmouse_input_mapping(struct hid_device *hdev,
+ 
+ 	/* Magic Trackpad does not give relative data after switching to MT */
+ 	if ((hi->input->id.product == USB_DEVICE_ID_APPLE_MAGICTRACKPAD ||
+-	     hi->input->id.product == USB_DEVICE_ID_APPLE_MAGICTRACKPAD2) &&
++	     hi->input->id.product == USB_DEVICE_ID_APPLE_MAGICTRACKPAD2 ||
++	     hi->input->id.product ==
++		     USB_DEVICE_ID_APPLE_MAGICTRACKPAD2_USBC) &&
+ 	    field->flags & HID_MAIN_ITEM_RELATIVE)
+ 		return -1;
+ 
+@@ -718,7 +734,8 @@ static int magicmouse_enable_multitouch(struct hid_device *hdev)
+ 	int ret;
+ 	int feature_size;
+ 
+-	if (hdev->product == USB_DEVICE_ID_APPLE_MAGICTRACKPAD2) {
++	if (hdev->product == USB_DEVICE_ID_APPLE_MAGICTRACKPAD2 ||
++	    hdev->product == USB_DEVICE_ID_APPLE_MAGICTRACKPAD2_USBC) {
+ 		if (hdev->vendor == BT_VENDOR_ID_APPLE) {
+ 			feature_size = sizeof(feature_mt_trackpad2_bt);
+ 			feature = feature_mt_trackpad2_bt;
+@@ -763,7 +780,8 @@ static int magicmouse_fetch_battery(struct hid_device *hdev)
+ 
+ 	if (!hdev->battery || hdev->vendor != USB_VENDOR_ID_APPLE ||
+ 	    (hdev->product != USB_DEVICE_ID_APPLE_MAGICMOUSE2 &&
+-	     hdev->product != USB_DEVICE_ID_APPLE_MAGICTRACKPAD2))
++	     hdev->product != USB_DEVICE_ID_APPLE_MAGICTRACKPAD2 &&
++	     hdev->product != USB_DEVICE_ID_APPLE_MAGICTRACKPAD2_USBC))
+ 		return -1;
+ 
+ 	report_enum = &hdev->report_enum[hdev->battery_report_type];
+@@ -832,7 +850,9 @@ static int magicmouse_probe(struct hid_device *hdev,
+ 
+ 	if (id->vendor == USB_VENDOR_ID_APPLE &&
+ 	    (id->product == USB_DEVICE_ID_APPLE_MAGICMOUSE2 ||
+-	     (id->product == USB_DEVICE_ID_APPLE_MAGICTRACKPAD2 && hdev->type != HID_TYPE_USBMOUSE)))
++	     ((id->product == USB_DEVICE_ID_APPLE_MAGICTRACKPAD2 ||
++	       id->product == USB_DEVICE_ID_APPLE_MAGICTRACKPAD2_USBC) &&
++	      hdev->type != HID_TYPE_USBMOUSE)))
+ 		return 0;
+ 
+ 	if (!msc->input) {
+@@ -847,7 +867,8 @@ static int magicmouse_probe(struct hid_device *hdev,
+ 	else if (id->product == USB_DEVICE_ID_APPLE_MAGICMOUSE2)
+ 		report = hid_register_report(hdev, HID_INPUT_REPORT,
+ 			MOUSE2_REPORT_ID, 0);
+-	else if (id->product == USB_DEVICE_ID_APPLE_MAGICTRACKPAD2) {
++	else if (id->product == USB_DEVICE_ID_APPLE_MAGICTRACKPAD2 ||
++		 id->product == USB_DEVICE_ID_APPLE_MAGICTRACKPAD2_USBC) {
+ 		if (id->vendor == BT_VENDOR_ID_APPLE)
+ 			report = hid_register_report(hdev, HID_INPUT_REPORT,
+ 				TRACKPAD2_BT_REPORT_ID, 0);
+@@ -917,7 +938,8 @@ static __u8 *magicmouse_report_fixup(struct hid_device *hdev, __u8 *rdesc,
+ 	 */
+ 	if (hdev->vendor == USB_VENDOR_ID_APPLE &&
+ 	    (hdev->product == USB_DEVICE_ID_APPLE_MAGICMOUSE2 ||
+-	     hdev->product == USB_DEVICE_ID_APPLE_MAGICTRACKPAD2) &&
++	     hdev->product == USB_DEVICE_ID_APPLE_MAGICTRACKPAD2 ||
++	     hdev->product == USB_DEVICE_ID_APPLE_MAGICTRACKPAD2_USBC) &&
+ 	    *rsize == 83 && rdesc[46] == 0x84 && rdesc[58] == 0x85) {
+ 		hid_info(hdev,
+ 			 "fixing up magicmouse battery report descriptor\n");
+@@ -948,6 +970,10 @@ static const struct hid_device_id magic_mice[] = {
+ 		USB_DEVICE_ID_APPLE_MAGICTRACKPAD2), .driver_data = 0 },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE,
+ 		USB_DEVICE_ID_APPLE_MAGICTRACKPAD2), .driver_data = 0 },
++	{ HID_BLUETOOTH_DEVICE(BT_VENDOR_ID_APPLE,
++		USB_DEVICE_ID_APPLE_MAGICTRACKPAD2_USBC), .driver_data = 0 },
++	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE,
++		USB_DEVICE_ID_APPLE_MAGICTRACKPAD2_USBC), .driver_data = 0 },
+ 	{ }
  };
- 
- static u64 soc_uid;
-@@ -51,24 +51,29 @@ static u32 imx8mq_soc_revision_from_atf(void)
- static inline u32 imx8mq_soc_revision_from_atf(void) { return 0; };
- #endif
- 
--static u32 __init imx8mq_soc_revision(void)
-+static int imx8mq_soc_revision(u32 *socrev)
- {
- 	struct device_node *np;
- 	void __iomem *ocotp_base;
- 	u32 magic;
- 	u32 rev;
- 	struct clk *clk;
-+	int ret;
- 
- 	np = of_find_compatible_node(NULL, NULL, "fsl,imx8mq-ocotp");
- 	if (!np)
--		return 0;
-+		return -EINVAL;
- 
- 	ocotp_base = of_iomap(np, 0);
--	WARN_ON(!ocotp_base);
-+	if (!ocotp_base) {
-+		ret = -EINVAL;
-+		goto err_iomap;
-+	}
-+
- 	clk = of_clk_get_by_name(np, NULL);
- 	if (IS_ERR(clk)) {
--		WARN_ON(IS_ERR(clk));
--		return 0;
-+		ret = PTR_ERR(clk);
-+		goto err_clk;
- 	}
- 
- 	clk_prepare_enable(clk);
-@@ -88,32 +93,45 @@ static u32 __init imx8mq_soc_revision(void)
- 	soc_uid <<= 32;
- 	soc_uid |= readl_relaxed(ocotp_base + OCOTP_UID_LOW);
- 
-+	*socrev = rev;
-+
- 	clk_disable_unprepare(clk);
- 	clk_put(clk);
- 	iounmap(ocotp_base);
- 	of_node_put(np);
- 
--	return rev;
-+	return 0;
-+
-+err_clk:
-+	iounmap(ocotp_base);
-+err_iomap:
-+	of_node_put(np);
-+	return ret;
- }
- 
--static void __init imx8mm_soc_uid(void)
-+static int imx8mm_soc_uid(void)
- {
- 	void __iomem *ocotp_base;
- 	struct device_node *np;
- 	struct clk *clk;
-+	int ret = 0;
- 	u32 offset = of_machine_is_compatible("fsl,imx8mp") ?
- 		     IMX8MP_OCOTP_UID_OFFSET : 0;
- 
- 	np = of_find_compatible_node(NULL, NULL, "fsl,imx8mm-ocotp");
- 	if (!np)
--		return;
-+		return -EINVAL;
- 
- 	ocotp_base = of_iomap(np, 0);
--	WARN_ON(!ocotp_base);
-+	if (!ocotp_base) {
-+		ret = -EINVAL;
-+		goto err_iomap;
-+	}
-+
- 	clk = of_clk_get_by_name(np, NULL);
- 	if (IS_ERR(clk)) {
--		WARN_ON(IS_ERR(clk));
--		return;
-+		ret = PTR_ERR(clk);
-+		goto err_clk;
- 	}
- 
- 	clk_prepare_enable(clk);
-@@ -124,31 +142,41 @@ static void __init imx8mm_soc_uid(void)
- 
- 	clk_disable_unprepare(clk);
- 	clk_put(clk);
-+
-+err_clk:
- 	iounmap(ocotp_base);
-+err_iomap:
- 	of_node_put(np);
-+
-+	return ret;
- }
- 
--static u32 __init imx8mm_soc_revision(void)
-+static int imx8mm_soc_revision(u32 *socrev)
- {
- 	struct device_node *np;
- 	void __iomem *anatop_base;
--	u32 rev;
-+	int ret;
- 
- 	np = of_find_compatible_node(NULL, NULL, "fsl,imx8mm-anatop");
- 	if (!np)
--		return 0;
-+		return -EINVAL;
- 
- 	anatop_base = of_iomap(np, 0);
--	WARN_ON(!anatop_base);
-+	if (!anatop_base) {
-+		ret = -EINVAL;
-+		goto err_iomap;
-+	}
- 
--	rev = readl_relaxed(anatop_base + ANADIG_DIGPROG_IMX8MM);
-+	*socrev = readl_relaxed(anatop_base + ANADIG_DIGPROG_IMX8MM);
- 
- 	iounmap(anatop_base);
- 	of_node_put(np);
- 
--	imx8mm_soc_uid();
-+	return imx8mm_soc_uid();
- 
--	return rev;
-+err_iomap:
-+	of_node_put(np);
-+	return ret;
- }
- 
- static const struct imx8_soc_data imx8mq_soc_data = {
-@@ -184,7 +212,7 @@ static __maybe_unused const struct of_device_id imx8_soc_match[] = {
- 	kasprintf(GFP_KERNEL, "%d.%d", (soc_rev >> 4) & 0xf,  soc_rev & 0xf) : \
- 	"unknown"
- 
--static int __init imx8_soc_init(void)
-+static int imx8m_soc_probe(struct platform_device *pdev)
- {
- 	struct soc_device_attribute *soc_dev_attr;
- 	struct soc_device *soc_dev;
-@@ -212,8 +240,11 @@ static int __init imx8_soc_init(void)
- 	data = id->data;
- 	if (data) {
- 		soc_dev_attr->soc_id = data->name;
--		if (data->soc_revision)
--			soc_rev = data->soc_revision();
-+		if (data->soc_revision) {
-+			ret = data->soc_revision(&soc_rev);
-+			if (ret)
-+				goto free_soc;
-+		}
- 	}
- 
- 	soc_dev_attr->revision = imx8_revision(soc_rev);
-@@ -251,4 +282,36 @@ static int __init imx8_soc_init(void)
- 	kfree(soc_dev_attr);
- 	return ret;
- }
-+
-+static struct platform_driver imx8m_soc_driver = {
-+	.probe = imx8m_soc_probe,
-+	.driver = {
-+		.name = "imx8m-soc",
-+	},
-+};
-+
-+static int __init imx8_soc_init(void)
-+{
-+	struct platform_device *pdev;
-+	int ret;
-+
-+	/* No match means this is non-i.MX8M hardware, do nothing. */
-+	if (!of_match_node(imx8_soc_match, of_root))
-+		return 0;
-+
-+	ret = platform_driver_register(&imx8m_soc_driver);
-+	if (ret) {
-+		pr_err("Failed to register imx8m-soc platform driver: %d\n", ret);
-+		return ret;
-+	}
-+
-+	pdev = platform_device_register_simple("imx8m-soc", -1, NULL, 0);
-+	if (IS_ERR(pdev)) {
-+		pr_err("Failed to register imx8m-soc platform device: %ld\n", PTR_ERR(pdev));
-+		platform_driver_unregister(&imx8m_soc_driver);
-+		return PTR_ERR(pdev);
-+	}
-+
-+	return 0;
-+}
- device_initcall(imx8_soc_init);
+ MODULE_DEVICE_TABLE(hid, magic_mice);
 -- 
 2.43.0
 
