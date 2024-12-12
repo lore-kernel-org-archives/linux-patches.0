@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 069A122332E;
-	Thu, 12 Dec 2024 17:43:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B0AF223E77;
+	Thu, 12 Dec 2024 17:43:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734025429; cv=none; b=lJWHpC5TQ53Fhds8JHxs7wLneqahGLMUslvxlPv8uc+IGjv7wZpZfEkAAFlE5xP6scrsAfz/yM0A5UiLh7MkUesSSuqdopMOjfTUKbSr422wZd8MEdHJn0U4GiAhk4ffPOMRNEQpsayidHAyLo1uMiPXTyEm+E0veiQpRCuWfwg=
+	t=1734025431; cv=none; b=Vla5h5EBeCh4kCdcp2n6qf0Olf4WXooV2LdFkDA0XfnHJ1LeZrc5enQCOy1IeynENBvkYzF9DtmQ8Ni3Hnyt7aajuPBJViagqjrH2AG0Hw6jJKUscXXdR/qqNecreSrBO0+SxhID3zsTI1Mnjr20FIIIbA32lLTUDBTHxK7kR7M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734025429; c=relaxed/simple;
-	bh=DaO5lkFLiR/3H/scMVE0EX1DvEGuL3VKoTwV5bL7QBo=;
+	s=arc-20240116; t=1734025431; c=relaxed/simple;
+	bh=eq2E/Vps1O0CL0pyDU54obhV6Z3Z4gUreU3y+oJiUs8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=moWumhHZ2MyC19NIvbzM8QVlmr10UZk6fit5qZ+niUsFAiXu3Pz+Q0J3g4T2Q71ynWFmspSJ1ZeG5lUnubYdsbEfwyOlWi+K4aow4hdBuwvl38ccw4sYsYZ3F5BVXotQH8ufOhILZJN3P5SWJ1HZCsqgUKPtB0HQ3HzRUVZtBtg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BfjEHJaq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AlSRIQT3Jq6ZHzjCzygL/uY/iy5PTJtXaTuc9+bO93jY0YNCTkLk2cugnH1WVRRk2H5GbO40tkcIHGN0sEi4uibWiPTWLm/PNcuDFjC9koggyQUI+FlLG9k6a9NisoW/CvO0WfWUAC06+UPxjKJvHOmV5xWZ6Oc/l6AH/2ScecQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MmYEUjy+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BfjEHJaq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23B44C4CECE;
-	Thu, 12 Dec 2024 17:43:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MmYEUjy+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D124C4CECE;
+	Thu, 12 Dec 2024 17:43:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734025428;
-	bh=DaO5lkFLiR/3H/scMVE0EX1DvEGuL3VKoTwV5bL7QBo=;
+	s=korg; t=1734025431;
+	bh=eq2E/Vps1O0CL0pyDU54obhV6Z3Z4gUreU3y+oJiUs8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BfjEHJaqEb3g+k/G3fC2pj6trA1KkZEdlkK+6nTM1zcATNir3c5lm39MHHMCSlFjN
-	 zNyhurAzAlydPnY2eWVGb4V2PSYERcLN9mJN7t9LTAJwYQKlgjRYQxaPvWtO/dUk1L
-	 4FNGV1AgDoCT+nWDZG9uvXCcUhP0SVSrjHhEqWyg=
+	b=MmYEUjy+4VncxmzmUDJ0zMv3k6ny3IpZvuH3mLWwFGk84JagacY/Z1K9Owf3q54YX
+	 wKQlUnSMddLQaeHWDA9tVNA3S1A2Y/hQYsd2044QNM2Tf84qs8yJdcwUyGdo8/qT+c
+	 Fah+YHA/8Ci8a/7VvLdFdx9JC0FEM4f3ylEQJfz0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muchun Song <muchun.song@linux.dev>,
-	Muchun Song <songmuchun@bytedance.com>,
-	Ming Lei <ming.lei@redhat.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 5.4 166/321] block: fix ordering between checking BLK_MQ_S_STOPPED request adding
-Date: Thu, 12 Dec 2024 16:01:24 +0100
-Message-ID: <20241212144236.536738776@linuxfoundation.org>
+	Jason Gerecke <jason.gerecke@wacom.com>,
+	Jiri Kosina <jkosina@suse.com>
+Subject: [PATCH 5.4 167/321] HID: wacom: Interpret tilt data from Intuos Pro BT as signed values
+Date: Thu, 12 Dec 2024 16:01:25 +0100
+Message-ID: <20241212144236.574564357@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144229.291682835@linuxfoundation.org>
 References: <20241212144229.291682835@linuxfoundation.org>
@@ -52,113 +50,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Muchun Song <songmuchun@bytedance.com>
+From: Jason Gerecke <jason.gerecke@wacom.com>
 
-commit 96a9fe64bfd486ebeeacf1e6011801ffe89dae18 upstream.
+commit 49a397ad24ee5e2c53a59dada2780d7e71bd3f77 upstream.
 
-Supposing first scenario with a virtio_blk driver.
+The tilt data contained in the Bluetooth packets of an Intuos Pro are
+supposed to be interpreted as signed values. Simply casting the values
+to type `char` is not guaranteed to work since it is implementation-
+defined whether it is signed or unsigned. At least one user has noticed
+the data being reported incorrectly on their system. To ensure that the
+data is interpreted properly, we specifically cast to `signed char`
+instead.
 
-CPU0                        CPU1
-
-blk_mq_try_issue_directly()
-  __blk_mq_issue_directly()
-    q->mq_ops->queue_rq()
-      virtio_queue_rq()
-        blk_mq_stop_hw_queue()
-                            virtblk_done()
-  blk_mq_request_bypass_insert()  1) store
-                              blk_mq_start_stopped_hw_queue()
-                                clear_bit(BLK_MQ_S_STOPPED)       3) store
-                                blk_mq_run_hw_queue()
-                                  if (!blk_mq_hctx_has_pending()) 4) load
-                                    return
-                                  blk_mq_sched_dispatch_requests()
-  blk_mq_run_hw_queue()
-    if (!blk_mq_hctx_has_pending())
-      return
-    blk_mq_sched_dispatch_requests()
-      if (blk_mq_hctx_stopped())  2) load
-        return
-      __blk_mq_sched_dispatch_requests()
-
-Supposing another scenario.
-
-CPU0                        CPU1
-
-blk_mq_requeue_work()
-  blk_mq_insert_request() 1) store
-                            virtblk_done()
-                              blk_mq_start_stopped_hw_queue()
-  blk_mq_run_hw_queues()        clear_bit(BLK_MQ_S_STOPPED)       3) store
-                                blk_mq_run_hw_queue()
-                                  if (!blk_mq_hctx_has_pending()) 4) load
-                                    return
-                                  blk_mq_sched_dispatch_requests()
-    if (blk_mq_hctx_stopped())  2) load
-      continue
-    blk_mq_run_hw_queue()
-
-Both scenarios are similar, the full memory barrier should be inserted
-between 1) and 2), as well as between 3) and 4) to make sure that either
-CPU0 sees BLK_MQ_S_STOPPED is cleared or CPU1 sees dispatch list.
-Otherwise, either CPU will not rerun the hardware queue causing
-starvation of the request.
-
-The easy way to fix it is to add the essential full memory barrier into
-helper of blk_mq_hctx_stopped(). In order to not affect the fast path
-(hardware queue is not stopped most of the time), we only insert the
-barrier into the slow path. Actually, only slow path needs to care about
-missing of dispatching the request to the low-level device driver.
-
-Fixes: 320ae51feed5 ("blk-mq: new multi-queue block IO queueing mechanism")
-Cc: stable@vger.kernel.org
-Cc: Muchun Song <muchun.song@linux.dev>
-Signed-off-by: Muchun Song <songmuchun@bytedance.com>
-Reviewed-by: Ming Lei <ming.lei@redhat.com>
-Link: https://lore.kernel.org/r/20241014092934.53630-4-songmuchun@bytedance.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Link: https://github.com/linuxwacom/input-wacom/issues/445
+Fixes: 4922cd26f03c ("HID: wacom: Support 2nd-gen Intuos Pro's Bluetooth classic interface")
+CC: stable@vger.kernel.org # 4.11+
+Signed-off-by: Jason Gerecke <jason.gerecke@wacom.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- block/blk-mq.c |    6 ++++++
- block/blk-mq.h |   13 +++++++++++++
- 2 files changed, 19 insertions(+)
+ drivers/hid/wacom_wac.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/block/blk-mq.c
-+++ b/block/blk-mq.c
-@@ -1648,6 +1648,12 @@ void blk_mq_start_stopped_hw_queue(struc
- 		return;
+--- a/drivers/hid/wacom_wac.c
++++ b/drivers/hid/wacom_wac.c
+@@ -1394,9 +1394,9 @@ static void wacom_intuos_pro2_bt_pen(str
+ 					rotation -= 1800;
  
- 	clear_bit(BLK_MQ_S_STOPPED, &hctx->state);
-+	/*
-+	 * Pairs with the smp_mb() in blk_mq_hctx_stopped() to order the
-+	 * clearing of BLK_MQ_S_STOPPED above and the checking of dispatch
-+	 * list in the subsequent routine.
-+	 */
-+	smp_mb__after_atomic();
- 	blk_mq_run_hw_queue(hctx, async);
- }
- EXPORT_SYMBOL_GPL(blk_mq_start_stopped_hw_queue);
---- a/block/blk-mq.h
-+++ b/block/blk-mq.h
-@@ -177,6 +177,19 @@ static inline struct blk_mq_tags *blk_mq
- 
- static inline bool blk_mq_hctx_stopped(struct blk_mq_hw_ctx *hctx)
- {
-+	/* Fast path: hardware queue is not stopped most of the time. */
-+	if (likely(!test_bit(BLK_MQ_S_STOPPED, &hctx->state)))
-+		return false;
-+
-+	/*
-+	 * This barrier is used to order adding of dispatch list before and
-+	 * the test of BLK_MQ_S_STOPPED below. Pairs with the memory barrier
-+	 * in blk_mq_start_stopped_hw_queue() so that dispatch code could
-+	 * either see BLK_MQ_S_STOPPED is cleared or dispatch list is not
-+	 * empty to avoid missing dispatching requests.
-+	 */
-+	smp_mb();
-+
- 	return test_bit(BLK_MQ_S_STOPPED, &hctx->state);
- }
- 
+ 				input_report_abs(pen_input, ABS_TILT_X,
+-						 (char)frame[7]);
++						 (signed char)frame[7]);
+ 				input_report_abs(pen_input, ABS_TILT_Y,
+-						 (char)frame[8]);
++						 (signed char)frame[8]);
+ 				input_report_abs(pen_input, ABS_Z, rotation);
+ 				input_report_abs(pen_input, ABS_WHEEL,
+ 						 get_unaligned_le16(&frame[11]));
 
 
