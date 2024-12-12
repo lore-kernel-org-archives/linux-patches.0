@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6928D222D68;
-	Thu, 12 Dec 2024 16:08:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0966E222D68;
+	Thu, 12 Dec 2024 16:08:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734019712; cv=none; b=Eh3K/6GudeYgh9ELIZAXeYoX/Of5JBc9TW0d/vN5Tztyr1vm5RmxpF3d/0lfm01Puo1hBUFg2g8ebmsg9P9nNn1Hg8dGgmYBxSIQ+zpwPMjgCim1YLvSiQJG+pitfHIkuErGgNZlCIrXSPBInm6Bgw5p7JhgzoU6hB7iKE/7gK8=
+	t=1734019716; cv=none; b=Ix37hJ1dETLWb6k+Sl1i71riKol2HwGngcV3OgVOJQQcF12iAl4xId8pTj5jt85YheHqY5iqEQi9CeRTMeFmGwqfIfiaN9ASrkriRE7WNeN44gvhxiQG/4AUfJ7jPiwa2vg6xbgbxcTYumQ7ZZQ9RKKSwVdwHMkDGAe7HkMcSk8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734019712; c=relaxed/simple;
-	bh=g69dOTKkVTdiOuK/hJGBiVKUIIjuCZmhvuO4ZyHs3ZY=;
+	s=arc-20240116; t=1734019716; c=relaxed/simple;
+	bh=DwbZL5po4cNF14OUlV07kTqP2/UKRXRpXkdxUDuSs/c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gs6C8/BXA1R6vTvAVfXyo0u9mZUm8Pv4GfWQsrIOLKYTsE7DeV6hCDKmDtW4v3+x5sNcOS0mCKYn7lG+ptZrUaf/iq5MG4VhfZH8JlWFPZjUcaYA2+wPOm1G4Sshs4OCEHsW2XuByqyJMsvv5Gl9plo46IwMJCqo80+UDfjo2Ys=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CA9wuNje; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TSU+jRPrhd+zPRHsYej/vwd2EjVnSSvpdA7GaRmvm82yK282aRthpY/GMGuPkA9DHFJfnt2ZEAxyhXaN4AO2AVvGM7gFrPyaT5OtcMQvdoNENIzs2LJdQBg6r3aSNO13fU7T+D/zODzWqbeIjWkkPLQvUAhfbkCY01m7Rhj81tQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QPeTNhsj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CA9wuNje"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB3EBC4CECE;
-	Thu, 12 Dec 2024 16:08:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QPeTNhsj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 612F6C4CECE;
+	Thu, 12 Dec 2024 16:08:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734019712;
-	bh=g69dOTKkVTdiOuK/hJGBiVKUIIjuCZmhvuO4ZyHs3ZY=;
+	s=korg; t=1734019715;
+	bh=DwbZL5po4cNF14OUlV07kTqP2/UKRXRpXkdxUDuSs/c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CA9wuNjeu90YGw8bEodYPIhhP7RrS0QdSrZztQ1bOPm0SuaT/I6ZpcmKDH2xCnrTk
-	 ZoiBUkwanVzpr2PR/ZEqNZzYqeNsIT+xqDioj8Dot7Xcd8RSwlG+kXEhcI9K8AabzD
-	 kKZIUf7R7Y+JMVXTJwBzYRii3VgOMjOmuJ6ZHZLo=
+	b=QPeTNhsjk5UGY21sSHss8zQqY0q/FabtepbR9EHaGgnmp4GJv8CihJG7wfJ059GPJ
+	 WDDIWX0KxeDhe8MO1IAx68311/E7AlX6grCP/+52IkedqNUwuExqnWPUlKOwNgFxIK
+	 hpuJTRTdbPYnMokfIvnRHjsdBTiDIOjVys72HZ+0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhiguo Niu <zhiguo.niu@unisoc.com>,
+	Jinsu Lee <jinsu1.lee@samsung.com>,
 	Chao Yu <chao@kernel.org>,
 	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 277/772] f2fs: fix to avoid use GC_AT when setting gc_mode as GC_URGENT_LOW or GC_URGENT_MID
-Date: Thu, 12 Dec 2024 15:53:42 +0100
-Message-ID: <20241212144401.355218270@linuxfoundation.org>
+Subject: [PATCH 6.1 278/772] f2fs: fix to avoid forcing direct write to use buffered IO on inline_data inode
+Date: Thu, 12 Dec 2024 15:53:43 +0100
+Message-ID: <20241212144401.394868328@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -52,67 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhiguo Niu <zhiguo.niu@unisoc.com>
+From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit 296b8cb34e65fa93382cf919be5a056f719c9a26 ]
+[ Upstream commit 26e6f59d0bbaac76fa3413462d780bd2b5f9f653 ]
 
-If gc_mode is set to GC_URGENT_LOW or GC_URGENT_MID, cost benefit GC
-approach should be used, but if ATGC is enabled at the same time,
-Age-threshold approach will be selected, which can only do amount of
-GC and it is much less than the numbers of CB approach.
+Jinsu Lee reported a performance regression issue, after commit
+5c8764f8679e ("f2fs: fix to force buffered IO on inline_data
+inode"), we forced direct write to use buffered IO on inline_data
+inode, it will cause performace regression due to memory copy
+and data flush.
 
-some traces:
-  f2fs_gc-254:48-396     [007] ..... 2311600.684028: f2fs_gc_begin: dev = (254,48), gc_type = Background GC, no_background_GC = 0, nr_free_secs = 0, nodes = 1053, dents = 2, imeta = 18, free_sec:44898, free_seg:44898, rsv_seg:239, prefree_seg:0
-  f2fs_gc-254:48-396     [007] ..... 2311600.684527: f2fs_get_victim: dev = (254,48), type = No TYPE, policy = (Background GC, LFS-mode, Age-threshold), victim = 10, cost = 4294364975, ofs_unit = 1, pre_victim_secno = -1, prefree = 0, free = 44898
-  f2fs_gc-254:48-396     [007] ..... 2311600.714835: f2fs_gc_end: dev = (254,48), ret = 0, seg_freed = 0, sec_freed = 0, nodes = 1562, dents = 2, imeta = 18, free_sec:44898, free_seg:44898, rsv_seg:239, prefree_seg:0
-  f2fs_gc-254:48-396     [007] ..... 2311600.714843: f2fs_background_gc: dev = (254,48), wait_ms = 50, prefree = 0, free = 44898
-  f2fs_gc-254:48-396     [007] ..... 2311600.771785: f2fs_gc_begin: dev = (254,48), gc_type = Background GC, no_background_GC = 0, nr_free_secs = 0, nodes = 1562, dents = 2, imeta = 18, free_sec:44898, free_seg:44898, rsv_seg:239, prefree_seg:
-  f2fs_gc-254:48-396     [007] ..... 2311600.772275: f2fs_gc_end: dev = (254,48), ret = -61, seg_freed = 0, sec_freed = 0, nodes = 1562, dents = 2, imeta = 18, free_sec:44898, free_seg:44898, rsv_seg:239, prefree_seg:0
+It's fine to not force direct write to use buffered IO, as it
+can convert inline inode before committing direct write IO.
 
-Fixes: 0e5e81114de1 ("f2fs: add GC_URGENT_LOW mode in gc_urgent")
-Fixes: d98af5f45520 ("f2fs: introduce gc_urgent_mid mode")
-Signed-off-by: Zhiguo Niu <zhiguo.niu@unisoc.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
+Fixes: 5c8764f8679e ("f2fs: fix to force buffered IO on inline_data inode")
+Reported-by: Jinsu Lee <jinsu1.lee@samsung.com>
+Closes: https://lore.kernel.org/linux-f2fs-devel/af03dd2c-e361-4f80-b2fd-39440766cf6e@kernel.org
+Signed-off-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/ABI/testing/sysfs-fs-f2fs | 7 +++++--
- fs/f2fs/gc.c                            | 2 ++
- 2 files changed, 7 insertions(+), 2 deletions(-)
+ fs/f2fs/file.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/ABI/testing/sysfs-fs-f2fs b/Documentation/ABI/testing/sysfs-fs-f2fs
-index 483639fb727b2..a411ce2c75016 100644
---- a/Documentation/ABI/testing/sysfs-fs-f2fs
-+++ b/Documentation/ABI/testing/sysfs-fs-f2fs
-@@ -303,10 +303,13 @@ Description:	Do background GC aggressively when set. Set to 0 by default.
- 		GC approach and turns SSR mode on.
- 		gc urgent low(2): lowers the bar of checking I/O idling in
- 		order to process outstanding discard commands and GC a
--		little bit aggressively. uses cost benefit GC approach.
-+		little bit aggressively. always uses cost benefit GC approach,
-+		and will override age-threshold GC approach if ATGC is enabled
-+		at the same time.
- 		gc urgent mid(3): does GC forcibly in a period of given
- 		gc_urgent_sleep_time and executes a mid level of I/O idling check.
--		uses cost benefit GC approach.
-+		always uses cost benefit GC approach, and will override
-+		age-threshold GC approach if ATGC is enabled at the same time.
+diff --git a/fs/f2fs/file.c b/fs/f2fs/file.c
+index a25b9bff76ffc..3bab52d33e806 100644
+--- a/fs/f2fs/file.c
++++ b/fs/f2fs/file.c
+@@ -855,7 +855,11 @@ static bool f2fs_force_buffered_io(struct inode *inode, int rw)
+ 		return true;
+ 	if (f2fs_compressed_file(inode))
+ 		return true;
+-	if (f2fs_has_inline_data(inode))
++	/*
++	 * only force direct read to use buffered IO, for direct write,
++	 * it expects inline data conversion before committing IO.
++	 */
++	if (f2fs_has_inline_data(inode) && rw == READ)
+ 		return true;
  
- What:		/sys/fs/f2fs/<disk>/gc_urgent_sleep_time
- Date:		August 2017
-diff --git a/fs/f2fs/gc.c b/fs/f2fs/gc.c
-index 5a661a0e76632..687b2ce82c854 100644
---- a/fs/f2fs/gc.c
-+++ b/fs/f2fs/gc.c
-@@ -227,6 +227,8 @@ static int select_gc_type(struct f2fs_sb_info *sbi, int gc_type)
- 
- 	switch (sbi->gc_mode) {
- 	case GC_IDLE_CB:
-+	case GC_URGENT_LOW:
-+	case GC_URGENT_MID:
- 		gc_mode = GC_CB;
- 		break;
- 	case GC_IDLE_GREEDY:
+ 	/* disallow direct IO if any of devices has unaligned blksize */
 -- 
 2.43.0
 
