@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C33D2397AD;
-	Thu, 12 Dec 2024 16:23:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C985C2397B6;
+	Thu, 12 Dec 2024 16:23:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734020626; cv=none; b=RiayHWivzn46Smy+Tgjy6/kJngatidI1N0zuzDUka3mnjC2kg9E/NQv7DbCR6zFm9+ZkLb6j5yw0Cx5A92jjb3pYkt4UuDjNbcEzaHbtbgKWrz5xr05k+27Cugp90MiL2hiSSoK6L/9CggCEtEHsf8IKJjZZZx1P4Wt0qvr0Dfk=
+	t=1734020629; cv=none; b=aZOWaIfz0RGBCOKGPwt3B1Hvek/d8e8WNiig7cXX72TBw54xyioWSVgAP9YmspG70sMWgUsowP4sR7rOrKq94mn1x4pAVZLqh5cFNtBmyjlV9ICnMmXmtaV4Jaa6VVXeDMQmwQo2lspgF5aTs3bFX5pOaDYErY2VZrutSZI8aTE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734020626; c=relaxed/simple;
-	bh=OK1cr0ehcQXYqenS2UxXjnQQOjUpUifIHLJOED4bhxo=;
+	s=arc-20240116; t=1734020629; c=relaxed/simple;
+	bh=kljfqyTZwidfIjTynyiaCld+tSR30Wqd9rJSZ6kJrXA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ul9cgz33QVMw+0ZhJnVa8ZyAAZG9CZKM0Aa/J24l2FFGoaW4+Tg8oEbcHYiaBS2ZhIGv0lI6Edlz5zXGaWAQhsjDK860xsMOn4vW4HjLdp7A8GZEX84uZtcFtb9hrGdUKO72AJ6IpmiNePNC8j5iKEee8Nt7Nb+NcculHXCuPOw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=smunRdkc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=StUd1QLph12ouZaJgR70e7SkKTJhHLZ0B3a+FkUtZ140EGYmPOwypFlBdYCkAu5TGgDYyuGKtGHu5oLtlBNoaJ2mA6HzQAIIcn+Pgp127kWZuu7Ykr+KqiJ12Vc6bNZwkLZy/fEYEdw6xGIvRYue0hAiRvyjlPuJbiF0VQZL8DU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hX9Pc+ND; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="smunRdkc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE610C4CECE;
-	Thu, 12 Dec 2024 16:23:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hX9Pc+ND"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37A26C4CECE;
+	Thu, 12 Dec 2024 16:23:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734020626;
-	bh=OK1cr0ehcQXYqenS2UxXjnQQOjUpUifIHLJOED4bhxo=;
+	s=korg; t=1734020629;
+	bh=kljfqyTZwidfIjTynyiaCld+tSR30Wqd9rJSZ6kJrXA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=smunRdkcaOUrc0O/pshkFdUYWGI1In4lbADCVXh5PvwS+gP95sDq6Ni3adQUn1hwr
-	 pdek0JofPVWaGJXAtKweYKKcKT5678I5EPUTi9R9/bDuqaBmtHC1WxQcleqGosIoXp
-	 30yRBFOXVYPNX/AABQgvx0HRM9V8BvFREea0Xc9c=
+	b=hX9Pc+NDBB60ZZkyVmmW9kWckaaHcmKo/9wegKgWyGhBfkq2iK5b6Y5zaH6pmt3Zh
+	 ulRVqqIehmK0fmeRmp1q50m5OTLfqGpMc4SnAZXe+zKrxF+ERy5unwwjK3zs4dAvQ4
+	 p8AowMNrACQ6ah7phe4lPqkumOKGyCoNYIbi7IGg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dario Binacchi <dario.binacchi@amarulasolutions.com>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 516/772] can: sun4i_can: sun4i_can_err(): call can_change_state() even if cf is NULL
-Date: Thu, 12 Dec 2024 15:57:41 +0100
-Message-ID: <20241212144411.280763023@linuxfoundation.org>
+	Kishon Vijay Abraham I <kishon@ti.com>,
+	Siddharth Vadapalli <s-vadapalli@ti.com>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>
+Subject: [PATCH 6.1 489/772] PCI: keystone: Add link up check to ks_pcie_other_map_bus()
+Date: Thu, 12 Dec 2024 15:57:14 +0100
+Message-ID: <20241212144410.163108496@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -45,52 +45,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dario Binacchi <dario.binacchi@amarulasolutions.com>
+From: Kishon Vijay Abraham I <kishon@ti.com>
 
-[ Upstream commit ee6bf3677ae03569d833795064e17f605c2163c7 ]
+commit 9e9ec8d8692a6f64d81ef67d4fb6255af6be684b upstream.
 
-Call the function can_change_state() if the allocation of the skb
-fails, as it handles the cf parameter when it is null.
+K2G forwards the error triggered by a link-down state (e.g., no connected
+endpoint device) on the system bus for PCI configuration transactions;
+these errors are reported as an SError at system level, which is fatal and
+hangs the system.
 
-Additionally, this ensures that the statistics related to state error
-counters (i. e. warning, passive, and bus-off) are updated.
+So, apply fix similar to how it was done in the DesignWare Core driver
+commit 15b23906347c ("PCI: dwc: Add link up check in dw_child_pcie_ops.map_bus()").
 
-Fixes: 0738eff14d81 ("can: Allwinner A10/A20 CAN Controller support - Kernel module")
-Signed-off-by: Dario Binacchi <dario.binacchi@amarulasolutions.com>
-Link: https://patch.msgid.link/20241122221650.633981-3-dario.binacchi@amarulasolutions.com
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 10a797c6e54a ("PCI: dwc: keystone: Use pci_ops for config space accessors")
+Link: https://lore.kernel.org/r/20240524105714.191642-3-s-vadapalli@ti.com
+Signed-off-by: Kishon Vijay Abraham I <kishon@ti.com>
+Signed-off-by: Siddharth Vadapalli <s-vadapalli@ti.com>
+[kwilczynski: commit log, added tag for stable releases]
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+Cc: stable@vger.kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/can/sun4i_can.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/pci/controller/dwc/pci-keystone.c |   11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/drivers/net/can/sun4i_can.c b/drivers/net/can/sun4i_can.c
-index c3a6b028ea4d6..6bf721eda65d2 100644
---- a/drivers/net/can/sun4i_can.c
-+++ b/drivers/net/can/sun4i_can.c
-@@ -630,10 +630,10 @@ static int sun4i_can_err(struct net_device *dev, u8 isrc, u8 status)
- 		tx_state = txerr >= rxerr ? state : 0;
- 		rx_state = txerr <= rxerr ? state : 0;
+--- a/drivers/pci/controller/dwc/pci-keystone.c
++++ b/drivers/pci/controller/dwc/pci-keystone.c
+@@ -465,6 +465,17 @@ static void __iomem *ks_pcie_other_map_b
+ 	struct keystone_pcie *ks_pcie = to_keystone_pcie(pci);
+ 	u32 reg;
  
--		if (likely(skb))
--			can_change_state(dev, cf, tx_state, rx_state);
--		else
--			priv->can.state = state;
-+		/* The skb allocation might fail, but can_change_state()
-+		 * handles cf == NULL.
-+		 */
-+		can_change_state(dev, cf, tx_state, rx_state);
- 		if (state == CAN_STATE_BUS_OFF)
- 			can_bus_off(dev);
- 	}
--- 
-2.43.0
-
++	/*
++	 * Checking whether the link is up here is a last line of defense
++	 * against platforms that forward errors on the system bus as
++	 * SError upon PCI configuration transactions issued when the link
++	 * is down. This check is racy by definition and does not stop
++	 * the system from triggering an SError if the link goes down
++	 * after this check is performed.
++	 */
++	if (!dw_pcie_link_up(pci))
++		return NULL;
++
+ 	reg = CFG_BUS(bus->number) | CFG_DEVICE(PCI_SLOT(devfn)) |
+ 		CFG_FUNC(PCI_FUNC(devfn));
+ 	if (!pci_is_root_bus(bus->parent))
 
 
