@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE8CD239BA7;
-	Thu, 12 Dec 2024 16:46:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19C21239BA7;
+	Thu, 12 Dec 2024 16:46:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734022006; cv=none; b=TF7JrwxkujHJdyfD1lP2A+krcUv/ntgtmB+qm0QFwRjrquz0V/gnDKRJcOdIVHzJelStYlGSetxg4zk0tcVFuOrNRwfX+bGH6MYzZ/PcD/enxVK1siI93FRI/REveWRaLjbV/GkkIUhvTsh6uh14coYqtDIq5VFk/NJF4jZSnys=
+	t=1734022010; cv=none; b=pnTjTJjmxjleodDqI06U9/Yu0O3a3UDWKo3TpvXhAV4OWJOpwktPyjPY6JY1STyeHW62fwIO7zZmbcPdpnryt04gpykRtPiuGVOnIJJ7UoLAvPcNlCPVYx2S0gmyR7Ifjs9Prl0o9YQvFlT+8+XbpfVfqOkAFKU8QSlLPOeTIBc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734022006; c=relaxed/simple;
-	bh=68oPjxCJeVEUvQfPC2Z7fl2nxjG+6hP8H/+KxG3vQXU=;
+	s=arc-20240116; t=1734022010; c=relaxed/simple;
+	bh=Ur0ov/XDhD0i06o/PcGuOJdWKPNobZnwWdWIXsk8zFs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l3TWS4lvlx9L1kYnzntqBLk73gxq9uJwbWi1ggdhP6qHeOKNfAQs+9DqtuBImm0tjBZCXSVbZdg3e1our9ndp8+UMb1NZizTiXx9krLq2d5+a9ZPTurmuBKzBbSSK4uZBiVVUBAnwSnOjPfDcsZ9anDfQd7EV8Bm5Wx2KVWQMQM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DVDgVrZl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lmiomYz7sdc2UJbDB0cssXVQyhH2/C01VZiT1kzzCKDUrb8ZKpeKHlEYCvAmYnbS9ytFckQh2AaQSshNzZNW6CNEsrzN+DNpzZzb/uKtvhTh7N9fOiaC3gtJ+a3OUoi/RkxCjccQY0f/oWHFdoOHOZvFxO2b2Bw2Aw24NXTOWmc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1x3l+JxV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DVDgVrZl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEF7CC4CECE;
-	Thu, 12 Dec 2024 16:46:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1x3l+JxV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68997C4CECE;
+	Thu, 12 Dec 2024 16:46:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734022006;
-	bh=68oPjxCJeVEUvQfPC2Z7fl2nxjG+6hP8H/+KxG3vQXU=;
+	s=korg; t=1734022010;
+	bh=Ur0ov/XDhD0i06o/PcGuOJdWKPNobZnwWdWIXsk8zFs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DVDgVrZlf8K+qpEMUdtVqng5kpM3I2s5OrAzCq92t54MWpV30wI+8R46ngKEp8O45
-	 ZHDp/aDVgYA7cRGijxzzo3HRIfw/KdP96ZJud9+upBAp+onQHHGwbIIUuxXqhObNLy
-	 GTWq7ZT+ADBexxJZdLRO4E2XJNENnN3gVgTB694s=
+	b=1x3l+JxVmpJ4fqCs+KO8XVuZWTATaNrkQVFmURrTKHz85C9KoAFjJQeLhKHNU1iD8
+	 FTTdLlZez1gp5rInXfieUc9N7hcnYYM+vlSAYYWGD1ifX0HO/mR4OEFREpaRk4esuq
+	 qwiZuBZtqMXwwkIL/MF7iLchnEs8aqr3JVILAcBw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Yuan Can <yuancan@huawei.com>,
+	Brian Norris <briannorris@chromium.org>,
+	Tzung-Bi Shih <tzungbi@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 091/565] crypto: caam - Fix the pointer passed to caam_qi_shutdown()
-Date: Thu, 12 Dec 2024 15:54:46 +0100
-Message-ID: <20241212144315.083597148@linuxfoundation.org>
+Subject: [PATCH 5.15 092/565] firmware: google: Unregister driver_info on failure
+Date: Thu, 12 Dec 2024 15:54:47 +0100
+Message-ID: <20241212144315.122754710@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144311.432886635@linuxfoundation.org>
 References: <20241212144311.432886635@linuxfoundation.org>
@@ -51,37 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Yuan Can <yuancan@huawei.com>
 
-[ Upstream commit ad980b04f51f7fb503530bd1cb328ba5e75a250e ]
+[ Upstream commit 32b0901e141f6d4cf49d820b53eb09b88b1f72f7 ]
 
-The type of the last parameter given to devm_add_action_or_reset() is
-"struct caam_drv_private *", but in caam_qi_shutdown(), it is casted to
-"struct device *".
+When platform_device_register_full() returns error, the gsmi_init() returns
+without unregister gsmi_driver_info, fix by add missing
+platform_driver_unregister() when platform_device_register_full() failed.
 
-Pass the correct parameter to devm_add_action_or_reset() so that the
-resources are released as expected.
-
-Fixes: f414de2e2fff ("crypto: caam - use devres to de-initialize QI")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: 8942b2d5094b ("gsmi: Add GSMI commands to log S0ix info")
+Signed-off-by: Yuan Can <yuancan@huawei.com>
+Acked-by: Brian Norris <briannorris@chromium.org>
+Link: https://lore.kernel.org/r/20241015131344.20272-1-yuancan@huawei.com
+Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/caam/qi.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/firmware/google/gsmi.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/crypto/caam/qi.c b/drivers/crypto/caam/qi.c
-index 8163f5df8ebf7..2c52bf7d31ea5 100644
---- a/drivers/crypto/caam/qi.c
-+++ b/drivers/crypto/caam/qi.c
-@@ -765,7 +765,7 @@ int caam_qi_init(struct platform_device *caam_pdev)
+diff --git a/drivers/firmware/google/gsmi.c b/drivers/firmware/google/gsmi.c
+index 871bedf533a80..8c75308b01d5d 100644
+--- a/drivers/firmware/google/gsmi.c
++++ b/drivers/firmware/google/gsmi.c
+@@ -918,7 +918,8 @@ static __init int gsmi_init(void)
+ 	gsmi_dev.pdev = platform_device_register_full(&gsmi_dev_info);
+ 	if (IS_ERR(gsmi_dev.pdev)) {
+ 		printk(KERN_ERR "gsmi: unable to register platform device\n");
+-		return PTR_ERR(gsmi_dev.pdev);
++		ret = PTR_ERR(gsmi_dev.pdev);
++		goto out_unregister;
+ 	}
  
- 	caam_debugfs_qi_init(ctrlpriv);
- 
--	err = devm_add_action_or_reset(qidev, caam_qi_shutdown, ctrlpriv);
-+	err = devm_add_action_or_reset(qidev, caam_qi_shutdown, qidev);
- 	if (err)
- 		return err;
+ 	/* SMI access needs to be serialized */
+@@ -1056,10 +1057,11 @@ static __init int gsmi_init(void)
+ 	gsmi_buf_free(gsmi_dev.name_buf);
+ 	kmem_cache_destroy(gsmi_dev.mem_pool);
+ 	platform_device_unregister(gsmi_dev.pdev);
+-	pr_info("gsmi: failed to load: %d\n", ret);
++out_unregister:
+ #ifdef CONFIG_PM
+ 	platform_driver_unregister(&gsmi_driver_info);
+ #endif
++	pr_info("gsmi: failed to load: %d\n", ret);
+ 	return ret;
+ }
  
 -- 
 2.43.0
