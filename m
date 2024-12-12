@@ -1,43 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F89A2153DD;
-	Thu, 12 Dec 2024 17:33:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52B9B221D93;
+	Thu, 12 Dec 2024 17:33:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734024802; cv=none; b=mzZqouk4EvPYQV6DSdm31789EEhr0ZEMy0L2OWLif7w+WcsTf/doHLUo43kKUQ8aZxATAau/nUlA9DO01l66VTVdykgZQ1c1VxLZLXMrP3cmKP43crlxSSloDZmRCiy9pVxIMvIfX1rIHKlpbFW4xJK58BnLauN1EUjPnaCNMGY=
+	t=1734024805; cv=none; b=UF2v64cmcbnJherNWXkJGHhLJwJ5LNoTdYSwrhVf5WYHal2EXbf49FBMkqN3Q/VSODzwJvifyz0vO3PXwEvxO51q2zA1C19dlMMesRCpNQeBkrtw0D9B43QOH3zbYfPH8riOJio5PpAr/unHyb7UVt694gxL90pM1nV7w/hUvcg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734024802; c=relaxed/simple;
-	bh=IUSdrSOHh0jj4njDf+n7yioFiqtpfUBBKnMLKwh+SJo=;
+	s=arc-20240116; t=1734024805; c=relaxed/simple;
+	bh=vZgYJLUnK6D68nLBhrGX2oU2PVWnTbdNcaxAqQokZdw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pOKYy7TOAoTGJDtAff6O25I12AUjE4hmaphq2uXFR3SaGji5A3fCphWih/VV2r+QudDPPkQMJCmcTOdqgIg0iC5AWypYt0Om43z8EsC0IZj/Tr+X0Pd+mWDP124CvikMfYCSSeb/0VX1K5iqsHmJfY0USzSvKZi3NCwQGuSckRg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pA0thmHM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NVh+SxDBjLkEkbcx/yvWWSbMITVNlgY5z4+rF1jsmPZCAVO7hmVHIzMu4Xs9xlmOZF/hYbMbdgF3SkgUBmpa/vIozKejSoA60jgGzvEuaz5puDua+kcjCUjl/GkDCXNqa8skNffgFO4rqJhv6RJRSQaSDdCwrYmAMYGHKN0lAzI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dj+7uIpe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pA0thmHM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BDB9C4CECE;
-	Thu, 12 Dec 2024 17:33:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dj+7uIpe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92898C4CECE;
+	Thu, 12 Dec 2024 17:33:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734024802;
-	bh=IUSdrSOHh0jj4njDf+n7yioFiqtpfUBBKnMLKwh+SJo=;
+	s=korg; t=1734024805;
+	bh=vZgYJLUnK6D68nLBhrGX2oU2PVWnTbdNcaxAqQokZdw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pA0thmHMFahJFZaqejpanXb7WfGVYyaBhWVtO+PfE4mzpj1W4YETqR3gaoVFxkdRp
-	 YUeTOl/MxsUjHDKokw+aW/4+JQLmAt/k3OWf7Fnw6lHLDlzPJDM6fcNaB0mbF/eU7E
-	 XC/m2I4AD/xddRQVzROZwhqoX7l9RHK1J+iTPlGw=
+	b=Dj+7uIpe0LgjqDLYt7oGmiq6YveWRLSzSboFcttXPzY+tn2s2gBqsNcDqgrpspf9L
+	 yb9ODKK81LuF9dCF2RCRSEYS2q++5KUsRq6wGap16mmgqv3Z4jrrQqw3EuE9jeyJoX
+	 atr1atRmUrMPCzXWNbVDl4FBUUWhpWDncfuoIU7g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wengang Wang <wen.gang.wang@oracle.com>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Jun Piao <piaojun@huawei.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.10 377/459] ocfs2: update seq_file index in ocfs2_dlm_seq_next
-Date: Thu, 12 Dec 2024 16:01:55 +0100
-Message-ID: <20241212144308.560934665@linuxfoundation.org>
+	Abaci Robot <abaci@linux.alibaba.com>,
+	Jiapeng Chong <jiapeng.chong@linux.alibaba.com>,
+	Kalle Valo <kvalo@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 410/459] wifi: ipw2x00: libipw_rx_any(): fix bad alignment
+Date: Thu, 12 Dec 2024 16:02:28 +0100
+Message-ID: <20241212144309.960611648@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144253.511169641@linuxfoundation.org>
 References: <20241212144253.511169641@linuxfoundation.org>
@@ -56,43 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wengang Wang <wen.gang.wang@oracle.com>
+From: Jiapeng Chong <jiapeng.chong@linux.alibaba.com>
 
-commit 914eec5e980171bc128e7e24f7a22aa1d803570e upstream.
+[ Upstream commit 4fa4f049dc0d9741b16c96bcbf0108c85368a2b9 ]
 
-The following INFO level message was seen:
+This patch fixes incorrect code alignment.
 
-seq_file: buggy .next function ocfs2_dlm_seq_next [ocfs2] did not
-update position index
+./drivers/net/wireless/intel/ipw2x00/libipw_rx.c:871:2-3: code aligned with following code on line 882.
+./drivers/net/wireless/intel/ipw2x00/libipw_rx.c:886:2-3: code aligned with following code on line 900.
 
-Fix:
-Update *pos (so m->index) to make seq_read_iter happy though the index its
-self makes no sense to ocfs2_dlm_seq_next.
-
-Link: https://lkml.kernel.org/r/20241119174500.9198-1-wen.gang.wang@oracle.com
-Signed-off-by: Wengang Wang <wen.gang.wang@oracle.com>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Jun Piao <piaojun@huawei.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: Abaci Robot <abaci@linux.alibaba.com>
+Closes: https://bugzilla.openanolis.cn/show_bug.cgi?id=11381
+Signed-off-by: Jiapeng Chong <jiapeng.chong@linux.alibaba.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://patch.msgid.link/20241101060725.54640-1-jiapeng.chong@linux.alibaba.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/dlmglue.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/wireless/intel/ipw2x00/libipw_rx.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/fs/ocfs2/dlmglue.c
-+++ b/fs/ocfs2/dlmglue.c
-@@ -3101,6 +3101,7 @@ static void *ocfs2_dlm_seq_next(struct s
- 	struct ocfs2_lock_res *iter = v;
- 	struct ocfs2_lock_res *dummy = &priv->p_iter_res;
- 
-+	(*pos)++;
- 	spin_lock(&ocfs2_dlm_tracking_lock);
- 	iter = ocfs2_dlm_next_res(iter, priv);
- 	list_del_init(&dummy->l_debug_list);
+diff --git a/drivers/net/wireless/intel/ipw2x00/libipw_rx.c b/drivers/net/wireless/intel/ipw2x00/libipw_rx.c
+index 5a2a723e480b0..4c6e742c56958 100644
+--- a/drivers/net/wireless/intel/ipw2x00/libipw_rx.c
++++ b/drivers/net/wireless/intel/ipw2x00/libipw_rx.c
+@@ -870,8 +870,8 @@ void libipw_rx_any(struct libipw_device *ieee,
+ 	switch (ieee->iw_mode) {
+ 	case IW_MODE_ADHOC:
+ 		/* our BSS and not from/to DS */
+-		if (ether_addr_equal(hdr->addr3, ieee->bssid))
+-		if ((fc & (IEEE80211_FCTL_TODS+IEEE80211_FCTL_FROMDS)) == 0) {
++		if (ether_addr_equal(hdr->addr3, ieee->bssid) &&
++		    ((fc & (IEEE80211_FCTL_TODS + IEEE80211_FCTL_FROMDS)) == 0)) {
+ 			/* promisc: get all */
+ 			if (ieee->dev->flags & IFF_PROMISC)
+ 				is_packet_for_us = 1;
+@@ -885,8 +885,8 @@ void libipw_rx_any(struct libipw_device *ieee,
+ 		break;
+ 	case IW_MODE_INFRA:
+ 		/* our BSS (== from our AP) and from DS */
+-		if (ether_addr_equal(hdr->addr2, ieee->bssid))
+-		if ((fc & (IEEE80211_FCTL_TODS+IEEE80211_FCTL_FROMDS)) == IEEE80211_FCTL_FROMDS) {
++		if (ether_addr_equal(hdr->addr2, ieee->bssid) &&
++		    ((fc & (IEEE80211_FCTL_TODS + IEEE80211_FCTL_FROMDS)) == IEEE80211_FCTL_FROMDS)) {
+ 			/* promisc: get all */
+ 			if (ieee->dev->flags & IFF_PROMISC)
+ 				is_packet_for_us = 1;
+-- 
+2.43.0
+
 
 
