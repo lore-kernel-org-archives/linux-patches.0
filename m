@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BE7E215762;
-	Thu, 12 Dec 2024 17:23:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D16213CA93;
+	Thu, 12 Dec 2024 17:23:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734024216; cv=none; b=mrPQbPbAT2yWferg9GEB8nB5gz1UN9y5s3m4s+y7ifEiO3xwOaRTYL28niJb/0HpL2w4uK0lI8O2+QpuNLdSehVz8jJ1Qv0YPOc7A4chjgbT0cSRrJz9rp7WMU4N7NFDhFCFSnGOISAjUhG/D7gVRg976ehHLBdKFbwphBgtqsg=
+	t=1734024219; cv=none; b=g+10rHl3PH09I3ndtkIJH/PshXVh1DyGFNkm3SVUxhP13DeVXsJ+XajtPsl5aUzXqo7IeStOoczQBE1ktDLafh9Emz7BP+Z34qewPdzXqxY54Qn+E/4uIWsth3IH1dlFEkiGsi0nkZe0NYQ74xqITr1WWSgZD6zI6wpk6rKtJgw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734024216; c=relaxed/simple;
-	bh=iWJDrnJkS9igJ8xdE/F0TuVH4gJCf71zoe/E7gSFzQg=;
+	s=arc-20240116; t=1734024219; c=relaxed/simple;
+	bh=E/KKvT2K3OO6vKa/5Wc2WVyLIcjee/I+A2Pe5x3Nu0s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Jz1O3/aAzKkYlSbA2TIkv3RpSVfZypM5+3Z53LboVTQiAMfcQ0FcZDVAqOMFOYL3k0ispm0Wafn8QNtPopGJ+boDhpYYdSrVTeH1tbXppmHmb3rClXGVMsvUlq4nXrbMc0vMB463hT0iyLxeCB8vqo0i8gngLG6kLVkUvliLhgE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jNEOaD0r; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=sdeklWyZGs9NAFAHkGLCGlrHI7J6DK8gUI20y9cGOf/xaSLghJdlIHd1u4+ue7pJ7Y3+FwQpt+7HGtMgjpkWq9GcIJWwDYO1YRTkYwGZQVULT8FZgpawEzRV0T3JYG0OmaFIL21z+L5xowSRE74jnaRm9WUlUb0b3axz2p36D/A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jzkacX0H; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jNEOaD0r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB8ADC4CECE;
-	Thu, 12 Dec 2024 17:23:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jzkacX0H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE852C4CECE;
+	Thu, 12 Dec 2024 17:23:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734024216;
-	bh=iWJDrnJkS9igJ8xdE/F0TuVH4gJCf71zoe/E7gSFzQg=;
+	s=korg; t=1734024219;
+	bh=E/KKvT2K3OO6vKa/5Wc2WVyLIcjee/I+A2Pe5x3Nu0s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jNEOaD0rkhjAkFeSQLSb13hCQ44rm0WjFee0GBU7lngjSM3fOpHheDuCVxjLwhWGR
-	 wO9WgHqWTprj2eZkNHLSvsQG8nu1M74wzwPBfDf595hVEw1hpstHqgbW9PP08kVvPo
-	 KuDpTwKYiR5wZi2TvGYcAac8w1y6IiOxZwWwBjUs=
+	b=jzkacX0HN2riQlnF0M8qrvYZZZJwSYEm9qCwMwQJqLqIPBi9Xi9jAEWBrNFBrQfdI
+	 3WeAdmQUwsgS7NSIAkF++xzt/bUab9atxfgATRu6YbyFMv2P28ACMLAGjwfrCbwwOD
+	 QjtTi7yoo/ev04/S/tMSv7Rou5f5/c1zpcaCm51U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	=?UTF-8?q?Cs=C3=B3k=C3=A1s,
+	=20Bence?= <csokas.bence@prolan.hu>,
+	Alexander Dahl <ada@thorsis.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 224/459] net: stmmac: dwmac-socfpga: Set RX watchdog interrupt as broken
-Date: Thu, 12 Dec 2024 15:59:22 +0100
-Message-ID: <20241212144302.419638384@linuxfoundation.org>
+Subject: [PATCH 5.10 225/459] spi: atmel-quadspi: Fix register name in verbose logging function
+Date: Thu, 12 Dec 2024 15:59:23 +0100
+Message-ID: <20241212144302.457625723@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144253.511169641@linuxfoundation.org>
 References: <20241212144253.511169641@linuxfoundation.org>
@@ -45,54 +47,45 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maxime Chevallier <maxime.chevallier@bootlin.com>
+From: Csókás, Bence <csokas.bence@prolan.hu>
 
-[ Upstream commit 407618d66dba55e7db1278872e8be106808bbe91 ]
+[ Upstream commit 2ac40e6d0ccdd93031f8b1af61b0fe5cdd704923 ]
 
-On DWMAC3 and later, there's a RX Watchdog interrupt that's used for
-interrupt coalescing. It's known to be buggy on some platforms, and
-dwmac-socfpga appears to be one of them. Changing the interrupt
-coalescing from ethtool doesn't appear to have any effect here.
+`atmel_qspi_reg_name()` is used for pretty-printing register offsets
+for verbose logging of register accesses. However, due to a typo
+(likely a copy-paste error), QSPI_RD's offset prints as "MR", the
+name of the previous register. Fix this typo.
 
-Without disabling RIWT (Received Interrupt Watchdog Timer, I
-believe...), we observe latencies while receiving traffic that amount to
-around ~0.4ms. This was discovered with NTP but can be easily reproduced
-with a simple ping. Without this patch :
-
-64 bytes from 192.168.5.2: icmp_seq=1 ttl=64 time=0.657 ms
-
-With this patch :
-
-64 bytes from 192.168.5.2: icmp_seq=1 ttl=64 time=0.254 ms
-
-Fixes: 801d233b7302 ("net: stmmac: Add SOCFPGA glue driver")
-Signed-off-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Link: https://patch.msgid.link/20241122141256.764578-1-maxime.chevallier@bootlin.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: c528ecfbef04 ("spi: atmel-quadspi: Add verbose debug facilities to monitor register accesses")
+Signed-off-by: Csókás, Bence <csokas.bence@prolan.hu>
+Reviewed-by: Alexander Dahl <ada@thorsis.com>
+Link: https://patch.msgid.link/20241122141302.2599636-1-csokas.bence@prolan.hu
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/dwmac-socfpga.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/spi/atmel-quadspi.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-socfpga.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-socfpga.c
-index 142bf912011e2..263235a4fc554 100644
---- a/drivers/net/ethernet/stmicro/stmmac/dwmac-socfpga.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-socfpga.c
-@@ -426,6 +426,8 @@ static int socfpga_dwmac_probe(struct platform_device *pdev)
- 	plat_dat->bsp_priv = dwmac;
- 	plat_dat->fix_mac_speed = socfpga_dwmac_fix_mac_speed;
- 
-+	plat_dat->riwt_off = 1;
-+
- 	ret = stmmac_dvr_probe(&pdev->dev, plat_dat, &stmmac_res);
- 	if (ret)
- 		goto err_remove_config_dt;
+diff --git a/drivers/spi/atmel-quadspi.c b/drivers/spi/atmel-quadspi.c
+index 8aa89d93db118..17217cc5e4052 100644
+--- a/drivers/spi/atmel-quadspi.c
++++ b/drivers/spi/atmel-quadspi.c
+@@ -182,7 +182,7 @@ static const char *atmel_qspi_reg_name(u32 offset, char *tmp, size_t sz)
+ 	case QSPI_MR:
+ 		return "MR";
+ 	case QSPI_RD:
+-		return "MR";
++		return "RD";
+ 	case QSPI_TD:
+ 		return "TD";
+ 	case QSPI_SR:
 -- 
 2.43.0
 
