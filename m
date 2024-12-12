@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FAB82210F8;
-	Thu, 12 Dec 2024 17:14:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49A491487CD;
+	Thu, 12 Dec 2024 17:14:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734023686; cv=none; b=Qq5Uj2puABnVsNLCPUGSfj/nD8rAOJLskFg43vdlpu4n5lrZIn0A/kraFio9B769FPAI83YV0E00nIIl8S4U4Qz387kSjyubMN111VAke9OouHbhjJJdreTVlBirjZcj7blWEFd6j9iX7UZVGQj3Vn0T1mJNlSVNla3wODgkdPg=
+	t=1734023689; cv=none; b=jPe5p9/ESQH8oR5IxN5ArR8lrpPlz1CV9LghaeevoNs5KncPZT7aOLE/HfX/T/+IhGaasw7DgPWlosc2fCMv0YjsLrt6/RGrV938JeqLPmtauC7knhwg90DTPUb+CSiY9LyAAjWnnvserPrt0TVtw1FxETbnK89xMAm79MCOBjw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734023686; c=relaxed/simple;
-	bh=HbJDiFsUvcz5OyQ5me0+h60YZA6H8DdiRWvIphtVz4o=;
+	s=arc-20240116; t=1734023689; c=relaxed/simple;
+	bh=aqnsWBiAszvhMg+3bVnCWUstUk6JlYUTGXO19f1Lnbo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GSf1y/+JUg4ccXeBqwXoMe+DnANUu/0NlYXPQWJ3YE24TnxW+nYFAgwHuMif11sIaxOh1/dxkdXiy4FwwuqPsO39wBtpCfywmUvSNUI+dQw7q+hNk2uIztp9ppHPlYMqPUI5UtnoGfK6jztcM74UoR0O2FYEw11n45IlDJj1u9A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gt6Lziwr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XqH2ta8RljcGbYpkF3BOWF4D0TujPVp/BECm2A7fqWP4ieFMc+mAK1xaDa3280jzeitf+l08YX3rg+cSDJ+JeMeSaOSok0FauCrrIQ0/YC675n3Vu7sY5L2SIL4sKxldAVBTtbW4+VR0pe/lxaUyuY7PYNXVxOfJGtHcxtV3GVg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x57BYQFM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gt6Lziwr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C91B9C4CECE;
-	Thu, 12 Dec 2024 17:14:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x57BYQFM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2C6CC4CECE;
+	Thu, 12 Dec 2024 17:14:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734023686;
-	bh=HbJDiFsUvcz5OyQ5me0+h60YZA6H8DdiRWvIphtVz4o=;
+	s=korg; t=1734023689;
+	bh=aqnsWBiAszvhMg+3bVnCWUstUk6JlYUTGXO19f1Lnbo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gt6Lziwr9kBQRtnLhANQbIFD/a97CGU9riY7iyjWsWkAzBfK6+msfOhLNLI2Lstf+
-	 Wd4tocdhuORESDcFbxrGsH2ZMB3EzGJOYV0+TFc0bFBwBGxpfYW/3S6u5RMegeGraO
-	 hMVvzxTP+BEkVYuHU08+YxssKwnCjYpz6MPeHosI=
+	b=x57BYQFMH8jgb202hkLh0HkX1+9gu7pwaFB0qHJdOEwjiCb1YBsBEhfCJoJHfZERq
+	 lsj7J4mVKOzR92VgSi1HfX7G17b/lnHjjJYJsZfSTdnM6408IpFyXvhbsVAw2bFHQi
+	 ERuoeFIAXX2EJga8yxbb7z3BWznifLIqxpM2S8IY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eryk Zagorski <erykzagorski@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 048/459] ALSA: usb-audio: Fix Yamaha P-125 Quirk Entry
-Date: Thu, 12 Dec 2024 15:56:26 +0100
-Message-ID: <20241212144255.421927766@linuxfoundation.org>
+	Sam Protsenko <semen.protsenko@linaro.org>,
+	Aurelien Jarno <aurelien@aurel32.net>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 5.10 022/459] Revert "mmc: dw_mmc: Fix IDMAC operation with pages bigger than 4K"
+Date: Thu, 12 Dec 2024 15:56:00 +0100
+Message-ID: <20241212144254.402556740@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144253.511169641@linuxfoundation.org>
 References: <20241212144253.511169641@linuxfoundation.org>
@@ -51,56 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eryk Zagorski <erykzagorski@gmail.com>
+From: Aurelien Jarno <aurelien@aurel32.net>
 
-[ Upstream commit 6f891ca15b017707840c9e7f5afd9fc6cfd7d8b1 ]
+commit 1635e407a4a64d08a8517ac59ca14ad4fc785e75 upstream.
 
-This patch switches the P-125 quirk entry to use a composite quirk as the
-P-125 supplies both MIDI and Audio like many of the other Yamaha
-keyboards
+The commit 8396c793ffdf ("mmc: dw_mmc: Fix IDMAC operation with pages
+bigger than 4K") increased the max_req_size, even for 4K pages, causing
+various issues:
+- Panic booting the kernel/rootfs from an SD card on Rockchip RK3566
+- Panic booting the kernel/rootfs from an SD card on StarFive JH7100
+- "swiotlb buffer is full" and data corruption on StarFive JH7110
 
-Signed-off-by: Eryk Zagorski <erykzagorski@gmail.com>
-Link: https://patch.msgid.link/20241111164520.9079-2-erykzagorski@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+At this stage no fix have been found, so it's probably better to just
+revert the change.
+
+This reverts commit 8396c793ffdf28bb8aee7cfe0891080f8cab7890.
+
+Cc: stable@vger.kernel.org
+Cc: Sam Protsenko <semen.protsenko@linaro.org>
+Fixes: 8396c793ffdf ("mmc: dw_mmc: Fix IDMAC operation with pages bigger than 4K")
+Closes: https://lore.kernel.org/linux-mmc/614692b4-1dbe-31b8-a34d-cb6db1909bb7@w6rz.net/
+Closes: https://lore.kernel.org/linux-mmc/CAC8uq=Ppnmv98mpa1CrWLawWoPnu5abtU69v-=G-P7ysATQ2Pw@mail.gmail.com/
+Signed-off-by: Aurelien Jarno <aurelien@aurel32.net>
+Message-ID: <20241110114700.622372-1-aurelien@aurel32.net>
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/quirks-table.h | 14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
+ drivers/mmc/host/dw_mmc.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/sound/usb/quirks-table.h b/sound/usb/quirks-table.h
-index c6104523dd79c..119c0bde74464 100644
---- a/sound/usb/quirks-table.h
-+++ b/sound/usb/quirks-table.h
-@@ -350,7 +350,6 @@ YAMAHA_DEVICE(0x105a, NULL),
- YAMAHA_DEVICE(0x105b, NULL),
- YAMAHA_DEVICE(0x105c, NULL),
- YAMAHA_DEVICE(0x105d, NULL),
--YAMAHA_DEVICE(0x1718, "P-125"),
- {
- 	USB_DEVICE(0x0499, 0x1503),
- 	.driver_info = (unsigned long) & (const struct snd_usb_audio_quirk) {
-@@ -485,6 +484,19 @@ YAMAHA_DEVICE(0x1718, "P-125"),
- 		}
- 	}
- },
-+{
-+	USB_DEVICE(0x0499, 0x1718),
-+	QUIRK_DRIVER_INFO {
-+		/* .vendor_name = "Yamaha", */
-+		/* .product_name = "P-125", */
-+		QUIRK_DATA_COMPOSITE {
-+			{ QUIRK_DATA_STANDARD_AUDIO(1) },
-+			{ QUIRK_DATA_STANDARD_AUDIO(2) },
-+			{ QUIRK_DATA_MIDI_YAMAHA(3) },
-+			QUIRK_COMPOSITE_END
-+		}
-+	}
-+},
- YAMAHA_DEVICE(0x2000, "DGP-7"),
- YAMAHA_DEVICE(0x2001, "DGP-5"),
- YAMAHA_DEVICE(0x2002, NULL),
--- 
-2.43.0
-
+--- a/drivers/mmc/host/dw_mmc.c
++++ b/drivers/mmc/host/dw_mmc.c
+@@ -2826,8 +2826,8 @@ static int dw_mci_init_slot(struct dw_mc
+ 	if (host->use_dma == TRANS_MODE_IDMAC) {
+ 		mmc->max_segs = host->ring_size;
+ 		mmc->max_blk_size = 65535;
+-		mmc->max_req_size = DW_MCI_DESC_DATA_LENGTH * host->ring_size;
+-		mmc->max_seg_size = mmc->max_req_size;
++		mmc->max_seg_size = 0x1000;
++		mmc->max_req_size = mmc->max_seg_size * host->ring_size;
+ 		mmc->max_blk_count = mmc->max_req_size / 512;
+ 	} else if (host->use_dma == TRANS_MODE_EDMAC) {
+ 		mmc->max_segs = 64;
 
 
