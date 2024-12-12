@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24E1913792B;
-	Thu, 12 Dec 2024 17:05:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC2B422331C;
+	Thu, 12 Dec 2024 17:05:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734023103; cv=none; b=m9BVPiMGt4xwGNgn5v4J7ARkdOudsc5zs4jymiWfeZ6iL1qgbTJm2CzOZSmCmiqfP4PzrM2WfAoQw6Wp8dopPzUkTbBLPGGBIP9DKTre5VXuRtsOiE2TqlX7w/9+Tw0/MBK/x5nIqGwBECs63Pz2PnYAWr5VHayv2z7ibE3nKo0=
+	t=1734023107; cv=none; b=WL48gWqv5W/ZdS3fwwXehB8lA9qRBldpkIu2Kj/3GI8ybARvP60HsOlM9tuSbNJp5SfLUtgqcEgI8uJZpyDrDSvZxeic6nziYUXK84ObJuKzr5QN50fMglk0h8hsm+maSW2jMZNCt9sgdsEy7S2CgBuad4njTj0i7VK2TXpxSSM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734023103; c=relaxed/simple;
-	bh=snzliHm4d3f8Fm+qosSiOuawQThwg7JCoIngsrIrTBc=;
+	s=arc-20240116; t=1734023107; c=relaxed/simple;
+	bh=OtUG1MV05MuCtugYcf9cdzSL1AaEIXKAe8qJdOQVSxY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F3lV/IqVzFI/OxROxawpceB8jflBmJcdJkfKyAHkYeHqBe/z3clUj9rne8TDojIeQLkbWHI4pb/JLi3oYz2WT3P01Dl0Xsqdhcdgss/51GfKohxHbyoUEtKWSbD+TqqjZ1gYCHJcmHskzSlWffogE0rMnT+7WPcZ3nk97oa7DPQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PLfcfFcq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pFGOJiWxXuaCaSy9ox8V2RSEJ8E2V9C1TLXDZET3exHHx1bPJkHAcesg0q6UUdo9skWg48h8t85M7gd/5zUJmBPeeoiv0jwC7JYxEL9N9gBWnB8tiIIeNa114IWheMXJSHJxLLNHC/lNZX6dwthw/jzlkKNg3wipN6hwpjpPVCQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GGJ+fFVU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PLfcfFcq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B8DEC4CED0;
-	Thu, 12 Dec 2024 17:05:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GGJ+fFVU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5683BC4CED0;
+	Thu, 12 Dec 2024 17:05:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734023102;
-	bh=snzliHm4d3f8Fm+qosSiOuawQThwg7JCoIngsrIrTBc=;
+	s=korg; t=1734023105;
+	bh=OtUG1MV05MuCtugYcf9cdzSL1AaEIXKAe8qJdOQVSxY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PLfcfFcqNd+xIAHu0QSaLcBVmT7iZ3tnFqY33fJ/IAwD7izhN2IxoXDfxyveLeNSg
-	 khXeQm2Wm3cb9s8coxObAm2/WBSsfe2nvkSwlAczWu1LfJ7FpFOTeWKrRQ/Nvhll44
-	 FyszA5yHfPe/YSLKm5g6w+gFnJfN9zaSsnMxLTrU=
+	b=GGJ+fFVUqiFP14zonoebYWVGKgwyBmHEMaWo4OeHNHWZLTWK2jK0o1gf0vHsCWGeE
+	 nsOKcp0rNEtCPoQPQwbq6VJvqvNGz3lHCFU0MZ9HMZWFEy9BcW/jAo55pNErTADsGm
+	 unh3PM5+7awLKK6ejZ3E4375zxtZxFH1p8U/Gxvs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+3ec5271486d7cb2d242a@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
-	Stefano Brivio <sbrivio@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 425/565] geneve: do not assume mac header is set in geneve_xmit_skb()
-Date: Thu, 12 Dec 2024 16:00:20 +0100
-Message-ID: <20241212144328.470163780@linuxfoundation.org>
+Subject: [PATCH 5.15 426/565] gpio: grgpio: use a helper variable to store the address of ofdev->dev
+Date: Thu, 12 Dec 2024 16:00:21 +0100
+Message-ID: <20241212144328.510333605@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144311.432886635@linuxfoundation.org>
 References: <20241212144311.432886635@linuxfoundation.org>
@@ -53,83 +50,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-[ Upstream commit 8588c99c7d47448fcae39e3227d6e2bb97aad86d ]
+[ Upstream commit d036ae41cebdfae92666024163c109b8fef516fa ]
 
-We should not assume mac header is set in output path.
+Instead of dereferencing the platform device pointer repeatedly, just
+store its address in a helper variable.
 
-Use skb_eth_hdr() instead of eth_hdr() to fix the issue.
-
-sysbot reported the following :
-
- WARNING: CPU: 0 PID: 11635 at include/linux/skbuff.h:3052 skb_mac_header include/linux/skbuff.h:3052 [inline]
- WARNING: CPU: 0 PID: 11635 at include/linux/skbuff.h:3052 eth_hdr include/linux/if_ether.h:24 [inline]
- WARNING: CPU: 0 PID: 11635 at include/linux/skbuff.h:3052 geneve_xmit_skb drivers/net/geneve.c:898 [inline]
- WARNING: CPU: 0 PID: 11635 at include/linux/skbuff.h:3052 geneve_xmit+0x4c38/0x5730 drivers/net/geneve.c:1039
-Modules linked in:
-CPU: 0 UID: 0 PID: 11635 Comm: syz.4.1423 Not tainted 6.12.0-syzkaller-10296-gaaf20f870da0 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 09/13/2024
- RIP: 0010:skb_mac_header include/linux/skbuff.h:3052 [inline]
- RIP: 0010:eth_hdr include/linux/if_ether.h:24 [inline]
- RIP: 0010:geneve_xmit_skb drivers/net/geneve.c:898 [inline]
- RIP: 0010:geneve_xmit+0x4c38/0x5730 drivers/net/geneve.c:1039
-Code: 21 c6 02 e9 35 d4 ff ff e8 a5 48 4c fb 90 0f 0b 90 e9 fd f5 ff ff e8 97 48 4c fb 90 0f 0b 90 e9 d8 f5 ff ff e8 89 48 4c fb 90 <0f> 0b 90 e9 41 e4 ff ff e8 7b 48 4c fb 90 0f 0b 90 e9 cd e7 ff ff
-RSP: 0018:ffffc90003b2f870 EFLAGS: 00010283
-RAX: 000000000000037a RBX: 000000000000ffff RCX: ffffc9000dc3d000
-RDX: 0000000000080000 RSI: ffffffff86428417 RDI: 0000000000000003
-RBP: ffffc90003b2f9f0 R08: 0000000000000003 R09: 000000000000ffff
-R10: 000000000000ffff R11: 0000000000000002 R12: ffff88806603c000
-R13: 0000000000000000 R14: ffff8880685b2780 R15: 0000000000000e23
-FS:  00007fdc2deed6c0(0000) GS:ffff8880b8600000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 0000001b30a1dff8 CR3: 0000000056b8c000 CR4: 00000000003526f0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-Call Trace:
- <TASK>
-  __netdev_start_xmit include/linux/netdevice.h:5002 [inline]
-  netdev_start_xmit include/linux/netdevice.h:5011 [inline]
-  __dev_direct_xmit+0x58a/0x720 net/core/dev.c:4490
-  dev_direct_xmit include/linux/netdevice.h:3181 [inline]
-  packet_xmit+0x1e4/0x360 net/packet/af_packet.c:285
-  packet_snd net/packet/af_packet.c:3146 [inline]
-  packet_sendmsg+0x2700/0x5660 net/packet/af_packet.c:3178
-  sock_sendmsg_nosec net/socket.c:711 [inline]
-  __sock_sendmsg net/socket.c:726 [inline]
-  __sys_sendto+0x488/0x4f0 net/socket.c:2197
-  __do_sys_sendto net/socket.c:2204 [inline]
-  __se_sys_sendto net/socket.c:2200 [inline]
-  __x64_sys_sendto+0xe0/0x1c0 net/socket.c:2200
-  do_syscall_x64 arch/x86/entry/common.c:52 [inline]
-  do_syscall_64+0xcd/0x250 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-Fixes: a025fb5f49ad ("geneve: Allow configuration of DF behaviour")
-Reported-by: syzbot+3ec5271486d7cb2d242a@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/674f4b72.050a0220.17bd51.004a.GAE@google.com/T/#u
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Stefano Brivio <sbrivio@redhat.com>
-Link: https://patch.msgid.link/20241203182122.2725517-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://lore.kernel.org/r/20241015131832.44678-3-brgl@bgdev.pl
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Stable-dep-of: 050b23d081da ("gpio: grgpio: Add NULL check in grgpio_probe")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/geneve.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpio/gpio-grgpio.c | 23 ++++++++++++-----------
+ 1 file changed, 12 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/net/geneve.c b/drivers/net/geneve.c
-index d7440cc4be80b..10e3d69205a4f 100644
---- a/drivers/net/geneve.c
-+++ b/drivers/net/geneve.c
-@@ -985,7 +985,7 @@ static int geneve_xmit_skb(struct sk_buff *skb, struct net_device *dev,
- 		if (geneve->cfg.df == GENEVE_DF_SET) {
- 			df = htons(IP_DF);
- 		} else if (geneve->cfg.df == GENEVE_DF_INHERIT) {
--			struct ethhdr *eth = eth_hdr(skb);
-+			struct ethhdr *eth = skb_eth_hdr(skb);
+diff --git a/drivers/gpio/gpio-grgpio.c b/drivers/gpio/gpio-grgpio.c
+index 21204a5dca3d4..bf5ecf23cbceb 100644
+--- a/drivers/gpio/gpio-grgpio.c
++++ b/drivers/gpio/gpio-grgpio.c
+@@ -328,6 +328,7 @@ static const struct irq_domain_ops grgpio_irq_domain_ops = {
+ static int grgpio_probe(struct platform_device *ofdev)
+ {
+ 	struct device_node *np = ofdev->dev.of_node;
++	struct device *dev = &ofdev->dev;
+ 	void  __iomem *regs;
+ 	struct gpio_chip *gc;
+ 	struct grgpio_priv *priv;
+@@ -337,7 +338,7 @@ static int grgpio_probe(struct platform_device *ofdev)
+ 	int size;
+ 	int i;
  
- 			if (ntohs(eth->h_proto) == ETH_P_IPV6) {
- 				df = htons(IP_DF);
+-	priv = devm_kzalloc(&ofdev->dev, sizeof(*priv), GFP_KERNEL);
++	priv = devm_kzalloc(dev, sizeof(*priv), GFP_KERNEL);
+ 	if (!priv)
+ 		return -ENOMEM;
+ 
+@@ -346,29 +347,29 @@ static int grgpio_probe(struct platform_device *ofdev)
+ 		return PTR_ERR(regs);
+ 
+ 	gc = &priv->gc;
+-	err = bgpio_init(gc, &ofdev->dev, 4, regs + GRGPIO_DATA,
++	err = bgpio_init(gc, dev, 4, regs + GRGPIO_DATA,
+ 			 regs + GRGPIO_OUTPUT, NULL, regs + GRGPIO_DIR, NULL,
+ 			 BGPIOF_BIG_ENDIAN_BYTE_ORDER);
+ 	if (err) {
+-		dev_err(&ofdev->dev, "bgpio_init() failed\n");
++		dev_err(dev, "bgpio_init() failed\n");
+ 		return err;
+ 	}
+ 
+ 	priv->regs = regs;
+ 	priv->imask = gc->read_reg(regs + GRGPIO_IMASK);
+-	priv->dev = &ofdev->dev;
++	priv->dev = dev;
+ 
+ 	gc->of_node = np;
+ 	gc->owner = THIS_MODULE;
+ 	gc->to_irq = grgpio_to_irq;
+-	gc->label = devm_kasprintf(&ofdev->dev, GFP_KERNEL, "%pOF", np);
++	gc->label = devm_kasprintf(dev, GFP_KERNEL, "%pOF", np);
+ 	gc->base = -1;
+ 
+ 	err = of_property_read_u32(np, "nbits", &prop);
+ 	if (err || prop <= 0 || prop > GRGPIO_MAX_NGPIO) {
+ 		gc->ngpio = GRGPIO_MAX_NGPIO;
+-		dev_dbg(&ofdev->dev,
+-			"No or invalid nbits property: assume %d\n", gc->ngpio);
++		dev_dbg(dev, "No or invalid nbits property: assume %d\n",
++			gc->ngpio);
+ 	} else {
+ 		gc->ngpio = prop;
+ 	}
+@@ -380,7 +381,7 @@ static int grgpio_probe(struct platform_device *ofdev)
+ 	irqmap = (s32 *)of_get_property(np, "irqmap", &size);
+ 	if (irqmap) {
+ 		if (size < gc->ngpio) {
+-			dev_err(&ofdev->dev,
++			dev_err(dev,
+ 				"irqmap shorter than ngpio (%d < %d)\n",
+ 				size, gc->ngpio);
+ 			return -EINVAL;
+@@ -390,7 +391,7 @@ static int grgpio_probe(struct platform_device *ofdev)
+ 						     &grgpio_irq_domain_ops,
+ 						     priv);
+ 		if (!priv->domain) {
+-			dev_err(&ofdev->dev, "Could not add irq domain\n");
++			dev_err(dev, "Could not add irq domain\n");
+ 			return -EINVAL;
+ 		}
+ 
+@@ -420,13 +421,13 @@ static int grgpio_probe(struct platform_device *ofdev)
+ 
+ 	err = gpiochip_add_data(gc, priv);
+ 	if (err) {
+-		dev_err(&ofdev->dev, "Could not add gpiochip\n");
++		dev_err(dev, "Could not add gpiochip\n");
+ 		if (priv->domain)
+ 			irq_domain_remove(priv->domain);
+ 		return err;
+ 	}
+ 
+-	dev_info(&ofdev->dev, "regs=0x%p, base=%d, ngpio=%d, irqs=%s\n",
++	dev_info(dev, "regs=0x%p, base=%d, ngpio=%d, irqs=%s\n",
+ 		 priv->regs, gc->base, gc->ngpio, priv->domain ? "on" : "off");
+ 
+ 	return 0;
 -- 
 2.43.0
 
