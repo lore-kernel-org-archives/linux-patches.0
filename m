@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 841A222D4C6;
-	Thu, 12 Dec 2024 16:03:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9484622332E;
+	Thu, 12 Dec 2024 16:03:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734019426; cv=none; b=IatT/sgbyYjKBUaIgr4sEphy5kolbLQZIJqDq9LM2/RjdSAzQYY54glkbbaC4hQQ0Yj9GIflPD+tplbGcVtLvcQiDSe/e7cxx98vrYikx1dpbL/GWbLPaW2JNdFF8++wq6zLFAP4U9/fl8aUYtH6jhpzGoTcBMlF1vZfLuCZ/wY=
+	t=1734019430; cv=none; b=UqJJY1TLEC2wEG0OiKl4KyZ++E8qnljOVhp1CSzmmFzRmYVIhHNnx6nmtubgHNwuRvFxOae/7um63tnAXa1p8lVb9/Fa3qwmhuwkK9hBBvnYLPztx3PRBtSVFKs/spTSOBdYJPIqZ2HKOv8EjyQ5LZ6kpvZN4b8Sp030DMBocTg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734019426; c=relaxed/simple;
-	bh=IWfc/VT6jlPxDfI4oMW7peqnghecywtdkzmhjeFhvbQ=;
+	s=arc-20240116; t=1734019430; c=relaxed/simple;
+	bh=e7R7Uxp8WadpekN/CuUU5zKR4ewfhyACRHnOVs9DAc8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ulGNl7AjzTHcoQjTyQiMk/0GjwCnW5SMoUCV6x0FQGIaQ+U2rUN6u7ZpyQttu7qHpYk/lKLY7sEquzWu0+BlwVWvGdHUVLRNyk6ZegShT9Yn+w4V4yULy+JsICmvaaK7cMqVc6NAqTzvqtT0rnoBF+j8wsIFIhjh7nUaz1u/nzI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=05VSn5zt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VYWVe1UdrsakmIaNKnLkxj7V7iHopfagJQK30a3o/wls/vwphpFVXPWDCH9j3fjcrR7twOQd+06lQL5KrCPgiRbLge0EC0vAsu8yBTyaBHUylCxGZUhEzsELjr4jagS6Z15Cqxl8NNKf5IgPn9VC4lnJ+XOEAoIYTR55lmgDm+k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YQ+KH+uM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="05VSn5zt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4BF8C4CECE;
-	Thu, 12 Dec 2024 16:03:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YQ+KH+uM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDB3CC4CECE;
+	Thu, 12 Dec 2024 16:03:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734019426;
-	bh=IWfc/VT6jlPxDfI4oMW7peqnghecywtdkzmhjeFhvbQ=;
+	s=korg; t=1734019430;
+	bh=e7R7Uxp8WadpekN/CuUU5zKR4ewfhyACRHnOVs9DAc8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=05VSn5zttUzQESqyfN5lkC1lFCT9JwpXMGGPFSRByUyGINZdKYMzkh0/jiytHzsB0
-	 lI0dEEI6A+nGDWv/gn90GoVJYi73RehdYBof1FwYaLrHo6HDO0Kj7/YFI6Nw98VRVE
-	 EiKsFdYOCbBQAMUNR2LTD1SIJGHvjHpgCpD9WKXE=
+	b=YQ+KH+uMDMv8iT1ptUq8DiV+GZP+UPuwqikAA2+bR+WGOozQChNsgqvrwpOpYD6tV
+	 yTG4WPLcpVzWDRuSENHTazCQO7RxFxVrq0Fc6pVFbSNkOhrmHADmYe8Pw5puwUzw5r
+	 +vbwV5ctobHnDjYwGtqqYV1spyHZsFsaAjlyCJaM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinjie Ruan <ruanjinjie@huawei.com>,
+	Marcus Folkesson <marcus.folkesson@gmail.com>,
 	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 205/772] mfd: tps65010: Use IRQF_NO_AUTOEN flag in request_irq() to fix race
-Date: Thu, 12 Dec 2024 15:52:30 +0100
-Message-ID: <20241212144358.406871900@linuxfoundation.org>
+Subject: [PATCH 6.1 206/772] mfd: da9052-spi: Change read-mask to write-mask
+Date: Thu, 12 Dec 2024 15:52:31 +0100
+Message-ID: <20241212144358.445809394@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -51,47 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinjie Ruan <ruanjinjie@huawei.com>
+From: Marcus Folkesson <marcus.folkesson@gmail.com>
 
-[ Upstream commit 2174f9a8c9db50f74df769edd5a4ab822c73b6d2 ]
+[ Upstream commit 2e3378f6c79a1b3f7855ded1ef306ea4406352ed ]
 
-As the comment said, disable_irq() after request_irq() still has a
-time gap in which interrupts can come. request_irq() with IRQF_NO_AUTOEN
-flag will disable IRQ auto-enable when request IRQ.
+Driver has mixed up the R/W bit.
+The LSB bit is set on write rather than read.
+Change it to avoid nasty things to happen.
 
-Fixes: 72cd799544f2 ("[PATCH] I2C: add i2c driver for TPS6501x")
-Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-Link: https://lore.kernel.org/r/20240912031530.2211654-1-ruanjinjie@huawei.com
+Fixes: e9e9d3973594 ("mfd: da9052: Avoid setting read_flag_mask for da9052-i2c driver")
+Signed-off-by: Marcus Folkesson <marcus.folkesson@gmail.com>
+Link: https://lore.kernel.org/r/20240925-da9052-v2-1-f243e4505b07@gmail.com
 Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/tps65010.c | 8 ++------
- 1 file changed, 2 insertions(+), 6 deletions(-)
+ drivers/mfd/da9052-spi.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/mfd/tps65010.c b/drivers/mfd/tps65010.c
-index c2afa2e69f42f..35ddffb96ba1a 100644
---- a/drivers/mfd/tps65010.c
-+++ b/drivers/mfd/tps65010.c
-@@ -548,17 +548,13 @@ static int tps65010_probe(struct i2c_client *client,
- 	 */
- 	if (client->irq > 0) {
- 		status = request_irq(client->irq, tps65010_irq,
--				     IRQF_TRIGGER_FALLING, DRIVER_NAME, tps);
-+				     IRQF_TRIGGER_FALLING | IRQF_NO_AUTOEN,
-+				     DRIVER_NAME, tps);
- 		if (status < 0) {
- 			dev_dbg(&client->dev, "can't get IRQ %d, err %d\n",
- 					client->irq, status);
- 			return status;
- 		}
--		/* annoying race here, ideally we'd have an option
--		 * to claim the irq now and enable it later.
--		 * FIXME genirq IRQF_NOAUTOEN now solves that ...
--		 */
--		disable_irq(client->irq);
- 		set_bit(FLAG_IRQ_ENABLE, &tps->flags);
- 	} else
- 		dev_warn(&client->dev, "IRQ not configured!\n");
+diff --git a/drivers/mfd/da9052-spi.c b/drivers/mfd/da9052-spi.c
+index b79a57b45c1e8..458f919de4cb4 100644
+--- a/drivers/mfd/da9052-spi.c
++++ b/drivers/mfd/da9052-spi.c
+@@ -37,7 +37,7 @@ static int da9052_spi_probe(struct spi_device *spi)
+ 	spi_set_drvdata(spi, da9052);
+ 
+ 	config = da9052_regmap_config;
+-	config.read_flag_mask = 1;
++	config.write_flag_mask = 1;
+ 	config.reg_bits = 7;
+ 	config.pad_bits = 1;
+ 	config.val_bits = 8;
 -- 
 2.43.0
 
