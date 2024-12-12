@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29132209F27;
-	Thu, 12 Dec 2024 15:01:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B00732080FC;
+	Thu, 12 Dec 2024 15:01:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734015687; cv=none; b=KCrPTHboNyWYZBaeYcqcJMvAMmvAFiXCxzfc0J0IIPqRUlP3/q81nJ/YPSwG30JKzvQKscMAOzfJ22WENyQ0FfltEz26sE9mCFLTz0+W9roLMwB7GmEz4m5w2Q7WoppG3egYyRoSUIqhsMlG0s/WhtOz+iKmX6zlYtLIcAmkjv8=
+	t=1734015690; cv=none; b=Eqy+k4n1A8SdOMQKH1cgx1A5vRiRmmppkdpWXO5cBYpcfF842viAckGHZcIGPENqMzsF0wyP/8WZSbiHC0Y6sa0k+GU1Tls4PdzM43RRAbQlmZpC2uCepmIuMkLDc6t5LMGDy4Apxky/41TAiKTGBqiymEC2JxSeFFNK3uYSHiY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734015687; c=relaxed/simple;
-	bh=7mue2m8HCSurmgndi7OYQOrYrV61ROyvCIoKa/nODYM=;
+	s=arc-20240116; t=1734015690; c=relaxed/simple;
+	bh=jPkVc6YolaZ1iP2umkrLgqyGYTTsOSSsCN7npZw/D0E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X6VshnPRz5YE7E7jcTSBL/IVBpUFS91mqaSLymwIc9HCjDBMfe7s446aAKCRA7N3oeZs7cbURgdfr6wUuGcQ5brqeehrzuTcbQkzEd65XeOHIho55RVqDG48MaieR41OkHTfE5MA/nP33w+fSEDEOxCkLUhgmQtb7Qmk8MddIx8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SrFm5nW9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oF7DcS6NHkpN+6LAkPcNPJp8Mwy6K/5H77moFlGIMjod0FZ90PvoyaFw/ShIw/fwBI4FEJFroeWKxOmwTXoGlQSSPM+CVbt6Aq57nVmbEmjwtzzO/In5hrDRi3+k9ox5YPuqjHIiiElHAu1m1F93z4kZPs+G7yaIAJwKGLAyl7I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gtVJMYdX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SrFm5nW9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98787C4CED4;
-	Thu, 12 Dec 2024 15:01:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gtVJMYdX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0108BC4CECE;
+	Thu, 12 Dec 2024 15:01:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734015687;
-	bh=7mue2m8HCSurmgndi7OYQOrYrV61ROyvCIoKa/nODYM=;
+	s=korg; t=1734015690;
+	bh=jPkVc6YolaZ1iP2umkrLgqyGYTTsOSSsCN7npZw/D0E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SrFm5nW9r6H7HtXSDrIK4pYN/LQZpFLfeorUeLWyHLwoTdXE7iS+yCFgOpEJLablP
-	 2Lx0BrTcVll/2BkUS1VS8j90FG7AwmZdkgzpbUK8bZHK3hOatHw3cJF9aBIKu557+a
-	 kll5IvFP5jU6qK9ikHtepq3mACaLy4+379Z4lDC4=
+	b=gtVJMYdXWih5pWCABHTlYU+63WndxiJbZTdVDhkQFuzQy52aWovxVRu4XLwAz8K6b
+	 +XWw+J9ApoKn/QwTSa1sd6mUJVkKFOdFmMCSi2XHX5/ZFCk8NW4+yEXsX8XZDOzJF4
+	 qReq1ma6S+xZTG5NitSya6a1RWtwEf52aJeRHPEs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+57bac0866ddd99fe47c0@syzkaller.appspotmail.com,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Maximilian Heyne <mheyne@amazon.de>,
+	Benjamin Tissoires <bentiss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 018/466] netfilter: nft_socket: remove WARN_ON_ONCE on maximum cgroup level
-Date: Thu, 12 Dec 2024 15:53:07 +0100
-Message-ID: <20241212144307.407799807@linuxfoundation.org>
+Subject: [PATCH 6.12 019/466] selftests: hid: fix typo and exit code
+Date: Thu, 12 Dec 2024 15:53:08 +0100
+Message-ID: <20241212144307.451332681@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144306.641051666@linuxfoundation.org>
 References: <20241212144306.641051666@linuxfoundation.org>
@@ -51,36 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Maximilian Heyne <mheyne@amazon.de>
 
-[ Upstream commit b7529880cb961d515642ce63f9d7570869bbbdc3 ]
+[ Upstream commit e8f34747bddedaf3895e5d5066e0f71713fff811 ]
 
-cgroup maximum depth is INT_MAX by default, there is a cgroup toggle to
-restrict this maximum depth to a more reasonable value not to harm
-performance. Remove unnecessary WARN_ON_ONCE which is reachable from
-userspace.
+The correct exit code to mark a test as skipped is 4.
 
-Fixes: 7f3287db6543 ("netfilter: nft_socket: make cgroupsv2 matching work with namespaces")
-Reported-by: syzbot+57bac0866ddd99fe47c0@syzkaller.appspotmail.com
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: ffb85d5c9e80 ("selftests: hid: import hid-tools hid-core tests")
+Signed-off-by: Maximilian Heyne <mheyne@amazon.de>
+Link: https://patch.msgid.link/20241126135850.76493-1-mheyne@amazon.de
+Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_socket.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../testing/selftests/hid/run-hid-tools-tests.sh | 16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
 
-diff --git a/net/netfilter/nft_socket.c b/net/netfilter/nft_socket.c
-index f5da0c1775f2e..35d0409b00950 100644
---- a/net/netfilter/nft_socket.c
-+++ b/net/netfilter/nft_socket.c
-@@ -68,7 +68,7 @@ static noinline int nft_socket_cgroup_subtree_level(void)
+diff --git a/tools/testing/selftests/hid/run-hid-tools-tests.sh b/tools/testing/selftests/hid/run-hid-tools-tests.sh
+index bdae8464da865..af1682a53c27e 100755
+--- a/tools/testing/selftests/hid/run-hid-tools-tests.sh
++++ b/tools/testing/selftests/hid/run-hid-tools-tests.sh
+@@ -2,24 +2,26 @@
+ # SPDX-License-Identifier: GPL-2.0
+ # Runs tests for the HID subsystem
  
- 	cgroup_put(cgrp);
++KSELFTEST_SKIP_TEST=4
++
+ if ! command -v python3 > /dev/null 2>&1; then
+ 	echo "hid-tools: [SKIP] python3 not installed"
+-	exit 77
++	exit $KSELFTEST_SKIP_TEST
+ fi
  
--	if (WARN_ON_ONCE(level > 255))
-+	if (level > 255)
- 		return -ERANGE;
+ if ! python3 -c "import pytest" > /dev/null 2>&1; then
+-	echo "hid: [SKIP/ pytest module not installed"
+-	exit 77
++	echo "hid: [SKIP] pytest module not installed"
++	exit $KSELFTEST_SKIP_TEST
+ fi
  
- 	if (WARN_ON_ONCE(level < 0))
+ if ! python3 -c "import pytest_tap" > /dev/null 2>&1; then
+-	echo "hid: [SKIP/ pytest_tap module not installed"
+-	exit 77
++	echo "hid: [SKIP] pytest_tap module not installed"
++	exit $KSELFTEST_SKIP_TEST
+ fi
+ 
+ if ! python3 -c "import hidtools" > /dev/null 2>&1; then
+-	echo "hid: [SKIP/ hid-tools module not installed"
+-	exit 77
++	echo "hid: [SKIP] hid-tools module not installed"
++	exit $KSELFTEST_SKIP_TEST
+ fi
+ 
+ TARGET=${TARGET:=.}
 -- 
 2.43.0
 
