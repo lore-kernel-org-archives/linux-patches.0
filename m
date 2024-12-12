@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11FED222D42;
-	Thu, 12 Dec 2024 15:51:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1C21217F34;
+	Thu, 12 Dec 2024 15:51:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734018683; cv=none; b=MvTfi2lyN2z61xstegI7i9TieT6hRz8U33c5uVx7+LOx1Gc5Z/y9v8wahTFw9PcmY0flHjcQxa0gYivv20GUEpFWe3xlFhjZqdZPUBR8XCOGaGgoeQKBm4W925HZXAp4drSMSjwc068LVDn/Qt/cHyMCuF8AGS+dpiASGYQyjeI=
+	t=1734018686; cv=none; b=FYjDZXhTMUN/p8EmV9X4l/KrTI9t4WGKnf8qpbX8IvlQHoWqzc5DUm3qr+b638KVC7eyEmzXi1Yy8oVlDPsBf9U9hT7QNbx7i6KGEu83smaKCV2Tz1XypcP+3JrmbIGfT0VtVEnQIyCJiBD98kbfnE3zC26GcqRkL/G7AwRQ3Qc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734018683; c=relaxed/simple;
-	bh=gZ3tfu7V1a7MQUZi/RiwI/nZMf6DU/qyFzQ0uiVwmqE=;
+	s=arc-20240116; t=1734018686; c=relaxed/simple;
+	bh=iO8/4uM+46q2yPKilqqbfFFpgj5c99YMhb+ZuM7/PPA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KUxoeXmcPwH5QniZe9oVeWRQTH0yKAgwQVo3AbMaPn8qUJxWCH29h2Mjo1cSREhdE9Zbyvm8lefs/O/oZYdh4SR2EGZTUR0OOPIWffVpdjNMlzKZObx953UKFFa/DuWDdn8oELHBZCL1uPHHQfqzHDgwiwvEliShWdQHCNaqayw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DY29Ia2s; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VQnz8+gcnFagEVUtBEfvdcon5/bcbRowIA41dD9LRmZCwjd8dd5kOK2rHp6XvYSZ0VX48npMiD3TMiJllP8RY3IeqZfJh5U7Ud9n1gMPAJTPxCkEWoGyRvBtfKiPRqbpzUVhfR5g90hJ7fZvnotobCpqIjxMlOyfcA7vXWgSdEc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L78Rn9WT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DY29Ia2s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 742DDC4CED4;
-	Thu, 12 Dec 2024 15:51:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L78Rn9WT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E73CC4CECE;
+	Thu, 12 Dec 2024 15:51:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734018682;
-	bh=gZ3tfu7V1a7MQUZi/RiwI/nZMf6DU/qyFzQ0uiVwmqE=;
+	s=korg; t=1734018686;
+	bh=iO8/4uM+46q2yPKilqqbfFFpgj5c99YMhb+ZuM7/PPA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DY29Ia2s64jlXnyzac2k1v/AncKTKSnrwzAzgEI8ZH2U/dLuJDy7Pj4XB3SSU9YZ2
-	 UMg+KtQu0e+8O6BPFHl4Papv7nmEsR/sNFhTbJTcexxVxS83YKOCfyorHlxo0ThQoD
-	 P+/CEtMHUHSn9X2ovkIflT+tSqvRy6NeG96nMWGA=
+	b=L78Rn9WTj9X7f7AmZ2LC1QxZN+GUCa/lUiREFKr2OdGPy80tZWOZdeFIm19df8/NQ
+	 Lj39GVrjnnO3eJgh9DV2GnSnOD98LZo9P/ruy0MIU7mygaFT85X6FCyuJpRsoVuOTT
+	 dpHGWY94NWW1cFe6JFewAJ/6m0Nsb05zS4k9GPf0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Wander Lairson Costa <wander@redhat.com>,
 	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Daniel Bristot de Oliveira <bristot@kernel.org>,
-	Phil Auld <pauld@redhat.com>,
-	Valentin Schneider <vschneid@redhat.com>,
+	Juri Lelli <juri.lelli@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 330/356] sched/deadline: Move bandwidth accounting into {en,de}queue_dl_entity
-Date: Thu, 12 Dec 2024 16:00:49 +0100
-Message-ID: <20241212144257.601668701@linuxfoundation.org>
+Subject: [PATCH 6.6 331/356] sched/deadline: Fix warning in migrate_enable for boosted tasks
+Date: Thu, 12 Dec 2024 16:00:50 +0100
+Message-ID: <20241212144257.639344223@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144244.601729511@linuxfoundation.org>
 References: <20241212144244.601729511@linuxfoundation.org>
@@ -53,262 +52,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Zijlstra <peterz@infradead.org>
+From: Wander Lairson Costa <wander@redhat.com>
 
-[ Upstream commit 2f7a0f58948d8231236e2facecc500f1930fb996 ]
+[ Upstream commit 0664e2c311b9fa43b33e3e81429cd0c2d7f9c638 ]
 
-In preparation of introducing !task sched_dl_entity; move the
-bandwidth accounting into {en.de}queue_dl_entity().
+When running the following command:
 
+while true; do
+    stress-ng --cyclic 30 --timeout 30s --minimize --quiet
+done
+
+a warning is eventually triggered:
+
+WARNING: CPU: 43 PID: 2848 at kernel/sched/deadline.c:794
+setup_new_dl_entity+0x13e/0x180
+...
+Call Trace:
+ <TASK>
+ ? show_trace_log_lvl+0x1c4/0x2df
+ ? enqueue_dl_entity+0x631/0x6e0
+ ? setup_new_dl_entity+0x13e/0x180
+ ? __warn+0x7e/0xd0
+ ? report_bug+0x11a/0x1a0
+ ? handle_bug+0x3c/0x70
+ ? exc_invalid_op+0x14/0x70
+ ? asm_exc_invalid_op+0x16/0x20
+ enqueue_dl_entity+0x631/0x6e0
+ enqueue_task_dl+0x7d/0x120
+ __do_set_cpus_allowed+0xe3/0x280
+ __set_cpus_allowed_ptr_locked+0x140/0x1d0
+ __set_cpus_allowed_ptr+0x54/0xa0
+ migrate_enable+0x7e/0x150
+ rt_spin_unlock+0x1c/0x90
+ group_send_sig_info+0xf7/0x1a0
+ ? kill_pid_info+0x1f/0x1d0
+ kill_pid_info+0x78/0x1d0
+ kill_proc_info+0x5b/0x110
+ __x64_sys_kill+0x93/0xc0
+ do_syscall_64+0x5c/0xf0
+ entry_SYSCALL_64_after_hwframe+0x6e/0x76
+ RIP: 0033:0x7f0dab31f92b
+
+This warning occurs because set_cpus_allowed dequeues and enqueues tasks
+with the ENQUEUE_RESTORE flag set. If the task is boosted, the warning
+is triggered. A boosted task already had its parameters set by
+rt_mutex_setprio, and a new call to setup_new_dl_entity is unnecessary,
+hence the WARN_ON call.
+
+Check if we are requeueing a boosted task and avoid calling
+setup_new_dl_entity if that's the case.
+
+Fixes: 295d6d5e3736 ("sched/deadline: Fix switching to -deadline")
+Signed-off-by: Wander Lairson Costa <wander@redhat.com>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Signed-off-by: Daniel Bristot de Oliveira <bristot@kernel.org>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Phil Auld <pauld@redhat.com>
-Reviewed-by: Valentin Schneider <vschneid@redhat.com>
-Link: https://lkml.kernel.org/r/a86dccbbe44e021b8771627e1dae01a69b73466d.1699095159.git.bristot@kernel.org
-Stable-dep-of: 0664e2c311b9 ("sched/deadline: Fix warning in migrate_enable for boosted tasks")
+Acked-by: Juri Lelli <juri.lelli@redhat.com>
+Link: https://lore.kernel.org/r/20240724142253.27145-2-wander@redhat.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/deadline.c | 130 ++++++++++++++++++++++------------------
- kernel/sched/sched.h    |   6 ++
- 2 files changed, 78 insertions(+), 58 deletions(-)
+ kernel/sched/deadline.c | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/kernel/sched/deadline.c b/kernel/sched/deadline.c
-index 97b548c343ddd..aacd3bf9fa4e7 100644
+index aacd3bf9fa4e7..b9e99bc3b1cf2 100644
 --- a/kernel/sched/deadline.c
 +++ b/kernel/sched/deadline.c
-@@ -391,12 +391,12 @@ static void __dl_clear_params(struct sched_dl_entity *dl_se);
-  * up, and checks if the task is still in the "ACTIVE non contending"
-  * state or not (in the second case, it updates running_bw).
-  */
--static void task_non_contending(struct task_struct *p)
-+static void task_non_contending(struct sched_dl_entity *dl_se)
- {
--	struct sched_dl_entity *dl_se = &p->dl;
- 	struct hrtimer *timer = &dl_se->inactive_timer;
- 	struct dl_rq *dl_rq = dl_rq_of_se(dl_se);
- 	struct rq *rq = rq_of_dl_rq(dl_rq);
-+	struct task_struct *p = dl_task_of(dl_se);
- 	s64 zerolag_time;
- 
- 	/*
-@@ -428,13 +428,14 @@ static void task_non_contending(struct task_struct *p)
- 	if ((zerolag_time < 0) || hrtimer_active(&dl_se->inactive_timer)) {
- 		if (dl_task(p))
- 			sub_running_bw(dl_se, dl_rq);
-+
- 		if (!dl_task(p) || READ_ONCE(p->__state) == TASK_DEAD) {
- 			struct dl_bw *dl_b = dl_bw_of(task_cpu(p));
- 
- 			if (READ_ONCE(p->__state) == TASK_DEAD)
--				sub_rq_bw(&p->dl, &rq->dl);
-+				sub_rq_bw(dl_se, &rq->dl);
- 			raw_spin_lock(&dl_b->lock);
--			__dl_sub(dl_b, p->dl.dl_bw, dl_bw_cpus(task_cpu(p)));
-+			__dl_sub(dl_b, dl_se->dl_bw, dl_bw_cpus(task_cpu(p)));
- 			raw_spin_unlock(&dl_b->lock);
- 			__dl_clear_params(dl_se);
- 		}
-@@ -1627,6 +1628,41 @@ enqueue_dl_entity(struct sched_dl_entity *dl_se, int flags)
- 
- 	update_stats_enqueue_dl(dl_rq_of_se(dl_se), dl_se, flags);
- 
-+	/*
-+	 * Check if a constrained deadline task was activated
-+	 * after the deadline but before the next period.
-+	 * If that is the case, the task will be throttled and
-+	 * the replenishment timer will be set to the next period.
-+	 */
-+	if (!dl_se->dl_throttled && !dl_is_implicit(dl_se))
-+		dl_check_constrained_dl(dl_se);
-+
-+	if (flags & (ENQUEUE_RESTORE|ENQUEUE_MIGRATING)) {
-+		struct dl_rq *dl_rq = dl_rq_of_se(dl_se);
-+
-+		add_rq_bw(dl_se, dl_rq);
-+		add_running_bw(dl_se, dl_rq);
-+	}
-+
-+	/*
-+	 * If p is throttled, we do not enqueue it. In fact, if it exhausted
-+	 * its budget it needs a replenishment and, since it now is on
-+	 * its rq, the bandwidth timer callback (which clearly has not
-+	 * run yet) will take care of this.
-+	 * However, the active utilization does not depend on the fact
-+	 * that the task is on the runqueue or not (but depends on the
-+	 * task's state - in GRUB parlance, "inactive" vs "active contending").
-+	 * In other words, even if a task is throttled its utilization must
-+	 * be counted in the active utilization; hence, we need to call
-+	 * add_running_bw().
-+	 */
-+	if (dl_se->dl_throttled && !(flags & ENQUEUE_REPLENISH)) {
-+		if (flags & ENQUEUE_WAKEUP)
-+			task_contending(dl_se, flags);
-+
-+		return;
-+	}
-+
- 	/*
- 	 * If this is a wakeup or a new instance, the scheduling
- 	 * parameters of the task might need updating. Otherwise,
-@@ -1646,9 +1682,28 @@ enqueue_dl_entity(struct sched_dl_entity *dl_se, int flags)
- 	__enqueue_dl_entity(dl_se);
- }
- 
--static void dequeue_dl_entity(struct sched_dl_entity *dl_se)
-+static void dequeue_dl_entity(struct sched_dl_entity *dl_se, int flags)
- {
- 	__dequeue_dl_entity(dl_se);
-+
-+	if (flags & (DEQUEUE_SAVE|DEQUEUE_MIGRATING)) {
-+		struct dl_rq *dl_rq = dl_rq_of_se(dl_se);
-+
-+		sub_running_bw(dl_se, dl_rq);
-+		sub_rq_bw(dl_se, dl_rq);
-+	}
-+
-+	/*
-+	 * This check allows to start the inactive timer (or to immediately
-+	 * decrease the active utilization, if needed) in two cases:
-+	 * when the task blocks and when it is terminating
-+	 * (p->state == TASK_DEAD). We can handle the two cases in the same
-+	 * way, because from GRUB's point of view the same thing is happening
-+	 * (the task moves from "active contending" to "active non contending"
-+	 * or "inactive")
-+	 */
-+	if (flags & DEQUEUE_SLEEP)
-+		task_non_contending(dl_se);
- }
- 
- static void enqueue_task_dl(struct rq *rq, struct task_struct *p, int flags)
-@@ -1693,76 +1748,35 @@ static void enqueue_task_dl(struct rq *rq, struct task_struct *p, int flags)
- 		return;
- 	}
- 
--	/*
--	 * Check if a constrained deadline task was activated
--	 * after the deadline but before the next period.
--	 * If that is the case, the task will be throttled and
--	 * the replenishment timer will be set to the next period.
--	 */
--	if (!p->dl.dl_throttled && !dl_is_implicit(&p->dl))
--		dl_check_constrained_dl(&p->dl);
--
--	if (p->on_rq == TASK_ON_RQ_MIGRATING || flags & ENQUEUE_RESTORE) {
--		add_rq_bw(&p->dl, &rq->dl);
--		add_running_bw(&p->dl, &rq->dl);
--	}
--
--	/*
--	 * If p is throttled, we do not enqueue it. In fact, if it exhausted
--	 * its budget it needs a replenishment and, since it now is on
--	 * its rq, the bandwidth timer callback (which clearly has not
--	 * run yet) will take care of this.
--	 * However, the active utilization does not depend on the fact
--	 * that the task is on the runqueue or not (but depends on the
--	 * task's state - in GRUB parlance, "inactive" vs "active contending").
--	 * In other words, even if a task is throttled its utilization must
--	 * be counted in the active utilization; hence, we need to call
--	 * add_running_bw().
--	 */
--	if (p->dl.dl_throttled && !(flags & ENQUEUE_REPLENISH)) {
--		if (flags & ENQUEUE_WAKEUP)
--			task_contending(&p->dl, flags);
--
--		return;
--	}
--
- 	check_schedstat_required();
- 	update_stats_wait_start_dl(dl_rq_of_se(&p->dl), &p->dl);
- 
-+	if (p->on_rq == TASK_ON_RQ_MIGRATING)
-+		flags |= ENQUEUE_MIGRATING;
-+
- 	enqueue_dl_entity(&p->dl, flags);
- 
--	if (!task_current(rq, p) && p->nr_cpus_allowed > 1)
-+	if (!task_current(rq, p) && !p->dl.dl_throttled && p->nr_cpus_allowed > 1)
- 		enqueue_pushable_dl_task(rq, p);
- }
- 
- static void __dequeue_task_dl(struct rq *rq, struct task_struct *p, int flags)
- {
- 	update_stats_dequeue_dl(&rq->dl, &p->dl, flags);
--	dequeue_dl_entity(&p->dl);
--	dequeue_pushable_dl_task(rq, p);
-+	dequeue_dl_entity(&p->dl, flags);
-+
-+	if (!p->dl.dl_throttled)
-+		dequeue_pushable_dl_task(rq, p);
- }
- 
- static void dequeue_task_dl(struct rq *rq, struct task_struct *p, int flags)
- {
- 	update_curr_dl(rq);
--	__dequeue_task_dl(rq, p, flags);
- 
--	if (p->on_rq == TASK_ON_RQ_MIGRATING || flags & DEQUEUE_SAVE) {
--		sub_running_bw(&p->dl, &rq->dl);
--		sub_rq_bw(&p->dl, &rq->dl);
--	}
-+	if (p->on_rq == TASK_ON_RQ_MIGRATING)
-+		flags |= DEQUEUE_MIGRATING;
- 
--	/*
--	 * This check allows to start the inactive timer (or to immediately
--	 * decrease the active utilization, if needed) in two cases:
--	 * when the task blocks and when it is terminating
--	 * (p->state == TASK_DEAD). We can handle the two cases in the same
--	 * way, because from GRUB's point of view the same thing is happening
--	 * (the task moves from "active contending" to "active non contending"
--	 * or "inactive")
--	 */
--	if (flags & DEQUEUE_SLEEP)
--		task_non_contending(p);
-+	__dequeue_task_dl(rq, p, flags);
- }
- 
- /*
-@@ -2580,7 +2594,7 @@ static void switched_from_dl(struct rq *rq, struct task_struct *p)
- 	 * will reset the task parameters.
- 	 */
- 	if (task_on_rq_queued(p) && p->dl.dl_runtime)
--		task_non_contending(p);
-+		task_non_contending(&p->dl);
- 
- 	/*
- 	 * In case a task is setscheduled out from SCHED_DEADLINE we need to
-diff --git a/kernel/sched/sched.h b/kernel/sched/sched.h
-index 992ac92d021d2..d48c6a292a83d 100644
---- a/kernel/sched/sched.h
-+++ b/kernel/sched/sched.h
-@@ -2196,6 +2196,10 @@ extern const u32		sched_prio_to_wmult[40];
-  * MOVE - paired with SAVE/RESTORE, explicitly does not preserve the location
-  *        in the runqueue.
-  *
-+ * NOCLOCK - skip the update_rq_clock() (avoids double updates)
-+ *
-+ * MIGRATION - p->on_rq == TASK_ON_RQ_MIGRATING (used for DEADLINE)
-+ *
-  * ENQUEUE_HEAD      - place at front of runqueue (tail if not specified)
-  * ENQUEUE_REPLENISH - CBS (replenish runtime and postpone deadline)
-  * ENQUEUE_MIGRATED  - the task was migrated during wakeup
-@@ -2206,6 +2210,7 @@ extern const u32		sched_prio_to_wmult[40];
- #define DEQUEUE_SAVE		0x02 /* Matches ENQUEUE_RESTORE */
- #define DEQUEUE_MOVE		0x04 /* Matches ENQUEUE_MOVE */
- #define DEQUEUE_NOCLOCK		0x08 /* Matches ENQUEUE_NOCLOCK */
-+#define DEQUEUE_MIGRATING	0x100 /* Matches ENQUEUE_MIGRATING */
- 
- #define ENQUEUE_WAKEUP		0x01
- #define ENQUEUE_RESTORE		0x02
-@@ -2220,6 +2225,7 @@ extern const u32		sched_prio_to_wmult[40];
- #define ENQUEUE_MIGRATED	0x00
- #endif
- #define ENQUEUE_INITIAL		0x80
-+#define ENQUEUE_MIGRATING	0x100
- 
- #define RETRY_TASK		((void *)-1UL)
- 
+@@ -1674,6 +1674,7 @@ enqueue_dl_entity(struct sched_dl_entity *dl_se, int flags)
+ 	} else if (flags & ENQUEUE_REPLENISH) {
+ 		replenish_dl_entity(dl_se);
+ 	} else if ((flags & ENQUEUE_RESTORE) &&
++		  !is_dl_boosted(dl_se) &&
+ 		  dl_time_before(dl_se->deadline,
+ 				 rq_clock(rq_of_dl_rq(dl_rq_of_se(dl_se))))) {
+ 		setup_new_dl_entity(dl_se);
 -- 
 2.43.0
 
