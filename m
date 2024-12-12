@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFEFF222D59;
-	Thu, 12 Dec 2024 17:01:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A594217656;
+	Thu, 12 Dec 2024 17:01:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734022890; cv=none; b=H3jDriD70iXzZj7xRkdWx2uc7AEWnqvI6W08P8zW0B5DU5eh5qc6AWh8PMyJXBlaf2iPEHmL+94LVEOuu/MIjaNeV94bEuT2qhNrtVVzjoOj7n6HAe7CrOP+cHALJ7nEqIArrLd+CPyK4TVkfExX26pFlqL2pBogc2wHpSw0kAo=
+	t=1734022895; cv=none; b=pb2pc+xf8Kk8RH5lo4kO1R8cPhM4D4ZuiuoSpu3VN0+j9trRzBh/h4SfsatjA5uryi7C+HNEubB9ysy2DX0lbKuti1tqv92Gy83iWhEUR6vaPf0csAb2cQ+BY+5MH7WmGpt4fLdo4RpNRLLX90vPpMkTG2wlrEX7N9k8aOl+oM8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734022890; c=relaxed/simple;
-	bh=Lujznu1Kdk+e21QcvoFG8PLZbA/mLhtsgy9mWoOO31o=;
+	s=arc-20240116; t=1734022895; c=relaxed/simple;
+	bh=qIqseR0Z067ptnX5X3zB1t6BQJbHDeKUMFUb8R65QDc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ErQY7JzZHRAQzaElk3Ypbm+AYu8gRj5bwGRkGz+os98DRsdf5XPpJQI4UKK645Jiie80rKqqf4fhf1rO/d32ykSemVLmSq9lDzb3tW9g0h/AAH/S+dl4aJzVeIA9fcRLhKUrDF409rclAFmMNnICWI/s/3mxsSsGVta81dO3zDE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lny2fE8q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O9M3uBrsUZ6t/t0GJvI8N1Q7WLK/5YuewIAh9cy8OHRv371WOptQYw//JO/SK6ozp3enEgtqFqcNlrKQz9z5ch8gdp5PlPI11ZJEIPGvpU+fi/r7VnwK/B7oBR3eBMICdyLm9PHdDdm6LHbuJGlC83wEYUgm/wMJVEMGvfwARrQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yXWWilaV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lny2fE8q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51286C4CECE;
-	Thu, 12 Dec 2024 17:01:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yXWWilaV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4009C4CECE;
+	Thu, 12 Dec 2024 17:01:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734022889;
-	bh=Lujznu1Kdk+e21QcvoFG8PLZbA/mLhtsgy9mWoOO31o=;
+	s=korg; t=1734022894;
+	bh=qIqseR0Z067ptnX5X3zB1t6BQJbHDeKUMFUb8R65QDc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Lny2fE8qK8Rj+zk93yQlyvIw8hqY/tL81/96w5R7i/NcKEZPcO1Xrjmyb6JJjUnar
-	 NDT8oc/CvZgPrGuZpQvqKTwxsKEIQfwpK/Yv8S/MFYTZkvf2h/UE8opdlmsXI/MEXN
-	 CJGNdIPHZPf/due6dULj4fvcupwBDkY3LjuUdYqA=
+	b=yXWWilaVpLe4QmnBYkXZxVkBMvioWrxo0kfj+l7Uznmd5s6ZQ7cYkyKqZj4QAwyVt
+	 qMWgcNlgr6VZHJG1LpTC+j8zQj4Ld+74lJa6NUsJ1SJJLpDh6TqkTJbQvTWxzjb2AI
+	 Um8uPv1q5a0KSDAMcfXwLhpHRKL0PG+jxPMPGY/U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Waqar Hameed <waqar.hameed@axis.com>,
 	Zhihao Cheng <chengzhihao1@huawei.com>,
 	Richard Weinberger <richard@nod.at>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 362/565] ubi: fastmap: Fix duplicate slab cache names while attaching
-Date: Thu, 12 Dec 2024 15:59:17 +0100
-Message-ID: <20241212144325.924529798@linuxfoundation.org>
+Subject: [PATCH 5.15 363/565] ubifs: authentication: Fix use-after-free in ubifs_tnc_end_commit
+Date: Thu, 12 Dec 2024 15:59:18 +0100
+Message-ID: <20241212144325.965153780@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144311.432886635@linuxfoundation.org>
 References: <20241212144311.432886635@linuxfoundation.org>
@@ -51,102 +52,169 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhihao Cheng <chengzhihao1@huawei.com>
+From: Waqar Hameed <waqar.hameed@axis.com>
 
-[ Upstream commit bcddf52b7a17adcebc768d26f4e27cf79adb424c ]
+[ Upstream commit 4617fb8fc15effe8eda4dd898d4e33eb537a7140 ]
 
-Since commit 4c39529663b9 ("slab: Warn on duplicate cache names when
-DEBUG_VM=y"), the duplicate slab cache names can be detected and a
-kernel WARNING is thrown out.
-In UBI fast attaching process, alloc_ai() could be invoked twice
-with the same slab cache name 'ubi_aeb_slab_cache', which will trigger
-following warning messages:
- kmem_cache of name 'ubi_aeb_slab_cache' already exists
- WARNING: CPU: 0 PID: 7519 at mm/slab_common.c:107
-          __kmem_cache_create_args+0x100/0x5f0
- Modules linked in: ubi(+) nandsim [last unloaded: nandsim]
- CPU: 0 UID: 0 PID: 7519 Comm: modprobe Tainted: G 6.12.0-rc2
- RIP: 0010:__kmem_cache_create_args+0x100/0x5f0
- Call Trace:
-   __kmem_cache_create_args+0x100/0x5f0
-   alloc_ai+0x295/0x3f0 [ubi]
-   ubi_attach+0x3c3/0xcc0 [ubi]
-   ubi_attach_mtd_dev+0x17cf/0x3fa0 [ubi]
-   ubi_init+0x3fb/0x800 [ubi]
-   do_init_module+0x265/0x7d0
-   __x64_sys_finit_module+0x7a/0xc0
+After an insertion in TNC, the tree might split and cause a node to
+change its `znode->parent`. A further deletion of other nodes in the
+tree (which also could free the nodes), the aforementioned node's
+`znode->cparent` could still point to a freed node. This
+`znode->cparent` may not be updated when getting nodes to commit in
+`ubifs_tnc_start_commit()`. This could then trigger a use-after-free
+when accessing the `znode->cparent` in `write_index()` in
+`ubifs_tnc_end_commit()`.
 
-The problem could be easily reproduced by loading UBI device by fastmap
-with CONFIG_DEBUG_VM=y.
-Fix it by using different slab names for alloc_ai() callers.
+This can be triggered by running
 
-Fixes: d2158f69a7d4 ("UBI: Remove alloc_ai() slab name from parameter list")
-Fixes: fdf10ed710c0 ("ubi: Rework Fastmap attach base code")
+  rm -f /etc/test-file.bin
+  dd if=/dev/urandom of=/etc/test-file.bin bs=1M count=60 conv=fsync
+
+in a loop, and with `CONFIG_UBIFS_FS_AUTHENTICATION`. KASAN then
+reports:
+
+  BUG: KASAN: use-after-free in ubifs_tnc_end_commit+0xa5c/0x1950
+  Write of size 32 at addr ffffff800a3af86c by task ubifs_bgt0_20/153
+
+  Call trace:
+   dump_backtrace+0x0/0x340
+   show_stack+0x18/0x24
+   dump_stack_lvl+0x9c/0xbc
+   print_address_description.constprop.0+0x74/0x2b0
+   kasan_report+0x1d8/0x1f0
+   kasan_check_range+0xf8/0x1a0
+   memcpy+0x84/0xf4
+   ubifs_tnc_end_commit+0xa5c/0x1950
+   do_commit+0x4e0/0x1340
+   ubifs_bg_thread+0x234/0x2e0
+   kthread+0x36c/0x410
+   ret_from_fork+0x10/0x20
+
+  Allocated by task 401:
+   kasan_save_stack+0x38/0x70
+   __kasan_kmalloc+0x8c/0xd0
+   __kmalloc+0x34c/0x5bc
+   tnc_insert+0x140/0x16a4
+   ubifs_tnc_add+0x370/0x52c
+   ubifs_jnl_write_data+0x5d8/0x870
+   do_writepage+0x36c/0x510
+   ubifs_writepage+0x190/0x4dc
+   __writepage+0x58/0x154
+   write_cache_pages+0x394/0x830
+   do_writepages+0x1f0/0x5b0
+   filemap_fdatawrite_wbc+0x170/0x25c
+   file_write_and_wait_range+0x140/0x190
+   ubifs_fsync+0xe8/0x290
+   vfs_fsync_range+0xc0/0x1e4
+   do_fsync+0x40/0x90
+   __arm64_sys_fsync+0x34/0x50
+   invoke_syscall.constprop.0+0xa8/0x260
+   do_el0_svc+0xc8/0x1f0
+   el0_svc+0x34/0x70
+   el0t_64_sync_handler+0x108/0x114
+   el0t_64_sync+0x1a4/0x1a8
+
+  Freed by task 403:
+   kasan_save_stack+0x38/0x70
+   kasan_set_track+0x28/0x40
+   kasan_set_free_info+0x28/0x4c
+   __kasan_slab_free+0xd4/0x13c
+   kfree+0xc4/0x3a0
+   tnc_delete+0x3f4/0xe40
+   ubifs_tnc_remove_range+0x368/0x73c
+   ubifs_tnc_remove_ino+0x29c/0x2e0
+   ubifs_jnl_delete_inode+0x150/0x260
+   ubifs_evict_inode+0x1d4/0x2e4
+   evict+0x1c8/0x450
+   iput+0x2a0/0x3c4
+   do_unlinkat+0x2cc/0x490
+   __arm64_sys_unlinkat+0x90/0x100
+   invoke_syscall.constprop.0+0xa8/0x260
+   do_el0_svc+0xc8/0x1f0
+   el0_svc+0x34/0x70
+   el0t_64_sync_handler+0x108/0x114
+   el0t_64_sync+0x1a4/0x1a8
+
+The offending `memcpy()` in `ubifs_copy_hash()` has a use-after-free
+when a node becomes root in TNC but still has a `cparent` to an already
+freed node. More specifically, consider the following TNC:
+
+         zroot
+         /
+        /
+      zp1
+      /
+     /
+    zn
+
+Inserting a new node `zn_new` with a key smaller then `zn` will trigger
+a split in `tnc_insert()` if `zp1` is full:
+
+         zroot
+         /   \
+        /     \
+      zp1     zp2
+      /         \
+     /           \
+  zn_new          zn
+
+`zn->parent` has now been moved to `zp2`, *but* `zn->cparent` still
+points to `zp1`.
+
+Now, consider a removal of all the nodes _except_ `zn`. Just when
+`tnc_delete()` is about to delete `zroot` and `zp2`:
+
+         zroot
+             \
+              \
+              zp2
+                \
+                 \
+                 zn
+
+`zroot` and `zp2` get freed and the tree collapses:
+
+           zn
+
+`zn` now becomes the new `zroot`.
+
+`get_znodes_to_commit()` will now only find `zn`, the new `zroot`, and
+`write_index()` will check its `znode->cparent` that wrongly points to
+the already freed `zp1`. `ubifs_copy_hash()` thus gets wrongly called
+with `znode->cparent->zbranch[znode->iip].hash` that triggers the
+use-after-free!
+
+Fix this by explicitly setting `znode->cparent` to `NULL` in
+`get_znodes_to_commit()` for the root node. The search for the dirty
+nodes is bottom-up in the tree. Thus, when `find_next_dirty(znode)`
+returns NULL, the current `znode` _is_ the root node. Add an assert for
+this.
+
+Fixes: 16a26b20d2af ("ubifs: authentication: Add hashes to index nodes")
+Tested-by: Waqar Hameed <waqar.hameed@axis.com>
+Co-developed-by: Zhihao Cheng <chengzhihao1@huawei.com>
 Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
+Signed-off-by: Waqar Hameed <waqar.hameed@axis.com>
+Reviewed-by: Zhihao Cheng <chengzhihao1@huawei.com>
 Signed-off-by: Richard Weinberger <richard@nod.at>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/ubi/attach.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ fs/ubifs/tnc_commit.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/mtd/ubi/attach.c b/drivers/mtd/ubi/attach.c
-index ae5abe492b52a..adc47b87b38a5 100644
---- a/drivers/mtd/ubi/attach.c
-+++ b/drivers/mtd/ubi/attach.c
-@@ -1447,7 +1447,7 @@ static int scan_all(struct ubi_device *ubi, struct ubi_attach_info *ai,
- 	return err;
- }
- 
--static struct ubi_attach_info *alloc_ai(void)
-+static struct ubi_attach_info *alloc_ai(const char *slab_name)
- {
- 	struct ubi_attach_info *ai;
- 
-@@ -1461,7 +1461,7 @@ static struct ubi_attach_info *alloc_ai(void)
- 	INIT_LIST_HEAD(&ai->alien);
- 	INIT_LIST_HEAD(&ai->fastmap);
- 	ai->volumes = RB_ROOT;
--	ai->aeb_slab_cache = kmem_cache_create("ubi_aeb_slab_cache",
-+	ai->aeb_slab_cache = kmem_cache_create(slab_name,
- 					       sizeof(struct ubi_ainf_peb),
- 					       0, 0, NULL);
- 	if (!ai->aeb_slab_cache) {
-@@ -1491,7 +1491,7 @@ static int scan_fast(struct ubi_device *ubi, struct ubi_attach_info **ai)
- 
- 	err = -ENOMEM;
- 
--	scan_ai = alloc_ai();
-+	scan_ai = alloc_ai("ubi_aeb_slab_cache_fastmap");
- 	if (!scan_ai)
- 		goto out;
- 
-@@ -1557,7 +1557,7 @@ int ubi_attach(struct ubi_device *ubi, int force_scan)
- 	int err;
- 	struct ubi_attach_info *ai;
- 
--	ai = alloc_ai();
-+	ai = alloc_ai("ubi_aeb_slab_cache");
- 	if (!ai)
- 		return -ENOMEM;
- 
-@@ -1575,7 +1575,7 @@ int ubi_attach(struct ubi_device *ubi, int force_scan)
- 		if (err > 0 || mtd_is_eccerr(err)) {
- 			if (err != UBI_NO_FASTMAP) {
- 				destroy_ai(ai);
--				ai = alloc_ai();
-+				ai = alloc_ai("ubi_aeb_slab_cache");
- 				if (!ai)
- 					return -ENOMEM;
- 
-@@ -1614,7 +1614,7 @@ int ubi_attach(struct ubi_device *ubi, int force_scan)
- 	if (ubi->fm && ubi_dbg_chk_fastmap(ubi)) {
- 		struct ubi_attach_info *scan_ai;
- 
--		scan_ai = alloc_ai();
-+		scan_ai = alloc_ai("ubi_aeb_slab_cache_dbg_chk_fastmap");
- 		if (!scan_ai) {
- 			err = -ENOMEM;
- 			goto out_wl;
+diff --git a/fs/ubifs/tnc_commit.c b/fs/ubifs/tnc_commit.c
+index 58c92c96ecef2..049905ade4655 100644
+--- a/fs/ubifs/tnc_commit.c
++++ b/fs/ubifs/tnc_commit.c
+@@ -657,6 +657,8 @@ static int get_znodes_to_commit(struct ubifs_info *c)
+ 		znode->alt = 0;
+ 		cnext = find_next_dirty(znode);
+ 		if (!cnext) {
++			ubifs_assert(c, !znode->parent);
++			znode->cparent = NULL;
+ 			znode->cnext = c->cnext;
+ 			break;
+ 		}
 -- 
 2.43.0
 
