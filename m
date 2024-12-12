@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD5DE13CA93;
-	Thu, 12 Dec 2024 17:21:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A247205501;
+	Thu, 12 Dec 2024 17:21:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734024072; cv=none; b=BrOCrbl94uUmCAVcHVyC/raUGZiopwUlTM/0hbS7UPMZqfUXiKAQ39LvlQz7qK7KGCl/5+9dgunHhMiM4NMZMgkas9PZGiIFOWNbMElW4qy7WcQBK56Uvm+1+KtkIL4rTXKy6Op2tNCVEEYICdBCujiAu64yMKP5apCf5I6sT4U=
+	t=1734024076; cv=none; b=ZXd5cHB2yqJy+NF1Pe4eWvnnqd2o+7KqnGatoJbee1T7/teLe9S53jiSGlAb9bPBEqNz8/o85nBtmK4y4XzK8m3KM7DUAdt28StSdVdVnL2AZ2oENHEe0SQDHIQXGTonbgmxL4jkgb413W/zZ3OQQT0R7S0BAp6BmFeBBAdGvns=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734024072; c=relaxed/simple;
-	bh=qwvHZfHejgQ2Z+HonXeJZTSOpvTdlJEl2/nnTEHaOAg=;
+	s=arc-20240116; t=1734024076; c=relaxed/simple;
+	bh=wq3U8CEZeoyrfazSPJI6mwuiDuNHEEg2GNC+P7lkflQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EO2eCbVY6+RHEm1sN7ECYfZ835f0UVieNeXBDD27q9ffTGtMpSRoDATdH0HBptPWgqwpwvm921CBozeqDLpC+E8/YZQEnzrqcEv0YeGZjmI0xkWqFcytFOpj4Fh6dcSAS7MOH9hTsurkgRIPyL/Dzxc2FLwRQDdkkja6mQ9Shy4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oWhvDN3m; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=J8ftGKQiy0wDkfHxJ05ieKueZuIzRra0SsjbyEc/tiBT4i9ocdtudePrDtFvM5iys9iCwisvCwIwvpFHRQsC5nFLHhovQ+Zd6adZH/K5FLbh9W8IIZrKYOTAuEmeVZtBfFvNAeAeBg19qvCJo+OapLb1Io0xfSnSdy+T+DXCiAQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jzJtlwOC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oWhvDN3m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5258AC4CECE;
-	Thu, 12 Dec 2024 17:21:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jzJtlwOC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B414C4CECE;
+	Thu, 12 Dec 2024 17:21:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734024072;
-	bh=qwvHZfHejgQ2Z+HonXeJZTSOpvTdlJEl2/nnTEHaOAg=;
+	s=korg; t=1734024075;
+	bh=wq3U8CEZeoyrfazSPJI6mwuiDuNHEEg2GNC+P7lkflQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oWhvDN3mYdkPZhARdu9el3sxnlNbLtb6hfZX9nYjMvRtIn9dKa35WtNrKsxcsYxNU
-	 KOGsycj6QHzc3O0Y3Rylp+wp79MIr4bUxGFTSpEqcqjP0iEsBh1zmBMfDp8YhPCVFj
-	 JoJbrRopBpvVobJjgnH5E4i6zKGYnpblsHrxxPp8=
+	b=jzJtlwOCc//Yv6naFEEVV25V2bJdKt6NL7NMj4qMoiRNFfkERaAVirIQbsUautmXb
+	 2988JMZ++imr/B9vICde3WgvpBMA8xzZ1uY+ecWaXejg78lg9SUNOhgMHm9G8Nlwpo
+	 n0lInrLWszqVd+h3moSFvooeMMJtwB3CpvClvfT8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ye Bin <yebin10@huawei.com>,
+	Zeng Heng <zengheng4@huawei.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 176/459] scsi: bfa: Fix use-after-free in bfad_im_module_exit()
-Date: Thu, 12 Dec 2024 15:58:34 +0100
-Message-ID: <20241212144300.476599649@linuxfoundation.org>
+Subject: [PATCH 5.10 177/459] scsi: fusion: Remove unused variable rc
+Date: Thu, 12 Dec 2024 15:58:35 +0100
+Message-ID: <20241212144300.515591452@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144253.511169641@linuxfoundation.org>
 References: <20241212144253.511169641@linuxfoundation.org>
@@ -51,107 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ye Bin <yebin10@huawei.com>
+From: Zeng Heng <zengheng4@huawei.com>
 
-[ Upstream commit 178b8f38932d635e90f5f0e9af1986c6f4a89271 ]
+[ Upstream commit bd65694223f7ad11c790ab63ad1af87a771192ee ]
 
-BUG: KASAN: slab-use-after-free in __lock_acquire+0x2aca/0x3a20
-Read of size 8 at addr ffff8881082d80c8 by task modprobe/25303
+The return value of scsi_device_reprobe() is currently ignored in
+_scsih_reprobe_lun(). Fixing the calling code to deal with the potential
+error is non-trivial, so for now just WARN_ON().
 
-Call Trace:
- <TASK>
- dump_stack_lvl+0x95/0xe0
- print_report+0xcb/0x620
- kasan_report+0xbd/0xf0
- __lock_acquire+0x2aca/0x3a20
- lock_acquire+0x19b/0x520
- _raw_spin_lock+0x2b/0x40
- attribute_container_unregister+0x30/0x160
- fc_release_transport+0x19/0x90 [scsi_transport_fc]
- bfad_im_module_exit+0x23/0x60 [bfa]
- bfad_init+0xdb/0xff0 [bfa]
- do_one_initcall+0xdc/0x550
- do_init_module+0x22d/0x6b0
- load_module+0x4e96/0x5ff0
- init_module_from_file+0xcd/0x130
- idempotent_init_module+0x330/0x620
- __x64_sys_finit_module+0xb3/0x110
- do_syscall_64+0xc1/0x1d0
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
- </TASK>
+The handling of scsi_device_reprobe()'s return value refers to
+_scsih_reprobe_lun() and the following link:
 
-Allocated by task 25303:
- kasan_save_stack+0x24/0x50
- kasan_save_track+0x14/0x30
- __kasan_kmalloc+0x7f/0x90
- fc_attach_transport+0x4f/0x4740 [scsi_transport_fc]
- bfad_im_module_init+0x17/0x80 [bfa]
- bfad_init+0x23/0xff0 [bfa]
- do_one_initcall+0xdc/0x550
- do_init_module+0x22d/0x6b0
- load_module+0x4e96/0x5ff0
- init_module_from_file+0xcd/0x130
- idempotent_init_module+0x330/0x620
- __x64_sys_finit_module+0xb3/0x110
- do_syscall_64+0xc1/0x1d0
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
+https://lore.kernel.org/all/094fdbf57487af4f395238c0525b2a560c8f68f0.1469766027.git.calvinowens@fb.com/
 
-Freed by task 25303:
- kasan_save_stack+0x24/0x50
- kasan_save_track+0x14/0x30
- kasan_save_free_info+0x3b/0x60
- __kasan_slab_free+0x38/0x50
- kfree+0x212/0x480
- bfad_im_module_init+0x7e/0x80 [bfa]
- bfad_init+0x23/0xff0 [bfa]
- do_one_initcall+0xdc/0x550
- do_init_module+0x22d/0x6b0
- load_module+0x4e96/0x5ff0
- init_module_from_file+0xcd/0x130
- idempotent_init_module+0x330/0x620
- __x64_sys_finit_module+0xb3/0x110
- do_syscall_64+0xc1/0x1d0
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-Above issue happens as follows:
-
-bfad_init
-  error = bfad_im_module_init()
-    fc_release_transport(bfad_im_scsi_transport_template);
-  if (error)
-    goto ext;
-
-ext:
-  bfad_im_module_exit();
-    fc_release_transport(bfad_im_scsi_transport_template);
-    --> Trigger double release
-
-Don't call bfad_im_module_exit() if bfad_im_module_init() failed.
-
-Fixes: 7725ccfda597 ("[SCSI] bfa: Brocade BFA FC SCSI driver")
-Signed-off-by: Ye Bin <yebin10@huawei.com>
-Link: https://lore.kernel.org/r/20241023011809.63466-1-yebin@huaweicloud.com
+Fixes: f99be43b3024 ("[SCSI] fusion: power pc and miscellaneous bug fixs")
+Signed-off-by: Zeng Heng <zengheng4@huawei.com>
+Link: https://lore.kernel.org/r/20241024084417.154655-1-zengheng4@huawei.com
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/bfa/bfad.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/message/fusion/mptsas.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/scsi/bfa/bfad.c b/drivers/scsi/bfa/bfad.c
-index 440ef32be048f..45b5f83ad6da1 100644
---- a/drivers/scsi/bfa/bfad.c
-+++ b/drivers/scsi/bfa/bfad.c
-@@ -1705,9 +1705,8 @@ bfad_init(void)
+diff --git a/drivers/message/fusion/mptsas.c b/drivers/message/fusion/mptsas.c
+index 18b91ea1a353f..e56e96671da99 100644
+--- a/drivers/message/fusion/mptsas.c
++++ b/drivers/message/fusion/mptsas.c
+@@ -4205,10 +4205,8 @@ mptsas_find_phyinfo_by_phys_disk_num(MPT_ADAPTER *ioc, u8 phys_disk_num,
+ static void
+ mptsas_reprobe_lun(struct scsi_device *sdev, void *data)
+ {
+-	int rc;
+-
+ 	sdev->no_uld_attach = data ? 1 : 0;
+-	rc = scsi_device_reprobe(sdev);
++	WARN_ON(scsi_device_reprobe(sdev));
+ }
  
- 	error = bfad_im_module_init();
- 	if (error) {
--		error = -ENOMEM;
- 		printk(KERN_WARNING "bfad_im_module_init failure\n");
--		goto ext;
-+		return -ENOMEM;
- 	}
- 
- 	if (strcmp(FCPI_NAME, " fcpim") == 0)
+ static void
 -- 
 2.43.0
 
