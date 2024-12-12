@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8859115696E;
-	Thu, 12 Dec 2024 17:40:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 943F915696E;
+	Thu, 12 Dec 2024 17:40:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734025205; cv=none; b=q9P39mBatBdIgwfz6l32N+CvPpOsvfAST9TrRiqrqycc7iuszzvDKOhffLWLbUyTQuLqK7vJM4lqTRZWnVG9A2Rcx5p/Xen3AvXgC2rpPMIePH6y3/G1UJe0prpL1BHgdy6TQXZ+iwF65PIPI3BbdGJilHO6Qu7IQex/KSouu08=
+	t=1734025208; cv=none; b=bCdSiYTlEQQb6kaPn9sYMtV3F4wAUCthjec5r/V/23Te8RrgT2yrl0qZVh+3of+kBhiDNrsJ6HnQS+ufLl/IbAORgof9kXO3zmzIher3kLYDEOzpdW7CGJ2T9yLRl4RnvCTzx6zjY1Sy9NHR8pRgMyso9Cg2VYSi6gKD2w9OcGI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734025205; c=relaxed/simple;
-	bh=Rz+t02jKp5C7aOIZtrXB5HQE5rkrJf+pdW2nuQG8qWU=;
+	s=arc-20240116; t=1734025208; c=relaxed/simple;
+	bh=tKxjisRK2TTfi2HZeebz6pOauDRr51KselUje7H8D2w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GKiOQ5KmIR6eqzXkqp7ZSdF1f1XxpsFWVSw+vNeIB6FOmANrmejpDGDsYOYvNSeJQAfFVkJZwH95C63Sxql0BFdfM4J/rxt935HICOt/z1KgwTsul+/GgENx3U85pJupw7tvgSNnw/8KInX8ZNneM92oO4R/f2DJddNQnBzuzSI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YSxITUWL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IE6dAZ6iUjGv0VtZyB2/5MY8ikZQ01YilE1uPDsc5s+6BXnThBY8a3H8GkTz82vfaFt0wQRz7KythStpicrgUAmcx/x0go1FiD41meIGJy8wq/cCV8OvoJALLFndl9Rx0m2UQm0JV162uc6Dc4osd1ozR7BMAl1Sd4GLJPfQn9M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nCvTBr6U; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YSxITUWL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01490C4CED0;
-	Thu, 12 Dec 2024 17:40:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nCvTBr6U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13AE9C4CECE;
+	Thu, 12 Dec 2024 17:40:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734025205;
-	bh=Rz+t02jKp5C7aOIZtrXB5HQE5rkrJf+pdW2nuQG8qWU=;
+	s=korg; t=1734025208;
+	bh=tKxjisRK2TTfi2HZeebz6pOauDRr51KselUje7H8D2w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YSxITUWLV2URJHfNUiEMA2EL6Sd7UJx1Q7h/4JbwdlW5rfD3VCvibesCLavPDq1GB
-	 Kru3Ead3NRjq6rGLjWC0vhxz2mLnfRF2EBHxXM+pcFI/74Uq6dd7b1BZ67EQh5tY8f
-	 xjmlBFgdjTXz9dxfc3DOE5ROSWq7Onzq2hha1i9s=
+	b=nCvTBr6Um/WUkCidwSNlGPP+YmmLCdf1gNy6p9kskW4ffrcsNcPIMMCvc0h2IoA1c
+	 A7pDN7cgv0q47H8WtwIF4jSpqo7RjARYqYoQTpTPrUzVKnYZs8hN9JweWdTs+0EBWp
+	 dII0I1Vqz/JvmT4oh6038qJ37YcAEF3CSz7EUAIo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Ning <zhangn1985@outlook.com>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Lee Jones <lee@kernel.org>,
+	Doug Brown <doug@schmorgal.com>,
+	Lucas Stach <l.stach@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 092/321] mfd: intel_soc_pmic_bxtwc: Use IRQ domain for TMU device
-Date: Thu, 12 Dec 2024 16:00:10 +0100
-Message-ID: <20241212144233.623967304@linuxfoundation.org>
+Subject: [PATCH 5.4 075/321] drm/etnaviv: fix power register offset on GC300
+Date: Thu, 12 Dec 2024 15:59:53 +0100
+Message-ID: <20241212144232.952212310@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144229.291682835@linuxfoundation.org>
 References: <20241212144229.291682835@linuxfoundation.org>
@@ -53,145 +51,156 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Doug Brown <doug@schmorgal.com>
 
-[ Upstream commit 9b79d59e6b2b515eb9a22bc469ef7b8f0904fc73 ]
+[ Upstream commit 61a6920bb604df3a0e389a2a9479e1e233e4461d ]
 
-While design wise the idea of converting the driver to use
-the hierarchy of the IRQ chips is correct, the implementation
-has (inherited) flaws. This was unveiled when platform_get_irq()
-had started WARN() on IRQ 0 that is supposed to be a Linux
-IRQ number (also known as vIRQ).
+Older GC300 revisions have their power registers at an offset of 0x200
+rather than 0x100. Add new gpu_read_power and gpu_write_power functions
+to encapsulate accesses to the power addresses and fix the addresses.
 
-Rework the driver to respect IRQ domain when creating each MFD
-device separately, as the domain is not the same for all of them.
-
-Fixes: 957ae5098185 ("platform/x86: Add Whiskey Cove PMIC TMU support")
-Fixes: 57129044f504 ("mfd: intel_soc_pmic_bxtwc: Use chained IRQs for second level IRQ chips")
-Reported-by: Zhang Ning <zhangn1985@outlook.com>
-Closes: https://lore.kernel.org/r/TY2PR01MB3322FEDCDC048B7D3794F922CDBA2@TY2PR01MB3322.jpnprd01.prod.outlook.com
-Tested-by: Zhang Ning <zhangn1985@outlook.com>
-Acked-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://lore.kernel.org/r/20241005193029.1929139-3-andriy.shevchenko@linux.intel.com
-Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Doug Brown <doug@schmorgal.com>
+Signed-off-by: Lucas Stach <l.stach@pengutronix.de>
+Stable-dep-of: 37dc4737447a ("drm/etnaviv: hold GPU lock across perfmon sampling")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/intel_soc_pmic_bxtwc.c     | 31 ++++++++++++++------------
- drivers/platform/x86/intel_bxtwc_tmu.c | 22 +++++-------------
- 2 files changed, 23 insertions(+), 30 deletions(-)
+ drivers/gpu/drm/etnaviv/etnaviv_dump.c |  7 ++++++-
+ drivers/gpu/drm/etnaviv/etnaviv_gpu.c  | 20 ++++++++++----------
+ drivers/gpu/drm/etnaviv/etnaviv_gpu.h  | 21 +++++++++++++++++++++
+ 3 files changed, 37 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/mfd/intel_soc_pmic_bxtwc.c b/drivers/mfd/intel_soc_pmic_bxtwc.c
-index 9b5edc1b47d89..ba441fd9c4ed4 100644
---- a/drivers/mfd/intel_soc_pmic_bxtwc.c
-+++ b/drivers/mfd/intel_soc_pmic_bxtwc.c
-@@ -241,12 +241,6 @@ static struct mfd_cell bxt_wc_dev[] = {
- 		.num_resources = ARRAY_SIZE(bcu_resources),
- 		.resources = bcu_resources,
- 	},
--	{
--		.name = "bxt_wcove_tmu",
--		.num_resources = ARRAY_SIZE(tmu_resources),
--		.resources = tmu_resources,
--	},
--
- 	{
- 		.name = "bxt_wcove_gpio",
- 		.num_resources = ARRAY_SIZE(gpio_resources),
-@@ -257,6 +251,14 @@ static struct mfd_cell bxt_wc_dev[] = {
- 	},
- };
- 
-+static const struct mfd_cell bxt_wc_tmu_dev[] = {
-+	{
-+		.name = "bxt_wcove_tmu",
-+		.num_resources = ARRAY_SIZE(tmu_resources),
-+		.resources = tmu_resources,
-+	},
-+};
-+
- static struct mfd_cell bxt_wc_chgr_dev[] = {
- 	{
- 		.name = "bxt_wcove_usbc",
-@@ -485,6 +487,15 @@ static int bxtwc_probe(struct platform_device *pdev)
- 	if (ret)
- 		return dev_err_probe(dev, ret, "Failed to add IRQ chip\n");
- 
-+	ret = bxtwc_add_chained_devices(pmic, bxt_wc_tmu_dev, ARRAY_SIZE(bxt_wc_tmu_dev),
-+					pmic->irq_chip_data,
-+					BXTWC_TMU_LVL1_IRQ,
-+					IRQF_ONESHOT,
-+					&bxtwc_regmap_irq_chip_tmu,
-+					&pmic->irq_chip_data_tmu);
-+	if (ret)
-+		return ret;
-+
- 	ret = bxtwc_add_chained_irq_chip(pmic, pmic->irq_chip_data,
- 					 BXTWC_PWRBTN_LVL1_IRQ,
- 					 IRQF_ONESHOT,
-@@ -493,14 +504,6 @@ static int bxtwc_probe(struct platform_device *pdev)
- 	if (ret)
- 		return dev_err_probe(dev, ret, "Failed to add PWRBTN IRQ chip\n");
- 
--	ret = bxtwc_add_chained_irq_chip(pmic, pmic->irq_chip_data,
--					 BXTWC_TMU_LVL1_IRQ,
--					 IRQF_ONESHOT,
--					 &bxtwc_regmap_irq_chip_tmu,
--					 &pmic->irq_chip_data_tmu);
--	if (ret)
--		return dev_err_probe(dev, ret, "Failed to add TMU IRQ chip\n");
--
- 	/* Add chained IRQ handler for BCU IRQs */
- 	ret = bxtwc_add_chained_irq_chip(pmic, pmic->irq_chip_data,
- 					 BXTWC_BCU_LVL1_IRQ,
-diff --git a/drivers/platform/x86/intel_bxtwc_tmu.c b/drivers/platform/x86/intel_bxtwc_tmu.c
-index 7ccf583649e6b..3c9778366d930 100644
---- a/drivers/platform/x86/intel_bxtwc_tmu.c
-+++ b/drivers/platform/x86/intel_bxtwc_tmu.c
-@@ -48,9 +48,8 @@ static irqreturn_t bxt_wcove_tmu_irq_handler(int irq, void *data)
- static int bxt_wcove_tmu_probe(struct platform_device *pdev)
+diff --git a/drivers/gpu/drm/etnaviv/etnaviv_dump.c b/drivers/gpu/drm/etnaviv/etnaviv_dump.c
+index 827aed62027a2..8e86cbe52ef83 100644
+--- a/drivers/gpu/drm/etnaviv/etnaviv_dump.c
++++ b/drivers/gpu/drm/etnaviv/etnaviv_dump.c
+@@ -83,10 +83,15 @@ static void etnaviv_core_dump_registers(struct core_dump_iterator *iter,
  {
- 	struct intel_soc_pmic *pmic = dev_get_drvdata(pdev->dev.parent);
--	struct regmap_irq_chip_data *regmap_irq_chip;
- 	struct wcove_tmu *wctmu;
--	int ret, virq, irq;
-+	int ret;
+ 	struct etnaviv_dump_registers *reg = iter->data;
+ 	unsigned int i;
++	u32 read_addr;
  
- 	wctmu = devm_kzalloc(&pdev->dev, sizeof(*wctmu), GFP_KERNEL);
- 	if (!wctmu)
-@@ -59,27 +58,18 @@ static int bxt_wcove_tmu_probe(struct platform_device *pdev)
- 	wctmu->dev = &pdev->dev;
- 	wctmu->regmap = pmic->regmap;
- 
--	irq = platform_get_irq(pdev, 0);
--	if (irq < 0)
--		return irq;
-+	wctmu->irq = platform_get_irq(pdev, 0);
-+	if (wctmu->irq < 0)
-+		return wctmu->irq;
- 
--	regmap_irq_chip = pmic->irq_chip_data_tmu;
--	virq = regmap_irq_get_virq(regmap_irq_chip, irq);
--	if (virq < 0) {
--		dev_err(&pdev->dev,
--			"failed to get virtual interrupt=%d\n", irq);
--		return virq;
--	}
--
--	ret = devm_request_threaded_irq(&pdev->dev, virq,
-+	ret = devm_request_threaded_irq(&pdev->dev, wctmu->irq,
- 					NULL, bxt_wcove_tmu_irq_handler,
- 					IRQF_ONESHOT, "bxt_wcove_tmu", wctmu);
- 	if (ret) {
- 		dev_err(&pdev->dev, "request irq failed: %d,virq: %d\n",
--							ret, virq);
-+			ret, wctmu->irq);
- 		return ret;
+ 	for (i = 0; i < ARRAY_SIZE(etnaviv_dump_registers); i++, reg++) {
++		read_addr = etnaviv_dump_registers[i];
++		if (read_addr >= VIVS_PM_POWER_CONTROLS &&
++		    read_addr <= VIVS_PM_PULSE_EATER)
++			read_addr = gpu_fix_power_address(gpu, read_addr);
+ 		reg->reg = cpu_to_le32(etnaviv_dump_registers[i]);
+-		reg->value = cpu_to_le32(gpu_read(gpu, etnaviv_dump_registers[i]));
++		reg->value = cpu_to_le32(gpu_read(gpu, read_addr));
  	}
--	wctmu->irq = virq;
  
- 	/* Unmask TMU second level Wake & System alarm */
- 	regmap_update_bits(wctmu->regmap, BXTWC_MTMUIRQ_REG,
+ 	etnaviv_core_dump_header(iter, ETDUMP_BUF_REG, reg);
+diff --git a/drivers/gpu/drm/etnaviv/etnaviv_gpu.c b/drivers/gpu/drm/etnaviv/etnaviv_gpu.c
+index 8c6f9752692df..7b49d3b0840fe 100644
+--- a/drivers/gpu/drm/etnaviv/etnaviv_gpu.c
++++ b/drivers/gpu/drm/etnaviv/etnaviv_gpu.c
+@@ -566,7 +566,7 @@ static void etnaviv_gpu_enable_mlcg(struct etnaviv_gpu *gpu)
+ 	u32 pmc, ppc;
+ 
+ 	/* enable clock gating */
+-	ppc = gpu_read(gpu, VIVS_PM_POWER_CONTROLS);
++	ppc = gpu_read_power(gpu, VIVS_PM_POWER_CONTROLS);
+ 	ppc |= VIVS_PM_POWER_CONTROLS_ENABLE_MODULE_CLOCK_GATING;
+ 
+ 	/* Disable stall module clock gating for 4.3.0.1 and 4.3.0.2 revs */
+@@ -574,9 +574,9 @@ static void etnaviv_gpu_enable_mlcg(struct etnaviv_gpu *gpu)
+ 	    gpu->identity.revision == 0x4302)
+ 		ppc |= VIVS_PM_POWER_CONTROLS_DISABLE_STALL_MODULE_CLOCK_GATING;
+ 
+-	gpu_write(gpu, VIVS_PM_POWER_CONTROLS, ppc);
++	gpu_write_power(gpu, VIVS_PM_POWER_CONTROLS, ppc);
+ 
+-	pmc = gpu_read(gpu, VIVS_PM_MODULE_CONTROLS);
++	pmc = gpu_read_power(gpu, VIVS_PM_MODULE_CONTROLS);
+ 
+ 	/* Disable PA clock gating for GC400+ without bugfix except for GC420 */
+ 	if (gpu->identity.model >= chipModel_GC400 &&
+@@ -605,7 +605,7 @@ static void etnaviv_gpu_enable_mlcg(struct etnaviv_gpu *gpu)
+ 	pmc |= VIVS_PM_MODULE_CONTROLS_DISABLE_MODULE_CLOCK_GATING_RA_HZ;
+ 	pmc |= VIVS_PM_MODULE_CONTROLS_DISABLE_MODULE_CLOCK_GATING_RA_EZ;
+ 
+-	gpu_write(gpu, VIVS_PM_MODULE_CONTROLS, pmc);
++	gpu_write_power(gpu, VIVS_PM_MODULE_CONTROLS, pmc);
+ }
+ 
+ void etnaviv_gpu_start_fe(struct etnaviv_gpu *gpu, u32 address, u16 prefetch)
+@@ -665,11 +665,11 @@ static void etnaviv_gpu_setup_pulse_eater(struct etnaviv_gpu *gpu)
+ 	    (gpu->identity.features & chipFeatures_PIPE_3D))
+ 	{
+ 		/* Performance fix: disable internal DFS */
+-		pulse_eater = gpu_read(gpu, VIVS_PM_PULSE_EATER);
++		pulse_eater = gpu_read_power(gpu, VIVS_PM_PULSE_EATER);
+ 		pulse_eater |= BIT(18);
+ 	}
+ 
+-	gpu_write(gpu, VIVS_PM_PULSE_EATER, pulse_eater);
++	gpu_write_power(gpu, VIVS_PM_PULSE_EATER, pulse_eater);
+ }
+ 
+ static void etnaviv_gpu_hw_init(struct etnaviv_gpu *gpu)
+@@ -1237,9 +1237,9 @@ static void sync_point_perfmon_sample_pre(struct etnaviv_gpu *gpu,
+ 	u32 val;
+ 
+ 	/* disable clock gating */
+-	val = gpu_read(gpu, VIVS_PM_POWER_CONTROLS);
++	val = gpu_read_power(gpu, VIVS_PM_POWER_CONTROLS);
+ 	val &= ~VIVS_PM_POWER_CONTROLS_ENABLE_MODULE_CLOCK_GATING;
+-	gpu_write(gpu, VIVS_PM_POWER_CONTROLS, val);
++	gpu_write_power(gpu, VIVS_PM_POWER_CONTROLS, val);
+ 
+ 	/* enable debug register */
+ 	val = gpu_read(gpu, VIVS_HI_CLOCK_CONTROL);
+@@ -1270,9 +1270,9 @@ static void sync_point_perfmon_sample_post(struct etnaviv_gpu *gpu,
+ 	gpu_write(gpu, VIVS_HI_CLOCK_CONTROL, val);
+ 
+ 	/* enable clock gating */
+-	val = gpu_read(gpu, VIVS_PM_POWER_CONTROLS);
++	val = gpu_read_power(gpu, VIVS_PM_POWER_CONTROLS);
+ 	val |= VIVS_PM_POWER_CONTROLS_ENABLE_MODULE_CLOCK_GATING;
+-	gpu_write(gpu, VIVS_PM_POWER_CONTROLS, val);
++	gpu_write_power(gpu, VIVS_PM_POWER_CONTROLS, val);
+ }
+ 
+ 
+diff --git a/drivers/gpu/drm/etnaviv/etnaviv_gpu.h b/drivers/gpu/drm/etnaviv/etnaviv_gpu.h
+index 02478c75f8968..4beb7b2f3eddd 100644
+--- a/drivers/gpu/drm/etnaviv/etnaviv_gpu.h
++++ b/drivers/gpu/drm/etnaviv/etnaviv_gpu.h
+@@ -10,6 +10,7 @@
+ #include "etnaviv_gem.h"
+ #include "etnaviv_mmu.h"
+ #include "etnaviv_drv.h"
++#include "common.xml.h"
+ 
+ struct etnaviv_gem_submit;
+ struct etnaviv_vram_mapping;
+@@ -158,6 +159,26 @@ static inline u32 gpu_read(struct etnaviv_gpu *gpu, u32 reg)
+ 	return readl(gpu->mmio + reg);
+ }
+ 
++static inline u32 gpu_fix_power_address(struct etnaviv_gpu *gpu, u32 reg)
++{
++	/* Power registers in GC300 < 2.0 are offset by 0x100 */
++	if (gpu->identity.model == chipModel_GC300 &&
++	    gpu->identity.revision < 0x2000)
++		reg += 0x100;
++
++	return reg;
++}
++
++static inline void gpu_write_power(struct etnaviv_gpu *gpu, u32 reg, u32 data)
++{
++	writel(data, gpu->mmio + gpu_fix_power_address(gpu, reg));
++}
++
++static inline u32 gpu_read_power(struct etnaviv_gpu *gpu, u32 reg)
++{
++	return readl(gpu->mmio + gpu_fix_power_address(gpu, reg));
++}
++
+ int etnaviv_gpu_get_param(struct etnaviv_gpu *gpu, u32 param, u64 *value);
+ 
+ int etnaviv_gpu_init(struct etnaviv_gpu *gpu);
 -- 
 2.43.0
 
