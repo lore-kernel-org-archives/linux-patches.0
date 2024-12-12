@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 087832F44;
-	Thu, 12 Dec 2024 16:59:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C692121B8E1;
+	Thu, 12 Dec 2024 16:59:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734022758; cv=none; b=fwiFkepkdw0PmXpH6d2lzV1lwnxClgaY4RQFG+bsH3spyPMJbb83dHOqF43Nm+Wibbh2h9Aub6uEdaurol7s/RqJmaXN/W1rjz1QLhfje0TmZPMc/RCvlK0CnmLDJF8BX1tLJkguf4DzVMUJ6XEf+Vp8zZJaj5MOE8VxfJy/+mM=
+	t=1734022761; cv=none; b=ENCIENmXtlfxvAlZ1rYH5p/z6ITj//SPaUnptY5QKI/WDTpLBWM9Mstli5oak51zAfWnblDRh+rvr2XcECaEr0a72tPMCXhlIpPoXrF2kF20ZBQLg6pZttdJDoc6QZszKWyDGrRTInPzADmtiYilWnExqt3Psp7jEHii74tafpM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734022758; c=relaxed/simple;
-	bh=p6axj+vyLwFDD6P1Ez5QsnIQodqYc+KmLLfGTQ0Cyaw=;
+	s=arc-20240116; t=1734022761; c=relaxed/simple;
+	bh=tOTtHWGvurV6d+noyY4QIo4B/GrFjIMTTwbSSCwSYmk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l7qZEwDhmKxysdoOk5xCLkJi0AoejGsdT55L1KhY3wFCGVg+g9hjoAxZ/K4l/LwKm+aT28QMNEnArSrxAKYg/5/0X1RaXTIAqvISLWGDamHqUyPC8M4YQA3wyKbFCa0jYeQx6m7SEhyjf/cJvKyDaCHlLFwvBN3ie2vmFbqEE+w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VhpO833q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=enSr85qHUdP4fMpSgcRzGv8yENfQVPc7A42UO7oyxu1DmA23IKnwxmo01cw/hax6zkh6Kj1oH0PpIgJwkOTnyll9RuJ5czeV11uLRXSXFK1z7tTQqglH64iaHH0ig7JkQ3nFknzgPjnkne2L04qNHk8ImtsuGbD2qA7RI/cdKX8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LLmUUw+S; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VhpO833q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 517C6C4CED0;
-	Thu, 12 Dec 2024 16:59:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LLmUUw+S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFD3EC4CED0;
+	Thu, 12 Dec 2024 16:59:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734022757;
-	bh=p6axj+vyLwFDD6P1Ez5QsnIQodqYc+KmLLfGTQ0Cyaw=;
+	s=korg; t=1734022761;
+	bh=tOTtHWGvurV6d+noyY4QIo4B/GrFjIMTTwbSSCwSYmk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VhpO833qHo7wCC15Vjrthho9sYCuCuDlqmikkaEpCY5qEPj02ZHJQFrH/ljt7M/2F
-	 X7iEzQiKRV1V1pstyJyVfMog53EXWhlhnon6QXzs5v9CtcDnqb2ZG7wIF808uwbyo9
-	 98YHJaxeY4w/vSXhiLR6RfaqMqHIJvDLUGwNAk1U=
+	b=LLmUUw+SD9nIPNbP0rLqlObzy9OBhpazCWfjtBD2bvJWMXn3EU6mhPvGzlqeVYDZc
+	 X30d532A8D34kPSnjIcQGgMiSeSx9+UF26XkSalhFWOR7/CglDzso6zO4X6MgiFMEj
+	 vZJjmb86DPD4Ol8/wyN3mgBWY+E3FxbTIor3lOhs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lukasz Luba <lukasz.luba@arm.com>,
-	Jinjie Ruan <ruanjinjie@huawei.com>,
-	Viresh Kumar <viresh.kumar@linaro.org>
-Subject: [PATCH 5.15 329/565] cpufreq: mediatek-hw: Fix wrong return value in mtk_cpufreq_get_cpu_power()
-Date: Thu, 12 Dec 2024 15:58:44 +0100
-Message-ID: <20241212144324.603161076@linuxfoundation.org>
+	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
+	Tzung-Bi Shih <tzungbi@kernel.org>
+Subject: [PATCH 5.15 330/565] platform/chrome: cros_ec_typec: fix missing fwnode reference decrement
+Date: Thu, 12 Dec 2024 15:58:45 +0100
+Message-ID: <20241212144324.642242578@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144311.432886635@linuxfoundation.org>
 References: <20241212144311.432886635@linuxfoundation.org>
@@ -51,36 +50,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinjie Ruan <ruanjinjie@huawei.com>
+From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
 
-commit 172bf5ed04cb6c9e66d58de003938ed5c8756570 upstream.
+commit 9c41f371457bd9a24874e3c7934d9745e87fbc58 upstream.
 
-mtk_cpufreq_get_cpu_power() return 0 if the policy is NULL. Then in
-em_create_perf_table(), the later zero check for power is not invalid
-as power is uninitialized. As Lukasz suggested, it must return -EINVAL when
-the 'policy' is not found. So return -EINVAL to fix it.
+The device_for_each_child_node() macro requires explicit calls to
+fwnode_handle_put() upon early exits (return, break, goto) to decrement
+the fwnode's refcount, and avoid levaing a node reference behind.
+
+Add the missing fwnode_handle_put() after the common label for all error
+paths.
 
 Cc: stable@vger.kernel.org
-Fixes: 4855e26bcf4d ("cpufreq: mediatek-hw: Add support for CPUFREQ HW")
-Reviewed-by: Lukasz Luba <lukasz.luba@arm.com>
-Suggested-by: Lukasz Luba <lukasz.luba@arm.com>
-Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+Fixes: fdc6b21e2444 ("platform/chrome: Add Type C connector class driver")
+Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+Link: https://lore.kernel.org/r/20241013-cross_ec_typec_fwnode_handle_put-v2-1-9182b2cd7767@gmail.com
+Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cpufreq/mediatek-cpufreq-hw.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/platform/chrome/cros_ec_typec.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/cpufreq/mediatek-cpufreq-hw.c
-+++ b/drivers/cpufreq/mediatek-cpufreq-hw.c
-@@ -60,7 +60,7 @@ mtk_cpufreq_get_cpu_power(unsigned long
+--- a/drivers/platform/chrome/cros_ec_typec.c
++++ b/drivers/platform/chrome/cros_ec_typec.c
+@@ -375,6 +375,7 @@ static int cros_typec_init_ports(struct
+ 	return 0;
  
- 	policy = cpufreq_cpu_get_raw(cpu_dev->id);
- 	if (!policy)
--		return 0;
-+		return -EINVAL;
- 
- 	data = policy->driver_data;
- 
+ unregister_ports:
++	fwnode_handle_put(fwnode);
+ 	cros_unregister_ports(typec);
+ 	return ret;
+ }
 
 
