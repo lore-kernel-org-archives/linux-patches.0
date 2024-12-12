@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B982B6F2FE;
-	Thu, 12 Dec 2024 17:43:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 149D52248A4;
+	Thu, 12 Dec 2024 17:44:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734025437; cv=none; b=YEx2yC+R3cGj5mi0JbRwv2nPF65P3tZyL/nBJz1DEurYwdX1M+0mBRals9cJEv2GJqeQsOPm1En/km0PYyE7ZCqYf2bTbSAMSdX6WdZi4OsqIyHyY63bRKKBuHWPJ1JINRnJxUP6XoZeGxMopGKNwwEBk59L14d4h1NFZ2RuObw=
+	t=1734025441; cv=none; b=obr3E8R6ggRX0HDOyaNyvfcu28YaaB9+crU9z8wzyfDJRfs+c9XCYIWL2Fm/8NLrhCBzsqXyL85VQNG9q6/0aUWuQ5hMSEyi8GRfLmcfgqfOLA2+vEfk201+iw7rDbTSonAlent/Hz0hEgsJfsBeD3Rba6poKmOOiz8Xd1vqeWw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734025437; c=relaxed/simple;
-	bh=COm7bFt8dkceTYiiHKBCoCLn5oJQf/RkVbfFaVLWEUU=;
+	s=arc-20240116; t=1734025441; c=relaxed/simple;
+	bh=xPom0Tp9/HTIaEgnga5/2Gdz+y+0D9+GqF7amVtT0zc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rHN6JN4+icao6J5aFVxJFsrD8iMSvlw1h3jAQ7Jvr77yKsaFj0rahQFst01auA6EtxwXpkQ+xipbzhqmRLRzAd39CpHCtm6knnMxpa0YYyghS6SFecRXPAZOB0QGurD2rQ6kGrr+aKg164B/+mZG8vByS2wx41uPaBDOk9VoB4w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fMCc2Uk5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=md2Tc1jgeF7ujA4TrPFmxDjSzAMaY5yxqqrqcCNGHImCALVgDTzxkEZOAR1Hyc+uonOD0n/AE/TXk3C7Dea0pQIHJ5Bcfi0zOJWu09ZudRRdqZHK0SR7pbEf9V3bPyQiz8KRhKGrOzX9Cl+UGP8Ts/b63znaS4UckUwJrBfizSk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wXtuP0FP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fMCc2Uk5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AE83C4CECE;
-	Thu, 12 Dec 2024 17:43:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wXtuP0FP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EA6BC4CED0;
+	Thu, 12 Dec 2024 17:44:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734025437;
-	bh=COm7bFt8dkceTYiiHKBCoCLn5oJQf/RkVbfFaVLWEUU=;
+	s=korg; t=1734025440;
+	bh=xPom0Tp9/HTIaEgnga5/2Gdz+y+0D9+GqF7amVtT0zc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fMCc2Uk5vIO4VwQ8/c0+SQ3o2i94YrK6mldxuiZrdtF0Q4mwxYxEnyaqcMIaS/fod
-	 Ecmv32Usx7wW9A0Jo9rmqYaJrTzm11MhDCxJqTb8cxDFDpeQK04QgcxBJMtDJ34FzH
-	 BPZHx30NUhkr8gHN7zAPjCY+GvubYXs1gA2unFKU=
+	b=wXtuP0FPVYDxR26WGjlnd5dvTKPrkSIynMRgqgshM3WntVAM5XvOuBUq6eTul9riQ
+	 ZgxbZD8PaLd/2lMnSjqlUjnDDrImC4N2Godl8dOJ0vsfY6k6qxBtojWDVIhhZBNLJy
+	 Yhs3jzprRoBYMqYc5rF3gL6senOVaJ/0bHz0IsXI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yafang Shao <laoar.shao@gmail.com>,
-	Tejun Heo <tj@kernel.org>,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
-	Shivani Agarwal <shivani.agarwal@broadcom.com>,
-	Siddh Raman Pant <siddh.raman.pant@oracle.com>
-Subject: [PATCH 5.4 142/321] cgroup: Make operations on the cgroup root_list RCU safe
-Date: Thu, 12 Dec 2024 16:01:00 +0100
-Message-ID: <20241212144235.586996883@linuxfoundation.org>
+	Kailang Yang <kailang@realtek.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 5.4 169/321] ALSA: hda/realtek: Update ALC225 depop procedure
+Date: Thu, 12 Dec 2024 16:01:27 +0100
+Message-ID: <20241212144236.656672756@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144229.291682835@linuxfoundation.org>
 References: <20241212144229.291682835@linuxfoundation.org>
@@ -53,128 +50,147 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yafang Shao <laoar.shao@gmail.com>
+From: Kailang Yang <kailang@realtek.com>
 
-commit d23b5c577715892c87533b13923306acc6243f93 upstream.
+commit 1fd50509fe14a9adc9329e0454b986157a4c155a upstream.
 
-At present, when we perform operations on the cgroup root_list, we must
-hold the cgroup_mutex, which is a relatively heavyweight lock. In reality,
-we can make operations on this list RCU-safe, eliminating the need to hold
-the cgroup_mutex during traversal. Modifications to the list only occur in
-the cgroup root setup and destroy paths, which should be infrequent in a
-production environment. In contrast, traversal may occur frequently.
-Therefore, making it RCU-safe would be beneficial.
+Old procedure has a chance to meet Headphone no output.
 
-Signed-off-by: Yafang Shao <laoar.shao@gmail.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
-[fp: adapt to 5.10 mainly because of changes made by e210a89f5b07
- ("cgroup.c: add helper __cset_cgroup_from_root to cleanup duplicated
- codes")]
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
-[Shivani: Modified to apply on v5.4.y]
-Signed-off-by: Shivani Agarwal <shivani.agarwal@broadcom.com>
-Reviewed-by: Siddh Raman Pant <siddh.raman.pant@oracle.com>
-Signed-off-by: Siddh Raman Pant <siddh.raman.pant@oracle.com>
+Fixes: da911b1f5e98 ("ALSA: hda/realtek - update ALC225 depop optimize")
+Signed-off-by: Kailang Yang <kailang@realtek.com>
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/5a27b016ba9d42b4a4e6dadce50a3ba4@realtek.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/cgroup-defs.h     |    1 +
- kernel/cgroup/cgroup-internal.h |    3 ++-
- kernel/cgroup/cgroup.c          |   23 ++++++++++++++++-------
- 3 files changed, 19 insertions(+), 8 deletions(-)
+ sound/pci/hda/patch_realtek.c |   95 +++++++++++++++++++-----------------------
+ 1 file changed, 43 insertions(+), 52 deletions(-)
 
---- a/include/linux/cgroup-defs.h
-+++ b/include/linux/cgroup-defs.h
-@@ -517,6 +517,7 @@ struct cgroup_root {
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -3634,33 +3634,28 @@ static void alc225_init(struct hda_codec
+ 	hp1_pin_sense = snd_hda_jack_detect(codec, hp_pin);
+ 	hp2_pin_sense = snd_hda_jack_detect(codec, 0x16);
  
- 	/* A list running through the active hierarchies */
- 	struct list_head root_list;
-+	struct rcu_head rcu;
+-	if (hp1_pin_sense || hp2_pin_sense)
++	if (hp1_pin_sense || hp2_pin_sense) {
+ 		msleep(2);
++		alc_update_coefex_idx(codec, 0x57, 0x04, 0x0007, 0x1); /* Low power */
  
- 	/* Hierarchy-specific flags */
- 	unsigned int flags;
---- a/kernel/cgroup/cgroup-internal.h
-+++ b/kernel/cgroup/cgroup-internal.h
-@@ -172,7 +172,8 @@ extern struct list_head cgroup_roots;
+-	alc_update_coefex_idx(codec, 0x57, 0x04, 0x0007, 0x1); /* Low power */
++		if (hp1_pin_sense)
++			snd_hda_codec_write(codec, hp_pin, 0,
++				    AC_VERB_SET_PIN_WIDGET_CONTROL, PIN_OUT);
++		if (hp2_pin_sense)
++			snd_hda_codec_write(codec, 0x16, 0,
++				    AC_VERB_SET_PIN_WIDGET_CONTROL, PIN_OUT);
++		msleep(75);
++
++		if (hp1_pin_sense)
++			snd_hda_codec_write(codec, hp_pin, 0,
++				    AC_VERB_SET_AMP_GAIN_MUTE, AMP_OUT_UNMUTE);
++		if (hp2_pin_sense)
++			snd_hda_codec_write(codec, 0x16, 0,
++				    AC_VERB_SET_AMP_GAIN_MUTE, AMP_OUT_UNMUTE);
  
- /* iterate across the hierarchies */
- #define for_each_root(root)						\
--	list_for_each_entry((root), &cgroup_roots, root_list)
-+	list_for_each_entry_rcu((root), &cgroup_roots, root_list,	\
-+				lockdep_is_held(&cgroup_mutex))
- 
- /**
-  * for_each_subsys - iterate all enabled cgroup subsystems
---- a/kernel/cgroup/cgroup.c
-+++ b/kernel/cgroup/cgroup.c
-@@ -1314,7 +1314,7 @@ void cgroup_free_root(struct cgroup_root
- {
- 	if (root) {
- 		idr_destroy(&root->cgroup_idr);
--		kfree(root);
-+		kfree_rcu(root, rcu);
- 	}
+-	if (hp1_pin_sense || spec->ultra_low_power)
+-		snd_hda_codec_write(codec, hp_pin, 0,
+-			    AC_VERB_SET_AMP_GAIN_MUTE, AMP_OUT_MUTE);
+-	if (hp2_pin_sense)
+-		snd_hda_codec_write(codec, 0x16, 0,
+-			    AC_VERB_SET_AMP_GAIN_MUTE, AMP_OUT_MUTE);
+-
+-	if (hp1_pin_sense || hp2_pin_sense || spec->ultra_low_power)
+-		msleep(85);
+-
+-	if (hp1_pin_sense || spec->ultra_low_power)
+-		snd_hda_codec_write(codec, hp_pin, 0,
+-			    AC_VERB_SET_PIN_WIDGET_CONTROL, PIN_OUT);
+-	if (hp2_pin_sense)
+-		snd_hda_codec_write(codec, 0x16, 0,
+-			    AC_VERB_SET_PIN_WIDGET_CONTROL, PIN_OUT);
+-
+-	if (hp1_pin_sense || hp2_pin_sense || spec->ultra_low_power)
+-		msleep(100);
+-
+-	alc_update_coef_idx(codec, 0x4a, 3 << 10, 0);
+-	alc_update_coefex_idx(codec, 0x57, 0x04, 0x0007, 0x4); /* Hight power */
++		msleep(75);
++		alc_update_coefex_idx(codec, 0x57, 0x04, 0x0007, 0x4); /* Hight power */
++	}
  }
  
-@@ -1348,7 +1348,7 @@ static void cgroup_destroy_root(struct c
- 	spin_unlock_irq(&css_set_lock);
+ static void alc225_shutup(struct hda_codec *codec)
+@@ -3672,36 +3667,35 @@ static void alc225_shutup(struct hda_cod
+ 	if (!hp_pin)
+ 		hp_pin = 0x21;
  
- 	if (!list_empty(&root->root_list)) {
--		list_del(&root->root_list);
-+		list_del_rcu(&root->root_list);
- 		cgroup_root_count--;
+-	alc_disable_headset_jack_key(codec);
+-	/* 3k pull low control for Headset jack. */
+-	alc_update_coef_idx(codec, 0x4a, 0, 3 << 10);
+-
+ 	hp1_pin_sense = snd_hda_jack_detect(codec, hp_pin);
+ 	hp2_pin_sense = snd_hda_jack_detect(codec, 0x16);
+ 
+-	if (hp1_pin_sense || hp2_pin_sense)
++	if (hp1_pin_sense || hp2_pin_sense) {
++		alc_disable_headset_jack_key(codec);
++		/* 3k pull low control for Headset jack. */
++		alc_update_coef_idx(codec, 0x4a, 0, 3 << 10);
+ 		msleep(2);
+ 
+-	if (hp1_pin_sense || spec->ultra_low_power)
+-		snd_hda_codec_write(codec, hp_pin, 0,
+-			    AC_VERB_SET_AMP_GAIN_MUTE, AMP_OUT_MUTE);
+-	if (hp2_pin_sense)
+-		snd_hda_codec_write(codec, 0x16, 0,
+-			    AC_VERB_SET_AMP_GAIN_MUTE, AMP_OUT_MUTE);
+-
+-	if (hp1_pin_sense || hp2_pin_sense || spec->ultra_low_power)
+-		msleep(85);
+-
+-	if (hp1_pin_sense || spec->ultra_low_power)
+-		snd_hda_codec_write(codec, hp_pin, 0,
+-			    AC_VERB_SET_PIN_WIDGET_CONTROL, 0x0);
+-	if (hp2_pin_sense)
+-		snd_hda_codec_write(codec, 0x16, 0,
+-			    AC_VERB_SET_PIN_WIDGET_CONTROL, 0x0);
+-
+-	if (hp1_pin_sense || hp2_pin_sense || spec->ultra_low_power)
+-		msleep(100);
+-
++		if (hp1_pin_sense)
++			snd_hda_codec_write(codec, hp_pin, 0,
++				    AC_VERB_SET_AMP_GAIN_MUTE, AMP_OUT_MUTE);
++		if (hp2_pin_sense)
++			snd_hda_codec_write(codec, 0x16, 0,
++				    AC_VERB_SET_AMP_GAIN_MUTE, AMP_OUT_MUTE);
++
++		msleep(75);
++
++		if (hp1_pin_sense)
++			snd_hda_codec_write(codec, hp_pin, 0,
++				    AC_VERB_SET_PIN_WIDGET_CONTROL, 0x0);
++		if (hp2_pin_sense)
++			snd_hda_codec_write(codec, 0x16, 0,
++				    AC_VERB_SET_PIN_WIDGET_CONTROL, 0x0);
++
++		msleep(75);
++		alc_update_coef_idx(codec, 0x4a, 3 << 10, 0);
++		alc_enable_headset_jack_key(codec);
++	}
+ 	alc_auto_setup_eapd(codec, false);
+ 	alc_shutup_pins(codec);
+ 	if (spec->ultra_low_power) {
+@@ -3712,9 +3706,6 @@ static void alc225_shutup(struct hda_cod
+ 		alc_update_coef_idx(codec, 0x4a, 3<<4, 2<<4);
+ 		msleep(30);
  	}
- 
-@@ -1401,7 +1401,6 @@ static struct cgroup *cset_cgroup_from_r
- {
- 	struct cgroup *res = NULL;
- 
--	lockdep_assert_held(&cgroup_mutex);
- 	lockdep_assert_held(&css_set_lock);
- 
- 	if (cset == &init_css_set) {
-@@ -1421,13 +1420,23 @@ static struct cgroup *cset_cgroup_from_r
- 		}
- 	}
- 
--	BUG_ON(!res);
-+	/*
-+	 * If cgroup_mutex is not held, the cgrp_cset_link will be freed
-+	 * before we remove the cgroup root from the root_list. Consequently,
-+	 * when accessing a cgroup root, the cset_link may have already been
-+	 * freed, resulting in a NULL res_cgroup. However, by holding the
-+	 * cgroup_mutex, we ensure that res_cgroup can't be NULL.
-+	 * If we don't hold cgroup_mutex in the caller, we must do the NULL
-+	 * check.
-+	 */
- 	return res;
+-
+-	alc_update_coef_idx(codec, 0x4a, 3 << 10, 0);
+-	alc_enable_headset_jack_key(codec);
  }
  
- /*
-  * Return the cgroup for "task" from the given hierarchy. Must be
-- * called with cgroup_mutex and css_set_lock held.
-+ * called with css_set_lock held to prevent task's groups from being modified.
-+ * Must be called with either cgroup_mutex or rcu read lock to prevent the
-+ * cgroup root from being destroyed.
-  */
- struct cgroup *task_cgroup_from_root(struct task_struct *task,
- 				     struct cgroup_root *root)
-@@ -2012,7 +2021,7 @@ void init_cgroup_root(struct cgroup_fs_c
- 	struct cgroup_root *root = ctx->root;
- 	struct cgroup *cgrp = &root->cgrp;
- 
--	INIT_LIST_HEAD(&root->root_list);
-+	INIT_LIST_HEAD_RCU(&root->root_list);
- 	atomic_set(&root->nr_cgrps, 1);
- 	cgrp->root = root;
- 	init_cgroup_housekeeping(cgrp);
-@@ -2094,7 +2103,7 @@ int cgroup_setup_root(struct cgroup_root
- 	 * care of subsystems' refcounts, which are explicitly dropped in
- 	 * the failure exit path.
- 	 */
--	list_add(&root->root_list, &cgroup_roots);
-+	list_add_rcu(&root->root_list, &cgroup_roots);
- 	cgroup_root_count++;
- 
- 	/*
+ static void alc_default_init(struct hda_codec *codec)
 
 
