@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B18BE22912F;
-	Thu, 12 Dec 2024 16:54:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 495B4229664;
+	Thu, 12 Dec 2024 16:54:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734022454; cv=none; b=IaL+WeAlV+FzzdMYH6J3PwBGeK3WNRPPo5vc3uR3iNh75qWeL5sLOibm8Y0C2zj3ofGb5JO9JnZ9VTYq5Wycf0O1LAS6VSW2ht8+vIg3zx5V77DW5sk+pRmc/4NYGtSuUzLEiIQpKQSHxmsq7zZsRP3xHEcEarn2Ds9K4RM+dtw=
+	t=1734022458; cv=none; b=hc2bLnI1IaeX1ezyIQ5RDzI6N531uQpk57LAbeIcC6rZ53tXTlzL9uLsMlYUGOhiqL4zHqQSyXK+v3av6VlikvITeIl/BZI09XHjy9THqhprFreBZvrM0mTXqCFYUFtlY0akVPpUx3OIqT+8n47LKTL6QqwVt1bj8gwnpw9OhYM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734022454; c=relaxed/simple;
-	bh=zaN0CjDcegDhe90Zinx6BDHaPxzA7rGgpTe/hn43R1I=;
+	s=arc-20240116; t=1734022458; c=relaxed/simple;
+	bh=3+urGbIXrOKIYxXBIZiufRuYGG4blym6RaSauwp1Sfw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Hz8Ppmywz1Xl4YaMvXvTRD3VEb/BFG2Du0HSAduXf9WIss1tGQekTWbG3EU3yCvo/CvvtaKRY96XqCgIgg7GaK2qnRTkxwk7UaOsdKDQRKYvSJ0erNRvrWoxzgMe9MtxGuK1doCyzfUo3Xhq4M0D/6GBCrDaWQFZSaULYDoUoIQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fcfIGyuR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=LDkU9hT20HBpNOdF1oxLtVcI8jZB28FMcEKih7me9KBR6zlkvVO4JOSh3Zix5CzWqlqwgXFFb9DLU4XUP3mZJ5A8B4GIxluJ3bDBMd81pAFsEfnJYZCoCVHgx0qsRHKVM2kcGQNbHmsO4kzjhi5tkyWPo9RlD5s1Wnvsind0WTs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mL2NuodR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fcfIGyuR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1ECDFC4CECE;
-	Thu, 12 Dec 2024 16:54:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mL2NuodR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC843C4CECE;
+	Thu, 12 Dec 2024 16:54:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734022454;
-	bh=zaN0CjDcegDhe90Zinx6BDHaPxzA7rGgpTe/hn43R1I=;
+	s=korg; t=1734022458;
+	bh=3+urGbIXrOKIYxXBIZiufRuYGG4blym6RaSauwp1Sfw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fcfIGyuRkgXhLkpY2oE52qokp008aJVH8IxJqf06YSJ4xgvYmugxarzcmnVnNjlPy
-	 qaBUTeRfK1WY701GWOPnypf1gQN+IlC9Gma64CELLQddj0g6nKhIYSQgqNd47My9OK
-	 bPL5fL7nNJrBKMFu45vpgAx+UUuTYnr/m+wLQKfg=
+	b=mL2NuodRLNNewKRp8KONJIZaGbmXTBnAV0sgj+PRA64+r71qQaMSXdN6qGMoUK+wT
+	 gyDmKgd5a3OYa8Qx1Ov5z8FxmTzhiLlLrltVWN5j4nseOlEyQEE9GFzLn9EQ5VPSKn
+	 3akj8pV7gPAytV3i4/1t4XvkI51Nx5kcMOHya0UQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Naveen Naidu <naveennaidu479@gmail.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 245/565] PCI: cpqphp: Use PCI_POSSIBLE_ERROR() to check config reads
-Date: Thu, 12 Dec 2024 15:57:20 +0100
-Message-ID: <20241212144321.159878774@linuxfoundation.org>
+Subject: [PATCH 5.15 246/565] PCI: cpqphp: Fix PCIBIOS_* return value confusion
+Date: Thu, 12 Dec 2024 15:57:21 +0100
+Message-ID: <20241212144321.199071045@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144311.432886635@linuxfoundation.org>
 References: <20241212144311.432886635@linuxfoundation.org>
@@ -45,58 +45,87 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: weiyufeng <weiyufeng@kylinos.cn>
+From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 
-[ Upstream commit a18a025c2fb5fbf2d1d0606ea0d7441ac90e9c39 ]
+[ Upstream commit e2226dbc4a4919d9c8bd9293299b532090bdf020 ]
 
-When config pci_ops.read() can detect failed PCI transactions, the data
-returned to the CPU is PCI_ERROR_RESPONSE (~0 or 0xffffffff).
+Code in and related to PCI_RefinedAccessConfig() has three types of return
+type confusion:
 
-Obviously a successful PCI config read may *also* return that data if a
-config register happens to contain ~0, so it doesn't definitively indicate
-an error unless we know the register cannot contain ~0.
+ - PCI_RefinedAccessConfig() tests pci_bus_read_config_dword() return value
+   against -1.
 
-Use PCI_POSSIBLE_ERROR() to check the response we get when we read data
-from hardware.  This unifies PCI error response checking and makes error
-checks consistent and easier to find.
+ - PCI_RefinedAccessConfig() returns both -1 and PCIBIOS_* return codes.
 
-Link: https://lore.kernel.org/r/b12005c0d57bb9d4c8b486724d078b7bd92f8321.1637243717.git.naveennaidu479@gmail.com
-Signed-off-by: Naveen Naidu <naveennaidu479@gmail.com>
+ - Callers of PCI_RefinedAccessConfig() only test for -1.
+
+Make PCI_RefinedAccessConfig() return PCIBIOS_* codes consistently and
+adapt callers accordingly.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Link: https://lore.kernel.org/r/20241022091140.3504-2-ilpo.jarvinen@linux.intel.com
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Stable-dep-of: e2226dbc4a49 ("PCI: cpqphp: Fix PCIBIOS_* return value confusion")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/hotplug/cpqphp_pci.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/pci/hotplug/cpqphp_pci.c | 15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
 
 diff --git a/drivers/pci/hotplug/cpqphp_pci.c b/drivers/pci/hotplug/cpqphp_pci.c
-index 1b2b3f3b648bc..a20875da4ec70 100644
+index a20875da4ec70..ce6eb71a63599 100644
 --- a/drivers/pci/hotplug/cpqphp_pci.c
 +++ b/drivers/pci/hotplug/cpqphp_pci.c
-@@ -138,7 +138,7 @@ static int PCI_RefinedAccessConfig(struct pci_bus *bus, unsigned int devfn, u8 o
+@@ -135,11 +135,13 @@ int cpqhp_unconfigure_device(struct pci_func *func)
+ static int PCI_RefinedAccessConfig(struct pci_bus *bus, unsigned int devfn, u8 offset, u32 *value)
+ {
+ 	u32 vendID = 0;
++	int ret;
  
- 	if (pci_bus_read_config_dword(bus, devfn, PCI_VENDOR_ID, &vendID) == -1)
- 		return -1;
--	if (vendID == 0xffffffff)
-+	if (PCI_POSSIBLE_ERROR(vendID))
- 		return -1;
+-	if (pci_bus_read_config_dword(bus, devfn, PCI_VENDOR_ID, &vendID) == -1)
+-		return -1;
++	ret = pci_bus_read_config_dword(bus, devfn, PCI_VENDOR_ID, &vendID);
++	if (ret != PCIBIOS_SUCCESSFUL)
++		return PCIBIOS_DEVICE_NOT_FOUND;
+ 	if (PCI_POSSIBLE_ERROR(vendID))
+-		return -1;
++		return PCIBIOS_DEVICE_NOT_FOUND;
  	return pci_bus_read_config_dword(bus, devfn, offset, value);
  }
-@@ -251,7 +251,7 @@ static int PCI_GetBusDevHelper(struct controller *ctrl, u8 *bus_num, u8 *dev_num
- 			*dev_num = tdevice;
- 			ctrl->pci_bus->number = tbus;
- 			pci_bus_read_config_dword(ctrl->pci_bus, *dev_num, PCI_VENDOR_ID, &work);
--			if (!nobridge || (work == 0xffffffff))
-+			if (!nobridge || PCI_POSSIBLE_ERROR(work))
- 				return 0;
  
- 			dbg("bus_num %d devfn %d\n", *bus_num, *dev_num);
+@@ -200,13 +202,15 @@ static int PCI_ScanBusForNonBridge(struct controller *ctrl, u8 bus_num, u8 *dev_
+ {
+ 	u16 tdevice;
+ 	u32 work;
++	int ret;
+ 	u8 tbus;
+ 
+ 	ctrl->pci_bus->number = bus_num;
+ 
+ 	for (tdevice = 0; tdevice < 0xFF; tdevice++) {
+ 		/* Scan for access first */
+-		if (PCI_RefinedAccessConfig(ctrl->pci_bus, tdevice, 0x08, &work) == -1)
++		ret = PCI_RefinedAccessConfig(ctrl->pci_bus, tdevice, 0x08, &work);
++		if (ret)
+ 			continue;
+ 		dbg("Looking for nonbridge bus_num %d dev_num %d\n", bus_num, tdevice);
+ 		/* Yep we got one. Not a bridge ? */
+@@ -218,7 +222,8 @@ static int PCI_ScanBusForNonBridge(struct controller *ctrl, u8 bus_num, u8 *dev_
+ 	}
+ 	for (tdevice = 0; tdevice < 0xFF; tdevice++) {
+ 		/* Scan for access first */
+-		if (PCI_RefinedAccessConfig(ctrl->pci_bus, tdevice, 0x08, &work) == -1)
++		ret = PCI_RefinedAccessConfig(ctrl->pci_bus, tdevice, 0x08, &work);
++		if (ret)
+ 			continue;
+ 		dbg("Looking for bridge bus_num %d dev_num %d\n", bus_num, tdevice);
+ 		/* Yep we got one. bridge ? */
 -- 
 2.43.0
 
