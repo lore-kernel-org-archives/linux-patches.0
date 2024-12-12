@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ED6D748A;
-	Thu, 12 Dec 2024 15:28:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E244748A;
+	Thu, 12 Dec 2024 15:28:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734017285; cv=none; b=r61zvqA1y24r25PYjXeyShbtuBNKHSL24zn7TnblbtucEWejgxiWjwaNQM8uKYkIA+ZKfCjkxq4k6GSxLWbaoG4wWawj3WcMOCMOczU8l9Hq5HseQjK5z2QadR4s3QJCp15z3Z534yjQOjNdLF5XZ3E2DuxfvNRQmo3/4rNXbEk=
+	t=1734017288; cv=none; b=nRk8SVQmBZHZexpvRl+1cAeNURTbZkfe2O2jpdcL43z5+1W7ZaltW0b+saf+sMCTpQS8LYG/bTttkbRif3oL41DjfRQ2ayUxhtgt0Zv7ntquaBOz9CLPz/iyLkPTE6k80KJmpYEMXX7Op3AE5sM4iPu0Wx+MUM2YUzm8cYMa89s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734017285; c=relaxed/simple;
-	bh=tujJgAMFOdqOMbDQFbl10P5LH5NhHKPxtw30Bbm7L9c=;
+	s=arc-20240116; t=1734017288; c=relaxed/simple;
+	bh=o2YQ1BEBRm60sOhcOzB6iHVF47GXYVBStDHtGlByxIg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Rz48EiFkL90rRhRQcy6tJtgpqjbISSHe3nzy0EL/g0MEZmLZVhj8C1iWlcEaO5ByV1k66WMqTaT1EPE996KZ/O6N0Gy+ylk9hOCu4R6AFtGSLH+eiRnukscmzv8hLk7rL+ZhWnPkCm7B4IA8QH3TBhyMQSbXFiVy//8590vHuuw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dJhFgfos; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=p/vUbq2dj3gnKpR5I3z/gfGqDYAh5IK8gn1dB1SS7AWnMVMSx2h+C5DDCnFbb8vIZaLfqPdrhSLdJloEeMLyxrjh57qPy1CONva9xONmNZAG9UlEnflinA3P8cJeHudmwg4Kq+pMYlSYmO9ZjrIUpYzmHxA48UTGoWeqAm8qwvw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U1lQ9NJX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dJhFgfos"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2C47C4CECE;
-	Thu, 12 Dec 2024 15:28:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U1lQ9NJX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11519C4CECE;
+	Thu, 12 Dec 2024 15:28:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734017285;
-	bh=tujJgAMFOdqOMbDQFbl10P5LH5NhHKPxtw30Bbm7L9c=;
+	s=korg; t=1734017288;
+	bh=o2YQ1BEBRm60sOhcOzB6iHVF47GXYVBStDHtGlByxIg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dJhFgfos3BcrxEHDJOSjkpgObRTTtXPgRHgxpyAhWoo3hTfzAWFVfR3W6igjnNBdx
-	 ACn8z6BlhuLEK3DMv6CvZfQVSuIMzGkJx04KLTUcDG5styOg4fpdfxcvE9nwJnI8Hy
-	 NCcOnmIAjLZdUlLWRNMzUI+f88ehRcCW5BhbFIkw=
+	b=U1lQ9NJX8kSL8Um9Xh2ZeXzAgTNnqvceUAzdWA+7KqxxY2bkb5JUJ4NIzh+4koOvW
+	 5ezkImq4H7tnwbf5buQeE4BOeWbLullBUUuiaoJ3q5ba4ZMFpCH2cGbQXxhQtHxGVN
+	 DHdLLtsHZY5wIWbLzHlLZAlOCxK5ozd8o9Y3ScX0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	Lucas De Marchi <lucas.demarchi@intel.com>,
-	Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>,
-	Nirmoy Das <nirmoy.das@intel.com>,
-	Badal Nilawar <badal.nilawar@intel.com>,
+	Aric Cyr <aric.cyr@amd.com>,
+	Austin Zheng <Austin.Zheng@amd.com>,
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 436/466] drm/xe/devcoredump: Update handling of xe_force_wake_get return
-Date: Thu, 12 Dec 2024 16:00:05 +0100
-Message-ID: <20241212144324.091181796@linuxfoundation.org>
+Subject: [PATCH 6.12 437/466] drm/amd/display: Update Interface to Check UCLK DPM
+Date: Thu, 12 Dec 2024 16:00:06 +0100
+Message-ID: <20241212144324.128679509@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144306.641051666@linuxfoundation.org>
 References: <20241212144306.641051666@linuxfoundation.org>
@@ -54,95 +54,142 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>
+From: Austin Zheng <Austin.Zheng@amd.com>
 
-[ Upstream commit 9ffd6ec2de08ef4ac5f17f6131d1db57613493f9 ]
+[ Upstream commit b8d046985c2dc41a0e264a391da4606099f8d44f ]
 
-xe_force_wake_get() now returns the reference count-incremented domain
-mask. If it fails for individual domains, the return value will always
-be 0. However, for XE_FORCEWAKE_ALL, it may return a non-zero value even
-in the event of failure. Use helper xe_force_wake_ref_has_domain to
-verify all domains are initialized or not. Update the return handling of
-xe_force_wake_get() to reflect this behavior, and ensure that the return
-value is passed as input to xe_force_wake_put().
+[Why]
+Videos using YUV420 format may result in high power being used.
+Disabling MPO may result in lower power usage.
+Update interface that can be used to check power profile of a dc_state.
 
-v3
-- return xe_wakeref_t instead of int in xe_force_wake_get()
+[How]
+Allow pstate switching in VBlank as last entry in strategy candidates.
+Add helper functions that can be used to determine power level:
+-get power profile after a dc_state has undergone full validation
 
-v5
-- return unsigned int for xe_force_wake_get()
-
-v6
-- use helper xe_force_wake_ref_has_domain()
-
-v7
-- Fix commit message
-
-Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Cc: Lucas De Marchi <lucas.demarchi@intel.com>
-Signed-off-by: Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>
-Reviewed-by: Nirmoy Das <nirmoy.das@intel.com>
-Reviewed-by: Badal Nilawar <badal.nilawar@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20241014075601.2324382-12-himal.prasad.ghimiray@intel.com
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Stable-dep-of: 5dce85fecb87 ("drm/xe: Move the coredump registration to the worker thread")
+Reviewed-by: Aric Cyr <aric.cyr@amd.com>
+Signed-off-by: Austin Zheng <Austin.Zheng@amd.com>
+Signed-off-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Stable-dep-of: 6a7fd76b949e ("drm/amd/display: Add option to retrieve detile buffer size")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_devcoredump.c | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/amd/display/dc/core/dc.c        |  9 ++++++++-
+ .../dml21/src/dml2_pmo/dml2_pmo_dcn4_fams2.c    |  1 +
+ drivers/gpu/drm/amd/display/dc/inc/core_types.h |  4 ++++
+ .../dc/resource/dcn315/dcn315_resource.c        |  6 ++++++
+ .../dc/resource/dcn401/dcn401_resource.c        | 17 +++++++++++++++++
+ 5 files changed, 36 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_devcoredump.c b/drivers/gpu/drm/xe/xe_devcoredump.c
-index 0884c49942fe6..5221ee3f12149 100644
---- a/drivers/gpu/drm/xe/xe_devcoredump.c
-+++ b/drivers/gpu/drm/xe/xe_devcoredump.c
-@@ -147,13 +147,15 @@ static void xe_devcoredump_deferred_snap_work(struct work_struct *work)
+diff --git a/drivers/gpu/drm/amd/display/dc/core/dc.c b/drivers/gpu/drm/amd/display/dc/core/dc.c
+index a6911bb2cf0c6..1d99ab233765f 100644
+--- a/drivers/gpu/drm/amd/display/dc/core/dc.c
++++ b/drivers/gpu/drm/amd/display/dc/core/dc.c
+@@ -6001,8 +6001,15 @@ void dc_set_edp_power(const struct dc *dc, struct dc_link *edp_link,
+ struct dc_power_profile dc_get_power_profile_for_dc_state(const struct dc_state *context)
  {
- 	struct xe_devcoredump_snapshot *ss = container_of(work, typeof(*ss), work);
- 	struct xe_devcoredump *coredump = container_of(ss, typeof(*coredump), snapshot);
-+	unsigned int fw_ref;
+ 	struct dc_power_profile profile = { 0 };
++	struct dc *dc = NULL;
  
- 	/* keep going if fw fails as we still want to save the memory and SW data */
--	if (xe_force_wake_get(gt_to_fw(ss->gt), XE_FORCEWAKE_ALL))
-+	fw_ref = xe_force_wake_get(gt_to_fw(ss->gt), XE_FORCEWAKE_ALL);
-+	if (!xe_force_wake_ref_has_domain(fw_ref, XE_FORCEWAKE_ALL))
- 		xe_gt_info(ss->gt, "failed to get forcewake for coredump capture\n");
- 	xe_vm_snapshot_capture_delayed(ss->vm);
- 	xe_guc_exec_queue_snapshot_capture_delayed(ss->ge);
--	xe_force_wake_put(gt_to_fw(ss->gt), XE_FORCEWAKE_ALL);
-+	xe_force_wake_put(gt_to_fw(ss->gt), fw_ref);
+-	profile.power_level += !context->bw_ctx.bw.dcn.clk.p_state_change_support;
++	if (!context || !context->clk_mgr || !context->clk_mgr->ctx || !context->clk_mgr->ctx->dc)
++		return profile;
++
++	dc = context->clk_mgr->ctx->dc;
++
++	if (dc->res_pool->funcs->get_power_profile)
++		profile.power_level = dc->res_pool->funcs->get_power_profile(context);
  
- 	/* Calculate devcoredump size */
- 	ss->read.size = __xe_devcoredump_read(NULL, INT_MAX, coredump);
-@@ -226,8 +228,9 @@ static void devcoredump_snapshot(struct xe_devcoredump *coredump,
- 	u32 width_mask = (0x1 << q->width) - 1;
- 	const char *process_name = "no process";
- 
--	int i;
-+	unsigned int fw_ref;
- 	bool cookie;
-+	int i;
- 
- 	ss->snapshot_time = ktime_get_real();
- 	ss->boot_time = ktime_get_boottime();
-@@ -250,8 +253,7 @@ static void devcoredump_snapshot(struct xe_devcoredump *coredump,
+ 	return profile;
+ }
+diff --git a/drivers/gpu/drm/amd/display/dc/dml2/dml21/src/dml2_pmo/dml2_pmo_dcn4_fams2.c b/drivers/gpu/drm/amd/display/dc/dml2/dml21/src/dml2_pmo/dml2_pmo_dcn4_fams2.c
+index dd9971867f749..720ecede3a4c0 100644
+--- a/drivers/gpu/drm/amd/display/dc/dml2/dml21/src/dml2_pmo/dml2_pmo_dcn4_fams2.c
++++ b/drivers/gpu/drm/amd/display/dc/dml2/dml21/src/dml2_pmo/dml2_pmo_dcn4_fams2.c
+@@ -1799,6 +1799,7 @@ bool pmo_dcn4_fams2_init_for_pstate_support(struct dml2_pmo_init_for_pstate_supp
  	}
  
- 	/* keep going if fw fails as we still want to save the memory and SW data */
--	if (xe_force_wake_get(gt_to_fw(q->gt), XE_FORCEWAKE_ALL))
--		xe_gt_info(ss->gt, "failed to get forcewake for coredump capture\n");
-+	fw_ref = xe_force_wake_get(gt_to_fw(q->gt), XE_FORCEWAKE_ALL);
+ 	if (s->pmo_dcn4.num_pstate_candidates > 0) {
++		s->pmo_dcn4.pstate_strategy_candidates[s->pmo_dcn4.num_pstate_candidates-1].allow_state_increase = true;
+ 		s->pmo_dcn4.cur_pstate_candidate = -1;
+ 		return true;
+ 	} else {
+diff --git a/drivers/gpu/drm/amd/display/dc/inc/core_types.h b/drivers/gpu/drm/amd/display/dc/inc/core_types.h
+index bfb8b8502d202..8597e866bfe6b 100644
+--- a/drivers/gpu/drm/amd/display/dc/inc/core_types.h
++++ b/drivers/gpu/drm/amd/display/dc/inc/core_types.h
+@@ -215,6 +215,10 @@ struct resource_funcs {
  
- 	ss->ct = xe_guc_ct_snapshot_capture(&guc->ct, true);
- 	ss->ge = xe_guc_exec_queue_snapshot_capture(q);
-@@ -269,7 +271,7 @@ static void devcoredump_snapshot(struct xe_devcoredump *coredump,
+ 	void (*get_panel_config_defaults)(struct dc_panel_config *panel_config);
+ 	void (*build_pipe_pix_clk_params)(struct pipe_ctx *pipe_ctx);
++	/*
++	 * Get indicator of power from a context that went through full validation
++	 */
++	int (*get_power_profile)(const struct dc_state *context);
+ };
  
- 	queue_work(system_unbound_wq, &ss->work);
- 
--	xe_force_wake_put(gt_to_fw(q->gt), XE_FORCEWAKE_ALL);
-+	xe_force_wake_put(gt_to_fw(q->gt), fw_ref);
- 	dma_fence_end_signalling(cookie);
+ struct audio_support{
+diff --git a/drivers/gpu/drm/amd/display/dc/resource/dcn315/dcn315_resource.c b/drivers/gpu/drm/amd/display/dc/resource/dcn315/dcn315_resource.c
+index 3f4b9dba41124..f6b840f046a5d 100644
+--- a/drivers/gpu/drm/amd/display/dc/resource/dcn315/dcn315_resource.c
++++ b/drivers/gpu/drm/amd/display/dc/resource/dcn315/dcn315_resource.c
+@@ -1812,6 +1812,11 @@ static void dcn315_get_panel_config_defaults(struct dc_panel_config *panel_confi
+ 	*panel_config = panel_config_defaults;
  }
  
++static int dcn315_get_power_profile(const struct dc_state *context)
++{
++	return !context->bw_ctx.bw.dcn.clk.p_state_change_support;
++}
++
+ static struct dc_cap_funcs cap_funcs = {
+ 	.get_dcc_compression_cap = dcn20_get_dcc_compression_cap
+ };
+@@ -1840,6 +1845,7 @@ static struct resource_funcs dcn315_res_pool_funcs = {
+ 	.update_bw_bounding_box = dcn315_update_bw_bounding_box,
+ 	.patch_unknown_plane_state = dcn20_patch_unknown_plane_state,
+ 	.get_panel_config_defaults = dcn315_get_panel_config_defaults,
++	.get_power_profile = dcn315_get_power_profile,
+ };
+ 
+ static bool dcn315_resource_construct(
+diff --git a/drivers/gpu/drm/amd/display/dc/resource/dcn401/dcn401_resource.c b/drivers/gpu/drm/amd/display/dc/resource/dcn401/dcn401_resource.c
+index 4aa975418fb18..6bcc6c400b386 100644
+--- a/drivers/gpu/drm/amd/display/dc/resource/dcn401/dcn401_resource.c
++++ b/drivers/gpu/drm/amd/display/dc/resource/dcn401/dcn401_resource.c
+@@ -1688,6 +1688,22 @@ static void dcn401_build_pipe_pix_clk_params(struct pipe_ctx *pipe_ctx)
+ 	}
+ }
+ 
++static int dcn401_get_power_profile(const struct dc_state *context)
++{
++	int uclk_mhz = context->bw_ctx.bw.dcn.clk.dramclk_khz / 1000;
++	int dpm_level = 0;
++
++	for (int i = 0; i < context->clk_mgr->bw_params->clk_table.num_entries_per_clk.num_memclk_levels; i++) {
++		if (context->clk_mgr->bw_params->clk_table.entries[i].memclk_mhz == 0 ||
++			uclk_mhz < context->clk_mgr->bw_params->clk_table.entries[i].memclk_mhz)
++			break;
++		if (uclk_mhz > context->clk_mgr->bw_params->clk_table.entries[i].memclk_mhz)
++			dpm_level++;
++	}
++
++	return dpm_level;
++}
++
+ static struct resource_funcs dcn401_res_pool_funcs = {
+ 	.destroy = dcn401_destroy_resource_pool,
+ 	.link_enc_create = dcn401_link_encoder_create,
+@@ -1714,6 +1730,7 @@ static struct resource_funcs dcn401_res_pool_funcs = {
+ 	.prepare_mcache_programming = dcn401_prepare_mcache_programming,
+ 	.build_pipe_pix_clk_params = dcn401_build_pipe_pix_clk_params,
+ 	.calculate_mall_ways_from_bytes = dcn32_calculate_mall_ways_from_bytes,
++	.get_power_profile = dcn401_get_power_profile,
+ };
+ 
+ static uint32_t read_pipe_fuses(struct dc_context *ctx)
 -- 
 2.43.0
 
