@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83393229677;
-	Thu, 12 Dec 2024 17:01:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 598A7215782;
+	Thu, 12 Dec 2024 17:01:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734022869; cv=none; b=F/JwFHpyx8mjnYXJsBiBYyA3qZ4epAU1xA7LgIhXI1b45xdWNibtJAbcYHPDn5TbHELbw3QofNEN+WLmXYQmpCxh9u84ygBTsLhNm/mXZCqqmOp9CrlrfGL84DVfMmnrSo+NcBt9Qp3Mb/qWrFsYvzODh/J8/CKTcdm21Wqtx2E=
+	t=1734022874; cv=none; b=MWJ6yJNoZFMhN/3SfMayivMLw16srfVOaaeYSNmhXoeL5PlC0Uo4o6kV5077/UoA4laVWie6BVKLOEhdVGvbC7tgZwSQe29YB85lfDcS0Vk4FtcoyQeqPFSeEmqN4GdyU7e/fyoCKZyj3z1a3elv01y4WZ2pq7Alx3kVCmenQns=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734022869; c=relaxed/simple;
-	bh=UF+iLgOhEhSCxM/xlsWRAE33hcdX9c0uoik3Ie1oKYo=;
+	s=arc-20240116; t=1734022874; c=relaxed/simple;
+	bh=WYm02KkL2MIB0lzRCizbXr751wzTZN3CmPcyHDw7Cm4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aalk0Ez1nHWO0xRn2mZtqVll5AjJSrCgJ1oG194FWtBkWR4m/K4w5/txm4noV9G5xqjaa6al/BISsaYTypkmV3tozV271G++vzdjVGk89xbKNxyr6ygt/CigTLi/5u3zmVrLSnIeE5Lps815+lsAT73qZ0Ue6YM9ZNDRnXpP7r4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qrKZz0Dg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EcURQj/ED4otEizRPeh07v8BnjYcczFJg9oXEeNcBiydEuVCmYUd2iaNuiDwFXDIxa/bWafd7gEBbP8qEVZFefD86yoiZ7XrVEEYLvcjjqiRv0kwFZU7SMmN2WNDdhI1Z2vG4UtV2fhFrpXxC0HVmC3PEBpVGk/37CO4fn4qqtw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kW657lVx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qrKZz0Dg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8FFBC4CECE;
-	Thu, 12 Dec 2024 17:01:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kW657lVx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1F1FC4CECE;
+	Thu, 12 Dec 2024 17:01:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734022869;
-	bh=UF+iLgOhEhSCxM/xlsWRAE33hcdX9c0uoik3Ie1oKYo=;
+	s=korg; t=1734022874;
+	bh=WYm02KkL2MIB0lzRCizbXr751wzTZN3CmPcyHDw7Cm4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qrKZz0Dgl9S2knOZq0Opow/5RSWe/rT3KTsHokI0sNHJD/ce/yt2NGo664nJ8I7jE
-	 4Q8+z6iAIRlG97fultL2gPo+3qEfRDvV5S4pNNEr2y3MTxmNmwgrQOrS0WNpHOXGF2
-	 oDSBZ4NsCKlhZrvFAZKcGniUfuJYT3ueMqd99vmg=
+	b=kW657lVxplspRJVUAyg5chZpWthxGuR4/TeSUW0datjD3YNtZkUwBO1MU6JyFJ/r9
+	 BjxEu+bobsFWNm1XVP0yzRyWgjPagQwl41H0XQzO6Gl8Ia2H5YEilfylMXUsUyzyji
+	 21afLGyYxOsRzlzLnsTN2CewAfsLyMI5/pA/Znbo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+7f4a6f7f7051474e40ad@syzkaller.appspotmail.com,
-	Ahmed Ehab <bottaawesome633@gmail.com>,
-	Boqun Feng <boqun.feng@gmail.com>
-Subject: [PATCH 5.15 317/565] locking/lockdep: Avoid creating new name string literals in lockdep_set_subclass()
-Date: Thu, 12 Dec 2024 15:58:32 +0100
-Message-ID: <20241212144324.133907395@linuxfoundation.org>
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Andy Shevchenko <andy@kernel.org>,
+	"James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>,
+	Kees Cook <kees@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.15 350/565] lib: string_helpers: silence snprintf() output truncation warning
+Date: Thu, 12 Dec 2024 15:59:05 +0100
+Message-ID: <20241212144325.433349110@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144311.432886635@linuxfoundation.org>
 References: <20241212144311.432886635@linuxfoundation.org>
@@ -51,46 +53,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ahmed Ehab <bottaawesome633@gmail.com>
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-commit d7fe143cb115076fed0126ad8cf5ba6c3e575e43 upstream.
+commit a508ef4b1dcc82227edc594ffae583874dd425d7 upstream.
 
-Syzbot reports a problem that a warning will be triggered while
-searching a lock class in look_up_lock_class().
+The output of ".%03u" with the unsigned int in range [0, 4294966295] may
+get truncated if the target buffer is not 12 bytes. This can't really
+happen here as the 'remainder' variable cannot exceed 999 but the
+compiler doesn't know it. To make it happy just increase the buffer to
+where the warning goes away.
 
-The cause of the issue is that a new name is created and used by
-lockdep_set_subclass() instead of using the existing one. This results
-in a lock instance has a different name pointer than previous registered
-one stored in lock class, and WARN_ONCE() is triggered because of that
-in look_up_lock_class().
-
-To fix this, change lockdep_set_subclass() to use the existing name
-instead of a new one. Hence, no new name will be created by
-lockdep_set_subclass(). Hence, the warning is avoided.
-
-[boqun: Reword the commit log to state the correct issue]
-
-Reported-by: <syzbot+7f4a6f7f7051474e40ad@syzkaller.appspotmail.com>
-Fixes: de8f5e4f2dc1f ("lockdep: Introduce wait-type checks")
+Fixes: 3c9f3681d0b4 ("[SCSI] lib: add generic helper to print sizes rounded to the correct SI range")
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Reviewed-by: Andy Shevchenko <andy@kernel.org>
+Cc: James E.J. Bottomley <James.Bottomley@HansenPartnership.com>
+Cc: Kees Cook <kees@kernel.org>
 Cc: stable@vger.kernel.org
-Signed-off-by: Ahmed Ehab <bottaawesome633@gmail.com>
-Signed-off-by: Boqun Feng <boqun.feng@gmail.com>
-Link: https://lore.kernel.org/lkml/20240824221031.7751-1-bottaawesome633@gmail.com/
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Link: https://lore.kernel.org/r/20241101205453.9353-1-brgl@bgdev.pl
+Signed-off-by: Kees Cook <kees@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/lockdep.h |    2 +-
+ lib/string_helpers.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/include/linux/lockdep.h
-+++ b/include/linux/lockdep.h
-@@ -233,7 +233,7 @@ static inline void lockdep_init_map(stru
- 			      (lock)->dep_map.lock_type)
+--- a/lib/string_helpers.c
++++ b/lib/string_helpers.c
+@@ -51,7 +51,7 @@ void string_get_size(u64 size, u64 blk_s
+ 	static const unsigned int rounding[] = { 500, 50, 5 };
+ 	int i = 0, j;
+ 	u32 remainder = 0, sf_cap;
+-	char tmp[8];
++	char tmp[12];
+ 	const char *unit;
  
- #define lockdep_set_subclass(lock, sub)					\
--	lockdep_init_map_type(&(lock)->dep_map, #lock, (lock)->dep_map.key, sub,\
-+	lockdep_init_map_type(&(lock)->dep_map, (lock)->dep_map.name, (lock)->dep_map.key, sub,\
- 			      (lock)->dep_map.wait_type_inner,		\
- 			      (lock)->dep_map.wait_type_outer,		\
- 			      (lock)->dep_map.lock_type)
+ 	tmp[0] = '\0';
 
 
