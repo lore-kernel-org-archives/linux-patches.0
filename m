@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 185712210E5;
-	Thu, 12 Dec 2024 16:20:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 479F22210DE;
+	Thu, 12 Dec 2024 16:20:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734020433; cv=none; b=QfIGpUp3+3fk5t6DhjH4TuDRTJsz9ZkwG0IVU5mtz8k2M5iAlzBYH4LQP8RWWJewXEYbjX9JqETw4U2rfTC/aJ7t/ZYcSXwjFvVjIHSsLd5PQb4NKZ8W42hQfCNObbayX1d4grE/ytC1ajOECzThZ/n2alZG8w8hUo509jr74W4=
+	t=1734020436; cv=none; b=TXU0fgpCk97f1eCHgNm811qWUCxlZpbZBTHheCLtmE10hNWwZ6BKv0xPgcIsAekmrwA/D9jSTpDRMJ+GCZnq579ajSn/Ar7e4QJf03JYDXGlvg7niamiH0xIJXJVnXPDznLZgVw5HG42/qt9NVPpJJ5vfaiSiow6CXUgPoRXvRE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734020433; c=relaxed/simple;
-	bh=yizy/JhUdBmArzSQOO2jRU1LdgDUshjRe4pg7zcpdG4=;
+	s=arc-20240116; t=1734020436; c=relaxed/simple;
+	bh=kf0YkienMpP5zx3JwS01gSJg+MiOqTQbruUYkuQnAOA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JD68LwGukTc4gMkjJqyll+msg6IhXQDUoDIyM+g42I7ZbYeqs7zrTFJHZ7xYgBSfkWCiJut5lVIdR2GKlVS8w6iINLX/kv95A2cNqWT44rja0AfJ+IkiLcJGvh5fAyvYHdgQXGrsiJY4IVDHKjuH6ImiZ+fs3i8dLyBmP1KcOFQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qhZTIi1i; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tDCbH2g+2/Jy1ftyEPUsvqz73oI1dXWIyEYRvp4kRUCkvaG3hAaUFQqJ1ljEQL57otA/oKjNsTrJ8UWRdscE2ukoBry2cYFAG9XS5tlo2qt3v7oStkmzdi2Oh1CrZSpWdF5RkC8oYyEFaEGx0R4w0znaZUNp+aVt1dc9pKQHSCg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UMFdi7PI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qhZTIi1i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01943C4CED3;
-	Thu, 12 Dec 2024 16:20:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UMFdi7PI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F58DC4CECE;
+	Thu, 12 Dec 2024 16:20:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734020432;
-	bh=yizy/JhUdBmArzSQOO2jRU1LdgDUshjRe4pg7zcpdG4=;
+	s=korg; t=1734020436;
+	bh=kf0YkienMpP5zx3JwS01gSJg+MiOqTQbruUYkuQnAOA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qhZTIi1i+q51569WtzKzfSQ1SkwDfpgwWGIo65w7KRS3Ik8Qsad4wy1ZR4DFeNM3S
-	 qEGBeQZaMjanpErenSHd37bIm+YnMV7HJum3LW+ZrBVyKIR0Pes9073+XiFI2SH6yx
-	 fXoJppvgMkwCh5522xIqQFcHWcM0G4TqDntGr+Us=
+	b=UMFdi7PIM/Yn06Cchg0JXBZasqbbFYOKqsybhTj+e2zcEF/nYv6ocnBlHv79LXrxA
+	 YFFCtjSMD91N1GsO5D4QMffhSjSj54UHv/JfCPSwKp7Rp7JHXYdfxvoG4PCeyZ34xi
+	 r4JIgZx5AsLPmrZ2id9NaPC3rCAsTT4tsBsZch2s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinjie Ruan <ruanjinjie@huawei.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 6.1 467/772] media: gspca: ov534-ov772x: Fix off-by-one error in set_frame_rate()
-Date: Thu, 12 Dec 2024 15:56:52 +0100
-Message-ID: <20241212144409.229615379@linuxfoundation.org>
+	Gaosheng Cui <cuigaosheng1@huawei.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Subject: [PATCH 6.1 468/772] media: platform: allegro-dvt: Fix possible memory leak in allocate_buffers_internal()
+Date: Thu, 12 Dec 2024 15:56:53 +0100
+Message-ID: <20241212144409.272269178@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -51,37 +50,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinjie Ruan <ruanjinjie@huawei.com>
+From: Gaosheng Cui <cuigaosheng1@huawei.com>
 
-commit d2842dec577900031826dc44e9bf0c66416d7173 upstream.
+commit 0f514068fbc5d4d189c817adc7c4e32cffdc2e47 upstream.
 
-In set_frame_rate(), select a rate in rate_0 or rate_1 by checking
-sd->frame_rate >= r->fps in a loop, but the loop condition terminates when
-the index reaches zero, which fails to check the last elememt in rate_0 or
-rate_1.
+The buffer in the loop should be released under the exception path,
+otherwise there may be a memory leak here.
 
-Check for >= 0 so that the last one in rate_0 or rate_1 is also checked.
+To mitigate this, free the buffer when allegro_alloc_buffer fails.
 
-Fixes: 189d92af707e ("V4L/DVB (13422): gspca - ov534: ov772x changes from Richard Kaswy.")
-Cc: stable@vger.kernel.org
-Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+Fixes: f20387dfd065 ("media: allegro: add Allegro DVT video IP core driver")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/usb/gspca/ov534.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/platform/allegro-dvt/allegro-core.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/media/usb/gspca/ov534.c
-+++ b/drivers/media/usb/gspca/ov534.c
-@@ -847,7 +847,7 @@ static void set_frame_rate(struct gspca_
- 		r = rate_1;
- 		i = ARRAY_SIZE(rate_1);
+--- a/drivers/media/platform/allegro-dvt/allegro-core.c
++++ b/drivers/media/platform/allegro-dvt/allegro-core.c
+@@ -1510,8 +1510,10 @@ static int allocate_buffers_internal(str
+ 		INIT_LIST_HEAD(&buffer->head);
+ 
+ 		err = allegro_alloc_buffer(dev, buffer, size);
+-		if (err)
++		if (err) {
++			kfree(buffer);
+ 			goto err;
++		}
+ 		list_add(&buffer->head, list);
  	}
--	while (--i > 0) {
-+	while (--i >= 0) {
- 		if (sd->frame_rate >= r->fps)
- 			break;
- 		r++;
+ 
 
 
