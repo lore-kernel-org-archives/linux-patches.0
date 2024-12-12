@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB98453365;
-	Thu, 12 Dec 2024 16:26:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B957222D4B;
+	Thu, 12 Dec 2024 16:27:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734020817; cv=none; b=GXueiWy6xW74qJmU60H+MY9yD0ef548nkhfuyKkFGpyzL3B9dQ9UoF8DeeFQywCWXaX6w8r8tjCXnJQu2iLK8SwBfAwB42k1PlBVmfamAVc1451LG1pB/O7Sr6bm5DdWgWY62UtAeJEpgrfSJsXNrv1m6FGZsiqSBaurPkquqQM=
+	t=1734020820; cv=none; b=pPbiOdq0V2at/3Qe0x+PW1/EBdbzSjWlmfQGdzsP++GyNJxsFFT7DP9tTvxO81IknaMAaq+7FuLsdnRaUBL0L0k0ysXnwQs0J3TNhya5AFgdV0QGYZIhVCNQ7e7NY16DeZpL4SFBmjZNWFWxFVMtlX6UOpChFcoynrKBpJTqYZ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734020817; c=relaxed/simple;
-	bh=4Lw5GbmUcBSM2jk5VL1T2wS1geWinI7MeFvXrDfLIQg=;
+	s=arc-20240116; t=1734020820; c=relaxed/simple;
+	bh=ORUs7DZoYoZoi7WrW6wxV5aT17PN3QwnyAC/WHMfuV8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=edOXGNCy3q456wt8ddbIq1GTc26fkPeKbE7ZEPy4DIXGGoWeU1lpRsK6eE6wS2RQPLnNuPYsQyyqq0SF8ZqYBTVZHDH2gHkn685ucrRkeg7Awr7Y0/BUcFantKfLMtdpm0ZG5MVmJH0EOzsQp/F3qQNur0Ya8Pq3cmnHTTez3Pk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=shCYtEw7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KaYkSRLt4e0IfKX2ZNHim5dOol8v4eSn/og7VdsSgDUmKw/qhRfeBbk2XTyWK0zRMVVcqJoxrA6mrkJk6QPuoELWFC2lx2rLdXTpNJBniEE729GPbtm0xvdMy+Ge4pIrGTMNBFa8oQVVsWOhvxej3pd2Kv0mpJ7l0xU6FxROI9s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dg6yxjWM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="shCYtEw7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C166C4CECE;
-	Thu, 12 Dec 2024 16:26:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dg6yxjWM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F346C4CECE;
+	Thu, 12 Dec 2024 16:26:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734020816;
-	bh=4Lw5GbmUcBSM2jk5VL1T2wS1geWinI7MeFvXrDfLIQg=;
+	s=korg; t=1734020820;
+	bh=ORUs7DZoYoZoi7WrW6wxV5aT17PN3QwnyAC/WHMfuV8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=shCYtEw7E+C/NLT798DSmWNiCss5Eb3rWtPKiluOfjRc6ub+X67H4iUpaFbvWziQx
-	 SdoVAzK/Un8YU+g0cXdd+eo52joFqowD1IbpvGLiZleO6LChRHBUmxrh1ApAXqjsPt
-	 cq9ghdcZEp9jvwgOQeMQacKTbRt/+53N5FhXqPu8=
+	b=dg6yxjWM07A97ducPmymCMZxtVA/UPBrOaMO8lazrlec7vfeYag9Xq9gsTWskgG6O
+	 PRGorGj/cgT4KPZgP6Hr8WToC4CKNdgo5pX9fW/Saw9U+pIciqpkBw7rTOnUunDEq3
+	 DbRQP9yXeQFx626c39I1N9LBQK1CmUcRJNhgt4Wk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Li <Frank.Li@nxp.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	John Ogness <john.ogness@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 568/772] i3c: master: add enable(disable) hot join in sys entry
-Date: Thu, 12 Dec 2024 15:58:33 +0100
-Message-ID: <20241212144413.429578956@linuxfoundation.org>
+Subject: [PATCH 6.1 551/772] serial: amba-pl011: Use port lock wrappers
+Date: Thu, 12 Dec 2024 15:58:16 +0100
+Message-ID: <20241212144412.728357479@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -51,157 +51,335 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Frank Li <Frank.Li@nxp.com>
+From: Thomas Gleixner <tglx@linutronix.de>
 
-[ Upstream commit 317bacf960a4879af22d12175f47d284930b3273 ]
+[ Upstream commit 68ca3e72d7463d79d29b6e4961d6028df2a88e25 ]
 
-Add hotjoin entry in sys file system allow user enable/disable hotjoin
-feature.
+When a serial port is used for kernel console output, then all
+modifications to the UART registers which are done from other contexts,
+e.g. getty, termios, are interference points for the kernel console.
 
-Add (*enable(disable)_hotjoin)() to i3c_master_controller_ops.
-Add api i3c_master_enable(disable)_hotjoin();
+So far this has been ignored and the printk output is based on the
+principle of hope. The rework of the console infrastructure which aims to
+support threaded and atomic consoles, requires to mark sections which
+modify the UART registers as unsafe. This allows the atomic write function
+to make informed decisions and eventually to restore operational state. It
+also allows to prevent the regular UART code from modifying UART registers
+while printk output is in progress.
 
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
-Link: https://lore.kernel.org/r/20231201222532.2431484-2-Frank.Li@nxp.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
-Stable-dep-of: 25bc99be5fe5 ("i3c: master: svc: Modify enabled_events bit 7:0 to act as IBI enable counter")
+All modifications of UART registers are guarded by the UART port lock,
+which provides an obvious synchronization point with the console
+infrastructure.
+
+To avoid adding this functionality to all UART drivers, wrap the
+spin_[un]lock*() invocations for uart_port::lock into helper functions
+which just contain the spin_[un]lock*() invocations for now. In a
+subsequent step these helpers will gain the console synchronization
+mechanisms.
+
+Converted with coccinelle. No functional change.
+
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Signed-off-by: John Ogness <john.ogness@linutronix.de>
+Link: https://lore.kernel.org/r/20230914183831.587273-18-john.ogness@linutronix.de
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 2bcacc1c87ac ("serial: amba-pl011: Fix RX stall when DMA is used")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i3c/master.c       | 83 ++++++++++++++++++++++++++++++++++++++
- include/linux/i3c/master.h |  5 +++
- 2 files changed, 88 insertions(+)
+ drivers/tty/serial/amba-pl011.c | 72 ++++++++++++++++-----------------
+ 1 file changed, 36 insertions(+), 36 deletions(-)
 
-diff --git a/drivers/i3c/master.c b/drivers/i3c/master.c
-index c8aa0d27143cc..f5a289a39b1a2 100644
---- a/drivers/i3c/master.c
-+++ b/drivers/i3c/master.c
-@@ -514,6 +514,88 @@ static ssize_t i2c_scl_frequency_show(struct device *dev,
+diff --git a/drivers/tty/serial/amba-pl011.c b/drivers/tty/serial/amba-pl011.c
+index 2f0f05259778a..c95351d24f363 100644
+--- a/drivers/tty/serial/amba-pl011.c
++++ b/drivers/tty/serial/amba-pl011.c
+@@ -346,9 +346,9 @@ static int pl011_fifo_to_tty(struct uart_amba_port *uap)
+ 				flag = TTY_FRAME;
+ 		}
+ 
+-		spin_unlock(&uap->port.lock);
++		uart_port_unlock(&uap->port);
+ 		sysrq = uart_handle_sysrq_char(&uap->port, ch & 255);
+-		spin_lock(&uap->port.lock);
++		uart_port_lock(&uap->port);
+ 
+ 		if (!sysrq)
+ 			uart_insert_char(&uap->port, ch, UART011_DR_OE, ch, flag);
+@@ -543,7 +543,7 @@ static void pl011_dma_tx_callback(void *data)
+ 	unsigned long flags;
+ 	u16 dmacr;
+ 
+-	spin_lock_irqsave(&uap->port.lock, flags);
++	uart_port_lock_irqsave(&uap->port, &flags);
+ 	if (uap->dmatx.queued)
+ 		dma_unmap_single(dmatx->chan->device->dev, dmatx->dma,
+ 				dmatx->len, DMA_TO_DEVICE);
+@@ -564,7 +564,7 @@ static void pl011_dma_tx_callback(void *data)
+ 	if (!(dmacr & UART011_TXDMAE) || uart_tx_stopped(&uap->port) ||
+ 	    uart_circ_empty(&uap->port.state->xmit)) {
+ 		uap->dmatx.queued = false;
+-		spin_unlock_irqrestore(&uap->port.lock, flags);
++		uart_port_unlock_irqrestore(&uap->port, flags);
+ 		return;
+ 	}
+ 
+@@ -575,7 +575,7 @@ static void pl011_dma_tx_callback(void *data)
+ 		 */
+ 		pl011_start_tx_pio(uap);
+ 
+-	spin_unlock_irqrestore(&uap->port.lock, flags);
++	uart_port_unlock_irqrestore(&uap->port, flags);
  }
- static DEVICE_ATTR_RO(i2c_scl_frequency);
  
-+static int i3c_set_hotjoin(struct i3c_master_controller *master, bool enable)
-+{
-+	int ret;
-+
-+	if (!master || !master->ops)
-+		return -EINVAL;
-+
-+	if (!master->ops->enable_hotjoin || !master->ops->disable_hotjoin)
-+		return -EINVAL;
-+
-+	i3c_bus_normaluse_lock(&master->bus);
-+
-+	if (enable)
-+		ret = master->ops->enable_hotjoin(master);
-+	else
-+		ret = master->ops->disable_hotjoin(master);
-+
-+	master->hotjoin = enable;
-+
-+	i3c_bus_normaluse_unlock(&master->bus);
-+
-+	return ret;
-+}
-+
-+static ssize_t hotjoin_store(struct device *dev, struct device_attribute *attr,
-+			     const char *buf, size_t count)
-+{
-+	struct i3c_bus *i3cbus = dev_to_i3cbus(dev);
-+	int ret;
-+	bool res;
-+
-+	if (!i3cbus->cur_master)
-+		return -EINVAL;
-+
-+	if (kstrtobool(buf, &res))
-+		return -EINVAL;
-+
-+	ret = i3c_set_hotjoin(i3cbus->cur_master->common.master, res);
-+	if (ret)
-+		return ret;
-+
-+	return count;
-+}
-+
-+/*
-+ * i3c_master_enable_hotjoin - Enable hotjoin
-+ * @master: I3C master object
-+ *
-+ * Return: a 0 in case of success, an negative error code otherwise.
-+ */
-+int i3c_master_enable_hotjoin(struct i3c_master_controller *master)
-+{
-+	return i3c_set_hotjoin(master, true);
-+}
-+EXPORT_SYMBOL_GPL(i3c_master_enable_hotjoin);
-+
-+/*
-+ * i3c_master_disable_hotjoin - Disable hotjoin
-+ * @master: I3C master object
-+ *
-+ * Return: a 0 in case of success, an negative error code otherwise.
-+ */
-+int i3c_master_disable_hotjoin(struct i3c_master_controller *master)
-+{
-+	return i3c_set_hotjoin(master, false);
-+}
-+EXPORT_SYMBOL_GPL(i3c_master_disable_hotjoin);
-+
-+static ssize_t hotjoin_show(struct device *dev, struct device_attribute *da, char *buf)
-+{
-+	struct i3c_bus *i3cbus = dev_to_i3cbus(dev);
-+	ssize_t ret;
-+
-+	i3c_bus_normaluse_lock(i3cbus);
-+	ret = sysfs_emit(buf, "%d\n", i3cbus->cur_master->common.master->hotjoin);
-+	i3c_bus_normaluse_unlock(i3cbus);
-+
-+	return ret;
-+}
-+
-+static DEVICE_ATTR_RW(hotjoin);
-+
- static struct attribute *i3c_masterdev_attrs[] = {
- 	&dev_attr_mode.attr,
- 	&dev_attr_current_master.attr,
-@@ -524,6 +606,7 @@ static struct attribute *i3c_masterdev_attrs[] = {
- 	&dev_attr_pid.attr,
- 	&dev_attr_dynamic_address.attr,
- 	&dev_attr_hdrcap.attr,
-+	&dev_attr_hotjoin.attr,
- 	NULL,
- };
- ATTRIBUTE_GROUPS(i3c_masterdev);
-diff --git a/include/linux/i3c/master.h b/include/linux/i3c/master.h
-index 4b7bb43bf4307..b5a568caf4c80 100644
---- a/include/linux/i3c/master.h
-+++ b/include/linux/i3c/master.h
-@@ -451,6 +451,8 @@ struct i3c_master_controller_ops {
- 	int (*disable_ibi)(struct i3c_dev_desc *dev);
- 	void (*recycle_ibi_slot)(struct i3c_dev_desc *dev,
- 				 struct i3c_ibi_slot *slot);
-+	int (*enable_hotjoin)(struct i3c_master_controller *master);
-+	int (*disable_hotjoin)(struct i3c_master_controller *master);
- };
+ /*
+@@ -1004,7 +1004,7 @@ static void pl011_dma_rx_callback(void *data)
+ 	 * routine to flush out the secondary DMA buffer while
+ 	 * we immediately trigger the next DMA job.
+ 	 */
+-	spin_lock_irq(&uap->port.lock);
++	uart_port_lock_irq(&uap->port);
+ 	/*
+ 	 * Rx data can be taken by the UART interrupts during
+ 	 * the DMA irq handler. So we check the residue here.
+@@ -1020,7 +1020,7 @@ static void pl011_dma_rx_callback(void *data)
+ 	ret = pl011_dma_rx_trigger_dma(uap);
  
- /**
-@@ -486,6 +488,7 @@ struct i3c_master_controller {
- 	const struct i3c_master_controller_ops *ops;
- 	unsigned int secondary : 1;
- 	unsigned int init_done : 1;
-+	unsigned int hotjoin: 1;
- 	struct {
- 		struct list_head i3c;
- 		struct list_head i2c;
-@@ -542,6 +545,8 @@ int i3c_master_register(struct i3c_master_controller *master,
- 			const struct i3c_master_controller_ops *ops,
- 			bool secondary);
- void i3c_master_unregister(struct i3c_master_controller *master);
-+int i3c_master_enable_hotjoin(struct i3c_master_controller *master);
-+int i3c_master_disable_hotjoin(struct i3c_master_controller *master);
+ 	pl011_dma_rx_chars(uap, pending, lastbuf, false);
+-	spin_unlock_irq(&uap->port.lock);
++	uart_port_unlock_irq(&uap->port);
+ 	/*
+ 	 * Do this check after we picked the DMA chars so we don't
+ 	 * get some IRQ immediately from RX.
+@@ -1086,11 +1086,11 @@ static void pl011_dma_rx_poll(struct timer_list *t)
+ 	if (jiffies_to_msecs(jiffies - dmarx->last_jiffies)
+ 			> uap->dmarx.poll_timeout) {
  
- /**
-  * i3c_dev_get_master_data() - get master private data attached to an I3C
+-		spin_lock_irqsave(&uap->port.lock, flags);
++		uart_port_lock_irqsave(&uap->port, &flags);
+ 		pl011_dma_rx_stop(uap);
+ 		uap->im |= UART011_RXIM;
+ 		pl011_write(uap->im, uap, REG_IMSC);
+-		spin_unlock_irqrestore(&uap->port.lock, flags);
++		uart_port_unlock_irqrestore(&uap->port, flags);
+ 
+ 		uap->dmarx.running = false;
+ 		dmaengine_terminate_all(rxchan);
+@@ -1186,10 +1186,10 @@ static void pl011_dma_shutdown(struct uart_amba_port *uap)
+ 	while (pl011_read(uap, REG_FR) & uap->vendor->fr_busy)
+ 		cpu_relax();
+ 
+-	spin_lock_irq(&uap->port.lock);
++	uart_port_lock_irq(&uap->port);
+ 	uap->dmacr &= ~(UART011_DMAONERR | UART011_RXDMAE | UART011_TXDMAE);
+ 	pl011_write(uap->dmacr, uap, REG_DMACR);
+-	spin_unlock_irq(&uap->port.lock);
++	uart_port_unlock_irq(&uap->port);
+ 
+ 	if (uap->using_tx_dma) {
+ 		/* In theory, this should already be done by pl011_dma_flush_buffer */
+@@ -1400,9 +1400,9 @@ static void pl011_throttle_rx(struct uart_port *port)
+ {
+ 	unsigned long flags;
+ 
+-	spin_lock_irqsave(&port->lock, flags);
++	uart_port_lock_irqsave(port, &flags);
+ 	pl011_stop_rx(port);
+-	spin_unlock_irqrestore(&port->lock, flags);
++	uart_port_unlock_irqrestore(port, flags);
+ }
+ 
+ static void pl011_enable_ms(struct uart_port *port)
+@@ -1420,7 +1420,7 @@ __acquires(&uap->port.lock)
+ {
+ 	pl011_fifo_to_tty(uap);
+ 
+-	spin_unlock(&uap->port.lock);
++	uart_port_unlock(&uap->port);
+ 	tty_flip_buffer_push(&uap->port.state->port);
+ 	/*
+ 	 * If we were temporarily out of DMA mode for a while,
+@@ -1445,7 +1445,7 @@ __acquires(&uap->port.lock)
+ #endif
+ 		}
+ 	}
+-	spin_lock(&uap->port.lock);
++	uart_port_lock(&uap->port);
+ }
+ 
+ static bool pl011_tx_char(struct uart_amba_port *uap, unsigned char c,
+@@ -1551,7 +1551,7 @@ static irqreturn_t pl011_int(int irq, void *dev_id)
+ 	unsigned int status, pass_counter = AMBA_ISR_PASS_LIMIT;
+ 	int handled = 0;
+ 
+-	spin_lock_irqsave(&uap->port.lock, flags);
++	uart_port_lock_irqsave(&uap->port, &flags);
+ 	status = pl011_read(uap, REG_RIS) & uap->im;
+ 	if (status) {
+ 		do {
+@@ -1581,7 +1581,7 @@ static irqreturn_t pl011_int(int irq, void *dev_id)
+ 		handled = 1;
+ 	}
+ 
+-	spin_unlock_irqrestore(&uap->port.lock, flags);
++	uart_port_unlock_irqrestore(&uap->port, flags);
+ 
+ 	return IRQ_RETVAL(handled);
+ }
+@@ -1653,14 +1653,14 @@ static void pl011_break_ctl(struct uart_port *port, int break_state)
+ 	unsigned long flags;
+ 	unsigned int lcr_h;
+ 
+-	spin_lock_irqsave(&uap->port.lock, flags);
++	uart_port_lock_irqsave(&uap->port, &flags);
+ 	lcr_h = pl011_read(uap, REG_LCRH_TX);
+ 	if (break_state == -1)
+ 		lcr_h |= UART01x_LCRH_BRK;
+ 	else
+ 		lcr_h &= ~UART01x_LCRH_BRK;
+ 	pl011_write(lcr_h, uap, REG_LCRH_TX);
+-	spin_unlock_irqrestore(&uap->port.lock, flags);
++	uart_port_unlock_irqrestore(&uap->port, flags);
+ }
+ 
+ #ifdef CONFIG_CONSOLE_POLL
+@@ -1799,7 +1799,7 @@ static void pl011_enable_interrupts(struct uart_amba_port *uap)
+ 	unsigned long flags;
+ 	unsigned int i;
+ 
+-	spin_lock_irqsave(&uap->port.lock, flags);
++	uart_port_lock_irqsave(&uap->port, &flags);
+ 
+ 	/* Clear out any spuriously appearing RX interrupts */
+ 	pl011_write(UART011_RTIS | UART011_RXIS, uap, REG_ICR);
+@@ -1821,7 +1821,7 @@ static void pl011_enable_interrupts(struct uart_amba_port *uap)
+ 	if (!pl011_dma_rx_running(uap))
+ 		uap->im |= UART011_RXIM;
+ 	pl011_write(uap->im, uap, REG_IMSC);
+-	spin_unlock_irqrestore(&uap->port.lock, flags);
++	uart_port_unlock_irqrestore(&uap->port, flags);
+ }
+ 
+ static void pl011_unthrottle_rx(struct uart_port *port)
+@@ -1829,7 +1829,7 @@ static void pl011_unthrottle_rx(struct uart_port *port)
+ 	struct uart_amba_port *uap = container_of(port, struct uart_amba_port, port);
+ 	unsigned long flags;
+ 
+-	spin_lock_irqsave(&uap->port.lock, flags);
++	uart_port_lock_irqsave(&uap->port, &flags);
+ 
+ 	uap->im = UART011_RTIM;
+ 	if (!pl011_dma_rx_running(uap))
+@@ -1837,7 +1837,7 @@ static void pl011_unthrottle_rx(struct uart_port *port)
+ 
+ 	pl011_write(uap->im, uap, REG_IMSC);
+ 
+-	spin_unlock_irqrestore(&uap->port.lock, flags);
++	uart_port_unlock_irqrestore(&uap->port, flags);
+ }
+ 
+ static int pl011_startup(struct uart_port *port)
+@@ -1857,7 +1857,7 @@ static int pl011_startup(struct uart_port *port)
+ 
+ 	pl011_write(uap->vendor->ifls, uap, REG_IFLS);
+ 
+-	spin_lock_irq(&uap->port.lock);
++	uart_port_lock_irq(&uap->port);
+ 
+ 	cr = pl011_read(uap, REG_CR);
+ 	cr &= UART011_CR_RTS | UART011_CR_DTR;
+@@ -1868,7 +1868,7 @@ static int pl011_startup(struct uart_port *port)
+ 
+ 	pl011_write(cr, uap, REG_CR);
+ 
+-	spin_unlock_irq(&uap->port.lock);
++	uart_port_unlock_irq(&uap->port);
+ 
+ 	/*
+ 	 * initialise the old status of the modem signals
+@@ -1929,12 +1929,12 @@ static void pl011_disable_uart(struct uart_amba_port *uap)
+ 	unsigned int cr;
+ 
+ 	uap->port.status &= ~(UPSTAT_AUTOCTS | UPSTAT_AUTORTS);
+-	spin_lock_irq(&uap->port.lock);
++	uart_port_lock_irq(&uap->port);
+ 	cr = pl011_read(uap, REG_CR);
+ 	cr &= UART011_CR_RTS | UART011_CR_DTR;
+ 	cr |= UART01x_CR_UARTEN | UART011_CR_TXE;
+ 	pl011_write(cr, uap, REG_CR);
+-	spin_unlock_irq(&uap->port.lock);
++	uart_port_unlock_irq(&uap->port);
+ 
+ 	/*
+ 	 * disable break condition and fifos
+@@ -1946,14 +1946,14 @@ static void pl011_disable_uart(struct uart_amba_port *uap)
+ 
+ static void pl011_disable_interrupts(struct uart_amba_port *uap)
+ {
+-	spin_lock_irq(&uap->port.lock);
++	uart_port_lock_irq(&uap->port);
+ 
+ 	/* mask all interrupts and clear all pending ones */
+ 	uap->im = 0;
+ 	pl011_write(uap->im, uap, REG_IMSC);
+ 	pl011_write(0xffff, uap, REG_ICR);
+ 
+-	spin_unlock_irq(&uap->port.lock);
++	uart_port_unlock_irq(&uap->port);
+ }
+ 
+ static void pl011_shutdown(struct uart_port *port)
+@@ -2098,7 +2098,7 @@ pl011_set_termios(struct uart_port *port, struct ktermios *termios,
+ 
+ 	bits = tty_get_frame_size(termios->c_cflag);
+ 
+-	spin_lock_irqsave(&port->lock, flags);
++	uart_port_lock_irqsave(port, &flags);
+ 
+ 	/*
+ 	 * Update the per-port timeout.
+@@ -2165,7 +2165,7 @@ pl011_set_termios(struct uart_port *port, struct ktermios *termios,
+ 	pl011_write_lcr_h(uap, lcr_h);
+ 	pl011_write(old_cr, uap, REG_CR);
+ 
+-	spin_unlock_irqrestore(&port->lock, flags);
++	uart_port_unlock_irqrestore(port, flags);
+ }
+ 
+ static void
+@@ -2183,10 +2183,10 @@ sbsa_uart_set_termios(struct uart_port *port, struct ktermios *termios,
+ 	termios->c_cflag &= ~(CMSPAR | CRTSCTS);
+ 	termios->c_cflag |= CS8 | CLOCAL;
+ 
+-	spin_lock_irqsave(&port->lock, flags);
++	uart_port_lock_irqsave(port, &flags);
+ 	uart_update_timeout(port, CS8, uap->fixed_baud);
+ 	pl011_setup_status_masks(port, termios);
+-	spin_unlock_irqrestore(&port->lock, flags);
++	uart_port_unlock_irqrestore(port, flags);
+ }
+ 
+ static const char *pl011_type(struct uart_port *port)
+@@ -2325,9 +2325,9 @@ pl011_console_write(struct console *co, const char *s, unsigned int count)
+ 	if (uap->port.sysrq)
+ 		locked = 0;
+ 	else if (oops_in_progress)
+-		locked = spin_trylock(&uap->port.lock);
++		locked = uart_port_trylock(&uap->port);
+ 	else
+-		spin_lock(&uap->port.lock);
++		uart_port_lock(&uap->port);
+ 
+ 	/*
+ 	 *	First save the CR then disable the interrupts
+@@ -2353,7 +2353,7 @@ pl011_console_write(struct console *co, const char *s, unsigned int count)
+ 		pl011_write(old_cr, uap, REG_CR);
+ 
+ 	if (locked)
+-		spin_unlock(&uap->port.lock);
++		uart_port_unlock(&uap->port);
+ 	local_irq_restore(flags);
+ 
+ 	clk_disable(uap->clk);
 -- 
 2.43.0
 
