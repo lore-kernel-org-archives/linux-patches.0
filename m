@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76FEA218594;
-	Thu, 12 Dec 2024 16:42:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED742218594;
+	Thu, 12 Dec 2024 16:42:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734021724; cv=none; b=b33Th9VCCUYZIU7YbGDOiDz80Py7h0gDsaUEd31Wcq/PFdUDJB234tsmkE4Z+Puo00UdcdqNV75OaKzvvWXoREYzk6n1XRpTgOWUfF3fA7AewcqImxXzGAkrM5ES7SeJu4lkzdsisdbbEeoqH+PX2PTdTT6qm2r/dqTEZGAV3WI=
+	t=1734021728; cv=none; b=QFrvKSpb5fMSyu5Fv4O4NK+PwBQr7UK5OJYqe4Gk89wYgSNBgxi8WEtU8k9YRU5PEt9jfJHuwzlqgBOzVIDEfY9iOVpJHwmvxkHH9vf60omRqGHY7ca5o2Am9VgujG0Hs9IxOkLKKFFDo1x3w9+vUp4wk7kFftaqAE9ekTiquec=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734021724; c=relaxed/simple;
-	bh=y3W63cNpyYYPPacEylSM2pC7zGXA9YSd6kRK/oNZz9k=;
+	s=arc-20240116; t=1734021728; c=relaxed/simple;
+	bh=paxo6vwseOWkJUeTqXv4Buf10P05KHPE5vu92bG+zKU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JOel9GYmO53mlYnQA8SWhSyG0ci2EIF1DzkxvfFzK1ua02O+fqrIwgDhk4q4DrDw1NPMvvy7FozJzoR/UphHoNhnRUD9ugqaCyumw0rLG+Q0MQBMQsLqJ5Hb15sefIp8OIYPvWFifP/ilN5zZW9Kn7mE5Pz7I8OjnXk3TVy5+u8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iS1Hj8hk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jI+aw05j/rNghy9WJuJS82KaGsBY+RhdB4ykHSHvxnpOGhKO/lq1ZG0WizoLNVrgRrUzAJ+Kg6IayaZJv3sdH8QJtkDHfrEjzKVOaMgPK159V3A59UClkk5EEgt0ws1+Eqhi3eyM+iz7FVD4BUW8S/fLJPFg+A/Nvo/hYVouORc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ea7C4HK0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iS1Hj8hk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0BDFC4CECE;
-	Thu, 12 Dec 2024 16:42:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ea7C4HK0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A40AC4CECE;
+	Thu, 12 Dec 2024 16:42:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734021724;
-	bh=y3W63cNpyYYPPacEylSM2pC7zGXA9YSd6kRK/oNZz9k=;
+	s=korg; t=1734021727;
+	bh=paxo6vwseOWkJUeTqXv4Buf10P05KHPE5vu92bG+zKU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iS1Hj8hk0pHNW2ugDhAT7PDAwV8Tjwwux8WjTjIyHeif77yM3KespOEZi5i5vDwFw
-	 /htxjKaSzN0dTGSU5b7bi8QXyc1OKTmcah44PhkkcFYbzKKhDzRFrx624e4gUsBl+g
-	 i7CbOD5bV+1ODMsIVt3ZqnKUQ2wYsZYtGEKC/V/w=
+	b=ea7C4HK0ys+RFzbj7nNJ1XgljRmE6pVOUtRFb03YUDce3O61vH8dE39xHNHFUTIFT
+	 coDiibpNXXA7Oz7UdLBqDPerXCcJ1Rs4jtopJOLlCK/5IO6UbMWTLK3EZ9kD2zWDF4
+	 Msu0icHgYx9iSaZSiGjbFkgvfFVioAViFdt7RORo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 044/565] mptcp: cope racing subflow creation in mptcp_rcv_space_adjust
-Date: Thu, 12 Dec 2024 15:53:59 +0100
-Message-ID: <20241212144313.216736139@linuxfoundation.org>
+	Hugh Dickins <hughd@google.com>,
+	Chuck Lever <chuck.lever@oracle.com>,
+	Jeongjun Park <aha310510@gmail.com>,
+	Yu Zhao <yuzhao@google.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.15 045/565] mm: revert "mm: shmem: fix data-race in shmem_getattr()"
+Date: Thu, 12 Dec 2024 15:54:00 +0100
+Message-ID: <20241212144313.263600491@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144311.432886635@linuxfoundation.org>
 References: <20241212144311.432886635@linuxfoundation.org>
@@ -51,48 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Andrew Morton <akpm@linux-foundation.org>
 
-commit ce7356ae35943cc6494cc692e62d51a734062b7d upstream.
+commit d1aa0c04294e29883d65eac6c2f72fe95cc7c049 upstream.
 
-Additional active subflows - i.e. created by the in kernel path
-manager - are included into the subflow list before starting the
-3whs.
+Revert d949d1d14fa2 ("mm: shmem: fix data-race in shmem_getattr()") as
+suggested by Chuck [1].  It is causing deadlocks when accessing tmpfs over
+NFS.
 
-A racing recvmsg() spooling data received on an already established
-subflow would unconditionally call tcp_cleanup_rbuf() on all the
-current subflows, potentially hitting a divide by zero error on
-the newly created ones.
+As Hugh commented, "added just to silence a syzbot sanitizer splat: added
+where there has never been any practical problem".
 
-Explicitly check that the subflow is in a suitable state before
-invoking tcp_cleanup_rbuf().
-
-Fixes: c76c6956566f ("mptcp: call tcp_cleanup_rbuf on subflows")
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/02374660836e1b52afc91966b7535c8c5f7bafb0.1731060874.git.pabeni@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ Conflicts in protocol.c, because commit f410cbea9f3d ("tcp: annotate
-  data-races around tp->window_clamp") has not been backported to this
-  version. The conflict is easy to resolve, because only the context is
-  different, but not the line to modify. ]
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://lkml.kernel.org/r/ZzdxKF39VEmXSSyN@tissot.1015granger.net [1]
+Fixes: d949d1d14fa2 ("mm: shmem: fix data-race in shmem_getattr()")
+Acked-by: Hugh Dickins <hughd@google.com>
+Cc: Chuck Lever <chuck.lever@oracle.com>
+Cc: Jeongjun Park <aha310510@gmail.com>
+Cc: Yu Zhao <yuzhao@google.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Hugh Dickins <hughd@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/protocol.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ mm/shmem.c |    2 --
+ 1 file changed, 2 deletions(-)
 
---- a/net/mptcp/protocol.c
-+++ b/net/mptcp/protocol.c
-@@ -1986,7 +1986,8 @@ static void mptcp_rcv_space_adjust(struc
- 				slow = lock_sock_fast(ssk);
- 				WRITE_ONCE(ssk->sk_rcvbuf, rcvbuf);
- 				tcp_sk(ssk)->window_clamp = window_clamp;
--				tcp_cleanup_rbuf(ssk, 1);
-+				if (tcp_can_send_ack(ssk))
-+					tcp_cleanup_rbuf(ssk, 1);
- 				unlock_sock_fast(ssk, slow);
- 			}
- 		}
+--- a/mm/shmem.c
++++ b/mm/shmem.c
+@@ -1077,9 +1077,7 @@ static int shmem_getattr(struct user_nam
+ 		shmem_recalc_inode(inode);
+ 		spin_unlock_irq(&info->lock);
+ 	}
+-	inode_lock_shared(inode);
+ 	generic_fillattr(&init_user_ns, inode, stat);
+-	inode_unlock_shared(inode);
+ 
+ 	if (shmem_is_huge(NULL, inode, 0))
+ 		stat->blksize = HPAGE_PMD_SIZE;
 
 
