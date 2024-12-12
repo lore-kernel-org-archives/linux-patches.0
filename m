@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 423361487CD;
-	Thu, 12 Dec 2024 15:28:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51205205ACF;
+	Thu, 12 Dec 2024 15:28:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734017305; cv=none; b=IeP5AK0R0GVMl4vkzTziMs+WU2ioGv2Pva6RiY5kwHB4uRnMcKOM8Jh4kSkUR+AFCgZoHHCB8CLI94x41aq3DXa7HWLTpq17ss+Hert7Cv67YuF4hmKjPfILcgcoS0h6AoHf39AVwgXV6ELUWwNa/3MGbb/c7cVYiLDtzM6UsGA=
+	t=1734017308; cv=none; b=QzzBStwS6kqwJ7j4fR7JjSUMlM6NbI8tREKGkc5YtS0+sler0U+46NGkHagWxgUdfWlc40gv0XtYQihAzzDNVGeeLK6vreyalDs33A8n0VBGU3pgpy1eXdVXXIABsymWAySt48H5G4blfdT7/2oMS+jc7yI0qVkryVKzLDPh9z4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734017305; c=relaxed/simple;
-	bh=R8yBiiFGEdiiPcl8FEj2x65iu8LAyFncdEYsa6ZgHUU=;
+	s=arc-20240116; t=1734017308; c=relaxed/simple;
+	bh=XA7fvPy4ofHtdzx84EVuPTFyTcEyNuDLs5U9e3msgWI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UYn691WxtQ8Ek//VK9sNLgEruiS8/lCeiZLP9wXGb3AGroFGfDHmEKkdFXWCaXVcY8Ivav39xU4SD1GDwX3HWANpX5SWp6yPixLojS1EfpJUGnzsnWRFHS/zAeXDfR6MUuH02csoXNMbBgNWMExFP+9XbGkzCscZUy0C/MoUSKA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cUEr0DTf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=L6jwwPnPOz0pqOBjjbtma2G6bBLLCaKuH9n1UN/A8VR2tmyl65ziN7uO6Fjkmyy/iOcooR+IO62hJvKeJ4TpcgYDcT8DvjT+Kk4KHDDhdXo6mkubqET/o3LBsx8gSPaGGTsiU375M8E9P5PQTRgL3eylTO9pzDrfS0BjMkfQNqw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=peV6Z/Ho; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cUEr0DTf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A33F4C4CECE;
-	Thu, 12 Dec 2024 15:28:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="peV6Z/Ho"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6885C4CECE;
+	Thu, 12 Dec 2024 15:28:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734017305;
-	bh=R8yBiiFGEdiiPcl8FEj2x65iu8LAyFncdEYsa6ZgHUU=;
+	s=korg; t=1734017308;
+	bh=XA7fvPy4ofHtdzx84EVuPTFyTcEyNuDLs5U9e3msgWI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cUEr0DTfKPAhNFZ082JU5RFdjuAlC0yhylg4am2ocenCcnPLB+1NmQuzwqfLpU7/j
-	 PDqBLPfOb1RD+RMHuAtoyJ5OzNIevOLD9l/x02mkWxRVAGKcq3Yd4SCHOE5yqFOnM1
-	 d4wkxM0dWpZ0WhczuEUGXydl1fs5qt+sMEOaGlqU=
+	b=peV6Z/Hor0/inyptqGSje9HSxFncU/tAjl1kR8hijxasJDtNlg/vFU2osm3d6mGxb
+	 1s2NZ143M9LPl80H012CnAXhVTXp1Z/8dAEQlzryclMs9XYfJ3+/6OmnQ6Ohi72z6W
+	 mScck7ykXDc5ENut5v72t2BqRmOZdGB058N/JbMA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Julia Lawall <julia.lawall@inria.fr>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
 	K Prateek Nayak <kprateek.nayak@amd.com>,
 	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 441/466] sched/fair: Check idle_cpu() before need_resched() to detect ilb CPU turning busy
-Date: Thu, 12 Dec 2024 16:00:10 +0100
-Message-ID: <20241212144324.281630922@linuxfoundation.org>
+Subject: [PATCH 6.12 442/466] sched/core: Prevent wakeup of ksoftirqd during idle load balance
+Date: Thu, 12 Dec 2024 16:00:11 +0100
+Message-ID: <20241212144324.320035449@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144306.641051666@linuxfoundation.org>
 References: <20241212144306.641051666@linuxfoundation.org>
@@ -53,55 +55,67 @@ Content-Transfer-Encoding: 8bit
 
 From: K Prateek Nayak <kprateek.nayak@amd.com>
 
-[ Upstream commit ff47a0acfcce309cf9e175149c75614491953c8f ]
+[ Upstream commit e932c4ab38f072ce5894b2851fea8bc5754bb8e5 ]
 
-Commit b2a02fc43a1f ("smp: Optimize send_call_function_single_ipi()")
-optimizes IPIs to idle CPUs in TIF_POLLING_NRFLAG mode by setting the
-TIF_NEED_RESCHED flag in idle task's thread info and relying on
-flush_smp_call_function_queue() in idle exit path to run the
-call-function. A softirq raised by the call-function is handled shortly
-after in do_softirq_post_smp_call_flush() but the TIF_NEED_RESCHED flag
-remains set and is only cleared later when schedule_idle() calls
-__schedule().
+Scheduler raises a SCHED_SOFTIRQ to trigger a load balancing event on
+from the IPI handler on the idle CPU. If the SMP function is invoked
+from an idle CPU via flush_smp_call_function_queue() then the HARD-IRQ
+flag is not set and raise_softirq_irqoff() needlessly wakes ksoftirqd
+because soft interrupts are handled before ksoftirqd get on the CPU.
 
-need_resched() check in _nohz_idle_balance() exists to bail out of load
-balancing if another task has woken up on the CPU currently in-charge of
-idle load balancing which is being processed in SCHED_SOFTIRQ context.
-Since the optimization mentioned above overloads the interpretation of
-TIF_NEED_RESCHED, check for idle_cpu() before going with the existing
-need_resched() check which can catch a genuine task wakeup on an idle
-CPU processing SCHED_SOFTIRQ from do_softirq_post_smp_call_flush(), as
-well as the case where ksoftirqd needs to be preempted as a result of
-new task wakeup or slice expiry.
+Adding a trace_printk() in nohz_csd_func() at the spot of raising
+SCHED_SOFTIRQ and enabling trace events for sched_switch, sched_wakeup,
+and softirq_entry (for SCHED_SOFTIRQ vector alone) helps observing the
+current behavior:
 
-In case of PREEMPT_RT or threadirqs, although the idle load balancing
-may be inhibited in some cases on the ilb CPU, the fact that ksoftirqd
-is the only fair task going back to sleep will trigger a newidle balance
-on the CPU which will alleviate some imbalance if it exists if idle
-balance fails to do so.
+       <idle>-0   [000] dN.1.:  nohz_csd_func: Raising SCHED_SOFTIRQ from nohz_csd_func
+       <idle>-0   [000] dN.4.:  sched_wakeup: comm=ksoftirqd/0 pid=16 prio=120 target_cpu=000
+       <idle>-0   [000] .Ns1.:  softirq_entry: vec=7 [action=SCHED]
+       <idle>-0   [000] .Ns1.:  softirq_exit: vec=7  [action=SCHED]
+       <idle>-0   [000] d..2.:  sched_switch: prev_comm=swapper/0 prev_pid=0 prev_prio=120 prev_state=R ==> next_comm=ksoftirqd/0 next_pid=16 next_prio=120
+  ksoftirqd/0-16  [000] d..2.:  sched_switch: prev_comm=ksoftirqd/0 prev_pid=16 prev_prio=120 prev_state=S ==> next_comm=swapper/0 next_pid=0 next_prio=120
+       ...
+
+Use __raise_softirq_irqoff() to raise the softirq. The SMP function call
+is always invoked on the requested CPU in an interrupt handler. It is
+guaranteed that soft interrupts are handled at the end.
+
+Following are the observations with the changes when enabling the same
+set of events:
+
+       <idle>-0       [000] dN.1.: nohz_csd_func: Raising SCHED_SOFTIRQ for nohz_idle_balance
+       <idle>-0       [000] dN.1.: softirq_raise: vec=7 [action=SCHED]
+       <idle>-0       [000] .Ns1.: softirq_entry: vec=7 [action=SCHED]
+
+No unnecessary ksoftirqd wakeups are seen from idle task's context to
+service the softirq.
 
 Fixes: b2a02fc43a1f ("smp: Optimize send_call_function_single_ipi()")
+Closes: https://lore.kernel.org/lkml/fcf823f-195e-6c9a-eac3-25f870cb35ac@inria.fr/ [1]
+Reported-by: Julia Lawall <julia.lawall@inria.fr>
+Suggested-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Signed-off-by: K Prateek Nayak <kprateek.nayak@amd.com>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20241119054432.6405-4-kprateek.nayak@amd.com
+Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Link: https://lore.kernel.org/r/20241119054432.6405-5-kprateek.nayak@amd.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/fair.c | 2 +-
+ kernel/sched/core.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index 49fa456cd3320..782ce70ebd1b0 100644
---- a/kernel/sched/fair.c
-+++ b/kernel/sched/fair.c
-@@ -12580,7 +12580,7 @@ static void _nohz_idle_balance(struct rq *this_rq, unsigned int flags)
- 		 * work being done for other CPUs. Next load
- 		 * balancing owner will pick it up.
- 		 */
--		if (need_resched()) {
-+		if (!idle_cpu(this_cpu) && need_resched()) {
- 			if (flags & NOHZ_STATS_KICK)
- 				has_blocked_load = true;
- 			if (flags & NOHZ_NEXT_KICK)
+diff --git a/kernel/sched/core.c b/kernel/sched/core.c
+index 33bc43b223cba..6cc12777bb11a 100644
+--- a/kernel/sched/core.c
++++ b/kernel/sched/core.c
+@@ -1244,7 +1244,7 @@ static void nohz_csd_func(void *info)
+ 	rq->idle_balance = idle_cpu(cpu);
+ 	if (rq->idle_balance) {
+ 		rq->nohz_idle_balance = flags;
+-		raise_softirq_irqoff(SCHED_SOFTIRQ);
++		__raise_softirq_irqoff(SCHED_SOFTIRQ);
+ 	}
+ }
+ 
 -- 
 2.43.0
 
