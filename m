@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92FC2226545;
-	Thu, 12 Dec 2024 16:23:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2815D226545;
+	Thu, 12 Dec 2024 16:23:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734020619; cv=none; b=G/EWoA9NfZcwuqjhPcCudDuG90XBedGe7uPiu7gCOgyH6A1UH+uuJpItBLQownxGqYn/qLRvKYtWjWj1MuRlrx+mxbGHA+yumpiLBNUZNw8vT8x+jfFrCL2gKk9mm8ZN3ExIWPW817JZACgJ8Idm8P5b9SC/85P1tBwJ7pgXJC8=
+	t=1734020623; cv=none; b=nqBf6V3hW3BRVckOQDSFqunQiNI/3AaSrPrT0MfHZznPvzhWHpbpmcvA1Y0FvfptK8W2/1VxkBi03FJJGBui4DuP4ssHhPkGExjPAiCwIBnH7YqzcUSdO2HHyTTPdbbKwosrofmj25VuIVITJjCzIq0CEpZo/dDzwYvjdyeYqkE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734020619; c=relaxed/simple;
-	bh=fxTEgtE1eg3XJLuEPT4vuOnv+Cat7KxEkMPUBH1qjPQ=;
+	s=arc-20240116; t=1734020623; c=relaxed/simple;
+	bh=926HJtEn5ky1N9xkhML+tiW1YsQ0jmDttzzywLJoorU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=LDDYK6EqeJeMRmElCedQLo4HI8H+C7Jkj/0o7ZGCIpVixVPWtWsd/SbhVvyBbM5lHo7LYh25ZIEUp58azT6EOQNcggKWs8rBAeoeotzhVz5e2Ojq6Rr5s4fmo1+PGhFGPSlOGhoupgdkzHhRxMMrMFkB5C/AaVZ3HupvafanomQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VtHYUyYx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DunGyl1UGstiSUcg5S7GXGmcxxFQArdV3E5OUoX283rAOoxN/oEH+QnLBMDhjnu+KP7RKYECnL/RO5yZ2mMs9VS6GD8luc2k+/vz16kEDmsK/KJcsUby+cgVk9OSDbzAHHcUzc+64H9lKeNhFPUpprbMPPnfdnASJxBMh4O+sQY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jjtdgpbv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VtHYUyYx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16B75C4CECE;
-	Thu, 12 Dec 2024 16:23:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jjtdgpbv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7293AC4CECE;
+	Thu, 12 Dec 2024 16:23:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734020619;
-	bh=fxTEgtE1eg3XJLuEPT4vuOnv+Cat7KxEkMPUBH1qjPQ=;
+	s=korg; t=1734020623;
+	bh=926HJtEn5ky1N9xkhML+tiW1YsQ0jmDttzzywLJoorU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VtHYUyYxtQ84oDTaUVQMIylDvr3KBCE92LHe4C3QszIo70rtPgI01z/CZhhVPtw6b
-	 spogEBi3DZEb1KckNiCvClLtJ6pcmcTB/jMnhzoiAD9cHAMDCcCb7euHGy2ZokcSsh
-	 5BHRUv326Jr/jSRFks4ZIChRzb5z1RFu5BCHaIKU=
+	b=jjtdgpbvkb56lRr82awlJr/yxnn4lTsQgK2bsM973J/He/g9agCFUETyClKTUr5l4
+	 5SwS2fIWOJ3h1K4wiorJ+/ywLxKbjNIQcjiLHzm4fFk2d+YS13mH0QZbUnRd/Vqksy
+	 y3YUYEMbQ7gAV17+8Rn0kU1E5AwzfKbtjPuBivuI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kishon Vijay Abraham I <kishon@ti.com>,
-	Siddharth Vadapalli <s-vadapalli@ti.com>,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>
-Subject: [PATCH 6.1 488/772] PCI: keystone: Set mode as Root Complex for "ti,keystone-pcie" compatible
-Date: Thu, 12 Dec 2024 15:57:13 +0100
-Message-ID: <20241212144410.113470043@linuxfoundation.org>
+	Dario Binacchi <dario.binacchi@amarulasolutions.com>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 515/772] can: c_can: c_can_handle_bus_err(): update statistics if skb allocation fails
+Date: Thu, 12 Dec 2024 15:57:40 +0100
+Message-ID: <20241212144411.237609567@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -45,54 +45,101 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kishon Vijay Abraham I <kishon@ti.com>
+From: Dario Binacchi <dario.binacchi@amarulasolutions.com>
 
-commit 5a938ed9481b0c06cb97aec45e722a80568256fd upstream.
+[ Upstream commit 9e66242504f49e17481d8e197730faba7d99c934 ]
 
-commit 23284ad677a9 ("PCI: keystone: Add support for PCIe EP in AM654x
-Platforms") introduced configuring "enum dw_pcie_device_mode" as part of
-device data ("struct ks_pcie_of_data"). However it failed to set the
-mode for "ti,keystone-pcie" compatible.
+Ensure that the statistics are always updated, even if the skb
+allocation fails.
 
-Since the mode defaults to "DW_PCIE_UNKNOWN_TYPE", the following error
-message is displayed for the v3.65a controller:
-
-  "INVALID device type 0"
-
-Despite the driver probing successfully, the controller may not be
-functional in the Root Complex mode of operation.
-
-So, set the mode as Root Complex for "ti,keystone-pcie" compatible to
-fix this.
-
-Fixes: 23284ad677a9 ("PCI: keystone: Add support for PCIe EP in AM654x Platforms")
-Link: https://lore.kernel.org/r/20240524105714.191642-2-s-vadapalli@ti.com
-Signed-off-by: Kishon Vijay Abraham I <kishon@ti.com>
-Signed-off-by: Siddharth Vadapalli <s-vadapalli@ti.com>
-[kwilczynski: commit log, added tag for stable releases]
-Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
-Cc: stable@vger.kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 4d6d26537940 ("can: c_can: fix {rx,tx}_errors statistics")
+Signed-off-by: Dario Binacchi <dario.binacchi@amarulasolutions.com>
+Link: https://patch.msgid.link/20241122221650.633981-2-dario.binacchi@amarulasolutions.com
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/dwc/pci-keystone.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/can/c_can/c_can_main.c | 26 +++++++++++++++++---------
+ 1 file changed, 17 insertions(+), 9 deletions(-)
 
---- a/drivers/pci/controller/dwc/pci-keystone.c
-+++ b/drivers/pci/controller/dwc/pci-keystone.c
-@@ -1105,6 +1105,7 @@ static int ks_pcie_am654_set_mode(struct
+diff --git a/drivers/net/can/c_can/c_can_main.c b/drivers/net/can/c_can/c_can_main.c
+index 511615dc33419..cc371d0c9f3c7 100644
+--- a/drivers/net/can/c_can/c_can_main.c
++++ b/drivers/net/can/c_can/c_can_main.c
+@@ -1014,49 +1014,57 @@ static int c_can_handle_bus_err(struct net_device *dev,
  
- static const struct ks_pcie_of_data ks_pcie_rc_of_data = {
- 	.host_ops = &ks_pcie_host_ops,
-+	.mode = DW_PCIE_RC_TYPE,
- 	.version = DW_PCIE_VER_365A,
- };
+ 	/* propagate the error condition to the CAN stack */
+ 	skb = alloc_can_err_skb(dev, &cf);
+-	if (unlikely(!skb))
+-		return 0;
  
+ 	/* check for 'last error code' which tells us the
+ 	 * type of the last error to occur on the CAN bus
+ 	 */
+-	cf->can_id |= CAN_ERR_PROT | CAN_ERR_BUSERROR;
++	if (likely(skb))
++		cf->can_id |= CAN_ERR_PROT | CAN_ERR_BUSERROR;
+ 
+ 	switch (lec_type) {
+ 	case LEC_STUFF_ERROR:
+ 		netdev_dbg(dev, "stuff error\n");
+-		cf->data[2] |= CAN_ERR_PROT_STUFF;
++		if (likely(skb))
++			cf->data[2] |= CAN_ERR_PROT_STUFF;
+ 		stats->rx_errors++;
+ 		break;
+ 	case LEC_FORM_ERROR:
+ 		netdev_dbg(dev, "form error\n");
+-		cf->data[2] |= CAN_ERR_PROT_FORM;
++		if (likely(skb))
++			cf->data[2] |= CAN_ERR_PROT_FORM;
+ 		stats->rx_errors++;
+ 		break;
+ 	case LEC_ACK_ERROR:
+ 		netdev_dbg(dev, "ack error\n");
+-		cf->data[3] = CAN_ERR_PROT_LOC_ACK;
++		if (likely(skb))
++			cf->data[3] = CAN_ERR_PROT_LOC_ACK;
+ 		stats->tx_errors++;
+ 		break;
+ 	case LEC_BIT1_ERROR:
+ 		netdev_dbg(dev, "bit1 error\n");
+-		cf->data[2] |= CAN_ERR_PROT_BIT1;
++		if (likely(skb))
++			cf->data[2] |= CAN_ERR_PROT_BIT1;
+ 		stats->tx_errors++;
+ 		break;
+ 	case LEC_BIT0_ERROR:
+ 		netdev_dbg(dev, "bit0 error\n");
+-		cf->data[2] |= CAN_ERR_PROT_BIT0;
++		if (likely(skb))
++			cf->data[2] |= CAN_ERR_PROT_BIT0;
+ 		stats->tx_errors++;
+ 		break;
+ 	case LEC_CRC_ERROR:
+ 		netdev_dbg(dev, "CRC error\n");
+-		cf->data[3] = CAN_ERR_PROT_LOC_CRC_SEQ;
++		if (likely(skb))
++			cf->data[3] = CAN_ERR_PROT_LOC_CRC_SEQ;
+ 		stats->rx_errors++;
+ 		break;
+ 	default:
+ 		break;
+ 	}
+ 
++	if (unlikely(!skb))
++		return 0;
++
+ 	netif_receive_skb(skb);
+ 	return 1;
+ }
+-- 
+2.43.0
+
 
 
