@@ -1,36 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C496E2368E0;
-	Thu, 12 Dec 2024 16:20:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D75724354D;
+	Thu, 12 Dec 2024 16:20:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734020406; cv=none; b=Xqe40rEm5YX6s5UTLRlAPzqE4GPwcjdV2w67h9P1gzsajurRkbpIMcLjbpHbVcn+w+IGro2+7C8mTZ6UrtNJM8OcQJBhbhdMUP4rU7dB2gQQkDBM88hpvN0sFxrrbQK72xfIOQIdwtJrAU1WkYjYUGIiJ+HSr5dEYVbR9NAH1rY=
+	t=1734020410; cv=none; b=DTMrzfA48Bn4AbJkl5B/YzCh9eY2unbK68xaiAuVt+6R4w33B4C7ybOj+KHDIcfcgu/3nVig9G3yNskanNwJXSl03YfI+kblKfHIjShF1hZM8epB8z/5s8MHIUwvfF88XLAaVqgS3SH8eEmmhijuH6sitES6wW9iMO0S79nEOZY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734020406; c=relaxed/simple;
-	bh=e+MsuQxXgF+CJZNzGEDhQ8PE97qON8hSnFA0Adol1t4=;
+	s=arc-20240116; t=1734020410; c=relaxed/simple;
+	bh=Pmz6/Qfj/53LCcofZRb9IG30V5WsehzLflhFAMtF9lg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HKrMZ7eBQQ5ADcHPaEmyfRaMXblvAQvRfFXp+7EUs4laVuvC93S2tLDkeLLUTv/j/fkcELwktep3ccPp91UT0f8BIhnhPx702VeBEHMzfaxsB3ZDxQU6uqTTdx5v2HRhGq/cZLhxLTxsHtIjAr9nA51QaRzK3s9dKvghUC56N38=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xuRC3WNe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mEbFqPZOsureoV3Etk5qjmMvhH9XbMOP5Ikhq7BucMEwBhlOoF2fj1NPEV4XKyAyHTdnwhqWwvSahcZ27MqEjsXoOLHXmb2p/MRAb95PCCvsRFvAA6pfjHIG3AKxJpOJJeA+df4wESf5dyXKB8uBqaQ0gp4cmUt+oqC478jlb78=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f+EQkiPM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xuRC3WNe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17117C4CECE;
-	Thu, 12 Dec 2024 16:20:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f+EQkiPM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C064CC4CECE;
+	Thu, 12 Dec 2024 16:20:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734020406;
-	bh=e+MsuQxXgF+CJZNzGEDhQ8PE97qON8hSnFA0Adol1t4=;
+	s=korg; t=1734020410;
+	bh=Pmz6/Qfj/53LCcofZRb9IG30V5WsehzLflhFAMtF9lg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xuRC3WNeFdThAFFqWm6odogYa1JeMnLWQNQ8+n1q80vG8ESXmTmYAVY0vhPFBWK/5
-	 qZkvtAM3pc+at2UoXWLvMe2arQV5MCcMiUmVcxx5EpvEkvdER/crmabsEHCSv2Y/E2
-	 oxY9OE5IUyQR8YPOfyu254QKrLEvhfdpu2MfdVCs=
+	b=f+EQkiPM8rEjh57gBkUDxabQOk3vGtojFd//egBdeMXqgV8ATZGBcNbKpJR4daMyd
+	 htfEkQPCn4EacTOMbm4Idvwv37WNo9rz7RV+16IjrvCOwdhajDYatPoCk0DDSgJH03
+	 cFKXjm9hGOQLd/3ZdagILNHeK6gs7DIuE9mO85tQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Subject: [PATCH 6.1 419/772] usb: dwc3: gadget: Fix checking for number of TRBs left
-Date: Thu, 12 Dec 2024 15:56:04 +0100
-Message-ID: <20241212144407.224671360@linuxfoundation.org>
+	syzbot+3030e17bd57a73d39bd7@syzkaller.appspotmail.com,
+	Qu Wenruo <wqu@suse.com>,
+	Lizhi Xu <lizhi.xu@windriver.com>,
+	David Sterba <dsterba@suse.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 453/772] btrfs: add a sanity check for btrfs root in btrfs_search_slot()
+Date: Thu, 12 Dec 2024 15:56:38 +0100
+Message-ID: <20241212144408.645350933@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -49,53 +53,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+From: Lizhi Xu <lizhi.xu@windriver.com>
 
-commit 02a6982b0ccfcdc39e20016f5fc9a1b7826a6ee7 upstream.
+[ Upstream commit 3ed51857a50f530ac7a1482e069dfbd1298558d4 ]
 
-The check whether the TRB ring is full or empty in dwc3_calc_trbs_left()
-is insufficient. It assumes there are active TRBs if there's any request
-in the started_list. However, that's not the case for requests with a
-large SG list.
+Syzbot reports a null-ptr-deref in btrfs_search_slot().
 
-That is, if we have a single usb request that requires more TRBs than
-the total TRBs in the TRB ring, the queued TRBs will be available when
-all the TRBs in the ring are completed. But the request is only
-partially completed and remains in the started_list. With the current
-logic, the TRB ring is empty, but dwc3_calc_trbs_left() returns 0.
+The reproducer is using rescue=ibadroots, and the extent tree root is
+corrupted thus the extent tree is NULL.
 
-Fix this by additionally checking for the request->num_trbs for active
-TRB count.
+When scrub tries to search the extent tree to gather the needed extent
+info, btrfs_search_slot() doesn't check if the target root is NULL or
+not, resulting the null-ptr-deref.
 
-Cc: stable@vger.kernel.org
-Fixes: 51f1954ad853 ("usb: dwc3: gadget: Fix dwc3_calc_trbs_left()")
-Signed-off-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Link: https://lore.kernel.org/r/708dc62b56b77da1f704cc2ae9b6ddb1f2dbef1f.1731545781.git.Thinh.Nguyen@synopsys.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Add sanity check for btrfs root before using it in btrfs_search_slot().
+
+Reported-by: syzbot+3030e17bd57a73d39bd7@syzkaller.appspotmail.com
+Fixes: 42437a6386ff ("btrfs: introduce mount option rescue=ignorebadroots")
+Link: https://syzkaller.appspot.com/bug?extid=3030e17bd57a73d39bd7
+CC: stable@vger.kernel.org # 5.15+
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Tested-by: syzbot+3030e17bd57a73d39bd7@syzkaller.appspotmail.com
+Signed-off-by: Lizhi Xu <lizhi.xu@windriver.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/dwc3/gadget.c |    9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ fs/btrfs/ctree.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/dwc3/gadget.c
-+++ b/drivers/usb/dwc3/gadget.c
-@@ -1203,11 +1203,14 @@ static u32 dwc3_calc_trbs_left(struct dw
- 	 * pending to be processed by the driver.
- 	 */
- 	if (dep->trb_enqueue == dep->trb_dequeue) {
-+		struct dwc3_request *req;
-+
- 		/*
--		 * If there is any request remained in the started_list at
--		 * this point, that means there is no TRB available.
-+		 * If there is any request remained in the started_list with
-+		 * active TRBs at this point, then there is no TRB available.
- 		 */
--		if (!list_empty(&dep->started_list))
-+		req = next_request(&dep->started_list);
-+		if (req && req->num_trbs)
- 			return 0;
+diff --git a/fs/btrfs/ctree.c b/fs/btrfs/ctree.c
+index 46550c26e6844..347934eb5198d 100644
+--- a/fs/btrfs/ctree.c
++++ b/fs/btrfs/ctree.c
+@@ -1973,7 +1973,7 @@ int btrfs_search_slot(struct btrfs_trans_handle *trans, struct btrfs_root *root,
+ 		      const struct btrfs_key *key, struct btrfs_path *p,
+ 		      int ins_len, int cow)
+ {
+-	struct btrfs_fs_info *fs_info = root->fs_info;
++	struct btrfs_fs_info *fs_info;
+ 	struct extent_buffer *b;
+ 	int slot;
+ 	int ret;
+@@ -1986,6 +1986,10 @@ int btrfs_search_slot(struct btrfs_trans_handle *trans, struct btrfs_root *root,
+ 	int min_write_lock_level;
+ 	int prev_cmp;
  
- 		return DWC3_TRB_NUM - 1;
++	if (!root)
++		return -EINVAL;
++
++	fs_info = root->fs_info;
+ 	might_sleep();
+ 
+ 	lowest_level = p->lowest_level;
+-- 
+2.43.0
+
 
 
