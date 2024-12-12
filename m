@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EE8121578A;
-	Thu, 12 Dec 2024 15:14:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3AC521765E;
+	Thu, 12 Dec 2024 15:14:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734016451; cv=none; b=ZTjKomJCG/p0kzcHGMkPC5PCD+Q4U2sxwzfWvxWqUviTlTROEMqf3wozemddy11CAnvQdLbHE8jcWaau6L5xdJcnP5uHEHplKWhPv9UvSS3YjTuBq2cfGQuCHfGC0ap3aNycK/TN5GOIjirM+PC2X0002Un4oRgJ1i79+MqCHgo=
+	t=1734016455; cv=none; b=ikbbs6jYXYqjkzzeyUmsgKzK2fVzzUVOuW/pvrPNH4O0MqN3ix6bxAtAlEzff6qc5UrpvOEC7i02B1CThNq0gjEfZXwAA0JKyt8stVFK6kFLaQmpluISaWXHf/YWCj0+WuzKSHsSmPseK7flYQ4FZGWXeyT0lanT3smtozn7i0c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734016451; c=relaxed/simple;
-	bh=+3kUKYTdtrOLB8B/iE1vk3b3BzkE3R7VH/GPeEjcIMo=;
+	s=arc-20240116; t=1734016455; c=relaxed/simple;
+	bh=qErvlU+RXXLiBDaly4SizXvz9rCPR6ZsOvCraZZCMxM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JWVVrt1yF8gyiR764niacN7zmfhzxG4Y9vh8nB7eS9DTdnM23UN3iMOQvyP4Su3petZT7HK16C3XXzxaKLlSIjepr/eIWzvr2H100cHmfV+ovt0hInE2O6kn/EvawbstL0WVsun6BFJZQXiO4RY+trHAJYyxg5OKzsPL4qbPF7E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OwkvHao/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Rpzd13lQpdMgtUTTL4eWZgdu6wLpqJpY14qoxscj1aSt9+scfauGjf3VMzZnodweCI80CLyGn/BXawfmBnLaNoyRbMC3xM8KsKRMIGicdPhqoEwD5kBszTuq/ULFdrZQdse0wV+gldbb6Bc2t8uHOjxuDDCO0mjU9g6T68e4x6Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qqmleTIG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OwkvHao/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98B3CC4CED0;
-	Thu, 12 Dec 2024 15:14:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qqmleTIG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D287C4CED0;
+	Thu, 12 Dec 2024 15:14:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734016451;
-	bh=+3kUKYTdtrOLB8B/iE1vk3b3BzkE3R7VH/GPeEjcIMo=;
+	s=korg; t=1734016454;
+	bh=qErvlU+RXXLiBDaly4SizXvz9rCPR6ZsOvCraZZCMxM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OwkvHao/tVETOmxwYip8NX1ngPSMPEdPFn4/KSavOOVFwnddpcOCLp+wz1JMm2bEx
-	 v+/IO7WckhV4lqL4MXk2+nbpH+2L4sZ2/oVTJvHAG4WQ+37MayG4lBjpR52j5N8OCz
-	 UkQCzCkPuO1v+oFycqpx3i2YnEg6PxJ9/MATmMR4=
+	b=qqmleTIGY0ZqBGyBDAx0B8h/dbL4zsv07x1GyzAKA6YoqOL3+N1ArOWNQTMRJPg/b
+	 RFNiT+Ys4JKysrnyFVjCh7K6YC6J6LKv8JZFpsS8Joca32MOqchMoE+zjz9GiCiZo3
+	 zO94qJRtDOq53rqT2EJw3PApZwyaIN0c0x2reLYI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Akinobu Mita <akinobu.mita@gmail.com>,
-	SeongJae Park <sj@kernel.org>,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Steven Rostedt <rostedt@goodmis.org>,
+	John Sperbeck <jsperbeck@google.com>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Michal Hocko <mhocko@kernel.org>,
+	Muchun Song <muchun.song@linux.dev>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.12 203/466] mm/damon: fix order of arguments in damos_before_apply tracepoint
-Date: Thu, 12 Dec 2024 15:56:12 +0100
-Message-ID: <20241212144314.806956260@linuxfoundation.org>
+Subject: [PATCH 6.12 204/466] mm: memcg: declare do_memsw_account inline
+Date: Thu, 12 Dec 2024 15:56:13 +0100
+Message-ID: <20241212144314.850136025@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144306.641051666@linuxfoundation.org>
 References: <20241212144306.641051666@linuxfoundation.org>
@@ -54,41 +55,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Akinobu Mita <akinobu.mita@gmail.com>
+From: John Sperbeck <jsperbeck@google.com>
 
-commit 6535b8669c1a74078098517174e53fc907ce9d56 upstream.
+commit 89dd878282881306c38f7e354e7614fca98cb9a6 upstream.
 
-Since the order of the scheme_idx and target_idx arguments in TP_ARGS is
-reversed, they are stored in the trace record in reverse.
+In commit 66d60c428b23 ("mm: memcg: move legacy memcg event code into
+memcontrol-v1.c"), the static do_memsw_account() function was moved from a
+.c file to a .h file.  Unfortunately, the traditional inline keyword
+wasn't added.  If a file (e.g., a unit test) includes the .h file, but
+doesn't refer to do_memsw_account(), it will get a warning like:
 
-Link: https://lkml.kernel.org/r/20241115182023.43118-1-sj@kernel.org
-Link: https://patch.msgid.link/20241112154828.40307-1-akinobu.mita@gmail.com
-Fixes: c603c630b509 ("mm/damon/core: add a tracepoint for damos apply target regions")
-Signed-off-by: Akinobu Mita <akinobu.mita@gmail.com>
-Signed-off-by: SeongJae Park <sj@kernel.org>
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Cc: Steven Rostedt <rostedt@goodmis.org>
+mm/memcontrol-v1.h:41:13: warning: unused function 'do_memsw_account' [-Wunused-function]
+   41 | static bool do_memsw_account(void)
+      |             ^~~~~~~~~~~~~~~~
+
+Link: https://lkml.kernel.org/r/20241128203959.726527-1-jsperbeck@google.com
+Fixes: 66d60c428b23 ("mm: memcg: move legacy memcg event code into memcontrol-v1.c")
+Signed-off-by: John Sperbeck <jsperbeck@google.com>
+Acked-by: Roman Gushchin <roman.gushchin@linux.dev>
+Cc: Johannes Weiner <hannes@cmpxchg.org>
+Cc: Michal Hocko <mhocko@kernel.org>
+Cc: Muchun Song <muchun.song@linux.dev>
+Cc: Shakeel Butt <shakeel.butt@linux.dev>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/trace/events/damon.h | 2 +-
+ mm/memcontrol-v1.h | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/trace/events/damon.h b/include/trace/events/damon.h
-index 23200aabccac..da4bd9fd1162 100644
---- a/include/trace/events/damon.h
-+++ b/include/trace/events/damon.h
-@@ -15,7 +15,7 @@ TRACE_EVENT_CONDITION(damos_before_apply,
- 		unsigned int target_idx, struct damon_region *r,
- 		unsigned int nr_regions, bool do_trace),
+diff --git a/mm/memcontrol-v1.h b/mm/memcontrol-v1.h
+index 0e3b82951d91..144d71b65907 100644
+--- a/mm/memcontrol-v1.h
++++ b/mm/memcontrol-v1.h
+@@ -38,7 +38,7 @@ void mem_cgroup_id_put_many(struct mem_cgroup *memcg, unsigned int n);
+ 	     iter = mem_cgroup_iter(NULL, iter, NULL))
  
--	TP_ARGS(context_idx, target_idx, scheme_idx, r, nr_regions, do_trace),
-+	TP_ARGS(context_idx, scheme_idx, target_idx, r, nr_regions, do_trace),
- 
- 	TP_CONDITION(do_trace),
- 
+ /* Whether legacy memory+swap accounting is active */
+-static bool do_memsw_account(void)
++static inline bool do_memsw_account(void)
+ {
+ 	return !cgroup_subsys_on_dfl(memory_cgrp_subsys);
+ }
 -- 
 2.47.1
 
