@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00DA3217707;
-	Thu, 12 Dec 2024 15:30:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C912F215799;
+	Thu, 12 Dec 2024 15:30:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734017448; cv=none; b=jhrWdfFjA9t2tGanSotoYZal5BiUNOYKGugPZjbWpbhCVYR9xx+1IEw8qXEqti1352mIQ9ZPkz22AzF213uJiaz9kagY8qA26o9NH5tBZvGIvAkgMcNnHPpNWmrFT9xtByq69d/1JdRZtR1RxKOlmWgwwqrJjQ2ArqzZWuWQ2TM=
+	t=1734017451; cv=none; b=LyJCZ7d9nK6ivZ54MG5tM06ZasIV3MNi5O0Bi8Xd0CbtUtFCGSbYyvfJ1qhoWbLuO/Y8KQdY8cqSnoL2EVdW5xURhkwA5EielCeRLA5pH4udWep2t4M1x/DwLCe0iNTXUZibjnm+9VT505ukV6j7eAHlVc1HZxU6UVJ0vJZHCQQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734017448; c=relaxed/simple;
-	bh=Qp3tkI5E/R9a3wADCsnthJdkrgF9Ds0r+4RwWx4HuMc=;
+	s=arc-20240116; t=1734017451; c=relaxed/simple;
+	bh=5QtGArNLeTg8sN7B9Xdbhg9XyOIRnsj7WHyIUx6oOcE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VlGnIJupjW441Txbjg0WtQcJLRVzDnhfEXl7PtSKx9+HkDeIMXk6Ttmr6ZEcG9UhNEeBbljUTe9T0Ny94w3z+MeSXWgIdShep9YBkd06LNKXDryjRj3mpvQG0f95rS81PS5KSXAeHOctfOO7V3FKuznUSU05epXywSuhDHGBUK4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z1f0/F1g; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qeNqsYQ3q9wLYSfGEOyI4OlzcKrJPh1ojNaNe3KxpoaqpYHtz8ac4w2pXL6uVkw0uQlE3bUbkmD+fnp293nRvsvjdhTgvhMym2+f5/bx/rnHqcn/ikqGp088g52JLNr7BquVJa5A66g/ZrbPU/AkZ8VKKmwxIo1+XWhfTBfBBXA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wMak2kAy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z1f0/F1g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DACAC4CECE;
-	Thu, 12 Dec 2024 15:30:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wMak2kAy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA873C4CECE;
+	Thu, 12 Dec 2024 15:30:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734017447;
-	bh=Qp3tkI5E/R9a3wADCsnthJdkrgF9Ds0r+4RwWx4HuMc=;
+	s=korg; t=1734017451;
+	bh=5QtGArNLeTg8sN7B9Xdbhg9XyOIRnsj7WHyIUx6oOcE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z1f0/F1gCKbNs5fZT2VAiuVonAyGhEobKaUBDIM55nTludl/roZZXc3OzEzrzTmXJ
-	 V/NfuqIOHdI6P0ulSq7NpEp1hxkG3nU/zRTgk52cRt0Bl9yDiHWNc1lSlQDEDMm4st
-	 DLwIyajAWh0KADvZuDGRA4rTOrsiF84EPRoPNEUE=
+	b=wMak2kAyVBdqurU9BNCCvT/KpQLHpd1kbr9QoLNjBZln2RWgmjE85nvQPO3R/uSjm
+	 d21A3v4h9RmC9rRglyC9s5LGolXS1Q3eK8WhJ3HP+tmkjWMZ4gAstbaSv0C2gk1fX5
+	 D/ILhkIVN4blDd4Q3GpYdh75Laxg8bsYMQZh0xuk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dario Binacchi <dario.binacchi@amarulasolutions.com>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	kernel test robot <lkp@intel.com>,
+	Ruowen Qin <ruqin@redhat.com>,
+	Jinghao Jia <jinghao7@illinois.edu>,
+	Julian Anastasov <ja@ssi.bg>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 016/356] can: f81604: f81604_handle_can_bus_errors(): fix {rx,tx}_errors statistics
-Date: Thu, 12 Dec 2024 15:55:35 +0100
-Message-ID: <20241212144245.263910270@linuxfoundation.org>
+Subject: [PATCH 6.6 017/356] ipvs: fix UB due to uninitialized stack access in ip_vs_protocol_init()
+Date: Thu, 12 Dec 2024 15:55:36 +0100
+Message-ID: <20241212144245.302317726@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144244.601729511@linuxfoundation.org>
 References: <20241212144244.601729511@linuxfoundation.org>
@@ -51,56 +54,114 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dario Binacchi <dario.binacchi@amarulasolutions.com>
+From: Jinghao Jia <jinghao7@illinois.edu>
 
-[ Upstream commit d7b916540c2ba3d2a88c27b2a6287b39d8eac052 ]
+[ Upstream commit 146b6f1112eb30a19776d6c323c994e9d67790db ]
 
-The f81604_handle_can_bus_errors() function only incremented the receive
-error counter and never the transmit error counter, even if the ECC_DIR
-flag reported that an error had occurred during transmission.
+Under certain kernel configurations when building with Clang/LLVM, the
+compiler does not generate a return or jump as the terminator
+instruction for ip_vs_protocol_init(), triggering the following objtool
+warning during build time:
 
-Increment the receive/transmit error counter based on the value of the
-ECC_DIR flag.
+  vmlinux.o: warning: objtool: ip_vs_protocol_init() falls through to next function __initstub__kmod_ip_vs_rr__935_123_ip_vs_rr_init6()
 
-Fixes: 88da17436973 ("can: usb: f81604: add Fintek F81604 support")
-Signed-off-by: Dario Binacchi <dario.binacchi@amarulasolutions.com>
-Link: https://patch.msgid.link/20241122221650.633981-13-dario.binacchi@amarulasolutions.com
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+At runtime, this either causes an oops when trying to load the ipvs
+module or a boot-time panic if ipvs is built-in. This same issue has
+been reported by the Intel kernel test robot previously.
+
+Digging deeper into both LLVM and the kernel code reveals this to be a
+undefined behavior problem. ip_vs_protocol_init() uses a on-stack buffer
+of 64 chars to store the registered protocol names and leaves it
+uninitialized after definition. The function calls strnlen() when
+concatenating protocol names into the buffer. With CONFIG_FORTIFY_SOURCE
+strnlen() performs an extra step to check whether the last byte of the
+input char buffer is a null character (commit 3009f891bb9f ("fortify:
+Allow strlen() and strnlen() to pass compile-time known lengths")).
+This, together with possibly other configurations, cause the following
+IR to be generated:
+
+  define hidden i32 @ip_vs_protocol_init() local_unnamed_addr #5 section ".init.text" align 16 !kcfi_type !29 {
+    %1 = alloca [64 x i8], align 16
+    ...
+
+  14:                                               ; preds = %11
+    %15 = getelementptr inbounds i8, ptr %1, i64 63
+    %16 = load i8, ptr %15, align 1
+    %17 = tail call i1 @llvm.is.constant.i8(i8 %16)
+    %18 = icmp eq i8 %16, 0
+    %19 = select i1 %17, i1 %18, i1 false
+    br i1 %19, label %20, label %23
+
+  20:                                               ; preds = %14
+    %21 = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %1) #23
+    ...
+
+  23:                                               ; preds = %14, %11, %20
+    %24 = call i64 @strnlen(ptr noundef nonnull dereferenceable(1) %1, i64 noundef 64) #24
+    ...
+  }
+
+The above code calculates the address of the last char in the buffer
+(value %15) and then loads from it (value %16). Because the buffer is
+never initialized, the LLVM GVN pass marks value %16 as undefined:
+
+  %13 = getelementptr inbounds i8, ptr %1, i64 63
+  br i1 undef, label %14, label %17
+
+This gives later passes (SCCP, in particular) more DCE opportunities by
+propagating the undef value further, and eventually removes everything
+after the load on the uninitialized stack location:
+
+  define hidden i32 @ip_vs_protocol_init() local_unnamed_addr #0 section ".init.text" align 16 !kcfi_type !11 {
+    %1 = alloca [64 x i8], align 16
+    ...
+
+  12:                                               ; preds = %11
+    %13 = getelementptr inbounds i8, ptr %1, i64 63
+    unreachable
+  }
+
+In this way, the generated native code will just fall through to the
+next function, as LLVM does not generate any code for the unreachable IR
+instruction and leaves the function without a terminator.
+
+Zero the on-stack buffer to avoid this possible UB.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202402100205.PWXIz1ZK-lkp@intel.com/
+Co-developed-by: Ruowen Qin <ruqin@redhat.com>
+Signed-off-by: Ruowen Qin <ruqin@redhat.com>
+Signed-off-by: Jinghao Jia <jinghao7@illinois.edu>
+Acked-by: Julian Anastasov <ja@ssi.bg>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/usb/f81604.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ net/netfilter/ipvs/ip_vs_proto.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/net/can/usb/f81604.c b/drivers/net/can/usb/f81604.c
-index ec8cef7fd2d53..fb9fb16507f0b 100644
---- a/drivers/net/can/usb/f81604.c
-+++ b/drivers/net/can/usb/f81604.c
-@@ -526,7 +526,6 @@ static void f81604_handle_can_bus_errors(struct f81604_port_priv *priv,
- 		netdev_dbg(netdev, "bus error interrupt\n");
+diff --git a/net/netfilter/ipvs/ip_vs_proto.c b/net/netfilter/ipvs/ip_vs_proto.c
+index f100da4ba3bc3..a9fd1d3fc2cbf 100644
+--- a/net/netfilter/ipvs/ip_vs_proto.c
++++ b/net/netfilter/ipvs/ip_vs_proto.c
+@@ -340,7 +340,7 @@ void __net_exit ip_vs_protocol_net_cleanup(struct netns_ipvs *ipvs)
  
- 		priv->can.can_stats.bus_error++;
--		stats->rx_errors++;
+ int __init ip_vs_protocol_init(void)
+ {
+-	char protocols[64];
++	char protocols[64] = { 0 };
+ #define REGISTER_PROTOCOL(p)			\
+ 	do {					\
+ 		register_ip_vs_protocol(p);	\
+@@ -348,8 +348,6 @@ int __init ip_vs_protocol_init(void)
+ 		strcat(protocols, (p)->name);	\
+ 	} while (0)
  
- 		if (skb) {
- 			cf->can_id |= CAN_ERR_PROT | CAN_ERR_BUSERROR;
-@@ -548,10 +547,15 @@ static void f81604_handle_can_bus_errors(struct f81604_port_priv *priv,
- 
- 			/* set error location */
- 			cf->data[3] = data->ecc & F81604_SJA1000_ECC_SEG;
-+		}
- 
--			/* Error occurred during transmission? */
--			if ((data->ecc & F81604_SJA1000_ECC_DIR) == 0)
-+		/* Error occurred during transmission? */
-+		if ((data->ecc & F81604_SJA1000_ECC_DIR) == 0) {
-+			stats->tx_errors++;
-+			if (skb)
- 				cf->data[2] |= CAN_ERR_PROT_TX;
-+		} else {
-+			stats->rx_errors++;
- 		}
- 
- 		set_bit(F81604_CLEAR_ECC, &priv->clear_flags);
+-	protocols[0] = '\0';
+-	protocols[2] = '\0';
+ #ifdef CONFIG_IP_VS_PROTO_TCP
+ 	REGISTER_PROTOCOL(&ip_vs_protocol_tcp);
+ #endif
 -- 
 2.43.0
 
