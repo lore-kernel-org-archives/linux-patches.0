@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98420208984;
-	Thu, 12 Dec 2024 17:50:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD341209695;
+	Thu, 12 Dec 2024 17:50:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734025801; cv=none; b=cNkquK3A5dwbbZwY6/eolj4705JvJ5MNY5gt6vUSpLfXOhuZOFv4KsZNawHhxJ6UQilOCYM4zMugQ3FpTr1IziSRaBHdjtEuY89oow+DLzCugngzpwMZ4ubs578vguPBX0DKkEXkLlZpk6Q4G81ryOgsDY3q5c8o3B6gEj4dpl8=
+	t=1734025804; cv=none; b=jVu8yaBhxPwmaTIz4FucLma+tKZCaKHTH+6T0jzyBNGjST0DzLI6fWo1Bab1VM2ZZ72sH74ycOo//04FuNE7qmST57A/hffV7g1VtdclHDs7l08FY13Yva+e2FtYDyqwsOO3EErKvrSfI5hvcd60FmlujB+IVEKTq9xyJkjEsVU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734025801; c=relaxed/simple;
-	bh=Bjq3DQJEQv9WaGh7O6mUy6b0IrrcIteOL4xYzAOmZUI=;
+	s=arc-20240116; t=1734025804; c=relaxed/simple;
+	bh=2EWKsV7sdQNV5OMA8kRdvw/HGA6/lwVCu+6yL+bgkgI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ubpzrlEOvuJa1boOssbCVyw9GKA5l5SHRAynUItN9KRcEjsYNrhidwteHa/1ed/aeJmTNFUhu5/X9GZss/Zg1gkEXBSrvzR4WJ0SIay/kl9i1eDnW2OMeU9LMKXQa1IXv+4f+Ubi0nQp0Kat9cO0+h74RtUsY1XR6PVJcZ1vO6A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G/nVIrS8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gCFVZjv8mv20LhPMLrhD/hWsczi67jLDA0U3nk4qunA3ejFuqMFx/DFdr7Kqlfz5k3pVIghpR/trDraF3xyPsahxugiKzJNyUBA2/X7EeZd10ciub0CS3XfiWFwkFtRPhRr3Z4jONmJrbVQlK2MPyVvjTWK8tEPgs/5rRpZkSUY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jlNVZQrO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G/nVIrS8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CB6AC4CECE;
-	Thu, 12 Dec 2024 17:50:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jlNVZQrO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30093C4CECE;
+	Thu, 12 Dec 2024 17:50:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734025801;
-	bh=Bjq3DQJEQv9WaGh7O6mUy6b0IrrcIteOL4xYzAOmZUI=;
+	s=korg; t=1734025804;
+	bh=2EWKsV7sdQNV5OMA8kRdvw/HGA6/lwVCu+6yL+bgkgI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G/nVIrS8mqY/3WbR5Q5Ha5RdnAisbL/u5L47YkiLnng6n/TxBdyeRVCcs/QrL+O5+
-	 xxElywB/Xtl7ZvX31Z4zgVjCPh5EsEQPyp3e0aUHJq7htF6+Z6nhpYWEHBj5cR8vbh
-	 Y+HlWFbVPRiFblxftYzV2iRBzO/NlZynwTIiA4Ig=
+	b=jlNVZQrOQ4HxndvDQz9XWO9NSxMsF6UMjk8mfV575E8z/gSfiYe1KYGfrBi2I+LCN
+	 19ete2jPbZ4qM3E0p7Laz/kzT34ht1GY8DDI50DHaDeHC1ulLo2G6xJUqlpWWIE1+k
+	 uLqc3NESf8QzpJpa00E9nO7CM29F4dMFBQhUgyA0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Ignat Korchagin <ignat@cloudflare.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Willem de Bruijn <willemb@google.com>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 274/321] af_packet: avoid erroring out after sock_init_data() in packet_create()
-Date: Thu, 12 Dec 2024 16:03:12 +0100
-Message-ID: <20241212144240.806131032@linuxfoundation.org>
+Subject: [PATCH 5.4 292/321] net/neighbor: clear error in case strict check is not set
+Date: Thu, 12 Dec 2024 16:03:30 +0100
+Message-ID: <20241212144241.516774361@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144229.291682835@linuxfoundation.org>
 References: <20241212144229.291682835@linuxfoundation.org>
@@ -54,64 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ignat Korchagin <ignat@cloudflare.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit 46f2a11cb82b657fd15bab1c47821b635e03838b ]
+[ Upstream commit 0de6a472c3b38432b2f184bd64eb70d9ea36d107 ]
 
-After sock_init_data() the allocated sk object is attached to the provided
-sock object. On error, packet_create() frees the sk object leaving the
-dangling pointer in the sock object on return. Some other code may try
-to use this pointer and cause use-after-free.
+Commit 51183d233b5a ("net/neighbor: Update neigh_dump_info for strict
+data checking") added strict checking. The err variable is not cleared,
+so if we find no table to dump we will return the validation error even
+if user did not want strict checking.
 
-Suggested-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Ignat Korchagin <ignat@cloudflare.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20241014153808.51894-2-ignat@cloudflare.com
+I think the only way to hit this is to send an buggy request, and ask
+for a table which doesn't exist, so there's no point treating this
+as a real fix. I only noticed it because a syzbot repro depended on it
+to trigger another bug.
+
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20241115003221.733593-1-kuba@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/packet/af_packet.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ net/core/neighbour.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/packet/af_packet.c b/net/packet/af_packet.c
-index 6aed6a36ea456..88bc4a21dda45 100644
---- a/net/packet/af_packet.c
-+++ b/net/packet/af_packet.c
-@@ -3357,18 +3357,18 @@ static int packet_create(struct net *net, struct socket *sock, int protocol,
- 	if (sock->type == SOCK_PACKET)
- 		sock->ops = &packet_ops_spkt;
+diff --git a/net/core/neighbour.c b/net/core/neighbour.c
+index e571007d083cc..4dfe17f1a76aa 100644
+--- a/net/core/neighbour.c
++++ b/net/core/neighbour.c
+@@ -2734,6 +2734,7 @@ static int neigh_dump_info(struct sk_buff *skb, struct netlink_callback *cb)
+ 	err = neigh_valid_dump_req(nlh, cb->strict_check, &filter, cb->extack);
+ 	if (err < 0 && cb->strict_check)
+ 		return err;
++	err = 0;
  
-+	po = pkt_sk(sk);
-+	err = packet_alloc_pending(po);
-+	if (err)
-+		goto out_sk_free;
-+
- 	sock_init_data(sock, sk);
+ 	s_t = cb->args[0];
  
--	po = pkt_sk(sk);
- 	init_completion(&po->skb_completion);
- 	sk->sk_family = PF_PACKET;
- 	po->num = proto;
- 	po->xmit = dev_queue_xmit;
- 
--	err = packet_alloc_pending(po);
--	if (err)
--		goto out2;
--
- 	packet_cached_dev_reset(po);
- 
- 	sk->sk_destruct = packet_sock_destruct;
-@@ -3403,7 +3403,7 @@ static int packet_create(struct net *net, struct socket *sock, int protocol,
- 	preempt_enable();
- 
- 	return 0;
--out2:
-+out_sk_free:
- 	sk_free(sk);
- out:
- 	return err;
 -- 
 2.43.0
 
