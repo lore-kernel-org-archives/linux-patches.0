@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 574A722A81C;
-	Thu, 12 Dec 2024 17:00:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD3FA229677;
+	Thu, 12 Dec 2024 17:00:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734022839; cv=none; b=FMxHZy4dBLevzSzJInbaR7tfnfHOd65EuB1zoyEjwXhSrHA+9aLvID/cLw3WWr5CCI8oMuJTyQvpxvIsv8ClHMnsoZuliGk9VaaSF2RviSQm/CFqJv1UTZuPUtHA0QU6ySbGLtnlXJbmGncUMCS06lTJlb+VoHkkI7nKQ35Pofc=
+	t=1734022843; cv=none; b=RG+QLcHs9TXUIt3DF30BteJRCPCJq0CAiHSGTvap/AAUEUDM0ZCPevrtD3OFwXJpTtma1YkZxiowEp2UZ2v22cz0NKgJYCWGHhnAoxgeOHjbaTyocK9qh5x8akq57JJ2r3gecfG0+NqZImoUWMihLflxeCO3AS6RQi7fPIxourY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734022839; c=relaxed/simple;
-	bh=87efIatYdbPJfMSAplZIo1eM2+e5tyrrEi3N1rAaJtE=;
+	s=arc-20240116; t=1734022843; c=relaxed/simple;
+	bh=QozCcMWY1rdcOxTTvn6Ia0Ywq/DAQlin0Moi94/iEqQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RCTHUvyYn+wKSsp8AOxHIrnW1DaUwSIMLiofwwM8yy1jHT0G8ANGbajyKM66FiLpkg7G2eITSj9DymG6bpO1rgpKTs3C7Gjyhk5yJLtmsWwGXtQS4ZyEx0pPfVlluh6O3WBU4D9k6CMez5CbFpj8qGkwcocnJ3BT6U2GjbPfCAE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YqdSXHmW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ssT36+SSPLgU1QB/9/fK0+jzS2rmjS22pCSXpB4rAHUWboxmRMG7OTFqJoHRR+n3CS7o++HOJ3Yc1eQ8FPvhQosAZrlxzIFs4Jfr/qKOowGZEj5ahImj/m+TAtAuHbi1qSENCHtvJyyHCuKwdG8kTDvrxFb6aCRTCowkHMM7xTs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i5KanIyS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YqdSXHmW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D2F3C4CED0;
-	Thu, 12 Dec 2024 17:00:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i5KanIyS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E905C4CECE;
+	Thu, 12 Dec 2024 17:00:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734022839;
-	bh=87efIatYdbPJfMSAplZIo1eM2+e5tyrrEi3N1rAaJtE=;
+	s=korg; t=1734022842;
+	bh=QozCcMWY1rdcOxTTvn6Ia0Ywq/DAQlin0Moi94/iEqQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YqdSXHmWSLalXtyDl2RmQGzxPWVXNLSiD8hr/uZx0TASI1UfDBEWOg8uWl8aQSSq8
-	 omEnwdu9bNqO4rjPN82/jOO82RScnKrpCQaRxmljubLgySed592D5s5i1Ym3PXeTU1
-	 wNiU7oklX2HN8kUxbQpsg7uJhC6db+r+4ZTEj5og=
+	b=i5KanIySxj0jSaSX8/kqBEVaXE8ZxdWkpPG0zmInM+ShSTfVD3HxyCAeFtKYWjado
+	 KLQacrO25EhaPAFk8g099KxAIJCdtlJPk7j4Trxm56S9fS0sYa0JYONU/dPaf0JNwN
+	 +5TrYmb6BiidVadyQiNbJosdqTsorf6ePLlqUz+o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.15 347/565] ALSA: hda/realtek: Apply quirk for Medion E15433
-Date: Thu, 12 Dec 2024 15:59:02 +0100
-Message-ID: <20241212144325.315077168@linuxfoundation.org>
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Subject: [PATCH 5.15 348/565] usb: dwc3: gadget: Fix checking for number of TRBs left
+Date: Thu, 12 Dec 2024 15:59:03 +0100
+Message-ID: <20241212144325.355265255@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144311.432886635@linuxfoundation.org>
 References: <20241212144311.432886635@linuxfoundation.org>
@@ -49,31 +49,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
 
-commit ca0f79f0286046f6a91c099dc941cf7afae198d6 upstream.
+commit 02a6982b0ccfcdc39e20016f5fc9a1b7826a6ee7 upstream.
 
-Medion E15433 laptop wich ALC269VC (SSID 2782:1705) needs the same
-workaround for the missing speaker as another model.
+The check whether the TRB ring is full or empty in dwc3_calc_trbs_left()
+is insufficient. It assumes there are active TRBs if there's any request
+in the started_list. However, that's not the case for requests with a
+large SG list.
 
-Link: https://bugzilla.suse.com/show_bug.cgi?id=1233298
-Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20241128072646.15659-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+That is, if we have a single usb request that requires more TRBs than
+the total TRBs in the TRB ring, the queued TRBs will be available when
+all the TRBs in the ring are completed. But the request is only
+partially completed and remains in the started_list. With the current
+logic, the TRB ring is empty, but dwc3_calc_trbs_left() returns 0.
+
+Fix this by additionally checking for the request->num_trbs for active
+TRB count.
+
+Cc: stable@vger.kernel.org
+Fixes: 51f1954ad853 ("usb: dwc3: gadget: Fix dwc3_calc_trbs_left()")
+Signed-off-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Link: https://lore.kernel.org/r/708dc62b56b77da1f704cc2ae9b6ddb1f2dbef1f.1731545781.git.Thinh.Nguyen@synopsys.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_realtek.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/usb/dwc3/gadget.c |    9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -9546,6 +9546,7 @@ static const struct snd_pci_quirk alc269
- 	SND_PCI_QUIRK(0x2782, 0x0228, "Infinix ZERO BOOK 13", ALC269VB_FIXUP_INFINIX_ZERO_BOOK_13),
- 	SND_PCI_QUIRK(0x2782, 0x0232, "CHUWI CoreBook XPro", ALC269VB_FIXUP_CHUWI_COREBOOK_XPRO),
- 	SND_PCI_QUIRK(0x2782, 0x1701, "Infinix Y4 Max", ALC269VC_FIXUP_INFINIX_Y4_MAX),
-+	SND_PCI_QUIRK(0x2782, 0x1705, "MEDION E15433", ALC269VC_FIXUP_INFINIX_Y4_MAX),
- 	SND_PCI_QUIRK(0x2782, 0x1707, "Vaio VJFE-ADL", ALC298_FIXUP_SPK_VOLUME),
- 	SND_PCI_QUIRK(0x8086, 0x2074, "Intel NUC 8", ALC233_FIXUP_INTEL_NUC8_DMIC),
- 	SND_PCI_QUIRK(0x8086, 0x2080, "Intel NUC 8 Rugged", ALC256_FIXUP_INTEL_NUC8_RUGGED),
+--- a/drivers/usb/dwc3/gadget.c
++++ b/drivers/usb/dwc3/gadget.c
+@@ -1168,11 +1168,14 @@ static u32 dwc3_calc_trbs_left(struct dw
+ 	 * pending to be processed by the driver.
+ 	 */
+ 	if (dep->trb_enqueue == dep->trb_dequeue) {
++		struct dwc3_request *req;
++
+ 		/*
+-		 * If there is any request remained in the started_list at
+-		 * this point, that means there is no TRB available.
++		 * If there is any request remained in the started_list with
++		 * active TRBs at this point, then there is no TRB available.
+ 		 */
+-		if (!list_empty(&dep->started_list))
++		req = next_request(&dep->started_list);
++		if (req && req->num_trbs)
+ 			return 0;
+ 
+ 		return DWC3_TRB_NUM - 1;
 
 
