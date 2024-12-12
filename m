@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 731F82165F0;
-	Thu, 12 Dec 2024 16:59:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB9E92153C1;
+	Thu, 12 Dec 2024 16:59:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734022796; cv=none; b=NFrAxiYLhox6Af60MzO+vYiVSEVnatUS7P4iPkbzbx+xI2stspeLGukF1FGkm4XqLparBsSqSbyBBrYVfoEtsLvNq1ArfpQV685CoXckEe/UsZmteh9PHqrWE2UYah4IpFpgXTA8q14lUnGWgL9TBB9Q9A7QIrCjPFcjHO6hOR4=
+	t=1734022800; cv=none; b=ESR7sz0ozTfDtoUtq7KYRjEvnU0jVAFJ62cC/mqE/UMT+V+m37aBTSc+fvw5mg1FcuR1ci4RWqkC9q9h/qDfECTbjFDkRdavoHv8cWkeuFtPYe/uNBg/jZ93D3lT3RvLWsZLYdT9ZlLLfQ/Sygu99kQRNfjsAnAxmoXNtrT5dB8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734022796; c=relaxed/simple;
-	bh=FTvnODVrXMPdNbiv0WQfjw1L1+gZtSk+LGTl+nlHe4Y=;
+	s=arc-20240116; t=1734022800; c=relaxed/simple;
+	bh=RsK917zXAp13wGpmFmkH4TiAJ9yvtqAuBlh/m6TsfIU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BpJPrVsWH7ULPo4dbzyCoLwMq7xe6iPgFPvEfqEmZbq65y2Rl2Dtd4sPaVSXrdAtLONMPLQbCHeJF1wfpX5e8BN1nsXhy2fQJWixt3Ck/OCYPcReiH9MVIlQFGGpMvsvzjGvFS+sTp0nIbE29Isgjpm+Tv08xyzuzdTZmNwBsGo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PiUooD9P; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sqI/YnyO/8rS870vB5mFaA6RaewMJ9BE4iloxGxeSfFAD3TihjeS5bZ6pZGAp4qJbGUTofB1+iCrXIxbXsMddvy/46p9ZpsD9yMUr2Ws29ffGQMRxRH00dtp7rHJJaQZc8dcGFwYyUFOo0W+s8PYh0DcwvO+QJked0ZLlGdptfk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0QtoPRqM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PiUooD9P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCCC3C4CECE;
-	Thu, 12 Dec 2024 16:59:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0QtoPRqM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C673C4CECE;
+	Thu, 12 Dec 2024 16:59:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734022796;
-	bh=FTvnODVrXMPdNbiv0WQfjw1L1+gZtSk+LGTl+nlHe4Y=;
+	s=korg; t=1734022799;
+	bh=RsK917zXAp13wGpmFmkH4TiAJ9yvtqAuBlh/m6TsfIU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PiUooD9P3Ef4B+1ROUyzBoPya6jMR2a2fe8RkY97f6rcWr41mMi5UOvQpwf7K1b9J
-	 S1Yc00SIw1BrDrnepX243cN8z7ngjQBNupAbTyDSFfnhUZrP8eXYFalt4jVOTOI+vN
-	 ESrgcuoT96lC6MgjjkL47RFSP/4btf5xKiP5irhU=
+	b=0QtoPRqMjxors/M9qGO4cu2/e0JjcU4anwHVM8Z2CwXnQGjn3K/SRK2bkM7dyMTbM
+	 ckOLBT9U1yj8kD8Z7OkTDuSl+dqsjtB+hoYGZLnB0Uavyp1Uetf95rB3b0QyehNQzK
+	 BKc+pstI36MIAthaPQU+u7wMBst/1ww/5Q9QnEN8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Rutland <mark.rutland@arm.com>,
-	Will Deacon <will@kernel.org>,
-	Catalin Marinas <catalin.marinas@arm.com>
-Subject: [PATCH 5.15 337/565] arm64: tls: Fix context-switching of tpidrro_el0 when kpti is enabled
-Date: Thu, 12 Dec 2024 15:58:52 +0100
-Message-ID: <20241212144324.918600869@linuxfoundation.org>
+	Muchun Song <muchun.song@linux.dev>,
+	Muchun Song <songmuchun@bytedance.com>,
+	Ming Lei <ming.lei@redhat.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 5.15 338/565] block: fix ordering between checking BLK_MQ_S_STOPPED request adding
+Date: Thu, 12 Dec 2024 15:58:53 +0100
+Message-ID: <20241212144324.957206015@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144311.432886635@linuxfoundation.org>
 References: <20241212144311.432886635@linuxfoundation.org>
@@ -51,47 +52,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Will Deacon <will@kernel.org>
+From: Muchun Song <songmuchun@bytedance.com>
 
-commit 67ab51cbdfee02ef07fb9d7d14cc0bf6cb5a5e5c upstream.
+commit 96a9fe64bfd486ebeeacf1e6011801ffe89dae18 upstream.
 
-Commit 18011eac28c7 ("arm64: tls: Avoid unconditional zeroing of
-tpidrro_el0 for native tasks") tried to optimise the context switching
-of tpidrro_el0 by eliding the clearing of the register when switching
-to a native task with kpti enabled, on the erroneous assumption that
-the kpti trampoline entry code would already have taken care of the
-write.
+Supposing first scenario with a virtio_blk driver.
 
-Although the kpti trampoline does zero the register on entry from a
-native task, the check in tls_thread_switch() is on the *next* task and
-so we can end up leaving a stale, non-zero value in the register if the
-previous task was 32-bit.
+CPU0                        CPU1
 
-Drop the broken optimisation and zero tpidrro_el0 unconditionally when
-switching to a native 64-bit task.
+blk_mq_try_issue_directly()
+  __blk_mq_issue_directly()
+    q->mq_ops->queue_rq()
+      virtio_queue_rq()
+        blk_mq_stop_hw_queue()
+                            virtblk_done()
+  blk_mq_request_bypass_insert()  1) store
+                              blk_mq_start_stopped_hw_queue()
+                                clear_bit(BLK_MQ_S_STOPPED)       3) store
+                                blk_mq_run_hw_queue()
+                                  if (!blk_mq_hctx_has_pending()) 4) load
+                                    return
+                                  blk_mq_sched_dispatch_requests()
+  blk_mq_run_hw_queue()
+    if (!blk_mq_hctx_has_pending())
+      return
+    blk_mq_sched_dispatch_requests()
+      if (blk_mq_hctx_stopped())  2) load
+        return
+      __blk_mq_sched_dispatch_requests()
 
-Cc: Mark Rutland <mark.rutland@arm.com>
+Supposing another scenario.
+
+CPU0                        CPU1
+
+blk_mq_requeue_work()
+  blk_mq_insert_request() 1) store
+                            virtblk_done()
+                              blk_mq_start_stopped_hw_queue()
+  blk_mq_run_hw_queues()        clear_bit(BLK_MQ_S_STOPPED)       3) store
+                                blk_mq_run_hw_queue()
+                                  if (!blk_mq_hctx_has_pending()) 4) load
+                                    return
+                                  blk_mq_sched_dispatch_requests()
+    if (blk_mq_hctx_stopped())  2) load
+      continue
+    blk_mq_run_hw_queue()
+
+Both scenarios are similar, the full memory barrier should be inserted
+between 1) and 2), as well as between 3) and 4) to make sure that either
+CPU0 sees BLK_MQ_S_STOPPED is cleared or CPU1 sees dispatch list.
+Otherwise, either CPU will not rerun the hardware queue causing
+starvation of the request.
+
+The easy way to fix it is to add the essential full memory barrier into
+helper of blk_mq_hctx_stopped(). In order to not affect the fast path
+(hardware queue is not stopped most of the time), we only insert the
+barrier into the slow path. Actually, only slow path needs to care about
+missing of dispatching the request to the low-level device driver.
+
+Fixes: 320ae51feed5 ("blk-mq: new multi-queue block IO queueing mechanism")
 Cc: stable@vger.kernel.org
-Fixes: 18011eac28c7 ("arm64: tls: Avoid unconditional zeroing of tpidrro_el0 for native tasks")
-Signed-off-by: Will Deacon <will@kernel.org>
-Acked-by: Mark Rutland <mark.rutland@arm.com>
-Link: https://lore.kernel.org/r/20241114095332.23391-1-will@kernel.org
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+Cc: Muchun Song <muchun.song@linux.dev>
+Signed-off-by: Muchun Song <songmuchun@bytedance.com>
+Reviewed-by: Ming Lei <ming.lei@redhat.com>
+Link: https://lore.kernel.org/r/20241014092934.53630-4-songmuchun@bytedance.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kernel/process.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ block/blk-mq.c |    6 ++++++
+ block/blk-mq.h |   13 +++++++++++++
+ 2 files changed, 19 insertions(+)
 
---- a/arch/arm64/kernel/process.c
-+++ b/arch/arm64/kernel/process.c
-@@ -394,7 +394,7 @@ static void tls_thread_switch(struct tas
+--- a/block/blk-mq.c
++++ b/block/blk-mq.c
+@@ -1813,6 +1813,12 @@ void blk_mq_start_stopped_hw_queue(struc
+ 		return;
  
- 	if (is_compat_thread(task_thread_info(next)))
- 		write_sysreg(next->thread.uw.tp_value, tpidrro_el0);
--	else if (!arm64_kernel_unmapped_at_el0())
-+	else
- 		write_sysreg(0, tpidrro_el0);
+ 	clear_bit(BLK_MQ_S_STOPPED, &hctx->state);
++	/*
++	 * Pairs with the smp_mb() in blk_mq_hctx_stopped() to order the
++	 * clearing of BLK_MQ_S_STOPPED above and the checking of dispatch
++	 * list in the subsequent routine.
++	 */
++	smp_mb__after_atomic();
+ 	blk_mq_run_hw_queue(hctx, async);
+ }
+ EXPORT_SYMBOL_GPL(blk_mq_start_stopped_hw_queue);
+--- a/block/blk-mq.h
++++ b/block/blk-mq.h
+@@ -177,6 +177,19 @@ static inline struct blk_mq_tags *blk_mq
  
- 	write_sysreg(*task_user_tls(next), tpidr_el0);
+ static inline bool blk_mq_hctx_stopped(struct blk_mq_hw_ctx *hctx)
+ {
++	/* Fast path: hardware queue is not stopped most of the time. */
++	if (likely(!test_bit(BLK_MQ_S_STOPPED, &hctx->state)))
++		return false;
++
++	/*
++	 * This barrier is used to order adding of dispatch list before and
++	 * the test of BLK_MQ_S_STOPPED below. Pairs with the memory barrier
++	 * in blk_mq_start_stopped_hw_queue() so that dispatch code could
++	 * either see BLK_MQ_S_STOPPED is cleared or dispatch list is not
++	 * empty to avoid missing dispatching requests.
++	 */
++	smp_mb();
++
+ 	return test_bit(BLK_MQ_S_STOPPED, &hctx->state);
+ }
+ 
 
 
