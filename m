@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 935C415696E;
-	Thu, 12 Dec 2024 17:41:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D4A313CA81;
+	Thu, 12 Dec 2024 17:41:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734025270; cv=none; b=IlCaIggRLeSZKW/vIJuSb1Rkmrm/9mmyfNR35d6s8qwmvAeKDP+8mmDSAFT4ZsKIu6voimtlWuMXNKdX++R9EdzG7rEX/YkyQGBwDKRFEVZeioU8sCD3D+KT7bPkFWSpcMmK36zZX5EYeMfDGqti8sV8IzH92NA3zj2DoNLujLY=
+	t=1734025273; cv=none; b=fAWdKQLqeXC5eSGkVX+Lhi0a0evMwzqO3sFdk1XGLQ2SYV5+/dpmghbh+Dbef2y+fKo8nyzEgW66QQbhpjBTc/678eoKTRBf45UheQ8GIgSlJZ6+3tezBC7qrGILS/FIpd/Wtppwzdl/x1USPqfjSUTStwESkihaAkPhdO5SQws=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734025270; c=relaxed/simple;
-	bh=ETarZRPySSCyPI1AVPq48vIOyTXtY+jksDQWJlKF6N8=;
+	s=arc-20240116; t=1734025273; c=relaxed/simple;
+	bh=aXYN1Dl2oOIULk1Pilcs0MdJz8pe/bAoldKrl3mzAbI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=amp1Ado06ndVWkLIwQzeqGantkhT6WQVjoVtxhWTFk/ueWKnC/ZjuEI2l8F7z3YXc+9kGwSl3Dw5Aqgmb1kKolxiTuHBNlKzN2VkAe+oDJFtKoEpciQ3JF5q5nfoZomxVMeFrvzSqC/qf2ooyyxEOfZ6aVnLS02Qv7uAimEDKmg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cBxWrICA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JQc2giXDYvcfn/lGdetRgCQhYTagsFZxcLGCWU2en7yxxaG+w0Cd7tz6D71LZNVa8Pg3IE4xiNFYKwfZmCZRCFXATQ6YE6cYFuAAAcY9hFROSwQHEGDr+s4s9gn6/NkJw1OKGeamqgVyFYRLjkSaF24FMRJrkaZ6AsAMVC0Z6Ak=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m2G7Q7UU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cBxWrICA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19509C4CED0;
-	Thu, 12 Dec 2024 17:41:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m2G7Q7UU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00CA6C4CECE;
+	Thu, 12 Dec 2024 17:41:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734025270;
-	bh=ETarZRPySSCyPI1AVPq48vIOyTXtY+jksDQWJlKF6N8=;
+	s=korg; t=1734025273;
+	bh=aXYN1Dl2oOIULk1Pilcs0MdJz8pe/bAoldKrl3mzAbI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cBxWrICAudfCGL3AXTdge8iRotxVvPpZtzEjtj8H33fP6vE++md1XaXFAhVdbhhVJ
-	 oL/j93E1tG2uTB0F2YfplwcYx8+g3KbSUBFwWpxW7PeZNCHrCUI5zUabEYUnj1f09z
-	 RjVaHUYGM9PlKFVG8qCTH3KrdeqwzemWCPHufQO4=
+	b=m2G7Q7UUrXa0alvKfPv+OMFx8Jl/0qieGCdB6qvoIYoIk8d1jHjoI3mbjTSpOsE6G
+	 KrRWdkDMNHtSJvXDyPiXH02/m6uj1JAC9BgAHmeVADdF2KBWKouhwFi8/x0EZZGoEQ
+	 g/pSVFgp5MxU2hiyMI4avDqpA6kuQGHir0FgEn4g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Jinjie Ruan <ruanjinjie@huawei.com>,
-	Rob Clark <robdclark@chromium.org>,
+	Nuno Sa <nuno.sa@analog.com>,
+	Conor Dooley <conor.dooley@microchip.com>,
+	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 073/321] drm/msm/adreno: Use IRQF_NO_AUTOEN flag in request_irq()
-Date: Thu, 12 Dec 2024 15:59:51 +0100
-Message-ID: <20241212144232.875887682@linuxfoundation.org>
+Subject: [PATCH 5.4 107/321] dt-bindings: clock: axi-clkgen: include AXI clk
+Date: Thu, 12 Dec 2024 16:00:25 +0100
+Message-ID: <20241212144234.214208045@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144229.291682835@linuxfoundation.org>
 References: <20241212144229.291682835@linuxfoundation.org>
@@ -52,45 +52,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinjie Ruan <ruanjinjie@huawei.com>
+From: Nuno Sa <nuno.sa@analog.com>
 
-[ Upstream commit 394679f322649d06fea3c646ba65f5a0887f52c3 ]
+[ Upstream commit 47f3f5a82a31527e027929c5cec3dd1ef5ef30f5 ]
 
-disable_irq() after request_irq() still has a time gap in which
-interrupts can come. request_irq() with IRQF_NO_AUTOEN flag will
-disable IRQ auto-enable when request IRQ.
+In order to access the registers of the HW, we need to make sure that
+the AXI bus clock is enabled. Hence let's increase the number of clocks
+by one and add clock-names to differentiate between parent clocks and
+the bus clock.
 
-Fixes: 4b565ca5a2cb ("drm/msm: Add A6XX device support")
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-Patchwork: https://patchwork.freedesktop.org/patch/614075/
-Signed-off-by: Rob Clark <robdclark@chromium.org>
+Fixes: 0e646c52cf0e ("clk: Add axi-clkgen driver")
+Signed-off-by: Nuno Sa <nuno.sa@analog.com>
+Link: https://lore.kernel.org/r/20241029-axi-clkgen-fix-axiclk-v2-1-bc5e0733ad76@analog.com
+Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ .../bindings/clock/adi,axi-clkgen.yaml        | 22 +++++++++++++++----
+ 1 file changed, 18 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-index 40431a09dc97c..55ff242292f3d 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-@@ -1233,15 +1233,13 @@ static int a6xx_gmu_get_irq(struct a6xx_gmu *gmu, struct platform_device *pdev,
+diff --git a/Documentation/devicetree/bindings/clock/adi,axi-clkgen.yaml b/Documentation/devicetree/bindings/clock/adi,axi-clkgen.yaml
+index 0d06387184d68..bb2eec3021a09 100644
+--- a/Documentation/devicetree/bindings/clock/adi,axi-clkgen.yaml
++++ b/Documentation/devicetree/bindings/clock/adi,axi-clkgen.yaml
+@@ -25,9 +25,21 @@ properties:
+     description:
+       Specifies the reference clock(s) from which the output frequency is
+       derived. This must either reference one clock if only the first clock
+-      input is connected or two if both clock inputs are connected.
+-    minItems: 1
+-    maxItems: 2
++      input is connected or two if both clock inputs are connected. The last
++      clock is the AXI bus clock that needs to be enabled so we can access the
++      core registers.
++    minItems: 2
++    maxItems: 3
++
++  clock-names:
++    oneOf:
++      - items:
++          - const: clkin1
++          - const: s_axi_aclk
++      - items:
++          - const: clkin1
++          - const: clkin2
++          - const: s_axi_aclk
  
- 	irq = platform_get_irq_byname(pdev, name);
+   '#clock-cells':
+     const: 0
+@@ -39,6 +51,7 @@ required:
+   - compatible
+   - reg
+   - clocks
++  - clock-names
+   - '#clock-cells'
  
--	ret = request_irq(irq, handler, IRQF_TRIGGER_HIGH, name, gmu);
-+	ret = request_irq(irq, handler, IRQF_TRIGGER_HIGH | IRQF_NO_AUTOEN, name, gmu);
- 	if (ret) {
- 		DRM_DEV_ERROR(&pdev->dev, "Unable to get interrupt %s %d\n",
- 			      name, ret);
- 		return ret;
- 	}
- 
--	disable_irq(irq);
--
- 	return irq;
- }
- 
+ additionalProperties: false
+@@ -49,5 +62,6 @@ examples:
+       compatible = "adi,axi-clkgen-2.00.a";
+       #clock-cells = <0>;
+       reg = <0xff000000 0x1000>;
+-      clocks = <&osc 1>;
++      clocks = <&osc 1>, <&clkc 15>;
++      clock-names = "clkin1", "s_axi_aclk";
+     };
 -- 
 2.43.0
 
