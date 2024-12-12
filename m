@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D911209695;
-	Thu, 12 Dec 2024 17:50:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC6C3209695;
+	Thu, 12 Dec 2024 17:50:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734025807; cv=none; b=QjjPAkybSfTDBT3WQLfAR4zdofrwRXxvZ6uTCk6Hx0Qi+Rc9s1BC9AsBfyhApvFeEPm0WsDljrsnr7IzeeTi//r2dBVZopMeh52P6tYyiYCHal7gu+z1hVl1yxLPApLDP+Tb0cgtgrjdfrXWJYv7Gaw4bz3eN8kBAS3Vw5I2v9k=
+	t=1734025810; cv=none; b=ZtkyacHrx83Y7+p3EfBMidFvaivvGIhBBqxgldhuLuHNCSakAf+fqO/oCOOFzvAr6pAY/5z2AGLJQRtGgCwOmyH2IXDV/jBDYgjn5i1moawXWx64sLAjckzpdGrNp9CvxsGzBz5MJKkkkrjMDByqFhDpdnW6jPyWreoVM9E+EtA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734025807; c=relaxed/simple;
-	bh=lvTaaEpgGyXLB6ojEy9ef9xr4yZ71EA5LhAnHb/IyHw=;
+	s=arc-20240116; t=1734025810; c=relaxed/simple;
+	bh=b2m9tOcsQls/1Ng5wacPoqDcl0dpNh60tEr24/RUGV0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i05x2/EDk3Uz2xeTRoF04fm+PDFq/9KfLEXnA7oDxHMS4/kR8i2VBQeUNDyEYXVLMAt1DI6BFEtjLsH6cc4jbEF3u0UNKBqmjIgl6BCVxYp7bl9BkhmoKGJtAbq8VHJg16QUNSrhKrBTpIQ2h1M1hcOgWPzDcZmcnIzn35/13mU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i2aDP7GO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mcLq7hlqczVUfO36keXbuSpXLY1WVaokneJqN0uBZGgxU4E/5f+1Ax8Fde8nyJaoD+YQZDhmYtoBun/PpymrdtdP/O0t0/yetrsxxiPjC4RgLqCneLQaEZgLqf8FXgvwR8/IIJAfVcF3VYdcoHEphMKn1HSJqjxY3hQUH3pGyWE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w0HXMWGM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i2aDP7GO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C038C4CECE;
-	Thu, 12 Dec 2024 17:50:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w0HXMWGM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36B98C4CECE;
+	Thu, 12 Dec 2024 17:50:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734025807;
-	bh=lvTaaEpgGyXLB6ojEy9ef9xr4yZ71EA5LhAnHb/IyHw=;
+	s=korg; t=1734025810;
+	bh=b2m9tOcsQls/1Ng5wacPoqDcl0dpNh60tEr24/RUGV0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i2aDP7GOmC1IY98Y31J5GWk4ly7H2EzemEitle3mXojNSaozKAdOsJ8THbMJQwYXK
-	 3mpwzb6vskS8j2BxX8ZkNFJRFKt7NkrPn/mvCVQC/icajr3R+SPYmHLAlre3oPEbmm
-	 ao1/V6aS4x+dDqDda/5PCr3hA4jPYM+09m59iiCM=
+	b=w0HXMWGMBUNVYHnuH9T4k6+HnbA0Dy6Z4CpW6HVr7mfJGoy7xibAHtPAj5sfACsE3
+	 et9gnpL6MpgZY8WXlThHXJckIPn/x7HNVfOJuTrxHT0u+W8OHjQycNJAl4ZjK+w7ji
+	 OwyshoznTdfBZTCg1womM0WvLKEvZItzp+35OzD8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Kubiak <michal.kubiak@intel.com>,
-	Breno Leitao <leitao@debian.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Uros Bizjak <ubizjak@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 293/321] netpoll: Use rcu_access_pointer() in __netpoll_setup
-Date: Thu, 12 Dec 2024 16:03:31 +0100
-Message-ID: <20241212144241.555315757@linuxfoundation.org>
+Subject: [PATCH 5.4 294/321] tracing: Use atomic64_inc_return() in trace_clock_counter()
+Date: Thu, 12 Dec 2024 16:03:32 +0100
+Message-ID: <20241212144241.594111822@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144229.291682835@linuxfoundation.org>
 References: <20241212144229.291682835@linuxfoundation.org>
@@ -52,42 +53,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Uros Bizjak <ubizjak@gmail.com>
 
-[ Upstream commit c69c5e10adb903ae2438d4f9c16eccf43d1fcbc1 ]
+[ Upstream commit eb887c4567d1b0e7684c026fe7df44afa96589e6 ]
 
-The ndev->npinfo pointer in __netpoll_setup() is RCU-protected but is being
-accessed directly for a NULL check. While no RCU read lock is held in this
-context, we should still use proper RCU primitives for consistency and
-correctness.
+Use atomic64_inc_return(&ref) instead of atomic64_add_return(1, &ref)
+to use optimized implementation and ease register pressure around
+the primitive for targets that implement optimized variant.
 
-Replace the direct NULL check with rcu_access_pointer(), which is the
-appropriate primitive when only checking for NULL without dereferencing
-the pointer. This function provides the necessary ordering guarantees
-without requiring RCU read-side protection.
-
-Reviewed-by: Michal Kubiak <michal.kubiak@intel.com>
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Link: https://patch.msgid.link/20241118-netpoll_rcu-v1-1-a1888dcb4a02@debian.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Cc: Steven Rostedt <rostedt@goodmis.org>
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Link: https://lore.kernel.org/20241007085651.48544-1-ubizjak@gmail.com
+Signed-off-by: Uros Bizjak <ubizjak@gmail.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/netpoll.c | 2 +-
+ kernel/trace/trace_clock.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/core/netpoll.c b/net/core/netpoll.c
-index 9b263a5c0f36f..9a67aa989d606 100644
---- a/net/core/netpoll.c
-+++ b/net/core/netpoll.c
-@@ -615,7 +615,7 @@ int __netpoll_setup(struct netpoll *np, struct net_device *ndev)
- 		goto out;
- 	}
- 
--	if (!ndev->npinfo) {
-+	if (!rcu_access_pointer(ndev->npinfo)) {
- 		npinfo = kmalloc(sizeof(*npinfo), GFP_KERNEL);
- 		if (!npinfo) {
- 			err = -ENOMEM;
+diff --git a/kernel/trace/trace_clock.c b/kernel/trace/trace_clock.c
+index 4702efb00ff21..4cb2ebc439be6 100644
+--- a/kernel/trace/trace_clock.c
++++ b/kernel/trace/trace_clock.c
+@@ -154,5 +154,5 @@ static atomic64_t trace_counter;
+  */
+ u64 notrace trace_clock_counter(void)
+ {
+-	return atomic64_add_return(1, &trace_counter);
++	return atomic64_inc_return(&trace_counter);
+ }
 -- 
 2.43.0
 
