@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38ACE14A82;
-	Thu, 12 Dec 2024 15:54:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBBC614A82;
+	Thu, 12 Dec 2024 15:54:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734018864; cv=none; b=Rb04HvwI3LpP+wxAJJPCbmpHu/z2d+CliKuDMcnsu3IaBirxq8tLhUoNW35YIhJFy5NwhtMcn/+jswGfQnj+NDgxnh7RqJrmhHn36kmKNW0oqnU4OFmUFR1MzbZU663e1oaff9kbojpISrMydTbT6LpvoVNwmFPVQFG4YxeEbyw=
+	t=1734018868; cv=none; b=nz7lvbHzovJByfraDocBDEcIfSWGh8gCYd4SHFx+K17E+hBPApGLfSsmUdbGUtzzK/pi2N9lz1IAQbj6ix6ty5bpvCVF+9+42t2fkdo7uwJxSm1rOf25J8EblEr9y3Fvfa7YSaY0yG+++QnHMeIuFVpQ0+IYGOEFwqEFleKSles=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734018864; c=relaxed/simple;
-	bh=hdQaLcPAdYTY9jI6Ak2iCj1Rgialpe2kCIOnwUHqpJQ=;
+	s=arc-20240116; t=1734018868; c=relaxed/simple;
+	bh=4QKlJNBCzqSLhdCZ067AuM2TLRGYwkczfhYkjSl6aKA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=orv+BQ5gQ5YTXVgn0NoPoTdzaS4srMzJxebEZiVxdiflXIpCZTfhX2+Cif2M7hhUWR9t19MgfBx5M7exfNiAJ+k9BzE3XV19woXEYYTtz0IHRSqm6eftDV4Hrepu5YKmqLzb1AFIpXhsBLXJdkjZi8+law0qSsQtsyZ0WldV9lc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ID3DjnMt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=boN6t/32K91FZpilLR08twZ5DSbLRbQmOUi1UrzeiH2isWS+ZinCMafKjxuFSE6YS2yPBMah0HqjwL8MGQiTbhrchLAtVrGG/Og3Uhmj+mJ69oyxq2VIjqSPV4939hKABNEq0yl8KXaoLFRoxjH2HNhHLwiH/wdiO4kLpLZZIa0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hqnGW9pF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ID3DjnMt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F194C4CECE;
-	Thu, 12 Dec 2024 15:54:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hqnGW9pF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6520AC4CECE;
+	Thu, 12 Dec 2024 15:54:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734018864;
-	bh=hdQaLcPAdYTY9jI6Ak2iCj1Rgialpe2kCIOnwUHqpJQ=;
+	s=korg; t=1734018868;
+	bh=4QKlJNBCzqSLhdCZ067AuM2TLRGYwkczfhYkjSl6aKA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ID3DjnMtJjP1FZQQyOkIxCiXhGW1o7GXa3BFtDuxduJyHelbRaY8cDCqNbOMHJD88
-	 w3tCMoJO7ZPt6uZJOAdGyN2nL3hZngMhIFpd8eg68xWNPhC03L1lwihbZXbIX11Y/T
-	 IK+YYa9oFtwot9/8gQfmKLhiSlv4G31IOwC64LAE=
+	b=hqnGW9pFk0lPMz2d+SKlPLb2ZW2QFp25xW4FZpPcAPVyXtYj3Nwc/3GFOSs/FM1pm
+	 wNSMuxOrhG5rZFB5AIQA3ulFljP/c6cn9OZehemyBn5lYdtoFWdSc+PUAUfhCaXRcI
+	 ps0U180Ul9AQFpbNXUmVsKOSkWOZFxTt92z9h4Co=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Keith Busch <kbusch@kernel.org>,
+	Daniel Palmer <daniel@0x0f.com>,
+	Finn Thain <fthain@linux-m68k.org>,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 054/772] nvme-pci: fix freeing of the HMB descriptor table
-Date: Thu, 12 Dec 2024 15:49:59 +0100
-Message-ID: <20241212144352.176955837@linuxfoundation.org>
+Subject: [PATCH 6.1 055/772] m68k: mvme147: Fix SCSI controller IRQ numbers
+Date: Thu, 12 Dec 2024 15:50:00 +0100
+Message-ID: <20241212144352.218173725@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -51,92 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christoph Hellwig <hch@lst.de>
+From: Daniel Palmer <daniel@0x0f.com>
 
-[ Upstream commit 3c2fb1ca8086eb139b2a551358137525ae8e0d7a ]
+[ Upstream commit 47bc874427382018fa2e3e982480e156271eee70 ]
 
-The HMB descriptor table is sized to the maximum number of descriptors
-that could be used for a given device, but __nvme_alloc_host_mem could
-break out of the loop earlier on memory allocation failure and end up
-using less descriptors than planned for, which leads to an incorrect
-size passed to dma_free_coherent.
+Sometime long ago the m68k IRQ code was refactored and the interrupt
+numbers for SCSI controller on this board ended up wrong, and it hasn't
+worked since.
 
-In practice this was not showing up because the number of descriptors
-tends to be low and the dma coherent allocator always allocates and
-frees at least a page.
+The PCC adds 0x40 to the vector for its interrupts so they end up in
+the user interrupt range. Hence, the kernel number should be the kernel
+offset for user interrupt range + the PCC interrupt number.
 
-Fixes: 87ad72a59a38 ("nvme-pci: implement host memory buffer support")
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Fixes: 200a3d352cd5 ("[PATCH] m68k: convert VME irq code")
+Signed-off-by: Daniel Palmer <daniel@0x0f.com>
+Reviewed-by: Finn Thain <fthain@linux-m68k.org>
+Reviewed-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Link: https://lore.kernel.org/0e7636a21a0274eea35bfd5d874459d5078e97cc.1727926187.git.fthain@linux-m68k.org
+Signed-off-by: Geert Uytterhoeven <geert@linux-m68k.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/pci.c | 16 +++++++++-------
- 1 file changed, 9 insertions(+), 7 deletions(-)
+ arch/m68k/include/asm/mvme147hw.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
-index f0063962c2c87..e09df396eb14c 100644
---- a/drivers/nvme/host/pci.c
-+++ b/drivers/nvme/host/pci.c
-@@ -153,6 +153,7 @@ struct nvme_dev {
- 	/* host memory buffer support: */
- 	u64 host_mem_size;
- 	u32 nr_host_mem_descs;
-+	u32 host_mem_descs_size;
- 	dma_addr_t host_mem_descs_dma;
- 	struct nvme_host_mem_buf_desc *host_mem_descs;
- 	void **host_mem_desc_bufs;
-@@ -2007,10 +2008,10 @@ static void nvme_free_host_mem(struct nvme_dev *dev)
+diff --git a/arch/m68k/include/asm/mvme147hw.h b/arch/m68k/include/asm/mvme147hw.h
+index e28eb1c0e0bfb..dbf88059e47a4 100644
+--- a/arch/m68k/include/asm/mvme147hw.h
++++ b/arch/m68k/include/asm/mvme147hw.h
+@@ -93,8 +93,8 @@ struct pcc_regs {
+ #define M147_SCC_B_ADDR		0xfffe3000
+ #define M147_SCC_PCLK		5000000
  
- 	kfree(dev->host_mem_desc_bufs);
- 	dev->host_mem_desc_bufs = NULL;
--	dma_free_coherent(dev->dev,
--			dev->nr_host_mem_descs * sizeof(*dev->host_mem_descs),
-+	dma_free_coherent(dev->dev, dev->host_mem_descs_size,
- 			dev->host_mem_descs, dev->host_mem_descs_dma);
- 	dev->host_mem_descs = NULL;
-+	dev->host_mem_descs_size = 0;
- 	dev->nr_host_mem_descs = 0;
- }
+-#define MVME147_IRQ_SCSI_PORT	(IRQ_USER+0x45)
+-#define MVME147_IRQ_SCSI_DMA	(IRQ_USER+0x46)
++#define MVME147_IRQ_SCSI_PORT	(IRQ_USER + 5)
++#define MVME147_IRQ_SCSI_DMA	(IRQ_USER + 6)
  
-@@ -2018,7 +2019,7 @@ static int __nvme_alloc_host_mem(struct nvme_dev *dev, u64 preferred,
- 		u32 chunk_size)
- {
- 	struct nvme_host_mem_buf_desc *descs;
--	u32 max_entries, len;
-+	u32 max_entries, len, descs_size;
- 	dma_addr_t descs_dma;
- 	int i = 0;
- 	void **bufs;
-@@ -2031,8 +2032,9 @@ static int __nvme_alloc_host_mem(struct nvme_dev *dev, u64 preferred,
- 	if (dev->ctrl.hmmaxd && dev->ctrl.hmmaxd < max_entries)
- 		max_entries = dev->ctrl.hmmaxd;
+ /* SCC interrupts, for MVME147 */
  
--	descs = dma_alloc_coherent(dev->dev, max_entries * sizeof(*descs),
--				   &descs_dma, GFP_KERNEL);
-+	descs_size = max_entries * sizeof(*descs);
-+	descs = dma_alloc_coherent(dev->dev, descs_size, &descs_dma,
-+			GFP_KERNEL);
- 	if (!descs)
- 		goto out;
- 
-@@ -2061,6 +2063,7 @@ static int __nvme_alloc_host_mem(struct nvme_dev *dev, u64 preferred,
- 	dev->host_mem_size = size;
- 	dev->host_mem_descs = descs;
- 	dev->host_mem_descs_dma = descs_dma;
-+	dev->host_mem_descs_size = descs_size;
- 	dev->host_mem_desc_bufs = bufs;
- 	return 0;
- 
-@@ -2075,8 +2078,7 @@ static int __nvme_alloc_host_mem(struct nvme_dev *dev, u64 preferred,
- 
- 	kfree(bufs);
- out_free_descs:
--	dma_free_coherent(dev->dev, max_entries * sizeof(*descs), descs,
--			descs_dma);
-+	dma_free_coherent(dev->dev, descs_size, descs, descs_dma);
- out:
- 	dev->host_mem_descs = NULL;
- 	return -ENOMEM;
 -- 
 2.43.0
 
