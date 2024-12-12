@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51205205ACF;
-	Thu, 12 Dec 2024 15:28:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 996BD748A;
+	Thu, 12 Dec 2024 15:28:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734017308; cv=none; b=QzzBStwS6kqwJ7j4fR7JjSUMlM6NbI8tREKGkc5YtS0+sler0U+46NGkHagWxgUdfWlc40gv0XtYQihAzzDNVGeeLK6vreyalDs33A8n0VBGU3pgpy1eXdVXXIABsymWAySt48H5G4blfdT7/2oMS+jc7yI0qVkryVKzLDPh9z4=
+	t=1734017311; cv=none; b=TV+pwd1LenMUOVVP7OPIV0XgSITTc4jM7jQdGDMKQz19crp5yjTMS/2bLT3yAYrsTb31lkI2mn4BAycaSaPgDLYipIVQlM7s5N6aa8aQezkZwJ3nedmoneUtZlPEnKHHSQ5Rg2q4HeAE0TMy+F2+67Pv42cJaEamZ85gBX3MQmA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734017308; c=relaxed/simple;
-	bh=XA7fvPy4ofHtdzx84EVuPTFyTcEyNuDLs5U9e3msgWI=;
+	s=arc-20240116; t=1734017311; c=relaxed/simple;
+	bh=jo+soLT40rXgf1Qn0g60kPv7F3PTkDyA51ojdrN9RF8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L6jwwPnPOz0pqOBjjbtma2G6bBLLCaKuH9n1UN/A8VR2tmyl65ziN7uO6Fjkmyy/iOcooR+IO62hJvKeJ4TpcgYDcT8DvjT+Kk4KHDDhdXo6mkubqET/o3LBsx8gSPaGGTsiU375M8E9P5PQTRgL3eylTO9pzDrfS0BjMkfQNqw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=peV6Z/Ho; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ewMD7ttJ7O0V+SaRCfEppliaJmvuLpKi/LTT/ejE8bpjMNl2UHMAYqKROWdx/6pvPFsy+/W7w2M/1SIuX69EINaNndfeQFG5Gz1kGdK6N4cx0XyqdMXjwXLiUAhrjkf6qKyqAguGrwLaHa5H4sP3d1SmVmUTlK3x1Inh6O+BHE8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NEGP+sib; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="peV6Z/Ho"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6885C4CECE;
-	Thu, 12 Dec 2024 15:28:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NEGP+sib"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D567C4CECE;
+	Thu, 12 Dec 2024 15:28:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734017308;
-	bh=XA7fvPy4ofHtdzx84EVuPTFyTcEyNuDLs5U9e3msgWI=;
+	s=korg; t=1734017311;
+	bh=jo+soLT40rXgf1Qn0g60kPv7F3PTkDyA51ojdrN9RF8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=peV6Z/Hor0/inyptqGSje9HSxFncU/tAjl1kR8hijxasJDtNlg/vFU2osm3d6mGxb
-	 1s2NZ143M9LPl80H012CnAXhVTXp1Z/8dAEQlzryclMs9XYfJ3+/6OmnQ6Ohi72z6W
-	 mScck7ykXDc5ENut5v72t2BqRmOZdGB058N/JbMA=
+	b=NEGP+sibIOhhDZFj0fm8Zyed7gYxDvPg5xU36vWlhzkW5NynMS9IyxXKGKADQwfo9
+	 fksmxubuTCAZruGpZiwj0uPhpRd2lm2V8RAoRfpMn2XRKG3q56hFP+nc/+Kw7W78Xo
+	 U2OcE239b1C1q0qR2oBVX2aWtTyofnUX6g7ybVuI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Julia Lawall <julia.lawall@inria.fr>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	K Prateek Nayak <kprateek.nayak@amd.com>,
+	Wander Lairson Costa <wander@redhat.com>,
 	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Juri Lelli <juri.lelli@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 442/466] sched/core: Prevent wakeup of ksoftirqd during idle load balance
-Date: Thu, 12 Dec 2024 16:00:11 +0100
-Message-ID: <20241212144324.320035449@linuxfoundation.org>
+Subject: [PATCH 6.12 443/466] sched/deadline: Fix warning in migrate_enable for boosted tasks
+Date: Thu, 12 Dec 2024 16:00:12 +0100
+Message-ID: <20241212144324.358551206@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144306.641051666@linuxfoundation.org>
 References: <20241212144306.641051666@linuxfoundation.org>
@@ -53,69 +52,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: K Prateek Nayak <kprateek.nayak@amd.com>
+From: Wander Lairson Costa <wander@redhat.com>
 
-[ Upstream commit e932c4ab38f072ce5894b2851fea8bc5754bb8e5 ]
+[ Upstream commit 0664e2c311b9fa43b33e3e81429cd0c2d7f9c638 ]
 
-Scheduler raises a SCHED_SOFTIRQ to trigger a load balancing event on
-from the IPI handler on the idle CPU. If the SMP function is invoked
-from an idle CPU via flush_smp_call_function_queue() then the HARD-IRQ
-flag is not set and raise_softirq_irqoff() needlessly wakes ksoftirqd
-because soft interrupts are handled before ksoftirqd get on the CPU.
+When running the following command:
 
-Adding a trace_printk() in nohz_csd_func() at the spot of raising
-SCHED_SOFTIRQ and enabling trace events for sched_switch, sched_wakeup,
-and softirq_entry (for SCHED_SOFTIRQ vector alone) helps observing the
-current behavior:
+while true; do
+    stress-ng --cyclic 30 --timeout 30s --minimize --quiet
+done
 
-       <idle>-0   [000] dN.1.:  nohz_csd_func: Raising SCHED_SOFTIRQ from nohz_csd_func
-       <idle>-0   [000] dN.4.:  sched_wakeup: comm=ksoftirqd/0 pid=16 prio=120 target_cpu=000
-       <idle>-0   [000] .Ns1.:  softirq_entry: vec=7 [action=SCHED]
-       <idle>-0   [000] .Ns1.:  softirq_exit: vec=7  [action=SCHED]
-       <idle>-0   [000] d..2.:  sched_switch: prev_comm=swapper/0 prev_pid=0 prev_prio=120 prev_state=R ==> next_comm=ksoftirqd/0 next_pid=16 next_prio=120
-  ksoftirqd/0-16  [000] d..2.:  sched_switch: prev_comm=ksoftirqd/0 prev_pid=16 prev_prio=120 prev_state=S ==> next_comm=swapper/0 next_pid=0 next_prio=120
-       ...
+a warning is eventually triggered:
 
-Use __raise_softirq_irqoff() to raise the softirq. The SMP function call
-is always invoked on the requested CPU in an interrupt handler. It is
-guaranteed that soft interrupts are handled at the end.
+WARNING: CPU: 43 PID: 2848 at kernel/sched/deadline.c:794
+setup_new_dl_entity+0x13e/0x180
+...
+Call Trace:
+ <TASK>
+ ? show_trace_log_lvl+0x1c4/0x2df
+ ? enqueue_dl_entity+0x631/0x6e0
+ ? setup_new_dl_entity+0x13e/0x180
+ ? __warn+0x7e/0xd0
+ ? report_bug+0x11a/0x1a0
+ ? handle_bug+0x3c/0x70
+ ? exc_invalid_op+0x14/0x70
+ ? asm_exc_invalid_op+0x16/0x20
+ enqueue_dl_entity+0x631/0x6e0
+ enqueue_task_dl+0x7d/0x120
+ __do_set_cpus_allowed+0xe3/0x280
+ __set_cpus_allowed_ptr_locked+0x140/0x1d0
+ __set_cpus_allowed_ptr+0x54/0xa0
+ migrate_enable+0x7e/0x150
+ rt_spin_unlock+0x1c/0x90
+ group_send_sig_info+0xf7/0x1a0
+ ? kill_pid_info+0x1f/0x1d0
+ kill_pid_info+0x78/0x1d0
+ kill_proc_info+0x5b/0x110
+ __x64_sys_kill+0x93/0xc0
+ do_syscall_64+0x5c/0xf0
+ entry_SYSCALL_64_after_hwframe+0x6e/0x76
+ RIP: 0033:0x7f0dab31f92b
 
-Following are the observations with the changes when enabling the same
-set of events:
+This warning occurs because set_cpus_allowed dequeues and enqueues tasks
+with the ENQUEUE_RESTORE flag set. If the task is boosted, the warning
+is triggered. A boosted task already had its parameters set by
+rt_mutex_setprio, and a new call to setup_new_dl_entity is unnecessary,
+hence the WARN_ON call.
 
-       <idle>-0       [000] dN.1.: nohz_csd_func: Raising SCHED_SOFTIRQ for nohz_idle_balance
-       <idle>-0       [000] dN.1.: softirq_raise: vec=7 [action=SCHED]
-       <idle>-0       [000] .Ns1.: softirq_entry: vec=7 [action=SCHED]
+Check if we are requeueing a boosted task and avoid calling
+setup_new_dl_entity if that's the case.
 
-No unnecessary ksoftirqd wakeups are seen from idle task's context to
-service the softirq.
-
-Fixes: b2a02fc43a1f ("smp: Optimize send_call_function_single_ipi()")
-Closes: https://lore.kernel.org/lkml/fcf823f-195e-6c9a-eac3-25f870cb35ac@inria.fr/ [1]
-Reported-by: Julia Lawall <julia.lawall@inria.fr>
-Suggested-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Signed-off-by: K Prateek Nayak <kprateek.nayak@amd.com>
+Fixes: 295d6d5e3736 ("sched/deadline: Fix switching to -deadline")
+Signed-off-by: Wander Lairson Costa <wander@redhat.com>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Link: https://lore.kernel.org/r/20241119054432.6405-5-kprateek.nayak@amd.com
+Acked-by: Juri Lelli <juri.lelli@redhat.com>
+Link: https://lore.kernel.org/r/20240724142253.27145-2-wander@redhat.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/sched/deadline.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/kernel/sched/core.c b/kernel/sched/core.c
-index 33bc43b223cba..6cc12777bb11a 100644
---- a/kernel/sched/core.c
-+++ b/kernel/sched/core.c
-@@ -1244,7 +1244,7 @@ static void nohz_csd_func(void *info)
- 	rq->idle_balance = idle_cpu(cpu);
- 	if (rq->idle_balance) {
- 		rq->nohz_idle_balance = flags;
--		raise_softirq_irqoff(SCHED_SOFTIRQ);
-+		__raise_softirq_irqoff(SCHED_SOFTIRQ);
+diff --git a/kernel/sched/deadline.c b/kernel/sched/deadline.c
+index be1b917dc8ce4..40a1ad4493b4d 100644
+--- a/kernel/sched/deadline.c
++++ b/kernel/sched/deadline.c
+@@ -2042,6 +2042,7 @@ enqueue_dl_entity(struct sched_dl_entity *dl_se, int flags)
+ 	} else if (flags & ENQUEUE_REPLENISH) {
+ 		replenish_dl_entity(dl_se);
+ 	} else if ((flags & ENQUEUE_RESTORE) &&
++		   !is_dl_boosted(dl_se) &&
+ 		   dl_time_before(dl_se->deadline, rq_clock(rq_of_dl_se(dl_se)))) {
+ 		setup_new_dl_entity(dl_se);
  	}
- }
- 
 -- 
 2.43.0
 
