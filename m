@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F74321B8E1;
-	Thu, 12 Dec 2024 15:38:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF836217F46;
+	Thu, 12 Dec 2024 15:38:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734017889; cv=none; b=SYPhbfbpUtrCo85tJGs5fNZVzhkKVKj2s5NeMYs9yu5/4foLJ9cQUbOKXcmsfYL5V7gjU3zs3hKf3R5o+7ZUQWeKdJzbbUDYkXbvn8WpwwgB/aW9aEyWBwclb4HwA4B3VBGy3SKM+ravwz5dWiNJENaz8CW4J+slLAE/AMpB7hk=
+	t=1734017897; cv=none; b=kBD69yuWd21YC9VK3dJUcFNBXoVTVTlTIbH2ObmxEVBblX5KtpCtJip58U2uKXm+3oqWQ0WtzWC5YoSpQ4AFf8R0QX7sy2OeyG8l3R4o9yOx9RahqVXlNZSNi/vDmv8/19ihAcnhosOgBNZMcLtLMDPd/EMleWCRi0jk8+teSGs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734017889; c=relaxed/simple;
-	bh=pjLymWJRNTxsMo9ep9Neo7mHhy3HA3lnRDko3Ug9eB0=;
+	s=arc-20240116; t=1734017897; c=relaxed/simple;
+	bh=BLrQJikhizs2thdn9Qi3PG2Yn+2PpEEExr5OnyAZANc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n58R3c+WH21hb90ygqWJC+YcgeJ9I2thwQIYc+SN3IiWqds/k7RvirOmshZFIVRFktLmdfYsx+/f8FTIQluU8yHzCcNZobFkjUf/g9sNzXfiyaIIsUjMiB2GeBbzROKQLh1QFTl7+VXYiWB6bCZMpUHeNAC4GvfCvFh+abb84jE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x7IhaPmX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Bzu77NpZgp1lueA5Vcoo04p2XiOItziqf2BZVrHSMjxPsJR3fd6tdzAyf5KtEFHTvSMh9WfCYefLTgK/SgbZS0VEnPQmgrow/tRSvOA6ljC/drq99y3Zd7OEPuqiHDg7Xu02FSzu6cmYCm5+HIzhuMT5uULRb3/hAX9InB7FDsg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UX0YIToL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x7IhaPmX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E6C9C4CECE;
-	Thu, 12 Dec 2024 15:38:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UX0YIToL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55CD7C4CECE;
+	Thu, 12 Dec 2024 15:38:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734017889;
-	bh=pjLymWJRNTxsMo9ep9Neo7mHhy3HA3lnRDko3Ug9eB0=;
+	s=korg; t=1734017897;
+	bh=BLrQJikhizs2thdn9Qi3PG2Yn+2PpEEExr5OnyAZANc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x7IhaPmXHkOLvhSTRnoEZplnE2k6oq6eCgZTJqKvxyfAdspGIOVelqw4O/EMsH+km
-	 vi00Tx4milGdnT+/en0dr5WpPWoZPC7IEW4F5NcAsa6VhWI2UXzmDrSpNZs9Vk2Y4S
-	 VwHfWJWzdsl6ekbC2WA7LRL05Q0GaRn4qAXkQEz8=
+	b=UX0YIToL2dQl1Mu48inN9TbVJ/T72OCxENGR1L0eOqhfqfLlZTjTyfu8hWATTE3S/
+	 Nk02ka59S7GAO46/DqP7Ku1n40VZUWN+Vv/uN/PnVyr32hzgTsiJiPWCaNa0KUAKeV
+	 pPRwt0Nh9WDKPdVNu+RpidsHJgnHPjYw2dvnCe/U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jordy Zomer <jordyzomer@google.com>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.6 141/356] ksmbd: fix Out-of-Bounds Read in ksmbd_vfs_stream_read
-Date: Thu, 12 Dec 2024 15:57:40 +0100
-Message-ID: <20241212144250.212195378@linuxfoundation.org>
+Subject: [PATCH 6.6 142/356] ksmbd: fix Out-of-Bounds Write in ksmbd_vfs_stream_write
+Date: Thu, 12 Dec 2024 15:57:41 +0100
+Message-ID: <20241212144250.251156011@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144244.601729511@linuxfoundation.org>
 References: <20241212144244.601729511@linuxfoundation.org>
@@ -53,10 +53,10 @@ Content-Transfer-Encoding: 8bit
 
 From: Jordy Zomer <jordyzomer@google.com>
 
-commit fc342cf86e2dc4d2edb0fc2ff5e28b6c7845adb9 upstream.
+commit 313dab082289e460391c82d855430ec8a28ddf81 upstream.
 
-An offset from client could be a negative value, It could lead
-to an out-of-bounds read from the stream_buf.
+An offset from client could be a negative value, It could allows
+to write data outside the bounds of the allocated buffer.
 Note that this issue is coming when setting
 'vfs objects = streams_xattr parameter' in ksmbd.conf.
 
@@ -67,21 +67,19 @@ Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/smb2pdu.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ fs/smb/server/smb2pdu.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
 --- a/fs/smb/server/smb2pdu.c
 +++ b/fs/smb/server/smb2pdu.c
-@@ -6652,6 +6652,10 @@ int smb2_read(struct ksmbd_work *work)
+@@ -6869,6 +6869,8 @@ int smb2_write(struct ksmbd_work *work)
  	}
  
  	offset = le64_to_cpu(req->Offset);
-+	if (offset < 0) {
-+		err = -EINVAL;
-+		goto out;
-+	}
++	if (offset < 0)
++		return -EINVAL;
  	length = le32_to_cpu(req->Length);
- 	mincount = le32_to_cpu(req->MinimumCount);
  
+ 	if (req->Channel == SMB2_CHANNEL_RDMA_V1 ||
 
 
