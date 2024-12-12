@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A8C32236EA;
-	Thu, 12 Dec 2024 17:48:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E038223711;
+	Thu, 12 Dec 2024 17:48:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734025716; cv=none; b=D4Wat+sNbuka5N5p5631dFvGOGR9CWyzV4jrg6WnCMvkK0oH6ehwdlD8q/ZA1chY44lpI2fxdLJqADH11jWgUwbR9pRMvbkxMjCabTk8QCpaXLU1YjJqkPZgN7T1T9lzTNF2N1TbKbuNTSwBVWU6LLrU38dodvvQzba2WMkT9SM=
+	t=1734025719; cv=none; b=CNv7SYQj4p7ptDwqVIy9Ymvfpt871qsdabLBnuI4BmyGn9gb0Fgy8jIKwj+Xr4suJBuS3Gkmv4+23KQ0vFFTO2tcSx173vyJnR0PBTHnyj5Z7mAZjAXcMjpAPoMU9k9jBCIOxXT5v2CtVDbMOOXBhqwcniq37GW46dJX4yU8gGY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734025716; c=relaxed/simple;
-	bh=GjzuLaoJKvSuZfNB25CnAMk9xLLkRPe6fTQZ1YxQVk4=;
+	s=arc-20240116; t=1734025719; c=relaxed/simple;
+	bh=ccpCDN3QgRnBR4bm+fgXRaXtRBPz5UDE/t0StJl8vfc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BYU/9vXzeMsGpyY5ObU9bshgAB0PCYheijFIw7n9WjZwnXHhdm6zbWC3hJBDo/D3lohH8WZhOrugypxw1gSyQY5DkcFMg2WE7HuNSjZN78tkZzNI/gOEKJl2AQlWLqsMK6r5CKdscioxnfSHZjLeOA7xdeAV4WCv2dA6jn2ChQo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SiOHnnvx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CiWUvObzxxTROWw6tA+ZFXTt/TWptTPTu1dg0zWai9mmcn/8qXSxWkWbtYamwvJye03VfH+lFdVq0R+qrTthZ3j9B+i0YP05qGGcVJAZD0QCsxAOkllNGZbzhK64NOJjLQKlZpa7Hd9fFRxsw8yo2ovwCWHop2zaHHKX1A7gizc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lAhz717M; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SiOHnnvx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3F10C4CEDE;
-	Thu, 12 Dec 2024 17:48:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lAhz717M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C704AC4CECE;
+	Thu, 12 Dec 2024 17:48:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734025716;
-	bh=GjzuLaoJKvSuZfNB25CnAMk9xLLkRPe6fTQZ1YxQVk4=;
+	s=korg; t=1734025719;
+	bh=ccpCDN3QgRnBR4bm+fgXRaXtRBPz5UDE/t0StJl8vfc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SiOHnnvxSXPRrP+GWCbj7U5gmRe0Iw0YhqCQUN8KSc9HWAHTSgdzkiq65bjECZZle
-	 zRQGoeOtiyXKiza91ft2a+miCuz+uX0C+1j5OJqv2iHN3rDlKfn9I9R4qiJEvwIudi
-	 iT5EAHGWObH96SHxlgSxOGSTgnMytCRR7/7ulSfk=
+	b=lAhz717MGSdBbotcC12Lv4kKPkHOhtq0RZY1Z/zcMgKQ+9d0eHD5kOyal6EViUwh5
+	 WdRRc8xJq6q9gHjr5H2DIDl2QFT3wKosibE/psauQri5Aj6ZECFaJlfUwugWa+mmlv
+	 rKAvAd0a2m+xFUNRyLLBCdgO5ok7h82AbxIK2OSI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anthony Pighin <anthony.pighin@nokia.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
-	Adrian Hunter <adrian.hunter@intel.com>
-Subject: [PATCH 5.4 263/321] mmc: core: Further prevent card detect during shutdown
-Date: Thu, 12 Dec 2024 16:03:01 +0100
-Message-ID: <20241212144240.372951836@linuxfoundation.org>
+	Thomas Richter <tmricht@linux.ibm.com>,
+	Hendrik Brueckner <brueckner@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 264/321] s390/cpum_sf: Handle CPU hotplug remove during sampling
+Date: Thu, 12 Dec 2024 16:03:02 +0100
+Message-ID: <20241212144240.412214457@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144229.291682835@linuxfoundation.org>
 References: <20241212144229.291682835@linuxfoundation.org>
@@ -51,56 +52,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ulf Hansson <ulf.hansson@linaro.org>
+From: Thomas Richter <tmricht@linux.ibm.com>
 
-commit 87a0d90fcd31c0f36da0332428c9e1a1e0f97432 upstream.
+[ Upstream commit a0bd7dacbd51c632b8e2c0500b479af564afadf3 ]
 
-Disabling card detect from the host's ->shutdown_pre() callback turned out
-to not be the complete solution. More precisely, beyond the point when the
-mmc_bus->shutdown() has been called, to gracefully power off the card, we
-need to prevent card detect. Otherwise the mmc_rescan work may poll for the
-card with a CMD13, to see if it's still alive, which then will fail and
-hang as the card has already been powered off.
+CPU hotplug remove handling triggers the following function
+call sequence:
 
-To fix this problem, let's disable mmc_rescan prior to power off the card
-during shutdown.
+   CPUHP_AP_PERF_S390_SF_ONLINE  --> s390_pmu_sf_offline_cpu()
+   ...
+   CPUHP_AP_PERF_ONLINE          --> perf_event_exit_cpu()
 
-Reported-by: Anthony Pighin <anthony.pighin@nokia.com>
-Fixes: 66c915d09b94 ("mmc: core: Disable card detect during shutdown")
-Cc: stable@vger.kernel.org
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-Reviewed-by: Adrian Hunter <adrian.hunter@intel.com>
-Closes: https://lore.kernel.org/all/BN0PR08MB695133000AF116F04C3A9FFE83212@BN0PR08MB6951.namprd08.prod.outlook.com/
-Tested-by: Anthony Pighin <anthony.pighin@nokia.com>
-Message-ID: <20241125122446.18684-1-ulf.hansson@linaro.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+The s390 CPUMF sampling CPU hotplug handler invokes:
+
+ s390_pmu_sf_offline_cpu()
+ +-->  cpusf_pmu_setup()
+       +--> setup_pmc_cpu()
+            +--> deallocate_buffers()
+
+This function de-allocates all sampling data buffers (SDBs) allocated
+for that CPU at event initialization. It also clears the
+PMU_F_RESERVED bit. The CPU is gone and can not be sampled.
+
+With the event still being active on the removed CPU, the CPU event
+hotplug support in kernel performance subsystem triggers the
+following function calls on the removed CPU:
+
+  perf_event_exit_cpu()
+  +--> perf_event_exit_cpu_context()
+       +--> __perf_event_exit_context()
+	    +--> __perf_remove_from_context()
+	         +--> event_sched_out()
+	              +--> cpumsf_pmu_del()
+	                   +--> cpumsf_pmu_stop()
+                                +--> hw_perf_event_update()
+
+to stop and remove the event. During removal of the event, the
+sampling device driver tries to read out the remaining samples from
+the sample data buffers (SDBs). But they have already been freed
+(and may have been re-assigned). This may lead to a use after free
+situation in which case the samples are most likely invalid. In the
+best case the memory has not been reassigned and still contains
+valid data.
+
+Remedy this situation and check if the CPU is still in reserved
+state (bit PMU_F_RESERVED set). In this case the SDBs have not been
+released an contain valid data. This is always the case when
+the event is removed (and no CPU hotplug off occured).
+If the PMU_F_RESERVED bit is not set, the SDB buffers are gone.
+
+Signed-off-by: Thomas Richter <tmricht@linux.ibm.com>
+Reviewed-by: Hendrik Brueckner <brueckner@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/core/bus.c  |    2 ++
- drivers/mmc/core/core.c |    3 +++
- 2 files changed, 5 insertions(+)
+ arch/s390/kernel/perf_cpum_sf.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/mmc/core/bus.c
-+++ b/drivers/mmc/core/bus.c
-@@ -134,6 +134,8 @@ static void mmc_bus_shutdown(struct devi
- 	if (dev->driver && drv->shutdown)
- 		drv->shutdown(card);
+diff --git a/arch/s390/kernel/perf_cpum_sf.c b/arch/s390/kernel/perf_cpum_sf.c
+index 4f251cd624d7e..6047ccb6f8e26 100644
+--- a/arch/s390/kernel/perf_cpum_sf.c
++++ b/arch/s390/kernel/perf_cpum_sf.c
+@@ -1862,7 +1862,9 @@ static void cpumsf_pmu_stop(struct perf_event *event, int flags)
+ 	event->hw.state |= PERF_HES_STOPPED;
  
-+	__mmc_stop_host(host);
-+
- 	if (host->bus_ops->shutdown) {
- 		ret = host->bus_ops->shutdown(host);
- 		if (ret)
---- a/drivers/mmc/core/core.c
-+++ b/drivers/mmc/core/core.c
-@@ -2382,6 +2382,9 @@ void mmc_start_host(struct mmc_host *hos
- 
- void __mmc_stop_host(struct mmc_host *host)
- {
-+	if (host->rescan_disable)
-+		return;
-+
- 	if (host->slot.cd_irq >= 0) {
- 		mmc_gpio_set_cd_wake(host, false);
- 		disable_irq(host->slot.cd_irq);
+ 	if ((flags & PERF_EF_UPDATE) && !(event->hw.state & PERF_HES_UPTODATE)) {
+-		hw_perf_event_update(event, 1);
++		/* CPU hotplug off removes SDBs. No samples to extract. */
++		if (cpuhw->flags & PMU_F_RESERVED)
++			hw_perf_event_update(event, 1);
+ 		event->hw.state |= PERF_HES_UPTODATE;
+ 	}
+ 	perf_pmu_enable(event->pmu);
+-- 
+2.43.0
+
 
 
