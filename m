@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88898215178;
-	Thu, 12 Dec 2024 17:37:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1621A15696E;
+	Thu, 12 Dec 2024 17:37:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734025039; cv=none; b=nLDwgsG+gdUfSZqIKEuCxl0kTQ/9pjchDDnobCs+t1zw+Zsfr94cnEj7KpgDn45ds+9QMZV+FTQkszYzNVWx3mjdGhfyhXw596JWPk9AoQXf9IQzogqo9HhJ7SRlrCTq21LxXusmW73ODot+FMdFOzdNXPF6Y+ETPauo//BXKjA=
+	t=1734025042; cv=none; b=OcHGmFEHi+cGA72PyQEXa7KtSAJPCAQfvsAa03wRz7+jdA4Pt/IlTC+CJVJkKYbg9OR9+UlK37t7eGKy4RE7eQWwAu28PT1FkKbkM6JJ8XIxF468Pzxi+++IEyfOZoz3hdM0qHwL1wz7KZ4467s2XgS1+AReMFq32VeSr1MFBig=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734025039; c=relaxed/simple;
-	bh=OlObgQETfXfwKBdE9vzpzuvYr8rd0WwYpftTStGu7Yk=;
+	s=arc-20240116; t=1734025042; c=relaxed/simple;
+	bh=NvGkcrj7mYeqyogxZllWF855n8J0P3rfaBxRbKF7qsY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JRKfLTTXfnhbm3f8+Ubw9GqoLc6gGTYGNcQW8CXomHT2pFCEYiZO99DYe9eS6s1652jHjvF3Ufk5V9xh+Y/B5fRke//8dDJtSgdzlc15bxDEgp6lbYpbU/0EVqTWRmZwoh8bbdDZzVkrjwj7MCxjy/D32YWj/U3HdElby1XG5s4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ajM3viv9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=up/kXX0MixBAskAAEdvpVOTw4ameHqv0ii1rFfIMpQgfsT3t8aQX/u8YKVFYMMWkH5yRwBFZvQ+zNJLwJ/k6vnZo95JY7HrUUbcrq+iOOhhtp+DBOHEi3VoJy0+gw/LSfbtKS+AmZHAGu09Pty2bHF2dZQdYKk+MTB4/MZsyMpU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0YQjQjmO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ajM3viv9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0332C4CECE;
-	Thu, 12 Dec 2024 17:37:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0YQjQjmO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95CA8C4CECE;
+	Thu, 12 Dec 2024 17:37:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734025039;
-	bh=OlObgQETfXfwKBdE9vzpzuvYr8rd0WwYpftTStGu7Yk=;
+	s=korg; t=1734025042;
+	bh=NvGkcrj7mYeqyogxZllWF855n8J0P3rfaBxRbKF7qsY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ajM3viv9HZJJ+aOjVGkFtr6tkt0ckQdpSF21HgKrXaY4Jq86rtyfif+EwUqARhERx
-	 08/wmOJXtP6UgMpAwIokG5qYssIYl2qhao+kVsXX54510Y/8pw6ndESGzPGo0jSPIK
-	 geqoZmMLCH/lVh3fAWxNuMs8AQxogfkbvJq6FpGw=
+	b=0YQjQjmOESx5lH47qlFNn6lQDGQcLV1BEqPWSqiQPymhyZ8ayRsPRhNjNLCo41ZJK
+	 H2W0OPNosB1JZy3cZNTnSYDwHQ0Z9Zb1LQyi0jHQuZ3xsfBKdyQHM8yPSsU7+gaAmI
+	 HqfbfqMKSk36QSUIzepMjtq+TzfTm8kkr5xIe56k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksandr Mishin <amishin@t-argos.ru>,
-	Hanjun Guo <guohanjun@huawei.com>,
-	Sudeep Holla <sudeep.holla@arm.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Heiko Carstens <hca@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 035/321] acpi/arm64: Adjust error handling procedure in gtdt_parse_timer_block()
-Date: Thu, 12 Dec 2024 15:59:13 +0100
-Message-ID: <20241212144231.389820572@linuxfoundation.org>
+Subject: [PATCH 5.4 036/321] s390/syscalls: Avoid creation of arch/arch/ directory
+Date: Thu, 12 Dec 2024 15:59:14 +0100
+Message-ID: <20241212144231.428331849@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144229.291682835@linuxfoundation.org>
 References: <20241212144229.291682835@linuxfoundation.org>
@@ -53,43 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aleksandr Mishin <amishin@t-argos.ru>
+From: Masahiro Yamada <masahiroy@kernel.org>
 
-[ Upstream commit 1a9de2f6fda69d5f105dd8af776856a66abdaa64 ]
+[ Upstream commit 0708967e2d56e370231fd07defa0d69f9ad125e8 ]
 
-In case of error in gtdt_parse_timer_block() invalid 'gtdt_frame'
-will be used in 'do {} while (i-- >= 0 && gtdt_frame--);' statement block
-because do{} block will be executed even if 'i == 0'.
+Building the kernel with ARCH=s390 creates a weird arch/arch/ directory.
 
-Adjust error handling procedure by replacing 'i-- >= 0' with 'i-- > 0'.
+  $ find arch/arch
+  arch/arch
+  arch/arch/s390
+  arch/arch/s390/include
+  arch/arch/s390/include/generated
+  arch/arch/s390/include/generated/asm
+  arch/arch/s390/include/generated/uapi
+  arch/arch/s390/include/generated/uapi/asm
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+The root cause is 'targets' in arch/s390/kernel/syscalls/Makefile,
+where the relative path is incorrect.
 
-Fixes: a712c3ed9b8a ("acpi/arm64: Add memory-mapped timer support in GTDT driver")
-Signed-off-by: Aleksandr Mishin <amishin@t-argos.ru>
-Acked-by: Hanjun Guo <guohanjun@huawei.com>
-Acked-by: Sudeep Holla <sudeep.holla@arm.com>
-Acked-by: Aleksandr Mishin <amishin@t-argos.ru>
-Link: https://lore.kernel.org/r/20240827101239.22020-1-amishin@t-argos.ru
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+Strictly speaking, 'targets' was not necessary in the first place
+because this Makefile uses 'filechk' instead of 'if_changed'.
+
+However, this commit keeps it, as it will be useful when converting
+'filechk' to 'if_changed' later.
+
+Fixes: 5c75824d915e ("s390/syscalls: add Makefile to generate system call header files")
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Link: https://lore.kernel.org/r/20241111134603.2063226-1-masahiroy@kernel.org
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/arm64/gtdt.c | 2 +-
+ arch/s390/kernel/syscalls/Makefile | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/acpi/arm64/gtdt.c b/drivers/acpi/arm64/gtdt.c
-index 311419d1d6b05..b00724700f552 100644
---- a/drivers/acpi/arm64/gtdt.c
-+++ b/drivers/acpi/arm64/gtdt.c
-@@ -283,7 +283,7 @@ static int __init gtdt_parse_timer_block(struct acpi_gtdt_timer_block *block,
- 		if (frame->virt_irq > 0)
- 			acpi_unregister_gsi(gtdt_frame->virtual_timer_interrupt);
- 		frame->virt_irq = 0;
--	} while (i-- >= 0 && gtdt_frame--);
-+	} while (i-- > 0 && gtdt_frame--);
+diff --git a/arch/s390/kernel/syscalls/Makefile b/arch/s390/kernel/syscalls/Makefile
+index b98f25029b8e6..7b77ed779c7b2 100644
+--- a/arch/s390/kernel/syscalls/Makefile
++++ b/arch/s390/kernel/syscalls/Makefile
+@@ -12,7 +12,7 @@ kapi-hdrs-y := $(kapi)/unistd_nr.h
+ uapi-hdrs-y := $(uapi)/unistd_32.h
+ uapi-hdrs-y += $(uapi)/unistd_64.h
  
- 	return -EINVAL;
- }
+-targets += $(addprefix ../../../,$(gen-y) $(kapi-hdrs-y) $(uapi-hdrs-y))
++targets += $(addprefix ../../../../,$(gen-y) $(kapi-hdrs-y) $(uapi-hdrs-y))
+ 
+ PHONY += kapi uapi
+ 
 -- 
 2.43.0
 
