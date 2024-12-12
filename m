@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B18A82135C1;
-	Thu, 12 Dec 2024 15:40:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F6A121CFEA;
+	Thu, 12 Dec 2024 15:40:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734018001; cv=none; b=Pdb/HvG+OnActrN0v+7+kPkpkzewNs5U0/6tIlTaPic63rdFS6xe2Xxg3JXxv37J/3BQUKlkz62uXPhezYkKRaw8l595AXiP6IWegCIfMDApy/DWSfR0eJV4uZeQ6MpAI3WKUeKZoankkBiZPNUsnN05eiriyc0cYjhBUdzxsyw=
+	t=1734018005; cv=none; b=K8iDBnsidSOnwV5urht2ELqwZ05YrLp/KcdBQlFkg3jMToRtPF2LO2/b94+fPRXtoVj/wg5mBSTKsaeHm5biUiJNTgR6xiRwdEHzuCMptApbjibpuNh1dZNtVks2WnUUTCFX0KzPsbuHR45fX1zTfTjuEUVtt0uQKJM1AHipze8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734018001; c=relaxed/simple;
-	bh=Zuz4yx29RPj1FWd1lWezLYYwP1Ms9v2cpGGSkwaXVyA=;
+	s=arc-20240116; t=1734018005; c=relaxed/simple;
+	bh=0wnz53vN/UgV7QxvEJguY4ERtQOnpivkqC3kfgIGLwU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mX371LfhqHmT+BaSOefqLM0Wg8wyUrN6n/BScZd7cEGXmWFU/pOJ95Lji/pB5Wj5fjUlUM3pq2DzAq+txn95PGdXr2hLejmTJCA4tJjWON5x++kocMD+LDXRhIbz/i+JAoPsLJXgem6vbqyPvHfFTnpJY8BlhTPcjTVuAGMcDaQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r8gyLQSE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g0q1pKZqsPSJmmNGtK1fVWMhD9XqtehIdo2jvyPfjT7YLAXgoXyCKwzfxB9CjoU1PuaVIJtE5U5yJfRfkvahankKOsGomdKxJBO/1N/Jqm1YswcCJ6EGFs99UPENpDSgK3qKQ4WXF7rC4MaqaIGCVH+pQaetHnjLvMVwL7Xv4As=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rrki6gPd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r8gyLQSE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17EBFC4CED0;
-	Thu, 12 Dec 2024 15:40:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rrki6gPd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A69DDC4CED0;
+	Thu, 12 Dec 2024 15:40:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734018001;
-	bh=Zuz4yx29RPj1FWd1lWezLYYwP1Ms9v2cpGGSkwaXVyA=;
+	s=korg; t=1734018005;
+	bh=0wnz53vN/UgV7QxvEJguY4ERtQOnpivkqC3kfgIGLwU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r8gyLQSEHnynCanavkvU7WgouDmDeDCIRWtuy5oiG4sX9Zbx5upr/6U9NFVTht4Im
-	 53Us4ZSqeH9TmzPlZE5Ci7wA5+4riyJBOMHYTC53VQ24CLlUDFNsLC3vllkcAHqttq
-	 3FszA+t5M+JIrrv/JQOc8h1PZIlMHeJsLKVauLZk=
+	b=Rrki6gPdbeDaQXyd0zISQhLNG93RsOFyIdP3ynfECqoJigVuatUDIoulsPu6EAZuf
+	 55kYmopHEcHVTvSJMV5YIJk8KHdVnCy3/7EPWD0fhBsTT2hW2mxzEMPqsIBv+EDH2e
+	 rZHFQTvqSfbQBSykdwBXQOZRsvvAIvW/9qu/JbPo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergey Senozhatsky <senozhatsky@chromium.org>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Masahiro Yamada <masahiroy@kernel.org>
-Subject: [PATCH 6.6 170/356] modpost: Add .irqentry.text to OTHER_SECTIONS
-Date: Thu, 12 Dec 2024 15:58:09 +0100
-Message-ID: <20241212144251.352410838@linuxfoundation.org>
+	David Woodhouse <dwmw@amazon.co.uk>,
+	Ingo Molnar <mingo@kernel.org>
+Subject: [PATCH 6.6 171/356] x86/kexec: Restore GDT on return from ::preserve_context kexec
+Date: Thu, 12 Dec 2024 15:58:10 +0100
+Message-ID: <20241212144251.392375675@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144244.601729511@linuxfoundation.org>
 References: <20241212144244.601729511@linuxfoundation.org>
@@ -51,42 +50,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Gleixner <tglx@linutronix.de>
+From: David Woodhouse <dwmw@amazon.co.uk>
 
-commit 7912405643a14b527cd4a4f33c1d4392da900888 upstream.
+commit 07fa619f2a40c221ea27747a3323cabc59ab25eb upstream.
 
-The compiler can fully inline the actual handler function of an interrupt
-entry into the .irqentry.text entry point. If such a function contains an
-access which has an exception table entry, modpost complains about a
-section mismatch:
+The restore_processor_state() function explicitly states that "the asm code
+that gets us here will have restored a usable GDT". That wasn't true in the
+case of returning from a ::preserve_context kexec. Make it so.
 
-  WARNING: vmlinux.o(__ex_table+0x447c): Section mismatch in reference ...
+Without this, the kernel was depending on the called function to reload a
+GDT which is appropriate for the kernel before returning.
 
-  The relocation at __ex_table+0x447c references section ".irqentry.text"
-  which is not in the list of authorized sections.
+Test program:
 
-Add .irqentry.text to OTHER_SECTIONS to cure the issue.
+ #include <unistd.h>
+ #include <errno.h>
+ #include <stdio.h>
+ #include <stdlib.h>
+ #include <linux/kexec.h>
+ #include <linux/reboot.h>
+ #include <sys/reboot.h>
+ #include <sys/syscall.h>
 
-Reported-by: Sergey Senozhatsky <senozhatsky@chromium.org>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Cc: stable@vger.kernel.org # needed for linux-5.4-y
-Link: https://lore.kernel.org/all/20241128111844.GE10431@google.com/
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+ int main (void)
+ {
+        struct kexec_segment segment = {};
+	unsigned char purgatory[] = {
+		0x66, 0xba, 0xf8, 0x03,	// mov $0x3f8, %dx
+		0xb0, 0x42,		// mov $0x42, %al
+		0xee,			// outb %al, (%dx)
+		0xc3,			// ret
+	};
+	int ret;
+
+	segment.buf = &purgatory;
+	segment.bufsz = sizeof(purgatory);
+	segment.mem = (void *)0x400000;
+	segment.memsz = 0x1000;
+	ret = syscall(__NR_kexec_load, 0x400000, 1, &segment, KEXEC_PRESERVE_CONTEXT);
+	if (ret) {
+		perror("kexec_load");
+		exit(1);
+	}
+
+	ret = syscall(__NR_reboot, LINUX_REBOOT_MAGIC1, LINUX_REBOOT_MAGIC2, LINUX_REBOOT_CMD_KEXEC);
+	if (ret) {
+		perror("kexec reboot");
+		exit(1);
+	}
+	printf("Success\n");
+	return 0;
+ }
+
+Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20241205153343.3275139-2-dwmw2@infradead.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- scripts/mod/modpost.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/kernel/relocate_kernel_64.S |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/scripts/mod/modpost.c
-+++ b/scripts/mod/modpost.c
-@@ -808,7 +808,7 @@ static void check_section(const char *mo
- 		".ltext", ".ltext.*"
- #define OTHER_TEXT_SECTIONS ".ref.text", ".head.text", ".spinlock.text", \
- 		".fixup", ".entry.text", ".exception.text", \
--		".coldtext", ".softirqentry.text"
-+		".coldtext", ".softirqentry.text", ".irqentry.text"
+--- a/arch/x86/kernel/relocate_kernel_64.S
++++ b/arch/x86/kernel/relocate_kernel_64.S
+@@ -240,6 +240,13 @@ SYM_CODE_START_LOCAL_NOALIGN(virtual_map
+ 	movq	CR0(%r8), %r8
+ 	movq	%rax, %cr3
+ 	movq	%r8, %cr0
++
++#ifdef CONFIG_KEXEC_JUMP
++	/* Saved in save_processor_state. */
++	movq    $saved_context, %rax
++	lgdt    saved_context_gdt_desc(%rax)
++#endif
++
+ 	movq	%rbp, %rax
  
- #define ALL_TEXT_SECTIONS  ".init.text", ".exit.text", \
- 		TEXT_SECTIONS, OTHER_TEXT_SECTIONS
+ 	popf
 
 
