@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76BEC21578B;
-	Thu, 12 Dec 2024 15:35:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F161E21578B;
+	Thu, 12 Dec 2024 15:36:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734017758; cv=none; b=k87JKJ3ttb7PNuhm7OxgeTvbH/WJL2d5oo3EH+vxSfCZTPpt8cdkhYq22Zne+mTZQSPlmP63UQKU5BuT+cazQ9RSZYXhVZP1j0tAxqem71d9sGdk6qe+CZZ7cDS05VR/ohcvVinPghU5VAI6HU++GDhhcLLZK0fsMLUtahFnvZs=
+	t=1734017762; cv=none; b=UNBGrpIMVm/oGmr27Y2o74AtLwhK+A+Kmx95Hea+KOSMNiVcKxAgahBdMptLNm98QOaiI72Wr++pRjsnvSUxibuGU0w1mHiMTKk6vpDXI+neb9tIqQUsQkRPNk3Mq8GdG/VCf2Heq50FFFm0W60TWb58sotVRhuE7DUnBX965b4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734017758; c=relaxed/simple;
-	bh=KPxi4ZGvUKyq5/Y40SDBDgECRgfzBUpk7uxYaB13noA=;
+	s=arc-20240116; t=1734017762; c=relaxed/simple;
+	bh=7FjQUMnlaWtGsD/X4vwP1SawEhYb8sDzKZpvUVY5aZY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fTce1Lqg+FyZem4hD74efgPo+1+Ax0oQ/VZ0f6g8YG466LXhHbC55QnRVkk0083b8RugW2UbpzHihX5At6AtD3RiFUgR/j8pI2YreNlWsPoIHgdXERukxoVqb9BVtyXxMwrw6KDjWnL3SrjzaOnnB0WClQjS11le9iXxjqyuLo4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xVNjlQyx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=FsYWF/c1yckdryH/PhxbQiw1WOvFdhN+IQRDwH4Re771vCXbHe5GV+piBRqfdgSHgT27C0J0v6vSzpJEVSLGkbJA66sbCvEovc4gIq7ZIy9Ys7gsw2a8xDpC8VaVxT/l9of3fSW59uahD7wbw0TnoD7EhI6+cL8cFFbTAsudLkg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ptgh8w9p; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xVNjlQyx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA236C4CECE;
-	Thu, 12 Dec 2024 15:35:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ptgh8w9p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CCE8C4CECE;
+	Thu, 12 Dec 2024 15:36:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734017758;
-	bh=KPxi4ZGvUKyq5/Y40SDBDgECRgfzBUpk7uxYaB13noA=;
+	s=korg; t=1734017761;
+	bh=7FjQUMnlaWtGsD/X4vwP1SawEhYb8sDzKZpvUVY5aZY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xVNjlQyxEyziLl+9Ja8R6Cv6f3aSl/OJbBhWtah1OdSbr4+6neIX2nmq6qVX/Gx4s
-	 qhpnehUEjOHGqtfYdRdw6dlcHrUWR65xmUklQoUzp+bqcFWFxNdsVi2tCxquVep3qd
-	 iI+mDuCWJVSy6eAOq5eYmmGOl/+hJ+G0oEHchf2c=
+	b=ptgh8w9pQT+xbe8TcPiBCLokxGLZEybNkmQcYutK3JNWfsddhbyfDjNfFHaH8stqu
+	 /OJWBkpYXLBRrBgR/XjpxOiZ8XTLXfcIhy8ENNtAW8N/1afoC5I/vYQ2tGmUethvEy
+	 lWsWNO8qLwPqOblKBMTlnHo+JqcG5+VW/TfMfWzE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Frank Li <Frank.Li@nxp.com>,
 	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 104/356] i3c: master: Replace hard code 2 with macro I3C_ADDR_SLOT_STATUS_BITS
-Date: Thu, 12 Dec 2024 15:57:03 +0100
-Message-ID: <20241212144248.749006275@linuxfoundation.org>
+Subject: [PATCH 6.6 105/356] i3c: master: Extend address status bit to 4 and add I3C_ADDR_SLOT_EXT_DESIRED
+Date: Thu, 12 Dec 2024 15:57:04 +0100
+Message-ID: <20241212144248.787447841@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144244.601729511@linuxfoundation.org>
 References: <20241212144244.601729511@linuxfoundation.org>
@@ -46,6 +46,7 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
@@ -54,68 +55,189 @@ Content-Transfer-Encoding: 8bit
 
 From: Frank Li <Frank.Li@nxp.com>
 
-[ Upstream commit 16aed0a6520ba01b7d22c32e193fc1ec674f92d4 ]
+[ Upstream commit 2f552fa280590e61bd3dbe66a7b54b99caa642a4 ]
 
-Replace the hardcoded value 2, which indicates 2 bits for I3C address
-status, with the predefined macro I3C_ADDR_SLOT_STATUS_BITS.
+Extend the address status bit to 4 and introduce the
+I3C_ADDR_SLOT_EXT_DESIRED macro to indicate that a device prefers a
+specific address. This is generally set by the 'assigned-address' in the
+device tree source (dts) file.
 
-Improve maintainability and extensibility of the code.
+ ┌────┬─────────────┬───┬─────────┬───┐
+ │S/Sr│ 7'h7E RnW=0 │ACK│ ENTDAA  │ T ├────┐
+ └────┴─────────────┴───┴─────────┴───┘    │
+ ┌─────────────────────────────────────────┘
+ │  ┌──┬─────────────┬───┬─────────────────┬────────────────┬───┬─────────┐
+ └─►│Sr│7'h7E RnW=1  │ACK│48bit UID BCR DCR│Assign 7bit Addr│PAR│ ACK/NACK│
+    └──┴─────────────┴───┴─────────────────┴────────────────┴───┴─────────┘
+
+Some master controllers (such as HCI) need to prepare the entire above
+transaction before sending it out to the I3C bus. This means that a 7-bit
+dynamic address needs to be allocated before knowing the target device's
+UID information.
+
+However, some I3C targets may request specific addresses (called as
+"init_dyn_addr"), which is typically specified by the DT-'s
+assigned-address property. Lower addresses having higher IBI priority. If
+it is available, i3c_bus_get_free_addr() preferably return a free address
+that is not in the list of desired addresses (called as "init_dyn_addr").
+This allows the device with the "init_dyn_addr" to switch to its
+"init_dyn_addr" when it hot-joins the I3C bus. Otherwise, if the
+"init_dyn_addr" is already in use by another I3C device, the target device
+will not be able to switch to its desired address.
+
+If the previous step fails, fallback returning one of the remaining
+unassigned address, regardless of its state in the desired list.
 
 Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Frank Li <Frank.Li@nxp.com>
-Link: https://lore.kernel.org/r/20241021-i3c_dts_assign-v8-1-4098b8bde01e@nxp.com
+Link: https://lore.kernel.org/r/20241021-i3c_dts_assign-v8-2-4098b8bde01e@nxp.com
 Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Stable-dep-of: 851bd21cdb55 ("i3c: master: Fix dynamic address leak when 'assigned-address' is present")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i3c/master.c       | 4 ++--
- include/linux/i3c/master.h | 4 +++-
- 2 files changed, 5 insertions(+), 3 deletions(-)
+ drivers/i3c/master.c       | 65 +++++++++++++++++++++++++++++++-------
+ include/linux/i3c/master.h |  7 ++--
+ 2 files changed, 59 insertions(+), 13 deletions(-)
 
 diff --git a/drivers/i3c/master.c b/drivers/i3c/master.c
-index 78171a754a3f8..2b6bc03652139 100644
+index 2b6bc03652139..d2a08a9a54414 100644
 --- a/drivers/i3c/master.c
 +++ b/drivers/i3c/master.c
-@@ -345,7 +345,7 @@ static enum i3c_addr_slot_status
- i3c_bus_get_addr_slot_status(struct i3c_bus *bus, u16 addr)
- {
- 	unsigned long status;
--	int bitpos = addr * 2;
-+	int bitpos = addr * I3C_ADDR_SLOT_STATUS_BITS;
- 
- 	if (addr > I2C_MAX_ADDR)
- 		return I3C_ADDR_SLOT_RSVD;
-@@ -359,7 +359,7 @@ i3c_bus_get_addr_slot_status(struct i3c_bus *bus, u16 addr)
- static void i3c_bus_set_addr_slot_status(struct i3c_bus *bus, u16 addr,
- 					 enum i3c_addr_slot_status status)
- {
--	int bitpos = addr * 2;
-+	int bitpos = addr * I3C_ADDR_SLOT_STATUS_BITS;
- 	unsigned long *ptr;
- 
- 	if (addr > I2C_MAX_ADDR)
-diff --git a/include/linux/i3c/master.h b/include/linux/i3c/master.h
-index f0aa4c549aa7f..ed6b153481021 100644
---- a/include/linux/i3c/master.h
-+++ b/include/linux/i3c/master.h
-@@ -305,6 +305,8 @@ enum i3c_addr_slot_status {
- 	I3C_ADDR_SLOT_STATUS_MASK = 3,
+@@ -342,7 +342,7 @@ struct bus_type i3c_bus_type = {
  };
  
-+#define I3C_ADDR_SLOT_STATUS_BITS 2
+ static enum i3c_addr_slot_status
+-i3c_bus_get_addr_slot_status(struct i3c_bus *bus, u16 addr)
++i3c_bus_get_addr_slot_status_mask(struct i3c_bus *bus, u16 addr, u32 mask)
+ {
+ 	unsigned long status;
+ 	int bitpos = addr * I3C_ADDR_SLOT_STATUS_BITS;
+@@ -353,11 +353,17 @@ i3c_bus_get_addr_slot_status(struct i3c_bus *bus, u16 addr)
+ 	status = bus->addrslots[bitpos / BITS_PER_LONG];
+ 	status >>= bitpos % BITS_PER_LONG;
+ 
+-	return status & I3C_ADDR_SLOT_STATUS_MASK;
++	return status & mask;
+ }
+ 
+-static void i3c_bus_set_addr_slot_status(struct i3c_bus *bus, u16 addr,
+-					 enum i3c_addr_slot_status status)
++static enum i3c_addr_slot_status
++i3c_bus_get_addr_slot_status(struct i3c_bus *bus, u16 addr)
++{
++	return i3c_bus_get_addr_slot_status_mask(bus, addr, I3C_ADDR_SLOT_STATUS_MASK);
++}
 +
++static void i3c_bus_set_addr_slot_status_mask(struct i3c_bus *bus, u16 addr,
++					      enum i3c_addr_slot_status status, u32 mask)
+ {
+ 	int bitpos = addr * I3C_ADDR_SLOT_STATUS_BITS;
+ 	unsigned long *ptr;
+@@ -366,9 +372,14 @@ static void i3c_bus_set_addr_slot_status(struct i3c_bus *bus, u16 addr,
+ 		return;
+ 
+ 	ptr = bus->addrslots + (bitpos / BITS_PER_LONG);
+-	*ptr &= ~((unsigned long)I3C_ADDR_SLOT_STATUS_MASK <<
+-						(bitpos % BITS_PER_LONG));
+-	*ptr |= (unsigned long)status << (bitpos % BITS_PER_LONG);
++	*ptr &= ~((unsigned long)mask << (bitpos % BITS_PER_LONG));
++	*ptr |= ((unsigned long)status & mask) << (bitpos % BITS_PER_LONG);
++}
++
++static void i3c_bus_set_addr_slot_status(struct i3c_bus *bus, u16 addr,
++					 enum i3c_addr_slot_status status)
++{
++	i3c_bus_set_addr_slot_status_mask(bus, addr, status, I3C_ADDR_SLOT_STATUS_MASK);
+ }
+ 
+ static bool i3c_bus_dev_addr_is_avail(struct i3c_bus *bus, u8 addr)
+@@ -380,13 +391,44 @@ static bool i3c_bus_dev_addr_is_avail(struct i3c_bus *bus, u8 addr)
+ 	return status == I3C_ADDR_SLOT_FREE;
+ }
+ 
++/*
++ * ┌────┬─────────────┬───┬─────────┬───┐
++ * │S/Sr│ 7'h7E RnW=0 │ACK│ ENTDAA  │ T ├────┐
++ * └────┴─────────────┴───┴─────────┴───┘    │
++ * ┌─────────────────────────────────────────┘
++ * │  ┌──┬─────────────┬───┬─────────────────┬────────────────┬───┬─────────┐
++ * └─►│Sr│7'h7E RnW=1  │ACK│48bit UID BCR DCR│Assign 7bit Addr│PAR│ ACK/NACK│
++ *    └──┴─────────────┴───┴─────────────────┴────────────────┴───┴─────────┘
++ * Some master controllers (such as HCI) need to prepare the entire above transaction before
++ * sending it out to the I3C bus. This means that a 7-bit dynamic address needs to be allocated
++ * before knowing the target device's UID information.
++ *
++ * However, some I3C targets may request specific addresses (called as "init_dyn_addr"), which is
++ * typically specified by the DT-'s assigned-address property. Lower addresses having higher IBI
++ * priority. If it is available, i3c_bus_get_free_addr() preferably return a free address that is
++ * not in the list of desired addresses (called as "init_dyn_addr"). This allows the device with
++ * the "init_dyn_addr" to switch to its "init_dyn_addr" when it hot-joins the I3C bus. Otherwise,
++ * if the "init_dyn_addr" is already in use by another I3C device, the target device will not be
++ * able to switch to its desired address.
++ *
++ * If the previous step fails, fallback returning one of the remaining unassigned address,
++ * regardless of its state in the desired list.
++ */
+ static int i3c_bus_get_free_addr(struct i3c_bus *bus, u8 start_addr)
+ {
+ 	enum i3c_addr_slot_status status;
+ 	u8 addr;
+ 
+ 	for (addr = start_addr; addr < I3C_MAX_ADDR; addr++) {
+-		status = i3c_bus_get_addr_slot_status(bus, addr);
++		status = i3c_bus_get_addr_slot_status_mask(bus, addr,
++							   I3C_ADDR_SLOT_EXT_STATUS_MASK);
++		if (status == I3C_ADDR_SLOT_FREE)
++			return addr;
++	}
++
++	for (addr = start_addr; addr < I3C_MAX_ADDR; addr++) {
++		status = i3c_bus_get_addr_slot_status_mask(bus, addr,
++							   I3C_ADDR_SLOT_STATUS_MASK);
+ 		if (status == I3C_ADDR_SLOT_FREE)
+ 			return addr;
+ 	}
+@@ -1877,9 +1919,10 @@ static int i3c_master_bus_init(struct i3c_master_controller *master)
+ 			goto err_rstdaa;
+ 		}
+ 
+-		i3c_bus_set_addr_slot_status(&master->bus,
+-					     i3cboardinfo->init_dyn_addr,
+-					     I3C_ADDR_SLOT_I3C_DEV);
++		i3c_bus_set_addr_slot_status_mask(&master->bus,
++						  i3cboardinfo->init_dyn_addr,
++						  I3C_ADDR_SLOT_I3C_DEV | I3C_ADDR_SLOT_EXT_DESIRED,
++						  I3C_ADDR_SLOT_EXT_STATUS_MASK);
+ 
+ 		/*
+ 		 * Only try to create/attach devices that have a static
+diff --git a/include/linux/i3c/master.h b/include/linux/i3c/master.h
+index ed6b153481021..f2eb2452ffa5f 100644
+--- a/include/linux/i3c/master.h
++++ b/include/linux/i3c/master.h
+@@ -290,7 +290,8 @@ enum i3c_open_drain_speed {
+  * @I3C_ADDR_SLOT_I2C_DEV: address is assigned to an I2C device
+  * @I3C_ADDR_SLOT_I3C_DEV: address is assigned to an I3C device
+  * @I3C_ADDR_SLOT_STATUS_MASK: address slot mask
+- *
++ * @I3C_ADDR_SLOT_EXT_DESIRED: the bitmask represents addresses that are preferred by some devices,
++ *			       such as the "assigned-address" property in a device tree source.
+  * On an I3C bus, addresses are assigned dynamically, and we need to know which
+  * addresses are free to use and which ones are already assigned.
+  *
+@@ -303,9 +304,11 @@ enum i3c_addr_slot_status {
+ 	I3C_ADDR_SLOT_I2C_DEV,
+ 	I3C_ADDR_SLOT_I3C_DEV,
+ 	I3C_ADDR_SLOT_STATUS_MASK = 3,
++	I3C_ADDR_SLOT_EXT_STATUS_MASK = 7,
++	I3C_ADDR_SLOT_EXT_DESIRED = BIT(2),
+ };
+ 
+-#define I3C_ADDR_SLOT_STATUS_BITS 2
++#define I3C_ADDR_SLOT_STATUS_BITS 4
+ 
  /**
   * struct i3c_bus - I3C bus object
-  * @cur_master: I3C master currently driving the bus. Since I3C is multi-master
-@@ -346,7 +348,7 @@ enum i3c_addr_slot_status {
- struct i3c_bus {
- 	struct i3c_dev_desc *cur_master;
- 	int id;
--	unsigned long addrslots[((I2C_MAX_ADDR + 1) * 2) / BITS_PER_LONG];
-+	unsigned long addrslots[((I2C_MAX_ADDR + 1) * I3C_ADDR_SLOT_STATUS_BITS) / BITS_PER_LONG];
- 	enum i3c_bus_mode mode;
- 	struct {
- 		unsigned long i3c;
 -- 
 2.43.0
 
