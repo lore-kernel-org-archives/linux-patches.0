@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEE8414A82;
-	Thu, 12 Dec 2024 15:52:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F6C3217F40;
+	Thu, 12 Dec 2024 15:52:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734018771; cv=none; b=KswX1YePuGJgB5COFubaeclM/FqMQ8+/A2eWv/eCitS7Q2qkaVYc19guyVDnOeWUfA/Noha2OsQzypPfcuUJ1hDt6uT34QvM7w37yWXdc2IvQo/qWD5DVGyMHkqi9fJ5DkoIadaqpuLkCwfQaa1tdldUp6jya3K3cgpy7bpzo80=
+	t=1734018774; cv=none; b=ktB2FQqcwwX6RCGHp5Gx3u6Spgq+Ql9yFzmisOWDqvVRMMH7WjTqTBfxzsrOIOF9zV72liIXBYLhCwBix81cIXw3Lq3PWP+41htCG7ld5nrbW/8EYYCAkjEbRjoA2+qLS7dgwk4NSXKb9F+BxNc0Gydho77Ff5AnBLYustZdonw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734018771; c=relaxed/simple;
-	bh=Xz+yJWMyjHlbucbM4UzMob1COJb9OzZObw91FifpZ+s=;
+	s=arc-20240116; t=1734018774; c=relaxed/simple;
+	bh=6SW18GJJC5SkmNOx6KSEl5aqm6/0XMS2fFuKMl8fOAk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Et792xH6812bhje/jbteD3yICFL16aq3MuzS36F+hyG/ck3K0sdNAV/LlfSMKUYa0Cj7RIB9elPdCb3o0+UCybuB35bOkkPwA+dP4aw+fT6htsu4McqlsLlGpVUfUhWSkZdDXI/7PUUdCggY0R1b6V9VI4a8G9AjoXLIgzq7N1I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vIek4Zco; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=u49dnLycOoRt4uEodGeUaZiC+mDpkTwv4lHPEp2FEEn6Mu59lqcuBGufzpU9pflexQNhpBjhXPqt+O8DQbxvaZWU6IjLOxTaV/USdeb6SpupokfJIyEwauQHzpelO239kgwXKXDJYoEOtAyikGlYbX4pki6aV/GLoyQLqSrMRCQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k+Lp/54J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vIek4Zco"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAD0FC4CED3;
-	Thu, 12 Dec 2024 15:52:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k+Lp/54J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF937C4CED0;
+	Thu, 12 Dec 2024 15:52:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734018771;
-	bh=Xz+yJWMyjHlbucbM4UzMob1COJb9OzZObw91FifpZ+s=;
+	s=korg; t=1734018774;
+	bh=6SW18GJJC5SkmNOx6KSEl5aqm6/0XMS2fFuKMl8fOAk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vIek4ZcoPXCYtX+tFdc0aa22Rj7qff8JH6ISIbIVsEuy2OU0EOS4NoaiuEtJwcmMY
-	 ygsdiVhA3elnMjCffyEtYdAW5+REVKnztgC1w/lxw9oAuQS4Nm63B4jSNcfDEUjW7Z
-	 vo91HUvlUt2LIxWNua1en0hlwCw7rpKKdBu/GxJo=
+	b=k+Lp/54J+dPfebC4jbnsPpA1VncZlulkrnfU2l/iJin15B5E6eVCQTAFamzsNFja6
+	 GUburP8CqM4/GS5NxU7al8A763covKSx4iwZXYOTBcjSS4PV3DMO8EZZVQBsOJHPCl
+	 dvzw9UQg8HAqDlMgsLbF4EAeXe0asYaVoKBECx14=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Gabay <daniel.gabay@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Ben Greear <greearb@candelatech.com>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 004/772] wifi: iwlwifi: mvm: Use the sync timepoint API in suspend
-Date: Thu, 12 Dec 2024 15:49:09 +0100
-Message-ID: <20241212144349.995023905@linuxfoundation.org>
+Subject: [PATCH 6.1 005/772] mac80211: fix user-power when emulating chanctx
+Date: Thu, 12 Dec 2024 15:49:10 +0100
+Message-ID: <20241212144350.035489119@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -52,62 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Gabay <daniel.gabay@intel.com>
+From: Ben Greear <greearb@candelatech.com>
 
-[ Upstream commit 9715246ca0bfc9feaec1b4ff5b3d38de65a7025d ]
+[ Upstream commit 9b15c6cf8d2e82c8427cd06f535d8de93b5b995c ]
 
-When starting the suspend flow, HOST_D3_START triggers an _async_
-firmware dump collection for debugging purposes. The async worker
-may race with suspend flow and fail to get NIC access, resulting in
-the following warning:
-"Timeout waiting for hardware access (CSR_GP_CNTRL 0xffffffff)"
+ieee80211_calc_hw_conf_chan was ignoring the configured
+user_txpower.  If it is set, use it to potentially decrease
+txpower as requested.
 
-Fix this by switching to the sync version to ensure the dump
-completes before proceeding with the suspend flow, avoiding
-potential race issues.
-
-Signed-off-by: Daniel Gabay <daniel.gabay@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20241010140328.9aae318cd593.I4b322009f39489c0b1d8893495c887870f73ed9c@changeid
+Signed-off-by: Ben Greear <greearb@candelatech.com>
+Link: https://patch.msgid.link/20241010203954.1219686-1-greearb@candelatech.com
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/fw/init.c | 4 +++-
- drivers/net/wireless/intel/iwlwifi/mvm/d3.c  | 2 ++
- 2 files changed, 5 insertions(+), 1 deletion(-)
+ net/mac80211/main.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/fw/init.c b/drivers/net/wireless/intel/iwlwifi/fw/init.c
-index 135bd48bfe9fa..cf02a2afbee56 100644
---- a/drivers/net/wireless/intel/iwlwifi/fw/init.c
-+++ b/drivers/net/wireless/intel/iwlwifi/fw/init.c
-@@ -39,10 +39,12 @@ void iwl_fw_runtime_init(struct iwl_fw_runtime *fwrt, struct iwl_trans *trans,
- }
- IWL_EXPORT_SYMBOL(iwl_fw_runtime_init);
+diff --git a/net/mac80211/main.c b/net/mac80211/main.c
+index 1eec4e2eb74cc..683301d9f5084 100644
+--- a/net/mac80211/main.c
++++ b/net/mac80211/main.c
+@@ -144,6 +144,8 @@ static u32 ieee80211_hw_conf_chan(struct ieee80211_local *local)
+ 	}
  
-+/* Assumes the appropriate lock is held by the caller */
- void iwl_fw_runtime_suspend(struct iwl_fw_runtime *fwrt)
- {
- 	iwl_fw_suspend_timestamp(fwrt);
--	iwl_dbg_tlv_time_point(fwrt, IWL_FW_INI_TIME_POINT_HOST_D3_START, NULL);
-+	iwl_dbg_tlv_time_point_sync(fwrt, IWL_FW_INI_TIME_POINT_HOST_D3_START,
-+				    NULL);
- }
- IWL_EXPORT_SYMBOL(iwl_fw_runtime_suspend);
+ 	power = ieee80211_chandef_max_power(&chandef);
++	if (local->user_power_level != IEEE80211_UNSET_POWER_LEVEL)
++		power = min(local->user_power_level, power);
  
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/d3.c b/drivers/net/wireless/intel/iwlwifi/mvm/d3.c
-index 425588605a262..53302c29c2291 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/d3.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/d3.c
-@@ -1375,7 +1375,9 @@ int iwl_mvm_suspend(struct ieee80211_hw *hw, struct cfg80211_wowlan *wowlan)
- 
- 	iwl_mvm_pause_tcm(mvm, true);
- 
-+	mutex_lock(&mvm->mutex);
- 	iwl_fw_runtime_suspend(&mvm->fwrt);
-+	mutex_unlock(&mvm->mutex);
- 
- 	return __iwl_mvm_suspend(hw, wowlan, false);
- }
+ 	rcu_read_lock();
+ 	list_for_each_entry_rcu(sdata, &local->interfaces, list) {
 -- 
 2.43.0
 
