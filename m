@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54A1A242A82;
-	Thu, 12 Dec 2024 16:19:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35CA9223E94;
+	Thu, 12 Dec 2024 16:19:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734020357; cv=none; b=onw2KSWSsvOaavnbgDsDkdXeieP7zt5Wvgw0ijDeCmGtvE5pJw9FKKGlwI+kAjIU6Nn2xrn5TIUqw0Tl3jhI4vva7ACKA3owV1B5TRcJHbLZ68tXBKPI3V9t/ZvgI0wUHezi1mvEyoxB9UXXL/wU3a3NzRshu/s9vKVIoL3s3yQ=
+	t=1734020361; cv=none; b=RIKl+Jr2vZkhJopAP9y/tuGWDyNJQLqdyMZIXqj1kUvxWpPBfaAJLDEbSPBIylOHfgM9ayXbAK3vZQZJpsqkdkXpcc1ikAcDQe6KKmyQsORptGerfRnrmDrs6/uu8pc+4soiy5W6KUEiJaAduI/3Yx9I9UIQcmkd+vwe3uKXl0M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734020357; c=relaxed/simple;
-	bh=vJsT4yBVmWVE0lEACM3jmjx5Ob5D+trIJsLXhHab7oA=;
+	s=arc-20240116; t=1734020361; c=relaxed/simple;
+	bh=IehZTnUj2/4WtXHZPeKiBZbd4T4LWbne+ezo2uFd0lo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dP7ND1x0o0HO4z7okygCVMVwNmRN1OzRxSt0mg1EEB4Chqnib/ztnl7uqPU4G0U+fDTioqERFJLX2wZBu3XtKcsm3Mn6bUq7alz86zvGrFLr9LxTI8szLOBBmxeHD/EMwnOnkw321U9lVbRrpMg2VaP4dhOVTmWSJUlZoh7gErI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WcitXgbR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ocvVQG64h5FQtANOiQfy+otmJZ6zt9H7vwgAnuYrGkYH36NHw0cT359WUOH1jPTZQlL5+ZQWk3pnLbXysqBprMdt9qgUrT4pztIA2HyTvXtGDw8FHvEruxttxLBpaoy1zhtAWgFWvjUpdAFMYFDQXsJ2oUbjs22+IPmlnXL82ok=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PoTdLLvP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WcitXgbR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 522DAC4CECE;
-	Thu, 12 Dec 2024 16:19:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PoTdLLvP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E443C4AF09;
+	Thu, 12 Dec 2024 16:19:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734020357;
-	bh=vJsT4yBVmWVE0lEACM3jmjx5Ob5D+trIJsLXhHab7oA=;
+	s=korg; t=1734020361;
+	bh=IehZTnUj2/4WtXHZPeKiBZbd4T4LWbne+ezo2uFd0lo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WcitXgbRF/YkZjlHwaNR7ErOrBZtuXMb+Wtv3Ml0DLgoL78SHjnRHLjBmUVkIsfRZ
-	 V02pInhS/vcZH18TR7ZSg3ixYmHTt321vP7b7BAsud2bKppyMTAYldbJBrMw9N0ASt
-	 mguR2lLmOc0eAjwu4Nch9OcqU5AZbB81qvg5SKdU=
+	b=PoTdLLvPG3xv4ZrCfbYtRqi54Y08foTnzjTU91OdoBcIor7Mf+hcMbiVzaAA2aCx6
+	 ajVENQPZyXfKCT6TENH91iQ2Py8Bzl1GOANf7LklczVHwsaqq9xoIM6n5rcTeymW6e
+	 +TOUjBNxDnVaOD9HN5JiNoVlr4n/x2JlPbnZ7azE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Li Lingfeng <lilingfeng3@huawei.com>,
+	Liu Jian <liujian56@huawei.com>,
 	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 446/772] nfs: ignore SB_RDONLY when mounting nfs
-Date: Thu, 12 Dec 2024 15:56:31 +0100
-Message-ID: <20241212144408.351747964@linuxfoundation.org>
+Subject: [PATCH 6.1 447/772] sunrpc: clear XPRT_SOCK_UPD_TIMEOUT when reset transport
+Date: Thu, 12 Dec 2024 15:56:32 +0100
+Message-ID: <20241212144408.392331207@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -51,77 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li Lingfeng <lilingfeng3@huawei.com>
+From: Liu Jian <liujian56@huawei.com>
 
-[ Upstream commit 52cb7f8f177878b4f22397b9c4d2c8f743766be3 ]
+[ Upstream commit 4db9ad82a6c823094da27de4825af693a3475d51 ]
 
-When exporting only one file system with fsid=0 on the server side, the
-client alternately uses the ro/rw mount options to perform the mount
-operation, and a new vfsmount is generated each time.
+Since transport->sock has been set to NULL during reset transport,
+XPRT_SOCK_UPD_TIMEOUT also needs to be cleared. Otherwise, the
+xs_tcp_set_socket_timeouts() may be triggered in xs_tcp_send_request()
+to dereference the transport->sock that has been set to NULL.
 
-It can be reproduced as follows:
-[root@localhost ~]# mount /dev/sda /mnt2
-[root@localhost ~]# echo "/mnt2 *(rw,no_root_squash,fsid=0)" >/etc/exports
-[root@localhost ~]# systemctl restart nfs-server
-[root@localhost ~]# mount -t nfs -o ro,vers=4 127.0.0.1:/ /mnt/sdaa
-[root@localhost ~]# mount -t nfs -o rw,vers=4 127.0.0.1:/ /mnt/sdaa
-[root@localhost ~]# mount -t nfs -o ro,vers=4 127.0.0.1:/ /mnt/sdaa
-[root@localhost ~]# mount -t nfs -o rw,vers=4 127.0.0.1:/ /mnt/sdaa
-[root@localhost ~]# mount | grep nfs4
-127.0.0.1:/ on /mnt/sdaa type nfs4 (ro,relatime,vers=4.2,rsize=1048576,...
-127.0.0.1:/ on /mnt/sdaa type nfs4 (rw,relatime,vers=4.2,rsize=1048576,...
-127.0.0.1:/ on /mnt/sdaa type nfs4 (ro,relatime,vers=4.2,rsize=1048576,...
-127.0.0.1:/ on /mnt/sdaa type nfs4 (rw,relatime,vers=4.2,rsize=1048576,...
-[root@localhost ~]#
-
-We expected that after mounting with the ro option, using the rw option to
-mount again would return EBUSY, but the actual situation was not the case.
-
-As shown above, when mounting for the first time, a superblock with the ro
-flag will be generated, and at the same time, in do_new_mount_fc -->
-do_add_mount, it detects that the superblock corresponding to the current
-target directory is inconsistent with the currently generated one
-(path->mnt->mnt_sb != newmnt->mnt.mnt_sb), and a new vfsmount will be
-generated.
-
-When mounting with the rw option for the second time, since no matching
-superblock can be found in the fs_supers list, a new superblock with the
-rw flag will be generated again. The superblock in use (ro) is different
-from the newly generated superblock (rw), and a new vfsmount will be
-generated again.
-
-When mounting with the ro option for the third time, the superblock (ro)
-is found in fs_supers, the superblock in use (rw) is different from the
-found superblock (ro), and a new vfsmount will be generated again.
-
-We can switch between ro/rw through remount, and only one superblock needs
-to be generated, thus avoiding the problem of repeated generation of
-vfsmount caused by switching superblocks.
-
-Furthermore, This can also resolve the issue described in the link.
-
-Fixes: 275a5d24bf56 ("NFS: Error when mounting the same filesystem with different options")
-Link: https://lore.kernel.org/all/20240604112636.236517-3-lilingfeng@huaweicloud.com/
+Fixes: 7196dbb02ea0 ("SUNRPC: Allow changing of the TCP timeout parameters on the fly")
 Signed-off-by: Li Lingfeng <lilingfeng3@huawei.com>
+Signed-off-by: Liu Jian <liujian56@huawei.com>
 Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/internal.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/sunrpc/xprtsock.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/nfs/internal.h b/fs/nfs/internal.h
-index d921d7b7bec64..7fa23a6368e0b 100644
---- a/fs/nfs/internal.h
-+++ b/fs/nfs/internal.h
-@@ -11,7 +11,7 @@
- #include <linux/nfs_page.h>
- #include <linux/wait_bit.h>
+diff --git a/net/sunrpc/xprtsock.c b/net/sunrpc/xprtsock.c
+index 190dae11f634a..b9dc8e197dde8 100644
+--- a/net/sunrpc/xprtsock.c
++++ b/net/sunrpc/xprtsock.c
+@@ -1130,6 +1130,7 @@ static void xs_sock_reset_state_flags(struct rpc_xprt *xprt)
+ 	clear_bit(XPRT_SOCK_WAKE_WRITE, &transport->sock_state);
+ 	clear_bit(XPRT_SOCK_WAKE_DISCONNECT, &transport->sock_state);
+ 	clear_bit(XPRT_SOCK_NOSPACE, &transport->sock_state);
++	clear_bit(XPRT_SOCK_UPD_TIMEOUT, &transport->sock_state);
+ }
  
--#define NFS_SB_MASK (SB_RDONLY|SB_NOSUID|SB_NODEV|SB_NOEXEC|SB_SYNCHRONOUS)
-+#define NFS_SB_MASK (SB_NOSUID|SB_NODEV|SB_NOEXEC|SB_SYNCHRONOUS)
- 
- extern const struct export_operations nfs_export_ops;
- 
+ static void xs_run_error_worker(struct sock_xprt *transport, unsigned int nr)
 -- 
 2.43.0
 
