@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CCCD2EAE5;
-	Thu, 12 Dec 2024 15:06:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F27AA211476;
+	Thu, 12 Dec 2024 15:06:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734015993; cv=none; b=qaH59haKHCTkgEzgydmIlPpcglSiOcPhEQZtmt7UpqYbWYcs6Axi4QZdRAut9gO/c1U1/7aJEu2XuVO30epnhGefqT9IzBgWTgQEpYncCNaYehZs5aQsMzkmgaQ/p9H9RDwgtCPh0dHpWHfDW3tWoEwHQdgu6r70n1uLBMjyVoQ=
+	t=1734015997; cv=none; b=SqnQwhnZVxEEXxK7xgUHscz5x9k3SYsgKBQVqH6ke+qa3/Eh/eWsp59PIKUKnvAAgwD4cR1IWCVQmfPcO9whmy1XV0ZKZ3Tq8Sn4mQD7J7rpmg1+5uu3mlKUKlxZbeNYRaOUddrRnijGl3ZXwzdFHRvB81fUQzrD60FYG3fmccE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734015993; c=relaxed/simple;
-	bh=qm40uhayvrkO1McX1eecFbaY8SYyMGw9EXWVIbPrMbU=;
+	s=arc-20240116; t=1734015997; c=relaxed/simple;
+	bh=6xXj9nOgaEmASTzxYmgk0EKzJvWm+9vC/8nqIn4mfHA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pGVDxohSwFhak266kc0OzNDSNTBQcvc7lTWZFDMRXACJ/zPbIF29lXKdU60qkKglgBPGLOsD6sg3Zbg/9Rie017ZrV1cSiJUMYMIwJIbkWXQ+6p0kHs0cQXWt/pu+UZ9xZcrrKOofaAZMug0L0Q4qLTf+MRv/xvo5EfIrkczNzU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yazh2N6f; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=D/1NFX73IShCNMW+4Vrer6qSrXuI4h1InYzLfweHh0FG7MRguVfWKSqH1MUI1WhWgP/bqCqWt7yMBYBL+cWWr9IN28g5C6lGQbHiji2fBh+8w9q4Zf3e+sRd98tXU9QqCT+YDJ42q9vsyNKFY5gJ6Emc4mEznKAEFd4mLXbp7Bs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rd8Mzhs1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yazh2N6f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43D8DC4CECE;
-	Thu, 12 Dec 2024 15:06:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rd8Mzhs1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC5C1C4CECE;
+	Thu, 12 Dec 2024 15:06:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734015992;
-	bh=qm40uhayvrkO1McX1eecFbaY8SYyMGw9EXWVIbPrMbU=;
+	s=korg; t=1734015996;
+	bh=6xXj9nOgaEmASTzxYmgk0EKzJvWm+9vC/8nqIn4mfHA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yazh2N6fqpt0FlqkadaaDijt3IXk3h0Ovtw2fWKYXKLN1nSq0kQUsN4eYHw9CHFMU
-	 KoL5+qBAEZn5rVcaULOEAMV7qwM2aEhKi00gWN1iotaCqmyj/EKojC3i++F3jtlgBQ
-	 RQ3lcW3CIWui+Q0nJaT4/B1XfVlW+sHxnJQ6sx8g=
+	b=Rd8Mzhs1xcmDQTlRT9636pdH8dh74xNFviHj9CRiEqqDLaWAsR1MapUnXYF2DN+tn
+	 MWwjlXa9owfWjnTy+bS17U2kM9I9Ahcrhcn1Ao5GFgx7O+q1PX+O9+OlMMaB5f4sNn
+	 eTUg/4ImbrxG0J/ngsTldEPeNnKhVWQNQa1wOLFk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Will Deacon <will@kernel.org>,
-	Catalin Marinas <catalin.marinas@arm.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Tao Lyu <tao.lyu@epfl.ch>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 102/466] drivers/virt: pkvm: Dont fail ioremap() call if MMIO_GUARD fails
-Date: Thu, 12 Dec 2024 15:54:31 +0100
-Message-ID: <20241212144310.843922773@linuxfoundation.org>
+Subject: [PATCH 6.12 103/466] bpf: Dont mark STACK_INVALID as STACK_MISC in mark_stack_slot_misc
+Date: Thu, 12 Dec 2024 15:54:32 +0100
+Message-ID: <20241212144310.882412779@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144306.641051666@linuxfoundation.org>
 References: <20241212144306.641051666@linuxfoundation.org>
@@ -51,45 +53,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Will Deacon <will@kernel.org>
+From: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 
-[ Upstream commit d44679fb954ffea961036ed1aeb7d65035f78489 ]
+[ Upstream commit 69772f509e084ec6bca12dbcdeeeff41b0103774 ]
 
-Calling the MMIO_GUARD hypercall from guests which have not been
-enrolled (e.g. because they are running without pvmfw) results in
--EINVAL being returned. In this case, MMIO_GUARD is not active
-and so we can simply proceed with the normal ioremap() routine.
+Inside mark_stack_slot_misc, we should not upgrade STACK_INVALID to
+STACK_MISC when allow_ptr_leaks is false, since invalid contents
+shouldn't be read unless the program has the relevant capabilities.
+The relaxation only makes sense when env->allow_ptr_leaks is true.
 
-Don't fail ioremap() if MMIO_GUARD fails; instead WARN_ON_ONCE()
-to highlight that the pvm environment is slightly wonky.
+However, such conversion in privileged mode becomes unnecessary, as
+invalid slots can be read without being upgraded to STACK_MISC.
 
-Fixes: 0f1269495800 ("drivers/virt: pkvm: Intercept ioremap using pKVM MMIO_GUARD hypercall")
-Signed-off-by: Will Deacon <will@kernel.org>
-Link: https://lore.kernel.org/r/20241202145731.6422-2-will@kernel.org
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+Currently, the condition is inverted (i.e. checking for true instead of
+false), simply remove it to restore correct behavior.
+
+Fixes: eaf18febd6eb ("bpf: preserve STACK_ZERO slots on partial reg spills")
+Acked-by: Andrii Nakryiko <andrii@kernel.org>
+Reported-by: Tao Lyu <tao.lyu@epfl.ch>
+Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Link: https://lore.kernel.org/r/20241204044757.1483141-2-memxor@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/virt/coco/pkvm-guest/arm-pkvm-guest.c | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ kernel/bpf/verifier.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/virt/coco/pkvm-guest/arm-pkvm-guest.c b/drivers/virt/coco/pkvm-guest/arm-pkvm-guest.c
-index 56a3859dda8a1..4230b817a80bd 100644
---- a/drivers/virt/coco/pkvm-guest/arm-pkvm-guest.c
-+++ b/drivers/virt/coco/pkvm-guest/arm-pkvm-guest.c
-@@ -87,12 +87,8 @@ static int mmio_guard_ioremap_hook(phys_addr_t phys, size_t size,
- 
- 	while (phys < end) {
- 		const int func_id = ARM_SMCCC_VENDOR_HYP_KVM_MMIO_GUARD_FUNC_ID;
--		int err;
--
--		err = arm_smccc_do_one_page(func_id, phys);
--		if (err)
--			return err;
- 
-+		WARN_ON_ONCE(arm_smccc_do_one_page(func_id, phys));
- 		phys += PAGE_SIZE;
- 	}
- 
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index 8955259112c03..cdf8ce1e2cc4f 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -1200,14 +1200,17 @@ static bool is_spilled_scalar_reg64(const struct bpf_stack_state *stack)
+ /* Mark stack slot as STACK_MISC, unless it is already STACK_INVALID, in which
+  * case they are equivalent, or it's STACK_ZERO, in which case we preserve
+  * more precise STACK_ZERO.
+- * Note, in uprivileged mode leaving STACK_INVALID is wrong, so we take
+- * env->allow_ptr_leaks into account and force STACK_MISC, if necessary.
++ * Regardless of allow_ptr_leaks setting (i.e., privileged or unprivileged
++ * mode), we won't promote STACK_INVALID to STACK_MISC. In privileged case it is
++ * unnecessary as both are considered equivalent when loading data and pruning,
++ * in case of unprivileged mode it will be incorrect to allow reads of invalid
++ * slots.
+  */
+ static void mark_stack_slot_misc(struct bpf_verifier_env *env, u8 *stype)
+ {
+ 	if (*stype == STACK_ZERO)
+ 		return;
+-	if (env->allow_ptr_leaks && *stype == STACK_INVALID)
++	if (*stype == STACK_INVALID)
+ 		return;
+ 	*stype = STACK_MISC;
+ }
 -- 
 2.43.0
 
