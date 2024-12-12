@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBF112210E3;
-	Thu, 12 Dec 2024 17:12:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CB7E53365;
+	Thu, 12 Dec 2024 17:12:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734023566; cv=none; b=p4ieFvVRe8d6R2kSzN7Hij9AzFWXRSdEexLoL3Hj0lMFQDX4NascxtgULqLQ8A7wbVT6LK54yJq75vkxKSysgmzSuS9lCiwMNo9kcZAZlBpq3C7kkAMKWWXkU+uydPZHFOj+NJJIpJP/bLrO7PsICNTaJrA3D5j7CAKBu9TR6lA=
+	t=1734023570; cv=none; b=cue+4laCzX3AmcTsUl9FGQDk6TPiKs8UW+SOy3JRJ9nDfh6j4xjvGcIc62VQf38GfcPOVCxxmJZBO9BXTnPC0VZeVwNLKPWHaLpmcX4vnSlYYgPitz5WoKtZ0RhhSUj6ZCgjORbIfQlWxYjdRnnakynn7gdBJqHtHnlWufMrMFo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734023566; c=relaxed/simple;
-	bh=T13E6lUa/mRPR5ZG4ox9E5HAIM3BnaLEgXN4rTR2IdQ=;
+	s=arc-20240116; t=1734023570; c=relaxed/simple;
+	bh=mfnPpnXtmIk8m5pzELfmVXPCRs32XYZmi1vgKL76J+o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=X1ZP4GIr0QY23c3GalQx/HGfpTufHS+suKBurS67LsMTsBzaw1yVAwSNZtm87EAdBltyDi2/8N/KUv4xP6SdkrS1kJRN+SrZP8bx0pjl8R6amqaOtfBvDusuC4xs9llLobGv110/SLTjR1Nu1eXMnZW+l61mZaggoCVqtOhBidE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ne9mxIOe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g2nTzsK8hBzqS4U+wYGqVeTrIIEnoKNsjKvQA5DTWdYW2v+iEpfHNKmfpqssfGNqjbQAgo+4yIVc5vG/mR+Uov27fiCEDvzsIpEFjm15kgbCtSBDdeszUg40yR6Po3LY16MiFIXGncjOUfPO8XfEffHrU2uN6XrOf5iWST0KVfM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XofZ2E6F; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ne9mxIOe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62534C4CED0;
-	Thu, 12 Dec 2024 17:12:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XofZ2E6F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B287C4CED0;
+	Thu, 12 Dec 2024 17:12:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734023566;
-	bh=T13E6lUa/mRPR5ZG4ox9E5HAIM3BnaLEgXN4rTR2IdQ=;
+	s=korg; t=1734023569;
+	bh=mfnPpnXtmIk8m5pzELfmVXPCRs32XYZmi1vgKL76J+o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ne9mxIOeLjAY8pg5cNSHvzkg9T/Dtlyfh2OyO3RkNP1Z3VtqxVn/DVI2yV5Syv31Q
-	 yD+TG0FKe+K4gF8/X3jxE9uPjNEMpspV9d+VBoxg1dtZwr9DQwf5PTfoB4sZhsKOkw
-	 O5bzmuhwT4kBLt+TjNRfdNwf0T7rXOfzp/R8zDSU=
+	b=XofZ2E6FDGTHrEoHmz/D3PBqHHVgnPtNSN2/dUjfhYB2wSjIXK8qrN9vzGjkWNno8
+	 6rvgmjNJV+b/q4oUNRFy5KLxUuMn6FivFPyA+wIQFlyOyyI4p2OuGKzIz3GSHv5oe3
+	 i/YO2FShVwe6/Y7xTmfGZk6wbxC4Mt+s6SSVd/5w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Michal=20Vok=C3=A1=C4=8D?= <michal.vokac@ysoft.com>,
-	Lee Jones <lee@kernel.org>
-Subject: [PATCH 5.10 010/459] leds: lp55xx: Remove redundant test for invalid channel number
-Date: Thu, 12 Dec 2024 15:55:48 +0100
-Message-ID: <20241212144253.933033973@linuxfoundation.org>
+	Gabor Juhos <j4g8y7@gmail.com>,
+	Bjorn Andersson <andersson@kernel.org>
+Subject: [PATCH 5.10 011/459] clk: qcom: gcc-qcs404: fix initial rate of GPLL3
+Date: Thu, 12 Dec 2024 15:55:49 +0100
+Message-ID: <20241212144253.972933200@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144253.511169641@linuxfoundation.org>
 References: <20241212144253.511169641@linuxfoundation.org>
@@ -44,58 +44,57 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michal Vokáč <michal.vokac@ysoft.com>
+From: Gabor Juhos <j4g8y7@gmail.com>
 
-commit 09b1ef9813a0742674f7efe26104403ca94a1b4a upstream.
+commit 36d202241d234fa4ac50743510d098ad52bd193a upstream.
 
-Since commit 92a81562e695 ("leds: lp55xx: Add multicolor framework
-support to lp55xx") there are two subsequent tests if the chan_nr
-(reg property) is in valid range. One in the lp55xx_init_led()
-function and one in the lp55xx_parse_common_child() function that
-was added with the mentioned commit.
+The comment before the config of the GPLL3 PLL says that the
+PLL should run at 930 MHz. In contrary to this, calculating
+the frequency from the current configuration values by using
+19.2 MHz as input frequency defined in 'qcs404.dtsi', it gives
+921.6 MHz:
 
-There are two issues with that.
+  $ xo=19200000; l=48; alpha=0x0; alpha_hi=0x0
+  $ echo "$xo * ($((l)) + $(((alpha_hi << 32 | alpha) >> 8)) / 2^32)" | bc -l
+  921600000.00000000000000000000
 
-First is in the lp55xx_parse_common_child() function where the reg
-property is tested right after it is read from the device tree.
-Test for the upper range is not correct though. Valid reg values are
-0 to (max_channel - 1) so it should be >=.
+Set 'alpha_hi' in the configuration to a value used in downstream
+kernels [1][2] in order to get the correct output rate:
 
-Second issue is that in case the parsed value is out of the range
-the probe just fails and no error message is shown as the code never
-reaches the second test that prints and error message.
+  $ xo=19200000; l=48; alpha=0x0; alpha_hi=0x70
+  $ echo "$xo * ($((l)) + $(((alpha_hi << 32 | alpha) >> 8)) / 2^32)" | bc -l
+  930000000.00000000000000000000
 
-Remove the test form lp55xx_parse_common_child() function completely
-and keep the one in lp55xx_init_led() function to deal with it.
+The change is based on static code analysis, compile tested only.
 
-Fixes: 92a81562e695 ("leds: lp55xx: Add multicolor framework support to lp55xx")
+[1] https://git.codelinaro.org/clo/la/kernel/msm-5.4/-/blob/kernel.lnx.5.4.r56-rel/drivers/clk/qcom/gcc-qcs404.c?ref_type=heads#L335
+[2} https://git.codelinaro.org/clo/la/kernel/msm-5.15/-/blob/kernel.lnx.5.15.r49-rel/drivers/clk/qcom/gcc-qcs404.c?ref_type=heads#L127
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Michal Vokáč <michal.vokac@ysoft.com>
-Link: https://lore.kernel.org/r/20241017150812.3563629-1-michal.vokac@ysoft.com
-Signed-off-by: Lee Jones <lee@kernel.org>
+Fixes: 652f1813c113 ("clk: qcom: gcc: Add global clock controller driver for QCS404")
+Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
+Link: https://lore.kernel.org/r/20241022-fix-gcc-qcs404-gpll3-v1-1-c4d30d634d19@gmail.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/leds/leds-lp55xx-common.c |    3 ---
- 1 file changed, 3 deletions(-)
+ drivers/clk/qcom/gcc-qcs404.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/leds/leds-lp55xx-common.c
-+++ b/drivers/leds/leds-lp55xx-common.c
-@@ -578,9 +578,6 @@ static int lp55xx_parse_common_child(str
- 	if (ret)
- 		return ret;
- 
--	if (*chan_nr < 0 || *chan_nr > cfg->max_channel)
--		return -EINVAL;
--
- 	return 0;
- }
- 
+--- a/drivers/clk/qcom/gcc-qcs404.c
++++ b/drivers/clk/qcom/gcc-qcs404.c
+@@ -337,6 +337,7 @@ static struct clk_alpha_pll gpll1_out_ma
+ /* 930MHz configuration */
+ static const struct alpha_pll_config gpll3_config = {
+ 	.l = 48,
++	.alpha_hi = 0x70,
+ 	.alpha = 0x0,
+ 	.alpha_en_mask = BIT(24),
+ 	.post_div_mask = 0xf << 8,
 
 
