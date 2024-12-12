@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5446A21CFEA;
-	Thu, 12 Dec 2024 16:38:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED4A721CFEA;
+	Thu, 12 Dec 2024 16:38:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734021507; cv=none; b=jScje1P3lJV1Qy+b96ZUMgulcHodzNLLeNJjawjCSsfRKuKA+AVzZcwWhJHKKdFkpiUNl+2o/57N3CST3eb2fCjp1TRtMJ4jMg2iUr1MyCuSVDIpVWlCLrCdOOFPePv7G1OjjltTy87idLqNtpy49k9oeiWnuGyEfn7EjNX0krA=
+	t=1734021510; cv=none; b=brreJzSQPWJ/dBQIgUD3JE7BT78WqOG1Exf5ZfW6bZFTHduQ9RGe0boQFU7wnh9CDQ+e8n3Mqf5HyBsl2DP4C4qSUFkJRR8RqmljeR9gceZME1Q913Y6ZG1ULjQGuGiCKe6eQoU4VfHyC3FF2x4SwEk+ngswox04Zdg/PZk7HjA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734021507; c=relaxed/simple;
-	bh=k1Uw/UfOmAarwFaDgzHOtLH9ovykdEFZOxTqcMOcsaA=;
+	s=arc-20240116; t=1734021510; c=relaxed/simple;
+	bh=3rQK6+0r2tzlRKvOT73UWLUpOaLZU+A2G9DwXqFyy44=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ub7rUcFPN3uFf3xA3eH0JUv1crqsD+Fyo+FePWQwNumpwiSd1aQyHKeCgXookoCLr6LKPnYTnev8X2KMN+Kt/RbKYTYIxZqCP8EQ9QBV6Gtsi9OLPnUT9XpLUVIpigqN1Z4jIftbb/2y/yKbQQlDKkR2KcbiZnKtLd8yxJYJodE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WUgamRmY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qVnDwpkkMJ4s5jRP2+mYsjoh+yckY4P5LFBSKgHNl12VN7cyZ4v83AiQN5wC2h9fCb2VQXyQ0cU4oADoa7gjvkdLMHZc1k/qM34/ur8xEzC2xy2uTZ+83M32EOoRtDbo8K0crELFZXv1+L7Pk9VTeodMsI3cAjdEKvpzkUkeaJM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ojc1ZyZI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WUgamRmY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59D63C4CECE;
-	Thu, 12 Dec 2024 16:38:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ojc1ZyZI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11FBEC4CECE;
+	Thu, 12 Dec 2024 16:38:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734021505;
-	bh=k1Uw/UfOmAarwFaDgzHOtLH9ovykdEFZOxTqcMOcsaA=;
+	s=korg; t=1734021509;
+	bh=3rQK6+0r2tzlRKvOT73UWLUpOaLZU+A2G9DwXqFyy44=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WUgamRmY3tIILQg8Ew9SdtxsMfMF9h7B7iGJeLkrtLbcXTTw/ElY4YTzKNpe2Ee8h
-	 XHKzPtezpgmixp0ttJJB0iIeCvKhSLycxkppTyT/p6JcRWiASHAmdZs12OkSydmcSt
-	 nL3deZNxYAA0xAErAjojguwtwJqx6oomkeHOzs5A=
+	b=ojc1ZyZI+mZp5GzP3Koh7K1uWLNyD6ge64V9OBB2pFfev2z7FulhaDPd6/Cbs9pbc
+	 NDtm7wiZO9fMRsk2Sgpm3Yxzs3PPUHw08E1puB42+uKCXEhZhPJJaTZBETg1fTlVZe
+	 PhTj3aX4aeWXzc9qje6s/uUql6wtW0N/8wJF2aYU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lonial Con <kongln9170@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Daniel Borkmann <daniel@iogearbox.net>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Shung-Hsi Yu <shung-hsi.yu@suse.com>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Bin Lan <bin.lan.cn@windriver.com>
-Subject: [PATCH 6.1 757/772] bpf: Fix helper writes to read-only maps
-Date: Thu, 12 Dec 2024 16:01:42 +0100
-Message-ID: <20241212144421.217823679@linuxfoundation.org>
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	David Ahern <dsahern@kernel.org>,
+	Martin KaFai Lau <martin.lau@kernel.org>
+Subject: [PATCH 6.1 758/772] net: Move {l,t,d}stats allocation to core and convert veth & vrf
+Date: Thu, 12 Dec 2024 16:01:43 +0100
+Message-ID: <20241212144421.259686893@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -56,233 +55,290 @@ Content-Transfer-Encoding: 8bit
 
 From: Daniel Borkmann <daniel@iogearbox.net>
 
-commit 32556ce93bc45c730829083cb60f95a2728ea48b upstream.
+[ Upstream commit 34d21de99cea9cb17967874313e5b0262527833c ]
 
-Lonial found an issue that despite user- and BPF-side frozen BPF map
-(like in case of .rodata), it was still possible to write into it from
-a BPF program side through specific helpers having ARG_PTR_TO_{LONG,INT}
-as arguments.
+Move {l,t,d}stats allocation to the core and let netdevs pick the stats
+type they need. That way the driver doesn't have to bother with error
+handling (allocation failure checking, making sure free happens in the
+right spot, etc) - all happening in the core.
 
-In check_func_arg() when the argument is as mentioned, the meta->raw_mode
-is never set. Later, check_helper_mem_access(), under the case of
-PTR_TO_MAP_VALUE as register base type, it assumes BPF_READ for the
-subsequent call to check_map_access_type() and given the BPF map is
-read-only it succeeds.
-
-The helpers really need to be annotated as ARG_PTR_TO_{LONG,INT} | MEM_UNINIT
-when results are written into them as opposed to read out of them. The
-latter indicates that it's okay to pass a pointer to uninitialized memory
-as the memory is written to anyway.
-
-However, ARG_PTR_TO_{LONG,INT} is a special case of ARG_PTR_TO_FIXED_SIZE_MEM
-just with additional alignment requirement. So it is better to just get
-rid of the ARG_PTR_TO_{LONG,INT} special cases altogether and reuse the
-fixed size memory types. For this, add MEM_ALIGNED to additionally ensure
-alignment given these helpers write directly into the args via *<ptr> = val.
-The .arg*_size has been initialized reflecting the actual sizeof(*<ptr>).
-
-MEM_ALIGNED can only be used in combination with MEM_FIXED_SIZE annotated
-argument types, since in !MEM_FIXED_SIZE cases the verifier does not know
-the buffer size a priori and therefore cannot blindly write *<ptr> = val.
-
-Fixes: 57c3bb725a3d ("bpf: Introduce ARG_PTR_TO_{INT,LONG} arg types")
-Reported-by: Lonial Con <kongln9170@gmail.com>
+Co-developed-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Acked-by: Andrii Nakryiko <andrii@kernel.org>
-Acked-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
-Link: https://lore.kernel.org/r/20240913191754.13290-3-daniel@iogearbox.net
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-[ Resolve merge conflict in include/linux/bpf.h and merge conflict in
-  kernel/bpf/verifier.c.]
-Signed-off-by: Bin Lan <bin.lan.cn@windriver.com>
+Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
+Cc: David Ahern <dsahern@kernel.org>
+Link: https://lore.kernel.org/r/20231114004220.6495-3-daniel@iogearbox.net
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Stable-dep-of: 024ee930cb3c ("bpf: Fix dev's rx stats for bpf_redirect_peer traffic")
+[ Note: Simplified vrf bits to reduce patch given unrelated to the fix ]
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/bpf.h      |    7 +++++--
- kernel/bpf/helpers.c     |    6 ++++--
- kernel/bpf/syscall.c     |    3 ++-
- kernel/bpf/verifier.c    |   41 +++++------------------------------------
- kernel/trace/bpf_trace.c |    6 ++++--
- net/core/filter.c        |    6 ++++--
- 6 files changed, 24 insertions(+), 45 deletions(-)
+ drivers/net/veth.c        |   16 +------------
+ drivers/net/vrf.c         |   24 ++++++--------------
+ include/linux/netdevice.h |   30 ++++++++++++++++++++++----
+ net/core/dev.c            |   53 +++++++++++++++++++++++++++++++++++++++++++---
+ 4 files changed, 85 insertions(+), 38 deletions(-)
 
---- a/include/linux/bpf.h
-+++ b/include/linux/bpf.h
-@@ -475,6 +475,11 @@ enum bpf_type_flag {
- 	/* Size is known at compile time. */
- 	MEM_FIXED_SIZE		= BIT(10 + BPF_BASE_TYPE_BITS),
+--- a/drivers/net/veth.c
++++ b/drivers/net/veth.c
+@@ -1381,25 +1381,12 @@ static void veth_free_queues(struct net_
  
-+	/* Memory must be aligned on some architectures, used in combination with
-+	 * MEM_FIXED_SIZE.
-+	 */
-+	MEM_ALIGNED		= BIT(17 + BPF_BASE_TYPE_BITS),
-+
- 	__BPF_TYPE_FLAG_MAX,
- 	__BPF_TYPE_LAST_FLAG	= __BPF_TYPE_FLAG_MAX - 1,
- };
-@@ -510,8 +515,6 @@ enum bpf_arg_type {
- 	ARG_ANYTHING,		/* any (initialized) argument is ok */
- 	ARG_PTR_TO_SPIN_LOCK,	/* pointer to bpf_spin_lock */
- 	ARG_PTR_TO_SOCK_COMMON,	/* pointer to sock_common */
--	ARG_PTR_TO_INT,		/* pointer to int */
--	ARG_PTR_TO_LONG,	/* pointer to long */
- 	ARG_PTR_TO_SOCKET,	/* pointer to bpf_sock (fullsock) */
- 	ARG_PTR_TO_BTF_ID,	/* pointer to in-kernel struct */
- 	ARG_PTR_TO_ALLOC_MEM,	/* pointer to dynamically allocated memory */
---- a/kernel/bpf/helpers.c
-+++ b/kernel/bpf/helpers.c
-@@ -531,7 +531,8 @@ const struct bpf_func_proto bpf_strtol_p
- 	.arg1_type	= ARG_PTR_TO_MEM | MEM_RDONLY,
- 	.arg2_type	= ARG_CONST_SIZE,
- 	.arg3_type	= ARG_ANYTHING,
--	.arg4_type	= ARG_PTR_TO_LONG,
-+	.arg4_type	= ARG_PTR_TO_FIXED_SIZE_MEM | MEM_UNINIT | MEM_ALIGNED,
-+	.arg4_size	= sizeof(s64),
- };
- 
- BPF_CALL_4(bpf_strtoul, const char *, buf, size_t, buf_len, u64, flags,
-@@ -560,7 +561,8 @@ const struct bpf_func_proto bpf_strtoul_
- 	.arg1_type	= ARG_PTR_TO_MEM | MEM_RDONLY,
- 	.arg2_type	= ARG_CONST_SIZE,
- 	.arg3_type	= ARG_ANYTHING,
--	.arg4_type	= ARG_PTR_TO_LONG,
-+	.arg4_type	= ARG_PTR_TO_FIXED_SIZE_MEM | MEM_UNINIT | MEM_ALIGNED,
-+	.arg4_size	= sizeof(u64),
- };
- 
- BPF_CALL_3(bpf_strncmp, const char *, s1, u32, s1_sz, const char *, s2)
---- a/kernel/bpf/syscall.c
-+++ b/kernel/bpf/syscall.c
-@@ -5260,7 +5260,8 @@ static const struct bpf_func_proto bpf_k
- 	.arg1_type	= ARG_PTR_TO_MEM,
- 	.arg2_type	= ARG_CONST_SIZE_OR_ZERO,
- 	.arg3_type	= ARG_ANYTHING,
--	.arg4_type	= ARG_PTR_TO_LONG,
-+	.arg4_type	= ARG_PTR_TO_FIXED_SIZE_MEM | MEM_UNINIT | MEM_ALIGNED,
-+	.arg4_size	= sizeof(u64),
- };
- 
- static const struct bpf_func_proto *
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -5818,16 +5818,6 @@ static bool arg_type_is_dynptr(enum bpf_
- 	return base_type(type) == ARG_PTR_TO_DYNPTR;
+ static int veth_dev_init(struct net_device *dev)
+ {
+-	int err;
+-
+-	dev->lstats = netdev_alloc_pcpu_stats(struct pcpu_lstats);
+-	if (!dev->lstats)
+-		return -ENOMEM;
+-
+-	err = veth_alloc_queues(dev);
+-	if (err) {
+-		free_percpu(dev->lstats);
+-		return err;
+-	}
+-
+-	return 0;
++	return veth_alloc_queues(dev);
  }
  
--static int int_ptr_type_to_size(enum bpf_arg_type type)
--{
--	if (type == ARG_PTR_TO_INT)
--		return sizeof(u32);
--	else if (type == ARG_PTR_TO_LONG)
--		return sizeof(u64);
--
--	return -EINVAL;
--}
--
- static int resolve_map_arg_type(struct bpf_verifier_env *env,
- 				 const struct bpf_call_arg_meta *meta,
- 				 enum bpf_arg_type *arg_type)
-@@ -5908,16 +5898,6 @@ static const struct bpf_reg_types mem_ty
- 	},
+ static void veth_dev_free(struct net_device *dev)
+ {
+ 	veth_free_queues(dev);
+-	free_percpu(dev->lstats);
+ }
+ 
+ #ifdef CONFIG_NET_POLL_CONTROLLER
+@@ -1625,6 +1612,7 @@ static void veth_setup(struct net_device
+ 			       NETIF_F_HW_VLAN_STAG_RX);
+ 	dev->needs_free_netdev = true;
+ 	dev->priv_destructor = veth_dev_free;
++	dev->pcpu_stat_type = NETDEV_PCPU_STAT_LSTATS;
+ 	dev->max_mtu = ETH_MAX_MTU;
+ 
+ 	dev->hw_features = VETH_FEATURES;
+--- a/drivers/net/vrf.c
++++ b/drivers/net/vrf.c
+@@ -121,22 +121,12 @@ struct net_vrf {
+ 	int			ifindex;
  };
  
--static const struct bpf_reg_types int_ptr_types = {
--	.types = {
--		PTR_TO_STACK,
--		PTR_TO_PACKET,
--		PTR_TO_PACKET_META,
--		PTR_TO_MAP_KEY,
--		PTR_TO_MAP_VALUE,
--	},
+-struct pcpu_dstats {
+-	u64			tx_pkts;
+-	u64			tx_bytes;
+-	u64			tx_drps;
+-	u64			rx_pkts;
+-	u64			rx_bytes;
+-	u64			rx_drps;
+-	struct u64_stats_sync	syncp;
 -};
 -
- static const struct bpf_reg_types fullsock_types = { .types = { PTR_TO_SOCKET } };
- static const struct bpf_reg_types scalar_types = { .types = { SCALAR_VALUE } };
- static const struct bpf_reg_types context_types = { .types = { PTR_TO_CTX } };
-@@ -5955,8 +5935,6 @@ static const struct bpf_reg_types *compa
- 	[ARG_PTR_TO_SPIN_LOCK]		= &spin_lock_types,
- 	[ARG_PTR_TO_MEM]		= &mem_types,
- 	[ARG_PTR_TO_ALLOC_MEM]		= &alloc_mem_types,
--	[ARG_PTR_TO_INT]		= &int_ptr_types,
--	[ARG_PTR_TO_LONG]		= &int_ptr_types,
- 	[ARG_PTR_TO_PERCPU_BTF_ID]	= &percpu_btf_ptr_types,
- 	[ARG_PTR_TO_FUNC]		= &func_ptr_types,
- 	[ARG_PTR_TO_STACK]		= &stack_ptr_types,
-@@ -6303,9 +6281,11 @@ skip_type_check:
- 		 */
- 		meta->raw_mode = arg_type & MEM_UNINIT;
- 		if (arg_type & MEM_FIXED_SIZE) {
--			err = check_helper_mem_access(env, regno,
--						      fn->arg_size[arg], false,
--						      meta);
-+			err = check_helper_mem_access(env, regno, fn->arg_size[arg], false, meta);
-+			if (err)
-+				return err;
-+			if (arg_type & MEM_ALIGNED)
-+				err = check_ptr_alignment(env, reg, 0, fn->arg_size[arg], true);
- 		}
- 		break;
- 	case ARG_CONST_SIZE:
-@@ -6373,17 +6353,6 @@ skip_type_check:
- 		if (err)
- 			return err;
- 		break;
--	case ARG_PTR_TO_INT:
--	case ARG_PTR_TO_LONG:
--	{
--		int size = int_ptr_type_to_size(arg_type);
--
--		err = check_helper_mem_access(env, regno, size, false, meta);
--		if (err)
--			return err;
--		err = check_ptr_alignment(env, reg, 0, size, true);
--		break;
--	}
- 	case ARG_PTR_TO_CONST_STR:
- 	{
- 		struct bpf_map *map = reg->map_ptr;
---- a/kernel/trace/bpf_trace.c
-+++ b/kernel/trace/bpf_trace.c
-@@ -1192,7 +1192,8 @@ static const struct bpf_func_proto bpf_g
- 	.ret_type	= RET_INTEGER,
- 	.arg1_type	= ARG_PTR_TO_CTX,
- 	.arg2_type	= ARG_ANYTHING,
--	.arg3_type	= ARG_PTR_TO_LONG,
-+	.arg3_type	= ARG_PTR_TO_FIXED_SIZE_MEM | MEM_UNINIT | MEM_ALIGNED,
-+	.arg3_size	= sizeof(u64),
+ static void vrf_rx_stats(struct net_device *dev, int len)
+ {
+ 	struct pcpu_dstats *dstats = this_cpu_ptr(dev->dstats);
+ 
+ 	u64_stats_update_begin(&dstats->syncp);
+-	dstats->rx_pkts++;
++	dstats->rx_packets++;
+ 	dstats->rx_bytes += len;
+ 	u64_stats_update_end(&dstats->syncp);
+ }
+@@ -161,10 +151,10 @@ static void vrf_get_stats64(struct net_d
+ 		do {
+ 			start = u64_stats_fetch_begin_irq(&dstats->syncp);
+ 			tbytes = dstats->tx_bytes;
+-			tpkts = dstats->tx_pkts;
+-			tdrops = dstats->tx_drps;
++			tpkts = dstats->tx_packets;
++			tdrops = dstats->tx_drops;
+ 			rbytes = dstats->rx_bytes;
+-			rpkts = dstats->rx_pkts;
++			rpkts = dstats->rx_packets;
+ 		} while (u64_stats_fetch_retry_irq(&dstats->syncp, start));
+ 		stats->tx_bytes += tbytes;
+ 		stats->tx_packets += tpkts;
+@@ -421,7 +411,7 @@ static int vrf_local_xmit(struct sk_buff
+ 	if (likely(__netif_rx(skb) == NET_RX_SUCCESS))
+ 		vrf_rx_stats(dev, len);
+ 	else
+-		this_cpu_inc(dev->dstats->rx_drps);
++		this_cpu_inc(dev->dstats->rx_drops);
+ 
+ 	return NETDEV_TX_OK;
+ }
+@@ -616,11 +606,11 @@ static netdev_tx_t vrf_xmit(struct sk_bu
+ 		struct pcpu_dstats *dstats = this_cpu_ptr(dev->dstats);
+ 
+ 		u64_stats_update_begin(&dstats->syncp);
+-		dstats->tx_pkts++;
++		dstats->tx_packets++;
+ 		dstats->tx_bytes += len;
+ 		u64_stats_update_end(&dstats->syncp);
+ 	} else {
+-		this_cpu_inc(dev->dstats->tx_drps);
++		this_cpu_inc(dev->dstats->tx_drops);
+ 	}
+ 
+ 	return ret;
+--- a/include/linux/netdevice.h
++++ b/include/linux/netdevice.h
+@@ -1747,6 +1747,13 @@ enum netdev_ml_priv_type {
+ 	ML_PRIV_CAN,
  };
  
- BPF_CALL_2(get_func_ret, void *, ctx, u64 *, value)
-@@ -1208,7 +1209,8 @@ static const struct bpf_func_proto bpf_g
- 	.func		= get_func_ret,
- 	.ret_type	= RET_INTEGER,
- 	.arg1_type	= ARG_PTR_TO_CTX,
--	.arg2_type	= ARG_PTR_TO_LONG,
-+	.arg2_type	= ARG_PTR_TO_FIXED_SIZE_MEM | MEM_UNINIT | MEM_ALIGNED,
-+	.arg2_size	= sizeof(u64),
- };
++enum netdev_stat_type {
++	NETDEV_PCPU_STAT_NONE,
++	NETDEV_PCPU_STAT_LSTATS, /* struct pcpu_lstats */
++	NETDEV_PCPU_STAT_TSTATS, /* struct pcpu_sw_netstats */
++	NETDEV_PCPU_STAT_DSTATS, /* struct pcpu_dstats */
++};
++
+ /**
+  *	struct net_device - The DEVICE structure.
+  *
+@@ -1941,10 +1948,14 @@ enum netdev_ml_priv_type {
+  *
+  * 	@ml_priv:	Mid-layer private
+  *	@ml_priv_type:  Mid-layer private type
+- * 	@lstats:	Loopback statistics
+- * 	@tstats:	Tunnel statistics
+- * 	@dstats:	Dummy statistics
+- * 	@vstats:	Virtual ethernet statistics
++ *
++ *	@pcpu_stat_type:	Type of device statistics which the core should
++ *				allocate/free: none, lstats, tstats, dstats. none
++ *				means the driver is handling statistics allocation/
++ *				freeing internally.
++ *	@lstats:		Loopback statistics: packets, bytes
++ *	@tstats:		Tunnel statistics: RX/TX packets, RX/TX bytes
++ *	@dstats:		Dummy statistics: RX/TX/drop packets, RX/TX bytes
+  *
+  *	@garp_port:	GARP
+  *	@mrp_port:	MRP
+@@ -2287,6 +2298,7 @@ struct net_device {
+ 	void				*ml_priv;
+ 	enum netdev_ml_priv_type	ml_priv_type;
  
- BPF_CALL_1(get_func_arg_cnt, void *, ctx)
---- a/net/core/filter.c
-+++ b/net/core/filter.c
-@@ -6233,7 +6233,8 @@ static const struct bpf_func_proto bpf_s
- 	.ret_type	= RET_INTEGER,
- 	.arg1_type      = ARG_PTR_TO_CTX,
- 	.arg2_type      = ARG_ANYTHING,
--	.arg3_type      = ARG_PTR_TO_INT,
-+	.arg3_type      = ARG_PTR_TO_FIXED_SIZE_MEM | MEM_UNINIT | MEM_ALIGNED,
-+	.arg3_size	= sizeof(u32),
- 	.arg4_type      = ARG_ANYTHING,
- 	.arg5_type      = ARG_ANYTHING,
- };
-@@ -6244,7 +6245,8 @@ static const struct bpf_func_proto bpf_x
- 	.ret_type	= RET_INTEGER,
- 	.arg1_type      = ARG_PTR_TO_CTX,
- 	.arg2_type      = ARG_ANYTHING,
--	.arg3_type      = ARG_PTR_TO_INT,
-+	.arg3_type      = ARG_PTR_TO_FIXED_SIZE_MEM | MEM_UNINIT | MEM_ALIGNED,
-+	.arg3_size	= sizeof(u32),
- 	.arg4_type      = ARG_ANYTHING,
- 	.arg5_type      = ARG_ANYTHING,
- };
++	enum netdev_stat_type		pcpu_stat_type:8;
+ 	union {
+ 		struct pcpu_lstats __percpu		*lstats;
+ 		struct pcpu_sw_netstats __percpu	*tstats;
+@@ -2670,6 +2682,16 @@ struct pcpu_sw_netstats {
+ 	struct u64_stats_sync   syncp;
+ } __aligned(4 * sizeof(u64));
+ 
++struct pcpu_dstats {
++	u64			rx_packets;
++	u64			rx_bytes;
++	u64			rx_drops;
++	u64			tx_packets;
++	u64			tx_bytes;
++	u64			tx_drops;
++	struct u64_stats_sync	syncp;
++} __aligned(8 * sizeof(u64));
++
+ struct pcpu_lstats {
+ 	u64_stats_t packets;
+ 	u64_stats_t bytes;
+--- a/net/core/dev.c
++++ b/net/core/dev.c
+@@ -9991,6 +9991,46 @@ void netif_tx_stop_all_queues(struct net
+ }
+ EXPORT_SYMBOL(netif_tx_stop_all_queues);
+ 
++static int netdev_do_alloc_pcpu_stats(struct net_device *dev)
++{
++	void __percpu *v;
++
++	switch (dev->pcpu_stat_type) {
++	case NETDEV_PCPU_STAT_NONE:
++		return 0;
++	case NETDEV_PCPU_STAT_LSTATS:
++		v = dev->lstats = netdev_alloc_pcpu_stats(struct pcpu_lstats);
++		break;
++	case NETDEV_PCPU_STAT_TSTATS:
++		v = dev->tstats = netdev_alloc_pcpu_stats(struct pcpu_sw_netstats);
++		break;
++	case NETDEV_PCPU_STAT_DSTATS:
++		v = dev->dstats = netdev_alloc_pcpu_stats(struct pcpu_dstats);
++		break;
++	default:
++		return -EINVAL;
++	}
++
++	return v ? 0 : -ENOMEM;
++}
++
++static void netdev_do_free_pcpu_stats(struct net_device *dev)
++{
++	switch (dev->pcpu_stat_type) {
++	case NETDEV_PCPU_STAT_NONE:
++		return;
++	case NETDEV_PCPU_STAT_LSTATS:
++		free_percpu(dev->lstats);
++		break;
++	case NETDEV_PCPU_STAT_TSTATS:
++		free_percpu(dev->tstats);
++		break;
++	case NETDEV_PCPU_STAT_DSTATS:
++		free_percpu(dev->dstats);
++		break;
++	}
++}
++
+ /**
+  * register_netdevice() - register a network device
+  * @dev: device to register
+@@ -10051,11 +10091,15 @@ int register_netdevice(struct net_device
+ 		goto err_uninit;
+ 	}
+ 
++	ret = netdev_do_alloc_pcpu_stats(dev);
++	if (ret)
++		goto err_uninit;
++
+ 	ret = -EBUSY;
+ 	if (!dev->ifindex)
+ 		dev->ifindex = dev_new_index(net);
+ 	else if (__dev_get_by_index(net, dev->ifindex))
+-		goto err_uninit;
++		goto err_free_pcpu;
+ 
+ 	/* Transfer changeable features to wanted_features and enable
+ 	 * software offloads (GSO and GRO).
+@@ -10102,14 +10146,14 @@ int register_netdevice(struct net_device
+ 	ret = call_netdevice_notifiers(NETDEV_POST_INIT, dev);
+ 	ret = notifier_to_errno(ret);
+ 	if (ret)
+-		goto err_uninit;
++		goto err_free_pcpu;
+ 
+ 	ret = netdev_register_kobject(dev);
+ 	write_lock(&dev_base_lock);
+ 	dev->reg_state = ret ? NETREG_UNREGISTERED : NETREG_REGISTERED;
+ 	write_unlock(&dev_base_lock);
+ 	if (ret)
+-		goto err_uninit;
++		goto err_free_pcpu;
+ 
+ 	__netdev_update_features(dev);
+ 
+@@ -10156,6 +10200,8 @@ int register_netdevice(struct net_device
+ out:
+ 	return ret;
+ 
++err_free_pcpu:
++	netdev_do_free_pcpu_stats(dev);
+ err_uninit:
+ 	if (dev->netdev_ops->ndo_uninit)
+ 		dev->netdev_ops->ndo_uninit(dev);
+@@ -10409,6 +10455,7 @@ void netdev_run_todo(void)
+ 		WARN_ON(rcu_access_pointer(dev->ip_ptr));
+ 		WARN_ON(rcu_access_pointer(dev->ip6_ptr));
+ 
++		netdev_do_free_pcpu_stats(dev);
+ 		if (dev->priv_destructor)
+ 			dev->priv_destructor(dev);
+ 		if (dev->needs_free_netdev)
 
 
