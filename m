@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F3D8222D68;
-	Thu, 12 Dec 2024 17:08:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 215ED222D7E;
+	Thu, 12 Dec 2024 17:08:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734023326; cv=none; b=oHaf+ENYcW/l6VwHCeqBQ0JbgrT29BfCxVdSLXPWjQmqWsNDRKK61kwpjF88SES/6KyLKF9H0fnTLV4nHZy3c05Eit5vqMJyUknMD1PRp9Mv33dpEbADqR+CjtUfkVN2xK7LwGJ9iHZdtcDRD7csIAtbb2jZW2OyavLeiG/LT1A=
+	t=1734023329; cv=none; b=URpk8tM2+dS5v2QZsJbDuOyR3pCsSHdFpiDxwMvLpVTUwafTQsFgW/REhEh+YbIuTaiv/1dlDsgbS89Z4hRseTbeJNk11t4gJUCO+mhISJPl7v+5XnjIZg/iGwGrh3PdbI42m3hJLpEpdgrLB9R1gCMe6tlkphOgzf4JpuBoftU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734023326; c=relaxed/simple;
-	bh=8DiqBZC1/eydaoajg8Y0aWfalbXNuLPOiuLK+tS5lKA=;
+	s=arc-20240116; t=1734023329; c=relaxed/simple;
+	bh=T3RfZG+3+kIWF3dct0C0cl9anpUDu3O5GCP8kJFO1BY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Foityc7jMD+FxDMWIYyB6umc8Lj/6VmA1gHJgixrt6P4u1SP+MaeKNiQ8M4zN5nsrj4kHn4ZW0VnxpHsXVMhiISDX99Zsz78RNnN/SpzFZwg247JTsylkOdg58+kE8gHw9tOFXNRNfX7HaPRbIt2i3NpK2DF0eRhqSrxBn18tfM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LfPSpnBh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=c0op8DyfpzX1LzuIIRZL5KH/320pwGfgJf9CZzjzC8TxsWQ0e2HCawruKPzK4mijbwVkJUYPpGp844d5pFUYywhIn676UNnEfa9NegCKJgQt2H+9V5Njxh7+nSAZy8uj7TweRtOUFEYRLw7hIGBK92p4fSEKFyR3kM/QBFbJ/Q4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lliG5Yga; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LfPSpnBh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8691FC4CECE;
-	Thu, 12 Dec 2024 17:08:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lliG5Yga"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94B42C4CECE;
+	Thu, 12 Dec 2024 17:08:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734023325;
-	bh=8DiqBZC1/eydaoajg8Y0aWfalbXNuLPOiuLK+tS5lKA=;
+	s=korg; t=1734023329;
+	bh=T3RfZG+3+kIWF3dct0C0cl9anpUDu3O5GCP8kJFO1BY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LfPSpnBhEuGIxFWgDTYnBAxyi1vYFPVj34y1xwd17xn/1JtkS69hHVTsJE8S8SdCv
-	 0v190WOdA/mPBc1sCpZwDTCeIAMt7ewPS4HER/1ry9yykHqBbHH7Khs6/W77Pmdb2k
-	 a2jyuJOLUiP3SzYfirC/GCpOFBgNh7TrmKvAXVM4=
+	b=lliG5YgaStDlyYCN7RWJ/gaSxfOP4BTqq14f8nDxSieEjIRZGQMCJ+lgwuR+ZiLrP
+	 /xv+1PXjOnIttMt52xsWbZFfDnciglNJCRlwcwuKlo0jHkkKxUb4w3LSPP/lfUHZYk
+	 v2iyBlsBVfi+QOSZUBnndTa7ZjokZOhvY9PBXTOI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Denis Nikitin <denik@chromium.org>,
-	Levi Yun <yeoreum.yun@arm.com>,
-	Christoph Hellwig <hch@lst.de>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 498/565] dma-debug: fix a possible deadlock on radix_lock
-Date: Thu, 12 Dec 2024 16:01:33 +0100
-Message-ID: <20241212144331.451234787@linuxfoundation.org>
+Subject: [PATCH 5.15 481/565] r8169: dont apply UDP padding quirk on RTL8126A
+Date: Thu, 12 Dec 2024 16:01:16 +0100
+Message-ID: <20241212144330.773274999@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144311.432886635@linuxfoundation.org>
 References: <20241212144311.432886635@linuxfoundation.org>
@@ -52,66 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Levi Yun <yeoreum.yun@arm.com>
+From: Heiner Kallweit <hkallweit1@gmail.com>
 
-[ Upstream commit 7543c3e3b9b88212fcd0aaf5cab5588797bdc7de ]
+[ Upstream commit 87e26448dbda4523b73a894d96f0f788506d3795 ]
 
-radix_lock() shouldn't be held while holding dma_hash_entry[idx].lock
-otherwise, there's a possible deadlock scenario when
-dma debug API is called holding rq_lock():
+Vendor drivers r8125/r8126 indicate that this quirk isn't needed
+any longer for RTL8126A. Mimic this in r8169.
 
-CPU0                   CPU1                       CPU2
-dma_free_attrs()
-check_unmap()          add_dma_entry()            __schedule() //out
-                                                  (A) rq_lock()
-get_hash_bucket()
-(A) dma_entry_hash
-                                                  check_sync()
-                       (A) radix_lock()           (W) dma_entry_hash
-dma_entry_free()
-(W) radix_lock()
-                       // CPU2's one
-                       (W) rq_lock()
-
-CPU1 situation can happen when it extending radix tree and
-it tries to wake up kswapd via wake_all_kswapd().
-
-CPU2 situation can happen while perf_event_task_sched_out()
-(i.e. dma sync operation is called while deleting perf_event using
- etm and etr tmc which are Arm Coresight hwtracing driver backends).
-
-To remove this possible situation, call dma_entry_free() after
-put_hash_bucket() in check_unmap().
-
-Reported-by: Denis Nikitin <denik@chromium.org>
-Closes: https://lists.linaro.org/archives/list/coresight@lists.linaro.org/thread/2WMS7BBSF5OZYB63VT44U5YWLFP5HL6U/#RWM6MLQX5ANBTEQ2PRM7OXCBGCE6NPWU
-Signed-off-by: Levi Yun <yeoreum.yun@arm.com>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/d1317187-aa81-4a69-b831-678436e4de62@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/dma/debug.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/realtek/r8169_main.c | 14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
-diff --git a/kernel/dma/debug.c b/kernel/dma/debug.c
-index 09ccb4d6bc7b6..b3961b4ae1696 100644
---- a/kernel/dma/debug.c
-+++ b/kernel/dma/debug.c
-@@ -1046,9 +1046,13 @@ static void check_unmap(struct dma_debug_entry *ref)
- 	}
+diff --git a/drivers/net/ethernet/realtek/r8169_main.c b/drivers/net/ethernet/realtek/r8169_main.c
+index 8e910f3349b2a..d9d19ea77d20b 100644
+--- a/drivers/net/ethernet/realtek/r8169_main.c
++++ b/drivers/net/ethernet/realtek/r8169_main.c
+@@ -4148,8 +4148,8 @@ static unsigned int rtl8125_quirk_udp_padto(struct rtl8169_private *tp,
+ {
+ 	unsigned int padto = 0, len = skb->len;
  
- 	hash_bucket_del(entry);
--	dma_entry_free(entry);
--
- 	put_hash_bucket(bucket, flags);
-+
-+	/*
-+	 * Free the entry outside of bucket_lock to avoid ABBA deadlocks
-+	 * between that and radix_lock.
-+	 */
-+	dma_entry_free(entry);
- }
+-	if (rtl_is_8125(tp) && len < 128 + RTL_MIN_PATCH_LEN &&
+-	    rtl_skb_is_udp(skb) && skb_transport_header_was_set(skb)) {
++	if (len < 128 + RTL_MIN_PATCH_LEN && rtl_skb_is_udp(skb) &&
++	    skb_transport_header_was_set(skb)) {
+ 		unsigned int trans_data_len = skb_tail_pointer(skb) -
+ 					      skb_transport_header(skb);
  
- static void check_for_stack(struct device *dev,
+@@ -4173,9 +4173,15 @@ static unsigned int rtl8125_quirk_udp_padto(struct rtl8169_private *tp,
+ static unsigned int rtl_quirk_packet_padto(struct rtl8169_private *tp,
+ 					   struct sk_buff *skb)
+ {
+-	unsigned int padto;
++	unsigned int padto = 0;
+ 
+-	padto = rtl8125_quirk_udp_padto(tp, skb);
++	switch (tp->mac_version) {
++	case RTL_GIGA_MAC_VER_61 ... RTL_GIGA_MAC_VER_63:
++		padto = rtl8125_quirk_udp_padto(tp, skb);
++		break;
++	default:
++		break;
++	}
+ 
+ 	switch (tp->mac_version) {
+ 	case RTL_GIGA_MAC_VER_34:
 -- 
 2.43.0
 
