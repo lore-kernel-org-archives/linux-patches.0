@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 735292210EA;
-	Thu, 12 Dec 2024 17:38:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BB1115696E;
+	Thu, 12 Dec 2024 17:38:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734025090; cv=none; b=airFLyU2yrRlBLoyQEEY846mSjw67g6NDzggo+Tv3c5V9gbohCCG/euARDchDlguKsEBePIdbsTJMJRY1iGB/Xw1IQo1XwPHfhn/pLVD06FHmOZHCPeCIT4fJvTftRbapYBclQv05HVXEmrQUQPx5c84uTA0TTNe5msxL+aFM9Y=
+	t=1734025093; cv=none; b=gp2OrzFNsxJ7YMX33mgmDAjoLVDfT5OB6mrvDP7zk5+jzISZmVu85ERJStqLuWasYUhkANrluoIV36I+665cEpTiy1QaYj0oJm9A4XzQiEfKpaiWYrwa/tyYfLrTk69AMdZE1nw1gGMvOrmjVvpx9Exgk7iHl1u1QeuR8AXVRy4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734025090; c=relaxed/simple;
-	bh=iyX/AruZQDAmRHtzylRQLH0XvXiiEWnrjcrzA2Btplo=;
+	s=arc-20240116; t=1734025093; c=relaxed/simple;
+	bh=stcHcM74PTe1EI2vmSH4+jmfLCwVsBl2q+fEeEgf1aA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fXY0kh3nsVGTPUMhJsOTirZ/kwHqID2lSit9lKH2k3ysXkZ2Nk+oCOBYHdXZexGgNvbmxj5sLAHDpLURf/wweb13tqTEo1jo3PKg8ondqHeWkk2ufChRobrlZ2F9Z16/d2QxQLxRDfue5HvL0Az+JLCLoMs3DRd5dftGB9Y4SwM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RjQGG8RA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TOOO67YTEM8N5Y5qYAF8tnuV2xUQUVv4tsjf7M3ELxcYY93HORygTqZ5dXCBX67Rf9Rv1+9iwozveOGUinWoOtMeaWMx7A+3jQHAm2NfZmU2lnGWAVC6SU60u76Uw5ImL0ZLuzqTSuicx0j9DEUnDWCoELchpDUH9vJh3m5/koQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TegSpdtS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RjQGG8RA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4E05C4CECE;
-	Thu, 12 Dec 2024 17:38:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TegSpdtS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9486DC4CECE;
+	Thu, 12 Dec 2024 17:38:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734025090;
-	bh=iyX/AruZQDAmRHtzylRQLH0XvXiiEWnrjcrzA2Btplo=;
+	s=korg; t=1734025093;
+	bh=stcHcM74PTe1EI2vmSH4+jmfLCwVsBl2q+fEeEgf1aA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RjQGG8RAofPbckUjbSNVmT/VU9eUHElW9T1aBiwzFEgYT0kAMCIfwnvJjnNOZ2Mhc
-	 Nkmfkf6es7UCwMEk7rYUBfgklMd//skxFSIAOepP51NhcfC2HokMX5bai1rZMlW050
-	 tZx8B6gnuob7afJrQ2ikWA8L5QlVxm0J92ZQt7/8=
+	b=TegSpdtSe3FOXwRa5GC8tjHTFOg0vTL5wwAJwmsPeSybezf+INHlNZrxTTNKFWBVK
+	 bm3vitdhdkvKBkTFthy5HoXSXDtuz5je2sAvTJC3JEV9hy5sfrEsMzmgGgEwbADRD6
+	 SWL6jKoRLQcQQ1j89YlNCMTXqLSppLvHF16yICI8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	Luo Qiu <luoqiu@kylinsec.com.cn>,
+	Sudeep Holla <sudeep.holla@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 053/321] regmap: irq: Set lockdep class for hierarchical IRQ domains
-Date: Thu, 12 Dec 2024 15:59:31 +0100
-Message-ID: <20241212144232.088463060@linuxfoundation.org>
+Subject: [PATCH 5.4 054/321] firmware: arm_scpi: Check the DVFS OPP count returned by the firmware
+Date: Thu, 12 Dec 2024 15:59:32 +0100
+Message-ID: <20241212144232.126974096@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144229.291682835@linuxfoundation.org>
 References: <20241212144229.291682835@linuxfoundation.org>
@@ -51,83 +51,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Luo Qiu <luoqiu@kylinsec.com.cn>
 
-[ Upstream commit 953e549471cabc9d4980f1da2e9fa79f4c23da06 ]
+[ Upstream commit 109aa654f85c5141e813b2cd1bd36d90be678407 ]
 
-Lockdep gives a false positive splat as it can't distinguish the lock
-which is taken by different IRQ descriptors from different IRQ chips
-that are organized in a way of a hierarchy:
+Fix a kernel crash with the below call trace when the SCPI firmware
+returns OPP count of zero.
 
-   ======================================================
-   WARNING: possible circular locking dependency detected
-   6.12.0-rc5-next-20241101-00148-g9fabf8160b53 #562 Tainted: G        W
-   ------------------------------------------------------
-   modprobe/141 is trying to acquire lock:
-   ffff899446947868 (intel_soc_pmic_bxtwc:502:(&bxtwc_regmap_config)->lock){+.+.}-{4:4}, at: regmap_update_bits_base+0x33/0x90
+dvfs_info.opp_count may be zero on some platforms during the reboot
+test, and the kernel will crash after dereferencing the pointer to
+kcalloc(info->count, sizeof(*opp), GFP_KERNEL).
 
-   but task is already holding lock:
-   ffff899446947c68 (&d->lock){+.+.}-{4:4}, at: __setup_irq+0x682/0x790
+  |  Unable to handle kernel NULL pointer dereference at virtual address 0000000000000028
+  |  Mem abort info:
+  |    ESR = 0x96000004
+  |    Exception class = DABT (current EL), IL = 32 bits
+  |    SET = 0, FnV = 0
+  |    EA = 0, S1PTW = 0
+  |  Data abort info:
+  |    ISV = 0, ISS = 0x00000004
+  |    CM = 0, WnR = 0
+  |  user pgtable: 4k pages, 48-bit VAs, pgdp = 00000000faefa08c
+  |  [0000000000000028] pgd=0000000000000000
+  |  Internal error: Oops: 96000004 [#1] SMP
+  |  scpi-hwmon: probe of PHYT000D:00 failed with error -110
+  |  Process systemd-udevd (pid: 1701, stack limit = 0x00000000aaede86c)
+  |  CPU: 2 PID: 1701 Comm: systemd-udevd Not tainted 4.19.90+ #1
+  |  Hardware name: PHYTIUM LTD Phytium FT2000/4/Phytium FT2000/4, BIOS
+  |  pstate: 60000005 (nZCv daif -PAN -UAO)
+  |  pc : scpi_dvfs_recalc_rate+0x40/0x58 [clk_scpi]
+  |  lr : clk_register+0x438/0x720
+  |  Call trace:
+  |   scpi_dvfs_recalc_rate+0x40/0x58 [clk_scpi]
+  |   devm_clk_hw_register+0x50/0xa0
+  |   scpi_clk_ops_init.isra.2+0xa0/0x138 [clk_scpi]
+  |   scpi_clocks_probe+0x528/0x70c [clk_scpi]
+  |   platform_drv_probe+0x58/0xa8
+  |   really_probe+0x260/0x3d0
+  |   driver_probe_device+0x12c/0x148
+  |   device_driver_attach+0x74/0x98
+  |   __driver_attach+0xb4/0xe8
+  |   bus_for_each_dev+0x88/0xe0
+  |   driver_attach+0x30/0x40
+  |   bus_add_driver+0x178/0x2b0
+  |   driver_register+0x64/0x118
+  |   __platform_driver_register+0x54/0x60
+  |   scpi_clocks_driver_init+0x24/0x1000 [clk_scpi]
+  |   do_one_initcall+0x54/0x220
+  |   do_init_module+0x54/0x1c8
+  |   load_module+0x14a4/0x1668
+  |   __se_sys_finit_module+0xf8/0x110
+  |   __arm64_sys_finit_module+0x24/0x30
+  |   el0_svc_common+0x78/0x170
+  |   el0_svc_handler+0x38/0x78
+  |   el0_svc+0x8/0x340
+  |  Code: 937d7c00 a94153f3 a8c27bfd f9400421 (b8606820)
+  |  ---[ end trace 06feb22469d89fa8 ]---
+  |  Kernel panic - not syncing: Fatal exception
+  |  SMP: stopping secondary CPUs
+  |  Kernel Offset: disabled
+  |  CPU features: 0x10,a0002008
+  |  Memory Limit: none
 
-   which lock already depends on the new lock.
-
-   -> #3 (&d->lock){+.+.}-{4:4}:
-   -> #2 (&desc->request_mutex){+.+.}-{4:4}:
-   -> #1 (ipclock){+.+.}-{4:4}:
-   -> #0 (intel_soc_pmic_bxtwc:502:(&bxtwc_regmap_config)->lock){+.+.}-{4:4}:
-
-   Chain exists of:
-     intel_soc_pmic_bxtwc:502:(&bxtwc_regmap_config)->lock --> &desc->request_mutex --> &d->lock
-
-    Possible unsafe locking scenario:
-
-          CPU0                    CPU1
-          ----                    ----
-     lock(&d->lock);
-                                  lock(&desc->request_mutex);
-                                  lock(&d->lock);
-     lock(intel_soc_pmic_bxtwc:502:(&bxtwc_regmap_config)->lock);
-
-    *** DEADLOCK ***
-
-   3 locks held by modprobe/141:
-    #0: ffff8994419368f8 (&dev->mutex){....}-{4:4}, at: __driver_attach+0xf6/0x250
-    #1: ffff89944690b250 (&desc->request_mutex){+.+.}-{4:4}, at: __setup_irq+0x1a2/0x790
-    #2: ffff899446947c68 (&d->lock){+.+.}-{4:4}, at: __setup_irq+0x682/0x790
-
-Set a lockdep class when we map the IRQ so that it doesn't warn about
-a lockdep bug that doesn't exist.
-
-Fixes: 4af8be67fd99 ("regmap: Convert regmap_irq to use irq_domain")
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://patch.msgid.link/20241101165553.4055617-1-andriy.shevchenko@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 8cb7cf56c9fe ("firmware: add support for ARM System Control and Power Interface(SCPI) protocol")
+Signed-off-by: Luo Qiu <luoqiu@kylinsec.com.cn>
+Message-Id: <55A2F7A784391686+20241101032115.275977-1-luoqiu@kylinsec.com.cn>
+Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/regmap/regmap-irq.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/firmware/arm_scpi.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/base/regmap/regmap-irq.c b/drivers/base/regmap/regmap-irq.c
-index 3c1e554df4eb2..54cb9a02254f9 100644
---- a/drivers/base/regmap/regmap-irq.c
-+++ b/drivers/base/regmap/regmap-irq.c
-@@ -522,12 +522,16 @@ static irqreturn_t regmap_irq_thread(int irq, void *d)
- 		return IRQ_NONE;
- }
+diff --git a/drivers/firmware/arm_scpi.c b/drivers/firmware/arm_scpi.c
+index 72634e9d81169..131b22bd713f3 100644
+--- a/drivers/firmware/arm_scpi.c
++++ b/drivers/firmware/arm_scpi.c
+@@ -627,6 +627,9 @@ static struct scpi_dvfs_info *scpi_dvfs_get_info(u8 domain)
+ 	if (ret)
+ 		return ERR_PTR(ret);
  
-+static struct lock_class_key regmap_irq_lock_class;
-+static struct lock_class_key regmap_irq_request_class;
++	if (!buf.opp_count)
++		return ERR_PTR(-ENOENT);
 +
- static int regmap_irq_map(struct irq_domain *h, unsigned int virq,
- 			  irq_hw_number_t hw)
- {
- 	struct regmap_irq_chip_data *data = h->host_data;
- 
- 	irq_set_chip_data(virq, data);
-+	irq_set_lockdep_class(virq, &regmap_irq_lock_class, &regmap_irq_request_class);
- 	irq_set_chip(virq, &data->irq_chip);
- 	irq_set_nested_thread(virq, 1);
- 	irq_set_parent(virq, data->irq);
+ 	info = kmalloc(sizeof(*info), GFP_KERNEL);
+ 	if (!info)
+ 		return ERR_PTR(-ENOMEM);
 -- 
 2.43.0
 
