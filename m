@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 883631487CD;
-	Thu, 12 Dec 2024 15:21:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 243082AF0E;
+	Thu, 12 Dec 2024 15:21:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734016908; cv=none; b=gJSKIxnIzYWCNgqGezfO4TXh7kZepuwynMSKHI74Fkn4+pn7i65tQtAR7D47e9jOJExZEpoCuG2XPFBAys5uRTBnDa5Cqpb4JzWOr2AvS1uf3Fg2Xq8XbiFqwrk18F7gmuhKRfvzuEf/m/TEgwqQu92DXsZE5VmgqpnSXtMYzmY=
+	t=1734016912; cv=none; b=WdmUWM96SR7KR2wCkGyhf3reyGN+ncxCWiIKGJkEjcdiiKeVcSZKCsQBgahxV/yPnV+PQkSxVZxH/y4iWmA8dk1pOz45SFrE+mAXKriYDGEmarRzHVTdaXHaXbrznk7245LWRQD4cBcSKj6uzo6tQjQBUSujKFnNO5o1yS5o2J4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734016908; c=relaxed/simple;
-	bh=95y47CyjyY6riJIVPuyKA7GINFbqD1S2hWzDyRf1oeo=;
+	s=arc-20240116; t=1734016912; c=relaxed/simple;
+	bh=HGxTVeraG11XzHhT/zkkLuWkvFsClO5muHpMjG5UIFI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MZTpzilGliMgxpDGTKuKXSqLBUZMpjYoU1RWgQ+DLwcNoZNyeXy/fKGGuqDYJn38a5sB8hKNFMVQ2vQrazrpW6V6wdoNLUzHK50wyI0UYLhUcbt/qrS8uGWepp0UDngwoKEZWnlSqtoDM2C+VsjsHSSQ3aRybz1DD4zkxPQrojM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aHwmq75p; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eQqd4wpGshjyfAW4K7qYif2X1Up+jwQ38hSelu7O8wMLSRwrFo9L8AhOwe3WVZWAzQA07TFCPzJOVnQnlcIfCabzIidxcS5k9w9ZT/F+cvKLmqcGsHW2TGXsj/2SV3oRrxdCd4d2RgBW2WGvr2NiKvneo2OFt8heltPGz2aiIn8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bfpiSB90; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aHwmq75p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9F2DC4CECE;
-	Thu, 12 Dec 2024 15:21:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bfpiSB90"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CDA7C4CECE;
+	Thu, 12 Dec 2024 15:21:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734016908;
-	bh=95y47CyjyY6riJIVPuyKA7GINFbqD1S2hWzDyRf1oeo=;
+	s=korg; t=1734016912;
+	bh=HGxTVeraG11XzHhT/zkkLuWkvFsClO5muHpMjG5UIFI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aHwmq75pV8Ni2YCm3HtUrzeuI8+MKcVIxSiXAQOwWOHo1wpO7hpLppMkDpt3F2GZA
-	 1RQwaXMBZuUhaJ5MLf5/rfVNBBdz4Qi8LDjLn9GpnF4IcFdBvdwXnpKZDvnD0Ig+Lq
-	 JQxBp270UwPkvAbQATSdcB13BoANWkxvn6V5Ppy4=
+	b=bfpiSB90LaFhSdv/IgJRRWLuyeqDqJ8qS5y1liENIYHgbuS7sCYjTs0hCF1n93fPl
+	 +WRIWmGnKlKrK039vcgqnEk2YrxXIRC37MIKoFn9p8Zx01RInP/1hYUAIloN0hJ5sO
+	 RVW4+vr5Yg5qj7gFWGngMQfAZxIOGaOKoscn8ExI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ignat Korchagin <ignat@cloudflare.com>,
-	Vincent Mailhol <mailhol.vincent@wanadoo.fr>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Sean Anderson <sean.anderson@seco.com>,
+	Aleksandr Mishin <amishin@t-argos.ru>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 290/466] net: af_can: do not leave a dangling sk pointer in can_create()
-Date: Thu, 12 Dec 2024 15:57:39 +0100
-Message-ID: <20241212144318.242195832@linuxfoundation.org>
+Subject: [PATCH 6.12 323/466] fsl/fman: Validate cell-index value obtained from Device Tree
+Date: Thu, 12 Dec 2024 15:58:12 +0100
+Message-ID: <20241212144319.555901164@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144306.641051666@linuxfoundation.org>
 References: <20241212144306.641051666@linuxfoundation.org>
@@ -54,37 +52,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ignat Korchagin <ignat@cloudflare.com>
+From: Aleksandr Mishin <amishin@t-argos.ru>
 
-[ Upstream commit 811a7ca7320c062e15d0f5b171fe6ad8592d1434 ]
+[ Upstream commit bd50c4125c98bd1a86f8e514872159700a9c678c ]
 
-On error can_create() frees the allocated sk object, but sock_init_data()
-has already attached it to the provided sock object. This will leave a
-dangling sk pointer in the sock object and may cause use-after-free later.
+Cell-index value is obtained from Device Tree and then used to calculate
+the index for accessing arrays port_mfl[], mac_mfl[] and intr_mng[].
+In case of broken DT due to any error cell-index can contain any value
+and it is possible to go beyond the array boundaries which can lead
+at least to memory corruption.
 
-Signed-off-by: Ignat Korchagin <ignat@cloudflare.com>
-Reviewed-by: Vincent Mailhol <mailhol.vincent@wanadoo.fr>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Reviewed-by: Marc Kleine-Budde <mkl@pengutronix.de>
-Link: https://patch.msgid.link/20241014153808.51894-5-ignat@cloudflare.com
+Validate cell-index value obtained from Device Tree.
+
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Reviewed-by: Sean Anderson <sean.anderson@seco.com>
+Signed-off-by: Aleksandr Mishin <amishin@t-argos.ru>
+Link: https://patch.msgid.link/20241028065824.15452-1-amishin@t-argos.ru
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/can/af_can.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/freescale/fman/fman.c | 1 -
+ drivers/net/ethernet/freescale/fman/fman.h | 3 +++
+ drivers/net/ethernet/freescale/fman/mac.c  | 5 +++++
+ 3 files changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/net/can/af_can.c b/net/can/af_can.c
-index 707576eeeb582..01f3fbb3b67dc 100644
---- a/net/can/af_can.c
-+++ b/net/can/af_can.c
-@@ -171,6 +171,7 @@ static int can_create(struct net *net, struct socket *sock, int protocol,
- 		/* release sk on errors */
- 		sock_orphan(sk);
- 		sock_put(sk);
-+		sock->sk = NULL;
- 	}
+diff --git a/drivers/net/ethernet/freescale/fman/fman.c b/drivers/net/ethernet/freescale/fman/fman.c
+index d96028f01770c..fb416d60dcd72 100644
+--- a/drivers/net/ethernet/freescale/fman/fman.c
++++ b/drivers/net/ethernet/freescale/fman/fman.c
+@@ -24,7 +24,6 @@
  
-  errout:
+ /* General defines */
+ #define FMAN_LIODN_TBL			64	/* size of LIODN table */
+-#define MAX_NUM_OF_MACS			10
+ #define FM_NUM_OF_FMAN_CTRL_EVENT_REGS	4
+ #define BASE_RX_PORTID			0x08
+ #define BASE_TX_PORTID			0x28
+diff --git a/drivers/net/ethernet/freescale/fman/fman.h b/drivers/net/ethernet/freescale/fman/fman.h
+index 2ea575a46675b..74eb62eba0d7f 100644
+--- a/drivers/net/ethernet/freescale/fman/fman.h
++++ b/drivers/net/ethernet/freescale/fman/fman.h
+@@ -74,6 +74,9 @@
+ #define BM_MAX_NUM_OF_POOLS		64 /* Buffers pools */
+ #define FMAN_PORT_MAX_EXT_POOLS_NUM	8  /* External BM pools per Rx port */
+ 
++/* General defines */
++#define MAX_NUM_OF_MACS			10
++
+ struct fman; /* FMan data */
+ 
+ /* Enum for defining port types */
+diff --git a/drivers/net/ethernet/freescale/fman/mac.c b/drivers/net/ethernet/freescale/fman/mac.c
+index 11da139082e1b..1916a2ac48b9f 100644
+--- a/drivers/net/ethernet/freescale/fman/mac.c
++++ b/drivers/net/ethernet/freescale/fman/mac.c
+@@ -259,6 +259,11 @@ static int mac_probe(struct platform_device *_of_dev)
+ 		err = -EINVAL;
+ 		goto _return_dev_put;
+ 	}
++	if (val >= MAX_NUM_OF_MACS) {
++		dev_err(dev, "cell-index value is too big for %pOF\n", mac_node);
++		err = -EINVAL;
++		goto _return_dev_put;
++	}
+ 	priv->cell_index = (u8)val;
+ 
+ 	/* Get the MAC address */
 -- 
 2.43.0
 
