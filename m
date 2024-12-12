@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE104237FEB;
-	Thu, 12 Dec 2024 16:23:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81B83237FFB;
+	Thu, 12 Dec 2024 16:23:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734020589; cv=none; b=BAKbo1PoZmAz6gAxrek8bQR5JXvyLeaUk0hN2rybpO3rgm1ZYv4gKFLxPNkDURTuMhPlJpuiwKnN852jfDRtxZnrofA5T8DpfMRNKpE1NiYjNbD6vy80DvhJBHLVC7A0IDHovrFcEKVupvXawOCrbuHTRyVDLHHjvmBznqDNteg=
+	t=1734020593; cv=none; b=ckzkAApAyvhRkA7xnPKAEN31QzA293H8Id144f9NfHjVqPuQM1N1CcVTiGxzplp+e8e0NG1qGnhbMEykV3d9BFYypSf07Wuieka280KkTAtpt+Q6w0VDc28qaoidU/tFFOY5Di4Z9mqBRKYdsip2U4yb9H2vX3WvqkJ3S79X5f8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734020589; c=relaxed/simple;
-	bh=ZKLFhqxjp/s15VrCKbAVos748QOsolh5UxUElQBr6D0=;
+	s=arc-20240116; t=1734020593; c=relaxed/simple;
+	bh=n1J24Gj93Yulhw5q2ecONnaUkk5F44ra3jASWhIr98c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IH1GAUWawj1ytm85Ht1q39Ow/V/Gpzoy6QeR916B8uE2/xe4pRwwB0aRY00NoE7ZhCBHTYO8RGtRVVYw9j89LHEgZ+3yPhbgjyXVYSQbFmJt7rHqIKp374/tImryLKfbjgTbzxnIh4h559iKr1UoyUS4QDPfsKoSu//7UGEvwiQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rLNIk2Ml; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pzKgM+4BIPAha7y4k93fJT8SVhneVhWfyk5X7NHetJg8aIjul4jQ6wP6pV1zJUoJ6gsUQB1AQkhMPsJhIeAIcmWlbeu06BRjOg2WQADG9fAgzQlgoxsr9g0BHuU9MPeasyQ58YEfCi4IXmuLMtqMhKNiyaSSIRwOcwTv4KNOxqs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T4j4xH+I; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rLNIk2Ml"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15A55C4CECE;
-	Thu, 12 Dec 2024 16:23:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T4j4xH+I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DF54C4CEDE;
+	Thu, 12 Dec 2024 16:23:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734020589;
-	bh=ZKLFhqxjp/s15VrCKbAVos748QOsolh5UxUElQBr6D0=;
+	s=korg; t=1734020593;
+	bh=n1J24Gj93Yulhw5q2ecONnaUkk5F44ra3jASWhIr98c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rLNIk2Ml+gdmkN5bnMWWt/kIgB8F2uAY17do7Xnk9aYs610Ay02zmMYcWGan6PYbW
-	 pArXQsOhID1mDaruC8MVPjKwUFABHWq3TtzzRm2cFS2ljH0GNlMJZHKXa48OXeNOdv
-	 f8hrT80HtFx8gG9zqUaqGotcX0nGQ7KhfGBfm2cs=
+	b=T4j4xH+IX17hbIBw1uUrkmx+GqFflxD3SdkoOnRvvrTSP/0EIqn2lRoB/elpc/Ftr
+	 BoGZtTt/VUCMcvUhtk++ka8e9/uqYQv18xVprFtBAwG+LDAXP6nih9a0L6Nw2p9mNw
+	 DVF+fRmq0uOVDGDrRC+a1kVfQK6UyMqeCu9vAhA4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oleksandr Ocheretnyi <oocheret@cisco.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Nick Chan <towinchenmi@gmail.com>,
 	Guenter Roeck <linux@roeck-us.net>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
 	Wim Van Sebroeck <wim@linux-watchdog.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 507/772] iTCO_wdt: mask NMI_NOW bit for update_no_reboot_bit() call
-Date: Thu, 12 Dec 2024 15:57:32 +0100
-Message-ID: <20241212144410.903930383@linuxfoundation.org>
+Subject: [PATCH 6.1 508/772] watchdog: apple: Actually flush writes after requesting watchdog restart
+Date: Thu, 12 Dec 2024 15:57:33 +0100
+Message-ID: <20241212144410.943290964@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -53,83 +53,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oleksandr Ocheretnyi <oocheret@cisco.com>
+From: Nick Chan <towinchenmi@gmail.com>
 
-[ Upstream commit daa814d784ac034c62ab3fb0ef83daeafef527e2 ]
+[ Upstream commit 51dfe714c03c066aabc815a2bb2adcc998dfcb30 ]
 
-Commit da23b6faa8bf ("watchdog: iTCO: Add support for Cannon Lake
-PCH iTCO") does not mask NMI_NOW bit during TCO1_CNT register's
-value comparison for update_no_reboot_bit() call causing following
-failure:
+Although there is an existing code comment about flushing the writes,
+writes were not actually being flushed.
 
-   ...
-   iTCO_vendor_support: vendor-support=0
-   iTCO_wdt iTCO_wdt: unable to reset NO_REBOOT flag, device
-                                    disabled by hardware/BIOS
-   ...
+Actually flush the writes by changing readl_relaxed() to readl().
 
-and this can lead to unexpected NMIs later during regular
-crashkernel's workflow because of watchdog probe call failures.
-
-This change masks NMI_NOW bit for TCO1_CNT register values to
-avoid unexpected NMI_NOW bit inversions.
-
-Fixes: da23b6faa8bf ("watchdog: iTCO: Add support for Cannon Lake PCH iTCO")
-Signed-off-by: Oleksandr Ocheretnyi <oocheret@cisco.com>
-Reviewed-by: Guenter Roeck <linux@roeck-us.net>
-Reviewed-by: Mika Westerberg <mika.westerberg@linux.intel.com>
-Link: https://lore.kernel.org/r/20240913191403.2560805-1-oocheret@cisco.com
+Fixes: 4ed224aeaf661 ("watchdog: Add Apple SoC watchdog driver")
+Suggested-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Nick Chan <towinchenmi@gmail.com>
+Reviewed-by: Guenter Roeck  <linux@roeck-us.net>
+Link: https://lore.kernel.org/r/20241001170018.20139-2-towinchenmi@gmail.com
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/watchdog/iTCO_wdt.c | 21 +++++++++++++++++++--
- 1 file changed, 19 insertions(+), 2 deletions(-)
+ drivers/watchdog/apple_wdt.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/watchdog/iTCO_wdt.c b/drivers/watchdog/iTCO_wdt.c
-index e937b4dd28be7..35ae40b35f555 100644
---- a/drivers/watchdog/iTCO_wdt.c
-+++ b/drivers/watchdog/iTCO_wdt.c
-@@ -82,6 +82,13 @@
- #define TCO2_CNT(p)	(TCOBASE(p) + 0x0a) /* TCO2 Control Register	*/
- #define TCOv2_TMR(p)	(TCOBASE(p) + 0x12) /* TCOv2 Timer Initial Value*/
+diff --git a/drivers/watchdog/apple_wdt.c b/drivers/watchdog/apple_wdt.c
+index 16aca21f13d6a..a5af532c40867 100644
+--- a/drivers/watchdog/apple_wdt.c
++++ b/drivers/watchdog/apple_wdt.c
+@@ -130,7 +130,7 @@ static int apple_wdt_restart(struct watchdog_device *wdd, unsigned long mode,
+ 	 * can take up to ~20-25ms until the SoC is actually reset. Just wait
+ 	 * 50ms here to be safe.
+ 	 */
+-	(void)readl_relaxed(wdt->regs + APPLE_WDT_WD1_CUR_TIME);
++	(void)readl(wdt->regs + APPLE_WDT_WD1_CUR_TIME);
+ 	mdelay(50);
  
-+/*
-+ * NMI_NOW is bit 8 of TCO1_CNT register
-+ * Read/Write
-+ * This bit is implemented as RW but has no effect on HW.
-+ */
-+#define NMI_NOW		BIT(8)
-+
- /* internal variables */
- struct iTCO_wdt_private {
- 	struct watchdog_device wddev;
-@@ -219,13 +226,23 @@ static int update_no_reboot_bit_cnt(void *priv, bool set)
- 	struct iTCO_wdt_private *p = priv;
- 	u16 val, newval;
- 
--	val = inw(TCO1_CNT(p));
-+	/*
-+	 * writing back 1b1 to NMI_NOW of TCO1_CNT register
-+	 * causes NMI_NOW bit inversion what consequently does
-+	 * not allow to perform the register's value comparison
-+	 * properly.
-+	 *
-+	 * NMI_NOW bit masking for TCO1_CNT register values
-+	 * helps to avoid possible NMI_NOW bit inversions on
-+	 * following write operation.
-+	 */
-+	val = inw(TCO1_CNT(p)) & ~NMI_NOW;
- 	if (set)
- 		val |= BIT(0);
- 	else
- 		val &= ~BIT(0);
- 	outw(val, TCO1_CNT(p));
--	newval = inw(TCO1_CNT(p));
-+	newval = inw(TCO1_CNT(p)) & ~NMI_NOW;
- 
- 	/* make sure the update is successful */
- 	return val != newval ? -EIO : 0;
+ 	return 0;
 -- 
 2.43.0
 
