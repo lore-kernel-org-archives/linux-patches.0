@@ -1,40 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED742218594;
-	Thu, 12 Dec 2024 16:42:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7112421B90F;
+	Thu, 12 Dec 2024 16:42:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734021728; cv=none; b=QFrvKSpb5fMSyu5Fv4O4NK+PwBQr7UK5OJYqe4Gk89wYgSNBgxi8WEtU8k9YRU5PEt9jfJHuwzlqgBOzVIDEfY9iOVpJHwmvxkHH9vf60omRqGHY7ca5o2Am9VgujG0Hs9IxOkLKKFFDo1x3w9+vUp4wk7kFftaqAE9ekTiquec=
+	t=1734021731; cv=none; b=sh75Z4PlrCDhhqSVq24UH/9xkPnfhAJHzoHCf1vv8AQS8H4dEdF8quSR939KKCP40ReK70qL66zD7CV/LL2hSp4wMHiTRvPZm6BHVglIx0hHS7aYj7Y8kBNTWBidrmc9vcRZX2WkqiUCZRhL+rVc1BIqFwmNMjK5g2ffrFIp1Ts=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734021728; c=relaxed/simple;
-	bh=paxo6vwseOWkJUeTqXv4Buf10P05KHPE5vu92bG+zKU=;
+	s=arc-20240116; t=1734021731; c=relaxed/simple;
+	bh=/ellpx5kprHizFvTOFj8sqiC+EWByHevVAN5joDWesk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jI+aw05j/rNghy9WJuJS82KaGsBY+RhdB4ykHSHvxnpOGhKO/lq1ZG0WizoLNVrgRrUzAJ+Kg6IayaZJv3sdH8QJtkDHfrEjzKVOaMgPK159V3A59UClkk5EEgt0ws1+Eqhi3eyM+iz7FVD4BUW8S/fLJPFg+A/Nvo/hYVouORc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ea7C4HK0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uhtpra3haXnS/a1nZXwQQSw/p2rTr5BeaownbqR+dHAQf0fZjJVD6Z+qLrQrtkRMa0xiYX7LcharFgaPEz1TlJzgzuCo9sjsaAkzt0hYdk4cRwtzgeSdLpYJ/Lw9Kz8wuyTFbdDX7PNlAyTnrSgOTgR3zIBfwYduwIW+i+q+Kzs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lArMEaYe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ea7C4HK0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A40AC4CECE;
-	Thu, 12 Dec 2024 16:42:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lArMEaYe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A174CC4CECE;
+	Thu, 12 Dec 2024 16:42:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734021727;
-	bh=paxo6vwseOWkJUeTqXv4Buf10P05KHPE5vu92bG+zKU=;
+	s=korg; t=1734021731;
+	bh=/ellpx5kprHizFvTOFj8sqiC+EWByHevVAN5joDWesk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ea7C4HK0ys+RFzbj7nNJ1XgljRmE6pVOUtRFb03YUDce3O61vH8dE39xHNHFUTIFT
-	 coDiibpNXXA7Oz7UdLBqDPerXCcJ1Rs4jtopJOLlCK/5IO6UbMWTLK3EZ9kD2zWDF4
-	 Msu0icHgYx9iSaZSiGjbFkgvfFVioAViFdt7RORo=
+	b=lArMEaYe22orJsgYKtJzO8rxPW23xOkmA5tNwkjVFzbMI7g7GWFU0O36Mdt/cKvtH
+	 JggNpNlkWvwYJM/uQVotA1FUXzWw9Shw/DepOmThl4bl9poKmEhjIdXIbXH0wXHQeE
+	 CtHPO2/s45pi4wxITyPlv+XhYFhzB+n2vm+twpWs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hugh Dickins <hughd@google.com>,
-	Chuck Lever <chuck.lever@oracle.com>,
-	Jeongjun Park <aha310510@gmail.com>,
-	Yu Zhao <yuzhao@google.com>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	Jann Horn <jannh@google.com>,
+	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	Andreas Larsson <andreas@gaisler.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Helge Deller <deller@gmx.de>,
+	"James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Mark Brown <broonie@kernel.org>,
+	Peter Xu <peterx@redhat.com>,
+	Will Deacon <will@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.15 045/565] mm: revert "mm: shmem: fix data-race in shmem_getattr()"
-Date: Thu, 12 Dec 2024 15:54:00 +0100
-Message-ID: <20241212144313.263600491@linuxfoundation.org>
+Subject: [PATCH 5.15 046/565] mm: avoid unsafe VMA hook invocation when error arises on mmap hook
+Date: Thu, 12 Dec 2024 15:54:01 +0100
+Message-ID: <20241212144313.303218750@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144311.432886635@linuxfoundation.org>
 References: <20241212144311.432886635@linuxfoundation.org>
@@ -53,42 +62,179 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrew Morton <akpm@linux-foundation.org>
+From: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
 
-commit d1aa0c04294e29883d65eac6c2f72fe95cc7c049 upstream.
+[ Upstream commit 3dd6ed34ce1f2356a77fb88edafb5ec96784e3cf ]
 
-Revert d949d1d14fa2 ("mm: shmem: fix data-race in shmem_getattr()") as
-suggested by Chuck [1].  It is causing deadlocks when accessing tmpfs over
-NFS.
+Patch series "fix error handling in mmap_region() and refactor
+(hotfixes)", v4.
 
-As Hugh commented, "added just to silence a syzbot sanitizer splat: added
-where there has never been any practical problem".
+mmap_region() is somewhat terrifying, with spaghetti-like control flow and
+numerous means by which issues can arise and incomplete state, memory
+leaks and other unpleasantness can occur.
 
-Link: https://lkml.kernel.org/r/ZzdxKF39VEmXSSyN@tissot.1015granger.net [1]
-Fixes: d949d1d14fa2 ("mm: shmem: fix data-race in shmem_getattr()")
-Acked-by: Hugh Dickins <hughd@google.com>
-Cc: Chuck Lever <chuck.lever@oracle.com>
-Cc: Jeongjun Park <aha310510@gmail.com>
-Cc: Yu Zhao <yuzhao@google.com>
+A large amount of the complexity arises from trying to handle errors late
+in the process of mapping a VMA, which forms the basis of recently
+observed issues with resource leaks and observable inconsistent state.
+
+This series goes to great lengths to simplify how mmap_region() works and
+to avoid unwinding errors late on in the process of setting up the VMA for
+the new mapping, and equally avoids such operations occurring while the
+VMA is in an inconsistent state.
+
+The patches in this series comprise the minimal changes required to
+resolve existing issues in mmap_region() error handling, in order that
+they can be hotfixed and backported.  There is additionally a follow up
+series which goes further, separated out from the v1 series and sent and
+updated separately.
+
+This patch (of 5):
+
+After an attempted mmap() fails, we are no longer in a situation where we
+can safely interact with VMA hooks.  This is currently not enforced,
+meaning that we need complicated handling to ensure we do not incorrectly
+call these hooks.
+
+We can avoid the whole issue by treating the VMA as suspect the moment
+that the file->f_ops->mmap() function reports an error by replacing
+whatever VMA operations were installed with a dummy empty set of VMA
+operations.
+
+We do so through a new helper function internal to mm - mmap_file() -
+which is both more logically named than the existing call_mmap() function
+and correctly isolates handling of the vm_op reassignment to mm.
+
+All the existing invocations of call_mmap() outside of mm are ultimately
+nested within the call_mmap() from mm, which we now replace.
+
+It is therefore safe to leave call_mmap() in place as a convenience
+    function (and to avoid churn).  The invokers are:
+
+     ovl_file_operations -> mmap -> ovl_mmap() -> backing_file_mmap()
+    coda_file_operations -> mmap -> coda_file_mmap()
+     shm_file_operations -> shm_mmap()
+shm_file_operations_huge -> shm_mmap()
+            dma_buf_fops -> dma_buf_mmap_internal -> i915_dmabuf_ops
+                            -> i915_gem_dmabuf_mmap()
+
+None of these callers interact with vm_ops or mappings in a problematic
+way on error, quickly exiting out.
+
+Link: https://lkml.kernel.org/r/cover.1730224667.git.lorenzo.stoakes@oracle.com
+Link: https://lkml.kernel.org/r/d41fd763496fd0048a962f3fd9407dc72dd4fd86.1730224667.git.lorenzo.stoakes@oracle.com
+Fixes: deb0f6562884 ("mm/mmap: undo ->mmap() when arch_validate_flags() fails")
+Signed-off-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Reported-by: Jann Horn <jannh@google.com>
+Reviewed-by: Liam R. Howlett <Liam.Howlett@oracle.com>
+Reviewed-by: Vlastimil Babka <vbabka@suse.cz>
+Reviewed-by: Jann Horn <jannh@google.com>
+Cc: Andreas Larsson <andreas@gaisler.com>
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+Cc: David S. Miller <davem@davemloft.net>
+Cc: Helge Deller <deller@gmx.de>
+Cc: James E.J. Bottomley <James.Bottomley@HansenPartnership.com>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: Mark Brown <broonie@kernel.org>
+Cc: Peter Xu <peterx@redhat.com>
+Cc: Will Deacon <will@kernel.org>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Hugh Dickins <hughd@google.com>
+Signed-off-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/shmem.c |    2 --
- 1 file changed, 2 deletions(-)
+ mm/internal.h |   12 ++++++++++++
+ mm/mmap.c     |    4 ++--
+ mm/nommu.c    |    4 ++--
+ mm/util.c     |   18 ++++++++++++++++++
+ 4 files changed, 34 insertions(+), 4 deletions(-)
 
---- a/mm/shmem.c
-+++ b/mm/shmem.c
-@@ -1077,9 +1077,7 @@ static int shmem_getattr(struct user_nam
- 		shmem_recalc_inode(inode);
- 		spin_unlock_irq(&info->lock);
- 	}
--	inode_lock_shared(inode);
- 	generic_fillattr(&init_user_ns, inode, stat);
--	inode_unlock_shared(inode);
+--- a/mm/internal.h
++++ b/mm/internal.h
+@@ -34,6 +34,18 @@
  
- 	if (shmem_is_huge(NULL, inode, 0))
- 		stat->blksize = HPAGE_PMD_SIZE;
+ void page_writeback_init(void);
+ 
++/*
++ * This is a file-backed mapping, and is about to be memory mapped - invoke its
++ * mmap hook and safely handle error conditions. On error, VMA hooks will be
++ * mutated.
++ *
++ * @file: File which backs the mapping.
++ * @vma:  VMA which we are mapping.
++ *
++ * Returns: 0 if success, error otherwise.
++ */
++int mmap_file(struct file *file, struct vm_area_struct *vma);
++
+ vm_fault_t do_swap_page(struct vm_fault *vmf);
+ 
+ void free_pgtables(struct mmu_gather *tlb, struct vm_area_struct *start_vma,
+--- a/mm/mmap.c
++++ b/mm/mmap.c
+@@ -1788,7 +1788,7 @@ unsigned long mmap_region(struct file *f
+ 		}
+ 
+ 		vma->vm_file = get_file(file);
+-		error = call_mmap(file, vma);
++		error = mmap_file(file, vma);
+ 		if (error)
+ 			goto unmap_and_free_vma;
+ 
+@@ -1803,7 +1803,7 @@ unsigned long mmap_region(struct file *f
+ 
+ 		addr = vma->vm_start;
+ 
+-		/* If vm_flags changed after call_mmap(), we should try merge vma again
++		/* If vm_flags changed after mmap_file(), we should try merge vma again
+ 		 * as we may succeed this time.
+ 		 */
+ 		if (unlikely(vm_flags != vma->vm_flags && prev)) {
+--- a/mm/nommu.c
++++ b/mm/nommu.c
+@@ -942,7 +942,7 @@ static int do_mmap_shared_file(struct vm
+ {
+ 	int ret;
+ 
+-	ret = call_mmap(vma->vm_file, vma);
++	ret = mmap_file(vma->vm_file, vma);
+ 	if (ret == 0) {
+ 		vma->vm_region->vm_top = vma->vm_region->vm_end;
+ 		return 0;
+@@ -973,7 +973,7 @@ static int do_mmap_private(struct vm_are
+ 	 * - VM_MAYSHARE will be set if it may attempt to share
+ 	 */
+ 	if (capabilities & NOMMU_MAP_DIRECT) {
+-		ret = call_mmap(vma->vm_file, vma);
++		ret = mmap_file(vma->vm_file, vma);
+ 		if (ret == 0) {
+ 			/* shouldn't return success if we're not sharing */
+ 			BUG_ON(!(vma->vm_flags & VM_MAYSHARE));
+--- a/mm/util.c
++++ b/mm/util.c
+@@ -1086,6 +1086,24 @@ int __weak memcmp_pages(struct page *pag
+ 	return ret;
+ }
+ 
++int mmap_file(struct file *file, struct vm_area_struct *vma)
++{
++	static const struct vm_operations_struct dummy_vm_ops = {};
++	int err = call_mmap(file, vma);
++
++	if (likely(!err))
++		return 0;
++
++	/*
++	 * OK, we tried to call the file hook for mmap(), but an error
++	 * arose. The mapping is in an inconsistent state and we most not invoke
++	 * any further hooks on it.
++	 */
++	vma->vm_ops = &dummy_vm_ops;
++
++	return err;
++}
++
+ #ifdef CONFIG_PRINTK
+ /**
+  * mem_dump_obj - Print available provenance information
 
 
