@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4253D2080D9;
-	Thu, 12 Dec 2024 17:51:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E137021421C;
+	Thu, 12 Dec 2024 17:51:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734025867; cv=none; b=PiNZ6y/bk+Ss7mgMSEVmVat/iGTbBh1f8na15U79lNryefx3uJYsz2FauRADubXDMhcNoFciC3FsN41T8yT4j90hkypF7OLecELi9Hz0K9xuZ/tJjlPwr3sv+8LTNMxJC78zacYG8sYQsDPPKoEkioztNwkiL4sLcVpFp6JICX4=
+	t=1734025869; cv=none; b=G/pG/aK9mjqLvNzoLgeFpOFzOuiwijLmf9jq+6FRXaVb9YEEKDwsMh4q9lGOl5F/TWnB9iyhZ8pXz9weD4e7PJL24gDy4X63c/4Rcaf6+JD3EG7hgWwmyK2tHnyb3TLa7teQ49qQnnl/EKrQ2oxuFsNBndWhWTlVAJ7Y1rVy+nI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734025867; c=relaxed/simple;
-	bh=6i8g3MAAo5+zl6+YeVWW7HUuxYb7O784+GoqLOW/hwE=;
+	s=arc-20240116; t=1734025869; c=relaxed/simple;
+	bh=YYvAVRVOaF/MYFAjKNoXDMMuj6RaFmcPz5sJcquS0DY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jieNUY9uVMMyB9PLMxtr1Ua1cdLWOVUhgI+T1B3uw52Kzo2aDTY4gpHWujSsgdLD3jMb5YDgCvX/fRLWqBNVNnZUhfHcxZNtKAIVID5wcxcoOzFT4R/NnHcsmAhKyglZg9y0qs+1d/aQsLSZpPPqLTWstAhcp56OyKSf9/CS5wM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bKBaWWTg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iIlatlT6NVcHokvDSgt3p5nIvfTqyvcN78jNt2qQrkVWkBIvwRfvrH/TdR/lVSFKQA4DrcgQuG/q/Ns72wogNZ4OlE+DcS86X5rxS6Rbn2UjB+ceZos3zI6Jp/cDG77ghHPvcDLRKYucAHq5d01vSxTLCOKSAOW+MglmVu9iCR0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IrUoVerA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bKBaWWTg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 726A7C4CECE;
-	Thu, 12 Dec 2024 17:51:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IrUoVerA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B728C4CECE;
+	Thu, 12 Dec 2024 17:51:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734025865;
-	bh=6i8g3MAAo5+zl6+YeVWW7HUuxYb7O784+GoqLOW/hwE=;
+	s=korg; t=1734025868;
+	bh=YYvAVRVOaF/MYFAjKNoXDMMuj6RaFmcPz5sJcquS0DY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bKBaWWTgtqm803BYXJ/EsXcB6s2NYYfYGQDSfZTjVchsiijBFiCclbIb+SzHMRBeF
-	 ggvtvawoJpYi6X2Vb1FCSiKYfBKk5CNxNHUqCG17re2iEGFKyeEYeesTOEZ/yU1rEl
-	 hNHa9+6e+ToU8jJrdE+QmjJjwh3jaTCmy8ddsrYs=
+	b=IrUoVerAzMpfrEz2sd/wT/TwC0wf83xCKZepOEPRe7m5YcY4K98CFKTkdaCuJJfzy
+	 vpblyUoikKMqrRiQi7ltPGyiAKrBUhnduuHfPEpp1oDzYgNPOvh65e/UsT0okpKhpp
+	 6HUeNfdVhnPRG5VMSj7/iSQWFOsBxHw7QuyBYu9E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Parker Newman <pnewman@connecttech.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 306/321] misc: eeprom: eeprom_93cx6: Add quirk for extra read clock cycle
-Date: Thu, 12 Dec 2024 16:03:44 +0100
-Message-ID: <20241212144242.064946561@linuxfoundation.org>
+	Kinsey Moore <kinsey.moore@oarcorp.com>,
+	Richard Weinberger <richard@nod.at>
+Subject: [PATCH 5.4 315/321] jffs2: Fix rtime decompressor
+Date: Thu, 12 Dec 2024 16:03:53 +0100
+Message-ID: <20241212144242.427013195@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144229.291682835@linuxfoundation.org>
 References: <20241212144229.291682835@linuxfoundation.org>
@@ -51,119 +50,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Parker Newman <pnewman@connecttech.com>
+From: Richard Weinberger <richard@nod.at>
 
-[ Upstream commit 7738a7ab9d12c5371ed97114ee2132d4512e9fd5 ]
+commit b29bf7119d6bbfd04aabb8d82b060fe2a33ef890 upstream.
 
-Add a quirk similar to eeprom_93xx46 to add an extra clock cycle before
-reading data from the EEPROM.
+The fix for a memory corruption contained a off-by-one error and
+caused the compressor to fail in legit cases.
 
-The 93Cx6 family of EEPROMs output a "dummy 0 bit" between the writing
-of the op-code/address from the host to the EEPROM and the reading of
-the actual data from the EEPROM.
-
-More info can be found on page 6 of the AT93C46 datasheet (linked below).
-Similar notes are found in other 93xx6 datasheets.
-
-In summary the read operation for a 93Cx6 EEPROM is:
-Write to EEPROM:	110[A5-A0]	(9 bits)
-Read from EEPROM:	0[D15-D0]	(17 bits)
-
-Where:
-	110 is the start bit and READ OpCode
-	[A5-A0] is the address to read from
-	0 is a "dummy bit" preceding the actual data
-	[D15-D0] is the actual data.
-
-Looking at the READ timing diagrams in the 93Cx6 datasheets the dummy
-bit should be clocked out on the last address bit clock cycle meaning it
-should be discarded naturally.
-
-However, depending on the hardware configuration sometimes this dummy
-bit is not discarded. This is the case with Exar PCI UARTs which require
-an extra clock cycle between sending the address and reading the data.
-
-Datasheet: https://ww1.microchip.com/downloads/en/DeviceDoc/Atmel-5193-SEEPROM-AT93C46D-Datasheet.pdf
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Signed-off-by: Parker Newman <pnewman@connecttech.com>
-Link: https://lore.kernel.org/r/0f23973efefccd2544705a0480b4ad4c2353e407.1727880931.git.pnewman@connecttech.com
+Cc: Kinsey Moore <kinsey.moore@oarcorp.com>
+Cc: stable@vger.kernel.org
+Fixes: fe051552f5078 ("jffs2: Prevent rtime decompress memory corruption")
+Signed-off-by: Richard Weinberger <richard@nod.at>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/misc/eeprom/eeprom_93cx6.c | 10 ++++++++++
- include/linux/eeprom_93cx6.h       | 11 +++++++++++
- 2 files changed, 21 insertions(+)
+ fs/jffs2/compr_rtime.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/misc/eeprom/eeprom_93cx6.c b/drivers/misc/eeprom/eeprom_93cx6.c
-index 36a2eb837371b..6b42ba6705d3f 100644
---- a/drivers/misc/eeprom/eeprom_93cx6.c
-+++ b/drivers/misc/eeprom/eeprom_93cx6.c
-@@ -186,6 +186,11 @@ void eeprom_93cx6_read(struct eeprom_93cx6 *eeprom, const u8 word,
- 	eeprom_93cx6_write_bits(eeprom, command,
- 		PCI_EEPROM_WIDTH_OPCODE + eeprom->width);
+--- a/fs/jffs2/compr_rtime.c
++++ b/fs/jffs2/compr_rtime.c
+@@ -95,7 +95,7 @@ static int jffs2_rtime_decompress(unsign
  
-+	if (has_quirk_extra_read_cycle(eeprom)) {
-+		eeprom_93cx6_pulse_high(eeprom);
-+		eeprom_93cx6_pulse_low(eeprom);
-+	}
-+
- 	/*
- 	 * Read the requested 16 bits.
- 	 */
-@@ -252,6 +257,11 @@ void eeprom_93cx6_readb(struct eeprom_93cx6 *eeprom, const u8 byte,
- 	eeprom_93cx6_write_bits(eeprom, command,
- 		PCI_EEPROM_WIDTH_OPCODE + eeprom->width + 1);
- 
-+	if (has_quirk_extra_read_cycle(eeprom)) {
-+		eeprom_93cx6_pulse_high(eeprom);
-+		eeprom_93cx6_pulse_low(eeprom);
-+	}
-+
- 	/*
- 	 * Read the requested 8 bits.
- 	 */
-diff --git a/include/linux/eeprom_93cx6.h b/include/linux/eeprom_93cx6.h
-index c860c72a921d0..3a485cc0e0fa0 100644
---- a/include/linux/eeprom_93cx6.h
-+++ b/include/linux/eeprom_93cx6.h
-@@ -11,6 +11,8 @@
- 	Supported chipsets: 93c46, 93c56 and 93c66.
-  */
- 
-+#include <linux/bits.h>
-+
- /*
-  * EEPROM operation defines.
-  */
-@@ -34,6 +36,7 @@
-  * @register_write(struct eeprom_93cx6 *eeprom): handler to
-  * write to the eeprom register by using all reg_* fields.
-  * @width: eeprom width, should be one of the PCI_EEPROM_WIDTH_* defines
-+ * @quirks: eeprom or controller quirks
-  * @drive_data: Set if we're driving the data line.
-  * @reg_data_in: register field to indicate data input
-  * @reg_data_out: register field to indicate data output
-@@ -50,6 +53,9 @@ struct eeprom_93cx6 {
- 	void (*register_write)(struct eeprom_93cx6 *eeprom);
- 
- 	int width;
-+	unsigned int quirks;
-+/* Some EEPROMs require an extra clock cycle before reading */
-+#define PCI_EEPROM_QUIRK_EXTRA_READ_CYCLE	BIT(0)
- 
- 	char drive_data;
- 	char reg_data_in;
-@@ -71,3 +77,8 @@ extern void eeprom_93cx6_wren(struct eeprom_93cx6 *eeprom, bool enable);
- 
- extern void eeprom_93cx6_write(struct eeprom_93cx6 *eeprom,
- 			       u8 addr, u16 data);
-+
-+static inline bool has_quirk_extra_read_cycle(struct eeprom_93cx6 *eeprom)
-+{
-+	return eeprom->quirks & PCI_EEPROM_QUIRK_EXTRA_READ_CYCLE;
-+}
--- 
-2.43.0
-
+ 		positions[value]=outpos;
+ 		if (repeat) {
+-			if ((outpos + repeat) >= destlen) {
++			if ((outpos + repeat) > destlen) {
+ 				return 1;
+ 			}
+ 			if (backoffs + repeat >= outpos) {
 
 
