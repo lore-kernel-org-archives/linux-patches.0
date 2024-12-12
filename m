@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 285822054F8;
-	Thu, 12 Dec 2024 15:23:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEEB9209693;
+	Thu, 12 Dec 2024 15:23:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734017007; cv=none; b=uhn7ygF5UVR0NO5xMQYq/et8xTw6bpVKiQkdXhVN5EzJxoH369s6FXBCbjUkGpzdXaj3/c++ARSnkmDLjBBAgIsNSYiUWba1zxYlvC/Z/zAsCOztdfKSxhW8RmQkh9jxEXamltAtVucN7v1n+UP9fzV+vncbOMXmlAHIfqlABC8=
+	t=1734017011; cv=none; b=tCvMJjnCZk32gvg6ixo1+6E+QWGaK+kvgFRHwECAGpQYSM0askdmTungRospv5WtrcPWpVkZFWXSQIgnCEPbToyJ3ZA9Do8k7ziZ5R7BxB4adVrXzm8hbG6i5bwVqObIDVtajCFcLHfcia+oU/7G3J1V8l7MkE3h2xsA+ie/FbE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734017007; c=relaxed/simple;
-	bh=5JwtVALgFHovo6fRMNPeZN+MNHcr5LPE+XCsTk0/eoA=;
+	s=arc-20240116; t=1734017011; c=relaxed/simple;
+	bh=XmFcFj63zSGG3wYCSF4r0D6KK0q6J/KytaZen57rN4A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QRmr3pANEF4LNozUkgf5Kxg7udlOuEJpyxviV1aS0FukVy1GWt6i0Y2w7aQgTPGf8eXOQ9+2OigghYt4I5YKfC++kpx6MINnmxA9sBusqzXX777yv+rRIInBY1IPJeTF10/4V3SdV/yXKwwBGYcXzNVY01Cxxb+x/R3vLkLmRig=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2t0qL7Ov; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=b/8yceiGbATfudA4qgqT/0C8Wiwv+8sfRMwtK8awmLxYtydPHWmQ/qg5JkcqeASxPlW78mHTz2psv0X6SKn4HIeb645JHDiNxCU9pJQirkx8ibOl4rY5t/aQPocFmmVGUB6pg/9BvAORSdaA0caam5fnG5w8nzyNJhGMpstkJl4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CbLMdezi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2t0qL7Ov"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D67FC4CECE;
-	Thu, 12 Dec 2024 15:23:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CbLMdezi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5ADF6C4CED0;
+	Thu, 12 Dec 2024 15:23:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734017007;
-	bh=5JwtVALgFHovo6fRMNPeZN+MNHcr5LPE+XCsTk0/eoA=;
+	s=korg; t=1734017010;
+	bh=XmFcFj63zSGG3wYCSF4r0D6KK0q6J/KytaZen57rN4A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2t0qL7OvZ8/xWBQgJmyFO7hiFf34qPgq5j8ufDu+L8aty8cLznMgLxpqvdf5Z2aIT
-	 cwts8Rts3dRSqBNVd964UkGNUB0+X2Ym/TmnsXxkKIWjWTph+afL6IQkphiY/ePeq0
-	 0Xl0FOMMdn4vM0z2J/zz5KeJ1x6JGdi8UgYTCZhQ=
+	b=CbLMdeziUvmPAvnH+ueld5GNvncHbX2DzqJVFCVP9sNJrr4719tVuacL9frm0TkQq
+	 656en+LGdiDMHHmZHTUnHgJm1qieEvb2YUyeU/rsZRIE03WLRtWDf0m4hUkTEJMUma
+	 TlAaEBw8CibRQ8XRWPDiH9ivQyN22ZvbNtplezgw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Esben Haabendal <esben@geanix.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	John Kacur <jkacur@redhat.com>,
+	Luis Goncalves <lgoncalv@redhat.com>,
+	Tomas Glozar <tglozar@redhat.com>,
+	Gabriele Monaco <gmonaco@redhat.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 354/466] pinctrl: freescale: fix COMPILE_TEST error with PINCTRL_IMX_SCU
-Date: Thu, 12 Dec 2024 15:58:43 +0100
-Message-ID: <20241212144320.773155779@linuxfoundation.org>
+Subject: [PATCH 6.12 355/466] rtla: Fix consistency in getopt_long for timerlat_hist
+Date: Thu, 12 Dec 2024 15:58:44 +0100
+Message-ID: <20241212144320.810951011@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144306.641051666@linuxfoundation.org>
 References: <20241212144306.641051666@linuxfoundation.org>
@@ -52,38 +54,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Esben Haabendal <esben@geanix.com>
+From: Gabriele Monaco <gmonaco@redhat.com>
 
-[ Upstream commit 58414a31c5713afb5449fd74a26a843d34cc62e8 ]
+[ Upstream commit cfb1ea216c1656a4112becbc4bf757891933b902 ]
 
-When PINCTRL_IMX_SCU was selected by PINCTRL_IMX8DXL or PINCTRL_IMX8QM
-combined with COMPILE_TEST on a non-arm platforms, the IMX_SCU
-dependency could not be enabled.
+Commit e9a4062e1527 ("rtla: Add --trace-buffer-size option") adds a new
+long option to rtla utilities, but among all affected files,
+timerlat_hist misses a trailing `:` in the corresponding short option
+inside the getopt string (e.g. `\3:`). This patch propagates the `:`.
 
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202410031439.GyTSa0kX-lkp@intel.com/
-Closes: https://lore.kernel.org/oe-kbuild-all/202410030852.q0Hukplf-lkp@intel.com/
-Signed-off-by: Esben Haabendal <esben@geanix.com>
-Link: https://lore.kernel.org/20241003-imx-pinctrl-compile-test-fix-v1-1-145ca1948cc3@geanix.com
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Although this change is not functionally required, it improves
+consistency and slightly reduces the likelihood a future change would
+introduce a problem.
+
+Cc: John Kacur <jkacur@redhat.com>
+Cc: Luis Goncalves <lgoncalv@redhat.com>
+Cc: Tomas Glozar <tglozar@redhat.com>
+Link: https://lore.kernel.org/20240926143417.54039-1-gmonaco@redhat.com
+Signed-off-by: Gabriele Monaco <gmonaco@redhat.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/freescale/Kconfig | 2 +-
+ tools/tracing/rtla/src/timerlat_hist.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pinctrl/freescale/Kconfig b/drivers/pinctrl/freescale/Kconfig
-index 3b59d71890045..139bc0fb8a9db 100644
---- a/drivers/pinctrl/freescale/Kconfig
-+++ b/drivers/pinctrl/freescale/Kconfig
-@@ -20,7 +20,7 @@ config PINCTRL_IMX_SCMI
+diff --git a/tools/tracing/rtla/src/timerlat_hist.c b/tools/tracing/rtla/src/timerlat_hist.c
+index 829511a712224..f6aa83ff15659 100644
+--- a/tools/tracing/rtla/src/timerlat_hist.c
++++ b/tools/tracing/rtla/src/timerlat_hist.c
+@@ -778,7 +778,7 @@ static struct timerlat_hist_params
+ 		/* getopt_long stores the option index here. */
+ 		int option_index = 0;
  
- config PINCTRL_IMX_SCU
- 	tristate
--	depends on IMX_SCU
-+	depends on IMX_SCU || COMPILE_TEST
- 	select PINCTRL_IMX
+-		c = getopt_long(argc, argv, "a:c:C::b:d:e:E:DhH:i:knp:P:s:t::T:uU0123456:7:8:9\1\2:\3",
++		c = getopt_long(argc, argv, "a:c:C::b:d:e:E:DhH:i:knp:P:s:t::T:uU0123456:7:8:9\1\2:\3:",
+ 				 long_options, &option_index);
  
- config PINCTRL_IMX1_CORE
+ 		/* detect the end of the options. */
 -- 
 2.43.0
 
