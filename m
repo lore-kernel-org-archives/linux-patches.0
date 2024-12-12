@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0962223C5C;
-	Thu, 12 Dec 2024 16:48:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83BEA1F2381;
+	Thu, 12 Dec 2024 16:48:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734022107; cv=none; b=MI5VfFWX5lmQPUX0fElGPoG+EOUg6loxrACUAwzQVUPkSGt9v/WE+7A2Obj4N3sAgD9yzUoQMV/2PdAQa/NO9O8hCYHaQWbrbJbZN1crBK6HTAmHtjPMQL9jtbpYnA3AhJk0e1dBdDWDNLAnIHd+RitQC2Y6z+dCUZCvEGy2dGk=
+	t=1734022110; cv=none; b=gayPZZqkfGHbhqWkBsfN9Zkx72zYinsLMO7oJ9XuGMiW1vW8nqy2XO2hQxUsF1dv3dsr2XUzopSeIFy4fxX2MgzvUJJ1SRr8m+VRe1HSvqwrbOMI0L2Isjz7I8gzr9Pl1C2XD9Z/3xL2VkI/LHqyAEwAU+88dsz0ke4A8KWJvR4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734022107; c=relaxed/simple;
-	bh=UDKMsbPpWQgA3S+BhiVFZ9ZbUKieecG/BHCcV6akSCs=;
+	s=arc-20240116; t=1734022110; c=relaxed/simple;
+	bh=T93IiUiNXVdtTUYTbtnLLBaBYtnBrSIoiQEHvyo3f5M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cBobr5WDXqlhD05UjPGnV3P2brP6c0lvcONkhqSCzMFMm9jMaCvqKqbgYeZM5dNC7Fstyc+rOxSeDuuPN2m/z2MyEWCygWIqXr23iKV6bMYbWrl9XRZSgjS9ARErqKm+iDANeKhrtWWK5FTtf7U8i+CiHPmkXZRDhBiuODxtmS8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R90kBZoD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JD8ALud7y422Q6strLsriIHbTrG1zNLXseohbh51oqqjU+yEZ7ufTIj7uo3guSaQflPhP63ALsoRhHa8hjFrVVIhA/qVIDppl7J2vsvkRHiCjXTiOh5ghQWCkSVQE9/hDBzDylywxllqtdzmmkjvu4EaWRmNlIcqc4HAXKF6Hms=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VXzYKoK7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R90kBZoD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72B73C4CECE;
-	Thu, 12 Dec 2024 16:48:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VXzYKoK7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFA78C4CECE;
+	Thu, 12 Dec 2024 16:48:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734022106;
-	bh=UDKMsbPpWQgA3S+BhiVFZ9ZbUKieecG/BHCcV6akSCs=;
+	s=korg; t=1734022110;
+	bh=T93IiUiNXVdtTUYTbtnLLBaBYtnBrSIoiQEHvyo3f5M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R90kBZoDtmOI2Cl0ZWYxIqJT7ghKn3R+vjXSCHbWXFA5FcrQlcx+AhzSR6NfQjzal
-	 QFMwypUi+Mtz7XrPQXP1/jFyR7XEmYoFxC8wT44uCJwPXU5PNsEBUFYxoxaEApWD0u
-	 AFFedE6a1HuNWp79NaPbLWtGSKSu1Ho7m28pZptQ=
+	b=VXzYKoK739FCBVCyuESblebL8rwcVqzXgNGIhgtejPluRPpVvwAviHHh4zjC9mIqD
+	 kDm+b+2TClMwDp+GQegAeYdQgerIQdfmsgNMIJtm8LSjw3paioVdql4J/aExeKfQPB
+	 esBiU6hNDwwnMblExS4Fvu8+bdavRAvtaJeEV8Ww=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
-	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Daolong Zhu <jg_daolongzhu@mediatek.corp-partner.google.com>,
+	Hsin-Te Yuan <yuanhsinte@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 149/565] drm/omap: Fix locking in omap_gem_new_dmabuf()
-Date: Thu, 12 Dec 2024 15:55:44 +0100
-Message-ID: <20241212144317.375182551@linuxfoundation.org>
+Subject: [PATCH 5.15 123/565] arm64: dts: mt8183: Damu: add i2c2s i2c-scl-internal-delay-ns
+Date: Thu, 12 Dec 2024 15:55:18 +0100
+Message-ID: <20241212144316.347873994@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144311.432886635@linuxfoundation.org>
 References: <20241212144311.432886635@linuxfoundation.org>
@@ -52,73 +53,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+From: Daolong Zhu <jg_daolongzhu@mediatek.corp-partner.google.com>
 
-[ Upstream commit e6a1c4037227539373c8cf484ace83833e2ad6a2 ]
+[ Upstream commit 6ff2d45f2121c698a57c959ae21885a048615908 ]
 
-omap_gem_new_dmabuf() creates the new gem object, and then takes and
-holds the omap_obj->lock for the rest of the function. This has two
-issues:
+Add i2c2's i2c-scl-internal-delay-ns.
 
-- omap_gem_free_object(), which is called in the error paths, also takes
-  the same lock, leading to deadlock
-- Even if the above wouldn't happen, in the error cases
-  omap_gem_new_dmabuf() still unlocks omap_obj->lock, even after the
-  omap_obj has already been freed.
-
-Furthermore, I don't think there's any reason to take the lock at all,
-as the object was just created and not yet shared with anyone else.
-
-To fix all this, drop taking the lock.
-
-Fixes: 3cbd0c587b12 ("drm/omap: gem: Replace struct_mutex usage with omap_obj private lock")
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Closes: https://lore.kernel.org/all/511b99d7-aade-4f92-bd3e-63163a13d617@stanley.mountain/
-Reviewed-by: Sebastian Reichel <sebastian.reichel@collabora.com>
-Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240806-omapdrm-misc-fixes-v1-3-15d31aea0831@ideasonboard.com
+Fixes: cabc71b08eb5 ("arm64: dts: mt8183: Add kukui-jacuzzi-damu board")
+Reviewed-by: Matthias Brugger <matthias.bgg@gmail.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Signed-off-by: Daolong Zhu <jg_daolongzhu@mediatek.corp-partner.google.com>
+Signed-off-by: Hsin-Te Yuan <yuanhsinte@chromium.org>
+Link: https://lore.kernel.org/r/20241025-i2c-delay-v2-4-9be1bcaf35e0@chromium.org
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/omapdrm/omap_gem.c | 10 ++--------
- 1 file changed, 2 insertions(+), 8 deletions(-)
+ arch/arm64/boot/dts/mediatek/mt8183-kukui-jacuzzi-damu.dts | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/gpu/drm/omapdrm/omap_gem.c b/drivers/gpu/drm/omapdrm/omap_gem.c
-index 38af6195d9593..ed206312ab426 100644
---- a/drivers/gpu/drm/omapdrm/omap_gem.c
-+++ b/drivers/gpu/drm/omapdrm/omap_gem.c
-@@ -1303,8 +1303,6 @@ struct drm_gem_object *omap_gem_new_dmabuf(struct drm_device *dev, size_t size,
+diff --git a/arch/arm64/boot/dts/mediatek/mt8183-kukui-jacuzzi-damu.dts b/arch/arm64/boot/dts/mediatek/mt8183-kukui-jacuzzi-damu.dts
+index 42ba9c00866cd..8e0cba4d23726 100644
+--- a/arch/arm64/boot/dts/mediatek/mt8183-kukui-jacuzzi-damu.dts
++++ b/arch/arm64/boot/dts/mediatek/mt8183-kukui-jacuzzi-damu.dts
+@@ -29,3 +29,6 @@ &qca_wifi {
+ 	qcom,ath10k-calibration-variant = "GO_DAMU";
+ };
  
- 	omap_obj = to_omap_bo(obj);
- 
--	mutex_lock(&omap_obj->lock);
--
- 	omap_obj->sgt = sgt;
- 
- 	if (sgt->orig_nents == 1) {
-@@ -1319,21 +1317,17 @@ struct drm_gem_object *omap_gem_new_dmabuf(struct drm_device *dev, size_t size,
- 		pages = kcalloc(npages, sizeof(*pages), GFP_KERNEL);
- 		if (!pages) {
- 			omap_gem_free_object(obj);
--			obj = ERR_PTR(-ENOMEM);
--			goto done;
-+			return ERR_PTR(-ENOMEM);
- 		}
- 
- 		omap_obj->pages = pages;
- 		ret = drm_prime_sg_to_page_array(sgt, pages, npages);
- 		if (ret) {
- 			omap_gem_free_object(obj);
--			obj = ERR_PTR(-ENOMEM);
--			goto done;
-+			return ERR_PTR(-ENOMEM);
- 		}
- 	}
- 
--done:
--	mutex_unlock(&omap_obj->lock);
- 	return obj;
- }
- 
++&i2c2 {
++	i2c-scl-internal-delay-ns = <20000>;
++};
 -- 
 2.43.0
 
