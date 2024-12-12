@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEBCA216E3B;
-	Thu, 12 Dec 2024 16:53:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AD37222D57;
+	Thu, 12 Dec 2024 16:53:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734022404; cv=none; b=G0goxzoN0aHXeRictw9AbgWEqJya/FzVw2GLfi6czpIJN17VxcrK4po14AtnKW56i0Ji4yzjaY58S6DQoTwryI+aDXyjeqSF0oEublpPh1b34R2rvJgl5nDLYXzUd3k9zhBVK0UDSxSmBDpf23yuq0K1Ud+IY4MYayoKT2awSfg=
+	t=1734022408; cv=none; b=cecd1ULIClABzo0+b1f8+jOlgrfJqJbPbTfYVlq1qQi9EKiZrdKP1HvubWnNfdIviUiSBxwkDe9xjVCFIxzSC1eHeyN+sw94392UehGeCmywOG5XcphQQKE40zbEn2sISSt6BLnS5rsV1YopoVwtXJGaUwlcbmMDdPXM32Y2Pqc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734022404; c=relaxed/simple;
-	bh=ZJxY1A2oaObt2YuP9adZGSqiY2iEPv6aPu0Sz7/XcHU=;
+	s=arc-20240116; t=1734022408; c=relaxed/simple;
+	bh=Cdg2TGsZ9BUz8+qSjeH6RtkxFk9BfGOed6TQh193UXI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pRUaxMjIcTp1wVfNGrvTfi1a2ZETzUA8OWf2MTfKgSgKJ1H/Inmra4kTI+yM9E8kPr0Y3Y+i6+aNMlclu19iY/wZAokUCHeKGgZpEtUKdK7j4Kznlzxx4mHDGTYNduMGXdvNgAJJ7Jd/kvKdJSA11g3LHEus0HElja+DUHJCLho=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a8Z3x71k; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O9SlcIE+FitTXiGGxzQCjPCF35Hco0JGsYSzR6V+I6rufL95D8K6s1xvRwyXqB4xvFGaWaUZ41BzHVjDsd6Gvps3Ib1YysftWNkRPIBSqgg6PU6ouua1BrHtaTQxOogdzYDqc8VA/On7ShwMZxaqW3by4g4ssTaWWGPW1SpzLa4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qULdPRR5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a8Z3x71k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C515C4CECE;
-	Thu, 12 Dec 2024 16:53:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qULdPRR5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2ED4C4CECE;
+	Thu, 12 Dec 2024 16:53:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734022404;
-	bh=ZJxY1A2oaObt2YuP9adZGSqiY2iEPv6aPu0Sz7/XcHU=;
+	s=korg; t=1734022408;
+	bh=Cdg2TGsZ9BUz8+qSjeH6RtkxFk9BfGOed6TQh193UXI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a8Z3x71kTENH/1l6/OKxeuxAGUTWM1kgcd2W5F+iWmIHsIvDgQW6jOvNJ2UOOKQPm
-	 PTDjI1mZ2WesWncgKwK84z7AP0enpjCBP9LkiM9TaCWzQpl20K1zzxxmX3mkaf5zuU
-	 VX75Uyn4B/+OS5pZ7XZf4454gwc9R66ellSMczR4=
+	b=qULdPRR5TyiN6WxIJFgpFOF0mlaQyssirfS8zIuDN9yo4/5BzFHuAIOiNt1YBkJcs
+	 8pkRWdRjwN1p38P3P9DC94K7VFeuu407mxdcltxH9B9fmbKVtHJLentGVKlpzMH5pY
+	 n4l/AOoiCgqKIAVwp6aLb5gzpi9snQARNRNJL2BU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Suchanek <msuchanek@suse.de>,
+	Zhang Zekun <zhangzekun11@huawei.com>,
 	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 233/565] powerpc/sstep: make emulate_vsx_load and emulate_vsx_store static
-Date: Thu, 12 Dec 2024 15:57:08 +0100
-Message-ID: <20241212144320.696414445@linuxfoundation.org>
+Subject: [PATCH 5.15 234/565] powerpc/kexec: Fix return of uninitialized variable
+Date: Thu, 12 Dec 2024 15:57:09 +0100
+Message-ID: <20241212144320.735006711@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144311.432886635@linuxfoundation.org>
 References: <20241212144311.432886635@linuxfoundation.org>
@@ -51,74 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Suchanek <msuchanek@suse.de>
+From: Zhang Zekun <zhangzekun11@huawei.com>
 
-[ Upstream commit a26c4dbb3d9c1821cb0fc11cb2dbc32d5bf3463b ]
+[ Upstream commit 83b5a407fbb73e6965adfb4bd0a803724bf87f96 ]
 
-These functions are not used outside of sstep.c
+of_property_read_u64() can fail and leave the variable uninitialized,
+which will then be used. Return error if reading the property failed.
 
-Fixes: 350779a29f11 ("powerpc: Handle most loads and stores in instruction emulation code")
-Signed-off-by: Michal Suchanek <msuchanek@suse.de>
+Fixes: 2e6bd221d96f ("powerpc/kexec_file: Enable early kernel OPAL calls")
+Signed-off-by: Zhang Zekun <zhangzekun11@huawei.com>
 Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://patch.msgid.link/20241001130356.14664-1-msuchanek@suse.de
+Link: https://patch.msgid.link/20240930075628.125138-1-zhangzekun11@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/include/asm/sstep.h |  5 -----
- arch/powerpc/lib/sstep.c         | 12 ++++--------
- 2 files changed, 4 insertions(+), 13 deletions(-)
+ arch/powerpc/kexec/file_load_64.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/arch/powerpc/include/asm/sstep.h b/arch/powerpc/include/asm/sstep.h
-index 1df867c2e054e..1ece2b0e9369b 100644
---- a/arch/powerpc/include/asm/sstep.h
-+++ b/arch/powerpc/include/asm/sstep.h
-@@ -173,9 +173,4 @@ extern int emulate_step(struct pt_regs *regs, struct ppc_inst instr);
-  */
- extern int emulate_loadstore(struct pt_regs *regs, struct instruction_op *op);
+diff --git a/arch/powerpc/kexec/file_load_64.c b/arch/powerpc/kexec/file_load_64.c
+index 5056e175ca2c4..bce1bef0be899 100644
+--- a/arch/powerpc/kexec/file_load_64.c
++++ b/arch/powerpc/kexec/file_load_64.c
+@@ -909,13 +909,18 @@ int setup_purgatory_ppc64(struct kimage *image, const void *slave_code,
+ 	if (dn) {
+ 		u64 val;
  
--extern void emulate_vsx_load(struct instruction_op *op, union vsx_reg *reg,
--			     const void *mem, bool cross_endian);
--extern void emulate_vsx_store(struct instruction_op *op,
--			      const union vsx_reg *reg, void *mem,
--			      bool cross_endian);
- extern int emulate_dcbz(unsigned long ea, struct pt_regs *regs);
-diff --git a/arch/powerpc/lib/sstep.c b/arch/powerpc/lib/sstep.c
-index ecc2e06854d74..c08665c011706 100644
---- a/arch/powerpc/lib/sstep.c
-+++ b/arch/powerpc/lib/sstep.c
-@@ -723,8 +723,8 @@ static nokprobe_inline int emulate_stq(struct pt_regs *regs, unsigned long ea,
- #endif /* __powerpc64 */
+-		of_property_read_u64(dn, "opal-base-address", &val);
++		ret = of_property_read_u64(dn, "opal-base-address", &val);
++		if (ret)
++			goto out;
++
+ 		ret = kexec_purgatory_get_set_symbol(image, "opal_base", &val,
+ 						     sizeof(val), false);
+ 		if (ret)
+ 			goto out;
  
- #ifdef CONFIG_VSX
--void emulate_vsx_load(struct instruction_op *op, union vsx_reg *reg,
--		      const void *mem, bool rev)
-+static nokprobe_inline void emulate_vsx_load(struct instruction_op *op, union vsx_reg *reg,
-+					     const void *mem, bool rev)
- {
- 	int size, read_size;
- 	int i, j;
-@@ -806,11 +806,9 @@ void emulate_vsx_load(struct instruction_op *op, union vsx_reg *reg,
- 		break;
+-		of_property_read_u64(dn, "opal-entry-address", &val);
++		ret = of_property_read_u64(dn, "opal-entry-address", &val);
++		if (ret)
++			goto out;
+ 		ret = kexec_purgatory_get_set_symbol(image, "opal_entry", &val,
+ 						     sizeof(val), false);
  	}
- }
--EXPORT_SYMBOL_GPL(emulate_vsx_load);
--NOKPROBE_SYMBOL(emulate_vsx_load);
- 
--void emulate_vsx_store(struct instruction_op *op, const union vsx_reg *reg,
--		       void *mem, bool rev)
-+static nokprobe_inline void emulate_vsx_store(struct instruction_op *op, const union vsx_reg *reg,
-+					      void *mem, bool rev)
- {
- 	int size, write_size;
- 	int i, j;
-@@ -898,8 +896,6 @@ void emulate_vsx_store(struct instruction_op *op, const union vsx_reg *reg,
- 		break;
- 	}
- }
--EXPORT_SYMBOL_GPL(emulate_vsx_store);
--NOKPROBE_SYMBOL(emulate_vsx_store);
- 
- static nokprobe_inline int do_vsx_load(struct instruction_op *op,
- 				       unsigned long ea, struct pt_regs *regs,
 -- 
 2.43.0
 
