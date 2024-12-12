@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5725C2144C4;
-	Thu, 12 Dec 2024 17:24:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CCC92144C4;
+	Thu, 12 Dec 2024 17:24:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734024269; cv=none; b=EUiD49ZYlA9x39fqjxD0HSfcf4i6GEGsZu07nCvgjAi6mtiKEWE5HyoCeI7nLWTjYBdDrGl0iySFCLQsMPjnAYM9P6dWsTkvoAK5vkemi+Zx5t2x2AtaT8vMK8YrPEzBmE3uE7Qem1NoKmhBZqtepRBjvhPZ0hcLbtbyIXUkeVc=
+	t=1734024272; cv=none; b=Zise9OKf7gUmFvyCt+iU1rwDhPLnfzq8vc+8wPzQ9bwgeFrUxoUqisR+lw8BuJEIxu320PyKM+mrtMWjjMttIx4B48zflE4O+HicjyNmGwJ7XBvbvbfH+eN8PcjIWvdke8/aDSatEAyf23zasMSWaoYqWhnK7K8G/TJOhkAetW8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734024269; c=relaxed/simple;
-	bh=4DJ1F8K4jk21OW/eE0QXOymxqbdEVDb+LlMvxzV96pU=;
+	s=arc-20240116; t=1734024272; c=relaxed/simple;
+	bh=/N2tfq0xTtfejukiU1YNWBml5enHn/0WfjdT9j/C0P8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gKJ7TTqdKCN7ymp8g4HaeQRoNPpy0X4lxc0lwG1ZN6AKSD3VR4k6nBRWFGtpTQBblQtcjxn448j9EH6BaiLn4rydpQoZXn/QahiZPMvtbe5bpmTzLur39YUOzOcTFiTgPR9RJ/XHTeWG2QDobDoE2Jry4e9k0E4C4PEllP7pKxg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qAA8Prn3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IH12Ofbasjp2wvkDzpJGlYGRF0Ovn1lj4XhiVwZ8dlOsgDu+FF9F4YLU6LGivfZBx76AT3+l54nOuVVljuvmR0hIKaDdzWHjfo2ggl92orb5upypePSewIVMEsotNDTuoeLeBEN3OgkQhozOeg2cdZAVyNeMdaA5knHONBvt0g4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S9AonotS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qAA8Prn3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D32BC4CECE;
-	Thu, 12 Dec 2024 17:24:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S9AonotS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E786C4CECE;
+	Thu, 12 Dec 2024 17:24:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734024268;
-	bh=4DJ1F8K4jk21OW/eE0QXOymxqbdEVDb+LlMvxzV96pU=;
+	s=korg; t=1734024271;
+	bh=/N2tfq0xTtfejukiU1YNWBml5enHn/0WfjdT9j/C0P8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qAA8Prn3s504r3Z2JuSAlUtdAFNkdQSqCyP4xBpiEU/q5fx07Dywr5hjbJ+sPGwH3
-	 6jC1tEuTRfZxcaoPMdUaedJBT+3MJ4ixkCHUo6aNpgMvIz7VgiRNB5uujqGrttQCTv
-	 D3Nt3c+pY7BTeFT+ZHuipA1Kbwmpv8jYU9m3ZwRs=
+	b=S9AonotS2wSbrhcDcN5Frc8ArFTR5WNHDhj7MCmVVXCnsloMaVywtNsPXeYgXT5Zg
+	 8d16V6mcgqQy+VQgfjfFYeMCilxXizAuMwhZxoqnqp11DF15qkbMEY8NuVt6XoKVVa
+	 Oaal01V/wIeTSWZBSlYieEq+RmzmKCWqyC//QVTk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	chao liu <liuzgyid@outlook.com>,
-	John Johansen <john.johansen@canonical.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 240/459] apparmor: fix Do simple duplicate message elimination
-Date: Thu, 12 Dec 2024 15:59:38 +0100
-Message-ID: <20241212144303.062512321@linuxfoundation.org>
+	Qiu-ji Chen <chenqiuji666@gmail.com>,
+	Juergen Gross <jgross@suse.com>
+Subject: [PATCH 5.10 241/459] xen: Fix the issue of resource not being properly released in xenbus_dev_probe()
+Date: Thu, 12 Dec 2024 15:59:39 +0100
+Message-ID: <20241212144303.102953544@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144253.511169641@linuxfoundation.org>
 References: <20241212144253.511169641@linuxfoundation.org>
@@ -51,35 +50,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: chao liu <liuzgyid@outlook.com>
+From: Qiu-ji Chen <chenqiuji666@gmail.com>
 
-[ Upstream commit 9b897132424fe76bf6c61f22f9cf12af7f1d1e6a ]
+commit afc545da381ba0c651b2658966ac737032676f01 upstream.
 
-Multiple profiles shared 'ent->caps', so some logs missed.
+This patch fixes an issue in the function xenbus_dev_probe(). In the
+xenbus_dev_probe() function, within the if (err) branch at line 313, the
+program incorrectly returns err directly without releasing the resources
+allocated by err = drv->probe(dev, id). As the return value is non-zero,
+the upper layers assume the processing logic has failed. However, the probe
+operation was performed earlier without a corresponding remove operation.
+Since the probe actually allocates resources, failing to perform the remove
+operation could lead to problems.
 
-Fixes: 0ed3b28ab8bf ("AppArmor: mediation of non file objects")
-Signed-off-by: chao liu <liuzgyid@outlook.com>
-Signed-off-by: John Johansen <john.johansen@canonical.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+To fix this issue, we followed the resource release logic of the
+xenbus_dev_remove() function by adding a new block fail_remove before the
+fail_put block. After entering the branch if (err) at line 313, the
+function will use a goto statement to jump to the fail_remove block,
+ensuring that the previously acquired resources are correctly released,
+thus preventing the reference count leak.
+
+This bug was identified by an experimental static analysis tool developed
+by our team. The tool specializes in analyzing reference count operations
+and detecting potential issues where resources are not properly managed.
+In this case, the tool flagged the missing release operation as a
+potential problem, which led to the development of this patch.
+
+Fixes: 4bac07c993d0 ("xen: add the Xenbus sysfs and virtual device hotplug driver")
+Cc: stable@vger.kernel.org
+Signed-off-by: Qiu-ji Chen <chenqiuji666@gmail.com>
+Reviewed-by: Juergen Gross <jgross@suse.com>
+Message-ID: <20241105130919.4621-1-chenqiuji666@gmail.com>
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/apparmor/capability.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/xen/xenbus/xenbus_probe.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/security/apparmor/capability.c b/security/apparmor/capability.c
-index deccea8654ad8..1b13fd89d5a9f 100644
---- a/security/apparmor/capability.c
-+++ b/security/apparmor/capability.c
-@@ -94,6 +94,8 @@ static int audit_caps(struct common_audit_data *sa, struct aa_profile *profile,
- 		return error;
- 	} else {
- 		aa_put_profile(ent->profile);
-+		if (profile != ent->profile)
-+			cap_clear(ent->caps);
- 		ent->profile = aa_get_profile(profile);
- 		cap_raise(ent->caps, cap);
+--- a/drivers/xen/xenbus/xenbus_probe.c
++++ b/drivers/xen/xenbus/xenbus_probe.c
+@@ -250,10 +250,16 @@ int xenbus_dev_probe(struct device *_dev
+ 	if (err) {
+ 		dev_warn(&dev->dev, "watch_otherend on %s failed.\n",
+ 		       dev->nodename);
+-		return err;
++		goto fail_remove;
  	}
--- 
-2.43.0
-
+ 
+ 	return 0;
++fail_remove:
++	if (drv->remove) {
++		down(&dev->reclaim_sem);
++		drv->remove(dev);
++		up(&dev->reclaim_sem);
++	}
+ fail_put:
+ 	module_put(drv->driver.owner);
+ fail:
 
 
