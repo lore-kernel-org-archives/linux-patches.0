@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95ABF2185A0;
-	Thu, 12 Dec 2024 15:37:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 065782185B1;
+	Thu, 12 Dec 2024 15:37:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734017836; cv=none; b=d33WKj9aDV68Wwc1fIAKrnW/c7DY5fGQTFWE+BlyJ6tzKVO6oSMFYzR9HWr+VX0gFELFr0l3+Cnhe1Uc2QQc9Y1y9CzP9rCbIBS1F2JcPC9UbtIi29mZeLDdBremKHprAvmIVryrH+TWLln/3qUgbKRhhh/fgy/p8KtOmtVJazc=
+	t=1734017840; cv=none; b=jncAvj3sUIY5y/SFmfR6lEkjAAaEV0W+a8f166wdmRKOV+kpBSVe6JJCkwF/Igo1zeNQARNXk7rZ1nbqw8j6jGy95QyqryoPKIKhQ03locWy6J0Ar2D37W6XId7tmkjL7++2BeN8Ek9hVrx3U/oKEo9xJYdsBnFTWHnjfMeMwIo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734017836; c=relaxed/simple;
-	bh=fhp052IMS7XQju/F4YLNwrN31hYJMsoFAKd/wWPTwhM=;
+	s=arc-20240116; t=1734017840; c=relaxed/simple;
+	bh=Il58N4Q2z4nTllO6ifQc54yconmmvB1CLMrgIxGWsX4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=mDd9ZnSVBubblqOMQXIBqqLh9jKeDja7k4lIT67BaYrKYbh5fDwxdQJYdDsZqMtIc5oJlMk/52sp+J0dNp13WefnCLOT1uemHJdVAMZMBenT34smNy4x8/nfQfK3VhBbAEOuG9aXeDBVubqtcdulBMEVzZNG1CXV/FRXzZZz26c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DY844Rkf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HW1liQ8wFJ9jCUqYZlDQSAHRzMEFMgoGZaNPXFZoHWedNCCCOHZBQEGHT2JSCA8CNUsiRN/ITlBQFQlMger6TyrwU6yCuAXnMHt5YIMfPtoTfQSNzAYKzyRjmftQ+9l/1pqkna24yqncpTWDy+almNybV5sBI9V2ohJVqQcpOxY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rO0I/RX6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DY844Rkf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E007C4CECE;
-	Thu, 12 Dec 2024 15:37:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rO0I/RX6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17DC9C4CECE;
+	Thu, 12 Dec 2024 15:37:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734017836;
-	bh=fhp052IMS7XQju/F4YLNwrN31hYJMsoFAKd/wWPTwhM=;
+	s=korg; t=1734017839;
+	bh=Il58N4Q2z4nTllO6ifQc54yconmmvB1CLMrgIxGWsX4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DY844RkfV8VsttNR0xE2UNpB47do321DQrB4du2kTXpnUT2XlyTVlDudhuUALlLNd
-	 gqT1mrHCoJFtzy/vuoa/7AQxCvwO/Shd7+7/oloxDR2WbXpqrJnqdcIxie88eVl4zd
-	 wWNzoesyXAnzaSE1HwaRKh3KqVE0c9q2fvCrurYw=
+	b=rO0I/RX6OQQmxoafmc44K07D8KFuKEyCH0CA3OSjOhGvh7tgtFnoH216yxFswTWBe
+	 xBh5SmzZG4zzJfS6a5G830TWpwOFNfo781dLw0atsxKKfUl/bC6lyIpcRlDwSZjf6d
+	 y88Mg0FtEXKg2G0/msB6NE7UPOjfecrySKJR/WLA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	=?UTF-8?q?P=C3=A9ter=20Ujfalusi?= <peter.ujfalusi@linux.intel.com>,
-	Liam Girdwood <liam.r.girdwood@intel.com>,
-	Kai Vehmanen <kai.vehmanen@linux.intel.com>,
-	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	Saravana Kannan <saravanak@google.com>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Rob Herring <robh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 123/356] ASoC: SOF: ipc3-topology: Convert the topology pin index to ALH dai index
-Date: Thu, 12 Dec 2024 15:57:22 +0100
-Message-ID: <20241212144249.510971426@linuxfoundation.org>
+Subject: [PATCH 6.6 095/356] driver core: Add FWLINK_FLAG_IGNORE to completely ignore a fwnode link
+Date: Thu, 12 Dec 2024 15:56:54 +0100
+Message-ID: <20241212144248.369520124@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144244.601729511@linuxfoundation.org>
 References: <20241212144244.601729511@linuxfoundation.org>
@@ -49,90 +46,89 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Bard Liao <yung-chuan.liao@linux.intel.com>
+From: Saravana Kannan <saravanak@google.com>
 
-[ Upstream commit e9db1b551774037ebe39dde4a658d89ba95e260b ]
+[ Upstream commit b7e1241d8f77ed64404a5e4450f43a319310fc91 ]
 
-Intel SoundWire machine driver always uses Pin number 2 and above.
-Currently, the pin number is used as the FW DAI index directly. As a
-result, FW DAI 0 and 1 are never used. That worked fine because we use
-up to 2 DAIs in a SDW link. Convert the topology pin index to ALH dai
-index, the mapping is using 2-off indexing, iow, pin #2 is ALH dai #0.
+A fwnode link between specific supplier-consumer fwnodes can be added
+multiple times for multiple reasons. If that dependency doesn't exist,
+deleting the fwnode link once doesn't guarantee that it won't get created
+again.
 
-The issue exists since beginning. And the Fixes tag is the first commit
-that this commit can be applied.
+So, add FWLINK_FLAG_IGNORE flag to mark a fwnode link as one that needs to
+be completely ignored. Since a fwnode link's flags is an OR of all the
+flags passed to all the fwnode_link_add() calls to create that specific
+fwnode link, the FWLINK_FLAG_IGNORE flag is preserved and can be used to
+mark a fwnode link as on that need to be completely ignored until it is
+deleted.
 
-Fixes: b66bfc3a9810 ("ASoC: SOF: sof-audio: Fix broken early bclk feature for SSP")
-Signed-off-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Reviewed-by: Péter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Reviewed-by: Liam Girdwood <liam.r.girdwood@intel.com>
-Reviewed-by: Kai Vehmanen <kai.vehmanen@linux.intel.com>
-Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
-Link: https://patch.msgid.link/20241127092955.20026-1-yung-chuan.liao@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Saravana Kannan <saravanak@google.com>
+Acked-by: "Rafael J. Wysocki" <rafael@kernel.org>
+Reviewed-by: Rob Herring <robh@kernel.org>
+Link: https://lore.kernel.org/r/20240305050458.1400667-3-saravanak@google.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: bac3b10b78e5 ("driver core: fw_devlink: Stop trying to optimize cycle detection logic")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/sof/ipc3-topology.c | 26 ++++++++++++++++++++++++--
- 1 file changed, 24 insertions(+), 2 deletions(-)
+ drivers/base/core.c    | 9 ++++++++-
+ include/linux/fwnode.h | 2 ++
+ 2 files changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/sound/soc/sof/ipc3-topology.c b/sound/soc/sof/ipc3-topology.c
-index d96555438c6bf..a1eab10211b0e 100644
---- a/sound/soc/sof/ipc3-topology.c
-+++ b/sound/soc/sof/ipc3-topology.c
-@@ -20,6 +20,9 @@
- /* size of tplg ABI in bytes */
- #define SOF_IPC3_TPLG_ABI_SIZE 3
+diff --git a/drivers/base/core.c b/drivers/base/core.c
+index 499904f1ba6b3..3aaf234dbb088 100644
+--- a/drivers/base/core.c
++++ b/drivers/base/core.c
+@@ -1025,7 +1025,8 @@ static struct fwnode_handle *fwnode_links_check_suppliers(
+ 		return NULL;
  
-+/* Base of SOF_DAI_INTEL_ALH, this should be aligned with SOC_SDW_INTEL_BIDIR_PDI_BASE */
-+#define INTEL_ALH_DAI_INDEX_BASE 2
-+
- struct sof_widget_data {
- 	int ctrl_type;
- 	int ipc_cmd;
-@@ -1509,6 +1512,17 @@ static int sof_ipc3_widget_setup_comp_dai(struct snd_sof_widget *swidget)
- 	if (ret < 0)
- 		goto free;
+ 	list_for_each_entry(link, &fwnode->suppliers, c_hook)
+-		if (!(link->flags & FWLINK_FLAG_CYCLE))
++		if (!(link->flags &
++		      (FWLINK_FLAG_CYCLE | FWLINK_FLAG_IGNORE)))
+ 			return link->supplier;
  
-+	/* Subtract the base to match the FW dai index. */
-+	if (comp_dai->type == SOF_DAI_INTEL_ALH) {
-+		if (comp_dai->dai_index < INTEL_ALH_DAI_INDEX_BASE) {
-+			dev_err(sdev->dev,
-+				"Invalid ALH dai index %d, only Pin numbers >= %d can be used\n",
-+				comp_dai->dai_index, INTEL_ALH_DAI_INDEX_BASE);
-+			return -EINVAL;
-+		}
-+		comp_dai->dai_index -= INTEL_ALH_DAI_INDEX_BASE;
-+	}
+ 	return NULL;
+@@ -1976,6 +1977,9 @@ static bool __fw_devlink_relax_cycles(struct device *con,
+ 	}
+ 
+ 	list_for_each_entry(link, &sup_handle->suppliers, c_hook) {
++		if (link->flags & FWLINK_FLAG_IGNORE)
++			continue;
 +
- 	dev_dbg(scomp->dev, "dai %s: type %d index %d\n",
- 		swidget->widget->name, comp_dai->type, comp_dai->dai_index);
- 	sof_dbg_comp_config(scomp, &comp_dai->config);
-@@ -2076,8 +2090,16 @@ static int sof_ipc3_dai_config(struct snd_sof_dev *sdev, struct snd_sof_widget *
- 	case SOF_DAI_INTEL_ALH:
- 		if (data) {
- 			/* save the dai_index during hw_params and reuse it for hw_free */
--			if (flags & SOF_DAI_CONFIG_FLAGS_HW_PARAMS)
--				config->dai_index = data->dai_index;
-+			if (flags & SOF_DAI_CONFIG_FLAGS_HW_PARAMS) {
-+				/* Subtract the base to match the FW dai index. */
-+				if (data->dai_index < INTEL_ALH_DAI_INDEX_BASE) {
-+					dev_err(sdev->dev,
-+						"Invalid ALH dai index %d, only Pin numbers >= %d can be used\n",
-+						config->dai_index, INTEL_ALH_DAI_INDEX_BASE);
-+					return -EINVAL;
-+				}
-+				config->dai_index = data->dai_index - INTEL_ALH_DAI_INDEX_BASE;
-+			}
- 			config->alh.stream_id = data->dai_data;
- 		}
- 		break;
+ 		if (__fw_devlink_relax_cycles(con, link->supplier)) {
+ 			__fwnode_link_cycle(link);
+ 			ret = true;
+@@ -2054,6 +2058,9 @@ static int fw_devlink_create_devlink(struct device *con,
+ 	int ret = 0;
+ 	u32 flags;
+ 
++	if (link->flags & FWLINK_FLAG_IGNORE)
++		return 0;
++
+ 	if (con->fwnode == link->consumer)
+ 		flags = fw_devlink_get_flags(link->flags);
+ 	else
+diff --git a/include/linux/fwnode.h b/include/linux/fwnode.h
+index 5700451b300fb..525cc031596b6 100644
+--- a/include/linux/fwnode.h
++++ b/include/linux/fwnode.h
+@@ -51,8 +51,10 @@ struct fwnode_handle {
+  * fwnode link flags
+  *
+  * CYCLE:	The fwnode link is part of a cycle. Don't defer probe.
++ * IGNORE:	Completely ignore this link, even during cycle detection.
+  */
+ #define FWLINK_FLAG_CYCLE			BIT(0)
++#define FWLINK_FLAG_IGNORE			BIT(1)
+ 
+ struct fwnode_link {
+ 	struct fwnode_handle *supplier;
 -- 
 2.43.0
 
