@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AADA613CA81;
-	Thu, 12 Dec 2024 17:40:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A82F613CA81;
+	Thu, 12 Dec 2024 17:41:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734025258; cv=none; b=L4i9kpSL4XTqTJPNePojE+p1vN4Y8uhGStPHPDS/Hi2AGuWDtpMkjZv4mM0198MvfOyllauO+5RBTOCbLSbRg3iNKEJRZJpjIcYt4Fk5rO1LhJCbTtVngCKL1b7kPabOdpw4Rt24YQdtXbcApCZnFW7HM1hfizP945DzbBc7bJY=
+	t=1734025261; cv=none; b=jxCNmG+Vj3A6/ug3Ma0WpNdT0VRmTWfA3h5vfSRXCm9eoQ7R5qzhOJOQLCUhoXSg6icbimpZzpZq46UZJGPFI6ufoz3a1g5ThQ7pEmmTs1yIpxhezt9mcdXnpgQXaEm07abhdbUDmPNDRyJvo4+MPH1I6SiqGfeqnRw1dIItpfo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734025258; c=relaxed/simple;
-	bh=s4XBvM0EzOm5Z1SAhSqs2vKp2V7QR335S6qM6CTtV4k=;
+	s=arc-20240116; t=1734025261; c=relaxed/simple;
+	bh=bp+k4797OthKoVRrNEQjlsupK0m8Zg9tvVk800+EaKw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EsnVhoJY3MUCibHqA8IYQpiWsiNw3x92u04C+PISm9tflhLjIdBljnloj7t86BZTl6zzeYmUaosPTHG/4wI5ALjJwJbMtrbVDt53EthOQ4r8eIVpMCuO8UGEFtI74WOq0UQ31BaAp1rc660YLtmt0iKdkM8rdMKADYZFc859LrY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L/EQuAsX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RF23EAyTr33mNjxxL1noh2f7fmeEg+aiiH0IOJMihjx8I/783vhnJlXzxV6qy4HiPJE7QduwkYxhb/2G1m3y3ijIACCbgqoFmvIPjD6bUFBx9rYqlVmZK2Wb2EG1KTYWQ+DFuk7B1k4MgFchyF5fawIVBeWZyqcjSCPgEG9rT14=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZoFeU4b3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L/EQuAsX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F1FEC4CECE;
-	Thu, 12 Dec 2024 17:40:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZoFeU4b3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C1CCC4CED3;
+	Thu, 12 Dec 2024 17:41:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734025258;
-	bh=s4XBvM0EzOm5Z1SAhSqs2vKp2V7QR335S6qM6CTtV4k=;
+	s=korg; t=1734025261;
+	bh=bp+k4797OthKoVRrNEQjlsupK0m8Zg9tvVk800+EaKw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L/EQuAsXZPqrVoDbdNMX0mbNhhtDxOv1s2+YD0Lmx9+wcmtISKcLOi8Gj9FWTzLr7
-	 NNXJUKpJiC9nsJ8AG100kt2V4Ap8HG+oXxfwmiwKSABp4uT2J6AwkFBCcYnu0q7PwD
-	 OmfjQIKD1AhrJLCDnqQkCVfaAiE7ktXgfpgRL9bc=
+	b=ZoFeU4b3Ee6oODGqtsBrVL4ErCog4/iYKASbJK4zIB7YuaR8KKc4PMtpjsh0IUVNW
+	 BGRM5vvfmQabWqWj2Jjz161wN2imhunKt5UBAZ7cjh/bFIs2yxZiVOenbM8dsOIJJg
+	 iraw0YbomGW6efwmXWKYcJ2VctaxhmVfw+Ax3OyY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zijian Zhang <zijianzhang@bytedance.com>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	David Ahern <dsahern@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 079/321] bpf, sockmap: Fix sk_msg_reset_curr
-Date: Thu, 12 Dec 2024 15:59:57 +0100
-Message-ID: <20241212144233.106738621@linuxfoundation.org>
+Subject: [PATCH 5.4 080/321] selftests: net: really check for bg process completion
+Date: Thu, 12 Dec 2024 15:59:58 +0100
+Message-ID: <20241212144233.146697678@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144229.291682835@linuxfoundation.org>
 References: <20241212144229.291682835@linuxfoundation.org>
@@ -51,68 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zijian Zhang <zijianzhang@bytedance.com>
+From: Paolo Abeni <pabeni@redhat.com>
 
-[ Upstream commit 955afd57dc4bf7e8c620a0a9e3af3c881c2c6dff ]
+[ Upstream commit 52ed077aa6336dbef83a2d6d21c52d1706fb7f16 ]
 
-Found in the test_txmsg_pull in test_sockmap,
-```
-txmsg_cork = 512; // corking is importrant here
-opt->iov_length = 3;
-opt->iov_count = 1;
-opt->rate = 512; // sendmsg will be invoked 512 times
-```
-The first sendmsg will send an sk_msg with size 3, and bpf_msg_pull_data
-will be invoked the first time. sk_msg_reset_curr will reset the copybreak
-from 3 to 0. In the second sendmsg, since we are in the stage of corking,
-psock->cork will be reused in func sk_msg_alloc. msg->sg.copybreak is 0
-now, the second msg will overwrite the first msg. As a result, we could
-not pass the data integrity test.
+A recent refactor transformed the check for process completion
+in a true statement, due to a typo.
 
-The same problem happens in push and pop test. Thus, fix sk_msg_reset_curr
-to restore the correct copybreak.
+As a result, the relevant test-case is unable to catch the
+regression it was supposed to detect.
 
-Fixes: bb9aefde5bba ("bpf: sockmap, updating the sg structure should also update curr")
-Signed-off-by: Zijian Zhang <zijianzhang@bytedance.com>
-Link: https://lore.kernel.org/r/20241106222520.527076-9-zijianzhang@bytedance.com
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Restore the correct condition.
+
+Fixes: 691bb4e49c98 ("selftests: net: avoid just another constant wait")
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://patch.msgid.link/0e6f213811f8e93a235307e683af8225cc6277ae.1730828007.git.pabeni@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/filter.c | 20 +++++++++-----------
- 1 file changed, 9 insertions(+), 11 deletions(-)
+ tools/testing/selftests/net/pmtu.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/core/filter.c b/net/core/filter.c
-index 5c9b7c270739f..9f67d9f20ae09 100644
---- a/net/core/filter.c
-+++ b/net/core/filter.c
-@@ -2221,18 +2221,16 @@ BPF_CALL_2(bpf_msg_cork_bytes, struct sk_msg *, msg, u32, bytes)
+diff --git a/tools/testing/selftests/net/pmtu.sh b/tools/testing/selftests/net/pmtu.sh
+index a4dc32729749d..f72001008db00 100755
+--- a/tools/testing/selftests/net/pmtu.sh
++++ b/tools/testing/selftests/net/pmtu.sh
+@@ -1133,7 +1133,7 @@ check_running() {
+ 	pid=${1}
+ 	cmd=${2}
  
- static void sk_msg_reset_curr(struct sk_msg *msg)
- {
--	u32 i = msg->sg.start;
--	u32 len = 0;
--
--	do {
--		len += sk_msg_elem(msg, i)->length;
--		sk_msg_iter_var_next(i);
--		if (len >= msg->sg.size)
--			break;
--	} while (i != msg->sg.end);
-+	if (!msg->sg.size) {
-+		msg->sg.curr = msg->sg.start;
-+		msg->sg.copybreak = 0;
-+	} else {
-+		u32 i = msg->sg.end;
- 
--	msg->sg.curr = i;
--	msg->sg.copybreak = 0;
-+		sk_msg_iter_var_prev(i);
-+		msg->sg.curr = i;
-+		msg->sg.copybreak = msg->sg.data[i].length;
-+	}
+-	[ "$(cat /proc/${pid}/cmdline 2>/dev/null | tr -d '\0')" = "{cmd}" ]
++	[ "$(cat /proc/${pid}/cmdline 2>/dev/null | tr -d '\0')" = "${cmd}" ]
  }
  
- static const struct bpf_func_proto bpf_msg_cork_bytes_proto = {
+ test_cleanup_vxlanX_exception() {
 -- 
 2.43.0
 
