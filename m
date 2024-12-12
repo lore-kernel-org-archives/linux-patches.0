@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91B9B23FD1B;
-	Thu, 12 Dec 2024 16:15:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9854823FD1D;
+	Thu, 12 Dec 2024 16:15:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734020112; cv=none; b=PDBkgkOQdVC6iRdwBYg4eV9Vv0fzP0pKu09lpS5aXENt2vTajJEtrzQWW0l9c7f2K5Buc4i5wlx7cdhcnGHJbKUHP044LSYKP2A+7Pc1JSZi1OmVyeF8aAkEh2DlJlzdQwb+luzCfbBURaenKOxkjxqJXtAKApdWaTqBYjcVNHw=
+	t=1734020116; cv=none; b=MQYmxYtsN5Lk+XbuBkuj/nbhDlEovmxp2VjiNhR3CIUtWJp4getuNm4WW7qY6wDJH85uLVHuXfXSQHcF8lbrB0Fv0/WireZbIcA5gHVjKYPQ4Shet39sjyU+jhrFJGbiG5Lx2+axKdqQ9ovImgTnB81wcXdLAS2M9PYkQgCgkSA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734020112; c=relaxed/simple;
-	bh=Cj6VjRn5DS7q1dWH65ZlKGPusE6n44sp5zV/zFQidFA=;
+	s=arc-20240116; t=1734020116; c=relaxed/simple;
+	bh=fa9cYrVdgTMiCuoTpzAaZGdV06ocT+nR2VI7U2F23Us=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T83i2Vo812TQru0Nbzp8bFF3iGC7oSidr69ZCQTglpJbyUVC56U14hxpwj+ymcnFnmdklbQtziokm+jILrcUYMhK1m7KlpbsXhS2oRhW7X1ul14X4XEPYNKBr9UBrSth+al59iQBRbdwAc3nB3LMwSocXYetIVnT3I9udlpD+9Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mz75tWbI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=taTHulror/VWJ4t1CzQUkgeJ4jCXKSw9itjAv3ITG56kX3NX1kLI4xp9gaLuBvgmxg8JIqkKJsSdsFOh/36cDTKOUxg+QoZRCCwIb7aozOnzhyT+lwg90sT/6+5AeTyqboO9A/iOnhwKb2KHN7Ne1su1HPp8RxD+BuSwICOpEnw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aHv7coAA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mz75tWbI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90507C4CECE;
-	Thu, 12 Dec 2024 16:15:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aHv7coAA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 758FEC4CECE;
+	Thu, 12 Dec 2024 16:15:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734020112;
-	bh=Cj6VjRn5DS7q1dWH65ZlKGPusE6n44sp5zV/zFQidFA=;
+	s=korg; t=1734020116;
+	bh=fa9cYrVdgTMiCuoTpzAaZGdV06ocT+nR2VI7U2F23Us=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Mz75tWbIu85ty6+MLKBxX1N4D0gV5XYeUTFucFGABG5KRS6KJd8MlBIc6PFjUxNYW
-	 3NbdUv01Rr2bMzC/EEmjf1bqqA+OZsjlj2xPh84Jf7e4lzYTpSqsD7pLvYwgCu4gJw
-	 +Yy+NL0F8hUo/vwj2DOA3MY54AnqDPod8RPPMLeU=
+	b=aHv7coAA0Md6RpywmoEW1ygFhbr4cF0nRVvpx9FxFmqR6GPmzTYlSfbEUhRkfKA6y
+	 hkyKFZMQ5vAx0kWgyWbxULQIVCbKoNr/Na3COxcq1JlReKWkwaIC10ihx/JzE8wpQV
+	 Y7xURGHPGO1ghCfcSMZPQ3836a+NoAO7NDpMw6/E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Angelo Dureghello <adureghello@baylibre.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.1 380/772] dt-bindings: iio: dac: ad3552r: fix maximum spi speed
-Date: Thu, 12 Dec 2024 15:55:25 +0100
-Message-ID: <20241212144405.603525517@linuxfoundation.org>
+	syzbot+01218003be74b5e1213a@syzkaller.appspotmail.com,
+	Yuezhang Mo <Yuezhang.Mo@sony.com>,
+	Namjae Jeon <linkinjeon@kernel.org>
+Subject: [PATCH 6.1 381/772] exfat: fix uninit-value in __exfat_get_dentry_set
+Date: Thu, 12 Dec 2024 15:55:26 +0100
+Message-ID: <20241212144405.646945701@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -51,33 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Angelo Dureghello <adureghello@baylibre.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-commit d1d1c117f39b2057d1e978f26a8bd9631ddb193b upstream.
+commit 02dffe9ab092fc4c8800aee68cb7eafd37a980c4 upstream.
 
-Fix maximum SPI clock speed, as per datasheet (Rev. B, page 6).
+There is no check if stream size and start_clu are invalid.
+If start_clu is EOF cluster and stream size is 4096, It will
+cause uninit value access. because ei->hint_femp.eidx could
+be 128(if cluster size is 4K) and wrong hint will allocate
+next cluster. and this cluster will be same with the cluster
+that is allocated by exfat_extend_valid_size(). The previous
+patch will check invalid start_clu, but for clarity, initialize
+hint_femp.eidx to zero.
 
-Fixes: b0a96c5f599e ("dt-bindings: iio: dac: Add adi,ad3552r.yaml")
 Cc: stable@vger.kernel.org
-Signed-off-by: Angelo Dureghello <adureghello@baylibre.com>
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://patch.msgid.link/20241003-wip-bl-ad3552r-axi-v0-iio-testing-v4-4-ceb157487329@baylibre.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Reported-by: syzbot+01218003be74b5e1213a@syzkaller.appspotmail.com
+Tested-by: syzbot+01218003be74b5e1213a@syzkaller.appspotmail.com
+Reviewed-by: Yuezhang Mo <Yuezhang.Mo@sony.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/devicetree/bindings/iio/dac/adi,ad3552r.yaml |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/exfat/namei.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/Documentation/devicetree/bindings/iio/dac/adi,ad3552r.yaml
-+++ b/Documentation/devicetree/bindings/iio/dac/adi,ad3552r.yaml
-@@ -26,7 +26,7 @@ properties:
-     maxItems: 1
+--- a/fs/exfat/namei.c
++++ b/fs/exfat/namei.c
+@@ -364,6 +364,7 @@ static int exfat_find_empty_entry(struct
+ 		if (ei->start_clu == EXFAT_EOF_CLUSTER) {
+ 			ei->start_clu = clu.dir;
+ 			p_dir->dir = clu.dir;
++			hint_femp.eidx = 0;
+ 		}
  
-   spi-max-frequency:
--    maximum: 30000000
-+    maximum: 66000000
- 
-   reset-gpios:
-     maxItems: 1
+ 		/* append to the FAT chain */
 
 
