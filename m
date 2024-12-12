@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50175215F48;
-	Thu, 12 Dec 2024 15:07:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1636E216E28;
+	Thu, 12 Dec 2024 15:07:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734016066; cv=none; b=VkqQwfhyckINnQurj1UiRjMIWvt9h5E+dcoLn/hZf58Ej7G66e81CDwhP5zXIY8abY5zeg4tHRsbDaS4eHlzFAnSscrgDmAC1cS0zO6CeEsbFkqXgiyivRsEmejoMeSvwr5KDAnRRM+UlDFleB7X7sNKqORpQjEopBvaRH/dEEk=
+	t=1734016070; cv=none; b=WshGJk4/w9M+Fdd64/9Oqq5T1N7xrpILOUVr6RkBt922OyGSzAwYwDFgi+y3N6DFzjMiLw/yM0RIBffOPCdO0VLE75xrDBpzuHy1UAehdu80ZuXcltwopvMv6R5s99ne42sglAqADiF+W943YB1BwSMjzdSDlWmyZR7u+sMO2ac=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734016066; c=relaxed/simple;
-	bh=wt/N8ZX5jjgo88VCUl6+z4njAmTe+AhVDWr10oQ2fmY=;
+	s=arc-20240116; t=1734016070; c=relaxed/simple;
+	bh=3tpX/S8Rmx/omHwlXFMvrTikkkLzYAD1QGz3WPOwRKo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QJHgn+dqjoR19/BHB/s+7mHBHcoaNz7NvbcmgbsUEvp0siA9q5gHpDVSJ1yaYDlmhDYYVltRwLwBHfXcQxMw02K0b9jt5PGyrCUrjWoWO2PjJ8UJhvLCUwHtWfF8VImudZ2If2rP8zcCpW0pfpef+qtWvJ7bZZ2Ni/1JRqa198c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uu3NsvHO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=E9e082aMSLXGVRFCUOD3ImjStoLzX/mgKYZkeQsULThRolM/KUAFi3pZZEbIu02ojzO4oAg9gedG+5dNkywLAfpmUIishYPZN1lfE/7IZ9xL42zuskWagLCKhmgymzW4lcryalL98IpK5iKzDQNWtrVbH53jrmKMFYE2peiQsTY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S2LIIXhs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uu3NsvHO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C60C7C4CECE;
-	Thu, 12 Dec 2024 15:07:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S2LIIXhs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77BE0C4CED0;
+	Thu, 12 Dec 2024 15:07:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734016066;
-	bh=wt/N8ZX5jjgo88VCUl6+z4njAmTe+AhVDWr10oQ2fmY=;
+	s=korg; t=1734016070;
+	bh=3tpX/S8Rmx/omHwlXFMvrTikkkLzYAD1QGz3WPOwRKo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uu3NsvHO/pNwGgFFaBJpyevz2TObh6r2GwExLoUr435gQgxJo8P4x6ZeKP5nGgmsj
-	 tb592DEypck+zjOG8j8kyHWJ6VikiNZnuWfflX64pErgoHx6hikCSLYPO1h4YjC7MJ
-	 Cf2EJmQWMk8fl5P/oniHTJbDHqcRvSFgoYguSgJQ=
+	b=S2LIIXhsH5ziAbn9KNQjc34+iRJwHxeyRgJPXKuFooyk7WJnuKRSjUj94mL9JIlnK
+	 vlQ3KtrXR7XODojtYaofE+wrbVK2vBV0lGgnwhoVLJQbgzdbww3iZ8/4lrVjCAE1cK
+	 EA4TAAcdakVeQtP4XlNujT+C8U9oxUXw7wP7gM3w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alice Ryhl <aliceryhl@google.com>,
-	Andreas Hindborg <a.hindborg@kernel.org>,
-	Miguel Ojeda <ojeda@kernel.org>
-Subject: [PATCH 6.12 121/466] rust: allow `clippy::needless_lifetimes`
-Date: Thu, 12 Dec 2024 15:54:50 +0100
-Message-ID: <20241212144311.588804118@linuxfoundation.org>
+	Michael <auslands-kv@gmx.de>,
+	Kenny Levinsen <kl@kl.wtf>,
+	Benjamin Tissoires <bentiss@kernel.org>
+Subject: [PATCH 6.12 122/466] HID: i2c-hid: Revert to using power commands to wake on resume
+Date: Thu, 12 Dec 2024 15:54:51 +0100
+Message-ID: <20241212144311.627952570@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144306.641051666@linuxfoundation.org>
 References: <20241212144306.641051666@linuxfoundation.org>
@@ -45,62 +45,85 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Miguel Ojeda <ojeda@kernel.org>
+From: Kenny Levinsen <kl@kl.wtf>
 
-commit 60fc1e6750133620e404d40b93df5afe32e3e6c6 upstream.
+commit 34851431ceca1bf457d85895bd38a4e7967e2055 upstream.
 
-In beta Clippy (i.e. Rust 1.83.0), the `needless_lifetimes` lint has
-been extended [1] to suggest eliding `impl` lifetimes, e.g.
+commit 7d6f065de37c ("HID: i2c-hid: Use address probe to wake on resume")
+replaced the retry of power commands with the dummy read "bus probe" we
+use on boot which accounts for a necessary delay before retry.
 
-    error: the following explicit lifetimes could be elided: 'a
-    --> rust/kernel/list.rs:647:6
-        |
-    647 | impl<'a, T: ?Sized + ListItem<ID>, const ID: u64> FusedIterator for Iter<'a, T, ID> {}
-        |      ^^                                                                  ^^
-        |
-        = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#needless_lifetimes
-        = note: `-D clippy::needless-lifetimes` implied by `-D warnings`
-        = help: to override `-D warnings` add `#[allow(clippy::needless_lifetimes)]`
-    help: elide the lifetimes
-        |
-    647 - impl<'a, T: ?Sized + ListItem<ID>, const ID: u64> FusedIterator for Iter<'a, T, ID> {}
-    647 + impl<T: ?Sized + ListItem<ID>, const ID: u64> FusedIterator for Iter<'_, T, ID> {}
+This made at least one Weida device (2575:0910 in an ASUS Vivobook S14)
+very unhappy, as the bus probe despite being successful somehow lead to
+the following power command failing so hard that the device never lets
+go of the bus. This means that even retries of the power command would
+fail on a timeout as the bus remains busy.
 
-A possibility would have been to clean them -- the RFC patch [2] did
-this, while asking if we wanted these cleanups. There is an open issue
-[3] in Clippy about being able to differentiate some of the new cases,
-e.g. those that do not involve introducing `'_`. Thus it seems others
-feel similarly.
+Remove the bus probe on resume and instead reintroduce retry of the
+power command for wake-up purposes while respecting the newly
+established wake-up retry timings.
 
-Thus, for the time being, we decided to `allow` the lint.
-
-Link: https://github.com/rust-lang/rust-clippy/pull/13286 [1]
-Link: https://lore.kernel.org/rust-for-linux/20241012231300.397010-1-ojeda@kernel.org/ [2]
-Link: https://github.com/rust-lang/rust-clippy/issues/13514 [3]
-Reviewed-by: Alice Ryhl <aliceryhl@google.com>
-Reviewed-by: Andreas Hindborg <a.hindborg@kernel.org>
-Link: https://lore.kernel.org/r/20241116181538.369355-1-ojeda@kernel.org
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+Fixes: 7d6f065de37c ("HID: i2c-hid: Use address probe to wake on resume")
+Cc: stable@vger.kernel.org
+Reported-by: Michael <auslands-kv@gmx.de>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=219440
+Link: https://lore.kernel.org/r/d5acb485-7377-4139-826d-4df04d21b5ed@leemhuis.info/
+Signed-off-by: Kenny Levinsen <kl@kl.wtf>
+Link: https://patch.msgid.link/20241119235615.23902-1-kl@kl.wtf
+Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Makefile |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/hid/i2c-hid/i2c-hid-core.c | 20 ++++++++++++--------
+ 1 file changed, 12 insertions(+), 8 deletions(-)
 
---- a/Makefile
-+++ b/Makefile
-@@ -456,6 +456,7 @@ export rust_common_flags := --edition=20
- 			    -Wclippy::mut_mut \
- 			    -Wclippy::needless_bitwise_bool \
- 			    -Wclippy::needless_continue \
-+			    -Aclippy::needless_lifetimes \
- 			    -Wclippy::no_mangle_with_rust_abi \
- 			    -Wclippy::dbg_macro
+diff --git a/drivers/hid/i2c-hid/i2c-hid-core.c b/drivers/hid/i2c-hid/i2c-hid-core.c
+index 43664a24176f..4e87380d3edd 100644
+--- a/drivers/hid/i2c-hid/i2c-hid-core.c
++++ b/drivers/hid/i2c-hid/i2c-hid-core.c
+@@ -414,7 +414,19 @@ static int i2c_hid_set_power(struct i2c_hid *ihid, int power_state)
  
+ 	i2c_hid_dbg(ihid, "%s\n", __func__);
+ 
++	/*
++	 * Some STM-based devices need 400µs after a rising clock edge to wake
++	 * from deep sleep, in which case the first request will fail due to
++	 * the address not being acknowledged. Try after a short sleep to see
++	 * if the device came alive on the bus. Certain Weida Tech devices also
++	 * need this.
++	 */
+ 	ret = i2c_hid_set_power_command(ihid, power_state);
++	if (ret && power_state == I2C_HID_PWR_ON) {
++		usleep_range(400, 500);
++		ret = i2c_hid_set_power_command(ihid, I2C_HID_PWR_ON);
++	}
++
+ 	if (ret)
+ 		dev_err(&ihid->client->dev,
+ 			"failed to change power setting.\n");
+@@ -976,14 +988,6 @@ static int i2c_hid_core_resume(struct i2c_hid *ihid)
+ 
+ 	enable_irq(client->irq);
+ 
+-	/* Make sure the device is awake on the bus */
+-	ret = i2c_hid_probe_address(ihid);
+-	if (ret < 0) {
+-		dev_err(&client->dev, "nothing at address after resume: %d\n",
+-			ret);
+-		return -ENXIO;
+-	}
+-
+ 	/* On Goodix 27c6:0d42 wait extra time before device wakeup.
+ 	 * It's not clear why but if we send wakeup too early, the device will
+ 	 * never trigger input interrupts.
+-- 
+2.47.1
+
 
 
