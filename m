@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49A491487CD;
-	Thu, 12 Dec 2024 17:14:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DB232210DB;
+	Thu, 12 Dec 2024 17:14:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734023689; cv=none; b=jPe5p9/ESQH8oR5IxN5ArR8lrpPlz1CV9LghaeevoNs5KncPZT7aOLE/HfX/T/+IhGaasw7DgPWlosc2fCMv0YjsLrt6/RGrV938JeqLPmtauC7knhwg90DTPUb+CSiY9LyAAjWnnvserPrt0TVtw1FxETbnK89xMAm79MCOBjw=
+	t=1734023692; cv=none; b=TlLGwKlZDOl32XEOeo0+8UZAVFMFC3d5rLYAOV45vWoSjdwslxQHqEEJp9z/zUxel/VI/Tt7maiG2y7vt/eGCnhxDzToXofUmC7U5sUMysFhF8Kpb1jGM8aLiKtYhAXBgMyKvXEatrYT3mW547X1AZ5byO9oULMIafZzxJrYOA8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734023689; c=relaxed/simple;
-	bh=aqnsWBiAszvhMg+3bVnCWUstUk6JlYUTGXO19f1Lnbo=;
+	s=arc-20240116; t=1734023692; c=relaxed/simple;
+	bh=qnLBIjDWTo7FIX2Awvw/9LHnSfiIqN87qnBS3pUaGqo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XqH2ta8RljcGbYpkF3BOWF4D0TujPVp/BECm2A7fqWP4ieFMc+mAK1xaDa3280jzeitf+l08YX3rg+cSDJ+JeMeSaOSok0FauCrrIQ0/YC675n3Vu7sY5L2SIL4sKxldAVBTtbW4+VR0pe/lxaUyuY7PYNXVxOfJGtHcxtV3GVg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x57BYQFM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LFFNjoTg0eUrX/tpT78i4MZO+LtuDEaA6KnRXxU4iy6rqfTekGXED330WJemtO8Nn572HZOYeb2mSwhsq1yxZOboi/Y8rrm9h8S9rbZyfjSQyzhiwDHRplPaLmy8BQx29Os+7CNb+XUhFe20ASwlKxgK7C+n3x0eWv56lCFYMGo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WRbctKQS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x57BYQFM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2C6CC4CECE;
-	Thu, 12 Dec 2024 17:14:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WRbctKQS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C57DCC4CECE;
+	Thu, 12 Dec 2024 17:14:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734023689;
-	bh=aqnsWBiAszvhMg+3bVnCWUstUk6JlYUTGXO19f1Lnbo=;
+	s=korg; t=1734023692;
+	bh=qnLBIjDWTo7FIX2Awvw/9LHnSfiIqN87qnBS3pUaGqo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x57BYQFMH8jgb202hkLh0HkX1+9gu7pwaFB0qHJdOEwjiCb1YBsBEhfCJoJHfZERq
-	 lsj7J4mVKOzR92VgSi1HfX7G17b/lnHjjJYJsZfSTdnM6408IpFyXvhbsVAw2bFHQi
-	 ERuoeFIAXX2EJga8yxbb7z3BWznifLIqxpM2S8IY=
+	b=WRbctKQSZm5Osg7Hag5JPoPpTS/GUasZ0I4pGn1XA48WnC8xmv0c424bFUI24vnqs
+	 NIgHO8f2/oU9NFLXz/8g+8N4bp9MxlVe/uXS7TnFJbCkgNY3cWaPUJd6YF+VCqk4bo
+	 4xZqVbnQ2vEas5FMXmHkz5RRZb9z6RUt027Bh7T8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sam Protsenko <semen.protsenko@linaro.org>,
-	Aurelien Jarno <aurelien@aurel32.net>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 5.10 022/459] Revert "mmc: dw_mmc: Fix IDMAC operation with pages bigger than 4K"
-Date: Thu, 12 Dec 2024 15:56:00 +0100
-Message-ID: <20241212144254.402556740@linuxfoundation.org>
+	Breno Leitao <leitao@debian.org>,
+	David Ahern <dsahern@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 049/459] ipmr: Fix access to mfc_cache_list without lock held
+Date: Thu, 12 Dec 2024 15:56:27 +0100
+Message-ID: <20241212144255.460133995@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144253.511169641@linuxfoundation.org>
 References: <20241212144253.511169641@linuxfoundation.org>
@@ -51,47 +52,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aurelien Jarno <aurelien@aurel32.net>
+From: Breno Leitao <leitao@debian.org>
 
-commit 1635e407a4a64d08a8517ac59ca14ad4fc785e75 upstream.
+[ Upstream commit e28acc9c1ccfcb24c08e020828f69d0a915b06ae ]
 
-The commit 8396c793ffdf ("mmc: dw_mmc: Fix IDMAC operation with pages
-bigger than 4K") increased the max_req_size, even for 4K pages, causing
-various issues:
-- Panic booting the kernel/rootfs from an SD card on Rockchip RK3566
-- Panic booting the kernel/rootfs from an SD card on StarFive JH7100
-- "swiotlb buffer is full" and data corruption on StarFive JH7110
+Accessing `mr_table->mfc_cache_list` is protected by an RCU lock. In the
+following code flow, the RCU read lock is not held, causing the
+following error when `RCU_PROVE` is not held. The same problem might
+show up in the IPv6 code path.
 
-At this stage no fix have been found, so it's probably better to just
-revert the change.
+	6.12.0-rc5-kbuilder-01145-gbac17284bdcb #33 Tainted: G            E    N
+	-----------------------------
+	net/ipv4/ipmr_base.c:313 RCU-list traversed in non-reader section!!
 
-This reverts commit 8396c793ffdf28bb8aee7cfe0891080f8cab7890.
+	rcu_scheduler_active = 2, debug_locks = 1
+		   2 locks held by RetransmitAggre/3519:
+		    #0: ffff88816188c6c0 (nlk_cb_mutex-ROUTE){+.+.}-{3:3}, at: __netlink_dump_start+0x8a/0x290
+		    #1: ffffffff83fcf7a8 (rtnl_mutex){+.+.}-{3:3}, at: rtnl_dumpit+0x6b/0x90
 
-Cc: stable@vger.kernel.org
-Cc: Sam Protsenko <semen.protsenko@linaro.org>
-Fixes: 8396c793ffdf ("mmc: dw_mmc: Fix IDMAC operation with pages bigger than 4K")
-Closes: https://lore.kernel.org/linux-mmc/614692b4-1dbe-31b8-a34d-cb6db1909bb7@w6rz.net/
-Closes: https://lore.kernel.org/linux-mmc/CAC8uq=Ppnmv98mpa1CrWLawWoPnu5abtU69v-=G-P7ysATQ2Pw@mail.gmail.com/
-Signed-off-by: Aurelien Jarno <aurelien@aurel32.net>
-Message-ID: <20241110114700.622372-1-aurelien@aurel32.net>
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+	stack backtrace:
+		    lockdep_rcu_suspicious
+		    mr_table_dump
+		    ipmr_rtm_dumproute
+		    rtnl_dump_all
+		    rtnl_dumpit
+		    netlink_dump
+		    __netlink_dump_start
+		    rtnetlink_rcv_msg
+		    netlink_rcv_skb
+		    netlink_unicast
+		    netlink_sendmsg
+
+This is not a problem per see, since the RTNL lock is held here, so, it
+is safe to iterate in the list without the RCU read lock, as suggested
+by Eric.
+
+To alleviate the concern, modify the code to use
+list_for_each_entry_rcu() with the RTNL-held argument.
+
+The annotation will raise an error only if RTNL or RCU read lock are
+missing during iteration, signaling a legitimate problem, otherwise it
+will avoid this false positive.
+
+This will solve the IPv6 case as well, since ip6mr_rtm_dumproute() calls
+this function as well.
+
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://patch.msgid.link/20241108-ipmr_rcu-v2-1-c718998e209b@debian.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/dw_mmc.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/ipv4/ipmr_base.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/mmc/host/dw_mmc.c
-+++ b/drivers/mmc/host/dw_mmc.c
-@@ -2826,8 +2826,8 @@ static int dw_mci_init_slot(struct dw_mc
- 	if (host->use_dma == TRANS_MODE_IDMAC) {
- 		mmc->max_segs = host->ring_size;
- 		mmc->max_blk_size = 65535;
--		mmc->max_req_size = DW_MCI_DESC_DATA_LENGTH * host->ring_size;
--		mmc->max_seg_size = mmc->max_req_size;
-+		mmc->max_seg_size = 0x1000;
-+		mmc->max_req_size = mmc->max_seg_size * host->ring_size;
- 		mmc->max_blk_count = mmc->max_req_size / 512;
- 	} else if (host->use_dma == TRANS_MODE_EDMAC) {
- 		mmc->max_segs = 64;
+diff --git a/net/ipv4/ipmr_base.c b/net/ipv4/ipmr_base.c
+index aa8738a91210a..c45cb7cb57590 100644
+--- a/net/ipv4/ipmr_base.c
++++ b/net/ipv4/ipmr_base.c
+@@ -301,7 +301,8 @@ int mr_table_dump(struct mr_table *mrt, struct sk_buff *skb,
+ 	if (filter->filter_set)
+ 		flags |= NLM_F_DUMP_FILTERED;
+ 
+-	list_for_each_entry_rcu(mfc, &mrt->mfc_cache_list, list) {
++	list_for_each_entry_rcu(mfc, &mrt->mfc_cache_list, list,
++				lockdep_rtnl_is_held()) {
+ 		if (e < s_e)
+ 			goto next_entry;
+ 		if (filter->dev &&
+-- 
+2.43.0
+
 
 
