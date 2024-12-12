@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE764222D4B;
-	Thu, 12 Dec 2024 16:15:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5F66211A34;
+	Thu, 12 Dec 2024 16:16:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734020159; cv=none; b=Qu3CfdXxI3ruZbRFAx29lPCTxYUM0YJPK292jawlHQQTi9ZhSvwL7VebMywL4YHi3SkvOqOhFBENOKm1vl7LjOTTPAefdnO6mhBIcKQ0s9Y9Hs+Hh7w6PI8318GgH4NzKFSSTtPT+WmUCIzi9ku4do4MYpVImiZlVCfT5DlNEd8=
+	t=1734020162; cv=none; b=Q1iHdeYEjkEI7QId2NioaE7PSF2TcZUQgWN2mv2hCHwp9MgLmREaYSDpF76kgX7q3/FjGT4EcLEw4nZS8DxLgjlzXkvaPwHg1RTakMfKx7i9Mpm3xnPLWE/OYTjDWhM/ajwxPE4ZvBD3sRxNt3FgQveszcRtyFRBmslyEfjL60Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734020159; c=relaxed/simple;
-	bh=Bj0xO6nSFJylT0MiJ/HupEsO5181rkaz/kYlvpAA3rs=;
+	s=arc-20240116; t=1734020162; c=relaxed/simple;
+	bh=xg2/+CcoMLDbBr0KR6F3LQBJXJDw6+HaES1XuYEG4c8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UZc2GcFZAhR1x70Ne6qAdQ60WBvDzvZ9/SQpzhI7DpsqQUklAG2IvGoGxUohc907XH5m6EnRfhTCmuJSz1zk4w7LrSt1cjNZyCA7H94RqeldPsgzmZPGDfsuUlFh371b3HA8grXDfcgcA70smuhKHBA/Pm3t3OrZV5Re3Vl1FcM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y8By5Az5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Xk54NhfrmR8w05HeQfqnXeG64HV+dpLkUolPeA7+kePokRuc5BrQvjpGiTx+H64oLimWmSMobuIr8NtzoW1bIBihnA1yuOBZJVoFG1pgaQZuAhfcccp8neNLnrqlu92IzHbLIwhUoU9c554e1RX9lvWIiwABuQPwI0+monw9aNY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HamBqsrT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y8By5Az5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44BA3C4CECE;
-	Thu, 12 Dec 2024 16:15:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HamBqsrT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED3F3C4CECE;
+	Thu, 12 Dec 2024 16:16:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734020158;
-	bh=Bj0xO6nSFJylT0MiJ/HupEsO5181rkaz/kYlvpAA3rs=;
+	s=korg; t=1734020162;
+	bh=xg2/+CcoMLDbBr0KR6F3LQBJXJDw6+HaES1XuYEG4c8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y8By5Az5sCHhnTGXxQ8u2o2RnsK5zJ+G46sa9GEgyriOipPPboEKLyDmImqEJebf3
-	 gdbqZuSXrWmW0QXG23O/TMGQ7WmoetuCAjX44Vp97AQ0AqwKOEOjcq7m5uQIBCD7eV
-	 RCHqjJtJDExajXPs1EGvJs3TYl0CeJJ8gzVhujgg=
+	b=HamBqsrTsYqouFRRW2TmAvcIruseNrZP1hAt+1XhM6akkibFf1+Agz+rhbwvYZ5ah
+	 xYG7lkZt8O3yJLp/8y8vompUtLttPqec3//vKZZrM6wr/kN4AO7LL38E20H1oR88cd
+	 DV6wMK191ndxtZJfA9WVJNqZd2ovE+BfJy2Pytxg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeongjun Park <aha310510@gmail.com>,
-	Andreas Dilger <adilger@dilger.ca>,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 6.1 362/772] ext4: supress data-race warnings in ext4_free_inodes_{count,set}()
-Date: Thu, 12 Dec 2024 15:55:07 +0100
-Message-ID: <20241212144404.879552550@linuxfoundation.org>
+	Dongli Zhang <dongli.zhang@oracle.com>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Hagar Hemdan <hagarhem@amazon.com>
+Subject: [PATCH 6.1 353/772] perf/x86/intel: Hide Topdown metrics events if the feature is not enumerated
+Date: Thu, 12 Dec 2024 15:54:58 +0100
+Message-ID: <20241212144404.500059207@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -51,83 +52,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeongjun Park <aha310510@gmail.com>
+From: Kan Liang <kan.liang@linux.intel.com>
 
-commit 902cc179c931a033cd7f4242353aa2733bf8524c upstream.
+commit 556a7c039a52c21da33eaae9269984a1ef59189b upstream.
 
-find_group_other() and find_group_orlov() read *_lo, *_hi with
-ext4_free_inodes_count without additional locking. This can cause
-data-race warning, but since the lock is held for most writes and free
-inodes value is generally not a problem even if it is incorrect, it is
-more appropriate to use READ_ONCE()/WRITE_ONCE() than to add locking.
+The below error is observed on Ice Lake VM.
 
-==================================================================
-BUG: KCSAN: data-race in ext4_free_inodes_count / ext4_free_inodes_set
+$ perf stat
+Error:
+The sys_perf_event_open() syscall returned with 22 (Invalid argument)
+for event (slots).
+/bin/dmesg | grep -i perf may provide additional information.
 
-write to 0xffff88810404300e of 2 bytes by task 6254 on cpu 1:
- ext4_free_inodes_set+0x1f/0x80 fs/ext4/super.c:405
- __ext4_new_inode+0x15ca/0x2200 fs/ext4/ialloc.c:1216
- ext4_symlink+0x242/0x5a0 fs/ext4/namei.c:3391
- vfs_symlink+0xca/0x1d0 fs/namei.c:4615
- do_symlinkat+0xe3/0x340 fs/namei.c:4641
- __do_sys_symlinkat fs/namei.c:4657 [inline]
- __se_sys_symlinkat fs/namei.c:4654 [inline]
- __x64_sys_symlinkat+0x5e/0x70 fs/namei.c:4654
- x64_sys_call+0x1dda/0x2d60 arch/x86/include/generated/asm/syscalls_64.h:267
- do_syscall_x64 arch/x86/entry/common.c:52 [inline]
- do_syscall_64+0x54/0x120 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x76/0x7e
+In a virtualization env, the Topdown metrics and the slots event haven't
+been supported yet. The guest CPUID doesn't enumerate them. However, the
+current kernel unconditionally exposes the slots event and the Topdown
+metrics events to sysfs, which misleads the perf tool and triggers the
+error.
 
-read to 0xffff88810404300e of 2 bytes by task 6257 on cpu 0:
- ext4_free_inodes_count+0x1c/0x80 fs/ext4/super.c:349
- find_group_other fs/ext4/ialloc.c:594 [inline]
- __ext4_new_inode+0x6ec/0x2200 fs/ext4/ialloc.c:1017
- ext4_symlink+0x242/0x5a0 fs/ext4/namei.c:3391
- vfs_symlink+0xca/0x1d0 fs/namei.c:4615
- do_symlinkat+0xe3/0x340 fs/namei.c:4641
- __do_sys_symlinkat fs/namei.c:4657 [inline]
- __se_sys_symlinkat fs/namei.c:4654 [inline]
- __x64_sys_symlinkat+0x5e/0x70 fs/namei.c:4654
- x64_sys_call+0x1dda/0x2d60 arch/x86/include/generated/asm/syscalls_64.h:267
- do_syscall_x64 arch/x86/entry/common.c:52 [inline]
- do_syscall_64+0x54/0x120 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x76/0x7e
+Hide the perf-metrics topdown events and the slots event if the
+perf-metrics feature is not enumerated.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Jeongjun Park <aha310510@gmail.com>
-Reviewed-by: Andreas Dilger <adilger@dilger.ca>
-Link: https://patch.msgid.link/20241003125337.47283-1-aha310510@gmail.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+The big core of a hybrid platform can also supports the perf-metrics
+feature. Fix the hybrid platform as well.
+
+Closes: https://lore.kernel.org/lkml/CAM9d7cj8z+ryyzUHR+P1Dcpot2jjW+Qcc4CPQpfafTXN=LEU0Q@mail.gmail.com/
+Reported-by: Dongli Zhang <dongli.zhang@oracle.com>
+Signed-off-by: Kan Liang <kan.liang@linux.intel.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Tested-by: Dongli Zhang <dongli.zhang@oracle.com>
+Link: https://lkml.kernel.org/r/20240708193336.1192217-2-kan.liang@linux.intel.com
+Signed-off-by: Hagar Hemdan <hagarhem@amazon.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/super.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ arch/x86/events/intel/core.c |   34 +++++++++++++++++++++++++++++++++-
+ 1 file changed, 33 insertions(+), 1 deletion(-)
 
---- a/fs/ext4/super.c
-+++ b/fs/ext4/super.c
-@@ -338,9 +338,9 @@ __u32 ext4_free_group_clusters(struct su
- __u32 ext4_free_inodes_count(struct super_block *sb,
- 			      struct ext4_group_desc *bg)
- {
--	return le16_to_cpu(bg->bg_free_inodes_count_lo) |
-+	return le16_to_cpu(READ_ONCE(bg->bg_free_inodes_count_lo)) |
- 		(EXT4_DESC_SIZE(sb) >= EXT4_MIN_DESC_SIZE_64BIT ?
--		 (__u32)le16_to_cpu(bg->bg_free_inodes_count_hi) << 16 : 0);
-+		 (__u32)le16_to_cpu(READ_ONCE(bg->bg_free_inodes_count_hi)) << 16 : 0);
+--- a/arch/x86/events/intel/core.c
++++ b/arch/x86/events/intel/core.c
+@@ -5409,8 +5409,22 @@ default_is_visible(struct kobject *kobj,
+ 	return attr->mode;
  }
  
- __u32 ext4_used_dirs_count(struct super_block *sb,
-@@ -394,9 +394,9 @@ void ext4_free_group_clusters_set(struct
- void ext4_free_inodes_set(struct super_block *sb,
- 			  struct ext4_group_desc *bg, __u32 count)
- {
--	bg->bg_free_inodes_count_lo = cpu_to_le16((__u16)count);
-+	WRITE_ONCE(bg->bg_free_inodes_count_lo, cpu_to_le16((__u16)count));
- 	if (EXT4_DESC_SIZE(sb) >= EXT4_MIN_DESC_SIZE_64BIT)
--		bg->bg_free_inodes_count_hi = cpu_to_le16(count >> 16);
-+		WRITE_ONCE(bg->bg_free_inodes_count_hi, cpu_to_le16(count >> 16));
++static umode_t
++td_is_visible(struct kobject *kobj, struct attribute *attr, int i)
++{
++	/*
++	 * Hide the perf metrics topdown events
++	 * if the feature is not enumerated.
++	 */
++	if (x86_pmu.num_topdown_events)
++		return x86_pmu.intel_cap.perf_metrics ? attr->mode : 0;
++
++	return attr->mode;
++}
++
+ static struct attribute_group group_events_td  = {
+ 	.name = "events",
++	.is_visible = td_is_visible,
+ };
+ 
+ static struct attribute_group group_events_mem = {
+@@ -5587,9 +5601,27 @@ static umode_t hybrid_format_is_visible(
+ 	return (cpu >= 0) && (pmu->cpu_type & pmu_attr->pmu_type) ? attr->mode : 0;
  }
  
- void ext4_used_dirs_set(struct super_block *sb,
++static umode_t hybrid_td_is_visible(struct kobject *kobj,
++				    struct attribute *attr, int i)
++{
++	struct device *dev = kobj_to_dev(kobj);
++	struct x86_hybrid_pmu *pmu =
++		 container_of(dev_get_drvdata(dev), struct x86_hybrid_pmu, pmu);
++
++	if (!is_attr_for_this_pmu(kobj, attr))
++		return 0;
++
++
++	/* Only the big core supports perf metrics */
++	if (pmu->cpu_type == hybrid_big)
++		return pmu->intel_cap.perf_metrics ? attr->mode : 0;
++
++	return attr->mode;
++}
++
+ static struct attribute_group hybrid_group_events_td  = {
+ 	.name		= "events",
+-	.is_visible	= hybrid_events_is_visible,
++	.is_visible	= hybrid_td_is_visible,
+ };
+ 
+ static struct attribute_group hybrid_group_events_mem = {
 
 
