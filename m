@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F7F523ED76;
-	Thu, 12 Dec 2024 16:13:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77F6D23ED76;
+	Thu, 12 Dec 2024 16:13:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734020002; cv=none; b=V9BEXV4JNp+bYw4sVCyLW6lrkxuQETQKWJ9JSf8I9EH0NnFxOT0J3dasj7I08Q7GPCBwJ9V0j/k2igO2bp+FfRK/i10IPB0x3KYcNYmSaTagoYhWGFr3ilMCYHh5cRyWJU78Pi7gtiXJUA/YuhFsrfzfwsNf1YA5qdEpYjALY+M=
+	t=1734020005; cv=none; b=aY51y0KGgCV718at/I+oNK5Q7UFABdZbkFV4eZ0Z9R1xJ3QUC3pCFnHbYa1VwNDCRzd0QMVE9d5OBo3jLmo/xkUlZUmFzs/l6xaBx21PuLlWYBBz0yKSa1ZYJUJvSocIdBxmpIt2qdT88gMWNVqkDJ8nQ1mVE7icidKBf+sJpcU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734020002; c=relaxed/simple;
-	bh=owS4ER3FJcPTRmONNSDCHtmqSpusGuejyWaZX+ImufE=;
+	s=arc-20240116; t=1734020005; c=relaxed/simple;
+	bh=V/38ft5fw0gL/J69i1rSAj0mVNlJ2Ub2DhN5R0xdTE0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YBchSHLafuthTsSbuUDzpoa1BSh5OFf6r5sAIf/dHt1JzxPVBJDDKUC/zgZya6mBwZyKk69kiKlSkuNSBShFv3OsLZEOTPOqiVo7TQ56vstAiaLshiHdpjRiCEnWYTyM3j14jknov0QoOsTciH6Ce7V+kM3akMJh6oAOKW65sZk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X9ONdgoV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DgTzWhGZH/h2DxsGk7U3FzOcm3cV1S0ePG54FrE+s8Nza5q3CpTAO+jgSrjMR7YtZ/AhCbAE8FsAu3Gnhav5eAyBltlN8BZ+YZ0dWYtY+8d6dyqGpcTTyPv5UnCCEXBf93J0etoyQ1udfTxfjRsQDNU3kbMHy8DTIgwdp8/tzXU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OZXABNPP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X9ONdgoV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86CB0C4CED3;
-	Thu, 12 Dec 2024 16:13:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OZXABNPP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5D1EC4CECE;
+	Thu, 12 Dec 2024 16:13:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734020002;
-	bh=owS4ER3FJcPTRmONNSDCHtmqSpusGuejyWaZX+ImufE=;
+	s=korg; t=1734020005;
+	bh=V/38ft5fw0gL/J69i1rSAj0mVNlJ2Ub2DhN5R0xdTE0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X9ONdgoVfkW4TNqUurbD9DV/h92nCNa/fDtk5R9wklcEqWzcll0gNUSsPrjqWP9yy
-	 +CJxu8B4XtxcAqTN/9cTqr3lNpM7RJcd8J2uxnJLWPDu22xz+R0hOKa19Kx0JC60tZ
-	 pwHvycw9z1If+5rt94HbAcBD6J1hJ6AoX0niYv/o=
+	b=OZXABNPPwh5uf3mcM0yV4qD8PRlY8F2y7avB9sgZttnoqgpIzcT7R46wc22+U7Udm
+	 Qv0hcaeFoXwNGW0fOQjTwPmT5bSXYXFF9/uWcS6xcOsmwQviMo+0cipgMylJJC4c1x
+	 FxUDpZkWVom1VKKLPtPAVYN1Du1o87nll9lE7RF8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhixu Liu <zhixu.liu@gmail.com>,
-	Zqiang <qiang.zhang1211@gmail.com>,
-	Neeraj Upadhyay <neeraj.upadhyay@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
+	Qu Wenruo <wqu@suse.com>,
+	Boris Burkov <boris@bur.io>,
+	David Sterba <dsterba@suse.com>,
 	Xiangyu Chen <xiangyu.chen@windriver.com>
-Subject: [PATCH 6.1 351/772] rcu-tasks: Fix access non-existent percpu rtpcp variable in rcu_tasks_need_gpcb()
-Date: Thu, 12 Dec 2024 15:54:56 +0100
-Message-ID: <20241212144404.411736948@linuxfoundation.org>
+Subject: [PATCH 6.1 352/772] btrfs: qgroup: fix qgroup prealloc rsv leak in subvolume operations
+Date: Thu, 12 Dec 2024 15:54:57 +0100
+Message-ID: <20241212144404.453071226@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -53,262 +52,232 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zqiang <qiang.zhang1211@gmail.com>
+From: Boris Burkov <boris@bur.io>
 
-commit fd70e9f1d85f5323096ad313ba73f5fe3d15ea41 upstream.
+commit 74e97958121aa1f5854da6effba70143f051b0cd upstream.
 
-For kernels built with CONFIG_FORCE_NR_CPUS=y, the nr_cpu_ids is
-defined as NR_CPUS instead of the number of possible cpus, this
-will cause the following system panic:
+Create subvolume, create snapshot and delete subvolume all use
+btrfs_subvolume_reserve_metadata() to reserve metadata for the changes
+done to the parent subvolume's fs tree, which cannot be mediated in the
+normal way via start_transaction. When quota groups (squota or qgroups)
+are enabled, this reserves qgroup metadata of type PREALLOC. Once the
+operation is associated to a transaction, we convert PREALLOC to
+PERTRANS, which gets cleared in bulk at the end of the transaction.
 
-smpboot: Allowing 4 CPUs, 0 hotplug CPUs
-...
-setup_percpu: NR_CPUS:512 nr_cpumask_bits:512 nr_cpu_ids:512 nr_node_ids:1
-...
-BUG: unable to handle page fault for address: ffffffff9911c8c8
-Oops: 0000 [#1] PREEMPT SMP PTI
-CPU: 0 PID: 15 Comm: rcu_tasks_trace Tainted: G W
-6.6.21 #1 5dc7acf91a5e8e9ac9dcfc35bee0245691283ea6
-RIP: 0010:rcu_tasks_need_gpcb+0x25d/0x2c0
-RSP: 0018:ffffa371c00a3e60 EFLAGS: 00010082
-CR2: ffffffff9911c8c8 CR3: 000000040fa20005 CR4: 00000000001706f0
-Call Trace:
-<TASK>
-? __die+0x23/0x80
-? page_fault_oops+0xa4/0x180
-? exc_page_fault+0x152/0x180
-? asm_exc_page_fault+0x26/0x40
-? rcu_tasks_need_gpcb+0x25d/0x2c0
-? __pfx_rcu_tasks_kthread+0x40/0x40
-rcu_tasks_one_gp+0x69/0x180
-rcu_tasks_kthread+0x94/0xc0
-kthread+0xe8/0x140
-? __pfx_kthread+0x40/0x40
-ret_from_fork+0x34/0x80
-? __pfx_kthread+0x40/0x40
-ret_from_fork_asm+0x1b/0x80
-</TASK>
+However, the error paths of these three operations were not implementing
+this lifecycle correctly. They unconditionally converted the PREALLOC to
+PERTRANS in a generic cleanup step regardless of errors or whether the
+operation was fully associated to a transaction or not. This resulted in
+error paths occasionally converting this rsv to PERTRANS without calling
+record_root_in_trans successfully, which meant that unless that root got
+recorded in the transaction by some other thread, the end of the
+transaction would not free that root's PERTRANS, leaking it. Ultimately,
+this resulted in hitting a WARN in CONFIG_BTRFS_DEBUG builds at unmount
+for the leaked reservation.
 
-Considering that there may be holes in the CPU numbers, use the
-maximum possible cpu number, instead of nr_cpu_ids, for configuring
-enqueue and dequeue limits.
+The fix is to ensure that every qgroup PREALLOC reservation observes the
+following properties:
 
-[ neeraj.upadhyay: Fix htmldocs build error reported by Stephen Rothwell ]
+1. any failure before record_root_in_trans is called successfully
+   results in freeing the PREALLOC reservation.
+2. after record_root_in_trans, we convert to PERTRANS, and now the
+   transaction owns freeing the reservation.
 
-Closes: https://lore.kernel.org/linux-input/CALMA0xaTSMN+p4xUXkzrtR5r6k7hgoswcaXx7baR_z9r5jjskw@mail.gmail.com/T/#u
-Reported-by: Zhixu Liu <zhixu.liu@gmail.com>
-Signed-off-by: Zqiang <qiang.zhang1211@gmail.com>
-Signed-off-by: Neeraj Upadhyay <neeraj.upadhyay@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
-[Xiangyu: BP to fix CVE:CVE-2024-49926, minor conflict resolution]
+This patch enforces those properties on the three operations. Without
+it, generic/269 with squotas enabled at mkfs time would fail in ~5-10
+runs on my system. With this patch, it ran successfully 1000 times in a
+row.
+
+Fixes: e85fde5162bf ("btrfs: qgroup: fix qgroup meta rsv leak for subvolume operations")
+CC: stable@vger.kernel.org # 6.1+
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Boris Burkov <boris@bur.io>
+Signed-off-by: David Sterba <dsterba@suse.com>
+[Xiangyu: BP to fix CVE-2024-35956, due to 6.1 btrfs_subvolume_release_metadata()
+defined in ctree.h, modified the header file name from root-tree.h to ctree.h]
 Signed-off-by: Xiangyu Chen <xiangyu.chen@windriver.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/rcu/tasks.h |   82 ++++++++++++++++++++++++++++++++++-------------------
- 1 file changed, 54 insertions(+), 28 deletions(-)
+ fs/btrfs/ctree.h     |    2 --
+ fs/btrfs/inode.c     |   13 ++++++++++++-
+ fs/btrfs/ioctl.c     |   36 ++++++++++++++++++++++++++++--------
+ fs/btrfs/root-tree.c |   10 ----------
+ 4 files changed, 40 insertions(+), 21 deletions(-)
 
---- a/kernel/rcu/tasks.h
-+++ b/kernel/rcu/tasks.h
-@@ -31,6 +31,7 @@ typedef void (*postgp_func_t)(struct rcu
-  * @barrier_q_head: RCU callback for barrier operation.
-  * @rtp_blkd_tasks: List of tasks blocked as readers.
-  * @cpu: CPU number corresponding to this entry.
-+ * @index: Index of this CPU in rtpcp_array of the rcu_tasks structure.
-  * @rtpp: Pointer to the rcu_tasks structure.
-  */
- struct rcu_tasks_percpu {
-@@ -43,6 +44,7 @@ struct rcu_tasks_percpu {
- 	struct rcu_head barrier_q_head;
- 	struct list_head rtp_blkd_tasks;
- 	int cpu;
-+	int index;
- 	struct rcu_tasks *rtpp;
- };
+--- a/fs/btrfs/ctree.h
++++ b/fs/btrfs/ctree.h
+@@ -2987,8 +2987,6 @@ enum btrfs_flush_state {
+ int btrfs_subvolume_reserve_metadata(struct btrfs_root *root,
+ 				     struct btrfs_block_rsv *rsv,
+ 				     int nitems, bool use_global_rsv);
+-void btrfs_subvolume_release_metadata(struct btrfs_root *root,
+-				      struct btrfs_block_rsv *rsv);
+ void btrfs_delalloc_release_extents(struct btrfs_inode *inode, u64 num_bytes);
  
-@@ -68,6 +70,7 @@ struct rcu_tasks_percpu {
-  * @postgp_func: This flavor's post-grace-period function (optional).
-  * @call_func: This flavor's call_rcu()-equivalent function.
-  * @rtpcpu: This flavor's rcu_tasks_percpu structure.
-+ * @rtpcp_array: Array of pointers to rcu_tasks_percpu structure of CPUs in cpu_possible_mask.
-  * @percpu_enqueue_shift: Shift down CPU ID this much when enqueuing callbacks.
-  * @percpu_enqueue_lim: Number of per-CPU callback queues in use for enqueuing.
-  * @percpu_dequeue_lim: Number of per-CPU callback queues in use for dequeuing.
-@@ -100,6 +103,7 @@ struct rcu_tasks {
- 	postgp_func_t postgp_func;
- 	call_rcu_func_t call_func;
- 	struct rcu_tasks_percpu __percpu *rtpcpu;
-+	struct rcu_tasks_percpu **rtpcp_array;
- 	int percpu_enqueue_shift;
- 	int percpu_enqueue_lim;
- 	int percpu_dequeue_lim;
-@@ -164,6 +168,8 @@ module_param(rcu_task_contend_lim, int,
- static int rcu_task_collapse_lim __read_mostly = 10;
- module_param(rcu_task_collapse_lim, int, 0444);
+ int btrfs_delalloc_reserve_metadata(struct btrfs_inode *inode, u64 num_bytes,
+--- a/fs/btrfs/inode.c
++++ b/fs/btrfs/inode.c
+@@ -4707,6 +4707,7 @@ int btrfs_delete_subvolume(struct inode
+ 	struct btrfs_trans_handle *trans;
+ 	struct btrfs_block_rsv block_rsv;
+ 	u64 root_flags;
++	u64 qgroup_reserved = 0;
+ 	int ret;
  
-+static int rcu_task_cpu_ids;
-+
- /* RCU tasks grace-period state for debugging. */
- #define RTGS_INIT		 0
- #define RTGS_WAIT_WAIT_CBS	 1
-@@ -228,6 +234,8 @@ static void cblist_init_generic(struct r
- 	unsigned long flags;
- 	int lim;
- 	int shift;
-+	int maxcpu;
-+	int index = 0;
+ 	down_write(&fs_info->subvol_sem);
+@@ -4751,12 +4752,20 @@ int btrfs_delete_subvolume(struct inode
+ 	ret = btrfs_subvolume_reserve_metadata(root, &block_rsv, 5, true);
+ 	if (ret)
+ 		goto out_undead;
++	qgroup_reserved = block_rsv.qgroup_rsv_reserved;
  
- 	raw_spin_lock_irqsave(&rtp->cbs_gbl_lock, flags);
- 	if (rcu_task_enqueue_lim < 0) {
-@@ -238,14 +246,9 @@ static void cblist_init_generic(struct r
+ 	trans = btrfs_start_transaction(root, 0);
+ 	if (IS_ERR(trans)) {
+ 		ret = PTR_ERR(trans);
+ 		goto out_release;
  	}
- 	lim = rcu_task_enqueue_lim;
++	ret = btrfs_record_root_in_trans(trans, root);
++	if (ret) {
++		btrfs_abort_transaction(trans, ret);
++		goto out_end_trans;
++	}
++	btrfs_qgroup_convert_reserved_meta(root, qgroup_reserved);
++	qgroup_reserved = 0;
+ 	trans->block_rsv = &block_rsv;
+ 	trans->bytes_reserved = block_rsv.size;
  
--	if (lim > nr_cpu_ids)
--		lim = nr_cpu_ids;
--	shift = ilog2(nr_cpu_ids / lim);
--	if (((nr_cpu_ids - 1) >> shift) >= lim)
--		shift++;
--	WRITE_ONCE(rtp->percpu_enqueue_shift, shift);
--	WRITE_ONCE(rtp->percpu_dequeue_lim, lim);
--	smp_store_release(&rtp->percpu_enqueue_lim, lim);
-+	rtp->rtpcp_array = kcalloc(num_possible_cpus(), sizeof(struct rcu_tasks_percpu *), GFP_KERNEL);
-+	BUG_ON(!rtp->rtpcp_array);
-+
- 	for_each_possible_cpu(cpu) {
- 		struct rcu_tasks_percpu *rtpcp = per_cpu_ptr(rtp->rtpcpu, cpu);
+@@ -4815,7 +4824,9 @@ out_end_trans:
+ 	ret = btrfs_end_transaction(trans);
+ 	inode->i_flags |= S_DEAD;
+ out_release:
+-	btrfs_subvolume_release_metadata(root, &block_rsv);
++	btrfs_block_rsv_release(fs_info, &block_rsv, (u64)-1, NULL);
++	if (qgroup_reserved)
++		btrfs_qgroup_free_meta_prealloc(root, qgroup_reserved);
+ out_undead:
+ 	if (ret) {
+ 		spin_lock(&dest->root_item_lock);
+--- a/fs/btrfs/ioctl.c
++++ b/fs/btrfs/ioctl.c
+@@ -592,6 +592,7 @@ static noinline int create_subvol(struct
+ 	int ret;
+ 	dev_t anon_dev;
+ 	u64 objectid;
++	u64 qgroup_reserved = 0;
  
-@@ -258,16 +261,33 @@ static void cblist_init_generic(struct r
- 		INIT_WORK(&rtpcp->rtp_work, rcu_tasks_invoke_cbs_wq);
- 		rtpcp->cpu = cpu;
- 		rtpcp->rtpp = rtp;
-+		rtpcp->index = index;
-+		rtp->rtpcp_array[index] = rtpcp;
-+		index++;
- 		if (!rtpcp->rtp_blkd_tasks.next)
- 			INIT_LIST_HEAD(&rtpcp->rtp_blkd_tasks);
- 		raw_spin_unlock_rcu_node(rtpcp); // irqs remain disabled.
-+		maxcpu = cpu;
+ 	root_item = kzalloc(sizeof(*root_item), GFP_KERNEL);
+ 	if (!root_item)
+@@ -629,13 +630,18 @@ static noinline int create_subvol(struct
+ 					       trans_num_items, false);
+ 	if (ret)
+ 		goto out_new_inode_args;
++	qgroup_reserved = block_rsv.qgroup_rsv_reserved;
+ 
+ 	trans = btrfs_start_transaction(root, 0);
+ 	if (IS_ERR(trans)) {
+ 		ret = PTR_ERR(trans);
+-		btrfs_subvolume_release_metadata(root, &block_rsv);
+-		goto out_new_inode_args;
++		goto out_release_rsv;
  	}
- 	raw_spin_unlock_irqrestore(&rtp->cbs_gbl_lock, flags);
++	ret = btrfs_record_root_in_trans(trans, BTRFS_I(dir)->root);
++	if (ret)
++		goto out;
++	btrfs_qgroup_convert_reserved_meta(root, qgroup_reserved);
++	qgroup_reserved = 0;
+ 	trans->block_rsv = &block_rsv;
+ 	trans->bytes_reserved = block_rsv.size;
  
- 	if (rcu_task_cb_adjust)
- 		pr_info("%s: Setting adjustable number of callback queues.\n", __func__);
+@@ -744,12 +750,15 @@ static noinline int create_subvol(struct
+ out:
+ 	trans->block_rsv = NULL;
+ 	trans->bytes_reserved = 0;
+-	btrfs_subvolume_release_metadata(root, &block_rsv);
  
--	pr_info("%s: Setting shift to %d and lim to %d.\n", __func__, data_race(rtp->percpu_enqueue_shift), data_race(rtp->percpu_enqueue_lim));
-+	rcu_task_cpu_ids = maxcpu + 1;
-+	if (lim > rcu_task_cpu_ids)
-+		lim = rcu_task_cpu_ids;
-+	shift = ilog2(rcu_task_cpu_ids / lim);
-+	if (((rcu_task_cpu_ids - 1) >> shift) >= lim)
-+		shift++;
-+	WRITE_ONCE(rtp->percpu_enqueue_shift, shift);
-+	WRITE_ONCE(rtp->percpu_dequeue_lim, lim);
-+	smp_store_release(&rtp->percpu_enqueue_lim, lim);
-+
-+	pr_info("%s: Setting shift to %d and lim to %d rcu_task_cb_adjust=%d rcu_task_cpu_ids=%d.\n",
-+			rtp->name, data_race(rtp->percpu_enqueue_shift), data_race(rtp->percpu_enqueue_lim),
-+			rcu_task_cb_adjust, rcu_task_cpu_ids);
-+
+ 	if (ret)
+ 		btrfs_end_transaction(trans);
+ 	else
+ 		ret = btrfs_commit_transaction(trans);
++out_release_rsv:
++	btrfs_block_rsv_release(fs_info, &block_rsv, (u64)-1, NULL);
++	if (qgroup_reserved)
++		btrfs_qgroup_free_meta_prealloc(root, qgroup_reserved);
+ out_new_inode_args:
+ 	btrfs_new_inode_args_destroy(&new_inode_args);
+ out_inode:
+@@ -771,6 +780,8 @@ static int create_snapshot(struct btrfs_
+ 	struct btrfs_pending_snapshot *pending_snapshot;
+ 	unsigned int trans_num_items;
+ 	struct btrfs_trans_handle *trans;
++	struct btrfs_block_rsv *block_rsv;
++	u64 qgroup_reserved = 0;
+ 	int ret;
+ 
+ 	/* We do not support snapshotting right now. */
+@@ -807,19 +818,19 @@ static int create_snapshot(struct btrfs_
+ 		goto free_pending;
+ 	}
+ 
+-	btrfs_init_block_rsv(&pending_snapshot->block_rsv,
+-			     BTRFS_BLOCK_RSV_TEMP);
++	block_rsv = &pending_snapshot->block_rsv;
++	btrfs_init_block_rsv(block_rsv, BTRFS_BLOCK_RSV_TEMP);
+ 	/*
+ 	 * 1 to add dir item
+ 	 * 1 to add dir index
+ 	 * 1 to update parent inode item
+ 	 */
+ 	trans_num_items = create_subvol_num_items(inherit) + 3;
+-	ret = btrfs_subvolume_reserve_metadata(BTRFS_I(dir)->root,
+-					       &pending_snapshot->block_rsv,
++	ret = btrfs_subvolume_reserve_metadata(BTRFS_I(dir)->root, block_rsv,
+ 					       trans_num_items, false);
+ 	if (ret)
+ 		goto free_pending;
++	qgroup_reserved = block_rsv->qgroup_rsv_reserved;
+ 
+ 	pending_snapshot->dentry = dentry;
+ 	pending_snapshot->root = root;
+@@ -832,6 +843,13 @@ static int create_snapshot(struct btrfs_
+ 		ret = PTR_ERR(trans);
+ 		goto fail;
+ 	}
++	ret = btrfs_record_root_in_trans(trans, BTRFS_I(dir)->root);
++	if (ret) {
++		btrfs_end_transaction(trans);
++		goto fail;
++	}
++	btrfs_qgroup_convert_reserved_meta(root, qgroup_reserved);
++	qgroup_reserved = 0;
+ 
+ 	trans->pending_snapshot = pending_snapshot;
+ 
+@@ -861,7 +879,9 @@ fail:
+ 	if (ret && pending_snapshot->snap)
+ 		pending_snapshot->snap->anon_dev = 0;
+ 	btrfs_put_root(pending_snapshot->snap);
+-	btrfs_subvolume_release_metadata(root, &pending_snapshot->block_rsv);
++	btrfs_block_rsv_release(fs_info, block_rsv, (u64)-1, NULL);
++	if (qgroup_reserved)
++		btrfs_qgroup_free_meta_prealloc(root, qgroup_reserved);
+ free_pending:
+ 	if (pending_snapshot->anon_dev)
+ 		free_anon_bdev(pending_snapshot->anon_dev);
+--- a/fs/btrfs/root-tree.c
++++ b/fs/btrfs/root-tree.c
+@@ -532,13 +532,3 @@ int btrfs_subvolume_reserve_metadata(str
+ 	}
+ 	return ret;
  }
- 
- // IRQ-work handler that does deferred wakeup for call_rcu_tasks_generic().
-@@ -307,7 +327,7 @@ static void call_rcu_tasks_generic(struc
- 			rtpcp->rtp_n_lock_retries = 0;
- 		}
- 		if (rcu_task_cb_adjust && ++rtpcp->rtp_n_lock_retries > rcu_task_contend_lim &&
--		    READ_ONCE(rtp->percpu_enqueue_lim) != nr_cpu_ids)
-+		    READ_ONCE(rtp->percpu_enqueue_lim) != rcu_task_cpu_ids)
- 			needadjust = true;  // Defer adjustment to avoid deadlock.
- 	}
- 	if (!rcu_segcblist_is_enabled(&rtpcp->cblist)) {
-@@ -320,10 +340,10 @@ static void call_rcu_tasks_generic(struc
- 	raw_spin_unlock_irqrestore_rcu_node(rtpcp, flags);
- 	if (unlikely(needadjust)) {
- 		raw_spin_lock_irqsave(&rtp->cbs_gbl_lock, flags);
--		if (rtp->percpu_enqueue_lim != nr_cpu_ids) {
-+		if (rtp->percpu_enqueue_lim != rcu_task_cpu_ids) {
- 			WRITE_ONCE(rtp->percpu_enqueue_shift, 0);
--			WRITE_ONCE(rtp->percpu_dequeue_lim, nr_cpu_ids);
--			smp_store_release(&rtp->percpu_enqueue_lim, nr_cpu_ids);
-+			WRITE_ONCE(rtp->percpu_dequeue_lim, rcu_task_cpu_ids);
-+			smp_store_release(&rtp->percpu_enqueue_lim, rcu_task_cpu_ids);
- 			pr_info("Switching %s to per-CPU callback queuing.\n", rtp->name);
- 		}
- 		raw_spin_unlock_irqrestore(&rtp->cbs_gbl_lock, flags);
-@@ -394,6 +414,8 @@ static int rcu_tasks_need_gpcb(struct rc
- 	int needgpcb = 0;
- 
- 	for (cpu = 0; cpu < smp_load_acquire(&rtp->percpu_dequeue_lim); cpu++) {
-+		if (!cpu_possible(cpu))
-+			continue;
- 		struct rcu_tasks_percpu *rtpcp = per_cpu_ptr(rtp->rtpcpu, cpu);
- 
- 		/* Advance and accelerate any new callbacks. */
-@@ -426,7 +448,7 @@ static int rcu_tasks_need_gpcb(struct rc
- 	if (rcu_task_cb_adjust && ncbs <= rcu_task_collapse_lim) {
- 		raw_spin_lock_irqsave(&rtp->cbs_gbl_lock, flags);
- 		if (rtp->percpu_enqueue_lim > 1) {
--			WRITE_ONCE(rtp->percpu_enqueue_shift, order_base_2(nr_cpu_ids));
-+			WRITE_ONCE(rtp->percpu_enqueue_shift, order_base_2(rcu_task_cpu_ids));
- 			smp_store_release(&rtp->percpu_enqueue_lim, 1);
- 			rtp->percpu_dequeue_gpseq = get_state_synchronize_rcu();
- 			gpdone = false;
-@@ -441,7 +463,9 @@ static int rcu_tasks_need_gpcb(struct rc
- 			pr_info("Completing switch %s to CPU-0 callback queuing.\n", rtp->name);
- 		}
- 		if (rtp->percpu_dequeue_lim == 1) {
--			for (cpu = rtp->percpu_dequeue_lim; cpu < nr_cpu_ids; cpu++) {
-+			for (cpu = rtp->percpu_dequeue_lim; cpu < rcu_task_cpu_ids; cpu++) {
-+				if (!cpu_possible(cpu))
-+					continue;
- 				struct rcu_tasks_percpu *rtpcp = per_cpu_ptr(rtp->rtpcpu, cpu);
- 
- 				WARN_ON_ONCE(rcu_segcblist_n_cbs(&rtpcp->cblist));
-@@ -456,30 +480,32 @@ static int rcu_tasks_need_gpcb(struct rc
- // Advance callbacks and invoke any that are ready.
- static void rcu_tasks_invoke_cbs(struct rcu_tasks *rtp, struct rcu_tasks_percpu *rtpcp)
- {
--	int cpu;
--	int cpunext;
- 	int cpuwq;
- 	unsigned long flags;
- 	int len;
-+	int index;
- 	struct rcu_head *rhp;
- 	struct rcu_cblist rcl = RCU_CBLIST_INITIALIZER(rcl);
- 	struct rcu_tasks_percpu *rtpcp_next;
- 
--	cpu = rtpcp->cpu;
--	cpunext = cpu * 2 + 1;
--	if (cpunext < smp_load_acquire(&rtp->percpu_dequeue_lim)) {
--		rtpcp_next = per_cpu_ptr(rtp->rtpcpu, cpunext);
--		cpuwq = rcu_cpu_beenfullyonline(cpunext) ? cpunext : WORK_CPU_UNBOUND;
--		queue_work_on(cpuwq, system_wq, &rtpcp_next->rtp_work);
--		cpunext++;
--		if (cpunext < smp_load_acquire(&rtp->percpu_dequeue_lim)) {
--			rtpcp_next = per_cpu_ptr(rtp->rtpcpu, cpunext);
--			cpuwq = rcu_cpu_beenfullyonline(cpunext) ? cpunext : WORK_CPU_UNBOUND;
-+	index = rtpcp->index * 2 + 1;
-+	if (index < num_possible_cpus()) {
-+		rtpcp_next = rtp->rtpcp_array[index];
-+		if (rtpcp_next->cpu < smp_load_acquire(&rtp->percpu_dequeue_lim)) {
-+			cpuwq = rcu_cpu_beenfullyonline(rtpcp_next->cpu) ? rtpcp_next->cpu : WORK_CPU_UNBOUND;
- 			queue_work_on(cpuwq, system_wq, &rtpcp_next->rtp_work);
-+			index++;
-+			if (index < num_possible_cpus()) {
-+				rtpcp_next = rtp->rtpcp_array[index];
-+				if (rtpcp_next->cpu < smp_load_acquire(&rtp->percpu_dequeue_lim)) {
-+					cpuwq = rcu_cpu_beenfullyonline(rtpcp_next->cpu) ? rtpcp_next->cpu : WORK_CPU_UNBOUND;
-+					queue_work_on(cpuwq, system_wq, &rtpcp_next->rtp_work);
-+				}
-+			}
- 		}
- 	}
- 
--	if (rcu_segcblist_empty(&rtpcp->cblist) || !cpu_possible(cpu))
-+	if (rcu_segcblist_empty(&rtpcp->cblist))
- 		return;
- 	raw_spin_lock_irqsave_rcu_node(rtpcp, flags);
- 	rcu_segcblist_advance(&rtpcp->cblist, rcu_seq_current(&rtp->tasks_gp_seq));
+-
+-void btrfs_subvolume_release_metadata(struct btrfs_root *root,
+-				      struct btrfs_block_rsv *rsv)
+-{
+-	struct btrfs_fs_info *fs_info = root->fs_info;
+-	u64 qgroup_to_release;
+-
+-	btrfs_block_rsv_release(fs_info, rsv, (u64)-1, &qgroup_to_release);
+-	btrfs_qgroup_convert_reserved_meta(root, qgroup_to_release);
+-}
 
 
