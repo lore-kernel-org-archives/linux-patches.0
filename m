@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB18D22A81A;
-	Thu, 12 Dec 2024 16:50:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F81822A81A;
+	Thu, 12 Dec 2024 16:50:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734022223; cv=none; b=S2cnb+T9sqM5Hk+0Y8B3r+PPdtyiYWkzwWtRP8gHdkzHLAnGOMZpcpN2Kt61er8O2PB/1dlygm8WqjWcpISB/m0vfZQHcvGp6GD0MIHT4GsRdyjrrV0ICe/sojbi7SkWTF8QTTYC1TIi/aCeyed23qqynys83D7p5PJzaE0+WZw=
+	t=1734022228; cv=none; b=kl9YUyGjr+i4JRfgpRXGN+vmbEspenwSFFi418xZabe9sDwZKHnUTnSYmP/aFcCqf0b3wWZ6xii+Tw/oHwPPc8H/JrZ6qwZNm6a0c6B3FNkrI3/AE0ESI/Pz5S1/JYDZQkrcuDRmjUfkZGNS0Husd3LgXdYXqAplEYUXcMZ5hQg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734022223; c=relaxed/simple;
-	bh=S+1Aatn++lCWCj9J2taKbXbHLlWD3HY9ZaM4aq3NvUk=;
+	s=arc-20240116; t=1734022228; c=relaxed/simple;
+	bh=jMgPekBpSOBrTLfQux4pVcZ3Ixu3bAou0zM83q+OQKw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YSaF9Vw8XZOiHAbTDwkmol+hUVvCfaN764twoawiEGDGivEwzWox0zHG3z+CZ5CQ8BlmLI9z8lOudbGwOdoszXekQW19IUd3Q8NDoMlxu8XNtlUJDLroimsDuIwHZXFWC0WmVAbW8TAxFEsjhg0IJ+wRBYPiywx84TD2tyl9zq0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iWpMh87N; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dfRT/bGXzwC7Fpf2rHCtYCRJEUResPq+h+K6rsQIAFUbJnLP37OQr9OepK2PZT2vvrn0FqAQdoJReqSTNR3vKmKdgJY0L39Tepqv2jYfK8UsIm9B3cj47tLDFrgUb8qgiTooDy/9ZQo7NA2k5ya1bzVg0G1vFA6zcJgWCyO9iRg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a7dFBwsz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iWpMh87N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 194CDC4CECE;
-	Thu, 12 Dec 2024 16:50:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a7dFBwsz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F008C4CECE;
+	Thu, 12 Dec 2024 16:50:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734022223;
-	bh=S+1Aatn++lCWCj9J2taKbXbHLlWD3HY9ZaM4aq3NvUk=;
+	s=korg; t=1734022227;
+	bh=jMgPekBpSOBrTLfQux4pVcZ3Ixu3bAou0zM83q+OQKw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iWpMh87NvO2jd3Mpbjg+8sM5LQ8wTU35gv5DF9rZdQPd/+54d2vX6jUZs2ejxW+RH
-	 9OicVrCwrJZudEjaGfZqOmCNVMM7W+5+eJysfwMhg3v+ABQTHQYA4R5A7e/Fwpmfyb
-	 qiJx4l7wT0kdthTc98k5NYiZDKcecBsgFP0xB8JI=
+	b=a7dFBwsznLCqTnlJOX8wJ6h82tucw/OgtDPgdWM/PzomZ/rrsrivgaGCF2XQkfoor
+	 OeDzDAOlLXxFrIk2TxpO4CEE54E60D7bpLRp1OEGYmJ2oHIMkWPNXQH9jXxcJQ/RHo
+	 S6AF38eGEgFPsyymn1tAjvKvTCwWmuAoTHXHaFZA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sui Jingfeng <sui.jingfeng@linux.dev>,
-	Xiaolei Wang <xiaolei.wang@windriver.com>,
-	Christian Gmeiner <cgmeiner@igalia.com>,
-	Lucas Stach <l.stach@pengutronix.de>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Baochen Qiang <quic_bqiang@quicinc.com>,
+	Jeff Johnson <quic_jjohnson@quicinc.com>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 181/565] drm/etnaviv: Request pages from DMA32 zone on addressing_limited
-Date: Thu, 12 Dec 2024 15:56:16 +0100
-Message-ID: <20241212144318.628483079@linuxfoundation.org>
+Subject: [PATCH 5.15 155/565] wifi: ath10k: fix invalid VHT parameters in supported_vht_mcs_rate_nss1
+Date: Thu, 12 Dec 2024 15:55:50 +0100
+Message-ID: <20241212144317.607223022@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144311.432886635@linuxfoundation.org>
 References: <20241212144311.432886635@linuxfoundation.org>
@@ -53,66 +53,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiaolei Wang <xiaolei.wang@windriver.com>
+From: Baochen Qiang <quic_bqiang@quicinc.com>
 
-[ Upstream commit 13c96ac9a3f0f1c7ba1ff0656ea508e7fa065e7e ]
+[ Upstream commit d50886b27850447d90c0cd40c725238097909d1e ]
 
-Remove __GFP_HIGHMEM when requesting a page from DMA32 zone,
-and since all vivante GPUs in the system will share the same
-DMA constraints, move the check of whether to get a page from
-DMA32 to etnaviv_bind().
+In supported_vht_mcs_rate_nss1, the rate for MCS9 & VHT20 is defined as
+{780,  867}, this does not align with firmware's definition and therefore
+fails the verification in ath10k_mac_get_rate_flags_vht():
 
-Fixes: b72af445cd38 ("drm/etnaviv: request pages from DMA32 zone when needed")
-Suggested-by: Sui Jingfeng <sui.jingfeng@linux.dev>
-Signed-off-by: Xiaolei Wang <xiaolei.wang@windriver.com>
-Reviewed-by: Christian Gmeiner <cgmeiner@igalia.com>
-Signed-off-by: Lucas Stach <l.stach@pengutronix.de>
+	invalid vht params rate 960 100kbps nss 1 mcs 9
+
+Change it to {865,  960} to align with firmware, so this issue could be
+fixed.
+
+Since ath10k_hw_params::supports_peer_stats_info is enabled only for
+QCA6174, this change does not affect other chips.
+
+Tested-on: QCA6174 hw3.2 PCI WLAN.RM.4.4.1-00309-QCARMSWPZ-1
+
+Fixes: 3344b99d69ab ("ath10k: add bitrate parse for peer stats info")
+Reported-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Closes: https://lore.kernel.org/lkml/fba24cd3-4a1e-4072-8585-8402272788ff@molgen.mpg.de/
+Signed-off-by: Baochen Qiang <quic_bqiang@quicinc.com>
+Acked-by: Jeff Johnson <quic_jjohnson@quicinc.com>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://patch.msgid.link/20240711020344.98040-2-quic_bqiang@quicinc.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/etnaviv/etnaviv_drv.c | 10 ++++++++++
- drivers/gpu/drm/etnaviv/etnaviv_gpu.c |  8 --------
- 2 files changed, 10 insertions(+), 8 deletions(-)
+ drivers/net/wireless/ath/ath10k/mac.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/etnaviv/etnaviv_drv.c b/drivers/gpu/drm/etnaviv/etnaviv_drv.c
-index c45e5158fdff9..a547af3cf2e10 100644
---- a/drivers/gpu/drm/etnaviv/etnaviv_drv.c
-+++ b/drivers/gpu/drm/etnaviv/etnaviv_drv.c
-@@ -519,6 +519,16 @@ static int etnaviv_bind(struct device *dev)
- 	priv->num_gpus = 0;
- 	priv->shm_gfp_mask = GFP_HIGHUSER | __GFP_RETRY_MAYFAIL | __GFP_NOWARN;
+diff --git a/drivers/net/wireless/ath/ath10k/mac.c b/drivers/net/wireless/ath/ath10k/mac.c
+index 8208434d7d2b2..f91251770250f 100644
+--- a/drivers/net/wireless/ath/ath10k/mac.c
++++ b/drivers/net/wireless/ath/ath10k/mac.c
+@@ -9066,7 +9066,7 @@ static const struct ath10k_index_vht_data_rate_type supported_vht_mcs_rate_nss1[
+ 	{6,  {2633, 2925}, {1215, 1350}, {585,  650} },
+ 	{7,  {2925, 3250}, {1350, 1500}, {650,  722} },
+ 	{8,  {3510, 3900}, {1620, 1800}, {780,  867} },
+-	{9,  {3900, 4333}, {1800, 2000}, {780,  867} }
++	{9,  {3900, 4333}, {1800, 2000}, {865,  960} }
+ };
  
-+	/*
-+	 * If the GPU is part of a system with DMA addressing limitations,
-+	 * request pages for our SHM backend buffers from the DMA32 zone to
-+	 * hopefully avoid performance killing SWIOTLB bounce buffering.
-+	 */
-+	if (dma_addressing_limited(dev)) {
-+		priv->shm_gfp_mask |= GFP_DMA32;
-+		priv->shm_gfp_mask &= ~__GFP_HIGHMEM;
-+	}
-+
- 	priv->cmdbuf_suballoc = etnaviv_cmdbuf_suballoc_new(drm->dev);
- 	if (IS_ERR(priv->cmdbuf_suballoc)) {
- 		dev_err(drm->dev, "Failed to create cmdbuf suballocator\n");
-diff --git a/drivers/gpu/drm/etnaviv/etnaviv_gpu.c b/drivers/gpu/drm/etnaviv/etnaviv_gpu.c
-index e8ff70be449ac..123c8263d27fd 100644
---- a/drivers/gpu/drm/etnaviv/etnaviv_gpu.c
-+++ b/drivers/gpu/drm/etnaviv/etnaviv_gpu.c
-@@ -798,14 +798,6 @@ int etnaviv_gpu_init(struct etnaviv_gpu *gpu)
- 	if (ret)
- 		goto fail;
- 
--	/*
--	 * If the GPU is part of a system with DMA addressing limitations,
--	 * request pages for our SHM backend buffers from the DMA32 zone to
--	 * hopefully avoid performance killing SWIOTLB bounce buffering.
--	 */
--	if (dma_addressing_limited(gpu->dev))
--		priv->shm_gfp_mask |= GFP_DMA32;
--
- 	/* Create buffer: */
- 	ret = etnaviv_cmdbuf_init(priv->cmdbuf_suballoc, &gpu->buffer,
- 				  PAGE_SIZE);
+ /*MCS parameters with Nss = 2 */
 -- 
 2.43.0
 
