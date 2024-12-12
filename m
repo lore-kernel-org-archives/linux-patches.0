@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C902223C42;
-	Thu, 12 Dec 2024 17:10:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42CED21576E;
+	Thu, 12 Dec 2024 17:10:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734023424; cv=none; b=FKv5A7clTTO2/5esn8StZb/xSy1t2roDFKjznLGGc20fR8x0XZMUJAoslrk6LawccNWQIIQNYuxS1XOmf91XMDcZX0V+5R5HmTduBNd+optnaBEpgjsOYBMJU7PisVNjTOGXZuMDnoWaOV0FaYum6WiDye7dD0XB5iz836YUHHg=
+	t=1734023427; cv=none; b=uHWYRx4MD5Y3F6H6IWB0yUR/r1td3lbCNNU63S1pKgq3rkMoVS4PKMR4o+FPqoF9x63dNVxxSbTSmJe32gEcqQAb/hrUwOw2/T7yEcNR9FWIwcBBubk8CMOdIKzryj1bq/CDt4u7E/s04dCEsDAMJMM02E2kJ2Jt97zDD7n01o4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734023424; c=relaxed/simple;
-	bh=oFqVGPkvW2uof8A793hQWGJOb4P6tqbMIy+UqvYezds=;
+	s=arc-20240116; t=1734023427; c=relaxed/simple;
+	bh=OV2Mcd7k1YNR6hIArj4MTagjFLej+QKcztuGsWWX/MA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fQtRccEKYjR/Ko8BWfIrsZMVEjmittdW8RXSMuV+Z/68ka8j+WNY3OjQlIgcYPHSIwEV3pzfpiTKiVJKp/GTIOV4vc5l6H4wvOjXA/iq6jZGYu6Pm8oyp+5Z6ysZPdOMVLAt2ZAExrEcB568Cv7tcq3VKN4A39LXvwZJaF5x1F0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1yL6gxYd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LEsKwcUHNgXWVBYh6DlD9pny5rH5/4cinEbK7YnSgcphS9tNBgDojG+AYpVqFY1yh6JgY7eIC+QsMacVM4/crMgkN5+SPi3Dm0/T3rKnGl3GyOGvdlBl4CMGsSS6u2sQ5oheHro5xp4aFuv+23/RUV+4ysAIvCojPo4GZP/tt34=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gc9TDf19; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1yL6gxYd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3B9DC4CED0;
-	Thu, 12 Dec 2024 17:10:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gc9TDf19"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9E5DC4CECE;
+	Thu, 12 Dec 2024 17:10:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734023424;
-	bh=oFqVGPkvW2uof8A793hQWGJOb4P6tqbMIy+UqvYezds=;
+	s=korg; t=1734023427;
+	bh=OV2Mcd7k1YNR6hIArj4MTagjFLej+QKcztuGsWWX/MA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1yL6gxYdGheOLYyUX5Ayfr+9LFbZiv19kZJnmrv7v3d1t5y1fiRvalrO3xTnxQB4e
-	 +cWuHQFKUaK7PLuHBH9lY0KtOxztG4RM7FkidxMadoz6jsPgmz9TKA7nEB+OlmM80b
-	 H+mte8+sqXK+VU0TEtxh/HrU5+Bv4Hb3xKFAln7E=
+	b=gc9TDf19uTUQb9aV/O8wA6UkUslwUtwZZvZM19QlDl85jRZbsJ/VEdDrimG4NMONd
+	 eh7AMU3gtw4sZX0+lZwM4AK5NCp8HUXM1rvNdN2xRu2Z71qxowZyfOr2AXNVEaVa41
+	 XV95gDjy50ErOamT17dIyLugiDxB0jBjLhKq/mDw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vincent Donnefort <vdonnefort@google.com>,
-	Sami Tolvanen <samitolvanen@google.com>,
-	Nathan Chancellor <nathan@kernel.org>,
+	Sergey Senozhatsky <senozhatsky@chromium.org>,
+	Thomas Gleixner <tglx@linutronix.de>,
 	Masahiro Yamada <masahiroy@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Alexander Lobakin <alexandr.lobakin@intel.com>
-Subject: [PATCH 5.15 530/565] modpost: Include .text.* in TEXT_SECTIONS
-Date: Thu, 12 Dec 2024 16:02:05 +0100
-Message-ID: <20241212144332.763326429@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 531/565] modpost: Add .irqentry.text to OTHER_SECTIONS
+Date: Thu, 12 Dec 2024 16:02:06 +0100
+Message-ID: <20241212144332.808800390@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144311.432886635@linuxfoundation.org>
 References: <20241212144311.432886635@linuxfoundation.org>
@@ -54,51 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Thomas Gleixner <tglx@linutronix.de>
 
-[ Upstream commit 19331e84c3873256537d446afec1f6c507f8c4ef ]
+[ Upstream commit 7912405643a14b527cd4a4f33c1d4392da900888 ]
 
-Commit 6c730bfc894f ("modpost: handle -ffunction-sections") added
-".text.*" to the OTHER_TEXT_SECTIONS macro to fix certain section
-mismatch warnings. Unfortunately, this makes it impossible for modpost
-to warn about section mismatches with LTO, which implies
-'-ffunction-sections', as all functions are put in their own
-'.text.<func_name>' sections, which may still reference functions in
-sections they are not supposed to, such as __init.
+The compiler can fully inline the actual handler function of an interrupt
+entry into the .irqentry.text entry point. If such a function contains an
+access which has an exception table entry, modpost complains about a
+section mismatch:
 
-Fix this by moving ".text.*" into TEXT_SECTIONS, so that configurations
-with '-ffunction-sections' will see warnings about mismatched sections.
+  WARNING: vmlinux.o(__ex_table+0x447c): Section mismatch in reference ...
 
-Link: https://lore.kernel.org/Y39kI3MOtVI5BAnV@google.com/
-Reported-by: Vincent Donnefort <vdonnefort@google.com>
-Reviewed-and-tested-by: Alexander Lobakin <alexandr.lobakin@intel.com>
-Reviewed-by: Sami Tolvanen <samitolvanen@google.com>
-Tested-by: Vincent Donnefort <vdonnefort@google.com>
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+  The relocation at __ex_table+0x447c references section ".irqentry.text"
+  which is not in the list of authorized sections.
+
+Add .irqentry.text to OTHER_SECTIONS to cure the issue.
+
+Reported-by: Sergey Senozhatsky <senozhatsky@chromium.org>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Cc: stable@vger.kernel.org # needed for linux-5.4-y
+Link: https://lore.kernel.org/all/20241128111844.GE10431@google.com/
 Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-Stable-dep-of: 7912405643a1 ("modpost: Add .irqentry.text to OTHER_SECTIONS")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/mod/modpost.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ scripts/mod/modpost.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/scripts/mod/modpost.c b/scripts/mod/modpost.c
-index c6e655e0ed988..43bacdee5cc5d 100644
+index 43bacdee5cc5d..a663a0ea4066b 100644
 --- a/scripts/mod/modpost.c
 +++ b/scripts/mod/modpost.c
-@@ -936,10 +936,10 @@ static void check_section(const char *modname, struct elf_info *elf,
- #define ALL_EXIT_SECTIONS EXIT_SECTIONS, ALL_XXXEXIT_SECTIONS
- 
- #define DATA_SECTIONS ".data", ".data.rel"
--#define TEXT_SECTIONS ".text", ".text.unlikely", ".sched.text", \
-+#define TEXT_SECTIONS ".text", ".text.*", ".sched.text", \
+@@ -940,7 +940,7 @@ static void check_section(const char *modname, struct elf_info *elf,
  		".kprobes.text", ".cpuidle.text", ".noinstr.text"
  #define OTHER_TEXT_SECTIONS ".ref.text", ".head.text", ".spinlock.text", \
--		".fixup", ".entry.text", ".exception.text", ".text.*", \
-+		".fixup", ".entry.text", ".exception.text", \
- 		".coldtext", ".softirqentry.text"
+ 		".fixup", ".entry.text", ".exception.text", \
+-		".coldtext", ".softirqentry.text"
++		".coldtext", ".softirqentry.text", ".irqentry.text"
  
  #define INIT_SECTIONS      ".init.*"
+ #define MEM_INIT_SECTIONS  ".meminit.*"
 -- 
 2.43.0
 
