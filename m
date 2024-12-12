@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B819213E97;
-	Thu, 12 Dec 2024 15:08:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82C782163AB;
+	Thu, 12 Dec 2024 15:08:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734016091; cv=none; b=VQTLET1B7iyUyPNEMJmKleoZIKGxrLDtWXoqCusaC1/5FgYeoVIedyloPkbSXWLT2IJcWk/+ZhPlJLGSwkvTmkjiq24qhyEW7F7IvlKEd88LsEgdMbiR8a7hwjESZS6Hz7royLWypIfy1L42tgGBJsKe+PUumNNn3qRgVdc/KnM=
+	t=1734016094; cv=none; b=rcUlFdnJ0QRS+86hbt0NJM7Ht3qppv+V4U0iNRY8oGS3cTnj8kxZCZi/otkaZEJvYBHLLUnjoamr35fkSw4kpOIESXmF6mJemzlM0q17K08hCr7DVs8tE07Izn80F62ect6SPp7AywDHjOVaRhh7Cuvg+/f7PbXEErQUytIEvIw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734016091; c=relaxed/simple;
-	bh=4gqk7jQxdYQPQlWW9HPbFKQz91K0H2VPb9JOEGm21aY=;
+	s=arc-20240116; t=1734016094; c=relaxed/simple;
+	bh=QNs04o5wKwEJZ8VigCa51mj/wTcuOH9cFHoSnSC0RnA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NQxWWTeVIAyQzWpMigSNP0CqdFjSfs16hHEkwugK+5wDVLg0ZtGLaC/lECxHBA43ru8gh6LIEO9CgS7W3EpBi9lSkLWBos2vraITfQrNp5g9mK+UDoZrzDNOo4FU15etzfzPKiiN6Yur9BGaepBhJB88g7tQojVzMz5Duz1NljM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MoWTKIvN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OHiNDRjAFO1cJ9QCLUHcX6J2irBx8cWu4D3HyUtPe5AzyDZEcALldhiCdvjDsVublxIyr2s0Pa5JSFGVVyHyTSYb3SftgQuMoHd5SZmxBIgwtucavd8ZDpTu7yFvGGNG2INjbzlirzFj/FcYcSfCXxLSK9gY3zbxnO8YT0yGZEc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rlmMQtbJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MoWTKIvN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E28AC4CED7;
-	Thu, 12 Dec 2024 15:08:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rlmMQtbJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAA04C4CECE;
+	Thu, 12 Dec 2024 15:08:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734016091;
-	bh=4gqk7jQxdYQPQlWW9HPbFKQz91K0H2VPb9JOEGm21aY=;
+	s=korg; t=1734016094;
+	bh=QNs04o5wKwEJZ8VigCa51mj/wTcuOH9cFHoSnSC0RnA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MoWTKIvNeCQyYwkH3Hf8w7IdhAdyg1Q1/YJNK8MiPxIzlf1jA84zaExU8r3ZtPhCa
-	 2LPeEytQn5zfqxL+cQ/FA9XJbuaHZGkdc7V361L3ncrM4g0/E+YorYTu1iAwN2E+Uy
-	 UVAi5Mrg3QN2P2FlJEY3TNIM9kY2LUz5WJRQV914=
+	b=rlmMQtbJzNtKMuwBRQjYj0Xf2EZ/D3UDQERbdjFf9rENIXuTnNxsUlK1mbZN7Mc9h
+	 RQh2/AstyFNzQM/MqicFfpmowTI5uL1Qo3up8PqUPgkS3Tc3w55GQ9E4TFi3DB9J3L
+	 axLJbd8dkxNsUiwdyRPIF3KOy/iB9S9h7jt8FSsw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rudi Horn <rudi.horn@oracle.com>,
-	Aruna Ramakrishna <aruna.ramakrishna@oracle.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Tao Lyu <tao.lyu@epfl.ch>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 099/466] x86/pkeys: Ensure updated PKRU value is XRSTORd
-Date: Thu, 12 Dec 2024 15:54:28 +0100
-Message-ID: <20241212144310.727783417@linuxfoundation.org>
+Subject: [PATCH 6.12 100/466] bpf: Ensure reg is PTR_TO_STACK in process_iter_arg
+Date: Thu, 12 Dec 2024 15:54:29 +0100
+Message-ID: <20241212144310.765861597@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144306.641051666@linuxfoundation.org>
 References: <20241212144306.641051666@linuxfoundation.org>
@@ -52,94 +53,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aruna Ramakrishna <aruna.ramakrishna@oracle.com>
+From: Tao Lyu <tao.lyu@epfl.ch>
 
-[ Upstream commit ae6012d72fa60c9ff92de5bac7a8021a47458e5b ]
+[ Upstream commit 12659d28615d606b36e382f4de2dd05550d202af ]
 
-When XSTATE_BV[i] is 0, and XRSTOR attempts to restore state component
-'i' it ignores any value in the XSAVE buffer and instead restores the
-state component's init value.
+Currently, KF_ARG_PTR_TO_ITER handling missed checking the reg->type and
+ensuring it is PTR_TO_STACK. Instead of enforcing this in the caller of
+process_iter_arg, move the check into it instead so that all callers
+will gain the check by default. This is similar to process_dynptr_func.
 
-This means that if XSAVE writes XSTATE_BV[PKRU]=0 then XRSTOR will
-ignore the value that update_pkru_in_sigframe() writes to the XSAVE buffer.
+An existing selftest in verifier_bits_iter.c fails due to this change,
+but it's because it was passing a NULL pointer into iter_next helper and
+getting an error further down the checks, but probably meant to pass an
+uninitialized iterator on the stack (as is done in the subsequent test
+below it). We will gain coverage for non-PTR_TO_STACK arguments in later
+patches hence just change the declaration to zero-ed stack object.
 
-XSTATE_BV[PKRU] only gets written as 0 if PKRU is in its init state. On
-Intel CPUs, basically never happens because the kernel usually
-overwrites the init value (aside: this is why we didn't notice this bug
-until now). But on AMD, the init tracker is more aggressive and will
-track PKRU as being in its init state upon any wrpkru(0x0).
-Unfortunately, sig_prepare_pkru() does just that: wrpkru(0x0).
-
-This writes XSTATE_BV[PKRU]=0 which makes XRSTOR ignore the PKRU value
-in the sigframe.
-
-To fix this, always overwrite the sigframe XSTATE_BV with a value that
-has XSTATE_BV[PKRU]==1.  This ensures that XRSTOR will not ignore what
-update_pkru_in_sigframe() wrote.
-
-The problematic sequence of events is something like this:
-
-Userspace does:
-	* wrpkru(0xffff0000) (or whatever)
-	* Hardware sets: XINUSE[PKRU]=1
-Signal happens, kernel is entered:
-	* sig_prepare_pkru() => wrpkru(0x00000000)
-	* Hardware sets: XINUSE[PKRU]=0 (aggressive AMD init tracker)
-	* XSAVE writes most of XSAVE buffer, including
-	  XSTATE_BV[PKRU]=XINUSE[PKRU]=0
-	* update_pkru_in_sigframe() overwrites PKRU in XSAVE buffer
-... signal handling
-	* XRSTOR sees XSTATE_BV[PKRU]==0, ignores just-written value
-	  from update_pkru_in_sigframe()
-
-Fixes: 70044df250d0 ("x86/pkeys: Update PKRU to enable all pkeys before XSAVE")
-Suggested-by: Rudi Horn <rudi.horn@oracle.com>
-Signed-off-by: Aruna Ramakrishna <aruna.ramakrishna@oracle.com>
-Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
-Acked-by: Dave Hansen <dave.hansen@linux.intel.com>
-Link: https://lore.kernel.org/all/20241119174520.3987538-3-aruna.ramakrishna%40oracle.com
+Fixes: 06accc8779c1 ("bpf: add support for open-coded iterator loops")
+Suggested-by: Andrii Nakryiko <andrii@kernel.org>
+Signed-off-by: Tao Lyu <tao.lyu@epfl.ch>
+[ Kartikeya: move check into process_iter_arg, rewrite commit log ]
+Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Link: https://lore.kernel.org/r/20241203000238.3602922-2-memxor@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/fpu/xstate.h | 16 ++++++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
+ kernel/bpf/verifier.c                                  | 5 +++++
+ tools/testing/selftests/bpf/progs/verifier_bits_iter.c | 4 ++--
+ 2 files changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/arch/x86/kernel/fpu/xstate.h b/arch/x86/kernel/fpu/xstate.h
-index 6b2924fbe5b8d..aa16f1a1bbcf1 100644
---- a/arch/x86/kernel/fpu/xstate.h
-+++ b/arch/x86/kernel/fpu/xstate.h
-@@ -72,10 +72,22 @@ static inline u64 xfeatures_mask_independent(void)
- /*
-  * Update the value of PKRU register that was already pushed onto the signal frame.
-  */
--static inline int update_pkru_in_sigframe(struct xregs_state __user *buf, u32 pkru)
-+static inline int update_pkru_in_sigframe(struct xregs_state __user *buf, u64 mask, u32 pkru)
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index 91317857ea3ee..8955259112c03 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -8021,6 +8021,11 @@ static int process_iter_arg(struct bpf_verifier_env *env, int regno, int insn_id
+ 	const struct btf_type *t;
+ 	int spi, err, i, nr_slots, btf_id;
+ 
++	if (reg->type != PTR_TO_STACK) {
++		verbose(env, "arg#%d expected pointer to an iterator on stack\n", regno - 1);
++		return -EINVAL;
++	}
++
+ 	/* For iter_{new,next,destroy} functions, btf_check_iter_kfuncs()
+ 	 * ensures struct convention, so we wouldn't need to do any BTF
+ 	 * validation here. But given iter state can be passed as a parameter
+diff --git a/tools/testing/selftests/bpf/progs/verifier_bits_iter.c b/tools/testing/selftests/bpf/progs/verifier_bits_iter.c
+index 7c881bca9af5c..a7a6ae6c162fe 100644
+--- a/tools/testing/selftests/bpf/progs/verifier_bits_iter.c
++++ b/tools/testing/selftests/bpf/progs/verifier_bits_iter.c
+@@ -35,9 +35,9 @@ __description("uninitialized iter in ->next()")
+ __failure __msg("expected an initialized iter_bits as arg #1")
+ int BPF_PROG(next_uninit, struct bpf_iter_meta *meta, struct cgroup *cgrp)
  {
-+	u64 xstate_bv;
-+	int err;
-+
- 	if (unlikely(!cpu_feature_enabled(X86_FEATURE_OSPKE)))
- 		return 0;
-+
-+	/* Mark PKRU as in-use so that it is restored correctly. */
-+	xstate_bv = (mask & xfeatures_in_use()) | XFEATURE_MASK_PKRU;
-+
-+	err =  __put_user(xstate_bv, &buf->header.xfeatures);
-+	if (err)
-+		return err;
-+
-+	/* Update PKRU value in the userspace xsave buffer. */
- 	return __put_user(pkru, (unsigned int __user *)get_xsave_addr_user(buf, XFEATURE_PKRU));
+-	struct bpf_iter_bits *it = NULL;
++	struct bpf_iter_bits it = {};
+ 
+-	bpf_iter_bits_next(it);
++	bpf_iter_bits_next(&it);
+ 	return 0;
  }
  
-@@ -292,7 +304,7 @@ static inline int xsave_to_user_sigframe(struct xregs_state __user *buf, u32 pkr
- 	clac();
- 
- 	if (!err)
--		err = update_pkru_in_sigframe(buf, pkru);
-+		err = update_pkru_in_sigframe(buf, mask, pkru);
- 
- 	return err;
- }
 -- 
 2.43.0
 
