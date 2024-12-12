@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24FE82206A5;
-	Thu, 12 Dec 2024 17:22:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18CCE176AA1;
+	Thu, 12 Dec 2024 17:22:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734024175; cv=none; b=fZcm75mEv/A0co9gMajl4zHs503Z6f6PzXgvUqd8R64b05GaNn6qxpeLcu+wPk3RSXXwG7ehR2T6aRg0TZJsVal86YCilLKtdrM3ryJVGuZKD2y2DK3Y9gVNLWgFfhE8TzSEDKZmv6GVK9uZp8NiZp3HuQFkgOw6eD2YOrv0oD8=
+	t=1734024178; cv=none; b=eiH2nUxUFvaRUO7clyrsxW34caeD4YSWpK/VV5bNT6NfXhOZ+i59+k6YsQZG3J3hme/5DLowhOSMuYhLBL/4+v8DqhrSEoFNhcx6aEiALaJpSAzFj6Ugy4a1fPfUyQgHigwddwhP9l+WqYYAcntWIhaIvuYayVZQiuflUawV/SQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734024175; c=relaxed/simple;
-	bh=y/rxPk4C11a34KRfb8Ogb0JErWhGW4REQUgKTnQjrcY=;
+	s=arc-20240116; t=1734024178; c=relaxed/simple;
+	bh=Gf9+gNSWBdusS3SLczmzcgRIzLQCpnCpmEY9U28WPNU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X/VkXxQ3xJUGpi7reCq/iKW61Lgzkr1LIzst/lamXJv0HWPL7nk/GDz6DK7X8GXQZ1Slxzg2sDGGI+QN87JqU80AgkocSuR3HbwFppElbd4wkIySKWMF6mTF0xBGS7DMb9np+XfhEPimHve7jGfjg9+xmheeFsCZK826Jq7feXc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wV0WvLqV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gLAzZhaB6l1+vr+LKbSuIjeu8Xfzafg4fTylxxBzyfinLD0pSLu0zUodSC0YiDy6h4L3tdoZekV5YFGBdX65d+ot7kpTupkR12bHhXxF46iIoEFoN/lm9JtODIqJ/lOfrDhbT7osre+GGkFvFAakl58jmRqJIPYJ7D75gLRAiug=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KOO8pHv8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wV0WvLqV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9998BC4CECE;
-	Thu, 12 Dec 2024 17:22:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KOO8pHv8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 912EFC4CED0;
+	Thu, 12 Dec 2024 17:22:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734024175;
-	bh=y/rxPk4C11a34KRfb8Ogb0JErWhGW4REQUgKTnQjrcY=;
+	s=korg; t=1734024178;
+	bh=Gf9+gNSWBdusS3SLczmzcgRIzLQCpnCpmEY9U28WPNU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wV0WvLqVOYBBCHRMHeOTWjIpAPNARSMUdBA/Jcfhq0R2r1llw8YocnO7D4QLbyCWg
-	 ibga0K51XGcYtRH2VWLpTrV4LITocvakSi86kOw71ep+b7tzhP0m6b9ccKrkQCsj0c
-	 XsADUvLh0LoXSDPpI+vKXWa8ZRV6CNW/LkWQCJI4=
+	b=KOO8pHv8Dlyn5DFLAm+x3C8PG1mJILoS/7xzPH8mqykIUm0jlQ0AkZKxAT1j94jwg
+	 ay/09oh7jRdudcuO2JdT8xmbUob5vBTWU5fL+IxPQ1Con2l5hpSJT44yWhpnAkzr6X
+	 XHC5Kac7KCgmw07uiIhr7JDLgv12ySgN/08R6p4k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sibi Sankar <quic_sibis@quicinc.com>,
-	Douglas Anderson <dianders@chromium.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 210/459] remoteproc: qcom_q6v5_mss: Re-order writes to the IMEM region
-Date: Thu, 12 Dec 2024 15:59:08 +0100
-Message-ID: <20241212144301.868179746@linuxfoundation.org>
+Subject: [PATCH 5.10 211/459] NFSD: Prevent NULL dereference in nfsd4_process_cb_update()
+Date: Thu, 12 Dec 2024 15:59:09 +0100
+Message-ID: <20241212144301.907762685@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144253.511169641@linuxfoundation.org>
 References: <20241212144253.511169641@linuxfoundation.org>
@@ -52,40 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sibi Sankar <quic_sibis@quicinc.com>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit 7b22b7719fc17d5979a991c918c868ab041be5c8 ]
+[ Upstream commit 1e02c641c3a43c88cecc08402000418e15578d38 ]
 
-Any write access to the IMEM region when the Q6 is setting up XPU
-protection on it will result in a XPU violation. Fix this by ensuring
-IMEM writes related to the MBA post-mortem logs happen before the Q6
-is brought out of reset.
+@ses is initialized to NULL. If __nfsd4_find_backchannel() finds no
+available backchannel session, setup_callback_client() will try to
+dereference @ses and segfault.
 
-Fixes: 318130cc9362 ("remoteproc: qcom_q6v5_mss: Add MBA log extraction support")
-Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
-Tested-by: Douglas Anderson <dianders@chromium.org>
-Link: https://lore.kernel.org/r/20240819073020.3291287-1-quic_sibis@quicinc.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: dcbeaa68dbbd ("nfsd4: allow backchannel recovery")
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/remoteproc/qcom_q6v5_mss.c | 3 +++
- 1 file changed, 3 insertions(+)
+ fs/nfsd/nfs4callback.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/remoteproc/qcom_q6v5_mss.c b/drivers/remoteproc/qcom_q6v5_mss.c
-index 3d975ecd93360..876223e6c9291 100644
---- a/drivers/remoteproc/qcom_q6v5_mss.c
-+++ b/drivers/remoteproc/qcom_q6v5_mss.c
-@@ -980,6 +980,9 @@ static int q6v5_mba_load(struct q6v5 *qproc)
- 		goto disable_active_clks;
+diff --git a/fs/nfsd/nfs4callback.c b/fs/nfsd/nfs4callback.c
+index 4eae2c5af2edf..18d62d3424c1a 100644
+--- a/fs/nfsd/nfs4callback.c
++++ b/fs/nfsd/nfs4callback.c
+@@ -1379,6 +1379,8 @@ static void nfsd4_process_cb_update(struct nfsd4_callback *cb)
+ 		ses = c->cn_session;
  	}
+ 	spin_unlock(&clp->cl_lock);
++	if (!c)
++		return;
  
-+	if (qproc->has_mba_logs)
-+		qcom_pil_info_store("mba", qproc->mba_phys, MBA_LOG_SIZE);
-+
- 	writel(qproc->mba_phys, qproc->rmb_base + RMB_MBA_IMAGE_REG);
- 	if (qproc->dp_size) {
- 		writel(qproc->mba_phys + SZ_1M, qproc->rmb_base + RMB_PMI_CODE_START_REG);
+ 	err = setup_callback_client(clp, &conn, ses);
+ 	if (err) {
 -- 
 2.43.0
 
