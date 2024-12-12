@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE4EF2144C4;
-	Thu, 12 Dec 2024 17:24:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5725C2144C4;
+	Thu, 12 Dec 2024 17:24:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734024265; cv=none; b=gOmRf3DIVVr4AiBzr9gqbAPc3+JzsBRo68/xUiXOTlrCfkNY0SAtN7TpO9Ju6GVYgDNUpOmth/OFSAlqm/xhsVUEhApOAvMIUPzUbN+jqG5ZGAYFrkEikNRPSZnyrb/russ0pQtPoG3RKNQNLz9xWzA4UVwd4tK0aEBaRejGWTw=
+	t=1734024269; cv=none; b=EUiD49ZYlA9x39fqjxD0HSfcf4i6GEGsZu07nCvgjAi6mtiKEWE5HyoCeI7nLWTjYBdDrGl0iySFCLQsMPjnAYM9P6dWsTkvoAK5vkemi+Zx5t2x2AtaT8vMK8YrPEzBmE3uE7Qem1NoKmhBZqtepRBjvhPZ0hcLbtbyIXUkeVc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734024265; c=relaxed/simple;
-	bh=uESCVqeDFtSPBt7QE3BwFf7NB4o7VFQKBYtvV2/9DNE=;
+	s=arc-20240116; t=1734024269; c=relaxed/simple;
+	bh=4DJ1F8K4jk21OW/eE0QXOymxqbdEVDb+LlMvxzV96pU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UvYMtOJHak9bVH8w9l7E/Q4LPJ9JvX30O/Sz70wqf6s7WoWEJmL83psZsZ2h7QBQacRBl43BchqK2Suo148s7VsmvZmMXz4uBoHIF3+KFen+b/IXiNwCsoNvawY0J1tE0DQHPM926jh/wRuDndovCpMCzSk2XpR4N90HB/LE/FM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=phrFgDj2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gKJ7TTqdKCN7ymp8g4HaeQRoNPpy0X4lxc0lwG1ZN6AKSD3VR4k6nBRWFGtpTQBblQtcjxn448j9EH6BaiLn4rydpQoZXn/QahiZPMvtbe5bpmTzLur39YUOzOcTFiTgPR9RJ/XHTeWG2QDobDoE2Jry4e9k0E4C4PEllP7pKxg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qAA8Prn3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="phrFgDj2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50596C4CECE;
-	Thu, 12 Dec 2024 17:24:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qAA8Prn3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D32BC4CECE;
+	Thu, 12 Dec 2024 17:24:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734024265;
-	bh=uESCVqeDFtSPBt7QE3BwFf7NB4o7VFQKBYtvV2/9DNE=;
+	s=korg; t=1734024268;
+	bh=4DJ1F8K4jk21OW/eE0QXOymxqbdEVDb+LlMvxzV96pU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=phrFgDj2TtCxm8S8SCYvC0Ao59zsRgAsil8wsy9XEQOzYZmthTMk3LE3mFnGmS3RS
-	 IVs/DjdeQ+4GVzKXFVM4zTsnKciP4b8SYzJDg/nMlt89t0L2p4t9iw7iAO9wbqXM2w
-	 L6DC97P4keYhC7KE1u2M8iz/hgUWtcth6LvWpAA0=
+	b=qAA8Prn3s504r3Z2JuSAlUtdAFNkdQSqCyP4xBpiEU/q5fx07Dywr5hjbJ+sPGwH3
+	 6jC1tEuTRfZxcaoPMdUaedJBT+3MJ4ixkCHUo6aNpgMvIz7VgiRNB5uujqGrttQCTv
+	 D3Nt3c+pY7BTeFT+ZHuipA1Kbwmpv8jYU9m3ZwRs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kailang Yang <kailang@realtek.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	chao liu <liuzgyid@outlook.com>,
+	John Johansen <john.johansen@canonical.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 239/459] ALSA: hda/realtek: Update ALC256 depop procedure
-Date: Thu, 12 Dec 2024 15:59:37 +0100
-Message-ID: <20241212144303.020558307@linuxfoundation.org>
+Subject: [PATCH 5.10 240/459] apparmor: fix Do simple duplicate message elimination
+Date: Thu, 12 Dec 2024 15:59:38 +0100
+Message-ID: <20241212144303.062512321@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144253.511169641@linuxfoundation.org>
 References: <20241212144253.511169641@linuxfoundation.org>
@@ -51,100 +51,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kailang Yang <kailang@realtek.com>
+From: chao liu <liuzgyid@outlook.com>
 
-[ Upstream commit cc3d0b5dd989d3238d456f9fd385946379a9c13d ]
+[ Upstream commit 9b897132424fe76bf6c61f22f9cf12af7f1d1e6a ]
 
-Old procedure has a chance to meet Headphone no output.
+Multiple profiles shared 'ent->caps', so some logs missed.
 
-Fixes: 4a219ef8f370 ("ALSA: hda/realtek - Add ALC256 HP depop function")
-Signed-off-by: Kailang Yang <kailang@realtek.com>
-Link: https://lore.kernel.org/463c5f93715d4714967041a0a8cec28e@realtek.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 0ed3b28ab8bf ("AppArmor: mediation of non file objects")
+Signed-off-by: chao liu <liuzgyid@outlook.com>
+Signed-off-by: John Johansen <john.johansen@canonical.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_realtek.c | 42 ++++++++++++++++-------------------
- 1 file changed, 19 insertions(+), 23 deletions(-)
+ security/apparmor/capability.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-index b1dbb0b4c8158..eec99b9cd7692 100644
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -3596,25 +3596,22 @@ static void alc256_init(struct hda_codec *codec)
- 
- 	hp_pin_sense = snd_hda_jack_detect(codec, hp_pin);
- 
--	if (hp_pin_sense)
-+	if (hp_pin_sense) {
- 		msleep(2);
-+		alc_update_coefex_idx(codec, 0x57, 0x04, 0x0007, 0x1); /* Low power */
- 
--	alc_update_coefex_idx(codec, 0x57, 0x04, 0x0007, 0x1); /* Low power */
--
--	snd_hda_codec_write(codec, hp_pin, 0,
--			    AC_VERB_SET_AMP_GAIN_MUTE, AMP_OUT_MUTE);
--
--	if (hp_pin_sense || spec->ultra_low_power)
--		msleep(85);
--
--	snd_hda_codec_write(codec, hp_pin, 0,
-+		snd_hda_codec_write(codec, hp_pin, 0,
- 			    AC_VERB_SET_PIN_WIDGET_CONTROL, PIN_OUT);
- 
--	if (hp_pin_sense || spec->ultra_low_power)
--		msleep(100);
-+		msleep(75);
-+
-+		snd_hda_codec_write(codec, hp_pin, 0,
-+			    AC_VERB_SET_AMP_GAIN_MUTE, AMP_OUT_UNMUTE);
- 
-+		msleep(75);
-+		alc_update_coefex_idx(codec, 0x57, 0x04, 0x0007, 0x4); /* Hight power */
-+	}
- 	alc_update_coef_idx(codec, 0x46, 3 << 12, 0);
--	alc_update_coefex_idx(codec, 0x57, 0x04, 0x0007, 0x4); /* Hight power */
- 	alc_update_coefex_idx(codec, 0x53, 0x02, 0x8000, 1 << 15); /* Clear bit */
- 	alc_update_coefex_idx(codec, 0x53, 0x02, 0x8000, 0 << 15);
- 	/*
-@@ -3638,29 +3635,28 @@ static void alc256_shutup(struct hda_codec *codec)
- 	alc_update_coefex_idx(codec, 0x57, 0x04, 0x0007, 0x1); /* Low power */
- 	hp_pin_sense = snd_hda_jack_detect(codec, hp_pin);
- 
--	if (hp_pin_sense)
-+	if (hp_pin_sense) {
- 		msleep(2);
- 
--	snd_hda_codec_write(codec, hp_pin, 0,
-+		snd_hda_codec_write(codec, hp_pin, 0,
- 			    AC_VERB_SET_AMP_GAIN_MUTE, AMP_OUT_MUTE);
- 
--	if (hp_pin_sense || spec->ultra_low_power)
--		msleep(85);
-+		msleep(75);
- 
- 	/* 3k pull low control for Headset jack. */
- 	/* NOTE: call this before clearing the pin, otherwise codec stalls */
- 	/* If disable 3k pulldown control for alc257, the Mic detection will not work correctly
- 	 * when booting with headset plugged. So skip setting it for the codec alc257
- 	 */
--	if (spec->en_3kpull_low)
--		alc_update_coef_idx(codec, 0x46, 0, 3 << 12);
-+		if (spec->en_3kpull_low)
-+			alc_update_coef_idx(codec, 0x46, 0, 3 << 12);
- 
--	if (!spec->no_shutup_pins)
--		snd_hda_codec_write(codec, hp_pin, 0,
-+		if (!spec->no_shutup_pins)
-+			snd_hda_codec_write(codec, hp_pin, 0,
- 				    AC_VERB_SET_PIN_WIDGET_CONTROL, 0x0);
- 
--	if (hp_pin_sense || spec->ultra_low_power)
--		msleep(100);
-+		msleep(75);
-+	}
- 
- 	alc_auto_setup_eapd(codec, false);
- 	alc_shutup_pins(codec);
+diff --git a/security/apparmor/capability.c b/security/apparmor/capability.c
+index deccea8654ad8..1b13fd89d5a9f 100644
+--- a/security/apparmor/capability.c
++++ b/security/apparmor/capability.c
+@@ -94,6 +94,8 @@ static int audit_caps(struct common_audit_data *sa, struct aa_profile *profile,
+ 		return error;
+ 	} else {
+ 		aa_put_profile(ent->profile);
++		if (profile != ent->profile)
++			cap_clear(ent->caps);
+ 		ent->profile = aa_get_profile(profile);
+ 		cap_raise(ent->caps, cap);
+ 	}
 -- 
 2.43.0
 
