@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F2062210DB;
-	Thu, 12 Dec 2024 17:02:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B38F13792B;
+	Thu, 12 Dec 2024 17:02:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734022954; cv=none; b=ezvLjTs/TDDGGtbTnlgqU0HzsqEYtozKa2C4g2j+6vp6XuqBnn+l8VcMl8SwWngTKdeqJv8B+wYoG86tb+Xy+djIp8XIm/fmuJGUXP5Xo23GarusK35BtJBc2rtX1NHlu+R5kfFIVs9/5e/x98fgloxlxouTNh9QHphaZwRzyEQ=
+	t=1734022957; cv=none; b=cef2tNqOxOLfskXnx3DhycL4y+30b1FDPuds/eMugYRcjqZIW4o2KfE6payH7dikGMZcEAgiKdZaw/3ypaSuciMAzihZp8f3qYVougbnJmwGKybT6FxPVw3H9nxA+mqRl0iLLqtmrzTYLbV66K5xCFkYnjZ6nxexyopolTdLy/s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734022954; c=relaxed/simple;
-	bh=hr7a9bsEumDFZ+mKRL3jztkKVcAUu4NkiUQPZBxEQGg=;
+	s=arc-20240116; t=1734022957; c=relaxed/simple;
+	bh=l3o+5BO4M/vML0IHN6VX+Juprc7RntmRwtDMoQ9ZDiQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BvJifuNehe8gcZa0iVI9RgEPt4BvX3jEZaeVn4+YBVtynEO42cEh+Y7jvSr0IMTHtl7297yjcD2qeuGGsG8/bQ9r0+drnlDWDzoWY5lR52sonzrmpf4SKuAhTBkwKyVMOpUxDh+E3fzQ09EuuyoTGAsqlNJZ3g/N3099QtQlpvs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RzSxYN3D; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hKUDmBehEa3bJeyDA/+Ec4euS2Vttlvj8D870Uck0WTJheSPOqykXWnBhUcHc5UrxteHrgHcTRTnH/yiAom+eKw72ZIsXNuvZEgzwvNEPKxg1H+ENSxbjgSsV5cxokDJiySarXMwkKx80p+ycwKR1ie/sRD85fDkKlOMSBHwr8k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uAe+valL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RzSxYN3D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 936E0C4CECE;
-	Thu, 12 Dec 2024 17:02:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uAe+valL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6677C4CECE;
+	Thu, 12 Dec 2024 17:02:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734022954;
-	bh=hr7a9bsEumDFZ+mKRL3jztkKVcAUu4NkiUQPZBxEQGg=;
+	s=korg; t=1734022957;
+	bh=l3o+5BO4M/vML0IHN6VX+Juprc7RntmRwtDMoQ9ZDiQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RzSxYN3Dh+pxi0vi15ybMAfe9LIER73JNvXrdmplWb3ntvZ6+lTlwTv0sb8RE/A7f
-	 mOPuFDvo7nQQW1nRl2gHK+4DZI8cpBd3rRHZ6H43gIEIcs8KW1I9N5IvYpCxZtjiwX
-	 Di5oeh4vfHDUxt+cLJVuU328GtAdiKIeQPSUVBQM=
+	b=uAe+valLYUJ+Gb4q+Iz5vN/3AnkpjKGHR2bBoTVwAJTxeJr7GgVHBJcjgQrB4FsPD
+	 m4ZCfHpprLH+/sAs711qARsRb0QrnooX6uM3g4AK2YKgNXDtBz6e6H+hiWnYLHXLOi
+	 ztC0y+aKcjjXTwBwKWQv3ClE/y6PpILw2hH8D7oo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Disha Goel <disgoel@linux.ibm.com>,
-	Baokun Li <libaokun1@huawei.com>,
-	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
-	Jan Kara <jack@suse.cz>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 378/565] quota: flush quota_release_work upon quota writeback
-Date: Thu, 12 Dec 2024 15:59:33 +0100
-Message-ID: <20241212144326.571580417@linuxfoundation.org>
+	Yang Erkun <yangerkun@huawei.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 5.15 352/565] SUNRPC: make sure cache entry active before cache_show
+Date: Thu, 12 Dec 2024 15:59:07 +0100
+Message-ID: <20241212144325.515118252@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144311.432886635@linuxfoundation.org>
 References: <20241212144311.432886635@linuxfoundation.org>
@@ -53,69 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ojaswin Mujoo <ojaswin@linux.ibm.com>
+From: Yang Erkun <yangerkun@huawei.com>
 
-[ Upstream commit ac6f420291b3fee1113f21d612fa88b628afab5b ]
+commit 2862eee078a4d2d1f584e7f24fa50dddfa5f3471 upstream.
 
-One of the paths quota writeback is called from is:
+The function `c_show` was called with protection from RCU. This only
+ensures that `cp` will not be freed. Therefore, the reference count for
+`cp` can drop to zero, which will trigger a refcount use-after-free
+warning when `cache_get` is called. To resolve this issue, use
+`cache_get_rcu` to ensure that `cp` remains active.
 
-freeze_super()
-  sync_filesystem()
-    ext4_sync_fs()
-      dquot_writeback_dquots()
+------------[ cut here ]------------
+refcount_t: addition on 0; use-after-free.
+WARNING: CPU: 7 PID: 822 at lib/refcount.c:25
+refcount_warn_saturate+0xb1/0x120
+CPU: 7 UID: 0 PID: 822 Comm: cat Not tainted 6.12.0-rc3+ #1
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS
+1.16.1-2.fc37 04/01/2014
+RIP: 0010:refcount_warn_saturate+0xb1/0x120
 
-Since we currently don't always flush the quota_release_work queue in
-this path, we can end up with the following race:
+Call Trace:
+ <TASK>
+ c_show+0x2fc/0x380 [sunrpc]
+ seq_read_iter+0x589/0x770
+ seq_read+0x1e5/0x270
+ proc_reg_read+0xe1/0x140
+ vfs_read+0x125/0x530
+ ksys_read+0xc1/0x160
+ do_syscall_64+0x5f/0x170
+ entry_SYSCALL_64_after_hwframe+0x76/0x7e
 
- 1. dquot are added to releasing_dquots list during regular operations.
- 2. FS Freeze starts, however, this does not flush the quota_release_work queue.
- 3. Freeze completes.
- 4. Kernel eventually tries to flush the workqueue while FS is frozen which
-    hits a WARN_ON since transaction gets started during frozen state:
-
-  ext4_journal_check_start+0x28/0x110 [ext4] (unreliable)
-  __ext4_journal_start_sb+0x64/0x1c0 [ext4]
-  ext4_release_dquot+0x90/0x1d0 [ext4]
-  quota_release_workfn+0x43c/0x4d0
-
-Which is the following line:
-
-  WARN_ON(sb->s_writers.frozen == SB_FREEZE_COMPLETE);
-
-Which ultimately results in generic/390 failing due to dmesg
-noise. This was detected on powerpc machine 15 cores.
-
-To avoid this, make sure to flush the workqueue during
-dquot_writeback_dquots() so we dont have any pending workitems after
-freeze.
-
-Reported-by: Disha Goel <disgoel@linux.ibm.com>
-CC: stable@vger.kernel.org
-Fixes: dabc8b207566 ("quota: fix dqput() to follow the guarantees dquot_srcu should provide")
-Reviewed-by: Baokun Li <libaokun1@huawei.com>
-Signed-off-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
-Signed-off-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/20241121123855.645335-2-ojaswin@linux.ibm.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org # v4.20+
+Signed-off-by: Yang Erkun <yangerkun@huawei.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/quota/dquot.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/sunrpc/cache.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/fs/quota/dquot.c b/fs/quota/dquot.c
-index 3b62fbcefa8c3..5e2cf15b82f4d 100644
---- a/fs/quota/dquot.c
-+++ b/fs/quota/dquot.c
-@@ -690,6 +690,8 @@ int dquot_writeback_dquots(struct super_block *sb, int type)
- 
- 	WARN_ON_ONCE(!rwsem_is_locked(&sb->s_umount));
- 
-+	flush_delayed_work(&quota_release_work);
+--- a/net/sunrpc/cache.c
++++ b/net/sunrpc/cache.c
+@@ -1415,7 +1415,9 @@ static int c_show(struct seq_file *m, vo
+ 		seq_printf(m, "# expiry=%lld refcnt=%d flags=%lx\n",
+ 			   convert_to_wallclock(cp->expiry_time),
+ 			   kref_read(&cp->ref), cp->flags);
+-	cache_get(cp);
++	if (!cache_get_rcu(cp))
++		return 0;
 +
- 	for (cnt = 0; cnt < MAXQUOTAS; cnt++) {
- 		if (type != -1 && cnt != type)
- 			continue;
--- 
-2.43.0
-
+ 	if (cache_check(cd, cp, NULL))
+ 		/* cache_check does a cache_put on failure */
+ 		seq_puts(m, "# ");
 
 
