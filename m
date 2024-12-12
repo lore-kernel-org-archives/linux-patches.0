@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E22AB2AF0E;
-	Thu, 12 Dec 2024 15:22:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15D132AF0E;
+	Thu, 12 Dec 2024 15:23:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734016979; cv=none; b=KXKt0tkb4I20XHztPfg4e30YE0DT3jAGWAElaJYMWRpBz74jTyQ7bwPiTQv4NSLnCOY9zxCe5yriC5HSGtE/Cd4OoBE367jeDLMy4sbQsO39bP08EC5/eQk7MfdieBMlHPlJB1rXxMsP8G1a6r2T3eQ4GYichbE+6wYvWvSo4ZU=
+	t=1734016982; cv=none; b=JrLyQK9H2/u63xROJ9siH04RLvOzU9nGIjUX/WsR7q8ugtCX6hrGIZG2saAnUg2oeY00Fu0QGJLvwcMHIztSGvpVFFHY0l1gWdgcZihOtwq8b/zndB4CdHIBpzsQXIbkK6eUyfdLZJ/IPxszVaU8XaM6BEbKc+ZTyMfgYuJBR4s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734016979; c=relaxed/simple;
-	bh=+e4mDw3EHtOD1xqck3jQlV5BAC2GD17Hv4li+f/E2fU=;
+	s=arc-20240116; t=1734016982; c=relaxed/simple;
+	bh=ABbYLaYNOSDZ/z7PC8h7bLODGzyaE7qyn5QbbDnmqpQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=leKw1M03rIQuD/rtaY4X965PQ+m7qcsOEXtOm1SmQASxb5CgMfnJK2NoV0gi1laKQwCAMWjpB3W/HbFw2ubAZtacAu+roVFgEc7HmUH375ZkkyDTTPKPrZuc9LSgJaNq6Uqg34p9PuVfKGr5SPexRQ5dAosFr/rY/25AkYdB3VQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QX51lTsb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Fg2PU6B3jAMm/IWhX+q0FwQZfvZ60UhlXDjvw+uyv+qIABo3VtryFyAt6JqHMDh8iRTnu+o4sesNmwkpb25nWbzTGAGiEMDDrc3/Dld+pWxEkt5siD+wKvUJZqmUvZUvw3CfJOI37Je8nVIr9uYxAnbclYBA72MsLNDnsQ+oV2s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nettyItW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QX51lTsb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65822C4CECE;
-	Thu, 12 Dec 2024 15:22:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nettyItW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75FF6C4CECE;
+	Thu, 12 Dec 2024 15:23:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734016978;
-	bh=+e4mDw3EHtOD1xqck3jQlV5BAC2GD17Hv4li+f/E2fU=;
+	s=korg; t=1734016982;
+	bh=ABbYLaYNOSDZ/z7PC8h7bLODGzyaE7qyn5QbbDnmqpQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QX51lTsbq2mLzlAIhUCsvGOtyAnllwrMEf53AU6e+VtgkdCOytpj97qNyCuUqOHnz
-	 F6kOdcVB46axzjE0JIK4NL/zHAlIuyY53p+Cr4EbbPvcJsg3QxHRFvvxcOTu6gh7ko
-	 YA2SdRmZYPcwkhfGIobX+hl7bHFIFhw5Pa6PCh0M=
+	b=nettyItWQfgM8/I0B6wxCMyQu4rlzr6hLm/U2sVLCqmQTAzQgSOwSRS6diMVM0CgU
+	 CN2gpG8ZtAbUD8pn1QN705ZYiLH90kbE3VCfdnAarwHW6hJKKxrOH1T+UXa8CfEgTZ
+	 NRXtoszU4cOdnw04GAfgpl1ezPUmWKaj8mqvX/3A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hao Qin <hao.qin@mediatek.com>,
+	Jonathan McCrohan <jmccrohan@gmail.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 347/466] Bluetooth: btusb: Add new VID/PID 0489/e111 for MT7925
-Date: Thu, 12 Dec 2024 15:58:36 +0100
-Message-ID: <20241212144320.497596294@linuxfoundation.org>
+Subject: [PATCH 6.12 348/466] Bluetooth: btusb: Add new VID/PID 0489/e124 for MT7925
+Date: Thu, 12 Dec 2024 15:58:37 +0100
+Message-ID: <20241212144320.538228166@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144306.641051666@linuxfoundation.org>
 References: <20241212144306.641051666@linuxfoundation.org>
@@ -51,18 +51,18 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hao Qin <hao.qin@mediatek.com>
+From: Jonathan McCrohan <jmccrohan@gmail.com>
 
-[ Upstream commit faa5fd605d2081b6c9fa2355b59582d4ccd24b16 ]
+[ Upstream commit 679cb60fd60774798719c3e449874a168642a8e6 ]
 
-Add VID 0489 & PID e111 for MediaTek MT7925 USB Bluetooth chip.
+Add VID 0489 & PID e124 for MediaTek MT7925 USB Bluetooth chip.
 
 The information in /sys/kernel/debug/usb/devices about the Bluetooth
 device is listed as the below.
 
-T:  Bus=02 Lev=02 Prnt=02 Port=04 Cnt=02 Dev#=  4 Spd=480  MxCh= 0
+T:  Bus=01 Lev=01 Prnt=01 Port=08 Cnt=02 Dev#=  3 Spd=480  MxCh= 0
 D:  Ver= 2.10 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
-P:  Vendor=0489 ProdID=e111 Rev= 1.00
+P:  Vendor=0489 ProdID=e124 Rev= 1.00
 S:  Manufacturer=MediaTek Inc.
 S:  Product=Wireless_Device
 S:  SerialNumber=000000000
@@ -100,7 +100,7 @@ I:  If#= 2 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=(none)
 E:  Ad=8a(I) Atr=03(Int.) MxPS= 512 Ivl=125us
 E:  Ad=0a(O) Atr=03(Int.) MxPS= 512 Ivl=125us
 
-Signed-off-by: Hao Qin <hao.qin@mediatek.com>
+Signed-off-by: Jonathan McCrohan <jmccrohan@gmail.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
@@ -108,18 +108,18 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 2 insertions(+)
 
 diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index 2a8fe85371804..d922fa8e8b3ce 100644
+index d922fa8e8b3ce..9208b5b7fc86f 100644
 --- a/drivers/bluetooth/btusb.c
 +++ b/drivers/bluetooth/btusb.c
-@@ -642,6 +642,8 @@ static const struct usb_device_id quirks_table[] = {
+@@ -650,6 +650,8 @@ static const struct usb_device_id quirks_table[] = {
  						     BTUSB_WIDEBAND_SPEECH },
- 
- 	/* Additional MediaTek MT7925 Bluetooth devices */
-+	{ USB_DEVICE(0x0489, 0xe111), .driver_info = BTUSB_MEDIATEK |
+ 	{ USB_DEVICE(0x0489, 0xe11e), .driver_info = BTUSB_MEDIATEK |
+ 						     BTUSB_WIDEBAND_SPEECH },
++	{ USB_DEVICE(0x0489, 0xe124), .driver_info = BTUSB_MEDIATEK |
 +						     BTUSB_WIDEBAND_SPEECH },
- 	{ USB_DEVICE(0x0489, 0xe113), .driver_info = BTUSB_MEDIATEK |
+ 	{ USB_DEVICE(0x0489, 0xe139), .driver_info = BTUSB_MEDIATEK |
  						     BTUSB_WIDEBAND_SPEECH },
- 	{ USB_DEVICE(0x0489, 0xe118), .driver_info = BTUSB_MEDIATEK |
+ 	{ USB_DEVICE(0x13d3, 0x3602), .driver_info = BTUSB_MEDIATEK |
 -- 
 2.43.0
 
