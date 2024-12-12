@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94A9922968B;
-	Thu, 12 Dec 2024 16:25:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08DF123D41A;
+	Thu, 12 Dec 2024 16:25:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734020733; cv=none; b=HIgKikIP3XbPmI5uP8iowWP7Z2jT3XccLOCchavYqsyN8inhXQ3ZyqvGB8B0KzOW29q/0PZuI8KllwCEhTvbAlgtH8/wifIJaCIbQsZS7ymAGIjFJ26KTwHlXxfS6nRvm/5ac/sHQtzVbTqwYhK4c0kB2cMzMEWrLUk8/LRBz34=
+	t=1734020737; cv=none; b=as01wOxw/wkDuFj305dggjuZ1qOTtMuk3Dnf4YT6Orae2OAO1UbhW7X4pv2vH4boYDJI+lpIUQRBkxcxYEdjQZHe46R7lexPb7w+rWikJhzD62G4elhh2BFoVhjeMqV1JbkYpF7mTiGTBhrpL99vCVKUWz3eHPqou7E7nvQKyOU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734020733; c=relaxed/simple;
-	bh=jX4Q4d8Aig2T/I4PNkjA7/77aa4+DocUqqJfqTGA+gM=;
+	s=arc-20240116; t=1734020737; c=relaxed/simple;
+	bh=NTK+L0x+I9OCyi80mXYsNqKY4qokrPT+JRMzR4bkfUE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L+dyyDMTY7n6meQJym192omg9D3seexHPkWKSkSEL+UO5finsKSSA+5FPvggWm4Yc+wuWCnobD8tl/lZXckUVQHzXmIyJ/XJImRZIHCFx7BxBrsZxkhMkpcQQY7/1OmyVnV1vQcNd2oBXScgSmnzj0jAAlHPxiV5Qz2M1kLfudQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i+2yaol3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=axz7Z9w87ygGWSkqbIx+jJElXge477dFN59Y1BHR/b4uvCIzKMbPBWNxueEy+Qqa1x2M/ycVLghpF0QbOvSsyK+Io4B4N+ueg3KVhyqvF9Ov749fhZ+jO4aUZjyhqncq7PKtGnqFxlX6CoFd7YjhudHa6p7nrF2sCMgTepCrKes=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yh+qECbB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i+2yaol3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D17DBC4CEF6;
-	Thu, 12 Dec 2024 16:25:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yh+qECbB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69602C4CECE;
+	Thu, 12 Dec 2024 16:25:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734020733;
-	bh=jX4Q4d8Aig2T/I4PNkjA7/77aa4+DocUqqJfqTGA+gM=;
+	s=korg; t=1734020736;
+	bh=NTK+L0x+I9OCyi80mXYsNqKY4qokrPT+JRMzR4bkfUE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i+2yaol3h5S8jy0gzwoM3rfFJE0+adfpfddhzIdibXL052Us07zuKhgOf2NyhTtVF
-	 1oZ7ACHnswAHfldRIyiGzwEFibFYC8eS0RXtkwtEmdJ/6LJmDWwChn5u2Bijl3nhYI
-	 eoL+g3VawZbrBEY3olczd1Qk4TCIKFHYDozTAS98=
+	b=Yh+qECbB9DKCm/DMJnxxP472ABJG5TVT1+UembO8phhTnB/0klFxaaQEBQwFBfd1J
+	 ZLEDwEJA93HBIiRE52TIsro5tf9Fr/ZbFuNz1bCg+HOUbQqI+LqWNn1wg7LnLyocHC
+	 1MwFniB1TcDbS6vd8dryXxQapPLgur5VOm1Gu9uc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+3ec5271486d7cb2d242a@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
-	Stefano Brivio <sbrivio@redhat.com>,
+	Jianbo Liu <jianbol@nvidia.com>,
+	Frode Nordahl <frode.nordahl@canonical.com>,
+	Chris Mi <cmi@nvidia.com>,
+	Ariel Levkovich <lariel@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 545/772] geneve: do not assume mac header is set in geneve_xmit_skb()
-Date: Thu, 12 Dec 2024 15:58:10 +0100
-Message-ID: <20241212144412.489139663@linuxfoundation.org>
+Subject: [PATCH 6.1 546/772] net/mlx5e: Remove workaround to avoid syndrome for internal port
+Date: Thu, 12 Dec 2024 15:58:11 +0100
+Message-ID: <20241212144412.528824712@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -53,83 +55,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Jianbo Liu <jianbol@nvidia.com>
 
-[ Upstream commit 8588c99c7d47448fcae39e3227d6e2bb97aad86d ]
+[ Upstream commit 5085f861b414e4a51ce28a891dfa32a10a54b64e ]
 
-We should not assume mac header is set in output path.
+Previously a workaround was added to avoid syndrome 0xcdb051. It is
+triggered when offload a rule with tunnel encapsulation, and
+forwarding to another table, but not matching on the internal port in
+firmware steering mode. The original workaround skips internal tunnel
+port logic, which is not correct as not all cases are considered. As
+an example, if vlan is configured on the uplink port, traffic can't
+pass because vlan header is not added with this workaround. Besides,
+there is no such issue for software steering. So, this patch removes
+that, and returns error directly if trying to offload such rule for
+firmware steering.
 
-Use skb_eth_hdr() instead of eth_hdr() to fix the issue.
-
-sysbot reported the following :
-
- WARNING: CPU: 0 PID: 11635 at include/linux/skbuff.h:3052 skb_mac_header include/linux/skbuff.h:3052 [inline]
- WARNING: CPU: 0 PID: 11635 at include/linux/skbuff.h:3052 eth_hdr include/linux/if_ether.h:24 [inline]
- WARNING: CPU: 0 PID: 11635 at include/linux/skbuff.h:3052 geneve_xmit_skb drivers/net/geneve.c:898 [inline]
- WARNING: CPU: 0 PID: 11635 at include/linux/skbuff.h:3052 geneve_xmit+0x4c38/0x5730 drivers/net/geneve.c:1039
-Modules linked in:
-CPU: 0 UID: 0 PID: 11635 Comm: syz.4.1423 Not tainted 6.12.0-syzkaller-10296-gaaf20f870da0 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 09/13/2024
- RIP: 0010:skb_mac_header include/linux/skbuff.h:3052 [inline]
- RIP: 0010:eth_hdr include/linux/if_ether.h:24 [inline]
- RIP: 0010:geneve_xmit_skb drivers/net/geneve.c:898 [inline]
- RIP: 0010:geneve_xmit+0x4c38/0x5730 drivers/net/geneve.c:1039
-Code: 21 c6 02 e9 35 d4 ff ff e8 a5 48 4c fb 90 0f 0b 90 e9 fd f5 ff ff e8 97 48 4c fb 90 0f 0b 90 e9 d8 f5 ff ff e8 89 48 4c fb 90 <0f> 0b 90 e9 41 e4 ff ff e8 7b 48 4c fb 90 0f 0b 90 e9 cd e7 ff ff
-RSP: 0018:ffffc90003b2f870 EFLAGS: 00010283
-RAX: 000000000000037a RBX: 000000000000ffff RCX: ffffc9000dc3d000
-RDX: 0000000000080000 RSI: ffffffff86428417 RDI: 0000000000000003
-RBP: ffffc90003b2f9f0 R08: 0000000000000003 R09: 000000000000ffff
-R10: 000000000000ffff R11: 0000000000000002 R12: ffff88806603c000
-R13: 0000000000000000 R14: ffff8880685b2780 R15: 0000000000000e23
-FS:  00007fdc2deed6c0(0000) GS:ffff8880b8600000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 0000001b30a1dff8 CR3: 0000000056b8c000 CR4: 00000000003526f0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-Call Trace:
- <TASK>
-  __netdev_start_xmit include/linux/netdevice.h:5002 [inline]
-  netdev_start_xmit include/linux/netdevice.h:5011 [inline]
-  __dev_direct_xmit+0x58a/0x720 net/core/dev.c:4490
-  dev_direct_xmit include/linux/netdevice.h:3181 [inline]
-  packet_xmit+0x1e4/0x360 net/packet/af_packet.c:285
-  packet_snd net/packet/af_packet.c:3146 [inline]
-  packet_sendmsg+0x2700/0x5660 net/packet/af_packet.c:3178
-  sock_sendmsg_nosec net/socket.c:711 [inline]
-  __sock_sendmsg net/socket.c:726 [inline]
-  __sys_sendto+0x488/0x4f0 net/socket.c:2197
-  __do_sys_sendto net/socket.c:2204 [inline]
-  __se_sys_sendto net/socket.c:2200 [inline]
-  __x64_sys_sendto+0xe0/0x1c0 net/socket.c:2200
-  do_syscall_x64 arch/x86/entry/common.c:52 [inline]
-  do_syscall_64+0xcd/0x250 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-Fixes: a025fb5f49ad ("geneve: Allow configuration of DF behaviour")
-Reported-by: syzbot+3ec5271486d7cb2d242a@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/674f4b72.050a0220.17bd51.004a.GAE@google.com/T/#u
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Stefano Brivio <sbrivio@redhat.com>
-Link: https://patch.msgid.link/20241203182122.2725517-1-edumazet@google.com
+Fixes: 06b4eac9c4be ("net/mlx5e: Don't offload internal port if filter device is out device")
+Signed-off-by: Jianbo Liu <jianbol@nvidia.com>
+Tested-by: Frode Nordahl <frode.nordahl@canonical.com>
+Reviewed-by: Chris Mi <cmi@nvidia.com>
+Reviewed-by: Ariel Levkovich <lariel@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://patch.msgid.link/20241203204920.232744-7-tariqt@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/geneve.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../ethernet/mellanox/mlx5/core/en/tc_tun_encap.c   | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/geneve.c b/drivers/net/geneve.c
-index c4a49a75250e3..27b570678c9fc 100644
---- a/drivers/net/geneve.c
-+++ b/drivers/net/geneve.c
-@@ -990,7 +990,7 @@ static int geneve_xmit_skb(struct sk_buff *skb, struct net_device *dev,
- 		if (geneve->cfg.df == GENEVE_DF_SET) {
- 			df = htons(IP_DF);
- 		} else if (geneve->cfg.df == GENEVE_DF_INHERIT) {
--			struct ethhdr *eth = eth_hdr(skb);
-+			struct ethhdr *eth = skb_eth_hdr(skb);
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/tc_tun_encap.c b/drivers/net/ethernet/mellanox/mlx5/core/en/tc_tun_encap.c
+index 907ad6ffe7275..407556334495d 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en/tc_tun_encap.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en/tc_tun_encap.c
+@@ -4,6 +4,7 @@
+ #include <net/fib_notifier.h>
+ #include <net/nexthop.h>
+ #include "tc_tun_encap.h"
++#include "fs_core.h"
+ #include "en_tc.h"
+ #include "tc_tun.h"
+ #include "rep/tc.h"
+@@ -23,10 +24,18 @@ static int mlx5e_set_int_port_tunnel(struct mlx5e_priv *priv,
  
- 			if (ntohs(eth->h_proto) == ETH_P_IPV6) {
- 				df = htons(IP_DF);
+ 	route_dev = dev_get_by_index(dev_net(e->out_dev), e->route_dev_ifindex);
+ 
+-	if (!route_dev || !netif_is_ovs_master(route_dev) ||
+-	    attr->parse_attr->filter_dev == e->out_dev)
++	if (!route_dev || !netif_is_ovs_master(route_dev))
+ 		goto out;
+ 
++	if (priv->mdev->priv.steering->mode == MLX5_FLOW_STEERING_MODE_DMFS &&
++	    mlx5e_eswitch_uplink_rep(attr->parse_attr->filter_dev) &&
++	    (attr->esw_attr->dests[out_index].flags & MLX5_ESW_DEST_ENCAP)) {
++		mlx5_core_warn(priv->mdev,
++			       "Matching on external port with encap + fwd to table actions is not allowed for firmware steering\n");
++		err = -EINVAL;
++		goto out;
++	}
++
+ 	err = mlx5e_set_fwd_to_int_port_actions(priv, attr, e->route_dev_ifindex,
+ 						MLX5E_TC_INT_PORT_EGRESS,
+ 						&attr->action, out_index);
 -- 
 2.43.0
 
