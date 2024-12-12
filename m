@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E131216E29;
-	Thu, 12 Dec 2024 15:08:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4A70216E29;
+	Thu, 12 Dec 2024 15:08:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734016104; cv=none; b=ZuX7gQQHZtpX/t8Jq9t0LNngNRdc9n9HLO+5XNWPzjNejJrZeGhWv/yEq/A9tCMJc4+cW5io6U5TVxRD5fBriPDn9xMw2RQQDN5qPO2lQOjiyl8ZzK7esAZfnnL/eHfLeQJsUiUt91oi5urfiiQxWZYjE1r+AUzoNApyDaT0MZY=
+	t=1734016107; cv=none; b=sp/wzOnOQ7ewhTQyPWX1Ys8HbzRxTCRzIxWtMyCO/KxttQl8XxxEwyQ00JcLJsbsttc+eqMe44kssxis5H/WGTToyzLstI7hgq1tikCVq02FPSTLSJ9j6TkFCrsChSJXh+QiJTby11tenMRHW4jIBANBQtE/LKScrKA2Tq54AKQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734016104; c=relaxed/simple;
-	bh=n6PivKZJM8QSqbZPerQO8s9E1k+8H2H9DBgRBhGxzcI=;
+	s=arc-20240116; t=1734016107; c=relaxed/simple;
+	bh=nHRU2JTnJ6ZV3JLT2+wPLeqwxbxaDB14CC1fuli2LY4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tBXAG76YQ122ihAuIxANKi3idJRENJ2kzhCuaEPaLIB/lYkCJYWjOAjtYJtGhu7z1XgnRbfmOx4Wwdah4wKXW8IH8HObLLCdusrIDLU28mLHu+lXy2Tpgwqux4uVkVJs0lIi2mFuzQgs0EdURpryq3weyJ2c2p2x6i+Jr9KOisI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jiu3tDLx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AnmMb7WaStAlwy8i+LMYyunLmHDupQklXHzpQaYnIMLSOX6ISJyrGfrGraSxA/f2G9R2BzlPNcGZl13IFe0UDEeAPRa6LNMIg2PQhm1AtsncO6idDwbi1Ejq3YKIj+QXbwrl5HtOMzFrnUg7HxX5QM722vjpX4Ed3UXDeLioJUY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M0/TTsvE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jiu3tDLx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7095C4CECE;
-	Thu, 12 Dec 2024 15:08:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M0/TTsvE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 440B2C4CECE;
+	Thu, 12 Dec 2024 15:08:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734016104;
-	bh=n6PivKZJM8QSqbZPerQO8s9E1k+8H2H9DBgRBhGxzcI=;
+	s=korg; t=1734016107;
+	bh=nHRU2JTnJ6ZV3JLT2+wPLeqwxbxaDB14CC1fuli2LY4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Jiu3tDLx732bhompztP7Nw25SxtqXHVRzrOkMSbCSnFrgyCbgo8dE4DYT9NQZbIuJ
-	 7sszA2HGJ4gd7IMmU/c56mrSvLl+HNKtB1Rg2w+FqmBxqdD3Ihb+71agh5pOQ10A/Y
-	 9Bl6EUxepe0zkZb/2eX4G5GC3SrTMslrlqk1WmWk=
+	b=M0/TTsvE6RMgT/Jz6aQlt5IJh5VFfmdof8T4R8AGeryBQTyKY9HlshUOQAMjCEaJX
+	 56Qp4HdNfOgRWGRQEWB2geZIil6Es/fFm1kgBQ2IoJZkvY70GrLi61vmEVRrR6MzjW
+	 U45BexmAV9m8jyMg2NStKNcMN/iNjvE2No/SywGk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yutang Jiang <jiangyutang@os.amperecomputing.com>,
-	Yang Shi <yang@os.amperecomputing.com>,
+	Will Deacon <will@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Marc Zyngier <maz@kernel.org>,
+	James Morse <james.morse@arm.com>,
 	Catalin Marinas <catalin.marinas@arm.com>
-Subject: [PATCH 6.12 134/466] arm64: mm: Fix zone_dma_limit calculation
-Date: Thu, 12 Dec 2024 15:55:03 +0100
-Message-ID: <20241212144312.099490335@linuxfoundation.org>
+Subject: [PATCH 6.12 135/466] arm64: Ensure bits ASID[15:8] are masked out when the kernel uses 8-bit ASIDs
+Date: Thu, 12 Dec 2024 15:55:04 +0100
+Message-ID: <20241212144312.138099051@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144306.641051666@linuxfoundation.org>
 References: <20241212144306.641051666@linuxfoundation.org>
@@ -51,68 +53,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yang Shi <yang@os.amperecomputing.com>
+From: Catalin Marinas <catalin.marinas@arm.com>
 
-commit 56a708742a8bf127eb66798bfc9c9516c61f9930 upstream.
+commit c0900d15d31c2597dd9f634c8be2b71762199890 upstream.
 
-Commit ba0fb44aed47 ("dma-mapping: replace zone_dma_bits by
-zone_dma_limit") and subsequent patches changed how zone_dma_limit is
-calculated to allow a reduced ZONE_DMA even when RAM starts above 4GB.
-Commit 122c234ef4e1 ("arm64: mm: keep low RAM dma zone") further fixed
-this to ensure ZONE_DMA remains below U32_MAX if RAM starts below 4GB,
-especially on platforms that do not have IORT or DT description of the
-device DMA ranges. While zone boundaries calculation was fixed by the
-latter commit, zone_dma_limit, used to determine the GFP_DMA flag in the
-core code, was not updated. This results in excessive use of GFP_DMA and
-unnecessary ZONE_DMA allocations on some platforms.
+Linux currently sets the TCR_EL1.AS bit unconditionally during CPU
+bring-up. On an 8-bit ASID CPU, this is RES0 and ignored, otherwise
+16-bit ASIDs are enabled. However, if running in a VM and the hypervisor
+reports 8-bit ASIDs (ID_AA64MMFR0_EL1.ASIDBits == 0) on a 16-bit ASIDs
+CPU, Linux uses bits 8 to 63 as a generation number for tracking old
+process ASIDs. The bottom 8 bits of this generation end up being written
+to TTBR1_EL1 and also used for the ASID-based TLBI operations as the
+upper 8 bits of the ASID. Following an ASID roll-over event we can have
+threads of the same application with the same 8-bit ASID but different
+generation numbers running on separate CPUs. Both TLB caching and the
+TLBI operations will end up using different actual 16-bit ASIDs for the
+same process.
 
-Update zone_dma_limit to match the actual upper bound of ZONE_DMA.
+A similar scenario can happen in a big.LITTLE configuration if the boot
+CPU only uses 8-bit ASIDs while secondary CPUs have 16-bit ASIDs.
 
-Fixes: ba0fb44aed47 ("dma-mapping: replace zone_dma_bits by zone_dma_limit")
-Cc: <stable@vger.kernel.org> # 6.12.x
-Reported-by: Yutang Jiang <jiangyutang@os.amperecomputing.com>
-Tested-by: Yutang Jiang <jiangyutang@os.amperecomputing.com>
-Signed-off-by: Yang Shi <yang@os.amperecomputing.com>
-Link: https://lore.kernel.org/r/20241125171650.77424-1-yang@os.amperecomputing.com
-[catalin.marinas@arm.com: some tweaking of the commit log]
+Ensure that the ASID generation is only tracked by bits 16 and up,
+leaving bits 15:8 as 0 if the kernel uses 8-bit ASIDs. Note that
+clearing TCR_EL1.AS is not sufficient since the architecture requires
+that the top 8 bits of the ASID passed to TLBI instructions are 0 rather
+than ignored in such configuration.
+
+Cc: stable@vger.kernel.org
+Cc: Will Deacon <will@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Marc Zyngier <maz@kernel.org>
+Cc: James Morse <james.morse@arm.com>
+Acked-by: Mark Rutland <mark.rutland@arm.com>
+Acked-by: Marc Zyngier <maz@kernel.org>
+Link: https://lore.kernel.org/r/20241203151941.353796-1-catalin.marinas@arm.com
 Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/mm/init.c |   17 ++++++++---------
- 1 file changed, 8 insertions(+), 9 deletions(-)
+ arch/arm64/mm/context.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/arch/arm64/mm/init.c
-+++ b/arch/arm64/mm/init.c
-@@ -116,15 +116,6 @@ static void __init arch_reserve_crashker
+--- a/arch/arm64/mm/context.c
++++ b/arch/arm64/mm/context.c
+@@ -32,9 +32,9 @@ static unsigned long nr_pinned_asids;
+ static unsigned long *pinned_asid_map;
  
- static phys_addr_t __init max_zone_phys(phys_addr_t zone_limit)
- {
--	/**
--	 * Information we get from firmware (e.g. DT dma-ranges) describe DMA
--	 * bus constraints. Devices using DMA might have their own limitations.
--	 * Some of them rely on DMA zone in low 32-bit memory. Keep low RAM
--	 * DMA zone on platforms that have RAM there.
--	 */
--	if (memblock_start_of_DRAM() < U32_MAX)
--		zone_limit = min(zone_limit, U32_MAX);
--
- 	return min(zone_limit, memblock_end_of_DRAM() - 1) + 1;
- }
+ #define ASID_MASK		(~GENMASK(asid_bits - 1, 0))
+-#define ASID_FIRST_VERSION	(1UL << asid_bits)
++#define ASID_FIRST_VERSION	(1UL << 16)
  
-@@ -140,6 +131,14 @@ static void __init zone_sizes_init(void)
- 	acpi_zone_dma_limit = acpi_iort_dma_get_max_cpu_address();
- 	dt_zone_dma_limit = of_dma_get_max_cpu_address(NULL);
- 	zone_dma_limit = min(dt_zone_dma_limit, acpi_zone_dma_limit);
-+	/*
-+	 * Information we get from firmware (e.g. DT dma-ranges) describe DMA
-+	 * bus constraints. Devices using DMA might have their own limitations.
-+	 * Some of them rely on DMA zone in low 32-bit memory. Keep low RAM
-+	 * DMA zone on platforms that have RAM there.
-+	 */
-+	if (memblock_start_of_DRAM() < U32_MAX)
-+		zone_dma_limit = min(zone_dma_limit, U32_MAX);
- 	arm64_dma_phys_limit = max_zone_phys(zone_dma_limit);
- 	max_zone_pfns[ZONE_DMA] = PFN_DOWN(arm64_dma_phys_limit);
- #endif
+-#define NUM_USER_ASIDS		ASID_FIRST_VERSION
++#define NUM_USER_ASIDS		(1UL << asid_bits)
+ #define ctxid2asid(asid)	((asid) & ~ASID_MASK)
+ #define asid2ctxid(asid, genid)	((asid) | (genid))
+ 
 
 
