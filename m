@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77FBD235C3B;
-	Thu, 12 Dec 2024 16:19:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7A87242F07;
+	Thu, 12 Dec 2024 16:19:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734020381; cv=none; b=pXjex7MwzJ8bF+GZMYSXJQoKLCTd16h4sdQ+0zopbLTbZGybm9UCIBy1xe00FxyFZjfusDZbcCkx3KR9qwm85X7S+6z5b/JXiCg9K/tfFvv4/bA7UC9vAYZQWqscIZ1GR6ztLUWcJwzkQT9Qd2XPH2S0FNYAMdQR27SHDmr82fs=
+	t=1734020384; cv=none; b=RyPRxZypuTML4a1xwweTrKZD8HfW32949+uZSCeyEIDJRRPY7oReki+WjkMu9ojTlz5DBYEImFJniu2Uxt8cVIBsBkUGg7jWDq9uP2yl4QgI0ReQaHl4Poedn5EA7qP8PslYebWlKgYlIjIIEaBXbhyamwaG93k9LxJiSEeJ3fI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734020381; c=relaxed/simple;
-	bh=BwWQeu5WYgoNe3ZL0EvAi5/GgSGVwVh9DliZP3hBntQ=;
+	s=arc-20240116; t=1734020384; c=relaxed/simple;
+	bh=/Kw01WspyqulwhkfUPX31RjFlwecJTPj/h5op6223Jk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=odoXzK+WRZv0AlfBPaxWm6sKl7gUe3dq/1Qv0EEF1YimzKO3qfDT89O5M5SoExatzHBYsh2POCIY7GE4NxWrK4ZAvvybUT6QDtqAIzkGr7XE5DuNiCC49cDB+Ekg8hcmS3WezHcG+OEGKq/yGw40fZ0k97jg9QtP2/fFC7qC+Dk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W2CfyBkk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=V6ZY48SBG4sgUMW+aUFgJolcVnDyszkD/fqOh3QM360+z7BW9E92i5fZXsPtsfr3hgM3ClzO1XjcOWaDSRGxU6KpEHd3l9ixefSDawVIwVDyA57v8tbhFHDF0GGpg3A/9HE/fvjdDjh4+ECsZCP0MTuq4sfSCp1KO5P0xSZH8cU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WT2vS8PC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W2CfyBkk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91E09C4CECE;
-	Thu, 12 Dec 2024 16:19:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WT2vS8PC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FD07C4CECE;
+	Thu, 12 Dec 2024 16:19:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734020381;
-	bh=BwWQeu5WYgoNe3ZL0EvAi5/GgSGVwVh9DliZP3hBntQ=;
+	s=korg; t=1734020384;
+	bh=/Kw01WspyqulwhkfUPX31RjFlwecJTPj/h5op6223Jk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W2CfyBkkr+IVHP+RFy460F/LVfwK8Nth2Cz/Vl+T2kWbUl6TJJbGMdOllCayjx+2Z
-	 h6QYc182C2iZOE8xZJgxE9tvDrZyenru18qyom8qP0+zp5/fhhXbnEOYXD8jyGvmLK
-	 KO5n71ab8yi2I7LYMjLRDqJFAlJNF+Ke+Wgs+AvM=
+	b=WT2vS8PCLnKKDALkku4tTi3Qd6NlLn2J1ndh7fAK0UHDYY9nnrIUEOCtFMu1TJ84I
+	 wXTo/zyOtkV6t4BYQRjVNIy2RgxkRLS+wKPPysHRnsmltG5t7fkRntuZU00YavgKhs
+	 mhpVrCvlkUS3hhnPDQzVx8z6bPoof0CkCT+Bso2A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 451/772] btrfs: dont loop for nowait writes when checking for cross references
-Date: Thu, 12 Dec 2024 15:56:36 +0100
-Message-ID: <20241212144408.564802633@linuxfoundation.org>
+	Ma Wupeng <mawupeng1@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.1 423/772] ipc: fix memleak if msg_init_ns failed in create_ipc_ns
+Date: Thu, 12 Dec 2024 15:56:08 +0100
+Message-ID: <20241212144407.392511086@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -52,45 +50,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Ma Wupeng <mawupeng1@huawei.com>
 
-[ Upstream commit ed67f2a913a4f0fc505db29805c41dd07d3cb356 ]
+commit bc8f5921cd69188627c08041276238de222ab466 upstream.
 
-When checking for delayed refs when verifying if there are cross
-references for a data extent, we stop if the path has nowait set and we
-can't try lock the delayed ref head's mutex, returning -EAGAIN with the
-goal of making a write fallback to a blocking context. However we ignore
-the -EAGAIN at btrfs_cross_ref_exist() when check_delayed_ref() returns
-it, and keep looping instead of immediately returning the -EAGAIN to the
-caller.
+Percpu memory allocation may failed during create_ipc_ns however this
+fail is not handled properly since ipc sysctls and mq sysctls is not
+released properly. Fix this by release these two resource when failure.
 
-Fix this by not looping if we get -EAGAIN and we have a nowait path.
+Here is the kmemleak stack when percpu failed:
 
-Fixes: 26ce91144631 ("btrfs: make can_nocow_extent nowait compatible")
-CC: stable@vger.kernel.org # 6.1+
-Reviewed-by: Josef Bacik <josef@toxicpanda.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+unreferenced object 0xffff88819de2a600 (size 512):
+  comm "shmem_2nstest", pid 120711, jiffies 4300542254
+  hex dump (first 32 bytes):
+    60 aa 9d 84 ff ff ff ff fc 18 48 b2 84 88 ff ff  `.........H.....
+    04 00 00 00 a4 01 00 00 20 e4 56 81 ff ff ff ff  ........ .V.....
+  backtrace (crc be7cba35):
+    [<ffffffff81b43f83>] __kmalloc_node_track_caller_noprof+0x333/0x420
+    [<ffffffff81a52e56>] kmemdup_noprof+0x26/0x50
+    [<ffffffff821b2f37>] setup_mq_sysctls+0x57/0x1d0
+    [<ffffffff821b29cc>] copy_ipcs+0x29c/0x3b0
+    [<ffffffff815d6a10>] create_new_namespaces+0x1d0/0x920
+    [<ffffffff815d7449>] copy_namespaces+0x2e9/0x3e0
+    [<ffffffff815458f3>] copy_process+0x29f3/0x7ff0
+    [<ffffffff8154b080>] kernel_clone+0xc0/0x650
+    [<ffffffff8154b6b1>] __do_sys_clone+0xa1/0xe0
+    [<ffffffff843df8ff>] do_syscall_64+0xbf/0x1c0
+    [<ffffffff846000b0>] entry_SYSCALL_64_after_hwframe+0x4b/0x53
+
+Link: https://lkml.kernel.org/r/20241023093129.3074301-1-mawupeng1@huawei.com
+Fixes: 72d1e611082e ("ipc/msg: mitigate the lock contention with percpu counter")
+Signed-off-by: Ma Wupeng <mawupeng1@huawei.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/extent-tree.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ ipc/namespace.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/fs/btrfs/extent-tree.c b/fs/btrfs/extent-tree.c
-index 0d97c8ee6b4fb..2ac060dc65000 100644
---- a/fs/btrfs/extent-tree.c
-+++ b/fs/btrfs/extent-tree.c
-@@ -2372,7 +2372,7 @@ int btrfs_cross_ref_exist(struct btrfs_root *root, u64 objectid, u64 offset,
- 			goto out;
+--- a/ipc/namespace.c
++++ b/ipc/namespace.c
+@@ -68,13 +68,15 @@ static struct ipc_namespace *create_ipc_
  
- 		ret = check_delayed_ref(root, path, objectid, offset, bytenr);
--	} while (ret == -EAGAIN);
-+	} while (ret == -EAGAIN && !path->nowait);
+ 	err = msg_init_ns(ns);
+ 	if (err)
+-		goto fail_put;
++		goto fail_ipc;
  
- out:
- 	btrfs_release_path(path);
--- 
-2.43.0
-
+ 	sem_init_ns(ns);
+ 	shm_init_ns(ns);
+ 
+ 	return ns;
+ 
++fail_ipc:
++	retire_ipc_sysctls(ns);
+ fail_mq:
+ 	retire_mq_sysctls(ns);
+ 
 
 
