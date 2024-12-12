@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5046D222D67;
-	Thu, 12 Dec 2024 17:43:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68CA2222D67;
+	Thu, 12 Dec 2024 17:43:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734025402; cv=none; b=QJePXqJho6tIxdJulu3rSmmNwR5apa/vIhx3GuRz2GaLzKBC8i2k07XQklusA1dBC+evZ/lqg3f4IDpTr4lR6rsOapaCjA8HwPixLl2KEkyos2X5/sIMYKyGUJEjQTlRdcaXfIC9moWBQ9lLsHOYJ5CtrLlDApjxFg0IIayXmiI=
+	t=1734025405; cv=none; b=DGWKALPDmKkfkr+QqHJ8A0bf6Tz/mPJ5NIpm0HsrKaZL+fYVompYL1FEvND8RswOKddCYW+928Ww+CAo449bLxfcv7u5ov7dPlINIGRR/DsLRne63WEyR5hte6juVQe4glkNZahuLCTXe170nffa1FoKyr9xX/5zLVX3KXXu7Ys=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734025402; c=relaxed/simple;
-	bh=KctbU6bKkpGMRWsZ8JI4gNHczi6WutcAt0KtOyRUb18=;
+	s=arc-20240116; t=1734025405; c=relaxed/simple;
+	bh=mGxeKq6U6L7heB7rVdeMDiSNCxPr/x5R7Xbn7kL1C6Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=AgMA3/mcoSi+Vaa/W/aCrG/eDcOulVRVYXHNEXGq26154D5lsFSKEmZ6erycLuXlic1U1NKrpG8w5ZocYZtXj5+WDD3ZhKABlyH+au+/pBv0gTG7oz//peQV2dRplmiZFLzABJTfaLVcqkrmbyjXphtUUIjJK/qsaSQvLGlKPW8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PmCAQDes; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sMzF/fJnNI0VBKvXy9U6/+RE9RcJ3ruKpRNrfvQvxYl7YprNalsEtPr5/3DEicDgupPSZJ8Up5PxfDdJ++sTa6I+Ww+fW/VoIS5ww65EZ1tmrmNJoNIkzczJZYqbzFDp2pVftXEdZsv62YbMzT7duzLzYLQ4sZZx9NWreSbiTk8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=veZJRNYb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PmCAQDes"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A65AC4CED0;
-	Thu, 12 Dec 2024 17:43:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="veZJRNYb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E354C4CED0;
+	Thu, 12 Dec 2024 17:43:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734025401;
-	bh=KctbU6bKkpGMRWsZ8JI4gNHczi6WutcAt0KtOyRUb18=;
+	s=korg; t=1734025404;
+	bh=mGxeKq6U6L7heB7rVdeMDiSNCxPr/x5R7Xbn7kL1C6Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PmCAQDessZVjyxOf4jb17xSDaZgvd16761hiYqjAxAmpGuFh9R1KR0YKTg75APp6e
-	 XOiiXjkNsQUBYGbBoqZJDM63y8tNazOLStr4V9F/impz84klyFyW10Aluy4KH8bcgX
-	 +eDKz3wbPjE9Wd2wpF1vqjnB66vfyaqnaXPMu2tU=
+	b=veZJRNYbv35lYJPzSUNQoUVyxziTecY9xCoeH+Fv5ZRZuZNq3E7DjL7txmUlToyDf
+	 eWux5VlM5GS7oEZOSgC+LJrtVmOGbXWtpxWoqclQ8Ce/wYupjRR9QdY6eFdHQiADoY
+	 lbGyemvDjvUGgTQlPySLoQ7txuzvZGM5h20ElWe0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
-	Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
-	=?UTF-8?q?Alexis=20Lothor=C3=A9?= <alexis.lothore@bootlin.com>
-Subject: [PATCH 5.4 158/321] spi: Fix acpi deferred irq probe
-Date: Thu, 12 Dec 2024 16:01:16 +0100
-Message-ID: <20241212144236.218944409@linuxfoundation.org>
+	Vitalii Mordan <mordan@ispras.ru>,
+	Alan Stern <stern@rowland.harvard.edu>
+Subject: [PATCH 5.4 141/321] usb: ehci-spear: fix call balance of sehci clk handling routines
+Date: Thu, 12 Dec 2024 16:00:59 +0100
+Message-ID: <20241212144235.549724338@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144229.291682835@linuxfoundation.org>
 References: <20241212144229.291682835@linuxfoundation.org>
@@ -46,67 +44,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>
+From: Vitalii Mordan <mordan@ispras.ru>
 
-commit d24cfee7f63d6b44d45a67c5662bd1cc48e8b3ca upstream.
+commit 40c974826734836402abfd44efbf04f63a2cc1c1 upstream.
 
-When probing spi device take care of deferred probe of ACPI irq gpio
-similar like for OF/DT case.
+If the clock sehci->clk was not enabled in spear_ehci_hcd_drv_probe,
+it should not be disabled in any path.
 
->From practical standpoint this fixes issue with vsc-tp driver on
-Dell XP 9340 laptop, which try to request interrupt with spi->irq
-equal to -EPROBE_DEFER and fail to probe with the following error:
+Conversely, if it was enabled in spear_ehci_hcd_drv_probe, it must be disabled
+in all error paths to ensure proper cleanup.
 
-vsc-tp spi-INTC10D0:00: probe with driver vsc-tp failed with error -22
+Found by Linux Verification Center (linuxtesting.org) with Klever.
 
-Suggested-by: Hans de Goede <hdegoede@redhat.com>
-Fixes: 33ada67da352 ("ACPI / spi: attach GPIO IRQ from ACPI description to SPI device")
+Fixes: 7675d6ba436f ("USB: EHCI: make ehci-spear a separate driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Tested-by: Alexis Lothoré <alexis.lothore@bootlin.com> # Dell XPS9320, ov01a10
-Link: https://patch.msgid.link/20241122094224.226773-1-stanislaw.gruszka@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Vitalii Mordan <mordan@ispras.ru>
+Acked-by: Alan Stern <stern@rowland.harvard.edu>
+Link: https://lore.kernel.org/r/20241114230310.432213-1-mordan@ispras.ru
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi.c |   13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ drivers/usb/host/ehci-spear.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/drivers/spi/spi.c
-+++ b/drivers/spi/spi.c
-@@ -397,6 +397,16 @@ static int spi_drv_probe(struct device *
- 			spi->irq = 0;
- 	}
+--- a/drivers/usb/host/ehci-spear.c
++++ b/drivers/usb/host/ehci-spear.c
+@@ -110,7 +110,9 @@ static int spear_ehci_hcd_drv_probe(stru
+ 	/* registers start at offset 0x0 */
+ 	hcd_to_ehci(hcd)->caps = hcd->regs;
  
-+	if (has_acpi_companion(dev) && spi->irq < 0) {
-+		struct acpi_device *adev = to_acpi_device_node(dev->fwnode);
-+
-+		spi->irq = acpi_dev_gpio_irq_get(adev, 0);
-+		if (spi->irq == -EPROBE_DEFER)
-+			return -EPROBE_DEFER;
-+		if (spi->irq < 0)
-+			spi->irq = 0;
-+	}
-+
- 	ret = dev_pm_domain_attach(dev, true);
- 	if (ret)
- 		return ret;
-@@ -2045,9 +2055,6 @@ static acpi_status acpi_register_spi_dev
- 	acpi_set_modalias(adev, acpi_device_hid(adev), spi->modalias,
- 			  sizeof(spi->modalias));
+-	clk_prepare_enable(sehci->clk);
++	retval = clk_prepare_enable(sehci->clk);
++	if (retval)
++		goto err_put_hcd;
+ 	retval = usb_add_hcd(hcd, irq, IRQF_SHARED);
+ 	if (retval)
+ 		goto err_stop_ehci;
+@@ -135,8 +137,7 @@ static int spear_ehci_hcd_drv_remove(str
  
--	if (spi->irq < 0)
--		spi->irq = acpi_dev_gpio_irq_get(adev, 0);
--
- 	acpi_device_set_enumerated(adev);
+ 	usb_remove_hcd(hcd);
  
- 	adev->power.flags.ignore_parent = true;
+-	if (sehci->clk)
+-		clk_disable_unprepare(sehci->clk);
++	clk_disable_unprepare(sehci->clk);
+ 	usb_put_hcd(hcd);
+ 
+ 	return 0;
 
 
