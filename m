@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C0A520967D;
-	Thu, 12 Dec 2024 17:23:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7337D13CA93;
+	Thu, 12 Dec 2024 17:23:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734024196; cv=none; b=NwNFN/9GqVQ1Zhi5T1dDbfUwj2ZVlDYU79Xjz9xX5agXJsovUSixxLti6Dsxv2dfIWPpSHUAPHZ0j6/2oiOW/xbkjduKAcG4F/hKccIFkcYPViYpkoQqFJvRmDf8gYtalBwL+/TBw5SjAfgjenRcUxDmCGet+pz3HqGoK7YIbro=
+	t=1734024199; cv=none; b=LiU0h0fPtP0aVFE1q6tUHITi0q6DQ+rlMb4GGDBky7nBXI52+m4kcsnaPTbLQepJxImoI49TcKxCqDsGO90da8cYJPT2+SoObyuvbYJnzr8Vl3RYnIpj7kEhk0D80t4vH4Z2ynX+d0dEz448LfKZrr8AxiYD5sau+HEq1hJX+cM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734024196; c=relaxed/simple;
-	bh=92ipmAz2kaG4MkcZ5ke5K31otMbZkYFUTJwNbs4Rt7Q=;
+	s=arc-20240116; t=1734024199; c=relaxed/simple;
+	bh=7ij68q00kIv8QSY6JtPJY85yWzq96oTmkLW+6iCNEbc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m70CYNYyyG9oDb0Hk5qMh4utvapQWiIICJImkRqKSD46Wh2cRdJY5Bi4q2MTtyl/LMr122XePOnYk7wI4hRZmO5MBLiVSbgvVlFxtBC/9kW3V0K2ZFdtezuZ4v+35p/jdwAZ/yEQ0rgjgR+PuZVZSE4RKLsrgUUmoW9GJUJjPpk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bd92fBZC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rYJ+vHZDC03RPwgaOWv+HBtA2eZ7nmpXTScUBrV1N7VJC2BZ9fGTEsMgHcgtUCQRsZtehRnIg7pTrY+4an+mkYfImZyP/cN8liSwOAqUFgHzUbH1p6d4fOJietKCSJAIFNtyZRpMvhfAoxZkfpAgGR5rYSNk3s8ZuBeK/UKhyDU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rc0xp1mS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bd92fBZC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2022C4CED0;
-	Thu, 12 Dec 2024 17:23:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rc0xp1mS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E01EAC4CEDE;
+	Thu, 12 Dec 2024 17:23:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734024196;
-	bh=92ipmAz2kaG4MkcZ5ke5K31otMbZkYFUTJwNbs4Rt7Q=;
+	s=korg; t=1734024199;
+	bh=7ij68q00kIv8QSY6JtPJY85yWzq96oTmkLW+6iCNEbc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bd92fBZCloiY2JGgMmBZP3xKo40Vgtafh5GbMjxcejBfYzw/JsX1Wa0iEu7vBOelN
-	 20MiHt1G4TcA6E8VkeA75A2cCINqctCVhg2jPFFlENZeIv6VyR2p84ztT9wsdWmp51
-	 zOt3EGlL1uewxMCC/2vbpnbtGaICz51Wc3tppPJ4=
+	b=rc0xp1mSOrO5DZIiLCC/9KhW/a+RJlUMvKMNeH/RC7vA5m3kaKsPXhxoB89vOfhXf
+	 RqNX2NOKgs1oqfr6RMye0W/mzgzfhU5QYaMN3RX3rRfnN6rJ87KucEtlgX727EP6ih
+	 N/OF4/rt34rFOu24Ssi2N4EtXeBxb8iZTKSUpKIo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandru Ardelean <alexandru.ardelean@analog.com>,
+	Nuno Sa <nuno.sa@analog.com>,
 	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 188/459] clk: axi-clkgen: use devm_platform_ioremap_resource() short-hand
-Date: Thu, 12 Dec 2024 15:58:46 +0100
-Message-ID: <20241212144300.984725123@linuxfoundation.org>
+Subject: [PATCH 5.10 189/459] clk: clk-axi-clkgen: make sure to enable the AXI bus clock
+Date: Thu, 12 Dec 2024 15:58:47 +0100
+Message-ID: <20241212144301.024238973@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144253.511169641@linuxfoundation.org>
 References: <20241212144253.511169641@linuxfoundation.org>
@@ -51,45 +51,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexandru Ardelean <alexandru.ardelean@analog.com>
+From: Nuno Sa <nuno.sa@analog.com>
 
-[ Upstream commit 6ba7ea7630fb03c1ce01508bdf89f5bb39b38e54 ]
+[ Upstream commit c64ef7e4851d1a9abbb7f7833e4936973ac5ba79 ]
 
-No major functional change. Noticed while checking the driver code that
-this could be used.
-Saves two lines.
+In order to access the registers of the HW, we need to make sure that
+the AXI bus clock is enabled. Hence let's increase the number of clocks
+by one.
 
-Signed-off-by: Alexandru Ardelean <alexandru.ardelean@analog.com>
-Link: https://lore.kernel.org/r/20210201151245.21845-5-alexandru.ardelean@analog.com
+In order to keep backward compatibility and make sure old DTs still work
+we check if clock-names is available or not. If it is, then we can
+disambiguate between really having the AXI clock or a parent clock and
+so we can enable the bus clock. If not, we fallback to what was done
+before and don't explicitly enable the AXI bus clock.
+
+Note that if clock-names is given, the axi clock must be the last one in
+the phandle array (also enforced in the DT bindings) so that we can reuse
+as much code as possible.
+
+Fixes: 0e646c52cf0e ("clk: Add axi-clkgen driver")
+Signed-off-by: Nuno Sa <nuno.sa@analog.com>
+Link: https://lore.kernel.org/r/20241029-axi-clkgen-fix-axiclk-v2-2-bc5e0733ad76@analog.com
 Signed-off-by: Stephen Boyd <sboyd@kernel.org>
-Stable-dep-of: c64ef7e4851d ("clk: clk-axi-clkgen: make sure to enable the AXI bus clock")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/clk-axi-clkgen.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/clk/clk-axi-clkgen.c | 22 ++++++++++++++++++++--
+ 1 file changed, 20 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/clk/clk-axi-clkgen.c b/drivers/clk/clk-axi-clkgen.c
-index 14d803e6af623..1aa3d9fd8d0ac 100644
+index 1aa3d9fd8d0ac..3e2cf1fad262e 100644
 --- a/drivers/clk/clk-axi-clkgen.c
 +++ b/drivers/clk/clk-axi-clkgen.c
-@@ -497,7 +497,6 @@ static int axi_clkgen_probe(struct platform_device *pdev)
+@@ -7,6 +7,7 @@
+  */
+ 
+ #include <linux/platform_device.h>
++#include <linux/clk.h>
+ #include <linux/clk-provider.h>
+ #include <linux/slab.h>
+ #include <linux/io.h>
+@@ -497,6 +498,7 @@ static int axi_clkgen_probe(struct platform_device *pdev)
  	struct clk_init_data init;
  	const char *parent_names[2];
  	const char *clk_name;
--	struct resource *mem;
++	struct clk *axi_clk;
  	unsigned int i;
  	int ret;
  
-@@ -512,8 +511,7 @@ static int axi_clkgen_probe(struct platform_device *pdev)
- 	if (!axi_clkgen)
- 		return -ENOMEM;
- 
--	mem = platform_get_resource(pdev, IORESOURCE_MEM, 0);
--	axi_clkgen->base = devm_ioremap_resource(&pdev->dev, mem);
-+	axi_clkgen->base = devm_platform_ioremap_resource(pdev, 0);
- 	if (IS_ERR(axi_clkgen->base))
+@@ -516,8 +518,24 @@ static int axi_clkgen_probe(struct platform_device *pdev)
  		return PTR_ERR(axi_clkgen->base);
  
+ 	init.num_parents = of_clk_get_parent_count(pdev->dev.of_node);
+-	if (init.num_parents < 1 || init.num_parents > 2)
+-		return -EINVAL;
++
++	axi_clk = devm_clk_get_enabled(&pdev->dev, "s_axi_aclk");
++	if (!IS_ERR(axi_clk)) {
++		if (init.num_parents < 2 || init.num_parents > 3)
++			return -EINVAL;
++
++		init.num_parents -= 1;
++	} else {
++		/*
++		 * Legacy... So that old DTs which do not have clock-names still
++		 * work. In this case we don't explicitly enable the AXI bus
++		 * clock.
++		 */
++		if (PTR_ERR(axi_clk) != -ENOENT)
++			return PTR_ERR(axi_clk);
++		if (init.num_parents < 1 || init.num_parents > 2)
++			return -EINVAL;
++	}
+ 
+ 	for (i = 0; i < init.num_parents; i++) {
+ 		parent_names[i] = of_clk_get_parent_name(pdev->dev.of_node, i);
 -- 
 2.43.0
 
