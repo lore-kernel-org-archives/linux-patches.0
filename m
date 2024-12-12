@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCDDB223E7B;
-	Thu, 12 Dec 2024 17:46:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5D2122D4D5;
+	Thu, 12 Dec 2024 17:46:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734025573; cv=none; b=a8CEkP+3nq5B2Zave4kI6/tcWhB/DUocfK9PARvt1IjV/0CR6eTFx28Xa7K+Acrr4okVIx0nEfHeKAUODLY4ruzh8tLoLtzr+olPG/0dDpZqmOaqOqKj1lWqmv3u/Ca4Eu7/3tObWIaqz/55LTJpHajiDoDURjHYRXzb21MheUY=
+	t=1734025576; cv=none; b=M69RMx6Y2m3cJt6z9ilmzF0RUQy4V8A8v6vIee4rKqEknV/ThM4Nl1CBAt/YbsxorCLqv6vMnj7pkytmVkjUOUKFv/EyliBK2+6Ykup0XJ63UasAnKemvFk9O9VVV+vS9jDWiCgG3HxbuTjRMgfp7NDl0ivExs4kFI76uElqRIM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734025573; c=relaxed/simple;
-	bh=pIS3DmfGM29tnHRWBNaAg4rKx9RUvp++/0I0tac6L8E=;
+	s=arc-20240116; t=1734025576; c=relaxed/simple;
+	bh=FbaKsw368hf49xRtaKgZNoY9C8ZwHfdqiVfyBFHHzPg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i9dJBkHgCwPK4J8v0qwyuMMc7MEd18yN6J/wsHcrAOl08fJBjt55Mn5cS+68j2De+scZ0/d2G4YXKbtOu1mZ39kyN7PYieOOOGZamFozn8pN1Y2UkEOSWsF+Ve/aN+i1pPV1pq1ECR6yr0W4AIZLxmlCUZ6OvW1mPrWpKl3I61g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=duddlB9Z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=L64Q7tgYypHEh15B2lfOQzW5LMctmcHeIX2F+ERQWX8ZBOx9ZBkmHTY+7ApBPEOpYFuXRyh3nHO2WbSm9d8BrqEHmH9Toy7miW/oIw524wDHVHzJg2LzTF7XqQ7L+2EY5miWF00hw9pL9TMLFaUgSoY6t6ekYAPuxwUaBlit294=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JEq7kMqx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="duddlB9Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57904C4CECE;
-	Thu, 12 Dec 2024 17:46:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JEq7kMqx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C496C4CECE;
+	Thu, 12 Dec 2024 17:46:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734025573;
-	bh=pIS3DmfGM29tnHRWBNaAg4rKx9RUvp++/0I0tac6L8E=;
+	s=korg; t=1734025576;
+	bh=FbaKsw368hf49xRtaKgZNoY9C8ZwHfdqiVfyBFHHzPg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=duddlB9Z85uiZKGFl4v5Mf5zjjxjX5Nz/mKECiWsWMi59peHbupglI8BmzA863m03
-	 VLquTNiX0I1hdQ6c2KveIbpQSE4Zro2MxvnUFXfWyvQU+YcZ7U+QiJlDzigGSywTpm
-	 FXkBPhgJFNh5PZzkYvdSkR30RLe/UuDdU1397R6U=
+	b=JEq7kMqxRbQFrUu85/7NdNg0w348ixbBub6ZFiLW5ZPiYpXnCFzaqvMfru+YgTIFS
+	 gbCObFYte7x/3DchQis5kr9MncRLOJ2yW8Md2c7ayMpZIuVYXbfOZm3MPY9745zxI4
+	 kGD6iTdDCTRaREeeIpkB7pEPGCp7E9sQNuKvOuuY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinjie Ruan <ruanjinjie@huawei.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 5.4 207/321] media: gspca: ov534-ov772x: Fix off-by-one error in set_frame_rate()
-Date: Thu, 12 Dec 2024 16:02:05 +0100
-Message-ID: <20241212144238.159458226@linuxfoundation.org>
+	Yang Erkun <yangerkun@huawei.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 5.4 216/321] nfsd: make sure exp active before svc_export_show
+Date: Thu, 12 Dec 2024 16:02:14 +0100
+Message-ID: <20241212144238.509916618@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144229.291682835@linuxfoundation.org>
 References: <20241212144229.291682835@linuxfoundation.org>
@@ -51,37 +51,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinjie Ruan <ruanjinjie@huawei.com>
+From: Yang Erkun <yangerkun@huawei.com>
 
-commit d2842dec577900031826dc44e9bf0c66416d7173 upstream.
+commit be8f982c369c965faffa198b46060f8853e0f1f0 upstream.
 
-In set_frame_rate(), select a rate in rate_0 or rate_1 by checking
-sd->frame_rate >= r->fps in a loop, but the loop condition terminates when
-the index reaches zero, which fails to check the last elememt in rate_0 or
-rate_1.
+The function `e_show` was called with protection from RCU. This only
+ensures that `exp` will not be freed. Therefore, the reference count for
+`exp` can drop to zero, which will trigger a refcount use-after-free
+warning when `exp_get` is called. To resolve this issue, use
+`cache_get_rcu` to ensure that `exp` remains active.
 
-Check for >= 0 so that the last one in rate_0 or rate_1 is also checked.
+------------[ cut here ]------------
+refcount_t: addition on 0; use-after-free.
+WARNING: CPU: 3 PID: 819 at lib/refcount.c:25
+refcount_warn_saturate+0xb1/0x120
+CPU: 3 UID: 0 PID: 819 Comm: cat Not tainted 6.12.0-rc3+ #1
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS
+1.16.1-2.fc37 04/01/2014
+RIP: 0010:refcount_warn_saturate+0xb1/0x120
+...
+Call Trace:
+ <TASK>
+ e_show+0x20b/0x230 [nfsd]
+ seq_read_iter+0x589/0x770
+ seq_read+0x1e5/0x270
+ vfs_read+0x125/0x530
+ ksys_read+0xc1/0x160
+ do_syscall_64+0x5f/0x170
+ entry_SYSCALL_64_after_hwframe+0x76/0x7e
 
-Fixes: 189d92af707e ("V4L/DVB (13422): gspca - ov534: ov772x changes from Richard Kaswy.")
-Cc: stable@vger.kernel.org
-Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+Fixes: bf18f163e89c ("NFSD: Using exp_get for export getting")
+Cc: stable@vger.kernel.org # 4.20+
+Signed-off-by: Yang Erkun <yangerkun@huawei.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/usb/gspca/ov534.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/nfsd/export.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/media/usb/gspca/ov534.c
-+++ b/drivers/media/usb/gspca/ov534.c
-@@ -847,7 +847,7 @@ static void set_frame_rate(struct gspca_
- 		r = rate_1;
- 		i = ARRAY_SIZE(rate_1);
+--- a/fs/nfsd/export.c
++++ b/fs/nfsd/export.c
+@@ -1223,9 +1223,12 @@ static int e_show(struct seq_file *m, vo
+ 		return 0;
  	}
--	while (--i > 0) {
-+	while (--i >= 0) {
- 		if (sd->frame_rate >= r->fps)
- 			break;
- 		r++;
+ 
+-	exp_get(exp);
++	if (!cache_get_rcu(&exp->h))
++		return 0;
++
+ 	if (cache_check(cd, &exp->h, NULL))
+ 		return 0;
++
+ 	exp_put(exp);
+ 	return svc_export_show(m, cd, cp);
+ }
 
 
