@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 960E5215764;
-	Thu, 12 Dec 2024 17:28:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80602215764;
+	Thu, 12 Dec 2024 17:28:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734024505; cv=none; b=lxhk4a1nxPdvzlG8/KiyoaMrO16Tjr250TKd53xgLws9v76lnCAQtowXK0lxOESn10VrXRT7U11tkQjtmuJopCBRpsaUHvPukwT7sUIi1/EA9QZ50K633fBY8uqYyuCfRkmqMYRjTyA5Qf+/VM76YT+WIofZWHPOUUYVAlQgXZ0=
+	t=1734024508; cv=none; b=eMM9/0bX8wqUynm0EHV1tAyPWRD49/d38OSoVv0FFrFeWB/YnEs9DTvSiYbt3jeV/6lYTMAXAM0N/nOROz5k7aaf7MUdDyc3nDhKEh0+wpR5C1LOQ6q99grFYTunbuYlCUlke9KNT0cv8+iwHoCWLdIAhIiCv7PGZdRnOHEBD/w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734024505; c=relaxed/simple;
-	bh=P15TW9F4MboHJKCX2mWs0AukkMqV88d/Q0OHfdN/9DA=;
+	s=arc-20240116; t=1734024508; c=relaxed/simple;
+	bh=BesJ8ZbA2EZlLxV+vAhzuzoaGtp8QrRaiTcxbPWDwLA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qGVEKRqiee4mskq0MyF6dneFJavf9fTSwNrKUGj0r74YJvbgSl4XjulkxsEwI0lWWK9IYpGuSACOPqqjuMPSHrXeFNbFv3B7+kxyj1uWLDjnVWpp4+X6wPf9RxzL2uhfLQSOssngXIXNzSy5ww8EAY+x20utoOK7f67iL+o2dN8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lorZ29PP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CFTngVLbtavwJDQT5uxgsrxQDekfC3Vk+//valY9j5XATnoUx/ftGq5IsQ7WdL/eOafaWrH02x/Piuddz2StMRag4L1yNoYVvvcYuZCgw/5BPzfe2HWqFHDNfvYFVDXjSwB8nypKTeRbVuBxrZcEyCmvXEuRPpnSRXIZS/pzupM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q8mCYd+l; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lorZ29PP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10577C4CED0;
-	Thu, 12 Dec 2024 17:28:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q8mCYd+l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 071AEC4CED0;
+	Thu, 12 Dec 2024 17:28:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734024505;
-	bh=P15TW9F4MboHJKCX2mWs0AukkMqV88d/Q0OHfdN/9DA=;
+	s=korg; t=1734024508;
+	bh=BesJ8ZbA2EZlLxV+vAhzuzoaGtp8QrRaiTcxbPWDwLA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lorZ29PPTO2CCuH1jrIhJt2bSLONwjlEav57dQmbHWeG0t/9C91uTnVSDjJqRjDyI
-	 2/EVxjMbqiAIWHBLPCynyxVGSgehqzhY9pp+jzRDGJwGbMEB7tQDpHLGcPvGQdlMfk
-	 aCrXPQOz/hCH9/J4h1uiUUjm2kifVcNF/CS7owTI=
+	b=Q8mCYd+lC6mUYu4Wm5xWNDNg73hCX6O6zC+aCrWCSMsOUnkmh1zsxutVcNfND7/4J
+	 R9zZ0ZQ+N3HzjSRVmrVCafz2c3J+yDO4r0zyM2mQ/D+aUfSsd+LrPLiK2mU8YevCiC
+	 +LP+Os6TNCLswH5f84J1n9Wjof1dj5hRjCYp5xcY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tiwei Bie <tiwei.btw@antgroup.com>,
-	Johannes Berg <johannes.berg@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 288/459] um: Fix potential integer overflow during physmem setup
-Date: Thu, 12 Dec 2024 16:00:26 +0100
-Message-ID: <20241212144305.010280215@linuxfoundation.org>
+	Kailang Yang <kailang@realtek.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 5.10 279/459] ALSA: hda/realtek: Set PCBeep to default value for ALC274
+Date: Thu, 12 Dec 2024 16:00:17 +0100
+Message-ID: <20241212144304.648642646@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144253.511169641@linuxfoundation.org>
 References: <20241212144253.511169641@linuxfoundation.org>
@@ -51,50 +50,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tiwei Bie <tiwei.btw@antgroup.com>
+From: Kailang Yang <kailang@realtek.com>
 
-[ Upstream commit a98b7761f697e590ed5d610d87fa12be66f23419 ]
+commit 155699ccab7c78cbba69798242b68bc8ac66d5d2 upstream.
 
-This issue happens when the real map size is greater than LONG_MAX,
-which can be easily triggered on UML/i386.
+BIOS Enable PC beep path cause pop noise via speaker during boot time.
+Set to default value from driver will solve the issue.
 
-Fixes: fe205bdd1321 ("um: Print minimum physical memory requirement")
-Signed-off-by: Tiwei Bie <tiwei.btw@antgroup.com>
-Link: https://patch.msgid.link/20240916045950.508910-3-tiwei.btw@antgroup.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Kailang Yang <kailang@realtek.com>
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/2721bb57e20a44c3826c473e933f9105@realtek.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/um/kernel/physmem.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ sound/pci/hda/patch_realtek.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/um/kernel/physmem.c b/arch/um/kernel/physmem.c
-index e7c7b53a1435b..87b51089b0616 100644
---- a/arch/um/kernel/physmem.c
-+++ b/arch/um/kernel/physmem.c
-@@ -80,10 +80,10 @@ void __init setup_physmem(unsigned long start, unsigned long reserve_end,
- 			  unsigned long len, unsigned long long highmem)
- {
- 	unsigned long reserve = reserve_end - start;
--	long map_size = len - reserve;
-+	unsigned long map_size = len - reserve;
- 	int err;
- 
--	if(map_size <= 0) {
-+	if (len <= reserve) {
- 		os_warn("Too few physical memory! Needed=%lu, given=%lu\n",
- 			reserve, len);
- 		exit(1);
-@@ -94,7 +94,7 @@ void __init setup_physmem(unsigned long start, unsigned long reserve_end,
- 	err = os_map_memory((void *) reserve_end, physmem_fd, reserve,
- 			    map_size, 1, 1, 1);
- 	if (err < 0) {
--		os_warn("setup_physmem - mapping %ld bytes of memory at 0x%p "
-+		os_warn("setup_physmem - mapping %lu bytes of memory at 0x%p "
- 			"failed - errno = %d\n", map_size,
- 			(void *) reserve_end, err);
- 		exit(1);
--- 
-2.43.0
-
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -464,6 +464,8 @@ static void alc_fill_eapd_coef(struct hd
+ 		break;
+ 	case 0x10ec0234:
+ 	case 0x10ec0274:
++		alc_write_coef_idx(codec, 0x6e, 0x0c25);
++		fallthrough;
+ 	case 0x10ec0294:
+ 	case 0x10ec0700:
+ 	case 0x10ec0701:
 
 
