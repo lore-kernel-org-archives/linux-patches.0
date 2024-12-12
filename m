@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1993022333E;
-	Thu, 12 Dec 2024 17:09:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDDDF223E69;
+	Thu, 12 Dec 2024 17:09:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734023353; cv=none; b=QKfSdlE1t4C/bmIR+6JCQh+Vki4HANRPYJCNGLc+apppvGjJWMlZG04bdxC5EbnU9BNI9hItbgA9XnJSWIHyPGog8MSgibgfyzDo+9KImLxkKn5cyHhi30zD4nRSuAZnAE7uqCPV4guXPIjaOq81gr7UFS1KTe1e0tVRTK09syc=
+	t=1734023356; cv=none; b=EduhbYliOiQQ5sHFWNuewDEPwJL9Ld+a51OzuazbYksU5odhlBeQhNq7RGLmzWCzrR/dLWdSgz+FznK4O74nU864SsmuqGcyK8rhwZhvXgnVijnbJMBwJX62u0nj4l+fza1Ge1PR6ErUu5rTYUWtxuWb2Va6WQCjE/cLVWaEPv8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734023353; c=relaxed/simple;
-	bh=SPjHnO4De2tZOPS/e/IKcnhlZ6YyzrQUqgIICWl+sNA=;
+	s=arc-20240116; t=1734023356; c=relaxed/simple;
+	bh=JHqdMTP68qDUsCSDbKY7yHKdKO8tyAYdnbToAZlyFqA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iw+PAl9/dYnO9dzyDVIZ6QPPUIuzlKXJcmdf5Vo7UbMOKoxnJww20pB0RSe47Bx+r44x2Aafh+bTiw7guT85dGPr3iSxEUaGDPkiW0mD9aJKquIjjkdfvr56O5O02jrb4HiPDf5ByAxDa7syXkA2VDZW0q2VgalaXNwQFiCJGf4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O6evQ3IC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Dd/VW87hb8/V8D2qSQQ6G93dBYHE7Ln69KDH3VDuKK8FgW+FYcvGP2rVPYmm/BKNJWOJK/wQPNVSbRlkPBoHNSNMcY2dQgwZ8uOLc/fnn2sAZhSE6cb1rIxPMjKrzKd7RFso/fGYM4V4hXAicAPfgLGKvXLaQyFH2C7RoBNp8pc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W7q98cTn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O6evQ3IC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90BC2C4CECE;
-	Thu, 12 Dec 2024 17:09:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W7q98cTn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79127C4CECE;
+	Thu, 12 Dec 2024 17:09:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734023353;
-	bh=SPjHnO4De2tZOPS/e/IKcnhlZ6YyzrQUqgIICWl+sNA=;
+	s=korg; t=1734023355;
+	bh=JHqdMTP68qDUsCSDbKY7yHKdKO8tyAYdnbToAZlyFqA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O6evQ3ICdLHs5etGv/lOLpm55PqW1h89np2Iju+M+Tyz7j4jCQxp17je9bO+QSoeG
-	 eHZiRWiOa42l5eqL8rksb5rDNeplhrAJB1Ns1HkJPeF9uk+5H9S7+1CXcNENAjTTPL
-	 YNLnRaEcEj2oDT80jL1AsYE5WzTRiu8cC+jUhKSI=
+	b=W7q98cTnrUrxIrp424XXNH2LkLOO1FqXmwZNQQW0nxvQGGKwrQTrVxJQroQx+9LHv
+	 kcqRCaYogM7yv98hZkdG7ph553EgvZzzcAgF1BzsgQilswabRpKq1f2cjTvNE/kq08
+	 msVsIQKREueXp6rL4ZVe4873B6K1ls2ROrfTKIug=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Norbert van Bolhuis <nvbolhuis@gmail.com>,
-	Kalle Valo <kvalo@kernel.org>,
+	syzbot+6ea290ba76d8c1eb1ac2@syzkaller.appspotmail.com,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 506/565] wifi: brcmfmac: Fix oops due to NULL pointer dereference in brcmf_sdiod_sglist_rw()
-Date: Thu, 12 Dec 2024 16:01:41 +0100
-Message-ID: <20241212144331.771772156@linuxfoundation.org>
+Subject: [PATCH 5.15 507/565] Bluetooth: hci_core: Fix not checking skb length on hci_acldata_packet
+Date: Thu, 12 Dec 2024 16:01:42 +0100
+Message-ID: <20241212144331.811553964@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144311.432886635@linuxfoundation.org>
 References: <20241212144311.432886635@linuxfoundation.org>
@@ -51,48 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Norbert van Bolhuis <nvbolhuis@gmail.com>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit 857282b819cbaa0675aaab1e7542e2c0579f52d7 ]
+[ Upstream commit 3fe288a8214e7dd784d1f9b7c9e448244d316b47 ]
 
-This patch fixes a NULL pointer dereference bug in brcmfmac that occurs
-when a high 'sd_sgentry_align' value applies (e.g. 512) and a lot of queued SKBs
-are sent from the pkt queue.
+This fixes not checking if skb really contains an ACL header otherwise
+the code may attempt to access some uninitilized/invalid memory past the
+valid skb->data.
 
-The problem is the number of entries in the pre-allocated sgtable, it is
-nents = max(rxglom_size, txglom_size) + max(rxglom_size, txglom_size) >> 4 + 1.
-Given the default [rt]xglom_size=32 it's actually 35 which is too small.
-Worst case, the pkt queue can end up with 64 SKBs. This occurs when a new SKB
-is added for each original SKB if tailroom isn't enough to hold tail_pad.
-At least one sg entry is needed for each SKB. So, eventually the "skb_queue_walk loop"
-in brcmf_sdiod_sglist_rw may run out of sg entries. This makes sg_next return
-NULL and this causes the oops.
-
-The patch sets nents to max(rxglom_size, txglom_size) * 2 to be able handle
-the worst-case.
-Btw. this requires only 64-35=29 * 16 (or 20 if CONFIG_NEED_SG_DMA_LENGTH) = 464
-additional bytes of memory.
-
-Signed-off-by: Norbert van Bolhuis <nvbolhuis@gmail.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://patch.msgid.link/20241107132903.13513-1-nvbolhuis@gmail.com
+Reported-by: syzbot+6ea290ba76d8c1eb1ac2@syzkaller.appspotmail.com
+Tested-by: syzbot+6ea290ba76d8c1eb1ac2@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=6ea290ba76d8c1eb1ac2
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/bluetooth/hci_core.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c
-index ac02244a6fdf1..16c46845566ef 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c
-@@ -770,7 +770,7 @@ void brcmf_sdiod_sgtable_alloc(struct brcmf_sdio_dev *sdiodev)
+diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
+index 7dff3f1a2a9eb..7ed5d6e47e4f3 100644
+--- a/net/bluetooth/hci_core.c
++++ b/net/bluetooth/hci_core.c
+@@ -4943,18 +4943,22 @@ static void hci_tx_work(struct work_struct *work)
+ /* ACL data packet */
+ static void hci_acldata_packet(struct hci_dev *hdev, struct sk_buff *skb)
+ {
+-	struct hci_acl_hdr *hdr = (void *) skb->data;
++	struct hci_acl_hdr *hdr;
+ 	struct hci_conn *conn;
+ 	__u16 handle, flags;
  
- 	nents = max_t(uint, BRCMF_DEFAULT_RXGLOM_SIZE,
- 		      sdiodev->settings->bus.sdio.txglomsz);
--	nents += (nents >> 4) + 1;
-+	nents *= 2;
+-	skb_pull(skb, HCI_ACL_HDR_SIZE);
++	hdr = skb_pull_data(skb, sizeof(*hdr));
++	if (!hdr) {
++		bt_dev_err(hdev, "ACL packet too small");
++		goto drop;
++	}
  
- 	WARN_ON(nents > sdiodev->max_segment_count);
+ 	handle = __le16_to_cpu(hdr->handle);
+ 	flags  = hci_flags(handle);
+ 	handle = hci_handle(handle);
+ 
+-	BT_DBG("%s len %d handle 0x%4.4x flags 0x%4.4x", hdev->name, skb->len,
+-	       handle, flags);
++	bt_dev_dbg(hdev, "len %d handle 0x%4.4x flags 0x%4.4x", skb->len,
++		   handle, flags);
+ 
+ 	hdev->stat.acl_rx++;
+ 
+@@ -4973,6 +4977,7 @@ static void hci_acldata_packet(struct hci_dev *hdev, struct sk_buff *skb)
+ 			   handle);
+ 	}
+ 
++drop:
+ 	kfree_skb(skb);
+ }
  
 -- 
 2.43.0
