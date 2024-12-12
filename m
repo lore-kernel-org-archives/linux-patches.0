@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B108214227;
-	Thu, 12 Dec 2024 17:12:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBF112210E3;
+	Thu, 12 Dec 2024 17:12:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734023564; cv=none; b=NR6pypeBICiHqpyJ8GnCV1NGPUf04KcLLhdBSElTLmihCUXz2frdzWSr/wRoVWFTQfFONJyg0J9JTXWh1sGEIAd7e0SsA3UZOpCDcmRs0+Fq1ATk8n1cHUa9M5gEIrdbqn2DyUg9ctkLLgq68J7rOCYSTZrlqLUDT89S791sq2U=
+	t=1734023566; cv=none; b=p4ieFvVRe8d6R2kSzN7Hij9AzFWXRSdEexLoL3Hj0lMFQDX4NascxtgULqLQ8A7wbVT6LK54yJq75vkxKSysgmzSuS9lCiwMNo9kcZAZlBpq3C7kkAMKWWXkU+uydPZHFOj+NJJIpJP/bLrO7PsICNTaJrA3D5j7CAKBu9TR6lA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734023564; c=relaxed/simple;
-	bh=UXTPZ/pFaabT6l06MlbQ0kJ9GAuIwVgBFELBX5TSUxA=;
+	s=arc-20240116; t=1734023566; c=relaxed/simple;
+	bh=T13E6lUa/mRPR5ZG4ox9E5HAIM3BnaLEgXN4rTR2IdQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ptPYOp/FXUcnPwG+sY3j1mXNaoSJC0WD4qvZD0P3x5MZbFewDlvQBZXrkWmf/PWQAZtoJgwBRAcIp1C1WIt9Eg0e5AK5Ouwqyivr+is7YysC0kRkL9nXCdJpEEcvW7kPAdmrRJu2Sh9HQJded3GSGqtu2HKuqYsJWTSCLQAJyc4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tiRPZi4n; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=X1ZP4GIr0QY23c3GalQx/HGfpTufHS+suKBurS67LsMTsBzaw1yVAwSNZtm87EAdBltyDi2/8N/KUv4xP6SdkrS1kJRN+SrZP8bx0pjl8R6amqaOtfBvDusuC4xs9llLobGv110/SLTjR1Nu1eXMnZW+l61mZaggoCVqtOhBidE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ne9mxIOe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tiRPZi4n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B519C4CED4;
-	Thu, 12 Dec 2024 17:12:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ne9mxIOe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62534C4CED0;
+	Thu, 12 Dec 2024 17:12:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734023563;
-	bh=UXTPZ/pFaabT6l06MlbQ0kJ9GAuIwVgBFELBX5TSUxA=;
+	s=korg; t=1734023566;
+	bh=T13E6lUa/mRPR5ZG4ox9E5HAIM3BnaLEgXN4rTR2IdQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tiRPZi4nbqJrGP+R5edcLIQXP3SyeiZqgbXuv0dipwryBygsZmQZX+PEDANsZllem
-	 +8MKXoZiMc2BYXAvvNLd4IWdZtMrtHDx1kMc2oGpYF8aXLf/PfHlCdK1kSo78tid1E
-	 QLDvD9hL8Vuqc6SVnPwbYPYQwXV+OBej6AC99VJc=
+	b=Ne9mxIOeLjAY8pg5cNSHvzkg9T/Dtlyfh2OyO3RkNP1Z3VtqxVn/DVI2yV5Syv31Q
+	 yD+TG0FKe+K4gF8/X3jxE9uPjNEMpspV9d+VBoxg1dtZwr9DQwf5PTfoB4sZhsKOkw
+	 O5bzmuhwT4kBLt+TjNRfdNwf0T7rXOfzp/R8zDSU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ondrej Jirman <megi@xff.cz>,
-	Andrey Skvortsov <andrej.skvortzov@gmail.com>,
-	Dragan Simic <dsimic@manjaro.org>,
-	Chen-Yu Tsai <wens@csie.org>
-Subject: [PATCH 5.10 001/459] arm64: dts: allwinner: pinephone: Add mount matrix to accelerometer
-Date: Thu, 12 Dec 2024 15:55:39 +0100
-Message-ID: <20241212144253.577185836@linuxfoundation.org>
+	=?UTF-8?q?Michal=20Vok=C3=A1=C4=8D?= <michal.vokac@ysoft.com>,
+	Lee Jones <lee@kernel.org>
+Subject: [PATCH 5.10 010/459] leds: lp55xx: Remove redundant test for invalid channel number
+Date: Thu, 12 Dec 2024 15:55:48 +0100
+Message-ID: <20241212144253.933033973@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144253.511169641@linuxfoundation.org>
 References: <20241212144253.511169641@linuxfoundation.org>
@@ -46,51 +44,58 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dragan Simic <dsimic@manjaro.org>
+From: Michal Vokáč <michal.vokac@ysoft.com>
 
-commit 2496b2aaacf137250f4ca449f465e2cadaabb0e8 upstream.
+commit 09b1ef9813a0742674f7efe26104403ca94a1b4a upstream.
 
-The way InvenSense MPU-6050 accelerometer is mounted on the user-facing side
-of the Pine64 PinePhone mainboard, which makes it rotated 90 degrees counter-
-clockwise, [1] requires the accelerometer's x- and y-axis to be swapped, and
-the direction of the accelerometer's y-axis to be inverted.
+Since commit 92a81562e695 ("leds: lp55xx: Add multicolor framework
+support to lp55xx") there are two subsequent tests if the chan_nr
+(reg property) is in valid range. One in the lp55xx_init_led()
+function and one in the lp55xx_parse_common_child() function that
+was added with the mentioned commit.
 
-Rectify this by adding a mount-matrix to the accelerometer definition in the
-Pine64 PinePhone dtsi file.
+There are two issues with that.
 
-[1] https://files.pine64.org/doc/PinePhone/PinePhone%20mainboard%20bottom%20placement%20v1.1%2020191031.pdf
+First is in the lp55xx_parse_common_child() function where the reg
+property is tested right after it is read from the device tree.
+Test for the upper range is not correct though. Valid reg values are
+0 to (max_channel - 1) so it should be >=.
 
-Fixes: 91f480d40942 ("arm64: dts: allwinner: Add initial support for Pine64 PinePhone")
+Second issue is that in case the parsed value is out of the range
+the probe just fails and no error message is shown as the code never
+reaches the second test that prints and error message.
+
+Remove the test form lp55xx_parse_common_child() function completely
+and keep the one in lp55xx_init_led() function to deal with it.
+
+Fixes: 92a81562e695 ("leds: lp55xx: Add multicolor framework support to lp55xx")
 Cc: stable@vger.kernel.org
-Suggested-by: Ondrej Jirman <megi@xff.cz>
-Suggested-by: Andrey Skvortsov <andrej.skvortzov@gmail.com>
-Signed-off-by: Dragan Simic <dsimic@manjaro.org>
-Reviewed-by: Andrey Skvortsov <andrej.skvortzov@gmail.com>
-Link: https://patch.msgid.link/129f0c754d071cca1db5d207d9d4a7bd9831dff7.1726773282.git.dsimic@manjaro.org
-[wens@csie.org: Replaced Helped-by with Suggested-by]
-Signed-off-by: Chen-Yu Tsai <wens@csie.org>
+Signed-off-by: Michal Vokáč <michal.vokac@ysoft.com>
+Link: https://lore.kernel.org/r/20241017150812.3563629-1-michal.vokac@ysoft.com
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/allwinner/sun50i-a64-pinephone.dtsi |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/leds/leds-lp55xx-common.c |    3 ---
+ 1 file changed, 3 deletions(-)
 
---- a/arch/arm64/boot/dts/allwinner/sun50i-a64-pinephone.dtsi
-+++ b/arch/arm64/boot/dts/allwinner/sun50i-a64-pinephone.dtsi
-@@ -157,6 +157,9 @@
- 		interrupts = <7 5 IRQ_TYPE_EDGE_RISING>; /* PH5 */
- 		vdd-supply = <&reg_dldo1>;
- 		vddio-supply = <&reg_dldo1>;
-+		mount-matrix = "0", "1", "0",
-+			       "-1", "0", "0",
-+			       "0", "0", "1";
- 	};
- };
+--- a/drivers/leds/leds-lp55xx-common.c
++++ b/drivers/leds/leds-lp55xx-common.c
+@@ -578,9 +578,6 @@ static int lp55xx_parse_common_child(str
+ 	if (ret)
+ 		return ret;
+ 
+-	if (*chan_nr < 0 || *chan_nr > cfg->max_channel)
+-		return -EINVAL;
+-
+ 	return 0;
+ }
  
 
 
