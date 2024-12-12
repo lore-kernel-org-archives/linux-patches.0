@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D16213CA93;
-	Thu, 12 Dec 2024 17:23:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83B51211493;
+	Thu, 12 Dec 2024 17:23:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734024219; cv=none; b=g+10rHl3PH09I3ndtkIJH/PshXVh1DyGFNkm3SVUxhP13DeVXsJ+XajtPsl5aUzXqo7IeStOoczQBE1ktDLafh9Emz7BP+Z34qewPdzXqxY54Qn+E/4uIWsth3IH1dlFEkiGsi0nkZe0NYQ74xqITr1WWSgZD6zI6wpk6rKtJgw=
+	t=1734024222; cv=none; b=Yu103BG0cNxs30LsrbDRL2GeDzWNVJDYLqJX6aWIN8YwX3JjYODuvzu3ic8F87KCmzQY2gd/J5BjuT6Xyw1ikXI3zloObg4E3yh2DPjDiBXjHGs6pj2qFKnJ6FvOk4Jzq88T5yOD28MEbY60xv8g4LVjEtngVsR49dljgJNA64s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734024219; c=relaxed/simple;
-	bh=E/KKvT2K3OO6vKa/5Wc2WVyLIcjee/I+A2Pe5x3Nu0s=;
+	s=arc-20240116; t=1734024222; c=relaxed/simple;
+	bh=HAImLJBg+x9KZW95FwKkPr64WlE0DTsEkACqdAXXjx8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=sdeklWyZGs9NAFAHkGLCGlrHI7J6DK8gUI20y9cGOf/xaSLghJdlIHd1u4+ue7pJ7Y3+FwQpt+7HGtMgjpkWq9GcIJWwDYO1YRTkYwGZQVULT8FZgpawEzRV0T3JYG0OmaFIL21z+L5xowSRE74jnaRm9WUlUb0b3axz2p36D/A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jzkacX0H; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Lnf8fLzqCnwW6MCg8lel80lvBL/DA0OlkOQ94yGHwmhBt0YeDq+4HjHkvYbMC1CUBQJeqDCLuYpQi9S4K7/ktCP6D2qGgnNGmVbMiv5fATkEflGDGsV6NGVevop7MOfZIyusoObqdTwUXtVYaNraE3d1F0FPysIy6p8NRjV56y8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jttF14y3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jzkacX0H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE852C4CECE;
-	Thu, 12 Dec 2024 17:23:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jttF14y3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 054AFC4CECE;
+	Thu, 12 Dec 2024 17:23:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734024219;
-	bh=E/KKvT2K3OO6vKa/5Wc2WVyLIcjee/I+A2Pe5x3Nu0s=;
+	s=korg; t=1734024222;
+	bh=HAImLJBg+x9KZW95FwKkPr64WlE0DTsEkACqdAXXjx8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jzkacX0HN2riQlnF0M8qrvYZZZJwSYEm9qCwMwQJqLqIPBi9Xi9jAEWBrNFBrQfdI
-	 3WeAdmQUwsgS7NSIAkF++xzt/bUab9atxfgATRu6YbyFMv2P28ACMLAGjwfrCbwwOD
-	 QjtTi7yoo/ev04/S/tMSv7Rou5f5/c1zpcaCm51U=
+	b=jttF14y34ncytK/Aklp6L4smhUbD74yK4wGJHEzcRwuky04wq/Sod6sKryWAy372O
+	 eVYqgdrQ+sk5N/sVIqMnYEHYyPa50GOBP+GbSL9gnFDqaP52r0feyXwCHsWYDnkFjV
+	 lUw+6u6gphCS/xVoez6hIFGv4Ag5/9KUZnzY/mww=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Cs=C3=B3k=C3=A1s,
-	=20Bence?= <csokas.bence@prolan.hu>,
-	Alexander Dahl <ada@thorsis.com>,
-	Mark Brown <broonie@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Alexander Lobakin <alobakin@pm.me>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 225/459] spi: atmel-quadspi: Fix register name in verbose logging function
-Date: Thu, 12 Dec 2024 15:59:23 +0100
-Message-ID: <20241212144302.457625723@linuxfoundation.org>
+Subject: [PATCH 5.10 226/459] net: introduce a netdev feature for UDP GRO forwarding
+Date: Thu, 12 Dec 2024 15:59:24 +0100
+Message-ID: <20241212144302.498434245@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144253.511169641@linuxfoundation.org>
 References: <20241212144253.511169641@linuxfoundation.org>
@@ -47,45 +46,71 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Csókás, Bence <csokas.bence@prolan.hu>
+From: Alexander Lobakin <alobakin@pm.me>
 
-[ Upstream commit 2ac40e6d0ccdd93031f8b1af61b0fe5cdd704923 ]
+[ Upstream commit 6f1c0ea133a6e4a193a7b285efe209664caeea43 ]
 
-`atmel_qspi_reg_name()` is used for pretty-printing register offsets
-for verbose logging of register accesses. However, due to a typo
-(likely a copy-paste error), QSPI_RD's offset prints as "MR", the
-name of the previous register. Fix this typo.
+Introduce a new netdev feature, NETIF_F_GRO_UDP_FWD, to allow user
+to turn UDP GRO on and off for forwarding.
+Defaults to off to not change current datapath.
 
-Fixes: c528ecfbef04 ("spi: atmel-quadspi: Add verbose debug facilities to monitor register accesses")
-Signed-off-by: Csókás, Bence <csokas.bence@prolan.hu>
-Reviewed-by: Alexander Dahl <ada@thorsis.com>
-Link: https://patch.msgid.link/20241122141302.2599636-1-csokas.bence@prolan.hu
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Suggested-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Alexander Lobakin <alobakin@pm.me>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 9cfb5e7f0ded ("net: hsr: fix hsr_init_sk() vs network/transport headers.")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/atmel-quadspi.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/linux/netdev_features.h | 4 +++-
+ net/ethtool/common.c            | 1 +
+ 2 files changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/spi/atmel-quadspi.c b/drivers/spi/atmel-quadspi.c
-index 8aa89d93db118..17217cc5e4052 100644
---- a/drivers/spi/atmel-quadspi.c
-+++ b/drivers/spi/atmel-quadspi.c
-@@ -182,7 +182,7 @@ static const char *atmel_qspi_reg_name(u32 offset, char *tmp, size_t sz)
- 	case QSPI_MR:
- 		return "MR";
- 	case QSPI_RD:
--		return "MR";
-+		return "RD";
- 	case QSPI_TD:
- 		return "TD";
- 	case QSPI_SR:
+diff --git a/include/linux/netdev_features.h b/include/linux/netdev_features.h
+index e2a92697a6638..7b7a7e4d81254 100644
+--- a/include/linux/netdev_features.h
++++ b/include/linux/netdev_features.h
+@@ -84,6 +84,7 @@ enum {
+ 	NETIF_F_GRO_FRAGLIST_BIT,	/* Fraglist GRO */
+ 
+ 	NETIF_F_HW_MACSEC_BIT,		/* Offload MACsec operations */
++	NETIF_F_GRO_UDP_FWD_BIT,	/* Allow UDP GRO for forwarding */
+ 
+ 	/*
+ 	 * Add your fresh new feature above and remember to update
+@@ -157,6 +158,7 @@ enum {
+ #define NETIF_F_GRO_FRAGLIST	__NETIF_F(GRO_FRAGLIST)
+ #define NETIF_F_GSO_FRAGLIST	__NETIF_F(GSO_FRAGLIST)
+ #define NETIF_F_HW_MACSEC	__NETIF_F(HW_MACSEC)
++#define NETIF_F_GRO_UDP_FWD	__NETIF_F(GRO_UDP_FWD)
+ 
+ /* Finds the next feature with the highest number of the range of start-1 till 0.
+  */
+@@ -234,7 +236,7 @@ static inline int find_next_netdev_feature(u64 feature, unsigned long start)
+ #define NETIF_F_SOFT_FEATURES	(NETIF_F_GSO | NETIF_F_GRO)
+ 
+ /* Changeable features with no special hardware requirements that defaults to off. */
+-#define NETIF_F_SOFT_FEATURES_OFF	NETIF_F_GRO_FRAGLIST
++#define NETIF_F_SOFT_FEATURES_OFF	(NETIF_F_GRO_FRAGLIST | NETIF_F_GRO_UDP_FWD)
+ 
+ #define NETIF_F_VLAN_FEATURES	(NETIF_F_HW_VLAN_CTAG_FILTER | \
+ 				 NETIF_F_HW_VLAN_CTAG_RX | \
+diff --git a/net/ethtool/common.c b/net/ethtool/common.c
+index 24036e3055a13..181220101a6e7 100644
+--- a/net/ethtool/common.c
++++ b/net/ethtool/common.c
+@@ -68,6 +68,7 @@ const char netdev_features_strings[NETDEV_FEATURE_COUNT][ETH_GSTRING_LEN] = {
+ 	[NETIF_F_HW_TLS_RX_BIT] =	 "tls-hw-rx-offload",
+ 	[NETIF_F_GRO_FRAGLIST_BIT] =	 "rx-gro-list",
+ 	[NETIF_F_HW_MACSEC_BIT] =	 "macsec-hw-offload",
++	[NETIF_F_GRO_UDP_FWD_BIT] =	 "rx-udp-gro-forwarding",
+ };
+ 
+ const char
 -- 
 2.43.0
 
