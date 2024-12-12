@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F71C2F44;
-	Thu, 12 Dec 2024 17:05:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 677422144C4;
+	Thu, 12 Dec 2024 17:05:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734023152; cv=none; b=I3jDME8VgC8prX/Fv+pCutfMe7INljfFNtPTizbrAsrP++ZSoOvVpK8sk0MautMRqUOP0ELVIOhK1xBIiipPIvaI5HGy5lVwdnD5kj/qURDavegocFBViGisTGS4d/LpQVt+MDL+f/y9V7rw6+9/AFTJknbzL4VdN7srMepWKKg=
+	t=1734023155; cv=none; b=k13cmtl/CLBH+bqiZgJ7MoMVK5RuXzLwrJSU3U2Jd7hyMd9dGTVM1R2L4G3WVSBsYC+Y88fbZ6H5SHG4hQaU8q/K/lEugdpqBto6A2S0KvgvOTQ78oNY73i7YnWQu3YqFaBZuXZEVQCm5vCjanyEkV3sdrKoSheeFHR+xxpXSCA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734023152; c=relaxed/simple;
-	bh=aWPkycsT/i/TEEyYJVnQaT40eNOotZ1gStlJRSFzTfY=;
+	s=arc-20240116; t=1734023155; c=relaxed/simple;
+	bh=7BPw0P9PDJyXbBPWT7DJcIJw8fNc9SuD3s2XC9tQ2s8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=agYOstHoCxymmzwaacQThsEfuNDPwrW2RnyMTbBqDtYqEnLmv2CKk62RkuFH3x7NoaTpc2C07XNVn2WHPAoxyaZbpbDciGfVBDHYvycz2skSY01CGyKZkPFgVv70w+IWyAuHnXfjd4PR/CFaOYOuxb2+pFt4Plr93ZU97fI2cMA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cmX0h+yg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=AZmK8Ctyzt7LmX7CDtXeTZBevFXbBC3VSZU/jFsSQt2d1445XTRRnhLy8WcDDLUsAipqPQ7bsATW7E/TgoUdH0T6ceqS9C7m4zCc5Q6mWsCR5obSSGjWbWycRbIVgGO7W45depSQaIIYxNm6436y7N3Cfh+anglNkiPbJLKxEHg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R5E1p3fJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cmX0h+yg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E252AC4CECE;
-	Thu, 12 Dec 2024 17:05:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R5E1p3fJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2C97C4CECE;
+	Thu, 12 Dec 2024 17:05:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734023152;
-	bh=aWPkycsT/i/TEEyYJVnQaT40eNOotZ1gStlJRSFzTfY=;
+	s=korg; t=1734023155;
+	bh=7BPw0P9PDJyXbBPWT7DJcIJw8fNc9SuD3s2XC9tQ2s8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cmX0h+ygpmrZEhwBRGt73Jvk3T+MUKn2C0620unw3geq1w0GqryyapVQnS6s1PCJp
-	 KR9Sw2hpM5Q710QIHNrv9HhTQblK/oTNevw81TaeQR4DcjSvr2b+gNO6RxpdKhPlMU
-	 vnHg4yCP7V2jHZZY8p5GrybepWv4vFuZO9DbFj1A=
+	b=R5E1p3fJXthOXsppodZ6tAxsRucG001XJh8APzZCK1WGxmGItgBdzMNY+GqTOra4e
+	 +sFiDVbcSLB70hnLASC99JqyNurfMTEXYEVPtgT+OcMnM+rWwZfQKomSKSa2Ocy/qM
+	 YY0Bhiz0iYPLOncHWex2eKDDcxi9WLmgs8YmN6VU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pei Xiao <xiaopei01@kylinos.cn>,
-	Mark Brown <broonie@kernel.org>,
+	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
+	Iago Toral Quiroga <itoral@igalia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 440/565] spi: mpc52xx: Add cancel_work_sync before module remove
-Date: Thu, 12 Dec 2024 16:00:35 +0100
-Message-ID: <20241212144329.078345336@linuxfoundation.org>
+Subject: [PATCH 5.15 441/565] drm/v3d: Enable Performance Counters before clearing them
+Date: Thu, 12 Dec 2024 16:00:36 +0100
+Message-ID: <20241212144329.125574745@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144311.432886635@linuxfoundation.org>
 References: <20241212144311.432886635@linuxfoundation.org>
@@ -45,45 +45,55 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pei Xiao <xiaopei01@kylinos.cn>
+From: Maíra Canal <mcanal@igalia.com>
 
-[ Upstream commit 984836621aad98802d92c4a3047114cf518074c8 ]
+[ Upstream commit c98b10496b2f3c4f576af3482c71aadcfcbf765e ]
 
-If we remove the module which will call mpc52xx_spi_remove
-it will free 'ms' through spi_unregister_controller.
-while the work ms->work will be used. The sequence of operations
-that may lead to a UAF bug.
+On the Raspberry Pi 5, performance counters are not being cleared
+when `v3d_perfmon_start()` is called, even though we write to the
+CLR register. As a result, their values accumulate until they
+overflow.
 
-Fix it by ensuring that the work is canceled before proceeding with
-the cleanup in mpc52xx_spi_remove.
+The expected behavior is for performance counters to reset to zero
+at the start of a job. When the job finishes and the perfmon is
+stopped, the counters should accurately reflect the values for that
+specific job.
 
-Fixes: ca632f556697 ("spi: reorganize drivers")
-Signed-off-by: Pei Xiao <xiaopei01@kylinos.cn>
-Link: https://patch.msgid.link/1f16f8ae0e50ca9adb1dc849bf2ac65a40c9ceb9.1732783000.git.xiaopei01@kylinos.cn
-Signed-off-by: Mark Brown <broonie@kernel.org>
+To ensure this behavior, the performance counters are now enabled
+before being cleared. This allows the CLR register to function as
+intended, zeroing the counter values when the job begins.
+
+Fixes: 26a4dc29b74a ("drm/v3d: Expose performance counters to userspace")
+Signed-off-by: Maíra Canal <mcanal@igalia.com>
+Reviewed-by: Iago Toral Quiroga <itoral@igalia.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20241204122831.17015-1-mcanal@igalia.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-mpc52xx.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/v3d/v3d_perfmon.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/spi/spi-mpc52xx.c b/drivers/spi/spi-mpc52xx.c
-index 51041526546dd..fa49e899f2b2e 100644
---- a/drivers/spi/spi-mpc52xx.c
-+++ b/drivers/spi/spi-mpc52xx.c
-@@ -521,6 +521,7 @@ static int mpc52xx_spi_remove(struct platform_device *op)
- 	struct mpc52xx_spi *ms = spi_master_get_devdata(master);
- 	int i;
+diff --git a/drivers/gpu/drm/v3d/v3d_perfmon.c b/drivers/gpu/drm/v3d/v3d_perfmon.c
+index b74b537e620fc..3de4cc692f44d 100644
+--- a/drivers/gpu/drm/v3d/v3d_perfmon.c
++++ b/drivers/gpu/drm/v3d/v3d_perfmon.c
+@@ -49,9 +49,9 @@ void v3d_perfmon_start(struct v3d_dev *v3d, struct v3d_perfmon *perfmon)
+ 		V3D_CORE_WRITE(0, V3D_V4_PCTR_0_SRC_X(source), channel);
+ 	}
  
-+	cancel_work_sync(&ms->work);
- 	free_irq(ms->irq0, ms);
- 	free_irq(ms->irq1, ms);
++	V3D_CORE_WRITE(0, V3D_V4_PCTR_0_EN, mask);
+ 	V3D_CORE_WRITE(0, V3D_V4_PCTR_0_CLR, mask);
+ 	V3D_CORE_WRITE(0, V3D_PCTR_0_OVERFLOW, mask);
+-	V3D_CORE_WRITE(0, V3D_V4_PCTR_0_EN, mask);
  
+ 	v3d->active_perfmon = perfmon;
+ }
 -- 
 2.43.0
 
