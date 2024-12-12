@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2FE022652A;
-	Thu, 12 Dec 2024 16:23:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5C8D22652A;
+	Thu, 12 Dec 2024 16:23:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734020596; cv=none; b=macgk5w5MAtsv7Dtvtb+gVlN1EkOd73b8Ycy14PoKMSmE6HCT3hSDgZQnQSUk972RcLaSTPn4CCIEh0FDwoI4RL6/WVBF05ge9AQN94iFss2hcU9CMXbkH2vHTzv8jpPdws6uV+uH8COLak3qB0SnOYZCLjHiin44B+TILcrUGI=
+	t=1734020600; cv=none; b=bN5DGSCB8EJwNpyTBk8ijspPkYdPo7x3v8qVftZ3kcz+g71T7MkB1o4VfpFGrm6tVuy0f6wbM84cKrWH8RrPG1Dzx1i7AJaCPVxZdXo+cKJgBb1H5zvKZIPc5m4n9o0pXvyf++E+XzqELmqI/U5dhm7aD8yxqgnz2cU6mL4Fsao=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734020596; c=relaxed/simple;
-	bh=ldKvYzMjHa82Q3UF9LMriaHRVTOrPsxv3OiGiSa/O9U=;
+	s=arc-20240116; t=1734020600; c=relaxed/simple;
+	bh=oqgEjLu5hwZ/5F9Ucbi4X2mrFPWdpk+buaQXhq5o6/o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VuRF/CuN0gOHSuACPuGG/O7L+nH4rpkqf/iLu4dE/TMjhFBB4mgzAz0UX9VvIXOq2I6qB3xclurWVuxt35Ah3sa0LV1CPfnTcxi2JxuZbP/iU7cSRQmyctOT0UcrORHzS9DrCr3bRHTYOUgwAOUJ8RkvOv+dGVPxxxI1cGMEBSs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lrN5JwNM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=l1lVAhLLEyKVsZUf3cP8BmO5LU3/BlI+mZ5qpWY0iHOqEVqXv0LPYZjR/wrZZ9xo58uusUHEpCjtOui4mpgQc2Nk7qxSIdIM4OgqymEsaqHFqiCzEPZEPikWgoQsvPUasQyrykHsAuA6ugB9KR0P9RjmC39BSyRRCSRXU/BgGGg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lzOI+OD8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lrN5JwNM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E7E4C4CED0;
-	Thu, 12 Dec 2024 16:23:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lzOI+OD8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7495C4CECE;
+	Thu, 12 Dec 2024 16:23:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734020596;
-	bh=ldKvYzMjHa82Q3UF9LMriaHRVTOrPsxv3OiGiSa/O9U=;
+	s=korg; t=1734020600;
+	bh=oqgEjLu5hwZ/5F9Ucbi4X2mrFPWdpk+buaQXhq5o6/o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lrN5JwNMr68abFIZx6LrAP/nb0pIC4ot8hyEQWRzkVIutz179jvnJb7jDGpdB3ooq
-	 JfwtESHkaG64WdanxrjqT0vdusS+Cd5sRJ/9oxmOTo2mBLsmTePHOFadlIF4ZHPsJB
-	 O+jB02RrwGOR19y2q0QOiamFonWt24YcTfoE8oDY=
+	b=lzOI+OD8GCfq+BX/fMHDWCceiw0GKSk1KybfO9Lp7QoBWoHbzZKFxm+yck/ludp7K
+	 lbtmS9PPMU8AQTaHQOiyo81MXrXIdvfvvb7PrBmcUmIth3dlPoG1Ew4dTmqOSLEQ8R
+	 FBep1fAtr1khbIU00sBGlAjNeSXAX2FlR40eC584=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yassine Oudjana <y.oudjana@protonmail.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Wim Van Sebroeck <wim@linux-watchdog.org>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 509/772] watchdog: mediatek: Make sure system reset gets asserted in mtk_wdt_restart()
-Date: Thu, 12 Dec 2024 15:57:34 +0100
-Message-ID: <20241212144410.986119242@linuxfoundation.org>
+Subject: [PATCH 6.1 510/772] can: gs_usb: remove leading space from goto labels
+Date: Thu, 12 Dec 2024 15:57:35 +0100
+Message-ID: <20241212144411.026316788@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -53,45 +50,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yassine Oudjana <y.oudjana@protonmail.com>
+From: Marc Kleine-Budde <mkl@pengutronix.de>
 
-[ Upstream commit a1495a21e0b8aad92132dfcf9c6fffc1bde9d5b2 ]
+[ Upstream commit f1a14714bf48f87fa8e774f415ea9815daf3750d ]
 
-Clear the IRQ enable bit of WDT_MODE before asserting software reset
-in order to make TOPRGU issue a system reset signal instead of an IRQ.
+Remove leading spaces from goto labels in accordance with the kernel
+encoding style.
 
-Fixes: a44a45536f7b ("watchdog: Add driver for Mediatek watchdog")
-Signed-off-by: Yassine Oudjana <y.oudjana@protonmail.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Reviewed-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://lore.kernel.org/r/20241106104738.195968-2-y.oudjana@protonmail.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
+Link: https://lore.kernel.org/all/20230718-gs_usb-cleanups-v1-1-c3b9154ec605@pengutronix.de
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Stable-dep-of: 889b2ae9139a ("can: gs_usb: add usb endpoint address detection at driver probe step")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/watchdog/mtk_wdt.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/net/can/usb/gs_usb.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/watchdog/mtk_wdt.c b/drivers/watchdog/mtk_wdt.c
-index e977875367926..08763ff950c6d 100644
---- a/drivers/watchdog/mtk_wdt.c
-+++ b/drivers/watchdog/mtk_wdt.c
-@@ -175,9 +175,15 @@ static int mtk_wdt_restart(struct watchdog_device *wdt_dev,
- {
- 	struct mtk_wdt_dev *mtk_wdt = watchdog_get_drvdata(wdt_dev);
- 	void __iomem *wdt_base;
-+	u32 reg;
+diff --git a/drivers/net/can/usb/gs_usb.c b/drivers/net/can/usb/gs_usb.c
+index 264a0f764e011..1d089c9b46410 100644
+--- a/drivers/net/can/usb/gs_usb.c
++++ b/drivers/net/can/usb/gs_usb.c
+@@ -639,7 +639,7 @@ static void gs_usb_receive_bulk_callback(struct urb *urb)
+ 		netif_rx(skb);
+ 	}
  
- 	wdt_base = mtk_wdt->wdt_base;
+- resubmit_urb:
++resubmit_urb:
+ 	usb_fill_bulk_urb(urb, usbcan->udev,
+ 			  usb_rcvbulkpipe(usbcan->udev, GS_USB_ENDPOINT_IN),
+ 			  hf, dev->parent->hf_size_rx,
+@@ -649,7 +649,7 @@ static void gs_usb_receive_bulk_callback(struct urb *urb)
  
-+	/* Enable reset in order to issue a system reset instead of an IRQ */
-+	reg = readl(wdt_base + WDT_MODE);
-+	reg &= ~WDT_MODE_IRQ_EN;
-+	writel(reg | WDT_MODE_KEY, wdt_base + WDT_MODE);
-+
- 	while (1) {
- 		writel(WDT_SWRST_KEY, wdt_base + WDT_SWRST);
- 		mdelay(5);
+ 	/* USB failure take down all interfaces */
+ 	if (rc == -ENODEV) {
+- device_detach:
++device_detach:
+ 		for (rc = 0; rc < GS_MAX_INTF; rc++) {
+ 			if (usbcan->canch[rc])
+ 				netif_device_detach(usbcan->canch[rc]->netdev);
+@@ -814,12 +814,12 @@ static netdev_tx_t gs_can_start_xmit(struct sk_buff *skb,
+ 
+ 	return NETDEV_TX_OK;
+ 
+- badidx:
++badidx:
+ 	kfree(hf);
+- nomem_hf:
++nomem_hf:
+ 	usb_free_urb(urb);
+ 
+- nomem_urb:
++nomem_urb:
+ 	gs_free_tx_context(txc);
+ 	dev_kfree_skb(skb);
+ 	stats->tx_dropped++;
+@@ -1311,7 +1311,7 @@ static struct gs_can *gs_make_candev(unsigned int channel,
+ 
+ 	return dev;
+ 
+- out_free_candev:
++out_free_candev:
+ 	free_candev(dev->netdev);
+ 	return ERR_PTR(rc);
+ }
 -- 
 2.43.0
 
