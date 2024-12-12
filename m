@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 849D12EAE5;
-	Thu, 12 Dec 2024 15:02:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 967D32EAE5;
+	Thu, 12 Dec 2024 15:02:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734015756; cv=none; b=S5AxR5048XkdmjV5cl2e8A4KAPFMGH5MtLgRqONFd6rER7io6U80Fi0peQOHVR7ZAHEMWdnXnRUg3CfQbCHWhzPjQVOthLVt3t1FsgMZJC8akyA/R3IFloNWFryNEgdD2ZQif+q5hEH5rfeS1rMBr4IPKsjFV4CoYzbTw6a4+UU=
+	t=1734015759; cv=none; b=qwn90rBwNueg8oj8pLEEPFv8lGh9UVlSEHL9OPlr1PHGa0wGtymsjxhua0f2CUpnGHt7dj9DWXhkcPauvwisXiP5soqcRcF6npwaX3nZbp5tCwYzv+Y5DFyprqbAGy8gWi7eVh0le5loi26WEfNRZXXDHkVkE/wI9CjUSJ0q3/c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734015756; c=relaxed/simple;
-	bh=4dkncBzhCdMcde5NM5idd689imf/ucMbiqnEGXNeSz8=;
+	s=arc-20240116; t=1734015759; c=relaxed/simple;
+	bh=HFoHrRmw9ybQqepn6nMlHRLphEV+tqJqX31kkxLWYZ0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pdtqkkAOadgmiwqatP7jv6IwXPoY32aMQvRhflrv+52s4kQ+BHkgF+mZYEklc6eAwn2pcH8l4qIQck+TkfSNiwBGuAagwEYSiNGoBrRgCySKCTuHCoGRjpR5D2T7QW8UVoJFLZULOufe3g5gQadvkB2telit9JZKKxJbVotJ520=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fXE1RkvK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=p1QGSVooT788kaoybimoX5CN/tbUGYfL7DPKnwW5RCUuS4AIQtd+oy8l50jUsuQJuhQ7rkUAAOaaV85wb6qTnqDwWFS8fq7JsTPLyKigJIyyeWbYvS2GZ3WWhe8LYAEKk1DKBue2/C1I5LJX2Ygi9T2UaPaNp9g66f+CQcz/wD0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JYXLL8Jo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fXE1RkvK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3D10C4CED0;
-	Thu, 12 Dec 2024 15:02:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JYXLL8Jo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F1CAC4CED4;
+	Thu, 12 Dec 2024 15:02:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734015756;
-	bh=4dkncBzhCdMcde5NM5idd689imf/ucMbiqnEGXNeSz8=;
+	s=korg; t=1734015759;
+	bh=HFoHrRmw9ybQqepn6nMlHRLphEV+tqJqX31kkxLWYZ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fXE1RkvKr2g/WwLVw+IijXvqZIC+onwYwJkiB/f1QK4r19XWImOsbWOM/z8FEBwpF
-	 u+eBXyvBqMmXyLH3QlDnOOc/A9+4yA6YuBPteIUKFoThvKAA8Xqn3gXKSFMVN0fCrK
-	 Kc2mF0vKAoMZmJKUXv0+5EydRL57UA/lSH48MSHY=
+	b=JYXLL8JoIQsJDJzij+wUZ4cGbwBV7/bRwk+iZDzRUJ9AMKyT5D0es+hpniRfervfb
+	 EFIXjCH6LjMAxf0Bgxw8KUtIL3CnAn01M54dDBaCVeJ/3PHt2j+21/c5DPjwyEQ/+x
+	 i+nKIMpfZRCzg//znb7XjHfLPDjQREIsF83AfClI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+7f4643b267cc680bfa1c@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
-	Lukasz Majewski <lukma@denx.de>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 036/466] net: hsr: must allocate more bytes for RedBox support
-Date: Thu, 12 Dec 2024 15:53:25 +0100
-Message-ID: <20241212144308.112067451@linuxfoundation.org>
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Arkadiusz Kubalewski <arkadiusz.kubalewski@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
+Subject: [PATCH 6.12 037/466] ice: fix PHY Clock Recovery availability check
+Date: Thu, 12 Dec 2024 15:53:26 +0100
+Message-ID: <20241212144308.150691056@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144306.641051666@linuxfoundation.org>
 References: <20241212144306.641051666@linuxfoundation.org>
@@ -53,131 +53,121 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Arkadiusz Kubalewski <arkadiusz.kubalewski@intel.com>
 
-[ Upstream commit af8edaeddbc52e53207d859c912b017fd9a77629 ]
+[ Upstream commit 01fd68e54794fb1e1fe95be38facf9bbafee9ca3 ]
 
-Blamed commit forgot to change hsr_init_skb() to allocate
-larger skb for RedBox case.
+To check if PHY Clock Recovery mechanic is available for a device, there
+is a need to verify if given PHY is available within the netlist, but the
+netlist node type used for the search is wrong, also the search context
+shall be specified.
 
-Indeed, send_hsr_supervision_frame() will add
-two additional components (struct hsr_sup_tlv
-and struct hsr_sup_payload)
+Modify the search function to allow specifying the context in the
+search.
 
-syzbot reported the following crash:
-skbuff: skb_over_panic: text:ffffffff8afd4b0a len:34 put:6 head:ffff88802ad29e00 data:ffff88802ad29f22 tail:0x144 end:0x140 dev:gretap0
-------------[ cut here ]------------
- kernel BUG at net/core/skbuff.c:206 !
-Oops: invalid opcode: 0000 [#1] PREEMPT SMP KASAN NOPTI
-CPU: 2 UID: 0 PID: 7611 Comm: syz-executor Not tainted 6.12.0-syzkaller #0
-Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2~bpo12+1 04/01/2014
- RIP: 0010:skb_panic+0x157/0x1d0 net/core/skbuff.c:206
-Code: b6 04 01 84 c0 74 04 3c 03 7e 21 8b 4b 70 41 56 45 89 e8 48 c7 c7 a0 7d 9b 8c 41 57 56 48 89 ee 52 4c 89 e2 e8 9a 76 79 f8 90 <0f> 0b 4c 89 4c 24 10 48 89 54 24 08 48 89 34 24 e8 94 76 fb f8 4c
-RSP: 0018:ffffc90000858ab8 EFLAGS: 00010282
-RAX: 0000000000000087 RBX: ffff8880598c08c0 RCX: ffffffff816d3e69
-RDX: 0000000000000000 RSI: ffffffff816de786 RDI: 0000000000000005
-RBP: ffffffff8c9b91c0 R08: 0000000000000005 R09: 0000000000000000
-R10: 0000000000000302 R11: ffffffff961cc1d0 R12: ffffffff8afd4b0a
-R13: 0000000000000006 R14: ffff88804b938130 R15: 0000000000000140
-FS:  000055558a3d6500(0000) GS:ffff88806a800000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007f1295974ff8 CR3: 000000002ab6e000 CR4: 0000000000352ef0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-Call Trace:
- <IRQ>
-  skb_over_panic net/core/skbuff.c:211 [inline]
-  skb_put+0x174/0x1b0 net/core/skbuff.c:2617
-  send_hsr_supervision_frame+0x6fa/0x9e0 net/hsr/hsr_device.c:342
-  hsr_proxy_announce+0x1a3/0x4a0 net/hsr/hsr_device.c:436
-  call_timer_fn+0x1a0/0x610 kernel/time/timer.c:1794
-  expire_timers kernel/time/timer.c:1845 [inline]
-  __run_timers+0x6e8/0x930 kernel/time/timer.c:2419
-  __run_timer_base kernel/time/timer.c:2430 [inline]
-  __run_timer_base kernel/time/timer.c:2423 [inline]
-  run_timer_base+0x111/0x190 kernel/time/timer.c:2439
-  run_timer_softirq+0x1a/0x40 kernel/time/timer.c:2449
-  handle_softirqs+0x213/0x8f0 kernel/softirq.c:554
-  __do_softirq kernel/softirq.c:588 [inline]
-  invoke_softirq kernel/softirq.c:428 [inline]
-  __irq_exit_rcu kernel/softirq.c:637 [inline]
-  irq_exit_rcu+0xbb/0x120 kernel/softirq.c:649
-  instr_sysvec_apic_timer_interrupt arch/x86/kernel/apic/apic.c:1049 [inline]
-  sysvec_apic_timer_interrupt+0xa4/0xc0 arch/x86/kernel/apic/apic.c:1049
- </IRQ>
+Use the PHY node type instead of CLOCK CONTROLLER type, also use proper
+search context which for PHY search is PORT, as defined in E810
+Datasheet [1] ('3.3.8.2.4 Node Part Number and Node Options (0x0003)' and
+'Table 3-105. Program Topology Device NVM Admin Command').
 
-Fixes: 5055cccfc2d1 ("net: hsr: Provide RedBox support (HSR-SAN)")
-Reported-by: syzbot+7f4643b267cc680bfa1c@syzkaller.appspotmail.com
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Lukasz Majewski <lukma@denx.de>
-Link: https://patch.msgid.link/20241202100558.507765-1-edumazet@google.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+[1] https://cdrdv2.intel.com/v1/dl/getContent/613875?explicitVersion=true
+
+Fixes: 91e43ca0090b ("ice: fix linking when CONFIG_PTP_1588_CLOCK=n")
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Signed-off-by: Arkadiusz Kubalewski <arkadiusz.kubalewski@intel.com>
+Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/hsr/hsr_device.c | 19 +++++++++++++------
- 1 file changed, 13 insertions(+), 6 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_common.c | 25 ++++++++++++++-------
+ 1 file changed, 17 insertions(+), 8 deletions(-)
 
-diff --git a/net/hsr/hsr_device.c b/net/hsr/hsr_device.c
-index f630d6645636d..44048d7538ddc 100644
---- a/net/hsr/hsr_device.c
-+++ b/net/hsr/hsr_device.c
-@@ -246,20 +246,22 @@ static const struct header_ops hsr_header_ops = {
- 	.parse	 = eth_header_parse,
- };
- 
--static struct sk_buff *hsr_init_skb(struct hsr_port *master)
-+static struct sk_buff *hsr_init_skb(struct hsr_port *master, int extra)
+diff --git a/drivers/net/ethernet/intel/ice/ice_common.c b/drivers/net/ethernet/intel/ice/ice_common.c
+index 009716a12a26a..f1324e25b2af1 100644
+--- a/drivers/net/ethernet/intel/ice/ice_common.c
++++ b/drivers/net/ethernet/intel/ice/ice_common.c
+@@ -542,7 +542,8 @@ ice_aq_get_netlist_node(struct ice_hw *hw, struct ice_aqc_get_link_topo *cmd,
+ /**
+  * ice_find_netlist_node
+  * @hw: pointer to the hw struct
+- * @node_type_ctx: type of netlist node to look for
++ * @node_type: type of netlist node to look for
++ * @ctx: context of the search
+  * @node_part_number: node part number to look for
+  * @node_handle: output parameter if node found - optional
+  *
+@@ -552,10 +553,12 @@ ice_aq_get_netlist_node(struct ice_hw *hw, struct ice_aqc_get_link_topo *cmd,
+  * valid if the function returns zero, and should be ignored on any non-zero
+  * return value.
+  *
+- * Returns: 0 if the node is found, -ENOENT if no handle was found, and
+- * a negative error code on failure to access the AQ.
++ * Return:
++ * * 0 if the node is found,
++ * * -ENOENT if no handle was found,
++ * * negative error code on failure to access the AQ.
+  */
+-static int ice_find_netlist_node(struct ice_hw *hw, u8 node_type_ctx,
++static int ice_find_netlist_node(struct ice_hw *hw, u8 node_type, u8 ctx,
+ 				 u8 node_part_number, u16 *node_handle)
  {
- 	struct hsr_priv *hsr = master->hsr;
- 	struct sk_buff *skb;
- 	int hlen, tlen;
-+	int len;
+ 	u8 idx;
+@@ -566,8 +569,8 @@ static int ice_find_netlist_node(struct ice_hw *hw, u8 node_type_ctx,
+ 		int status;
  
- 	hlen = LL_RESERVED_SPACE(master->dev);
- 	tlen = master->dev->needed_tailroom;
-+	len = sizeof(struct hsr_sup_tag) + sizeof(struct hsr_sup_payload);
- 	/* skb size is same for PRP/HSR frames, only difference
- 	 * being, for PRP it is a trailer and for HSR it is a
--	 * header
-+	 * header.
-+	 * RedBox might use @extra more bytes.
- 	 */
--	skb = dev_alloc_skb(sizeof(struct hsr_sup_tag) +
--			    sizeof(struct hsr_sup_payload) + hlen + tlen);
-+	skb = dev_alloc_skb(len + extra + hlen + tlen);
+ 		cmd.addr.topo_params.node_type_ctx =
+-			FIELD_PREP(ICE_AQC_LINK_TOPO_NODE_TYPE_M,
+-				   node_type_ctx);
++			FIELD_PREP(ICE_AQC_LINK_TOPO_NODE_TYPE_M, node_type) |
++			FIELD_PREP(ICE_AQC_LINK_TOPO_NODE_CTX_M, ctx);
+ 		cmd.addr.topo_params.index = idx;
  
- 	if (!skb)
- 		return skb;
-@@ -295,6 +297,7 @@ static void send_hsr_supervision_frame(struct hsr_port *port,
- 	struct hsr_sup_tlv *hsr_stlv;
- 	struct hsr_sup_tag *hsr_stag;
- 	struct sk_buff *skb;
-+	int extra = 0;
+ 		status = ice_aq_get_netlist_node(hw, &cmd,
+@@ -2726,9 +2729,11 @@ bool ice_is_pf_c827(struct ice_hw *hw)
+  */
+ bool ice_is_phy_rclk_in_netlist(struct ice_hw *hw)
+ {
+-	if (ice_find_netlist_node(hw, ICE_AQC_LINK_TOPO_NODE_TYPE_CLK_CTRL,
++	if (ice_find_netlist_node(hw, ICE_AQC_LINK_TOPO_NODE_TYPE_PHY,
++				  ICE_AQC_LINK_TOPO_NODE_CTX_PORT,
+ 				  ICE_AQC_GET_LINK_TOPO_NODE_NR_C827, NULL) &&
+-	    ice_find_netlist_node(hw, ICE_AQC_LINK_TOPO_NODE_TYPE_CLK_CTRL,
++	    ice_find_netlist_node(hw, ICE_AQC_LINK_TOPO_NODE_TYPE_PHY,
++				  ICE_AQC_LINK_TOPO_NODE_CTX_PORT,
+ 				  ICE_AQC_GET_LINK_TOPO_NODE_NR_E822_PHY, NULL))
+ 		return false;
  
- 	*interval = msecs_to_jiffies(HSR_LIFE_CHECK_INTERVAL);
- 	if (hsr->announce_count < 3 && hsr->prot_version == 0) {
-@@ -303,7 +306,11 @@ static void send_hsr_supervision_frame(struct hsr_port *port,
- 		hsr->announce_count++;
- 	}
+@@ -2744,6 +2749,7 @@ bool ice_is_phy_rclk_in_netlist(struct ice_hw *hw)
+ bool ice_is_clock_mux_in_netlist(struct ice_hw *hw)
+ {
+ 	if (ice_find_netlist_node(hw, ICE_AQC_LINK_TOPO_NODE_TYPE_CLK_MUX,
++				  ICE_AQC_LINK_TOPO_NODE_CTX_GLOBAL,
+ 				  ICE_AQC_GET_LINK_TOPO_NODE_NR_GEN_CLK_MUX,
+ 				  NULL))
+ 		return false;
+@@ -2764,12 +2770,14 @@ bool ice_is_clock_mux_in_netlist(struct ice_hw *hw)
+ bool ice_is_cgu_in_netlist(struct ice_hw *hw)
+ {
+ 	if (!ice_find_netlist_node(hw, ICE_AQC_LINK_TOPO_NODE_TYPE_CLK_CTRL,
++				   ICE_AQC_LINK_TOPO_NODE_CTX_GLOBAL,
+ 				   ICE_AQC_GET_LINK_TOPO_NODE_NR_ZL30632_80032,
+ 				   NULL)) {
+ 		hw->cgu_part_number = ICE_AQC_GET_LINK_TOPO_NODE_NR_ZL30632_80032;
+ 		return true;
+ 	} else if (!ice_find_netlist_node(hw,
+ 					  ICE_AQC_LINK_TOPO_NODE_TYPE_CLK_CTRL,
++					  ICE_AQC_LINK_TOPO_NODE_CTX_GLOBAL,
+ 					  ICE_AQC_GET_LINK_TOPO_NODE_NR_SI5383_5384,
+ 					  NULL)) {
+ 		hw->cgu_part_number = ICE_AQC_GET_LINK_TOPO_NODE_NR_SI5383_5384;
+@@ -2788,6 +2796,7 @@ bool ice_is_cgu_in_netlist(struct ice_hw *hw)
+ bool ice_is_gps_in_netlist(struct ice_hw *hw)
+ {
+ 	if (ice_find_netlist_node(hw, ICE_AQC_LINK_TOPO_NODE_TYPE_GPS,
++				  ICE_AQC_LINK_TOPO_NODE_CTX_GLOBAL,
+ 				  ICE_AQC_GET_LINK_TOPO_NODE_NR_GEN_GPS, NULL))
+ 		return false;
  
--	skb = hsr_init_skb(port);
-+	if (hsr->redbox)
-+		extra = sizeof(struct hsr_sup_tlv) +
-+			sizeof(struct hsr_sup_payload);
-+
-+	skb = hsr_init_skb(port, extra);
- 	if (!skb) {
- 		netdev_warn_once(port->dev, "HSR: Could not send supervision frame\n");
- 		return;
-@@ -362,7 +369,7 @@ static void send_prp_supervision_frame(struct hsr_port *master,
- 	struct hsr_sup_tag *hsr_stag;
- 	struct sk_buff *skb;
- 
--	skb = hsr_init_skb(master);
-+	skb = hsr_init_skb(master, 0);
- 	if (!skb) {
- 		netdev_warn_once(master->dev, "PRP: Could not send supervision frame\n");
- 		return;
 -- 
 2.43.0
 
