@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C341C222D59;
-	Thu, 12 Dec 2024 17:46:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84B9D22540B;
+	Thu, 12 Dec 2024 17:46:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734025599; cv=none; b=dYWn9Ra0febQ1Qu6ahLa5ttfnFn/bVdDMctt/JlrLTsTna6W9e8RRuSysHOvGGQ/s6LemEuo+oCA3n0wGD7JD+2NCBKaigO03QkACdWDqAP59rJxTz3WYr8lXv8VkWA/91E1qV7Y8v29a1hhbp2kEL6vS9B/ZVK5Gc474vKRLLc=
+	t=1734025602; cv=none; b=sy3a6mdeNa/aaRWe1vd+ChfmCzzMn8kY7oBM1fAWNFtVM4I7fY3oGVHK9SAT7MooxSLk3eimtmaVHFFd5Dq03asLvGthNl/09f6PTwWCqajlC23irqGEqo+a+vxNq+h+AYxA5oG+Ff4xWXlchFis/8GI90uFQpa62b3yl88O4ks=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734025599; c=relaxed/simple;
-	bh=qztOIygnxnECAQm/R1SIht4dhev17/r4a1wXTA5wLIw=;
+	s=arc-20240116; t=1734025602; c=relaxed/simple;
+	bh=368lU46KYietBa8DuHf7eEcpz3b0E49RSKM1UFL2IsU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CEAHCpgSXLb5SoC576FtM6EggmnwUVvJsjZ2BpbUHW6ulL5/bJRcwNVyqnzb0sioBTJaYgNg8i8GqVhGNAhAwhqnjuIlHtAXH/WkxCmKYRuZ8SIH7HwDZ+CVo+Uf1lwyXPpq0Oz79ETpg1hYUpAG8/Z8pgx+eeRag0cumjzxbOY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zv9Ng97X; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OgZyEMqpziNMpQg9GHTo0LwaNcTyL5Ywrjbp1uOooPHaGOoW+LjoBtSuW9KM3ErIYLJSX+uWVyACPdKMCCEkAWT/qDx7+eeZC8vXg3n6AyPr75ARH9NftEpsWHs7ei24PL7NkDIZ6Nxh69HVtRag8+V6WrStjqEyUl20wac5M20=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F9mpJghy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zv9Ng97X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C075C4CED0;
-	Thu, 12 Dec 2024 17:46:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F9mpJghy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12802C4CECE;
+	Thu, 12 Dec 2024 17:46:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734025599;
-	bh=qztOIygnxnECAQm/R1SIht4dhev17/r4a1wXTA5wLIw=;
+	s=korg; t=1734025602;
+	bh=368lU46KYietBa8DuHf7eEcpz3b0E49RSKM1UFL2IsU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Zv9Ng97XVW9Dqhim/hiKFGOs1mmuQCvBbuDWMygRRbZ4kkaDB8abhs1u2HLWNZMxf
-	 sjVijLVr4ezDe0c3koMy7Vjbst4HyvLnwsX88Ivs2an5jbTdo2vxQ2fTO6o39vWGbv
-	 GHggb8qEtOT8rf5bRCerySu1hI0SjrDZve4Y8EQU=
+	b=F9mpJghybKi/ROHN0GP3B5tfMAYIsPH4LU4LBoWmuzG0E03329qtNJ1W2ro32LjWR
+	 eTrOxuCepNo6LHxPes0NDNypJQMVWXSi0uLDPAGELWdDOIGiZjWpdPVqa7L3BDQbHy
+	 tZiKC/5EjpuIPuD1SimEeP6hsnxlnz+BJrPBj9zs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+6c8215822f35fdb35667@syzkaller.appspotmail.com,
-	Dmitry Antipov <dmantipov@yandex.ru>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Martin Ottens <martin.ottens@fau.de>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 224/321] netfilter: x_tables: fix LED ID check in led_tg_check()
-Date: Thu, 12 Dec 2024 16:02:22 +0100
-Message-ID: <20241212144238.825426430@linuxfoundation.org>
+Subject: [PATCH 5.4 225/321] net/sched: tbf: correct backlog statistic for GSO packets
+Date: Thu, 12 Dec 2024 16:02:23 +0100
+Message-ID: <20241212144238.864826430@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144229.291682835@linuxfoundation.org>
 References: <20241212144229.291682835@linuxfoundation.org>
@@ -52,107 +52,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Antipov <dmantipov@yandex.ru>
+From: Martin Ottens <martin.ottens@fau.de>
 
-[ Upstream commit 04317f4eb2aad312ad85c1a17ad81fe75f1f9bc7 ]
+[ Upstream commit 1596a135e3180c92e42dd1fbcad321f4fb3e3b17 ]
 
-Syzbot has reported the following BUG detected by KASAN:
+When the length of a GSO packet in the tbf qdisc is larger than the burst
+size configured the packet will be segmented by the tbf_segment function.
+Whenever this function is used to enqueue SKBs, the backlog statistic of
+the tbf is not increased correctly. This can lead to underflows of the
+'backlog' byte-statistic value when these packets are dequeued from tbf.
 
-BUG: KASAN: slab-out-of-bounds in strlen+0x58/0x70
-Read of size 1 at addr ffff8881022da0c8 by task repro/5879
-...
-Call Trace:
- <TASK>
- dump_stack_lvl+0x241/0x360
- ? __pfx_dump_stack_lvl+0x10/0x10
- ? __pfx__printk+0x10/0x10
- ? _printk+0xd5/0x120
- ? __virt_addr_valid+0x183/0x530
- ? __virt_addr_valid+0x183/0x530
- print_report+0x169/0x550
- ? __virt_addr_valid+0x183/0x530
- ? __virt_addr_valid+0x183/0x530
- ? __virt_addr_valid+0x45f/0x530
- ? __phys_addr+0xba/0x170
- ? strlen+0x58/0x70
- kasan_report+0x143/0x180
- ? strlen+0x58/0x70
- strlen+0x58/0x70
- kstrdup+0x20/0x80
- led_tg_check+0x18b/0x3c0
- xt_check_target+0x3bb/0xa40
- ? __pfx_xt_check_target+0x10/0x10
- ? stack_depot_save_flags+0x6e4/0x830
- ? nft_target_init+0x174/0xc30
- nft_target_init+0x82d/0xc30
- ? __pfx_nft_target_init+0x10/0x10
- ? nf_tables_newrule+0x1609/0x2980
- ? nf_tables_newrule+0x1609/0x2980
- ? rcu_is_watching+0x15/0xb0
- ? nf_tables_newrule+0x1609/0x2980
- ? nf_tables_newrule+0x1609/0x2980
- ? __kmalloc_noprof+0x21a/0x400
- nf_tables_newrule+0x1860/0x2980
- ? __pfx_nf_tables_newrule+0x10/0x10
- ? __nla_parse+0x40/0x60
- nfnetlink_rcv+0x14e5/0x2ab0
- ? __pfx_validate_chain+0x10/0x10
- ? __pfx_nfnetlink_rcv+0x10/0x10
- ? __lock_acquire+0x1384/0x2050
- ? netlink_deliver_tap+0x2e/0x1b0
- ? __pfx_lock_release+0x10/0x10
- ? netlink_deliver_tap+0x2e/0x1b0
- netlink_unicast+0x7f8/0x990
- ? __pfx_netlink_unicast+0x10/0x10
- ? __virt_addr_valid+0x183/0x530
- ? __check_object_size+0x48e/0x900
- netlink_sendmsg+0x8e4/0xcb0
- ? __pfx_netlink_sendmsg+0x10/0x10
- ? aa_sock_msg_perm+0x91/0x160
- ? __pfx_netlink_sendmsg+0x10/0x10
- __sock_sendmsg+0x223/0x270
- ____sys_sendmsg+0x52a/0x7e0
- ? __pfx_____sys_sendmsg+0x10/0x10
- __sys_sendmsg+0x292/0x380
- ? __pfx___sys_sendmsg+0x10/0x10
- ? lockdep_hardirqs_on_prepare+0x43d/0x780
- ? __pfx_lockdep_hardirqs_on_prepare+0x10/0x10
- ? exc_page_fault+0x590/0x8c0
- ? do_syscall_64+0xb6/0x230
- do_syscall_64+0xf3/0x230
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-...
- </TASK>
+Reproduce the bug:
+Ensure that the sender machine has GSO enabled. Configured the tbf on
+the outgoing interface of the machine as follows (burstsize = 1 MTU):
+$ tc qdisc add dev <oif> root handle 1: tbf rate 50Mbit burst 1514 latency 50ms
 
-Since an invalid (without '\0' byte at all) byte sequence may be passed
-from userspace, add an extra check to ensure that such a sequence is
-rejected as possible ID and so never passed to 'kstrdup()' and further.
+Send bulk TCP traffic out via this interface, e.g., by running an iPerf3
+client on this machine. Check the qdisc statistics:
+$ tc -s qdisc show dev <oif>
 
-Reported-by: syzbot+6c8215822f35fdb35667@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=6c8215822f35fdb35667
-Fixes: 268cb38e1802 ("netfilter: x_tables: add LED trigger target")
-Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+The 'backlog' byte-statistic has incorrect values while traffic is
+transferred, e.g., high values due to u32 underflows. When the transfer
+is stopped, the value is != 0, which should never happen.
+
+This patch fixes this bug by updating the statistics correctly, even if
+single SKBs of a GSO SKB cannot be enqueued.
+
+Fixes: e43ac79a4bc6 ("sch_tbf: segment too big GSO packets")
+Signed-off-by: Martin Ottens <martin.ottens@fau.de>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20241125174608.1484356-1-martin.ottens@fau.de
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/xt_LED.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/sched/sch_tbf.c | 18 ++++++++++++------
+ 1 file changed, 12 insertions(+), 6 deletions(-)
 
-diff --git a/net/netfilter/xt_LED.c b/net/netfilter/xt_LED.c
-index 0371c387b0d1f..13a2b5820b34b 100644
---- a/net/netfilter/xt_LED.c
-+++ b/net/netfilter/xt_LED.c
-@@ -97,7 +97,9 @@ static int led_tg_check(const struct xt_tgchk_param *par)
- 	struct xt_led_info_internal *ledinternal;
- 	int err;
+diff --git a/net/sched/sch_tbf.c b/net/sched/sch_tbf.c
+index a7f60bb2dd513..259a39ca99bfb 100644
+--- a/net/sched/sch_tbf.c
++++ b/net/sched/sch_tbf.c
+@@ -146,7 +146,7 @@ static int tbf_segment(struct sk_buff *skb, struct Qdisc *sch,
+ 	struct tbf_sched_data *q = qdisc_priv(sch);
+ 	struct sk_buff *segs, *nskb;
+ 	netdev_features_t features = netif_skb_features(skb);
+-	unsigned int len = 0, prev_len = qdisc_pkt_len(skb);
++	unsigned int len = 0, prev_len = qdisc_pkt_len(skb), seg_len;
+ 	int ret, nb;
  
--	if (ledinfo->id[0] == '\0')
-+	/* Bail out if empty string or not a string at all. */
-+	if (ledinfo->id[0] == '\0' ||
-+	    !memchr(ledinfo->id, '\0', sizeof(ledinfo->id)))
- 		return -EINVAL;
+ 	segs = skb_gso_segment(skb, features & ~NETIF_F_GSO_MASK);
+@@ -158,22 +158,28 @@ static int tbf_segment(struct sk_buff *skb, struct Qdisc *sch,
+ 	while (segs) {
+ 		nskb = segs->next;
+ 		skb_mark_not_on_list(segs);
+-		qdisc_skb_cb(segs)->pkt_len = segs->len;
+-		len += segs->len;
++		seg_len = segs->len;
++		qdisc_skb_cb(segs)->pkt_len = seg_len;
+ 		ret = qdisc_enqueue(segs, q->qdisc, to_free);
+ 		if (ret != NET_XMIT_SUCCESS) {
+ 			if (net_xmit_drop_count(ret))
+ 				qdisc_qstats_drop(sch);
+ 		} else {
+ 			nb++;
++			len += seg_len;
+ 		}
+ 		segs = nskb;
+ 	}
+ 	sch->q.qlen += nb;
+-	if (nb > 1)
++	sch->qstats.backlog += len;
++	if (nb > 0) {
+ 		qdisc_tree_reduce_backlog(sch, 1 - nb, prev_len - len);
+-	consume_skb(skb);
+-	return nb > 0 ? NET_XMIT_SUCCESS : NET_XMIT_DROP;
++		consume_skb(skb);
++		return NET_XMIT_SUCCESS;
++	}
++
++	kfree_skb(skb);
++	return NET_XMIT_DROP;
+ }
  
- 	mutex_lock(&xt_led_mutex);
+ static int tbf_enqueue(struct sk_buff *skb, struct Qdisc *sch,
 -- 
 2.43.0
 
