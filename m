@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FFBC20A5EE;
-	Thu, 12 Dec 2024 17:41:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ECE920A5EE;
+	Thu, 12 Dec 2024 17:41:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734025291; cv=none; b=BJvBuepcCj1a1kXSQpZgd4n1H46Pgl6oFrqc4xp2GgkQuihRJPJcIjQG/KMW1M2Cu9Uu3nXotEPn2YreRHtH4c5rCLHz9T8G6WAgkgEYwOOk2LDhsmIayNQgTi9sjH/K9DLkKIJyCDClm4QonAj7IHLXXXaH0LMEbdZq4ljrMDU=
+	t=1734025295; cv=none; b=G+dBV5PIHexNfr6oxXTWfWnBHFG1KI5OOtJ2NJ3f8+IxaASCifOgq3L17/L6bjUujXSLLoY+xLqcSrULzfPhcBTWR44vRSnDrryFkyrwni/34tOMXaw6SvnIgLiQ+FPfUrIBkPYygFyVr1PdPPJtqPdGAl1/BMmBYqqWN/2tkOc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734025291; c=relaxed/simple;
-	bh=mTFxcyZdkNNNV46g+Nu+JfpnkvdRemPlwTnHJ2+OVh8=;
+	s=arc-20240116; t=1734025295; c=relaxed/simple;
+	bh=xolOzt0IdWTZmyNNGA7WCis2Ko/MBA7/ewNn4KGv/8I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Tw1fw2TYnwgA3RQFypP898EQ+kRykQp7vkA1I/QJA+2Mh0lytPeJf3omHeJ/AwpFWdRyEBNhI3CITvOplx9F18EFWxO0dMbQUpNr1sVjl8ac5c/I3l4a5VKKGtFCz+7fgxP0JO7jnjtGw/b/rDYI5SX/h4Aj23UfUuHvv+AzKD0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qdddNkVk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EBLntor5bsoam63jxiEp7fLuO7X0fWMUdZXWFiQVSX9+mkbUrcDP8wPQQ4mZ3+uECqLxt/+edRVRl1K1kmGCpHiMz9ROk380eOZvXvo26ckNwbqVtsOTO8JuCqajmBnLDlp4qFLQHICK7/qTAvTt/Zam1/2my9GaC/AK7wj8NiU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TDolz2w2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qdddNkVk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B189C4CECE;
-	Thu, 12 Dec 2024 17:41:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TDolz2w2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8593BC4CECE;
+	Thu, 12 Dec 2024 17:41:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734025290;
-	bh=mTFxcyZdkNNNV46g+Nu+JfpnkvdRemPlwTnHJ2+OVh8=;
+	s=korg; t=1734025293;
+	bh=xolOzt0IdWTZmyNNGA7WCis2Ko/MBA7/ewNn4KGv/8I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qdddNkVkvQDacWrg6kJvL0suAJ8jWolmabdtahwCNcwpS88Lb52Gh5+Q1Ej0qW29w
-	 yXVSyuwfumi9FDikIktouEVN/8V79tEHmVhhzxnyhKfGr4zlVH1tCN7NJLnN55nV25
-	 JTJwQ40utl8oJvFMHiz/N1O0qPGYIn+TmO1Or9ao=
+	b=TDolz2w2H6T/lqa+Mc86a/8uLf6XIeyMsBzjIOHwuNSUfTJ8GDmzlMrXH30TlQ3aF
+	 CUeNmGrgYJWCPNtNpqdYmtSMyz70T5GsHni7SleAuR0NU57Z4OnKbGFRVUBryPwJLo
+	 6CBfkUImNeOLc3z/F/AihQmZGM3vSSoGNGnoWOug=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonathan Marek <jonathan@marek.ca>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 121/321] rpmsg: glink: use only lower 16-bits of param2 for CMD_OPEN name length
-Date: Thu, 12 Dec 2024 16:00:39 +0100
-Message-ID: <20241212144234.759620663@linuxfoundation.org>
+Subject: [PATCH 5.4 122/321] NFSD: Prevent NULL dereference in nfsd4_process_cb_update()
+Date: Thu, 12 Dec 2024 16:00:40 +0100
+Message-ID: <20241212144234.797653042@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144229.291682835@linuxfoundation.org>
 References: <20241212144229.291682835@linuxfoundation.org>
@@ -52,41 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jonathan Marek <jonathan@marek.ca>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit 06c59d97f63c1b8af521fa5aef8a716fb988b285 ]
+[ Upstream commit 1e02c641c3a43c88cecc08402000418e15578d38 ]
 
-The name len field of the CMD_OPEN packet is only 16-bits and the upper
-16-bits of "param2" are a different "prio" field, which can be nonzero in
-certain situations, and CMD_OPEN packets can be unexpectedly dropped
-because of this.
+@ses is initialized to NULL. If __nfsd4_find_backchannel() finds no
+available backchannel session, setup_callback_client() will try to
+dereference @ses and segfault.
 
-Fix this by masking out the upper 16 bits of param2.
-
-Fixes: b4f8e52b89f6 ("rpmsg: Introduce Qualcomm RPM glink driver")
-Signed-off-by: Jonathan Marek <jonathan@marek.ca>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20241007235935.6216-1-jonathan@marek.ca
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: dcbeaa68dbbd ("nfsd4: allow backchannel recovery")
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rpmsg/qcom_glink_native.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/nfsd/nfs4callback.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/rpmsg/qcom_glink_native.c b/drivers/rpmsg/qcom_glink_native.c
-index 4766c21f96901..47ffaca8d86b5 100644
---- a/drivers/rpmsg/qcom_glink_native.c
-+++ b/drivers/rpmsg/qcom_glink_native.c
-@@ -1045,7 +1045,8 @@ static irqreturn_t qcom_glink_native_intr(int irq, void *data)
- 			qcom_glink_rx_advance(glink, ALIGN(sizeof(msg), 8));
- 			break;
- 		case GLINK_CMD_OPEN:
--			ret = qcom_glink_rx_defer(glink, param2);
-+			/* upper 16 bits of param2 are the "prio" field */
-+			ret = qcom_glink_rx_defer(glink, param2 & 0xffff);
- 			break;
- 		case GLINK_CMD_TX_DATA:
- 		case GLINK_CMD_TX_DATA_CONT:
+diff --git a/fs/nfsd/nfs4callback.c b/fs/nfsd/nfs4callback.c
+index 771733396eab2..51462f7958b3c 100644
+--- a/fs/nfsd/nfs4callback.c
++++ b/fs/nfsd/nfs4callback.c
+@@ -1229,6 +1229,8 @@ static void nfsd4_process_cb_update(struct nfsd4_callback *cb)
+ 		ses = c->cn_session;
+ 	}
+ 	spin_unlock(&clp->cl_lock);
++	if (!c)
++		return;
+ 
+ 	err = setup_callback_client(clp, &conn, ses);
+ 	if (err) {
 -- 
 2.43.0
 
