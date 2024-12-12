@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A65F1F2381;
-	Thu, 12 Dec 2024 17:16:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E6614F218;
+	Thu, 12 Dec 2024 17:16:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734023794; cv=none; b=Ccznp2bOdvF3CA2R4tirmL2EfVnHhR7fLbq5qwhG8SmZNX73jmnwlfe8uh/Nj/lZWec+ZbLuYMDbrdMJwHoSmBD6OK8owhdTnZbTDagOvya5WjmN2pIE3fPU6WzJO8JqOGfc/qad4EfQILwwJp9v9YsskEXd/Bq+b9PuTejUqG4=
+	t=1734023797; cv=none; b=LY/5TbQWMCCGDvb45Dgtsp4kmaVIjy8o4RxiqDa+jruKLH5Dtu6T90dTNgMUjArv+LvTvQrXML4oobeVRzEHZcOQ4uBj5K57Vxidv2WlmabnBA62Ydev8P1NK07jEak0hGIV4FMnhFTlPaXb/BwMIwhXIV07X9kHJHdmjPdnrjo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734023794; c=relaxed/simple;
-	bh=gPrRNxUZfnu4c33NwyVaxZFdcKNWPLGNTs6+q6k/f6A=;
+	s=arc-20240116; t=1734023797; c=relaxed/simple;
+	bh=1ZxN9CcJhGMg1MGE2YOElUZHT7HQ7LJl8YDhsA/jy8k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gPiQ4no16cFHihv9Wu3/HV+JATjnifokNUzkEI69GZ/PTFqBL63/DqgXOyJwYOWYe/Qe9HEMYHrpkkekTnIViAdFKqcn1eB4ZzqF6GC9SAYCQe4QL4cZc5Ik9hFu440IqSzI1YstlokfgRoKKENU2gXK1cvSMeayENgogsaOthY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w9etNfx4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=BsiBUTdDuKULyKQdS8EsbYLrIBE1C43NbpX9CVkZG34m2s5H5/4AwaqDpo/2K4wQvChO9vs0Z9ejVkrJUSORDKCVqvsbWsWJ963pDOVeX8CcWFIBUNfxZwdhp4LZAvpA8Ybk/dfh1udDZG8q6St7LBEyWMAP3poH7t9TPq0NAS4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k1a1Bq6i; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w9etNfx4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEED7C4CECE;
-	Thu, 12 Dec 2024 17:16:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k1a1Bq6i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03C99C4CECE;
+	Thu, 12 Dec 2024 17:16:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734023794;
-	bh=gPrRNxUZfnu4c33NwyVaxZFdcKNWPLGNTs6+q6k/f6A=;
+	s=korg; t=1734023797;
+	bh=1ZxN9CcJhGMg1MGE2YOElUZHT7HQ7LJl8YDhsA/jy8k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w9etNfx4QWiIy7qL30wacZ4dbN519udr62gvCI3ZiOVCc2Tf50vNpzqHT1GuRIGxo
-	 wWOssayd6ev21/mxtALNpPvh4b80dLqcW8gieuMiACisDbjp/AidnydfoCfMsY40jV
-	 rZxb2aZtXi33oGaTAGe7Zr8j1ucD82pWiXXqz/uA=
+	b=k1a1Bq6iv4Hgv7UM6A3zhfnFDOPhRU5BB8/yt0oIDJNilwAMvrAKmgK/8GNOIA9vm
+	 SKsjEiXnZctP85RGy738lMH3PcFTwIKsU81J0CrBxNMF4I11mrUusNS2a4lvmlPaq6
+	 0WsYs+oWSk8Gz99h/mclCOODAWPkAr8uB7+dXJEE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 083/459] soc: qcom: geni-se: fix array underflow in geni_se_clk_tbl_get()
-Date: Thu, 12 Dec 2024 15:57:01 +0100
-Message-ID: <20241212144256.796753053@linuxfoundation.org>
+Subject: [PATCH 5.10 084/459] mmc: mmc_spi: drop buggy snprintf()
+Date: Thu, 12 Dec 2024 15:57:02 +0100
+Message-ID: <20241212144256.838493267@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144253.511169641@linuxfoundation.org>
 References: <20241212144253.511169641@linuxfoundation.org>
@@ -45,44 +46,68 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-[ Upstream commit 78261cb08f06c93d362cab5c5034bf5899bc7552 ]
+[ Upstream commit 328bda09cc91b3d93bc64f4a4dadc44313dd8140 ]
 
-This loop is supposed to break if the frequency returned from
-clk_round_rate() is the same as on the previous iteration.  However,
-that check doesn't make sense on the first iteration through the loop.
-It leads to reading before the start of these->clk_perf_tbl[] array.
+GCC 13 complains about the truncated output of snprintf():
 
-Fixes: eddac5af0654 ("soc: qcom: Add GENI based QUP Wrapper driver")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://lore.kernel.org/r/8cd12678-f44a-4b16-a579-c8f11175ee8c@stanley.mountain
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+drivers/mmc/host/mmc_spi.c: In function ‘mmc_spi_response_get’:
+drivers/mmc/host/mmc_spi.c:227:64: error: ‘snprintf’ output may be truncated before the last format character [-Werror=format-truncation=]
+  227 |         snprintf(tag, sizeof(tag), "  ... CMD%d response SPI_%s",
+      |                                                                ^
+drivers/mmc/host/mmc_spi.c:227:9: note: ‘snprintf’ output between 26 and 43 bytes into a destination of size 32
+  227 |         snprintf(tag, sizeof(tag), "  ... CMD%d response SPI_%s",
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  228 |                 cmd->opcode, maptype(cmd));
+
+Drop it and fold the string it generates into the only place where it's
+emitted - the dev_dbg() call at the end of the function.
+
+Fixes: 15a0580ced08 ("mmc_spi host driver")
+Suggested-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Link: https://lore.kernel.org/r/20241008160134.69934-1-brgl@bgdev.pl
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/qcom/qcom-geni-se.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/mmc/host/mmc_spi.c | 9 +++------
+ 1 file changed, 3 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/soc/qcom/qcom-geni-se.c b/drivers/soc/qcom/qcom-geni-se.c
-index 0dbca679bd32f..0d4b48f135855 100644
---- a/drivers/soc/qcom/qcom-geni-se.c
-+++ b/drivers/soc/qcom/qcom-geni-se.c
-@@ -553,7 +553,8 @@ int geni_se_clk_tbl_get(struct geni_se *se, unsigned long **tbl)
+diff --git a/drivers/mmc/host/mmc_spi.c b/drivers/mmc/host/mmc_spi.c
+index a1fb5d0e9553a..d85e5f7f5011d 100644
+--- a/drivers/mmc/host/mmc_spi.c
++++ b/drivers/mmc/host/mmc_spi.c
+@@ -230,10 +230,6 @@ static int mmc_spi_response_get(struct mmc_spi_host *host,
+ 	u8 	leftover = 0;
+ 	unsigned short rotator;
+ 	int 	i;
+-	char	tag[32];
+-
+-	snprintf(tag, sizeof(tag), "  ... CMD%d response SPI_%s",
+-		cmd->opcode, maptype(cmd));
  
- 	for (i = 0; i < MAX_CLK_PERF_LEVEL; i++) {
- 		freq = clk_round_rate(se->clk, freq + 1);
--		if (freq <= 0 || freq == se->clk_perf_tbl[i - 1])
-+		if (freq <= 0 ||
-+		    (i > 0 && freq == se->clk_perf_tbl[i - 1]))
- 			break;
- 		se->clk_perf_tbl[i] = freq;
+ 	/* Except for data block reads, the whole response will already
+ 	 * be stored in the scratch buffer.  It's somewhere after the
+@@ -386,8 +382,9 @@ static int mmc_spi_response_get(struct mmc_spi_host *host,
  	}
+ 
+ 	if (value < 0)
+-		dev_dbg(&host->spi->dev, "%s: resp %04x %08x\n",
+-			tag, cmd->resp[0], cmd->resp[1]);
++		dev_dbg(&host->spi->dev,
++			"  ... CMD%d response SPI_%s: resp %04x %08x\n",
++			cmd->opcode, maptype(cmd), cmd->resp[0], cmd->resp[1]);
+ 
+ 	/* disable chipselect on errors and some success cases */
+ 	if (value >= 0 && cs_on)
 -- 
 2.43.0
 
