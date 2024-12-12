@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B0AF223E77;
-	Thu, 12 Dec 2024 17:43:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C6E822370C;
+	Thu, 12 Dec 2024 17:43:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734025431; cv=none; b=Vla5h5EBeCh4kCdcp2n6qf0Olf4WXooV2LdFkDA0XfnHJ1LeZrc5enQCOy1IeynENBvkYzF9DtmQ8Ni3Hnyt7aajuPBJViagqjrH2AG0Hw6jJKUscXXdR/qqNecreSrBO0+SxhID3zsTI1Mnjr20FIIIbA32lLTUDBTHxK7kR7M=
+	t=1734025435; cv=none; b=OZdixfYbJyr0dTMizkYjdC7TSbM1QYze2F3EaDXF/KlBPSXGpKYn1GnJmLN7hpeABJLR48QPrysESZccbD1laKS0B26VLZhdWC3PKDTXqgPjmk1D94qcl25SxUFqEjiX8PphhtSYvg/v0iR2RmT4ssD8bfUP0YI5LpIQvULiDkk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734025431; c=relaxed/simple;
-	bh=eq2E/Vps1O0CL0pyDU54obhV6Z3Z4gUreU3y+oJiUs8=;
+	s=arc-20240116; t=1734025435; c=relaxed/simple;
+	bh=yW+4VT8LVR0MX0Gjtpdjn3w354bqYuMWY1FhQtv9TP8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AlSRIQT3Jq6ZHzjCzygL/uY/iy5PTJtXaTuc9+bO93jY0YNCTkLk2cugnH1WVRRk2H5GbO40tkcIHGN0sEi4uibWiPTWLm/PNcuDFjC9koggyQUI+FlLG9k6a9NisoW/CvO0WfWUAC06+UPxjKJvHOmV5xWZ6Oc/l6AH/2ScecQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MmYEUjy+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BIarUXNxC37oV+EBlhmW6WG28xMwj+T/+wqNVC+z4VksfhfclPZraxcVNbYou54wxue3O9/W7qJZF6RnR89AiKwtch9jP3rQelIz/f6ExkPgrLeNN5O7hEsx/vBaTDvuv9J4xW4MxQeleGH/g8jKjw0zgwrvzqDMxCgtlXfm0iM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HR0jsI/k; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MmYEUjy+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D124C4CECE;
-	Thu, 12 Dec 2024 17:43:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HR0jsI/k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D7FFC4CEDD;
+	Thu, 12 Dec 2024 17:43:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734025431;
-	bh=eq2E/Vps1O0CL0pyDU54obhV6Z3Z4gUreU3y+oJiUs8=;
+	s=korg; t=1734025434;
+	bh=yW+4VT8LVR0MX0Gjtpdjn3w354bqYuMWY1FhQtv9TP8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MmYEUjy+4VncxmzmUDJ0zMv3k6ny3IpZvuH3mLWwFGk84JagacY/Z1K9Owf3q54YX
-	 wKQlUnSMddLQaeHWDA9tVNA3S1A2Y/hQYsd2044QNM2Tf84qs8yJdcwUyGdo8/qT+c
-	 Fah+YHA/8Ci8a/7VvLdFdx9JC0FEM4f3ylEQJfz0=
+	b=HR0jsI/kL+S5DpSvjAPPPrjtthK54Gr6o91OeFd5mPDhggux6ftXtuQ9E9f+Z9jL9
+	 3eZDqnidRVr0YhvkLM/+Ecmx+d6ccz3vDpKv7+6gRDr30TQ65CZEzVQQa1ZpPe1JZL
+	 qFxmeaBmyK+u7BzdZn81k1wg22WHkTFIWZz5PB7Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Gerecke <jason.gerecke@wacom.com>,
-	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 5.4 167/321] HID: wacom: Interpret tilt data from Intuos Pro BT as signed values
-Date: Thu, 12 Dec 2024 16:01:25 +0100
-Message-ID: <20241212144236.574564357@linuxfoundation.org>
+	Qiu-ji Chen <chenqiuji666@gmail.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Subject: [PATCH 5.4 168/321] media: wl128x: Fix atomicity violation in fmc_send_cmd()
+Date: Thu, 12 Dec 2024 16:01:26 +0100
+Message-ID: <20241212144236.614578733@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144229.291682835@linuxfoundation.org>
 References: <20241212144229.291682835@linuxfoundation.org>
@@ -50,41 +50,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason Gerecke <jason.gerecke@wacom.com>
+From: Qiu-ji Chen <chenqiuji666@gmail.com>
 
-commit 49a397ad24ee5e2c53a59dada2780d7e71bd3f77 upstream.
+commit ca59f9956d4519ab18ab2270be47c6b8c6ced091 upstream.
 
-The tilt data contained in the Bluetooth packets of an Intuos Pro are
-supposed to be interpreted as signed values. Simply casting the values
-to type `char` is not guaranteed to work since it is implementation-
-defined whether it is signed or unsigned. At least one user has noticed
-the data being reported incorrectly on their system. To ensure that the
-data is interpreted properly, we specifically cast to `signed char`
-instead.
+Atomicity violation occurs when the fmc_send_cmd() function is executed
+simultaneously with the modification of the fmdev->resp_skb value.
+Consider a scenario where, after passing the validity check within the
+function, a non-null fmdev->resp_skb variable is assigned a null value.
+This results in an invalid fmdev->resp_skb variable passing the validity
+check. As seen in the later part of the function, skb = fmdev->resp_skb;
+when the invalid fmdev->resp_skb passes the check, a null pointer
+dereference error may occur at line 478, evt_hdr = (void *)skb->data;
 
-Link: https://github.com/linuxwacom/input-wacom/issues/445
-Fixes: 4922cd26f03c ("HID: wacom: Support 2nd-gen Intuos Pro's Bluetooth classic interface")
-CC: stable@vger.kernel.org # 4.11+
-Signed-off-by: Jason Gerecke <jason.gerecke@wacom.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+To address this issue, it is recommended to include the validity check of
+fmdev->resp_skb within the locked section of the function. This
+modification ensures that the value of fmdev->resp_skb does not change
+during the validation process, thereby maintaining its validity.
+
+This possible bug is found by an experimental static analysis tool
+developed by our team. This tool analyzes the locking APIs
+to extract function pairs that can be concurrently executed, and then
+analyzes the instructions in the paired functions to identify possible
+concurrency bugs including data races and atomicity violations.
+
+Fixes: e8454ff7b9a4 ("[media] drivers:media:radio: wl128x: FM Driver Common sources")
+Cc: stable@vger.kernel.org
+Signed-off-by: Qiu-ji Chen <chenqiuji666@gmail.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/wacom_wac.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/media/radio/wl128x/fmdrv_common.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/hid/wacom_wac.c
-+++ b/drivers/hid/wacom_wac.c
-@@ -1394,9 +1394,9 @@ static void wacom_intuos_pro2_bt_pen(str
- 					rotation -= 1800;
- 
- 				input_report_abs(pen_input, ABS_TILT_X,
--						 (char)frame[7]);
-+						 (signed char)frame[7]);
- 				input_report_abs(pen_input, ABS_TILT_Y,
--						 (char)frame[8]);
-+						 (signed char)frame[8]);
- 				input_report_abs(pen_input, ABS_Z, rotation);
- 				input_report_abs(pen_input, ABS_WHEEL,
- 						 get_unaligned_le16(&frame[11]));
+--- a/drivers/media/radio/wl128x/fmdrv_common.c
++++ b/drivers/media/radio/wl128x/fmdrv_common.c
+@@ -463,11 +463,12 @@ int fmc_send_cmd(struct fmdev *fmdev, u8
+ 			   jiffies_to_msecs(FM_DRV_TX_TIMEOUT) / 1000);
+ 		return -ETIMEDOUT;
+ 	}
++	spin_lock_irqsave(&fmdev->resp_skb_lock, flags);
+ 	if (!fmdev->resp_skb) {
++		spin_unlock_irqrestore(&fmdev->resp_skb_lock, flags);
+ 		fmerr("Response SKB is missing\n");
+ 		return -EFAULT;
+ 	}
+-	spin_lock_irqsave(&fmdev->resp_skb_lock, flags);
+ 	skb = fmdev->resp_skb;
+ 	fmdev->resp_skb = NULL;
+ 	spin_unlock_irqrestore(&fmdev->resp_skb_lock, flags);
 
 
