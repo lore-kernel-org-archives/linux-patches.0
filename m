@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B00022135C1;
-	Thu, 12 Dec 2024 15:32:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAC40215774;
+	Thu, 12 Dec 2024 15:32:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734017558; cv=none; b=oJsa76urR/ElmBLBD7h7ePeEG/JakEJdhcLPMjOW4hixFb8RpoD3438F7U/R4/8PVQb7ZwHZDN7YAr7OdM+in7egZRddWnqdklEAnNRxfm+8ddy6atp8re/dwvnU/lhJupM0SBdGb7hY4gPRc9kyg/eVYjTJV4Dt0ZTmUZ+GIQs=
+	t=1734017562; cv=none; b=RQT4kPXrX9enmmDAUwZeIUyHYgyt3MOeLMtfHNgRpB2nPccjODDbfUVmk9Af/fQ8WGAofsZQZodYJwj7r5drYOTqinCfqG75ng5DKhDSrFvV39VnyhQKMLNgi2AywclF7cD7ANQhgdt96lIEwoKmf/o+7YPXwl5G2P22LEkHHYc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734017558; c=relaxed/simple;
-	bh=9g1hZoZrmX3uHssOLvxDGaw1W0x+kcY2xEwGkRrKXfk=;
+	s=arc-20240116; t=1734017562; c=relaxed/simple;
+	bh=qGEJmUhj9Q8NzZbwZmHXxHyegz+hk7r5FiVCe0MHH2s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a9pDB5BSzPxiZ/ilvP4ouIkhDIs9pDw9YwMr5CnFnd2OQK3YLBjic9MZKq57q2zI3gSKjNlNPwG+uKRHpm7M3AdwKCCDPTmcbiqDYHUduoIknKlwpEd4c0CO6d0whkvMYZE7cDVPEUsFWbA0i48FxE2GQQvUocCGf6hGitteZLM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lAkzxm6V; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iuUQd20zYfl3gtoomEqDsMtchYW4Ad7rTCGNRki4xCcHGzKNhLVuRstDSSNub+c1JgP+fqGwamY+zfw9CE6WlthD31Aup0k6FjCJHvZ7tDeXR9NM6QNL+puqKNMMj72nSJWQgKzGD8CKyn+wkb5vm7iY+DuYN5ngZpuLNz8hr4A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MQy2G86+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lAkzxm6V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B812C4CECE;
-	Thu, 12 Dec 2024 15:32:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MQy2G86+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EF76C4CEDE;
+	Thu, 12 Dec 2024 15:32:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734017558;
-	bh=9g1hZoZrmX3uHssOLvxDGaw1W0x+kcY2xEwGkRrKXfk=;
+	s=korg; t=1734017561;
+	bh=qGEJmUhj9Q8NzZbwZmHXxHyegz+hk7r5FiVCe0MHH2s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lAkzxm6VOydv5KnArKlMJOK8RPg5Q+KGXvkNmR2C5GWyuIkiN8XajRbC9FU5Z9X2f
-	 CurH7A8hJeg0ycwSH/RTuORcOXRQBUFDsM30EMm3N8F25sNb13bWQcf6ol7I2xqZ5D
-	 /0y1dD+CBRMuWjUh/Ckcac+RxqHvoe3/XbVHIodQ=
+	b=MQy2G86+nlu9Lsu6oolbXvLMIOoJul6lmBqCHS466mSNbFClvsS6vKZ6cvOBABKo7
+	 jDIKGljzhNiD+o20Md7s+1+/dQa6Rn1iGgwOmyMFoXc5U4yOftx8U4Ib+q17Ler9Vu
+	 Ma1WlbF501ZS4SFo8nqaWmTyrmySCF67nHIXleMM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yifei Liu <yifei.l.liu@oracle.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	Rafal Romanowski <rafal.romanowski@intel.com>,
+	Yuan Can <yuancan@huawei.com>,
 	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 047/356] ixgbe: downgrade logging of unsupported VF API version to debug
-Date: Thu, 12 Dec 2024 15:56:06 +0100
-Message-ID: <20241212144246.492003531@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>,
+	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
+Subject: [PATCH 6.6 048/356] igb: Fix potential invalid memory access in igb_init_module()
+Date: Thu, 12 Dec 2024 15:56:07 +0100
+Message-ID: <20241212144246.532070567@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144244.601729511@linuxfoundation.org>
 References: <20241212144244.601729511@linuxfoundation.org>
@@ -54,71 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jacob Keller <jacob.e.keller@intel.com>
+From: Yuan Can <yuancan@huawei.com>
 
-[ Upstream commit 15915b43a7fb938934bb7fc4290127218859d795 ]
+[ Upstream commit 0566f83d206c7a864abcd741fe39d6e0ae5eef29 ]
 
-The ixgbe PF driver logs an info message when a VF attempts to negotiate an
-API version which it does not support:
+The pci_register_driver() can fail and when this happened, the dca_notifier
+needs to be unregistered, otherwise the dca_notifier can be called when
+igb fails to install, resulting to invalid memory access.
 
-  VF 0 requested invalid api version 6
-
-The ixgbevf driver attempts to load with mailbox API v1.5, which is
-required for best compatibility with other hosts such as the ESX VMWare PF.
-
-The Linux PF only supports API v1.4, and does not currently have support
-for the v1.5 API.
-
-The logged message can confuse users, as the v1.5 API is valid, but just
-happens to not currently be supported by the Linux PF.
-
-Downgrade the info message to a debug message, and fix the language to
-use 'unsupported' instead of 'invalid' to improve message clarity.
-
-Long term, we should investigate whether the improvements in the v1.5 API
-make sense for the Linux PF, and if so implement them properly. This may
-require yet another API version to resolve issues with negotiating IPSEC
-offload support.
-
-Fixes: 339f28964147 ("ixgbevf: Add support for new mailbox communication between PF and VF")
-Reported-by: Yifei Liu <yifei.l.liu@oracle.com>
-Link: https://lore.kernel.org/intel-wired-lan/20240301235837.3741422-1-yifei.l.liu@oracle.com/
-Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
-Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
+Fixes: bbd98fe48a43 ("igb: Fix DCA errors and do not use context index for 82576")
+Signed-off-by: Yuan Can <yuancan@huawei.com>
+Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
 Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ixgbe/ixgbe_common.h | 2 ++
- drivers/net/ethernet/intel/ixgbe/ixgbe_sriov.c  | 2 +-
- 2 files changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/intel/igb/igb_main.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/net/ethernet/intel/ixgbe/ixgbe_common.h b/drivers/net/ethernet/intel/ixgbe/ixgbe_common.h
-index 34761e691d52d..efdc222e183d1 100644
---- a/drivers/net/ethernet/intel/ixgbe/ixgbe_common.h
-+++ b/drivers/net/ethernet/intel/ixgbe/ixgbe_common.h
-@@ -194,6 +194,8 @@ u32 ixgbe_read_reg(struct ixgbe_hw *hw, u32 reg);
- 	dev_err(&adapter->pdev->dev, format, ## arg)
- #define e_dev_notice(format, arg...) \
- 	dev_notice(&adapter->pdev->dev, format, ## arg)
-+#define e_dbg(msglvl, format, arg...) \
-+	netif_dbg(adapter, msglvl, adapter->netdev, format, ## arg)
- #define e_info(msglvl, format, arg...) \
- 	netif_info(adapter, msglvl, adapter->netdev, format, ## arg)
- #define e_err(msglvl, format, arg...) \
-diff --git a/drivers/net/ethernet/intel/ixgbe/ixgbe_sriov.c b/drivers/net/ethernet/intel/ixgbe/ixgbe_sriov.c
-index d0a6c220a12ac..9c89a87e35e01 100644
---- a/drivers/net/ethernet/intel/ixgbe/ixgbe_sriov.c
-+++ b/drivers/net/ethernet/intel/ixgbe/ixgbe_sriov.c
-@@ -1049,7 +1049,7 @@ static int ixgbe_negotiate_vf_api(struct ixgbe_adapter *adapter,
- 		break;
- 	}
- 
--	e_info(drv, "VF %d requested invalid api version %u\n", vf, api);
-+	e_dbg(drv, "VF %d requested unsupported api version %u\n", vf, api);
- 
- 	return -1;
+diff --git a/drivers/net/ethernet/intel/igb/igb_main.c b/drivers/net/ethernet/intel/igb/igb_main.c
+index 49b349fa22542..c38be2880efcf 100644
+--- a/drivers/net/ethernet/intel/igb/igb_main.c
++++ b/drivers/net/ethernet/intel/igb/igb_main.c
+@@ -665,6 +665,10 @@ static int __init igb_init_module(void)
+ 	dca_register_notify(&dca_notifier);
+ #endif
+ 	ret = pci_register_driver(&igb_driver);
++#ifdef CONFIG_IGB_DCA
++	if (ret)
++		dca_unregister_notify(&dca_notifier);
++#endif
+ 	return ret;
  }
+ 
 -- 
 2.43.0
 
