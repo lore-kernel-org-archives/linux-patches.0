@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ADC8215764;
-	Thu, 12 Dec 2024 17:28:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 960E5215764;
+	Thu, 12 Dec 2024 17:28:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734024502; cv=none; b=Ilx9F5+OxXTvJXoYn9CBUL9fVjANdEV9PV8kIeeZBhB0ZriUrrVH6ifEYCc6NM+FZbTgyqVjTtQTHs4vR5Rx+fNZwyf5MiykaW2u69KqC0H33i37cUGZL5HnUcqE5Vr9YWZuXA8ee7ncI0JgfijWF5Uw1VF/mx4LOMqlzc8t2vg=
+	t=1734024505; cv=none; b=lxhk4a1nxPdvzlG8/KiyoaMrO16Tjr250TKd53xgLws9v76lnCAQtowXK0lxOESn10VrXRT7U11tkQjtmuJopCBRpsaUHvPukwT7sUIi1/EA9QZ50K633fBY8uqYyuCfRkmqMYRjTyA5Qf+/VM76YT+WIofZWHPOUUYVAlQgXZ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734024502; c=relaxed/simple;
-	bh=gQ+qFUOIojTPeb/EI8hJ48noAOqdwXQr5ZVVL/XOJZM=;
+	s=arc-20240116; t=1734024505; c=relaxed/simple;
+	bh=P15TW9F4MboHJKCX2mWs0AukkMqV88d/Q0OHfdN/9DA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WW21v8vOZSqIUfJXpABMy056Ak+KKjcVVNDcXTSQwr/J6+t1abHVU2tS5SnbOgDGhOsr6n20EnbPjqcOnQTNlcG/mqgxaDg/HhLMbXKH1k+OxgoANGh7hF9il6X43Mh3MallnefJQSmiYZECUF7R2ER0xo3pUHGFSfKyRYwahxk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bi+qrib1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qGVEKRqiee4mskq0MyF6dneFJavf9fTSwNrKUGj0r74YJvbgSl4XjulkxsEwI0lWWK9IYpGuSACOPqqjuMPSHrXeFNbFv3B7+kxyj1uWLDjnVWpp4+X6wPf9RxzL2uhfLQSOssngXIXNzSy5ww8EAY+x20utoOK7f67iL+o2dN8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lorZ29PP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bi+qrib1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E89CCC4CED0;
-	Thu, 12 Dec 2024 17:28:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lorZ29PP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10577C4CED0;
+	Thu, 12 Dec 2024 17:28:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734024502;
-	bh=gQ+qFUOIojTPeb/EI8hJ48noAOqdwXQr5ZVVL/XOJZM=;
+	s=korg; t=1734024505;
+	bh=P15TW9F4MboHJKCX2mWs0AukkMqV88d/Q0OHfdN/9DA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Bi+qrib1DvI1TnscPRcGc3BArkwV4BM9cp8lNn9BG54C1Q+h/mUeAlKmloM8KnyQw
-	 QLTBhndxeq3Y/30NXlc18S3NJTQ0eq2mE3BtbHK6RF7bK7aoW5PhcXhrXeDUZeH6pU
-	 025eCNXY5dAE6X9/6zqoXHadjhOB3HO7VHud9Zec=
+	b=lorZ29PPTO2CCuH1jrIhJt2bSLONwjlEav57dQmbHWeG0t/9C91uTnVSDjJqRjDyI
+	 2/EVxjMbqiAIWHBLPCynyxVGSgehqzhY9pp+jzRDGJwGbMEB7tQDpHLGcPvGQdlMfk
+	 aCrXPQOz/hCH9/J4h1uiUUjm2kifVcNF/CS7owTI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Lew <quic_clew@quicinc.com>,
-	Bjorn Andersson <quic_bjorande@quicinc.com>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 5.10 287/459] rpmsg: glink: Propagate TX failures in intentless mode as well
-Date: Thu, 12 Dec 2024 16:00:25 +0100
-Message-ID: <20241212144304.970681365@linuxfoundation.org>
+	Tiwei Bie <tiwei.btw@antgroup.com>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 288/459] um: Fix potential integer overflow during physmem setup
+Date: Thu, 12 Dec 2024 16:00:26 +0100
+Message-ID: <20241212144305.010280215@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144253.511169641@linuxfoundation.org>
 References: <20241212144253.511169641@linuxfoundation.org>
@@ -51,56 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bjorn Andersson <quic_bjorande@quicinc.com>
+From: Tiwei Bie <tiwei.btw@antgroup.com>
 
-commit 7a68f9fa97357a0f2073c9c31ed4101da4fce93e upstream.
+[ Upstream commit a98b7761f697e590ed5d610d87fa12be66f23419 ]
 
-As support for splitting transmission over several messages using
-TX_DATA_CONT was introduced it does not immediately return the return
-value of qcom_glink_tx().
+This issue happens when the real map size is greater than LONG_MAX,
+which can be easily triggered on UML/i386.
 
-The result is that in the intentless case (i.e. intent == NULL), the
-code will continue to send all additional chunks. This is wasteful, and
-it's possible that the send operation could incorrectly indicate
-success, if the last chunk fits in the TX fifo.
-
-Fix the condition.
-
-Fixes: 8956927faed3 ("rpmsg: glink: Add TX_DATA_CONT command while sending")
-Reviewed-by: Chris Lew <quic_clew@quicinc.com>
-Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20230418163018.785524-2-quic_bjorande@quicinc.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: fe205bdd1321 ("um: Print minimum physical memory requirement")
+Signed-off-by: Tiwei Bie <tiwei.btw@antgroup.com>
+Link: https://patch.msgid.link/20240916045950.508910-3-tiwei.btw@antgroup.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rpmsg/qcom_glink_native.c |   10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ arch/um/kernel/physmem.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/rpmsg/qcom_glink_native.c
-+++ b/drivers/rpmsg/qcom_glink_native.c
-@@ -1355,8 +1355,9 @@ static int __qcom_glink_send(struct glin
- 	ret = qcom_glink_tx(glink, &req, sizeof(req), data, chunk_size, wait);
+diff --git a/arch/um/kernel/physmem.c b/arch/um/kernel/physmem.c
+index e7c7b53a1435b..87b51089b0616 100644
+--- a/arch/um/kernel/physmem.c
++++ b/arch/um/kernel/physmem.c
+@@ -80,10 +80,10 @@ void __init setup_physmem(unsigned long start, unsigned long reserve_end,
+ 			  unsigned long len, unsigned long long highmem)
+ {
+ 	unsigned long reserve = reserve_end - start;
+-	long map_size = len - reserve;
++	unsigned long map_size = len - reserve;
+ 	int err;
  
- 	/* Mark intent available if we failed */
--	if (ret && intent) {
--		intent->in_use = false;
-+	if (ret) {
-+		if (intent)
-+			intent->in_use = false;
- 		return ret;
- 	}
- 
-@@ -1377,8 +1378,9 @@ static int __qcom_glink_send(struct glin
- 				    chunk_size, wait);
- 
- 		/* Mark intent available if we failed */
--		if (ret && intent) {
--			intent->in_use = false;
-+		if (ret) {
-+			if (intent)
-+				intent->in_use = false;
- 			break;
- 		}
- 	}
+-	if(map_size <= 0) {
++	if (len <= reserve) {
+ 		os_warn("Too few physical memory! Needed=%lu, given=%lu\n",
+ 			reserve, len);
+ 		exit(1);
+@@ -94,7 +94,7 @@ void __init setup_physmem(unsigned long start, unsigned long reserve_end,
+ 	err = os_map_memory((void *) reserve_end, physmem_fd, reserve,
+ 			    map_size, 1, 1, 1);
+ 	if (err < 0) {
+-		os_warn("setup_physmem - mapping %ld bytes of memory at 0x%p "
++		os_warn("setup_physmem - mapping %lu bytes of memory at 0x%p "
+ 			"failed - errno = %d\n", map_size,
+ 			(void *) reserve_end, err);
+ 		exit(1);
+-- 
+2.43.0
+
 
 
