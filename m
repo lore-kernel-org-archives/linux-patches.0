@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6382122969A;
-	Thu, 12 Dec 2024 16:14:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B66421765B;
+	Thu, 12 Dec 2024 16:14:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734020087; cv=none; b=oJCS5D+yebdVcZKPvAFqyliPGi+PzZulhB2x/26UY1CDUmfPlzE3nPtZMMgyu2CiJuiEX36DPppRAAlmlojTZN0pCp4OH1tQIzdUZvyxqjaIULbEBXMIIj/dxazBLjv2iGNEi1gvTWYWfNGGg2WIzYY+mJsbodz4Wizj9LQz7qQ=
+	t=1734020091; cv=none; b=rvLOKp4rK+oJFwyfRKk9Z0hq+ObZCb6+/WPzPb217HHvR412yN5u2wAONxJLQDvOveBVYsywyCXHzC7jj+aL11ciFKpCvIbWskdbXu8zvd7mcZI1u/dBH+gj+UPV3Y6dQ8uOIS8QwEeV1Mmma6cjsRGv0hvDzdtkopCSMrrwmXE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734020087; c=relaxed/simple;
-	bh=1dHYo5BrLtqrve83hhg6UWQTZbVxlU6Ke0bOURb3C2g=;
+	s=arc-20240116; t=1734020091; c=relaxed/simple;
+	bh=KajzymmL5WbioXfoukf7VY5kYtXb6xaBlL0YObb2EXw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QzUHsTY0ShsGDacMHfAs+NJvnqlJ+MLSjkFtUtxr+7KVDJJcgvNNbJGSUAC+RqNlWhvs7U1x+wOmhT+4A62bIs0b8BfMHQrocMFk1NM1uh3yI9wmUohscjklfSzg8CVKIrBPDdD+WUs4vjCVTsQbGJdDkg7ThkrNMMFnxbfcp8Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nfYFidwr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=E0JR1xSOrCpvhqzppaqEoIfel19qIylBOfpP3CRDTZwnCjhdaxrNqzwBwLL20qH9HptVNeFpBmAyulQUOw6HOfu8HI+NKvEVUFe3wSbInlj9VQTINgDwhUpSpzxsGgD2H8V/2poiBtwaqw0C4CY/QHbo7dLVnrQOCTVvY8fU87c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lHiYN74Q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nfYFidwr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7633C4CECE;
-	Thu, 12 Dec 2024 16:14:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lHiYN74Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB493C4CECE;
+	Thu, 12 Dec 2024 16:14:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734020087;
-	bh=1dHYo5BrLtqrve83hhg6UWQTZbVxlU6Ke0bOURb3C2g=;
+	s=korg; t=1734020091;
+	bh=KajzymmL5WbioXfoukf7VY5kYtXb6xaBlL0YObb2EXw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nfYFidwrAINxIC/5c9uBqweucusau79D1MfbSzLizk+JX8Jyh8iGPDJhYnxcuvMJD
-	 D5xYC0BIBMjOC/XVyHzkbFs5dseCD2rj3cFvbacjsJvHO1McglTTcX94ecWYHJ2Lps
-	 FDDBkf487xtQKs9n/Xex2kK6/eBb5AH9/JaoBtPU=
+	b=lHiYN74QH2RDMvs42BtnNZUE3iKvcWEI5NI7JoKzP3ekXckLszBAA+bkwH62LAPZz
+	 gnStBt/7bPqOGRvD19JfGBSxtwKQhKfxszFHTAFAz3IfolOeqh6bu+/ZJ2UbazLSzv
+	 XKOL+g7UIzIrwGvhUNNKMfRuDjz+6SWs8E45T9Fs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miklos Szeredi <miklos@szeredi.hu>,
-	Amir Goldstein <amir73il@gmail.com>,
-	Jan Kara <jack@suse.cz>
-Subject: [PATCH 6.1 374/772] fsnotify: fix sending inotify event with unexpected filename
-Date: Thu, 12 Dec 2024 15:55:19 +0100
-Message-ID: <20241212144405.363770994@linuxfoundation.org>
+	Jann Horn <jannh@google.com>
+Subject: [PATCH 6.1 375/772] comedi: Flush partial mappings in error case
+Date: Thu, 12 Dec 2024 15:55:20 +0100
+Message-ID: <20241212144405.402682218@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -51,90 +49,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Amir Goldstein <amir73il@gmail.com>
+From: Jann Horn <jannh@google.com>
 
-commit aa52c54da40d9eee3ba87c05cdcb0cd07c04fa13 upstream.
+commit ce8f9fb651fac95dd41f69afe54d935420b945bd upstream.
 
-We got a report that adding a fanotify filsystem watch prevents tail -f
-from receiving events.
+If some remap_pfn_range() calls succeeded before one failed, we still have
+buffer pages mapped into the userspace page tables when we drop the buffer
+reference with comedi_buf_map_put(bm). The userspace mappings are only
+cleaned up later in the mmap error path.
 
-Reproducer:
+Fix it by explicitly flushing all mappings in our VMA on the error path.
 
-1. Create 3 windows / login sessions. Become root in each session.
-2. Choose a mounted filesystem that is pretty quiet; I picked /boot.
-3. In the first window, run: fsnotifywait -S -m /boot
-4. In the second window, run: echo data >> /boot/foo
-5. In the third window, run: tail -f /boot/foo
-6. Go back to the second window and run: echo more data >> /boot/foo
-7. Observe that the tail command doesn't show the new data.
-8. In the first window, hit control-C to interrupt fsnotifywait.
-9. In the second window, run: echo still more data >> /boot/foo
-10. Observe that the tail command in the third window has now printed
-the missing data.
+See commit 79a61cc3fc04 ("mm: avoid leaving partial pfn mappings around in
+error case").
 
-When stracing tail, we observed that when fanotify filesystem mark is
-set, tail does get the inotify event, but the event is receieved with
-the filename:
-
-read(4, "\1\0\0\0\2\0\0\0\0\0\0\0\20\0\0\0foo\0\0\0\0\0\0\0\0\0\0\0\0\0",
-50) = 32
-
-This is unexpected, because tail is watching the file itself and not its
-parent and is inconsistent with the inotify event received by tail when
-fanotify filesystem mark is not set:
-
-read(4, "\1\0\0\0\2\0\0\0\0\0\0\0\0\0\0\0", 50) = 16
-
-The inteference between different fsnotify groups was caused by the fact
-that the mark on the sb requires the filename, so the filename is passed
-to fsnotify().  Later on, fsnotify_handle_event() tries to take care of
-not passing the filename to groups (such as inotify) that are interested
-in the filename only when the parent is watching.
-
-But the logic was incorrect for the case that no group is watching the
-parent, some groups are watching the sb and some watching the inode.
-
-Reported-by: Miklos Szeredi <miklos@szeredi.hu>
-Fixes: 7372e79c9eb9 ("fanotify: fix logic of reporting name info with watched parent")
-Cc: stable@vger.kernel.org # 5.10+
-Signed-off-by: Amir Goldstein <amir73il@gmail.com>
-Signed-off-by: Jan Kara <jack@suse.cz>
+Cc: stable@vger.kernel.org
+Fixes: ed9eccbe8970 ("Staging: add comedi core")
+Signed-off-by: Jann Horn <jannh@google.com>
+Link: https://lore.kernel.org/r/20241017-comedi-tlb-v3-1-16b82f9372ce@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/notify/fsnotify.c |   23 +++++++++++++----------
- 1 file changed, 13 insertions(+), 10 deletions(-)
+ drivers/comedi/comedi_fops.c |   12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
---- a/fs/notify/fsnotify.c
-+++ b/fs/notify/fsnotify.c
-@@ -310,16 +310,19 @@ static int fsnotify_handle_event(struct
- 	if (!inode_mark)
- 		return 0;
+--- a/drivers/comedi/comedi_fops.c
++++ b/drivers/comedi/comedi_fops.c
+@@ -2402,6 +2402,18 @@ static int comedi_mmap(struct file *file
  
--	if (mask & FS_EVENT_ON_CHILD) {
--		/*
--		 * Some events can be sent on both parent dir and child marks
--		 * (e.g. FS_ATTRIB).  If both parent dir and child are
--		 * watching, report the event once to parent dir with name (if
--		 * interested) and once to child without name (if interested).
--		 * The child watcher is expecting an event without a file name
--		 * and without the FS_EVENT_ON_CHILD flag.
--		 */
--		mask &= ~FS_EVENT_ON_CHILD;
-+	/*
-+	 * Some events can be sent on both parent dir and child marks (e.g.
-+	 * FS_ATTRIB).  If both parent dir and child are watching, report the
-+	 * event once to parent dir with name (if interested) and once to child
-+	 * without name (if interested).
-+	 *
-+	 * In any case regardless whether the parent is watching or not, the
-+	 * child watcher is expecting an event without the FS_EVENT_ON_CHILD
-+	 * flag. The file name is expected if and only if this is a directory
-+	 * event.
-+	 */
-+	mask &= ~FS_EVENT_ON_CHILD;
-+	if (!(mask & ALL_FSNOTIFY_DIRENT_EVENTS)) {
- 		dir = NULL;
- 		name = NULL;
+ 			start += PAGE_SIZE;
+ 		}
++
++#ifdef CONFIG_MMU
++		/*
++		 * Leaving behind a partial mapping of a buffer we're about to
++		 * drop is unsafe, see remap_pfn_range_notrack().
++		 * We need to zap the range here ourselves instead of relying
++		 * on the automatic zapping in remap_pfn_range() because we call
++		 * remap_pfn_range() in a loop.
++		 */
++		if (retval)
++			zap_vma_ptes(vma, vma->vm_start, size);
++#endif
  	}
+ 
+ 	if (retval == 0) {
 
 
