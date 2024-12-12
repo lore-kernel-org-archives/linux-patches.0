@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59CA8229678;
-	Thu, 12 Dec 2024 16:54:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BDA5231A45;
+	Thu, 12 Dec 2024 16:54:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734022486; cv=none; b=bcB6LmA68rbligC1kbfzZlCM66Mbr5Sy3BYeJr6EmCgff/QJLGzYZAW+486VC48Xjy7pOM8t2FwjdF4fcO92T549rMD0naZzAMq3jDXCCwKCw4uZDZk6usf/LAMNS4Jzn5f96SfDVKHNBSUPUGfZhZt/GXcKqn2O277xxmJy1Ng=
+	t=1734022490; cv=none; b=hXGGC6BQyK4M3wmXBlUZCa+O4OrCoGnA2J0y3F1fm6JE/0RSBoFj7cxWpQct2ZyvET0AuvxmdfBJ8Ex3Jybo9EByLWCoaAPLvCihResKTKa59uQ8TsoGZSl9RjWn3U9lKxtD/C1xNe+GWbdkXVMb0IPEEqGq/1ZrlUf5Sre7avg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734022486; c=relaxed/simple;
-	bh=HYL4k71H/uB4nCfWpaHF52uWKXzai8MWho4+4ptZvbk=;
+	s=arc-20240116; t=1734022490; c=relaxed/simple;
+	bh=Niy6NUFoFaX5cvUVKlNiibDHp8zWRP9j21344Gn3/Ik=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Myti2ttFLTqCKrzztY0lcVhIkF6E9t85VKJNWyt0D7IftvZGj+dmBlPSYxzs/NUfoRHZeP2mJlSG6RZr3I9aorawUkx8JA97AZ3exoonVX1Glyt+KB56AusedqPnxFVcIu9qD4x4ab31UWnazV/VhhRqU2QmbHYL1ZtcUBtrqeE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yfl2exch; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=E62wPB56mZ5aktWM9CS346xLGJHWXyONYOQoDSkNPHtkvTsmDljd3bWSTaGQgfXV2wWX8k+PXrVITMka4wLBfowzMkMkFHrIcqY8tu4WK+nFFQiU1tvMqucoe407c/NYXkJxtvLDmikTUcMaNV54kqQQjhhpmwtg4eWriLCTCOE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u1KHEmBQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yfl2exch"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3AB2C4CED0;
-	Thu, 12 Dec 2024 16:54:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u1KHEmBQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 864ECC4CED0;
+	Thu, 12 Dec 2024 16:54:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734022486;
-	bh=HYL4k71H/uB4nCfWpaHF52uWKXzai8MWho4+4ptZvbk=;
+	s=korg; t=1734022490;
+	bh=Niy6NUFoFaX5cvUVKlNiibDHp8zWRP9j21344Gn3/Ik=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Yfl2exchBjLq4BGFRsQX4VF0udAkLy7ZStYuj5ut3DVaQWqmdM3FUFO46w7SX8hos
-	 j4IKV+MpM93ksTTgQE78HbCdcPsROGdilTA9UOUurfQRfoKt6KJ+Z+MSNtRfL6AjXc
-	 ASJ5xMXFgZ0oY6skrvL2PgqUv2C2NyvMiaXgOMzw=
+	b=u1KHEmBQ/jLjS4SJgOHJl8w6f+8cW8MZhBT4ngjunrkcZP72cbiVxlIvzkil5jLxs
+	 iWmmon4tJslRTjvW6A0GxoQnsDqzuHxCuunhENmbayJWvVeXGMDFHQgmlbjedK+9Et
+	 Dv3hFicA2L/51jBIbyi6JWgCLaXC79e+ibTARg9A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Peng Fan <peng.fan@nxp.com>,
+	Carlos Song <carlos.song@nxp.com>,
+	Dong Aisheng <aisheng.dong@nxp.com>,
 	Abel Vesa <abel.vesa@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 223/565] clk: imx: lpcg-scu: SW workaround for errata (e10858)
-Date: Thu, 12 Dec 2024 15:56:58 +0100
-Message-ID: <20241212144320.304677003@linuxfoundation.org>
+Subject: [PATCH 5.15 224/565] clk: imx: clk-scu: fix clk enable state save and restore
+Date: Thu, 12 Dec 2024 15:56:59 +0100
+Message-ID: <20241212144320.344428231@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144311.432886635@linuxfoundation.org>
 References: <20241212144311.432886635@linuxfoundation.org>
@@ -51,111 +53,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peng Fan <peng.fan@nxp.com>
+From: Dong Aisheng <aisheng.dong@nxp.com>
 
-[ Upstream commit 5ee063fac85656bea9cfe3570af147ba1701ba18 ]
+[ Upstream commit e81361f6cf9bf4a1848b0813bc4becb2250870b8 ]
 
-Back-to-back LPCG writes can be ignored by the LPCG register due to
-a HW bug. The writes need to be separated by at least 4 cycles of
-the gated clock. See https://www.nxp.com.cn/docs/en/errata/IMX8_1N94W.pdf
+The scu clk_ops only inplements prepare() and unprepare() callback.
+Saving the clock state during suspend by checking clk_hw_is_enabled()
+is not safe as it's possible that some device drivers may only
+disable the clocks without unprepare. Then the state retention will not
+work for such clocks.
 
-The workaround is implemented as follows:
-1. For clocks running greater than or equal to 24MHz, a read
-followed by the write will provide sufficient delay.
-2. For clocks running below 24MHz, add a delay of 4 clock cylces
-after the write to the LPCG register.
+Fixing it by checking clk_hw_is_prepared() which is more reasonable
+and safe.
 
-Fixes: 2f77296d3df9 ("clk: imx: add lpcg clock support")
-Signed-off-by: Peng Fan <peng.fan@nxp.com>
-Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
-Link: https://lore.kernel.org/r/20241027-imx-clk-v1-v3-1-89152574d1d7@nxp.com
+Fixes: d0409631f466 ("clk: imx: scu: add suspend/resume support")
+Reviewed-by: Peng Fan <peng.fan@nxp.com>
+Tested-by: Carlos Song <carlos.song@nxp.com>
+Signed-off-by: Dong Aisheng <aisheng.dong@nxp.com>
+Link: https://lore.kernel.org/r/20241027-imx-clk-v1-v3-4-89152574d1d7@nxp.com
 Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/imx/clk-lpcg-scu.c | 37 ++++++++++++++++++++++++++--------
- 1 file changed, 29 insertions(+), 8 deletions(-)
+ drivers/clk/imx/clk-scu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/clk/imx/clk-lpcg-scu.c b/drivers/clk/imx/clk-lpcg-scu.c
-index dd5abd09f3e20..620afdf8dc03e 100644
---- a/drivers/clk/imx/clk-lpcg-scu.c
-+++ b/drivers/clk/imx/clk-lpcg-scu.c
-@@ -6,10 +6,12 @@
+diff --git a/drivers/clk/imx/clk-scu.c b/drivers/clk/imx/clk-scu.c
+index 89a914a15d62d..7e2b09f7bbc50 100644
+--- a/drivers/clk/imx/clk-scu.c
++++ b/drivers/clk/imx/clk-scu.c
+@@ -577,7 +577,7 @@ static int __maybe_unused imx_clk_scu_suspend(struct device *dev)
+ 		clk->rate = clk_scu_recalc_rate(&clk->hw, 0);
+ 	else
+ 		clk->rate = clk_hw_get_rate(&clk->hw);
+-	clk->is_enabled = clk_hw_is_enabled(&clk->hw);
++	clk->is_enabled = clk_hw_is_prepared(&clk->hw);
  
- #include <linux/bits.h>
- #include <linux/clk-provider.h>
-+#include <linux/delay.h>
- #include <linux/err.h>
- #include <linux/io.h>
- #include <linux/slab.h>
- #include <linux/spinlock.h>
-+#include <linux/units.h>
- 
- #include "clk-scu.h"
- 
-@@ -41,6 +43,29 @@ struct clk_lpcg_scu {
- 
- #define to_clk_lpcg_scu(_hw) container_of(_hw, struct clk_lpcg_scu, hw)
- 
-+/* e10858 -LPCG clock gating register synchronization errata */
-+static void lpcg_e10858_writel(unsigned long rate, void __iomem *reg, u32 val)
-+{
-+	writel(val, reg);
-+
-+	if (rate >= 24 * HZ_PER_MHZ || rate == 0) {
-+		/*
-+		 * The time taken to access the LPCG registers from the AP core
-+		 * through the interconnect is longer than the minimum delay
-+		 * of 4 clock cycles required by the errata.
-+		 * Adding a readl will provide sufficient delay to prevent
-+		 * back-to-back writes.
-+		 */
-+		readl(reg);
-+	} else {
-+		/*
-+		 * For clocks running below 24MHz, wait a minimum of
-+		 * 4 clock cycles.
-+		 */
-+		ndelay(4 * (DIV_ROUND_UP(1000 * HZ_PER_MHZ, rate)));
-+	}
-+}
-+
- static int clk_lpcg_scu_enable(struct clk_hw *hw)
- {
- 	struct clk_lpcg_scu *clk = to_clk_lpcg_scu(hw);
-@@ -57,7 +82,8 @@ static int clk_lpcg_scu_enable(struct clk_hw *hw)
- 		val |= CLK_GATE_SCU_LPCG_HW_SEL;
- 
- 	reg |= val << clk->bit_idx;
--	writel(reg, clk->reg);
-+
-+	lpcg_e10858_writel(clk_hw_get_rate(hw), clk->reg, reg);
- 
- 	spin_unlock_irqrestore(&imx_lpcg_scu_lock, flags);
- 
-@@ -74,7 +100,7 @@ static void clk_lpcg_scu_disable(struct clk_hw *hw)
- 
- 	reg = readl_relaxed(clk->reg);
- 	reg &= ~(CLK_GATE_SCU_LPCG_MASK << clk->bit_idx);
--	writel(reg, clk->reg);
-+	lpcg_e10858_writel(clk_hw_get_rate(hw), clk->reg, reg);
- 
- 	spin_unlock_irqrestore(&imx_lpcg_scu_lock, flags);
- }
-@@ -145,13 +171,8 @@ static int __maybe_unused imx_clk_lpcg_scu_resume(struct device *dev)
- {
- 	struct clk_lpcg_scu *clk = dev_get_drvdata(dev);
- 
--	/*
--	 * FIXME: Sometimes writes don't work unless the CPU issues
--	 * them twice
--	 */
--
--	writel(clk->state, clk->reg);
- 	writel(clk->state, clk->reg);
-+	lpcg_e10858_writel(0, clk->reg, clk->state);
- 	dev_dbg(dev, "restore lpcg state 0x%x\n", clk->state);
- 
- 	return 0;
+ 	if (clk->parent)
+ 		dev_dbg(dev, "save parent %s idx %u\n", clk_hw_get_name(clk->parent),
 -- 
 2.43.0
 
