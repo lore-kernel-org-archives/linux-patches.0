@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF2BF2144C4;
-	Thu, 12 Dec 2024 17:07:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4C972F44;
+	Thu, 12 Dec 2024 17:07:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734023265; cv=none; b=q7YEaL1ZBKxKGObKn2fD57sqWLtIhj7GsSanB3Fn7IZP51pEdjGHaOEi9BQkzyDwE/eNbkExuvIQDT0FzgiOmTMh9vuDxWV3vsi6HjVAFLHrk7n94Ukk75hltDScHEIIghIZNZrPZuXCIs0+upIuIxFyFAO4YD3x1/huUkyop8Y=
+	t=1734023268; cv=none; b=dsN2oIfDRebH3xFR1IgTZ24wjZfG4tGqpZvETjEjm+Ju4GTLCUGaN/y4rLM54kD6/8Wr3FhCMYv0SOfpUUjxfJthaweKzY7eRJ/gUJxjPgWPILCV0zb1PQwJoBO5fCYGlyS+GIUkHvkVAVTke+P7VcfLoDXfTsZPTxFIw0gzXso=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734023265; c=relaxed/simple;
-	bh=+B8zHS7qa0xaUKTxmIUoN2laaHmk4xHmvc9iBnDweoE=;
+	s=arc-20240116; t=1734023268; c=relaxed/simple;
+	bh=Qr0Sn5LAJiNTUPV/T4Ba8VpSJ3yuz+Z3NG/5/q5lMzc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SHuudx55EfZuhDKMSA8DP7U9uT1h4Z8bK1lwQnkqf7p/UUH7puA94BzkzrPZ8r4NRPa/jNBGZ7iFj7W9qHyUlbrRcl2Gd9VC3+lwnsPYtcYgw/2sgECJ16oF3bjXEUqft6tlrMnwNwadn4KUnR4Uj6gPOMZhdLpqk15DEW5FusY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ICbMKJPk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=juwR7xeWxjxvXLLSKhSpyH4cqGfwt5xdhTG+q/dh3uFScWP2nYgZOKDsUgSePic6MZgObHi46TKb15P/7UiYlXtmEhISUN5FvlOBBnpoD4apgvXxmmTwQ7kmL96/rjQalDxj7xzHKdgDG4BTeyw/4y60WhXAotCyR43q/Sl+rwI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t2PrWAG+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ICbMKJPk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36A1AC4CECE;
-	Thu, 12 Dec 2024 17:07:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t2PrWAG+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35298C4CECE;
+	Thu, 12 Dec 2024 17:07:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734023265;
-	bh=+B8zHS7qa0xaUKTxmIUoN2laaHmk4xHmvc9iBnDweoE=;
+	s=korg; t=1734023268;
+	bh=Qr0Sn5LAJiNTUPV/T4Ba8VpSJ3yuz+Z3NG/5/q5lMzc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ICbMKJPkufbt6MFseXxiyIgA+JmfpxEjUFKa/6con/PtL+jT00wfYdlxhi/h4tvNj
-	 iq6F3i2wrY14HalnLJh3Q6LDBgHNcp4wK1Xxu0ayCTbNuuYiCjqfmvKgHclkKIg+1C
-	 +5TpLYVWmzJCIXhNh6qU281Wo6+ARpViOTpHZXpU=
+	b=t2PrWAG+qADTnharIn/VreFdXf0ofN/oAc2WhuG2Pt6hLwpWh9LPas//5g/jv2tf1
+	 t54sYJ0TQbiPK6bWgrr+dhm5ZnK74zsJuJJEG97/Lw3estCHO2hi9C+uxfkeoKOV5w
+	 trhjHR927f6paOcwJknFwUDTkK0zNfPPcTBXR4gQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marie Ramlow <me@nycode.dev>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.15 450/565] ALSA: usb-audio: add mixer mapping for Corsair HS80
-Date: Thu, 12 Dec 2024 16:00:45 +0100
-Message-ID: <20241212144329.509212829@linuxfoundation.org>
+	Maxime Ripard <mripard@kernel.org>,
+	Dave Stevenson <dave.stevenson@raspberrypi.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 477/565] drm/vc4: hvs: Set AXI panic modes for the HVS
+Date: Thu, 12 Dec 2024 16:01:12 +0100
+Message-ID: <20241212144330.609516856@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144311.432886635@linuxfoundation.org>
 References: <20241212144311.432886635@linuxfoundation.org>
@@ -50,43 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marie Ramlow <me@nycode.dev>
+From: Dave Stevenson <dave.stevenson@raspberrypi.com>
 
-commit a7de2b873f3dbcda02d504536f1ec6dc50e3f6c4 upstream.
+[ Upstream commit 014eccc9da7bfc76a3107fceea37dd60f1d63630 ]
 
-The Corsair HS80 RGB Wireless is a USB headset with a mic and a sidetone
-feature. It has the same quirk as the Virtuoso series.
-This labels the mixers appropriately, so applications don't
-move the sidetone volume when they actually intend to move the main
-headset volume.
+The HVS can change AXI request mode based on how full the COB
+FIFOs are.
+Until now the vc4 driver has been relying on the firmware to
+have set these to sensible values.
 
-Signed-off-by: Marie Ramlow <me@nycode.dev>
-cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20241130165240.17838-1-me@nycode.dev
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+With HVS channel 2 now being used for live video, change the
+panic mode for all channels to be explicitly set by the driver,
+and the same for all channels.
+
+Reviewed-by: Maxime Ripard <mripard@kernel.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240621152055.4180873-7-dave.stevenson@raspberrypi.com
+Signed-off-by: Dave Stevenson <dave.stevenson@raspberrypi.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/mixer_maps.c |   10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/gpu/drm/vc4/vc4_hvs.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
---- a/sound/usb/mixer_maps.c
-+++ b/sound/usb/mixer_maps.c
-@@ -574,6 +574,16 @@ static const struct usbmix_ctl_map usbmi
- 		.id = USB_ID(0x1b1c, 0x0a42),
- 		.map = corsair_virtuoso_map,
- 	},
-+	{
-+		/* Corsair HS80 RGB Wireless (wired mode) */
-+		.id = USB_ID(0x1b1c, 0x0a6a),
-+		.map = corsair_virtuoso_map,
-+	},
-+	{
-+		/* Corsair HS80 RGB Wireless (wireless mode) */
-+		.id = USB_ID(0x1b1c, 0x0a6b),
-+		.map = corsair_virtuoso_map,
-+	},
- 	{	/* Gigabyte TRX40 Aorus Master (rear panel + front mic) */
- 		.id = USB_ID(0x0414, 0xa001),
- 		.map = aorus_master_alc1220vb_map,
+diff --git a/drivers/gpu/drm/vc4/vc4_hvs.c b/drivers/gpu/drm/vc4/vc4_hvs.c
+index 3856ac289d380..69b2936a5f4ad 100644
+--- a/drivers/gpu/drm/vc4/vc4_hvs.c
++++ b/drivers/gpu/drm/vc4/vc4_hvs.c
+@@ -729,6 +729,17 @@ static int vc4_hvs_bind(struct device *dev, struct device *master, void *data)
+ 	dispctrl |= VC4_SET_FIELD(2, SCALER_DISPCTRL_PANIC1);
+ 	dispctrl |= VC4_SET_FIELD(2, SCALER_DISPCTRL_PANIC2);
+ 
++	/* Set AXI panic mode.
++	 * VC4 panics when < 2 lines in FIFO.
++	 * VC5 panics when less than 1 line in the FIFO.
++	 */
++	dispctrl &= ~(SCALER_DISPCTRL_PANIC0_MASK |
++		      SCALER_DISPCTRL_PANIC1_MASK |
++		      SCALER_DISPCTRL_PANIC2_MASK);
++	dispctrl |= VC4_SET_FIELD(2, SCALER_DISPCTRL_PANIC0);
++	dispctrl |= VC4_SET_FIELD(2, SCALER_DISPCTRL_PANIC1);
++	dispctrl |= VC4_SET_FIELD(2, SCALER_DISPCTRL_PANIC2);
++
+ 	HVS_WRITE(SCALER_DISPCTRL, dispctrl);
+ 
+ 	ret = devm_request_irq(dev, platform_get_irq(pdev, 0),
+-- 
+2.43.0
+
 
 
