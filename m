@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 974B5223304;
-	Thu, 12 Dec 2024 16:02:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D629223304;
+	Thu, 12 Dec 2024 16:02:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734019366; cv=none; b=SZ4TLIFERYZ+NMIO51qvBfQ1M4oqQ0ifEuRYNtuAT/HjXfzQuWtHsy6PtDX8EAZAYCUzMgIvDqrmQTHf8v+/2aoaGlZ9ZGYnf2QKhr2LuzhuUITeCQQ+2aucM2M0XHGdrpGJtYp963iGC491h7kT0me21oXBazEnUq8hpmAdka4=
+	t=1734019370; cv=none; b=ms9C/y1+hxPsNrnNmMq6WfWq2ZFqFqXe7pYS1Co290jgNLFaRF57MVdmja6SC0C5vQkwlMO0ElPZOM+g0K3LqTpb4Qa30UNQi3SaptlObJl109Qw/pUoGwcZeFtgPyHaoFvkcmk7h3W5B3WEimCwAHu3zYaIOtrQc2pVONUzT7c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734019366; c=relaxed/simple;
-	bh=gwiHL1rfY7c4BwzMvix21ktgeTl5SAQp6XitKxJYNZA=;
+	s=arc-20240116; t=1734019370; c=relaxed/simple;
+	bh=Gv2EexfOdC8vmfRyPmRiDZrkun65ukthpxnhWpKfNKc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NtWPH/GiB8N/k5VznsR+CcDFiSQ0dVFDP1lkpNmbLEntLNxPlq62TeoYhe6FqCE1F24C6xGRoHEFicvVSID5F7QF1V4CMixAtpwAGMVnVA04WUrcjQeHQwFk+k3fpnLLORAyWp6noMw7kanrq4sjsvSjWj+Q6GWmX+4seomNaok=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jrIYqUAf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=sYbQlosAIFv4WHA4KopF+7nwLT30L6S/RYECvJ/kMlLNeDnC8qCP2K+lL/W8zINIvUvmaCoiJN01tRt42Qx0LBOsuJTEKQzCoDjol5bmWYB4UkpLCDXvAkFyQMVZwR4l5zGqEL/QoRACjyiBp4qaTNJ76w1P37fIBh2szKXuUuM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ays95wqo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jrIYqUAf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 152ADC4CECE;
-	Thu, 12 Dec 2024 16:02:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ays95wqo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F74DC4CED0;
+	Thu, 12 Dec 2024 16:02:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734019366;
-	bh=gwiHL1rfY7c4BwzMvix21ktgeTl5SAQp6XitKxJYNZA=;
+	s=korg; t=1734019370;
+	bh=Gv2EexfOdC8vmfRyPmRiDZrkun65ukthpxnhWpKfNKc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jrIYqUAfWBTxm6YAWIVXCC2emGnaow/EjioIVrIRDOdV7fPCepcQlBDRQaavMgRNt
-	 bmNJORgBScMUggTCqB7DQD8JsTC6LrdE2vUhGLsI5qLkrGOHULA9Zeq59JlJmrTXEH
-	 1Z0iQaprkPIi5RAG+rwixba2C3S5Y4LnBsliR+Hk=
+	b=ays95wqoJhIQnGEg6QTstVzPSWDz3k8d+6UYlC87xblgQwm1gbOuozw6VGmt4kHnY
+	 CU7/wT7nwM4iaZghJdGyTSvQtB2FSSFjTY74+f3vfjDBlncLrTwvnZC5YS2cXM4+wf
+	 /aJPKjPRUv79pLMfXoC7D+fR9l+Xk20GN04Ay9u8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Eric Dumazet <edumazet@google.com>,
-	Guillaume Nault <gnault@redhat.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Willem de Bruijn <willemb@google.com>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 187/772] sock_diag: allow concurrent operation in sock_diag_rcv_msg()
-Date: Thu, 12 Dec 2024 15:52:12 +0100
-Message-ID: <20241212144357.670858894@linuxfoundation.org>
+Subject: [PATCH 6.1 188/772] net: use unrcu_pointer() helper
+Date: Thu, 12 Dec 2024 15:52:13 +0100
+Message-ID: <20241212144357.709907487@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -48,6 +46,7 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
@@ -56,164 +55,244 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 86e8921df05c6e9423ab74ab8d41022775d8b83a ]
+[ Upstream commit b4cb4a1391dcdc640c4ade003aaf0ee19cc8d509 ]
 
-TCPDIAG_GETSOCK and DCCPDIAG_GETSOCK diag are serialized
-on sock_diag_table_mutex.
+Toke mentioned unrcu_pointer() existence, allowing
+to remove some of the ugly casts we have when using
+xchg() for rcu protected pointers.
 
-This is to make sure inet_diag module is not unloaded
-while diag was ongoing.
-
-It is time to get rid of this mutex and use RCU protection,
-allowing full parallelism.
+Also make inet_rcv_compat const.
 
 Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Guillaume Nault <gnault@redhat.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
+Cc: Toke Høiland-Jørgensen <toke@redhat.com>
+Reviewed-by: Toke Høiland-Jørgensen <toke@redhat.com>
+Link: https://lore.kernel.org/r/20240604111603.45871-1-edumazet@google.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Stable-dep-of: eb02688c5c45 ("ipv6: release nexthop on device removal")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/sock_diag.h |  9 ++++++--
- net/core/sock_diag.c      | 43 +++++++++++++++++++++++----------------
- net/ipv4/inet_diag.c      |  9 ++++++--
- 3 files changed, 40 insertions(+), 21 deletions(-)
+ include/net/sock.h       | 2 +-
+ net/core/gen_estimator.c | 2 +-
+ net/core/sock_diag.c     | 8 +++-----
+ net/ipv4/cipso_ipv4.c    | 2 +-
+ net/ipv4/tcp.c           | 2 +-
+ net/ipv4/tcp_fastopen.c  | 7 ++++---
+ net/ipv4/udp.c           | 2 +-
+ net/ipv6/af_inet6.c      | 2 +-
+ net/ipv6/ip6_fib.c       | 2 +-
+ net/ipv6/ipv6_sockglue.c | 3 +--
+ net/ipv6/route.c         | 6 +++---
+ net/sched/act_api.c      | 2 +-
+ 12 files changed, 19 insertions(+), 21 deletions(-)
 
-diff --git a/include/linux/sock_diag.h b/include/linux/sock_diag.h
-index 7c07754d711b9..110978dc9af1b 100644
---- a/include/linux/sock_diag.h
-+++ b/include/linux/sock_diag.h
-@@ -23,8 +23,13 @@ struct sock_diag_handler {
- int sock_diag_register(const struct sock_diag_handler *h);
- void sock_diag_unregister(const struct sock_diag_handler *h);
+diff --git a/include/net/sock.h b/include/net/sock.h
+index 1b39b62d44e24..0a06c997b45be 100644
+--- a/include/net/sock.h
++++ b/include/net/sock.h
+@@ -2246,7 +2246,7 @@ sk_dst_set(struct sock *sk, struct dst_entry *dst)
  
--void sock_diag_register_inet_compat(int (*fn)(struct sk_buff *skb, struct nlmsghdr *nlh));
--void sock_diag_unregister_inet_compat(int (*fn)(struct sk_buff *skb, struct nlmsghdr *nlh));
-+struct sock_diag_inet_compat {
-+	struct module *owner;
-+	int (*fn)(struct sk_buff *skb, struct nlmsghdr *nlh);
-+};
-+
-+void sock_diag_register_inet_compat(const struct sock_diag_inet_compat *ptr);
-+void sock_diag_unregister_inet_compat(const struct sock_diag_inet_compat *ptr);
- 
- u64 __sock_gen_cookie(struct sock *sk);
- 
-diff --git a/net/core/sock_diag.c b/net/core/sock_diag.c
-index 73b2e36032b3e..d36beb9a9a928 100644
---- a/net/core/sock_diag.c
-+++ b/net/core/sock_diag.c
-@@ -17,8 +17,9 @@
- #include <linux/sock_diag.h>
- 
- static const struct sock_diag_handler __rcu *sock_diag_handlers[AF_MAX];
--static int (*inet_rcv_compat)(struct sk_buff *skb, struct nlmsghdr *nlh);
--static DEFINE_MUTEX(sock_diag_table_mutex);
-+
-+static struct sock_diag_inet_compat __rcu *inet_rcv_compat;
-+
- static struct workqueue_struct *broadcast_wq;
- 
- DEFINE_COOKIE(sock_cookie);
-@@ -181,19 +182,20 @@ void sock_diag_broadcast_destroy(struct sock *sk)
- 	queue_work(broadcast_wq, &bsk->work);
+ 	sk_tx_queue_clear(sk);
+ 	WRITE_ONCE(sk->sk_dst_pending_confirm, 0);
+-	old_dst = xchg((__force struct dst_entry **)&sk->sk_dst_cache, dst);
++	old_dst = unrcu_pointer(xchg(&sk->sk_dst_cache, RCU_INITIALIZER(dst)));
+ 	dst_release(old_dst);
  }
  
--void sock_diag_register_inet_compat(int (*fn)(struct sk_buff *skb, struct nlmsghdr *nlh))
-+void sock_diag_register_inet_compat(const struct sock_diag_inet_compat *ptr)
+diff --git a/net/core/gen_estimator.c b/net/core/gen_estimator.c
+index 4fcbdd71c59fa..e0654e3a92861 100644
+--- a/net/core/gen_estimator.c
++++ b/net/core/gen_estimator.c
+@@ -206,7 +206,7 @@ void gen_kill_estimator(struct net_rate_estimator __rcu **rate_est)
  {
--	mutex_lock(&sock_diag_table_mutex);
--	inet_rcv_compat = fn;
--	mutex_unlock(&sock_diag_table_mutex);
-+	xchg((__force const struct sock_diag_inet_compat **)&inet_rcv_compat,
-+	     ptr);
+ 	struct net_rate_estimator *est;
+ 
+-	est = xchg((__force struct net_rate_estimator **)rate_est, NULL);
++	est = unrcu_pointer(xchg(rate_est, NULL));
+ 	if (est) {
+ 		del_timer_sync(&est->timer);
+ 		kfree_rcu(est, rcu);
+diff --git a/net/core/sock_diag.c b/net/core/sock_diag.c
+index d36beb9a9a928..17972558f54a0 100644
+--- a/net/core/sock_diag.c
++++ b/net/core/sock_diag.c
+@@ -18,7 +18,7 @@
+ 
+ static const struct sock_diag_handler __rcu *sock_diag_handlers[AF_MAX];
+ 
+-static struct sock_diag_inet_compat __rcu *inet_rcv_compat;
++static const struct sock_diag_inet_compat __rcu *inet_rcv_compat;
+ 
+ static struct workqueue_struct *broadcast_wq;
+ 
+@@ -184,8 +184,7 @@ void sock_diag_broadcast_destroy(struct sock *sk)
+ 
+ void sock_diag_register_inet_compat(const struct sock_diag_inet_compat *ptr)
+ {
+-	xchg((__force const struct sock_diag_inet_compat **)&inet_rcv_compat,
+-	     ptr);
++	xchg(&inet_rcv_compat, RCU_INITIALIZER(ptr));
  }
  EXPORT_SYMBOL_GPL(sock_diag_register_inet_compat);
  
--void sock_diag_unregister_inet_compat(int (*fn)(struct sk_buff *skb, struct nlmsghdr *nlh))
-+void sock_diag_unregister_inet_compat(const struct sock_diag_inet_compat *ptr)
+@@ -193,8 +192,7 @@ void sock_diag_unregister_inet_compat(const struct sock_diag_inet_compat *ptr)
  {
--	mutex_lock(&sock_diag_table_mutex);
--	inet_rcv_compat = NULL;
--	mutex_unlock(&sock_diag_table_mutex);
-+	const struct sock_diag_inet_compat *old;
-+
-+	old = xchg((__force const struct sock_diag_inet_compat **)&inet_rcv_compat,
-+		   NULL);
-+	WARN_ON_ONCE(old != ptr);
+ 	const struct sock_diag_inet_compat *old;
+ 
+-	old = xchg((__force const struct sock_diag_inet_compat **)&inet_rcv_compat,
+-		   NULL);
++	old = unrcu_pointer(xchg(&inet_rcv_compat, NULL));
+ 	WARN_ON_ONCE(old != ptr);
  }
  EXPORT_SYMBOL_GPL(sock_diag_unregister_inet_compat);
+diff --git a/net/ipv4/cipso_ipv4.c b/net/ipv4/cipso_ipv4.c
+index 2b56cabe4da98..fd139daf9dfb3 100644
+--- a/net/ipv4/cipso_ipv4.c
++++ b/net/ipv4/cipso_ipv4.c
+@@ -1955,7 +1955,7 @@ int cipso_v4_req_setattr(struct request_sock *req,
+ 	buf = NULL;
  
-@@ -256,20 +258,27 @@ static int __sock_diag_cmd(struct sk_buff *skb, struct nlmsghdr *nlh)
- static int sock_diag_rcv_msg(struct sk_buff *skb, struct nlmsghdr *nlh,
- 			     struct netlink_ext_ack *extack)
+ 	req_inet = inet_rsk(req);
+-	opt = xchg((__force struct ip_options_rcu **)&req_inet->ireq_opt, opt);
++	opt = unrcu_pointer(xchg(&req_inet->ireq_opt, RCU_INITIALIZER(opt)));
+ 	if (opt)
+ 		kfree_rcu(opt, rcu);
+ 
+diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
+index cb79919323a62..e27a9a9bb1623 100644
+--- a/net/ipv4/tcp.c
++++ b/net/ipv4/tcp.c
+@@ -3184,7 +3184,7 @@ int tcp_disconnect(struct sock *sk, int flags)
+ 	icsk->icsk_ack.rcv_mss = TCP_MIN_MSS;
+ 	memset(&tp->rx_opt, 0, sizeof(tp->rx_opt));
+ 	__sk_dst_reset(sk);
+-	dst_release(xchg((__force struct dst_entry **)&sk->sk_rx_dst, NULL));
++	dst_release(unrcu_pointer(xchg(&sk->sk_rx_dst, NULL)));
+ 	tcp_saved_syn_free(tp);
+ 	tp->compressed_ack = 0;
+ 	tp->segs_in = 0;
+diff --git a/net/ipv4/tcp_fastopen.c b/net/ipv4/tcp_fastopen.c
+index 85e4953f11821..d0b7ded591bd4 100644
+--- a/net/ipv4/tcp_fastopen.c
++++ b/net/ipv4/tcp_fastopen.c
+@@ -49,7 +49,7 @@ void tcp_fastopen_ctx_destroy(struct net *net)
  {
-+	const struct sock_diag_inet_compat *ptr;
- 	int ret;
+ 	struct tcp_fastopen_context *ctxt;
  
- 	switch (nlh->nlmsg_type) {
- 	case TCPDIAG_GETSOCK:
- 	case DCCPDIAG_GETSOCK:
--		if (inet_rcv_compat == NULL)
-+
-+		if (!rcu_access_pointer(inet_rcv_compat))
- 			sock_load_diag_module(AF_INET, 0);
+-	ctxt = xchg((__force struct tcp_fastopen_context **)&net->ipv4.tcp_fastopen_ctx, NULL);
++	ctxt = unrcu_pointer(xchg(&net->ipv4.tcp_fastopen_ctx, NULL));
  
--		mutex_lock(&sock_diag_table_mutex);
--		if (inet_rcv_compat != NULL)
--			ret = inet_rcv_compat(skb, nlh);
--		else
--			ret = -EOPNOTSUPP;
--		mutex_unlock(&sock_diag_table_mutex);
-+		rcu_read_lock();
-+		ptr = rcu_dereference(inet_rcv_compat);
-+		if (ptr && !try_module_get(ptr->owner))
-+			ptr = NULL;
-+		rcu_read_unlock();
-+
-+		ret = -EOPNOTSUPP;
-+		if (ptr) {
-+			ret = ptr->fn(skb, nlh);
-+			module_put(ptr->owner);
-+		}
+ 	if (ctxt)
+ 		call_rcu(&ctxt->rcu, tcp_fastopen_ctx_free);
+@@ -80,9 +80,10 @@ int tcp_fastopen_reset_cipher(struct net *net, struct sock *sk,
  
- 		return ret;
- 	case SOCK_DIAG_BY_FAMILY:
-diff --git a/net/ipv4/inet_diag.c b/net/ipv4/inet_diag.c
-index a3d0e18885f59..2bd5d0ed7a6fc 100644
---- a/net/ipv4/inet_diag.c
-+++ b/net/ipv4/inet_diag.c
-@@ -1445,6 +1445,11 @@ void inet_diag_unregister(const struct inet_diag_handler *h)
+ 	if (sk) {
+ 		q = &inet_csk(sk)->icsk_accept_queue.fastopenq;
+-		octx = xchg((__force struct tcp_fastopen_context **)&q->ctx, ctx);
++		octx = unrcu_pointer(xchg(&q->ctx, RCU_INITIALIZER(ctx)));
+ 	} else {
+-		octx = xchg((__force struct tcp_fastopen_context **)&net->ipv4.tcp_fastopen_ctx, ctx);
++		octx = unrcu_pointer(xchg(&net->ipv4.tcp_fastopen_ctx,
++					  RCU_INITIALIZER(ctx)));
+ 	}
+ 
+ 	if (octx)
+diff --git a/net/ipv4/udp.c b/net/ipv4/udp.c
+index 53267566808c1..3f9c4b74fdc0c 100644
+--- a/net/ipv4/udp.c
++++ b/net/ipv4/udp.c
+@@ -2252,7 +2252,7 @@ bool udp_sk_rx_dst_set(struct sock *sk, struct dst_entry *dst)
+ 	struct dst_entry *old;
+ 
+ 	if (dst_hold_safe(dst)) {
+-		old = xchg((__force struct dst_entry **)&sk->sk_rx_dst, dst);
++		old = unrcu_pointer(xchg(&sk->sk_rx_dst, RCU_INITIALIZER(dst)));
+ 		dst_release(old);
+ 		return old != dst;
+ 	}
+diff --git a/net/ipv6/af_inet6.c b/net/ipv6/af_inet6.c
+index 62247621cea52..ea16c40cfb211 100644
+--- a/net/ipv6/af_inet6.c
++++ b/net/ipv6/af_inet6.c
+@@ -513,7 +513,7 @@ void inet6_destroy_sock(struct sock *sk)
+ 
+ 	/* Free tx options */
+ 
+-	opt = xchg((__force struct ipv6_txoptions **)&np->opt, NULL);
++	opt = unrcu_pointer(xchg(&np->opt, NULL));
+ 	if (opt) {
+ 		atomic_sub(opt->tot_len, &sk->sk_omem_alloc);
+ 		txopt_put(opt);
+diff --git a/net/ipv6/ip6_fib.c b/net/ipv6/ip6_fib.c
+index 1123594ad2be7..0b45ef8b7ee21 100644
+--- a/net/ipv6/ip6_fib.c
++++ b/net/ipv6/ip6_fib.c
+@@ -983,7 +983,7 @@ static void __fib6_drop_pcpu_from(struct fib6_nh *fib6_nh,
+ 		if (pcpu_rt && rcu_access_pointer(pcpu_rt->from) == match) {
+ 			struct fib6_info *from;
+ 
+-			from = xchg((__force struct fib6_info **)&pcpu_rt->from, NULL);
++			from = unrcu_pointer(xchg(&pcpu_rt->from, NULL));
+ 			fib6_info_release(from);
+ 		}
+ 	}
+diff --git a/net/ipv6/ipv6_sockglue.c b/net/ipv6/ipv6_sockglue.c
+index 532f4478c8840..2924aa45adbc5 100644
+--- a/net/ipv6/ipv6_sockglue.c
++++ b/net/ipv6/ipv6_sockglue.c
+@@ -111,8 +111,7 @@ struct ipv6_txoptions *ipv6_update_options(struct sock *sk,
+ 			icsk->icsk_sync_mss(sk, icsk->icsk_pmtu_cookie);
+ 		}
+ 	}
+-	opt = xchg((__force struct ipv6_txoptions **)&inet6_sk(sk)->opt,
+-		   opt);
++	opt = unrcu_pointer(xchg(&inet6_sk(sk)->opt, RCU_INITIALIZER(opt)));
+ 	sk_dst_reset(sk);
+ 
+ 	return opt;
+diff --git a/net/ipv6/route.c b/net/ipv6/route.c
+index 6a227edf8a8aa..10e7517d126d9 100644
+--- a/net/ipv6/route.c
++++ b/net/ipv6/route.c
+@@ -369,7 +369,7 @@ static void ip6_dst_destroy(struct dst_entry *dst)
+ 		in6_dev_put(idev);
+ 	}
+ 
+-	from = xchg((__force struct fib6_info **)&rt->from, NULL);
++	from = unrcu_pointer(xchg(&rt->from, NULL));
+ 	fib6_info_release(from);
  }
- EXPORT_SYMBOL_GPL(inet_diag_unregister);
  
-+static const struct sock_diag_inet_compat inet_diag_compat = {
-+	.owner	= THIS_MODULE,
-+	.fn	= inet_diag_rcv_msg_compat,
-+};
-+
- static int __init inet_diag_init(void)
+@@ -1432,7 +1432,7 @@ static struct rt6_info *rt6_make_pcpu_route(struct net *net,
+ 	if (res->f6i->fib6_destroying) {
+ 		struct fib6_info *from;
+ 
+-		from = xchg((__force struct fib6_info **)&pcpu_rt->from, NULL);
++		from = unrcu_pointer(xchg(&pcpu_rt->from, NULL));
+ 		fib6_info_release(from);
+ 	}
+ 
+@@ -1461,7 +1461,7 @@ static void rt6_remove_exception(struct rt6_exception_bucket *bucket,
+ 	/* purge completely the exception to allow releasing the held resources:
+ 	 * some [sk] cache may keep the dst around for unlimited time
+ 	 */
+-	from = xchg((__force struct fib6_info **)&rt6_ex->rt6i->from, NULL);
++	from = unrcu_pointer(xchg(&rt6_ex->rt6i->from, NULL));
+ 	fib6_info_release(from);
+ 	dst_dev_put(&rt6_ex->rt6i->dst);
+ 
+diff --git a/net/sched/act_api.c b/net/sched/act_api.c
+index 05bd1e9bca36a..b75e22756c4b0 100644
+--- a/net/sched/act_api.c
++++ b/net/sched/act_api.c
+@@ -61,7 +61,7 @@ static void tcf_set_action_cookie(struct tc_cookie __rcu **old_cookie,
  {
- 	const int inet_diag_table_size = (IPPROTO_MAX *
-@@ -1463,7 +1468,7 @@ static int __init inet_diag_init(void)
- 	if (err)
- 		goto out_free_inet;
+ 	struct tc_cookie *old;
  
--	sock_diag_register_inet_compat(inet_diag_rcv_msg_compat);
-+	sock_diag_register_inet_compat(&inet_diag_compat);
- out:
- 	return err;
- 
-@@ -1478,7 +1483,7 @@ static void __exit inet_diag_exit(void)
- {
- 	sock_diag_unregister(&inet6_diag_handler);
- 	sock_diag_unregister(&inet_diag_handler);
--	sock_diag_unregister_inet_compat(inet_diag_rcv_msg_compat);
-+	sock_diag_unregister_inet_compat(&inet_diag_compat);
- 	kfree(inet_diag_table);
+-	old = xchg((__force struct tc_cookie **)old_cookie, new_cookie);
++	old = unrcu_pointer(xchg(old_cookie, RCU_INITIALIZER(new_cookie)));
+ 	if (old)
+ 		call_rcu(&old->rcu, tcf_free_cookie_rcu);
  }
- 
 -- 
 2.43.0
 
