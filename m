@@ -1,43 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE1D7211493;
-	Thu, 12 Dec 2024 17:48:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4431223C7B;
+	Thu, 12 Dec 2024 17:48:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734025689; cv=none; b=FgAkSiYYBx6CKnNps/ctCfGdRF6pifM1uUWLMXHL//xE8W//SI+zGS7wVzObcEOyy+QRx9e73Q3Dmj8NoRE20tl3i0UQ21xZq+WWoGX0fUDMzd0gUEdsU9j7f8dTEcExeDDbeNMehJ/CUSL9sb26jmYsrJ6s5Iii04AuS1eR17U=
+	t=1734025692; cv=none; b=ruJx07MjeU8qejfli54VsaJiXyOd2AG9Wpct1yX8eHy4eVoNBMSpOCDFlIinahqK0BCeIryIP8x7MOe23/g94qMmfRR6T7XSvV2hK3LaDJWxlIjVKo3PAsXGNKriDHHkyaKSV5e97U1rCDUQ0f3ckRTV9IQgBTz4q+2Yfp3+wW0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734025689; c=relaxed/simple;
-	bh=LnlGGBA2UaKw/PalTZC4qRXdqZOZTzAz4vheBKX6VTM=;
+	s=arc-20240116; t=1734025692; c=relaxed/simple;
+	bh=Wpct2XvaFJrUGqJfZTWxBHk9EOgPOy7Qs1hQPSk/g+E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Wx/wcm22DhPEyYIGv2SYWjHK56ub2zsxNP5Z5sNB4ct+bN2sRbhLbTwgx3xXZIo9zmU/wvJ/t198LVlb82vJ8a9G9xB76P1yJiNTAMYM3LCB1byS/ZtPz+XE9rOiIwFdnAo0EYRz2gFGpQIZbkuuh1dkDKVdwvUH6MmIjonMhzc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PY0GYnNY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Uyc6Zw2iiGjLtsdEWdQ/o9q2IHB/gQEIQeysK1AY/zJUQQbo4+MKRigpdx89JQeydw1ngA8xEcjyZQ4rzqKQnzezUU4s12U0NaGVflCRrBsGTmUQoxsIwgwEsiHlx34izntM8DqmnG6k8QhUMHZrRkOkXiBdL/OYS9w7AZBn+9I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oegu7QfI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PY0GYnNY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31083C4CED1;
-	Thu, 12 Dec 2024 17:48:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oegu7QfI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35B17C4CEDE;
+	Thu, 12 Dec 2024 17:48:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734025689;
-	bh=LnlGGBA2UaKw/PalTZC4qRXdqZOZTzAz4vheBKX6VTM=;
+	s=korg; t=1734025692;
+	bh=Wpct2XvaFJrUGqJfZTWxBHk9EOgPOy7Qs1hQPSk/g+E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PY0GYnNY4r0RUuR4NCAuZvjliKifsKExwiXrgiSPO4Terj2g0w50QO2i+p6MVdCDv
-	 NgPEZWi98oAPMZmLABoL0m1nJgyRF3owGNhLcRlR3s6/mj9+fdkiK61cBsAGka8plI
-	 GEaSKbKQCQ2Nyy+iaOpFmR329ftRwaVh4RZXQYsE=
+	b=oegu7QfIw3reWQQNHTacecLhoOOUi2RoidF9/u/vY2/5H0pwrJxiIusC/mp2tezEU
+	 P/cPaoPNb/G8T7TbdWwd0cT2CeGC0GCCnZyztHAwYpB9keFomN4BAJRV1kYEqej5EU
+	 CZtlPk4OStsN94rMGJJDSZ3Y/WUIMLgUXk+b+4Jw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wengang Wang <wen.gang.wang@oracle.com>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Jun Piao <piaojun@huawei.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.4 255/321] ocfs2: update seq_file index in ocfs2_dlm_seq_next
-Date: Thu, 12 Dec 2024 16:02:53 +0100
-Message-ID: <20241212144240.040057008@linuxfoundation.org>
+	Quinn Tran <qutran@marvell.com>,
+	Nilesh Javali <njavali@marvell.com>,
+	Himanshu Madhani <himanshu.madhani@oracle.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 5.4 256/321] scsi: qla2xxx: Fix NVMe and NPIV connect issue
+Date: Thu, 12 Dec 2024 16:02:54 +0100
+Message-ID: <20241212144240.078725474@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144229.291682835@linuxfoundation.org>
 References: <20241212144229.291682835@linuxfoundation.org>
@@ -56,43 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wengang Wang <wen.gang.wang@oracle.com>
+From: Quinn Tran <qutran@marvell.com>
 
-commit 914eec5e980171bc128e7e24f7a22aa1d803570e upstream.
+commit 4812b7796c144f63a1094f79a5eb8fbdad8d7ebc upstream.
 
-The following INFO level message was seen:
+NVMe controller fails to send connect command due to failure to locate
+hw context buffer for NVMe queue 0 (blk_mq_hw_ctx, hctx_idx=0). The
+cause of the issue is NPIV host did not initialize the vha->irq_offset
+field.  This field is given to blk-mq (blk_mq_pci_map_queues) to help
+locate the beginning of IO Queues which in turn help locate NVMe queue
+0.
 
-seq_file: buggy .next function ocfs2_dlm_seq_next [ocfs2] did not
-update position index
+Initialize this field to allow NVMe to work properly with NPIV host.
 
-Fix:
-Update *pos (so m->index) to make seq_read_iter happy though the index its
-self makes no sense to ocfs2_dlm_seq_next.
+ kernel: nvme nvme5: Connect command failed, errno: -18
+ kernel: nvme nvme5: qid 0: secure concatenation is not supported
+ kernel: nvme nvme5: NVME-FC{5}: create_assoc failed, assoc_id 2e9100 ret 401
+ kernel: nvme nvme5: NVME-FC{5}: reset: Reconnect attempt failed (401)
+ kernel: nvme nvme5: NVME-FC{5}: Reconnect attempt in 2 seconds
 
-Link: https://lkml.kernel.org/r/20241119174500.9198-1-wen.gang.wang@oracle.com
-Signed-off-by: Wengang Wang <wen.gang.wang@oracle.com>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Jun Piao <piaojun@huawei.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: stable@vger.kernel.org
+Fixes: f0783d43dde4 ("scsi: qla2xxx: Use correct number of vectors for online CPUs")
+Signed-off-by: Quinn Tran <qutran@marvell.com>
+Signed-off-by: Nilesh Javali <njavali@marvell.com>
+Link: https://lore.kernel.org/r/20241115130313.46826-6-njavali@marvell.com
+Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ocfs2/dlmglue.c |    1 +
+ drivers/scsi/qla2xxx/qla_mid.c |    1 +
  1 file changed, 1 insertion(+)
 
---- a/fs/ocfs2/dlmglue.c
-+++ b/fs/ocfs2/dlmglue.c
-@@ -3101,6 +3101,7 @@ static void *ocfs2_dlm_seq_next(struct s
- 	struct ocfs2_lock_res *iter = v;
- 	struct ocfs2_lock_res *dummy = &priv->p_iter_res;
+--- a/drivers/scsi/qla2xxx/qla_mid.c
++++ b/drivers/scsi/qla2xxx/qla_mid.c
+@@ -492,6 +492,7 @@ qla24xx_create_vhost(struct fc_vport *fc
+ 		return(NULL);
+ 	}
  
-+	(*pos)++;
- 	spin_lock(&ocfs2_dlm_tracking_lock);
- 	iter = ocfs2_dlm_next_res(iter, priv);
- 	list_del_init(&dummy->l_debug_list);
++	vha->irq_offset = QLA_BASE_VECTORS;
+ 	host = vha->host;
+ 	fc_vport->dd_data = vha;
+ 	/* New host info */
 
 
