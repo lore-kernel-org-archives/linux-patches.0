@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DD672253EC;
-	Thu, 12 Dec 2024 16:51:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEDE92253FE;
+	Thu, 12 Dec 2024 16:51:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734022286; cv=none; b=G1Op/+p/r4bXJHpMlwYAjqby/UIpOgHYKwKr/H60jBM41mjTm7oRRNbWtnCAa05nkzX38y626y3dhnffS5a9OXQhHdp7UBuc1iSZE6iHjVFxmc0c18rKf21nfZniIe8yQDF4v8EhE0+XLb++hio11GE63pZBRwhiBiBk3zDKIPg=
+	t=1734022289; cv=none; b=k2aAqesg9KfSzZjI1VzHIPgpIfcHKZ6AF19Bzw3tD272gm8/1/eK0sh+A7jVsoPG5ciwaOvUGr9KgbcIRhB6Zq0W2PBIDgEr6hfdIq4TnH2tqgA7nu8Sha9PFSnlD8iCpTWTnlxPs1+m2qEfIsXvtkLTEfG5fboooLH016spmQ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734022286; c=relaxed/simple;
-	bh=0Y2o9VoCzDGQYtQhU9cV4PWt0wLv8UqxuKin3TCyXWM=;
+	s=arc-20240116; t=1734022289; c=relaxed/simple;
+	bh=KnsQ1YxgOLUUTzI+bMEZQia4Vpq3UIOl2VCEweJKSsc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p40wbjLfPJKbWdDEHroo4PNfhUBBB955hZc1mHG0CcQoVvhl2aj6YS/9vaP17wuz2uLxtX72qLwTkQcTD6lzz+Ok8P8+elVhwS3L75buBWQezsj38dNijg4CS/rJWioBTjUMdX5K+Aq7ImVgmtBuTfL9W2CTg+nB3RWC1djBtVQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZwMafnO5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BoRmK5oZZ13Suv30qRznNb9zIfSTqffXgQuF23CXUm0sTNJ9V0yyZiAadhGwEI9kN33ttWPsT6pLd2uvvGh324CEYqBu58y5E55TRwOljEoXiMllrjIs7GT5Iszu8ePHEBArjxIFGMZVmMrjWfBVxS7mMcxT4xxFaLVyXDzyXMw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F7AZLydB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZwMafnO5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7039C4CECE;
-	Thu, 12 Dec 2024 16:51:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F7AZLydB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2D9DC4CECE;
+	Thu, 12 Dec 2024 16:51:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734022286;
-	bh=0Y2o9VoCzDGQYtQhU9cV4PWt0wLv8UqxuKin3TCyXWM=;
+	s=korg; t=1734022289;
+	bh=KnsQ1YxgOLUUTzI+bMEZQia4Vpq3UIOl2VCEweJKSsc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZwMafnO5bavDbzXMtJ2hC00nNNdEPin1QRnFoUdTHKG5A2wTfP3QaTPtxDliIY96b
-	 C68o0XUm7ndiWzdVPOYW6Rzvt7qhZtJ0CqyaDq6Gcf+QVTAAl4ueTuJtSUlWCT5zNN
-	 JY30lZXX649zynLhQOWp5uyUr+B3b51tuN1WynKQ=
+	b=F7AZLydB1m0MbxWD4zlwOmqOUKm2M0+F63VtiSkyneAN2J+BG48rRGgjg4ZHU9Wpv
+	 6qP6u231VCcrmENCsancZlOYm3ppsAVmy9QwQDpKBCU1XhTkByQiiF8EJ9VnewOvLg
+	 daCKFF/3vwbJmjjt2+nk4RxGprFMrbndJTkX6aHw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+73582d08864d8268b6fd@syzkaller.appspotmail.com,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 200/565] ALSA: usx2y: Use snd_card_free_when_closed() at disconnection
-Date: Thu, 12 Dec 2024 15:56:35 +0100
-Message-ID: <20241212144319.399297075@linuxfoundation.org>
+Subject: [PATCH 5.15 201/565] ALSA: us122l: Use snd_card_free_when_closed() at disconnection
+Date: Thu, 12 Dec 2024 15:56:36 +0100
+Message-ID: <20241212144319.438558376@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144311.432886635@linuxfoundation.org>
 References: <20241212144311.432886635@linuxfoundation.org>
@@ -53,7 +52,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit dafb28f02be407e07a6f679e922a626592b481b0 ]
+[ Upstream commit b7df09bb348016943f56b09dcaafe221e3f73947 ]
 
 The USB disconnect callback is supposed to be short and not too-long
 waiting.  OTOH, the current code uses snd_card_free() at
@@ -66,29 +65,33 @@ snd_card_free_when_closed().  This variant returns immediately while
 the release of resources is done asynchronously by the card device
 release at the last close.
 
-Fixes: 230cd5e24853 ("[ALSA] prevent oops & dead keyboard on usb unplugging while the device is be ing used")
-Reported-by: syzbot+73582d08864d8268b6fd@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=73582d08864d8268b6fd
+The loop of us122l->mmap_count check is dropped as well.  The check is
+useless for the asynchronous operation with *_when_closed().
+
+Fixes: 030a07e44129 ("ALSA: Add USB US122L driver")
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20241113111042.15058-2-tiwai@suse.de
+Link: https://patch.msgid.link/20241113111042.15058-3-tiwai@suse.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/usx2y/usbusx2y.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/usb/usx2y/us122l.c | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
-diff --git a/sound/usb/usx2y/usbusx2y.c b/sound/usb/usx2y/usbusx2y.c
-index 099bee662af6b..c3292afa883ee 100644
---- a/sound/usb/usx2y/usbusx2y.c
-+++ b/sound/usb/usx2y/usbusx2y.c
-@@ -423,7 +423,7 @@ static void snd_usx2y_disconnect(struct usb_interface *intf)
- 	}
- 	if (usx2y->us428ctls_sharedmem)
- 		wake_up(&usx2y->us428ctls_wait_queue_head);
+diff --git a/sound/usb/usx2y/us122l.c b/sound/usb/usx2y/us122l.c
+index e558931cce16e..23d7d542a3de6 100644
+--- a/sound/usb/usx2y/us122l.c
++++ b/sound/usb/usx2y/us122l.c
+@@ -617,10 +617,7 @@ static void snd_us122l_disconnect(struct usb_interface *intf)
+ 	usb_put_intf(usb_ifnum_to_if(us122l->dev, 1));
+ 	usb_put_dev(us122l->dev);
+ 
+-	while (atomic_read(&us122l->mmap_count))
+-		msleep(500);
+-
 -	snd_card_free(card);
 +	snd_card_free_when_closed(card);
  }
  
- static int snd_usx2y_probe(struct usb_interface *intf,
+ static int snd_us122l_suspend(struct usb_interface *intf, pm_message_t message)
 -- 
 2.43.0
 
