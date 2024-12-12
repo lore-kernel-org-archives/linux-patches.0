@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F937222D72;
-	Thu, 12 Dec 2024 17:45:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68C9222A7E2;
+	Thu, 12 Dec 2024 17:45:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734025500; cv=none; b=DgwCJQHue6osurT8S9uXV7nXLndYZZTYNiH6pIs2JTb7gPd4SCij/ZZgoQLzME3SLIRY5Nt77ehC0AVyvzlGWJ1v1zCyr+0s+9XLwqolHoGdL0Yrqn+51o3vvVgkDT29qEN8YrOvv/D1Z9pt0CPVnxeDAx9SUM5Fc7xbGTW/J4o=
+	t=1734025503; cv=none; b=iB5mGh6VM8mIZT5eFo5P1ERpzkHZIYOopWjnsUY4UftVqA2GvjsOjTZyH3c3ex1kylv3BsvV7ArrspDo7OhQsc1EjoriR33A3Gi43+ousFD/mEMYfEvTzSIvu3ibBlefQg7qRTuPu3uLC6Adk7v4LhtpFWMSxW4+LwGXOM1yGjk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734025500; c=relaxed/simple;
-	bh=lrn+WvuXcCwAs6ez2zr+OYVA+Rh/JqR8goTYwPz0xWM=;
+	s=arc-20240116; t=1734025503; c=relaxed/simple;
+	bh=xvbFgeJm16AbYjeUPBXQ7I3MZsG9dyE6tub/IdXjihg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jKxCaQdfa+YpPhfgxUgmNP8g+p7vWpkQQO98Qqonx2mAKOT90cyVI9vKY2DWj5viWfVpWVJokCEFsHdQyntKfPNa53x61iecRg2auJucAQ+TdquXirRG9GGEVjbktFvifLUsy4YR3GMESzcpWxndKoQlwWUeY3tMjO6/5qLcuL4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qsVPzRvR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=u/PgHLYJiEIeeAhAXnSfOYflm6CuZuOnKmEDkn3+rZVLxL9WqzJEPt+C6k/oOoNilrWRM4gRyiTxNcWdMhEhV4uuTUnVrKgOZlSLfIUviSa7rmaDuvcYkoxpR6swZiHFmYEtW3SZZerMmU1UCC0Iw56Xt3qrpDtQs+1beVEkjpE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CBFQe5p/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qsVPzRvR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D841AC4CECE;
-	Thu, 12 Dec 2024 17:44:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CBFQe5p/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D30A8C4CECE;
+	Thu, 12 Dec 2024 17:45:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734025500;
-	bh=lrn+WvuXcCwAs6ez2zr+OYVA+Rh/JqR8goTYwPz0xWM=;
+	s=korg; t=1734025503;
+	bh=xvbFgeJm16AbYjeUPBXQ7I3MZsG9dyE6tub/IdXjihg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qsVPzRvR3EODPQGO/LGuWI8PlCPQLW5U4w6QiovFaFyK3cvTLJuyuhg8ldCBXYEqD
-	 XD+AzKLbc9ijdmRPD7IifSYLqfQD50dwEw7b1/mrfWmjyY1YGzvZV0VEDPXSET4VuE
-	 vZpJbOE18enGBuNgqGkpfclaank5D+LTfkxMXqEs=
+	b=CBFQe5p/l4ahjW81Y3FBewcSReyNHq17UQ8iZDJ7nDVYvMuSDqcTlXW0amxLZDjaM
+	 SMHGCsTgJaunJ1yCsmuxbmViFGXOlBb02sQQpy6xzG1PRkl3hEIy6h2Qm6HdaaqAQl
+	 1MV8aKNAswRtAUJHbm3Ii5OJDXn/t+wFu2eIQNg0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qingfang Deng <qingfang.deng@siflower.com.cn>,
-	Zhihao Cheng <chengzhihao1@huawei.com>,
-	Richard Weinberger <richard@nod.at>,
+	Christoph Hellwig <hch@lst.de>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	John Garry <john.g.garry@oracle.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 191/321] jffs2: fix use of uninitialized variable
-Date: Thu, 12 Dec 2024 16:01:49 +0100
-Message-ID: <20241212144237.530494009@linuxfoundation.org>
+Subject: [PATCH 5.4 192/321] block: return unsigned int from bdev_io_min
+Date: Thu, 12 Dec 2024 16:01:50 +0100
+Message-ID: <20241212144237.569707071@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144229.291682835@linuxfoundation.org>
 References: <20241212144229.291682835@linuxfoundation.org>
@@ -52,55 +53,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qingfang Deng <qingfang.deng@siflower.com.cn>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit 3ba44ee966bc3c41dd8a944f963466c8fcc60dc8 ]
+[ Upstream commit 46fd48ab3ea3eb3bb215684bd66ea3d260b091a9 ]
 
-When building the kernel with -Wmaybe-uninitialized, the compiler
-reports this warning:
+The underlying limit is defined as an unsigned int, so return that from
+bdev_io_min as well.
 
-In function 'jffs2_mark_erased_block',
-    inlined from 'jffs2_erase_pending_blocks' at fs/jffs2/erase.c:116:4:
-fs/jffs2/erase.c:474:9: warning: 'bad_offset' may be used uninitialized [-Wmaybe-uninitialized]
-  474 |         jffs2_erase_failed(c, jeb, bad_offset);
-      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-fs/jffs2/erase.c: In function 'jffs2_erase_pending_blocks':
-fs/jffs2/erase.c:402:18: note: 'bad_offset' was declared here
-  402 |         uint32_t bad_offset;
-      |                  ^~~~~~~~~~
-
-When mtd->point() is used, jffs2_erase_pending_blocks can return -EIO
-without initializing bad_offset, which is later used at the filebad
-label in jffs2_mark_erased_block.
-Fix it by initializing this variable.
-
-Fixes: 8a0f572397ca ("[JFFS2] Return values of jffs2_block_check_erase error paths")
-Signed-off-by: Qingfang Deng <qingfang.deng@siflower.com.cn>
-Reviewed-by: Zhihao Cheng <chengzhihao1@huawei.com>
-Signed-off-by: Richard Weinberger <richard@nod.at>
+Fixes: ac481c20ef8f ("block: Topology ioctls")
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Martin K. Petersen <martin.petersen@oracle.com>
+Reviewed-by: John Garry <john.g.garry@oracle.com>
+Link: https://lore.kernel.org/r/20241119072602.1059488-1-hch@lst.de
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/jffs2/erase.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ include/linux/blkdev.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/jffs2/erase.c b/fs/jffs2/erase.c
-index 7e9abdb897122..5fbaf6ab9f482 100644
---- a/fs/jffs2/erase.c
-+++ b/fs/jffs2/erase.c
-@@ -340,10 +340,9 @@ static int jffs2_block_check_erase(struct jffs2_sb_info *c, struct jffs2_erasebl
- 		} while(--retlen);
- 		mtd_unpoint(c->mtd, jeb->offset, c->sector_size);
- 		if (retlen) {
--			pr_warn("Newly-erased block contained word 0x%lx at offset 0x%08tx\n",
--				*wordebuf,
--				jeb->offset +
--				c->sector_size-retlen * sizeof(*wordebuf));
-+			*bad_offset = jeb->offset + c->sector_size - retlen * sizeof(*wordebuf);
-+			pr_warn("Newly-erased block contained word 0x%lx at offset 0x%08x\n",
-+				*wordebuf, *bad_offset);
- 			return -EIO;
- 		}
- 		return 0;
+diff --git a/include/linux/blkdev.h b/include/linux/blkdev.h
+index 5194467d7d753..92ec0b9dd1834 100644
+--- a/include/linux/blkdev.h
++++ b/include/linux/blkdev.h
+@@ -1333,7 +1333,7 @@ static inline unsigned int queue_io_min(const struct request_queue *q)
+ 	return q->limits.io_min;
+ }
+ 
+-static inline int bdev_io_min(struct block_device *bdev)
++static inline unsigned int bdev_io_min(struct block_device *bdev)
+ {
+ 	return queue_io_min(bdev_get_queue(bdev));
+ }
 -- 
 2.43.0
 
