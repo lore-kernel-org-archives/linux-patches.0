@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 687D421766D;
-	Thu, 12 Dec 2024 15:13:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 136FF21766D;
+	Thu, 12 Dec 2024 15:13:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734016412; cv=none; b=W2R9MEysPhUSngdgCioQiubbmEbY86aTb5Ki0bc1PqqIuQRrXsWLyy8vREbpjBeOqmro+/3I13ObHsKZkIqYvJP6xOSemepJCqYL7PbEfz5AitkJCZGa/pkCf/fn2uZf00v+/YEyT8xBLltL8FYLbtw24z6+w79dJDzPIQZPuso=
+	t=1734016415; cv=none; b=RCpfx6CWOcYdrCL3Bhm6N+v+KU4tIZ7xCJujMKBGa0TZFgRq7J3NwBrUZYw+/z0kWuz02ZdHWssotQMibZEdfnpF3q4Q8NkWFj8ZU7qyPFFQEqP/1IeO29YAvaU5rl861ukI/J1A8kBpDIzpcU6Djini5rAM3IfMLxPGVTsMKm4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734016412; c=relaxed/simple;
-	bh=do3tALeFNhB3hoiQvJM4Msfr4+GFTXHRtcjaD57IXdY=;
+	s=arc-20240116; t=1734016415; c=relaxed/simple;
+	bh=nbYBYQeX6Vx9TS5XyJKadgqip5Z5TSDAqkB0INzEhLU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GECUR+bKuOzJkVE3wbR9cWUPFmxeqN8KAmJwruXqCNDQOh+OpcC/1Z8FqRDV7rZHlSZ1Ui0iO3ePGgjtsnPd3RTS4grvcr4/2KQ3fw+yKW6ZG0wcof1TDYLYqHkKOYIqQL+Yv6SH8+HnBXQs0wI5QFY3pVR913yv/KJrUGBwUg0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rr9dLA8q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Y9wM7/45IVdrMOzW0tiPUwGf0RA5/y4JT2gneSW7ZjG1Onu7pxN804SYTrhL6IFfu4OYperrzH4dIyZtylG2+BTqeEzZr9s6zRPfrUh3kojZZBEUx2oVCWhyj25WHLDIX1P2B302O7qrZ5s+PNrIjsdVAnl5t3djVnpuJMq94zM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p0UA36lE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rr9dLA8q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 678FCC4CED0;
-	Thu, 12 Dec 2024 15:13:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p0UA36lE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17E82C4CED0;
+	Thu, 12 Dec 2024 15:13:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734016410;
-	bh=do3tALeFNhB3hoiQvJM4Msfr4+GFTXHRtcjaD57IXdY=;
+	s=korg; t=1734016414;
+	bh=nbYBYQeX6Vx9TS5XyJKadgqip5Z5TSDAqkB0INzEhLU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Rr9dLA8qHurOa9DGNumD2zEaFPkW0yThToCPYrWVPmsPQJNajqep+uQNuWEUSNPnC
-	 +P1vUfMjpdjgkdP77qNyjjK1X0QBU9EXSHDbLEetmIDJ8Dpm3Yi9lIin1NcwzSIWGy
-	 Ceci1LuJZJHyvLXgMsA14X3aEr1jgYJ5GVs7IG9A=
+	b=p0UA36lEln7LN6eRbwTDztKMVJbV3UR7+vHFnyzSaSY21hVWGwbXs5nY3UG2FcsAq
+	 qbYhh8d5nnfO5fk+0lMiB3rmjfYsMBwxY/QGiS8VE9K1j2YF5MNJ7hTSLXLvRxPlxJ
+	 1U1JmW42Zet8ITz6SzJxoXAWozM4sqEk5ij4+s+c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liequan Che <cheliequan@inspur.com>,
-	Zheng Wang <zyytlz.wz@163.com>,
-	Mingzhe Zou <mingzhe.zou@easystack.cn>,
-	Coly Li <colyli@suse.de>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.12 161/466] bcache: revert replacing IS_ERR_OR_NULL with IS_ERR again
-Date: Thu, 12 Dec 2024 15:55:30 +0100
-Message-ID: <20241212144313.159076739@linuxfoundation.org>
+	Anders Blomdell <anders.blomdell@gmail.com>,
+	Philippe Troin <phil@fifi.org>,
+	Jan Kara <jack@suse.cz>,
+	Matthew Wilcox <willy@infradead.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.12 162/466] Revert "readahead: properly shorten readahead when falling back to do_page_cache_ra()"
+Date: Thu, 12 Dec 2024 15:55:31 +0100
+Message-ID: <20241212144313.202242815@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144306.641051666@linuxfoundation.org>
 References: <20241212144306.641051666@linuxfoundation.org>
@@ -53,46 +53,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Liequan Che <cheliequan@inspur.com>
+From: Jan Kara <jack@suse.cz>
 
-commit b2e382ae12a63560fca35050498e19e760adf8c0 upstream.
+commit a220d6b95b1ae12c7626283d7609f0a1438e6437 upstream.
 
-Commit 028ddcac477b ("bcache: Remove unnecessary NULL point check in
-node allocations") leads a NULL pointer deference in cache_set_flush().
+This reverts commit 7c877586da3178974a8a94577b6045a48377ff25.
 
-1721         if (!IS_ERR_OR_NULL(c->root))
-1722                 list_add(&c->root->list, &c->btree_cache);
+Anders and Philippe have reported that recent kernels occasionally hang
+when used with NFS in readahead code.  The problem has been bisected to
+7c877586da3 ("readahead: properly shorten readahead when falling back to
+do_page_cache_ra()").  The cause of the problem is that ra->size can be
+shrunk by read_pages() call and subsequently we end up calling
+do_page_cache_ra() with negative (read huge positive) number of pages.
+Let's revert 7c877586da3 for now until we can find a proper way how the
+logic in read_pages() and page_cache_ra_order() can coexist.  This can
+lead to reduced readahead throughput due to readahead window confusion but
+that's better than outright hangs.
 
->From the above code in cache_set_flush(), if previous registration code
-fails before allocating c->root, it is possible c->root is NULL as what
-it is initialized. __bch_btree_node_alloc() never returns NULL but
-c->root is possible to be NULL at above line 1721.
-
-This patch replaces IS_ERR() by IS_ERR_OR_NULL() to fix this.
-
-Fixes: 028ddcac477b ("bcache: Remove unnecessary NULL point check in node allocations")
-Signed-off-by: Liequan Che <cheliequan@inspur.com>
-Cc: stable@vger.kernel.org
-Cc: Zheng Wang <zyytlz.wz@163.com>
-Reviewed-by: Mingzhe Zou <mingzhe.zou@easystack.cn>
-Signed-off-by: Coly Li <colyli@suse.de>
-Link: https://lore.kernel.org/r/20241202115638.28957-1-colyli@suse.de
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Link: https://lkml.kernel.org/r/20241126145208.985-1-jack@suse.cz
+Fixes: 7c877586da31 ("readahead: properly shorten readahead when falling back to do_page_cache_ra()")
+Reported-by: Anders Blomdell <anders.blomdell@gmail.com>
+Reported-by: Philippe Troin <phil@fifi.org>
+Signed-off-by: Jan Kara <jack@suse.cz>
+Tested-by: Philippe Troin <phil@fifi.org>
+Cc: Matthew Wilcox <willy@infradead.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/bcache/super.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ mm/readahead.c |    5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
---- a/drivers/md/bcache/super.c
-+++ b/drivers/md/bcache/super.c
-@@ -1718,7 +1718,7 @@ static CLOSURE_CALLBACK(cache_set_flush)
- 	if (!IS_ERR_OR_NULL(c->gc_thread))
- 		kthread_stop(c->gc_thread);
+--- a/mm/readahead.c
++++ b/mm/readahead.c
+@@ -453,8 +453,7 @@ void page_cache_ra_order(struct readahea
+ 		struct file_ra_state *ra, unsigned int new_order)
+ {
+ 	struct address_space *mapping = ractl->mapping;
+-	pgoff_t start = readahead_index(ractl);
+-	pgoff_t index = start;
++	pgoff_t index = readahead_index(ractl);
+ 	unsigned int min_order = mapping_min_folio_order(mapping);
+ 	pgoff_t limit = (i_size_read(mapping->host) - 1) >> PAGE_SHIFT;
+ 	pgoff_t mark = index + ra->size - ra->async_size;
+@@ -517,7 +516,7 @@ void page_cache_ra_order(struct readahea
+ 	if (!err)
+ 		return;
+ fallback:
+-	do_page_cache_ra(ractl, ra->size - (index - start), ra->async_size);
++	do_page_cache_ra(ractl, ra->size, ra->async_size);
+ }
  
--	if (!IS_ERR(c->root))
-+	if (!IS_ERR_OR_NULL(c->root))
- 		list_add(&c->root->list, &c->btree_cache);
- 
- 	/*
+ static unsigned long ractl_max_pages(struct readahead_control *ractl,
 
 
