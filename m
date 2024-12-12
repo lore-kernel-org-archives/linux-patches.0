@@ -1,141 +1,141 @@
-Received: from mail-vk1-f170.google.com (mail-vk1-f170.google.com [209.85.221.170])
+Received: from mail-qt1-f179.google.com (mail-qt1-f179.google.com [209.85.160.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29F8D1AF4C1
-	for <patches@lists.linux.dev>; Thu, 12 Dec 2024 19:48:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0553191F85
+	for <patches@lists.linux.dev>; Thu, 12 Dec 2024 19:53:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734032901; cv=none; b=XABo07cDISyLCBWKNinj1Yl8stN7lSq1LjbbYLsEzIqqBmSlM/6Hd5jBW74eS6zNq4rnnVkCcZ0594/iCuWr2Aoh4bG2UfVq4j8OS92+IOeIOF3aY/8kCcIgng+DgmAIlLuOs+KFI4wF0Unr5QEgpJJuVdry80/t15RH7FdZWcc=
+	t=1734033233; cv=none; b=irluCJtuR+DGCui/TmtSj8kzxcSDEEcxhH4/eAbO+Hws63dfjET3GI3I3VeT1YFsIqvHoshGi2pEWmmXFFrPbvRlqWgPhaRl7jLpW9gGiHQbZANkiT/HejDBt+bxioUm9xfgz/FsHD9Wa2Dzqg7RIZ5AOrYYkRV1mAkl8Ad5H6w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734032901; c=relaxed/simple;
-	bh=IczXGAF+eM1R/n6n4f5k72EKL4WE9hhqzfJUbDYrWKk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=kzHbCZND0uprC/zPcyuCyEuweK11lDm4iTOJCZRqjk3gzhKTyx55NmYUFNBPB8aSawEyU9sHe5h/4x/HLe3BZjMYcSC8+YkLMZrpHH7JV6DT2I7l8FXTXfDyUg/4W+rsqJ38+hSkRSehDx+vxNVmaDDHGJtIcreXpTy0Lz82/i4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=I6rGxQ8d; arc=none smtp.client-ip=209.85.221.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+	s=arc-20240116; t=1734033233; c=relaxed/simple;
+	bh=edRiCalX1S8i2hLiGSD/RC3UGFfIm9L1s53cMBdg0Hs=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=mo/8/H3TeAT5ahgFLVBKrjyXhH8dxaPzBIDKFJ/JEv0RjGEMjEjbvqTdZhxlske3lPh35b4/umaSDLSTId6GA2Y5Rdg4zZsQP/13ubtagESvj5fpvuvZwVPT5SKz92ppXyD5Hdk1+/m0aaDXOgNpv5A4wNmhWmoPKmftNFCVFY0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PJgkfYzH; arc=none smtp.client-ip=209.85.160.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="I6rGxQ8d"
-Received: by mail-vk1-f170.google.com with SMTP id 71dfb90a1353d-5189a440a65so488104e0c.1
-        for <patches@lists.linux.dev>; Thu, 12 Dec 2024 11:48:19 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PJgkfYzH"
+Received: by mail-qt1-f179.google.com with SMTP id d75a77b69052e-4678cd314b6so9453391cf.3
+        for <patches@lists.linux.dev>; Thu, 12 Dec 2024 11:53:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1734032899; x=1734637699; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=BlbbI/g+hRuUgF8qGy3bJAgo11Dj0VWxvIagMZzWOus=;
-        b=I6rGxQ8dwV9WcK1+oisAJoisisTpKc35Lq7e/tktEu2iHxcziyzNzfm+zyNfGhB2Fm
-         4hQlcouEx/uV6BKDuIEeCESPCHWgrjz+3DO0UtoIe49zuvuPKCFJcHfF2wdISkEW3fNg
-         y9SWrDUJvsDBz2RiQ+oMPrl5Od1sLWGW6YhXPRqioXsafg6ulGQCbrIXjGgM1rMaopxv
-         RWEbjyW3kUsGTgM7EOPo/39TEMK1SL07+pJMupvftc/BubeDJ/HoqGhavZGP7l0hfF3w
-         A0sggtfSpzOBST+MTInqIS/GCw7jPzsy3sm17GyjmWg/aHgWnwlR8KcxuIGzClWjmJP8
-         zx2A==
+        d=gmail.com; s=20230601; t=1734033231; x=1734638031; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=sPlGAJkm20MaJPbgK/9Xq/stgyHGFJzZwjUSfu4XrZ0=;
+        b=PJgkfYzHujLs10O7+CjNxEJv2eDJDQMCpFEy3VXnOu9Nx2B2a7JdloEL+wXBOhnWdp
+         /3+avJ0Puei9tZYfENzmU6oj29omYzqkmH7aBtDL5EtJ5gCzTexZMm8hGkiz4A3U6Azg
+         +VyojpdRdwygTdxQKsnOOp0Lx0cLjV0FEqIyD6ceVCFJTIT8M/wURya5spe6TuwNRAk/
+         fYkxE8q4qMOc7y81CzYM5VLsZMbhMsibZr/5Wqc3n1VQc192gOe5KMzr9dTkgrWFAHBN
+         FOYcYxIdCrJ2JorZgzjkmEnbivxjTKoX7gbL2SG0vhcRqUenpeh3ZlOP1QE7j+z+oQfI
+         Dr9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734032899; x=1734637699;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=BlbbI/g+hRuUgF8qGy3bJAgo11Dj0VWxvIagMZzWOus=;
-        b=A5s3s5OjUyhGOyVjdjNvW5xerfqekdmxmCuH1JeNuqbhH322MtSWZuOMYuw5du+xLT
-         EXHOcUIVf1Iy+ABjCog0upveh//q5zBZeHgYj18wJnmNesUaP47SlOVrBX2GF1klzTSx
-         JMeEdZ5SU1bU91JLxGf6T+fvvT4yaUo6pOdNSlJU2VLb4+EhEwefuXl3gvBh+GQogII3
-         tXwF15sMp0Dr7f5wR26cYEROt29CfCYAbdQB/PUVj90gjqabDwss6/B3Z8Gv9SjgYoi4
-         7wExM0zeJBRicQ8IPhzwOvz4r+KZgICV3xDcQzPNCA34f2dg0YSBNWVXqkrFQzOmHPOs
-         nBLg==
-X-Forwarded-Encrypted: i=1; AJvYcCVBNLR3ING3SLd0qW5Zy8Je/TBmJsHYQ6CPuy6ZZZJmuhyBcPNYE9rDFqSdCuGryrIyAlBv6BCE@lists.linux.dev
-X-Gm-Message-State: AOJu0YxTpoiLrq8/yj35Rbdy6FskErau6vBH5kXl5c7rPW8x99m+ZDq8
-	4SW5ETnniIGCyUcjXMMIB/sYq30bbLdVPKSABdtUcpVlBDVSMjnvx4MqJhfO5MFR1qkQhL3oRu/
-	tI4u1Jvbe5KUVqpCoVvl261KRu5X73zs5nIKRCQ==
-X-Gm-Gg: ASbGncv8TabzHfr0h9Gq0cXtNzqAy4EIcO3Yljr10/Z/OZXK7mqPnEf3fZi2+CB9GJC
-	RMNUSngGC1sTqRN+W5VTjuyfjHD6xxOOS8KJ3
-X-Google-Smtp-Source: AGHT+IFBe0k1ufkZG205NB2FpxYW8UXDiGTPL48pwGMQjlmQbagnb8MkD4Y4QDURyIAwIg3y5dWgFpLofgO5GFaugWY=
-X-Received: by 2002:a05:6122:8c17:b0:515:d032:796b with SMTP id
- 71dfb90a1353d-518ca48a3d8mr68111e0c.11.1734032899050; Thu, 12 Dec 2024
- 11:48:19 -0800 (PST)
+        d=1e100.net; s=20230601; t=1734033231; x=1734638031;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=sPlGAJkm20MaJPbgK/9Xq/stgyHGFJzZwjUSfu4XrZ0=;
+        b=NKwCSjUmper9XQlDdsMjgJshrEJQqDrqJ7bLJAWbmnN4f1lu0MRY3V2uL70mryXIIs
+         5A6RXyv97ahRi8CaVJw+Qo1z8+u3G1j8w/jJQnPexwAgkyu4tag5ZUccpw5jeFwjo+q5
+         lDhLOOKjmOxDej8KcAc6NnLyYRbd5iq1eHj29Y7Au0RWhmrCReFc81OtGC0TEk8ZiZhf
+         RLqtCdT+KMCWFsGkzbQA2KYzQ/35ugoFu9OVT8p0DIyWF3faujKd1TgbZss+LnyoonGd
+         DgI6kvDoK6HgulAjJtR4G/2z+KJ4Q5XiRvWdpIWOxXlOQPvrC4FVTCSlPc5dvUrn/uJp
+         XmpQ==
+X-Gm-Message-State: AOJu0YwdINYKedI+S82X7lqg/+4GOQKHqLOKOGn1KOD9rfXuEDu52G5q
+	mAsAm0DnDo+QDoFgOHpgSWmFE2v4alTgucWRH0l7v44x8hq6Cc4t
+X-Gm-Gg: ASbGnctQE20jriXldRq737nSFRna5p3xNU1vpUdEAjRgbkwBf9SBuzF/FapHg7SDUsx
+	HZQgK/tcwRIdal9lrN9GR/Wy/CwH+I7Hvgbd8ETrX69xrDZyv8MZV6gnuXZJRq7M/V4v35JowuY
+	S4FH7HktKzWLHfsGNIF+vW28V0MAHF/IdDzJYxvKKlkeD5+3kkanzk4fjBjf+w1bzfo4g7DouQH
+	2oeAU8DIrZZLv/R15NDZ7z90+q84hTT8GKeAGPU9jB5Mxsb7Cgdalh/Ixrv/AxRq2lT5fjKZWzC
+	d1CMGM6t
+X-Google-Smtp-Source: AGHT+IFvlLZUnpCLTwr3yh1PDjcpmN+9iFF2G67MAybupOGN267T8/qfQahwH4wAPyScj52vLXmP+w==
+X-Received: by 2002:ac8:5748:0:b0:466:a584:69f8 with SMTP id d75a77b69052e-467a16890b8mr28184611cf.43.1734033230748;
+        Thu, 12 Dec 2024 11:53:50 -0800 (PST)
+Received: from [10.67.48.245] ([192.19.223.252])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-4678a0edd33sm21967221cf.54.2024.12.12.11.53.42
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 12 Dec 2024 11:53:49 -0800 (PST)
+Message-ID: <57107aaf-55b5-4389-ba3c-6a48995d1116@gmail.com>
+Date: Thu, 12 Dec 2024 11:53:40 -0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20241212144306.641051666@linuxfoundation.org> <CA+G9fYuX2BsEOCZPC+2aJZ6mEh10kGY69pEQU3oo1rmK-8kTRg@mail.gmail.com>
- <CA+G9fYu3SmdFKRkSDU0UV=bMs69UHx8UOeuniqTSD9haQ2yBvQ@mail.gmail.com>
-In-Reply-To: <CA+G9fYu3SmdFKRkSDU0UV=bMs69UHx8UOeuniqTSD9haQ2yBvQ@mail.gmail.com>
-From: Naresh Kamboju <naresh.kamboju@linaro.org>
-Date: Fri, 13 Dec 2024 01:18:07 +0530
-Message-ID: <CA+G9fYvV21_-3QYWh_gmKMRZ89AYn-KM99DbmghsLQJEL2+4Nw@mail.gmail.com>
-Subject: Re: [PATCH 6.12 000/466] 6.12.5-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, 
-	broonie@kernel.org, Thomas Gleixner <tglx@linutronix.de>, John Stultz <jstultz@google.com>, 
-	Dan Carpenter <dan.carpenter@linaro.org>, Arnd Bergmann <arnd@arndb.de>, 
-	Anders Roxell <anders.roxell@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 5.4 000/321] 5.4.287-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+ conor@kernel.org, hargar@microsoft.com, broonie@kernel.org
+References: <20241212144229.291682835@linuxfoundation.org>
+Content-Language: en-US
+From: Florian Fainelli <f.fainelli@gmail.com>
+Autocrypt: addr=f.fainelli@gmail.com; keydata=
+ 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
+In-Reply-To: <20241212144229.291682835@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Fri, 13 Dec 2024 at 01:04, Naresh Kamboju <naresh.kamboju@linaro.org> wrote:
->
-> On Thu, 12 Dec 2024 at 23:35, Naresh Kamboju <naresh.kamboju@linaro.org> wrote:
-> >
-> > On Thu, 12 Dec 2024 at 20:30, Greg Kroah-Hartman
-> > <gregkh@linuxfoundation.org> wrote:
-> > >
-> > > This is the start of the stable review cycle for the 6.12.5 release.
-> > > There are 466 patches in this series, all will be posted as a response
-> > > to this one.  If anyone has any issues with these being applied, please
-> > > let me know.
-> > >
-> > > Responses should be made by Sat, 14 Dec 2024 14:41:35 +0000.
-> > > Anything received after that time might be too late.
-> > >
-> > > The whole patch series can be found in one patch at:
-> > >         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.12.5-rc1.gz
-> > > or in the git tree and branch at:
-> > >         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.12.y
-> > > and the diffstat can be found below.
-> > >
-> > > thanks,
-> > >
-> > > greg k-h
-> >
-> > The riscv builds failed on Linux stable-rc linux-6.12.y due to following build
-> > warnings / errors.
-> >
-> > riscv:
-> >   * build/gcc-13-defconfig
-> >   * build/clang-19-defconfig
-> >   * build/clang-nightly-defconfig
-> >   * build/gcc-8-defconfig
-> >
-> > First seen on Linux stable-rc linux-6.12.y v6.12.4-467-g3f47dc0fd5b1,
-> >   Good: v6.12.4
-> >   Bad:  6.12.5-rc1
-> >
-> >
-> > Build log:
-> > -----------
-> > kernel/time/timekeeping.c: In function 'timekeeping_debug_get_ns':
-> > kernel/time/timekeeping.c:263:17: error: too few arguments to function
-> > 'clocksource_delta'
-> >   263 |         delta = clocksource_delta(now, last, mask);
-> >       |                 ^~~~~~~~~~~~~~~~~
-> > In file included from kernel/time/timekeeping.c:30:
-> > kernel/time/timekeeping_internal.h:18:19: note: declared here
-> >    18 | static inline u64 clocksource_delta(u64 now, u64 last, u64
-> > mask, u64 max_delta)
-> >       |                   ^~~~~~~~~~~~~~~~~
-> > make[5]: *** [scripts/Makefile.build:229: kernel/time/timekeeping.o] Error 1
->
-> The bisect log pointing to first bad commit,
->
->     clocksource: Make negative motion detection more robust
->     commit 76031d9536a076bf023bedbdb1b4317fc801dd67 upstream.
+On 12/12/24 06:58, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.4.287 release.
+> There are 321 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Sat, 14 Dec 2024 14:41:35 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.4.287-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.4.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
-This issue was fixed in the upstream by adding the following patch,
-  timekeeping: Remove CONFIG_DEBUG_TIMEKEEPING
-  commit d44d26987bb3df6d76556827097fc9ce17565cb8 upstream
+On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
+BMIPS_GENERIC:
 
-- Naresh
+Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
+-- 
+Florian
