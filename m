@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BBEC213E6F;
-	Thu, 12 Dec 2024 17:36:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 722692210EA;
+	Thu, 12 Dec 2024 17:36:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734025000; cv=none; b=JalxXkkxIZoKunx6mSagxR0irgUK4CNvlhS8zf4a8+PmrAEn5JVY9YoNpy/uqsafV+ozckJPiDPLHCuZGYDEoOrC/RcvVjKnALq/b8/DMneLMbdCwJYfMpIkSXXu+q+nfIkWkRovE3EPdkClUZ69A7aW+pUuDEe4GVcabHmd/4I=
+	t=1734025003; cv=none; b=H9ExYNGBya8TGa87eA4j2iE7aWgsbqTunBo4WFsY4MK/GY70PbtVIWXk6Dy0h6fSOjRbHm/OIzvIq60VtzcoyyB5Vbq6XiOak6w0FcgLAJ/xwlYUWPg2CEAkZ60b1Q9Dh2lO9MYDIbXs6Y9D0i9nY9EJojPunpN1cxEELTivAFU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734025000; c=relaxed/simple;
-	bh=NqipYDFWYVngCSdcz6eHdo54/+R3OeqRZRHLSwUCvOU=;
+	s=arc-20240116; t=1734025003; c=relaxed/simple;
+	bh=cjc/6+19se+a2T17air/4nAb0ZpGzj/vr92NLbOtIB0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QWXY6AH0OTzUfBgbNz6qCVMnD2OcgI07DzvblVdNBgtzMiT7MVfgUIbZs63wkdh6bnLMIdWMbLezl1Mxm4Ks4LIKFK8rO0H/05pjexYTA3HeYuCeYD8n0LHPQUoI0I0qWc7eNgwlpYfgZSKMrKSQOqnvPC6Gxpl1umRITfpfqZo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Eoc/vC0A; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EWw2ccR8IgmhUQV9Rtcxk0om8RJ7ZpghnQEClyst+UbyjMUBWNIPBGJcKRUkKOdsQ0TNDg1RRB5zFl54/BJKubiJUXd6h3Ojx6FAwZ02VjITDC8k5VrXX3xDp6OAeHOMBbe2vbaORqCQ2diG7wLnTdgluvErnbVxOJ6AJlVkT/4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tuqCapKv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Eoc/vC0A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C7A2C4CECE;
-	Thu, 12 Dec 2024 17:36:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tuqCapKv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB372C4CECE;
+	Thu, 12 Dec 2024 17:36:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734025000;
-	bh=NqipYDFWYVngCSdcz6eHdo54/+R3OeqRZRHLSwUCvOU=;
+	s=korg; t=1734025003;
+	bh=cjc/6+19se+a2T17air/4nAb0ZpGzj/vr92NLbOtIB0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Eoc/vC0AXYthc6D/vjk3wZgMfMPwqKsbruosLJKc/qyvaVo5frXOeeswwgdFDZsiW
-	 pL94kCVjYZDuDo3/yTGKLe4my8WDb2vq+OK1Fkng73TafEwMsv5Fp/Rovd4apDzfwf
-	 h30OsjbOyuVbNj0lH7awli6ZBSi+2hMB0Y+8tlT4=
+	b=tuqCapKv3msQnnIUd3VuBImvP1EQ1UgMdf6Ze8O+tSOA3IDkkpfhu0H1v0NEPZ5ba
+	 kFmkJEEXnCeValvERsL+s4/TZj0tv7mI8jH8pLSjkNLT3H/xesjL7Tnjxao69/MQzJ
+	 smaEXj1VgLoNZHdAQoqzZNl+zYZ1or2leSzO4k1s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Wang <00107082@163.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
+	Breno Leitao <leitao@debian.org>,
+	David Ahern <dsahern@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 023/321] proc/softirqs: replace seq_printf with seq_put_decimal_ull_width
-Date: Thu, 12 Dec 2024 15:59:01 +0100
-Message-ID: <20241212144230.825588180@linuxfoundation.org>
+Subject: [PATCH 5.4 024/321] ipmr: Fix access to mfc_cache_list without lock held
+Date: Thu, 12 Dec 2024 15:59:02 +0100
+Message-ID: <20241212144230.864274225@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144229.291682835@linuxfoundation.org>
 References: <20241212144229.291682835@linuxfoundation.org>
@@ -51,37 +52,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Wang <00107082@163.com>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit 84b9749a3a704dcc824a88aa8267247c801d51e4 ]
+[ Upstream commit e28acc9c1ccfcb24c08e020828f69d0a915b06ae ]
 
-seq_printf is costy, on a system with n CPUs, reading /proc/softirqs
-would yield 10*n decimal values, and the extra cost parsing format string
-grows linearly with number of cpus. Replace seq_printf with
-seq_put_decimal_ull_width have significant performance improvement.
-On an 8CPUs system, reading /proc/softirqs show ~40% performance
-gain with this patch.
+Accessing `mr_table->mfc_cache_list` is protected by an RCU lock. In the
+following code flow, the RCU read lock is not held, causing the
+following error when `RCU_PROVE` is not held. The same problem might
+show up in the IPv6 code path.
 
-Signed-off-by: David Wang <00107082@163.com>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+	6.12.0-rc5-kbuilder-01145-gbac17284bdcb #33 Tainted: G            E    N
+	-----------------------------
+	net/ipv4/ipmr_base.c:313 RCU-list traversed in non-reader section!!
+
+	rcu_scheduler_active = 2, debug_locks = 1
+		   2 locks held by RetransmitAggre/3519:
+		    #0: ffff88816188c6c0 (nlk_cb_mutex-ROUTE){+.+.}-{3:3}, at: __netlink_dump_start+0x8a/0x290
+		    #1: ffffffff83fcf7a8 (rtnl_mutex){+.+.}-{3:3}, at: rtnl_dumpit+0x6b/0x90
+
+	stack backtrace:
+		    lockdep_rcu_suspicious
+		    mr_table_dump
+		    ipmr_rtm_dumproute
+		    rtnl_dump_all
+		    rtnl_dumpit
+		    netlink_dump
+		    __netlink_dump_start
+		    rtnetlink_rcv_msg
+		    netlink_rcv_skb
+		    netlink_unicast
+		    netlink_sendmsg
+
+This is not a problem per see, since the RTNL lock is held here, so, it
+is safe to iterate in the list without the RCU read lock, as suggested
+by Eric.
+
+To alleviate the concern, modify the code to use
+list_for_each_entry_rcu() with the RTNL-held argument.
+
+The annotation will raise an error only if RTNL or RCU read lock are
+missing during iteration, signaling a legitimate problem, otherwise it
+will avoid this false positive.
+
+This will solve the IPv6 case as well, since ip6mr_rtm_dumproute() calls
+this function as well.
+
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://patch.msgid.link/20241108-ipmr_rcu-v2-1-c718998e209b@debian.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/proc/softirqs.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv4/ipmr_base.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/fs/proc/softirqs.c b/fs/proc/softirqs.c
-index 12901dcf57e2b..d8f4e7d54d002 100644
---- a/fs/proc/softirqs.c
-+++ b/fs/proc/softirqs.c
-@@ -19,7 +19,7 @@ static int show_softirqs(struct seq_file *p, void *v)
- 	for (i = 0; i < NR_SOFTIRQS; i++) {
- 		seq_printf(p, "%12s:", softirq_to_name[i]);
- 		for_each_possible_cpu(j)
--			seq_printf(p, " %10u", kstat_softirqs_cpu(i, j));
-+			seq_put_decimal_ull_width(p, " ", kstat_softirqs_cpu(i, j), 10);
- 		seq_putc(p, '\n');
- 	}
- 	return 0;
+diff --git a/net/ipv4/ipmr_base.c b/net/ipv4/ipmr_base.c
+index ea48bd15a575b..4a1a90a135406 100644
+--- a/net/ipv4/ipmr_base.c
++++ b/net/ipv4/ipmr_base.c
+@@ -301,7 +301,8 @@ int mr_table_dump(struct mr_table *mrt, struct sk_buff *skb,
+ 	if (filter->filter_set)
+ 		flags |= NLM_F_DUMP_FILTERED;
+ 
+-	list_for_each_entry_rcu(mfc, &mrt->mfc_cache_list, list) {
++	list_for_each_entry_rcu(mfc, &mrt->mfc_cache_list, list,
++				lockdep_rtnl_is_held()) {
+ 		if (e < s_e)
+ 			goto next_entry;
+ 		if (filter->dev &&
 -- 
 2.43.0
 
