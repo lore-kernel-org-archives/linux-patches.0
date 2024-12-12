@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB68621E085;
-	Thu, 12 Dec 2024 15:37:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F8082210FB;
+	Thu, 12 Dec 2024 15:37:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734017874; cv=none; b=UOUkoFwkSejgPrvIR7w2afMYAIwfW71+IwlqSn3l6p2a7O5ZiJS3HgPcI8vEblSGJO1cuBpVvqiBcCOD8ECbjXUAzlD4SwL0Pcv5KHIM6LY+lH6b5BvpEAMBZrQYM4DcHhUvh/MArdkqHMNvMpaRMY63b8mU5R75uzqHkvhEfH8=
+	t=1734017877; cv=none; b=OmuI5oH03dBH8mjf6ZVoU9gOa79zZEOnqWuajqukk6GynDQNpMCnrbx5cyCRRQlMEs0r8uFYvnC1VxKwlj15Wyrd9oS1P0G6yXyJ5zYA7DZ1a0UlZr8lOwyUR7TUtmXxDfFHTjk8NMJcHUIpG9jxJ/oV1Y1BUNIimKLcZxa2oW0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734017874; c=relaxed/simple;
-	bh=6FZ2w0krYJuGiawEr4Efy9GKfPIvmIlYZVPIsladLmY=;
+	s=arc-20240116; t=1734017877; c=relaxed/simple;
+	bh=O+Z1pypRDeaiZEx7pkYSdExqq6P8IjgYRpcDE6dvFxo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=aO4VqndGilKQezmv4VS8Bi0BXtQMQqJRIE7ND/9VOxgTf7NnYsOqQUSX4NrbTL/Vx2KJWakyP021j16KJavON4nkGT/6jevoFFjnpsvR6xYEPaHT+3BJIDA3tv6LdUUNCcH43M7s9Ybvw7FNqn48YpYu9mJrH3EOXW1pxR7iEpI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wsy8qOlc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SBH7v62dcmoNkP65vhju4JkcfeTjPBtfOA8+zvxpWYc1NvTd4wSu+NLT2w7BzXqzZheqErcxDq1MBYt+2o48ldDWGfDv/HfG+GWOgL7hH/7A0rzYOOGEtupMHn0ctCqXXN9hmmgOOSb762lrDVpkp98BIozoe3FNw34pEuY8Qws=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GDsNNARC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wsy8qOlc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D615C4CECE;
-	Thu, 12 Dec 2024 15:37:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GDsNNARC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73937C4CED7;
+	Thu, 12 Dec 2024 15:37:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734017873;
-	bh=6FZ2w0krYJuGiawEr4Efy9GKfPIvmIlYZVPIsladLmY=;
+	s=korg; t=1734017876;
+	bh=O+Z1pypRDeaiZEx7pkYSdExqq6P8IjgYRpcDE6dvFxo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wsy8qOlc7in1bZXMqA1liXwbAvuddQONeQ4jE1QTsE57VsgJAWAHxKiGKPdVb1X80
-	 BXOwUYoVAIWXJZIpmmULd+0kVxZp/wJwH95Wyl7FhifMsE7yVq6cR+EJR/BAxzStot
-	 Dvx72xWrid9iBV8xk1q5yI9qMS1rxt/FdwlAI/2E=
+	b=GDsNNARCNJ4bMW9GzzbaNSRaz+PJT8SVFjPn2SZ37gz/cwxHX9NtxfEKOzsMDXg4Z
+	 l3gPawf7OpnE5nQz8wAT+DJoGpMHoiB0QVxjJnnN3NC8rEvQY/DDETs8PWTbj39a0F
+	 Z9DwVM+djuNkNZR/Ri2FdIJKNk/QRDj8rK9bM8dM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
-	Hou Tao <houtao1@huawei.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Sean Christopherson <seanjc@google.com>,
+	Ingo Molnar <mingo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 136/356] bpf: Fix exact match conditions in trie_get_next_key()
-Date: Thu, 12 Dec 2024 15:57:35 +0100
-Message-ID: <20241212144250.018391184@linuxfoundation.org>
+Subject: [PATCH 6.6 137/356] x86/CPU/AMD: WARN when setting EFER.AUTOIBRS if and only if the WRMSR fails
+Date: Thu, 12 Dec 2024 15:57:36 +0100
+Message-ID: <20241212144250.056404154@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144244.601729511@linuxfoundation.org>
 References: <20241212144244.601729511@linuxfoundation.org>
@@ -46,62 +46,44 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hou Tao <houtao1@huawei.com>
+From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit 27abc7b3fa2e09bbe41e2924d328121546865eda ]
+[ Upstream commit 492077668fb453b8b16c842fcf3fafc2ebc190e9 ]
 
-trie_get_next_key() uses node->prefixlen == key->prefixlen to identify
-an exact match, However, it is incorrect because when the target key
-doesn't fully match the found node (e.g., node->prefixlen != matchlen),
-these two nodes may also have the same prefixlen. It will return
-expected result when the passed key exist in the trie. However when a
-recently-deleted key or nonexistent key is passed to
-trie_get_next_key(), it may skip keys and return incorrect result.
+When ensuring EFER.AUTOIBRS is set, WARN only on a negative return code
+from msr_set_bit(), as '1' is used to indicate the WRMSR was successful
+('0' indicates the MSR bit was already set).
 
-Fix it by using node->prefixlen == matchlen to identify exact matches.
-When the condition is true after the search, it also implies
-node->prefixlen equals key->prefixlen, otherwise, the search would
-return NULL instead.
-
-Fixes: b471f2f1de8b ("bpf: implement MAP_GET_NEXT_KEY command for LPM_TRIE map")
-Reviewed-by: Toke Høiland-Jørgensen <toke@redhat.com>
-Signed-off-by: Hou Tao <houtao1@huawei.com>
-Link: https://lore.kernel.org/r/20241206110622.1161752-6-houtao@huaweicloud.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: 8cc68c9c9e92 ("x86/CPU/AMD: Make sure EFER[AIBRSE] is set")
+Reported-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Link: https://lore.kernel.org/r/Z1MkNofJjt7Oq0G6@google.com
+Closes: https://lore.kernel.org/all/20241205220604.GA2054199@thelio-3990X
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/lpm_trie.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/x86/kernel/cpu/amd.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/bpf/lpm_trie.c b/kernel/bpf/lpm_trie.c
-index 958f907cdaf0e..c4f1d465ae35c 100644
---- a/kernel/bpf/lpm_trie.c
-+++ b/kernel/bpf/lpm_trie.c
-@@ -638,7 +638,7 @@ static int trie_get_next_key(struct bpf_map *map, void *_key, void *_next_key)
- 	struct lpm_trie_node **node_stack = NULL;
- 	int err = 0, stack_ptr = -1;
- 	unsigned int next_bit;
--	size_t matchlen;
-+	size_t matchlen = 0;
+diff --git a/arch/x86/kernel/cpu/amd.c b/arch/x86/kernel/cpu/amd.c
+index 145c81c68394b..9413fb767c6a7 100644
+--- a/arch/x86/kernel/cpu/amd.c
++++ b/arch/x86/kernel/cpu/amd.c
+@@ -1205,7 +1205,7 @@ static void init_amd(struct cpuinfo_x86 *c)
+ 	 */
+ 	if (spectre_v2_in_eibrs_mode(spectre_v2_enabled) &&
+ 	    cpu_has(c, X86_FEATURE_AUTOIBRS))
+-		WARN_ON_ONCE(msr_set_bit(MSR_EFER, _EFER_AUTOIBRS));
++		WARN_ON_ONCE(msr_set_bit(MSR_EFER, _EFER_AUTOIBRS) < 0);
  
- 	/* The get_next_key follows postorder. For the 4 node example in
- 	 * the top of this file, the trie_get_next_key() returns the following
-@@ -677,7 +677,7 @@ static int trie_get_next_key(struct bpf_map *map, void *_key, void *_next_key)
- 		next_bit = extract_bit(key->data, node->prefixlen);
- 		node = rcu_dereference(node->child[next_bit]);
- 	}
--	if (!node || node->prefixlen != key->prefixlen ||
-+	if (!node || node->prefixlen != matchlen ||
- 	    (node->flags & LPM_TREE_NODE_FLAG_IM))
- 		goto find_leftmost;
- 
+ 	if (!cpu_has(c, X86_FEATURE_HYPERVISOR) &&
+ 	     cpu_has_amd_erratum(c, amd_erratum_1485))
 -- 
 2.43.0
 
