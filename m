@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 848C613792B;
-	Thu, 12 Dec 2024 15:25:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9269B2054F8;
+	Thu, 12 Dec 2024 15:25:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734017103; cv=none; b=QVdCea+nL4lfvuNZIwgF0bmjIOuhXx7t4AISETH+uHqF9dJF+MUXSPX/70IRDKbjqFAncTqRy2DooZkHZMStEnQEvDId1ljJxwAf1hkQ/e9T4trtMxmDRvKSNv3osEP8u1NNRDs7lu2rNnJMVleSIRnBJBPUAmBryr2C2GrbG/Y=
+	t=1734017108; cv=none; b=WA1WiZFXR3TiUj65wiSr2Jj1f6uqZJjcCdDwisGgrnCUg4w6Am5wMp+nlZuFgqu4/MU/eAzh7r1nYilx2nTsA3y+pLR2B4lGRnKhrA87ky6ElwAlSlidGolbTsctIJLGgtWVCewX+0P03lTUjHCXUQLAzVgwhlcnOxonW8qbjtA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734017103; c=relaxed/simple;
-	bh=m4m3EPgE1YVS7dBpLSo/pLsvuOGHt97UzbqshcFedKo=;
+	s=arc-20240116; t=1734017108; c=relaxed/simple;
+	bh=r6PK7uxeFoeVSDQ1VG+mRn8wLK0L54GgkjkpoKC6Y9E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PZiLZrRWD1NM/nb0PKjeQyRL1ZRsaE0uQBqR5DQ6xl31Iu19xek1OWa+U0W4ITBJcjGCOvNXFfifsUDREHKgc8CULgVKvcLaSJiCjPprHN/oHCOUv0SZUvKL7AQ6D967er1CGL4otVLOI5uyd+UuGjlFSUHxX6RK/cF7V2yDfVY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ev72Gob7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YyHNVBp3mANhf4VGNLY1EQSb9u/DTuDr3JgSPv37SqbJdoayegBHOAEOVi+kUlkAt9eJh0dAz6+vF39PkNUVdxPjsV+5IyjoJzl+prbhDhN1K0QYSC/dxFGoIkEUDfDSglrPtXJyc3T/Qjsf2nHBkvAbjYxT1AoF1bMmkuemjE8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sq+862Lc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ev72Gob7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3DAFC4CECE;
-	Thu, 12 Dec 2024 15:25:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sq+862Lc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 986D1C4CECE;
+	Thu, 12 Dec 2024 15:25:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734017103;
-	bh=m4m3EPgE1YVS7dBpLSo/pLsvuOGHt97UzbqshcFedKo=;
+	s=korg; t=1734017107;
+	bh=r6PK7uxeFoeVSDQ1VG+mRn8wLK0L54GgkjkpoKC6Y9E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ev72Gob75RV2VumLs5U420pgmgq1po+2p/C2GsoVsm7rCCFjpQMREvAQwp+aqOS55
-	 ECbvwpeHBUmGsI26AmeO7NubMJYNUfXMLCTTPRyoESaOCNx1trNnaY1j5Tr1/Cpbd+
-	 aeHdPtlCy6Egxjdw+FxKwMF8PaAIs0uT61MutgXI=
+	b=sq+862Lc9/5HnFwreB10zhMKSVl2sMX5RIFg5JsqTk7ckgK/tE5et3Ex99ySWD2tu
+	 1lI+JUg1NHn0/3lYYZWxyzjNmgTa/VNS1E03FtbD6fCn8WvWOqrVUZAMilmIWQiYxp
+	 TifggFyyfM3Fmi+y7rmm8t4SNBBe9VtjpV+aHtwk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kees Cook <kees@kernel.org>,
-	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Tatsuya S <tatsuya.s2862@gmail.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 383/466] smb: client: memcpy() with surrounding object base address
-Date: Thu, 12 Dec 2024 15:59:12 +0100
-Message-ID: <20241212144321.904994069@linuxfoundation.org>
+Subject: [PATCH 6.12 384/466] tracing: Fix function name for trampoline
+Date: Thu, 12 Dec 2024 15:59:13 +0100
+Message-ID: <20241212144321.942096154@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144306.641051666@linuxfoundation.org>
 References: <20241212144306.641051666@linuxfoundation.org>
@@ -52,42 +53,161 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kees Cook <kees@kernel.org>
+From: Tatsuya S <tatsuya.s2862@gmail.com>
 
-[ Upstream commit f69b0187f8745a7a9584f6b13f5e792594b88b2e ]
+[ Upstream commit 6ce5a6f0a07d37cc377df08a8d8a9c283420f323 ]
 
-Like commit f1f047bd7ce0 ("smb: client: Fix -Wstringop-overflow issues"),
-adjust the memcpy() destination address to be based off the surrounding
-object rather than based off the 4-byte "Protocol" member. This avoids a
-build-time warning when compiling under CONFIG_FORTIFY_SOURCE with GCC 15:
+The issue that unrelated function name is shown on stack trace like
+following even though it should be trampoline code address is caused by
+the creation of trampoline code in the area where .init.text section
+of module was freed after module is loaded.
 
-In function 'fortify_memcpy_chk',
-    inlined from 'CIFSSMBSetPathInfo' at ../fs/smb/client/cifssmb.c:5358:2:
-../include/linux/fortify-string.h:571:25: error: call to '__write_overflow_field' declared with attribute warning: detected write beyond size of field (1st parameter); maybe use struct_group()? [-Werror=attribute-warning]
-  571 |                         __write_overflow_field(p_size_field, size);
-      |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+bash-1344    [002] .....    43.644608: <stack trace>
+=> (MODULE INIT FUNCTION)
+=> vfs_write
+=> ksys_write
+=> do_syscall_64
+=> entry_SYSCALL_64_after_hwframe
 
-Signed-off-by: Kees Cook <kees@kernel.org>
-Reviewed-by: Gustavo A. R. Silva <gustavoars@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+To resolve this, when function address of stack trace entry is in
+trampoline, output without looking up symbol name.
+
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Link: https://lore.kernel.org/20241021071454.34610-2-tatsuya.s2862@gmail.com
+Signed-off-by: Tatsuya S <tatsuya.s2862@gmail.com>
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/cifssmb.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/trace/trace.c        | 33 +++++++++++++++++++++++++--------
+ kernel/trace/trace.h        |  7 +++++++
+ kernel/trace/trace_output.c |  4 ++++
+ 3 files changed, 36 insertions(+), 8 deletions(-)
 
-diff --git a/fs/smb/client/cifssmb.c b/fs/smb/client/cifssmb.c
-index c6f15dbe860a4..0eae60731c20c 100644
---- a/fs/smb/client/cifssmb.c
-+++ b/fs/smb/client/cifssmb.c
-@@ -5406,7 +5406,7 @@ CIFSSMBSetPathInfo(const unsigned int xid, struct cifs_tcon *tcon,
- 	param_offset = offsetof(struct smb_com_transaction2_spi_req,
- 				InformationLevel) - 4;
- 	offset = param_offset + params;
--	data_offset = (char *) (&pSMB->hdr.Protocol) + offset;
-+	data_offset = (char *)pSMB + offsetof(typeof(*pSMB), hdr.Protocol) + offset;
- 	pSMB->ParameterOffset = cpu_to_le16(param_offset);
- 	pSMB->DataOffset = cpu_to_le16(offset);
- 	pSMB->SetupCount = 1;
+diff --git a/kernel/trace/trace.c b/kernel/trace/trace.c
+index 6a891e00aa7f4..17d2ffde0bb60 100644
+--- a/kernel/trace/trace.c
++++ b/kernel/trace/trace.c
+@@ -988,7 +988,8 @@ static inline void trace_access_lock_init(void)
+ #endif
+ 
+ #ifdef CONFIG_STACKTRACE
+-static void __ftrace_trace_stack(struct trace_buffer *buffer,
++static void __ftrace_trace_stack(struct trace_array *tr,
++				 struct trace_buffer *buffer,
+ 				 unsigned int trace_ctx,
+ 				 int skip, struct pt_regs *regs);
+ static inline void ftrace_trace_stack(struct trace_array *tr,
+@@ -997,7 +998,8 @@ static inline void ftrace_trace_stack(struct trace_array *tr,
+ 				      int skip, struct pt_regs *regs);
+ 
+ #else
+-static inline void __ftrace_trace_stack(struct trace_buffer *buffer,
++static inline void __ftrace_trace_stack(struct trace_array *tr,
++					struct trace_buffer *buffer,
+ 					unsigned int trace_ctx,
+ 					int skip, struct pt_regs *regs)
+ {
+@@ -2947,7 +2949,8 @@ struct ftrace_stacks {
+ static DEFINE_PER_CPU(struct ftrace_stacks, ftrace_stacks);
+ static DEFINE_PER_CPU(int, ftrace_stack_reserve);
+ 
+-static void __ftrace_trace_stack(struct trace_buffer *buffer,
++static void __ftrace_trace_stack(struct trace_array *tr,
++				 struct trace_buffer *buffer,
+ 				 unsigned int trace_ctx,
+ 				 int skip, struct pt_regs *regs)
+ {
+@@ -2994,6 +2997,20 @@ static void __ftrace_trace_stack(struct trace_buffer *buffer,
+ 		nr_entries = stack_trace_save(fstack->calls, size, skip);
+ 	}
+ 
++#ifdef CONFIG_DYNAMIC_FTRACE
++	/* Mark entry of stack trace as trampoline code */
++	if (tr->ops && tr->ops->trampoline) {
++		unsigned long tramp_start = tr->ops->trampoline;
++		unsigned long tramp_end = tramp_start + tr->ops->trampoline_size;
++		unsigned long *calls = fstack->calls;
++
++		for (int i = 0; i < nr_entries; i++) {
++			if (calls[i] >= tramp_start && calls[i] < tramp_end)
++				calls[i] = FTRACE_TRAMPOLINE_MARKER;
++		}
++	}
++#endif
++
+ 	event = __trace_buffer_lock_reserve(buffer, TRACE_STACK,
+ 				    struct_size(entry, caller, nr_entries),
+ 				    trace_ctx);
+@@ -3024,7 +3041,7 @@ static inline void ftrace_trace_stack(struct trace_array *tr,
+ 	if (!(tr->trace_flags & TRACE_ITER_STACKTRACE))
+ 		return;
+ 
+-	__ftrace_trace_stack(buffer, trace_ctx, skip, regs);
++	__ftrace_trace_stack(tr, buffer, trace_ctx, skip, regs);
+ }
+ 
+ void __trace_stack(struct trace_array *tr, unsigned int trace_ctx,
+@@ -3033,7 +3050,7 @@ void __trace_stack(struct trace_array *tr, unsigned int trace_ctx,
+ 	struct trace_buffer *buffer = tr->array_buffer.buffer;
+ 
+ 	if (rcu_is_watching()) {
+-		__ftrace_trace_stack(buffer, trace_ctx, skip, NULL);
++		__ftrace_trace_stack(tr, buffer, trace_ctx, skip, NULL);
+ 		return;
+ 	}
+ 
+@@ -3050,7 +3067,7 @@ void __trace_stack(struct trace_array *tr, unsigned int trace_ctx,
+ 		return;
+ 
+ 	ct_irq_enter_irqson();
+-	__ftrace_trace_stack(buffer, trace_ctx, skip, NULL);
++	__ftrace_trace_stack(tr, buffer, trace_ctx, skip, NULL);
+ 	ct_irq_exit_irqson();
+ }
+ 
+@@ -3067,8 +3084,8 @@ void trace_dump_stack(int skip)
+ 	/* Skip 1 to skip this function. */
+ 	skip++;
+ #endif
+-	__ftrace_trace_stack(printk_trace->array_buffer.buffer,
+-			     tracing_gen_ctx(), skip, NULL);
++	__ftrace_trace_stack(printk_trace, printk_trace->array_buffer.buffer,
++				tracing_gen_ctx(), skip, NULL);
+ }
+ EXPORT_SYMBOL_GPL(trace_dump_stack);
+ 
+diff --git a/kernel/trace/trace.h b/kernel/trace/trace.h
+index c866991b9c78b..30d6675c78cfe 100644
+--- a/kernel/trace/trace.h
++++ b/kernel/trace/trace.h
+@@ -2176,4 +2176,11 @@ static inline int rv_init_interface(void)
+ }
+ #endif
+ 
++/*
++ * This is used only to distinguish
++ * function address from trampoline code.
++ * So this value has no meaning.
++ */
++#define FTRACE_TRAMPOLINE_MARKER  ((unsigned long) INT_MAX)
++
+ #endif /* _LINUX_KERNEL_TRACE_H */
+diff --git a/kernel/trace/trace_output.c b/kernel/trace/trace_output.c
+index 868f2f912f280..c14573e5a9033 100644
+--- a/kernel/trace/trace_output.c
++++ b/kernel/trace/trace_output.c
+@@ -1246,6 +1246,10 @@ static enum print_line_t trace_stack_print(struct trace_iterator *iter,
+ 			break;
+ 
+ 		trace_seq_puts(s, " => ");
++		if ((*p) == FTRACE_TRAMPOLINE_MARKER) {
++			trace_seq_puts(s, "[FTRACE TRAMPOLINE]\n");
++			continue;
++		}
+ 		seq_print_ip_sym(s, (*p) + delta, flags);
+ 		trace_seq_putc(s, '\n');
+ 	}
 -- 
 2.43.0
 
