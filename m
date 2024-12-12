@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9FA222837C;
-	Thu, 12 Dec 2024 16:40:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92FCF22E9EB;
+	Thu, 12 Dec 2024 16:40:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734021606; cv=none; b=K5pmPihzY9ag7LPy1Hrd8jWKrA71D8hDh1vC4S9yeX6hko/PoyfO0m2u9KU+GCQKKLGfPBP9CD/Ap2tV/NoKfUu5e3Rr2W/VKwssJjxHoUVBGGWyWrZPhBHsVMeQ0JDzO/uwPli136/lk3lE3xWhs5Tw6lkpOMXSrW8+MWuG31I=
+	t=1734021609; cv=none; b=d4C3C06Rs7KarpOolADVR4nEF1LHvLe1x51pvbCD7s0XjMpdiHLeL9frAx9WIqDJ/BmNwpE3EKYFScb+PMLK7hvHmRDv9P1aETqc1/hMznROWDJcoOvC/kthhy/dz0qTyDOcn0vr5z1C7SNoInev/AVRvnR5ARNSJVBvMKMOLLs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734021606; c=relaxed/simple;
-	bh=Y/KPRL5Osx0n1geYMXZG1VSX0fBLt0wXgQ2/lJoDqqo=;
+	s=arc-20240116; t=1734021609; c=relaxed/simple;
+	bh=W58mrVLO8UulDpbopUik83t4dKXPPCFHBVLMTZ53PkE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tCuw0acK00qRp9OES9muPpnOsPn8O6RTbvhcUo7yCK6XVfdSPQQvTRA5wpeuL3ZK9qUlDZXouWV2dJezRSpQntnyZXA5yVeMaqO67N9zgppfVmyzSoZ9jIlQwbiRQb/zV0uFFdYXj3gy2m4hRbmhSwI2geLMV/lU/PwUlr+Tacw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lXzFgras; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZgW+aqjf1iNMOGEWnsGTJQYOEyabRUcCAcKecyQCRLcuJ4uqwNt/sK8VSRVWkwS67Fns6mP9/eUCnHGcjAGSLPJbbQMIMYAjp9QbHTifx0YBMWpou7YO5q9EaCDAxLkPhgjEeLW2Tt7/e8G4A/JIqeKu5OmfXMcJ7K/hzq+ekMg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UxVa/uXP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lXzFgras"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0352BC4CECE;
-	Thu, 12 Dec 2024 16:40:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UxVa/uXP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2B4BC4CECE;
+	Thu, 12 Dec 2024 16:40:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734021605;
-	bh=Y/KPRL5Osx0n1geYMXZG1VSX0fBLt0wXgQ2/lJoDqqo=;
+	s=korg; t=1734021609;
+	bh=W58mrVLO8UulDpbopUik83t4dKXPPCFHBVLMTZ53PkE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lXzFgrasofGf4OIH1bZlx4W3ertYt2/VhNsAqPPaBeJd//2TputSiAqDiYVnfP/h8
-	 wkeH7p92ZuNq8FXMTiKmxTxoLx2YmdyaHN989kcbRbcHmsrLPgGFak5m5R0M9mfk9k
-	 KPi5Rm3HkIAr+WvyCuiSKXzIswFKEk3dm3IqAxZk=
+	b=UxVa/uXPA/e1+ALCmuysVBRTTaSbVWV1c5M3wh8/1YgM4124CYl7SVJSVXoCAvKoT
+	 VU1vV+ZY37xJwV1QbWB4DQW0bQC4TQNcUx3ijEDgtmmoS8NAMd9BcGv7xfJdHdu5d0
+	 XTgwEMXpKJdjWiM/mFRcp+jOw9nSXADf2tnN0Uzo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	guoweikang <guoweikang.kernel@gmail.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 5.15 012/565] ftrace: Fix regression with module command in stack_trace_filter
-Date: Thu, 12 Dec 2024 15:53:27 +0100
-Message-ID: <20241212144311.938599675@linuxfoundation.org>
+	MengEn Sun <mengensun@tencent.com>,
+	JinLiang Zheng <alexjlzheng@tencent.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.15 013/565] vmstat: call fold_vm_zone_numa_events() before show per zone NUMA event
+Date: Thu, 12 Dec 2024 15:53:28 +0100
+Message-ID: <20241212144311.976105298@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144311.432886635@linuxfoundation.org>
 References: <20241212144311.432886635@linuxfoundation.org>
@@ -53,43 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: guoweikang <guoweikang.kernel@gmail.com>
+From: MengEn Sun <mengensun@tencent.com>
 
-commit 45af52e7d3b8560f21d139b3759735eead8b1653 upstream.
+commit 2ea80b039b9af0b71c00378523b71c254fb99c23 upstream.
 
-When executing the following command:
+Since 5.14-rc1, NUMA events will only be folded from per-CPU statistics to
+per zone and global statistics when the user actually needs it.
 
-    # echo "write*:mod:ext3" > /sys/kernel/tracing/stack_trace_filter
+Currently, the kernel has performs the fold operation when reading
+/proc/vmstat, but does not perform the fold operation in /proc/zoneinfo.
+This can lead to inaccuracies in the following statistics in zoneinfo:
+- numa_hit
+- numa_miss
+- numa_foreign
+- numa_interleave
+- numa_local
+- numa_other
 
-The current mod command causes a null pointer dereference. While commit
-0f17976568b3f ("ftrace: Fix regression with module command in stack_trace_filter")
-has addressed part of the issue, it left a corner case unhandled, which still
-results in a kernel crash.
+Therefore, before printing per-zone vm_numa_event when reading
+/proc/zoneinfo, we should also perform the fold operation.
 
-Cc: stable@vger.kernel.org
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Link: https://lore.kernel.org/20241120052750.275463-1-guoweikang.kernel@gmail.com
-Fixes: 04ec7bb642b77 ("tracing: Have the trace_array hold the list of registered func probes");
-Signed-off-by: guoweikang <guoweikang.kernel@gmail.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Link: https://lkml.kernel.org/r/1730433998-10461-1-git-send-email-mengensun@tencent.com
+Fixes: f19298b9516c ("mm/vmstat: convert NUMA statistics to basic NUMA counters")
+Signed-off-by: MengEn Sun <mengensun@tencent.com>
+Reviewed-by: JinLiang Zheng <alexjlzheng@tencent.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/ftrace.c |    3 +++
- 1 file changed, 3 insertions(+)
+ mm/vmstat.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/kernel/trace/ftrace.c
-+++ b/kernel/trace/ftrace.c
-@@ -4305,6 +4305,9 @@ ftrace_mod_callback(struct trace_array *
- 	char *func;
- 	int ret;
+--- a/mm/vmstat.c
++++ b/mm/vmstat.c
+@@ -1690,6 +1690,7 @@ static void zoneinfo_show_print(struct s
+ 			   zone_page_state(zone, i));
  
-+	if (!tr)
-+		return -ENODEV;
-+
- 	/* match_records() modifies func, and we need the original */
- 	func = kstrdup(func_orig, GFP_KERNEL);
- 	if (!func)
+ #ifdef CONFIG_NUMA
++	fold_vm_zone_numa_events(zone);
+ 	for (i = 0; i < NR_VM_NUMA_EVENT_ITEMS; i++)
+ 		seq_printf(m, "\n      %-12s %lu", numa_stat_name(i),
+ 			   zone_numa_event_state(zone, i));
 
 
