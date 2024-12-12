@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 876642236EA;
-	Thu, 12 Dec 2024 17:48:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A8C32236EA;
+	Thu, 12 Dec 2024 17:48:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734025713; cv=none; b=kaYEzch7+wFj2pooFO25AISLgiolbFtBuO1cm4Zu6GWti7X50PEejlzbSR0gGhvvj25ZyR7UkiU9hYBSCcpNxjJwUdB+5FokMBiB3jx2Fu8srX89Enow50n9nhQQBy+eoSLk+ucrrq9wLelYACNQD2vBvuSOMx648aXUI+cSjnc=
+	t=1734025716; cv=none; b=D4Wat+sNbuka5N5p5631dFvGOGR9CWyzV4jrg6WnCMvkK0oH6ehwdlD8q/ZA1chY44lpI2fxdLJqADH11jWgUwbR9pRMvbkxMjCabTk8QCpaXLU1YjJqkPZgN7T1T9lzTNF2N1TbKbuNTSwBVWU6LLrU38dodvvQzba2WMkT9SM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734025713; c=relaxed/simple;
-	bh=qa4QqnRj8eKKk/AcFtwnLz6J/QXGrUdCWTbJWh6IFaQ=;
+	s=arc-20240116; t=1734025716; c=relaxed/simple;
+	bh=GjzuLaoJKvSuZfNB25CnAMk9xLLkRPe6fTQZ1YxQVk4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HHBHKdqN9A55FCclu8jmIMVMUDib/Me5K7ugU5glu2Y0A7BfwRDETqMbYTPBpCxTd2gk0biMPnlQkdnLO6ThQ3DfuMqUK1v71QRkObvcKFylfnI4jm8O+31KfIyow8tAamnH/Dgvob1G2ABVzRiODXE0Bb/SWoigVb58DUAZ7vk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kGAxnQtm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BYU/9vXzeMsGpyY5ObU9bshgAB0PCYheijFIw7n9WjZwnXHhdm6zbWC3hJBDo/D3lohH8WZhOrugypxw1gSyQY5DkcFMg2WE7HuNSjZN78tkZzNI/gOEKJl2AQlWLqsMK6r5CKdscioxnfSHZjLeOA7xdeAV4WCv2dA6jn2ChQo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SiOHnnvx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kGAxnQtm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4E55C4CECE;
-	Thu, 12 Dec 2024 17:48:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SiOHnnvx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3F10C4CEDE;
+	Thu, 12 Dec 2024 17:48:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734025713;
-	bh=qa4QqnRj8eKKk/AcFtwnLz6J/QXGrUdCWTbJWh6IFaQ=;
+	s=korg; t=1734025716;
+	bh=GjzuLaoJKvSuZfNB25CnAMk9xLLkRPe6fTQZ1YxQVk4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kGAxnQtmjccGbfl9LGo0k/a4EgrZxXDdvXWD19Ea/mr4QgFow/IQp0eav3CmNy2EI
-	 t2KRECXiGBcoMb+7ZO4cAxsE1avJ7Povwyw1WM34bAAAqT+jZ/r71dl+xjPaV6eF+C
-	 R/ERHZxFGTN6g0ZYJLOCrKe6dUXyhZfuMzvyyU1Y=
+	b=SiOHnnvxSXPRrP+GWCbj7U5gmRe0Iw0YhqCQUN8KSc9HWAHTSgdzkiq65bjECZZle
+	 zRQGoeOtiyXKiza91ft2a+miCuz+uX0C+1j5OJqv2iHN3rDlKfn9I9R4qiJEvwIudi
+	 iT5EAHGWObH96SHxlgSxOGSTgnMytCRR7/7ulSfk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cosmin Tanislav <demonsingur@gmail.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 5.4 262/321] regmap: detach regmap from dev on regmap_exit
-Date: Thu, 12 Dec 2024 16:03:00 +0100
-Message-ID: <20241212144240.331741077@linuxfoundation.org>
+	Anthony Pighin <anthony.pighin@nokia.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
+	Adrian Hunter <adrian.hunter@intel.com>
+Subject: [PATCH 5.4 263/321] mmc: core: Further prevent card detect during shutdown
+Date: Thu, 12 Dec 2024 16:03:01 +0100
+Message-ID: <20241212144240.372951836@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144229.291682835@linuxfoundation.org>
 References: <20241212144229.291682835@linuxfoundation.org>
@@ -50,59 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cosmin Tanislav <demonsingur@gmail.com>
+From: Ulf Hansson <ulf.hansson@linaro.org>
 
-commit 3061e170381af96d1e66799d34264e6414d428a7 upstream.
+commit 87a0d90fcd31c0f36da0332428c9e1a1e0f97432 upstream.
 
-At the end of __regmap_init(), if dev is not NULL, regmap_attach_dev()
-is called, which adds a devres reference to the regmap, to be able to
-retrieve a dev's regmap by name using dev_get_regmap().
+Disabling card detect from the host's ->shutdown_pre() callback turned out
+to not be the complete solution. More precisely, beyond the point when the
+mmc_bus->shutdown() has been called, to gracefully power off the card, we
+need to prevent card detect. Otherwise the mmc_rescan work may poll for the
+card with a CMD13, to see if it's still alive, which then will fail and
+hang as the card has already been powered off.
 
-When calling regmap_exit, the opposite does not happen, and the
-reference is kept until the dev is detached.
+To fix this problem, let's disable mmc_rescan prior to power off the card
+during shutdown.
 
-Add a regmap_detach_dev() function and call it in regmap_exit() to make
-sure that the devres reference is not kept.
-
+Reported-by: Anthony Pighin <anthony.pighin@nokia.com>
+Fixes: 66c915d09b94 ("mmc: core: Disable card detect during shutdown")
 Cc: stable@vger.kernel.org
-Fixes: 72b39f6f2b5a ("regmap: Implement dev_get_regmap()")
-Signed-off-by: Cosmin Tanislav <demonsingur@gmail.com>
-Rule: add
-Link: https://lore.kernel.org/stable/20241128130554.362486-1-demonsingur%40gmail.com
-Link: https://patch.msgid.link/20241128131625.363835-1-demonsingur@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Reviewed-by: Adrian Hunter <adrian.hunter@intel.com>
+Closes: https://lore.kernel.org/all/BN0PR08MB695133000AF116F04C3A9FFE83212@BN0PR08MB6951.namprd08.prod.outlook.com/
+Tested-by: Anthony Pighin <anthony.pighin@nokia.com>
+Message-ID: <20241125122446.18684-1-ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/base/regmap/regmap.c |   12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ drivers/mmc/core/bus.c  |    2 ++
+ drivers/mmc/core/core.c |    3 +++
+ 2 files changed, 5 insertions(+)
 
---- a/drivers/base/regmap/regmap.c
-+++ b/drivers/base/regmap/regmap.c
-@@ -603,6 +603,17 @@ int regmap_attach_dev(struct device *dev
- }
- EXPORT_SYMBOL_GPL(regmap_attach_dev);
+--- a/drivers/mmc/core/bus.c
++++ b/drivers/mmc/core/bus.c
+@@ -134,6 +134,8 @@ static void mmc_bus_shutdown(struct devi
+ 	if (dev->driver && drv->shutdown)
+ 		drv->shutdown(card);
  
-+static int dev_get_regmap_match(struct device *dev, void *res, void *data);
++	__mmc_stop_host(host);
 +
-+static int regmap_detach_dev(struct device *dev, struct regmap *map)
-+{
-+	if (!dev)
-+		return 0;
-+
-+	return devres_release(dev, dev_get_regmap_release,
-+			      dev_get_regmap_match, (void *)map->name);
-+}
-+
- static enum regmap_endian regmap_get_reg_endian(const struct regmap_bus *bus,
- 					const struct regmap_config *config)
- {
-@@ -1347,6 +1358,7 @@ void regmap_exit(struct regmap *map)
- {
- 	struct regmap_async *async;
+ 	if (host->bus_ops->shutdown) {
+ 		ret = host->bus_ops->shutdown(host);
+ 		if (ret)
+--- a/drivers/mmc/core/core.c
++++ b/drivers/mmc/core/core.c
+@@ -2382,6 +2382,9 @@ void mmc_start_host(struct mmc_host *hos
  
-+	regmap_detach_dev(map->dev, map);
- 	regcache_exit(map);
- 	regmap_debugfs_exit(map);
- 	regmap_range_exit(map);
+ void __mmc_stop_host(struct mmc_host *host)
+ {
++	if (host->rescan_disable)
++		return;
++
+ 	if (host->slot.cd_irq >= 0) {
+ 		mmc_gpio_set_cd_wake(host, false);
+ 		disable_irq(host->slot.cd_irq);
 
 
