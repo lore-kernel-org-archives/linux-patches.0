@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9A77223C7B;
-	Thu, 12 Dec 2024 17:48:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 767382153EC;
+	Thu, 12 Dec 2024 17:48:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734025695; cv=none; b=K2uLMR2vMsy/olw1H8vzAZ/lLSXGqR7ZUkPBUg7GjNcTsozNxs7mAmHmS+d1Tb6F+C18WTyn97xzB/gDnnkQkV/wY/se+yLGx0IxY4D/X8+2oMODnqaQV4V+uOD60dkvMLaxt6Z7301mTpF+VRFymQMAOhHAArvc4ZgefJmf2qg=
+	t=1734025698; cv=none; b=eXjw5bsKMdok3KoNiQi1H8loOFxmJV7IqgvE0kP+FdqCix7/+9PuX9ZC0uuN6VV/N7wNomwQ2icQ2xZdQeTSL4mwc4l8j9MbVqsKsic3NkDp4un+Fm2A4fuhSG/Nf2Omg+0YEWBPEK529aZaBaKQQcqvxQMa8ZeEaXrKsIPBKA8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734025695; c=relaxed/simple;
-	bh=U1LEfS+OH2O5bBUIMd0Q+Wx08esbw4gyq/CZrj1JhL4=;
+	s=arc-20240116; t=1734025698; c=relaxed/simple;
+	bh=FeSpDvAcljI+gjk3UYIvU2mmMNNCrrbRUvxqKvlnaDM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E3iXxOrxmnpqfauqxyoyiKs3w3dWxUcnEadQn2glrOGJWNQ8XoK3fqWk48WL00LCRzs7WV08Fkhjk4yisRabv82F7pDlP0lZC/i05sNR78QZp3qGmqgBAN6gV6DF3HfoFCYf7FLXKHH6FzVtm/INHlyxHILJY0IH9MdYx2f6dag=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jmvDxuAh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ijo4UtTB4gC/mispKS48Ok5lfXO5Qy2u7iW6QGmF9yRI8hT1rdZgChmXSNPpCLXmSyTUgBIVFp+caata4J6HPxSUADDyOjrn987ozElY0CxfDwroTyBruRj2D+SChZdlE5uzYANk5wV8nEgmXLytXijnIBpAWY+1blliEgZ4TPE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vVkUcvaK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jmvDxuAh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38CA6C4CED1;
-	Thu, 12 Dec 2024 17:48:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vVkUcvaK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04EE6C4CED1;
+	Thu, 12 Dec 2024 17:48:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734025695;
-	bh=U1LEfS+OH2O5bBUIMd0Q+Wx08esbw4gyq/CZrj1JhL4=;
+	s=korg; t=1734025698;
+	bh=FeSpDvAcljI+gjk3UYIvU2mmMNNCrrbRUvxqKvlnaDM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jmvDxuAhOTFC6IWNElsCkj/QksE0awFRc3xbPW/W8xAuE1CEQNRQhGjMkgKcXtUgz
-	 tE0YAdBJ5j9d3PKL2+1gWsHALEoQ+q4/GQ63hMWZ8L7wMDpBjvRhzx8LTOcdKUM5IS
-	 71b4wRoq+oV7XDKQrNrJhTgBT8Bawi9HCbBWvWt4=
+	b=vVkUcvaKx+5E8eTkmWgrDmIc2fN777PthyjPZah/ZdXXkl+44KnAFH7JSyMmA2hxv
+	 bKnL2BLsMmyEcn144s/e7I8z+xAhKorVySOMVIICfIiE8/MN4xvOhp1SV2KWL//UJr
+	 5rC5Ym8bxgS3ZGnYkSCDncY/sdqAOmOXuqmYAfns=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anil Gurumurthy <agurumurthy@marvell.com>,
+	Saurav Kashyap <skashyap@marvell.com>,
 	Nilesh Javali <njavali@marvell.com>,
 	Himanshu Madhani <himanshu.madhani@oracle.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 5.4 257/321] scsi: qla2xxx: Supported speed displayed incorrectly for VPorts
-Date: Thu, 12 Dec 2024 16:02:55 +0100
-Message-ID: <20241212144240.120283070@linuxfoundation.org>
+Subject: [PATCH 5.4 258/321] scsi: qla2xxx: Remove check req_sg_cnt should be equal to rsp_sg_cnt
+Date: Thu, 12 Dec 2024 16:02:56 +0100
+Message-ID: <20241212144240.159308483@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144229.291682835@linuxfoundation.org>
 References: <20241212144229.291682835@linuxfoundation.org>
@@ -52,36 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anil Gurumurthy <agurumurthy@marvell.com>
+From: Saurav Kashyap <skashyap@marvell.com>
 
-commit e4e268f898c8a08f0a1188677e15eadbc06e98f6 upstream.
+commit 833c70e212fc40d3e98da941796f4c7bcaecdf58 upstream.
 
-The fc_function_template for vports was missing the
-.show_host_supported_speeds. The base port had the same.
-
-Add .show_host_supported_speeds to the vport template as well.
+Firmware supports multiple sg_cnt for request and response for CT
+commands, so remove the redundant check. A check is there where sg_cnt
+for request and response should be same. This is not required as driver
+and FW have code to handle multiple and different sg_cnt on request and
+response.
 
 Cc: stable@vger.kernel.org
-Fixes: 2c3dfe3f6ad8 ("[SCSI] qla2xxx: add support for NPIV")
-Signed-off-by: Anil Gurumurthy <agurumurthy@marvell.com>
+Signed-off-by: Saurav Kashyap <skashyap@marvell.com>
 Signed-off-by: Nilesh Javali <njavali@marvell.com>
-Link: https://lore.kernel.org/r/20241115130313.46826-7-njavali@marvell.com
+Link: https://lore.kernel.org/r/20241115130313.46826-5-njavali@marvell.com
 Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/qla2xxx/qla_attr.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/scsi/qla2xxx/qla_bsg.c |   10 ----------
+ 1 file changed, 10 deletions(-)
 
---- a/drivers/scsi/qla2xxx/qla_attr.c
-+++ b/drivers/scsi/qla2xxx/qla_attr.c
-@@ -3070,6 +3070,7 @@ struct fc_function_template qla2xxx_tran
- 	.show_host_node_name = 1,
- 	.show_host_port_name = 1,
- 	.show_host_supported_classes = 1,
-+	.show_host_supported_speeds = 1,
+--- a/drivers/scsi/qla2xxx/qla_bsg.c
++++ b/drivers/scsi/qla2xxx/qla_bsg.c
+@@ -462,16 +462,6 @@ qla2x00_process_ct(struct bsg_job *bsg_j
+ 		goto done;
+ 	}
  
- 	.get_host_port_id = qla2x00_get_host_port_id,
- 	.show_host_port_id = 1,
+-	if ((req_sg_cnt !=  bsg_job->request_payload.sg_cnt) ||
+-	    (rsp_sg_cnt != bsg_job->reply_payload.sg_cnt)) {
+-		ql_log(ql_log_warn, vha, 0x7011,
+-		    "request_sg_cnt: %x dma_request_sg_cnt: %x reply_sg_cnt:%x "
+-		    "dma_reply_sg_cnt: %x\n", bsg_job->request_payload.sg_cnt,
+-		    req_sg_cnt, bsg_job->reply_payload.sg_cnt, rsp_sg_cnt);
+-		rval = -EAGAIN;
+-		goto done_unmap_sg;
+-	}
+-
+ 	if (!vha->flags.online) {
+ 		ql_log(ql_log_warn, vha, 0x7012,
+ 		    "Host is not online.\n");
 
 
