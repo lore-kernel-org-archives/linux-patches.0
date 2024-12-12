@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DED1F213E6B;
-	Thu, 12 Dec 2024 15:55:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAE0210F2;
+	Thu, 12 Dec 2024 15:55:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734018915; cv=none; b=VNPTSg47u92kap4e9Q2fuinhByV2SoyevTs6krc4Kngqpj9c4yidYRhKP2aod3MrHr3d7+oZ6vYW27OhX3EmrKK2qrACueAWB0aZXse1UbbQJANMAdcDIYmJ9Avxutw5G8FwRREsguGpIylNOq/KS71wuMZrB8aYKtde9ozOyaw=
+	t=1734018918; cv=none; b=l6A5W/JfsUBiddJvlECJUlX9cxTy3LmoSyvdCF0prBM/A7dPkzGOQtqaDxusQDGthd1DoN8z5Ta9VrY6rDGTZT+pOzrB+RpovkyIwXIwLYoukFbOvbebS4RYotxNasOzXMstb2Wj5WCDohvEPgkvRlOF+S0ZOHAiTLRFngV20Lk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734018915; c=relaxed/simple;
-	bh=OPWOt1IYtI9shpY5EQh5fRUbflnynfGg3XGpu8J/RRo=;
+	s=arc-20240116; t=1734018918; c=relaxed/simple;
+	bh=CNJmhWXTimY/DMvqrJmXWPvmTEQDfexwtPNFqUjwUJE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qm28F0LksffC8hkxj/lPS7Yb6xt2p2tpzujtnYhcAsRtFWcvo14rQWCpzBHNdYHWF5rybGP5WIvPsfo6iY3TyiZScJ6xzmfsxngR1H7Rxsnc4FN3sF3NkiCeWJkYbx2CtigZ5mFsGYhoRVvAliB1ZIXYdlprRgVcwGWlVSOeeE0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rfbv7d6H; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ApCPttKfU961EV98u1jE1PNaAzxnI+/7/wdNU28mjJs0mvxyTDMfOGktehWos4G+NHDyqDhZsjDJFW703RcTrso+vjdFLPCY7HYjCwrbipeh1fS7+9Amys+sQjmuqLnbvH2BrECa9ZfscvspmWPLWdquToWtHSB2uXc/Zr6cOPQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L3KFMR/7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rfbv7d6H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A6DAC4CED3;
-	Thu, 12 Dec 2024 15:55:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L3KFMR/7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1876CC4CECE;
+	Thu, 12 Dec 2024 15:55:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734018914;
-	bh=OPWOt1IYtI9shpY5EQh5fRUbflnynfGg3XGpu8J/RRo=;
+	s=korg; t=1734018918;
+	bh=CNJmhWXTimY/DMvqrJmXWPvmTEQDfexwtPNFqUjwUJE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rfbv7d6HK5rrxQcO1jcopDbMWlc4iUSpT28uEMh85Iv/oHVOR9ATtPIZoBN73Qz7P
-	 YkgR8nlWy9X8poey8bQdK3tXKUc7IJGjEi05i3IYYTsTg64yi0synW1ZlVN2zF9x+j
-	 JFJ16WgXSt1hlIgo8H/PIGJ0mW2hEgi1HrSqMrFU=
+	b=L3KFMR/789UAIZjvcDJzMETfTjb3z857lxTPcHVt8m7gF2J8pSsDSmbkzbkKVIzyq
+	 qyk2egsnLFtPAOzSMEHk4kyPShDtGJDhIQB6Eav6XcEVVjT9+DPEacvmT/dAqKc/08
+	 hIQ6s9yX8A7/1Qxf7wSkGP5MnJ3ZUQ2Kr7LTBJps=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Thompson <davthompson@nvidia.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Shravan Kumar Ramani <shravankr@nvidia.com>,
+	Ahsan Atta <ahsan.atta@intel.com>,
+	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 069/772] EDAC/bluefield: Fix potential integer overflow
-Date: Thu, 12 Dec 2024 15:50:14 +0100
-Message-ID: <20241212144352.785955319@linuxfoundation.org>
+Subject: [PATCH 6.1 070/772] crypto: qat - remove faulty arbiter config reset
+Date: Thu, 12 Dec 2024 15:50:15 +0100
+Message-ID: <20241212144352.826386452@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -52,41 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Thompson <davthompson@nvidia.com>
+From: Ahsan Atta <ahsan.atta@intel.com>
 
-[ Upstream commit 1fe774a93b46bb029b8f6fa9d1f25affa53f06c6 ]
+[ Upstream commit 70199359902f1c7187dcb28a1be679a7081de7cc ]
 
-The 64-bit argument for the "get DIMM info" SMC call consists of mem_ctrl_idx
-left-shifted 16 bits and OR-ed with DIMM index.  With mem_ctrl_idx defined as
-32-bits wide the left-shift operation truncates the upper 16 bits of
-information during the calculation of the SMC argument.
+Resetting the service arbiter config can cause potential issues
+related to response ordering and ring flow control check in the
+event of AER or device hang. This is because it results in changing
+the default response ring size from 32 bytes to 16 bytes. The service
+arbiter config reset also disables response ring flow control check.
+Thus, by removing this reset we can prevent the service arbiter from
+being configured inappropriately, which leads to undesired device
+behaviour in the event of errors.
 
-The mem_ctrl_idx stack variable must be defined as 64-bits wide to prevent any
-potential integer overflow, i.e. loss of data from upper 16 bits.
-
-Fixes: 82413e562ea6 ("EDAC, mellanox: Add ECC support for BlueField DDR4")
-Signed-off-by: David Thompson <davthompson@nvidia.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Shravan Kumar Ramani <shravankr@nvidia.com>
-Link: https://lore.kernel.org/r/20240930151056.10158-1-davthompson@nvidia.com
+Fixes: 7afa232e76ce ("crypto: qat - Intel(R) QAT DH895xcc accelerator")
+Signed-off-by: Ahsan Atta <ahsan.atta@intel.com>
+Reviewed-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/edac/bluefield_edac.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/crypto/qat/qat_common/adf_hw_arbiter.c | 4 ----
+ 1 file changed, 4 deletions(-)
 
-diff --git a/drivers/edac/bluefield_edac.c b/drivers/edac/bluefield_edac.c
-index e4736eb37bfb3..0ef0489827682 100644
---- a/drivers/edac/bluefield_edac.c
-+++ b/drivers/edac/bluefield_edac.c
-@@ -180,7 +180,7 @@ static void bluefield_edac_check(struct mem_ctl_info *mci)
- static void bluefield_edac_init_dimms(struct mem_ctl_info *mci)
- {
- 	struct bluefield_edac_priv *priv = mci->pvt_info;
--	int mem_ctrl_idx = mci->mc_idx;
-+	u64 mem_ctrl_idx = mci->mc_idx;
- 	struct dimm_info *dimm;
- 	u64 smc_info, smc_arg;
- 	int is_empty = 1, i;
+diff --git a/drivers/crypto/qat/qat_common/adf_hw_arbiter.c b/drivers/crypto/qat/qat_common/adf_hw_arbiter.c
+index 64e4596a24f40..fd39cbcdec039 100644
+--- a/drivers/crypto/qat/qat_common/adf_hw_arbiter.c
++++ b/drivers/crypto/qat/qat_common/adf_hw_arbiter.c
+@@ -90,10 +90,6 @@ void adf_exit_arb(struct adf_accel_dev *accel_dev)
+ 
+ 	hw_data->get_arb_info(&info);
+ 
+-	/* Reset arbiter configuration */
+-	for (i = 0; i < ADF_ARB_NUM; i++)
+-		WRITE_CSR_ARB_SARCONFIG(csr, arb_off, i, 0);
+-
+ 	/* Unmap worker threads to service arbiters */
+ 	for (i = 0; i < hw_data->num_engines; i++)
+ 		WRITE_CSR_ARB_WT2SAM(csr, arb_off, wt_off, i, 0);
 -- 
 2.43.0
 
