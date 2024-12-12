@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3D462210DE;
-	Thu, 12 Dec 2024 16:10:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24936225412;
+	Thu, 12 Dec 2024 16:10:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734019828; cv=none; b=OcXlnf1bErGhc4ej5vAVmsPFxWUgCj/akjkjLuSgfC7jcGzgljB2FYdmAUij65vjHXyybqKdQB0oIM/WpRt+LZ1qMrKPHRI61CrO6XqXaYix10ZVq3MmJfdy6tavV2jGD7riTKXlheuSVH8pR0ZjPTTpqZmez1YjqJ1FA09kIvI=
+	t=1734019832; cv=none; b=bko3zq6qi1PN8yZjtyvI+WMM7OssNx/aJz5jCYNvEZMNm9bfrMJSg9TQVmsHcwKC8FO+g8sUzp6znFkAEWa05dLrTd84EejOLsKdGo9IDd3XLwdJzTEGahzOBPoftxwx/tjWeyeoFBBwO2D9Qqvodo2BKngsER3GygFHIinjHfc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734019828; c=relaxed/simple;
-	bh=s33D+rVaXs5Rr9Ll/lKZ/uUFfmXd+4zkUWghJdHiPYk=;
+	s=arc-20240116; t=1734019832; c=relaxed/simple;
+	bh=IfAh3poKpaSP0opTUnEN6ZIOD1rMsN6jVm0E02gv7xM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=piHY234hb3Qrq5viJ3a9CjImOxzyLnSIsWxF5mWa3+O7FJmYO8i7w+NHVgbbaKgPr74pVbZ6WiBl/tYvF8uBbYeBL66SILruB8F6F9Q66Xr3eudRKB0M8P26T3YsJcnu5ayUVEbW/fRMouqweE+S6S5daciIL+yuOZEcs/St9Y0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xI4SmcF3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VxHIsfj0W72BcB5RUn3qWbNFEP5p0PMsKxOMCFVBNRpo89rEuVJKbAYiAGrBAWglnGD5OUJPR4G8bMKT+PrlFVMCxx7Tr+e/U59W1vxsDcgBvBEfxUPzU7aMreFS6Sv6HZNpucCseFq1DwkGSwuQXdYPABPCgIqMNZt+/ooQrX4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vARGfodC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xI4SmcF3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA71DC4CECE;
-	Thu, 12 Dec 2024 16:10:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vARGfodC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F522C4CECE;
+	Thu, 12 Dec 2024 16:10:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734019828;
-	bh=s33D+rVaXs5Rr9Ll/lKZ/uUFfmXd+4zkUWghJdHiPYk=;
+	s=korg; t=1734019832;
+	bh=IfAh3poKpaSP0opTUnEN6ZIOD1rMsN6jVm0E02gv7xM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xI4SmcF3UfVJ+x4elXO3dvCVR03tg3BwfkyCLRb7J8fGQAfrn+bs6QpLXEubsJ2Xg
-	 vvwf4u0i5x9W8JKwsKHm4Ka5J5cxWQiFIMV/EsGiYI21zFZuGITGiJ0m/3oDSHx8+H
-	 ex5w1bwNrQ/IkTopBObg+N6XL0ljNjHch/Y1TvTQ=
+	b=vARGfodCc2gWyKxvenliQijZwdhK8SXi4dlU62eboilvlz5s06M4/8OKJSLKuFzB5
+	 0b0QdATwNdI14JGTM2rplW4/Sc7EVrZHJoP2SNZrSoFoxzmLowGSfZ4RV2MYowecbp
+	 UyIVQxYZZN0xE/cPDWBIkra/S2aFWaDaXQL3Rb5I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oleksij Rempel <o.rempel@pengutronix.de>,
-	Florian Fainelli <f.fainelli@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Alexandra Winter <wintera@linux.ibm.com>,
+	Thorsten Winkler <twinkler@linux.ibm.com>,
+	Sidraya Jayagond <sidraya@linux.ibm.com>,
+	David Wei <dw@davidwei.uk>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 308/772] net: usb: lan78xx: Fix refcounting and autosuspend on invalid WoL configuration
-Date: Thu, 12 Dec 2024 15:54:13 +0100
-Message-ID: <20241212144402.623081597@linuxfoundation.org>
+Subject: [PATCH 6.1 309/772] s390/iucv: MSG_PEEK causes memory leak in iucv_sock_destruct()
+Date: Thu, 12 Dec 2024 15:54:14 +0100
+Message-ID: <20241212144402.668401559@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -52,46 +54,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oleksij Rempel <o.rempel@pengutronix.de>
+From: Sidraya Jayagond <sidraya@linux.ibm.com>
 
-[ Upstream commit e863ff806f72098bccaf8fa89c80d9ad6187c3b0 ]
+[ Upstream commit ebaf81317e42aa990ad20b113cfe3a7b20d4e937 ]
 
-Validate Wake-on-LAN (WoL) options in `lan78xx_set_wol` before calling
-`usb_autopm_get_interface`. This prevents USB autopm refcounting issues
-and ensures the adapter can properly enter autosuspend when invalid WoL
-options are provided.
+Passing MSG_PEEK flag to skb_recv_datagram() increments skb refcount
+(skb->users) and iucv_sock_recvmsg() does not decrement skb refcount
+at exit.
+This results in skb memory leak in skb_queue_purge() and WARN_ON in
+iucv_sock_destruct() during socket close. To fix this decrease
+skb refcount by one if MSG_PEEK is set in order to prevent memory
+leak and WARN_ON.
 
-Fixes: eb9ad088f966 ("lan78xx: Check for supported Wake-on-LAN modes")
-Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
-Acked-by: Florian Fainelli <f.fainelli@gmail.com>
-Link: https://patch.msgid.link/20241118140351.2398166-1-o.rempel@pengutronix.de
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+WARNING: CPU: 2 PID: 6292 at net/iucv/af_iucv.c:286 iucv_sock_destruct+0x144/0x1a0 [af_iucv]
+CPU: 2 PID: 6292 Comm: afiucv_test_msg Kdump: loaded Tainted: G        W          6.10.0-rc7 #1
+Hardware name: IBM 3931 A01 704 (z/VM 7.3.0)
+Call Trace:
+        [<001587c682c4aa98>] iucv_sock_destruct+0x148/0x1a0 [af_iucv]
+        [<001587c682c4a9d0>] iucv_sock_destruct+0x80/0x1a0 [af_iucv]
+        [<001587c704117a32>] __sk_destruct+0x52/0x550
+        [<001587c704104a54>] __sock_release+0xa4/0x230
+        [<001587c704104c0c>] sock_close+0x2c/0x40
+        [<001587c702c5f5a8>] __fput+0x2e8/0x970
+        [<001587c7024148c4>] task_work_run+0x1c4/0x2c0
+        [<001587c7023b0716>] do_exit+0x996/0x1050
+        [<001587c7023b13aa>] do_group_exit+0x13a/0x360
+        [<001587c7023b1626>] __s390x_sys_exit_group+0x56/0x60
+        [<001587c7022bccca>] do_syscall+0x27a/0x380
+        [<001587c7049a6a0c>] __do_syscall+0x9c/0x160
+        [<001587c7049ce8a8>] system_call+0x70/0x98
+        Last Breaking-Event-Address:
+        [<001587c682c4a9d4>] iucv_sock_destruct+0x84/0x1a0 [af_iucv]
+
+Fixes: eac3731bd04c ("[S390]: Add AF_IUCV socket support")
+Reviewed-by: Alexandra Winter <wintera@linux.ibm.com>
+Reviewed-by: Thorsten Winkler <twinkler@linux.ibm.com>
+Signed-off-by: Sidraya Jayagond <sidraya@linux.ibm.com>
+Signed-off-by: Alexandra Winter <wintera@linux.ibm.com>
+Reviewed-by: David Wei <dw@davidwei.uk>
+Link: https://patch.msgid.link/20241119152219.3712168-1-wintera@linux.ibm.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/lan78xx.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ net/iucv/af_iucv.c | 26 +++++++++++++++++---------
+ 1 file changed, 17 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/net/usb/lan78xx.c b/drivers/net/usb/lan78xx.c
-index ee3c13bbf6c02..feff1265cad6f 100644
---- a/drivers/net/usb/lan78xx.c
-+++ b/drivers/net/usb/lan78xx.c
-@@ -1657,13 +1657,13 @@ static int lan78xx_set_wol(struct net_device *netdev,
- 	struct lan78xx_priv *pdata = (struct lan78xx_priv *)(dev->data[0]);
- 	int ret;
+diff --git a/net/iucv/af_iucv.c b/net/iucv/af_iucv.c
+index 815b1df0b2d19..0f660b1d3bd51 100644
+--- a/net/iucv/af_iucv.c
++++ b/net/iucv/af_iucv.c
+@@ -1238,7 +1238,9 @@ static int iucv_sock_recvmsg(struct socket *sock, struct msghdr *msg,
+ 		return -EOPNOTSUPP;
  
-+	if (wol->wolopts & ~WAKE_ALL)
-+		return -EINVAL;
+ 	/* receive/dequeue next skb:
+-	 * the function understands MSG_PEEK and, thus, does not dequeue skb */
++	 * the function understands MSG_PEEK and, thus, does not dequeue skb
++	 * only refcount is increased.
++	 */
+ 	skb = skb_recv_datagram(sk, flags, &err);
+ 	if (!skb) {
+ 		if (sk->sk_shutdown & RCV_SHUTDOWN)
+@@ -1254,9 +1256,8 @@ static int iucv_sock_recvmsg(struct socket *sock, struct msghdr *msg,
+ 
+ 	cskb = skb;
+ 	if (skb_copy_datagram_msg(cskb, offset, msg, copied)) {
+-		if (!(flags & MSG_PEEK))
+-			skb_queue_head(&sk->sk_receive_queue, skb);
+-		return -EFAULT;
++		err = -EFAULT;
++		goto err_out;
+ 	}
+ 
+ 	/* SOCK_SEQPACKET: set MSG_TRUNC if recv buf size is too small */
+@@ -1273,11 +1274,8 @@ static int iucv_sock_recvmsg(struct socket *sock, struct msghdr *msg,
+ 	err = put_cmsg(msg, SOL_IUCV, SCM_IUCV_TRGCLS,
+ 		       sizeof(IUCV_SKB_CB(skb)->class),
+ 		       (void *)&IUCV_SKB_CB(skb)->class);
+-	if (err) {
+-		if (!(flags & MSG_PEEK))
+-			skb_queue_head(&sk->sk_receive_queue, skb);
+-		return err;
+-	}
++	if (err)
++		goto err_out;
+ 
+ 	/* Mark read part of skb as used */
+ 	if (!(flags & MSG_PEEK)) {
+@@ -1333,8 +1331,18 @@ static int iucv_sock_recvmsg(struct socket *sock, struct msghdr *msg,
+ 	/* SOCK_SEQPACKET: return real length if MSG_TRUNC is set */
+ 	if (sk->sk_type == SOCK_SEQPACKET && (flags & MSG_TRUNC))
+ 		copied = rlen;
++	if (flags & MSG_PEEK)
++		skb_unref(skb);
+ 
+ 	return copied;
 +
- 	ret = usb_autopm_get_interface(dev->intf);
- 	if (ret < 0)
- 		return ret;
++err_out:
++	if (!(flags & MSG_PEEK))
++		skb_queue_head(&sk->sk_receive_queue, skb);
++	else
++		skb_unref(skb);
++
++	return err;
+ }
  
--	if (wol->wolopts & ~WAKE_ALL)
--		return -EINVAL;
--
- 	pdata->wol = wol->wolopts;
- 
- 	device_set_wakeup_enable(&dev->udev->dev, (bool)wol->wolopts);
+ static inline __poll_t iucv_accept_poll(struct sock *parent)
 -- 
 2.43.0
 
