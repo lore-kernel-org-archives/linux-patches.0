@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C040215041;
-	Thu, 12 Dec 2024 17:47:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CF92223C43;
+	Thu, 12 Dec 2024 17:47:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734025640; cv=none; b=dFH+4ei6yf0pCd/hRUaGx58lP/5dQHHYKoVTcKcA9Qpq46M3nLeQmceiVPmwNY/RSfdCON8OzAOke6PktjTyaabYEpZfne9y490zy4DzKQ6jO0DuMr3+lJOlcrmc8jHSw3A+qgWOLYGO+JM5b7YkuegDOkbtcE3m0OQJ8W5Cp+g=
+	t=1734025643; cv=none; b=TIQ+5+478JpvhBJr8jCbIjfY1SPt0EPBIqoyUAtFgulQjRKuDXteNAOHtfay79ekY2KKAbRwsRj8CHXlT/PykmsdJww9/+snjugVFyN43q2VyPNM0iyg1EUTxLoy+2NiSh1fMz38QQK/bv2HrocrHm9sUpP7nK+Nchs7hZVGuk8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734025640; c=relaxed/simple;
-	bh=GwpS+TkelWobucYdzvjVTDXcOEj+sxriqdvy13IIh64=;
+	s=arc-20240116; t=1734025643; c=relaxed/simple;
+	bh=11Mxjcs5D62YpM3hXQvyVGQ6J3CeeGxuRUI9h+hMF6c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BfG+PqUoiQytH9Ga+xYmfxDiFijyQo7aCTTF+3Xm/lGv9yoSSheuAQC0DknTda6zOtFxi08/MUc1/y7bQY+KbvMt/bOvljTUjoHjcLawI1EzjJhKEcth4hCkRxuVC/gld9B/0hG4b9iCYZEsrQmlGA2gODItk5MWXAOHdmo/zVc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pmQ5H2tQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DJWnaHTbHwHe245xZzdTGWMY4T+cjxPznK5iYgL+IIGTmTL2PzUqo9duKHu952us6wNIbh4KS4sF1kZgw5ZzWegdMC0LtFlsHbBVE0oRNiCZcQ5LRu+fqC/3hqxi/VKzOYczm7N2HTbmGz5odG4nj4tMbMNHtHglK/KQ1l+U8vs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hfjC7X5A; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pmQ5H2tQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2F21C4CECE;
-	Thu, 12 Dec 2024 17:47:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hfjC7X5A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA02DC4CECE;
+	Thu, 12 Dec 2024 17:47:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734025640;
-	bh=GwpS+TkelWobucYdzvjVTDXcOEj+sxriqdvy13IIh64=;
+	s=korg; t=1734025643;
+	bh=11Mxjcs5D62YpM3hXQvyVGQ6J3CeeGxuRUI9h+hMF6c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pmQ5H2tQFh6HD0B3flj6SsX7omCKKclf6xpnSY4Wfe8AvCiBcOPBN0QuvakL1EPsB
-	 FnGN8/GCoNijSHJ+K8G7Zf13TdP5o8fMD6/tB8ecNlhMkK3HlES7+t3Iz7QCNAD5Yq
-	 Fj7vqWFOOBDriluooe31qM3crMlXaRnNaymPgLkQ=
+	b=hfjC7X5ATgbL6HVzGqJM3zLpc4FVjxFZJwN5REO4EFKhzbHAVOK+Xh8nJeXWVv+Uc
+	 IvFH2cQO2/EvOnBbWh+TWpKegoll4Y1m4gF2cCVKVNR27aOumkoKAVot0aoopzbJ55
+	 Wbw3Q5tLb4XP3ny+NiIBqIwhrqLbyPRObns7XlIk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Laurent Fasnacht <laurent.fasnacht@proton.ch>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Jan Beulich <jbeulich@suse.com>,
+	Paul Durrant <pdurrant@amazon.com>,
+	Juergen Gross <jgross@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 236/321] netfilter: nft_set_hash: skip duplicated elements pending gc run
-Date: Thu, 12 Dec 2024 16:02:34 +0100
-Message-ID: <20241212144239.295289134@linuxfoundation.org>
+Subject: [PATCH 5.4 237/321] xen/xenbus: reference count registered modules
+Date: Thu, 12 Dec 2024 16:02:35 +0100
+Message-ID: <20241212144239.334355977@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144229.291682835@linuxfoundation.org>
 References: <20241212144229.291682835@linuxfoundation.org>
@@ -51,95 +52,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Paul Durrant <pdurrant@amazon.com>
 
-[ Upstream commit 7ffc7481153bbabf3332c6a19b289730c7e1edf5 ]
+[ Upstream commit 196748a276b4dee01177e6b7abcda27cd759de83 ]
 
-rhashtable does not provide stable walk, duplicated elements are
-possible in case of resizing. I considered that checking for errors when
-calling rhashtable_walk_next() was sufficient to detect the resizing.
-However, rhashtable_walk_next() returns -EAGAIN only at the end of the
-iteration, which is too late, because a gc work containing duplicated
-elements could have been already scheduled for removal to the worker.
+To prevent a PV driver module being removed whilst attached to its other
+end, and hence xenbus calling into potentially invalid text, take a
+reference on the module before calling the probe() method (dropping it if
+unsuccessful) and drop the reference after returning from the remove()
+method.
 
-Add a u32 gc worker sequence number per set, bump it on every workqueue
-run. Annotate gc worker sequence number on the expired element. Use it
-to skip those already seen in this gc workqueue run.
-
-Note that this new field is never reset in case gc transaction fails, so
-next gc worker run on the expired element overrides it. Wraparound of gc
-worker sequence number should not be an issue with stale gc worker
-sequence number in the element, that would just postpone the element
-removal in one gc run.
-
-Note that it is not possible to use flags to annotate that element is
-pending gc run to detect duplicates, given that gc transaction can be
-invalidated in case of update from the control plane, therefore, not
-allowing to clear such flag.
-
-On x86_64, pahole reports no changes in the size of nft_rhash_elem.
-
-Fixes: f6c383b8c31a ("netfilter: nf_tables: adapt set backend to use GC transaction API")
-Reported-by: Laurent Fasnacht <laurent.fasnacht@proton.ch>
-Tested-by: Laurent Fasnacht <laurent.fasnacht@proton.ch>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Suggested-by: Jan Beulich <jbeulich@suse.com>
+Signed-off-by: Paul Durrant <pdurrant@amazon.com>
+Reviewed-by: Jan Beulich <jbeulich@suse.com>
+Reviewed-by: Juergen Gross <jgross@suse.com>
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Stable-dep-of: afc545da381b ("xen: Fix the issue of resource not being properly released in xenbus_dev_probe()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_set_hash.c | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ drivers/xen/xenbus/xenbus_probe.c | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
-diff --git a/net/netfilter/nft_set_hash.c b/net/netfilter/nft_set_hash.c
-index ec03d4c77b3df..200f837372adf 100644
---- a/net/netfilter/nft_set_hash.c
-+++ b/net/netfilter/nft_set_hash.c
-@@ -27,10 +27,12 @@ extern unsigned int nf_tables_net_id;
- struct nft_rhash {
- 	struct rhashtable		ht;
- 	struct delayed_work		gc_work;
-+	u32				wq_gc_seq;
- };
- 
- struct nft_rhash_elem {
- 	struct rhash_head		node;
-+	u32				wq_gc_seq;
- 	struct nft_set_ext		ext;
- };
- 
-@@ -325,6 +327,10 @@ static void nft_rhash_gc(struct work_struct *work)
- 	if (!gc)
- 		goto done;
- 
-+	/* Elements never collected use a zero gc worker sequence number. */
-+	if (unlikely(++priv->wq_gc_seq == 0))
-+		priv->wq_gc_seq++;
-+
- 	rhashtable_walk_enter(&priv->ht, &hti);
- 	rhashtable_walk_start(&hti);
- 
-@@ -342,6 +348,14 @@ static void nft_rhash_gc(struct work_struct *work)
- 			goto try_later;
- 		}
- 
-+		/* rhashtable walk is unstable, already seen in this gc run?
-+		 * Then, skip this element. In case of (unlikely) sequence
-+		 * wraparound and stale element wq_gc_seq, next gc run will
-+		 * just find this expired element.
-+		 */
-+		if (he->wq_gc_seq == priv->wq_gc_seq)
-+			continue;
-+
- 		if (nft_set_elem_is_dead(&he->ext))
- 			goto dead_elem;
- 
-@@ -362,6 +376,8 @@ static void nft_rhash_gc(struct work_struct *work)
- 		if (!gc)
- 			goto try_later;
- 
-+		/* annotate gc sequence for this attempt. */
-+		he->wq_gc_seq = priv->wq_gc_seq;
- 		nft_trans_gc_elem_add(gc, he);
+diff --git a/drivers/xen/xenbus/xenbus_probe.c b/drivers/xen/xenbus/xenbus_probe.c
+index b911a91bce6b7..9215099caad61 100644
+--- a/drivers/xen/xenbus/xenbus_probe.c
++++ b/drivers/xen/xenbus/xenbus_probe.c
+@@ -233,9 +233,16 @@ int xenbus_dev_probe(struct device *_dev)
+ 		return err;
  	}
  
++	if (!try_module_get(drv->driver.owner)) {
++		dev_warn(&dev->dev, "failed to acquire module reference on '%s'\n",
++			 drv->driver.name);
++		err = -ESRCH;
++		goto fail;
++	}
++
+ 	err = drv->probe(dev, id);
+ 	if (err)
+-		goto fail;
++		goto fail_put;
+ 
+ 	err = watch_otherend(dev);
+ 	if (err) {
+@@ -245,6 +252,8 @@ int xenbus_dev_probe(struct device *_dev)
+ 	}
+ 
+ 	return 0;
++fail_put:
++	module_put(drv->driver.owner);
+ fail:
+ 	xenbus_dev_error(dev, err, "xenbus_dev_probe on %s", dev->nodename);
+ 	xenbus_switch_state(dev, XenbusStateClosed);
+@@ -264,6 +273,8 @@ int xenbus_dev_remove(struct device *_dev)
+ 	if (drv->remove)
+ 		drv->remove(dev);
+ 
++	module_put(drv->driver.owner);
++
+ 	free_otherend_details(dev);
+ 
+ 	xenbus_switch_state(dev, XenbusStateClosed);
 -- 
 2.43.0
 
