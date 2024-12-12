@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B40BC217656;
-	Thu, 12 Dec 2024 16:26:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AEDF23EA7F;
+	Thu, 12 Dec 2024 16:26:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734020770; cv=none; b=qg1rmoDq5NJmwmRscA+AouyxmBHjsojsyxfAZRgx7AsyIfBvTtPS9Dj2S68lduXCoFn4dHydUZUFuE4dfjkgwOu9y0knRyZRBz8yvDieybGNw7Z7/bx9YSX3SkJK5xSdtbmihGfLPifypYwXDuS69bwoTTemj8aoDsBsNQkYzcA=
+	t=1734020774; cv=none; b=TNOTrVMn2nrMv0S1eF9IFsy9BjnkKwySUGNqtKdC67M+TAgOnk9TpMEIbhpsg500aQH9diBRMfTf9YIU0G+oEhb/wPmNm9a08Dslumpd6ge2L5x9x4/W1hVY5k9s0Qrnf6CLKLAWegpRqiw3A1EnOoF1abGktAVfg03xgACxiWE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734020770; c=relaxed/simple;
-	bh=zH9EJcpkfah2zZXiegTAeioc+o/uDmWKlP/90iJhiQw=;
+	s=arc-20240116; t=1734020774; c=relaxed/simple;
+	bh=EzVD0XXWuU0UwdD88ve0SmrJRywOYqnY0l6kx0KUqUQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UNAcv0fzbtEOPP5rmCLsPc7AWrEHRZb38nOMs1qwL6UCXN995QPbcsrGJKIjN6EaNILqnt4QxprKvwclXpDvkevBOs9XTi2wwGYvZMarj0dUOlyk9kkqDId74iFYGV13kleviSGmZYlAOrXrBnufuZPJet65kkGSxHZHG16PWoQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PwWlJfq2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oBCcLn7y8fD72QYPcSfOQ8GJP2icT/crt8zTGGd7Jd+yZc092MH51JlaQn54FZ5Kr1G07vLrEv3dd3Dtgph59rl0hd3k+mF1Vi2FKO5xf4mJQki3AjOonIqcOBocmK8zTOhZuAVG3UcTLODwxM+XhXLJxNARD92lmtAZ62GHLgM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QmsJNviT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PwWlJfq2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2607C4CED3;
-	Thu, 12 Dec 2024 16:26:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QmsJNviT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31931C4CED0;
+	Thu, 12 Dec 2024 16:26:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734020770;
-	bh=zH9EJcpkfah2zZXiegTAeioc+o/uDmWKlP/90iJhiQw=;
+	s=korg; t=1734020773;
+	bh=EzVD0XXWuU0UwdD88ve0SmrJRywOYqnY0l6kx0KUqUQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PwWlJfq2bmYJiOc/VWR9NotdTwrujWjPzORg6npLJg/gktG+Kv1CgTS1jZJEbMM3T
-	 Ec3r1qhlt6JPgmpyhb1TE006thhp+BSLFVxFR9qe+Y/f18Mb5DSiwoFbDQpTMSGOSA
-	 JjHe93HobKZz5+N+6QmXvB2bOMxAVtOdnV1Oljoo=
+	b=QmsJNviTUnCPkwhpLYiVHAFmtWVy3FuJTju9g4WiJCZSwuEQ+OYaEkp0Ap8qhcOkq
+	 RVUl22E7hR4EIrCd9lGI9EFVs3MaOLLP70uLe8JzsT4Rs/wEWpx2wV9CI2Vwx/TH4L
+	 i7qqiHAtIitWS0/5HQrBCQNaUuSafaD8L0tIuhmY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+57bac0866ddd99fe47c0@syzkaller.appspotmail.com,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Dario Binacchi <dario.binacchi@amarulasolutions.com>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 526/772] netfilter: nft_socket: remove WARN_ON_ONCE on maximum cgroup level
-Date: Thu, 12 Dec 2024 15:57:51 +0100
-Message-ID: <20241212144411.698162917@linuxfoundation.org>
+Subject: [PATCH 6.1 517/772] can: hi311x: hi3110_can_ist(): fix potential use-after-free
+Date: Thu, 12 Dec 2024 15:57:42 +0100
+Message-ID: <20241212144411.327934833@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -51,36 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Dario Binacchi <dario.binacchi@amarulasolutions.com>
 
-[ Upstream commit b7529880cb961d515642ce63f9d7570869bbbdc3 ]
+[ Upstream commit 9ad86d377ef4a19c75a9c639964879a5b25a433b ]
 
-cgroup maximum depth is INT_MAX by default, there is a cgroup toggle to
-restrict this maximum depth to a more reasonable value not to harm
-performance. Remove unnecessary WARN_ON_ONCE which is reachable from
-userspace.
+The commit a22bd630cfff ("can: hi311x: do not report txerr and rxerr
+during bus-off") removed the reporting of rxerr and txerr even in case
+of correct operation (i. e. not bus-off).
 
-Fixes: 7f3287db6543 ("netfilter: nft_socket: make cgroupsv2 matching work with namespaces")
-Reported-by: syzbot+57bac0866ddd99fe47c0@syzkaller.appspotmail.com
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+The error count information added to the CAN frame after netif_rx() is
+a potential use after free, since there is no guarantee that the skb
+is in the same state. It might be freed or reused.
+
+Fix the issue by postponing the netif_rx() call in case of txerr and
+rxerr reporting.
+
+Fixes: a22bd630cfff ("can: hi311x: do not report txerr and rxerr during bus-off")
+Signed-off-by: Dario Binacchi <dario.binacchi@amarulasolutions.com>
+Link: https://patch.msgid.link/20241122221650.633981-5-dario.binacchi@amarulasolutions.com
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_socket.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/can/spi/hi311x.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/netfilter/nft_socket.c b/net/netfilter/nft_socket.c
-index 4148df6d6a471..2d33674e9e5e9 100644
---- a/net/netfilter/nft_socket.c
-+++ b/net/netfilter/nft_socket.c
-@@ -68,7 +68,7 @@ static noinline int nft_socket_cgroup_subtree_level(void)
+diff --git a/drivers/net/can/spi/hi311x.c b/drivers/net/can/spi/hi311x.c
+index e1b8533a602e2..fb58e294f7b79 100644
+--- a/drivers/net/can/spi/hi311x.c
++++ b/drivers/net/can/spi/hi311x.c
+@@ -671,9 +671,9 @@ static irqreturn_t hi3110_can_ist(int irq, void *dev_id)
+ 			tx_state = txerr >= rxerr ? new_state : 0;
+ 			rx_state = txerr <= rxerr ? new_state : 0;
+ 			can_change_state(net, cf, tx_state, rx_state);
+-			netif_rx(skb);
  
- 	cgroup_put(cgrp);
+ 			if (new_state == CAN_STATE_BUS_OFF) {
++				netif_rx(skb);
+ 				can_bus_off(net);
+ 				if (priv->can.restart_ms == 0) {
+ 					priv->force_quit = 1;
+@@ -684,6 +684,7 @@ static irqreturn_t hi3110_can_ist(int irq, void *dev_id)
+ 				cf->can_id |= CAN_ERR_CNT;
+ 				cf->data[6] = txerr;
+ 				cf->data[7] = rxerr;
++				netif_rx(skb);
+ 			}
+ 		}
  
--	if (WARN_ON_ONCE(level > 255))
-+	if (level > 255)
- 		return -ERANGE;
- 
- 	if (WARN_ON_ONCE(level < 0))
 -- 
 2.43.0
 
