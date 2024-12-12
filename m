@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 213FF13CA93;
-	Thu, 12 Dec 2024 17:22:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33EC3176AA1;
+	Thu, 12 Dec 2024 17:22:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734024145; cv=none; b=YDPn6QY3GcvJe5qp77umqdk5emZI15CmjrFsPCGI/3xsIbBVyywa5iHPUMMEfN6IogF1Ae8pg7sXwKc8Gc0I1YWRrK2FcX/VoBogQ9ourwWKBkV+qaWMgFFGuiiNoK5Qt9KObOPLFo4RDg/3krxyfklMMhAA0gcMzSCLwFl7vyQ=
+	t=1734024148; cv=none; b=Em1j18H7vo5kfzeWAjvEB5mdmbSZEiEQ+ERe9pLecsq2p8KL7UDN8VslD9b5nOpskdmEhiFHGAxlh0XufacCzSzSZIAEy4pfctXIPFfa13PcooXf8rl1ubPzRlXd3bPjzRrKa9nR/lr8V3MEOtn8xnWt7rI+nJ2JWPXfDlITXRg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734024145; c=relaxed/simple;
-	bh=rMkmrxeL0VN+8yj+JPc/LpA+rjrrcKaxUZr1E86Ge68=;
+	s=arc-20240116; t=1734024148; c=relaxed/simple;
+	bh=K4FUo6F/NZRPWTFtsxzH7LpcPzXR14fvqj6y35UFSf8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kGBoqHHa7PYffnJk/itP0MIwr/19JRXHIsJ4VtHBaMtGZU6UZenoZ18HLI0d+62QDqfGyco/JURwUl/NPuR9iNqEsVqsrqjTtOq1piiQIsDCBWwwuqG9aAdVeCpzByTaJmgxLdUaSty/t9uxJlHCLVOJTe7tysFM9DrLDOAe5r4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SsRPjMVs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=o22Yq7iIZFtkmnHbWPTteO3Rc4sGac+y535jaVV+PjfYVtuDFGOtILViaWtuo0IEcMNiDchJJwojKHRyGoOP7QM55RfdTVpae2dA9eJMr0tyKROcWvVVpmaHBu3YfZ6QvW5LbWo6cIhX4JA5nAoPx5HeUx8YiLP9jLtuWbifKg8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MHhfUzqV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SsRPjMVs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A2BDC4CECE;
-	Thu, 12 Dec 2024 17:22:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MHhfUzqV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BC24C4CECE;
+	Thu, 12 Dec 2024 17:22:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734024145;
-	bh=rMkmrxeL0VN+8yj+JPc/LpA+rjrrcKaxUZr1E86Ge68=;
+	s=korg; t=1734024148;
+	bh=K4FUo6F/NZRPWTFtsxzH7LpcPzXR14fvqj6y35UFSf8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SsRPjMVskKexFRvAoVNSQF/jUA3ZnrsD5EIuBmZzbfJJKNjcdpp2NjxdgYzaALvgW
-	 JKMzOEI8m+S8suyRBrnTvaBemsks71/+la66yECCQGlE5LOXasVNIHopfrjMwg7neG
-	 QA0yFWYElsq7VgIro+sFwWhPWCViS6+z/F3xg25c=
+	b=MHhfUzqVdeFPHWF8ElS9DhRNgN4XYHcqssTKnnyXl5hnNdxEjtpfzDHKDAe5S5ckW
+	 HEyqTq/ahr32w8cSBS5Aw52mYzOUMXhlLmbHSyfjw5DeXajrJR1XGPNpBISsxEsavi
+	 dHVAJegGqO4KQto2BwzfODb4hyyt5gRIwZkFNjfo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Peterson <benjamin@engflow.com>,
-	Howard Chu <howardchu95@gmail.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	Namhyung Kim <namhyung@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Javier Martinez Canillas <javierm@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 201/459] perf trace: avoid garbage when not printing a trace events arguments
-Date: Thu, 12 Dec 2024 15:58:59 +0100
-Message-ID: <20241212144301.507784608@linuxfoundation.org>
+Subject: [PATCH 5.10 184/459] fbdev/sh7760fb: Alloc DMA memory from hardware device
+Date: Thu, 12 Dec 2024 15:58:42 +0100
+Message-ID: <20241212144300.827190840@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144253.511169641@linuxfoundation.org>
 References: <20241212144253.511169641@linuxfoundation.org>
@@ -53,39 +51,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Peterson <benjamin@engflow.com>
+From: Thomas Zimmermann <tzimmermann@suse.de>
 
-[ Upstream commit 5fb8e56542a3cf469fdf25d77f50e21cbff3ae7e ]
+[ Upstream commit 8404e56f4bc1d1a65bfc98450ba3dae5e653dda1 ]
 
-trace__fprintf_tp_fields may not print any tracepoint arguments. E.g., if the
-argument values are all zero. Previously, this would result in a totally
-uninitialized buffer being passed to fprintf, which could lead to garbage on the
-console. Fix the problem by passing the number of initialized bytes fprintf.
+Pass the hardware device to the DMA helpers dma_alloc_coherent() and
+dma_free_coherent(). The fbdev device that is currently being used is
+a software device and does not provide DMA memory. Also update the
+related dev_*() output statements similarly.
 
-Fixes: f11b2803bb88 ("perf trace: Allow choosing how to augment the tracepoint arguments")
-Signed-off-by: Benjamin Peterson <benjamin@engflow.com>
-Tested-by: Howard Chu <howardchu95@gmail.com>
-Tested-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Link: https://lore.kernel.org/r/20241103204816.7834-1-benjamin@engflow.com
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230613110953.24176-28-tzimmermann@suse.de
+Stable-dep-of: f89d17ae2ac4 ("fbdev: sh7760fb: Fix a possible memory leak in sh7760fb_alloc_mem()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-trace.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/video/fbdev/sh7760fb.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/tools/perf/builtin-trace.c b/tools/perf/builtin-trace.c
-index 8de0d0a740de4..3143601c1cb1f 100644
---- a/tools/perf/builtin-trace.c
-+++ b/tools/perf/builtin-trace.c
-@@ -2748,7 +2748,7 @@ static size_t trace__fprintf_tp_fields(struct trace *trace, struct evsel *evsel,
- 		printed += syscall_arg_fmt__scnprintf_val(arg, bf + printed, size - printed, &syscall_arg, val);
+diff --git a/drivers/video/fbdev/sh7760fb.c b/drivers/video/fbdev/sh7760fb.c
+index 5978a89212322..6adf048c1bae8 100644
+--- a/drivers/video/fbdev/sh7760fb.c
++++ b/drivers/video/fbdev/sh7760fb.c
+@@ -359,7 +359,7 @@ static void sh7760fb_free_mem(struct fb_info *info)
+ 	if (!info->screen_base)
+ 		return;
+ 
+-	dma_free_coherent(info->dev, info->screen_size,
++	dma_free_coherent(info->device, info->screen_size,
+ 			  info->screen_base, par->fbdma);
+ 
+ 	par->fbdma = 0;
+@@ -408,14 +408,14 @@ static int sh7760fb_alloc_mem(struct fb_info *info)
+ 	if (vram < PAGE_SIZE)
+ 		vram = PAGE_SIZE;
+ 
+-	fbmem = dma_alloc_coherent(info->dev, vram, &par->fbdma, GFP_KERNEL);
++	fbmem = dma_alloc_coherent(info->device, vram, &par->fbdma, GFP_KERNEL);
+ 
+ 	if (!fbmem)
+ 		return -ENOMEM;
+ 
+ 	if ((par->fbdma & SH7760FB_DMA_MASK) != SH7760FB_DMA_MASK) {
+ 		sh7760fb_free_mem(info);
+-		dev_err(info->dev, "kernel gave me memory at 0x%08lx, which is"
++		dev_err(info->device, "kernel gave me memory at 0x%08lx, which is"
+ 			"unusable for the LCDC\n", (unsigned long)par->fbdma);
+ 		return -ENOMEM;
+ 	}
+@@ -486,7 +486,7 @@ static int sh7760fb_probe(struct platform_device *pdev)
+ 
+ 	ret = sh7760fb_alloc_mem(info);
+ 	if (ret) {
+-		dev_dbg(info->dev, "framebuffer memory allocation failed!\n");
++		dev_dbg(info->device, "framebuffer memory allocation failed!\n");
+ 		goto out_unmap;
  	}
  
--	return printed + fprintf(trace->output, "%s", bf);
-+	return printed + fprintf(trace->output, "%.*s", (int)printed, bf);
- }
- 
- static int trace__event_handler(struct trace *trace, struct evsel *evsel,
 -- 
 2.43.0
 
