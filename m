@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F314D1487CD;
-	Thu, 12 Dec 2024 17:04:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C948D53365;
+	Thu, 12 Dec 2024 17:04:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734023097; cv=none; b=HDpLS+nn9cMop5IOkneOc/C5GoE3vxYheB8B/WQL+nsSe5O34ugP9O3I/B0xsD9a89U3QQCryDqZ6opN+WRETmWQJo6q/hov9w657K3p84txrjnSZwzSomDfBAEQ2l5LWxg6wsr5xtug3lqRqRm0wgVJS9+47+HkYpUJJ73hH4A=
+	t=1734023099; cv=none; b=ASd3vwPPEBTPetYqP8bCmkIAUiihi4IG6dK7+zfIWl0bxw3o+haNy84wl8w6DEdR/oLYzx7Xn6xmtsuabmbVkrjgMTAdkO27se4bqAbQXNEWge1+KcwRi4OAVOTKlxvXgHsalJ2x8fFfLf1qYMRfduL6BUUZ+JaxTcQUFC1cggg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734023097; c=relaxed/simple;
-	bh=eKei7FCmYqXXTGok65qM6gt48Mc9NBwZRXoDAAIWJ5w=;
+	s=arc-20240116; t=1734023099; c=relaxed/simple;
+	bh=c0f3a0cVZWOygKU0PTReB5rk4iUxNsycTWEkWAHobws=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rrilzTLWcBCFcCWIP+SeA7QiaCyQbZGEygO04ydXnBXhqBVGabidR3n1waCNo/YRREms3Y6W5u5icBGiRPx+aD2mBizQY3intOhMIknyC8xA8SBnIvncxV1sYj2YhWuQA7n7GEC34m4As2mwadw+MTzKOuJ8OdTJ4qSI6fJjbcA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M6tsipaP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tSivoUVMx0DfuN919VziHcF7gyiUv3DxUh0nSBa+mKTCmtUhH72NTt60hTBu/9r0WJRlZOran8n8Px9dkLSc6FxnqQJCEoODrTQAtMj987s69mApVbeebrV42e04/peXQqUQ03VEpXOAHZMmkoMoW9kiMSva9bbRXOJ4nFtdNzk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uNSZ5d5A; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M6tsipaP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7687DC4CECE;
-	Thu, 12 Dec 2024 17:04:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uNSZ5d5A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EE23C4CED4;
+	Thu, 12 Dec 2024 17:04:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734023096;
-	bh=eKei7FCmYqXXTGok65qM6gt48Mc9NBwZRXoDAAIWJ5w=;
+	s=korg; t=1734023099;
+	bh=c0f3a0cVZWOygKU0PTReB5rk4iUxNsycTWEkWAHobws=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M6tsipaPQlwaHhg9JYbrQLBZW/w9HCvbViberrZWOSJP8x4ixTpKhF6LUqLrWfC53
-	 2cmj+bJggo+uRbstUGTntscrP3oCkexlHqeXx6Vkwr+vMec4iNBUyngczxBNXiPeVG
-	 2bRnvJUT3nkWPRgDPvnSxY0WI/3I1YvXsxyZyq+k=
+	b=uNSZ5d5AZ9CWESGjr1PKD5qA9VWbUREf+XZ1NtcHvXo9gKUJ93oeIxRAEfg/bk7xe
+	 cpnvQF/YTfiafDaOtODbSdlfcXVTdCyVZKnYd2GadAF3eGwCyp2psZOBiDaf7Oamnn
+	 Drd4Ug5HMvuO4Us/VMXy8+U/wqrkUfOUfguIYvfY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ivan Solodovnikov <solodovnikov.ia@phystech.edu>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Kory Maincent <kory.maincent@bootlin.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 415/565] dccp: Fix memory leak in dccp_feat_change_recv
-Date: Thu, 12 Dec 2024 16:00:10 +0100
-Message-ID: <20241212144328.063139978@linuxfoundation.org>
+Subject: [PATCH 5.15 424/565] ethtool: Fix wrong mod state in case of verbose and no_mask bitset
+Date: Thu, 12 Dec 2024 16:00:19 +0100
+Message-ID: <20241212144328.430243062@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144311.432886635@linuxfoundation.org>
 References: <20241212144311.432886635@linuxfoundation.org>
@@ -51,76 +51,125 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ivan Solodovnikov <solodovnikov.ia@phystech.edu>
+From: Kory Maincent <kory.maincent@bootlin.com>
 
-[ Upstream commit 22be4727a8f898442066bcac34f8a1ad0bc72e14 ]
+[ Upstream commit 910c4788d6155b2202ec88273376cd7ecdc24f0a ]
 
-If dccp_feat_push_confirm() fails after new value for SP feature was accepted
-without reconciliation ('entry == NULL' branch), memory allocated for that value
-with dccp_feat_clone_sp_val() is never freed.
+A bitset without mask in a _SET request means we want exactly the bits in
+the bitset to be set. This works correctly for compact format but when
+verbose format is parsed, ethnl_update_bitset32_verbose() only sets the
+bits present in the request bitset but does not clear the rest. The commit
+6699170376ab ("ethtool: fix application of verbose no_mask bitset") fixes
+this issue by clearing the whole target bitmap before we start iterating.
+The solution proposed brought an issue with the behavior of the mod
+variable. As the bitset is always cleared the old value will always
+differ to the new value.
 
-Here is the kmemleak stack for this:
+Fix it by adding a new function to compare bitmaps and a temporary variable
+which save the state of the old bitmap.
 
-unreferenced object 0xffff88801d4ab488 (size 8):
-  comm "syz-executor310", pid 1127, jiffies 4295085598 (age 41.666s)
-  hex dump (first 8 bytes):
-    01 b4 4a 1d 80 88 ff ff                          ..J.....
-  backtrace:
-    [<00000000db7cabfe>] kmemdup+0x23/0x50 mm/util.c:128
-    [<0000000019b38405>] kmemdup include/linux/string.h:465 [inline]
-    [<0000000019b38405>] dccp_feat_clone_sp_val net/dccp/feat.c:371 [inline]
-    [<0000000019b38405>] dccp_feat_clone_sp_val net/dccp/feat.c:367 [inline]
-    [<0000000019b38405>] dccp_feat_change_recv net/dccp/feat.c:1145 [inline]
-    [<0000000019b38405>] dccp_feat_parse_options+0x1196/0x2180 net/dccp/feat.c:1416
-    [<00000000b1f6d94a>] dccp_parse_options+0xa2a/0x1260 net/dccp/options.c:125
-    [<0000000030d7b621>] dccp_rcv_state_process+0x197/0x13d0 net/dccp/input.c:650
-    [<000000001f74c72e>] dccp_v4_do_rcv+0xf9/0x1a0 net/dccp/ipv4.c:688
-    [<00000000a6c24128>] sk_backlog_rcv include/net/sock.h:1041 [inline]
-    [<00000000a6c24128>] __release_sock+0x139/0x3b0 net/core/sock.c:2570
-    [<00000000cf1f3a53>] release_sock+0x54/0x1b0 net/core/sock.c:3111
-    [<000000008422fa23>] inet_wait_for_connect net/ipv4/af_inet.c:603 [inline]
-    [<000000008422fa23>] __inet_stream_connect+0x5d0/0xf70 net/ipv4/af_inet.c:696
-    [<0000000015b6f64d>] inet_stream_connect+0x53/0xa0 net/ipv4/af_inet.c:735
-    [<0000000010122488>] __sys_connect_file+0x15c/0x1a0 net/socket.c:1865
-    [<00000000b4b70023>] __sys_connect+0x165/0x1a0 net/socket.c:1882
-    [<00000000f4cb3815>] __do_sys_connect net/socket.c:1892 [inline]
-    [<00000000f4cb3815>] __se_sys_connect net/socket.c:1889 [inline]
-    [<00000000f4cb3815>] __x64_sys_connect+0x6e/0xb0 net/socket.c:1889
-    [<00000000e7b1e839>] do_syscall_64+0x33/0x40 arch/x86/entry/common.c:46
-    [<0000000055e91434>] entry_SYSCALL_64_after_hwframe+0x67/0xd1
-
-Clean up the allocated memory in case of dccp_feat_push_confirm() failure
-and bail out with an error reset code.
-
-Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
-
-Fixes: e77b8363b2ea ("dccp: Process incoming Change feature-negotiation options")
-Signed-off-by: Ivan Solodovnikov <solodovnikov.ia@phystech.edu>
-Link: https://patch.msgid.link/20241126143902.190853-1-solodovnikov.ia@phystech.edu
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 6699170376ab ("ethtool: fix application of verbose no_mask bitset")
+Signed-off-by: Kory Maincent <kory.maincent@bootlin.com>
+Link: https://patch.msgid.link/20241202153358.1142095-1-kory.maincent@bootlin.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/dccp/feat.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ net/ethtool/bitset.c | 48 ++++++++++++++++++++++++++++++++++++++++----
+ 1 file changed, 44 insertions(+), 4 deletions(-)
 
-diff --git a/net/dccp/feat.c b/net/dccp/feat.c
-index 54086bb05c42c..f7554dcdaaba9 100644
---- a/net/dccp/feat.c
-+++ b/net/dccp/feat.c
-@@ -1166,8 +1166,12 @@ static u8 dccp_feat_change_recv(struct list_head *fn, u8 is_mandatory, u8 opt,
- 			goto not_valid_or_not_known;
- 		}
+diff --git a/net/ethtool/bitset.c b/net/ethtool/bitset.c
+index 0515d6604b3b9..f0883357d12e5 100644
+--- a/net/ethtool/bitset.c
++++ b/net/ethtool/bitset.c
+@@ -425,12 +425,32 @@ static int ethnl_parse_bit(unsigned int *index, bool *val, unsigned int nbits,
+ 	return 0;
+ }
  
--		return dccp_feat_push_confirm(fn, feat, local, &fval);
-+		if (dccp_feat_push_confirm(fn, feat, local, &fval)) {
-+			kfree(fval.sp.vec);
-+			return DCCP_RESET_CODE_TOO_BUSY;
-+		}
- 
-+		return 0;
- 	} else if (entry->state == FEAT_UNSTABLE) {	/* 6.6.2 */
- 		return 0;
++/**
++ * ethnl_bitmap32_equal() - Compare two bitmaps
++ * @map1:  first bitmap
++ * @map2:  second bitmap
++ * @nbits: bit size to compare
++ *
++ * Return: true if first @nbits are equal, false if not
++ */
++static bool ethnl_bitmap32_equal(const u32 *map1, const u32 *map2,
++				 unsigned int nbits)
++{
++	if (memcmp(map1, map2, nbits / 32 * sizeof(u32)))
++		return false;
++	if (nbits % 32 == 0)
++		return true;
++	return !((map1[nbits / 32] ^ map2[nbits / 32]) &
++		 ethnl_lower_bits(nbits % 32));
++}
++
+ static int
+ ethnl_update_bitset32_verbose(u32 *bitmap, unsigned int nbits,
+ 			      const struct nlattr *attr, struct nlattr **tb,
+ 			      ethnl_string_array_t names,
+ 			      struct netlink_ext_ack *extack, bool *mod)
+ {
++	u32 *saved_bitmap = NULL;
+ 	struct nlattr *bit_attr;
+ 	bool no_mask;
+ 	int rem;
+@@ -448,8 +468,20 @@ ethnl_update_bitset32_verbose(u32 *bitmap, unsigned int nbits,
  	}
+ 
+ 	no_mask = tb[ETHTOOL_A_BITSET_NOMASK];
+-	if (no_mask)
+-		ethnl_bitmap32_clear(bitmap, 0, nbits, mod);
++	if (no_mask) {
++		unsigned int nwords = DIV_ROUND_UP(nbits, 32);
++		unsigned int nbytes = nwords * sizeof(u32);
++		bool dummy;
++
++		/* The bitmap size is only the size of the map part without
++		 * its mask part.
++		 */
++		saved_bitmap = kcalloc(nwords, sizeof(u32), GFP_KERNEL);
++		if (!saved_bitmap)
++			return -ENOMEM;
++		memcpy(saved_bitmap, bitmap, nbytes);
++		ethnl_bitmap32_clear(bitmap, 0, nbits, &dummy);
++	}
+ 
+ 	nla_for_each_nested(bit_attr, tb[ETHTOOL_A_BITSET_BITS], rem) {
+ 		bool old_val, new_val;
+@@ -458,22 +490,30 @@ ethnl_update_bitset32_verbose(u32 *bitmap, unsigned int nbits,
+ 		if (nla_type(bit_attr) != ETHTOOL_A_BITSET_BITS_BIT) {
+ 			NL_SET_ERR_MSG_ATTR(extack, bit_attr,
+ 					    "only ETHTOOL_A_BITSET_BITS_BIT allowed in ETHTOOL_A_BITSET_BITS");
++			kfree(saved_bitmap);
+ 			return -EINVAL;
+ 		}
+ 		ret = ethnl_parse_bit(&idx, &new_val, nbits, bit_attr, no_mask,
+ 				      names, extack);
+-		if (ret < 0)
++		if (ret < 0) {
++			kfree(saved_bitmap);
+ 			return ret;
++		}
+ 		old_val = bitmap[idx / 32] & ((u32)1 << (idx % 32));
+ 		if (new_val != old_val) {
+ 			if (new_val)
+ 				bitmap[idx / 32] |= ((u32)1 << (idx % 32));
+ 			else
+ 				bitmap[idx / 32] &= ~((u32)1 << (idx % 32));
+-			*mod = true;
++			if (!no_mask)
++				*mod = true;
+ 		}
+ 	}
+ 
++	if (no_mask && !ethnl_bitmap32_equal(saved_bitmap, bitmap, nbits))
++		*mod = true;
++
++	kfree(saved_bitmap);
+ 	return 0;
+ }
+ 
 -- 
 2.43.0
 
