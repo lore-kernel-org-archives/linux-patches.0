@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 542B4217F48;
-	Thu, 12 Dec 2024 15:31:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C66EF21E086;
+	Thu, 12 Dec 2024 15:32:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734017517; cv=none; b=P+FJ7GKDu3fkVFxTp5vwUnKwQu1rB7D9LGviam9vjHO1qD9LWzsUp3PUnYcOUuTYliznzTHRWKRx4HO8B1nNDHT7LZH17QGG2NP2uM0/58v4GAaUFo3YJEAnYNn9bfMhqBnEIo2/PMbthWg5MtCH9DInKFTyRQPaLHMEQzyrBzA=
+	t=1734017520; cv=none; b=kjNR1mn0HnI0VLX6igPrTlRvzeMowG+UdeF0Q07vcamKW4LNBvrYqc8zOIAl+61k0h6cki7umHv4foSRAoZuA4y23w05dv0qijRowqbkyOjK2fTTpKZZ5PqL6x/FkzNhfN+EKpt4TX78MnaVrFbZozYZvv9WH8hKAbMRlrv869k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734017517; c=relaxed/simple;
-	bh=BDtIoeD99Q5+GcSGtgwe6k38S3iUs4VL9IO3v82L4RQ=;
+	s=arc-20240116; t=1734017520; c=relaxed/simple;
+	bh=il3BTeSmUWEGYD8ILBu8cVXC58gaRMyDY3RZz26HIxM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qG2+Yp1nMo+Z0/W5RLGS+RSmGEWMkGLlGE83+i+AO2cobF7FNov4ujWxdtecMZFgayDyYIxnnamJ2emw0tQsIw/Jd6GsbWglAyWF3zhghXPsC8ik6oa1AOFjIjBt5asKJfZYLLP1VmkWgRtsRasiqTMDZqtoMBc9+fz/QXZDRjA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XoTuz5G0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LL7RnTPi46U8/SMzTHsHE0Impq6RJG7CDO9B5H8YPjL80KyGMCkFk773H+dfNBnU5r6yKbawd/u0frEKteNPByRtARA4deD3BEUyEVXTPsebnox7BZKjiJv+nl1OP11sSXGfBOzAP2RKXd3e8R4GmFyF5i3jqlNYls2edGtTvwc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VlJQ9PxU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XoTuz5G0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BA9AC4CECE;
-	Thu, 12 Dec 2024 15:31:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VlJQ9PxU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3482AC4CED4;
+	Thu, 12 Dec 2024 15:32:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734017517;
-	bh=BDtIoeD99Q5+GcSGtgwe6k38S3iUs4VL9IO3v82L4RQ=;
+	s=korg; t=1734017520;
+	bh=il3BTeSmUWEGYD8ILBu8cVXC58gaRMyDY3RZz26HIxM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XoTuz5G08qQj7dXe2p/pSqLFPmObncFpe4PoZIQhd1A3KCGok6PCXPUPZ0gXPGuoy
-	 JPz4hOSjhyqqgbxaoE7PqQdBfF+jgf4VLCr6x2YINU7RmDzgFzDvzrguaV+AhcgEJK
-	 2sRUICix9OAb5/IK4Ohc2xBD9UAplp4fLKhWYazc=
+	b=VlJQ9PxUeXo5m2GiGK9wW5s+8SFbRQwReEeq585ogu6nU9hpmHDmTAqSxd8jcmdng
+	 ALBnAXFp+wAFBbb/0DONrYNPKeOcAChKRSoPGMpgohNhMgnWAAcIOahU5aonhGj+sU
+	 hyAzOzZ/vJK8fgGHBUX5d1UTt6hdvHExgj1ElC9I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandra Winter <wintera@linux.ibm.com>,
 	Wen Gu <guwen@linux.alibaba.com>,
+	Alexandra Winter <wintera@linux.ibm.com>,
 	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 036/356] net/smc: unify the structs of accept or confirm message for v1 and v2
-Date: Thu, 12 Dec 2024 15:55:55 +0100
-Message-ID: <20241212144246.053759087@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>,
+	Wenjia Zhang <wenjia@linux.ibm.com>
+Subject: [PATCH 6.6 037/356] net/smc: define a reserved CHID range for virtual ISM devices
+Date: Thu, 12 Dec 2024 15:55:56 +0100
+Message-ID: <20241212144246.092807870@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144244.601729511@linuxfoundation.org>
 References: <20241212144244.601729511@linuxfoundation.org>
@@ -54,470 +55,60 @@ Content-Transfer-Encoding: 8bit
 
 From: Wen Gu <guwen@linux.alibaba.com>
 
-[ Upstream commit 9505450d55b0f7809fe63c36ad9339a909461c87 ]
+[ Upstream commit 8dd512df3c98ce8081e3541990bf849157675723 ]
 
-The structs of CLC accept and confirm messages for SMCv1 and SMCv2 are
-separately defined and often casted to each other in the code, which may
-increase the risk of errors caused by future divergence of them. So
-unify them into one struct for better maintainability.
+According to virtual ISM support feature defined by SMCv2.1, CHIDs in
+the range 0xFF00 to 0xFFFF are reserved for use by virtual ISM devices.
 
-Suggested-by: Alexandra Winter <wintera@linux.ibm.com>
+And two helpers are introduced to distinguish virtual ISM devices from
+the existing platform firmware ISM devices.
+
 Signed-off-by: Wen Gu <guwen@linux.alibaba.com>
+Reviewed-and-tested-by: Wenjia Zhang <wenjia@linux.ibm.com>
 Reviewed-by: Alexandra Winter <wintera@linux.ibm.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Stable-dep-of: 0541db8ee32c ("net/smc: initialize close_work early to avoid warning")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/smc/af_smc.c  | 52 +++++++++++++------------------------
- net/smc/smc_clc.c | 65 ++++++++++++++++++++---------------------------
- net/smc/smc_clc.h | 42 +++++++++++++-----------------
- 3 files changed, 62 insertions(+), 97 deletions(-)
+ net/smc/smc_ism.h | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
-diff --git a/net/smc/af_smc.c b/net/smc/af_smc.c
-index 3158b94fd347a..ea24fb4dae0df 100644
---- a/net/smc/af_smc.c
-+++ b/net/smc/af_smc.c
-@@ -659,8 +659,6 @@ static bool smc_isascii(char *hostname)
- static void smc_conn_save_peer_info_fce(struct smc_sock *smc,
- 					struct smc_clc_msg_accept_confirm *clc)
- {
--	struct smc_clc_msg_accept_confirm_v2 *clc_v2 =
--		(struct smc_clc_msg_accept_confirm_v2 *)clc;
- 	struct smc_clc_first_contact_ext *fce;
- 	int clc_v2_len;
+diff --git a/net/smc/smc_ism.h b/net/smc/smc_ism.h
+index 832b2f42d79f3..d1228a615f23c 100644
+--- a/net/smc/smc_ism.h
++++ b/net/smc/smc_ism.h
+@@ -15,6 +15,8 @@
  
-@@ -669,17 +667,15 @@ static void smc_conn_save_peer_info_fce(struct smc_sock *smc,
- 		return;
+ #include "smc.h"
  
- 	if (smc->conn.lgr->is_smcd) {
--		memcpy(smc->conn.lgr->negotiated_eid, clc_v2->d1.eid,
-+		memcpy(smc->conn.lgr->negotiated_eid, clc->d1.eid,
- 		       SMC_MAX_EID_LEN);
--		clc_v2_len = offsetofend(struct smc_clc_msg_accept_confirm_v2,
--					 d1);
-+		clc_v2_len = offsetofend(struct smc_clc_msg_accept_confirm, d1);
- 	} else {
--		memcpy(smc->conn.lgr->negotiated_eid, clc_v2->r1.eid,
-+		memcpy(smc->conn.lgr->negotiated_eid, clc->r1.eid,
- 		       SMC_MAX_EID_LEN);
--		clc_v2_len = offsetofend(struct smc_clc_msg_accept_confirm_v2,
--					 r1);
-+		clc_v2_len = offsetofend(struct smc_clc_msg_accept_confirm, r1);
- 	}
--	fce = (struct smc_clc_first_contact_ext *)(((u8 *)clc_v2) + clc_v2_len);
-+	fce = (struct smc_clc_first_contact_ext *)(((u8 *)clc) + clc_v2_len);
- 	smc->conn.lgr->peer_os = fce->os_type;
- 	smc->conn.lgr->peer_smc_release = fce->release;
- 	if (smc_isascii(fce->hostname))
-@@ -1131,13 +1127,13 @@ static int smc_connect_ism_vlan_cleanup(struct smc_sock *smc,
++#define SMC_VIRTUAL_ISM_CHID_MASK	0xFF00
++
+ struct smcd_dev_list {	/* List of SMCD devices */
+ 	struct list_head list;
+ 	struct mutex mutex;	/* Protects list of devices */
+@@ -56,4 +58,22 @@ static inline int smc_ism_write(struct smcd_dev *smcd, u64 dmb_tok,
+ 	return rc < 0 ? rc : 0;
  }
  
- #define SMC_CLC_MAX_ACCEPT_LEN \
--	(sizeof(struct smc_clc_msg_accept_confirm_v2) + \
-+	(sizeof(struct smc_clc_msg_accept_confirm) + \
- 	 sizeof(struct smc_clc_first_contact_ext_v2x) + \
- 	 sizeof(struct smc_clc_msg_trail))
- 
- /* CLC handshake during connect */
- static int smc_connect_clc(struct smc_sock *smc,
--			   struct smc_clc_msg_accept_confirm_v2 *aclc2,
-+			   struct smc_clc_msg_accept_confirm *aclc,
- 			   struct smc_init_info *ini)
- {
- 	int rc = 0;
-@@ -1147,7 +1143,7 @@ static int smc_connect_clc(struct smc_sock *smc,
- 	if (rc)
- 		return rc;
- 	/* receive SMC Accept CLC message */
--	return smc_clc_wait_msg(smc, aclc2, SMC_CLC_MAX_ACCEPT_LEN,
-+	return smc_clc_wait_msg(smc, aclc, SMC_CLC_MAX_ACCEPT_LEN,
- 				SMC_CLC_ACCEPT, CLC_WAIT_TIME);
- }
- 
-@@ -1183,10 +1179,8 @@ static int smc_connect_rdma_v2_prepare(struct smc_sock *smc,
- 				       struct smc_clc_msg_accept_confirm *aclc,
- 				       struct smc_init_info *ini)
- {
--	struct smc_clc_msg_accept_confirm_v2 *clc_v2 =
--		(struct smc_clc_msg_accept_confirm_v2 *)aclc;
- 	struct smc_clc_first_contact_ext *fce =
--		smc_get_clc_first_contact_ext(clc_v2, false);
-+		smc_get_clc_first_contact_ext(aclc, false);
- 	struct net *net = sock_net(&smc->sk);
- 	int rc;
- 
-@@ -1309,10 +1303,7 @@ static int smc_connect_rdma(struct smc_sock *smc,
- 	}
- 
- 	if (aclc->hdr.version > SMC_V1) {
--		struct smc_clc_msg_accept_confirm_v2 *clc_v2 =
--			(struct smc_clc_msg_accept_confirm_v2 *)aclc;
--
--		eid = clc_v2->r1.eid;
-+		eid = aclc->r1.eid;
- 		if (ini->first_contact_local)
- 			smc_fill_gid_list(link->lgr, &ini->smcrv2.gidlist,
- 					  link->smcibdev, link->gid);
-@@ -1353,7 +1344,7 @@ static int smc_connect_rdma(struct smc_sock *smc,
-  * Determine from the CHID of the received CLC ACCEPT the ISM device chosen.
-  */
- static int
--smc_v2_determine_accepted_chid(struct smc_clc_msg_accept_confirm_v2 *aclc,
-+smc_v2_determine_accepted_chid(struct smc_clc_msg_accept_confirm *aclc,
- 			       struct smc_init_info *ini)
- {
- 	int i;
-@@ -1380,12 +1371,9 @@ static int smc_connect_ism(struct smc_sock *smc,
- 	ini->first_contact_peer = aclc->hdr.typev2 & SMC_FIRST_CONTACT_MASK;
- 
- 	if (aclc->hdr.version == SMC_V2) {
--		struct smc_clc_msg_accept_confirm_v2 *aclc_v2 =
--			(struct smc_clc_msg_accept_confirm_v2 *)aclc;
--
- 		if (ini->first_contact_peer) {
- 			struct smc_clc_first_contact_ext *fce =
--				smc_get_clc_first_contact_ext(aclc_v2, true);
-+				smc_get_clc_first_contact_ext(aclc, true);
- 
- 			ini->release_nr = fce->release;
- 			rc = smc_clc_clnt_v2x_features_validate(fce, ini);
-@@ -1393,7 +1381,7 @@ static int smc_connect_ism(struct smc_sock *smc,
- 				return rc;
- 		}
- 
--		rc = smc_v2_determine_accepted_chid(aclc_v2, ini);
-+		rc = smc_v2_determine_accepted_chid(aclc, ini);
- 		if (rc)
- 			return rc;
- 	}
-@@ -1419,12 +1407,8 @@ static int smc_connect_ism(struct smc_sock *smc,
- 	smc_rx_init(smc);
- 	smc_tx_init(smc);
- 
--	if (aclc->hdr.version > SMC_V1) {
--		struct smc_clc_msg_accept_confirm_v2 *clc_v2 =
--			(struct smc_clc_msg_accept_confirm_v2 *)aclc;
--
--		eid = clc_v2->d1.eid;
--	}
-+	if (aclc->hdr.version > SMC_V1)
-+		eid = aclc->d1.eid;
- 
- 	rc = smc_clc_send_confirm(smc, ini->first_contact_local,
- 				  aclc->hdr.version, eid, ini);
-@@ -1475,7 +1459,6 @@ static int smc_connect_check_aclc(struct smc_init_info *ini,
- static int __smc_connect(struct smc_sock *smc)
- {
- 	u8 version = smc_ism_is_v2_capable() ? SMC_V2 : SMC_V1;
--	struct smc_clc_msg_accept_confirm_v2 *aclc2;
- 	struct smc_clc_msg_accept_confirm *aclc;
- 	struct smc_init_info *ini = NULL;
- 	u8 *buf = NULL;
-@@ -1523,11 +1506,10 @@ static int __smc_connect(struct smc_sock *smc)
- 		rc = SMC_CLC_DECL_MEM;
- 		goto fallback;
- 	}
--	aclc2 = (struct smc_clc_msg_accept_confirm_v2 *)buf;
--	aclc = (struct smc_clc_msg_accept_confirm *)aclc2;
-+	aclc = (struct smc_clc_msg_accept_confirm *)buf;
- 
- 	/* perform CLC handshake */
--	rc = smc_connect_clc(smc, aclc2, ini);
-+	rc = smc_connect_clc(smc, aclc, ini);
- 	if (rc) {
- 		/* -EAGAIN on timeout, see tcp_recvmsg() */
- 		if (rc == -EAGAIN) {
-diff --git a/net/smc/smc_clc.c b/net/smc/smc_clc.c
-index d471a06baac32..a28dee81d6fa4 100644
---- a/net/smc/smc_clc.c
-+++ b/net/smc/smc_clc.c
-@@ -387,9 +387,9 @@ static bool smc_clc_msg_prop_valid(struct smc_clc_msg_proposal *pclc)
- 
- /* check arriving CLC accept or confirm */
- static bool
--smc_clc_msg_acc_conf_valid(struct smc_clc_msg_accept_confirm_v2 *clc_v2)
-+smc_clc_msg_acc_conf_valid(struct smc_clc_msg_accept_confirm *clc)
- {
--	struct smc_clc_msg_hdr *hdr = &clc_v2->hdr;
-+	struct smc_clc_msg_hdr *hdr = &clc->hdr;
- 
- 	if (hdr->typev1 != SMC_TYPE_R && hdr->typev1 != SMC_TYPE_D)
- 		return false;
-@@ -459,7 +459,7 @@ static int smc_clc_fill_fce_v2x(struct smc_clc_first_contact_ext_v2x *fce_v2x,
-  */
- static bool smc_clc_msg_hdr_valid(struct smc_clc_msg_hdr *clcm, bool check_trl)
- {
--	struct smc_clc_msg_accept_confirm_v2 *clc_v2;
-+	struct smc_clc_msg_accept_confirm *clc;
- 	struct smc_clc_msg_proposal *pclc;
- 	struct smc_clc_msg_decline *dclc;
- 	struct smc_clc_msg_trail *trl;
-@@ -477,12 +477,11 @@ static bool smc_clc_msg_hdr_valid(struct smc_clc_msg_hdr *clcm, bool check_trl)
- 		break;
- 	case SMC_CLC_ACCEPT:
- 	case SMC_CLC_CONFIRM:
--		clc_v2 = (struct smc_clc_msg_accept_confirm_v2 *)clcm;
--		if (!smc_clc_msg_acc_conf_valid(clc_v2))
-+		clc = (struct smc_clc_msg_accept_confirm *)clcm;
-+		if (!smc_clc_msg_acc_conf_valid(clc))
- 			return false;
- 		trl = (struct smc_clc_msg_trail *)
--			((u8 *)clc_v2 + ntohs(clc_v2->hdr.length) -
--							sizeof(*trl));
-+			((u8 *)clc + ntohs(clc->hdr.length) - sizeof(*trl));
- 		break;
- 	case SMC_CLC_DECLINE:
- 		dclc = (struct smc_clc_msg_decline *)clcm;
-@@ -1009,7 +1008,7 @@ int smc_clc_send_proposal(struct smc_sock *smc, struct smc_init_info *ini)
- 
- static void
- smcd_clc_prep_confirm_accept(struct smc_connection *conn,
--			     struct smc_clc_msg_accept_confirm_v2 *clc_v2,
-+			     struct smc_clc_msg_accept_confirm *clc,
- 			     int first_contact, u8 version,
- 			     u8 *eid, struct smc_init_info *ini,
- 			     int *fce_len,
-@@ -1017,11 +1016,9 @@ smcd_clc_prep_confirm_accept(struct smc_connection *conn,
- 			     struct smc_clc_msg_trail *trl)
- {
- 	struct smcd_dev *smcd = conn->lgr->smcd;
--	struct smc_clc_msg_accept_confirm *clc;
- 	int len;
- 
- 	/* SMC-D specific settings */
--	clc = (struct smc_clc_msg_accept_confirm *)clc_v2;
- 	memcpy(clc->hdr.eyecatcher, SMCD_EYECATCHER,
- 	       sizeof(SMCD_EYECATCHER));
- 	clc->hdr.typev1 = SMC_TYPE_D;
-@@ -1033,15 +1030,15 @@ smcd_clc_prep_confirm_accept(struct smc_connection *conn,
- 	if (version == SMC_V1) {
- 		clc->hdr.length = htons(SMCD_CLC_ACCEPT_CONFIRM_LEN);
- 	} else {
--		clc_v2->d1.chid = htons(smc_ism_get_chid(smcd));
-+		clc->d1.chid = htons(smc_ism_get_chid(smcd));
- 		if (eid && eid[0])
--			memcpy(clc_v2->d1.eid, eid, SMC_MAX_EID_LEN);
-+			memcpy(clc->d1.eid, eid, SMC_MAX_EID_LEN);
- 		len = SMCD_CLC_ACCEPT_CONFIRM_LEN_V2;
- 		if (first_contact) {
- 			*fce_len = smc_clc_fill_fce_v2x(fce_v2x, ini);
- 			len += *fce_len;
- 		}
--		clc_v2->hdr.length = htons(len);
-+		clc->hdr.length = htons(len);
- 	}
- 	memcpy(trl->eyecatcher, SMCD_EYECATCHER,
- 	       sizeof(SMCD_EYECATCHER));
-@@ -1049,7 +1046,7 @@ smcd_clc_prep_confirm_accept(struct smc_connection *conn,
- 
- static void
- smcr_clc_prep_confirm_accept(struct smc_connection *conn,
--			     struct smc_clc_msg_accept_confirm_v2 *clc_v2,
-+			     struct smc_clc_msg_accept_confirm *clc,
- 			     int first_contact, u8 version,
- 			     u8 *eid, struct smc_init_info *ini,
- 			     int *fce_len,
-@@ -1057,12 +1054,10 @@ smcr_clc_prep_confirm_accept(struct smc_connection *conn,
- 			     struct smc_clc_fce_gid_ext *gle,
- 			     struct smc_clc_msg_trail *trl)
- {
--	struct smc_clc_msg_accept_confirm *clc;
- 	struct smc_link *link = conn->lnk;
- 	int len;
- 
- 	/* SMC-R specific settings */
--	clc = (struct smc_clc_msg_accept_confirm *)clc_v2;
- 	memcpy(clc->hdr.eyecatcher, SMC_EYECATCHER,
- 	       sizeof(SMC_EYECATCHER));
- 	clc->hdr.typev1 = SMC_TYPE_R;
-@@ -1094,7 +1089,7 @@ smcr_clc_prep_confirm_accept(struct smc_connection *conn,
- 		clc->hdr.length = htons(SMCR_CLC_ACCEPT_CONFIRM_LEN);
- 	} else {
- 		if (eid && eid[0])
--			memcpy(clc_v2->r1.eid, eid, SMC_MAX_EID_LEN);
-+			memcpy(clc->r1.eid, eid, SMC_MAX_EID_LEN);
- 		len = SMCR_CLC_ACCEPT_CONFIRM_LEN_V2;
- 		if (first_contact) {
- 			*fce_len = smc_clc_fill_fce_v2x(fce_v2x, ini);
-@@ -1108,20 +1103,19 @@ smcr_clc_prep_confirm_accept(struct smc_connection *conn,
- 				len += gle->gid_cnt * sizeof(gle->gid[0]);
- 			}
- 		}
--		clc_v2->hdr.length = htons(len);
-+		clc->hdr.length = htons(len);
- 	}
- 	memcpy(trl->eyecatcher, SMC_EYECATCHER, sizeof(SMC_EYECATCHER));
- }
- 
- /* build and send CLC CONFIRM / ACCEPT message */
- static int smc_clc_send_confirm_accept(struct smc_sock *smc,
--				       struct smc_clc_msg_accept_confirm_v2 *clc_v2,
-+				       struct smc_clc_msg_accept_confirm *clc,
- 				       int first_contact, u8 version,
- 				       u8 *eid, struct smc_init_info *ini)
- {
- 	struct smc_clc_first_contact_ext_v2x fce_v2x;
- 	struct smc_connection *conn = &smc->conn;
--	struct smc_clc_msg_accept_confirm *clc;
- 	struct smc_clc_fce_gid_ext gle;
- 	struct smc_clc_msg_trail trl;
- 	int i, fce_len;
-@@ -1129,21 +1123,20 @@ static int smc_clc_send_confirm_accept(struct smc_sock *smc,
- 	struct msghdr msg;
- 
- 	/* send SMC Confirm CLC msg */
--	clc = (struct smc_clc_msg_accept_confirm *)clc_v2;
- 	clc->hdr.version = version;	/* SMC version */
- 	if (first_contact)
- 		clc->hdr.typev2 |= SMC_FIRST_CONTACT_MASK;
- 	if (conn->lgr->is_smcd)
--		smcd_clc_prep_confirm_accept(conn, clc_v2, first_contact,
-+		smcd_clc_prep_confirm_accept(conn, clc, first_contact,
- 					     version, eid, ini, &fce_len,
- 					     &fce_v2x, &trl);
- 	else
--		smcr_clc_prep_confirm_accept(conn, clc_v2, first_contact,
-+		smcr_clc_prep_confirm_accept(conn, clc, first_contact,
- 					     version, eid, ini, &fce_len,
- 					     &fce_v2x, &gle, &trl);
- 	memset(&msg, 0, sizeof(msg));
- 	i = 0;
--	vec[i].iov_base = clc_v2;
-+	vec[i].iov_base = clc;
- 	if (version > SMC_V1)
- 		vec[i++].iov_len = (clc->hdr.typev1 == SMC_TYPE_D ?
- 					SMCD_CLC_ACCEPT_CONFIRM_LEN_V2 :
-@@ -1177,16 +1170,16 @@ static int smc_clc_send_confirm_accept(struct smc_sock *smc,
- int smc_clc_send_confirm(struct smc_sock *smc, bool clnt_first_contact,
- 			 u8 version, u8 *eid, struct smc_init_info *ini)
- {
--	struct smc_clc_msg_accept_confirm_v2 cclc_v2;
-+	struct smc_clc_msg_accept_confirm cclc;
- 	int reason_code = 0;
- 	int len;
- 
- 	/* send SMC Confirm CLC msg */
--	memset(&cclc_v2, 0, sizeof(cclc_v2));
--	cclc_v2.hdr.type = SMC_CLC_CONFIRM;
--	len = smc_clc_send_confirm_accept(smc, &cclc_v2, clnt_first_contact,
-+	memset(&cclc, 0, sizeof(cclc));
-+	cclc.hdr.type = SMC_CLC_CONFIRM;
-+	len = smc_clc_send_confirm_accept(smc, &cclc, clnt_first_contact,
- 					  version, eid, ini);
--	if (len < ntohs(cclc_v2.hdr.length)) {
-+	if (len < ntohs(cclc.hdr.length)) {
- 		if (len >= 0) {
- 			reason_code = -ENETUNREACH;
- 			smc->sk.sk_err = -reason_code;
-@@ -1202,14 +1195,14 @@ int smc_clc_send_confirm(struct smc_sock *smc, bool clnt_first_contact,
- int smc_clc_send_accept(struct smc_sock *new_smc, bool srv_first_contact,
- 			u8 version, u8 *negotiated_eid, struct smc_init_info *ini)
- {
--	struct smc_clc_msg_accept_confirm_v2 aclc_v2;
-+	struct smc_clc_msg_accept_confirm aclc;
- 	int len;
- 
--	memset(&aclc_v2, 0, sizeof(aclc_v2));
--	aclc_v2.hdr.type = SMC_CLC_ACCEPT;
--	len = smc_clc_send_confirm_accept(new_smc, &aclc_v2, srv_first_contact,
-+	memset(&aclc, 0, sizeof(aclc));
-+	aclc.hdr.type = SMC_CLC_ACCEPT;
-+	len = smc_clc_send_confirm_accept(new_smc, &aclc, srv_first_contact,
- 					  version, negotiated_eid, ini);
--	if (len < ntohs(aclc_v2.hdr.length))
-+	if (len < ntohs(aclc.hdr.length))
- 		len = len >= 0 ? -EPROTO : -new_smc->clcsock->sk->sk_err;
- 
- 	return len > 0 ? 0 : len;
-@@ -1270,10 +1263,8 @@ int smc_clc_clnt_v2x_features_validate(struct smc_clc_first_contact_ext *fce,
- int smc_clc_v2x_features_confirm_check(struct smc_clc_msg_accept_confirm *cclc,
- 				       struct smc_init_info *ini)
- {
--	struct smc_clc_msg_accept_confirm_v2 *clc_v2 =
--		(struct smc_clc_msg_accept_confirm_v2 *)cclc;
- 	struct smc_clc_first_contact_ext *fce =
--		smc_get_clc_first_contact_ext(clc_v2, ini->is_smcd);
-+		smc_get_clc_first_contact_ext(cclc, ini->is_smcd);
- 	struct smc_clc_first_contact_ext_v2x *fce_v2x =
- 		(struct smc_clc_first_contact_ext_v2x *)fce;
- 
-diff --git a/net/smc/smc_clc.h b/net/smc/smc_clc.h
-index 08155a96a02a1..d7b1716cfb0fd 100644
---- a/net/smc/smc_clc.h
-+++ b/net/smc/smc_clc.h
-@@ -257,30 +257,23 @@ struct smc_clc_fce_gid_ext {
- };
- 
- struct smc_clc_msg_accept_confirm {	/* clc accept / confirm message */
--	struct smc_clc_msg_hdr hdr;
--	union {
--		struct smcr_clc_msg_accept_confirm r0; /* SMC-R */
--		struct { /* SMC-D */
--			struct smcd_clc_msg_accept_confirm_common d0;
--			u32 reserved5[3];
--		};
--	};
--} __packed;			/* format defined in RFC7609 */
--
--struct smc_clc_msg_accept_confirm_v2 {	/* clc accept / confirm message */
- 	struct smc_clc_msg_hdr hdr;
- 	union {
- 		struct { /* SMC-R */
- 			struct smcr_clc_msg_accept_confirm r0;
--			u8 eid[SMC_MAX_EID_LEN];
--			u8 reserved6[8];
--		} r1;
-+			struct { /* v2 only */
-+				u8 eid[SMC_MAX_EID_LEN];
-+				u8 reserved6[8];
-+			} __packed r1;
-+		};
- 		struct { /* SMC-D */
- 			struct smcd_clc_msg_accept_confirm_common d0;
--			__be16 chid;
--			u8 eid[SMC_MAX_EID_LEN];
--			u8 reserved5[8];
--		} d1;
-+			struct { /* v2 only, but 12 bytes reserved in v1 */
-+				__be16 chid;
-+				u8 eid[SMC_MAX_EID_LEN];
-+				u8 reserved5[8];
-+			} __packed d1;
-+		};
- 	};
- };
- 
-@@ -389,24 +382,23 @@ smc_get_clc_smcd_v2_ext(struct smc_clc_v2_extension *prop_v2ext)
- }
- 
- static inline struct smc_clc_first_contact_ext *
--smc_get_clc_first_contact_ext(struct smc_clc_msg_accept_confirm_v2 *clc_v2,
-+smc_get_clc_first_contact_ext(struct smc_clc_msg_accept_confirm *clc,
- 			      bool is_smcd)
- {
- 	int clc_v2_len;
- 
--	if (clc_v2->hdr.version == SMC_V1 ||
--	    !(clc_v2->hdr.typev2 & SMC_FIRST_CONTACT_MASK))
-+	if (clc->hdr.version == SMC_V1 ||
-+	    !(clc->hdr.typev2 & SMC_FIRST_CONTACT_MASK))
- 		return NULL;
- 
- 	if (is_smcd)
- 		clc_v2_len =
--			offsetofend(struct smc_clc_msg_accept_confirm_v2, d1);
-+			offsetofend(struct smc_clc_msg_accept_confirm, d1);
- 	else
- 		clc_v2_len =
--			offsetofend(struct smc_clc_msg_accept_confirm_v2, r1);
-+			offsetofend(struct smc_clc_msg_accept_confirm, r1);
- 
--	return (struct smc_clc_first_contact_ext *)(((u8 *)clc_v2) +
--						    clc_v2_len);
-+	return (struct smc_clc_first_contact_ext *)(((u8 *)clc) + clc_v2_len);
- }
- 
- struct smcd_dev;
++static inline bool __smc_ism_is_virtual(u16 chid)
++{
++	/* CHIDs in range of 0xFF00 to 0xFFFF are reserved
++	 * for virtual ISM device.
++	 *
++	 * loopback-ism:	0xFFFF
++	 * virtio-ism:		0xFF00 ~ 0xFFFE
++	 */
++	return ((chid & 0xFF00) == 0xFF00);
++}
++
++static inline bool smc_ism_is_virtual(struct smcd_dev *smcd)
++{
++	u16 chid = smcd->ops->get_chid(smcd);
++
++	return __smc_ism_is_virtual(chid);
++}
++
+ #endif
 -- 
 2.43.0
 
