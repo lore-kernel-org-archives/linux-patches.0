@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E571B223C58;
-	Thu, 12 Dec 2024 16:04:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C123223C46;
+	Thu, 12 Dec 2024 16:04:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734019470; cv=none; b=ZzZaABApnP6C2CjDZ4j3Oqj7nsoDqp8jxehgn+uFMrArAR3xRQM6+XaS+zie12Oho4ylxn+z7n6pZbHFM0Uk9ad7o3TJR6SbtXJ/ggzthruX7f9yY6BfIxs+LcO5bYW0U5bO+Mu93pYb0F6bO2CrYXgnE19y0l5DkTzD1gvmd/g=
+	t=1734019473; cv=none; b=DJ2nCOsw3VHK8nRZ7S+yGZ4WMy1mYf7i+n8xTkkxX/l7dSogw1nmQux7P2c9jtUGK3ZnjRBneTrcOqCkRtf0vBzuJ3r1f6snPW/Yr6tg7x6M37a7Yy7iR2zhu3jjxnsVtiX7GKSRvZcG8O2sg2Md87GooWS230UlDhpoGGXopPA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734019470; c=relaxed/simple;
-	bh=t8iVE2fri5dxuQ4WjG7RSZGC2wI5oBu1JOL6nmIIkLc=;
+	s=arc-20240116; t=1734019473; c=relaxed/simple;
+	bh=Pj/8TaB0NrLF79Ow/JmFZmMHWq/DHkW1baku7afNPfQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C38Sjtrf1jd9W8fgzgGCBRxag0q6IRCg3+rrHXXyBmBvw8W4MNimRQr0+KbRbNJNkFevgvdtR/PD4NRjQ7KsH/gyfaT4N8r0XBN4PTkdu/TVt+cerG9wxDPmFWqBQEMMbduTOMxcaweqruZhV/qTNSF4wBOaE2bFWg5NZQJq5cc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gfz4Lfju; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=urc6hCusRAer7iSkfp8wfJzAliH2xI1C4RYian6K9qmz3xh4GqEhs+Q6nvikID/AweBpDdXOrRXgILXXN2bMleXcLFBoTCR43Tg6y+Cc/9n4fn86ksTf2rTAbz+9ZTWkABGrS+3SehgFzCSBQk4+PCtxGXmAH5cbWO77cwOIHjc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QHNIvYcv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gfz4Lfju"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50C27C4CECE;
-	Thu, 12 Dec 2024 16:04:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QHNIvYcv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA005C4CECE;
+	Thu, 12 Dec 2024 16:04:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734019469;
-	bh=t8iVE2fri5dxuQ4WjG7RSZGC2wI5oBu1JOL6nmIIkLc=;
+	s=korg; t=1734019473;
+	bh=Pj/8TaB0NrLF79Ow/JmFZmMHWq/DHkW1baku7afNPfQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gfz4Lfjud3Luaeben9phNZHeh2wb1V3QZ4fcnwEiE4JhdZdMcWVu81Zcwih2BpJtD
-	 3PCWz/0qJSn6Fngox0yln9BU4KcXkzLKao+i1mPN404eKSer2ceaCqrkihoHszdZY3
-	 w+UAFWQioP5aW9jRgcGick1MmtWh5cwCwBjIGnro=
+	b=QHNIvYcvP8mB2cVins0yBaao25QeTZOJzL6TBVXjIkdd0GCsqkrwAj/kA6YqBCwmO
+	 COt2REf0FIYZC0pN2Y2tJjOd3dc5dM9ID7WYM8lBZp4Sc8YUl8Tllai+VpNUK0sHSS
+	 PTnWRUzSYKtyztFjNJiKWI0juRFZ00ZbZ0aFFiWk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Tudor Ambarus <tudor.ambarus@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 215/772] memory: renesas-rpc-if: Remove Runtime PM wrappers
-Date: Thu, 12 Dec 2024 15:52:40 +0100
-Message-ID: <20241212144358.801912730@linuxfoundation.org>
+Subject: [PATCH 6.1 216/772] mtd: hyperbus: rpc-if: Convert to platform remove callback returning void
+Date: Thu, 12 Dec 2024 15:52:41 +0100
+Message-ID: <20241212144358.840909815@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -46,113 +46,67 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-[ Upstream commit 27e5f98c30d73cdb8c8baeaf7d0af19af5266d3a ]
+[ Upstream commit baaa90c1c923ff2412fae0162eb66d036fd3be6b ]
 
-Now the rpcif_{en,dis}able_rpm() wrappers just take a pointer to a
-device structure, there is no point in keeping them.  Remove them, and
-update the callers to call Runtime PM directly.
+The .remove() callback for a platform driver returns an int which makes
+many driver authors wrongly assume it's possible to do error handling by
+returning an error code. However the value returned is ignored (apart
+from emitting a warning) and this typically results in resource leaks.
 
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Acked-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Link: https://lore.kernel.org/r/d87aa5d7e4a39b18f7e2e0649fee0a45b45d371f.1669213027.git.geert+renesas@glider.be
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To improve here there is a quest to make the remove callback return
+void. In the first step of this quest all drivers are converted to
+.remove_new(), which already returns void. Eventually after all drivers
+are converted, .remove_new() will be renamed to .remove().
+
+Trivially convert this driver from always returning zero in the remove
+callback to the void returning variant.
+
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Acked-by: Tudor Ambarus <tudor.ambarus@linaro.org>
+Link: https://lore.kernel.org/linux-mtd/20231008200143.196369-11-u.kleine-koenig@pengutronix.de
 Stable-dep-of: 7d189579a287 ("mtd: hyperbus: rpc-if: Add missing MODULE_DEVICE_TABLE")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/hyperbus/rpc-if.c   |  6 +++---
- drivers/spi/spi-rpc-if.c        |  6 +++---
- include/memory/renesas-rpc-if.h | 10 ----------
- 3 files changed, 6 insertions(+), 16 deletions(-)
+ drivers/mtd/hyperbus/rpc-if.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/mtd/hyperbus/rpc-if.c b/drivers/mtd/hyperbus/rpc-if.c
-index 41734e337ac00..ef32fca5f785e 100644
+index ef32fca5f785e..b22aa57119f23 100644
 --- a/drivers/mtd/hyperbus/rpc-if.c
 +++ b/drivers/mtd/hyperbus/rpc-if.c
-@@ -130,7 +130,7 @@ static int rpcif_hb_probe(struct platform_device *pdev)
- 
- 	platform_set_drvdata(pdev, hyperbus);
- 
--	rpcif_enable_rpm(hyperbus->rpc.dev);
-+	pm_runtime_enable(hyperbus->rpc.dev);
- 
- 	error = rpcif_hw_init(hyperbus->rpc.dev, true);
- 	if (error)
-@@ -150,7 +150,7 @@ static int rpcif_hb_probe(struct platform_device *pdev)
- 	return 0;
- 
- out_disable_rpm:
--	rpcif_disable_rpm(hyperbus->rpc.dev);
-+	pm_runtime_disable(hyperbus->rpc.dev);
+@@ -154,20 +154,18 @@ static int rpcif_hb_probe(struct platform_device *pdev)
  	return error;
  }
  
-@@ -160,7 +160,7 @@ static int rpcif_hb_remove(struct platform_device *pdev)
+-static int rpcif_hb_remove(struct platform_device *pdev)
++static void rpcif_hb_remove(struct platform_device *pdev)
+ {
+ 	struct rpcif_hyperbus *hyperbus = platform_get_drvdata(pdev);
  
  	hyperbus_unregister_device(&hyperbus->hbdev);
  
--	rpcif_disable_rpm(hyperbus->rpc.dev);
-+	pm_runtime_disable(hyperbus->rpc.dev);
- 
- 	return 0;
- }
-diff --git a/drivers/spi/spi-rpc-if.c b/drivers/spi/spi-rpc-if.c
-index 5063587d2c724..ec0904faf3a10 100644
---- a/drivers/spi/spi-rpc-if.c
-+++ b/drivers/spi/spi-rpc-if.c
-@@ -147,7 +147,7 @@ static int rpcif_spi_probe(struct platform_device *pdev)
- 
- 	ctlr->dev.of_node = parent->of_node;
- 
--	rpcif_enable_rpm(rpc->dev);
-+	pm_runtime_enable(rpc->dev);
- 
- 	ctlr->num_chipselect = 1;
- 	ctlr->mem_ops = &rpcif_spi_mem_ops;
-@@ -169,7 +169,7 @@ static int rpcif_spi_probe(struct platform_device *pdev)
- 	return 0;
- 
- out_disable_rpm:
--	rpcif_disable_rpm(rpc->dev);
-+	pm_runtime_disable(rpc->dev);
- 	return error;
- }
- 
-@@ -179,7 +179,7 @@ static int rpcif_spi_remove(struct platform_device *pdev)
- 	struct rpcif *rpc = spi_controller_get_devdata(ctlr);
- 
- 	spi_unregister_controller(ctlr);
--	rpcif_disable_rpm(rpc->dev);
-+	pm_runtime_disable(rpc->dev);
- 
- 	return 0;
- }
-diff --git a/include/memory/renesas-rpc-if.h b/include/memory/renesas-rpc-if.h
-index d2130c2c8c82f..b1b6d9126b038 100644
---- a/include/memory/renesas-rpc-if.h
-+++ b/include/memory/renesas-rpc-if.h
-@@ -75,14 +75,4 @@ void rpcif_prepare(struct device *dev, const struct rpcif_op *op, u64 *offs,
- int rpcif_manual_xfer(struct device *dev);
- ssize_t rpcif_dirmap_read(struct device *dev, u64 offs, size_t len, void *buf);
- 
--static inline void rpcif_enable_rpm(struct device *dev)
--{
--	pm_runtime_enable(dev);
--}
+ 	pm_runtime_disable(hyperbus->rpc.dev);
 -
--static inline void rpcif_disable_rpm(struct device *dev)
--{
--	pm_runtime_disable(dev);
--}
--
- #endif // __RENESAS_RPC_IF_H
+-	return 0;
+ }
+ 
+ static struct platform_driver rpcif_platform_driver = {
+ 	.probe	= rpcif_hb_probe,
+-	.remove	= rpcif_hb_remove,
++	.remove_new = rpcif_hb_remove,
+ 	.driver	= {
+ 		.name	= "rpc-if-hyperflash",
+ 	},
 -- 
 2.43.0
 
