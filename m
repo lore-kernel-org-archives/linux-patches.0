@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E47B053365;
-	Thu, 12 Dec 2024 17:01:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 731F71487CD;
+	Thu, 12 Dec 2024 17:01:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734022914; cv=none; b=DuaCH6tO4aefJDyb1e+AEfPgMXvXbrd/Kmo4UlZlL5B+lL1Udl56YbCP8nOIQOgY6ZcZFkdv3tvOF7l1kY3warFW9sNVWyMyYhKQgVM0oGghASTJF2XxrTqdl8a0BjLTh4lFDx9YnZG7N/SQ6H2RLX6HSD7lEoTK50U0YKxHq/U=
+	t=1734022917; cv=none; b=dL4dH2jxryYBdKJ+Q8iT0htqUpMUqCoIRj+AjAelvFAF5qzzSuOIKMa8BWcbggExWugz953e1mold3uNf6KOPSr/EEwDvt2sBsrcSdzZeAXBY+WDLjCPiEt0tCOh4oZFx1LYTTgpKYTvuxrP+10sopgMj7RbLLEYUWW1VGTt58Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734022914; c=relaxed/simple;
-	bh=e1S9d50QnzFBRG+OuiPy43poZ7vU+3Y6A1SgQt9y2ag=;
+	s=arc-20240116; t=1734022917; c=relaxed/simple;
+	bh=SgdUikX3rJZdxpZU4gbNKTK3mI7ApdaGlFgJhqaQNec=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DnSS6dB1PfAvxBrIv0KT8kmpqPjWl+cnQaEu1NPF0hY/hix8vf4moXejraYZ8ID2ZoNRlvlkFAswqsw5dzGo+98NLAVV42FI57D+r8EBKB/MG953PalQSfp16lp+nF4lXQtANg8pT4iBVICKD8W6aHMWGRPg9A6y8Leo4jnb9XU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=078qm2Ap; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SAtuWDu3k3zVLzG97xn/BAYkdR7JBbJNYjQnYZNNymB99+UQLHBzgAk+QlAhwPXcNaSmnmT4AfhZ57YLADb2O0JReJzW8DcijkCVkJ20JV+ZpaejD9Du8Hb31jlBXK+eAz4oIcRBVEZ7RbYBW3I1Ls5EYTxzzqioShHby+TQVuo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2UCrjhxC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="078qm2Ap"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0CD9C4CED0;
-	Thu, 12 Dec 2024 17:01:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2UCrjhxC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC2F1C4CECE;
+	Thu, 12 Dec 2024 17:01:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734022913;
-	bh=e1S9d50QnzFBRG+OuiPy43poZ7vU+3Y6A1SgQt9y2ag=;
+	s=korg; t=1734022917;
+	bh=SgdUikX3rJZdxpZU4gbNKTK3mI7ApdaGlFgJhqaQNec=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=078qm2ApcZLhp06zLHk0jpGdtqm9OyH/HQwYtf8gFR6l6IvMlK67yy10dhXacUu1b
-	 HHzodODCKnhbi57f4PmEAVTW0D9t+Pm5ETVK78FWh7zwWNYhvLX0CCSXWFwX1dDr02
-	 CrXjWsmqFiSaHTtxtLuJ0U04BjrKGmuRnC7TsEqQ=
+	b=2UCrjhxC+E+zsWrwjSp3r1amgMZLsI33az6VnpUnwBVjD5XFZbbFB4EQUYJmR5K/w
+	 fCv1YAxFWSm/6Zm/ATeA8QdjNJked54OH73+PI3FmNQJyYvwxGTAVzs+hyum3BgknP
+	 UaK1VuNysXWMEcJe9a76gsdsRLrwHPAAvPb/NpwA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 368/565] rtc: ab-eoz9: dont fail temperature reads on undervoltage notification
-Date: Thu, 12 Dec 2024 15:59:23 +0100
-Message-ID: <20241212144326.171309632@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 5.15 351/565] NFSD: Prevent a potential integer overflow
+Date: Thu, 12 Dec 2024 15:59:06 +0100
+Message-ID: <20241212144325.473639395@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144311.432886635@linuxfoundation.org>
 References: <20241212144311.432886635@linuxfoundation.org>
@@ -51,48 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maxime Chevallier <maxime.chevallier@bootlin.com>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit e0779a0dcf41a6452ac0a169cd96863feb5787c7 ]
+commit 7f33b92e5b18e904a481e6e208486da43e4dc841 upstream.
 
-The undervoltage flags reported by the RTC are useful to know if the
-time and date are reliable after a reboot. Although the threshold VLOW1
-indicates that the thermometer has been shutdown and time compensation
-is off, it doesn't mean that the temperature readout is currently
-impossible.
+If the tag length is >= U32_MAX - 3 then the "length + 4" addition
+can result in an integer overflow. Address this by splitting the
+decoding into several steps so that decode_cb_compound4res() does
+not have to perform arithmetic on the unsafe length value.
 
-As the system is running, the RTC voltage is now fully established and
-we can read the temperature.
-
-Fixes: 67075b63cce2 ("rtc: add AB-RTCMC-32.768kHz-EOZ9 RTC support")
-Signed-off-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Link: https://lore.kernel.org/r/20241122101031.68916-3-maxime.chevallier@bootlin.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Cc: stable@vger.kernel.org
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/rtc/rtc-ab-eoz9.c | 7 -------
- 1 file changed, 7 deletions(-)
+ fs/nfsd/nfs4callback.c |   14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/rtc/rtc-ab-eoz9.c b/drivers/rtc/rtc-ab-eoz9.c
-index a9b355510cd47..31c264100d781 100644
---- a/drivers/rtc/rtc-ab-eoz9.c
-+++ b/drivers/rtc/rtc-ab-eoz9.c
-@@ -396,13 +396,6 @@ static int abeoz9z3_temp_read(struct device *dev,
- 	if (ret < 0)
- 		return ret;
+--- a/fs/nfsd/nfs4callback.c
++++ b/fs/nfsd/nfs4callback.c
+@@ -297,17 +297,17 @@ static int decode_cb_compound4res(struct
+ 	u32 length;
+ 	__be32 *p;
  
--	if ((val & ABEOZ9_REG_CTRL_STATUS_V1F) ||
--	    (val & ABEOZ9_REG_CTRL_STATUS_V2F)) {
--		dev_err(dev,
--			"thermometer might be disabled due to low voltage\n");
--		return -EINVAL;
--	}
--
- 	switch (attr) {
- 	case hwmon_temp_input:
- 		ret = regmap_read(regmap, ABEOZ9_REG_REG_TEMP, &val);
--- 
-2.43.0
-
+-	p = xdr_inline_decode(xdr, 4 + 4);
++	p = xdr_inline_decode(xdr, XDR_UNIT);
+ 	if (unlikely(p == NULL))
+ 		goto out_overflow;
+-	hdr->status = be32_to_cpup(p++);
++	hdr->status = be32_to_cpup(p);
+ 	/* Ignore the tag */
+-	length = be32_to_cpup(p++);
+-	p = xdr_inline_decode(xdr, length + 4);
+-	if (unlikely(p == NULL))
++	if (xdr_stream_decode_u32(xdr, &length) < 0)
++		goto out_overflow;
++	if (xdr_inline_decode(xdr, length) == NULL)
++		goto out_overflow;
++	if (xdr_stream_decode_u32(xdr, &hdr->nops) < 0)
+ 		goto out_overflow;
+-	p += XDR_QUADLEN(length);
+-	hdr->nops = be32_to_cpup(p);
+ 	return 0;
+ out_overflow:
+ 	return -EIO;
 
 
