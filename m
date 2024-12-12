@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0164C2EAE5;
-	Thu, 12 Dec 2024 15:20:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 833C52AF0E;
+	Thu, 12 Dec 2024 15:20:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734016838; cv=none; b=n1biQOfjadRieK4V8dB7Sf/6GJjtzAQJAkQqzbU+iXeY4Txmc70tYajZ18ppc+2XLJM/yDsQPXiT6iOSlA4k6KKjkL8yh3H9tIFlg1+9SoehLC+urz05ffSqvRY/sk2/FjeZ4mCrB1u/pVkRjnC1XoYCZIRcEXg0LNnOO8OcBRE=
+	t=1734016841; cv=none; b=gsjfo3bTWRXFy2jm+Q0K0fSXkR+7C3kjEvs2A3kFe8KSYOh+iJJ9V1ZoQAYCEXy1pPTIRTYKG01moIIGb5uKju44jXrTUenYNe1gZPSbHB2rOo5CbOcgjhkqQX977Hh8lmg4/rFytDM69ig1BiTWZ0GbqUjNiMRLnaWAGkDgj98=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734016838; c=relaxed/simple;
-	bh=bsIxLEq6nE+t/wm2Fpm1r5BW4phWYlGn5zPkLYi6RN4=;
+	s=arc-20240116; t=1734016841; c=relaxed/simple;
+	bh=D68DjHyA8i6nAKO8SQ1zozJSges5MlVpwfsJmuZM3UE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mnn/DCs0BTIL2RAn7XmWJAfV3ID329FegiNLR+UQ0gKKOZZjmGrcRv0jgXCJGBwmrCQGLfsTNENyJk8VS2x5VI6t6vyOViQvrMOF8PtO/xmSA2VZwfrNign8z5Qyrf0MX1Q+98PBTNUo5vGSaveDYLV8zyBSs08luNqhOapLCmE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dw3WD7e1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NFZ0s0mMjzIghg1mm45Gch/c2YDBL07QB8hSneB6AeNk2uOGrtFcVM8RsJJfrFLuITCUhkZU0hOX9Yl1iQMpetjzUXS6kfmrroEdCBtWMXsQnRdRS3Oh+pbl/cm3D7iEmPlLLrUHLYhvYbtSH8d17KBt2aul99ZSV1PikvIP8tY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xXA0DeqX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dw3WD7e1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63289C4CECE;
-	Thu, 12 Dec 2024 15:20:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xXA0DeqX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5A85C4CECE;
+	Thu, 12 Dec 2024 15:20:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734016837;
-	bh=bsIxLEq6nE+t/wm2Fpm1r5BW4phWYlGn5zPkLYi6RN4=;
+	s=korg; t=1734016841;
+	bh=D68DjHyA8i6nAKO8SQ1zozJSges5MlVpwfsJmuZM3UE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Dw3WD7e1C7W3Mqf3kcl8a8k3EQSpr3N2DRB14O4l8lcHSctysm5Fp4C+GbmzCdTtJ
-	 brTziMhJ72tVxqo3zZIxNciU/s3UKqaJ3gDedxwLgce4ZV8FrbBDGhV8Pj2fQ7x3g4
-	 ipBg15WLO38gr6g9rlTIPHQ3IGL5MdWzj3Pdt8q0=
+	b=xXA0DeqXuonpMyxEKo/IeBukzNEdM/7yq9LeFdEVPxGhbXb8bW61QVH+3652Dntqq
+	 8j+QJmy40rrPSn+N1eQ9j96YVqLqj3Hr811IQriiFTXDom8vL+2WyMYKjwLD7d7kSt
+	 w89WVhOafm8rsahU5krfFIOnnLvw0tolmhDkNTZ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Victor Lu <victorchengchi.lu@amd.com>,
+	Prike Liang <Prike.Liang@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 310/466] drm/amdgpu: clear RB_OVERFLOW bit when enabling interrupts for vega20_ih
-Date: Thu, 12 Dec 2024 15:57:59 +0100
-Message-ID: <20241212144319.028152297@linuxfoundation.org>
+Subject: [PATCH 6.12 311/466] drm/amdgpu: Dereference the ATCS ACPI buffer
+Date: Thu, 12 Dec 2024 15:58:00 +0100
+Message-ID: <20241212144319.067948786@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144306.641051666@linuxfoundation.org>
 References: <20241212144306.641051666@linuxfoundation.org>
@@ -51,70 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Victor Lu <victorchengchi.lu@amd.com>
+From: Prike Liang <Prike.Liang@amd.com>
 
-[ Upstream commit 8b22f048331dfd45fdfbf0efdfb1d43deff7518d ]
+[ Upstream commit 32e7ee293ff476c67b51be006e986021967bc525 ]
 
-Port this change to vega20_ih.c:
-commit afbf7955ff01 ("drm/amdgpu: clear RB_OVERFLOW bit when enabling interrupts")
+Need to dereference the atcs acpi buffer after
+the method is executed, otherwise it will result in
+a memory leak.
 
-Original commit message:
-"Why:
-Setting IH_RB_WPTR register to 0 will not clear the RB_OVERFLOW bit
-if RB_ENABLE is not set.
-
-How to fix:
-Set WPTR_OVERFLOW_CLEAR bit after RB_ENABLE bit is set.
-The RB_ENABLE bit is required to be set, together with
-WPTR_OVERFLOW_ENABLE bit so that setting WPTR_OVERFLOW_CLEAR bit
-would clear the RB_OVERFLOW."
-
-Signed-off-by: Victor Lu <victorchengchi.lu@amd.com>
+Signed-off-by: Prike Liang <Prike.Liang@amd.com>
 Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/vega20_ih.c | 27 ++++++++++++++++++++++++++
- 1 file changed, 27 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_acpi.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/vega20_ih.c b/drivers/gpu/drm/amd/amdgpu/vega20_ih.c
-index ac439f0565e35..16f5561fb86ec 100644
---- a/drivers/gpu/drm/amd/amdgpu/vega20_ih.c
-+++ b/drivers/gpu/drm/amd/amdgpu/vega20_ih.c
-@@ -114,6 +114,33 @@ static int vega20_ih_toggle_ring_interrupts(struct amdgpu_device *adev,
- 	tmp = REG_SET_FIELD(tmp, IH_RB_CNTL, RB_ENABLE, (enable ? 1 : 0));
- 	tmp = REG_SET_FIELD(tmp, IH_RB_CNTL, RB_GPU_TS_ENABLE, 1);
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_acpi.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_acpi.c
+index 7dd55ed57c1d9..b8d4e07d2043e 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_acpi.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_acpi.c
+@@ -800,6 +800,7 @@ int amdgpu_acpi_power_shift_control(struct amdgpu_device *adev,
+ 		return -EIO;
+ 	}
  
-+	if (enable) {
-+		/* Unset the CLEAR_OVERFLOW bit to make sure the next step
-+		 * is switching the bit from 0 to 1
-+		 */
-+		tmp = REG_SET_FIELD(tmp, IH_RB_CNTL, WPTR_OVERFLOW_CLEAR, 0);
-+		if (amdgpu_sriov_vf(adev) && amdgpu_sriov_reg_indirect_ih(adev)) {
-+			if (psp_reg_program(&adev->psp, ih_regs->psp_reg_id, tmp))
-+				return -ETIMEDOUT;
-+		} else {
-+			WREG32_NO_KIQ(ih_regs->ih_rb_cntl, tmp);
-+		}
-+
-+		/* Clear RB_OVERFLOW bit */
-+		tmp = REG_SET_FIELD(tmp, IH_RB_CNTL, WPTR_OVERFLOW_CLEAR, 1);
-+		if (amdgpu_sriov_vf(adev) && amdgpu_sriov_reg_indirect_ih(adev)) {
-+			if (psp_reg_program(&adev->psp, ih_regs->psp_reg_id, tmp))
-+				return -ETIMEDOUT;
-+		} else {
-+			WREG32_NO_KIQ(ih_regs->ih_rb_cntl, tmp);
-+		}
-+
-+		/* Unset the CLEAR_OVERFLOW bit immediately so new overflows
-+		 * can be detected.
-+		 */
-+		tmp = REG_SET_FIELD(tmp, IH_RB_CNTL, WPTR_OVERFLOW_CLEAR, 0);
-+	}
-+
- 	/* enable_intr field is only valid in ring0 */
- 	if (ih == &adev->irq.ih)
- 		tmp = REG_SET_FIELD(tmp, IH_RB_CNTL, ENABLE_INTR, (enable ? 1 : 0));
++	kfree(info);
+ 	return 0;
+ }
+ 
 -- 
 2.43.0
 
