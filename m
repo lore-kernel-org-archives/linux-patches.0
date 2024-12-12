@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D207221D93;
-	Thu, 12 Dec 2024 16:16:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DD2722B581;
+	Thu, 12 Dec 2024 16:16:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734020181; cv=none; b=B27d9eIDQ/C1yef5WN42G4/hEgexv8CFNpr/vDJavju65jp0OCwo2p2nj6oHwdq14FHa9cIPGqud+zLGlaOQ58cAtLYN8JAuX5nWjhDnysuLgxOTLzfFvwuF9SiDQdVt1A3u6an/UtsnigY3aPCCdfn5nhpVSrRH4vg9PRUh5u4=
+	t=1734020184; cv=none; b=lPpj7nt7sRQnmaJ1rEI5dmkIrNzBhjn6jQVoub5oRf2nlLhFIQUCI7UlgitpedI84pJWyleXnPeGzqx03nll5GJO2O2Aij8bIRArkUx+jNKKF8X4rWZCNnm6TR6sawb0eYE2wH4KaWqi/Cu12BbZKpSMYlbkDE0HaaUM9e67fbI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734020181; c=relaxed/simple;
-	bh=0ouICGu4iw7/u98CjTj/NlQdo1080oPO3Cx5eh5g03Q=;
+	s=arc-20240116; t=1734020184; c=relaxed/simple;
+	bh=cLtkwnmOxR4Bqpb7uuvpJqRICW7a+Qlc6KR23U79iuA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gxLEI2b7FWwhOBhNAMl4ti18BkCgRVp3r+cgyrTF8zk1cnAKbKVga2avGN/Y54CDyzu4mZI2TxJgWN+QADowUpMW3apU7Pov1cKbhCx+V1kUpnywDTQ+Ha51tdPQW6gzNwNIctdPZxPrD4DVglkS2k3WYMZ73BHdoRHDo5A5QwA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mtv6/tEd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iWl0LAKMl11rQbLsZecIuRKNWOz/VVh99M/cgVbg0CinSxvMrMBq70JvgF0khu/c3no3R64MqaP5rNkBZZWq91pbh0ts4o5REkiTj6kwH92fFykgtZKRbHdpOLK5Cazo3cyU4fs4KYF+c9gP6sW+mTqrXnWaeXScxLOAMH4Aq9A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=spRvjP2t; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mtv6/tEd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47161C4CECE;
-	Thu, 12 Dec 2024 16:16:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="spRvjP2t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BED4FC4CECE;
+	Thu, 12 Dec 2024 16:16:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734020180;
-	bh=0ouICGu4iw7/u98CjTj/NlQdo1080oPO3Cx5eh5g03Q=;
+	s=korg; t=1734020184;
+	bh=cLtkwnmOxR4Bqpb7uuvpJqRICW7a+Qlc6KR23U79iuA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Mtv6/tEdg6eWdVB41oaD4NZ6KlWm4FEAoR14+m9sV9FfoLpn3lTVq8U0GQiOmQ11D
-	 hHxClOsGX5CDZSzQoDI8hyCKhGLdIDLhtfErv1WwYCMB8ivHsq1OT2bZ6GB79bmYWk
-	 Wms3EXbDpGxH1dLr+kt0EgunGqKevuxi/12VPQxQ=
+	b=spRvjP2tKgghAYq5b7Vh0SxHWe+IqAZjGBsk/UK8XZoZnDiTIbnhCmlXPh4RHt1T+
+	 GeFHmA4x0vuZC8uFkEZvAR6GacGNTvLv59ShsrQHyEQE6KqcfLb8katKx2BW1PJh/w
+	 m31lLZLpMa5ZY27wjoQwbtcSjXE/lRL2YjQ42OU8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tiwei Bie <tiwei.btw@antgroup.com>,
-	Anton Ivanov <anton.ivanov@cambridgegreys.com>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.1 399/772] um: net: Do not use drvdata in release
-Date: Thu, 12 Dec 2024 15:55:44 +0100
-Message-ID: <20241212144406.407088090@linuxfoundation.org>
+	Michal Simek <michal.simek@amd.com>,
+	Krzysztof Kozlowski <krzk@kernel.org>
+Subject: [PATCH 6.1 400/772] dt-bindings: serial: rs485: Fix rs485-rts-delay property
+Date: Thu, 12 Dec 2024 15:55:45 +0100
+Message-ID: <20241212144406.446664199@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -51,74 +50,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tiwei Bie <tiwei.btw@antgroup.com>
+From: Michal Simek <michal.simek@amd.com>
 
-commit d1db692a9be3b4bd3473b64fcae996afaffe8438 upstream.
+commit 12b3642b6c242061d3ba84e6e3050c3141ded14c upstream.
 
-The drvdata is not available in release. Let's just use container_of()
-to get the uml_net instance. Otherwise, removing a network device will
-result in a crash:
+Code expects array only with 2 items which should be checked.
+But also item checking is not working as it should likely because of
+incorrect items description.
 
-RIP: 0033:net_device_release+0x10/0x6f
-RSP: 00000000e20c7c40  EFLAGS: 00010206
-RAX: 000000006002e4e7 RBX: 00000000600f1baf RCX: 00000000624074e0
-RDX: 0000000062778000 RSI: 0000000060551c80 RDI: 00000000627af028
-RBP: 00000000e20c7c50 R08: 00000000603ad594 R09: 00000000e20c7b70
-R10: 000000000000135a R11: 00000000603ad422 R12: 0000000000000000
-R13: 0000000062c7af00 R14: 0000000062406d60 R15: 00000000627700b6
-Kernel panic - not syncing: Segfault with no mm
-CPU: 0 UID: 0 PID: 29 Comm: kworker/0:2 Not tainted 6.12.0-rc6-g59b723cd2adb #1
-Workqueue: events mc_work_proc
-Stack:
- 627af028 62c7af00 e20c7c80 60276fcd
- 62778000 603f5820 627af028 00000000
- e20c7cb0 603a2bcd 627af000 62770010
-Call Trace:
- [<60276fcd>] device_release+0x70/0xba
- [<603a2bcd>] kobject_put+0xba/0xe7
- [<60277265>] put_device+0x19/0x1c
- [<60281266>] platform_device_put+0x26/0x29
- [<60281e5f>] platform_device_unregister+0x2c/0x2e
- [<6002ec9c>] net_remove+0x63/0x69
- [<60031316>] ? mconsole_reply+0x0/0x50
- [<600310c8>] mconsole_remove+0x160/0x1cc
- [<60087d40>] ? __remove_hrtimer+0x38/0x74
- [<60087ff8>] ? hrtimer_try_to_cancel+0x8c/0x98
- [<6006b3cf>] ? dl_server_stop+0x3f/0x48
- [<6006b390>] ? dl_server_stop+0x0/0x48
- [<600672e8>] ? dequeue_entities+0x327/0x390
- [<60038fa6>] ? um_set_signals+0x0/0x43
- [<6003070c>] mc_work_proc+0x77/0x91
- [<60057664>] process_scheduled_works+0x1b3/0x2dd
- [<60055f32>] ? assign_work+0x0/0x58
- [<60057f0a>] worker_thread+0x1e9/0x293
- [<6005406f>] ? set_pf_worker+0x0/0x64
- [<6005d65d>] ? arch_local_irq_save+0x0/0x2d
- [<6005d748>] ? kthread_exit+0x0/0x3a
- [<60057d21>] ? worker_thread+0x0/0x293
- [<6005dbf1>] kthread+0x126/0x12b
- [<600219c5>] new_thread_handler+0x85/0xb6
-
+Fixes: d50f974c4f7f ("dt-bindings: serial: Convert rs485 bindings to json-schema")
+Signed-off-by: Michal Simek <michal.simek@amd.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Tiwei Bie <tiwei.btw@antgroup.com>
-Acked-By: Anton Ivanov <anton.ivanov@cambridgegreys.com>
-Link: https://patch.msgid.link/20241104163203.435515-4-tiwei.btw@antgroup.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Reviewed-by: Krzysztof Kozlowski <krzk@kernel.org>
+Link: https://lore.kernel.org/r/820c639b9e22fe037730ed44d1b044cdb6d28b75.1726480384.git.michal.simek@amd.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/um/drivers/net_kern.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ Documentation/devicetree/bindings/serial/rs485.yaml |   19 +++++++++----------
+ 1 file changed, 9 insertions(+), 10 deletions(-)
 
---- a/arch/um/drivers/net_kern.c
-+++ b/arch/um/drivers/net_kern.c
-@@ -336,7 +336,7 @@ static struct platform_driver uml_net_dr
+--- a/Documentation/devicetree/bindings/serial/rs485.yaml
++++ b/Documentation/devicetree/bindings/serial/rs485.yaml
+@@ -18,16 +18,15 @@ properties:
+     description: prop-encoded-array <a b>
+     $ref: /schemas/types.yaml#/definitions/uint32-array
+     items:
+-      items:
+-        - description: Delay between rts signal and beginning of data sent in
+-            milliseconds. It corresponds to the delay before sending data.
+-          default: 0
+-          maximum: 100
+-        - description: Delay between end of data sent and rts signal in milliseconds.
+-            It corresponds to the delay after sending data and actual release
+-            of the line.
+-          default: 0
+-          maximum: 100
++      - description: Delay between rts signal and beginning of data sent in
++          milliseconds. It corresponds to the delay before sending data.
++        default: 0
++        maximum: 100
++      - description: Delay between end of data sent and rts signal in milliseconds.
++          It corresponds to the delay after sending data and actual release
++          of the line.
++        default: 0
++        maximum: 100
  
- static void net_device_release(struct device *dev)
- {
--	struct uml_net *device = dev_get_drvdata(dev);
-+	struct uml_net *device = container_of(dev, struct uml_net, pdev.dev);
- 	struct net_device *netdev = device->dev;
- 	struct uml_net_private *lp = netdev_priv(netdev);
- 
+   rs485-rts-active-low:
+     description: drive RTS low when sending (default is high).
 
 
