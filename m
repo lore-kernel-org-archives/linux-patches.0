@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 609F0223C49;
-	Thu, 12 Dec 2024 16:41:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8793122540A;
+	Thu, 12 Dec 2024 16:41:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734021681; cv=none; b=fjldjB4TsPRrnzeGSWS9shb1BFoJkHUHehP4SIm184bfe9sXJCk4V64leIZtXeIKl80K4Nc0eCaAxK2ugMv4kNJ6nqKmn4TjrhD+I6MufMJQ60RreNFykpfU9UOs8jcHfLqjQFuBLdw4B9dqUEaJRisd0Znbimsi+ZpUG6Y8dDQ=
+	t=1734021684; cv=none; b=sxo11kFANv45izNh8R+qATCXjjQHNi3MxODS/yodcP4if42rEOGINSa+Qjub0F3s5LHqACM0twEtrg5pOYcmcOnk1DMM0O18XCRXLon5WRuPZYRCH9YQaImSo3G2MDF1Z4HEjKW3cPvwph7rNJp5/a7md3PLzQKfCwSsGNAgWFw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734021681; c=relaxed/simple;
-	bh=vpoxC+ggmNCYxL8EYsuotcyoKF6RR2uByX38YYAYqAI=;
+	s=arc-20240116; t=1734021684; c=relaxed/simple;
+	bh=Njue87T6jO81O9j/9DM5r59/0HJmwVS0aZmXpSeHU6g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tFoJ7b1KKbN9UYpalP4FBLEx39hW2omzltFOA3KMuQiL6Y6s2wNbqqJb64Qq+41/FDOcOUusvQ+JQY8wTqIR5NAa59oAm6mWeQd9+DF6/R7XmOpM1amm/sgV92J5HLv8733IgpLJ4FektuUK95uBV+TAdtRUsP/3pYUafd+0fck=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Loal4bPb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qA5pV/IGhNO6FzBn3K8dcp8i1tdgqT6wCtq1ZdmwcnFBuw3GD9c8qk4GCmB5mzUVykgWfBpkuoNazjdZOwi8weG2QqhlCMBqKfs6SSNokZNErfD3B4kBGEk80DjBKZuzuUNjAeIAfEtlwK/dyG+YHy7328mDyHjb4i32gHjZpJg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L6heTiYk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Loal4bPb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74BF8C4CECE;
-	Thu, 12 Dec 2024 16:41:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L6heTiYk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1FC7C4CECE;
+	Thu, 12 Dec 2024 16:41:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734021681;
-	bh=vpoxC+ggmNCYxL8EYsuotcyoKF6RR2uByX38YYAYqAI=;
+	s=korg; t=1734021684;
+	bh=Njue87T6jO81O9j/9DM5r59/0HJmwVS0aZmXpSeHU6g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Loal4bPbneKjsLnI/M/P4TW19BQYeCZ2jN2x1DIgyuGlY9J4O/jit1sBNX0RF4+8q
-	 LmmtBbWl0ZVxT/sm4XlWep4kEFtzbSd+0Q4Au6SL1T53yuxaVL7afgXh+zMko8FVX9
-	 +a1U53NkjVeIW48oIplArz+ihaeZ6YZKjDfHws+k=
+	b=L6heTiYkFCbfzAcgnJjKPeQ6Ce/ZYkS5TcYr/iSzqAZuGHPmAdFfyT5LN9MdVdZwE
+	 Rzh52BIpVjn8v35L8cuUljDoaGw72yOtKJhpChiLbSDWSHCHf+teeQZSJ4KlbnwGjy
+	 u7wSJObUWDFWYDqvYZsTaG7VqJbx3MRN4/ouwY10=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sam Protsenko <semen.protsenko@linaro.org>,
-	Aurelien Jarno <aurelien@aurel32.net>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 5.15 033/565] Revert "mmc: dw_mmc: Fix IDMAC operation with pages bigger than 4K"
-Date: Thu, 12 Dec 2024 15:53:48 +0100
-Message-ID: <20241212144312.759098932@linuxfoundation.org>
+	Francesco Dolcini <francesco.dolcini@toradex.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>
+Subject: [PATCH 5.15 034/565] drm/bridge: tc358768: Fix DSI command tx
+Date: Thu, 12 Dec 2024 15:53:49 +0100
+Message-ID: <20241212144312.803960017@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144311.432886635@linuxfoundation.org>
 References: <20241212144311.432886635@linuxfoundation.org>
@@ -51,47 +50,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aurelien Jarno <aurelien@aurel32.net>
+From: Francesco Dolcini <francesco.dolcini@toradex.com>
 
-commit 1635e407a4a64d08a8517ac59ca14ad4fc785e75 upstream.
+commit 32c4514455b2b8fde506f8c0962f15c7e4c26f1d upstream.
 
-The commit 8396c793ffdf ("mmc: dw_mmc: Fix IDMAC operation with pages
-bigger than 4K") increased the max_req_size, even for 4K pages, causing
-various issues:
-- Panic booting the kernel/rootfs from an SD card on Rockchip RK3566
-- Panic booting the kernel/rootfs from an SD card on StarFive JH7100
-- "swiotlb buffer is full" and data corruption on StarFive JH7110
+Wait for the command transmission to be completed in the DSI transfer
+function polling for the dc_start bit to go back to idle state after the
+transmission is started.
 
-At this stage no fix have been found, so it's probably better to just
-revert the change.
+This is documented in the datasheet and failures to do so lead to
+commands corruption.
 
-This reverts commit 8396c793ffdf28bb8aee7cfe0891080f8cab7890.
-
+Fixes: ff1ca6397b1d ("drm/bridge: Add tc358768 driver")
 Cc: stable@vger.kernel.org
-Cc: Sam Protsenko <semen.protsenko@linaro.org>
-Fixes: 8396c793ffdf ("mmc: dw_mmc: Fix IDMAC operation with pages bigger than 4K")
-Closes: https://lore.kernel.org/linux-mmc/614692b4-1dbe-31b8-a34d-cb6db1909bb7@w6rz.net/
-Closes: https://lore.kernel.org/linux-mmc/CAC8uq=Ppnmv98mpa1CrWLawWoPnu5abtU69v-=G-P7ysATQ2Pw@mail.gmail.com/
-Signed-off-by: Aurelien Jarno <aurelien@aurel32.net>
-Message-ID: <20241110114700.622372-1-aurelien@aurel32.net>
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Francesco Dolcini <francesco.dolcini@toradex.com>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://lore.kernel.org/r/20240926141246.48282-1-francesco@dolcini.it
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240926141246.48282-1-francesco@dolcini.it
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/dw_mmc.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/bridge/tc358768.c |   21 +++++++++++++++++++--
+ 1 file changed, 19 insertions(+), 2 deletions(-)
 
---- a/drivers/mmc/host/dw_mmc.c
-+++ b/drivers/mmc/host/dw_mmc.c
-@@ -2903,8 +2903,8 @@ static int dw_mci_init_slot(struct dw_mc
- 	if (host->use_dma == TRANS_MODE_IDMAC) {
- 		mmc->max_segs = host->ring_size;
- 		mmc->max_blk_size = 65535;
--		mmc->max_req_size = DW_MCI_DESC_DATA_LENGTH * host->ring_size;
--		mmc->max_seg_size = mmc->max_req_size;
-+		mmc->max_seg_size = 0x1000;
-+		mmc->max_req_size = mmc->max_seg_size * host->ring_size;
- 		mmc->max_blk_count = mmc->max_req_size / 512;
- 	} else if (host->use_dma == TRANS_MODE_EDMAC) {
- 		mmc->max_segs = 64;
+--- a/drivers/gpu/drm/bridge/tc358768.c
++++ b/drivers/gpu/drm/bridge/tc358768.c
+@@ -124,6 +124,9 @@
+ #define TC358768_DSI_CONFW_MODE_CLR	(6 << 29)
+ #define TC358768_DSI_CONFW_ADDR_DSI_CONTROL	(0x3 << 24)
+ 
++/* TC358768_DSICMD_TX (0x0600) register */
++#define TC358768_DSI_CMDTX_DC_START	BIT(0)
++
+ static const char * const tc358768_supplies[] = {
+ 	"vddc", "vddmipi", "vddio"
+ };
+@@ -227,6 +230,21 @@ static void tc358768_update_bits(struct
+ 		tc358768_write(priv, reg, tmp);
+ }
+ 
++static void tc358768_dsicmd_tx(struct tc358768_priv *priv)
++{
++	u32 val;
++
++	/* start transfer */
++	tc358768_write(priv, TC358768_DSICMD_TX, TC358768_DSI_CMDTX_DC_START);
++	if (priv->error)
++		return;
++
++	/* wait transfer completion */
++	priv->error = regmap_read_poll_timeout(priv->regmap, TC358768_DSICMD_TX, val,
++					       (val & TC358768_DSI_CMDTX_DC_START) == 0,
++					       100, 100000);
++}
++
+ static int tc358768_sw_reset(struct tc358768_priv *priv)
+ {
+ 	/* Assert Reset */
+@@ -507,8 +525,7 @@ static ssize_t tc358768_dsi_host_transfe
+ 		}
+ 	}
+ 
+-	/* start transfer */
+-	tc358768_write(priv, TC358768_DSICMD_TX, 1);
++	tc358768_dsicmd_tx(priv);
+ 
+ 	ret = tc358768_clear_error(priv);
+ 	if (ret)
 
 
