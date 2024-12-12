@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 596D72210E3;
-	Thu, 12 Dec 2024 17:14:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FAB82210F8;
+	Thu, 12 Dec 2024 17:14:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734023683; cv=none; b=VRgwvd+SzcHSai0sUB4WiX1ohz1hwNPG5ForvWEwQ5JLi3w97opFNe8G5Rim/Bgc6Ys/TOLw2bm1c5gqHb4hF+cDievr95NpWKYQKEmF8cj5r5ztp06O3s3oF01AybaKcFIayTR9IwewRzbpowhsVuZ0Xq8otDk470BeO5sU4pg=
+	t=1734023686; cv=none; b=Qq5Uj2puABnVsNLCPUGSfj/nD8rAOJLskFg43vdlpu4n5lrZIn0A/kraFio9B769FPAI83YV0E00nIIl8S4U4Qz387kSjyubMN111VAke9OouHbhjJJdreTVlBirjZcj7blWEFd6j9iX7UZVGQj3Vn0T1mJNlSVNla3wODgkdPg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734023683; c=relaxed/simple;
-	bh=DuLiWxsPlA3iduJz1IDOSU2e6wBtXlqvk4COTnoYm4Y=;
+	s=arc-20240116; t=1734023686; c=relaxed/simple;
+	bh=HbJDiFsUvcz5OyQ5me0+h60YZA6H8DdiRWvIphtVz4o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Rc564VmVhVlb7ZlLWi3137JN1wYxiG07NtIKOzMUIbOumRlvVNVgKfglygmGGh4Q5IA79RPlLhcKjtmT4vFwGYjsrXOVRUVEjIykgrPBw7nA+ih9VTsYEbzSD5/0iqRXc0psdb7f0w5TA+w96eylUpVmwO6+C/rm1QKYmJbIdSI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lvbyQSTF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GSf1y/+JUg4ccXeBqwXoMe+DnANUu/0NlYXPQWJ3YE24TnxW+nYFAgwHuMif11sIaxOh1/dxkdXiy4FwwuqPsO39wBtpCfywmUvSNUI+dQw7q+hNk2uIztp9ppHPlYMqPUI5UtnoGfK6jztcM74UoR0O2FYEw11n45IlDJj1u9A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gt6Lziwr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lvbyQSTF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D93C0C4CECE;
-	Thu, 12 Dec 2024 17:14:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gt6Lziwr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C91B9C4CECE;
+	Thu, 12 Dec 2024 17:14:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734023683;
-	bh=DuLiWxsPlA3iduJz1IDOSU2e6wBtXlqvk4COTnoYm4Y=;
+	s=korg; t=1734023686;
+	bh=HbJDiFsUvcz5OyQ5me0+h60YZA6H8DdiRWvIphtVz4o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lvbyQSTFY5ZfGMQfDF09EpdoPI4awAIfn/ML7+uTHRk6mDN6XH7YqDK1og5xSb/zF
-	 G4JexWZcSpeKXBRzeiDVNSmfTEGcRQT15YjaNxakOmbqPQR4ptz+bfTYgy2wsnJBSA
-	 ketMXeIdFhMJdekKlLroHuJBi9rD6nVM0nLHFUT4=
+	b=gt6Lziwr9kBQRtnLhANQbIFD/a97CGU9riY7iyjWsWkAzBfK6+msfOhLNLI2Lstf+
+	 Wd4tocdhuORESDcFbxrGsH2ZMB3EzGJOYV0+TFc0bFBwBGxpfYW/3S6u5RMegeGraO
+	 hMVvzxTP+BEkVYuHU08+YxssKwnCjYpz6MPeHosI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Wang <00107082@163.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
+	Eryk Zagorski <erykzagorski@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 047/459] proc/softirqs: replace seq_printf with seq_put_decimal_ull_width
-Date: Thu, 12 Dec 2024 15:56:25 +0100
-Message-ID: <20241212144255.382295278@linuxfoundation.org>
+Subject: [PATCH 5.10 048/459] ALSA: usb-audio: Fix Yamaha P-125 Quirk Entry
+Date: Thu, 12 Dec 2024 15:56:26 +0100
+Message-ID: <20241212144255.421927766@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144253.511169641@linuxfoundation.org>
 References: <20241212144253.511169641@linuxfoundation.org>
@@ -51,37 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Wang <00107082@163.com>
+From: Eryk Zagorski <erykzagorski@gmail.com>
 
-[ Upstream commit 84b9749a3a704dcc824a88aa8267247c801d51e4 ]
+[ Upstream commit 6f891ca15b017707840c9e7f5afd9fc6cfd7d8b1 ]
 
-seq_printf is costy, on a system with n CPUs, reading /proc/softirqs
-would yield 10*n decimal values, and the extra cost parsing format string
-grows linearly with number of cpus. Replace seq_printf with
-seq_put_decimal_ull_width have significant performance improvement.
-On an 8CPUs system, reading /proc/softirqs show ~40% performance
-gain with this patch.
+This patch switches the P-125 quirk entry to use a composite quirk as the
+P-125 supplies both MIDI and Audio like many of the other Yamaha
+keyboards
 
-Signed-off-by: David Wang <00107082@163.com>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Signed-off-by: Eryk Zagorski <erykzagorski@gmail.com>
+Link: https://patch.msgid.link/20241111164520.9079-2-erykzagorski@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/proc/softirqs.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/usb/quirks-table.h | 14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
 
-diff --git a/fs/proc/softirqs.c b/fs/proc/softirqs.c
-index 12901dcf57e2b..d8f4e7d54d002 100644
---- a/fs/proc/softirqs.c
-+++ b/fs/proc/softirqs.c
-@@ -19,7 +19,7 @@ static int show_softirqs(struct seq_file *p, void *v)
- 	for (i = 0; i < NR_SOFTIRQS; i++) {
- 		seq_printf(p, "%12s:", softirq_to_name[i]);
- 		for_each_possible_cpu(j)
--			seq_printf(p, " %10u", kstat_softirqs_cpu(i, j));
-+			seq_put_decimal_ull_width(p, " ", kstat_softirqs_cpu(i, j), 10);
- 		seq_putc(p, '\n');
+diff --git a/sound/usb/quirks-table.h b/sound/usb/quirks-table.h
+index c6104523dd79c..119c0bde74464 100644
+--- a/sound/usb/quirks-table.h
++++ b/sound/usb/quirks-table.h
+@@ -350,7 +350,6 @@ YAMAHA_DEVICE(0x105a, NULL),
+ YAMAHA_DEVICE(0x105b, NULL),
+ YAMAHA_DEVICE(0x105c, NULL),
+ YAMAHA_DEVICE(0x105d, NULL),
+-YAMAHA_DEVICE(0x1718, "P-125"),
+ {
+ 	USB_DEVICE(0x0499, 0x1503),
+ 	.driver_info = (unsigned long) & (const struct snd_usb_audio_quirk) {
+@@ -485,6 +484,19 @@ YAMAHA_DEVICE(0x1718, "P-125"),
+ 		}
  	}
- 	return 0;
+ },
++{
++	USB_DEVICE(0x0499, 0x1718),
++	QUIRK_DRIVER_INFO {
++		/* .vendor_name = "Yamaha", */
++		/* .product_name = "P-125", */
++		QUIRK_DATA_COMPOSITE {
++			{ QUIRK_DATA_STANDARD_AUDIO(1) },
++			{ QUIRK_DATA_STANDARD_AUDIO(2) },
++			{ QUIRK_DATA_MIDI_YAMAHA(3) },
++			QUIRK_COMPOSITE_END
++		}
++	}
++},
+ YAMAHA_DEVICE(0x2000, "DGP-7"),
+ YAMAHA_DEVICE(0x2001, "DGP-5"),
+ YAMAHA_DEVICE(0x2002, NULL),
 -- 
 2.43.0
 
