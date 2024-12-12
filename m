@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A43CE176AA1;
-	Thu, 12 Dec 2024 17:24:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3DD2176AA1;
+	Thu, 12 Dec 2024 17:24:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734024284; cv=none; b=l8Pio8m5uWgkTGkXV9NzJ8XvCs+5/pjdu1SMGHR5LmDyewy3BknlR22IWJHrb/sLACTYq3IS7OmsPYYYhzn54MMtET3EGo5c/qEuCYYBVlTkeV+HeCQkRSpNT2J7AOcZFKMjf8bdE2Bid0TPQRaVtoTEGVjQBgO5qm2s+UYCAvA=
+	t=1734024287; cv=none; b=Pbl1gsKglZJv4TG1noTMQtRVx3vJ3zN0VxedjiOxTfEquN4+cmzm/Qx3HaFwpTPzjO5Rdlo4vYYTYMiEkiFk1X1KxX2aamtENwMTd+bNYcJy7jzZ4bKFQsxecT0pBCdyUfjaVWyvgA0rRQNmmBtkuVfa1PWvXvqDZFraWicWuuI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734024284; c=relaxed/simple;
-	bh=LymndhvKKDxosAK+TbSDDCWS3yg2z++CCZgaSymh85A=;
+	s=arc-20240116; t=1734024287; c=relaxed/simple;
+	bh=0F24mx9hRhNMpMKTMHE1SKpep2L4dOGMhHzmgpVpjfY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=cMVYYvtYeePqZtC2pkB6OxWNDJWZ/u8w+hGplCU58gteNjnDHTBCU70v7kkGMEudIgBUckWTUqtMVa8y+OQksBcN3U//e9k27bWeREvLhaPvW8SBJ0McszIkQeey5tkuX/x1jflVypMTJbWBa2eGeeDqAVym3xlvPJj/UhAOExQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tvcxj+sv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kNoWj2FqOZdXJFnbpw7ahrP3iWwBYENO3ZYOgbH/yWJ/LcjsJhkBG7rMq+PPZESmZ/3P4NG/3VwJOcZ+AUNzC+/j629TMbCtlV0Rhr1ViQ0WEXwofSYYKgLyBoVg8R94AipzPd3O8OqvRQZM/g8iClw66vCi4R2n70gpQzW76eU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HktsBx2C; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tvcxj+sv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AB8FC4CECE;
-	Thu, 12 Dec 2024 17:24:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HktsBx2C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 271E1C4CECE;
+	Thu, 12 Dec 2024 17:24:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734024284;
-	bh=LymndhvKKDxosAK+TbSDDCWS3yg2z++CCZgaSymh85A=;
+	s=korg; t=1734024287;
+	bh=0F24mx9hRhNMpMKTMHE1SKpep2L4dOGMhHzmgpVpjfY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tvcxj+svLJCAzqF1BM8sOpsxhJKK81EAJ34Z5NLM+rxDge80bfUv2aDUal8qUROif
-	 /W+MYVRNHGcpkPkcRl9sTzTAzAmXGqlzuzO6GxawmWGaDZSzE/oGbNWpiGGltHfjvZ
-	 cm88+smtmi3LK8ZsmIN0AjUtJ0D8oERVlgflS3rQ=
+	b=HktsBx2CBsfH6rtF4rkAp52oj/RWnbmJP5oo3dZ0/q/qc3TP6UAK2SUpy7t6m3bMm
+	 Um3iZtq5E3A5Dn5ASsDGC9lX4bwT7/TLMOs9zghZ6P0d6ios0BOUQucnM99hhucGgD
+	 4kFxIE3qygc6WAVH3bcjiT+oihLkQ3Lr1cKwRJA0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Beno=C3=AEt=20Sevens?= <bsevens@google.com>,
-	stable@kernel.org,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.10 244/459] ALSA: usb-audio: Fix potential out-of-bound accesses for Extigy and Mbox devices
-Date: Thu, 12 Dec 2024 15:59:42 +0100
-Message-ID: <20241212144303.222270168@linuxfoundation.org>
+	Jeongjun Park <aha310510@gmail.com>,
+	Andreas Dilger <adilger@dilger.ca>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 5.10 245/459] ext4: supress data-race warnings in ext4_free_inodes_{count,set}()
+Date: Thu, 12 Dec 2024 15:59:43 +0100
+Message-ID: <20241212144303.264391351@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144253.511169641@linuxfoundation.org>
 References: <20241212144253.511169641@linuxfoundation.org>
@@ -45,92 +45,89 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Benoît Sevens <bsevens@google.com>
+From: Jeongjun Park <aha310510@gmail.com>
 
-commit b909df18ce2a998afef81d58bbd1a05dc0788c40 upstream.
+commit 902cc179c931a033cd7f4242353aa2733bf8524c upstream.
 
-A bogus device can provide a bNumConfigurations value that exceeds the
-initial value used in usb_get_configuration for allocating dev->config.
+find_group_other() and find_group_orlov() read *_lo, *_hi with
+ext4_free_inodes_count without additional locking. This can cause
+data-race warning, but since the lock is held for most writes and free
+inodes value is generally not a problem even if it is incorrect, it is
+more appropriate to use READ_ONCE()/WRITE_ONCE() than to add locking.
 
-This can lead to out-of-bounds accesses later, e.g. in
-usb_destroy_configuration.
+==================================================================
+BUG: KCSAN: data-race in ext4_free_inodes_count / ext4_free_inodes_set
 
-Signed-off-by: Benoît Sevens <bsevens@google.com>
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Cc: stable@kernel.org
-Link: https://patch.msgid.link/20241120124144.3814457-1-bsevens@google.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+write to 0xffff88810404300e of 2 bytes by task 6254 on cpu 1:
+ ext4_free_inodes_set+0x1f/0x80 fs/ext4/super.c:405
+ __ext4_new_inode+0x15ca/0x2200 fs/ext4/ialloc.c:1216
+ ext4_symlink+0x242/0x5a0 fs/ext4/namei.c:3391
+ vfs_symlink+0xca/0x1d0 fs/namei.c:4615
+ do_symlinkat+0xe3/0x340 fs/namei.c:4641
+ __do_sys_symlinkat fs/namei.c:4657 [inline]
+ __se_sys_symlinkat fs/namei.c:4654 [inline]
+ __x64_sys_symlinkat+0x5e/0x70 fs/namei.c:4654
+ x64_sys_call+0x1dda/0x2d60 arch/x86/include/generated/asm/syscalls_64.h:267
+ do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+ do_syscall_64+0x54/0x120 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x76/0x7e
+
+read to 0xffff88810404300e of 2 bytes by task 6257 on cpu 0:
+ ext4_free_inodes_count+0x1c/0x80 fs/ext4/super.c:349
+ find_group_other fs/ext4/ialloc.c:594 [inline]
+ __ext4_new_inode+0x6ec/0x2200 fs/ext4/ialloc.c:1017
+ ext4_symlink+0x242/0x5a0 fs/ext4/namei.c:3391
+ vfs_symlink+0xca/0x1d0 fs/namei.c:4615
+ do_symlinkat+0xe3/0x340 fs/namei.c:4641
+ __do_sys_symlinkat fs/namei.c:4657 [inline]
+ __se_sys_symlinkat fs/namei.c:4654 [inline]
+ __x64_sys_symlinkat+0x5e/0x70 fs/namei.c:4654
+ x64_sys_call+0x1dda/0x2d60 arch/x86/include/generated/asm/syscalls_64.h:267
+ do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+ do_syscall_64+0x54/0x120 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x76/0x7e
+
+Cc: stable@vger.kernel.org
+Signed-off-by: Jeongjun Park <aha310510@gmail.com>
+Reviewed-by: Andreas Dilger <adilger@dilger.ca>
+Link: https://patch.msgid.link/20241003125337.47283-1-aha310510@gmail.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/quirks.c |   19 ++++++++++++++-----
- 1 file changed, 14 insertions(+), 5 deletions(-)
+ fs/ext4/super.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/sound/usb/quirks.c
-+++ b/sound/usb/quirks.c
-@@ -595,6 +595,7 @@ int snd_usb_create_quirk(struct snd_usb_
- static int snd_usb_extigy_boot_quirk(struct usb_device *dev, struct usb_interface *intf)
+--- a/fs/ext4/super.c
++++ b/fs/ext4/super.c
+@@ -322,9 +322,9 @@ __u32 ext4_free_group_clusters(struct su
+ __u32 ext4_free_inodes_count(struct super_block *sb,
+ 			      struct ext4_group_desc *bg)
  {
- 	struct usb_host_config *config = dev->actconfig;
-+	struct usb_device_descriptor new_device_descriptor;
- 	int err;
- 
- 	if (le16_to_cpu(get_cfg_desc(config)->wTotalLength) == EXTIGY_FIRMWARE_SIZE_OLD ||
-@@ -606,10 +607,14 @@ static int snd_usb_extigy_boot_quirk(str
- 		if (err < 0)
- 			dev_dbg(&dev->dev, "error sending boot message: %d\n", err);
- 		err = usb_get_descriptor(dev, USB_DT_DEVICE, 0,
--				&dev->descriptor, sizeof(dev->descriptor));
--		config = dev->actconfig;
-+				&new_device_descriptor, sizeof(new_device_descriptor));
- 		if (err < 0)
- 			dev_dbg(&dev->dev, "error usb_get_descriptor: %d\n", err);
-+		if (new_device_descriptor.bNumConfigurations > dev->descriptor.bNumConfigurations)
-+			dev_dbg(&dev->dev, "error too large bNumConfigurations: %d\n",
-+				new_device_descriptor.bNumConfigurations);
-+		else
-+			memcpy(&dev->descriptor, &new_device_descriptor, sizeof(dev->descriptor));
- 		err = usb_reset_configuration(dev);
- 		if (err < 0)
- 			dev_dbg(&dev->dev, "error usb_reset_configuration: %d\n", err);
-@@ -941,6 +946,7 @@ static void mbox2_setup_48_24_magic(stru
- static int snd_usb_mbox2_boot_quirk(struct usb_device *dev)
- {
- 	struct usb_host_config *config = dev->actconfig;
-+	struct usb_device_descriptor new_device_descriptor;
- 	int err;
- 	u8 bootresponse[0x12];
- 	int fwsize;
-@@ -976,10 +982,14 @@ static int snd_usb_mbox2_boot_quirk(stru
- 	dev_dbg(&dev->dev, "device initialised!\n");
- 
- 	err = usb_get_descriptor(dev, USB_DT_DEVICE, 0,
--		&dev->descriptor, sizeof(dev->descriptor));
--	config = dev->actconfig;
-+		&new_device_descriptor, sizeof(new_device_descriptor));
- 	if (err < 0)
- 		dev_dbg(&dev->dev, "error usb_get_descriptor: %d\n", err);
-+	if (new_device_descriptor.bNumConfigurations > dev->descriptor.bNumConfigurations)
-+		dev_dbg(&dev->dev, "error too large bNumConfigurations: %d\n",
-+			new_device_descriptor.bNumConfigurations);
-+	else
-+		memcpy(&dev->descriptor, &new_device_descriptor, sizeof(dev->descriptor));
- 
- 	err = usb_reset_configuration(dev);
- 	if (err < 0)
-@@ -1024,7 +1034,6 @@ static int snd_usb_axefx3_boot_quirk(str
- 	return 0;
+-	return le16_to_cpu(bg->bg_free_inodes_count_lo) |
++	return le16_to_cpu(READ_ONCE(bg->bg_free_inodes_count_lo)) |
+ 		(EXT4_DESC_SIZE(sb) >= EXT4_MIN_DESC_SIZE_64BIT ?
+-		 (__u32)le16_to_cpu(bg->bg_free_inodes_count_hi) << 16 : 0);
++		 (__u32)le16_to_cpu(READ_ONCE(bg->bg_free_inodes_count_hi)) << 16 : 0);
  }
  
--
- #define MICROBOOK_BUF_SIZE 128
+ __u32 ext4_used_dirs_count(struct super_block *sb,
+@@ -378,9 +378,9 @@ void ext4_free_group_clusters_set(struct
+ void ext4_free_inodes_set(struct super_block *sb,
+ 			  struct ext4_group_desc *bg, __u32 count)
+ {
+-	bg->bg_free_inodes_count_lo = cpu_to_le16((__u16)count);
++	WRITE_ONCE(bg->bg_free_inodes_count_lo, cpu_to_le16((__u16)count));
+ 	if (EXT4_DESC_SIZE(sb) >= EXT4_MIN_DESC_SIZE_64BIT)
+-		bg->bg_free_inodes_count_hi = cpu_to_le16(count >> 16);
++		WRITE_ONCE(bg->bg_free_inodes_count_hi, cpu_to_le16(count >> 16));
+ }
  
- static int snd_usb_motu_microbookii_communicate(struct usb_device *dev, u8 *buf,
+ void ext4_used_dirs_set(struct super_block *sb,
 
 
