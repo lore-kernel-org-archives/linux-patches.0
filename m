@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08128216E2D;
-	Thu, 12 Dec 2024 17:42:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBAEC13C918;
+	Thu, 12 Dec 2024 17:42:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734025358; cv=none; b=nk0WFno8fg1Ge/13TSa4atMaizxHYEGoS6OhIcAwbWmh/uGdx3KHjB8bJdOr3q+dS6U3MK5iuOOZzdjwPAbDuBfP2eyV3WwagfjOGQ23gIbWR+uQE7+1Hc+MmK/wTEPjYh+vI80vuuzwchOVgs9Mt+zrOQn+wP9jsUQcMFXIrbw=
+	t=1734025361; cv=none; b=VILbnOgzC4satY/vF1sQFa45ULmPVMq1E75OCjQ0SbfUA1FNkYfXcWtO64F7vDfcQfBdHBG/0Q3IKvmfJgUhqk2OpVXAwR3AualA2jo8pP0mi3Cnz+R6a8py6z5v1GaruJVP6W+W+EALZtIWH41yIxolC5QV7Px5/Ms7p2Al7zc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734025358; c=relaxed/simple;
-	bh=lBI/ORXBr9Dw7g6aelKFQ5G7OZLgreiaoCCA/IhJQF8=;
+	s=arc-20240116; t=1734025361; c=relaxed/simple;
+	bh=I1jTAh5liROYeu5kS8s3I2SCUCc5y9CsiM+yiL8PRc4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=fWt3J04rLtb4v9cdU9fIvtMguDCeZWvzJDQ4Tng1w9B689nCtRi2yne+sZhL4JAydMMn1+FqiI97X0ITIA+1orjMiaVxfGGnd2QBB64VYDRRYsayvJsnjCmvDAFns4joDvg1/IuuGTPRbt5G2obH6paXjv0+QorwgbuBFXBHM0w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z33v7hSI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bmqzBnaLl1MYeFCeDeda7h99nnd8L8xPBsXrd78K1Wu9pM/U1MZlW9jMJErrW6fWPOtwe1ooQSDf1+YKy/EtmyNsUi93KRAXAiliiKWuuZaZFZFzyg6Z0IiK2d/b8dZV0+kuK9FkPdx96ErEtiBOXrOeXWZ/D6t7DSmgmsPxL8U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=an0Se2SC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z33v7hSI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 867F5C4CECE;
-	Thu, 12 Dec 2024 17:42:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="an0Se2SC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64417C4CED3;
+	Thu, 12 Dec 2024 17:42:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734025357;
-	bh=lBI/ORXBr9Dw7g6aelKFQ5G7OZLgreiaoCCA/IhJQF8=;
+	s=korg; t=1734025360;
+	bh=I1jTAh5liROYeu5kS8s3I2SCUCc5y9CsiM+yiL8PRc4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z33v7hSIaqCbhNUnB2VvOk9wqQnujFwd8UeHmExDWXhbZXIB1A08+q9TkWw7flDGh
-	 7p4rfVdmtoKTLVecUr1Mi59E4bW0UvTJoSIyunqJxaXbavNkGb1eoHlMOWBvhUGW1/
-	 xijAOrz8geUXG/Dka7aC86CH5UB5E+dy7KHxgGEw=
+	b=an0Se2SC/sK87xkW1oEn+uJqgtUqtrMirDq1M4wE0iCaiU/eYisERjl06EeXKAaFX
+	 Y/4tj2NDYGQh6TtchAwKc1nn8J3F/bRWXViCELRuTFVh0aVOq7+qJNjKNujsuF6lyg
+	 1Gw6OBTvJsMgvE/xsP26gji54u/Mx3EHiyVhupaU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+	Jean-Michel Hautbois <jeanmichel.hautbois@yoseli.org>,
+	Greg Ungerer <gerg@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 113/321] PCI: cpqphp: Fix PCIBIOS_* return value confusion
-Date: Thu, 12 Dec 2024 16:00:31 +0100
-Message-ID: <20241212144234.446973062@linuxfoundation.org>
+Subject: [PATCH 5.4 114/321] m68k: mcfgpio: Fix incorrect register offset for CONFIG_M5441x
+Date: Thu, 12 Dec 2024 16:00:32 +0100
+Message-ID: <20241212144234.486870169@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144229.291682835@linuxfoundation.org>
 References: <20241212144229.291682835@linuxfoundation.org>
@@ -45,87 +45,41 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+From: Jean-Michel Hautbois <jeanmichel.hautbois@yoseli.org>
 
-[ Upstream commit e2226dbc4a4919d9c8bd9293299b532090bdf020 ]
+[ Upstream commit f212140962c93cd5da43283a18e31681540fc23d ]
 
-Code in and related to PCI_RefinedAccessConfig() has three types of return
-type confusion:
+Fix a typo in the CONFIG_M5441x preprocessor condition, where the GPIO
+register offset was incorrectly set to 8 instead of 0. This prevented
+proper GPIO configuration for m5441x targets.
 
- - PCI_RefinedAccessConfig() tests pci_bus_read_config_dword() return value
-   against -1.
-
- - PCI_RefinedAccessConfig() returns both -1 and PCIBIOS_* return codes.
-
- - Callers of PCI_RefinedAccessConfig() only test for -1.
-
-Make PCI_RefinedAccessConfig() return PCIBIOS_* codes consistently and
-adapt callers accordingly.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Link: https://lore.kernel.org/r/20241022091140.3504-2-ilpo.jarvinen@linux.intel.com
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Fixes: bea8bcb12da0 ("m68knommu: Add support for the Coldfire m5441x.")
+Signed-off-by: Jean-Michel Hautbois <jeanmichel.hautbois@yoseli.org>
+Signed-off-by: Greg Ungerer <gerg@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/hotplug/cpqphp_pci.c | 15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
+ arch/m68k/include/asm/mcfgpio.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pci/hotplug/cpqphp_pci.c b/drivers/pci/hotplug/cpqphp_pci.c
-index a20875da4ec70..ce6eb71a63599 100644
---- a/drivers/pci/hotplug/cpqphp_pci.c
-+++ b/drivers/pci/hotplug/cpqphp_pci.c
-@@ -135,11 +135,13 @@ int cpqhp_unconfigure_device(struct pci_func *func)
- static int PCI_RefinedAccessConfig(struct pci_bus *bus, unsigned int devfn, u8 offset, u32 *value)
- {
- 	u32 vendID = 0;
-+	int ret;
- 
--	if (pci_bus_read_config_dword(bus, devfn, PCI_VENDOR_ID, &vendID) == -1)
--		return -1;
-+	ret = pci_bus_read_config_dword(bus, devfn, PCI_VENDOR_ID, &vendID);
-+	if (ret != PCIBIOS_SUCCESSFUL)
-+		return PCIBIOS_DEVICE_NOT_FOUND;
- 	if (PCI_POSSIBLE_ERROR(vendID))
--		return -1;
-+		return PCIBIOS_DEVICE_NOT_FOUND;
- 	return pci_bus_read_config_dword(bus, devfn, offset, value);
- }
- 
-@@ -200,13 +202,15 @@ static int PCI_ScanBusForNonBridge(struct controller *ctrl, u8 bus_num, u8 *dev_
- {
- 	u16 tdevice;
- 	u32 work;
-+	int ret;
- 	u8 tbus;
- 
- 	ctrl->pci_bus->number = bus_num;
- 
- 	for (tdevice = 0; tdevice < 0xFF; tdevice++) {
- 		/* Scan for access first */
--		if (PCI_RefinedAccessConfig(ctrl->pci_bus, tdevice, 0x08, &work) == -1)
-+		ret = PCI_RefinedAccessConfig(ctrl->pci_bus, tdevice, 0x08, &work);
-+		if (ret)
- 			continue;
- 		dbg("Looking for nonbridge bus_num %d dev_num %d\n", bus_num, tdevice);
- 		/* Yep we got one. Not a bridge ? */
-@@ -218,7 +222,8 @@ static int PCI_ScanBusForNonBridge(struct controller *ctrl, u8 bus_num, u8 *dev_
- 	}
- 	for (tdevice = 0; tdevice < 0xFF; tdevice++) {
- 		/* Scan for access first */
--		if (PCI_RefinedAccessConfig(ctrl->pci_bus, tdevice, 0x08, &work) == -1)
-+		ret = PCI_RefinedAccessConfig(ctrl->pci_bus, tdevice, 0x08, &work);
-+		if (ret)
- 			continue;
- 		dbg("Looking for bridge bus_num %d dev_num %d\n", bus_num, tdevice);
- 		/* Yep we got one. bridge ? */
+diff --git a/arch/m68k/include/asm/mcfgpio.h b/arch/m68k/include/asm/mcfgpio.h
+index 27f32cc81da6b..02049568198c9 100644
+--- a/arch/m68k/include/asm/mcfgpio.h
++++ b/arch/m68k/include/asm/mcfgpio.h
+@@ -144,7 +144,7 @@ static inline void gpio_free(unsigned gpio)
+  * read-modify-write as well as those controlled by the EPORT and GPIO modules.
+  */
+ #define MCFGPIO_SCR_START		40
+-#elif defined(CONFIGM5441x)
++#elif defined(CONFIG_M5441x)
+ /* The m5441x EPORT doesn't have its own GPIO port, uses PORT C */
+ #define MCFGPIO_SCR_START		0
+ #else
 -- 
 2.43.0
 
