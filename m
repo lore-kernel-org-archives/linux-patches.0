@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32B7F215764;
-	Thu, 12 Dec 2024 16:49:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA857223C59;
+	Thu, 12 Dec 2024 16:49:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734022160; cv=none; b=BYUqua28tESNTUdgfwe3Ep41xrGGXPk8wRGrOssfuiiHJnbTTKICDORMFdPz4LR+skzulMCZttfUmOMqXjbIWBjM/n0PqJSgqk9y9gvaRUx+T9AK0qtkTNAzS8sWGhrTEEvxYY4yLm/SpEsHkOElrcWmB58L8DPz/j7MU+hlVLE=
+	t=1734022163; cv=none; b=CvrbK22O40dQHf1UesGIo0a6wXWxeS5ZOHHemTAk525PXtB12NacXG5mIuKrRwUOCv0JJnl9aRSm/klNyepTYtCC2PFeVcMdRy6x9M7sPOEYqg28s4et1akABl/x2G1P31KVNV3TuH8iDFJGCE9cf1EDUsoySUlU1NySOI4S7WU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734022160; c=relaxed/simple;
-	bh=l0lYLfOJIBWOAOPHPQNuTmgBogg21RiNmxMKOafr+Uk=;
+	s=arc-20240116; t=1734022163; c=relaxed/simple;
+	bh=h5IUFbt7LgXX1xIjewV4zoia7WkB29L9Wv9qHL/ONVM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dQgeVIqOc8b4/NSZxNpWk2WkEiUC0MdAutsJASzY/UCzyML2YH4QUJgjrd8X7n2xp87U98D2dRLdS0AW8tDMoV9vs6e0OX0niw1lq5QGA56C3r5GrUPucl7AJzeTa5UXaF3X4Njb/gn36REncumVHHCImKlztkTH2T1zt60C5gE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SA+8U6rF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QiWyD28z/rog6+l5HoJh6zyLbhbMquSJi4I4qAr4qu70jy6CMJ2jnJP0ThDQr5epeURsa8yOAnfWF4dhXXlcujl0g2mUSMlGX7EMFIp7hMu+gWLDL99bZtg+ZY28N+YgWQrcOtztZF4bCuPw8RwdbbNFplOHmdTg7t1xx3cRv1c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NkEG1DdH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SA+8U6rF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E7BFC4CECE;
-	Thu, 12 Dec 2024 16:49:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NkEG1DdH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E8D2C4CECE;
+	Thu, 12 Dec 2024 16:49:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734022160;
-	bh=l0lYLfOJIBWOAOPHPQNuTmgBogg21RiNmxMKOafr+Uk=;
+	s=korg; t=1734022163;
+	bh=h5IUFbt7LgXX1xIjewV4zoia7WkB29L9Wv9qHL/ONVM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SA+8U6rFXMcbY0QcVU0u4J4h11qHmm3ujNziHnu3iV7oENsQzkARn/qNLoCoL+b38
-	 XfK0THATvbn2OmGTgs2IO8w+BsEMcTTi4k4UakvfT/EbjuVUwkGCOjhK1QOBLBYKAr
-	 cxGy0rdLOo1SM3lgZBpcSh6hQ1vdEtzQYt3Yjoj4=
+	b=NkEG1DdHcmhpBSccj588gykrv/fKD51an8sfJoo54SVxkfyOdI+5DCZpfXO6JloRT
+	 zDsnNdcTKTSC7VkrwURpUHrMScY8NxXAJNZdR4E62FAClzU66rN64twzxieUoFhlnT
+	 j5gWgTCFGL5LSfdZQGTS5TN0A7A9KfD9ZOCd9ve0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Chen <chenyuan@kylinos.cn>,
 	Andrii Nakryiko <andrii@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 165/565] bpf: Fix the xdp_adjust_tail sample prog issue
-Date: Thu, 12 Dec 2024 15:56:00 +0100
-Message-ID: <20241212144318.000035417@linuxfoundation.org>
+Subject: [PATCH 5.15 166/565] libbpf: fix sym_is_subprog() logic for weak global subprogs
+Date: Thu, 12 Dec 2024 15:56:01 +0100
+Message-ID: <20241212144318.040192753@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144311.432886635@linuxfoundation.org>
 References: <20241212144311.432886635@linuxfoundation.org>
@@ -51,39 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuan Chen <chenyuan@kylinos.cn>
+From: Andrii Nakryiko <andrii@kernel.org>
 
-[ Upstream commit 4236f114a3ffbbfd217436c08852e94cae372f57 ]
+[ Upstream commit 4073213488be542f563eb4b2457ab4cbcfc2b738 ]
 
-During the xdp_adjust_tail test, probabilistic failure occurs and SKB package
-is discarded by the kernel. After checking the issues by tracking SKB package,
-it is identified that they were caused by checksum errors. Refer to checksum
-of the arch/arm64/include/asm/checksum.h for fixing.
+sym_is_subprog() is incorrectly rejecting relocations against *weak*
+global subprogs. Fix that by realizing that STB_WEAK is also a global
+function.
 
-v2: Based on Alexei Starovoitov's suggestions, it is necessary to keep the code
- implementation consistent.
+While it seems like verifier doesn't support taking an address of
+non-static subprog right now, it's still best to fix support for it on
+libbpf side, otherwise users will get a very confusing error during BPF
+skeleton generation or static linking due to misinterpreted relocation:
 
-Fixes: c6ffd1ff7856 (bpf: add bpf_xdp_adjust_tail sample prog)
-Signed-off-by: Yuan Chen <chenyuan@kylinos.cn>
+  libbpf: prog 'handle_tp': bad map relo against 'foo' in section '.text'
+  Error: failed to open BPF object file: Relocation failed
+
+It's clearly not a map relocation, but is treated and reported as such
+without this fix.
+
+Fixes: 53eddb5e04ac ("libbpf: Support subprog address relocation")
 Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20240930024115.52841-1-chenyuan_fl@163.com
+Link: https://lore.kernel.org/r/20241009011554.880168-1-andrii@kernel.org
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- samples/bpf/xdp_adjust_tail_kern.c | 1 +
- 1 file changed, 1 insertion(+)
+ tools/lib/bpf/libbpf.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/samples/bpf/xdp_adjust_tail_kern.c b/samples/bpf/xdp_adjust_tail_kern.c
-index ffdd548627f0a..da67bcad1c638 100644
---- a/samples/bpf/xdp_adjust_tail_kern.c
-+++ b/samples/bpf/xdp_adjust_tail_kern.c
-@@ -57,6 +57,7 @@ static __always_inline void swap_mac(void *data, struct ethhdr *orig_eth)
+diff --git a/tools/lib/bpf/libbpf.c b/tools/lib/bpf/libbpf.c
+index d201a7356fad6..294fdba9c76f7 100644
+--- a/tools/lib/bpf/libbpf.c
++++ b/tools/lib/bpf/libbpf.c
+@@ -3129,7 +3129,7 @@ static bool sym_is_subprog(const GElf_Sym *sym, int text_shndx)
+ 		return true;
  
- static __always_inline __u16 csum_fold_helper(__u32 csum)
- {
-+	csum = (csum & 0xffff) + (csum >> 16);
- 	return ~((csum & 0xffff) + (csum >> 16));
+ 	/* global function */
+-	return bind == STB_GLOBAL && type == STT_FUNC;
++	return (bind == STB_GLOBAL || bind == STB_WEAK) && type == STT_FUNC;
  }
  
+ static int find_extern_btf_id(const struct btf *btf, const char *ext_name)
 -- 
 2.43.0
 
