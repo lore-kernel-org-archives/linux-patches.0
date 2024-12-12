@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2734D2144C4;
-	Thu, 12 Dec 2024 17:23:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F8DF13CA93;
+	Thu, 12 Dec 2024 17:23:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734024184; cv=none; b=iGxwVhrr8mmMPUwp+QorQdfHOPUKMjCCj+UD9FsgEK5a3aQNDeDCf1pUgFPLKFW6WoaGQaq15xCVpdJIVUWXyHksl0FjAUIzmnpTMp16TUgIILRwSvHsqeh2Mks2JSATvPyyvaIVEYhhTHDYpkQMS81N0HwZUVxfpELCd47URiU=
+	t=1734024187; cv=none; b=KShYYoIMf187jioqpK5aJdEStWyt3PF67C/JK/hbD0TdIXVr0dHFuYZfuvTV8vbFKxs3Q+Y6boKBR147M+vMTQllVVCfQiPpngV8pPhXTAWCE0cfeaHCLYVf3tTPxl6ZaAZFx6bBsgoynbP23Y6vm9c7/qtuPiHgJc8gZJHeVW4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734024184; c=relaxed/simple;
-	bh=KwDHRH8eIu1y1gj0rFKf7OEI8LICOibgawGnaaNM+iI=;
+	s=arc-20240116; t=1734024187; c=relaxed/simple;
+	bh=CMlOVf6T5VAZDQWzW9ehbriSUqwVVYoiytnF1YL6Vrs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CUOoZFB1V4yffBDXLCCvfOkpqFaNeCGb4cZV5d7P0VEZgZ7D6aHeChXy9YPFC85k15bAmxMFIlY493dfG2IoyAGK2CVRpIdx/XzPLtLtIBCPFtcf743yEbxCu+Y4f2DulxPDDP0+zJq4zE8ZbYtZAaDmUjyRAv2vBzq6lRZ6QEQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dbo95lGk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tHg4TrHSXKOvvRaESe8G9PSM1f9XS7mPJJVSgU1W8McFzOdPODaB7MYVpvQOjqGLjMMNtwPFTVkaf4YFqSbgoigprF73IQ9ag8CbWYlUZL2qW3eoycFQ4yGBLt18AfP+kYvpM6uC8bbQfXcB69KGu4PHueBHhwknSMVNEeh8iVU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1f3uEejt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dbo95lGk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90656C4CECE;
-	Thu, 12 Dec 2024 17:23:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1f3uEejt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B33EBC4CECE;
+	Thu, 12 Dec 2024 17:23:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734024184;
-	bh=KwDHRH8eIu1y1gj0rFKf7OEI8LICOibgawGnaaNM+iI=;
+	s=korg; t=1734024187;
+	bh=CMlOVf6T5VAZDQWzW9ehbriSUqwVVYoiytnF1YL6Vrs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Dbo95lGk1eVLCf1kaNn7Nq09MHgQDwGQMo3CIBP15uHwytxM6CvsWq3viT7M6AzkC
-	 maVU10JjTgKRt3iNrwMqTw7/lfblSsbJFMEozf+zowjjKKKbR1XoYL/Zv7R8HMjOlp
-	 umzglSjT/6T7jwRucUDGMETwoJkvrHCijnRXhuIM=
+	b=1f3uEejtD1xy/MkWIbQB4NkbrpmtpgbQtD43el1RJadAAO2b+8AJte7ggF0nbk1ce
+	 qTyb2Ngf6I8r/qzhecYc7Mxi6W4/5ZTKUuc9G9VpZu7t2zDGKWZRF7IPj5pk1sZHrC
+	 xlbHvztLmP7x/nb6D2+O8+MvAR1FVUzcXdgYvJNY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 212/459] NFSD: Cap the number of bytes copied by nfs4_reset_recoverydir()
-Date: Thu, 12 Dec 2024 15:59:10 +0100
-Message-ID: <20241212144301.947789541@linuxfoundation.org>
+Subject: [PATCH 5.10 213/459] NFSD: Fix nfsd4_shutdown_copy()
+Date: Thu, 12 Dec 2024 15:59:11 +0100
+Message-ID: <20241212144301.985895730@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144253.511169641@linuxfoundation.org>
 References: <20241212144253.511169641@linuxfoundation.org>
@@ -53,33 +53,69 @@ Content-Transfer-Encoding: 8bit
 
 From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit f64ea4af43161bb86ffc77e6aeb5bcf5c3229df0 ]
+[ Upstream commit 62a8642ba00aa8ceb0a02ade942f5ec52e877c95 ]
 
-It's only current caller already length-checks the string, but let's
-be safe.
+nfsd4_shutdown_copy() is just this:
 
-Fixes: 0964a3d3f1aa ("[PATCH] knfsd: nfsd4 reboot dirname fix")
+	while ((copy = nfsd4_get_copy(clp)) != NULL)
+		nfsd4_stop_copy(copy);
+
+nfsd4_get_copy() bumps @copy's reference count, preventing
+nfsd4_stop_copy() from releasing @copy.
+
+A while loop like this usually works by removing the first element
+of the list, but neither nfsd4_get_copy() nor nfsd4_stop_copy()
+alters the async_copies list.
+
+Best I can tell, then, is that nfsd4_shutdown_copy() continues to
+loop until other threads manage to remove all the items from this
+list. The spinning loop blocks shutdown until these items are gone.
+
+Possibly the reason we haven't seen this issue in the field is
+because client_has_state() prevents __destroy_client() from calling
+nfsd4_shutdown_copy() if there are any items on this list. In a
+subsequent patch I plan to remove that restriction.
+
+Fixes: e0639dc5805a ("NFSD introduce async copy feature")
 Reviewed-by: Jeff Layton <jlayton@kernel.org>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs4recover.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/nfsd/nfs4proc.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/fs/nfsd/nfs4recover.c b/fs/nfsd/nfs4recover.c
-index 2904268c18c9a..eca39b5c12c68 100644
---- a/fs/nfsd/nfs4recover.c
-+++ b/fs/nfsd/nfs4recover.c
-@@ -658,7 +658,8 @@ nfs4_reset_recoverydir(char *recdir)
- 		return status;
- 	status = -ENOTDIR;
- 	if (d_is_dir(path.dentry)) {
--		strcpy(user_recovery_dirname, recdir);
-+		strscpy(user_recovery_dirname, recdir,
-+			sizeof(user_recovery_dirname));
- 		status = 0;
+diff --git a/fs/nfsd/nfs4proc.c b/fs/nfsd/nfs4proc.c
+index 237e47896af86..8cf0e4e62bc84 100644
+--- a/fs/nfsd/nfs4proc.c
++++ b/fs/nfsd/nfs4proc.c
+@@ -1256,7 +1256,7 @@ static void nfsd4_stop_copy(struct nfsd4_copy *copy)
+ 	nfs4_put_copy(copy);
+ }
+ 
+-static struct nfsd4_copy *nfsd4_get_copy(struct nfs4_client *clp)
++static struct nfsd4_copy *nfsd4_unhash_copy(struct nfs4_client *clp)
+ {
+ 	struct nfsd4_copy *copy = NULL;
+ 
+@@ -1265,6 +1265,9 @@ static struct nfsd4_copy *nfsd4_get_copy(struct nfs4_client *clp)
+ 		copy = list_first_entry(&clp->async_copies, struct nfsd4_copy,
+ 					copies);
+ 		refcount_inc(&copy->refcount);
++		copy->cp_clp = NULL;
++		if (!list_empty(&copy->copies))
++			list_del_init(&copy->copies);
  	}
- 	path_put(&path);
+ 	spin_unlock(&clp->async_lock);
+ 	return copy;
+@@ -1274,7 +1277,7 @@ void nfsd4_shutdown_copy(struct nfs4_client *clp)
+ {
+ 	struct nfsd4_copy *copy;
+ 
+-	while ((copy = nfsd4_get_copy(clp)) != NULL)
++	while ((copy = nfsd4_unhash_copy(clp)) != NULL)
+ 		nfsd4_stop_copy(copy);
+ }
+ #ifdef CONFIG_NFSD_V4_2_INTER_SSC
 -- 
 2.43.0
 
