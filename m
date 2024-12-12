@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFA4F20A5EE;
-	Thu, 12 Dec 2024 17:32:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FE42215710;
+	Thu, 12 Dec 2024 17:32:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734024763; cv=none; b=UUgpvkGbM/phNh+uivRQQR/f5XwCe7rar/CSDA/CTBpUK57gAIISQFQ18RWLA3RG5Hd1AaFMhOLocOQHPCTsvNECQenD8hoQPoRh+EEiOOQfBBRXsZqmSk0C7l+rpkXIygMXCvxkNTnVVwIt3ndGWGksp4P9d0VsCOhLRPvaxGQ=
+	t=1734024766; cv=none; b=CUPoZ0rKQAfVlodX7nrE0DXvXEuadYuDpY8V69cUP+fJ8WsfkDGM7/oz8WLy0pUMd4hlBgM8NQ2RrZiK6h+FXBc04syPH35kuSeus2r7sTqn5z0jeqZRuxHY5JSyVd5JdYwBDyqHEKcdPqRAYAVbpGaTqtrd0/YOOdd9Bat1r2Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734024763; c=relaxed/simple;
-	bh=XAFCdz/ZEWmKSsqajo0bqbMu3ReOae8OJOz9NY1WtGo=;
+	s=arc-20240116; t=1734024766; c=relaxed/simple;
+	bh=k+4sWLlxIHkpCaz0cw/Gui7K68VEqXIsUmBQqpU6GLg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LOnaGHR4KcObCEkmJvdU4x/A4t+uUUSJMfSflDbhjWDchrMp844Myuc4R/bjyJ1tGngfE4c6tc7IPsqRxq3Xyjs+9KdrZM3gEhBm8YUSSm09U2oOqGr6hdW8z4Xek54cpkabmC61YYJBYkAHVSIZmHl6Y3KUINW1VSZOILQPqvs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HSnDT+SF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VKjKBf8N17yTTcj+1oZrmSU+iY5uZACXdaFHIjcHlgLm9ZSt2lk9h/jPR8UTRCuX/8NevCzf5k4QbyPC+Z5tkbcF0NPHHVswyg/ADbTqXVDGu5hb4yyrlQ+QH9IFya93m1uQV0uHWd8TEO5tjuZj6ASkbv+F/pBCCCUatmKN4pI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t1Te2AQV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HSnDT+SF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC5C1C4CED0;
-	Thu, 12 Dec 2024 17:32:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t1Te2AQV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D929AC4CECE;
+	Thu, 12 Dec 2024 17:32:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734024763;
-	bh=XAFCdz/ZEWmKSsqajo0bqbMu3ReOae8OJOz9NY1WtGo=;
+	s=korg; t=1734024766;
+	bh=k+4sWLlxIHkpCaz0cw/Gui7K68VEqXIsUmBQqpU6GLg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HSnDT+SFqmVk6b7nntE0b56GIPWt8Jc7RLlV1Hnd64Fzyg86AMjk8tmymWgQl/6D2
-	 Ewjdn2BO07z+uIZNAUBE50VWJj8mGdQv+q93amCkmgRtG0rYG8P8nXuO92VaqZczNE
-	 VFFXCKS475E/61EIvcpwbT3DH3IAwTKW9KMHSs5Q=
+	b=t1Te2AQVGsAcCVq9fRRs63EwoZ1eJYG6ETaYj+j/4kP48rjerP2CI79/D5ruljlqu
+	 nm8OFnQkTKfZ6MRoaYYpm4uIRboVVGhRdscNfbQ3snkVz74z7D1Cs25PZyZswSP92i
+	 pQcS804dbC2JspCfbUT36aVc9hZ1W7v/zrHzC3wc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Denis Nikitin <denik@chromium.org>,
-	Levi Yun <yeoreum.yun@arm.com>,
-	Christoph Hellwig <hch@lst.de>,
+	syzbot+65fa06e29859e41a83f3@syzkaller.appspotmail.com,
+	Ghanshyam Agrawal <ghanshyam1898@gmail.com>,
+	Dave Kleikamp <dave.kleikamp@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 403/459] dma-debug: fix a possible deadlock on radix_lock
-Date: Thu, 12 Dec 2024 16:02:21 +0100
-Message-ID: <20241212144309.682798698@linuxfoundation.org>
+Subject: [PATCH 5.10 404/459] jfs: array-index-out-of-bounds fix in dtReadFirst
+Date: Thu, 12 Dec 2024 16:02:22 +0100
+Message-ID: <20241212144309.727365475@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144253.511169641@linuxfoundation.org>
 References: <20241212144253.511169641@linuxfoundation.org>
@@ -52,66 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Levi Yun <yeoreum.yun@arm.com>
+From: Ghanshyam Agrawal <ghanshyam1898@gmail.com>
 
-[ Upstream commit 7543c3e3b9b88212fcd0aaf5cab5588797bdc7de ]
+[ Upstream commit ca84a2c9be482836b86d780244f0357e5a778c46 ]
 
-radix_lock() shouldn't be held while holding dma_hash_entry[idx].lock
-otherwise, there's a possible deadlock scenario when
-dma debug API is called holding rq_lock():
+The value of stbl can be sometimes out of bounds due
+to a bad filesystem. Added a check with appopriate return
+of error code in that case.
 
-CPU0                   CPU1                       CPU2
-dma_free_attrs()
-check_unmap()          add_dma_entry()            __schedule() //out
-                                                  (A) rq_lock()
-get_hash_bucket()
-(A) dma_entry_hash
-                                                  check_sync()
-                       (A) radix_lock()           (W) dma_entry_hash
-dma_entry_free()
-(W) radix_lock()
-                       // CPU2's one
-                       (W) rq_lock()
-
-CPU1 situation can happen when it extending radix tree and
-it tries to wake up kswapd via wake_all_kswapd().
-
-CPU2 situation can happen while perf_event_task_sched_out()
-(i.e. dma sync operation is called while deleting perf_event using
- etm and etr tmc which are Arm Coresight hwtracing driver backends).
-
-To remove this possible situation, call dma_entry_free() after
-put_hash_bucket() in check_unmap().
-
-Reported-by: Denis Nikitin <denik@chromium.org>
-Closes: https://lists.linaro.org/archives/list/coresight@lists.linaro.org/thread/2WMS7BBSF5OZYB63VT44U5YWLFP5HL6U/#RWM6MLQX5ANBTEQ2PRM7OXCBGCE6NPWU
-Signed-off-by: Levi Yun <yeoreum.yun@arm.com>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
+Reported-by: syzbot+65fa06e29859e41a83f3@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=65fa06e29859e41a83f3
+Signed-off-by: Ghanshyam Agrawal <ghanshyam1898@gmail.com>
+Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/dma/debug.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ fs/jfs/jfs_dtree.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/kernel/dma/debug.c b/kernel/dma/debug.c
-index 654b039dfc335..d19f610c9eef8 100644
---- a/kernel/dma/debug.c
-+++ b/kernel/dma/debug.c
-@@ -1047,9 +1047,13 @@ static void check_unmap(struct dma_debug_entry *ref)
- 	}
+diff --git a/fs/jfs/jfs_dtree.c b/fs/jfs/jfs_dtree.c
+index a222a9d71887f..8f7ce1bea44c5 100644
+--- a/fs/jfs/jfs_dtree.c
++++ b/fs/jfs/jfs_dtree.c
+@@ -3382,6 +3382,13 @@ static int dtReadFirst(struct inode *ip, struct btstack * btstack)
  
- 	hash_bucket_del(entry);
--	dma_entry_free(entry);
--
- 	put_hash_bucket(bucket, flags);
+ 		/* get the leftmost entry */
+ 		stbl = DT_GETSTBL(p);
 +
-+	/*
-+	 * Free the entry outside of bucket_lock to avoid ABBA deadlocks
-+	 * between that and radix_lock.
-+	 */
-+	dma_entry_free(entry);
- }
++		if (stbl[0] < 0 || stbl[0] > 127) {
++			DT_PUTPAGE(mp);
++			jfs_error(ip->i_sb, "stbl[0] out of bound\n");
++			return -EIO;
++		}
++
+ 		xd = (pxd_t *) & p->slot[stbl[0]];
  
- static void check_for_stack(struct device *dev,
+ 		/* get the child page block address */
 -- 
 2.43.0
 
