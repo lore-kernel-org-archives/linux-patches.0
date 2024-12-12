@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED89453365;
-	Thu, 12 Dec 2024 16:27:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CB4C2236FC;
+	Thu, 12 Dec 2024 16:27:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734020850; cv=none; b=J5PZdapfK/axAu+3vguNf54dIcGTDGkaHtIZ3LcUhwRq+1xcn0jXbqJUjyS0QUHg6dwEu4eX5Vb/pI4Ekg2DHgSXIwssqerde/PBo5oL1lFCyAuUWLLfoUKY5eBRqscMMoMcmRdHUwFBENCZHeUKbQ6o2uZ5nMc/8T+2C8XXJsU=
+	t=1734020853; cv=none; b=k0BplB47/4BWIV3oIA6wnjIJcffCPLQXW4StteLT+a6fI6vsN0W3WOo+hbjQ/k0DSM8Ze7jqlaE69meNvx76WG+8t8jDvXyDzWk9gOXRcEE2pa5BfZPwoLsEnWL5HuzXEoPRo+POz01nL3OcCv/xi3J6N+xhRJw24JxPCa5RgMw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734020850; c=relaxed/simple;
-	bh=jptQCoj+YNpaXjG5psUjy7iKG4kTklDQThbFKqhU0Lc=;
+	s=arc-20240116; t=1734020853; c=relaxed/simple;
+	bh=rw6saT5Eof2uVmLlOAVN3lkAF7eBIQ83Cwpnb/1pcuI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PsiwVyq5P9ctj0hmDuIlS1Sbsx7ppgzNymmJkmTbKOcydaxeO/KRBPoXOKlOBhpHoUF2S1LZcbqQm7/Eb3MU07wtYr+U2jO8Y+5J24P0epgecnIMhvMGOslW5l3LAAgXoTpWn9A54YhMc5nU/F0U2w9iv6hkDUh83GJtZvs2xnE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IIcGP2Zi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=eL/3uqAKdOVqAdeJ30OSrQzPv2uAzmjs9aBgve9V4DC70zIYI7Ikk8HFrsvwf45R7LU+QHFSvso/2V8yxSHc0icAkkMsEKcNeLOWe8TzJBfbo7e2+M8tRLo21n5ME/jzfEoQQW0DmFIpf5wRoKAR5FwPA1gjFCw7/NYWt/rJ5AQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E/+i54Hz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IIcGP2Zi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 490C5C4AF0B;
-	Thu, 12 Dec 2024 16:27:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E/+i54Hz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2A96C4CECE;
+	Thu, 12 Dec 2024 16:27:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734020849;
-	bh=jptQCoj+YNpaXjG5psUjy7iKG4kTklDQThbFKqhU0Lc=;
+	s=korg; t=1734020853;
+	bh=rw6saT5Eof2uVmLlOAVN3lkAF7eBIQ83Cwpnb/1pcuI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IIcGP2Zi+/Rv+RZaN8mSddjXrb0ee94anm4eq1CR8sSIzSVn6PHaVvPw8WTT5wFqE
-	 wRsb7DkH6TDb3ecMWiHYGjYzh7exGMivzYQEyMPWNi0g0LL+WrbJ3VLaCTOcm24KGP
-	 aLtWZhJsv0X6JTumxh1DnfjnidLEsZbV+CjM4DDQ=
+	b=E/+i54HzP+eafcHZNez514oUdz+5oezq4eaC9kcioGVHmgI0CvvKLiOqWTWnm/ig2
+	 kD0N15i7UDfWRj2uO53+USdU0rL5iupArVYQ2F22I5Rr1ERIOh33Cr3VdCouRYxKfF
+	 aW2rCiVW78hdJPH0UlVP+ujs96B4GcS9GMACqvvE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Kishon Vijay Abraham I <kishon@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 576/772] i3c: master: Fix dynamic address leak when assigned-address is present
-Date: Thu, 12 Dec 2024 15:58:41 +0100
-Message-ID: <20241212144413.752432412@linuxfoundation.org>
+Subject: [PATCH 6.1 577/772] PCI: endpoint: Use a separate lock for protecting epc->pci_epf list
+Date: Thu, 12 Dec 2024 15:58:42 +0100
+Message-ID: <20241212144413.792823056@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -47,107 +46,121 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Frank Li <Frank.Li@nxp.com>
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-[ Upstream commit 851bd21cdb55e727ab29280bc9f6b678164f802a ]
+[ Upstream commit d6dd5bafaabf98a99a76227ab8dc9a89e76a198f ]
 
-If the DTS contains 'assigned-address', a dynamic address leak occurs
-during hotjoin events.
+The EPC controller maintains a list of EPF drivers added to it. For
+protecting this list against the concurrent accesses, the epc->lock
+(used for protecting epc_ops) has been used so far. Since there were
+no users trying to use epc_ops and modify the pci_epf list simultaneously,
+this was not an issue.
 
-Assume a device have assigned-address 0xb.
-  - Device issue Hotjoin
-  - Call i3c_master_do_daa()
-  - Call driver xxx_do_daa()
-  - Call i3c_master_get_free_addr() to get dynamic address 0x9
-  - i3c_master_add_i3c_dev_locked(0x9)
-  -     expected_dyn_addr  = newdev->boardinfo->init_dyn_addr (0xb);
-  -     i3c_master_reattach_i3c_dev(newdev(0xb), old_dyn_addr(0x9));
-  -         if (dev->info.dyn_addr != old_dyn_addr &&
-                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ 0xb != 0x9 -> TRUE
-                (!dev->boardinfo ||
-                 ^^^^^^^^^^^^^^^ ->  FALSE
-                 dev->info.dyn_addr != dev->boardinfo->init_dyn_addr)) {
-                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-                 0xb != 0xb      ->  FALSE
-                 ...
-                 i3c_bus_set_addr_slot_status(&master->bus, old_dyn_addr,
-                                                     I3C_ADDR_SLOT_FREE);
-		 ^^^
-                 This will be skipped. So old_dyn_addr never free
-            }
+But with the addition of callback mechanism for passing the events, this
+will be a problem. Because the pci_epf list needs to be iterated first
+for getting hold of the EPF driver and then the relevant event specific
+callback needs to be called for the driver.
 
-  - i3c_master_get_free_addr() will return increased sequence number.
+If the same epc->lock is used, then it will result in a deadlock scenario.
 
-Remove dev->info.dyn_addr != dev->boardinfo->init_dyn_addr condition check.
-dev->info.dyn_addr should be checked before calling this function because
-i3c_master_setnewda_locked() has already been called and the target device
-has already accepted dyn_addr. It is too late to check if dyn_addr is free
-in i3c_master_reattach_i3c_dev().
+For instance,
 
-Add check to ensure expected_dyn_addr is free before
-i3c_master_setnewda_locked().
+...
+	mutex_lock(&epc->lock);
+	list_for_each_entry(epf, &epc->pci_epf, list) {
+		epf->event_ops->core_init(epf);
+		|
+		|-> pci_epc_set_bar();
+			|
+			|-> mutex_lock(&epc->lock) # DEADLOCK
+...
 
-Fixes: cc3a392d69b6 ("i3c: master: fix for SETDASA and DAA process")
-Cc: stable@kernel.org
-Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
-Link: https://lore.kernel.org/r/20241021-i3c_dts_assign-v8-3-4098b8bde01e@nxp.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+So to fix this issue, use a separate lock called "list_lock" for
+protecting the pci_epf list against the concurrent accesses. This lock
+will also be used by the callback mechanism.
+
+Link: https://lore.kernel.org/linux-pci/20230124071158.5503-4-manivannan.sadhasivam@linaro.org
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+Acked-by: Kishon Vijay Abraham I <kishon@ti.com>
+Stable-dep-of: 688d2eb4c6fc ("PCI: endpoint: Clear secondary (not primary) EPC in pci_epc_remove_epf()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i3c/master.c | 15 +++++----------
- 1 file changed, 5 insertions(+), 10 deletions(-)
+ drivers/pci/endpoint/pci-epc-core.c | 9 +++++----
+ include/linux/pci-epc.h             | 2 ++
+ 2 files changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/i3c/master.c b/drivers/i3c/master.c
-index a24264f275135..41ecc0d898f0c 100644
---- a/drivers/i3c/master.c
-+++ b/drivers/i3c/master.c
-@@ -1491,16 +1491,9 @@ static int i3c_master_reattach_i3c_dev(struct i3c_dev_desc *dev,
- 				       u8 old_dyn_addr)
- {
- 	struct i3c_master_controller *master = i3c_dev_get_master(dev);
--	enum i3c_addr_slot_status status;
- 	int ret;
+diff --git a/drivers/pci/endpoint/pci-epc-core.c b/drivers/pci/endpoint/pci-epc-core.c
+index 3bc9273d0a082..6cce430d431b1 100644
+--- a/drivers/pci/endpoint/pci-epc-core.c
++++ b/drivers/pci/endpoint/pci-epc-core.c
+@@ -613,7 +613,7 @@ int pci_epc_add_epf(struct pci_epc *epc, struct pci_epf *epf,
+ 	if (type == SECONDARY_INTERFACE && epf->sec_epc)
+ 		return -EBUSY;
  
--	if (dev->info.dyn_addr != old_dyn_addr &&
--	    (!dev->boardinfo ||
--	     dev->info.dyn_addr != dev->boardinfo->init_dyn_addr)) {
--		status = i3c_bus_get_addr_slot_status(&master->bus,
--						      dev->info.dyn_addr);
--		if (status != I3C_ADDR_SLOT_FREE)
--			return -EBUSY;
-+	if (dev->info.dyn_addr != old_dyn_addr) {
- 		i3c_bus_set_addr_slot_status(&master->bus,
- 					     dev->info.dyn_addr,
- 					     I3C_ADDR_SLOT_I3C_DEV);
-@@ -1902,9 +1895,10 @@ static int i3c_master_bus_init(struct i3c_master_controller *master)
- 			goto err_rstdaa;
- 		}
+-	mutex_lock(&epc->lock);
++	mutex_lock(&epc->list_lock);
+ 	func_no = find_first_zero_bit(&epc->function_num_map,
+ 				      BITS_PER_LONG);
+ 	if (func_no >= BITS_PER_LONG) {
+@@ -640,7 +640,7 @@ int pci_epc_add_epf(struct pci_epc *epc, struct pci_epf *epf,
  
-+		/* Do not mark as occupied until real device exist in bus */
- 		i3c_bus_set_addr_slot_status_mask(&master->bus,
- 						  i3cboardinfo->init_dyn_addr,
--						  I3C_ADDR_SLOT_I3C_DEV | I3C_ADDR_SLOT_EXT_DESIRED,
-+						  I3C_ADDR_SLOT_EXT_DESIRED,
- 						  I3C_ADDR_SLOT_EXT_STATUS_MASK);
+ 	list_add_tail(list, &epc->pci_epf);
+ ret:
+-	mutex_unlock(&epc->lock);
++	mutex_unlock(&epc->list_lock);
  
- 		/*
-@@ -2068,7 +2062,8 @@ int i3c_master_add_i3c_dev_locked(struct i3c_master_controller *master,
- 	else
- 		expected_dyn_addr = newdev->info.dyn_addr;
+ 	return ret;
+ }
+@@ -672,11 +672,11 @@ void pci_epc_remove_epf(struct pci_epc *epc, struct pci_epf *epf,
+ 		list = &epf->sec_epc_list;
+ 	}
  
--	if (newdev->info.dyn_addr != expected_dyn_addr) {
-+	if (newdev->info.dyn_addr != expected_dyn_addr &&
-+	    i3c_bus_get_addr_slot_status(&master->bus, expected_dyn_addr) == I3C_ADDR_SLOT_FREE) {
- 		/*
- 		 * Try to apply the expected dynamic address. If it fails, keep
- 		 * the address assigned by the master.
+-	mutex_lock(&epc->lock);
++	mutex_lock(&epc->list_lock);
+ 	clear_bit(func_no, &epc->function_num_map);
+ 	list_del(list);
+ 	epf->epc = NULL;
+-	mutex_unlock(&epc->lock);
++	mutex_unlock(&epc->list_lock);
+ }
+ EXPORT_SYMBOL_GPL(pci_epc_remove_epf);
+ 
+@@ -773,6 +773,7 @@ __pci_epc_create(struct device *dev, const struct pci_epc_ops *ops,
+ 	}
+ 
+ 	mutex_init(&epc->lock);
++	mutex_init(&epc->list_lock);
+ 	INIT_LIST_HEAD(&epc->pci_epf);
+ 	ATOMIC_INIT_NOTIFIER_HEAD(&epc->notifier);
+ 
+diff --git a/include/linux/pci-epc.h b/include/linux/pci-epc.h
+index a48778e1a4ee3..fe729dfe509b8 100644
+--- a/include/linux/pci-epc.h
++++ b/include/linux/pci-epc.h
+@@ -122,6 +122,7 @@ struct pci_epc_mem {
+  * struct pci_epc - represents the PCI EPC device
+  * @dev: PCI EPC device
+  * @pci_epf: list of endpoint functions present in this EPC device
++ * list_lock: Mutex for protecting pci_epf list
+  * @ops: function pointers for performing endpoint operations
+  * @windows: array of address space of the endpoint controller
+  * @mem: first window of the endpoint controller, which corresponds to
+@@ -139,6 +140,7 @@ struct pci_epc_mem {
+ struct pci_epc {
+ 	struct device			dev;
+ 	struct list_head		pci_epf;
++	struct mutex			list_lock;
+ 	const struct pci_epc_ops	*ops;
+ 	struct pci_epc_mem		**windows;
+ 	struct pci_epc_mem		*mem;
 -- 
 2.43.0
 
