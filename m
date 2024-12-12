@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C4A5222D7B;
-	Thu, 12 Dec 2024 17:12:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5BF8222D7B;
+	Thu, 12 Dec 2024 17:12:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734023526; cv=none; b=DmtXXpr+qbrnBkGo/HqPjC2xvZqHHlTUaRtnzFvfz2sQtT7XsYiGvIkV71KLSdNFOC1F2nPNwFwsEc33E6eT0OQgKVPN+VuSSbLnD6lhgfEKFlruwWHSYXPp7tswafzbAzFtOaHO//7dv0bQJ95NPsFig9+4nI5N6ePlFgtcuKE=
+	t=1734023530; cv=none; b=XFBsIcRa5F+tT+eDDmfDGbnjhhBMAHs/kFYcGW7/GXMD+q5Z/SQaZrQwV3OWCK1p003I2qDukdA6COBAVvQK7HK0OGE8DuT3USP2qgaJqxIijTn9PCxDQNVvAIuaDJDk8N7ByJMl3YPF7DUucQyoWjxPqnUEWLsGUdxbhjeom1c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734023526; c=relaxed/simple;
-	bh=j06c0CXn4qKpq26d0G6BxJVY2pNvTUUv6+3pJdMeCN8=;
+	s=arc-20240116; t=1734023530; c=relaxed/simple;
+	bh=xrDCwL2ewL4dEqjIZFSSo0FffkZUNmwvJQgrMLg4KF4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bfLGcpdY1Ya8fY+Qpgg0bUMb4qBuX3DdX3tyvRUyxins1c8I5CEuOL1bxnmNMKMlP2CH0mbMkAC/GYt1eShw1qFmNRaBz17RKuXFS2Oos1WASrX0qDwQslrFc5AYd2dRGs/C1XtDlFTT9kjkUoqzaFfi8pm7gO6bqUTcDIvaTkE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ky6+WehY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fIMc3T1j3x2aEunah+LKBBcHaQCbgS5DRmY4YCtCpsAcX9fuGWm7hhJrgGQ19SeWmxYtMiZc4OW0rUS8cyQc3FqaLHzhbfvuBP/o2jl35ev22ZGTS3CSKghDiRnBbmLkzH5HfLW+wSJy6fZZCS15+RxKZ4uYGI5XhPC0cC1L08M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DxnLo3El; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ky6+WehY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E142C4CED0;
-	Thu, 12 Dec 2024 17:12:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DxnLo3El"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 310DDC4CED0;
+	Thu, 12 Dec 2024 17:12:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734023526;
-	bh=j06c0CXn4qKpq26d0G6BxJVY2pNvTUUv6+3pJdMeCN8=;
+	s=korg; t=1734023529;
+	bh=xrDCwL2ewL4dEqjIZFSSo0FffkZUNmwvJQgrMLg4KF4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ky6+WehYIj/WMPDGVEme3BKvChWWT3AtsYz7d7dgHMwCt7/ZqkHwOns3uQx7bFYHc
-	 BIPXChjSuz3WzrCd1C6+WLWU2rQZ2RIAgjSJ5lPnNC5DyBub7KJYLwf6W7eAxPPtqI
-	 +FuJobryG1jThm2XbJhsCajwrBPoeSMAaEhyfAgo=
+	b=DxnLo3ElFD8p7uq7B+5C9ZfxgBuZDxpmXKS5kG2Ys2Ir1BSVUspRLglIAobnKyTiX
+	 R6d8m2TudCackHcSu44vhclx8arqJOZ/SkqMJym3+CMPY7B+HBUiK5STZJHhb9HTB1
+	 xWeQbuN1lG4XqnTItQQVfmC4P3tIde5GZc/ttL6s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ameer Hamza <amhamza.mgc@gmail.com>,
-	Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>,
-	Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>
-Subject: [PATCH 5.15 563/565] media: venus: vdec: fixed possible memory leak issue
-Date: Thu, 12 Dec 2024 16:02:38 +0100
-Message-ID: <20241212144334.129182069@linuxfoundation.org>
+	Wenjia Zhang <wenjia@linux.ibm.com>,
+	Karsten Graul <kgraul@linux.ibm.com>,
+	"D. Wythe" <alibuda@linux.alibaba.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.15 564/565] net/smc: Fix af_ops of child socket pointing to released memory
+Date: Thu, 12 Dec 2024 16:02:39 +0100
+Message-ID: <20241212144334.181942631@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144311.432886635@linuxfoundation.org>
 References: <20241212144311.432886635@linuxfoundation.org>
@@ -52,48 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ameer Hamza <amhamza.mgc@gmail.com>
+From: Karsten Graul <kgraul@linux.ibm.com>
 
-commit 8403fdd775858a7bf04868d43daea0acbe49ddfc upstream.
+commit 49b7d376abe54a49e8bd5e64824032b7c97c62d4 upstream.
 
-The venus_helper_alloc_dpb_bufs() implementation allows an early return
-on an error path when checking the id from ida_alloc_min() which would
-not release the earlier buffer allocation.
+Child sockets may inherit the af_ops from the parent listen socket.
+When the listen socket is released then the af_ops of the child socket
+points to released memory.
+Solve that by restoring the original af_ops for child sockets which
+inherited the parent af_ops. And clear any inherited user_data of the
+parent socket.
 
-Move the direct kfree() from the error checking of dma_alloc_attrs() to
-the common fail path to ensure that allocations are released on all
-error paths in this function.
-
-Addresses-Coverity: 1494120 ("Resource leak")
-
-cc: stable@vger.kernel.org # 5.16+
-Fixes: 40d87aafee29 ("media: venus: vdec: decoded picture buffer handling during reconfig sequence")
-Signed-off-by: Ameer Hamza <amhamza.mgc@gmail.com>
-Reviewed-by: Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>
-Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Fixes: 8270d9c21041 ("net/smc: Limit backlog connections")
+Reviewed-by: Wenjia Zhang <wenjia@linux.ibm.com>
+Signed-off-by: Karsten Graul <kgraul@linux.ibm.com>
+Reviewed-by: D. Wythe <alibuda@linux.alibaba.com>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/qcom/venus/helpers.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/smc/af_smc.c |   14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
---- a/drivers/media/platform/qcom/venus/helpers.c
-+++ b/drivers/media/platform/qcom/venus/helpers.c
-@@ -189,7 +189,6 @@ int venus_helper_alloc_dpb_bufs(struct v
- 		buf->va = dma_alloc_attrs(dev, buf->size, &buf->da, GFP_KERNEL,
- 					  buf->attrs);
- 		if (!buf->va) {
--			kfree(buf);
- 			ret = -ENOMEM;
- 			goto fail;
- 		}
-@@ -209,6 +208,7 @@ int venus_helper_alloc_dpb_bufs(struct v
- 	return 0;
+--- a/net/smc/af_smc.c
++++ b/net/smc/af_smc.c
+@@ -79,6 +79,7 @@ static struct sock *smc_tcp_syn_recv_soc
+ 					  bool *own_req)
+ {
+ 	struct smc_sock *smc;
++	struct sock *child;
  
- fail:
-+	kfree(buf);
- 	venus_helper_free_dpb_bufs(inst);
- 	return ret;
- }
+ 	smc = smc_clcsock_user_data(sk);
+ 
+@@ -92,8 +93,17 @@ static struct sock *smc_tcp_syn_recv_soc
+ 	}
+ 
+ 	/* passthrough to original syn recv sock fct */
+-	return smc->ori_af_ops->syn_recv_sock(sk, skb, req, dst, req_unhash,
+-					      own_req);
++	child = smc->ori_af_ops->syn_recv_sock(sk, skb, req, dst, req_unhash,
++					       own_req);
++	/* child must not inherit smc or its ops */
++	if (child) {
++		rcu_assign_sk_user_data(child, NULL);
++
++		/* v4-mapped sockets don't inherit parent ops. Don't restore. */
++		if (inet_csk(child)->icsk_af_ops == inet_csk(sk)->icsk_af_ops)
++			inet_csk(child)->icsk_af_ops = smc->ori_af_ops;
++	}
++	return child;
+ 
+ drop:
+ 	dst_release(dst);
 
 
