@@ -1,127 +1,137 @@
-Received: from eu-smtp-delivery-151.mimecast.com (eu-smtp-delivery-151.mimecast.com [185.58.86.151])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 576AE222D68
-	for <patches@lists.linux.dev>; Thu, 12 Dec 2024 17:29:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.58.86.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 163B621CFEA;
+	Thu, 12 Dec 2024 17:29:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734024592; cv=none; b=BtBkQXv2TPOXPi3Tygq7GNj3PHR2mrwnO6JG5FmYNf6SqSy+HrDzAckui7PCmK4QgPhZNDHQkoK7W+XZf9yVfy7Vc5lkP2GR1ql+H6IhMRa3bC+vtORC114/9wJcghJc0cYlS6G6zGcRoNwnulJphvl80ttX4+wREPekDoUsBe8=
+	t=1734024593; cv=none; b=hDgDaJyB+Z7SBsAwstjn3tHa8+4CbrTtVZU2E/cdfoXHB6BKXCU0jex9uPg/Wbcnq5ocK3EEP7TggJxydgNKHdlEEIT3BGNLeFghvzZgYiZnkZLDuEup7xx9KNQoHbkZ+YMtBl9oabSjdSwziKhdEqlVAKLAQ3hOyf/QC/kzN70=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734024592; c=relaxed/simple;
-	bh=ayFvDAuq2+Jwh2xZPoLyKRjBI+kW/hEHltWiLIYYHCs=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 MIME-Version:Content-Type; b=YANdbYyVWS/XUdhi+3jyXpIQAPnqXeHVDT0apd5noBrU6hiQXKsXH4AyL9pldAOXeAOLMYjQYkel48DyzwOoTmWKu6QAAl8lnx1rG2+3PKm0ECIoS4YGbZreAU6hiQmBsX02LzVXx9S1JYCW9D2jgLk2eLbN1YLTum7nh2fxAfs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ACULAB.COM; spf=pass smtp.mailfrom=aculab.com; arc=none smtp.client-ip=185.58.86.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ACULAB.COM
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=aculab.com
-Received: from AcuMS.aculab.com (156.67.243.121 [156.67.243.121]) by
- relay.mimecast.com with ESMTP with both STARTTLS and AUTH (version=TLSv1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id
- uk-mta-37-nu4osZHLMQSYbwV6FMbTtw-1; Thu, 12 Dec 2024 17:29:41 +0000
-X-MC-Unique: nu4osZHLMQSYbwV6FMbTtw-1
-X-Mimecast-MFC-AGG-ID: nu4osZHLMQSYbwV6FMbTtw
-Received: from AcuMS.Aculab.com (10.202.163.6) by AcuMS.aculab.com
- (10.202.163.6) with Microsoft SMTP Server (TLS) id 15.0.1497.48; Thu, 12 Dec
- 2024 17:28:44 +0000
-Received: from AcuMS.Aculab.com ([::1]) by AcuMS.aculab.com ([::1]) with mapi
- id 15.00.1497.048; Thu, 12 Dec 2024 17:28:44 +0000
-From: David Laight <David.Laight@ACULAB.COM>
-To: 'Tejun Heo' <tj@kernel.org>, Nathan Chancellor <nathan@kernel.org>
-CC: Josef Bacik <josef@toxicpanda.com>, Jens Axboe <axboe@kernel.dk>,
-	"cgroups@vger.kernel.org" <cgroups@vger.kernel.org>,
-	"linux-block@vger.kernel.org" <linux-block@vger.kernel.org>,
-	"llvm@lists.linux.dev" <llvm@lists.linux.dev>, "patches@lists.linux.dev"
-	<patches@lists.linux.dev>, Linux Kernel Functional Testing <lkft@linaro.org>,
-	kernel test robot <lkp@intel.com>
-Subject: RE: [PATCH] blk-iocost: Avoid using clamp() on inuse in
- __propagate_weights()
-Thread-Topic: [PATCH] blk-iocost: Avoid using clamp() on inuse in
- __propagate_weights()
-Thread-Index: AQHbTLneKltIssSpBEabKMv+lJlW17Li3L3A
-Date: Thu, 12 Dec 2024 17:28:44 +0000
-Message-ID: <5231409257664f8097c82f79869fb52b@AcuMS.aculab.com>
-References: <20241212-blk-iocost-fix-clamp-error-v1-1-b925491bc7d3@kernel.org>
- <Z1sbG2zh8xmb-lxu@slm.duckdns.org>
-In-Reply-To: <Z1sbG2zh8xmb-lxu@slm.duckdns.org>
-Accept-Language: en-GB, en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-exchange-transport-fromentityheader: Hosted
+	s=arc-20240116; t=1734024593; c=relaxed/simple;
+	bh=GnpuiMfuJGUTOPFD2uxG5/UIoSaW39QuNnQxNPdGoM8=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=Mu0Y50ELaLmIeKmVtd38g6PTdYFgFAXsp6APYX82iAnu+Vq/Pk4WGBZDzJVt9g3z1AZzs7qoAYc8tCrIN+1EA4vruzidlM2yHYOMk+vQs5kTHv87nKIJvTPefLJbm3X2C5pbClgbubNfWqaAYkHUGlBrzZxyh5p+ieycQvKSPm8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aEN54xiz; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aEN54xiz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87803C4CEDE;
+	Thu, 12 Dec 2024 17:29:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1734024592;
+	bh=GnpuiMfuJGUTOPFD2uxG5/UIoSaW39QuNnQxNPdGoM8=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=aEN54xizUFX9cP5JV22LDWAHVpT+EPlwUz+MpVflhSEzLqqA3oUchYh2K4kTu2WvL
+	 V5fvSBFw48N0xRTA5jidVPZMK0qVcdkaYPwyYtHoTBwkAkq/6OMBO6smzoiIc+or9n
+	 Vj7VXkrIM3huZ53IIu7xLXq5W5ik2gDiviegRSaE=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Peter Griffin <peter.griffin@linaro.org>,
+	Tudor Ambarus <tudor.ambarus@linaro.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 5.10 317/459] scsi: ufs: exynos: Fix hibern8 notify callbacks
+Date: Thu, 12 Dec 2024 16:00:55 +0100
+Message-ID: <20241212144306.176781203@linuxfoundation.org>
+X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20241212144253.511169641@linuxfoundation.org>
+References: <20241212144253.511169641@linuxfoundation.org>
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: GpjIrwFebpSbVVjwObt8j3LEK9VejAQaV6uElQZ7yxE_1734024580
-X-Mimecast-Originator: aculab.com
-Content-Language: en-US
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-From: Tejun Heo <tj@kernel.org>
-> Sent: 12 December 2024 17:19
->=20
-> On Thu, Dec 12, 2024 at 10:13:29AM -0700, Nathan Chancellor wrote:
-> > After a recent change to clamp() and its variants [1] that increases th=
-e
-> > coverage of the check that high is greater than low because it can be
-> > done through inlining, certain build configurations (such as s390
-> > defconfig) fail to build with clang with:
-> >
-...
-> > __propagate_weights() is called with an active value of zero in
-> > ioc_check_iocgs(), which results in the high value being less than the
-> > low value, which is undefined because the value returned depends on the
-> > order of the comparisons.
-> >
-> > The purpose of this expression is to ensure inuse is not more than
-> > active and at least 1. This could be written more simply with a ternary
-> > expression that uses min(inuse, active) as the condition so that the
-> > value of that condition can be used if it is not zero and one if it is.
-> > Do this conversion to resolve the error and add a comment to deter
-> > people from turning this back into clamp().
-> >
-> > Link: https://lore.kernel.org/r/34d53778977747f19cce2abb287bb3e6@AcuMS.=
-aculab.com/ [1]
-> > Suggested-by: David Laight <david.laight@aculab.com>
-> > Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
-> > Closes: https://lore.kernel.org/llvm/CA+G9fYsD7mw13wredcZn0L-KBA3yeoVST=
-uxnss-
-> AEWMN3ha0cA@mail.gmail.com/
-> > Reported-by: kernel test robot <lkp@intel.com>
-> > Closes: https://lore.kernel.org/oe-kbuild-all/202412120322.3GfVe3vF-lkp=
-@intel.com/
-> > Signed-off-by: Nathan Chancellor <nathan@kernel.org>
->=20
-> Acked-by: Tejun Heo <tj@kernel.org>
->=20
-> This likely deserves:
->=20
-> Fixes: 7caa47151ab2 ("blkcg: implement blk-iocost")
-> Cc: stable@vger.kernel.org # v5.4+
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
-Especially since the old defn was:
+------------------
 
-#define __clamp(val, lo, hi)=09\
-=09((val) >=3D (hi) ? (hi) : ((val) <=3D (lo) ? (lo) : (val)))
+From: Peter Griffin <peter.griffin@linaro.org>
 
-so:
--=09=09inuse =3D clamp_t(u32, inuse, 1, active);
+commit ceef938bbf8b93ba3a218b4adc244cde94b582aa upstream.
 
-is zero if active is zero.
+v1 of the patch which introduced the ufshcd_vops_hibern8_notify()
+callback used a bool instead of an enum. In v2 this was updated to an
+enum based on the review feedback in [1].
 
-=09David
+ufs-exynos hibernate calls have always been broken upstream as it
+follows the v1 bool implementation.
 
->=20
-> Thanks.
->=20
-> --
-> tejun
+Link: https://patchwork.kernel.org/project/linux-scsi/patch/001f01d23994$719997c0$54ccc740$@samsung.com/ [1]
+Fixes: 55f4b1f73631 ("scsi: ufs: ufs-exynos: Add UFS host support for Exynos SoCs")
+Signed-off-by: Peter Griffin <peter.griffin@linaro.org>
+Link: https://lore.kernel.org/r/20241031150033.3440894-13-peter.griffin@linaro.org
+Cc: stable@vger.kernel.org
+Reviewed-by: Tudor Ambarus <tudor.ambarus@linaro.org>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ drivers/scsi/ufs/ufs-exynos.c |   16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
--
-Registered Address Lakeside, Bramley Road, Mount Farm, Milton Keynes, MK1 1=
-PT, UK
-Registration No: 1397386 (Wales)
+--- a/drivers/scsi/ufs/ufs-exynos.c
++++ b/drivers/scsi/ufs/ufs-exynos.c
+@@ -1051,12 +1051,12 @@ static void exynos_ufs_dev_hw_reset(stru
+ 	hci_writel(ufs, 1 << 0, HCI_GPIO_OUT);
+ }
+ 
+-static void exynos_ufs_pre_hibern8(struct ufs_hba *hba, u8 enter)
++static void exynos_ufs_pre_hibern8(struct ufs_hba *hba, enum uic_cmd_dme cmd)
+ {
+ 	struct exynos_ufs *ufs = ufshcd_get_variant(hba);
+ 	struct exynos_ufs_uic_attr *attr = ufs->drv_data->uic_attr;
+ 
+-	if (!enter) {
++	if (cmd == UIC_CMD_DME_HIBER_EXIT) {
+ 		if (ufs->opts & EXYNOS_UFS_OPT_BROKEN_AUTO_CLK_CTRL)
+ 			exynos_ufs_disable_auto_ctrl_hcc(ufs);
+ 		exynos_ufs_ungate_clks(ufs);
+@@ -1084,11 +1084,11 @@ static void exynos_ufs_pre_hibern8(struc
+ 	}
+ }
+ 
+-static void exynos_ufs_post_hibern8(struct ufs_hba *hba, u8 enter)
++static void exynos_ufs_post_hibern8(struct ufs_hba *hba, enum uic_cmd_dme cmd)
+ {
+ 	struct exynos_ufs *ufs = ufshcd_get_variant(hba);
+ 
+-	if (!enter) {
++	if (cmd == UIC_CMD_DME_HIBER_EXIT) {
+ 		u32 cur_mode = 0;
+ 		u32 pwrmode;
+ 
+@@ -1107,7 +1107,7 @@ static void exynos_ufs_post_hibern8(stru
+ 
+ 		if (!(ufs->opts & EXYNOS_UFS_OPT_SKIP_CONNECTION_ESTAB))
+ 			exynos_ufs_establish_connt(ufs);
+-	} else {
++	} else if (cmd == UIC_CMD_DME_HIBER_ENTER) {
+ 		ufs->entry_hibern8_t = ktime_get();
+ 		exynos_ufs_gate_clks(ufs);
+ 		if (ufs->opts & EXYNOS_UFS_OPT_BROKEN_AUTO_CLK_CTRL)
+@@ -1176,15 +1176,15 @@ static int exynos_ufs_pwr_change_notify(
+ }
+ 
+ static void exynos_ufs_hibern8_notify(struct ufs_hba *hba,
+-				     enum uic_cmd_dme enter,
++				     enum uic_cmd_dme cmd,
+ 				     enum ufs_notify_change_status notify)
+ {
+ 	switch ((u8)notify) {
+ 	case PRE_CHANGE:
+-		exynos_ufs_pre_hibern8(hba, enter);
++		exynos_ufs_pre_hibern8(hba, cmd);
+ 		break;
+ 	case POST_CHANGE:
+-		exynos_ufs_post_hibern8(hba, enter);
++		exynos_ufs_post_hibern8(hba, cmd);
+ 		break;
+ 	}
+ }
+
 
