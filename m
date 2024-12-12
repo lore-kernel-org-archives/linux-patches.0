@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B9462AF0E;
-	Thu, 12 Dec 2024 15:21:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 913712AF0E;
+	Thu, 12 Dec 2024 15:21:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734016898; cv=none; b=cMiGRtRhqQazsw0yNCkd8qHXWUhlgm/jGWiCO4IcoRqC3/jiCeOPTuq9FccmHBzPcTBbiAAuETZBk1xC8Y3jg07LHh339ewUnh98A35JuMZ02AXrNAz14TmSzPvzKBkcAhImfad7NI9pJsFlgXHrhbLC/JYkiOmMEOx/b+AEmP8=
+	t=1734016901; cv=none; b=IfLwkF27yq3t9SDJIHAoSKoO9sgp7UmKoXwRhlmsSDiZrYwx2Y+dqBrIYXcMBRBjQaM2LAYUQFQLa+Wpc0OBn0OadkmDxbMw6MBty78zl3LTxz9nMXCDL0Cw5q57u4bQJL056850N78NXRNS5XN3XnGERmkhWH2KBtg9QpK9l+A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734016898; c=relaxed/simple;
-	bh=kPOtGWQJ/v59Nud4LkEDVmp5Rp5ak0RpOzJoIlhOAks=;
+	s=arc-20240116; t=1734016901; c=relaxed/simple;
+	bh=3PwxppdzN3QOPtcGKDNObf4Bn2FrTZZQkZ00dEwiDmA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CJKsndX0GbdgP++/WdSNWomJQ1pgOCeRiafNmEPC8mS51v5tjn9k+Tn+UZYl70kX+MUDVCrb5Vyku0lrMq3SuVSFrcZ4n0Llj9P3vT/ZKevRV9MA9Vsr8bD13NhSa6yzr6aSo26RjwQNBjZOV6xNI3xuyLdJrBgcz3jcOiRpfpY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FtuoXrAi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IoXVHpzm8ounWTre5e4IwTNHt9yF7Aaomxh0bFlXLSOFVhG9EkW8ZETnv+sunlL7gsw2SXAsVqYAlpZezwOchYwDSJq5xhRfe40bwM9UU+rMwB2RNR1wlTFy4cUy1wvvJKK3nl9RHyeus6Ti1D9yr+o0R5eASLUUIiRHcqe03dE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oWjAuVFr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FtuoXrAi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EE26C4CED4;
-	Thu, 12 Dec 2024 15:21:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oWjAuVFr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0025BC4CECE;
+	Thu, 12 Dec 2024 15:21:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734016898;
-	bh=kPOtGWQJ/v59Nud4LkEDVmp5Rp5ak0RpOzJoIlhOAks=;
+	s=korg; t=1734016901;
+	bh=3PwxppdzN3QOPtcGKDNObf4Bn2FrTZZQkZ00dEwiDmA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FtuoXrAiokoxxAre1392E/YujpCXuVtl46BbR0U7E06UXDB0bg6WeBkpl0v89j6Pz
-	 U+NZrdFX9PETH5L0ojr9/UHViiKoLICOozz6aePUQQ9Qb+5GbjIJHuICjR6IVDWHkA
-	 DufomiGELudUEPwy8SdLmsu7VAgBf5d1GEWfdpEg=
+	b=oWjAuVFrZOonXxtvJvXk6bklzNTex86NJsCXXMZD4lLrczSD9BDVNJa+E+YEkmD4d
+	 Z53roFGGCUFHt6SgDh3WErcuSFhvVoNVzZZrRb2qYhwlrgOHoASrKe2fHtKg4HNut/
+	 SQ2yJwdUnbJGeNVA+kqlAxxL4OBHlaZIT8K8f1/c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krishna Vivek Vitta <kvitta@microsoft.com>,
-	Amir Goldstein <amir73il@gmail.com>,
-	Jan Kara <jack@suse.cz>,
+	Eduard Zingerman <eddyz87@gmail.com>,
+	Leon Hwang <leon.hwang@linux.dev>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 297/466] fanotify: allow reporting errors on failure to open fd
-Date: Thu, 12 Dec 2024 15:57:46 +0100
-Message-ID: <20241212144318.518754361@linuxfoundation.org>
+Subject: [PATCH 6.12 298/466] bpf: Prevent tailcall infinite loop caused by freplace
+Date: Thu, 12 Dec 2024 15:57:47 +0100
+Message-ID: <20241212144318.557972083@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144306.641051666@linuxfoundation.org>
 References: <20241212144306.641051666@linuxfoundation.org>
@@ -52,229 +52,310 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Amir Goldstein <amir73il@gmail.com>
+From: Leon Hwang <leon.hwang@linux.dev>
 
-[ Upstream commit 522249f05c5551aec9ec0ba9b6438f1ec19c138d ]
+[ Upstream commit d6083f040d5d8f8d748462c77e90547097df936e ]
 
-When working in "fd mode", fanotify_read() needs to open an fd
-from a dentry to report event->fd to userspace.
+There is a potential infinite loop issue that can occur when using a
+combination of tail calls and freplace.
 
-Opening an fd from dentry can fail for several reasons.
-For example, when tasks are gone and we try to open their
-/proc files or we try to open a WRONLY file like in sysfs
-or when trying to open a file that was deleted on the
-remote network server.
+In an upcoming selftest, the attach target for entry_freplace of
+tailcall_freplace.c is subprog_tc of tc_bpf2bpf.c, while the tail call in
+entry_freplace leads to entry_tc. This results in an infinite loop:
 
-Add a new flag FAN_REPORT_FD_ERROR for fanotify_init().
-For a group with FAN_REPORT_FD_ERROR, we will send the
-event with the error instead of the open fd, otherwise
-userspace may not get the error at all.
+entry_tc -> subprog_tc -> entry_freplace --tailcall-> entry_tc.
 
-For an overflow event, we report -EBADF to avoid confusing FAN_NOFD
-with -EPERM.  Similarly for pidfd open errors we report either -ESRCH
-or the open error instead of FAN_NOPIDFD and FAN_EPIDFD.
+The problem arises because the tail_call_cnt in entry_freplace resets to
+zero each time entry_freplace is executed, causing the tail call mechanism
+to never terminate, eventually leading to a kernel panic.
 
-In any case, userspace will not know which file failed to
-open, so add a debug print for further investigation.
+To fix this issue, the solution is twofold:
 
-Reported-by: Krishna Vivek Vitta <kvitta@microsoft.com>
-Link: https://lore.kernel.org/linux-fsdevel/SI2P153MB07182F3424619EDDD1F393EED46D2@SI2P153MB0718.APCP153.PROD.OUTLOOK.COM/
-Signed-off-by: Amir Goldstein <amir73il@gmail.com>
-Signed-off-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/20241003142922.111539-1-amir73il@gmail.com
+1. Prevent updating a program extended by an freplace program to a
+   prog_array map.
+2. Prevent extending a program that is already part of a prog_array map
+   with an freplace program.
+
+This ensures that:
+
+* If a program or its subprogram has been extended by an freplace program,
+  it can no longer be updated to a prog_array map.
+* If a program has been added to a prog_array map, neither it nor its
+  subprograms can be extended by an freplace program.
+
+Moreover, an extension program should not be tailcalled. As such, return
+-EINVAL if the program has a type of BPF_PROG_TYPE_EXT when adding it to a
+prog_array map.
+
+Additionally, fix a minor code style issue by replacing eight spaces with a
+tab for proper formatting.
+
+Reviewed-by: Eduard Zingerman <eddyz87@gmail.com>
+Signed-off-by: Leon Hwang <leon.hwang@linux.dev>
+Link: https://lore.kernel.org/r/20241015150207.70264-2-leon.hwang@linux.dev
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/notify/fanotify/fanotify_user.c | 85 +++++++++++++++++-------------
- include/linux/fanotify.h           |  1 +
- include/uapi/linux/fanotify.h      |  1 +
- 3 files changed, 50 insertions(+), 37 deletions(-)
+ include/linux/bpf.h     | 17 +++++++++++----
+ kernel/bpf/arraymap.c   | 26 +++++++++++++++++++++--
+ kernel/bpf/core.c       |  1 +
+ kernel/bpf/syscall.c    |  7 +++---
+ kernel/bpf/trampoline.c | 47 ++++++++++++++++++++++++++++++++++-------
+ 5 files changed, 81 insertions(+), 17 deletions(-)
 
-diff --git a/fs/notify/fanotify/fanotify_user.c b/fs/notify/fanotify/fanotify_user.c
-index 9644bc72e4573..8e2d43fc6f7c1 100644
---- a/fs/notify/fanotify/fanotify_user.c
-+++ b/fs/notify/fanotify/fanotify_user.c
-@@ -266,13 +266,6 @@ static int create_fd(struct fsnotify_group *group, const struct path *path,
- 			       group->fanotify_data.f_flags | __FMODE_NONOTIFY,
- 			       current_cred());
- 	if (IS_ERR(new_file)) {
--		/*
--		 * we still send an event even if we can't open the file.  this
--		 * can happen when say tasks are gone and we try to open their
--		 * /proc files or we try to open a WRONLY file like in sysfs
--		 * we just send the errno to userspace since there isn't much
--		 * else we can do.
--		 */
- 		put_unused_fd(client_fd);
- 		client_fd = PTR_ERR(new_file);
- 	} else {
-@@ -663,7 +656,7 @@ static ssize_t copy_event_to_user(struct fsnotify_group *group,
- 	unsigned int info_mode = FAN_GROUP_FLAG(group, FANOTIFY_INFO_MODES);
- 	unsigned int pidfd_mode = info_mode & FAN_REPORT_PIDFD;
- 	struct file *f = NULL, *pidfd_file = NULL;
--	int ret, pidfd = FAN_NOPIDFD, fd = FAN_NOFD;
-+	int ret, pidfd = -ESRCH, fd = -EBADF;
+diff --git a/include/linux/bpf.h b/include/linux/bpf.h
+index bc2e3dab0487e..cbe2350912460 100644
+--- a/include/linux/bpf.h
++++ b/include/linux/bpf.h
+@@ -1300,8 +1300,12 @@ void *__bpf_dynptr_data_rw(const struct bpf_dynptr_kern *ptr, u32 len);
+ bool __bpf_dynptr_is_rdonly(const struct bpf_dynptr_kern *ptr);
  
- 	pr_debug("%s: group=%p event=%p\n", __func__, group, event);
+ #ifdef CONFIG_BPF_JIT
+-int bpf_trampoline_link_prog(struct bpf_tramp_link *link, struct bpf_trampoline *tr);
+-int bpf_trampoline_unlink_prog(struct bpf_tramp_link *link, struct bpf_trampoline *tr);
++int bpf_trampoline_link_prog(struct bpf_tramp_link *link,
++			     struct bpf_trampoline *tr,
++			     struct bpf_prog *tgt_prog);
++int bpf_trampoline_unlink_prog(struct bpf_tramp_link *link,
++			       struct bpf_trampoline *tr,
++			       struct bpf_prog *tgt_prog);
+ struct bpf_trampoline *bpf_trampoline_get(u64 key,
+ 					  struct bpf_attach_target_info *tgt_info);
+ void bpf_trampoline_put(struct bpf_trampoline *tr);
+@@ -1383,12 +1387,14 @@ void bpf_jit_uncharge_modmem(u32 size);
+ bool bpf_prog_has_trampoline(const struct bpf_prog *prog);
+ #else
+ static inline int bpf_trampoline_link_prog(struct bpf_tramp_link *link,
+-					   struct bpf_trampoline *tr)
++					   struct bpf_trampoline *tr,
++					   struct bpf_prog *tgt_prog)
+ {
+ 	return -ENOTSUPP;
+ }
+ static inline int bpf_trampoline_unlink_prog(struct bpf_tramp_link *link,
+-					     struct bpf_trampoline *tr)
++					     struct bpf_trampoline *tr,
++					     struct bpf_prog *tgt_prog)
+ {
+ 	return -ENOTSUPP;
+ }
+@@ -1492,6 +1498,9 @@ struct bpf_prog_aux {
+ 	bool xdp_has_frags;
+ 	bool exception_cb;
+ 	bool exception_boundary;
++	bool is_extended; /* true if extended by freplace program */
++	u64 prog_array_member_cnt; /* counts how many times as member of prog_array */
++	struct mutex ext_mutex; /* mutex for is_extended and prog_array_member_cnt */
+ 	struct bpf_arena *arena;
+ 	/* BTF_KIND_FUNC_PROTO for valid attach_btf_id */
+ 	const struct btf_type *attach_func_proto;
+diff --git a/kernel/bpf/arraymap.c b/kernel/bpf/arraymap.c
+index 79660e3fca4c1..6cdbb4c33d31d 100644
+--- a/kernel/bpf/arraymap.c
++++ b/kernel/bpf/arraymap.c
+@@ -947,22 +947,44 @@ static void *prog_fd_array_get_ptr(struct bpf_map *map,
+ 				   struct file *map_file, int fd)
+ {
+ 	struct bpf_prog *prog = bpf_prog_get(fd);
++	bool is_extended;
  
-@@ -691,10 +684,39 @@ static ssize_t copy_event_to_user(struct fsnotify_group *group,
- 	if (!FAN_GROUP_FLAG(group, FANOTIFY_UNPRIV) &&
- 	    path && path->mnt && path->dentry) {
- 		fd = create_fd(group, path, &f);
--		if (fd < 0)
--			return fd;
-+		/*
-+		 * Opening an fd from dentry can fail for several reasons.
-+		 * For example, when tasks are gone and we try to open their
-+		 * /proc files or we try to open a WRONLY file like in sysfs
-+		 * or when trying to open a file that was deleted on the
-+		 * remote network server.
-+		 *
-+		 * For a group with FAN_REPORT_FD_ERROR, we will send the
-+		 * event with the error instead of the open fd, otherwise
-+		 * Userspace may not get the error at all.
-+		 * In any case, userspace will not know which file failed to
-+		 * open, so add a debug print for further investigation.
+ 	if (IS_ERR(prog))
+ 		return prog;
+ 
+-	if (!bpf_prog_map_compatible(map, prog)) {
++	if (prog->type == BPF_PROG_TYPE_EXT ||
++	    !bpf_prog_map_compatible(map, prog)) {
+ 		bpf_prog_put(prog);
+ 		return ERR_PTR(-EINVAL);
+ 	}
+ 
++	mutex_lock(&prog->aux->ext_mutex);
++	is_extended = prog->aux->is_extended;
++	if (!is_extended)
++		prog->aux->prog_array_member_cnt++;
++	mutex_unlock(&prog->aux->ext_mutex);
++	if (is_extended) {
++		/* Extended prog can not be tail callee. It's to prevent a
++		 * potential infinite loop like:
++		 * tail callee prog entry -> tail callee prog subprog ->
++		 * freplace prog entry --tailcall-> tail callee prog entry.
 +		 */
-+		if (fd < 0) {
-+			pr_debug("fanotify: create_fd(%pd2) failed err=%d\n",
-+				 path->dentry, fd);
-+			if (!FAN_GROUP_FLAG(group, FAN_REPORT_FD_ERROR)) {
-+				/*
-+				 * Historically, we've handled EOPENSTALE in a
-+				 * special way and silently dropped such
-+				 * events. Now we have to keep it to maintain
-+				 * backward compatibility...
-+				 */
-+				if (fd == -EOPENSTALE)
-+					fd = 0;
-+				return fd;
-+			}
-+		}
- 	}
--	metadata.fd = fd;
-+	if (FAN_GROUP_FLAG(group, FAN_REPORT_FD_ERROR))
-+		metadata.fd = fd;
-+	else
-+		metadata.fd = fd >= 0 ? fd : FAN_NOFD;
- 
- 	if (pidfd_mode) {
- 		/*
-@@ -709,18 +731,16 @@ static ssize_t copy_event_to_user(struct fsnotify_group *group,
- 		 * The PIDTYPE_TGID check for an event->pid is performed
- 		 * preemptively in an attempt to catch out cases where the event
- 		 * listener reads events after the event generating process has
--		 * already terminated. Report FAN_NOPIDFD to the event listener
--		 * in those cases, with all other pidfd creation errors being
--		 * reported as FAN_EPIDFD.
-+		 * already terminated.  Depending on flag FAN_REPORT_FD_ERROR,
-+		 * report either -ESRCH or FAN_NOPIDFD to the event listener in
-+		 * those cases with all other pidfd creation errors reported as
-+		 * the error code itself or as FAN_EPIDFD.
- 		 */
--		if (metadata.pid == 0 ||
--		    !pid_has_task(event->pid, PIDTYPE_TGID)) {
--			pidfd = FAN_NOPIDFD;
--		} else {
-+		if (metadata.pid && pid_has_task(event->pid, PIDTYPE_TGID))
- 			pidfd = pidfd_prepare(event->pid, 0, &pidfd_file);
--			if (pidfd < 0)
--				pidfd = FAN_EPIDFD;
--		}
++		bpf_prog_put(prog);
++		return ERR_PTR(-EBUSY);
++	}
 +
-+		if (!FAN_GROUP_FLAG(group, FAN_REPORT_FD_ERROR) && pidfd < 0)
-+			pidfd = pidfd == -ESRCH ? FAN_NOPIDFD : FAN_EPIDFD;
- 	}
+ 	return prog;
+ }
  
- 	ret = -EFAULT;
-@@ -737,9 +757,6 @@ static ssize_t copy_event_to_user(struct fsnotify_group *group,
- 	buf += FAN_EVENT_METADATA_LEN;
- 	count -= FAN_EVENT_METADATA_LEN;
- 
--	if (fanotify_is_perm_event(event->mask))
--		FANOTIFY_PERM(event)->fd = fd;
--
- 	if (info_mode) {
- 		ret = copy_info_records_to_user(event, info, info_mode, pidfd,
- 						buf, count);
-@@ -753,15 +770,18 @@ static ssize_t copy_event_to_user(struct fsnotify_group *group,
- 	if (pidfd_file)
- 		fd_install(pidfd, pidfd_file);
- 
-+	if (fanotify_is_perm_event(event->mask))
-+		FANOTIFY_PERM(event)->fd = fd;
+ static void prog_fd_array_put_ptr(struct bpf_map *map, void *ptr, bool need_defer)
+ {
++	struct bpf_prog *prog = ptr;
 +
- 	return metadata.event_len;
++	mutex_lock(&prog->aux->ext_mutex);
++	prog->aux->prog_array_member_cnt--;
++	mutex_unlock(&prog->aux->ext_mutex);
+ 	/* bpf_prog is freed after one RCU or tasks trace grace period */
+-	bpf_prog_put(ptr);
++	bpf_prog_put(prog);
+ }
  
- out_close_fd:
--	if (fd != FAN_NOFD) {
-+	if (f) {
- 		put_unused_fd(fd);
- 		fput(f);
+ static u32 prog_fd_array_sys_lookup_elem(void *ptr)
+diff --git a/kernel/bpf/core.c b/kernel/bpf/core.c
+index 5e77c58e06010..233ea78f8f1bd 100644
+--- a/kernel/bpf/core.c
++++ b/kernel/bpf/core.c
+@@ -131,6 +131,7 @@ struct bpf_prog *bpf_prog_alloc_no_stats(unsigned int size, gfp_t gfp_extra_flag
+ 	INIT_LIST_HEAD_RCU(&fp->aux->ksym_prefix.lnode);
+ #endif
+ 	mutex_init(&fp->aux->used_maps_mutex);
++	mutex_init(&fp->aux->ext_mutex);
+ 	mutex_init(&fp->aux->dst_mutex);
+ 
+ 	return fp;
+diff --git a/kernel/bpf/syscall.c b/kernel/bpf/syscall.c
+index c5aa127ed4cc0..8405a95e066cf 100644
+--- a/kernel/bpf/syscall.c
++++ b/kernel/bpf/syscall.c
+@@ -3218,7 +3218,8 @@ static void bpf_tracing_link_release(struct bpf_link *link)
+ 		container_of(link, struct bpf_tracing_link, link.link);
+ 
+ 	WARN_ON_ONCE(bpf_trampoline_unlink_prog(&tr_link->link,
+-						tr_link->trampoline));
++						tr_link->trampoline,
++						tr_link->tgt_prog));
+ 
+ 	bpf_trampoline_put(tr_link->trampoline);
+ 
+@@ -3358,7 +3359,7 @@ static int bpf_tracing_prog_attach(struct bpf_prog *prog,
+ 	 *   in prog->aux
+ 	 *
+ 	 * - if prog->aux->dst_trampoline is NULL, the program has already been
+-         *   attached to a target and its initial target was cleared (below)
++	 *   attached to a target and its initial target was cleared (below)
+ 	 *
+ 	 * - if tgt_prog != NULL, the caller specified tgt_prog_fd +
+ 	 *   target_btf_id using the link_create API.
+@@ -3433,7 +3434,7 @@ static int bpf_tracing_prog_attach(struct bpf_prog *prog,
+ 	if (err)
+ 		goto out_unlock;
+ 
+-	err = bpf_trampoline_link_prog(&link->link, tr);
++	err = bpf_trampoline_link_prog(&link->link, tr, tgt_prog);
+ 	if (err) {
+ 		bpf_link_cleanup(&link_primer);
+ 		link = NULL;
+diff --git a/kernel/bpf/trampoline.c b/kernel/bpf/trampoline.c
+index 1166d9dd3e8b5..ecdd2660561f5 100644
+--- a/kernel/bpf/trampoline.c
++++ b/kernel/bpf/trampoline.c
+@@ -528,7 +528,27 @@ static enum bpf_tramp_prog_type bpf_attach_type_to_tramp(struct bpf_prog *prog)
+ 	}
+ }
+ 
+-static int __bpf_trampoline_link_prog(struct bpf_tramp_link *link, struct bpf_trampoline *tr)
++static int bpf_freplace_check_tgt_prog(struct bpf_prog *tgt_prog)
++{
++	struct bpf_prog_aux *aux = tgt_prog->aux;
++
++	guard(mutex)(&aux->ext_mutex);
++	if (aux->prog_array_member_cnt)
++		/* Program extensions can not extend target prog when the target
++		 * prog has been updated to any prog_array map as tail callee.
++		 * It's to prevent a potential infinite loop like:
++		 * tgt prog entry -> tgt prog subprog -> freplace prog entry
++		 * --tailcall-> tgt prog entry.
++		 */
++		return -EBUSY;
++
++	aux->is_extended = true;
++	return 0;
++}
++
++static int __bpf_trampoline_link_prog(struct bpf_tramp_link *link,
++				      struct bpf_trampoline *tr,
++				      struct bpf_prog *tgt_prog)
+ {
+ 	enum bpf_tramp_prog_type kind;
+ 	struct bpf_tramp_link *link_exiting;
+@@ -549,6 +569,9 @@ static int __bpf_trampoline_link_prog(struct bpf_tramp_link *link, struct bpf_tr
+ 		/* Cannot attach extension if fentry/fexit are in use. */
+ 		if (cnt)
+ 			return -EBUSY;
++		err = bpf_freplace_check_tgt_prog(tgt_prog);
++		if (err)
++			return err;
+ 		tr->extension_prog = link->link.prog;
+ 		return bpf_arch_text_poke(tr->func.addr, BPF_MOD_JUMP, NULL,
+ 					  link->link.prog->bpf_func);
+@@ -575,17 +598,21 @@ static int __bpf_trampoline_link_prog(struct bpf_tramp_link *link, struct bpf_tr
+ 	return err;
+ }
+ 
+-int bpf_trampoline_link_prog(struct bpf_tramp_link *link, struct bpf_trampoline *tr)
++int bpf_trampoline_link_prog(struct bpf_tramp_link *link,
++			     struct bpf_trampoline *tr,
++			     struct bpf_prog *tgt_prog)
+ {
+ 	int err;
+ 
+ 	mutex_lock(&tr->mutex);
+-	err = __bpf_trampoline_link_prog(link, tr);
++	err = __bpf_trampoline_link_prog(link, tr, tgt_prog);
+ 	mutex_unlock(&tr->mutex);
+ 	return err;
+ }
+ 
+-static int __bpf_trampoline_unlink_prog(struct bpf_tramp_link *link, struct bpf_trampoline *tr)
++static int __bpf_trampoline_unlink_prog(struct bpf_tramp_link *link,
++					struct bpf_trampoline *tr,
++					struct bpf_prog *tgt_prog)
+ {
+ 	enum bpf_tramp_prog_type kind;
+ 	int err;
+@@ -596,6 +623,8 @@ static int __bpf_trampoline_unlink_prog(struct bpf_tramp_link *link, struct bpf_
+ 		err = bpf_arch_text_poke(tr->func.addr, BPF_MOD_JUMP,
+ 					 tr->extension_prog->bpf_func, NULL);
+ 		tr->extension_prog = NULL;
++		guard(mutex)(&tgt_prog->aux->ext_mutex);
++		tgt_prog->aux->is_extended = false;
+ 		return err;
+ 	}
+ 	hlist_del_init(&link->tramp_hlist);
+@@ -604,12 +633,14 @@ static int __bpf_trampoline_unlink_prog(struct bpf_tramp_link *link, struct bpf_
+ }
+ 
+ /* bpf_trampoline_unlink_prog() should never fail. */
+-int bpf_trampoline_unlink_prog(struct bpf_tramp_link *link, struct bpf_trampoline *tr)
++int bpf_trampoline_unlink_prog(struct bpf_tramp_link *link,
++			       struct bpf_trampoline *tr,
++			       struct bpf_prog *tgt_prog)
+ {
+ 	int err;
+ 
+ 	mutex_lock(&tr->mutex);
+-	err = __bpf_trampoline_unlink_prog(link, tr);
++	err = __bpf_trampoline_unlink_prog(link, tr, tgt_prog);
+ 	mutex_unlock(&tr->mutex);
+ 	return err;
+ }
+@@ -624,7 +655,7 @@ static void bpf_shim_tramp_link_release(struct bpf_link *link)
+ 	if (!shim_link->trampoline)
+ 		return;
+ 
+-	WARN_ON_ONCE(bpf_trampoline_unlink_prog(&shim_link->link, shim_link->trampoline));
++	WARN_ON_ONCE(bpf_trampoline_unlink_prog(&shim_link->link, shim_link->trampoline, NULL));
+ 	bpf_trampoline_put(shim_link->trampoline);
+ }
+ 
+@@ -738,7 +769,7 @@ int bpf_trampoline_link_cgroup_shim(struct bpf_prog *prog,
+ 		goto err;
  	}
  
--	if (pidfd >= 0) {
-+	if (pidfd_file) {
- 		put_unused_fd(pidfd);
- 		fput(pidfd_file);
- 	}
-@@ -828,15 +848,6 @@ static ssize_t fanotify_read(struct file *file, char __user *buf,
- 		}
+-	err = __bpf_trampoline_link_prog(&shim_link->link, tr);
++	err = __bpf_trampoline_link_prog(&shim_link->link, tr, NULL);
+ 	if (err)
+ 		goto err;
  
- 		ret = copy_event_to_user(group, event, buf, count);
--		if (unlikely(ret == -EOPENSTALE)) {
--			/*
--			 * We cannot report events with stale fd so drop it.
--			 * Setting ret to 0 will continue the event loop and
--			 * do the right thing if there are no more events to
--			 * read (i.e. return bytes read, -EAGAIN or wait).
--			 */
--			ret = 0;
--		}
- 
- 		/*
- 		 * Permission events get queued to wait for response.  Other
-@@ -845,7 +856,7 @@ static ssize_t fanotify_read(struct file *file, char __user *buf,
- 		if (!fanotify_is_perm_event(event->mask)) {
- 			fsnotify_destroy_event(group, &event->fse);
- 		} else {
--			if (ret <= 0) {
-+			if (ret <= 0 || FANOTIFY_PERM(event)->fd < 0) {
- 				spin_lock(&group->notification_lock);
- 				finish_permission_event(group,
- 					FANOTIFY_PERM(event), FAN_DENY, NULL);
-@@ -1954,7 +1965,7 @@ static int __init fanotify_user_setup(void)
- 				     FANOTIFY_DEFAULT_MAX_USER_MARKS);
- 
- 	BUILD_BUG_ON(FANOTIFY_INIT_FLAGS & FANOTIFY_INTERNAL_GROUP_FLAGS);
--	BUILD_BUG_ON(HWEIGHT32(FANOTIFY_INIT_FLAGS) != 12);
-+	BUILD_BUG_ON(HWEIGHT32(FANOTIFY_INIT_FLAGS) != 13);
- 	BUILD_BUG_ON(HWEIGHT32(FANOTIFY_MARK_FLAGS) != 11);
- 
- 	fanotify_mark_cache = KMEM_CACHE(fanotify_mark,
-diff --git a/include/linux/fanotify.h b/include/linux/fanotify.h
-index 4f1c4f6031180..89ff45bd6f01b 100644
---- a/include/linux/fanotify.h
-+++ b/include/linux/fanotify.h
-@@ -36,6 +36,7 @@
- #define FANOTIFY_ADMIN_INIT_FLAGS	(FANOTIFY_PERM_CLASSES | \
- 					 FAN_REPORT_TID | \
- 					 FAN_REPORT_PIDFD | \
-+					 FAN_REPORT_FD_ERROR | \
- 					 FAN_UNLIMITED_QUEUE | \
- 					 FAN_UNLIMITED_MARKS)
- 
-diff --git a/include/uapi/linux/fanotify.h b/include/uapi/linux/fanotify.h
-index a37de58ca571a..34f221d3a1b95 100644
---- a/include/uapi/linux/fanotify.h
-+++ b/include/uapi/linux/fanotify.h
-@@ -60,6 +60,7 @@
- #define FAN_REPORT_DIR_FID	0x00000400	/* Report unique directory id */
- #define FAN_REPORT_NAME		0x00000800	/* Report events with name */
- #define FAN_REPORT_TARGET_FID	0x00001000	/* Report dirent target id  */
-+#define FAN_REPORT_FD_ERROR	0x00002000	/* event->fd can report error */
- 
- /* Convenience macro - FAN_REPORT_NAME requires FAN_REPORT_DIR_FID */
- #define FAN_REPORT_DFID_NAME	(FAN_REPORT_DIR_FID | FAN_REPORT_NAME)
 -- 
 2.43.0
 
