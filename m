@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB2B02236EB;
-	Thu, 12 Dec 2024 17:39:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B13A4216E0B;
+	Thu, 12 Dec 2024 17:39:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734025148; cv=none; b=Q/5WjLClOAHDZeNeNhD4/hQZ7p3WHOQCRxM0bTVg7YXJpDbZqVCqPVdtzfp/fRGuk4HNSjiNqq7u4MEz4BBtU3BGUV4QE7EXk+/hywTMPnfVy0aLuQ4Yoylt11hmuQOxFI1VOL83TtYI5IN6iEjxJfC0cABxsC15IhUPnLwTRCY=
+	t=1734025151; cv=none; b=quOmtd3mtR71ywqbRAvUVDIgXA6WJbCbvTdnTRkel3oXUpDDweOajPoftIp3gRAP0t6orCJ4bypUp3yAV3AIQdj9EWEtTEiLgpkp80ynBKknXoKB6LxM+S9Sxsg5AfPKYDZyCnmSQJCiDEiCPwH9zncIWFMNjUwu12r8n3keK5M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734025148; c=relaxed/simple;
-	bh=sGfnaVgMZiOribpVuzirzglVRb5MNeQuv6Me7US94gc=;
+	s=arc-20240116; t=1734025151; c=relaxed/simple;
+	bh=le5UrBY/3ghraRSe0FAHj46ut7xExlY4Od9KXkZd5yM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LxmcBV4hPfYQxres6Yvo7FZuRKH8CSqf07wuvnOCl2G26j4oNQmeoaJd7zNVhJ8n9ejkz3XFBUZ51DzxpiA0sgkl7ZgChHDvO6d5g8AWW1dkDr6FGAm8VZidJVwwmYCyEElRgQDgChhBVEN7yvU9Jk60J/Hdfx2fzn5sljdfx5A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tDJqw1qt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uF6LQP0rDTibB5m+mBHT/eb/TS0jMPtX+ea38vHq7wwg5gtIi/HHzOurtPm38xHICWGWn2mzUay6ONwyAnJXqCt/eTl3gv24V3XcXsXkc/HKQqmzsz+KIZQjn9HUFhPTCd8bte0VO1TAnaprHFCll9MkqghgtNHVWbWgQwsIg9c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y/bbN6I/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tDJqw1qt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44694C4CECE;
-	Thu, 12 Dec 2024 17:39:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y/bbN6I/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BF20C4CED0;
+	Thu, 12 Dec 2024 17:39:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734025148;
-	bh=sGfnaVgMZiOribpVuzirzglVRb5MNeQuv6Me7US94gc=;
+	s=korg; t=1734025151;
+	bh=le5UrBY/3ghraRSe0FAHj46ut7xExlY4Od9KXkZd5yM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tDJqw1qt6gXo3KBeM9rjFH02Ee0ofIvdd2EQ2t3ishD0qxlsIf0q9WgV6cYCPFVYp
-	 MvaaO/X8qWo1zsZ0vhVnHd4m1WedIpRVfzu8Ss+FGwnlw9xtAZycUzEE9zPbXYryPA
-	 uvmeopcu3xHgeaTEscQ3vpSZVAKyUHaLXKFaOIL0=
+	b=y/bbN6I/rKjvOAm28uFiGuerAUi/Fj+iThVBhw/uXoInpztdJVoaEG66QqjGrS3jX
+	 6uOgulGeNz9Q8+woDDCUtunhuFl42AeW0ciKY6IARcySHkYXBrXqkelam7rB10jhSM
+	 xrDHb3M04S7f+nKQ3kMeJ6QeJSgastsb/Wwdsdvo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthias Schiffer <matthias.schiffer@tq-group.com>,
-	Alexander Stein <alexander.stein@ew.tq-group.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Steven Price <steven.price@arm.com>,
+	Boris Brezillon <boris.brezillon@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 071/321] drm: fsl-dcu: enable PIXCLK on LS1021A
-Date: Thu, 12 Dec 2024 15:59:49 +0100
-Message-ID: <20241212144232.794144611@linuxfoundation.org>
+Subject: [PATCH 5.4 072/321] drm/panfrost: Remove unused id_mask from struct panfrost_model
+Date: Thu, 12 Dec 2024 15:59:50 +0100
+Message-ID: <20241212144232.834283616@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144229.291682835@linuxfoundation.org>
 References: <20241212144229.291682835@linuxfoundation.org>
@@ -52,86 +51,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthias Schiffer <matthias.schiffer@tq-group.com>
+From: Steven Price <steven.price@arm.com>
 
-[ Upstream commit ffcde9e44d3e18fde3d18bfff8d9318935413bfd ]
+[ Upstream commit 581d1f8248550f2b67847e6d84f29fbe3751ea0a ]
 
-The PIXCLK needs to be enabled in SCFG before accessing certain DCU
-registers, or the access will hang. For simplicity, the PIXCLK is enabled
-unconditionally, resulting in increased power consumption.
+The id_mask field of struct panfrost_model has never been used.
 
-Signed-off-by: Matthias Schiffer <matthias.schiffer@tq-group.com>
-Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
-Fixes: 109eee2f2a18 ("drm/layerscape: Add Freescale DCU DRM driver")
-Acked-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240926055552.1632448-2-alexander.stein@ew.tq-group.com
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Fixes: f3ba91228e8e ("drm/panfrost: Add initial panfrost driver")
+Signed-off-by: Steven Price <steven.price@arm.com>
+Reviewed-by: Boris Brezillon <boris.brezillon@collabora.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20241025140008.385081-1-steven.price@arm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/fsl-dcu/Kconfig           |  1 +
- drivers/gpu/drm/fsl-dcu/fsl_dcu_drm_drv.c | 15 +++++++++++++++
- drivers/gpu/drm/fsl-dcu/fsl_dcu_drm_drv.h |  3 +++
- 3 files changed, 19 insertions(+)
+ drivers/gpu/drm/panfrost/panfrost_gpu.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/fsl-dcu/Kconfig b/drivers/gpu/drm/fsl-dcu/Kconfig
-index d7dd8ba90e3af..9e5a35e7c00cc 100644
---- a/drivers/gpu/drm/fsl-dcu/Kconfig
-+++ b/drivers/gpu/drm/fsl-dcu/Kconfig
-@@ -8,6 +8,7 @@ config DRM_FSL_DCU
- 	select DRM_PANEL
- 	select REGMAP_MMIO
- 	select VIDEOMODE_HELPERS
-+	select MFD_SYSCON if SOC_LS1021A
- 	help
- 	  Choose this option if you have an Freescale DCU chipset.
- 	  If M is selected the module will be called fsl-dcu-drm.
-diff --git a/drivers/gpu/drm/fsl-dcu/fsl_dcu_drm_drv.c b/drivers/gpu/drm/fsl-dcu/fsl_dcu_drm_drv.c
-index 11b4a81bacc68..1065249807323 100644
---- a/drivers/gpu/drm/fsl-dcu/fsl_dcu_drm_drv.c
-+++ b/drivers/gpu/drm/fsl-dcu/fsl_dcu_drm_drv.c
-@@ -100,6 +100,7 @@ static void fsl_dcu_irq_uninstall(struct drm_device *dev)
- static int fsl_dcu_load(struct drm_device *dev, unsigned long flags)
- {
- 	struct fsl_dcu_drm_device *fsl_dev = dev->dev_private;
-+	struct regmap *scfg;
- 	int ret;
- 
- 	ret = fsl_dcu_drm_modeset_init(fsl_dev);
-@@ -108,6 +109,20 @@ static int fsl_dcu_load(struct drm_device *dev, unsigned long flags)
- 		return ret;
- 	}
- 
-+	scfg = syscon_regmap_lookup_by_compatible("fsl,ls1021a-scfg");
-+	if (PTR_ERR(scfg) != -ENODEV) {
-+		/*
-+		 * For simplicity, enable the PIXCLK unconditionally,
-+		 * resulting in increased power consumption. Disabling
-+		 * the clock in PM or on unload could be implemented as
-+		 * a future improvement.
-+		 */
-+		ret = regmap_update_bits(scfg, SCFG_PIXCLKCR, SCFG_PIXCLKCR_PXCEN,
-+					 SCFG_PIXCLKCR_PXCEN);
-+		if (ret < 0)
-+			return dev_err_probe(dev->dev, ret, "failed to enable pixclk\n");
-+	}
-+
- 	ret = drm_vblank_init(dev, dev->mode_config.num_crtc);
- 	if (ret < 0) {
- 		dev_err(dev->dev, "failed to initialize vblank\n");
-diff --git a/drivers/gpu/drm/fsl-dcu/fsl_dcu_drm_drv.h b/drivers/gpu/drm/fsl-dcu/fsl_dcu_drm_drv.h
-index e2049a0e8a92a..566396013c04a 100644
---- a/drivers/gpu/drm/fsl-dcu/fsl_dcu_drm_drv.h
-+++ b/drivers/gpu/drm/fsl-dcu/fsl_dcu_drm_drv.h
-@@ -160,6 +160,9 @@
- #define FSL_DCU_ARGB4444		12
- #define FSL_DCU_YUV422			14
- 
-+#define SCFG_PIXCLKCR			0x28
-+#define SCFG_PIXCLKCR_PXCEN		BIT(31)
-+
- #define VF610_LAYER_REG_NUM		9
- #define LS1021A_LAYER_REG_NUM		10
- 
+diff --git a/drivers/gpu/drm/panfrost/panfrost_gpu.c b/drivers/gpu/drm/panfrost/panfrost_gpu.c
+index 0d39a201c7591..c0260a14639a0 100644
+--- a/drivers/gpu/drm/panfrost/panfrost_gpu.c
++++ b/drivers/gpu/drm/panfrost/panfrost_gpu.c
+@@ -153,7 +153,6 @@ static void panfrost_gpu_init_quirks(struct panfrost_device *pfdev)
+ struct panfrost_model {
+ 	const char *name;
+ 	u32 id;
+-	u32 id_mask;
+ 	u64 features;
+ 	u64 issues;
+ 	struct {
 -- 
 2.43.0
 
