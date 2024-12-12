@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEA0C6F2FE;
-	Thu, 12 Dec 2024 15:52:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B01D813792B;
+	Thu, 12 Dec 2024 15:52:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734018726; cv=none; b=W+kpG+wgN6wXf/fEEjbgKJ5tUN55JcMA/rNOPtjoQ9+0D0JjI1/tybNNxDoDNumkDe1kH6ca77pG1u0qKIwqPuW5y7LvfVyDtC40ZVN/ywE6lENNysvDMzzRnVib0Uh3NxP/nd26hML4T8a8pPyDPszJCjpk5LT+VAxvTzjGTVg=
+	t=1734018730; cv=none; b=cQ6tIvyzv+89LVoytCWhm60SJhfhtI5FAAlcQugRR7SNqGo3idJeaTuKPx8dxtYp1+bqWKKtPfbHadl//J9d3n+nBlOFNpL2XEEUEihN9LE48lZlEQ62yMj67cvDl1nnTjVjrBICNEOz0BoT+J5/+hnbzWmTd2wpfH5YTiSJfkY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734018726; c=relaxed/simple;
-	bh=6H0V/FtE+Ry9z8K+c/ijhKCj2mYZhqenoeuriYDwn20=;
+	s=arc-20240116; t=1734018730; c=relaxed/simple;
+	bh=opd9wIEMzIr0S0fxyfQevngtLTbZQS59YmpRjpSrGNU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Wl0lhR+aZB+x4RNiYPZ6YoknaVX+eZBI0VtSed1V3IqjpV9+B4zdzP5ThpdD2IKYEhZdSuJsAkRK4EqBNQkGR8ytVMkJLygQYJRoWVJbysWSrchAHXsiFzJgsUyysfK5Z2YKGqG0u8YILz09EoN/vhbu47dn6BWWalw9JRAWc8g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WX7Oubox; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=kruliZ1dKoArIv3M3JWTFtgWS/RxZ+lOVDUEGcFTknNJHtrdIShg+vpUW1f11Dh9Il3kzoUayQhYiLsw1BO8b8WCa0GkV0D3V8caPjnOtWdYP/I7VkYxEwwaDAyK6ho+Fu5AMCZUAyGO59FS/oE/tF1P6h04XAoj4eVUGHGWtZ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cx+IF396; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WX7Oubox"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45933C4CEE0;
-	Thu, 12 Dec 2024 15:52:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cx+IF396"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17AF5C4CECE;
+	Thu, 12 Dec 2024 15:52:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734018726;
-	bh=6H0V/FtE+Ry9z8K+c/ijhKCj2mYZhqenoeuriYDwn20=;
+	s=korg; t=1734018730;
+	bh=opd9wIEMzIr0S0fxyfQevngtLTbZQS59YmpRjpSrGNU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WX7OuboxnOAKWSZoousAYDx+bReuSxa2nNStzxbsGbmHy26ajqFBqAE5vz1kEbBDb
-	 7kWgHvrFE9BqLebLY0eaGvw3ijxoWJ3mYifoFYbuhyI9aM0BuQBOXkhNJVV6YJSr+e
-	 yUGBmrPfkjX15ZzurZkmvIjJrmvyjXjHH8IuKBbk=
+	b=Cx+IF3968++tyQQUMPfOGNou3K91Z8VhUhJE1kUj2TscvifBCz9x3K7shfXskzsKg
+	 uVryatzba6VSzwoTNTgJaP22neRXW3IoYKIzPaPnzWsiWU2TFYskHcNHukX/+I3hhW
+	 O0qOLM+HUPIKBZdVko7VSJRy9D1weh1DrslkE9LQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	zhang jiao <zhangjiao2@cmss.chinamobile.com>,
-	Daniel Lezcano <daniel.lezcano@linaro.org>,
+	=?UTF-8?q?Alexander=20H=C3=B6lzl?= <alexander.hoelzl@gmx.net>,
+	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Vincent Mailhol <mailhol.vincent@wanadoo.fr>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 016/772] tools/lib/thermal: Remove the thermal.h soft link when doing make clean
-Date: Thu, 12 Dec 2024 15:49:21 +0100
-Message-ID: <20241212144350.617048722@linuxfoundation.org>
+Subject: [PATCH 6.1 017/772] can: j1939: fix error in J1939 documentation.
+Date: Thu, 12 Dec 2024 15:49:22 +0100
+Message-ID: <20241212144350.655794697@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -45,42 +47,42 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: zhang jiao <zhangjiao2@cmss.chinamobile.com>
+From: Alexander Hölzl <alexander.hoelzl@gmx.net>
 
-[ Upstream commit c5426dcc5a3a064bbd2de383e29035a14fe933e0 ]
+[ Upstream commit b6ec62e01aa4229bc9d3861d1073806767ea7838 ]
 
-Run "make -C tools thermal" can create a soft link for thermal.h in
-tools/include/uapi/linux.  Just rm it when make clean.
+The description of PDU1 format usage mistakenly referred to PDU2 format.
 
-Signed-off-by: zhang jiao <zhangjiao2@cmss.chinamobile.com>
-Link: https://lore.kernel.org/r/20240912045031.18426-1-zhangjiao2@cmss.chinamobile.com
-Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
+Signed-off-by: Alexander Hölzl <alexander.hoelzl@gmx.net>
+Acked-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Acked-by: Vincent Mailhol <mailhol.vincent@wanadoo.fr>
+Link: https://patch.msgid.link/20241023145257.82709-1-alexander.hoelzl@gmx.net
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/thermal/Makefile | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ Documentation/networking/j1939.rst | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/lib/thermal/Makefile b/tools/lib/thermal/Makefile
-index 2d0d255fd0e1c..8890fd57b110c 100644
---- a/tools/lib/thermal/Makefile
-+++ b/tools/lib/thermal/Makefile
-@@ -121,7 +121,9 @@ all: fixdep
+diff --git a/Documentation/networking/j1939.rst b/Documentation/networking/j1939.rst
+index b705d2801e9c3..80b1c5e19fd53 100644
+--- a/Documentation/networking/j1939.rst
++++ b/Documentation/networking/j1939.rst
+@@ -121,7 +121,7 @@ format, the Group Extension is set in the PS-field.
  
- clean:
- 	$(call QUIET_CLEAN, libthermal) $(RM) $(LIBTHERMAL_A) \
--                *.o *~ *.a *.so *.so.$(VERSION) *.so.$(LIBTHERMAL_VERSION) .*.d .*.cmd LIBTHERMAL-CFLAGS $(LIBTHERMAL_PC)
-+                *.o *~ *.a *.so *.so.$(VERSION) *.so.$(LIBTHERMAL_VERSION) \
-+                .*.d .*.cmd LIBTHERMAL-CFLAGS $(LIBTHERMAL_PC) \
-+                $(srctree)/tools/$(THERMAL_UAPI)
+ On the other hand, when using PDU1 format, the PS-field contains a so-called
+ Destination Address, which is _not_ part of the PGN. When communicating a PGN
+-from user space to kernel (or vice versa) and PDU2 format is used, the PS-field
++from user space to kernel (or vice versa) and PDU1 format is used, the PS-field
+ of the PGN shall be set to zero. The Destination Address shall be set
+ elsewhere.
  
- $(LIBTHERMAL_PC):
- 	$(QUIET_GEN)sed -e "s|@PREFIX@|$(prefix)|" \
 -- 
 2.43.0
 
