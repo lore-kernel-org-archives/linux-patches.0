@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6BFB22370C;
-	Thu, 12 Dec 2024 17:48:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D50A215041;
+	Thu, 12 Dec 2024 17:49:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734025739; cv=none; b=VaGDxUExd41twaQPfDb6Y7X+04dnLAK09WambzYDCXmyV2BdFb24Urgzfa/qALMf862QPSXYAjkwRPwsaFFySX5YmwwDz4azA/DMbN41MHPTBR3s4tDXa2KpPXrgidcxfUKrKIb7Q3GkjL3fJtD4jNRjLSMtLJ8hkEWYrxs/xak=
+	t=1734025742; cv=none; b=q0Cv2lBVioqwxIFO0gfGNiArx18cgp5Sq0AZkYKpeNOQcv5npVeojHte7ybuglurwNonCRQxJVejpKqy3rjZxkCJTbiSocHs4NYaeVYmdSxI5aXsv5ffhy5cG7OEaLGy78Y+3xgNOn+OLy769uQJnJcYLvS/inaDeHCkpsRC85Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734025739; c=relaxed/simple;
-	bh=z8uCcV3cipBz719El42Ge/u8ywaxH5EOQie0vCeOIOk=;
+	s=arc-20240116; t=1734025742; c=relaxed/simple;
+	bh=U2BFt0XyKY5y3f7exKNALlGhGteoEX9+YrjR84xHy+Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Zd05JIN08DB/XGGE2AFZR4EqJ+Qr7Vdqze2gYgJLbSMfn01bP94fc3IkvYHOpSAUjev/MmtpGtdhg99iy2u+/AVmG+tTcyCEvNLZAEuRuZq0bHDZ9x6FCRFXdb/+1KiN1p6Px7DW8uWGu7M6DqqMvmYbncy5PiOIKz3ledZgUGI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yUmIL9Ph; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hX88kFBs5eKJAak3fc6DMeQghjeEF0Zg4ItgFIM6Nkc75W6hFfZTBMgThB9+fTICHN9i3ow8ePCcq/tkqVvNpRr+DJFQSQB8WPSpzZOszgfAXWIPy4VMIydJ3fQ+fsBekgze2AX7A1pcD+A8hZe9LERU5B7TIjZElb2QxxSWcZE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1DF5HMwK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yUmIL9Ph"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B98BC4CECE;
-	Thu, 12 Dec 2024 17:48:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1DF5HMwK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 228E0C4CECE;
+	Thu, 12 Dec 2024 17:49:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734025739;
-	bh=z8uCcV3cipBz719El42Ge/u8ywaxH5EOQie0vCeOIOk=;
+	s=korg; t=1734025742;
+	bh=U2BFt0XyKY5y3f7exKNALlGhGteoEX9+YrjR84xHy+Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yUmIL9PhC2lmcw0uX+v3EtW+6NjCxpUiaaVd9zv0MU9OWB8Sr8Fwkti0dT5rW3onr
-	 q1d6ujgpTq5UWTOGkY5Yd4YC4eafIOHHx82aPb/eOdPTKHakPFWbpbT8blstFfnULu
-	 iY7ntzAcUJ/nGfXQCxgUUd9JfMQLbdP1Ckl8t6G0=
+	b=1DF5HMwKdoUkbtIIwCCpgrfQjsof3BgbASnccl5ckIgyy1mK2NTq8+OhU1p9cBagQ
+	 L4X8fc+chCShkybemD1HSsBQJ/T3FIBk+A58wSNFYE1mbRo5fvpbepBeEdeQY9jHBb
+	 r8xkKVPzjVEAhM63Zkk6Khz9OP7FzKXzUQk4fqnE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhu Jun <zhujun2@cmss.chinamobile.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
+	Simon Horman <horms@kernel.org>,
+	Daniel Machon <daniel.machon@microchip.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 270/321] samples/bpf: Fix a resource leak
-Date: Thu, 12 Dec 2024 16:03:08 +0100
-Message-ID: <20241212144240.647265468@linuxfoundation.org>
+Subject: [PATCH 5.4 271/321] net: fec_mpc52xx_phy: Use %pa to format resource_size_t
+Date: Thu, 12 Dec 2024 16:03:09 +0100
+Message-ID: <20241212144240.685776045@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144229.291682835@linuxfoundation.org>
 References: <20241212144229.291682835@linuxfoundation.org>
@@ -51,37 +53,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhu Jun <zhujun2@cmss.chinamobile.com>
+From: Simon Horman <horms@kernel.org>
 
-[ Upstream commit f3ef53174b23246fe9bc2bbc2542f3a3856fa1e2 ]
+[ Upstream commit 020bfdc4ed94be472138c891bde4d14241cf00fd ]
 
-The opened file should be closed in show_sockopts(), otherwise resource
-leak will occur that this problem was discovered by reading code
+The correct format string for resource_size_t is %pa which
+acts on the address of the variable to be formatted [1].
 
-Signed-off-by: Zhu Jun <zhujun2@cmss.chinamobile.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20241010014126.2573-1-zhujun2@cmss.chinamobile.com
+[1] https://elixir.bootlin.com/linux/v6.11.3/source/Documentation/core-api/printk-formats.rst#L229
+
+Introduced by commit 9d9326d3bc0e ("phy: Change mii_bus id field to a string")
+
+Flagged by gcc-14 as:
+
+drivers/net/ethernet/freescale/fec_mpc52xx_phy.c: In function 'mpc52xx_fec_mdio_probe':
+drivers/net/ethernet/freescale/fec_mpc52xx_phy.c:97:46: warning: format '%x' expects argument of type 'unsigned int', but argument 4 has type 'resource_size_t' {aka 'long long unsigned int'} [-Wformat=]
+   97 |         snprintf(bus->id, MII_BUS_ID_SIZE, "%x", res.start);
+      |                                             ~^   ~~~~~~~~~
+      |                                              |      |
+      |                                              |      resource_size_t {aka long long unsigned int}
+      |                                              unsigned int
+      |                                             %llx
+
+No functional change intended.
+Compile tested only.
+
+Reported-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Closes: https://lore.kernel.org/netdev/711d7f6d-b785-7560-f4dc-c6aad2cce99@linux-m68k.org/
+Signed-off-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Daniel Machon <daniel.machon@microchip.com>
+Link: https://patch.msgid.link/20241014-net-pa-fmt-v1-1-dcc9afb8858b@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- samples/bpf/test_cgrp2_sock.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/freescale/fec_mpc52xx_phy.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/samples/bpf/test_cgrp2_sock.c b/samples/bpf/test_cgrp2_sock.c
-index b0811da5a00f3..3f56519a1ccd7 100644
---- a/samples/bpf/test_cgrp2_sock.c
-+++ b/samples/bpf/test_cgrp2_sock.c
-@@ -174,8 +174,10 @@ static int show_sockopts(int family)
- 		return 1;
+diff --git a/drivers/net/ethernet/freescale/fec_mpc52xx_phy.c b/drivers/net/ethernet/freescale/fec_mpc52xx_phy.c
+index b5497e3083020..7e631e2f710fb 100644
+--- a/drivers/net/ethernet/freescale/fec_mpc52xx_phy.c
++++ b/drivers/net/ethernet/freescale/fec_mpc52xx_phy.c
+@@ -92,7 +92,7 @@ static int mpc52xx_fec_mdio_probe(struct platform_device *of)
+ 		goto out_free;
  	}
  
--	if (get_bind_to_device(sd, name, sizeof(name)) < 0)
-+	if (get_bind_to_device(sd, name, sizeof(name)) < 0) {
-+		close(sd);
- 		return 1;
-+	}
+-	snprintf(bus->id, MII_BUS_ID_SIZE, "%x", res.start);
++	snprintf(bus->id, MII_BUS_ID_SIZE, "%pa", &res.start);
+ 	bus->priv = priv;
  
- 	mark = get_somark(sd);
- 	prio = get_priority(sd);
+ 	bus->parent = dev;
 -- 
 2.43.0
 
