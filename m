@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8F7C22C345;
-	Thu, 12 Dec 2024 16:02:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F439223304;
+	Thu, 12 Dec 2024 16:02:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734019356; cv=none; b=j/u4BAP/SW7W0NPBv7cni7Tq+7SbVSj6ZdeDPHjPgJhcNjM45zf2NmY8TKdpUHr3PajwigBEuGIbHwRj2N+g7BDcSMHkcigYQU78cxrzg5oG/poD/VGMiyX8fQ8LLWYpiKLFeSqLnc8DqLLNQ/xrxuO0dagl5277JSkWTOeKTgc=
+	t=1734019359; cv=none; b=huJCFtFPEa11AnMBPE23Icr2Sr3blW/7b7/biEbd4vj4Q88abouKgPf8acrkL/aY0WiCj4L/B00C4iR/Awj2s2YfKsNM8jAM9+0reQEmkRUb+G+pnHNTdKcVRef8rbd1vkM/8rOKvWPbxq1C5vbm3hc727MXhq3xGWRIpLn1i9c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734019356; c=relaxed/simple;
-	bh=Xh0OxhXQJdlb1IASOcyr1MWFJaiPX+TiwvfaBOvV4m0=;
+	s=arc-20240116; t=1734019359; c=relaxed/simple;
+	bh=qm1YnoW+vQ+UocEeRoE3mSzBQ3xaBYGlx3dd/71L7jQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Aa8tuAP0zcQ25yebmu1mhqYqzVUkE6lUjm8kenFl9Qdbu0NEhXKlidQeKvoTR6p3QP3x6cKd0E2PKRpWXXQYRcCEmEm/ftQJCOOfShR7Jp80j22M/cV32BrYBGipcKxhxl6IgcMg5/pkQY7NyRxXdtG9csdq+hdh64Y9ECTuzYk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wIW1vljj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZtEI0c+7wazrnHHLjGKs0Ft+WRJDj9RSNgXckitpNP9DmxAL2mbib6aOe7XLuw0B7KyfN6hO9tb9KtoDtmJxMY2VucCq0C91Nz5HCclR72htBVr8Zgyw5P9+Ce5lufP8zywQJiuvrcsQ1CpdjblTQFKdPduRYTvPcaXU25c8pu4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x+CA8n47; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wIW1vljj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E889C4CECE;
-	Thu, 12 Dec 2024 16:02:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x+CA8n47"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B13E1C4CECE;
+	Thu, 12 Dec 2024 16:02:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734019355;
-	bh=Xh0OxhXQJdlb1IASOcyr1MWFJaiPX+TiwvfaBOvV4m0=;
+	s=korg; t=1734019359;
+	bh=qm1YnoW+vQ+UocEeRoE3mSzBQ3xaBYGlx3dd/71L7jQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wIW1vljjH9abVh4fNp5Jp8ERHeY4c6TFzgWPLiBXMbzsN+KkNJRhB9y27CFUm3Pod
-	 KQvVPi4l+z7+25o0aMtqm9X+ICGhILUlDmQr+yjNQMRWsXvrdyd3KCm1sGrsDudcYN
-	 5foU6Z+HEmO7ebnPYtCrWrM+tfIY7kPLFkwLL7Q0=
+	b=x+CA8n47XuRA39dFC+kv1eYS6M1qHjyVc8b3xas/0iRYFFH2BQnmHieRvjD60g8ZU
+	 +4HWBYM8p2CfszXiAnX+AhgFcNqRDF2LscJfTADkJEX7KwUTM/mFoWJHxS4rkGtCia
+	 tPfvE1EFMpSYS6rfuy+YGgT72W2PRrN5pbgRRRuY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -33,9 +33,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Willem de Bruijn <willemb@google.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 185/772] sock_diag: add module pointer to "struct sock_diag_handler"
-Date: Thu, 12 Dec 2024 15:52:10 +0100
-Message-ID: <20241212144357.587999109@linuxfoundation.org>
+Subject: [PATCH 6.1 186/772] sock_diag: allow concurrent operations
+Date: Thu, 12 Dec 2024 15:52:11 +0100
+Message-ID: <20241212144357.628277824@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -56,12 +56,16 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 114b4bb1cc19239b272d52ebbe156053483fe2f8 ]
+[ Upstream commit 1d55a6974756cf3979efd2cc68bcece611a44053 ]
 
-Following patch is going to use RCU instead of
-sock_diag_table_mutex acquisition.
+sock_diag_broadcast_destroy_work() and __sock_diag_cmd()
+are currently using sock_diag_table_mutex to protect
+against concurrent sock_diag_handlers[] changes.
 
-This patch is a preparation, no change of behavior yet.
+This makes inet_diag dump serialized, thus less scalable
+than legacy /proc files.
+
+It is time to switch to full RCU protection.
 
 Signed-off-by: Eric Dumazet <edumazet@google.com>
 Reviewed-by: Guillaume Nault <gnault@redhat.com>
@@ -71,133 +75,151 @@ Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Stable-dep-of: eb02688c5c45 ("ipv6: release nexthop on device removal")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/sock_diag.h | 1 +
- net/ipv4/inet_diag.c      | 2 ++
- net/netlink/diag.c        | 1 +
- net/packet/diag.c         | 1 +
- net/smc/smc_diag.c        | 1 +
- net/tipc/diag.c           | 1 +
- net/unix/diag.c           | 1 +
- net/vmw_vsock/diag.c      | 1 +
- net/xdp/xsk_diag.c        | 1 +
- 9 files changed, 10 insertions(+)
+ net/core/sock_diag.c | 73 +++++++++++++++++++++++++-------------------
+ 1 file changed, 42 insertions(+), 31 deletions(-)
 
-diff --git a/include/linux/sock_diag.h b/include/linux/sock_diag.h
-index 0b9ecd8cf9793..7c07754d711b9 100644
---- a/include/linux/sock_diag.h
-+++ b/include/linux/sock_diag.h
-@@ -13,6 +13,7 @@ struct nlmsghdr;
- struct sock;
+diff --git a/net/core/sock_diag.c b/net/core/sock_diag.c
+index e6ea6764d10ab..73b2e36032b3e 100644
+--- a/net/core/sock_diag.c
++++ b/net/core/sock_diag.c
+@@ -16,7 +16,7 @@
+ #include <linux/inet_diag.h>
+ #include <linux/sock_diag.h>
  
- struct sock_diag_handler {
-+	struct module *owner;
- 	__u8 family;
- 	int (*dump)(struct sk_buff *skb, struct nlmsghdr *nlh);
- 	int (*get_info)(struct sk_buff *skb, struct sock *sk);
-diff --git a/net/ipv4/inet_diag.c b/net/ipv4/inet_diag.c
-index e4e1999d93f50..a3d0e18885f59 100644
---- a/net/ipv4/inet_diag.c
-+++ b/net/ipv4/inet_diag.c
-@@ -1397,6 +1397,7 @@ int inet_diag_handler_get_info(struct sk_buff *skb, struct sock *sk)
+-static const struct sock_diag_handler *sock_diag_handlers[AF_MAX];
++static const struct sock_diag_handler __rcu *sock_diag_handlers[AF_MAX];
+ static int (*inet_rcv_compat)(struct sk_buff *skb, struct nlmsghdr *nlh);
+ static DEFINE_MUTEX(sock_diag_table_mutex);
+ static struct workqueue_struct *broadcast_wq;
+@@ -119,6 +119,24 @@ static size_t sock_diag_nlmsg_size(void)
+ 	       + nla_total_size_64bit(sizeof(struct tcp_info))); /* INET_DIAG_INFO */
  }
  
- static const struct sock_diag_handler inet_diag_handler = {
-+	.owner = THIS_MODULE,
- 	.family = AF_INET,
- 	.dump = inet_diag_handler_cmd,
- 	.get_info = inet_diag_handler_get_info,
-@@ -1404,6 +1405,7 @@ static const struct sock_diag_handler inet_diag_handler = {
- };
++static const struct sock_diag_handler *sock_diag_lock_handler(int family)
++{
++	const struct sock_diag_handler *handler;
++
++	rcu_read_lock();
++	handler = rcu_dereference(sock_diag_handlers[family]);
++	if (handler && !try_module_get(handler->owner))
++		handler = NULL;
++	rcu_read_unlock();
++
++	return handler;
++}
++
++static void sock_diag_unlock_handler(const struct sock_diag_handler *handler)
++{
++	module_put(handler->owner);
++}
++
+ static void sock_diag_broadcast_destroy_work(struct work_struct *work)
+ {
+ 	struct broadcast_sk *bsk =
+@@ -135,12 +153,12 @@ static void sock_diag_broadcast_destroy_work(struct work_struct *work)
+ 	if (!skb)
+ 		goto out;
  
- static const struct sock_diag_handler inet6_diag_handler = {
-+	.owner = THIS_MODULE,
- 	.family = AF_INET6,
- 	.dump = inet_diag_handler_cmd,
- 	.get_info = inet_diag_handler_get_info,
-diff --git a/net/netlink/diag.c b/net/netlink/diag.c
-index 9c4f231be2757..7b15aa5f7bc20 100644
---- a/net/netlink/diag.c
-+++ b/net/netlink/diag.c
-@@ -241,6 +241,7 @@ static int netlink_diag_handler_dump(struct sk_buff *skb, struct nlmsghdr *h)
+-	mutex_lock(&sock_diag_table_mutex);
+-	hndl = sock_diag_handlers[sk->sk_family];
+-	if (hndl && hndl->get_info)
+-		err = hndl->get_info(skb, sk);
+-	mutex_unlock(&sock_diag_table_mutex);
+-
++	hndl = sock_diag_lock_handler(sk->sk_family);
++	if (hndl) {
++		if (hndl->get_info)
++			err = hndl->get_info(skb, sk);
++		sock_diag_unlock_handler(hndl);
++	}
+ 	if (!err)
+ 		nlmsg_multicast(sock_net(sk)->diag_nlsk, skb, 0, group,
+ 				GFP_KERNEL);
+@@ -181,33 +199,26 @@ EXPORT_SYMBOL_GPL(sock_diag_unregister_inet_compat);
+ 
+ int sock_diag_register(const struct sock_diag_handler *hndl)
+ {
+-	int err = 0;
++	int family = hndl->family;
+ 
+-	if (hndl->family >= AF_MAX)
++	if (family >= AF_MAX)
+ 		return -EINVAL;
+ 
+-	mutex_lock(&sock_diag_table_mutex);
+-	if (sock_diag_handlers[hndl->family])
+-		err = -EBUSY;
+-	else
+-		WRITE_ONCE(sock_diag_handlers[hndl->family], hndl);
+-	mutex_unlock(&sock_diag_table_mutex);
+-
+-	return err;
++	return !cmpxchg((const struct sock_diag_handler **)
++				&sock_diag_handlers[family],
++			NULL, hndl) ? 0 : -EBUSY;
  }
+ EXPORT_SYMBOL_GPL(sock_diag_register);
  
- static const struct sock_diag_handler netlink_diag_handler = {
-+	.owner = THIS_MODULE,
- 	.family = AF_NETLINK,
- 	.dump = netlink_diag_handler_dump,
- };
-diff --git a/net/packet/diag.c b/net/packet/diag.c
-index a68a84574c739..057ee37bd0766 100644
---- a/net/packet/diag.c
-+++ b/net/packet/diag.c
-@@ -245,6 +245,7 @@ static int packet_diag_handler_dump(struct sk_buff *skb, struct nlmsghdr *h)
+-void sock_diag_unregister(const struct sock_diag_handler *hnld)
++void sock_diag_unregister(const struct sock_diag_handler *hndl)
+ {
+-	int family = hnld->family;
++	int family = hndl->family;
+ 
+ 	if (family >= AF_MAX)
+ 		return;
+ 
+-	mutex_lock(&sock_diag_table_mutex);
+-	BUG_ON(sock_diag_handlers[family] != hnld);
+-	WRITE_ONCE(sock_diag_handlers[family], NULL);
+-	mutex_unlock(&sock_diag_table_mutex);
++	xchg((const struct sock_diag_handler **)&sock_diag_handlers[family],
++	     NULL);
  }
+ EXPORT_SYMBOL_GPL(sock_diag_unregister);
  
- static const struct sock_diag_handler packet_diag_handler = {
-+	.owner = THIS_MODULE,
- 	.family = AF_PACKET,
- 	.dump = packet_diag_handler_dump,
- };
-diff --git a/net/smc/smc_diag.c b/net/smc/smc_diag.c
-index 7a907186a33ae..2d1cd033398b6 100644
---- a/net/smc/smc_diag.c
-+++ b/net/smc/smc_diag.c
-@@ -249,6 +249,7 @@ static int smc_diag_handler_dump(struct sk_buff *skb, struct nlmsghdr *h)
+@@ -224,20 +235,20 @@ static int __sock_diag_cmd(struct sk_buff *skb, struct nlmsghdr *nlh)
+ 		return -EINVAL;
+ 	req->sdiag_family = array_index_nospec(req->sdiag_family, AF_MAX);
+ 
+-	if (READ_ONCE(sock_diag_handlers[req->sdiag_family]) == NULL)
++	if (!rcu_access_pointer(sock_diag_handlers[req->sdiag_family]))
+ 		sock_load_diag_module(req->sdiag_family, 0);
+ 
+-	mutex_lock(&sock_diag_table_mutex);
+-	hndl = sock_diag_handlers[req->sdiag_family];
++	hndl = sock_diag_lock_handler(req->sdiag_family);
+ 	if (hndl == NULL)
+-		err = -ENOENT;
+-	else if (nlh->nlmsg_type == SOCK_DIAG_BY_FAMILY)
++		return -ENOENT;
++
++	if (nlh->nlmsg_type == SOCK_DIAG_BY_FAMILY)
+ 		err = hndl->dump(skb, nlh);
+ 	else if (nlh->nlmsg_type == SOCK_DESTROY && hndl->destroy)
+ 		err = hndl->destroy(skb, nlh);
+ 	else
+ 		err = -EOPNOTSUPP;
+-	mutex_unlock(&sock_diag_table_mutex);
++	sock_diag_unlock_handler(hndl);
+ 
+ 	return err;
  }
- 
- static const struct sock_diag_handler smc_diag_handler = {
-+	.owner = THIS_MODULE,
- 	.family = AF_SMC,
- 	.dump = smc_diag_handler_dump,
- };
-diff --git a/net/tipc/diag.c b/net/tipc/diag.c
-index 73137f4aeb68f..11da9d2ebbf69 100644
---- a/net/tipc/diag.c
-+++ b/net/tipc/diag.c
-@@ -95,6 +95,7 @@ static int tipc_sock_diag_handler_dump(struct sk_buff *skb,
- }
- 
- static const struct sock_diag_handler tipc_sock_diag_handler = {
-+	.owner = THIS_MODULE,
- 	.family = AF_TIPC,
- 	.dump = tipc_sock_diag_handler_dump,
- };
-diff --git a/net/unix/diag.c b/net/unix/diag.c
-index 1de7500b41b61..a6bd861314df0 100644
---- a/net/unix/diag.c
-+++ b/net/unix/diag.c
-@@ -322,6 +322,7 @@ static int unix_diag_handler_dump(struct sk_buff *skb, struct nlmsghdr *h)
- }
- 
- static const struct sock_diag_handler unix_diag_handler = {
-+	.owner = THIS_MODULE,
- 	.family = AF_UNIX,
- 	.dump = unix_diag_handler_dump,
- };
-diff --git a/net/vmw_vsock/diag.c b/net/vmw_vsock/diag.c
-index a2823b1c5e28b..6efa9eb93336f 100644
---- a/net/vmw_vsock/diag.c
-+++ b/net/vmw_vsock/diag.c
-@@ -157,6 +157,7 @@ static int vsock_diag_handler_dump(struct sk_buff *skb, struct nlmsghdr *h)
- }
- 
- static const struct sock_diag_handler vsock_diag_handler = {
-+	.owner = THIS_MODULE,
- 	.family = AF_VSOCK,
- 	.dump = vsock_diag_handler_dump,
- };
-diff --git a/net/xdp/xsk_diag.c b/net/xdp/xsk_diag.c
-index 22b36c8143cfd..e1012bfec7207 100644
---- a/net/xdp/xsk_diag.c
-+++ b/net/xdp/xsk_diag.c
-@@ -194,6 +194,7 @@ static int xsk_diag_handler_dump(struct sk_buff *nlskb, struct nlmsghdr *hdr)
- }
- 
- static const struct sock_diag_handler xsk_diag_handler = {
-+	.owner = THIS_MODULE,
- 	.family = AF_XDP,
- 	.dump = xsk_diag_handler_dump,
- };
+@@ -283,12 +294,12 @@ static int sock_diag_bind(struct net *net, int group)
+ 	switch (group) {
+ 	case SKNLGRP_INET_TCP_DESTROY:
+ 	case SKNLGRP_INET_UDP_DESTROY:
+-		if (!READ_ONCE(sock_diag_handlers[AF_INET]))
++		if (!rcu_access_pointer(sock_diag_handlers[AF_INET]))
+ 			sock_load_diag_module(AF_INET, 0);
+ 		break;
+ 	case SKNLGRP_INET6_TCP_DESTROY:
+ 	case SKNLGRP_INET6_UDP_DESTROY:
+-		if (!READ_ONCE(sock_diag_handlers[AF_INET6]))
++		if (!rcu_access_pointer(sock_diag_handlers[AF_INET6]))
+ 			sock_load_diag_module(AF_INET6, 0);
+ 		break;
+ 	}
 -- 
 2.43.0
 
