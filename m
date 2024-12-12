@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B2A4222D5E;
-	Thu, 12 Dec 2024 17:13:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CD90222D7C;
+	Thu, 12 Dec 2024 17:13:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734023595; cv=none; b=jxf/6+EBDBNNF4/dE1c7iDXH5vmel8R0wm6y9Cs0TSX76SLOtAe39lEwGVL35KM+RezfzLt/ZbDVcdYwf6mbPEm2lcTgY6kFgg/wXGOHNjLoVPAnQNy+ZSVm0upusZlxYsFNUg8mFY1qj7WfHHJpyncU9HSYVLRm9T7gmPFJ9i8=
+	t=1734023599; cv=none; b=XloaemZ+LnfmOLMQDtI6xT8/XmNbtBTayGgf16/7FtFhHdvis9DEVd55cH93pkSTVrU7JFeGTcIgfqGj4O+Pc3cfyPw4YTYOvoagSheTuJ4IktIagsmSJH8u9uDFmIu7VeigkijIQUu29XnZuw2JIVUIABnZIp6b7ifdcrbmEYc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734023595; c=relaxed/simple;
-	bh=DrlmXyA2wK0s5cAotrHOME7Gf2jjyCVpI/K4NWbc04M=;
+	s=arc-20240116; t=1734023599; c=relaxed/simple;
+	bh=WXJBsk4VkyuFUoaV0Llfg9MgrhKZJWevPLU/sbdtdbU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=uXphO1vyMRDK0Wii81R0Gxc7ckpE1RU+fatTgQDLMEX/chHYF1/2ouDDGSuOQ97XN8I+up9cmMHXEsaGmgYSJAWWMi9MIA8JbAs9KwjCFzJMOkx5x2zDFlQMKx7C+oA1yN3zr5myNx6VpgfC/KYvsX0VOPspaXDn0ZnaOLPoxbY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X3Nr014c; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gDI6gXHvnHm+jPdS6MMEDLc9f3Cvj+2p1NIGkGnfgh2Ga4W+4QuhNmHFXSsJ1KDB0pwDyrJIcWxquT+QM2XVI02C71wOQYRMUuFow86Mu7kkpfbufje475GUfGj0XXLvuTmmHdxbspU95ZDKtXn4XWCQYb+yeJfMFYbbMUSBZdw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WCNqeChJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X3Nr014c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C23BC4CECE;
-	Thu, 12 Dec 2024 17:13:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WCNqeChJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0C68C4CECE;
+	Thu, 12 Dec 2024 17:13:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734023594;
-	bh=DrlmXyA2wK0s5cAotrHOME7Gf2jjyCVpI/K4NWbc04M=;
+	s=korg; t=1734023598;
+	bh=WXJBsk4VkyuFUoaV0Llfg9MgrhKZJWevPLU/sbdtdbU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X3Nr014cZMbLyswkAmHPKVAozn3LhqbmpOfQY/87h1kq1VBO6bTYrq8i6/76+308Q
-	 BSCFUt/u7jyWPxbkynzOKGibISTdC3LlnpiYEUcgulAtLLFOndDdNkniSRpJ/nz0EW
-	 CqZ3ycu5N9p/2a+bDn/v4YQ4eubwpuZEP7wPIvGQ=
+	b=WCNqeChJ+JJCWSMy+H057SAJkdtqRcvNDY6ya/E5ltZD6WuwEYgmwiBHg8HEQW+gi
+	 6g5qTsWNLFmlAoouIhf9pZtaGGFKjctJ5UYpTZxp4na1gN7Nz6qNYJdlTvfQkm0aTG
+	 ZCOx3Uz9QpsC4yWQ1HG2sp5yysQvRh4dLRD93t9A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Shiyan <eagle.alexander923@gmail.com>,
+	Li Zetao <lizetao1@huawei.com>,
 	Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Subject: [PATCH 5.10 002/459] media: i2c: tc358743: Fix crash in the probe error path when using polling
-Date: Thu, 12 Dec 2024 15:55:40 +0100
-Message-ID: <20241212144253.615245666@linuxfoundation.org>
+Subject: [PATCH 5.10 003/459] media: ts2020: fix null-ptr-deref in ts2020_probe()
+Date: Thu, 12 Dec 2024 15:55:41 +0100
+Message-ID: <20241212144253.657214239@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144253.511169641@linuxfoundation.org>
 References: <20241212144253.511169641@linuxfoundation.org>
@@ -44,83 +44,79 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexander Shiyan <eagle.alexander923@gmail.com>
+From: Li Zetao <lizetao1@huawei.com>
 
-commit 869f38ae07f7df829da4951c3d1f7a2be09c2e9a upstream.
+commit 4a058b34b52ed3feb1f3ff6fd26aefeeeed20cba upstream.
 
-If an error occurs in the probe() function, we should remove the polling
-timer that was alarmed earlier, otherwise the timer is called with
-arguments that are already freed, which results in a crash.
+KASAN reported a null-ptr-deref issue when executing the following
+command:
 
-------------[ cut here ]------------
-WARNING: CPU: 3 PID: 0 at kernel/time/timer.c:1830 __run_timers+0x244/0x268
-Modules linked in:
-CPU: 3 UID: 0 PID: 0 Comm: swapper/3 Not tainted 6.11.0 #226
-Hardware name: Diasom DS-RK3568-SOM-EVB (DT)
-pstate: 804000c9 (Nzcv daIF +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-pc : __run_timers+0x244/0x268
-lr : __run_timers+0x1d4/0x268
-sp : ffffff80eff2baf0
-x29: ffffff80eff2bb50 x28: 7fffffffffffffff x27: ffffff80eff2bb00
-x26: ffffffc080f669c0 x25: ffffff80efef6bf0 x24: ffffff80eff2bb00
-x23: 0000000000000000 x22: dead000000000122 x21: 0000000000000000
-x20: ffffff80efef6b80 x19: ffffff80041c8bf8 x18: ffffffffffffffff
-x17: ffffffc06f146000 x16: ffffff80eff27dc0 x15: 000000000000003e
-x14: 0000000000000000 x13: 00000000000054da x12: 0000000000000000
-x11: 00000000000639c0 x10: 000000000000000c x9 : 0000000000000009
-x8 : ffffff80eff2cb40 x7 : ffffff80eff2cb40 x6 : ffffff8002bee480
-x5 : ffffffc080cb2220 x4 : ffffffc080cb2150 x3 : 00000000000f4240
-x2 : 0000000000000102 x1 : ffffff80eff2bb00 x0 : ffffff80041c8bf0
-Call trace:
- __run_timers+0x244/0x268
- timer_expire_remote+0x50/0x68
- tmigr_handle_remote+0x388/0x39c
- run_timer_softirq+0x38/0x44
- handle_softirqs+0x138/0x298
- __do_softirq+0x14/0x20
- ____do_softirq+0x10/0x1c
- call_on_irq_stack+0x24/0x4c
- do_softirq_own_stack+0x1c/0x2c
- irq_exit_rcu+0x9c/0xcc
- el1_interrupt+0x48/0xc0
- el1h_64_irq_handler+0x18/0x24
- el1h_64_irq+0x7c/0x80
- default_idle_call+0x34/0x68
- do_idle+0x23c/0x294
- cpu_startup_entry+0x38/0x3c
- secondary_start_kernel+0x128/0x160
- __secondary_switched+0xb8/0xbc
----[ end trace 0000000000000000 ]---
+  # echo ts2020 0x20 > /sys/bus/i2c/devices/i2c-0/new_device
+    KASAN: null-ptr-deref in range [0x0000000000000010-0x0000000000000017]
+    CPU: 53 UID: 0 PID: 970 Comm: systemd-udevd Not tainted 6.12.0-rc2+ #24
+    Hardware name: QEMU Standard PC (Q35 + ICH9, 2009)
+    RIP: 0010:ts2020_probe+0xad/0xe10 [ts2020]
+    RSP: 0018:ffffc9000abbf598 EFLAGS: 00010202
+    RAX: dffffc0000000000 RBX: 0000000000000000 RCX: ffffffffc0714809
+    RDX: 0000000000000002 RSI: ffff88811550be00 RDI: 0000000000000010
+    RBP: ffff888109868800 R08: 0000000000000001 R09: fffff52001577eb6
+    R10: 0000000000000000 R11: ffffc9000abbff50 R12: ffffffffc0714790
+    R13: 1ffff92001577eb8 R14: ffffffffc07190d0 R15: 0000000000000001
+    FS:  00007f95f13b98c0(0000) GS:ffff888149280000(0000) knlGS:0000000000000000
+    CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+    CR2: 0000555d2634b000 CR3: 0000000152236000 CR4: 00000000000006f0
+    DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+    DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+    Call Trace:
+     <TASK>
+     ts2020_probe+0xad/0xe10 [ts2020]
+     i2c_device_probe+0x421/0xb40
+     really_probe+0x266/0x850
+    ...
 
-Fixes: 4e66a52a2e4c ("[media] tc358743: Add support for platforms without IRQ line")
-Signed-off-by: Alexander Shiyan <eagle.alexander923@gmail.com>
-Cc: stable@vger.kernel.org
+The cause of the problem is that when using sysfs to dynamically register
+an i2c device, there is no platform data, but the probe process of ts2020
+needs to use platform data, resulting in a null pointer being accessed.
+
+Solve this problem by adding checks to platform data.
+
+Fixes: dc245a5f9b51 ("[media] ts2020: implement I2C client bindings")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Li Zetao <lizetao1@huawei.com>
 Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/i2c/tc358743.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/media/dvb-frontends/ts2020.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/drivers/media/i2c/tc358743.c
-+++ b/drivers/media/i2c/tc358743.c
-@@ -2176,8 +2176,10 @@ static int tc358743_probe(struct i2c_cli
+--- a/drivers/media/dvb-frontends/ts2020.c
++++ b/drivers/media/dvb-frontends/ts2020.c
+@@ -554,13 +554,19 @@ static int ts2020_probe(struct i2c_clien
+ 		const struct i2c_device_id *id)
+ {
+ 	struct ts2020_config *pdata = client->dev.platform_data;
+-	struct dvb_frontend *fe = pdata->fe;
++	struct dvb_frontend *fe;
+ 	struct ts2020_priv *dev;
+ 	int ret;
+ 	u8 u8tmp;
+ 	unsigned int utmp;
+ 	char *chip_str;
  
- err_work_queues:
- 	cec_unregister_adapter(state->cec_adap);
--	if (!state->i2c_client->irq)
-+	if (!state->i2c_client->irq) {
-+		del_timer(&state->timer);
- 		flush_work(&state->work_i2c_poll);
++	if (!pdata) {
++		dev_err(&client->dev, "platform data is mandatory\n");
++		return -EINVAL;
 +	}
- 	cancel_delayed_work(&state->delayed_work_enable_hotplug);
- 	mutex_destroy(&state->confctl_mutex);
- err_hdl:
++
++	fe = pdata->fe;
+ 	dev = kzalloc(sizeof(*dev), GFP_KERNEL);
+ 	if (!dev) {
+ 		ret = -ENOMEM;
 
 
