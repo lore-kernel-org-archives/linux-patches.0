@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CE87217F34;
-	Thu, 12 Dec 2024 15:08:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E131216E29;
+	Thu, 12 Dec 2024 15:08:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734016101; cv=none; b=uijZR7Q1fzImn9LSGYBdlOps3Lfa4ft+yUqFu9+j35bLk5Y8pxysDygUtaOgBfrL/tROkoPeNCeDXjDLEgEbzT8tM86RkRkHYY3F/jwkMyImgZ4lDJG8Wrw8QdKJL6KI4hyQsDdm/H3cVYYOS4+cMFiCECyh3eWWZ5uvXjvrxYY=
+	t=1734016104; cv=none; b=ZuX7gQQHZtpX/t8Jq9t0LNngNRdc9n9HLO+5XNWPzjNejJrZeGhWv/yEq/A9tCMJc4+cW5io6U5TVxRD5fBriPDn9xMw2RQQDN5qPO2lQOjiyl8ZzK7esAZfnnL/eHfLeQJsUiUt91oi5urfiiQxWZYjE1r+AUzoNApyDaT0MZY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734016101; c=relaxed/simple;
-	bh=1IBtwzBzVnwFhlDQeUeJ1aGp6ad88gC6AoUKSIrkn/M=;
+	s=arc-20240116; t=1734016104; c=relaxed/simple;
+	bh=n6PivKZJM8QSqbZPerQO8s9E1k+8H2H9DBgRBhGxzcI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VZ9bCfFJEu35dOB5OikF3oPBMn5BGArJ2ca5/U8JY4mSKZtlGKoIHboI7QsJd9kf0HrIeQgYGobt7Z3RF/qDvRzc/htPxdp/kQ+Hc2nmuzsSztfzumRY9bgGKo12Bb/AitopVj0u4ELfu6yjxcOHmasJsLOVgtf4x1Kln2MOsgk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gbjcV18X; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tBXAG76YQ122ihAuIxANKi3idJRENJ2kzhCuaEPaLIB/lYkCJYWjOAjtYJtGhu7z1XgnRbfmOx4Wwdah4wKXW8IH8HObLLCdusrIDLU28mLHu+lXy2Tpgwqux4uVkVJs0lIi2mFuzQgs0EdURpryq3weyJ2c2p2x6i+Jr9KOisI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jiu3tDLx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gbjcV18X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A947C4CEDD;
-	Thu, 12 Dec 2024 15:08:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jiu3tDLx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7095C4CECE;
+	Thu, 12 Dec 2024 15:08:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734016101;
-	bh=1IBtwzBzVnwFhlDQeUeJ1aGp6ad88gC6AoUKSIrkn/M=;
+	s=korg; t=1734016104;
+	bh=n6PivKZJM8QSqbZPerQO8s9E1k+8H2H9DBgRBhGxzcI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gbjcV18XUfBDfBa73NjY8VTCdG6UIJm16d90Y9jzhDUl5adf9nkkDVDev9qrYbCfy
-	 BydWN6Cqqt6svAOYQTvt79Lohiko6mPGBOaSlL5bcr6eiwKPRW0VvV6HpCkuj6G/vQ
-	 VouQxV2uo29daiekD6RWT5zM5EliXqonaqM69KtU=
+	b=Jiu3tDLx732bhompztP7Nw25SxtqXHVRzrOkMSbCSnFrgyCbgo8dE4DYT9NQZbIuJ
+	 7sszA2HGJ4gd7IMmU/c56mrSvLl+HNKtB1Rg2w+FqmBxqdD3Ihb+71agh5pOQ10A/Y
+	 9Bl6EUxepe0zkZb/2eX4G5GC3SrTMslrlqk1WmWk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.12 125/466] LoongArch: KVM: Protect kvm_check_requests() with SRCU
-Date: Thu, 12 Dec 2024 15:54:54 +0100
-Message-ID: <20241212144311.744179045@linuxfoundation.org>
+	Yutang Jiang <jiangyutang@os.amperecomputing.com>,
+	Yang Shi <yang@os.amperecomputing.com>,
+	Catalin Marinas <catalin.marinas@arm.com>
+Subject: [PATCH 6.12 134/466] arm64: mm: Fix zone_dma_limit calculation
+Date: Thu, 12 Dec 2024 15:55:03 +0100
+Message-ID: <20241212144312.099490335@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144306.641051666@linuxfoundation.org>
 References: <20241212144306.641051666@linuxfoundation.org>
@@ -49,73 +51,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Huacai Chen <chenhuacai@loongson.cn>
+From: Yang Shi <yang@os.amperecomputing.com>
 
-commit 589e6cc7597655bed7b8543b8286925f631f597c upstream.
+commit 56a708742a8bf127eb66798bfc9c9516c61f9930 upstream.
 
-When we enable lockdep we get such a warning:
+Commit ba0fb44aed47 ("dma-mapping: replace zone_dma_bits by
+zone_dma_limit") and subsequent patches changed how zone_dma_limit is
+calculated to allow a reduced ZONE_DMA even when RAM starts above 4GB.
+Commit 122c234ef4e1 ("arm64: mm: keep low RAM dma zone") further fixed
+this to ensure ZONE_DMA remains below U32_MAX if RAM starts below 4GB,
+especially on platforms that do not have IORT or DT description of the
+device DMA ranges. While zone boundaries calculation was fixed by the
+latter commit, zone_dma_limit, used to determine the GFP_DMA flag in the
+core code, was not updated. This results in excessive use of GFP_DMA and
+unnecessary ZONE_DMA allocations on some platforms.
 
- =============================
- WARNING: suspicious RCU usage
- 6.12.0-rc7+ #1891 Tainted: G        W
- -----------------------------
- include/linux/kvm_host.h:1043 suspicious rcu_dereference_check() usage!
- other info that might help us debug this:
- rcu_scheduler_active = 2, debug_locks = 1
- 1 lock held by qemu-system-loo/948:
-  #0: 90000001184a00a8 (&vcpu->mutex){+.+.}-{4:4}, at: kvm_vcpu_ioctl+0xf4/0xe20 [kvm]
- stack backtrace:
- CPU: 0 UID: 0 PID: 948 Comm: qemu-system-loo Tainted: G        W          6.12.0-rc7+ #1891
- Tainted: [W]=WARN
- Hardware name: Loongson Loongson-3A5000-7A1000-1w-CRB/Loongson-LS3A5000-7A1000-1w-CRB, BIOS vUDK2018-LoongArch-V2.0.0-prebeta9 10/21/2022
- Stack : 0000000000000089 9000000005a0db9c 90000000071519c8 900000012c578000
-         900000012c57b920 0000000000000000 900000012c57b928 9000000007e53788
-         900000000815bcc8 900000000815bcc0 900000012c57b790 0000000000000001
-         0000000000000001 4b031894b9d6b725 0000000004dec000 90000001003299c0
-         0000000000000414 0000000000000001 000000000000002d 0000000000000003
-         0000000000000030 00000000000003b4 0000000004dec000 90000001184a0000
-         900000000806d000 9000000007e53788 00000000000000b4 0000000000000004
-         0000000000000004 0000000000000000 0000000000000000 9000000107baf600
-         9000000008916000 9000000007e53788 9000000005924778 0000000010000044
-         00000000000000b0 0000000000000004 0000000000000000 0000000000071c1d
-         ...
- Call Trace:
- [<9000000005924778>] show_stack+0x38/0x180
- [<90000000071519c4>] dump_stack_lvl+0x94/0xe4
- [<90000000059eb754>] lockdep_rcu_suspicious+0x194/0x240
- [<ffff8000022143bc>] kvm_gfn_to_hva_cache_init+0xfc/0x120 [kvm]
- [<ffff80000222ade4>] kvm_pre_enter_guest+0x3a4/0x520 [kvm]
- [<ffff80000222b3dc>] kvm_handle_exit+0x23c/0x480 [kvm]
+Update zone_dma_limit to match the actual upper bound of ZONE_DMA.
 
-Fix it by protecting kvm_check_requests() with SRCU.
-
-Cc: stable@vger.kernel.org
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Fixes: ba0fb44aed47 ("dma-mapping: replace zone_dma_bits by zone_dma_limit")
+Cc: <stable@vger.kernel.org> # 6.12.x
+Reported-by: Yutang Jiang <jiangyutang@os.amperecomputing.com>
+Tested-by: Yutang Jiang <jiangyutang@os.amperecomputing.com>
+Signed-off-by: Yang Shi <yang@os.amperecomputing.com>
+Link: https://lore.kernel.org/r/20241125171650.77424-1-yang@os.amperecomputing.com
+[catalin.marinas@arm.com: some tweaking of the commit log]
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/kvm/vcpu.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ arch/arm64/mm/init.c |   17 ++++++++---------
+ 1 file changed, 8 insertions(+), 9 deletions(-)
 
---- a/arch/loongarch/kvm/vcpu.c
-+++ b/arch/loongarch/kvm/vcpu.c
-@@ -240,7 +240,7 @@ static void kvm_late_check_requests(stru
-  */
- static int kvm_enter_guest_check(struct kvm_vcpu *vcpu)
+--- a/arch/arm64/mm/init.c
++++ b/arch/arm64/mm/init.c
+@@ -116,15 +116,6 @@ static void __init arch_reserve_crashker
+ 
+ static phys_addr_t __init max_zone_phys(phys_addr_t zone_limit)
  {
--	int ret;
-+	int idx, ret;
- 
- 	/*
- 	 * Check conditions before entering the guest
-@@ -249,7 +249,9 @@ static int kvm_enter_guest_check(struct
- 	if (ret < 0)
- 		return ret;
- 
-+	idx = srcu_read_lock(&vcpu->kvm->srcu);
- 	ret = kvm_check_requests(vcpu);
-+	srcu_read_unlock(&vcpu->kvm->srcu, idx);
- 
- 	return ret;
+-	/**
+-	 * Information we get from firmware (e.g. DT dma-ranges) describe DMA
+-	 * bus constraints. Devices using DMA might have their own limitations.
+-	 * Some of them rely on DMA zone in low 32-bit memory. Keep low RAM
+-	 * DMA zone on platforms that have RAM there.
+-	 */
+-	if (memblock_start_of_DRAM() < U32_MAX)
+-		zone_limit = min(zone_limit, U32_MAX);
+-
+ 	return min(zone_limit, memblock_end_of_DRAM() - 1) + 1;
  }
+ 
+@@ -140,6 +131,14 @@ static void __init zone_sizes_init(void)
+ 	acpi_zone_dma_limit = acpi_iort_dma_get_max_cpu_address();
+ 	dt_zone_dma_limit = of_dma_get_max_cpu_address(NULL);
+ 	zone_dma_limit = min(dt_zone_dma_limit, acpi_zone_dma_limit);
++	/*
++	 * Information we get from firmware (e.g. DT dma-ranges) describe DMA
++	 * bus constraints. Devices using DMA might have their own limitations.
++	 * Some of them rely on DMA zone in low 32-bit memory. Keep low RAM
++	 * DMA zone on platforms that have RAM there.
++	 */
++	if (memblock_start_of_DRAM() < U32_MAX)
++		zone_dma_limit = min(zone_dma_limit, U32_MAX);
+ 	arm64_dma_phys_limit = max_zone_phys(zone_dma_limit);
+ 	max_zone_pfns[ZONE_DMA] = PFN_DOWN(arm64_dma_phys_limit);
+ #endif
 
 
