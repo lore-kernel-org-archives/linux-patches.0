@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B96B1F2381;
-	Thu, 12 Dec 2024 17:01:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98F7D211A34;
+	Thu, 12 Dec 2024 17:01:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734022902; cv=none; b=FiLOTz3UsvcyeDwz7dIFM8NlagT67urTJYl1OFZ3XUUCXEcvt6cTuUrtjw7M6W8141ec5vTlNuKjF3l3bDLxWpIUkLZheWtO14AAQZviPcQ0YNGMsFb8FKDp+EEPfwZrWbqBuJbZg3tsdlmQ3qZbtKrAaBep4YGy73FRJGJrad0=
+	t=1734022905; cv=none; b=EBuPUxjAq/+4bi2iPg4TLDy99c11PDvFvzPf2V2vuH9jO6x+3zbZ6F8vxubOi2WzcMRqM2GlkE8BnMxtYrCJ7QjsX9GuGulSFmOPM6iWcHGLZIm7W20rtzPnODOVSlDKrwa0Lp5OEabK6ihFU9R849g6JkxqULCpzlhjYZKVoDE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734022902; c=relaxed/simple;
-	bh=Iq8UXAkZUl2JkRRssdxrT+GrtS/2vo0JHCpkHB7aKyY=;
+	s=arc-20240116; t=1734022905; c=relaxed/simple;
+	bh=SSK21wSOGFhBDXeE/ox3+RXWEfPy/k0UPD7s9QsYSbw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=deGvC9ThQzJW2In67dUW7YOsy6/776McUrrzXMoc9EUW8zOKl1KM5PFjsF9javHuLo1o3jaSsSwLk8fGnzaSqpiaemAzXyrYyKVl1ewLAiNylsJuYzlrpTLP896+PyRsbecxaKhBUqKTDckXj49+EEOM+Pr6quNrSeyGDejJb1Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aJdjmt9f; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aKZMo02/iGn49Crd8w6xYHmrUIA32lwjIs/ncVcnM4wFb3uMraOdM9IRfnFsWIhJZWIRsgoK+quqgd6LgKaBLQKssfSkLXCZ55vvoyJ6EWeyFMlMLFlS/zSSb5FPWV2sShT9cWfeEOaQWKnv1ECulDLCiEEjKLWznUBI6fwDP+8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GXXVnrv+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aJdjmt9f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D7A9C4CECE;
-	Thu, 12 Dec 2024 17:01:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GXXVnrv+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3268C4CECE;
+	Thu, 12 Dec 2024 17:01:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734022902;
-	bh=Iq8UXAkZUl2JkRRssdxrT+GrtS/2vo0JHCpkHB7aKyY=;
+	s=korg; t=1734022905;
+	bh=SSK21wSOGFhBDXeE/ox3+RXWEfPy/k0UPD7s9QsYSbw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aJdjmt9fg/Urtm/5stfDnBjwFeckPt4QaVIF1zltqw9R6lXimAAuHaPjpIdv6QaRY
-	 80V1H6nXKljhMXpJqyRVI4z2sBS66Pdmd2JUJFFCAtpdC6fLIPhtDBJYE5WqEEEUBL
-	 CBgm6PY8Ezd3gLmi/7kg+63BABWslkAlTzQ5KtAw=
+	b=GXXVnrv+UUbNM/c+/hTwKWhcReUFQ2sczYxHpdh0rXGmqW92SZ/wSLLtwCmCSxlaN
+	 MFuDiW3ugX3R9zh/Egg1Sq1T3+xXWcCQeyz599YH6Z71EcVELRDCUyiWsCqoj3q5v6
+	 nFpDxCChYPPLRMnHEBqjLOvDzapu9ELDtqJ8Bt7g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	John Garry <john.g.garry@oracle.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Alex Zenla <alex@edera.dev>,
+	Alexander Merritt <alexander@edera.dev>,
+	Ariadne Conill <ariadne@ariadne.space>,
+	Juergen Gross <jgross@suse.com>,
+	Dominique Martinet <asmadeus@codewreck.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 365/565] block: return unsigned int from bdev_io_min
-Date: Thu, 12 Dec 2024 15:59:20 +0100
-Message-ID: <20241212144326.043930871@linuxfoundation.org>
+Subject: [PATCH 5.15 366/565] 9p/xen: fix init sequence
+Date: Thu, 12 Dec 2024 15:59:21 +0100
+Message-ID: <20241212144326.083011324@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144311.432886635@linuxfoundation.org>
 References: <20241212144311.432886635@linuxfoundation.org>
@@ -53,37 +54,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christoph Hellwig <hch@lst.de>
+From: Alex Zenla <alex@edera.dev>
 
-[ Upstream commit 46fd48ab3ea3eb3bb215684bd66ea3d260b091a9 ]
+[ Upstream commit 7ef3ae82a6ebbf4750967d1ce43bcdb7e44ff74b ]
 
-The underlying limit is defined as an unsigned int, so return that from
-bdev_io_min as well.
+Large amount of mount hangs observed during hotplugging of 9pfs devices. The
+9pfs Xen driver attempts to initialize itself more than once, causing the
+frontend and backend to disagree: the backend listens on a channel that the
+frontend does not send on, resulting in stalled processing.
 
-Fixes: ac481c20ef8f ("block: Topology ioctls")
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Martin K. Petersen <martin.petersen@oracle.com>
-Reviewed-by: John Garry <john.g.garry@oracle.com>
-Link: https://lore.kernel.org/r/20241119072602.1059488-1-hch@lst.de
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Only allow initialization of 9p frontend once.
+
+Fixes: c15fe55d14b3b ("9p/xen: fix connection sequence")
+Signed-off-by: Alex Zenla <alex@edera.dev>
+Signed-off-by: Alexander Merritt <alexander@edera.dev>
+Signed-off-by: Ariadne Conill <ariadne@ariadne.space>
+Reviewed-by: Juergen Gross <jgross@suse.com>
+Message-ID: <20241119211633.38321-1-alexander@edera.dev>
+Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/blkdev.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/9p/trans_xen.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/include/linux/blkdev.h b/include/linux/blkdev.h
-index c6d57814988d2..60e4d426fda87 100644
---- a/include/linux/blkdev.h
-+++ b/include/linux/blkdev.h
-@@ -1429,7 +1429,7 @@ static inline unsigned int queue_io_min(const struct request_queue *q)
- 	return q->limits.io_min;
- }
+diff --git a/net/9p/trans_xen.c b/net/9p/trans_xen.c
+index 99e6b2483311c..716736046a18f 100644
+--- a/net/9p/trans_xen.c
++++ b/net/9p/trans_xen.c
+@@ -487,6 +487,7 @@ static int xen_9pfs_front_init(struct xenbus_device *dev)
+ 		goto error;
+ 	}
  
--static inline int bdev_io_min(struct block_device *bdev)
-+static inline unsigned int bdev_io_min(struct block_device *bdev)
- {
- 	return queue_io_min(bdev_get_queue(bdev));
- }
++	xenbus_switch_state(dev, XenbusStateInitialised);
+ 	return 0;
+ 
+  error_xenbus:
+@@ -534,8 +535,10 @@ static void xen_9pfs_front_changed(struct xenbus_device *dev,
+ 		break;
+ 
+ 	case XenbusStateInitWait:
+-		if (!xen_9pfs_front_init(dev))
+-			xenbus_switch_state(dev, XenbusStateInitialised);
++		if (dev->state != XenbusStateInitialising)
++			break;
++
++		xen_9pfs_front_init(dev);
+ 		break;
+ 
+ 	case XenbusStateConnected:
 -- 
 2.43.0
 
