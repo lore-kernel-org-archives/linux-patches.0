@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D54C223320;
-	Thu, 12 Dec 2024 17:30:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 906E0213E6F;
+	Thu, 12 Dec 2024 17:30:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734024608; cv=none; b=qFQq8yBKQLutH4aiX3v5sD+rOtp7i3iolF5L74si2tB3JLGJr7uikg6sHNF8t/hF1mPOuJS8Wqq0J+paeHaXRRYukQZ9VtiYcAvDeFfbAtnLpslHGw84APu6GiqE6m7eB++JK90azAEeuClg4M2TaiQKmbfkT5dma3UaHQmCjvE=
+	t=1734024611; cv=none; b=EMLq6k1TxkP9Lc0DWYXVBynbJHrNiVQcgQqgirZgKKaFi8j775pkf0Ggn2ugMnfsLm2ChBpL5XlutkXy4OnPC2WP3JF3H9OaXY7USl3KbFdjItNFSrgCHkODRiHUIwezl7DZmxpkzkG/W9k7kAJxheMq6DbB1cWGZa/2IHNz2Nc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734024608; c=relaxed/simple;
-	bh=peJu836SFe7EytLwqTOJECHue+1MnnZqmfBBOivN/EI=;
+	s=arc-20240116; t=1734024611; c=relaxed/simple;
+	bh=patnt3JB/x3iWzA+1QLzOn7w6QV/Qzt12K1OYvQznBs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rUaDFKSp0LWP74lcNDvhiqhC5oM/+DikPd++7nBpUcU/nMNdPMnQF45k4GYS552N1FITUAdVgALU7uuIS2KUFT2zNg6Zx5ASf8zDXKn/a3F5U1PpVIEqxetc/y6fVZf1lLdky/sIietwzAUkCBJoXFXE1IG2KBpbQyJ5slcGaQI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lZp7Skq7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mmi8KHdLC+Qq3204m2zl18tbdjXBGsYjavuSe3AQ9ZzLeVZq/uu715IJndy6JVJpWpHfnjYgEmBzrrRXjg1oQvgR5z+cIh5rqeTCWYz2u3l3ER/ct8tCukNLCv0YI8TOMSuCHPqmyAbo5HgTjKVIF8YkAOYaa9kwRxpFKzN1fJ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ulqLbT0h; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lZp7Skq7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5B04C4CECE;
-	Thu, 12 Dec 2024 17:30:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ulqLbT0h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDFB4C4CECE;
+	Thu, 12 Dec 2024 17:30:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734024608;
-	bh=peJu836SFe7EytLwqTOJECHue+1MnnZqmfBBOivN/EI=;
+	s=korg; t=1734024611;
+	bh=patnt3JB/x3iWzA+1QLzOn7w6QV/Qzt12K1OYvQznBs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lZp7Skq7BqlHnDZjBVB4n++qRHcqIruBEcz4RlVK7X0vUsFbqR+wOWk3LMb4AOSFV
-	 bpPpURiwC/N3E7zpgokxdmFQIDxGWcK594t4ueSnZKiOjgK8SRFZ+vxZ6QKo5QyhSQ
-	 Io12vEaMB6vGpSEZ+ZqrIP1stvXbtLNfCZt7T8D8=
+	b=ulqLbT0hBci21QyIojvqrwmYJ4RIyzYnR3jScoCCXrss14L7XBN3BWsg2d6ZjwTBD
+	 FluaqM0UbW4ZIw5Ya/Xk+hPPkPS5aVU6U1fhtJ5BQISCjrHHbsGqXBQHnpPTZVU2Zp
+	 YEZ8ifn3MehIFhzIJSiX1u7kGttI5jA85A/cdZL4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 5.10 312/459] octeontx2-pf: Fix out-of-bounds read in otx2_get_fecparam()
-Date: Thu, 12 Dec 2024 16:00:50 +0100
-Message-ID: <20241212144305.969420049@linuxfoundation.org>
+	Charles Han <hanchunchao@inspur.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 346/459] gpio: grgpio: Add NULL check in grgpio_probe
+Date: Thu, 12 Dec 2024 16:01:24 +0100
+Message-ID: <20241212144307.329936250@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144253.511169641@linuxfoundation.org>
 References: <20241212144253.511169641@linuxfoundation.org>
@@ -50,50 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gustavo A. R. Silva <gustavoars@kernel.org>
+From: Charles Han <hanchunchao@inspur.com>
 
-commit 93efb0c656837f4a31d7cc6117a7c8cecc8fadac upstream.
+[ Upstream commit 050b23d081da0f29474de043e9538c1f7a351b3b ]
 
-Code at line 967 implies that rsp->fwdata.supported_fec may be up to 4:
+devm_kasprintf() can return a NULL pointer on failure,but this
+returned value in grgpio_probe is not checked.
+Add NULL check in grgpio_probe, to handle kernel NULL
+pointer dereference error.
 
- 967: if (rsp->fwdata.supported_fec <= FEC_MAX_INDEX)
-
-If rsp->fwdata.supported_fec evaluates to 4, then there is an
-out-of-bounds read at line 971 because fec is an array with
-a maximum of 4 elements:
-
- 954         const int fec[] = {
- 955                 ETHTOOL_FEC_OFF,
- 956                 ETHTOOL_FEC_BASER,
- 957                 ETHTOOL_FEC_RS,
- 958                 ETHTOOL_FEC_BASER | ETHTOOL_FEC_RS};
- 959 #define FEC_MAX_INDEX 4
-
- 971: fecparam->fec = fec[rsp->fwdata.supported_fec];
-
-Fix this by properly indexing fec[] with rsp->fwdata.supported_fec - 1.
-In this case the proper indexes 0 to 3 are used when
-rsp->fwdata.supported_fec evaluates to a range of 1 to 4, correspondingly.
-
-Fixes: d0cf9503e908 ("octeontx2-pf: ethtool fec mode support")
-Addresses-Coverity-ID: 1501722 ("Out-of-bounds read")
-Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org
+Fixes: 7eb6ce2f2723 ("gpio: Convert to using %pOF instead of full_name")
+Signed-off-by: Charles Han <hanchunchao@inspur.com>
+Link: https://lore.kernel.org/r/20241114091822.78199-1-hanchunchao@inspur.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/octeontx2/nic/otx2_ethtool.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpio/gpio-grgpio.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_ethtool.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_ethtool.c
-@@ -805,7 +805,7 @@ static int otx2_get_fecparam(struct net_
- 		if (!rsp->fwdata.supported_fec)
- 			fecparam->fec = ETHTOOL_FEC_NONE;
- 		else
--			fecparam->fec = fec[rsp->fwdata.supported_fec];
-+			fecparam->fec = fec[rsp->fwdata.supported_fec - 1];
- 	}
- 	return 0;
- }
+diff --git a/drivers/gpio/gpio-grgpio.c b/drivers/gpio/gpio-grgpio.c
+index ca3bf8d51d5aa..506891115bb3e 100644
+--- a/drivers/gpio/gpio-grgpio.c
++++ b/drivers/gpio/gpio-grgpio.c
+@@ -363,6 +363,9 @@ static int grgpio_probe(struct platform_device *ofdev)
+ 	gc->owner = THIS_MODULE;
+ 	gc->to_irq = grgpio_to_irq;
+ 	gc->label = devm_kasprintf(dev, GFP_KERNEL, "%pOF", np);
++	if (!gc->label)
++		return -ENOMEM;
++
+ 	gc->base = -1;
+ 
+ 	err = of_property_read_u32(np, "nbits", &prop);
+-- 
+2.43.0
+
 
 
