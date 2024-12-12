@@ -1,39 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4058A205501;
-	Thu, 12 Dec 2024 17:12:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E88953365;
+	Thu, 12 Dec 2024 17:12:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734023551; cv=none; b=b29zGkY4QHBQDlk8T7tYB2PGZd7EvTELGmEs+1uiL8WMcnXoalSZGazUPGVEtCWQak1A7L5NdGrMPvnQQnsQX8lPKd7oULRPyH29VZo4Mks8MgEQgEGh1sZwn6Mvb/RBEgssu65JqeW4DGzZlSbj7EGmGSpFsok1XTAffTU8GoU=
+	t=1734023554; cv=none; b=aKN7aM0l3idR7inXVDArIz5t0DHzC/zXtljHPXvRg2b0X/7w4/ufvpx2pdl5/9PJ182RQXSGUoPRa5fo23rZibvSwekap1uMXOD7fzeUgSBn6HlicmqMtlXRQPvpezVCn/EClCFnRVpKQQ49cBzCNz8xLMW3w5Hp+5FfLUu4sRM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734023551; c=relaxed/simple;
-	bh=eL7vu4UMtqu8S9yOH7e4B96cH94JlR+RMhbFHQQQeA4=;
+	s=arc-20240116; t=1734023554; c=relaxed/simple;
+	bh=3JgCAw96Vp09b2vjdM6POUedlqsV8IQ04rW4dIf7Odc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ctkBjombdT/qojkao5UwFjSVmZnicK6MlcxiuB1tcWybko0zmLkvne6/3bYFXB2GB+PXha+U4iq3+UW1ag/JCsu89NTo80Tc/QgXf8H/5jbpfShtrIH0WhtSHGxW4qsugZalHTMHHtbfOo4Wg420rrbdcEFDYcmHH4/UO/sA9Lk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tY8vL8qP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q24e3V2E3s2slOl3YNCwMp588lakLQpWqYDpHL8Q4BTUsAGGZvfaZO8WoaitapSx2RgylbyrHxVOGOm0nXWvX1Pecaa24txYjl5xRBhwUssCZHlIfyqReYCW1L47CXgtvbo3JEClPVvhWva+Y59+Zz5sLXp8q9DUWNbv1gDrfS0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s6erdl4x; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tY8vL8qP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF947C4CED0;
-	Thu, 12 Dec 2024 17:12:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s6erdl4x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D49D2C4CED4;
+	Thu, 12 Dec 2024 17:12:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734023551;
-	bh=eL7vu4UMtqu8S9yOH7e4B96cH94JlR+RMhbFHQQQeA4=;
+	s=korg; t=1734023554;
+	bh=3JgCAw96Vp09b2vjdM6POUedlqsV8IQ04rW4dIf7Odc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tY8vL8qPKdTt+0St4WDKhpsnEuoxu43JdU8uwY0JU+bSyf1Bhkr1w7skLOksKpdlA
-	 p7XDSyU78twGWS33pcI/PHIaB1uA2hziF29mt447W4lf++d1/Uoib1T4+SNgb8BbvW
-	 jU+KBfd9YmRynASNXIXEuAXQZkgdFo5vd3FnwyhE=
+	b=s6erdl4xeMYxMpcyCz92b1OzQQDiiVXVkdV5KRz39VKLQ22OP9PY1yNx++Dwb3aI6
+	 G1bNjWeZhpLPBQEFZ99GMCGc2aBskhT3hPIsUZa/NflVp6QpJT4vnGIJz4aChkViaB
+	 hKhifnZt75/yLYI6Q3xWahpSU3xZOJ1BMUd5UV/k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Willem de Bruijn <willemb@google.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Libo Chen <libo.chen.cn@windriver.com>
-Subject: [PATCH 5.15 552/565] fou: remove warn in gue_gro_receive on unsupported protocol
-Date: Thu, 12 Dec 2024 16:02:27 +0100
-Message-ID: <20241212144333.677176813@linuxfoundation.org>
+	Zhang Zekun <zhangzekun11@huawei.com>
+Subject: [PATCH 5.15 553/565] Revert "drm/amdgpu: add missing size check in amdgpu_debugfs_gprwave_read()"
+Date: Thu, 12 Dec 2024 16:02:28 +0100
+Message-ID: <20241212144333.718494081@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144311.432886635@linuxfoundation.org>
 References: <20241212144311.432886635@linuxfoundation.org>
@@ -52,42 +49,31 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Willem de Bruijn <willemb@google.com>
+From: Zhang Zekun <zhangzekun11@huawei.com>
 
-commit dd89a81d850fa9a65f67b4527c0e420d15bf836c upstream.
+This reverts commit aaf6160a4b7f9ee3cd91aa5b3251f5dbe2170f42.
 
-Drop the WARN_ON_ONCE inn gue_gro_receive if the encapsulated type is
-not known or does not have a GRO handler.
+The origin mainline patch fix a buffer overflow issue in
+amdgpu_debugfs_gprwave_read(), but it has not been introduced in kernel
+6.1 and older kernels. This patch add a check in a wrong function in the
+same file.
 
-Such a packet is easily constructed. Syzbot generates them and sets
-off this warning.
-
-Remove the warning as it is expected and not actionable.
-
-The warning was previously reduced from WARN_ON to WARN_ON_ONCE in
-commit 270136613bf7 ("fou: Do WARN_ON_ONCE in gue_gro_receive for bad
-proto callbacks").
-
-Signed-off-by: Willem de Bruijn <willemb@google.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/20240614122552.1649044-1-willemdebruijn.kernel@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Zhang Zekun <zhangzekun11@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Libo Chen <libo.chen.cn@windriver.com>
 ---
- net/ipv4/fou.c |    2 +-
+ drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/ipv4/fou.c
-+++ b/net/ipv4/fou.c
-@@ -453,7 +453,7 @@ next_proto:
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c
+@@ -401,7 +401,7 @@ static ssize_t amdgpu_debugfs_regs_didt_
+ 	ssize_t result = 0;
+ 	int r;
  
- 	offloads = NAPI_GRO_CB(skb)->is_ipv6 ? inet6_offloads : inet_offloads;
- 	ops = rcu_dereference(offloads[proto]);
--	if (WARN_ON_ONCE(!ops || !ops->callbacks.gro_receive))
-+	if (!ops || !ops->callbacks.gro_receive)
- 		goto out;
+-	if (size > 4096 || size & 0x3 || *pos & 0x3)
++	if (size & 0x3 || *pos & 0x3)
+ 		return -EINVAL;
  
- 	pp = call_gro_receive(ops->callbacks.gro_receive, head, skb);
+ 	if (!adev->didt_wreg)
 
 
