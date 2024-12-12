@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0899322C35E;
-	Thu, 12 Dec 2024 16:28:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FFCB22C36B;
+	Thu, 12 Dec 2024 16:28:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734020893; cv=none; b=ksH31ms7hQxW2IPiIH9tZdLxkvxfON1sdjiVyc4NR1R64oy0j8HFAMPmh/bEflT33UiLfabr+BuAR3QiId1+lRmVKaPVPzTOovB27g4yA4g98trN9lmtp2QZKmJLtt9Ep5PW6+cJKhJEOMIbOLu/OV3/VIqncM41uAZ6lEOOVvU=
+	t=1734020896; cv=none; b=p3dtkS9XBPxZM+Teqs4oT9jzKDFU9A901FYjgnyxaOvuLD3e4Dly+LrRGoigU10WOQpn/rObLTGNwqk1J2uR9ZxLHa1/iOpYjxUexVnUxi5PRhOj7D0rmKDPkrEUn3ALmcep02/n/yN+kEPIM9txxdDTz7XMd6DEOVto+RJwB9Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734020893; c=relaxed/simple;
-	bh=UgiDbqa+rN7TAH5SPBmv/t03P4EossAmVInpNEvUah8=;
+	s=arc-20240116; t=1734020896; c=relaxed/simple;
+	bh=b7EU+jL7qgwj70tSapTtmNW6NADHPguBOI7TCQfli3w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P9GZtG19NpIQwWX5OV397Kc3nKbxq5hrFkg8JoEZJZ9Cqus5Uj4QjZ7pUG50fxaWvTATNP0g3s8roi+Jqz7O5oN0BhAVh+qSA0d83vHL/Jg827E7//aU1M4YFVH/5AeRJTPDwLv9i+tD4u9qvsjyyI5aG4m+GQIAGZf/Do9xqG8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GVaHWTMp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Sr6pOO85rkqPHtmjwNE2CF4h8omkG66j+olwsXenEnIIo04tEZdODd6FH6bcz2qEY5KtXLVip2hme4TSie2iMzg/T15ug4uGRbv4eDwsNL94PXKHT2ynRMtDy/6CLphUAmLhiwCStl8GIb2K+NCxtNWyRZM3pQmQasmwnf6M60c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pFLjayuH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GVaHWTMp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27B59C4CECE;
-	Thu, 12 Dec 2024 16:28:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pFLjayuH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7199BC4CECE;
+	Thu, 12 Dec 2024 16:28:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734020892;
-	bh=UgiDbqa+rN7TAH5SPBmv/t03P4EossAmVInpNEvUah8=;
+	s=korg; t=1734020895;
+	bh=b7EU+jL7qgwj70tSapTtmNW6NADHPguBOI7TCQfli3w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GVaHWTMpZcUBE1yVAGyuZsHTHv6/i84wNkWPMzlTSNTEyCrqWQeB+sKTWmbF9ltNN
-	 B1N1stL+5rEFxQZwQG0ljAuxCajG7B7NzyXKsZtrPjcSgrxOJjY4EA0WOOjSCmRkGV
-	 V4NREqkRKspJF2r9+MQ30zzhBkLz9zFUAi/9Ln5Y=
+	b=pFLjayuHEkB4MINdgxqInw/75zVNbL6uykxed6AoqVmejTOMRdvU/6eAFvPn2vQUA
+	 YIVSIV0U5WQH14SCoJBSdOeX3cBcVWiQPpm3bxYeynZavk1QQSRIFKTJczlPUPwNTB
+	 k7sZP5IwNoUA0V+n+7ahxvELM9HFufiRvizHk+is=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Kuro Chung <kuro.chung@ite.com.tw>,
+	Hermes Wu <hermes.wu@ite.com.tw>,
+	Robert Foss <rfoss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 549/772] gpio: grgpio: use a helper variable to store the address of ofdev->dev
-Date: Thu, 12 Dec 2024 15:58:14 +0100
-Message-ID: <20241212144412.648618693@linuxfoundation.org>
+Subject: [PATCH 6.1 583/772] drm/bridge: it6505: update usleep_range for RC circuit charge time
+Date: Thu, 12 Dec 2024 15:58:48 +0100
+Message-ID: <20241212144414.030497802@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -50,111 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+From: Kuro Chung <kuro.chung@ite.com.tw>
 
-[ Upstream commit d036ae41cebdfae92666024163c109b8fef516fa ]
+[ Upstream commit 8814444e62b8a8b573fba2cbbb327d5817b74eb0 ]
 
-Instead of dereferencing the platform device pointer repeatedly, just
-store its address in a helper variable.
+The spec of timing between IVDD/OVDD and SYSRTEN is 10ms, but SYSRSTN RC
+circuit need at least 25ms for rising time, update for match spec
 
-Link: https://lore.kernel.org/r/20241015131832.44678-3-brgl@bgdev.pl
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Stable-dep-of: 050b23d081da ("gpio: grgpio: Add NULL check in grgpio_probe")
+Signed-off-by: Kuro Chung <kuro.chung@ite.com.tw>
+Signed-off-by: Hermes Wu <hermes.wu@ite.com.tw>
+Reviewed-by: Robert Foss <rfoss@kernel.org>
+Signed-off-by: Robert Foss <rfoss@kernel.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240604024405.1122488-1-kuro.chung@ite.com.tw
+Stable-dep-of: c5f3f21728b0 ("drm/bridge: it6505: Fix inverted reset polarity")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpio-grgpio.c | 23 ++++++++++++-----------
- 1 file changed, 12 insertions(+), 11 deletions(-)
+ drivers/gpu/drm/bridge/ite-it6505.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpio/gpio-grgpio.c b/drivers/gpio/gpio-grgpio.c
-index bea0e32c195d4..56b6808c3e4a9 100644
---- a/drivers/gpio/gpio-grgpio.c
-+++ b/drivers/gpio/gpio-grgpio.c
-@@ -328,6 +328,7 @@ static const struct irq_domain_ops grgpio_irq_domain_ops = {
- static int grgpio_probe(struct platform_device *ofdev)
- {
- 	struct device_node *np = ofdev->dev.of_node;
-+	struct device *dev = &ofdev->dev;
- 	void  __iomem *regs;
- 	struct gpio_chip *gc;
- 	struct grgpio_priv *priv;
-@@ -337,7 +338,7 @@ static int grgpio_probe(struct platform_device *ofdev)
- 	int size;
- 	int i;
- 
--	priv = devm_kzalloc(&ofdev->dev, sizeof(*priv), GFP_KERNEL);
-+	priv = devm_kzalloc(dev, sizeof(*priv), GFP_KERNEL);
- 	if (!priv)
- 		return -ENOMEM;
- 
-@@ -346,28 +347,28 @@ static int grgpio_probe(struct platform_device *ofdev)
- 		return PTR_ERR(regs);
- 
- 	gc = &priv->gc;
--	err = bgpio_init(gc, &ofdev->dev, 4, regs + GRGPIO_DATA,
-+	err = bgpio_init(gc, dev, 4, regs + GRGPIO_DATA,
- 			 regs + GRGPIO_OUTPUT, NULL, regs + GRGPIO_DIR, NULL,
- 			 BGPIOF_BIG_ENDIAN_BYTE_ORDER);
- 	if (err) {
--		dev_err(&ofdev->dev, "bgpio_init() failed\n");
-+		dev_err(dev, "bgpio_init() failed\n");
- 		return err;
+diff --git a/drivers/gpu/drm/bridge/ite-it6505.c b/drivers/gpu/drm/bridge/ite-it6505.c
+index 292c4f6da04af..aad750ad4798d 100644
+--- a/drivers/gpu/drm/bridge/ite-it6505.c
++++ b/drivers/gpu/drm/bridge/ite-it6505.c
+@@ -2563,7 +2563,7 @@ static int it6505_poweron(struct it6505 *it6505)
+ 		gpiod_set_value_cansleep(pdata->gpiod_reset, 0);
+ 		usleep_range(1000, 2000);
+ 		gpiod_set_value_cansleep(pdata->gpiod_reset, 1);
+-		usleep_range(10000, 20000);
++		usleep_range(25000, 35000);
  	}
  
- 	priv->regs = regs;
- 	priv->imask = gc->read_reg(regs + GRGPIO_IMASK);
--	priv->dev = &ofdev->dev;
-+	priv->dev = dev;
- 
- 	gc->owner = THIS_MODULE;
- 	gc->to_irq = grgpio_to_irq;
--	gc->label = devm_kasprintf(&ofdev->dev, GFP_KERNEL, "%pOF", np);
-+	gc->label = devm_kasprintf(dev, GFP_KERNEL, "%pOF", np);
- 	gc->base = -1;
- 
- 	err = of_property_read_u32(np, "nbits", &prop);
- 	if (err || prop <= 0 || prop > GRGPIO_MAX_NGPIO) {
- 		gc->ngpio = GRGPIO_MAX_NGPIO;
--		dev_dbg(&ofdev->dev,
--			"No or invalid nbits property: assume %d\n", gc->ngpio);
-+		dev_dbg(dev, "No or invalid nbits property: assume %d\n",
-+			gc->ngpio);
- 	} else {
- 		gc->ngpio = prop;
- 	}
-@@ -379,7 +380,7 @@ static int grgpio_probe(struct platform_device *ofdev)
- 	irqmap = (s32 *)of_get_property(np, "irqmap", &size);
- 	if (irqmap) {
- 		if (size < gc->ngpio) {
--			dev_err(&ofdev->dev,
-+			dev_err(dev,
- 				"irqmap shorter than ngpio (%d < %d)\n",
- 				size, gc->ngpio);
- 			return -EINVAL;
-@@ -389,7 +390,7 @@ static int grgpio_probe(struct platform_device *ofdev)
- 						     &grgpio_irq_domain_ops,
- 						     priv);
- 		if (!priv->domain) {
--			dev_err(&ofdev->dev, "Could not add irq domain\n");
-+			dev_err(dev, "Could not add irq domain\n");
- 			return -EINVAL;
- 		}
- 
-@@ -419,13 +420,13 @@ static int grgpio_probe(struct platform_device *ofdev)
- 
- 	err = gpiochip_add_data(gc, priv);
- 	if (err) {
--		dev_err(&ofdev->dev, "Could not add gpiochip\n");
-+		dev_err(dev, "Could not add gpiochip\n");
- 		if (priv->domain)
- 			irq_domain_remove(priv->domain);
- 		return err;
- 	}
- 
--	dev_info(&ofdev->dev, "regs=0x%p, base=%d, ngpio=%d, irqs=%s\n",
-+	dev_info(dev, "regs=0x%p, base=%d, ngpio=%d, irqs=%s\n",
- 		 priv->regs, gc->base, gc->ngpio, priv->domain ? "on" : "off");
- 
- 	return 0;
+ 	it6505->powered = true;
 -- 
 2.43.0
 
