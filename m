@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DBB21487CD;
-	Thu, 12 Dec 2024 15:28:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10B4D1487CD;
+	Thu, 12 Dec 2024 15:28:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734017331; cv=none; b=jYjcys6dHcgC8njrgEz+22XciFX/yV7QN7ZcXahWkCFnu1uMb1iYYQlwhMk8wBgfqACzhtVf9Xbh1+05lBFcttgtSUWzvASQ0Pl2nFVBoEA3c8bXF8W4uxG270JmcBlB6Uy5fC4ig5mChShSJ0v5+RuQcY/9lOMNEPiOMt7pfAA=
+	t=1734017335; cv=none; b=n+NNKzgEQyygz3l4+8FEO+5pvj0sFbsaB+yvZ8amqfguW8RwLMv7WXxtVr2MftHrAF4sQVp/Daw1hJQNiuk74i6E17o51WHzn2Pw7jca7yeVGoxD0fuebbJXA4Nx6Tr2IgeYWTFew5PoMscGTwHEC63DR8+K2DgZKG1JJqLdqpw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734017331; c=relaxed/simple;
-	bh=zYevgBt9OduXC7rEltBHWh4Wcwe/1tDrc1Q/h0fc41o=;
+	s=arc-20240116; t=1734017335; c=relaxed/simple;
+	bh=4ONwU1gbgJHH7imbzsUboVMqnlXUo1HWDA6ns5NM2ok=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ppo+do2MflMofjhvc7NX4nTfTFWa11PuqdPMDEPFa4fqMmhJERnf5Ky686+PCHwClFBTfZ7itYv0xkU0dTR2ongmVeitMpDRtsvV1ou2y4/MuCUgikKiOLFuwjaGKVYRolVP+TvllEfg5fIFojv7hFxzEtTHnIBUelfcsfEaWQE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Df1VpRRE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=am5+18QhvciI/9BzSlAX0xXJ5OJHsWMnEMrmaS/3IJDpDHAjhPV4+/9dUwYgLiuy01wcBgJgO6ZhW3stNQp3ZBL+x8wMYiIOsv8g6Lsd1UQMplAcVgFLR2KVNOflcGXkTeDcoGplyqk9/AZSJz90/aQ8rCoYQ+OSqbJnioQcdGc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PXhmFd05; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Df1VpRRE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE33AC4CECE;
-	Thu, 12 Dec 2024 15:28:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PXhmFd05"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7129EC4CECE;
+	Thu, 12 Dec 2024 15:28:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734017331;
-	bh=zYevgBt9OduXC7rEltBHWh4Wcwe/1tDrc1Q/h0fc41o=;
+	s=korg; t=1734017334;
+	bh=4ONwU1gbgJHH7imbzsUboVMqnlXUo1HWDA6ns5NM2ok=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Df1VpRRESWs6AG2FyKMWUW/o389v0h0Bi/eN/thhjjHlIcLoVkvGNJExQ2krIkQNT
-	 dFpwU7Ub4aTswF3c5ZZ3xBefAZEeWk0AH5P+rTk6E3ZKeL5CbpsifyLChzEXtaiL2E
-	 qcwyu3bFq5dcCfYhctunBvnjlTCXSvsSpkKOdkp4=
+	b=PXhmFd05SWkmWpBs5Eoog3MhmL3JM7jLWFps2Ikc9u8HFXoo5GBBa4NfYp3O04JyW
+	 L+BjBbmJexixB3Ud/BiO4OWApXlvOCR6JDQnZ5NqzdhVlHAf2PhE/BnEPMlOnJ0j9Y
+	 G3yxEwHOXsP4fMJZtYL9NKcoteHNwWKvBP1udXfM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	David Woodhouse <dwmw@amazon.co.uk>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 449/466] tracing/eprobe: Fix to release eprobe when failed to add dyn_event
-Date: Thu, 12 Dec 2024 16:00:18 +0100
-Message-ID: <20241212144324.601049369@linuxfoundation.org>
+Subject: [PATCH 6.12 450/466] x86: Fix build regression with CONFIG_KEXEC_JUMP enabled
+Date: Thu, 12 Dec 2024 16:00:19 +0100
+Message-ID: <20241212144324.640446550@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144306.641051666@linuxfoundation.org>
 References: <20241212144306.641051666@linuxfoundation.org>
@@ -50,38 +53,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+From: Damien Le Moal <dlemoal@kernel.org>
 
-[ Upstream commit 494b332064c0ce2f7392fa92632bc50191c1b517 ]
+[ Upstream commit aeb68937614f4aeceaaa762bd7f0212ce842b797 ]
 
-Fix eprobe event to unregister event call and release eprobe when it fails
-to add dynamic event correctly.
+Build 6.13-rc12 for x86_64 with gcc 14.2.1 fails with the error:
 
-Link: https://lore.kernel.org/all/173289886698.73724.1959899350183686006.stgit@devnote2/
+  ld: vmlinux.o: in function `virtual_mapped':
+  linux/arch/x86/kernel/relocate_kernel_64.S:249:(.text+0x5915b): undefined reference to `saved_context_gdt_desc'
 
-Fixes: 7491e2c44278 ("tracing: Add a probe that attaches to trace events")
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+when CONFIG_KEXEC_JUMP is enabled.
+
+This was introduced by commit 07fa619f2a40 ("x86/kexec: Restore GDT on
+return from ::preserve_context kexec") which introduced a use of
+saved_context_gdt_desc without a declaration for it.
+
+Fix that by including asm/asm-offsets.h where saved_context_gdt_desc
+is defined (indirectly in include/generated/asm-offsets.h which
+asm/asm-offsets.h includes).
+
+Fixes: 07fa619f2a40 ("x86/kexec: Restore GDT on return from ::preserve_context kexec")
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Acked-by: Borislav Petkov (AMD) <bp@alien8.de>
+Acked-by: David Woodhouse <dwmw@amazon.co.uk>
+Closes: https://lore.kernel.org/oe-kbuild-all/202411270006.ZyyzpYf8-lkp@intel.com/
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace_eprobe.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ arch/x86/kernel/relocate_kernel_64.S | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/kernel/trace/trace_eprobe.c b/kernel/trace/trace_eprobe.c
-index ebda68ee9abff..be8be0c1aaf0f 100644
---- a/kernel/trace/trace_eprobe.c
-+++ b/kernel/trace/trace_eprobe.c
-@@ -963,6 +963,11 @@ static int __trace_eprobe_create(int argc, const char *argv[])
- 		goto error;
- 	}
- 	ret = dyn_event_add(&ep->devent, &ep->tp.event->call);
-+	if (ret < 0) {
-+		trace_probe_unregister_event_call(&ep->tp);
-+		mutex_unlock(&event_mutex);
-+		goto error;
-+	}
- 	mutex_unlock(&event_mutex);
- 	return ret;
- parse_error:
+diff --git a/arch/x86/kernel/relocate_kernel_64.S b/arch/x86/kernel/relocate_kernel_64.S
+index 1236f25fc8d12..540443d699e3c 100644
+--- a/arch/x86/kernel/relocate_kernel_64.S
++++ b/arch/x86/kernel/relocate_kernel_64.S
+@@ -13,6 +13,7 @@
+ #include <asm/pgtable_types.h>
+ #include <asm/nospec-branch.h>
+ #include <asm/unwind_hints.h>
++#include <asm/asm-offsets.h>
+ 
+ /*
+  * Must be relocatable PIC code callable as a C function, in particular
 -- 
 2.43.0
 
