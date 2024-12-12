@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 453C8222D7C;
-	Thu, 12 Dec 2024 17:38:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45CE22210EA;
+	Thu, 12 Dec 2024 17:38:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734025084; cv=none; b=VJbvMTwtGPTzd4peLndl+BkLCLsXn2fA0HmJt6gp2R4zu2Py0rfuNu2BzeOUs3BArdSzCHB56CPwVpYnDxCFXHSk5e5fKhoh7vTSEDOXyMw+S+IhxM9SrPydJ4Oi7jAZlSFR0V4/WvG2EbNOYXeqcAWdNsYoAYDeA0x9aO+JTTY=
+	t=1734025087; cv=none; b=EZuz95IIwyFY8sbfkdwMPaEczzp+6l9n0WhfmF1wY0pr8Vf0auA/BB2oVNLwZzABDtLNSxicBPtAYwGAw3dqZjK4Eg8pBmRzMXy9v11JqRYTLBUUWJ+Nlv1lISQH0s2+jB3r/eCIJD8zTkecH0lvHrrhR/7qbfYPfamSj//9it4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734025084; c=relaxed/simple;
-	bh=2N4K+dZDRCR8+U94ZWB3OnruyYrmTnLakWSKF+hlVAE=;
+	s=arc-20240116; t=1734025087; c=relaxed/simple;
+	bh=7FbK5oxjMDBN0ZfeRXhhxwhgzcgzk8UpVq3xBjAEBl8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oH57vNDTEkH/VtMBUdBuRb80FPG2KBCx0+tTrpe6fz5K/R582flBsfR+OEMmkXo13qFRCEnl5AWBniVHcxOolQuxKowfrHGfECpFZVi/y21rRU1+ZMQjR5Ia3k+w5/hmrYAJr7sSYyeEceS28jSscMBZ9jy7VqPTgHYug9a0inQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WKWXBTec; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K8SjRkFxROL2h/UYwn4L480u6qQNZ94VMBzY2Yv26kqV2U4WSWXLW0Uc+sWF0eR5c1h7Z7oA9MsXcDa30xafQ7OYFJaBAAT/cT5dGn/yXrRPR7szGNccgJ3Um6eXzdcS60lMwQkI/p0EXjDNjLzKiXE/a+sGPWrMihyGuD337LU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1nSPTGP4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WKWXBTec"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF87CC4CED0;
-	Thu, 12 Dec 2024 17:38:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1nSPTGP4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC649C4CECE;
+	Thu, 12 Dec 2024 17:38:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734025084;
-	bh=2N4K+dZDRCR8+U94ZWB3OnruyYrmTnLakWSKF+hlVAE=;
+	s=korg; t=1734025087;
+	bh=7FbK5oxjMDBN0ZfeRXhhxwhgzcgzk8UpVq3xBjAEBl8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WKWXBTec8LErxDvt9mkfA0ChFVxHdzmMS1EOiHeyTMUz1UBERWZaoTPJRZCFucWZg
-	 3BRK3MAZ+53tekY5h/BpS7pLq+SVFFlV28u6fPT9+7jZu0oEMQ+6jVzYuHEzqmwA/Z
-	 5yfbV34g+R1kwDAyMS72wX27L2HT4gdzmF51/KbI=
+	b=1nSPTGP4yWu68jOXlV5zLr8aJa1wBMcgCjVOLBILP/TRc2SrtI/22paQMO/SllUMz
+	 e+Kpk6LNxgIeOu/Vax+LSbELKXDHHU6KUILLMxK1YyYq15Fvw87L+OzekJJqEGcziv
+	 WEnS+3ByQVpOBztDirSaDhDh5/fWpnMKwnVTPRpM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gregory Price <gourry@gourry.net>,
-	Ilias Apalodimas <ilias.apalodimas@linaro.org>,
-	Ard Biesheuvel <ardb@kernel.org>,
+	Andre Przywara <andre.przywara@arm.com>,
+	Chen-Yu Tsai <wens@csie.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 051/321] tpm: fix signed/unsigned bug when checking event logs
-Date: Thu, 12 Dec 2024 15:59:29 +0100
-Message-ID: <20241212144232.010735572@linuxfoundation.org>
+Subject: [PATCH 5.4 052/321] ARM: dts: cubieboard4: Fix DCDC5 regulator constraints
+Date: Thu, 12 Dec 2024 15:59:30 +0100
+Message-ID: <20241212144232.049327478@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144229.291682835@linuxfoundation.org>
 References: <20241212144229.291682835@linuxfoundation.org>
@@ -52,81 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gregory Price <gourry@gourry.net>
+From: Andre Przywara <andre.przywara@arm.com>
 
-[ Upstream commit e6d654e9f5a97742cfe794b1c4bb5d3fb2d25e98 ]
+[ Upstream commit dd36ad71ad65968f97630808bc8d605c929b128e ]
 
-A prior bugfix that fixes a signed/unsigned error causes
-another signed unsigned error.
+The DCDC5 voltage rail in the X-Powers AXP809 PMIC has a resolution of
+50mV, so the currently enforced limits of 1.475 and 1.525 volts cannot
+be set, when the existing regulator value is beyond this range.
 
-A situation where log_tbl->size is invalid can cause the
-size passed to memblock_reserve to become negative.
+This will lead to the whole regulator driver to give up and fail
+probing, which in turn will hang the system, as essential devices depend
+on the PMIC.
+In this case a bug in U-Boot set the voltage to 1.75V (meant for DCDC4),
+and the AXP driver's attempt to correct this lead to this error:
+==================
+[    4.447653] axp20x-rsb sunxi-rsb-3a3: AXP20X driver loaded
+[    4.450066] vcc-dram: Bringing 1750000uV into 1575000-1575000uV
+[    4.460272] vcc-dram: failed to apply 1575000-1575000uV constraint: -EINVAL
+[    4.474788] axp20x-regulator axp20x-regulator.0: Failed to register dcdc5
+[    4.482276] axp20x-regulator axp20x-regulator.0: probe with driver axp20x-regulator failed with error -22
+==================
 
-log_size from the main event log is an unsigned int, and
-the code reduces to the following
+Set the limits to values that can be programmed, so any correction will
+be successful.
 
-u64 value = (int)unsigned_value;
-
-This results in sign extension, and the value sent to
-memblock_reserve becomes effectively negative.
-
-Fixes: be59d57f9806 ("efi/tpm: Fix sanity check of unsigned tbl_size being less than zero")
-Signed-off-by: Gregory Price <gourry@gourry.net>
-Reviewed-by: Ilias Apalodimas <ilias.apalodimas@linaro.org>
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Signed-off-by: Andre Przywara <andre.przywara@arm.com>
+Fixes: 1e1dea72651b ("ARM: dts: sun9i: cubieboard4: Add AXP809 PMIC device node and regulators")
+Link: https://patch.msgid.link/20241007222916.19013-1-andre.przywara@arm.com
+Signed-off-by: Chen-Yu Tsai <wens@csie.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/efi/tpm.c | 17 +++++++++--------
- 1 file changed, 9 insertions(+), 8 deletions(-)
+ arch/arm/boot/dts/sun9i-a80-cubieboard4.dts | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/firmware/efi/tpm.c b/drivers/firmware/efi/tpm.c
-index e8d69bd548f3f..9c3613e6af158 100644
---- a/drivers/firmware/efi/tpm.c
-+++ b/drivers/firmware/efi/tpm.c
-@@ -40,7 +40,8 @@ int __init efi_tpm_eventlog_init(void)
- {
- 	struct linux_efi_tpm_eventlog *log_tbl;
- 	struct efi_tcg2_final_events_table *final_tbl;
--	int tbl_size;
-+	unsigned int tbl_size;
-+	int final_tbl_size;
- 	int ret = 0;
+diff --git a/arch/arm/boot/dts/sun9i-a80-cubieboard4.dts b/arch/arm/boot/dts/sun9i-a80-cubieboard4.dts
+index 484b93df20cb6..c7a3bf3cc3407 100644
+--- a/arch/arm/boot/dts/sun9i-a80-cubieboard4.dts
++++ b/arch/arm/boot/dts/sun9i-a80-cubieboard4.dts
+@@ -280,8 +280,8 @@ reg_dcdc4: dcdc4 {
  
- 	if (efi.tpm_log == EFI_INVALID_TABLE_ADDR) {
-@@ -80,26 +81,26 @@ int __init efi_tpm_eventlog_init(void)
- 		goto out;
- 	}
+ 			reg_dcdc5: dcdc5 {
+ 				regulator-always-on;
+-				regulator-min-microvolt = <1425000>;
+-				regulator-max-microvolt = <1575000>;
++				regulator-min-microvolt = <1450000>;
++				regulator-max-microvolt = <1550000>;
+ 				regulator-name = "vcc-dram";
+ 			};
  
--	tbl_size = 0;
-+	final_tbl_size = 0;
- 	if (final_tbl->nr_events != 0) {
- 		void *events = (void *)efi.tpm_final_log
- 				+ sizeof(final_tbl->version)
- 				+ sizeof(final_tbl->nr_events);
- 
--		tbl_size = tpm2_calc_event_log_size(events,
--						    final_tbl->nr_events,
--						    log_tbl->log);
-+		final_tbl_size = tpm2_calc_event_log_size(events,
-+							  final_tbl->nr_events,
-+							  log_tbl->log);
- 	}
- 
--	if (tbl_size < 0) {
-+	if (final_tbl_size < 0) {
- 		pr_err(FW_BUG "Failed to parse event in TPM Final Events Log\n");
- 		ret = -EINVAL;
- 		goto out_calc;
- 	}
- 
- 	memblock_reserve(efi.tpm_final_log,
--			 tbl_size + sizeof(*final_tbl));
--	efi_tpm_final_log_size = tbl_size;
-+			 final_tbl_size + sizeof(*final_tbl));
-+	efi_tpm_final_log_size = final_tbl_size;
- 
- out_calc:
- 	early_memunmap(final_tbl, sizeof(*final_tbl));
 -- 
 2.43.0
 
