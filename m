@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 538AF223E81;
-	Thu, 12 Dec 2024 16:19:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97F32223E9D;
+	Thu, 12 Dec 2024 16:19:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734020365; cv=none; b=Jnx3l0ewm5llEKLLq3ZuWrua0sGJULEAuCrIW/77XobMu6a4i4WKDKCaw2H1FXhLudalY8H1XOeLp5CsKfBMlAds8aE+N2HYFyNKWHByYpOP2t/PCH4yZMK5Tl0CeTaKMDH23LWjjZFV4RqEy/UgL2OePx4t2Pdrrnhd2h8JZ/I=
+	t=1734020369; cv=none; b=bnQhQkthiPAZawvPjCbuB3Uad0+U4lAhlv+GUKP/4glczxowQi2hla3nxNcKhW4irHWSmYfFy1BuWltLwaJWVBfU4tEcC1WupqPS+raihgJpoX8OeTOTk8rBPUXjm57itHDXNGTgsONXAFuwHt3sbqbJ7WxkWTUSzf1rqZzqkvg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734020365; c=relaxed/simple;
-	bh=ex5dRL/V0Uid0vXFx3i+2pthC2MITxOAHn3mDCFNt04=;
+	s=arc-20240116; t=1734020369; c=relaxed/simple;
+	bh=zRx4iQUZROuHTEF16Yv6NLu8LDk8ueMdTOhMrlWY28E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XBd0jiLcW7bnk2dB+J5jOrTOVIvLp5G8c7GW0EB8qJvtbFIsFvnEmKpxzYJzb10ia4vV1RNBs0jmezkVoxm3EAS3nvsgPae7fIDlCmCTW3weE9E86Ug61bB6GbypQZ8E7j+ZzzyB67EGrfJFFVY7zl4ysfHefE85VXJrs0hrvWY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vSW5SgVB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Fj0CWzwb+fuUkGlfWb6IAG10cuiauu2xFkqrE5HwMdrSN3HM79E2Rau5rd0TyhXM18UbLnSHs1cdHi8eHNrCRq7DY3zYX2LTWz2nWjb6cYqVca19vNpXumGJmYKlZfFS6cuu3PD1JoSvwzo/Bch8QLvmKNqd6z9/9OdjmoUptR4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RNLv4Ez6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vSW5SgVB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFC39C4CECE;
-	Thu, 12 Dec 2024 16:19:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RNLv4Ez6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CEE5C4CED3;
+	Thu, 12 Dec 2024 16:19:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734020365;
-	bh=ex5dRL/V0Uid0vXFx3i+2pthC2MITxOAHn3mDCFNt04=;
+	s=korg; t=1734020369;
+	bh=zRx4iQUZROuHTEF16Yv6NLu8LDk8ueMdTOhMrlWY28E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vSW5SgVBqZErU+6ETKaao95wFojlUAr57QPC9KFo3pIXxCSREOxkW88Jpd8a7VfG1
-	 a+DKIDx4ckDfp2pcJEYfxQKGWiERreLH7O9WSCfHyqQ5vtr37k1Hj9//H5Xgc3fSCy
-	 wMpr2vIGi2kLoNrq90PMtl9ULFZmkd6gf7XBQ+w8=
+	b=RNLv4Ez6yj0O4uhDmypYTcvnoGJ3O48mIN1sn3e3RK3Qhfhtn5bawbI3+z9b3Shbf
+	 WQjtpg9zg8xWSg0sF1GUyDfOQadB44RXaP3YQMxHnmsNdVWQMyrD/OTgUQhHdUGc6y
+	 sSEQ7tScFaU5rC+93+LNEeolkgFFMFUFoeNdyZ7Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 448/772] sh: intc: Fix use-after-free bug in register_intc_controller()
-Date: Thu, 12 Dec 2024 15:56:33 +0100
-Message-ID: <20241212144408.434216922@linuxfoundation.org>
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Andy Shevchenko <andy@kernel.org>,
+	"James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>,
+	Kees Cook <kees@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.1 422/772] lib: string_helpers: silence snprintf() output truncation warning
+Date: Thu, 12 Dec 2024 15:56:07 +0100
+Message-ID: <20241212144407.350896810@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -51,46 +53,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-[ Upstream commit 63e72e551942642c48456a4134975136cdcb9b3c ]
+commit a508ef4b1dcc82227edc594ffae583874dd425d7 upstream.
 
-In the error handling for this function, d is freed without ever
-removing it from intc_list which would lead to a use after free.
-To fix this, let's only add it to the list after everything has
-succeeded.
+The output of ".%03u" with the unsigned int in range [0, 4294966295] may
+get truncated if the target buffer is not 12 bytes. This can't really
+happen here as the 'remainder' variable cannot exceed 999 but the
+compiler doesn't know it. To make it happy just increase the buffer to
+where the warning goes away.
 
-Fixes: 2dcec7a988a1 ("sh: intc: set_irq_wake() support")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-Signed-off-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 3c9f3681d0b4 ("[SCSI] lib: add generic helper to print sizes rounded to the correct SI range")
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Reviewed-by: Andy Shevchenko <andy@kernel.org>
+Cc: James E.J. Bottomley <James.Bottomley@HansenPartnership.com>
+Cc: Kees Cook <kees@kernel.org>
+Cc: stable@vger.kernel.org
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Link: https://lore.kernel.org/r/20241101205453.9353-1-brgl@bgdev.pl
+Signed-off-by: Kees Cook <kees@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/sh/intc/core.c | 2 +-
+ lib/string_helpers.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/sh/intc/core.c b/drivers/sh/intc/core.c
-index ca4f4ca413f11..b19388b349be3 100644
---- a/drivers/sh/intc/core.c
-+++ b/drivers/sh/intc/core.c
-@@ -209,7 +209,6 @@ int __init register_intc_controller(struct intc_desc *desc)
- 		goto err0;
+--- a/lib/string_helpers.c
++++ b/lib/string_helpers.c
+@@ -52,7 +52,7 @@ void string_get_size(u64 size, u64 blk_s
+ 	static const unsigned int rounding[] = { 500, 50, 5 };
+ 	int i = 0, j;
+ 	u32 remainder = 0, sf_cap;
+-	char tmp[8];
++	char tmp[12];
+ 	const char *unit;
  
- 	INIT_LIST_HEAD(&d->list);
--	list_add_tail(&d->list, &intc_list);
- 
- 	raw_spin_lock_init(&d->lock);
- 	INIT_RADIX_TREE(&d->tree, GFP_ATOMIC);
-@@ -369,6 +368,7 @@ int __init register_intc_controller(struct intc_desc *desc)
- 
- 	d->skip_suspend = desc->skip_syscore_suspend;
- 
-+	list_add_tail(&d->list, &intc_list);
- 	nr_intc_controllers++;
- 
- 	return 0;
--- 
-2.43.0
-
+ 	tmp[0] = '\0';
 
 
