@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1A49213E6F;
-	Thu, 12 Dec 2024 17:38:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0961222D72;
+	Thu, 12 Dec 2024 17:38:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734025110; cv=none; b=bgR1YTd1Y2Z1nNnxdb0H8Od8PltwN4MkaXefZUC5d4PKsG1UFq82yAidQo7lrIj6tjJlHpfXYHaixQiaXuVg0cSj6UAFmK4QWtzBk6UR5Wtssvm+d39CGk/R74JdBlENE3rqp3t9DpqsB/IzFniZKunTY85hbX69JRxEmkuFe5E=
+	t=1734025113; cv=none; b=hrJNq0yyP1yhGG7mSYvJxRxwqzScd2Tq6NMOhQB+Pm+RPRhfPDGrPdKiQnq3gL0Mh7rCznwZYKbg9PKWyDd9IVc/9VZlgBhGFph0IacDV3LCPyDaufC2SUXH+jNaaV8W58VNkttqKQZqaAW9wtwhzGNjTWGa0SuAqtEbUfws+jU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734025110; c=relaxed/simple;
-	bh=s6vmPcXochGrHCjnt7iJ3HOTN3Q65YLNUJ2i77x/hbU=;
+	s=arc-20240116; t=1734025113; c=relaxed/simple;
+	bh=J1uUGLE3cO9Zw2/YYTvDx+peOkkICcVvwKcufkLyh9k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lYdilJighZCe4KDzddO63Olx7q0RKdsIpkMPUS2CJaXOsOFdOtbiWMnj8sTOEyv49G4DpB+kpWL/UxujR9iGmLm3lHWZqDEV9BVTu9aSmZ1Ep7XA5NORBLoCCr1XPqF9xnygKCUFwvzY/PXwCOVBEGFKgUwEkpn1xQrpLTFdpD4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sxgAhvQm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LBRuJijDdW12G4m+lOA9D+FNKoQAK2yPFmOhghKh7Q66l2GD1Jp5ZQ9ijVwb1b5bhqTSVd7YLSSKuXyUPrjgl4yREUHalOgzqRzvwlS2RHCFdULrn6HYVdfvc1Zk8Ua4hGGQQ1cN2U2IURFdgm/J2IIdGITptzn6kkhZIctUaCE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SNEnDwdR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sxgAhvQm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3372BC4CECE;
-	Thu, 12 Dec 2024 17:38:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SNEnDwdR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05EF7C4CECE;
+	Thu, 12 Dec 2024 17:38:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734025110;
-	bh=s6vmPcXochGrHCjnt7iJ3HOTN3Q65YLNUJ2i77x/hbU=;
+	s=korg; t=1734025113;
+	bh=J1uUGLE3cO9Zw2/YYTvDx+peOkkICcVvwKcufkLyh9k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sxgAhvQmtl3u865GnHuF5UmQawybE7qQ1IoDZVi/ZE1KMANrRkjbJb13tXk5vcnsX
-	 pNJC7MQxjEyCA0lPSbXclrLPqyctu6DBK510zycZw/E2YZA3vzZzNolZrSmivUnWGD
-	 Zo+wuzJ6kjTlIBgVqDF2QDkM/MJPkMqY9mGEdPm0=
+	b=SNEnDwdRDe32FxW6RadVwpfZTSDY2P2lIoRZVMNH7wzU3z1XHPnPwZv8hewvGU8Yw
+	 Z3HOm4e4TQXANI4hnqjYiBYZk3D3i2cVY6eeQ+QeYN9cKSBi+kvtFF//66Y6H95yHT
+	 H8/3KHwVx8jW+B58QX60pwf0WxJGQRVYzkXnOicU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yi Yang <yiyang13@huawei.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Jinjie Ruan <ruanjinjie@huawei.com>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 042/321] crypto: pcrypt - Call crypto layer directly when padata_do_parallel() return -EBUSY
-Date: Thu, 12 Dec 2024 15:59:20 +0100
-Message-ID: <20241212144231.656713905@linuxfoundation.org>
+Subject: [PATCH 5.4 060/321] drm/imx/ipuv3: Use IRQF_NO_AUTOEN flag in request_irq()
+Date: Thu, 12 Dec 2024 15:59:38 +0100
+Message-ID: <20241212144232.363676167@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144229.291682835@linuxfoundation.org>
 References: <20241212144229.291682835@linuxfoundation.org>
@@ -51,56 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yi Yang <yiyang13@huawei.com>
+From: Jinjie Ruan <ruanjinjie@huawei.com>
 
-[ Upstream commit 662f2f13e66d3883b9238b0b96b17886179e60e2 ]
+[ Upstream commit 40004709a3d3b07041a473a163ca911ef04ab8bd ]
 
-Since commit 8f4f68e788c3 ("crypto: pcrypt - Fix hungtask for
-PADATA_RESET"), the pcrypt encryption and decryption operations return
--EAGAIN when the CPU goes online or offline. In alg_test(), a WARN is
-generated when pcrypt_aead_decrypt() or pcrypt_aead_encrypt() returns
--EAGAIN, the unnecessary panic will occur when panic_on_warn set 1.
-Fix this issue by calling crypto layer directly without parallelization
-in that case.
+disable_irq() after request_irq() still has a time gap in which
+interrupts can come. request_irq() with IRQF_NO_AUTOEN flag will
+disable IRQ auto-enable when request IRQ.
 
-Fixes: 8f4f68e788c3 ("crypto: pcrypt - Fix hungtask for PADATA_RESET")
-Signed-off-by: Yi Yang <yiyang13@huawei.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: 47b1be5c0f4e ("staging: imx/drm: request irq only after adding the crtc")
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+Reviewed-by: Philipp Zabel <p.zabel@pengutronix.de>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240912083020.3720233-4-ruanjinjie@huawei.com
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- crypto/pcrypt.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/imx/ipuv3-crtc.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/crypto/pcrypt.c b/crypto/pcrypt.c
-index 63e64164900e8..9e4179f5717e6 100644
---- a/crypto/pcrypt.c
-+++ b/crypto/pcrypt.c
-@@ -118,8 +118,10 @@ static int pcrypt_aead_encrypt(struct aead_request *req)
- 	err = padata_do_parallel(ictx->psenc, padata, &ctx->cb_cpu);
- 	if (!err)
- 		return -EINPROGRESS;
--	if (err == -EBUSY)
--		return -EAGAIN;
-+	if (err == -EBUSY) {
-+		/* try non-parallel mode */
-+		return crypto_aead_encrypt(creq);
-+	}
+diff --git a/drivers/gpu/drm/imx/ipuv3-crtc.c b/drivers/gpu/drm/imx/ipuv3-crtc.c
+index f19264e91d4db..49a71ee5c583c 100644
+--- a/drivers/gpu/drm/imx/ipuv3-crtc.c
++++ b/drivers/gpu/drm/imx/ipuv3-crtc.c
+@@ -411,14 +411,12 @@ static int ipu_crtc_init(struct ipu_crtc *ipu_crtc,
+ 	}
  
- 	return err;
- }
-@@ -167,8 +169,10 @@ static int pcrypt_aead_decrypt(struct aead_request *req)
- 	err = padata_do_parallel(ictx->psdec, padata, &ctx->cb_cpu);
- 	if (!err)
- 		return -EINPROGRESS;
--	if (err == -EBUSY)
--		return -EAGAIN;
-+	if (err == -EBUSY) {
-+		/* try non-parallel mode */
-+		return crypto_aead_decrypt(creq);
-+	}
+ 	ipu_crtc->irq = ipu_plane_irq(ipu_crtc->plane[0]);
+-	ret = devm_request_irq(ipu_crtc->dev, ipu_crtc->irq, ipu_irq_handler, 0,
+-			"imx_drm", ipu_crtc);
++	ret = devm_request_irq(ipu_crtc->dev, ipu_crtc->irq, ipu_irq_handler,
++			       IRQF_NO_AUTOEN, "imx_drm", ipu_crtc);
+ 	if (ret < 0) {
+ 		dev_err(ipu_crtc->dev, "irq request failed with %d.\n", ret);
+ 		goto err_put_plane1_res;
+ 	}
+-	/* Only enable IRQ when we actually need it to trigger work. */
+-	disable_irq(ipu_crtc->irq);
  
- 	return err;
- }
+ 	return 0;
+ 
 -- 
 2.43.0
 
