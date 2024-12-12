@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7F80222D7B;
-	Thu, 12 Dec 2024 16:37:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5122C223331;
+	Thu, 12 Dec 2024 16:38:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734021479; cv=none; b=lIIUgUdUzV+RdLuteCCb/zydTHK170XSwKAkYBhCvW9zl87Hy9vYq5Mpn/xQmVOTvjILeS0YSAlYTBBMITnS+wX5rIO62WAJX5F0iU7517MklhE8+B9FdwSSEAhClB84vYkGTY37J7VL6lB0hJyYQYW/ofjlohzkhMPir7k6rTI=
+	t=1734021482; cv=none; b=enM7qTvJ1nXfiJqn1RyfvlNl2wYd6AQXkUlB/1oeIPTyvNDwaKGEBDTzk+E1KP4n2jRN/rdaIeS8GzM6KNWMCqq6nMufN/q6mdFNLpENLN3MBb3dzd2fgNncxJh6nlFGqwm1cv7+jmRVRnHYpddUrmxkiFzJZrly2VjzGrvr97A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734021479; c=relaxed/simple;
-	bh=U9zxT8IagUdZ7J3OPraUJFqkNn1P9zNTjf8QNCeCQUc=;
+	s=arc-20240116; t=1734021482; c=relaxed/simple;
+	bh=EMAjHTDsIfRkbwQwtlCvMPhgNaY78EMnAqVTmrBIyag=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q2lh94P8t95an60q8/HctQmLoypQxBCan03AqsSC4hGHKluKp9akC5cFCAw+Hr8Kt9Qbd7+5GUuVV9yRxUDIgyk5GEKTVrlFPtsecWj7l9XSSN/vaVXbl6OT3DPTgOabMrsvK4t9R7w+R8+uaIWVX6gQjUNarq5+AkV6nfUXMRw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kuJ9klj/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XyyrGe7UfftufdlDMcLcpDNPrzPfzqctACg6yxsGRI4ZZDqGZ/rW9MAMYkL9u5g1Pm9BOWem4984iPCM8EKfCJHK0NQ7difn4oz+GdiB+oHfPeNC4BXayt8gjYaxb6hcN4r8S8wkB+/9XbEJXQutfdJx3NL7LFsrrkyW5OEUK9o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tq1EXzNC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kuJ9klj/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EC89C4CEDD;
-	Thu, 12 Dec 2024 16:37:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tq1EXzNC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90775C4CECE;
+	Thu, 12 Dec 2024 16:38:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734021478;
-	bh=U9zxT8IagUdZ7J3OPraUJFqkNn1P9zNTjf8QNCeCQUc=;
+	s=korg; t=1734021482;
+	bh=EMAjHTDsIfRkbwQwtlCvMPhgNaY78EMnAqVTmrBIyag=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kuJ9klj/I3xwkIzindYk6eZcm6vU6UzxlFfLHMl7xT/bpzu82E1Li6CbXGYPhqdso
-	 sIi7Ct9SHSXOPKIxJ4AFIge/5e4qQBraHMJuRXlwKJ8TFcjapUmN3XMJXcJQ0JyN3N
-	 9JtDFfFEcmkqEcIqo6Lw1eB5UM158C4/zOEZCym4=
+	b=Tq1EXzNCxqyvK76TxHh33U7yO8kffVngVLRqhoIZ1smef34JadF//vBn92mb5gGWr
+	 5c3NSK9UPUmeyVqy+qnmMenTXNFtPg+VLitay40PsFApnwIwoZLR087U++G3cOZ+bI
+	 NAAPeWGuuHl5CIFD+GXfX2kadEjwMSstsUzapDTo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Huacai Chen <chenhuacai@loongson.cn>,
+	Peter Chen <peter.chen@kernel.com>,
+	Xu Yang <xu.yang_2@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 719/772] LoongArch: Fix sleeping in atomic context for PREEMPT_RT
-Date: Thu, 12 Dec 2024 16:01:04 +0100
-Message-ID: <20241212144419.592857078@linuxfoundation.org>
+Subject: [PATCH 6.1 720/772] usb: chipidea: udc: handle USB Error Interrupt if IOC not set
+Date: Thu, 12 Dec 2024 16:01:05 +0100
+Message-ID: <20241212144419.636800130@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -50,78 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Huacai Chen <chenhuacai@loongson.cn>
+From: Xu Yang <xu.yang_2@nxp.com>
 
-[ Upstream commit 88fd2b70120d52c1010257d36776876941375490 ]
+[ Upstream commit 548f48b66c0c5d4b9795a55f304b7298cde2a025 ]
 
-Commit bab1c299f3945ffe79 ("LoongArch: Fix sleeping in atomic context in
-setup_tlb_handler()") changes the gfp flag from GFP_KERNEL to GFP_ATOMIC
-for alloc_pages_node(). However, for PREEMPT_RT kernels we can still get
-a "sleeping in atomic context" error:
+As per USBSTS register description about UEI:
 
-[    0.372259] BUG: sleeping function called from invalid context at kernel/locking/spinlock_rt.c:48
-[    0.372266] in_atomic(): 1, irqs_disabled(): 1, non_block: 0, pid: 0, name: swapper/1
-[    0.372268] preempt_count: 1, expected: 0
-[    0.372270] RCU nest depth: 1, expected: 1
-[    0.372272] 3 locks held by swapper/1/0:
-[    0.372274]  #0: 900000000c9f5e60 (&pcp->lock){+.+.}-{3:3}, at: get_page_from_freelist+0x524/0x1c60
-[    0.372294]  #1: 90000000087013b8 (rcu_read_lock){....}-{1:3}, at: rt_spin_trylock+0x50/0x140
-[    0.372305]  #2: 900000047fffd388 (&zone->lock){+.+.}-{3:3}, at: __rmqueue_pcplist+0x30c/0xea0
-[    0.372314] irq event stamp: 0
-[    0.372316] hardirqs last  enabled at (0): [<0000000000000000>] 0x0
-[    0.372322] hardirqs last disabled at (0): [<9000000005947320>] copy_process+0x9c0/0x26e0
-[    0.372329] softirqs last  enabled at (0): [<9000000005947320>] copy_process+0x9c0/0x26e0
-[    0.372335] softirqs last disabled at (0): [<0000000000000000>] 0x0
-[    0.372341] CPU: 1 UID: 0 PID: 0 Comm: swapper/1 Not tainted 6.12.0-rc7+ #1891
-[    0.372346] Hardware name: Loongson Loongson-3A5000-7A1000-1w-CRB/Loongson-LS3A5000-7A1000-1w-CRB, BIOS vUDK2018-LoongArch-V2.0.0-prebeta9 10/21/2022
-[    0.372349] Stack : 0000000000000089 9000000005a0db9c 90000000071519c8 9000000100388000
-[    0.372486]         900000010038b890 0000000000000000 900000010038b898 9000000007e53788
-[    0.372492]         900000000815bcc8 900000000815bcc0 900000010038b700 0000000000000001
-[    0.372498]         0000000000000001 4b031894b9d6b725 00000000055ec000 9000000100338fc0
-[    0.372503]         00000000000000c4 0000000000000001 000000000000002d 0000000000000003
-[    0.372509]         0000000000000030 0000000000000003 00000000055ec000 0000000000000003
-[    0.372515]         900000000806d000 9000000007e53788 00000000000000b0 0000000000000004
-[    0.372521]         0000000000000000 0000000000000000 900000000c9f5f10 0000000000000000
-[    0.372526]         90000000076f12d8 9000000007e53788 9000000005924778 0000000000000000
-[    0.372532]         00000000000000b0 0000000000000004 0000000000000000 0000000000070000
-[    0.372537]         ...
-[    0.372540] Call Trace:
-[    0.372542] [<9000000005924778>] show_stack+0x38/0x180
-[    0.372548] [<90000000071519c4>] dump_stack_lvl+0x94/0xe4
-[    0.372555] [<900000000599b880>] __might_resched+0x1a0/0x260
-[    0.372561] [<90000000071675cc>] rt_spin_lock+0x4c/0x140
-[    0.372565] [<9000000005cbb768>] __rmqueue_pcplist+0x308/0xea0
-[    0.372570] [<9000000005cbed84>] get_page_from_freelist+0x564/0x1c60
-[    0.372575] [<9000000005cc0d98>] __alloc_pages_noprof+0x218/0x1820
-[    0.372580] [<900000000593b36c>] tlb_init+0x1ac/0x298
-[    0.372585] [<9000000005924b74>] per_cpu_trap_init+0x114/0x140
-[    0.372589] [<9000000005921964>] cpu_probe+0x4e4/0xa60
-[    0.372592] [<9000000005934874>] start_secondary+0x34/0xc0
-[    0.372599] [<900000000715615c>] smpboot_entry+0x64/0x6c
+  When completion of a USB transaction results in an error condition, this
+  bit is set by the Host/Device Controller. This bit is set along with the
+  USBINT bit, if the TD on which the error interrupt occurred also had its
+  interrupt on complete (IOC) bit set.
 
-This is because in PREEMPT_RT kernels normal spinlocks are replaced by
-rt spinlocks and rt_spin_lock() will cause sleeping. Fix it by disabling
-NUMA optimization completely for PREEMPT_RT kernels.
+UI is set only when IOC set. Add checking UEI to fix miss call
+isr_tr_complete_handler() when IOC have not set and transfer error happen.
 
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Acked-by: Peter Chen <peter.chen@kernel.com>
+Signed-off-by: Xu Yang <xu.yang_2@nxp.com>
+Link: https://lore.kernel.org/r/20240926022906.473319-1-xu.yang_2@nxp.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/loongarch/mm/tlb.c | 2 +-
+ drivers/usb/chipidea/udc.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/loongarch/mm/tlb.c b/arch/loongarch/mm/tlb.c
-index eeb2d815cfa2a..faf44cac403b4 100644
---- a/arch/loongarch/mm/tlb.c
-+++ b/arch/loongarch/mm/tlb.c
-@@ -279,7 +279,7 @@ void setup_tlb_handler(int cpu)
- 		/* Avoid lockdep warning */
- 		rcu_cpu_starting(cpu);
+diff --git a/drivers/usb/chipidea/udc.c b/drivers/usb/chipidea/udc.c
+index 35dfc05854fb7..3795c70a31555 100644
+--- a/drivers/usb/chipidea/udc.c
++++ b/drivers/usb/chipidea/udc.c
+@@ -2052,7 +2052,7 @@ static irqreturn_t udc_irq(struct ci_hdrc *ci)
+ 			}
+ 		}
  
--#ifdef CONFIG_NUMA
-+#if defined(CONFIG_NUMA) && !defined(CONFIG_PREEMPT_RT)
- 		vec_sz = sizeof(exception_handlers);
+-		if (USBi_UI  & intr)
++		if ((USBi_UI | USBi_UEI) & intr)
+ 			isr_tr_complete_handler(ci);
  
- 		if (pcpu_handlers[cpu])
+ 		if ((USBi_SLI & intr) && !(ci->suspended)) {
 -- 
 2.43.0
 
