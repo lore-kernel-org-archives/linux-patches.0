@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C6FF228C8D;
-	Thu, 12 Dec 2024 16:14:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36CB9229676;
+	Thu, 12 Dec 2024 16:14:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734020075; cv=none; b=kEeYcHbjSdzKBEUKeycsppfKotQAH0u6hqSy6s9TpB0tnqwZy32lX0ZPcII19zLjtYj2Nh6jXqHD7PzNA759jBrp8HmacWqoIjdj5TTCsImulCLZPBj/y7CZLE0YwE1yfcajNTkSIW4XlwnemFmDuhYKn3tPyXo+yw+AhKs6rds=
+	t=1734020080; cv=none; b=U5DialLD3MyrXBVpmDfiEjWD+LD3kHQ99ySXMxHMAcds/MgfVPR2frNNipqTm304QmhLSgH+l6q72W3qqFGjmyVFehXYuAmuxP25/jFDgv1IioNJiZdhuvGQY6YtWXSbU8/cLMkD0+Tw1fmFQeQyfwLRq0bEUFn3nNbfXwgAv5w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734020075; c=relaxed/simple;
-	bh=q+x1aDQMZ2bNv1tqaKzneIrhFs6FFfjXX1Q/D3FFuM0=;
+	s=arc-20240116; t=1734020080; c=relaxed/simple;
+	bh=q4H3kR7vuHJH/pRb45XxkjtAhBgEby/OqOvNLS6q0rU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Rp6W2+Ix9VSjKrdGVWxep1acLYZn5E2B3g405vWVLF0zXeEDVgxF4kEwiROXd4AdSiXB6YEE8EyiT7khLBzRvFsJs4QkoyDz+aRdEOgr1zObtwcF1CtTeEin3pMX+zipOs6U/D2ZKCMb3exjYsz6ikNRKwqv/QFlFqjclafZgHM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PQO4wVQi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=nWqu6Y2UW4h5bfcytg2vNCNpV3AxGDqyJmWQX0Dfoasw+9SrM1iETQS0uPSXYoURSonPcNIgmg1AuqB+KK7Y0ACnzpvMetomCgf8XyjOOYChbW/bjWRH4YK1CFYxSO+wG+4aWVzURBo1Z9L6a7R3xSNJrGehTkPStxMIAPyQmdw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RFJ+gYpl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PQO4wVQi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80605C4CECE;
-	Thu, 12 Dec 2024 16:14:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RFJ+gYpl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF7BFC4CED0;
+	Thu, 12 Dec 2024 16:14:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734020075;
-	bh=q+x1aDQMZ2bNv1tqaKzneIrhFs6FFfjXX1Q/D3FFuM0=;
+	s=korg; t=1734020079;
+	bh=q4H3kR7vuHJH/pRb45XxkjtAhBgEby/OqOvNLS6q0rU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PQO4wVQim8+ry7KrO5itAEOSrhJcMlS0n+yewSxmZyPb1LyU7su3eAmMzVwlWST14
-	 RdOtR3zWw2Q1oTiN7b+YPWF8ew7vnffRmiOCtXaodqnpNx8xSe67OirUlOg+QQ2XHc
-	 vRxwRYauGvL2m2H0FMIASjP+fGuComAffkLcCHcs=
+	b=RFJ+gYpl48dSEg5NJ22ayewgzqKsyx9Ph4+m1eCkCdLQWS5hjFMjd+YjqQLnIGTAX
+	 pYzfKCiID9BKgD7rjexGTElGAEjuEn0HcDgRC9cLb4gkh9xfPlUQ0zspzX+oDSYFjU
+	 ywmETnt93FbLmpIaZrFAAfa2dmHQrfNYa6kisRws=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Raghavendra Rao Ananta <rananta@google.com>,
-	Marc Zyngier <maz@kernel.org>,
-	Oliver Upton <oliver.upton@linux.dev>
-Subject: [PATCH 6.1 372/772] KVM: arm64: Ignore PMCNTENSET_EL0 while checking for overflow status
-Date: Thu, 12 Dec 2024 15:55:17 +0100
-Message-ID: <20241212144405.280122644@linuxfoundation.org>
+	=?UTF-8?q?Beno=C3=AEt=20Sevens?= <bsevens@google.com>,
+	stable@kernel.org,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.1 355/772] ALSA: usb-audio: Fix potential out-of-bound accesses for Extigy and Mbox devices
+Date: Thu, 12 Dec 2024 15:55:00 +0100
+Message-ID: <20241212144404.581816469@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -45,49 +45,109 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Raghavendra Rao Ananta <rananta@google.com>
+From: Benoît Sevens <bsevens@google.com>
 
-commit 54bbee190d42166209185d89070c58a343bf514b upstream.
+commit b909df18ce2a998afef81d58bbd1a05dc0788c40 upstream.
 
-DDI0487K.a D13.3.1 describes the PMU overflow condition, which evaluates
-to true if any counter's global enable (PMCR_EL0.E), overflow flag
-(PMOVSSET_EL0[n]), and interrupt enable (PMINTENSET_EL1[n]) are all 1.
-Of note, this does not require a counter to be enabled
-(i.e. PMCNTENSET_EL0[n] = 1) to generate an overflow.
+A bogus device can provide a bNumConfigurations value that exceeds the
+initial value used in usb_get_configuration for allocating dev->config.
 
-Align kvm_pmu_overflow_status() with the reality of the architecture
-and stop using PMCNTENSET_EL0 as part of the overflow condition. The
-bug was discovered while running an SBSA PMU test [*], which only sets
-PMCR.E, PMOVSSET<0>, PMINTENSET<0>, and expects an overflow interrupt.
+This can lead to out-of-bounds accesses later, e.g. in
+usb_destroy_configuration.
 
-Cc: stable@vger.kernel.org
-Fixes: 76d883c4e640 ("arm64: KVM: Add access handler for PMOVSSET and PMOVSCLR register")
-Link: https://github.com/ARM-software/sbsa-acs/blob/master/test_pool/pmu/operating_system/test_pmu001.c
-Signed-off-by: Raghavendra Rao Ananta <rananta@google.com>
-[ oliver: massaged changelog ]
-Reviewed-by: Marc Zyngier <maz@kernel.org>
-Link: https://lore.kernel.org/r/20241120005230.2335682-2-oliver.upton@linux.dev
-Signed-off-by: Oliver Upton <oliver.upton@linux.dev>
+Signed-off-by: Benoît Sevens <bsevens@google.com>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable@kernel.org
+Link: https://patch.msgid.link/20241120124144.3814457-1-bsevens@google.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kvm/pmu-emul.c |    1 -
- 1 file changed, 1 deletion(-)
+ sound/usb/quirks.c |   27 +++++++++++++++++++++------
+ 1 file changed, 21 insertions(+), 6 deletions(-)
 
---- a/arch/arm64/kvm/pmu-emul.c
-+++ b/arch/arm64/kvm/pmu-emul.c
-@@ -294,7 +294,6 @@ static u64 kvm_pmu_overflow_status(struc
+--- a/sound/usb/quirks.c
++++ b/sound/usb/quirks.c
+@@ -553,6 +553,7 @@ int snd_usb_create_quirk(struct snd_usb_
+ static int snd_usb_extigy_boot_quirk(struct usb_device *dev, struct usb_interface *intf)
+ {
+ 	struct usb_host_config *config = dev->actconfig;
++	struct usb_device_descriptor new_device_descriptor;
+ 	int err;
  
- 	if ((__vcpu_sys_reg(vcpu, PMCR_EL0) & ARMV8_PMU_PMCR_E)) {
- 		reg = __vcpu_sys_reg(vcpu, PMOVSSET_EL0);
--		reg &= __vcpu_sys_reg(vcpu, PMCNTENSET_EL0);
- 		reg &= __vcpu_sys_reg(vcpu, PMINTENSET_EL1);
- 	}
+ 	if (le16_to_cpu(get_cfg_desc(config)->wTotalLength) == EXTIGY_FIRMWARE_SIZE_OLD ||
+@@ -564,10 +565,14 @@ static int snd_usb_extigy_boot_quirk(str
+ 		if (err < 0)
+ 			dev_dbg(&dev->dev, "error sending boot message: %d\n", err);
+ 		err = usb_get_descriptor(dev, USB_DT_DEVICE, 0,
+-				&dev->descriptor, sizeof(dev->descriptor));
+-		config = dev->actconfig;
++				&new_device_descriptor, sizeof(new_device_descriptor));
+ 		if (err < 0)
+ 			dev_dbg(&dev->dev, "error usb_get_descriptor: %d\n", err);
++		if (new_device_descriptor.bNumConfigurations > dev->descriptor.bNumConfigurations)
++			dev_dbg(&dev->dev, "error too large bNumConfigurations: %d\n",
++				new_device_descriptor.bNumConfigurations);
++		else
++			memcpy(&dev->descriptor, &new_device_descriptor, sizeof(dev->descriptor));
+ 		err = usb_reset_configuration(dev);
+ 		if (err < 0)
+ 			dev_dbg(&dev->dev, "error usb_reset_configuration: %d\n", err);
+@@ -899,6 +904,7 @@ static void mbox2_setup_48_24_magic(stru
+ static int snd_usb_mbox2_boot_quirk(struct usb_device *dev)
+ {
+ 	struct usb_host_config *config = dev->actconfig;
++	struct usb_device_descriptor new_device_descriptor;
+ 	int err;
+ 	u8 bootresponse[0x12];
+ 	int fwsize;
+@@ -934,10 +940,14 @@ static int snd_usb_mbox2_boot_quirk(stru
+ 	dev_dbg(&dev->dev, "device initialised!\n");
  
+ 	err = usb_get_descriptor(dev, USB_DT_DEVICE, 0,
+-		&dev->descriptor, sizeof(dev->descriptor));
+-	config = dev->actconfig;
++		&new_device_descriptor, sizeof(new_device_descriptor));
+ 	if (err < 0)
+ 		dev_dbg(&dev->dev, "error usb_get_descriptor: %d\n", err);
++	if (new_device_descriptor.bNumConfigurations > dev->descriptor.bNumConfigurations)
++		dev_dbg(&dev->dev, "error too large bNumConfigurations: %d\n",
++			new_device_descriptor.bNumConfigurations);
++	else
++		memcpy(&dev->descriptor, &new_device_descriptor, sizeof(dev->descriptor));
+ 
+ 	err = usb_reset_configuration(dev);
+ 	if (err < 0)
+@@ -1251,6 +1261,7 @@ static void mbox3_setup_48_24_magic(stru
+ static int snd_usb_mbox3_boot_quirk(struct usb_device *dev)
+ {
+ 	struct usb_host_config *config = dev->actconfig;
++	struct usb_device_descriptor new_device_descriptor;
+ 	int err;
+ 	int descriptor_size;
+ 
+@@ -1264,10 +1275,14 @@ static int snd_usb_mbox3_boot_quirk(stru
+ 	dev_dbg(&dev->dev, "device initialised!\n");
+ 
+ 	err = usb_get_descriptor(dev, USB_DT_DEVICE, 0,
+-		&dev->descriptor, sizeof(dev->descriptor));
+-	config = dev->actconfig;
++		&new_device_descriptor, sizeof(new_device_descriptor));
+ 	if (err < 0)
+ 		dev_dbg(&dev->dev, "error usb_get_descriptor: %d\n", err);
++	if (new_device_descriptor.bNumConfigurations > dev->descriptor.bNumConfigurations)
++		dev_dbg(&dev->dev, "error too large bNumConfigurations: %d\n",
++			new_device_descriptor.bNumConfigurations);
++	else
++		memcpy(&dev->descriptor, &new_device_descriptor, sizeof(dev->descriptor));
+ 
+ 	err = usb_reset_configuration(dev);
+ 	if (err < 0)
 
 
