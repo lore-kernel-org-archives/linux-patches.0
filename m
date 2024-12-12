@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9711A2054EF;
-	Thu, 12 Dec 2024 16:48:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2D902054EF;
+	Thu, 12 Dec 2024 16:48:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734022117; cv=none; b=mJSiGKzmIwtr2xBgSni8nO7yA7IfGo0rQW27+MkyRwgiFO4tUcZClFXuOjKHE+Bdt481eSq95MWC42hB3Mt7CN1YLBDtqeQNQC/z1M5we4uHcmslCZgneVECJA97LlA5wR6s23iXZpKYN93QqskIoPmO7yiQM8LH9E0Kyor3mng=
+	t=1734022120; cv=none; b=i0whA3ec79r76kAqZMh4S8aEMcGDzMGYp6HrTu5871VRLliMQSas0MeZygEg/6oAfO4rcxV5NdVYj25ucXP9QS5LBhZJYFXDVX4YMelxmjksdy6ROgnwTFaYFeCeBMoGgRSoW05Subc4BbMOhJh8tnwIK6W4BhF7R+DTqH+qNrU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734022117; c=relaxed/simple;
-	bh=DdIMJm5RvjCupqqEh0+H0diQHknWxle0I6rwdDoQUD8=;
+	s=arc-20240116; t=1734022120; c=relaxed/simple;
+	bh=WaNxOEmqoE99jKjdXXHjA2BEunfGzjL+AROqRcb86ds=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MV+4pNp0KtLOxJfDv9DJUDeuE1733bJbiEhuI/uNpqP8K+RuqXmYUpJxl5TxGF2N+mTU/fyujmrGUFVy9z5PDLbtG4fg79l4O0j/+8j4xhnaHJPRViVyRdJfT3AW+Hya8fGGcIm1gyqmNmzhW6yO24adenmjem0UOgSCl/PQX48=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SS/3RhCu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=aTh4EFC73WQxOzemz3Wp9FIsdmnY/OIHdVYSLpOMyty5uEHov5cR1D8F3q+PhXrk9T3eaI+xFZtEv2JoFaL3hBnXuX5WfCtxPWjNQMVuOhIRjPreU8sVaOrQmuzZ8+pfKITqq+fJM1vWlGdhWfbFqN+IZREw960G9w/+PZIUeZ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sGwVLbg0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SS/3RhCu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C669FC4CECE;
-	Thu, 12 Dec 2024 16:48:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sGwVLbg0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 315D5C4CECE;
+	Thu, 12 Dec 2024 16:48:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734022117;
-	bh=DdIMJm5RvjCupqqEh0+H0diQHknWxle0I6rwdDoQUD8=;
+	s=korg; t=1734022120;
+	bh=WaNxOEmqoE99jKjdXXHjA2BEunfGzjL+AROqRcb86ds=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SS/3RhCuU9tQYYxIeUd40j40fiVa8AOv6bq4/+0dBSD5ystIXok2UNHnQ+PXDyuXc
-	 zfegH1UTtrJBnVhACRSwVXwBw8RBfKuqCTgYMMD4MjwmwYut8WX7vsOFfz2idVY9vO
-	 +/GlhpOuH4pcbhd4KTNpl7qc6hg7ePQAhfsyX8f0=
+	b=sGwVLbg0hO5g+DgHiVziTRZ/x3LDrKQjZO77PLoHKfThzPEw+nbjHvXQUKFF2dI9A
+	 b94X8xPXY4U5XmZJ6Bstcv66K3XdRH+qi7zrqEFmDARBUjhUHZ5J/q9GgDLn72Ob09
+	 /Q3+2CmJivSiHowiF/NICdxHOQmsAb2sPL150Anw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinjie Ruan <ruanjinjie@huawei.com>,
-	Brian Norris <briannorris@chromium.org>,
-	Kalle Valo <kvalo@kernel.org>,
+	Jun Li <jun.li@nxp.com>,
+	Clark Wang <xiaoning.wang@nxp.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 151/565] wifi: mwifiex: Use IRQF_NO_AUTOEN flag in request_irq()
-Date: Thu, 12 Dec 2024 15:55:46 +0100
-Message-ID: <20241212144317.452946248@linuxfoundation.org>
+Subject: [PATCH 5.15 124/565] pwm: imx27: Workaround of the pwm output bug when decrease the duty cycle
+Date: Thu, 12 Dec 2024 15:55:19 +0100
+Message-ID: <20241212144316.386752948@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144311.432886635@linuxfoundation.org>
 References: <20241212144311.432886635@linuxfoundation.org>
@@ -46,52 +47,191 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jinjie Ruan <ruanjinjie@huawei.com>
+From: Clark Wang <xiaoning.wang@nxp.com>
 
-[ Upstream commit 9a98dd48b6d834d7a3fe5e8e7b8c3a1d006f9685 ]
+[ Upstream commit a25351e4c7740eb22561a3ee4ef17611c6f410b0 ]
 
-disable_irq() after request_irq() still has a time gap in which
-interrupts can come. request_irq() with IRQF_NO_AUTOEN flag will
-disable IRQ auto-enable when request IRQ.
+Implement workaround for ERR051198
+(https://www.nxp.com/docs/en/errata/IMX8MN_0N14Y.pdf)
 
-Fixes: 853402a00823 ("mwifiex: Enable WoWLAN for both sdio and pcie")
-Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-Acked-by: Brian Norris <briannorris@chromium.org>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://patch.msgid.link/20240910124314.698896-3-ruanjinjie@huawei.com
+PWM output may not function correctly if the FIFO is empty when a new SAR
+value is programmed.
+
+Description:
+  When the PWM FIFO is empty, a new value programmed to the PWM Sample
+  register (PWM_PWMSAR) will be directly applied even if the current timer
+  period has not expired. If the new SAMPLE value programmed in the
+  PWM_PWMSAR register is less than the previous value, and the PWM counter
+  register (PWM_PWMCNR) that contains the current COUNT value is greater
+  than the new programmed SAMPLE value, the current period will not flip
+  the level. This may result in an output pulse with a duty cycle of 100%.
+
+Workaround:
+  Program the current SAMPLE value in the PWM_PWMSAR register before
+  updating the new duty cycle to the SAMPLE value in the PWM_PWMSAR
+  register. This will ensure that the new SAMPLE value is modified during
+  a non-empty FIFO, and can be successfully updated after the period
+  expires.
+
+Write the old SAR value before updating the new duty cycle to SAR. This
+avoids writing the new value into an empty FIFO.
+
+This only resolves the issue when the PWM period is longer than 2us
+(or <500kHz) because write register is not quick enough when PWM period is
+very short.
+
+Reproduce steps:
+  cd /sys/class/pwm/pwmchip1/pwm0
+  echo 2000000000 > period     # It is easy to observe by using long period
+  echo 1000000000 > duty_cycle
+  echo 1 > enable
+  echo       8000 > duty_cycle # One full high pulse will be seen by scope
+
+Fixes: 166091b1894d ("[ARM] MXC: add pwm driver for i.MX SoCs")
+Reviewed-by: Jun Li <jun.li@nxp.com>
+Signed-off-by: Clark Wang <xiaoning.wang@nxp.com>
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
+Link: https://lore.kernel.org/r/20241008194123.1943141-1-Frank.Li@nxp.com
+Signed-off-by: Uwe Kleine-König <ukleinek@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/marvell/mwifiex/main.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/pwm/pwm-imx27.c | 98 ++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 96 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/marvell/mwifiex/main.c b/drivers/net/wireless/marvell/mwifiex/main.c
-index 7943fd3b3058d..18ab3222b1406 100644
---- a/drivers/net/wireless/marvell/mwifiex/main.c
-+++ b/drivers/net/wireless/marvell/mwifiex/main.c
-@@ -1614,7 +1614,8 @@ static void mwifiex_probe_of(struct mwifiex_adapter *adapter)
+diff --git a/drivers/pwm/pwm-imx27.c b/drivers/pwm/pwm-imx27.c
+index ea91a2f81a9fc..ce8dbd5d174f6 100644
+--- a/drivers/pwm/pwm-imx27.c
++++ b/drivers/pwm/pwm-imx27.c
+@@ -26,6 +26,7 @@
+ #define MX3_PWMSR			0x04    /* PWM Status Register */
+ #define MX3_PWMSAR			0x0C    /* PWM Sample Register */
+ #define MX3_PWMPR			0x10    /* PWM Period Register */
++#define MX3_PWMCNR			0x14    /* PWM Counter Register */
+ 
+ #define MX3_PWMCR_FWM			GENMASK(27, 26)
+ #define MX3_PWMCR_STOPEN		BIT(25)
+@@ -215,11 +216,13 @@ static void pwm_imx27_wait_fifo_slot(struct pwm_chip *chip,
+ static int pwm_imx27_apply(struct pwm_chip *chip, struct pwm_device *pwm,
+ 			   const struct pwm_state *state)
+ {
+-	unsigned long period_cycles, duty_cycles, prescale;
++	unsigned long period_cycles, duty_cycles, prescale, period_us, tmp;
+ 	struct pwm_imx27_chip *imx = to_pwm_imx27_chip(chip);
+ 	struct pwm_state cstate;
+ 	unsigned long long c;
+ 	unsigned long long clkrate;
++	unsigned long flags;
++	int val;
+ 	int ret;
+ 	u32 cr;
+ 
+@@ -262,7 +265,98 @@ static int pwm_imx27_apply(struct pwm_chip *chip, struct pwm_device *pwm,
+ 		pwm_imx27_sw_reset(chip);
  	}
  
- 	ret = devm_request_irq(dev, adapter->irq_wakeup,
--			       mwifiex_irq_wakeup_handler, IRQF_TRIGGER_LOW,
-+			       mwifiex_irq_wakeup_handler,
-+			       IRQF_TRIGGER_LOW | IRQF_NO_AUTOEN,
- 			       "wifi_wake", adapter);
- 	if (ret) {
- 		dev_err(dev, "Failed to request irq_wakeup %d (%d)\n",
-@@ -1622,7 +1623,6 @@ static void mwifiex_probe_of(struct mwifiex_adapter *adapter)
- 		goto err_exit;
- 	}
+-	writel(duty_cycles, imx->mmio_base + MX3_PWMSAR);
++	val = readl(imx->mmio_base + MX3_PWMPR);
++	val = val >= MX3_PWMPR_MAX ? MX3_PWMPR_MAX : val;
++	cr = readl(imx->mmio_base + MX3_PWMCR);
++	tmp = NSEC_PER_SEC * (u64)(val + 2) * MX3_PWMCR_PRESCALER_GET(cr);
++	tmp = DIV_ROUND_UP_ULL(tmp, clkrate);
++	period_us = DIV_ROUND_UP_ULL(tmp, 1000);
++
++	/*
++	 * ERR051198:
++	 * PWM: PWM output may not function correctly if the FIFO is empty when
++	 * a new SAR value is programmed
++	 *
++	 * Description:
++	 * When the PWM FIFO is empty, a new value programmed to the PWM Sample
++	 * register (PWM_PWMSAR) will be directly applied even if the current
++	 * timer period has not expired.
++	 *
++	 * If the new SAMPLE value programmed in the PWM_PWMSAR register is
++	 * less than the previous value, and the PWM counter register
++	 * (PWM_PWMCNR) that contains the current COUNT value is greater than
++	 * the new programmed SAMPLE value, the current period will not flip
++	 * the level. This may result in an output pulse with a duty cycle of
++	 * 100%.
++	 *
++	 * Consider a change from
++	 *     ________
++	 *    /        \______/
++	 *    ^      *        ^
++	 * to
++	 *     ____
++	 *    /    \__________/
++	 *    ^               ^
++	 * At the time marked by *, the new write value will be directly applied
++	 * to SAR even the current period is not over if FIFO is empty.
++	 *
++	 *     ________        ____________________
++	 *    /        \______/                    \__________/
++	 *    ^               ^      *        ^               ^
++	 *    |<-- old SAR -->|               |<-- new SAR -->|
++	 *
++	 * That is the output is active for a whole period.
++	 *
++	 * Workaround:
++	 * Check new SAR less than old SAR and current counter is in errata
++	 * windows, write extra old SAR into FIFO and new SAR will effect at
++	 * next period.
++	 *
++	 * Sometime period is quite long, such as over 1 second. If add old SAR
++	 * into FIFO unconditional, new SAR have to wait for next period. It
++	 * may be too long.
++	 *
++	 * Turn off the interrupt to ensure that not IRQ and schedule happen
++	 * during above operations. If any irq and schedule happen, counter
++	 * in PWM will be out of data and take wrong action.
++	 *
++	 * Add a safety margin 1.5us because it needs some time to complete
++	 * IO write.
++	 *
++	 * Use writel_relaxed() to minimize the interval between two writes to
++	 * the SAR register to increase the fastest PWM frequency supported.
++	 *
++	 * When the PWM period is longer than 2us(or <500kHz), this workaround
++	 * can solve this problem. No software workaround is available if PWM
++	 * period is shorter than IO write. Just try best to fill old data
++	 * into FIFO.
++	 */
++	c = clkrate * 1500;
++	do_div(c, NSEC_PER_SEC);
++
++	local_irq_save(flags);
++	val = FIELD_GET(MX3_PWMSR_FIFOAV, readl_relaxed(imx->mmio_base + MX3_PWMSR));
++
++	if (duty_cycles < imx->duty_cycle && (cr & MX3_PWMCR_EN)) {
++		if (period_us < 2) { /* 2us = 500 kHz */
++			/* Best effort attempt to fix up >500 kHz case */
++			udelay(3 * period_us);
++			writel_relaxed(imx->duty_cycle, imx->mmio_base + MX3_PWMSAR);
++			writel_relaxed(imx->duty_cycle, imx->mmio_base + MX3_PWMSAR);
++		} else if (val < MX3_PWMSR_FIFOAV_2WORDS) {
++			val = readl_relaxed(imx->mmio_base + MX3_PWMCNR);
++			/*
++			 * If counter is close to period, controller may roll over when
++			 * next IO write.
++			 */
++			if ((val + c >= duty_cycles && val < imx->duty_cycle) ||
++			    val + c >= period_cycles)
++				writel_relaxed(imx->duty_cycle, imx->mmio_base + MX3_PWMSAR);
++		}
++	}
++	writel_relaxed(duty_cycles, imx->mmio_base + MX3_PWMSAR);
++	local_irq_restore(flags);
++
+ 	writel(period_cycles, imx->mmio_base + MX3_PWMPR);
  
--	disable_irq(adapter->irq_wakeup);
- 	if (device_init_wakeup(dev, true)) {
- 		dev_err(dev, "fail to init wakeup for mwifiex\n");
- 		goto err_exit;
+ 	/*
 -- 
 2.43.0
 
