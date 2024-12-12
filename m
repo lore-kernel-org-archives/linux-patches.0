@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 701902054EF;
-	Thu, 12 Dec 2024 16:48:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 936C3222D52;
+	Thu, 12 Dec 2024 16:48:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734022127; cv=none; b=U+2r/jC17ObXYXf0308iJ1iwucX6KxrfRoiF/xd1qxg0jehY53/YJKwk5BF1z8izPcon1tHkUP+zMgxULCKFR+bT/hmRTgktYFVSzT7pzwR6Y0Keah2ZeNx0YuGP1Vq/N32GsBQKVFE+VG7zlFbN7OQ9emL15MDvduGhAC4Q4Ag=
+	t=1734022131; cv=none; b=ssFsIPIRHpfNPope+kHWLMvGHCUewqAtJ8l5Bj9CiYmvEiLS03DcSBgBD7y3oAWL0LLHTmoCKUdJvob0edNi7LlgXsxpQTYfciRYReI2E22hvPxK4m/nMcIhYmdJE/8rbznDakcqzdHrUrI88AQzh5jtSvxTVbrLU23plEXXk1o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734022127; c=relaxed/simple;
-	bh=Dj3HYjPZk+PbMfLC1oInOfqz9soFNaxiF/6UzCNIuJM=;
+	s=arc-20240116; t=1734022131; c=relaxed/simple;
+	bh=h95J9gJlQQq/H+f0bDtUvJPuTL6T1L71nw80ncYS3jI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZHz4LZKNmzztdG/jGpSMEUwwDc1TrtQqNEbq7Ns+41UFD2cNSwGnSU313esAiNytaNNiRVP26hKkj74qot1VBb5X5T49Csn4GTYvJYgP/+PutlJNK75HVenIvw3/XrPUGTQ1y7VAdXZNa7pt+mszgaNagvLDmR6m3GZ/2wBsOaE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GPPxx6F5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R+MKwWAN1iLvbsYna5sYEiiLA85ApUJEnysXL4i4zVBsLfCfWErYP3y7JINXnyzDN25FFoA5LXHCBkJ+CwdRIdIvAnpa368HzBs0Jj/Vo7nhqrMRy4+ItDL10EpV6lOvpO5hSy3K5Y7HQXXfkTLo76mIISZE+o6GCbrB0m+8cTc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bBCWloWd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GPPxx6F5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D411BC4CECE;
-	Thu, 12 Dec 2024 16:48:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bBCWloWd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BB3FC4CED3;
+	Thu, 12 Dec 2024 16:48:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734022127;
-	bh=Dj3HYjPZk+PbMfLC1oInOfqz9soFNaxiF/6UzCNIuJM=;
+	s=korg; t=1734022131;
+	bh=h95J9gJlQQq/H+f0bDtUvJPuTL6T1L71nw80ncYS3jI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GPPxx6F5v/Fh8+9ym/+6LOfV3aH+MahndC5Uf4t0KfC2nwpJUI242ooUBkA69LzAS
-	 l4Qb3/IX2XqRb/l5AqOokVwvefGoAdEtdAk1LZq5scq4L41xp8BUJqFNjZvfygsoSf
-	 HwJJJCJCVC36+CUv/7iEjAFd09WVkEiwES2OXabo=
+	b=bBCWloWdVURI7/yGrvcreUC0KO0aw7wr78WoLsR85Y23SuEAQPcWaeXPJbOqWfLj2
+	 my6B7+HaaUOcqJxwGeyh5cx8P4/pJKpfo323cIN7A8VixU0h+Wglw5e0GXZXyC7kko
+	 3g3DPstgHzmThFqK/Xewou3uKHdvwwlbDzdsORaw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Zekun <zhangzekun11@huawei.com>,
-	Dhruva Gole <d-gole@ti.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+	Breno Leitao <leitao@debian.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 126/565] pmdomain: ti-sci: Add missing of_node_put() for args.np
-Date: Thu, 12 Dec 2024 15:55:21 +0100
-Message-ID: <20241212144316.466520533@linuxfoundation.org>
+Subject: [PATCH 5.15 127/565] spi: tegra210-quad: Avoid shift-out-of-bounds
+Date: Thu, 12 Dec 2024 15:55:22 +0100
+Message-ID: <20241212144316.505122199@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144311.432886635@linuxfoundation.org>
 References: <20241212144311.432886635@linuxfoundation.org>
@@ -52,46 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Zekun <zhangzekun11@huawei.com>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit afc2331ef81657493c074592c409dac7c3cb8ccc ]
+[ Upstream commit f399051ec1ff02e74ae5c2517aed2cc486fd005b ]
 
-of_parse_phandle_with_args() needs to call of_node_put() to decrement
-the refcount of args.np. So, Add the missing of_node_put() in the loop.
+A shift-out-of-bounds issue was identified by UBSAN in the
+tegra_qspi_fill_tx_fifo_from_client_txbuf() function.
 
-Fixes: efa5c01cd7ee ("soc: ti: ti_sci_pm_domains: switch to use multiple genpds instead of one")
-Signed-off-by: Zhang Zekun <zhangzekun11@huawei.com>
-Reviewed-by: Dhruva Gole <d-gole@ti.com>
-Message-ID: <20241024030442.119506-2-zhangzekun11@huawei.com>
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+	 UBSAN: shift-out-of-bounds in drivers/spi/spi-tegra210-quad.c:345:27
+	 shift exponent 32 is too large for 32-bit type 'u32' (aka 'unsigned int')
+	 Call trace:
+	  tegra_qspi_start_cpu_based_transfer
+
+The problem arises when shifting the contents of tx_buf left by 8 times
+the value of i, which can exceed 4 and result in an exponent larger than
+32 bits.
+
+Resolve this by restrict the value of i to be less than 4, preventing
+the shift operation from overflowing.
+
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Fixes: 921fc1838fb0 ("spi: tegra210-quad: Add support for Tegra210 QSPI controller")
+Link: https://patch.msgid.link/20241004125400.1791089-1-leitao@debian.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/ti/ti_sci_pm_domains.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/spi/spi-tegra210-quad.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/soc/ti/ti_sci_pm_domains.c b/drivers/soc/ti/ti_sci_pm_domains.c
-index 17984a7bffba5..b21b152ed5d0f 100644
---- a/drivers/soc/ti/ti_sci_pm_domains.c
-+++ b/drivers/soc/ti/ti_sci_pm_domains.c
-@@ -165,6 +165,7 @@ static int ti_sci_pm_domain_probe(struct platform_device *pdev)
- 				break;
+diff --git a/drivers/spi/spi-tegra210-quad.c b/drivers/spi/spi-tegra210-quad.c
+index 7967073c13545..3432058b0a7bd 100644
+--- a/drivers/spi/spi-tegra210-quad.c
++++ b/drivers/spi/spi-tegra210-quad.c
+@@ -298,7 +298,7 @@ tegra_qspi_fill_tx_fifo_from_client_txbuf(struct tegra_qspi *tqspi, struct spi_t
+ 		for (count = 0; count < max_n_32bit; count++) {
+ 			u32 x = 0;
  
- 			if (args.args_count >= 1 && args.np == dev->of_node) {
-+				of_node_put(args.np);
- 				if (args.args[0] > max_id) {
- 					max_id = args.args[0];
- 				} else {
-@@ -192,7 +193,10 @@ static int ti_sci_pm_domain_probe(struct platform_device *pdev)
- 				pm_genpd_init(&pd->pd, NULL, true);
- 
- 				list_add(&pd->node, &pd_provider->pd_list);
-+			} else {
-+				of_node_put(args.np);
- 			}
-+
- 			index++;
+-			for (i = 0; len && (i < bytes_per_word); i++, len--)
++			for (i = 0; len && (i < min(4, bytes_per_word)); i++, len--)
+ 				x |= (u32)(*tx_buf++) << (i * 8);
+ 			tegra_qspi_writel(tqspi, x, QSPI_TX_FIFO);
  		}
- 	}
 -- 
 2.43.0
 
