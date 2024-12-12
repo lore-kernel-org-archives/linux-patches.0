@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66D9B20A5EE;
-	Thu, 12 Dec 2024 17:31:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A75320A5EE;
+	Thu, 12 Dec 2024 17:31:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734024703; cv=none; b=bZVC71ks2iGK8o6n7yGWhM/dQBtZkwBnHT9Cl6o51LDLJdKA3ACWInt0qP6OaUBHVf+nIRXkuKaqDwppbXT52lr7KHLceFGBzpCt5E0RKK8lBB4dlGqlt+kDjcgFRgN4oVe42i0YJjom1Ie5CK4QBemG8kyLksD8Vb1UcO0Rs9Q=
+	t=1734024706; cv=none; b=TAswVagwAvCdqzNB+TwPBu/l4de8Gywajfkd09u3Lj0YIe/eM8V8/gNqwOWhloriaOfHAJecRnofOmL4bOlJSwN8XJwEaJ09hVGgUtn7sb7yiScewVnGionAOfaZ+az6Pg9WZvKP/HtnB9nJhRr/uVuLOKIzFx9+k7YPrm0MDxk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734024703; c=relaxed/simple;
-	bh=5EBU3S51Dqoja7IoBWibr4zt2M9AyccyDEYulEAXx3Y=;
+	s=arc-20240116; t=1734024706; c=relaxed/simple;
+	bh=AiEFlwi6E5zHBjovDL62fxFZO9MwKw71QReJjFq6BEo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ow0JU/GpMQiiPIymAOHbIF5rRFWKBnZ3paO8v9rXBt/L6ypnFtjriypaUlfl+wP6p8iKaU/QKX/742XRb6I1PR/1Thxp4mZeOKFYH2ygRyENFS4UWEYhTgb12IO8uQs3LWn8yjElRQI63Gtgf++fsx0aXO503HJ4LfXAbnv8ANg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jz+GwpmL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=o94qtMcE6WhkuLqWQ3ZlK6rmTY5XxC8wqvMP5bbCO8vnweOwppTS4uUuNSUlHEASc88YVZW/48bwJCc3TxZ6uCjxJF8R17J10iXFX8dvOAgzgpaP9GFI1WPwybTDFHYzCAL0h1ljueqhrVAwmDaoNFb04YYD6alXi4SjQ7tp4xc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qfmMXQ5l; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jz+GwpmL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C91AC4CECE;
-	Thu, 12 Dec 2024 17:31:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qfmMXQ5l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DC1CC4CECE;
+	Thu, 12 Dec 2024 17:31:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734024703;
-	bh=5EBU3S51Dqoja7IoBWibr4zt2M9AyccyDEYulEAXx3Y=;
+	s=korg; t=1734024706;
+	bh=AiEFlwi6E5zHBjovDL62fxFZO9MwKw71QReJjFq6BEo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jz+GwpmLz4NQ4//5h8qlzmmxZQdv4fzYL+yaxiQfDfiL1+m8+rgtuowaD5dYsdECM
-	 NtWRewbA1No/v/oDkiNoqn0FqZHew5Jz5UEJgRbjcHDtQ1/5gU2+p5u/6XBAwTNtg8
-	 NwW5gVMWucvbKI9QVsL1pCc+aQh1egnKYOBQ4zcQ=
+	b=qfmMXQ5lkznpTdr/VzSBSFHUhxJdJPbi6XPIuQJE/P9k3A8cx4fztsHuYYxMLgYd+
+	 vbaWz/Eaq2uyIarfqbMKUd3f9/PecLpkwW1yUSaGsBXzGhr54ioyGx7xKNR140kZz8
+	 U6g6XiWRfQ9BgYH4/mxSWVsr1+MDfWkzi6QV5XdQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zijian Zhang <zijianzhang@bytedance.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	John Fastabend <john.fastabend@gmail.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 354/459] tcp_bpf: Fix the sk_mem_uncharge logic in tcp_bpf_sendmsg
-Date: Thu, 12 Dec 2024 16:01:32 +0100
-Message-ID: <20241212144307.647916307@linuxfoundation.org>
+Subject: [PATCH 5.10 345/459] gpio: grgpio: use a helper variable to store the address of ofdev->dev
+Date: Thu, 12 Dec 2024 16:01:23 +0100
+Message-ID: <20241212144307.291280895@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144253.511169641@linuxfoundation.org>
 References: <20241212144253.511169641@linuxfoundation.org>
@@ -52,163 +50,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zijian Zhang <zijianzhang@bytedance.com>
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-[ Upstream commit ca70b8baf2bd125b2a4d96e76db79375c07d7ff2 ]
+[ Upstream commit d036ae41cebdfae92666024163c109b8fef516fa ]
 
-The current sk memory accounting logic in __SK_REDIRECT is pre-uncharging
-tosend bytes, which is either msg->sg.size or a smaller value apply_bytes.
+Instead of dereferencing the platform device pointer repeatedly, just
+store its address in a helper variable.
 
-Potential problems with this strategy are as follows:
-
-- If the actual sent bytes are smaller than tosend, we need to charge some
-  bytes back, as in line 487, which is okay but seems not clean.
-
-- When tosend is set to apply_bytes, as in line 417, and (ret < 0), we may
-  miss uncharging (msg->sg.size - apply_bytes) bytes.
-
-[...]
-415 tosend = msg->sg.size;
-416 if (psock->apply_bytes && psock->apply_bytes < tosend)
-417   tosend = psock->apply_bytes;
-[...]
-443 sk_msg_return(sk, msg, tosend);
-444 release_sock(sk);
-446 origsize = msg->sg.size;
-447 ret = tcp_bpf_sendmsg_redir(sk_redir, redir_ingress,
-448                             msg, tosend, flags);
-449 sent = origsize - msg->sg.size;
-[...]
-454 lock_sock(sk);
-455 if (unlikely(ret < 0)) {
-456   int free = sk_msg_free_nocharge(sk, msg);
-458   if (!cork)
-459     *copied -= free;
-460 }
-[...]
-487 if (eval == __SK_REDIRECT)
-488   sk_mem_charge(sk, tosend - sent);
-[...]
-
-When running the selftest test_txmsg_redir_wait_sndmem with txmsg_apply,
-the following warning will be reported:
-
-------------[ cut here ]------------
-WARNING: CPU: 6 PID: 57 at net/ipv4/af_inet.c:156 inet_sock_destruct+0x190/0x1a0
-Modules linked in:
-CPU: 6 UID: 0 PID: 57 Comm: kworker/6:0 Not tainted 6.12.0-rc1.bm.1-amd64+ #43
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.12.0-1 04/01/2014
-Workqueue: events sk_psock_destroy
-RIP: 0010:inet_sock_destruct+0x190/0x1a0
-RSP: 0018:ffffad0a8021fe08 EFLAGS: 00010206
-RAX: 0000000000000011 RBX: ffff9aab4475b900 RCX: ffff9aab481a0800
-RDX: 0000000000000303 RSI: 0000000000000011 RDI: ffff9aab4475b900
-RBP: ffff9aab4475b990 R08: 0000000000000000 R09: ffff9aab40050ec0
-R10: 0000000000000000 R11: ffff9aae6fdb1d01 R12: ffff9aab49c60400
-R13: ffff9aab49c60598 R14: ffff9aab49c60598 R15: dead000000000100
-FS:  0000000000000000(0000) GS:ffff9aae6fd80000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007ffec7e47bd8 CR3: 00000001a1a1c004 CR4: 0000000000770ef0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-PKRU: 55555554
-Call Trace:
-<TASK>
-? __warn+0x89/0x130
-? inet_sock_destruct+0x190/0x1a0
-? report_bug+0xfc/0x1e0
-? handle_bug+0x5c/0xa0
-? exc_invalid_op+0x17/0x70
-? asm_exc_invalid_op+0x1a/0x20
-? inet_sock_destruct+0x190/0x1a0
-__sk_destruct+0x25/0x220
-sk_psock_destroy+0x2b2/0x310
-process_scheduled_works+0xa3/0x3e0
-worker_thread+0x117/0x240
-? __pfx_worker_thread+0x10/0x10
-kthread+0xcf/0x100
-? __pfx_kthread+0x10/0x10
-ret_from_fork+0x31/0x40
-? __pfx_kthread+0x10/0x10
-ret_from_fork_asm+0x1a/0x30
-</TASK>
----[ end trace 0000000000000000 ]---
-
-In __SK_REDIRECT, a more concise way is delaying the uncharging after sent
-bytes are finalized, and uncharge this value. When (ret < 0), we shall
-invoke sk_msg_free.
-
-Same thing happens in case __SK_DROP, when tosend is set to apply_bytes,
-we may miss uncharging (msg->sg.size - apply_bytes) bytes. The same
-warning will be reported in selftest.
-
-[...]
-468 case __SK_DROP:
-469 default:
-470 sk_msg_free_partial(sk, msg, tosend);
-471 sk_msg_apply_bytes(psock, tosend);
-472 *copied -= (tosend + delta);
-473 return -EACCES;
-[...]
-
-So instead of sk_msg_free_partial we can do sk_msg_free here.
-
-Fixes: 604326b41a6f ("bpf, sockmap: convert to generic sk_msg interface")
-Fixes: 8ec95b94716a ("bpf, sockmap: Fix the sk->sk_forward_alloc warning of sk_stream_kill_queues")
-Signed-off-by: Zijian Zhang <zijianzhang@bytedance.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Acked-by: John Fastabend <john.fastabend@gmail.com>
-Link: https://lore.kernel.org/bpf/20241016234838.3167769-3-zijianzhang@bytedance.com
+Link: https://lore.kernel.org/r/20241015131832.44678-3-brgl@bgdev.pl
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Stable-dep-of: 050b23d081da ("gpio: grgpio: Add NULL check in grgpio_probe")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_bpf.c | 11 ++++-------
- 1 file changed, 4 insertions(+), 7 deletions(-)
+ drivers/gpio/gpio-grgpio.c | 23 ++++++++++++-----------
+ 1 file changed, 12 insertions(+), 11 deletions(-)
 
-diff --git a/net/ipv4/tcp_bpf.c b/net/ipv4/tcp_bpf.c
-index ade27d63655c2..85ae2c310148d 100644
---- a/net/ipv4/tcp_bpf.c
-+++ b/net/ipv4/tcp_bpf.c
-@@ -375,7 +375,6 @@ static int tcp_bpf_send_verdict(struct sock *sk, struct sk_psock *psock,
- 			cork = true;
- 			psock->cork = NULL;
- 		}
--		sk_msg_return(sk, msg, tosend);
- 		release_sock(sk);
+diff --git a/drivers/gpio/gpio-grgpio.c b/drivers/gpio/gpio-grgpio.c
+index f954359c9544e..ca3bf8d51d5aa 100644
+--- a/drivers/gpio/gpio-grgpio.c
++++ b/drivers/gpio/gpio-grgpio.c
+@@ -328,6 +328,7 @@ static const struct irq_domain_ops grgpio_irq_domain_ops = {
+ static int grgpio_probe(struct platform_device *ofdev)
+ {
+ 	struct device_node *np = ofdev->dev.of_node;
++	struct device *dev = &ofdev->dev;
+ 	void  __iomem *regs;
+ 	struct gpio_chip *gc;
+ 	struct grgpio_priv *priv;
+@@ -337,7 +338,7 @@ static int grgpio_probe(struct platform_device *ofdev)
+ 	int size;
+ 	int i;
  
- 		origsize = msg->sg.size;
-@@ -386,8 +385,9 @@ static int tcp_bpf_send_verdict(struct sock *sk, struct sk_psock *psock,
- 			sock_put(sk_redir);
+-	priv = devm_kzalloc(&ofdev->dev, sizeof(*priv), GFP_KERNEL);
++	priv = devm_kzalloc(dev, sizeof(*priv), GFP_KERNEL);
+ 	if (!priv)
+ 		return -ENOMEM;
  
- 		lock_sock(sk);
-+		sk_mem_uncharge(sk, sent);
- 		if (unlikely(ret < 0)) {
--			int free = sk_msg_free_nocharge(sk, msg);
-+			int free = sk_msg_free(sk, msg);
+@@ -346,29 +347,29 @@ static int grgpio_probe(struct platform_device *ofdev)
+ 		return PTR_ERR(regs);
  
- 			if (!cork)
- 				*copied -= free;
-@@ -401,7 +401,7 @@ static int tcp_bpf_send_verdict(struct sock *sk, struct sk_psock *psock,
- 		break;
- 	case __SK_DROP:
- 	default:
--		sk_msg_free_partial(sk, msg, tosend);
-+		sk_msg_free(sk, msg);
- 		sk_msg_apply_bytes(psock, tosend);
- 		*copied -= (tosend + delta);
- 		return -EACCES;
-@@ -417,11 +417,8 @@ static int tcp_bpf_send_verdict(struct sock *sk, struct sk_psock *psock,
- 		}
- 		if (msg &&
- 		    msg->sg.data[msg->sg.start].page_link &&
--		    msg->sg.data[msg->sg.start].length) {
--			if (eval == __SK_REDIRECT)
--				sk_mem_charge(sk, tosend - sent);
-+		    msg->sg.data[msg->sg.start].length)
- 			goto more_data;
--		}
+ 	gc = &priv->gc;
+-	err = bgpio_init(gc, &ofdev->dev, 4, regs + GRGPIO_DATA,
++	err = bgpio_init(gc, dev, 4, regs + GRGPIO_DATA,
+ 			 regs + GRGPIO_OUTPUT, NULL, regs + GRGPIO_DIR, NULL,
+ 			 BGPIOF_BIG_ENDIAN_BYTE_ORDER);
+ 	if (err) {
+-		dev_err(&ofdev->dev, "bgpio_init() failed\n");
++		dev_err(dev, "bgpio_init() failed\n");
+ 		return err;
  	}
- 	return ret;
- }
+ 
+ 	priv->regs = regs;
+ 	priv->imask = gc->read_reg(regs + GRGPIO_IMASK);
+-	priv->dev = &ofdev->dev;
++	priv->dev = dev;
+ 
+ 	gc->of_node = np;
+ 	gc->owner = THIS_MODULE;
+ 	gc->to_irq = grgpio_to_irq;
+-	gc->label = devm_kasprintf(&ofdev->dev, GFP_KERNEL, "%pOF", np);
++	gc->label = devm_kasprintf(dev, GFP_KERNEL, "%pOF", np);
+ 	gc->base = -1;
+ 
+ 	err = of_property_read_u32(np, "nbits", &prop);
+ 	if (err || prop <= 0 || prop > GRGPIO_MAX_NGPIO) {
+ 		gc->ngpio = GRGPIO_MAX_NGPIO;
+-		dev_dbg(&ofdev->dev,
+-			"No or invalid nbits property: assume %d\n", gc->ngpio);
++		dev_dbg(dev, "No or invalid nbits property: assume %d\n",
++			gc->ngpio);
+ 	} else {
+ 		gc->ngpio = prop;
+ 	}
+@@ -380,7 +381,7 @@ static int grgpio_probe(struct platform_device *ofdev)
+ 	irqmap = (s32 *)of_get_property(np, "irqmap", &size);
+ 	if (irqmap) {
+ 		if (size < gc->ngpio) {
+-			dev_err(&ofdev->dev,
++			dev_err(dev,
+ 				"irqmap shorter than ngpio (%d < %d)\n",
+ 				size, gc->ngpio);
+ 			return -EINVAL;
+@@ -390,7 +391,7 @@ static int grgpio_probe(struct platform_device *ofdev)
+ 						     &grgpio_irq_domain_ops,
+ 						     priv);
+ 		if (!priv->domain) {
+-			dev_err(&ofdev->dev, "Could not add irq domain\n");
++			dev_err(dev, "Could not add irq domain\n");
+ 			return -EINVAL;
+ 		}
+ 
+@@ -420,13 +421,13 @@ static int grgpio_probe(struct platform_device *ofdev)
+ 
+ 	err = gpiochip_add_data(gc, priv);
+ 	if (err) {
+-		dev_err(&ofdev->dev, "Could not add gpiochip\n");
++		dev_err(dev, "Could not add gpiochip\n");
+ 		if (priv->domain)
+ 			irq_domain_remove(priv->domain);
+ 		return err;
+ 	}
+ 
+-	dev_info(&ofdev->dev, "regs=0x%p, base=%d, ngpio=%d, irqs=%s\n",
++	dev_info(dev, "regs=0x%p, base=%d, ngpio=%d, irqs=%s\n",
+ 		 priv->regs, gc->base, gc->ngpio, priv->domain ? "on" : "off");
+ 
+ 	return 0;
 -- 
 2.43.0
 
