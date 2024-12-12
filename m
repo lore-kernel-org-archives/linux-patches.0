@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E67FF1487CD;
-	Thu, 12 Dec 2024 15:27:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 957261487CD;
+	Thu, 12 Dec 2024 15:27:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734017266; cv=none; b=uX5SgYTV8TA2WlHRL5Yu6KZSl0eIvK4CUwkNesg39FqHTVgZuuGtp9hXAO21dHyYD2KgsNk2ZogXBYJSlpPYSDf6ojjfeBLpoRO372cPl5I8zniB/aEBGOms/gjfhBMstu3ToyhqpQW13ArLoHZCiYjToCz5BLgTH+rF5ITVhNg=
+	t=1734017269; cv=none; b=mhi/iY4xNC3K91CkyIFjoAAYZ6HzATIdlW8Qrhebm+OQD8Rqnr+qm7aOQUes3K5b24PbCrJ9SyTOKEkJ1RUIMVZ7Y4IpGw4psjToX8erHj1EtUjDRGozS9vYxCx+PabhHvcaONYi3sNF7+v85eIN2W94YafbIGPquq/ZoXRbTT0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734017266; c=relaxed/simple;
-	bh=6geqNnmrgig/yK91QooXzTNEirV9TnincBf8uRo1+Hg=;
+	s=arc-20240116; t=1734017269; c=relaxed/simple;
+	bh=lvASbpKw7EAQ92LxD4W3maO0smYG50Um4tf3PfP1r1Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rCOfDDCNNkw0i2zmpw7tgvLhQZz1E17jtGA6bpbwOyRbeGcxXK+ZW/O/1GCdi78oSGsLY7za8E/qEq7c4GSRu1Di/2zlvEmUksd8iNjt8cb+1mp45Rsl+KaJI1x4cx6ClN5r893tSGkkLnW2q5bqPkF1UvxHfLfMSF/P7xZY+CU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A1O+HFZL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=COgcQSyvMkqO2pTcbXYLzvJxhtn2VKlnMrFs7IGPXcI/VkdMA4HHAOLGDbnYCExAJuPbFnB7+6wC1l4vZXoM0nPR6uAoyFA3O43C0VY/e/Th7Wn87CholRJSVLtd6CtK+jj10Ws2wGduGsC/smapb5B5S37RBRTF+/3dG8Znqtc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lbDx2jvl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A1O+HFZL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54303C4CECE;
-	Thu, 12 Dec 2024 15:27:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lbDx2jvl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8344C4CECE;
+	Thu, 12 Dec 2024 15:27:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734017265;
-	bh=6geqNnmrgig/yK91QooXzTNEirV9TnincBf8uRo1+Hg=;
+	s=korg; t=1734017269;
+	bh=lvASbpKw7EAQ92LxD4W3maO0smYG50Um4tf3PfP1r1Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A1O+HFZLkQrQmrkobOwjtl4q8ODSi1jjgPd8C0HGfM/6gtiSI66jYtn/mTyC8lQaR
-	 mtsaD+oX3RowLsQlxOy1Qj+Ks34kCadAECmNqVJIVtihhxk6x5RktklmT8LlbLuLNn
-	 y5zlq9GHXQax1aUn8cPflcYOaGK2zuWMjH3UMcPU=
+	b=lbDx2jvlmCNiwkdgIEnHmOtTwoMkDLQWsYj37o8vqlt5I7A3uMcSLp18b5ucUKNu4
+	 UTIrwow7I75TFwzxyRom+vvFbVpL48pX+XwTkN6yEjiHtEC+cQDRgjMKLrtl8MaF5m
+	 K1cF29gyoUbCVez7GqGoZGrJZYT8BAfDv5Uq0rb0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Parker Newman <pnewman@connecttech.com>,
+	John Harrison <John.C.Harrison@Intel.com>,
+	Julia Filipchuk <julia.filipchuk@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 422/466] misc: eeprom: eeprom_93cx6: Add quirk for extra read clock cycle
-Date: Thu, 12 Dec 2024 15:59:51 +0100
-Message-ID: <20241212144323.427816533@linuxfoundation.org>
+Subject: [PATCH 6.12 431/466] drm/xe/devcoredump: Use drm_puts and already cached local variables
+Date: Thu, 12 Dec 2024 16:00:00 +0100
+Message-ID: <20241212144323.900526881@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144306.641051666@linuxfoundation.org>
 References: <20241212144306.641051666@linuxfoundation.org>
@@ -51,117 +51,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Parker Newman <pnewman@connecttech.com>
+From: John Harrison <John.C.Harrison@Intel.com>
 
-[ Upstream commit 7738a7ab9d12c5371ed97114ee2132d4512e9fd5 ]
+[ Upstream commit 9d86d080cfb3ab935c842ac5525a90430a14c998 ]
 
-Add a quirk similar to eeprom_93xx46 to add an extra clock cycle before
-reading data from the EEPROM.
+There are a bunch of calls to drm_printf with static strings. Switch
+them to drm_puts instead.
 
-The 93Cx6 family of EEPROMs output a "dummy 0 bit" between the writing
-of the op-code/address from the host to the EEPROM and the reading of
-the actual data from the EEPROM.
+There are also a bunch of 'coredump->snapshot.XXX' references when
+'coredump->snapshot' has alread been cached locally as 'ss'. So use
+'ss->XXX' instead.
 
-More info can be found on page 6 of the AT93C46 datasheet (linked below).
-Similar notes are found in other 93xx6 datasheets.
-
-In summary the read operation for a 93Cx6 EEPROM is:
-Write to EEPROM:	110[A5-A0]	(9 bits)
-Read from EEPROM:	0[D15-D0]	(17 bits)
-
-Where:
-	110 is the start bit and READ OpCode
-	[A5-A0] is the address to read from
-	0 is a "dummy bit" preceding the actual data
-	[D15-D0] is the actual data.
-
-Looking at the READ timing diagrams in the 93Cx6 datasheets the dummy
-bit should be clocked out on the last address bit clock cycle meaning it
-should be discarded naturally.
-
-However, depending on the hardware configuration sometimes this dummy
-bit is not discarded. This is the case with Exar PCI UARTs which require
-an extra clock cycle between sending the address and reading the data.
-
-Datasheet: https://ww1.microchip.com/downloads/en/DeviceDoc/Atmel-5193-SEEPROM-AT93C46D-Datasheet.pdf
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Signed-off-by: Parker Newman <pnewman@connecttech.com>
-Link: https://lore.kernel.org/r/0f23973efefccd2544705a0480b4ad4c2353e407.1727880931.git.pnewman@connecttech.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: John Harrison <John.C.Harrison@Intel.com>
+Reviewed-by: Julia Filipchuk <julia.filipchuk@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20241003004611.2323493-3-John.C.Harrison@Intel.com
+Stable-dep-of: 5dce85fecb87 ("drm/xe: Move the coredump registration to the worker thread")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/misc/eeprom/eeprom_93cx6.c | 10 ++++++++++
- include/linux/eeprom_93cx6.h       | 11 +++++++++++
- 2 files changed, 21 insertions(+)
+ drivers/gpu/drm/xe/xe_devcoredump.c | 40 ++++++++++++++---------------
+ 1 file changed, 20 insertions(+), 20 deletions(-)
 
-diff --git a/drivers/misc/eeprom/eeprom_93cx6.c b/drivers/misc/eeprom/eeprom_93cx6.c
-index 9627294fe3e95..4c9827fe92173 100644
---- a/drivers/misc/eeprom/eeprom_93cx6.c
-+++ b/drivers/misc/eeprom/eeprom_93cx6.c
-@@ -186,6 +186,11 @@ void eeprom_93cx6_read(struct eeprom_93cx6 *eeprom, const u8 word,
- 	eeprom_93cx6_write_bits(eeprom, command,
- 		PCI_EEPROM_WIDTH_OPCODE + eeprom->width);
+diff --git a/drivers/gpu/drm/xe/xe_devcoredump.c b/drivers/gpu/drm/xe/xe_devcoredump.c
+index bdb76e834e4c3..d23719d5c2a3d 100644
+--- a/drivers/gpu/drm/xe/xe_devcoredump.c
++++ b/drivers/gpu/drm/xe/xe_devcoredump.c
+@@ -85,9 +85,9 @@ static ssize_t __xe_devcoredump_read(char *buffer, size_t count,
  
-+	if (has_quirk_extra_read_cycle(eeprom)) {
-+		eeprom_93cx6_pulse_high(eeprom);
-+		eeprom_93cx6_pulse_low(eeprom);
-+	}
+ 	p = drm_coredump_printer(&iter);
+ 
+-	drm_printf(&p, "**** Xe Device Coredump ****\n");
+-	drm_printf(&p, "kernel: " UTS_RELEASE "\n");
+-	drm_printf(&p, "module: " KBUILD_MODNAME "\n");
++	drm_puts(&p, "**** Xe Device Coredump ****\n");
++	drm_puts(&p, "kernel: " UTS_RELEASE "\n");
++	drm_puts(&p, "module: " KBUILD_MODNAME "\n");
+ 
+ 	ts = ktime_to_timespec64(ss->snapshot_time);
+ 	drm_printf(&p, "Snapshot time: %lld.%09ld\n", ts.tv_sec, ts.tv_nsec);
+@@ -96,20 +96,20 @@ static ssize_t __xe_devcoredump_read(char *buffer, size_t count,
+ 	drm_printf(&p, "Process: %s\n", ss->process_name);
+ 	xe_device_snapshot_print(xe, &p);
+ 
+-	drm_printf(&p, "\n**** GuC CT ****\n");
+-	xe_guc_ct_snapshot_print(coredump->snapshot.ct, &p);
+-	xe_guc_exec_queue_snapshot_print(coredump->snapshot.ge, &p);
++	drm_puts(&p, "\n**** GuC CT ****\n");
++	xe_guc_ct_snapshot_print(ss->ct, &p);
++	xe_guc_exec_queue_snapshot_print(ss->ge, &p);
+ 
+-	drm_printf(&p, "\n**** Job ****\n");
+-	xe_sched_job_snapshot_print(coredump->snapshot.job, &p);
++	drm_puts(&p, "\n**** Job ****\n");
++	xe_sched_job_snapshot_print(ss->job, &p);
+ 
+-	drm_printf(&p, "\n**** HW Engines ****\n");
++	drm_puts(&p, "\n**** HW Engines ****\n");
+ 	for (i = 0; i < XE_NUM_HW_ENGINES; i++)
+-		if (coredump->snapshot.hwe[i])
+-			xe_hw_engine_snapshot_print(coredump->snapshot.hwe[i],
+-						    &p);
+-	drm_printf(&p, "\n**** VM state ****\n");
+-	xe_vm_snapshot_print(coredump->snapshot.vm, &p);
++		if (ss->hwe[i])
++			xe_hw_engine_snapshot_print(ss->hwe[i], &p);
 +
- 	/*
- 	 * Read the requested 16 bits.
- 	 */
-@@ -252,6 +257,11 @@ void eeprom_93cx6_readb(struct eeprom_93cx6 *eeprom, const u8 byte,
- 	eeprom_93cx6_write_bits(eeprom, command,
- 		PCI_EEPROM_WIDTH_OPCODE + eeprom->width + 1);
++	drm_puts(&p, "\n**** VM state ****\n");
++	xe_vm_snapshot_print(ss->vm, &p);
  
-+	if (has_quirk_extra_read_cycle(eeprom)) {
-+		eeprom_93cx6_pulse_high(eeprom);
-+		eeprom_93cx6_pulse_low(eeprom);
-+	}
-+
- 	/*
- 	 * Read the requested 8 bits.
- 	 */
-diff --git a/include/linux/eeprom_93cx6.h b/include/linux/eeprom_93cx6.h
-index c860c72a921d0..3a485cc0e0fa0 100644
---- a/include/linux/eeprom_93cx6.h
-+++ b/include/linux/eeprom_93cx6.h
-@@ -11,6 +11,8 @@
- 	Supported chipsets: 93c46, 93c56 and 93c66.
-  */
+ 	return count - iter.remain;
+ }
+@@ -247,18 +247,18 @@ static void devcoredump_snapshot(struct xe_devcoredump *coredump,
+ 	if (xe_force_wake_get(gt_to_fw(q->gt), XE_FORCEWAKE_ALL))
+ 		xe_gt_info(ss->gt, "failed to get forcewake for coredump capture\n");
  
-+#include <linux/bits.h>
-+
- /*
-  * EEPROM operation defines.
-  */
-@@ -34,6 +36,7 @@
-  * @register_write(struct eeprom_93cx6 *eeprom): handler to
-  * write to the eeprom register by using all reg_* fields.
-  * @width: eeprom width, should be one of the PCI_EEPROM_WIDTH_* defines
-+ * @quirks: eeprom or controller quirks
-  * @drive_data: Set if we're driving the data line.
-  * @reg_data_in: register field to indicate data input
-  * @reg_data_out: register field to indicate data output
-@@ -50,6 +53,9 @@ struct eeprom_93cx6 {
- 	void (*register_write)(struct eeprom_93cx6 *eeprom);
+-	coredump->snapshot.ct = xe_guc_ct_snapshot_capture(&guc->ct, true);
+-	coredump->snapshot.ge = xe_guc_exec_queue_snapshot_capture(q);
+-	coredump->snapshot.job = xe_sched_job_snapshot_capture(job);
+-	coredump->snapshot.vm = xe_vm_snapshot_capture(q->vm);
++	ss->ct = xe_guc_ct_snapshot_capture(&guc->ct, true);
++	ss->ge = xe_guc_exec_queue_snapshot_capture(q);
++	ss->job = xe_sched_job_snapshot_capture(job);
++	ss->vm = xe_vm_snapshot_capture(q->vm);
  
- 	int width;
-+	unsigned int quirks;
-+/* Some EEPROMs require an extra clock cycle before reading */
-+#define PCI_EEPROM_QUIRK_EXTRA_READ_CYCLE	BIT(0)
+ 	for_each_hw_engine(hwe, q->gt, id) {
+ 		if (hwe->class != q->hwe->class ||
+ 		    !(BIT(hwe->logical_instance) & adj_logical_mask)) {
+-			coredump->snapshot.hwe[id] = NULL;
++			ss->hwe[id] = NULL;
+ 			continue;
+ 		}
+-		coredump->snapshot.hwe[id] = xe_hw_engine_snapshot_capture(hwe);
++		ss->hwe[id] = xe_hw_engine_snapshot_capture(hwe);
+ 	}
  
- 	char drive_data;
- 	char reg_data_in;
-@@ -71,3 +77,8 @@ extern void eeprom_93cx6_wren(struct eeprom_93cx6 *eeprom, bool enable);
- 
- extern void eeprom_93cx6_write(struct eeprom_93cx6 *eeprom,
- 			       u8 addr, u16 data);
-+
-+static inline bool has_quirk_extra_read_cycle(struct eeprom_93cx6 *eeprom)
-+{
-+	return eeprom->quirks & PCI_EEPROM_QUIRK_EXTRA_READ_CYCLE;
-+}
+ 	queue_work(system_unbound_wq, &ss->work);
 -- 
 2.43.0
 
