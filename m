@@ -1,43 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C412A2210FB;
-	Thu, 12 Dec 2024 15:53:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBA9721576E;
+	Thu, 12 Dec 2024 15:53:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734018798; cv=none; b=G26Nb0B4NXMyqgG7vi+A+D2/siT0T1F8a2tFPLaQToDdlxnhrYqxAztL0Sua0Wp1PsrDjbn/z3xZ4GAvInPlZFJ6Vq2qJdkk56mD4UoGG5AI8EO8/kereDm7P7QMbMjLZ+oT2AhVgBtaEOP4LBVhXCajrsWW1Bl9l5M0GAFG8CA=
+	t=1734018802; cv=none; b=sJJRUYBrI/SA33Sb5Zba6wq3MozGZiWUIQkFwSX6XaDkbVMTK8uLW5ufA9Bx7co+SGeo+m6xyOo4KvoAOCaxhFjeFX1Ss/cXoXOumzFwP3RVNVJr94RaTDJOv9BZs1+I5ezF/MhkhKBzrbkLMPJelmTegk0rGTj9rT739wxUMVQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734018798; c=relaxed/simple;
-	bh=SPeOurpFIM7XU929DPYIrdc3hLP5J3CUvi9xKgtV7Vo=;
+	s=arc-20240116; t=1734018802; c=relaxed/simple;
+	bh=Shf7CwIdTxJxgUg9wfJjjrWIWoLSY7sIY/mL1BAWcGc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D0ocQXHYO+z4bEM5/0pZ6Srw6HKXBi8H6WDzSBmU5q9A9nVIRBvKmfpWUIdq/mFYreHMPc2Ae2g/Un0T6PFPFTCcIZ9aTkdu8+CgR7Knu8umLjwGFy0eATvBOLGkwZ4b3k0T1HlnpSjgEM7C7yqIl44pgbydvwYP2zK8bzuU1RU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RGKj61Pn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=U3O656kw4SNDmRAf2sTILxEnf42bnTKhQNmodMu1mPHxg539EzxaWcZtNcErU9Wv6qyELER7cjAZTQAodDNrfU0rOLe1eYNBwZ6EIvcuJWLLavMzZHdN4YUl1VYki/84AeYPeBqsQqBNn+s/HOhnqFAaSbwMwu7aAqQVEm/Ytls=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Eoh7GqgC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RGKj61Pn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46F35C4CECE;
-	Thu, 12 Dec 2024 15:53:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Eoh7GqgC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0053C4CECE;
+	Thu, 12 Dec 2024 15:53:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734018798;
-	bh=SPeOurpFIM7XU929DPYIrdc3hLP5J3CUvi9xKgtV7Vo=;
+	s=korg; t=1734018802;
+	bh=Shf7CwIdTxJxgUg9wfJjjrWIWoLSY7sIY/mL1BAWcGc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RGKj61Pn3l9ZvJRdMbGpGCpH17J4KQXsbTMGuRYjr/GTQlsfIHFlaAbcj6FvtiC4M
-	 2mL9cP+Q0UYneFPxdHvTWOkDZCuQ+6qIKxpzdK4FDoV8ULPbD7ZI0qYuUeUjpzyghb
-	 VfvR3VMFsA3MUVaWXrVXxHubJpi3Uy3KQpUdMKFk=
+	b=Eoh7GqgCeKpOSHUJl9KIpCzjLr6bM65fp3LOdV4YMzo9zWeXv5+N3v+r6DI4ZFDlW
+	 3OeZTooiPUEvPxjhx3DUaCBXq55Ui52q8BlITPaWiINEqyljdZcOrKSesqaT/LrflK
+	 jaMxBAChFYolZWAjxZosEIew8THEvmZsiIiW+tDg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nevenko Stupar <nevenko.stupar@amd.com>,
-	Rodrigo Siqueira <rodrigo.siqueira@amd.com>,
-	Jerry Zuo <jerry.zuo@amd.com>,
-	Alex Hung <alex.hung@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Xiangyu Chen <xiangyu.chen@windriver.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 037/772] drm/amd/display: Check null-initialized variables
-Date: Thu, 12 Dec 2024 15:49:42 +0100
-Message-ID: <20241212144351.475902680@linuxfoundation.org>
+Subject: [PATCH 6.1 038/772] Bluetooth: hci_sync: Add helper functions to manipulate cmd_sync queue
+Date: Thu, 12 Dec 2024 15:49:43 +0100
+Message-ID: <20241212144351.515567719@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -56,55 +51,208 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Hung <alex.hung@amd.com>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit 367cd9ceba1933b63bc1d87d967baf6d9fd241d2 ]
+[ Upstream commit 505ea2b295929e7be2b4e1bc86ee31cb7862fb01 ]
 
-[WHAT & HOW]
-drr_timing and subvp_pipe are initialized to null and they are not
-always assigned new values. It is necessary to check for null before
-dereferencing.
+This adds functions to queue, dequeue and lookup into the cmd_sync
+list.
 
-This fixes 2 FORWARD_NULL issues reported by Coverity.
-
-Reviewed-by: Nevenko Stupar <nevenko.stupar@amd.com>
-Reviewed-by: Rodrigo Siqueira <rodrigo.siqueira@amd.com>
-Signed-off-by: Jerry Zuo <jerry.zuo@amd.com>
-Signed-off-by: Alex Hung <alex.hung@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-[Xiangyu: BP to fix CVE: CVE-2024-49898, Minor conflict resolution]
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Xiangyu Chen <xiangyu.chen@windriver.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ include/net/bluetooth/hci_sync.h |  12 +++
+ net/bluetooth/hci_sync.c         | 132 +++++++++++++++++++++++++++++--
+ 2 files changed, 136 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c b/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c
-index 85e0d1c2a9085..9d8917f72d184 100644
---- a/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c
-+++ b/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c
-@@ -900,8 +900,9 @@ static bool subvp_drr_schedulable(struct dc *dc, struct dc_state *context, struc
- 	 * for VBLANK: (VACTIVE region of the SubVP pipe can fit the MALL prefetch, VBLANK frame time,
- 	 * and the max of (VBLANK blanking time, MALL region)).
- 	 */
--	if (stretched_drr_us < (1 / (double)drr_timing->min_refresh_in_uhz) * 1000000 * 1000000 &&
--			subvp_active_us - prefetch_us - stretched_drr_us - max_vblank_mallregion > 0)
-+	if (drr_timing &&
-+	    stretched_drr_us < (1 / (double)drr_timing->min_refresh_in_uhz) * 1000000 * 1000000 &&
-+	    subvp_active_us - prefetch_us - stretched_drr_us - max_vblank_mallregion > 0)
- 		schedulable = true;
+diff --git a/include/net/bluetooth/hci_sync.h b/include/net/bluetooth/hci_sync.h
+index 7accd5ff0760b..3a7658d660224 100644
+--- a/include/net/bluetooth/hci_sync.h
++++ b/include/net/bluetooth/hci_sync.h
+@@ -47,6 +47,18 @@ int hci_cmd_sync_submit(struct hci_dev *hdev, hci_cmd_sync_work_func_t func,
+ 			void *data, hci_cmd_sync_work_destroy_t destroy);
+ int hci_cmd_sync_queue(struct hci_dev *hdev, hci_cmd_sync_work_func_t func,
+ 		       void *data, hci_cmd_sync_work_destroy_t destroy);
++struct hci_cmd_sync_work_entry *
++hci_cmd_sync_lookup_entry(struct hci_dev *hdev, hci_cmd_sync_work_func_t func,
++			  void *data, hci_cmd_sync_work_destroy_t destroy);
++int hci_cmd_sync_queue_once(struct hci_dev *hdev, hci_cmd_sync_work_func_t func,
++			    void *data, hci_cmd_sync_work_destroy_t destroy);
++void hci_cmd_sync_cancel_entry(struct hci_dev *hdev,
++			       struct hci_cmd_sync_work_entry *entry);
++bool hci_cmd_sync_dequeue(struct hci_dev *hdev, hci_cmd_sync_work_func_t func,
++			  void *data, hci_cmd_sync_work_destroy_t destroy);
++bool hci_cmd_sync_dequeue_once(struct hci_dev *hdev,
++			      hci_cmd_sync_work_func_t func, void *data,
++			      hci_cmd_sync_work_destroy_t destroy);
  
- 	return schedulable;
-@@ -966,7 +967,7 @@ static bool subvp_vblank_schedulable(struct dc *dc, struct dc_state *context)
- 	if (found && context->res_ctx.pipe_ctx[vblank_index].stream->ignore_msa_timing_param) {
- 		// SUBVP + DRR case
- 		schedulable = subvp_drr_schedulable(dc, context, &context->res_ctx.pipe_ctx[vblank_index]);
--	} else if (found) {
-+	} else if (found && subvp_pipe) {
- 		main_timing = &subvp_pipe->stream->timing;
- 		phantom_timing = &subvp_pipe->stream->mall_stream_config.paired_stream->timing;
- 		vblank_timing = &context->res_ctx.pipe_ctx[vblank_index].stream->timing;
+ int hci_update_eir_sync(struct hci_dev *hdev);
+ int hci_update_class_sync(struct hci_dev *hdev);
+diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
+index 862ac5e1f4b49..b7a7b2afaa049 100644
+--- a/net/bluetooth/hci_sync.c
++++ b/net/bluetooth/hci_sync.c
+@@ -650,6 +650,17 @@ void hci_cmd_sync_init(struct hci_dev *hdev)
+ 	INIT_DELAYED_WORK(&hdev->adv_instance_expire, adv_timeout_expire);
+ }
+ 
++static void _hci_cmd_sync_cancel_entry(struct hci_dev *hdev,
++				       struct hci_cmd_sync_work_entry *entry,
++				       int err)
++{
++	if (entry->destroy)
++		entry->destroy(hdev, entry->data, err);
++
++	list_del(&entry->list);
++	kfree(entry);
++}
++
+ void hci_cmd_sync_clear(struct hci_dev *hdev)
+ {
+ 	struct hci_cmd_sync_work_entry *entry, *tmp;
+@@ -658,13 +669,8 @@ void hci_cmd_sync_clear(struct hci_dev *hdev)
+ 	cancel_work_sync(&hdev->reenable_adv_work);
+ 
+ 	mutex_lock(&hdev->cmd_sync_work_lock);
+-	list_for_each_entry_safe(entry, tmp, &hdev->cmd_sync_work_list, list) {
+-		if (entry->destroy)
+-			entry->destroy(hdev, entry->data, -ECANCELED);
+-
+-		list_del(&entry->list);
+-		kfree(entry);
+-	}
++	list_for_each_entry_safe(entry, tmp, &hdev->cmd_sync_work_list, list)
++		_hci_cmd_sync_cancel_entry(hdev, entry, -ECANCELED);
+ 	mutex_unlock(&hdev->cmd_sync_work_lock);
+ }
+ 
+@@ -756,6 +762,115 @@ int hci_cmd_sync_queue(struct hci_dev *hdev, hci_cmd_sync_work_func_t func,
+ }
+ EXPORT_SYMBOL(hci_cmd_sync_queue);
+ 
++static struct hci_cmd_sync_work_entry *
++_hci_cmd_sync_lookup_entry(struct hci_dev *hdev, hci_cmd_sync_work_func_t func,
++			   void *data, hci_cmd_sync_work_destroy_t destroy)
++{
++	struct hci_cmd_sync_work_entry *entry, *tmp;
++
++	list_for_each_entry_safe(entry, tmp, &hdev->cmd_sync_work_list, list) {
++		if (func && entry->func != func)
++			continue;
++
++		if (data && entry->data != data)
++			continue;
++
++		if (destroy && entry->destroy != destroy)
++			continue;
++
++		return entry;
++	}
++
++	return NULL;
++}
++
++/* Queue HCI command entry once:
++ *
++ * - Lookup if an entry already exist and only if it doesn't creates a new entry
++ *   and queue it.
++ */
++int hci_cmd_sync_queue_once(struct hci_dev *hdev, hci_cmd_sync_work_func_t func,
++			    void *data, hci_cmd_sync_work_destroy_t destroy)
++{
++	if (hci_cmd_sync_lookup_entry(hdev, func, data, destroy))
++		return 0;
++
++	return hci_cmd_sync_queue(hdev, func, data, destroy);
++}
++EXPORT_SYMBOL(hci_cmd_sync_queue_once);
++
++/* Lookup HCI command entry:
++ *
++ * - Return first entry that matches by function callback or data or
++ *   destroy callback.
++ */
++struct hci_cmd_sync_work_entry *
++hci_cmd_sync_lookup_entry(struct hci_dev *hdev, hci_cmd_sync_work_func_t func,
++			  void *data, hci_cmd_sync_work_destroy_t destroy)
++{
++	struct hci_cmd_sync_work_entry *entry;
++
++	mutex_lock(&hdev->cmd_sync_work_lock);
++	entry = _hci_cmd_sync_lookup_entry(hdev, func, data, destroy);
++	mutex_unlock(&hdev->cmd_sync_work_lock);
++
++	return entry;
++}
++EXPORT_SYMBOL(hci_cmd_sync_lookup_entry);
++
++/* Cancel HCI command entry */
++void hci_cmd_sync_cancel_entry(struct hci_dev *hdev,
++			       struct hci_cmd_sync_work_entry *entry)
++{
++	mutex_lock(&hdev->cmd_sync_work_lock);
++	_hci_cmd_sync_cancel_entry(hdev, entry, -ECANCELED);
++	mutex_unlock(&hdev->cmd_sync_work_lock);
++}
++EXPORT_SYMBOL(hci_cmd_sync_cancel_entry);
++
++/* Dequeue one HCI command entry:
++ *
++ * - Lookup and cancel first entry that matches.
++ */
++bool hci_cmd_sync_dequeue_once(struct hci_dev *hdev,
++			       hci_cmd_sync_work_func_t func,
++			       void *data, hci_cmd_sync_work_destroy_t destroy)
++{
++	struct hci_cmd_sync_work_entry *entry;
++
++	entry = hci_cmd_sync_lookup_entry(hdev, func, data, destroy);
++	if (!entry)
++		return false;
++
++	hci_cmd_sync_cancel_entry(hdev, entry);
++
++	return true;
++}
++EXPORT_SYMBOL(hci_cmd_sync_dequeue_once);
++
++/* Dequeue HCI command entry:
++ *
++ * - Lookup and cancel any entry that matches by function callback or data or
++ *   destroy callback.
++ */
++bool hci_cmd_sync_dequeue(struct hci_dev *hdev, hci_cmd_sync_work_func_t func,
++			  void *data, hci_cmd_sync_work_destroy_t destroy)
++{
++	struct hci_cmd_sync_work_entry *entry;
++	bool ret = false;
++
++	mutex_lock(&hdev->cmd_sync_work_lock);
++	while ((entry = _hci_cmd_sync_lookup_entry(hdev, func, data,
++						   destroy))) {
++		_hci_cmd_sync_cancel_entry(hdev, entry, -ECANCELED);
++		ret = true;
++	}
++	mutex_unlock(&hdev->cmd_sync_work_lock);
++
++	return ret;
++}
++EXPORT_SYMBOL(hci_cmd_sync_dequeue);
++
+ int hci_update_eir_sync(struct hci_dev *hdev)
+ {
+ 	struct hci_cp_write_eir cp;
+@@ -3023,7 +3138,8 @@ int hci_update_passive_scan(struct hci_dev *hdev)
+ 	    hci_dev_test_flag(hdev, HCI_UNREGISTER))
+ 		return 0;
+ 
+-	return hci_cmd_sync_queue(hdev, update_passive_scan_sync, NULL, NULL);
++	return hci_cmd_sync_queue_once(hdev, update_passive_scan_sync, NULL,
++				       NULL);
+ }
+ 
+ int hci_write_sc_support_sync(struct hci_dev *hdev, u8 val)
 -- 
 2.43.0
 
