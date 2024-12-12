@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C530B21578E;
-	Thu, 12 Dec 2024 15:21:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31B1A1487CD;
+	Thu, 12 Dec 2024 15:21:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734016875; cv=none; b=IpbfRPXMfFQstLKn6XA/6s5ewTGxApJIqmpWMglELViAUk5rwK1J3AFMre9HEmBBlJBuVGdFJh04vFL3VLHsVSrm+QXQyjV7z8+O+pxddZU8zOdVpQp2vzQjId8seCphA3JAk0dAzNCLgtIlb/uGO/DvVgp0SqqNLQqtLCBb13o=
+	t=1734016884; cv=none; b=g+PKQYvcKbkdXombM/QQUOgAKWA5lWWHDoKUBlJcbls1TzTdpgt5ODhvEMQyoaNoaSV0pUCl8Q/2REMOZ2WhBJsMo4WD0EQlfu6OrjI2HOjZ4oW/mvOBGgxwUbApxBWkR1UJbVBoaK7fuvgDc8isze9bDvUIavDFLg2HgSWkq1I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734016875; c=relaxed/simple;
-	bh=WgjfDnQoYsdrJ6B/NHP6Wngup37s6D+UPJ9MKQd+Tyk=;
+	s=arc-20240116; t=1734016884; c=relaxed/simple;
+	bh=P7ym09U9iISElfv6t6WxqNV3GN+AwbAViihv75nl+yk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L3jM2MBIR9nwGPk2nfhL4/+KQ4Z13+LcGHEmWL4Z25y2cy1hP6iRqjUrJPUzc+yjtCTmqGRa0/8LifWOmVrec+ItzFUMPt2IqqbKWshSiOG4S3YTbox1Wa0ckKja2VHOll5p++1vZMzcSpiCJNL0P6tcMKQqYru82fbXXvHJxZQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iLGl/oRR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MP9UPqd+v+xhxUb0usUSA6TZbaMpG9WO68g8LdP/5y9cudOWAJS59iJ56VxVArlaDMhPYnbEDgLV80htPmbCUeogjSsXdxZ2cehBbexJD/w58QBTkLoQ3Bzw/G+EV/WbXbu8yK4htoFSPPqd5JyQdnyncbciMF9qAvus3VnL6bs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cEYz2YV0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iLGl/oRR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30566C4CED7;
-	Thu, 12 Dec 2024 15:21:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cEYz2YV0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9063FC4CECE;
+	Thu, 12 Dec 2024 15:21:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734016875;
-	bh=WgjfDnQoYsdrJ6B/NHP6Wngup37s6D+UPJ9MKQd+Tyk=;
+	s=korg; t=1734016884;
+	bh=P7ym09U9iISElfv6t6WxqNV3GN+AwbAViihv75nl+yk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iLGl/oRRtFVO3zbk5+MO6Rwgzyb+6vROgQnTaLJ4Y/qwQ559+j5iQ24Pd4SWN0rJ6
-	 e5gkNs+XuIsAM8powe2YH33/qLkSFxkFYVTWyvrbIyLes68DnJ399JvyLq1OX8H4m0
-	 UtkIlBGNuMz/0fnFFsmU6abM/G7Jkca++qXqpA+I=
+	b=cEYz2YV0416pXVqCVrkC/3UInwTGIASqXwVOuNRngQs3bjHt7M7ptYQeg8uG3fcJ5
+	 RGXTbyIyGEE++hCYfqW2wE7ldE73718SgW1a9ZA5yScjZYLAvlF7TPE8xeioJUza/V
+	 3TQWWDU/dTTX93YadA6GvnUg4k48c5wsPaE8t0e4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+b5ca8a249162c4b9a7d0@syzkaller.appspotmail.com,
+	syzbot+0315f8fe99120601ba88@syzkaller.appspotmail.com,
 	Ghanshyam Agrawal <ghanshyam1898@gmail.com>,
 	Dave Kleikamp <dave.kleikamp@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 320/466] jfs: fix shift-out-of-bounds in dbSplit
-Date: Thu, 12 Dec 2024 15:58:09 +0100
-Message-ID: <20241212144319.438842314@linuxfoundation.org>
+Subject: [PATCH 6.12 321/466] jfs: fix array-index-out-of-bounds in jfs_readdir
+Date: Thu, 12 Dec 2024 15:58:10 +0100
+Message-ID: <20241212144319.477849877@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144306.641051666@linuxfoundation.org>
 References: <20241212144306.641051666@linuxfoundation.org>
@@ -54,35 +54,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Ghanshyam Agrawal <ghanshyam1898@gmail.com>
 
-[ Upstream commit a5f5e4698f8abbb25fe4959814093fb5bfa1aa9d ]
+[ Upstream commit 839f102efb168f02dfdd46717b7c6dddb26b015e ]
 
-When dmt_budmin is less than zero, it causes errors
-in the later stages. Added a check to return an error beforehand
-in dbAllocCtl itself.
+The stbl might contain some invalid values. Added a check to
+return error code in that case.
 
-Reported-by: syzbot+b5ca8a249162c4b9a7d0@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=b5ca8a249162c4b9a7d0
+Reported-by: syzbot+0315f8fe99120601ba88@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=0315f8fe99120601ba88
 Signed-off-by: Ghanshyam Agrawal <ghanshyam1898@gmail.com>
 Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/jfs/jfs_dmap.c | 3 +++
- 1 file changed, 3 insertions(+)
+ fs/jfs/jfs_dtree.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/fs/jfs/jfs_dmap.c b/fs/jfs/jfs_dmap.c
-index 3ab410059dc20..39957361a7eed 100644
---- a/fs/jfs/jfs_dmap.c
-+++ b/fs/jfs/jfs_dmap.c
-@@ -1820,6 +1820,9 @@ dbAllocCtl(struct bmap * bmp, s64 nblocks, int l2nb, s64 blkno, s64 * results)
- 			return -EIO;
- 		dp = (struct dmap *) mp->data;
+diff --git a/fs/jfs/jfs_dtree.c b/fs/jfs/jfs_dtree.c
+index 69fd936fbdb37..8f85177f284b5 100644
+--- a/fs/jfs/jfs_dtree.c
++++ b/fs/jfs/jfs_dtree.c
+@@ -2891,6 +2891,14 @@ int jfs_readdir(struct file *file, struct dir_context *ctx)
+ 		stbl = DT_GETSTBL(p);
  
-+		if (dp->tree.budmin < 0)
-+			return -EIO;
+ 		for (i = index; i < p->header.nextindex; i++) {
++			if (stbl[i] < 0 || stbl[i] > 127) {
++				jfs_err("JFS: Invalid stbl[%d] = %d for inode %ld, block = %lld",
++					i, stbl[i], (long)ip->i_ino, (long long)bn);
++				free_page(dirent_buf);
++				DT_PUTPAGE(mp);
++				return -EIO;
++			}
 +
- 		/* try to allocate the blocks.
- 		 */
- 		rc = dbAllocDmapLev(bmp, dp, (int) nblocks, l2nb, results);
+ 			d = (struct ldtentry *) & p->slot[stbl[i]];
+ 
+ 			if (((long) jfs_dirent + d->namlen + 1) >
 -- 
 2.43.0
 
