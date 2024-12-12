@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3FAE21C166;
-	Thu, 12 Dec 2024 17:03:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9E1322145E;
+	Thu, 12 Dec 2024 17:03:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734023033; cv=none; b=Uujh4QGzYE3jjKDMUWYDUY7zWxv3xA1TRvkc4xOCrQENkJlGeir2Q2pY266NJ4NVsCVhUyGB39/QzA9ftkQdEcU6QWNzUQhGMV7OdLp0Ac47khk4YmeYRzNc4s6mVbEmNfmQHAHBMfgqGjLIBJzcZGbJPtoaOPrllEd/uv0gbLc=
+	t=1734023036; cv=none; b=MVt2RzHYR6gl9+rFq3cH9cy8AcAK9aOQ5canoHP6rks2v15akGkIuaOQD/bHoYyp52H44SSYVrBk/cI5pFrbu8GqYy2uidNzNry9gX8Vi4cqz6E8xQzLR/82Z1cLXV2Vz4lGkZb5nYESvuDMJ4Tgsh+P+DGUm6t6ysOEbTp33bY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734023033; c=relaxed/simple;
-	bh=y0dEE7Po0bPI4CKLIj+sasLDcpefXnIe+P7AORulU2c=;
+	s=arc-20240116; t=1734023036; c=relaxed/simple;
+	bh=5/6pXRi5GzFGJQU/W0PQzLc2RSbbpklfozAbiE3Flg8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fL7joRfHRWO7myVi8cdh+f9Iu0KG90GTX0cRzV6BmkqYoXHiAisJJROUEvR0kfvitR4wPrwMWJy/cChnlrlaGRznTKnAWJbLDYzcB0ipHcdLrrmXtFCG34rSs3V3xxnEMfZSSjoEMMLJGLgCmftIl4Q+71f+PpYl1zLLiOgAvrE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=trWfntwD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CZVd98xxeQ3UMrGFQrI8kU5pGaMMH+8rPtf+OWbOBjALjVfyIAIYz0p6ZmP9q9h/wKHCwX3TWandQIYVLsxeIFFDkMTY9T+zjjrel6mttp9KkuZOeUIO9QVsvjuqTRoy89BIdOmCYfOUNpyrK4CbZ75gyQyz2D2akGJQLoWUUY0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AqxamKPj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="trWfntwD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F423DC4CECE;
-	Thu, 12 Dec 2024 17:03:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AqxamKPj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43EF6C4CECE;
+	Thu, 12 Dec 2024 17:03:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734023033;
-	bh=y0dEE7Po0bPI4CKLIj+sasLDcpefXnIe+P7AORulU2c=;
+	s=korg; t=1734023036;
+	bh=5/6pXRi5GzFGJQU/W0PQzLc2RSbbpklfozAbiE3Flg8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=trWfntwDemy0JEF1LqAhveYvBd5QGLkfJo7qm/hq9mjFC2vF5Ucj+IlEdfrxBSSfi
-	 gx+lSdUKOamC+i2azRc/gM5laTpsSc3ebFHbbJXZFuzyKg7bUxsxQYrr5F+oIG1zQT
-	 QFczAc4VPeMkykHe9DhbZf39W2I7GxCqmbxGfVEQ=
+	b=AqxamKPjJ6OoZK1/xUph3r8L3Xb/2FfDq+3k1DDSRH0eSk3Pe3LizOsBWp82Mjd5z
+	 FPTMh09oOwUTHpN9yytYNDQ6XdYrZL0EKZByMQ1YS2cjM13ZJ/QG3iqt92ucHMRRsf
+	 I2gIp31lLPHgn/SFOyAdhfqMp5OrhyOmphFHws0g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Dario Binacchi <dario.binacchi@amarulasolutions.com>,
 	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 402/565] can: c_can: c_can_handle_bus_err(): update statistics if skb allocation fails
-Date: Thu, 12 Dec 2024 15:59:57 +0100
-Message-ID: <20241212144327.543302591@linuxfoundation.org>
+Subject: [PATCH 5.15 403/565] can: sun4i_can: sun4i_can_err(): call can_change_state() even if cf is NULL
+Date: Thu, 12 Dec 2024 15:59:58 +0100
+Message-ID: <20241212144327.587584499@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144311.432886635@linuxfoundation.org>
 References: <20241212144311.432886635@linuxfoundation.org>
@@ -53,91 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Dario Binacchi <dario.binacchi@amarulasolutions.com>
 
-[ Upstream commit 9e66242504f49e17481d8e197730faba7d99c934 ]
+[ Upstream commit ee6bf3677ae03569d833795064e17f605c2163c7 ]
 
-Ensure that the statistics are always updated, even if the skb
-allocation fails.
+Call the function can_change_state() if the allocation of the skb
+fails, as it handles the cf parameter when it is null.
 
-Fixes: 4d6d26537940 ("can: c_can: fix {rx,tx}_errors statistics")
+Additionally, this ensures that the statistics related to state error
+counters (i. e. warning, passive, and bus-off) are updated.
+
+Fixes: 0738eff14d81 ("can: Allwinner A10/A20 CAN Controller support - Kernel module")
 Signed-off-by: Dario Binacchi <dario.binacchi@amarulasolutions.com>
-Link: https://patch.msgid.link/20241122221650.633981-2-dario.binacchi@amarulasolutions.com
+Link: https://patch.msgid.link/20241122221650.633981-3-dario.binacchi@amarulasolutions.com
 Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/c_can/c_can_main.c | 26 +++++++++++++++++---------
- 1 file changed, 17 insertions(+), 9 deletions(-)
+ drivers/net/can/sun4i_can.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/can/c_can/c_can_main.c b/drivers/net/can/c_can/c_can_main.c
-index d9595eb3e125f..875ac76bc5fdd 100644
---- a/drivers/net/can/c_can/c_can_main.c
-+++ b/drivers/net/can/c_can/c_can_main.c
-@@ -1022,49 +1022,57 @@ static int c_can_handle_bus_err(struct net_device *dev,
+diff --git a/drivers/net/can/sun4i_can.c b/drivers/net/can/sun4i_can.c
+index ab9adfe92a94b..aad1882a9be11 100644
+--- a/drivers/net/can/sun4i_can.c
++++ b/drivers/net/can/sun4i_can.c
+@@ -613,10 +613,10 @@ static int sun4i_can_err(struct net_device *dev, u8 isrc, u8 status)
+ 		tx_state = txerr >= rxerr ? state : 0;
+ 		rx_state = txerr <= rxerr ? state : 0;
  
- 	/* propagate the error condition to the CAN stack */
- 	skb = alloc_can_err_skb(dev, &cf);
--	if (unlikely(!skb))
--		return 0;
- 
- 	/* check for 'last error code' which tells us the
- 	 * type of the last error to occur on the CAN bus
- 	 */
--	cf->can_id |= CAN_ERR_PROT | CAN_ERR_BUSERROR;
-+	if (likely(skb))
-+		cf->can_id |= CAN_ERR_PROT | CAN_ERR_BUSERROR;
- 
- 	switch (lec_type) {
- 	case LEC_STUFF_ERROR:
- 		netdev_dbg(dev, "stuff error\n");
--		cf->data[2] |= CAN_ERR_PROT_STUFF;
-+		if (likely(skb))
-+			cf->data[2] |= CAN_ERR_PROT_STUFF;
- 		stats->rx_errors++;
- 		break;
- 	case LEC_FORM_ERROR:
- 		netdev_dbg(dev, "form error\n");
--		cf->data[2] |= CAN_ERR_PROT_FORM;
-+		if (likely(skb))
-+			cf->data[2] |= CAN_ERR_PROT_FORM;
- 		stats->rx_errors++;
- 		break;
- 	case LEC_ACK_ERROR:
- 		netdev_dbg(dev, "ack error\n");
--		cf->data[3] = CAN_ERR_PROT_LOC_ACK;
-+		if (likely(skb))
-+			cf->data[3] = CAN_ERR_PROT_LOC_ACK;
- 		stats->tx_errors++;
- 		break;
- 	case LEC_BIT1_ERROR:
- 		netdev_dbg(dev, "bit1 error\n");
--		cf->data[2] |= CAN_ERR_PROT_BIT1;
-+		if (likely(skb))
-+			cf->data[2] |= CAN_ERR_PROT_BIT1;
- 		stats->tx_errors++;
- 		break;
- 	case LEC_BIT0_ERROR:
- 		netdev_dbg(dev, "bit0 error\n");
--		cf->data[2] |= CAN_ERR_PROT_BIT0;
-+		if (likely(skb))
-+			cf->data[2] |= CAN_ERR_PROT_BIT0;
- 		stats->tx_errors++;
- 		break;
- 	case LEC_CRC_ERROR:
- 		netdev_dbg(dev, "CRC error\n");
--		cf->data[3] = CAN_ERR_PROT_LOC_CRC_SEQ;
-+		if (likely(skb))
-+			cf->data[3] = CAN_ERR_PROT_LOC_CRC_SEQ;
- 		stats->rx_errors++;
- 		break;
- 	default:
- 		break;
+-		if (likely(skb))
+-			can_change_state(dev, cf, tx_state, rx_state);
+-		else
+-			priv->can.state = state;
++		/* The skb allocation might fail, but can_change_state()
++		 * handles cf == NULL.
++		 */
++		can_change_state(dev, cf, tx_state, rx_state);
+ 		if (state == CAN_STATE_BUS_OFF)
+ 			can_bus_off(dev);
  	}
- 
-+	if (unlikely(!skb))
-+		return 0;
-+
- 	netif_receive_skb(skb);
- 	return 1;
- }
 -- 
 2.43.0
 
