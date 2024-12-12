@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 406F61487CD;
-	Thu, 12 Dec 2024 15:27:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9D68748A;
+	Thu, 12 Dec 2024 15:27:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734017276; cv=none; b=bNnv2TFc2rxO0PNWhqvdObr7SgeayZH9ABWp0QhIOU8vHMcBjPQDgtYyFEsZgzPZKOc4drlaoiOhE6BCaLrmXatc3A3www+hIc0wiPmro1cqMtcGZHsVkpVl1D0uuXuyMOw43kzx8U/1PF2Ev+l8AZepXxHfJrCM9UhxNMaSjXc=
+	t=1734017279; cv=none; b=bxSVNliv1omMeTxl6gI06RGoibq5kZRHC6dp6IMrOyBZ/vHFVPRCIMFl9vRN1i20OrEpqEh29UFHWUZxlza/+Mncv6UR3BDKlHGZo/ndYpeU89xS3A24K3ORW8T4I2UAzpomYgNdRLaz3PG1wjvIf2iiriRyjuQxAKdH63wdffY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734017276; c=relaxed/simple;
-	bh=HU1cuD0mksdb5LjCgmhd8JyStxGhQGj3Ez1pKgt4llA=;
+	s=arc-20240116; t=1734017279; c=relaxed/simple;
+	bh=/kdOtRmtiqu2b0aNUb4VSVBk/eXjbyfADCUbkcKFhoM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JmajfOWCOOjHMTVFY3TAM6ogwpFUFDyBj+tdfy6tt92ROqYnPeDjlktrddshplpZolMfeCDcH2t2etDYf0FOic31BweRC3qDks0FOWd8l+z4RRurvG2dCCwoAYjEBObSad3LnsflUFfIxmx0MOaChoeZVEeAeT4E+Lv42HHGHX8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kh6/RC5k; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NvBuEpQ92Empcia3JQgczVq8WfJLDnj23XJ5wXHnBVdly6jjh0uvtW2bAh/3HgeEcUxEfXcGcsECi+WtIAyUc+7je5EgBTzHZrj7kmckMxtOJn6+CxBkyjy2rjIJsoaU/12DGcfZB8sMyXaMm6u3C6+oZYgo3Wtnu/TE8RCKawU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tTjlNfP4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kh6/RC5k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 438B1C4CECE;
-	Thu, 12 Dec 2024 15:27:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tTjlNfP4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54D3FC4CECE;
+	Thu, 12 Dec 2024 15:27:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734017275;
-	bh=HU1cuD0mksdb5LjCgmhd8JyStxGhQGj3Ez1pKgt4llA=;
+	s=korg; t=1734017278;
+	bh=/kdOtRmtiqu2b0aNUb4VSVBk/eXjbyfADCUbkcKFhoM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kh6/RC5kA+sb/vbvZjfnc74Lje09IXDycLSJOZlo6hkcMmlrFfWpeYOZh8Q/LdNc3
-	 4E4sfCwP05YB+0XaeWhTen9s+rUEgC9yzflJuMsftSYWj4w+HD76j5Tf6hpl2/W2Zi
-	 gf98b2HjkTFpVihu1AIKqL2AZjQ7mdSs1+hAXvmo=
+	b=tTjlNfP4KBjHxEB9yNyUwRM5WRdAJA6UbJFqSWrWhWuVsRWIr8zjQgd/4D+TMMHN3
+	 NsqT/OmJDFrPRxulnGN5JpuJKR7rxnHXhTmxWLFtJg8cirWgopMlp3cfVYwB5pRtWT
+	 OikldVxXWtXBir4pClBNJY/Jvu63PUcfR4FtSF/I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	John Harrison <John.C.Harrison@Intel.com>,
 	Julia Filipchuk <julia.filipchuk@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 433/466] drm/xe/devcoredump: Add ASCII85 dump helper function
-Date: Thu, 12 Dec 2024 16:00:02 +0100
-Message-ID: <20241212144323.979079474@linuxfoundation.org>
+Subject: [PATCH 6.12 434/466] drm/xe/guc: Copy GuC log prior to dumping
+Date: Thu, 12 Dec 2024 16:00:03 +0100
+Message-ID: <20241212144324.016328779@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144306.641051666@linuxfoundation.org>
 References: <20241212144306.641051666@linuxfoundation.org>
@@ -53,155 +53,100 @@ Content-Transfer-Encoding: 8bit
 
 From: John Harrison <John.C.Harrison@Intel.com>
 
-[ Upstream commit ec1455ce7e35a31289d2dbc1070b980538698921 ]
+[ Upstream commit a59a403419aa03d5e44c8cf014e415490395b17f ]
 
-There is a need to include the GuC log and other large binary objects
-in core dumps and via dmesg. So add a helper for dumping to a printer
-function via conversion to ASCII85 encoding.
+Add an extra stage to the GuC log print to copy the log buffer into
+regular host memory first, rather than printing the live GPU buffer
+object directly. Doing so helps prevent inconsistencies due to the log
+being updated as it is being dumped. It also allows the use of the
+ASCII85 helper function for printing the log in a more compact form
+than a straight hex dump.
 
-Another issue with dumping such a large buffer is that it can be slow,
-especially if dumping to dmesg over a serial port. So add a yield to
-prevent the 'task has been stuck for 120s' kernel hang check feature
-from firing.
-
-v2: Add a prefix to the output string. Fix memory allocation bug.
-v3: Correct a string size calculation and clean up a define (review
-feedback from Julia F).
+v2: Use %zx instead of %lx for size_t prints.
+v3: Replace hexdump code with ascii85 call (review feedback from
+Matthew B). Move chunking code into next patch as that reduces the
+deltas of both.
+v4: Add a prefix to the ASCII85 output to aid tool parsing.
 
 Signed-off-by: John Harrison <John.C.Harrison@Intel.com>
 Reviewed-by: Julia Filipchuk <julia.filipchuk@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20241003004611.2323493-5-John.C.Harrison@Intel.com
+Link: https://patchwork.freedesktop.org/patch/msgid/20241003004611.2323493-6-John.C.Harrison@Intel.com
 Stable-dep-of: 5dce85fecb87 ("drm/xe: Move the coredump registration to the worker thread")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_devcoredump.c | 87 +++++++++++++++++++++++++++++
- drivers/gpu/drm/xe/xe_devcoredump.h |  6 ++
- 2 files changed, 93 insertions(+)
+ drivers/gpu/drm/xe/xe_guc_log.c | 40 +++++++++++++++++++--------------
+ 1 file changed, 23 insertions(+), 17 deletions(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_devcoredump.c b/drivers/gpu/drm/xe/xe_devcoredump.c
-index 2690f1d1cde4c..0884c49942fe6 100644
---- a/drivers/gpu/drm/xe/xe_devcoredump.c
-+++ b/drivers/gpu/drm/xe/xe_devcoredump.c
-@@ -6,6 +6,7 @@
- #include "xe_devcoredump.h"
- #include "xe_devcoredump_types.h"
+diff --git a/drivers/gpu/drm/xe/xe_guc_log.c b/drivers/gpu/drm/xe/xe_guc_log.c
+index a37ee34194284..be47780ec2a7e 100644
+--- a/drivers/gpu/drm/xe/xe_guc_log.c
++++ b/drivers/gpu/drm/xe/xe_guc_log.c
+@@ -6,9 +6,12 @@
+ #include "xe_guc_log.h"
  
-+#include <linux/ascii85.h>
- #include <linux/devcoredump.h>
- #include <generated/utsrelease.h>
+ #include <drm/drm_managed.h>
++#include <linux/vmalloc.h>
  
-@@ -315,3 +316,89 @@ int xe_devcoredump_init(struct xe_device *xe)
+ #include "xe_bo.h"
++#include "xe_devcoredump.h"
+ #include "xe_gt.h"
++#include "xe_gt_printk.h"
+ #include "xe_map.h"
+ #include "xe_module.h"
+ 
+@@ -49,32 +52,35 @@ static size_t guc_log_size(void)
+ 		CAPTURE_BUFFER_SIZE;
  }
  
- #endif
-+
 +/**
-+ * xe_print_blob_ascii85 - print a BLOB to some useful location in ASCII85
-+ *
-+ * The output is split to multiple lines because some print targets, e.g. dmesg
-+ * cannot handle arbitrarily long lines. Note also that printing to dmesg in
-+ * piece-meal fashion is not possible, each separate call to drm_puts() has a
-+ * line-feed automatically added! Therefore, the entire output line must be
-+ * constructed in a local buffer first, then printed in one atomic output call.
-+ *
-+ * There is also a scheduler yield call to prevent the 'task has been stuck for
-+ * 120s' kernel hang check feature from firing when printing to a slow target
-+ * such as dmesg over a serial port.
-+ *
-+ * TODO: Add compression prior to the ASCII85 encoding to shrink huge buffers down.
-+ *
++ * xe_guc_log_print - dump a copy of the GuC log to some useful location
++ * @log: GuC log structure
 + * @p: the printer object to output to
-+ * @prefix: optional prefix to add to output string
-+ * @blob: the Binary Large OBject to dump out
-+ * @offset: offset in bytes to skip from the front of the BLOB, must be a multiple of sizeof(u32)
-+ * @size: the size in bytes of the BLOB, must be a multiple of sizeof(u32)
 + */
-+void xe_print_blob_ascii85(struct drm_printer *p, const char *prefix,
-+			   const void *blob, size_t offset, size_t size)
-+{
-+	const u32 *blob32 = (const u32 *)blob;
-+	char buff[ASCII85_BUFSZ], *line_buff;
-+	size_t line_pos = 0;
-+
-+#define DMESG_MAX_LINE_LEN	800
-+#define MIN_SPACE		(ASCII85_BUFSZ + 2)		/* 85 + "\n\0" */
-+
-+	if (size & 3)
-+		drm_printf(p, "Size not word aligned: %zu", size);
-+	if (offset & 3)
-+		drm_printf(p, "Offset not word aligned: %zu", size);
-+
-+	line_buff = kzalloc(DMESG_MAX_LINE_LEN, GFP_KERNEL);
-+	if (IS_ERR_OR_NULL(line_buff)) {
-+		drm_printf(p, "Failed to allocate line buffer: %pe", line_buff);
+ void xe_guc_log_print(struct xe_guc_log *log, struct drm_printer *p)
+ {
+ 	struct xe_device *xe = log_to_xe(log);
+ 	size_t size;
+-	int i, j;
++	void *copy;
+ 
+-	xe_assert(xe, log->bo);
++	if (!log->bo) {
++		drm_puts(p, "GuC log buffer not allocated");
 +		return;
 +	}
-+
-+	blob32 += offset / sizeof(*blob32);
-+	size /= sizeof(*blob32);
-+
-+	if (prefix) {
-+		strscpy(line_buff, prefix, DMESG_MAX_LINE_LEN - MIN_SPACE - 2);
-+		line_pos = strlen(line_buff);
-+
-+		line_buff[line_pos++] = ':';
-+		line_buff[line_pos++] = ' ';
-+	}
-+
-+	while (size--) {
-+		u32 val = *(blob32++);
-+
-+		strscpy(line_buff + line_pos, ascii85_encode(val, buff),
-+			DMESG_MAX_LINE_LEN - line_pos);
-+		line_pos += strlen(line_buff + line_pos);
-+
-+		if ((line_pos + MIN_SPACE) >= DMESG_MAX_LINE_LEN) {
-+			line_buff[line_pos++] = '\n';
-+			line_buff[line_pos++] = 0;
-+
-+			drm_puts(p, line_buff);
-+
-+			line_pos = 0;
-+
-+			/* Prevent 'stuck thread' time out errors */
-+			cond_resched();
-+		}
-+	}
-+
-+	if (line_pos) {
-+		line_buff[line_pos++] = '\n';
-+		line_buff[line_pos++] = 0;
-+
-+		drm_puts(p, line_buff);
-+	}
-+
-+	kfree(line_buff);
-+
-+#undef MIN_SPACE
-+#undef DMESG_MAX_LINE_LEN
-+}
-diff --git a/drivers/gpu/drm/xe/xe_devcoredump.h b/drivers/gpu/drm/xe/xe_devcoredump.h
-index e2fa65ce09322..a4eebc285fc83 100644
---- a/drivers/gpu/drm/xe/xe_devcoredump.h
-+++ b/drivers/gpu/drm/xe/xe_devcoredump.h
-@@ -6,6 +6,9 @@
- #ifndef _XE_DEVCOREDUMP_H_
- #define _XE_DEVCOREDUMP_H_
  
-+#include <linux/types.h>
-+
-+struct drm_printer;
- struct xe_device;
- struct xe_sched_job;
+ 	size = log->bo->size;
  
-@@ -23,4 +26,7 @@ static inline int xe_devcoredump_init(struct xe_device *xe)
+-#define DW_PER_READ		128
+-	xe_assert(xe, !(size % (DW_PER_READ * sizeof(u32))));
+-	for (i = 0; i < size / sizeof(u32); i += DW_PER_READ) {
+-		u32 read[DW_PER_READ];
+-
+-		xe_map_memcpy_from(xe, read, &log->bo->vmap, i * sizeof(u32),
+-				   DW_PER_READ * sizeof(u32));
+-#define DW_PER_PRINT		4
+-		for (j = 0; j < DW_PER_READ / DW_PER_PRINT; ++j) {
+-			u32 *print = read + j * DW_PER_PRINT;
+-
+-			drm_printf(p, "0x%08x 0x%08x 0x%08x 0x%08x\n",
+-				   *(print + 0), *(print + 1),
+-				   *(print + 2), *(print + 3));
+-		}
++	copy = vmalloc(size);
++	if (!copy) {
++		drm_printf(p, "Failed to allocate %zu", size);
++		return;
+ 	}
++
++	xe_map_memcpy_from(xe, copy, &log->bo->vmap, 0, size);
++
++	xe_print_blob_ascii85(p, "Log data", copy, 0, size);
++
++	vfree(copy);
  }
- #endif
  
-+void xe_print_blob_ascii85(struct drm_printer *p, const char *prefix,
-+			   const void *blob, size_t offset, size_t size);
-+
- #endif
+ int xe_guc_log_init(struct xe_guc_log *log)
 -- 
 2.43.0
 
