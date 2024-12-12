@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B52E6748A;
-	Thu, 12 Dec 2024 15:28:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07CFB748A;
+	Thu, 12 Dec 2024 15:28:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734017298; cv=none; b=AptRT7/1SVJs4+Z4SgPPKkjbnZXp3dQ0Dl2/zGs63IsMA8EICgsZ1wGwb7aq8xHDuBLFsBtSeFRhMuAf0aJJ3DGVmv1mBR5fXeq7BLAag4W51m9GquGwE0dJXmmq4Y6p7Re6cwJ8gV0KPS/tD+GXX4VIZODcjufLlP/7bNcrgus=
+	t=1734017302; cv=none; b=ibIfA+AEbwDgyB1yrwJV+0tvAY/O0f4DXWjBQcz1NmUNPPKEwOpN3DwA2ieRLxgRGdwUv8P9FhIBelOUVWs7X6x0J1724vBomlX+SIaweHlT7ctiRG4zKVCr/I75G/UT2vrdYtYVe2HnmP8XSJrT6GnHCS/oJqXGzd5ckMPfxDI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734017298; c=relaxed/simple;
-	bh=PMBIxOXlcUNFKqbM8LBM8m+AtO6RF9oRGbEsin6I8hI=;
+	s=arc-20240116; t=1734017302; c=relaxed/simple;
+	bh=cLP37izQaU+oj9pk6NgZq3HPrnFWjOawTGCYw2pw1M4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZGz71JdVHvbQGZiHC52HrcIz6DZZZCCV/9MyYiCQYItZJB5x7zny5RaPaWngcknP5AQ0a5CcszDIn6qv8GHGknkggksLLOSSN9XXkyfD2GL5kAU+K+1ld34jqMhbXzo3vCZ5QNC+eCGFlzU1O1UMe8c/GC1P9w77HaoBw8+i3jM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cy50/XuE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=dWCBM2csWyVk9MHvaMQZwnkTtVkzIpuuqWxEBLBVyMZ4PWQLr0xrkGuf+dUV5aPwMpPl2md2VpJsJE7ReQMkCphn3agadypqZoU39v9/SpENasuXC1zJFziHLIh/XAY4co19uKbB0W7eqlCWs+Kvesc1UVHbdv1TrdhBraHg/x0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i4Evhudc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cy50/XuE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18FECC4CECE;
-	Thu, 12 Dec 2024 15:28:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i4Evhudc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F536C4CECE;
+	Thu, 12 Dec 2024 15:28:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734017298;
-	bh=PMBIxOXlcUNFKqbM8LBM8m+AtO6RF9oRGbEsin6I8hI=;
+	s=korg; t=1734017301;
+	bh=cLP37izQaU+oj9pk6NgZq3HPrnFWjOawTGCYw2pw1M4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Cy50/XuEu1EX++HedKIAsFWPmxViekXun62P03l4tNXy02LKQMtEyQuH81nGOAg60
-	 U3WXfbeOpzUF7mprx1eN9bFfnaDjqht0oS1k72QS/c3XRus/oewVQvtJtd2kRyGFNI
-	 bqUmea2kQRNLV8/46wq8vnj8H57G27U+b9OksCAY=
+	b=i4EvhudcM46iZgrj9M9fY2OQZ5jPYoOFy64+z55U8C18Hy1tCVEV0P8yPgsloCq43
+	 Ooc4IkJUNH405z/R0MIcjAmnFVlsK4UxdrwU/NSncvPEPzjbB61OdOjIZxc88UcOAl
+	 XbO/bNWrLoC55/W/iC194lehUAMdUXo0eYVEiAsU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Zijlstra <peterz@infradead.org>,
-	K Prateek Nayak <kprateek.nayak@amd.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	=?UTF-8?q?Mateusz=20Jo=C5=84czyk?= <mat.jonczyk@o2.pl>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 440/466] sched/core: Remove the unnecessary need_resched() check in nohz_csd_func()
-Date: Thu, 12 Dec 2024 16:00:09 +0100
-Message-ID: <20241212144324.242299901@linuxfoundation.org>
+Subject: [PATCH 6.12 423/466] rtc: cmos: avoid taking rtc_lock for extended period of time
+Date: Thu, 12 Dec 2024 15:59:52 +0100
+Message-ID: <20241212144323.467812439@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144306.641051666@linuxfoundation.org>
 References: <20241212144306.641051666@linuxfoundation.org>
@@ -45,125 +46,97 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: K Prateek Nayak <kprateek.nayak@amd.com>
+From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 
-[ Upstream commit ea9cffc0a154124821531991d5afdd7e8b20d7aa ]
+[ Upstream commit 0a6efab33eab4e973db26d9f90c3e97a7a82e399 ]
 
-The need_resched() check currently in nohz_csd_func() can be tracked
-to have been added in scheduler_ipi() back in 2011 via commit
-ca38062e57e9 ("sched: Use resched IPI to kick off the nohz idle balance")
+On my device reading entirety of /sys/devices/pnp0/00:03/cmos_nvram0/nvmem
+takes about 9 msec during which time interrupts are off on the CPU that
+does the read and the thread that performs the read can not be migrated
+or preempted by another higher priority thread (RT or not).
 
-Since then, it has travelled quite a bit but it seems like an idle_cpu()
-check currently is sufficient to detect the need to bail out from an
-idle load balancing. To justify this removal, consider all the following
-case where an idle load balancing could race with a task wakeup:
+Allow readers and writers be preempted by taking and releasing rtc_lock
+spinlock for each individual byte read or written rather than once per
+read/write request.
 
-o Since commit f3dd3f674555b ("sched: Remove the limitation of WF_ON_CPU
-  on wakelist if wakee cpu is idle") a target perceived to be idle
-  (target_rq->nr_running == 0) will return true for
-  ttwu_queue_cond(target) which will offload the task wakeup to the idle
-  target via an IPI.
-
-  In all such cases target_rq->ttwu_pending will be set to 1 before
-  queuing the wake function.
-
-  If an idle load balance races here, following scenarios are possible:
-
-  - The CPU is not in TIF_POLLING_NRFLAG mode in which case an actual
-    IPI is sent to the CPU to wake it out of idle. If the
-    nohz_csd_func() queues before sched_ttwu_pending(), the idle load
-    balance will bail out since idle_cpu(target) returns 0 since
-    target_rq->ttwu_pending is 1. If the nohz_csd_func() is queued after
-    sched_ttwu_pending() it should see rq->nr_running to be non-zero and
-    bail out of idle load balancing.
-
-  - The CPU is in TIF_POLLING_NRFLAG mode and instead of an actual IPI,
-    the sender will simply set TIF_NEED_RESCHED for the target to put it
-    out of idle and flush_smp_call_function_queue() in do_idle() will
-    execute the call function. Depending on the ordering of the queuing
-    of nohz_csd_func() and sched_ttwu_pending(), the idle_cpu() check in
-    nohz_csd_func() should either see target_rq->ttwu_pending = 1 or
-    target_rq->nr_running to be non-zero if there is a genuine task
-    wakeup racing with the idle load balance kick.
-
-o The waker CPU perceives the target CPU to be busy
-  (targer_rq->nr_running != 0) but the CPU is in fact going idle and due
-  to a series of unfortunate events, the system reaches a case where the
-  waker CPU decides to perform the wakeup by itself in ttwu_queue() on
-  the target CPU but target is concurrently selected for idle load
-  balance (XXX: Can this happen? I'm not sure, but we'll consider the
-  mother of all coincidences to estimate the worst case scenario).
-
-  ttwu_do_activate() calls enqueue_task() which would increment
-  "rq->nr_running" post which it calls wakeup_preempt() which is
-  responsible for setting TIF_NEED_RESCHED (via a resched IPI or by
-  setting TIF_NEED_RESCHED on a TIF_POLLING_NRFLAG idle CPU) The key
-  thing to note in this case is that rq->nr_running is already non-zero
-  in case of a wakeup before TIF_NEED_RESCHED is set which would
-  lead to idle_cpu() check returning false.
-
-In all cases, it seems that need_resched() check is unnecessary when
-checking for idle_cpu() first since an impending wakeup racing with idle
-load balancer will either set the "rq->ttwu_pending" or indicate a newly
-woken task via "rq->nr_running".
-
-Chasing the reason why this check might have existed in the first place,
-I came across  Peter's suggestion on the fist iteration of Suresh's
-patch from 2011 [1] where the condition to raise the SCHED_SOFTIRQ was:
-
-	sched_ttwu_do_pending(list);
-
-	if (unlikely((rq->idle == current) &&
-	    rq->nohz_balance_kick &&
-	    !need_resched()))
-		raise_softirq_irqoff(SCHED_SOFTIRQ);
-
-Since the condition to raise the SCHED_SOFIRQ was preceded by
-sched_ttwu_do_pending() (which is equivalent of sched_ttwu_pending()) in
-the current upstream kernel, the need_resched() check was necessary to
-catch a newly queued task. Peter suggested modifying it to:
-
-	if (idle_cpu() && rq->nohz_balance_kick && !need_resched())
-		raise_softirq_irqoff(SCHED_SOFTIRQ);
-
-where idle_cpu() seems to have replaced "rq->idle == current" check.
-
-Even back then, the idle_cpu() check would have been sufficient to catch
-a new task being enqueued. Since commit b2a02fc43a1f ("smp: Optimize
-send_call_function_single_ipi()") overloads the interpretation of
-TIF_NEED_RESCHED for TIF_POLLING_NRFLAG idling, remove the
-need_resched() check in nohz_csd_func() to raise SCHED_SOFTIRQ based
-on Peter's suggestion.
-
-Fixes: b2a02fc43a1f ("smp: Optimize send_call_function_single_ipi()")
-Suggested-by: Peter Zijlstra <peterz@infradead.org>
-Signed-off-by: K Prateek Nayak <kprateek.nayak@amd.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20241119054432.6405-3-kprateek.nayak@amd.com
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Reviewed-by: Mateusz Jończyk <mat.jonczyk@o2.pl>
+Link: https://lore.kernel.org/r/Zxv8QWR21AV4ztC5@google.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/rtc/rtc-cmos.c | 31 +++++++++++++++----------------
+ 1 file changed, 15 insertions(+), 16 deletions(-)
 
-diff --git a/kernel/sched/core.c b/kernel/sched/core.c
-index 76b27b2a9c56a..33bc43b223cba 100644
---- a/kernel/sched/core.c
-+++ b/kernel/sched/core.c
-@@ -1242,7 +1242,7 @@ static void nohz_csd_func(void *info)
- 	WARN_ON(!(flags & NOHZ_KICK_MASK));
+diff --git a/drivers/rtc/rtc-cmos.c b/drivers/rtc/rtc-cmos.c
+index 35dca2accbb8d..5849d2970bba4 100644
+--- a/drivers/rtc/rtc-cmos.c
++++ b/drivers/rtc/rtc-cmos.c
+@@ -645,18 +645,17 @@ static int cmos_nvram_read(void *priv, unsigned int off, void *val,
+ 	unsigned char *buf = val;
  
- 	rq->idle_balance = idle_cpu(cpu);
--	if (rq->idle_balance && !need_resched()) {
-+	if (rq->idle_balance) {
- 		rq->nohz_idle_balance = flags;
- 		raise_softirq_irqoff(SCHED_SOFTIRQ);
+ 	off += NVRAM_OFFSET;
+-	spin_lock_irq(&rtc_lock);
+-	for (; count; count--, off++) {
++	for (; count; count--, off++, buf++) {
++		guard(spinlock_irq)(&rtc_lock);
+ 		if (off < 128)
+-			*buf++ = CMOS_READ(off);
++			*buf = CMOS_READ(off);
+ 		else if (can_bank2)
+-			*buf++ = cmos_read_bank2(off);
++			*buf = cmos_read_bank2(off);
+ 		else
+-			break;
++			return -EIO;
  	}
+-	spin_unlock_irq(&rtc_lock);
+ 
+-	return count ? -EIO : 0;
++	return 0;
+ }
+ 
+ static int cmos_nvram_write(void *priv, unsigned int off, void *val,
+@@ -671,23 +670,23 @@ static int cmos_nvram_write(void *priv, unsigned int off, void *val,
+ 	 * NVRAM to update, updating checksums is also part of its job.
+ 	 */
+ 	off += NVRAM_OFFSET;
+-	spin_lock_irq(&rtc_lock);
+-	for (; count; count--, off++) {
++	for (; count; count--, off++, buf++) {
+ 		/* don't trash RTC registers */
+ 		if (off == cmos->day_alrm
+ 				|| off == cmos->mon_alrm
+ 				|| off == cmos->century)
+-			buf++;
+-		else if (off < 128)
+-			CMOS_WRITE(*buf++, off);
++			continue;
++
++		guard(spinlock_irq)(&rtc_lock);
++		if (off < 128)
++			CMOS_WRITE(*buf, off);
+ 		else if (can_bank2)
+-			cmos_write_bank2(*buf++, off);
++			cmos_write_bank2(*buf, off);
+ 		else
+-			break;
++			return -EIO;
+ 	}
+-	spin_unlock_irq(&rtc_lock);
+ 
+-	return count ? -EIO : 0;
++	return 0;
+ }
+ 
+ /*----------------------------------------------------------------*/
 -- 
 2.43.0
 
