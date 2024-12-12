@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2875A213E6F;
-	Thu, 12 Dec 2024 17:34:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A61722333B;
+	Thu, 12 Dec 2024 17:34:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734024876; cv=none; b=QYGI8ThVFL/uCTI2z2fNuFwpPxHYzDX2DjXrrNAAstwQaV7dsU8glmIw+9/AkNDHJIuUFQNAx4boL90HKbdMwQHrmmJTYbR9Dd1Lp5NcVLMenu7wbEA6Epc3GKwlJJXl1jIgGkjfJLtrrK9gItsiO4IBEU6Y6GFYNqMLBLcvEpQ=
+	t=1734024879; cv=none; b=V1d8m5Ox7knZs9noKnj1uqglPT/zCcGROFsiwhx8kYunWiUK6B/ztBZjI98G4NKWPg26uFOxU4uFVq6Sh5UhRj21hfISPHUMxPo0IWUHO6IW9VaARyoBeJSo21rkF8aZhqoZ7cxzK7yte5U0BCNi7xgCgCAqgapbEZ33GYod7kg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734024876; c=relaxed/simple;
-	bh=t6+n2Jj2cJRl2VTvFqsT7mfQJBsrcH6+trqZMTv936g=;
+	s=arc-20240116; t=1734024879; c=relaxed/simple;
+	bh=sUrOqsLOY6HoJYuB53oYWcUIeQa78wiT9lax+/7qlok=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mHi8oPbnuQK38zi+kna1oTC8XLoYtD2Qv43LDZgPq9GTvM+wNb/HXO1ZHowvW0vhYC5GC5anpxwaot0EsvMvoT8ttGlnv2+gs/d0qAZy3I67a2JYGf1OTJDL9dGOVinl0PjMBgk2DmS8SUmc+8TfXztDXfCEjAbl9vmMYac/noE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bV1g6Qss; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mKOuS7saqzl0hK54H2+Xcnr/VrBCEDe2qPp1J/pnJrG42M9ujnARop1hncQuTGVNhhxP/Lfa5ftVgfhQTsr1Mi6iDxEmJt8qnxgB+tKQAF4r+oFDxIeQB/oT2utnlnwMMYEwP6l6Sji0zPANMdblBM3OaJe8fCBNvHFyFfSC5Wg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nJq2NilM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bV1g6Qss"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4113C4CECE;
-	Thu, 12 Dec 2024 17:34:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nJq2NilM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99D0BC4CED4;
+	Thu, 12 Dec 2024 17:34:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734024876;
-	bh=t6+n2Jj2cJRl2VTvFqsT7mfQJBsrcH6+trqZMTv936g=;
+	s=korg; t=1734024879;
+	bh=sUrOqsLOY6HoJYuB53oYWcUIeQa78wiT9lax+/7qlok=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bV1g6QssFKEcj3y226XcGKpExE7CCGcTp+kjMqtqK2dyNhlE96wANJKYwv68FiqHS
-	 sOd/x/JTXT0CDOUI0JaCx2Ooym7e43Y5urulJAXx+2VPd1KK1IwkIBp0BAzhGOzoZx
-	 audYCM3x6F+8jW1UVzAT5scpx1F/wsfX8xlqZo4M=
+	b=nJq2NilM59YKJSfNSf5jSInJqPRPwio3O4Ca4McZHAcdsJCRajezcKmllGd6Hp1P8
+	 lWlN5YpRbfCeAwCYSRjjb5noRZBmY+KEhDZLbRZxwcu6y43wZya7uuYMmbqRyGec5V
+	 EK1zWb4w/zA/uvhW6A6LFtoI4zhBu8FpK2AMFAKo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Julia Lawall <julia.lawall@inria.fr>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	K Prateek Nayak <kprateek.nayak@amd.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	David Sterba <dsterba@suse.com>,
+	Qu Wenruo <wqu@suse.com>,
+	Filipe Manana <fdmanana@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 440/459] sched/core: Prevent wakeup of ksoftirqd during idle load balance
-Date: Thu, 12 Dec 2024 16:02:58 +0100
-Message-ID: <20241212144311.132484153@linuxfoundation.org>
+Subject: [PATCH 5.10 441/459] btrfs: fix missing snapshot drew unlock when root is dead during swap activation
+Date: Thu, 12 Dec 2024 16:02:59 +0100
+Message-ID: <20241212144311.172355020@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144253.511169641@linuxfoundation.org>
 References: <20241212144253.511169641@linuxfoundation.org>
@@ -53,69 +53,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: K Prateek Nayak <kprateek.nayak@amd.com>
+From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit e932c4ab38f072ce5894b2851fea8bc5754bb8e5 ]
+[ Upstream commit 9c803c474c6c002d8ade68ebe99026cc39c37f85 ]
 
-Scheduler raises a SCHED_SOFTIRQ to trigger a load balancing event on
-from the IPI handler on the idle CPU. If the SMP function is invoked
-from an idle CPU via flush_smp_call_function_queue() then the HARD-IRQ
-flag is not set and raise_softirq_irqoff() needlessly wakes ksoftirqd
-because soft interrupts are handled before ksoftirqd get on the CPU.
+When activating a swap file we acquire the root's snapshot drew lock and
+then check if the root is dead, failing and returning with -EPERM if it's
+dead but without unlocking the root's snapshot lock. Fix this by adding
+the missing unlock.
 
-Adding a trace_printk() in nohz_csd_func() at the spot of raising
-SCHED_SOFTIRQ and enabling trace events for sched_switch, sched_wakeup,
-and softirq_entry (for SCHED_SOFTIRQ vector alone) helps observing the
-current behavior:
-
-       <idle>-0   [000] dN.1.:  nohz_csd_func: Raising SCHED_SOFTIRQ from nohz_csd_func
-       <idle>-0   [000] dN.4.:  sched_wakeup: comm=ksoftirqd/0 pid=16 prio=120 target_cpu=000
-       <idle>-0   [000] .Ns1.:  softirq_entry: vec=7 [action=SCHED]
-       <idle>-0   [000] .Ns1.:  softirq_exit: vec=7  [action=SCHED]
-       <idle>-0   [000] d..2.:  sched_switch: prev_comm=swapper/0 prev_pid=0 prev_prio=120 prev_state=R ==> next_comm=ksoftirqd/0 next_pid=16 next_prio=120
-  ksoftirqd/0-16  [000] d..2.:  sched_switch: prev_comm=ksoftirqd/0 prev_pid=16 prev_prio=120 prev_state=S ==> next_comm=swapper/0 next_pid=0 next_prio=120
-       ...
-
-Use __raise_softirq_irqoff() to raise the softirq. The SMP function call
-is always invoked on the requested CPU in an interrupt handler. It is
-guaranteed that soft interrupts are handled at the end.
-
-Following are the observations with the changes when enabling the same
-set of events:
-
-       <idle>-0       [000] dN.1.: nohz_csd_func: Raising SCHED_SOFTIRQ for nohz_idle_balance
-       <idle>-0       [000] dN.1.: softirq_raise: vec=7 [action=SCHED]
-       <idle>-0       [000] .Ns1.: softirq_entry: vec=7 [action=SCHED]
-
-No unnecessary ksoftirqd wakeups are seen from idle task's context to
-service the softirq.
-
-Fixes: b2a02fc43a1f ("smp: Optimize send_call_function_single_ipi()")
-Closes: https://lore.kernel.org/lkml/fcf823f-195e-6c9a-eac3-25f870cb35ac@inria.fr/ [1]
-Reported-by: Julia Lawall <julia.lawall@inria.fr>
-Suggested-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Signed-off-by: K Prateek Nayak <kprateek.nayak@amd.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Link: https://lore.kernel.org/r/20241119054432.6405-5-kprateek.nayak@amd.com
+Fixes: 60021bd754c6 ("btrfs: prevent subvol with swapfile from being deleted")
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/btrfs/inode.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/kernel/sched/core.c b/kernel/sched/core.c
-index 1f4bf91c27d22..7cf45d506688c 100644
---- a/kernel/sched/core.c
-+++ b/kernel/sched/core.c
-@@ -752,7 +752,7 @@ static void nohz_csd_func(void *info)
- 	rq->idle_balance = idle_cpu(cpu);
- 	if (rq->idle_balance) {
- 		rq->nohz_idle_balance = flags;
--		raise_softirq_irqoff(SCHED_SOFTIRQ);
-+		__raise_softirq_irqoff(SCHED_SOFTIRQ);
- 	}
- }
+diff --git a/fs/btrfs/inode.c b/fs/btrfs/inode.c
+index 24598acb9a314..eba87f2936d2c 100644
+--- a/fs/btrfs/inode.c
++++ b/fs/btrfs/inode.c
+@@ -10283,6 +10283,7 @@ static int btrfs_swap_activate(struct swap_info_struct *sis, struct file *file,
+ 	if (btrfs_root_dead(root)) {
+ 		spin_unlock(&root->root_item_lock);
  
++		btrfs_drew_write_unlock(&root->snapshot_lock);
+ 		btrfs_exclop_finish(fs_info);
+ 		btrfs_warn(fs_info,
+ 		"cannot activate swapfile because subvolume %llu is being deleted",
 -- 
 2.43.0
 
