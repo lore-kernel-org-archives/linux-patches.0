@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FEFC21CFEA;
-	Thu, 12 Dec 2024 16:38:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5446A21CFEA;
+	Thu, 12 Dec 2024 16:38:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734021502; cv=none; b=DfCmapdEaCSsdm8+dqd2aWnnpnmohKsX5RfpwoJmCSHGM9Pfb+sIjbePWEIPI2HsGCBTbYmDK+RR05NmiIAPr1+vZLg/xDL4eEnGGPu+naANjiPzRif6v9ygHZ2EMA3c5L1n7GWErFNVn1CLHtKMMCdHiU+os6AgE2E8uAsKmJw=
+	t=1734021507; cv=none; b=jScje1P3lJV1Qy+b96ZUMgulcHodzNLLeNJjawjCSsfRKuKA+AVzZcwWhJHKKdFkpiUNl+2o/57N3CST3eb2fCjp1TRtMJ4jMg2iUr1MyCuSVDIpVWlCLrCdOOFPePv7G1OjjltTy87idLqNtpy49k9oeiWnuGyEfn7EjNX0krA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734021502; c=relaxed/simple;
-	bh=kpCBODGK5NOEfxCYAsK8OCCGqPOHKGJHbrL8AmgD0kk=;
+	s=arc-20240116; t=1734021507; c=relaxed/simple;
+	bh=k1Uw/UfOmAarwFaDgzHOtLH9ovykdEFZOxTqcMOcsaA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NtMUZBFNA4a56dRA7qt3i+YLhY088qu2/GsCAa/00kQDmsgChXkODzsmYZScVMUqYupiqVUB1gdfYbgrhdFYpMZnKDtRnBxtmYgSp5ADd6UNOvLE37gPMWDrkdlg+7vDywhfV8fvP6C1DFYcO4PxzZWiImKjVSt1j6Z9sI5xhL8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uTrnCBpp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ub7rUcFPN3uFf3xA3eH0JUv1crqsD+Fyo+FePWQwNumpwiSd1aQyHKeCgXookoCLr6LKPnYTnev8X2KMN+Kt/RbKYTYIxZqCP8EQ9QBV6Gtsi9OLPnUT9XpLUVIpigqN1Z4jIftbb/2y/yKbQQlDKkR2KcbiZnKtLd8yxJYJodE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WUgamRmY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uTrnCBpp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4F6CC4CECE;
-	Thu, 12 Dec 2024 16:38:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WUgamRmY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59D63C4CECE;
+	Thu, 12 Dec 2024 16:38:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734021502;
-	bh=kpCBODGK5NOEfxCYAsK8OCCGqPOHKGJHbrL8AmgD0kk=;
+	s=korg; t=1734021505;
+	bh=k1Uw/UfOmAarwFaDgzHOtLH9ovykdEFZOxTqcMOcsaA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uTrnCBpp7cTZigDL/kV11/aHJvL3A2tGrZ07PDcp9Hsdi5vVe1vwhaYZLWx/rw3VU
-	 7g+i5cVZu6+6Mk6KQ0/UK7dYXv1XJxjhEWsuTKKt5BR+zu2tAC6b6ripK1ig73Iznf
-	 ZJPwMWx1Me5Tij47d+gXP/iO0Dh5GrWHmmu3CpbI=
+	b=WUgamRmY3tIILQg8Ew9SdtxsMfMF9h7B7iGJeLkrtLbcXTTw/ElY4YTzKNpe2Ee8h
+	 XHKzPtezpgmixp0ttJJB0iIeCvKhSLycxkppTyT/p6JcRWiASHAmdZs12OkSydmcSt
+	 nL3deZNxYAA0xAErAjojguwtwJqx6oomkeHOzs5A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shu Han <ebpqwerty472123@gmail.com>,
-	Stephen Smalley <stephen.smalley.work@gmail.com>,
-	Paul Moore <paul@paul-moore.com>,
+	Lonial Con <kongln9170@gmail.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Shung-Hsi Yu <shung-hsi.yu@suse.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Bin Lan <bin.lan.cn@windriver.com>
-Subject: [PATCH 6.1 756/772] mm: call the security_mmap_file() LSM hook in remap_file_pages()
-Date: Thu, 12 Dec 2024 16:01:41 +0100
-Message-ID: <20241212144421.170816057@linuxfoundation.org>
+Subject: [PATCH 6.1 757/772] bpf: Fix helper writes to read-only maps
+Date: Thu, 12 Dec 2024 16:01:42 +0100
+Message-ID: <20241212144421.217823679@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -52,79 +54,235 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shu Han <ebpqwerty472123@gmail.com>
+From: Daniel Borkmann <daniel@iogearbox.net>
 
-commit ea7e2d5e49c05e5db1922387b09ca74aa40f46e2 upstream.
+commit 32556ce93bc45c730829083cb60f95a2728ea48b upstream.
 
-The remap_file_pages syscall handler calls do_mmap() directly, which
-doesn't contain the LSM security check. And if the process has called
-personality(READ_IMPLIES_EXEC) before and remap_file_pages() is called for
-RW pages, this will actually result in remapping the pages to RWX,
-bypassing a W^X policy enforced by SELinux.
+Lonial found an issue that despite user- and BPF-side frozen BPF map
+(like in case of .rodata), it was still possible to write into it from
+a BPF program side through specific helpers having ARG_PTR_TO_{LONG,INT}
+as arguments.
 
-So we should check prot by security_mmap_file LSM hook in the
-remap_file_pages syscall handler before do_mmap() is called. Otherwise, it
-potentially permits an attacker to bypass a W^X policy enforced by
-SELinux.
+In check_func_arg() when the argument is as mentioned, the meta->raw_mode
+is never set. Later, check_helper_mem_access(), under the case of
+PTR_TO_MAP_VALUE as register base type, it assumes BPF_READ for the
+subsequent call to check_map_access_type() and given the BPF map is
+read-only it succeeds.
 
-The bypass is similar to CVE-2016-10044, which bypass the same thing via
-AIO and can be found in [1].
+The helpers really need to be annotated as ARG_PTR_TO_{LONG,INT} | MEM_UNINIT
+when results are written into them as opposed to read out of them. The
+latter indicates that it's okay to pass a pointer to uninitialized memory
+as the memory is written to anyway.
 
-The PoC:
+However, ARG_PTR_TO_{LONG,INT} is a special case of ARG_PTR_TO_FIXED_SIZE_MEM
+just with additional alignment requirement. So it is better to just get
+rid of the ARG_PTR_TO_{LONG,INT} special cases altogether and reuse the
+fixed size memory types. For this, add MEM_ALIGNED to additionally ensure
+alignment given these helpers write directly into the args via *<ptr> = val.
+The .arg*_size has been initialized reflecting the actual sizeof(*<ptr>).
 
-$ cat > test.c
+MEM_ALIGNED can only be used in combination with MEM_FIXED_SIZE annotated
+argument types, since in !MEM_FIXED_SIZE cases the verifier does not know
+the buffer size a priori and therefore cannot blindly write *<ptr> = val.
 
-int main(void) {
-	size_t pagesz = sysconf(_SC_PAGE_SIZE);
-	int mfd = syscall(SYS_memfd_create, "test", 0);
-	const char *buf = mmap(NULL, 4 * pagesz, PROT_READ | PROT_WRITE,
-		MAP_SHARED, mfd, 0);
-	unsigned int old = syscall(SYS_personality, 0xffffffff);
-	syscall(SYS_personality, READ_IMPLIES_EXEC | old);
-	syscall(SYS_remap_file_pages, buf, pagesz, 0, 2, 0);
-	syscall(SYS_personality, old);
-	// show the RWX page exists even if W^X policy is enforced
-	int fd = open("/proc/self/maps", O_RDONLY);
-	unsigned char buf2[1024];
-	while (1) {
-		int ret = read(fd, buf2, 1024);
-		if (ret <= 0) break;
-		write(1, buf2, ret);
-	}
-	close(fd);
-}
-
-$ gcc test.c -o test
-$ ./test | grep rwx
-7f1836c34000-7f1836c35000 rwxs 00002000 00:01 2050 /memfd:test (deleted)
-
-Link: https://project-zero.issues.chromium.org/issues/42452389 [1]
-Cc: stable@vger.kernel.org
-Signed-off-by: Shu Han <ebpqwerty472123@gmail.com>
-Acked-by: Stephen Smalley <stephen.smalley.work@gmail.com>
-[PM: subject line tweaks]
-Signed-off-by: Paul Moore <paul@paul-moore.com>
-[ Resolve merge conflict in mm/mmap.c. ]
+Fixes: 57c3bb725a3d ("bpf: Introduce ARG_PTR_TO_{INT,LONG} arg types")
+Reported-by: Lonial Con <kongln9170@gmail.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Acked-by: Andrii Nakryiko <andrii@kernel.org>
+Acked-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
+Link: https://lore.kernel.org/r/20240913191754.13290-3-daniel@iogearbox.net
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+[ Resolve merge conflict in include/linux/bpf.h and merge conflict in
+  kernel/bpf/verifier.c.]
 Signed-off-by: Bin Lan <bin.lan.cn@windriver.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/mmap.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ include/linux/bpf.h      |    7 +++++--
+ kernel/bpf/helpers.c     |    6 ++++--
+ kernel/bpf/syscall.c     |    3 ++-
+ kernel/bpf/verifier.c    |   41 +++++------------------------------------
+ kernel/trace/bpf_trace.c |    6 ++++--
+ net/core/filter.c        |    6 ++++--
+ 6 files changed, 24 insertions(+), 45 deletions(-)
 
---- a/mm/mmap.c
-+++ b/mm/mmap.c
-@@ -3021,8 +3021,12 @@ SYSCALL_DEFINE5(remap_file_pages, unsign
- 		flags |= MAP_LOCKED;
+--- a/include/linux/bpf.h
++++ b/include/linux/bpf.h
+@@ -475,6 +475,11 @@ enum bpf_type_flag {
+ 	/* Size is known at compile time. */
+ 	MEM_FIXED_SIZE		= BIT(10 + BPF_BASE_TYPE_BITS),
  
- 	file = get_file(vma->vm_file);
-+	ret = security_mmap_file(vma->vm_file, prot, flags);
-+	if (ret)
-+		goto out_fput;
- 	ret = do_mmap(vma->vm_file, start, size,
- 			prot, flags, pgoff, &populate, NULL);
-+out_fput:
- 	fput(file);
- out:
- 	mmap_write_unlock(mm);
++	/* Memory must be aligned on some architectures, used in combination with
++	 * MEM_FIXED_SIZE.
++	 */
++	MEM_ALIGNED		= BIT(17 + BPF_BASE_TYPE_BITS),
++
+ 	__BPF_TYPE_FLAG_MAX,
+ 	__BPF_TYPE_LAST_FLAG	= __BPF_TYPE_FLAG_MAX - 1,
+ };
+@@ -510,8 +515,6 @@ enum bpf_arg_type {
+ 	ARG_ANYTHING,		/* any (initialized) argument is ok */
+ 	ARG_PTR_TO_SPIN_LOCK,	/* pointer to bpf_spin_lock */
+ 	ARG_PTR_TO_SOCK_COMMON,	/* pointer to sock_common */
+-	ARG_PTR_TO_INT,		/* pointer to int */
+-	ARG_PTR_TO_LONG,	/* pointer to long */
+ 	ARG_PTR_TO_SOCKET,	/* pointer to bpf_sock (fullsock) */
+ 	ARG_PTR_TO_BTF_ID,	/* pointer to in-kernel struct */
+ 	ARG_PTR_TO_ALLOC_MEM,	/* pointer to dynamically allocated memory */
+--- a/kernel/bpf/helpers.c
++++ b/kernel/bpf/helpers.c
+@@ -531,7 +531,8 @@ const struct bpf_func_proto bpf_strtol_p
+ 	.arg1_type	= ARG_PTR_TO_MEM | MEM_RDONLY,
+ 	.arg2_type	= ARG_CONST_SIZE,
+ 	.arg3_type	= ARG_ANYTHING,
+-	.arg4_type	= ARG_PTR_TO_LONG,
++	.arg4_type	= ARG_PTR_TO_FIXED_SIZE_MEM | MEM_UNINIT | MEM_ALIGNED,
++	.arg4_size	= sizeof(s64),
+ };
+ 
+ BPF_CALL_4(bpf_strtoul, const char *, buf, size_t, buf_len, u64, flags,
+@@ -560,7 +561,8 @@ const struct bpf_func_proto bpf_strtoul_
+ 	.arg1_type	= ARG_PTR_TO_MEM | MEM_RDONLY,
+ 	.arg2_type	= ARG_CONST_SIZE,
+ 	.arg3_type	= ARG_ANYTHING,
+-	.arg4_type	= ARG_PTR_TO_LONG,
++	.arg4_type	= ARG_PTR_TO_FIXED_SIZE_MEM | MEM_UNINIT | MEM_ALIGNED,
++	.arg4_size	= sizeof(u64),
+ };
+ 
+ BPF_CALL_3(bpf_strncmp, const char *, s1, u32, s1_sz, const char *, s2)
+--- a/kernel/bpf/syscall.c
++++ b/kernel/bpf/syscall.c
+@@ -5260,7 +5260,8 @@ static const struct bpf_func_proto bpf_k
+ 	.arg1_type	= ARG_PTR_TO_MEM,
+ 	.arg2_type	= ARG_CONST_SIZE_OR_ZERO,
+ 	.arg3_type	= ARG_ANYTHING,
+-	.arg4_type	= ARG_PTR_TO_LONG,
++	.arg4_type	= ARG_PTR_TO_FIXED_SIZE_MEM | MEM_UNINIT | MEM_ALIGNED,
++	.arg4_size	= sizeof(u64),
+ };
+ 
+ static const struct bpf_func_proto *
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -5818,16 +5818,6 @@ static bool arg_type_is_dynptr(enum bpf_
+ 	return base_type(type) == ARG_PTR_TO_DYNPTR;
+ }
+ 
+-static int int_ptr_type_to_size(enum bpf_arg_type type)
+-{
+-	if (type == ARG_PTR_TO_INT)
+-		return sizeof(u32);
+-	else if (type == ARG_PTR_TO_LONG)
+-		return sizeof(u64);
+-
+-	return -EINVAL;
+-}
+-
+ static int resolve_map_arg_type(struct bpf_verifier_env *env,
+ 				 const struct bpf_call_arg_meta *meta,
+ 				 enum bpf_arg_type *arg_type)
+@@ -5908,16 +5898,6 @@ static const struct bpf_reg_types mem_ty
+ 	},
+ };
+ 
+-static const struct bpf_reg_types int_ptr_types = {
+-	.types = {
+-		PTR_TO_STACK,
+-		PTR_TO_PACKET,
+-		PTR_TO_PACKET_META,
+-		PTR_TO_MAP_KEY,
+-		PTR_TO_MAP_VALUE,
+-	},
+-};
+-
+ static const struct bpf_reg_types fullsock_types = { .types = { PTR_TO_SOCKET } };
+ static const struct bpf_reg_types scalar_types = { .types = { SCALAR_VALUE } };
+ static const struct bpf_reg_types context_types = { .types = { PTR_TO_CTX } };
+@@ -5955,8 +5935,6 @@ static const struct bpf_reg_types *compa
+ 	[ARG_PTR_TO_SPIN_LOCK]		= &spin_lock_types,
+ 	[ARG_PTR_TO_MEM]		= &mem_types,
+ 	[ARG_PTR_TO_ALLOC_MEM]		= &alloc_mem_types,
+-	[ARG_PTR_TO_INT]		= &int_ptr_types,
+-	[ARG_PTR_TO_LONG]		= &int_ptr_types,
+ 	[ARG_PTR_TO_PERCPU_BTF_ID]	= &percpu_btf_ptr_types,
+ 	[ARG_PTR_TO_FUNC]		= &func_ptr_types,
+ 	[ARG_PTR_TO_STACK]		= &stack_ptr_types,
+@@ -6303,9 +6281,11 @@ skip_type_check:
+ 		 */
+ 		meta->raw_mode = arg_type & MEM_UNINIT;
+ 		if (arg_type & MEM_FIXED_SIZE) {
+-			err = check_helper_mem_access(env, regno,
+-						      fn->arg_size[arg], false,
+-						      meta);
++			err = check_helper_mem_access(env, regno, fn->arg_size[arg], false, meta);
++			if (err)
++				return err;
++			if (arg_type & MEM_ALIGNED)
++				err = check_ptr_alignment(env, reg, 0, fn->arg_size[arg], true);
+ 		}
+ 		break;
+ 	case ARG_CONST_SIZE:
+@@ -6373,17 +6353,6 @@ skip_type_check:
+ 		if (err)
+ 			return err;
+ 		break;
+-	case ARG_PTR_TO_INT:
+-	case ARG_PTR_TO_LONG:
+-	{
+-		int size = int_ptr_type_to_size(arg_type);
+-
+-		err = check_helper_mem_access(env, regno, size, false, meta);
+-		if (err)
+-			return err;
+-		err = check_ptr_alignment(env, reg, 0, size, true);
+-		break;
+-	}
+ 	case ARG_PTR_TO_CONST_STR:
+ 	{
+ 		struct bpf_map *map = reg->map_ptr;
+--- a/kernel/trace/bpf_trace.c
++++ b/kernel/trace/bpf_trace.c
+@@ -1192,7 +1192,8 @@ static const struct bpf_func_proto bpf_g
+ 	.ret_type	= RET_INTEGER,
+ 	.arg1_type	= ARG_PTR_TO_CTX,
+ 	.arg2_type	= ARG_ANYTHING,
+-	.arg3_type	= ARG_PTR_TO_LONG,
++	.arg3_type	= ARG_PTR_TO_FIXED_SIZE_MEM | MEM_UNINIT | MEM_ALIGNED,
++	.arg3_size	= sizeof(u64),
+ };
+ 
+ BPF_CALL_2(get_func_ret, void *, ctx, u64 *, value)
+@@ -1208,7 +1209,8 @@ static const struct bpf_func_proto bpf_g
+ 	.func		= get_func_ret,
+ 	.ret_type	= RET_INTEGER,
+ 	.arg1_type	= ARG_PTR_TO_CTX,
+-	.arg2_type	= ARG_PTR_TO_LONG,
++	.arg2_type	= ARG_PTR_TO_FIXED_SIZE_MEM | MEM_UNINIT | MEM_ALIGNED,
++	.arg2_size	= sizeof(u64),
+ };
+ 
+ BPF_CALL_1(get_func_arg_cnt, void *, ctx)
+--- a/net/core/filter.c
++++ b/net/core/filter.c
+@@ -6233,7 +6233,8 @@ static const struct bpf_func_proto bpf_s
+ 	.ret_type	= RET_INTEGER,
+ 	.arg1_type      = ARG_PTR_TO_CTX,
+ 	.arg2_type      = ARG_ANYTHING,
+-	.arg3_type      = ARG_PTR_TO_INT,
++	.arg3_type      = ARG_PTR_TO_FIXED_SIZE_MEM | MEM_UNINIT | MEM_ALIGNED,
++	.arg3_size	= sizeof(u32),
+ 	.arg4_type      = ARG_ANYTHING,
+ 	.arg5_type      = ARG_ANYTHING,
+ };
+@@ -6244,7 +6245,8 @@ static const struct bpf_func_proto bpf_x
+ 	.ret_type	= RET_INTEGER,
+ 	.arg1_type      = ARG_PTR_TO_CTX,
+ 	.arg2_type      = ARG_ANYTHING,
+-	.arg3_type      = ARG_PTR_TO_INT,
++	.arg3_type      = ARG_PTR_TO_FIXED_SIZE_MEM | MEM_UNINIT | MEM_ALIGNED,
++	.arg3_size	= sizeof(u32),
+ 	.arg4_type      = ARG_ANYTHING,
+ 	.arg5_type      = ARG_ANYTHING,
+ };
 
 
