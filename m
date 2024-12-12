@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73E63217F34;
-	Thu, 12 Dec 2024 15:51:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9658222D44;
+	Thu, 12 Dec 2024 15:51:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734018690; cv=none; b=o4y57SPv5HlYTbQBHWq1JNlBgnsqSa2kjlGBW0gTT7l6buBxiAkCzjnjY16VuI1XbEsEylBxMnwK2mcmT7cn38jGCXPNtAQKZD7xcrW2T8ebERtCYcdr5T+u8o1noTkgzN//thaGfIY/97UE3a+s8/Ud3C95lSxNRE4tpu1a7qc=
+	t=1734018693; cv=none; b=s2ak/1Ets6LoKKzbeGEo4oWYVx6jFaT/ycoOKLDmQECOs0Rhr1aoqNQ+mfo9beNO7hd4I7Wiy54qCriaaN/Vm+0jBAxCVrzJ7NI6oCmUWwe6UsC87FwubsYxHiuizAICCVRJdgShzHVHIxXcLzB1ypS+VHh05r9K0bi+mx6/Vig=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734018690; c=relaxed/simple;
-	bh=0lLFVIeb+ieAeLfjSeH9zx5AKaw9tdoP7NAfbIQggTM=;
+	s=arc-20240116; t=1734018693; c=relaxed/simple;
+	bh=rgABftn1QCRFJRyG5RHqIam4gU0aIn92HmkYbnUsqRU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aBNXZTfwRi8mhjPnLzstxbGCt3mW/2mpxFf/g6PG6c+XXWorgpdWGRSw0ABaD9FOHGOIOZoWGG0zbThg2enp2WXPnZtMXo2h3IHBugsdOPfmF9y1P0o7D5LfTqg3XG43ws4K5+E8RVGO9VabhyGYqKQd0qFcKfDFhY+dmxxsDWA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0iPvbxrr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lH+vwW/8NRurRkm/pqRCYpzT1G5NjwfZPhZbEzmoyniRW5yvKUpMW3B/Hg5T9MT9rplz0I0mw0QvcLyLeOzeBRB8RF98OGdveqj3uORVFfoLDEz4MgDi/QWNoyDjf9M2dbiEPvczVIRezfs7NGdw+coZILdQyYH33FtxfyYFpss=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tj8i1uyL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0iPvbxrr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B45FDC4CED0;
-	Thu, 12 Dec 2024 15:51:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tj8i1uyL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 324DBC4CECE;
+	Thu, 12 Dec 2024 15:51:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734018690;
-	bh=0lLFVIeb+ieAeLfjSeH9zx5AKaw9tdoP7NAfbIQggTM=;
+	s=korg; t=1734018693;
+	bh=rgABftn1QCRFJRyG5RHqIam4gU0aIn92HmkYbnUsqRU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0iPvbxrr/d05UDlKtIyoojRcjbUuekO70f5uGolkAvaRYQ97loEc5MXuSldl1StY7
-	 8BmToezDHS70OEj2ZeoPCywPKgpgGR/cNyTxyrL8qyUA4jDCkAB8PVtmBMdOjMk6Rp
-	 Yd0IXqz4bRTPE0mWtdspCmbECwveIB+iJw75AuP8=
+	b=Tj8i1uyL3K1bAMU3i9x3jgSYI32P7yrvEAIBzdi2CIDYJyV4ck95KshgN9kkuBuvz
+	 Wvlmqe81lXiS+BhAFFioIdN4kjS4JcKqqzLBJBlfBw3x0ucvq8TfPWvUxOxUV17zAs
+	 ayKzmShJcXFD3CMHHxpj3Lr4TRzZLZTg04kSp2vU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Julia Lawall <julia.lawall@inria.fr>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	K Prateek Nayak <kprateek.nayak@amd.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 322/356] sched/core: Prevent wakeup of ksoftirqd during idle load balance
-Date: Thu, 12 Dec 2024 16:00:41 +0100
-Message-ID: <20241212144257.279481594@linuxfoundation.org>
+	Ravindra Yashvant Shinde <ravindra.yashvant.shinde@nxp.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>
+Subject: [PATCH 6.6 355/356] i3c: master: Remove i3c_dev_disable_ibi_locked(olddev) on device hotjoin
+Date: Thu, 12 Dec 2024 16:01:14 +0100
+Message-ID: <20241212144258.594768842@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144244.601729511@linuxfoundation.org>
 References: <20241212144244.601729511@linuxfoundation.org>
@@ -53,71 +52,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: K Prateek Nayak <kprateek.nayak@amd.com>
+From: Frank Li <Frank.Li@nxp.com>
 
-[ Upstream commit e932c4ab38f072ce5894b2851fea8bc5754bb8e5 ]
+commit 36faa04ce3d9c962b4b29d285ad07ca29e2988e4 upstream.
 
-Scheduler raises a SCHED_SOFTIRQ to trigger a load balancing event on
-from the IPI handler on the idle CPU. If the SMP function is invoked
-from an idle CPU via flush_smp_call_function_queue() then the HARD-IRQ
-flag is not set and raise_softirq_irqoff() needlessly wakes ksoftirqd
-because soft interrupts are handled before ksoftirqd get on the CPU.
+When a new device hotjoins, a new dynamic address is assigned.
+i3c_master_add_i3c_dev_locked() identifies that the device was previously
+attached to the bus and locates the olddev.
 
-Adding a trace_printk() in nohz_csd_func() at the spot of raising
-SCHED_SOFTIRQ and enabling trace events for sched_switch, sched_wakeup,
-and softirq_entry (for SCHED_SOFTIRQ vector alone) helps observing the
-current behavior:
+i3c_master_add_i3c_dev_locked()
+{
+    ...
+    olddev = i3c_master_search_i3c_dev_duplicate(newdev);
+    ...
+    if (olddev) {
+        ...
+        i3c_dev_disable_ibi_locked(olddev);
+        ^^^^^^
+        The olddev should not receive any commands on the i3c bus as it
+        does not exist and has been assigned a new address. This will
+        result in NACK or timeout. So remove it.
+    }
 
-       <idle>-0   [000] dN.1.:  nohz_csd_func: Raising SCHED_SOFTIRQ from nohz_csd_func
-       <idle>-0   [000] dN.4.:  sched_wakeup: comm=ksoftirqd/0 pid=16 prio=120 target_cpu=000
-       <idle>-0   [000] .Ns1.:  softirq_entry: vec=7 [action=SCHED]
-       <idle>-0   [000] .Ns1.:  softirq_exit: vec=7  [action=SCHED]
-       <idle>-0   [000] d..2.:  sched_switch: prev_comm=swapper/0 prev_pid=0 prev_prio=120 prev_state=R ==> next_comm=ksoftirqd/0 next_pid=16 next_prio=120
-  ksoftirqd/0-16  [000] d..2.:  sched_switch: prev_comm=ksoftirqd/0 prev_pid=16 prev_prio=120 prev_state=S ==> next_comm=swapper/0 next_pid=0 next_prio=120
-       ...
+    i3c_dev_free_ibi_locked(olddev);
+    ^^^^^^^^
+    This function internally calls i3c_dev_disable_ibi_locked() function
+    causing to send DISEC command with old Address.
 
-Use __raise_softirq_irqoff() to raise the softirq. The SMP function call
-is always invoked on the requested CPU in an interrupt handler. It is
-guaranteed that soft interrupts are handled at the end.
+    The olddev should not receive any commands on the i3c bus as it
+    does not exist and has been assigned a new address. This will
+    result in NACK or timeout. So, update the olddev->ibi->enabled
+    flag to false to avoid DISEC with OldAddr.
+}
 
-Following are the observations with the changes when enabling the same
-set of events:
+Include part of Ravindra Yashvant Shinde's work:
+https://lore.kernel.org/linux-i3c/20240820151917.3904956-1-ravindra.yashvant.shinde@nxp.com/T/#u
 
-       <idle>-0       [000] dN.1.: nohz_csd_func: Raising SCHED_SOFTIRQ for nohz_idle_balance
-       <idle>-0       [000] dN.1.: softirq_raise: vec=7 [action=SCHED]
-       <idle>-0       [000] .Ns1.: softirq_entry: vec=7 [action=SCHED]
-
-No unnecessary ksoftirqd wakeups are seen from idle task's context to
-service the softirq.
-
-Fixes: b2a02fc43a1f ("smp: Optimize send_call_function_single_ipi()")
-Closes: https://lore.kernel.org/lkml/fcf823f-195e-6c9a-eac3-25f870cb35ac@inria.fr/ [1]
-Reported-by: Julia Lawall <julia.lawall@inria.fr>
-Suggested-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Signed-off-by: K Prateek Nayak <kprateek.nayak@amd.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Link: https://lore.kernel.org/r/20241119054432.6405-5-kprateek.nayak@amd.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 317bacf960a4 ("i3c: master: add enable(disable) hot join in sys entry")
+Co-developed-by: Ravindra Yashvant Shinde <ravindra.yashvant.shinde@nxp.com>
+Signed-off-by: Ravindra Yashvant Shinde <ravindra.yashvant.shinde@nxp.com>
+Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
+Link: https://lore.kernel.org/r/20241001162232.223724-1-Frank.Li@nxp.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/i3c/master.c |   13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/kernel/sched/core.c b/kernel/sched/core.c
-index 8abd1bf31864e..da14c7450156b 100644
---- a/kernel/sched/core.c
-+++ b/kernel/sched/core.c
-@@ -1183,7 +1183,7 @@ static void nohz_csd_func(void *info)
- 	rq->idle_balance = idle_cpu(cpu);
- 	if (rq->idle_balance) {
- 		rq->nohz_idle_balance = flags;
--		raise_softirq_irqoff(SCHED_SOFTIRQ);
-+		__raise_softirq_irqoff(SCHED_SOFTIRQ);
- 	}
- }
+--- a/drivers/i3c/master.c
++++ b/drivers/i3c/master.c
+@@ -2048,11 +2048,16 @@ int i3c_master_add_i3c_dev_locked(struct
+ 			ibireq.max_payload_len = olddev->ibi->max_payload_len;
+ 			ibireq.num_slots = olddev->ibi->num_slots;
  
--- 
-2.43.0
-
+-			if (olddev->ibi->enabled) {
++			if (olddev->ibi->enabled)
+ 				enable_ibi = true;
+-				i3c_dev_disable_ibi_locked(olddev);
+-			}
+-
++			/*
++			 * The olddev should not receive any commands on the
++			 * i3c bus as it does not exist and has been assigned
++			 * a new address. This will result in NACK or timeout.
++			 * So, update the olddev->ibi->enabled flag to false
++			 * to avoid DISEC with OldAddr.
++			 */
++			olddev->ibi->enabled = false;
+ 			i3c_dev_free_ibi_locked(olddev);
+ 		}
+ 		mutex_unlock(&olddev->ibi_lock);
 
 
