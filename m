@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 549E7223304;
-	Thu, 12 Dec 2024 16:02:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 974B5223304;
+	Thu, 12 Dec 2024 16:02:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734019363; cv=none; b=ekP5MS4AjdbFAkoUHYaur5yAseTUUizEOOImcreMCS2d3W9CUFXKtxu4oixhsGeDEe0jNiHBfuH81JY4SlH8YitFvML+xJHQvNzzFIpj2Whh44Qz3HUzbcu3vyz/LfpSDzyVnGncA3is5hXykwh51I50ITXaGwqzwJPTDAtybvk=
+	t=1734019366; cv=none; b=SZ4TLIFERYZ+NMIO51qvBfQ1M4oqQ0ifEuRYNtuAT/HjXfzQuWtHsy6PtDX8EAZAYCUzMgIvDqrmQTHf8v+/2aoaGlZ9ZGYnf2QKhr2LuzhuUITeCQQ+2aucM2M0XHGdrpGJtYp963iGC491h7kT0me21oXBazEnUq8hpmAdka4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734019363; c=relaxed/simple;
-	bh=zjVlyBvB0CZjTmGCeIZXSmrzLVdD8OABLWGLt1EYCOw=;
+	s=arc-20240116; t=1734019366; c=relaxed/simple;
+	bh=gwiHL1rfY7c4BwzMvix21ktgeTl5SAQp6XitKxJYNZA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tW6cYmmvH7bT5nDL2DVBkOCOp3V6w3uHhOgsBwY0JlgHv0a2qzXtp/+xoYT8khQU7fPQA4BmqbmnhjJ4YRB32vTKRFIS8gWOxS0uH4njQ/Q41zMhSMOQtnK8u1eIMkX+9JltwkLRh7bIQntd0GcGNwNhQFMx9+jbeHlA3U70pws=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A+FNM9rL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NtWPH/GiB8N/k5VznsR+CcDFiSQ0dVFDP1lkpNmbLEntLNxPlq62TeoYhe6FqCE1F24C6xGRoHEFicvVSID5F7QF1V4CMixAtpwAGMVnVA04WUrcjQeHQwFk+k3fpnLLORAyWp6noMw7kanrq4sjsvSjWj+Q6GWmX+4seomNaok=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jrIYqUAf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A+FNM9rL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F2E8C4CEDE;
-	Thu, 12 Dec 2024 16:02:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jrIYqUAf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 152ADC4CECE;
+	Thu, 12 Dec 2024 16:02:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734019363;
-	bh=zjVlyBvB0CZjTmGCeIZXSmrzLVdD8OABLWGLt1EYCOw=;
+	s=korg; t=1734019366;
+	bh=gwiHL1rfY7c4BwzMvix21ktgeTl5SAQp6XitKxJYNZA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A+FNM9rLaNE5to/b1Buf6Y26uHG2naX/eeOk+/YQMc8H/lyonhgSjd1E6egCtmbjK
-	 CBYo0k/LfVAvK8zQaHHcqVRvuCyhud2vg+HubPaSyJob7erxPjKYkIwgITR4OsJJIR
-	 r+hrrFeMP0d9tzUSPk9XidRgTFdwxG2BOqPo1dic=
+	b=jrIYqUAfWBTxm6YAWIVXCC2emGnaow/EjioIVrIRDOdV7fPCepcQlBDRQaavMgRNt
+	 bmNJORgBScMUggTCqB7DQD8JsTC6LrdE2vUhGLsI5qLkrGOHULA9Zeq59JlJmrTXEH
+	 1Z0iQaprkPIi5RAG+rwixba2C3S5Y4LnBsliR+Hk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dipendra Khadka <kdipendra88@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	Andrew Lunn <andrew@lunn.ch>,
+	Eric Dumazet <edumazet@google.com>,
+	Guillaume Nault <gnault@redhat.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 160/772] octeontx2-pf: handle otx2_mbox_get_rsp errors in otx2_flows.c
-Date: Thu, 12 Dec 2024 15:51:45 +0100
-Message-ID: <20241212144356.540623691@linuxfoundation.org>
+Subject: [PATCH 6.1 187/772] sock_diag: allow concurrent operation in sock_diag_rcv_msg()
+Date: Thu, 12 Dec 2024 15:52:12 +0100
+Message-ID: <20241212144357.670858894@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -52,58 +54,166 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dipendra Khadka <kdipendra88@gmail.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit bd3110bc102ab6292656b8118be819faa0de8dd0 ]
+[ Upstream commit 86e8921df05c6e9423ab74ab8d41022775d8b83a ]
 
-Adding error pointer check after calling otx2_mbox_get_rsp().
+TCPDIAG_GETSOCK and DCCPDIAG_GETSOCK diag are serialized
+on sock_diag_table_mutex.
 
-Fixes: 9917060fc30a ("octeontx2-pf: Cleanup flow rule management")
-Fixes: f0a1913f8a6f ("octeontx2-pf: Add support for ethtool ntuple filters")
-Fixes: 674b3e164238 ("octeontx2-pf: Add additional checks while configuring ucast/bcast/mcast rules")
-Signed-off-by: Dipendra Khadka <kdipendra88@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: Andrew Lunn <andrew@lunn.ch>
+This is to make sure inet_diag module is not unloaded
+while diag was ongoing.
+
+It is time to get rid of this mutex and use RCU protection,
+allowing full parallelism.
+
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Guillaume Nault <gnault@redhat.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Stable-dep-of: eb02688c5c45 ("ipv6: release nexthop on device removal")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/marvell/octeontx2/nic/otx2_flows.c    | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ include/linux/sock_diag.h |  9 ++++++--
+ net/core/sock_diag.c      | 43 +++++++++++++++++++++++----------------
+ net/ipv4/inet_diag.c      |  9 ++++++--
+ 3 files changed, 40 insertions(+), 21 deletions(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_flows.c b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_flows.c
-index 5c757508322b9..7c7f8814fb3f9 100644
---- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_flows.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_flows.c
-@@ -121,6 +121,8 @@ int otx2_alloc_mcam_entries(struct otx2_nic *pfvf, u16 count)
+diff --git a/include/linux/sock_diag.h b/include/linux/sock_diag.h
+index 7c07754d711b9..110978dc9af1b 100644
+--- a/include/linux/sock_diag.h
++++ b/include/linux/sock_diag.h
+@@ -23,8 +23,13 @@ struct sock_diag_handler {
+ int sock_diag_register(const struct sock_diag_handler *h);
+ void sock_diag_unregister(const struct sock_diag_handler *h);
  
- 		rsp = (struct npc_mcam_alloc_entry_rsp *)otx2_mbox_get_rsp
- 			(&pfvf->mbox.mbox, 0, &req->hdr);
-+		if (IS_ERR(rsp))
-+			goto exit;
+-void sock_diag_register_inet_compat(int (*fn)(struct sk_buff *skb, struct nlmsghdr *nlh));
+-void sock_diag_unregister_inet_compat(int (*fn)(struct sk_buff *skb, struct nlmsghdr *nlh));
++struct sock_diag_inet_compat {
++	struct module *owner;
++	int (*fn)(struct sk_buff *skb, struct nlmsghdr *nlh);
++};
++
++void sock_diag_register_inet_compat(const struct sock_diag_inet_compat *ptr);
++void sock_diag_unregister_inet_compat(const struct sock_diag_inet_compat *ptr);
  
- 		for (ent = 0; ent < rsp->count; ent++)
- 			flow_cfg->flow_ent[ent + allocated] = rsp->entry_list[ent];
-@@ -199,6 +201,10 @@ static int otx2_mcam_entry_init(struct otx2_nic *pfvf)
+ u64 __sock_gen_cookie(struct sock *sk);
  
- 	rsp = (struct npc_mcam_alloc_entry_rsp *)otx2_mbox_get_rsp
- 	       (&pfvf->mbox.mbox, 0, &req->hdr);
-+	if (IS_ERR(rsp)) {
-+		mutex_unlock(&pfvf->mbox.lock);
-+		return PTR_ERR(rsp);
-+	}
+diff --git a/net/core/sock_diag.c b/net/core/sock_diag.c
+index 73b2e36032b3e..d36beb9a9a928 100644
+--- a/net/core/sock_diag.c
++++ b/net/core/sock_diag.c
+@@ -17,8 +17,9 @@
+ #include <linux/sock_diag.h>
  
- 	if (rsp->count != req->count) {
- 		netdev_info(pfvf->netdev,
-@@ -234,6 +240,10 @@ static int otx2_mcam_entry_init(struct otx2_nic *pfvf)
+ static const struct sock_diag_handler __rcu *sock_diag_handlers[AF_MAX];
+-static int (*inet_rcv_compat)(struct sk_buff *skb, struct nlmsghdr *nlh);
+-static DEFINE_MUTEX(sock_diag_table_mutex);
++
++static struct sock_diag_inet_compat __rcu *inet_rcv_compat;
++
+ static struct workqueue_struct *broadcast_wq;
  
- 	frsp = (struct npc_get_field_status_rsp *)otx2_mbox_get_rsp
- 	       (&pfvf->mbox.mbox, 0, &freq->hdr);
-+	if (IS_ERR(frsp)) {
-+		mutex_unlock(&pfvf->mbox.lock);
-+		return PTR_ERR(frsp);
-+	}
+ DEFINE_COOKIE(sock_cookie);
+@@ -181,19 +182,20 @@ void sock_diag_broadcast_destroy(struct sock *sk)
+ 	queue_work(broadcast_wq, &bsk->work);
+ }
  
- 	if (frsp->enable) {
- 		pfvf->flags |= OTX2_FLAG_RX_VLAN_SUPPORT;
+-void sock_diag_register_inet_compat(int (*fn)(struct sk_buff *skb, struct nlmsghdr *nlh))
++void sock_diag_register_inet_compat(const struct sock_diag_inet_compat *ptr)
+ {
+-	mutex_lock(&sock_diag_table_mutex);
+-	inet_rcv_compat = fn;
+-	mutex_unlock(&sock_diag_table_mutex);
++	xchg((__force const struct sock_diag_inet_compat **)&inet_rcv_compat,
++	     ptr);
+ }
+ EXPORT_SYMBOL_GPL(sock_diag_register_inet_compat);
+ 
+-void sock_diag_unregister_inet_compat(int (*fn)(struct sk_buff *skb, struct nlmsghdr *nlh))
++void sock_diag_unregister_inet_compat(const struct sock_diag_inet_compat *ptr)
+ {
+-	mutex_lock(&sock_diag_table_mutex);
+-	inet_rcv_compat = NULL;
+-	mutex_unlock(&sock_diag_table_mutex);
++	const struct sock_diag_inet_compat *old;
++
++	old = xchg((__force const struct sock_diag_inet_compat **)&inet_rcv_compat,
++		   NULL);
++	WARN_ON_ONCE(old != ptr);
+ }
+ EXPORT_SYMBOL_GPL(sock_diag_unregister_inet_compat);
+ 
+@@ -256,20 +258,27 @@ static int __sock_diag_cmd(struct sk_buff *skb, struct nlmsghdr *nlh)
+ static int sock_diag_rcv_msg(struct sk_buff *skb, struct nlmsghdr *nlh,
+ 			     struct netlink_ext_ack *extack)
+ {
++	const struct sock_diag_inet_compat *ptr;
+ 	int ret;
+ 
+ 	switch (nlh->nlmsg_type) {
+ 	case TCPDIAG_GETSOCK:
+ 	case DCCPDIAG_GETSOCK:
+-		if (inet_rcv_compat == NULL)
++
++		if (!rcu_access_pointer(inet_rcv_compat))
+ 			sock_load_diag_module(AF_INET, 0);
+ 
+-		mutex_lock(&sock_diag_table_mutex);
+-		if (inet_rcv_compat != NULL)
+-			ret = inet_rcv_compat(skb, nlh);
+-		else
+-			ret = -EOPNOTSUPP;
+-		mutex_unlock(&sock_diag_table_mutex);
++		rcu_read_lock();
++		ptr = rcu_dereference(inet_rcv_compat);
++		if (ptr && !try_module_get(ptr->owner))
++			ptr = NULL;
++		rcu_read_unlock();
++
++		ret = -EOPNOTSUPP;
++		if (ptr) {
++			ret = ptr->fn(skb, nlh);
++			module_put(ptr->owner);
++		}
+ 
+ 		return ret;
+ 	case SOCK_DIAG_BY_FAMILY:
+diff --git a/net/ipv4/inet_diag.c b/net/ipv4/inet_diag.c
+index a3d0e18885f59..2bd5d0ed7a6fc 100644
+--- a/net/ipv4/inet_diag.c
++++ b/net/ipv4/inet_diag.c
+@@ -1445,6 +1445,11 @@ void inet_diag_unregister(const struct inet_diag_handler *h)
+ }
+ EXPORT_SYMBOL_GPL(inet_diag_unregister);
+ 
++static const struct sock_diag_inet_compat inet_diag_compat = {
++	.owner	= THIS_MODULE,
++	.fn	= inet_diag_rcv_msg_compat,
++};
++
+ static int __init inet_diag_init(void)
+ {
+ 	const int inet_diag_table_size = (IPPROTO_MAX *
+@@ -1463,7 +1468,7 @@ static int __init inet_diag_init(void)
+ 	if (err)
+ 		goto out_free_inet;
+ 
+-	sock_diag_register_inet_compat(inet_diag_rcv_msg_compat);
++	sock_diag_register_inet_compat(&inet_diag_compat);
+ out:
+ 	return err;
+ 
+@@ -1478,7 +1483,7 @@ static void __exit inet_diag_exit(void)
+ {
+ 	sock_diag_unregister(&inet6_diag_handler);
+ 	sock_diag_unregister(&inet_diag_handler);
+-	sock_diag_unregister_inet_compat(inet_diag_rcv_msg_compat);
++	sock_diag_unregister_inet_compat(&inet_diag_compat);
+ 	kfree(inet_diag_table);
+ }
+ 
 -- 
 2.43.0
 
