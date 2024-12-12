@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A81E222EA0A;
-	Thu, 12 Dec 2024 16:32:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 767342343C6;
+	Thu, 12 Dec 2024 16:32:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734021127; cv=none; b=N3nbpdmHwnoKk1kgEPbWnHBR/GNT1zO+LGh9DpfEKGHMxceVcOgodvnTq14w+Z1GV2nJFqocJM0QamV8GteIuJvFHChPG2u763mWaeB0qsE73gfdjfEYXbFqvgrGO+dtBF9ef6wCX48UW3YxxNqzsU4sPnaabbQvGvT6czpHxT4=
+	t=1734021131; cv=none; b=ObOJf0rVruOyUvU3oaGZB8s1KmtU94KFCrqkgRghy3510F4uBsykaTksTOWeIOxXb9kzZ2J7tZZ7KKlJMqLYK0DzcWp8qoNUpo0aiBSaEKw4MM+oEumrRUZYMvT+M+frPBxeXzbasqpVgSc+ly+cMDqU91uhHVQhlnU+eMhlG/I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734021127; c=relaxed/simple;
-	bh=bsJaaKjcuf5wE894BCs6t1gw4f9sSRv8WBQzuCgoFls=;
+	s=arc-20240116; t=1734021131; c=relaxed/simple;
+	bh=YVfpKO3oQPupK8J9Anq/1QOBamsKsc7nUkfX7ql94PU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hRBEKEYfQmH0eSmhCOhT8JC5TK8RcmWsDACeviO36XFFx+Nh2Ds52X71HPvdPd7c7LGsL2l6vZ7E8PBC9NSvv0YxhEii43VUFS3lFdF+0axJG1bwM2sKIkpVjGN0QmDRN888tNGGyE//idC9Qg54C9JXxfoGH/fco7lb8FyJUYs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xOUGQabo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PMaAz2Bvf0vruUxUus+m0C3xWXGylBuFFVnI75dwIE5w1QqWByendA4YuFDpL0eVf5jE+mAgabvChpNbk/IDd7hSCjEPjVSuue45y9yMkpfqi4otwlbolIB/4fqj++S/m/zPGCXzN2ZGWsXaVhGq8zwtq0vseTvKJbRSNAD3w4w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KFHMKQy9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xOUGQabo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00D6FC4CECE;
-	Thu, 12 Dec 2024 16:32:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KFHMKQy9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E9B5C4CECE;
+	Thu, 12 Dec 2024 16:32:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734021127;
-	bh=bsJaaKjcuf5wE894BCs6t1gw4f9sSRv8WBQzuCgoFls=;
+	s=korg; t=1734021131;
+	bh=YVfpKO3oQPupK8J9Anq/1QOBamsKsc7nUkfX7ql94PU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xOUGQabo/aHs2fvLVlQVmY/0ZtbmurK8J3GRJnDxmebMrqGxXrCCJZF15GCcHgDH0
-	 trFPLOaVg3Gi1fgFAF6SekT70vhC98S0wkv2coFlWXnugpF41PjTBTSBKUk0FAWSKA
-	 4SpYEI207Agkrs9PyVNgzF5g2WIT/pFLA5SGp+1o=
+	b=KFHMKQy9fE3NnmMpkLgis8dKy/vRfOUMgJLXM5JRkMZMp8lQ2yaB7HYFiSCsRRVc6
+	 Hw4a0Ado+piY9GJ4u384EhbEGpyTnX2Y38jPH3+1+EKMr8UtuhKp1Lld9WiJ4NdQb6
+	 NexeKQzvHV6QuELwk7H3I0G9OxRY/Jak7siV7FNQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	syzbot+96d5d14c47d97015c624@syzkaller.appspotmail.com,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 623/772] nilfs2: fix potential out-of-bounds memory access in nilfs_find_entry()
-Date: Thu, 12 Dec 2024 15:59:28 +0100
-Message-ID: <20241212144415.666105962@linuxfoundation.org>
+	Liequan Che <cheliequan@inspur.com>,
+	Zheng Wang <zyytlz.wz@163.com>,
+	Mingzhe Zou <mingzhe.zou@easystack.cn>,
+	Coly Li <colyli@suse.de>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.1 624/772] bcache: revert replacing IS_ERR_OR_NULL with IS_ERR again
+Date: Thu, 12 Dec 2024 15:59:29 +0100
+Message-ID: <20241212144415.715648406@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -51,53 +53,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+From: Liequan Che <cheliequan@inspur.com>
 
-commit 985ebec4ab0a28bb5910c3b1481a40fbf7f9e61d upstream.
+commit b2e382ae12a63560fca35050498e19e760adf8c0 upstream.
 
-Syzbot reported that when searching for records in a directory where the
-inode's i_size is corrupted and has a large value, memory access outside
-the folio/page range may occur, or a use-after-free bug may be detected if
-KASAN is enabled.
+Commit 028ddcac477b ("bcache: Remove unnecessary NULL point check in
+node allocations") leads a NULL pointer deference in cache_set_flush().
 
-This is because nilfs_last_byte(), which is called by nilfs_find_entry()
-and others to calculate the number of valid bytes of directory data in a
-page from i_size and the page index, loses the upper 32 bits of the 64-bit
-size information due to an inappropriate type of local variable to which
-the i_size value is assigned.
+1721         if (!IS_ERR_OR_NULL(c->root))
+1722                 list_add(&c->root->list, &c->btree_cache);
 
-This caused a large byte offset value due to underflow in the end address
-calculation in the calling nilfs_find_entry(), resulting in memory access
-that exceeds the folio/page size.
+>From the above code in cache_set_flush(), if previous registration code
+fails before allocating c->root, it is possible c->root is NULL as what
+it is initialized. __bch_btree_node_alloc() never returns NULL but
+c->root is possible to be NULL at above line 1721.
 
-Fix this issue by changing the type of the local variable causing the bit
-loss from "unsigned int" to "u64".  The return value of nilfs_last_byte()
-is also of type "unsigned int", but it is truncated so as not to exceed
-PAGE_SIZE and no bit loss occurs, so no change is required.
+This patch replaces IS_ERR() by IS_ERR_OR_NULL() to fix this.
 
-Link: https://lkml.kernel.org/r/20241119172403.9292-1-konishi.ryusuke@gmail.com
-Fixes: 2ba466d74ed7 ("nilfs2: directory entry operations")
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Reported-by: syzbot+96d5d14c47d97015c624@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=96d5d14c47d97015c624
-Tested-by: syzbot+96d5d14c47d97015c624@syzkaller.appspotmail.com
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 028ddcac477b ("bcache: Remove unnecessary NULL point check in node allocations")
+Signed-off-by: Liequan Che <cheliequan@inspur.com>
+Cc: stable@vger.kernel.org
+Cc: Zheng Wang <zyytlz.wz@163.com>
+Reviewed-by: Mingzhe Zou <mingzhe.zou@easystack.cn>
+Signed-off-by: Coly Li <colyli@suse.de>
+Link: https://lore.kernel.org/r/20241202115638.28957-1-colyli@suse.de
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nilfs2/dir.c |    2 +-
+ drivers/md/bcache/super.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/nilfs2/dir.c
-+++ b/fs/nilfs2/dir.c
-@@ -76,7 +76,7 @@ static inline void nilfs_put_page(struct
-  */
- static unsigned int nilfs_last_byte(struct inode *inode, unsigned long page_nr)
- {
--	unsigned int last_byte = inode->i_size;
-+	u64 last_byte = inode->i_size;
+--- a/drivers/md/bcache/super.c
++++ b/drivers/md/bcache/super.c
+@@ -1726,7 +1726,7 @@ static void cache_set_flush(struct closu
+ 	if (!IS_ERR_OR_NULL(c->gc_thread))
+ 		kthread_stop(c->gc_thread);
  
- 	last_byte -= page_nr << PAGE_SHIFT;
- 	if (last_byte > PAGE_SIZE)
+-	if (!IS_ERR(c->root))
++	if (!IS_ERR_OR_NULL(c->root))
+ 		list_add(&c->root->list, &c->btree_cache);
+ 
+ 	/*
 
 
