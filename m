@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9E592210CA;
-	Thu, 12 Dec 2024 16:24:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D1552210CF;
+	Thu, 12 Dec 2024 16:25:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734020698; cv=none; b=bjhLSfypZwMlP9ULkhGBPAtV2Cj1m/7+GaVvYtDEbBEMR2EfCp1b/nc6zvlICwKP7axjozg7IrHf4omT++XidJOQGZJwBYHrPKzEi8KXq/LouQGNJnRfl2hTPcP2kaR2/5xT2qwxVpMvw2rEzMu2EXZvPdkm65LrPbxqoxp2OIg=
+	t=1734020702; cv=none; b=mA8wu7dY00ZCMYX92yvpicMvFePJkN1kNfHpwD0Hgei3qm7sg146dsDKEH2e4/EiU2Dm+7gpnPP4ym01zzSaJ1C1M+KWJ+uVLLGBIuIU3clPjM5Qxahw7NjbFwrqJM6WrZGAu3hN3plHycE5i26eg+u3OIMt/gwVRkXBBzKO3VM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734020698; c=relaxed/simple;
-	bh=Kf8Hb53+DCHMsGs+Q3klelNyZiFbIB5eRTu9iccom30=;
+	s=arc-20240116; t=1734020702; c=relaxed/simple;
+	bh=CJtDW593F2IzLLtTfq0aqYqFXIPQkqVrhZKW4T9Rpyw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eLPxCrdG4OkigSHOSKWNx6G403dVMMhP2e4EGpkr/ekZCDbXnalG/bSddZgj/5NsJCJ1kFD0v2dV+F+JCQq/kcB3XEGTGOpEru0UR1oORz0rQ1mYx7MZKIATCNGCTaLxV4HmKE5dMj+U+7hcP3a6afRdPzxZTNCj8/1TfI8CaRI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GarNuds1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eBkyrM+IeZM9OkPqRXxfKYkVUo7QZSh8JKPVra8/Dz3euxTla8o9QQPb6bcvZp8chNY3c8nARRK5OesU3tLmYFrjpY28SWCoY3a28e/TaiHJk7Jm1qnvJ6eFS7LBObcD3RmOQPpaH8dGCAjScOyvjIeahimhzv/H2h5Fm8nEeh0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uQx/9/XO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GarNuds1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB63BC4CECE;
-	Thu, 12 Dec 2024 16:24:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uQx/9/XO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68545C4CECE;
+	Thu, 12 Dec 2024 16:25:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734020698;
-	bh=Kf8Hb53+DCHMsGs+Q3klelNyZiFbIB5eRTu9iccom30=;
+	s=korg; t=1734020702;
+	bh=CJtDW593F2IzLLtTfq0aqYqFXIPQkqVrhZKW4T9Rpyw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GarNuds1gU6Yqh/gygn+V0ujQ0emzs72cxMA3V4eihNbCKJ2y6Qz0bezw6xmfUw55
-	 d/pVeI73Se2p0SKU1KDx1J1BbLrO4F5LEAVLJxgG5L7l7d2GYwDGagpL0GIUU6UDek
-	 eSKSuKUw9mBYbViAGghilJK2gAwP2kcnPoLx0Eg0=
+	b=uQx/9/XO9thkbLjeDgbFe19fTujb7RLv72JGGwbehMqONwEQUrUujNZYb+ApvpVv2
+	 oLf7p6C6SC9v/7/mNO587MDIKI29jNf/ImJWK7Hh4Ejlcx0Cs1qnu+oL+eKoZ8ZamR
+	 rQfYxP3lBUoQIlr+CHj/thaWsVP+Y17xCHB/NOh8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dario Binacchi <dario.binacchi@amarulasolutions.com>,
-	Marek Vasut <marex@denx.de>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Florian Forestier <florian@forestier.re>,
+	Louis Leseur <louis.leseur@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 519/772] can: ifi_canfd: ifi_canfd_handle_lec_err(): fix {rx,tx}_errors statistics
-Date: Thu, 12 Dec 2024 15:57:44 +0100
-Message-ID: <20241212144411.414418203@linuxfoundation.org>
+Subject: [PATCH 6.1 537/772] net/qed: allow old cards not supporting "num_images" to work
+Date: Thu, 12 Dec 2024 15:58:02 +0100
+Message-ID: <20241212144412.161334020@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -52,115 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dario Binacchi <dario.binacchi@amarulasolutions.com>
+From: Louis Leseur <louis.leseur@gmail.com>
 
-[ Upstream commit bb03d568bb21b4afe7935d1943bcf68ddea3ea45 ]
+[ Upstream commit 7a0ea70da56ee8c2716d0b79e9959d3c47efab62 ]
 
-The ifi_canfd_handle_lec_err() function was incorrectly incrementing only
-the receive error counter, even in cases of bit or acknowledgment errors
-that occur during transmission.
+Commit 43645ce03e00 ("qed: Populate nvm image attribute shadow.")
+added support for populating flash image attributes, notably
+"num_images". However, some cards were not able to return this
+information. In such cases, the driver would return EINVAL, causing the
+driver to exit.
 
-Fix the issue by incrementing the appropriate counter based on the
-type of error.
+Add check to return EOPNOTSUPP instead of EINVAL when the card is not
+able to return these information. The caller function already handles
+EOPNOTSUPP without error.
 
-Fixes: 5bbd655a8bd0 ("can: ifi: Add more detailed error reporting")
-Signed-off-by: Dario Binacchi <dario.binacchi@amarulasolutions.com>
-Reviewed-by: Marek Vasut <marex@denx.de>
-Link: https://patch.msgid.link/20241122221650.633981-8-dario.binacchi@amarulasolutions.com
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Fixes: 43645ce03e00 ("qed: Populate nvm image attribute shadow.")
+Co-developed-by: Florian Forestier <florian@forestier.re>
+Signed-off-by: Florian Forestier <florian@forestier.re>
+Signed-off-by: Louis Leseur <louis.leseur@gmail.com>
+Link: https://patch.msgid.link/20241128083633.26431-1-louis.leseur@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/ifi_canfd/ifi_canfd.c | 58 ++++++++++++++++++---------
- 1 file changed, 40 insertions(+), 18 deletions(-)
+ drivers/net/ethernet/qlogic/qed/qed_mcp.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/can/ifi_canfd/ifi_canfd.c b/drivers/net/can/ifi_canfd/ifi_canfd.c
-index 07eaf724a5727..de26f5788ff5f 100644
---- a/drivers/net/can/ifi_canfd/ifi_canfd.c
-+++ b/drivers/net/can/ifi_canfd/ifi_canfd.c
-@@ -391,36 +391,55 @@ static int ifi_canfd_handle_lec_err(struct net_device *ndev)
- 		return 0;
+diff --git a/drivers/net/ethernet/qlogic/qed/qed_mcp.c b/drivers/net/ethernet/qlogic/qed/qed_mcp.c
+index 16e6bd4661433..6218d9c268554 100644
+--- a/drivers/net/ethernet/qlogic/qed/qed_mcp.c
++++ b/drivers/net/ethernet/qlogic/qed/qed_mcp.c
+@@ -3314,7 +3314,9 @@ int qed_mcp_bist_nvm_get_num_images(struct qed_hwfn *p_hwfn,
+ 	if (rc)
+ 		return rc;
  
- 	priv->can.can_stats.bus_error++;
--	stats->rx_errors++;
+-	if (((rsp & FW_MSG_CODE_MASK) != FW_MSG_CODE_OK))
++	if (((rsp & FW_MSG_CODE_MASK) == FW_MSG_CODE_UNSUPPORTED))
++		rc = -EOPNOTSUPP;
++	else if (((rsp & FW_MSG_CODE_MASK) != FW_MSG_CODE_OK))
+ 		rc = -EINVAL;
  
- 	/* Propagate the error condition to the CAN stack. */
- 	skb = alloc_can_err_skb(ndev, &cf);
--	if (unlikely(!skb))
--		return 0;
- 
- 	/* Read the error counter register and check for new errors. */
--	cf->can_id |= CAN_ERR_PROT | CAN_ERR_BUSERROR;
-+	if (likely(skb))
-+		cf->can_id |= CAN_ERR_PROT | CAN_ERR_BUSERROR;
- 
--	if (errctr & IFI_CANFD_ERROR_CTR_OVERLOAD_FIRST)
--		cf->data[2] |= CAN_ERR_PROT_OVERLOAD;
-+	if (errctr & IFI_CANFD_ERROR_CTR_OVERLOAD_FIRST) {
-+		stats->rx_errors++;
-+		if (likely(skb))
-+			cf->data[2] |= CAN_ERR_PROT_OVERLOAD;
-+	}
- 
--	if (errctr & IFI_CANFD_ERROR_CTR_ACK_ERROR_FIRST)
--		cf->data[3] = CAN_ERR_PROT_LOC_ACK;
-+	if (errctr & IFI_CANFD_ERROR_CTR_ACK_ERROR_FIRST) {
-+		stats->tx_errors++;
-+		if (likely(skb))
-+			cf->data[3] = CAN_ERR_PROT_LOC_ACK;
-+	}
- 
--	if (errctr & IFI_CANFD_ERROR_CTR_BIT0_ERROR_FIRST)
--		cf->data[2] |= CAN_ERR_PROT_BIT0;
-+	if (errctr & IFI_CANFD_ERROR_CTR_BIT0_ERROR_FIRST) {
-+		stats->tx_errors++;
-+		if (likely(skb))
-+			cf->data[2] |= CAN_ERR_PROT_BIT0;
-+	}
- 
--	if (errctr & IFI_CANFD_ERROR_CTR_BIT1_ERROR_FIRST)
--		cf->data[2] |= CAN_ERR_PROT_BIT1;
-+	if (errctr & IFI_CANFD_ERROR_CTR_BIT1_ERROR_FIRST) {
-+		stats->tx_errors++;
-+		if (likely(skb))
-+			cf->data[2] |= CAN_ERR_PROT_BIT1;
-+	}
- 
--	if (errctr & IFI_CANFD_ERROR_CTR_STUFF_ERROR_FIRST)
--		cf->data[2] |= CAN_ERR_PROT_STUFF;
-+	if (errctr & IFI_CANFD_ERROR_CTR_STUFF_ERROR_FIRST) {
-+		stats->rx_errors++;
-+		if (likely(skb))
-+			cf->data[2] |= CAN_ERR_PROT_STUFF;
-+	}
- 
--	if (errctr & IFI_CANFD_ERROR_CTR_CRC_ERROR_FIRST)
--		cf->data[3] = CAN_ERR_PROT_LOC_CRC_SEQ;
-+	if (errctr & IFI_CANFD_ERROR_CTR_CRC_ERROR_FIRST) {
-+		stats->rx_errors++;
-+		if (likely(skb))
-+			cf->data[3] = CAN_ERR_PROT_LOC_CRC_SEQ;
-+	}
- 
--	if (errctr & IFI_CANFD_ERROR_CTR_FORM_ERROR_FIRST)
--		cf->data[2] |= CAN_ERR_PROT_FORM;
-+	if (errctr & IFI_CANFD_ERROR_CTR_FORM_ERROR_FIRST) {
-+		stats->rx_errors++;
-+		if (likely(skb))
-+			cf->data[2] |= CAN_ERR_PROT_FORM;
-+	}
- 
- 	/* Reset the error counter, ack the IRQ and re-enable the counter. */
- 	writel(IFI_CANFD_ERROR_CTR_ER_RESET, priv->base + IFI_CANFD_ERROR_CTR);
-@@ -428,6 +447,9 @@ static int ifi_canfd_handle_lec_err(struct net_device *ndev)
- 	       priv->base + IFI_CANFD_INTERRUPT);
- 	writel(IFI_CANFD_ERROR_CTR_ER_ENABLE, priv->base + IFI_CANFD_ERROR_CTR);
- 
-+	if (unlikely(!skb))
-+		return 0;
-+
- 	netif_receive_skb(skb);
- 
- 	return 1;
+ 	return rc;
 -- 
 2.43.0
 
