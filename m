@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D7232144C4;
-	Thu, 12 Dec 2024 16:00:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B998B2144C4;
+	Thu, 12 Dec 2024 16:00:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734019225; cv=none; b=GMzZuWNRZqQ13ES9G9psEPBNLozgzmGoNFerhHoYI9WGRUWshRnWv4TdTNoqD5G3zmA679hIjDw8nNH0nRFw7hdwnCKQjkGnAeH7501RQ/hnbnrQMr2B4tV5gOUo9gK6ug2ostxN0JcnkhsScMO0Bu5dV5+jM1IMhZ/Ymfi8WtU=
+	t=1734019228; cv=none; b=MbdluKIR56ll0+HlHHzlyiqZ0T+ueTtjfA80XBSwgHMjSE+pCUOF6+0gnnVUWEW3ZazNHqkgv4RgYJ88y7kWZHWIV4bys4Mg8nv1n6EbUptrTJK77bTV7nlAFAvpttT1Ymkq/Ayg1D38vhkNBNWp38BqkAatPUaGjJQlzJ7ClZ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734019225; c=relaxed/simple;
-	bh=zxLclcoFlJsZmB70hz4Yu8d/C3rmlpB4tET+sKtnfw0=;
+	s=arc-20240116; t=1734019228; c=relaxed/simple;
+	bh=Uu1aTUJtRY82/ETFh8HIAqWwr9St32oaYTY5ikFUqBM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ty17UhDYzrQoLKT1E1BmikZc8EhCU+aOAqhs8tjGTfZS2/2TMyxdTei7h+mmRdjXmSR0dUVcwWReP0smZ4Ieky1sH3kUxfO/WeZzNnzyIrL59XurTzfaV4ArbGdzSQh81UqhIvXwcLKfai3XvK5gdLgPfDTINrUp+/4XRvDD1do=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0BZQrdYQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Cspc+iSG9U+j9TdDHhSN3Por9+vMlPKihQevqKecn0l/2AOe0GSe5POnb733pddKDU6rOCmY4iVvosYODDsWug/FJOFDU3P6BmEciaq+C6vuf+7uQhu6RiAWUMVqTQbt0bxrRIGRTonlLtYeTWGZ/Gz9weOEFcKsF0i/ltTVgH8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iS8ldtIz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0BZQrdYQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76F19C4CECE;
-	Thu, 12 Dec 2024 16:00:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iS8ldtIz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29576C4CECE;
+	Thu, 12 Dec 2024 16:00:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734019224;
-	bh=zxLclcoFlJsZmB70hz4Yu8d/C3rmlpB4tET+sKtnfw0=;
+	s=korg; t=1734019228;
+	bh=Uu1aTUJtRY82/ETFh8HIAqWwr9St32oaYTY5ikFUqBM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0BZQrdYQdiVUmtcdQ+RQcHaKtuESr0sroZMLsXwYHB8qzGtTOxqv+VYUTkO8N/YBk
-	 GjMTN4FGNk/mai9HE9q8uGkbO3COf8sFP1RqV9NGJmuBEqFqrbTbkzK/D9db62+sLm
-	 COH2lH5B/86I8rBBWk5jbTw06o3s5rMp+SmQLXQ8=
+	b=iS8ldtIzoGgIWygjil4S1pMIjPignLcry8bMufZpRRKYOcQf7dTesyWmmkTR2jUjT
+	 nZjn41qGVsw2lPMCYxTD+yNCPLKWFRoO0g60YUBpeg2CTe7icPE9vXe0hQ/q4SjgVr
+	 Trt89khRGI5ZlZGsP/f1su44ikNhd9tXZoSXyMxM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Simon Horman <horms@kernel.org>,
+	Hangbin Liu <liuhangbin@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 151/772] libbpf: never interpret subprogs in .text as entry programs
-Date: Thu, 12 Dec 2024 15:51:36 +0100
-Message-ID: <20241212144356.173851285@linuxfoundation.org>
+Subject: [PATCH 6.1 152/772] netdevsim: copy addresses for both in and out paths
+Date: Thu, 12 Dec 2024 15:51:37 +0100
+Message-ID: <20241212144356.213810852@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -51,45 +52,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrii Nakryiko <andrii@kernel.org>
+From: Hangbin Liu <liuhangbin@gmail.com>
 
-[ Upstream commit db089c9158c1d535a36dfc010e5db37fccea2561 ]
+[ Upstream commit 2cf567f421dbfe7e53b7e5ddee9400da10efb75d ]
 
-Libbpf pre-1.0 had a legacy logic of allowing singular non-annotated
-(i.e., not having explicit SEC() annotation) function to be treated as
-sole entry BPF program (unless there were other explicit entry
-programs).
+The current code only copies the address for the in path, leaving the out
+path address set to 0. This patch corrects the issue by copying the addresses
+for both the in and out paths. Before this patch:
 
-This behavior was dropped during libbpf 1.0 transition period (unless
-LIBBPF_STRICT_SEC_NAME flag was unset in libbpf_mode). When 1.0 was
-released and all the legacy behavior was removed, the bug slipped
-through leaving this legacy behavior around.
+  # cat /sys/kernel/debug/netdevsim/netdevsim0/ports/0/ipsec
+  SA count=2 tx=20
+  sa[0] tx ipaddr=0.0.0.0
+  sa[0]    spi=0x00000100 proto=0x32 salt=0x0adecc3a crypt=1
+  sa[0]    key=0x3167608a ca4f1397 43565909 941fa627
+  sa[1] rx ipaddr=192.168.0.1
+  sa[1]    spi=0x00000101 proto=0x32 salt=0x0adecc3a crypt=1
+  sa[1]    key=0x3167608a ca4f1397 43565909 941fa627
 
-Fix this for good, as it actually causes very confusing behavior if BPF
-object file only has subprograms, but no entry programs.
+After this patch:
 
-Fixes: bd054102a8c7 ("libbpf: enforce strict libbpf 1.0 behaviors")
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/r/20241010211731.4121837-1-andrii@kernel.org
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+  = cat /sys/kernel/debug/netdevsim/netdevsim0/ports/0/ipsec
+  SA count=2 tx=20
+  sa[0] tx ipaddr=192.168.0.2
+  sa[0]    spi=0x00000100 proto=0x32 salt=0x0adecc3a crypt=1
+  sa[0]    key=0x3167608a ca4f1397 43565909 941fa627
+  sa[1] rx ipaddr=192.168.0.1
+  sa[1]    spi=0x00000101 proto=0x32 salt=0x0adecc3a crypt=1
+  sa[1]    key=0x3167608a ca4f1397 43565909 941fa627
+
+Fixes: 7699353da875 ("netdevsim: add ipsec offload testing")
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
+Link: https://patch.msgid.link/20241010040027.21440-3-liuhangbin@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/bpf/libbpf.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/netdevsim/ipsec.c | 11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
-diff --git a/tools/lib/bpf/libbpf.c b/tools/lib/bpf/libbpf.c
-index d8b5304eac8cd..a0fb50718daef 100644
---- a/tools/lib/bpf/libbpf.c
-+++ b/tools/lib/bpf/libbpf.c
-@@ -3896,7 +3896,7 @@ static int bpf_object__collect_externs(struct bpf_object *obj)
+diff --git a/drivers/net/netdevsim/ipsec.c b/drivers/net/netdevsim/ipsec.c
+index 386336a38f349..feca55eef9938 100644
+--- a/drivers/net/netdevsim/ipsec.c
++++ b/drivers/net/netdevsim/ipsec.c
+@@ -171,14 +171,13 @@ static int nsim_ipsec_add_sa(struct xfrm_state *xs)
+ 		return ret;
+ 	}
  
- static bool prog_is_subprog(const struct bpf_object *obj, const struct bpf_program *prog)
- {
--	return prog->sec_idx == obj->efile.text_shndx && obj->nr_programs > 1;
-+	return prog->sec_idx == obj->efile.text_shndx;
- }
+-	if (xs->xso.dir == XFRM_DEV_OFFLOAD_IN) {
++	if (xs->xso.dir == XFRM_DEV_OFFLOAD_IN)
+ 		sa.rx = true;
  
- struct bpf_program *
+-		if (xs->props.family == AF_INET6)
+-			memcpy(sa.ipaddr, &xs->id.daddr.a6, 16);
+-		else
+-			memcpy(&sa.ipaddr[3], &xs->id.daddr.a4, 4);
+-	}
++	if (xs->props.family == AF_INET6)
++		memcpy(sa.ipaddr, &xs->id.daddr.a6, 16);
++	else
++		memcpy(&sa.ipaddr[3], &xs->id.daddr.a4, 4);
+ 
+ 	/* the preparations worked, so save the info */
+ 	memcpy(&ipsec->sa[sa_idx], &sa, sizeof(sa));
 -- 
 2.43.0
 
