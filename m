@@ -1,39 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BA36222D67;
-	Thu, 12 Dec 2024 17:36:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08C48223C53;
+	Thu, 12 Dec 2024 17:36:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734024964; cv=none; b=qBR/+klH4E9OBcs1agyBGyswbD/j1XcNIaVT6gxcdlwkJ9xKG4cey+eVvdDjPJsBTz2WmzOwGOmnJeH0UE/V5Lwj9NfO2QDv673RexbKGjOYiodcDq/2ppf2jM7KtSSUkvzdQMHISqLkQp7ulEpEQqTvNLiJ0FXrnfay82eFVtM=
+	t=1734024967; cv=none; b=TladKXH6KNEYFJjO0t+FqEaX+eVYKtqX/3mSPwKV+D/LFkd9e8MFQ7flD+dEgRx/g24aVGJXChX80pTMbyMvVpK8GdLlO3P53xca5M9GVhYSoayBndh6IfyED5TSiQfIBIMrOZzbuklUoOgDEXC6NhaxhD4tDf6QZNuMIL5q8wc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734024964; c=relaxed/simple;
-	bh=nHK+rx5yTAvWB8HSiFE8AU2qSbhCq0f32HZ7ZdSqnXE=;
+	s=arc-20240116; t=1734024967; c=relaxed/simple;
+	bh=m0apJX/WGs19R7YHoEAxXcpKwoSVD9/hHUjPlqTCzio=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J32xOAQJ/AWOam7thKftNpAwDN6ETDF7v4tK9oynSpwyJMdJmjpIVECXUJKGEvYT6/TCZeTiOy4XsEC+GqhICrVDgJYZNhifykH5dYskFGU4e6j5iqew7cl/vzaX0Jdm7uWoEtC3JGefHiozfpNngAV9J+blWV5x9eL4reX0euc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UHiQcdsX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pRkD1bET3zxbMbzRXP6rPwdq22gYML8Nwu1LE2PiAzY8XSM6tnU39g2LV+owLpzEBFfoEKGeTo8SK6HqJwO/476LsUnzraC9v+J96A1JPMLV+0qm2BLugFsJ31O9bCJULlcanzC7QrWl3nw8hWQ2JkEjrD1ptXFb0kQP/4IJLCE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=13L5DoxH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UHiQcdsX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87E9AC4CECE;
-	Thu, 12 Dec 2024 17:36:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="13L5DoxH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78601C4CED0;
+	Thu, 12 Dec 2024 17:36:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734024963;
-	bh=nHK+rx5yTAvWB8HSiFE8AU2qSbhCq0f32HZ7ZdSqnXE=;
+	s=korg; t=1734024966;
+	bh=m0apJX/WGs19R7YHoEAxXcpKwoSVD9/hHUjPlqTCzio=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UHiQcdsXKL9rlSWm/hXy5z0FsWdbtJUoLvMdjSHerolMXOQAOo55MroErDQgwIchj
-	 e1Ot5fahXquCEiNbw59sbLCxcq4IWqQQ1VuUPKXbrSSqX14HxzxogSwagW2GpE+/u4
-	 PvHLy3931ESfCppwfxo4BnHz8DVHlt+jjjvyGY9I=
+	b=13L5DoxHszAGYKh/slvL9lNFJvxiIk+mYW9xKgSe5uWdTVhqYD/KW87ukmtpIU31o
+	 Ex+JsmAYJLmIAVs4tQhlrzftHk0btHcjjstmzdKjHLeYU4Dfawq9KkKifgR6VOGgd8
+	 N3QJQidlx4mWsA23kaKlFWcRgCrJA7ZNAnubnb4c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dragos Tatulea <dtatulea@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 003/321] net/mlx5e: kTLS, Fix incorrect page refcounting
-Date: Thu, 12 Dec 2024 15:58:41 +0100
-Message-ID: <20241212144229.447918115@linuxfoundation.org>
+	Dmitry Antipov <dmantipov@yandex.ru>,
+	syzbot+453873f1588c2d75b447@syzkaller.appspotmail.com,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Mark Fasheh <mark@fasheh.com>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Jun Piao <piaojun@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.4 004/321] ocfs2: uncache inode which has failed entering the group
+Date: Thu, 12 Dec 2024 15:58:42 +0100
+Message-ID: <20241212144229.488517468@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144229.291682835@linuxfoundation.org>
 References: <20241212144229.291682835@linuxfoundation.org>
@@ -52,67 +57,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dragos Tatulea <dtatulea@nvidia.com>
+From: Dmitry Antipov <dmantipov@yandex.ru>
 
-[ Upstream commit dd6e972cc5890d91d6749bb48e3912721c4e4b25 ]
+commit 737f34137844d6572ab7d473c998c7f977ff30eb upstream.
 
-The kTLS tx handling code is using a mix of get_page() and
-page_ref_inc() APIs to increment the page reference. But on the release
-path (mlx5e_ktls_tx_handle_resync_dump_comp()), only put_page() is used.
+Syzbot has reported the following BUG:
 
-This is an issue when using pages from large folios: the get_page()
-references are stored on the folio page while the page_ref_inc()
-references are stored directly in the given page. On release the folio
-page will be dereferenced too many times.
+kernel BUG at fs/ocfs2/uptodate.c:509!
+...
+Call Trace:
+ <TASK>
+ ? __die_body+0x5f/0xb0
+ ? die+0x9e/0xc0
+ ? do_trap+0x15a/0x3a0
+ ? ocfs2_set_new_buffer_uptodate+0x145/0x160
+ ? do_error_trap+0x1dc/0x2c0
+ ? ocfs2_set_new_buffer_uptodate+0x145/0x160
+ ? __pfx_do_error_trap+0x10/0x10
+ ? handle_invalid_op+0x34/0x40
+ ? ocfs2_set_new_buffer_uptodate+0x145/0x160
+ ? exc_invalid_op+0x38/0x50
+ ? asm_exc_invalid_op+0x1a/0x20
+ ? ocfs2_set_new_buffer_uptodate+0x2e/0x160
+ ? ocfs2_set_new_buffer_uptodate+0x144/0x160
+ ? ocfs2_set_new_buffer_uptodate+0x145/0x160
+ ocfs2_group_add+0x39f/0x15a0
+ ? __pfx_ocfs2_group_add+0x10/0x10
+ ? __pfx_lock_acquire+0x10/0x10
+ ? mnt_get_write_access+0x68/0x2b0
+ ? __pfx_lock_release+0x10/0x10
+ ? rcu_read_lock_any_held+0xb7/0x160
+ ? __pfx_rcu_read_lock_any_held+0x10/0x10
+ ? smack_log+0x123/0x540
+ ? mnt_get_write_access+0x68/0x2b0
+ ? mnt_get_write_access+0x68/0x2b0
+ ? mnt_get_write_access+0x226/0x2b0
+ ocfs2_ioctl+0x65e/0x7d0
+ ? __pfx_ocfs2_ioctl+0x10/0x10
+ ? smack_file_ioctl+0x29e/0x3a0
+ ? __pfx_smack_file_ioctl+0x10/0x10
+ ? lockdep_hardirqs_on_prepare+0x43d/0x780
+ ? __pfx_lockdep_hardirqs_on_prepare+0x10/0x10
+ ? __pfx_ocfs2_ioctl+0x10/0x10
+ __se_sys_ioctl+0xfb/0x170
+ do_syscall_64+0xf3/0x230
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+...
+ </TASK>
 
-This was found while doing kTLS testing with sendfile() + ZC when the
-served file was read from NFS on a kernel with NFS large folios support
-(commit 49b29a573da8 ("nfs: add support for large folios")).
+When 'ioctl(OCFS2_IOC_GROUP_ADD, ...)' has failed for the particular
+inode in 'ocfs2_verify_group_and_input()', corresponding buffer head
+remains cached and subsequent call to the same 'ioctl()' for the same
+inode issues the BUG() in 'ocfs2_set_new_buffer_uptodate()' (trying
+to cache the same buffer head of that inode). Fix this by uncaching
+the buffer head with 'ocfs2_remove_from_cache()' on error path in
+'ocfs2_group_add()'.
 
-Fixes: 84d1bb2b139e ("net/mlx5e: kTLS, Limit DUMP wqe size")
-Signed-off-by: Dragos Tatulea <dtatulea@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20241107183527.676877-5-tariqt@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lkml.kernel.org/r/20241114043844.111847-1-dmantipov@yandex.ru
+Fixes: 7909f2bf8353 ("[PATCH 2/2] ocfs2: Implement group add for online resize")
+Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
+Reported-by: syzbot+453873f1588c2d75b447@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=453873f1588c2d75b447
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Cc: Dmitry Antipov <dmantipov@yandex.ru>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Jun Piao <piaojun@huawei.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en_accel/ktls_tx.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ fs/ocfs2/resize.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ktls_tx.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ktls_tx.c
-@@ -233,7 +233,7 @@ tx_sync_info_get(struct mlx5e_ktls_offlo
- 	while (remaining > 0) {
- 		skb_frag_t *frag = &record->frags[i];
+--- a/fs/ocfs2/resize.c
++++ b/fs/ocfs2/resize.c
+@@ -568,6 +568,8 @@ out_commit:
+ 	ocfs2_commit_trans(osb, handle);
  
--		get_page(skb_frag_page(frag));
-+		page_ref_inc(skb_frag_page(frag));
- 		remaining -= skb_frag_size(frag);
- 		info->frags[i++] = *frag;
- 	}
-@@ -321,7 +321,7 @@ void mlx5e_ktls_tx_handle_resync_dump_co
- 	stats = sq->stats;
+ out_free_group_bh:
++	if (ret < 0)
++		ocfs2_remove_from_cache(INODE_CACHE(inode), group_bh);
+ 	brelse(group_bh);
  
- 	mlx5e_tx_dma_unmap(sq->pdev, dma);
--	put_page(wi->resync_dump_frag_page);
-+	page_ref_dec(wi->resync_dump_frag_page);
- 	stats->tls_dump_packets++;
- 	stats->tls_dump_bytes += wi->num_bytes;
- }
-@@ -412,12 +412,12 @@ mlx5e_ktls_tx_handle_ooo(struct mlx5e_kt
- 
- err_out:
- 	for (; i < info.nr_frags; i++)
--		/* The put_page() here undoes the page ref obtained in tx_sync_info_get().
-+		/* The page_ref_dec() here undoes the page ref obtained in tx_sync_info_get().
- 		 * Page refs obtained for the DUMP WQEs above (by page_ref_add) will be
- 		 * released only upon their completions (or in mlx5e_free_txqsq_descs,
- 		 * if channel closes).
- 		 */
--		put_page(skb_frag_page(&info.frags[i]));
-+		page_ref_dec(skb_frag_page(&info.frags[i]));
- 
- 	return MLX5E_KTLS_SYNC_FAIL;
- }
+ out_unlock:
 
 
