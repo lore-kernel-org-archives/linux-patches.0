@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BA29222D67;
-	Thu, 12 Dec 2024 17:34:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9320B2210F1;
+	Thu, 12 Dec 2024 17:34:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734024894; cv=none; b=C8wGKmTO+flXryIvZWbHDyrtlx4QyCSn3iyithGECcoi/rsaAUlAPpKfD7MfpJgNTjUkTkcbfw4uQlcWgHngxv6qpJbDdZ4HtUaiMVEaWloB7Ql1a6DL08KU8Vgh3KGH4s8DCtKxFCXffLgOmpPyOGB8LNTk/z7l15LsAYRKAic=
+	t=1734024897; cv=none; b=gTu78LKZqxMgsVNtqqvVLa+Cp551s01Qg9ssAoek/BSqzSgSRMxhNqb1FcyxLIHFUYwf5JrEAtBCarXn24833M21RSRIJ0bfcQ+WlrrExsIsgKa8tOwTWj2HvNMAS4Kj4hpytAnuxmu4dYTNM4A4p+E9ckX+Qx+2UMMvGhgT/HQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734024894; c=relaxed/simple;
-	bh=FwrqNOK9hoYAPa4aUMYY/44Q5pXd726NCOIkVDJ7RvM=;
+	s=arc-20240116; t=1734024897; c=relaxed/simple;
+	bh=SkkZ5SLAMNihkHt2nY8kEaLEnQ9u2EnFD9jmR9fqKt8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mrcCYr6dm7ddZJnglLBIsiVB77YXNwufRU1QcndYioPXp/KMB2b09J19MQcrfgExOw+xVwZAiZJdNj/8jD1M1UT8URBsgLT0BjRaF1eYNHAdAkRPWyTywVjsrYtzXXV4iWvjhO9+tokrdlJvKtk7emvuxewFiufoi+OQzIQVsEM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PYbNO+ya; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DQ9kgT6WNMhpicD+0ji7tCxNqzueT4uqNhcydQCorJSSLrBSssJNLFqSjgM2AQ52Gv1aJCPBjmGWE/druFlPWfS4bdvZyO66YqrRJI3NAZ9Dr7kv4f2kk25hUVQdr2GGDk1A76175aY+VmAoNTg/hg0z0YO7idowxEJ4GDg/aaw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mG6rCtbc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PYbNO+ya"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5A6DC4CECE;
-	Thu, 12 Dec 2024 17:34:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mG6rCtbc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9C77C4CECE;
+	Thu, 12 Dec 2024 17:34:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734024894;
-	bh=FwrqNOK9hoYAPa4aUMYY/44Q5pXd726NCOIkVDJ7RvM=;
+	s=korg; t=1734024897;
+	bh=SkkZ5SLAMNihkHt2nY8kEaLEnQ9u2EnFD9jmR9fqKt8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PYbNO+yaPwiKhQl0aayELE2PlecicMVOqWz3x63Gdf6cXegx7ilF99/qBFxINXQfI
-	 cgMhuGfJQoNBlkXkYK/iz3hO4/Qzum1HrurOHw0lO3ZS6gEyKH2Om04UfysPZNybKw
-	 me2cdGIYTpaoEBLvKSsaA43vwBPA6yxitpSg8evE=
+	b=mG6rCtbc5PkbuDaVXu0mIFSegkLWiBHEp4OWZ7YYwUEU2ptvytV7Um9OurWk7QnR0
+	 PJMLvGAwfhhLSNZoSVNrfXm0IPIvvo2QibvdoQr8j3vv0UFh/SNbBcWkxR2Ut1S5d6
+	 qJuZCLOabB85ISCMq9IXmdjw9XQVMIVR8ZhMdg0A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Esben Haabendal <esben@geanix.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Uros Bizjak <ubizjak@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 417/459] pinctrl: freescale: fix COMPILE_TEST error with PINCTRL_IMX_SCU
-Date: Thu, 12 Dec 2024 16:02:35 +0100
-Message-ID: <20241212144310.236125235@linuxfoundation.org>
+Subject: [PATCH 5.10 418/459] tracing: Use atomic64_inc_return() in trace_clock_counter()
+Date: Thu, 12 Dec 2024 16:02:36 +0100
+Message-ID: <20241212144310.274352892@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144253.511169641@linuxfoundation.org>
 References: <20241212144253.511169641@linuxfoundation.org>
@@ -52,38 +53,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Esben Haabendal <esben@geanix.com>
+From: Uros Bizjak <ubizjak@gmail.com>
 
-[ Upstream commit 58414a31c5713afb5449fd74a26a843d34cc62e8 ]
+[ Upstream commit eb887c4567d1b0e7684c026fe7df44afa96589e6 ]
 
-When PINCTRL_IMX_SCU was selected by PINCTRL_IMX8DXL or PINCTRL_IMX8QM
-combined with COMPILE_TEST on a non-arm platforms, the IMX_SCU
-dependency could not be enabled.
+Use atomic64_inc_return(&ref) instead of atomic64_add_return(1, &ref)
+to use optimized implementation and ease register pressure around
+the primitive for targets that implement optimized variant.
 
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202410031439.GyTSa0kX-lkp@intel.com/
-Closes: https://lore.kernel.org/oe-kbuild-all/202410030852.q0Hukplf-lkp@intel.com/
-Signed-off-by: Esben Haabendal <esben@geanix.com>
-Link: https://lore.kernel.org/20241003-imx-pinctrl-compile-test-fix-v1-1-145ca1948cc3@geanix.com
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Cc: Steven Rostedt <rostedt@goodmis.org>
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Link: https://lore.kernel.org/20241007085651.48544-1-ubizjak@gmail.com
+Signed-off-by: Uros Bizjak <ubizjak@gmail.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/freescale/Kconfig | 2 +-
+ kernel/trace/trace_clock.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pinctrl/freescale/Kconfig b/drivers/pinctrl/freescale/Kconfig
-index a1fbb3b9ae346..eefc786d08b45 100644
---- a/drivers/pinctrl/freescale/Kconfig
-+++ b/drivers/pinctrl/freescale/Kconfig
-@@ -9,7 +9,7 @@ config PINCTRL_IMX
- 
- config PINCTRL_IMX_SCU
- 	tristate
--	depends on IMX_SCU
-+	depends on IMX_SCU || COMPILE_TEST
- 	select PINCTRL_IMX
- 
- config PINCTRL_IMX1_CORE
+diff --git a/kernel/trace/trace_clock.c b/kernel/trace/trace_clock.c
+index 4702efb00ff21..4cb2ebc439be6 100644
+--- a/kernel/trace/trace_clock.c
++++ b/kernel/trace/trace_clock.c
+@@ -154,5 +154,5 @@ static atomic64_t trace_counter;
+  */
+ u64 notrace trace_clock_counter(void)
+ {
+-	return atomic64_add_return(1, &trace_counter);
++	return atomic64_inc_return(&trace_counter);
+ }
 -- 
 2.43.0
 
