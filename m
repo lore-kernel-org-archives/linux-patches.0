@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50F26176AA1;
-	Thu, 12 Dec 2024 17:29:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 583A321E085;
+	Thu, 12 Dec 2024 17:29:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734024559; cv=none; b=upl+TS4xyVQIDcanw2PDlceVzCkE3qSWi15T2WFIttEouXdjEhhapKmCfjea+Ps3Qz9ZuZmVDupCg6t7LynN09iqGTrqWgddiOsOsJOELyj9KXkaTue1jd1IH5NWy9Kz86okb2UEoYqp5px937lDzrLK9spaFDcd0TeQ7Vv5+2Q=
+	t=1734024562; cv=none; b=Z+7paNAg+j0LGTTsrXOw362OlTEgf5IUkbdX0ExWnn5iquLdzbDQfpPSdG/1RhxUzbx17XmqpM0WWIDhdhOhsn9rmqD5eHs95ByfKNZlcvucKXkxD+ejmO4winM+RJpjc9ZX/NBrvHGIeft6Z2vNJYHx8+7embRe+I+cvLt6lMU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734024559; c=relaxed/simple;
-	bh=LWeWqyjQ3p+ITXNBb3kFFAIMmGYx3BW36xWvRgcc7xE=;
+	s=arc-20240116; t=1734024562; c=relaxed/simple;
+	bh=KwB/D6hOG986RsVf/V6TFsNHRO+YOfHIZeunxJKMKz8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JJtD7RCqeOMPTjt6qGvCAqN2GM9nJhl+brs9TL2KHW5WniTMsEUNRPKU3mFtTKYo5kCt1Jxkk274ExTFTyoLvYplrSljmGJREGD0oXYnSJ3UEdQUgbzsf2Pb1DeP+cExoDgK73Ad5QZHDTu3f57LErM707UJS3znb5588zlomD4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q4wA3L6f; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TgHy4Vt8+fmZG/9xBIlVgu8sW+FLCkORkd9QD13b3zZTSHcf2qjLymiLfyLI4ko9C+qO3w2y20uYDSMS95nFYtTYY9PDrHN0McXs2k3qh8UmNYG/0wR/uhQNBBhsAUtpaTD29zYd4rdm40X+GlH9lLffAb3L6KHRkZOqxUubwKE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=for/88Na; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q4wA3L6f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE122C4CED0;
-	Thu, 12 Dec 2024 17:29:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="for/88Na"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0005C4CED4;
+	Thu, 12 Dec 2024 17:29:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734024559;
-	bh=LWeWqyjQ3p+ITXNBb3kFFAIMmGYx3BW36xWvRgcc7xE=;
+	s=korg; t=1734024562;
+	bh=KwB/D6hOG986RsVf/V6TFsNHRO+YOfHIZeunxJKMKz8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q4wA3L6f6HpoVwqponozbGUeyPtmpHypFudvtT4HUS6umGIZkvH8xf9z8iLtSAKCj
-	 7rZdaIJzlJ0F7ddUxUXbBL4u2dufA88Wb+XiEN3hdI6bytUaYLT3Z0EG0ysVEBx5U4
-	 +0HeeVfHmJa9RHO27zb9tW195ekbsB1+6wLPGAH4=
+	b=for/88NaD50yQlPQoFQO/oUD8AsKkSkMdKEMBhghxgA+cswHAsibyEglfELpctaIL
+	 HaVhfckV/5BBYrB2q4bCqyYFvyJ2kipbGMmhIM9FQZJX2KB0gTZ7wzOaEAmudEsvMm
+	 adzK7DhCEDtDFdBIWTkkZOI3pURhJOFgnCT4sopQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ivan Solodovnikov <solodovnikov.ia@phystech.edu>,
+	syzkaller <syzkaller@googlegroups.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 336/459] dccp: Fix memory leak in dccp_feat_change_recv
-Date: Thu, 12 Dec 2024 16:01:14 +0100
-Message-ID: <20241212144306.935079480@linuxfoundation.org>
+Subject: [PATCH 5.10 337/459] tipc: Fix use-after-free of kernel socket in cleanup_bearer().
+Date: Thu, 12 Dec 2024 16:01:15 +0100
+Message-ID: <20241212144306.974809038@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144253.511169641@linuxfoundation.org>
 References: <20241212144253.511169641@linuxfoundation.org>
@@ -51,76 +52,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ivan Solodovnikov <solodovnikov.ia@phystech.edu>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit 22be4727a8f898442066bcac34f8a1ad0bc72e14 ]
+[ Upstream commit 6a2fa13312e51a621f652d522d7e2df7066330b6 ]
 
-If dccp_feat_push_confirm() fails after new value for SP feature was accepted
-without reconciliation ('entry == NULL' branch), memory allocated for that value
-with dccp_feat_clone_sp_val() is never freed.
+syzkaller reported a use-after-free of UDP kernel socket
+in cleanup_bearer() without repro. [0][1]
 
-Here is the kmemleak stack for this:
+When bearer_disable() calls tipc_udp_disable(), cleanup
+of the UDP kernel socket is deferred by work calling
+cleanup_bearer().
 
-unreferenced object 0xffff88801d4ab488 (size 8):
-  comm "syz-executor310", pid 1127, jiffies 4295085598 (age 41.666s)
-  hex dump (first 8 bytes):
-    01 b4 4a 1d 80 88 ff ff                          ..J.....
-  backtrace:
-    [<00000000db7cabfe>] kmemdup+0x23/0x50 mm/util.c:128
-    [<0000000019b38405>] kmemdup include/linux/string.h:465 [inline]
-    [<0000000019b38405>] dccp_feat_clone_sp_val net/dccp/feat.c:371 [inline]
-    [<0000000019b38405>] dccp_feat_clone_sp_val net/dccp/feat.c:367 [inline]
-    [<0000000019b38405>] dccp_feat_change_recv net/dccp/feat.c:1145 [inline]
-    [<0000000019b38405>] dccp_feat_parse_options+0x1196/0x2180 net/dccp/feat.c:1416
-    [<00000000b1f6d94a>] dccp_parse_options+0xa2a/0x1260 net/dccp/options.c:125
-    [<0000000030d7b621>] dccp_rcv_state_process+0x197/0x13d0 net/dccp/input.c:650
-    [<000000001f74c72e>] dccp_v4_do_rcv+0xf9/0x1a0 net/dccp/ipv4.c:688
-    [<00000000a6c24128>] sk_backlog_rcv include/net/sock.h:1041 [inline]
-    [<00000000a6c24128>] __release_sock+0x139/0x3b0 net/core/sock.c:2570
-    [<00000000cf1f3a53>] release_sock+0x54/0x1b0 net/core/sock.c:3111
-    [<000000008422fa23>] inet_wait_for_connect net/ipv4/af_inet.c:603 [inline]
-    [<000000008422fa23>] __inet_stream_connect+0x5d0/0xf70 net/ipv4/af_inet.c:696
-    [<0000000015b6f64d>] inet_stream_connect+0x53/0xa0 net/ipv4/af_inet.c:735
-    [<0000000010122488>] __sys_connect_file+0x15c/0x1a0 net/socket.c:1865
-    [<00000000b4b70023>] __sys_connect+0x165/0x1a0 net/socket.c:1882
-    [<00000000f4cb3815>] __do_sys_connect net/socket.c:1892 [inline]
-    [<00000000f4cb3815>] __se_sys_connect net/socket.c:1889 [inline]
-    [<00000000f4cb3815>] __x64_sys_connect+0x6e/0xb0 net/socket.c:1889
-    [<00000000e7b1e839>] do_syscall_64+0x33/0x40 arch/x86/entry/common.c:46
-    [<0000000055e91434>] entry_SYSCALL_64_after_hwframe+0x67/0xd1
+tipc_net_stop() waits for such works to finish by checking
+tipc_net(net)->wq_count.  However, the work decrements the
+count too early before releasing the kernel socket,
+unblocking cleanup_net() and resulting in use-after-free.
 
-Clean up the allocated memory in case of dccp_feat_push_confirm() failure
-and bail out with an error reset code.
+Let's move the decrement after releasing the socket in
+cleanup_bearer().
 
-Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
+[0]:
+ref_tracker: net notrefcnt@000000009b3d1faf has 1/1 users at
+     sk_alloc+0x438/0x608
+     inet_create+0x4c8/0xcb0
+     __sock_create+0x350/0x6b8
+     sock_create_kern+0x58/0x78
+     udp_sock_create4+0x68/0x398
+     udp_sock_create+0x88/0xc8
+     tipc_udp_enable+0x5e8/0x848
+     __tipc_nl_bearer_enable+0x84c/0xed8
+     tipc_nl_bearer_enable+0x38/0x60
+     genl_family_rcv_msg_doit+0x170/0x248
+     genl_rcv_msg+0x400/0x5b0
+     netlink_rcv_skb+0x1dc/0x398
+     genl_rcv+0x44/0x68
+     netlink_unicast+0x678/0x8b0
+     netlink_sendmsg+0x5e4/0x898
+     ____sys_sendmsg+0x500/0x830
 
-Fixes: e77b8363b2ea ("dccp: Process incoming Change feature-negotiation options")
-Signed-off-by: Ivan Solodovnikov <solodovnikov.ia@phystech.edu>
-Link: https://patch.msgid.link/20241126143902.190853-1-solodovnikov.ia@phystech.edu
+[1]:
+BUG: KMSAN: use-after-free in udp_hashslot include/net/udp.h:85 [inline]
+BUG: KMSAN: use-after-free in udp_lib_unhash+0x3b8/0x930 net/ipv4/udp.c:1979
+ udp_hashslot include/net/udp.h:85 [inline]
+ udp_lib_unhash+0x3b8/0x930 net/ipv4/udp.c:1979
+ sk_common_release+0xaf/0x3f0 net/core/sock.c:3820
+ inet_release+0x1e0/0x260 net/ipv4/af_inet.c:437
+ inet6_release+0x6f/0xd0 net/ipv6/af_inet6.c:489
+ __sock_release net/socket.c:658 [inline]
+ sock_release+0xa0/0x210 net/socket.c:686
+ cleanup_bearer+0x42d/0x4c0 net/tipc/udp_media.c:819
+ process_one_work kernel/workqueue.c:3229 [inline]
+ process_scheduled_works+0xcaf/0x1c90 kernel/workqueue.c:3310
+ worker_thread+0xf6c/0x1510 kernel/workqueue.c:3391
+ kthread+0x531/0x6b0 kernel/kthread.c:389
+ ret_from_fork+0x60/0x80 arch/x86/kernel/process.c:147
+ ret_from_fork_asm+0x11/0x20 arch/x86/entry/entry_64.S:244
+
+Uninit was created at:
+ slab_free_hook mm/slub.c:2269 [inline]
+ slab_free mm/slub.c:4580 [inline]
+ kmem_cache_free+0x207/0xc40 mm/slub.c:4682
+ net_free net/core/net_namespace.c:454 [inline]
+ cleanup_net+0x16f2/0x19d0 net/core/net_namespace.c:647
+ process_one_work kernel/workqueue.c:3229 [inline]
+ process_scheduled_works+0xcaf/0x1c90 kernel/workqueue.c:3310
+ worker_thread+0xf6c/0x1510 kernel/workqueue.c:3391
+ kthread+0x531/0x6b0 kernel/kthread.c:389
+ ret_from_fork+0x60/0x80 arch/x86/kernel/process.c:147
+ ret_from_fork_asm+0x11/0x20 arch/x86/entry/entry_64.S:244
+
+CPU: 0 UID: 0 PID: 54 Comm: kworker/0:2 Not tainted 6.12.0-rc1-00131-gf66ebf37d69c #7 91723d6f74857f70725e1583cba3cf4adc716cfa
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.3-0-ga6ed6b701f0a-prebuilt.qemu.org 04/01/2014
+Workqueue: events cleanup_bearer
+
+Fixes: 26abe14379f8 ("net: Modify sk_alloc to not reference count the netns of kernel sockets.")
+Reported-by: syzkaller <syzkaller@googlegroups.com>
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Link: https://patch.msgid.link/20241127050512.28438-1-kuniyu@amazon.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/dccp/feat.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ net/tipc/udp_media.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/dccp/feat.c b/net/dccp/feat.c
-index 788dd629c4204..e9cc7415ba484 100644
---- a/net/dccp/feat.c
-+++ b/net/dccp/feat.c
-@@ -1160,8 +1160,12 @@ static u8 dccp_feat_change_recv(struct list_head *fn, u8 is_mandatory, u8 opt,
- 			goto not_valid_or_not_known;
- 		}
- 
--		return dccp_feat_push_confirm(fn, feat, local, &fval);
-+		if (dccp_feat_push_confirm(fn, feat, local, &fval)) {
-+			kfree(fval.sp.vec);
-+			return DCCP_RESET_CODE_TOO_BUSY;
-+		}
- 
-+		return 0;
- 	} else if (entry->state == FEAT_UNSTABLE) {	/* 6.6.2 */
- 		return 0;
+diff --git a/net/tipc/udp_media.c b/net/tipc/udp_media.c
+index ec6d7730b8522..d54b5c1d3c83c 100644
+--- a/net/tipc/udp_media.c
++++ b/net/tipc/udp_media.c
+@@ -810,10 +810,10 @@ static void cleanup_bearer(struct work_struct *work)
+ 		kfree_rcu(rcast, rcu);
  	}
+ 
+-	atomic_dec(&tipc_net(sock_net(ub->ubsock->sk))->wq_count);
+ 	dst_cache_destroy(&ub->rcast.dst_cache);
+ 	udp_tunnel_sock_release(ub->ubsock);
+ 	synchronize_net();
++	atomic_dec(&tipc_net(sock_net(ub->ubsock->sk))->wq_count);
+ 	kfree(ub);
+ }
+ 
 -- 
 2.43.0
 
