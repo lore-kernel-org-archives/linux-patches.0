@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 627231547F0;
-	Thu, 12 Dec 2024 15:35:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D75151547F0;
+	Thu, 12 Dec 2024 15:35:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734017703; cv=none; b=e9hzse6G0qv0HvcOmuSBtttTYhwxZ1rWCE61yFWo3l4CHZ7mrwdD1KHRmavT/z8pkFBuS5+pFuCv1XN5087vNFXB9fyDpr7goIYc+kOG0+dV4/s4HNnpg04h0wkqcpMnNST7iAqEFXMVoIhOo+/pt/JIbI614VYHvSONOKSDg3E=
+	t=1734017706; cv=none; b=Svgq3eag/CzrCIEbQSn5xACpCQ6CzqEoxPHtMogSzjwwxCMJQ8jH1/G3D56wNkpJSu8Y9Wpp/Ncg32f4YxMF6TRinaM/pHt3k+JDqgBIO89hNlGlRtvq6JqOT4zcvc4JTdUN3Bo2nshGta+TEJNivYFe5p1wHjg6yM5L9EN/SJc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734017703; c=relaxed/simple;
-	bh=WC9Y1jjPRk1m8A71Rx+I1WWwj0iTqr2BjnPdIauYGOU=;
+	s=arc-20240116; t=1734017706; c=relaxed/simple;
+	bh=CDWXQDml3CSwaQwj397TCJgzB7w06Cj2SnUiB2di6Ss=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YBpziQkR4TpyLEFjpTNCKq0tIOicfzK5rVIYZKPlYJEsHrVC49SwCDmJ8NEgAVYDu1UrAfqBewxQlitmvHmCSzMlRaRZ2WDetecRT27pV2m4+hS+h3hqpml83YLfMVXLMJNIWIOr3mNz0SU8l9Q/W2/LU7fnt2sXwyk9hjFOdJs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iSvhyNwR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fhrcH/1/Na+HO6iPvyTjf/ynSrngnqBPbslbSb/GuRhM5z5biXonLhlHsKNkHbd2Ecu5LCikUTslAnOeTBug6cApE/S0npQepgiHgKSccpmMUvRiokWCyslLZRllBZyeJekqg2F5+ii++0fSS1l41HHjVXKpl8vFUJwRn0Fp6Ms=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tx549aak; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iSvhyNwR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAC05C4CECE;
-	Thu, 12 Dec 2024 15:35:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tx549aak"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4541CC4CED0;
+	Thu, 12 Dec 2024 15:35:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734017703;
-	bh=WC9Y1jjPRk1m8A71Rx+I1WWwj0iTqr2BjnPdIauYGOU=;
+	s=korg; t=1734017706;
+	bh=CDWXQDml3CSwaQwj397TCJgzB7w06Cj2SnUiB2di6Ss=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iSvhyNwR46x22zHZfS/pjL0z0cRClJ0TxCwMQX10ox5Vqij+ZVZNru91ViHZ/v+zo
-	 k9szhxzppIhp21JEOaRHIlxnxotkr+RAUYEcgPeCCnUr/M5MxOkTL3zGVYSvHiWMtG
-	 C/fRY6yLlirsywBOU5cf75lLu7iOBkPZw7qfMBiA=
+	b=Tx549aakeAgZOWEg2A4enleobx3Z9+pDeoTXKPTEXdvbS/5DIkIu9yc7vd9kcatuJ
+	 ULP9FX8kDEtIA6Tv41LI4eR+SQcKjrmfg1WbjHpUKSP7RP+RrMPdDKDle2bMjqNWxp
+	 r3wziIdnS/H4BNSVHWf7xKq+JHbPl8+qXinSMPBA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Sergey Senozhatsky <senozhatsky@chromium.org>,
 	Minchan Kim <minchan@kernel.org>,
-	Dmytro Maluka <dmaluka@chromium.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 087/356] zram: split memory-tracking and ac-time tracking
-Date: Thu, 12 Dec 2024 15:56:46 +0100
-Message-ID: <20241212144248.058843550@linuxfoundation.org>
+Subject: [PATCH 6.6 088/356] zram: do not mark idle slots that cannot be idle
+Date: Thu, 12 Dec 2024 15:56:47 +0100
+Message-ID: <20241212144248.097151129@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144244.601729511@linuxfoundation.org>
 References: <20241212144244.601729511@linuxfoundation.org>
@@ -55,163 +54,62 @@ Content-Transfer-Encoding: 8bit
 
 From: Sergey Senozhatsky <senozhatsky@chromium.org>
 
-[ Upstream commit a7a0350583ba51d8cde6180bb51d704b89a3b29e ]
+[ Upstream commit b967fa1ba72b5da2b6d9bf95f0b13420a59e0701 ]
 
-ZRAM_MEMORY_TRACKING enables two features:
-- per-entry ac-time tracking
-- debugfs interface
+ZRAM_SAME slots cannot be post-processed (writeback or recompress) so do
+not mark them ZRAM_IDLE.  Same with ZRAM_WB slots, they cannot be
+ZRAM_IDLE because they are not in zsmalloc pool anymore.
 
-The latter one is the reason why memory-tracking depends on DEBUG_FS,
-while the former one is used far beyond debugging these days.  Namely
-ac-time is used for fine grained writeback of idle entries (pages).
-
-Move ac-time tracking under its own config option so that it can be
-enabled (along with writeback) on systems without DEBUG_FS.
-
-[senozhatsky@chromium.org: ifdef fixup, per Dmytro]
-  Link: https://lkml.kernel.org/r/20231117013543.540280-1-senozhatsky@chromium.org
-Link: https://lkml.kernel.org/r/20231115024223.4133148-1-senozhatsky@chromium.org
+Link: https://lkml.kernel.org/r/20240917021020.883356-6-senozhatsky@chromium.org
 Signed-off-by: Sergey Senozhatsky <senozhatsky@chromium.org>
 Cc: Minchan Kim <minchan@kernel.org>
-Cc: Dmytro Maluka <dmaluka@chromium.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Stable-dep-of: d37da422edb0 ("zram: clear IDLE flag in mark_idle()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/admin-guide/blockdev/zram.rst |  2 +-
- drivers/block/zram/Kconfig                  | 11 ++++++++-
- drivers/block/zram/zram_drv.c               | 27 ++++++++++-----------
- drivers/block/zram/zram_drv.h               |  2 +-
- 4 files changed, 25 insertions(+), 17 deletions(-)
+ drivers/block/zram/zram_drv.c | 25 ++++++++++++++++++-------
+ 1 file changed, 18 insertions(+), 7 deletions(-)
 
-diff --git a/Documentation/admin-guide/blockdev/zram.rst b/Documentation/admin-guide/blockdev/zram.rst
-index e4551579cb128..ee2b0030d4168 100644
---- a/Documentation/admin-guide/blockdev/zram.rst
-+++ b/Documentation/admin-guide/blockdev/zram.rst
-@@ -328,7 +328,7 @@ as idle::
- From now on, any pages on zram are idle pages. The idle mark
- will be removed until someone requests access of the block.
- IOW, unless there is access request, those pages are still idle pages.
--Additionally, when CONFIG_ZRAM_MEMORY_TRACKING is enabled pages can be
-+Additionally, when CONFIG_ZRAM_TRACK_ENTRY_ACTIME is enabled pages can be
- marked as idle based on how long (in seconds) it's been since they were
- last accessed::
- 
-diff --git a/drivers/block/zram/Kconfig b/drivers/block/zram/Kconfig
-index 0386b7da02aa3..af201392ed52c 100644
---- a/drivers/block/zram/Kconfig
-+++ b/drivers/block/zram/Kconfig
-@@ -69,9 +69,18 @@ config ZRAM_WRITEBACK
- 
- 	 See Documentation/admin-guide/blockdev/zram.rst for more information.
- 
-+config ZRAM_TRACK_ENTRY_ACTIME
-+	bool "Track access time of zram entries"
-+	depends on ZRAM
-+	help
-+	  With this feature zram tracks access time of every stored
-+	  entry (page), which can be used for a more fine grained IDLE
-+	  pages writeback.
-+
- config ZRAM_MEMORY_TRACKING
- 	bool "Track zRam block status"
- 	depends on ZRAM && DEBUG_FS
-+	select ZRAM_TRACK_ENTRY_ACTIME
- 	help
- 	  With this feature, admin can track the state of allocated blocks
- 	  of zRAM. Admin could see the information via
-@@ -86,4 +95,4 @@ config ZRAM_MULTI_COMP
- 	  This will enable multi-compression streams, so that ZRAM can
- 	  re-compress pages using a potentially slower but more effective
- 	  compression algorithm. Note, that IDLE page recompression
--	  requires ZRAM_MEMORY_TRACKING.
-+	  requires ZRAM_TRACK_ENTRY_ACTIME.
 diff --git a/drivers/block/zram/zram_drv.c b/drivers/block/zram/zram_drv.c
-index c29c471b6a182..582df13bfde94 100644
+index 582df13bfde94..e05eace18cc47 100644
 --- a/drivers/block/zram/zram_drv.c
 +++ b/drivers/block/zram/zram_drv.c
-@@ -174,6 +174,14 @@ static inline u32 zram_get_priority(struct zram *zram, u32 index)
- 	return prio & ZRAM_COMP_PRIORITY_MASK;
- }
- 
-+static void zram_accessed(struct zram *zram, u32 index)
-+{
-+	zram_clear_flag(zram, index, ZRAM_IDLE);
-+#ifdef CONFIG_ZRAM_TRACK_ENTRY_ACTIME
-+	zram->table[index].ac_time = ktime_get_boottime();
-+#endif
-+}
-+
- static inline void update_used_max(struct zram *zram,
- 					const unsigned long pages)
- {
-@@ -293,8 +301,9 @@ static void mark_idle(struct zram *zram, ktime_t cutoff)
- 		zram_slot_lock(zram, index);
- 		if (zram_allocated(zram, index) &&
- 				!zram_test_flag(zram, index, ZRAM_UNDER_WB)) {
--#ifdef CONFIG_ZRAM_MEMORY_TRACKING
--			is_idle = !cutoff || ktime_after(cutoff, zram->table[index].ac_time);
-+#ifdef CONFIG_ZRAM_TRACK_ENTRY_ACTIME
-+			is_idle = !cutoff || ktime_after(cutoff,
-+							 zram->table[index].ac_time);
- #endif
- 			if (is_idle)
- 				zram_set_flag(zram, index, ZRAM_IDLE);
-@@ -317,7 +326,7 @@ static ssize_t idle_store(struct device *dev,
+@@ -297,17 +297,28 @@ static void mark_idle(struct zram *zram, ktime_t cutoff)
+ 		/*
+ 		 * Do not mark ZRAM_UNDER_WB slot as ZRAM_IDLE to close race.
+ 		 * See the comment in writeback_store.
++		 *
++		 * Also do not mark ZRAM_SAME slots as ZRAM_IDLE, because no
++		 * post-processing (recompress, writeback) happens to the
++		 * ZRAM_SAME slot.
++		 *
++		 * And ZRAM_WB slots simply cannot be ZRAM_IDLE.
  		 */
- 		u64 age_sec;
- 
--		if (IS_ENABLED(CONFIG_ZRAM_MEMORY_TRACKING) && !kstrtoull(buf, 0, &age_sec))
-+		if (IS_ENABLED(CONFIG_ZRAM_TRACK_ENTRY_ACTIME) && !kstrtoull(buf, 0, &age_sec))
- 			cutoff_time = ktime_sub(ktime_get_boottime(),
- 					ns_to_ktime(age_sec * NSEC_PER_SEC));
- 		else
-@@ -844,12 +853,6 @@ static void zram_debugfs_destroy(void)
- 	debugfs_remove_recursive(zram_debugfs_root);
+ 		zram_slot_lock(zram, index);
+-		if (zram_allocated(zram, index) &&
+-				!zram_test_flag(zram, index, ZRAM_UNDER_WB)) {
++		if (!zram_allocated(zram, index) ||
++		    zram_test_flag(zram, index, ZRAM_WB) ||
++		    zram_test_flag(zram, index, ZRAM_UNDER_WB) ||
++		    zram_test_flag(zram, index, ZRAM_SAME)) {
++			zram_slot_unlock(zram, index);
++			continue;
++		}
++
+ #ifdef CONFIG_ZRAM_TRACK_ENTRY_ACTIME
+-			is_idle = !cutoff || ktime_after(cutoff,
+-							 zram->table[index].ac_time);
++		is_idle = !cutoff ||
++			ktime_after(cutoff, zram->table[index].ac_time);
+ #endif
+-			if (is_idle)
+-				zram_set_flag(zram, index, ZRAM_IDLE);
+-		}
++		if (is_idle)
++			zram_set_flag(zram, index, ZRAM_IDLE);
+ 		zram_slot_unlock(zram, index);
+ 	}
  }
- 
--static void zram_accessed(struct zram *zram, u32 index)
--{
--	zram_clear_flag(zram, index, ZRAM_IDLE);
--	zram->table[index].ac_time = ktime_get_boottime();
--}
--
- static ssize_t read_block_state(struct file *file, char __user *buf,
- 				size_t count, loff_t *ppos)
- {
-@@ -933,10 +936,6 @@ static void zram_debugfs_unregister(struct zram *zram)
- #else
- static void zram_debugfs_create(void) {};
- static void zram_debugfs_destroy(void) {};
--static void zram_accessed(struct zram *zram, u32 index)
--{
--	zram_clear_flag(zram, index, ZRAM_IDLE);
--};
- static void zram_debugfs_register(struct zram *zram) {};
- static void zram_debugfs_unregister(struct zram *zram) {};
- #endif
-@@ -1257,7 +1256,7 @@ static void zram_free_page(struct zram *zram, size_t index)
- {
- 	unsigned long handle;
- 
--#ifdef CONFIG_ZRAM_MEMORY_TRACKING
-+#ifdef CONFIG_ZRAM_TRACK_ENTRY_ACTIME
- 	zram->table[index].ac_time = 0;
- #endif
- 	if (zram_test_flag(zram, index, ZRAM_IDLE))
-diff --git a/drivers/block/zram/zram_drv.h b/drivers/block/zram/zram_drv.h
-index ca7a15bd48456..35e3221446292 100644
---- a/drivers/block/zram/zram_drv.h
-+++ b/drivers/block/zram/zram_drv.h
-@@ -69,7 +69,7 @@ struct zram_table_entry {
- 		unsigned long element;
- 	};
- 	unsigned long flags;
--#ifdef CONFIG_ZRAM_MEMORY_TRACKING
-+#ifdef CONFIG_ZRAM_TRACK_ENTRY_ACTIME
- 	ktime_t ac_time;
- #endif
- };
 -- 
 2.43.0
 
