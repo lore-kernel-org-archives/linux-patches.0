@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF721205501;
-	Thu, 12 Dec 2024 16:59:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 731F82165F0;
+	Thu, 12 Dec 2024 16:59:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734022792; cv=none; b=geZ89vsESaUaHmUc+34tQoBe4oTvtFJd0QxUAqnE3SzaDz1Ck6GvAnnqffzm4K6upYuniBpnQPap8Y4PLlczA4Rrx5Yl6rAI8OTMeO/xjOv2Ah0HpewU6ef0Ra2Du0qr/cisoEkSrhXyWRkyno1w1pKwnXM7u3Ph/rvU6FZdqrk=
+	t=1734022796; cv=none; b=NFrAxiYLhox6Af60MzO+vYiVSEVnatUS7P4iPkbzbx+xI2stspeLGukF1FGkm4XqLparBsSqSbyBBrYVfoEtsLvNq1ArfpQV685CoXckEe/UsZmteh9PHqrWE2UYah4IpFpgXTA8q14lUnGWgL9TBB9Q9A7QIrCjPFcjHO6hOR4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734022792; c=relaxed/simple;
-	bh=zelIeGNPlxpGnNWCGRC2OBnjtwCXoMtCc6FsrpIu6m4=;
+	s=arc-20240116; t=1734022796; c=relaxed/simple;
+	bh=FTvnODVrXMPdNbiv0WQfjw1L1+gZtSk+LGTl+nlHe4Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P13OiUpPVXYt+J7eAJM8gNYZHRuediMcedAM0UVkLqO9AEZN3nt/TuAfXV+SUwBqq9sm8VoRoAWHQdqdAXpPd40F8DU2i7+wWc6ZeNTTbBmj1EqvKzwghaTQAB0nleKNsuVtcmRS21VXo3ElbSwP5Cinx+htJ1jisyy1GNHgJQQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VxwdKmLj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BpJPrVsWH7ULPo4dbzyCoLwMq7xe6iPgFPvEfqEmZbq65y2Rl2Dtd4sPaVSXrdAtLONMPLQbCHeJF1wfpX5e8BN1nsXhy2fQJWixt3Ck/OCYPcReiH9MVIlQFGGpMvsvzjGvFS+sTp0nIbE29Isgjpm+Tv08xyzuzdTZmNwBsGo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PiUooD9P; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VxwdKmLj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21B07C4CED0;
-	Thu, 12 Dec 2024 16:59:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PiUooD9P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCCC3C4CECE;
+	Thu, 12 Dec 2024 16:59:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734022792;
-	bh=zelIeGNPlxpGnNWCGRC2OBnjtwCXoMtCc6FsrpIu6m4=;
+	s=korg; t=1734022796;
+	bh=FTvnODVrXMPdNbiv0WQfjw1L1+gZtSk+LGTl+nlHe4Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VxwdKmLj40Od8yFVE76SoD25voyqE+ULQmMN53d+JHMDmiumlSOYEFw1LI3OcE0Q/
-	 Ebobprgt/jCz5VaSgG6xtofALxcxsMHWQXT8WJC3RroI0o8JDG8+1vbNIKOh2SKzcf
-	 l1i6m03iD6Wg+MF9HGlMMRbPBvmthw72yUVTOW/0=
+	b=PiUooD9P3Ef4B+1ROUyzBoPya6jMR2a2fe8RkY97f6rcWr41mMi5UOvQpwf7K1b9J
+	 S1Yc00SIw1BrDrnepX243cN8z7ngjQBNupAbTyDSFfnhUZrP8eXYFalt4jVOTOI+vN
+	 ESrgcuoT96lC6MgjjkL47RFSP/4btf5xKiP5irhU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrej Shadura <andrew.shadura@collabora.co.uk>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Aleksei Vetrov <vvvvvv@google.com>
-Subject: [PATCH 5.15 319/565] Bluetooth: Fix type of len in rfcomm_sock_getsockopt{,_old}()
-Date: Thu, 12 Dec 2024 15:58:34 +0100
-Message-ID: <20241212144324.210899887@linuxfoundation.org>
+	Mark Rutland <mark.rutland@arm.com>,
+	Will Deacon <will@kernel.org>,
+	Catalin Marinas <catalin.marinas@arm.com>
+Subject: [PATCH 5.15 337/565] arm64: tls: Fix context-switching of tpidrro_el0 when kpti is enabled
+Date: Thu, 12 Dec 2024 15:58:52 +0100
+Message-ID: <20241212144324.918600869@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144311.432886635@linuxfoundation.org>
 References: <20241212144311.432886635@linuxfoundation.org>
@@ -52,83 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrej Shadura <andrew.shadura@collabora.co.uk>
+From: Will Deacon <will@kernel.org>
 
-commit 5fe6caa62b07fd39cd6a28acc8f92ba2955e11a6 upstream.
+commit 67ab51cbdfee02ef07fb9d7d14cc0bf6cb5a5e5c upstream.
 
-Commit 9bf4e919ccad worked around an issue introduced after an innocuous
-optimisation change in LLVM main:
+Commit 18011eac28c7 ("arm64: tls: Avoid unconditional zeroing of
+tpidrro_el0 for native tasks") tried to optimise the context switching
+of tpidrro_el0 by eliding the clearing of the register when switching
+to a native task with kpti enabled, on the erroneous assumption that
+the kpti trampoline entry code would already have taken care of the
+write.
 
-> len is defined as an 'int' because it is assigned from
-> '__user int *optlen'. However, it is clamped against the result of
-> sizeof(), which has a type of 'size_t' ('unsigned long' for 64-bit
-> platforms). This is done with min_t() because min() requires compatible
-> types, which results in both len and the result of sizeof() being casted
-> to 'unsigned int', meaning len changes signs and the result of sizeof()
-> is truncated. From there, len is passed to copy_to_user(), which has a
-> third parameter type of 'unsigned long', so it is widened and changes
-> signs again. This excessive casting in combination with the KCSAN
-> instrumentation causes LLVM to fail to eliminate the __bad_copy_from()
-> call, failing the build.
+Although the kpti trampoline does zero the register on entry from a
+native task, the check in tls_thread_switch() is on the *next* task and
+so we can end up leaving a stale, non-zero value in the register if the
+previous task was 32-bit.
 
-The same issue occurs in rfcomm in functions rfcomm_sock_getsockopt and
-rfcomm_sock_getsockopt_old.
+Drop the broken optimisation and zero tpidrro_el0 unconditionally when
+switching to a native 64-bit task.
 
-Change the type of len to size_t in both rfcomm_sock_getsockopt and
-rfcomm_sock_getsockopt_old and replace min_t() with min().
-
+Cc: Mark Rutland <mark.rutland@arm.com>
 Cc: stable@vger.kernel.org
-Co-authored-by: Aleksei Vetrov <vvvvvv@google.com>
-Improves: 9bf4e919ccad ("Bluetooth: Fix type of len in {l2cap,sco}_sock_getsockopt_old()")
-Link: https://github.com/ClangBuiltLinux/linux/issues/2007
-Link: https://github.com/llvm/llvm-project/issues/85647
-Signed-off-by: Andrej Shadura <andrew.shadura@collabora.co.uk>
-Reviewed-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: 18011eac28c7 ("arm64: tls: Avoid unconditional zeroing of tpidrro_el0 for native tasks")
+Signed-off-by: Will Deacon <will@kernel.org>
+Acked-by: Mark Rutland <mark.rutland@arm.com>
+Link: https://lore.kernel.org/r/20241114095332.23391-1-will@kernel.org
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/rfcomm/sock.c |   10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ arch/arm64/kernel/process.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/bluetooth/rfcomm/sock.c
-+++ b/net/bluetooth/rfcomm/sock.c
-@@ -740,7 +740,8 @@ static int rfcomm_sock_getsockopt_old(st
- 	struct sock *l2cap_sk;
- 	struct l2cap_conn *conn;
- 	struct rfcomm_conninfo cinfo;
--	int len, err = 0;
-+	int err = 0;
-+	size_t len;
- 	u32 opt;
+--- a/arch/arm64/kernel/process.c
++++ b/arch/arm64/kernel/process.c
+@@ -394,7 +394,7 @@ static void tls_thread_switch(struct tas
  
- 	BT_DBG("sk %p", sk);
-@@ -794,7 +795,7 @@ static int rfcomm_sock_getsockopt_old(st
- 		cinfo.hci_handle = conn->hcon->handle;
- 		memcpy(cinfo.dev_class, conn->hcon->dev_class, 3);
+ 	if (is_compat_thread(task_thread_info(next)))
+ 		write_sysreg(next->thread.uw.tp_value, tpidrro_el0);
+-	else if (!arm64_kernel_unmapped_at_el0())
++	else
+ 		write_sysreg(0, tpidrro_el0);
  
--		len = min_t(unsigned int, len, sizeof(cinfo));
-+		len = min(len, sizeof(cinfo));
- 		if (copy_to_user(optval, (char *) &cinfo, len))
- 			err = -EFAULT;
- 
-@@ -813,7 +814,8 @@ static int rfcomm_sock_getsockopt(struct
- {
- 	struct sock *sk = sock->sk;
- 	struct bt_security sec;
--	int len, err = 0;
-+	int err = 0;
-+	size_t len;
- 
- 	BT_DBG("sk %p", sk);
- 
-@@ -838,7 +840,7 @@ static int rfcomm_sock_getsockopt(struct
- 		sec.level = rfcomm_pi(sk)->sec_level;
- 		sec.key_size = 0;
- 
--		len = min_t(unsigned int, len, sizeof(sec));
-+		len = min(len, sizeof(sec));
- 		if (copy_to_user(optval, (char *) &sec, len))
- 			err = -EFAULT;
- 
+ 	write_sysreg(*task_user_tls(next), tpidr_el0);
 
 
