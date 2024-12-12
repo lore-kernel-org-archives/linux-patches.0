@@ -1,44 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F3BA21504F;
-	Thu, 12 Dec 2024 15:13:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F5CF21661F;
+	Thu, 12 Dec 2024 15:13:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734016400; cv=none; b=itnhTyimjYY0zJkMFKupJYMICAyhiKzGHRVQukYkYz1ZSb8kk7rZmrxUOLHG0zXG0RincKhBIH/QO/je5L06h/s/5hf+oQR90P1AUh4YuODinfLTmq3X4aWvFzpALuj6A2nmcnkLkQzzwFrMiiPKgX8qZHQ3JfvOjpKcHO0IiUs=
+	t=1734016404; cv=none; b=lDJBkH6Jp8Z/xuiDu8DjIx6EXeozf4MF5up0jvjgY73zMymXA7Whdtct/IHmi5DETbZ/Mo+vFD/VlNbhKRrZeOihR3L2YqnZSHGCss+Jqc6nU1sEwMDkQI4zvqGGMFbJuTKzfh7mWAPSuWznl4vT0RuxPkE00sBHFfsp2aqiWaA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734016400; c=relaxed/simple;
-	bh=zcGb39HukC9WrXDt8aW7OOWAIqaP5SYzjuQ1GzpLw50=;
+	s=arc-20240116; t=1734016404; c=relaxed/simple;
+	bh=cpvS0MQgBWIXikBUmBqFLs6XQW5fMgZOB+IEkvrNy50=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=YM3kUps6Yy1n8V+z4IFA6+XUWshAnTXRhj0RtepwPAPlqsHzxPA7PZDQyLT8+VfFgOHvi9OLMdvgmD1F4InL3eLtbGlvol433CYwiBYpZdFo4JtsTIt/dvuDQtC2TZVUSPLftGC4HlFWTU0hIs/6t8DE91RfM3FxDxkykNtMaqM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mTU5Jhw0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=GN7Km9RW0/qNQvAvAm74MQqxa/gPnNUzW51nZFUIGs/Msa90NOu9c+PZUcCKrJWnlMN58tF+vxg0UuhJaZSWeXTagz2EqDzq54f6H3+94riGS7ZNfmanUYrnDj1oiIW17HJzxR0M4SmdKJYVNLrzL/eod7IfWtuFvyz+sHPWuaQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UPdZtNtx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mTU5Jhw0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E893FC4CED0;
-	Thu, 12 Dec 2024 15:13:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UPdZtNtx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 824C9C4CED7;
+	Thu, 12 Dec 2024 15:13:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734016400;
-	bh=zcGb39HukC9WrXDt8aW7OOWAIqaP5SYzjuQ1GzpLw50=;
+	s=korg; t=1734016403;
+	bh=cpvS0MQgBWIXikBUmBqFLs6XQW5fMgZOB+IEkvrNy50=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mTU5Jhw0tUwCdFZ/iPako2vi4DRBOf/Gnrq9VJqiHMj5QODqrw5edQSr+D/jbcHQE
-	 pUzV7OCpFS7E5u3RNzf0V4U84GbQ6+6H4PkXZ0H1uNVQUf0fyeQCKkZtNnoGkMAn9k
-	 BbTBpwsoYRsJbV40mg4QWilSIx/avocIEpzzd3J4=
+	b=UPdZtNtx5H5teZPKa6kMyMITur+dfGAaLpOzKMd95RZxR3hkLfRZIog2GV9WJ4nre
+	 6kxAdsAN4WrWsb6XNmqdn+f8bXnE2Rmxqs9Y+a8/0eEF3GlLJOx/TPMB4um2hUUkv+
+	 rMQ99KrqLFiBUAHHyaTvqEqOGuqTMdYYHi2CnOvg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tvrtko Ursulin <tvrtko.ursulin@igalia.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Daniel Vetter <daniel.vetter@ffwll.ch>,
-	Sumit Semwal <sumit.semwal@linaro.org>,
-	Gustavo Padovan <gustavo@padovan.org>,
-	Friedrich Vock <friedrich.vock@gmx.de>,
-	linux-media@vger.kernel.org,
-	dri-devel@lists.freedesktop.org,
-	linaro-mm-sig@lists.linaro.org
-Subject: [PATCH 6.12 187/466] dma-fence: Use kernels sort for merging fences
-Date: Thu, 12 Dec 2024 15:55:56 +0100
-Message-ID: <20241212144314.187467678@linuxfoundation.org>
+	Jordy Zomer <jordyzomer@google.com>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
+	John Fastabend <john.fastabend@gmail.com>,
+	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
+	Alexei Starovoitov <ast@kernel.org>
+Subject: [PATCH 6.12 188/466] xsk: fix OOB map writes when deleting elements
+Date: Thu, 12 Dec 2024 15:55:57 +0100
+Message-ID: <20241212144314.226195523@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144306.641051666@linuxfoundation.org>
 References: <20241212144306.641051666@linuxfoundation.org>
@@ -58,268 +54,110 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
+From: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
 
-commit fe52c649438b8489c9456681d93a9b3de3d38263 upstream.
+commit 32cd3db7de97c0c7a018756ce66244342fd583f0 upstream.
 
-One alternative to the fix Christian proposed in
-https://lore.kernel.org/dri-devel/20241024124159.4519-3-christian.koenig@amd.com/
-is to replace the rather complex open coded sorting loops with the kernel
-standard sort followed by a context squashing pass.
+Jordy says:
 
-Proposed advantage of this would be readability but one concern Christian
-raised was that there could be many fences, that they are typically mostly
-sorted, and so the kernel's heap sort would be much worse by the proposed
-algorithm.
+"
+In the xsk_map_delete_elem function an unsigned integer
+(map->max_entries) is compared with a user-controlled signed integer
+(k). Due to implicit type conversion, a large unsigned value for
+map->max_entries can bypass the intended bounds check:
 
-I had a look running some games and vkcube to see what are the typical
-number of input fences. Tested scenarios:
+	if (k >= map->max_entries)
+		return -EINVAL;
 
-1) Hogwarts Legacy under Gamescope
+This allows k to hold a negative value (between -2147483648 and -2),
+which is then used as an array index in m->xsk_map[k], which results
+in an out-of-bounds access.
 
-450 calls per second to __dma_fence_unwrap_merge.
+	spin_lock_bh(&m->lock);
+	map_entry = &m->xsk_map[k]; // Out-of-bounds map_entry
+	old_xs = unrcu_pointer(xchg(map_entry, NULL));  // Oob write
+	if (old_xs)
+		xsk_map_sock_delete(old_xs, map_entry);
+	spin_unlock_bh(&m->lock);
 
-Percentages per number of fences buckets, before and after checking for
-signalled status, sorting and flattening:
+The xchg operation can then be used to cause an out-of-bounds write.
+Moreover, the invalid map_entry passed to xsk_map_sock_delete can lead
+to further memory corruption.
+"
 
-   N       Before      After
-   0       0.91%
-   1      69.40%
-  2-3     28.72%       9.4%  (90.6% resolved to one fence)
-  4-5      0.93%
-  6-9      0.03%
-  10+
+It indeed results in following splat:
 
-2) Cyberpunk 2077 under Gamescope
+[76612.897343] BUG: unable to handle page fault for address: ffffc8fc2e461108
+[76612.904330] #PF: supervisor write access in kernel mode
+[76612.909639] #PF: error_code(0x0002) - not-present page
+[76612.914855] PGD 0 P4D 0
+[76612.917431] Oops: Oops: 0002 [#1] PREEMPT SMP
+[76612.921859] CPU: 11 UID: 0 PID: 10318 Comm: a.out Not tainted 6.12.0-rc1+ #470
+[76612.929189] Hardware name: Intel Corporation S2600WFT/S2600WFT, BIOS SE5C620.86B.02.01.0008.031920191559 03/19/2019
+[76612.939781] RIP: 0010:xsk_map_delete_elem+0x2d/0x60
+[76612.944738] Code: 00 00 41 54 55 53 48 63 2e 3b 6f 24 73 38 4c 8d a7 f8 00 00 00 48 89 fb 4c 89 e7 e8 2d bf 05 00 48 8d b4 eb 00 01 00 00 31 ff <48> 87 3e 48 85 ff 74 05 e8 16 ff ff ff 4c 89 e7 e8 3e bc 05 00 31
+[76612.963774] RSP: 0018:ffffc9002e407df8 EFLAGS: 00010246
+[76612.969079] RAX: 0000000000000000 RBX: ffffc9002e461000 RCX: 0000000000000000
+[76612.976323] RDX: 0000000000000001 RSI: ffffc8fc2e461108 RDI: 0000000000000000
+[76612.983569] RBP: ffffffff80000001 R08: 0000000000000000 R09: 0000000000000007
+[76612.990812] R10: ffffc9002e407e18 R11: ffff888108a38858 R12: ffffc9002e4610f8
+[76612.998060] R13: ffff888108a38858 R14: 00007ffd1ae0ac78 R15: ffffc9002e4610c0
+[76613.005303] FS:  00007f80b6f59740(0000) GS:ffff8897e0ec0000(0000) knlGS:0000000000000000
+[76613.013517] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[76613.019349] CR2: ffffc8fc2e461108 CR3: 000000011e3ef001 CR4: 00000000007726f0
+[76613.026595] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+[76613.033841] DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+[76613.041086] PKRU: 55555554
+[76613.043842] Call Trace:
+[76613.046331]  <TASK>
+[76613.048468]  ? __die+0x20/0x60
+[76613.051581]  ? page_fault_oops+0x15a/0x450
+[76613.055747]  ? search_extable+0x22/0x30
+[76613.059649]  ? search_bpf_extables+0x5f/0x80
+[76613.063988]  ? exc_page_fault+0xa9/0x140
+[76613.067975]  ? asm_exc_page_fault+0x22/0x30
+[76613.072229]  ? xsk_map_delete_elem+0x2d/0x60
+[76613.076573]  ? xsk_map_delete_elem+0x23/0x60
+[76613.080914]  __sys_bpf+0x19b7/0x23c0
+[76613.084555]  __x64_sys_bpf+0x1a/0x20
+[76613.088194]  do_syscall_64+0x37/0xb0
+[76613.091832]  entry_SYSCALL_64_after_hwframe+0x4b/0x53
+[76613.096962] RIP: 0033:0x7f80b6d1e88d
+[76613.100592] Code: 5b 41 5c c3 66 0f 1f 84 00 00 00 00 00 f3 0f 1e fa 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 8b 0d 73 b5 0f 00 f7 d8 64 89 01 48
+[76613.119631] RSP: 002b:00007ffd1ae0ac68 EFLAGS: 00000206 ORIG_RAX: 0000000000000141
+[76613.131330] RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 00007f80b6d1e88d
+[76613.142632] RDX: 0000000000000098 RSI: 00007ffd1ae0ad20 RDI: 0000000000000003
+[76613.153967] RBP: 00007ffd1ae0adc0 R08: 0000000000000000 R09: 0000000000000000
+[76613.166030] R10: 00007f80b6f77040 R11: 0000000000000206 R12: 00007ffd1ae0aed8
+[76613.177130] R13: 000055ddf42ce1e9 R14: 000055ddf42d0d98 R15: 00007f80b6fab040
+[76613.188129]  </TASK>
 
-1050 calls per second, amounting to 0.01% CPU time according to perf top.
+Fix this by simply changing key type from int to u32.
 
-   N       Before      After
-   0       1.13%
-   1      52.30%
-  2-3     40.34%       55.57%
-  4-5      1.46%        0.50%
-  6-9      2.44%
-  10+      2.34%
-
-3) vkcube under Plasma
-
-90 calls per second.
-
-   N       Before      After
-   0
-   1
-  2-3      100%         0%   (Ie. all resolved to a single fence)
-  4-5
-  6-9
-  10+
-
-In the case of vkcube all invocations in the 2-3 bucket were actually
-just two input fences.
-
->From these numbers it looks like the heap sort should not be a
-disadvantage, given how the dominant case is <= 2 input fences which heap
-sort solves with just one compare and swap. (And for the case of one input
-fence we have a fast path in the previous patch.)
-
-A complementary possibility is to implement a different sorting algorithm
-under the same API as the kernel's sort() and so keep the simplicity,
-potentially moving the new sort under lib/ if it would be found more
-widely useful.
-
-v2:
- * Hold on to fence references and reduce commentary. (Christian)
- * Record and use latest signaled timestamp in the 2nd loop too.
- * Consolidate zero or one fences fast paths.
-
-v3:
- * Reverse the seqno sort order for a simpler squashing pass. (Christian)
-
-Signed-off-by: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
-Fixes: 245a4a7b531c ("dma-buf: generalize dma_fence unwrap & merging v3")
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/3617
-Cc: Christian König <christian.koenig@amd.com>
-Cc: Daniel Vetter <daniel.vetter@ffwll.ch>
-Cc: Sumit Semwal <sumit.semwal@linaro.org>
-Cc: Gustavo Padovan <gustavo@padovan.org>
-Cc: Friedrich Vock <friedrich.vock@gmx.de>
-Cc: linux-media@vger.kernel.org
-Cc: dri-devel@lists.freedesktop.org
-Cc: linaro-mm-sig@lists.linaro.org
-Cc: <stable@vger.kernel.org> # v6.0+
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Christian König <christian.koenig@amd.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20241115102153.1980-3-tursulin@igalia.com
+Fixes: fbfc504a24f5 ("bpf: introduce new bpf AF_XDP map type BPF_MAP_TYPE_XSKMAP")
+CC: stable@vger.kernel.org
+Reported-by: Jordy Zomer <jordyzomer@google.com>
+Suggested-by: Jordy Zomer <jordyzomer@google.com>
+Reviewed-by: Toke Høiland-Jørgensen <toke@redhat.com>
+Acked-by: John Fastabend <john.fastabend@gmail.com>
+Signed-off-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
+Link: https://lore.kernel.org/r/20241122121030.716788-2-maciej.fijalkowski@intel.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma-buf/dma-fence-unwrap.c |  126 +++++++++++++++++--------------------
- 1 file changed, 60 insertions(+), 66 deletions(-)
+ net/xdp/xskmap.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/dma-buf/dma-fence-unwrap.c
-+++ b/drivers/dma-buf/dma-fence-unwrap.c
-@@ -12,6 +12,7 @@
- #include <linux/dma-fence-chain.h>
- #include <linux/dma-fence-unwrap.h>
- #include <linux/slab.h>
-+#include <linux/sort.h>
+--- a/net/xdp/xskmap.c
++++ b/net/xdp/xskmap.c
+@@ -224,7 +224,7 @@ static long xsk_map_delete_elem(struct b
+ 	struct xsk_map *m = container_of(map, struct xsk_map, map);
+ 	struct xdp_sock __rcu **map_entry;
+ 	struct xdp_sock *old_xs;
+-	int k = *(u32 *)key;
++	u32 k = *(u32 *)key;
  
- /* Internal helper to start new array iteration, don't use directly */
- static struct dma_fence *
-@@ -59,6 +60,25 @@ struct dma_fence *dma_fence_unwrap_next(
- }
- EXPORT_SYMBOL_GPL(dma_fence_unwrap_next);
- 
-+
-+static int fence_cmp(const void *_a, const void *_b)
-+{
-+	struct dma_fence *a = *(struct dma_fence **)_a;
-+	struct dma_fence *b = *(struct dma_fence **)_b;
-+
-+	if (a->context < b->context)
-+		return -1;
-+	else if (a->context > b->context)
-+		return 1;
-+
-+	if (dma_fence_is_later(b, a))
-+		return 1;
-+	else if (dma_fence_is_later(a, b))
-+		return -1;
-+
-+	return 0;
-+}
-+
- /* Implementation for the dma_fence_merge() marco, don't use directly */
- struct dma_fence *__dma_fence_unwrap_merge(unsigned int num_fences,
- 					   struct dma_fence **fences,
-@@ -67,8 +87,7 @@ struct dma_fence *__dma_fence_unwrap_mer
- 	struct dma_fence_array *result;
- 	struct dma_fence *tmp, **array;
- 	ktime_t timestamp;
--	unsigned int i;
--	size_t count;
-+	int i, j, count;
- 
- 	count = 0;
- 	timestamp = ns_to_ktime(0);
-@@ -96,80 +115,55 @@ struct dma_fence *__dma_fence_unwrap_mer
- 	if (!array)
- 		return NULL;
- 
--	/*
--	 * This trashes the input fence array and uses it as position for the
--	 * following merge loop. This works because the dma_fence_merge()
--	 * wrapper macro is creating this temporary array on the stack together
--	 * with the iterators.
--	 */
--	for (i = 0; i < num_fences; ++i)
--		fences[i] = dma_fence_unwrap_first(fences[i], &iter[i]);
--
- 	count = 0;
--	do {
--		unsigned int sel;
--
--restart:
--		tmp = NULL;
--		for (i = 0; i < num_fences; ++i) {
--			struct dma_fence *next;
--
--			while (fences[i] && dma_fence_is_signaled(fences[i]))
--				fences[i] = dma_fence_unwrap_next(&iter[i]);
--
--			next = fences[i];
--			if (!next)
--				continue;
--
--			/*
--			 * We can't guarantee that inpute fences are ordered by
--			 * context, but it is still quite likely when this
--			 * function is used multiple times. So attempt to order
--			 * the fences by context as we pass over them and merge
--			 * fences with the same context.
--			 */
--			if (!tmp || tmp->context > next->context) {
--				tmp = next;
--				sel = i;
--
--			} else if (tmp->context < next->context) {
--				continue;
--
--			} else if (dma_fence_is_later(tmp, next)) {
--				fences[i] = dma_fence_unwrap_next(&iter[i]);
--				goto restart;
-+	for (i = 0; i < num_fences; ++i) {
-+		dma_fence_unwrap_for_each(tmp, &iter[i], fences[i]) {
-+			if (!dma_fence_is_signaled(tmp)) {
-+				array[count++] = dma_fence_get(tmp);
- 			} else {
--				fences[sel] = dma_fence_unwrap_next(&iter[sel]);
--				goto restart;
-+				ktime_t t = dma_fence_timestamp(tmp);
-+
-+				if (ktime_after(t, timestamp))
-+					timestamp = t;
- 			}
- 		}
-+	}
- 
--		if (tmp) {
--			array[count++] = dma_fence_get(tmp);
--			fences[sel] = dma_fence_unwrap_next(&iter[sel]);
--		}
--	} while (tmp);
-+	if (count == 0 || count == 1)
-+		goto return_fastpath;
- 
--	if (count == 0) {
--		tmp = dma_fence_allocate_private_stub(ktime_get());
--		goto return_tmp;
--	}
-+	sort(array, count, sizeof(*array), fence_cmp, NULL);
- 
--	if (count == 1) {
--		tmp = array[0];
--		goto return_tmp;
-+	/*
-+	 * Only keep the most recent fence for each context.
-+	 */
-+	j = 0;
-+	for (i = 1; i < count; i++) {
-+		if (array[i]->context == array[j]->context)
-+			dma_fence_put(array[i]);
-+		else
-+			array[++j] = array[i];
- 	}
-+	count = ++j;
- 
--	result = dma_fence_array_create(count, array,
--					dma_fence_context_alloc(1),
--					1, false);
--	if (!result) {
--		for (i = 0; i < count; i++)
--			dma_fence_put(array[i]);
--		tmp = NULL;
--		goto return_tmp;
-+	if (count > 1) {
-+		result = dma_fence_array_create(count, array,
-+						dma_fence_context_alloc(1),
-+						1, false);
-+		if (!result) {
-+			for (i = 0; i < count; i++)
-+				dma_fence_put(array[i]);
-+			tmp = NULL;
-+			goto return_tmp;
-+		}
-+		return &result->base;
- 	}
--	return &result->base;
-+
-+return_fastpath:
-+	if (count == 0)
-+		tmp = dma_fence_allocate_private_stub(timestamp);
-+	else
-+		tmp = array[0];
- 
- return_tmp:
- 	kfree(array);
+ 	if (k >= map->max_entries)
+ 		return -EINVAL;
 
 
