@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EADFA222D75;
-	Thu, 12 Dec 2024 16:05:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8AAC223C7A;
+	Thu, 12 Dec 2024 16:05:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734019531; cv=none; b=SC+W2wFFxqXxZsKq5ib8K26A7tBG2hf9NAbqc2cS33noEFb5gWqvVUW7cDdMv7QcFKXJ6rd0Oz4ZcNjW07UjvkWWz6+ZSX5IPa6g8hCvBeC7XSUYm3QBB21IAe50oaC/kX3QvXzPdlSyE73Uui12z75vm2JRFzw+muWwpAWcu1g=
+	t=1734019535; cv=none; b=gc26hqhd6vZlSZ/zv6hShxbJr5wj8P3mwYazNiCq3/wfW9NyanvKepb4PWXLsw301kul2m4pB2UL8HaZU0ySXMbYLkwaszxa9d5FnnC9kMdNMs3GvABEIhY0FGQtL9CeBI709KzEMhsGjK2hVc5V27+7OwbiZ4nmR+LH2KBv2+Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734019531; c=relaxed/simple;
-	bh=Ra9rIS/DKZCYCjgOrIXLSmB7xF3yMs18vx24WtVa5os=;
+	s=arc-20240116; t=1734019535; c=relaxed/simple;
+	bh=gJO9AoFccjozS059vjWqt1qPAMqMOsBu/9xo4GhGMKY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a55BURMnCaI161Sd8zwfX2EsAKoHMGAe5WwF+3i9JM1NbTk2x2T220sCQ5sdDlU1VRjz+kR1FpT1CakYG5+y8S0nZlm2whm0wjTaEjdPo4Beb/Q9JqHfSsj2Moo7/PeiAN1YzDFdfKl9aX5Y48Kp0ZmZ7CjVsMVE2j/ryhs/+sA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OOtrQT6E; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fbs0LctNugIuLK6Ewo2lzSTO/P13CyvH+LRFF7CAf0Nh1NCXlSIrI+MEZpNLpRyUPKwZcdK0pf+bw0WUnwEvh0wWxYl4V/T/o5UVOvpzCBr2Ivp4eID03cntuatvImj2Ysi90YvvKD4uH30r2j/aVzpwikDEVgW3dU1udJEn/i0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uRtyNLCE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OOtrQT6E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69622C4CED0;
-	Thu, 12 Dec 2024 16:05:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uRtyNLCE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D265C4CECE;
+	Thu, 12 Dec 2024 16:05:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734019530;
-	bh=Ra9rIS/DKZCYCjgOrIXLSmB7xF3yMs18vx24WtVa5os=;
+	s=korg; t=1734019534;
+	bh=gJO9AoFccjozS059vjWqt1qPAMqMOsBu/9xo4GhGMKY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OOtrQT6EmRhn/kVzKkH+tUxRNRmUROOqtGhcxPSTWhWhNTyEUw61ej2k9Mw4yQ/Wi
-	 iZS0J6iPcxj90I78kmAFBhzjAj8EB/TS/mHm+X5FPKnCkR9PrWjxjqnbgrEaG/nQzl
-	 6MSPhRDIDb45JDYuJ2vzEEuXxBZ+wrBqW7yGN5VE=
+	b=uRtyNLCEDaSNGJnvfOHw4XM13LknBhFxwlmnxDZBI1p5WJZOHO4c4v8e/Iw0EckLz
+	 NoSqzc2OdQ0eEcNLTAO/YNCJYUPG/eiMXIM6glSzXK7E93g+rgvWuRxpEiYj3dijAy
+	 aba3S7oN9gC//Zl/yexGbGJKgRgbOb7ybvuH54hQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengchang Tang <tangchengchang@huawei.com>,
-	Junxian Huang <huangjunxian6@hisilicon.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Jacky Bai <ping.bai@nxp.com>,
+	Peng Fan <peng.fan@nxp.com>,
+	Abel Vesa <abel.vesa@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 224/772] RDMA/hns: Add clear_hem return value to log
-Date: Thu, 12 Dec 2024 15:52:49 +0100
-Message-ID: <20241212144359.163430592@linuxfoundation.org>
+Subject: [PATCH 6.1 233/772] clk: imx: fracn-gppll: fix pll power up
+Date: Thu, 12 Dec 2024 15:52:58 +0100
+Message-ID: <20241212144359.537978927@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -52,113 +52,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chengchang Tang <tangchengchang@huawei.com>
+From: Peng Fan <peng.fan@nxp.com>
 
-[ Upstream commit a519a612a71848b69b70b18b4d14d165b2d8aaf7 ]
+[ Upstream commit ff4279618f0aec350b0fb41b2b35841324fbd96e ]
 
-Log return value of clear_hem() to help diagnose.
+To i.MX93 which features dual Cortex-A55 cores and DSU, when using
+writel_relaxed to write value to PLL registers, the value might be
+buffered. To make sure the value has been written into the hardware,
+using readl to read back the register could achieve the goal.
 
-Link: https://lore.kernel.org/r/20230523121641.3132102-4-huangjunxian6@hisilicon.com
-Signed-off-by: Chengchang Tang <tangchengchang@huawei.com>
-Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-Stable-dep-of: d81fb6511abf ("RDMA/hns: Use dev_* printings in hem code instead of ibdev_*")
+current PLL power up flow can be simplified as below:
+  1. writel_relaxed to set the PLL POWERUP bit;
+  2. readl_poll_timeout to check the PLL lock bit:
+     a). timeout = ktime_add_us(ktime_get(), timeout_us);
+     b). readl the pll the lock reg;
+     c). check if the pll lock bit ready
+     d). check if timeout
+
+But in some corner cases, both the write in step 1 and read in
+step 2 will be blocked by other bus transaction in the SoC for a
+long time, saying the value into real hardware is just before step b).
+That means the timeout counting has begins for quite sometime since
+step a), but value still not written into real hardware until bus
+released just at a point before step b).
+
+Then there maybe chances that the pll lock bit is not ready
+when readl done but the timeout happens. readl_poll_timeout will
+err return due to timeout. To avoid such unexpected failure,
+read back the reg to make sure the write has been done in HW
+reg.
+
+So use readl after writel_relaxed to fix the issue.
+
+Since we are here, to avoid udelay to run before writel_relaxed, use
+readl before udelay.
+
+Fixes: 1b26cb8a77a4 ("clk: imx: support fracn gppll")
+Co-developed-by: Jacky Bai <ping.bai@nxp.com>
+Signed-off-by: Jacky Bai <ping.bai@nxp.com>
+Signed-off-by: Peng Fan <peng.fan@nxp.com>
+Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
+Link: https://lore.kernel.org/r/20241027-imx-clk-v1-v3-3-89152574d1d7@nxp.com
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hns/hns_roce_hem.c | 44 ++++++++++++++++--------
- 1 file changed, 30 insertions(+), 14 deletions(-)
+ drivers/clk/imx/clk-fracn-gppll.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/infiniband/hw/hns/hns_roce_hem.c b/drivers/infiniband/hw/hns/hns_roce_hem.c
-index 2c8f0fd9557d1..d0f338ff78df5 100644
---- a/drivers/infiniband/hw/hns/hns_roce_hem.c
-+++ b/drivers/infiniband/hw/hns/hns_roce_hem.c
-@@ -619,6 +619,7 @@ static void clear_mhop_hem(struct hns_roce_dev *hr_dev,
- 	u32 hop_num = mhop->hop_num;
- 	u32 chunk_ba_num;
- 	u32 step_idx;
-+	int ret;
- 
- 	index->inited = HEM_INDEX_BUF;
- 	chunk_ba_num = mhop->bt_chunk_size / BA_BYTE_LEN;
-@@ -642,16 +643,24 @@ static void clear_mhop_hem(struct hns_roce_dev *hr_dev,
- 		else
- 			step_idx = hop_num;
- 
--		if (hr_dev->hw->clear_hem(hr_dev, table, obj, step_idx))
--			ibdev_warn(ibdev, "failed to clear hop%u HEM.\n", hop_num);
--
--		if (index->inited & HEM_INDEX_L1)
--			if (hr_dev->hw->clear_hem(hr_dev, table, obj, 1))
--				ibdev_warn(ibdev, "failed to clear HEM step 1.\n");
-+		ret = hr_dev->hw->clear_hem(hr_dev, table, obj, step_idx);
-+		if (ret)
-+			ibdev_warn(ibdev, "failed to clear hop%u HEM, ret = %d.\n",
-+				   hop_num, ret);
-+
-+		if (index->inited & HEM_INDEX_L1) {
-+			ret = hr_dev->hw->clear_hem(hr_dev, table, obj, 1);
-+			if (ret)
-+				ibdev_warn(ibdev, "failed to clear HEM step 1, ret = %d.\n",
-+					   ret);
-+		}
- 
--		if (index->inited & HEM_INDEX_L0)
--			if (hr_dev->hw->clear_hem(hr_dev, table, obj, 0))
--				ibdev_warn(ibdev, "failed to clear HEM step 0.\n");
-+		if (index->inited & HEM_INDEX_L0) {
-+			ret = hr_dev->hw->clear_hem(hr_dev, table, obj, 0);
-+			if (ret)
-+				ibdev_warn(ibdev, "failed to clear HEM step 0, ret = %d.\n",
-+					   ret);
-+		}
+diff --git a/drivers/clk/imx/clk-fracn-gppll.c b/drivers/clk/imx/clk-fracn-gppll.c
+index 281fc62ecd3d5..5f2296bb67a65 100644
+--- a/drivers/clk/imx/clk-fracn-gppll.c
++++ b/drivers/clk/imx/clk-fracn-gppll.c
+@@ -250,9 +250,11 @@ static int clk_fracn_gppll_set_rate(struct clk_hw *hw, unsigned long drate,
+ 	pll_div = FIELD_PREP(PLL_RDIV_MASK, rate->rdiv) | rate->odiv |
+ 		FIELD_PREP(PLL_MFI_MASK, rate->mfi);
+ 	writel_relaxed(pll_div, pll->base + PLL_DIV);
++	readl(pll->base + PLL_DIV);
+ 	if (pll->flags & CLK_FRACN_GPPLL_FRACN) {
+ 		writel_relaxed(rate->mfd, pll->base + PLL_DENOMINATOR);
+ 		writel_relaxed(FIELD_PREP(PLL_MFN_MASK, rate->mfn), pll->base + PLL_NUMERATOR);
++		readl(pll->base + PLL_NUMERATOR);
  	}
- }
  
-@@ -688,6 +697,7 @@ void hns_roce_table_put(struct hns_roce_dev *hr_dev,
- {
- 	struct device *dev = hr_dev->dev;
- 	unsigned long i;
-+	int ret;
+ 	/* Wait for 5us according to fracn mode pll doc */
+@@ -261,6 +263,7 @@ static int clk_fracn_gppll_set_rate(struct clk_hw *hw, unsigned long drate,
+ 	/* Enable Powerup */
+ 	tmp |= POWERUP_MASK;
+ 	writel_relaxed(tmp, pll->base + PLL_CTRL);
++	readl(pll->base + PLL_CTRL);
  
- 	if (hns_roce_check_whether_mhop(hr_dev, table->type)) {
- 		hns_roce_table_mhop_put(hr_dev, table, obj, 1);
-@@ -700,8 +710,10 @@ void hns_roce_table_put(struct hns_roce_dev *hr_dev,
- 					 &table->mutex))
- 		return;
+ 	/* Wait Lock */
+ 	ret = clk_fracn_gppll_wait_lock(pll);
+@@ -298,6 +301,7 @@ static int clk_fracn_gppll_prepare(struct clk_hw *hw)
  
--	if (hr_dev->hw->clear_hem(hr_dev, table, obj, HEM_HOP_STEP_DIRECT))
--		dev_warn(dev, "failed to clear HEM base address.\n");
-+	ret = hr_dev->hw->clear_hem(hr_dev, table, obj, HEM_HOP_STEP_DIRECT);
-+	if (ret)
-+		dev_warn(dev, "failed to clear HEM base address, ret = %d.\n",
-+			 ret);
+ 	val |= POWERUP_MASK;
+ 	writel_relaxed(val, pll->base + PLL_CTRL);
++	readl(pll->base + PLL_CTRL);
  
- 	hns_roce_free_hem(hr_dev, table->hem[i]);
- 	table->hem[i] = NULL;
-@@ -917,6 +929,8 @@ void hns_roce_cleanup_hem_table(struct hns_roce_dev *hr_dev,
- {
- 	struct device *dev = hr_dev->dev;
- 	unsigned long i;
-+	int obj;
-+	int ret;
- 
- 	if (hns_roce_check_whether_mhop(hr_dev, table->type)) {
- 		hns_roce_cleanup_mhop_hem_table(hr_dev, table);
-@@ -925,9 +939,11 @@ void hns_roce_cleanup_hem_table(struct hns_roce_dev *hr_dev,
- 
- 	for (i = 0; i < table->num_hem; ++i)
- 		if (table->hem[i]) {
--			if (hr_dev->hw->clear_hem(hr_dev, table,
--			    i * table->table_chunk_size / table->obj_size, 0))
--				dev_err(dev, "clear HEM base address failed.\n");
-+			obj = i * table->table_chunk_size / table->obj_size;
-+			ret = hr_dev->hw->clear_hem(hr_dev, table, obj, 0);
-+			if (ret)
-+				dev_err(dev, "clear HEM base address failed, ret = %d.\n",
-+					ret);
- 
- 			hns_roce_free_hem(hr_dev, table->hem[i]);
- 		}
+ 	ret = clk_fracn_gppll_wait_lock(pll);
+ 	if (ret)
 -- 
 2.43.0
 
