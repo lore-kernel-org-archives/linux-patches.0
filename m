@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85C33221D9F;
-	Thu, 12 Dec 2024 16:28:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73234221D9F;
+	Thu, 12 Dec 2024 16:29:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734020937; cv=none; b=IRwIHj2WAjJBE3fO+Euw5ssw4DajfS0XjULoyzJ0WggILq5xGlyUpwtkpOqTbJD0qb7cyTPvM01mwhMZFDcv1n+mG5Vj07g9xK9sw1xK7W6ahGAuDqoMbP67IfNoxbaJtpwem+25B2pGWCaRWhNk5zoOMYmoaD7jx2b7Cua45Pw=
+	t=1734020941; cv=none; b=tzH7p71wPA3Zcf8A0jBsec294yT7reChrBa8K8/6oZF1+J6/lprkabXgf4l/30bDmHSinuyKqHU5kbf+OfmXpuGNxvEv0g7gzCTgM9uQRD2n7aaPK4gNa+SyitzXM0zstYlWAs27lF5FNAcA2nXIuD67PX5Bm/r4urWc7kPGU1g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734020937; c=relaxed/simple;
-	bh=3rv2AEn5T8I7kJa+UwOip674mHTPc/Jj08EQdIgKvGE=;
+	s=arc-20240116; t=1734020941; c=relaxed/simple;
+	bh=PpbrkQBXt0m4yMXwYQ478zpNblIVWQWD701zV9R5CqU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ukDCup1e1q8KsOG9PpWxUQ8Rk498u+uD7+diK85YeHKEHvhnIjrbu+VErizZCCn3JfoXaeui7oeijWVRUypEaScdTL9Zm5yQZMIAvqkM12NzVhK6hQgmMuwmScsAT+yootjrZH43KKD/X/w8vkUdldIaiAJ55FV8neVq+FDQF+0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nO2k/vfT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uyyzPsFt7VOwlkjvU+o0YQQrExUPl/jQYEOkEY3xoKbgGidz2U4bwUCgelBDxtlQusf4DU6VyEB9l7SeTqpBslLQ7UeOxB42hlOfqDfVzwUOQW6Am8hw2RTfbquhArR5qgU6ywE1Vd83VAZuvcAh5sYvYiWrHvfXrifgFgI9Qok=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UodBaT4w; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nO2k/vfT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDE0FC4CED0;
-	Thu, 12 Dec 2024 16:28:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UodBaT4w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E407BC4CED0;
+	Thu, 12 Dec 2024 16:29:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734020937;
-	bh=3rv2AEn5T8I7kJa+UwOip674mHTPc/Jj08EQdIgKvGE=;
+	s=korg; t=1734020941;
+	bh=PpbrkQBXt0m4yMXwYQ478zpNblIVWQWD701zV9R5CqU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nO2k/vfTWnmtVonTBj6rkQZsO/EYELxrk1gSwbZdBfnGUDwZ0vNctkvdmFj+Wl4Lv
-	 cYVnFGVS5w1CRHL0hd1/0iwBGhEwcwkxeJD9wjpgOSm1QUJS3zx5pAn6O3SHWxc7va
-	 FAXkWdSXKvRU4U2AYyTQp3ugn3QccBKTPj0VbfFA=
+	b=UodBaT4w/4rDEiQ5Eok06jeTnxed4Ch0nztApiBfBK2tMASJdWkBbmCGJVQo9nO4C
+	 cndrCAVGM8ApAw6z8SnZ04FQPcRq6p1R00gOQqf+mAgq7MX+y5YHmrTw3Cg+mNTiX4
+	 PgGKjtnPCVfr6LIG0trRNqBQPyPJgHdEyouPAFco=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Roman Gushchin <roman.gushchin@linux.dev>,
-	syzbot+e985d3026c4fd041578e@syzkaller.appspotmail.com,
-	Hugh Dickins <hughd@google.com>,
-	Matthew Wilcox <willy@infradead.org>,
-	Sean Christopherson <seanjc@google.com>,
-	Vlastimil Babka <vbabka@suse.cz>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 602/772] mm: page_alloc: move mlocked flag clearance into free_pages_prepare()
-Date: Thu, 12 Dec 2024 15:59:07 +0100
-Message-ID: <20241212144414.799806161@linuxfoundation.org>
+	Zhenxing Chen <chenzhenxing@uniontech.com>,
+	Xu Rao <raoxu@uniontech.com>,
+	WangYuli <wangyuli@uniontech.com>,
+	Benjamin Tissoires <bentiss@kernel.org>
+Subject: [PATCH 6.1 603/772] HID: wacom: fix when get product name maybe null pointer
+Date: Thu, 12 Dec 2024 15:59:08 +0100
+Message-ID: <20241212144414.841216609@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -55,193 +52,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Roman Gushchin <roman.gushchin@linux.dev>
+From: WangYuli <wangyuli@uniontech.com>
 
-commit 66edc3a5894c74f8887c8af23b97593a0dd0df4d upstream.
+commit 59548215b76be98cf3422eea9a67d6ea578aca3d upstream.
 
-Syzbot reported a bad page state problem caused by a page being freed
-using free_page() still having a mlocked flag at free_pages_prepare()
-stage:
+Due to incorrect dev->product reporting by certain devices, null
+pointer dereferences occur when dev->product is empty, leading to
+potential system crashes.
 
-  BUG: Bad page state in process syz.5.504  pfn:61f45
-  page: refcount:0 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x61f45
-  flags: 0xfff00000080204(referenced|workingset|mlocked|node=0|zone=1|lastcpupid=0x7ff)
-  raw: 00fff00000080204 0000000000000000 dead000000000122 0000000000000000
-  raw: 0000000000000000 0000000000000000 00000000ffffffff 0000000000000000
-  page dumped because: PAGE_FLAGS_CHECK_AT_FREE flag(s) set
-  page_owner tracks the page as allocated
-  page last allocated via order 0, migratetype Unmovable, gfp_mask 0x400dc0(GFP_KERNEL_ACCOUNT|__GFP_ZERO), pid 8443, tgid 8442 (syz.5.504), ts 201884660643, free_ts 201499827394
-   set_page_owner include/linux/page_owner.h:32 [inline]
-   post_alloc_hook+0x1f3/0x230 mm/page_alloc.c:1537
-   prep_new_page mm/page_alloc.c:1545 [inline]
-   get_page_from_freelist+0x303f/0x3190 mm/page_alloc.c:3457
-   __alloc_pages_noprof+0x292/0x710 mm/page_alloc.c:4733
-   alloc_pages_mpol_noprof+0x3e8/0x680 mm/mempolicy.c:2265
-   kvm_coalesced_mmio_init+0x1f/0xf0 virt/kvm/coalesced_mmio.c:99
-   kvm_create_vm virt/kvm/kvm_main.c:1235 [inline]
-   kvm_dev_ioctl_create_vm virt/kvm/kvm_main.c:5488 [inline]
-   kvm_dev_ioctl+0x12dc/0x2240 virt/kvm/kvm_main.c:5530
-   __do_compat_sys_ioctl fs/ioctl.c:1007 [inline]
-   __se_compat_sys_ioctl+0x510/0xc90 fs/ioctl.c:950
-   do_syscall_32_irqs_on arch/x86/entry/common.c:165 [inline]
-   __do_fast_syscall_32+0xb4/0x110 arch/x86/entry/common.c:386
-   do_fast_syscall_32+0x34/0x80 arch/x86/entry/common.c:411
-   entry_SYSENTER_compat_after_hwframe+0x84/0x8e
-  page last free pid 8399 tgid 8399 stack trace:
-   reset_page_owner include/linux/page_owner.h:25 [inline]
-   free_pages_prepare mm/page_alloc.c:1108 [inline]
-   free_unref_folios+0xf12/0x18d0 mm/page_alloc.c:2686
-   folios_put_refs+0x76c/0x860 mm/swap.c:1007
-   free_pages_and_swap_cache+0x5c8/0x690 mm/swap_state.c:335
-   __tlb_batch_free_encoded_pages mm/mmu_gather.c:136 [inline]
-   tlb_batch_pages_flush mm/mmu_gather.c:149 [inline]
-   tlb_flush_mmu_free mm/mmu_gather.c:366 [inline]
-   tlb_flush_mmu+0x3a3/0x680 mm/mmu_gather.c:373
-   tlb_finish_mmu+0xd4/0x200 mm/mmu_gather.c:465
-   exit_mmap+0x496/0xc40 mm/mmap.c:1926
-   __mmput+0x115/0x390 kernel/fork.c:1348
-   exit_mm+0x220/0x310 kernel/exit.c:571
-   do_exit+0x9b2/0x28e0 kernel/exit.c:926
-   do_group_exit+0x207/0x2c0 kernel/exit.c:1088
-   __do_sys_exit_group kernel/exit.c:1099 [inline]
-   __se_sys_exit_group kernel/exit.c:1097 [inline]
-   __x64_sys_exit_group+0x3f/0x40 kernel/exit.c:1097
-   x64_sys_call+0x2634/0x2640 arch/x86/include/generated/asm/syscalls_64.h:232
-   do_syscall_x64 arch/x86/entry/common.c:52 [inline]
-   do_syscall_64+0xf3/0x230 arch/x86/entry/common.c:83
-   entry_SYSCALL_64_after_hwframe+0x77/0x7f
-  Modules linked in:
-  CPU: 0 UID: 0 PID: 8442 Comm: syz.5.504 Not tainted 6.12.0-rc6-syzkaller #0
-  Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 09/13/2024
-  Call Trace:
-   <TASK>
-   __dump_stack lib/dump_stack.c:94 [inline]
-   dump_stack_lvl+0x241/0x360 lib/dump_stack.c:120
-   bad_page+0x176/0x1d0 mm/page_alloc.c:501
-   free_page_is_bad mm/page_alloc.c:918 [inline]
-   free_pages_prepare mm/page_alloc.c:1100 [inline]
-   free_unref_page+0xed0/0xf20 mm/page_alloc.c:2638
-   kvm_destroy_vm virt/kvm/kvm_main.c:1327 [inline]
-   kvm_put_kvm+0xc75/0x1350 virt/kvm/kvm_main.c:1386
-   kvm_vcpu_release+0x54/0x60 virt/kvm/kvm_main.c:4143
-   __fput+0x23f/0x880 fs/file_table.c:431
-   task_work_run+0x24f/0x310 kernel/task_work.c:239
-   exit_task_work include/linux/task_work.h:43 [inline]
-   do_exit+0xa2f/0x28e0 kernel/exit.c:939
-   do_group_exit+0x207/0x2c0 kernel/exit.c:1088
-   __do_sys_exit_group kernel/exit.c:1099 [inline]
-   __se_sys_exit_group kernel/exit.c:1097 [inline]
-   __ia32_sys_exit_group+0x3f/0x40 kernel/exit.c:1097
-   ia32_sys_call+0x2624/0x2630 arch/x86/include/generated/asm/syscalls_32.h:253
-   do_syscall_32_irqs_on arch/x86/entry/common.c:165 [inline]
-   __do_fast_syscall_32+0xb4/0x110 arch/x86/entry/common.c:386
-   do_fast_syscall_32+0x34/0x80 arch/x86/entry/common.c:411
-   entry_SYSENTER_compat_after_hwframe+0x84/0x8e
-  RIP: 0023:0xf745d579
-  Code: Unable to access opcode bytes at 0xf745d54f.
-  RSP: 002b:00000000f75afd6c EFLAGS: 00000206 ORIG_RAX: 00000000000000fc
-  RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 0000000000000000
-  RDX: 0000000000000000 RSI: 00000000ffffff9c RDI: 00000000f744cff4
-  RBP: 00000000f717ae61 R08: 0000000000000000 R09: 0000000000000000
-  R10: 0000000000000000 R11: 0000000000000206 R12: 0000000000000000
-  R13: 0000000000000000 R14: 0000000000000000 R15: 0000000000000000
-   </TASK>
+This issue was found on EXCELSIOR DL37-D05 device with
+Loongson-LS3A6000-7A2000-DL37 motherboard.
 
-The problem was originally introduced by commit b109b87050df ("mm/munlock:
-replace clear_page_mlock() by final clearance"): it was focused on
-handling pagecache and anonymous memory and wasn't suitable for lower
-level get_page()/free_page() API's used for example by KVM, as with this
-reproducer.
+Kernel logs:
+[   56.470885] usb 4-3: new full-speed USB device number 4 using ohci-pci
+[   56.671638] usb 4-3: string descriptor 0 read error: -22
+[   56.671644] usb 4-3: New USB device found, idVendor=056a, idProduct=0374, bcdDevice= 1.07
+[   56.671647] usb 4-3: New USB device strings: Mfr=1, Product=2, SerialNumber=3
+[   56.678839] hid-generic 0003:056A:0374.0004: hiddev0,hidraw3: USB HID v1.10 Device [HID 056a:0374] on usb-0000:00:05.0-3/input0
+[   56.697719] CPU 2 Unable to handle kernel paging request at virtual address 0000000000000000, era == 90000000066e35c8, ra == ffff800004f98a80
+[   56.697732] Oops[#1]:
+[   56.697734] CPU: 2 PID: 2742 Comm: (udev-worker) Tainted: G           OE      6.6.0-loong64-desktop #25.00.2000.015
+[   56.697737] Hardware name: Inspur CE520L2/C09901N000000000, BIOS 2.09.00 10/11/2024
+[   56.697739] pc 90000000066e35c8 ra ffff800004f98a80 tp 9000000125478000 sp 900000012547b8a0
+[   56.697741] a0 0000000000000000 a1 ffff800004818b28 a2 0000000000000000 a3 0000000000000000
+[   56.697743] a4 900000012547b8f0 a5 0000000000000000 a6 0000000000000000 a7 0000000000000000
+[   56.697745] t0 ffff800004818b2d t1 0000000000000000 t2 0000000000000003 t3 0000000000000005
+[   56.697747] t4 0000000000000000 t5 0000000000000000 t6 0000000000000000 t7 0000000000000000
+[   56.697748] t8 0000000000000000 u0 0000000000000000 s9 0000000000000000 s0 900000011aa48028
+[   56.697750] s1 0000000000000000 s2 0000000000000000 s3 ffff800004818e80 s4 ffff800004810000
+[   56.697751] s5 90000001000b98d0 s6 ffff800004811f88 s7 ffff800005470440 s8 0000000000000000
+[   56.697753]    ra: ffff800004f98a80 wacom_update_name+0xe0/0x300 [wacom]
+[   56.697802]   ERA: 90000000066e35c8 strstr+0x28/0x120
+[   56.697806]  CRMD: 000000b0 (PLV0 -IE -DA +PG DACF=CC DACM=CC -WE)
+[   56.697816]  PRMD: 0000000c (PPLV0 +PIE +PWE)
+[   56.697821]  EUEN: 00000000 (-FPE -SXE -ASXE -BTE)
+[   56.697827]  ECFG: 00071c1d (LIE=0,2-4,10-12 VS=7)
+[   56.697831] ESTAT: 00010000 [PIL] (IS= ECode=1 EsubCode=0)
+[   56.697835]  BADV: 0000000000000000
+[   56.697836]  PRID: 0014d000 (Loongson-64bit, Loongson-3A6000)
+[   56.697838] Modules linked in: wacom(+) bnep bluetooth rfkill qrtr nls_iso8859_1 nls_cp437 snd_hda_codec_conexant snd_hda_codec_generic ledtrig_audio snd_hda_codec_hdmi snd_hda_intel snd_intel_dspcfg snd_hda_codec snd_hda_core snd_hwdep snd_pcm snd_timer snd soundcore input_leds mousedev led_class joydev deepin_netmonitor(OE) fuse nfnetlink dmi_sysfs ip_tables x_tables overlay amdgpu amdxcp drm_exec gpu_sched drm_buddy radeon drm_suballoc_helper i2c_algo_bit drm_ttm_helper r8169 ttm drm_display_helper spi_loongson_pci xhci_pci cec xhci_pci_renesas spi_loongson_core hid_generic realtek gpio_loongson_64bit
+[   56.697887] Process (udev-worker) (pid: 2742, threadinfo=00000000aee0d8b4, task=00000000a9eff1f3)
+[   56.697890] Stack : 0000000000000000 ffff800004817e00 0000000000000000 0000251c00000000
+[   56.697896]         0000000000000000 00000011fffffffd 0000000000000000 0000000000000000
+[   56.697901]         0000000000000000 1b67a968695184b9 0000000000000000 90000001000b98d0
+[   56.697906]         90000001000bb8d0 900000011aa48028 0000000000000000 ffff800004f9d74c
+[   56.697911]         90000001000ba000 ffff800004f9ce58 0000000000000000 ffff800005470440
+[   56.697916]         ffff800004811f88 90000001000b98d0 9000000100da2aa8 90000001000bb8d0
+[   56.697921]         0000000000000000 90000001000ba000 900000011aa48028 ffff800004f9d74c
+[   56.697926]         ffff8000054704e8 90000001000bb8b8 90000001000ba000 0000000000000000
+[   56.697931]         90000001000bb8d0 9000000006307564 9000000005e666e0 90000001752359b8
+[   56.697936]         9000000008cbe400 900000000804d000 9000000005e666e0 0000000000000000
+[   56.697941]         ...
+[   56.697944] Call Trace:
+[   56.697945] [<90000000066e35c8>] strstr+0x28/0x120
+[   56.697950] [<ffff800004f98a80>] wacom_update_name+0xe0/0x300 [wacom]
+[   56.698000] [<ffff800004f9ce58>] wacom_parse_and_register+0x338/0x900 [wacom]
+[   56.698050] [<ffff800004f9d74c>] wacom_probe+0x32c/0x420 [wacom]
+[   56.698099] [<9000000006307564>] hid_device_probe+0x144/0x260
+[   56.698103] [<9000000005e65d68>] really_probe+0x208/0x540
+[   56.698109] [<9000000005e661dc>] __driver_probe_device+0x13c/0x1e0
+[   56.698112] [<9000000005e66620>] driver_probe_device+0x40/0x100
+[   56.698116] [<9000000005e6680c>] __device_attach_driver+0x12c/0x180
+[   56.698119] [<9000000005e62bc8>] bus_for_each_drv+0x88/0x160
+[   56.698123] [<9000000005e66468>] __device_attach+0x108/0x260
+[   56.698126] [<9000000005e63918>] device_reprobe+0x78/0x100
+[   56.698129] [<9000000005e62a68>] bus_for_each_dev+0x88/0x160
+[   56.698132] [<9000000006304e54>] __hid_bus_driver_added+0x34/0x80
+[   56.698134] [<9000000005e62bc8>] bus_for_each_drv+0x88/0x160
+[   56.698137] [<9000000006304df0>] __hid_register_driver+0x70/0xa0
+[   56.698142] [<9000000004e10fe4>] do_one_initcall+0x104/0x320
+[   56.698146] [<9000000004f38150>] do_init_module+0x90/0x2c0
+[   56.698151] [<9000000004f3a3d8>] init_module_from_file+0xb8/0x120
+[   56.698155] [<9000000004f3a590>] idempotent_init_module+0x150/0x3a0
+[   56.698159] [<9000000004f3a890>] sys_finit_module+0xb0/0x140
+[   56.698163] [<900000000671e4e8>] do_syscall+0x88/0xc0
+[   56.698166] [<9000000004e12404>] handle_syscall+0xc4/0x160
+[   56.698171] Code: 0011958f  00150224  5800cd85 <2a00022c> 00150004  4000c180  0015022c  03400000  03400000
+[   56.698192] ---[ end trace 0000000000000000 ]---
 
-Fix it by moving the mlocked flag clearance down to free_page_prepare().
-
-The bug itself if fairly old and harmless (aside from generating these
-warnings), aside from a small memory leak - "bad" pages are stopped from
-being allocated again.
-
-Link: https://lkml.kernel.org/r/20241106195354.270757-1-roman.gushchin@linux.dev
-Fixes: b109b87050df ("mm/munlock: replace clear_page_mlock() by final clearance")
-Signed-off-by: Roman Gushchin <roman.gushchin@linux.dev>
-Reported-by: syzbot+e985d3026c4fd041578e@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/6729f475.050a0220.701a.0019.GAE@google.com
-Acked-by: Hugh Dickins <hughd@google.com>
-Cc: Matthew Wilcox <willy@infradead.org>
-Cc: Sean Christopherson <seanjc@google.com>
-Cc: Vlastimil Babka <vbabka@suse.cz>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Hugh Dickins <hughd@google.com>
+Fixes: 09dc28acaec7 ("HID: wacom: Improve generic name generation")
+Reported-by: Zhenxing Chen <chenzhenxing@uniontech.com>
+Co-developed-by: Xu Rao <raoxu@uniontech.com>
+Signed-off-by: Xu Rao <raoxu@uniontech.com>
+Signed-off-by: WangYuli <wangyuli@uniontech.com>
+Link: https://patch.msgid.link/B31757FE8E1544CF+20241125052616.18261-1-wangyuli@uniontech.com
+Cc: stable@vger.kernel.org
+Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/page_alloc.c |   15 +++++++++++++++
- mm/swap.c       |   20 --------------------
- 2 files changed, 15 insertions(+), 20 deletions(-)
+ drivers/hid/wacom_sys.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/mm/page_alloc.c
-+++ b/mm/page_alloc.c
-@@ -1388,12 +1388,27 @@ static __always_inline bool free_pages_p
- 	int bad = 0;
- 	bool skip_kasan_poison = should_skip_kasan_poison(page, fpi_flags);
- 	bool init = want_init_on_free();
-+	struct folio *folio = page_folio(page);
- 
- 	VM_BUG_ON_PAGE(PageTail(page), page);
- 
- 	trace_mm_page_free(page, order);
- 	kmsan_free_page(page, order);
- 
-+	/*
-+	 * In rare cases, when truncation or holepunching raced with
-+	 * munlock after VM_LOCKED was cleared, Mlocked may still be
-+	 * found set here.  This does not indicate a problem, unless
-+	 * "unevictable_pgs_cleared" appears worryingly large.
-+	 */
-+	if (unlikely(folio_test_mlocked(folio))) {
-+		long nr_pages = folio_nr_pages(folio);
-+
-+		__folio_clear_mlocked(folio);
-+		zone_stat_mod_folio(folio, NR_MLOCK, -nr_pages);
-+		count_vm_events(UNEVICTABLE_PGCLEARED, nr_pages);
-+	}
-+
- 	if (unlikely(PageHWPoison(page)) && !order) {
- 		/*
- 		 * Do not let hwpoison pages hit pcplists/buddy
---- a/mm/swap.c
-+++ b/mm/swap.c
-@@ -88,14 +88,6 @@ static void __page_cache_release(struct
- 		__folio_clear_lru_flags(folio);
- 		unlock_page_lruvec_irqrestore(lruvec, flags);
- 	}
--	/* See comment on folio_test_mlocked in release_pages() */
--	if (unlikely(folio_test_mlocked(folio))) {
--		long nr_pages = folio_nr_pages(folio);
--
--		__folio_clear_mlocked(folio);
--		zone_stat_mod_folio(folio, NR_MLOCK, -nr_pages);
--		count_vm_events(UNEVICTABLE_PGCLEARED, nr_pages);
--	}
- }
- 
- static void __folio_put_small(struct folio *folio)
-@@ -1034,18 +1026,6 @@ void release_pages(struct page **pages,
- 			__folio_clear_lru_flags(folio);
+--- a/drivers/hid/wacom_sys.c
++++ b/drivers/hid/wacom_sys.c
+@@ -2234,7 +2234,8 @@ static void wacom_update_name(struct wac
+ 		if (hid_is_usb(wacom->hdev)) {
+ 			struct usb_interface *intf = to_usb_interface(wacom->hdev->dev.parent);
+ 			struct usb_device *dev = interface_to_usbdev(intf);
+-			product_name = dev->product;
++			if (dev->product != NULL)
++				product_name = dev->product;
  		}
  
--		/*
--		 * In rare cases, when truncation or holepunching raced with
--		 * munlock after VM_LOCKED was cleared, Mlocked may still be
--		 * found set here.  This does not indicate a problem, unless
--		 * "unevictable_pgs_cleared" appears worryingly large.
--		 */
--		if (unlikely(folio_test_mlocked(folio))) {
--			__folio_clear_mlocked(folio);
--			zone_stat_sub_folio(folio, NR_MLOCK);
--			count_vm_event(UNEVICTABLE_PGCLEARED);
--		}
--
- 		list_add(&folio->lru, &pages_to_free);
- 	}
- 	if (lruvec)
+ 		if (wacom->hdev->bus == BUS_I2C) {
 
 
