@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0481A2210E5;
-	Thu, 12 Dec 2024 16:10:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F37A32253EB;
+	Thu, 12 Dec 2024 16:10:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734019801; cv=none; b=jgEmUHa0ydWtfDHjJJScv5EaoVNUMKfE5CmZzJ+BlURa+ybDlx7RW58EZrMqQ7aI5mo8wEfIz6E8cNQs2DcMDkdLU8CiOJ8qFPT3zeR2YRTxGx8BefOfJh1DAzw1R+I0KZrsxrOakz/hCHlJOdAtnJ0naBjSQatsvn4XSjC0hQc=
+	t=1734019805; cv=none; b=bb0PQUgZ9KwDTcK2eYHym0Q/2NAf6ihOWo1ylSK+4Br0m4Onzux6IFjPKQxFYA8uSDVNpbP0IsqKl15I7FlpzdM+w+AaWXD2EBxx3vK7ZheXcwTz8Pg+XtnQzvhqxdLiGbFBfV3zK1OnIdBo4RopXUFDikXguVdj0+N6AGZyGkQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734019801; c=relaxed/simple;
-	bh=0V6lT0vs3qHe0ZQUZdKYqwuZW3HE+UYB2TLN0FJVCZI=;
+	s=arc-20240116; t=1734019805; c=relaxed/simple;
+	bh=gIJGrDC1RBH4tOTmVlxQXhZcRIzUylW/WcfT6M31vH8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pW1pJ8h9A/Cq0/3X6szt86tsGtqeHH0UItZz6FrfXIrUadPQMON5sXW0p7wV7J7+wi9e6NbKmwTYDT3RZbdjrx5mCICuF7cDNawyfszsz2XnlqU+diUjSgHU3hqGx8H9LPGYHUQhoZNLtlUA6gwpYIEnHO3I6oZ0mTBaGyNXe3A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vTCdzYXH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eeEydcietSHWi79i0EdlKFW/nMVZhnorZTwmnexU7alqH+EAkqweXEUY0lr0SSktYkVII3DcI08xmLpbEBroaQi8j9Cl4AefyOE+0TJ8OEFpLmfiYW9FzFddNks9aonYkgriBkmtHmR0rIAWiYET8JOknYTkvO1Wr6Ju+ARMnSc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n9ZfooR4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vTCdzYXH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C222C4CECE;
-	Thu, 12 Dec 2024 16:10:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n9ZfooR4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44FBBC4CECE;
+	Thu, 12 Dec 2024 16:10:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734019800;
-	bh=0V6lT0vs3qHe0ZQUZdKYqwuZW3HE+UYB2TLN0FJVCZI=;
+	s=korg; t=1734019804;
+	bh=gIJGrDC1RBH4tOTmVlxQXhZcRIzUylW/WcfT6M31vH8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vTCdzYXHBkYQo74zLl0q24A9GMHW/TM2Cnw4ppP7OpISExtaM17/9qitE+e1lcdCx
-	 ulsHHopqylXUFNidr9yM4EcAuyLjV/qUlhhqKiwxRc6nwRxUYMs5561VJiSmuFZWCk
-	 3Kruvf4L8sxasqiAqhLRfhYJ9BoL5YWVr90efJig=
+	b=n9ZfooR4qMQAQAUNgPBPCBq5YsBIufM/3ECypySauVseui3CQFQLEidqjc2JhEbXV
+	 zMkhzMoSrPdxpqdmcvckMTywoLwV6dvS4xj/GcW1YqFSCuDSeukraa3FZPcekP5H2K
+	 vM7X0YMP+VGj7BR40yAeNsjk7rFDWrC/PuHZfPys=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Fastabend <john.fastabend@gmail.com>,
-	Tiezhu Yang <yangtiezhu@loongson.cn>,
-	Huacai Chen <chenhuacai@loongson.cn>,
+	Kyle Tso <kyletso@google.com>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 302/772] LoongArch: BPF: Sign-extend return values
-Date: Thu, 12 Dec 2024 15:54:07 +0100
-Message-ID: <20241212144402.382545650@linuxfoundation.org>
+Subject: [PATCH 6.1 303/772] power: supply: core: Remove might_sleep() from power_supply_put()
+Date: Thu, 12 Dec 2024 15:54:08 +0100
+Message-ID: <20241212144402.421640533@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -52,89 +54,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tiezhu Yang <yangtiezhu@loongson.cn>
+From: Bart Van Assche <bvanassche@acm.org>
 
-[ Upstream commit 73c359d1d356cf10236ccd358bd55edab33e9424 ]
+[ Upstream commit f6da4553ff24a5d1c959c9627c965323adc3d307 ]
 
-(1) Description of Problem:
+The put_device() call in power_supply_put() may call
+power_supply_dev_release(). The latter function does not sleep so
+power_supply_put() doesn't sleep either. Hence, remove the might_sleep()
+call from power_supply_put(). This patch suppresses false positive
+complaints about calling a sleeping function from atomic context if
+power_supply_put() is called from atomic context.
 
-When testing BPF JIT with the latest compiler toolchains on LoongArch,
-there exist some strange failed test cases, dmesg shows something like
-this:
-
-  # dmesg -t | grep FAIL | head -1
-  ... ret -3 != -3 (0xfffffffd != 0xfffffffd)FAIL ...
-
-(2) Steps to Reproduce:
-
-  # echo 1 > /proc/sys/net/core/bpf_jit_enable
-  # modprobe test_bpf
-
-(3) Additional Info:
-
-There are no failed test cases compiled with the lower version of GCC
-such as 13.3.0, while the problems only appear with higher version of
-GCC such as 14.2.0.
-
-This is because the problems were hidden by the lower version of GCC due
-to redundant sign extension instructions generated by compiler, but with
-optimization of higher version of GCC, the sign extension instructions
-have been removed.
-
-(4) Root Cause Analysis:
-
-The LoongArch architecture does not expose sub-registers, and hold all
-32-bit values in a sign-extended format. While BPF, on the other hand,
-exposes sub-registers, and use zero-extension (similar to arm64/x86).
-
-This has led to some subtle bugs, where a BPF JITted program has not
-sign-extended the a0 register (return value in LoongArch land), passed
-the return value up the kernel, for example:
-
-  | int from_bpf(void);
-  |
-  | long foo(void)
-  | {
-  |    return from_bpf();
-  | }
-
-Here, a0 would be 0xffffffff instead of the expected 0xffffffffffffffff.
-
-Internally, the LoongArch JIT uses a5 as a dedicated register for BPF
-return values. That is to say, the LoongArch BPF uses a5 for BPF return
-values, which are zero-extended, whereas the LoongArch ABI uses a0 which
-is sign-extended.
-
-(5) Final Solution:
-
-Keep a5 zero-extended, but explicitly sign-extend a0 (which is used
-outside BPF land). Because libbpf currently defines the return value
-of an ebpf program as a 32-bit unsigned integer, just use addi.w to
-extend bit 31 into bits 63 through 32 of a5 to a0. This is similar to
-commit 2f1b0d3d7331 ("riscv, bpf: Sign-extend return values").
-
-Fixes: 5dc615520c4d ("LoongArch: Add BPF JIT support")
-Acked-by: John Fastabend <john.fastabend@gmail.com>
-Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Cc: Kyle Tso <kyletso@google.com>
+Cc: Krzysztof Kozlowski <krzk@kernel.org>
+Fixes: 1a352462b537 ("power_supply: Add power_supply_put for decrementing device reference counter")
+Signed-off-by: Bart Van Assche <bvanassche@acm.org>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/20240917193914.47566-1-bvanassche@acm.org
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/loongarch/net/bpf_jit.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/power/supply/power_supply_core.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/arch/loongarch/net/bpf_jit.c b/arch/loongarch/net/bpf_jit.c
-index 4e86441e63196..2567916370b4e 100644
---- a/arch/loongarch/net/bpf_jit.c
-+++ b/arch/loongarch/net/bpf_jit.c
-@@ -179,7 +179,7 @@ static void __build_epilogue(struct jit_ctx *ctx, bool is_tail_call)
- 
- 	if (!is_tail_call) {
- 		/* Set return value */
--		move_reg(ctx, LOONGARCH_GPR_A0, regmap[BPF_REG_0]);
-+		emit_insn(ctx, addiw, LOONGARCH_GPR_A0, regmap[BPF_REG_0], 0);
- 		/* Return to the caller */
- 		emit_insn(ctx, jirl, LOONGARCH_GPR_RA, LOONGARCH_GPR_ZERO, 0);
- 	} else {
+diff --git a/drivers/power/supply/power_supply_core.c b/drivers/power/supply/power_supply_core.c
+index ac88c9636b663..13801dfa5c385 100644
+--- a/drivers/power/supply/power_supply_core.c
++++ b/drivers/power/supply/power_supply_core.c
+@@ -480,8 +480,6 @@ EXPORT_SYMBOL_GPL(power_supply_get_by_name);
+  */
+ void power_supply_put(struct power_supply *psy)
+ {
+-	might_sleep();
+-
+ 	atomic_dec(&psy->use_cnt);
+ 	put_device(&psy->dev);
+ }
 -- 
 2.43.0
 
