@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98F2E13CA93;
-	Thu, 12 Dec 2024 17:14:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6A6453365;
+	Thu, 12 Dec 2024 17:14:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734023665; cv=none; b=XJ84D/EDwima2FitUmIr7/F1VpLQiXZ1e0ebtLegocAUzgLNZHFD1r9/tZeIotwFOQn5PpEbBcUHHPsyRnIUxlBV49WekA2YL1KfSZShp2R5EjXRXKptoxgWWOS1f3M5294l0V+qyhIuo/lKalFeQHkkFnB75srsh3AoPbraRf4=
+	t=1734023668; cv=none; b=feyCIA/Dxw9hpioEQolIoO/9j7tSUajAgw8RWqzuKgNKq7ol6sttI2Z9iPw0+4UGj35vX4Y2+/zYMnLWX8sNgqhmloz508rierlDPUH60uWmmcCwPO7U7YKBpIrDhEeXd7763++8UBSZuejMa8ibSXOYDgV1eVPRvFMwXjnjteY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734023665; c=relaxed/simple;
-	bh=ziKYWeM8ApyoUDkYRBy+Uirp1QE3puBbVdNfCSMAzLM=;
+	s=arc-20240116; t=1734023668; c=relaxed/simple;
+	bh=2ZA4HxqYfmH0GetntLTnsvl1YV6yT84qP3T+rBW1L08=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=aAauHGDOuswVpJMF6Dbt1Qs3hcoCJygUdobJX8fYNxwim7cKbRHTDjswJEBbH5rcjseqAtLBX0nr2v0Lwtk7NrTTUPTwficBE3GLItyLShtvEASoiu+GVQFrTNTOZp7JOT5S9KDsGvQINUVQ8VqUGX/z3JujVh394yb0xJR7Wn0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xHlv3Ot9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SueyYcLeB1v6xlG1U9xTZ9GZ0GCXyNF2Z9hOOK/AVZRWB0ErB8ek+0FTOazfL7228t98sIrwCyZYIFPIH0RDHqoyItubEN0Pd+ayRhrE9Eay68CXnYk7rl1bSgcJNAathXvJzvlXe4t795EHJx+UGQb6uYxj7Gn8RQK5L6HUdL0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1uapfokV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xHlv3Ot9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EFA8C4CECE;
-	Thu, 12 Dec 2024 17:14:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1uapfokV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25F16C4CECE;
+	Thu, 12 Dec 2024 17:14:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734023665;
-	bh=ziKYWeM8ApyoUDkYRBy+Uirp1QE3puBbVdNfCSMAzLM=;
+	s=korg; t=1734023668;
+	bh=2ZA4HxqYfmH0GetntLTnsvl1YV6yT84qP3T+rBW1L08=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xHlv3Ot9TUfD/VYr7V6W86shUb8X+20sUyTG+YtOtNqjVhNxrtuTjUIUdv9OTn4/a
-	 gKfEA15DRFhUJkaZd29YLEzERBOXgu5R3xJkO0UJ1iGPDRhZhiqdzMyYrs75jI3n8A
-	 AqJQm0btrpvTndZnorwFmbbZKCCvaKLrxVBXTmEM=
+	b=1uapfokVsOPG03AnnQQA0zEpt9OptQtQ5C9i3o7UnZq4CrYf9e0M7whWM3YvA8qTh
+	 pHQwQL/75NqCvZe2Y6V3ph3kMFN+jkWCRq5nznaHrV2JFIV4zwOICrq2SDEcQWMic9
+	 2reXfuLrZ8IvxFfXMVwlmZODFki44n+Zegka9uvU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Beno=C3=AEt=20Monin?= <benoit.monin@gmx.fr>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Charles Han <hanchunchao@inspur.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 041/459] net: usb: qmi_wwan: add Quectel RG650V
-Date: Thu, 12 Dec 2024 15:56:19 +0100
-Message-ID: <20241212144255.150597963@linuxfoundation.org>
+Subject: [PATCH 5.10 042/459] soc: qcom: Add check devm_kasprintf() returned value
+Date: Thu, 12 Dec 2024 15:56:20 +0100
+Message-ID: <20241212144255.190110083@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144253.511169641@linuxfoundation.org>
 References: <20241212144253.511169641@linuxfoundation.org>
@@ -46,67 +45,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Benoît Monin <benoit.monin@gmx.fr>
+From: Charles Han <hanchunchao@inspur.com>
 
-[ Upstream commit 6b3f18a76be6bbd237c7594cf0bf2912b68084fe ]
+[ Upstream commit e694d2b5c58ba2d1e995d068707c8d966e7f5f2a ]
 
-Add support for Quectel RG650V which is based on Qualcomm SDX65 chip.
-The composition is DIAG / NMEA / AT / AT / QMI.
+devm_kasprintf() can return a NULL pointer on failure but this
+returned value in qcom_socinfo_probe() is not checked.
 
-T: Bus=02 Lev=01 Prnt=01 Port=03 Cnt=01 Dev#=  4 Spd=5000 MxCh= 0
-D: Ver= 3.20 Cls=00(>ifc ) Sub=00 Prot=00 MxPS= 9 #Cfgs=  1
-P: Vendor=2c7c ProdID=0122 Rev=05.15
-S: Manufacturer=Quectel
-S: Product=RG650V-EU
-S: SerialNumber=xxxxxxx
-C: #Ifs= 5 Cfg#= 1 Atr=a0 MxPwr=896mA
-I: If#= 0 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
-E: Ad=01(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E: Ad=81(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-I: If#= 1 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E: Ad=02(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E: Ad=82(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-I: If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E: Ad=03(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E: Ad=83(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E: Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=9ms
-I: If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E: Ad=04(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E: Ad=85(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E: Ad=86(I) Atr=03(Int.) MxPS=  10 Ivl=9ms
-I: If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=ff Driver=qmi_wwan
-E: Ad=05(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E: Ad=87(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E: Ad=88(I) Atr=03(Int.) MxPS=   8 Ivl=9ms
-
-Signed-off-by: Benoît Monin <benoit.monin@gmx.fr>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20241024151113.53203-1-benoit.monin@gmx.fr
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Charles Han <hanchunchao@inspur.com>
+Link: https://lore.kernel.org/r/20240929072349.202520-1-hanchunchao@inspur.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/qmi_wwan.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/soc/qcom/socinfo.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/usb/qmi_wwan.c b/drivers/net/usb/qmi_wwan.c
-index 3b1076eea6702..a6953ac95eec7 100644
---- a/drivers/net/usb/qmi_wwan.c
-+++ b/drivers/net/usb/qmi_wwan.c
-@@ -1020,6 +1020,7 @@ static const struct usb_device_id products[] = {
- 		USB_DEVICE_AND_INTERFACE_INFO(0x03f0, 0x581d, USB_CLASS_VENDOR_SPEC, 1, 7),
- 		.driver_info = (unsigned long)&qmi_wwan_info,
- 	},
-+	{QMI_MATCH_FF_FF_FF(0x2c7c, 0x0122)},	/* Quectel RG650V */
- 	{QMI_MATCH_FF_FF_FF(0x2c7c, 0x0125)},	/* Quectel EC25, EC20 R2.0  Mini PCIe */
- 	{QMI_MATCH_FF_FF_FF(0x2c7c, 0x0306)},	/* Quectel EP06/EG06/EM06 */
- 	{QMI_MATCH_FF_FF_FF(0x2c7c, 0x0512)},	/* Quectel EG12/EM12 */
+diff --git a/drivers/soc/qcom/socinfo.c b/drivers/soc/qcom/socinfo.c
+index 60c82dcaa8d1d..7bb3543e42e59 100644
+--- a/drivers/soc/qcom/socinfo.c
++++ b/drivers/soc/qcom/socinfo.c
+@@ -507,10 +507,16 @@ static int qcom_socinfo_probe(struct platform_device *pdev)
+ 	qs->attr.revision = devm_kasprintf(&pdev->dev, GFP_KERNEL, "%u.%u",
+ 					   SOCINFO_MAJOR(le32_to_cpu(info->ver)),
+ 					   SOCINFO_MINOR(le32_to_cpu(info->ver)));
+-	if (offsetof(struct socinfo, serial_num) <= item_size)
++	if (!qs->attr.soc_id || qs->attr.revision)
++		return -ENOMEM;
++
++	if (offsetof(struct socinfo, serial_num) <= item_size) {
+ 		qs->attr.serial_number = devm_kasprintf(&pdev->dev, GFP_KERNEL,
+ 							"%u",
+ 							le32_to_cpu(info->serial_num));
++		if (!qs->attr.serial_number)
++			return -ENOMEM;
++	}
+ 
+ 	qs->soc_dev = soc_device_register(&qs->attr);
+ 	if (IS_ERR(qs->soc_dev))
 -- 
 2.43.0
 
