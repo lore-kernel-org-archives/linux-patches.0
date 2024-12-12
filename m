@@ -1,42 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 556CF22968C;
-	Thu, 12 Dec 2024 16:55:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25F452288F5;
+	Thu, 12 Dec 2024 16:55:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734022549; cv=none; b=rSI9W5YyAKJx7wzgBFp090aRP3gAJlM6+c1JjMV2AppsXMxtnGw9NPkqElh2vxXXytgk/cfLeuWLg6QotxzNOQzMXRQXCUWCMFrMmVQ4X7YivHKibTS3zIPS7CK6xOYwvObPmrnNd42yBLpW9yTfn9P92UpYvcRkECBs6mVdjEE=
+	t=1734022553; cv=none; b=IRYlODVZLK9uCpO6yWAxMTB+lmDd7OmCCXv/+D88FI/VGTNCIO+RmwLpDKVID2St0S5DWm5TZBkmHGbJp8tcruXYONct/4oqE2pzzmWi3nomhJYhd4e057LFKxq0+JdD3jBFnizMSSpPb1dTG6ulrjzWhjrTGyMW+9zu9H47jT4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734022549; c=relaxed/simple;
-	bh=EuF73JpuGa4joHiIDPtq+kIJCbgzBVIHkVkJLZtsLD8=;
+	s=arc-20240116; t=1734022553; c=relaxed/simple;
+	bh=i0ARyF5ushn4AXN0OZ4tCGXhN5zWJJ/MxN/k2lVwEKw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kvfqiWueBEf76GRThB7r1VzYYjtSDxqt+MLxEzlv8+gVYM5CvaHxd2VxRleqLstetg3tCGMCConexUq/xZdmhlNbjgaQW6wtvByNPbN7IZRcfeIIE26F9nIVeg5WqwjQKF37YTwJzYrCwajCXF3xXHcHL6yvOArmJ6sP8zlCHsQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cdtjMhCC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZAeJEjqkdebXXhuPHMNKn167u8qJzf+uMD9s/eth9aSCj2jLzW5ktmNVGhV3qfkHty4RaNpOLmpMQpgCdXMZ9lecc64F+Il4DYwMC1pCsYR/lu6WWrcAqjJxIk8CgZ1kj/KE4lYc36S83f8lK/x8OOgYhlFe1azd4wyFskKa7aw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1j9VmlIt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cdtjMhCC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B544CC4CECE;
-	Thu, 12 Dec 2024 16:55:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1j9VmlIt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A98AC4CED4;
+	Thu, 12 Dec 2024 16:55:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734022549;
-	bh=EuF73JpuGa4joHiIDPtq+kIJCbgzBVIHkVkJLZtsLD8=;
+	s=korg; t=1734022553;
+	bh=i0ARyF5ushn4AXN0OZ4tCGXhN5zWJJ/MxN/k2lVwEKw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cdtjMhCCF73vpU8aR8OacwH3PgbZ9Zk6JLfjowSQ5WGtOKyicTtcqQAlK1xE1XSoG
-	 5Al6QjEIqa0lihecLSjMLlrJw+artEYiZv4IE/1xObq5pggThdzpaqi4BbvEUok6ac
-	 Cx108lZeglBHUFYJfBpte58RKQ7r+gtccTg2f6lo=
+	b=1j9VmlItcN8UvFMNC2jfGOT7anobyA1I/gDo2+slfELPcdl1QrF9z+SjcouvdE4cY
+	 YC1L0AuAPruwCKXA3NEw1GRU1prFBc/dZYNjYX8NDI4TADetWCxlKSoyIfUIBuJZ/E
+	 dwjqzrS7Z7CTziHBBy/j4N9ZN2FtqO5VblZNnj8M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org,
-	Greg Ungerer <gerg@linux-m68k.org>,
-	Geert Uytterhoeven <geert@linux-m68k.org>
+To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	linux-m68k@lists.linux-m68k.org,
-	linux-kernel@vger.kernel.org,
-	Antonio Quartulli <antonio@mandelbit.com>,
-	Greg Ungerer <gerg@kernel.org>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Eric Sandeen <sandeen@redhat.com>,
+	David Howells <dhowells@redhat.com>,
+	Al Viro <viro@zeniv.linux.org.uk>,
+	Christian Brauner <brauner@kernel.org>,
+	Jan Kara <jack@suse.cz>,
+	Jonathan Corbet <corbet@lwn.net>,
+	linux-doc@vger.kernel.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 254/565] m68k: coldfire/device.c: only build FEC when HW macros are defined
-Date: Thu, 12 Dec 2024 15:57:29 +0100
-Message-ID: <20241212144321.515709571@linuxfoundation.org>
+Subject: [PATCH 5.15 272/565] fs_parser: update mount_api doc to match function signature
+Date: Thu, 12 Dec 2024 15:57:47 +0100
+Message-ID: <20241212144322.214671679@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144311.432886635@linuxfoundation.org>
 References: <20241212144311.432886635@linuxfoundation.org>
@@ -55,75 +57,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Antonio Quartulli <antonio@mandelbit.com>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit 63a24cf8cc330e5a68ebd2e20ae200096974c475 ]
+[ Upstream commit c66f759832a83cb273ba5a55c66dcc99384efa74 ]
 
-When CONFIG_FEC is set (due to COMPILE_TEST) along with
-CONFIG_M54xx, coldfire/device.c has compile errors due to
-missing MCFEC_* and MCF_IRQ_FEC_* symbols.
+Add the missing 'name' parameter to the mount_api documentation for
+fs_validate_description().
 
-Make the whole FEC blocks dependent on having the HW macros
-defined, rather than on CONFIG_FEC itself.
-
-This fix is very similar to commit e6e1e7b19fa1 ("m68k: coldfire/device.c: only build for MCF_EDMA when h/w macros are defined")
-
-Fixes: b7ce7f0d0efc ("m68knommu: merge common ColdFire FEC platform setup code")
-To: Greg Ungerer <gerg@linux-m68k.org>
-To: Geert Uytterhoeven <geert@linux-m68k.org>
-Cc: linux-m68k@lists.linux-m68k.org
-Cc: linux-kernel@vger.kernel.org
-Signed-off-by: Antonio Quartulli <antonio@mandelbit.com>
-Signed-off-by: Greg Ungerer <gerg@kernel.org>
+Fixes: 96cafb9ccb15 ("fs_parser: remove fs_parameter_description name field")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Link: https://lore.kernel.org/r/20241125215021.231758-1-rdunlap@infradead.org
+Cc: Eric Sandeen <sandeen@redhat.com>
+Cc: David Howells <dhowells@redhat.com>
+Cc: Al Viro <viro@zeniv.linux.org.uk>
+Cc: Christian Brauner <brauner@kernel.org>
+Cc: Jan Kara <jack@suse.cz>
+Cc: Jonathan Corbet <corbet@lwn.net>
+Cc: linux-doc@vger.kernel.org
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/m68k/coldfire/device.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ Documentation/filesystems/mount_api.rst | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/m68k/coldfire/device.c b/arch/m68k/coldfire/device.c
-index 7dab46728aeda..b6958ec2a220c 100644
---- a/arch/m68k/coldfire/device.c
-+++ b/arch/m68k/coldfire/device.c
-@@ -93,7 +93,7 @@ static struct platform_device mcf_uart = {
- 	.dev.platform_data	= mcf_uart_platform_data,
- };
+diff --git a/Documentation/filesystems/mount_api.rst b/Documentation/filesystems/mount_api.rst
+index eb358a00be279..12e30da6a511c 100644
+--- a/Documentation/filesystems/mount_api.rst
++++ b/Documentation/filesystems/mount_api.rst
+@@ -778,7 +778,8 @@ process the parameters it is given.
  
--#if IS_ENABLED(CONFIG_FEC)
-+#ifdef MCFFEC_BASE0
+    * ::
  
- #ifdef CONFIG_M5441x
- #define FEC_NAME	"enet-fec"
-@@ -145,6 +145,7 @@ static struct platform_device mcf_fec0 = {
- 		.platform_data		= FEC_PDATA,
- 	}
- };
-+#endif /* MCFFEC_BASE0 */
+-       bool fs_validate_description(const struct fs_parameter_description *desc);
++       bool fs_validate_description(const char *name,
++                                    const struct fs_parameter_description *desc);
  
- #ifdef MCFFEC_BASE1
- static struct resource mcf_fec1_resources[] = {
-@@ -182,7 +183,6 @@ static struct platform_device mcf_fec1 = {
- 	}
- };
- #endif /* MCFFEC_BASE1 */
--#endif /* CONFIG_FEC */
- 
- #if IS_ENABLED(CONFIG_SPI_COLDFIRE_QSPI)
- /*
-@@ -624,12 +624,12 @@ static struct platform_device mcf_flexcan0 = {
- 
- static struct platform_device *mcf_devices[] __initdata = {
- 	&mcf_uart,
--#if IS_ENABLED(CONFIG_FEC)
-+#ifdef MCFFEC_BASE0
- 	&mcf_fec0,
-+#endif
- #ifdef MCFFEC_BASE1
- 	&mcf_fec1,
- #endif
--#endif
- #if IS_ENABLED(CONFIG_SPI_COLDFIRE_QSPI)
- 	&mcf_qspi,
- #endif
+      This performs some validation checks on a parameter description.  It
+      returns true if the description is good and false if it is not.  It will
 -- 
 2.43.0
 
