@@ -1,39 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DB232210DB;
-	Thu, 12 Dec 2024 17:14:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAEED22332E;
+	Thu, 12 Dec 2024 17:14:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734023692; cv=none; b=TlLGwKlZDOl32XEOeo0+8UZAVFMFC3d5rLYAOV45vWoSjdwslxQHqEEJp9z/zUxel/VI/Tt7maiG2y7vt/eGCnhxDzToXofUmC7U5sUMysFhF8Kpb1jGM8aLiKtYhAXBgMyKvXEatrYT3mW547X1AZ5byO9oULMIafZzxJrYOA8=
+	t=1734023695; cv=none; b=A7xNHUFLwedaq+Rv6FH1dAcuA5ZPqfk/FJb3fDgGQFYRbXpGF3nAUO0GHziIzBNzsv2JESpzFE1wL8lMwagc8sC5uthSfbaPa32bl1ECsMf/EnB2gSOQCqoBo8eBs0i/w9HX24WdySRzYSToLy8fkc4woMgP20S2iBcpCyx0XHE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734023692; c=relaxed/simple;
-	bh=qnLBIjDWTo7FIX2Awvw/9LHnSfiIqN87qnBS3pUaGqo=;
+	s=arc-20240116; t=1734023695; c=relaxed/simple;
+	bh=Ygk9ijJtZxCCDHEvLRTBaMM0XwsyRSv9qq2DTG7qHcw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LFFNjoTg0eUrX/tpT78i4MZO+LtuDEaA6KnRXxU4iy6rqfTekGXED330WJemtO8Nn572HZOYeb2mSwhsq1yxZOboi/Y8rrm9h8S9rbZyfjSQyzhiwDHRplPaLmy8BQx29Os+7CNb+XUhFe20ASwlKxgK7C+n3x0eWv56lCFYMGo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WRbctKQS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PMHG6GsMCnhM2CUDGI8xr6D7nl/I2t9QC81V4KHJNPBnC63LTF0xqfusNx+BF20eRiUH5biV9vVlCAKE3D0LDaClooGFQwvEr6nkdAr/o5NJBLo513f3UY6wAsjfXbEw6nVJa0OS6Yw6/v7Cyy13pNnpC9lVA8jB1eRPquUklGc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=npwn1hDx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WRbctKQS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C57DCC4CECE;
-	Thu, 12 Dec 2024 17:14:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="npwn1hDx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4E58C4CECE;
+	Thu, 12 Dec 2024 17:14:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734023692;
-	bh=qnLBIjDWTo7FIX2Awvw/9LHnSfiIqN87qnBS3pUaGqo=;
+	s=korg; t=1734023695;
+	bh=Ygk9ijJtZxCCDHEvLRTBaMM0XwsyRSv9qq2DTG7qHcw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WRbctKQSZm5Osg7Hag5JPoPpTS/GUasZ0I4pGn1XA48WnC8xmv0c424bFUI24vnqs
-	 NIgHO8f2/oU9NFLXz/8g+8N4bp9MxlVe/uXS7TnFJbCkgNY3cWaPUJd6YF+VCqk4bo
-	 4xZqVbnQ2vEas5FMXmHkz5RRZb9z6RUt027Bh7T8=
+	b=npwn1hDxw4SkrS+mNCGtnYzUfdKwm1OsneWVBanIoKsvpgS/ozrBwUX57OMT4zJGB
+	 YdfBNx8S7SmCmPf6AP+MxMGPljAcwuGlCh597f+IeVOYoB3eVUnVwYanjVC782SiBi
+	 9FMK5O+MGyaDmMcVYYF38iPfs0+ZAzhEs3UmbyzY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
-	David Ahern <dsahern@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Neeraj Upadhyay <quic_neeraju@quicinc.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Martin KaFai Lau <kafai@fb.com>,
+	KP Singh <kpsingh@kernel.org>,
+	Krister Johansen <kjlx@templeofstupid.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 049/459] ipmr: Fix access to mfc_cache_list without lock held
-Date: Thu, 12 Dec 2024 15:56:27 +0100
-Message-ID: <20241212144255.460133995@linuxfoundation.org>
+Subject: [PATCH 5.10 050/459] rcu-tasks: Idle tasks on offline CPUs are in quiescent states
+Date: Thu, 12 Dec 2024 15:56:28 +0100
+Message-ID: <20241212144255.498259854@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144253.511169641@linuxfoundation.org>
 References: <20241212144253.511169641@linuxfoundation.org>
@@ -52,74 +57,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Paul E. McKenney <paulmck@kernel.org>
 
-[ Upstream commit e28acc9c1ccfcb24c08e020828f69d0a915b06ae ]
+commit 5c9a9ca44fda41c5e82f50efced5297a9c19760d upstream.
 
-Accessing `mr_table->mfc_cache_list` is protected by an RCU lock. In the
-following code flow, the RCU read lock is not held, causing the
-following error when `RCU_PROVE` is not held. The same problem might
-show up in the IPv6 code path.
+Any idle task corresponding to an offline CPU is in an RCU Tasks Trace
+quiescent state.  This commit causes rcu_tasks_trace_postscan() to ignore
+idle tasks for offline CPUs, which it can do safely due to CPU-hotplug
+operations being disabled.
 
-	6.12.0-rc5-kbuilder-01145-gbac17284bdcb #33 Tainted: G            E    N
-	-----------------------------
-	net/ipv4/ipmr_base.c:313 RCU-list traversed in non-reader section!!
-
-	rcu_scheduler_active = 2, debug_locks = 1
-		   2 locks held by RetransmitAggre/3519:
-		    #0: ffff88816188c6c0 (nlk_cb_mutex-ROUTE){+.+.}-{3:3}, at: __netlink_dump_start+0x8a/0x290
-		    #1: ffffffff83fcf7a8 (rtnl_mutex){+.+.}-{3:3}, at: rtnl_dumpit+0x6b/0x90
-
-	stack backtrace:
-		    lockdep_rcu_suspicious
-		    mr_table_dump
-		    ipmr_rtm_dumproute
-		    rtnl_dump_all
-		    rtnl_dumpit
-		    netlink_dump
-		    __netlink_dump_start
-		    rtnetlink_rcv_msg
-		    netlink_rcv_skb
-		    netlink_unicast
-		    netlink_sendmsg
-
-This is not a problem per see, since the RTNL lock is held here, so, it
-is safe to iterate in the list without the RCU read lock, as suggested
-by Eric.
-
-To alleviate the concern, modify the code to use
-list_for_each_entry_rcu() with the RTNL-held argument.
-
-The annotation will raise an error only if RTNL or RCU read lock are
-missing during iteration, signaling a legitimate problem, otherwise it
-will avoid this false positive.
-
-This will solve the IPv6 case as well, since ip6mr_rtm_dumproute() calls
-this function as well.
-
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://patch.msgid.link/20241108-ipmr_rcu-v2-1-c718998e209b@debian.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
+Cc: Neeraj Upadhyay <quic_neeraju@quicinc.com>
+Cc: Eric Dumazet <edumazet@google.com>
+Cc: Alexei Starovoitov <ast@kernel.org>
+Cc: Andrii Nakryiko <andrii@kernel.org>
+Cc: Martin KaFai Lau <kafai@fb.com>
+Cc: KP Singh <kpsingh@kernel.org>
+Signed-off-by: Krister Johansen <kjlx@templeofstupid.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/ipmr_base.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ kernel/rcu/tasks.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/ipv4/ipmr_base.c b/net/ipv4/ipmr_base.c
-index aa8738a91210a..c45cb7cb57590 100644
---- a/net/ipv4/ipmr_base.c
-+++ b/net/ipv4/ipmr_base.c
-@@ -301,7 +301,8 @@ int mr_table_dump(struct mr_table *mrt, struct sk_buff *skb,
- 	if (filter->filter_set)
- 		flags |= NLM_F_DUMP_FILTERED;
+diff --git a/kernel/rcu/tasks.h b/kernel/rcu/tasks.h
+index bede3a4f108e3..ea45a2d53a99e 100644
+--- a/kernel/rcu/tasks.h
++++ b/kernel/rcu/tasks.h
+@@ -1007,7 +1007,7 @@ static void rcu_tasks_trace_postscan(struct list_head *hop)
+ {
+ 	int cpu;
  
--	list_for_each_entry_rcu(mfc, &mrt->mfc_cache_list, list) {
-+	list_for_each_entry_rcu(mfc, &mrt->mfc_cache_list, list,
-+				lockdep_rtnl_is_held()) {
- 		if (e < s_e)
- 			goto next_entry;
- 		if (filter->dev &&
+-	for_each_possible_cpu(cpu)
++	for_each_online_cpu(cpu)
+ 		rcu_tasks_trace_pertask(idle_task(cpu), hop);
+ 
+ 	// Re-enable CPU hotplug now that the tasklist scan has completed.
 -- 
 2.43.0
 
