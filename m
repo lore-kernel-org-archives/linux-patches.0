@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 256C42253FD;
-	Thu, 12 Dec 2024 17:44:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 020AF2253FD;
+	Thu, 12 Dec 2024 17:44:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734025456; cv=none; b=lNRLDcU3DKqFUvoujnJvYo/Eqa0YH8ji/jbxAb8Bpra2L/KQnqziM+bh7ZNWbwWlonElZAgy7vfhnI3SoaL2knkUQEFE60lODw8o0BzV3KGpe81u6+QswKi7dur18VHGe+53H2deNWbP0AV/U9lUgJRI8DFyajkQ7Tt2lquulDM=
+	t=1734025459; cv=none; b=C47qyygtA/btfqI3zNgLnDpvkwIn7TD8g5n/cdKsDjlB54vW44CfMUWz/l/uEW0iJbWwg0At4esALyki+NGfEwRukSgnFXyBXbh1Ed6m2uUhgMU8pfcIlbZSJEKLljjfIVX7oQ110xp1oENWNLpOjGy0wam7Y5s++cpA+TV1I2g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734025456; c=relaxed/simple;
-	bh=BUbDxmIS+3+LVDNt4gXFdc162Im7Vb/lYJE8YBnUZLc=;
+	s=arc-20240116; t=1734025459; c=relaxed/simple;
+	bh=D7XeO9Y1Y/c08XLLanwTaLHAlyg9hVFVUxB+ymapqnU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=En2hHRfReplPgZeKQviIbBwsbnyDG5X18C8o/UoYx2P9yh5YXZbBoNcRzOhQF3yca9P8kFbkfii6WxHBpOFxa+STAR8BwPn2zJI8K2e2MUfbAuYElnDnMUvm49mzLwmOxiMY/jzEx98vGOtPAUSfr2UTPrrwhEtN31rajlmN1uY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zz1lxiFJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=iU3X5rPaoaWPPtQDium+5zn0FusT7oBfZ4g2LOy8qWuA2Rlx+kd7q3dyHqQ3ur/Do4UOpS6HANuTQExTR2FUGS2GLncnAZ2EP0EQkXjash4DU7cq6iGvGKIt+U+E59i4zB1IcMsAbsDwscHQd60b5qwrOwx8bvDAW1Bi9nxm6wY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vYz+YZl4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zz1lxiFJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98224C4CECE;
-	Thu, 12 Dec 2024 17:44:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vYz+YZl4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 824E4C4CED0;
+	Thu, 12 Dec 2024 17:44:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734025456;
-	bh=BUbDxmIS+3+LVDNt4gXFdc162Im7Vb/lYJE8YBnUZLc=;
+	s=korg; t=1734025458;
+	bh=D7XeO9Y1Y/c08XLLanwTaLHAlyg9hVFVUxB+ymapqnU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zz1lxiFJS/1T2TT99lAGKqjI0uTgeHC66Kpee9RAyhndcYJo4MPsODY5kzvvGliJx
-	 PTw0JLD6Ynz5laq0HRv5L6d3gGqpOAjPsDiRMttQDZCjGlCtLe2G0DTFoqYOsznUW2
-	 I7LlkF9ifyLOoY78Q6I+ZLQFa24Qb1IxH0KMR698=
+	b=vYz+YZl4EnVAisRXUwRYA9uMp80clYjgG9gGYgWqLKy7jyoNx/tSFO97fLpGluJ/e
+	 S3VdbeOnb6sGj7huFuwJrJy2EJPXkyIcotdpvIdHEiiIuMBkBPofeIjzW7LEYC920Z
+	 3lVSsf/pzi4r6f1rHZxNao8n6NNX+Ro3y/AY6tAM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manikanta Mylavarapu <quic_mmanikan@quicinc.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 5.4 144/321] soc: qcom: socinfo: fix revision check in qcom_socinfo_probe()
-Date: Thu, 12 Dec 2024 16:01:02 +0100
-Message-ID: <20241212144235.668512506@linuxfoundation.org>
+	=?UTF-8?q?Beno=C3=AEt=20Sevens?= <bsevens@google.com>,
+	stable@kernel.org,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 5.4 145/321] ALSA: usb-audio: Fix potential out-of-bound accesses for Extigy and Mbox devices
+Date: Thu, 12 Dec 2024 16:01:03 +0100
+Message-ID: <20241212144235.708094475@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144229.291682835@linuxfoundation.org>
 References: <20241212144229.291682835@linuxfoundation.org>
@@ -45,48 +45,92 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
+From: Benoît Sevens <bsevens@google.com>
 
-commit 128fdbf36cddc2a901c4889ba1c89fa9f2643f2c upstream.
+commit b909df18ce2a998afef81d58bbd1a05dc0788c40 upstream.
 
-In success case, the revision holds a non-null pointer. The current
-logic incorrectly returns an error for a non-null pointer, whereas
-it should return an error for a null pointer.
+A bogus device can provide a bNumConfigurations value that exceeds the
+initial value used in usb_get_configuration for allocating dev->config.
 
-The socinfo driver for IPQ9574 and IPQ5332 is currently broken,
-resulting in the following error message
-qcom-socinfo qcom-socinfo: probe with driver qcom-socinfo failed with
-error -12
+This can lead to out-of-bounds accesses later, e.g. in
+usb_destroy_configuration.
 
-Add a null check for the revision to ensure it returns an error only in
-failure case (null pointer).
-
-Fixes: e694d2b5c58b ("soc: qcom: Add check devm_kasprintf() returned value")
-Signed-off-by: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20241016144852.2888679-1-quic_mmanikan@quicinc.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Benoît Sevens <bsevens@google.com>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable@kernel.org
+Link: https://patch.msgid.link/20241120124144.3814457-1-bsevens@google.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/soc/qcom/socinfo.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/usb/quirks.c |   19 ++++++++++++++-----
+ 1 file changed, 14 insertions(+), 5 deletions(-)
 
---- a/drivers/soc/qcom/socinfo.c
-+++ b/drivers/soc/qcom/socinfo.c
-@@ -433,7 +433,7 @@ static int qcom_socinfo_probe(struct pla
- 	qs->attr.revision = devm_kasprintf(&pdev->dev, GFP_KERNEL, "%u.%u",
- 					   SOCINFO_MAJOR(le32_to_cpu(info->ver)),
- 					   SOCINFO_MINOR(le32_to_cpu(info->ver)));
--	if (!qs->attr.soc_id || qs->attr.revision)
-+	if (!qs->attr.soc_id || !qs->attr.revision)
- 		return -ENOMEM;
+--- a/sound/usb/quirks.c
++++ b/sound/usb/quirks.c
+@@ -585,6 +585,7 @@ int snd_usb_create_quirk(struct snd_usb_
+ static int snd_usb_extigy_boot_quirk(struct usb_device *dev, struct usb_interface *intf)
+ {
+ 	struct usb_host_config *config = dev->actconfig;
++	struct usb_device_descriptor new_device_descriptor;
+ 	int err;
  
- 	if (offsetof(struct socinfo, serial_num) <= item_size) {
+ 	if (le16_to_cpu(get_cfg_desc(config)->wTotalLength) == EXTIGY_FIRMWARE_SIZE_OLD ||
+@@ -596,10 +597,14 @@ static int snd_usb_extigy_boot_quirk(str
+ 		if (err < 0)
+ 			dev_dbg(&dev->dev, "error sending boot message: %d\n", err);
+ 		err = usb_get_descriptor(dev, USB_DT_DEVICE, 0,
+-				&dev->descriptor, sizeof(dev->descriptor));
+-		config = dev->actconfig;
++				&new_device_descriptor, sizeof(new_device_descriptor));
+ 		if (err < 0)
+ 			dev_dbg(&dev->dev, "error usb_get_descriptor: %d\n", err);
++		if (new_device_descriptor.bNumConfigurations > dev->descriptor.bNumConfigurations)
++			dev_dbg(&dev->dev, "error too large bNumConfigurations: %d\n",
++				new_device_descriptor.bNumConfigurations);
++		else
++			memcpy(&dev->descriptor, &new_device_descriptor, sizeof(dev->descriptor));
+ 		err = usb_reset_configuration(dev);
+ 		if (err < 0)
+ 			dev_dbg(&dev->dev, "error usb_reset_configuration: %d\n", err);
+@@ -933,6 +938,7 @@ static void mbox2_setup_48_24_magic(stru
+ static int snd_usb_mbox2_boot_quirk(struct usb_device *dev)
+ {
+ 	struct usb_host_config *config = dev->actconfig;
++	struct usb_device_descriptor new_device_descriptor;
+ 	int err;
+ 	u8 bootresponse[0x12];
+ 	int fwsize;
+@@ -968,10 +974,14 @@ static int snd_usb_mbox2_boot_quirk(stru
+ 	dev_dbg(&dev->dev, "device initialised!\n");
+ 
+ 	err = usb_get_descriptor(dev, USB_DT_DEVICE, 0,
+-		&dev->descriptor, sizeof(dev->descriptor));
+-	config = dev->actconfig;
++		&new_device_descriptor, sizeof(new_device_descriptor));
+ 	if (err < 0)
+ 		dev_dbg(&dev->dev, "error usb_get_descriptor: %d\n", err);
++	if (new_device_descriptor.bNumConfigurations > dev->descriptor.bNumConfigurations)
++		dev_dbg(&dev->dev, "error too large bNumConfigurations: %d\n",
++			new_device_descriptor.bNumConfigurations);
++	else
++		memcpy(&dev->descriptor, &new_device_descriptor, sizeof(dev->descriptor));
+ 
+ 	err = usb_reset_configuration(dev);
+ 	if (err < 0)
+@@ -1018,7 +1028,6 @@ static int snd_usb_axefx3_boot_quirk(str
+ 	return 0;
+ }
+ 
+-
+ #define MICROBOOK_BUF_SIZE 128
+ 
+ static int snd_usb_motu_microbookii_communicate(struct usb_device *dev, u8 *buf,
 
 
