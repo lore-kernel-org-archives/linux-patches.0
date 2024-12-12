@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19FB02156FF;
-	Thu, 12 Dec 2024 15:05:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A50ED2156FF;
+	Thu, 12 Dec 2024 15:05:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734015933; cv=none; b=T7yZmzHAnPvhN9IzpYLpn7BrhMABmM1EwSDn56BVS7ncaM1d7AoyvVztHm7yItqvHctSsA0zfjipsyFULgcPykck1+76WtvG3/N74m/kFCaaKQQmiPD2DQps5jDMhxKuladSDt/5WAvCQ+qE+eN4SVYP/csrbtytzADLfIuLUCE=
+	t=1734015936; cv=none; b=ooZlrLmhumhIRfziHUAwErEcWabat3zz+vP2NhWCWw/LM0Q2RXChk9oo+VcK2oDT7ggnzDPOPY31ET2pEnG+0Sk3BuYuzcfiaaaw/fVS1FeKilVmESKa1MGF4Z6hFo1J8lj7tJdqfdJ/b5lcmZilggHWEPdGtWCi+Xv0+qBnvWI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734015933; c=relaxed/simple;
-	bh=nXRya/TI5X2+IUdZX/pLc7cuTc6INtv/9sd04UQtv3o=;
+	s=arc-20240116; t=1734015936; c=relaxed/simple;
+	bh=qiQh5ahLbr8j8i5h66aj0rGgACw7p1+MLr0glwUDY68=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PnSR3m3q0GoLvoRgb26WFs3JUyowDxvywFbJlHEJJD8fSX2gq9fJxQzQCwJtw0GYzVqDayAemEDM8oaiS0s0y0bwDxF+G5/Be+aAuOaH5Znh3rXpsh65gntfpTpM5u6uYbT8i+Nyd+kLik9kNNkevyjjE7ADtjZzaj5BoAiC/8U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QfSEf3Pw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CbfMaSwRms1n34try6GQu1B7dVNw4oHy2VkFOvfk4cXVxJ4DSaLfsEgVSnRvv3QbZvPFl1/lqCGGyct2AhySfkeLP0sJFncVjZJZu/p6szOSCAFNxkl1DS6mkCwthkTpI6glSY44BzHMjtJBQGCPxdcy+vCP7upeWW/FufLbUWQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mIQ0lFRs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QfSEf3Pw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90305C4CECE;
-	Thu, 12 Dec 2024 15:05:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mIQ0lFRs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC784C4CECE;
+	Thu, 12 Dec 2024 15:05:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734015933;
-	bh=nXRya/TI5X2+IUdZX/pLc7cuTc6INtv/9sd04UQtv3o=;
+	s=korg; t=1734015936;
+	bh=qiQh5ahLbr8j8i5h66aj0rGgACw7p1+MLr0glwUDY68=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QfSEf3PwVL3p7PU1XJ95CITB5VWdM24cfM2a/vpDNqpEqncV5gri3Oa6kUaka5ZYw
-	 PwGfuK0bbl96SZOP2wHYs0JvC7fIid/uAXc+IJfj2JXX3i1mYuTrwQmo/2ta77ZMk9
-	 eNM+b5JEV1L6+Y2VlZOCxqRkq8a5XQAuB0yLwFmc=
+	b=mIQ0lFRsQmHlEM9Fs9pE7Egl7rAo9cgFWOT7YP/j9P9nq0mUjYzP4N3EB2EC5GRUP
+	 Z3V4mSb39/gcHxFQHfHR+NmpCoIWkHUk7Opl329yRTha8YHjTSTYNIyRnRDlR9aIrW
+	 pBXo/2ksP4qdNLnVJEKpqw6/lsmq4qNIPLo1nXp0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Luczaj <mhal@rbox.co>,
-	Stefano Garzarella <sgarzare@redhat.com>,
-	Luigi Leonardi <leonardi@redhat.com>,
+	Alasdair McWilliam <alasdair.mcwilliam@outlook.com>,
+	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
+	Larysa Zaremba <larysa.zaremba@intel.com>,
 	Alexei Starovoitov <ast@kernel.org>,
-	John Fastabend <john.fastabend@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 084/466] bpf, vsock: Invoke proto::close on close()
-Date: Thu, 12 Dec 2024 15:54:13 +0100
-Message-ID: <20241212144310.140287555@linuxfoundation.org>
+Subject: [PATCH 6.12 085/466] xsk: always clear DMA mapping information when unmapping the pool
+Date: Thu, 12 Dec 2024 15:54:14 +0100
+Message-ID: <20241212144310.178858681@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144306.641051666@linuxfoundation.org>
 References: <20241212144306.641051666@linuxfoundation.org>
@@ -54,138 +53,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Luczaj <mhal@rbox.co>
+From: Larysa Zaremba <larysa.zaremba@intel.com>
 
-[ Upstream commit 135ffc7becc82cfb84936ae133da7969220b43b2 ]
+[ Upstream commit ac9a48a6f1610b094072b815e884e1668aea4401 ]
 
-vsock defines a BPF callback to be invoked when close() is called. However,
-this callback is never actually executed. As a result, a closed vsock
-socket is not automatically removed from the sockmap/sockhash.
+When the umem is shared, the DMA mapping is also shared between the xsk
+pools, therefore it should stay valid as long as at least 1 user remains.
+However, the pool also keeps the copies of DMA-related information that are
+initialized in the same way in xp_init_dma_info(), but cleared by
+xp_dma_unmap() only for the last remaining pool, this causes the problems
+below.
 
-Introduce a dummy vsock_close() and make vsock_release() call proto::close.
+The first one is that the commit adbf5a42341f ("ice: remove af_xdp_zc_qps
+bitmap") relies on pool->dev to determine the presence of a ZC pool on a
+given queue, avoiding internal bookkeeping. This works perfectly fine if
+the UMEM is not shared, but reliably fails otherwise as stated in the
+linked report.
 
-Note: changes in __vsock_release() look messy, but it's only due to indent
-level reduction and variables xmas tree reorder.
+The second one is pool->dma_pages which is dynamically allocated and
+only freed in xp_dma_unmap(), this leads to a small memory leak. kmemleak
+does not catch it, but by printing the allocation results after terminating
+the userspace program it is possible to see that all addresses except the
+one belonging to the last detached pool are still accessible through the
+kmemleak dump functionality.
 
-Fixes: 634f1a7110b4 ("vsock: support sockmap")
-Signed-off-by: Michal Luczaj <mhal@rbox.co>
-Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
-Reviewed-by: Luigi Leonardi <leonardi@redhat.com>
-Link: https://lore.kernel.org/r/20241118-vsock-bpf-poll-close-v1-3-f1b9669cacdc@rbox.co
+Always clear the DMA mapping information from the pool and free
+pool->dma_pages when unmapping the pool, so that the only difference
+between results of the last remaining user's call and the ones before would
+be the destruction of the DMA mapping.
+
+Fixes: adbf5a42341f ("ice: remove af_xdp_zc_qps bitmap")
+Fixes: 921b68692abb ("xsk: Enable sharing of dma mappings")
+Reported-by: Alasdair McWilliam <alasdair.mcwilliam@outlook.com>
+Closes: https://lore.kernel.org/PA4P194MB10056F208AF221D043F57A3D86512@PA4P194MB1005.EURP194.PROD.OUTLOOK.COM
+Acked-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
+Signed-off-by: Larysa Zaremba <larysa.zaremba@intel.com>
+Link: https://lore.kernel.org/r/20241122112912.89881-1-larysa.zaremba@intel.com
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Acked-by: John Fastabend <john.fastabend@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/vmw_vsock/af_vsock.c | 67 ++++++++++++++++++++++++----------------
- 1 file changed, 40 insertions(+), 27 deletions(-)
+ net/xdp/xsk_buff_pool.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/net/vmw_vsock/af_vsock.c b/net/vmw_vsock/af_vsock.c
-index 919da8edd03c8..b52b798aa4c29 100644
---- a/net/vmw_vsock/af_vsock.c
-+++ b/net/vmw_vsock/af_vsock.c
-@@ -117,12 +117,14 @@
- static int __vsock_bind(struct sock *sk, struct sockaddr_vm *addr);
- static void vsock_sk_destruct(struct sock *sk);
- static int vsock_queue_rcv_skb(struct sock *sk, struct sk_buff *skb);
-+static void vsock_close(struct sock *sk, long timeout);
- 
- /* Protocol family. */
- struct proto vsock_proto = {
- 	.name = "AF_VSOCK",
- 	.owner = THIS_MODULE,
- 	.obj_size = sizeof(struct vsock_sock),
-+	.close = vsock_close,
- #ifdef CONFIG_BPF_SYSCALL
- 	.psock_update_sk_prot = vsock_bpf_update_proto,
- #endif
-@@ -797,39 +799,37 @@ static bool sock_type_connectible(u16 type)
- 
- static void __vsock_release(struct sock *sk, int level)
- {
--	if (sk) {
--		struct sock *pending;
--		struct vsock_sock *vsk;
--
--		vsk = vsock_sk(sk);
--		pending = NULL;	/* Compiler warning. */
-+	struct vsock_sock *vsk;
-+	struct sock *pending;
- 
--		/* When "level" is SINGLE_DEPTH_NESTING, use the nested
--		 * version to avoid the warning "possible recursive locking
--		 * detected". When "level" is 0, lock_sock_nested(sk, level)
--		 * is the same as lock_sock(sk).
--		 */
--		lock_sock_nested(sk, level);
-+	vsk = vsock_sk(sk);
-+	pending = NULL;	/* Compiler warning. */
- 
--		if (vsk->transport)
--			vsk->transport->release(vsk);
--		else if (sock_type_connectible(sk->sk_type))
--			vsock_remove_sock(vsk);
-+	/* When "level" is SINGLE_DEPTH_NESTING, use the nested
-+	 * version to avoid the warning "possible recursive locking
-+	 * detected". When "level" is 0, lock_sock_nested(sk, level)
-+	 * is the same as lock_sock(sk).
-+	 */
-+	lock_sock_nested(sk, level);
- 
--		sock_orphan(sk);
--		sk->sk_shutdown = SHUTDOWN_MASK;
-+	if (vsk->transport)
-+		vsk->transport->release(vsk);
-+	else if (sock_type_connectible(sk->sk_type))
-+		vsock_remove_sock(vsk);
- 
--		skb_queue_purge(&sk->sk_receive_queue);
-+	sock_orphan(sk);
-+	sk->sk_shutdown = SHUTDOWN_MASK;
- 
--		/* Clean up any sockets that never were accepted. */
--		while ((pending = vsock_dequeue_accept(sk)) != NULL) {
--			__vsock_release(pending, SINGLE_DEPTH_NESTING);
--			sock_put(pending);
--		}
-+	skb_queue_purge(&sk->sk_receive_queue);
- 
--		release_sock(sk);
--		sock_put(sk);
-+	/* Clean up any sockets that never were accepted. */
-+	while ((pending = vsock_dequeue_accept(sk)) != NULL) {
-+		__vsock_release(pending, SINGLE_DEPTH_NESTING);
-+		sock_put(pending);
+diff --git a/net/xdp/xsk_buff_pool.c b/net/xdp/xsk_buff_pool.c
+index 521a2938e50a1..0662d34b09ee7 100644
+--- a/net/xdp/xsk_buff_pool.c
++++ b/net/xdp/xsk_buff_pool.c
+@@ -387,10 +387,9 @@ void xp_dma_unmap(struct xsk_buff_pool *pool, unsigned long attrs)
+ 		return;
  	}
-+
-+	release_sock(sk);
-+	sock_put(sk);
- }
  
- static void vsock_sk_destruct(struct sock *sk)
-@@ -901,9 +901,22 @@ void vsock_data_ready(struct sock *sk)
- }
- EXPORT_SYMBOL_GPL(vsock_data_ready);
+-	if (!refcount_dec_and_test(&dma_map->users))
+-		return;
++	if (refcount_dec_and_test(&dma_map->users))
++		__xp_dma_unmap(dma_map, attrs);
  
-+/* Dummy callback required by sockmap.
-+ * See unconditional call of saved_close() in sock_map_close().
-+ */
-+static void vsock_close(struct sock *sk, long timeout)
-+{
-+}
-+
- static int vsock_release(struct socket *sock)
- {
--	__vsock_release(sock->sk, 0);
-+	struct sock *sk = sock->sk;
-+
-+	if (!sk)
-+		return 0;
-+
-+	sk->sk_prot->close(sk, 0);
-+	__vsock_release(sk, 0);
- 	sock->sk = NULL;
- 	sock->state = SS_FREE;
- 
+-	__xp_dma_unmap(dma_map, attrs);
+ 	kvfree(pool->dma_pages);
+ 	pool->dma_pages = NULL;
+ 	pool->dma_pages_cnt = 0;
 -- 
 2.43.0
 
