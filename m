@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 659E9217F28;
-	Thu, 12 Dec 2024 15:39:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE5AD6F2FE;
+	Thu, 12 Dec 2024 15:39:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734017979; cv=none; b=XD5tJbToxF646KUAcdTnkOZvTvUyg1iHq4CNHOkeI2FSVU97hzRAjj8z3CXOmt410D3UYGGhjtYBBK8G34WVaMFOAglCHgDC8auVrzTktMUj/VZimKt9xMO1uwa6dd7N+zHbS72xYXsET7GcR2bv7FitOEqxA4kk6chWEdpFgTg=
+	t=1734017983; cv=none; b=TYu0ArjspneIu0ssm+44hNcoTalXEA2jApRb/9STE7sdCDzg5aEjkpSgrNX4rCQjBknhKM+yvwlN5SzEItKCgGElzaQIRU7MItJGGJZL64Bqd3ZHrGZjgv03LsG/ppgIcYhOlWpOKcGVMQhI1AkOweeNGvQgEADHrpT2rOzcPW8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734017979; c=relaxed/simple;
-	bh=VnCIlSTInJPMQGbjzsWVwGMjxFsTjjLAlDm4VB9IiXw=;
+	s=arc-20240116; t=1734017983; c=relaxed/simple;
+	bh=aeQZywb7YmM9ED57E/T/KDNgJlwPyu0jH4zks9kRUr8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Oazg+4M83/pV/7YTiQwk38hfTiSc0Dbt45Y/nqa6Czde3HOFW/nr6aGhpxH9//iMQidFfIAYCHYxP5yAq790uQgrFCWMka936pcXUmx/HFJa5jUQr8mxHwiPH0NETVtOAiLMZPTGbobFy2o5vazYbAtSsAi6fG2s7N2P3639YLE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J7G1+Pec; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LwzDx7+Wes2Iq2YEF99UZGH9BD/dJ6Gn0R4IGSLwmhrF8sS+k5/sdqNm3w3t1sKVe7wgqxx8aWRox+HaiYQTkr9/Ntj+u+L/ROo3hSUZGw0/Dc9CXyRG1RgPv56vgaqKauCVcMedUhGCGnMSe3rLSw3DUv/72uSLS76Qd5Mhw24=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uG4U6bI/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J7G1+Pec"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE68EC4CECE;
-	Thu, 12 Dec 2024 15:39:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uG4U6bI/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DFD6C4CECE;
+	Thu, 12 Dec 2024 15:39:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734017979;
-	bh=VnCIlSTInJPMQGbjzsWVwGMjxFsTjjLAlDm4VB9IiXw=;
+	s=korg; t=1734017982;
+	bh=aeQZywb7YmM9ED57E/T/KDNgJlwPyu0jH4zks9kRUr8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J7G1+PecWinG9dOInjdh0DJtAvEdg8XNyWRSU/riLIUJ7QOL3AH76NyDXffmm/2L9
-	 UBUm+63QbIq4AgwmSd0o/vHcDr1Z52vpExGQfUw9rvxzBw4LB1V2SHcMZ8AAI/Xy2m
-	 OdPZJBT6ryRvyYMkS2w9PRRW3frBesZ47znNCkew=
+	b=uG4U6bI/JB9lDIr6KTJDlaPrvlprUONckH7WBfYFePf9dMdTyeJIlf/mIkkfF27xI
+	 +mdTbsEEErY2GsPl74SA0P8uLXBX6cd1DXSSXpjbB5JMhUbObtFpwY6fPReY01z5Oz
+	 TLYzkincq9t3ge9jvUzCAx9hU1F28bUKRq9fe3gc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 124/356] ASoC: SOF: ipc3-topology: fix resource leaks in sof_ipc3_widget_setup_comp_dai()
-Date: Thu, 12 Dec 2024 15:57:23 +0100
-Message-ID: <20241212144249.550144998@linuxfoundation.org>
+	Gwendal Grignou <gwendal@chromium.org>,
+	Can Guo <quic_cang@quicinc.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 6.6 157/356] scsi: ufs: core: sysfs: Prevent div by zero
+Date: Thu, 12 Dec 2024 15:57:56 +0100
+Message-ID: <20241212144250.841202964@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144244.601729511@linuxfoundation.org>
 References: <20241212144244.601729511@linuxfoundation.org>
@@ -51,54 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Gwendal Grignou <gwendal@chromium.org>
 
-[ Upstream commit 6d544ea21d367cbd9746ae882e67a839391a6594 ]
+commit eb48e9fc0028bed94a40a9352d065909f19e333c upstream.
 
-These error paths should free comp_dai before returning.
+Prevent a division by 0 when monitoring is not enabled.
 
-Fixes: 909dadf21aae ("ASoC: SOF: topology: Make DAI widget parsing IPC agnostic")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://patch.msgid.link/67d185cf-d139-4f8c-970a-dbf0542246a8@stanley.mountain
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 1d8613a23f3c ("scsi: ufs: core: Introduce HBA performance monitor sysfs nodes")
+Cc: stable@vger.kernel.org
+Signed-off-by: Gwendal Grignou <gwendal@chromium.org>
+Link: https://lore.kernel.org/r/20241120062522.917157-1-gwendal@chromium.org
+Reviewed-by: Can Guo <quic_cang@quicinc.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/sof/ipc3-topology.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/ufs/core/ufs-sysfs.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/sound/soc/sof/ipc3-topology.c b/sound/soc/sof/ipc3-topology.c
-index a1eab10211b0e..0e5ae7fa0ef7a 100644
---- a/sound/soc/sof/ipc3-topology.c
-+++ b/sound/soc/sof/ipc3-topology.c
-@@ -1503,14 +1503,14 @@ static int sof_ipc3_widget_setup_comp_dai(struct snd_sof_widget *swidget)
- 	ret = sof_update_ipc_object(scomp, comp_dai, SOF_DAI_TOKENS, swidget->tuples,
- 				    swidget->num_tuples, sizeof(*comp_dai), 1);
- 	if (ret < 0)
--		goto free;
-+		goto free_comp;
+--- a/drivers/ufs/core/ufs-sysfs.c
++++ b/drivers/ufs/core/ufs-sysfs.c
+@@ -485,6 +485,9 @@ static ssize_t read_req_latency_avg_show
+ 	struct ufs_hba *hba = dev_get_drvdata(dev);
+ 	struct ufs_hba_monitor *m = &hba->monitor;
  
- 	/* update comp_tokens */
- 	ret = sof_update_ipc_object(scomp, &comp_dai->config, SOF_COMP_TOKENS,
- 				    swidget->tuples, swidget->num_tuples,
- 				    sizeof(comp_dai->config), 1);
- 	if (ret < 0)
--		goto free;
-+		goto free_comp;
++	if (!m->nr_req[READ])
++		return sysfs_emit(buf, "0\n");
++
+ 	return sysfs_emit(buf, "%llu\n", div_u64(ktime_to_us(m->lat_sum[READ]),
+ 						 m->nr_req[READ]));
+ }
+@@ -552,6 +555,9 @@ static ssize_t write_req_latency_avg_sho
+ 	struct ufs_hba *hba = dev_get_drvdata(dev);
+ 	struct ufs_hba_monitor *m = &hba->monitor;
  
- 	/* Subtract the base to match the FW dai index. */
- 	if (comp_dai->type == SOF_DAI_INTEL_ALH) {
-@@ -1518,7 +1518,8 @@ static int sof_ipc3_widget_setup_comp_dai(struct snd_sof_widget *swidget)
- 			dev_err(sdev->dev,
- 				"Invalid ALH dai index %d, only Pin numbers >= %d can be used\n",
- 				comp_dai->dai_index, INTEL_ALH_DAI_INDEX_BASE);
--			return -EINVAL;
-+			ret = -EINVAL;
-+			goto free_comp;
- 		}
- 		comp_dai->dai_index -= INTEL_ALH_DAI_INDEX_BASE;
- 	}
--- 
-2.43.0
-
++	if (!m->nr_req[WRITE])
++		return sysfs_emit(buf, "0\n");
++
+ 	return sysfs_emit(buf, "%llu\n", div_u64(ktime_to_us(m->lat_sum[WRITE]),
+ 						 m->nr_req[WRITE]));
+ }
 
 
