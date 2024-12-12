@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB05D239BC1;
-	Thu, 12 Dec 2024 16:35:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA32623A180;
+	Thu, 12 Dec 2024 16:35:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734021347; cv=none; b=ghZ57q1x0Dgvb3nld1RMtGNIHanwvf/Sr34q0LnVn2vCtVr+UgXrEvvrKu1ZmKpR7Yd9hPwm9tpokvK1/92odOx0AaJxlAce8vzvM0mOk+k6FJIJRddPxXRvR+i4BkX27uS7yvIxJTZMVeiYEhC1l/HXixR9ox/yVhO5esV0nCk=
+	t=1734021350; cv=none; b=jQnuMjHbGIp+PhBrMuJPktYhdP6tSYLUFAzL+UJXe0Vm0TooyjPLpBmA53StYzSDCU1bD4w6jB20jIt6wSl2VInPQFh6JIfufqKfIQT4EDFKTk+FjLryvbkTJ1ymx8lU4HM3W8VOwZH1rpp3LHuBWsSh3LXQGeHJLh1y4sdTPIE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734021347; c=relaxed/simple;
-	bh=HLC5tL2Ekts0FZOAYehvB5rBPoGEAXb5oQ97/LQwf7s=;
+	s=arc-20240116; t=1734021350; c=relaxed/simple;
+	bh=BDiHpkfnH4hpmhbUJ1XLdL+xVa0mbdizKPvN2/vmU3g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FKvxR2+3LBgcBz0XtEXSCq2DGQ5BFW4oN+pHGTn1uOyLdvHVQeeyChi0ZbYSowOQQL7znKgIz8jisiPV8AI8og20peUE72ShMYe8NuL5sx/FCvKdLDa22e7Yyv8hifmOgdcESXqMjJ4WZwB9ej2DHYghr8sVoo3uzIfLFnAQe8o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aBOaKg75; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=e3MiWA533JGUNcZbFrJIbMBkvMr2yXYB6wUeKa0pyaPURG37ZulasR7lwIV9//8MGRcKNnw8YhE2FaZ1ylgnxA5yiumQ/xE2fpag1nG0neZoUA6mBB0Z1mCtYoSi5kPYogYR6d0mT1aghtLS8JQlpOxbAeK1OGZnA3GRPhYx5xU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2OkJWasZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aBOaKg75"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5581AC4CED0;
-	Thu, 12 Dec 2024 16:35:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2OkJWasZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9B40C4CED0;
+	Thu, 12 Dec 2024 16:35:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734021346;
-	bh=HLC5tL2Ekts0FZOAYehvB5rBPoGEAXb5oQ97/LQwf7s=;
+	s=korg; t=1734021350;
+	bh=BDiHpkfnH4hpmhbUJ1XLdL+xVa0mbdizKPvN2/vmU3g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aBOaKg75TEd8e8w/rY1FUxEfEJ759NRY9gAv99kEdA9ABxEXH9jbChKmlYb7nvlSv
-	 tl4jzxuTGt3NPApijO5wtVBU0qKnFoek1klWbiYYKHztxCT5asa+KOqfo1xlWFSsK8
-	 O3OIqTzAg3bdl4FgSFGlIHi1TEejjUT+jKMUez68=
+	b=2OkJWasZTxVI2UVCiNeyAT85Ng4Rq1EK7hLdhF/cFXBHspYIszpu3S367cKufrYDZ
+	 8+yQ2JIEGztoV3BTRjCkLdyVmVWU7gxM1VLzduaPQ7419jR7onTRqgSnt7rq3oFcZd
+	 8lybaDy/jkEz/PcCH6AGQiMOv9zs5eD5zwNmtYyo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kees Cook <kees@kernel.org>,
-	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	syzbot+65fa06e29859e41a83f3@syzkaller.appspotmail.com,
+	Ghanshyam Agrawal <ghanshyam1898@gmail.com>,
+	Dave Kleikamp <dave.kleikamp@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 711/772] smb: client: memcpy() with surrounding object base address
-Date: Thu, 12 Dec 2024 16:00:56 +0100
-Message-ID: <20241212144419.276816607@linuxfoundation.org>
+Subject: [PATCH 6.1 683/772] jfs: array-index-out-of-bounds fix in dtReadFirst
+Date: Thu, 12 Dec 2024 16:00:28 +0100
+Message-ID: <20241212144418.135214728@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -52,42 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kees Cook <kees@kernel.org>
+From: Ghanshyam Agrawal <ghanshyam1898@gmail.com>
 
-[ Upstream commit f69b0187f8745a7a9584f6b13f5e792594b88b2e ]
+[ Upstream commit ca84a2c9be482836b86d780244f0357e5a778c46 ]
 
-Like commit f1f047bd7ce0 ("smb: client: Fix -Wstringop-overflow issues"),
-adjust the memcpy() destination address to be based off the surrounding
-object rather than based off the 4-byte "Protocol" member. This avoids a
-build-time warning when compiling under CONFIG_FORTIFY_SOURCE with GCC 15:
+The value of stbl can be sometimes out of bounds due
+to a bad filesystem. Added a check with appopriate return
+of error code in that case.
 
-In function 'fortify_memcpy_chk',
-    inlined from 'CIFSSMBSetPathInfo' at ../fs/smb/client/cifssmb.c:5358:2:
-../include/linux/fortify-string.h:571:25: error: call to '__write_overflow_field' declared with attribute warning: detected write beyond size of field (1st parameter); maybe use struct_group()? [-Werror=attribute-warning]
-  571 |                         __write_overflow_field(p_size_field, size);
-      |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Signed-off-by: Kees Cook <kees@kernel.org>
-Reviewed-by: Gustavo A. R. Silva <gustavoars@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Reported-by: syzbot+65fa06e29859e41a83f3@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=65fa06e29859e41a83f3
+Signed-off-by: Ghanshyam Agrawal <ghanshyam1898@gmail.com>
+Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/cifssmb.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/jfs/jfs_dtree.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/fs/smb/client/cifssmb.c b/fs/smb/client/cifssmb.c
-index 67c5fc2b2db94..6077fe1dcc9ce 100644
---- a/fs/smb/client/cifssmb.c
-+++ b/fs/smb/client/cifssmb.c
-@@ -5349,7 +5349,7 @@ CIFSSMBSetPathInfo(const unsigned int xid, struct cifs_tcon *tcon,
- 	param_offset = offsetof(struct smb_com_transaction2_spi_req,
- 				InformationLevel) - 4;
- 	offset = param_offset + params;
--	data_offset = (char *) (&pSMB->hdr.Protocol) + offset;
-+	data_offset = (char *)pSMB + offsetof(typeof(*pSMB), hdr.Protocol) + offset;
- 	pSMB->ParameterOffset = cpu_to_le16(param_offset);
- 	pSMB->DataOffset = cpu_to_le16(offset);
- 	pSMB->SetupCount = 1;
+diff --git a/fs/jfs/jfs_dtree.c b/fs/jfs/jfs_dtree.c
+index 5d3127ca68a42..69fd936fbdb37 100644
+--- a/fs/jfs/jfs_dtree.c
++++ b/fs/jfs/jfs_dtree.c
+@@ -3086,6 +3086,13 @@ static int dtReadFirst(struct inode *ip, struct btstack * btstack)
+ 
+ 		/* get the leftmost entry */
+ 		stbl = DT_GETSTBL(p);
++
++		if (stbl[0] < 0 || stbl[0] > 127) {
++			DT_PUTPAGE(mp);
++			jfs_error(ip->i_sb, "stbl[0] out of bound\n");
++			return -EIO;
++		}
++
+ 		xd = (pxd_t *) & p->slot[stbl[0]];
+ 
+ 		/* get the child page block address */
 -- 
 2.43.0
 
