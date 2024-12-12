@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C99E226524;
-	Thu, 12 Dec 2024 15:59:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDA06241F40;
+	Thu, 12 Dec 2024 15:59:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734019147; cv=none; b=WnS5xiNwWRNKM3K2mq0cxSjA7Lv/pYYA/CiFoaZ5OjYkec/r3aaysp+ieRdrD5DlXXezBb1dZ31W7ZomAqrb3ihCBCkVyX+GN4tp3PCfVHfJ0dg0+/MWnGwd4P05lWO/i/Bk526zeihRwkNqAML9LdB+6Fn0w1Fsu8n0XMNbEeM=
+	t=1734019150; cv=none; b=t6P0GoHFtrBw1Ix7R/5Fzk2LxAR/EgoVJpMlDPTLcvnjkMTps+GLcHkC29ZoH/g1VbvwKp9sP5lS4pgRj2W2m5H2Ux4x/oRYFUxqhPoate64c1Hl6g+5sizug7E3T+KMDn3q5bxjsZo3dJ750zJUwpCb2nF3GgdKha9eaV2EiOY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734019147; c=relaxed/simple;
-	bh=vi4ljSwieDYG6+RMICZJIiQ5mgDVY9rS5GezwJ1e3vk=;
+	s=arc-20240116; t=1734019150; c=relaxed/simple;
+	bh=TELLZLcqINJvTCdCGp5jf/6HUqmeujhotutaeuQWH30=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gsxXmLLHtpTvaLQJHB4ID0SvP0cO2T+MsQ/IAvnc3PpizlE2ZYjJLv/UkPewaIQzyzmPPK8h9gzFBCu7vThRP7Z/cNV4wwRjUOQSeG8acz7Q8KpWJXc/e93kiyzEwx4IajxXyO+39SBsxznDLwHy2UDQiXtfYN4G6FOL/MXbGUk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=stcaYij8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fFHXSo2JMwCtINzrgNfzS+7umxviqGe90BZUolRXJLTJOMGFJH9anY6S8fmfuxnw3Ly5Ugx43e+5QC6bWjzGeVsbl8P90+4Lr1Hk1PnB9hJB+dM9xBktfonFyPeUtTlCNV2bakiVJaV8rY053yJT5zuUU25G+ROkJx7DNy2tluw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uDD5ANC7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="stcaYij8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C954C4CED0;
-	Thu, 12 Dec 2024 15:59:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uDD5ANC7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB0F8C4CED3;
+	Thu, 12 Dec 2024 15:59:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734019146;
-	bh=vi4ljSwieDYG6+RMICZJIiQ5mgDVY9rS5GezwJ1e3vk=;
+	s=korg; t=1734019150;
+	bh=TELLZLcqINJvTCdCGp5jf/6HUqmeujhotutaeuQWH30=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=stcaYij8ACI1ExxMCc/B/avsRliKFjFtB1B8Yq+dGiRPEbTkUVpdVDbgUVzlyLkI1
-	 3UzTQ21Lvor6VtFZerpogTNUFTBn6VcPW6jRiw7Z5BFqjv3xSVL0QdzgGlG0vwmWLZ
-	 Dr95Z/QzWN3dzvO6u0H/saDR1zRybTh6NalIgFEI=
+	b=uDD5ANC7xMQRyy9MYPJAlQEP8OCHE6PWZtZ/zpMELswFBBnH5smdomrSqRwCOnuOb
+	 swy5+O7aqT3x88MDpv7UR22A21cmn64zBG/moFwvLotycILBIrIxrdwN+w1L2rsImD
+	 /Z6SPb1kw1SUyn9xS57GOIApB4Vstg77VOmNTCWo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gregory Price <gourry@gourry.net>,
-	Ilias Apalodimas <ilias.apalodimas@linaro.org>,
-	Ard Biesheuvel <ardb@kernel.org>,
+	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
+	Daniel Lezcano <daniel.lezcano@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 100/772] tpm: fix signed/unsigned bug when checking event logs
-Date: Thu, 12 Dec 2024 15:50:45 +0100
-Message-ID: <20241212144354.074982116@linuxfoundation.org>
+Subject: [PATCH 6.1 091/772] clocksource/drivers/timer-ti-dm: Fix child node refcount handling
+Date: Thu, 12 Dec 2024 15:50:36 +0100
+Message-ID: <20241212144353.706016634@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -52,81 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gregory Price <gourry@gourry.net>
+From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
 
-[ Upstream commit e6d654e9f5a97742cfe794b1c4bb5d3fb2d25e98 ]
+[ Upstream commit e5cfc0989d9a2849c51c720a16b90b2c061a1aeb ]
 
-A prior bugfix that fixes a signed/unsigned error causes
-another signed unsigned error.
+of_find_compatible_node() increments the node's refcount, and it must be
+decremented again with a call to of_node_put() when the pointer is no
+longer required to avoid leaking the resource.
 
-A situation where log_tbl->size is invalid can cause the
-size passed to memblock_reserve to become negative.
+Instead of adding the missing calls to of_node_put() in all execution
+paths, use the cleanup attribute for 'arm_timer' by means of the
+__free() macro, which automatically calls of_node_put() when the
+variable goes out of scope.
 
-log_size from the main event log is an unsigned int, and
-the code reduces to the following
-
-u64 value = (int)unsigned_value;
-
-This results in sign extension, and the value sent to
-memblock_reserve becomes effectively negative.
-
-Fixes: be59d57f9806 ("efi/tpm: Fix sanity check of unsigned tbl_size being less than zero")
-Signed-off-by: Gregory Price <gourry@gourry.net>
-Reviewed-by: Ilias Apalodimas <ilias.apalodimas@linaro.org>
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Fixes: 25de4ce5ed02 ("clocksource/drivers/timer-ti-dm: Handle dra7 timer wrap errata i940")
+Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+Link: https://lore.kernel.org/r/20241031-timer-ti-dm-systimer-of_node_put-v3-1-063ee822b73a@gmail.com
+Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/efi/tpm.c | 17 +++++++++--------
- 1 file changed, 9 insertions(+), 8 deletions(-)
+ drivers/clocksource/timer-ti-dm-systimer.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/firmware/efi/tpm.c b/drivers/firmware/efi/tpm.c
-index e8d69bd548f3f..9c3613e6af158 100644
---- a/drivers/firmware/efi/tpm.c
-+++ b/drivers/firmware/efi/tpm.c
-@@ -40,7 +40,8 @@ int __init efi_tpm_eventlog_init(void)
+diff --git a/drivers/clocksource/timer-ti-dm-systimer.c b/drivers/clocksource/timer-ti-dm-systimer.c
+index 632523c1232f6..734920e8c5759 100644
+--- a/drivers/clocksource/timer-ti-dm-systimer.c
++++ b/drivers/clocksource/timer-ti-dm-systimer.c
+@@ -688,9 +688,9 @@ subsys_initcall(dmtimer_percpu_timer_startup);
+ 
+ static int __init dmtimer_percpu_quirk_init(struct device_node *np, u32 pa)
  {
- 	struct linux_efi_tpm_eventlog *log_tbl;
- 	struct efi_tcg2_final_events_table *final_tbl;
--	int tbl_size;
-+	unsigned int tbl_size;
-+	int final_tbl_size;
- 	int ret = 0;
+-	struct device_node *arm_timer;
++	struct device_node *arm_timer __free(device_node) =
++		of_find_compatible_node(NULL, NULL, "arm,armv7-timer");
  
- 	if (efi.tpm_log == EFI_INVALID_TABLE_ADDR) {
-@@ -80,26 +81,26 @@ int __init efi_tpm_eventlog_init(void)
- 		goto out;
- 	}
- 
--	tbl_size = 0;
-+	final_tbl_size = 0;
- 	if (final_tbl->nr_events != 0) {
- 		void *events = (void *)efi.tpm_final_log
- 				+ sizeof(final_tbl->version)
- 				+ sizeof(final_tbl->nr_events);
- 
--		tbl_size = tpm2_calc_event_log_size(events,
--						    final_tbl->nr_events,
--						    log_tbl->log);
-+		final_tbl_size = tpm2_calc_event_log_size(events,
-+							  final_tbl->nr_events,
-+							  log_tbl->log);
- 	}
- 
--	if (tbl_size < 0) {
-+	if (final_tbl_size < 0) {
- 		pr_err(FW_BUG "Failed to parse event in TPM Final Events Log\n");
- 		ret = -EINVAL;
- 		goto out_calc;
- 	}
- 
- 	memblock_reserve(efi.tpm_final_log,
--			 tbl_size + sizeof(*final_tbl));
--	efi_tpm_final_log_size = tbl_size;
-+			 final_tbl_size + sizeof(*final_tbl));
-+	efi_tpm_final_log_size = final_tbl_size;
- 
- out_calc:
- 	early_memunmap(final_tbl, sizeof(*final_tbl));
+-	arm_timer = of_find_compatible_node(NULL, NULL, "arm,armv7-timer");
+ 	if (of_device_is_available(arm_timer)) {
+ 		pr_warn_once("ARM architected timer wrap issue i940 detected\n");
+ 		return 0;
 -- 
 2.43.0
 
