@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3B102210DB;
-	Thu, 12 Dec 2024 16:32:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EEE5223C49;
+	Thu, 12 Dec 2024 16:32:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734021169; cv=none; b=HmCVk7M2sFpB0LTKPtdI7886Xwf/o0fKLA7jqCxO9GxnpJIC4eaRs5hECf9lap0VbCNW7JZs7FTBoQP3zHlnjLlDZdqiXy8SOLdysbeoZurvNeYNjk6i+Zl/hpRhHwGbnX/MJMz47z9nhLLgXgkkhj8W6GMy6fvXzrRfY6LLDHA=
+	t=1734021173; cv=none; b=f5T/wRjKxIsF/T1m1J/K12ZV2qcrF/E7z1X07+1Tn6nktHfHBAA3eaQt19leTOVVGXqWLYBCWpI9QDnrxR3QrZgtlzgvFwXRdvMGbXl+BB+GEijaJsmcOcR56pwmOGJaZ/2+joQBMQ9c/At5fZ9ZCAz+dEVaYUfOpWbjNqyYYBQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734021169; c=relaxed/simple;
-	bh=7C5+z8Q+8X3OCo4OYXhEPIOImEdrkcBK5t00MS/kkMU=;
+	s=arc-20240116; t=1734021173; c=relaxed/simple;
+	bh=oj99FP9OQQArVuJkrydngOkYAU79tjsAwLfaa9KT/SI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TCs20pf1wZr0k/yB0Ro4BLDdRCb5SMLMItYE/BscElSpGh0NPd22o4917iJx838/Neto91A2EfbvsCWLi3KfpljgXM1SPXWoHLGD+LqIHnYX/rKUu83vKjmLiQXnXpo04wj99CdOBulrm3Q8nJXA7NZbji3OaeKLhN1inh+NmBw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e9VTPmNl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WhfuUlU9730VRxUjY7NGJI6FWplEi1w2yRhpQ+O06cHvAcz3UkDUWgw6IuV6ZinwDJXitNT7J0BZFP1OYOpAb++OeYjabvGrvKEk3wRGUc4vqxJaywb2N0HiN1H2cmnInSnMtixvZdWabR/B5I9KdwSkUL44kNjd38FgmiV9h7Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EUUkOW5e; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e9VTPmNl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1525DC4CECE;
-	Thu, 12 Dec 2024 16:32:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EUUkOW5e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B086C4CECE;
+	Thu, 12 Dec 2024 16:32:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734021169;
-	bh=7C5+z8Q+8X3OCo4OYXhEPIOImEdrkcBK5t00MS/kkMU=;
+	s=korg; t=1734021173;
+	bh=oj99FP9OQQArVuJkrydngOkYAU79tjsAwLfaa9KT/SI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e9VTPmNl+MKqGalynC9HAwsCcL2MaQRTw5CiNcCmjEue36ekV0WU31sMx3MbMJSTl
-	 yrKl+kba6TR9VYqxlh8767sJinTi5BiLJh7JTmY7dqcECS8d/eJxtxam+ICfiyjkEb
-	 kUtIwLIEDn3zjvE9wPa3GvJOFO7+qCIuFjP2VyBU=
+	b=EUUkOW5exdQH9wclYmTL41urnzyu/619pX6zZ50c652qyMGjKxP057FT/aFdU6wCj
+	 +qgPZ5z/Hh3EWhtok1CZfNdgOv5EZ2nDI9U9T5OYJBLqnLVcyt/ve3bxIprRTHfK3f
+	 Ii6o86L0F09N1I6B7M8oH4zngsY8kow5lhKTTQIo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
-	Simon Horman <horms@kernel.org>,
-	Daniel Machon <daniel.machon@microchip.com>,
+	Elena Salomatkina <esalomatkina@ispras.ru>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 665/772] net: ethernet: fs_enet: Use %pa to format resource_size_t
-Date: Thu, 12 Dec 2024 16:00:10 +0100
-Message-ID: <20241212144417.397961858@linuxfoundation.org>
+Subject: [PATCH 6.1 666/772] net/sched: cbs: Fix integer overflow in cbs_set_port_rate()
+Date: Thu, 12 Dec 2024 16:00:11 +0100
+Message-ID: <20241212144417.437601388@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -53,55 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Simon Horman <horms@kernel.org>
+From: Elena Salomatkina <esalomatkina@ispras.ru>
 
-[ Upstream commit 45fe45fada261e1e83fce2a07fa22835aec1cf0a ]
+[ Upstream commit 397006ba5d918f9b74e734867e8fddbc36dc2282 ]
 
-The correct format string for resource_size_t is %pa which
-acts on the address of the variable to be formatted [1].
+The subsequent calculation of port_rate = speed * 1000 * BYTES_PER_KBIT,
+where the BYTES_PER_KBIT is of type LL, may cause an overflow.
+At least when speed = SPEED_20000, the expression to the left of port_rate
+will be greater than INT_MAX.
 
-[1] https://elixir.bootlin.com/linux/v6.11.3/source/Documentation/core-api/printk-formats.rst#L229
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-Introduced by commit 9d9326d3bc0e ("phy: Change mii_bus id field to a string")
-
-Flagged by gcc-14 as:
-
-drivers/net/ethernet/freescale/fs_enet/mii-bitbang.c: In function 'fs_mii_bitbang_init':
-drivers/net/ethernet/freescale/fs_enet/mii-bitbang.c:126:46: warning: format '%x' expects argument of type 'unsigned int', but argument 4 has type 'resource_size_t' {aka 'long long unsigned int'} [-Wformat=]
-  126 |         snprintf(bus->id, MII_BUS_ID_SIZE, "%x", res.start);
-      |                                             ~^   ~~~~~~~~~
-      |                                              |      |
-      |                                              |      resource_size_t {aka long long unsigned int}
-      |                                              unsigned int
-      |                                             %llx
-
-No functional change intended.
-Compile tested only.
-
-Reported-by: Geert Uytterhoeven <geert@linux-m68k.org>
-Closes: https://lore.kernel.org/netdev/711d7f6d-b785-7560-f4dc-c6aad2cce99@linux-m68k.org/
-Signed-off-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Daniel Machon <daniel.machon@microchip.com>
-Link: https://patch.msgid.link/20241014-net-pa-fmt-v1-2-dcc9afb8858b@kernel.org
+Signed-off-by: Elena Salomatkina <esalomatkina@ispras.ru>
+Link: https://patch.msgid.link/20241013124529.1043-1-esalomatkina@ispras.ru
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/freescale/fs_enet/mii-bitbang.c | 2 +-
+ net/sched/sch_cbs.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/freescale/fs_enet/mii-bitbang.c b/drivers/net/ethernet/freescale/fs_enet/mii-bitbang.c
-index 21de56345503f..f743112730194 100644
---- a/drivers/net/ethernet/freescale/fs_enet/mii-bitbang.c
-+++ b/drivers/net/ethernet/freescale/fs_enet/mii-bitbang.c
-@@ -126,7 +126,7 @@ static int fs_mii_bitbang_init(struct mii_bus *bus, struct device_node *np)
- 	 * we get is an int, and the odds of multiple bitbang mdio buses
- 	 * is low enough that it's not worth going too crazy.
- 	 */
--	snprintf(bus->id, MII_BUS_ID_SIZE, "%x", res.start);
-+	snprintf(bus->id, MII_BUS_ID_SIZE, "%pa", &res.start);
+diff --git a/net/sched/sch_cbs.c b/net/sched/sch_cbs.c
+index cac870eb78973..0567a15d0f850 100644
+--- a/net/sched/sch_cbs.c
++++ b/net/sched/sch_cbs.c
+@@ -310,7 +310,7 @@ static void cbs_set_port_rate(struct net_device *dev, struct cbs_sched_data *q)
+ {
+ 	struct ethtool_link_ksettings ecmd;
+ 	int speed = SPEED_10;
+-	int port_rate;
++	s64 port_rate;
+ 	int err;
  
- 	data = of_get_property(np, "fsl,mdio-pin", &len);
- 	if (!data || len != 4)
+ 	err = __ethtool_get_link_ksettings(dev, &ecmd);
 -- 
 2.43.0
 
