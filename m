@@ -1,40 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82C782163AB;
-	Thu, 12 Dec 2024 15:08:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C000216606;
+	Thu, 12 Dec 2024 15:08:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734016094; cv=none; b=rcUlFdnJ0QRS+86hbt0NJM7Ht3qppv+V4U0iNRY8oGS3cTnj8kxZCZi/otkaZEJvYBHLLUnjoamr35fkSw4kpOIESXmF6mJemzlM0q17K08hCr7DVs8tE07Izn80F62ect6SPp7AywDHjOVaRhh7Cuvg+/f7PbXEErQUytIEvIw=
+	t=1734016100; cv=none; b=VBrLAdZKWTz6580rJfbF7ffELnyuMmoDko6P0QTu1pGwqTp9THWjo7hEC5zT+L+AjH+e+LgTlFxfBKwwiXQ22dl0/W8+RqbegmK/gxEOo4Z8trT8KGeGEpzHtMD/P+XzHL6LElERPGrP2+G56QBG3tLEos7Dcn0GK7Eml9Us2UA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734016094; c=relaxed/simple;
-	bh=QNs04o5wKwEJZ8VigCa51mj/wTcuOH9cFHoSnSC0RnA=;
+	s=arc-20240116; t=1734016100; c=relaxed/simple;
+	bh=wlwqMY4kB3ScDh2YT3T0tfW8Tx2fn2/Ty9vH+1pR5V0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OHiNDRjAFO1cJ9QCLUHcX6J2irBx8cWu4D3HyUtPe5AzyDZEcALldhiCdvjDsVublxIyr2s0Pa5JSFGVVyHyTSYb3SftgQuMoHd5SZmxBIgwtucavd8ZDpTu7yFvGGNG2INjbzlirzFj/FcYcSfCXxLSK9gY3zbxnO8YT0yGZEc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rlmMQtbJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Q4QKwP61ftYrC79UXpf9GygLgEj9D787DdGjhQcVaLDUyk/DGBtlycbMBge45VnE0Y3lZ9X6NhX94YMvwzkhivihW3LeXphGVmmm/MmUMRwTP+KcD83q1ihsYCXxGZ6GEUxgy+oJGkG4/DqqYSoHlln/kClKT7eyfVh5pKnzajI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tUgJpYzC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rlmMQtbJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAA04C4CECE;
-	Thu, 12 Dec 2024 15:08:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tUgJpYzC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E548C4CECE;
+	Thu, 12 Dec 2024 15:08:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734016094;
-	bh=QNs04o5wKwEJZ8VigCa51mj/wTcuOH9cFHoSnSC0RnA=;
+	s=korg; t=1734016097;
+	bh=wlwqMY4kB3ScDh2YT3T0tfW8Tx2fn2/Ty9vH+1pR5V0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rlmMQtbJzNtKMuwBRQjYj0Xf2EZ/D3UDQERbdjFf9rENIXuTnNxsUlK1mbZN7Mc9h
-	 RQh2/AstyFNzQM/MqicFfpmowTI5uL1Qo3up8PqUPgkS3Tc3w55GQ9E4TFi3DB9J3L
-	 axLJbd8dkxNsUiwdyRPIF3KOy/iB9S9h7jt8FSsw=
+	b=tUgJpYzC5sVoUGfK/wqIxu+nBgKLj6pZoYYcZpA+MewDRqY4pS/UI3vQ906wNXHka
+	 rMtIzjolUzrSi9Voax3f1LgSou641PG58SYS7LjcJ9mC8GjOO5X4y5mIT9C8VepjWy
+	 doAEFFv2tPGhzwGM7XyWUYRb+LXiQLOT02R5d6Fk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Tao Lyu <tao.lyu@epfl.ch>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	=?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn@rivosinc.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Alexandre Ghiti <alexghiti@rivosinc.com>,
+	Jean-Philippe Brucker <jean-philippe@linaro.org>,
+	Namhyung Kim <namhyung@kernel.org>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
+	Quentin Monnet <qmo@kernel.org>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 100/466] bpf: Ensure reg is PTR_TO_STACK in process_iter_arg
-Date: Thu, 12 Dec 2024 15:54:29 +0100
-Message-ID: <20241212144310.765861597@linuxfoundation.org>
+Subject: [PATCH 6.12 091/466] tools: Override makefile ARCH variable if defined, but empty
+Date: Thu, 12 Dec 2024 15:54:20 +0100
+Message-ID: <20241212144310.412092666@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144306.641051666@linuxfoundation.org>
 References: <20241212144306.641051666@linuxfoundation.org>
@@ -47,73 +52,61 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tao Lyu <tao.lyu@epfl.ch>
+From: Björn Töpel <bjorn@rivosinc.com>
 
-[ Upstream commit 12659d28615d606b36e382f4de2dd05550d202af ]
+[ Upstream commit 537a2525eaf76ea9b0dca62b994500d8670b39d5 ]
 
-Currently, KF_ARG_PTR_TO_ITER handling missed checking the reg->type and
-ensuring it is PTR_TO_STACK. Instead of enforcing this in the caller of
-process_iter_arg, move the check into it instead so that all callers
-will gain the check by default. This is similar to process_dynptr_func.
+There are a number of tools (bpftool, selftests), that require a
+"bootstrap" build. Here, a bootstrap build is a build host variant of
+a target. E.g., assume that you're performing a bpftool cross-build on
+x86 to riscv, a bootstrap build would then be an x86 variant of
+bpftool. The typical way to perform the host build variant, is to pass
+"ARCH=" in a sub-make. However, if a variable has been set with a
+command argument, then ordinary assignments in the makefile are
+ignored.
 
-An existing selftest in verifier_bits_iter.c fails due to this change,
-but it's because it was passing a NULL pointer into iter_next helper and
-getting an error further down the checks, but probably meant to pass an
-uninitialized iterator on the stack (as is done in the subsequent test
-below it). We will gain coverage for non-PTR_TO_STACK arguments in later
-patches hence just change the declaration to zero-ed stack object.
+This side-effect results in that ARCH, and variables depending on ARCH
+are not set. Workaround by overriding ARCH to the host arch, if ARCH
+is empty.
 
-Fixes: 06accc8779c1 ("bpf: add support for open-coded iterator loops")
-Suggested-by: Andrii Nakryiko <andrii@kernel.org>
-Signed-off-by: Tao Lyu <tao.lyu@epfl.ch>
-[ Kartikeya: move check into process_iter_arg, rewrite commit log ]
-Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
-Link: https://lore.kernel.org/r/20241203000238.3602922-2-memxor@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: 8859b0da5aac ("tools/bpftool: Fix cross-build")
+Signed-off-by: Björn Töpel <bjorn@rivosinc.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Tested-by: Alexandre Ghiti <alexghiti@rivosinc.com>
+Reviewed-by: Jean-Philippe Brucker <jean-philippe@linaro.org>
+Reviewed-by: Namhyung Kim <namhyung@kernel.org>
+Reviewed-by: Toke Høiland-Jørgensen <toke@redhat.com>
+Acked-by: Quentin Monnet <qmo@kernel.org>
+Acked-by: Jiri Olsa <jolsa@kernel.org>
+Cc: Arnaldo Carvalho de Melo <acme@redhat.com>
+Link: https://lore.kernel.org/bpf/20241127101748.165693-1-bjorn@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c                                  | 5 +++++
- tools/testing/selftests/bpf/progs/verifier_bits_iter.c | 4 ++--
- 2 files changed, 7 insertions(+), 2 deletions(-)
+ tools/scripts/Makefile.arch | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 91317857ea3ee..8955259112c03 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -8021,6 +8021,11 @@ static int process_iter_arg(struct bpf_verifier_env *env, int regno, int insn_id
- 	const struct btf_type *t;
- 	int spi, err, i, nr_slots, btf_id;
+diff --git a/tools/scripts/Makefile.arch b/tools/scripts/Makefile.arch
+index f6a50f06dfc45..eabfe9f411d91 100644
+--- a/tools/scripts/Makefile.arch
++++ b/tools/scripts/Makefile.arch
+@@ -7,8 +7,8 @@ HOSTARCH := $(shell uname -m | sed -e s/i.86/x86/ -e s/x86_64/x86/ \
+                                   -e s/sh[234].*/sh/ -e s/aarch64.*/arm64/ \
+                                   -e s/riscv.*/riscv/ -e s/loongarch.*/loongarch/)
  
-+	if (reg->type != PTR_TO_STACK) {
-+		verbose(env, "arg#%d expected pointer to an iterator on stack\n", regno - 1);
-+		return -EINVAL;
-+	}
-+
- 	/* For iter_{new,next,destroy} functions, btf_check_iter_kfuncs()
- 	 * ensures struct convention, so we wouldn't need to do any BTF
- 	 * validation here. But given iter state can be passed as a parameter
-diff --git a/tools/testing/selftests/bpf/progs/verifier_bits_iter.c b/tools/testing/selftests/bpf/progs/verifier_bits_iter.c
-index 7c881bca9af5c..a7a6ae6c162fe 100644
---- a/tools/testing/selftests/bpf/progs/verifier_bits_iter.c
-+++ b/tools/testing/selftests/bpf/progs/verifier_bits_iter.c
-@@ -35,9 +35,9 @@ __description("uninitialized iter in ->next()")
- __failure __msg("expected an initialized iter_bits as arg #1")
- int BPF_PROG(next_uninit, struct bpf_iter_meta *meta, struct cgroup *cgrp)
- {
--	struct bpf_iter_bits *it = NULL;
-+	struct bpf_iter_bits it = {};
+-ifndef ARCH
+-ARCH := $(HOSTARCH)
++ifeq ($(strip $(ARCH)),)
++override ARCH := $(HOSTARCH)
+ endif
  
--	bpf_iter_bits_next(it);
-+	bpf_iter_bits_next(&it);
- 	return 0;
- }
- 
+ SRCARCH := $(ARCH)
 -- 
 2.43.0
 
