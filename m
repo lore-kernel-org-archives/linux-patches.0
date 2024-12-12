@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18CCE176AA1;
-	Thu, 12 Dec 2024 17:22:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19E1A2210EA;
+	Thu, 12 Dec 2024 17:23:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734024178; cv=none; b=eiH2nUxUFvaRUO7clyrsxW34caeD4YSWpK/VV5bNT6NfXhOZ+i59+k6YsQZG3J3hme/5DLowhOSMuYhLBL/4+v8DqhrSEoFNhcx6aEiALaJpSAzFj6Ugy4a1fPfUyQgHigwddwhP9l+WqYYAcntWIhaIvuYayVZQiuflUawV/SQ=
+	t=1734024181; cv=none; b=TRr/wIcrN2aCzCzgogxoFAnwad9L9DFzCxMYcc2bLUTXfKoHVf8CGO3uUbMAqx3I09SNO8mRnskZMNel5swcNI/bDtaiZ1fK5g6hWfUfgLJMovXgMLngymy43lti2ECfrBERmJaGEXV/pQBYlEaQ9ldweC9j0SfMhlKoVH4iuW0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734024178; c=relaxed/simple;
-	bh=Gf9+gNSWBdusS3SLczmzcgRIzLQCpnCpmEY9U28WPNU=;
+	s=arc-20240116; t=1734024181; c=relaxed/simple;
+	bh=M7l/CWdDNr+OJsztfy79yvMlCJCtDPOz8B7pfATkB74=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gLAzZhaB6l1+vr+LKbSuIjeu8Xfzafg4fTylxxBzyfinLD0pSLu0zUodSC0YiDy6h4L3tdoZekV5YFGBdX65d+ot7kpTupkR12bHhXxF46iIoEFoN/lm9JtODIqJ/lOfrDhbT7osre+GGkFvFAakl58jmRqJIPYJ7D75gLRAiug=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KOO8pHv8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VuAVpOambNtTYusdZQDONlAIkrtOLmCBCBgPD8SXRPJJ1eVdYrtrtpjc70Br95rjc3k8sQtcEeURmmNQq04mITiCUEn4xKVuq6kwSF7cFKyt2rn4GPgBl4g09ha0+fg45jKPEoj/ZQWVS/9JoboErD45THAcIBhIotPPvmoQQdg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iqpwIhmA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KOO8pHv8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 912EFC4CED0;
-	Thu, 12 Dec 2024 17:22:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iqpwIhmA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DA2FC4CECE;
+	Thu, 12 Dec 2024 17:23:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734024178;
-	bh=Gf9+gNSWBdusS3SLczmzcgRIzLQCpnCpmEY9U28WPNU=;
+	s=korg; t=1734024181;
+	bh=M7l/CWdDNr+OJsztfy79yvMlCJCtDPOz8B7pfATkB74=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KOO8pHv8Dlyn5DFLAm+x3C8PG1mJILoS/7xzPH8mqykIUm0jlQ0AkZKxAT1j94jwg
-	 ay/09oh7jRdudcuO2JdT8xmbUob5vBTWU5fL+IxPQ1Con2l5hpSJT44yWhpnAkzr6X
-	 XHC5Kac7KCgmw07uiIhr7JDLgv12ySgN/08R6p4k=
+	b=iqpwIhmAZTSj+Tcv5Epy7+uuEJC4HWHtoMo4rBrnawuVL5xe2IC9yxJzGUEtTEGqS
+	 ZDsu0tOOFY4YiKGg1eT9XMBBF0JZ+CXebnvUo9FlC0J5cEfY6otrfc8mOherq0C510
+	 SqdJdCiwU2dmcLX3BfrP2PUfPX9om7pUb4Rhdq1E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>,
+	Zhen Lei <thunder.leizhen@huawei.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 211/459] NFSD: Prevent NULL dereference in nfsd4_process_cb_update()
-Date: Thu, 12 Dec 2024 15:59:09 +0100
-Message-ID: <20241212144301.907762685@linuxfoundation.org>
+Subject: [PATCH 5.10 185/459] fbdev: sh7760fb: Fix a possible memory leak in sh7760fb_alloc_mem()
+Date: Thu, 12 Dec 2024 15:58:43 +0100
+Message-ID: <20241212144300.866419502@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144253.511169641@linuxfoundation.org>
 References: <20241212144253.511169641@linuxfoundation.org>
@@ -51,35 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Zhen Lei <thunder.leizhen@huawei.com>
 
-[ Upstream commit 1e02c641c3a43c88cecc08402000418e15578d38 ]
+[ Upstream commit f89d17ae2ac42931be2a0153fecbf8533280c927 ]
 
-@ses is initialized to NULL. If __nfsd4_find_backchannel() finds no
-available backchannel session, setup_callback_client() will try to
-dereference @ses and segfault.
+When information such as info->screen_base is not ready, calling
+sh7760fb_free_mem() does not release memory correctly. Call
+dma_free_coherent() instead.
 
-Fixes: dcbeaa68dbbd ("nfsd4: allow backchannel recovery")
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Fixes: 4a25e41831ee ("video: sh7760fb: SH7760/SH7763 LCDC framebuffer driver")
+Signed-off-by: Zhen Lei <thunder.leizhen@huawei.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs4callback.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/video/fbdev/sh7760fb.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/fs/nfsd/nfs4callback.c b/fs/nfsd/nfs4callback.c
-index 4eae2c5af2edf..18d62d3424c1a 100644
---- a/fs/nfsd/nfs4callback.c
-+++ b/fs/nfsd/nfs4callback.c
-@@ -1379,6 +1379,8 @@ static void nfsd4_process_cb_update(struct nfsd4_callback *cb)
- 		ses = c->cn_session;
- 	}
- 	spin_unlock(&clp->cl_lock);
-+	if (!c)
-+		return;
+diff --git a/drivers/video/fbdev/sh7760fb.c b/drivers/video/fbdev/sh7760fb.c
+index 6adf048c1bae8..62e28d315d815 100644
+--- a/drivers/video/fbdev/sh7760fb.c
++++ b/drivers/video/fbdev/sh7760fb.c
+@@ -409,12 +409,11 @@ static int sh7760fb_alloc_mem(struct fb_info *info)
+ 		vram = PAGE_SIZE;
  
- 	err = setup_callback_client(clp, &conn, ses);
- 	if (err) {
+ 	fbmem = dma_alloc_coherent(info->device, vram, &par->fbdma, GFP_KERNEL);
+-
+ 	if (!fbmem)
+ 		return -ENOMEM;
+ 
+ 	if ((par->fbdma & SH7760FB_DMA_MASK) != SH7760FB_DMA_MASK) {
+-		sh7760fb_free_mem(info);
++		dma_free_coherent(info->device, vram, fbmem, par->fbdma);
+ 		dev_err(info->device, "kernel gave me memory at 0x%08lx, which is"
+ 			"unusable for the LCDC\n", (unsigned long)par->fbdma);
+ 		return -ENOMEM;
 -- 
 2.43.0
 
