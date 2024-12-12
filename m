@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A145222D68;
-	Thu, 12 Dec 2024 15:15:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A91F2153F8;
+	Thu, 12 Dec 2024 15:15:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734016505; cv=none; b=J413lHf2yyj1smLCiEe7m9RmunNr22H9BEiukJ17a95QZa7rAs6EhosjKxJWkFcJD/Mj02aXy+NC4nU80+fi0chlGcQtCw0mlt9V6PGc2/aYbx8KlPk6Epc+yhgFD+tcxmnUn+yMLMav2SyFfY2wTUeY1A4MjE3qjA9ckR5KK3Q=
+	t=1734016508; cv=none; b=s+WF582NzgLqYfbkNBq3UFQdXeRLCVdcap4NmwjJwMdWQkhUj7kw8kKgb5qB4xA0GJtRmXWOoPpddXf6/rCluIY2l8nmnCwQHlc03K0MgL3nstj5XKUFMq1Uq4Xh0driQiaVfrX4lFK7wzcefBBVSG4F8jxfSzNC3KAROAYqjHY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734016505; c=relaxed/simple;
-	bh=I2oz1gYxnUPjAkLjH69w87Gus9oPJLSpl60urc0pZfo=;
+	s=arc-20240116; t=1734016508; c=relaxed/simple;
+	bh=t0PzaepkKjFuXT2WoX2oMDIOHnS9Xs7PUZ/YRXhrYMk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hECmjAchDIdhA9s0IZUiBlnHcDOpD7FeA42wB1R9w5StlyjsIH/rIwlI7dgNYi6rHUF+5+4x79fwpxlXIJUpiqTym76v5DVk2hsPi7e0tg+IO5HKIXGZcEGMXcgNE0LwDgZHmVt7acbukSfRO+IIz5S3lUgFO4lLI/h7RFQViJs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EOxR0w6L; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GB1+1oYS4FDvN1uLa/rWji6nsG9c+FWFyZhZHtMF7PuehVl1mGP3+GduYHIQ+WuBaD4G2BM2YEdFhgp8sFL9mJ3BzcpItsH5w3PmxzMDY8oYQnSzC/edGewFwKGccgsjDNhZ6MTYEd7ZvVQCJ2t1X3JAg+7zDcCD+OgfK72GAH8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0lCwdHUZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EOxR0w6L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91693C4CED0;
-	Thu, 12 Dec 2024 15:15:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0lCwdHUZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F326AC4CECE;
+	Thu, 12 Dec 2024 15:15:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734016505;
-	bh=I2oz1gYxnUPjAkLjH69w87Gus9oPJLSpl60urc0pZfo=;
+	s=korg; t=1734016508;
+	bh=t0PzaepkKjFuXT2WoX2oMDIOHnS9Xs7PUZ/YRXhrYMk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EOxR0w6LSobWc6HIuDevDSwZjDpuxnXjtt7PDnYe9UTRGVa/+P0b13l+TTflNb4Lb
-	 7cU/Ll3ZAQTpt46MSu0YhPqlcyBXUc/CDmBDp5x1DHJRCUEjbxMABx/m1S0H2TkwER
-	 URcUIWPYmJLaqenv9dZiOPlrGz04FUNY5J/moWK8=
+	b=0lCwdHUZ/mhyd2cF3dVMdrqcQD6b+vimbLvIYp/0gns7REzY/ivw+z5Pakug/OSqg
+	 vNL/+jpRMeVsAjZuOMrl6GMk9LA2Xhz4RbAtfog7ICsZHaHe8HsuL13G9kBM/6ZuNc
+	 FkaI0ejc0MQBuRNwemCUe3J1bFt70vzmC2akeq4M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Richter <tmricht@linux.ibm.com>,
-	Hendrik Brueckner <brueckner@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 217/466] s390/cpum_sf: Handle CPU hotplug remove during sampling
-Date: Thu, 12 Dec 2024 15:56:26 +0100
-Message-ID: <20241212144315.360018008@linuxfoundation.org>
+Subject: [PATCH 6.12 218/466] block: RCU protect disk->conv_zones_bitmap
+Date: Thu, 12 Dec 2024 15:56:27 +0100
+Message-ID: <20241212144315.399646667@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144306.641051666@linuxfoundation.org>
 References: <20241212144306.641051666@linuxfoundation.org>
@@ -52,78 +53,139 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Richter <tmricht@linux.ibm.com>
+From: Damien Le Moal <dlemoal@kernel.org>
 
-[ Upstream commit a0bd7dacbd51c632b8e2c0500b479af564afadf3 ]
+[ Upstream commit d7cb6d7414ea1b33536fa6d11805cb8dceec1f97 ]
 
-CPU hotplug remove handling triggers the following function
-call sequence:
+Ensure that a disk revalidation changing the conventional zones bitmap
+of a disk does not cause invalid memory references when using the
+disk_zone_is_conv() helper by RCU protecting the disk->conv_zones_bitmap
+pointer.
 
-   CPUHP_AP_PERF_S390_SF_ONLINE  --> s390_pmu_sf_offline_cpu()
-   ...
-   CPUHP_AP_PERF_ONLINE          --> perf_event_exit_cpu()
+disk_zone_is_conv() is modified to operate under the RCU read lock and
+the function disk_set_conv_zones_bitmap() is added to update a disk
+conv_zones_bitmap pointer using rcu_replace_pointer() with the disk
+zone_wplugs_lock spinlock held.
 
-The s390 CPUMF sampling CPU hotplug handler invokes:
+disk_free_zone_resources() is modified to call
+disk_update_zone_resources() with a NULL bitmap pointer to free the disk
+conv_zones_bitmap. disk_set_conv_zones_bitmap() is also used in
+disk_update_zone_resources() to set the new (revalidated) bitmap and
+free the old one.
 
- s390_pmu_sf_offline_cpu()
- +-->  cpusf_pmu_setup()
-       +--> setup_pmc_cpu()
-            +--> deallocate_buffers()
-
-This function de-allocates all sampling data buffers (SDBs) allocated
-for that CPU at event initialization. It also clears the
-PMU_F_RESERVED bit. The CPU is gone and can not be sampled.
-
-With the event still being active on the removed CPU, the CPU event
-hotplug support in kernel performance subsystem triggers the
-following function calls on the removed CPU:
-
-  perf_event_exit_cpu()
-  +--> perf_event_exit_cpu_context()
-       +--> __perf_event_exit_context()
-	    +--> __perf_remove_from_context()
-	         +--> event_sched_out()
-	              +--> cpumsf_pmu_del()
-	                   +--> cpumsf_pmu_stop()
-                                +--> hw_perf_event_update()
-
-to stop and remove the event. During removal of the event, the
-sampling device driver tries to read out the remaining samples from
-the sample data buffers (SDBs). But they have already been freed
-(and may have been re-assigned). This may lead to a use after free
-situation in which case the samples are most likely invalid. In the
-best case the memory has not been reassigned and still contains
-valid data.
-
-Remedy this situation and check if the CPU is still in reserved
-state (bit PMU_F_RESERVED set). In this case the SDBs have not been
-released an contain valid data. This is always the case when
-the event is removed (and no CPU hotplug off occured).
-If the PMU_F_RESERVED bit is not set, the SDB buffers are gone.
-
-Signed-off-by: Thomas Richter <tmricht@linux.ibm.com>
-Reviewed-by: Hendrik Brueckner <brueckner@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Link: https://lore.kernel.org/r/20241107064300.227731-2-dlemoal@kernel.org
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/kernel/perf_cpum_sf.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ block/blk-zoned.c      | 43 ++++++++++++++++++++++++++++++------------
+ include/linux/blkdev.h |  2 +-
+ 2 files changed, 32 insertions(+), 13 deletions(-)
 
-diff --git a/arch/s390/kernel/perf_cpum_sf.c b/arch/s390/kernel/perf_cpum_sf.c
-index 3317f4878eaa7..331e0654d61d7 100644
---- a/arch/s390/kernel/perf_cpum_sf.c
-+++ b/arch/s390/kernel/perf_cpum_sf.c
-@@ -1780,7 +1780,9 @@ static void cpumsf_pmu_stop(struct perf_event *event, int flags)
- 	event->hw.state |= PERF_HES_STOPPED;
+diff --git a/block/blk-zoned.c b/block/blk-zoned.c
+index 95e517723db3e..0b1184176ce77 100644
+--- a/block/blk-zoned.c
++++ b/block/blk-zoned.c
+@@ -350,9 +350,15 @@ int blkdev_zone_mgmt_ioctl(struct block_device *bdev, blk_mode_t mode,
  
- 	if ((flags & PERF_EF_UPDATE) && !(event->hw.state & PERF_HES_UPTODATE)) {
--		hw_perf_event_update(event, 1);
-+		/* CPU hotplug off removes SDBs. No samples to extract. */
-+		if (cpuhw->flags & PMU_F_RESERVED)
-+			hw_perf_event_update(event, 1);
- 		event->hw.state |= PERF_HES_UPTODATE;
+ static inline bool disk_zone_is_conv(struct gendisk *disk, sector_t sector)
+ {
+-	if (!disk->conv_zones_bitmap)
+-		return false;
+-	return test_bit(disk_zone_no(disk, sector), disk->conv_zones_bitmap);
++	unsigned long *bitmap;
++	bool is_conv;
++
++	rcu_read_lock();
++	bitmap = rcu_dereference(disk->conv_zones_bitmap);
++	is_conv = bitmap && test_bit(disk_zone_no(disk, sector), bitmap);
++	rcu_read_unlock();
++
++	return is_conv;
+ }
+ 
+ static bool disk_zone_is_last(struct gendisk *disk, struct blk_zone *zone)
+@@ -1455,6 +1461,24 @@ static void disk_destroy_zone_wplugs_hash_table(struct gendisk *disk)
+ 	disk->zone_wplugs_hash_bits = 0;
+ }
+ 
++static unsigned int disk_set_conv_zones_bitmap(struct gendisk *disk,
++					       unsigned long *bitmap)
++{
++	unsigned int nr_conv_zones = 0;
++	unsigned long flags;
++
++	spin_lock_irqsave(&disk->zone_wplugs_lock, flags);
++	if (bitmap)
++		nr_conv_zones = bitmap_weight(bitmap, disk->nr_zones);
++	bitmap = rcu_replace_pointer(disk->conv_zones_bitmap, bitmap,
++				     lockdep_is_held(&disk->zone_wplugs_lock));
++	spin_unlock_irqrestore(&disk->zone_wplugs_lock, flags);
++
++	kfree_rcu_mightsleep(bitmap);
++
++	return nr_conv_zones;
++}
++
+ void disk_free_zone_resources(struct gendisk *disk)
+ {
+ 	if (!disk->zone_wplugs_pool)
+@@ -1478,8 +1502,7 @@ void disk_free_zone_resources(struct gendisk *disk)
+ 	mempool_destroy(disk->zone_wplugs_pool);
+ 	disk->zone_wplugs_pool = NULL;
+ 
+-	bitmap_free(disk->conv_zones_bitmap);
+-	disk->conv_zones_bitmap = NULL;
++	disk_set_conv_zones_bitmap(disk, NULL);
+ 	disk->zone_capacity = 0;
+ 	disk->last_zone_capacity = 0;
+ 	disk->nr_zones = 0;
+@@ -1538,7 +1561,7 @@ static int disk_update_zone_resources(struct gendisk *disk,
+ 				      struct blk_revalidate_zone_args *args)
+ {
+ 	struct request_queue *q = disk->queue;
+-	unsigned int nr_seq_zones, nr_conv_zones = 0;
++	unsigned int nr_seq_zones, nr_conv_zones;
+ 	unsigned int pool_size;
+ 	struct queue_limits lim;
+ 	int ret;
+@@ -1546,10 +1569,8 @@ static int disk_update_zone_resources(struct gendisk *disk,
+ 	disk->nr_zones = args->nr_zones;
+ 	disk->zone_capacity = args->zone_capacity;
+ 	disk->last_zone_capacity = args->last_zone_capacity;
+-	swap(disk->conv_zones_bitmap, args->conv_zones_bitmap);
+-	if (disk->conv_zones_bitmap)
+-		nr_conv_zones = bitmap_weight(disk->conv_zones_bitmap,
+-					      disk->nr_zones);
++	nr_conv_zones =
++		disk_set_conv_zones_bitmap(disk, args->conv_zones_bitmap);
+ 	if (nr_conv_zones >= disk->nr_zones) {
+ 		pr_warn("%s: Invalid number of conventional zones %u / %u\n",
+ 			disk->disk_name, nr_conv_zones, disk->nr_zones);
+@@ -1829,8 +1850,6 @@ int blk_revalidate_disk_zones(struct gendisk *disk)
+ 		blk_mq_unfreeze_queue(q);
  	}
- 	perf_pmu_enable(event->pmu);
+ 
+-	kfree(args.conv_zones_bitmap);
+-
+ 	return ret;
+ }
+ EXPORT_SYMBOL_GPL(blk_revalidate_disk_zones);
+diff --git a/include/linux/blkdev.h b/include/linux/blkdev.h
+index e84a93c401320..6b4bc85f4999b 100644
+--- a/include/linux/blkdev.h
++++ b/include/linux/blkdev.h
+@@ -195,7 +195,7 @@ struct gendisk {
+ 	unsigned int		nr_zones;
+ 	unsigned int		zone_capacity;
+ 	unsigned int		last_zone_capacity;
+-	unsigned long		*conv_zones_bitmap;
++	unsigned long __rcu	*conv_zones_bitmap;
+ 	unsigned int            zone_wplugs_hash_bits;
+ 	spinlock_t              zone_wplugs_lock;
+ 	struct mempool_s	*zone_wplugs_pool;
 -- 
 2.43.0
 
