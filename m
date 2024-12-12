@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24CC82144C0;
-	Thu, 12 Dec 2024 16:57:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13F8713792B;
+	Thu, 12 Dec 2024 16:57:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734022656; cv=none; b=Kk/U1cATw6ycSufecS3n8JNvXey4YYp8zuudrty+icco9rjSSwTDFXBjRU9+DVeNpRmlwnB/WcQ32G+8b05A2oqEqya/9Do9tHoXmvuGu1d64tYPEteNLnmKGB6qAsP2otGsAbJW70DAEui7vuXusxF2M/QPV/I3G1xJlji0RZI=
+	t=1734022659; cv=none; b=RH8DcpSTROwdB8vCD0/gE2dZbF4wd8Hey0tkNoGj46EJWUHl6UFR0uAxuukmS+sc6OVfNYOqZVbTuW9L2ZoGwr/9gIljbNi1Wb2pO8w4yxmYVQFHdnB8Snpe6N7p/yl32CF1fbP1WQ6aBjG5QVI+ubWWv29nP8x0DREfzWfu4WI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734022656; c=relaxed/simple;
-	bh=C7/Wv+YAdr8+JXUcUk0L1FIb9+vMnA+2ccs/w7VIQ6w=;
+	s=arc-20240116; t=1734022659; c=relaxed/simple;
+	bh=jHxQ/jiqtXOnQhpEPV/kmt+woqG4ENjLlYmCK9Nf8Cw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C8qIgfv2zecb/qAL5CX+mtaC2xVBCXQp/jcOo2XABI4bCOthPnGvkT4MpjV4R/JHwDO1p6Fw0JezGZX2bNZ9WefQfzxl5Oi5nVy2OwKfZ/2LGccRymiEiUnTkO0+BUH0XXOpBlCyV4WNU6oFRJOvoatb3wvtkjCHTl9W6+YedjY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R9764gVC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YvJAlnwZqirCg5vSvOwdfXkpUXGmAIBjZ8sn2gtEDOeNNZLB8wsFb4jA5vDw771iUQTHFwW/+qvzAPFSFnn/UAt9Gkm6BBFutrHaxwQfOTu59fXonDSMTt2OKumHOj93P9dJMMb/PTaZ9RlcHGlwXXXm9xPK5Ezt0SMyzEFA5Q8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vJPesXFv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R9764gVC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B3EBC4CED0;
-	Thu, 12 Dec 2024 16:57:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vJPesXFv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F2BDC4CED4;
+	Thu, 12 Dec 2024 16:57:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734022655;
-	bh=C7/Wv+YAdr8+JXUcUk0L1FIb9+vMnA+2ccs/w7VIQ6w=;
+	s=korg; t=1734022658;
+	bh=jHxQ/jiqtXOnQhpEPV/kmt+woqG4ENjLlYmCK9Nf8Cw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R9764gVCzsatZATbgJISxS9WPQPZlYXLYN6X3XpcrsljtZZXY2JbTszgHDED6s6ib
-	 F+IjwT5d0vHxqAJzTbi8u0NJUfiefhKEC+4k0zff13t22hQIVk5uW6m2DsaXdV56YA
-	 XC2umFtI1fZosYVZTxlA3iytCKUWits49rcqBsoQ=
+	b=vJPesXFvh38gIBHSK+P2P4yTxCR9sprlazB9ZDTkzSxeIKTgHk7d2zzcRHr6w7LU3
+	 ZH2iNYBwb54slAOo2og8/Nev7w6oGAB70OkX5pDDcjcz+gYxOcHpqU8G5qDyrjw49z
+	 KM4/N+l5+sVw1B3h1GkOPgoRzSiweF5t9aPLSpuk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joel Guittet <jguittet.opensource@witekio.com>
-Subject: [PATCH 5.15 300/565] Revert "drivers: clk: zynqmp: update divider round rate logic"
-Date: Thu, 12 Dec 2024 15:58:15 +0100
-Message-ID: <20241212144323.324639672@linuxfoundation.org>
+	kernel test robot <lkp@intel.com>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 5.15 301/565] ASoC: Intel: sst: Fix used of uninitialized ctx to log an error
+Date: Thu, 12 Dec 2024 15:58:16 +0100
+Message-ID: <20241212144323.364572959@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144311.432886635@linuxfoundation.org>
 References: <20241212144311.432886635@linuxfoundation.org>
@@ -49,111 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joel Guittet <jguittet@witekio.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-This reverts commit 9117fc44fd3a9538261e530ba5a022dfc9519620 which is
-commit 1fe15be1fb613534ecbac5f8c3f8744f757d237d upstream.
+commit c1895ba181e560144601fafe46aeedbafdf4dbc4 upstream.
 
-It is reported to cause regressions in the 5.15.y tree, so revert it for
-now.
+Fix the new "LPE0F28" code path using the uninitialized ctx variable
+to log an error.
 
-Link: https://www.spinics.net/lists/kernel/msg5397998.html
-Signed-off-by: Joel Guittet <jguittet.opensource@witekio.com>
+Fixes: 6668610b4d8c ("ASoC: Intel: sst: Support LPE0F28 ACPI HID")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202410261106.EBx49ssy-lkp@intel.com/
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://patch.msgid.link/20241026143615.171821-1-hdegoede@redhat.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/clk/zynqmp/divider.c |   66 +++++++++++++++++++++++++++++++++++++++----
- 1 file changed, 61 insertions(+), 5 deletions(-)
+ sound/soc/intel/atom/sst/sst_acpi.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/clk/zynqmp/divider.c
-+++ b/drivers/clk/zynqmp/divider.c
-@@ -110,6 +110,52 @@ static unsigned long zynqmp_clk_divider_
- 	return DIV_ROUND_UP_ULL(parent_rate, value);
- }
- 
-+static void zynqmp_get_divider2_val(struct clk_hw *hw,
-+				    unsigned long rate,
-+				    struct zynqmp_clk_divider *divider,
-+				    u32 *bestdiv)
-+{
-+	int div1;
-+	int div2;
-+	long error = LONG_MAX;
-+	unsigned long div1_prate;
-+	struct clk_hw *div1_parent_hw;
-+	struct zynqmp_clk_divider *pdivider;
-+	struct clk_hw *div2_parent_hw = clk_hw_get_parent(hw);
-+
-+	if (!div2_parent_hw)
-+		return;
-+
-+	pdivider = to_zynqmp_clk_divider(div2_parent_hw);
-+	if (!pdivider)
-+		return;
-+
-+	div1_parent_hw = clk_hw_get_parent(div2_parent_hw);
-+	if (!div1_parent_hw)
-+		return;
-+
-+	div1_prate = clk_hw_get_rate(div1_parent_hw);
-+	*bestdiv = 1;
-+	for (div1 = 1; div1 <= pdivider->max_div;) {
-+		for (div2 = 1; div2 <= divider->max_div;) {
-+			long new_error = ((div1_prate / div1) / div2) - rate;
-+
-+			if (abs(new_error) < abs(error)) {
-+				*bestdiv = div2;
-+				error = new_error;
-+			}
-+			if (divider->flags & CLK_DIVIDER_POWER_OF_TWO)
-+				div2 = div2 << 1;
-+			else
-+				div2++;
-+		}
-+		if (pdivider->flags & CLK_DIVIDER_POWER_OF_TWO)
-+			div1 = div1 << 1;
-+		else
-+			div1++;
-+	}
-+}
-+
- /**
-  * zynqmp_clk_divider_round_rate() - Round rate of divider clock
-  * @hw:			handle between common and hardware-specific interfaces
-@@ -128,7 +174,6 @@ static long zynqmp_clk_divider_round_rat
- 	u32 div_type = divider->div_type;
- 	u32 bestdiv;
- 	int ret;
--	u8 width;
- 
- 	/* if read only, just return current value */
- 	if (divider->flags & CLK_DIVIDER_READ_ONLY) {
-@@ -148,12 +193,23 @@ static long zynqmp_clk_divider_round_rat
- 		return DIV_ROUND_UP_ULL((u64)*prate, bestdiv);
- 	}
- 
--	width = fls(divider->max_div);
-+	bestdiv = zynqmp_divider_get_val(*prate, rate, divider->flags);
-+
-+	/*
-+	 * In case of two divisors, compute best divider values and return
-+	 * divider2 value based on compute value. div1 will  be automatically
-+	 * set to optimum based on required total divider value.
-+	 */
-+	if (div_type == TYPE_DIV2 &&
-+	    (clk_hw_get_flags(hw) & CLK_SET_RATE_PARENT)) {
-+		zynqmp_get_divider2_val(hw, rate, divider, &bestdiv);
-+	}
- 
--	rate = divider_round_rate(hw, rate, prate, NULL, width, divider->flags);
-+	if ((clk_hw_get_flags(hw) & CLK_SET_RATE_PARENT) && divider->is_frac)
-+		bestdiv = rate % *prate ? 1 : bestdiv;
- 
--	if (divider->is_frac && (clk_hw_get_flags(hw) & CLK_SET_RATE_PARENT) && (rate % *prate))
--		*prate = rate;
-+	bestdiv = min_t(u32, bestdiv, divider->max_div);
-+	*prate = rate * bestdiv;
- 
- 	return rate;
- }
+--- a/sound/soc/intel/atom/sst/sst_acpi.c
++++ b/sound/soc/intel/atom/sst/sst_acpi.c
+@@ -309,7 +309,7 @@ static int sst_acpi_probe(struct platfor
+ 		rsrc = platform_get_resource(pdev, IORESOURCE_MEM,
+ 					     pdata->res_info->acpi_lpe_res_index);
+ 		if (!rsrc) {
+-			dev_err(ctx->dev, "Invalid SHIM base\n");
++			dev_err(dev, "Invalid SHIM base\n");
+ 			return -EIO;
+ 		}
+ 		rsrc->start -= pdata->res_info->shim_offset;
 
 
