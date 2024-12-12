@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D146213CA93;
-	Thu, 12 Dec 2024 17:14:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 972DD6F2FE;
+	Thu, 12 Dec 2024 17:14:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734023653; cv=none; b=Ferl2CQzoo3+8uhZMR46jLiAvvA5c7tvnpXwKqAfQrH4T42a5heVSQDqq2HvkxC0poDEXwlpeHsEXIsiU1+BdbZkWZYBrgNIducVyq1S2sicgVUBJkVfHDROAPQM/abDYKjmt8WS6NRVeHnaL8I5bE7WYPBchz+9OibNMKaTD8c=
+	t=1734023656; cv=none; b=II4QYbpKaWFHFjLRkxhexYRSL7MMpBGmYwns9NCnMs264OUy9iYaeQrvbK6Qq7eoDgz/HHR/jZkyDcH4Pa++twx9zfZSTasy6WDdP5WjEdgzdj8bvX3CMXk72UckNbs5d1NSuHZSAm1LXsfqjXVrwtbPllLwN+V19rZEErvJXBE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734023653; c=relaxed/simple;
-	bh=oExNaZldSXpeKNjc9AoSkW2hjtEMRid1TlEoF4CpNYk=;
+	s=arc-20240116; t=1734023656; c=relaxed/simple;
+	bh=XnKeaJRI5mb64NyN11Y2VhwEXQmbiqLi/dMTzOofHBU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nbEbl/yxsGech8fIFfx6DQ6/GfyQNuzJ5kSV+o8/BF3TsqWvgOytGRot/JmFuOjrbJ576qMjwZ6usK7M74GA+7E4i3gu4prmC1eNjVyrMVOicw9+mZ36C5Tg5l2jH1h7AQ62h+nYQCe6/Ixba8MC+rFXDF3AY27HiNcmbMIz8AU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z6pH3sXV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sdfj4LKkiJygPprcJZAteOO1/SyB1gBjZD/X5ZWkfxa9kaY7Kg8rbMtJeS4ABRmO9m8qb38ocQmus//oGE6h8VO4aXXVJUNg0HBzTG3wCi2lgB8MxZvK/SO5+xx383qgMNMrh2V9b1mB9txm05PI6yRYp12bTugw/UfgupK7ZfE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w4Lg2dKj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z6pH3sXV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3C20C4CECE;
-	Thu, 12 Dec 2024 17:14:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w4Lg2dKj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D3E6C4CECE;
+	Thu, 12 Dec 2024 17:14:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734023653;
-	bh=oExNaZldSXpeKNjc9AoSkW2hjtEMRid1TlEoF4CpNYk=;
+	s=korg; t=1734023656;
+	bh=XnKeaJRI5mb64NyN11Y2VhwEXQmbiqLi/dMTzOofHBU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z6pH3sXV7MXFn1U1nobK7dIhZ21ZSeU8Zyt+kU1i68ze/YxvdDsDpWXmJK3nBPQDk
-	 MA1gCZ04RHzhWeoMmTPw7HwpuT1OTfECbouiFU9hk5PYavI1gtDBqsSPe4gd6qHvnd
-	 qh3EJM17Cyqn3i5gFi0HXDvRydKQ3Mt2pfzkp7OM=
+	b=w4Lg2dKjReq39uUkUqxNXJ0VSnwVT7B/g/ZWzmQ6bEwz4/od+q4JR8fuh6L9aMaev
+	 dewKkfnrbLnHIW5wWi+Qg70Tsq9f3HNTw/XukwTUzyNpjzsFPbYJ2YCBv9gHG2Z+B/
+	 XhAeeJ8IrVH+bfWPCxfZFv19VBNDXPNnVO0YI/ao=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Zhijian <lizhijian@fujitsu.com>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 038/459] selftests/watchdog-test: Fix system accidentally reset after watchdog-test
-Date: Thu, 12 Dec 2024 15:56:16 +0100
-Message-ID: <20241212144255.030971151@linuxfoundation.org>
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	Tejun Heo <tj@kernel.org>,
+	Ubisectech Sirius <bugreport@valiantsec.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.10 021/459] nilfs2: fix null-ptr-deref in block_dirty_buffer tracepoint
+Date: Thu, 12 Dec 2024 15:55:59 +0100
+Message-ID: <20241212144254.363810795@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144253.511169641@linuxfoundation.org>
 References: <20241212144253.511169641@linuxfoundation.org>
@@ -51,57 +52,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li Zhijian <lizhijian@fujitsu.com>
+From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-[ Upstream commit dc1308bee1ed03b4d698d77c8bd670d399dcd04d ]
+commit 2026559a6c4ce34db117d2db8f710fe2a9420d5a upstream.
 
-When running watchdog-test with 'make run_tests', the watchdog-test will
-be terminated by a timeout signal(SIGTERM) due to the test timemout.
+When using the "block:block_dirty_buffer" tracepoint, mark_buffer_dirty()
+may cause a NULL pointer dereference, or a general protection fault when
+KASAN is enabled.
 
-And then, a system reboot would happen due to watchdog not stop. see
-the dmesg as below:
-```
-[ 1367.185172] watchdog: watchdog0: watchdog did not stop!
-```
+This happens because, since the tracepoint was added in
+mark_buffer_dirty(), it references the dev_t member bh->b_bdev->bd_dev
+regardless of whether the buffer head has a pointer to a block_device
+structure.
 
-Fix it by registering more signals(including SIGTERM) in watchdog-test,
-where its signal handler will stop the watchdog.
+In the current implementation, nilfs_grab_buffer(), which grabs a buffer
+to read (or create) a block of metadata, including b-tree node blocks,
+does not set the block device, but instead does so only if the buffer is
+not in the "uptodate" state for each of its caller block reading
+functions.  However, if the uptodate flag is set on a folio/page, and the
+buffer heads are detached from it by try_to_free_buffers(), and new buffer
+heads are then attached by create_empty_buffers(), the uptodate flag may
+be restored to each buffer without the block device being set to
+bh->b_bdev, and mark_buffer_dirty() may be called later in that state,
+resulting in the bug mentioned above.
 
-After that
- # timeout 1 ./watchdog-test
- Watchdog Ticking Away!
- .
- Stopping watchdog ticks...
+Fix this issue by making nilfs_grab_buffer() always set the block device
+of the super block structure to the buffer head, regardless of the state
+of the buffer's uptodate flag.
 
-Link: https://lore.kernel.org/all/20241029031324.482800-1-lizhijian@fujitsu.com/
-Signed-off-by: Li Zhijian <lizhijian@fujitsu.com>
-Reviewed-by: Shuah Khan <skhan@linuxfoundation.org>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lkml.kernel.org/r/20241106160811.3316-3-konishi.ryusuke@gmail.com
+Fixes: 5305cb830834 ("block: add block_{touch|dirty}_buffer tracepoint")
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Cc: Tejun Heo <tj@kernel.org>
+Cc: Ubisectech Sirius <bugreport@valiantsec.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/watchdog/watchdog-test.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ fs/nilfs2/btnode.c  |    2 --
+ fs/nilfs2/gcinode.c |    4 +---
+ fs/nilfs2/mdt.c     |    1 -
+ fs/nilfs2/page.c    |    1 +
+ 4 files changed, 2 insertions(+), 6 deletions(-)
 
-diff --git a/tools/testing/selftests/watchdog/watchdog-test.c b/tools/testing/selftests/watchdog/watchdog-test.c
-index f45e510500c0d..09773695d219f 100644
---- a/tools/testing/selftests/watchdog/watchdog-test.c
-+++ b/tools/testing/selftests/watchdog/watchdog-test.c
-@@ -242,7 +242,13 @@ int main(int argc, char *argv[])
+--- a/fs/nilfs2/btnode.c
++++ b/fs/nilfs2/btnode.c
+@@ -68,7 +68,6 @@ nilfs_btnode_create_block(struct address
+ 		goto failed;
+ 	}
+ 	memset(bh->b_data, 0, i_blocksize(inode));
+-	bh->b_bdev = inode->i_sb->s_bdev;
+ 	bh->b_blocknr = blocknr;
+ 	set_buffer_mapped(bh);
+ 	set_buffer_uptodate(bh);
+@@ -133,7 +132,6 @@ int nilfs_btnode_submit_block(struct add
+ 		goto found;
+ 	}
+ 	set_buffer_mapped(bh);
+-	bh->b_bdev = inode->i_sb->s_bdev;
+ 	bh->b_blocknr = pblocknr; /* set block address for read */
+ 	bh->b_end_io = end_buffer_read_sync;
+ 	get_bh(bh);
+--- a/fs/nilfs2/gcinode.c
++++ b/fs/nilfs2/gcinode.c
+@@ -83,10 +83,8 @@ int nilfs_gccache_submit_read_data(struc
+ 		goto out;
+ 	}
  
- 	printf("Watchdog Ticking Away!\n");
+-	if (!buffer_mapped(bh)) {
+-		bh->b_bdev = inode->i_sb->s_bdev;
++	if (!buffer_mapped(bh))
+ 		set_buffer_mapped(bh);
+-	}
+ 	bh->b_blocknr = pbn;
+ 	bh->b_end_io = end_buffer_read_sync;
+ 	get_bh(bh);
+--- a/fs/nilfs2/mdt.c
++++ b/fs/nilfs2/mdt.c
+@@ -89,7 +89,6 @@ static int nilfs_mdt_create_block(struct
+ 	if (buffer_uptodate(bh))
+ 		goto failed_bh;
  
-+	/*
-+	 * Register the signals
-+	 */
- 	signal(SIGINT, term);
-+	signal(SIGTERM, term);
-+	signal(SIGKILL, term);
-+	signal(SIGQUIT, term);
+-	bh->b_bdev = sb->s_bdev;
+ 	err = nilfs_mdt_insert_new_block(inode, block, bh, init_block);
+ 	if (likely(!err)) {
+ 		get_bh(bh);
+--- a/fs/nilfs2/page.c
++++ b/fs/nilfs2/page.c
+@@ -63,6 +63,7 @@ struct buffer_head *nilfs_grab_buffer(st
+ 		put_page(page);
+ 		return NULL;
+ 	}
++	bh->b_bdev = inode->i_sb->s_bdev;
+ 	return bh;
+ }
  
- 	while (1) {
- 		keep_alive();
--- 
-2.43.0
-
 
 
