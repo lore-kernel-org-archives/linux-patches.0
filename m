@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 906E0213E6F;
-	Thu, 12 Dec 2024 17:30:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CC2B221D93;
+	Thu, 12 Dec 2024 17:30:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734024611; cv=none; b=EMLq6k1TxkP9Lc0DWYXVBynbJHrNiVQcgQqgirZgKKaFi8j775pkf0Ggn2ugMnfsLm2ChBpL5XlutkXy4OnPC2WP3JF3H9OaXY7USl3KbFdjItNFSrgCHkODRiHUIwezl7DZmxpkzkG/W9k7kAJxheMq6DbB1cWGZa/2IHNz2Nc=
+	t=1734024614; cv=none; b=aBycT8NOp/9t4XWqnr0e7N7k8kWZFVfyXy6bkmDz9iP317yADhXsTtZ8g6bzwx6chNvTkn6Ns7Zi37R9DMMaOWhL4QqxLMDK8T6yoovbEr7TKgI+w1mxuCD8oy7LonPxdrMWSyPCEZG3ZzVwYxDHv6GylmFV3jQlpV32cRqoYIY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734024611; c=relaxed/simple;
-	bh=patnt3JB/x3iWzA+1QLzOn7w6QV/Qzt12K1OYvQznBs=;
+	s=arc-20240116; t=1734024614; c=relaxed/simple;
+	bh=nvA2XrCTtzG8ZxBqv2oSLS4VELMa9bNIlxfjNXIiT68=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mmi8KHdLC+Qq3204m2zl18tbdjXBGsYjavuSe3AQ9ZzLeVZq/uu715IJndy6JVJpWpHfnjYgEmBzrrRXjg1oQvgR5z+cIh5rqeTCWYz2u3l3ER/ct8tCukNLCv0YI8TOMSuCHPqmyAbo5HgTjKVIF8YkAOYaa9kwRxpFKzN1fJ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ulqLbT0h; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PtTrCVx1N24zeRcsDCGpgHST7istxOKo9oCSeqouLqPM0vu69JkJWG91q1Csgc7et7hkE6wT1HqHPMy7TXamWgeNUKGKnePgl+RUs522g2VrDE4FlohtCJlgvYQQERkBWcxq3vY3mKN31IJqdcNVYS0uWM6D0TAHb8maL+YiNBo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a123gz1J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ulqLbT0h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDFB4C4CECE;
-	Thu, 12 Dec 2024 17:30:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a123gz1J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD5BEC4CECE;
+	Thu, 12 Dec 2024 17:30:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734024611;
-	bh=patnt3JB/x3iWzA+1QLzOn7w6QV/Qzt12K1OYvQznBs=;
+	s=korg; t=1734024614;
+	bh=nvA2XrCTtzG8ZxBqv2oSLS4VELMa9bNIlxfjNXIiT68=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ulqLbT0hBci21QyIojvqrwmYJ4RIyzYnR3jScoCCXrss14L7XBN3BWsg2d6ZjwTBD
-	 FluaqM0UbW4ZIw5Ya/Xk+hPPkPS5aVU6U1fhtJ5BQISCjrHHbsGqXBQHnpPTZVU2Zp
-	 YEZ8ifn3MehIFhzIJSiX1u7kGttI5jA85A/cdZL4=
+	b=a123gz1JsT4P49AB9lDVdTbMnsTpKm/5lm9SrN4Z/7h8I7FYIVs3aCwJK9mSJQVwj
+	 ocbmJBjMo8xH6tB/3a/DDSOhDUjyjeUqcjl7+5zjC6orWyiDlRHiJ5SNrF9EL96iTE
+	 DAJlLApnhtYbzS+1bv3W9QlMV4xi/nNJu5F2G62g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Charles Han <hanchunchao@inspur.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Pei Xiao <xiaopei01@kylinos.cn>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 346/459] gpio: grgpio: Add NULL check in grgpio_probe
-Date: Thu, 12 Dec 2024 16:01:24 +0100
-Message-ID: <20241212144307.329936250@linuxfoundation.org>
+Subject: [PATCH 5.10 355/459] spi: mpc52xx: Add cancel_work_sync before module remove
+Date: Thu, 12 Dec 2024 16:01:33 +0100
+Message-ID: <20241212144307.687457846@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144253.511169641@linuxfoundation.org>
 References: <20241212144253.511169641@linuxfoundation.org>
@@ -51,39 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Charles Han <hanchunchao@inspur.com>
+From: Pei Xiao <xiaopei01@kylinos.cn>
 
-[ Upstream commit 050b23d081da0f29474de043e9538c1f7a351b3b ]
+[ Upstream commit 984836621aad98802d92c4a3047114cf518074c8 ]
 
-devm_kasprintf() can return a NULL pointer on failure,but this
-returned value in grgpio_probe is not checked.
-Add NULL check in grgpio_probe, to handle kernel NULL
-pointer dereference error.
+If we remove the module which will call mpc52xx_spi_remove
+it will free 'ms' through spi_unregister_controller.
+while the work ms->work will be used. The sequence of operations
+that may lead to a UAF bug.
 
-Cc: stable@vger.kernel.org
-Fixes: 7eb6ce2f2723 ("gpio: Convert to using %pOF instead of full_name")
-Signed-off-by: Charles Han <hanchunchao@inspur.com>
-Link: https://lore.kernel.org/r/20241114091822.78199-1-hanchunchao@inspur.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Fix it by ensuring that the work is canceled before proceeding with
+the cleanup in mpc52xx_spi_remove.
+
+Fixes: ca632f556697 ("spi: reorganize drivers")
+Signed-off-by: Pei Xiao <xiaopei01@kylinos.cn>
+Link: https://patch.msgid.link/1f16f8ae0e50ca9adb1dc849bf2ac65a40c9ceb9.1732783000.git.xiaopei01@kylinos.cn
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpio-grgpio.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/spi/spi-mpc52xx.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpio/gpio-grgpio.c b/drivers/gpio/gpio-grgpio.c
-index ca3bf8d51d5aa..506891115bb3e 100644
---- a/drivers/gpio/gpio-grgpio.c
-+++ b/drivers/gpio/gpio-grgpio.c
-@@ -363,6 +363,9 @@ static int grgpio_probe(struct platform_device *ofdev)
- 	gc->owner = THIS_MODULE;
- 	gc->to_irq = grgpio_to_irq;
- 	gc->label = devm_kasprintf(dev, GFP_KERNEL, "%pOF", np);
-+	if (!gc->label)
-+		return -ENOMEM;
-+
- 	gc->base = -1;
+diff --git a/drivers/spi/spi-mpc52xx.c b/drivers/spi/spi-mpc52xx.c
+index ef2f24420460d..be99efafabbce 100644
+--- a/drivers/spi/spi-mpc52xx.c
++++ b/drivers/spi/spi-mpc52xx.c
+@@ -519,6 +519,7 @@ static int mpc52xx_spi_remove(struct platform_device *op)
+ 	struct mpc52xx_spi *ms = spi_master_get_devdata(master);
+ 	int i;
  
- 	err = of_property_read_u32(np, "nbits", &prop);
++	cancel_work_sync(&ms->work);
+ 	free_irq(ms->irq0, ms);
+ 	free_irq(ms->irq1, ms);
+ 
 -- 
 2.43.0
 
