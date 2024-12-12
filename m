@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C66324036B;
-	Thu, 12 Dec 2024 16:19:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54A1A242A82;
+	Thu, 12 Dec 2024 16:19:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734020353; cv=none; b=u52134jdJWGL+bsb5hu9q09vBbPJiiii7ouyzb7vDXMbQ99Hf6W7czDJqml9hqW2Rz4bty8484QMvcpYlikNsIsXIfD+Ehz16D6hlEuH640zXnYOUrgaVnwSpDtn42dy1x6vDYUl3kaOnqwtq80Tn6N5RlLJeatO66qs5gpY+k8=
+	t=1734020357; cv=none; b=onw2KSWSsvOaavnbgDsDkdXeieP7zt5Wvgw0ijDeCmGtvE5pJw9FKKGlwI+kAjIU6Nn2xrn5TIUqw0Tl3jhI4vva7ACKA3owV1B5TRcJHbLZ68tXBKPI3V9t/ZvgI0wUHezi1mvEyoxB9UXXL/wU3a3NzRshu/s9vKVIoL3s3yQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734020353; c=relaxed/simple;
-	bh=0g29gXdjvGu1ia6J1arjaipSfOAPjG1WZtNlkvK2lYA=;
+	s=arc-20240116; t=1734020357; c=relaxed/simple;
+	bh=vJsT4yBVmWVE0lEACM3jmjx5Ob5D+trIJsLXhHab7oA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=DmF3kIc0ITPzSpRPATGxmfRMbkGhcW+oI8WSgMDmTr6Ot+H72w/0BgThrb3+fYt4DrS5jOwAeEZ4yAI/rcYZ8K3HuLtRe0zK+W3NUBHYO6WfJ4Q4Vsk9D2pFWuoEXxOWPAzKTD3w2r+AwWN1IUxsxdUznrPBluvqO6s/8ZSUnjA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=avQy6AEK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dP7ND1x0o0HO4z7okygCVMVwNmRN1OzRxSt0mg1EEB4Chqnib/ztnl7uqPU4G0U+fDTioqERFJLX2wZBu3XtKcsm3Mn6bUq7alz86zvGrFLr9LxTI8szLOBBmxeHD/EMwnOnkw321U9lVbRrpMg2VaP4dhOVTmWSJUlZoh7gErI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WcitXgbR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="avQy6AEK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06800C4CEE5;
-	Thu, 12 Dec 2024 16:19:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WcitXgbR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 522DAC4CECE;
+	Thu, 12 Dec 2024 16:19:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734020352;
-	bh=0g29gXdjvGu1ia6J1arjaipSfOAPjG1WZtNlkvK2lYA=;
+	s=korg; t=1734020357;
+	bh=vJsT4yBVmWVE0lEACM3jmjx5Ob5D+trIJsLXhHab7oA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=avQy6AEKXRmIurMEhlKX8/P+qo3GVQdx2gHtMEcmuzIkTR4gChtHad7GPst/BZd3k
-	 wsijoJlAf+EDvg/OfTzy/MBprOXmeOFrGhibMMLEpzm0QJ1NVNlLTDTqaVyJt7w3dT
-	 ele8/ai3G4bFk2mClBk8zollaXvGwUD2AQU7orhI=
+	b=WcitXgbRF/YkZjlHwaNR7ErOrBZtuXMb+Wtv3Ml0DLgoL78SHjnRHLjBmUVkIsfRZ
+	 V02pInhS/vcZH18TR7ZSg3ixYmHTt321vP7b7BAsud2bKppyMTAYldbJBrMw9N0ASt
+	 mguR2lLmOc0eAjwu4Nch9OcqU5AZbB81qvg5SKdU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masahiro Yamada <masahiroy@kernel.org>,
+	Li Lingfeng <lilingfeng3@huawei.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 445/772] modpost: remove incorrect code in do_eisa_entry()
-Date: Thu, 12 Dec 2024 15:56:30 +0100
-Message-ID: <20241212144408.311566379@linuxfoundation.org>
+Subject: [PATCH 6.1 446/772] nfs: ignore SB_RDONLY when mounting nfs
+Date: Thu, 12 Dec 2024 15:56:31 +0100
+Message-ID: <20241212144408.351747964@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -44,87 +45,82 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Masahiro Yamada <masahiroy@kernel.org>
+From: Li Lingfeng <lilingfeng3@huawei.com>
 
-[ Upstream commit 0c3e091319e4748cb36ac9a50848903dc6f54054 ]
+[ Upstream commit 52cb7f8f177878b4f22397b9c4d2c8f743766be3 ]
 
-This function contains multiple bugs after the following commits:
+When exporting only one file system with fsid=0 on the server side, the
+client alternately uses the ro/rw mount options to perform the mount
+operation, and a new vfsmount is generated each time.
 
- - ac551828993e ("modpost: i2c aliases need no trailing wildcard")
- - 6543becf26ff ("mod/file2alias: make modalias generation safe for cross compiling")
+It can be reproduced as follows:
+[root@localhost ~]# mount /dev/sda /mnt2
+[root@localhost ~]# echo "/mnt2 *(rw,no_root_squash,fsid=0)" >/etc/exports
+[root@localhost ~]# systemctl restart nfs-server
+[root@localhost ~]# mount -t nfs -o ro,vers=4 127.0.0.1:/ /mnt/sdaa
+[root@localhost ~]# mount -t nfs -o rw,vers=4 127.0.0.1:/ /mnt/sdaa
+[root@localhost ~]# mount -t nfs -o ro,vers=4 127.0.0.1:/ /mnt/sdaa
+[root@localhost ~]# mount -t nfs -o rw,vers=4 127.0.0.1:/ /mnt/sdaa
+[root@localhost ~]# mount | grep nfs4
+127.0.0.1:/ on /mnt/sdaa type nfs4 (ro,relatime,vers=4.2,rsize=1048576,...
+127.0.0.1:/ on /mnt/sdaa type nfs4 (rw,relatime,vers=4.2,rsize=1048576,...
+127.0.0.1:/ on /mnt/sdaa type nfs4 (ro,relatime,vers=4.2,rsize=1048576,...
+127.0.0.1:/ on /mnt/sdaa type nfs4 (rw,relatime,vers=4.2,rsize=1048576,...
+[root@localhost ~]#
 
-Commit ac551828993e inserted the following code to do_eisa_entry():
+We expected that after mounting with the ro option, using the rw option to
+mount again would return EBUSY, but the actual situation was not the case.
 
-    else
-            strcat(alias, "*");
+As shown above, when mounting for the first time, a superblock with the ro
+flag will be generated, and at the same time, in do_new_mount_fc -->
+do_add_mount, it detects that the superblock corresponding to the current
+target directory is inconsistent with the currently generated one
+(path->mnt->mnt_sb != newmnt->mnt.mnt_sb), and a new vfsmount will be
+generated.
 
-This is incorrect because 'alias' is uninitialized. If it is not
-NULL-terminated, strcat() could cause a buffer overrun.
+When mounting with the rw option for the second time, since no matching
+superblock can be found in the fs_supers list, a new superblock with the
+rw flag will be generated again. The superblock in use (ro) is different
+from the newly generated superblock (rw), and a new vfsmount will be
+generated again.
 
-Even if 'alias' happens to be zero-filled, it would output:
+When mounting with the ro option for the third time, the superblock (ro)
+is found in fs_supers, the superblock in use (rw) is different from the
+found superblock (ro), and a new vfsmount will be generated again.
 
-    MODULE_ALIAS("*");
+We can switch between ro/rw through remount, and only one superblock needs
+to be generated, thus avoiding the problem of repeated generation of
+vfsmount caused by switching superblocks.
 
-This would match anything. As a result, the module could be loaded by
-any unrelated uevent from an unrelated subsystem.
+Furthermore, This can also resolve the issue described in the link.
 
-Commit ac551828993e introduced another bug.            
-
-Prior to that commit, the conditional check was:
-
-    if (eisa->sig[0])
-
-This checked if the first character of eisa_device_id::sig was not '\0'.
-
-However, commit ac551828993e changed it as follows:
-
-    if (sig[0])
-
-sig[0] is NOT the first character of the eisa_device_id::sig. The
-type of 'sig' is 'char (*)[8]', meaning that the type of 'sig[0]' is
-'char [8]' instead of 'char'. 'sig[0]' and 'symval' refer to the same
-address, which never becomes NULL.
-
-The correct conversion would have been:
-
-    if ((*sig)[0])
-
-However, this if-conditional was meaningless because the earlier change
-in commit ac551828993e was incorrect.
-
-This commit removes the entire incorrect code, which should never have
-been executed.
-
-Fixes: ac551828993e ("modpost: i2c aliases need no trailing wildcard")
-Fixes: 6543becf26ff ("mod/file2alias: make modalias generation safe for cross compiling")
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Fixes: 275a5d24bf56 ("NFS: Error when mounting the same filesystem with different options")
+Link: https://lore.kernel.org/all/20240604112636.236517-3-lilingfeng@huaweicloud.com/
+Signed-off-by: Li Lingfeng <lilingfeng3@huawei.com>
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/mod/file2alias.c | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ fs/nfs/internal.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/scripts/mod/file2alias.c b/scripts/mod/file2alias.c
-index 39e2c8883ddd4..c08beab14a2e0 100644
---- a/scripts/mod/file2alias.c
-+++ b/scripts/mod/file2alias.c
-@@ -808,10 +808,7 @@ static int do_eisa_entry(const char *filename, void *symval,
- 		char *alias)
- {
- 	DEF_FIELD_ADDR(symval, eisa_device_id, sig);
--	if (sig[0])
--		sprintf(alias, EISA_DEVICE_MODALIAS_FMT "*", *sig);
--	else
--		strcat(alias, "*");
-+	sprintf(alias, EISA_DEVICE_MODALIAS_FMT "*", *sig);
- 	return 1;
- }
+diff --git a/fs/nfs/internal.h b/fs/nfs/internal.h
+index d921d7b7bec64..7fa23a6368e0b 100644
+--- a/fs/nfs/internal.h
++++ b/fs/nfs/internal.h
+@@ -11,7 +11,7 @@
+ #include <linux/nfs_page.h>
+ #include <linux/wait_bit.h>
+ 
+-#define NFS_SB_MASK (SB_RDONLY|SB_NOSUID|SB_NODEV|SB_NOEXEC|SB_SYNCHRONOUS)
++#define NFS_SB_MASK (SB_NOSUID|SB_NODEV|SB_NOEXEC|SB_SYNCHRONOUS)
+ 
+ extern const struct export_operations nfs_export_ops;
  
 -- 
 2.43.0
