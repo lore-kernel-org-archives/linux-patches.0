@@ -1,39 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F375521CFF0;
-	Thu, 12 Dec 2024 16:12:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C28223ED64;
+	Thu, 12 Dec 2024 16:12:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734019976; cv=none; b=hZmK1B3d52IaBLmRuzgpQj8ipPSfEku8X3lq33FCTuFZW1B2UIyh8XF5/EH0+NoRHz2GikRgTHlA3uACx1zsaVDdCplt4EQVnWPcRyE42Jtea9TMuSW6Qy+xwvnVjlOcwVL3I1WBdGn82z7yT51xAvvqh2woECLPePv2k3L++60=
+	t=1734019979; cv=none; b=ez8H3AXFjORPGO5CT/GJNa/DxawTXNQtmA1eObztz3wwKzx7umf1/8rU7ev3d+fONFhIwIf6zR7cczWiG2tAgD9Fb9Gb+HoELgGP7XaanD5v3bOFTnpnnI02bC44++hitim2niwbBkvQiVvd6HZVCtU1+2Y27cMDHfqT+mNp6Ac=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734019976; c=relaxed/simple;
-	bh=0twdHZYYEV400CHqB2ib/oOYE9io30l83OHySeivKoY=;
+	s=arc-20240116; t=1734019979; c=relaxed/simple;
+	bh=Je+0CY9TZvC5Kqrl9HnRuKYgYRg1lJ1bE3NoYzKSlqg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CCnk49D+fJBMTy2sRD2nUxSejKa2/5KL/rdKETAKbtTX6l2jRLrRYnVN2LVMM3/p7F5wxD1X8AaNzVxdWu+qckLadBjQTdefWYXvWdJ2kCbGLcXEAeqVWQNoDId/2AapFyl4ULEH88Vdk4ClWnYA/VD9vyxtsXAibTQLbr5UrAE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qsY57tR9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ow/qtl3+Qjn0v5zRB4/SmX2s4R3dmISQkvIJaSfZWWK+byhTToreqOF9d08vVI8+OEzBQYHRxk0WCiq/8UFp1SdRbCCf3vXrXWsjmIUy1/d7W40YwuMtWYQFWfUT4s8eeuS7mDN1H2/sFgmENje83ntkpPsfH2eeTFGIsetyUF4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hnekHaFe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qsY57tR9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47643C4CED0;
-	Thu, 12 Dec 2024 16:12:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hnekHaFe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 849F3C4CECE;
+	Thu, 12 Dec 2024 16:12:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734019975;
-	bh=0twdHZYYEV400CHqB2ib/oOYE9io30l83OHySeivKoY=;
+	s=korg; t=1734019979;
+	bh=Je+0CY9TZvC5Kqrl9HnRuKYgYRg1lJ1bE3NoYzKSlqg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qsY57tR9FiSAz9rwczbHbwN1NqUC4eQ8synFnkyOaZCB9TlMAsQND/XDaqT+jXhOR
-	 ZAupbkqMps4x4SQIQMf+PisNwnAyibhoERjH3ssEU0oWsYQelHm9xQqD7SVbkNCwF6
-	 lUbzwv+l4DFaFjKKf5UISvPInB+Oz8zdluvtyd2M=
+	b=hnekHaFeBjhQB40REwvChbLHZbV9gvuY6QQpk99ig4k1nvzp0sr8gpjoUkNeGRKur
+	 7M6sD9efZXWd5ciGXkEE3sf9FG5REGZ55SnsaOUIsvXOhIu7drt+gzc1g4ygwJmynH
+	 1FUuYrFIKUTMl6bqWyshUN2TUCYv6Cr5loTmZ3yY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Tom Chung <chiahsuan.chung@amd.com>,
+	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
+	Roman Li <roman.li@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Harry Wentland <harry.wentland@amd.com>,
+	Hamza Mahfooz <hamza.mahfooz@amd.com>,
+	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>,
 	Xiangyu Chen <xiangyu.chen@windriver.com>
-Subject: [PATCH 6.1 346/772] wifi: iwlwifi: mvm: avoid NULL pointer dereference
-Date: Thu, 12 Dec 2024 15:54:51 +0100
-Message-ID: <20241212144404.208141457@linuxfoundation.org>
+Subject: [PATCH 6.1 347/772] drm/amd/display: Add NULL check for clk_mgr and clk_mgr->funcs in dcn30_init_hw
+Date: Thu, 12 Dec 2024 15:54:52 +0100
+Message-ID: <20241212144404.252465476@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -52,72 +59,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
 
-commit 557a6cd847645e667f3b362560bd7e7c09aac284 upstream.
+commit cba7fec864172dadd953daefdd26e01742b71a6a upstream.
 
-iwl_mvm_tx_skb_sta() and iwl_mvm_tx_mpdu() verify that the mvmvsta
-pointer is not NULL.
-It retrieves this pointer using iwl_mvm_sta_from_mac80211, which is
-dereferencing the ieee80211_sta pointer.
-If sta is NULL, iwl_mvm_sta_from_mac80211 will dereference a NULL
-pointer.
-Fix this by checking the sta pointer before retrieving the mvmsta
-from it. If sta is not NULL, then mvmsta isn't either.
+This commit addresses a potential null pointer dereference issue in the
+`dcn30_init_hw` function. The issue could occur when `dc->clk_mgr` or
+`dc->clk_mgr->funcs` is null.
 
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Reviewed-by: Johannes Berg <johannes.berg@intel.com>
-Link: https://patch.msgid.link/20240825191257.880921ce23b7.I340052d70ab6d3410724ce955eb00da10e08188f@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+The fix adds a check to ensure `dc->clk_mgr` and `dc->clk_mgr->funcs` is
+not null before accessing its functions. This prevents a potential null
+pointer dereference.
+
+Reported by smatch:
+drivers/gpu/drm/amd/amdgpu/../display/dc/hwss/dcn30/dcn30_hwseq.c:789 dcn30_init_hw() error: we previously assumed 'dc->clk_mgr' could be null (see line 628)
+
+Cc: Tom Chung <chiahsuan.chung@amd.com>
+Cc: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
+Cc: Roman Li <roman.li@amd.com>
+Cc: Alex Hung <alex.hung@amd.com>
+Cc: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Cc: Harry Wentland <harry.wentland@amd.com>
+Cc: Hamza Mahfooz <hamza.mahfooz@amd.com>
+Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+Reviewed-by: Alex Hung <alex.hung@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+[Xiangyu: BP to fix CVE: CVE-2024-49917, modified the source path]
 Signed-off-by: Xiangyu Chen <xiangyu.chen@windriver.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/tx.c |   12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/amd/display/dc/dcn30/dcn30_hwseq.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/drivers/net/wireless/intel/iwlwifi/mvm/tx.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/tx.c
-@@ -1105,6 +1105,9 @@ static int iwl_mvm_tx_mpdu(struct iwl_mv
- 	bool is_ampdu = false;
- 	int hdrlen;
+--- a/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_hwseq.c
++++ b/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_hwseq.c
+@@ -448,7 +448,7 @@ void dcn30_init_hw(struct dc *dc)
+ 	int edp_num;
+ 	uint32_t backlight = MAX_BACKLIGHT_LEVEL;
  
-+	if (WARN_ON_ONCE(!sta))
-+		return -1;
-+
- 	mvmsta = iwl_mvm_sta_from_mac80211(sta);
- 	fc = hdr->frame_control;
- 	hdrlen = ieee80211_hdrlen(fc);
-@@ -1112,9 +1115,6 @@ static int iwl_mvm_tx_mpdu(struct iwl_mv
- 	if (IWL_MVM_NON_TRANSMITTING_AP && ieee80211_is_probe_resp(fc))
- 		return -1;
+-	if (dc->clk_mgr && dc->clk_mgr->funcs->init_clocks)
++	if (dc->clk_mgr && dc->clk_mgr->funcs && dc->clk_mgr->funcs->init_clocks)
+ 		dc->clk_mgr->funcs->init_clocks(dc->clk_mgr);
  
--	if (WARN_ON_ONCE(!mvmsta))
--		return -1;
--
- 	if (WARN_ON_ONCE(mvmsta->sta_id == IWL_MVM_INVALID_STA))
- 		return -1;
+ 	// Initialize the dccg
+@@ -631,11 +631,12 @@ void dcn30_init_hw(struct dc *dc)
+ 	if (!dcb->funcs->is_accelerated_mode(dcb) && dc->res_pool->hubbub->funcs->init_watermarks)
+ 		dc->res_pool->hubbub->funcs->init_watermarks(dc->res_pool->hubbub);
  
-@@ -1242,16 +1242,18 @@ drop:
- int iwl_mvm_tx_skb_sta(struct iwl_mvm *mvm, struct sk_buff *skb,
- 		       struct ieee80211_sta *sta)
- {
--	struct iwl_mvm_sta *mvmsta = iwl_mvm_sta_from_mac80211(sta);
-+	struct iwl_mvm_sta *mvmsta;
- 	struct ieee80211_tx_info info;
- 	struct sk_buff_head mpdus_skbs;
- 	unsigned int payload_len;
- 	int ret;
- 	struct sk_buff *orig_skb = skb;
+-	if (dc->clk_mgr->funcs->notify_wm_ranges)
++	if (dc->clk_mgr && dc->clk_mgr->funcs && dc->clk_mgr->funcs->notify_wm_ranges)
+ 		dc->clk_mgr->funcs->notify_wm_ranges(dc->clk_mgr);
  
--	if (WARN_ON_ONCE(!mvmsta))
-+	if (WARN_ON_ONCE(!sta))
- 		return -1;
+ 	//if softmax is enabled then hardmax will be set by a different call
+-	if (dc->clk_mgr->funcs->set_hard_max_memclk && !dc->clk_mgr->dc_mode_softmax_enabled)
++	if (dc->clk_mgr && dc->clk_mgr->funcs && dc->clk_mgr->funcs->set_hard_max_memclk &&
++	    !dc->clk_mgr->dc_mode_softmax_enabled)
+ 		dc->clk_mgr->funcs->set_hard_max_memclk(dc->clk_mgr);
  
-+	mvmsta = iwl_mvm_sta_from_mac80211(sta);
-+
- 	if (WARN_ON_ONCE(mvmsta->sta_id == IWL_MVM_INVALID_STA))
- 		return -1;
- 
+ 	if (dc->res_pool->hubbub->funcs->force_pstate_change_control)
 
 
