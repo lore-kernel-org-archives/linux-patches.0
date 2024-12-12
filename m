@@ -1,39 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DF40222D4E;
-	Thu, 12 Dec 2024 17:13:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0246B222D4E;
+	Thu, 12 Dec 2024 17:13:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734023582; cv=none; b=DKVHAijSMWcMghfp556i8orI1jI1x2HxApul/ltVWlxkQ6YjH46TwEWOVsM3y/66e00CczqHXj0m0+fMyVAjfSJM9HeptM4bEX+J4oA0ihUj+M/4rn213PgEmbhA38HHhi7Z56k70jy/kLTTiqVatQpcXe0DkyKQXzfifezroGk=
+	t=1734023586; cv=none; b=b/uUaL7uBpXEkclP9Wgg4BqswXjXUvDR5uNmnd1JIsbFy1XdOxme41k76YOh+vRd0MorM0621rXg2gGwDbsrKvQoiXNQLh/cqMh+hf87qtEAV3hpvuU7jQSQO5HLvviezxLXcmL18vz6dg+CrIdWsvw0vq09bPivvvFaEske+XA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734023582; c=relaxed/simple;
-	bh=Vwp3OH8nFNJw1xn5nCs5OlT6JvzgNSN67SIcRhePkTk=;
+	s=arc-20240116; t=1734023586; c=relaxed/simple;
+	bh=EufI7uL5sRL00LnyESYpDXeOsmpuTKxBw/AzZi8OmvM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=PFbBmeowlGzz8cnUtWUrRphy5QCie6wF51vjRw+89rjlJoW76HrjAelVxpFqI7zpBKYPisiJDL700TreXrt+nu6pAjrJ76Rwyywo9cfxAIP36aL41TFYapRypCf02V/uRS42RyZjeMwNPW0oevwylRUcIrCaEP9rWOFyom72CmA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PoEIbBuh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DQ3CzH2PVb5w3hTeRGMtJT85VJxCXn6qKw/tywnEuGqfY/KWkjBYTzlQUB9bDE/DRV9W4V+XG7grHj9y07P40wtfbvbcwbmAgrhPy2oDIfyswfpzZBbBEqPxf7MgypzKAFKTqBw65y0bZ+/seS8VCZN98WHEPZOx+aMAVsTcxrQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zK2Ezijg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PoEIbBuh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4A12C4CED0;
-	Thu, 12 Dec 2024 17:13:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zK2Ezijg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B89D1C4CEDF;
+	Thu, 12 Dec 2024 17:13:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734023582;
-	bh=Vwp3OH8nFNJw1xn5nCs5OlT6JvzgNSN67SIcRhePkTk=;
+	s=korg; t=1734023585;
+	bh=EufI7uL5sRL00LnyESYpDXeOsmpuTKxBw/AzZi8OmvM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PoEIbBuhpcSGjR3dyY0FLO9q2arjUsqnKGs3MeruJcsAEw3ghZplBDetCyfwIHiKg
-	 uJx246B7YJTDKaDDBY3vUUe9qrMeq8ZuwE2gqeadDdZGyomvARpSWxJfNcts40P1pa
-	 5xzIH3w1LwKXzhb4RBufM3fOExzzkkh1j4BsmXAI=
+	b=zK2Ezijgs9aZ4VEsphHxEvQ0QCrjBTQFZMJ0N83/E9zJDnkLXpUR4Qs0y+WtO/yYL
+	 rY3HryqVXAlTQslSQ+ZEcmoKEMVwccqlmxX3mMBSnrZaZSEbtCW1eQcEXkLZgL5NfM
+	 a+CDh+FhFWnySBx8QlUYVjqVO5iLvjgfAmwONXgU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baoquan He <bhe@redhat.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Tom Lendacky <thomas.lendacky@amd.com>,
-	stable@kernel.org
-Subject: [PATCH 5.10 015/459] x86/mm: Fix a kdump kernel failure on SME system when CONFIG_IMA_KEXEC=y
-Date: Thu, 12 Dec 2024 15:55:53 +0100
-Message-ID: <20241212144254.130774620@linuxfoundation.org>
+	Dmitry Antipov <dmantipov@yandex.ru>,
+	syzbot+453873f1588c2d75b447@syzkaller.appspotmail.com,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Mark Fasheh <mark@fasheh.com>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Jun Piao <piaojun@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.10 016/459] ocfs2: uncache inode which has failed entering the group
+Date: Thu, 12 Dec 2024 15:55:54 +0100
+Message-ID: <20241212144254.170894256@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144253.511169641@linuxfoundation.org>
 References: <20241212144253.511169641@linuxfoundation.org>
@@ -46,121 +51,97 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Baoquan He <bhe@redhat.com>
+From: Dmitry Antipov <dmantipov@yandex.ru>
 
-commit 8d9ffb2fe65a6c4ef114e8d4f947958a12751bbe upstream.
+commit 737f34137844d6572ab7d473c998c7f977ff30eb upstream.
 
-The kdump kernel is broken on SME systems with CONFIG_IMA_KEXEC=y enabled.
-Debugging traced the issue back to
+Syzbot has reported the following BUG:
 
-  b69a2afd5afc ("x86/kexec: Carry forward IMA measurement log on kexec").
-
-Testing was previously not conducted on SME systems with CONFIG_IMA_KEXEC
-enabled, which led to the oversight, with the following incarnation:
-
+kernel BUG at fs/ocfs2/uptodate.c:509!
 ...
-  ima: No TPM chip found, activating TPM-bypass!
-  Loading compiled-in module X.509 certificates
-  Loaded X.509 cert 'Build time autogenerated kernel key: 18ae0bc7e79b64700122bb1d6a904b070fef2656'
-  ima: Allocated hash algorithm: sha256
-  Oops: general protection fault, probably for non-canonical address 0xcfacfdfe6660003e: 0000 [#1] PREEMPT SMP NOPTI
-  CPU: 0 UID: 0 PID: 1 Comm: swapper/0 Not tainted 6.11.0-rc2+ #14
-  Hardware name: Dell Inc. PowerEdge R7425/02MJ3T, BIOS 1.20.0 05/03/2023
-  RIP: 0010:ima_restore_measurement_list
-  Call Trace:
-   <TASK>
-   ? show_trace_log_lvl
-   ? show_trace_log_lvl
-   ? ima_load_kexec_buffer
-   ? __die_body.cold
-   ? die_addr
-   ? exc_general_protection
-   ? asm_exc_general_protection
-   ? ima_restore_measurement_list
-   ? vprintk_emit
-   ? ima_load_kexec_buffer
-   ima_load_kexec_buffer
-   ima_init
-   ? __pfx_init_ima
-   init_ima
-   ? __pfx_init_ima
-   do_one_initcall
-   do_initcalls
-   ? __pfx_kernel_init
-   kernel_init_freeable
-   kernel_init
-   ret_from_fork
-   ? __pfx_kernel_init
-   ret_from_fork_asm
-   </TASK>
-  Modules linked in:
-  ---[ end trace 0000000000000000 ]---
-  ...
-  Kernel panic - not syncing: Fatal exception
-  Kernel Offset: disabled
-  Rebooting in 10 seconds..
+Call Trace:
+ <TASK>
+ ? __die_body+0x5f/0xb0
+ ? die+0x9e/0xc0
+ ? do_trap+0x15a/0x3a0
+ ? ocfs2_set_new_buffer_uptodate+0x145/0x160
+ ? do_error_trap+0x1dc/0x2c0
+ ? ocfs2_set_new_buffer_uptodate+0x145/0x160
+ ? __pfx_do_error_trap+0x10/0x10
+ ? handle_invalid_op+0x34/0x40
+ ? ocfs2_set_new_buffer_uptodate+0x145/0x160
+ ? exc_invalid_op+0x38/0x50
+ ? asm_exc_invalid_op+0x1a/0x20
+ ? ocfs2_set_new_buffer_uptodate+0x2e/0x160
+ ? ocfs2_set_new_buffer_uptodate+0x144/0x160
+ ? ocfs2_set_new_buffer_uptodate+0x145/0x160
+ ocfs2_group_add+0x39f/0x15a0
+ ? __pfx_ocfs2_group_add+0x10/0x10
+ ? __pfx_lock_acquire+0x10/0x10
+ ? mnt_get_write_access+0x68/0x2b0
+ ? __pfx_lock_release+0x10/0x10
+ ? rcu_read_lock_any_held+0xb7/0x160
+ ? __pfx_rcu_read_lock_any_held+0x10/0x10
+ ? smack_log+0x123/0x540
+ ? mnt_get_write_access+0x68/0x2b0
+ ? mnt_get_write_access+0x68/0x2b0
+ ? mnt_get_write_access+0x226/0x2b0
+ ocfs2_ioctl+0x65e/0x7d0
+ ? __pfx_ocfs2_ioctl+0x10/0x10
+ ? smack_file_ioctl+0x29e/0x3a0
+ ? __pfx_smack_file_ioctl+0x10/0x10
+ ? lockdep_hardirqs_on_prepare+0x43d/0x780
+ ? __pfx_lockdep_hardirqs_on_prepare+0x10/0x10
+ ? __pfx_ocfs2_ioctl+0x10/0x10
+ __se_sys_ioctl+0xfb/0x170
+ do_syscall_64+0xf3/0x230
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+...
+ </TASK>
 
-Adding debug printks showed that the stored addr and size of ima_kexec buffer
-are not decrypted correctly like:
+When 'ioctl(OCFS2_IOC_GROUP_ADD, ...)' has failed for the particular
+inode in 'ocfs2_verify_group_and_input()', corresponding buffer head
+remains cached and subsequent call to the same 'ioctl()' for the same
+inode issues the BUG() in 'ocfs2_set_new_buffer_uptodate()' (trying
+to cache the same buffer head of that inode). Fix this by uncaching
+the buffer head with 'ocfs2_remove_from_cache()' on error path in
+'ocfs2_group_add()'.
 
-  ima: ima_load_kexec_buffer, buffer:0xcfacfdfe6660003e, size:0xe48066052d5df359
-
-Three types of setup_data info
-
-  — SETUP_EFI,
-  - SETUP_IMA, and
-  - SETUP_RNG_SEED
-
-are passed to the kexec/kdump kernel. Only the ima_kexec buffer
-experienced incorrect decryption. Debugging identified a bug in
-early_memremap_is_setup_data(), where an incorrect range calculation
-occurred due to the len variable in struct setup_data ended up only
-representing the length of the data field, excluding the struct's size,
-and thus leading to miscalculation.
-
-Address a similar issue in memremap_is_setup_data() while at it.
-
-  [ bp: Heavily massage. ]
-
-Fixes: b3c72fc9a78e ("x86/boot: Introduce setup_indirect")
-Signed-off-by: Baoquan He <bhe@redhat.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Acked-by: Tom Lendacky <thomas.lendacky@amd.com>
-Cc: <stable@kernel.org>
-Link: https://lore.kernel.org/r/20240911081615.262202-3-bhe@redhat.com
+Link: https://lkml.kernel.org/r/20241114043844.111847-1-dmantipov@yandex.ru
+Fixes: 7909f2bf8353 ("[PATCH 2/2] ocfs2: Implement group add for online resize")
+Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
+Reported-by: syzbot+453873f1588c2d75b447@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=453873f1588c2d75b447
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Cc: Dmitry Antipov <dmantipov@yandex.ru>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Jun Piao <piaojun@huawei.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/mm/ioremap.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ fs/ocfs2/resize.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/arch/x86/mm/ioremap.c
-+++ b/arch/x86/mm/ioremap.c
-@@ -660,7 +660,8 @@ static bool memremap_is_setup_data(resou
- 		paddr_next = data->next;
- 		len = data->len;
+--- a/fs/ocfs2/resize.c
++++ b/fs/ocfs2/resize.c
+@@ -568,6 +568,8 @@ out_commit:
+ 	ocfs2_commit_trans(osb, handle);
  
--		if ((phys_addr > paddr) && (phys_addr < (paddr + len))) {
-+		if ((phys_addr > paddr) &&
-+		    (phys_addr < (paddr + sizeof(struct setup_data) + len))) {
- 			memunmap(data);
- 			return true;
- 		}
-@@ -722,7 +723,8 @@ static bool __init early_memremap_is_set
- 		paddr_next = data->next;
- 		len = data->len;
+ out_free_group_bh:
++	if (ret < 0)
++		ocfs2_remove_from_cache(INODE_CACHE(inode), group_bh);
+ 	brelse(group_bh);
  
--		if ((phys_addr > paddr) && (phys_addr < (paddr + len))) {
-+		if ((phys_addr > paddr) &&
-+		    (phys_addr < (paddr + sizeof(struct setup_data) + len))) {
- 			early_memunmap(data, sizeof(*data));
- 			return true;
- 		}
+ out_unlock:
 
 
