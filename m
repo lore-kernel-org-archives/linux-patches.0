@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C98B215799;
-	Thu, 12 Dec 2024 15:41:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC78E215764;
+	Thu, 12 Dec 2024 15:41:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734018096; cv=none; b=Il+DXnfXqp4CAPqa/p8GvsgEbhrTEiYwq7GdYWI/aUvu5+TU/F8Lgr8OUlp57wimGhraGHovkMWkP9/jj56TTibCwuFG7zIKdYYZoO5ixtffYbLuvl10XzlQv696LnTAvgAdo3fB7+ONKyig/GHmZLw8Z/vcObeIL9WAmmQkriw=
+	t=1734018099; cv=none; b=kbovUQi1wH3AAzRU1/VV3uU9Qw5b8orEi7+jlXO7s7WiG/7HdQAuV8ZceiQyhuqNxRiOEYVGYzXOg8ExQCWHKQFjDtX/iRLt913yYU99Z/anRQqxoyt5zlOAIlv5NIhvVX4NIPhDzS6fBWubaLsQ2KjxuVVHMNE58waIwU7Q7ZY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734018096; c=relaxed/simple;
-	bh=DfO83Np6x/cqKOHZsajcwhaaggW61KyZ+zmK5M+mSGo=;
+	s=arc-20240116; t=1734018099; c=relaxed/simple;
+	bh=ehKb/PMjJ/+g3tivDd4axmdmOZixscbC/oiTFsBUPzY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=alod30lZyfZMrCMbCxfVeYaXW0iRiqq3P1mwoMCsevx8Qd9mUZNuMrmZsyzDY/0Nz8BOUw8tPtnSX/ySsyy5RVqFibVsZ2u1pGYXW9tfNYdnUsXDXHlvwTJUJ2ZVs0eDfnZzoeuAnk3wb8VTOqVSgq9oRAJOsw/Y12zv9iOKVfk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zGdhdz/T; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bJSGDI1EFNIncIvdR8cc27jAN+8Q89ChzF6UcswRybjuHoKw5XX8KhWp9UQxW2bLbu/OrwGaAdFbp8QdTAer+KZ74hUv1DPkpP7xvxfVAxVYPMLjVp3Wvx9MQmbMvA5MfRtmJYy58insCnytwrb2oJZ1/nb+nQrQTEs+faExizY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CKb7bIUw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zGdhdz/T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DB3BC4CECE;
-	Thu, 12 Dec 2024 15:41:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CKb7bIUw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16FE1C4CECE;
+	Thu, 12 Dec 2024 15:41:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734018096;
-	bh=DfO83Np6x/cqKOHZsajcwhaaggW61KyZ+zmK5M+mSGo=;
+	s=korg; t=1734018099;
+	bh=ehKb/PMjJ/+g3tivDd4axmdmOZixscbC/oiTFsBUPzY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zGdhdz/TbQTZaKMKqR7yw8pO/Z6iK9f1WauPF5ePTdI8B/iTMrjOlW0Dr/UaJaNnA
-	 4GTKhGE/UBEJ6NbWclz314g/IyqJOh1HlWCqxH6EnRNR+0NS0MVH4DnE2a1oFQFgvb
-	 vp5tjhhEkmegwefK/ROt3xM+G7ADb6o20ja8S4oA=
+	b=CKb7bIUwKMe+EH8UWgzEFB65AL4Fg9BQgx3g8coXEemX4C/H1DFHqUUXteWZjdJ9J
+	 6ny4pHKpyN9NNJNWz1c+AK9WrrfKXjg3lr3Det7hlTqPk6niH9lYE13y03GjQ2pilf
+	 +ohr7I1F8jYbZyowds0V5Y+8HksonmnOo6t0O/Ak=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Saurav Kashyap <skashyap@marvell.com>,
-	Nilesh Javali <njavali@marvell.com>,
-	Himanshu Madhani <himanshu.madhani@oracle.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.6 156/356] scsi: qla2xxx: Remove check req_sg_cnt should be equal to rsp_sg_cnt
-Date: Thu, 12 Dec 2024 15:57:55 +0100
-Message-ID: <20241212144250.803458814@linuxfoundation.org>
+	Mark Brown <broonie@kernel.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 190/356] kselftest/arm64: Dont leak pipe fds in pac.exec_sign_all()
+Date: Thu, 12 Dec 2024 15:58:29 +0100
+Message-ID: <20241212144252.137293819@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144244.601729511@linuxfoundation.org>
 References: <20241212144244.601729511@linuxfoundation.org>
@@ -52,45 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Saurav Kashyap <skashyap@marvell.com>
+From: Mark Brown <broonie@kernel.org>
 
-commit 833c70e212fc40d3e98da941796f4c7bcaecdf58 upstream.
+[ Upstream commit 27141b690547da5650a420f26ec369ba142a9ebb ]
 
-Firmware supports multiple sg_cnt for request and response for CT
-commands, so remove the redundant check. A check is there where sg_cnt
-for request and response should be same. This is not required as driver
-and FW have code to handle multiple and different sg_cnt on request and
-response.
+The PAC exec_sign_all() test spawns some child processes, creating pipes
+to be stdin and stdout for the child. It cleans up most of the file
+descriptors that are created as part of this but neglects to clean up the
+parent end of the child stdin and stdout. Add the missing close() calls.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Saurav Kashyap <skashyap@marvell.com>
-Signed-off-by: Nilesh Javali <njavali@marvell.com>
-Link: https://lore.kernel.org/r/20241115130313.46826-5-njavali@marvell.com
-Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Link: https://lore.kernel.org/r/20241111-arm64-pac-test-collisions-v1-1-171875f37e44@kernel.org
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/qla2xxx/qla_bsg.c |   10 ----------
- 1 file changed, 10 deletions(-)
+ tools/testing/selftests/arm64/pauth/pac.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/scsi/qla2xxx/qla_bsg.c
-+++ b/drivers/scsi/qla2xxx/qla_bsg.c
-@@ -494,16 +494,6 @@ qla2x00_process_ct(struct bsg_job *bsg_j
- 		goto done;
+diff --git a/tools/testing/selftests/arm64/pauth/pac.c b/tools/testing/selftests/arm64/pauth/pac.c
+index b743daa772f55..5a07b3958fbf2 100644
+--- a/tools/testing/selftests/arm64/pauth/pac.c
++++ b/tools/testing/selftests/arm64/pauth/pac.c
+@@ -182,6 +182,9 @@ int exec_sign_all(struct signatures *signed_vals, size_t val)
+ 		return -1;
  	}
  
--	if ((req_sg_cnt !=  bsg_job->request_payload.sg_cnt) ||
--	    (rsp_sg_cnt != bsg_job->reply_payload.sg_cnt)) {
--		ql_log(ql_log_warn, vha, 0x7011,
--		    "request_sg_cnt: %x dma_request_sg_cnt: %x reply_sg_cnt:%x "
--		    "dma_reply_sg_cnt: %x\n", bsg_job->request_payload.sg_cnt,
--		    req_sg_cnt, bsg_job->reply_payload.sg_cnt, rsp_sg_cnt);
--		rval = -EAGAIN;
--		goto done_unmap_sg;
--	}
--
- 	if (!vha->flags.online) {
- 		ql_log(ql_log_warn, vha, 0x7012,
- 		    "Host is not online.\n");
++	close(new_stdin[1]);
++	close(new_stdout[0]);
++
+ 	return 0;
+ }
+ 
+-- 
+2.43.0
+
 
 
