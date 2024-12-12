@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F0B5217640;
-	Thu, 12 Dec 2024 15:59:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2121217640;
+	Thu, 12 Dec 2024 15:59:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734019195; cv=none; b=JDT64r650ujEDBjtm2s1hwh8NJd6MCacAn8HGWydF1EaUroQRCD8CESWgDCm4J0/Pb8jj0KJ6SNZVNx3WHPB0tw6oWio5O7C4pS02z7Syz1Mmi/b4k22kTyKXNuLTsZVG8AfhinsUd/hd9Ry13MYbvlz8sz1RhEKq06X2rZAIxI=
+	t=1734019198; cv=none; b=BSSKGAaJEiOhY/gz7+2Kl2Yq8QxxPw9sqJtCrYL3Qy0+42Rpb25RnmRq30ddyF9qGNn98p2cJWyqDYQpH6FulZfbaa08D6MCJzJyfMHTu6nwHXYatASToIs3Vi44c2XfHkdsNgpjNU0zY+073u/MwvM3CSUnMe+Ttnc56G6O1uk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734019195; c=relaxed/simple;
-	bh=o5xwaTu/1HuC5C+Ju7FgcZihfDzYPp2Ml+WdWvb8p7c=;
+	s=arc-20240116; t=1734019198; c=relaxed/simple;
+	bh=tGB3k66oOUB6/+cZYd+TsNLR+d4jYEkCU8uP9uC9y70=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K/h1ClWDh5R1Myfod5HQvekwLIWwCFEU83D+gDE6x8xPxeC016YSeDplEa3CzOHn5fK0stJUKP/v71ysSdDQq9S7H/C2GnnMY1ZUsSO5uXl74wEoXGx5/gksn0pBDZt9r5nQFOq+TKhEqBHIODo/8aVwOJeQnU5aaymOFy5uf/M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WJrVYaos; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CaArNlcK6rtXwvbkYFEMzOFk8CGg8oNfHBsEZss3qLYbNOXxyFUURoeZ0eff2FxR0bZH/eTn2ekOVs97/M1h1eUzdGBrBo1dtJgcuk6luCygynfVAA6IXpIl3BzC9Em/jOKD6BV0k1wCrDHtFhHZxG6nI8bcsWHSHsPMmhqfrGI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oYFl/IQl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WJrVYaos"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E585C4CECE;
-	Thu, 12 Dec 2024 15:59:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oYFl/IQl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10A54C4CECE;
+	Thu, 12 Dec 2024 15:59:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734019195;
-	bh=o5xwaTu/1HuC5C+Ju7FgcZihfDzYPp2Ml+WdWvb8p7c=;
+	s=korg; t=1734019198;
+	bh=tGB3k66oOUB6/+cZYd+TsNLR+d4jYEkCU8uP9uC9y70=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WJrVYaosBG5s6w8AltwptYebLmzUV4cTHviaQ81/YigL0XnQ/vDvkBGUubCZLbSz6
-	 WPAUJkuN2iiMN7CyidzBKOly6sRjeTKtIFK/hpGdxXRPA6qemNZwXLyCRl97iu3ngK
-	 4LGJpvuf+HfLfMDMhrk75nuLx1lVnL1wakBxAgqs=
+	b=oYFl/IQlsomZ6gwPVN/1Ul5bHq/Yxj4QvzsYkrGm6vr8sHo39zFO0dzYQppKw7JkU
+	 Dg1T8LqzzjHAWAvOIM9sBXcy+qU/1FJHUFM/8RTJpb4rQv3PpWIcep15L1MXk3imkE
+	 XPzZ/bKgWcZgf4ZFBfJljY6kcSU2VMvUOQX0ndCs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxime Ripard <mripard@kernel.org>,
-	Dave Stevenson <dave.stevenson@raspberrypi.com>,
+	Pin-yen Lin <treapking@chromium.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Douglas Anderson <dianders@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 126/772] drm/vc4: hvs: Dont write gamma luts on 2711
-Date: Thu, 12 Dec 2024 15:51:11 +0100
-Message-ID: <20241212144355.134091877@linuxfoundation.org>
+Subject: [PATCH 6.1 144/772] drm/bridge: anx7625: Drop EDID cache on bridge power off
+Date: Thu, 12 Dec 2024 15:51:29 +0100
+Message-ID: <20241212144355.881787227@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -51,39 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dave Stevenson <dave.stevenson@raspberrypi.com>
+From: Pin-yen Lin <treapking@chromium.org>
 
-[ Upstream commit 52efe364d1968ee3e3ed45eb44eb924b63635315 ]
+[ Upstream commit 00ae002116a14c2e6a342c4c9ae080cdbb9b4b21 ]
 
-The gamma block has changed in 2711, therefore writing the lut
-in vc4_hvs_lut_load is incorrect.
+The bridge might miss the display change events when it's powered off.
+This happens when a user changes the external monitor when the system
+is suspended and the embedded controller doesn't not wake AP up.
 
-Whilst the gamma property isn't created for 2711, it is called
-from vc4_hvs_init_channel, so abort if attempted.
+It's also observed that one DP-to-HDMI bridge doesn't work correctly
+when there is no EDID read after it is powered on.
 
-Fixes: c54619b0bfb3 ("drm/vc4: Add support for the BCM2711 HVS5")
-Reviewed-by: Maxime Ripard <mripard@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240621152055.4180873-15-dave.stevenson@raspberrypi.com
-Signed-off-by: Dave Stevenson <dave.stevenson@raspberrypi.com>
+Drop the cache to force an EDID read after system resume to fix this.
+
+Fixes: 8bdfc5dae4e3 ("drm/bridge: anx7625: Add anx7625 MIPI DSI/DPI to DP")
+Signed-off-by: Pin-yen Lin <treapking@chromium.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240926092931.3870342-2-treapking@chromium.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/vc4/vc4_hvs.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/bridge/analogix/anx7625.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/vc4/vc4_hvs.c b/drivers/gpu/drm/vc4/vc4_hvs.c
-index 47990ecbfc4df..cf017b59114e9 100644
---- a/drivers/gpu/drm/vc4/vc4_hvs.c
-+++ b/drivers/gpu/drm/vc4/vc4_hvs.c
-@@ -220,6 +220,9 @@ static void vc4_hvs_lut_load(struct vc4_hvs *hvs,
- 	if (!drm_dev_enter(drm, &idx))
- 		return;
+diff --git a/drivers/gpu/drm/bridge/analogix/anx7625.c b/drivers/gpu/drm/bridge/analogix/anx7625.c
+index 193015c75b454..e14c9fdabe2ba 100644
+--- a/drivers/gpu/drm/bridge/analogix/anx7625.c
++++ b/drivers/gpu/drm/bridge/analogix/anx7625.c
+@@ -2567,6 +2567,8 @@ static int __maybe_unused anx7625_runtime_pm_suspend(struct device *dev)
+ 	mutex_lock(&ctx->lock);
  
-+	if (hvs->vc4->is_vc5)
-+		return;
-+
- 	/* The LUT memory is laid out with each HVS channel in order,
- 	 * each of which takes 256 writes for R, 256 for G, then 256
- 	 * for B.
+ 	anx7625_stop_dp_work(ctx);
++	if (!ctx->pdata.panel_bridge)
++		anx7625_remove_edid(ctx);
+ 	anx7625_power_standby(ctx);
+ 
+ 	mutex_unlock(&ctx->lock);
 -- 
 2.43.0
 
