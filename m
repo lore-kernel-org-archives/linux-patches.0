@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D28041487CD;
-	Thu, 12 Dec 2024 17:17:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38FE84F218;
+	Thu, 12 Dec 2024 17:17:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734023833; cv=none; b=WSAXYWqmcwrl3p3xelNufyyENeMl0OJp8Z3yDdldjHP9A2lox04gK9QpMlkktj+6XhCqvzx67znJVyoN2x95JebnV04m9ZgRFDwOU4T6nG28jSf6cqswfQrhnYCIMUWNDm3CgbYfbY0nVx9NAOZJkZmg+SeTvHzDS1Y/KUNXsKU=
+	t=1734023838; cv=none; b=JGPACu5/jYua8kfdLUimWaacVVw3pxpyAloRUouGIgy8T8VorxfXigK4cioendOXlmBLNrfBE+HwtZudPn5SbmUxzU9EQ38eMWdKitdGYPOE0s1hotAM/HGZMV4g4h9SINI6ZVq3Y1ldTOYeuprLnykkxV40gVCTNyxZhII2D30=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734023833; c=relaxed/simple;
-	bh=hAhDP4pZwv8m11z8znIRXclH86hq4arMq/2RmQXm8Q8=;
+	s=arc-20240116; t=1734023838; c=relaxed/simple;
+	bh=5Zu92DBGnlT6z8I95VYWhuQGAGLRmc32xFVz2Vsnsfc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uACEANagLc4vuVOYLz0ezr5Jx3O9KycZUeyYW4YeK4Va4r8z6vYogcpwcUTlTrUjW+XY+5tEZX+XY+jOB/RtqLr6iZ4y0q/mHw4b9SrTg9SHlECIFLZ3G6PBVeLGsYWll1ISNadTca4lgKEIm3E/5SISwcrDvHvh9QXdSQzeEI4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bl5czQET; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=gGkMzpSps3Q5Ca7Ze7QdnePYURq3KIO+3E2iwwgpbBqeHBx9sq4xH3g+wdRamC0qg5zWrTZK61HNEd0s1WI6hpzgDDeZHO4PX1fPufh1ehnmzC+Yf/r0/b7NKJGnUTZogh5PAqfGJG3FJRpCT4i+LYc5/G7fz8jwYHbl8UIyopg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sRZj+Ici; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bl5czQET"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51011C4CECE;
-	Thu, 12 Dec 2024 17:17:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sRZj+Ici"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60ACBC4CECE;
+	Thu, 12 Dec 2024 17:17:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734023833;
-	bh=hAhDP4pZwv8m11z8znIRXclH86hq4arMq/2RmQXm8Q8=;
+	s=korg; t=1734023836;
+	bh=5Zu92DBGnlT6z8I95VYWhuQGAGLRmc32xFVz2Vsnsfc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Bl5czQET262A3IYoEBXOZPXQ12Hd0hw2LrDVS1/cd+sd1J+ws9jLuG+19eSvvPaP0
-	 znC+islGZCtHnOeSUCoKKWl+/iimaisPWArOinvEhPhLQAin8V+2HhQgEtQHPtlt8Z
-	 tP7yeTQAwRq9By8EHHlc3HZTE0LLHML4vAjZGw0A=
+	b=sRZj+IcigQWmxMhfs/8Tcgc6Nxh+tnTINVqUC/ZsU1FJQRYxzddW5aeH5cVRhuTJf
+	 hYIVQRM+Vhl+6rL6BTKitNuIizgGO3FNCv1RboAUxdG5exAlqyKDCiXOw9CZqN9+QC
+	 1O1hCxXhNqwiXvvHqt1Jtb0H7hw3oEoAtKqJ5l6s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Jani Nikula <jani.nikula@intel.com>,
+	Jeongjun Park <aha310510@gmail.com>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 098/459] drm/mm: Mark drm_mm_interval_tree*() functions with __maybe_unused
-Date: Thu, 12 Dec 2024 15:57:16 +0100
-Message-ID: <20241212144257.381678821@linuxfoundation.org>
+Subject: [PATCH 5.10 099/459] wifi: ath9k: add range check for conn_rsp_epid in htc_connect_service()
+Date: Thu, 12 Dec 2024 15:57:17 +0100
+Message-ID: <20241212144257.421705857@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144253.511169641@linuxfoundation.org>
 References: <20241212144253.511169641@linuxfoundation.org>
@@ -45,56 +46,62 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Jeongjun Park <aha310510@gmail.com>
 
-[ Upstream commit 53bd7c1c0077db533472ae32799157758302ef48 ]
+[ Upstream commit 8619593634cbdf5abf43f5714df49b04e4ef09ab ]
 
-The INTERVAL_TREE_DEFINE() uncoditionally provides a bunch of helper
-functions which in some cases may be not used. This, in particular,
-prevents kernel builds with clang, `make W=1` and CONFIG_WERROR=y:
+I found the following bug in my fuzzer:
 
-.../drm/drm_mm.c:152:1: error: unused function 'drm_mm_interval_tree_insert' [-Werror,-Wunused-function]
-  152 | INTERVAL_TREE_DEFINE(struct drm_mm_node, rb,
-      | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  153 |                      u64, __subtree_last,
-      |                      ~~~~~~~~~~~~~~~~~~~~
-  154 |                      START, LAST, static inline, drm_mm_interval_tree)
-      |                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  UBSAN: array-index-out-of-bounds in drivers/net/wireless/ath/ath9k/htc_hst.c:26:51
+  index 255 is out of range for type 'htc_endpoint [22]'
+  CPU: 0 UID: 0 PID: 8 Comm: kworker/0:0 Not tainted 6.11.0-rc6-dirty #14
+  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
+  Workqueue: events request_firmware_work_func
+  Call Trace:
+   <TASK>
+   dump_stack_lvl+0x180/0x1b0
+   __ubsan_handle_out_of_bounds+0xd4/0x130
+   htc_issue_send.constprop.0+0x20c/0x230
+   ? _raw_spin_unlock_irqrestore+0x3c/0x70
+   ath9k_wmi_cmd+0x41d/0x610
+   ? mark_held_locks+0x9f/0xe0
+   ...
 
-Fix this by marking drm_mm_interval_tree*() functions with __maybe_unused.
+Since this bug has been confirmed to be caused by insufficient verification
+of conn_rsp_epid, I think it would be appropriate to add a range check for
+conn_rsp_epid to htc_connect_service() to prevent the bug from occurring.
 
-See also commit 6863f5643dd7 ("kbuild: allow Clang to find unused static
-inline functions for W=1 build").
-
-Fixes: 202b52b7fbf7 ("drm: Track drm_mm nodes with an interval tree")
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Reviewed-by: Jani Nikula <jani.nikula@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240829154640.1120050-1-andriy.shevchenko@linux.intel.com
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+Fixes: fb9987d0f748 ("ath9k_htc: Support for AR9271 chipset.")
+Signed-off-by: Jeongjun Park <aha310510@gmail.com>
+Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://patch.msgid.link/20240909103855.68006-1-aha310510@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_mm.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/ath/ath9k/htc_hst.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/gpu/drm/drm_mm.c b/drivers/gpu/drm/drm_mm.c
-index a4a04d2461353..7c25a8e38830b 100644
---- a/drivers/gpu/drm/drm_mm.c
-+++ b/drivers/gpu/drm/drm_mm.c
-@@ -154,7 +154,7 @@ static void show_leaks(struct drm_mm *mm) { }
+diff --git a/drivers/net/wireless/ath/ath9k/htc_hst.c b/drivers/net/wireless/ath/ath9k/htc_hst.c
+index 99667aba289df..00dc97ac53b9d 100644
+--- a/drivers/net/wireless/ath/ath9k/htc_hst.c
++++ b/drivers/net/wireless/ath/ath9k/htc_hst.c
+@@ -294,6 +294,9 @@ int htc_connect_service(struct htc_target *target,
+ 		return -ETIMEDOUT;
+ 	}
  
- INTERVAL_TREE_DEFINE(struct drm_mm_node, rb,
- 		     u64, __subtree_last,
--		     START, LAST, static inline, drm_mm_interval_tree)
-+		     START, LAST, static inline __maybe_unused, drm_mm_interval_tree)
- 
- struct drm_mm_node *
- __drm_mm_interval_first(const struct drm_mm *mm, u64 start, u64 last)
++	if (target->conn_rsp_epid < 0 || target->conn_rsp_epid >= ENDPOINT_MAX)
++		return -EINVAL;
++
+ 	*conn_rsp_epid = target->conn_rsp_epid;
+ 	return 0;
+ err:
 -- 
 2.43.0
 
