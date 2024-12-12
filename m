@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27063217656;
-	Thu, 12 Dec 2024 16:37:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA5FE23E6E3;
+	Thu, 12 Dec 2024 16:37:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734021451; cv=none; b=D2Iq1nRLXHs8+ylEYjOL8DLs2BtOhHF8gmZnem5wgfnh9KPRjIpg/T0gzb9sw3mxbf8/XEOpwzpjhmnBUJ6AJnesbDrjbkAONRi2bd2kdX0rc3zzs+r5t8YgJmdnkxpqNkZdH/tXToMnK5vBJ9wifQygw4PXP+t6yaFQXVebdZ4=
+	t=1734021454; cv=none; b=dqpPPBzuifVoHrB0TXtMkcOlkFjDx5mUfK8k8Gtx+Yrr2ipJ5e8GnLgXuCgRsYoZSm9cdYaaK3EjGfI1OrEylpJsY0fdGpDgklN4EYQB9fadHajcld2aPEzHfVG1VfL1uasJQUc3LvYZd+1OJh+H2GhP1h2Jp+bC8pECR1ZMORM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734021451; c=relaxed/simple;
-	bh=f5u2AF/7uTTkxP1ZRjOffjYwTGMRCAfAW9miywszuLY=;
+	s=arc-20240116; t=1734021454; c=relaxed/simple;
+	bh=zwnCMkt+7oTdWAuvIyR4XOXGb7V1AvJmgoZFobATmpU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VTkparZ3iaic6KqlX7nAuca5AQRFW6JIfv9xdKEb6Fmg8mZJQ4vHmm62bmdOaQ6A85dzBHSGVHo6q2Nu1xQOgUNtkqhkGGQd/BvD5hxbIBq1W6XkrWOmH6CxVwnnYdVkKefatEmSBOpXfHuDZimzec7bm3LSOH99vJIDCSGfwkk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PhgwHT6T; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QIx1TJh7RGbqQtsbiYug3X5zlbQ8nW5bOM4QlOUaGvCmJ9X3PY2wZPMagmwP4fQJQFbnzLMzYCgniZ/7+2VauAuJdzBWq+UcE6fvZ2I7JwgSpGxqdTmEXWFlFlQ2ookB1DUeLO07V3ZuzB6FNPdNn5y/LuNhXahvzCIV3jerA3g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bB1vGSJA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PhgwHT6T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FEF5C4CECE;
-	Thu, 12 Dec 2024 16:37:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bB1vGSJA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAD5AC4CECE;
+	Thu, 12 Dec 2024 16:37:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734021451;
-	bh=f5u2AF/7uTTkxP1ZRjOffjYwTGMRCAfAW9miywszuLY=;
+	s=korg; t=1734021454;
+	bh=zwnCMkt+7oTdWAuvIyR4XOXGb7V1AvJmgoZFobATmpU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PhgwHT6TMQODg9E9P9tNDziNXDTZw24WumqVMEERTYSM2zaIyLjRWYPB+Jg7YJvpY
-	 LrZnBG0FjSNX87iZv063WAKOzw9wYfg1G5VGoiML5u3uZkVx2Xj2Lakr1kOgJ/2N1p
-	 Uoh0iq29sJvpEHf9gRGwVuPBQb0JDvidn72bgZPs=
+	b=bB1vGSJASVrhM38VUghw0SlcbzRIikg5ClMfdpal61tSFdA1F4bHEODbjlHAj6Qwi
+	 u9Rm9HNogpjGPcK7jfF9zb18El/MJEmYNKhXSzsT1hvAsF0kUJ5fEemogBHPR1HO1B
+	 Wq/PkoQNJsD/NHezoFI2tZTBsRPFhqrsZ7L+8ntU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shusen Li <lishusen2@huawei.com>,
 	Kunkun Jiang <jiangkunkun@huawei.com>,
 	Jing Zhang <jingzhangos@google.com>,
 	Oliver Upton <oliver.upton@linux.dev>
-Subject: [PATCH 6.1 740/772] KVM: arm64: vgic-its: Clear DTE when MAPD unmaps a device
-Date: Thu, 12 Dec 2024 16:01:25 +0100
-Message-ID: <20241212144420.508363775@linuxfoundation.org>
+Subject: [PATCH 6.1 741/772] KVM: arm64: vgic-its: Clear ITE when DISCARD frees an ITE
+Date: Thu, 12 Dec 2024 16:01:26 +0100
+Message-ID: <20241212144420.550242680@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -54,57 +53,48 @@ Content-Transfer-Encoding: 8bit
 
 From: Kunkun Jiang <jiangkunkun@huawei.com>
 
-commit e9649129d33dca561305fc590a7c4ba8c3e5675a upstream.
+commit 7602ffd1d5e8927fadd5187cb4aed2fdc9c47143 upstream.
 
-vgic_its_save_device_tables will traverse its->device_list to
-save DTE for each device. vgic_its_restore_device_tables will
-traverse each entry of device table and check if it is valid.
-Restore if valid.
-
-But when MAPD unmaps a device, it does not invalidate the
-corresponding DTE. In the scenario of continuous saves
-and restores, there may be a situation where a device's DTE
-is not saved but is restored. This is unreasonable and may
-cause restore to fail. This patch clears the corresponding
-DTE when MAPD unmaps a device.
+When DISCARD frees an ITE, it does not invalidate the
+corresponding ITE. In the scenario of continuous saves and
+restores, there may be a situation where an ITE is not saved
+but is restored. This is unreasonable and may cause restore
+to fail. This patch clears the corresponding ITE when DISCARD
+frees an ITE.
 
 Cc: stable@vger.kernel.org
-Fixes: 57a9a117154c ("KVM: arm64: vgic-its: Device table save/restore")
-Co-developed-by: Shusen Li <lishusen2@huawei.com>
-Signed-off-by: Shusen Li <lishusen2@huawei.com>
+Fixes: eff484e0298d ("KVM: arm64: vgic-its: ITT save and restore")
 Signed-off-by: Kunkun Jiang <jiangkunkun@huawei.com>
 [Jing: Update with entry write helper]
 Signed-off-by: Jing Zhang <jingzhangos@google.com>
-Link: https://lore.kernel.org/r/20241107214137.428439-5-jingzhangos@google.com
+Link: https://lore.kernel.org/r/20241107214137.428439-6-jingzhangos@google.com
 Signed-off-by: Oliver Upton <oliver.upton@linux.dev>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kvm/vgic/vgic-its.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ arch/arm64/kvm/vgic/vgic-its.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
 --- a/arch/arm64/kvm/vgic/vgic-its.c
 +++ b/arch/arm64/kvm/vgic/vgic-its.c
-@@ -1211,9 +1211,11 @@ static int vgic_its_cmd_handle_mapd(stru
- 	bool valid = its_cmd_get_validbit(its_cmd);
- 	u8 num_eventid_bits = its_cmd_get_size(its_cmd);
- 	gpa_t itt_addr = its_cmd_get_ittaddr(its_cmd);
-+	int dte_esz = vgic_its_get_abi(its)->dte_esz;
- 	struct its_device *device;
-+	gpa_t gpa;
+@@ -855,6 +855,9 @@ static int vgic_its_cmd_handle_discard(s
  
--	if (!vgic_its_check_id(its, its->baser_device_table, device_id, NULL))
-+	if (!vgic_its_check_id(its, its->baser_device_table, device_id, &gpa))
- 		return E_ITS_MAPD_DEVICE_OOR;
+ 	ite = find_ite(its, device_id, event_id);
+ 	if (ite && its_is_collection_mapped(ite->collection)) {
++		struct its_device *device = find_its_device(its, device_id);
++		int ite_esz = vgic_its_get_abi(its)->ite_esz;
++		gpa_t gpa = device->itt_addr + ite->event_id * ite_esz;
+ 		/*
+ 		 * Though the spec talks about removing the pending state, we
+ 		 * don't bother here since we clear the ITTE anyway and the
+@@ -863,7 +866,8 @@ static int vgic_its_cmd_handle_discard(s
+ 		vgic_its_invalidate_cache(kvm);
  
- 	if (valid && num_eventid_bits > VITS_TYPER_IDBITS)
-@@ -1234,7 +1236,7 @@ static int vgic_its_cmd_handle_mapd(stru
- 	 * is an error, so we are done in any case.
- 	 */
- 	if (!valid)
+ 		its_free_ite(kvm, ite);
 -		return 0;
-+		return vgic_its_write_entry_lock(its, gpa, 0, dte_esz);
++
++		return vgic_its_write_entry_lock(its, gpa, 0, ite_esz);
+ 	}
  
- 	device = vgic_its_alloc_device(its, device_id, itt_addr,
- 				       num_eventid_bits);
+ 	return E_ITS_DISCARD_UNMAPPED_INTERRUPT;
 
 
