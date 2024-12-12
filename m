@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E22F2236EA;
-	Thu, 12 Dec 2024 16:49:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7485D222D74;
+	Thu, 12 Dec 2024 16:49:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734022167; cv=none; b=dvDCNCn0s1rLDgbCpgfqi5R6o8eM2yOIm8HmPBtrITh9zZiPumFFKwCmgfWdDEiUrHloVIYDK67hEh1iY+Fl9wkiRiF66VqPbE6pJ02JxOYKJbhcU5eBcCuTTj+bCg5hnSJJssH+MVGaMNlCCtY4P3KkCSJs4/lMnsTZ8n7Q6pI=
+	t=1734022171; cv=none; b=EUYjeQD0z4+lyDRXev3QSK/9MK1k6ax0Z5c9vUhinw7LwDUmeTBPv/xFWWNSZNPDGxs4c/Fnc/ZI13yyN8KFsYsOHwzGh/H1nliDr3/07VfiGFonTPzZQjOt0s/3GvPjINYpHrW/4fvVoDaNf/dySwgrs8mksSWQioKm0wXfYrc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734022167; c=relaxed/simple;
-	bh=R/crO/NKGt7Abr2wMLExJe30ngcV9ZnL4w4YhUnTVto=;
+	s=arc-20240116; t=1734022171; c=relaxed/simple;
+	bh=KGvIG2dbeJ0qLzIgvUd72wwjSTUcLHuGaz9TGWnV0ZM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GNY4/EnYHonMg52yKT0AxOkLSzSLfWpUq45ruCN3cvxkr2HXtKV8KXvd1V8LH4cL3v1kEWSH2J9wSHNdjDymqBZ9PzscBLjj1JsQuQJuJ3oW352F6DY5fyu0Pa9GEDUrnnNpapQADY2mrNkrHCJl0k35iNnFfZGjQeboWLFOOFs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x4nJfWdb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=a0ueYpz8MI5Fkhdt8BmbhgcyutoMK/HnkNMmFFjf3plk+0HWeG505mFrsq3jhmoJTwwU0523w5YtjG87E8IOVGmwqlQ4ehdHwEX1XHbUEwmVz+ZEs7G7ALtjjKNr+JFci3OMYmfVFOwObrZcVMRfKElfBc6hREwRX1V2tLgVZOA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I9IOTv0s; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x4nJfWdb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D82BEC4CECE;
-	Thu, 12 Dec 2024 16:49:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I9IOTv0s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D753AC4CED3;
+	Thu, 12 Dec 2024 16:49:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734022167;
-	bh=R/crO/NKGt7Abr2wMLExJe30ngcV9ZnL4w4YhUnTVto=;
+	s=korg; t=1734022171;
+	bh=KGvIG2dbeJ0qLzIgvUd72wwjSTUcLHuGaz9TGWnV0ZM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x4nJfWdbdqK4LY57+Dr3oR/r2JKfdWIJIyGfwMvfBJ6XCmFNgL4Dwq8dIGtwFLjZ3
-	 23/1Y+ZQ3Q0h4yxIFKeBH+/oJHY0LNJpMk/A3OXHIkXqaOKbHEFSL0aegrr0tkAjbW
-	 S9Wy6LuvJE7K2gLeVHhU/2H28/lZ1yvDQ2hKtBG0=
+	b=I9IOTv0sjePA0bdby+xar3/nfPtJKYoPPly2bLEGVL/paBm3MF4eMZdCAyNKHISle
+	 BzE2cC0V10Emqcchrw0W4vE0Tl08zrqDDnzVkpGtlQfkSsb/GCIHKHscR/+5xc5BbY
+	 QEEkgclcuK7cMSFw5EoKabCx87cPElwlV+iQohP4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Raed Salem <raeds@nvidia.com>,
 	Leon Romanovsky <leonro@nvidia.com>,
-	"David S. Miller" <davem@davemloft.net>,
 	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 167/565] xfrm: rename xfrm_state_offload struct to allow reuse
-Date: Thu, 12 Dec 2024 15:56:02 +0100
-Message-ID: <20241212144318.078123712@linuxfoundation.org>
+Subject: [PATCH 5.15 168/565] xfrm: store and rely on direction to construct offload flags
+Date: Thu, 12 Dec 2024 15:56:03 +0100
+Message-ID: <20241212144318.116392420@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144311.432886635@linuxfoundation.org>
 References: <20241212144311.432886635@linuxfoundation.org>
@@ -55,122 +54,92 @@ Content-Transfer-Encoding: 8bit
 
 From: Leon Romanovsky <leonro@nvidia.com>
 
-[ Upstream commit 87e0a94e60ea2e29be9dec6bc146fbc9861a4055 ]
+[ Upstream commit 482db2f1dd211f73ad9d71e33ae15c1df6379982 ]
 
-The struct xfrm_state_offload has all fields needed to hold information
-for offloaded policies too. In order to do not create new struct with
-same fields, let's rename existing one and reuse it later.
+XFRM state doesn't need anything from flags except to understand
+direction, so store it separately. For future patches, such change
+will allow us to reuse xfrm_dev_offload for policy offload too, which
+has three possible directions instead of two.
 
 Reviewed-by: Raed Salem <raeds@nvidia.com>
 Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
-Acked-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Stable-dep-of: 2cf567f421db ("netdevsim: copy addresses for both in and out paths")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/xfrm.h     | 10 +++++-----
- net/xfrm/xfrm_device.c |  2 +-
- net/xfrm/xfrm_state.c  |  4 ++--
- net/xfrm/xfrm_user.c   |  2 +-
- 4 files changed, 9 insertions(+), 9 deletions(-)
+ include/net/xfrm.h     | 6 ++++++
+ net/xfrm/xfrm_device.c | 8 +++++++-
+ net/xfrm/xfrm_user.c   | 3 ++-
+ 3 files changed, 15 insertions(+), 2 deletions(-)
 
 diff --git a/include/net/xfrm.h b/include/net/xfrm.h
-index 20ce2e1b3f61e..395d85eeb5d88 100644
+index 395d85eeb5d88..3232cdf1b4ef4 100644
 --- a/include/net/xfrm.h
 +++ b/include/net/xfrm.h
-@@ -126,7 +126,7 @@ struct xfrm_state_walk {
+@@ -126,12 +126,18 @@ struct xfrm_state_walk {
  	struct xfrm_address_filter *filter;
  };
  
--struct xfrm_state_offload {
-+struct xfrm_dev_offload {
++enum {
++	XFRM_DEV_OFFLOAD_IN = 1,
++	XFRM_DEV_OFFLOAD_OUT,
++};
++
+ struct xfrm_dev_offload {
  	struct net_device	*dev;
  	struct net_device	*real_dev;
  	unsigned long		offload_handle;
-@@ -246,7 +246,7 @@ struct xfrm_state {
- 	struct xfrm_lifetime_cur curlft;
- 	struct hrtimer		mtimer;
+ 	unsigned int		num_exthdrs;
+ 	u8			flags;
++	u8			dir : 2;
+ };
  
--	struct xfrm_state_offload xso;
-+	struct xfrm_dev_offload xso;
- 
- 	/* used to fix curlft->add_time when changing date */
- 	long		saved_tmo;
-@@ -1885,7 +1885,7 @@ bool xfrm_dev_offload_ok(struct sk_buff *skb, struct xfrm_state *x);
- 
- static inline void xfrm_dev_state_advance_esn(struct xfrm_state *x)
- {
--	struct xfrm_state_offload *xso = &x->xso;
-+	struct xfrm_dev_offload *xso = &x->xso;
- 
- 	if (xso->dev && xso->dev->xfrmdev_ops->xdo_dev_state_advance_esn)
- 		xso->dev->xfrmdev_ops->xdo_dev_state_advance_esn(x);
-@@ -1911,7 +1911,7 @@ static inline bool xfrm_dst_offload_ok(struct dst_entry *dst)
- 
- static inline void xfrm_dev_state_delete(struct xfrm_state *x)
- {
--	struct xfrm_state_offload *xso = &x->xso;
-+	struct xfrm_dev_offload *xso = &x->xso;
- 
- 	if (xso->dev)
- 		xso->dev->xfrmdev_ops->xdo_dev_state_delete(x);
-@@ -1919,7 +1919,7 @@ static inline void xfrm_dev_state_delete(struct xfrm_state *x)
- 
- static inline void xfrm_dev_state_free(struct xfrm_state *x)
- {
--	struct xfrm_state_offload *xso = &x->xso;
-+	struct xfrm_dev_offload *xso = &x->xso;
- 	struct net_device *dev = xso->dev;
- 
- 	if (dev && dev->xfrmdev_ops) {
+ struct xfrm_mode {
 diff --git a/net/xfrm/xfrm_device.c b/net/xfrm/xfrm_device.c
-index 4d13f7a372ab6..61aa0fd9d2a0c 100644
+index 61aa0fd9d2a0c..7690d23bcf8bb 100644
 --- a/net/xfrm/xfrm_device.c
 +++ b/net/xfrm/xfrm_device.c
-@@ -225,7 +225,7 @@ int xfrm_dev_state_add(struct net *net, struct xfrm_state *x,
- 	int err;
- 	struct dst_entry *dst;
- 	struct net_device *dev;
--	struct xfrm_state_offload *xso = &x->xso;
-+	struct xfrm_dev_offload *xso = &x->xso;
- 	xfrm_address_t *saddr;
- 	xfrm_address_t *daddr;
+@@ -129,7 +129,7 @@ struct sk_buff *validate_xmit_xfrm(struct sk_buff *skb, netdev_features_t featur
  
-diff --git a/net/xfrm/xfrm_state.c b/net/xfrm/xfrm_state.c
-index 60f3ea5561ddf..ff8159bae7bbf 100644
---- a/net/xfrm/xfrm_state.c
-+++ b/net/xfrm/xfrm_state.c
-@@ -750,7 +750,7 @@ xfrm_dev_state_flush_secctx_check(struct net *net, struct net_device *dev, bool
+ 	sp = skb_sec_path(skb);
+ 	x = sp->xvec[sp->len - 1];
+-	if (xo->flags & XFRM_GRO || x->xso.flags & XFRM_OFFLOAD_INBOUND)
++	if (xo->flags & XFRM_GRO || x->xso.dir == XFRM_DEV_OFFLOAD_IN)
+ 		return skb;
  
- 	for (i = 0; i <= net->xfrm.state_hmask; i++) {
- 		struct xfrm_state *x;
--		struct xfrm_state_offload *xso;
-+		struct xfrm_dev_offload *xso;
+ 	/* This skb was already validated on the upper/virtual dev */
+@@ -285,11 +285,17 @@ int xfrm_dev_state_add(struct net *net, struct xfrm_state *x,
+ 	/* Don't forward bit that is not implemented */
+ 	xso->flags = xuo->flags & ~XFRM_OFFLOAD_IPV6;
  
- 		hlist_for_each_entry(x, net->xfrm.state_bydst+i, bydst) {
- 			xso = &x->xso;
-@@ -834,7 +834,7 @@ int xfrm_dev_state_flush(struct net *net, struct net_device *dev, bool task_vali
- 	err = -ESRCH;
- 	for (i = 0; i <= net->xfrm.state_hmask; i++) {
- 		struct xfrm_state *x;
--		struct xfrm_state_offload *xso;
-+		struct xfrm_dev_offload *xso;
- restart:
- 		hlist_for_each_entry(x, net->xfrm.state_bydst+i, bydst) {
- 			xso = &x->xso;
++	if (xuo->flags & XFRM_OFFLOAD_INBOUND)
++		xso->dir = XFRM_DEV_OFFLOAD_IN;
++	else
++		xso->dir = XFRM_DEV_OFFLOAD_OUT;
++
+ 	err = dev->xfrmdev_ops->xdo_dev_state_add(x);
+ 	if (err) {
+ 		xso->num_exthdrs = 0;
+ 		xso->flags = 0;
+ 		xso->dev = NULL;
++		xso->dir = 0;
+ 		xso->real_dev = NULL;
+ 		dev_put(dev);
+ 
 diff --git a/net/xfrm/xfrm_user.c b/net/xfrm/xfrm_user.c
-index 1ebd54afe34c9..bb63b0dab87bd 100644
+index bb63b0dab87bd..1aa05b608ccf0 100644
 --- a/net/xfrm/xfrm_user.c
 +++ b/net/xfrm/xfrm_user.c
-@@ -843,7 +843,7 @@ static int copy_sec_ctx(struct xfrm_sec_ctx *s, struct sk_buff *skb)
+@@ -855,7 +855,8 @@ static int copy_user_offload(struct xfrm_dev_offload *xso, struct sk_buff *skb)
+ 	xuo = nla_data(attr);
+ 	memset(xuo, 0, sizeof(*xuo));
+ 	xuo->ifindex = xso->dev->ifindex;
+-	xuo->flags = xso->flags;
++	if (xso->dir == XFRM_DEV_OFFLOAD_IN)
++		xuo->flags = XFRM_OFFLOAD_INBOUND;
+ 
  	return 0;
  }
- 
--static int copy_user_offload(struct xfrm_state_offload *xso, struct sk_buff *skb)
-+static int copy_user_offload(struct xfrm_dev_offload *xso, struct sk_buff *skb)
- {
- 	struct xfrm_user_offload *xuo;
- 	struct nlattr *attr;
 -- 
 2.43.0
 
