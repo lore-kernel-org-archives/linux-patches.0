@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BB5C2185B1;
-	Thu, 12 Dec 2024 15:38:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 571A92185B1;
+	Thu, 12 Dec 2024 15:38:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734017908; cv=none; b=Kzqe260E5cYjgTCDnjb6CCD5H1Qs1Aj9V6kXF3uwV723XAcMhULOxLFtcVIg/NoKWjgV+Pn5aLZckGysP/62YUKfzRXVHh1bC+5qUVNe/FTkszLThq5jMlSztCrwm4BS3iCMgFo79IdPefCDz575PZWruRQQQRUiG5wu9nOaBPs=
+	t=1734017912; cv=none; b=tZkX8IWP98kyAhM7hLw4DmH+qv7WF43dInYwQ7O8r/4EJyX3OzxkLGY54UBZipzlCAG+hkc5FFGPrZoAOi/raAcGtWnnSBbqDwJHRJ2kYbh6UgPedN+J0xlVImZaCnzgG5pDGBCciimcV2YfDYbdfWECHPQ1T2iwOcQtfr+LwQo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734017908; c=relaxed/simple;
-	bh=eue58u7P/Ab3PLjFjDeehmmtkJXy5U5g67xgmulAtMw=;
+	s=arc-20240116; t=1734017912; c=relaxed/simple;
+	bh=j03e9Oe2VyBNAm7KMcecabemlx0AyODyYVBbkXYsgOk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=b2khTnkwCg8rXrzxtkyPoN3FUyYmiSAabjA1HeFuEs7Jg4jk4ll1b6QSNBJEscaa5/Ug7Z7YujqhyOssaJnjNtfgELbFceihSK/KRCvIlB0qj6aECPKoTXjP2J14zfsZyv7riczW4ode4pa7GtJCgZt7G1A7bEIY9FWm2W56IcY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VAEOIbFZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K1Ox7oj2vL9EUx6hJcGNy22lCCxAiEvA9hvVV+6l4XI9hPJpdpm27JMVPMTBLQ/d+TjGZRiBvMX8LqiRso8EnS1NVEzAbt8LfT2Dtj0vynruj+y2tkjhMjfQ7QKrCLTEr3ZSE+PZ7Nr41Ffn79FMIanZkAYsB1izPkhmr/04oe0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=narqVZCq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VAEOIbFZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B8DAC4CECE;
-	Thu, 12 Dec 2024 15:38:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="narqVZCq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 754F9C4CECE;
+	Thu, 12 Dec 2024 15:38:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734017908;
-	bh=eue58u7P/Ab3PLjFjDeehmmtkJXy5U5g67xgmulAtMw=;
+	s=korg; t=1734017911;
+	bh=j03e9Oe2VyBNAm7KMcecabemlx0AyODyYVBbkXYsgOk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VAEOIbFZfmTEI3sSLQ/Xo4BNA+9IfT0+2Uju8vKsO9YX7ATMHeelTavHOBrKb502T
-	 1yRJnFi3laMieBmJQSmVyUuPgzEjVkD9lM7hjtz7KBCeRf/y2jTUGGBRxGkKJRJ2mg
-	 H5Vj9r3/Fu2TuefehGRJ9wSTKtkImPqG54msCWHU=
+	b=narqVZCqzO4SNoaQjohwQ/hx3T4vkCOillwWfe5KahZ9K6PbqRLR3Pc+aRbPJr31Q
+	 iRf4dV1j3JMvtb+7VoFSq1MNF20Az59YySairlEwg9R77H3TvYNmVju7umg9GTBs0c
+	 y/oM4a6P2P5XWBh0vomlv7zrV5RaunQ70xXbTbdM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolai Buchwitz <nb@tipi-net.de>,
-	Lino Sanfilippo <l.sanfilippo@kunbus.com>,
-	=?UTF-8?q?Leonard=20G=C3=B6hrs?= <l.goehrs@pengutronix.de>,
+	Renjaya Raga Zenta <renjaya.zenta@formulatrix.com>,
 	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 6.6 144/356] can: dev: can_set_termination(): allow sleeping GPIOs
-Date: Thu, 12 Dec 2024 15:57:43 +0100
-Message-ID: <20241212144250.331050365@linuxfoundation.org>
+Subject: [PATCH 6.6 145/356] can: mcp251xfd: mcp251xfd_get_tef_len(): work around erratum DS80000789E 6.
+Date: Thu, 12 Dec 2024 15:57:44 +0100
+Message-ID: <20241212144250.370314266@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144244.601729511@linuxfoundation.org>
 References: <20241212144244.601729511@linuxfoundation.org>
@@ -46,7 +44,6 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
@@ -55,42 +52,94 @@ Content-Transfer-Encoding: 8bit
 
 From: Marc Kleine-Budde <mkl@pengutronix.de>
 
-commit ee1dfbdd8b4b6de85e96ae2059dc9c1bdb6b49b5 upstream.
+commit 30447a1bc0e066e492552b3e5ffeb63c1605dfe2 upstream.
 
-In commit 6e86a1543c37 ("can: dev: provide optional GPIO based
-termination support") GPIO based termination support was added.
+Commit b8e0ddd36ce9 ("can: mcp251xfd: tef: prepare to workaround
+broken TEF FIFO tail index erratum") introduced
+mcp251xfd_get_tef_len() to get the number of unhandled transmit events
+from the Transmit Event FIFO (TEF).
 
-For no particular reason that patch uses gpiod_set_value() to set the
-GPIO. This leads to the following warning, if the systems uses a
-sleeping GPIO, i.e. behind an I2C port expander:
+As the TEF has no head index, the driver uses the TX-FIFO's tail index
+instead, assuming that send frames are completed.
 
-| WARNING: CPU: 0 PID: 379 at /drivers/gpio/gpiolib.c:3496 gpiod_set_value+0x50/0x6c
-| CPU: 0 UID: 0 PID: 379 Comm: ip Not tainted 6.11.0-20241016-1 #1 823affae360cc91126e4d316d7a614a8bf86236c
+When calculating the number of unhandled TEF events, that commit
+didn't take mcp2518fd erratum DS80000789E 6. into account. According
+to that erratum, the FIFOCI bits of a FIFOSTA register, here the
+TX-FIFO tail index might be corrupted.
 
-Replace gpiod_set_value() by gpiod_set_value_cansleep() to allow the
-use of sleeping GPIOs.
+However here it seems the bit indicating that the TX-FIFO is
+empty (MCP251XFD_REG_FIFOSTA_TFERFFIF) is not correct while the
+TX-FIFO tail index is.
 
-Cc: Nicolai Buchwitz <nb@tipi-net.de>
-Cc: Lino Sanfilippo <l.sanfilippo@kunbus.com>
+Assume that the TX-FIFO is indeed empty if:
+- Chip's head and tail index are equal (len == 0).
+- The TX-FIFO is less than half full.
+  (The TX-FIFO empty case has already been checked at the
+   beginning of this function.)
+- No free buffers in the TX ring.
+
+If the TX-FIFO is assumed to be empty, assume that the TEF is full and
+return the number of elements in the TX-FIFO (which equals the number
+of TEF elements).
+
+If these assumptions are false, the driver might read to many objects
+from the TEF. mcp251xfd_handle_tefif_one() checks the sequence numbers
+and will refuse to process old events.
+
+Reported-by: Renjaya Raga Zenta <renjaya.zenta@formulatrix.com>
+Closes: https://patch.msgid.link/CAJ7t6HgaeQ3a_OtfszezU=zB-FqiZXqrnATJ3UujNoQJJf7GgA@mail.gmail.com
+Fixes: b8e0ddd36ce9 ("can: mcp251xfd: tef: prepare to workaround broken TEF FIFO tail index erratum")
+Tested-by: Renjaya Raga Zenta <renjaya.zenta@formulatrix.com>
 Cc: stable@vger.kernel.org
-Reported-by: Leonard Göhrs <l.goehrs@pengutronix.de>
-Tested-by: Leonard Göhrs <l.goehrs@pengutronix.de>
-Fixes: 6e86a1543c37 ("can: dev: provide optional GPIO based termination support")
-Link: https://patch.msgid.link/20241121-dev-fix-can_set_termination-v1-1-41fa6e29216d@pengutronix.de
+Link: https://patch.msgid.link/20241126-mcp251xfd-fix-length-calculation-v2-1-c2ed516ed6ba@pengutronix.de
 Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/can/dev/dev.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/can/spi/mcp251xfd/mcp251xfd-tef.c |   29 +++++++++++++++++++++++++-
+ 1 file changed, 28 insertions(+), 1 deletion(-)
 
---- a/drivers/net/can/dev/dev.c
-+++ b/drivers/net/can/dev/dev.c
-@@ -452,7 +452,7 @@ static int can_set_termination(struct ne
- 	else
- 		set = 0;
+--- a/drivers/net/can/spi/mcp251xfd/mcp251xfd-tef.c
++++ b/drivers/net/can/spi/mcp251xfd/mcp251xfd-tef.c
+@@ -21,6 +21,11 @@ static inline bool mcp251xfd_tx_fifo_sta
+ 	return fifo_sta & MCP251XFD_REG_FIFOSTA_TFERFFIF;
+ }
  
--	gpiod_set_value(priv->termination_gpio, set);
-+	gpiod_set_value_cansleep(priv->termination_gpio, set);
++static inline bool mcp251xfd_tx_fifo_sta_less_than_half_full(u32 fifo_sta)
++{
++	return fifo_sta & MCP251XFD_REG_FIFOSTA_TFHRFHIF;
++}
++
+ static inline int
+ mcp251xfd_tef_tail_get_from_chip(const struct mcp251xfd_priv *priv,
+ 				 u8 *tef_tail)
+@@ -147,7 +152,29 @@ mcp251xfd_get_tef_len(struct mcp251xfd_p
+ 	BUILD_BUG_ON(sizeof(tx_ring->obj_num) != sizeof(len));
+ 
+ 	len = (chip_tx_tail << shift) - (tail << shift);
+-	*len_p = len >> shift;
++	len >>= shift;
++
++	/* According to mcp2518fd erratum DS80000789E 6. the FIFOCI
++	 * bits of a FIFOSTA register, here the TX-FIFO tail index
++	 * might be corrupted.
++	 *
++	 * However here it seems the bit indicating that the TX-FIFO
++	 * is empty (MCP251XFD_REG_FIFOSTA_TFERFFIF) is not correct
++	 * while the TX-FIFO tail index is.
++	 *
++	 * We assume the TX-FIFO is empty, i.e. all pending CAN frames
++	 * haven been send, if:
++	 * - Chip's head and tail index are equal (len == 0).
++	 * - The TX-FIFO is less than half full.
++	 *   (The TX-FIFO empty case has already been checked at the
++	 *    beginning of this function.)
++	 * - No free buffers in the TX ring.
++	 */
++	if (len == 0 && mcp251xfd_tx_fifo_sta_less_than_half_full(fifo_sta) &&
++	    mcp251xfd_get_tx_free(tx_ring) == 0)
++		len = tx_ring->obj_num;
++
++	*len_p = len;
  
  	return 0;
  }
