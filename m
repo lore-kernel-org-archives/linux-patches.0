@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 827C121660C;
-	Thu, 12 Dec 2024 17:25:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83743211493;
+	Thu, 12 Dec 2024 17:25:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734024342; cv=none; b=M6D+Nq+AZbAmaRWHWd6O/eTG8Z3lJ4gnippowG1LQ25+jzOulKD2MBKyxM6jHrAZW98XKEUAZxavUx492Y4cxynnGMwiBKT9G8VEa+JxC9pLv41crPTiSvvoMaH9+O8RRGS3laPockNQL2nzISqFKoWcZHrjquF6Lh77yP4zp5o=
+	t=1734024345; cv=none; b=JdvkLAJmt1EaE3P1Oo2sXeh/UDyYygMlkMHY7uzZzpJFY4JY3vI1soFu8/0bqsAojCoxFxn5Zi0HAM4vPmfPBwCKXpBX7BmI1NQyK2EwvCzQXx+pSMD8dmfh0RX/Q/Qw5xAKADv/TXaVb4drML2EDA18M4CSQ2ErQrQl0e53eJc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734024342; c=relaxed/simple;
-	bh=FHLgtNFr0ufY07a+1snulwTHe2xxNvCdCl0BZL5nNig=;
+	s=arc-20240116; t=1734024345; c=relaxed/simple;
+	bh=ca9SIfFhrf4++LBEf+SFnEMetWGkHcH8LApfcLMSY2Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=mz3+q7soi4ECZDlSUCatVRyiRu9C9wF0O8Ct4vA7zH91lc4OKi0USP08toBQvMp+qMIrhJX5/WIbKeSv2OD0Uznn/akq/LOvC8EeOyVulaPrMPWVggM4R0I6NUUxLTMtQACWzbgev3oNt/H/+Y9C5J53FQFzGteUxQDBhvQzSmE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=siIzeVYp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JDBLD9VcJFgvtD5jmKNkr4dWN1JbK6/U19Fdsd8AYRxtPULwMfy1ALNXsSaCWfSQKDurjoOKH4NeMZrUfXLO0FZhAcXi9mRlZ8Pt6oqUiuxSbgTkYKJyjZspfYCWMHCM3PPZIEwd+BYvW3CcArwAWjdPpbTn8dF1qlbJ/B1rtmU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k7YOz7PE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="siIzeVYp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0305AC4CECE;
-	Thu, 12 Dec 2024 17:25:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k7YOz7PE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02D6AC4CECE;
+	Thu, 12 Dec 2024 17:25:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734024342;
-	bh=FHLgtNFr0ufY07a+1snulwTHe2xxNvCdCl0BZL5nNig=;
+	s=korg; t=1734024345;
+	bh=ca9SIfFhrf4++LBEf+SFnEMetWGkHcH8LApfcLMSY2Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=siIzeVYpLTST7M0yJGPSPFWYaoduELdPa292fdecll+XYAGka9rsa0e1+wJOwrUtO
-	 LDb9JzR4p1rj2p3j4vPpGTTLSUT4s+6SvQggrpAE9x+F95XsSUdbYwoFiAUZvk2tp8
-	 iIRxKEVRFE9kzpzsh/y98PVbC7cdlsbLsxp0e0l4=
+	b=k7YOz7PEx0XqUNAlRwwYGUEbJNKqbfxBnur9hnMvcwOdw9DMnlCtC2JGtXwPj6iZQ
+	 0Z+QUZgOam5iF8leMuXjidzUy68XOkZa7YoVsXmIXrlMRtJ8jbUM/N4KzVaUr6GUhe
+	 D6Lv9BUQ1A9GmbDNKoh9Vi0rGgKt04Ohu+G2jTY4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
-	Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
-	=?UTF-8?q?Alexis=20Lothor=C3=A9?= <alexis.lothore@bootlin.com>
-Subject: [PATCH 5.10 265/459] spi: Fix acpi deferred irq probe
-Date: Thu, 12 Dec 2024 16:00:03 +0100
-Message-ID: <20241212144304.070768411@linuxfoundation.org>
+	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
+	Tzung-Bi Shih <tzungbi@kernel.org>
+Subject: [PATCH 5.10 266/459] platform/chrome: cros_ec_typec: fix missing fwnode reference decrement
+Date: Thu, 12 Dec 2024 16:00:04 +0100
+Message-ID: <20241212144304.111842741@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144253.511169641@linuxfoundation.org>
 References: <20241212144253.511169641@linuxfoundation.org>
@@ -46,67 +44,42 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>
+From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
 
-commit d24cfee7f63d6b44d45a67c5662bd1cc48e8b3ca upstream.
+commit 9c41f371457bd9a24874e3c7934d9745e87fbc58 upstream.
 
-When probing spi device take care of deferred probe of ACPI irq gpio
-similar like for OF/DT case.
+The device_for_each_child_node() macro requires explicit calls to
+fwnode_handle_put() upon early exits (return, break, goto) to decrement
+the fwnode's refcount, and avoid levaing a node reference behind.
 
->From practical standpoint this fixes issue with vsc-tp driver on
-Dell XP 9340 laptop, which try to request interrupt with spi->irq
-equal to -EPROBE_DEFER and fail to probe with the following error:
+Add the missing fwnode_handle_put() after the common label for all error
+paths.
 
-vsc-tp spi-INTC10D0:00: probe with driver vsc-tp failed with error -22
-
-Suggested-by: Hans de Goede <hdegoede@redhat.com>
-Fixes: 33ada67da352 ("ACPI / spi: attach GPIO IRQ from ACPI description to SPI device")
 Cc: stable@vger.kernel.org
-Signed-off-by: Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Tested-by: Alexis Lothoré <alexis.lothore@bootlin.com> # Dell XPS9320, ov01a10
-Link: https://patch.msgid.link/20241122094224.226773-1-stanislaw.gruszka@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: fdc6b21e2444 ("platform/chrome: Add Type C connector class driver")
+Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+Link: https://lore.kernel.org/r/20241013-cross_ec_typec_fwnode_handle_put-v2-1-9182b2cd7767@gmail.com
+Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi.c |   13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ drivers/platform/chrome/cros_ec_typec.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/spi/spi.c
-+++ b/drivers/spi/spi.c
-@@ -397,6 +397,16 @@ static int spi_drv_probe(struct device *
- 			spi->irq = 0;
- 	}
+--- a/drivers/platform/chrome/cros_ec_typec.c
++++ b/drivers/platform/chrome/cros_ec_typec.c
+@@ -294,6 +294,7 @@ static int cros_typec_init_ports(struct
+ 	return 0;
  
-+	if (has_acpi_companion(dev) && spi->irq < 0) {
-+		struct acpi_device *adev = to_acpi_device_node(dev->fwnode);
-+
-+		spi->irq = acpi_dev_gpio_irq_get(adev, 0);
-+		if (spi->irq == -EPROBE_DEFER)
-+			return -EPROBE_DEFER;
-+		if (spi->irq < 0)
-+			spi->irq = 0;
-+	}
-+
- 	ret = dev_pm_domain_attach(dev, true);
- 	if (ret)
- 		return ret;
-@@ -2249,9 +2259,6 @@ static acpi_status acpi_register_spi_dev
- 	acpi_set_modalias(adev, acpi_device_hid(adev), spi->modalias,
- 			  sizeof(spi->modalias));
- 
--	if (spi->irq < 0)
--		spi->irq = acpi_dev_gpio_irq_get(adev, 0);
--
- 	acpi_device_set_enumerated(adev);
- 
- 	adev->power.flags.ignore_parent = true;
+ unregister_ports:
++	fwnode_handle_put(fwnode);
+ 	cros_unregister_ports(typec);
+ 	return ret;
+ }
 
 
