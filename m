@@ -1,42 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A570221DB0;
-	Thu, 12 Dec 2024 16:13:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 055E9222D42;
+	Thu, 12 Dec 2024 16:13:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734020036; cv=none; b=tpl9jGHdgph9kdX/hn+NK3bsAKPRtbR6dhOGLh0CZpIm+LJtTrscc09X7kUMXhk4jiP5pLVVugovhqhd5W2ggMcFvQ1zNi1+vVKvuGfJSYEAgdoiCNgudANVilwy9CEaLYDminyS4KzDDQeR+pOitXeafAhAYT06NMlUyuZvebI=
+	t=1734020040; cv=none; b=TTrxtXMaIlnD/fb8K6+1PAfJY+kesk6P6vwW4zqAEhG3FhyN1ZAWT3M+emRHgZfJ9q1/l0D6AWp3SogTeEI0zow7CN5VmKx/C8WSKOfNA6Ur2HYG4uYyuw0NR04Ym8GBBw97kHteLwEIKHhBLCsMc1QtGsO/N0yDWtOgoD739O4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734020036; c=relaxed/simple;
-	bh=Mp/QABc3NY6SFnjlaaBCamG6zjfZGyHKwAJpneYUyew=;
+	s=arc-20240116; t=1734020040; c=relaxed/simple;
+	bh=S+WYNvdmGrvDmzsSaP12wVt+daCmzW6wa+qretsCVTI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JMB7IRUIS0Xnhax+mS+Lugamk4Cc26a6AUiu2HXFv25Dq4WfaDwZnNr/tMKXXnVoZ/w87wc+Di36/yy+fGbyGcByXLDmqFOHoh2Sl9YvFFpuc5VLPyCtuwvazw380HRZ4MboX6m/wqWQ2jMkI7qYfi4N9QBc4uF6f5aUrypsVKc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Uo4S2yt9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=my3UMAYmn2uYEIjtrXVtxFOFKhmOtC9xCjty1SLAl9fcpsebPvqAX90I/QpEHZ4XGJgFlWNkJ6TpttiB0b1B5N5BQ4BuSKFFhjLuo6BzDQoEbj6MIBXoN+lOGGFyggj9UuY2H4NoDv7R4dOg7os6l/+5I7Kx/959i0DOG9FoNr0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pHqDuD2S; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Uo4S2yt9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 934EFC4CECE;
-	Thu, 12 Dec 2024 16:13:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pHqDuD2S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47D77C4CECE;
+	Thu, 12 Dec 2024 16:13:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734020036;
-	bh=Mp/QABc3NY6SFnjlaaBCamG6zjfZGyHKwAJpneYUyew=;
+	s=korg; t=1734020039;
+	bh=S+WYNvdmGrvDmzsSaP12wVt+daCmzW6wa+qretsCVTI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Uo4S2yt9c4QV8owdzQh8eRtp5oXSZXBfvCeggUNbbtW1ZhiNSPjxPhV/RG/CNPxdq
-	 ugV7m/In9bJbIsp3iYA9opgVEGjwnu4SkXPogjF99Qwr5jn53HRqnR7tI27pK5CFY1
-	 iWcgqYJp5UTlDNUhOW9XHO2XapMI9sCjOA+vDZuY=
+	b=pHqDuD2SeOFlIKTHBZsa7DogmelwS75IJd19ZE3t3R4phkItZV6wE617yTmslYtKZ
+	 thY50qEwQ5rqaseH7ml9m4sScUq5bCI+QQiWbCv5Pst2xCI2kP9L8RG2hxFLnVDhc7
+	 weC4zijaj0K1+FQMn14NxuWEvU8rQ9t3SwngHthI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ido Schimmel <idosch@nvidia.com>,
-	Amit Cohen <amcohen@nvidia.com>,
-	Jiri Pirko <jiri@nvidia.com>,
-	Petr Machata <petrm@nvidia.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Bin Lan <bin.lan.cn@windriver.com>
-Subject: [PATCH 6.1 354/772] mlxsw: spectrum_acl_tcam: Fix NULL pointer dereference in error path
-Date: Thu, 12 Dec 2024 15:54:59 +0100
-Message-ID: <20241212144404.539179440@linuxfoundation.org>
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 6.1 363/772] ext4: fix FS_IOC_GETFSMAP handling
+Date: Thu, 12 Dec 2024 15:55:08 +0100
+Message-ID: <20241212144404.917886198@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -55,99 +49,158 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Theodore Ts'o <tytso@mit.edu>
 
-commit efeb7dfea8ee10cdec11b6b6ba4e405edbe75809 upstream.
+commit 4a622e4d477bb12ad5ed4abbc7ad1365de1fa347 upstream.
 
-When calling mlxsw_sp_acl_tcam_region_destroy() from an error path after
-failing to attach the region to an ACL group, we hit a NULL pointer
-dereference upon 'region->group->tcam' [1].
+The original implementation ext4's FS_IOC_GETFSMAP handling only
+worked when the range of queried blocks included at least one free
+(unallocated) block range.  This is because how the metadata blocks
+were emitted was as a side effect of ext4_mballoc_query_range()
+calling ext4_getfsmap_datadev_helper(), and that function was only
+called when a free block range was identified.  As a result, this
+caused generic/365 to fail.
 
-Fix by retrieving the 'tcam' pointer using mlxsw_sp_acl_to_tcam().
+Fix this by creating a new function ext4_getfsmap_meta_helper() which
+gets called so that blocks before the first free block range in a
+block group can get properly reported.
 
-[1]
-BUG: kernel NULL pointer dereference, address: 0000000000000000
-[...]
-RIP: 0010:mlxsw_sp_acl_tcam_region_destroy+0xa0/0xd0
-[...]
-Call Trace:
- mlxsw_sp_acl_tcam_vchunk_get+0x88b/0xa20
- mlxsw_sp_acl_tcam_ventry_add+0x25/0xe0
- mlxsw_sp_acl_rule_add+0x47/0x240
- mlxsw_sp_flower_replace+0x1a9/0x1d0
- tc_setup_cb_add+0xdc/0x1c0
- fl_hw_replace_filter+0x146/0x1f0
- fl_change+0xc17/0x1360
- tc_new_tfilter+0x472/0xb90
- rtnetlink_rcv_msg+0x313/0x3b0
- netlink_rcv_skb+0x58/0x100
- netlink_unicast+0x244/0x390
- netlink_sendmsg+0x1e4/0x440
- ____sys_sendmsg+0x164/0x260
- ___sys_sendmsg+0x9a/0xe0
- __sys_sendmsg+0x7a/0xc0
- do_syscall_64+0x40/0xe0
- entry_SYSCALL_64_after_hwframe+0x63/0x6b
-
-Fixes: 22a677661f56 ("mlxsw: spectrum: Introduce ACL core with simple TCAM implementation")
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Amit Cohen <amcohen@nvidia.com>
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
-Signed-off-by: Petr Machata <petrm@nvidia.com>
-Acked-by: Paolo Abeni <pabeni@redhat.com>
-Link: https://lore.kernel.org/r/fb6a4542bbc9fcab5a523802d97059bffbca7126.1705502064.git.petrm@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ For the function mlxsw_sp_acl_to_tcam() is not exist in 6.1.y, pick
-mlxsw_sp_acl_to_tcam() from commit 74cbc3c03c828ccf265a72f9bcb5aee906978744 ]
-Signed-off-by: Bin Lan <bin.lan.cn@windriver.com>
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/mellanox/mlxsw/spectrum.h          |    1 +
- drivers/net/ethernet/mellanox/mlxsw/spectrum_acl.c      |    5 +++++
- drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c |    4 ++--
- 3 files changed, 8 insertions(+), 2 deletions(-)
+ fs/ext4/fsmap.c   |   54 +++++++++++++++++++++++++++++++++++++++++++++++++++++-
+ fs/ext4/mballoc.c |   18 ++++++++++++++----
+ fs/ext4/mballoc.h |    1 +
+ 3 files changed, 68 insertions(+), 5 deletions(-)
 
---- a/drivers/net/ethernet/mellanox/mlxsw/spectrum.h
-+++ b/drivers/net/ethernet/mellanox/mlxsw/spectrum.h
-@@ -970,6 +970,7 @@ enum mlxsw_sp_acl_profile {
- };
- 
- struct mlxsw_afk *mlxsw_sp_acl_afk(struct mlxsw_sp_acl *acl);
-+struct mlxsw_sp_acl_tcam *mlxsw_sp_acl_to_tcam(struct mlxsw_sp_acl *acl);
- 
- int mlxsw_sp_acl_ruleset_bind(struct mlxsw_sp *mlxsw_sp,
- 			      struct mlxsw_sp_flow_block *block,
---- a/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl.c
-+++ b/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl.c
-@@ -40,6 +40,11 @@ struct mlxsw_afk *mlxsw_sp_acl_afk(struc
- 	return acl->afk;
+--- a/fs/ext4/fsmap.c
++++ b/fs/ext4/fsmap.c
+@@ -185,6 +185,56 @@ static inline ext4_fsblk_t ext4_fsmap_ne
+ 	return fmr->fmr_physical + fmr->fmr_length;
  }
  
-+struct mlxsw_sp_acl_tcam *mlxsw_sp_acl_to_tcam(struct mlxsw_sp_acl *acl)
++static int ext4_getfsmap_meta_helper(struct super_block *sb,
++				     ext4_group_t agno, ext4_grpblk_t start,
++				     ext4_grpblk_t len, void *priv)
 +{
-+	return &acl->tcam;
++	struct ext4_getfsmap_info *info = priv;
++	struct ext4_fsmap *p;
++	struct ext4_fsmap *tmp;
++	struct ext4_sb_info *sbi = EXT4_SB(sb);
++	ext4_fsblk_t fsb, fs_start, fs_end;
++	int error;
++
++	fs_start = fsb = (EXT4_C2B(sbi, start) +
++			  ext4_group_first_block_no(sb, agno));
++	fs_end = fs_start + EXT4_C2B(sbi, len);
++
++	/* Return relevant extents from the meta_list */
++	list_for_each_entry_safe(p, tmp, &info->gfi_meta_list, fmr_list) {
++		if (p->fmr_physical < info->gfi_next_fsblk) {
++			list_del(&p->fmr_list);
++			kfree(p);
++			continue;
++		}
++		if (p->fmr_physical <= fs_start ||
++		    p->fmr_physical + p->fmr_length <= fs_end) {
++			/* Emit the retained free extent record if present */
++			if (info->gfi_lastfree.fmr_owner) {
++				error = ext4_getfsmap_helper(sb, info,
++							&info->gfi_lastfree);
++				if (error)
++					return error;
++				info->gfi_lastfree.fmr_owner = 0;
++			}
++			error = ext4_getfsmap_helper(sb, info, p);
++			if (error)
++				return error;
++			fsb = p->fmr_physical + p->fmr_length;
++			if (info->gfi_next_fsblk < fsb)
++				info->gfi_next_fsblk = fsb;
++			list_del(&p->fmr_list);
++			kfree(p);
++			continue;
++		}
++	}
++	if (info->gfi_next_fsblk < fsb)
++		info->gfi_next_fsblk = fsb;
++
++	return 0;
 +}
 +
- struct mlxsw_sp_acl_ruleset_ht_key {
- 	struct mlxsw_sp_flow_block *block;
- 	u32 chain_index;
---- a/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c
-+++ b/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c
-@@ -747,13 +747,13 @@ static void
- mlxsw_sp_acl_tcam_region_destroy(struct mlxsw_sp *mlxsw_sp,
- 				 struct mlxsw_sp_acl_tcam_region *region)
- {
-+	struct mlxsw_sp_acl_tcam *tcam = mlxsw_sp_acl_to_tcam(mlxsw_sp->acl);
- 	const struct mlxsw_sp_acl_tcam_ops *ops = mlxsw_sp->acl_tcam_ops;
++
+ /* Transform a blockgroup's free record into a fsmap */
+ static int ext4_getfsmap_datadev_helper(struct super_block *sb,
+ 					ext4_group_t agno, ext4_grpblk_t start,
+@@ -539,6 +589,7 @@ static int ext4_getfsmap_datadev(struct
+ 		error = ext4_mballoc_query_range(sb, info->gfi_agno,
+ 				EXT4_B2C(sbi, info->gfi_low.fmr_physical),
+ 				EXT4_B2C(sbi, info->gfi_high.fmr_physical),
++				ext4_getfsmap_meta_helper,
+ 				ext4_getfsmap_datadev_helper, info);
+ 		if (error)
+ 			goto err;
+@@ -560,7 +611,8 @@ static int ext4_getfsmap_datadev(struct
  
- 	ops->region_fini(mlxsw_sp, region->priv);
- 	mlxsw_sp_acl_tcam_region_disable(mlxsw_sp, region);
- 	mlxsw_sp_acl_tcam_region_free(mlxsw_sp, region);
--	mlxsw_sp_acl_tcam_region_id_put(region->group->tcam,
--					region->id);
-+	mlxsw_sp_acl_tcam_region_id_put(tcam, region->id);
- 	kfree(region);
- }
+ 	/* Report any gaps at the end of the bg */
+ 	info->gfi_last = true;
+-	error = ext4_getfsmap_datadev_helper(sb, end_ag, last_cluster, 0, info);
++	error = ext4_getfsmap_datadev_helper(sb, end_ag, last_cluster + 1,
++					     0, info);
+ 	if (error)
+ 		goto err;
+ 
+--- a/fs/ext4/mballoc.c
++++ b/fs/ext4/mballoc.c
+@@ -6685,13 +6685,14 @@ int
+ ext4_mballoc_query_range(
+ 	struct super_block		*sb,
+ 	ext4_group_t			group,
+-	ext4_grpblk_t			start,
++	ext4_grpblk_t			first,
+ 	ext4_grpblk_t			end,
++	ext4_mballoc_query_range_fn	meta_formatter,
+ 	ext4_mballoc_query_range_fn	formatter,
+ 	void				*priv)
+ {
+ 	void				*bitmap;
+-	ext4_grpblk_t			next;
++	ext4_grpblk_t			start, next;
+ 	struct ext4_buddy		e4b;
+ 	int				error;
+ 
+@@ -6702,10 +6703,19 @@ ext4_mballoc_query_range(
+ 
+ 	ext4_lock_group(sb, group);
+ 
+-	start = max(e4b.bd_info->bb_first_free, start);
++	start = max(e4b.bd_info->bb_first_free, first);
+ 	if (end >= EXT4_CLUSTERS_PER_GROUP(sb))
+ 		end = EXT4_CLUSTERS_PER_GROUP(sb) - 1;
+-
++	if (meta_formatter && start != first) {
++		if (start > end)
++			start = end;
++		ext4_unlock_group(sb, group);
++		error = meta_formatter(sb, group, first, start - first,
++				       priv);
++		if (error)
++			goto out_unload;
++		ext4_lock_group(sb, group);
++	}
+ 	while (start <= end) {
+ 		start = mb_find_next_zero_bit(bitmap, end + 1, start);
+ 		if (start > end)
+--- a/fs/ext4/mballoc.h
++++ b/fs/ext4/mballoc.h
+@@ -245,6 +245,7 @@ ext4_mballoc_query_range(
+ 	ext4_group_t			agno,
+ 	ext4_grpblk_t			start,
+ 	ext4_grpblk_t			end,
++	ext4_mballoc_query_range_fn	meta_formatter,
+ 	ext4_mballoc_query_range_fn	formatter,
+ 	void				*priv);
  
 
 
