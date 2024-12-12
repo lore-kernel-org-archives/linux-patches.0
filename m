@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26EFC6F2FE;
-	Thu, 12 Dec 2024 17:42:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D161E13C918;
+	Thu, 12 Dec 2024 17:42:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734025329; cv=none; b=E6dWngQQgHheAOJdglDvVayqaIdQkcZcwFOeneNL/aDxtHu6gFw3lWN62xXLbS2B8ynnbvNayTXvv+fteGEc/Adw9MYTzBxLgtqXENt30OJJvKm6h//E+WKAD1VUZBahYjytubojvWknuAGRkBCJbxMBtz2yHys7NYhxhwn36KQ=
+	t=1734025331; cv=none; b=Mh6cW4I51W6BDEts9/6MrQQ30YFnxg+ZeUk1Vl7flunsKwrp0NHHWt3W2o0x/wkKcxlZ+VibPbbUsHtUhcMWC4rkgZLjzHSx6lxY2yp+5roriBPfv3nxjdJRpdIUKFZe6rbF5q4Ro7xoauBy4i8oNCSWRA8KGyMgL/OJZCiO7v4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734025329; c=relaxed/simple;
-	bh=BOPRaEqqytEurFzmzxYlFATTOkUEKhHbPdLKRb+vxXM=;
+	s=arc-20240116; t=1734025331; c=relaxed/simple;
+	bh=ETYhmcQuxkZSJhVsBU8uTS2Y8e55VvYq7A+G+frFaas=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JBkcW8CyiYBsgUdyovg2TgnV4b9bk3Z4lV2i3Vi6sXM3yB/34qBTfYtOUmupVOe4giL4ux/5yODL7pUPVtjn1nHDJZXf5KML6jN/L+tPOIjXMKeTHGeM3J2V4hFDdTVYalW/gVLH9aIEB2NhLWecYRM8UADPqFtCLPxf6HL6Nuk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jR5qTVxj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=H3OmIVBOtX7F+AH1Sx0Kfak6aHNG4pjq8tW0JGwR3SMJ+dyY6rsxDain1fa8AaBuLcv8pSta4SRfwRibQEPTmDePDgCLEWXelOiNqW8BSNKQaWGks4yhnkO818jCpOTbyHa3u+cH6rliGHmlB7EA8OdBeOfrs/H7rkInvDoLCPY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NXPDLH56; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jR5qTVxj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9745BC4CED3;
-	Thu, 12 Dec 2024 17:42:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NXPDLH56"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F398C4CED0;
+	Thu, 12 Dec 2024 17:42:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734025329;
-	bh=BOPRaEqqytEurFzmzxYlFATTOkUEKhHbPdLKRb+vxXM=;
+	s=korg; t=1734025331;
+	bh=ETYhmcQuxkZSJhVsBU8uTS2Y8e55VvYq7A+G+frFaas=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jR5qTVxj6ung6MKMVwsg5LFiPXLgo2mq0KYtFWF/mKxi+mXqmWVsryjRSzjVNEzVW
-	 WWiIZ0XyUYVenQE8mJ4ECnCAsm7vS/i05sNtod8s1GfjOldXtvrkAYmuqB2rwvO/lN
-	 wkA+ZWIgUJwkS5sC/l8jLg+kq28ZUZMagDTx56c8=
+	b=NXPDLH56CWw4EDwKJ29DvR0yHMICFWL7bHzZUDatMzTz/9RMt0fZpO7RT29+MFnfq
+	 qtSizFRz7OMROLNvJLJXxlerdEjyDZDWmYSZpX4NH2QK9fnZVvLwpOiqUT5zX8PlaI
+	 d7MCjPVerey5HNi9fQbPcpvR05qGq/RZqsmdg7+w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Ahern <dsahern@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Jeongjun Park <aha310510@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 133/321] ipmr: fix tables suspicious RCU usage
-Date: Thu, 12 Dec 2024 16:00:51 +0100
-Message-ID: <20241212144235.230361582@linuxfoundation.org>
+Subject: [PATCH 5.4 134/321] usb: using mutex lock and supporting O_NONBLOCK flag in iowarrior_read()
+Date: Thu, 12 Dec 2024 16:00:52 +0100
+Message-ID: <20241212144235.274619401@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144229.291682835@linuxfoundation.org>
 References: <20241212144229.291682835@linuxfoundation.org>
@@ -51,152 +50,127 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Jeongjun Park <aha310510@gmail.com>
 
-[ Upstream commit fc9c273d6daaa9866f349bbe8cae25c67764c456 ]
+[ Upstream commit 44feafbaa66ec86232b123bb8437a6a262442025 ]
 
-Similar to the previous patch, plumb the RCU lock inside
-the ipmr_get_table(), provided a lockless variant and apply
-the latter in the few spots were the lock is already held.
+iowarrior_read() uses the iowarrior dev structure, but does not use any
+lock on the structure. This can cause various bugs including data-races,
+so it is more appropriate to use a mutex lock to safely protect the
+iowarrior dev structure. When using a mutex lock, you should split the
+branch to prevent blocking when the O_NONBLOCK flag is set.
 
-Fixes: 709b46e8d90b ("net: Add compat ioctl support for the ipv4 multicast ioctl SIOCGETSGCNT")
-Fixes: f0ad0860d01e ("ipv4: ipmr: support multiple tables")
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+In addition, it is unnecessary to check for NULL on the iowarrior dev
+structure obtained by reading file->private_data. Therefore, it is
+better to remove the check.
+
+Fixes: 946b960d13c1 ("USB: add driver for iowarrior devices.")
+Signed-off-by: Jeongjun Park <aha310510@gmail.com>
+Link: https://lore.kernel.org/r/20240919103403.3986-1-aha310510@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/ipmr.c | 42 +++++++++++++++++++++++++++++-------------
- 1 file changed, 29 insertions(+), 13 deletions(-)
+ drivers/usb/misc/iowarrior.c | 46 ++++++++++++++++++++++++++++--------
+ 1 file changed, 36 insertions(+), 10 deletions(-)
 
-diff --git a/net/ipv4/ipmr.c b/net/ipv4/ipmr.c
-index 11f916646d34d..8e31c277fe465 100644
---- a/net/ipv4/ipmr.c
-+++ b/net/ipv4/ipmr.c
-@@ -129,7 +129,7 @@ static struct mr_table *ipmr_mr_table_iter(struct net *net,
- 	return ret;
- }
+diff --git a/drivers/usb/misc/iowarrior.c b/drivers/usb/misc/iowarrior.c
+index c366a65fbd802..f23291da25498 100644
+--- a/drivers/usb/misc/iowarrior.c
++++ b/drivers/usb/misc/iowarrior.c
+@@ -277,28 +277,45 @@ static ssize_t iowarrior_read(struct file *file, char __user *buffer,
+ 	struct iowarrior *dev;
+ 	int read_idx;
+ 	int offset;
++	int retval;
  
--static struct mr_table *ipmr_get_table(struct net *net, u32 id)
-+static struct mr_table *__ipmr_get_table(struct net *net, u32 id)
- {
- 	struct mr_table *mrt;
+ 	dev = file->private_data;
  
-@@ -140,6 +140,16 @@ static struct mr_table *ipmr_get_table(struct net *net, u32 id)
- 	return NULL;
- }
- 
-+static struct mr_table *ipmr_get_table(struct net *net, u32 id)
-+{
-+	struct mr_table *mrt;
++	if (file->f_flags & O_NONBLOCK) {
++		retval = mutex_trylock(&dev->mutex);
++		if (!retval)
++			return -EAGAIN;
++	} else {
++		retval = mutex_lock_interruptible(&dev->mutex);
++		if (retval)
++			return -ERESTARTSYS;
++	}
 +
-+	rcu_read_lock();
-+	mrt = __ipmr_get_table(net, id);
-+	rcu_read_unlock();
-+	return mrt;
-+}
-+
- static int ipmr_fib_lookup(struct net *net, struct flowi4 *flp4,
- 			   struct mr_table **mrt)
- {
-@@ -181,7 +191,7 @@ static int ipmr_rule_action(struct fib_rule *rule, struct flowi *flp,
- 
- 	arg->table = fib_rule_get_table(rule, arg);
- 
--	mrt = ipmr_get_table(rule->fr_net, arg->table);
-+	mrt = __ipmr_get_table(rule->fr_net, arg->table);
- 	if (!mrt)
- 		return -EAGAIN;
- 	res->mrt = mrt;
-@@ -312,6 +322,8 @@ static struct mr_table *ipmr_get_table(struct net *net, u32 id)
- 	return net->ipv4.mrt;
- }
- 
-+#define __ipmr_get_table ipmr_get_table
-+
- static int ipmr_fib_lookup(struct net *net, struct flowi4 *flp4,
- 			   struct mr_table **mrt)
- {
-@@ -400,7 +412,7 @@ static struct mr_table *ipmr_new_table(struct net *net, u32 id)
- 	if (id != RT_TABLE_DEFAULT && id >= 1000000000)
- 		return ERR_PTR(-EINVAL);
- 
--	mrt = ipmr_get_table(net, id);
-+	mrt = __ipmr_get_table(net, id);
- 	if (mrt)
- 		return mrt;
- 
-@@ -1391,7 +1403,7 @@ int ip_mroute_setsockopt(struct sock *sk, int optname, char __user *optval,
- 		goto out_unlock;
- 	}
- 
--	mrt = ipmr_get_table(net, raw_sk(sk)->ipmr_table ? : RT_TABLE_DEFAULT);
-+	mrt = __ipmr_get_table(net, raw_sk(sk)->ipmr_table ? : RT_TABLE_DEFAULT);
- 	if (!mrt) {
- 		ret = -ENOENT;
- 		goto out_unlock;
-@@ -2264,11 +2276,13 @@ int ipmr_get_route(struct net *net, struct sk_buff *skb,
- 	struct mr_table *mrt;
- 	int err;
- 
--	mrt = ipmr_get_table(net, RT_TABLE_DEFAULT);
--	if (!mrt)
-+	rcu_read_lock();
-+	mrt = __ipmr_get_table(net, RT_TABLE_DEFAULT);
-+	if (!mrt) {
-+		rcu_read_unlock();
- 		return -ENOENT;
+ 	/* verify that the device wasn't unplugged */
+-	if (!dev || !dev->present)
+-		return -ENODEV;
++	if (!dev->present) {
++		retval = -ENODEV;
++		goto exit;
 +	}
  
--	rcu_read_lock();
- 	cache = ipmr_cache_find(mrt, saddr, daddr);
- 	if (!cache && skb->dev) {
- 		int vif = ipmr_find_vif(mrt, skb->dev);
-@@ -2557,7 +2571,7 @@ static int ipmr_rtm_getroute(struct sk_buff *in_skb, struct nlmsghdr *nlh,
- 	grp = tb[RTA_DST] ? nla_get_in_addr(tb[RTA_DST]) : 0;
- 	tableid = tb[RTA_TABLE] ? nla_get_u32(tb[RTA_TABLE]) : 0;
+ 	dev_dbg(&dev->interface->dev, "minor %d, count = %zd\n",
+ 		dev->minor, count);
  
--	mrt = ipmr_get_table(net, tableid ? tableid : RT_TABLE_DEFAULT);
-+	mrt = __ipmr_get_table(net, tableid ? tableid : RT_TABLE_DEFAULT);
- 	if (!mrt) {
- 		err = -ENOENT;
- 		goto errout_free;
-@@ -2609,7 +2623,7 @@ static int ipmr_rtm_dumproute(struct sk_buff *skb, struct netlink_callback *cb)
- 	if (filter.table_id) {
- 		struct mr_table *mrt;
+ 	/* read count must be packet size (+ time stamp) */
+ 	if ((count != dev->report_size)
+-	    && (count != (dev->report_size + 1)))
+-		return -EINVAL;
++	    && (count != (dev->report_size + 1))) {
++		retval = -EINVAL;
++		goto exit;
++	}
  
--		mrt = ipmr_get_table(sock_net(skb->sk), filter.table_id);
-+		mrt = __ipmr_get_table(sock_net(skb->sk), filter.table_id);
- 		if (!mrt) {
- 			if (rtnl_msg_family(cb->nlh) != RTNL_FAMILY_IPMR)
- 				return skb->len;
-@@ -2717,7 +2731,7 @@ static int rtm_to_ipmr_mfcc(struct net *net, struct nlmsghdr *nlh,
- 			break;
+ 	/* repeat until no buffer overrun in callback handler occur */
+ 	do {
+ 		atomic_set(&dev->overflow_flag, 0);
+ 		if ((read_idx = read_index(dev)) == -1) {
+ 			/* queue empty */
+-			if (file->f_flags & O_NONBLOCK)
+-				return -EAGAIN;
++			if (file->f_flags & O_NONBLOCK) {
++				retval = -EAGAIN;
++				goto exit;
++			}
+ 			else {
+ 				//next line will return when there is either new data, or the device is unplugged
+ 				int r = wait_event_interruptible(dev->read_wait,
+@@ -309,28 +326,37 @@ static ssize_t iowarrior_read(struct file *file, char __user *buffer,
+ 								  -1));
+ 				if (r) {
+ 					//we were interrupted by a signal
+-					return -ERESTART;
++					retval = -ERESTART;
++					goto exit;
+ 				}
+ 				if (!dev->present) {
+ 					//The device was unplugged
+-					return -ENODEV;
++					retval = -ENODEV;
++					goto exit;
+ 				}
+ 				if (read_idx == -1) {
+ 					// Can this happen ???
+-					return 0;
++					retval = 0;
++					goto exit;
+ 				}
+ 			}
  		}
- 	}
--	mrt = ipmr_get_table(net, tblid);
-+	mrt = __ipmr_get_table(net, tblid);
- 	if (!mrt) {
- 		ret = -ENOENT;
- 		goto out;
-@@ -2922,13 +2936,15 @@ static void *ipmr_vif_seq_start(struct seq_file *seq, loff_t *pos)
- 	struct net *net = seq_file_net(seq);
- 	struct mr_table *mrt;
  
--	mrt = ipmr_get_table(net, RT_TABLE_DEFAULT);
--	if (!mrt)
-+	rcu_read_lock();
-+	mrt = __ipmr_get_table(net, RT_TABLE_DEFAULT);
-+	if (!mrt) {
-+		rcu_read_unlock();
- 		return ERR_PTR(-ENOENT);
-+	}
+ 		offset = read_idx * (dev->report_size + 1);
+ 		if (copy_to_user(buffer, dev->read_queue + offset, count)) {
+-			return -EFAULT;
++			retval = -EFAULT;
++			goto exit;
+ 		}
+ 	} while (atomic_read(&dev->overflow_flag));
  
- 	iter->mrt = mrt;
- 
--	rcu_read_lock();
- 	return mr_vif_seq_start(seq, pos);
+ 	read_idx = ++read_idx == MAX_INTERRUPT_BUFFER ? 0 : read_idx;
+ 	atomic_set(&dev->read_idx, read_idx);
++	mutex_unlock(&dev->mutex);
+ 	return count;
++
++exit:
++	mutex_unlock(&dev->mutex);
++	return retval;
  }
  
+ /*
 -- 
 2.43.0
 
