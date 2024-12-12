@@ -1,154 +1,153 @@
-Received: from mail-ua1-f47.google.com (mail-ua1-f47.google.com [209.85.222.47])
+Received: from mail-pf1-f181.google.com (mail-pf1-f181.google.com [209.85.210.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B2B01AF0B0
-	for <patches@lists.linux.dev>; Thu, 12 Dec 2024 21:00:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C0F11BDA97
+	for <patches@lists.linux.dev>; Thu, 12 Dec 2024 21:38:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734037212; cv=none; b=XtjQF1PQepM/xWokVK4q5LHQ9rKm/4pTg85fBDDvKnMcWxtzzOs/coaTZYtYtD0x8LPPiTXplBBdq2ft1kbijKYPwnnk6G7BKc/0dVFK4ukk/DigMzguPRH+PkCRAkQ7GY5BXBv7Zay1HYqI8tjXTLUuBpuOMnYfnvgB88BPVdQ=
+	t=1734039520; cv=none; b=NOu4l8InYgodRpm/7kP3Q39ltngDdtwLVepjTC36bNZQaMuMs4RuUN4P6YxCfN3LQVFi7yimXJvlmw6GCr/GJZ0wUnuMTEqg6XoFCpPmTLrviDekMgxO4d8mj9a/jevCIqKdXANF/jfNGeMo9MjLh4a1idz5vcrFkfbRQqb0sNA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734037212; c=relaxed/simple;
-	bh=nC4EmuVP4ntlQc9bu8GJVOZYdMhzB21vlErGfWW8W3U=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=gWyX2RaruVYY1QHltQmZg+F7QbmISRKaPOPtfO98I0+CP6L7S9Vlbkn1xHgGWK7rTnGjVmQO6suz87fMgUXB5F8fViuQBJBjPtN7MQxq0Lo0Vk09kHePK9zTfT8G56f/F5ZwqPR+5hYE52p5iJ5p7ykNlHQteRrJf5E+6CBeOPQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=GZjBF2Dh; arc=none smtp.client-ip=209.85.222.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+	s=arc-20240116; t=1734039520; c=relaxed/simple;
+	bh=FVsAhf/L/A/1hExk6EI4BILQJE/BdwS8en2INWU/29g=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Ln2R2XkTlV0uS1c4yVPMpTHuTks6fRvnZpJbL+j8gQPeCYJcauM7FK+FGgOu5hX6bYJyhUyY5Da1t4hO44cf0paIhqCmvqOq0d/AZuF1CIGBAgwuoKNI40uWak2zw9iMBdAFnbcK3fBOH2VlEYXqwrXj7h9gDdC3rEmjWAG3zcU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VRcH4Mvv; arc=none smtp.client-ip=209.85.210.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="GZjBF2Dh"
-Received: by mail-ua1-f47.google.com with SMTP id a1e0cc1a2514c-85c61388e68so234625241.3
-        for <patches@lists.linux.dev>; Thu, 12 Dec 2024 13:00:09 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VRcH4Mvv"
+Received: by mail-pf1-f181.google.com with SMTP id d2e1a72fcca58-725ea1e19f0so904470b3a.3
+        for <patches@lists.linux.dev>; Thu, 12 Dec 2024 13:38:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1734037208; x=1734642008; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=k6Y1+WixMes/8w7Qpnpmgj9E+CHS4GlCyK+GluDTf58=;
-        b=GZjBF2DhtRyQi/JnzJvDB7ypnOS1NAB6EfgbdMUmr1a1xUhJf4eENux5buUEjpXowP
-         R2FQxQhOALgAGevqUuDlRKlCQqWtvKbSd7Ghz7UQiFMO17Q7JkWH4+Ee2ioM0ZPHqllj
-         FrGLgx5t2Al7Y9GT52vBMozHXwMpA8PRK+cosqfpgOL9bCUPWO+mQiYm6iHVNNt8GiDO
-         jkls1yDyGp1ns+KjLmYsHsw2R5FlLewgW7wXZlYBv9lcCRdM6ILCbxccxpI56AYIp4hU
-         eiZhsFxzfAxLl3Vrx3WVJj1QJoer8706pkYwcTGGpnkWh0TT08ONs7Bdg6yoCf/zMjaI
-         zJWg==
+        d=gmail.com; s=20230601; t=1734039519; x=1734644319; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=pZ5zZgnlUdJh8z0DW3NiXjiumc4XlLzMn30s1WWYCFM=;
+        b=VRcH4Mvvyc58E9Qu0aQhhX2m3iBhDT4fRBDN5/5J3iDdzhLVto9fBzJCdoh+FzbscQ
+         rN78YDyxTs1isHPnWP5OLQ1w7mVNaQN4Oqc0LRTnMtHqEB6aullglgDkQuN4NFXEi6ci
+         m4qzYrRPJXBkf4tTmIDpRVIaN6rr7iuOZR89IoqlHbUc7AdS6iPVwNNgZ6m9GTj55hJS
+         DqArqzaCXWwC17A6UMfTJKg3Ig9FfVf0ggK9HrAbwauMmuHkohzQl7k7l1MSsbgswGj7
+         Yds9dGRSrX8UoKwjOr+gkCBTzrG6tr4yg8YeC3BX2oApeJ09T5LvhrKGaApAxM94v5pG
+         eDwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734037208; x=1734642008;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=k6Y1+WixMes/8w7Qpnpmgj9E+CHS4GlCyK+GluDTf58=;
-        b=DtsXEMmheZ7Kr8N8Z1EjtZ1IW63RRJEnb1k3dgZY4nVoUCfpc6x+gPjJRhKSU7CUl4
-         v66PcukWw/Apnq7zHmtCUxsknWJ/6dJvQyZOxpTvoOUjLkyxPFK0cK0kkwTrcsL1cMHd
-         axnHo3FHCX3NtFjbHgpv6a11V9sUzg6zME7vWLjaYEctawXfWBPoY7KOW+q138mU6Zld
-         8uzMUzgPbj7WEkmRi2klctABrNZFc+N0OmdDUnN5YnlpdcGGGVvjaBmW3ht5XL38BzOh
-         gBhABN1iUA+jVMEKRbVc9TI0vqJqVLCP4TYK/u3cRePz9938rRLvkoreEw2M+m70S5YJ
-         zFxA==
-X-Forwarded-Encrypted: i=1; AJvYcCXSvDq/XTTFHaRq53XDbYJc5OCB40CUuDG/G6DweD8yIUfnvvHx0ofI7u+8fidxVjZgNqgZY0cC@lists.linux.dev
-X-Gm-Message-State: AOJu0YzMPua5dyqL+E+WPAmYAQPaeuo1UgqRPQnuNGewrDiny3GOaR6F
-	fAFV1LQko1BODjWz4NaLIIoL4siezvwmogxeuf/OQQts6jJcPqY1IMEOjHb+TjJg74gp/JAzGqR
-	hp+bQ79kHqvOhuPzd7j/2g9yUQp9pV9lm3YD7NA==
-X-Gm-Gg: ASbGncsmLc43aZCt9O9QK0vZfo+WTXIZQd9JfZauFfs3MJI4BeAmHA5qVATZCwVb1lQ
-	xKYx5bEUN8hfNwWiaV8u0YT098BSN2Ed2U9kK
-X-Google-Smtp-Source: AGHT+IGdvT/mhowuOXBJ2aXodZzIiREIHRQvRQBno0frewBNX+LzZcApS40ykgaLhTzbQyOr7inpeeuIlg31e3nkwkQ=
-X-Received: by 2002:a05:6102:1591:b0:4b2:5c2a:cc9d with SMTP id
- ada2fe7eead31-4b25d9dff21mr592214137.16.1734037208538; Thu, 12 Dec 2024
- 13:00:08 -0800 (PST)
+        d=1e100.net; s=20230601; t=1734039519; x=1734644319;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=pZ5zZgnlUdJh8z0DW3NiXjiumc4XlLzMn30s1WWYCFM=;
+        b=KFg03VuSXa1QFOoczNXPX4HDtZXdO+rCcI+XGtWVbYMeZW2+04qKXPxyqhw/2wPeX2
+         C/+/lhJHmg+bSEgY4z80G02KmovYnnN6IseMP/ijAGbAZYzGfvtTEOrm4T+4/eeo6Lf2
+         I++4NYuExSgsqDGZu2kBOL4t1uqQdIHvmtsf8LC1aH/6AQQVTkPnlk7MR6UZqIDsF9cg
+         BDFhJ+PDmm0cHwqrD94EiAh1+t8R2bpHrx5BExCMcBw6DP4PpvsWaoKyhY7gHJix1stV
+         bsEBacBhicAKyoxuHq9CXQLsGoZYdOHJox1G6wij95gHzy1P5QqfhEpRCZ0pAysXD5Bu
+         FXGA==
+X-Gm-Message-State: AOJu0Yxqa4z3BRvK/LEdsbkmWeFq8Q/251yQa3Kkh8toVLVOQDQ4WE/k
+	xhqtLmGRJJb7zskZMvjjK2QGWLGH6tY/sWLAwKBGYBBARO+5K+T2
+X-Gm-Gg: ASbGnct3BLItyCrxW3Eag2x3J0clJ0Ff6ZolRomVz3J0plYv9pNqCEZQ11gOLIYJfsE
+	7/j7HvhicIDbkdyEFOQUsBx0LJ6QZdkNONMQZs3AHyIs5IklGP82XwyY9YyfjrXY/HjVfqrmo6P
+	EuJOIbW8Z1b1SfMQxPBEWQVv9NBx/tmpPtoOpnKqZzSNMbY1pJkoq6Y4M292DHtszbXwRYrHSvZ
+	78YvyM8CBOgtpAI6Y9AIsKLvVIPPZmpMtdwV1PpqLMV9Z2JFkCfSkn1y32J0OzFFyOGJ8AWRrH9
+	olujUnm2
+X-Google-Smtp-Source: AGHT+IGY7RCaXhDWkOiohikluaInFk753KShzMe0a+LB/ak/xr5+1bNnx0spv/17RPvzmUvXHDONfg==
+X-Received: by 2002:a05:6a00:f08:b0:725:f4c6:6b71 with SMTP id d2e1a72fcca58-7290c25a4c7mr211922b3a.20.1734039518574;
+        Thu, 12 Dec 2024 13:38:38 -0800 (PST)
+Received: from [10.67.48.245] ([192.19.223.252])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-725a29e8df0sm13750293b3a.68.2024.12.12.13.38.32
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 12 Dec 2024 13:38:38 -0800 (PST)
+Message-ID: <c356563b-4137-403f-9f0f-29e9b38512ce@gmail.com>
+Date: Thu, 12 Dec 2024 13:38:31 -0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20241212144349.797589255@linuxfoundation.org>
-In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
-From: Naresh Kamboju <naresh.kamboju@linaro.org>
-Date: Fri, 13 Dec 2024 02:29:56 +0530
-Message-ID: <CA+G9fYu+u4a+63vCCeLo1LdWhvK75B9j-znx7kp2ZVtzK_H4AQ@mail.gmail.com>
+User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH 6.1 000/772] 6.1.120-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, 
-	broonie@kernel.org, Arnd Bergmann <arnd@arndb.de>, 
-	Dan Carpenter <dan.carpenter@linaro.org>, Anders Roxell <anders.roxell@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+ conor@kernel.org, hargar@microsoft.com, broonie@kernel.org
+References: <20241212144349.797589255@linuxfoundation.org>
+Content-Language: en-US
+From: Florian Fainelli <f.fainelli@gmail.com>
+Autocrypt: addr=f.fainelli@gmail.com; keydata=
+ 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
+In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On Thu, 12 Dec 2024 at 21:23, Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
->
+On 12/12/24 06:49, Greg Kroah-Hartman wrote:
 > This is the start of the stable review cycle for the 6.1.120 release.
 > There are 772 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
->
+> 
 > Responses should be made by Sat, 14 Dec 2024 14:41:35 +0000.
 > Anything received after that time might be too late.
->
+> 
 > The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.120-rc1.gz
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.120-rc1.gz
 > or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
 > and the diffstat can be found below.
->
+> 
 > thanks,
->
+> 
 > greg k-h
 
-The powerpc builds failed on Linux stable-rc linux-6.1.y due to following build
-warnings / errors.
+On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
+BMIPS_GENERIC:
 
-powerpc:
-  * build/gcc-13-tqm8xx_defconfig
+Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
 
-First seen on Linux stable-rc v6.1.119-773-g9f320894b9c2.
-  Good: v6.1.119
-  Bad: v6.1.119-773-g9f320894b9c2
+There is a new warning though:
 
-Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
-
-Build log:
------
-/builds/linux/arch/powerpc/include/asm/page_32.h:16: error:
-"ARCH_DMA_MINALIGN" redefined [-Werror]
-   16 | #define ARCH_DMA_MINALIGN       L1_CACHE_BYTES
-      |
-In file included from /builds/linux/include/linux/slab.h:15:
-/builds/linux/include/linux/cache.h:104: note: this is the location of
-the previous definition
-  104 | #define ARCH_DMA_MINALIGN __alignof__(unsigned long long)
-      |
-cc1: all warnings being treated as errors
-
-The bisection pointed to,
-   mm/slab: decouple ARCH_KMALLOC_MINALIGN from ARCH_DMA_MINALIGN
-   commit 4ab5f8ec7d71aea5fe13a48248242130f84ac6bb upstream.
-
-Links:
--------
- - https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.1.y/build/v6.1.119-773-g9f320894b9c2/testrun/26283233/suite/build/test/gcc-13-tqm8xx_defconfig/log
- - https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.1.y/build/v6.1.119-773-g9f320894b9c2/testrun/26283233/suite/build/test/gcc-13-tqm8xx_defconfig/details/
- - https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.1.y/build/v6.1.119-773-g9f320894b9c2/testrun/26283233/suite/build/test/gcc-13-tqm8xx_defconfig/history/
-
-Steps to reproduce:
-------------
- # tuxmake --runtime podman --target-arch powerpc --toolchain gcc-13
---kconfig tqm8xx_defconfig
+scripts/mod/modpost.c:969:44: warning: excess elements in array initializer
+   969 |         .good_tosec = {ALL_TEXT_SECTIONS , NULL},
+       |                                            ^~~~
+scripts/mod/modpost.c:969:44: note: (near initialization for 
+‘sectioncheck[10].good_tosec’)
+   HOSTLD  scripts/mod/modpost
 
 
-metadata:
-----
-  git describe: v6.1.119-773-g9f320894b9c2
-  git repo: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
-  git sha: 9f320894b9c2f9e21bda8aac6c57a2e6395f8eba
-  kernel config:
-https://storage.tuxsuite.com/public/linaro/lkft/builds/2q7iTg4R40CXEIVAGM9hWTEqyjR/config
-  build url: https://storage.tuxsuite.com/public/linaro/lkft/builds/2q7iTg4R40CXEIVAGM9hWTEqyjR/
-  toolchain: gcc-13
-  config: gcc-13-tqm8xx_defconfig
-  arch: powerpc
 
-
- --
-Linaro LKFT
-https://lkft.linaro.org
+-- 
+Florian
