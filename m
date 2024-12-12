@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02CC0215795;
-	Thu, 12 Dec 2024 15:16:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87A5321504F;
+	Thu, 12 Dec 2024 15:16:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734016581; cv=none; b=ctOHQFQYBQlmHwRsBlKn4Q9+JjchuT7uzBzBQgJbvWQVzVTmFBXf21hZ+ZF6ONtwgsf4Vfa3ONf+fZb3X1h8SkX5R3c2wdRnNOJzQGeIM2o24PuaHCNTK7hGMCjpZC6ZUJxpndrDZCRuickw/mxI64nNAJuo9HW86x+j0Sr14GU=
+	t=1734016584; cv=none; b=gF4TSHQDAumVYxig6o3FO16G1KOcCIIYifoU0hvetYc9xZhP/O5Pai70SqDi9ElYqIpjsUDNmkhRhTcIRXPS9BA/Cb1NEjo0hma7CRrlXEDDGMWTks71l/Bzatst1IVeN8VBNh1PbyaVvCkAtNA3dW6f/XpDnGtMSAT4JXl84bU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734016581; c=relaxed/simple;
-	bh=GWpMa40uK0zaQvz3VSqnjq3n5SoYxXiYdNkpZlvKsFw=;
+	s=arc-20240116; t=1734016584; c=relaxed/simple;
+	bh=cl7nXJA+xbMol58vR7uT71yHhlFEsdtCtWIyHSzpQ1Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cJhDs1Ci2URtxfDqN5CIVMTm9qDjLEU+p4MNXQNBaUMQ83v8PTBgQLP1H7KvuQWRJhb53an4Q6hwAahGtUvL/w+GDe012uK39uwbxkc6euP3Jc4C/lwNsxZlj2uJPeqXBLgra68ay1uDtPMmXEJxEAkPmNTxdR4ohF+esAPaKcg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yrBVAs1D; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KtIlagk2yq7jhE2ED9KUot7Nkzr9dYyHF9mMeQ5lXOPyqa9uTpc8CGJbXVAvh0F61kLCQFyuXFOBBfjWTSlKQPdhSA2Nu/GG6HBzlbw147vVU1EyYV2F6Hlfu5EOVRNljGeW/LOO36suNiedjTKF75SwULhIIyVdJurx1Ud0ips=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lc/5qCfZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yrBVAs1D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11FD4C4CECE;
-	Thu, 12 Dec 2024 15:16:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lc/5qCfZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB083C4CECE;
+	Thu, 12 Dec 2024 15:16:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734016580;
-	bh=GWpMa40uK0zaQvz3VSqnjq3n5SoYxXiYdNkpZlvKsFw=;
+	s=korg; t=1734016584;
+	bh=cl7nXJA+xbMol58vR7uT71yHhlFEsdtCtWIyHSzpQ1Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yrBVAs1Dtj56JLviiGwAZkAcNrqyS7QnlC4daGJhZifaedTFBUw41hdGR3SyziVx4
-	 r146qQr0j1bC1hQXbwpLXytcGO32CA2hg7fIYyVI7OfclDfuF/9CtWNoJFVEaEJBs5
-	 TTYFU9bfZhk/B61zN4LnBUz0HeqQHtfRN1d7ZH4Y=
+	b=lc/5qCfZF4WMjfKU9u0P0tq9bPxtRVS8So2NEgaRe3/FF63+zebyJYf5c3tAgtKqj
+	 NdbGDq4NJ2WELRkzyom0lUn68x4Qi89QpEFWX8gDkN6E7BUXC9DUQZILOTTY2iMQ0K
+	 viy91W/hxnHejhcfyNzYyrd+2kxmeL3IaiT7SKfM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maya Matuszczyk <maccraft123mc@gmail.com>,
+	Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
 	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 239/466] firmware: qcom: scm: Allow QSEECOM on Lenovo Yoga Slim 7x
-Date: Thu, 12 Dec 2024 15:56:48 +0100
-Message-ID: <20241212144316.224510846@linuxfoundation.org>
+Subject: [PATCH 6.12 240/466] soc: qcom: pd-mapper: Add QCM6490 PD maps
+Date: Thu, 12 Dec 2024 15:56:49 +0100
+Message-ID: <20241212144316.264491313@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144306.641051666@linuxfoundation.org>
 References: <20241212144306.641051666@linuxfoundation.org>
@@ -52,34 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maya Matuszczyk <maccraft123mc@gmail.com>
+From: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
 
-[ Upstream commit c6fa2834afc6a6fe210415ec253a61e6eafdf651 ]
+[ Upstream commit 31a95fe0851afbbc697b6be96c8a81a01d65aa5f ]
 
-Allow QSEECOM on Lenovo Yoga Slim 7x, to enable accessing EFI variables.
+The QCM6490 is a variant of SC7280, with the usual set of protection
+domains, and hence the need for a PD-mapper. In particular USB Type-C
+port management and battery management is pmic_glink based.
 
-Signed-off-by: Maya Matuszczyk <maccraft123mc@gmail.com>
+Add an entry to the kernel, to avoid the need for userspace to provide
+this service.
+
+Signed-off-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20240919134421.112643-2-maccraft123mc@gmail.com
-[bjorn: Rewrote commit message]
+Link: https://lore.kernel.org/r/20241004-qcm6490-pd-mapper-v1-1-d6f4bc3bffa3@oss.qualcomm.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/qcom/qcom_scm.c | 1 +
+ drivers/soc/qcom/qcom_pd_mapper.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
-index 2e4260ba5f793..f019e0b787cb7 100644
---- a/drivers/firmware/qcom/qcom_scm.c
-+++ b/drivers/firmware/qcom/qcom_scm.c
-@@ -1745,6 +1745,7 @@ static const struct of_device_id qcom_scm_qseecom_allowlist[] __maybe_unused = {
- 	{ .compatible = "lenovo,flex-5g" },
- 	{ .compatible = "lenovo,thinkpad-t14s" },
- 	{ .compatible = "lenovo,thinkpad-x13s", },
-+	{ .compatible = "lenovo,yoga-slim7x" },
- 	{ .compatible = "microsoft,romulus13", },
- 	{ .compatible = "microsoft,romulus15", },
- 	{ .compatible = "qcom,sc8180x-primus" },
+diff --git a/drivers/soc/qcom/qcom_pd_mapper.c b/drivers/soc/qcom/qcom_pd_mapper.c
+index c940f4da28ed5..6e30f08761aa4 100644
+--- a/drivers/soc/qcom/qcom_pd_mapper.c
++++ b/drivers/soc/qcom/qcom_pd_mapper.c
+@@ -540,6 +540,7 @@ static const struct of_device_id qcom_pdm_domains[] __maybe_unused = {
+ 	{ .compatible = "qcom,msm8996", .data = msm8996_domains, },
+ 	{ .compatible = "qcom,msm8998", .data = msm8998_domains, },
+ 	{ .compatible = "qcom,qcm2290", .data = qcm2290_domains, },
++	{ .compatible = "qcom,qcm6490", .data = sc7280_domains, },
+ 	{ .compatible = "qcom,qcs404", .data = qcs404_domains, },
+ 	{ .compatible = "qcom,sc7180", .data = sc7180_domains, },
+ 	{ .compatible = "qcom,sc7280", .data = sc7280_domains, },
 -- 
 2.43.0
 
