@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8D202358BF;
-	Thu, 12 Dec 2024 16:55:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F650229690;
+	Thu, 12 Dec 2024 16:55:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734022530; cv=none; b=XRnaJIV3VI5p8EjXg5smSgZQ5Ebgc5vmer+BDoAkdmAvWNqJzhg6wBtCzaDMvH/SF10TQidxHfWORH/K2Vv8gnAr0n/rFgF76xBsJrGzdcsF/BY5lhXy/b316mmxNl9irrEsWEdqRTxf38K7Ona+dWTOh8UlRsBeo+92jzXfVKA=
+	t=1734022534; cv=none; b=BLILYMURFbIhBNmgGtf9nNhfqWkvmGIiDwF/OoqXbelNKsW1cHP4aaeQKzkScF0OKvQNW5spII8rU2llJWZxzsGAfnk30F+WehzOssbrLXCf+uluHrc12e2IHs/hUAg1W+Y+yNsAerYd+tNe9z/ZYPqa5kAaJ2dEjaPzOiQGnzs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734022530; c=relaxed/simple;
-	bh=8GwtE/lOkUosBLm57g0ZHBlMKM+CUtijXpAFVEdZXQA=;
+	s=arc-20240116; t=1734022534; c=relaxed/simple;
+	bh=cWyRP9cLV4fkVtkZbf/BZFF+ClULPRM1LNtKCgUNr7k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RG9d8tSekU5difRj44+h72E+jB5hMvsLRL5PvXSeiOGRL3zdrX3q/FFggR32p9TKTm8AQIkE+PD/alEUJjjLdea8DIvCSjLcqHwZtvC9NMAFlgE7agHlYHhTAUtN+WPGyUHvXDx+uCIKAFvXdN9LSvvvz3GNN8yMEfpxASZAsBs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zyrqOgMd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Myzq1Rj53gLD07Cj1lT3rKZ0GTW5G9IhdY0R0UrYLC06TQ5q2sCLfWhc9/NDwq92rMks6Sm0XI5zvKdlrHUfC+c89iu89bbXTOnmLTCHsO+EeXWGmxkoRLR73EJHrKbJFEQvqd9C13AYvcqausWNYvfeqEwHpplt0wUgp2B4qmE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2UubcWs4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zyrqOgMd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7D2FC4CECE;
-	Thu, 12 Dec 2024 16:55:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2UubcWs4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8C74C4CECE;
+	Thu, 12 Dec 2024 16:55:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734022530;
-	bh=8GwtE/lOkUosBLm57g0ZHBlMKM+CUtijXpAFVEdZXQA=;
+	s=korg; t=1734022534;
+	bh=cWyRP9cLV4fkVtkZbf/BZFF+ClULPRM1LNtKCgUNr7k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zyrqOgMdeGLAeBp1dQ3szUkMFE5aBLfs+sOwSVHjPDrcJg0Dx5a9EquAWNBPG8125
-	 rX1CwCU9QU2u0Q2Zuwo+jrq+lWxvbS4PF7wjD471y1Pt/INcpzLOprkPXKh0IELqYL
-	 rtKh8U1x2mPnim0EdNuG9suHdnhiblfTl9SFoAgA=
+	b=2UubcWs4pt9AtN/Qa0jbHnpGr5n2jlKkNuILM2yURJW9oIMvfoSYYJCbaZWvMt4hf
+	 lz4TXzz34HhZ4ipjlPUo6OJ6R8jwi931Syh7SlxbPnYxa9mVnFkrkOf3YYAi90ENHI
+	 QvMHpE04PFOZkA12ANYyX5ejBG9uymusEcCGnqrs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>,
+	Murad Masimov <m.masimov@maxima.ru>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 267/565] NFSD: Fix nfsd4_shutdown_copy()
-Date: Thu, 12 Dec 2024 15:57:42 +0100
-Message-ID: <20241212144322.021439001@linuxfoundation.org>
+Subject: [PATCH 5.15 268/565] hwmon: (tps23861) Fix reporting of negative temperatures
+Date: Thu, 12 Dec 2024 15:57:43 +0100
+Message-ID: <20241212144322.060048228@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144311.432886635@linuxfoundation.org>
 References: <20241212144311.432886635@linuxfoundation.org>
@@ -51,71 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Murad Masimov <m.masimov@maxima.ru>
 
-[ Upstream commit 62a8642ba00aa8ceb0a02ade942f5ec52e877c95 ]
+[ Upstream commit de2bf507fabba9c0c678cf5ed54beb546f5ca29a ]
 
-nfsd4_shutdown_copy() is just this:
+Negative temperatures are reported as large positive temperatures
+due to missing sign extension from unsigned int to long. Cast unsigned
+raw register values to signed before performing the calculations
+to fix the problem.
 
-	while ((copy = nfsd4_get_copy(clp)) != NULL)
-		nfsd4_stop_copy(copy);
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-nfsd4_get_copy() bumps @copy's reference count, preventing
-nfsd4_stop_copy() from releasing @copy.
-
-A while loop like this usually works by removing the first element
-of the list, but neither nfsd4_get_copy() nor nfsd4_stop_copy()
-alters the async_copies list.
-
-Best I can tell, then, is that nfsd4_shutdown_copy() continues to
-loop until other threads manage to remove all the items from this
-list. The spinning loop blocks shutdown until these items are gone.
-
-Possibly the reason we haven't seen this issue in the field is
-because client_has_state() prevents __destroy_client() from calling
-nfsd4_shutdown_copy() if there are any items on this list. In a
-subsequent patch I plan to remove that restriction.
-
-Fixes: e0639dc5805a ("NFSD introduce async copy feature")
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Fixes: fff7b8ab2255 ("hwmon: add Texas Instruments TPS23861 driver")
+Signed-off-by: Murad Masimov <m.masimov@maxima.ru>
+Message-ID: <20241121173604.2021-1-m.masimov@maxima.ru>
+[groeck: Updated subject and description]
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs4proc.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/hwmon/tps23861.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/nfsd/nfs4proc.c b/fs/nfsd/nfs4proc.c
-index 0b698e25826fa..c48c1a3be5d2f 100644
---- a/fs/nfsd/nfs4proc.c
-+++ b/fs/nfsd/nfs4proc.c
-@@ -1256,7 +1256,7 @@ static void nfsd4_stop_copy(struct nfsd4_copy *copy)
- 	nfs4_put_copy(copy);
+diff --git a/drivers/hwmon/tps23861.c b/drivers/hwmon/tps23861.c
+index 2148fd543bb4b..3b2e72ed38c57 100644
+--- a/drivers/hwmon/tps23861.c
++++ b/drivers/hwmon/tps23861.c
+@@ -132,7 +132,7 @@ static int tps23861_read_temp(struct tps23861_data *data, long *val)
+ 	if (err < 0)
+ 		return err;
+ 
+-	*val = (regval * TEMPERATURE_LSB) - 20000;
++	*val = ((long)regval * TEMPERATURE_LSB) - 20000;
+ 
+ 	return 0;
  }
- 
--static struct nfsd4_copy *nfsd4_get_copy(struct nfs4_client *clp)
-+static struct nfsd4_copy *nfsd4_unhash_copy(struct nfs4_client *clp)
- {
- 	struct nfsd4_copy *copy = NULL;
- 
-@@ -1265,6 +1265,9 @@ static struct nfsd4_copy *nfsd4_get_copy(struct nfs4_client *clp)
- 		copy = list_first_entry(&clp->async_copies, struct nfsd4_copy,
- 					copies);
- 		refcount_inc(&copy->refcount);
-+		copy->cp_clp = NULL;
-+		if (!list_empty(&copy->copies))
-+			list_del_init(&copy->copies);
- 	}
- 	spin_unlock(&clp->async_lock);
- 	return copy;
-@@ -1274,7 +1277,7 @@ void nfsd4_shutdown_copy(struct nfs4_client *clp)
- {
- 	struct nfsd4_copy *copy;
- 
--	while ((copy = nfsd4_get_copy(clp)) != NULL)
-+	while ((copy = nfsd4_unhash_copy(clp)) != NULL)
- 		nfsd4_stop_copy(copy);
- }
- #ifdef CONFIG_NFSD_V4_2_INTER_SSC
 -- 
 2.43.0
 
