@@ -1,109 +1,96 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D808225A21;
-	Thu, 12 Dec 2024 17:44:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 841AC225A21;
+	Thu, 12 Dec 2024 17:44:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734025489; cv=none; b=gosvCpc09dkOQsPYLSaurKO59YTEiEZIYgkgqoxsAuQMwSzh/zq5fKKV3VPe8SiDdMXyLqAbdbdPFYjeOV1mEJKIOfTRNz1YZ4cAYKdzPDhftKFKsmIX6jWeNU1zlrT+/ATILhzB37ThcBNY0DVhHCr/F1j++RHM5FC7LwOs2r8=
+	t=1734025491; cv=none; b=H/O4pREaL/dQ1ppoxRZfGWn/QwDD3okEAjofIVfGWCdc3V8M2yOeHXBstrIDtHN8VbQVKNd/4A9qqb7CuVXaida/IxVhWTgwZq6U5+wnWYShbh5c3wvhdlRR/8w8T90yjZk1Pe91e9Q8cLvMQZ0AO+Hk4zLjBblyXV3UekS5dFE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734025489; c=relaxed/simple;
-	bh=9tKjhSY0qkGEtTedwIdJnqlX2zVR0a9N/gnmnBVr8Xg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BStbIw/mfA6PsMPcSof8VvpOHmOplCypNzT035tBA/MQjl4qtr6Jt+D2K86ivP1CNW7bXAfNpBx2UvHhhWkEMZt6yBh0Ftk+w87yyuBbIRgcHusCZ4tfOc0l42/UdZfE/1l6KkW/4EH6xkJLsYJwEqHOysfJL4uu12bBz7AG/eg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AZ/lQM3Z; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1734025491; c=relaxed/simple;
+	bh=nLsymGhNxM6p2dldtUXTo6hBLA4g0AbBC2D2EIdIl48=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=eC2u80newZtE8d+1LZQEcnjlzkNEJoJ2LQGWAnpbvZGOeg9/RPTrRURKuxlBL3m3E6yYJg/nBf2t/9cf17rw9LskNmjQJPRTa6wg0O6IoWyGvFOU2UYjxXzMUNZKJ6rEGit6Ve6RkGR61uMt8GE7XITo8FlPxg9awSmx/bYD9XQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mlZpidK+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AZ/lQM3Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0240C4CECE;
-	Thu, 12 Dec 2024 17:44:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1734025489;
-	bh=9tKjhSY0qkGEtTedwIdJnqlX2zVR0a9N/gnmnBVr8Xg=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=AZ/lQM3ZxOQj99+ru5U9GsTlZXmtrv+GycdFGABcKJfO9Q+DJwIQDnhUhtIo2WGDD
-	 0O7N12jymgot0QCYpOQsOQWkA4IlP7n5+kS1u5HGaRIFZ1n+TlnqoEHJaE2cNyM1GK
-	 yVDuEx5J3ZBDI5UfdmEWkDJtHEr/xuOCwvKbCHKdkPj0BFq+CIhRji3Jj/I+Tu4rOr
-	 F2jaTLwG29mt7Yf1PjVYwms8TI08NDirPHha8hmieFpPg+CpkSphA8Jw1gojDo1txk
-	 PNfR0bmasi8JPKfolBueyWqBpfWZ3NKX9O/Jzq/1wFXsLhprLL+bdrMv/ZbX9lfv9u
-	 3cOKTDkWORYJw==
-Date: Thu, 12 Dec 2024 10:44:44 -0700
-From: Nathan Chancellor <nathan@kernel.org>
-To: Tejun Heo <tj@kernel.org>
-Cc: Josef Bacik <josef@toxicpanda.com>, Jens Axboe <axboe@kernel.dk>,
-	cgroups@vger.kernel.org, linux-block@vger.kernel.org,
-	llvm@lists.linux.dev, patches@lists.linux.dev,
-	David Laight <david.laight@aculab.com>,
-	Linux Kernel Functional Testing <lkft@linaro.org>,
-	kernel test robot <lkp@intel.com>
-Subject: Re: [PATCH] blk-iocost: Avoid using clamp() on inuse in
- __propagate_weights()
-Message-ID: <20241212174444.GB2149156@ax162>
-References: <20241212-blk-iocost-fix-clamp-error-v1-1-b925491bc7d3@kernel.org>
- <Z1sbG2zh8xmb-lxu@slm.duckdns.org>
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mlZpidK+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B199C4CECE;
+	Thu, 12 Dec 2024 17:44:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1734025491;
+	bh=nLsymGhNxM6p2dldtUXTo6hBLA4g0AbBC2D2EIdIl48=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=mlZpidK+pv+DoJvdHWRzm1U4nPxXsue3GemSlHYK8N1lIE9CroIivVV9WOCONOkkV
+	 OoieYKpZh8gMeE51+xUwPs2fhUVYvWIk4Z7msOXR/+edJJcXeGW/T74/VAUD5kV8R1
+	 hVfKYQ9m0NkNChJXt1dROf0eOaV3YB+W0VBnstlY=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Zhihao Cheng <chengzhihao1@huawei.com>,
+	Richard Weinberger <richard@nod.at>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 188/321] ubifs: Correct the total block count by deducting journal reservation
+Date: Thu, 12 Dec 2024 16:01:46 +0100
+Message-ID: <20241212144237.410020513@linuxfoundation.org>
+X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20241212144229.291682835@linuxfoundation.org>
+References: <20241212144229.291682835@linuxfoundation.org>
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Z1sbG2zh8xmb-lxu@slm.duckdns.org>
+Content-Transfer-Encoding: 8bit
 
-On Thu, Dec 12, 2024 at 07:19:23AM -1000, Tejun Heo wrote:
-> On Thu, Dec 12, 2024 at 10:13:29AM -0700, Nathan Chancellor wrote:
-> > After a recent change to clamp() and its variants [1] that increases the
-> > coverage of the check that high is greater than low because it can be
-> > done through inlining, certain build configurations (such as s390
-> > defconfig) fail to build with clang with:
-> > 
-> >   block/blk-iocost.c:1101:11: error: call to '__compiletime_assert_557' declared with 'error' attribute: clamp() low limit 1 greater than high limit active
-> >    1101 |                 inuse = clamp_t(u32, inuse, 1, active);
-> >         |                         ^
-> >   include/linux/minmax.h:218:36: note: expanded from macro 'clamp_t'
-> >     218 | #define clamp_t(type, val, lo, hi) __careful_clamp(type, val, lo, hi)
-> >         |                                    ^
-> >   include/linux/minmax.h:195:2: note: expanded from macro '__careful_clamp'
-> >     195 |         __clamp_once(type, val, lo, hi, __UNIQUE_ID(v_), __UNIQUE_ID(l_), __UNIQUE_ID(h_))
-> >         |         ^
-> >   include/linux/minmax.h:188:2: note: expanded from macro '__clamp_once'
-> >     188 |         BUILD_BUG_ON_MSG(statically_true(ulo > uhi),                            \
-> >         |         ^
-> > 
-> > __propagate_weights() is called with an active value of zero in
-> > ioc_check_iocgs(), which results in the high value being less than the
-> > low value, which is undefined because the value returned depends on the
-> > order of the comparisons.
-> > 
-> > The purpose of this expression is to ensure inuse is not more than
-> > active and at least 1. This could be written more simply with a ternary
-> > expression that uses min(inuse, active) as the condition so that the
-> > value of that condition can be used if it is not zero and one if it is.
-> > Do this conversion to resolve the error and add a comment to deter
-> > people from turning this back into clamp().
-> > 
-> > Link: https://lore.kernel.org/r/34d53778977747f19cce2abb287bb3e6@AcuMS.aculab.com/ [1]
-> > Suggested-by: David Laight <david.laight@aculab.com>
-> > Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
-> > Closes: https://lore.kernel.org/llvm/CA+G9fYsD7mw13wredcZn0L-KBA3yeoVSTuxnss-AEWMN3ha0cA@mail.gmail.com/
-> > Reported-by: kernel test robot <lkp@intel.com>
-> > Closes: https://lore.kernel.org/oe-kbuild-all/202412120322.3GfVe3vF-lkp@intel.com/
-> > Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-> 
-> Acked-by: Tejun Heo <tj@kernel.org>
+5.4-stable review patch.  If anyone has any objections, please let me know.
 
-Thanks for the quick response!
+------------------
 
-> This likely deserves:
-> 
-> Fixes: 7caa47151ab2 ("blkcg: implement blk-iocost")
-> Cc: stable@vger.kernel.org # v5.4+
+From: Zhihao Cheng <chengzhihao1@huawei.com>
 
-Thanks, I was wondering if I should have provided those. I'll carry them
-forward on any future revisions, as I assume Jens can pick those up with
-your tag if this is good enough.
+[ Upstream commit 84a2bee9c49769310efa19601157ef50a1df1267 ]
 
-> 
-> -- 
-> tejun
-> 
+Since commit e874dcde1cbf ("ubifs: Reserve one leb for each journal
+head while doing budget"), available space is calulated by deducting
+reservation for all journal heads. However, the total block count (
+which is only used by statfs) is not updated yet, which will cause
+the wrong displaying for used space(total - available).
+Fix it by deducting reservation for all journal heads from total
+block count.
+
+Fixes: e874dcde1cbf ("ubifs: Reserve one leb for each journal head while doing budget")
+Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
+Signed-off-by: Richard Weinberger <richard@nod.at>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ fs/ubifs/super.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/fs/ubifs/super.c b/fs/ubifs/super.c
+index 29526040ad774..0b114f685be14 100644
+--- a/fs/ubifs/super.c
++++ b/fs/ubifs/super.c
+@@ -759,10 +759,10 @@ static void init_constants_master(struct ubifs_info *c)
+ 	 * necessary to report something for the 'statfs()' call.
+ 	 *
+ 	 * Subtract the LEB reserved for GC, the LEB which is reserved for
+-	 * deletions, minimum LEBs for the index, and assume only one journal
+-	 * head is available.
++	 * deletions, minimum LEBs for the index, the LEBs which are reserved
++	 * for each journal head.
+ 	 */
+-	tmp64 = c->main_lebs - 1 - 1 - MIN_INDEX_LEBS - c->jhead_cnt + 1;
++	tmp64 = c->main_lebs - 1 - 1 - MIN_INDEX_LEBS - c->jhead_cnt;
+ 	tmp64 *= (long long)c->leb_size - c->leb_overhead;
+ 	tmp64 = ubifs_reported_space(c, tmp64);
+ 	c->block_cnt = tmp64 >> UBIFS_BLOCK_SHIFT;
+-- 
+2.43.0
+
+
+
