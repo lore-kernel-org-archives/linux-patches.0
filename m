@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93416236942;
-	Thu, 12 Dec 2024 16:45:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 136A2236938;
+	Thu, 12 Dec 2024 16:45:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734021950; cv=none; b=GSMTGT9pUzpwvVzY3eNJ8PsCpqcYSVW3kqgr5bsERqiH5gCXQAO3fADkpsmoFofgB/SEWNcsSdfdyOYDBSKMPmAWN07KsdCGWrELUvXE1drSTg/PRR03EwLnFQLt9lUBk4wCTyCrt9TMtLnI/ryHkw+73ZsTM49fo/260pLBHys=
+	t=1734021954; cv=none; b=Zz5l3Pwdgg425DawR9phV2gKEDPliyUme4hvqyUMfnRcUbRd3u2eM6AwX56OJyRY79Qq7mUsLyVSBYhCPgE/fnvjg0CvItO5ZxFZZmk5Oyn9QgKsWJAYpKjJfB2+ucMngWMj8EFEuNKYoPYC3kJPk5zc/3GJIet+MRzT7UsKTo4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734021950; c=relaxed/simple;
-	bh=Z1cP6uYQlH214bnzZaQfqwXW4Q23RB76Q9RbMFSVpmI=;
+	s=arc-20240116; t=1734021954; c=relaxed/simple;
+	bh=os1zG89cGF263RV7YYddGLjeJWdfEoxha+yAR07uDIs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N9WsSIlWnTa7Z0B6mAdIHxZT29hJrjAaKiAePkgP9Nbe9J01gIFmJ4dz7gbKFV8xBR0uMxEyF+LLAGcOxlzHiMbsN1p/XhqhMAFMD7l5n47zTTW68TPOl95hiFW8gGP5HEAlDb2FuVZzegQZhilfxNsgbfY9b+phAwF7H8sVI0s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nnQPYFvZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cRHJQrOdfofvQ2v4cWqqwrtxOPBohljqWefy79f9XK5MSpr+VBuV9HeqP2n17I1aPmN/NHjeVuhfL4UmkQAEkatniknT17WsOeqeRGUxU9iiGefb7zNVF7k8r/MM5YsRsoKUT97PM0nu7OGMeGGRmSDD4JlcXoyVB2TZ0lKiDgA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kTXBzVUq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nnQPYFvZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 903E4C4CECE;
-	Thu, 12 Dec 2024 16:45:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kTXBzVUq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CCAEC4CECE;
+	Thu, 12 Dec 2024 16:45:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734021950;
-	bh=Z1cP6uYQlH214bnzZaQfqwXW4Q23RB76Q9RbMFSVpmI=;
+	s=korg; t=1734021953;
+	bh=os1zG89cGF263RV7YYddGLjeJWdfEoxha+yAR07uDIs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nnQPYFvZTOr0ILVm61mDWjm7VTa9JmDur8mjXF0XxMFio24MvYyW0EkP13Dmpnmox
-	 uGvRDDLvtIl2ba0MQiLuwuVBphOuzTPJmYnwf7M2E3BTU6KyHw43XuiNCPi+CVWobK
-	 6HN2sOvQ/6JGc9a6yupmGJ7wGgTg4zXjBX6MpyCU=
+	b=kTXBzVUqFz4UnsxiXvS8Zl57JWqyRJAPFgeq5ePgwAuA+HhDIWmOE5K8QO8aTeOOn
+	 Pp3u6RusZcabk/6ahRCowihYOrlPMEH+SahWXfUgdQ7+0+jq94aDzAD6YOf6/5i5lA
+	 odBo8VrIcdkDcqh5wMd/te1TBEszLsQwqZm2nZ70=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Heiko Carstens <hca@linux.ibm.com>,
+	Alexander Potapenko <glider@google.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Marco Elver <elver@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 089/565] s390/syscalls: Avoid creation of arch/arch/ directory
-Date: Thu, 12 Dec 2024 15:54:44 +0100
-Message-ID: <20241212144315.005648391@linuxfoundation.org>
+Subject: [PATCH 5.15 107/565] kcsan, seqlock: Support seqcount_latch_t
+Date: Thu, 12 Dec 2024 15:55:02 +0100
+Message-ID: <20241212144315.707651149@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144311.432886635@linuxfoundation.org>
 References: <20241212144311.432886635@linuxfoundation.org>
@@ -51,52 +52,208 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Masahiro Yamada <masahiroy@kernel.org>
+From: Marco Elver <elver@google.com>
 
-[ Upstream commit 0708967e2d56e370231fd07defa0d69f9ad125e8 ]
+[ Upstream commit 5c1806c41ce0a0110db5dd4c483cf2dc28b3ddf0 ]
 
-Building the kernel with ARCH=s390 creates a weird arch/arch/ directory.
+While fuzzing an arm64 kernel, Alexander Potapenko reported:
 
-  $ find arch/arch
-  arch/arch
-  arch/arch/s390
-  arch/arch/s390/include
-  arch/arch/s390/include/generated
-  arch/arch/s390/include/generated/asm
-  arch/arch/s390/include/generated/uapi
-  arch/arch/s390/include/generated/uapi/asm
+| BUG: KCSAN: data-race in ktime_get_mono_fast_ns / timekeeping_update
+|
+| write to 0xffffffc082e74248 of 56 bytes by interrupt on cpu 0:
+|  update_fast_timekeeper kernel/time/timekeeping.c:430 [inline]
+|  timekeeping_update+0x1d8/0x2d8 kernel/time/timekeeping.c:768
+|  timekeeping_advance+0x9e8/0xb78 kernel/time/timekeeping.c:2344
+|  update_wall_time+0x18/0x38 kernel/time/timekeeping.c:2360
+|  [...]
+|
+| read to 0xffffffc082e74258 of 8 bytes by task 5260 on cpu 1:
+|  __ktime_get_fast_ns kernel/time/timekeeping.c:372 [inline]
+|  ktime_get_mono_fast_ns+0x88/0x174 kernel/time/timekeeping.c:489
+|  init_srcu_struct_fields+0x40c/0x530 kernel/rcu/srcutree.c:263
+|  init_srcu_struct+0x14/0x20 kernel/rcu/srcutree.c:311
+|  [...]
+|
+| value changed: 0x000002f875d33266 -> 0x000002f877416866
+|
+| Reported by Kernel Concurrency Sanitizer on:
+| CPU: 1 UID: 0 PID: 5260 Comm: syz.2.7483 Not tainted 6.12.0-rc3-dirty #78
 
-The root cause is 'targets' in arch/s390/kernel/syscalls/Makefile,
-where the relative path is incorrect.
+This is a false positive data race between a seqcount latch writer and a reader
+accessing stale data. Since its introduction, KCSAN has never understood the
+seqcount_latch interface (due to being unannotated).
 
-Strictly speaking, 'targets' was not necessary in the first place
-because this Makefile uses 'filechk' instead of 'if_changed'.
+Unlike the regular seqlock interface, the seqcount_latch interface for latch
+writers never has had a well-defined critical section, making it difficult to
+teach tooling where the critical section starts and ends.
 
-However, this commit keeps it, as it will be useful when converting
-'filechk' to 'if_changed' later.
+Introduce an instrumentable (non-raw) seqcount_latch interface, with
+which we can clearly denote writer critical sections. This both helps
+readability and tooling like KCSAN to understand when the writer is done
+updating all latch copies.
 
-Fixes: 5c75824d915e ("s390/syscalls: add Makefile to generate system call header files")
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-Link: https://lore.kernel.org/r/20241111134603.2063226-1-masahiroy@kernel.org
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Fixes: 88ecd153be95 ("seqlock, kcsan: Add annotations for KCSAN")
+Reported-by: Alexander Potapenko <glider@google.com>
+Co-developed-by: "Peter Zijlstra (Intel)" <peterz@infradead.org>
+Signed-off-by: "Peter Zijlstra (Intel)" <peterz@infradead.org>
+Signed-off-by: Marco Elver <elver@google.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://lore.kernel.org/r/20241104161910.780003-4-elver@google.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/kernel/syscalls/Makefile | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ Documentation/locking/seqlock.rst |  2 +-
+ include/linux/seqlock.h           | 86 +++++++++++++++++++++++++------
+ 2 files changed, 72 insertions(+), 16 deletions(-)
 
-diff --git a/arch/s390/kernel/syscalls/Makefile b/arch/s390/kernel/syscalls/Makefile
-index b98f25029b8e6..7b77ed779c7b2 100644
---- a/arch/s390/kernel/syscalls/Makefile
-+++ b/arch/s390/kernel/syscalls/Makefile
-@@ -12,7 +12,7 @@ kapi-hdrs-y := $(kapi)/unistd_nr.h
- uapi-hdrs-y := $(uapi)/unistd_32.h
- uapi-hdrs-y += $(uapi)/unistd_64.h
+diff --git a/Documentation/locking/seqlock.rst b/Documentation/locking/seqlock.rst
+index 64405e5da63e4..60d808d6ed765 100644
+--- a/Documentation/locking/seqlock.rst
++++ b/Documentation/locking/seqlock.rst
+@@ -153,7 +153,7 @@ Use seqcount_latch_t when the write side sections cannot be protected
+ from interruption by readers. This is typically the case when the read
+ side can be invoked from NMI handlers.
  
--targets += $(addprefix ../../../,$(gen-y) $(kapi-hdrs-y) $(uapi-hdrs-y))
-+targets += $(addprefix ../../../../,$(gen-y) $(kapi-hdrs-y) $(uapi-hdrs-y))
+-Check `raw_write_seqcount_latch()` for more information.
++Check `write_seqcount_latch()` for more information.
  
- PHONY += kapi uapi
  
+ .. _seqlock_t:
+diff --git a/include/linux/seqlock.h b/include/linux/seqlock.h
+index 97831499d5005..a06af404c4b2a 100644
+--- a/include/linux/seqlock.h
++++ b/include/linux/seqlock.h
+@@ -686,6 +686,23 @@ static __always_inline unsigned raw_read_seqcount_latch(const seqcount_latch_t *
+ 	return READ_ONCE(s->seqcount.sequence);
+ }
+ 
++/**
++ * read_seqcount_latch() - pick even/odd latch data copy
++ * @s: Pointer to seqcount_latch_t
++ *
++ * See write_seqcount_latch() for details and a full reader/writer usage
++ * example.
++ *
++ * Return: sequence counter raw value. Use the lowest bit as an index for
++ * picking which data copy to read. The full counter must then be checked
++ * with read_seqcount_latch_retry().
++ */
++static __always_inline unsigned read_seqcount_latch(const seqcount_latch_t *s)
++{
++	kcsan_atomic_next(KCSAN_SEQLOCK_REGION_MAX);
++	return raw_read_seqcount_latch(s);
++}
++
+ /**
+  * raw_read_seqcount_latch_retry() - end a seqcount_latch_t read section
+  * @s:		Pointer to seqcount_latch_t
+@@ -700,9 +717,34 @@ raw_read_seqcount_latch_retry(const seqcount_latch_t *s, unsigned start)
+ 	return unlikely(READ_ONCE(s->seqcount.sequence) != start);
+ }
+ 
++/**
++ * read_seqcount_latch_retry() - end a seqcount_latch_t read section
++ * @s:		Pointer to seqcount_latch_t
++ * @start:	count, from read_seqcount_latch()
++ *
++ * Return: true if a read section retry is required, else false
++ */
++static __always_inline int
++read_seqcount_latch_retry(const seqcount_latch_t *s, unsigned start)
++{
++	kcsan_atomic_next(0);
++	return raw_read_seqcount_latch_retry(s, start);
++}
++
+ /**
+  * raw_write_seqcount_latch() - redirect latch readers to even/odd copy
+  * @s: Pointer to seqcount_latch_t
++ */
++static __always_inline void raw_write_seqcount_latch(seqcount_latch_t *s)
++{
++	smp_wmb();	/* prior stores before incrementing "sequence" */
++	s->seqcount.sequence++;
++	smp_wmb();      /* increment "sequence" before following stores */
++}
++
++/**
++ * write_seqcount_latch_begin() - redirect latch readers to odd copy
++ * @s: Pointer to seqcount_latch_t
+  *
+  * The latch technique is a multiversion concurrency control method that allows
+  * queries during non-atomic modifications. If you can guarantee queries never
+@@ -730,17 +772,11 @@ raw_read_seqcount_latch_retry(const seqcount_latch_t *s, unsigned start)
+  *
+  *	void latch_modify(struct latch_struct *latch, ...)
+  *	{
+- *		smp_wmb();	// Ensure that the last data[1] update is visible
+- *		latch->seq.sequence++;
+- *		smp_wmb();	// Ensure that the seqcount update is visible
+- *
++ *		write_seqcount_latch_begin(&latch->seq);
+  *		modify(latch->data[0], ...);
+- *
+- *		smp_wmb();	// Ensure that the data[0] update is visible
+- *		latch->seq.sequence++;
+- *		smp_wmb();	// Ensure that the seqcount update is visible
+- *
++ *		write_seqcount_latch(&latch->seq);
+  *		modify(latch->data[1], ...);
++ *		write_seqcount_latch_end(&latch->seq);
+  *	}
+  *
+  * The query will have a form like::
+@@ -751,13 +787,13 @@ raw_read_seqcount_latch_retry(const seqcount_latch_t *s, unsigned start)
+  *		unsigned seq, idx;
+  *
+  *		do {
+- *			seq = raw_read_seqcount_latch(&latch->seq);
++ *			seq = read_seqcount_latch(&latch->seq);
+  *
+  *			idx = seq & 0x01;
+  *			entry = data_query(latch->data[idx], ...);
+  *
+  *		// This includes needed smp_rmb()
+- *		} while (raw_read_seqcount_latch_retry(&latch->seq, seq));
++ *		} while (read_seqcount_latch_retry(&latch->seq, seq));
+  *
+  *		return entry;
+  *	}
+@@ -781,11 +817,31 @@ raw_read_seqcount_latch_retry(const seqcount_latch_t *s, unsigned start)
+  *	When data is a dynamic data structure; one should use regular RCU
+  *	patterns to manage the lifetimes of the objects within.
+  */
+-static inline void raw_write_seqcount_latch(seqcount_latch_t *s)
++static __always_inline void write_seqcount_latch_begin(seqcount_latch_t *s)
+ {
+-	smp_wmb();	/* prior stores before incrementing "sequence" */
+-	s->seqcount.sequence++;
+-	smp_wmb();      /* increment "sequence" before following stores */
++	kcsan_nestable_atomic_begin();
++	raw_write_seqcount_latch(s);
++}
++
++/**
++ * write_seqcount_latch() - redirect latch readers to even copy
++ * @s: Pointer to seqcount_latch_t
++ */
++static __always_inline void write_seqcount_latch(seqcount_latch_t *s)
++{
++	raw_write_seqcount_latch(s);
++}
++
++/**
++ * write_seqcount_latch_end() - end a seqcount_latch_t write section
++ * @s:		Pointer to seqcount_latch_t
++ *
++ * Marks the end of a seqcount_latch_t writer section, after all copies of the
++ * latch-protected data have been updated.
++ */
++static __always_inline void write_seqcount_latch_end(seqcount_latch_t *s)
++{
++	kcsan_nestable_atomic_end();
+ }
+ 
+ /*
 -- 
 2.43.0
 
