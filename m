@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97F32223E9D;
-	Thu, 12 Dec 2024 16:19:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E373B222D68;
+	Thu, 12 Dec 2024 16:19:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734020369; cv=none; b=bnQhQkthiPAZawvPjCbuB3Uad0+U4lAhlv+GUKP/4glczxowQi2hla3nxNcKhW4irHWSmYfFy1BuWltLwaJWVBfU4tEcC1WupqPS+raihgJpoX8OeTOTk8rBPUXjm57itHDXNGTgsONXAFuwHt3sbqbJ7WxkWTUSzf1rqZzqkvg=
+	t=1734020373; cv=none; b=JhV7Lfyk/rL/RLOuhoAyq3ucxHh7l6gQ0LI7JqNOwTyKJThYfqdkFwfl9Q8srGy82opZik4u92mRqB29i7CDBQeh6wNevRgqTLrwDqVftSlsXxDG3aQQsxP6YqBn4NsaJ59jk3jJaptkLcydfuJJ6tTP4vHwi8rtmoT3mZvlHSE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734020369; c=relaxed/simple;
-	bh=zRx4iQUZROuHTEF16Yv6NLu8LDk8ueMdTOhMrlWY28E=;
+	s=arc-20240116; t=1734020373; c=relaxed/simple;
+	bh=qgJhTaSHitTXg6R9sRhf9d6NokqnWG2O8cf5QGDvdic=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Fj0CWzwb+fuUkGlfWb6IAG10cuiauu2xFkqrE5HwMdrSN3HM79E2Rau5rd0TyhXM18UbLnSHs1cdHi8eHNrCRq7DY3zYX2LTWz2nWjb6cYqVca19vNpXumGJmYKlZfFS6cuu3PD1JoSvwzo/Bch8QLvmKNqd6z9/9OdjmoUptR4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RNLv4Ez6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YWHtvx9OtbNWbAAr/ArDv/nPhUVj+AVljU6tIyB/dtfLQwBgoFT4mUCLbzhz3lz1n40AZiBBC8OBDcvS4TgsA0soZquPsv1ezf9vaujhL1foKZT8xYrJtSl3BnlqCc4ujZdXEWhkQ4U4oV01kRhyzXqqIHMfqQxhMGhz87qJj9A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zxzzmIRh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RNLv4Ez6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CEE5C4CED3;
-	Thu, 12 Dec 2024 16:19:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zxzzmIRh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FD5FC4CECE;
+	Thu, 12 Dec 2024 16:19:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734020369;
-	bh=zRx4iQUZROuHTEF16Yv6NLu8LDk8ueMdTOhMrlWY28E=;
+	s=korg; t=1734020372;
+	bh=qgJhTaSHitTXg6R9sRhf9d6NokqnWG2O8cf5QGDvdic=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RNLv4Ez6yj0O4uhDmypYTcvnoGJ3O48mIN1sn3e3RK3Qhfhtn5bawbI3+z9b3Shbf
-	 WQjtpg9zg8xWSg0sF1GUyDfOQadB44RXaP3YQMxHnmsNdVWQMyrD/OTgUQhHdUGc6y
-	 sSEQ7tScFaU5rC+93+LNEeolkgFFMFUFoeNdyZ7Y=
+	b=zxzzmIRhWeKcnMsTQW0MS0YhJB0jkvXs9rF13PW5LU7NSey6sJFnrU/4U30W2aNLc
+	 Oa8/D17Wqb2RzivLuWemarP47a/cw2wiPBlhmR8cm1ugeRLjLDVYuVnR4z/riNZWHp
+	 YtX8MoCQ0Ri2zc0/NbNv5xvo7BUZO64yx+ITvlrE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Andy Shevchenko <andy@kernel.org>,
-	"James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>,
-	Kees Cook <kees@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 422/772] lib: string_helpers: silence snprintf() output truncation warning
-Date: Thu, 12 Dec 2024 15:56:07 +0100
-Message-ID: <20241212144407.350896810@linuxfoundation.org>
+	Long Li <leo.lilong@huawei.com>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Carlos Maiolino <cem@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 449/772] xfs: remove unknown compat feature check in superblock write validation
+Date: Thu, 12 Dec 2024 15:56:34 +0100
+Message-ID: <20241212144408.479440854@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -53,40 +53,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+From: Long Li <leo.lilong@huawei.com>
 
-commit a508ef4b1dcc82227edc594ffae583874dd425d7 upstream.
+[ Upstream commit 652f03db897ba24f9c4b269e254ccc6cc01ff1b7 ]
 
-The output of ".%03u" with the unsigned int in range [0, 4294966295] may
-get truncated if the target buffer is not 12 bytes. This can't really
-happen here as the 'remainder' variable cannot exceed 999 but the
-compiler doesn't know it. To make it happy just increase the buffer to
-where the warning goes away.
+Compat features are new features that older kernels can safely ignore,
+allowing read-write mounts without issues. The current sb write validation
+implementation returns -EFSCORRUPTED for unknown compat features,
+preventing filesystem write operations and contradicting the feature's
+definition.
 
-Fixes: 3c9f3681d0b4 ("[SCSI] lib: add generic helper to print sizes rounded to the correct SI range")
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Reviewed-by: Andy Shevchenko <andy@kernel.org>
-Cc: James E.J. Bottomley <James.Bottomley@HansenPartnership.com>
-Cc: Kees Cook <kees@kernel.org>
-Cc: stable@vger.kernel.org
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Link: https://lore.kernel.org/r/20241101205453.9353-1-brgl@bgdev.pl
-Signed-off-by: Kees Cook <kees@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Additionally, if the mounted image is unclean, the log recovery may need
+to write to the superblock. Returning an error for unknown compat features
+during sb write validation can cause mount failures.
+
+Although XFS currently does not use compat feature flags, this issue
+affects current kernels' ability to mount images that may use compat
+feature flags in the future.
+
+Since superblock read validation already warns about unknown compat
+features, it's unnecessary to repeat this warning during write validation.
+Therefore, the relevant code in write validation is being removed.
+
+Fixes: 9e037cb7972f ("xfs: check for unknown v5 feature bits in superblock write verifier")
+Cc: stable@vger.kernel.org # v4.19+
+Signed-off-by: Long Li <leo.lilong@huawei.com>
+Reviewed-by: Darrick J. Wong <djwong@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Carlos Maiolino <cem@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/string_helpers.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/xfs/libxfs/xfs_sb.c | 7 -------
+ 1 file changed, 7 deletions(-)
 
---- a/lib/string_helpers.c
-+++ b/lib/string_helpers.c
-@@ -52,7 +52,7 @@ void string_get_size(u64 size, u64 blk_s
- 	static const unsigned int rounding[] = { 500, 50, 5 };
- 	int i = 0, j;
- 	u32 remainder = 0, sf_cap;
--	char tmp[8];
-+	char tmp[12];
- 	const char *unit;
- 
- 	tmp[0] = '\0';
+diff --git a/fs/xfs/libxfs/xfs_sb.c b/fs/xfs/libxfs/xfs_sb.c
+index c24a38272cb7c..d214233ef532f 100644
+--- a/fs/xfs/libxfs/xfs_sb.c
++++ b/fs/xfs/libxfs/xfs_sb.c
+@@ -259,13 +259,6 @@ xfs_validate_sb_write(
+ 	 * the kernel cannot support since we checked for unsupported bits in
+ 	 * the read verifier, which means that memory is corrupt.
+ 	 */
+-	if (xfs_sb_has_compat_feature(sbp, XFS_SB_FEAT_COMPAT_UNKNOWN)) {
+-		xfs_warn(mp,
+-"Corruption detected in superblock compatible features (0x%x)!",
+-			(sbp->sb_features_compat & XFS_SB_FEAT_COMPAT_UNKNOWN));
+-		return -EFSCORRUPTED;
+-	}
+-
+ 	if (!xfs_is_readonly(mp) &&
+ 	    xfs_sb_has_ro_compat_feature(sbp, XFS_SB_FEAT_RO_COMPAT_UNKNOWN)) {
+ 		xfs_alert(mp,
+-- 
+2.43.0
+
 
 
