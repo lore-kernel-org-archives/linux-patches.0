@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E42822969E;
-	Thu, 12 Dec 2024 17:01:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83393229677;
+	Thu, 12 Dec 2024 17:01:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734022867; cv=none; b=HRgCT3izfANlOVgLiwpwOPX97/m3cyUoMLy59U4lzSGf+iK75DkpSe58scDQPx1iCYETM6nHgsymcqZZoW25igF1JGF39CjsRjvrvFue2I86vOA3AiSSoCb8qnmQynEsJLQZweSKP7KnrdLUubZ5XpdEYNbA98y6Lp5Lf5KU5ko=
+	t=1734022869; cv=none; b=F/JwFHpyx8mjnYXJsBiBYyA3qZ4epAU1xA7LgIhXI1b45xdWNibtJAbcYHPDn5TbHELbw3QofNEN+WLmXYQmpCxh9u84ygBTsLhNm/mXZCqqmOp9CrlrfGL84DVfMmnrSo+NcBt9Qp3Mb/qWrFsYvzODh/J8/CKTcdm21Wqtx2E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734022867; c=relaxed/simple;
-	bh=n2KyBmDCGarKp49akKEZEAK6NyaC5LxkpaTYLXkW89c=;
+	s=arc-20240116; t=1734022869; c=relaxed/simple;
+	bh=UF+iLgOhEhSCxM/xlsWRAE33hcdX9c0uoik3Ie1oKYo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OVdwIMmsRR9DrMu4/xLyJRBvoioByLUqtRxJQ4RCRLdmtvM/7l40nZRkXTSvOoEVICqWf2i6F+uD2ELvhZklmJw8WaYhFTlNj8svrmbWYeK9FcLGuzuKajO84a99twHUWswH3T2Re8I/rAxvsP6mlA3C9FQnyEyf5PlKKEDjk+M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GSXPoL3o; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aalk0Ez1nHWO0xRn2mZtqVll5AjJSrCgJ1oG194FWtBkWR4m/K4w5/txm4noV9G5xqjaa6al/BISsaYTypkmV3tozV271G++vzdjVGk89xbKNxyr6ygt/CigTLi/5u3zmVrLSnIeE5Lps815+lsAT73qZ0Ue6YM9ZNDRnXpP7r4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qrKZz0Dg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GSXPoL3o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41154C4CECE;
-	Thu, 12 Dec 2024 17:01:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qrKZz0Dg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8FFBC4CECE;
+	Thu, 12 Dec 2024 17:01:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734022865;
-	bh=n2KyBmDCGarKp49akKEZEAK6NyaC5LxkpaTYLXkW89c=;
+	s=korg; t=1734022869;
+	bh=UF+iLgOhEhSCxM/xlsWRAE33hcdX9c0uoik3Ie1oKYo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GSXPoL3ok77XRRe+W6DQmm1bQjP2LYTjIcb/93nwlnR/RWBRXe/O1ZbZbBkXUODBf
-	 hs/v1EVt8s5n2zF+z1AymRzy2C/ItPu3fjQ8Ydr2JTqLY96merkE0F52SnVbXkAjls
-	 13jE33LtcWfmNEaccvi5g/NGJoHvGu5Zlhkksmc0=
+	b=qrKZz0Dgl9S2knOZq0Opow/5RSWe/rT3KTsHokI0sNHJD/ce/yt2NGo664nJ8I7jE
+	 4Q8+z6iAIRlG97fultL2gPo+3qEfRDvV5S4pNNEr2y3MTxmNmwgrQOrS0WNpHOXGF2
+	 oDSBZ4NsCKlhZrvFAZKcGniUfuJYT3ueMqd99vmg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+58c872f7790a4d2ac951@syzkaller.appspotmail.com,
-	Jeongjun Park <aha310510@gmail.com>,
-	Jozsef Kadlecsik <kadlec@blackhole.kfki.hu>,
-	Pablo Neira Ayuso <pablo@netfilter.org>
-Subject: [PATCH 5.15 326/565] netfilter: ipset: add missing range check in bitmap_ip_uadt
-Date: Thu, 12 Dec 2024 15:58:41 +0100
-Message-ID: <20241212144324.485589729@linuxfoundation.org>
+	syzbot+7f4a6f7f7051474e40ad@syzkaller.appspotmail.com,
+	Ahmed Ehab <bottaawesome633@gmail.com>,
+	Boqun Feng <boqun.feng@gmail.com>
+Subject: [PATCH 5.15 317/565] locking/lockdep: Avoid creating new name string literals in lockdep_set_subclass()
+Date: Thu, 12 Dec 2024 15:58:32 +0100
+Message-ID: <20241212144324.133907395@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144311.432886635@linuxfoundation.org>
 References: <20241212144311.432886635@linuxfoundation.org>
@@ -52,51 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeongjun Park <aha310510@gmail.com>
+From: Ahmed Ehab <bottaawesome633@gmail.com>
 
-commit 35f56c554eb1b56b77b3cf197a6b00922d49033d upstream.
+commit d7fe143cb115076fed0126ad8cf5ba6c3e575e43 upstream.
 
-When tb[IPSET_ATTR_IP_TO] is not present but tb[IPSET_ATTR_CIDR] exists,
-the values of ip and ip_to are slightly swapped. Therefore, the range check
-for ip should be done later, but this part is missing and it seems that the
-vulnerability occurs.
+Syzbot reports a problem that a warning will be triggered while
+searching a lock class in look_up_lock_class().
 
-So we should add missing range checks and remove unnecessary range checks.
+The cause of the issue is that a new name is created and used by
+lockdep_set_subclass() instead of using the existing one. This results
+in a lock instance has a different name pointer than previous registered
+one stored in lock class, and WARN_ONCE() is triggered because of that
+in look_up_lock_class().
 
-Cc: <stable@vger.kernel.org>
-Reported-by: syzbot+58c872f7790a4d2ac951@syzkaller.appspotmail.com
-Fixes: 72205fc68bd1 ("netfilter: ipset: bitmap:ip set type support")
-Signed-off-by: Jeongjun Park <aha310510@gmail.com>
-Acked-by: Jozsef Kadlecsik <kadlec@blackhole.kfki.hu>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+To fix this, change lockdep_set_subclass() to use the existing name
+instead of a new one. Hence, no new name will be created by
+lockdep_set_subclass(). Hence, the warning is avoided.
+
+[boqun: Reword the commit log to state the correct issue]
+
+Reported-by: <syzbot+7f4a6f7f7051474e40ad@syzkaller.appspotmail.com>
+Fixes: de8f5e4f2dc1f ("lockdep: Introduce wait-type checks")
+Cc: stable@vger.kernel.org
+Signed-off-by: Ahmed Ehab <bottaawesome633@gmail.com>
+Signed-off-by: Boqun Feng <boqun.feng@gmail.com>
+Link: https://lore.kernel.org/lkml/20240824221031.7751-1-bottaawesome633@gmail.com/
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/ipset/ip_set_bitmap_ip.c |    7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ include/linux/lockdep.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/netfilter/ipset/ip_set_bitmap_ip.c
-+++ b/net/netfilter/ipset/ip_set_bitmap_ip.c
-@@ -163,11 +163,8 @@ bitmap_ip_uadt(struct ip_set *set, struc
- 		ret = ip_set_get_hostipaddr4(tb[IPSET_ATTR_IP_TO], &ip_to);
- 		if (ret)
- 			return ret;
--		if (ip > ip_to) {
-+		if (ip > ip_to)
- 			swap(ip, ip_to);
--			if (ip < map->first_ip)
--				return -IPSET_ERR_BITMAP_RANGE;
--		}
- 	} else if (tb[IPSET_ATTR_CIDR]) {
- 		u8 cidr = nla_get_u8(tb[IPSET_ATTR_CIDR]);
+--- a/include/linux/lockdep.h
++++ b/include/linux/lockdep.h
+@@ -233,7 +233,7 @@ static inline void lockdep_init_map(stru
+ 			      (lock)->dep_map.lock_type)
  
-@@ -178,7 +175,7 @@ bitmap_ip_uadt(struct ip_set *set, struc
- 		ip_to = ip;
- 	}
- 
--	if (ip_to > map->last_ip)
-+	if (ip < map->first_ip || ip_to > map->last_ip)
- 		return -IPSET_ERR_BITMAP_RANGE;
- 
- 	for (; !before(ip_to, ip); ip += map->hosts) {
+ #define lockdep_set_subclass(lock, sub)					\
+-	lockdep_init_map_type(&(lock)->dep_map, #lock, (lock)->dep_map.key, sub,\
++	lockdep_init_map_type(&(lock)->dep_map, (lock)->dep_map.name, (lock)->dep_map.key, sub,\
+ 			      (lock)->dep_map.wait_type_inner,		\
+ 			      (lock)->dep_map.wait_type_outer,		\
+ 			      (lock)->dep_map.lock_type)
 
 
