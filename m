@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B925E235C2F;
-	Thu, 12 Dec 2024 16:32:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52705223C49;
+	Thu, 12 Dec 2024 16:33:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734021176; cv=none; b=ClESqBVrZoHWQF2vAinUbWCwJtg2TBrh+l6ZY6iPZX87Rjxpwx5/wRKXIt1TDR9lndb252I1oeYbbCRXP8PEUIPKbLJLlZcTIjgsEy7fmw6di5+e5jZuprJn57qYB7Ojotb+LGBazTzuySfCmuf5/nCa32jbhKatEbKMnzV0DE8=
+	t=1734021180; cv=none; b=DjCbylYHXay8En8IlW17HFwRp22AFEI66o4l2tlB1Slwnx/eFgevK0GOivHj8+GJhTXRtV4BnJdjmZpxxTvrWeyYZj9xpeHAEuN5fXziBmq00NYwES50rb6tzw5gsTsGldVHPHQpvItcWey3qamaDHALusXtFm0+1xR3HHmph9w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734021176; c=relaxed/simple;
-	bh=XAt9YTx9MceM+4wupfZaPPG+GqLBzXvfm6AkkXImQgc=;
+	s=arc-20240116; t=1734021180; c=relaxed/simple;
+	bh=3lc1E6Sdyhw/Ioh0mGiIcwhdd41IwGvJgqlGLMP+6+8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=doKGuF4MB45lIWDbQY7mgV11Tw2CHjjHs4XuAWikxiRmxg0fTQHU/bkBblQ6MOPyI1mr7uPBQgkCImnjVYmiAl/uusto02kLTzj6wSIEICdqgH0qfmFnxIIYhrl/zpwWrg9TjKsXc8HyGKoHb86Znz/P5VzP+cCT1i5Lbzz+sKM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XtU6x5MI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IvLCP3R8w0vLllXQgx7ziL8YPkyx8CGIblfePIj8IvMzpc7JRatTiDcbB1k7tqeHsHX2025Rk1jleWsu6GTnvNMGhvnxzjowSnKpBFx0TAMYmJWUfTypWAyyDkTvt4eTOKGa6RjC23K1awIwiCk4O1F0Mg4+JA2C9usdeINtMFA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JA03bibB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XtU6x5MI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D623C4CECE;
-	Thu, 12 Dec 2024 16:32:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JA03bibB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92C82C4CECE;
+	Thu, 12 Dec 2024 16:32:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734021176;
-	bh=XAt9YTx9MceM+4wupfZaPPG+GqLBzXvfm6AkkXImQgc=;
+	s=korg; t=1734021180;
+	bh=3lc1E6Sdyhw/Ioh0mGiIcwhdd41IwGvJgqlGLMP+6+8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XtU6x5MIeUihaZvOmABZNO+nZdadvdSX4JQvwPXiu4fD2gKvGymFjfnStYUNXQyV4
-	 iUhNXmYPIDOw6OkLB8ACgIyrx09Js60LR7IxOG6I0KcqQtxl4eywHm5Yly7AUjDH4U
-	 qllO+yOxkzb3CVquQ1X01YqD3A802ffko8N0aJ2U=
+	b=JA03bibBJxfarhljViJcbH6U1NJpCpyObC6SLg2DiTavk1BniJtmNSWl1MS4W3rGA
+	 TLpin/8gICqRjIzUFALp5az8gryQv1HfdATjrDhOfGYnBRKpIJgSzIDQbnhA48AzxZ
+	 TrvMjn+FyASDmI1tiLt5R3Gm3MfNdqVAD6nFTGfM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rohan Barar <rohan.barar@gmail.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Eric Dumazet <edumazet@google.com>,
+	Ignat Korchagin <ignat@cloudflare.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 649/772] media: cx231xx: Add support for Dexatek USB Video Grabber 1d19:6108
-Date: Thu, 12 Dec 2024 15:59:54 +0100
-Message-ID: <20241212144416.740264944@linuxfoundation.org>
+Subject: [PATCH 6.1 667/772] af_packet: avoid erroring out after sock_init_data() in packet_create()
+Date: Thu, 12 Dec 2024 16:00:12 +0100
+Message-ID: <20241212144417.476334722@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -51,48 +54,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rohan Barar <rohan.barar@gmail.com>
+From: Ignat Korchagin <ignat@cloudflare.com>
 
-[ Upstream commit 61a830bc0ea69a05d8a4534f825c6aa618263649 ]
+[ Upstream commit 46f2a11cb82b657fd15bab1c47821b635e03838b ]
 
-Add Dexatek Technology Ltd USB Video Grabber 1d19:6108 to the cx231xx
-driver. This device is sold under the name "BAUHN DVD Maker (DK8723)" by
-ALDI in Australia.
+After sock_init_data() the allocated sk object is attached to the provided
+sock object. On error, packet_create() frees the sk object leaving the
+dangling pointer in the sock object on return. Some other code may try
+to use this pointer and cause use-after-free.
 
-This device is similar to 1d19:6109, which is already included in cx231xx.
-
-Both video and audio capture function correctly after installing the
-patched cx231xx driver.
-
-Patch Changelog
-v1:
- - Initial submission.
-v2:
- - Fix SoB + Improve subject.
-v3:
- - Rephrase message to not exceed 75 characters per line.
- - Removed reference to external GitHub URL.
-
-Signed-off-by: Rohan Barar <rohan.barar@gmail.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Suggested-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: Ignat Korchagin <ignat@cloudflare.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20241014153808.51894-2-ignat@cloudflare.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/cx231xx/cx231xx-cards.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/packet/af_packet.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/media/usb/cx231xx/cx231xx-cards.c b/drivers/media/usb/cx231xx/cx231xx-cards.c
-index 92efe6c1f47ba..bda729b42d05f 100644
---- a/drivers/media/usb/cx231xx/cx231xx-cards.c
-+++ b/drivers/media/usb/cx231xx/cx231xx-cards.c
-@@ -994,6 +994,8 @@ const unsigned int cx231xx_bcount = ARRAY_SIZE(cx231xx_boards);
+diff --git a/net/packet/af_packet.c b/net/packet/af_packet.c
+index c9c813f731c6e..9da9e41899c65 100644
+--- a/net/packet/af_packet.c
++++ b/net/packet/af_packet.c
+@@ -3418,18 +3418,18 @@ static int packet_create(struct net *net, struct socket *sock, int protocol,
+ 	if (sock->type == SOCK_PACKET)
+ 		sock->ops = &packet_ops_spkt;
  
- /* table of devices that work with this driver */
- struct usb_device_id cx231xx_id_table[] = {
-+	{USB_DEVICE(0x1D19, 0x6108),
-+	.driver_info = CX231XX_BOARD_PV_XCAPTURE_USB},
- 	{USB_DEVICE(0x1D19, 0x6109),
- 	.driver_info = CX231XX_BOARD_PV_XCAPTURE_USB},
- 	{USB_DEVICE(0x0572, 0x5A3C),
++	po = pkt_sk(sk);
++	err = packet_alloc_pending(po);
++	if (err)
++		goto out_sk_free;
++
+ 	sock_init_data(sock, sk);
+ 
+-	po = pkt_sk(sk);
+ 	init_completion(&po->skb_completion);
+ 	sk->sk_family = PF_PACKET;
+ 	po->num = proto;
+ 	po->xmit = dev_queue_xmit;
+ 
+-	err = packet_alloc_pending(po);
+-	if (err)
+-		goto out2;
+-
+ 	packet_cached_dev_reset(po);
+ 
+ 	sk->sk_destruct = packet_sock_destruct;
+@@ -3462,7 +3462,7 @@ static int packet_create(struct net *net, struct socket *sock, int protocol,
+ 	sock_prot_inuse_add(net, &packet_proto, 1);
+ 
+ 	return 0;
+-out2:
++out_sk_free:
+ 	sk_free(sk);
+ out:
+ 	return err;
 -- 
 2.43.0
 
