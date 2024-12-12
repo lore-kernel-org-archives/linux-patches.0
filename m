@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C336C21C172;
-	Thu, 12 Dec 2024 15:33:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEF8A215774;
+	Thu, 12 Dec 2024 15:33:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734017615; cv=none; b=nNmlCFuOeNnr+dHG0PkdfK6RRebSGsvEfv1n5H7Nari0KBV37FiOwLJRvOJkOngP7Lq9huXBtxihOTSfsz6Y837odnE7vwHTld3yoqFWY0vtMi2xXqQCF7NjeG+/TFhN9Dyk/cB09A4FLAjcDn5hwecqaa6RwwiAOJLvAxN/bmI=
+	t=1734017618; cv=none; b=ZsDfGONhqKCVhcOOSuSPtX+B3DshSlnsymixVTqvDSYn8AyZaGSqSWyJqXXmuYc+KdWTdnnWqBpQ16Kz0IqZ3nJo28ZJ1WqbgFUe0jb2xMtjXB0yi4GBuONQUqHcYoUprXNYsbOBoUy5bZx7CfNF7rdFPgz69cjuk1F15LNzVuA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734017615; c=relaxed/simple;
-	bh=NNPBH+/z0OUVqEqquSU+rbR2thFAK+48a9yoBfrxlUM=;
+	s=arc-20240116; t=1734017618; c=relaxed/simple;
+	bh=CgcLavHJlRrQqq4fxqtk9AaBHyCCzhREU9yPltuRlH0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dZqnAiqQgITCcjLS5xEob2cc2ZVNvU4NLDqa3jlrsSvSFQlDk7DnST+kHApffY6xXTuxnfxEV0DlWlDaKqQXpmQCGpkHdd6+jJ4dDITUO7YnUyrlvpKUxuN+bhExIxWbGgYkHlQtD0KTBrmQEgSUrmnzaWh1xi156TisqhY8kw0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BKbPa81L; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BG+DoHvIhpbprOp5h7c/kJZOea+1I/taOYFu0otPL+lA+wQJKTbeD2/Whsf/mnsBj2RiwQGtvbMUz3PHpyH3d74iOF8J+02+9pO1cJuWyg6Uqq5KOmo/cN0HWlbiWFL+eo0QrPJDBa5nUmkApU+y4ZKlP2lhdveeUaaUXTc2Tns=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rh2fRy3E; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BKbPa81L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC987C4CED4;
-	Thu, 12 Dec 2024 15:33:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rh2fRy3E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B417C4CED0;
+	Thu, 12 Dec 2024 15:33:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734017615;
-	bh=NNPBH+/z0OUVqEqquSU+rbR2thFAK+48a9yoBfrxlUM=;
+	s=korg; t=1734017618;
+	bh=CgcLavHJlRrQqq4fxqtk9AaBHyCCzhREU9yPltuRlH0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BKbPa81LAepE8zWh36NVth2a2i2b3Fc5+t3qDT5eMsxEKOgI4zUClwO+jQrG4X+dP
-	 1DgJj3wOCAWWcPIjdaHZv6goDNICm5Mko5h0YCMKvNxRqEkDYWu12J2bVCQeL/zdoJ
-	 fcbKoUVe/Jy3aCIhyLgWTC/yoZYfcrux5Gkq1bxY=
+	b=rh2fRy3EuuJcK6IQJScYkDysXy20V+X8bbVWnDcLLwQIEf5QBrkof18bA/yP+ic/l
+	 sgnu0IcXLYEUPgIWeSyCzEl0tGbH/6eJUYHySPkp9s23+at3UCfewPYHDRqPw7W9uD
+	 NEzqrZRtj9O1mC1h+Luvz81Z9UMS0Ns5Q22Z3Vp4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzkaller <syzkaller@googlegroups.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Wen Gu <guwen@linux.alibaba.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 033/356] tipc: Fix use-after-free of kernel socket in cleanup_bearer().
-Date: Thu, 12 Dec 2024 15:55:52 +0100
-Message-ID: <20241212144245.933623218@linuxfoundation.org>
+Subject: [PATCH 6.6 034/356] net/smc: rename some fce to fce_v2x for clarity
+Date: Thu, 12 Dec 2024 15:55:53 +0100
+Message-ID: <20241212144245.972492022@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144244.601729511@linuxfoundation.org>
 References: <20241212144244.601729511@linuxfoundation.org>
@@ -52,105 +51,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Wen Gu <guwen@linux.alibaba.com>
 
-[ Upstream commit 6a2fa13312e51a621f652d522d7e2df7066330b6 ]
+[ Upstream commit ac053a169c71ceb0f25f784fce9ea720455097b4 ]
 
-syzkaller reported a use-after-free of UDP kernel socket
-in cleanup_bearer() without repro. [0][1]
+Rename some functions or variables with 'fce' in their name but used in
+SMCv2.1 as 'fce_v2x' for clarity.
 
-When bearer_disable() calls tipc_udp_disable(), cleanup
-of the UDP kernel socket is deferred by work calling
-cleanup_bearer().
-
-tipc_net_stop() waits for such works to finish by checking
-tipc_net(net)->wq_count.  However, the work decrements the
-count too early before releasing the kernel socket,
-unblocking cleanup_net() and resulting in use-after-free.
-
-Let's move the decrement after releasing the socket in
-cleanup_bearer().
-
-[0]:
-ref_tracker: net notrefcnt@000000009b3d1faf has 1/1 users at
-     sk_alloc+0x438/0x608
-     inet_create+0x4c8/0xcb0
-     __sock_create+0x350/0x6b8
-     sock_create_kern+0x58/0x78
-     udp_sock_create4+0x68/0x398
-     udp_sock_create+0x88/0xc8
-     tipc_udp_enable+0x5e8/0x848
-     __tipc_nl_bearer_enable+0x84c/0xed8
-     tipc_nl_bearer_enable+0x38/0x60
-     genl_family_rcv_msg_doit+0x170/0x248
-     genl_rcv_msg+0x400/0x5b0
-     netlink_rcv_skb+0x1dc/0x398
-     genl_rcv+0x44/0x68
-     netlink_unicast+0x678/0x8b0
-     netlink_sendmsg+0x5e4/0x898
-     ____sys_sendmsg+0x500/0x830
-
-[1]:
-BUG: KMSAN: use-after-free in udp_hashslot include/net/udp.h:85 [inline]
-BUG: KMSAN: use-after-free in udp_lib_unhash+0x3b8/0x930 net/ipv4/udp.c:1979
- udp_hashslot include/net/udp.h:85 [inline]
- udp_lib_unhash+0x3b8/0x930 net/ipv4/udp.c:1979
- sk_common_release+0xaf/0x3f0 net/core/sock.c:3820
- inet_release+0x1e0/0x260 net/ipv4/af_inet.c:437
- inet6_release+0x6f/0xd0 net/ipv6/af_inet6.c:489
- __sock_release net/socket.c:658 [inline]
- sock_release+0xa0/0x210 net/socket.c:686
- cleanup_bearer+0x42d/0x4c0 net/tipc/udp_media.c:819
- process_one_work kernel/workqueue.c:3229 [inline]
- process_scheduled_works+0xcaf/0x1c90 kernel/workqueue.c:3310
- worker_thread+0xf6c/0x1510 kernel/workqueue.c:3391
- kthread+0x531/0x6b0 kernel/kthread.c:389
- ret_from_fork+0x60/0x80 arch/x86/kernel/process.c:147
- ret_from_fork_asm+0x11/0x20 arch/x86/entry/entry_64.S:244
-
-Uninit was created at:
- slab_free_hook mm/slub.c:2269 [inline]
- slab_free mm/slub.c:4580 [inline]
- kmem_cache_free+0x207/0xc40 mm/slub.c:4682
- net_free net/core/net_namespace.c:454 [inline]
- cleanup_net+0x16f2/0x19d0 net/core/net_namespace.c:647
- process_one_work kernel/workqueue.c:3229 [inline]
- process_scheduled_works+0xcaf/0x1c90 kernel/workqueue.c:3310
- worker_thread+0xf6c/0x1510 kernel/workqueue.c:3391
- kthread+0x531/0x6b0 kernel/kthread.c:389
- ret_from_fork+0x60/0x80 arch/x86/kernel/process.c:147
- ret_from_fork_asm+0x11/0x20 arch/x86/entry/entry_64.S:244
-
-CPU: 0 UID: 0 PID: 54 Comm: kworker/0:2 Not tainted 6.12.0-rc1-00131-gf66ebf37d69c #7 91723d6f74857f70725e1583cba3cf4adc716cfa
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.3-0-ga6ed6b701f0a-prebuilt.qemu.org 04/01/2014
-Workqueue: events cleanup_bearer
-
-Fixes: 26abe14379f8 ("net: Modify sk_alloc to not reference count the netns of kernel sockets.")
-Reported-by: syzkaller <syzkaller@googlegroups.com>
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Link: https://patch.msgid.link/20241127050512.28438-1-kuniyu@amazon.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Wen Gu <guwen@linux.alibaba.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: 0541db8ee32c ("net/smc: initialize close_work early to avoid warning")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tipc/udp_media.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/smc/smc_clc.c | 30 ++++++++++++++++--------------
+ 1 file changed, 16 insertions(+), 14 deletions(-)
 
-diff --git a/net/tipc/udp_media.c b/net/tipc/udp_media.c
-index cdc8378261ec3..70a39e29a6352 100644
---- a/net/tipc/udp_media.c
-+++ b/net/tipc/udp_media.c
-@@ -814,10 +814,10 @@ static void cleanup_bearer(struct work_struct *work)
- 		kfree_rcu(rcast, rcu);
- 	}
- 
--	atomic_dec(&tipc_net(sock_net(ub->ubsock->sk))->wq_count);
- 	dst_cache_destroy(&ub->rcast.dst_cache);
- 	udp_tunnel_sock_release(ub->ubsock);
- 	synchronize_net();
-+	atomic_dec(&tipc_net(sock_net(ub->ubsock->sk))->wq_count);
- 	kfree(ub);
+diff --git a/net/smc/smc_clc.c b/net/smc/smc_clc.c
+index 1489a8421d786..b34aff73ada4c 100644
+--- a/net/smc/smc_clc.c
++++ b/net/smc/smc_clc.c
+@@ -428,15 +428,16 @@ smc_clc_msg_decl_valid(struct smc_clc_msg_decline *dclc)
+ 	return true;
  }
  
+-static int smc_clc_fill_fce(struct smc_clc_first_contact_ext_v2x *fce,
+-			    struct smc_init_info *ini)
++static int smc_clc_fill_fce_v2x(struct smc_clc_first_contact_ext_v2x *fce_v2x,
++				struct smc_init_info *ini)
+ {
+-	int ret = sizeof(*fce);
++	int ret = sizeof(*fce_v2x);
+ 
+-	memset(fce, 0, sizeof(*fce));
+-	fce->fce_v2_base.os_type = SMC_CLC_OS_LINUX;
+-	fce->fce_v2_base.release = ini->release_nr;
+-	memcpy(fce->fce_v2_base.hostname, smc_hostname, sizeof(smc_hostname));
++	memset(fce_v2x, 0, sizeof(*fce_v2x));
++	fce_v2x->fce_v2_base.os_type = SMC_CLC_OS_LINUX;
++	fce_v2x->fce_v2_base.release = ini->release_nr;
++	memcpy(fce_v2x->fce_v2_base.hostname,
++	       smc_hostname, sizeof(smc_hostname));
+ 	if (ini->is_smcd && ini->release_nr < SMC_RELEASE_1) {
+ 		ret = sizeof(struct smc_clc_first_contact_ext);
+ 		goto out;
+@@ -444,8 +445,8 @@ static int smc_clc_fill_fce(struct smc_clc_first_contact_ext_v2x *fce,
+ 
+ 	if (ini->release_nr >= SMC_RELEASE_1) {
+ 		if (!ini->is_smcd) {
+-			fce->max_conns = ini->max_conns;
+-			fce->max_links = ini->max_links;
++			fce_v2x->max_conns = ini->max_conns;
++			fce_v2x->max_links = ini->max_links;
+ 		}
+ 	}
+ 
+@@ -1012,8 +1013,8 @@ static int smc_clc_send_confirm_accept(struct smc_sock *smc,
+ 				       int first_contact, u8 version,
+ 				       u8 *eid, struct smc_init_info *ini)
+ {
++	struct smc_clc_first_contact_ext_v2x fce_v2x;
+ 	struct smc_connection *conn = &smc->conn;
+-	struct smc_clc_first_contact_ext_v2x fce;
+ 	struct smcd_dev *smcd = conn->lgr->smcd;
+ 	struct smc_clc_msg_accept_confirm *clc;
+ 	struct smc_clc_fce_gid_ext gle;
+@@ -1045,7 +1046,7 @@ static int smc_clc_send_confirm_accept(struct smc_sock *smc,
+ 				memcpy(clc_v2->d1.eid, eid, SMC_MAX_EID_LEN);
+ 			len = SMCD_CLC_ACCEPT_CONFIRM_LEN_V2;
+ 			if (first_contact) {
+-				fce_len = smc_clc_fill_fce(&fce, ini);
++				fce_len = smc_clc_fill_fce_v2x(&fce_v2x, ini);
+ 				len += fce_len;
+ 			}
+ 			clc_v2->hdr.length = htons(len);
+@@ -1091,9 +1092,10 @@ static int smc_clc_send_confirm_accept(struct smc_sock *smc,
+ 				memcpy(clc_v2->r1.eid, eid, SMC_MAX_EID_LEN);
+ 			len = SMCR_CLC_ACCEPT_CONFIRM_LEN_V2;
+ 			if (first_contact) {
+-				fce_len = smc_clc_fill_fce(&fce, ini);
++				fce_len = smc_clc_fill_fce_v2x(&fce_v2x, ini);
+ 				len += fce_len;
+-				fce.fce_v2_base.v2_direct = !link->lgr->uses_gateway;
++				fce_v2x.fce_v2_base.v2_direct =
++					!link->lgr->uses_gateway;
+ 				if (clc->hdr.type == SMC_CLC_CONFIRM) {
+ 					memset(&gle, 0, sizeof(gle));
+ 					gle.gid_cnt = ini->smcrv2.gidlist.len;
+@@ -1120,7 +1122,7 @@ static int smc_clc_send_confirm_accept(struct smc_sock *smc,
+ 						SMCR_CLC_ACCEPT_CONFIRM_LEN) -
+ 				   sizeof(trl);
+ 	if (version > SMC_V1 && first_contact) {
+-		vec[i].iov_base = &fce;
++		vec[i].iov_base = &fce_v2x;
+ 		vec[i++].iov_len = fce_len;
+ 		if (!conn->lgr->is_smcd) {
+ 			if (clc->hdr.type == SMC_CLC_CONFIRM) {
 -- 
 2.43.0
 
