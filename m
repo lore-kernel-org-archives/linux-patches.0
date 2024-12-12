@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27FAC2135C1;
-	Thu, 12 Dec 2024 15:38:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 665722185A8;
+	Thu, 12 Dec 2024 15:38:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734017919; cv=none; b=SgRRKkDDx1OS7BLCSCADlgt7jQSaE7LI2WmV2IrfqtlIh+Xxhevb52fBT+xv6kBiu/BWt4bBXh9ReXZ3S5Y3uOwIbXCbD5GS7eGZfko5D3KOIr4eL2WcHr4p8oM46G9q/ikUWWWLhw9IWs8r12E0zmRB6wZolrsuE5ZzhapFU5Y=
+	t=1734017922; cv=none; b=n7xnmq3Bi3t+Yvc/+3HgXPZL91hmtRbeVjhCVnHzqsShXw3AHnQ323InMTP1DO2I+irVvNKkdIumXXnX4Y/693tM7/87vIip8cAOmWzW9DKHiMT7szzgHwXUFWwzTfcNd2CFeS9RFjvh8slmyYt50cJMO+w+aBXYTF6Oh1NZQnI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734017919; c=relaxed/simple;
-	bh=09GIPPN9YC2Az21L8J/mjl9yRoeTsShg5o7dAmKAP+E=;
+	s=arc-20240116; t=1734017922; c=relaxed/simple;
+	bh=hCak/1qFm7w8rQZ/BJIWSsonF6trx07v3bhoeNP4Sow=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fo+G3HtAhNhR+pclMP3INS+n83Bsr3zzkxfaLu92glCrEriao7hBcz8xjCHuDpYlJUhoUqQm2b9NFQinbyi0HVWI43sOgoT08N3f1hU7yratCNiGhKOJT+TLa6hE9cC7joZSQ7/SLRItwMpE6zJxX1hrBl/Cap3p3QT+0qppXUE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DASj1/H2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O/Tn7WzSywLL7s0gS/N5TwEOVuREtiskWfbFQO+o99Fw/EEVu7ep73g5Qb1h5JqnP7DmjHhQCdT7eAkp3jHPSBnILjBNBHZg/KuZkWU4tm5sQcbDi2KhCC3MMEqfs1tgG/vrE3xUMSO34h9V3r1VxLkhlrzb2gyGNkf1NpmKfrg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uQ4q4VFE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DASj1/H2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88FD6C4CED0;
-	Thu, 12 Dec 2024 15:38:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uQ4q4VFE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC572C4CECE;
+	Thu, 12 Dec 2024 15:38:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734017919;
-	bh=09GIPPN9YC2Az21L8J/mjl9yRoeTsShg5o7dAmKAP+E=;
+	s=korg; t=1734017922;
+	bh=hCak/1qFm7w8rQZ/BJIWSsonF6trx07v3bhoeNP4Sow=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DASj1/H2eq/DvuXwhWCnzoGBh+HJq8RtbzB7SK8Cp5n8e3sf5wbSG3GwWH1TcvkTd
-	 WrWSzH+KPttTj6XZU8C5siBOBY2HEBQifLNXJTsofXofEBTgCref6XNsS4xr3CA/Y3
-	 UdxHqm+yBwAz3bLj0ijUuIpEPPNPTgMY6iEB25AQ=
+	b=uQ4q4VFEApRIChcBNCseBydyftzCkEn1opqrm107hv2BG841y8tPe1/HXQMqEg8cA
+	 d9s5lpC8WTGMeFWe4UhvknOo9LFTZ3ji4GTKvHSQZB6FxEnb1lI1YanXPwLTUGDZcD
+	 oxzsZ7/LXc6iVaESCYrNND6RQPAKI/OGsmXSeUlA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Will Deacon <will@kernel.org>,
 	Mark Rutland <mark.rutland@arm.com>,
-	Marc Zyngier <maz@kernel.org>,
-	James Morse <james.morse@arm.com>,
+	Will Deacon <will@kernel.org>,
+	Mark Brown <broonie@kernel.org>,
 	Catalin Marinas <catalin.marinas@arm.com>
-Subject: [PATCH 6.6 147/356] arm64: Ensure bits ASID[15:8] are masked out when the kernel uses 8-bit ASIDs
-Date: Thu, 12 Dec 2024 15:57:46 +0100
-Message-ID: <20241212144250.447211980@linuxfoundation.org>
+Subject: [PATCH 6.6 148/356] arm64: ptrace: fix partial SETREGSET for NT_ARM_TAGGED_ADDR_CTRL
+Date: Thu, 12 Dec 2024 15:57:47 +0100
+Message-ID: <20241212144250.486597351@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144244.601729511@linuxfoundation.org>
 References: <20241212144244.601729511@linuxfoundation.org>
@@ -53,59 +52,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Catalin Marinas <catalin.marinas@arm.com>
+From: Mark Rutland <mark.rutland@arm.com>
 
-commit c0900d15d31c2597dd9f634c8be2b71762199890 upstream.
+commit ca62d90085f4af36de745883faab9f8a7cbb45d3 upstream.
 
-Linux currently sets the TCR_EL1.AS bit unconditionally during CPU
-bring-up. On an 8-bit ASID CPU, this is RES0 and ignored, otherwise
-16-bit ASIDs are enabled. However, if running in a VM and the hypervisor
-reports 8-bit ASIDs (ID_AA64MMFR0_EL1.ASIDBits == 0) on a 16-bit ASIDs
-CPU, Linux uses bits 8 to 63 as a generation number for tracking old
-process ASIDs. The bottom 8 bits of this generation end up being written
-to TTBR1_EL1 and also used for the ASID-based TLBI operations as the
-upper 8 bits of the ASID. Following an ASID roll-over event we can have
-threads of the same application with the same 8-bit ASID but different
-generation numbers running on separate CPUs. Both TLB caching and the
-TLBI operations will end up using different actual 16-bit ASIDs for the
-same process.
+Currently tagged_addr_ctrl_set() doesn't initialize the temporary 'ctrl'
+variable, and a SETREGSET call with a length of zero will leave this
+uninitialized. Consequently tagged_addr_ctrl_set() will consume an
+arbitrary value, potentially leaking up to 64 bits of memory from the
+kernel stack. The read is limited to a specific slot on the stack, and
+the issue does not provide a write mechanism.
 
-A similar scenario can happen in a big.LITTLE configuration if the boot
-CPU only uses 8-bit ASIDs while secondary CPUs have 16-bit ASIDs.
+As set_tagged_addr_ctrl() only accepts values where bits [63:4] zero and
+rejects other values, a partial SETREGSET attempt will randomly succeed
+or fail depending on the value of the uninitialized value, and the
+exposure is significantly limited.
 
-Ensure that the ASID generation is only tracked by bits 16 and up,
-leaving bits 15:8 as 0 if the kernel uses 8-bit ASIDs. Note that
-clearing TCR_EL1.AS is not sufficient since the architecture requires
-that the top 8 bits of the ASID passed to TLBI instructions are 0 rather
-than ignored in such configuration.
+Fix this by initializing the temporary value before copying the regset
+from userspace, as for other regsets (e.g. NT_PRSTATUS, NT_PRFPREG,
+NT_ARM_SYSTEM_CALL). In the case of a zero-length write, the existing
+value of the tagged address ctrl will be retained.
 
-Cc: stable@vger.kernel.org
+The NT_ARM_TAGGED_ADDR_CTRL regset is only visible in the
+user_aarch64_view used by a native AArch64 task to manipulate another
+native AArch64 task. As get_tagged_addr_ctrl() only returns an error
+value when called for a compat task, tagged_addr_ctrl_get() and
+tagged_addr_ctrl_set() should never observe an error value from
+get_tagged_addr_ctrl(). Add a WARN_ON_ONCE() to both to indicate that
+such an error would be unexpected, and error handlnig is not missing in
+either case.
+
+Fixes: 2200aa7154cb ("arm64: mte: ptrace: Add NT_ARM_TAGGED_ADDR_CTRL regset")
+Cc: <stable@vger.kernel.org> # 5.10.x
+Signed-off-by: Mark Rutland <mark.rutland@arm.com>
 Cc: Will Deacon <will@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Marc Zyngier <maz@kernel.org>
-Cc: James Morse <james.morse@arm.com>
-Acked-by: Mark Rutland <mark.rutland@arm.com>
-Acked-by: Marc Zyngier <maz@kernel.org>
-Link: https://lore.kernel.org/r/20241203151941.353796-1-catalin.marinas@arm.com
+Reviewed-by: Mark Brown <broonie@kernel.org>
+Link: https://lore.kernel.org/r/20241205121655.1824269-2-mark.rutland@arm.com
 Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/mm/context.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm64/kernel/ptrace.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/arch/arm64/mm/context.c
-+++ b/arch/arm64/mm/context.c
-@@ -32,9 +32,9 @@ static unsigned long nr_pinned_asids;
- static unsigned long *pinned_asid_map;
+--- a/arch/arm64/kernel/ptrace.c
++++ b/arch/arm64/kernel/ptrace.c
+@@ -1385,7 +1385,7 @@ static int tagged_addr_ctrl_get(struct t
+ {
+ 	long ctrl = get_tagged_addr_ctrl(target);
  
- #define ASID_MASK		(~GENMASK(asid_bits - 1, 0))
--#define ASID_FIRST_VERSION	(1UL << asid_bits)
-+#define ASID_FIRST_VERSION	(1UL << 16)
+-	if (IS_ERR_VALUE(ctrl))
++	if (WARN_ON_ONCE(IS_ERR_VALUE(ctrl)))
+ 		return ctrl;
  
--#define NUM_USER_ASIDS		ASID_FIRST_VERSION
-+#define NUM_USER_ASIDS		(1UL << asid_bits)
- #define ctxid2asid(asid)	((asid) & ~ASID_MASK)
- #define asid2ctxid(asid, genid)	((asid) | (genid))
+ 	return membuf_write(&to, &ctrl, sizeof(ctrl));
+@@ -1399,6 +1399,10 @@ static int tagged_addr_ctrl_set(struct t
+ 	int ret;
+ 	long ctrl;
  
++	ctrl = get_tagged_addr_ctrl(target);
++	if (WARN_ON_ONCE(IS_ERR_VALUE(ctrl)))
++		return ctrl;
++
+ 	ret = user_regset_copyin(&pos, &count, &kbuf, &ubuf, &ctrl, 0, -1);
+ 	if (ret)
+ 		return ret;
 
 
