@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D84EE6F2FE;
-	Thu, 12 Dec 2024 15:38:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A40A26F2FE;
+	Thu, 12 Dec 2024 15:38:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734017929; cv=none; b=hpDKm9SqdmYfgkLKrnXRlIH3IZ+0MTCQCEyb3/ZGsBkcIjLbZtSkXDAYF0p+zCNfoxj69ULoAy7nPDL1Zbr7bTWvO1ntP1h+9Acw7VyQg0NjXqDqyHVR6QhHv40uMTHiOMubEMxNP62a5xDBRe7iQnXivAwMhOP159Z3kzn9SIU=
+	t=1734017932; cv=none; b=WXhGS2lnauDW+JM/apV+ral3aWsC6I25L+fxfe89tlNCw+D0b+PNKKiEBhS0vAddG5hQAjVORc9AXmkm+yR6BkdJIISdU+K+7zaHM7RByG+Suog+ixTu4+Iv46UjkFExgd1kGxx756bePuZpq28NjjIoUPwnqIysXFsUsGcuJ24=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734017929; c=relaxed/simple;
-	bh=EaWfMEtfgPy+PxjzgD7EkdHEiRMJ3uhpq/14rjDxi6k=;
+	s=arc-20240116; t=1734017932; c=relaxed/simple;
+	bh=G1X4aMz4gtAKz7xfWD3BvZ1k+OUSaYdXi3mRWBw2Ke0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K8WRnfu0rnXMeJAQaDhrTCunLu/BMu65QGCN2Tf3Map2mhE8w6ivd4JOU8Eplc5kuACVzLRPjzGR+SO3ecmL1bfY18/38erMpwVx1zexO/45uuOEMZuSRKK0W8EuRSbQheH7jxHngX7Jo09Xgzxc5tnaxH9swIO1B7HvFwLaE1c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m2bkfZTZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=C1kD6KpKD9xOandZtGjyofvmU6b4hJfKqNsBMQvwYq8PeAt1jRAktQ05Zn3WmeEW8tL/aSnGCpkp8OsdScLYYYwQ0wBMoFHEk9Xk87AXgKQDZH8S0/bo05Kq1ud9XVSP9Rge16GwfHCr7LqQDy/MpGGET270ktRt4IkjRgoDPx0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cdYOqO+J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m2bkfZTZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46D96C4CECE;
-	Thu, 12 Dec 2024 15:38:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cdYOqO+J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11E49C4CECE;
+	Thu, 12 Dec 2024 15:38:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734017928;
-	bh=EaWfMEtfgPy+PxjzgD7EkdHEiRMJ3uhpq/14rjDxi6k=;
+	s=korg; t=1734017932;
+	bh=G1X4aMz4gtAKz7xfWD3BvZ1k+OUSaYdXi3mRWBw2Ke0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m2bkfZTZebOT/KR0anNojrJyMVI/UtGdesgnRq08HDVwJHvwDNe+VcGc4rT7mQE47
-	 Uz5JxvYlhhbIW9o6gB9ExhxvFmcod28Y4K6rcKNYF++tJDGXyLU27Zvx4N4PUKbpQJ
-	 73JHA3oL9RctIE5bC0b9Nch3+626n/dzY7wViW0Y=
+	b=cdYOqO+JFvOkYrJmfTQ5w/f1Xhrrib1HMNQWwlIfeKzvLbHbcdpf1E/xqTYn5Bj5T
+	 oKAJneV/uCo4QG7hDJa6osvNzjEX6GWzhaTbXJf1dgk7LR16+60fNVxX1NRUsgH5jh
+	 /J5PUFy/5P/rNW9Z7y/8CINEduWfUTurCX5cvE5A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nazar Bilinskyi <nbilinskyi@gmail.com>,
+	Sahas Leelodharry <sahas.leelodharry@mail.mcgill.ca>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.6 150/356] ALSA: hda/realtek: Enable mute and micmute LED on HP ProBook 430 G8
-Date: Thu, 12 Dec 2024 15:57:49 +0100
-Message-ID: <20241212144250.567571517@linuxfoundation.org>
+Subject: [PATCH 6.6 151/356] ALSA: hda/realtek: Add support for Samsung Galaxy Book3 360 (NP730QFG)
+Date: Thu, 12 Dec 2024 15:57:50 +0100
+Message-ID: <20241212144250.606508521@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144244.601729511@linuxfoundation.org>
 References: <20241212144244.601729511@linuxfoundation.org>
@@ -50,16 +50,21 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nazar Bilinskyi <nbilinskyi@gmail.com>
+From: Sahas Leelodharry <sahas.leelodharry@mail.mcgill.ca>
 
-commit 3a83f7baf1346aca885cb83cb888e835fef7c472 upstream.
+commit e2974a220594c06f536e65dfd7b2447e0e83a1cb upstream.
 
-HP ProBook 430 G8 has a mute and micmute LEDs that can be made to work
-using quirk ALC236_FIXUP_HP_GPIO_LED. Enable already existing quirk.
+Fixes the 3.5mm headphone jack on the Samsung Galaxy Book 3 360
+NP730QFG laptop.
+Unlike the other Galaxy Book3 series devices, this device only needs
+the ALC298_FIXUP_SAMSUNG_HEADPHONE_VERY_QUIET quirk.
+Verified changes on the device and compared with codec state in Windows.
 
-Signed-off-by: Nazar Bilinskyi <nbilinskyi@gmail.com>
+[ white-space fixes by tiwai ]
+
+Signed-off-by: Sahas Leelodharry <sahas.leelodharry@mail.mcgill.ca>
 Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20241130231631.8929-1-nbilinskyi@gmail.com
+Link: https://patch.msgid.link/QB1PR01MB40047D4CC1282DB7F1333124CC352@QB1PR01MB4004.CANPRD01.PROD.OUTLOOK.COM
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
@@ -68,13 +73,13 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
 --- a/sound/pci/hda/patch_realtek.c
 +++ b/sound/pci/hda/patch_realtek.c
-@@ -9922,6 +9922,7 @@ static const struct snd_pci_quirk alc269
- 	SND_PCI_QUIRK(0x103c, 0x87b7, "HP Laptop 14-fq0xxx", ALC236_FIXUP_HP_MUTE_LED_COEFBIT2),
- 	SND_PCI_QUIRK(0x103c, 0x87c8, "HP", ALC287_FIXUP_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x87d3, "HP Laptop 15-gw0xxx", ALC236_FIXUP_HP_MUTE_LED_COEFBIT2),
-+	SND_PCI_QUIRK(0x103c, 0x87df, "HP ProBook 430 G8 Notebook PC", ALC236_FIXUP_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x87e5, "HP ProBook 440 G8 Notebook PC", ALC236_FIXUP_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x87e7, "HP ProBook 450 G8 Notebook PC", ALC236_FIXUP_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x87f1, "HP ProBook 630 G8 Notebook PC", ALC236_FIXUP_HP_GPIO_LED),
+@@ -10180,6 +10180,7 @@ static const struct snd_pci_quirk alc269
+ 	SND_PCI_QUIRK(0x144d, 0xc830, "Samsung Galaxy Book Ion (NT950XCJ-X716A)", ALC298_FIXUP_SAMSUNG_AMP),
+ 	SND_PCI_QUIRK(0x144d, 0xc832, "Samsung Galaxy Book Flex Alpha (NP730QCJ)", ALC256_FIXUP_SAMSUNG_HEADPHONE_VERY_QUIET),
+ 	SND_PCI_QUIRK(0x144d, 0xca03, "Samsung Galaxy Book2 Pro 360 (NP930QED)", ALC298_FIXUP_SAMSUNG_AMP),
++	SND_PCI_QUIRK(0x144d, 0xca06, "Samsung Galaxy Book3 360 (NP730QFG)", ALC298_FIXUP_SAMSUNG_HEADPHONE_VERY_QUIET),
+ 	SND_PCI_QUIRK(0x144d, 0xc868, "Samsung Galaxy Book2 Pro (NP930XED)", ALC298_FIXUP_SAMSUNG_AMP),
+ 	SND_PCI_QUIRK(0x1458, 0xfa53, "Gigabyte BXBT-2807", ALC283_FIXUP_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x1462, 0xb120, "MSI Cubi MS-B120", ALC283_FIXUP_HEADSET_MIC),
 
 
