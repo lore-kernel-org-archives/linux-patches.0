@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 982EC1537C8;
-	Thu, 12 Dec 2024 15:20:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0164C2EAE5;
+	Thu, 12 Dec 2024 15:20:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734016834; cv=none; b=HUgY4rmXSTjiqxQYHxMw6O1XZWAVyha08rLIUwVVOqCTXAPWz/UvOCa0W6SQlD9ny7ULvPSuFNBxsS2UJLQLOHpHR/wPUM7pxD+pV/PbPg9KO5CoYOjI4Fuyle6IwBgfH8fMBg9jhDbjv2bkTtrYsQ9Wm0LhLFwBqeP6pR62dCI=
+	t=1734016838; cv=none; b=n1biQOfjadRieK4V8dB7Sf/6GJjtzAQJAkQqzbU+iXeY4Txmc70tYajZ18ppc+2XLJM/yDsQPXiT6iOSlA4k6KKjkL8yh3H9tIFlg1+9SoehLC+urz05ffSqvRY/sk2/FjeZ4mCrB1u/pVkRjnC1XoYCZIRcEXg0LNnOO8OcBRE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734016834; c=relaxed/simple;
-	bh=epHdGEASkMmKwlMes/M/cbqWIhKkmhTQXnzA3j7YNGQ=;
+	s=arc-20240116; t=1734016838; c=relaxed/simple;
+	bh=bsIxLEq6nE+t/wm2Fpm1r5BW4phWYlGn5zPkLYi6RN4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SetmKCEkmLh4DtPckWUBxLnElwK6z85Kh5sIVk3o2ixQSOaWGoefW8Ft3CdnOnQu9nsnhu3AysApCsV+xJBsCNj5LzYncXgPC3hg51q+OvjqQA1MiqIusNt+ejAH3mY1z4xWLohMWIUYhRFgW/Jy6BvpdNkD1K5WIfmK4BIjWKk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YpozNx6X; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mnn/DCs0BTIL2RAn7XmWJAfV3ID329FegiNLR+UQ0gKKOZZjmGrcRv0jgXCJGBwmrCQGLfsTNENyJk8VS2x5VI6t6vyOViQvrMOF8PtO/xmSA2VZwfrNign8z5Qyrf0MX1Q+98PBTNUo5vGSaveDYLV8zyBSs08luNqhOapLCmE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dw3WD7e1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YpozNx6X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9FADC4CECE;
-	Thu, 12 Dec 2024 15:20:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dw3WD7e1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63289C4CECE;
+	Thu, 12 Dec 2024 15:20:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734016834;
-	bh=epHdGEASkMmKwlMes/M/cbqWIhKkmhTQXnzA3j7YNGQ=;
+	s=korg; t=1734016837;
+	bh=bsIxLEq6nE+t/wm2Fpm1r5BW4phWYlGn5zPkLYi6RN4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YpozNx6X13OPCE8ESMjsbvXcW2tA9+EY6n0Ni4u6Ziwnfvl1/ti+S6YN69eCvjvHW
-	 8qzDaQaai2sr0mLXqIWquwkg+CSEGuRKPPL4i9s8mYcF82Nf/5RHGe3CeUlLJeYLDM
-	 4Pf1drLWurHcm3f+YBr5LF10sC1e/eUpr9wv3mmY=
+	b=Dw3WD7e1C7W3Mqf3kcl8a8k3EQSpr3N2DRB14O4l8lcHSctysm5Fp4C+GbmzCdTtJ
+	 brTziMhJ72tVxqo3zZIxNciU/s3UKqaJ3gDedxwLgce4ZV8FrbBDGhV8Pj2fQ7x3g4
+	 ipBg15WLO38gr6g9rlTIPHQ3IGL5MdWzj3Pdt8q0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ignat Korchagin <ignat@cloudflare.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Victor Lu <victorchengchi.lu@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 292/466] net: inet: do not leave a dangling sk pointer in inet_create()
-Date: Thu, 12 Dec 2024 15:57:41 +0100
-Message-ID: <20241212144318.323045870@linuxfoundation.org>
+Subject: [PATCH 6.12 310/466] drm/amdgpu: clear RB_OVERFLOW bit when enabling interrupts for vega20_ih
+Date: Thu, 12 Dec 2024 15:57:59 +0100
+Message-ID: <20241212144319.028152297@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144306.641051666@linuxfoundation.org>
 References: <20241212144306.641051666@linuxfoundation.org>
@@ -53,74 +51,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ignat Korchagin <ignat@cloudflare.com>
+From: Victor Lu <victorchengchi.lu@amd.com>
 
-[ Upstream commit 9365fa510c6f82e3aa550a09d0c5c6b44dbc78ff ]
+[ Upstream commit 8b22f048331dfd45fdfbf0efdfb1d43deff7518d ]
 
-sock_init_data() attaches the allocated sk object to the provided sock
-object. If inet_create() fails later, the sk object is freed, but the
-sock object retains the dangling pointer, which may create use-after-free
-later.
+Port this change to vega20_ih.c:
+commit afbf7955ff01 ("drm/amdgpu: clear RB_OVERFLOW bit when enabling interrupts")
 
-Clear the sk pointer in the sock object on error.
+Original commit message:
+"Why:
+Setting IH_RB_WPTR register to 0 will not clear the RB_OVERFLOW bit
+if RB_ENABLE is not set.
 
-Signed-off-by: Ignat Korchagin <ignat@cloudflare.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20241014153808.51894-7-ignat@cloudflare.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+How to fix:
+Set WPTR_OVERFLOW_CLEAR bit after RB_ENABLE bit is set.
+The RB_ENABLE bit is required to be set, together with
+WPTR_OVERFLOW_ENABLE bit so that setting WPTR_OVERFLOW_CLEAR bit
+would clear the RB_OVERFLOW."
+
+Signed-off-by: Victor Lu <victorchengchi.lu@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/af_inet.c | 22 ++++++++++------------
- 1 file changed, 10 insertions(+), 12 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/vega20_ih.c | 27 ++++++++++++++++++++++++++
+ 1 file changed, 27 insertions(+)
 
-diff --git a/net/ipv4/af_inet.c b/net/ipv4/af_inet.c
-index b24d74616637a..8095e82de8083 100644
---- a/net/ipv4/af_inet.c
-+++ b/net/ipv4/af_inet.c
-@@ -376,32 +376,30 @@ static int inet_create(struct net *net, struct socket *sock, int protocol,
- 		inet->inet_sport = htons(inet->inet_num);
- 		/* Add to protocol hash chains. */
- 		err = sk->sk_prot->hash(sk);
--		if (err) {
--			sk_common_release(sk);
--			goto out;
--		}
-+		if (err)
-+			goto out_sk_release;
- 	}
+diff --git a/drivers/gpu/drm/amd/amdgpu/vega20_ih.c b/drivers/gpu/drm/amd/amdgpu/vega20_ih.c
+index ac439f0565e35..16f5561fb86ec 100644
+--- a/drivers/gpu/drm/amd/amdgpu/vega20_ih.c
++++ b/drivers/gpu/drm/amd/amdgpu/vega20_ih.c
+@@ -114,6 +114,33 @@ static int vega20_ih_toggle_ring_interrupts(struct amdgpu_device *adev,
+ 	tmp = REG_SET_FIELD(tmp, IH_RB_CNTL, RB_ENABLE, (enable ? 1 : 0));
+ 	tmp = REG_SET_FIELD(tmp, IH_RB_CNTL, RB_GPU_TS_ENABLE, 1);
  
- 	if (sk->sk_prot->init) {
- 		err = sk->sk_prot->init(sk);
--		if (err) {
--			sk_common_release(sk);
--			goto out;
--		}
-+		if (err)
-+			goto out_sk_release;
- 	}
- 
- 	if (!kern) {
- 		err = BPF_CGROUP_RUN_PROG_INET_SOCK(sk);
--		if (err) {
--			sk_common_release(sk);
--			goto out;
--		}
-+		if (err)
-+			goto out_sk_release;
- 	}
- out:
- 	return err;
- out_rcu_unlock:
- 	rcu_read_unlock();
- 	goto out;
-+out_sk_release:
-+	sk_common_release(sk);
-+	sock->sk = NULL;
-+	goto out;
- }
- 
- 
++	if (enable) {
++		/* Unset the CLEAR_OVERFLOW bit to make sure the next step
++		 * is switching the bit from 0 to 1
++		 */
++		tmp = REG_SET_FIELD(tmp, IH_RB_CNTL, WPTR_OVERFLOW_CLEAR, 0);
++		if (amdgpu_sriov_vf(adev) && amdgpu_sriov_reg_indirect_ih(adev)) {
++			if (psp_reg_program(&adev->psp, ih_regs->psp_reg_id, tmp))
++				return -ETIMEDOUT;
++		} else {
++			WREG32_NO_KIQ(ih_regs->ih_rb_cntl, tmp);
++		}
++
++		/* Clear RB_OVERFLOW bit */
++		tmp = REG_SET_FIELD(tmp, IH_RB_CNTL, WPTR_OVERFLOW_CLEAR, 1);
++		if (amdgpu_sriov_vf(adev) && amdgpu_sriov_reg_indirect_ih(adev)) {
++			if (psp_reg_program(&adev->psp, ih_regs->psp_reg_id, tmp))
++				return -ETIMEDOUT;
++		} else {
++			WREG32_NO_KIQ(ih_regs->ih_rb_cntl, tmp);
++		}
++
++		/* Unset the CLEAR_OVERFLOW bit immediately so new overflows
++		 * can be detected.
++		 */
++		tmp = REG_SET_FIELD(tmp, IH_RB_CNTL, WPTR_OVERFLOW_CLEAR, 0);
++	}
++
+ 	/* enable_intr field is only valid in ring0 */
+ 	if (ih == &adev->irq.ih)
+ 		tmp = REG_SET_FIELD(tmp, IH_RB_CNTL, ENABLE_INTR, (enable ? 1 : 0));
 -- 
 2.43.0
 
