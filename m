@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08DFB4F218;
-	Thu, 12 Dec 2024 15:34:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C86DE217670;
+	Thu, 12 Dec 2024 15:34:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734017658; cv=none; b=k5n+y2Uz2ljCqGJcM0RLZOuxLwafn2D0As6l1RymBRgvFT9aSISAdMNUNTXw7winMJFXIH0UcRBCPP7u6/X/Ik49AGrufRRsurfQRIv05fwbwUNf2DJejAsv10O4Tny/dZojHzafuSg1atwjpVQjjKC/TJ+2bjU0LMCs0NQD5CU=
+	t=1734017661; cv=none; b=FIjs2ZMMRRgSFQzgi0fXPmuk5mS7ksZFim9Egkrui2EzUEF8WXoTn8W1RhPPq1tgIHDpu0VaSLjtuvk92fii2fmdQKtOxHgZ50r3YKGIpOWwKoSIbVRHwUzRwjH92rUC8sHNcJmsCYdDPL9XXh0972txrJFx7MKUvvW6VZTICOA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734017658; c=relaxed/simple;
-	bh=JWKkrGywqFocVhK7AiOt+ybllWMiq8uyw3uJAZ74t90=;
+	s=arc-20240116; t=1734017661; c=relaxed/simple;
+	bh=NIRMlwkb6yruWEuK9p/P2Wg1+dFIjz6cYpQretMHEzM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MG7xomah28wYIbyHHLcXGWAV5jqJvCSPQyoz5QIsGjoQncBKIte1XT/X37fLVQuqynvG9YGaT79t1dg9O0JWQtDMhUln9qg4rhKcd2UpF6/lZEPKZOsYG1hb2ldi2McKPlV3m8DNNzc0M3bSyvhceO2hsty1hAQlwMcth1eszAo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eYYwfI1U; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TYjpN0KlttCy5LHjqWsH0W8nI39Govt5jwkRzKpXzTJx51IuKsd4CAUjkdSbgAELuXXsvFsrup166wi9agspadS+4Jn0ZVgCpCiZdBqUuahJ3LbeUaDEdxr45nOUNJlScs+JKRBdKLpDua5lUJCaixat4E97hnVhdO8jzePEO4s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SseH0ulp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eYYwfI1U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AD21C4CECE;
-	Thu, 12 Dec 2024 15:34:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SseH0ulp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1CBEC4CECE;
+	Thu, 12 Dec 2024 15:34:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734017657;
-	bh=JWKkrGywqFocVhK7AiOt+ybllWMiq8uyw3uJAZ74t90=;
+	s=korg; t=1734017661;
+	bh=NIRMlwkb6yruWEuK9p/P2Wg1+dFIjz6cYpQretMHEzM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eYYwfI1Uqut0Fb8ZPua2GpCPJ3rXzYVK3uyhF9nBR+gfx0+pWjhX/89sLdlhNAlNZ
-	 r3K3uLxG0+dCmi2enwitIwSKhZ8PoNzCD9OwqsOkUPvTtd75pVnh7uv7JySwGzAJJT
-	 WN3JH4tyk+ZpSursI4vVew/q1dlB/J1k9U6MenII=
+	b=SseH0ulpTLaxAiFP5pCAZi2Gt+8aTWhgzUreVTxvEw2Hlee5Nl5NBSCo1r2HLu5IB
+	 xIUZYZSjNbKFOex4jpIT+XF92+ArT+54rZHrJIaD9MsXyyesUIagZ+ZA+9yxarNoG/
+	 2SO9D0vSX3VWKXRnIUipljoY50aXwMpcxe3TBMi0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Herve Codina <herve.codina@bootlin.com>,
 	Christophe Leroy <christophe.leroy@csgroup.eu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 075/356] soc: fsl: cpm1: qmc: Fix blank line and spaces
-Date: Thu, 12 Dec 2024 15:56:34 +0100
-Message-ID: <20241212144247.591135851@linuxfoundation.org>
+Subject: [PATCH 6.6 076/356] soc: fsl: cpm1: qmc: Re-order probe() operations
+Date: Thu, 12 Dec 2024 15:56:35 +0100
+Message-ID: <20241212144247.628640653@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144244.601729511@linuxfoundation.org>
 References: <20241212144244.601729511@linuxfoundation.org>
@@ -53,80 +53,139 @@ Content-Transfer-Encoding: 8bit
 
 From: Herve Codina <herve.codina@bootlin.com>
 
-[ Upstream commit f06ab938bcddcb3c3a0b458b03a827c701919c9e ]
+[ Upstream commit a13bf605342ea9df492b8159cadaa41862b53e15 ]
 
-checkpatch.pl raises the following issues
-  CHECK: Please don't use multiple blank lines
-  CHECK: Alignment should match open parenthesis
+Current code handles CPM1 version of QMC. In the QUICC Engine (QE)
+version, some operations done at probe() need to be done in a different
+order.
 
-Fix them.
+In order to prepare the support for the QE version, changed the sequence
+of operation done at probe():
+- Retrieve the tsa_serial earlier, before initializing resources.
+- Group SCC initialisation and do this initialization when it is really
+  needed in the probe() sequence.
+
+Having the QE compatible sequence in the CPM1 version does not lead to
+any issue and works correctly without any regressions.
 
 Signed-off-by: Herve Codina <herve.codina@bootlin.com>
 Reviewed-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Link: https://lore.kernel.org/r/20240808071132.149251-20-herve.codina@bootlin.com
+Link: https://lore.kernel.org/r/20240808071132.149251-26-herve.codina@bootlin.com
 Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
 Stable-dep-of: cb3daa51db81 ("soc: fsl: cpm1: qmc: Set the ret error code on platform_get_irq() failure")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/fsl/qe/qmc.c | 10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+ drivers/soc/fsl/qe/qmc.c | 54 +++++++++++++++++++---------------------
+ 1 file changed, 26 insertions(+), 28 deletions(-)
 
 diff --git a/drivers/soc/fsl/qe/qmc.c b/drivers/soc/fsl/qe/qmc.c
-index 2312152a44b3e..f22d1d85d1021 100644
+index f22d1d85d1021..a5c9cbb99600e 100644
 --- a/drivers/soc/fsl/qe/qmc.c
 +++ b/drivers/soc/fsl/qe/qmc.c
-@@ -253,7 +253,6 @@ static inline void qmc_setbits32(void __iomem *addr, u32 set)
- 	qmc_write32(addr, qmc_read32(addr) | set);
- }
+@@ -1281,6 +1281,12 @@ static int qmc_probe(struct platform_device *pdev)
+ 	qmc->dev = &pdev->dev;
+ 	INIT_LIST_HEAD(&qmc->chan_head);
  
--
- int qmc_chan_get_info(struct qmc_chan *chan, struct qmc_chan_info *info)
- {
- 	struct tsa_serial_info tsa_info;
-@@ -1093,7 +1092,7 @@ static int qmc_setup_chan(struct qmc *qmc, struct qmc_chan *chan)
- 		qmc_write32(chan->s_param + QMC_SPE_ZDSTATE, 0x00000080);
- 		qmc_write16(chan->s_param + QMC_SPE_MFLR, 60);
- 		qmc_write16(chan->s_param + QMC_SPE_CHAMR,
--			QMC_SPE_CHAMR_MODE_HDLC | QMC_SPE_CHAMR_HDLC_IDLM);
-+			    QMC_SPE_CHAMR_MODE_HDLC | QMC_SPE_CHAMR_HDLC_IDLM);
- 	}
- 
- 	/* Do not enable interrupts now. They will be enabled later */
-@@ -1286,7 +1285,6 @@ static int qmc_probe(struct platform_device *pdev)
++	qmc->tsa_serial = devm_tsa_serial_get_byphandle(qmc->dev, np, "fsl,tsa-serial");
++	if (IS_ERR(qmc->tsa_serial)) {
++		return dev_err_probe(qmc->dev, PTR_ERR(qmc->tsa_serial),
++				     "Failed to get TSA serial\n");
++	}
++
+ 	qmc->scc_regs = devm_platform_ioremap_resource_byname(pdev, "scc_regs");
  	if (IS_ERR(qmc->scc_regs))
  		return PTR_ERR(qmc->scc_regs);
+@@ -1297,33 +1303,13 @@ static int qmc_probe(struct platform_device *pdev)
+ 	if (IS_ERR(qmc->dpram))
+ 		return PTR_ERR(qmc->dpram);
  
+-	qmc->tsa_serial = devm_tsa_serial_get_byphandle(qmc->dev, np, "fsl,tsa-serial");
+-	if (IS_ERR(qmc->tsa_serial)) {
+-		return dev_err_probe(qmc->dev, PTR_ERR(qmc->tsa_serial),
+-				     "Failed to get TSA serial\n");
+-	}
 -
- 	res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "scc_pram");
- 	if (!res)
- 		return -EINVAL;
-@@ -1332,7 +1330,7 @@ static int qmc_probe(struct platform_device *pdev)
- 	 */
- 	qmc->bd_size = (nb_chans * (QMC_NB_TXBDS + QMC_NB_RXBDS)) * sizeof(cbd_t);
- 	qmc->bd_table = dmam_alloc_coherent(qmc->dev, qmc->bd_size,
--		&qmc->bd_dma_addr, GFP_KERNEL);
-+					    &qmc->bd_dma_addr, GFP_KERNEL);
+-	/* Connect the serial (SCC) to TSA */
+-	ret = tsa_serial_connect(qmc->tsa_serial);
+-	if (ret) {
+-		dev_err(qmc->dev, "Failed to connect TSA serial\n");
+-		return ret;
+-	}
+-
+ 	/* Parse channels informationss */
+ 	ret = qmc_of_parse_chans(qmc, np);
+ 	if (ret)
+-		goto err_tsa_serial_disconnect;
++		return ret;
+ 
+ 	nb_chans = qmc_nb_chans(qmc);
+ 
+-	/* Init GMSR_H and GMSR_L registers */
+-	qmc_write32(qmc->scc_regs + SCC_GSMRH,
+-		    SCC_GSMRH_CDS | SCC_GSMRH_CTSS | SCC_GSMRH_CDP | SCC_GSMRH_CTSP);
+-
+-	/* enable QMC mode */
+-	qmc_write32(qmc->scc_regs + SCC_GSMRL, SCC_GSMRL_MODE_QMC);
+-
+ 	/*
+ 	 * Allocate the buffer descriptor table
+ 	 * 8 rx and 8 tx descriptors per channel
+@@ -1333,8 +1319,7 @@ static int qmc_probe(struct platform_device *pdev)
+ 					    &qmc->bd_dma_addr, GFP_KERNEL);
  	if (!qmc->bd_table) {
  		dev_err(qmc->dev, "Failed to allocate bd table\n");
- 		ret = -ENOMEM;
-@@ -1345,7 +1343,7 @@ static int qmc_probe(struct platform_device *pdev)
- 	/* Allocate the interrupt table */
- 	qmc->int_size = QMC_NB_INTS * sizeof(u16);
- 	qmc->int_table = dmam_alloc_coherent(qmc->dev, qmc->int_size,
--		&qmc->int_dma_addr, GFP_KERNEL);
-+					     &qmc->int_dma_addr, GFP_KERNEL);
+-		ret = -ENOMEM;
+-		goto err_tsa_serial_disconnect;
++		return -ENOMEM;
+ 	}
+ 	memset(qmc->bd_table, 0, qmc->bd_size);
+ 
+@@ -1346,8 +1331,7 @@ static int qmc_probe(struct platform_device *pdev)
+ 					     &qmc->int_dma_addr, GFP_KERNEL);
  	if (!qmc->int_table) {
  		dev_err(qmc->dev, "Failed to allocate interrupt table\n");
- 		ret = -ENOMEM;
-@@ -1393,7 +1391,7 @@ static int qmc_probe(struct platform_device *pdev)
+-		ret = -ENOMEM;
+-		goto err_tsa_serial_disconnect;
++		return -ENOMEM;
+ 	}
+ 	memset(qmc->int_table, 0, qmc->int_size);
  
- 	/* Enable interrupts */
- 	qmc_write16(qmc->scc_regs + SCC_SCCM,
--		SCC_SCCE_IQOV | SCC_SCCE_GINT | SCC_SCCE_GUN | SCC_SCCE_GOV);
-+		    SCC_SCCE_IQOV | SCC_SCCE_GINT | SCC_SCCE_GUN | SCC_SCCE_GOV);
+@@ -1366,18 +1350,32 @@ static int qmc_probe(struct platform_device *pdev)
  
- 	ret = qmc_finalize_chans(qmc);
- 	if (ret < 0)
+ 	ret = qmc_setup_tsa(qmc);
+ 	if (ret)
+-		goto err_tsa_serial_disconnect;
++		return ret;
+ 
+ 	qmc_write16(qmc->scc_pram + QMC_GBL_QMCSTATE, 0x8000);
+ 
+ 	ret = qmc_setup_chans(qmc);
+ 	if (ret)
+-		goto err_tsa_serial_disconnect;
++		return ret;
+ 
+ 	/* Init interrupts table */
+ 	ret = qmc_setup_ints(qmc);
+ 	if (ret)
+-		goto err_tsa_serial_disconnect;
++		return ret;
++
++	/* Connect the serial (SCC) to TSA */
++	ret = tsa_serial_connect(qmc->tsa_serial);
++	if (ret) {
++		dev_err(qmc->dev, "Failed to connect TSA serial\n");
++		return ret;
++	}
++
++	/* Init GMSR_H and GMSR_L registers */
++	qmc_write32(qmc->scc_regs + SCC_GSMRH,
++		    SCC_GSMRH_CDS | SCC_GSMRH_CTSS | SCC_GSMRH_CDP | SCC_GSMRH_CTSP);
++
++	/* enable QMC mode */
++	qmc_write32(qmc->scc_regs + SCC_GSMRL, SCC_GSMRL_MODE_QMC);
+ 
+ 	/* Disable and clear interrupts,  set the irq handler */
+ 	qmc_write16(qmc->scc_regs + SCC_SCCM, 0x0000);
 -- 
 2.43.0
 
