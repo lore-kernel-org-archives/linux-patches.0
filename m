@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A03413792B;
-	Thu, 12 Dec 2024 16:57:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D401222D72;
+	Thu, 12 Dec 2024 16:57:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734022634; cv=none; b=GwpoWmKzkBSY1GvFGSvuZlePdiBHxvkxsJAnOQqBueXfr0VRyMvUVsX30wjppAvGFU2LfyhlYkOhuP1CegzwykFFUdDZoUZl+3RFDbXujK0+GzaSLNlRRvCmEn9JU7JLtG+YZ46efT/9Oulrsg0gQoijT8N18Vunu+dtKZ+AtL8=
+	t=1734022641; cv=none; b=ORho0IkY3dqcsKlwwRv8c5MEOhWlfZ/P6tiHugyKdyppSWdwsMObJH8s5CG4QnkzAXd3k0K8LsX/49+814L71sQEKHtZYZGhsVp1iYJJJUyRIFfZz9aTtPH52Qzc7JLb0rs50/czPb90H1sxrM5K0AyZlZDK40ccIrnsqAcBVA0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734022634; c=relaxed/simple;
-	bh=fgf4LDeHI0CLEmkkRbSmnniiJuoxfd/Vr2jdszO/ewU=;
+	s=arc-20240116; t=1734022641; c=relaxed/simple;
+	bh=hgdmElRG8eb2rSYzLsvKD5aK3wQz1qJLapz+pGN3iSg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JLid1X5tojoTq+1iFOZXgCjTAU7bhUDaf6Ix4ol424IZ+O1FnVeMbgAwKhDOnd9Fr5gGRlJQD6CN/PqlGeFD4p09h+anssntYOw0ZfTeAxzHXYbsbcxCi2ePqCtai4ZaGxgszdzjdsaep1sW4TfeJCqFBvtEhzbS85Ug3FaScGE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uGNMzCxT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tnN7Bq1yOdFvVK2J9aD7B+RM9WNlqijvrcg79UJmlSaQiJVPObcHRWUwBht4RpRLZqZzUiV/LrRf5z9cdBCpAWgw1mihjbveeQ5hgBYC44BvLUzV63qOk4Q1ZgwKYW8IrmM5dNpGKcmZaagog6H6uXbGvLitnBPa/ooMZlWYsh0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HebiCY56; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uGNMzCxT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8335BC4CECE;
-	Thu, 12 Dec 2024 16:57:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HebiCY56"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19049C4CECE;
+	Thu, 12 Dec 2024 16:57:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734022634;
-	bh=fgf4LDeHI0CLEmkkRbSmnniiJuoxfd/Vr2jdszO/ewU=;
+	s=korg; t=1734022637;
+	bh=hgdmElRG8eb2rSYzLsvKD5aK3wQz1qJLapz+pGN3iSg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uGNMzCxTCQwxYRycKxvWJC0tIawac4z5dIiIfqZajqg82X2TJg0yHsAIGZ6hkHNkn
-	 xNOKox9Z54TyErxzPRBBiKJ2TMO0EWShehry2I+U05tyk37UscGhh+cJ3nD5X1Xzq0
-	 8cwKkqm2SbjzhDXltfnsajsJZioFEQ+WvENV74pQ=
+	b=HebiCY56JglDUoK+wYqRPvsC/IEBFchBJEFtGpv143ZjVEM5xst8ayv8cIAX3Hb+M
+	 3tDzlVishBy6SI17L7q6y0pESUsWCQICr4/Zl3SpF3cxCrRTBVvsNmqRSQN/1kYhZZ
+	 57hr/vMlLO73y3R7BDmhujxp74onp+puIlBTznYw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	chao liu <liuzgyid@outlook.com>,
-	John Johansen <john.johansen@canonical.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 294/565] apparmor: fix Do simple duplicate message elimination
-Date: Thu, 12 Dec 2024 15:58:09 +0100
-Message-ID: <20241212144323.086811278@linuxfoundation.org>
+	Mikulas Patocka <mpatocka@redhat.com>,
+	Helge Deller <deller@gmx.de>,
+	Mingli Yu <mingli.yu@windriver.com>
+Subject: [PATCH 5.15 295/565] parisc: fix a possible DMA corruption
+Date: Thu, 12 Dec 2024 15:58:10 +0100
+Message-ID: <20241212144323.124874687@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144311.432886635@linuxfoundation.org>
 References: <20241212144311.432886635@linuxfoundation.org>
@@ -51,35 +51,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: chao liu <liuzgyid@outlook.com>
+From: Mikulas Patocka <mpatocka@redhat.com>
 
-[ Upstream commit 9b897132424fe76bf6c61f22f9cf12af7f1d1e6a ]
+commit 7ae04ba36b381bffe2471eff3a93edced843240f upstream.
 
-Multiple profiles shared 'ent->caps', so some logs missed.
+ARCH_DMA_MINALIGN was defined as 16 - this is too small - it may be
+possible that two unrelated 16-byte allocations share a cache line. If
+one of these allocations is written using DMA and the other is written
+using cached write, the value that was written with DMA may be
+corrupted.
 
-Fixes: 0ed3b28ab8bf ("AppArmor: mediation of non file objects")
-Signed-off-by: chao liu <liuzgyid@outlook.com>
-Signed-off-by: John Johansen <john.johansen@canonical.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+This commit changes ARCH_DMA_MINALIGN to be 128 on PA20 and 32 on PA1.1 -
+that's the largest possible cache line size.
+
+As different parisc microarchitectures have different cache line size, we
+define arch_slab_minalign(), cache_line_size() and
+dma_get_cache_alignment() so that the kernel may tune slab cache
+parameters dynamically, based on the detected cache line size.
+
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Helge Deller <deller@gmx.de>
+Signed-off-by: Mingli Yu <mingli.yu@windriver.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/apparmor/capability.c | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/parisc/Kconfig             |    1 +
+ arch/parisc/include/asm/cache.h |   11 ++++++++++-
+ 2 files changed, 11 insertions(+), 1 deletion(-)
 
-diff --git a/security/apparmor/capability.c b/security/apparmor/capability.c
-index deccea8654ad8..1b13fd89d5a9f 100644
---- a/security/apparmor/capability.c
-+++ b/security/apparmor/capability.c
-@@ -94,6 +94,8 @@ static int audit_caps(struct common_audit_data *sa, struct aa_profile *profile,
- 		return error;
- 	} else {
- 		aa_put_profile(ent->profile);
-+		if (profile != ent->profile)
-+			cap_clear(ent->caps);
- 		ent->profile = aa_get_profile(profile);
- 		cap_raise(ent->caps, cap);
- 	}
--- 
-2.43.0
-
+--- a/arch/parisc/Kconfig
++++ b/arch/parisc/Kconfig
+@@ -15,6 +15,7 @@ config PARISC
+ 	select ARCH_SPLIT_ARG64 if !64BIT
+ 	select ARCH_SUPPORTS_HUGETLBFS if PA20
+ 	select ARCH_SUPPORTS_MEMORY_FAILURE
++	select ARCH_HAS_CACHE_LINE_SIZE
+ 	select DMA_OPS
+ 	select RTC_CLASS
+ 	select RTC_DRV_GENERIC
+--- a/arch/parisc/include/asm/cache.h
++++ b/arch/parisc/include/asm/cache.h
+@@ -20,7 +20,16 @@
+ 
+ #define SMP_CACHE_BYTES L1_CACHE_BYTES
+ 
+-#define ARCH_DMA_MINALIGN	L1_CACHE_BYTES
++#ifdef CONFIG_PA20
++#define ARCH_DMA_MINALIGN	128
++#else
++#define ARCH_DMA_MINALIGN	32
++#endif
++#define ARCH_KMALLOC_MINALIGN	16	/* ldcw requires 16-byte alignment */
++
++#define arch_slab_minalign()	((unsigned)dcache_stride)
++#define cache_line_size()	dcache_stride
++#define dma_get_cache_alignment cache_line_size
+ 
+ #define __read_mostly __section(".data..read_mostly")
+ 
 
 
