@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 928A52153DD;
-	Thu, 12 Dec 2024 16:41:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0B9E2210DA;
+	Thu, 12 Dec 2024 16:41:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734021688; cv=none; b=f6NioEpcfC4jyeK+70kWst5jfod8y6XRIiwrBn6jvUUcAgJF8UiLMHUBcR1KDarFUfdZ3wLUEkxVsP+a0A52QSzU+J32m3NL8rxK7m1pF4/TzBkklxLSn7NdXTfUIUaTDrVcbXLVhKLO0cqzfmmbB0fpwSFNKJJg2e3YIgPUXEY=
+	t=1734021691; cv=none; b=g12EOjNAprOWomCzqaY5RdFqfMhI8+wXusBPLdTtnuq0ILow7Z49XT2mqr5XtmlIWNhDqHFsSjvfQoxW4lVcgOAB+0i2dJMWHAaIpe8HqTBskwiy+eOBoFHHAffbOG+XSEnGgprp7p/tTyrZgO8eR2sKkzE9ogAnGZnDqVo/t80=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734021688; c=relaxed/simple;
-	bh=dVSZ4e14Qa49MivuvhtviMt1GtqQhMaht4bFLQgSeLA=;
+	s=arc-20240116; t=1734021691; c=relaxed/simple;
+	bh=5uLKOlKm/6IR2dPvNaLT7Pfr85hRXTXxf20AyazI4dM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Qh4/XQKPdiSoun+29gjVhZI5/8gpllAwPPhbcPTtRw1jurBp858XShn8UzgIjiE01Y/x8K1wPTL1+9YCa8w14u2imioAETEaEKEzbFwnkyPkrDqWbGShdSU0waA3oEcDLx8X/k7+gO8Vno++bnsM1+zcV+QYvSHdbwDUEcNZ6co=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MyUkEDCv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=D/j9wy0ZZ1o80zp2UVAbIxmmlCE523QGklY/1Il2jhsT68sUBXYxQJXnwrrAk95GU72w1KXE1EDJryqRgA35CoW3uv0S/PzDSoHCM57KWdsSJsu0akJFZkaYeVCjqCKobk3/3AV7CqvlmUObDN78sW2UG5peNgpbveArXm/AyjY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d6Mm7Rho; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MyUkEDCv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EC83C4CECE;
-	Thu, 12 Dec 2024 16:41:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d6Mm7Rho"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CE32C4CECE;
+	Thu, 12 Dec 2024 16:41:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734021688;
-	bh=dVSZ4e14Qa49MivuvhtviMt1GtqQhMaht4bFLQgSeLA=;
+	s=korg; t=1734021691;
+	bh=5uLKOlKm/6IR2dPvNaLT7Pfr85hRXTXxf20AyazI4dM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MyUkEDCvC2dFHZWhhtQVi+Y1W69XknldYDjpHlUKZV/dyziA5NQeLfxeYYheL8LPp
-	 atv1Ep695nA1aWcCRa2UXanMhyljVeCsXJt2yVhCU3A4cEUGekE+SaqFx9dAV3mtTF
-	 CO1b4purfAYfzODakp9Uo8I87p3uSIyojME1NhpA=
+	b=d6Mm7Rho8JztOSmrtsRzqCjpNura+ZxpsDwxCYX/4acoyYUJ0WcKnihdVJgVTzXva
+	 p2tGjU3x6+2QBfuMANRb1t8R0pg1HY08fq1GJdg4KGFcVF+88dmpCbipVfHU8xXn95
+	 d8DoPtbklJjGhtv04FLHW8SHXazS56Lj7m3U9sCU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Samuel Holland <samuel@sholland.org>,
-	Maxime Ripard <maxime@cerno.tech>,
+	Andre Przywara <andre.przywara@arm.com>,
+	Parthiban Nallathambi <parthiban@linumiz.com>,
+	Chen-Yu Tsai <wens@csie.org>,
 	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 035/565] mmc: sunxi-mmc: Add D1 MMC variant
-Date: Thu, 12 Dec 2024 15:53:50 +0100
-Message-ID: <20241212144312.841008733@linuxfoundation.org>
+Subject: [PATCH 5.15 036/565] mmc: sunxi-mmc: Fix A100 compatible description
+Date: Thu, 12 Dec 2024 15:53:51 +0100
+Message-ID: <20241212144312.881666886@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144311.432886635@linuxfoundation.org>
 References: <20241212144311.432886635@linuxfoundation.org>
@@ -52,51 +53,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Samuel Holland <samuel@sholland.org>
+From: Andre Przywara <andre.przywara@arm.com>
 
-[ Upstream commit 75a2f412d0aed4a4a80ab2a2d96d040b17acb6d6 ]
+[ Upstream commit 85b580afc2c215394e08974bf033de9face94955 ]
 
-D1's MMC controllers are unique in that they have the DMA address shift
-(like A100) with a 13-bit descriptor size field (like sun4i). Add the
-compatible and parameters for this new variant.
+It turns out that the Allwinner A100/A133 SoC only supports 8K DMA
+blocks (13 bits wide), for both the SD/SDIO and eMMC instances.
+And while this alone would make a trivial fix, the H616 falls back to
+the A100 compatible string, so we have to now match the H616 compatible
+string explicitly against the description advertising 64K DMA blocks.
 
-Signed-off-by: Samuel Holland <samuel@sholland.org>
-Acked-by: Maxime Ripard <maxime@cerno.tech>
-Link: https://lore.kernel.org/r/20220203015112.12008-2-samuel@sholland.org
+As the A100 is now compatible with the D1 description, let the A100
+compatible string point to that block instead, and introduce an explicit
+match against the H616 string, pointing to the old description.
+Also remove the redundant setting of clk_delays to NULL on the way.
+
+Fixes: 3536b82e5853 ("mmc: sunxi: add support for A100 mmc controller")
+Cc: stable@vger.kernel.org
+Signed-off-by: Andre Przywara <andre.przywara@arm.com>
+Tested-by: Parthiban Nallathambi <parthiban@linumiz.com>
+Reviewed-by: Chen-Yu Tsai <wens@csie.org>
+Message-ID: <20241107014240.24669-1-andre.przywara@arm.com>
 Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-Stable-dep-of: 85b580afc2c2 ("mmc: sunxi-mmc: Fix A100 compatible description")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/sunxi-mmc.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/mmc/host/sunxi-mmc.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/mmc/host/sunxi-mmc.c b/drivers/mmc/host/sunxi-mmc.c
-index 3c213816db786..cd81f9a79169e 100644
+index cd81f9a79169e..1b6e41d55b622 100644
 --- a/drivers/mmc/host/sunxi-mmc.c
 +++ b/drivers/mmc/host/sunxi-mmc.c
-@@ -1168,6 +1168,14 @@ static const struct sunxi_mmc_cfg sun9i_a80_cfg = {
- 	.can_calibrate = false,
+@@ -1191,10 +1191,9 @@ static const struct sunxi_mmc_cfg sun50i_a64_emmc_cfg = {
+ 	.needs_new_timings = true,
  };
  
-+static const struct sunxi_mmc_cfg sun20i_d1_cfg = {
-+	.idma_des_size_bits = 13,
-+	.idma_des_shift = 2,
-+	.can_calibrate = true,
-+	.mask_data0 = true,
-+	.needs_new_timings = true,
-+};
-+
- static const struct sunxi_mmc_cfg sun50i_a64_cfg = {
+-static const struct sunxi_mmc_cfg sun50i_a100_cfg = {
++static const struct sunxi_mmc_cfg sun50i_h616_cfg = {
  	.idma_des_size_bits = 16,
- 	.clk_delays = NULL,
-@@ -1206,6 +1214,7 @@ static const struct of_device_id sunxi_mmc_of_match[] = {
- 	{ .compatible = "allwinner,sun7i-a20-mmc", .data = &sun7i_a20_cfg },
- 	{ .compatible = "allwinner,sun8i-a83t-emmc", .data = &sun8i_a83t_emmc_cfg },
- 	{ .compatible = "allwinner,sun9i-a80-mmc", .data = &sun9i_a80_cfg },
-+	{ .compatible = "allwinner,sun20i-d1-mmc", .data = &sun20i_d1_cfg },
+ 	.idma_des_shift = 2,
+-	.clk_delays = NULL,
+ 	.can_calibrate = true,
+ 	.mask_data0 = true,
+ 	.needs_new_timings = true,
+@@ -1217,8 +1216,9 @@ static const struct of_device_id sunxi_mmc_of_match[] = {
+ 	{ .compatible = "allwinner,sun20i-d1-mmc", .data = &sun20i_d1_cfg },
  	{ .compatible = "allwinner,sun50i-a64-mmc", .data = &sun50i_a64_cfg },
  	{ .compatible = "allwinner,sun50i-a64-emmc", .data = &sun50i_a64_emmc_cfg },
- 	{ .compatible = "allwinner,sun50i-a100-mmc", .data = &sun50i_a100_cfg },
+-	{ .compatible = "allwinner,sun50i-a100-mmc", .data = &sun50i_a100_cfg },
++	{ .compatible = "allwinner,sun50i-a100-mmc", .data = &sun20i_d1_cfg },
+ 	{ .compatible = "allwinner,sun50i-a100-emmc", .data = &sun50i_a100_emmc_cfg },
++	{ .compatible = "allwinner,sun50i-h616-mmc", .data = &sun50i_h616_cfg },
+ 	{ /* sentinel */ }
+ };
+ MODULE_DEVICE_TABLE(of, sunxi_mmc_of_match);
 -- 
 2.43.0
 
