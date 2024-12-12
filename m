@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CF92223C43;
-	Thu, 12 Dec 2024 17:47:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EB882236F0;
+	Thu, 12 Dec 2024 17:47:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734025643; cv=none; b=TIQ+5+478JpvhBJr8jCbIjfY1SPt0EPBIqoyUAtFgulQjRKuDXteNAOHtfay79ekY2KKAbRwsRj8CHXlT/PykmsdJww9/+snjugVFyN43q2VyPNM0iyg1EUTxLoy+2NiSh1fMz38QQK/bv2HrocrHm9sUpP7nK+Nchs7hZVGuk8=
+	t=1734025647; cv=none; b=kZxZzC0HeeOG/eENjqvZtSBeib7SoGp5qPOrcjwcjvEts7DBQRPChmTKGV/nYhFrSrvO4IDT2nJGRebay93PZtK38Js9W+0a6LAnXPdtnrn9HzshuVb9d3ACX9R2iUuVtPTktjMEXmv90P5Q1f9uBcTAPrLzD/JCASRKJESB/n4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734025643; c=relaxed/simple;
-	bh=11Mxjcs5D62YpM3hXQvyVGQ6J3CeeGxuRUI9h+hMF6c=;
+	s=arc-20240116; t=1734025647; c=relaxed/simple;
+	bh=5BB5KvQVw6gNjfUHBfnipCU7dg02NLEyqHNSk9EBVl0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DJWnaHTbHwHe245xZzdTGWMY4T+cjxPznK5iYgL+IIGTmTL2PzUqo9duKHu952us6wNIbh4KS4sF1kZgw5ZzWegdMC0LtFlsHbBVE0oRNiCZcQ5LRu+fqC/3hqxi/VKzOYczm7N2HTbmGz5odG4nj4tMbMNHtHglK/KQ1l+U8vs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hfjC7X5A; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=K0q8RqHYwBbz8HEeaY5RzfFE88irhyK4BuplECS7tc9Tq7wQlF9CyaxjvfJvd5kIWzOe64UA2IktaCdlbwdyvyRAqMjQywNhT+0G3HqSGNjkClwVSQ651VFh4c1/8sfRI4RUysTqNdpIO2cRkhTPWQIYzvcI8iNMnzeFzyZxQIU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bTXcVacy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hfjC7X5A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA02DC4CECE;
-	Thu, 12 Dec 2024 17:47:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bTXcVacy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84DC4C4CECE;
+	Thu, 12 Dec 2024 17:47:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734025643;
-	bh=11Mxjcs5D62YpM3hXQvyVGQ6J3CeeGxuRUI9h+hMF6c=;
+	s=korg; t=1734025645;
+	bh=5BB5KvQVw6gNjfUHBfnipCU7dg02NLEyqHNSk9EBVl0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hfjC7X5ATgbL6HVzGqJM3zLpc4FVjxFZJwN5REO4EFKhzbHAVOK+Xh8nJeXWVv+Uc
-	 IvFH2cQO2/EvOnBbWh+TWpKegoll4Y1m4gF2cCVKVNR27aOumkoKAVot0aoopzbJ55
-	 Wbw3Q5tLb4XP3ny+NiIBqIwhrqLbyPRObns7XlIk=
+	b=bTXcVacyHBcAFT7vkRg9evYydmdZwRDcnegqc4NZVStOMMb8EaTdf8AaRtPYeUFL7
+	 DNrdHtRyDdYC1zWtF9puQpMMpRREU3uq84Rp4CimStGOruPolmWbmNHAnezCVFGziB
+	 RvLVqxMU/pBvFV+a1ux1ut4N1aS9pQvYyvseXXxY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Beulich <jbeulich@suse.com>,
-	Paul Durrant <pdurrant@amazon.com>,
 	Juergen Gross <jgross@suse.com>,
+	=?UTF-8?q?Roger=20Pau=20Monn=C3=A9?= <roger.pau@citrix.com>,
+	SeongJae Park <sjpark@amazon.de>,
+	Boris Ostrovsky <boris.ostrovsky@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 237/321] xen/xenbus: reference count registered modules
-Date: Thu, 12 Dec 2024 16:02:35 +0100
-Message-ID: <20241212144239.334355977@linuxfoundation.org>
+Subject: [PATCH 5.4 238/321] xenbus/backend: Add memory pressure handler callback
+Date: Thu, 12 Dec 2024 16:02:36 +0100
+Message-ID: <20241212144239.378838454@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144229.291682835@linuxfoundation.org>
 References: <20241212144229.291682835@linuxfoundation.org>
@@ -46,73 +47,109 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Paul Durrant <pdurrant@amazon.com>
+From: SeongJae Park <sjpark@amazon.de>
 
-[ Upstream commit 196748a276b4dee01177e6b7abcda27cd759de83 ]
+[ Upstream commit 8a105678fb3ec4763352db84745968bf2cb4aa65 ]
 
-To prevent a PV driver module being removed whilst attached to its other
-end, and hence xenbus calling into potentially invalid text, take a
-reference on the module before calling the probe() method (dropping it if
-unsuccessful) and drop the reference after returning from the remove()
-method.
+Granting pages consumes backend system memory.  In systems configured
+with insufficient spare memory for those pages, it can cause a memory
+pressure situation.  However, finding the optimal amount of the spare
+memory is challenging for large systems having dynamic resource
+utilization patterns.  Also, such a static configuration might lack
+flexibility.
 
-Suggested-by: Jan Beulich <jbeulich@suse.com>
-Signed-off-by: Paul Durrant <pdurrant@amazon.com>
-Reviewed-by: Jan Beulich <jbeulich@suse.com>
+To mitigate such problems, this commit adds a memory reclaim callback to
+'xenbus_driver'.  If a memory pressure is detected, 'xenbus' requests
+every backend driver to volunarily release its memory.
+
+Note that it would be able to improve the callback facility for more
+sophisticated handlings of general pressures.  For example, it would be
+possible to monitor the memory consumption of each device and issue the
+release requests to only devices which causing the pressure.  Also, the
+callback could be extended to handle not only memory, but general
+resources.  Nevertheless, this version of the implementation defers such
+sophisticated goals as a future work.
+
 Reviewed-by: Juergen Gross <jgross@suse.com>
-Signed-off-by: Juergen Gross <jgross@suse.com>
+Reviewed-by: Roger Pau Monné <roger.pau@citrix.com>
+Signed-off-by: SeongJae Park <sjpark@amazon.de>
+Signed-off-by: Boris Ostrovsky <boris.ostrovsky@oracle.com>
 Stable-dep-of: afc545da381b ("xen: Fix the issue of resource not being properly released in xenbus_dev_probe()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/xen/xenbus/xenbus_probe.c | 13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ drivers/xen/xenbus/xenbus_probe_backend.c | 32 +++++++++++++++++++++++
+ include/xen/xenbus.h                      |  1 +
+ 2 files changed, 33 insertions(+)
 
-diff --git a/drivers/xen/xenbus/xenbus_probe.c b/drivers/xen/xenbus/xenbus_probe.c
-index b911a91bce6b7..9215099caad61 100644
---- a/drivers/xen/xenbus/xenbus_probe.c
-+++ b/drivers/xen/xenbus/xenbus_probe.c
-@@ -233,9 +233,16 @@ int xenbus_dev_probe(struct device *_dev)
- 		return err;
- 	}
+diff --git a/drivers/xen/xenbus/xenbus_probe_backend.c b/drivers/xen/xenbus/xenbus_probe_backend.c
+index 4bb603051d5b6..386a1348694a7 100644
+--- a/drivers/xen/xenbus/xenbus_probe_backend.c
++++ b/drivers/xen/xenbus/xenbus_probe_backend.c
+@@ -255,6 +255,35 @@ static int backend_probe_and_watch(struct notifier_block *notifier,
+ 	return NOTIFY_DONE;
+ }
  
-+	if (!try_module_get(drv->driver.owner)) {
-+		dev_warn(&dev->dev, "failed to acquire module reference on '%s'\n",
-+			 drv->driver.name);
-+		err = -ESRCH;
-+		goto fail;
-+	}
++static int backend_reclaim_memory(struct device *dev, void *data)
++{
++	const struct xenbus_driver *drv;
 +
- 	err = drv->probe(dev, id);
- 	if (err)
--		goto fail;
-+		goto fail_put;
++	if (!dev->driver)
++		return 0;
++	drv = to_xenbus_driver(dev->driver);
++	if (drv && drv->reclaim_memory)
++		drv->reclaim_memory(to_xenbus_device(dev));
++	return 0;
++}
++
++/*
++ * Returns 0 always because we are using shrinker to only detect memory
++ * pressure.
++ */
++static unsigned long backend_shrink_memory_count(struct shrinker *shrinker,
++				struct shrink_control *sc)
++{
++	bus_for_each_dev(&xenbus_backend.bus, NULL, NULL,
++			backend_reclaim_memory);
++	return 0;
++}
++
++static struct shrinker backend_memory_shrinker = {
++	.count_objects = backend_shrink_memory_count,
++	.seeks = DEFAULT_SEEKS,
++};
++
+ static int __init xenbus_probe_backend_init(void)
+ {
+ 	static struct notifier_block xenstore_notifier = {
+@@ -271,6 +300,9 @@ static int __init xenbus_probe_backend_init(void)
  
- 	err = watch_otherend(dev);
- 	if (err) {
-@@ -245,6 +252,8 @@ int xenbus_dev_probe(struct device *_dev)
- 	}
+ 	register_xenstore_notifier(&xenstore_notifier);
  
++	if (register_shrinker(&backend_memory_shrinker))
++		pr_warn("shrinker registration failed\n");
++
  	return 0;
-+fail_put:
-+	module_put(drv->driver.owner);
- fail:
- 	xenbus_dev_error(dev, err, "xenbus_dev_probe on %s", dev->nodename);
- 	xenbus_switch_state(dev, XenbusStateClosed);
-@@ -264,6 +273,8 @@ int xenbus_dev_remove(struct device *_dev)
- 	if (drv->remove)
- 		drv->remove(dev);
+ }
+ subsys_initcall(xenbus_probe_backend_init);
+diff --git a/include/xen/xenbus.h b/include/xen/xenbus.h
+index 14d47ed4114fd..cf37b2d93560f 100644
+--- a/include/xen/xenbus.h
++++ b/include/xen/xenbus.h
+@@ -113,6 +113,7 @@ struct xenbus_driver {
+ 	struct device_driver driver;
+ 	int (*read_otherend_details)(struct xenbus_device *dev);
+ 	int (*is_ready)(struct xenbus_device *dev);
++	void (*reclaim_memory)(struct xenbus_device *dev);
+ };
  
-+	module_put(drv->driver.owner);
-+
- 	free_otherend_details(dev);
- 
- 	xenbus_switch_state(dev, XenbusStateClosed);
+ static inline struct xenbus_driver *to_xenbus_driver(struct device_driver *drv)
 -- 
 2.43.0
 
