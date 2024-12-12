@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A381021660B;
-	Thu, 12 Dec 2024 17:20:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EB0321766D;
+	Thu, 12 Dec 2024 17:21:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734024057; cv=none; b=ECApwVrZkxQ+swqtVncu2Tws+iqmk10wM1xS48jTs93e5fjue9rYgFQA+W2HHlRFosi1ybZnCzUQBp6tUQWh3Fih3IRQL5Wc2I2+sHVxkhfCXss/2/rhvlpk/V7JRUKI4YnOX5hF0c75qI/RvQvXJqmXEiDZSZyyUrliRa3ETlc=
+	t=1734024060; cv=none; b=rrue+TJfTPp9T4cs+rC2WKJXYUxH/MFdGvY7Fvr+9u3zvMfdMEgzCHLdl7M6+7UClR0kuV6BB2H3QU7YWUvjNquxI9iPgA/OXhmB7bjfuogaXbXrK2OjEM0OIPzR4ZI4EBiZqQviH3+bSrrdRLSVz7GgzUxHsvcHUGmhp8G+1cw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734024057; c=relaxed/simple;
-	bh=474OyoAA377XTanm+JQV3+L07br42q5PirsoCxa9qek=;
+	s=arc-20240116; t=1734024060; c=relaxed/simple;
+	bh=ur+M9Mgkh0lmXeDGh0m8LRFgFMFqe+tLNGdtwwoK5Uw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cNYzy2wxs17/8L8I8TwBD7cknKZPrQsqnjpsxcTpi3kOOhCenUW/X3LPni2QyCfolFSMG+5Cgzy3TPoEYtoPwZ5aOxfoZX3BCIUbzqs/F3DDw6Z5x5LuZgaUk8klS3H+XfW4FAHqZoEZ38wZSitldZhaiyjZjdTfGR5Ywoy7/6c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BbONKA3Y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NAYgio7l7ETPn2DKpO6Qqpm3mu/N76e/wBW2vv/Ij+7IfinPWws/8d3qb9OqiNq5AvPSPQuuZJ1Zo8Z+HfkUA/dw9frKU5b83VGLaNCthHdXrLo0T0IGSHa4l6r7ERgobfoyXcMTYvAxXk7+QwxA177aRy2YXhCxUg2p0cFc4n0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Oqmu+z8A; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BbONKA3Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F82CC4CECE;
-	Thu, 12 Dec 2024 17:20:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Oqmu+z8A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CEE2C4CECE;
+	Thu, 12 Dec 2024 17:20:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734024057;
-	bh=474OyoAA377XTanm+JQV3+L07br42q5PirsoCxa9qek=;
+	s=korg; t=1734024060;
+	bh=ur+M9Mgkh0lmXeDGh0m8LRFgFMFqe+tLNGdtwwoK5Uw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BbONKA3YSCApzp7VBLdhgyeJC6FD6vpSBKDt3zFfbwGP3aEIP7z5Hs//p3KR3vu9j
-	 FOlttdpN3Q61mWrBSRGQPPFmlasvVk9AN3sVq0ofZxRXrId3ia34jQopGZpK3sMNCJ
-	 NaWvdUyajTMdlDMp9/TbALW7cPfTQhWhe4VXidH8=
+	b=Oqmu+z8A465AESNHMm0B5RYXmMAcJ0T4UCvcC4X1dlBQOmxl61lcvVSG89bLsKpyy
+	 S9xnsHhfuQDpyyU6HPREIGUWSWDnEiIEkR/i7NFQXo1Jkm6qUAvnqtZmaoyunKoJs2
+	 Flc/pzytyG2bmVStvOZr/ApbQW/GwHyfmhQ0Pkro=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Can <yuancan@huawei.com>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
+	"Dr. David Alan Gilbert" <linux@treblig.org>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 171/459] cpufreq: loongson2: Unregister platform_driver on failure
-Date: Thu, 12 Dec 2024 15:58:29 +0100
-Message-ID: <20241212144300.266234154@linuxfoundation.org>
+Subject: [PATCH 5.10 172/459] mtd: rawnand: atmel: Fix possible memory leak
+Date: Thu, 12 Dec 2024 15:58:30 +0100
+Message-ID: <20241212144300.306438489@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144253.511169641@linuxfoundation.org>
 References: <20241212144253.511169641@linuxfoundation.org>
@@ -51,37 +51,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuan Can <yuancan@huawei.com>
+From: Miquel Raynal <miquel.raynal@bootlin.com>
 
-[ Upstream commit 5f856d71ccdf89b4bac0ff70ebb0bb582e7f7f18 ]
+[ Upstream commit 6d734f1bfc336aaea91313a5632f2f197608fadd ]
 
-When cpufreq_register_driver() returns error, the cpufreq_init() returns
-without unregister platform_driver, fix by add missing
-platform_driver_unregister() when cpufreq_register_driver() failed.
+The pmecc "user" structure is allocated in atmel_pmecc_create_user() and
+was supposed to be freed with atmel_pmecc_destroy_user(), but this other
+helper is never called. One solution would be to find the proper
+location to call the destructor, but the trend today is to switch to
+device managed allocations, which in this case fits pretty well.
 
-Fixes: f8ede0f700f5 ("MIPS: Loongson 2F: Add CPU frequency scaling support")
-Signed-off-by: Yuan Can <yuancan@huawei.com>
-Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+Replace kzalloc() by devm_kzalloc() and drop the destructor entirely.
+
+Reported-by: "Dr. David Alan Gilbert" <linux@treblig.org>
+Closes: https://lore.kernel.org/all/ZvmIvRJCf6VhHvpo@gallifrey/
+Fixes: f88fc122cc34 ("mtd: nand: Cleanup/rework the atmel_nand driver")
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://lore.kernel.org/linux-mtd/20241001203149.387655-1-miquel.raynal@bootlin.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/loongson2_cpufreq.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/mtd/nand/raw/atmel/pmecc.c | 8 +-------
+ drivers/mtd/nand/raw/atmel/pmecc.h | 2 --
+ 2 files changed, 1 insertion(+), 9 deletions(-)
 
-diff --git a/drivers/cpufreq/loongson2_cpufreq.c b/drivers/cpufreq/loongson2_cpufreq.c
-index d05e761d95721..e1893e33b1a94 100644
---- a/drivers/cpufreq/loongson2_cpufreq.c
-+++ b/drivers/cpufreq/loongson2_cpufreq.c
-@@ -155,7 +155,9 @@ static int __init cpufreq_init(void)
+diff --git a/drivers/mtd/nand/raw/atmel/pmecc.c b/drivers/mtd/nand/raw/atmel/pmecc.c
+index cbb023bf00f72..09848d13802d8 100644
+--- a/drivers/mtd/nand/raw/atmel/pmecc.c
++++ b/drivers/mtd/nand/raw/atmel/pmecc.c
+@@ -362,7 +362,7 @@ atmel_pmecc_create_user(struct atmel_pmecc *pmecc,
+ 	size = ALIGN(size, sizeof(s32));
+ 	size += (req->ecc.strength + 1) * sizeof(s32) * 3;
  
- 	ret = cpufreq_register_driver(&loongson2_cpufreq_driver);
+-	user = kzalloc(size, GFP_KERNEL);
++	user = devm_kzalloc(pmecc->dev, size, GFP_KERNEL);
+ 	if (!user)
+ 		return ERR_PTR(-ENOMEM);
  
--	if (!ret && !nowait) {
-+	if (ret) {
-+		platform_driver_unregister(&platform_driver);
-+	} else if (!nowait) {
- 		saved_cpu_wait = cpu_wait;
- 		cpu_wait = loongson2_cpu_wait;
- 	}
+@@ -408,12 +408,6 @@ atmel_pmecc_create_user(struct atmel_pmecc *pmecc,
+ }
+ EXPORT_SYMBOL_GPL(atmel_pmecc_create_user);
+ 
+-void atmel_pmecc_destroy_user(struct atmel_pmecc_user *user)
+-{
+-	kfree(user);
+-}
+-EXPORT_SYMBOL_GPL(atmel_pmecc_destroy_user);
+-
+ static int get_strength(struct atmel_pmecc_user *user)
+ {
+ 	const int *strengths = user->pmecc->caps->strengths;
+diff --git a/drivers/mtd/nand/raw/atmel/pmecc.h b/drivers/mtd/nand/raw/atmel/pmecc.h
+index 7851c05126cf1..cc0c5af1f4f1a 100644
+--- a/drivers/mtd/nand/raw/atmel/pmecc.h
++++ b/drivers/mtd/nand/raw/atmel/pmecc.h
+@@ -55,8 +55,6 @@ struct atmel_pmecc *devm_atmel_pmecc_get(struct device *dev);
+ struct atmel_pmecc_user *
+ atmel_pmecc_create_user(struct atmel_pmecc *pmecc,
+ 			struct atmel_pmecc_user_req *req);
+-void atmel_pmecc_destroy_user(struct atmel_pmecc_user *user);
+-
+ void atmel_pmecc_reset(struct atmel_pmecc *pmecc);
+ int atmel_pmecc_enable(struct atmel_pmecc_user *user, int op);
+ void atmel_pmecc_disable(struct atmel_pmecc_user *user);
 -- 
 2.43.0
 
