@@ -1,37 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AED1B2210F1;
-	Thu, 12 Dec 2024 17:48:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE1D7211493;
+	Thu, 12 Dec 2024 17:48:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734025686; cv=none; b=Yrp73e3jndlp0dvOOIq1q6E5ImBM1p49E5SjII/ZpPL5a27XMPccmmypMq8Ux1X8RMWB8KZN43whr0AuhcDlK+x7zJeidOSitloNFz7Bxb6wUodXdLV7M46+XVqN1zoRw9eabn2KYa2VrDq7ItpHjt0p3edET8CZK2dFBo9VIXc=
+	t=1734025689; cv=none; b=FgAkSiYYBx6CKnNps/ctCfGdRF6pifM1uUWLMXHL//xE8W//SI+zGS7wVzObcEOyy+QRx9e73Q3Dmj8NoRE20tl3i0UQ21xZq+WWoGX0fUDMzd0gUEdsU9j7f8dTEcExeDDbeNMehJ/CUSL9sb26jmYsrJ6s5Iii04AuS1eR17U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734025686; c=relaxed/simple;
-	bh=EWYXLk9kBKIvGt7mgjhmKAG+0A5AcNnZATOzqJ9BFuo=;
+	s=arc-20240116; t=1734025689; c=relaxed/simple;
+	bh=LnlGGBA2UaKw/PalTZC4qRXdqZOZTzAz4vheBKX6VTM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CAKqex4oM0669BLxGImSItzEYD/wGXxxHcRn6o1R/x0+lvM8FDkr6qScB4oNlKp9HgtLTEv+of0qVDkOmniIn2TDABf4OJ3iofp4exqadWuh2lxsteH7A+1HVSoAy2EaJ7jnwzt6dNa2S2I3k8uDWKrrRUXFAenruh434J4m2Eo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TnpEq/NM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Wx/wcm22DhPEyYIGv2SYWjHK56ub2zsxNP5Z5sNB4ct+bN2sRbhLbTwgx3xXZIo9zmU/wvJ/t198LVlb82vJ8a9G9xB76P1yJiNTAMYM3LCB1byS/ZtPz+XE9rOiIwFdnAo0EYRz2gFGpQIZbkuuh1dkDKVdwvUH6MmIjonMhzc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PY0GYnNY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TnpEq/NM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32CE3C4CED1;
-	Thu, 12 Dec 2024 17:48:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PY0GYnNY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31083C4CED1;
+	Thu, 12 Dec 2024 17:48:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734025686;
-	bh=EWYXLk9kBKIvGt7mgjhmKAG+0A5AcNnZATOzqJ9BFuo=;
+	s=korg; t=1734025689;
+	bh=LnlGGBA2UaKw/PalTZC4qRXdqZOZTzAz4vheBKX6VTM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TnpEq/NMTF7eMHKr/ZjO65V3xO5lDeL1ARPsc0ztEHWaIDDW4i2Ulbf6nH/Cr501l
-	 RuOXbALUGXZuZihHtL+8WpXYVfZU392OTkeYv+BnLjVEcHn4v8hi+QqkiZSQj3OfWJ
-	 JQi4uH9+HnLJ2MiFrMMtGtcrYSQvrdSYg27PFATs=
+	b=PY0GYnNY4r0RUuR4NCAuZvjliKifsKExwiXrgiSPO4Terj2g0w50QO2i+p6MVdCDv
+	 NgPEZWi98oAPMZmLABoL0m1nJgyRF3owGNhLcRlR3s6/mj9+fdkiK61cBsAGka8plI
+	 GEaSKbKQCQ2Nyy+iaOpFmR329ftRwaVh4RZXQYsE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuan-Wei Chiu <visitorckw@gmail.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 5.4 254/321] tracing: Fix cmp_entries_dup() to respect sort() comparison rules
-Date: Thu, 12 Dec 2024 16:02:52 +0100
-Message-ID: <20241212144240.002294947@linuxfoundation.org>
+	Wengang Wang <wen.gang.wang@oracle.com>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Jun Piao <piaojun@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.4 255/321] ocfs2: update seq_file index in ocfs2_dlm_seq_next
+Date: Thu, 12 Dec 2024 16:02:53 +0100
+Message-ID: <20241212144240.040057008@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144229.291682835@linuxfoundation.org>
 References: <20241212144229.291682835@linuxfoundation.org>
@@ -50,52 +56,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuan-Wei Chiu <visitorckw@gmail.com>
+From: Wengang Wang <wen.gang.wang@oracle.com>
 
-commit e63fbd5f6810ed756bbb8a1549c7d4132968baa9 upstream.
+commit 914eec5e980171bc128e7e24f7a22aa1d803570e upstream.
 
-The cmp_entries_dup() function used as the comparator for sort()
-violated the symmetry and transitivity properties required by the
-sorting algorithm. Specifically, it returned 1 whenever memcmp() was
-non-zero, which broke the following expectations:
+The following INFO level message was seen:
 
-* Symmetry: If x < y, then y > x.
-* Transitivity: If x < y and y < z, then x < z.
+seq_file: buggy .next function ocfs2_dlm_seq_next [ocfs2] did not
+update position index
 
-These violations could lead to incorrect sorting and failure to
-correctly identify duplicate elements.
+Fix:
+Update *pos (so m->index) to make seq_read_iter happy though the index its
+self makes no sense to ocfs2_dlm_seq_next.
 
-Fix the issue by directly returning the result of memcmp(), which
-adheres to the required comparison properties.
-
-Cc: stable@vger.kernel.org
-Fixes: 08d43a5fa063 ("tracing: Add lock-free tracing_map")
-Link: https://lore.kernel.org/20241203202228.1274403-1-visitorckw@gmail.com
-Signed-off-by: Kuan-Wei Chiu <visitorckw@gmail.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Link: https://lkml.kernel.org/r/20241119174500.9198-1-wen.gang.wang@oracle.com
+Signed-off-by: Wengang Wang <wen.gang.wang@oracle.com>
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Jun Piao <piaojun@huawei.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/tracing_map.c |    6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ fs/ocfs2/dlmglue.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/kernel/trace/tracing_map.c
-+++ b/kernel/trace/tracing_map.c
-@@ -845,15 +845,11 @@ int tracing_map_init(struct tracing_map
- static int cmp_entries_dup(const void *A, const void *B)
- {
- 	const struct tracing_map_sort_entry *a, *b;
--	int ret = 0;
+--- a/fs/ocfs2/dlmglue.c
++++ b/fs/ocfs2/dlmglue.c
+@@ -3101,6 +3101,7 @@ static void *ocfs2_dlm_seq_next(struct s
+ 	struct ocfs2_lock_res *iter = v;
+ 	struct ocfs2_lock_res *dummy = &priv->p_iter_res;
  
- 	a = *(const struct tracing_map_sort_entry **)A;
- 	b = *(const struct tracing_map_sort_entry **)B;
- 
--	if (memcmp(a->key, b->key, a->elt->map->key_size))
--		ret = 1;
--
--	return ret;
-+	return memcmp(a->key, b->key, a->elt->map->key_size);
- }
- 
- static int cmp_entries_sum(const void *A, const void *B)
++	(*pos)++;
+ 	spin_lock(&ocfs2_dlm_tracking_lock);
+ 	iter = ocfs2_dlm_next_res(iter, priv);
+ 	list_del_init(&dummy->l_debug_list);
 
 
