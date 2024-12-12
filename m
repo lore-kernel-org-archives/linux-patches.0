@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4BE52EAE5;
-	Thu, 12 Dec 2024 15:16:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45AA12054F8;
+	Thu, 12 Dec 2024 15:16:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734016598; cv=none; b=QUi7P5C2TPyvXX5ZBBkY3Ik9EVGj+/WJx/K8U47i/c3+WFmRF4Jv1y8Y94iWpC6IuPdjn29jjpngnXSKouqSFdqChTXhoqqNTVaH0SL/f1NbN81JyfP0MT+CwE6aYyyHCEbYOz+oJww8BFbr5W93eQOkKMVkD/6Wy7hvrhW/7+w=
+	t=1734016602; cv=none; b=FVIJ7HdGRHTnS8WflivwPaYGjYppfRWA6kKIIgvlgsMTaj3aMEJf9PETMRfhANbRyr/adp0cYuJ3Zv6+0Qd78Hd7+gCXKadE9E5bO6yc0mPVwMXR4KgwrwaHu6pxNTBJflu37kKEDXE5muHOEIanGYIDIGWlaNlW8GywW4Oki4s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734016598; c=relaxed/simple;
-	bh=sQ/pFhZAxKM2KLImzB/SFX6m0xBTWmKIXfHfd96rgLU=;
+	s=arc-20240116; t=1734016602; c=relaxed/simple;
+	bh=Fidz5wYtwvBomorVxCCp+ayqvoKMEdwI4LI9umy2w3c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ig+nZ3dO4k7lTV0wnLfsmhfcA1vR4QuQd3SKHBO/vSZ0cfn4hGTNdrBI3fed6Z9zqSpKI+IeUjQIcPmJDkdRNG/0CdLN9jgn4SwLk8IUSxp1UsiFUcjenEuMdD8pm7w4QhlZszwWEGz98LHw/URiYOmPqK/tZt8gHUQAuL6ldYo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KulT993h; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CqdibR7/R/3j/SuvqdY73vlxg9JUUVYSOezUx1nv5eK4Me2Xco3nDjUmec1gqvXaXSkCP2FASTVXRueuU2TQB9xSk8wbXh8Gjc01uj8+bzXFKCzNSoUdwatBxtQB4+PvvuksdLINZBu+IuvPqt0OrZxJff5i7sk1C/eSGuKeZkU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NODnfPTH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KulT993h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30A33C4CECE;
-	Thu, 12 Dec 2024 15:16:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NODnfPTH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BCE8C4CECE;
+	Thu, 12 Dec 2024 15:16:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734016598;
-	bh=sQ/pFhZAxKM2KLImzB/SFX6m0xBTWmKIXfHfd96rgLU=;
+	s=korg; t=1734016602;
+	bh=Fidz5wYtwvBomorVxCCp+ayqvoKMEdwI4LI9umy2w3c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KulT993h2NXqrG6+F7v7mJYlk6xt5R1wbDc1KTFGjryGW8MyTyP6dYB9aGJSQBZbs
-	 n2fUJr1cSnwWSuVFD/R9l7CgtChdB7yXgCLpiM9zyci3/RhNpoZyLDEMj+QmSE3wAa
-	 HKNTcLC8euKKnW0WyZeAnhLwJRDjR3HGW5BmtXB0=
+	b=NODnfPTH/93+Z/vhWXgxL+JMCzOAhX2T8fCeYt4k4N9QkHSApmiHpbeLLRKMkPWbd
+	 hyq1Ashp2OKycXkurH5RE1oqL6NsFkXROzUmoEn/XofgzTGNSrLHpB8FTbzJXsKG2V
+	 J6jutiBmXH9xToup+5fQ4+BdUzbCnP1AxpCWbH08=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Giuliano Lotta <giuliano.lotta@gmail.com>,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Rohan Barar <rohan.barar@gmail.com>,
 	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 243/466] media: uvcvideo: Force UVC version to 1.0a for 0408:4033
-Date: Thu, 12 Dec 2024 15:56:52 +0100
-Message-ID: <20241212144316.385830644@linuxfoundation.org>
+Subject: [PATCH 6.12 244/466] media: cx231xx: Add support for Dexatek USB Video Grabber 1d19:6108
+Date: Thu, 12 Dec 2024 15:56:53 +0100
+Message-ID: <20241212144316.427536600@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144306.641051666@linuxfoundation.org>
 References: <20241212144306.641051666@linuxfoundation.org>
@@ -53,48 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ricardo Ribalda <ribalda@chromium.org>
+From: Rohan Barar <rohan.barar@gmail.com>
 
-[ Upstream commit c9df99302fff53b6007666136b9f43fbac7ee3d8 ]
+[ Upstream commit 61a830bc0ea69a05d8a4534f825c6aa618263649 ]
 
-The Quanta ACER HD User Facing camera reports a UVC 1.50 version, but
-implements UVC 1.0a as shown by the UVC probe control being 26 bytes
-long. Force the UVC version for that device.
+Add Dexatek Technology Ltd USB Video Grabber 1d19:6108 to the cx231xx
+driver. This device is sold under the name "BAUHN DVD Maker (DK8723)" by
+ALDI in Australia.
 
-Reported-by: Giuliano Lotta <giuliano.lotta@gmail.com>
-Closes: https://lore.kernel.org/linux-media/fce4f906-d69b-417d-9f13-bf69fe5c81e3@koyu.space/
-Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Link: https://lore.kernel.org/r/20240924-uvc-quanta-v1-1-2de023863767@chromium.org
-Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+This device is similar to 1d19:6109, which is already included in cx231xx.
+
+Both video and audio capture function correctly after installing the
+patched cx231xx driver.
+
+Patch Changelog
+v1:
+ - Initial submission.
+v2:
+ - Fix SoB + Improve subject.
+v3:
+ - Rephrase message to not exceed 75 characters per line.
+ - Removed reference to external GitHub URL.
+
+Signed-off-by: Rohan Barar <rohan.barar@gmail.com>
 Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/uvc/uvc_driver.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/media/usb/cx231xx/cx231xx-cards.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/media/usb/uvc/uvc_driver.c b/drivers/media/usb/uvc/uvc_driver.c
-index 17aa313613356..9f38a9b23c018 100644
---- a/drivers/media/usb/uvc/uvc_driver.c
-+++ b/drivers/media/usb/uvc/uvc_driver.c
-@@ -2479,6 +2479,17 @@ static const struct uvc_device_info uvc_quirk_force_y8 = {
-  */
- static const struct usb_device_id uvc_ids[] = {
- 	/* Quanta ACER HD User Facing */
-+	{ .match_flags		= USB_DEVICE_ID_MATCH_DEVICE
-+				| USB_DEVICE_ID_MATCH_INT_INFO,
-+	  .idVendor		= 0x0408,
-+	  .idProduct		= 0x4033,
-+	  .bInterfaceClass	= USB_CLASS_VIDEO,
-+	  .bInterfaceSubClass	= 1,
-+	  .bInterfaceProtocol	= UVC_PC_PROTOCOL_15,
-+	  .driver_info		= (kernel_ulong_t)&(const struct uvc_device_info){
-+		.uvc_version = 0x010a,
-+	  } },
-+	/* Quanta ACER HD User Facing */
- 	{ .match_flags		= USB_DEVICE_ID_MATCH_DEVICE
- 				| USB_DEVICE_ID_MATCH_INT_INFO,
- 	  .idVendor		= 0x0408,
+diff --git a/drivers/media/usb/cx231xx/cx231xx-cards.c b/drivers/media/usb/cx231xx/cx231xx-cards.c
+index 92efe6c1f47ba..bda729b42d05f 100644
+--- a/drivers/media/usb/cx231xx/cx231xx-cards.c
++++ b/drivers/media/usb/cx231xx/cx231xx-cards.c
+@@ -994,6 +994,8 @@ const unsigned int cx231xx_bcount = ARRAY_SIZE(cx231xx_boards);
+ 
+ /* table of devices that work with this driver */
+ struct usb_device_id cx231xx_id_table[] = {
++	{USB_DEVICE(0x1D19, 0x6108),
++	.driver_info = CX231XX_BOARD_PV_XCAPTURE_USB},
+ 	{USB_DEVICE(0x1D19, 0x6109),
+ 	.driver_info = CX231XX_BOARD_PV_XCAPTURE_USB},
+ 	{USB_DEVICE(0x0572, 0x5A3C),
 -- 
 2.43.0
 
