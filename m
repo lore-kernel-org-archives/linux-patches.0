@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EC7D176AA1;
-	Thu, 12 Dec 2024 17:25:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DCFB176AA1;
+	Thu, 12 Dec 2024 17:25:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734024300; cv=none; b=DdUXG8BUa+vWYr6N/mNQDZpvtyMbAFiu7nSt1pOrf6VaW76RaRCJ9tx1J+QIw3i68yWT8CnPyJcn4qJSC8DBhwrE2ZAtxtfxab+b5oSirTWxBXbDzkOH5TMGxrOsdxNWjOr+JBQVhgYOsdX2gDpROzcaeaZXyc1dIlhh9h55sdU=
+	t=1734024303; cv=none; b=CRWeVg+J+NYZmMVa2y0NG1q7CwfL3VybhWuFys4jlfPiVhQWfdnN/uWJ4mBMwC6bgzCb/5YZqd+O0pTNVpxNior5vuhqTeaTXG1Kj/ZCh6bEpvs68mY+cppwf0d6zgeP8Hyk+2Pm78cA8UjSZpdVyxrPTJL5X5k9Ei1MBAKyJeQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734024300; c=relaxed/simple;
-	bh=DY8w0Wfa9xZarEyXYwVDPxWmCqBAzV72dO6NaD0pPAE=;
+	s=arc-20240116; t=1734024303; c=relaxed/simple;
+	bh=CamiNhI/AsA6FxShs8t9bsDpX5LL2hJxE9nsKckhg8Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JzYinyOjnXOuIhbc0npjCsuB0CR/ptuRieEp/CJdP8z99Z4g8zEW1r46yb5wptl4B8kEkFGbuz9yDRaaLgqUmDEPjD6M49xFdLFWB36SuRQZ1YF00TM9JPtbeki+GpqBg+v5CttKlZh61ZBHuXp2vkUv2IccqeRe2V2+ttDjjaI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SOIJKitm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ImchI1XECGsHquEqw2DS0jN3kMhysrR5McO1zrNmlvTh8CmbD/DWsQd/Zxmop6smY6SGFXnHEpqpjxVUFBxNsc/zO3b2byadGnDMXM2/W/atIAMjfWD+tBmtT2xlY6ZRLbVrnTH9bB+8+nQcS+jPqvq2Ql3ySXwfFdhK6aFQe08=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H/gjXYSb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SOIJKitm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA722C4CECE;
-	Thu, 12 Dec 2024 17:24:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H/gjXYSb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6212C4CEDE;
+	Thu, 12 Dec 2024 17:25:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734024300;
-	bh=DY8w0Wfa9xZarEyXYwVDPxWmCqBAzV72dO6NaD0pPAE=;
+	s=korg; t=1734024303;
+	bh=CamiNhI/AsA6FxShs8t9bsDpX5LL2hJxE9nsKckhg8Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SOIJKitmxXlgGM1zCOnwsH9ZzYMj/5VuAWQdEjAIQemwew62+EQ2F6QQedazREV1x
-	 E8I36kkFMqaCAwkzsSZQF5cELYkvdPeGh1yCKFnaWZwAWWq3+XQpXKu5yEf2RmQlea
-	 pDX4OtbxNCfvRhMF2j6fGRtKZd836H4C07d1qkq8=
+	b=H/gjXYSbF0ICP6h6IcIgRJJPJpUr4sQXySnxQ9Nw0tSbSmJVFjnm+yVh0eVthkcCn
+	 onvM95BW7qBF2C+OZf7Ss9XGYfhzLJSIlqwdgylenDLwp78COrs5Fir4q2efZChPME
+	 qPtA22HTWnoi2A/vn8xbc7PVtEY1k5Ko/bVswTRQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Raghuram Chary J <raghuramchary.jallipalli@microchip.com>,
-	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Salam Noureddine <noureddine@arista.com>,
+	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
+	Somnath Kotur <somnath.kotur@broadcom.com>,
+	Pavan Chebbi <pavan.chebbi@broadcom.com>,
+	Michal Kubiak <michal.kubiak@intel.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 220/459] net: usb: lan78xx: Fix memory leak on device unplug by freeing PHY device
-Date: Thu, 12 Dec 2024 15:59:18 +0100
-Message-ID: <20241212144302.263693381@linuxfoundation.org>
+Subject: [PATCH 5.10 221/459] tg3: Set coherent DMA mask bits to 31 for BCM57766 chipsets
+Date: Thu, 12 Dec 2024 15:59:19 +0100
+Message-ID: <20241212144302.302657614@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144253.511169641@linuxfoundation.org>
 References: <20241212144253.511169641@linuxfoundation.org>
@@ -52,48 +55,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oleksij Rempel <o.rempel@pengutronix.de>
+From: Pavan Chebbi <pavan.chebbi@broadcom.com>
 
-[ Upstream commit ae7370e61c5d8f5bcefc2d4fca724bd4e9bbf789 ]
+[ Upstream commit 614f4d166eeeb9bd709b0ad29552f691c0f45776 ]
 
-Add calls to `phy_device_free` after `fixed_phy_unregister` to fix a
-memory leak that occurs when the device is unplugged. This ensures
-proper cleanup of pseudo fixed-link PHYs.
+The hardware on Broadcom 1G chipsets have a known limitation
+where they cannot handle DMA addresses that cross over 4GB.
+When such an address is encountered, the hardware sets the
+address overflow error bit in the DMA status register and
+triggers a reset.
 
-Fixes: 89b36fb5e532 ("lan78xx: Lan7801 Support for Fixed PHY")
-Cc: Raghuram Chary J <raghuramchary.jallipalli@microchip.com>
-Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
-Link: https://patch.msgid.link/20241116130558.1352230-2-o.rempel@pengutronix.de
+However, BCM57766 hardware is setting the overflow bit and
+triggering a reset in some cases when there is no actual
+underlying address overflow. The hardware team analyzed the
+issue and concluded that it is happening when the status
+block update has an address with higher (b16 to b31) bits
+as 0xffff following a previous update that had lowest bits
+as 0xffff.
+
+To work around this bug in the BCM57766 hardware, set the
+coherent dma mask from the current 64b to 31b. This will
+ensure that upper bits of the status block DMA address are
+always at most 0x7fff, thus avoiding the improper overflow
+check described above. This work around is intended for only
+status block and ring memories and has no effect on TX and
+RX buffers as they do not require coherent memory.
+
+Fixes: 72f2afb8a685 ("[TG3]: Add DMA address workaround")
+Reported-by: Salam Noureddine <noureddine@arista.com>
+Reviewed-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
+Reviewed-by: Somnath Kotur <somnath.kotur@broadcom.com>
+Signed-off-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
+Reviewed-by: Michal Kubiak <michal.kubiak@intel.com>
+Link: https://patch.msgid.link/20241119055741.147144-1-pavan.chebbi@broadcom.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/lan78xx.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/broadcom/tg3.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/usb/lan78xx.c b/drivers/net/usb/lan78xx.c
-index 96d3d0bd248bc..757d5c82f3f09 100644
---- a/drivers/net/usb/lan78xx.c
-+++ b/drivers/net/usb/lan78xx.c
-@@ -2157,6 +2157,7 @@ static int lan78xx_phy_init(struct lan78xx_net *dev)
- 		if (dev->chipid == ID_REV_CHIP_ID_7801_) {
- 			if (phy_is_pseudo_fixed_link(phydev)) {
- 				fixed_phy_unregister(phydev);
-+				phy_device_free(phydev);
- 			} else {
- 				phy_unregister_fixup_for_uid(PHY_KSZ9031RNX,
- 							     0xfffffff0);
-@@ -3835,8 +3836,10 @@ static void lan78xx_disconnect(struct usb_interface *intf)
+diff --git a/drivers/net/ethernet/broadcom/tg3.c b/drivers/net/ethernet/broadcom/tg3.c
+index fe2c9b110e606..937579817f226 100644
+--- a/drivers/net/ethernet/broadcom/tg3.c
++++ b/drivers/net/ethernet/broadcom/tg3.c
+@@ -17807,6 +17807,9 @@ static int tg3_init_one(struct pci_dev *pdev,
+ 	} else
+ 		persist_dma_mask = dma_mask = DMA_BIT_MASK(64);
  
- 	phy_disconnect(net->phydev);
- 
--	if (phy_is_pseudo_fixed_link(phydev))
-+	if (phy_is_pseudo_fixed_link(phydev)) {
- 		fixed_phy_unregister(phydev);
-+		phy_device_free(phydev);
-+	}
- 
- 	unregister_netdev(net);
- 
++	if (tg3_asic_rev(tp) == ASIC_REV_57766)
++		persist_dma_mask = DMA_BIT_MASK(31);
++
+ 	/* Configure DMA attributes. */
+ 	if (dma_mask > DMA_BIT_MASK(32)) {
+ 		err = pci_set_dma_mask(pdev, dma_mask);
 -- 
 2.43.0
 
