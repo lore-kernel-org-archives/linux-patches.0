@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14BE022969D;
-	Thu, 12 Dec 2024 16:47:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5615B22969D;
+	Thu, 12 Dec 2024 16:47:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734022069; cv=none; b=pCPTaSAqtIyWn8afgK80sapPAHtts7aXSqBtas2XvEGflvaGJsHc/FDbbwVNqBTLNgf262eWJKCe4ZPvQ5HgPROLppmwPl2eYAY3oSLl3vvWjznMQej9B/1B6bYsIDWITAbYa2EuCWLNPTv3hdKeXDqf2sL3yR2RvpKs3guI/OA=
+	t=1734022072; cv=none; b=XcKBDKbsmHxdQCdU9N6Hm/rryQfCSUdDWt5qIiVwbtWohcC9CXWO/gaUtPs+rSuaxMq8c3qXyGo5MODEG4ipupmjMwhJNgYg7YV2nwBbCi7nob4APiHq3P7auA8p991Z+thyvMJpIgcRevlG96Sh5k2DQZcWiBULMnBqmN1T/YE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734022069; c=relaxed/simple;
-	bh=GBPzlYY79WhNrVWGgD4U1xwOOEUEfe9Kjj2E8IvKfp8=;
+	s=arc-20240116; t=1734022072; c=relaxed/simple;
+	bh=qaJgUDCaj7T1ntOGe+coG2rKWa+EOvYAjMGbLe54KxM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Zoir4PtAuB14kvINyjLp0SDSNFZ8dvWOJS2Feia+CLnYKYx9LpgjklF2FypX2rUAWiYU7nm9SMLKkhe4q3paPZM8BXSzbQBlpMsk8TcEUyZW5BS5fS6oeR9zMBrOtTX69KC6hdBFNVYXlM4pgvfWbdVIjjA9roO5eoohf806OYI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P4z+g/SE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qDOQ213NAwzoI4Yg/NQ29OVgTq579g+E25oLK962ytm6Bfdz2TPCfTp9syMeKBEOZRVO0m7JnA5fid2Fg7UW5NPaUULVWYuAl+I9oeS9dZ2FIP0lecM5t1h4xVbabKsF/0FZKJbIBx+pE/+PwcO+8cSwbnBNtYPB55pK0v7/Gw4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZODYhSoW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P4z+g/SE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4340EC4CECE;
-	Thu, 12 Dec 2024 16:47:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZODYhSoW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B970DC4CECE;
+	Thu, 12 Dec 2024 16:47:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734022068;
-	bh=GBPzlYY79WhNrVWGgD4U1xwOOEUEfe9Kjj2E8IvKfp8=;
+	s=korg; t=1734022072;
+	bh=qaJgUDCaj7T1ntOGe+coG2rKWa+EOvYAjMGbLe54KxM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P4z+g/SEtrthKpA1OZphvIL9bmym77dFwOvBgch0d2moL80HusUhyrj1Wsq8MwJoj
-	 oNEbJ+2cAs6YCzzTB2YH/JHuuLQaPQ4u0amloGpoy0Kt4WO0Iq2EvCvoNoSugMtprl
-	 8YesprN3+jPtedlbgdkgLsYvYq0z+T0hjWutAh1U=
+	b=ZODYhSoW8tA2zH1XZC4RbSMkqTI+jE8uqLWqjb4AQwDosEAGzrMRaLlfXIHHh6vGM
+	 qer7pyd+/cqeDa4vVYtCTa9rnh8sgnmkWkCpklrvCwsgyPqs+amjsnKubXW8vLwUzW
+	 jSAC2Jq4DeHzkDpF8HO1Ee3Es2zhnUu5gi4J2O0A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Viswanath Boma <quic_vboma@quicinc.com>,
-	Dikshita Agarwal <quic_dikshita@quicinc.com>,
-	Vikash Garodia <quic_vgarodia@quicinc.com>,
-	Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Daolong Zhu <jg_daolongzhu@mediatek.corp-partner.google.com>,
+	Hsin-Te Yuan <yuanhsinte@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 139/565] media: venus : Addition of support for VIDIOC_TRY_ENCODER_CMD
-Date: Thu, 12 Dec 2024 15:55:34 +0100
-Message-ID: <20241212144316.975277044@linuxfoundation.org>
+Subject: [PATCH 5.15 122/565] arm64: dts: mt8183: burnet: add i2c2s i2c-scl-internal-delay-ns
+Date: Thu, 12 Dec 2024 15:55:17 +0100
+Message-ID: <20241212144316.306625846@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144311.432886635@linuxfoundation.org>
 References: <20241212144311.432886635@linuxfoundation.org>
@@ -54,37 +53,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dikshita Agarwal <quic_dikshita@quicinc.com>
+From: Daolong Zhu <jg_daolongzhu@mediatek.corp-partner.google.com>
 
-[ Upstream commit 2f2d6fe83d0346923f0247e15dd51f3257e65edd ]
+[ Upstream commit 85af64983889c621e8868b744c8ca03bd5038c02 ]
 
-v4l2 compliance expecting support for vidioc_try_encoder_cmd .
+Add i2c2's i2c-scl-internal-delay-ns.
 
-error details : test VIDIOC_(TRY_)ENCODER_CMD: FAIL
-
-Signed-off-by: Viswanath Boma <quic_vboma@quicinc.com>
-Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
-Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
-Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
-Stable-dep-of: 6c9934c5a00a ("media: venus: fix enc/dec destruction order")
+Fixes: dd6e3b06214f ("arm64: dts: mt8183: Add kukui-jacuzzi-burnet board")
+Reviewed-by: Matthias Brugger <matthias.bgg@gmail.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Signed-off-by: Daolong Zhu <jg_daolongzhu@mediatek.corp-partner.google.com>
+Signed-off-by: Hsin-Te Yuan <yuanhsinte@chromium.org>
+Link: https://lore.kernel.org/r/20241025-i2c-delay-v2-2-9be1bcaf35e0@chromium.org
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/qcom/venus/venc.c | 1 +
- 1 file changed, 1 insertion(+)
+ arch/arm64/boot/dts/mediatek/mt8183-kukui-jacuzzi-burnet.dts | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/media/platform/qcom/venus/venc.c b/drivers/media/platform/qcom/venus/venc.c
-index 2c23d83273a85..52a7366d7a5fc 100644
---- a/drivers/media/platform/qcom/venus/venc.c
-+++ b/drivers/media/platform/qcom/venus/venc.c
-@@ -549,6 +549,7 @@ static const struct v4l2_ioctl_ops venc_ioctl_ops = {
- 	.vidioc_enum_frameintervals = venc_enum_frameintervals,
- 	.vidioc_subscribe_event = venc_subscribe_event,
- 	.vidioc_unsubscribe_event = v4l2_event_unsubscribe,
-+	.vidioc_try_encoder_cmd = v4l2_m2m_ioctl_try_encoder_cmd,
+diff --git a/arch/arm64/boot/dts/mediatek/mt8183-kukui-jacuzzi-burnet.dts b/arch/arm64/boot/dts/mediatek/mt8183-kukui-jacuzzi-burnet.dts
+index a8d6f32ade8d9..0a1b79077bc45 100644
+--- a/arch/arm64/boot/dts/mediatek/mt8183-kukui-jacuzzi-burnet.dts
++++ b/arch/arm64/boot/dts/mediatek/mt8183-kukui-jacuzzi-burnet.dts
+@@ -28,3 +28,6 @@ touchscreen@2c {
+ 	};
  };
  
- static int venc_pm_get(struct venus_inst *inst)
++&i2c2 {
++	i2c-scl-internal-delay-ns = <4100>;
++};
 -- 
 2.43.0
 
