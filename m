@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBA53222D6D;
-	Thu, 12 Dec 2024 17:29:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE03A22331F;
+	Thu, 12 Dec 2024 17:29:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734024575; cv=none; b=vE93FYIpajVTjJusnw3LAU9fRginbs5ZLbbpoNdwr1nqgOs4kyR38kbZyz4ztEJt1ibPO2pyIf7+QYeD4fRVb4mV6pMWwK00kEOG9QmrTiX8a++3NMIcJFjVYrXTLA52edr8//zKsXG98K+ogUeUBWieOb5V1n3lWDC+PvzBz48=
+	t=1734024578; cv=none; b=J0Ap9j3sULaOAlvhrP/Gc95fgbjlzOsaVdAHaXo0wA0o3x8StRVpppVTJe0RNIs19tg+mgGjR1C1+JjvKFdoSzuHVt/KYLja6olJ496IYx+MmaziZSfLww9nQ3iFE6MAC3MIusnwnbHXYE4AAwX75zym27e4jLOHGARpaH6GGgQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734024575; c=relaxed/simple;
-	bh=Qd1Lep1pqSXxwS5V3qKJQAdKmV1w5eNp9UyKQC8YE80=;
+	s=arc-20240116; t=1734024578; c=relaxed/simple;
+	bh=IjEGRm8osZZIAGMJV8pPSwVRgeA16Nowlg6IHRcRp5A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hSRHU9A7M70oA8im4Gn1gyL7UU4NbwoUGZ1LZ17UCtE6hqpf/xUo16CpU2uzWC13lCA6ESaTdfG/06MvcHIGgNDNAhPaUCx3phY8sLbaSPxDS0f0TyYzt/lIYwZfB4HkFvTncZT7kI8hsY1kGhQdXJFhoqprzVHJILF91zZAjeU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=utQxmqUK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ps9dabshupv9wMA2h/NUSzlLTiavNvm2PMSJFNp2nYYu797XmavOb3VQdG2iRMcpGTIUzHJm4KB2zrNNyPRnnc8/v7ZTzhc1PTleIcNPWBW05pt9l/b5Qzx9frzXDHhh8h8nyfyjsEu5QYumvJWPuLKM6eqMe6vJjl89ZCgosZ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jllpn5zR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="utQxmqUK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70657C4CED0;
-	Thu, 12 Dec 2024 17:29:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jllpn5zR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BF59C4CED4;
+	Thu, 12 Dec 2024 17:29:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734024574;
-	bh=Qd1Lep1pqSXxwS5V3qKJQAdKmV1w5eNp9UyKQC8YE80=;
+	s=korg; t=1734024577;
+	bh=IjEGRm8osZZIAGMJV8pPSwVRgeA16Nowlg6IHRcRp5A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=utQxmqUKzOg5IrJq6NT0d/KvcYO1lrZ2bJRuVH3BbmJ5LRl9cD6AK2RejKITWFZtr
-	 iKFEPUCwZIKFjLJMoOo/DcXZXN8x+L2AEAnMA6pHKw/xmScSwL0EuRdmNkWrZofl5w
-	 Ir84rI2CT2dw5518PIbGJc216wG2ufvoheTPp+w4=
+	b=jllpn5zR7XnwvdUBbMUzVXB50PJtRV3xMzidiZ/n9edReg8Wl8z9VVaPO8EX+6Lbk
+	 iz+6+CGIp+G2ZOoy1rj50HK9tu/VzhryPA0apfZaMGSwiQ73EqvRKnUIyxbVGkr0K2
+	 18xc8LBibcETWjyW4eGrYC8Ya2xOyGNfg4uuqPgo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Phil Sutter <phil@nwl.cc>,
-	Jozsef Kadlecsik <kadlec@netfilter.org>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 341/459] netfilter: ipset: Hold module reference while requesting a module
-Date: Thu, 12 Dec 2024 16:01:19 +0100
-Message-ID: <20241212144307.132975507@linuxfoundation.org>
+	Zicheng Qu <quzicheng@huawei.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 5.10 315/459] ad7780: fix division by zero in ad7780_write_raw()
+Date: Thu, 12 Dec 2024 16:00:53 +0100
+Message-ID: <20241212144306.091086497@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144253.511169641@linuxfoundation.org>
 References: <20241212144253.511169641@linuxfoundation.org>
@@ -52,49 +50,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Phil Sutter <phil@nwl.cc>
+From: Zicheng Qu <quzicheng@huawei.com>
 
-[ Upstream commit 456f010bfaefde84d3390c755eedb1b0a5857c3c ]
+commit c174b53e95adf2eece2afc56cd9798374919f99a upstream.
 
-User space may unload ip_set.ko while it is itself requesting a set type
-backend module, leading to a kernel crash. The race condition may be
-provoked by inserting an mdelay() right after the nfnl_unlock() call.
+In the ad7780_write_raw() , val2 can be zero, which might lead to a
+division by zero error in DIV_ROUND_CLOSEST(). The ad7780_write_raw()
+is based on iio_info's write_raw. While val is explicitly declared that
+can be zero (in read mode), val2 is not specified to be non-zero.
 
-Fixes: a7b4f989a629 ("netfilter: ipset: IP set core support")
-Signed-off-by: Phil Sutter <phil@nwl.cc>
-Acked-by: Jozsef Kadlecsik <kadlec@netfilter.org>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 9085daa4abcc ("staging: iio: ad7780: add gain & filter gpio support")
+Cc: stable@vger.kernel.org
+Signed-off-by: Zicheng Qu <quzicheng@huawei.com>
+Link: https://patch.msgid.link/20241028142027.1032332-1-quzicheng@huawei.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/ipset/ip_set_core.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/iio/adc/ad7780.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/netfilter/ipset/ip_set_core.c b/net/netfilter/ipset/ip_set_core.c
-index bac92369a5436..a265efd31ba96 100644
---- a/net/netfilter/ipset/ip_set_core.c
-+++ b/net/netfilter/ipset/ip_set_core.c
-@@ -104,14 +104,19 @@ find_set_type(const char *name, u8 family, u8 revision)
- static bool
- load_settype(const char *name)
- {
-+	if (!try_module_get(THIS_MODULE))
-+		return false;
-+
- 	nfnl_unlock(NFNL_SUBSYS_IPSET);
- 	pr_debug("try to load ip_set_%s\n", name);
- 	if (request_module("ip_set_%s", name) < 0) {
- 		pr_warn("Can't find ip_set type %s\n", name);
- 		nfnl_lock(NFNL_SUBSYS_IPSET);
-+		module_put(THIS_MODULE);
- 		return false;
- 	}
- 	nfnl_lock(NFNL_SUBSYS_IPSET);
-+	module_put(THIS_MODULE);
- 	return true;
- }
+--- a/drivers/iio/adc/ad7780.c
++++ b/drivers/iio/adc/ad7780.c
+@@ -152,7 +152,7 @@ static int ad7780_write_raw(struct iio_d
  
--- 
-2.43.0
-
+ 	switch (m) {
+ 	case IIO_CHAN_INFO_SCALE:
+-		if (val != 0)
++		if (val != 0 || val2 == 0)
+ 			return -EINVAL;
+ 
+ 		vref = st->int_vref_mv * 1000000LL;
 
 
