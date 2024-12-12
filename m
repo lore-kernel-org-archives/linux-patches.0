@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E63162144C4;
-	Thu, 12 Dec 2024 17:24:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 875D92144C4;
+	Thu, 12 Dec 2024 17:24:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734024275; cv=none; b=usmva2c9Rt3FMuzRC2sDq1HGYnsqIdWfagR+FQApL6P/7ELTL2xYD2Ev3QTgRdjzIZxA3WBhzPM8Gusz5Yk8kI5efTWccet7q5zssqXiVGggc9n+3yE3H99G1cD+Wbm8ABxZdSABmSL24XcKCCg14Qf/TPIdG+FPb2vOL1H3wdk=
+	t=1734024278; cv=none; b=A4jEQnho+hXT5NZBPF0y/gViV9ejNbrP4vh7y2L6KksW1Y3DpgONdeFyg7nBVHnStIbnyc/mZxHM/CXIVMbSVfv34FPdOnlyBwcrcb3R7Vs0h4YRmB1zBRmempbkkU0KJsJSBuoLVEA2a0IkUlAQXbvKH3k8jq/C4n3XxUK0CAM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734024275; c=relaxed/simple;
-	bh=chvTYBEYCj9CsYhyy3iMukwaJa/X5Y7K5KfYS98fC6k=;
+	s=arc-20240116; t=1734024278; c=relaxed/simple;
+	bh=aRtFp0HXrqFEapL6wK3/y9LJoN75hz0TjuqsDpeSnzI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Wj+aTv4LDy82r8XHrAmaGPZt4RfYD+JJ4YQ5acjwyIH/eJ6upR3dsOq7UQ9eUJl5ezEKr6NBAO/7818a/aen399EL97yOSlyqvaty+6CTOcGaMb5rlInXygs09ih7ZzeHp+V58Qj13O58vYuDp83SilgBxlTrYAxH95nl5RUH8k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RsBELCYv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eDbbETsoQr1mHdXah1RJu0seUDVBDCQjvj4I68DuFvictpi6Qvc7m6mn1WmcaDx7VqB3VgiAXUPZtj2tgbD92SyZTrwIzdsbrNCPPe5VnotdjLQf19WhA4GUuia1PfexiaPwAC9dvRltJv9CCOojw3jXIKPmg4oQ1i4ESfVrOGY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=18VU+3Fa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RsBELCYv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CB9CC4CECE;
-	Thu, 12 Dec 2024 17:24:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="18VU+3Fa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05ADEC4CECE;
+	Thu, 12 Dec 2024 17:24:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734024274;
-	bh=chvTYBEYCj9CsYhyy3iMukwaJa/X5Y7K5KfYS98fC6k=;
+	s=korg; t=1734024278;
+	bh=aRtFp0HXrqFEapL6wK3/y9LJoN75hz0TjuqsDpeSnzI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RsBELCYvxF0Dodj3lSgYEQ9eq9Tn0iB4Lt+7H5cOX82jeHnslcqZqZyp7Hk078sgf
-	 b9Bn8UKu9xfhuWii3rMNd2p66J/7IEiR3hau9IklyqCi8igm+qsymLrO7EsSj0ODYh
-	 iNM5bSGwAMHwIksNgWAcHRGl5JkbKIeqOwiOZ1wU=
+	b=18VU+3FaXUvywYpsSC8O8VO23VtgBsTGHJ3Fm96nnv835bTrUw0nWh1ZAEVNo3Bcu
+	 HV/+XkQHJLkXbaDjbGULcJPi6YRFfgAfKjuVObMIvFYnMKSUV+EYUt8vvQ6eSotwmY
+	 V+436vqtsYDzAVhnn5DMvDPTGpFJiT0a6LzXaDEc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vitalii Mordan <mordan@ispras.ru>,
-	Alan Stern <stern@rowland.harvard.edu>
-Subject: [PATCH 5.10 242/459] usb: ehci-spear: fix call balance of sehci clk handling routines
-Date: Thu, 12 Dec 2024 15:59:40 +0100
-Message-ID: <20241212144303.142553314@linuxfoundation.org>
+	Manikanta Mylavarapu <quic_mmanikan@quicinc.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>
+Subject: [PATCH 5.10 243/459] soc: qcom: socinfo: fix revision check in qcom_socinfo_probe()
+Date: Thu, 12 Dec 2024 15:59:41 +0100
+Message-ID: <20241212144303.182654369@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144253.511169641@linuxfoundation.org>
 References: <20241212144253.511169641@linuxfoundation.org>
@@ -50,50 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vitalii Mordan <mordan@ispras.ru>
+From: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
 
-commit 40c974826734836402abfd44efbf04f63a2cc1c1 upstream.
+commit 128fdbf36cddc2a901c4889ba1c89fa9f2643f2c upstream.
 
-If the clock sehci->clk was not enabled in spear_ehci_hcd_drv_probe,
-it should not be disabled in any path.
+In success case, the revision holds a non-null pointer. The current
+logic incorrectly returns an error for a non-null pointer, whereas
+it should return an error for a null pointer.
 
-Conversely, if it was enabled in spear_ehci_hcd_drv_probe, it must be disabled
-in all error paths to ensure proper cleanup.
+The socinfo driver for IPQ9574 and IPQ5332 is currently broken,
+resulting in the following error message
+qcom-socinfo qcom-socinfo: probe with driver qcom-socinfo failed with
+error -12
 
-Found by Linux Verification Center (linuxtesting.org) with Klever.
+Add a null check for the revision to ensure it returns an error only in
+failure case (null pointer).
 
-Fixes: 7675d6ba436f ("USB: EHCI: make ehci-spear a separate driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Vitalii Mordan <mordan@ispras.ru>
-Acked-by: Alan Stern <stern@rowland.harvard.edu>
-Link: https://lore.kernel.org/r/20241114230310.432213-1-mordan@ispras.ru
+Fixes: e694d2b5c58b ("soc: qcom: Add check devm_kasprintf() returned value")
+Signed-off-by: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20241016144852.2888679-1-quic_mmanikan@quicinc.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/ehci-spear.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/soc/qcom/socinfo.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/host/ehci-spear.c
-+++ b/drivers/usb/host/ehci-spear.c
-@@ -108,7 +108,9 @@ static int spear_ehci_hcd_drv_probe(stru
- 	/* registers start at offset 0x0 */
- 	hcd_to_ehci(hcd)->caps = hcd->regs;
+--- a/drivers/soc/qcom/socinfo.c
++++ b/drivers/soc/qcom/socinfo.c
+@@ -507,7 +507,7 @@ static int qcom_socinfo_probe(struct pla
+ 	qs->attr.revision = devm_kasprintf(&pdev->dev, GFP_KERNEL, "%u.%u",
+ 					   SOCINFO_MAJOR(le32_to_cpu(info->ver)),
+ 					   SOCINFO_MINOR(le32_to_cpu(info->ver)));
+-	if (!qs->attr.soc_id || qs->attr.revision)
++	if (!qs->attr.soc_id || !qs->attr.revision)
+ 		return -ENOMEM;
  
--	clk_prepare_enable(sehci->clk);
-+	retval = clk_prepare_enable(sehci->clk);
-+	if (retval)
-+		goto err_put_hcd;
- 	retval = usb_add_hcd(hcd, irq, IRQF_SHARED);
- 	if (retval)
- 		goto err_stop_ehci;
-@@ -133,8 +135,7 @@ static int spear_ehci_hcd_drv_remove(str
- 
- 	usb_remove_hcd(hcd);
- 
--	if (sehci->clk)
--		clk_disable_unprepare(sehci->clk);
-+	clk_disable_unprepare(sehci->clk);
- 	usb_put_hcd(hcd);
- 
- 	return 0;
+ 	if (offsetof(struct socinfo, serial_num) <= item_size) {
 
 
