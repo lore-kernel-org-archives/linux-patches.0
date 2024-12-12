@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21C0620A5EE;
-	Thu, 12 Dec 2024 17:31:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41AC020A5EE;
+	Thu, 12 Dec 2024 17:31:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734024660; cv=none; b=PKycOqROuW8LQigOK8Hd2Lw1Grl9H5544C9qM4iPciiIVmQOlEAxd+cJW9vNYmjO06j8nkPpu9cUhcctCetlZWtOL3Yel93T8yfozty5En7SO55On3jmPwLnsLEHYQ3EJOMR6UwpCKM90obCy8AivutZCku8UqaxFHM48yBbhU0=
+	t=1734024663; cv=none; b=GEFjhYA5LxctkatqvTFjYkscECCDCZy54UwnaooD0JerGoenG6oS765p1kqJWXjrdAqu84oPL9b1QYm7WzCCSMhEXkpkJOc/GtNsTbY69dhDxiawlgFFH/MS25t4Z07f3AAn+0otvxb5b84dVuMAl5UegYT/4/GGwNjwobWWsf4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734024660; c=relaxed/simple;
-	bh=1UDDcBI2d0M2ulsfyAEtbtj4f+MlxsXnV7jTGCp2RBA=;
+	s=arc-20240116; t=1734024663; c=relaxed/simple;
+	bh=sGAqpHmElus80Jk/SmEQ+CBoy3N/KJuepRbq1bvh7dQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qgX+1yG6x3AVaZJbjFOzk66Pizbn0yLq2ZOe7H8Fl2qnkmX1OVCHWs38ruCpka6+t+lAjpQa/ov2ThY+4nzc+wzxmaEj4+upZjXZqt9TcLqI+ju06PTeHgtAjko5e4GjollM8pEIcJZaLZGez1TbG0RwgKvbDgn9Pr9/EsJHJNU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XRAusD1a; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BQcdNYfrUVAvSbGXTyb6AZhH+OAJ1gf8oi4YGsHxQDzXz9AXQ7s5ISrfazw3Bb8zz8HU/lqtSe7g0iWyeIUZznoHtppkuj7VVNojlMxKVCFJOJ+f33DQyMblXKAdDjkiEfhxMq22V8geE/MWE4a8bkpk2flZCTPHafzPcsHCLOM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lch5bgkx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XRAusD1a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 946B2C4CECE;
-	Thu, 12 Dec 2024 17:30:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lch5bgkx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEA35C4CECE;
+	Thu, 12 Dec 2024 17:31:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734024660;
-	bh=1UDDcBI2d0M2ulsfyAEtbtj4f+MlxsXnV7jTGCp2RBA=;
+	s=korg; t=1734024663;
+	bh=sGAqpHmElus80Jk/SmEQ+CBoy3N/KJuepRbq1bvh7dQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XRAusD1am6QTChQLUPaOTP2+ZKlLIpzQWZ0vkIPayCQKBJx012nFfSd62Ukmem1Ek
-	 6yhaUQ7PKxh1lFtP3b6m1hMSJcTgSta3oYvnuLShxBI+J5QPUoPWKZx9LwVGxgAWKd
-	 hta4+p3hHRvClGvaza/3dONFwZXfELAnlRYJy6hk=
+	b=lch5bgkx7A0avBzG+MOBeYxKpiRKUngvR0ZvOOPVNzkGSfsykO4XcVsrp1ZHjXYgG
+	 Yegr6TSUUZ7NQwSJyDPj2H59JBZVIWbuUihpjkPXSyttN8Pd2Ia0tISKJXLxVrDtdo
+	 tm0M+iYAMn95F593cOHLDe2YbuZ2pVI9G80dgw2I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Saurav Kashyap <skashyap@marvell.com>,
-	Nilesh Javali <njavali@marvell.com>,
-	Himanshu Madhani <himanshu.madhani@oracle.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 5.10 369/459] scsi: qla2xxx: Remove check req_sg_cnt should be equal to rsp_sg_cnt
-Date: Thu, 12 Dec 2024 16:01:47 +0100
-Message-ID: <20241212144308.247062862@linuxfoundation.org>
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	syzbot+96d5d14c47d97015c624@syzkaller.appspotmail.com,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.10 370/459] nilfs2: fix potential out-of-bounds memory access in nilfs_find_entry()
+Date: Thu, 12 Dec 2024 16:01:48 +0100
+Message-ID: <20241212144308.285270860@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144253.511169641@linuxfoundation.org>
 References: <20241212144253.511169641@linuxfoundation.org>
@@ -52,45 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Saurav Kashyap <skashyap@marvell.com>
+From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-commit 833c70e212fc40d3e98da941796f4c7bcaecdf58 upstream.
+commit 985ebec4ab0a28bb5910c3b1481a40fbf7f9e61d upstream.
 
-Firmware supports multiple sg_cnt for request and response for CT
-commands, so remove the redundant check. A check is there where sg_cnt
-for request and response should be same. This is not required as driver
-and FW have code to handle multiple and different sg_cnt on request and
-response.
+Syzbot reported that when searching for records in a directory where the
+inode's i_size is corrupted and has a large value, memory access outside
+the folio/page range may occur, or a use-after-free bug may be detected if
+KASAN is enabled.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Saurav Kashyap <skashyap@marvell.com>
-Signed-off-by: Nilesh Javali <njavali@marvell.com>
-Link: https://lore.kernel.org/r/20241115130313.46826-5-njavali@marvell.com
-Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+This is because nilfs_last_byte(), which is called by nilfs_find_entry()
+and others to calculate the number of valid bytes of directory data in a
+page from i_size and the page index, loses the upper 32 bits of the 64-bit
+size information due to an inappropriate type of local variable to which
+the i_size value is assigned.
+
+This caused a large byte offset value due to underflow in the end address
+calculation in the calling nilfs_find_entry(), resulting in memory access
+that exceeds the folio/page size.
+
+Fix this issue by changing the type of the local variable causing the bit
+loss from "unsigned int" to "u64".  The return value of nilfs_last_byte()
+is also of type "unsigned int", but it is truncated so as not to exceed
+PAGE_SIZE and no bit loss occurs, so no change is required.
+
+Link: https://lkml.kernel.org/r/20241119172403.9292-1-konishi.ryusuke@gmail.com
+Fixes: 2ba466d74ed7 ("nilfs2: directory entry operations")
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Reported-by: syzbot+96d5d14c47d97015c624@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=96d5d14c47d97015c624
+Tested-by: syzbot+96d5d14c47d97015c624@syzkaller.appspotmail.com
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/qla2xxx/qla_bsg.c |   10 ----------
- 1 file changed, 10 deletions(-)
+ fs/nilfs2/dir.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/scsi/qla2xxx/qla_bsg.c
-+++ b/drivers/scsi/qla2xxx/qla_bsg.c
-@@ -471,16 +471,6 @@ qla2x00_process_ct(struct bsg_job *bsg_j
- 		goto done;
- 	}
+--- a/fs/nilfs2/dir.c
++++ b/fs/nilfs2/dir.c
+@@ -76,7 +76,7 @@ static inline void nilfs_put_page(struct
+  */
+ static unsigned int nilfs_last_byte(struct inode *inode, unsigned long page_nr)
+ {
+-	unsigned int last_byte = inode->i_size;
++	u64 last_byte = inode->i_size;
  
--	if ((req_sg_cnt !=  bsg_job->request_payload.sg_cnt) ||
--	    (rsp_sg_cnt != bsg_job->reply_payload.sg_cnt)) {
--		ql_log(ql_log_warn, vha, 0x7011,
--		    "request_sg_cnt: %x dma_request_sg_cnt: %x reply_sg_cnt:%x "
--		    "dma_reply_sg_cnt: %x\n", bsg_job->request_payload.sg_cnt,
--		    req_sg_cnt, bsg_job->reply_payload.sg_cnt, rsp_sg_cnt);
--		rval = -EAGAIN;
--		goto done_unmap_sg;
--	}
--
- 	if (!vha->flags.online) {
- 		ql_log(ql_log_warn, vha, 0x7012,
- 		    "Host is not online.\n");
+ 	last_byte -= page_nr << PAGE_SHIFT;
+ 	if (last_byte > PAGE_SIZE)
 
 
