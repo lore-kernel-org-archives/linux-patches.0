@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 863EE235C30;
-	Thu, 12 Dec 2024 16:34:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16E3522652A;
+	Thu, 12 Dec 2024 16:34:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734021269; cv=none; b=cAoI1H+91/TxNW9Wn14rnlsv057yFzVtazOzVQNAzG+AyjvU0nOfGY1866w+tNfb36tS52Tkf5jNYGCBOq1Nz1dlWSJSxr64O35SSZOhqQtaDxI6LOgJyW83IJOjRrUvoWetlkb39o1RCRGyULXZP5acday1McG+KTwfw2++9Mk=
+	t=1734021272; cv=none; b=poUlQ4fHKISsDRFxEh36iDxSyEPfByTkRYCwVtMG1MadJXw+fVumW07qU9BPIiCEYgux9ir6PhhUjUpoFCn5d6Vj6Lblqtr0esMrE/suXYagTf6KAUGnJIyEdJeErmb/2pKa9436GDSUnBS+UvNqhwhO5UfoQ0c381FowVcV0vo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734021269; c=relaxed/simple;
-	bh=eb+veMoFlfWWc1x7v17+JW77YA768+ChP/lJ+tjgVYI=;
+	s=arc-20240116; t=1734021272; c=relaxed/simple;
+	bh=enYf3csh2m5Wr+7/igNNLqcH6vI6f6gUoytrnMIBfMU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j478JjohjZpZmrKwkNam9hmsGoPV5jPkaj9pEuoz/D4J6AUhHf+9n7m2cBpeOS7rkMSZrYiDYY6zaMZ7LshdgiPVB5JtGawioaMkxugZtJ/aQPMZ/m9ABFp682hinfD2wz/NP+bSmzp8STnnj0zhJo+KVceIIJDZ2joB2Y1OwKE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vHOMRHZ1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ljT4cSvgZUOTMTUcIAGZf19rwAedlcqs1WJUNivQQPliyslAE5eRQQfn/0nKOuZzYS6ZF+xlK1R5r5YtGxCxzqsA6rN8yKta/yHHNa5TH5v+4m6+0cjs7aSbufmHraJEUDGjKsJhX1m6QmtyH1WZT4nMWyf+iQIodDRFFF9Pc4I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I2fAVGsE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vHOMRHZ1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7999AC4CECE;
-	Thu, 12 Dec 2024 16:34:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I2fAVGsE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73BA8C4CECE;
+	Thu, 12 Dec 2024 16:34:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734021268;
-	bh=eb+veMoFlfWWc1x7v17+JW77YA768+ChP/lJ+tjgVYI=;
+	s=korg; t=1734021272;
+	bh=enYf3csh2m5Wr+7/igNNLqcH6vI6f6gUoytrnMIBfMU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vHOMRHZ19Yz/VOQQtuMi6rVAFz9/S/lhvqtpXELBMVtuy/bOWMPHfmtZF7cUvLnHG
-	 Jj5MnzaxiuBZDuZa5Y3ockc7zZBLx4wNCSo5cHYdFBIoplgZ8T0JBm84hVEOK3w2wq
-	 sLFRMz7ea4eZ+INQ8Z5NfzRNrhARGMSVyjdt1C9k=
+	b=I2fAVGsEi6MOR6QJVEWChQUzxiMCmj+kCFtQMGCJP9GsMObn8ggfWLpR3pHGO6iKi
+	 UqiB1592VFq48/3zMqITEiaCVhqypcHUalScYLervU2V0NRg+tsq2Uaxm4x1ZBBhow
+	 KRlPYsumVjDhFrC6XeuPxFdqeayVVE2P+LKtrovY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Lunn <andrew@lunn.ch>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Hilda Wu <hildawu@realtek.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 692/772] dsa: qca8k: Use nested lock to avoid splat
-Date: Thu, 12 Dec 2024 16:00:37 +0100
-Message-ID: <20241212144418.500435526@linuxfoundation.org>
+Subject: [PATCH 6.1 693/772] Bluetooth: btusb: Add RTL8852BE device 0489:e123 to device tables
+Date: Thu, 12 Dec 2024 16:00:38 +0100
+Message-ID: <20241212144418.543771730@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -51,37 +51,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrew Lunn <andrew@lunn.ch>
+From: Hilda Wu <hildawu@realtek.com>
 
-[ Upstream commit 078e0d596f7b5952dad8662ace8f20ed2165e2ce ]
+[ Upstream commit 69b84ffce260ff13826dc10aeb3c3e5c2288a552 ]
 
-qca8k_phy_eth_command() is used to probe the child MDIO bus while the
-parent MDIO is locked. This causes lockdep splat, reporting a possible
-deadlock. It is not an actually deadlock, because different locks are
-used. By making use of mutex_lock_nested() we can avoid this false
-positive.
+Add the support ID 0489:e123 to usb_device_id table for
+Realtek RTL8852B chip.
 
-Signed-off-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20241110175955.3053664-1-andrew@lunn.ch
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+The device info from /sys/kernel/debug/usb/devices as below.
+
+T:  Bus=01 Lev=01 Prnt=01 Port=07 Cnt=04 Dev#=  7 Spd=12   MxCh= 0
+D:  Ver= 1.00 Cls=e0(wlcon) Sub=01 Prot=01 MxPS=64 #Cfgs=  1
+P:  Vendor=0489 ProdID=e123 Rev= 0.00
+S:  Manufacturer=Realtek
+S:  Product=Bluetooth Radio
+S:  SerialNumber=00e04c000001
+C:* #Ifs= 2 Cfg#= 1 Atr=e0 MxPwr=500mA
+I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=1ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS=  64 Ivl=0ms
+E:  Ad=82(I) Atr=02(Bulk) MxPS=  64 Ivl=0ms
+I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+I:  If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+I:  If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+I:  If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+I:  If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+I:  If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+
+Signed-off-by: Hilda Wu <hildawu@realtek.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/qca/qca8k-8xxx.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/bluetooth/btusb.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/dsa/qca/qca8k-8xxx.c b/drivers/net/dsa/qca/qca8k-8xxx.c
-index 641692f716f86..47e9b2c303831 100644
---- a/drivers/net/dsa/qca/qca8k-8xxx.c
-+++ b/drivers/net/dsa/qca/qca8k-8xxx.c
-@@ -551,7 +551,7 @@ qca8k_phy_eth_command(struct qca8k_priv *priv, bool read, int phy,
- 	 * We therefore need to lock the MDIO bus onto which the switch is
- 	 * connected.
- 	 */
--	mutex_lock(&priv->bus->mdio_lock);
-+	mutex_lock_nested(&priv->bus->mdio_lock, MDIO_MUTEX_NESTED);
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index 0b915f2c76078..4c9747de0d6de 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -549,6 +549,8 @@ static const struct usb_device_id blacklist_table[] = {
+ 						     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x13d3, 0x3591), .driver_info = BTUSB_REALTEK |
+ 						     BTUSB_WIDEBAND_SPEECH },
++	{ USB_DEVICE(0x0489, 0xe123), .driver_info = BTUSB_REALTEK |
++						     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x0489, 0xe125), .driver_info = BTUSB_REALTEK |
+ 						     BTUSB_WIDEBAND_SPEECH },
  
- 	/* Actually start the request:
- 	 * 1. Send mdio master packet
 -- 
 2.43.0
 
