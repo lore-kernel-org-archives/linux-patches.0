@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C770223320;
-	Thu, 12 Dec 2024 17:20:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FF50223C4E;
+	Thu, 12 Dec 2024 17:20:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734024042; cv=none; b=tzDW1GMkj/bodPA99TeSX5WsN1JFHacNfwGbBgE7Q0n3UTWXwXlAVW1RHWw0zc9A2ATh+Jcn0md28Rwbd9LU5ApB40mrtx0Z4X6oZ8XzJI9Jb9Hfjue8NNu+maMj6wYOgv+oSUzi6n81a9JQoZ3kgR6ih13MOQVjpSzOsZ7dSX8=
+	t=1734024045; cv=none; b=jLm5gi4l4Q7kVPwyIOfqppbut8ikh6Pfl/YuHj9stknqhp7j6V1PUrwhQJMOtrySjtNe8zFfHQ06zOxDwPj/ktR6jPdBOXQURyCBblpkOFMLqJroJCz5LPvmO8MzbYg5C6yYVNzYQuW2My96Snwd7cqsUN8WhZqONrWWeOp0e8E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734024042; c=relaxed/simple;
-	bh=tKAn90tcW76qvwDURct+3UThslduq/xiDudIgKCOyvc=;
+	s=arc-20240116; t=1734024045; c=relaxed/simple;
+	bh=W2X0ltOSNBcELJmWSgJtqc8efTCNZSHdmrOUxJaVMs8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qZby13HxnfvYpGfXtgHUMeA/9In1BkZuIpywv/jauBVUiP9W5/NhYwdnFkgLEmVW9qS0InWd8/d3HxhK1fLUbW0+h2UboOpZXlaWuTcdgmcsc8w/cmTc7mTMZ0ABaxGTHYZZ2tuL34MxFvqILx8kiz6f3j6kbhBGjmAN/RFW+ck=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NbxReI/V; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fsx7BlzSEg/xBA6B4Tup3HUV7IOhk5x6IF+9ZsUiVKsX4fz6rKAqU7u8PhyUoIcddgvL5780FrXHW3eNjOGdqVZcNwJykRpPsIVddcqRnKrJrcWo17/hpayN/4fEkaXqKtPb2z0lK0g8T2KZPo3e6i/Z1A4pSAj/LnYbVa2A7t0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kUF0GkNu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NbxReI/V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DBFEC4CED3;
-	Thu, 12 Dec 2024 17:20:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kUF0GkNu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99A2DC4CECE;
+	Thu, 12 Dec 2024 17:20:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734024042;
-	bh=tKAn90tcW76qvwDURct+3UThslduq/xiDudIgKCOyvc=;
+	s=korg; t=1734024045;
+	bh=W2X0ltOSNBcELJmWSgJtqc8efTCNZSHdmrOUxJaVMs8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NbxReI/VqNS//wjzNGAdIlZmDiJjAo1CAS7mHj/YjsliOjBAVBFjGT56itYciW+po
-	 SPOo4gDL5ZA+ECaq7yTTgKk3U7kWf79WUWj0J2H2VIWKW2T0ojtjzyJ1nH3GG7NJXx
-	 gts2pcGpKyMXQZ5WsYa6HotjpCjktxQo8gIA/azw=
+	b=kUF0GkNu4iSy2U5aJq3LzfoCWbODAg2DpqqYQftBTloEqrj8Rno0pU6/tXkLUzDzS
+	 ASFgtixDJSIJGCUSpYMLyKTvY4bXqGHK2e8AyRnWYutmcha7h9MfORg4UBMiGKXj84
+	 SsoxFAxGVhp+nzBsQeg+4UP6KiTJ6IAMpr5tHa8s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Zhang Ning <zhangn1985@outlook.com>,
 	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Lee Jones <lee.jones@linaro.org>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 167/459] mfd: intel_soc_pmic_bxtwc: Use dev_err_probe()
-Date: Thu, 12 Dec 2024 15:58:25 +0100
-Message-ID: <20241212144300.111386664@linuxfoundation.org>
+Subject: [PATCH 5.10 168/459] mfd: intel_soc_pmic_bxtwc: Use IRQ domain for USB Type-C device
+Date: Thu, 12 Dec 2024 15:58:26 +0100
+Message-ID: <20241212144300.149555633@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144253.511169641@linuxfoundation.org>
 References: <20241212144253.511169641@linuxfoundation.org>
@@ -53,185 +54,138 @@ Content-Transfer-Encoding: 8bit
 
 From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit d30e2c30a43de950cfd3690f24342a39034221c4 ]
+[ Upstream commit 686fb77712a4bc94b76a0c5ae74c60118b7a0d79 ]
 
-Simplify the mux error path a bit by using dev_err_probe().
+While design wise the idea of converting the driver to use
+the hierarchy of the IRQ chips is correct, the implementation
+has (inherited) flaws. This was unveiled when platform_get_irq()
+had started WARN() on IRQ 0 that is supposed to be a Linux
+IRQ number (also known as vIRQ).
 
+Rework the driver to respect IRQ domain when creating each MFD
+device separately, as the domain is not the same for all of them.
+
+Fixes: 9c6235c86332 ("mfd: intel_soc_pmic_bxtwc: Add bxt_wcove_usbc device")
+Fixes: d2061f9cc32d ("usb: typec: add driver for Intel Whiskey Cove PMIC USB Type-C PHY")
+Fixes: 57129044f504 ("mfd: intel_soc_pmic_bxtwc: Use chained IRQs for second level IRQ chips")
+Reported-by: Zhang Ning <zhangn1985@outlook.com>
+Closes: https://lore.kernel.org/r/TY2PR01MB3322FEDCDC048B7D3794F922CDBA2@TY2PR01MB3322.jpnprd01.prod.outlook.com
+Tested-by: Zhang Ning <zhangn1985@outlook.com>
 Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Signed-off-by: Lee Jones <lee.jones@linaro.org>
-Link: https://lore.kernel.org/r/20220628221747.33956-4-andriy.shevchenko@linux.intel.com
-Stable-dep-of: 686fb77712a4 ("mfd: intel_soc_pmic_bxtwc: Use IRQ domain for USB Type-C device")
+Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://lore.kernel.org/r/20241005193029.1929139-2-andriy.shevchenko@linux.intel.com
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/intel_soc_pmic_bxtwc.c | 86 +++++++++---------------------
- 1 file changed, 26 insertions(+), 60 deletions(-)
+ drivers/mfd/intel_soc_pmic_bxtwc.c | 57 +++++++++++++++++++++---------
+ drivers/usb/typec/tcpm/wcove.c     |  4 ---
+ 2 files changed, 40 insertions(+), 21 deletions(-)
 
 diff --git a/drivers/mfd/intel_soc_pmic_bxtwc.c b/drivers/mfd/intel_soc_pmic_bxtwc.c
-index eba89780dbe75..3b41cc2d1ec01 100644
+index 3b41cc2d1ec01..82c71b475a7e0 100644
 --- a/drivers/mfd/intel_soc_pmic_bxtwc.c
 +++ b/drivers/mfd/intel_soc_pmic_bxtwc.c
-@@ -410,12 +410,9 @@ static int bxtwc_add_chained_irq_chip(struct intel_soc_pmic *pmic,
- 	int irq;
+@@ -240,16 +240,6 @@ static struct mfd_cell bxt_wc_dev[] = {
+ 		.num_resources = ARRAY_SIZE(thermal_resources),
+ 		.resources = thermal_resources,
+ 	},
+-	{
+-		.name = "bxt_wcove_usbc",
+-		.num_resources = ARRAY_SIZE(usbc_resources),
+-		.resources = usbc_resources,
+-	},
+-	{
+-		.name = "bxt_wcove_ext_charger",
+-		.num_resources = ARRAY_SIZE(charger_resources),
+-		.resources = charger_resources,
+-	},
+ 	{
+ 		.name = "bxt_wcove_bcu",
+ 		.num_resources = ARRAY_SIZE(bcu_resources),
+@@ -271,6 +261,19 @@ static struct mfd_cell bxt_wc_dev[] = {
+ 	},
+ };
  
- 	irq = regmap_irq_get_virq(pdata, pirq);
--	if (irq < 0) {
--		dev_err(pmic->dev,
--			"Failed to get parent vIRQ(%d) for chip %s, ret:%d\n",
--			pirq, chip->name, irq);
--		return irq;
--	}
-+	if (irq < 0)
-+		return dev_err_probe(pmic->dev, irq, "Failed to get parent vIRQ(%d) for chip %s\n",
-+				     pirq, chip->name);
- 
- 	return devm_regmap_add_irq_chip(pmic->dev, pmic->regmap, irq, irq_flags,
++static struct mfd_cell bxt_wc_chgr_dev[] = {
++	{
++		.name = "bxt_wcove_usbc",
++		.num_resources = ARRAY_SIZE(usbc_resources),
++		.resources = usbc_resources,
++	},
++	{
++		.name = "bxt_wcove_ext_charger",
++		.num_resources = ARRAY_SIZE(charger_resources),
++		.resources = charger_resources,
++	},
++};
++
+ static int regmap_ipc_byte_reg_read(void *context, unsigned int reg,
+ 				    unsigned int *val)
+ {
+@@ -418,6 +421,26 @@ static int bxtwc_add_chained_irq_chip(struct intel_soc_pmic *pmic,
  					0, chip, data);
-@@ -423,6 +420,7 @@ static int bxtwc_add_chained_irq_chip(struct intel_soc_pmic *pmic,
+ }
  
++static int bxtwc_add_chained_devices(struct intel_soc_pmic *pmic,
++				     const struct mfd_cell *cells, int n_devs,
++				     struct regmap_irq_chip_data *pdata,
++				     int pirq, int irq_flags,
++				     const struct regmap_irq_chip *chip,
++				     struct regmap_irq_chip_data **data)
++{
++	struct device *dev = pmic->dev;
++	struct irq_domain *domain;
++	int ret;
++
++	ret = bxtwc_add_chained_irq_chip(pmic, pdata, pirq, irq_flags, chip, data);
++	if (ret)
++		return dev_err_probe(dev, ret, "Failed to add %s IRQ chip\n", chip->name);
++
++	domain = regmap_irq_get_domain(*data);
++
++	return devm_mfd_add_devices(dev, PLATFORM_DEVID_NONE, cells, n_devs, NULL, 0, domain);
++}
++
  static int bxtwc_probe(struct platform_device *pdev)
  {
-+	struct device *dev = &pdev->dev;
- 	int ret;
- 	acpi_handle handle;
- 	acpi_status status;
-@@ -431,15 +429,10 @@ static int bxtwc_probe(struct platform_device *pdev)
+ 	struct device *dev = &pdev->dev;
+@@ -496,14 +519,14 @@ static int bxtwc_probe(struct platform_device *pdev)
+ 	if (ret)
+ 		return dev_err_probe(dev, ret, "Failed to add ADC IRQ chip\n");
  
- 	handle = ACPI_HANDLE(&pdev->dev);
- 	status = acpi_evaluate_integer(handle, "_HRV", NULL, &hrv);
--	if (ACPI_FAILURE(status)) {
--		dev_err(&pdev->dev, "Failed to get PMIC hardware revision\n");
--		return -ENODEV;
--	}
--	if (hrv != BROXTON_PMIC_WC_HRV) {
--		dev_err(&pdev->dev, "Invalid PMIC hardware revision: %llu\n",
--			hrv);
--		return -ENODEV;
--	}
-+	if (ACPI_FAILURE(status))
-+		return dev_err_probe(dev, -ENODEV, "Failed to get PMIC hardware revision\n");
-+	if (hrv != BROXTON_PMIC_WC_HRV)
-+		return dev_err_probe(dev, -ENODEV, "Invalid PMIC hardware revision: %llu\n", hrv);
- 
- 	pmic = devm_kzalloc(&pdev->dev, sizeof(*pmic), GFP_KERNEL);
- 	if (!pmic)
-@@ -459,40 +452,31 @@ static int bxtwc_probe(struct platform_device *pdev)
- 
- 	pmic->regmap = devm_regmap_init(&pdev->dev, NULL, pmic,
- 					&bxtwc_regmap_config);
--	if (IS_ERR(pmic->regmap)) {
--		ret = PTR_ERR(pmic->regmap);
--		dev_err(&pdev->dev, "Failed to initialise regmap: %d\n", ret);
--		return ret;
--	}
-+	if (IS_ERR(pmic->regmap))
-+		return dev_err_probe(dev, PTR_ERR(pmic->regmap), "Failed to initialise regmap\n");
- 
- 	ret = devm_regmap_add_irq_chip(&pdev->dev, pmic->regmap, pmic->irq,
- 				       IRQF_ONESHOT | IRQF_SHARED,
- 				       0, &bxtwc_regmap_irq_chip,
- 				       &pmic->irq_chip_data);
--	if (ret) {
--		dev_err(&pdev->dev, "Failed to add IRQ chip\n");
--		return ret;
--	}
-+	if (ret)
-+		return dev_err_probe(dev, ret, "Failed to add IRQ chip\n");
- 
- 	ret = bxtwc_add_chained_irq_chip(pmic, pmic->irq_chip_data,
- 					 BXTWC_PWRBTN_LVL1_IRQ,
- 					 IRQF_ONESHOT,
- 					 &bxtwc_regmap_irq_chip_pwrbtn,
- 					 &pmic->irq_chip_data_pwrbtn);
--	if (ret) {
--		dev_err(&pdev->dev, "Failed to add PWRBTN IRQ chip\n");
--		return ret;
--	}
-+	if (ret)
-+		return dev_err_probe(dev, ret, "Failed to add PWRBTN IRQ chip\n");
- 
- 	ret = bxtwc_add_chained_irq_chip(pmic, pmic->irq_chip_data,
- 					 BXTWC_TMU_LVL1_IRQ,
- 					 IRQF_ONESHOT,
- 					 &bxtwc_regmap_irq_chip_tmu,
- 					 &pmic->irq_chip_data_tmu);
--	if (ret) {
--		dev_err(&pdev->dev, "Failed to add TMU IRQ chip\n");
--		return ret;
--	}
-+	if (ret)
-+		return dev_err_probe(dev, ret, "Failed to add TMU IRQ chip\n");
- 
- 	/* Add chained IRQ handler for BCU IRQs */
- 	ret = bxtwc_add_chained_irq_chip(pmic, pmic->irq_chip_data,
-@@ -500,12 +484,8 @@ static int bxtwc_probe(struct platform_device *pdev)
- 					 IRQF_ONESHOT,
- 					 &bxtwc_regmap_irq_chip_bcu,
- 					 &pmic->irq_chip_data_bcu);
--
--
--	if (ret) {
--		dev_err(&pdev->dev, "Failed to add BUC IRQ chip\n");
--		return ret;
--	}
-+	if (ret)
-+		return dev_err_probe(dev, ret, "Failed to add BUC IRQ chip\n");
- 
- 	/* Add chained IRQ handler for ADC IRQs */
- 	ret = bxtwc_add_chained_irq_chip(pmic, pmic->irq_chip_data,
-@@ -513,12 +493,8 @@ static int bxtwc_probe(struct platform_device *pdev)
- 					 IRQF_ONESHOT,
- 					 &bxtwc_regmap_irq_chip_adc,
- 					 &pmic->irq_chip_data_adc);
--
--
--	if (ret) {
--		dev_err(&pdev->dev, "Failed to add ADC IRQ chip\n");
--		return ret;
--	}
-+	if (ret)
-+		return dev_err_probe(dev, ret, "Failed to add ADC IRQ chip\n");
- 
- 	/* Add chained IRQ handler for CHGR IRQs */
- 	ret = bxtwc_add_chained_irq_chip(pmic, pmic->irq_chip_data,
-@@ -526,12 +502,8 @@ static int bxtwc_probe(struct platform_device *pdev)
- 					 IRQF_ONESHOT,
- 					 &bxtwc_regmap_irq_chip_chgr,
- 					 &pmic->irq_chip_data_chgr);
--
--
--	if (ret) {
--		dev_err(&pdev->dev, "Failed to add CHGR IRQ chip\n");
--		return ret;
--	}
-+	if (ret)
-+		return dev_err_probe(dev, ret, "Failed to add CHGR IRQ chip\n");
+-	/* Add chained IRQ handler for CHGR IRQs */
+-	ret = bxtwc_add_chained_irq_chip(pmic, pmic->irq_chip_data,
+-					 BXTWC_CHGR_LVL1_IRQ,
+-					 IRQF_ONESHOT,
+-					 &bxtwc_regmap_irq_chip_chgr,
+-					 &pmic->irq_chip_data_chgr);
++	ret = bxtwc_add_chained_devices(pmic, bxt_wc_chgr_dev, ARRAY_SIZE(bxt_wc_chgr_dev),
++					pmic->irq_chip_data,
++					BXTWC_CHGR_LVL1_IRQ,
++					IRQF_ONESHOT,
++					&bxtwc_regmap_irq_chip_chgr,
++					&pmic->irq_chip_data_chgr);
+ 	if (ret)
+-		return dev_err_probe(dev, ret, "Failed to add CHGR IRQ chip\n");
++		return ret;
  
  	/* Add chained IRQ handler for CRIT IRQs */
  	ret = bxtwc_add_chained_irq_chip(pmic, pmic->irq_chip_data,
-@@ -539,19 +511,13 @@ static int bxtwc_probe(struct platform_device *pdev)
- 					 IRQF_ONESHOT,
- 					 &bxtwc_regmap_irq_chip_crit,
- 					 &pmic->irq_chip_data_crit);
--
--
--	if (ret) {
--		dev_err(&pdev->dev, "Failed to add CRIT IRQ chip\n");
--		return ret;
--	}
-+	if (ret)
-+		return dev_err_probe(dev, ret, "Failed to add CRIT IRQ chip\n");
+diff --git a/drivers/usb/typec/tcpm/wcove.c b/drivers/usb/typec/tcpm/wcove.c
+index 7e9c279bf49df..22fe8d60fe368 100644
+--- a/drivers/usb/typec/tcpm/wcove.c
++++ b/drivers/usb/typec/tcpm/wcove.c
+@@ -620,10 +620,6 @@ static int wcove_typec_probe(struct platform_device *pdev)
+ 	if (irq < 0)
+ 		return irq;
  
- 	ret = devm_mfd_add_devices(&pdev->dev, PLATFORM_DEVID_NONE, bxt_wc_dev,
- 				   ARRAY_SIZE(bxt_wc_dev), NULL, 0, NULL);
--	if (ret) {
--		dev_err(&pdev->dev, "Failed to add devices\n");
--		return ret;
--	}
-+	if (ret)
-+		return dev_err_probe(dev, ret, "Failed to add devices\n");
- 
- 	ret = sysfs_create_group(&pdev->dev.kobj, &bxtwc_group);
- 	if (ret) {
+-	irq = regmap_irq_get_virq(pmic->irq_chip_data_chgr, irq);
+-	if (irq < 0)
+-		return irq;
+-
+ 	ret = guid_parse(WCOVE_DSM_UUID, &wcove->guid);
+ 	if (ret)
+ 		return ret;
 -- 
 2.43.0
 
