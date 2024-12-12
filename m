@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3254A213E6B;
-	Thu, 12 Dec 2024 16:11:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4CF8225A56;
+	Thu, 12 Dec 2024 16:11:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734019866; cv=none; b=gedMUg+Zqh4xkXMcc5c+om0bmKO6JamAi8AHLhJTWxMEdekAShJqxi8vgYsJu6MngF1zeO1CxB0K2LiCAkgeBNe7LaS4cqXhBh/lnwGD6JJBBlAa9F6vX2c9AIUopYztTRyjbOLwnSvpyHLI2d2UoQLrg7JFHy7vtAzmdaSPc3E=
+	t=1734019869; cv=none; b=IVA40UZCPOItyUfDJBWJdURt1n+sAy5SNg/qFNc006zBOP2tsgLF3OYxH9O9pfcC6emVcQendxDn+3sAg0P/86o5nfFejcwgmo0/4GDt3fOJAh0oGPjJOQfFyAsAMNhMHlL0NF6AMAK4CxpI7wZak6JOAOOx8/E44lOf9exSX2Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734019866; c=relaxed/simple;
-	bh=+528Hdwv5W0mBSUHAnn6t6oCeP+o9nAU711u1/jsqvM=;
+	s=arc-20240116; t=1734019869; c=relaxed/simple;
+	bh=lX2Zdp+8xN+JsAsN5REAw3oEhPoSuc9rya9LMFdTEXY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D6aljTYcGNzfzQhB6YNB9pBlS2ptOEdmSkYCz5b0kclHeG5O3OUaWvprUCSO5KSVzJMl1/EIgyPu4LCNIvDoaEzx2Ul/oNF+G1gnvmC2O+WL9LvvifTmJLI1iRh/10cYyJoKgD7aOELrYe04lQDVODCselTjShQYKhYIR8zrqds=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dt2lgEho; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mJSXNrMQmpEjOqdTGeL9ZWnh5Zk1ou1thnu9D2kZCAjFsd8NAoxDj0MvXFkUmkdHgRiGyHpSgyzRIt+2nS8j2z5no4D+/LFGu8YqV3FPCvPYPILHaVUiwkrTr1BatTq5ZMktnJ7KpcSDES++W0BnZvfmgarfRoBRiUbOTvbE+fg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j0oAUofz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dt2lgEho"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D579C4CED4;
-	Thu, 12 Dec 2024 16:11:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j0oAUofz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D9CEC4CECE;
+	Thu, 12 Dec 2024 16:11:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734019866;
-	bh=+528Hdwv5W0mBSUHAnn6t6oCeP+o9nAU711u1/jsqvM=;
+	s=korg; t=1734019869;
+	bh=lX2Zdp+8xN+JsAsN5REAw3oEhPoSuc9rya9LMFdTEXY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dt2lgEhodtdP/Ilw647w17qrHvJMFj/lPGGrrFdTthWeWdalRdyFOBd+yJNF0MJe+
-	 glxfu+my8qU5WCzf/EADg1AGQllNFXcy0HFQXHJ5pU8DjgeQz8kONoKz2exGQQOjNS
-	 UyUNHcs/nJRad3acwjgbNc76P5ek+wTejuTh6TUM=
+	b=j0oAUofzVdoJAkOlJGyi3Mu8oW2K642ZUP94CRZy1OyyOA2NpYlAImdu70E4q9OOG
+	 0Ancl3IiFEJNnPzmXM6HaU0ZE2FhSz9e2XSc89x+BtoevAr+5XfD6EXjb5Mql9XVwD
+	 UxwMAH1YclekZV8dlTEO5qyHc1vt9Koyd0q/cZsU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Somnath Kotur <somnath.kotur@broadcom.com>,
-	Pavan Chebbi <pavan.chebbi@broadcom.com>,
-	Kashyap Desai <kashyap.desai@broadcom.com>,
-	Saravanan Vajravel <saravanan.vajravel@broadcom.com>,
-	Michael Chan <michael.chan@broadcom.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 317/772] bnxt_en: Reserve rings after PCIe AER recovery if NIC interface is down
-Date: Thu, 12 Dec 2024 15:54:22 +0100
-Message-ID: <20241212144402.988131815@linuxfoundation.org>
+Subject: [PATCH 6.1 291/772] NFSD: Cap the number of bytes copied by nfs4_reset_recoverydir()
+Date: Thu, 12 Dec 2024 15:53:56 +0100
+Message-ID: <20241212144401.923800358@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -55,51 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Saravanan Vajravel <saravanan.vajravel@broadcom.com>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit 5311598f7f3293683cdc761df71ae3469327332c ]
+[ Upstream commit f64ea4af43161bb86ffc77e6aeb5bcf5c3229df0 ]
 
-After successful PCIe AER recovery, FW will reset all resource
-reservations.  If it is IF_UP, the driver will call bnxt_open() and
-all resources will be reserved again.  It it is IF_DOWN, we should
-call bnxt_reserve_rings() so that we can reserve resources including
-RoCE resources to allow RoCE to resume after AER.  Without this
-patch, RoCE fails to resume in this IF_DOWN scenario.
+It's only current caller already length-checks the string, but let's
+be safe.
 
-Later, if it becomes IF_UP, bnxt_open() will see that resources have
-been reserved and will not reserve again.
-
-Fixes: fb1e6e562b37 ("bnxt_en: Fix AER recovery.")
-Reviewed-by: Somnath Kotur <somnath.kotur@broadcom.com>
-Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
-Reviewed-by: Kashyap Desai <kashyap.desai@broadcom.com>
-Signed-off-by: Saravanan Vajravel <saravanan.vajravel@broadcom.com>
-Signed-off-by: Michael Chan <michael.chan@broadcom.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 0964a3d3f1aa ("[PATCH] knfsd: nfsd4 reboot dirname fix")
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ fs/nfsd/nfs4recover.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-index 20e2fae64e67f..7d9677d0f7304 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-@@ -14113,8 +14113,12 @@ static void bnxt_io_resume(struct pci_dev *pdev)
- 	rtnl_lock();
- 
- 	err = bnxt_hwrm_func_qcaps(bp);
--	if (!err && netif_running(netdev))
--		err = bnxt_open(netdev);
-+	if (!err) {
-+		if (netif_running(netdev))
-+			err = bnxt_open(netdev);
-+		else
-+			err = bnxt_reserve_rings(bp, true);
-+	}
- 
- 	bnxt_ulp_start(bp, err);
- 	if (!err) {
+diff --git a/fs/nfsd/nfs4recover.c b/fs/nfsd/nfs4recover.c
+index 7d5d794e2e320..6596989718106 100644
+--- a/fs/nfsd/nfs4recover.c
++++ b/fs/nfsd/nfs4recover.c
+@@ -658,7 +658,8 @@ nfs4_reset_recoverydir(char *recdir)
+ 		return status;
+ 	status = -ENOTDIR;
+ 	if (d_is_dir(path.dentry)) {
+-		strcpy(user_recovery_dirname, recdir);
++		strscpy(user_recovery_dirname, recdir,
++			sizeof(user_recovery_dirname));
+ 		status = 0;
+ 	}
+ 	path_put(&path);
 -- 
 2.43.0
 
