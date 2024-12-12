@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 535602253FD;
-	Thu, 12 Dec 2024 15:48:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7ABE2236EF;
+	Thu, 12 Dec 2024 15:48:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734018536; cv=none; b=m1rx3/5gVV+TcXN4Tie0WzK6ZdprjPs2qd+tdu7Ku3N8HnGz9MtFUO8dZ1qyFIR3ZD4D7GVXMlG9LvP0b0/yttODJKBt0OSUD5kRVnL+hXB8J3I1V7uE72ddDf9guAqkdqh9fxlmh56+X+hX0DKRI8F1usysZklhEJZ3SGOKtXg=
+	t=1734018539; cv=none; b=mPP5RAcMgQuD5ajENpPxLjwB6vjYKAN6J5YEEJ5uN8Ipaw5Q9MeZg/SBHufdpxUOI1GzFJXWkCa6ft4h6Hlh5Deiyc9j5aR1RrOPr8vg9iNFRg0adaQfoZidOUZVUXTrurpG5+MaYm8Z213+UCVkCU0oQdKb46JESuY2zChF1Sk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734018536; c=relaxed/simple;
-	bh=4FY5LQ/924MCaCTizGiy6LQcbNv33RPnOcUyirhPKeI=;
+	s=arc-20240116; t=1734018539; c=relaxed/simple;
+	bh=QFnZiFqbKMLsWNiYtrnbNpQDapBgId2jjwFGS5HufeU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TiqSQRMbfKDgKv2Fonc0cH4E6zuWt3mEyYX9S3zNKHNTHYxFAGeLpHwNBOrHQ5bvhns1HqO5WhzocZSDNDxEYegxlRqCDktv3Txk9hc6iWGDe32Azp+Isu7osW9S6Z+ZqAyuNTD5+ZSt5QAnvBFxbNTNczEWalSHKU1ZKmgDY+Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lQ63eMRt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nERR5evdqEpJvADQ8pCg1CRR9/pZJvcZ4QvxZOBfO8LHRGsLoTRpRy9JaZpz5ybFrvbuGTRkTYkaX5ESz6yLGU27/zWPQJ9PUcWEmLU8SnRB64yOwksM/uwDQb60aSdMXybxNfbcdnjDrfV1CrJ+rOffOkkXLRkBp6yWL8cRDtQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LxgkL+1P; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lQ63eMRt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F037C4CECE;
-	Thu, 12 Dec 2024 15:48:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LxgkL+1P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 358F5C4CECE;
+	Thu, 12 Dec 2024 15:48:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734018535;
-	bh=4FY5LQ/924MCaCTizGiy6LQcbNv33RPnOcUyirhPKeI=;
+	s=korg; t=1734018539;
+	bh=QFnZiFqbKMLsWNiYtrnbNpQDapBgId2jjwFGS5HufeU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lQ63eMRtyl7r+cs2m2blzwC6Lp/0Y/QaGdE65O06q3THJpGr5HExIHrHtVYu72ojb
-	 F9Irz+vULX9ndaz9Q5xb//mPZzHJjTq2Yf3Y5AscaVWvrtu4ZTB0jOox4sGofP21dj
-	 EkWKuwK2buGtwl2tqJ9Vx4GRByHpxVVcv4uBa4kA=
+	b=LxgkL+1PfxyMryVEaA0Oac76teBzBshvtqwsQfG/s89qPeZT36yg+X895u6nHgYes
+	 /GOAZytUbF+uK1xHFbpv7XykqT0oFgbAfw057K93/qQHwTYlILa/Mt2q74hnK89/cT
+	 Fp2BjfVwzbFodOxgmoghgAOZYTh9Mey6Ko9x8d/o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Hildenbrand <david@redhat.com>,
-	syzbot+3511625422f7aa637f0d@syzkaller.appspotmail.com,
-	"Liam R. Howlett" <Liam.Howlett@Oracle.com>,
-	Christoph Lameter <cl@linux.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	K Prateek Nayak <kprateek.nayak@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 319/356] mm/mempolicy: fix migrate_to_node() assuming there is at least one VMA in a MM
-Date: Thu, 12 Dec 2024 16:00:38 +0100
-Message-ID: <20241212144257.157048429@linuxfoundation.org>
+Subject: [PATCH 6.6 320/356] sched/core: Remove the unnecessary need_resched() check in nohz_csd_func()
+Date: Thu, 12 Dec 2024 16:00:39 +0100
+Message-ID: <20241212144257.201866375@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144244.601729511@linuxfoundation.org>
 References: <20241212144244.601729511@linuxfoundation.org>
@@ -54,77 +51,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Hildenbrand <david@redhat.com>
+From: K Prateek Nayak <kprateek.nayak@amd.com>
 
-[ Upstream commit 091c1dd2d4df6edd1beebe0e5863d4034ade9572 ]
+[ Upstream commit ea9cffc0a154124821531991d5afdd7e8b20d7aa ]
 
-We currently assume that there is at least one VMA in a MM, which isn't
-true.
+The need_resched() check currently in nohz_csd_func() can be tracked
+to have been added in scheduler_ipi() back in 2011 via commit
+ca38062e57e9 ("sched: Use resched IPI to kick off the nohz idle balance")
 
-So we might end up having find_vma() return NULL, to then de-reference
-NULL.  So properly handle find_vma() returning NULL.
+Since then, it has travelled quite a bit but it seems like an idle_cpu()
+check currently is sufficient to detect the need to bail out from an
+idle load balancing. To justify this removal, consider all the following
+case where an idle load balancing could race with a task wakeup:
 
-This fixes the report:
+o Since commit f3dd3f674555b ("sched: Remove the limitation of WF_ON_CPU
+  on wakelist if wakee cpu is idle") a target perceived to be idle
+  (target_rq->nr_running == 0) will return true for
+  ttwu_queue_cond(target) which will offload the task wakeup to the idle
+  target via an IPI.
 
-Oops: general protection fault, probably for non-canonical address 0xdffffc0000000000: 0000 [#1] PREEMPT SMP KASAN PTI
-KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
-CPU: 1 UID: 0 PID: 6021 Comm: syz-executor284 Not tainted 6.12.0-rc7-syzkaller-00187-gf868cd251776 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 10/30/2024
-RIP: 0010:migrate_to_node mm/mempolicy.c:1090 [inline]
-RIP: 0010:do_migrate_pages+0x403/0x6f0 mm/mempolicy.c:1194
-Code: ...
-RSP: 0018:ffffc9000375fd08 EFLAGS: 00010246
-RAX: 0000000000000000 RBX: ffffc9000375fd78 RCX: 0000000000000000
-RDX: ffff88807e171300 RSI: dffffc0000000000 RDI: ffff88803390c044
-RBP: ffff88807e171428 R08: 0000000000000014 R09: fffffbfff2039ef1
-R10: ffffffff901cf78f R11: 0000000000000000 R12: 0000000000000003
-R13: ffffc9000375fe90 R14: ffffc9000375fe98 R15: ffffc9000375fdf8
-FS:  00005555919e1380(0000) GS:ffff8880b8700000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00005555919e1ca8 CR3: 000000007f12a000 CR4: 00000000003526f0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-Call Trace:
- <TASK>
- kernel_migrate_pages+0x5b2/0x750 mm/mempolicy.c:1709
- __do_sys_migrate_pages mm/mempolicy.c:1727 [inline]
- __se_sys_migrate_pages mm/mempolicy.c:1723 [inline]
- __x64_sys_migrate_pages+0x96/0x100 mm/mempolicy.c:1723
- do_syscall_x64 arch/x86/entry/common.c:52 [inline]
- do_syscall_64+0xcd/0x250 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
+  In all such cases target_rq->ttwu_pending will be set to 1 before
+  queuing the wake function.
 
-[akpm@linux-foundation.org: add unlikely()]
-Link: https://lkml.kernel.org/r/20241120201151.9518-1-david@redhat.com
-Fixes: 39743889aaf7 ("[PATCH] Swap Migration V5: sys_migrate_pages interface")
-Signed-off-by: David Hildenbrand <david@redhat.com>
-Reported-by: syzbot+3511625422f7aa637f0d@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/lkml/673d2696.050a0220.3c9d61.012f.GAE@google.com/T/
-Reviewed-by: Liam R. Howlett <Liam.Howlett@Oracle.com>
-Reviewed-by: Christoph Lameter <cl@linux.com>
-Cc: Liam R. Howlett <Liam.Howlett@Oracle.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+  If an idle load balance races here, following scenarios are possible:
+
+  - The CPU is not in TIF_POLLING_NRFLAG mode in which case an actual
+    IPI is sent to the CPU to wake it out of idle. If the
+    nohz_csd_func() queues before sched_ttwu_pending(), the idle load
+    balance will bail out since idle_cpu(target) returns 0 since
+    target_rq->ttwu_pending is 1. If the nohz_csd_func() is queued after
+    sched_ttwu_pending() it should see rq->nr_running to be non-zero and
+    bail out of idle load balancing.
+
+  - The CPU is in TIF_POLLING_NRFLAG mode and instead of an actual IPI,
+    the sender will simply set TIF_NEED_RESCHED for the target to put it
+    out of idle and flush_smp_call_function_queue() in do_idle() will
+    execute the call function. Depending on the ordering of the queuing
+    of nohz_csd_func() and sched_ttwu_pending(), the idle_cpu() check in
+    nohz_csd_func() should either see target_rq->ttwu_pending = 1 or
+    target_rq->nr_running to be non-zero if there is a genuine task
+    wakeup racing with the idle load balance kick.
+
+o The waker CPU perceives the target CPU to be busy
+  (targer_rq->nr_running != 0) but the CPU is in fact going idle and due
+  to a series of unfortunate events, the system reaches a case where the
+  waker CPU decides to perform the wakeup by itself in ttwu_queue() on
+  the target CPU but target is concurrently selected for idle load
+  balance (XXX: Can this happen? I'm not sure, but we'll consider the
+  mother of all coincidences to estimate the worst case scenario).
+
+  ttwu_do_activate() calls enqueue_task() which would increment
+  "rq->nr_running" post which it calls wakeup_preempt() which is
+  responsible for setting TIF_NEED_RESCHED (via a resched IPI or by
+  setting TIF_NEED_RESCHED on a TIF_POLLING_NRFLAG idle CPU) The key
+  thing to note in this case is that rq->nr_running is already non-zero
+  in case of a wakeup before TIF_NEED_RESCHED is set which would
+  lead to idle_cpu() check returning false.
+
+In all cases, it seems that need_resched() check is unnecessary when
+checking for idle_cpu() first since an impending wakeup racing with idle
+load balancer will either set the "rq->ttwu_pending" or indicate a newly
+woken task via "rq->nr_running".
+
+Chasing the reason why this check might have existed in the first place,
+I came across  Peter's suggestion on the fist iteration of Suresh's
+patch from 2011 [1] where the condition to raise the SCHED_SOFTIRQ was:
+
+	sched_ttwu_do_pending(list);
+
+	if (unlikely((rq->idle == current) &&
+	    rq->nohz_balance_kick &&
+	    !need_resched()))
+		raise_softirq_irqoff(SCHED_SOFTIRQ);
+
+Since the condition to raise the SCHED_SOFIRQ was preceded by
+sched_ttwu_do_pending() (which is equivalent of sched_ttwu_pending()) in
+the current upstream kernel, the need_resched() check was necessary to
+catch a newly queued task. Peter suggested modifying it to:
+
+	if (idle_cpu() && rq->nohz_balance_kick && !need_resched())
+		raise_softirq_irqoff(SCHED_SOFTIRQ);
+
+where idle_cpu() seems to have replaced "rq->idle == current" check.
+
+Even back then, the idle_cpu() check would have been sufficient to catch
+a new task being enqueued. Since commit b2a02fc43a1f ("smp: Optimize
+send_call_function_single_ipi()") overloads the interpretation of
+TIF_NEED_RESCHED for TIF_POLLING_NRFLAG idling, remove the
+need_resched() check in nohz_csd_func() to raise SCHED_SOFTIRQ based
+on Peter's suggestion.
+
+Fixes: b2a02fc43a1f ("smp: Optimize send_call_function_single_ipi()")
+Suggested-by: Peter Zijlstra <peterz@infradead.org>
+Signed-off-by: K Prateek Nayak <kprateek.nayak@amd.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://lore.kernel.org/r/20241119054432.6405-3-kprateek.nayak@amd.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/mempolicy.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ kernel/sched/core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/mm/mempolicy.c b/mm/mempolicy.c
-index 54f1b78d1b2c0..94c74c594d102 100644
---- a/mm/mempolicy.c
-+++ b/mm/mempolicy.c
-@@ -1071,6 +1071,10 @@ static long migrate_to_node(struct mm_struct *mm, int source, int dest,
+diff --git a/kernel/sched/core.c b/kernel/sched/core.c
+index b6f922a20f83a..8abd1bf31864e 100644
+--- a/kernel/sched/core.c
++++ b/kernel/sched/core.c
+@@ -1181,7 +1181,7 @@ static void nohz_csd_func(void *info)
+ 	WARN_ON(!(flags & NOHZ_KICK_MASK));
  
- 	VM_BUG_ON(!(flags & (MPOL_MF_MOVE | MPOL_MF_MOVE_ALL)));
- 	vma = find_vma(mm, 0);
-+	if (unlikely(!vma)) {
-+		mmap_read_unlock(mm);
-+		return 0;
-+	}
- 
- 	/*
- 	 * This does not migrate the range, but isolates all pages that
+ 	rq->idle_balance = idle_cpu(cpu);
+-	if (rq->idle_balance && !need_resched()) {
++	if (rq->idle_balance) {
+ 		rq->nohz_idle_balance = flags;
+ 		raise_softirq_irqoff(SCHED_SOFTIRQ);
+ 	}
 -- 
 2.43.0
 
