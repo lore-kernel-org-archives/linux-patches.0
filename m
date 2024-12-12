@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68D92215764;
-	Thu, 12 Dec 2024 15:21:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B9462AF0E;
+	Thu, 12 Dec 2024 15:21:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734016894; cv=none; b=Lg0Mr+lvUbpbVB3666sR8TW4Y2y5OJlvS3z+q/TNxS5BI3C9z1IER4HFYR5ocraUrPlk4OgJnibjisNHo0T/25hslRrgoW+7LV4XoQBOdETYz8UY8/vTQr/bHfQVbxzR3suE3ZOpxopQ0TOL0oZxpoQIKfgFZB33uGU4QVOccsQ=
+	t=1734016898; cv=none; b=cMiGRtRhqQazsw0yNCkd8qHXWUhlgm/jGWiCO4IcoRqC3/jiCeOPTuq9FccmHBzPcTBbiAAuETZBk1xC8Y3jg07LHh339ewUnh98A35JuMZ02AXrNAz14TmSzPvzKBkcAhImfad7NI9pJsFlgXHrhbLC/JYkiOmMEOx/b+AEmP8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734016894; c=relaxed/simple;
-	bh=XKa3Pzrvkg3T4biLG+HXER//Go1XftwJENesiAjq5zc=;
+	s=arc-20240116; t=1734016898; c=relaxed/simple;
+	bh=kPOtGWQJ/v59Nud4LkEDVmp5Rp5ak0RpOzJoIlhOAks=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Jfe46QXl0Dd/9Qz0MO2LWU8qbF7y1dLDPr43x5oNVfb/wIO5Q2fG54tBREiQmt2dIZz5QqsqZKplqzKu1PMS3OTqG/BCGrGyHpVhlvYv9zSucprWTBAjJDhk4UIXF+UtT6Rdb+hzLqpcgcHch04GqNLkuuDBe5tdxkfSknOB0/Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bc5XQ0FD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CJKsndX0GbdgP++/WdSNWomJQ1pgOCeRiafNmEPC8mS51v5tjn9k+Tn+UZYl70kX+MUDVCrb5Vyku0lrMq3SuVSFrcZ4n0Llj9P3vT/ZKevRV9MA9Vsr8bD13NhSa6yzr6aSo26RjwQNBjZOV6xNI3xuyLdJrBgcz3jcOiRpfpY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FtuoXrAi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bc5XQ0FD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB638C4CED4;
-	Thu, 12 Dec 2024 15:21:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FtuoXrAi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EE26C4CED4;
+	Thu, 12 Dec 2024 15:21:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734016894;
-	bh=XKa3Pzrvkg3T4biLG+HXER//Go1XftwJENesiAjq5zc=;
+	s=korg; t=1734016898;
+	bh=kPOtGWQJ/v59Nud4LkEDVmp5Rp5ak0RpOzJoIlhOAks=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Bc5XQ0FDocgsg1tWHytyfqSYZs/tGtmQsboAkvsiVb1vkYxlioHViITcWFtzNFk01
-	 Hpo4QMlMWvszV71kpZNBV+yh1+tJYwvgMAMAHltcZhrlr3ZHujJxicTgZXMkT2a77n
-	 tiYKZu/7u0DUcpuIw2Gm7ODiync3JrgBMwa/F9Eg=
+	b=FtuoXrAiokoxxAre1392E/YujpCXuVtl46BbR0U7E06UXDB0bg6WeBkpl0v89j6Pz
+	 U+NZrdFX9PETH5L0ojr9/UHViiKoLICOozz6aePUQQ9Qb+5GbjIJHuICjR6IVDWHkA
+	 DufomiGELudUEPwy8SdLmsu7VAgBf5d1GEWfdpEg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rosen Penev <rosenp@gmail.com>,
-	Jeff Johnson <quic_jjohnson@quicinc.com>,
+	Krishna Vivek Vitta <kvitta@microsoft.com>,
+	Amir Goldstein <amir73il@gmail.com>,
+	Jan Kara <jack@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 296/466] wifi: ath5k: add PCI ID for Arcadyan devices
-Date: Thu, 12 Dec 2024 15:57:45 +0100
-Message-ID: <20241212144318.476457230@linuxfoundation.org>
+Subject: [PATCH 6.12 297/466] fanotify: allow reporting errors on failure to open fd
+Date: Thu, 12 Dec 2024 15:57:46 +0100
+Message-ID: <20241212144318.518754361@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144306.641051666@linuxfoundation.org>
 References: <20241212144306.641051666@linuxfoundation.org>
@@ -51,32 +52,229 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rosen Penev <rosenp@gmail.com>
+From: Amir Goldstein <amir73il@gmail.com>
 
-[ Upstream commit f3ced9bb90b0a287a1fa6184d16b0f104a78fa90 ]
+[ Upstream commit 522249f05c5551aec9ec0ba9b6438f1ec19c138d ]
 
-Arcadyan made routers with this PCI ID containing an AR2417.
+When working in "fd mode", fanotify_read() needs to open an fd
+from a dentry to report event->fd to userspace.
 
-Signed-off-by: Rosen Penev <rosenp@gmail.com>
-Link: https://patch.msgid.link/20240930180716.139894-3-rosenp@gmail.com
-Signed-off-by: Jeff Johnson <quic_jjohnson@quicinc.com>
+Opening an fd from dentry can fail for several reasons.
+For example, when tasks are gone and we try to open their
+/proc files or we try to open a WRONLY file like in sysfs
+or when trying to open a file that was deleted on the
+remote network server.
+
+Add a new flag FAN_REPORT_FD_ERROR for fanotify_init().
+For a group with FAN_REPORT_FD_ERROR, we will send the
+event with the error instead of the open fd, otherwise
+userspace may not get the error at all.
+
+For an overflow event, we report -EBADF to avoid confusing FAN_NOFD
+with -EPERM.  Similarly for pidfd open errors we report either -ESRCH
+or the open error instead of FAN_NOPIDFD and FAN_EPIDFD.
+
+In any case, userspace will not know which file failed to
+open, so add a debug print for further investigation.
+
+Reported-by: Krishna Vivek Vitta <kvitta@microsoft.com>
+Link: https://lore.kernel.org/linux-fsdevel/SI2P153MB07182F3424619EDDD1F393EED46D2@SI2P153MB0718.APCP153.PROD.OUTLOOK.COM/
+Signed-off-by: Amir Goldstein <amir73il@gmail.com>
+Signed-off-by: Jan Kara <jack@suse.cz>
+Link: https://patch.msgid.link/20241003142922.111539-1-amir73il@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath5k/pci.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/notify/fanotify/fanotify_user.c | 85 +++++++++++++++++-------------
+ include/linux/fanotify.h           |  1 +
+ include/uapi/linux/fanotify.h      |  1 +
+ 3 files changed, 50 insertions(+), 37 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath5k/pci.c b/drivers/net/wireless/ath/ath5k/pci.c
-index b3137f60e8791..f5ca2fe0d0749 100644
---- a/drivers/net/wireless/ath/ath5k/pci.c
-+++ b/drivers/net/wireless/ath/ath5k/pci.c
-@@ -47,6 +47,7 @@ static const struct pci_device_id ath5k_pci_id_table[] = {
- 	{ PCI_VDEVICE(ATHEROS, 0x001c) }, /* PCI-E cards */
- 	{ PCI_VDEVICE(ATHEROS, 0x001d) }, /* 2417 Nala */
- 	{ PCI_VDEVICE(ATHEROS, 0xff16) }, /* Gigaset SX76[23] AR241[34]A */
-+	{ PCI_VDEVICE(ATHEROS, 0xff1a) }, /* Arcadyan ARV45XX AR2417 */
- 	{ PCI_VDEVICE(ATHEROS, 0xff1b) }, /* AR5BXB63 */
- 	{ 0 }
- };
+diff --git a/fs/notify/fanotify/fanotify_user.c b/fs/notify/fanotify/fanotify_user.c
+index 9644bc72e4573..8e2d43fc6f7c1 100644
+--- a/fs/notify/fanotify/fanotify_user.c
++++ b/fs/notify/fanotify/fanotify_user.c
+@@ -266,13 +266,6 @@ static int create_fd(struct fsnotify_group *group, const struct path *path,
+ 			       group->fanotify_data.f_flags | __FMODE_NONOTIFY,
+ 			       current_cred());
+ 	if (IS_ERR(new_file)) {
+-		/*
+-		 * we still send an event even if we can't open the file.  this
+-		 * can happen when say tasks are gone and we try to open their
+-		 * /proc files or we try to open a WRONLY file like in sysfs
+-		 * we just send the errno to userspace since there isn't much
+-		 * else we can do.
+-		 */
+ 		put_unused_fd(client_fd);
+ 		client_fd = PTR_ERR(new_file);
+ 	} else {
+@@ -663,7 +656,7 @@ static ssize_t copy_event_to_user(struct fsnotify_group *group,
+ 	unsigned int info_mode = FAN_GROUP_FLAG(group, FANOTIFY_INFO_MODES);
+ 	unsigned int pidfd_mode = info_mode & FAN_REPORT_PIDFD;
+ 	struct file *f = NULL, *pidfd_file = NULL;
+-	int ret, pidfd = FAN_NOPIDFD, fd = FAN_NOFD;
++	int ret, pidfd = -ESRCH, fd = -EBADF;
+ 
+ 	pr_debug("%s: group=%p event=%p\n", __func__, group, event);
+ 
+@@ -691,10 +684,39 @@ static ssize_t copy_event_to_user(struct fsnotify_group *group,
+ 	if (!FAN_GROUP_FLAG(group, FANOTIFY_UNPRIV) &&
+ 	    path && path->mnt && path->dentry) {
+ 		fd = create_fd(group, path, &f);
+-		if (fd < 0)
+-			return fd;
++		/*
++		 * Opening an fd from dentry can fail for several reasons.
++		 * For example, when tasks are gone and we try to open their
++		 * /proc files or we try to open a WRONLY file like in sysfs
++		 * or when trying to open a file that was deleted on the
++		 * remote network server.
++		 *
++		 * For a group with FAN_REPORT_FD_ERROR, we will send the
++		 * event with the error instead of the open fd, otherwise
++		 * Userspace may not get the error at all.
++		 * In any case, userspace will not know which file failed to
++		 * open, so add a debug print for further investigation.
++		 */
++		if (fd < 0) {
++			pr_debug("fanotify: create_fd(%pd2) failed err=%d\n",
++				 path->dentry, fd);
++			if (!FAN_GROUP_FLAG(group, FAN_REPORT_FD_ERROR)) {
++				/*
++				 * Historically, we've handled EOPENSTALE in a
++				 * special way and silently dropped such
++				 * events. Now we have to keep it to maintain
++				 * backward compatibility...
++				 */
++				if (fd == -EOPENSTALE)
++					fd = 0;
++				return fd;
++			}
++		}
+ 	}
+-	metadata.fd = fd;
++	if (FAN_GROUP_FLAG(group, FAN_REPORT_FD_ERROR))
++		metadata.fd = fd;
++	else
++		metadata.fd = fd >= 0 ? fd : FAN_NOFD;
+ 
+ 	if (pidfd_mode) {
+ 		/*
+@@ -709,18 +731,16 @@ static ssize_t copy_event_to_user(struct fsnotify_group *group,
+ 		 * The PIDTYPE_TGID check for an event->pid is performed
+ 		 * preemptively in an attempt to catch out cases where the event
+ 		 * listener reads events after the event generating process has
+-		 * already terminated. Report FAN_NOPIDFD to the event listener
+-		 * in those cases, with all other pidfd creation errors being
+-		 * reported as FAN_EPIDFD.
++		 * already terminated.  Depending on flag FAN_REPORT_FD_ERROR,
++		 * report either -ESRCH or FAN_NOPIDFD to the event listener in
++		 * those cases with all other pidfd creation errors reported as
++		 * the error code itself or as FAN_EPIDFD.
+ 		 */
+-		if (metadata.pid == 0 ||
+-		    !pid_has_task(event->pid, PIDTYPE_TGID)) {
+-			pidfd = FAN_NOPIDFD;
+-		} else {
++		if (metadata.pid && pid_has_task(event->pid, PIDTYPE_TGID))
+ 			pidfd = pidfd_prepare(event->pid, 0, &pidfd_file);
+-			if (pidfd < 0)
+-				pidfd = FAN_EPIDFD;
+-		}
++
++		if (!FAN_GROUP_FLAG(group, FAN_REPORT_FD_ERROR) && pidfd < 0)
++			pidfd = pidfd == -ESRCH ? FAN_NOPIDFD : FAN_EPIDFD;
+ 	}
+ 
+ 	ret = -EFAULT;
+@@ -737,9 +757,6 @@ static ssize_t copy_event_to_user(struct fsnotify_group *group,
+ 	buf += FAN_EVENT_METADATA_LEN;
+ 	count -= FAN_EVENT_METADATA_LEN;
+ 
+-	if (fanotify_is_perm_event(event->mask))
+-		FANOTIFY_PERM(event)->fd = fd;
+-
+ 	if (info_mode) {
+ 		ret = copy_info_records_to_user(event, info, info_mode, pidfd,
+ 						buf, count);
+@@ -753,15 +770,18 @@ static ssize_t copy_event_to_user(struct fsnotify_group *group,
+ 	if (pidfd_file)
+ 		fd_install(pidfd, pidfd_file);
+ 
++	if (fanotify_is_perm_event(event->mask))
++		FANOTIFY_PERM(event)->fd = fd;
++
+ 	return metadata.event_len;
+ 
+ out_close_fd:
+-	if (fd != FAN_NOFD) {
++	if (f) {
+ 		put_unused_fd(fd);
+ 		fput(f);
+ 	}
+ 
+-	if (pidfd >= 0) {
++	if (pidfd_file) {
+ 		put_unused_fd(pidfd);
+ 		fput(pidfd_file);
+ 	}
+@@ -828,15 +848,6 @@ static ssize_t fanotify_read(struct file *file, char __user *buf,
+ 		}
+ 
+ 		ret = copy_event_to_user(group, event, buf, count);
+-		if (unlikely(ret == -EOPENSTALE)) {
+-			/*
+-			 * We cannot report events with stale fd so drop it.
+-			 * Setting ret to 0 will continue the event loop and
+-			 * do the right thing if there are no more events to
+-			 * read (i.e. return bytes read, -EAGAIN or wait).
+-			 */
+-			ret = 0;
+-		}
+ 
+ 		/*
+ 		 * Permission events get queued to wait for response.  Other
+@@ -845,7 +856,7 @@ static ssize_t fanotify_read(struct file *file, char __user *buf,
+ 		if (!fanotify_is_perm_event(event->mask)) {
+ 			fsnotify_destroy_event(group, &event->fse);
+ 		} else {
+-			if (ret <= 0) {
++			if (ret <= 0 || FANOTIFY_PERM(event)->fd < 0) {
+ 				spin_lock(&group->notification_lock);
+ 				finish_permission_event(group,
+ 					FANOTIFY_PERM(event), FAN_DENY, NULL);
+@@ -1954,7 +1965,7 @@ static int __init fanotify_user_setup(void)
+ 				     FANOTIFY_DEFAULT_MAX_USER_MARKS);
+ 
+ 	BUILD_BUG_ON(FANOTIFY_INIT_FLAGS & FANOTIFY_INTERNAL_GROUP_FLAGS);
+-	BUILD_BUG_ON(HWEIGHT32(FANOTIFY_INIT_FLAGS) != 12);
++	BUILD_BUG_ON(HWEIGHT32(FANOTIFY_INIT_FLAGS) != 13);
+ 	BUILD_BUG_ON(HWEIGHT32(FANOTIFY_MARK_FLAGS) != 11);
+ 
+ 	fanotify_mark_cache = KMEM_CACHE(fanotify_mark,
+diff --git a/include/linux/fanotify.h b/include/linux/fanotify.h
+index 4f1c4f6031180..89ff45bd6f01b 100644
+--- a/include/linux/fanotify.h
++++ b/include/linux/fanotify.h
+@@ -36,6 +36,7 @@
+ #define FANOTIFY_ADMIN_INIT_FLAGS	(FANOTIFY_PERM_CLASSES | \
+ 					 FAN_REPORT_TID | \
+ 					 FAN_REPORT_PIDFD | \
++					 FAN_REPORT_FD_ERROR | \
+ 					 FAN_UNLIMITED_QUEUE | \
+ 					 FAN_UNLIMITED_MARKS)
+ 
+diff --git a/include/uapi/linux/fanotify.h b/include/uapi/linux/fanotify.h
+index a37de58ca571a..34f221d3a1b95 100644
+--- a/include/uapi/linux/fanotify.h
++++ b/include/uapi/linux/fanotify.h
+@@ -60,6 +60,7 @@
+ #define FAN_REPORT_DIR_FID	0x00000400	/* Report unique directory id */
+ #define FAN_REPORT_NAME		0x00000800	/* Report events with name */
+ #define FAN_REPORT_TARGET_FID	0x00001000	/* Report dirent target id  */
++#define FAN_REPORT_FD_ERROR	0x00002000	/* event->fd can report error */
+ 
+ /* Convenience macro - FAN_REPORT_NAME requires FAN_REPORT_DIR_FID */
+ #define FAN_REPORT_DFID_NAME	(FAN_REPORT_DIR_FID | FAN_REPORT_NAME)
 -- 
 2.43.0
 
