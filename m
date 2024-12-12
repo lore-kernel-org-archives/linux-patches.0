@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1163921765E;
-	Thu, 12 Dec 2024 15:34:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05F002153DF;
+	Thu, 12 Dec 2024 15:34:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734017651; cv=none; b=d5RPOn7Ogi+ac0aTojfMRXRxNyqRveASNVznYA985fuONOTvAiJjT5Zk8+XlM+6ckO36pQRl0GFb9avPoYXzxob310houBnMOoRfE64cM+hJAZd7jmRbcFovKPoc60gVDpqOx/n/5Ryt2uiKSsCV3uKLNGZMHOL2rDb4lBBDtnc=
+	t=1734017655; cv=none; b=J3ORiZBlKm8ooAHCZeNZ2424tOfYKOSGRG9TpBZHNgtW4YeqHVPuOeX2ZqLiLyq6Bp36Jj1KGiLuAwIxtEiRqzg93tc9v6oELswevcrampIWGG5tC0TMLRWJ7kG9aE9un7A1F44W7kl3q9kF4iWPHZbp7H1qRNIytkvbto9xqUc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734017651; c=relaxed/simple;
-	bh=0EIzCWmAMei+HYe4zNCPlH1KH07UjIg8+IISAOfM5ss=;
+	s=arc-20240116; t=1734017655; c=relaxed/simple;
+	bh=ZxffZ5XhvQjuqB610Ar/DgLm2UzhhbOLHm7PjFJJwqc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IqHfabfDd+wEYxW75QfwHHKBnm5AR9ybwUGduksYHIhBn2yY2NcWD4clp87YI+a/y0zJjCycTlabVIdOqwy8fCTsvWIuNDP8062c6Q8MA18gH4GVhbPwOo8HZu0QOh75DYlFKtnd50kyGwCVYugyl9zW2ZchHg5iT/gHpx1ZYdU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2NSjJbIG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Zcbi8riWnf735s+QoB8lQsqEa/8w/73UZIJdNlm/IVUZbs5uhgTltWrYuDCramu73QsSKEI46oz6ZoyV39ivM/8I4jkvKDtM8wzp+0TxKYPvdX1P983fQclgDcgz+8F7W2CTjcAu3y+9m+sXe8BdyH/+Fs5ZDju2GS6tfgAkynI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fPU+cIEV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2NSjJbIG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 293F5C4CECE;
-	Thu, 12 Dec 2024 15:34:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fPU+cIEV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F096C4CECE;
+	Thu, 12 Dec 2024 15:34:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734017650;
-	bh=0EIzCWmAMei+HYe4zNCPlH1KH07UjIg8+IISAOfM5ss=;
+	s=korg; t=1734017654;
+	bh=ZxffZ5XhvQjuqB610Ar/DgLm2UzhhbOLHm7PjFJJwqc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2NSjJbIGyCpGVTV6xLP9is70pw6WcUnyHQzbBlLEqm75EU1ASpdEmBVLQ/D9Rx2jL
-	 qrz27k3fKXID6c98Du9/WtuN5MF2MvrH2dim102HPzwYXJrXCwE9To7z7NiJxx2nVo
-	 VADc0QnOwEviYgvY3MkRcjflQNj5TpHsO/g6iYA4=
+	b=fPU+cIEVMUsUGf7M2aZVcCGT2rmmd27WuQXrUbQpuWrQgAkNkzdcF+PXcyQAGMa0E
+	 VZzBoJ9qazyV50Oc6Xw0NWcrlq3zcFvXIFzAYzN7ivvuPRczCNB3FyWeakZbvlHw/7
+	 HZFwxXvQ5M9S9GZbeFUt0RBQQ3QFZY2Z52xgXb/I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kartik Rajput <kkartik@nvidia.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	Herve Codina <herve.codina@bootlin.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 073/356] serial: amba-pl011: Fix RX stall when DMA is used
-Date: Thu, 12 Dec 2024 15:56:32 +0100
-Message-ID: <20241212144247.514807793@linuxfoundation.org>
+Subject: [PATCH 6.6 074/356] soc/fsl: cpm: qmc: Convert to platform remove callback returning void
+Date: Thu, 12 Dec 2024 15:56:33 +0100
+Message-ID: <20241212144247.553431899@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144244.601729511@linuxfoundation.org>
 References: <20241212144244.601729511@linuxfoundation.org>
@@ -45,52 +45,68 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kartik Rajput <kkartik@nvidia.com>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-[ Upstream commit 2bcacc1c87acf9a8ebc17de18cb2b3cfeca547cf ]
+[ Upstream commit 14914a115e807aa2f8025e451133627a64120ac3 ]
 
-Function pl011_throttle_rx() calls pl011_stop_rx() to disable RX, which
-also disables the RX DMA by clearing the RXDMAE bit of the DMACR
-register. However, to properly unthrottle RX when DMA is used, the
-function pl011_unthrottle_rx() is expected to set the RXDMAE bit of
-the DMACR register, which it currently lacks. This causes RX to stall
-after the throttle API is called.
+The .remove() callback for a platform driver returns an int which makes
+many driver authors wrongly assume it's possible to do error handling by
+returning an error code. However the value returned is ignored (apart
+from emitting a warning) and this typically results in resource leaks.
+To improve here there is a quest to make the remove callback return
+void. In the first step of this quest all drivers are converted to
+.remove_new() which already returns void. Eventually after all drivers
+are converted, .remove_new() will be renamed to .remove().
 
-Set RXDMAE bit in the DMACR register while unthrottling RX if RX DMA is
-used.
+Trivially convert this driver from always returning zero in the remove
+callback to the void returning variant.
 
-Fixes: 211565b10099 ("serial: pl011: UPSTAT_AUTORTS requires .throttle/unthrottle")
-Cc: stable@vger.kernel.org
-Signed-off-by: Kartik Rajput <kkartik@nvidia.com>
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-Link: https://lore.kernel.org/r/20241113092629.60226-1-kkartik@nvidia.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Acked-by: Herve Codina <herve.codina@bootlin.com>
+Link: https://lore.kernel.org/r/20230925095532.1984344-7-u.kleine-koenig@pengutronix.de
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Stable-dep-of: cb3daa51db81 ("soc: fsl: cpm1: qmc: Set the ret error code on platform_get_irq() failure")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/amba-pl011.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/soc/fsl/qe/qmc.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/tty/serial/amba-pl011.c b/drivers/tty/serial/amba-pl011.c
-index 16c7703110694..08f80188f73dd 100644
---- a/drivers/tty/serial/amba-pl011.c
-+++ b/drivers/tty/serial/amba-pl011.c
-@@ -1837,6 +1837,11 @@ static void pl011_unthrottle_rx(struct uart_port *port)
- 
- 	pl011_write(uap->im, uap, REG_IMSC);
- 
-+	if (uap->using_rx_dma) {
-+		uap->dmacr |= UART011_RXDMAE;
-+		pl011_write(uap->dmacr, uap, REG_DMACR);
-+	}
-+
- 	uart_port_unlock_irqrestore(&uap->port, flags);
+diff --git a/drivers/soc/fsl/qe/qmc.c b/drivers/soc/fsl/qe/qmc.c
+index 8dc73cc1a83b1..2312152a44b3e 100644
+--- a/drivers/soc/fsl/qe/qmc.c
++++ b/drivers/soc/fsl/qe/qmc.c
+@@ -1414,7 +1414,7 @@ static int qmc_probe(struct platform_device *pdev)
+ 	return ret;
  }
+ 
+-static int qmc_remove(struct platform_device *pdev)
++static void qmc_remove(struct platform_device *pdev)
+ {
+ 	struct qmc *qmc = platform_get_drvdata(pdev);
+ 
+@@ -1426,8 +1426,6 @@ static int qmc_remove(struct platform_device *pdev)
+ 
+ 	/* Disconnect the serial from TSA */
+ 	tsa_serial_disconnect(qmc->tsa_serial);
+-
+-	return 0;
+ }
+ 
+ static const struct of_device_id qmc_id_table[] = {
+@@ -1442,7 +1440,7 @@ static struct platform_driver qmc_driver = {
+ 		.of_match_table = of_match_ptr(qmc_id_table),
+ 	},
+ 	.probe = qmc_probe,
+-	.remove = qmc_remove,
++	.remove_new = qmc_remove,
+ };
+ module_platform_driver(qmc_driver);
  
 -- 
 2.43.0
