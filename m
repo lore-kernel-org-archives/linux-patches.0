@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A009C235C42;
-	Thu, 12 Dec 2024 16:55:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95BE2222D5E;
+	Thu, 12 Dec 2024 16:56:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734022556; cv=none; b=rl6/ZEJU3mrSMJicq9rk5VV5ppjBwpRizYWRzPiXju+L7Cpamq9ItUqAXQBpbR6kCpKQtFSWFAUajSDWZlPlKLEUYTxTvsdj2uVKxIjW1zgEpRBuhsm0wHrvZGpAWP/ZS+g9lhsiRPpyFrNYNBXBChAAG/6wqeUfyBpd11nH7A8=
+	t=1734022560; cv=none; b=rgx1BvgwgVih/rALHd58XjKgd5d/W6UvBVSOto3GgXFKC41mEZZp33B18iphLMUJkyyf/7UNZfSji+h8VoHYSqPtaaJTwDnJGE2xd9eXRZuEi/hWD9ce1xiC+1Ikel3ZIh+zWGgylVtd8+g+T/VkSmaG0ALlBCS1WO94Fl51atc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734022556; c=relaxed/simple;
-	bh=Ufp6LXg5zPsA5zFFP6hkUe5JFPuAnKMLRi/R9iFn5OU=;
+	s=arc-20240116; t=1734022560; c=relaxed/simple;
+	bh=3CjIF+ROvjqoC837+l50+TfeKPoQXx5RUdysBev6rdE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SkuaH31GcomfsfLE0NAqRGUtsdEwKoW2NHGtHJMWbu1SXOUB+lsq040qUuhgvUeIij7lylVDVsnU8LfXsqIiQwpLY3z4GLw/6Zn0ylWyBTWNlKAKme8xz9gx2kMtQ64hlxTVPHB6cpRH0mUkiGP7H3x12h5b5a8aZhbKJSbD8zY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XRq7MH/J; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=NXUF3D9vRJCwhbfQK1ajHKmUEImxClRkxejIemEjrGFBliW2oqC4NVdcGFdQtz3+Qd6j61Ml4KyqaTG2K7DdrAMVFO7lVTdt/V5t6OSiVhvrFgHDPGWK5aTz8SyLqNP/0uqAfUPamyhcb9ZxnPR+gzwh5YdscoqLrB+swByDV78=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WnZPuCdW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XRq7MH/J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D291C4CED0;
-	Thu, 12 Dec 2024 16:55:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WnZPuCdW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 935DDC4CED3;
+	Thu, 12 Dec 2024 16:55:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734022556;
-	bh=Ufp6LXg5zPsA5zFFP6hkUe5JFPuAnKMLRi/R9iFn5OU=;
+	s=korg; t=1734022560;
+	bh=3CjIF+ROvjqoC837+l50+TfeKPoQXx5RUdysBev6rdE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XRq7MH/JMi28/MXjyVOv/0epNwLH/XIuY+MrVmOQ+rfrtsLX14WIdOzHUhTDp77fE
-	 EaUKJ447odKhBMCvJmLxoILsyL8BKv1aI/ZJZbowX56OTMguJI5wuIwrmhfv4wz37/
-	 2WiUkjNRTJQCaiiGMO2w2yTK4J+UgfsyYlE0dzZc=
+	b=WnZPuCdWbx9H2DBsQO11JgsbwdwZj30gzLwo14WhCVH9WAhSFMekuZg9mkJYucykz
+	 D3P4isLeqSLxZvOjVzaCdOY+v/PmyKRWM3e/iUgzgtSCCagXj8keoAX4LzKvhUmC4/
+	 DdknOZpeNRsSniz1p3hii5fJEhJItr1K1/h4qYxE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyle Tso <kyletso@google.com>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	=?UTF-8?q?Barnab=C3=A1s=20Cz=C3=A9m=C3=A1n?= <barnabas.czeman@mainlining.org>,
 	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 273/565] power: supply: core: Remove might_sleep() from power_supply_put()
-Date: Thu, 12 Dec 2024 15:57:48 +0100
-Message-ID: <20241212144322.252879918@linuxfoundation.org>
+Subject: [PATCH 5.15 274/565] power: supply: bq27xxx: Fix registers of bq27426
+Date: Thu, 12 Dec 2024 15:57:49 +0100
+Message-ID: <20241212144322.293267352@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144311.432886635@linuxfoundation.org>
 References: <20241212144311.432886635@linuxfoundation.org>
@@ -48,48 +45,90 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Bart Van Assche <bvanassche@acm.org>
+From: Barnabás Czémán <barnabas.czeman@mainlining.org>
 
-[ Upstream commit f6da4553ff24a5d1c959c9627c965323adc3d307 ]
+[ Upstream commit 34f99d3b706a519e556841f405c224ca708b1f54 ]
 
-The put_device() call in power_supply_put() may call
-power_supply_dev_release(). The latter function does not sleep so
-power_supply_put() doesn't sleep either. Hence, remove the might_sleep()
-call from power_supply_put(). This patch suppresses false positive
-complaints about calling a sleeping function from atomic context if
-power_supply_put() is called from atomic context.
+Correct bq27426 registers, according to technical reference manual
+it does not have Design Capacity register so it is not register
+compatible with bq27421.
 
-Cc: Kyle Tso <kyletso@google.com>
-Cc: Krzysztof Kozlowski <krzk@kernel.org>
-Fixes: 1a352462b537 ("power_supply: Add power_supply_put for decrementing device reference counter")
-Signed-off-by: Bart Van Assche <bvanassche@acm.org>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://lore.kernel.org/r/20240917193914.47566-1-bvanassche@acm.org
+Fixes: 5ef6a16033b47 ("power: supply: bq27xxx: Add support for BQ27426")
+Signed-off-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
+Link: https://lore.kernel.org/r/20241016-fix_bq27426-v2-1-aa6c0f51a9f6@mainlining.org
 Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/power_supply_core.c | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/power/supply/bq27xxx_battery.c | 37 ++++++++++++++++++++++++--
+ 1 file changed, 35 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/power/supply/power_supply_core.c b/drivers/power/supply/power_supply_core.c
-index 8b2cd63016160..2ebf838fbf9d3 100644
---- a/drivers/power/supply/power_supply_core.c
-+++ b/drivers/power/supply/power_supply_core.c
-@@ -479,8 +479,6 @@ EXPORT_SYMBOL_GPL(power_supply_get_by_name);
-  */
- void power_supply_put(struct power_supply *psy)
- {
--	might_sleep();
--
- 	atomic_dec(&psy->use_cnt);
- 	put_device(&psy->dev);
- }
+diff --git a/drivers/power/supply/bq27xxx_battery.c b/drivers/power/supply/bq27xxx_battery.c
+index 7c1295986b594..b86674df7b3b2 100644
+--- a/drivers/power/supply/bq27xxx_battery.c
++++ b/drivers/power/supply/bq27xxx_battery.c
+@@ -449,9 +449,29 @@ static u8
+ 		[BQ27XXX_REG_AP] = 0x18,
+ 		BQ27XXX_DM_REG_ROWS,
+ 	},
++	bq27426_regs[BQ27XXX_REG_MAX] = {
++		[BQ27XXX_REG_CTRL] = 0x00,
++		[BQ27XXX_REG_TEMP] = 0x02,
++		[BQ27XXX_REG_INT_TEMP] = 0x1e,
++		[BQ27XXX_REG_VOLT] = 0x04,
++		[BQ27XXX_REG_AI] = 0x10,
++		[BQ27XXX_REG_FLAGS] = 0x06,
++		[BQ27XXX_REG_TTE] = INVALID_REG_ADDR,
++		[BQ27XXX_REG_TTF] = INVALID_REG_ADDR,
++		[BQ27XXX_REG_TTES] = INVALID_REG_ADDR,
++		[BQ27XXX_REG_TTECP] = INVALID_REG_ADDR,
++		[BQ27XXX_REG_NAC] = 0x08,
++		[BQ27XXX_REG_RC] = 0x0c,
++		[BQ27XXX_REG_FCC] = 0x0e,
++		[BQ27XXX_REG_CYCT] = INVALID_REG_ADDR,
++		[BQ27XXX_REG_AE] = INVALID_REG_ADDR,
++		[BQ27XXX_REG_SOC] = 0x1c,
++		[BQ27XXX_REG_DCAP] = INVALID_REG_ADDR,
++		[BQ27XXX_REG_AP] = 0x18,
++		BQ27XXX_DM_REG_ROWS,
++	},
+ #define bq27411_regs bq27421_regs
+ #define bq27425_regs bq27421_regs
+-#define bq27426_regs bq27421_regs
+ #define bq27441_regs bq27421_regs
+ #define bq27621_regs bq27421_regs
+ 	bq27z561_regs[BQ27XXX_REG_MAX] = {
+@@ -769,10 +789,23 @@ static enum power_supply_property bq27421_props[] = {
+ };
+ #define bq27411_props bq27421_props
+ #define bq27425_props bq27421_props
+-#define bq27426_props bq27421_props
+ #define bq27441_props bq27421_props
+ #define bq27621_props bq27421_props
+ 
++static enum power_supply_property bq27426_props[] = {
++	POWER_SUPPLY_PROP_STATUS,
++	POWER_SUPPLY_PROP_PRESENT,
++	POWER_SUPPLY_PROP_VOLTAGE_NOW,
++	POWER_SUPPLY_PROP_CURRENT_NOW,
++	POWER_SUPPLY_PROP_CAPACITY,
++	POWER_SUPPLY_PROP_CAPACITY_LEVEL,
++	POWER_SUPPLY_PROP_TEMP,
++	POWER_SUPPLY_PROP_TECHNOLOGY,
++	POWER_SUPPLY_PROP_CHARGE_FULL,
++	POWER_SUPPLY_PROP_CHARGE_NOW,
++	POWER_SUPPLY_PROP_MANUFACTURER,
++};
++
+ static enum power_supply_property bq27z561_props[] = {
+ 	POWER_SUPPLY_PROP_STATUS,
+ 	POWER_SUPPLY_PROP_PRESENT,
 -- 
 2.43.0
 
