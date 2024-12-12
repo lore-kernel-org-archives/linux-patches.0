@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D3DE218594;
-	Thu, 12 Dec 2024 15:46:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB4A66F2FE;
+	Thu, 12 Dec 2024 15:47:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734018419; cv=none; b=UCdH+ms6o9RtcJLXnQoJS366xMmlpX+8Ux9YCKM00SfRvAC9Bon+znH+/neMTljHCREKCX1rJBsrQPxDSTKePn1hXA0oouRN13pan/HHFVsmQQKiKyW9apkgohuwA3wzvWNXTdSpSBbL5xCeeWTLTD3LtPkPHOEEotr96K5OTY0=
+	t=1734018422; cv=none; b=Qrmqe+LVnlp42/hZ5js97JRVBwdWIcjjEvK2So5201yDIfnPjYDkDkubA9tmehM3fdW0m1+dAGBCL7x5EPipUH3sg+IJNApvwO6p9nIp5ZRCnfrt6jxzLEMGx74ifX32eNhU5MZVnbWAklghGpTr5wJV+yfm9f1G/DrtBbC09jo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734018419; c=relaxed/simple;
-	bh=OBevgeBIw+A1BGossCi51jOjAajAhPVQWa2baLnDEIQ=;
+	s=arc-20240116; t=1734018422; c=relaxed/simple;
+	bh=w/sLeYgMa6GBHheOaMvfVrDC7N7vp9jsLGaedIMo5HY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IYMs9MLIpFI45DW2oW0ngGs+dbu8i57DweQxqkO7fXDjEcK23avKal21EIpoB4fvstakauHsFExwIdRnaoB5nxnAb54wEIGiOolOLlA4HwZso+Su5hHOKb5mqTImG9V5ZGijVQyBXhsURcfWMq6gf9iwXUgcnx2aARq6sOwn4D4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MAcP5lXq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lVLSlh64VwtUjIoy3bAiV79G7B/yeRvpKbip5I1Lh2hU7RH2VF3oK/JElJRMPsyBNeguTaAKF78o3KhqIErdp//aJRz+NuFVx1D0qelBykYf/QaSSbrATHaH8bDzePgTtD8XApE5QOnyMb/IVluHGTJ/HWGtw1VWBwEWdCdupxk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ITsYlIyF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MAcP5lXq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D5AEC4CECE;
-	Thu, 12 Dec 2024 15:46:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ITsYlIyF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A440C4CECE;
+	Thu, 12 Dec 2024 15:47:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734018418;
-	bh=OBevgeBIw+A1BGossCi51jOjAajAhPVQWa2baLnDEIQ=;
+	s=korg; t=1734018422;
+	bh=w/sLeYgMa6GBHheOaMvfVrDC7N7vp9jsLGaedIMo5HY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MAcP5lXqWmEwZcDqZuwweJ0pPYIxywIqcRbNuZvK3Ls6f22wrJkJBlv3PGtDYOrt/
-	 bTwonaE75wghOBQ4MeduIKOhyX2tCQawGznVSyTmror5q1U+ac1mJ/ucE+g2vxWyyK
-	 b9qmthbrfn8RENBCNgp6mePFL7t5a10XTJqYNMX8=
+	b=ITsYlIyF0ObpXlR3sYqMGcybEgfpzs7Qsscaf0452HqJECnj5DHkm/KyohgTP0SBF
+	 sNMyj4lY5L5aKHvHmXUqJotAPpBk5A1nMb8BagVzrGVtGtEULn939JuNfS0fuQqwZ2
+	 J93vfY6il3MLUFTS4NIa0cAlbtE3AeybS0vNK2MU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gabriele Monaco <gmonaco@redhat.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Qi Han <hanqi@vivo.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 286/356] verification/dot2: Improve dot parser robustness
-Date: Thu, 12 Dec 2024 16:00:05 +0100
-Message-ID: <20241212144255.877357067@linuxfoundation.org>
+Subject: [PATCH 6.6 287/356] f2fs: fix f2fs_bug_on when uninstalling filesystem call f2fs_evict_inode.
+Date: Thu, 12 Dec 2024 16:00:06 +0100
+Message-ID: <20241212144255.915451527@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144244.601729511@linuxfoundation.org>
 References: <20241212144244.601729511@linuxfoundation.org>
@@ -51,97 +52,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gabriele Monaco <gmonaco@redhat.com>
+From: Qi Han <hanqi@vivo.com>
 
-[ Upstream commit 571f8b3f866a6d990a50fe5c89fe0ea78784d70b ]
+[ Upstream commit d5c367ef8287fb4d235c46a2f8c8d68715f3a0ca ]
 
-This patch makes the dot parser used by dot2c and dot2k slightly more
-robust, namely:
-* allows parsing files with the gv extension (GraphViz)
-* correctly parses edges with any indentation
-    * used to work only with a single character (e.g. '\t')
-Additionally it fixes a couple of warnings reported by pylint such as
-wrong indentation and comparison to False instead of `not ...`
+creating a large files during checkpoint disable until it runs out of
+space and then delete it, then remount to enable checkpoint again, and
+then unmount the filesystem triggers the f2fs_bug_on as below:
 
-Link: https://lore.kernel.org/20241017064238.41394-2-gmonaco@redhat.com
-Signed-off-by: Gabriele Monaco <gmonaco@redhat.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+------------[ cut here ]------------
+kernel BUG at fs/f2fs/inode.c:896!
+CPU: 2 UID: 0 PID: 1286 Comm: umount Not tainted 6.11.0-rc7-dirty #360
+Oops: invalid opcode: 0000 [#1] PREEMPT SMP NOPTI
+RIP: 0010:f2fs_evict_inode+0x58c/0x610
+Call Trace:
+ __die_body+0x15/0x60
+ die+0x33/0x50
+ do_trap+0x10a/0x120
+ f2fs_evict_inode+0x58c/0x610
+ do_error_trap+0x60/0x80
+ f2fs_evict_inode+0x58c/0x610
+ exc_invalid_op+0x53/0x60
+ f2fs_evict_inode+0x58c/0x610
+ asm_exc_invalid_op+0x16/0x20
+ f2fs_evict_inode+0x58c/0x610
+ evict+0x101/0x260
+ dispose_list+0x30/0x50
+ evict_inodes+0x140/0x190
+ generic_shutdown_super+0x2f/0x150
+ kill_block_super+0x11/0x40
+ kill_f2fs_super+0x7d/0x140
+ deactivate_locked_super+0x2a/0x70
+ cleanup_mnt+0xb3/0x140
+ task_work_run+0x61/0x90
+
+The root cause is: creating large files during disable checkpoint
+period results in not enough free segments, so when writing back root
+inode will failed in f2fs_enable_checkpoint. When umount the file
+system after enabling checkpoint, the root inode is dirty in
+f2fs_evict_inode function, which triggers BUG_ON. The steps to
+reproduce are as follows:
+
+dd if=/dev/zero of=f2fs.img bs=1M count=55
+mount f2fs.img f2fs_dir -o checkpoint=disable:10%
+dd if=/dev/zero of=big bs=1M count=50
+sync
+rm big
+mount -o remount,checkpoint=enable f2fs_dir
+umount f2fs_dir
+
+Let's redirty inode when there is not free segments during checkpoint
+is disable.
+
+Signed-off-by: Qi Han <hanqi@vivo.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/verification/dot2/automata.py | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ fs/f2fs/inode.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/tools/verification/dot2/automata.py b/tools/verification/dot2/automata.py
-index baffeb960ff0b..bdeb98baa8b06 100644
---- a/tools/verification/dot2/automata.py
-+++ b/tools/verification/dot2/automata.py
-@@ -29,11 +29,11 @@ class Automata:
+diff --git a/fs/f2fs/inode.c b/fs/f2fs/inode.c
+index a3e0c92735433..7ad4a92417591 100644
+--- a/fs/f2fs/inode.c
++++ b/fs/f2fs/inode.c
+@@ -788,8 +788,10 @@ int f2fs_write_inode(struct inode *inode, struct writeback_control *wbc)
+ 		!is_inode_flag_set(inode, FI_DIRTY_INODE))
+ 		return 0;
  
-     def __get_model_name(self):
-         basename = ntpath.basename(self.__dot_path)
--        if basename.endswith(".dot") == False:
-+        if not basename.endswith(".dot") and not basename.endswith(".gv"):
-             print("not a dot file")
-             raise Exception("not a dot file: %s" % self.__dot_path)
+-	if (!f2fs_is_checkpoint_ready(sbi))
++	if (!f2fs_is_checkpoint_ready(sbi)) {
++		f2fs_mark_inode_dirty_sync(inode, true);
+ 		return -ENOSPC;
++	}
  
--        model_name = basename[0:-4]
-+        model_name = ntpath.splitext(basename)[0]
-         if model_name.__len__() == 0:
-             raise Exception("not a dot file: %s" % self.__dot_path)
- 
-@@ -68,9 +68,9 @@ class Automata:
-     def __get_cursor_begin_events(self):
-         cursor = 0
-         while self.__dot_lines[cursor].split()[0] != "{node":
--           cursor += 1
-+            cursor += 1
-         while self.__dot_lines[cursor].split()[0] == "{node":
--           cursor += 1
-+            cursor += 1
-         # skip initial state transition
-         cursor += 1
-         return cursor
-@@ -94,11 +94,11 @@ class Automata:
-                 initial_state = state[7:]
-             else:
-                 states.append(state)
--                if self.__dot_lines[cursor].__contains__("doublecircle") == True:
-+                if "doublecircle" in self.__dot_lines[cursor]:
-                     final_states.append(state)
-                     has_final_states = True
- 
--                if self.__dot_lines[cursor].__contains__("ellipse") == True:
-+                if "ellipse" in self.__dot_lines[cursor]:
-                     final_states.append(state)
-                     has_final_states = True
- 
-@@ -110,7 +110,7 @@ class Automata:
-         # Insert the initial state at the bein og the states
-         states.insert(0, initial_state)
- 
--        if has_final_states == False:
-+        if not has_final_states:
-             final_states.append(initial_state)
- 
-         return states, initial_state, final_states
-@@ -120,7 +120,7 @@ class Automata:
-         cursor = self.__get_cursor_begin_events()
- 
-         events = []
--        while self.__dot_lines[cursor][1] == '"':
-+        while self.__dot_lines[cursor].lstrip()[0] == '"':
-             # transitions have the format:
-             # "all_fired" -> "both_fired" [ label = "disable_irq" ];
-             #  ------------ event is here ------------^^^^^
-@@ -161,7 +161,7 @@ class Automata:
-         # and we are back! Let's fill the matrix
-         cursor = self.__get_cursor_begin_events()
- 
--        while self.__dot_lines[cursor][1] == '"':
-+        while self.__dot_lines[cursor].lstrip()[0] == '"':
-             if self.__dot_lines[cursor].split()[1] == "->":
-                 line = self.__dot_lines[cursor].split()
-                 origin_state = line[0].replace('"','').replace(',','_')
+ 	/*
+ 	 * We need to balance fs here to prevent from producing dirty node pages
 -- 
 2.43.0
 
