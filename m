@@ -1,43 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7612223E71;
-	Thu, 12 Dec 2024 16:31:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A575F223E71;
+	Thu, 12 Dec 2024 16:31:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734021075; cv=none; b=mHXFERBqHOQGQXmUN48LoeTxWPDg8uTRN1K1j64CyhSCkgLSDn0c8Vr3LxH0kZSaUKyM3BQ+oexSuvJNkQU+69g2NF+HaqxfT9izAPOdyA1ZlDM1D0aIuoWDPS9vTSsu3xycE1MUQWC7HariH1XkXwhVTxRLiqvUFoUfOevaPpg=
+	t=1734021079; cv=none; b=OuAzZNaeXGkByVWj1+E+CCzd8CJ3EVfntJsaoPW+EPgRUkbiOSijNRHw+GBAA3y1hu6xkfzY73StxC0s/Krgn7kbjUH4AFtdx+NOeqBgg6tGfMRo4050XxI2GWRDh7jkNzt5Bi/XGubkaqb4/c22f8q4qcr6vZCpboQ1aFpwFI8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734021075; c=relaxed/simple;
-	bh=6tQBPdLnzLEVE3OtmmEnh4AoyOh3rncfnA4SlkhFrsA=;
+	s=arc-20240116; t=1734021079; c=relaxed/simple;
+	bh=WaaOzXn1lzKTc8HKCkLo7mEbfEM2Gk4xFu2pn1mj2I4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YePVQtOi0FBjrOD3I65uqVq4YQU1hX3eJjNNo53Xx1XTqAxkZ7BEvbKk2Px9J6SxM6wvP7MeAEE2HirM7CMtwGik78HICZWjIser14uvK5Sdw0VK5DVCB4VCR0mEDGKifAYU6k4Cfh9xvdack7HC1EH1qrdfESBvSVExAie9p/g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H3NHK7w+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tcm2tVhHZIDM+FeVMVijvHWOgOHAtlQfMG2AbqgknYm/8z7j1ahtLtHFg+emejWQzHmz8zVVAOICqOSDmFiFly9jHBxPEQm43Hi6HJbMBqq0Q2RSNrY16lGkhtPAXj14vDl9R84WIa80SiaKbqqiUeVHc+gzjxkemai0qEbZn44=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C6rdScpQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H3NHK7w+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 454E4C4CECE;
-	Thu, 12 Dec 2024 16:31:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C6rdScpQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE808C4CECE;
+	Thu, 12 Dec 2024 16:31:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734021075;
-	bh=6tQBPdLnzLEVE3OtmmEnh4AoyOh3rncfnA4SlkhFrsA=;
+	s=korg; t=1734021079;
+	bh=WaaOzXn1lzKTc8HKCkLo7mEbfEM2Gk4xFu2pn1mj2I4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H3NHK7w+fEB7Q3cukDBwJT+l5A8iCmgrEndHwwAPWqma0lpiqjvAigW/4U+FPTeZS
-	 vX+xncrsjeb3h03NUCPxUf314bmM7LX7aEsyOZy1DAS5DjG8rfmAZPd6VEHb9VJzOC
-	 Q6ONhPyMm8TqJonJIcWrKAvmzoQjHjkzMk/wyRfo=
+	b=C6rdScpQCR/XljNeCYcF3pi1eQRsgE7a9peWd5cwA6xNOHv92WeHbCq817tTCcEJ5
+	 Yk8vYhG9PSqK3qHAop8xLIAxRhWht1RNwiQatdbahT0/pWRek8quOhPAannqB0+3AL
+	 DM2Hkv4yby1S6HQ1VsP1A+0JZfrxjlY+of39lB78=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wengang Wang <wen.gang.wang@oracle.com>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Jun Piao <piaojun@huawei.com>,
+	Kees Cook <kees@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 638/772] ocfs2: update seq_file index in ocfs2_dlm_seq_next
-Date: Thu, 12 Dec 2024 15:59:43 +0100
-Message-ID: <20241212144416.296465704@linuxfoundation.org>
+Subject: [PATCH 6.1 639/772] lib: stackinit: hide never-taken branch from compiler
+Date: Thu, 12 Dec 2024 15:59:44 +0100
+Message-ID: <20241212144416.336523121@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -56,43 +50,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wengang Wang <wen.gang.wang@oracle.com>
+From: Kees Cook <kees@kernel.org>
 
-commit 914eec5e980171bc128e7e24f7a22aa1d803570e upstream.
+commit 5c3793604f91123bf49bc792ce697a0bef4c173c upstream.
 
-The following INFO level message was seen:
+The never-taken branch leads to an invalid bounds condition, which is by
+design. To avoid the unwanted warning from the compiler, hide the
+variable from the optimizer.
 
-seq_file: buggy .next function ocfs2_dlm_seq_next [ocfs2] did not
-update position index
+../lib/stackinit_kunit.c: In function 'do_nothing_u16_zero':
+../lib/stackinit_kunit.c:51:49: error: array subscript 1 is outside array bounds of 'u16[0]' {aka 'short unsigned int[]'} [-Werror=array-bounds=]
+   51 | #define DO_NOTHING_RETURN_SCALAR(ptr)           *(ptr)
+      |                                                 ^~~~~~
+../lib/stackinit_kunit.c:219:24: note: in expansion of macro 'DO_NOTHING_RETURN_SCALAR'
+  219 |                 return DO_NOTHING_RETURN_ ## which(ptr + 1);    \
+      |                        ^~~~~~~~~~~~~~~~~~
 
-Fix:
-Update *pos (so m->index) to make seq_read_iter happy though the index its
-self makes no sense to ocfs2_dlm_seq_next.
-
-Link: https://lkml.kernel.org/r/20241119174500.9198-1-wen.gang.wang@oracle.com
-Signed-off-by: Wengang Wang <wen.gang.wang@oracle.com>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Jun Piao <piaojun@huawei.com>
+Link: https://lkml.kernel.org/r/20241117113813.work.735-kees@kernel.org
+Signed-off-by: Kees Cook <kees@kernel.org>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ocfs2/dlmglue.c |    1 +
+ lib/stackinit_kunit.c |    1 +
  1 file changed, 1 insertion(+)
 
---- a/fs/ocfs2/dlmglue.c
-+++ b/fs/ocfs2/dlmglue.c
-@@ -3108,6 +3108,7 @@ static void *ocfs2_dlm_seq_next(struct s
- 	struct ocfs2_lock_res *iter = v;
- 	struct ocfs2_lock_res *dummy = &priv->p_iter_res;
- 
-+	(*pos)++;
- 	spin_lock(&ocfs2_dlm_tracking_lock);
- 	iter = ocfs2_dlm_next_res(iter, priv);
- 	list_del_init(&dummy->l_debug_list);
+--- a/lib/stackinit_kunit.c
++++ b/lib/stackinit_kunit.c
+@@ -199,6 +199,7 @@ static noinline void test_ ## name (stru
+ static noinline DO_NOTHING_TYPE_ ## which(var_type)		\
+ do_nothing_ ## name(var_type *ptr)				\
+ {								\
++	OPTIMIZER_HIDE_VAR(ptr);				\
+ 	/* Will always be true, but compiler doesn't know. */	\
+ 	if ((unsigned long)ptr > 0x2)				\
+ 		return DO_NOTHING_RETURN_ ## which(ptr);	\
 
 
