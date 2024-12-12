@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B81213792B;
-	Thu, 12 Dec 2024 16:28:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BF2220967D;
+	Thu, 12 Dec 2024 16:28:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734020903; cv=none; b=O1ixwi7dd/aKUnpP09ajwXgfqq4IY19eBzxvwL1IQ8IAC4XdJ8z27cJHF/xNz2I/lhscwnd8dmr6F1u1aZ50/DDYb76y04YBJJZ4bpVEHPSpsbDfp1P8XTTPDSjUlvrar2K5D24JskLuwy5eml5KhjHHxuJuQdvfRT78PK1HQLU=
+	t=1734020906; cv=none; b=m55gbeww4n0Mn3SDG/bvgmFe9XM9+FVFXe1p2Uz9Pe0TuAST5ZCFslasOwbyCutIEwcedQpcrg5/VMefDbbmZNJV5MgRyJxItU5EDxydcpFT0ITMOvAjRQL25dJrthe4cU4ckhKyHMZfmvtndsbNuYJXmZ+2ITPJQK+t28MHGHA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734020903; c=relaxed/simple;
-	bh=NqL9fDXvnI8vcqnJ689HZak6DNJOu9GYKVfZrZfSwyo=;
+	s=arc-20240116; t=1734020906; c=relaxed/simple;
+	bh=yqAfXRkUiASummIQQJ3ktqL2SdArnUnz6BuFEWLbMzw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tqHLTMvpwPMaf0ZdVggTPVuHzk+yy9PvLaAN/PyX5hKC3eZ7kE0lc0Jm4jal3opUi9sO+c6qhNMqW8ajISHqTrQGBmo9/fWXckGke9DAKpgMv/T8jbTZHgMnkte98NgYE3vfe3XJ3niHuUMzkKAxJvJT0Te5LLb950LkLQcNMkA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xLjdMJTx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=JwmAltflcW4Ofm66E1k70tLmX5HL0PrLIt+DGSgQljAaB8mXCOC6nofnC9R6q7uEesTRfskih375brxASd3W2671qFH2/lyyOGr9DSaD3nq8gHnkNdj5QPsWRfdF4hkVfttXeJIYgl8ElKi/sFyhkbqQDELTWiSVoQnNSdLjFyw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bgYfCl9w; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xLjdMJTx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37660C4CED0;
-	Thu, 12 Dec 2024 16:28:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bgYfCl9w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEA8CC4CED0;
+	Thu, 12 Dec 2024 16:28:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734020902;
-	bh=NqL9fDXvnI8vcqnJ689HZak6DNJOu9GYKVfZrZfSwyo=;
+	s=korg; t=1734020906;
+	bh=yqAfXRkUiASummIQQJ3ktqL2SdArnUnz6BuFEWLbMzw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xLjdMJTxirUmYu0+RhSx3PLfQBHDeBQRWZTHLnSpwBj2n1es8/lYIFfrUPwcUttxq
-	 pYnjQ+LBtTcRwmymlcd7sRKEsBIjQXVq0Avw1PFYvv1+v/a4Jk3JPQK9fB6Ro2Irhe
-	 xRDugAy7vbBIMDVG5zfL/SOrYdPJgSjAqh9Se3JI=
+	b=bgYfCl9wDgtxBWib29p3ni9KjD6Ssn2ynmeiFeRcIDDTaR740bMsferlMSecKXhI9
+	 1in6h+zYF8Lbd0GPB0+kCv4TBUBbrSRBWyWB9ziCYHDP1UR8L6CdqJYVEWhg0aPUnM
+	 Ztdc5xjyh/XijkStETONNcCs0xy5VL7RsMnX3+sU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Garry <john.g.garry@oracle.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
+	Iago Toral Quiroga <itoral@igalia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 593/772] scsi: scsi_debug: Fix hrtimer support for ndelay
-Date: Thu, 12 Dec 2024 15:58:58 +0100
-Message-ID: <20241212144414.434623564@linuxfoundation.org>
+Subject: [PATCH 6.1 594/772] drm/v3d: Enable Performance Counters before clearing them
+Date: Thu, 12 Dec 2024 15:58:59 +0100
+Message-ID: <20241212144414.474306352@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -45,46 +45,55 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: John Garry <john.g.garry@oracle.com>
+From: Maíra Canal <mcanal@igalia.com>
 
-[ Upstream commit 6918141d815acef056a0d10e966a027d869a922d ]
+[ Upstream commit c98b10496b2f3c4f576af3482c71aadcfcbf765e ]
 
-Since commit 771f712ba5b0 ("scsi: scsi_debug: Fix cmd duration
-calculation"), ns_from_boot value is only evaluated in schedule_resp()
-for polled requests.
+On the Raspberry Pi 5, performance counters are not being cleared
+when `v3d_perfmon_start()` is called, even though we write to the
+CLR register. As a result, their values accumulate until they
+overflow.
 
-However, ns_from_boot is also required for hrtimer support for when
-ndelay is less than INCLUSIVE_TIMING_MAX_NS, so fix up the logic to
-decide when to evaluate ns_from_boot.
+The expected behavior is for performance counters to reset to zero
+at the start of a job. When the job finishes and the perfmon is
+stopped, the counters should accurately reflect the values for that
+specific job.
 
-Fixes: 771f712ba5b0 ("scsi: scsi_debug: Fix cmd duration calculation")
-Signed-off-by: John Garry <john.g.garry@oracle.com>
-Link: https://lore.kernel.org/r/20241202130045.2335194-1-john.g.garry@oracle.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+To ensure this behavior, the performance counters are now enabled
+before being cleared. This allows the CLR register to function as
+intended, zeroing the counter values when the job begins.
+
+Fixes: 26a4dc29b74a ("drm/v3d: Expose performance counters to userspace")
+Signed-off-by: Maíra Canal <mcanal@igalia.com>
+Reviewed-by: Iago Toral Quiroga <itoral@igalia.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20241204122831.17015-1-mcanal@igalia.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/scsi_debug.c | 2 +-
+ drivers/gpu/drm/v3d/v3d_perfmon.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/scsi_debug.c b/drivers/scsi/scsi_debug.c
-index b77035ddc9440..2493e07a1a5ba 100644
---- a/drivers/scsi/scsi_debug.c
-+++ b/drivers/scsi/scsi_debug.c
-@@ -5672,7 +5672,7 @@ static int schedule_resp(struct scsi_cmnd *cmnd, struct sdebug_dev_info *devip,
- 	if (sdebug_host_max_queue)
- 		sd_dp->hc_idx = get_tag(cmnd);
+diff --git a/drivers/gpu/drm/v3d/v3d_perfmon.c b/drivers/gpu/drm/v3d/v3d_perfmon.c
+index cb56627328bb0..101332775b6a7 100644
+--- a/drivers/gpu/drm/v3d/v3d_perfmon.c
++++ b/drivers/gpu/drm/v3d/v3d_perfmon.c
+@@ -49,9 +49,9 @@ void v3d_perfmon_start(struct v3d_dev *v3d, struct v3d_perfmon *perfmon)
+ 		V3D_CORE_WRITE(0, V3D_V4_PCTR_0_SRC_X(source), channel);
+ 	}
  
--	if (polled)
-+	if (polled || (ndelay > 0 && ndelay < INCLUSIVE_TIMING_MAX_NS))
- 		ns_from_boot = ktime_get_boottime_ns();
++	V3D_CORE_WRITE(0, V3D_V4_PCTR_0_EN, mask);
+ 	V3D_CORE_WRITE(0, V3D_V4_PCTR_0_CLR, mask);
+ 	V3D_CORE_WRITE(0, V3D_PCTR_0_OVERFLOW, mask);
+-	V3D_CORE_WRITE(0, V3D_V4_PCTR_0_EN, mask);
  
- 	/* one of the resp_*() response functions is called here */
+ 	v3d->active_perfmon = perfmon;
+ }
 -- 
 2.43.0
 
