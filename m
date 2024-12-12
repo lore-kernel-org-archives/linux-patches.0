@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A858213E97;
-	Thu, 12 Dec 2024 15:11:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4D3D21504F;
+	Thu, 12 Dec 2024 15:11:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734016306; cv=none; b=ZcGpq/QYTGOWHRL+NP/jThf+dRZm9ip8aBqexNFOiZTi/usJk0jJcgBi75v50MriENsMdkiAkemgmRgM11y9TWdW0F89+nivZe8pZL2v3z8yCJsHSqfoSbi3DrJCxYGi4CQXvcpE+M+YQT+Zymytqv+xjbBEs7m7KHckkXUjr88=
+	t=1734016309; cv=none; b=FyG/xNRQDsZ34E8m9JMMV9a8L0aFUpDqndQZneCE00a7T7r4u5eFF4msyqkv4VC1Uoc9qdoyaUhmdjmI+vXoZM7oYz6mvYmt5LgRhRi5KlV7S0RCCQWAdO7ldudtG3MF6StGC0qqzI8qbBgKWPXhFSVHbYBwEo+/iFc5urqoQrc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734016306; c=relaxed/simple;
-	bh=+uI5BTrUGbNgGe9D85Y7WORUBxsDGIbBEmJVKloLzAo=;
+	s=arc-20240116; t=1734016309; c=relaxed/simple;
+	bh=0PTAS2LBaZPb0ie9o7+Z/o7CUv2aoPqr0l9e+w2nYas=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QDqfkDXsatZ4bAIJFjs23VycWzFTAnZfdnjGfH9YAHOPO/NlqZFyyk1LkkGRK/PGFyMJ6KTq/Q3naqjck07WJ6gim6BHgdG9sgqP5/wRjOt2sP95gMnqLzPBNc7uRSAgkxxXFXFWZvpfdh/AncfVLhZcYZON1Cz3dJsiMWqUM8A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PnU1rIo4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Vl0yiVBu9i9XgaQEDRn0ulGQKlqixpXLEynmckZ3hUfhgrGiJvcSrehvvfQPgOP+ImSV2OZu4fiWAJifTkqBopD9oFF0ckBrdpSefZTLShe/+Ba26rZDam8DysBmPQ3c+Wq9TPo1XS2jaRKR/SY20jbWxfZVtt5N2TolzpBo4r0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M0HcPiLW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PnU1rIo4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28B57C4CED7;
-	Thu, 12 Dec 2024 15:11:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M0HcPiLW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7AC0C4CED7;
+	Thu, 12 Dec 2024 15:11:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734016305;
-	bh=+uI5BTrUGbNgGe9D85Y7WORUBxsDGIbBEmJVKloLzAo=;
+	s=korg; t=1734016309;
+	bh=0PTAS2LBaZPb0ie9o7+Z/o7CUv2aoPqr0l9e+w2nYas=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PnU1rIo4K9fSXytztHStMA23NBeimQq+v3ZCsxGLQW0KSzNqGOWf8079Ny+Bbk5yb
-	 H4nZxiVQAE9VG3UnySQa81ROfEoGoVYoWydoCYqb4uPUagUl5s/us1U1uVSJBWscgw
-	 jACAY1VveSgzXuq8P07Rtq5NllkUMJ5OEwtFwmfI=
+	b=M0HcPiLWQP2OEh1dH6L5EHErmoRJe1ft7DTtc4Wprb/BB8zESyo8Rwm8pBJzc+9lA
+	 EIF9fkwv2cYfv3U2zSz8c2c9FWa5ExlWeGkRfJ95I0Du7Pcpcnb99kM7dlkKCVLCF5
+	 8srgPVmMOmZa9GuTTVzGpoHEyZQYWUiJtSzbXMd8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
 	Peter Wang <peter.wang@mediatek.com>,
-	Bean Huo <beanhuo@micron.com>,
 	Bart Van Assche <bvanassche@acm.org>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.12 153/466] scsi: ufs: pltfrm: Disable runtime PM during removal of glue drivers
-Date: Thu, 12 Dec 2024 15:55:22 +0100
-Message-ID: <20241212144312.841582339@linuxfoundation.org>
+Subject: [PATCH 6.12 154/466] scsi: ufs: core: Add missing post notify for power mode change
+Date: Thu, 12 Dec 2024 15:55:23 +0100
+Message-ID: <20241212144312.882527590@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144306.641051666@linuxfoundation.org>
 References: <20241212144306.641051666@linuxfoundation.org>
@@ -53,177 +51,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+From: Peter Wang <peter.wang@mediatek.com>
 
-commit d3326e6a3f9bf1e075be2201fb704c2fdf19e2b7 upstream.
+commit 7f45ed5f0cd5ccbbec79adc6c48a67d6a85fba56 upstream.
 
-When the UFSHCD platform glue drivers are removed, runtime PM should be
-disabled using pm_runtime_disable() to balance the enablement done in
-ufshcd_pltfrm_init(). This is also reported by PM core when the glue driver
-is removed and inserted again:
+When the power mode change is successful but the power mode hasn't
+actually changed, the post notification was missed.  Similar to the
+approach with hibernate/clock scale/hce enable, having pre/post
+notifications in the same function will make it easier to maintain.
 
-ufshcd-qcom 1d84000.ufshc: Unbalanced pm_runtime_enable!
+Additionally, supplement the description of power parameters for the
+pwr_change_notify callback.
 
-So disable runtime PM using a new helper API ufshcd_pltfrm_remove(), that
-also takes care of removing ufshcd. This helper should be called during the
-remove() stage of glue drivers.
-
-Cc: stable@vger.kernel.org # 3.12
-Fixes: 62694735ca95 ("[SCSI] ufs: Add runtime PM support for UFS host controller driver")
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Link: https://lore.kernel.org/r/20241111-ufs_bug_fix-v1-3-45ad8b62f02e@linaro.org
-Reviewed-by: Peter Wang <peter.wang@mediatek.com>
-Reviewed-by: Bean Huo <beanhuo@micron.com>
+Fixes: 7eb584db73be ("ufs: refactor configuring power mode")
+Cc: stable@vger.kernel.org #6.11.x
+Signed-off-by: Peter Wang <peter.wang@mediatek.com>
+Link: https://lore.kernel.org/r/20241122024943.30589-1-peter.wang@mediatek.com
 Reviewed-by: Bart Van Assche <bvanassche@acm.org>
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ufs/host/cdns-pltfrm.c        |    4 +---
- drivers/ufs/host/tc-dwc-g210-pltfrm.c |    4 +---
- drivers/ufs/host/ufs-exynos.c         |    2 +-
- drivers/ufs/host/ufs-hisi.c           |    4 +---
- drivers/ufs/host/ufs-mediatek.c       |    4 +---
- drivers/ufs/host/ufs-qcom.c           |    2 +-
- drivers/ufs/host/ufs-renesas.c        |    4 +---
- drivers/ufs/host/ufs-sprd.c           |    4 +---
- drivers/ufs/host/ufshcd-pltfrm.c      |   13 +++++++++++++
- drivers/ufs/host/ufshcd-pltfrm.h      |    1 +
- 10 files changed, 22 insertions(+), 20 deletions(-)
+ drivers/ufs/core/ufshcd.c |    7 ++++---
+ include/ufs/ufshcd.h      |   10 ++++++----
+ 2 files changed, 10 insertions(+), 7 deletions(-)
 
---- a/drivers/ufs/host/cdns-pltfrm.c
-+++ b/drivers/ufs/host/cdns-pltfrm.c
-@@ -307,9 +307,7 @@ static int cdns_ufs_pltfrm_probe(struct
-  */
- static void cdns_ufs_pltfrm_remove(struct platform_device *pdev)
- {
--	struct ufs_hba *hba =  platform_get_drvdata(pdev);
+--- a/drivers/ufs/core/ufshcd.c
++++ b/drivers/ufs/core/ufshcd.c
+@@ -4684,9 +4684,6 @@ static int ufshcd_change_power_mode(stru
+ 		dev_err(hba->dev,
+ 			"%s: power mode change failed %d\n", __func__, ret);
+ 	} else {
+-		ufshcd_vops_pwr_change_notify(hba, POST_CHANGE, NULL,
+-								pwr_mode);
 -
--	ufshcd_remove(hba);
-+	ufshcd_pltfrm_remove(pdev);
- }
+ 		memcpy(&hba->pwr_info, pwr_mode,
+ 			sizeof(struct ufs_pa_layer_attr));
+ 	}
+@@ -4715,6 +4712,10 @@ int ufshcd_config_pwr_mode(struct ufs_hb
  
- static const struct dev_pm_ops cdns_ufs_dev_pm_ops = {
---- a/drivers/ufs/host/tc-dwc-g210-pltfrm.c
-+++ b/drivers/ufs/host/tc-dwc-g210-pltfrm.c
-@@ -76,10 +76,8 @@ static int tc_dwc_g210_pltfm_probe(struc
-  */
- static void tc_dwc_g210_pltfm_remove(struct platform_device *pdev)
- {
--	struct ufs_hba *hba =  platform_get_drvdata(pdev);
--
- 	pm_runtime_get_sync(&(pdev)->dev);
--	ufshcd_remove(hba);
-+	ufshcd_pltfrm_remove(pdev);
- }
+ 	ret = ufshcd_change_power_mode(hba, &final_params);
  
- static const struct dev_pm_ops tc_dwc_g210_pltfm_pm_ops = {
---- a/drivers/ufs/host/ufs-exynos.c
-+++ b/drivers/ufs/host/ufs-exynos.c
-@@ -1964,7 +1964,7 @@ static void exynos_ufs_remove(struct pla
- 	struct exynos_ufs *ufs = ufshcd_get_variant(hba);
- 
- 	pm_runtime_get_sync(&(pdev)->dev);
--	ufshcd_remove(hba);
-+	ufshcd_pltfrm_remove(pdev);
- 
- 	phy_power_off(ufs->phy);
- 	phy_exit(ufs->phy);
---- a/drivers/ufs/host/ufs-hisi.c
-+++ b/drivers/ufs/host/ufs-hisi.c
-@@ -576,9 +576,7 @@ static int ufs_hisi_probe(struct platfor
- 
- static void ufs_hisi_remove(struct platform_device *pdev)
- {
--	struct ufs_hba *hba =  platform_get_drvdata(pdev);
--
--	ufshcd_remove(hba);
-+	ufshcd_pltfrm_remove(pdev);
- }
- 
- static const struct dev_pm_ops ufs_hisi_pm_ops = {
---- a/drivers/ufs/host/ufs-mediatek.c
-+++ b/drivers/ufs/host/ufs-mediatek.c
-@@ -1869,10 +1869,8 @@ out:
-  */
- static void ufs_mtk_remove(struct platform_device *pdev)
- {
--	struct ufs_hba *hba =  platform_get_drvdata(pdev);
--
- 	pm_runtime_get_sync(&(pdev)->dev);
--	ufshcd_remove(hba);
-+	ufshcd_pltfrm_remove(pdev);
- }
- 
- #ifdef CONFIG_PM_SLEEP
---- a/drivers/ufs/host/ufs-qcom.c
-+++ b/drivers/ufs/host/ufs-qcom.c
-@@ -1846,7 +1846,7 @@ static void ufs_qcom_remove(struct platf
- 	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
- 
- 	pm_runtime_get_sync(&(pdev)->dev);
--	ufshcd_remove(hba);
-+	ufshcd_pltfrm_remove(pdev);
- 	if (host->esi_enabled)
- 		platform_device_msi_free_irqs_all(hba->dev);
- }
---- a/drivers/ufs/host/ufs-renesas.c
-+++ b/drivers/ufs/host/ufs-renesas.c
-@@ -390,9 +390,7 @@ static int ufs_renesas_probe(struct plat
- 
- static void ufs_renesas_remove(struct platform_device *pdev)
- {
--	struct ufs_hba *hba = platform_get_drvdata(pdev);
--
--	ufshcd_remove(hba);
-+	ufshcd_pltfrm_remove(pdev);
- }
- 
- static struct platform_driver ufs_renesas_platform = {
---- a/drivers/ufs/host/ufs-sprd.c
-+++ b/drivers/ufs/host/ufs-sprd.c
-@@ -427,10 +427,8 @@ static int ufs_sprd_probe(struct platfor
- 
- static void ufs_sprd_remove(struct platform_device *pdev)
- {
--	struct ufs_hba *hba =  platform_get_drvdata(pdev);
--
- 	pm_runtime_get_sync(&(pdev)->dev);
--	ufshcd_remove(hba);
-+	ufshcd_pltfrm_remove(pdev);
- }
- 
- static const struct dev_pm_ops ufs_sprd_pm_ops = {
---- a/drivers/ufs/host/ufshcd-pltfrm.c
-+++ b/drivers/ufs/host/ufshcd-pltfrm.c
-@@ -524,6 +524,19 @@ out:
- }
- EXPORT_SYMBOL_GPL(ufshcd_pltfrm_init);
- 
-+/**
-+ * ufshcd_pltfrm_remove - Remove ufshcd platform
-+ * @pdev: pointer to Platform device handle
-+ */
-+void ufshcd_pltfrm_remove(struct platform_device *pdev)
-+{
-+	struct ufs_hba *hba =  platform_get_drvdata(pdev);
++	if (!ret)
++		ufshcd_vops_pwr_change_notify(hba, POST_CHANGE, NULL,
++					&final_params);
 +
-+	ufshcd_remove(hba);
-+	pm_runtime_disable(&pdev->dev);
-+}
-+EXPORT_SYMBOL_GPL(ufshcd_pltfrm_remove);
-+
- MODULE_AUTHOR("Santosh Yaragnavi <santosh.sy@samsung.com>");
- MODULE_AUTHOR("Vinayak Holikatti <h.vinayak@samsung.com>");
- MODULE_DESCRIPTION("UFS host controller Platform bus based glue driver");
---- a/drivers/ufs/host/ufshcd-pltfrm.h
-+++ b/drivers/ufs/host/ufshcd-pltfrm.h
-@@ -31,6 +31,7 @@ int ufshcd_negotiate_pwr_params(const st
- void ufshcd_init_host_params(struct ufs_host_params *host_params);
- int ufshcd_pltfrm_init(struct platform_device *pdev,
- 		       const struct ufs_hba_variant_ops *vops);
-+void ufshcd_pltfrm_remove(struct platform_device *pdev);
- int ufshcd_populate_vreg(struct device *dev, const char *name,
- 			 struct ufs_vreg **out_vreg, bool skip_current);
- 
+ 	return ret;
+ }
+ EXPORT_SYMBOL_GPL(ufshcd_config_pwr_mode);
+--- a/include/ufs/ufshcd.h
++++ b/include/ufs/ufshcd.h
+@@ -308,7 +308,9 @@ struct ufs_pwr_mode_info {
+  *                       to allow variant specific Uni-Pro initialization.
+  * @pwr_change_notify: called before and after a power mode change
+  *			is carried out to allow vendor spesific capabilities
+- *			to be set.
++ *			to be set. PRE_CHANGE can modify final_params based
++ *			on desired_pwr_mode, but POST_CHANGE must not alter
++ *			the final_params parameter
+  * @setup_xfer_req: called before any transfer request is issued
+  *                  to set some things
+  * @setup_task_mgmt: called before any task management request is issued
+@@ -350,9 +352,9 @@ struct ufs_hba_variant_ops {
+ 	int	(*link_startup_notify)(struct ufs_hba *,
+ 				       enum ufs_notify_change_status);
+ 	int	(*pwr_change_notify)(struct ufs_hba *,
+-					enum ufs_notify_change_status status,
+-					struct ufs_pa_layer_attr *,
+-					struct ufs_pa_layer_attr *);
++				enum ufs_notify_change_status status,
++				struct ufs_pa_layer_attr *desired_pwr_mode,
++				struct ufs_pa_layer_attr *final_params);
+ 	void	(*setup_xfer_req)(struct ufs_hba *hba, int tag,
+ 				  bool is_scsi_cmd);
+ 	void	(*setup_task_mgmt)(struct ufs_hba *, int, u8);
 
 
