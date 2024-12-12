@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7F384F218;
-	Thu, 12 Dec 2024 17:17:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B51534F218;
+	Thu, 12 Dec 2024 17:17:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734023821; cv=none; b=JU+dBxrJdMj/xBIODi2j57AysNEotBMwbhQmA3UXv/tiUuepuU3f8sg1c+hd5pYql9y/6VTNokFRrBTZLTKPwIQ1zJHfiTJcJUpFJO36TMNqeAvRM21WNeptk/ua8XjuQ0VtvkY9Tx6sqovxyN3/Uu/uCycne0MzL5UoVmNsPhU=
+	t=1734023824; cv=none; b=m3Kpz1kPwE3WgzpYutZ87XjYng5dYK0JE271A400zFmb+r5VxBSLgtVOJ+FxkUn5nze+px1xTur+fV6nAjSvafkm8ybL8CsnOhiCtubxwuW+prMRXnpWZN9066nzptKtpGMP/iTJF7KGpUc5Y0cW2JSSnGNcacJAtV22Eh1YtyU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734023821; c=relaxed/simple;
-	bh=lDWz8YHm2rnzezLNnylK/rS9sQ39mjf3yLseVhNHnI0=;
+	s=arc-20240116; t=1734023824; c=relaxed/simple;
+	bh=k7Vyturh8PncG3y2X4bJTBMr2eAv7ttkeetBojzhZOg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cg22uTfSjA7efJM+en/EecimPJCqIQ4rOv9z4LaxIu+jDnfeNyzJoEOzC8/leG6PJcmwd02VpJMe+x86bz9lCB0jqIi59f2KihtRfNvGvThneZS97bpzB1CRz9O671pUvW4de55EfQINa40kJZVG392uG9SWlx344DXXZZWLN7M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MN3VUPvY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kHpCwJx3I/WN2Be2mUf9U8YiF1lc2Swla2wPrLVbVnQPkgSpbBBZe3mz+/sYuKQJksQWIyO8YrilL9JGepAnF9QJGW2uzutHeiSb3kZBux0bJXR+d7WOCi2S+XYtty9zmCiQ84iZyLlVOgO7dXpaclw+x4Uh3QKPePI7bN7K7zU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AfRXNz8B; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MN3VUPvY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20185C4CECE;
-	Thu, 12 Dec 2024 17:17:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AfRXNz8B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32CC6C4CECE;
+	Thu, 12 Dec 2024 17:17:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734023821;
-	bh=lDWz8YHm2rnzezLNnylK/rS9sQ39mjf3yLseVhNHnI0=;
+	s=korg; t=1734023824;
+	bh=k7Vyturh8PncG3y2X4bJTBMr2eAv7ttkeetBojzhZOg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MN3VUPvYhZUjZvglkIpbJ+faHlxwCaG/VPIxoJcdPXoDG1vLYF/C94wTnBTqbINLH
-	 cvsL8hadLH4rlT2dZqaHcfm1quKn6632n12ahiBIY049do6iArnug8JHtO6O0GKlb+
-	 ajlRUTW7nyQl1HmA9py5snAfh2Bdkf1bd1SJxCCk=
+	b=AfRXNz8BTcpz3n3PpnlUe3jur3UluhcjJv/ksXIjpV0Tia/xdhgEA58V7w7cVa2xQ
+	 BceZ51BNa+73/IPbt/I8bUqOg6ehr3yfA0pG1Gz7C+OSYm8EKoPS0L+GC/4oDRqM3h
+	 /E8Ik53hGoAGvnvBjwVo92S7MLBSzrH7bQxjwsTU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hsin-Te Yuan <yuanhsinte@chromium.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
+	Luo Qiu <luoqiu@kylinsec.com.cn>,
+	Sudeep Holla <sudeep.holla@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 086/459] arm64: dts: mt8183: krane: Fix the address of eeprom at i2c4
-Date: Thu, 12 Dec 2024 15:57:04 +0100
-Message-ID: <20241212144256.915699889@linuxfoundation.org>
+Subject: [PATCH 5.10 095/459] firmware: arm_scpi: Check the DVFS OPP count returned by the firmware
+Date: Thu, 12 Dec 2024 15:57:13 +0100
+Message-ID: <20241212144257.267068615@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144253.511169641@linuxfoundation.org>
 References: <20241212144253.511169641@linuxfoundation.org>
@@ -52,39 +51,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hsin-Te Yuan <yuanhsinte@chromium.org>
+From: Luo Qiu <luoqiu@kylinsec.com.cn>
 
-[ Upstream commit e9c60c34948662b5d47573490ee538439b29e462 ]
+[ Upstream commit 109aa654f85c5141e813b2cd1bd36d90be678407 ]
 
-The address of eeprom should be 50.
+Fix a kernel crash with the below call trace when the SCPI firmware
+returns OPP count of zero.
 
-Fixes: cd894e274b74 ("arm64: dts: mt8183: Add krane-sku176 board")
-Signed-off-by: Hsin-Te Yuan <yuanhsinte@chromium.org>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Reviewed-by: Matthias Brugger <matthias.bgg@gmail.com>
-Link: https://lore.kernel.org/r/20240909-eeprom-v1-1-1ed2bc5064f4@chromium.org
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+dvfs_info.opp_count may be zero on some platforms during the reboot
+test, and the kernel will crash after dereferencing the pointer to
+kcalloc(info->count, sizeof(*opp), GFP_KERNEL).
+
+  |  Unable to handle kernel NULL pointer dereference at virtual address 0000000000000028
+  |  Mem abort info:
+  |    ESR = 0x96000004
+  |    Exception class = DABT (current EL), IL = 32 bits
+  |    SET = 0, FnV = 0
+  |    EA = 0, S1PTW = 0
+  |  Data abort info:
+  |    ISV = 0, ISS = 0x00000004
+  |    CM = 0, WnR = 0
+  |  user pgtable: 4k pages, 48-bit VAs, pgdp = 00000000faefa08c
+  |  [0000000000000028] pgd=0000000000000000
+  |  Internal error: Oops: 96000004 [#1] SMP
+  |  scpi-hwmon: probe of PHYT000D:00 failed with error -110
+  |  Process systemd-udevd (pid: 1701, stack limit = 0x00000000aaede86c)
+  |  CPU: 2 PID: 1701 Comm: systemd-udevd Not tainted 4.19.90+ #1
+  |  Hardware name: PHYTIUM LTD Phytium FT2000/4/Phytium FT2000/4, BIOS
+  |  pstate: 60000005 (nZCv daif -PAN -UAO)
+  |  pc : scpi_dvfs_recalc_rate+0x40/0x58 [clk_scpi]
+  |  lr : clk_register+0x438/0x720
+  |  Call trace:
+  |   scpi_dvfs_recalc_rate+0x40/0x58 [clk_scpi]
+  |   devm_clk_hw_register+0x50/0xa0
+  |   scpi_clk_ops_init.isra.2+0xa0/0x138 [clk_scpi]
+  |   scpi_clocks_probe+0x528/0x70c [clk_scpi]
+  |   platform_drv_probe+0x58/0xa8
+  |   really_probe+0x260/0x3d0
+  |   driver_probe_device+0x12c/0x148
+  |   device_driver_attach+0x74/0x98
+  |   __driver_attach+0xb4/0xe8
+  |   bus_for_each_dev+0x88/0xe0
+  |   driver_attach+0x30/0x40
+  |   bus_add_driver+0x178/0x2b0
+  |   driver_register+0x64/0x118
+  |   __platform_driver_register+0x54/0x60
+  |   scpi_clocks_driver_init+0x24/0x1000 [clk_scpi]
+  |   do_one_initcall+0x54/0x220
+  |   do_init_module+0x54/0x1c8
+  |   load_module+0x14a4/0x1668
+  |   __se_sys_finit_module+0xf8/0x110
+  |   __arm64_sys_finit_module+0x24/0x30
+  |   el0_svc_common+0x78/0x170
+  |   el0_svc_handler+0x38/0x78
+  |   el0_svc+0x8/0x340
+  |  Code: 937d7c00 a94153f3 a8c27bfd f9400421 (b8606820)
+  |  ---[ end trace 06feb22469d89fa8 ]---
+  |  Kernel panic - not syncing: Fatal exception
+  |  SMP: stopping secondary CPUs
+  |  Kernel Offset: disabled
+  |  CPU features: 0x10,a0002008
+  |  Memory Limit: none
+
+Fixes: 8cb7cf56c9fe ("firmware: add support for ARM System Control and Power Interface(SCPI) protocol")
+Signed-off-by: Luo Qiu <luoqiu@kylinsec.com.cn>
+Message-Id: <55A2F7A784391686+20241101032115.275977-1-luoqiu@kylinsec.com.cn>
+Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/mediatek/mt8183-kukui-krane.dtsi | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/firmware/arm_scpi.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/mediatek/mt8183-kukui-krane.dtsi b/arch/arm64/boot/dts/mediatek/mt8183-kukui-krane.dtsi
-index fbc471ccf805f..e61ec0229992e 100644
---- a/arch/arm64/boot/dts/mediatek/mt8183-kukui-krane.dtsi
-+++ b/arch/arm64/boot/dts/mediatek/mt8183-kukui-krane.dtsi
-@@ -85,9 +85,9 @@ &i2c4 {
- 	status = "okay";
- 	clock-frequency = <400000>;
+diff --git a/drivers/firmware/arm_scpi.c b/drivers/firmware/arm_scpi.c
+index 36391cb5130e2..3a1d77b882f7e 100644
+--- a/drivers/firmware/arm_scpi.c
++++ b/drivers/firmware/arm_scpi.c
+@@ -627,6 +627,9 @@ static struct scpi_dvfs_info *scpi_dvfs_get_info(u8 domain)
+ 	if (ret)
+ 		return ERR_PTR(ret);
  
--	eeprom@54 {
-+	eeprom@50 {
- 		compatible = "atmel,24c32";
--		reg = <0x54>;
-+		reg = <0x50>;
- 		pagesize = <32>;
- 	};
- };
++	if (!buf.opp_count)
++		return ERR_PTR(-ENOENT);
++
+ 	info = kmalloc(sizeof(*info), GFP_KERNEL);
+ 	if (!info)
+ 		return ERR_PTR(-ENOMEM);
 -- 
 2.43.0
 
