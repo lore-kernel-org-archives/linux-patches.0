@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79E1F217670;
-	Thu, 12 Dec 2024 15:35:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 185926F2FE;
+	Thu, 12 Dec 2024 15:35:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734017737; cv=none; b=SCX0BlcmCiC69I+rvVCRQmVO0Mmf5dhRQDB7cDpgp07AAi9sla8KGqLA3DNA4pY7oO+cVVT2dEpPrC13n3jAFzdq2LblqNqZ6wIwA1Rr21CcWIXSup+e/Y5KhQG6kIOA6A7g2/0qmqpeDrQLzDStRHClk9RMZ22IFa7S5yXeaEo=
+	t=1734017741; cv=none; b=RIHuTcus5SAWdinMyqishOMgTZJBxvR16cAtUTV0eGjjRwIuKQdsijHB/o+0jKIGdN6cWevCgpD282ea6MSWMtj+6bWb/vrAoGoGQh0J+JaGXStObsVHNXqB7IV8pV7/zY6G5WJiAx+sOh5+8dotluV+7TGcNqM3ILydQUriPtc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734017737; c=relaxed/simple;
-	bh=5kbsPwEpfGlHyeBKVHcG5DLN7ePhfnUhhKxuW08RCjI=;
+	s=arc-20240116; t=1734017741; c=relaxed/simple;
+	bh=NecZ8Z4sk3TZJTIVipycj77hzLn4fpYufS3zwkGri3k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ef3h9QtsUEK91PfX/TtLddAKOistfG4PXjihDbU9kj2GQTa6e3oWpCCj8wvX/qI2so86kfbldcxd5KzZ0k8nWtvK+J01idkP0Q+Fpy2pXETmrFYzMp/T+QejEHMTmV90swdLMidanhjtneEoCf7lfc9yaeaIRw3ewZYFLMCzkNg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ji1nLKfo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VT93aBp4RJz9utdRiy8DCiS155528wS0aciccH6GKQVW0zrXNl7Be1ioKvI6LTMWVEP/xCoNxpW1GgXGewufRM1viGf9tpj14lraK8TDNE1fOib+eycClVWAt8GS0nTqvfMCBMv1/6GsJj76LtTKrAbxv4AyxDUjTH5ozpCxkOA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jliIZMC0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ji1nLKfo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB7B3C4CECE;
-	Thu, 12 Dec 2024 15:35:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jliIZMC0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75F27C4CECE;
+	Thu, 12 Dec 2024 15:35:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734017737;
-	bh=5kbsPwEpfGlHyeBKVHcG5DLN7ePhfnUhhKxuW08RCjI=;
+	s=korg; t=1734017740;
+	bh=NecZ8Z4sk3TZJTIVipycj77hzLn4fpYufS3zwkGri3k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ji1nLKfoF/aKdidgumhL/y59Toi5gqZ5CByJtFgJjv11Ny2P7jfMumsEDwgfbkxjX
-	 cWYOqNXMF6dqqeO4rqKu2cQa+hfx5hIhSWEkRZZwC5EX0MxyrqHd7rMoX4UobpqwQg
-	 bEZOLKd8TxJAWj0lmC6aEhY7joE82gWRftl9p8ao=
+	b=jliIZMC0CgE5gWyBVikjXJex/b6QREeyqe2LPI518PLIPCwBzyYAoOhkNuHXg7lVY
+	 ovKERrGF0x/jUxtKQxkFBqKkG+qaTabIg+MK0waw+vnSyR7wqotzFM506tx6OJTe1G
+	 dG355mgzlCtVh5zkg0ldjnLXHHhYFhIyL2ny5Ni4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuangyi Chiang <ki.chiang65@gmail.com>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Petr Machata <petrm@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 068/356] xhci: Dont issue Reset Device command to Etron xHCI host
-Date: Thu, 12 Dec 2024 15:56:27 +0100
-Message-ID: <20241212144247.318662056@linuxfoundation.org>
+Subject: [PATCH 6.6 059/356] mlxsw: spectrum_acl_flex_keys: Use correct key block on Spectrum-4
+Date: Thu, 12 Dec 2024 15:56:18 +0100
+Message-ID: <20241212144246.967728398@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144244.601729511@linuxfoundation.org>
 References: <20241212144244.601729511@linuxfoundation.org>
@@ -51,105 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuangyi Chiang <ki.chiang65@gmail.com>
+From: Ido Schimmel <idosch@nvidia.com>
 
-[ Upstream commit 76d98856b1c6d06ce18f32c20527a4f9d283e660 ]
+[ Upstream commit 217bbf156f93ada86b91617489e7ba8a0904233c ]
 
-Sometimes the hub driver does not recognize the USB device connected
-to the external USB2.0 hub when the system resumes from S4.
+The driver is currently using an ACL key block that is not supported by
+Spectrum-4. This works because the driver is only using a single field
+from this key block which is located in the same offset in the
+equivalent Spectrum-4 key block.
 
-After the SetPortFeature(PORT_RESET) request is completed, the hub
-driver calls the HCD reset_device callback, which will issue a Reset
-Device command and free all structures associated with endpoints
-that were disabled.
+The issue was discovered when the firmware started rejecting the use of
+the unsupported key block. The change has been reverted to avoid
+breaking users that only update their firmware.
 
-This happens when the xHCI driver issue a Reset Device command to
-inform the Etron xHCI host that the USB device associated with a
-device slot has been reset. Seems that the Etron xHCI host can not
-perform this command correctly, affecting the USB device.
+Nonetheless, fix the issue by using the correct key block.
 
-To work around this, the xHCI driver should obtain a new device slot
-with reference to commit 651aaf36a7d7 ("usb: xhci: Handle USB transaction
-error on address command"), which is another way to inform the Etron
-xHCI host that the USB device has been reset.
-
-Add a new XHCI_ETRON_HOST quirk flag to invoke the workaround in
-xhci_discover_or_reset_device().
-
-Fixes: 2a8f82c4ceaf ("USB: xhci: Notify the xHC when a device is reset.")
-Cc: stable@vger.kernel.org
-Signed-off-by: Kuangyi Chiang <ki.chiang65@gmail.com>
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://lore.kernel.org/r/20241106101459.775897-19-mathias.nyman@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 07ff135958dd ("mlxsw: Introduce flex key elements for Spectrum-4")
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: Petr Machata <petrm@nvidia.com>
+Signed-off-by: Petr Machata <petrm@nvidia.com>
+Link: https://patch.msgid.link/35e72c97bdd3bc414fb8e4d747e5fb5d26c29658.1733237440.git.petrm@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/host/xhci-pci.c |  1 +
- drivers/usb/host/xhci.c     | 19 +++++++++++++++++++
- drivers/usb/host/xhci.h     |  1 +
- 3 files changed, 21 insertions(+)
+ .../net/ethernet/mellanox/mlxsw/spectrum_acl_flex_keys.c    | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/usb/host/xhci-pci.c b/drivers/usb/host/xhci-pci.c
-index d36158df83afc..340d9597d1ab0 100644
---- a/drivers/usb/host/xhci-pci.c
-+++ b/drivers/usb/host/xhci-pci.c
-@@ -458,6 +458,7 @@ static void xhci_pci_quirks(struct device *dev, struct xhci_hcd *xhci)
- 	if (pdev->vendor == PCI_VENDOR_ID_ETRON &&
- 	    (pdev->device == PCI_DEVICE_ID_EJ168 ||
- 	     pdev->device == PCI_DEVICE_ID_EJ188)) {
-+		xhci->quirks |= XHCI_ETRON_HOST;
- 		xhci->quirks |= XHCI_RESET_ON_RESUME;
- 		xhci->quirks |= XHCI_BROKEN_STREAMS;
- 	}
-diff --git a/drivers/usb/host/xhci.c b/drivers/usb/host/xhci.c
-index f005ce1f91ca2..3bd70e6ad64ba 100644
---- a/drivers/usb/host/xhci.c
-+++ b/drivers/usb/host/xhci.c
-@@ -3642,6 +3642,8 @@ void xhci_free_device_endpoint_resources(struct xhci_hcd *xhci,
- 				xhci->num_active_eps);
- }
+diff --git a/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_flex_keys.c b/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_flex_keys.c
+index 6fe185ea6732c..1850a975b3804 100644
+--- a/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_flex_keys.c
++++ b/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_flex_keys.c
+@@ -324,6 +324,10 @@ static const struct mlxsw_afk_element_inst mlxsw_sp_afk_element_info_mac_5b[] =
+ 	MLXSW_AFK_ELEMENT_INST_EXT_U32(SRC_SYS_PORT, 0x04, 0, 9, -1, true), /* RX_ACL_SYSTEM_PORT */
+ };
  
-+static void xhci_free_dev(struct usb_hcd *hcd, struct usb_device *udev);
++static const struct mlxsw_afk_element_inst mlxsw_sp_afk_element_info_ipv4_1b[] = {
++	MLXSW_AFK_ELEMENT_INST_BUF(SRC_IP_0_31, 0x04, 4),
++};
 +
- /*
-  * This submits a Reset Device Command, which will set the device state to 0,
-  * set the device address to 0, and disable all the endpoints except the default
-@@ -3712,6 +3714,23 @@ static int xhci_discover_or_reset_device(struct usb_hcd *hcd,
- 						SLOT_STATE_DISABLED)
- 		return 0;
- 
-+	if (xhci->quirks & XHCI_ETRON_HOST) {
-+		/*
-+		 * Obtaining a new device slot to inform the xHCI host that
-+		 * the USB device has been reset.
-+		 */
-+		ret = xhci_disable_slot(xhci, udev->slot_id);
-+		xhci_free_virt_device(xhci, udev->slot_id);
-+		if (!ret) {
-+			ret = xhci_alloc_dev(hcd, udev);
-+			if (ret == 1)
-+				ret = 0;
-+			else
-+				ret = -EINVAL;
-+		}
-+		return ret;
-+	}
-+
- 	trace_xhci_discover_or_reset_device(slot_ctx);
- 
- 	xhci_dbg(xhci, "Resetting device with slot ID %u\n", slot_id);
-diff --git a/drivers/usb/host/xhci.h b/drivers/usb/host/xhci.h
-index a0005a1124938..4bbd12db7239a 100644
---- a/drivers/usb/host/xhci.h
-+++ b/drivers/usb/host/xhci.h
-@@ -1660,6 +1660,7 @@ struct xhci_hcd {
- #define XHCI_ZHAOXIN_HOST	BIT_ULL(46)
- #define XHCI_WRITE_64_HI_LO	BIT_ULL(47)
- #define XHCI_CDNS_SCTX_QUIRK	BIT_ULL(48)
-+#define XHCI_ETRON_HOST	BIT_ULL(49)
- 
- 	unsigned int		num_active_eps;
- 	unsigned int		limit_active_eps;
+ static const struct mlxsw_afk_element_inst mlxsw_sp_afk_element_info_ipv4_5b[] = {
+ 	MLXSW_AFK_ELEMENT_INST_U32(VIRT_ROUTER, 0x04, 20, 12),
+ };
+@@ -341,7 +345,7 @@ static const struct mlxsw_afk_block mlxsw_sp4_afk_blocks[] = {
+ 	MLXSW_AFK_BLOCK(0x14, mlxsw_sp_afk_element_info_mac_4),
+ 	MLXSW_AFK_BLOCK_HIGH_ENTROPY(0x1A, mlxsw_sp_afk_element_info_mac_5b),
+ 	MLXSW_AFK_BLOCK_HIGH_ENTROPY(0x38, mlxsw_sp_afk_element_info_ipv4_0),
+-	MLXSW_AFK_BLOCK_HIGH_ENTROPY(0x39, mlxsw_sp_afk_element_info_ipv4_1),
++	MLXSW_AFK_BLOCK_HIGH_ENTROPY(0x3F, mlxsw_sp_afk_element_info_ipv4_1b),
+ 	MLXSW_AFK_BLOCK(0x3A, mlxsw_sp_afk_element_info_ipv4_2),
+ 	MLXSW_AFK_BLOCK(0x36, mlxsw_sp_afk_element_info_ipv4_5b),
+ 	MLXSW_AFK_BLOCK(0x40, mlxsw_sp_afk_element_info_ipv6_0),
 -- 
 2.43.0
 
