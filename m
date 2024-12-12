@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 583A321E085;
-	Thu, 12 Dec 2024 17:29:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D92A021660B;
+	Thu, 12 Dec 2024 17:29:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734024562; cv=none; b=Z+7paNAg+j0LGTTsrXOw362OlTEgf5IUkbdX0ExWnn5iquLdzbDQfpPSdG/1RhxUzbx17XmqpM0WWIDhdhOhsn9rmqD5eHs95ByfKNZlcvucKXkxD+ejmO4winM+RJpjc9ZX/NBrvHGIeft6Z2vNJYHx8+7embRe+I+cvLt6lMU=
+	t=1734024565; cv=none; b=LaqloDKUZTmMIY6FR1CN7Zhbr6x3RRF3xDycDHvFzhJtmr4lVS7zzVRwznqA64uDiS1OCJqI5O1rm15boFmuXInOjLpXwtX17wMsZWoV2UPBd6NE76nxuUnzLNLnZY9r/tKiSFXXCOPNrkXo+sDdmWKdmpw9jkcLkyWFSBkEarM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734024562; c=relaxed/simple;
-	bh=KwB/D6hOG986RsVf/V6TFsNHRO+YOfHIZeunxJKMKz8=;
+	s=arc-20240116; t=1734024565; c=relaxed/simple;
+	bh=cgOggIt8dmFMtb0BYarIgRkuR//zBvvoQK9hXgC2ujM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TgHy4Vt8+fmZG/9xBIlVgu8sW+FLCkORkd9QD13b3zZTSHcf2qjLymiLfyLI4ko9C+qO3w2y20uYDSMS95nFYtTYY9PDrHN0McXs2k3qh8UmNYG/0wR/uhQNBBhsAUtpaTD29zYd4rdm40X+GlH9lLffAb3L6KHRkZOqxUubwKE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=for/88Na; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LBQbNtsyq+KirV39kU2eCW6K9VEC0yadPu01qdrMPwgipcNQ/TKxNtLEF/83JAStr8TWXQD6K/Ua57ry4vH1r/MuVEl5/iiJNkiLlDCnc6LIEf6swpwnje4M3axMWgr5jgYD951GSbk48raZoBIP9FIMp4CUtsu6Y3YxFva3vus=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=irhom9gS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="for/88Na"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0005C4CED4;
-	Thu, 12 Dec 2024 17:29:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="irhom9gS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1092C4CED0;
+	Thu, 12 Dec 2024 17:29:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734024562;
-	bh=KwB/D6hOG986RsVf/V6TFsNHRO+YOfHIZeunxJKMKz8=;
+	s=korg; t=1734024565;
+	bh=cgOggIt8dmFMtb0BYarIgRkuR//zBvvoQK9hXgC2ujM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=for/88NaD50yQlPQoFQO/oUD8AsKkSkMdKEMBhghxgA+cswHAsibyEglfELpctaIL
-	 HaVhfckV/5BBYrB2q4bCqyYFvyJ2kipbGMmhIM9FQZJX2KB0gTZ7wzOaEAmudEsvMm
-	 adzK7DhCEDtDFdBIWTkkZOI3pURhJOFgnCT4sopQ=
+	b=irhom9gS/VmQ/oA4uPtcIQftrskqnHiUzJL07jfhDdMIfUGA2bB9SslH1n7CDDDDP
+	 XSdPnJXM48H2TTakSRbYjEWTAZNQCd9AB8j113noOACzAPOXS3yfhSspvsPxAgD2jB
+	 c8gbI5JNGKwMX1ZZDp33Bhpomb6BG+qGt+JA902Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzkaller <syzkaller@googlegroups.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Florian Forestier <florian@forestier.re>,
+	Louis Leseur <louis.leseur@gmail.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 337/459] tipc: Fix use-after-free of kernel socket in cleanup_bearer().
-Date: Thu, 12 Dec 2024 16:01:15 +0100
-Message-ID: <20241212144306.974809038@linuxfoundation.org>
+Subject: [PATCH 5.10 338/459] net/qed: allow old cards not supporting "num_images" to work
+Date: Thu, 12 Dec 2024 16:01:16 +0100
+Message-ID: <20241212144307.012994117@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144253.511169641@linuxfoundation.org>
 References: <20241212144253.511169641@linuxfoundation.org>
@@ -52,105 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Louis Leseur <louis.leseur@gmail.com>
 
-[ Upstream commit 6a2fa13312e51a621f652d522d7e2df7066330b6 ]
+[ Upstream commit 7a0ea70da56ee8c2716d0b79e9959d3c47efab62 ]
 
-syzkaller reported a use-after-free of UDP kernel socket
-in cleanup_bearer() without repro. [0][1]
+Commit 43645ce03e00 ("qed: Populate nvm image attribute shadow.")
+added support for populating flash image attributes, notably
+"num_images". However, some cards were not able to return this
+information. In such cases, the driver would return EINVAL, causing the
+driver to exit.
 
-When bearer_disable() calls tipc_udp_disable(), cleanup
-of the UDP kernel socket is deferred by work calling
-cleanup_bearer().
+Add check to return EOPNOTSUPP instead of EINVAL when the card is not
+able to return these information. The caller function already handles
+EOPNOTSUPP without error.
 
-tipc_net_stop() waits for such works to finish by checking
-tipc_net(net)->wq_count.  However, the work decrements the
-count too early before releasing the kernel socket,
-unblocking cleanup_net() and resulting in use-after-free.
-
-Let's move the decrement after releasing the socket in
-cleanup_bearer().
-
-[0]:
-ref_tracker: net notrefcnt@000000009b3d1faf has 1/1 users at
-     sk_alloc+0x438/0x608
-     inet_create+0x4c8/0xcb0
-     __sock_create+0x350/0x6b8
-     sock_create_kern+0x58/0x78
-     udp_sock_create4+0x68/0x398
-     udp_sock_create+0x88/0xc8
-     tipc_udp_enable+0x5e8/0x848
-     __tipc_nl_bearer_enable+0x84c/0xed8
-     tipc_nl_bearer_enable+0x38/0x60
-     genl_family_rcv_msg_doit+0x170/0x248
-     genl_rcv_msg+0x400/0x5b0
-     netlink_rcv_skb+0x1dc/0x398
-     genl_rcv+0x44/0x68
-     netlink_unicast+0x678/0x8b0
-     netlink_sendmsg+0x5e4/0x898
-     ____sys_sendmsg+0x500/0x830
-
-[1]:
-BUG: KMSAN: use-after-free in udp_hashslot include/net/udp.h:85 [inline]
-BUG: KMSAN: use-after-free in udp_lib_unhash+0x3b8/0x930 net/ipv4/udp.c:1979
- udp_hashslot include/net/udp.h:85 [inline]
- udp_lib_unhash+0x3b8/0x930 net/ipv4/udp.c:1979
- sk_common_release+0xaf/0x3f0 net/core/sock.c:3820
- inet_release+0x1e0/0x260 net/ipv4/af_inet.c:437
- inet6_release+0x6f/0xd0 net/ipv6/af_inet6.c:489
- __sock_release net/socket.c:658 [inline]
- sock_release+0xa0/0x210 net/socket.c:686
- cleanup_bearer+0x42d/0x4c0 net/tipc/udp_media.c:819
- process_one_work kernel/workqueue.c:3229 [inline]
- process_scheduled_works+0xcaf/0x1c90 kernel/workqueue.c:3310
- worker_thread+0xf6c/0x1510 kernel/workqueue.c:3391
- kthread+0x531/0x6b0 kernel/kthread.c:389
- ret_from_fork+0x60/0x80 arch/x86/kernel/process.c:147
- ret_from_fork_asm+0x11/0x20 arch/x86/entry/entry_64.S:244
-
-Uninit was created at:
- slab_free_hook mm/slub.c:2269 [inline]
- slab_free mm/slub.c:4580 [inline]
- kmem_cache_free+0x207/0xc40 mm/slub.c:4682
- net_free net/core/net_namespace.c:454 [inline]
- cleanup_net+0x16f2/0x19d0 net/core/net_namespace.c:647
- process_one_work kernel/workqueue.c:3229 [inline]
- process_scheduled_works+0xcaf/0x1c90 kernel/workqueue.c:3310
- worker_thread+0xf6c/0x1510 kernel/workqueue.c:3391
- kthread+0x531/0x6b0 kernel/kthread.c:389
- ret_from_fork+0x60/0x80 arch/x86/kernel/process.c:147
- ret_from_fork_asm+0x11/0x20 arch/x86/entry/entry_64.S:244
-
-CPU: 0 UID: 0 PID: 54 Comm: kworker/0:2 Not tainted 6.12.0-rc1-00131-gf66ebf37d69c #7 91723d6f74857f70725e1583cba3cf4adc716cfa
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.3-0-ga6ed6b701f0a-prebuilt.qemu.org 04/01/2014
-Workqueue: events cleanup_bearer
-
-Fixes: 26abe14379f8 ("net: Modify sk_alloc to not reference count the netns of kernel sockets.")
-Reported-by: syzkaller <syzkaller@googlegroups.com>
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Link: https://patch.msgid.link/20241127050512.28438-1-kuniyu@amazon.com
+Fixes: 43645ce03e00 ("qed: Populate nvm image attribute shadow.")
+Co-developed-by: Florian Forestier <florian@forestier.re>
+Signed-off-by: Florian Forestier <florian@forestier.re>
+Signed-off-by: Louis Leseur <louis.leseur@gmail.com>
+Link: https://patch.msgid.link/20241128083633.26431-1-louis.leseur@gmail.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tipc/udp_media.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/qlogic/qed/qed_mcp.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/net/tipc/udp_media.c b/net/tipc/udp_media.c
-index ec6d7730b8522..d54b5c1d3c83c 100644
---- a/net/tipc/udp_media.c
-+++ b/net/tipc/udp_media.c
-@@ -810,10 +810,10 @@ static void cleanup_bearer(struct work_struct *work)
- 		kfree_rcu(rcast, rcu);
- 	}
+diff --git a/drivers/net/ethernet/qlogic/qed/qed_mcp.c b/drivers/net/ethernet/qlogic/qed/qed_mcp.c
+index 2cd14ee95c1ff..a0c09a9172dc0 100644
+--- a/drivers/net/ethernet/qlogic/qed/qed_mcp.c
++++ b/drivers/net/ethernet/qlogic/qed/qed_mcp.c
+@@ -3262,7 +3262,9 @@ int qed_mcp_bist_nvm_get_num_images(struct qed_hwfn *p_hwfn,
+ 	if (rc)
+ 		return rc;
  
--	atomic_dec(&tipc_net(sock_net(ub->ubsock->sk))->wq_count);
- 	dst_cache_destroy(&ub->rcast.dst_cache);
- 	udp_tunnel_sock_release(ub->ubsock);
- 	synchronize_net();
-+	atomic_dec(&tipc_net(sock_net(ub->ubsock->sk))->wq_count);
- 	kfree(ub);
- }
+-	if (((rsp & FW_MSG_CODE_MASK) != FW_MSG_CODE_OK))
++	if (((rsp & FW_MSG_CODE_MASK) == FW_MSG_CODE_UNSUPPORTED))
++		rc = -EOPNOTSUPP;
++	else if (((rsp & FW_MSG_CODE_MASK) != FW_MSG_CODE_OK))
+ 		rc = -EINVAL;
  
+ 	return rc;
 -- 
 2.43.0
 
