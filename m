@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62B5522969E;
-	Thu, 12 Dec 2024 16:55:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8D202358BF;
+	Thu, 12 Dec 2024 16:55:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734022528; cv=none; b=ER58Mn+fbPg6A2Jl+Iq3eVGk75iByXWhBzSqujEGcRrYz1gMT80Oa7WuKwVpRNIiEHYgjQmkxp8ynMwiTEjvbO7s7LxtUTw25+NUEvVKy+eVZp4lHTtafpkVOBaDIH91W7BTZd8M1zHDYG/rnVm6nl7gyKul/7yetjtbTebLOJY=
+	t=1734022530; cv=none; b=XRnaJIV3VI5p8EjXg5smSgZQ5Ebgc5vmer+BDoAkdmAvWNqJzhg6wBtCzaDMvH/SF10TQidxHfWORH/K2Vv8gnAr0n/rFgF76xBsJrGzdcsF/BY5lhXy/b316mmxNl9irrEsWEdqRTxf38K7Ona+dWTOh8UlRsBeo+92jzXfVKA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734022528; c=relaxed/simple;
-	bh=DJBI4wOHV/oYlS0IzCgkvcd37mjDVb9p/VSvyf+5zWI=;
+	s=arc-20240116; t=1734022530; c=relaxed/simple;
+	bh=8GwtE/lOkUosBLm57g0ZHBlMKM+CUtijXpAFVEdZXQA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=svO/nMpxyuJIRVGV29MWHQyH+6AOUMwUHq1qHRIjdtW/rd6bOYS9upYnicmLIhEe7dS8F6LHFzfHt6X9WFgwcv/IttFTlve79M9zkPvoMBpXihsDpMy9vY/2zPDYdHk4XpCzv4SH4veuVaQ9rdXOscsbg/OIChSaJ7p2OISDVYg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aKWeusBe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RG9d8tSekU5difRj44+h72E+jB5hMvsLRL5PvXSeiOGRL3zdrX3q/FFggR32p9TKTm8AQIkE+PD/alEUJjjLdea8DIvCSjLcqHwZtvC9NMAFlgE7agHlYHhTAUtN+WPGyUHvXDx+uCIKAFvXdN9LSvvvz3GNN8yMEfpxASZAsBs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zyrqOgMd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aKWeusBe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66B45C4CECE;
-	Thu, 12 Dec 2024 16:55:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zyrqOgMd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7D2FC4CECE;
+	Thu, 12 Dec 2024 16:55:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734022526;
-	bh=DJBI4wOHV/oYlS0IzCgkvcd37mjDVb9p/VSvyf+5zWI=;
+	s=korg; t=1734022530;
+	bh=8GwtE/lOkUosBLm57g0ZHBlMKM+CUtijXpAFVEdZXQA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aKWeusBerI33JJvnn8DxH2tev+KaraTrVexQxjaOf1a5igVku7CZ6BSd7qgKWEwXa
-	 cYNjXrf7Ht9poTiUr1h48qCVW5InsZUVzvA220lhYc17++0sbH9ALmTf2szc0Asmcc
-	 at5wlMA71zi0T3z6HtLkZq2GBGbQdRfnTJyEJAP8=
+	b=zyrqOgMdeGLAeBp1dQ3szUkMFE5aBLfs+sOwSVHjPDrcJg0Dx5a9EquAWNBPG8125
+	 rX1CwCU9QU2u0Q2Zuwo+jrq+lWxvbS4PF7wjD471y1Pt/INcpzLOprkPXKh0IELqYL
+	 rtKh8U1x2mPnim0EdNuG9suHdnhiblfTl9SFoAgA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ye Bin <yebin10@huawei.com>,
+	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 266/565] svcrdma: fix miss destroy percpu_counter in svc_rdma_proc_init()
-Date: Thu, 12 Dec 2024 15:57:41 +0100
-Message-ID: <20241212144321.982018151@linuxfoundation.org>
+Subject: [PATCH 5.15 267/565] NFSD: Fix nfsd4_shutdown_copy()
+Date: Thu, 12 Dec 2024 15:57:42 +0100
+Message-ID: <20241212144322.021439001@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144311.432886635@linuxfoundation.org>
 References: <20241212144311.432886635@linuxfoundation.org>
@@ -51,98 +51,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ye Bin <yebin10@huawei.com>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit ce89e742a4c12b20f09a43fec1b21db33f2166cd ]
+[ Upstream commit 62a8642ba00aa8ceb0a02ade942f5ec52e877c95 ]
 
-There's issue as follows:
-RPC: Registered rdma transport module.
-RPC: Registered rdma backchannel transport module.
-RPC: Unregistered rdma transport module.
-RPC: Unregistered rdma backchannel transport module.
-BUG: unable to handle page fault for address: fffffbfff80c609a
-PGD 123fee067 P4D 123fee067 PUD 123fea067 PMD 10c624067 PTE 0
-Oops: Oops: 0000 [#1] PREEMPT SMP KASAN NOPTI
-RIP: 0010:percpu_counter_destroy_many+0xf7/0x2a0
-Call Trace:
- <TASK>
- __die+0x1f/0x70
- page_fault_oops+0x2cd/0x860
- spurious_kernel_fault+0x36/0x450
- do_kern_addr_fault+0xca/0x100
- exc_page_fault+0x128/0x150
- asm_exc_page_fault+0x26/0x30
- percpu_counter_destroy_many+0xf7/0x2a0
- mmdrop+0x209/0x350
- finish_task_switch.isra.0+0x481/0x840
- schedule_tail+0xe/0xd0
- ret_from_fork+0x23/0x80
- ret_from_fork_asm+0x1a/0x30
- </TASK>
+nfsd4_shutdown_copy() is just this:
 
-If register_sysctl() return NULL, then svc_rdma_proc_cleanup() will not
-destroy the percpu counters which init in svc_rdma_proc_init().
-If CONFIG_HOTPLUG_CPU is enabled, residual nodes may be in the
-'percpu_counters' list. The above issue may occur once the module is
-removed. If the CONFIG_HOTPLUG_CPU configuration is not enabled, memory
-leakage occurs.
-To solve above issue just destroy all percpu counters when
-register_sysctl() return NULL.
+	while ((copy = nfsd4_get_copy(clp)) != NULL)
+		nfsd4_stop_copy(copy);
 
-Fixes: 1e7e55731628 ("svcrdma: Restore read and write stats")
-Fixes: 22df5a22462e ("svcrdma: Convert rdma_stat_sq_starve to a per-CPU counter")
-Fixes: df971cd853c0 ("svcrdma: Convert rdma_stat_recv to a per-CPU counter")
-Signed-off-by: Ye Bin <yebin10@huawei.com>
+nfsd4_get_copy() bumps @copy's reference count, preventing
+nfsd4_stop_copy() from releasing @copy.
+
+A while loop like this usually works by removing the first element
+of the list, but neither nfsd4_get_copy() nor nfsd4_stop_copy()
+alters the async_copies list.
+
+Best I can tell, then, is that nfsd4_shutdown_copy() continues to
+loop until other threads manage to remove all the items from this
+list. The spinning loop blocks shutdown until these items are gone.
+
+Possibly the reason we haven't seen this issue in the field is
+because client_has_state() prevents __destroy_client() from calling
+nfsd4_shutdown_copy() if there are any items on this list. In a
+subsequent patch I plan to remove that restriction.
+
+Fixes: e0639dc5805a ("NFSD introduce async copy feature")
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/xprtrdma/svc_rdma.c | 19 ++++++++++++++-----
- 1 file changed, 14 insertions(+), 5 deletions(-)
+ fs/nfsd/nfs4proc.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/net/sunrpc/xprtrdma/svc_rdma.c b/net/sunrpc/xprtrdma/svc_rdma.c
-index f0d5eeed4c886..e1d4e426b21fa 100644
---- a/net/sunrpc/xprtrdma/svc_rdma.c
-+++ b/net/sunrpc/xprtrdma/svc_rdma.c
-@@ -234,25 +234,34 @@ static int svc_rdma_proc_init(void)
- 
- 	rc = percpu_counter_init(&svcrdma_stat_read, 0, GFP_KERNEL);
- 	if (rc)
--		goto out_err;
-+		goto err;
- 	rc = percpu_counter_init(&svcrdma_stat_recv, 0, GFP_KERNEL);
- 	if (rc)
--		goto out_err;
-+		goto err_read;
- 	rc = percpu_counter_init(&svcrdma_stat_sq_starve, 0, GFP_KERNEL);
- 	if (rc)
--		goto out_err;
-+		goto err_recv;
- 	rc = percpu_counter_init(&svcrdma_stat_write, 0, GFP_KERNEL);
- 	if (rc)
--		goto out_err;
-+		goto err_sq;
- 
- 	svcrdma_table_header = register_sysctl("sunrpc/svc_rdma",
- 					       svcrdma_parm_table);
-+	if (!svcrdma_table_header)
-+		goto err_write;
-+
- 	return 0;
- 
--out_err:
-+err_write:
-+	rc = -ENOMEM;
-+	percpu_counter_destroy(&svcrdma_stat_write);
-+err_sq:
- 	percpu_counter_destroy(&svcrdma_stat_sq_starve);
-+err_recv:
- 	percpu_counter_destroy(&svcrdma_stat_recv);
-+err_read:
- 	percpu_counter_destroy(&svcrdma_stat_read);
-+err:
- 	return rc;
+diff --git a/fs/nfsd/nfs4proc.c b/fs/nfsd/nfs4proc.c
+index 0b698e25826fa..c48c1a3be5d2f 100644
+--- a/fs/nfsd/nfs4proc.c
++++ b/fs/nfsd/nfs4proc.c
+@@ -1256,7 +1256,7 @@ static void nfsd4_stop_copy(struct nfsd4_copy *copy)
+ 	nfs4_put_copy(copy);
  }
  
+-static struct nfsd4_copy *nfsd4_get_copy(struct nfs4_client *clp)
++static struct nfsd4_copy *nfsd4_unhash_copy(struct nfs4_client *clp)
+ {
+ 	struct nfsd4_copy *copy = NULL;
+ 
+@@ -1265,6 +1265,9 @@ static struct nfsd4_copy *nfsd4_get_copy(struct nfs4_client *clp)
+ 		copy = list_first_entry(&clp->async_copies, struct nfsd4_copy,
+ 					copies);
+ 		refcount_inc(&copy->refcount);
++		copy->cp_clp = NULL;
++		if (!list_empty(&copy->copies))
++			list_del_init(&copy->copies);
+ 	}
+ 	spin_unlock(&clp->async_lock);
+ 	return copy;
+@@ -1274,7 +1277,7 @@ void nfsd4_shutdown_copy(struct nfs4_client *clp)
+ {
+ 	struct nfsd4_copy *copy;
+ 
+-	while ((copy = nfsd4_get_copy(clp)) != NULL)
++	while ((copy = nfsd4_unhash_copy(clp)) != NULL)
+ 		nfsd4_stop_copy(copy);
+ }
+ #ifdef CONFIG_NFSD_V4_2_INTER_SSC
 -- 
 2.43.0
 
