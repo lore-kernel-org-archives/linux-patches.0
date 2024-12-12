@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BA5A223E71;
-	Thu, 12 Dec 2024 17:44:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDAE8215041;
+	Thu, 12 Dec 2024 17:44:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734025469; cv=none; b=gllgaYi6PVFvlFHW0Yhr3CbP4iie2uTZA6vEbUHKflbyoC5ZYF0herMqO+6oIIqE4/D9+lTQZ17WzZrvuUWBzudepZm9JRDUBA6Pcs3tIWYCX3EC6lbRryiG1cogdYMz5YbrYk4d7M86pbiajHW+79yk1e/DVBbPU35mfhpWVrQ=
+	t=1734025471; cv=none; b=KfgOiG80QgZ2wlUa0U02ejfd/OgiEgIAV22GcQdq5ATj/WcgCnNBH5sW4bBB8BrslDtoh6936sBakaW1Ddr7owX5CvaeWEEgM9Qf2zNv+PsQp0C9Ljkoex3I19TxDO6qcvcUymHmMPKWT8M1QSCBKPKCvXyG10N9t0GO7JGHJqc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734025469; c=relaxed/simple;
-	bh=RDM5NFhYiHzh1g6b69pFxD1bMZ8H4pHaEQnUeo7Aopo=;
+	s=arc-20240116; t=1734025471; c=relaxed/simple;
+	bh=CCwzZ5lyGnP1rLLJ8CnVuCiBkWlmtT+x9pe+iO0LoYQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dYzBzVNw7AqH2X5lPdbByW4ANb1Riyaet81ZQDJ2CWB33EPWsWlhCrNwGMvDNC4UUiaLpencHiA+TOXiEu6V0tsmLe57OBTSmGclbB/LU75UV/NlSR7jOAvZo5l1Es9Kwzbw48KsoPRT6jatI6z2C061yhsPkY8RuLNpx3dWpgc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P9Lf4cLP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jAZupP0C9wbHCElwUGHLthR6ReGsJst1QKP9okE7J8v7vhMpCGqF8+fjNpiF7Db7Y4+P1JNssdAPelWUfp1BB1kl5GP6wXwZT1dxF6DFFdm/X6KoiSP0c+l0s10gdmZOzpmoIkIYYRKiHiSqmCg4rSw1LgUGiM7k9XnlsI+/Q9k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1iip6SGQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P9Lf4cLP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A059C4CECE;
-	Thu, 12 Dec 2024 17:44:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1iip6SGQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D958C4CECE;
+	Thu, 12 Dec 2024 17:44:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734025467;
-	bh=RDM5NFhYiHzh1g6b69pFxD1bMZ8H4pHaEQnUeo7Aopo=;
+	s=korg; t=1734025470;
+	bh=CCwzZ5lyGnP1rLLJ8CnVuCiBkWlmtT+x9pe+iO0LoYQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P9Lf4cLPqA8YSjhsqR+VhtzwpaumamOu0T9vlMiKVpcI53RtY1YzKE28cYlzavZCG
-	 CDyGTunmTOoQp5Pco6usljVjBWbecNO1hshx9fLo7vfRCn2V+B1RIgAkfuGnYN5kgU
-	 eX5ljfBawDFdbbTUmebtVjar77ZiUixKp+W14G50=
+	b=1iip6SGQNIEHQbW9Ym4RD31UlthJPqvPqlZhtRNJYydFWSbPCocWccjKlFRP1MH9m
+	 07rLdtwkcfr2TFieFb3a9oFa/SuJ8ObemafRqMYph7SqoQYwlyWN7EJt262OKXYo8P
+	 IffjXy0kcscfmivPCSptsgMN+QmT8wpOPFvp3Zss=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Artem Sadovnikov <ancowi69@gmail.com>,
-	Dave Kleikamp <dave.kleikamp@oracle.com>
-Subject: [PATCH 5.4 148/321] jfs: xattr: check invalid xattr size more strictly
-Date: Thu, 12 Dec 2024 16:01:06 +0100
-Message-ID: <20241212144235.824286509@linuxfoundation.org>
+	Johan Hovold <johan@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 139/321] staging: greybus: uart: clean up TIOCGSERIAL
+Date: Thu, 12 Dec 2024 16:00:57 +0100
+Message-ID: <20241212144235.470358291@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144229.291682835@linuxfoundation.org>
 References: <20241212144229.291682835@linuxfoundation.org>
@@ -50,38 +50,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Artem Sadovnikov <ancowi69@gmail.com>
+From: Johan Hovold <johan@kernel.org>
 
-commit d9f9d96136cba8fedd647d2c024342ce090133c2 upstream.
+[ Upstream commit d38be702452137fa82a56ff7cc577d829add1637 ]
 
-Commit 7c55b78818cf ("jfs: xattr: fix buffer overflow for invalid xattr")
-also addresses this issue but it only fixes it for positive values, while
-ea_size is an integer type and can take negative values, e.g. in case of
-a corrupted filesystem. This still breaks validation and would overflow
-because of implicit conversion from int to size_t in print_hex_dump().
+TIOCSSERIAL is a horrid, underspecified, legacy interface which for most
+serial devices is only useful for setting the close_delay and
+closing_wait parameters.
 
-Fix this issue by clamping the ea_size value instead.
+The xmit_fifo_size parameter could be used to set the hardware transmit
+fifo size of a legacy UART when it could not be detected, but the
+interface is limited to eight bits and should be left unset when not
+used.
 
-Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
+Similarly, baud_base could be used to set the UART base clock when it
+could not be detected but might as well be left unset when it is not
+known.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Artem Sadovnikov <ancowi69@gmail.com>
-Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
+The type parameter could be used to set the UART type, but is
+better left unspecified (type unknown) when it isn't used.
+
+Note that some applications have historically expected TIOCGSERIAL to be
+implemented, but judging from the Debian sources, the port type not
+being PORT_UNKNOWN is only used to check for the existence of legacy
+serial ports (ttySn). Notably USB serial drivers like ftdi_sio have been
+using PORT_UNKNOWN for twenty years without any problems.
+
+Drop the bogus values provided by the greybus implementation.
+
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://lore.kernel.org/r/20210407102334.32361-8-johan@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: fe0ebeafc3b7 ("staging: greybus: uart: Fix atomicity violation in get_serial_info()")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/jfs/xattr.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/staging/greybus/uart.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
---- a/fs/jfs/xattr.c
-+++ b/fs/jfs/xattr.c
-@@ -559,7 +559,7 @@ static int ea_get(struct inode *inode, s
+diff --git a/drivers/staging/greybus/uart.c b/drivers/staging/greybus/uart.c
+index 0e6bebc20695d..b8da6dc5d4d4d 100644
+--- a/drivers/staging/greybus/uart.c
++++ b/drivers/staging/greybus/uart.c
+@@ -621,10 +621,7 @@ static int get_serial_info(struct tty_struct *tty,
+ {
+ 	struct gb_tty *gb_tty = tty->driver_data;
  
-       size_check:
- 	if (EALIST_SIZE(ea_buf->xattr) != ea_size) {
--		int size = min_t(int, EALIST_SIZE(ea_buf->xattr), ea_size);
-+		int size = clamp_t(int, ea_size, 0, EALIST_SIZE(ea_buf->xattr));
- 
- 		printk(KERN_ERR "ea_get: invalid extended attribute\n");
- 		print_hex_dump(KERN_ERR, "", DUMP_PREFIX_ADDRESS, 16, 1,
+-	ss->type = PORT_16550A;
+ 	ss->line = gb_tty->minor;
+-	ss->xmit_fifo_size = 16;
+-	ss->baud_base = 9600;
+ 	ss->close_delay = jiffies_to_msecs(gb_tty->port.close_delay) / 10;
+ 	ss->closing_wait =
+ 		gb_tty->port.closing_wait == ASYNC_CLOSING_WAIT_NONE ?
+-- 
+2.43.0
+
 
 
