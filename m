@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3753213E97;
-	Thu, 12 Dec 2024 15:11:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAECF21660B;
+	Thu, 12 Dec 2024 15:11:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734016291; cv=none; b=r437aKr8Mz1bj+dQ2S4cgndtvREf+OVvktfN9cGG3/V6sxafeoYVTI8+nkNcdE7+TwHNEL3THrP0GXbcuG5ULlhreQkhgZpf8dSlH4JQ8rFOdC1SwcN8ixionBoH9duMXJvQ69pCHPYY1J6m2a7SOSa9yDop5aiCyV2MZRGf1PU=
+	t=1734016296; cv=none; b=ZbstFSBi2e5wCdxWwGA6W1z/V9vQkZy3F93p+JwZQSBZzPSlChOOlPbpjXR1CTq+VkArifxFoOEC4TG5KQcr8K0kvk7SJ24g2V5hfjVM+74U7znz/nlYs/pvv8FUCHFVo3YHRJhK+oWT8/S8PNfgWejR+5qEtuY5JFIp4hJg63Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734016291; c=relaxed/simple;
-	bh=llGiApNpU+Qxbmfgl8cVYhZeKlaADJfSaQkzTbqiqlg=;
+	s=arc-20240116; t=1734016296; c=relaxed/simple;
+	bh=3K8hiSU9CKbGBhw3ylAsiFlbdQNEbBVwMaXBDpbXKTE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PWXKdJM7a2XcG5hg2WxnMYBIkmbVKYcXgLqPDs7ynJpXmegJx4X5x0Iw4oCu1dyOK/BjSbs1u/YO8QbMAr7vAcNy7ssvk9d2BL4R28C/o1VxeLTZBcj/Bjn1vvj5duTtNwWhXwEkzM35Zzw9AgV90DgWG2A+tufbozXe5DZC5Kc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1O0kZwoc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FPajuz9uEcWodYT+PbSHBgjEqZnGhhRjLhebYZkyny3XkwNHcM41hp5NZBFuNbosy7Hqu5+B1eIYEv9hrrpX+RJ+7MJQ8nPDzymFKq24haRkVqvR5X+1r+ixkMDk393bPQTBGlgBcX7QkUQgqSzyAlN2ZfNQHPtGILkquVW9nGo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EJFMYyGh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1O0kZwoc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F88CC4CECE;
-	Thu, 12 Dec 2024 15:11:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EJFMYyGh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 180F3C4CECE;
+	Thu, 12 Dec 2024 15:11:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734016291;
-	bh=llGiApNpU+Qxbmfgl8cVYhZeKlaADJfSaQkzTbqiqlg=;
+	s=korg; t=1734016295;
+	bh=3K8hiSU9CKbGBhw3ylAsiFlbdQNEbBVwMaXBDpbXKTE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1O0kZwocw3BniduM7KmI9gSvCgRvz4SXquLQrBnTRWbHxSOr2e/OZIX44MdmeD4Cr
-	 cagaJWTJ1Fdf430LwMniYXBETKrxzbO6aIf7KwfZPjP7GQxJdVS9U9mN2a6QDl2SA2
-	 ZUoG640p2Qa8G7IF1xdfwlg1RR8GYGIy8DCn8pUA=
+	b=EJFMYyGhNJ5076C2ThEpHyVwiLA8BRIA+X+d1z4mLFx1xPgGX+WQzhiz8DuzT9FJj
+	 lefr0d2pLRpRZbvJV/TP7FMP5Mw5K0WD1oMcBk2Y7OxoAJY0dIQqq+TpaFx3Nbrt23
+	 BUOLsWloIX1d41thjKDwmtrARzESzR9PSz+XfDwU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Saurav Kashyap <skashyap@marvell.com>,
-	Nilesh Javali <njavali@marvell.com>,
-	Himanshu Madhani <himanshu.madhani@oracle.com>,
+	Gwendal Grignou <gwendal@chromium.org>,
+	Can Guo <quic_cang@quicinc.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.12 149/466] scsi: qla2xxx: Remove check req_sg_cnt should be equal to rsp_sg_cnt
-Date: Thu, 12 Dec 2024 15:55:18 +0100
-Message-ID: <20241212144312.687243906@linuxfoundation.org>
+Subject: [PATCH 6.12 150/466] scsi: ufs: core: sysfs: Prevent div by zero
+Date: Thu, 12 Dec 2024 15:55:19 +0100
+Message-ID: <20241212144312.724481761@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144306.641051666@linuxfoundation.org>
 References: <20241212144306.641051666@linuxfoundation.org>
@@ -52,45 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Saurav Kashyap <skashyap@marvell.com>
+From: Gwendal Grignou <gwendal@chromium.org>
 
-commit 833c70e212fc40d3e98da941796f4c7bcaecdf58 upstream.
+commit eb48e9fc0028bed94a40a9352d065909f19e333c upstream.
 
-Firmware supports multiple sg_cnt for request and response for CT
-commands, so remove the redundant check. A check is there where sg_cnt
-for request and response should be same. This is not required as driver
-and FW have code to handle multiple and different sg_cnt on request and
-response.
+Prevent a division by 0 when monitoring is not enabled.
 
+Fixes: 1d8613a23f3c ("scsi: ufs: core: Introduce HBA performance monitor sysfs nodes")
 Cc: stable@vger.kernel.org
-Signed-off-by: Saurav Kashyap <skashyap@marvell.com>
-Signed-off-by: Nilesh Javali <njavali@marvell.com>
-Link: https://lore.kernel.org/r/20241115130313.46826-5-njavali@marvell.com
-Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
+Signed-off-by: Gwendal Grignou <gwendal@chromium.org>
+Link: https://lore.kernel.org/r/20241120062522.917157-1-gwendal@chromium.org
+Reviewed-by: Can Guo <quic_cang@quicinc.com>
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/qla2xxx/qla_bsg.c |   10 ----------
- 1 file changed, 10 deletions(-)
+ drivers/ufs/core/ufs-sysfs.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/scsi/qla2xxx/qla_bsg.c
-+++ b/drivers/scsi/qla2xxx/qla_bsg.c
-@@ -494,16 +494,6 @@ qla2x00_process_ct(struct bsg_job *bsg_j
- 		goto done;
- 	}
+--- a/drivers/ufs/core/ufs-sysfs.c
++++ b/drivers/ufs/core/ufs-sysfs.c
+@@ -670,6 +670,9 @@ static ssize_t read_req_latency_avg_show
+ 	struct ufs_hba *hba = dev_get_drvdata(dev);
+ 	struct ufs_hba_monitor *m = &hba->monitor;
  
--	if ((req_sg_cnt !=  bsg_job->request_payload.sg_cnt) ||
--	    (rsp_sg_cnt != bsg_job->reply_payload.sg_cnt)) {
--		ql_log(ql_log_warn, vha, 0x7011,
--		    "request_sg_cnt: %x dma_request_sg_cnt: %x reply_sg_cnt:%x "
--		    "dma_reply_sg_cnt: %x\n", bsg_job->request_payload.sg_cnt,
--		    req_sg_cnt, bsg_job->reply_payload.sg_cnt, rsp_sg_cnt);
--		rval = -EAGAIN;
--		goto done_unmap_sg;
--	}
--
- 	if (!vha->flags.online) {
- 		ql_log(ql_log_warn, vha, 0x7012,
- 		    "Host is not online.\n");
++	if (!m->nr_req[READ])
++		return sysfs_emit(buf, "0\n");
++
+ 	return sysfs_emit(buf, "%llu\n", div_u64(ktime_to_us(m->lat_sum[READ]),
+ 						 m->nr_req[READ]));
+ }
+@@ -737,6 +740,9 @@ static ssize_t write_req_latency_avg_sho
+ 	struct ufs_hba *hba = dev_get_drvdata(dev);
+ 	struct ufs_hba_monitor *m = &hba->monitor;
+ 
++	if (!m->nr_req[WRITE])
++		return sysfs_emit(buf, "0\n");
++
+ 	return sysfs_emit(buf, "%llu\n", div_u64(ktime_to_us(m->lat_sum[WRITE]),
+ 						 m->nr_req[WRITE]));
+ }
 
 
