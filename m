@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35CA9223E94;
-	Thu, 12 Dec 2024 16:19:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 538AF223E81;
+	Thu, 12 Dec 2024 16:19:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734020361; cv=none; b=RIKl+Jr2vZkhJopAP9y/tuGWDyNJQLqdyMZIXqj1kUvxWpPBfaAJLDEbSPBIylOHfgM9ayXbAK3vZQZJpsqkdkXpcc1ikAcDQe6KKmyQsORptGerfRnrmDrs6/uu8pc+4soiy5W6KUEiJaAduI/3Yx9I9UIQcmkd+vwe3uKXl0M=
+	t=1734020365; cv=none; b=Jnx3l0ewm5llEKLLq3ZuWrua0sGJULEAuCrIW/77XobMu6a4i4WKDKCaw2H1FXhLudalY8H1XOeLp5CsKfBMlAds8aE+N2HYFyNKWHByYpOP2t/PCH4yZMK5Tl0CeTaKMDH23LWjjZFV4RqEy/UgL2OePx4t2Pdrrnhd2h8JZ/I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734020361; c=relaxed/simple;
-	bh=IehZTnUj2/4WtXHZPeKiBZbd4T4LWbne+ezo2uFd0lo=;
+	s=arc-20240116; t=1734020365; c=relaxed/simple;
+	bh=ex5dRL/V0Uid0vXFx3i+2pthC2MITxOAHn3mDCFNt04=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ocvVQG64h5FQtANOiQfy+otmJZ6zt9H7vwgAnuYrGkYH36NHw0cT359WUOH1jPTZQlL5+ZQWk3pnLbXysqBprMdt9qgUrT4pztIA2HyTvXtGDw8FHvEruxttxLBpaoy1zhtAWgFWvjUpdAFMYFDQXsJ2oUbjs22+IPmlnXL82ok=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PoTdLLvP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XBd0jiLcW7bnk2dB+J5jOrTOVIvLp5G8c7GW0EB8qJvtbFIsFvnEmKpxzYJzb10ia4vV1RNBs0jmezkVoxm3EAS3nvsgPae7fIDlCmCTW3weE9E86Ug61bB6GbypQZ8E7j+ZzzyB67EGrfJFFVY7zl4ysfHefE85VXJrs0hrvWY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vSW5SgVB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PoTdLLvP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E443C4AF09;
-	Thu, 12 Dec 2024 16:19:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vSW5SgVB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFC39C4CECE;
+	Thu, 12 Dec 2024 16:19:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734020361;
-	bh=IehZTnUj2/4WtXHZPeKiBZbd4T4LWbne+ezo2uFd0lo=;
+	s=korg; t=1734020365;
+	bh=ex5dRL/V0Uid0vXFx3i+2pthC2MITxOAHn3mDCFNt04=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PoTdLLvPG3xv4ZrCfbYtRqi54Y08foTnzjTU91OdoBcIor7Mf+hcMbiVzaAA2aCx6
-	 ajVENQPZyXfKCT6TENH91iQ2Py8Bzl1GOANf7LklczVHwsaqq9xoIM6n5rcTeymW6e
-	 +TOUjBNxDnVaOD9HN5JiNoVlr4n/x2JlPbnZ7azE=
+	b=vSW5SgVBqZErU+6ETKaao95wFojlUAr57QPC9KFo3pIXxCSREOxkW88Jpd8a7VfG1
+	 a+DKIDx4ckDfp2pcJEYfxQKGWiERreLH7O9WSCfHyqQ5vtr37k1Hj9//H5Xgc3fSCy
+	 wMpr2vIGi2kLoNrq90PMtl9ULFZmkd6gf7XBQ+w8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Lingfeng <lilingfeng3@huawei.com>,
-	Liu Jian <liujian56@huawei.com>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 447/772] sunrpc: clear XPRT_SOCK_UPD_TIMEOUT when reset transport
-Date: Thu, 12 Dec 2024 15:56:32 +0100
-Message-ID: <20241212144408.392331207@linuxfoundation.org>
+Subject: [PATCH 6.1 448/772] sh: intc: Fix use-after-free bug in register_intc_controller()
+Date: Thu, 12 Dec 2024 15:56:33 +0100
+Message-ID: <20241212144408.434216922@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -52,36 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Liu Jian <liujian56@huawei.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit 4db9ad82a6c823094da27de4825af693a3475d51 ]
+[ Upstream commit 63e72e551942642c48456a4134975136cdcb9b3c ]
 
-Since transport->sock has been set to NULL during reset transport,
-XPRT_SOCK_UPD_TIMEOUT also needs to be cleared. Otherwise, the
-xs_tcp_set_socket_timeouts() may be triggered in xs_tcp_send_request()
-to dereference the transport->sock that has been set to NULL.
+In the error handling for this function, d is freed without ever
+removing it from intc_list which would lead to a use after free.
+To fix this, let's only add it to the list after everything has
+succeeded.
 
-Fixes: 7196dbb02ea0 ("SUNRPC: Allow changing of the TCP timeout parameters on the fly")
-Signed-off-by: Li Lingfeng <lilingfeng3@huawei.com>
-Signed-off-by: Liu Jian <liujian56@huawei.com>
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Fixes: 2dcec7a988a1 ("sh: intc: set_irq_wake() support")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+Signed-off-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/xprtsock.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/sh/intc/core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/sunrpc/xprtsock.c b/net/sunrpc/xprtsock.c
-index 190dae11f634a..b9dc8e197dde8 100644
---- a/net/sunrpc/xprtsock.c
-+++ b/net/sunrpc/xprtsock.c
-@@ -1130,6 +1130,7 @@ static void xs_sock_reset_state_flags(struct rpc_xprt *xprt)
- 	clear_bit(XPRT_SOCK_WAKE_WRITE, &transport->sock_state);
- 	clear_bit(XPRT_SOCK_WAKE_DISCONNECT, &transport->sock_state);
- 	clear_bit(XPRT_SOCK_NOSPACE, &transport->sock_state);
-+	clear_bit(XPRT_SOCK_UPD_TIMEOUT, &transport->sock_state);
- }
+diff --git a/drivers/sh/intc/core.c b/drivers/sh/intc/core.c
+index ca4f4ca413f11..b19388b349be3 100644
+--- a/drivers/sh/intc/core.c
++++ b/drivers/sh/intc/core.c
+@@ -209,7 +209,6 @@ int __init register_intc_controller(struct intc_desc *desc)
+ 		goto err0;
  
- static void xs_run_error_worker(struct sock_xprt *transport, unsigned int nr)
+ 	INIT_LIST_HEAD(&d->list);
+-	list_add_tail(&d->list, &intc_list);
+ 
+ 	raw_spin_lock_init(&d->lock);
+ 	INIT_RADIX_TREE(&d->tree, GFP_ATOMIC);
+@@ -369,6 +368,7 @@ int __init register_intc_controller(struct intc_desc *desc)
+ 
+ 	d->skip_suspend = desc->skip_syscore_suspend;
+ 
++	list_add_tail(&d->list, &intc_list);
+ 	nr_intc_controllers++;
+ 
+ 	return 0;
 -- 
 2.43.0
 
