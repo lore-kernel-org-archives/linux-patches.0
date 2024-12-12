@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D438E222D72;
-	Thu, 12 Dec 2024 16:08:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 846E5222D72;
+	Thu, 12 Dec 2024 16:08:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734019692; cv=none; b=l+gb6d3bPkzCMdnV0xln/kI5PPxX9cjIdQU8riGGHSVI8P6UxTLzzJIzl+O+qZV+obyy1IOGLwzQwP1NPKxMBj2t1z7WbG1T1RVeeUXkxUdAUkJn0l5OfUe3Rrbf+WNcTU+wmubsfdBe89JFpBBvJ37kJFBsUqNUMbvwGQnoiPs=
+	t=1734019696; cv=none; b=YK6tiZnrzdNIZHlnwrOKWH0Dti2MrsjsJyd33kAr810cPs3xNziKXkPRCDEmw4sBHBQuhb9gMZ9cKj2qxTr5fD69wW+n4LNEoKjm3jhUZH4v6U4GvBJhDWUdp1gdtQdPchEY94JXr1QIRdhYQ0Qku2DxlJWpVrX4hwi/8mFck+o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734019692; c=relaxed/simple;
-	bh=YJoB2touhNwOSsfYdLqWO6sPxhewwJJUzViP2ifqJBc=;
+	s=arc-20240116; t=1734019696; c=relaxed/simple;
+	bh=QblXOO4dQ8GQlfJDjpxLaiETlqXPsK1gM2HROb7+iD4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mZvJqi/exBaAC/4IJbkeJK49sbPKjCtN3guxgSCyFQCIKkkyEfuqjr+QTUOIS1Ll7rCXhFpTlD9DMWHWBOlajuuR2mjuHfoCBZjBpQLq+xWAwzLaawJsYYsQ37Pyytkob3pMhoA2uiM9HDDN8AFaOQwFciLKu6zyys8C5x+2Jb0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pgqaJffI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HMlVrzOvMxkNDER9zXtG3Z+JKo6RO8dx5rHseQGVBUKWlz57FTGn5yFy/KP/WNDb1x4wezxA3GswMQQC1mtiENMGDYnub8XNSNfErLhl7+BRiMlX8y9jgOaFMRSaswowwnWEsoi/bZMKEd6+c2F64QykVSZbjyP5u6RKA9BS7R4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zREQZt/K; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pgqaJffI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BBA3C4CECE;
-	Thu, 12 Dec 2024 16:08:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zREQZt/K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E68CBC4CECE;
+	Thu, 12 Dec 2024 16:08:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734019692;
-	bh=YJoB2touhNwOSsfYdLqWO6sPxhewwJJUzViP2ifqJBc=;
+	s=korg; t=1734019696;
+	bh=QblXOO4dQ8GQlfJDjpxLaiETlqXPsK1gM2HROb7+iD4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pgqaJffIbUJRbMAQfVSdttQmBI0YeGvq/hMW7v8ryosM/36wzSDCk9CLQHenDEQHQ
-	 6CHEE9Zrd4GnV2YyF6vKc9nB8sUJgD5MGcMlKgiDRmMBM9leAEOEDuiBOGdS+rx69T
-	 YtXDWj78W+69IxLjgYgmYrYfH6ZWTztVUEn/JXeA=
+	b=zREQZt/KTPfdplzrbCxjeBYMRtWEDbQTjcWx+y+QhvSrdMW98snrUiwkTsfFVXa1Y
+	 8f2gU34uDwR49phXQS2aB4zihhvlzQQ6r+XcqftTFUJsRXrjaGLWwi2Hg603B8i5xw
+	 C6fVSoEH4dBPhfVhlVj/SGg7lqCulYUnVXosNnt8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Nuno Sa <nuno.sa@analog.com>,
+	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 274/772] f2fs: open code allocate_segment_by_default
-Date: Thu, 12 Dec 2024 15:53:39 +0100
-Message-ID: <20241212144401.230509500@linuxfoundation.org>
+Subject: [PATCH 6.1 257/772] clk: clk-axi-clkgen: make sure to enable the AXI bus clock
+Date: Thu, 12 Dec 2024 15:53:22 +0100
+Message-ID: <20241212144400.534702669@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -52,104 +51,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christoph Hellwig <hch@lst.de>
+From: Nuno Sa <nuno.sa@analog.com>
 
-[ Upstream commit 8442d94b8ac8d5d8300725a9ffa9def526b71170 ]
+[ Upstream commit c64ef7e4851d1a9abbb7f7833e4936973ac5ba79 ]
 
-allocate_segment_by_default has just two callers, which use very
-different code pathes inside it based on the force paramter.  Just
-open code the logic in the two callers using a new helper to decided
-if a new segment should be allocated.
+In order to access the registers of the HW, we need to make sure that
+the AXI bus clock is enabled. Hence let's increase the number of clocks
+by one.
 
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
-Stable-dep-of: 43563069e1c1 ("f2fs: check curseg->inited before write_sum_page in change_curseg")
+In order to keep backward compatibility and make sure old DTs still work
+we check if clock-names is available or not. If it is, then we can
+disambiguate between really having the AXI clock or a parent clock and
+so we can enable the bus clock. If not, we fallback to what was done
+before and don't explicitly enable the AXI bus clock.
+
+Note that if clock-names is given, the axi clock must be the last one in
+the phandle array (also enforced in the DT bindings) so that we can reuse
+as much code as possible.
+
+Fixes: 0e646c52cf0e ("clk: Add axi-clkgen driver")
+Signed-off-by: Nuno Sa <nuno.sa@analog.com>
+Link: https://lore.kernel.org/r/20241029-axi-clkgen-fix-axiclk-v2-2-bc5e0733ad76@analog.com
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/segment.c | 50 +++++++++++++++++++++++------------------------
- 1 file changed, 24 insertions(+), 26 deletions(-)
+ drivers/clk/clk-axi-clkgen.c | 22 ++++++++++++++++++++--
+ 1 file changed, 20 insertions(+), 2 deletions(-)
 
-diff --git a/fs/f2fs/segment.c b/fs/f2fs/segment.c
-index bfc3c9ba6ef40..a40322964c1e0 100644
---- a/fs/f2fs/segment.c
-+++ b/fs/f2fs/segment.c
-@@ -2859,31 +2859,20 @@ static int get_ssr_segment(struct f2fs_sb_info *sbi, int type,
- 	return 0;
- }
+diff --git a/drivers/clk/clk-axi-clkgen.c b/drivers/clk/clk-axi-clkgen.c
+index ac6ff736ac8f6..bb5cd9d389930 100644
+--- a/drivers/clk/clk-axi-clkgen.c
++++ b/drivers/clk/clk-axi-clkgen.c
+@@ -7,6 +7,7 @@
+  */
  
--/*
-- * flush out current segment and replace it with new segment
-- * This function should be returned with success, otherwise BUG
-- */
--static void allocate_segment_by_default(struct f2fs_sb_info *sbi,
--						int type, bool force)
-+static bool need_new_seg(struct f2fs_sb_info *sbi, int type)
- {
- 	struct curseg_info *curseg = CURSEG_I(sbi, type);
+ #include <linux/platform_device.h>
++#include <linux/clk.h>
+ #include <linux/clk-provider.h>
+ #include <linux/slab.h>
+ #include <linux/io.h>
+@@ -510,6 +511,7 @@ static int axi_clkgen_probe(struct platform_device *pdev)
+ 	struct clk_init_data init;
+ 	const char *parent_names[2];
+ 	const char *clk_name;
++	struct clk *axi_clk;
+ 	unsigned int i;
+ 	int ret;
  
--	if (force)
--		new_curseg(sbi, type, true);
--	else if (!is_set_ckpt_flags(sbi, CP_CRC_RECOVERY_FLAG) &&
--					curseg->seg_type == CURSEG_WARM_NODE)
--		new_curseg(sbi, type, false);
--	else if (curseg->alloc_type == LFS &&
--			is_next_segment_free(sbi, curseg, type) &&
--			likely(!is_sbi_flag_set(sbi, SBI_CP_DISABLED)))
--		new_curseg(sbi, type, false);
--	else if (f2fs_need_SSR(sbi) &&
--			get_ssr_segment(sbi, type, SSR, 0))
--		change_curseg(sbi, type, true);
--	else
--		new_curseg(sbi, type, false);
--
--	stat_inc_seg_type(sbi, curseg);
-+	if (!is_set_ckpt_flags(sbi, CP_CRC_RECOVERY_FLAG) &&
-+	    curseg->seg_type == CURSEG_WARM_NODE)
-+		return true;
-+	if (curseg->alloc_type == LFS &&
-+	    is_next_segment_free(sbi, curseg, type) &&
-+	    likely(!is_sbi_flag_set(sbi, SBI_CP_DISABLED)))
-+		return true;
-+	if (!f2fs_need_SSR(sbi) || !get_ssr_segment(sbi, type, SSR, 0))
-+		return true;
-+	return false;
- }
+@@ -526,8 +528,24 @@ static int axi_clkgen_probe(struct platform_device *pdev)
+ 		return PTR_ERR(axi_clkgen->base);
  
- void f2fs_allocate_segment_for_resize(struct f2fs_sb_info *sbi, int type,
-@@ -2936,7 +2925,8 @@ static void __allocate_new_segment(struct f2fs_sb_info *sbi, int type,
- 		return;
- alloc:
- 	old_segno = curseg->segno;
--	allocate_segment_by_default(sbi, type, true);
-+	new_curseg(sbi, type, true);
-+	stat_inc_seg_type(sbi, curseg);
- 	locate_dirty_segment(sbi, old_segno);
- }
- 
-@@ -3287,11 +3277,19 @@ void f2fs_allocate_data_block(struct f2fs_sb_info *sbi, struct page *page,
- 	update_sit_entry(sbi, old_blkaddr, -1);
- 
- 	if (!__has_curseg_space(sbi, curseg)) {
--		if (from_gc)
+ 	init.num_parents = of_clk_get_parent_count(pdev->dev.of_node);
+-	if (init.num_parents < 1 || init.num_parents > 2)
+-		return -EINVAL;
++
++	axi_clk = devm_clk_get_enabled(&pdev->dev, "s_axi_aclk");
++	if (!IS_ERR(axi_clk)) {
++		if (init.num_parents < 2 || init.num_parents > 3)
++			return -EINVAL;
++
++		init.num_parents -= 1;
++	} else {
 +		/*
-+		 * Flush out current segment and replace it with new segment.
++		 * Legacy... So that old DTs which do not have clock-names still
++		 * work. In this case we don't explicitly enable the AXI bus
++		 * clock.
 +		 */
-+		if (from_gc) {
- 			get_atssr_segment(sbi, type, se->type,
- 						AT_SSR, se->mtime);
--		else
--			allocate_segment_by_default(sbi, type, false);
-+		} else {
-+			if (need_new_seg(sbi, type))
-+				new_curseg(sbi, type, false);
-+			else
-+				change_curseg(sbi, type, true);
-+			stat_inc_seg_type(sbi, curseg);
-+		}
- 	}
- 	/*
- 	 * segment dirty status should be updated after segment allocation,
++		if (PTR_ERR(axi_clk) != -ENOENT)
++			return PTR_ERR(axi_clk);
++		if (init.num_parents < 1 || init.num_parents > 2)
++			return -EINVAL;
++	}
+ 
+ 	for (i = 0; i < init.num_parents; i++) {
+ 		parent_names[i] = of_clk_get_parent_name(pdev->dev.of_node, i);
 -- 
 2.43.0
 
