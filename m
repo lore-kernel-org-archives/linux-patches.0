@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16561229687;
-	Thu, 12 Dec 2024 16:54:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59CA8229678;
+	Thu, 12 Dec 2024 16:54:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734022483; cv=none; b=PAfq8NDkirOLmbrZGPU21FXJviiERT79qXMUs2tmlkfcNucxFaxbx6dVKbfwNLwn9lQd5ToR2oKJDrvhOMynGMDK4uXJnb/sKcUJGVh9ocFD+LIVJybqTP5JHWwKoJNOq27oBHGkuHum7FYmAwgvBoFGQAcevDDntlx/oFVLmEk=
+	t=1734022486; cv=none; b=bcB6LmA68rbligC1kbfzZlCM66Mbr5Sy3BYeJr6EmCgff/QJLGzYZAW+486VC48Xjy7pOM8t2FwjdF4fcO92T549rMD0naZzAMq3jDXCCwKCw4uZDZk6usf/LAMNS4Jzn5f96SfDVKHNBSUPUGfZhZt/GXcKqn2O277xxmJy1Ng=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734022483; c=relaxed/simple;
-	bh=4TjBXf4Par/xV/X9hvn1+Zn2mp+PhpL3/w82WmMrYZ0=;
+	s=arc-20240116; t=1734022486; c=relaxed/simple;
+	bh=HYL4k71H/uB4nCfWpaHF52uWKXzai8MWho4+4ptZvbk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=geisAind9Fhl/6a1idxrT97pB1WOE7wuf2wMjSwASCQM7WnVvoFgSqM4aUhJOTHoPCIC8i7ThpMoIRZrA4Xllk4kPCrnwSVRZsUzIFJRYPPBR0s/1V6qme0aKYwYlRm21ZUWPijp4VKd3EkX84OuEyNd6wkL7414TTfMZgW0upg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LNJUDmAg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Myti2ttFLTqCKrzztY0lcVhIkF6E9t85VKJNWyt0D7IftvZGj+dmBlPSYxzs/NUfoRHZeP2mJlSG6RZr3I9aorawUkx8JA97AZ3exoonVX1Glyt+KB56AusedqPnxFVcIu9qD4x4ab31UWnazV/VhhRqU2QmbHYL1ZtcUBtrqeE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yfl2exch; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LNJUDmAg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4390DC4CED0;
-	Thu, 12 Dec 2024 16:54:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yfl2exch"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3AB2C4CED0;
+	Thu, 12 Dec 2024 16:54:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734022482;
-	bh=4TjBXf4Par/xV/X9hvn1+Zn2mp+PhpL3/w82WmMrYZ0=;
+	s=korg; t=1734022486;
+	bh=HYL4k71H/uB4nCfWpaHF52uWKXzai8MWho4+4ptZvbk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LNJUDmAg3A6KLAHfkISJkck+BkSLEIzVTscIkvEdjFnLQbMZwc7BNHOvXPRtqdKOE
-	 q/CW2R7NYsi5WgTbBOt8x20T8MXQbC7m3JrFuZy0FTwR59ilRrtUdiRqXMEbNnUujY
-	 4uvGTy7z6GnFBRQv95BR+fv0d+wAyMIpxxT4Rb0M=
+	b=Yfl2exchBjLq4BGFRsQX4VF0udAkLy7ZStYuj5ut3DVaQWqmdM3FUFO46w7SX8hos
+	 j4IKV+MpM93ksTTgQE78HbCdcPsROGdilTA9UOUurfQRfoKt6KJ+Z+MSNtRfL6AjXc
+	 ASJ5xMXFgZ0oY6skrvL2PgqUv2C2NyvMiaXgOMzw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kashyap Desai <kashyap.desai@broadcom.com>,
-	Selvin Xavier <selvin.xavier@broadcom.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Peng Fan <peng.fan@nxp.com>,
+	Abel Vesa <abel.vesa@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 222/565] RDMA/bnxt_re: Check cqe flags to know imm_data vs inv_irkey
-Date: Thu, 12 Dec 2024 15:56:57 +0100
-Message-ID: <20241212144320.265535811@linuxfoundation.org>
+Subject: [PATCH 5.15 223/565] clk: imx: lpcg-scu: SW workaround for errata (e10858)
+Date: Thu, 12 Dec 2024 15:56:58 +0100
+Message-ID: <20241212144320.304677003@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144311.432886635@linuxfoundation.org>
 References: <20241212144311.432886635@linuxfoundation.org>
@@ -52,78 +51,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kashyap Desai <kashyap.desai@broadcom.com>
+From: Peng Fan <peng.fan@nxp.com>
 
-[ Upstream commit 808ca6de989c598bc5af1ae0ad971a66077efac0 ]
+[ Upstream commit 5ee063fac85656bea9cfe3570af147ba1701ba18 ]
 
-Invalidate rkey is cpu endian and immediate data is in big endian format.
-Both immediate data and invalidate the remote key returned by
-HW is in little endian format.
+Back-to-back LPCG writes can be ignored by the LPCG register due to
+a HW bug. The writes need to be separated by at least 4 cycles of
+the gated clock. See https://www.nxp.com.cn/docs/en/errata/IMX8_1N94W.pdf
 
-While handling the commit in fixes tag, the difference between
-immediate data and invalidate rkey endianness was not considered.
+The workaround is implemented as follows:
+1. For clocks running greater than or equal to 24MHz, a read
+followed by the write will provide sufficient delay.
+2. For clocks running below 24MHz, add a delay of 4 clock cylces
+after the write to the LPCG register.
 
-Without changes of this patch, Kernel ULP was failing while processing
-inv_rkey.
-
-dmesg log snippet -
-nvme nvme0: Bogus remote invalidation for rkey 0x2000019Fix in this patch
-
-Do endianness conversion based on completion queue entry flag.
-Also, the HW completions are already converted to host endianness in
-bnxt_qplib_cq_process_res_rc and bnxt_qplib_cq_process_res_ud and there
-is no need to convert it again in bnxt_re_poll_cq. Modified the union to
-hold the correct data type.
-
-Fixes: 95b087f87b78 ("bnxt_re: Fix imm_data endianness")
-Signed-off-by: Kashyap Desai <kashyap.desai@broadcom.com>
-Signed-off-by: Selvin Xavier <selvin.xavier@broadcom.com>
-Link: https://patch.msgid.link/1730110014-20755-1-git-send-email-selvin.xavier@broadcom.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: 2f77296d3df9 ("clk: imx: add lpcg clock support")
+Signed-off-by: Peng Fan <peng.fan@nxp.com>
+Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
+Link: https://lore.kernel.org/r/20241027-imx-clk-v1-v3-1-89152574d1d7@nxp.com
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/bnxt_re/ib_verbs.c | 7 +++++--
- drivers/infiniband/hw/bnxt_re/qplib_fp.h | 2 +-
- 2 files changed, 6 insertions(+), 3 deletions(-)
+ drivers/clk/imx/clk-lpcg-scu.c | 37 ++++++++++++++++++++++++++--------
+ 1 file changed, 29 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/infiniband/hw/bnxt_re/ib_verbs.c b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
-index e29894197f5ca..0ce7bdcf988e8 100644
---- a/drivers/infiniband/hw/bnxt_re/ib_verbs.c
-+++ b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
-@@ -3334,7 +3334,7 @@ static void bnxt_re_process_res_shadow_qp_wc(struct bnxt_re_qp *gsi_sqp,
- 	wc->byte_len = orig_cqe->length;
- 	wc->qp = &gsi_qp->ib_qp;
+diff --git a/drivers/clk/imx/clk-lpcg-scu.c b/drivers/clk/imx/clk-lpcg-scu.c
+index dd5abd09f3e20..620afdf8dc03e 100644
+--- a/drivers/clk/imx/clk-lpcg-scu.c
++++ b/drivers/clk/imx/clk-lpcg-scu.c
+@@ -6,10 +6,12 @@
  
--	wc->ex.imm_data = cpu_to_be32(le32_to_cpu(orig_cqe->immdata));
-+	wc->ex.imm_data = cpu_to_be32(orig_cqe->immdata);
- 	wc->src_qp = orig_cqe->src_qp;
- 	memcpy(wc->smac, orig_cqe->smac, ETH_ALEN);
- 	if (bnxt_re_is_vlan_pkt(orig_cqe, &vlan_id, &sl)) {
-@@ -3470,7 +3470,10 @@ int bnxt_re_poll_cq(struct ib_cq *ib_cq, int num_entries, struct ib_wc *wc)
- 				 (unsigned long)(cqe->qp_handle),
- 				 struct bnxt_re_qp, qplib_qp);
- 			wc->qp = &qp->ib_qp;
--			wc->ex.imm_data = cpu_to_be32(le32_to_cpu(cqe->immdata));
-+			if (cqe->flags & CQ_RES_RC_FLAGS_IMM)
-+				wc->ex.imm_data = cpu_to_be32(cqe->immdata);
-+			else
-+				wc->ex.invalidate_rkey = cqe->invrkey;
- 			wc->src_qp = cqe->src_qp;
- 			memcpy(wc->smac, cqe->smac, ETH_ALEN);
- 			wc->port_num = 1;
-diff --git a/drivers/infiniband/hw/bnxt_re/qplib_fp.h b/drivers/infiniband/hw/bnxt_re/qplib_fp.h
-index 57a3dae87f659..13263ce2309d7 100644
---- a/drivers/infiniband/hw/bnxt_re/qplib_fp.h
-+++ b/drivers/infiniband/hw/bnxt_re/qplib_fp.h
-@@ -374,7 +374,7 @@ struct bnxt_qplib_cqe {
- 	u16				cfa_meta;
- 	u64				wr_id;
- 	union {
--		__le32			immdata;
-+		u32			immdata;
- 		u32			invrkey;
- 	};
- 	u64				qp_handle;
+ #include <linux/bits.h>
+ #include <linux/clk-provider.h>
++#include <linux/delay.h>
+ #include <linux/err.h>
+ #include <linux/io.h>
+ #include <linux/slab.h>
+ #include <linux/spinlock.h>
++#include <linux/units.h>
+ 
+ #include "clk-scu.h"
+ 
+@@ -41,6 +43,29 @@ struct clk_lpcg_scu {
+ 
+ #define to_clk_lpcg_scu(_hw) container_of(_hw, struct clk_lpcg_scu, hw)
+ 
++/* e10858 -LPCG clock gating register synchronization errata */
++static void lpcg_e10858_writel(unsigned long rate, void __iomem *reg, u32 val)
++{
++	writel(val, reg);
++
++	if (rate >= 24 * HZ_PER_MHZ || rate == 0) {
++		/*
++		 * The time taken to access the LPCG registers from the AP core
++		 * through the interconnect is longer than the minimum delay
++		 * of 4 clock cycles required by the errata.
++		 * Adding a readl will provide sufficient delay to prevent
++		 * back-to-back writes.
++		 */
++		readl(reg);
++	} else {
++		/*
++		 * For clocks running below 24MHz, wait a minimum of
++		 * 4 clock cycles.
++		 */
++		ndelay(4 * (DIV_ROUND_UP(1000 * HZ_PER_MHZ, rate)));
++	}
++}
++
+ static int clk_lpcg_scu_enable(struct clk_hw *hw)
+ {
+ 	struct clk_lpcg_scu *clk = to_clk_lpcg_scu(hw);
+@@ -57,7 +82,8 @@ static int clk_lpcg_scu_enable(struct clk_hw *hw)
+ 		val |= CLK_GATE_SCU_LPCG_HW_SEL;
+ 
+ 	reg |= val << clk->bit_idx;
+-	writel(reg, clk->reg);
++
++	lpcg_e10858_writel(clk_hw_get_rate(hw), clk->reg, reg);
+ 
+ 	spin_unlock_irqrestore(&imx_lpcg_scu_lock, flags);
+ 
+@@ -74,7 +100,7 @@ static void clk_lpcg_scu_disable(struct clk_hw *hw)
+ 
+ 	reg = readl_relaxed(clk->reg);
+ 	reg &= ~(CLK_GATE_SCU_LPCG_MASK << clk->bit_idx);
+-	writel(reg, clk->reg);
++	lpcg_e10858_writel(clk_hw_get_rate(hw), clk->reg, reg);
+ 
+ 	spin_unlock_irqrestore(&imx_lpcg_scu_lock, flags);
+ }
+@@ -145,13 +171,8 @@ static int __maybe_unused imx_clk_lpcg_scu_resume(struct device *dev)
+ {
+ 	struct clk_lpcg_scu *clk = dev_get_drvdata(dev);
+ 
+-	/*
+-	 * FIXME: Sometimes writes don't work unless the CPU issues
+-	 * them twice
+-	 */
+-
+-	writel(clk->state, clk->reg);
+ 	writel(clk->state, clk->reg);
++	lpcg_e10858_writel(0, clk->reg, clk->state);
+ 	dev_dbg(dev, "restore lpcg state 0x%x\n", clk->state);
+ 
+ 	return 0;
 -- 
 2.43.0
 
