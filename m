@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2385176AA1;
-	Thu, 12 Dec 2024 17:04:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B34C9222D64;
+	Thu, 12 Dec 2024 17:04:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734023078; cv=none; b=u83wo2p8wmeHjK91vmqGJsdPajyu7ihtH/WYOYqJ++T2Ijsh0juZ8jjkL6FWfD2uOWF41vtO2pbg6CYs9xMt2awWIgid0KOMwDEBUYQyOx8uaYtFB6E5qop0MHBQVjglSCrnvizXbVMQD0rvjwI6ufiBJAmbpo1n4aqCssN1Wys=
+	t=1734023081; cv=none; b=hLTGqLlMQVdXPcTFf+geWYMGNL32xuCCZUNwUP4v6BDhZFwcZTwo2V5AYKTm+iCvqmuGTuh/j7TXlh0d30cQc1T0uRO0mWDmnXey5oVRsv+ECmMfZ965J/4VyVgIDouOMWVJz3kQPbXnr1FZF6kgGwygNcUpSEBXI4momsK9aU8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734023078; c=relaxed/simple;
-	bh=FLtvhAlXC9FivTrlTApQ5DBsJdl/37c+8hItHoy2aKY=;
+	s=arc-20240116; t=1734023081; c=relaxed/simple;
+	bh=zazexL0u/dtF/LDIzEWaGdBTeUvmZPCcmWl8qcv7iac=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=hvClZ4Go3hvRkJc5xLuw1io54S1BPY1xsepbgA+/Kxrh+TTFWeRaq8DX+vkC8Ne019ingPtZU6Y74ujeSkMdaFwGEEvJRjBgTdZL+Vm0P03S4lT2N9CZpAZZY/xSc1a33FULIsj2EbilaRUHh46F+GhcQcISii6Lp7vGGj9GevA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f4chE5H2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=h3qseMWaDy600WeTMCk7xyZDt20o7LVNJ36WD8Iw8iId3HQ6WJvzDjJn3D82QWHo0MSDyvup3krZMxin4DLAbmcXgNN2p4GKEHL4DqUIHthGf1QgybgIrtzFOZhP0JAYpii8g318mNkq8M784+h/rM4VGG5LBZ1N/4jNqZPzeNM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W+DwV7fG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f4chE5H2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B77AC4CED4;
-	Thu, 12 Dec 2024 17:04:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W+DwV7fG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 344F8C4CEDF;
+	Thu, 12 Dec 2024 17:04:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734023078;
-	bh=FLtvhAlXC9FivTrlTApQ5DBsJdl/37c+8hItHoy2aKY=;
+	s=korg; t=1734023081;
+	bh=zazexL0u/dtF/LDIzEWaGdBTeUvmZPCcmWl8qcv7iac=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f4chE5H2SJ4RdXLdb9VhPjTjQokvN5WR0bm0hXo+xw9g0/7A4lOB6Tg7TOUwFP1nt
-	 gthF00fVoNERlRU6fE0tYDkqka6fhdMzbMxPzqzqR95dnT+WA6RvU3yjDtOgOx/1P7
-	 K7bznOaBGhyY2v2uitHCazVirOYtIHYM345Jnx7c=
+	b=W+DwV7fGM4rQru0zRBaZcKQZxHTInM9pSuF5MlPGQU8UFcyShFhINh00IFiDPYYWg
+	 WwNLGGH8FlRyuqKqjIOT+TCQ2Zn+D7ApGPOOjnWJVzZf+7nrultHsXYlM9Qq91TdVV
+	 cfwDEFntF+UMppYQ8KNsn7xL9UKdxXElymxQr0Qo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kishon Vijay Abraham I <kishon@ti.com>,
-	Siddharth Vadapalli <s-vadapalli@ti.com>,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>
-Subject: [PATCH 5.15 387/565] PCI: keystone: Add link up check to ks_pcie_other_map_bus()
-Date: Thu, 12 Dec 2024 15:59:42 +0100
-Message-ID: <20241212144326.939250547@linuxfoundation.org>
+	Oleksandr Tymoshenko <ovt@google.com>,
+	Amir Goldstein <amir73il@gmail.com>
+Subject: [PATCH 5.15 388/565] ovl: properly handle large files in ovl_security_fileattr
+Date: Thu, 12 Dec 2024 15:59:43 +0100
+Message-ID: <20241212144326.977965022@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144311.432886635@linuxfoundation.org>
 References: <20241212144311.432886635@linuxfoundation.org>
@@ -45,56 +44,60 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kishon Vijay Abraham I <kishon@ti.com>
+From: Oleksandr Tymoshenko <ovt@google.com>
 
-commit 9e9ec8d8692a6f64d81ef67d4fb6255af6be684b upstream.
+commit 3b6b99ef15ea37635604992ede9ebcccef38a239 upstream.
 
-K2G forwards the error triggered by a link-down state (e.g., no connected
-endpoint device) on the system bus for PCI configuration transactions;
-these errors are reported as an SError at system level, which is fatal and
-hangs the system.
+dentry_open in ovl_security_fileattr fails for any file
+larger than 2GB if open method of the underlying filesystem
+calls generic_file_open (e.g. fusefs).
 
-So, apply fix similar to how it was done in the DesignWare Core driver
-commit 15b23906347c ("PCI: dwc: Add link up check in dw_child_pcie_ops.map_bus()").
+The issue can be reproduce using the following script:
+(passthrough_ll is an example app from libfuse).
 
-Fixes: 10a797c6e54a ("PCI: dwc: keystone: Use pci_ops for config space accessors")
-Link: https://lore.kernel.org/r/20240524105714.191642-3-s-vadapalli@ti.com
-Signed-off-by: Kishon Vijay Abraham I <kishon@ti.com>
-Signed-off-by: Siddharth Vadapalli <s-vadapalli@ti.com>
-[kwilczynski: commit log, added tag for stable releases]
-Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
-Cc: stable@vger.kernel.org
+  $ D=/opt/test/mnt
+  $ mkdir -p ${D}/{source,base,top/uppr,top/work,ovlfs}
+  $ dd if=/dev/zero of=${D}/source/zero.bin bs=1G count=2
+  $ passthrough_ll -o source=${D}/source ${D}/base
+  $ mount -t overlay overlay \
+      -olowerdir=${D}/base,upperdir=${D}/top/uppr,workdir=${D}/top/work \
+      ${D}/ovlfs
+  $ chmod 0777 ${D}/mnt/ovlfs/zero.bin
+
+Running this script results in "Value too large for defined data type"
+error message from chmod.
+
+Signed-off-by: Oleksandr Tymoshenko <ovt@google.com>
+Fixes: 72db82115d2b ("ovl: copy up sync/noatime fileattr flags")
+Cc: stable@vger.kernel.org # v5.15+
+Signed-off-by: Amir Goldstein <amir73il@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/controller/dwc/pci-keystone.c |   11 +++++++++++
- 1 file changed, 11 insertions(+)
+ fs/overlayfs/inode.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/drivers/pci/controller/dwc/pci-keystone.c
-+++ b/drivers/pci/controller/dwc/pci-keystone.c
-@@ -440,6 +440,17 @@ static void __iomem *ks_pcie_other_map_b
- 	struct keystone_pcie *ks_pcie = to_keystone_pcie(pci);
- 	u32 reg;
+--- a/fs/overlayfs/inode.c
++++ b/fs/overlayfs/inode.c
+@@ -519,8 +519,13 @@ static int ovl_security_fileattr(struct
+ 	struct file *file;
+ 	unsigned int cmd;
+ 	int err;
++	unsigned int flags;
  
-+	/*
-+	 * Checking whether the link is up here is a last line of defense
-+	 * against platforms that forward errors on the system bus as
-+	 * SError upon PCI configuration transactions issued when the link
-+	 * is down. This check is racy by definition and does not stop
-+	 * the system from triggering an SError if the link goes down
-+	 * after this check is performed.
-+	 */
-+	if (!dw_pcie_link_up(pci))
-+		return NULL;
+-	file = dentry_open(realpath, O_RDONLY, current_cred());
++	flags = O_RDONLY;
++	if (force_o_largefile())
++		flags |= O_LARGEFILE;
 +
- 	reg = CFG_BUS(bus->number) | CFG_DEVICE(PCI_SLOT(devfn)) |
- 		CFG_FUNC(PCI_FUNC(devfn));
- 	if (!pci_is_root_bus(bus->parent))
++	file = dentry_open(realpath, flags, current_cred());
+ 	if (IS_ERR(file))
+ 		return PTR_ERR(file);
+ 
 
 
