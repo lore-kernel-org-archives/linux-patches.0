@@ -1,44 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 093E32135C1;
-	Thu, 12 Dec 2024 15:31:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDEB4217707;
+	Thu, 12 Dec 2024 15:31:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734017479; cv=none; b=hAY1FLY2YHqK96qomrbMX5lMfsAwpQZtq930YV8k2tLkA5mRjyl4c2pqh4UkHAS/OO6nUd5zf44XC4TIeTZKNxlW6UoJb/zxr05l7QgRUwzpqsKzEl4l0qRNhX8CiKfZWiWpt/5NroCihm1ux0Rus+ro8a6p1YyxR7G+XOA/Alg=
+	t=1734017482; cv=none; b=ZR/ve1rWxGWdpbwGPJ/Cy43Kf2/convFmSxFiUroE2dBHmD56JNFsjejluanWrbuWW8WQor8HTXH7fp1PcGbCZbLDgrAnEmCpsFflEKHq5KgYxKjwoYpTQuxyXTPEcju8ZopLESnokKqkh55YlnTGFBYt5Z0Txt5U5XoDHxinfI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734017479; c=relaxed/simple;
-	bh=+HCKjpkNo3YnVoFbMnMHbU9i+PB18ZfQfUKggocindU=;
+	s=arc-20240116; t=1734017482; c=relaxed/simple;
+	bh=xK4+KTNgN/GgQW7K+IEjBGtCOgGiPeCphuq6qOWO+Lc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bI2PtCcK7B0YyGogF96LxoQUOgfv6KSAaOflwEKLX0MBi2UENVhcOybCwB/ZKkQL14kmnkxycI86W+Ct3Ipr0mBJPuOl1ICR/VjWZhG+qGdXFiCYZwmDZ/OHK+B+H2FlqxxFnAgi0Vuv7APJNtt3riwnIgcT9u0xAg57ofZVhPM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=neYDFP2e; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=el76AdlTFL8kqiEDtI8k4Lfa7R2cd0s6A5ryvmADg5l5dpU7T2VXyFihAtOJmg7nJIejmHdxN6kWpVcEcpevHJHlmVIAZdgKX0I6rzLo1OvnCxhqdhFgGEEMmGL+PJB79RTZg0Mbr88MC2tC5urOioslAzsBa//1ul/tBSXs2KU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nHUe8DWp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="neYDFP2e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37005C4CECE;
-	Thu, 12 Dec 2024 15:31:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nHUe8DWp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1D80C4CECE;
+	Thu, 12 Dec 2024 15:31:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734017478;
-	bh=+HCKjpkNo3YnVoFbMnMHbU9i+PB18ZfQfUKggocindU=;
+	s=korg; t=1734017482;
+	bh=xK4+KTNgN/GgQW7K+IEjBGtCOgGiPeCphuq6qOWO+Lc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=neYDFP2eRzLh6sY21Bbd6KcMqfRf4BH/iszxblueOV/UyhQgkDXOKJeSF+tgxx9BV
-	 TDUe3SbmtHByOVk7VyRE1QoB+qAPb2OSC59G47kmNw23CHy2UpbUzH9i4khrM0W0v0
-	 8gmE19HIx0zrQLPhUADn/dA9eDNzBa51Do0IYT7c=
+	b=nHUe8DWp6ncisTgb/ID42F1D7DHUq/tG/iBY/VY7xhhxX+cHHszkB9zgs1ipibPy1
+	 pZ3O3IFmHaz76SZ+fXL18TUOv/1GqZhsY8FhJ7zpOl3ZmIvJpRMtLGba1MAxf5He/D
+	 zwG3yXucxz+NKmQrLW9ZMUkvwD3iDzcmZMTb01gc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+671e2853f9851d039551@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
-	WingMan Kwok <w-kwok2@ti.com>,
-	Murali Karicheri <m-karicheri2@ti.com>,
-	MD Danish Anwar <danishanwar@ti.com>,
-	Jiri Pirko <jiri@nvidia.com>,
-	George McCollister <george.mccollister@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	syzbot+d4e8dc385d9258220c31@syzkaller.appspotmail.com,
+	Dmitry Antipov <dmantipov@yandex.ru>,
+	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 024/356] net: hsr: avoid potential out-of-bound access in fill_frame_info()
-Date: Thu, 12 Dec 2024 15:55:43 +0100
-Message-ID: <20241212144245.585618400@linuxfoundation.org>
+Subject: [PATCH 6.6 025/356] can: j1939: j1939_session_new(): fix skb reference counting
+Date: Thu, 12 Dec 2024 15:55:44 +0100
+Message-ID: <20241212144245.624833652@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144244.601729511@linuxfoundation.org>
 References: <20241212144244.601729511@linuxfoundation.org>
@@ -57,93 +53,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Dmitry Antipov <dmantipov@yandex.ru>
 
-[ Upstream commit b9653d19e556c6afd035602927a93d100a0d7644 ]
+[ Upstream commit a8c695005bfe6569acd73d777ca298ddddd66105 ]
 
-syzbot is able to feed a packet with 14 bytes, pretending
-it is a vlan one.
+Since j1939_session_skb_queue() does an extra skb_get() for each new
+skb, do the same for the initial one in j1939_session_new() to avoid
+refcount underflow.
 
-Since fill_frame_info() is relying on skb->mac_len already,
-extend the check to cover this case.
-
-BUG: KMSAN: uninit-value in fill_frame_info net/hsr/hsr_forward.c:709 [inline]
- BUG: KMSAN: uninit-value in hsr_forward_skb+0x9ee/0x3b10 net/hsr/hsr_forward.c:724
-  fill_frame_info net/hsr/hsr_forward.c:709 [inline]
-  hsr_forward_skb+0x9ee/0x3b10 net/hsr/hsr_forward.c:724
-  hsr_dev_xmit+0x2f0/0x350 net/hsr/hsr_device.c:235
-  __netdev_start_xmit include/linux/netdevice.h:5002 [inline]
-  netdev_start_xmit include/linux/netdevice.h:5011 [inline]
-  xmit_one net/core/dev.c:3590 [inline]
-  dev_hard_start_xmit+0x247/0xa20 net/core/dev.c:3606
-  __dev_queue_xmit+0x366a/0x57d0 net/core/dev.c:4434
-  dev_queue_xmit include/linux/netdevice.h:3168 [inline]
-  packet_xmit+0x9c/0x6c0 net/packet/af_packet.c:276
-  packet_snd net/packet/af_packet.c:3146 [inline]
-  packet_sendmsg+0x91ae/0xa6f0 net/packet/af_packet.c:3178
-  sock_sendmsg_nosec net/socket.c:711 [inline]
-  __sock_sendmsg+0x30f/0x380 net/socket.c:726
-  __sys_sendto+0x594/0x750 net/socket.c:2197
-  __do_sys_sendto net/socket.c:2204 [inline]
-  __se_sys_sendto net/socket.c:2200 [inline]
-  __x64_sys_sendto+0x125/0x1d0 net/socket.c:2200
-  x64_sys_call+0x346a/0x3c30 arch/x86/include/generated/asm/syscalls_64.h:45
-  do_syscall_x64 arch/x86/entry/common.c:52 [inline]
-  do_syscall_64+0xcd/0x1e0 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-Uninit was created at:
-  slab_post_alloc_hook mm/slub.c:4091 [inline]
-  slab_alloc_node mm/slub.c:4134 [inline]
-  kmem_cache_alloc_node_noprof+0x6bf/0xb80 mm/slub.c:4186
-  kmalloc_reserve+0x13d/0x4a0 net/core/skbuff.c:587
-  __alloc_skb+0x363/0x7b0 net/core/skbuff.c:678
-  alloc_skb include/linux/skbuff.h:1323 [inline]
-  alloc_skb_with_frags+0xc8/0xd00 net/core/skbuff.c:6612
-  sock_alloc_send_pskb+0xa81/0xbf0 net/core/sock.c:2881
-  packet_alloc_skb net/packet/af_packet.c:2995 [inline]
-  packet_snd net/packet/af_packet.c:3089 [inline]
-  packet_sendmsg+0x74c6/0xa6f0 net/packet/af_packet.c:3178
-  sock_sendmsg_nosec net/socket.c:711 [inline]
-  __sock_sendmsg+0x30f/0x380 net/socket.c:726
-  __sys_sendto+0x594/0x750 net/socket.c:2197
-  __do_sys_sendto net/socket.c:2204 [inline]
-  __se_sys_sendto net/socket.c:2200 [inline]
-  __x64_sys_sendto+0x125/0x1d0 net/socket.c:2200
-  x64_sys_call+0x346a/0x3c30 arch/x86/include/generated/asm/syscalls_64.h:45
-  do_syscall_x64 arch/x86/entry/common.c:52 [inline]
-  do_syscall_64+0xcd/0x1e0 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-Fixes: 48b491a5cc74 ("net: hsr: fix mac_len checks")
-Reported-by: syzbot+671e2853f9851d039551@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/6745dc7f.050a0220.21d33d.0018.GAE@google.com/T/#u
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: WingMan Kwok <w-kwok2@ti.com>
-Cc: Murali Karicheri <m-karicheri2@ti.com>
-Cc: MD Danish Anwar <danishanwar@ti.com>
-Cc: Jiri Pirko <jiri@nvidia.com>
-Cc: George McCollister <george.mccollister@gmail.com>
-Link: https://patch.msgid.link/20241126144344.4177332-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: syzbot+d4e8dc385d9258220c31@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=d4e8dc385d9258220c31
+Fixes: 9d71dd0c7009 ("can: add support of SAE J1939 protocol")
+Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
+Tested-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Acked-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Link: https://patch.msgid.link/20241105094823.2403806-1-dmantipov@yandex.ru
+[mkl: clean up commit message]
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/hsr/hsr_forward.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/can/j1939/transport.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/hsr/hsr_forward.c b/net/hsr/hsr_forward.c
-index 0323ab5023c69..2790f3964d6bd 100644
---- a/net/hsr/hsr_forward.c
-+++ b/net/hsr/hsr_forward.c
-@@ -588,6 +588,8 @@ static int fill_frame_info(struct hsr_frame_info *frame,
- 		frame->is_vlan = true;
+diff --git a/net/can/j1939/transport.c b/net/can/j1939/transport.c
+index 319f47df33300..95f7a7e65a73f 100644
+--- a/net/can/j1939/transport.c
++++ b/net/can/j1939/transport.c
+@@ -1505,7 +1505,7 @@ static struct j1939_session *j1939_session_new(struct j1939_priv *priv,
+ 	session->state = J1939_SESSION_NEW;
  
- 	if (frame->is_vlan) {
-+		if (skb->mac_len < offsetofend(struct hsr_vlan_ethhdr, vlanhdr))
-+			return -EINVAL;
- 		vlan_hdr = (struct hsr_vlan_ethhdr *)ethhdr;
- 		proto = vlan_hdr->vlanhdr.h_vlan_encapsulated_proto;
- 		/* FIXME: */
+ 	skb_queue_head_init(&session->skb_queue);
+-	skb_queue_tail(&session->skb_queue, skb);
++	skb_queue_tail(&session->skb_queue, skb_get(skb));
+ 
+ 	skcb = j1939_skb_to_cb(skb);
+ 	memcpy(&session->skcb, skcb, sizeof(session->skcb));
 -- 
 2.43.0
 
