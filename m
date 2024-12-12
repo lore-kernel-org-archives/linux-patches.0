@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92ED72054F8;
-	Thu, 12 Dec 2024 15:24:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F1F92054F8;
+	Thu, 12 Dec 2024 15:24:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734017069; cv=none; b=hGvL3P5fiJx/JcSzltNUzhqhOr+m+4VrmKUYzH8UaMkMhDWjrQIlAMv37Y9VJZUOVFYCuq9p3PauaCbxaIq8R8vmbvrW7woFTovnAEvqQeauPb1Ty10ZAqNTC9v4NPsDlKzZEeK5M0m4PprJwQusowxkqP+bvOr+reZickPut/M=
+	t=1734017072; cv=none; b=NQOfJX1N6o7cJxR4Me2On1sCdRafp/rKRwqVkJknuSZHuBOGXlhfIdGFl5s4nHsLfET2qp+Iht5+kFEP10iQWeN4Go38RXpOVOTNqxB9lNJQGVTAyAelQ6/1ynhqKuKmvlTODeSylpSWt7RPYpkYEkiIyJaleenRET9EtiGcWbM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734017069; c=relaxed/simple;
-	bh=h2KL4ohGEM0pF88tzoMv5+dSjRX1EUCZU+oySuldiZk=;
+	s=arc-20240116; t=1734017072; c=relaxed/simple;
+	bh=YtOvUgco+NdETp+iuWgSWAtAQPSvhdWMtIaM1HlbxAk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=urZ4lVb1OXMLrjoTIuIhwmozqz4qzQUwLXZtt+dW38KLKfymC83uV0jHL52brwSlHfbuxSAq08nvqxPv+Q8GUh/5SAe31/FgtA1dm+jSsxWi7izLvlKZfmO6+JbUHVhUxM07saOazyBe6TEWJ+u6nuYTvz9Ar9hpsJ6Z0/IlzMU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XmW5HxvH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hbdYuhyRnZZ5c2hjc4CfnVApe1U8sqLlYEtIRsHtIhIYZ3QtTuttsbdQA2+rxFX79o3ItyAGZfGf4goQu2lOf5VJzj1TUTklRxqVeLad6vErSxz37AVHqejqujWLU9zZ+4Ir5ZynOPUt2LluWlIMynbcYALNt+PFHs4Y7oO+Aa8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LWG4NHBR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XmW5HxvH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9403C4CECE;
-	Thu, 12 Dec 2024 15:24:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LWG4NHBR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDBE3C4CED0;
+	Thu, 12 Dec 2024 15:24:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734017069;
-	bh=h2KL4ohGEM0pF88tzoMv5+dSjRX1EUCZU+oySuldiZk=;
+	s=korg; t=1734017072;
+	bh=YtOvUgco+NdETp+iuWgSWAtAQPSvhdWMtIaM1HlbxAk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XmW5HxvHGcitsjzZ4BeozFjFo3b9yO4r1CN71BTas8JK31a+tMP01mcxCfQ/V4MfY
-	 G0ppMAfdTBStbiGxN/p3Yf0dHoiVDmRi4CvRfTUuONkQQpKEypuRr5n2aKhJPHiqW9
-	 FM0SgK5DdImvDMK21FOI2PkOAKor5W1++CW0qPNs=
+	b=LWG4NHBR2Gh1bQHg45gu7elZmvNOsR9Kq1uA8IkWECMTd/9nmuI+U97iabmfm/OS2
+	 wvKPAFXdAiS9PE7DGPEcTvALBuuIa1OZJD2F85tWUJVfAmhNLVOExo0sul02CQJIL9
+	 5iF/F1V/qP2/fM4GdH+dltH4JmDrJzhV3fRjcSxc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
 	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Devi Priya <quic_devipriy@quicinc.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 374/466] clk: qcom: dispcc-sm8550: enable support for SAR2130P
-Date: Thu, 12 Dec 2024 15:59:03 +0100
-Message-ID: <20241212144321.552825176@linuxfoundation.org>
+Subject: [PATCH 6.12 375/466] clk: qcom: clk-alpha-pll: Add NSS HUAYRA ALPHA PLL support for ipq9574
+Date: Thu, 12 Dec 2024 15:59:04 +0100
+Message-ID: <20241212144321.592532666@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144306.641051666@linuxfoundation.org>
 References: <20241212144306.641051666@linuxfoundation.org>
@@ -53,99 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Devi Priya <quic_devipriy@quicinc.com>
 
-[ Upstream commit 1335c7eb7012f23dc073b8ae4ffcfc1f6e69cfb3 ]
+[ Upstream commit 79dfed29aa3f714e0a94a39b2bfe9ac14ce19a6a ]
 
-The display clock controller on SAR2130P is very close to the clock
-controller on SM8550 (and SM8650). Reuse existing driver to add support
-for the controller on SAR2130P.
+Add support for NSS Huayra alpha pll found on ipq9574 SoCs.
+Programming sequence is the same as that of Huayra type Alpha PLL,
+so we can re-use the same.
 
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20241027-sar2130p-clocks-v5-10-ecad2a1432ba@linaro.org
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
+Link: https://lore.kernel.org/r/20241028060506.246606-2-quic_srichara@quicinc.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/Kconfig         |  4 ++--
- drivers/clk/qcom/dispcc-sm8550.c | 18 ++++++++++++++++--
- 2 files changed, 18 insertions(+), 4 deletions(-)
+ drivers/clk/qcom/clk-alpha-pll.c | 11 +++++++++++
+ drivers/clk/qcom/clk-alpha-pll.h |  1 +
+ 2 files changed, 12 insertions(+)
 
-diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
-index 4444dafa4e3df..9ba675f229b14 100644
---- a/drivers/clk/qcom/Kconfig
-+++ b/drivers/clk/qcom/Kconfig
-@@ -959,10 +959,10 @@ config SM_DISPCC_8450
- config SM_DISPCC_8550
- 	tristate "SM8550 Display Clock Controller"
- 	depends on ARM64 || COMPILE_TEST
--	depends on SM_GCC_8550 || SM_GCC_8650
-+	depends on SM_GCC_8550 || SM_GCC_8650 || SAR_GCC_2130P
- 	help
- 	  Support for the display clock controller on Qualcomm Technologies, Inc
--	  SM8550 or SM8650 devices.
-+	  SAR2130P, SM8550 or SM8650 devices.
- 	  Say Y if you want to support display devices and functionality such as
- 	  splash screen.
- 
-diff --git a/drivers/clk/qcom/dispcc-sm8550.c b/drivers/clk/qcom/dispcc-sm8550.c
-index 7f9021ca0ecb0..e41d4104d7702 100644
---- a/drivers/clk/qcom/dispcc-sm8550.c
-+++ b/drivers/clk/qcom/dispcc-sm8550.c
-@@ -75,7 +75,7 @@ static struct pll_vco lucid_ole_vco[] = {
- 	{ 249600000, 2000000000, 0 },
- };
- 
--static const struct alpha_pll_config disp_cc_pll0_config = {
-+static struct alpha_pll_config disp_cc_pll0_config = {
- 	.l = 0xd,
- 	.alpha = 0x6492,
- 	.config_ctl_val = 0x20485699,
-@@ -106,7 +106,7 @@ static struct clk_alpha_pll disp_cc_pll0 = {
+diff --git a/drivers/clk/qcom/clk-alpha-pll.c b/drivers/clk/qcom/clk-alpha-pll.c
+index be9bee6ab65f6..49687512184b9 100644
+--- a/drivers/clk/qcom/clk-alpha-pll.c
++++ b/drivers/clk/qcom/clk-alpha-pll.c
+@@ -267,6 +267,17 @@ const u8 clk_alpha_pll_regs[][PLL_OFF_MAX_REGS] = {
+ 		[PLL_OFF_OPMODE] = 0x30,
+ 		[PLL_OFF_STATUS] = 0x3c,
  	},
- };
- 
--static const struct alpha_pll_config disp_cc_pll1_config = {
-+static struct alpha_pll_config disp_cc_pll1_config = {
- 	.l = 0x1f,
- 	.alpha = 0x4000,
- 	.config_ctl_val = 0x20485699,
-@@ -594,6 +594,13 @@ static const struct freq_tbl ftbl_disp_cc_mdss_mdp_clk_src[] = {
- 	{ }
- };
- 
-+static const struct freq_tbl ftbl_disp_cc_mdss_mdp_clk_src_sar2130p[] = {
-+	F(200000000, P_DISP_CC_PLL0_OUT_MAIN, 3, 0, 0),
-+	F(325000000, P_DISP_CC_PLL0_OUT_MAIN, 3, 0, 0),
-+	F(514000000, P_DISP_CC_PLL0_OUT_MAIN, 3, 0, 0),
-+	{ }
-+};
++	[CLK_ALPHA_PLL_TYPE_NSS_HUAYRA] =  {
++		[PLL_OFF_L_VAL] = 0x04,
++		[PLL_OFF_ALPHA_VAL] = 0x08,
++		[PLL_OFF_TEST_CTL] = 0x0c,
++		[PLL_OFF_TEST_CTL_U] = 0x10,
++		[PLL_OFF_USER_CTL] = 0x14,
++		[PLL_OFF_CONFIG_CTL] = 0x18,
++		[PLL_OFF_CONFIG_CTL_U] = 0x1c,
++		[PLL_OFF_STATUS] = 0x20,
++	},
 +
- static const struct freq_tbl ftbl_disp_cc_mdss_mdp_clk_src_sm8650[] = {
- 	F(19200000, P_BI_TCXO, 1, 0, 0),
- 	F(85714286, P_DISP_CC_PLL0_OUT_MAIN, 3, 0, 0),
-@@ -1750,6 +1757,7 @@ static struct qcom_cc_desc disp_cc_sm8550_desc = {
+ };
+ EXPORT_SYMBOL_GPL(clk_alpha_pll_regs);
+ 
+diff --git a/drivers/clk/qcom/clk-alpha-pll.h b/drivers/clk/qcom/clk-alpha-pll.h
+index 55eca04b23a1f..c6d1b8429f951 100644
+--- a/drivers/clk/qcom/clk-alpha-pll.h
++++ b/drivers/clk/qcom/clk-alpha-pll.h
+@@ -32,6 +32,7 @@ enum {
+ 	CLK_ALPHA_PLL_TYPE_BRAMMO_EVO,
+ 	CLK_ALPHA_PLL_TYPE_STROMER,
+ 	CLK_ALPHA_PLL_TYPE_STROMER_PLUS,
++	CLK_ALPHA_PLL_TYPE_NSS_HUAYRA,
+ 	CLK_ALPHA_PLL_TYPE_MAX,
  };
  
- static const struct of_device_id disp_cc_sm8550_match_table[] = {
-+	{ .compatible = "qcom,sar2130p-dispcc" },
- 	{ .compatible = "qcom,sm8550-dispcc" },
- 	{ .compatible = "qcom,sm8650-dispcc" },
- 	{ }
-@@ -1780,6 +1788,12 @@ static int disp_cc_sm8550_probe(struct platform_device *pdev)
- 		disp_cc_mdss_mdp_clk_src.freq_tbl = ftbl_disp_cc_mdss_mdp_clk_src_sm8650;
- 		disp_cc_mdss_dptx1_usb_router_link_intf_clk.clkr.hw.init->parent_hws[0] =
- 			&disp_cc_mdss_dptx1_link_div_clk_src.clkr.hw;
-+	} else if (of_device_is_compatible(pdev->dev.of_node, "qcom,sar2130p-dispcc")) {
-+		disp_cc_pll0_config.l = 0x1f;
-+		disp_cc_pll0_config.alpha = 0x4000;
-+		disp_cc_pll0_config.user_ctl_val = 0x1;
-+		disp_cc_pll1_config.user_ctl_val = 0x1;
-+		disp_cc_mdss_mdp_clk_src.freq_tbl = ftbl_disp_cc_mdss_mdp_clk_src_sar2130p;
- 	}
- 
- 	clk_lucid_ole_pll_configure(&disp_cc_pll0, regmap, &disp_cc_pll0_config);
 -- 
 2.43.0
 
