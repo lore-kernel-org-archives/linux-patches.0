@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5439C748A;
-	Thu, 12 Dec 2024 15:29:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CF30205ACF;
+	Thu, 12 Dec 2024 15:29:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734017351; cv=none; b=qJCtN/YQD0M62BukWZiX2BDnIONPbh2+UxHz52+4hJab+5luhheS4Iep7PAfFvoCjbcJg+p8UioItm+Y7BzJLDMe12PIcIorK5fUSVWyh/v1nnZN34+aq3P0dnJzN/dWll45y7KlBqzvDHSkn+FRt9OUEJA359e6CBqmg5lrVHg=
+	t=1734017354; cv=none; b=lQOoG8pS42fpUUR8e3GWvXuOCTRTpXRTJj7usW0ni9jUWewGJqHf0O8GjIG8l4p0ukPN7eXydiT7vKaP4QeMFDbHP8STasHEZl2Gh5Chiru2vkTmwvcczbA4uJzm9BYxBBt0nTl9COz5b3IsEkQzsZTHtVcW5XSgLByZK9S4Z2E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734017351; c=relaxed/simple;
-	bh=+5GXDHsRheaHQpbv8SqvqKWGRIbF13nZxsgqPK0I71I=;
+	s=arc-20240116; t=1734017354; c=relaxed/simple;
+	bh=Kb3ieT8YqvbGMYZbE4VzyO5WuRalUhR+vCZEA53+R1E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sRUfbC2omPUQpU+eYUmEamDktX7UATSukIWOBQd0orbZuIaL0C2aGHHB0S1BkjAFtyjP0Y3tSyX4yR90C5XdapdncPRyxmoXK63wSJJtDZ5wao1ORRBwLVyKWh+hW2Z0bFiVd7OrOsTnHGDXmljrpeeKM+ppgSgsCYh1wS17X7Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xHd13+63; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EUP+Dam2A/F22l6JUrPKmic+TeyIinBK+OwgbuEnAhiHYTWsbi1dR1ktoSQqWxtC3qb7TIlPJ272xblohvA4seWwt2Yj4cl7jkLJ04fa9dVs7JTTKVejOjUFdvpwsFWEXSJE6fMp+Qblow6IFI3l/8ne9KzQL9Q2XTE7M96Jx24=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1G4DHurn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xHd13+63"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BCB9C4CECE;
-	Thu, 12 Dec 2024 15:29:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1G4DHurn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7790C4CECE;
+	Thu, 12 Dec 2024 15:29:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734017350;
-	bh=+5GXDHsRheaHQpbv8SqvqKWGRIbF13nZxsgqPK0I71I=;
+	s=korg; t=1734017354;
+	bh=Kb3ieT8YqvbGMYZbE4VzyO5WuRalUhR+vCZEA53+R1E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xHd13+63uh//MHhtiaLNoTbmbGnP1HCn9T0fhdmSzrlRH2axA1L4uSM45q0Ty7Qx5
-	 d7uAgholLZozAQkWuZQn06Z0e1eALCsmSOsGkBzTNYTDhdoj/Eh50sv8s32S7ghi5s
-	 Mk1HJqTTlSKJA2Vh0oyN8QWhM+yMqkdVAk2IrQuk=
+	b=1G4DHurn3bDFZpcgvo9/u5gYp+Fqh/qtc8gi9eei9DdEXu17wBHmhhYYNTSX3wQ0t
+	 /yx2bU9fjD6ZIPqukAtDvwfBQOB+CqaLjmqv/F8qpEvsmfKnMk0KHmHh7Orvmw1WT0
+	 omcZsPI0ezNqiudIbFKoE+bzXxqOoEnDZxoStSWs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ming Lei <ming.lei@redhat.com>,
-	Nilay Shroff <nilay@linux.ibm.com>,
-	Keith Busch <kbusch@kernel.org>,
+	Marc Zyngier <maz@kernel.org>,
+	Nianyao Tang <tangnianyao@huawei.com>,
+	Zhou Wang <wangzhou1@hisilicon.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 425/466] Revert "nvme: make keep-alive synchronous operation"
-Date: Thu, 12 Dec 2024 15:59:54 +0100
-Message-ID: <20241212144323.544396455@linuxfoundation.org>
+Subject: [PATCH 6.12 426/466] irqchip/gicv3-its: Add workaround for hip09 ITS erratum 162100801
+Date: Thu, 12 Dec 2024 15:59:55 +0100
+Message-ID: <20241212144323.582789283@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144306.641051666@linuxfoundation.org>
 References: <20241212144306.641051666@linuxfoundation.org>
@@ -52,92 +53,179 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nilay Shroff <nilay@linux.ibm.com>
+From: Zhou Wang <wangzhou1@hisilicon.com>
 
-[ Upstream commit 84488282166de6b6760ada8030e87aaa08bce3aa ]
+[ Upstream commit f82e62d470cc990ebd9d691f931dd418e4e9cea9 ]
 
-This reverts commit d06923670b5a5f609603d4a9fee4dec02d38de9c.
+When enabling GICv4.1 in hip09, VMAPP fails to clear some caches during
+the unmap operation, which can causes vSGIs to be lost.
 
-It was realized that the fix implemented to contain the race condition
-among the keep alive task and the fabric shutdown code path in the commit
-d06923670b5ia ("nvme: make keep-alive synchronous operation") is not
-optimal. The reason being keep-alive runs under the workqueue and making
-it synchronous would waste a workqueue context.
-Furthermore, we later found that the above race condition is a regression
-caused due to the changes implemented in commit a54a93d0e359 ("nvme: move
-stopping keep-alive into nvme_uninit_ctrl()"). So we decided to revert the
-commit d06923670b5a ("nvme: make keep-alive synchronous operation") and
-then fix the regression.
+To fix the issue, invalidate the related vPE cache through GICR_INVALLR
+after VMOVP.
 
-Link: https://lore.kernel.org/all/196f4013-3bbf-43ff-98b4-9cb2a96c20c2@grimberg.me/
-Reviewed-by: Ming Lei <ming.lei@redhat.com>
-Signed-off-by: Nilay Shroff <nilay@linux.ibm.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Suggested-by: Marc Zyngier <maz@kernel.org>
+Co-developed-by: Nianyao Tang <tangnianyao@huawei.com>
+Signed-off-by: Nianyao Tang <tangnianyao@huawei.com>
+Signed-off-by: Zhou Wang <wangzhou1@hisilicon.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Reviewed-by: Marc Zyngier <maz@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/core.c | 17 ++++++++++-------
- 1 file changed, 10 insertions(+), 7 deletions(-)
+ Documentation/arch/arm64/silicon-errata.rst |  2 +
+ arch/arm64/Kconfig                          | 11 +++++
+ drivers/irqchip/irq-gic-v3-its.c            | 50 ++++++++++++++++-----
+ 3 files changed, 52 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
-index ec03b25eacbbc..249914b90dbfa 100644
---- a/drivers/nvme/host/core.c
-+++ b/drivers/nvme/host/core.c
-@@ -1303,9 +1303,10 @@ static void nvme_queue_keep_alive_work(struct nvme_ctrl *ctrl)
- 	queue_delayed_work(nvme_wq, &ctrl->ka_work, delay);
- }
+diff --git a/Documentation/arch/arm64/silicon-errata.rst b/Documentation/arch/arm64/silicon-errata.rst
+index 65bfab1b18614..77db10e944f03 100644
+--- a/Documentation/arch/arm64/silicon-errata.rst
++++ b/Documentation/arch/arm64/silicon-errata.rst
+@@ -258,6 +258,8 @@ stable kernels.
+ | Hisilicon      | Hip{08,09,10,10C| #162001900      | N/A                         |
+ |                | ,11} SMMU PMCG  |                 |                             |
+ +----------------+-----------------+-----------------+-----------------------------+
++| Hisilicon      | Hip09           | #162100801      | HISILICON_ERRATUM_162100801 |
+++----------------+-----------------+-----------------+-----------------------------+
+ +----------------+-----------------+-----------------+-----------------------------+
+ | Qualcomm Tech. | Kryo/Falkor v1  | E1003           | QCOM_FALKOR_ERRATUM_1003    |
+ +----------------+-----------------+-----------------+-----------------------------+
+diff --git a/arch/arm64/Kconfig b/arch/arm64/Kconfig
+index 22f8a7bca6d21..a11a7a42edbfb 100644
+--- a/arch/arm64/Kconfig
++++ b/arch/arm64/Kconfig
+@@ -1232,6 +1232,17 @@ config HISILICON_ERRATUM_161600802
  
--static void nvme_keep_alive_finish(struct request *rq,
--		blk_status_t status, struct nvme_ctrl *ctrl)
-+static enum rq_end_io_ret nvme_keep_alive_end_io(struct request *rq,
-+						 blk_status_t status)
- {
-+	struct nvme_ctrl *ctrl = rq->end_io_data;
- 	unsigned long rtt = jiffies - (rq->deadline - rq->timeout);
- 	unsigned long delay = nvme_keep_alive_work_period(ctrl);
- 	enum nvme_ctrl_state state = nvme_ctrl_state(ctrl);
-@@ -1322,17 +1323,20 @@ static void nvme_keep_alive_finish(struct request *rq,
- 		delay = 0;
- 	}
+ 	  If unsure, say Y.
  
-+	blk_mq_free_request(rq);
++config HISILICON_ERRATUM_162100801
++	bool "Hip09 162100801 erratum support"
++	default y
++	help
++	  When enabling GICv4.1 in hip09, VMAPP will fail to clear some caches
++	  during unmapping operation, which will cause some vSGIs lost.
++	  To fix the issue, invalidate related vPE cache through GICR_INVALLR
++	  after VMOVP.
 +
- 	if (status) {
- 		dev_err(ctrl->device,
- 			"failed nvme_keep_alive_end_io error=%d\n",
- 				status);
--		return;
-+		return RQ_END_IO_NONE;
- 	}
++	  If unsure, say Y.
++
+ config QCOM_FALKOR_ERRATUM_1003
+ 	bool "Falkor E1003: Incorrect translation due to ASID change"
+ 	default y
+diff --git a/drivers/irqchip/irq-gic-v3-its.c b/drivers/irqchip/irq-gic-v3-its.c
+index 52f625e07658c..d9b6ec844cdda 100644
+--- a/drivers/irqchip/irq-gic-v3-its.c
++++ b/drivers/irqchip/irq-gic-v3-its.c
+@@ -44,6 +44,7 @@
+ #define ITS_FLAGS_WORKAROUND_CAVIUM_22375	(1ULL << 1)
+ #define ITS_FLAGS_WORKAROUND_CAVIUM_23144	(1ULL << 2)
+ #define ITS_FLAGS_FORCE_NON_SHAREABLE		(1ULL << 3)
++#define ITS_FLAGS_WORKAROUND_HISILICON_162100801	(1ULL << 4)
  
- 	ctrl->ka_last_check_time = jiffies;
- 	ctrl->comp_seen = false;
- 	if (state == NVME_CTRL_LIVE || state == NVME_CTRL_CONNECTING)
- 		queue_delayed_work(nvme_wq, &ctrl->ka_work, delay);
-+	return RQ_END_IO_NONE;
+ #define RD_LOCAL_LPI_ENABLED                    BIT(0)
+ #define RD_LOCAL_PENDTABLE_PREALLOCATED         BIT(1)
+@@ -61,6 +62,7 @@ static u32 lpi_id_bits;
+ #define LPI_PENDBASE_SZ		ALIGN(BIT(LPI_NRBITS) / 8, SZ_64K)
+ 
+ static u8 __ro_after_init lpi_prop_prio;
++static struct its_node *find_4_1_its(void);
+ 
+ /*
+  * Collection structure - just an ID, and a redistributor address to
+@@ -3797,6 +3799,20 @@ static void its_vpe_db_proxy_move(struct its_vpe *vpe, int from, int to)
+ 	raw_spin_unlock_irqrestore(&vpe_proxy.lock, flags);
  }
  
- static void nvme_keep_alive_work(struct work_struct *work)
-@@ -1341,7 +1345,6 @@ static void nvme_keep_alive_work(struct work_struct *work)
- 			struct nvme_ctrl, ka_work);
- 	bool comp_seen = ctrl->comp_seen;
- 	struct request *rq;
--	blk_status_t status;
++static void its_vpe_4_1_invall_locked(int cpu, struct its_vpe *vpe)
++{
++	void __iomem *rdbase;
++	u64 val;
++
++	val  = GICR_INVALLR_V;
++	val |= FIELD_PREP(GICR_INVALLR_VPEID, vpe->vpe_id);
++
++	guard(raw_spinlock)(&gic_data_rdist_cpu(cpu)->rd_lock);
++	rdbase = per_cpu_ptr(gic_rdists->rdist, cpu)->rd_base;
++	gic_write_lpir(val, rdbase + GICR_INVALLR);
++	wait_for_syncr(rdbase);
++}
++
+ static int its_vpe_set_affinity(struct irq_data *d,
+ 				const struct cpumask *mask_val,
+ 				bool force)
+@@ -3804,6 +3820,7 @@ static int its_vpe_set_affinity(struct irq_data *d,
+ 	struct its_vpe *vpe = irq_data_get_irq_chip_data(d);
+ 	unsigned int from, cpu = nr_cpu_ids;
+ 	struct cpumask *table_mask;
++	struct its_node *its;
+ 	unsigned long flags;
  
- 	ctrl->ka_last_check_time = jiffies;
+ 	/*
+@@ -3866,6 +3883,11 @@ static int its_vpe_set_affinity(struct irq_data *d,
+ 	vpe->col_idx = cpu;
  
-@@ -1364,9 +1367,9 @@ static void nvme_keep_alive_work(struct work_struct *work)
- 	nvme_init_request(rq, &ctrl->ka_cmd);
+ 	its_send_vmovp(vpe);
++
++	its = find_4_1_its();
++	if (its && its->flags & ITS_FLAGS_WORKAROUND_HISILICON_162100801)
++		its_vpe_4_1_invall_locked(cpu, vpe);
++
+ 	its_vpe_db_proxy_move(vpe, from, cpu);
  
- 	rq->timeout = ctrl->kato * HZ;
--	status = blk_execute_rq(rq, false);
--	nvme_keep_alive_finish(rq, status, ctrl);
--	blk_mq_free_request(rq);
-+	rq->end_io = nvme_keep_alive_end_io;
-+	rq->end_io_data = ctrl;
-+	blk_execute_rq_nowait(rq, false);
+ out:
+@@ -4173,22 +4195,12 @@ static void its_vpe_4_1_deschedule(struct its_vpe *vpe,
+ 
+ static void its_vpe_4_1_invall(struct its_vpe *vpe)
+ {
+-	void __iomem *rdbase;
+ 	unsigned long flags;
+-	u64 val;
+ 	int cpu;
+ 
+-	val  = GICR_INVALLR_V;
+-	val |= FIELD_PREP(GICR_INVALLR_VPEID, vpe->vpe_id);
+-
+ 	/* Target the redistributor this vPE is currently known on */
+ 	cpu = vpe_to_cpuid_lock(vpe, &flags);
+-	raw_spin_lock(&gic_data_rdist_cpu(cpu)->rd_lock);
+-	rdbase = per_cpu_ptr(gic_rdists->rdist, cpu)->rd_base;
+-	gic_write_lpir(val, rdbase + GICR_INVALLR);
+-
+-	wait_for_syncr(rdbase);
+-	raw_spin_unlock(&gic_data_rdist_cpu(cpu)->rd_lock);
++	its_vpe_4_1_invall_locked(cpu, vpe);
+ 	vpe_to_cpuid_unlock(vpe, flags);
  }
  
- static void nvme_start_keep_alive(struct nvme_ctrl *ctrl)
+@@ -4781,6 +4793,14 @@ static bool its_set_non_coherent(void *data)
+ 	return true;
+ }
+ 
++static bool __maybe_unused its_enable_quirk_hip09_162100801(void *data)
++{
++	struct its_node *its = data;
++
++	its->flags |= ITS_FLAGS_WORKAROUND_HISILICON_162100801;
++	return true;
++}
++
+ static const struct gic_quirk its_quirks[] = {
+ #ifdef CONFIG_CAVIUM_ERRATUM_22375
+ 	{
+@@ -4827,6 +4847,14 @@ static const struct gic_quirk its_quirks[] = {
+ 		.init	= its_enable_quirk_hip07_161600802,
+ 	},
+ #endif
++#ifdef CONFIG_HISILICON_ERRATUM_162100801
++	{
++		.desc	= "ITS: Hip09 erratum 162100801",
++		.iidr	= 0x00051736,
++		.mask	= 0xffffffff,
++		.init	= its_enable_quirk_hip09_162100801,
++	},
++#endif
+ #ifdef CONFIG_ROCKCHIP_ERRATUM_3588001
+ 	{
+ 		.desc   = "ITS: Rockchip erratum RK3588001",
 -- 
 2.43.0
 
