@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD22B748A;
-	Thu, 12 Dec 2024 15:28:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F73620969B;
+	Thu, 12 Dec 2024 15:28:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734017324; cv=none; b=d/FkiceHE2aBrLVKR9+Cn99pbWPYUkMplxMZo/mNwi3bHuWLBiptkQYiifIJAXGUJhq7wHDSagkFcKMVUmWaxzKWT8/Wmxh/txp0O66qbGYi5n4PaJ55SsYApkwm8kcUWd3KvXnIbDQK7fNrH0n7Cuq7uVWvy98YigEfXmOpA4s=
+	t=1734017328; cv=none; b=pw5OvD4hT4k/A1hGFFAcPnVMuqBnceUN0Su3P76eA6XxDVZBXJ7CXeXwZOk8pc5rW1N6vYPHrnYj4rjBliqseZF7pxntf630bjacnkodeSpeg4skjFYqiXjePgZlKXmcQAwe2LE+ojEyfYS+N2sDVKD81thJdrl4qj/V7swkdtw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734017324; c=relaxed/simple;
-	bh=Lfx77xCwfu+jUY2ZnCLkzgNS9RopBA0b2mcKa52MGw0=;
+	s=arc-20240116; t=1734017328; c=relaxed/simple;
+	bh=L5a08zkpsaY5jyQNzoDL/1bNNQRQzL0hSut9eD64YUc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cgYjifAn++hBBN//ydAKp8EiGq4X3MhWdvTWayDHjiJcuGH7pXwFRIrHpilmwyb9OLCC4amUgkzdWdYZw8+yNg63YeXwWZoajw+6VY6t5w1L9DCD1emfnpxYistQfRbqoenfo64sPQsh1zS1CQZoZR6o4qNucpSHJ0hWwG3V8oQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bmmo9PjV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=vB6O+r++UjYkPMNx+orNhmWNGeSaRlYtwxcycL+ePtLpQGfaRRzwVbNasH0O0JuQ9utJCZy2rZXo0qvFUydNR58Be8qAdYhR33XqNkbA3YOoqddf6wYOzGJfY4EiZBkXOS0eQMVPQY1vOzvz2D5AfBGvUlafGVtX8XncMOcJJjM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1VMJShUd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bmmo9PjV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5214AC4CECE;
-	Thu, 12 Dec 2024 15:28:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1VMJShUd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92D40C4CECE;
+	Thu, 12 Dec 2024 15:28:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734017324;
-	bh=Lfx77xCwfu+jUY2ZnCLkzgNS9RopBA0b2mcKa52MGw0=;
+	s=korg; t=1734017328;
+	bh=L5a08zkpsaY5jyQNzoDL/1bNNQRQzL0hSut9eD64YUc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Bmmo9PjVgKVsl7mElACSjzSJPFv6K2ERM86JvRvAMoyKcXayRCvq++w+p6zC04l9J
-	 lV5jtKyi6pltDWmiIDkfzrYjOqNeL0jsZTg6E77bfHK+08Bq7Suq4LLB08bnI1pmMD
-	 OHyre03HrtpL+G7LCU3mq5lLOlsX5Nf3P2bUQdYg=
+	b=1VMJShUd/GskLtuL0rgvNMMM5FNIQv8IsNP7IrG2lEO1/9pI/0/MkxU9cALVGPPwg
+	 JNndRs9Wvp3YED+ufN5Di48qVJSNmkwpjWc0oYnVMKzIOcoYSnXcdBbQ6AgFPrZztX
+	 hOUrLVrFR0Bx/ZWI75+MgQTEnoKXuTrlYY/t9LGo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	David Sterba <dsterba@suse.com>,
-	Qu Wenruo <wqu@suse.com>,
-	Filipe Manana <fdmanana@suse.com>,
+	Haoyu Li <lihaoyu499@gmail.com>,
+	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 447/466] btrfs: fix missing snapshot drew unlock when root is dead during swap activation
-Date: Thu, 12 Dec 2024 16:00:16 +0100
-Message-ID: <20241212144324.517508180@linuxfoundation.org>
+Subject: [PATCH 6.12 448/466] clk: en7523: Initialize num before accessing hws in en7523_register_clocks()
+Date: Thu, 12 Dec 2024 16:00:17 +0100
+Message-ID: <20241212144324.557011480@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144306.641051666@linuxfoundation.org>
 References: <20241212144306.641051666@linuxfoundation.org>
@@ -53,38 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Haoyu Li <lihaoyu499@gmail.com>
 
-[ Upstream commit 9c803c474c6c002d8ade68ebe99026cc39c37f85 ]
+[ Upstream commit 52fd1709e41d3a85b48bcfe2404a024ebaf30c3b ]
 
-When activating a swap file we acquire the root's snapshot drew lock and
-then check if the root is dead, failing and returning with -EPERM if it's
-dead but without unlocking the root's snapshot lock. Fix this by adding
-the missing unlock.
+With the new __counted_by annotation in clk_hw_onecell_data, the "num"
+struct member must be set before accessing the "hws" array. Failing to
+do so will trigger a runtime warning when enabling CONFIG_UBSAN_BOUNDS
+and CONFIG_FORTIFY_SOURCE.
 
-Fixes: 60021bd754c6 ("btrfs: prevent subvol with swapfile from being deleted")
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fixes: f316cdff8d67 ("clk: Annotate struct clk_hw_onecell_data with __counted_by")
+Signed-off-by: Haoyu Li <lihaoyu499@gmail.com>
+Link: https://lore.kernel.org/r/20241203142915.345523-1-lihaoyu499@gmail.com
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/inode.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/clk/clk-en7523.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/btrfs/inode.c b/fs/btrfs/inode.c
-index d067db2619713..58ffe78132d9d 100644
---- a/fs/btrfs/inode.c
-+++ b/fs/btrfs/inode.c
-@@ -9857,6 +9857,7 @@ static int btrfs_swap_activate(struct swap_info_struct *sis, struct file *file,
- 	if (btrfs_root_dead(root)) {
- 		spin_unlock(&root->root_item_lock);
+diff --git a/drivers/clk/clk-en7523.c b/drivers/clk/clk-en7523.c
+index fdd8ea989ed24..bc21b29214492 100644
+--- a/drivers/clk/clk-en7523.c
++++ b/drivers/clk/clk-en7523.c
+@@ -508,6 +508,8 @@ static void en7523_register_clocks(struct device *dev, struct clk_hw_onecell_dat
+ 	u32 rate;
+ 	int i;
  
-+		btrfs_drew_write_unlock(&root->snapshot_lock);
- 		btrfs_exclop_finish(fs_info);
- 		btrfs_warn(fs_info,
- 		"cannot activate swapfile because subvolume %llu is being deleted",
++	clk_data->num = EN7523_NUM_CLOCKS;
++
+ 	for (i = 0; i < ARRAY_SIZE(en7523_base_clks); i++) {
+ 		const struct en_clk_desc *desc = &en7523_base_clks[i];
+ 		u32 reg = desc->div_reg ? desc->div_reg : desc->base_reg;
+@@ -529,8 +531,6 @@ static void en7523_register_clocks(struct device *dev, struct clk_hw_onecell_dat
+ 
+ 	hw = en7523_register_pcie_clk(dev, np_base);
+ 	clk_data->hws[EN7523_CLK_PCIE] = hw;
+-
+-	clk_data->num = EN7523_NUM_CLOCKS;
+ }
+ 
+ static int en7523_clk_hw_init(struct platform_device *pdev,
 -- 
 2.43.0
 
