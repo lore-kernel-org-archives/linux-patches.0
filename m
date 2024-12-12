@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE30F2054EF;
-	Thu, 12 Dec 2024 16:56:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B19153365;
+	Thu, 12 Dec 2024 16:56:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734022586; cv=none; b=SRs4rDXbramrTgGEVjvhVMvKaf1+9X767RmsAG5h0IYAAInf/7bSZVpz32CinjYiHbAw2Q5gszjfhRhzwv7fGOlMwoGCNnr4Ip+MYpGnGZGM/0M9Zn42ZylXSaUHpDL3hz4tW4Er40SWGOPc68sAIScyDuinEGbdS1eE9KP2Mag=
+	t=1734022590; cv=none; b=rOluFge8oVIB2bloLhBefGBuUvF2K296AW2fhVIsWZkF1IDu7ziHLoKMZZqTsNf/+dwr3qpEhYSj+AWXqvWfJz8hdaW0eG3jdWwOJ4qqCR5CorSR280NzLuxF/Ep+oBnCJInbUpyS2/gJBdnaeRnUGxovw1dUuveUe14JmHUdPk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734022586; c=relaxed/simple;
-	bh=ofbWfchz5cb96mk2QrNY1KEZpiw5eI8WEEzGn5c+S68=;
+	s=arc-20240116; t=1734022590; c=relaxed/simple;
+	bh=ZaKUh52b2Ph1riNa7uE82ZKAY4Zfu7/UahxvyDkllKI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qvHJ4h0vq4HdO+ez46n8LqjDUB/cgJh4H5VExXKruI8DIiNZZh42WvHEHlF3P8yYaDkJH7TKyRo5ED49MXj64+zMiTt8S3eKhkQEuApYkUCoRUq7uR9jcCGSXawMQKd4/xV0toZ2pokwj7gisJas+I+Mc4F/pdyPlWOYdY1ihvw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XRqZ3pRR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PYjS6b2NXU7otJko69g7UX9O1nMJSpsvx2NeLktQ2T7QRJiQ0CzuutIoBd+sNItY/Jn5umjfE1Vumo8Fi26wH9bi2WJpXbIFcDFz5IiMW+f6TJSOGc//DvAZYBuoyUaK2ERhXsiBndQxlq8xqn8o1ZZD18curBlFptxT8PI7WAo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h7bw7hbd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XRqZ3pRR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BAAAC4CECE;
-	Thu, 12 Dec 2024 16:56:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h7bw7hbd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD2E6C4CECE;
+	Thu, 12 Dec 2024 16:56:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734022586;
-	bh=ofbWfchz5cb96mk2QrNY1KEZpiw5eI8WEEzGn5c+S68=;
+	s=korg; t=1734022590;
+	bh=ZaKUh52b2Ph1riNa7uE82ZKAY4Zfu7/UahxvyDkllKI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XRqZ3pRRmbiQZY/ptq+lObZ1KyGOVKMilm42JSdcrofFy0VoeM15A0bVZGEKY61nu
-	 5N77Fhz1azFjJ8nKxp66OsYl8gKBeMBcY1s/u6MSS0PQHPYatJ54e6pSN9CoY7cZ5e
-	 T1upiA0gZfkhxV7oMwncwU33uhlbKrKLqqF8+Tcs=
+	b=h7bw7hbdA7eZRCOmAKpseajfjxsRM68cbuW1pCiGjjumtScZp3ABsCZjohDIpHUaH
+	 n3zfGvJf1HGWVKdSTmmyhMDDweVDmua97o4sbg5EVvnAU4JdGIkSAM2NktgAVe6LEu
+	 1xWv5CS+L74gE6wyMjf0+x/hYTFXm32wMOgqk/q0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hariprasad Kelam <hkelam@marvell.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 281/565] octeontx2-af: RPM: Fix mismatch in lmac type
-Date: Thu, 12 Dec 2024 15:57:56 +0100
-Message-ID: <20241212144322.560105765@linuxfoundation.org>
+Subject: [PATCH 5.15 255/565] svcrdma: Address an integer overflow
+Date: Thu, 12 Dec 2024 15:57:30 +0100
+Message-ID: <20241212144321.553747661@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144311.432886635@linuxfoundation.org>
 References: <20241212144311.432886635@linuxfoundation.org>
@@ -51,35 +52,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hariprasad Kelam <hkelam@marvell.com>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit 7ebbbb23ea5b6d051509cb11399afac5042c9266 ]
+[ Upstream commit 3c63d8946e578663b868cb9912dac616ea68bfd0 ]
 
-Due to a bug in the previous patch, there is a mismatch
-between the lmac type reported by the driver and the actual
-hardware configuration.
+Dan Carpenter reports:
+> Commit 78147ca8b4a9 ("svcrdma: Add a "parsed chunk list" data
+> structure") from Jun 22, 2020 (linux-next), leads to the following
+> Smatch static checker warning:
+>
+>	net/sunrpc/xprtrdma/svc_rdma_recvfrom.c:498 xdr_check_write_chunk()
+>	warn: potential user controlled sizeof overflow 'segcount * 4 * 4'
+>
+> net/sunrpc/xprtrdma/svc_rdma_recvfrom.c
+>     488 static bool xdr_check_write_chunk(struct svc_rdma_recv_ctxt *rctxt)
+>     489 {
+>     490         u32 segcount;
+>     491         __be32 *p;
+>     492
+>     493         if (xdr_stream_decode_u32(&rctxt->rc_stream, &segcount))
+>                                                               ^^^^^^^^
+>
+>     494                 return false;
+>     495
+>     496         /* A bogus segcount causes this buffer overflow check to fail. */
+>     497         p = xdr_inline_decode(&rctxt->rc_stream,
+> --> 498                               segcount * rpcrdma_segment_maxsz * sizeof(*p));
+>
+>
+> segcount is an untrusted u32.  On 32bit systems anything >= SIZE_MAX / 16 will
+> have an integer overflow and some those values will be accepted by
+> xdr_inline_decode().
 
-Fixes: 3ad3f8f93c81 ("octeontx2-af: cn10k: MAC internal loopback support")
-Signed-off-by: Hariprasad Kelam <hkelam@marvell.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Fixes: 78147ca8b4a9 ("svcrdma: Add a "parsed chunk list" data structure")
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/octeontx2/af/rpm.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/sunrpc/xprtrdma/svc_rdma_recvfrom.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rpm.c b/drivers/net/ethernet/marvell/octeontx2/af/rpm.c
-index 3ac26ba31e2f3..35ece52977bcf 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/rpm.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/rpm.c
-@@ -256,7 +256,7 @@ u8 rpm_get_lmac_type(void *rpmd, int lmac_id)
- 	int err;
+diff --git a/net/sunrpc/xprtrdma/svc_rdma_recvfrom.c b/net/sunrpc/xprtrdma/svc_rdma_recvfrom.c
+index 9a80d3be1f635..adfe05f19060a 100644
+--- a/net/sunrpc/xprtrdma/svc_rdma_recvfrom.c
++++ b/net/sunrpc/xprtrdma/svc_rdma_recvfrom.c
+@@ -477,7 +477,13 @@ static bool xdr_check_write_chunk(struct svc_rdma_recv_ctxt *rctxt)
+ 	if (xdr_stream_decode_u32(&rctxt->rc_stream, &segcount))
+ 		return false;
  
- 	req = FIELD_SET(CMDREG_ID, CGX_CMD_GET_LINK_STS, req);
--	err = cgx_fwi_cmd_generic(req, &resp, rpm, 0);
-+	err = cgx_fwi_cmd_generic(req, &resp, rpm, lmac_id);
- 	if (!err)
- 		return FIELD_GET(RESP_LINKSTAT_LMAC_TYPE, resp);
- 	return err;
+-	/* A bogus segcount causes this buffer overflow check to fail. */
++	/* Before trusting the segcount value enough to use it in
++	 * a computation, perform a simple range check. This is an
++	 * arbitrary but sensible limit (ie, not architectural).
++	 */
++	if (unlikely(segcount > RPCSVC_MAXPAGES))
++		return false;
++
+ 	p = xdr_inline_decode(&rctxt->rc_stream,
+ 			      segcount * rpcrdma_segment_maxsz * sizeof(*p));
+ 	return p != NULL;
 -- 
 2.43.0
 
