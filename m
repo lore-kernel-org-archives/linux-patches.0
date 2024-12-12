@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F75D22A803;
-	Thu, 12 Dec 2024 16:26:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C229D53365;
+	Thu, 12 Dec 2024 16:26:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734020786; cv=none; b=t3AS7bi2Z0hJ/ETyHAVOgDY6AXMi9Nl+OwEAy//byM0SJMEu3mYbf3PFSiZEy+M4RGZXRdzdLMDuIa0Hb6LlS5QEkkISEp+Vutyb1JeXHMUqtMAiQhtf295KtTqK405j7Gf6vSvGFGA6WBursWYYcsFVcGqetANDfvnPyRaBy3Y=
+	t=1734020789; cv=none; b=uIddCmEPHaODdMLX/6PGwI6ffDltPP0T/M+qLBNDj1heGb2x6nNi54NoLuQYsTj7f5vY2FL1UAFRmgItuWgrcZLh0/gJuYXaiZ+81NuqaQIVsV4dI+wbvBwgrOFr3uO8y/9Qmuh5MWChvbUwVPF9oK763ql9OJS+e/T2UkrSzMY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734020786; c=relaxed/simple;
-	bh=1p6KekLdTty4fLxW030YDUGi0E+30ed3hVbZbLICuhw=;
+	s=arc-20240116; t=1734020789; c=relaxed/simple;
+	bh=TWVQAQmXYMHl/hag2FnOeD6/220g593mfJv77WN3Y/U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MFSDwPp4hrU8f7o/jN24IM6OzxmimiZANO7o6nVAhxNJaU8g0x6YN64vW2ZfQx4qXQDwSzh9zruXCSXYt6X0suuY0obb4q1nqGhZG79HILWGMwuPQ3o0QPcCPHNcD99QF+ULjoRX0kln908fzFBiP1yPKkabUfok99G6Ke8KPGA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UG5xwggi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ESZT/CKsxwlWrbgDqBvDv1dFK2Oafr9zuCjN9zpwElalorXOGiu58gLtPl+2QXlcuVuyuypxTvBYEuHQNf7pWOFHl/3cJ8v9MAeo0G6WTf+Y5J6SeeTBPBQokl9cpSQX8eNeb7USmldLd59oPPQV9o61l6jk0dMCiXuHzKnCryg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A9MKhhUS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UG5xwggi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 907FDC4CECE;
-	Thu, 12 Dec 2024 16:26:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A9MKhhUS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C57BC4CED0;
+	Thu, 12 Dec 2024 16:26:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734020786;
-	bh=1p6KekLdTty4fLxW030YDUGi0E+30ed3hVbZbLICuhw=;
+	s=korg; t=1734020789;
+	bh=TWVQAQmXYMHl/hag2FnOeD6/220g593mfJv77WN3Y/U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UG5xwggiKdWvzhMxblGnTIfhvVNHY3YcLBSTyCPQuqPLo6CADmRO03QQoUBW+a4D2
-	 FykEbvjYr/3cw5MJ4Qhak+ST6ouWhGfp3hC7MlcqZsxLbaVjHva/OJTxCsaaH2MNJ8
-	 +995aRr8x4z7zZSASsKrNynRBup3Cg3g9Nn3ITrw=
+	b=A9MKhhUSShfFpQCXArx+uljFT0ML6L4ERYYnNoqQPvltysUJ8UAUkhLumZZLRCFZ4
+	 U024orTKyJh1zEUSITvMHKwG9/PLXWF1j9+MSGAdu48Jz3Hz0AlFpw0lQKn9hVRZ+u
+	 457NE4PANBkKyZ7Nnp8rqYAJo8gjqLuxGIRjoVfg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	Masahiro Yamada <masahiroy@kernel.org>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	"Jason A. Donenfeld" <Jason@zx2c4.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 560/772] powerpc/vdso: Include CLANG_FLAGS explicitly in ldflags-y
-Date: Thu, 12 Dec 2024 15:58:25 +0100
-Message-ID: <20241212144413.101416305@linuxfoundation.org>
+Subject: [PATCH 6.1 561/772] powerpc/vdso: Refactor CFLAGS for CVDSO build
+Date: Thu, 12 Dec 2024 15:58:26 +0100
+Message-ID: <20241212144413.140644777@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -51,42 +52,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Christophe Leroy <christophe.leroy@csgroup.eu>
 
-[ Upstream commit a7e5eb53bf9b800d086e2ebcfebd9a3bb16bd1b0 ]
+[ Upstream commit a6b67eb09963af29991625862cbb4f56b85954ed ]
 
-A future change will move CLANG_FLAGS from KBUILD_{A,C}FLAGS to
-KBUILD_CPPFLAGS so that '--target' is available while preprocessing.
-When that occurs, the following error appears when building the compat
-PowerPC vDSO:
+In order to avoid two much duplication when we add new VDSO
+functionnalities in C like getrandom, refactor common CFLAGS.
 
-  clang: error: unsupported option '-mbig-endian' for target 'x86_64-pc-linux-gnu'
-  make[3]: *** [.../arch/powerpc/kernel/vdso/Makefile:76: arch/powerpc/kernel/vdso/vdso32.so.dbg] Error 1
-
-Explicitly add CLANG_FLAGS to ldflags-y, so that '--target' will always
-be present.
-
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Acked-by: Michael Ellerman <mpe@ellerman.id.au>
+Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
 Stable-dep-of: d677ce521334 ("powerpc/vdso: Drop -mstack-protector-guard flags in 32-bit files with clang")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/kernel/vdso/Makefile | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/powerpc/kernel/vdso/Makefile | 32 +++++++++++++------------------
+ 1 file changed, 13 insertions(+), 19 deletions(-)
 
 diff --git a/arch/powerpc/kernel/vdso/Makefile b/arch/powerpc/kernel/vdso/Makefile
-index 7e69e87fbf744..84a513c1af331 100644
+index 84a513c1af331..c12be984dccdf 100644
 --- a/arch/powerpc/kernel/vdso/Makefile
 +++ b/arch/powerpc/kernel/vdso/Makefile
-@@ -53,7 +53,7 @@ UBSAN_SANITIZE := n
+@@ -10,28 +10,11 @@ obj-vdso64 = sigtramp64-64.o gettimeofday-64.o datapage-64.o cacheflush-64.o not
+ 
+ ifneq ($(c-gettimeofday-y),)
+   CFLAGS_vgettimeofday-32.o += -include $(c-gettimeofday-y)
+-  CFLAGS_vgettimeofday-32.o += $(DISABLE_LATENT_ENTROPY_PLUGIN)
+-  CFLAGS_vgettimeofday-32.o += $(call cc-option, -fno-stack-protector)
+-  CFLAGS_vgettimeofday-32.o += -DDISABLE_BRANCH_PROFILING
+-  CFLAGS_vgettimeofday-32.o += -ffreestanding -fasynchronous-unwind-tables
+-  CFLAGS_REMOVE_vgettimeofday-32.o = $(CC_FLAGS_FTRACE)
+-  CFLAGS_REMOVE_vgettimeofday-32.o += -mcmodel=medium -mabi=elfv1 -mabi=elfv2 -mcall-aixdesc
+-  # This flag is supported by clang for 64-bit but not 32-bit so it will cause
+-  # an unused command line flag warning for this file.
+-  ifdef CONFIG_CC_IS_CLANG
+-  CFLAGS_REMOVE_vgettimeofday-32.o += -fno-stack-clash-protection
+-  endif
+-  CFLAGS_vgettimeofday-64.o += -include $(c-gettimeofday-y)
+-  CFLAGS_vgettimeofday-64.o += $(DISABLE_LATENT_ENTROPY_PLUGIN)
+-  CFLAGS_vgettimeofday-64.o += $(call cc-option, -fno-stack-protector)
+-  CFLAGS_vgettimeofday-64.o += -DDISABLE_BRANCH_PROFILING
+-  CFLAGS_vgettimeofday-64.o += -ffreestanding -fasynchronous-unwind-tables
+-  CFLAGS_REMOVE_vgettimeofday-64.o = $(CC_FLAGS_FTRACE)
+ # Go prior to 1.16.x assumes r30 is not clobbered by any VDSO code. That used to be true
+ # by accident when the VDSO was hand-written asm code, but may not be now that the VDSO is
+ # compiler generated. To avoid breaking Go tell GCC not to use r30. Impact on code
+ # generation is minimal, it will just use r29 instead.
+-  CFLAGS_vgettimeofday-64.o += $(call cc-option, -ffixed-r30)
++  CFLAGS_vgettimeofday-64.o += -include $(c-gettimeofday-y) $(call cc-option, -ffixed-r30)
+ endif
+ 
+ # Build rules
+@@ -53,12 +36,23 @@ UBSAN_SANITIZE := n
  KASAN_SANITIZE := n
  
  ccflags-y := -fno-common -fno-builtin
--ldflags-y := -Wl,--hash-style=both -nostdlib -shared -z noexecstack
-+ldflags-y := -Wl,--hash-style=both -nostdlib -shared -z noexecstack $(CLANG_FLAGS)
++ccflags-y += $(DISABLE_LATENT_ENTROPY_PLUGIN)
++ccflags-y += $(call cc-option, -fno-stack-protector)
++ccflags-y += -DDISABLE_BRANCH_PROFILING
++ccflags-y += -ffreestanding -fasynchronous-unwind-tables
++ccflags-remove-y := $(CC_FLAGS_FTRACE)
+ ldflags-y := -Wl,--hash-style=both -nostdlib -shared -z noexecstack $(CLANG_FLAGS)
  ldflags-$(CONFIG_LD_IS_LLD) += $(call cc-option,--ld-path=$(LD),-fuse-ld=lld)
  # Filter flags that clang will warn are unused for linking
  ldflags-y += $(filter-out $(CC_FLAGS_FTRACE) -Wa$(comma)%, $(KBUILD_CFLAGS))
+ 
+ CC32FLAGS := -m32
++CC32FLAGSREMOVE := -mcmodel=medium -mabi=elfv1 -mabi=elfv2 -mcall-aixdesc
++  # This flag is supported by clang for 64-bit but not 32-bit so it will cause
++  # an unused command line flag warning for this file.
++ifdef CONFIG_CC_IS_CLANG
++CC32FLAGSREMOVE += -fno-stack-clash-protection
++endif
+ LD32FLAGS := -Wl,-soname=linux-vdso32.so.1
+ AS32FLAGS := -D__VDSO32__
+ 
+@@ -105,7 +99,7 @@ quiet_cmd_vdso32ld_and_check = VDSO32L $@
+ quiet_cmd_vdso32as = VDSO32A $@
+       cmd_vdso32as = $(VDSOCC) $(a_flags) $(CC32FLAGS) $(AS32FLAGS) -c -o $@ $<
+ quiet_cmd_vdso32cc = VDSO32C $@
+-      cmd_vdso32cc = $(VDSOCC) $(c_flags) $(CC32FLAGS) -c -o $@ $<
++      cmd_vdso32cc = $(VDSOCC) $(filter-out $(CC32FLAGSREMOVE), $(c_flags)) $(CC32FLAGS) -c -o $@ $<
+ 
+ quiet_cmd_vdso64ld_and_check = VDSO64L $@
+       cmd_vdso64ld_and_check = $(VDSOCC) $(ldflags-y) $(LD64FLAGS) -o $@ -Wl,-T$(filter %.lds,$^) $(filter %.o,$^); $(cmd_vdso_check)
 -- 
 2.43.0
 
