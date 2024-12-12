@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C3442153DD;
-	Thu, 12 Dec 2024 17:03:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92C79223711;
+	Thu, 12 Dec 2024 17:03:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734022984; cv=none; b=Ge6mYWnOgGIHZ4IaXNQ0mkfzZhWWnCiVhp2tHJ/oDtSL1w05gbcPzRj3T0WVRm4eRHzSCbYeXTT279/33qyvX0p44mpNHGJ0w/VrIlax3N+4tK31z8zJQxl5PLbR2NlInc9P8dzoVeWIw0sZyzXEHnrNQ4yPpdcRoOLgjh5jgLg=
+	t=1734022987; cv=none; b=b+yIpXa62ui+Lv5qu20ROIS9TPYgEe8HyFjJfG2P5Yjd0RNS9WlOuTU9xLWFEVJz21KMVisn1/hJn2OP99PllAw+ADLid7ZrNzRp5WFEs4esjMRrgoiDAqS19q16cEz88rPLXXUmIA9tRFy2MjyPf4TI8KE4HNKr0PViSLhwkSI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734022984; c=relaxed/simple;
-	bh=pPGD3p+vJQihMhus/ebdbn2SjF8vM0lx923pWnVa7EM=;
+	s=arc-20240116; t=1734022987; c=relaxed/simple;
+	bh=jDiilNXGbDBsqdz0QSYwuMK923mgqjZo3A62LsUJ+vE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q8wv4GjV7Rd2W7ttjIFfp4G2z6bNCR+VXeR9Hn4Nktj+fGAaF0QQgg1mQSZYQNz3Cc44smymbFhwVonWBhj/pNglaTuhhQHJhRDL7Pq+LmX01Vunmiqycu2JDcqYUnqzeAzgB3uOyzqkpz+EWO/Zwv95u0b24rBMIoKbJNnvYOk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rg9f/wYo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CIe79fmhQpNKmQFUyH2DsWzTgL/RYUXPWmh6QuiaP5y3+2i5cgfU+2AAHC+fCcIX6OjQcdfWRZ/AFOdFC3XDK8f7w61ruwwB5j/FcP6ZsYfsQswFrM1zUWCbkyzBKUpbmqXbYI0lDzD1JpUTz8BWog56qe3pyiLfTNeK3JtGIBU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QIMvcoex; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rg9f/wYo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C9BCC4CECE;
-	Thu, 12 Dec 2024 17:03:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QIMvcoex"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C36EBC4CECE;
+	Thu, 12 Dec 2024 17:03:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734022984;
-	bh=pPGD3p+vJQihMhus/ebdbn2SjF8vM0lx923pWnVa7EM=;
+	s=korg; t=1734022987;
+	bh=jDiilNXGbDBsqdz0QSYwuMK923mgqjZo3A62LsUJ+vE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rg9f/wYoBBXm9zkdjiCg4wVE4sAhlARr0KdQIBiJCxSekT3ywfhMd7wshYG3HW9at
-	 br1MNL3fd95J+zbz8/3Op+9mz2RFyeh3K901TE9PUJD0Mivqm4ySTLbEk8Kae5vhTR
-	 CUVef2Ur3wP2rS6u6QetzjCw+CKpcu2Vhmj5xwqk=
+	b=QIMvcoexl4vOY5b69hQcMFyb9YrexIQCbIUWuyH9md1K1fK5nCKUmijgLhhU3dhwz
+	 BXfPqEGcLNn2M4nvS2upRWNPqUifk9QsJodKWGf1ZS5X4kXgs8L3I0oXTuQnU77PVB
+	 LnxkZb4az7oLqk9NpwTF95yXnjxiGvqP7ZmZ2bGU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Erkun <yangerkun@huawei.com>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Jinjie Ruan <ruanjinjie@huawei.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 357/565] NFSv4.0: Fix a use-after-free problem in the asynchronous open()
-Date: Thu, 12 Dec 2024 15:59:12 +0100
-Message-ID: <20241212144325.717651159@linuxfoundation.org>
+Subject: [PATCH 5.15 358/565] rtc: st-lpc: Use IRQF_NO_AUTOEN flag in request_irq()
+Date: Thu, 12 Dec 2024 15:59:13 +0100
+Message-ID: <20241212144325.760751206@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144311.432886635@linuxfoundation.org>
 References: <20241212144311.432886635@linuxfoundation.org>
@@ -51,50 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Trond Myklebust <trond.myklebust@hammerspace.com>
+From: Jinjie Ruan <ruanjinjie@huawei.com>
 
-[ Upstream commit 2fdb05dc0931250574f0cb0ebeb5ed8e20f4a889 ]
+[ Upstream commit b6cd7adec0cf03f0aefc55676e71dd721cbc71a8 ]
 
-Yang Erkun reports that when two threads are opening files at the same
-time, and are forced to abort before a reply is seen, then the call to
-nfs_release_seqid() in nfs4_opendata_free() can result in a
-use-after-free of the pointer to the defunct rpc task of the other
-thread.
-The fix is to ensure that if the RPC call is aborted before the call to
-nfs_wait_on_sequence() is complete, then we must call nfs_release_seqid()
-in nfs4_open_release() before the rpc_task is freed.
+If request_irq() fails in st_rtc_probe(), there is no need to enable
+the irq, and if it succeeds, disable_irq() after request_irq() still has
+a time gap in which interrupts can come.
 
-Reported-by: Yang Erkun <yangerkun@huawei.com>
-Fixes: 24ac23ab88df ("NFSv4: Convert open() into an asynchronous RPC call")
-Reviewed-by: Yang Erkun <yangerkun@huawei.com>
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+request_irq() with IRQF_NO_AUTOEN flag will disable IRQ auto-enable when
+request IRQ.
+
+Fixes: b5b2bdfc2893 ("rtc: st: Add new driver for ST's LPC RTC")
+Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+Link: https://lore.kernel.org/r/20240912033727.3013951-1-ruanjinjie@huawei.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/nfs4proc.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/rtc/rtc-st-lpc.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/fs/nfs/nfs4proc.c b/fs/nfs/nfs4proc.c
-index f1c351e40c7a5..4a0691aeb7c1d 100644
---- a/fs/nfs/nfs4proc.c
-+++ b/fs/nfs/nfs4proc.c
-@@ -2537,12 +2537,14 @@ static void nfs4_open_release(void *calldata)
- 	struct nfs4_opendata *data = calldata;
- 	struct nfs4_state *state = NULL;
+diff --git a/drivers/rtc/rtc-st-lpc.c b/drivers/rtc/rtc-st-lpc.c
+index d04d46f9cc65a..23fbe25edeff1 100644
+--- a/drivers/rtc/rtc-st-lpc.c
++++ b/drivers/rtc/rtc-st-lpc.c
+@@ -218,15 +218,14 @@ static int st_rtc_probe(struct platform_device *pdev)
+ 		return -EINVAL;
+ 	}
  
-+	/* In case of error, no cleanup! */
-+	if (data->rpc_status != 0 || !data->rpc_done) {
-+		nfs_release_seqid(data->o_arg.seqid);
-+		goto out_free;
-+	}
- 	/* If this request hasn't been cancelled, do nothing */
- 	if (!data->cancelled)
- 		goto out_free;
--	/* In case of error, no cleanup! */
--	if (data->rpc_status != 0 || !data->rpc_done)
--		goto out_free;
- 	/* In case we need an open_confirm, no cleanup! */
- 	if (data->o_res.rflags & NFS4_OPEN_RESULT_CONFIRM)
- 		goto out_free;
+-	ret = devm_request_irq(&pdev->dev, rtc->irq, st_rtc_handler, 0,
+-			       pdev->name, rtc);
++	ret = devm_request_irq(&pdev->dev, rtc->irq, st_rtc_handler,
++			       IRQF_NO_AUTOEN, pdev->name, rtc);
+ 	if (ret) {
+ 		dev_err(&pdev->dev, "Failed to request irq %i\n", rtc->irq);
+ 		return ret;
+ 	}
+ 
+ 	enable_irq_wake(rtc->irq);
+-	disable_irq(rtc->irq);
+ 
+ 	rtc->clk = devm_clk_get(&pdev->dev, NULL);
+ 	if (IS_ERR(rtc->clk)) {
 -- 
 2.43.0
 
