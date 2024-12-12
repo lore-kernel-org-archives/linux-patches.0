@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB2F3213E6B;
-	Thu, 12 Dec 2024 17:03:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F6FE2F44;
+	Thu, 12 Dec 2024 17:03:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734023013; cv=none; b=PIv2BWyWIc2z4EMSQky/i8LVQY/6V81/gFNdAGKAJAFgsafeMPKEqRNVrydF/iKEfHL+oIXxsm75Y5gvlCDh2ieFCBNe6/WnWWw0vJLLbBACTm+DsthTlcgOXaK9YvX7cy5N8uIoBPjOTalRADCf4d46dyGaQAqeLm4UZ+Pv2Yc=
+	t=1734023017; cv=none; b=q7Egz8DbMnOhh1RNriTcg4cbaegy/ZrQfn3rVEmAf94CqMpq7ei55V/DdNntwkW3IwTFvd042xEYlZ875dkOcKCHEtP2Cr3si29hNekNonw1+QnZwjyiAjtHGFSwQZvrtPcR7fstwcaP0EXSJXSqEewGoMV7R1LqgpyOJvdZ8f4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734023013; c=relaxed/simple;
-	bh=Gc+BBNtIrnHIs9x0tWGokBRxVn03Cbs3PxI4MhlaNjY=;
+	s=arc-20240116; t=1734023017; c=relaxed/simple;
+	bh=ZyPMEWBXh7NEVhr6e647IczXv3crpHErFD1TOH0T9qA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n0JgAE75CdgWM3SpLZF4XWuZbT/TH2XBsqcQRLlJR7UQFTNckQtxCdpDDz9ZtfOZVImCkUSgzLDQC3CkhjTsQ8cPiuuV679KScgJZ44WFXN20iPpcMX72r454V9hVlOmYshRVSair1LFuH6rhEXASdAYhc1hqz0xQjVRwSzvXFU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v/PcOMVe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=goUEj78X4H7BMUiNSqHkltTfWeE/vuVCrb6qdAVkSKs+JdWYdTCIUTjB1jQj6MoRsnCCeVz9qVGEAcBkINKKp8RMDeKIZYth7czjd6oDOFMFRFbgfb8Djeg6a2d32DQtUx3yWeW9IrXW/Cvnq7GxehWjwNnmtB2iQVnt6GsqbQc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x8OrxC2c; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v/PcOMVe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A726C4CED0;
-	Thu, 12 Dec 2024 17:03:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x8OrxC2c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A27E2C4CECE;
+	Thu, 12 Dec 2024 17:03:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734023013;
-	bh=Gc+BBNtIrnHIs9x0tWGokBRxVn03Cbs3PxI4MhlaNjY=;
+	s=korg; t=1734023017;
+	bh=ZyPMEWBXh7NEVhr6e647IczXv3crpHErFD1TOH0T9qA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v/PcOMVeWMIzNJrcmXzHBmIiHLzPjUCRxkSeVc8tK3erXH18CTPWGT7Ej7L9n2JhN
-	 yi5VQKRdB+lPQbR+drP/fIFLTaxPzHRODRzEiF5rf1+HFYUftS/xp6SlyeEXZRyux3
-	 zF7mbMox0NUlvV5BRzePNzKbauDzkG3qhu+C52VY=
+	b=x8OrxC2camF4wZIj4dzo3nK39IIT5njn3oddsfY1nTFHeG/gPeCEjggWwYwIvwq5P
+	 A3Wo+3/hFyv2dezGYyeg91+5WG1g+K4uGzzPy/BkhIxUQIlmmJV1qBNHqSug4S1ZaX
+	 AUCvlwoEIB42l4BpGfb9hF3uEXM5dBmF7qQoTmBE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Gmeiner <cgmeiner@igalia.com>,
-	Lucas Stach <l.stach@pengutronix.de>
-Subject: [PATCH 5.15 397/565] drm/etnaviv: flush shader L1 cache after user commandstream
-Date: Thu, 12 Dec 2024 15:59:52 +0100
-Message-ID: <20241212144327.341594199@linuxfoundation.org>
+	Oleksandr Ocheretnyi <oocheret@cisco.com>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	Wim Van Sebroeck <wim@linux-watchdog.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 398/565] iTCO_wdt: mask NMI_NOW bit for update_no_reboot_bit() call
+Date: Thu, 12 Dec 2024 15:59:53 +0100
+Message-ID: <20241212144327.382894076@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144311.432886635@linuxfoundation.org>
 References: <20241212144311.432886635@linuxfoundation.org>
@@ -50,33 +53,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lucas Stach <l.stach@pengutronix.de>
+From: Oleksandr Ocheretnyi <oocheret@cisco.com>
 
-commit 4f8dbadef085ab447a01a8d4806a3f629fea05ed upstream.
+[ Upstream commit daa814d784ac034c62ab3fb0ef83daeafef527e2 ]
 
-The shader L1 cache is a writeback cache for shader loads/stores
-and thus must be flushed before any BOs backing the shader buffers
-are potentially freed.
+Commit da23b6faa8bf ("watchdog: iTCO: Add support for Cannon Lake
+PCH iTCO") does not mask NMI_NOW bit during TCO1_CNT register's
+value comparison for update_no_reboot_bit() call causing following
+failure:
 
-Cc: stable@vger.kernel.org
-Reviewed-by: Christian Gmeiner <cgmeiner@igalia.com>
-Signed-off-by: Lucas Stach <l.stach@pengutronix.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+   ...
+   iTCO_vendor_support: vendor-support=0
+   iTCO_wdt iTCO_wdt: unable to reset NO_REBOOT flag, device
+                                    disabled by hardware/BIOS
+   ...
+
+and this can lead to unexpected NMIs later during regular
+crashkernel's workflow because of watchdog probe call failures.
+
+This change masks NMI_NOW bit for TCO1_CNT register values to
+avoid unexpected NMI_NOW bit inversions.
+
+Fixes: da23b6faa8bf ("watchdog: iTCO: Add support for Cannon Lake PCH iTCO")
+Signed-off-by: Oleksandr Ocheretnyi <oocheret@cisco.com>
+Reviewed-by: Guenter Roeck <linux@roeck-us.net>
+Reviewed-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Link: https://lore.kernel.org/r/20240913191403.2560805-1-oocheret@cisco.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/etnaviv/etnaviv_buffer.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/watchdog/iTCO_wdt.c | 21 +++++++++++++++++++--
+ 1 file changed, 19 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/etnaviv/etnaviv_buffer.c
-+++ b/drivers/gpu/drm/etnaviv/etnaviv_buffer.c
-@@ -481,7 +481,8 @@ void etnaviv_buffer_queue(struct etnaviv
- 	} else {
- 		CMD_LOAD_STATE(buffer, VIVS_GL_FLUSH_CACHE,
- 				       VIVS_GL_FLUSH_CACHE_DEPTH |
--				       VIVS_GL_FLUSH_CACHE_COLOR);
-+				       VIVS_GL_FLUSH_CACHE_COLOR |
-+				       VIVS_GL_FLUSH_CACHE_SHADER_L1);
- 		if (has_blt) {
- 			CMD_LOAD_STATE(buffer, VIVS_BLT_ENABLE, 0x1);
- 			CMD_LOAD_STATE(buffer, VIVS_BLT_SET_COMMAND, 0x1);
+diff --git a/drivers/watchdog/iTCO_wdt.c b/drivers/watchdog/iTCO_wdt.c
+index a8052a3faaabb..3cebb83b3e679 100644
+--- a/drivers/watchdog/iTCO_wdt.c
++++ b/drivers/watchdog/iTCO_wdt.c
+@@ -82,6 +82,13 @@
+ #define TCO2_CNT(p)	(TCOBASE(p) + 0x0a) /* TCO2 Control Register	*/
+ #define TCOv2_TMR(p)	(TCOBASE(p) + 0x12) /* TCOv2 Timer Initial Value*/
+ 
++/*
++ * NMI_NOW is bit 8 of TCO1_CNT register
++ * Read/Write
++ * This bit is implemented as RW but has no effect on HW.
++ */
++#define NMI_NOW		BIT(8)
++
+ /* internal variables */
+ struct iTCO_wdt_private {
+ 	struct watchdog_device wddev;
+@@ -220,13 +227,23 @@ static int update_no_reboot_bit_cnt(void *priv, bool set)
+ 	struct iTCO_wdt_private *p = priv;
+ 	u16 val, newval;
+ 
+-	val = inw(TCO1_CNT(p));
++	/*
++	 * writing back 1b1 to NMI_NOW of TCO1_CNT register
++	 * causes NMI_NOW bit inversion what consequently does
++	 * not allow to perform the register's value comparison
++	 * properly.
++	 *
++	 * NMI_NOW bit masking for TCO1_CNT register values
++	 * helps to avoid possible NMI_NOW bit inversions on
++	 * following write operation.
++	 */
++	val = inw(TCO1_CNT(p)) & ~NMI_NOW;
+ 	if (set)
+ 		val |= BIT(0);
+ 	else
+ 		val &= ~BIT(0);
+ 	outw(val, TCO1_CNT(p));
+-	newval = inw(TCO1_CNT(p));
++	newval = inw(TCO1_CNT(p)) & ~NMI_NOW;
+ 
+ 	/* make sure the update is successful */
+ 	return val != newval ? -EIO : 0;
+-- 
+2.43.0
+
 
 
