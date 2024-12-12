@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DD2722B581;
-	Thu, 12 Dec 2024 16:16:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9EA12210F2;
+	Thu, 12 Dec 2024 16:16:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734020184; cv=none; b=lPpj7nt7sRQnmaJ1rEI5dmkIrNzBhjn6jQVoub5oRf2nlLhFIQUCI7UlgitpedI84pJWyleXnPeGzqx03nll5GJO2O2Aij8bIRArkUx+jNKKF8X4rWZCNnm6TR6sawb0eYE2wH4KaWqi/Cu12BbZKpSMYlbkDE0HaaUM9e67fbI=
+	t=1734020188; cv=none; b=iViU3gNu2E9EyN2VQCjZoELtv3ZfPmhH8Ih2KzfoajaOet1B18Lz6w4fFhZjFM34OOlg+T9SfR6t9bwnSn3HkwI6mP57cw0ou7abSpWTn97jRk55Pr4P+CxDE+o0dYaA0jJVeSNXXV95t2VsZAp9sRIsYo+SKBqIhonV4uaZbQo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734020184; c=relaxed/simple;
-	bh=cLtkwnmOxR4Bqpb7uuvpJqRICW7a+Qlc6KR23U79iuA=;
+	s=arc-20240116; t=1734020188; c=relaxed/simple;
+	bh=p3wc7KMPmbmkijJo5Y7p/i4F5JDnowj6dyAT4VAw5qA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iWl0LAKMl11rQbLsZecIuRKNWOz/VVh99M/cgVbg0CinSxvMrMBq70JvgF0khu/c3no3R64MqaP5rNkBZZWq91pbh0ts4o5REkiTj6kwH92fFykgtZKRbHdpOLK5Cazo3cyU4fs4KYF+c9gP6sW+mTqrXnWaeXScxLOAMH4Aq9A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=spRvjP2t; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gqX3/hGB+JR6wYbTMF24+vv2iVfDucbVuZjm/BA5axtXDFrRAV2OMS8O3BrAX8U0P2kJMWCD8n4wlw+1S1oNJ7WEXNKJoiVfvqrq3aPu75rifiHCORunDGmJqUKszWFxHvYsS3U8edOgVTAozarSx2hQKdStC76X4mh5Yy7EOsI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xur1fsir; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="spRvjP2t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BED4FC4CECE;
-	Thu, 12 Dec 2024 16:16:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xur1fsir"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 593E3C4CECE;
+	Thu, 12 Dec 2024 16:16:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734020184;
-	bh=cLtkwnmOxR4Bqpb7uuvpJqRICW7a+Qlc6KR23U79iuA=;
+	s=korg; t=1734020187;
+	bh=p3wc7KMPmbmkijJo5Y7p/i4F5JDnowj6dyAT4VAw5qA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=spRvjP2tKgghAYq5b7Vh0SxHWe+IqAZjGBsk/UK8XZoZnDiTIbnhCmlXPh4RHt1T+
-	 GeFHmA4x0vuZC8uFkEZvAR6GacGNTvLv59ShsrQHyEQE6KqcfLb8katKx2BW1PJh/w
-	 m31lLZLpMa5ZY27wjoQwbtcSjXE/lRL2YjQ42OU8=
+	b=xur1fsirvaxuk9dERDozGjGhmBHo+4J/NiI7C3BDolGCl18bRqFN81b4L2oylpEF5
+	 xqH5yiPqZvnW0f7PoT2YUOT7XgYZkUG+5sX9OeCOZpx02bR6TGD7KESAqMEwmZA9XL
+	 rsVNdi5aLTckga3RaJMZywwCe/E1ij42fQzz5rNc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Simek <michal.simek@amd.com>,
-	Krzysztof Kozlowski <krzk@kernel.org>
-Subject: [PATCH 6.1 400/772] dt-bindings: serial: rs485: Fix rs485-rts-delay property
-Date: Thu, 12 Dec 2024 15:55:45 +0100
-Message-ID: <20241212144406.446664199@linuxfoundation.org>
+	Filip Brozovic <fbrozovic@gmail.com>,
+	stable <stable@kernel.org>
+Subject: [PATCH 6.1 401/772] serial: 8250_fintek: Add support for F81216E
+Date: Thu, 12 Dec 2024 15:55:46 +0100
+Message-ID: <20241212144406.486614046@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -50,51 +50,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Simek <michal.simek@amd.com>
+From: Filip Brozovic <fbrozovic@gmail.com>
 
-commit 12b3642b6c242061d3ba84e6e3050c3141ded14c upstream.
+commit 166105c9030a30ba08574a9998afc7b60bc72dd7 upstream.
 
-Code expects array only with 2 items which should be checked.
-But also item checking is not working as it should likely because of
-incorrect items description.
+The F81216E is a LPC/eSPI to 4 UART Super I/O and is mostly compatible with
+the F81216H, but does not support RS-485 auto-direction delays on any port.
 
-Fixes: d50f974c4f7f ("dt-bindings: serial: Convert rs485 bindings to json-schema")
-Signed-off-by: Michal Simek <michal.simek@amd.com>
-Cc: stable@vger.kernel.org
-Reviewed-by: Krzysztof Kozlowski <krzk@kernel.org>
-Link: https://lore.kernel.org/r/820c639b9e22fe037730ed44d1b044cdb6d28b75.1726480384.git.michal.simek@amd.com
+Signed-off-by: Filip Brozovic <fbrozovic@gmail.com>
+Cc: stable <stable@kernel.org>
+Link: https://lore.kernel.org/r/20241110111703.15494-1-fbrozovic@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/devicetree/bindings/serial/rs485.yaml |   19 +++++++++----------
- 1 file changed, 9 insertions(+), 10 deletions(-)
+ drivers/tty/serial/8250/8250_fintek.c |   14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
 
---- a/Documentation/devicetree/bindings/serial/rs485.yaml
-+++ b/Documentation/devicetree/bindings/serial/rs485.yaml
-@@ -18,16 +18,15 @@ properties:
-     description: prop-encoded-array <a b>
-     $ref: /schemas/types.yaml#/definitions/uint32-array
-     items:
--      items:
--        - description: Delay between rts signal and beginning of data sent in
--            milliseconds. It corresponds to the delay before sending data.
--          default: 0
--          maximum: 100
--        - description: Delay between end of data sent and rts signal in milliseconds.
--            It corresponds to the delay after sending data and actual release
--            of the line.
--          default: 0
--          maximum: 100
-+      - description: Delay between rts signal and beginning of data sent in
-+          milliseconds. It corresponds to the delay before sending data.
-+        default: 0
-+        maximum: 100
-+      - description: Delay between end of data sent and rts signal in milliseconds.
-+          It corresponds to the delay after sending data and actual release
-+          of the line.
-+        default: 0
-+        maximum: 100
+--- a/drivers/tty/serial/8250/8250_fintek.c
++++ b/drivers/tty/serial/8250/8250_fintek.c
+@@ -21,6 +21,7 @@
+ #define CHIP_ID_F81866 0x1010
+ #define CHIP_ID_F81966 0x0215
+ #define CHIP_ID_F81216AD 0x1602
++#define CHIP_ID_F81216E 0x1617
+ #define CHIP_ID_F81216H 0x0501
+ #define CHIP_ID_F81216 0x0802
+ #define VENDOR_ID1 0x23
+@@ -158,6 +159,7 @@ static int fintek_8250_check_id(struct f
+ 	case CHIP_ID_F81866:
+ 	case CHIP_ID_F81966:
+ 	case CHIP_ID_F81216AD:
++	case CHIP_ID_F81216E:
+ 	case CHIP_ID_F81216H:
+ 	case CHIP_ID_F81216:
+ 		break;
+@@ -181,6 +183,7 @@ static int fintek_8250_get_ldn_range(str
+ 		return 0;
  
-   rs485-rts-active-low:
-     description: drive RTS low when sending (default is high).
+ 	case CHIP_ID_F81216AD:
++	case CHIP_ID_F81216E:
+ 	case CHIP_ID_F81216H:
+ 	case CHIP_ID_F81216:
+ 		*min = F81216_LDN_LOW;
+@@ -250,6 +253,7 @@ static void fintek_8250_set_irq_mode(str
+ 		break;
+ 
+ 	case CHIP_ID_F81216AD:
++	case CHIP_ID_F81216E:
+ 	case CHIP_ID_F81216H:
+ 	case CHIP_ID_F81216:
+ 		sio_write_mask_reg(pdata, FINTEK_IRQ_MODE, IRQ_SHARE,
+@@ -263,7 +267,8 @@ static void fintek_8250_set_irq_mode(str
+ static void fintek_8250_set_max_fifo(struct fintek_8250 *pdata)
+ {
+ 	switch (pdata->pid) {
+-	case CHIP_ID_F81216H: /* 128Bytes FIFO */
++	case CHIP_ID_F81216E: /* 128Bytes FIFO */
++	case CHIP_ID_F81216H:
+ 	case CHIP_ID_F81966:
+ 	case CHIP_ID_F81866:
+ 		sio_write_mask_reg(pdata, FIFO_CTRL,
+@@ -297,6 +302,7 @@ static void fintek_8250_set_termios(stru
+ 		goto exit;
+ 
+ 	switch (pdata->pid) {
++	case CHIP_ID_F81216E:
+ 	case CHIP_ID_F81216H:
+ 		reg = RS485;
+ 		break;
+@@ -346,6 +352,7 @@ static void fintek_8250_set_termios_hand
+ 	struct fintek_8250 *pdata = uart->port.private_data;
+ 
+ 	switch (pdata->pid) {
++	case CHIP_ID_F81216E:
+ 	case CHIP_ID_F81216H:
+ 	case CHIP_ID_F81966:
+ 	case CHIP_ID_F81866:
+@@ -438,6 +445,11 @@ static void fintek_8250_set_rs485_handle
+ 			uart->port.rs485_supported = fintek_8250_rs485_supported;
+ 		break;
+ 
++	case CHIP_ID_F81216E: /* F81216E does not support RS485 delays */
++		uart->port.rs485_config = fintek_8250_rs485_config;
++		uart->port.rs485_supported = fintek_8250_rs485_supported;
++		break;
++
+ 	default: /* No RS485 Auto direction functional */
+ 		break;
+ 	}
 
 
