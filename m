@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AE16222D66;
-	Thu, 12 Dec 2024 16:10:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED724225409;
+	Thu, 12 Dec 2024 16:10:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734019813; cv=none; b=UXAEaw8DrbvKlbhDCS6K3z1UlxJ03PMxphLmLiPSB4NkMRsGM7wMUsILGz8OcR2+2FSi5ZgGB8kiICAnvE8EiaNXXgVPAHUM4ThKA7w62HbQf35QxJzq8znTQ9fGO9lwv/u11n4WG6PpKmtbyr5oE1acItE4EKZFRFJErgm6d8U=
+	t=1734019818; cv=none; b=JBidrTDK0RTkPirYrfxb96Ip4XqcpVG3cVyXLirUhu4JTV4mYp855FrS/YFU/0LRqz3OKTed+O1w3vRoXUT/rO5RbXW/SkLxc5w38X90n8YKrAoZqkUOMkgh54QvsCDb3jHVCXSzh5jXboSP69n6WJi9/DjpKNMsedRRXWTvNfs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734019813; c=relaxed/simple;
-	bh=CJjLKBbTO2Qzye/w43FTwU9vL+4xHzCHXq8ncUvnC0Y=;
+	s=arc-20240116; t=1734019818; c=relaxed/simple;
+	bh=eC0uQa2SuEzQZQ89v0NlPEjCWPLILXZ3r91a3JGFwIw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h6F8saOVvCwRHG8aTkFEv0gfgcy4Vj+P5pd+vdGI1IWMLOvOnssVDFfCe/O/ojmNgxaeuutlJ7htB5JRhOhw60DPQvI8zP5Ac7qGqgxsk4qfQF4ksOThbgXi9JwCiLKuChY52FaRAOR9G+aWlIziMon7Thdkjd1B4NKvJGwzLcU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=INmAEWDR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QdUXWMkrWbfzpc51v1Kr042FYYD81lQIKKGkJbhcOifZUB/RyWKLkxb4ADrwTdGNF8iKsx+knJEeZQz8kIepdMbm41HBxvFbmYvRBLvVAGQF0vXMrulB2jwOTXQRhz7a8rfF/tyTs9U/hiyLTBasaSDyW4k7AjzCygIDoVfTb7U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NU9SkjZJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="INmAEWDR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29506C4CECE;
-	Thu, 12 Dec 2024 16:10:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NU9SkjZJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9FD4C4CECE;
+	Thu, 12 Dec 2024 16:10:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734019812;
-	bh=CJjLKBbTO2Qzye/w43FTwU9vL+4xHzCHXq8ncUvnC0Y=;
+	s=korg; t=1734019816;
+	bh=eC0uQa2SuEzQZQ89v0NlPEjCWPLILXZ3r91a3JGFwIw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=INmAEWDR+mJcuh2iQRvaZWS5l4LdnaLerPsQ4pBOilorA5K2Wa+md9MgqeHGrzp5K
-	 VXbcubuEl1r7wskRthP5D8OfUhtq+BqCpGkqKLiISYNy3tJXKWn3VLSIljhPHgqBnZ
-	 r3E8AEyu247GW8Qza8L0g6iZ2pL9aI22knGuwV5E=
+	b=NU9SkjZJjE9C+tgvcIllyKjktda89WREs11bINZzjv1Xqz8PkP1kXyRqD3Cw5zboe
+	 2vZ2MEmvOCA2kfdpjehHO8PoyoIv5Rzp7RfrJnXfKCRzakXWyOyhavfJ8W+mYMlRS5
+	 lw2/VmNXD2nmalKCK/MvHPCj7vuGfaQrbx7ynxOw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Efstathiades <john.efstathiades@pebblebay.com>,
+	Raghuram Chary J <raghuramchary.jallipalli@microchip.com>,
 	Oleksij Rempel <o.rempel@pengutronix.de>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 305/772] net: usb: lan78xx: Fix double free issue with interrupt buffer allocation
-Date: Thu, 12 Dec 2024 15:54:10 +0100
-Message-ID: <20241212144402.502291822@linuxfoundation.org>
+Subject: [PATCH 6.1 306/772] net: usb: lan78xx: Fix memory leak on device unplug by freeing PHY device
+Date: Thu, 12 Dec 2024 15:54:11 +0100
+Message-ID: <20241212144402.543017644@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -54,96 +54,46 @@ Content-Transfer-Encoding: 8bit
 
 From: Oleksij Rempel <o.rempel@pengutronix.de>
 
-[ Upstream commit 03819abbeb11117dcbba40bfe322b88c0c88a6b6 ]
+[ Upstream commit ae7370e61c5d8f5bcefc2d4fca724bd4e9bbf789 ]
 
-In lan78xx_probe(), the buffer `buf` was being freed twice: once
-implicitly through `usb_free_urb(dev->urb_intr)` with the
-`URB_FREE_BUFFER` flag and again explicitly by `kfree(buf)`. This caused
-a double free issue.
+Add calls to `phy_device_free` after `fixed_phy_unregister` to fix a
+memory leak that occurs when the device is unplugged. This ensures
+proper cleanup of pseudo fixed-link PHYs.
 
-To resolve this, reordered `kmalloc()` and `usb_alloc_urb()` calls to
-simplify the initialization sequence and removed the redundant
-`kfree(buf)`.  Now, `buf` is allocated after `usb_alloc_urb()`, ensuring
-it is correctly managed by  `usb_fill_int_urb()` and freed by
-`usb_free_urb()` as intended.
-
-Fixes: a6df95cae40b ("lan78xx: Fix memory allocation bug")
-Cc: John Efstathiades <john.efstathiades@pebblebay.com>
+Fixes: 89b36fb5e532 ("lan78xx: Lan7801 Support for Fixed PHY")
+Cc: Raghuram Chary J <raghuramchary.jallipalli@microchip.com>
 Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
-Link: https://patch.msgid.link/20241116130558.1352230-1-o.rempel@pengutronix.de
+Link: https://patch.msgid.link/20241116130558.1352230-2-o.rempel@pengutronix.de
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/lan78xx.c | 29 ++++++++++++++---------------
- 1 file changed, 14 insertions(+), 15 deletions(-)
+ drivers/net/usb/lan78xx.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/net/usb/lan78xx.c b/drivers/net/usb/lan78xx.c
-index 366e83ed0a973..b18afd2c7aeed 100644
+index b18afd2c7aeed..ee3c13bbf6c02 100644
 --- a/drivers/net/usb/lan78xx.c
 +++ b/drivers/net/usb/lan78xx.c
-@@ -4417,29 +4417,30 @@ static int lan78xx_probe(struct usb_interface *intf,
+@@ -2387,6 +2387,7 @@ static int lan78xx_phy_init(struct lan78xx_net *dev)
+ 		if (dev->chipid == ID_REV_CHIP_ID_7801_) {
+ 			if (phy_is_pseudo_fixed_link(phydev)) {
+ 				fixed_phy_unregister(phydev);
++				phy_device_free(phydev);
+ 			} else {
+ 				phy_unregister_fixup_for_uid(PHY_KSZ9031RNX,
+ 							     0xfffffff0);
+@@ -4246,8 +4247,10 @@ static void lan78xx_disconnect(struct usb_interface *intf)
  
- 	period = ep_intr->desc.bInterval;
- 	maxp = usb_maxpacket(dev->udev, dev->pipe_intr);
--	buf = kmalloc(maxp, GFP_KERNEL);
--	if (!buf) {
-+
-+	dev->urb_intr = usb_alloc_urb(0, GFP_KERNEL);
-+	if (!dev->urb_intr) {
- 		ret = -ENOMEM;
- 		goto out5;
- 	}
+ 	phy_disconnect(net->phydev);
  
--	dev->urb_intr = usb_alloc_urb(0, GFP_KERNEL);
--	if (!dev->urb_intr) {
-+	buf = kmalloc(maxp, GFP_KERNEL);
-+	if (!buf) {
- 		ret = -ENOMEM;
--		goto out6;
--	} else {
--		usb_fill_int_urb(dev->urb_intr, dev->udev,
--				 dev->pipe_intr, buf, maxp,
--				 intr_complete, dev, period);
--		dev->urb_intr->transfer_flags |= URB_FREE_BUFFER;
-+		goto free_urbs;
- 	}
+-	if (phy_is_pseudo_fixed_link(phydev))
++	if (phy_is_pseudo_fixed_link(phydev)) {
+ 		fixed_phy_unregister(phydev);
++		phy_device_free(phydev);
++	}
  
-+	usb_fill_int_urb(dev->urb_intr, dev->udev,
-+			 dev->pipe_intr, buf, maxp,
-+			 intr_complete, dev, period);
-+	dev->urb_intr->transfer_flags |= URB_FREE_BUFFER;
-+
- 	dev->maxpacket = usb_maxpacket(dev->udev, dev->pipe_out);
+ 	usb_scuttle_anchored_urbs(&dev->deferred);
  
- 	/* Reject broken descriptors. */
- 	if (dev->maxpacket == 0) {
- 		ret = -ENODEV;
--		goto out6;
-+		goto free_urbs;
- 	}
- 
- 	/* driver requires remote-wakeup capability during autosuspend. */
-@@ -4447,7 +4448,7 @@ static int lan78xx_probe(struct usb_interface *intf,
- 
- 	ret = lan78xx_phy_init(dev);
- 	if (ret < 0)
--		goto out7;
-+		goto free_urbs;
- 
- 	ret = register_netdev(netdev);
- 	if (ret != 0) {
-@@ -4469,10 +4470,8 @@ static int lan78xx_probe(struct usb_interface *intf,
- 
- out8:
- 	phy_disconnect(netdev->phydev);
--out7:
-+free_urbs:
- 	usb_free_urb(dev->urb_intr);
--out6:
--	kfree(buf);
- out5:
- 	lan78xx_unbind(dev, intf);
- out4:
 -- 
 2.43.0
 
