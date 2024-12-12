@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE5AD6F2FE;
-	Thu, 12 Dec 2024 15:39:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFB806F2FE;
+	Thu, 12 Dec 2024 15:39:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734017983; cv=none; b=TYu0ArjspneIu0ssm+44hNcoTalXEA2jApRb/9STE7sdCDzg5aEjkpSgrNX4rCQjBknhKM+yvwlN5SzEItKCgGElzaQIRU7MItJGGJZL64Bqd3ZHrGZjgv03LsG/ppgIcYhOlWpOKcGVMQhI1AkOweeNGvQgEADHrpT2rOzcPW8=
+	t=1734017986; cv=none; b=Ff9X+h3ghwNl7n+N32BFDr52/IefX3dz76XjiqvJgArJN0uqqm5GbHexsK56uTJywZV+MrsNl/kgREAHqIpXic7XwCQ19nQy4Wu+h05lSmt+J6aYQ71FA/AUQPuzHhaYx5lFfR5noxzOSFdcVIkKuJPHQNBftfB7dcQv6/4HYsg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734017983; c=relaxed/simple;
-	bh=aeQZywb7YmM9ED57E/T/KDNgJlwPyu0jH4zks9kRUr8=;
+	s=arc-20240116; t=1734017986; c=relaxed/simple;
+	bh=6/HOC1tZavkIT+IUwhmQPwbl6txPm3leAsWR65L+ZKo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LwzDx7+Wes2Iq2YEF99UZGH9BD/dJ6Gn0R4IGSLwmhrF8sS+k5/sdqNm3w3t1sKVe7wgqxx8aWRox+HaiYQTkr9/Ntj+u+L/ROo3hSUZGw0/Dc9CXyRG1RgPv56vgaqKauCVcMedUhGCGnMSe3rLSw3DUv/72uSLS76Qd5Mhw24=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uG4U6bI/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=niK72WuSXuLOeCCq2r7LaoN0JCFF5rgdGHwewE/WEddiwdFMg0SysiVuQn8uEWyZCeYulNDqo/JwiakYmYqlk+Km2d6oGhseRdkQI9JuOsWrjDHsM/MFlynctOVgjXsz55vm63iz/DO4hvtPk1RmNyroUnf0gF468EIay6Q5zng=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IPeaMHhC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uG4U6bI/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DFD6C4CECE;
-	Thu, 12 Dec 2024 15:39:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IPeaMHhC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23914C4CED4;
+	Thu, 12 Dec 2024 15:39:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734017982;
-	bh=aeQZywb7YmM9ED57E/T/KDNgJlwPyu0jH4zks9kRUr8=;
+	s=korg; t=1734017986;
+	bh=6/HOC1tZavkIT+IUwhmQPwbl6txPm3leAsWR65L+ZKo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uG4U6bI/JB9lDIr6KTJDlaPrvlprUONckH7WBfYFePf9dMdTyeJIlf/mIkkfF27xI
-	 +mdTbsEEErY2GsPl74SA0P8uLXBX6cd1DXSSXpjbB5JMhUbObtFpwY6fPReY01z5Oz
-	 TLYzkincq9t3ge9jvUzCAx9hU1F28bUKRq9fe3gc=
+	b=IPeaMHhCEvMc3Zz4y9eYEWw6LmSRhHADrbnPDuKApUvEe8/cAoEa3JJrGokmE4YRL
+	 ZttgjAqig6o5Dl2VxpMqfwCjwX/JxsoHx0jqGjKkIt5wXuUnzkxH61cBCQir4fHmtG
+	 DYe5OZUuePs/YTCjQ1ZHsfXzmS/EMH7S7ZRk95RE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gwendal Grignou <gwendal@chromium.org>,
-	Can Guo <quic_cang@quicinc.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.6 157/356] scsi: ufs: core: sysfs: Prevent div by zero
-Date: Thu, 12 Dec 2024 15:57:56 +0100
-Message-ID: <20241212144250.841202964@linuxfoundation.org>
+	Lyude Paul <lyude@redhat.com>,
+	Imre Deak <imre.deak@intel.com>
+Subject: [PATCH 6.6 166/356] drm/dp_mst: Fix MST sideband message body length check
+Date: Thu, 12 Dec 2024 15:58:05 +0100
+Message-ID: <20241212144251.195017625@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144244.601729511@linuxfoundation.org>
 References: <20241212144244.601729511@linuxfoundation.org>
@@ -51,44 +50,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gwendal Grignou <gwendal@chromium.org>
+From: Imre Deak <imre.deak@intel.com>
 
-commit eb48e9fc0028bed94a40a9352d065909f19e333c upstream.
+commit bd2fccac61b40eaf08d9546acc9fef958bfe4763 upstream.
 
-Prevent a division by 0 when monitoring is not enabled.
+Fix the MST sideband message body length check, which must be at least 1
+byte accounting for the message body CRC (aka message data CRC) at the
+end of the message.
 
-Fixes: 1d8613a23f3c ("scsi: ufs: core: Introduce HBA performance monitor sysfs nodes")
-Cc: stable@vger.kernel.org
-Signed-off-by: Gwendal Grignou <gwendal@chromium.org>
-Link: https://lore.kernel.org/r/20241120062522.917157-1-gwendal@chromium.org
-Reviewed-by: Can Guo <quic_cang@quicinc.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+This fixes a case where an MST branch device returns a header with a
+correct header CRC (indicating a correctly received body length), with
+the body length being incorrectly set to 0. This will later lead to a
+memory corruption in drm_dp_sideband_append_payload() and the following
+errors in dmesg:
+
+   UBSAN: array-index-out-of-bounds in drivers/gpu/drm/display/drm_dp_mst_topology.c:786:25
+   index -1 is out of range for type 'u8 [48]'
+   Call Trace:
+    drm_dp_sideband_append_payload+0x33d/0x350 [drm_display_helper]
+    drm_dp_get_one_sb_msg+0x3ce/0x5f0 [drm_display_helper]
+    drm_dp_mst_hpd_irq_handle_event+0xc8/0x1580 [drm_display_helper]
+
+   memcpy: detected field-spanning write (size 18446744073709551615) of single field "&msg->msg[msg->curlen]" at drivers/gpu/drm/display/drm_dp_mst_topology.c:791 (size 256)
+   Call Trace:
+    drm_dp_sideband_append_payload+0x324/0x350 [drm_display_helper]
+    drm_dp_get_one_sb_msg+0x3ce/0x5f0 [drm_display_helper]
+    drm_dp_mst_hpd_irq_handle_event+0xc8/0x1580 [drm_display_helper]
+
+Cc: <stable@vger.kernel.org>
+Cc: Lyude Paul <lyude@redhat.com>
+Reviewed-by: Lyude Paul <lyude@redhat.com>
+Signed-off-by: Imre Deak <imre.deak@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20241125205314.1725887-1-imre.deak@intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ufs/core/ufs-sysfs.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/gpu/drm/display/drm_dp_mst_topology.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/ufs/core/ufs-sysfs.c
-+++ b/drivers/ufs/core/ufs-sysfs.c
-@@ -485,6 +485,9 @@ static ssize_t read_req_latency_avg_show
- 	struct ufs_hba *hba = dev_get_drvdata(dev);
- 	struct ufs_hba_monitor *m = &hba->monitor;
- 
-+	if (!m->nr_req[READ])
-+		return sysfs_emit(buf, "0\n");
+--- a/drivers/gpu/drm/display/drm_dp_mst_topology.c
++++ b/drivers/gpu/drm/display/drm_dp_mst_topology.c
+@@ -319,6 +319,9 @@ static bool drm_dp_decode_sideband_msg_h
+ 	hdr->broadcast = (buf[idx] >> 7) & 0x1;
+ 	hdr->path_msg = (buf[idx] >> 6) & 0x1;
+ 	hdr->msg_len = buf[idx] & 0x3f;
++	if (hdr->msg_len < 1)		/* min space for body CRC */
++		return false;
 +
- 	return sysfs_emit(buf, "%llu\n", div_u64(ktime_to_us(m->lat_sum[READ]),
- 						 m->nr_req[READ]));
- }
-@@ -552,6 +555,9 @@ static ssize_t write_req_latency_avg_sho
- 	struct ufs_hba *hba = dev_get_drvdata(dev);
- 	struct ufs_hba_monitor *m = &hba->monitor;
- 
-+	if (!m->nr_req[WRITE])
-+		return sysfs_emit(buf, "0\n");
-+
- 	return sysfs_emit(buf, "%llu\n", div_u64(ktime_to_us(m->lat_sum[WRITE]),
- 						 m->nr_req[WRITE]));
- }
+ 	idx++;
+ 	hdr->somt = (buf[idx] >> 7) & 0x1;
+ 	hdr->eomt = (buf[idx] >> 6) & 0x1;
 
 
