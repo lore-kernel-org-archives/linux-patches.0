@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38FE84F218;
-	Thu, 12 Dec 2024 17:17:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB9B04F218;
+	Thu, 12 Dec 2024 17:17:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734023838; cv=none; b=JGPACu5/jYua8kfdLUimWaacVVw3pxpyAloRUouGIgy8T8VorxfXigK4cioendOXlmBLNrfBE+HwtZudPn5SbmUxzU9EQ38eMWdKitdGYPOE0s1hotAM/HGZMV4g4h9SINI6ZVq3Y1ldTOYeuprLnykkxV40gVCTNyxZhII2D30=
+	t=1734023839; cv=none; b=RPIm3ZvWWtMG6/M0MT20UNREo9RAka7BHiKm+HW99J3JNdgKCYr57MjWTRAmZDah+6IQDf/240QuJBbWZXBYKgNDsszWjuJYf7Tf8qUfLk9KlRGwWc3EqFLqzj9UZXLlboQR4tsGvT7MPChORvufCuRdTcBsKSYvugjZrazUdJc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734023838; c=relaxed/simple;
-	bh=5Zu92DBGnlT6z8I95VYWhuQGAGLRmc32xFVz2Vsnsfc=;
+	s=arc-20240116; t=1734023839; c=relaxed/simple;
+	bh=y6jynlx/iO+i2CxH7JGpAwrJ0zaZUxQ8F56JRkxyRB4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=gGkMzpSps3Q5Ca7Ze7QdnePYURq3KIO+3E2iwwgpbBqeHBx9sq4xH3g+wdRamC0qg5zWrTZK61HNEd0s1WI6hpzgDDeZHO4PX1fPufh1ehnmzC+Yf/r0/b7NKJGnUTZogh5PAqfGJG3FJRpCT4i+LYc5/G7fz8jwYHbl8UIyopg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sRZj+Ici; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dBuqi19m85Ev2HmzO2fvms8unJyqO4JQG1JDMSJMcO2YVP8liI8PNRVNnNRTnX4mv4ZKtTmOqhy0jjJuAZeXBoK38OiqQlOG5yEhanUAiKU5NrqA9Juqkr/ULOaTwKpg2xTjIld4Cx1h0hQrT1Be5cbrgWquh5f5WteBJnuFi7g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0RYFIE8P; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sRZj+Ici"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60ACBC4CECE;
-	Thu, 12 Dec 2024 17:17:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0RYFIE8P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45804C4CECE;
+	Thu, 12 Dec 2024 17:17:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734023836;
-	bh=5Zu92DBGnlT6z8I95VYWhuQGAGLRmc32xFVz2Vsnsfc=;
+	s=korg; t=1734023839;
+	bh=y6jynlx/iO+i2CxH7JGpAwrJ0zaZUxQ8F56JRkxyRB4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sRZj+IcigQWmxMhfs/8Tcgc6Nxh+tnTINVqUC/ZsU1FJQRYxzddW5aeH5cVRhuTJf
-	 hYIVQRM+Vhl+6rL6BTKitNuIizgGO3FNCv1RboAUxdG5exAlqyKDCiXOw9CZqN9+QC
-	 1O1hCxXhNqwiXvvHqt1Jtb0H7hw3oEoAtKqJ5l6s=
+	b=0RYFIE8PtSC6+r9OSJ7PtMvoAn1xacK9geQMyF/gd6HEuaXUV9FxQ8qBqSy8NOQsB
+	 xFXcQZ+OBqTAMXAWSX8n6PdkER+wguUJhxuVNBOD5lZrtiNo/h7bGT00VTxLG/CZrd
+	 s1DP5lnGOV/OGDvQtR1Z8DR49hBnpkhGnEwIFCAo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeongjun Park <aha310510@gmail.com>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
-	Kalle Valo <quic_kvalo@quicinc.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 099/459] wifi: ath9k: add range check for conn_rsp_epid in htc_connect_service()
-Date: Thu, 12 Dec 2024 15:57:17 +0100
-Message-ID: <20241212144257.421705857@linuxfoundation.org>
+Subject: [PATCH 5.10 100/459] drm/omap: Fix locking in omap_gem_new_dmabuf()
+Date: Thu, 12 Dec 2024 15:57:18 +0100
+Message-ID: <20241212144257.459741366@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144253.511169641@linuxfoundation.org>
 References: <20241212144253.511169641@linuxfoundation.org>
@@ -46,62 +46,80 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jeongjun Park <aha310510@gmail.com>
+From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
 
-[ Upstream commit 8619593634cbdf5abf43f5714df49b04e4ef09ab ]
+[ Upstream commit e6a1c4037227539373c8cf484ace83833e2ad6a2 ]
 
-I found the following bug in my fuzzer:
+omap_gem_new_dmabuf() creates the new gem object, and then takes and
+holds the omap_obj->lock for the rest of the function. This has two
+issues:
 
-  UBSAN: array-index-out-of-bounds in drivers/net/wireless/ath/ath9k/htc_hst.c:26:51
-  index 255 is out of range for type 'htc_endpoint [22]'
-  CPU: 0 UID: 0 PID: 8 Comm: kworker/0:0 Not tainted 6.11.0-rc6-dirty #14
-  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
-  Workqueue: events request_firmware_work_func
-  Call Trace:
-   <TASK>
-   dump_stack_lvl+0x180/0x1b0
-   __ubsan_handle_out_of_bounds+0xd4/0x130
-   htc_issue_send.constprop.0+0x20c/0x230
-   ? _raw_spin_unlock_irqrestore+0x3c/0x70
-   ath9k_wmi_cmd+0x41d/0x610
-   ? mark_held_locks+0x9f/0xe0
-   ...
+- omap_gem_free_object(), which is called in the error paths, also takes
+  the same lock, leading to deadlock
+- Even if the above wouldn't happen, in the error cases
+  omap_gem_new_dmabuf() still unlocks omap_obj->lock, even after the
+  omap_obj has already been freed.
 
-Since this bug has been confirmed to be caused by insufficient verification
-of conn_rsp_epid, I think it would be appropriate to add a range check for
-conn_rsp_epid to htc_connect_service() to prevent the bug from occurring.
+Furthermore, I don't think there's any reason to take the lock at all,
+as the object was just created and not yet shared with anyone else.
 
-Fixes: fb9987d0f748 ("ath9k_htc: Support for AR9271 chipset.")
-Signed-off-by: Jeongjun Park <aha310510@gmail.com>
-Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://patch.msgid.link/20240909103855.68006-1-aha310510@gmail.com
+To fix all this, drop taking the lock.
+
+Fixes: 3cbd0c587b12 ("drm/omap: gem: Replace struct_mutex usage with omap_obj private lock")
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Closes: https://lore.kernel.org/all/511b99d7-aade-4f92-bd3e-63163a13d617@stanley.mountain/
+Reviewed-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240806-omapdrm-misc-fixes-v1-3-15d31aea0831@ideasonboard.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath9k/htc_hst.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/omapdrm/omap_gem.c | 10 ++--------
+ 1 file changed, 2 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath9k/htc_hst.c b/drivers/net/wireless/ath/ath9k/htc_hst.c
-index 99667aba289df..00dc97ac53b9d 100644
---- a/drivers/net/wireless/ath/ath9k/htc_hst.c
-+++ b/drivers/net/wireless/ath/ath9k/htc_hst.c
-@@ -294,6 +294,9 @@ int htc_connect_service(struct htc_target *target,
- 		return -ETIMEDOUT;
+diff --git a/drivers/gpu/drm/omapdrm/omap_gem.c b/drivers/gpu/drm/omapdrm/omap_gem.c
+index f67f223c6479f..662062cdba9d4 100644
+--- a/drivers/gpu/drm/omapdrm/omap_gem.c
++++ b/drivers/gpu/drm/omapdrm/omap_gem.c
+@@ -1289,8 +1289,6 @@ struct drm_gem_object *omap_gem_new_dmabuf(struct drm_device *dev, size_t size,
+ 
+ 	omap_obj = to_omap_bo(obj);
+ 
+-	mutex_lock(&omap_obj->lock);
+-
+ 	omap_obj->sgt = sgt;
+ 
+ 	if (sgt->orig_nents == 1) {
+@@ -1305,8 +1303,7 @@ struct drm_gem_object *omap_gem_new_dmabuf(struct drm_device *dev, size_t size,
+ 		pages = kcalloc(npages, sizeof(*pages), GFP_KERNEL);
+ 		if (!pages) {
+ 			omap_gem_free_object(obj);
+-			obj = ERR_PTR(-ENOMEM);
+-			goto done;
++			return ERR_PTR(-ENOMEM);
+ 		}
+ 
+ 		omap_obj->pages = pages;
+@@ -1314,13 +1311,10 @@ struct drm_gem_object *omap_gem_new_dmabuf(struct drm_device *dev, size_t size,
+ 						       npages);
+ 		if (ret) {
+ 			omap_gem_free_object(obj);
+-			obj = ERR_PTR(-ENOMEM);
+-			goto done;
++			return ERR_PTR(-ENOMEM);
+ 		}
  	}
  
-+	if (target->conn_rsp_epid < 0 || target->conn_rsp_epid >= ENDPOINT_MAX)
-+		return -EINVAL;
-+
- 	*conn_rsp_epid = target->conn_rsp_epid;
- 	return 0;
- err:
+-done:
+-	mutex_unlock(&omap_obj->lock);
+ 	return obj;
+ }
+ 
 -- 
 2.43.0
 
